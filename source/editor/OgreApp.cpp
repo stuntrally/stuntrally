@@ -7,6 +7,9 @@
 #include "../ogre/common/RenderConst.h"
 //#include "../ogre/common/MaterialGen/MaterialFactory.h"
 
+#include <OgreTerrainPaging.h>
+#include <OgreTerrainGroup.h>
+
 #if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 	// dir listing
 	#include <dirent.h>
@@ -26,7 +29,7 @@ App::App()  //  gui wigdets--
 	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0), valShadowFilter(0)  // shadow
 	,brImg(0), wndTabs(0), bnQuit(0)  // brush
 	,valSizeMinmap(0), valCamSpeed(0), valCamInert(0)  // settings
-	,valTerUpd(0), valSizeRoadP(0), valMiniUpd(0)
+	,valTerUpd(0), valSizeRoadP(0), valMiniUpd(0), chAutoBlendmap(0)
 	,cmbSky(0), cmbRain1(0),cmbRain2(0), valRain1Rate(0),valRain2Rate(0)  // sun
 	,valSunPitch(0),valSunYaw(0), valFogStart(0),valFogEnd(0)
 	,edLiAmb(0),edLiDiff(0),edLiSpec(0), edFogClr(0), chkFog(0)
@@ -48,6 +51,8 @@ App::App()  //  gui wigdets--
 	,edRdTcMul(0),edRdLenDim(0),edRdWidthSteps(0),edRdHeightOfs(0)  // road
 	,edRdSkirtLen(0),edRdSkirtH(0), edRdMergeLen(0),edRdLodPLen(0)
 	,edRdColN(0),edRdColR(0), edRdPwsM(0),edRdPlsM(0)
+	,edScaleAllMul(0),edScaleTerHMul(0)  // tools
+	,valAlignWidthAdd(0), valAlignWidthMul(0), valAlignSmooth(0)
 	,imgTrkIco1(0),imgTrkIco2(0), edFind(0)
 	,trkMList(0),trkName(0),bListTrackU(0)  // track
 
@@ -55,7 +60,7 @@ App::App()  //  gui wigdets--
 	,bTerUpd(0), curBr(2), bGuiReinit(0), noBlendUpd(0), bGI(0), resList(0)
 	,ndPos(0), mpos(0), asp(4.f/3.f)
 	,ndCar(0),entCar(0), ndStBox(0),entStBox(0), ndFluidBox(0),entFluidBox(0), ndObjBox(0),entObjBox(0)
-	,grass(0), trees(0), sun(0), terMaxAng(0.f)
+	,grass(0), trees(0), sun(0)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
 
 	,iFlCur(0), bRecreateFluids(0), iObjCur(0), iObjNew(0)
@@ -103,9 +108,9 @@ void App::postInit()
 	materialFactory = new MaterialFactory();
 	materialFactory->pApp = this;
 	materialFactory->setSceneManager(mSceneMgr);
-	materialFactory->setShadows(pSet->shadow_type >= 2);
-	materialFactory->setShadowsDepth(pSet->shadow_type >= 3);
-	materialFactory->setShadowsSoft(pSet->shadow_type == 4);
+	materialFactory->setShadows(pSet->shadow_type >= 1);
+	materialFactory->setShadowsDepth(pSet->shadow_type >= 2);
+	materialFactory->setShadowsSoft(pSet->shadow_type == 3);
 	materialFactory->setShaderQuality(pSet->shaders);
 	materialFactory->setShadowsFilterSize(pSet->shadow_filter);
 	materialFactory->setReflect(pSet->water_reflect);

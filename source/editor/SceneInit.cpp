@@ -9,6 +9,10 @@
 #include "btBulletCollisionCommon.h"
 #include "btBulletDynamicsCommon.h"
 
+#include <OgreTerrain.h>
+#include <OgreTerrainGroup.h>
+
+
 using namespace Ogre;
 
 
@@ -155,7 +159,7 @@ void App::LoadTrackEv()
 
 
 	//  road ~
-	road = new SplineRoad();
+	road = new SplineRoad(this);
 	road->iTexSize = pSet->tex_size;
 	road->Setup("sphere.mesh", 1.4f*pSet->road_sphr, terrain, mSceneMgr, mCamera);
 	road->LoadFile(TrkDir()+"road.xml");

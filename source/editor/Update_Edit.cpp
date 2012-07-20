@@ -7,6 +7,8 @@
 #include "../ogre/common/MultiList2.h"
 //#include "../ogre/common/MaterialGen/MaterialFactory.h"
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+#include <OgreTerrain.h>
+#include <OgreTerrainGroup.h>
 using namespace Ogre;
 
 
@@ -91,7 +93,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	}
 
 
-	//  keys dn/up - trklist
+	//  keys up/dn - trklist
 	static float dirU = 0.f,dirD = 0.f;
 	if (bGuiFocus)
 	{	if (isKey(UP)  ||isKey(NUMPAD8))	dirD += evt.timeSinceLastFrame;  else
@@ -767,21 +769,24 @@ bool App::frameEnded(const FrameEvent& evt)
 	if (tu >= pSet->ter_skip)
 	if (bTerUpd)
 	{	bTerUpd = false;  tu = 0;
-		mTerrainGroup->update();
-		//initBlendMaps(terrain);
+		if (mTerrainGroup)
+			mTerrainGroup->update();
 	}	tu++;
 
 	if (bu >= pSet->ter_skip)
 	if (bTerUpdBlend)
 	{	bTerUpdBlend = false;  bu = 0;
 		if (terrain)
+		{
+			GetTerAngles();  // full
 			initBlendMaps(terrain);
+		}
 	}	bu++;
 
 	
 	if (road)  // road
 	{
-		road->bCastShadow = pSet->shadow_type >= 3;
+		road->bCastShadow = pSet->shadow_type >= 2;
 		road->RebuildRoadInt();
 	}
 

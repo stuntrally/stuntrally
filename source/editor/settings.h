@@ -44,7 +44,7 @@ public:
 	bool isMain;  int inMenu;  // last menu id
 
 	//  settings
-	bool bFog, bTrees;
+	bool bFog, bTrees, autoBlendmap;
 	int ter_skip, mini_skip;  float road_sphr;
 	float cam_speed, cam_inert, cam_x,cam_y,cam_z, cam_dx,cam_dy,cam_dz;
 	
@@ -55,6 +55,8 @@ public:
 	
 	//  ter generate
 	float gen_freq, gen_persist, gen_pow, gen_scale, gen_ofsx, gen_ofsy;  int gen_oct;
+	//  align ter
+	float al_w_mul, al_w_add, al_smooth;
 	
 //------------------------------------------
 	SETTINGS();

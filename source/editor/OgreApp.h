@@ -15,14 +15,9 @@
 #include "../vdrift/tracksurface.h"
 #include "../vdrift/track.h"
 
-//#include <OgrePrerequisites.h>
 #include <OgreCommon.h>
 #include <OgreVector3.h>
 #include <OgreString.h>
-#include <OgreTerrain.h>  //remove --> class..
-#include <OgreTerrainGroup.h>
-#include <OgreTerrainPaging.h>
-#include <OgrePageManager.h>
 
 #include <MyGUI.h>
 
@@ -37,6 +32,8 @@ const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,5,15,30,45,90,180};
 
 namespace Forests {  class PagedGeometry;  }
 namespace MyGUI  {  class MultiList2;  class Slider;  }
+
+namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
 
 
 class App : public BaseApp, public Ogre::RenderTargetListener
@@ -75,9 +72,9 @@ protected:
 	Ogre::Vector3 vNew;	void editMouse();
 	
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
-	bool bNewHmap, bTrGrUpd;  Ogre::Real terMaxAng;
+	bool bNewHmap, bTrGrUpd;
 	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget), UpdTrees();
-	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb,int yb,int xe,int ye);
+	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
 	void CreateTrees(), CreateObjects(),DestroyObjects(), UpdObjPick();
 	void CreateFluids(), DestroyFluids(), CreateBltFluids(), UpdFluidBox(), UpdateWaterRTT(Ogre::Camera* cam);
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
@@ -127,7 +124,7 @@ protected:
 	Ogre::TerrainPaging* mTerrainPaging;  Ogre::PageManager* mPageManager;
 
 	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
-	void initBlendMaps(Ogre::Terrain* terrin);
+	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
 	float Noise(float x, float zoom, int octaves, float persistence);
 	void configureTerrainDefaults(class Ogre::Light* l);
@@ -174,7 +171,9 @@ protected:
 
 
 	///  bullet world
+public:
 	class btDiscreteDynamicsWorld* world;
+protected:
 	class btDefaultCollisionConfiguration* config;
 	class btCollisionDispatcher* dispatcher;
 	class bt32BitAxisSweep3* broadphase;
@@ -291,14 +290,14 @@ protected:
 	void MenuTabChg(MyGUI::TabPtr, size_t);
 
 
-	//  checks
+	//  [settings]
 	void chkMouseCapture(WP), chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP);  // startup
 	void chkUseImposters(WP wp);
-
-	//  [settings]
 	SLV(SizeMinmap);  SLV(CamSpeed);  SLV(CamInert);
 	SLV(TerUpd);  SLV(SizeRoadP);  SLV(MiniUpd);
 	void chkMinimap(WP), btnSetCam(WP);
+	void chkAutoBlendmap(WP);  MyGUI::ButtonPtr chAutoBlendmap;
+
 	
 
 	//  [Sky]  ----
@@ -393,6 +392,7 @@ protected:
 	void btnScaleAll(WP), btnDeleteRoad(WP), btnScaleTerH(WP);
 	MyGUI::EditPtr edScaleAllMul;  void editScaleAllMul(MyGUI::EditPtr);
 	MyGUI::EditPtr edScaleTerHMul;  void editScaleTerHMul(MyGUI::EditPtr);
+	SLV(AlignWidthAdd);  SLV(AlignWidthMul);  SLV(AlignSmooth);
 
 
 	//  [Track]  ----

@@ -146,6 +146,7 @@
 	<!--  Car  -->
 	<Tag name="Car">Car</Tag>
 	<Tag name="TipCarsList">Cars list. Press Enter or [New Game] to drive with it.</Tag>
+	<Tag name="TipCarDesc">Car description text.</Tag>
 	<Tag name="TipNewGameCar">Restart game.</Tag>
 
 	<Tag name="ColHue">Color - Hue</Tag>
@@ -463,6 +464,7 @@
 	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
 	<Tag name="InputMapNextCamera">Next Camera</Tag>
 	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
+	<Tag name="InputMapRewind">Rewind (time)</Tag>
 
 	<!--  Input  Map  -->
 	<Tag name="InputMapShowOptions">Show options</Tag>
@@ -714,6 +716,11 @@
 	<Tag name="DeleteRoad">Delete Road</Tag>
 	<Tag name="NeedReload">* need reload</Tag>
 
+	<Tag name="AlignTerrainToRoad">Align terrain to road</Tag>
+	<Tag name="AlignWidthAdd">Width add</Tag>
+	<Tag name="AlignWidthMul">Width multipy</Tag>
+	<Tag name="AlignSmooth">Smooth size</Tag>
+
 
 	<!--  Settings  -->
 	<Tag name="Settings">Settings</Tag>
@@ -725,6 +732,8 @@
 	<Tag name="TerUpdSkip">Terrain update skip</Tag>
 	<Tag name="CamInertia">Camera inertia</Tag>
 	<Tag name="MinimapUpdSkip">Minimap update skip</Tag>
+	<Tag name="AutoUpdateBlendmap">Auto update blendmap (slow for big size brushes)</Tag>
+	
 	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="Top">Top</Tag>
 	<Tag name="Left">Left</Tag>
@@ -776,7 +785,7 @@
 
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="InputMinimapType">alt-F2,F3 - Prev,next minimap type</Tag>
-	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap</Tag>
+	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
 
 	<!--  Terrain  brush  -->
 	<Tag name="InputBrushParams">Brush parameters</Tag>
@@ -847,6 +856,7 @@
 	<Tag name="InputRoadRebuild">B - rebuild road (after terrain change, etc.)</Tag>
 	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="InputRoadStats">T - road stats window</Tag>
+	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
 
 
 	<!--  Start pos  -->

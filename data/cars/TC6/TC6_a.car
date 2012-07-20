@@ -264,18 +264,18 @@ position = 0.0, -1.35, -0.47
 mass = 60.0
 position = 0.0, 0.96, -0.47
 
-[ particle-02 ]
-mass = 268.0
-position =  0.5, -1.3, -0.58
+[ particle-02 ]  # rear
+mass = 248.0
+position =  0.6,-1.7, -0.58
 
 [ particle-03 ]
-mass = 268.0
-position = -0.5, -1.3, -0.58
+mass = 248.0
+position = -0.6,-1.7, -0.58
 
-[ particle-04 ]
+[ particle-04 ]  # front
 mass = 247.0
-position =  0.45, 1.6, -0.58
+position =  0.6, 1.7, -0.58
 
 [ particle-05 ]
 mass = 247.0
-position = -0.45, 1.6, -0.58
+position = -0.6, 1.7, -0.58

@@ -442,7 +442,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="74 235 65 20" name="rdVal10">
+		<Widget type="TextBox" skin="TextBox" position="74 235 75 20" name="rdVal10">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 1.0"/>
 		</Widget>
@@ -2348,6 +2348,11 @@
 					<Property key="Alpha" value="0.4"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
+				<Widget type="Widget" skin="PanelSkin" position="24 300 554 132">
+					<Property key="Colour" value="0.9 0.7 0.6"/>
+					<Property key="Alpha" value="0.3"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="36 32 116 24">
 					<Property key="Caption" value="#{SourceTrack}:"/>
 					<Property key="TextColour" value="0.7 0.7 0.9"/>
@@ -2441,6 +2446,48 @@
 					<Property key="TextColour" value="0.3 1 0.3"/>
 					<Property key="Colour" value="0.3 1 0.3"/>
 					<Property key="Caption" value="#{ScaleTerHeight}"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+			
+				<Widget type="TextBox" skin="TextBox" position="32 310 210 24">
+					<Property key="Caption" value="#{AlignTerrainToRoad}"/>
+					<Property key="TextColour" value="1.0 0.66 0.55"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 340 144 24">
+					<Property key="Caption" value="#{AlignWidthAdd}"/>
+					<Property key="TextColour" value="0.8 0.5 0.5"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="248 340 320 18" name="AlignWidthAdd">
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="180 340 60 24" name="AlignWidthAddVal">
+					<Property key="TextColour" value="0.8 0.5 0.5"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 370 144 24">
+					<Property key="Caption" value="#{AlignWidthMul}"/>
+					<Property key="TextColour" value="0.8 0.5 0.4"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="248 370 320 18" name="AlignWidthMul">
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="180 370 60 24" name="AlignWidthMulVal">
+					<Property key="TextColour" value="0.8 0.5 0.4"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 400 144 24">
+					<Property key="Caption" value="#{AlignSmooth}"/>
+					<Property key="TextColour" value="0.8 0.6 0.2"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="248 400 320 18" name="AlignSmooth">
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="180 400 60 24" name="AlignSmoothVal">
+					<Property key="TextColour" value="0.8 0.6 0.2"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 			</Widget>
@@ -2881,6 +2928,65 @@
 					<Property key="TextColour" value="0.8 0.9 0.7"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="636 32 124 24">
+					<Property key="TextColour" value="0.5 0.75 1"/>
+					<Property key="Caption" value="#{SetCamTo}:"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="664 88 64 40" name="CamTop">
+					<Property key="Colour" value="0.4 0.65 0.9"/>
+					<Property key="TextColour" value="0.4 0.65 0.9"/>
+					<Property key="Caption" value="#{Top}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="616 92 48 32" name="CamLeft">
+					<Property key="Colour" value="0.6 0.8 1"/>
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="Caption" value="#{Left}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="728 92 48 32" name="CamRight">
+					<Property key="Colour" value="0.6 0.8 1"/>
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="Caption" value="#{Right}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="670 56 52 32" name="CamBack">
+					<Property key="Colour" value="0.6 0.8 1"/>
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="Caption" value="#{Back}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="670 128 52 32" name="CamFront">
+					<Property key="Colour" value="0.6 0.8 1"/>
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="Caption" value="#{Front}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="648 168 96 24" name="CamView1">
+					<Property key="Colour" value="0.5 0.75 1"/>
+					<Property key="TextColour" value="0.5 0.75 1"/>
+					<Property key="Caption" value="#{ViewFront}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="648 192 96 24" name="CamView2">
+					<Property key="Colour" value="0.5 0.75 1"/>
+					<Property key="TextColour" value="0.5 0.75 1"/>
+					<Property key="Caption" value="#{ViewLeft}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="648 216 96 24" name="CamView3">
+					<Property key="Colour" value="0.5 0.75 1"/>
+					<Property key="TextColour" value="0.5 0.75 1"/>
+					<Property key="Caption" value="#{ViewRight}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="648 240 96 24" name="CamView4">
+					<Property key="Colour" value="0.5 0.75 1"/>
+					<Property key="TextColour" value="0.5 0.75 1"/>
+					<Property key="Caption" value="#{ViewStart}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="616 322 128 24">
 					<Property key="TextColour" value="0.75 0.85 0.95"/>
 					<Property key="Caption" value="#{Startup}"/>
@@ -2909,19 +3015,6 @@
 				<Widget type="Button" skin="CheckBox" position="616 482 160 24" name="Wireframe">
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
 					<Property key="Caption" value="#{Wireframe} F11"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 200 144 24" name="Minimap">
-					<Property key="Caption" value="#{MinimapAndSize}"/>
-					<Property key="TextColour" value="0.5 0.8 0.3"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="272 202 320 16" name="SizeMinmap">
-					<Property key="Colour" value="0.5 0.8 0.3"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="200 202 60 24" name="SizeMinmapVal">
-					<Property key="TextColour" value="0.5 0.8 0.3"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 96 152 24">
@@ -2989,63 +3082,17 @@
 					<Property key="Colour" value="0.4 0.6 0.4"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="636 32 124 24">
-					<Property key="TextColour" value="0.5 0.75 1"/>
-					<Property key="Caption" value="#{SetCamTo}:"/>
+				<Widget type="Button" skin="CheckBox" position="32 200 144 24" name="Minimap">
+					<Property key="Caption" value="#{MinimapAndSize}"/>
+					<Property key="TextColour" value="0.5 0.8 0.3"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="664 88 64 40" name="CamTop">
-					<Property key="Colour" value="0.4 0.65 0.9"/>
-					<Property key="TextColour" value="0.4 0.65 0.9"/>
-					<Property key="Caption" value="#{Top}"/>
+				<Widget type="Slider" skin="Slider" position="272 202 320 16" name="SizeMinmap">
+					<Property key="Colour" value="0.5 0.8 0.3"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="616 92 48 32" name="CamLeft">
-					<Property key="Colour" value="0.6 0.8 1"/>
-					<Property key="TextColour" value="0.6 0.8 1"/>
-					<Property key="Caption" value="#{Left}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="728 92 48 32" name="CamRight">
-					<Property key="Colour" value="0.6 0.8 1"/>
-					<Property key="TextColour" value="0.6 0.8 1"/>
-					<Property key="Caption" value="#{Right}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="670 56 52 32" name="CamBack">
-					<Property key="Colour" value="0.6 0.8 1"/>
-					<Property key="TextColour" value="0.6 0.8 1"/>
-					<Property key="Caption" value="#{Back}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="670 128 52 32" name="CamFront">
-					<Property key="Colour" value="0.6 0.8 1"/>
-					<Property key="TextColour" value="0.6 0.8 1"/>
-					<Property key="Caption" value="#{Front}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="648 168 96 24" name="CamView1">
-					<Property key="Colour" value="0.5 0.75 1"/>
-					<Property key="TextColour" value="0.5 0.75 1"/>
-					<Property key="Caption" value="#{ViewFront}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="648 192 96 24" name="CamView2">
-					<Property key="Colour" value="0.5 0.75 1"/>
-					<Property key="TextColour" value="0.5 0.75 1"/>
-					<Property key="Caption" value="#{ViewLeft}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="648 216 96 24" name="CamView3">
-					<Property key="Colour" value="0.5 0.75 1"/>
-					<Property key="TextColour" value="0.5 0.75 1"/>
-					<Property key="Caption" value="#{ViewRight}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="648 240 96 24" name="CamView4">
-					<Property key="Colour" value="0.5 0.75 1"/>
-					<Property key="TextColour" value="0.5 0.75 1"/>
-					<Property key="Caption" value="#{ViewStart}"/>
+				<Widget type="TextBox" skin="TextBox" position="200 202 60 24" name="SizeMinmapVal">
+					<Property key="TextColour" value="0.5 0.8 0.3"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 232 152 24">
@@ -3060,6 +3107,11 @@
 					<Property key="Range" value="4"/>
 					<Property key="Colour" value="0.3 0.6 0.3"/>
 					<Property key="Visible" value="false"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 250 360 24" name="AutoBlendmap">
+					<Property key="Caption" value="#{AutoUpdateBlendmap}  alt-F9"/>
+					<Property key="TextColour" value="0.3 0.8 0.3"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 			</Widget>
@@ -3233,7 +3285,7 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 230 312 20">
 							<Property key="Caption" value="#{InputUpdBlendmap}"/>
-							<Property key="TextColour" value="0.7 0.9 0.1"/>
+							<Property key="TextColour" value="0.5 0.7 0.0"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="440 14 256 20">
@@ -3288,11 +3340,6 @@
 					<Widget type="TabItem" skin="" position="2 24 714 444">
 						<Property key="Caption" value="#{Road} 1"/>
 						<UserString key="RelativeTo" value="HelpWnd"/>
-						<Widget type="TextBox" skin="TextBox" position="32 236 320 20">
-							<Property key="Caption" value="#{InputRoadEdit}"/>
-							<Property key="TextColour" value="1.0 0.7 0.0"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 116 320 20">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{InputRoadIns}"/>
@@ -3323,17 +3370,27 @@
 							<Property key="Caption" value="#{InputRoadSelAlt}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 236 320 20">
+							<Property key="Caption" value="#{InputRoadEdit}"/>
+							<Property key="TextColour" value="1.0 0.7 0.0"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 258 320 20">
 							<Property key="TextColour" value="1.0 0.6 0.1"/>
 							<Property key="Caption" value="#{InputRoadRebuild}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 288 320 20">
+							<Property key="TextColour" value="0.9 0.6 0.5"/>
+							<Property key="Caption" value="#{InputRoadAlignTerrain}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 320 320 20">
 							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<Property key="Caption" value="#{InputRoadMerge}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 310 320 20">
+						<Widget type="TextBox" skin="TextBox" position="32 342 320 20">
 							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<Property key="Caption" value="#{InputRoadStats}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>

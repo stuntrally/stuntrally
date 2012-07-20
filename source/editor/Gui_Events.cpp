@@ -272,7 +272,7 @@ void App::btnTerrainHalf(WP)
 }
 
 //  Terrain  double  --------------------------------
-void App::btnTerrainDouble(WP)  // todo double.. gui []
+void App::btnTerrainDouble(WP)
 {
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str) / 2;
 	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
@@ -700,7 +700,7 @@ void App::comboPipeMtr(ComboBoxPtr cmb, size_t val)
 	int id = atoi(sn.c_str())-1;  if (id < 0 || id >= MTRs)  return;
 
 	String s = cmb->getItemNameAt(val);
-	road->sMtrPipe[id] = s;  road->RebuildRoad(true);  UpdPSSMMaterials();
+	road->SetMtrPipe(id, s);  road->RebuildRoad(true);  UpdPSSMMaterials();
 }
 
 void App::editRoad(EditPtr ed)
@@ -719,6 +719,22 @@ void App::editRoad(EditPtr ed)
 	//road->RebuildRoad(true);  //on Enter-
 }
 
+void App::slAlignWidthAdd(SL)
+{
+	Real v = 20.f * val;	pSet->al_w_add = v;
+	if (valAlignWidthAdd)  valAlignWidthAdd->setCaption(fToStr(v,1,3));
+}
+void App::slAlignWidthMul(SL)
+{
+	Real v = 1.f + 4.f * val;	pSet->al_w_mul = v;
+	if (valAlignWidthMul)  valAlignWidthMul->setCaption(fToStr(v,2,4));
+}
+void App::slAlignSmooth(SL)
+{
+	Real v = 6.f * val;		pSet->al_smooth = v;
+	if (valAlignSmooth)  valAlignSmooth->setCaption(fToStr(v,1,3));
+}
+
 
 //  [Settings]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -730,8 +746,7 @@ void App::chkEscQuits(WP wp){		ChkEv(escquit);		}
 
 void App::slMiniUpd(SL)
 {
-	int v = val * 20.f +slHalf;
-	pSet->mini_skip = v;
+	int v = val * 20.f +slHalf;  pSet->mini_skip = v;
 	if (valMiniUpd){	valMiniUpd->setCaption(toStr(v));  }
 }
 
@@ -757,8 +772,7 @@ void App::slCamSpeed(SL)
 
 void App::slTerUpd(SL)
 {
-	int v = val * 20.f +slHalf;
-	pSet->ter_skip = v;
+	int v = val * 20.f +slHalf;  pSet->ter_skip = v;
 	if (valTerUpd){	valTerUpd->setCaption(toStr(v));  }
 }
 
@@ -773,12 +787,15 @@ void App::slSizeMinmap(SL)
 }
 
 void App::chkMinimap(WP wp)
-{	ChkEv(trackmap);
-	UpdMiniVis();
+{
+	ChkEv(trackmap);  UpdMiniVis();
 	if (ndPos)  ndPos->setVisible(pSet->trackmap);
 }
 
-//brush_prv
+void App::chkAutoBlendmap(WP wp)
+{
+	ChkEv(autoBlendmap);
+}
 
 
 //  set camera in settings at exit

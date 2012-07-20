@@ -161,3 +161,10 @@ void SplineRoad::UpdRot()
 	//Quaternion q;  q.FromAngleAxis(Degree(0), vr);
 	//ndRot->setOrientation(q);  //.. box
 }
+
+
+void SplineRoad::SetMtrPipe(int i, Ogre::String sMtr)
+{
+	sMtrPipe[i] = sMtr;  // check if glass in mtr name
+	bMtrPipeGlass[i] = strstr(sMtr.c_str(), "lass") != 0;
+}

@@ -97,6 +97,7 @@ if (oneAxis)
 	inputs[CARINPUT::NEXT_CAM]	= action(sPlr+"NextCamera");
 	//  last chk
 	inputs[CARINPUT::LAST_CHK]	= forceBrake ? false : action(sPlr+"LastChk");
+	inputs[CARINPUT::REWIND]	= forceBrake ? false : action(sPlr+"Rewind");
 
 	return inputs;
 }

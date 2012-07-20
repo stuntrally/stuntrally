@@ -9,7 +9,7 @@ angular-damping = 0.0
 roll  = 10.0
 pitch = 400.0
 yaw   = 500.0
-yaw2  = 2.0
+yaw2  = 5.0
 
 [ model_ofs ]
 interior-x = -0.05
@@ -27,10 +27,10 @@ width = 0.56
 height = 0.57
 offsetL = 0.0
 offsetW = -0.02
-offsetH = 0.74
+offsetH = 0.80
 
 [ engine ]
-position = 0.0, 0.4, -0.1
+position = 0.0, 0.2, -0.1
 mass = 70.0
 max-power = 659360
 peak-engine-rpm = 6500
@@ -171,15 +171,15 @@ c17=-1.1        #	Vertical shift at load = 0 (Nm)  C17c0=2.2
 friction = 0.9
 max-pressure = 3.0e6
 bias = 0.65
-radius = 0.1397
+radius = 0.13
 area = 0.013
 
 [ brakes-rear ]
 friction = 0.9
 max-pressure = 3.0e6
 bias = 0.35
-radius = 0.1397
-area = 0.014
+radius = 0.13
+area = 0.013
 handbrake = 2.2
 
 
@@ -255,17 +255,17 @@ hinge = 0.25, -1.94, 0.0
 
 # these are used to calculate the weight distribution and balance
 [ particle-00 ]  # rear
-mass = 225
-position = 1.11, -1.3, -0.56
+mass = 230
+position =  1.0, -1.9, -0.60
 
 [ particle-01 ]
-mass = 225
-position = -1.11, -1.3, -0.56
+mass = 230
+position = -1.0, -1.9, -0.60
 
 [ particle-02 ]  # front
-mass = 225
-position = 1.11, 1.3, -0.56
+mass = 230
+position =  1.0,  1.7, -0.60
 
 [ particle-03 ]
-mass = 225
-position = -1.11, 1.3, -0.56
+mass = 230
+position = -1.0,  1.7, -0.60

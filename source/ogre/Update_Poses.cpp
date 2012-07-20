@@ -141,7 +141,36 @@ void App::newPoses(float time)  // time only for camera update
 		
 
 		///-----------------------------------------------------------------------
-		//  record  save data for replay
+		//  rewind
+		///-----------------------------------------------------------------------
+		if (!bRplPlay && !pGame->pause && !bGhost && pCar)
+		if (pCar->bRewind)  // do rewind (go back)
+		{
+			double& gtime = pGame->timer.GetRewindTime(c);
+			gtime = std::max(0.0, gtime - time * 4.f);  //par speed
+
+			RewindFrame rf;
+			bool ok = rewind.GetFrame(gtime, &rf, c);
+
+			pCar->SetPosRewind(rf.pos, rf.rot, rf.vel, rf.angvel);
+			carModels[c]->fCam->first = true;
+		}
+		else  // save data
+		{
+			const CARDYNAMICS& cd = pCar->dynamics;
+			RewindFrame fr;
+			fr.time = pGame->timer.GetRewindTime(c);
+			
+			fr.pos = cd.body.GetPosition();
+			fr.rot = cd.body.GetOrientation();
+			fr.vel = cd.GetVelocity();
+			fr.angvel = cd.GetAngularVelocity();
+
+			rewind.AddFrame(fr, c);  // rec rewind
+		}
+		
+		///-----------------------------------------------------------------------
+		//  record  save data
 		///-----------------------------------------------------------------------
 		if (pSet->rpl_rec && !pGame->pause && !bGhost && pCar)
 		{

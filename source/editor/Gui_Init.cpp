@@ -160,6 +160,7 @@ void App::InitGui()
 	Slv(TerUpd, pSet->ter_skip /20.f);
 	Slv(MiniUpd, pSet->mini_skip /20.f);
 	Slv(SizeRoadP, (pSet->road_sphr-0.1f) /11.9f);
+	Chk("AutoBlendmap", chkAutoBlendmap, pSet->autoBlendmap);  chAutoBlendmap = bchk;
 
 	//  set camera btns
 	Btn("CamView1", btnSetCam);  Btn("CamView2", btnSetCam);
@@ -272,6 +273,10 @@ void App::InitGui()
 	Btn("DeleteRoad", btnDeleteRoad);
 	Btn("ScaleAll", btnScaleAll);	Ed(ScaleAllMul, editScaleAllMul);
 	Btn("ScaleTerH", btnScaleTerH);	Ed(ScaleTerHMul, editScaleTerHMul);
+
+	Slv(AlignWidthAdd, pSet->al_w_add /20.f);
+	Slv(AlignWidthMul, (pSet->al_w_mul-1.f) /4.f);
+	Slv(AlignSmooth, pSet->al_smooth /6.f);
 	
 
 	///  Fill Combo boxes  . . . . . . .

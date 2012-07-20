@@ -165,15 +165,15 @@ c17=1.69        #	Vertical shift at load = 0 (Nm)  C17c0=2.2
 
 [ brakes-front ]
 friction = 0.93
-max-pressure = 2.0e6
-bias = 0.60
+max-pressure = 3.0e6
+bias = 0.55
 radius = 0.14
 area = 0.015
 
 [ brakes-rear ]
 friction = 0.93
-max-pressure = 2.0e6
-bias = 0.40
+max-pressure = 3.0e6
+bias = 0.45
 radius = 0.14
 area = 0.015
 handbrake = 1.8
@@ -253,17 +253,17 @@ hinge = 0,-0.6,0
 # these are used to calculate the weight distribution and balance
 [ particle-00 ]
 mass = 210.0
-position = 0.9, -1.09, -0.65
+position =  0.9, -1.19, -0.65
 
 [ particle-01 ]
 mass = 210.0
-position = -0.9, -1.09, -0.65
+position = -0.9, -1.19, -0.65
 
 [ particle-02 ]
 mass = 210.0
-position = 0.9, 1.09, -0.65
+position =  0.9, 1.19, -0.65
 
 [ particle-03 ]
 mass = 210.0
-position = -0.9, 1.09, -0.65
+position = -0.9, 1.19, -0.65
 

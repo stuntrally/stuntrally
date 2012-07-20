@@ -55,7 +55,8 @@ class SplineRoad : public SplineBase
 {
 public:
 	#ifdef ROAD_EDITOR
-		SplineRoad();
+		class App* pApp;  ///*
+		SplineRoad(App* papp);
 	#else
 		class GAME* pGame;  ///*
 		SplineRoad(GAME* pgame);
@@ -68,7 +69,7 @@ public:
 	bool LoadFile(Ogre::String fname, bool build=true), SaveFile(Ogre::String fname);
 	
 	//  Rebuild
-	void RebuildRoad(bool full=false), RebuildRoadInt(),
+	void RebuildRoad(bool full=false), RebuildRoadInt(bool editorAlign=false),
 		Destroy(), DestroyRoad(), DestroySeg(int id);
 
 	//  Update
@@ -114,13 +115,13 @@ private:
 		Ogre::Entity** pEnt, Ogre::SceneNode** pNode, Ogre::String sEnd);
 
 	std::vector<Ogre::uint16> idx;	// mesh indices
-#ifndef ROAD_EDITOR
+//#ifndef ROAD_EDITOR
 	std::vector<Ogre::Vector3> posBt;  // for bullet trimesh
-	std::vector<btTriangleMesh*> vbtTriMesh;  // for delete
-#endif
+	std::vector<class btTriangleMesh*> vbtTriMesh;  // for delete
+//#endif
 	std::vector<Ogre::Vector3>* at_pos;
 	//  add triangle, with index check
-	inline void addTri(int f1, int f2, int f3, int i);
+	inline void addTri(int f1, int f2, int f3, int i, bool blt);
 	int at_size, at_ilBt;  // pars for fi
 
 	//  markers
@@ -142,8 +143,8 @@ private:
 public:
 	Ogre::Camera* mCamera;
 private:
-
 	friend class App;
+
 	int iSelPoint, iChosen;  // -1 if none
 	std::set<int> vSel;  // selection
 	
@@ -153,12 +154,14 @@ private:
 	int iMrgSegs, segsMrg,  iOldHide;
 	bool rebuild;  int iVis, iTris, iDirtyId, idStr;
 
-
+	Ogre::String  sMtrPipe[MTRs];  // use SetMtrPipe to set
+	bool bMtrPipeGlass[MTRs];  // glass in mtr name
 public:
 	Ogre::Vector3 posHit;  bool bHitTer, bSelChng;  float fLodBias;
 
 	///  params, from xml
-	Ogre::String  sMtrRoad[MTRs], sMtrPipe[MTRs], sMtrWall,sMtrWallPipe, sMtrCol;
+	Ogre::String  sMtrRoad[MTRs], sMtrWall,sMtrWallPipe, sMtrCol;
+	void SetMtrPipe(int i, Ogre::String sMtr);
 
 	Ogre::Real fHeight;	// above terrain  ?for each point-
 	Ogre::Real tcMul;		// tex coord mul / unit length
@@ -190,6 +193,9 @@ public:
 	int iChkId1,iChkId1Rev;  // 1st chekpoint index (and for reversed) for mChks[]
 
 	int iTexSize;  //setting textures size for mtr name _s, call rebuild after change
+	
+	// params for editor tool: align terrain to road
+	float edWadd,edWmul;  // const added width and width multipler for whole road
 };
 
 #endif
