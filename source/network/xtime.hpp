@@ -22,7 +22,13 @@ namespace {
 	}
 	boost::xtime now() {
 		boost::xtime time;
+
+#if ((BOOST_VERSION >> 8) & 0xFFF) >= 50
+		// renamed in boost 1.50+
+		boost::xtime_get(&time, boost::TIME_UTC_);
+#else
 		boost::xtime_get(&time, boost::TIME_UTC);
+#endif
 		return time;
 	}
 	double seconds(boost::xtime const& time) {
