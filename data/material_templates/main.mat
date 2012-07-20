@@ -1,7 +1,5 @@
 material base
 {
-	shadow_caster_material base_shadowcaster
-
 	diffuse 1.0 1.0 1.0 1.0
 	specular 0.4 0.4 0.4 32
 	ambient 1.0 1.0 1.0
@@ -42,8 +40,5 @@ material base_shadowcaster
 	pass
 	{
 		fog_override true
-
-		// $ refers to context, in this case the material instance that uses this this material as a shadow caster material (shadow_caster_material)
-		cull_hardware $cull_hardware
 	}
 }
