@@ -595,6 +595,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign)
 				posBt.clear();
 				idx.clear();  // set for addTri
 				at_pos = &pos;  at_size = pos.size();  at_ilBt = iLmrg-2;
+				bltTri = blt;
 				
 				///  road ~
 				int iiw = 0;  //LogR( " __idx");
@@ -608,8 +609,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign)
 						{
 							//LogR( "   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw));
 							int f0 = iiw + w, f1 = f0 + (iw+1);
-							addTri(f0+0,f1+1,f0+1,i, blt);
-							addTri(f0+0,f1+0,f1+1,i, blt);
+							addTri(f0+0,f1+1,f0+1,i);
+							addTri(f0+0,f1+0,f1+1,i);
 						}
 						iiw += iw+1;
 					}
@@ -628,11 +629,11 @@ void SplineRoad::RebuildRoadInt(bool editorAlign)
 							//  |\ |  f0+0  f0+1
 							//  | \|  f1+0  f1+1
 							if (sw==0) {
-								addTri(f0+0,f1+1,f0+1,i, blt);
-								addTri(f0+0,f1+0,f1+1,i, blt);  }
+								addTri(f0+0,f1+1,f0+1,i);
+								addTri(f0+0,f1+0,f1+1,i);  }
 							else {  // |/|
-								addTri(f0+0,f1+0,f0+1,i, blt);
-								addTri(f0+1,f1+0,f1+1,i, blt);  }
+								addTri(f0+0,f1+0,f0+1,i);
+								addTri(f0+1,f1+0,f1+1,i);  }
 						}
 
 						///>>>  fix gaps when iw changes - fan tris
@@ -640,12 +641,12 @@ void SplineRoad::RebuildRoadInt(bool editorAlign)
 						for (m=0; m < ma; ++m)
 						{
 							int f0 = iiw + iw-1, f1 = f0 + (iw+2)+m;
-							addTri(f0+1,f1+0,f1+1,i, blt);
+							addTri(f0+1,f1+0,f1+1,i);
 						}
 						for (m=0; m < ms; ++m)
 						{
 							int f0 = iiw + iw-sw -m, f1 = f0 + (iw+1);
-							addTri(f0+0,f1+0,f0+1,i, blt);
+							addTri(f0+0,f1+0,f0+1,i);
 						}
 						iiw += iw + 1;
 					}
@@ -732,8 +733,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign)
 					for (int w=0; w < iwC; ++w)
 					{
 						int f0 = w + l*(iwC+1)*2, f1 = f0 + iwC+1;
-						addTri(f0+0, f1+1, f0+1, 1, blt);
-						addTri(f0+0, f1+0, f1+1, 1, blt);
+						addTri(f0+0, f1+1, f0+1, 1);
+						addTri(f0+0, f1+0, f1+1, 1);
 					}					
 					vSegs[seg].nTri[lod] += idx.size()/3;
 
@@ -801,7 +802,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign)
 				{
 					btTriangleMesh* trimesh = new btTriangleMesh();  vbtTriMesh.push_back(trimesh);
 					#define vToBlt(v)  btVector3(v.x, -v.z, v.y)
-					#define addTriB(a,b,c)  trimesh->addTriangle(vToBlt(a), vToBlt(b), vToBlt(c), blt);
+					#define addTriB(a,b,c)  trimesh->addTriangle(vToBlt(a), vToBlt(b), vToBlt(c));
 
 					size_t si = posBt.size(), a=0;  // %3!
 					for (size_t i=0; i < si/3; ++i,a+=3)
@@ -863,7 +864,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign)
 					}
 					#endif
 				}
-
+	
 			}/*bNxt Merging*/
 
 			sNum--;  segM++;  // next
@@ -894,7 +895,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign)
 
 
 //  add triangle
-void SplineRoad::addTri(int f1, int f2, int f3, int i, bool blt)
+void SplineRoad::addTri(int f1, int f2, int f3, int i)
 {
 	/*bool ok = true;  const int fmax = 65530; //16bit
 	if (f1 >= at_size || f1 > fmax)  {  LogRE("idx too big: "+toStr(f1)+" >= "+toStr(at_size));  ok = 0;  }
@@ -904,7 +905,7 @@ void SplineRoad::addTri(int f1, int f2, int f3, int i, bool blt)
 
 	idx.push_back(f1);	idx.push_back(f2);	idx.push_back(f3);
 
-	if (blt && i > 0 && i < at_ilBt)
+	if (bltTri && i > 0 && i < at_ilBt)
 	{
 		posBt.push_back((*at_pos)[f1]);
 		posBt.push_back((*at_pos)[f2]);
