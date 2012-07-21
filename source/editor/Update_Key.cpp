@@ -65,9 +65,11 @@ void App::UpdVisGui()
 	if (!bGuiFocus && mToolTip)  mToolTip->setVisible(false);
 
 	if (ovBrushPrv)
-	if (edMode >= ED_Road || !bEdit())
-		ovBrushPrv->hide();  else  ovBrushPrv->show();
-
+	{	//bool terTab = notMain && pSet->inMenu == WND_Edit /*&& mWndTabsEdit->getIndexSelected()==3*/;
+		//if ((edMode >= ED_Road || !bEdit()) && !terTab)
+		if (edMode >= ED_Road || bMoveCam)
+			ovBrushPrv->hide();  else  ovBrushPrv->show();
+	}
 	for (int i=0; i < WND_ALL; ++i)
 		mWndMainPanels[i]->setVisible(pSet->inMenu == i);
 }
@@ -463,6 +465,15 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_COMMA:	mBrOct[curBr] = std::max(1, mBrOct[curBr]-1);  updBrush();  break;
 		case KC_PERIOD:	mBrOct[curBr] = std::min(7, mBrOct[curBr]+1);  updBrush();  break;
 	}
+
+	//  ter brush presets ----
+	if (edMode < ED_Road && alt && arg.key >= KC_1 && arg.key <= KC_0)
+	{
+		int id = arg.key - KC_1;
+		if (shift)  id += 10;
+		SetBrushPreset(id);
+	}
+
 	
 	//  Fluids ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 	if (edMode == ED_Fluids)

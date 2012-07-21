@@ -15,7 +15,7 @@
 #include "../network/protocol.hpp"
 #include "tobullet.h"
 #include "game.h"  //sound
-
+#include "../ogre/SplitScreen.h"  // num plr
 
 //--------------------------------------------------------------------------------------------------------------------------
 bool CAR::LoadSounds(
@@ -322,13 +322,14 @@ void CAR::UpdateSounds(float dt)
 			camrot[0] = b.x;  camrot[1] = b.y;  camrot[2] = b.z;  camrot[3] = b.w;
 		}
 		if (pApp->pGame->sound.Enabled())
-			pApp->pGame->sound.SetListener(campos, camrot, MATHVECTOR <float,3>());
+			pApp->pGame->sound.SetListener(campos, camrot, MATHVECTOR <float,3>(),
+				pApp->mSplitMgr->mNumViewports == 1);  // 3D for 1 player
 
-		bool incar = false;//
+		/*bool incar = false;//
 		std::list <SOUNDSOURCE *> soundlist;
 		GetEngineSoundList(soundlist);
 		for (std::list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
-			(*s)->Set3DEffects(!incar);
+			(*s)->Set3DEffects(!incar);*/
 	}
 
 	// engine

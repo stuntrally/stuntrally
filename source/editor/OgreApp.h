@@ -146,7 +146,7 @@ protected:
 
 
 	///<>  terrain edit, brush
-	void updBrush();  bool bTerUpd,bTerUpdBlend;  char sBrushTest[512];  int curBr;
+	void updBrush();  bool bTerUpd,bTerUpdBlend;  char sBrushTest[512];  int curBr, brImgSave;
 	float mBrSize[ED_ALL],mBrIntens[ED_ALL], *mBrushData, terSetH,
 		mBrPow[ED_ALL],mBrFq[ED_ALL],mBrNOf[ED_ALL];  int mBrOct[ED_ALL];
 	float* pBrFmask, mBrFilt,mBrFiltOld;
@@ -320,6 +320,18 @@ protected:
 	MyGUI::TabPtr tabsTerLayers; void tabTerLayer(TAB);
 	int idTerLay;  bool bTerLay;  // help vars
 	MyGUI::ButtonPtr chkTexNormAuto;  void chkTexNormAutoOn(WP);  bool bTexNormAuto;  // auto
+	
+	struct BrushSet  // brush preset ----
+	{
+		ED_MODE edMode;  int curBr;
+		float Size,Intens,Pow,Fq,NOf;
+		int Oct;  EBrShape shape;
+		float Filter; //,SetH;
+		Ogre::String name;
+	};
+	const static int brSetsNum = 20;
+	const static BrushSet brSets[brSetsNum];
+	void btnBrushPreset(WP), SetBrushPreset(int id);
 
 	//  ter generate
 	SLV(TerGenScale);  SLV(TerGenOfsX);  SLV(TerGenOfsY);
