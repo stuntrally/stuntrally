@@ -126,9 +126,10 @@ protected:
 
 	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
 	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
-	float Noise(float x, float y, float zoom, int octaves, float persistance);
-	float Noise(float x, float zoom, int octaves, float persistence);
 	void configureTerrainDefaults(Ogre::Light* l);
+	float Noise(float x, float zoom, int octaves, float persistence);
+	float Noise(float x, float y, float zoom, int octaves, float persistance);
+	inline float linRange(const float& x, const float& xa, const float& xb, const float& s);  // min, max, smooth range
 		
 	void changeShadows(), UpdPSSMMaterials();
 public:
@@ -367,7 +368,7 @@ protected:
 	MyGUI::EditPtr edGrassDens,edTreesDens, edGrPage,edGrDist, edTrPage,edTrDist,
 		edGrMinX,edGrMaxX, edGrMinY,edGrMaxY,
 		edGrSwayDistr, edGrSwayLen, edGrSwaySpd, edTrRdDist, edTrImpDist,
-		edGrDensSmooth, edGrTerMaxAngle,edGrTerMaxHeight, edSceneryId;
+		edGrDensSmooth, edGrTerMaxAngle,edGrTerMinHeight,edGrTerMaxHeight, edSceneryId;
 	MyGUI::ComboBoxPtr cmbGrassMtr;  void comboGrassMtr(CMB);
 	MyGUI::ComboBoxPtr cmbGrassClr;  void comboGrassClr(CMB);
 	void editTrGr(MyGUI::EditPtr);

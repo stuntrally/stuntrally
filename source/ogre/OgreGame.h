@@ -187,7 +187,7 @@ protected:
 	void configureTerrainDefaults(Ogre::Light* l);
 	float Noise(float x, float zoom, int octaves, float persistance);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
-	Ogre::Real terMaxAng;
+	inline float linRange(const float& x, const float& xa, const float& xb, const float& s);  // min, max, smooth range
 
 public:
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);

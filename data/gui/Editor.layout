@@ -2045,12 +2045,24 @@
 							<UserString key="tip" value="#{TipGrTerMaxAngle}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 396 116 24">
+							<Property key="Caption" value="#{HeightMin}"/>
+							<Property key="TextColour" value="0.6 0.9 0.6"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipGrTerMinHeight}"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="152 394 64 24" name="GrTerMinHeight">
+							<Property key="Colour" value="0.6 0.9 0.6"/>
+							<Property key="TextColour" value="0.6 0.9 0.6"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipGrTerMinHeight}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 424 116 24">
 							<Property key="Caption" value="#{HeightMax}"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrTerMaxHeight}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="152 394 64 24" name="GrTerMaxHeight">
+						<Widget type="EditBox" skin="EditBox" position="152 422 64 24" name="GrTerMaxHeight">
 							<Property key="Colour" value="0.6 0.9 0.6"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>

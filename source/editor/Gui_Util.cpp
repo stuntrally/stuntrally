@@ -54,19 +54,18 @@ void App::SetGuiFromXmls()
 	//  [Vegetation]
 	//-----------------------------------------------
 	_Ed(GrassDens, sc.densGrass);	_Ed(TreesDens, sc.densTrees);
-	_Ed(GrPage, sc.grPage);		_Ed(GrDist, sc.grDist);
-	_Ed(TrPage, sc.trPage);		_Ed(TrDist, sc.trDist);
+	_Ed(GrPage, sc.grPage);			_Ed(GrDist, sc.grDist);
+	_Ed(TrPage, sc.trPage);			_Ed(TrDist, sc.trDist);
 	_Ed(GrMinX, sc.grMinSx);		_Ed(GrMaxX, sc.grMaxSx);
 	_Ed(GrMinY, sc.grMinSy);		_Ed(GrMaxY, sc.grMaxSy);
 	_Ed(GrSwayDistr, sc.grSwayDistr);  _Ed(GrDensSmooth, sc.grDensSmooth);
 	_Ed(GrSwayLen, sc.grSwayLen);	_Ed(GrSwaySpd, sc.grSwaySpeed);
 	_Ed(TrRdDist, sc.trRdDist);		_Ed(TrImpDist, sc.trDistImp);
 	_Ed(GrTerMaxAngle, sc.grTerMaxAngle);
-	_Ed(GrTerMaxHeight, sc.grTerMaxHeight);
+	_Ed(GrTerMinHeight, sc.grTerMinHeight);  _Ed(GrTerMaxHeight, sc.grTerMaxHeight);
 	_Ed(SceneryId, sc.sceneryId);
 	tabPgLayers(tabsPgLayers, 0);
-	_Cmb(cmbGrassMtr,sc.grassMtr);
-	_Cmb(cmbGrassClr,sc.grassColorMap);
+	_Cmb(cmbGrassMtr,sc.grassMtr);  _Cmb(cmbGrassClr,sc.grassColorMap);
 	//MeshPtr mp = MeshManager::load(sc.pgLayersAll[0].name);
 	//mp->getSubMesh(0)->
 
@@ -76,10 +75,10 @@ void App::SetGuiFromXmls()
 	{	_Cmb(cmbRoadMtr[i], road->sMtrRoad[i]);
 		_Cmb(cmbPipeMtr[i], road->sMtrPipe[i]);  }
 
-	_Ed(RdTcMul,		road->tcMul);		_Ed(RdColN, road->colN);
+	_Ed(RdTcMul,	road->tcMul);		_Ed(RdColN, road->colN);
 	_Ed(RdLenDim,	road->lenDiv0);		_Ed(RdColR, road->colR);
-	_Ed(RdWidthSteps,road->iw0);			_Ed(RdPwsM, road->iwPmul);
-	_Ed(RdHeightOfs,	road->fHeight);		_Ed(RdPlsM, road->ilPmul);
+	_Ed(RdWidthSteps,road->iw0);		_Ed(RdPwsM, road->iwPmul);
+	_Ed(RdHeightOfs,road->fHeight);		_Ed(RdPlsM, road->ilPmul);
 	_Ed(RdSkirtLen,	road->skLen);		_Ed(RdSkirtH,	road->skH);
 	_Ed(RdMergeLen,	road->setMrgLen);	_Ed(RdLodPLen,	road->lposLen);
 	bGI = true;
@@ -205,6 +204,7 @@ void App::btnCopyVeget(WP)
 	sc.grSwayDistr = sF.grSwayDistr;  sc.grSwayLen = sF.grSwayLen;
 	sc.grSwaySpeed = sF.grSwaySpeed;
 	sc.grTerMaxAngle = sF.grTerMaxAngle;
+	sc.grTerMinHeight = sF.grTerMinHeight;
 	sc.grTerMaxHeight = sF.grTerMaxHeight;
 	sc.trRdDist = sF.trRdDist;  sc.trDistImp = sF.trDistImp;
 	sc.grassMtr = sF.grassMtr;  sc.grassColorMap = sF.grassColorMap;
