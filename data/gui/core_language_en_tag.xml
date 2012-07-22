@@ -752,6 +752,8 @@
 <!--  Input/help  -->
 <!--  ............................................................................................................................  -->
 	<Tag name="InputHelp">Input/help</Tag>
+	<Tag name="Shortcuts">Shortcuts</Tag>
+	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
 
 	<!--  Main  -->
 	<Tag name="InputToggleCam">Tab - camera / edit mode toggle</Tag>

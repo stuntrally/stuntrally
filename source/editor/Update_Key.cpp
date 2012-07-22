@@ -168,9 +168,11 @@ void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
 
 void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 {
+	if (subtab == -1 && (!bGuiFocus || pSet->inMenu != wnd))  subtab = -2;  // cancel subtab cycling
+
 	if (!bGuiFocus)
 	if (edMode != ED_PrvCam)  {
-		bGuiFocus = !bGuiFocus;  UpdVisGui();  /*subtab = -2;*/  }
+		bGuiFocus = !bGuiFocus;  UpdVisGui();  }
 
 	//isFocGui = true;
 	pSet->isMain = false;  pSet->inMenu = wnd;
@@ -190,7 +192,7 @@ void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 	mWndTabs->setIndexSelected(tab);
 
 	if (!subt)  return;
-	MyGUI::TabControl* tc = (*subt)[t];  if (!tc)  return;
+	MyGUI::TabControl* tc = (*subt)[tab];  if (!tc)  return;
 	int  cnt = tc->getItemCount();
 
 	if (t == tab && subtab == -1)  // cycle subpages if same tab
@@ -198,7 +200,7 @@ void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 			tc->setIndexSelected( (tc->getIndexSelected()-1+cnt) % cnt );
 		else
 			tc->setIndexSelected( (tc->getIndexSelected()+1) % cnt );
-	}else
+	}
 	if (subtab > -1)
 		tc->setIndexSelected( std::min(cnt-1, subtab) );
 }
@@ -634,7 +636,7 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_R:	GuiShortcut(WND_Edit, 6);  return true;  // R Road
 		case KC_O:	GuiShortcut(WND_Edit, 7);  return true;  // O Tools
 
-		case KC_C:	GuiShortcut(WND_Options, 1);  return true;  // S Screen
+		case KC_C:	GuiShortcut(WND_Options, 1);  return true;  // C Screen
 		case KC_G:	GuiShortcut(WND_Options, 2);  return true;  // G Graphics
 		 case KC_N:	GuiShortcut(WND_Options, 2,2);  return true;  // N -Vegetation
 		case KC_E:	GuiShortcut(WND_Options, 3);  return true;  // E Settings

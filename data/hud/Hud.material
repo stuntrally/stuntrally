@@ -231,7 +231,7 @@ material hud/info
 			} 
 			texture_unit
 			{
-				texture border_rect.png
+				texture menu.png
 			}
 		}
 	}
