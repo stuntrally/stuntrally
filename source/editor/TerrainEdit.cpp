@@ -10,30 +10,34 @@ using namespace Ogre;
 //  Brush Presets data
 //---------------------------------------------------------------------------------------------------------------
 const App::BrushSet App::brSets[App::brSetsNum] = {
-//ED_MODE,curBr, Size, Intens,  Pow,Fq,NOf, Oct, EBrShape, Filter, name
-	{ED_Deform,0, 16.f, 10.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Small"},
-	{ED_Deform,0, 32.f, 20.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Medium"},
-	{ED_Deform,0, 64.f, 20.f,  2.f, 1.f, 0.f, 5, BRS_Noise, -1.f, "Big Noise"},
-	{ED_Deform,0, 16.f, 20.f,  4.f, 1.f, 0.f, 5, BRS_Noise, -1.f, "Noise"},
-
-	{ED_Height,2, 32.f, 20.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Small"},
-	{ED_Height,2, 64.f, 20.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Big"},
-	{ED_Smooth,1, 20.f, 20.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Medium"},
-	{ED_Smooth,1, 18.f, 30.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Heavy"},
-	{ED_Filter,3, 24.f, 20.f,  4.f, 1.f, 0.f, 5, BRS_Sinus,  2.f, "Filter small"},
-	{ED_Filter,3, 32.f, 20.f,  4.f, 1.f, 0.f, 5, BRS_Sinus,  4.f, "Filter big"},
-
-	{ED_Deform,0, 32.f, 10.f, 0.5f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Bold"},
-	{ED_Deform,0, 40.f, 20.f,  4.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Spike"},
-	{ED_Deform,0, 64.f, 20.f, 0.7f,0.5f, 1.9f,5, BRS_Noise, -1.f, "Cracks"},
-	{ED_Deform,0, 96.f, 20.f, 0.7f,0.25f,1.9f,5, BRS_Noise, -1.f, "Cracks Big"},
-	{ED_Deform,0, 96.f, 20.f,  7.f,0.53f,2.f, 7, BRS_Noise, -1.f, "Noise Peaks"},
-
-	{ED_Deform,2, 60.f, 30.f, 0.05f,1.f, 0.f, 5, BRS_Triangle, -1.f, "Drop"},
-	{ED_Deform,0, 16.f, 10.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Small"},
-	{ED_Deform,0, 16.f, 10.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Small"},
-	{ED_Deform,0, 16.f, 10.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Small"},
-	{ED_Deform,0, 16.f, 10.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Small"},
+//ED_MODE,curBr,  Size, Intens,  Pow, Freq, Ofs, Oct, EBrShape, Filter, HSet,  Name
+	{ED_Deform,0,  16.f, 10.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Small"},
+	{ED_Deform,0,  32.f, 20.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Medium"},
+	{ED_Deform,0,  40.f, 20.f,   4.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Spike"},
+													
+	{ED_Height,2,  32.f, 20.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Height small"},
+	{ED_Height,2,  64.f, 20.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f, 0.f,   "Height=0 big"},
+													
+	{ED_Smooth,1,  22.f, 30.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Smooth medium"},
+	{ED_Smooth,1,  16.f, 60.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Smooth heavy"},
+													
+	{ED_Filter,3,  16.f, 40.f,   4.f,  1.f,  0.f, 5,  BRS_Sinus,  2.f,-0.01f, "Filter small"},
+	{ED_Filter,3,  32.f, 20.f,   3.f,  1.f,  0.f, 5,  BRS_Sinus,  4.f,-0.01f, "Filter big"},
+	{ED_Filter,3, 128.f, 20.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus,  2.f,-0.01f, "Filter huge"},
+//------------
+	{ED_Deform,0,  32.f, 10.f,   0.5f, 1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Bold"},
+	{ED_Deform,0,  60.f, 30.f,   0.05f,1.f,  0.f, 5,BRS_Triangle,-1.f,-0.01f, "Drop"},
+													
+	{ED_Deform,0,  48.f, 20.f,   2.f,  1.f,  2.5f,5,  BRS_Noise, -1.f,-0.01f, "Noise normal"},
+	{ED_Deform,0,  24.f, 20.f,   4.f,  0.93f,2.7f,5,  BRS_Noise, -1.f,-0.01f, "Noise random"},
+													
+	{ED_Deform,0,  64.f, 20.f,   1.2f, 0.5f, 1.9f,5,  BRS_Noise, -1.f,-0.01f, "Cracks down"},
+	{ED_Deform,0,  60.f, 40.f,   0.7f, 0.4f, 0.f, 5,  BRS_Noise, -1.f,-0.01f, "Cracks"},
+	{ED_Deform,0,  96.f, 20.f,   0.7f, 0.25f,1.9f,5,  BRS_Noise, -1.f,-0.01f, "Cracks big, detail"},
+													
+	{ED_Deform,0,  96.f, 20.f,   7.f,  0.37f,0.9f,7,  BRS_Noise, -1.f,-0.01f, "Noise peaks"},
+	{ED_Deform,0,  60.f, 40.f,   3.3f, 0.4f, 1.1f,5,  BRS_Noise, -1.f,-0.01f, "Rocky scratch"},
+	{ED_Deform,0,  60.f, 20.f,   2.3f, 0.13f,0.f, 5,  BRS_Noise, -1.f,-0.01f, "High Noise, bumps"},
 };
 void App::btnBrushPreset(WP img)
 {
@@ -47,7 +51,8 @@ void App::SetBrushPreset(int id)
 	edMode = st.edMode;  curBr = st.curBr;
 	mBrSize[curBr] = st.Size;  mBrIntens[curBr] = st.Intens;  mBrShape[curBr] = st.shape;
 	mBrPow[curBr] = st.Pow;  mBrFq[curBr] = st.Fq;  mBrNOf[curBr] = st.NOf;  mBrOct[curBr] = st.Oct;
-	if (st.Filter > 0.f)  mBrFilt = st.Filter;  //terSetH = 10.f;
+	if (st.Filter > 0.f)  mBrFilt = st.Filter;
+	if (st.HSet != -0.01f)  terSetH = st.HSet;
 
 	brImgSave = id;
 	updBrush();  UpdEditWnds();
@@ -188,7 +193,7 @@ void App::updateBrushPrv(bool first)
 	pbuf->unlock();
 	
 	//  use 1 to save new brush presets images, 0 for release!
-	#if 0
+	#if 1
 	if (brImgSave >= 0)
 	{
 		Image im;  brushPrvTex->convertToImage(im);
@@ -439,7 +444,7 @@ void App::filter(Vector3 &pos, float dtime, float brMul)
 	
 	float *fHmap = terrain->getHeightData();
 	
-	float its = mBrIntens[curBr] * dtime * brMul;
+	float its = mBrIntens[curBr] * dtime * std::min(1.f,brMul);  //mul >1 errors
 	int mapPos, brPos, jj = cy,
 		ter = sc.td.iTerSize, ter2 = ter*ter, ter1 = ter+1;
 

@@ -32,7 +32,7 @@ const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,5,15,30,45,90,180};
 
 namespace Forests {  class PagedGeometry;  }
 namespace MyGUI  {  class MultiList2;  class Slider;  }
-namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
+namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  class Light;  }
 class MaterialFactory;
 
 
@@ -46,7 +46,7 @@ public:
 	BltObjects objs;  // veget collision in bullet
 
 	TRACKSURFACE su[8];  bool LoadSurf(), SaveSurf(const Ogre::String& trk);
-	class Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
+	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 
 	void UpdWndTitle(), SaveCam();
 	void LoadTrack(), SaveTrack(), UpdateTrack();
@@ -128,7 +128,7 @@ protected:
 	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
 	float Noise(float x, float zoom, int octaves, float persistence);
-	void configureTerrainDefaults(class Ogre::Light* l);
+	void configureTerrainDefaults(Ogre::Light* l);
 		
 	void changeShadows(), UpdPSSMMaterials();
 public:
@@ -327,7 +327,7 @@ protected:
 		ED_MODE edMode;  int curBr;
 		float Size,Intens,Pow,Fq,NOf;
 		int Oct;  EBrShape shape;
-		float Filter; //,SetH;
+		float Filter,HSet;
 		Ogre::String name;
 	};
 	const static int brSetsNum = 20;
