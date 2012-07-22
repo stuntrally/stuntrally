@@ -55,6 +55,7 @@ void App::createScene()  // once, init
 	InitGui();
 	TerCircleInit();
 	createBrushPrv();
+	if (mStatsOn)  mDebugOverlay->show();
 
 	//  load
 	if (pSet->autostart)
