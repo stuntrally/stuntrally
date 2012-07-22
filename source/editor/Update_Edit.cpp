@@ -61,35 +61,39 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	if (mStatsOn)
 	{
 		using namespace OIS;
-		static float tkey[KC_DIVIDE+1] = {0.f,};  // key delay time
+		const int Kmax = KC_DELETE;  // last key
+		static float tkey[Kmax+1] = {0.f,};  // key delay time
 		int i;
 		static bool first=true;
 		if (first)
 		{	first=false;
-			for (i=KC_DIVIDE; i > 0; --i)
-				tkey[i] = 0.f;
+			for (i=Kmax; i > 0; --i)  tkey[i] = 0.f;
 		}
 		String ss = "";
+		//  mouse buttons
 		if (mbLeft)  ss += "LMB ";
 		if (mbRight)  ss += "RMB ";
 		if (mbMiddle)  ss += "MMB ";
 
-		for (i=KC_DIVIDE; i > 0; --i)
-		{	OIS::KeyCode k = (OIS::KeyCode)i;
-			if (mKeyboard->isKeyDown(k))
-				tkey[i] = 0.2f;  // pressed, min time to display
-		}
+		//  pressed
+		for (i=Kmax; i > 0; --i)
+			if (mKeyboard->isKeyDown( (KeyCode)i ))
+				tkey[i] = 0.2f;  // min time to display
 
-		for (i=KC_DIVIDE; i > 0; --i)
+		//  modif
+		if (tkey[KC_LCONTROL] > 0.f || tkey[KC_RCONTROL] > 0.f)	ss += "Ctrl ";
+		if (tkey[KC_LMENU] > 0.f || tkey[KC_RMENU] > 0.f)		ss += "Alt ";
+		if (tkey[KC_LSHIFT] > 0.f || tkey[KC_RSHIFT] > 0.f)		ss += "Shift ";
+		//  all
+		for (i=Kmax; i > 0; --i)
 		{
 			if (tkey[i] > 0.f)
-			{
-				tkey[i] -= evt.timeSinceLastFrame;  //dec time
-				OIS::KeyCode k = (OIS::KeyCode)i;
+			{	tkey[i] -= evt.timeSinceLastFrame;  //dec time
+				KeyCode k = (KeyCode)i;
 	
-				 if (k == KC_LSHIFT || k == KC_RSHIFT)		ss += "Shift ";
-			else if (k == KC_LCONTROL || k == KC_RCONTROL)	ss += "Ctrl ";
-			else if (k == KC_LMENU || k == KC_RMENU)		ss += "Alt ";
+				 if (k == KC_LSHIFT || k == KC_RSHIFT ||
+					 k == KC_LCONTROL || k == KC_RCONTROL ||
+					 k == KC_LMENU || k == KC_RMENU)		{	}
 			else if (k == KC_DIVIDE)	ss += "Num / ";		else if (k == KC_MULTIPLY)	ss += "Num * ";
 			else if (k == KC_ADD)		ss += "Num + ";		else if (k == KC_SUBTRACT)	ss += "Num - ";
 			else
@@ -102,9 +106,12 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 					ss += mKeyboard->getAsString(k) + " ";
 		}	}	}
 		
+		//  mouse wheel
 		static int mzd = 0;
-		if (mz != 0)  mzd = 30;
-		if (mzd > 0)  {  ss += "Wheel ";  --mzd;  }
+		if (mz > 0)  mzd = 30;
+		if (mz < 0)  mzd = -30;
+		if (mzd > 0)  {  ss += "Wheel up";  --mzd;  }
+		if (mzd < 0)  {  ss += "Wheel dn";  ++mzd;  }
 		//ovInfo->setCaption(ss);
 		ovDbg->setCaption(ss);
 	}

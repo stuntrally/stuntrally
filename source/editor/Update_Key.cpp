@@ -65,11 +65,9 @@ void App::UpdVisGui()
 	if (!bGuiFocus && mToolTip)  mToolTip->setVisible(false);
 
 	if (ovBrushPrv)
-	{	//bool terTab = notMain && pSet->inMenu == WND_Edit /*&& mWndTabsEdit->getIndexSelected()==3*/;
-		//if ((edMode >= ED_Road || !bEdit()) && !terTab)
-		if (edMode >= ED_Road || bMoveCam)
-			ovBrushPrv->hide();  else  ovBrushPrv->show();
-	}
+	if (edMode >= ED_Road || bMoveCam)
+		ovBrushPrv->hide();  else  ovBrushPrv->show();
+
 	for (int i=0; i < WND_ALL; ++i)
 		mWndMainPanels[i]->setVisible(pSet->inMenu == i);
 }
@@ -469,7 +467,7 @@ bool App::KeyPress(const CmdKey &arg)
 	}
 
 	//  ter brush presets ----
-	if (edMode < ED_Road && alt && arg.key >= KC_1 && arg.key <= KC_0)
+	if (edMode < ED_Road && alt && arg.key >= KC_1 && arg.key <= KC_0 && !bMoveCam)
 	{
 		int id = arg.key - KC_1;
 		if (shift)  id += 10;
@@ -625,6 +623,8 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_S:	GuiShortcut(WND_Edit, 2);  return true;  // S Sun
 
 		case KC_H:	GuiShortcut(WND_Edit, 3);  return true;  // H Terrain (Heightmap)
+		 case KC_D:	GuiShortcut(WND_Edit, 3,0);  return true;  //  D -Brushes
+
 		case KC_T:	GuiShortcut(WND_Edit, 4);  return true;  // T Layers (Terrain)
 		 case KC_B:	GuiShortcut(WND_Edit, 4,0);  return true;  //  B -Blendmap
 		 case KC_P:	GuiShortcut(WND_Edit, 4,1);  return true;  //  P -Particles

@@ -130,7 +130,7 @@ static float GetAngle(float x, float y)
 ///  update brush preview texture  ---------------------------------
 void App::updateBrushPrv(bool first)
 {
-	if (!first && (!ovBrushPrv || edMode >= ED_Road || bMoveCam/*|| !bEdit()*/))  return;
+	if (!first && (!ovBrushPrv || edMode >= ED_Road /*|| bMoveCam/*|| !bEdit()*/))  return;
 	if (!pSet->brush_prv || brushPrvTex.isNull())  return;
 
 	//  Lock texture and fill pixel data
@@ -193,7 +193,7 @@ void App::updateBrushPrv(bool first)
 	pbuf->unlock();
 	
 	//  use 1 to save new brush presets images, 0 for release!
-	#if 1
+	#if 0
 	if (brImgSave >= 0)
 	{
 		Image im;  brushPrvTex->convertToImage(im);

@@ -3920,33 +3920,38 @@
 							<Property key="Caption" value="H  #{Terrain}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 130 240 20">
+						<Widget type="TextBox" skin="TextBox" position="48 130 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="D  #{Brushes}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 160 240 20">
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<Property key="Caption" value="T  #{Layers}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="48 150 240 20">
+						<Widget type="TextBox" skin="TextBox" position="48 180 240 20">
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<Property key="Caption" value="B  #{BlendMap}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="48 170 240 20">
+						<Widget type="TextBox" skin="TextBox" position="48 200 240 20">
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<Property key="Caption" value="P  #{Particles}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="48 190 240 20">
+						<Widget type="TextBox" skin="TextBox" position="48 220 240 20">
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<Property key="Caption" value="U  #{Surface}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						
-						<Widget type="TextBox" skin="TextBox" position="32 220 240 20">
+						<Widget type="TextBox" skin="TextBox" position="32 250 240 20">
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<Property key="Caption" value="R  #{Road}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 240 240 20">
+						<Widget type="TextBox" skin="TextBox" position="32 270 240 20">
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<Property key="Caption" value="O  #{Tools}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>

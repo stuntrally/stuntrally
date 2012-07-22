@@ -193,6 +193,16 @@ Editor/FpsOverlay
 Editor/DebugOverlay
 {
 	zorder 500
+	container BorderPanel(Editor/DebugPanelB)
+	{
+		metrics_mode pixels
+		vert_align bottom
+		left  300
+		width 500
+		top	-65
+		height	 65
+		material hud/Opponents
+	}
 	container BorderPanel(Editor/DebugPanel)
 	{
 		metrics_mode pixels
@@ -213,8 +223,8 @@ Editor/DebugOverlay
 			font_name Console
 			char_height 48
 			//caption Info
-			colour_top	0.7 0.8 0.9
-			colour_bottom 0.9 0.95 1.0
+			colour_top	0.8 0.9 1.0
+			colour_bottom 1.0 1.0 1.0
 		}
 		
 		element TextArea(Editor/DebugText2)
