@@ -136,7 +136,7 @@ void App::InitGui()
 	GuiCenterMouse();
 	
 	//  hide  ---
-	edMode = ED_Deform;  UpdEditWnds();  // *  UpdVisHit(); //after track
+	SetEdMode(ED_Deform);  UpdEditWnds();  // *  UpdVisHit(); //after track
 	if (!mWndOpts) 
 	{
 		LogO("WARNING: failed to create options window");

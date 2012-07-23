@@ -48,7 +48,7 @@ void App::btnBrushPreset(WP img)
 void App::SetBrushPreset(int id)
 {
 	const BrushSet& st = brSets[id];  // copy params
-	edMode = st.edMode;  curBr = st.curBr;
+	SetEdMode(st.edMode);  curBr = st.curBr;
 	mBrSize[curBr] = st.Size;  mBrIntens[curBr] = st.Intens;  mBrShape[curBr] = st.shape;
 	mBrPow[curBr] = st.Pow;  mBrFq[curBr] = st.Fq;  mBrNOf[curBr] = st.NOf;  mBrOct[curBr] = st.Oct;
 	if (st.Filter > 0.f)  mBrFilt = st.Filter;

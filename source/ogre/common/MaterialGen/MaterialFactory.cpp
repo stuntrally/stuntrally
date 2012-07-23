@@ -247,8 +247,8 @@ void MaterialFactory::setSoftParticles(bool bEnable)
 			MaterialPtr mat = MaterialManager::getSingleton().getByName( (*it) );
 			if (mat->getTechnique(0)->getPass(0)->hasFragmentProgram())
 			{
-				GpuProgramParametersSharedPtr vparams = mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-				vparams->setNamedConstant("useSoftParticles", bEnable ? 1.0f: -1.0f);
+				GpuProgramParametersSharedPtr fparams = mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+				fparams->setNamedConstant("useSoftParticles", bEnable ? 1.0f: -1.0f);
 			}
 		}
 	}
@@ -444,6 +444,9 @@ void MaterialFactory::setShaderParams(MaterialPtr mat)
 				if (pass->getFragmentProgramParameters()->_findNamedConstantDefinition("invTerSize", false))
 					pass->getFragmentProgramParameters()->setNamedConstant("invTerSize", 1.f / Real(pApp->sc.td.fTerWorldSize));
 
+				if (pass->getFragmentProgramParameters()->_findNamedConstantDefinition("enableWaterDepth", false))
+					pass->getFragmentProgramParameters()->setNamedConstant("enableWaterDepth", 1.f);
+
 				// pssm split points
 				if ( pass->getFragmentProgramParameters()->_findNamedConstantDefinition("pssmSplitPoints", false) && mPSSM)
 				{
@@ -634,3 +637,25 @@ void MaterialFactory::update()
 }
 
 //----------------------------------------------------------------------------------------
+
+void MaterialFactory::setWaterDepth(MaterialPtr mat, float enable)
+{
+	if (mat.isNull()) return;
+		
+	Material::TechniqueIterator techIt = mat->getTechniqueIterator();
+	while (techIt.hasMoreElements())
+	{
+		Technique* tech = techIt.getNext();
+		Technique::PassIterator passIt = tech->getPassIterator();
+		while (passIt.hasMoreElements())
+		{
+			Pass* pass = passIt.getNext();
+								
+			if (pass->hasFragmentProgram())
+			{
+				if (pass->getFragmentProgramParameters()->_findNamedConstantDefinition("enableWaterDepth", false))
+					pass->getFragmentProgramParameters()->setNamedConstant("enableWaterDepth", enable);
+			}
+		}
+	}
+}

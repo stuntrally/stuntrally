@@ -53,6 +53,7 @@ public:
 	
 	// stuff to be executed after BaseApp init
 	void postInit();
+	void SetEdMode(ED_MODE newMode);
 	
 	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };
 	
@@ -77,7 +78,8 @@ protected:
 	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget), UpdTrees();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
 	void CreateTrees(), CreateObjects(),DestroyObjects(), UpdObjPick();
-	void CreateFluids(), DestroyFluids(), CreateBltFluids(), UpdFluidBox(), UpdateWaterRTT(Ogre::Camera* cam);
+	void CreateFluids(), DestroyFluids(), CreateBltFluids();
+	void UpdFluidBox(), UpdateWaterRTT(Ogre::Camera* cam), UpdMtrWaterDepth();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 
 	bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");

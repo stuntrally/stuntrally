@@ -6,6 +6,7 @@
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/RenderConst.h"
+#include "../ogre/common/MaterialGen/MaterialFactory.h"
 #include <OgreTerrain.h>
 #include <MyGUI.h>
 using namespace MyGUI;
@@ -49,7 +50,19 @@ void App::UpdEditWnds()
 
 	UpdStartPos();  // StBox visible
 	UpdVisGui();  //br prv..
+
+	UpdMtrWaterDepth();
 }
+
+void App::SetEdMode(ED_MODE newMode)
+{
+	//if (pSet->autoWaterDepth)  //..?
+	if (edMode == ED_Fluids && newMode != ED_Fluids)
+		SaveWaterDepth();  // update, on exit from Fluids editing
+
+	edMode = newMode;	
+}
+
 
 void App::UpdVisGui()
 {
@@ -96,7 +109,7 @@ void App::togPrvCam()
 	static bool oldV = false;
 	if (edMode == ED_PrvCam)  // leave
 	{
-		edMode = edModeOld;
+		SetEdMode(edModeOld);
 		mViewport->setVisibilityMask(RV_MaskAll);
 		rt[RTs].ndMini->setVisible(false);
 		ndCar->setVisible(true);
@@ -112,7 +125,7 @@ void App::togPrvCam()
 	}else  // enter
 	{
 		edModeOld = edMode;
-		edMode = ED_PrvCam;
+		SetEdMode(ED_PrvCam);
 		bMoveCam = true;  UpdVisGui();
 		mViewport->setVisibilityMask(RV_MaskPrvCam);
 		rt[RTs].ndMini->setVisible(true);
@@ -513,7 +526,7 @@ bool App::KeyPress(const CmdKey &arg)
 			case KC_NUMPAD5:
 				if (fls == 1)	sc.fluids.clear();
 				else			sc.fluids.erase(sc.fluids.begin() + iFlCur);
-				iFlCur = std::min(iFlCur, (int)sc.fluids.size()-1);
+				iFlCur = std::max(0, std::min(iFlCur, (int)sc.fluids.size()-1));
 				bRecreateFluids = true;
 				break;
 
@@ -662,10 +675,10 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_V:	bTrGrUpd = true;  break;
 
 		//  terrain
-		case KC_D:	if (bEdit()){  edMode = ED_Deform;  curBr = 0;  updBrush();  UpdEditWnds();  }	break;
-		case KC_S:	if (bEdit()){  edMode = ED_Smooth;  curBr = 1;  updBrush();  UpdEditWnds();  }	break;
-		case KC_E:	if (bEdit()){  edMode = ED_Height;  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
-		case KC_F:  if (bEdit()){  edMode = ED_Filter;  curBr = 3;  updBrush();  UpdEditWnds();  }
+		case KC_D:	if (bEdit()){  SetEdMode(ED_Deform);  curBr = 0;  updBrush();  UpdEditWnds();  }	break;
+		case KC_S:	if (bEdit()){  SetEdMode(ED_Smooth);  curBr = 1;  updBrush();  UpdEditWnds();  }	break;
+		case KC_E:	if (bEdit()){  SetEdMode(ED_Height);  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
+		case KC_F:  if (bEdit()){  SetEdMode(ED_Filter);  curBr = 3;  updBrush();  UpdEditWnds();  }
 			else  //  focus on find edit
 			if (ctrl && edFind && bGuiFocus &&
 				!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 0)
@@ -676,24 +689,24 @@ bool App::KeyPress(const CmdKey &arg)
 			}	break;
 
 		//  road
-		case KC_R:	if (bEdit()){  edMode = ED_Road;	UpdEditWnds();  }	break;
+		case KC_R:	if (bEdit()){  SetEdMode(ED_Road);	UpdEditWnds();  }	break;
 		case KC_B:  if (road)  road->RebuildRoad(true);  break;
 		case KC_T:	if (mWndRoadStats)  mWndRoadStats->setVisible(!mWndRoadStats->getVisible());  break;
 		case KC_M:  if (road)  road->ToggleMerge();  break;
 
 		//  start pos
-		case KC_Q:	if (bEdit()){  edMode = ED_Start;  UpdEditWnds();  }   break;
+		case KC_Q:	if (bEdit()){  SetEdMode(ED_Start);  UpdEditWnds();  }   break;
 		case KC_SPACE:
 			if (edMode == ED_Start && road)  road->iDir *= -1;  break;
 		//  prv cam
 		case KC_F7:  togPrvCam();  break;
 
 		//  fluids
-		case KC_W:	if (bEdit()){  edMode = ED_Fluids;  UpdEditWnds();  }   break;
+		case KC_W:	if (bEdit()){  SetEdMode(ED_Fluids);  UpdEditWnds();  }   break;
 		case KC_F10:	SaveWaterDepth();   break;
 
 		//  objects
-		case KC_X:	if (bEdit()){  edMode = ED_Objects;  UpdEditWnds();  }   break;
+		case KC_X:	if (bEdit()){  SetEdMode(ED_Objects);  UpdEditWnds();  }   break;
 	}
 
 	return true;

@@ -264,8 +264,6 @@ void App::SaveWaterDepth()
 	if (sc.fluids.empty())
 	{
 		Delete(TrkDir()+"objects/waterDepth.png");  // no tex if no fluids
-		// save white texture, copy white.png
-		//Copy(PATHMANAGER::GetDataPath()+"/materials/white.png",TrkDir()+"objects/waterDepth.png");
 		return;
 	}
 	QTimer ti;  ti.update();  ///T  /// time
