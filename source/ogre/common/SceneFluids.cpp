@@ -87,7 +87,7 @@ void App::CreateBltFluids()
 	{
 		FluidBox& fb = sc.fluids[i];
 		///  add bullet trigger box   . . . . . . . . .
-		btVector3 pc(fb.pos.x, -fb.pos.z, fb.pos.y);  // center
+		btVector3 pc(fb.pos.x, -fb.pos.z, fb.pos.y -fb.size.y/2);  // center
 		btTransform tr;  tr.setIdentity();  tr.setOrigin(pc);
 		//tr.setRotation(btQuaternion(0, 0, fb.rot.x*PI_d/180.f));
 

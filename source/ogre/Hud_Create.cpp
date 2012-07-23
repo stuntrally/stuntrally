@@ -242,6 +242,10 @@ void App::CreateHUD(bool destroy)
 		txBFuel[c]->setVisible(false);
 		txBFuel[c]->setFontName("DigGear");  txBFuel[c]->setFontHeight(64);
 		txBFuel[c]->setTextColour(Colour(0.6,0.8,1.0));
+		
+
+		//  times text
+		//...
 	}
 	///  tex
 	resMgr.removeResourceLocation(path, sGrp);

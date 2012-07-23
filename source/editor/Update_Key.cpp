@@ -6,7 +6,6 @@
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/RenderConst.h"
-#include "../ogre/common/MaterialGen/MaterialFactory.h"
 #include <OgreTerrain.h>
 #include <MyGUI.h>
 using namespace MyGUI;
