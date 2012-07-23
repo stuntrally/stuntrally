@@ -261,6 +261,11 @@ void App::btnDeleteRoad(WP)
 	}
 	//road->RebuildRoad(true);
 }
+void App::btnDeleteFluids(WP)
+{
+	sc.fluids.clear();
+	bRecreateFluids = true;
+}
 
 void App::btnScaleAll(WP)
 {

@@ -2638,6 +2638,12 @@
 					<Property key="Caption" value="#{DeleteRoad}"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
+				<Widget type="Button" skin="Button" position="436 248 128 24" name="DeleteFluids">
+					<Property key="Colour" value="0.3 0.6 1.0"/>
+					<Property key="TextColour" value="0.3 0.6 1.0"/>
+					<Property key="Caption" value="#{DeleteFluids}"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="36 251 112 24">
 					<Property key="Caption" value="#{ScaleMul}"/>
 					<Property key="TextColour" value="0.3 1 0.3"/>

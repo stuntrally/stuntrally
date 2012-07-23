@@ -715,8 +715,9 @@
 	<Tag name="ScaleMul">Scale multiplier</Tag>
 	<Tag name="ScaleAll">Scale all</Tag>
 	<Tag name="ScaleTerHeight">Terrain Height</Tag>
-	<Tag name="DeleteRoad">Delete Road</Tag>
 	<Tag name="NeedReload">* need reload</Tag>
+	<Tag name="DeleteRoad">Delete Road</Tag>
+	<Tag name="DeleteFluids">Delete Fluids</Tag>
 
 	<Tag name="AlignTerrainToRoad">Align terrain to road</Tag>
 	<Tag name="AlignWidthAdd">Width add</Tag>
