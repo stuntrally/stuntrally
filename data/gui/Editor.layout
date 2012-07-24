@@ -850,6 +850,22 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipSunSpecular}"/>
 				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="380 140 24 24" name="ClrAmb">
+					<Property key="ImageTexture" value="white.png"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="380 172 24 24" name="ClrDiff">
+					<Property key="ImageTexture" value="white.png"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="380 204 24 24" name="ClrSpec">
+					<Property key="ImageTexture" value="white.png"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="380 252 24 24" name="ClrFog">
+					<Property key="ImageTexture" value="white.png"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="80 255 48 24">
 					<Property key="Caption" value="#{Fog}"/>
 					<Property key="TextColour" value="0.7 0.85 1"/>
@@ -1659,6 +1675,10 @@
 							<Property key="TextColour" value="0.6 0.8 0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTrailClr}"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="266 131 24 24" name="ClrTrail">
+							<Property key="ImageTexture" value="white.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="16 24 48 24">
 							<Property key="Caption" value="#{dust}"/>

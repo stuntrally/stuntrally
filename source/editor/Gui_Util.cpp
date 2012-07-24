@@ -24,6 +24,7 @@ void App::SetGuiFromXmls()
 		if (sl)  sl->setValue(val);  sl##name(sl, val);
 	
 	#define _Ed(name, val)  ed##name->setCaption(toStr(val));
+	#define _Clr(name, val)  clr##name->setColour(Colour(val.x,val.y,val.z));
 	#define _Cmb(cmb, str)  cmb->setIndexSelected( cmb->findItemIndexWith(str) );
 	
 
@@ -32,8 +33,8 @@ void App::SetGuiFromXmls()
 	_Cmb(cmbSky, sc.skyMtr);
 	_Slv(SunPitch, sc.ldPitch /90.f);
 	_Slv(SunYaw,   (sc.ldYaw + 180.f)  /360.f);
-	_Ed(LiAmb, sc.lAmb);  _Ed(LiDiff, sc.lDiff);  _Ed(LiSpec, sc.lSpec);
-	_Ed(FogClr, sc.fogClr);
+	_Ed(LiAmb, sc.lAmb);  _Ed(LiDiff, sc.lDiff);  _Ed(LiSpec, sc.lSpec);  _Ed(FogClr, sc.fogClr);
+	_Clr(Amb, sc.lAmb);  _Clr(Diff, sc.lDiff);  _Clr(Spec, sc.lSpec);  _Clr(Fog, sc.fogClr);
 	_Slv(FogStart, powf(sc.fogStart /2000.f, 0.5f));
 	_Slv(FogEnd,   powf(sc.fogEnd   /2000.f, 0.5f));
 

@@ -178,13 +178,16 @@ void App::InitGui()
 	if (bnQuit)  {  bnQuit->eventMouseButtonClick += newDelegate(this, &App::btnQuit);  bnQuit->setVisible(false);  }
 	
 
-	///  [Sky]
+	///  [Sun]
 	//----------------------------------------------------------------------------------------------
 	Slv(SunPitch,0);  Slv(SunYaw,0);
 	Slv(FogStart,0);  Slv(FogEnd,0);
 	Chk("FogDisable", chkFogDisable, pSet->bFog);  chkFog = bchk;
-	Ed(LiAmb, editLiAmb);  Ed(LiDiff, editLiDiff);  Ed(LiSpec, editLiSpec);
-	Ed(FogClr, editFogClr);
+	Ed(LiAmb, editLiAmb);  Ed(LiDiff, editLiDiff);  Ed(LiSpec, editLiSpec);  Ed(FogClr, editFogClr);
+	clrAmb = mGUI->findWidget<ImageBox>("ClrAmb");		clrDiff = mGUI->findWidget<ImageBox>("ClrDiff");
+	clrSpec = mGUI->findWidget<ImageBox>("ClrSpec");	clrFog = mGUI->findWidget<ImageBox>("ClrFog");
+	clrTrail = mGUI->findWidget<ImageBox>("ClrTrail");
+	//Todo: on click event - open color r,g,b dialog
 	Slv(Rain1Rate,0);  Slv(Rain2Rate,0);
 
 

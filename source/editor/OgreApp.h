@@ -310,6 +310,7 @@ protected:
 	SLV(Rain1Rate);  SLV(Rain2Rate);
 	SLV(SunPitch);  SLV(SunYaw);  SLV(FogStart);  SLV(FogEnd);
 	MyGUI::EditPtr edLiAmb,edLiDiff,edLiSpec, edFogClr;
+	MyGUI::ImageBox* clrAmb,*clrDiff,*clrSpec, *clrFog;
 	void editLiAmb(MyGUI::EditPtr),editLiDiff(MyGUI::EditPtr),editLiSpec(MyGUI::EditPtr), editFogClr(MyGUI::EditPtr);
 	void chkFogDisable(WP);  MyGUI::ButtonPtr chkFog;
 
@@ -355,10 +356,9 @@ protected:
 	SLV(TerLNoise);  //Chk("TerLNoiseOnly", chkTerLNoiseOnly, 0);
 
 	//  ter particles
-	MyGUI::EditPtr edLDust,edLDustS, edLMud,edLSmoke, edLTrlClr;
+	MyGUI::EditPtr edLDust,edLDustS, edLMud,edLSmoke, edLTrlClr;  MyGUI::ImageBox* clrTrail;
 	void editLDust(MyGUI::EditPtr), editLTrlClr(MyGUI::EditPtr);
-	MyGUI::ComboBoxPtr cmbParDust,cmbParMud,cmbParSmoke;
-	void comboParDust(CMB);
+	MyGUI::ComboBoxPtr cmbParDust,cmbParMud,cmbParSmoke;  void comboParDust(CMB);
 	
 	//  ter surfaces
 	MyGUI::ComboBoxPtr cmbSurfType;  void comboSurfType(CMB);
