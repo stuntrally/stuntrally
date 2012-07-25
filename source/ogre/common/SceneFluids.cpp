@@ -87,12 +87,12 @@ void App::CreateBltFluids()
 	{
 		FluidBox& fb = sc.fluids[i];
 		///  add bullet trigger box   . . . . . . . . .
-		btVector3 pc(fb.pos.x, -fb.pos.z, fb.pos.y - fb.size.y);  // center
+		btVector3 pc(fb.pos.x, -fb.pos.z, fb.pos.y -fb.size.y/2);  // center
 		btTransform tr;  tr.setIdentity();  tr.setOrigin(pc);
 		//tr.setRotation(btQuaternion(0, 0, fb.rot.x*PI_d/180.f));
 
 		btCollisionShape* bshp = 0;
-		bshp = new btBoxShape(btVector3(fb.size.x/2,fb.size.z/2, fb.size.y));
+		bshp = new btBoxShape(btVector3(fb.size.x/2,fb.size.z/2, fb.size.y/2));
 		//shp->setUserPointer((void*)7777);
 
 		btCollisionObject* bco = new btCollisionObject();
@@ -134,16 +134,30 @@ void App::UpdFluidBox()
 	int fls = sc.fluids.size();
 	bool bFluids = edMode == ED_Fluids && fls > 0 && !bMoveCam;
 	if (fls > 0)
-		iFlCur = std::min(iFlCur, fls-1);
+		iFlCur = std::max(0, std::min(iFlCur, fls-1));
 
 	if (!ndFluidBox)  return;
 	ndFluidBox->setVisible(bFluids);
 	if (!bFluids)  return;
 	
 	FluidBox& fb = sc.fluids[iFlCur];
-	Vector3 p = fb.pos;  p.y -= fb.size.y*0.5f;
-	ndFluidBox->setPosition(p);
+	ndFluidBox->setPosition(fb.pos);
 	ndFluidBox->setScale(fb.size);
+}
+
+void App::UpdMtrWaterDepth()
+{
+	/*
+	if (!materialFactory)  return;
+
+	float fl = edMode == ED_Fluids ? 0.f : 1.f;
+	GetMaterialsFromDef("fluids.matdef");
+	for (int i = 0; i < vsMaterials.size(); ++i)
+	{
+		MaterialPtr mtr = Ogre::MaterialManager::getSingleton().getByName(vsMaterials[i]);
+		materialFactory->setWaterDepth(mtr, fl);
+	}
+	*/
 }
 #endif
 

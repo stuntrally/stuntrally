@@ -715,8 +715,9 @@
 	<Tag name="ScaleMul">Scale multiplier</Tag>
 	<Tag name="ScaleAll">Scale all</Tag>
 	<Tag name="ScaleTerHeight">Terrain Height</Tag>
-	<Tag name="DeleteRoad">Delete Road</Tag>
 	<Tag name="NeedReload">* need reload</Tag>
+	<Tag name="DeleteRoad">Delete Road</Tag>
+	<Tag name="DeleteFluids">Delete Fluids</Tag>
 
 	<Tag name="AlignTerrainToRoad">Align terrain to road</Tag>
 	<Tag name="AlignWidthAdd">Width add</Tag>
@@ -752,6 +753,8 @@
 <!--  Input/help  -->
 <!--  ............................................................................................................................  -->
 	<Tag name="InputHelp">Input/help</Tag>
+	<Tag name="Shortcuts">Shortcuts</Tag>
+	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
 
 	<!--  Main  -->
 	<Tag name="InputToggleCam">Tab - camera / edit mode toggle</Tag>
@@ -1005,7 +1008,8 @@
 	<Tag name="TipImpDist">Far distance at which models will turn into 2d impostors.</Tag>
 	<Tag name="TipGrDensSmooth">Grass density map - smooth size</Tag>
 	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
-	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass.</Tag>
+	<Tag name="TipGrTerMinHeight">Terrain height below which there won't be any grass (starts fading out for 20m).</Tag>
+	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass (starts fading out for 20m).</Tag>
 	<Tag name="TipSceneryId">Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation.</Tag>
 	<Tag name="TipGrassMaterial">Grass material, chosen to match track's scenery.</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>

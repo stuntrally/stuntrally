@@ -165,15 +165,11 @@ void App::SaveGrassDens()
 		a += x * sc.td.iVertsX / w;
 		// would be better to interpolate 4 neighbours, or smooth this map
 
-		float ad = std::max(0.f, sc.td.hfAngle[a] - sc.grTerMaxAngle);  // ang diff
-		float hd = std::max(0.f, sc.td.hfHeight[a] - sc.grTerMaxHeight);  // height diff
-		if (ad > 0.f || hd > 0.f)
-		{
-			d = 20.f * ad + 20.f * hd;  //par mul,  smooth transition ..
-			v = std::max(0, std::min(255, 255-d));
-			v = std::min((int)(gd[b] & 0xFF), v);  // preserve road
-			gd[b] = 0xFF000000 + /*0x010101 */ v;  // no grass
-		}
+		v = std::max(0, std::min(255, int(255.f *
+			linRange(sc.td.hfAngle[a], 0.f,sc.grTerMaxAngle,20.f) *
+			linRange(sc.td.hfHeight[a], sc.grTerMinHeight,sc.grTerMaxHeight,20.f) )));
+		v = std::min((int)(gd[b] & 0xFF), v);  // preserve road
+		gd[b] = 0xFF000000 + /*0x010101 */ v;  // no grass
 	}	}
 
 	//Image im;
@@ -268,8 +264,6 @@ void App::SaveWaterDepth()
 	if (sc.fluids.empty())
 	{
 		Delete(TrkDir()+"objects/waterDepth.png");  // no tex if no fluids
-		// save white texture, copy white.png
-		//Copy(PATHMANAGER::GetDataPath()+"/materials/white.png",TrkDir()+"objects/waterDepth.png");
 		return;
 	}
 	QTimer ti;  ti.update();  ///T  /// time

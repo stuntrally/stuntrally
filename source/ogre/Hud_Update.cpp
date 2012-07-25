@@ -373,19 +373,12 @@ void App::UpdateHUD(int carId, float time)
 				hudWonPlace->setColour(clrPlace[pCarM->iWonPlace-1]);
 			}
 			times = String(TR("#{TBLap}  "+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps)));
-		}else
-		{	if (!road)  // score on vdr track
-			if (tim.GetIsDrifting(0))
-				times += String(TR("#{TBScore}  "+fToStr(tim.GetDriftScore(0),0,3)+"+"+fToStr(tim.GetThisDriftScore(0),0,2)));
-			else
-				times += String(TR("#{TBScore}  "+fToStr(tim.GetDriftScore(0),0,3)));
-		}		
-		if (hudTimes) {
+		}
+		if (hudTimes)
 			hudTimes->setCaption(times +
 				String(TR("\n#{TBTime} ")) + GetTimeString(tim.GetPlayerTime(carId))+
 				String(TR("\n#{TBLast} ")) + GetTimeString(tim.GetLastLap(carId))+
 				String(TR("\n#{TBBest} ")) + GetTimeString(tim.GetBestLap(carId, pSet->game.trackreverse)) );
-		}
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------

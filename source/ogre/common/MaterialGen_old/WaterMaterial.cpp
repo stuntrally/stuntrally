@@ -347,6 +347,8 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	uniform float4 depthColor, \n"
 	//	invTerSize scale to get depthMap uv from world pos (const for all, set at scene load)
 	"	uniform float invTerSize, \n"
+	//	depth disabled in editor
+	"	uniform float enableWaterDepth, \n"
 
 	//	deep (far), shallow (near), from fresnel (has nothing to do with depth)
 	"	uniform float4 deepColor, \n"
@@ -367,7 +369,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	//  depthMap for alpha near terrain and deep water
 	outStream <<
 	"	float2 uva = float2(IN.wp.z * -invTerSize + 0.5f, IN.wp.x * invTerSize + 0.5f); \n"
-	"	float2 aa = tex2D(depthMap, uva).rg; \n"
+	"	float2 aa = enableWaterDepth > 0.5f ? tex2D(depthMap, uva).rg : float2(1.f,0.5f); \n"
 	"	discard(aa.r < 0.01f); \n";  // this is water inside terrain no need to render
 		
 	if (needTerrainLightMap()) outStream <<

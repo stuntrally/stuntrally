@@ -41,6 +41,7 @@ public:
 	
 	// per-frame updates
 	void update();
+	void setWaterDepth(Ogre::MaterialPtr mat, float enable);
 	
 	// force re-generating shaders when generate() will be run the next time
 	void markDirty() { bSettingsChanged = true; };
@@ -109,7 +110,7 @@ public:
 private:
 	/// user settings definition ---------------------------------
 	bool bNormalMap, bEnvMap, bShadows, bShadowsDepth, bShadowsSoft, bShadowsFade;
-	unsigned int iTexSize; unsigned int iNumShadowTex; unsigned int iShadowsFilterSize;
+	unsigned int iTexSize, iNumShadowTex, iShadowsFilterSize;
 	float fShaderQuality, fShadowsFadeDistance;
 	bool bReflect, bRefract;
 	/// -------------------------------------------------------

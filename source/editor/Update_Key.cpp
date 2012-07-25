@@ -49,7 +49,19 @@ void App::UpdEditWnds()
 
 	UpdStartPos();  // StBox visible
 	UpdVisGui();  //br prv..
+
+	UpdMtrWaterDepth();
 }
+
+void App::SetEdMode(ED_MODE newMode)
+{
+	//if (pSet->autoWaterDepth)  //..?
+	if (edMode == ED_Fluids && newMode != ED_Fluids)
+		SaveWaterDepth();  // update, on exit from Fluids editing
+
+	edMode = newMode;	
+}
+
 
 void App::UpdVisGui()
 {
@@ -65,11 +77,9 @@ void App::UpdVisGui()
 	if (!bGuiFocus && mToolTip)  mToolTip->setVisible(false);
 
 	if (ovBrushPrv)
-	{	//bool terTab = notMain && pSet->inMenu == WND_Edit /*&& mWndTabsEdit->getIndexSelected()==3*/;
-		//if ((edMode >= ED_Road || !bEdit()) && !terTab)
-		if (edMode >= ED_Road || bMoveCam)
-			ovBrushPrv->hide();  else  ovBrushPrv->show();
-	}
+	if (edMode >= ED_Road || bMoveCam)
+		ovBrushPrv->hide();  else  ovBrushPrv->show();
+
 	for (int i=0; i < WND_ALL; ++i)
 		mWndMainPanels[i]->setVisible(pSet->inMenu == i);
 }
@@ -98,7 +108,7 @@ void App::togPrvCam()
 	static bool oldV = false;
 	if (edMode == ED_PrvCam)  // leave
 	{
-		edMode = edModeOld;
+		SetEdMode(edModeOld);
 		mViewport->setVisibilityMask(RV_MaskAll);
 		rt[RTs].ndMini->setVisible(false);
 		ndCar->setVisible(true);
@@ -114,7 +124,7 @@ void App::togPrvCam()
 	}else  // enter
 	{
 		edModeOld = edMode;
-		edMode = ED_PrvCam;
+		SetEdMode(ED_PrvCam);
 		bMoveCam = true;  UpdVisGui();
 		mViewport->setVisibilityMask(RV_MaskPrvCam);
 		rt[RTs].ndMini->setVisible(true);
@@ -168,9 +178,11 @@ void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
 
 void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 {
+	if (subtab == -1 && (!bGuiFocus || pSet->inMenu != wnd))  subtab = -2;  // cancel subtab cycling
+
 	if (!bGuiFocus)
 	if (edMode != ED_PrvCam)  {
-		bGuiFocus = !bGuiFocus;  UpdVisGui();  /*subtab = -2;*/  }
+		bGuiFocus = !bGuiFocus;  UpdVisGui();  }
 
 	//isFocGui = true;
 	pSet->isMain = false;  pSet->inMenu = wnd;
@@ -190,7 +202,7 @@ void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 	mWndTabs->setIndexSelected(tab);
 
 	if (!subt)  return;
-	MyGUI::TabControl* tc = (*subt)[t];  if (!tc)  return;
+	MyGUI::TabControl* tc = (*subt)[tab];  if (!tc)  return;
 	int  cnt = tc->getItemCount();
 
 	if (t == tab && subtab == -1)  // cycle subpages if same tab
@@ -198,7 +210,7 @@ void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 			tc->setIndexSelected( (tc->getIndexSelected()-1+cnt) % cnt );
 		else
 			tc->setIndexSelected( (tc->getIndexSelected()+1) % cnt );
-	}else
+	}
 	if (subtab > -1)
 		tc->setIndexSelected( std::min(cnt-1, subtab) );
 }
@@ -467,7 +479,7 @@ bool App::KeyPress(const CmdKey &arg)
 	}
 
 	//  ter brush presets ----
-	if (edMode < ED_Road && alt && arg.key >= KC_1 && arg.key <= KC_0)
+	if (edMode < ED_Road && alt && arg.key >= KC_1 && arg.key <= KC_0 && !bMoveCam)
 	{
 		int id = arg.key - KC_1;
 		if (shift)  id += 10;
@@ -513,7 +525,7 @@ bool App::KeyPress(const CmdKey &arg)
 			case KC_NUMPAD5:
 				if (fls == 1)	sc.fluids.clear();
 				else			sc.fluids.erase(sc.fluids.begin() + iFlCur);
-				iFlCur = std::min(iFlCur, (int)sc.fluids.size()-1);
+				iFlCur = std::max(0, std::min(iFlCur, (int)sc.fluids.size()-1));
 				bRecreateFluids = true;
 				break;
 
@@ -623,6 +635,8 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_S:	GuiShortcut(WND_Edit, 2);  return true;  // S Sun
 
 		case KC_H:	GuiShortcut(WND_Edit, 3);  return true;  // H Terrain (Heightmap)
+		 case KC_D:	GuiShortcut(WND_Edit, 3,0);  return true;  //  D -Brushes
+
 		case KC_T:	GuiShortcut(WND_Edit, 4);  return true;  // T Layers (Terrain)
 		 case KC_B:	GuiShortcut(WND_Edit, 4,0);  return true;  //  B -Blendmap
 		 case KC_P:	GuiShortcut(WND_Edit, 4,1);  return true;  //  P -Particles
@@ -634,7 +648,7 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_R:	GuiShortcut(WND_Edit, 6);  return true;  // R Road
 		case KC_O:	GuiShortcut(WND_Edit, 7);  return true;  // O Tools
 
-		case KC_C:	GuiShortcut(WND_Options, 1);  return true;  // S Screen
+		case KC_C:	GuiShortcut(WND_Options, 1);  return true;  // C Screen
 		case KC_G:	GuiShortcut(WND_Options, 2);  return true;  // G Graphics
 		 case KC_N:	GuiShortcut(WND_Options, 2,2);  return true;  // N -Vegetation
 		case KC_E:	GuiShortcut(WND_Options, 3);  return true;  // E Settings
@@ -660,10 +674,10 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_V:	bTrGrUpd = true;  break;
 
 		//  terrain
-		case KC_D:	if (bEdit()){  edMode = ED_Deform;  curBr = 0;  updBrush();  UpdEditWnds();  }	break;
-		case KC_S:	if (bEdit()){  edMode = ED_Smooth;  curBr = 1;  updBrush();  UpdEditWnds();  }	break;
-		case KC_E:	if (bEdit()){  edMode = ED_Height;  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
-		case KC_F:  if (bEdit()){  edMode = ED_Filter;  curBr = 3;  updBrush();  UpdEditWnds();  }
+		case KC_D:	if (bEdit()){  SetEdMode(ED_Deform);  curBr = 0;  updBrush();  UpdEditWnds();  }	break;
+		case KC_S:	if (bEdit()){  SetEdMode(ED_Smooth);  curBr = 1;  updBrush();  UpdEditWnds();  }	break;
+		case KC_E:	if (bEdit()){  SetEdMode(ED_Height);  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
+		case KC_F:  if (bEdit()){  SetEdMode(ED_Filter);  curBr = 3;  updBrush();  UpdEditWnds();  }
 			else  //  focus on find edit
 			if (ctrl && edFind && bGuiFocus &&
 				!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 0)
@@ -674,24 +688,24 @@ bool App::KeyPress(const CmdKey &arg)
 			}	break;
 
 		//  road
-		case KC_R:	if (bEdit()){  edMode = ED_Road;	UpdEditWnds();  }	break;
+		case KC_R:	if (bEdit()){  SetEdMode(ED_Road);	UpdEditWnds();  }	break;
 		case KC_B:  if (road)  road->RebuildRoad(true);  break;
 		case KC_T:	if (mWndRoadStats)  mWndRoadStats->setVisible(!mWndRoadStats->getVisible());  break;
 		case KC_M:  if (road)  road->ToggleMerge();  break;
 
 		//  start pos
-		case KC_Q:	if (bEdit()){  edMode = ED_Start;  UpdEditWnds();  }   break;
+		case KC_Q:	if (bEdit()){  SetEdMode(ED_Start);  UpdEditWnds();  }   break;
 		case KC_SPACE:
 			if (edMode == ED_Start && road)  road->iDir *= -1;  break;
 		//  prv cam
 		case KC_F7:  togPrvCam();  break;
 
 		//  fluids
-		case KC_W:	if (bEdit()){  edMode = ED_Fluids;  UpdEditWnds();  }   break;
+		case KC_W:	if (bEdit()){  SetEdMode(ED_Fluids);  UpdEditWnds();  }   break;
 		case KC_F10:	SaveWaterDepth();   break;
 
 		//  objects
-		case KC_X:	if (bEdit()){  edMode = ED_Objects;  UpdEditWnds();  }   break;
+		case KC_X:	if (bEdit()){  SetEdMode(ED_Objects);  UpdEditWnds();  }   break;
 	}
 
 	return true;

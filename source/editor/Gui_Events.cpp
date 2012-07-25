@@ -70,18 +70,22 @@ void App::chkFogDisable(WP wp)  // chk fog disable
 void App::editFogClr(Edit* ed)  // edit fog clr
 {
 	Vector3 c = s2v(ed->getCaption());  sc.fogClr = c;  UpdFog();
+	if (clrFog)  clrFog->setColour(Colour(c.x,c.y,c.z));
 }
 void App::editLiAmb(Edit* ed)  // edit light clrs
 {
 	Vector3 c = s2v(ed->getCaption());	sc.lAmb = c;  UpdSun();
+	if (clrAmb)  clrAmb->setColour(Colour(c.x,c.y,c.z));
 }
 void App::editLiDiff(Edit* ed)
 {
 	Vector3 c = s2v(ed->getCaption());	sc.lDiff = c;  UpdSun();
+	if (clrDiff)  clrDiff->setColour(Colour(c.x,c.y,c.z));
 }
 void App::editLiSpec(Edit* ed)
 {
 	Vector3 c = s2v(ed->getCaption());	sc.lSpec = c;  UpdSun();
+	if (clrSpec)  clrSpec->setColour(Colour(c.x,c.y,c.z));
 }
 
 
@@ -139,7 +143,7 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 	//  Terrain Particles
 	edLDust->setCaption(toStr(lay->dust));	edLDustS->setCaption(toStr(lay->dustS));
 	edLMud->setCaption(toStr(lay->mud));	edLSmoke->setCaption(toStr(lay->smoke));
-	edLTrlClr->setCaption(toStr(lay->tclr));
+	edLTrlClr->setCaption(toStr(lay->tclr));  if (clrTrail)  clrTrail->setColour(Colour(lay->tclr.r,lay->tclr.g,lay->tclr.b));
 	
 	//  Surfaces
 	int i = idTerLay;  //bTerLay ? idTerLay+1 : 0;  // road at 0
@@ -509,6 +513,7 @@ void App::editLTrlClr(EditPtr ed)
 	ColourValue c = s2c(ed->getCaption());
 	if (!bTerLay)   sc.td.layerRoad.tclr = c;
 	else  sc.td.layersAll[idTerLay].tclr = c;
+	if (clrTrail)  clrTrail->setColour(Colour(c.r,c.g,c.b));
 }
 
 void App::comboParDust(ComboBoxPtr cmb, size_t val)
@@ -563,6 +568,7 @@ void App::editTrGr(EditPtr ed)
 	else if (n=="TrRdDist")  sc.trRdDist = r;	else if (n=="TrImpDist")  sc.trDistImp = r;
 	else if (n=="GrDensSmooth")  sc.grDensSmooth = r;
 	else if (n=="GrTerMaxAngle")  sc.grTerMaxAngle = r;
+	else if (n=="GrTerMinHeight")  sc.grTerMinHeight = r;
 	else if (n=="GrTerMaxHeight")  sc.grTerMaxHeight = r;
 	else if (n=="SceneryId")  sc.sceneryId = r;
 }
@@ -583,7 +589,7 @@ void App::comboGrassClr(ComboBoxPtr cmb, size_t val)
 
 void App::tabPgLayers(TabPtr wp, size_t id)
 {
-	idPgLay = id;  // help var
+	idPgLay = id;  // help var												
 	const PagedLayer& lay = sc.pgLayersAll[id];
 
 	chkPgLay->setStateSelected(lay.on);

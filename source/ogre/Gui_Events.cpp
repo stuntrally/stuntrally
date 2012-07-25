@@ -644,6 +644,8 @@ void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
 
 void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 {
+	if (subtab == -1 && (!isFocGui || pSet->inMenu != wnd))  subtab = -2;  // cancel subtab cycling
+
 	isFocGui = true;
 	pSet->isMain = false;  pSet->inMenu = wnd;
 	
@@ -664,7 +666,7 @@ void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 	mWndTabs->setIndexSelected(tab);
 
 	if (!subt)  return;
-	MyGUI::TabControl* tc = (*subt)[t];  if (!tc)  return;
+	MyGUI::TabControl* tc = (*subt)[tab];  if (!tc)  return;
 	int  cnt = tc->getItemCount();
 
 	if (t == tab && subtab == -1)  // cycle subpages if same tab
@@ -672,7 +674,7 @@ void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 			tc->setIndexSelected( (tc->getIndexSelected()-1+cnt) % cnt );
 		else
 			tc->setIndexSelected( (tc->getIndexSelected()+1) % cnt );
-	}else
+	}
 	if (subtab > -1)
 		tc->setIndexSelected( std::min(cnt-1, subtab) );
 }

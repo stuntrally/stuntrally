@@ -136,7 +136,7 @@ void App::InitGui()
 	GuiCenterMouse();
 	
 	//  hide  ---
-	edMode = ED_Deform;  UpdEditWnds();  // *  UpdVisHit(); //after track
+	SetEdMode(ED_Deform);  UpdEditWnds();  // *  UpdVisHit(); //after track
 	if (!mWndOpts) 
 	{
 		LogO("WARNING: failed to create options window");
@@ -178,13 +178,16 @@ void App::InitGui()
 	if (bnQuit)  {  bnQuit->eventMouseButtonClick += newDelegate(this, &App::btnQuit);  bnQuit->setVisible(false);  }
 	
 
-	///  [Sky]
+	///  [Sun]
 	//----------------------------------------------------------------------------------------------
 	Slv(SunPitch,0);  Slv(SunYaw,0);
 	Slv(FogStart,0);  Slv(FogEnd,0);
 	Chk("FogDisable", chkFogDisable, pSet->bFog);  chkFog = bchk;
-	Ed(LiAmb, editLiAmb);  Ed(LiDiff, editLiDiff);  Ed(LiSpec, editLiSpec);
-	Ed(FogClr, editFogClr);
+	Ed(LiAmb, editLiAmb);  Ed(LiDiff, editLiDiff);  Ed(LiSpec, editLiSpec);  Ed(FogClr, editFogClr);
+	clrAmb = mGUI->findWidget<ImageBox>("ClrAmb");		clrDiff = mGUI->findWidget<ImageBox>("ClrDiff");
+	clrSpec = mGUI->findWidget<ImageBox>("ClrSpec");	clrFog = mGUI->findWidget<ImageBox>("ClrFog");
+	clrTrail = mGUI->findWidget<ImageBox>("ClrTrail");
+	//Todo: on click event - open color r,g,b dialog
 	Slv(Rain1Rate,0);  Slv(Rain2Rate,0);
 
 
@@ -252,8 +255,8 @@ void App::InitGui()
 	Ed(GrMinX, editTrGr);  Ed(GrMaxX, editTrGr);  Ed(GrMinY, editTrGr);  Ed(GrMaxY, editTrGr);
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
 	Ed(TrRdDist, editTrGr);  Ed(TrImpDist, editTrGr);
-	Ed(GrDensSmooth, editTrGr);  Ed(GrTerMaxAngle, editTrGr);  Ed(GrTerMaxHeight, editTrGr);
-	Ed(SceneryId, editTrGr);
+	Ed(GrDensSmooth, editTrGr);  Ed(SceneryId, editTrGr);
+	Ed(GrTerMaxAngle, editTrGr);  Ed(GrTerMinHeight, editTrGr);  Ed(GrTerMaxHeight, editTrGr);
 	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);
 	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);
 
@@ -282,7 +285,7 @@ void App::InitGui()
 	Btn("CopySun", btnCopySun);				Btn("CopyTerHmap", btnCopyTerHmap);
 	Btn("CopyTerLayers", btnCopyTerLayers);	Btn("CopyVeget", btnCopyVeget);
 	Btn("CopyRoad", btnCopyRoad);			Btn("CopyRoadPars", btnCopyRoadPars);
-	Btn("DeleteRoad", btnDeleteRoad);
+	Btn("DeleteRoad", btnDeleteRoad);		Btn("DeleteFluids", btnDeleteFluids);
 	Btn("ScaleAll", btnScaleAll);	Ed(ScaleAllMul, editScaleAllMul);
 	Btn("ScaleTerH", btnScaleTerH);	Ed(ScaleTerHMul, editScaleTerHMul);
 

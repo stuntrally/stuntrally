@@ -18,8 +18,8 @@
 
 	<championship name="Tutorial Jumps" ver="2" difficulty="3" length="3" tutorial="1" 
 			descr="Tutorial on jumps in tracks, for training jumping. Car velocity before jump is most important.">
-		<track name="D5-jmp8-low"  laps="1" factor="0.1" />
-		<track name="D6-jmp0-high" laps="1" factor="0.1" />
+		<track name="D5-jump8-low"  laps="1" factor="0.1" />
+		<track name="D6-jump0-high" laps="1" factor="0.1" />
 		<track name="D8-HHY" laps="1" factor="0.1" />
 	</championship>
 
@@ -94,7 +94,7 @@
 		<track name="J6-80fun"		laps="1" factor="0.1" />
 		<track name="S7-HighMadness" laps="1" factor="0.1" />
 		<track name="A1-StuntPark"	laps="1" factor="0.1" />
-		<track name="D7-hh"			laps="1" factor="0.1" />
+		<track name="D7-CrossJumps"	laps="1" factor="0.1" />
 	</championship>
 
 	<championship name="Pipes mastery" ver="3" difficulty="5" length="3" tutorial="0" 
@@ -174,9 +174,9 @@
 		<track name="D2-Mntn"		laps="1" factor="0.1" />
 		<track name="D3-P"			laps="1" factor="0.1" />
 		<track name="D4-SZ"			laps="1" factor="0.1" />
-		<track name="D5-jmp8-low"	laps="1" factor="0.1" />
-		<track name="D6-jmp0-high"	laps="1" factor="0.1" />
-		<track name="D7-hh"			laps="1" factor="0.1" />
+		<track name="D5-jump8-low"	laps="1" factor="0.1" />
+		<track name="D6-jump0-high"	laps="1" factor="0.1" />
+		<track name="D7-CrossJumps"	laps="1" factor="0.1" />
 		<track name="D8-HHY"		laps="1" factor="0.1" />
 		<track name="D9-Mud"		laps="1" factor="0.1" />
 		<track name="D10-MudBath"	laps="1" factor="0.15" />
@@ -351,13 +351,13 @@
 		<track name="F1-Cc"			time="48.5"/>
 		<track name="F3-osso"		time="38.5"/>
 		<!--18-->
-		<track name="D5-jmp8-low"	time="37.5"/>
-		<track name="D6-jmp0-high"	time="35.6"/>
+		<track name="D5-jump8-low"	time="37.5"/>
+		<track name="D6-jump0-high"	time="35.6"/>
 		<track name="S5-LoopBasic"	time="72.4"/>
 
 		<track name="F4-o4H"		time="85.3"/>
 		<track name="F6-DC3"		time="52.2"/>
-		<track name="D7-hh"			time="97.0"/>
+		<track name="D7-CrossJumps"	time="97.0"/>
 
 		<track name="D8-HHY"		time="120.3"/>
 		<track name="S6-PipeCrazy"	time="35.3"/>

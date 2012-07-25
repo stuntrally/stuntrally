@@ -33,8 +33,7 @@ const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,5,15,30,45,90,180};
 namespace Forests {  class PagedGeometry;  }
 namespace MyGUI  {  class MultiList2;  class Slider;  }
 
-namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
-
+namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  class Light;  }
 
 class App : public BaseApp, public Ogre::RenderTargetListener
 {
@@ -46,13 +45,14 @@ public:
 	BltObjects objs;  // veget collision in bullet
 
 	TRACKSURFACE su[8];  bool LoadSurf(), SaveSurf(const Ogre::String& trk);
-	class Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
+	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 
 	void UpdWndTitle(), SaveCam();
 	void LoadTrack(), SaveTrack(), UpdateTrack();
 	
 	// stuff to be executed after BaseApp init
 	void postInit();
+	void SetEdMode(ED_MODE newMode);
 	
 	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };
 	
@@ -76,7 +76,8 @@ protected:
 	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget), UpdTrees();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
 	void CreateTrees(), CreateObjects(),DestroyObjects(), UpdObjPick();
-	void CreateFluids(), DestroyFluids(), CreateBltFluids(), UpdFluidBox(), UpdateWaterRTT(Ogre::Camera* cam);
+	void CreateFluids(), DestroyFluids(), CreateBltFluids();
+	void UpdFluidBox(), UpdateWaterRTT(Ogre::Camera* cam), UpdMtrWaterDepth();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 
 	bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");
@@ -125,9 +126,10 @@ protected:
 
 	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
 	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
-	float Noise(float x, float y, float zoom, int octaves, float persistance);
+	void configureTerrainDefaults(Ogre::Light* l);
 	float Noise(float x, float zoom, int octaves, float persistence);
-	void configureTerrainDefaults(class Ogre::Light* l);
+	float Noise(float x, float y, float zoom, int octaves, float persistance);
+	inline float linRange(const float& x, const float& xa, const float& xb, const float& s);  // min, max, smooth range
 		
 	void changeShadows(), UpdPSSMMaterials();
 public:
@@ -306,6 +308,7 @@ protected:
 	SLV(Rain1Rate);  SLV(Rain2Rate);
 	SLV(SunPitch);  SLV(SunYaw);  SLV(FogStart);  SLV(FogEnd);
 	MyGUI::EditPtr edLiAmb,edLiDiff,edLiSpec, edFogClr;
+	MyGUI::ImageBox* clrAmb,*clrDiff,*clrSpec, *clrFog;
 	void editLiAmb(MyGUI::EditPtr),editLiDiff(MyGUI::EditPtr),editLiSpec(MyGUI::EditPtr), editFogClr(MyGUI::EditPtr);
 	void chkFogDisable(WP);  MyGUI::ButtonPtr chkFog;
 
@@ -326,7 +329,7 @@ protected:
 		ED_MODE edMode;  int curBr;
 		float Size,Intens,Pow,Fq,NOf;
 		int Oct;  EBrShape shape;
-		float Filter; //,SetH;
+		float Filter,HSet;
 		Ogre::String name;
 	};
 	const static int brSetsNum = 20;
@@ -351,10 +354,9 @@ protected:
 	SLV(TerLNoise);  //Chk("TerLNoiseOnly", chkTerLNoiseOnly, 0);
 
 	//  ter particles
-	MyGUI::EditPtr edLDust,edLDustS, edLMud,edLSmoke, edLTrlClr;
+	MyGUI::EditPtr edLDust,edLDustS, edLMud,edLSmoke, edLTrlClr;  MyGUI::ImageBox* clrTrail;
 	void editLDust(MyGUI::EditPtr), editLTrlClr(MyGUI::EditPtr);
-	MyGUI::ComboBoxPtr cmbParDust,cmbParMud,cmbParSmoke;
-	void comboParDust(CMB);
+	MyGUI::ComboBoxPtr cmbParDust,cmbParMud,cmbParSmoke;  void comboParDust(CMB);
 	
 	//  ter surfaces
 	MyGUI::ComboBoxPtr cmbSurfType;  void comboSurfType(CMB);
@@ -366,7 +368,7 @@ protected:
 	MyGUI::EditPtr edGrassDens,edTreesDens, edGrPage,edGrDist, edTrPage,edTrDist,
 		edGrMinX,edGrMaxX, edGrMinY,edGrMaxY,
 		edGrSwayDistr, edGrSwayLen, edGrSwaySpd, edTrRdDist, edTrImpDist,
-		edGrDensSmooth, edGrTerMaxAngle,edGrTerMaxHeight, edSceneryId;
+		edGrDensSmooth, edGrTerMaxAngle,edGrTerMinHeight,edGrTerMaxHeight, edSceneryId;
 	MyGUI::ComboBoxPtr cmbGrassMtr;  void comboGrassMtr(CMB);
 	MyGUI::ComboBoxPtr cmbGrassClr;  void comboGrassClr(CMB);
 	void editTrGr(MyGUI::EditPtr);
@@ -401,7 +403,7 @@ protected:
 	void btnTrkCopySel(WP);  bool ChkTrkCopy();
 	void btnCopySun(WP), btnCopyTerHmap(WP), btnCopyTerLayers(WP),
 		btnCopyVeget(WP), btnCopyRoad(WP), btnCopyRoadPars(WP);
-	void btnScaleAll(WP), btnDeleteRoad(WP), btnScaleTerH(WP);
+	void btnScaleAll(WP),btnScaleTerH(WP), btnDeleteRoad(WP),btnDeleteFluids(WP);
 	MyGUI::EditPtr edScaleAllMul;  void editScaleAllMul(MyGUI::EditPtr);
 	MyGUI::EditPtr edScaleTerHMul;  void editScaleTerHMul(MyGUI::EditPtr);
 	SLV(AlignWidthAdd);  SLV(AlignWidthMul);  SLV(AlignSmooth);

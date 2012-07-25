@@ -33,6 +33,7 @@ App::App()  //  gui wigdets--
 	,cmbSky(0), cmbRain1(0),cmbRain2(0), valRain1Rate(0),valRain2Rate(0)  // sun
 	,valSunPitch(0),valSunYaw(0), valFogStart(0),valFogEnd(0)
 	,edLiAmb(0),edLiDiff(0),edLiSpec(0), edFogClr(0), chkFog(0)
+	,clrAmb(0),clrDiff(0),clrSpec(0), clrFog(0), clrTrail(0)
 	,cmbTexDiff(0),cmbTexNorm(0), imgTexDiff(0), terrain(0)  // terrain
 	,valTerLAll(0),tabsHmap(0),tabsTerLayers(0), idTerLay(0),bTerLay(1)
 	,chkTerLay(0),chkTexNormAuto(0), bTexNormAuto(1), chkTerLNoiseOnly(0)
@@ -43,7 +44,8 @@ App::App()  //  gui wigdets--
 	,edGrassDens(0),edTreesDens(0), edGrPage(0),edGrDist(0), edTrPage(0),edTrDist(0)  // vegetation
 	,edGrMinX(0),edGrMaxX(0), edGrMinY(0),edGrMaxY(0)
 	,edGrSwayDistr(0), edGrSwayLen(0), edGrSwaySpd(0), edTrRdDist(0), edTrImpDist(0)
-	,edGrDensSmooth(0), edGrTerMaxAngle(0),edGrTerMaxHeight(0), edSceneryId(0), cmbGrassMtr(0), cmbGrassClr(0)
+	,edGrDensSmooth(0), edGrTerMaxAngle(0),edGrTerMinHeight(0),edGrTerMaxHeight(0)
+	,edSceneryId(0), cmbGrassMtr(0), cmbGrassClr(0)
 	,cmbPgLay(0), chkPgLay(0), tabsPgLayers(0), idPgLay(0)  //paged layers
 	,imgPaged(0), valLTrAll(0)
 	,valLTrDens(0),valLTrRdDist(0), valLTrMinSc(0),valLTrMaxSc(0), valLTrWindFx(0),valLTrWindFy(0)

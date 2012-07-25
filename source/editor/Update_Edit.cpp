@@ -60,23 +60,44 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	// key,mb info  ==================
 	if (mStatsOn)
 	{
-		String ss = "";
-		if (shift)  ss += "Shift ";	if (mbLeft)  ss += "LMB ";
-		if (ctrl)  ss += "Ctrl ";	if (mbRight)  ss += "RMB ";
-		if (alt)  ss += "Alt ";		if (mbMiddle)  ss += "MMB ";
-
 		using namespace OIS;
-		for (int i=KC_DIVIDE; i > 0; --i)
-		{	OIS::KeyCode k = (OIS::KeyCode)i;
-			if (k != KC_LSHIFT && k != KC_RSHIFT &&   //opt=
-				k != KC_LCONTROL && k != KC_RCONTROL && 
-				k != KC_LMENU && k != KC_RMENU)
-			if (mKeyboard->isKeyDown(k))
-			{
-				 if (k == KC_DIVIDE)	ss += "Num / ";		else if (k == KC_MULTIPLY)	ss += "Num * ";
+		const int Kmax = KC_DELETE;  // last key
+		static float tkey[Kmax+1] = {0.f,};  // key delay time
+		int i;
+		static bool first=true;
+		if (first)
+		{	first=false;
+			for (i=Kmax; i > 0; --i)  tkey[i] = 0.f;
+		}
+		String ss = "";
+		//  mouse buttons
+		if (mbLeft)  ss += "LMB ";
+		if (mbRight)  ss += "RMB ";
+		if (mbMiddle)  ss += "MMB ";
+
+		//  pressed
+		for (i=Kmax; i > 0; --i)
+			if (mKeyboard->isKeyDown( (KeyCode)i ))
+				tkey[i] = 0.2f;  // min time to display
+
+		//  modif
+		if (tkey[KC_LCONTROL] > 0.f || tkey[KC_RCONTROL] > 0.f)	ss += "Ctrl ";
+		if (tkey[KC_LMENU] > 0.f || tkey[KC_RMENU] > 0.f)		ss += "Alt ";
+		if (tkey[KC_LSHIFT] > 0.f || tkey[KC_RSHIFT] > 0.f)		ss += "Shift ";
+		//  all
+		for (i=Kmax; i > 0; --i)
+		{
+			if (tkey[i] > 0.f)
+			{	tkey[i] -= evt.timeSinceLastFrame;  //dec time
+				KeyCode k = (KeyCode)i;
+	
+				 if (k == KC_LSHIFT || k == KC_RSHIFT ||
+					 k == KC_LCONTROL || k == KC_RCONTROL ||
+					 k == KC_LMENU || k == KC_RMENU)		{	}
+			else if (k == KC_DIVIDE)	ss += "Num / ";		else if (k == KC_MULTIPLY)	ss += "Num * ";
 			else if (k == KC_ADD)		ss += "Num + ";		else if (k == KC_SUBTRACT)	ss += "Num - ";
 			else
-				{	 if (k == KC_NUMPAD0)  k = KC_INSERT;	else if (k == KC_DECIMAL)  k = KC_DELETE;
+			{		 if (k == KC_NUMPAD0)  k = KC_INSERT;	else if (k == KC_DECIMAL)  k = KC_DELETE;
 				else if (k == KC_NUMPAD1)  k = KC_END;		else if (k == KC_NUMPAD2)  k = KC_DOWN;
 				else if (k == KC_NUMPAD3)  k = KC_PGDOWN;	else if (k == KC_NUMPAD4)  k = KC_LEFT;
 				else if (k == KC_NUMPAD5)  k = KC_DELETE;	else if (k == KC_NUMPAD6)  k = KC_RIGHT;
@@ -85,9 +106,12 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 					ss += mKeyboard->getAsString(k) + " ";
 		}	}	}
 		
+		//  mouse wheel
 		static int mzd = 0;
-		if (mz != 0)  mzd = 30;
-		if (mzd > 0)  {  ss += "Wheel ";  --mzd;  }
+		if (mz > 0)  mzd = 30;
+		if (mz < 0)  mzd = -30;
+		if (mzd > 0)  {  ss += "Wheel up";  --mzd;  }
+		if (mzd < 0)  {  ss += "Wheel dn";  ++mzd;  }
 		//ovInfo->setCaption(ss);
 		ovDbg->setCaption(ss);
 	}

@@ -263,21 +263,16 @@ void App::InitGui()
 	Slv(HDRVignettingRadius, pSet->vignettingRadius/10);
 	Slv(HDRVignettingDarkness, pSet->vignettingDarkness);
 	
+	//bool noMRT = !MaterialGenerator::MRTSupported();
 	Chk("MotionBlur", chkVidBlur, pSet->camblur);
 	Chk("ssao", chkVidSSAO, pSet->ssao);
-	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);
 
-    /*
-	if (!MaterialGenerator::MRTSupported())
-		mGUI->findWidget<Button>("softparticles")->setEnabled(false);
-	Chk("DepthOfField", chkVidDepthOfField, pSet->dof);
-	if (!MaterialGenerator::MRTSupported())
-		mGUI->findWidget<Button>("DepthOfField")->setEnabled(false);
-	Chk("godrays", chkVidGodRays, pSet->godrays);
-	if (!MaterialGenerator::MRTSupported())
-		mGUI->findWidget<Button>("godrays")->setEnabled(false);
-         */
-	
+	/*
+	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);	if (noMRT)  bchk->setEnabled(false);
+	Chk("DepthOfField", chkVidDepthOfField, pSet->dof);				if (noMRT)  bchk->setEnabled(false);
+	Chk("godrays", chkVidGodRays, pSet->godrays);					if (noMRT)  bchk->setEnabled(false);
+	*/
+
 	Slv(BlurIntens, pSet->motionblurintensity);
 	Slv(DepthOfFieldFocus, powf(pSet->depthOfFieldFocus/2000.f, 0.5f));
 	Slv(DepthOfFieldFar,   powf(pSet->depthOfFieldFar/2000.f, 0.5f));

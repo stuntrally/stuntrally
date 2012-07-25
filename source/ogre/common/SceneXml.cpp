@@ -38,7 +38,7 @@ void Scene::Default()
 	grMinSx = 0.6f;  grMinSy = 0.6f;  grMaxSx = 0.85f;  grMaxSy = 0.9f;
 	grSwayDistr = 4.0f;  grSwayLen = 0.2f;  grSwaySpeed = 0.5f;
 	trPage = 200;  trDist = 200;  trDistImp = 800;  trRdDist = 3;
-	grTerMaxAngle = 30.f;  grTerMaxHeight = 200.f;
+	grTerMaxAngle = 30.f;  grTerMinHeight = -200.f;  grTerMaxHeight = 200.f;
 
 	camPos = Vector3(10.f,20.f,10.f);  camDir = Vector3(0.f,-0.3f,1.f);
 	sceneryId = 0;
@@ -277,6 +277,7 @@ bool Scene::LoadXml(String file, bool bTer)
 		a = ePgd->Attribute("grDensSmooth");	if (a)  grDensSmooth = s2i(a);
 
 		a = ePgd->Attribute("grTerMaxAngle");	if (a)  grTerMaxAngle = s2r(a);
+		a = ePgd->Attribute("grTerMinHeight");	if (a)  grTerMinHeight = s2r(a);
 		a = ePgd->Attribute("grTerMaxHeight");	if (a)  grTerMaxHeight = s2r(a);
 		//  trees
 		a = ePgd->Attribute("trPage");		if (a)  trPage = s2r(a);
@@ -468,6 +469,7 @@ bool Scene::SaveXml(String file)
 		pgd.SetAttribute("grDensSmooth",toStrC( grDensSmooth ));
 
 		pgd.SetAttribute("grTerMaxAngle",toStrC( grTerMaxAngle ));
+		pgd.SetAttribute("grTerMinHeight",toStrC( grTerMinHeight ));
 		pgd.SetAttribute("grTerMaxHeight",toStrC( grTerMaxHeight ));
 		//  trees
 		pgd.SetAttribute("trPage",		toStrC( trPage ));
