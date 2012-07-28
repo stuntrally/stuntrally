@@ -134,7 +134,7 @@ protected:
 	//     xa  xb
 	//1    .___.
 	//0__./     \.___
-z	//   xa-s    xb+s
+	//   xa-s    xb+s
 	inline float linRange(const float& x, const float& xa, const float& xb, const float& s)  // min, max, smooth range
 	{
 		if (x <= xa-s || x >= xb+s)  return 0.f;
