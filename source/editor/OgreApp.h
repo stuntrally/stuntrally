@@ -129,7 +129,18 @@ protected:
 	void configureTerrainDefaults(Ogre::Light* l);
 	float Noise(float x, float zoom, int octaves, float persistence);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
-	inline float linRange(const float& x, const float& xa, const float& xb, const float& s);  // min, max, smooth range
+	//     xa  xb
+	//1    .___.
+	//0__./     \.___
+	//   xa-s    xb+s
+	inline float linRange(const float& x, const float& xa, const float& xb, const float& s)  // min, max, smooth range
+	{
+		if (x <= xa-s || x >= xb+s)  return 0.f;
+		if (x >= xa && x <= xb)  return 1.f;
+		if (x < xa)  return (x-xa)/s+1;
+		if (x > xb)  return (xb-x)/s+1;
+		return 0.f;
+	}
 		
 	void changeShadows(), UpdPSSMMaterials();
 public:
