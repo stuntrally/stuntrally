@@ -31,7 +31,7 @@ using namespace Ogre;
 
 //  fill Blend maps
 //--------------------------------------------------------------------------------------------------------------------------
-inline float App::linRange(const float& x, const float& xa, const float& xb, const float& s)  // min, max, smooth range
+float App::linRange(const float& x, const float& xa, const float& xb, const float& s)  // min, max, smooth range
 //     xa  xb
 //1    .___.
 //0__./     \.___
