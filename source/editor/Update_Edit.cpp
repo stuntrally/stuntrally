@@ -423,6 +423,7 @@ void App::processMouse()  //! from Thread, cam vars only
 	//static double m_sumTime = 0.0;
 	//m_sumTime += mDTime;  int num = 0;
 	//while (m_sumTime > m_interval)
+	//if (!alt)
 	{
 		//num++;
 		//m_sumTime -= m_interval;
@@ -622,53 +623,67 @@ void App::editMouse()
 	}
 
 	///  edit objects . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-	if (edMode == ED_Objects && !sc.objects.empty() && iObjCur >= 0)
+	if (edMode == ED_Objects && !sc.objects.empty() && (iObjCur >= 0 || !vObjSel.empty()))
 	{
-		Object& o = sc.objects[iObjCur];
 		const Real fMove(0.5f), fRot(1.5f), fScale(0.02f);  //par speed
-		if (!alt)
+		bool upd = false, sel = !vObjSel.empty();
+		//  selection or picked
+		std::set<int>::iterator it = vObjSel.begin();
+		int i = sel ? *it : iObjCur;
+		while (i >= 0 && i < sc.objects.size())
 		{
-			if (mbLeft)	// move on xz
+			Object& o = sc.objects[i];
+			if (!alt)
 			{
-				Vector3 vx = mCameraT->getRight();	   vx.y = 0;  vx.normalise();
-				Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
-				Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
-				o.pos[0] += vm.x;  o.pos[1] -= vm.z;  // todo: for selection ..
-				o.SetFromBlt();	 UpdObjPick();
+				if (mbLeft)	// move on xz
+				{
+					Vector3 vx = mCameraT->getRight();	   vx.y = 0;  vx.normalise();
+					Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
+					Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
+					o.pos[0] += vm.x;  o.pos[1] -= vm.z;  // todo: for selection ..
+					o.SetFromBlt();	 upd = true;
+				}else
+				if (mbRight)  // move y
+				{
+					Real ym = -vNew.y * fMove * moveMul;
+					o.pos[2] += ym;
+					o.SetFromBlt();	 upd = true;
+				}
+				else
+				if (mbMiddle)  // rot yaw,  ctrl pitch local-
+				{
+					Real xm = vNew.x * fRot * moveMul *PI_d/180.f;
+					QUATERNION <float> qr;
+					if (!ctrl)  qr.Rotate(-xm, 0, 0, 1);  else  qr.Rotate(-xm, 0, 1, 0);
+					o.rot = o.rot * qr;
+					o.SetFromBlt();	 upd = true;
+				}
 			}else
-			if (mbRight)  // move y
 			{
-				Real ym = -vNew.y * fMove * moveMul;
-				o.pos[2] += ym;
-				o.SetFromBlt();	 UpdObjPick();
+				if (mbLeft)  // size xz
+				{
+					//Vector3 vm = Vector3(vNew.y, 0, vNew.x) * fMove * moveMul;
+					float vm = (vNew.y - vNew.x) * fMove * moveMul;
+					o.scale *= 1.f - vm * fScale;
+					//if (o.scale.x < 0.02f)  o.scale.x = 0.02f;
+					o.nd->setScale(o.scale);  upd = true;
+				}else
+				if (mbRight)  // scale y
+				{
+					float vm = (vNew.y - vNew.x) * fMove * moveMul;
+					o.scale.y *= 1.f - vm * fScale;
+					//if (o.scale.y < 0.02f)  o.scale.y = 0.02f;
+					o.nd->setScale(o.scale);  upd = true;
+				}
 			}
-			else
-			if (mbMiddle)  // rot yaw,  ctrl pitch local-
-			{
-				Real xm = vNew.x * fRot * moveMul *PI_d/180.f;
-				QUATERNION <float> qr;
-				if (!ctrl)  qr.Rotate(-xm, 0, 0, 1);  else  qr.Rotate(-xm, 0, 1, 0);
-				o.rot = o.rot * qr;
-				o.SetFromBlt();	 UpdObjPick();
-			}
-		}else
-		{
-			if (mbLeft)  // size xz
-			{
-				//Vector3 vm = Vector3(vNew.y, 0, vNew.x) * fMove * moveMul;
-				float vm = (vNew.y - vNew.x) * fMove * moveMul;
-				o.scale *= 1.f - vm * fScale;
-				//if (o.scale.x < 0.02f)  o.scale.x = 0.02f;
-				o.nd->setScale(o.scale);  UpdObjPick();
-			}else
-			if (mbRight)  // scale y
-			{
-				float vm = (vNew.y - vNew.x) * fMove * moveMul;
-				o.scale.y *= 1.f - vm * fScale;
-				//if (o.scale.y < 0.02f)  o.scale.y = 0.02f;
-				o.nd->setScale(o.scale);  UpdObjPick();
-			}
+			if (sel)
+			{	++it;  // next sel
+				if (it == vObjSel.end())  break;
+				i = *it;
+			}else  break;
 		}
+		if (upd)
+			UpdObjPick();
 	}
 }
 

@@ -633,7 +633,7 @@ bool App::KeyPress(const CmdKey &arg)
 			case KC_2:  // reset scale
 				if (iObjCur >= 0 && sc.objects.size() > 0)
 				{	::Object& o = sc.objects[iObjCur];
-					o.scale = Ogre::Vector3::UNIT_SCALE;
+					o.scale = Ogre::Vector3::UNIT_SCALE * (shift ? 0.5f : 1.f);
 					o.nd->setScale(o.scale);
 					UpdObjPick();
 				}	break;

@@ -902,6 +902,8 @@
 	<Tag name="InputObjectsRot">MMB - rotate Y</Tag>
 	<Tag name="InputObjectsScale">alt-LMB - scale   alt-RMB - scale Y only</Tag>
 	<Tag name="InputObjectsType">[,]  - change object type</Tag>
+	<Tag name="InputObjects1">1 - reset rotation</Tag>
+	<Tag name="InputObjects2">2 - reset scale to 1 (with shift to 0.5)</Tag>
 	
 		
 <!--  ............................................................................................................................  -->

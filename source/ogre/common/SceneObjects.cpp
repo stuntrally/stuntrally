@@ -219,10 +219,10 @@ void App::PickObject()
 				if (s == sc.objects[o].ent->getName())
 				{	i = o;  break;  }
 
-			//sscanf(s.c_str(),"oE%d", &i);
+			//  pick if closer
 			if (i != -1 && (*it).distance < dist)
 			{
-				iObjCur = i;  // pick
+				iObjCur = i;
 				dist = (*it).distance;
 			}
 		}
