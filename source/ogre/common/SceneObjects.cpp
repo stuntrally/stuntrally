@@ -136,6 +136,9 @@ void App::CreateObjects()
 		}
 		#endif
 	}
+	#ifdef ROAD_EDITOR
+	iObjLast = sc.objects.size();
+	#endif
 }
 
 void App::DestroyObjects()
@@ -211,7 +214,12 @@ void App::PickObject()
 		if (StringUtil::startsWith(s,"oE",false))
 		{
 			int i = -1;
-			sscanf(s.c_str(),"oE%d", &i);
+			//  find obj with same ent name
+			for (int o=0; o < sc.objects.size(); ++o)
+				if (s == sc.objects[o].ent->getName())
+				{	i = o;  break;  }
+
+			//sscanf(s.c_str(),"oE%d", &i);
 			if (i != -1 && (*it).distance < dist)
 			{
 				iObjCur = i;  // pick

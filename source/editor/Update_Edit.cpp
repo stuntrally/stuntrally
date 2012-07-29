@@ -368,13 +368,16 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (iObjCur == -1 || sc.objects.empty())
 		{	//  none sel
 			objTxt[0]->setCaption("#20FF20New#C0C0C0    "+toStr(iObjCur)+" / "+toStr(sc.objects.size()));
-			objTxt[1]->setCaption(vObjNames[iObjNew]);  // new params ...
+			objTxt[1]->setCaption(vObjNames[iObjTNew]);  // all new params ...
 			objTxt[3]->setCaption("");
 			objTxt[4]->setCaption("");
 			objTxt[5]->setCaption("");
 		}else
 		{	const Object& o = sc.objects[iObjCur];
-			objTxt[0]->setCaption("#A0D0FFCur#C0C0C0     "+toStr(iObjCur+1)+" / "+toStr(sc.objects.size()));
+			if (vObjSel.empty())
+				objTxt[0]->setCaption("#A0D0FFCur#C0C0C0     "+toStr(iObjCur+1)+" / "+toStr(sc.objects.size()));
+			else
+				objTxt[0]->setCaption("#00FFFFSel#C0C0C0     "+toStr(vObjSel.size())+" / "+toStr(sc.objects.size()));
 			objTxt[1]->setCaption(o.name);
 			objTxt[3]->setCaption("Pos:  "+fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
 			objTxt[4]->setCaption("Rot:  "+fToStr(o.nd->getOrientation().getYaw().valueDegrees(),1,4));

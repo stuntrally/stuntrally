@@ -390,7 +390,7 @@ void App::InitGui()
 	}
 
 	//---------------------  OBJECTS  ---------------------
-	iObjNew = 0;
+	iObjTNew = 0;
 	strlist lo;  vObjNames.clear();
 	GetFolderIndex(PATHMANAGER::GetDataPath() + "/objects", lo);
 	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)

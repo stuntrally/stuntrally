@@ -115,7 +115,7 @@ protected:
 	std::vector<Ogre::SceneNode*> vFlNd;
 	int iFlCur;  bool bRecreateFluids;
 	//  objects
-	int iObjCur;
+	std::set<int> vObjSel;  int iObjCur,iObjLast;
 	
 	
 	///  terrain
@@ -408,7 +408,7 @@ protected:
 	void editRoad(MyGUI::EditPtr);
 
 	//  [Objects]
-	std::vector<std::string> vObjNames;  int iObjNew;
+	std::vector<std::string> vObjNames;  int iObjTNew;
 	
 
 	//  [Tools]  ----
