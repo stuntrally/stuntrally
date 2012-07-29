@@ -73,6 +73,8 @@ public:
 };
 #endif
 
+//  Create
+//-------------------------------------------------------------------------------------------------------
 void App::CreateObjects()
 {
 	for (int i=0; i < sc.objects.size(); ++i)
@@ -152,6 +154,10 @@ void App::DestroyObjects()
 	sc.objects.clear();
 }
 
+
+//  Pick
+//-------------------------------------------------------------------------------------------------------
+
 #ifdef ROAD_EDITOR
 void App::UpdObjPick()
 {
@@ -180,5 +186,40 @@ void App::UpdObjPick()
 	ndObjBox->setPosition(posO);
 	ndObjBox->setOrientation(rotO);
 	ndObjBox->setScale(s);
+}
+
+void App::PickObject()
+{
+	if (sc.objects.empty())  return;
+
+	iObjCur = -1;
+	const MyGUI::IntPoint& mp = MyGUI::InputManager::getInstance().getMousePosition();
+	Real mx = Real(mp.left)/mWindow->getWidth(), my = Real(mp.top)/mWindow->getHeight();
+	Ray ray = mCamera->getCameraToViewportRay(mx,my);  // 0..1
+
+	//  query scene (aabbs are enough)
+	RaySceneQuery* rq = mSceneMgr->createRayQuery(ray);
+	rq->setSortByDistance(true);
+	RaySceneQueryResult& res = rq->execute();
+
+	Real dist = 100000.f;
+	for (RaySceneQueryResult::iterator it = res.begin(); it != res.end(); ++it)
+	{
+		const String& s = (*it).movable->getName();
+		//LogO("RAY "+s+" "+fToStr((*it).distance,2,4));
+
+		if (StringUtil::startsWith(s,"oE",false))
+		{
+			int i = -1;
+			sscanf(s.c_str(),"oE%d", &i);
+			if (i != -1 && (*it).distance < dist)
+			{
+				iObjCur = i;  // pick
+				dist = (*it).distance;
+			}
+		}
+	}
+	//rq->clearResults();
+	mSceneMgr->destroyQuery(rq);
 }
 #endif

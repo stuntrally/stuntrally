@@ -77,7 +77,7 @@ protected:
 	bool bNewHmap, bTrGrUpd;
 	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget), UpdTrees();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
-	void CreateTrees(), CreateObjects(),DestroyObjects(), UpdObjPick();
+	void CreateTrees(), CreateObjects(),DestroyObjects(), UpdObjPick(), PickObject();
 	void CreateFluids(), DestroyFluids(), CreateBltFluids();
 	void UpdFluidBox(), UpdateWaterRTT(Ogre::Camera* cam), UpdMtrWaterDepth();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);

@@ -6,6 +6,7 @@
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/RenderConst.h"
+#include "../ogre/common/SceneXml.h"
 #include <OgreTerrain.h>
 #include <MyGUI.h>
 using namespace MyGUI;
@@ -549,7 +550,7 @@ bool App::KeyPress(const CmdKey &arg)
 		switch (arg.key)
 		{
 			case KC_SPACE:
-				iObjCur = -1;  break;  // unselect
+				iObjCur = -1;  PickObject();  UpdObjPick();  break;
 				
 			//  prev,next type
 			case KC_LBRACKET:
@@ -575,7 +576,7 @@ bool App::KeyPress(const CmdKey &arg)
 				o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
 
 				sc.objects.push_back(o);
-				iObjCur = sc.objects.size()-1;
+				//iObjCur = sc.objects.size()-1;  // auto select inserted-
 				UpdObjPick();
 			}	break;
 		}

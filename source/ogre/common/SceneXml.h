@@ -90,7 +90,7 @@ public:
 	std::string name;  // mesh file name
 
 	Ogre::SceneNode* nd;  // ogre
-	Ogre::Entity* ent;  
+	Ogre::Entity* ent;
 	class btDefaultMotionState* ms;  // bullet
 	class btCollisionObject* cobj;
 
