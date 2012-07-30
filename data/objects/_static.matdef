@@ -1,10 +1,39 @@
 
 [pers_struct_dds]
 	diffuseMap_512 = pers_struct.dds
-	;diffuse = 0.64 0.64 0.64
-	;ambient = 0.80 0.80 0.80
 	ambient = 1.0 1.0 1.0
+	diffuse = 1.0 1.0 1.0
 	specular = 0.25 0.25 0.25 3
+	receivesShadows = false
+	receivesDepthShadows = true
+	terrainLightMap = true
+	shadowPriority = 1.0
+
+[pyramid_small]
+	diffuseMap_512 = pyramid_small.dds
+	ambient = 0.8 0.8 0.8
+	diffuse = 0.7 0.7 0.7
+	specular = 0.4 0.4 0.4 16
+	receivesShadows = false
+	receivesDepthShadows = true
+	terrainLightMap = true
+	shadowPriority = 1.0
+
+[pyramid_big]
+	diffuseMap_512 = pyramid_big.dds
+	ambient = 1.0 1.0 1.0
+	diffuse = 0.8 0.8 0.8
+	specular = 0.3 0.3 0.3 8
+	receivesShadows = false
+	receivesDepthShadows = true
+	terrainLightMap = true
+	shadowPriority = 1.0
+
+[obelisk]
+	diffuseMap_512 = obelisk.png
+	ambient = 1.0 0.92 0.7
+	diffuse = 1.0 0.92 0.7
+	specular = 0.2 0.2 0.2 8
 	receivesShadows = false
 	receivesDepthShadows = true
 	terrainLightMap = true
