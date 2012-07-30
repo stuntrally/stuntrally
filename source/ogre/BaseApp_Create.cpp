@@ -421,6 +421,7 @@ bool BaseApp::setup()
 	mFactory = new sh::Factory(platform);
 	mFactory->setSharedParameter ("globalColorMultiplier", sh::makeProperty<sh::Vector4>(new sh::Vector4(0.3, 1.0, 0.1, 1.0)));
 	mFactory->setGlobalSetting("fog", "true");
+	mFactory->setGlobalSetting("wind", "true");
 	mFactory->setGlobalSetting("mrt_output", "false");
 	mFactory->setGlobalSetting ("shadows", "false");
 	mFactory->setGlobalSetting ("shadows_pssm", "false");
@@ -430,6 +431,7 @@ bool BaseApp::setup()
 	mFactory->setSharedParameter("shadowFar_fadeStart", sh::makeProperty<sh::Vector4>(new sh::Vector4(0,0,0,0)));
 	mFactory->setSharedParameter ("arrowColour1", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
 	mFactory->setSharedParameter ("arrowColour2", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
+	mFactory->setSharedParameter ("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(0)));
 
 	mFactory->setShaderDebugOutputEnabled (true);
 

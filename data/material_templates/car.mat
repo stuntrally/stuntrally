@@ -1,18 +1,31 @@
 material car_body
 {
 	parent base
-	diffuseMap body00_red.png
+	diffuseMap body00_add.png
+	carPaintMap body00_red.png
 	reflMap refl.png
 	refl_map true
     env_map true
+    car_paint_map true
+    terrain_light_map true
     fresnel true
     fresnelScaleBiasPower 0.79 0.07 4
+    specular 1 1 1 128
 }
 
 material car_glass
 {
 	parent base
 	diffuseMap glass.png
+	depth_write off
+	scene_blend alpha_blend
+	specular 0.9 0.9 0.9 96
+	ambient 0.4 0.4 0.4
+	diffuse 0.9 0.9 0.9
+	fresnelScaleBiasPower 0.75 0.15 4
+	env_map true
+	fresnel true
+	transparent true
 }
 
 material car_ghost

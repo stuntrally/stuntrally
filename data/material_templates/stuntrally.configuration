@@ -6,4 +6,5 @@ configuration reflection
 configuration impostor_rtt
 {
     fog false
+    wind false
 }

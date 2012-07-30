@@ -54,6 +54,12 @@ void App::changeShadows()
 		0, 0);
 
 	sh::Factory::getInstance().setSharedParameter ("shadowFar_fadeStart", sh::makeProperty <sh::Vector4>(fade));
+
+	if (terrain)
+	{
+		sh::Factory::getInstance ().setSharedParameter ("terrainWorldSize", sh::makeProperty<sh::FloatValue> (new sh::FloatValue(terrain->getWorldSize())));
+		sh::Factory::getInstance ().setTextureAlias ("TerrainLightMap", terrain->getLightmap ()->getName());
+	}
 		
 	// disable 4 shadow textures (does not work because no texcoord's left in shader)
 	if (num == 4) num = 3;

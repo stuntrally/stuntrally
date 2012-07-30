@@ -109,7 +109,7 @@
     #ifdef SH_VERTEX_SHADER
 
         #define SH_BEGIN_PROGRAM \
-            in float4 shInputPosition;
+            in float4 vertex;
         #define SH_START_PROGRAM \
             void main(void)
 
@@ -134,7 +134,7 @@
     #if 1
     
     // automatically recognized by ogre when the input name equals this
-    #define shInputPosition gl_Vertex
+    #define shInputPosition vertex
 
     #define shOutputColour(num) gl_FragData[num]
 
@@ -149,8 +149,8 @@
 
     #ifdef SH_VERTEX_SHADER
 
-        #define SH_BEGIN_PROGRAM 
-
+        #define SH_BEGIN_PROGRAM \
+            attribute vec4 vertex; 
         #define SH_START_PROGRAM \
             void main(void)
 

@@ -171,6 +171,8 @@ protected:
 	// 1 behind map ( map.end() ): loading finished
 	std::map<unsigned int, std::string>::iterator currentLoadingState;
 
+	float mTimer;
+
 
 	///  terrain
 public:

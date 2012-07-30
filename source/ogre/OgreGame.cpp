@@ -18,7 +18,7 @@ using namespace Ogre;
 
 //  ctors  -----------------------------------------------
 App::App(SETTINGS *settings, GAME *game)
-	:pGame(game), ndLine(0), bGI(0), mThread()
+	:pGame(game), ndLine(0), bGI(0), mThread(), mTimer(0)
 	// ovr
 	,hudCountdown(0),hudNetMsg(0), hudAbs(0),hudTcs(0)
 	,hudTimes(0), hudWarnChk(0),hudWonPlace(0), hudOppB(0)

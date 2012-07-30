@@ -376,7 +376,9 @@ bool App::frameStart(Real time)
 			else{	 pr->setSpeedFactor(1.f);	 pr2->setSpeedFactor(1.f);	}
 		}
 		
-		//materialFactory->update();
+		// update shader time
+		mTimer += time;
+		mFactory->setSharedParameter ("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
 		
 		// We put this here, because first render frame is rather heavy
 		if (mClient && bLoadingEnd)

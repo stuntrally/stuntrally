@@ -40,6 +40,7 @@ material palm2
 	alpha_rejection greater 128
 	specular 0.5 0.5 0.5 32
 	cull_hardware none
+	tree_wind true
 }
 
 material Palm
@@ -50,6 +51,7 @@ material Palm
 	ambient 1.0 1.0 1.0
 	diffuse 0.6 0.6 0.6
 	specular 0.3 0.3 0.3 21
+	tree_wind true
 }
 
 
