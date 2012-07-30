@@ -2,3 +2,8 @@ configuration reflection
 {
     shadows_pssm false
 }
+
+configuration impostor_rtt
+{
+    fog false
+}

@@ -702,7 +702,7 @@ MaterialPtr StaticBillboardSet::getFadeMaterial(const Ogre::MaterialPtr &protoMa
             Pass *pass = tech->getPass(p);
 
             //Setup vertex program
-			pass->setVertexProgram("Sprite_vp");
+			pass->setVertexProgram("SpriteFade_vp");
             GpuProgramParametersSharedPtr params = pass->getVertexProgramParameters();
 
             //glsl can use the built in gl_ModelViewProjectionMatrix
@@ -810,13 +810,26 @@ void StaticBillboardSet::updateAll(const Vector3 &cameraDirection)
       Pass *p = mat->getTechnique(0)->getPass(0);
       if (!p->hasVertexProgram())
       {
-            ++i1;
-            continue;
-      }
+		  static const Ogre::String Sprite_vp = "Sprite_vp";
+		  p->setVertexProgram(Sprite_vp);
+
+		  // glsl can use the built in gl_ModelViewProjectionMatrix
+		  if (!s_isGLSL)
+			 p->getVertexProgramParameters()->setNamedAutoConstant("worldViewProj", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
+
+		  GpuProgramParametersSharedPtr params = p->getVertexProgramParameters();
+		  params->setNamedAutoConstant(uScroll, GpuProgramParameters::ACT_CUSTOM);
+		  params->setNamedAutoConstant(vScroll, GpuProgramParameters::ACT_CUSTOM);
+		  params->setNamedAutoConstant(preRotatedQuad0, GpuProgramParameters::ACT_CUSTOM);
+		  params->setNamedAutoConstant(preRotatedQuad1, GpuProgramParameters::ACT_CUSTOM);
+		  params->setNamedAutoConstant(preRotatedQuad2, GpuProgramParameters::ACT_CUSTOM);
+		  params->setNamedAutoConstant(preRotatedQuad3, GpuProgramParameters::ACT_CUSTOM);
+
+	  }
       if (!p->hasFragmentProgram())
       {
-            ++i1;
-            continue;
+			//++i1;
+			//continue;
 	  }
 
       // Which prerotated quad use
