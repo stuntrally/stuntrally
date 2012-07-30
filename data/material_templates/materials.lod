@@ -1,0 +1,4 @@
+lod_configuration 1
+{
+    terrain_composite_map true
+}

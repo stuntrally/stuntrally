@@ -5,16 +5,16 @@ material road
 
 material roadJungle_ter
 {
-	parent road
-	diffuseMap roadJungle.jpg
-	col 1.0 0.3 0.3
+	parent roadJungle
 }
 
 material roadJungle
 {
 	parent road
 	diffuseMap roadJungle.jpg
-	col 1.0 0.3 0.3
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 0.3 0.3 0.25 48
 }
 
 material roadAsphalt
@@ -39,6 +39,9 @@ material roadGDesert_ter
 {
 	parent road
 	diffuseMap roadDesert.jpg
+	ambient 0.84 0.94 0.74
+	diffuse 0.63 0.65 0.62
+	specular 0.23 0.23 0.22 32
 }
 
 material roadSand
@@ -57,10 +60,37 @@ material roadMud
 {
 	parent road
 	diffuseMap roadMud.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 0.2 0.2 0.15 32
 }
 
 material roadMud_ter
 {
-	parent road
-	diffuseMap roadMud.jpg
+	parent roadMud
+	
+	normal_map true
+	normalMap ice_3_nh1.png
+    alpha_map true
+    depth_write off
+    scene_blend alpha_blend
+    alphaMap roadAlpha.png
+}
+
+material roadDesert
+{
+    parent road
+    diffuseMap roadDesert.jpg
+	ambient 0.85 0.85 0.85
+	diffuse 0.81 0.8 0.75
+	specular 0.36 0.34 0.3 18
+}
+
+material roadDesert_ter
+{
+    parent roadDesert
+    alpha_map true
+    depth_write off
+    scene_blend alpha_blend
+    alphaMap roadAlpha.png
 }

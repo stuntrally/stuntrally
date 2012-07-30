@@ -1,0 +1,4 @@
+configuration reflection
+{
+    shadows_pssm false
+}

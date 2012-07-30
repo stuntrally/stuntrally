@@ -410,9 +410,24 @@ void CarModel::RecreateMaterials()
 	for (int i=0; i<NumMaterials; i++)
 	{
 		sh::Factory::getInstance().destroyMaterialInstance(sMtr[i] + strI);
-		sh::Factory::getInstance().createMaterialInstance(sMtr[i] + strI, sMtr[i]);
+		sh::MaterialInstance* m = sh::Factory::getInstance().createMaterialInstance(sMtr[i] + strI, sMtr[i]);
+
+
+		// change textures for the car
+		//if (m->hasProperty ("diffuseMap"))
+		{
+			std::string v = sh::retrieveValue<sh::StringValue>(m->getProperty ("diffuseMap"), 0).get();
+			m->setProperty ("diffuseMap", sh::makeProperty <sh::StringValue>(new sh::StringValue(sDirname + "_" + v)));
+		}
+		if (m->hasProperty ("reflMap"))
+		{
+
+			std::string v = sh::retrieveValue<sh::StringValue>(m->getProperty ("reflMap"), 0).get();
+			m->setProperty ("reflMap", sh::makeProperty <sh::StringValue>(new sh::StringValue(sDirname + "_" + v)));
+		}
 		sMtr[i] = sMtr[i] + strI;
 	}
+
 	
 	/*
 	if (!ghost)

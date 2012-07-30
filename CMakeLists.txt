@@ -53,6 +53,13 @@ mark_as_advanced(SHARE_INSTALL)
 add_definitions(-DSHARED_DATA_DIR="${SHARE_INSTALL}")
 
 
+if (DEFINED CMAKE_BUILD_TYPE)
+    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+        add_definitions(-D_DEBUG="")
+    endif()
+endif()
+
+
 if(WIN32)
 	set(Boost_USE_STATIC_LIBS   ON)
 endif(WIN32)

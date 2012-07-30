@@ -420,7 +420,40 @@ bool BaseApp::setup()
 	platform->setCacheFolder (PATHMANAGER::GetCacheDir());
 	mFactory = new sh::Factory(platform);
 	mFactory->setSharedParameter ("globalColorMultiplier", sh::makeProperty<sh::Vector4>(new sh::Vector4(0.3, 1.0, 0.1, 1.0)));
-	mFactory->setGlobalSetting("globalSetting_test", "foobar");
+	mFactory->setGlobalSetting("fog", "true");
+	mFactory->setGlobalSetting("mrt_output", "false");
+	mFactory->setGlobalSetting ("shadows", "false");
+	mFactory->setGlobalSetting ("shadows_pssm", "false");
+	mFactory->setGlobalSetting ("lighting", "true");
+	mFactory->setGlobalSetting ("terrain_composite_map", "false");
+	mFactory->setSharedParameter("pssmSplitPoints", sh::makeProperty<sh::Vector3>(new sh::Vector3(0,0,0)));
+	mFactory->setSharedParameter("shadowFar_fadeStart", sh::makeProperty<sh::Vector4>(new sh::Vector4(0,0,0,0)));
+	mFactory->setSharedParameter ("arrowColour1", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
+	mFactory->setSharedParameter ("arrowColour2", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
+
+	mFactory->setShaderDebugOutputEnabled (true);
+
+	sh::Language lang;
+	if (pSet->shader_mode == "")
+	{
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		lang = sh::Language_CG;
+#else
+		lang = sh::Language_GLSL;
+#endif
+	}
+	else
+	{
+		if (pSet->shader_mode == "glsl")
+			lang = sh::Language_GLSL;
+		else if (pSet->shader_mode == "cg")
+			lang = sh::Language_CG;
+		else
+			assert(0);
+	}
+	mFactory->setCurrentLanguage (lang);
+
+	mFactory->loadAllFiles ();
 
 		ti.update();  dt = ti.dt * 1000.f;  /// time
 		LogO(String(":::: Time post, mat factory: ") + toStr(dt) + " ms");

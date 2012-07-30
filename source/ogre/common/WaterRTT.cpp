@@ -42,6 +42,7 @@ void WaterRTT::create()
 		vp->setOverlaysEnabled(false);
 		vp->setBackgroundColour(ColourValue(0.8f, 0.9f, 1.0f));
 		vp->setShadowsEnabled(false);
+		vp->setMaterialScheme ("reflection");
 		vp->setVisibilityMask( i == 0 ? RV_WaterReflect : RV_WaterRefract);
 		rtt->addListener(this);
 

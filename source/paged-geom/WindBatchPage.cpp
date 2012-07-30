@@ -26,6 +26,8 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include "WindBatchedGeometry.h"
 #include "../ogre/common/RenderConst.h"
 
+#include "../shiny/Main/Factory.hpp"
+
 // to dump the shader source in a file
 #include <fstream>
 
@@ -146,47 +148,20 @@ void WindBatchPage::_updateShaders()
 		}
 
 		//Search for the desired material
+		/*
 		MaterialPtr generatedMaterial = MaterialManager::getSingleton().getByName(materialSignature.str());
 		if (generatedMaterial.isNull())
 		{
 			//Clone the material
-			generatedMaterial = ptrMat->clone(materialSignature.str());
+			std::cout << ptrMat->getName() << std::endl;
+			sh::MaterialInstance* m = sh::Factory::getInstance ().createMaterialInstance (materialSignature.str(), ptrMat->getName());
+			//generatedMaterial = ptrMat->clone(materialSignature.str());
 
 			//And apply the fade shader
-			for (unsigned short t = 0; t < generatedMaterial->getNumTechniques(); ++t)
-			{	Technique *tech = generatedMaterial->getTechnique(t);
-				for (unsigned short p = 0; p < tech->getNumPasses(); ++p)
-				{	Pass *pass = tech->getPass(p);
-
-					try
-					{
-					//Setup vertex program
-						/**  // exception in debug !_
-						if (pass->getVertexProgramName() == "")
-							pass->setVertexProgram(vertexProgName);/**/
-
-						GpuProgramParametersSharedPtr params = pass->getVertexProgramParameters();
-
-						///T removed a lot of params that are not needed in our own shader
-
-						if(params->_findNamedConstantDefinition("time",false))
-							params->setNamedConstantFromTime("time", 1);
-					}
-					catch (const Ogre::Exception &e)
-					{
-						///T don't create exception.log
-					}
-					catch (...)
-					{
-						OGRE_EXCEPT(Exception::ERR_INTERNAL_ERROR,
-							"Error configuring batched geometry transitions. If you're using materials with custom\
-							vertex shaders, they will need to implement fade transitions to be compatible with BatchPage.",
-							"BatchPage::_updateShaders()");
-					}
-				}
-			}
 		}
+		*/
 		//Apply the material
-		subBatch->setMaterial(generatedMaterial);
+		Ogre::MaterialPtr m = ptrMat;
+		subBatch->setMaterial(m);
 	}
 }

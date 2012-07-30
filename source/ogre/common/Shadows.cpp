@@ -25,6 +25,8 @@
 #include <OgreOverlayContainer.h>
 #include <OgreOverlayManager.h>
 
+#include "../../shiny/Main/Factory.hpp"
+
 #include "../common/QTimer.h"
 
 using namespace Ogre;
@@ -45,27 +47,21 @@ void App::changeShadows()
 	pSet->shadow_size = std::max(0,std::min(ciShadowNumSizes-1, pSet->shadow_size));
 	int fTex = /*2048*/ ciShadowSizesA[pSet->shadow_size], fTex2 = fTex/2;
 	int num = /*3*/ pSet->shadow_count;
+
+	sh::Vector4* fade = new sh::Vector4(
+		pSet->shadow_dist,
+		pSet->shadow_dist * 0.8, // fade start
+		0, 0);
+
+	sh::Factory::getInstance().setSharedParameter ("shadowFar_fadeStart", sh::makeProperty <sh::Vector4>(fade));
 		
 	// disable 4 shadow textures (does not work because no texcoord's left in shader)
 	if (num == 4) num = 3;
-/*
-	TerrainMaterialGeneratorB::SM2Profile* matProfile = 0;
-	
-	if (mTerrainGlobals)
-	{
-		matProfile = (TerrainMaterialGeneratorB::SM2Profile*) mTerrainGlobals->getDefaultMaterialGenerator()->getActiveProfile();
-		if (matProfile)
-		{	matProfile->setReceiveDynamicShadowsEnabled(enabled);
-			matProfile->setReceiveDynamicShadowsLowLod(true);
-			matProfile->setGlobalColourMapEnabled(false);
 
-			matProfile->setLayerSpecularMappingEnabled(pSet->ter_mtr >= 1);  // ter mtr
-			matProfile->setLayerNormalMappingEnabled(  pSet->ter_mtr >= 2);
-			matProfile->setLayerParallaxMappingEnabled(pSet->ter_mtr >= 3);
-	}	}
 
 	if (!enabled)  {
-		mSceneMgr->setShadowTechnique(SHADOWTYPE_NONE);  /*return;*/ //}
+		mSceneMgr->setShadowTechnique(SHADOWTYPE_NONE);  /*return;*/ //
+	}
 
 	else
 	{
@@ -114,31 +110,19 @@ void App::changeShadows()
 		mSceneMgr->setShadowCasterRenderBackFaces((bDepth && !bSoft) ? true : false);
 		
 		String shadowCasterMat;
-		if (bDepth && !bSoft) shadowCasterMat = "PSSM/shadow_caster";
-		else if (bSoft) shadowCasterMat = "PSVSM/shadow_caster";
+		if (bDepth) shadowCasterMat = "PSSM/shadow_caster_noalpha";
+
 		else shadowCasterMat = StringUtil::BLANK;
 		
 		mSceneMgr->setShadowTextureCasterMaterial(shadowCasterMat);
-/*
-		if (matProfile && terrain)  {
-			matProfile->setReceiveDynamicShadowsDepth(bDepth);
-			matProfile->setReceiveDynamicShadowsPSSM(static_cast<PSSMShadowCameraSetup*>(mPSSMSetup.get()));
-			MaterialPtr mtr = matProfile->generateForCompositeMap(terrain);
-			//LogO(mtr->getBestTechnique()->getPass(0)->getTextureUnitState(0)->getName());
-			//LogO(String("Ter mtr: ") + mtr->getName());
-
-		}*/
 	}
 
-/*
-	materialFactory->setTerrain(terrain);
-	materialFactory->setNumShadowTex(num);
-	materialFactory->setShadows(pSet->shadow_type != 0);
-	materialFactory->setShadowsDepth(bDepth);
-	materialFactory->setShadowsSoft(bSoft);
-	materialFactory->generate();
-	*/
-	#if 0	// shadow tex overlay
+
+	sh::Factory::getInstance().setGlobalSetting ("shadows", "false");
+	sh::Factory::getInstance().setGlobalSetting ("shadows_pssm", (pSet->shadow_type != 0) ? "true" : "false");
+
+	#if 0
+	// shadow tex overlay
 	// add the overlay elements to show the shadow maps:
 	// init overlay elements
 	OverlayManager& mgr = OverlayManager::getSingleton();
@@ -151,10 +135,8 @@ void App::changeShadows()
 	overlay = mgr.create("DebugOverlay");
 	
 	TexturePtr tex;
-	for (size_t i = 0; i < 2; ++i) {
-		//TexturePtr tex = mSceneMgr->getShadowTexture(i);
-		if (i == 0) tex = TextureManager::getSingleton().getByName("PlaneReflection"); 
-		else tex = TextureManager::getSingleton().getByName("PlaneRefraction"); 
+	for (size_t i = 0; i < 3; ++i) {
+		TexturePtr tex = mSceneMgr->getShadowTexture(i);
 		
 		// Set up a debug panel to display the shadow
 		
@@ -192,41 +174,6 @@ void App::changeShadows()
 	}
 	#endif
 	
-	// -------------------   update the paged-geom materials
-	
-	// grass is not cloned, just need to set new shader parameters
-	if (grass)
-	{
-		GrassLoader *grassLoader = static_cast<GrassLoader*>(grass->getPageLoader());
-		for (std::list<GrassLayer*>::iterator it= grassLoader->getLayerList().begin();
-			it != grassLoader->getLayerList().end(); ++it)
-		{
-			GrassLayer* layer = (*it);
-			layer->applyShader();
-		}
-	}
-	
-	// trees are more complicated since they are cloned
-	//!todo this doesn't work (tree material does not update immediately)
-	if(trees)
-	{
-		trees->reloadGeometry();
-		std::vector<ResourcePtr> reosurceToDelete;
-		ResourceManager::ResourceMapIterator it = MaterialManager::getSingleton().getResourceIterator();
-		while (it.hasMoreElements())
-		{
-			ResourcePtr material = it.getNext();
-			String materialName = material->getName();
-			std::string::size_type pos =materialName.find("BatchMat|");
-			if( pos != std::string::npos ) {
-				reosurceToDelete.push_back(material);
-			}
-		}
-		for(int i=0;i<reosurceToDelete.size();i++)
-		{
-			MaterialManager::getSingleton().remove(reosurceToDelete[i]);
-		}
-	}
 	UpdPSSMMaterials();
 
 	ti.update();	/// time
@@ -277,14 +224,7 @@ void App::UpdPSSMMaterials()	/// . . . . . . . .
 	PSSMShadowCameraSetup* pssmSetup = static_cast<PSSMShadowCameraSetup*>(mPSSMSetup.get());
 	const PSSMShadowCameraSetup::SplitPointList& splitPointList = pssmSetup->getSplitPoints();
 
-	for (size_t i = 0; i < splitPointList.size(); ++i)
-		splitPoints[i] = splitPointList[i];
+	sh::Vector3* splits = new sh::Vector3(splitPointList[1],splitPointList[2],splitPointList[3]);
 
-	// mtr splits for all cars (only game)
-	#ifndef ROAD_EDITOR
-	//if (pSet->shadow_type == 3) 
-	{
-		recreateCarMtr();
-	}
-	#endif
+	sh::Factory::getInstance().setSharedParameter("pssmSplitPoints", sh::makeProperty<sh::Vector3>(splits));
 }

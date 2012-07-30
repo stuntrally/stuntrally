@@ -72,6 +72,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_size.arrow", size_arrow);			Param(c,w, "hud_size.gauges_type", gauges_type);
 
 	//  graphics
+	Param(c,w, "graph_detail.shader_mode", shader_mode);
 	Param(c,w, "graph_detail.anisotropy", anisotropy);		Param(c,w, "graph_detail.view_dist", view_distance);
 	Param(c,w, "graph_detail.ter_detail", terdetail);		Param(c,w, "graph_detail.ter_dist", terdist);
 	Param(c,w, "graph_detail.road_dist", road_dist);		Param(c,w, "graph_detail.tex_size", tex_size);
@@ -212,7 +213,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	vignettingRadius(2.85), vignettingDarkness(0.34),
 	//  not in gui
 	boostFromExhaust(0), net_local_plr(-1),
-	renderNotActive(false)
+	renderNotActive(false),
+	shader_mode("")
 {
 	//  track
 	gui.track = "J1-T";

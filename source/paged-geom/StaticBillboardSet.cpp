@@ -83,7 +83,7 @@ mFadeInvisibleDist      (0.f)
    {
       //Load vertex shader to align billboards to face the camera (if not loaded already)
       ///T commented out shader creation code, we create these ourselves
-     /* if (s_nSelfInstances == 0)
+	  if (s_nSelfInstances == 0)
       {
          const Ogre::String &renderName = Root::getSingleton().getRenderSystem()->getName();
          s_isGLSL = renderName == "OpenGL Rendering Subsystem" ? true : false;
@@ -285,7 +285,7 @@ mFadeInvisibleDist      (0.f)
          }
          // compile it
          vertexShader2->load();
-      }*/
+	  }
    }
    else
    {
@@ -702,7 +702,7 @@ MaterialPtr StaticBillboardSet::getFadeMaterial(const Ogre::MaterialPtr &protoMa
             Pass *pass = tech->getPass(p);
 
             //Setup vertex program
-            pass->setVertexProgram("SpriteFade_vp");
+			pass->setVertexProgram("Sprite_vp");
             GpuProgramParametersSharedPtr params = pass->getVertexProgramParameters();
 
             //glsl can use the built in gl_ModelViewProjectionMatrix

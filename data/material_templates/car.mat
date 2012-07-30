@@ -2,7 +2,11 @@ material car_body
 {
 	parent base
 	diffuseMap body00_red.png
-	number_of_foreachs 2
+	reflMap refl.png
+	refl_map true
+    env_map true
+    fresnel true
+    fresnelScaleBiasPower 0.79 0.07 4
 }
 
 material car_glass
@@ -33,4 +37,11 @@ material cartire_rear
 {
 	parent base
 	diffuseMap wheel.png
+}
+
+material car_body_ES
+{
+    parent car_body
+    normal_map true
+    normalMap ES_normal.png
 }

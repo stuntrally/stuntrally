@@ -1,0 +1,24 @@
+material Arrow
+{
+    pass
+    {
+        vertex_program arrow_vertex
+        fragment_program arrow_fragment
+        
+        colour_write off
+        depth_write on
+        depth_func always_pass
+        fog_override true // no fog
+    }
+    
+    pass
+    {
+        vertex_program arrow_vertex
+        fragment_program arrow_fragment
+        
+        colour_write on
+        depth_bias 3
+        scene_blend alpha_blend
+        fog_override true // no fog
+    }
+}

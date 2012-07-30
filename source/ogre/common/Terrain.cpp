@@ -5,6 +5,8 @@
 //#include "../common/MaterialGen/TerrainMaterialGen.h"
 //#include "../common/MaterialGen/MaterialFactory.h"
 
+#include "TerrainMaterial.h"
+
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
 	#include "../../editor/settings.h"
@@ -199,13 +201,11 @@ void App::GetTerAngles(int xb,int yb, int xe,int ye, bool full)
 //--------------------------------------------------------------------------------------------------------------------------
 void App::configureTerrainDefaults(Light* l)
 {
-	//TerrainMaterialGeneratorPtr matGen = static_cast<TerrainMaterialGeneratorPtr>(new TerrainMaterialGeneratorB());
-    /*
 	TerrainMaterialGeneratorPtr matGen;
-	TerrainMaterialGeneratorB* matGenP = new TerrainMaterialGeneratorB();
+	TerrainMaterial* matGenP = new TerrainMaterial();
 	matGen.bind(matGenP);
+
 	mTerrainGlobals->setDefaultMaterialGenerator(matGen);
-*/
 	mTerrainGlobals->setMaxPixelError(pSet->terdetail);  // 1- 4-8+
 	//mTerrainGlobals->setUseRayBoxDistanceCalculation(true);
 	//mTerrainGlobals->getDefaultMaterialGenerator()->setDebugLevel(1);

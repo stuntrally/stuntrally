@@ -1,0 +1,15 @@
+shader_set arrow_vertex
+{
+    source arrow.shader
+    type vertex
+    profiles_cg vs_2_0 arbvp1
+    profiles_hlsl vs_2_0
+}
+
+shader_set arrow_fragment
+{
+    source arrow.shader
+    type fragment
+    profiles_cg ps_2_x arbfp1
+    profiles_hlsl ps_2_0
+}
