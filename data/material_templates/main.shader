@@ -232,9 +232,6 @@
         
         shOutputColour(0).xyz = shLerp (shOutputColour(0).xyz, fogColour, fogValue);
 #endif
-
-        // prevent negative colour output (for example with negative lights)
-        shOutputColour(0).xyz = max(shOutputColour(0).xyz, float3(0,0,0));
         
 #if ALPHA_MAP
         shOutputColour(0).a = shSample(alphaMap, float2(UV.x, UV.y * 0.01)).r;
