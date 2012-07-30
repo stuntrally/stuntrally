@@ -1,6 +1,7 @@
 #include "pch.h"
-#include "../common/RenderConst.h"
-#include "../common/Defines.h"
+#include "RenderConst.h"
+#include "Defines.h"
+#include "../../vdrift/pathmanager.h"
 
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
@@ -77,24 +78,45 @@ public:
 //-------------------------------------------------------------------------------------------------------
 void App::CreateObjects()
 {
+	//  maps for file exist (optimize)
+	using std::map;  using std::string;
+	map<string,bool> objExists, objHasBlt;
+	
+	for (int i=0; i < sc.objects.size(); ++i)
+	{
+		const string& s = sc.objects[i].name;
+		objExists[s] = false;  objHasBlt[s] = false;
+	}
+	for (map<string,bool>::iterator it = objExists.begin(); it != objExists.end(); ++it)
+	{
+		bool ex = boost::filesystem::exists(PATHMANAGER::GetDataPath()+"/objects/"+ (*it).first + ".mesh");
+		(*it).second = ex;
+		if (!ex)  LogO("CreateObjects mesh doesn't exist: " + (*it).first + ".mesh");
+	}
+	for (map<string,bool>::iterator it = objHasBlt.begin(); it != objHasBlt.end(); ++it)
+		(*it).second = boost::filesystem::exists(PATHMANAGER::GetDataPath()+"/objects/"+ (*it).first + ".bullet");
+
+	///  create
+	#ifndef ROAD_EDITOR
+	BulletWorldOffset* fileLoader = new BulletWorldOffset(pGame->collision.world);
+	#endif
 	for (int i=0; i < sc.objects.size(); ++i)
 	{
 		Object& o = sc.objects[i];
 		String s = toStr(i);  // counter for names
 
 		//  add to ogre
-		o.ent = mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
+		bool no = !objExists[o.name];
+		o.ent = mSceneMgr->createEntity("oE"+s, (no ? "sphere" : o.name) + ".mesh");
 		o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s);
 		o.SetFromBlt();
-		o.nd->setScale(o.scale);
 		o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
-
+		o.nd->setScale(o.scale);
+		if (no)  continue;
 
 		#ifndef ROAD_EDITOR
 		//  add to bullet world (in game)
-		std::string file = PATHMANAGER::GetDataPath()+"/objects/"+o.name+".bullet";
-		///  use some map ! dont check for every object ...
-		if (!boost::filesystem::exists(file))
+		if (!objHasBlt[o.name])
 		{
 			///  static
 			Vector3 posO = Vector3(o.pos[0],o.pos[2],-o.pos[1]);
@@ -121,12 +143,12 @@ void App::CreateObjects()
 		else  ///  dynamic
 		{
 			// .bullet load
-			BulletWorldOffset* fileLoader = new BulletWorldOffset(pGame->collision.world);
 			fileLoader->mTrOfs.setOrigin(btVector3(o.pos[0],o.pos[1],o.pos[2]+0.5f));
 			///+  why is this z ofs needed ? 1st sim dt ??...
 			fileLoader->mTrOfs.setRotation(btQuaternion(o.rot[0],o.rot[1],o.rot[2],o.rot[3]));
 			//fileLoader->setVerboseMode(true);//
 
+			std::string file = PATHMANAGER::GetDataPath()+"/objects/"+o.name+".bullet";
 			//LogO(".bullet: "+file);
 			if (fileLoader->loadFile(file.c_str()))
 			{
@@ -136,6 +158,9 @@ void App::CreateObjects()
 		}
 		#endif
 	}
+	#ifndef ROAD_EDITOR
+	delete fileLoader;
+	#endif
 	#ifdef ROAD_EDITOR
 	iObjLast = sc.objects.size();
 	#endif
