@@ -1,0 +1,370 @@
+material  pickup.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap pickup.bmp.png
+}
+material  flasha.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap flasha.bmp.png
+}
+material  flashb.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap flashb.bmp.png
+}
+material  tire.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap tire.bmp.png
+}
+material  twall.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap twall.bmp.png
+}
+material  logocam.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap logocam.bmp.png
+}
+material  logomar.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap logomar.bmp.png
+}
+material  fnceb.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap fnceb.bmp.png
+}
+material  tsd.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap tsd.bmp.png
+}
+material  billb01.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap billb01.bmp.png
+}
+material  windtw.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap windtw.bmp.png
+}
+material  renault.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap renault.bmp.png
+}
+material  tente.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap tente.bmp.png
+}
+material  tower.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap tower.bmp.png
+}
+material  windc.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap windc.bmp.png
+}
+material  pitdoor.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap pitdoor.bmp.png
+}
+material  brick.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap brick.bmp.png
+}
+material  tent1.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap tent1.bmp.png
+}
+material  bush01.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap bush01.bmp.png
+}
+material  conea.bmp.png
+{
+	parent 0vdrRoad
+	diffuseMap conea.bmp.png
+}
+material  rd1aa.bmp.png
+{
+	parent 0vdrRoad
+	diffuseMap rd1aa.bmp.png
+}
+material  dirtb.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap dirtb.bmp.png
+}
+material  rsaa.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap rsaa.bmp.png
+}
+material  dirta.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap dirta.bmp.png
+}
+material  rd1ae.bmp.png
+{
+	parent 0vdrRoad
+	diffuseMap rd1ae.bmp.png
+}
+material  rs1ac.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap rs1ac.bmp.png
+}
+material  rs1ab.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap rs1ab.bmp.png
+}
+material  grase.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap grase.bmp.png
+}
+material  grasd.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap grasd.bmp.png
+}
+material  dune01.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap dune01.bmp.png
+}
+material  fence.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap fence.bmp.png
+}
+material  fire.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap fire.bmp.png
+}
+material  fncei.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap fncei.bmp.png
+}
+material  megane.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap megane.bmp.png
+}
+material  windb.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap windb.bmp.png
+}
+material  winda.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap winda.bmp.png
+}
+material  grstand.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap grstand.bmp.png
+}
+material  conca.bmp.png
+{
+	parent 0vdrRoad
+	diffuseMap conca.bmp.png
+}
+material  gspe.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap gspe.bmp.png
+}
+material  gspa.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap gspa.bmp.png
+}
+material  grasa.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap grasa.bmp.png
+}
+material  grvla.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap grvla.bmp.png
+}
+material  lake01.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap lake01.bmp.png
+}
+material  rd1ag.bmp.png
+{
+	parent 0vdrRoad
+	diffuseMap rd1ag.bmp.png
+}
+material  rd1af.bmp.png
+{
+	parent 0vdrRoad
+	diffuseMap rd1af.bmp.png
+}
+material  grasc.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap grasc.bmp.png
+}
+material  grasb.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap grasb.bmp.png
+}
+material  shrub.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap shrub.bmp.png
+}
+material  treesa.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap treesa.bmp.png
+}
+material  treesb.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap treesb.bmp.png
+}
+material  treesc.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap treesc.bmp.png
+}
+material  rd1ad.bmp.png
+{
+	parent 0vdrRoad
+	diffuseMap rd1ad.bmp.png
+}
+material  mbox.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap mbox.bmp.png
+}
+material  people01.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap people01.bmp.png
+}
+material  people02.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap people02.bmp.png
+}
+material  pitbld02.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap pitbld02.bmp.png
+}
+material  pot.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap pot.bmp.png
+}
+material  pits.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap pits.bmp.png
+}
+material  xrw1a.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap xrw1a.bmp.png
+}
+material  fncea.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap fncea.bmp.png
+}
+material  model.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap model.bmp.png
+}
+material  scorebrd.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap scorebrd.bmp.png
+}
+material  seats.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap seats.bmp.png
+}
+material  shad.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap shad.bmp.png
+}
+material  tsc.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap tsc.bmp.png
+}
+material  ts.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap ts.bmp.png
+}
+material  tsa.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap tsa.bmp.png
+}
+material  trailers.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap trailers.bmp.png
+}
+material  rd1ac.bmp.png
+{
+	parent 0vdrRoad
+	diffuseMap rd1ac.bmp.png
+}
+material  rd1ab.bmp.png
+{
+	parent 0vdrRoad
+	diffuseMap rd1ab.bmp.png
+}
+material  trucka02.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap trucka02.bmp.png
+}
+material  mhside.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap mhside.bmp.png
+}
+material  mhfr.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap mhfr.bmp.png
+}
+material  xrw1b.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap xrw1b.bmp.png
+}

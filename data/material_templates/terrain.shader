@@ -146,6 +146,7 @@
     
 #if TRIPLANAR
         shUniform(float4x4, worldMatrix) @shAutoConstant(worldMatrix, world_matrix)
+        shUniform(float, terrainWorldSize) @shSharedParameter(terrainWorldSize)
 #endif
 
 
@@ -278,8 +279,9 @@
         float2 coord1, coord2, coord3;
         float4 col1, col2, col3;
         
-        // use world position to get a consistent uv scale
-        float3 wPos = shMatrixMult(worldMatrix, float4(objSpacePosition, 1)).xyz;
+        // use world position and divide by terrain world size to get a consistent uv scale (-0.5 ... 0.5)
+        // this is the same scale that non-triplanar would have
+        float3 wPos = shMatrixMult(worldMatrix, float4(objSpacePosition, 1)).xyz / terrainWorldSize;
 #endif
         
 #if NORMAL_MAPPING
@@ -304,10 +306,9 @@
     
 #if TRIPLANAR
 
-        // 700 = magic number to get roughly the same uv scale as without triplanar
-		coord1 = wPos.yz * uvMul@shPropertyString(uv_component_@shIterator) / 700;
-		coord2 = wPos.zx * uvMul@shPropertyString(uv_component_@shIterator) / 700;
-		coord3 = wPos.xy * uvMul@shPropertyString(uv_component_@shIterator) / 700;
+		coord1 = wPos.yz * uvMul@shPropertyString(uv_component_@shIterator);
+		coord2 = wPos.zx * uvMul@shPropertyString(uv_component_@shIterator);
+		coord3 = wPos.xy * uvMul@shPropertyString(uv_component_@shIterator);
 		
 		
         // parallax

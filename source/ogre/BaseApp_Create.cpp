@@ -431,6 +431,7 @@ bool BaseApp::setup()
 	mFactory->setSharedParameter ("arrowColour1", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
 	mFactory->setSharedParameter ("arrowColour2", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
 	mFactory->setSharedParameter ("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(0)));
+	mFactory->setSharedParameter ("terrainWorldSize", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(1024)));
 
 	mFactory->setShaderDebugOutputEnabled (true);
 
