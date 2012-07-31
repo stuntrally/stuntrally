@@ -1149,8 +1149,6 @@ void GrassLayer::_updateShaders()
 			///T use material name, //old:we use our own material (only one) so we want static material name
 			const String matName = material->getName();  //old "grass"
 
-			std::cout << " grassMat " << matName << std::endl;
-
 			//Check if the desired material already exists (if not, create it)
 			MaterialPtr tmpMat = MaterialManager::getSingleton().getByName(matName);
 			if (tmpMat.isNull())

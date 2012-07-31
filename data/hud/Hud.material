@@ -10,6 +10,29 @@ vertex_program Ogre/Needle_vp cg
 	}
 }
 
+
+material hud/CarPos
+{
+	technique
+	{
+		pass
+		{
+			depth_write off
+			scene_blend alpha_blend
+			cull_hardware none
+
+			diffuse 0 0 0
+			ambient vertexcolour
+
+			texture_unit
+			{
+				texture carpos0.png
+			}
+		}
+	}
+}
+
+
 //  needle  
 material hud/needleB
 {

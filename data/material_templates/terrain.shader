@@ -1,31 +1,36 @@
 #include "core.h"
 
-#define FOG @shGlobalSettingBool(fog)
-#define MRT @shGlobalSettingBool(mrt_output)
 
 
-#define SHADOWS @shGlobalSettingBool(shadows_pssm)
+#define RENDER_COMPOSITE_MAP @shPropertyBool(composite_map)
+
+#define COMPOSITE_MAP @shGlobalSettingBool(terrain_composite_map)
+
+#define FOG @shGlobalSettingBool(fog) && !RENDER_COMPOSITE_MAP
+#define MRT @shGlobalSettingBool(mrt_output) && !RENDER_COMPOSITE_MAP
+
+#define SHADOWS @shGlobalSettingBool(shadows_pssm) && !RENDER_COMPOSITE_MAP
 
 #if SHADOWS
 #include "shadows.h"
 #endif
 
-#define COMPOSITE_MAP @shGlobalSettingBool(terrain_composite_map)
-
 #define NUM_LAYERS @shPropertyString(num_layers)
 
 #define NORMAL_MAPPING 1
 
+#define SPECULAR !RENDER_COMPOSITE_MAP
+
 #define SPECULAR_EXPONENT 32
 
-#define PARALLAX_MAPPING 1 && !COMPOSITE_MAP && NORMAL_MAPPING
+#define PARALLAX_MAPPING 1 && !RENDER_COMPOSITE_MAP && NORMAL_MAPPING
 
 #define PARALLAX_SCALE 0.03
 #define PARALLAX_BIAS -0.04
 
-#define TRIPLANAR 1
+#define TRIPLANAR !RENDER_COMPOSITE_MAP
 
-#if MRT || FOG || SHADOWS
+#if (MRT) || (FOG) || (SHADOWS)
 #define NEED_DEPTH 1
 #endif
 
@@ -117,8 +122,11 @@
     // ----------------------------------- FRAGMENT ------------------------------------------
 
 
+#if !COMPOSITE_MAP
+
+
+
     SH_BEGIN_PROGRAM
-    
 
         shSampler2D(normalMap) // global normal map
 
@@ -173,7 +181,7 @@
 #if SHADOWS
     @shForeach(3)
         shSampler2D(shadowMap@shIterator)
-        shUniform(float2, invShadowmapSize@shIterator)  @shAutoConstant(invShadowmapSize@shIterator, inverse_texture_size, @shIterator(@shPropertyString(shadowtexture_offset)))
+        shUniform(float2, invShadowmapSize@shIterator)  @shAutoConstant(invShadowmapSize@shIterator, inverse_texture_size, @shIterator)
     @shEndForeach
     shUniform(float3, pssmSplitPoints)  @shSharedParameter(pssmSplitPoints)
 #endif
@@ -193,6 +201,30 @@
         float2 UV = @shPassthroughReceive(UV);
         
         float3 objSpacePosition = @shPassthroughReceive(objSpacePosition);
+
+
+        // Shadows
+#if SHADOWS
+        @shForeach(3)
+            float4 lightSpacePos@shIterator = @shPassthroughReceive(lightSpacePos@shIterator);
+        @shEndForeach
+
+            float shadow = pssmDepthShadow (lightSpacePos0, invShadowmapSize0, shadowMap0, lightSpacePos1, invShadowmapSize1, shadowMap1, lightSpacePos2, invShadowmapSize2, shadowMap2, depth, pssmSplitPoints);
+#endif
+
+
+
+#if !(SHADOWS)
+            float shadow = 1.0;
+#endif
+
+		shadow *= shSample(lightMap, UV).x;
+        
+
+
+
+
+
 
         float3 normal = shSample(normalMap, UV).rgb * 2 - 1;
         normal = normalize(normal);
@@ -349,10 +381,14 @@
         
         #if @shIterator == 0
         litRes.x = NdotL;
+        #if SPECULAR
         litRes.y = specular;
+        #endif
         #else
         litRes.x = shLerp (litRes.x, NdotL, blendValues@shPropertyString(blendmap_component_@shIterator));
+        #if SPECULAR
         litRes.y = shLerp (litRes.y, specular, blendValues@shPropertyString(blendmap_component_@shIterator));
+        #endif
         #endif
         
         #else
@@ -375,24 +411,6 @@
         
         
         
-        // Shadows
-#if SHADOWS
-        @shForeach(3)
-            float4 lightSpacePos@shIterator = @shPassthroughReceive(lightSpacePos@shIterator);
-        @shEndForeach
-
-            float shadow = pssmDepthShadow (lightSpacePos0, invShadowmapSize0, shadowMap0, lightSpacePos1, invShadowmapSize1, shadowMap1, lightSpacePos2, invShadowmapSize2, shadowMap2, depth, pssmSplitPoints);
-#endif
-
-
-
-#if !SHADOWS
-            float shadow = 1.0;
-#endif
-
-		shadow *= shSample(lightMap, UV).x;
-        
-        
         // Lighting 
 
 
@@ -409,11 +427,15 @@
         diffuse += lightDiffuse0.xyz * max(dot(normal, lightDir), 0) * shadow;
     
         shOutputColour(0).xyz *= (lightAmbient.xyz + diffuse);
+        #if SPECULAR
         shOutputColour(0).xyz += specular * lightSpecular0.xyz * specularAmount * shadow;
+        #endif
     
 #else
         shOutputColour(0).xyz *= (lightAmbient.xyz + litRes.x * lightDiffuse0.xyz * shadow);
+        #if SPECULAR
         shOutputColour(0).xyz += litRes.y * lightSpecular0.xyz * shadow;
+        #endif
 #endif
     
     
@@ -433,11 +455,113 @@
 #endif
 
 #if COMPOSITE_MAP
-       // shOutputColour(0).xyz = float3(1,1,1);
+        shOutputColour(0).xyz = float3(1,1,1);
 #endif
 
         //shOutputColour(0).xyz = float3(1,0,0) * blend_weights.x + float3(0,1,0) * blend_weights.y + float3(0,0,1) * blend_weights.z;
         //shOutputColour(0).xy = mod(coord1.xy / 100, float2(1,1));
     }
+    
+    
+    
+    
+    
+    
+#else // COMPOSITE_MAP
+
+
+
+
+
+
+    SH_BEGIN_PROGRAM
+    
+#if FOG
+        shUniform(float3, fogColour) @shAutoConstant(fogColour, fog_colour)
+        shUniform(float4, fogParams) @shAutoConstant(fogParams, fog_params)
+#endif
+    
+        @shPassthroughFragmentInputs
+    
+#if MRT
+        shDeclareMrtOutput(1)
+        shUniform(float, far) @shAutoConstant(far, far_clip_distance)
+#endif
+
+
+
+#if SHADOWS
+    @shForeach(3)
+        shSampler2D(shadowMap@shIterator)
+        shUniform(float2, invShadowmapSize@shIterator)  @shAutoConstant(invShadowmapSize@shIterator, inverse_texture_size, @shIterator)
+    @shEndForeach
+    shUniform(float3, pssmSplitPoints)  @shSharedParameter(pssmSplitPoints)
+#endif
+
+#if SHADOWS
+        shUniform(float4, shadowFar_fadeStart) @shSharedParameter(shadowFar_fadeStart)
+#endif
+
+
+        shSampler2D(compositeMap)
+
+
+    SH_START_PROGRAM
+    {
+
+#if NEED_DEPTH
+        float depth = @shPassthroughReceive(depth);
+#endif
+
+        float2 UV = @shPassthroughReceive(UV);
+        
+        float3 objSpacePosition = @shPassthroughReceive(objSpacePosition);
+
+
+        // Shadows
+#if SHADOWS
+        @shForeach(3)
+            float4 lightSpacePos@shIterator = @shPassthroughReceive(lightSpacePos@shIterator);
+        @shEndForeach
+
+            float shadow = pssmDepthShadow (lightSpacePos0, invShadowmapSize0, shadowMap0, lightSpacePos1, invShadowmapSize1, shadowMap1, lightSpacePos2, invShadowmapSize2, shadowMap2, depth, pssmSplitPoints);
+#endif
+
+
+
+#if !(SHADOWS)
+            float shadow = 1.0;
+#endif
+        
+        
+        shOutputColour(0) = float4(shSample(compositeMap, UV).xyz, 1);
+
+        
+#if FOG
+        float fogValue = shSaturate((depth - fogParams.y) * fogParams.w);
+        
+        shOutputColour(0).xyz = shLerp (shOutputColour(0).xyz, fogColour, fogValue);
+#endif
+
+        // prevent negative colour output (for example with negative lights)
+        shOutputColour(0).xyz = max(shOutputColour(0).xyz, float3(0,0,0));
+
+
+#if MRT
+        shOutputColour(1) = float4(depth / far,1,1,1);
+#endif
+
+    //shOutputColour(0).xy = UV;
+
+
+    }
+
+
+
+
+
+
+#endif
+    
 
 #endif

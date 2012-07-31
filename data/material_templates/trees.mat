@@ -82,6 +82,7 @@ material 3D-Diggers/fir01
     alpha_rejection greater 128
     transparent true
     tree_wind true
+    receives_shadows false
 }
 
 material 3D-Diggers/firW1

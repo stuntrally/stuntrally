@@ -94,3 +94,36 @@ material cartire_rear_ES
 {
     parent cartire_front_ES   
 }
+
+
+
+// RS
+
+material chasis/Material#1
+{
+    parent base
+    envMap ReflectionCube
+    env_map true
+    diffuse 1.0 1.0 1.0
+    ambient 1.0 1.0 1.0
+    specular 0.7 0.7 0.7 32
+    fresnelScaleBiasPower 0.73 0.07 4
+    diffuseMap chasis.png
+}
+
+
+material chasis/Material#2
+{
+	parent car_glass
+	diffuseMap ventanas.png
+}
+
+material chasis/Material_#3
+{
+    parent base
+	ambient 0.6 0.6 0.6
+	diffuse 0.5 0.5 0.5
+	specular 0.2 0.2 0.2 24
+	diffuseMap chasis_a.jpg
+}
+

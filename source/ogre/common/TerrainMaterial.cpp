@@ -67,7 +67,7 @@ void TerrainMaterial::Profile::createMaterial (const Ogre::String& matName, cons
 		Ogre::MaterialPtr ogreMat = static_cast<sh::OgreMaterial*>(mMaterial->getMaterial())->getOgreMaterial();
 
 		Ogre::Material::LodValueList list;
-		list.push_back(100);
+		list.push_back(Ogre::TerrainGlobalOptions::getSingleton().getCompositeMapDistance());
 		ogreMat->setLodLevels(list);
 	}
 
@@ -78,21 +78,18 @@ void TerrainMaterial::Profile::createMaterial (const Ogre::String& matName, cons
 	p->setProperty ("vertex_program", sh::makeProperty<sh::StringValue>(new sh::StringValue("terrain_vertex")));
 	p->setProperty ("fragment_program", sh::makeProperty<sh::StringValue>(new sh::StringValue("terrain_fragment")));
 
+	p->mShaderProperties.setProperty("composite_map", sh::makeProperty<sh::BooleanValue>(new sh::BooleanValue(renderCompositeMap)));
 
-	int shadowTextureOffset = 0;
 
 	// global normal map
 	sh::MaterialInstanceTextureUnit* normalMap = p->createTextureUnit ("normalMap");
 	normalMap->setProperty ("direct_texture", sh::makeProperty<sh::StringValue> (new sh::StringValue(terrain->getTerrainNormalMap ()->getName())));
 	normalMap->setProperty ("tex_address_mode", sh::makeProperty<sh::StringValue> (new sh::StringValue("clamp")));
 
-	++shadowTextureOffset;
-
 	// light map
 	sh::MaterialInstanceTextureUnit* lightMap = p->createTextureUnit ("lightMap");
 	lightMap->setProperty ("direct_texture", sh::makeProperty<sh::StringValue> (new sh::StringValue(terrain->getLightmap()->getName())));
 	lightMap->setProperty ("tex_address_mode", sh::makeProperty<sh::StringValue> (new sh::StringValue("clamp")));
-	++shadowTextureOffset;
 
 	uint maxLayers = getMaxLayers(terrain);
 	uint numBlendTextures = std::min(terrain->getBlendTextureCount(maxLayers), terrain->getBlendTextureCount());
@@ -108,7 +105,6 @@ void TerrainMaterial::Profile::createMaterial (const Ogre::String& matName, cons
 		blendTex->setProperty ("direct_texture", sh::makeProperty<sh::StringValue> (new sh::StringValue(terrain->getBlendTextureName(i))));
 		blendTex->setProperty ("tex_address_mode", sh::makeProperty<sh::StringValue> (new sh::StringValue("clamp")));
 	}
-	shadowTextureOffset += numBlendTextures;
 
 	// layer diffuse
 	for (uint i = 0; i < numLayers; ++i)
@@ -118,7 +114,6 @@ void TerrainMaterial::Profile::createMaterial (const Ogre::String& matName, cons
 		p->mShaderProperties.setProperty ("blendmap_component_" + Ogre::StringConverter::toString(i),
 			sh::makeProperty<sh::StringValue>(new sh::StringValue(Ogre::StringConverter::toString(int((i-1) / 4)) + "." + getComponent(int((i-1) % 4)))));
 	}
-	shadowTextureOffset += numLayers;
 
 	// layer normalheight
 	for (uint i = 0; i < numLayers; ++i)
@@ -126,7 +121,6 @@ void TerrainMaterial::Profile::createMaterial (const Ogre::String& matName, cons
 		sh::MaterialInstanceTextureUnit* normalTex = p->createTextureUnit ("normalMap" + Ogre::StringConverter::toString(i));
 		normalTex->setProperty ("direct_texture", sh::makeProperty<sh::StringValue> (new sh::StringValue(terrain->getLayerTextureName(i, 1))));
 	}
-	shadowTextureOffset += numLayers;
 
 	// shadow
 	if (!renderCompositeMap)
@@ -137,6 +131,10 @@ void TerrainMaterial::Profile::createMaterial (const Ogre::String& matName, cons
 			shadowTex->setProperty ("content_type", sh::makeProperty<sh::StringValue> (new sh::StringValue("shadow")));
 		}
 	}
+
+	// composite map
+	sh::MaterialInstanceTextureUnit* compositeMap = p->createTextureUnit ("compositeMap");
+	compositeMap->setProperty ("direct_texture", sh::makeProperty<sh::StringValue> (new sh::StringValue(terrain->getCompositeMap()->getName())));
 
 	// uv multipliers
 	uint numUVMul = numLayers / 4;
@@ -160,7 +158,7 @@ void TerrainMaterial::Profile::createMaterial (const Ogre::String& matName, cons
 	p->mShaderProperties.setProperty ("num_uv_mul", sh::makeProperty<sh::StringValue> (new sh::StringValue(Ogre::StringConverter::toString(numUVMul))));
 
 	p->mShaderProperties.setProperty ("shadowtexture_offset", sh::makeProperty<sh::StringValue>(new sh::StringValue(
-		Ogre::StringConverter::toString(shadowTextureOffset))));
+		Ogre::StringConverter::toString(0))));
 }
 
 
