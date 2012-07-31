@@ -18,9 +18,10 @@
 #define ENV_MAP @shPropertyBool(env_map)
 #define FRESNEL @shPropertyBool(fresnel)
 #define REFL_MAP @shPropertyBool(refl_map)
+#define SPEC_MAP @shPropertyBool(spec_map)
 #define CAR_PAINT_MAP @shPropertyBool(car_paint_map)
 #define TERRAIN_LIGHT_MAP @shPropertyBool(terrain_light_map)
-
+#define TERRAIN_LIGHT_MAP_TOGGLEABLE @shPropertyBool(terrain_light_map_toggleable)
 
 #if TERRAIN_LIGHT_MAP || ENV_MAP
 #define NEED_WORLD_MATRIX
@@ -134,6 +135,8 @@
 
 #if NORMAL_MAP
         shSampler2D(normalMap)
+        shInput(float3, tangentPassthrough)
+        shUniform(float, bumpScale) @shUniformProperty1f(bumpScale, bump_scale)
 #endif
 
 #if ENV_MAP
@@ -156,10 +159,8 @@
         shInput(float, depthPassthrough)
 #endif
 
-#if NORMAL_MAP
-        shInput(float3, tangentPassthrough)
-        
-        shUniform(float, bumpScale) @shUniformProperty1f(bumpScale, bump_scale)
+#if SPEC_MAP
+        shSampler2D(specMap)
 #endif
 
         shInput(float3, normalPassthrough)
@@ -186,7 +187,9 @@
 #if TERRAIN_LIGHT_MAP
         shSampler2D(terrainLightMap)
         shUniform(float, terrainWorldSize)  @shSharedParameter(terrainWorldSize)
+        #if TERRAIN_LIGHT_MAP_TOGGLEABLE
         shUniform(float, enableTerrainLightMap)
+        #endif
 #endif
 
 
@@ -255,23 +258,32 @@
 		float2 worldPos = shMatrixMult(wMat, float4(objSpacePositionPassthrough, 1)).xz;
 		float2 lmTexCoord = (worldPos / terrainWorldSize) + 0.5;
 		shadowingLM = shSample(terrainLightMap, lmTexCoord).x;
+        #if TERRAIN_LIGHT_MAP_TOGGLEABLE
+		shadow = min(shadow, (enableTerrainLightMap == 1) ? shadowingLM : 1.0);
+		#else
 		shadow = min(shadow, shadowingLM);
+		#endif
 #endif
 
 
         float3 lightDir = normalize(lightPosObjSpace.xyz);
 
         float NdotL = max(dot(normal, lightDir), 0);
-        float3 diffuse = materialDiffuse.xyz * NdotL * shadow;
+        float3 diffuse = materialDiffuse.xyz * lightDiffuse.xyz * NdotL * shadow;
     
         float3 eyeDir = normalize(camPosObjSpace.xyz - objSpacePositionPassthrough.xyz);
         float3 halfAngle = normalize (lightDir + eyeDir);
-        float specular = pow(max(dot(normal, halfAngle), 0), materialShininess);
+        
+        #if !SPEC_MAP
+        float3 specular = pow(max(dot(normal, halfAngle), 0), materialShininess) * materialSpecular.xyz;
+        #else
+        float4 specTex = shSample(specMap, UV);
+        float3 specular = pow(max(dot(normal, halfAngle), 0), specTex.a * 255) * specTex.xyz;
+        #endif
         if (NdotL <= 0)
-            specular = 0;
+            specular = float3(0,0,0);
 
-        shOutputColour(0).xyz *= (ambient + diffuse);
-        shOutputColour(0).xyz += specular * materialSpecular.xyz * lightSpecular.xyz * shadow;
+        shOutputColour(0).xyz = shOutputColour(0).xyz * (ambient + diffuse) + specular * lightSpecular.xyz * shadow;
 
 #if ENV_MAP           
         float3 r = reflect( -eyeDir, normal );
@@ -312,7 +324,7 @@
 
 #if SPECULAR_ALPHA
         // bump alpha with specular
-        shOutputColour(0).a = min(shOutputColour(0).a + specular ,1);
+        shOutputColour(0).a = min(shOutputColour(0).a + specular.x ,1);
 #endif
 
 //shOutputColour(0).xyz = shSample(carPaintMap, UV).rgb;

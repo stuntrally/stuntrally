@@ -266,6 +266,7 @@ const String& App::GetGhostFile()
 
 void App::materialCreated (sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex)
 {
+
 	Ogre::Technique* t = static_cast<sh::OgreMaterial*>(m->getMaterial())->getOgreTechniqueForConfiguration (configuration, lodIndex);
 
 

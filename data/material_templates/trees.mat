@@ -64,6 +64,7 @@ material tree.09.branch1.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE
 
 material tree.09.mat/SOLID/TEX/tree.09.png/VertCol
 {
+    parent base
 	diffuseMap tree.09.png
 	terrain_light_map true
 	tree_wind true
@@ -79,6 +80,8 @@ material 3D-Diggers/fir01
     diffuse 0.6 0.6 0.6
     diffuseMap fir01.png
     alpha_rejection greater 128
+    transparent true
+    tree_wind true
 }
 
 material 3D-Diggers/firW1
@@ -112,6 +115,7 @@ material palm2
 	cull_hardware none
 	tree_wind true
 	transparent true
+	receives_shadows false
 }
 
 material Palm
@@ -124,24 +128,29 @@ material Palm
 	specular 0.3 0.3 0.3 21
 	tree_wind true
 	transparent true
+	receives_shadows false
 }
 
 
 // Gum tree
 material gum_branch
 {
+    parent base
     diffuseMap gum_branch.png
     ambient 0.59 0.59 0.59
     diffuse 0.59 0.59 0.59
     alpha_rejection greater 128
     cull_hardware none
     transparent true
+    tree_wind true
 }
 
 material gum_bark
 {
+    parent base
     diffuseMap gum_bark.png
     ambient 0.8 0.8 0.8
     diffuse 0.64 0.64 0.64
     specular 0.12 0.12 0.12 32
+    tree_wind true
 }

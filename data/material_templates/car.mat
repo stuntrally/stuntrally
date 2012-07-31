@@ -8,6 +8,7 @@ material car_body
     env_map true
     car_paint_map true
     terrain_light_map true
+    terrain_light_map_toggleable true
     fresnel true
     fresnelScaleBiasPower 0.79 0.07 4
     specular 1 1 1 128
@@ -27,6 +28,7 @@ material car_glass
 	fresnel true
 	specular_alpha true
 	terrain_light_map true
+	terrain_light_map_toggleable true
 }
 
 material car_ghost
@@ -40,6 +42,7 @@ material car_interior
 	parent base
 	diffuseMap interior.png
 	terrain_light_map true
+	terrain_light_map_toggleable true
 }
 
 material cartire_front
@@ -47,6 +50,7 @@ material cartire_front
 	parent base
 	diffuseMap wheel.png
 	terrain_light_map true
+	terrain_light_map_toggleable true
 }
 
 material cartire_rear
@@ -54,11 +58,39 @@ material cartire_rear
 	parent base
 	diffuseMap wheel.png
 	terrain_light_map true
+	terrain_light_map_toggleable true
 }
+
+
+
+// ES
 
 material car_body_ES
 {
     parent car_body
     normal_map true
     normalMap ES_normal.png
+    spec_map true
+    specMap ES_spec.png
+}
+
+material car_interior_ES
+{
+    parent car_interior
+    normal_map true
+    normalMap ES_interior_normal.jpg
+}
+
+material cartire_front_ES
+{
+    parent cartire_front
+    normal_map true
+    normalMap ES_wheel_normal.jpg
+    spec_map true
+    specMap ES_wheel_spec.png
+}
+
+material cartire_rear_ES
+{
+    parent cartire_front_ES   
 }
