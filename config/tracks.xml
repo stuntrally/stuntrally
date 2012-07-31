@@ -150,5 +150,6 @@
 
 	<track n="93" name="F15-ForestTrip"	created="01-06-12" crtver="1.7" modified="29-06-12" scenery="Forest" author="krash" fluids="1" bumps="2" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="2" rating="3" />
 	<track n="94" name="J19-demo2"		created="23-07-12" crtver="1.7" modified="23-07-12" scenery="Jungle"	author="CH" fluids="2" bumps="0" jumps="1" loops="1" pipes="1" banked="2" frenzy="2" long="2" diff="2" rating="2" />
+<track n="95" name="D11-PersianCity"	created="31-07-12" crtver="1.7" modified="31-07-12" scenery="Desert"	author="CH" fluids="0" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="2" long="1" diff="2" rating="3" />
 
 </tracks>

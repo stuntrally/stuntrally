@@ -67,6 +67,28 @@
 	normalMap_1024 = volcano_7_nh1.png
 	terrainLightMap = true
 
+; ----------- Sand2 Island ------------
+[roadSand2]
+	parent = road
+	ambient = 0.94 0.94 0.94
+	diffuse = 0.82 0.82 0.82
+	specular = 0.23 0.23 0.22 32
+	depthBias = 3
+	diffuseMap_512 = roadSand2_s.jpg
+	diffuseMap_2048 = roadSand2.jpg
+	receivesShadows = true
+
+[roadSand2_ter]
+	parent = roadSand2
+	alphaMap_512 = roadAlpha_s.png
+	alphaMap_2048 = roadAlpha.png
+	transparent = true
+	sceneBlend = alpha
+	depthWrite = false
+	normalMap_512 = volcano_7_nh1_s.png
+	normalMap_1024 = volcano_7_nh1.png
+	terrainLightMap = true
+
 
 ; ----------- Sand Island shore ======------
 [roadSandShore]
