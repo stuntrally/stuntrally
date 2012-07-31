@@ -110,7 +110,7 @@ void App::CreateObjects()
 		o.ent = mSceneMgr->createEntity("oE"+s, (no ? "sphere" : o.name) + ".mesh");
 		o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s);
 		o.SetFromBlt();
-		o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
+		o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Objects);
 		o.nd->setScale(o.scale);
 		if (no)  continue;
 
