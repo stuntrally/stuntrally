@@ -109,6 +109,7 @@ void GrassLoader::frameUpdate()
 
 		layer->_updateShaders();
 		
+		/*
 		if (layer->material->getTechnique(0)->getPass(0)->hasVertexProgram())
 		{
 			GpuProgramParametersSharedPtr params = layer->material->getTechnique(0)->getPass(0)->getVertexProgramParameters();
@@ -131,6 +132,7 @@ void GrassLoader::frameUpdate()
 
 			}
 		}
+		*/
 	}
 }
 
@@ -1147,6 +1149,8 @@ void GrassLayer::_updateShaders()
 			///T use material name, //old:we use our own material (only one) so we want static material name
 			const String matName = material->getName();  //old "grass"
 
+			std::cout << " grassMat " << matName << std::endl;
+
 			//Check if the desired material already exists (if not, create it)
 			MaterialPtr tmpMat = MaterialManager::getSingleton().getByName(matName);
 			if (tmpMat.isNull())
@@ -1190,10 +1194,12 @@ void GrassLayer::_updateShaders()
 			//Now the material (tmpMat) has either been found or just created (depending on whether or not it was already
 			//created). The appropriate vertex shader should be applied and the material is ready for use.
 			
+			/*
 			if (tmpMat->getTechnique(0)->getPass(0)->hasVertexProgram()) {
 			if (tmpMat->getTechnique(0)->getPass(0)->getVertexProgramParameters()->_findNamedConstantDefinition("fadeRange", false))
 				tmpMat->getTechnique(0)->getPass(0)->getVertexProgramParameters()->setNamedConstant("fadeRange", fadeRange);
 			}
+			*/
 
 			//Apply the new material
 			material = tmpMat;

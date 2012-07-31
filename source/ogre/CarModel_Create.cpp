@@ -487,4 +487,5 @@ void CarModel::requestedConfiguration (sh::MaterialInstance* m, const std::strin
 void CarModel::createdConfiguration (sh::MaterialInstance* m, const std::string& configuration)
 {
 	UpdateLightMap();
+	ChangeClr(iIndex);
 }

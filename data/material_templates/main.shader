@@ -3,7 +3,7 @@
 
 #define FOG @shGlobalSettingBool(fog)
 
-#define SHADOWS @shGlobalSettingBool(shadows_pssm)
+#define SHADOWS @shGlobalSettingBool(shadows_pssm) && @shPropertyBool(receives_shadows)
 
 #if SHADOWS
     #include "shadows.h"
@@ -26,7 +26,7 @@
 #define NEED_WORLD_MATRIX
 #endif
 
-#define TRANSPARENT @shPropertyBool(transparent)
+#define SPECULAR_ALPHA @shPropertyBool(specular_alpha)
 
 #define TREE_WIND @shPropertyBool(tree_wind) && @shGlobalSettingBool(wind)
 
@@ -125,6 +125,7 @@
 		
 #if CAR_PAINT_MAP
         shSampler2D(carPaintMap)
+        shUniform(float3, carColour)
 #endif
 		
 #if ALPHA_MAP
@@ -146,6 +147,8 @@
         
         #if FRESNEL
         shUniform(float3, fresnelScaleBiasPower) @shUniformProperty3f(fresnelScaleBiasPower, fresnelScaleBiasPower)
+        #else
+        shUniform(float, reflAmount)    @shUniformProperty1f(reflAmount, refl_amount)
         #endif
 #endif
 
@@ -206,7 +209,7 @@
         shOutputColour(0) = shSample(diffuseMap, UV);
         
 #if CAR_PAINT_MAP
-        shOutputColour(0).xyz = shLerp ( shOutputColour(0).xyz, shSample(carPaintMap, UV).xyz, 1 - shOutputColour(0).a);
+        shOutputColour(0).xyz = shLerp ( shOutputColour(0).xyz, shSample(carPaintMap, UV).r * carColour, 1 - shOutputColour(0).a);
 #endif
 
 
@@ -242,7 +245,7 @@
             shadow = (depthPassthrough > shadowFar_fadeStart.x) ? 1 : ((depthPassthrough > shadowFar_fadeStart.y) ? 1-((1-shadow)*fade) : shadow);
 #endif
 
-#if !SHADOWS
+#if !(SHADOWS)
             float shadow = 1.0;
 #endif
 
@@ -252,7 +255,7 @@
 		float2 worldPos = shMatrixMult(wMat, float4(objSpacePositionPassthrough, 1)).xz;
 		float2 lmTexCoord = (worldPos / terrainWorldSize) + 0.5;
 		shadowingLM = shSample(terrainLightMap, lmTexCoord).x;
-		shadow *= shadowingLM + (1-enableTerrainLightMap);
+		shadow = min(shadow, shadowingLM);
 #endif
 
 
@@ -284,11 +287,12 @@
 		#endif
 		
 		#if FRESNEL
-		
 		float facing = 1.0 - max(abs(dot(-eyeDir, normal)), 0);
 		reflectionFactor *= shSaturate(fresnelScaleBiasPower.y + fresnelScaleBiasPower.x * pow(facing, fresnelScaleBiasPower.z));
-		
+		#else
+		reflectionFactor *= reflAmount;
 		#endif
+		
 		
 		shOutputColour(0).xyz = shLerp (shOutputColour(0).xyz, envColor.xyz, reflectionFactor);
 		
@@ -306,7 +310,7 @@
         shOutputColour(0).a = shSample(alphaMap, float2(UV.x, UV.y * 0.01)).r;
 #endif
 
-#if TRANSPARENT
+#if SPECULAR_ALPHA
         // bump alpha with specular
         shOutputColour(0).a = min(shOutputColour(0).a + specular ,1);
 #endif

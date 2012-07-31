@@ -21,11 +21,15 @@ material base
     bump_scale 1
     fresnelScaleBiasPower 0.79 0.07 4
     fresnel false
+    refl_amount 0.1 // only used when fresnel off
     
     tree_wind false
     
+    receives_shadows true
     
-    transparent false
+    specular_alpha false
+    
+    transparent false // for shadowcaster
 
 	pass
 	{
@@ -51,10 +55,12 @@ material base
 		    refl_map $refl_map
 		    car_paint_map $car_paint_map
 		    terrain_light_map $terrain_light_map
+		    receives_shadows $receives_shadows
+		    refl_amount $refl_amount
 		    
 		    tree_wind $tree_wind
 		    
-		    transparent $transparent
+		    specular_alpha $specular_alpha
 		    
 		    fresnel $fresnel
 		    fresnelScaleBiasPower $fresnelScaleBiasPower

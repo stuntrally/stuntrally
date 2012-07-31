@@ -412,7 +412,6 @@ bool BaseApp::setup()
 	LogO("*** recreateCompositor ***");
 	recreateCompositor();
 
-	postInit();
 	LogO("*** end setup ***");
 
 	sh::OgrePlatform* platform = new sh::OgrePlatform("General", PATHMANAGER::GetDataPath() + "/" + "material_templates");
@@ -456,6 +455,8 @@ bool BaseApp::setup()
 	mFactory->setCurrentLanguage (lang);
 
 	mFactory->loadAllFiles ();
+
+	postInit();
 
 		ti.update();  dt = ti.dt * 1000.f;  /// time
 		LogO(String(":::: Time post, mat factory: ") + toStr(dt) + " ms");

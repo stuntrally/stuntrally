@@ -15,6 +15,8 @@
 #include <OgreManualObject.h>
 using namespace Ogre;
 
+#include "../shiny/Platforms/Ogre/OgreMaterial.hpp"
+
 
 //  ctors  -----------------------------------------------
 App::App(SETTINGS *settings, GAME *game)
@@ -152,22 +154,9 @@ App::~App()
 void App::postInit()
 {
 	mSplitMgr->pApp = this;
-	/*
-	materialFactory = new MaterialFactory();
-	materialFactory->pApp = this;
-	materialFactory->setSceneManager(mSceneMgr);
-	materialFactory->setShadows(pSet->shadow_type >= 1);
-	materialFactory->setShadowsDepth(pSet->shadow_type >= 2);
-	materialFactory->setShadowsSoft(pSet->shadow_type == 3);
-	materialFactory->setShaderQuality(pSet->shaders);
-	materialFactory->setShadowsFilterSize(pSet->shadow_filter);
-	materialFactory->setReflect(pSet->water_reflect);
-	materialFactory->setRefract(pSet->water_refract);
-	if (pSet->tex_size == 0)
-		materialFactory->setTexSize(0);
-	else if (pSet->tex_size == 1)
-		materialFactory->setTexSize(4096);
-         */
+
+	mFactory->setMaterialListener(this);
+
 }
 
 void App::setTranslations()
@@ -271,4 +260,25 @@ const String& App::GetGhostFile()
 		+ pSet->game.track + (pSet->game.track_user ? "_u" : "") + (pSet->game.trackreverse ? "_r" : "")
 		+ "_" + pSet->game.car[0] + ".rpl";
 	return file;
+}
+
+
+
+void App::materialCreated (sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex)
+{
+	Ogre::Technique* t = static_cast<sh::OgreMaterial*>(m->getMaterial())->getOgreTechniqueForConfiguration (configuration, lodIndex);
+
+
+	// this is just here to set the correct shadow caster
+	if (m->hasProperty ("transparent") && m->hasProperty ("cull_hardware") && sh::retrieveValue<sh::StringValue>(m->getProperty ("cull_hardware"), 0).get() == "none")
+	{
+		// Crash !?
+		///assert(!MaterialManager::getSingleton().getByName("PSSM/shadow_caster_nocull").isNull ());
+		//t->setShadowCasterMaterial("PSSM/shadow_caster_nocull");
+	}
+
+	if (!m->hasProperty ("transparent") || !sh::retrieveValue<sh::BooleanValue>(m->getProperty ("transparent"), 0).get())
+	{
+		t->setShadowCasterMaterial("PSSM/shadow_caster_noalpha");
+	}
 }

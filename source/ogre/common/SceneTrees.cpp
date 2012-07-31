@@ -116,8 +116,7 @@ void App::CreateTrees()
 		grassLoader->setHeightFunction(&getTerrainHeight);
 
 		//  Add grass
-		//GrassLayer *l = grassLoader->addLayer(sc.grassMtr);
-		GrassLayer *l = grassLoader->addLayer("BaseWhite");
+		GrassLayer *l = grassLoader->addLayer(sc.grassMtr);
 		l->setMinimumSize(sc.grMinSx, sc.grMinSy);
 		l->setMaximumSize(sc.grMaxSx, sc.grMaxSy);
 		l->setDensity(fGrass);  l->setSwayDistribution(sc.grSwayDistr);

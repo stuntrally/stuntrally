@@ -1,6 +1,18 @@
-material road
+material road_terrain
 {
 	parent base
+	
+    alpha_map true
+    depth_write off
+    scene_blend alpha_blend
+    alphaMap roadAlpha.png
+    depth_bias 3
+    terrain_light_map true
+}
+
+material road
+{
+    parent base
 }
 
 material roadJungle_ter
@@ -37,7 +49,7 @@ material roadGDesert
 
 material roadGDesert_ter
 {
-	parent road
+	parent road_terrain
 	diffuseMap roadDesert.jpg
 	ambient 0.84 0.94 0.74
 	diffuse 0.63 0.65 0.62
@@ -67,14 +79,11 @@ material roadMud
 
 material roadMud_ter
 {
-	parent roadMud
+	parent road_terrain
 	
 	normal_map true
 	normalMap ice_3_nh1.png
-    alpha_map true
-    depth_write off
-    scene_blend alpha_blend
-    alphaMap roadAlpha.png
+	diffuseMap roadMud.jpg
 }
 
 material roadDesert
@@ -88,9 +97,10 @@ material roadDesert
 
 material roadDesert_ter
 {
-    parent roadDesert
-    alpha_map true
-    depth_write off
-    scene_blend alpha_blend
-    alphaMap roadAlpha.png
+    parent road_terrain
+    
+	ambient 0.85 0.85 0.85
+	diffuse 0.81 0.8 0.75
+	specular 0.36 0.34 0.3 18
+    diffuseMap roadDesert.jpg
 }

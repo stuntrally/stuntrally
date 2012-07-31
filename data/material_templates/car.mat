@@ -25,7 +25,8 @@ material car_glass
 	fresnelScaleBiasPower 0.75 0.15 4
 	env_map true
 	fresnel true
-	transparent true
+	specular_alpha true
+	terrain_light_map true
 }
 
 material car_ghost
@@ -38,18 +39,21 @@ material car_interior
 {
 	parent base
 	diffuseMap interior.png
+	terrain_light_map true
 }
 
 material cartire_front
 {
 	parent base
 	diffuseMap wheel.png
+	terrain_light_map true
 }
 
 material cartire_rear
 {
 	parent base
 	diffuseMap wheel.png
+	terrain_light_map true
 }
 
 material car_body_ES

@@ -116,7 +116,7 @@ void App::changeShadows()
 		mSceneMgr->setShadowCasterRenderBackFaces((bDepth && !bSoft) ? true : false);
 		
 		String shadowCasterMat;
-		if (bDepth) shadowCasterMat = "PSSM/shadow_caster_noalpha";
+		if (bDepth) shadowCasterMat = "PSSM/shadow_caster";
 
 		else shadowCasterMat = StringUtil::BLANK;
 		

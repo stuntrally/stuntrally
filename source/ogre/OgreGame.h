@@ -23,6 +23,8 @@
 #include <MyGUI.h>
 #include <OgreShadowCameraSetup.h>
 
+#include "../shiny/Main/Factory.hpp"
+
 
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;
 	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
@@ -36,7 +38,7 @@ class GraphView;
 const int CarPosCnt = 8;  // size of poses queue
 
 
-class App : public BaseApp, public GameClientCallback, public MasterClientCallback
+class App : public BaseApp, public GameClientCallback, public MasterClientCallback, public sh::MaterialListener
 {
 public:
 	App(SETTINGS* settings, GAME* game);
@@ -457,6 +459,10 @@ protected:
 	void evEdNetGameName(MyGUI::EditPtr), evEdNetPassword(MyGUI::EditPtr),
 		evEdNetNick(MyGUI::EditPtr), evEdNetServerIP(MyGUI::EditPtr),
 		evEdNetServerPort(MyGUI::EditPtr), evEdNetLocalPort(MyGUI::EditPtr);
+
+
+public:
+	virtual void materialCreated (sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex);
 };
 
 #endif
