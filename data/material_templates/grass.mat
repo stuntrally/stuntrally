@@ -1,0 +1,58 @@
+material grass
+{
+    parent base
+    
+    alpha_rejection greater_equal 128
+    cull_hardware none
+    scene_blend alpha_blend
+    grass_wind true
+    terrain_light_map true
+}
+
+material grassAustralia
+{
+    parent grass
+    diffuseMap grassAustralia.png
+}
+
+material grassDesert
+{
+    parent grass
+    diffuseMap grassDesert.png
+}
+
+material grassForest
+{
+    parent grass
+    diffuseMap grassForest.png
+}
+
+material grassJungle
+{
+    parent grass
+    diffuseMap grassJungle.png
+}
+
+material grassGreece
+{
+    parent grass
+    diffuseMap grassGreece.png
+}
+
+material grassSavanna
+{
+    parent grass
+    diffuseMap grassSavanna.png
+}
+
+material grassWinter
+{
+    parent grass
+    diffuseMap grassWinter.png
+}
+
+material grassUnidentified
+{
+    parent grass
+    diffuseMap grassUnidentified.png
+}

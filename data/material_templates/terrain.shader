@@ -201,6 +201,10 @@
 	    // derive final matrix
 		float3x3 TBN = float3x3(tangent, binormal, normal);
 		
+		#if SH_GLSL
+		TBN = transpose(TBN);
+		#endif
+		
 		float3 lightDir = lightPosObjSpace0.xyz; // directional
 		float3 eyeDir = eyePosObjSpace.xyz - objSpacePosition.xyz;
 
@@ -352,6 +356,7 @@
 #if COMPOSITE_MAP
        // shOutputColour(0).xyz = float3(1,1,1);
 #endif
+
 
     }
 
