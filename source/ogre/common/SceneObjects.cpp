@@ -1,6 +1,7 @@
 #include "pch.h"
-#include "../common/RenderConst.h"
-#include "../common/Defines.h"
+#include "RenderConst.h"
+#include "Defines.h"
+#include "../../vdrift/pathmanager.h"
 
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
@@ -73,26 +74,49 @@ public:
 };
 #endif
 
+//  Create
+//-------------------------------------------------------------------------------------------------------
 void App::CreateObjects()
 {
+	//  maps for file exist (optimize)
+	using std::map;  using std::string;
+	map<string,bool> objExists, objHasBlt;
+	
+	for (int i=0; i < sc.objects.size(); ++i)
+	{
+		const string& s = sc.objects[i].name;
+		objExists[s] = false;  objHasBlt[s] = false;
+	}
+	for (map<string,bool>::iterator it = objExists.begin(); it != objExists.end(); ++it)
+	{
+		bool ex = boost::filesystem::exists(PATHMANAGER::GetDataPath()+"/objects/"+ (*it).first + ".mesh");
+		(*it).second = ex;
+		if (!ex)  LogO("CreateObjects mesh doesn't exist: " + (*it).first + ".mesh");
+	}
+	for (map<string,bool>::iterator it = objHasBlt.begin(); it != objHasBlt.end(); ++it)
+		(*it).second = boost::filesystem::exists(PATHMANAGER::GetDataPath()+"/objects/"+ (*it).first + ".bullet");
+
+	///  create
+	#ifndef ROAD_EDITOR
+	BulletWorldOffset* fileLoader = new BulletWorldOffset(pGame->collision.world);
+	#endif
 	for (int i=0; i < sc.objects.size(); ++i)
 	{
 		Object& o = sc.objects[i];
 		String s = toStr(i);  // counter for names
 
 		//  add to ogre
-		o.ent = mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
+		bool no = !objExists[o.name];
+		o.ent = mSceneMgr->createEntity("oE"+s, (no ? "sphere" : o.name) + ".mesh");
 		o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s);
 		o.SetFromBlt();
+		o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Objects);
 		o.nd->setScale(o.scale);
-		o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
-
+		if (no)  continue;
 
 		#ifndef ROAD_EDITOR
 		//  add to bullet world (in game)
-		std::string file = PATHMANAGER::GetDataPath()+"/objects/"+o.name+".bullet";
-		///  use some map ! dont check for every object ...
-		if (!boost::filesystem::exists(file))
+		if (!objHasBlt[o.name])
 		{
 			///  static
 			Vector3 posO = Vector3(o.pos[0],o.pos[2],-o.pos[1]);
@@ -119,12 +143,12 @@ void App::CreateObjects()
 		else  ///  dynamic
 		{
 			// .bullet load
-			BulletWorldOffset* fileLoader = new BulletWorldOffset(pGame->collision.world);
 			fileLoader->mTrOfs.setOrigin(btVector3(o.pos[0],o.pos[1],o.pos[2]+0.5f));
 			///+  why is this z ofs needed ? 1st sim dt ??...
 			fileLoader->mTrOfs.setRotation(btQuaternion(o.rot[0],o.rot[1],o.rot[2],o.rot[3]));
 			//fileLoader->setVerboseMode(true);//
 
+			std::string file = PATHMANAGER::GetDataPath()+"/objects/"+o.name+".bullet";
 			//LogO(".bullet: "+file);
 			if (fileLoader->loadFile(file.c_str()))
 			{
@@ -134,6 +158,12 @@ void App::CreateObjects()
 		}
 		#endif
 	}
+	#ifndef ROAD_EDITOR
+	delete fileLoader;
+	#endif
+	#ifdef ROAD_EDITOR
+	iObjLast = sc.objects.size();
+	#endif
 }
 
 void App::DestroyObjects()
@@ -151,6 +181,10 @@ void App::DestroyObjects()
 	}
 	sc.objects.clear();
 }
+
+
+//  Pick
+//-------------------------------------------------------------------------------------------------------
 
 #ifdef ROAD_EDITOR
 void App::UpdObjPick()
@@ -180,5 +214,45 @@ void App::UpdObjPick()
 	ndObjBox->setPosition(posO);
 	ndObjBox->setOrientation(rotO);
 	ndObjBox->setScale(s);
+}
+
+void App::PickObject()
+{
+	if (sc.objects.empty())  return;
+
+	iObjCur = -1;
+	const MyGUI::IntPoint& mp = MyGUI::InputManager::getInstance().getMousePosition();
+	Real mx = Real(mp.left)/mWindow->getWidth(), my = Real(mp.top)/mWindow->getHeight();
+	Ray ray = mCamera->getCameraToViewportRay(mx,my);  // 0..1
+
+	//  query scene (aabbs are enough)
+	RaySceneQuery* rq = mSceneMgr->createRayQuery(ray);
+	rq->setSortByDistance(true);
+	RaySceneQueryResult& res = rq->execute();
+
+	Real dist = 100000.f;
+	for (RaySceneQueryResult::iterator it = res.begin(); it != res.end(); ++it)
+	{
+		const String& s = (*it).movable->getName();
+		//LogO("RAY "+s+" "+fToStr((*it).distance,2,4));
+
+		if (StringUtil::startsWith(s,"oE",false))
+		{
+			int i = -1;
+			//  find obj with same ent name
+			for (int o=0; o < sc.objects.size(); ++o)
+				if (s == sc.objects[o].ent->getName())
+				{	i = o;  break;  }
+
+			//  pick if closer
+			if (i != -1 && (*it).distance < dist)
+			{
+				iObjCur = i;
+				dist = (*it).distance;
+			}
+		}
+	}
+	//rq->clearResults();
+	mSceneMgr->destroyQuery(rq);
 }
 #endif

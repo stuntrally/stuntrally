@@ -64,8 +64,7 @@ App::App()  //  gui wigdets--
 	,ndCar(0),entCar(0), ndStBox(0),entStBox(0), ndFluidBox(0),entFluidBox(0), ndObjBox(0),entObjBox(0)
 	,grass(0), trees(0), sun(0)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
-
-	,iFlCur(0), bRecreateFluids(0), iObjCur(0), iObjNew(0)
+	,iFlCur(0), bRecreateFluids(0), iObjCur(-1), iObjTNew(0), iObjLast(0)
 	
 	,bTerUpdBlend(1), track(0)
 	,world(0), config(0), dispatcher(0), broadphase(0), solver(0)  //blt

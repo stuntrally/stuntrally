@@ -6,6 +6,7 @@
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/RenderConst.h"
+#include "../ogre/common/SceneXml.h"
 #include <OgreTerrain.h>
 #include <MyGUI.h>
 using namespace MyGUI;
@@ -549,23 +550,24 @@ bool App::KeyPress(const CmdKey &arg)
 		switch (arg.key)
 		{
 			case KC_SPACE:
-				iObjCur = -1;  break;  // unselect
+				iObjCur = -1;  PickObject();  UpdObjPick();  break;
 				
 			//  prev,next type
 			case KC_LBRACKET:
-				iObjNew = (iObjNew-1 + objAll)%objAll;  break;
+				iObjTNew = (iObjTNew-1 + objAll)%objAll;  break;
 			case KC_RBRACKET:
-				iObjNew = (iObjNew+1)%objAll;  break;
+				iObjTNew = (iObjTNew+1)%objAll;  break;
 				
 			//  ins
 			case KC_INSERT:	case KC_NUMPAD0:
 			if (road && road->bHitTer)
 			{
-				::Object o;  o.name = vObjNames[iObjNew];
+				::Object o;  o.name = vObjNames[iObjTNew];
 				const Ogre::Vector3& v = road->posHit;
 				o.pos[0] = v.x;  o.pos[1] =-v.z;  o.pos[2] = v.y;  //o.pos.y += 0.5f;
 				//todo: ?dyn objs size, get center,size, rmb height..
-				String s = toStr(sc.objects.size()+1);  // counter for names
+				++iObjLast;
+				String s = toStr(iObjLast);  // counter for names
 
 				//  create object
 				o.ent = mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
@@ -575,9 +577,20 @@ bool App::KeyPress(const CmdKey &arg)
 				o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
 
 				sc.objects.push_back(o);
-				iObjCur = sc.objects.size()-1;
+				//iObjCur = sc.objects.size()-1;  // auto select inserted-
 				UpdObjPick();
 			}	break;
+			
+			//  sel
+			case KC_BACK:
+				if (ctrl)  vObjSel.clear();  // unsel all
+				else
+				if (iObjCur > -1)
+					if (vObjSel.find(iObjCur) == vObjSel.end())
+						vObjSel.insert(iObjCur);  // add to sel
+					else
+						vObjSel.erase(iObjCur);  // unselect
+				break;
 		}
 		if (objs > 0)
 		switch (arg.key)
@@ -620,7 +633,7 @@ bool App::KeyPress(const CmdKey &arg)
 			case KC_2:  // reset scale
 				if (iObjCur >= 0 && sc.objects.size() > 0)
 				{	::Object& o = sc.objects[iObjCur];
-					o.scale = Ogre::Vector3::UNIT_SCALE;
+					o.scale = Ogre::Vector3::UNIT_SCALE * (shift ? 0.5f : 1.f);
 					o.nd->setScale(o.scale);
 					UpdObjPick();
 				}	break;

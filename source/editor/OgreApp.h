@@ -75,7 +75,7 @@ protected:
 	bool bNewHmap, bTrGrUpd;
 	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget), UpdTrees();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
-	void CreateTrees(), CreateObjects(),DestroyObjects(), UpdObjPick();
+	void CreateTrees(), CreateObjects(),DestroyObjects(), UpdObjPick(), PickObject();
 	void CreateFluids(), DestroyFluids(), CreateBltFluids();
 	void UpdFluidBox(), UpdateWaterRTT(Ogre::Camera* cam), UpdMtrWaterDepth();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
@@ -112,8 +112,6 @@ protected:
 	std::vector<Ogre::Entity*> vFlEnt;
 	std::vector<Ogre::SceneNode*> vFlNd;
 	int iFlCur;  bool bRecreateFluids;
-	//  objects
-	int iObjCur;
 	
 	
 	///  terrain
@@ -405,8 +403,10 @@ protected:
 		edRdColN,edRdColR, edRdPwsM,edRdPlsM;
 	void editRoad(MyGUI::EditPtr);
 
-	//  [Objects]
-	std::vector<std::string> vObjNames;  int iObjNew;
+
+	//  [Objects]  ----
+	std::vector<std::string> vObjNames;  int iObjTNew;
+	std::set<int> vObjSel;  int iObjCur,iObjLast;
 	
 
 	//  [Tools]  ----
