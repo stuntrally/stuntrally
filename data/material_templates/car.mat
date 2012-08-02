@@ -62,6 +62,56 @@ material cartire_rear
 }
 
 
+// 3S
+
+material car_body_3S
+{
+	parent car_body
+	specMap 3S_spec.png
+	spec_map true
+}
+
+
+// FM
+
+material car_body_FM
+{
+   	parent car_body
+	normalMap FM_normal.png
+	normal_map true
+}
+
+material car_interior_FM
+{
+	parent car_interior
+	normalMap FM_interior_normal.png
+	normal_map true
+	cull_hardware none
+    receives_shadows false
+}
+
+material cartire_front_FM
+{
+	parent cartire_front
+	normalMap wheel_normal.png
+    normal_map true
+}
+
+material cartire_rear_FM
+{
+	parent cartire_front_FM
+}
+
+
+// 360
+
+material car_interior_360
+{
+	parent car_interior
+	cull_hardware none
+	receives_shadows false
+}
+
 
 // ES
 
