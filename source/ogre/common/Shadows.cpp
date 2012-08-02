@@ -182,6 +182,14 @@ void App::changeShadows()
 	
 	UpdPSSMMaterials();
 
+
+	// rebuild static geom after materials change, avoids crash
+	if (mStaticGeom)
+	{
+		mStaticGeom->destroy ();
+		mStaticGeom->build ();
+	}
+
 	ti.update();	/// time
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time Shadows: ") + toStr(dt) + " ms");

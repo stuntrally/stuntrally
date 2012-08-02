@@ -123,16 +123,16 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 	ii += i;
 
 	//  static geom  -------------
-	StaticGeometry *sg = mSceneMgr->createStaticGeometry("track");
-	sg->setRegionDimensions(Vector3::UNIT_SCALE * 1000);  // 1000
-	sg->setOrigin(Vector3::ZERO);
-	sg->setCastShadows(true);
+	mStaticGeom = mSceneMgr->createStaticGeometry("track");
+	mStaticGeom->setRegionDimensions(Vector3::UNIT_SCALE * 1000);  // 1000
+	mStaticGeom->setOrigin(Vector3::ZERO);
+	mStaticGeom->setCastShadows(true);
 
 	for (std::vector<Entity*>::iterator it = ents.begin(); it != ents.end(); ++it)
-		sg->addEntity(*it, Vector3::ZERO);
+		mStaticGeom->addEntity(*it, Vector3::ZERO);
 
-	sg->build();
-	//sg->dump("_track-sg.txt");
+	mStaticGeom->build();
+	//mStaticGeom->dump("_track-sg.txt");
 }
 
 

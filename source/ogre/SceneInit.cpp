@@ -189,6 +189,7 @@ void App::LoadCleanUp()  // 1 first
 	mSceneMgr->destroyAllManualObjects();
 	mSceneMgr->destroyAllEntities();
 	mSceneMgr->destroyAllStaticGeometry();
+	mStaticGeom = 0;
 	//mSceneMgr->destroyAllParticleSystems();
 	mSceneMgr->destroyAllRibbonTrails();
 	mSplitMgr->mGuiSceneMgr->destroyAllManualObjects(); // !?..

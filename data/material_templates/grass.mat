@@ -1,11 +1,11 @@
 material grass
 {
     parent base
-    
     alpha_rejection greater_equal 128
     cull_hardware none
     scene_blend alpha_blend
     grass_wind true
+    vertex_colour true
     terrain_light_map true
 }
 

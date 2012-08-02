@@ -91,6 +91,7 @@ void App::NewCommon(bool onlyTerVeget)
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
 	mSceneMgr->destroyAllStaticGeometry();
+	mStaticGeom = 0;
 	DestroyVdrTrackBlt();
 	
 	if (!onlyTerVeget)

@@ -27,6 +27,8 @@ material base
     refl_amount 0.1 // only used when fresnel off
     
     tree_wind false
+    grass_wind false
+    vertex_colour false
     
     receives_shadows true
     
@@ -63,7 +65,9 @@ material base
 		    receives_shadows $receives_shadows
 		    refl_amount $refl_amount
 		    
-		    tree_wind $tree_wind
+            tree_wind $tree_wind
+            grass_wind $grass_wind
+            vertex_colour $vertex_colour
 		    
 		    specular_alpha $specular_alpha
 		    

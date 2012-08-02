@@ -112,6 +112,9 @@ protected:
 	std::vector<Ogre::Entity*> vFlEnt;
 	std::vector<Ogre::SceneNode*> vFlNd;
 	int iFlCur;  bool bRecreateFluids;
+
+	// vdrift static
+	Ogre::StaticGeometry* mStaticGeom;
 	
 	
 	///  terrain

@@ -29,8 +29,9 @@
 
 #define SPECULAR_ALPHA @shPropertyBool(specular_alpha)
 
-#define TREE_WIND @shPropertyBool(tree_wind) && @shGlobalSettingBool(wind)
-
+#define TREE_WIND @shPropertyBool(tree_wind)
+#define GRASS_WIND @shPropertyBool(grass_wind)
+#define VERTEX_COLOUR @shPropertyBool(vertex_colour)
 
 #ifdef SH_VERTEX_SHADER
 
@@ -39,11 +40,12 @@
     SH_BEGIN_PROGRAM
         shUniform(float4x4, wvp) @shAutoConstant(wvp, worldviewproj_matrix)
         shVertexInput(float2, uv0)
-        shOutput(float2, UV)
+        shOutput(float4, UV)
         shNormalInput(float4)
         
-#ifdef NEED_DEPTH
-        shOutput(float, depthPassthrough)
+#if VERTEX_COLOUR
+        shColourInput(float4)
+        shOutput(float3, vertexColour)
 #endif
 
 #if NORMAL_MAP
@@ -56,6 +58,14 @@
         shUniform(float, windTimer) @shSharedParameter(windTimer)
         shVertexInput(float4, uv1) // windParams
         shVertexInput(float4, uv2) // originPos
+
+#endif
+
+#if GRASS_WIND
+
+        shUniform(float, grassTimer) @shSharedParameter(grassTimer)
+        shUniform(float, grassFrequency) @shSharedParameter(grassFrequency)
+        shUniform(float4, grassDirection) @shSharedParameter(grassDirection)
 
 #endif
 
@@ -86,14 +96,28 @@
 		position.x += sin(windTimer + uv2.z ) * uv1.y * uv1.y * uv1.z;
 		
 #endif
+
+#if GRASS_WIND
+        float oldposx = position.x;
+        if (uv0.y == 0.0f)
+        {
+            float offset = sin(grassTimer + oldposx * grassFrequency);
+            position += grassDirection * offset;
+        }
+#endif
+
 	    shOutputPosition = shMatrixMult(wvp, position);
     
-	    UV = uv0;
+	    UV.xy = uv0;
 
         normalPassthrough = normal.xyz;
 
+#if VERTEX_COLOUR
+        vertexColour = colour.xyz;
+#endif
+
 #ifdef NEED_DEPTH
-        depthPassthrough = shOutputPosition.z;
+        UV.z = shOutputPosition.z;
 #endif
 
         objSpacePositionPassthrough = position.xyz;
@@ -117,7 +141,11 @@
 
     SH_BEGIN_PROGRAM
 		shSampler2D(diffuseMap)
-		shInput(float2, UV)
+		shInput(float4, UV)
+		
+#if VERTEX_COLOUR
+        shInput(float3, vertexColour)
+#endif
 		
 #ifdef NEED_WORLD_MATRIX
         shUniform(float4x4, wMat) @shAutoConstant(wMat, world_matrix)
@@ -155,10 +183,6 @@
         #endif
 #endif
 
-#ifdef NEED_DEPTH
-        shInput(float, depthPassthrough)
-#endif
-
 #if SPEC_MAP
         shSampler2D(specMap)
 #endif
@@ -192,6 +216,10 @@
         #endif
 #endif
 
+#if GRASS_WIND
+        shUniform(float, grassFadeRange) @shSharedParameter(grassFadeRange)
+#endif
+
 
 #if SHADOWS
     @shForeach(3)
@@ -209,10 +237,18 @@
 
     SH_START_PROGRAM
     {
-        shOutputColour(0) = shSample(diffuseMap, UV);
+        shOutputColour(0) = shSample(diffuseMap, UV.xy);
         
 #if CAR_PAINT_MAP
-        shOutputColour(0).xyz = shLerp ( shOutputColour(0).xyz, shSample(carPaintMap, UV).r * carColour, 1 - shOutputColour(0).a);
+        shOutputColour(0).xyz = shLerp ( shOutputColour(0).xyz, shSample(carPaintMap, UV.xy).r * carColour, 1 - shOutputColour(0).a);
+#endif
+
+#if VERTEX_COLOUR
+        shOutputColour(0).xyz *= vertexColour;
+#endif
+
+#ifdef NEED_DEPTH
+        float depthPassthrough = UV.z;
 #endif
 
 
@@ -227,7 +263,7 @@
 		tbn = transpose(tbn);
 		#endif
 
-        float3 TSnormal = shSample(normalMap, UV).xyz * 2 - 1;
+        float3 TSnormal = shSample(normalMap, UV.xy).xyz * 2 - 1;
         
         normal = normalize (shMatrixMult( transpose(tbn), TSnormal ));
 #endif
@@ -277,7 +313,7 @@
         #if !SPEC_MAP
         float3 specular = pow(max(dot(normal, halfAngle), 0), materialShininess) * materialSpecular.xyz;
         #else
-        float4 specTex = shSample(specMap, UV);
+        float4 specTex = shSample(specMap, UV.xy);
         float3 specular = pow(max(dot(normal, halfAngle), 0), specTex.a * 255) * specTex.xyz;
         #endif
         if (NdotL <= 0)
@@ -295,7 +331,7 @@
 		float reflectionFactor = 1;
 		
 		#if REFL_MAP
-		reflectionFactor *= shSample(reflMap, UV).r;
+		reflectionFactor *= shSample(reflMap, UV.xy).r;
 		#endif
 		
 		#if FRESNEL
@@ -327,7 +363,15 @@
         shOutputColour(0).a = min(shOutputColour(0).a + specular.x ,1);
 #endif
 
-//shOutputColour(0).xyz = shSample(carPaintMap, UV).rgb;
+#if GRASS_WIND
+        // grass distance fading
+        		"	float dist = distance(eyePosition.xz, worldPosition.xz); \n"
+		"	alphaFade = (2.0f - (2.0f * dist / (fadeRange))); \n";
+
+
+        float dist = distance(camPosObjSpace.xz, objSpacePositionPassthrough.xz);
+        shOutputColour(0).a *= (2.0f - (2.0f * dist / grassFadeRange));
+#endif
 
     }
 
