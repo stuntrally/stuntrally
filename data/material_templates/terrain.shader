@@ -17,13 +17,13 @@
 
 #define NUM_LAYERS @shPropertyString(num_layers)
 
-#define NORMAL_MAPPING 1
+#define NORMAL_MAPPING @shGlobalSettingBool(terrain_normal)
 
-#define SPECULAR !RENDER_COMPOSITE_MAP
+#define SPECULAR @shGlobalSettingBool(terrain_specular) && !RENDER_COMPOSITE_MAP
 
 #define SPECULAR_EXPONENT 32
 
-#define PARALLAX_MAPPING 1 && !RENDER_COMPOSITE_MAP && NORMAL_MAPPING
+#define PARALLAX_MAPPING @shGlobalSettingBool(terrain_parallax) && !RENDER_COMPOSITE_MAP && NORMAL_MAPPING
 
 #define PARALLAX_SCALE 0.03
 #define PARALLAX_BIAS -0.04
@@ -447,10 +447,6 @@
         shOutputColour(0).xyz = shLerp (shOutputColour(0).xyz, fogColour, fogValue);
 #endif
 
-        // prevent negative colour output (for example with negative lights)
-        shOutputColour(0).xyz = max(shOutputColour(0).xyz, float3(0,0,0));
-
-
 #if MRT
         shOutputColour(1) = float4(depth / far,1,1,1);
 #endif
@@ -543,10 +539,6 @@
         
         shOutputColour(0).xyz = shLerp (shOutputColour(0).xyz, fogColour, fogValue);
 #endif
-
-        // prevent negative colour output (for example with negative lights)
-        shOutputColour(0).xyz = max(shOutputColour(0).xyz, float3(0,0,0));
-
 
 #if MRT
         shOutputColour(1) = float4(depth / far,1,1,1);

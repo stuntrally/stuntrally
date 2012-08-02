@@ -7,6 +7,9 @@
 #include "../ogre/common/RenderConst.h"
 //#include "../ogre/common/MaterialGen/MaterialFactory.h"
 
+#include "../shiny/Main/Factory.hpp"
+#include "../shiny/Platforms/Ogre/OgrePlatform.hpp"
+
 #include <OgreTerrainPaging.h>
 #include <OgreTerrainGroup.h>
 
@@ -105,22 +108,53 @@ App::App()  //  gui wigdets--
 
 void App::postInit()
 {
-    /*
-	materialFactory = new MaterialFactory();
-	materialFactory->pApp = this;
-	materialFactory->setSceneManager(mSceneMgr);
-	materialFactory->setShadows(pSet->shadow_type >= 1);
-	materialFactory->setShadowsDepth(pSet->shadow_type >= 2);
-	materialFactory->setShadowsSoft(pSet->shadow_type == 3);
-	materialFactory->setShaderQuality(pSet->shaders);
-	materialFactory->setShadowsFilterSize(pSet->shadow_filter);
-	materialFactory->setReflect(pSet->water_reflect);
-	materialFactory->setRefract(pSet->water_refract);
-	if (pSet->tex_size == 0)
-		materialFactory->setTexSize(0);
-	else if (pSet->tex_size == 1)
-		materialFactory->setTexSize(4096);
-    */
+	sh::OgrePlatform* platform = new sh::OgrePlatform("General", PATHMANAGER::GetDataPath() + "/" + "material_templates");
+	platform->setShaderCachingEnabled (true);
+	platform->setCacheFolder (PATHMANAGER::GetCacheDir());
+	mFactory = new sh::Factory(platform);
+	mFactory->setSharedParameter ("globalColorMultiplier", sh::makeProperty<sh::Vector4>(new sh::Vector4(0.3, 1.0, 0.1, 1.0)));
+	mFactory->setGlobalSetting("fog", "true");
+	mFactory->setGlobalSetting("wind", "true");
+	mFactory->setGlobalSetting("mrt_output", "false");
+	mFactory->setGlobalSetting ("shadows", "false");
+	mFactory->setGlobalSetting ("shadows_pssm", "false");
+	mFactory->setGlobalSetting ("lighting", "true");
+	mFactory->setGlobalSetting ("terrain_composite_map", "false");
+	mFactory->setSharedParameter("pssmSplitPoints", sh::makeProperty<sh::Vector3>(new sh::Vector3(0,0,0)));
+	mFactory->setSharedParameter("shadowFar_fadeStart", sh::makeProperty<sh::Vector4>(new sh::Vector4(0,0,0,0)));
+	mFactory->setSharedParameter ("arrowColour1", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
+	mFactory->setSharedParameter ("arrowColour2", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
+	mFactory->setSharedParameter ("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(0)));
+	mFactory->setSharedParameter ("terrainWorldSize", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(1024)));
+	sh::Factory::getInstance().setGlobalSetting ("terrain_specular", (pSet->ter_mtr >= 1)  ? "true" : "false");
+	sh::Factory::getInstance().setGlobalSetting ("terrain_normal", (pSet->ter_mtr >= 2)  ? "true" : "false");
+	sh::Factory::getInstance().setGlobalSetting ("terrain_parallax", (pSet->ter_mtr >= 3)  ? "true" : "false");
+
+	mFactory->setShaderDebugOutputEnabled (true);
+
+	sh::Language lang;
+	if (pSet->shader_mode == "")
+	{
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		lang = sh::Language_HLSL;
+#else
+		lang = sh::Language_GLSL;
+#endif
+	}
+	else
+	{
+		if (pSet->shader_mode == "glsl")
+			lang = sh::Language_GLSL;
+		else if (pSet->shader_mode == "cg")
+			lang = sh::Language_CG;
+		else if (pSet->shader_mode == "hlsl")
+			lang = sh::Language_HLSL;
+		else
+			assert(0);
+	}
+	mFactory->setCurrentLanguage (lang);
+
+	mFactory->loadAllFiles ();
 }
 
 const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise" };  // static

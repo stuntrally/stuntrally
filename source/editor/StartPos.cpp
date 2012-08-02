@@ -128,8 +128,9 @@ void App::UpdStartPos()
 	//Vector3 vcx,vcy,vcz;  q1.ToAxes(vcx,vcy,vcz);
 
 	ndCar->setPosition(p1);    ndCar->setOrientation(q1);
-	ndStBox->setPosition(p1);  ndStBox->setOrientation(q1);
-	if (road)
+	/// \todo
+	//ndStBox->setPosition(p1);  ndStBox->setOrientation(q1);
+	/*if (road)
 	ndStBox->setScale(Vector3(1,road->vStBoxDim.y,road->vStBoxDim.z));
 	ndStBox->setVisible(edMode == ED_Start && bEdit());
-}
+*/}

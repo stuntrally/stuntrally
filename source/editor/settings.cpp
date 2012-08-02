@@ -36,6 +36,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "graph_shadow.count",shadow_count);			Param(c,w, "graph_shadow.type", shadow_type);
 	Param(c,w, "graph_shadow.shaders", shaders);			Param(c,w, "graph_shadow.lightmap_size", lightmap_size);
 	Param(c,w, "graph_shadow.filter", shadow_filter);
+	Param(c,w, "graph_shadow.shader_mode", shader_mode);
 	
 	Param(c,w, "graph_reflect.water_reflect", water_reflect); Param(c,w, "graph_reflect.water_refract", water_refract);
 	Param(c,w, "graph_reflect.water_rttsize", water_rttsize);
@@ -83,6 +84,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	shaders(0.5), lightmap_size(0),
 	grass(1.f), trees_dist(1.f), grass_dist(1.f),use_imposters(false),
 	water_reflect(0), water_refract(0), water_rttsize(0),
+	shader_mode(""),
 	//  startup
 	autostart(0), ogre_dialog(1), escquit(0), language(""), allow_save(0),
 	isMain(1), inMenu(0),

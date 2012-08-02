@@ -19,6 +19,8 @@ material base
     terrain_light_map false
     terrain_light_map_toggleable false
     
+    lighting true
+    
     spec_map false
     
     bump_scale 1
@@ -64,6 +66,7 @@ material base
 		    terrain_light_map_toggleable $terrain_light_map_toggleable
 		    receives_shadows $receives_shadows
 		    refl_amount $refl_amount
+		    lighting $lighting
 		    
             tree_wind $tree_wind
             grass_wind $grass_wind

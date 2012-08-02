@@ -29,6 +29,8 @@ const int ciShadowSizesA[ciShadowNumSizes] = {256,512,1024,2048,4096};
 const int ciAngSnapsNum = 7;
 const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,5,15,30,45,90,180};
 
+namespace sh { class Factory; }
+
 
 namespace Forests {  class PagedGeometry;  }
 namespace MyGUI  {  class MultiList2;  class Slider;  }
@@ -115,6 +117,9 @@ protected:
 
 	// vdrift static
 	Ogre::StaticGeometry* mStaticGeom;
+
+	// materials
+	sh::Factory* mFactory;
 	
 	
 	///  terrain

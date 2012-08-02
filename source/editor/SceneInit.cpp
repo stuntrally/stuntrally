@@ -102,7 +102,6 @@ void App::NewCommon(bool onlyTerVeget)
 
 	//  terrain
 	terrain = 0;
-	//materialFactory->setTerrain(0);
 	if (mTerrainGroup)
 		mTerrainGroup->removeAllTerrains();
 		
@@ -136,7 +135,6 @@ void App::LoadTrackEv()
 	UpdateWaterRTT(mCamera);
 	
 	/// generate materials
-	//materialFactory->generate();
 	CreateRoadSelMtrs();
 
 	BltWorldInit();

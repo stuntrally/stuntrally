@@ -889,9 +889,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		pSet->tracks_sortup = trkMList->mSortUp;
 		TrackListUpd(false);
 	}
-	
-	//materialFactory->update();
-	
+		
 	bFirstRenderFrame = false;
 	
 	return true;

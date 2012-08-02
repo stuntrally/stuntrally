@@ -27,6 +27,7 @@ public:
 	float grass, trees_dist, grass_dist;
 	bool water_reflect, water_refract; int water_rttsize;
 	bool use_imposters;
+	std::string shader_mode;
 
 	class GameSet
 	{

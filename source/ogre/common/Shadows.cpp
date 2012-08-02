@@ -95,7 +95,6 @@ void App::changeShadows()
 				const Real cAdjfA[5] = {2, 1, 0.5, 0.25, 0.125};
 				pssmSetup->setOptimalAdjustFactor(i, cAdjfA[std::min(i, 4)]);
 			}
-			//materialFactory->setPSSMCameraSetup(pssmSetup);
 			mPSSMSetup.bind(pssmSetup);
 		}
 		mSceneMgr->setShadowCameraSetup(mPSSMSetup);
@@ -126,6 +125,10 @@ void App::changeShadows()
 
 	sh::Factory::getInstance().setGlobalSetting ("shadows", "false");
 	sh::Factory::getInstance().setGlobalSetting ("shadows_pssm", (pSet->shadow_type != 0) ? "true" : "false");
+	sh::Factory::getInstance().setGlobalSetting ("terrain_specular", (pSet->ter_mtr >= 1)  ? "true" : "false");
+	sh::Factory::getInstance().setGlobalSetting ("terrain_normal", (pSet->ter_mtr >= 2)  ? "true" : "false");
+	sh::Factory::getInstance().setGlobalSetting ("terrain_parallax", (pSet->ter_mtr >= 3)  ? "true" : "false");
+
 
 	#if 0
 	// shadow tex overlay

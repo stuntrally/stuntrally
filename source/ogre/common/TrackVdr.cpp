@@ -45,6 +45,10 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 	bool hasMatOrig = boost::filesystem::exists(sPathOrig), hasMatCache = boost::filesystem::exists(sPathCache);
 	bool bGenerate = 0, gen = !hasMatOrig && !hasMatCache || bGenerate;  // set 1 to force generate for new vdrift tracks
 
+
+
+	// rewrite this code for new system
+#if 0
 	if (gen)
 	{
 		String sMtrs;
@@ -85,11 +89,7 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 		fileout.close();
 		hasMatCache = true;
 	}
-
-	//  load .matdef
-	LogO(String("Vdrift track .matdef  has Cache:")+ (hasMatCache?"yes":"no") + "  has Orig:" + (hasMatOrig?"yes":"no"));
-	//materialFactory->loadDefsFromFile(hasMatCache ? sMatCache : sMatOrig);
-	//materialFactory->generate(true);
+#endif
 	
 
 	//  meshes  -------------

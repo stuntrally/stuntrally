@@ -432,6 +432,9 @@ bool BaseApp::setup()
 	mFactory->setSharedParameter ("arrowColour2", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
 	mFactory->setSharedParameter ("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(0)));
 	mFactory->setSharedParameter ("terrainWorldSize", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(1024)));
+	sh::Factory::getInstance().setGlobalSetting ("terrain_specular", (pSet->ter_mtr >= 1)  ? "true" : "false");
+	sh::Factory::getInstance().setGlobalSetting ("terrain_normal", (pSet->ter_mtr >= 2)  ? "true" : "false");
+	sh::Factory::getInstance().setGlobalSetting ("terrain_parallax", (pSet->ter_mtr >= 3)  ? "true" : "false");
 
 	mFactory->setShaderDebugOutputEnabled (true);
 
@@ -439,7 +442,7 @@ bool BaseApp::setup()
 	if (pSet->shader_mode == "")
 	{
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-		lang = sh::Language_CG;
+		lang = sh::Language_HLSL;
 #else
 		lang = sh::Language_GLSL;
 #endif
@@ -450,6 +453,8 @@ bool BaseApp::setup()
 			lang = sh::Language_GLSL;
 		else if (pSet->shader_mode == "cg")
 			lang = sh::Language_CG;
+		else if (pSet->shader_mode == "hlsl")
+			lang = sh::Language_HLSL;
 		else
 			assert(0);
 	}
