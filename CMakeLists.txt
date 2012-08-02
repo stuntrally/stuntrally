@@ -63,7 +63,19 @@ endif()
 if(WIN32)
 	set(Boost_USE_STATIC_LIBS   ON)
 endif(WIN32)
-find_package(Boost COMPONENTS system thread filesystem REQUIRED QUIET)
+
+# find boost without components so we can use Boost_VERSION
+find_package(Boost REQUIRED QUIET)
+
+set(BOOST_COMPONENTS system thread filesystem)
+
+if (Boost_VERSION LESS 104900)
+    set(SHINY_USE_WAVE_SYSTEM_INSTALL "TRUE")
+    set(BOOST_COMPONENTS ${BOOST_COMPONENTS} wave)
+endif()
+
+
+find_package(Boost COMPONENTS ${BOOST_COMPONENTS} REQUIRED QUIET)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 list(APPEND LIBS ${Boost_LIBRARIES})

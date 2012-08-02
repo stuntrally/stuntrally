@@ -56,7 +56,7 @@ material grass2.png
 material road.png
 {
 	parent 0vdrTrk
-	diffuseMap road.png
+	diffuseMap road_virginia.png
 }
 material ac1.png
 {
