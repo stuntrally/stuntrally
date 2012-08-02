@@ -379,7 +379,8 @@ bool App::frameStart(Real time)
 		// update shader time
 		mTimer += time;
 		mFactory->setSharedParameter ("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
-		
+		mFactory->setSharedParameter ("waterTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
+
 		// We put this here, because first render frame is rather heavy
 		if (mClient && bLoadingEnd)
 		{

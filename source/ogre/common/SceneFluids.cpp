@@ -54,6 +54,8 @@ void App::CreateFluids()
 
 		String sMtr = fb.id == -1 ? "" : fluidsXml.fls[fb.id].material;  //"Water"+toStr(1+fb.type)
 		MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr);  //par,temp
+		/// \todo
+		/*
 		if (!mtr.isNull())
 		{	//  set sky map
 			MaterialPtr mtrSky = MaterialManager::getSingleton().getByName(sc.skyMtr);
@@ -65,6 +67,7 @@ void App::CreateFluids()
 			TextureUnitState* tus = pass->getTextureUnitState(1);
 			if (tus->getName() == "skyMap")  tus->setTextureName(tusSky->getTextureName());
 		}
+		*/
 		efl->setMaterial(mtr);  efl->setCastShadows(false);
 		efl->setRenderQueueGroup(RQG_Fluid);  efl->setVisibilityFlags(RV_Terrain);
 
@@ -167,8 +170,8 @@ void App::UpdateWaterRTT(Ogre::Camera* cam)
 	//  water RTT
 	mWaterRTT.setViewerCamera(cam);
 	mWaterRTT.setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
-	mWaterRTT.setReflect(0);
-	mWaterRTT.setRefract(0);
+	mWaterRTT.setReflect(1);
+	mWaterRTT.setRefract(1);
 	mWaterRTT.mSceneMgr = mSceneMgr;
 	if (!sc.fluids.empty())
 		mWaterRTT.setPlane(Plane(Vector3::UNIT_Y, sc.fluids.front().pos.y));

@@ -67,7 +67,7 @@ material roadAsphalt_ter
 
 material roadGDesert
 {
-	parent road_terrain
+	parent road
 	diffuseMap roadDesert.jpg
     ambient 0.84 0.94 0.74
 	diffuse 0.63 0.65 0.62

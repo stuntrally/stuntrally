@@ -1,0 +1,99 @@
+material Water
+{
+    pass
+    {
+        vertex_program water_vertex
+        fragment_program water_fragment
+        
+        cull_hardware none
+        
+        texture_unit reflectionMap
+        {
+            texture_alias WaterReflection
+            tex_address_mode clamp
+        }
+        
+        texture_unit refractionMap
+        {
+            texture_alias WaterRefraction
+            tex_address_mode clamp
+        }
+        
+        texture_unit normalMap
+        {
+            direct_texture water_nm.png
+        }
+        
+        texture_unit depthMap
+        {
+            texture waterDepth.png
+            tex_address_mode border
+            tex_border_colour 1 1 1
+        }
+    }
+}
+
+material Water_blue
+{
+    parent Water
+}
+
+material Water_cyan
+{
+    parent Water
+}
+
+material Water_green
+{
+    parent Water
+}
+
+material Water_white
+{
+    parent Water
+}
+
+material Water_sunset
+{
+    parent Water
+}
+
+material Water_shore
+{
+    parent Water
+}
+
+material Water_dark
+{
+    parent Water
+}
+
+material Grease_jelly
+{
+    parent Water
+}
+
+material Water_light
+{
+    parent Water
+}
+
+material Water_yellow
+{
+    parent Water
+}
+
+material Mud_orange
+{
+    parent Water
+}
+
+material Mud_brown
+{
+    parent Water
+}
+
+material Mud_dark
+{
+    parent Water
+}

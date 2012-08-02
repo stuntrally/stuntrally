@@ -7,6 +7,8 @@
 #include <OgrePlane.h>
 #include <OgreHardwarePixelBuffer.h>
 
+#include "../../shiny/Main/Factory.hpp"
+
 using namespace Ogre;
 
 WaterRTT::WaterRTT() : 
@@ -49,6 +51,9 @@ void WaterRTT::create()
 		if (i == 0) mReflectionTarget = rtt;
 		else mRefractionTarget = rtt;
 	}
+
+	sh::Factory::getInstance ().setTextureAlias ("WaterReflection", "PlaneReflection");
+	sh::Factory::getInstance ().setTextureAlias ("WaterRefraction", "PlaneRefraction");
 }
 
 void WaterRTT::setViewerCamera(Ogre::Camera* cam)
@@ -103,11 +108,11 @@ void WaterRTT::preRenderTargetUpdate(const RenderTargetEvent& evt)
 	mCamera->setPosition(mViewerCamera->getRealPosition());
 	
 	if (mNdFluidsRoot)  mNdFluidsRoot->setVisible(false);
-	
-	
+		
 	if (evt.source == mReflectionTarget)
 	{
-		mCamera->enableCustomNearClipPlane(mWaterPlane);
+		if (mCamera->getPosition ().y > -mWaterPlane.d)
+			mCamera->enableCustomNearClipPlane(mWaterPlane);
 		mCamera->enableReflection(mWaterPlane);
 	}
 }

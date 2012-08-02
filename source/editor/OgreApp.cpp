@@ -72,6 +72,8 @@ App::App()  //  gui wigdets--
 	,bTerUpdBlend(1), track(0)
 	,world(0), config(0), dispatcher(0), broadphase(0), solver(0)  //blt
 	,trackObject(0), trackMesh(0)
+
+	,mStaticGeom(0)
 {
 	imgPrv[0]=0; imgMini[0]=0; imgTer[0]=0;  trkDesc[0]=0;
 	
