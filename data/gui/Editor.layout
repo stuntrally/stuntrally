@@ -1409,6 +1409,7 @@
 					<Property key="TextColour" value="0.4 1 0.4"/>
 					<Property key="Colour" value="0.4 1 0.4"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
+					<UserString key="tip" value="#{TipTerLayers}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="480 60 112 24" name="TerLayOn">
 					<Property key="Caption" value="#{Enabled}"/>
@@ -2237,6 +2238,7 @@
 							<Property key="Caption" value="#{Used}: "/>
 							<Property key="TextColour" value="0.6 0.8 1"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipVegetGroups}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="128 135 56 24" name="LTrMinScVal">
 							<Property key="TextColour" value="0.6 0.8 0.8"/>
