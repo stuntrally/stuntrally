@@ -33,7 +33,6 @@ namespace BtOgre  {  class DebugDrawer;  }
 namespace MyGUI  {  class MultiList2;  }
 namespace OISB   {  class AnalogAxisAction;  }
 namespace MyGUI  {  class Slider;  }
-class MaterialFactory;
 class GraphView;
 const int CarPosCnt = 8;  // size of poses queue
 

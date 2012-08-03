@@ -1,0 +1,49 @@
+material pers_struct_dds
+{
+	parent base
+	diffuseMap pers_struct.dds
+	ambient 1.0 1.0 1.0
+	diffuse 1.0 1.0 1.0
+	specular 0.25 0.25 0.25 3
+	terrain_light_map true
+}
+
+material pyramid_small
+{
+	parent base
+	diffuseMap pyramid_small.dds
+	ambient 0.8 0.8 0.8
+	diffuse 0.7 0.7 0.7
+	specular 0.4 0.4 0.4 16
+	terrain_light_map true
+}
+
+material pyramid_big
+{
+	parent base
+	diffuseMap pyramid_big.dds
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 0.3 0.3 0.3 8
+	terrain_light_map true
+}
+
+material obelisk
+{
+	parent base
+	diffuseMap obelisk.png
+	ambient 1.0 0.92 0.7
+	diffuse 1.0 0.92 0.7
+	specular 0.2 0.2 0.2 8
+	terrain_light_map true
+}
+	
+material Temple
+{
+	parent base
+    ambient 0.79 0.76 0.49
+    diffuse 0.63 0.62 0.39
+    specular 0.14 0.14 0.135 32
+	terrain_light_map true
+	diffuseMap white.png
+}

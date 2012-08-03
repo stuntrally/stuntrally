@@ -7,7 +7,6 @@
 #include "../road/Road.h"
 #include "SplitScreen.h"
 #include "common/RenderConst.h"
-//#include "common/MaterialGen/MaterialFactory.h"
 #include "common/GraphView.h"
 
 #include "../network/gameclient.hpp"

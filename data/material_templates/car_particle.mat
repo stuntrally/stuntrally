@@ -1,0 +1,26 @@
+material Base_particle
+{
+    parent base
+    vertex_colour true
+    depth_write off
+    receives_shadows false
+    ambient 0 0 0
+    diffuse 0 0 0 1
+    emissive 1 1 1
+}
+
+
+
+material Boost
+{
+    parent Base_particle
+    scene_blend add
+    diffuseMap boost.png
+}
+
+material Particles/Spark
+{
+    parent Base_particle
+    scene_blend add
+    diffuseMap spark.png
+}

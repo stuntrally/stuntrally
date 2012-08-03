@@ -3,6 +3,7 @@ material base
 	diffuse 1.0 1.0 1.0 1.0
 	specular 0.4 0.4 0.4 32
 	ambient 1.0 1.0 1.0
+	emissive 0 0 0
 	specular 0 0 0 32
 
 	cull_hardware default
@@ -20,6 +21,7 @@ material base
     terrain_light_map_toggleable false
     
     lighting true
+	soft_particles false
     
     spec_map false
     
@@ -37,6 +39,7 @@ material base
     specular_alpha false
     
     transparent false // for shadowcaster
+    mrt_output true
 
 	pass
 	{
@@ -46,6 +49,7 @@ material base
 		diffuse $diffuse
 		specular $specular
 		ambient $ambient
+		emissive $emissive
 		specular $specular
 		
 		cull_hardware $cull_hardware
@@ -67,6 +71,8 @@ material base
 		    receives_shadows $receives_shadows
 		    refl_amount $refl_amount
 		    lighting $lighting
+		    mrt_output $mrt_output
+		    soft_particles $soft_particles
 		    
             tree_wind $tree_wind
             grass_wind $grass_wind
@@ -84,6 +90,11 @@ material base
 		{
 			texture $diffuseMap
 			create_in_ffp true
+		}
+		
+		texture_unit sceneDepth
+		{
+		    texture_alias SceneDepth
 		}
 		
 		texture_unit carPaintMap

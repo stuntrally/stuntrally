@@ -109,6 +109,28 @@ material roadSand_ter
 }
 
 
+// Sand2 island
+
+material roadSand2
+{
+	parent road
+	ambient 0.94 0.94 0.94
+	diffuse 0.82 0.82 0.82
+	specular 0.23 0.23 0.22 32
+	diffuseMap roadSand2.jpg
+}
+
+material roadSand2_ter
+{
+	parent road_terrain
+	ambient 0.94 0.94 0.94
+	diffuse 0.82 0.82 0.82
+	specular 0.23 0.23 0.22 32
+	diffuseMap roadSand2.jpg
+	normalMap volcano_7_nh1.png
+	normal_map true
+}	
+
 // Sand shore
 
 material roadSandShore

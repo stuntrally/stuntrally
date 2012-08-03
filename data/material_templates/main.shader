@@ -5,11 +5,13 @@
 
 #define SHADOWS @shGlobalSettingBool(shadows_pssm) && @shPropertyBool(receives_shadows)
 
+#define MRT @shPropertyBool(mrt_output)
+
 #if SHADOWS
     #include "shadows.h"
 #endif
 
-#if FOG || SHADOWS
+#if FOG || (SHADOWS) || MRT
 #define NEED_DEPTH
 #endif
 
@@ -23,7 +25,10 @@
 #define TERRAIN_LIGHT_MAP @shPropertyBool(terrain_light_map)
 #define TERRAIN_LIGHT_MAP_TOGGLEABLE @shPropertyBool(terrain_light_map_toggleable)
 
-#if TERRAIN_LIGHT_MAP || ENV_MAP
+#define SOFT_PARTICLES (@shPropertyBool(soft_particles) && @shGlobalSettingBool(soft_particles))
+
+
+#if (TERRAIN_LIGHT_MAP) || (ENV_MAP) || (SOFT_PARTICLES)
 #define NEED_WORLD_MATRIX
 #endif
 
@@ -43,9 +48,20 @@
         shOutput(float4, UV)
         shNormalInput(float4)
         
+#if MRT
+        shUniform(float4x4, wvMat) @shAutoConstant(wvMat, worldview_matrix)
+        shUniform(float, far) @shAutoConstant(far, far_clip_distance)
+        shOutput(float4, viewNormal)
+#endif
+
+
+#if SOFT_PARTICLES
+		shOutput(float3, screenPosition)
+#endif
+ 
 #if VERTEX_COLOUR
         shColourInput(float4)
-        shOutput(float3, vertexColour)
+        shOutput(float4, vertexColour)
 #endif
 
 #if NORMAL_MAP
@@ -70,7 +86,7 @@
 #endif
 
         shOutput(float3, normalPassthrough)
-        shOutput(float3, objSpacePositionPassthrough)
+        shOutput(float4, objSpacePositionPassthrough)
 
 #if SHADOWS
     @shForeach(3)
@@ -107,20 +123,29 @@
 #endif
 
 	    shOutputPosition = shMatrixMult(wvp, position);
+
+#if SOFT_PARTICLES
+		screenPosition = float3(shOutputPosition.xy, shOutputPosition.w);
+#endif
     
 	    UV.xy = uv0;
 
         normalPassthrough = normal.xyz;
 
 #if VERTEX_COLOUR
-        vertexColour = colour.xyz;
+        vertexColour = colour;
 #endif
 
 #ifdef NEED_DEPTH
         UV.z = shOutputPosition.z;
 #endif
 
-        objSpacePositionPassthrough = position.xyz;
+#if MRT
+        UV.w = length(shMatrixMult(wvMat, position).xyz) / far;
+        viewNormal = shMatrixMult(wvMat, float4(normal.xyz, 0));
+#endif
+
+        objSpacePositionPassthrough = position;
 
 #if NORMAL_MAP
         tangentPassthrough = tangent;
@@ -143,8 +168,28 @@
 		shSampler2D(diffuseMap)
 		shInput(float4, UV)
 		
+#if MRT
+        shInput(float4, viewNormal)
+#endif
+
+#if (MRT) || (SOFT_PARTICLES)
+        shUniform(float, far) @shAutoConstant(far, far_clip_distance)
+#endif
+
+#if SOFT_PARTICLES
+        shInput(float3, screenPosition)
+        shSampler2D(sceneDepth)
+        shUniform(float4, viewportSize) @shAutoConstant(viewportSize, viewport_size)
+        shUniform(float, flip) @shAutoConstant(flip, render_target_flipping)
+#endif
+
+#if (SOFT_PARTICLES) || (ENV_MAP)
+        shUniform(float3, camPosWS) @shAutoConstant(camPosWS, camera_position)
+#endif
+
+
 #if VERTEX_COLOUR
-        shInput(float3, vertexColour)
+        shInput(float4, vertexColour)
 #endif
 		
 #ifdef NEED_WORLD_MATRIX
@@ -170,8 +215,6 @@
 #if ENV_MAP
         shSamplerCube(envMap)
         
-        shUniform(float3, camPosWS) @shAutoConstant(camPosWS, camera_position)
-        
         #if REFL_MAP
         shSampler2D(reflMap)
         #endif
@@ -188,11 +231,12 @@
 #endif
 
         shInput(float3, normalPassthrough)
-        shInput(float3, objSpacePositionPassthrough)
+        shInput(float4, objSpacePositionPassthrough)
         shUniform(float4, lightAmbient)                       @shAutoConstant(lightAmbient, ambient_light_colour)
         shUniform(float4, materialAmbient)                    @shAutoConstant(materialAmbient, surface_ambient_colour)
         shUniform(float4, materialDiffuse)                    @shAutoConstant(materialDiffuse, surface_diffuse_colour)
         shUniform(float4, materialSpecular)                   @shAutoConstant(materialSpecular, surface_specular_colour)
+        shUniform(float4, materialEmissive)                   @shAutoConstant(materialEmissive, surface_emissive_colour)
         shUniform(float, materialShininess)                   @shAutoConstant(materialShininess, surface_shininess)
         
         shUniform(float4, lightPosObjSpace)        @shAutoConstant(lightPosObjSpace, light_position_object_space)
@@ -244,7 +288,7 @@
 #endif
 
 #if VERTEX_COLOUR
-        shOutputColour(0).xyz *= vertexColour;
+        shOutputColour(0) *= vertexColour;
 #endif
 
 #ifdef NEED_DEPTH
@@ -291,7 +335,7 @@
 
 #if TERRAIN_LIGHT_MAP
 		float shadowingLM;
-		float2 worldPos = shMatrixMult(wMat, float4(objSpacePositionPassthrough, 1)).xz;
+		float2 worldPos = shMatrixMult(wMat, float4(objSpacePositionPassthrough.xyz, 1)).xz;
 		float2 lmTexCoord = (worldPos / terrainWorldSize) + 0.5;
 		shadowingLM = shSample(terrainLightMap, lmTexCoord).x;
         #if TERRAIN_LIGHT_MAP_TOGGLEABLE
@@ -319,7 +363,7 @@
         if (NdotL <= 0)
             specular = float3(0,0,0);
 
-        shOutputColour(0).xyz = shOutputColour(0).xyz * (ambient + diffuse) + specular * lightSpecular.xyz * shadow;
+        shOutputColour(0).xyz = shOutputColour(0).xyz * (ambient + diffuse + materialEmissive.xyz) + specular * lightSpecular.xyz * shadow;
 
 #if ENV_MAP           
         float3 r = reflect( -eyeDir, normal );
@@ -365,12 +409,30 @@
 
 #if GRASS_WIND
         // grass distance fading
-        		"	float dist = distance(eyePosition.xz, worldPosition.xz); \n"
-		"	alphaFade = (2.0f - (2.0f * dist / (fadeRange))); \n";
-
-
         float dist = distance(camPosObjSpace.xz, objSpacePositionPassthrough.xz);
         shOutputColour(0).a *= (2.0f - (2.0f * dist / grassFadeRange));
+#endif
+
+#if SOFT_PARTICLES
+        float2 screenUV = screenPosition.xy / screenPosition.z;
+        screenUV = screenUV * float2(0.5f, -0.5f) + float2(0.5f, 0.5f);
+        screenUV += (viewportSize.zw) * 0.5;
+		screenUV.y =(1-shSaturate(flip))+flip*screenUV.y;
+		float depthTex = shSample(sceneDepth, screenUV).x * far;
+		float4 worldPos = shMatrixMult(wMat, float4(objSpacePositionPassthrough.xyz, 1));
+		float distanceToPixel = length(worldPos.xyz - camPosWS.xyz);
+		float thickness = 0.5;
+		float tNear = distanceToPixel - thickness;
+		float tFar = distanceToPixel + thickness;
+        float depthAlpha = shSaturate(depthTex - distanceToPixel);
+        shOutputColour(0).a *= depthAlpha;
+
+#endif
+
+
+#if MRT
+        shOutputColour(1) = float4(UV.w, normalize(viewNormal.xyz));
+        shOutputColour(2) = float4(UV.z / far, 0, UV.z / objSpacePositionPassthrough.w, 0);
 #endif
 
     }

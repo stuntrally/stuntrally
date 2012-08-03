@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "../common/RenderConst.h"
-//#include "../common/MaterialGen/MaterialFactory.h"
 
 #ifdef ROAD_EDITOR
 	#include "../common/Defines.h"

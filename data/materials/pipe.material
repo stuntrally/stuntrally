@@ -95,3 +95,127 @@ material pipeGlass
 		}
 	}
 }
+
+
+
+material pipeGlassCyan
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.4 0.5 0.5
+			diffuse 0.4 0.6 0.63
+			specular 0.32 0.39 0.41 64
+
+			depth_write off
+			scene_blend alpha_blend
+
+			cull_hardware clockwise
+
+			vertex_program_ref pipe_vp
+			{
+			}
+			fragment_program_ref pipe_fp
+			{
+				param_named alphaPars float4 0.3 0.3 0.4 1.0
+			}
+
+			depth_bias 3
+
+			texture_unit
+			{
+				texture roadGlassB.png
+			}
+		}
+
+		pass
+		{
+			ambient 0.4 0.5 0.5
+			diffuse 0.4 0.6 0.63
+			specular 0.32 0.39 0.41 64
+
+			depth_write off
+			scene_blend alpha_blend
+
+			cull_hardware anticlockwise
+
+			vertex_program_ref pipe_vp
+			{
+			}
+			fragment_program_ref pipe_fp
+			{
+				param_named alphaPars float4 0.3 0.3 0.4 1.0
+			}
+
+			depth_bias 3
+
+			texture_unit
+			{
+				texture roadGlassB.png
+			}
+		}
+	}
+}
+
+
+
+material pipeGlassOrange
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.8 0.4 0.1
+			diffuse 0.6 0.3 0.1
+			specular 0.6 0.5 0.4 64
+
+			depth_write off
+			scene_blend alpha_blend
+
+			cull_hardware clockwise
+
+			vertex_program_ref pipe_vp
+			{
+			}
+			fragment_program_ref pipe_fp
+			{
+				param_named alphaPars float4 0.1 0.2 0.3 1.0
+			}
+
+			depth_bias 3
+
+			texture_unit
+			{
+				texture roadGlassB.png
+			}
+		}
+
+		pass
+		{
+			ambient 0.8 0.4 0.1
+			diffuse 0.6 0.3 0.1
+			specular 0.6 0.5 0.4 64
+
+			depth_write off
+			scene_blend alpha_blend
+
+			cull_hardware anticlockwise
+
+			vertex_program_ref pipe_vp
+			{
+			}
+			fragment_program_ref pipe_fp
+			{
+				param_named alphaPars float4 0.1 0.2 0.3 1.0
+			}
+
+			depth_bias 3
+
+			texture_unit
+			{
+				texture roadGlassB.png
+			}
+		}
+	}
+}

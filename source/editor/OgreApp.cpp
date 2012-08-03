@@ -5,7 +5,6 @@
 #include "../vdrift/pathmanager.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/RenderConst.h"
-//#include "../ogre/common/MaterialGen/MaterialFactory.h"
 
 #include "../shiny/Main/Factory.hpp"
 #include "../shiny/Platforms/Ogre/OgrePlatform.hpp"
@@ -169,7 +168,6 @@ App::~App()
 	delete track;  //!
 	delete[] pBrFmask;  pBrFmask = 0;
 
-	//delete materialFactory;
 	delete[] mBrushData;
 	delete road;
 	if (mTerrainPaging)

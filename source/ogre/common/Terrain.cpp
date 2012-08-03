@@ -2,8 +2,6 @@
 #include "../common/Defines.h"
 #include "../common/RenderConst.h"
 #include "../../road/Road.h"  // sun rot
-//#include "../common/MaterialGen/TerrainMaterialGen.h"
-//#include "../common/MaterialGen/MaterialFactory.h"
 
 #include "TerrainMaterial.h"
 

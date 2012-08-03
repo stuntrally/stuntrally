@@ -1,0 +1,13 @@
+material RainDrop
+{
+    parent Base_particle
+    diffuseMap droplet.png
+    scene_blend alpha_blend
+}
+
+material SnowFlake
+{
+    parent Base_particle
+    diffuseMap snow.png
+    scene_blend alpha_blend
+}

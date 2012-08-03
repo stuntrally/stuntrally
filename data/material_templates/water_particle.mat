@@ -1,0 +1,23 @@
+material FluidMud
+{
+    parent Base_particle
+    emissive 1 1 1
+    ambient 0 0 0
+    diffuse 0 0 0 1
+    vertex_colour true
+    scene_blend alpha_blend
+    diffuseMap fluid-mud-dark.png
+    alpha_rejection greater 64
+}
+
+material FluidMudSoft
+{
+    parent FluidMud
+    diffuseMap fluid-mud-soft.png
+}
+
+material FluidWater
+{
+    parent FluidMud
+    diffuseMap fluid-water.png
+}

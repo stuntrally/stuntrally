@@ -8,7 +8,8 @@
 #include "../vdrift/settings.h"
 #include "../road/Road.h"
 #include "MyGUI_PointerManager.h"
-//#include "common/MaterialGen/MaterialFactory.h"
+
+#include "../shiny/Main/Factory.hpp"
 
 #include <OgreRoot.h>
 #include <OgreViewport.h>
@@ -246,22 +247,19 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		}
 
 		//update soft particle Depth Target
-        /*
+
 		if(pApp->pSet->softparticles && pApp->pSet->all_effects)
 		{
-			MaterialFactory::getSingletonPtr()->setSoftParticles(true);
 			Ogre::CompositorInstance  *compositor= Ogre::CompositorManager::getSingleton().getCompositorChain(evt.source)->getCompositor("gbuffer");
 			if(compositor!=NULL)
 			{
 				Ogre::TexturePtr depthTexture =	compositor->getTextureInstance("mrt_output",2);
 				if(!depthTexture.isNull())
 				{
-					MaterialFactory::getSingletonPtr()->setSoftParticleDepth(depthTexture);
+					sh::Factory::getInstance ().setTextureAlias ("SceneDepth", depthTexture->getName());
 				}
 			}
-		}else
-			MaterialFactory::getSingletonPtr()->setSoftParticles(false);
-        */
+		}
 	}
 	else
 	{

@@ -25,7 +25,6 @@
 	#include "../../editor/settings.h"
 	#include "../../vdrift/pathmanager.h"
 #endif
-//#include "MaterialGen/MaterialFactory.h"
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #include "BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h"
 #include "BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h"

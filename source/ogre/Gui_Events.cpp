@@ -503,6 +503,7 @@ void App::slHDRVignettingDarkness(SL)
 void App::chkVidBlur(WP wp)
 {		
 	ChkEv(camblur);  refreshCompositor();
+	changeShadows();
 }
 void App::chkVidSSAA(WP wp)
 {
@@ -511,18 +512,22 @@ void App::chkVidSSAA(WP wp)
 void App::chkVidSSAO(WP wp)
 {		
 	ChkEv(ssao);  refreshCompositor();
+	changeShadows();
 }
 void App::chkVidSoftParticles(WP wp)
 {		
 	ChkEv(softparticles);  refreshCompositor();
+	changeShadows();
 }
 void App::chkVidDepthOfField(WP wp)
 {		
 	ChkEv(dof);  refreshCompositor();
+	changeShadows();
 }
 void App::chkVidGodRays(WP wp)
 {		
 	ChkEv(godrays);  refreshCompositor();
+	changeShadows();
 }
 void App::slBloomInt(SL)
 {

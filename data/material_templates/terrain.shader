@@ -7,7 +7,7 @@
 #define COMPOSITE_MAP @shGlobalSettingBool(terrain_composite_map)
 
 #define FOG @shGlobalSettingBool(fog) && !RENDER_COMPOSITE_MAP
-#define MRT @shGlobalSettingBool(mrt_output) && !RENDER_COMPOSITE_MAP
+#define MRT !RENDER_COMPOSITE_MAP
 
 #define SHADOWS @shGlobalSettingBool(shadows_pssm) && !RENDER_COMPOSITE_MAP
 
@@ -41,7 +41,11 @@
 
 @shAllocatePassthrough(2, UV)
 
-@shAllocatePassthrough(3, objSpacePosition)
+@shAllocatePassthrough(4, objSpacePosition)
+
+#if MRT
+@shAllocatePassthrough(3, viewPosition)
+#endif
 
 #if SHADOWS
 @shForeach(3)
@@ -62,6 +66,9 @@
         shVertexInput(float2, uv0)
         shVertexInput(float2, uv1) // lodDelta, lodThreshold
         
+#if MRT
+        shUniform(float4x4, wvMat) @shAutoConstant(wvMat, worldview_matrix)
+#endif
 
 #if SHADOWS
     @shForeach(3)
@@ -74,6 +81,11 @@
 
     SH_START_PROGRAM
     {
+
+#if MRT
+        float3 viewPos = shMatrixMult(wvMat, shInputPosition).xyz;
+        @shPassthroughAssign(viewPosition, viewPos);
+#endif
 
 
         float4 worldPos = shMatrixMult(worldMatrix, shInputPosition);
@@ -102,7 +114,7 @@
 
         @shPassthroughAssign(UV, uv0);
         
-        @shPassthroughAssign(objSpacePosition, shInputPosition.xyz);
+        @shPassthroughAssign(objSpacePosition, shInputPosition);
 
 
 #if SHADOWS
@@ -165,6 +177,7 @@
 #if MRT
         shDeclareMrtOutput(1)
         shUniform(float, far) @shAutoConstant(far, far_clip_distance)
+        shUniform(float4x4, wvMat) @shAutoConstant(wvMat, worldview_matrix)
 #endif
 
 
@@ -201,7 +214,7 @@
 
         float2 UV = @shPassthroughReceive(UV);
         
-        float3 objSpacePosition = @shPassthroughReceive(objSpacePosition);
+        float4 objSpacePosition = @shPassthroughReceive(objSpacePosition);
 
 
         // Shadows
@@ -281,7 +294,7 @@
         
         // use world position and divide by terrain world size to get a consistent uv scale (-0.5 ... 0.5)
         // this is the same scale that non-triplanar would have
-        float3 wPos = shMatrixMult(worldMatrix, float4(objSpacePosition, 1)).xyz / terrainWorldSize;
+        float3 wPos = shMatrixMult(worldMatrix, float4(objSpacePosition.xyz, 1)).xyz / terrainWorldSize;
 #endif
         
 #if NORMAL_MAPPING
@@ -448,7 +461,10 @@
 #endif
 
 #if MRT
-        shOutputColour(1) = float4(depth / far,1,1,1);
+        float3 viewPosition = @shPassthroughReceive(viewPosition);
+        float3 viewNormal = normalize(shMatrixMult(wvMat, float4(normal, 0)).xyz);
+        shOutputColour(1) = float4(length(viewPosition) / far, normalize(viewNormal));
+        shOutputColour(2) = float4(depth / far, 0, depth / objSpacePosition.w, 0);
 #endif
 
 #if COMPOSITE_MAP
@@ -483,6 +499,7 @@
 #if MRT
         shDeclareMrtOutput(1)
         shUniform(float, far) @shAutoConstant(far, far_clip_distance)
+        shUniform(float4x4, wvMat) @shAutoConstant(wvMat, worldview_matrix)
 #endif
 
 
@@ -512,7 +529,7 @@
 
         float2 UV = @shPassthroughReceive(UV);
         
-        float3 objSpacePosition = @shPassthroughReceive(objSpacePosition);
+        float4 objSpacePosition = @shPassthroughReceive(objSpacePosition);
 
 
         // Shadows
@@ -541,7 +558,10 @@
 #endif
 
 #if MRT
-        shOutputColour(1) = float4(depth / far,1,1,1);
+        float3 viewPosition = @shPassthroughReceive(viewDepth);
+        float3 viewNormal = normalize(shMatrixMult(wvMat, float4(normal, 0)).xyz);
+        shOutputColour(1) = float4(length(viewPosition) / far, normalize(viewNormal));
+        shOutputColour(2) = float4(depth / far, 0, depth / objSpacePosition.w, 0);
 #endif
 
     //shOutputColour(0).xy = UV;

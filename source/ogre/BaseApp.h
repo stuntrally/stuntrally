@@ -28,8 +28,6 @@ namespace sh
 	class Factory;
 }
 
-class MaterialFactory;
-
 class MaterialMgrListener : public Ogre::MaterialManager::Listener
 {
 public:

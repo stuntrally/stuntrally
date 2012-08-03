@@ -5,7 +5,6 @@
 #include "../paged-geom/PagedGeometry.h"
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/RenderConst.h"
-//#include "../ogre/common/MaterialGen/MaterialFactory.h"
 #include "btBulletCollisionCommon.h"
 #include "btBulletDynamicsCommon.h"
 
