@@ -81,7 +81,7 @@ public:
 	// vdrift static
 	Ogre::StaticGeometry* mStaticGeom;
 	
-	// Rain, snow
+	// Weather  rain, snow
 	Ogre::ParticleSystem *pr,*pr2;
 	
 	//  trees

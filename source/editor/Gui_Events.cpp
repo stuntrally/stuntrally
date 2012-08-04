@@ -22,13 +22,13 @@ void App::comboSky(ComboBoxPtr cmb, size_t val)  // sky materials
 
 void App::comboRain1(ComboBoxPtr cmb, size_t val)  // rain types
 {
-	String s = cmb->getItemNameAt(val);
-	sc.rainName = s;
+	String s = cmb->getItemNameAt(val);  sc.rainName = s;
+	DestroyWeather();  CreateWeather();
 }
 void App::comboRain2(ComboBoxPtr cmb, size_t val)
 {
-	String s = cmb->getItemNameAt(val);
-	sc.rain2Name = s;
+	String s = cmb->getItemNameAt(val);  sc.rain2Name = s;
+	DestroyWeather();  CreateWeather();
 }
 
 void App::slRain1Rate(SL)  // rain rates
@@ -66,6 +66,10 @@ void App::slFogEnd(SL)
 void App::chkFogDisable(WP wp)  // chk fog disable
 {
 	ChkEv(bFog);  UpdFog();
+}
+void App::chkWeatherDisable(WP wp)
+{
+	ChkEv(bWeather);
 }
 void App::editFogClr(Edit* ed)  // edit fog clr
 {

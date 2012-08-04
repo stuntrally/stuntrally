@@ -89,6 +89,9 @@ void App::NewCommon(bool onlyTerVeget)
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
+	if (!onlyTerVeget)
+		DestroyWeather();
+
 	mSceneMgr->destroyAllStaticGeometry();
 	mStaticGeom = 0;
 	DestroyVdrTrackBlt();
@@ -142,6 +145,9 @@ void App::LoadTrackEv()
 	UpdWndTitle();
 
 	CreateFluids();
+
+	CreateWeather();
+
 
 	bNewHmap = false;/**/
 	CreateTerrain(bNewHmap,sc.ter);
@@ -294,6 +300,32 @@ void App::SaveTrackEv()
 	
 	Delete(getHMapNew());
 	Status("Saved", 1,0.6,0.2);
+}
+
+
+//  weather rain,snow  -----
+//-------------------------------------------------------------------------------------
+void App::CreateWeather()
+{
+	if (!pr && !sc.rainName.empty())
+	{	pr = mSceneMgr->createParticleSystem("Rain", sc.rainName);
+		pr->setVisibilityFlags(RV_Particles);
+		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr);
+		pr->setRenderQueueGroup(RQG_Weather);
+		pr->getEmitter(0)->setEmissionRate(0);
+	}
+	if (!pr2 && !sc.rain2Name.empty())
+	{	pr2 = mSceneMgr->createParticleSystem("Rain2", sc.rain2Name);
+		pr2->setVisibilityFlags(RV_Particles);
+		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr2);
+		pr2->setRenderQueueGroup(RQG_Weather);
+		pr2->getEmitter(0)->setEmissionRate(0);
+	}
+}
+void App::DestroyWeather()
+{
+	if (pr)  {  mSceneMgr->destroyParticleSystem(pr);   pr=0;  }
+	if (pr2) {  mSceneMgr->destroyParticleSystem(pr2);  pr2=0;  }
 }
 
 

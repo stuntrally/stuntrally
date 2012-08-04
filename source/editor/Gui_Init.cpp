@@ -183,6 +183,7 @@ void App::InitGui()
 	Slv(SunPitch,0);  Slv(SunYaw,0);
 	Slv(FogStart,0);  Slv(FogEnd,0);
 	Chk("FogDisable", chkFogDisable, pSet->bFog);  chkFog = bchk;
+	Chk("WeatherDisable", chkWeatherDisable, pSet->bWeather);  chkWeather = bchk;
 	Ed(LiAmb, editLiAmb);  Ed(LiDiff, editLiDiff);  Ed(LiSpec, editLiSpec);  Ed(FogClr, editFogClr);
 	clrAmb = mGUI->findWidget<ImageBox>("ClrAmb");		clrDiff = mGUI->findWidget<ImageBox>("ClrDiff");
 	clrSpec = mGUI->findWidget<ImageBox>("ClrSpec");	clrFog = mGUI->findWidget<ImageBox>("ClrFog");

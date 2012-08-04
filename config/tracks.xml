@@ -151,7 +151,7 @@
 	<track n="93" name="F15-ForestTrip"	created="01-06-12" crtver="1.7" modified="29-06-12" scenery="Forest" author="krash" fluids="1" bumps="2" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="2" rating="3" />
 	<track n="94" name="J19-demo2"		created="23-07-12" crtver="1.7" modified="23-07-12" scenery="Jungle"	author="CH" fluids="2" bumps="0" jumps="1" loops="1" pipes="1" banked="2" frenzy="2" long="2" diff="2" rating="2" />
 <track n="95" name="D11-PersianCity"	created="31-07-12" crtver="1.7" modified="31-07-12" scenery="Desert"	author="CH" fluids="0" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="2" long="1" diff="2" rating="3" />
-	<track n="96" name="I9-Rainbow"		created="01-08-12" crtver="1.7" modified="02-08-12" scenery="Island"	author="CH" fluids="0" bumps="1" jumps="0" loops="0" pipes="0" banked="3" frenzy="2" long="3" diff="3" rating="3" />
-	<track n="97" name="S14-Refinery"	created="02-08-12" crtver="1.7" modified="02-08-12" scenery="Savanna"	author="CH" fluids="0" bumps="1" jumps="2" loops="5" pipes="3" banked="4" frenzy="4" long="5" diff="6" rating="4" />
+	<track n="96" name="I9-Web"			created="01-08-12" crtver="1.7" modified="04-08-12" scenery="Island"	author="CH" fluids="2" bumps="0" jumps="2" loops="0" pipes="0" banked="5" frenzy="3" long="9" diff="5" rating="3" />
+	<track n="97" name="S14-Refinery"	created="02-08-12" crtver="1.7" modified="02-08-12" scenery="Savanna"	author="CH" fluids="0" bumps="1" jumps="2" loops="5" pipes="3" banked="4" frenzy="3" long="5" diff="6" rating="4" />
 
 </tracks>
