@@ -62,7 +62,7 @@
         #define WAVE_SCALE 25                      // overall wave scale
 
         #define ABBERATION 0.001                    // chromatic abberation amount
-        #define BUMP 1                            // overall water surface bumpiness
+        #define BUMP 1.5                            // overall water surface bumpiness
         #define REFL_BUMP 0.08                      // reflection distortion amount
         #define REFR_BUMP 0.06                      // refraction distortion amount
 

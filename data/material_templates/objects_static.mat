@@ -47,3 +47,12 @@ material Temple
 	terrain_light_map true
 	diffuseMap white.png
 }
+
+material DishHole
+{
+    parent base
+    diffuseMap pyramid_big.dds
+    ambient 1 1 1
+    diffuse 0.8 0.8 0.8
+    specular 0.4 0.4 0.4 16
+}

@@ -5,6 +5,8 @@
 
 #define SHADOWS @shGlobalSettingBool(shadows_pssm) && @shPropertyBool(receives_shadows)
 
+#define SHADOWS_DEPTH @shGlobalSettingBool(shadows_depth)
+
 #define MRT @shPropertyBool(mrt_output)
 
 #if SHADOWS

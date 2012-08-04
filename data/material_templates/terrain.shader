@@ -11,6 +11,8 @@
 
 #define SHADOWS @shGlobalSettingBool(shadows_pssm) && !RENDER_COMPOSITE_MAP
 
+#define SHADOWS_DEPTH @shGlobalSettingBool(shadows_depth)
+
 #if SHADOWS
 #include "shadows.h"
 #endif

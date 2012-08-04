@@ -418,12 +418,12 @@ bool BaseApp::setup()
 	platform->setShaderCachingEnabled (true);
 	platform->setCacheFolder (PATHMANAGER::GetCacheDir());
 	mFactory = new sh::Factory(platform);
-	mFactory->setSharedParameter ("globalColorMultiplier", sh::makeProperty<sh::Vector4>(new sh::Vector4(0.3, 1.0, 0.1, 1.0)));
 	mFactory->setGlobalSetting("fog", "true");
 	mFactory->setGlobalSetting("wind", "true");
 	mFactory->setGlobalSetting("mrt_output", "false");
 	mFactory->setGlobalSetting ("shadows", "false");
 	mFactory->setGlobalSetting ("shadows_pssm", "false");
+	sh::Factory::getInstance().setGlobalSetting ("shadows_depth", (pSet->shadow_type > 1) ? "true" : "false");
 	mFactory->setGlobalSetting ("lighting", "true");
 	mFactory->setGlobalSetting ("terrain_composite_map", "false");
 	mFactory->setGlobalSetting ("soft_particles", "false");

@@ -269,6 +269,11 @@ void App::materialCreated (sh::MaterialInstance* m, const std::string& configura
 
 	Ogre::Technique* t = static_cast<sh::OgreMaterial*>(m->getMaterial())->getOgreTechniqueForConfiguration (configuration, lodIndex);
 
+	if (pSet->shadow_type <= 1)
+	{
+		t->setShadowCasterMaterial ("");
+		return;
+	}
 
 	// this is just here to set the correct shadow caster
 	if (m->hasProperty ("transparent") && m->hasProperty ("cull_hardware") && sh::retrieveValue<sh::StringValue>(m->getProperty ("cull_hardware"), 0).get() == "none")

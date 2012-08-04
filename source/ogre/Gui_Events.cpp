@@ -449,6 +449,7 @@ void App::chkMultiThread(WP wp){	pSet->multi_thr = pSet->multi_thr ? 0 : 1;  if 
 void App::chkVidEffects(WP wp)
 {
 	ChkEv(all_effects);  recreateCompositor();  //refreshCompositor();
+	changeShadows();
 }
 void App::chkVidBloom(WP wp)
 {		
