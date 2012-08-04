@@ -222,8 +222,8 @@ bool App::frameStart(Real time)
 			if (isKey(KC_DOWN)||isKey(KC_NUMPAD2))	dirU += time;  else
 			{	dirU = 0.f;  dirD = 0.f;  }
 			int d = ctrl ? 4 : 1;
-			if (dirU > 0.0f) {  LNext( d);  dirU = -0.12f;  }
-			if (dirD > 0.0f) {  LNext(-d);  dirD = -0.12f;  }
+			if (dirU > 0.0f) {  LNext( d);  dirU = -0.15f;  }
+			if (dirD > 0.0f) {  LNext(-d);  dirD = -0.15f;  }
 		}
 		
 		///  Gui updates from networking
