@@ -32,7 +32,7 @@ App::App()  //  gui wigdets--
 	,valTerUpd(0), valSizeRoadP(0), valMiniUpd(0), chAutoBlendmap(0)
 	,cmbSky(0), cmbRain1(0),cmbRain2(0), valRain1Rate(0),valRain2Rate(0)  // sun
 	,valSunPitch(0),valSunYaw(0), valFogStart(0),valFogEnd(0)
-	,edLiAmb(0),edLiDiff(0),edLiSpec(0), edFogClr(0), chkFog(0)
+	,edLiAmb(0),edLiDiff(0),edLiSpec(0), edFogClr(0), chkFog(0), chkWeather(0)
 	,clrAmb(0),clrDiff(0),clrSpec(0), clrFog(0), clrTrail(0)
 	,cmbTexDiff(0),cmbTexNorm(0), imgTexDiff(0), terrain(0)  // terrain
 	,valTerLAll(0),tabsHmap(0),tabsTerLayers(0), idTerLay(0),bTerLay(1)
@@ -62,7 +62,7 @@ App::App()  //  gui wigdets--
 	,bTerUpd(0), curBr(2), bGuiReinit(0), noBlendUpd(0), bGI(0), resList(0), brImgSave(-1)
 	,ndPos(0), mpos(0), asp(4.f/3.f)
 	,ndCar(0),entCar(0), ndStBox(0),entStBox(0), ndFluidBox(0),entFluidBox(0), ndObjBox(0),entObjBox(0)
-	,grass(0), trees(0), sun(0)
+	,grass(0), trees(0), sun(0), pr(0),pr2(0)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
 	,iFlCur(0), bRecreateFluids(0), iObjCur(-1), iObjTNew(0), iObjLast(0)
 	
@@ -146,11 +146,14 @@ App::~App()
 
 void App::destroyScene()
 {
+	//NewCommon(false);  //?
 	if (road)
 	{	road->DestroyRoad();  delete road;  road = 0;  }
 
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
+
+	DestroyWeather();
 
 	delete[] sc.td.hfHeight;
 	delete[] sc.td.hfAngle;

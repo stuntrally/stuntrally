@@ -44,7 +44,7 @@ public:
 	bool isMain;  int inMenu;  // last menu id
 
 	//  settings
-	bool bFog, bTrees, autoBlendmap;
+	bool bFog, bTrees, bWeather, autoBlendmap;
 	int ter_skip, mini_skip;  float road_sphr;
 	float cam_speed, cam_inert, cam_x,cam_y,cam_z, cam_dx,cam_dy,cam_dz;
 	

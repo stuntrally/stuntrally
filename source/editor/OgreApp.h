@@ -196,6 +196,9 @@ protected:
 	void BltWorldInit(), BltWorldDestroy(), BltClear();
 
 
+	// Weather  rain, snow
+	Ogre::ParticleSystem *pr,*pr2;  void CreateWeather(),DestroyWeather();
+
 	//  trees
 	class Forests::PagedGeometry *trees, *grass;
 
@@ -203,7 +206,7 @@ protected:
 	void SaveGrassDens(), SaveWaterDepth(), AlignTerToRoad();
 	int iSnap;  Ogre::Real angSnap;
 
-	//  car starts
+	//  car start
 	bool LoadStartPos(),SaveStartPos(std::string path);  void UpdStartPos();
 	std::vector <MATHVECTOR <float, 3> > vStartPos;
 	std::vector <QUATERNION <float> >    vStartRot;
@@ -321,7 +324,7 @@ protected:
 	MyGUI::EditPtr edLiAmb,edLiDiff,edLiSpec, edFogClr;
 	MyGUI::ImageBox* clrAmb,*clrDiff,*clrSpec, *clrFog;
 	void editLiAmb(MyGUI::EditPtr),editLiDiff(MyGUI::EditPtr),editLiSpec(MyGUI::EditPtr), editFogClr(MyGUI::EditPtr);
-	void chkFogDisable(WP);  MyGUI::ButtonPtr chkFog;
+	void chkFogDisable(WP),chkWeatherDisable(WP);  MyGUI::ButtonPtr chkFog, chkWeather;
 
 	
 	///  [Terrain]  ----

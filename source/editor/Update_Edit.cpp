@@ -70,11 +70,6 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			for (i=Kmax; i > 0; --i)  tkey[i] = 0.f;
 		}
 		String ss = "";
-		//  mouse buttons
-		if (mbLeft)  ss += "LMB ";
-		if (mbRight)  ss += "RMB ";
-		if (mbMiddle)  ss += "MMB ";
-
 		//  pressed
 		for (i=Kmax; i > 0; --i)
 			if (mKeyboard->isKeyDown( (KeyCode)i ))
@@ -84,6 +79,12 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (tkey[KC_LCONTROL] > 0.f || tkey[KC_RCONTROL] > 0.f)	ss += "Ctrl ";
 		if (tkey[KC_LMENU] > 0.f || tkey[KC_RMENU] > 0.f)		ss += "Alt ";
 		if (tkey[KC_LSHIFT] > 0.f || tkey[KC_RSHIFT] > 0.f)		ss += "Shift ";
+
+		//  mouse buttons
+		if (mbLeft)  ss += "LMB ";
+		if (mbRight)  ss += "RMB ";
+		if (mbMiddle)  ss += "MMB ";
+
 		//  all
 		for (i=Kmax; i > 0; --i)
 		{
@@ -890,6 +891,25 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		TrackListUpd(false);
 	}
 	
+	//  Update rain/snow - depends on camera
+	const Vector3& pos = mCamera->getPosition(), dir = mCamera->getDirection();
+	static Vector3 oldPos = Vector3::ZERO;
+	Vector3 vel = (pos-oldPos)/ (1.0f / mWindow->getLastFPS());  oldPos = pos;
+	Vector3 par = pos + dir * 12 + vel * 0.4;
+	float f = pSet->bWeather ? 0.f : 1.f;
+	if (pr)
+	{
+		ParticleEmitter* pe = pr->getEmitter(0);
+		pe->setPosition(par);
+		pe->setEmissionRate(f * sc.rainEmit);
+	}
+	if (pr2)
+	{
+		ParticleEmitter* pe = pr2->getEmitter(0);
+		pe->setPosition(par);
+		pe->setEmissionRate(f * sc.rain2Emit);
+	}
+
 	materialFactory->update();
 	
 	bFirstRenderFrame = false;

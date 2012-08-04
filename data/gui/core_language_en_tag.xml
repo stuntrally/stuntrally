@@ -943,6 +943,7 @@
 	<Tag name="TipRainSnow1">Set 1 Rain/Snow type</Tag>
 	<Tag name="TipRainSnow2">Set 2 Rain/Snow type</Tag>
 	<Tag name="TipRainSnowInt">Rain/Snow intensity (eg. 1000)</Tag> 
+	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
 
 
 	<!--  Terrain  -->

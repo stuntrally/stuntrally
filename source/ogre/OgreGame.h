@@ -77,7 +77,7 @@ public:
 	BltObjects objs;  // veget collision in bullet
 	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 	
-	// Rain, snow
+	// Weather  rain, snow
 	Ogre::ParticleSystem *pr,*pr2;
 	
 	//  trees

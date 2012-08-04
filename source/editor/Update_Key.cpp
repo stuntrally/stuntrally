@@ -685,6 +685,9 @@ bool App::KeyPress(const CmdKey &arg)
 			pSet->bFog = !pSet->bFog;  chkFog->setStateSelected(pSet->bFog);  UpdFog();  }  break;
 		//  trees
 		case KC_V:	bTrGrUpd = true;  break;
+		//  weather
+		case KC_P:  {
+			pSet->bWeather = !pSet->bWeather;  chkWeather->setStateSelected(pSet->bWeather);  }  break;
 
 		//  terrain
 		case KC_D:	if (bEdit()){  SetEdMode(ED_Deform);  curBr = 0;  updBrush();  UpdEditWnds();  }	break;
