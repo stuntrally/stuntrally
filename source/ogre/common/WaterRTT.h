@@ -5,7 +5,7 @@
 namespace Ogre { class Camera;  class SceneManager; }
 
 /*
- * Class that handles RenderTarget for water reflection.
+ * Class that handles RenderTargets for water reflection and refraction.
  * Could also be used for other types of planar reflections (e.g. a mirror)
  */
 
@@ -19,11 +19,12 @@ public:
 	void destroy();
 	void recreate();
 	
-	void setRTTSize(const unsigned int size) { if (mRTTSize != size) { mChangedSettings=true; mRTTSize = size; } }
-	void setReflect(const bool reflect) { if (mReflect != reflect) { mChangedSettings=true; mReflect = reflect; } }
+	void setRTTSize(const unsigned int size) { if (mRTTSize != size) { mChangedSettings=true; mRTTSize = size; } };
+	void setReflect(const bool reflect) { if (mReflect != reflect) { mChangedSettings=true; mReflect = reflect; } };
+	void setRefract(const bool refract) { if (mRefract != refract) { mChangedSettings=true; mRefract = refract; } };
 	
 	void setActive(const bool active);
-	void setPlane(const Ogre::Plane& plane) { mWaterPlane = plane; }
+	void setPlane(const Ogre::Plane& plane) { mWaterPlane = plane; };
 	
 	void setViewerCamera(Ogre::Camera* cam);
 	
@@ -32,6 +33,7 @@ public:
 	
 private:
 	Ogre::RenderTarget* mReflectionTarget;
+	Ogre::RenderTarget* mRefractionTarget;
 	
 	Ogre::Plane mWaterPlane;
 
@@ -41,6 +43,7 @@ private:
 	unsigned int mRTTSize;
 	
 	bool mReflect;
+	bool mRefract;
 	
 	bool mChangedSettings;
 	

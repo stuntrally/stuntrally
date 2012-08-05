@@ -3135,6 +3135,11 @@
 							<Property key="TextColour" value="0.6 0.8 1"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 80 200 24" name="WaterRefraction">
+							<Property key="Caption" value="#{WaterRefraction}"/>
+							<Property key="TextColour" value="0.6 0.8 1"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 110 144 24">
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="Caption" value="#{Size}"/>

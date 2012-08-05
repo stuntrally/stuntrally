@@ -35,37 +35,37 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	{
 	case 0:  // Lowest  -------------
 		s.anisotropy = 0;  s.view_distance = 1000;  s.terdetail = 2.0f;  s.terdist = 0.f;  s.road_dist = 1.0;
-		s.tex_size = 0;  s.ter_mtr = 0;  s.shaders = 0;  s.use_imposters = 0;  s.water_reflect=0;  s.water_rttsize=0;
+		s.tex_size = 0;  s.ter_mtr = 0;  s.shaders = 0;  s.use_imposters = 0;  s.water_reflect=0;  s.water_refract=0;  s.water_rttsize=0;
 		s.shadow_type = 0;  s.shadow_size = 0;  s.shadow_count = 3;  s.shadow_dist = 1000;  s.shadow_filter = 1;
 		s.gui.trees = 0.f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
 	case 1:  // Low  -------------
 		s.anisotropy = 0;  s.view_distance = 1500;  s.terdetail = 1.7f;  s.terdist = 40.f;  s.road_dist = 1.2;
-		s.tex_size = 0;  s.ter_mtr = 1;  s.shaders = 0.25;  s.use_imposters = 0;  s.water_reflect=0;   s.water_rttsize=0;
+		s.tex_size = 0;  s.ter_mtr = 1;  s.shaders = 0.25;  s.use_imposters = 0;  s.water_reflect=0;  s.water_refract=0;  s.water_rttsize=0;
 		s.shadow_type = 0;  s.shadow_size = 0;  s.shadow_count = 3;  s.shadow_dist = 1000;  s.shadow_filter = 1;
 		s.gui.trees = 0.f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
 	case 2:  // Medium  -------------
 		s.anisotropy = 4;  s.view_distance = 2500;  s.terdetail = 1.5f;  s.terdist = 80.f;  s.road_dist = 1.4;
-		s.tex_size = 1;  s.ter_mtr = 1;  s.shaders = 0.5;  s.use_imposters = 1;  s.water_reflect=0; s.water_rttsize=0;
+		s.tex_size = 1;  s.ter_mtr = 1;  s.shaders = 0.5;  s.use_imposters = 1;  s.water_reflect=0;  s.water_refract=0;  s.water_rttsize=0;
 		s.shadow_type = 1;  s.shadow_size = 1;  s.shadow_count = 3;  s.shadow_dist = 3000;  s.shadow_filter = 2;
 		s.gui.trees = 0.5f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
 	case 3:  // High  -------------
 		s.anisotropy = 8;  s.view_distance = 6000;  s.terdetail = 1.3f;  s.terdist = 200.f;  s.road_dist = 1.6;
-		s.tex_size = 1;  s.ter_mtr = 2;  s.shaders = 0.75;  s.use_imposters = 1;  s.water_reflect=1;   s.water_rttsize=1;
+		s.tex_size = 1;  s.ter_mtr = 2;  s.shaders = 0.75;  s.use_imposters = 1;  s.water_reflect=1;  s.water_refract=0;  s.water_rttsize=1;
 		s.shadow_type = 2;  s.shadow_size = 2;  s.shadow_count = 3;  s.shadow_dist = 3000;  s.shadow_filter = 3;
 		s.gui.trees = 1.f;  s.grass = 1.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
 	case 4:  // Very High  -------------
 		s.anisotropy = 16;  s.view_distance = 8000;  s.terdetail = 1.2f;  s.terdist = 400.f;  s.road_dist = 2.0;
-		s.tex_size = 1;  s.ter_mtr = 3;  s.shaders = 1;  s.use_imposters = 1;  s.water_reflect=1;  s.water_rttsize=1;
+		s.tex_size = 1;  s.ter_mtr = 3;  s.shaders = 1;  s.use_imposters = 1;  s.water_reflect=1;  s.water_refract=1;  s.water_rttsize=1;
 		s.shadow_type = 2;  s.shadow_size = 3;  s.shadow_count = 3;  s.shadow_dist = 3000;  s.shadow_filter = 4;
 		s.gui.trees = 1.5f;  s.grass = 1.f;  s.trees_dist = 1.f;  s.grass_dist = 1.5f;	break;
 
 	case 5:  // Ultra  -------------
 		s.anisotropy = 16;  s.view_distance = 20000;  s.terdetail = 1.0f;  s.terdist = 1000.f;  s.road_dist = 3.0;
-		s.tex_size = 1;  s.ter_mtr = 3;  s.shaders = 1;  s.use_imposters = 1;  s.water_reflect=1;   s.water_rttsize=2;
+		s.tex_size = 1;  s.ter_mtr = 3;  s.shaders = 1;  s.use_imposters = 1;  s.water_reflect=1;  s.water_refract=1;  s.water_rttsize=2;
 		s.shadow_type = 2;  s.shadow_size = 4;  s.shadow_count = 3;  s.shadow_dist = 3000;  s.shadow_filter = 4;
 		s.gui.trees = 2.f;  s.grass = 2.f;  s.trees_dist = 2.f;  s.grass_dist = 2.f;	break;
 	}
@@ -174,6 +174,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 #endif
 
 	Chk("WaterReflection", chkWaterReflect, pSet->water_reflect);
+	Chk("WaterRefraction", chkWaterRefract, pSet->water_refract);
 	Slv(WaterSize, pSet->water_rttsize / 2.f)
 	mWaterRTT.setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
 	mWaterRTT.recreate();
