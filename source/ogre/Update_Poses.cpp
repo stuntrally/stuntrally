@@ -8,6 +8,8 @@
 #include "../vdrift/quickprof.h"
 #include "../network/gameclient.hpp"
 
+#include "../shiny/Main/Factory.hpp"
+
 #include "common/Slider.h"
 #include "SplitScreen.h"
 using namespace Ogre;
@@ -141,7 +143,36 @@ void App::newPoses(float time)  // time only for camera update
 		
 
 		///-----------------------------------------------------------------------
-		//  record  save data for replay
+		//  rewind
+		///-----------------------------------------------------------------------
+		if (!bRplPlay && !pGame->pause && !bGhost && pCar)
+		if (pCar->bRewind)  // do rewind (go back)
+		{
+			double& gtime = pGame->timer.GetRewindTime(c);
+			gtime = std::max(0.0, gtime - time * 4.f);  //par speed
+
+			RewindFrame rf;
+			bool ok = rewind.GetFrame(gtime, &rf, c);
+
+			pCar->SetPosRewind(rf.pos, rf.rot, rf.vel, rf.angvel);
+			carModels[c]->fCam->first = true;
+		}
+		else  // save data
+		{
+			const CARDYNAMICS& cd = pCar->dynamics;
+			RewindFrame fr;
+			fr.time = pGame->timer.GetRewindTime(c);
+			
+			fr.pos = cd.body.GetPosition();
+			fr.rot = cd.body.GetOrientation();
+			fr.vel = cd.GetVelocity();
+			fr.angvel = cd.GetAngularVelocity();
+
+			rewind.AddFrame(fr, c);  // rec rewind
+		}
+		
+		///-----------------------------------------------------------------------
+		//  record  save data
 		///-----------------------------------------------------------------------
 		if (pSet->rpl_rec && !pGame->pause && !bGhost && pCar)
 		{
@@ -259,20 +290,16 @@ void App::newPoses(float time)  // time only for camera update
 					// calc angle towards cam
 					Real angle = (arrowAnimCur.zAxis().dotProduct(carM->fCam->mCamera->getOrientation().zAxis())+1)/2.0f;
 					// set color in material
-					MaterialPtr arrowMat = MaterialManager::getSingleton().getByName("Arrow");
-					if (!arrowMat.isNull())
-					{	Technique* tech = arrowMat->getTechnique(0);
-						if (tech && tech->getNumPasses() >= 2)
-						if (tech->getPass(1)->hasFragmentProgram())
-						{
-							GpuProgramParametersSharedPtr fparams = arrowMat->getTechnique(0)->getPass(1)->getFragmentProgramParameters();
-							// green: 0.0 1.0 0.0     0.0 0.4 0.0
-							// red:   1.0 0.0 0.0     0.4 0.0 0.0
-							Vector3 col1 = angle * Vector3(0.0, 1.0, 0.0) + (1-angle) * Vector3(1.0, 0.0, 0.0);
-							Vector3 col2 = angle * Vector3(0.0, 0.4, 0.0) + (1-angle) * Vector3(0.4, 0.0, 0.0);
-							fparams->setNamedConstant("color1", col1);
-							fparams->setNamedConstant("color2", col2);
-					}	}
+
+					// green: 0.0 1.0 0.0     0.0 0.4 0.0
+					// red:   1.0 0.0 0.0     0.4 0.0 0.0
+					Vector3 col1 = angle * Vector3(0.0, 1.0, 0.0) + (1-angle) * Vector3(1.0, 0.0, 0.0);
+					Vector3 col2 = angle * Vector3(0.0, 0.4, 0.0) + (1-angle) * Vector3(0.4, 0.0, 0.0);
+
+					sh::Vector3* v1 = new sh::Vector3(col1.x, col1.y, col1.z);
+					sh::Vector3* v2 = new sh::Vector3(col2.x, col2.y, col2.z);
+					sh::Factory::getInstance ().setSharedParameter ("arrowColour1", sh::makeProperty <sh::Vector3>(v1));
+					sh::Factory::getInstance ().setSharedParameter ("arrowColour2", sh::makeProperty <sh::Vector3>(v2));
 				}
 			}
 			

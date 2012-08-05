@@ -22,13 +22,13 @@ void App::comboSky(ComboBoxPtr cmb, size_t val)  // sky materials
 
 void App::comboRain1(ComboBoxPtr cmb, size_t val)  // rain types
 {
-	String s = cmb->getItemNameAt(val);
-	sc.rainName = s;
+	String s = cmb->getItemNameAt(val);  sc.rainName = s;
+	DestroyWeather();  CreateWeather();
 }
 void App::comboRain2(ComboBoxPtr cmb, size_t val)
 {
-	String s = cmb->getItemNameAt(val);
-	sc.rain2Name = s;
+	String s = cmb->getItemNameAt(val);  sc.rain2Name = s;
+	DestroyWeather();  CreateWeather();
 }
 
 void App::slRain1Rate(SL)  // rain rates
@@ -67,21 +67,29 @@ void App::chkFogDisable(WP wp)  // chk fog disable
 {
 	ChkEv(bFog);  UpdFog();
 }
+void App::chkWeatherDisable(WP wp)
+{
+	ChkEv(bWeather);
+}
 void App::editFogClr(Edit* ed)  // edit fog clr
 {
 	Vector3 c = s2v(ed->getCaption());  sc.fogClr = c;  UpdFog();
+	if (clrFog)  clrFog->setColour(Colour(c.x,c.y,c.z));
 }
 void App::editLiAmb(Edit* ed)  // edit light clrs
 {
 	Vector3 c = s2v(ed->getCaption());	sc.lAmb = c;  UpdSun();
+	if (clrAmb)  clrAmb->setColour(Colour(c.x,c.y,c.z));
 }
 void App::editLiDiff(Edit* ed)
 {
 	Vector3 c = s2v(ed->getCaption());	sc.lDiff = c;  UpdSun();
+	if (clrDiff)  clrDiff->setColour(Colour(c.x,c.y,c.z));
 }
 void App::editLiSpec(Edit* ed)
 {
 	Vector3 c = s2v(ed->getCaption());	sc.lSpec = c;  UpdSun();
+	if (clrSpec)  clrSpec->setColour(Colour(c.x,c.y,c.z));
 }
 
 
@@ -139,7 +147,7 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 	//  Terrain Particles
 	edLDust->setCaption(toStr(lay->dust));	edLDustS->setCaption(toStr(lay->dustS));
 	edLMud->setCaption(toStr(lay->mud));	edLSmoke->setCaption(toStr(lay->smoke));
-	edLTrlClr->setCaption(toStr(lay->tclr));
+	edLTrlClr->setCaption(toStr(lay->tclr));  if (clrTrail)  clrTrail->setColour(Colour(lay->tclr.r,lay->tclr.g,lay->tclr.b));
 	
 	//  Surfaces
 	int i = idTerLay;  //bTerLay ? idTerLay+1 : 0;  // road at 0
@@ -272,7 +280,7 @@ void App::btnTerrainHalf(WP)
 }
 
 //  Terrain  double  --------------------------------
-void App::btnTerrainDouble(WP)  // todo double.. gui []
+void App::btnTerrainDouble(WP)
 {
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str) / 2;
 	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
@@ -509,6 +517,7 @@ void App::editLTrlClr(EditPtr ed)
 	ColourValue c = s2c(ed->getCaption());
 	if (!bTerLay)   sc.td.layerRoad.tclr = c;
 	else  sc.td.layersAll[idTerLay].tclr = c;
+	if (clrTrail)  clrTrail->setColour(Colour(c.r,c.g,c.b));
 }
 
 void App::comboParDust(ComboBoxPtr cmb, size_t val)
@@ -563,6 +572,7 @@ void App::editTrGr(EditPtr ed)
 	else if (n=="TrRdDist")  sc.trRdDist = r;	else if (n=="TrImpDist")  sc.trDistImp = r;
 	else if (n=="GrDensSmooth")  sc.grDensSmooth = r;
 	else if (n=="GrTerMaxAngle")  sc.grTerMaxAngle = r;
+	else if (n=="GrTerMinHeight")  sc.grTerMinHeight = r;
 	else if (n=="GrTerMaxHeight")  sc.grTerMaxHeight = r;
 	else if (n=="SceneryId")  sc.sceneryId = r;
 }
@@ -583,7 +593,7 @@ void App::comboGrassClr(ComboBoxPtr cmb, size_t val)
 
 void App::tabPgLayers(TabPtr wp, size_t id)
 {
-	idPgLay = id;  // help var
+	idPgLay = id;  // help var												
 	const PagedLayer& lay = sc.pgLayersAll[id];
 
 	chkPgLay->setStateSelected(lay.on);
@@ -700,7 +710,7 @@ void App::comboPipeMtr(ComboBoxPtr cmb, size_t val)
 	int id = atoi(sn.c_str())-1;  if (id < 0 || id >= MTRs)  return;
 
 	String s = cmb->getItemNameAt(val);
-	road->sMtrPipe[id] = s;  road->RebuildRoad(true);  UpdPSSMMaterials();
+	road->SetMtrPipe(id, s);  road->RebuildRoad(true);  UpdPSSMMaterials();
 }
 
 void App::editRoad(EditPtr ed)
@@ -719,6 +729,22 @@ void App::editRoad(EditPtr ed)
 	//road->RebuildRoad(true);  //on Enter-
 }
 
+void App::slAlignWidthAdd(SL)
+{
+	Real v = 20.f * val;	pSet->al_w_add = v;
+	if (valAlignWidthAdd)  valAlignWidthAdd->setCaption(fToStr(v,1,3));
+}
+void App::slAlignWidthMul(SL)
+{
+	Real v = 1.f + 4.f * val;	pSet->al_w_mul = v;
+	if (valAlignWidthMul)  valAlignWidthMul->setCaption(fToStr(v,2,4));
+}
+void App::slAlignSmooth(SL)
+{
+	Real v = 6.f * val;		pSet->al_smooth = v;
+	if (valAlignSmooth)  valAlignSmooth->setCaption(fToStr(v,1,3));
+}
+
 
 //  [Settings]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -730,8 +756,7 @@ void App::chkEscQuits(WP wp){		ChkEv(escquit);		}
 
 void App::slMiniUpd(SL)
 {
-	int v = val * 20.f +slHalf;
-	pSet->mini_skip = v;
+	int v = val * 20.f +slHalf;  pSet->mini_skip = v;
 	if (valMiniUpd){	valMiniUpd->setCaption(toStr(v));  }
 }
 
@@ -757,8 +782,7 @@ void App::slCamSpeed(SL)
 
 void App::slTerUpd(SL)
 {
-	int v = val * 20.f +slHalf;
-	pSet->ter_skip = v;
+	int v = val * 20.f +slHalf;  pSet->ter_skip = v;
 	if (valTerUpd){	valTerUpd->setCaption(toStr(v));  }
 }
 
@@ -773,12 +797,15 @@ void App::slSizeMinmap(SL)
 }
 
 void App::chkMinimap(WP wp)
-{	ChkEv(trackmap);
-	UpdMiniVis();
+{
+	ChkEv(trackmap);  UpdMiniVis();
 	if (ndPos)  ndPos->setVisible(pSet->trackmap);
 }
 
-//brush_prv
+void App::chkAutoBlendmap(WP wp)
+{
+	ChkEv(autoBlendmap);
+}
 
 
 //  set camera in settings at exit

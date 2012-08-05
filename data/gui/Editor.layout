@@ -442,7 +442,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="74 235 65 20" name="rdVal10">
+		<Widget type="TextBox" skin="TextBox" position="74 235 75 20" name="rdVal10">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 1.0"/>
 		</Widget>
@@ -793,6 +793,18 @@
 					<Property key="TextColour" value="1 1 0.5"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="152 71 48 24">
+					<Property key="Caption" value="#{Pitch}"/>
+					<Property key="TextColour" value="1 0.8 0.2"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+					<UserString key="tip" value="#{TipSunDirPitch}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="152 95 48 25">
+					<Property key="Caption" value="#{Yaw}"/>
+					<Property key="TextColour" value="1 1 0"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+					<UserString key="tip" value="#{TipSunDirYaw}"/>
+				</Widget>
 				<Widget type="Slider" skin="Slider" position="280 71 320 16" name="SunPitch">
 					<Property key="Colour" value="1 0.8 0.2"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
@@ -803,8 +815,12 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipSunDirYaw}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="152 95 48 25">
-					<Property key="Caption" value="#{Yaw}"/>
+				<Widget type="TextBox" skin="TextBox" position="208 71 56 24" name="SunPitchVal">
+					<Property key="TextColour" value="1 0.8 0.2"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+					<UserString key="tip" value="#{TipSunDirPitch}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="208 95 56 24" name="SunYawVal">
 					<Property key="TextColour" value="1 1 0"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipSunDirYaw}"/>
@@ -849,6 +865,22 @@
 					<Property key="TextColour" value="0.8 0.8 0.7"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipSunSpecular}"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="380 140 24 24" name="ClrAmb">
+					<Property key="ImageTexture" value="white.png"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="380 172 24 24" name="ClrDiff">
+					<Property key="ImageTexture" value="white.png"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="380 204 24 24" name="ClrSpec">
+					<Property key="ImageTexture" value="white.png"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="380 252 24 24" name="ClrFog">
+					<Property key="ImageTexture" value="white.png"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="80 255 48 24">
 					<Property key="Caption" value="#{Fog}"/>
@@ -899,27 +931,22 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipFogEndDist}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="208 71 56 24" name="SunPitchVal">
-					<Property key="TextColour" value="1 0.8 0.2"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-					<UserString key="tip" value="#{TipSunDirPitch}"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="208 95 56 24" name="SunYawVal">
-					<Property key="TextColour" value="1 1 0"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-					<UserString key="tip" value="#{TipSunDirYaw}"/>
-				</Widget>
 				<Widget type="Button" skin="CheckBox" position="436 255 172 24" name="FogDisable">
 					<Property key="Caption" value="#{DisableEdit} (G)"/>
 					<Property key="TextColour" value="0.6 0.75 0.9"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipDisableFog}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="152 71 48 24">
-					<Property key="Caption" value="#{Pitch}"/>
-					<Property key="TextColour" value="1 0.8 0.2"/>
+				<Widget type="TextBox" skin="TextBox" position="80 375 72 24">
+					<Property key="Caption" value="#{Weather}"/>
+					<Property key="TextColour" value="0.7 1 1"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
-					<UserString key="tip" value="#{TipSunDirPitch}"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="436 375 172 24" name="WeatherDisable">
+					<Property key="Caption" value="#{DisableEdit} (P)"/>
+					<Property key="TextColour" value="0.6 0.7 0.8"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+					<UserString key="tip" value="#{TipDisableWeather}"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="208 373 184 24" name="Rain1Cmb">
 					<Property key="Colour" value="0.7 1 1"/>
@@ -934,11 +961,6 @@
 					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipRainSnow2}"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="80 375 72 24">
-					<Property key="Caption" value="#{Weather}"/>
-					<Property key="TextColour" value="0.7 1 1"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="208 407 64 24" name="Rain1RateVal">
 					<Property key="TextColour" value="0.8 1 1"/>
@@ -988,11 +1010,6 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Terrain}"/>
 				<UserString key="RelativeTo" value="EditorWnd"/>
-				<Widget type="Widget" skin="PanelSkin" position="24 155 600 265">
-					<Property key="Colour" value="0.141069 0.321637 0.146006"/>
-					<Property key="Alpha" value="0.2"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 39 120 24">
 					<Property key="Caption" value="#{HeightmapSize}"/>
 					<Property key="TextColour" value="0.4 1 0.6"/>
@@ -1034,29 +1051,6 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipNewTerrainFlat}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="660 236 84 24" name="TerrainHalf">
-					<Property key="Colour" value="0.2 0.7 0.1"/>
-					<Property key="Alpha" value="0.8"/>
-					<Property key="Caption" value="#{TerrainHalf}"/>
-					<Property key="TextColour" value="0.2 0.7 0.1"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-					<UserString key="tip" value="#{TipTerrainHalf}"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="660 204 84 24" name="TerrainDouble">
-					<Property key="Colour" value="0.2 0.7 0.1"/>
-					<Property key="Alpha" value="0.8"/>
-					<Property key="Caption" value="#{TerrainDouble}"/>
-					<Property key="TextColour" value="0.2 0.7 0.1"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-					<UserString key="tip" value="#{TipTerrainDouble}"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="304 159 104 32" name="TerrainGenerate">
-					<Property key="Colour" value="0.7 1.0 0.8"/>
-					<Property key="Caption" value="#{NewTerrainGenerate}"/>
-					<Property key="TextColour" value="0.7 1.0 0.8"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-					<UserString key="tip" value="#{TipTerrainGenerate}"/>
-				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="160 38 340 20" name="TabHMapSize">
 					<Property key="Colour" value="0.7 0.9 1"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
@@ -1086,97 +1080,6 @@
 						<UserString key="RelativeTo" value="EditorWnd"/>
 					</Widget>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 205 108 24">
-					<Property key="Caption" value="#{TerGenScale}"/>
-					<Property key="TextColour" value="0.6 0.9 0.5"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="148 205 56 24" name="TerGenScaleVal">
-					<Property key="TextColour" value="0.6 1.0 0.8"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="208 205 400 16" name="TerGenScale">
-					<Property key="Colour" value="0.6 0.9 0.5"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 230 108 24">
-					<Property key="Caption" value="#{TerGenFreq}"/>
-					<Property key="TextColour" value="0.6 0.9 0.5"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="148 230 56 24" name="TerGenFreqVal">
-					<Property key="TextColour" value="0.6 1.0 0.8"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="208 230 400 16" name="TerGenFreq">
-					<Property key="Colour" value="0.6 0.9 0.5"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 271 108 24">
-					<Property key="Caption" value="#{TerGenOct}"/>
-					<Property key="TextColour" value="0.6 0.9 0.7"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="148 271 56 24" name="TerGenOctVal">
-					<Property key="TextColour" value="0.6 1.0 0.9"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="208 271 400 16" name="TerGenOct">
-					<Property key="Colour" value="0.6 0.9 0.7"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 296 108 24">
-					<Property key="Caption" value="#{TerGenPers}"/>
-					<Property key="TextColour" value="0.6 0.9 0.7"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="148 296 56 24" name="TerGenPersVal">
-					<Property key="TextColour" value="0.6 1.0 0.9"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="208 296 400 16" name="TerGenPers">
-					<Property key="Colour" value="0.6 0.9 0.7"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 321 108 24">
-					<Property key="Caption" value="#{TerGenPow}"/>
-					<Property key="TextColour" value="0.6 0.9 0.7"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="148 321 56 24" name="TerGenPowVal">
-					<Property key="TextColour" value="0.6 1.0 0.9"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="208 321 400 16" name="TerGenPow">
-					<Property key="Colour" value="0.6 0.9 0.7"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 362 108 24">
-					<Property key="Caption" value="#{TerGenOfsX}"/>
-					<Property key="TextColour" value="0.6 0.9 0.5"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="148 362 56 24" name="TerGenOfsXVal">
-					<Property key="TextColour" value="0.6 1.0 0.8"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="208 362 400 16" name="TerGenOfsX">
-					<Property key="Colour" value="0.6 0.9 0.5"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 387 108 24">
-					<Property key="Caption" value="#{TerGenOfsY}"/>
-					<Property key="TextColour" value="0.6 0.9 0.5"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="148 387 56 24" name="TerGenOfsYVal">
-					<Property key="TextColour" value="0.6 1.0 0.8"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="208 387 400 16" name="TerGenOfsY">
-					<Property key="Colour" value="0.6 0.9 0.5"/>
-					<UserString key="RelativeTo" value="EditorWnd"/>
-				</Widget>
 				<Widget type="ProgressBar" skin="ProgressBarFill" position="160 37 340 21">
 					<Property key="Colour" value="0.2 0.9 0.3"/>
 					<Property key="Alpha" value="0.3"/>
@@ -1184,10 +1087,324 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipTerVertCount}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="664 172 96 24">
-					<Property key="Caption" value="#{Tools}"/>
-					<Property key="TextColour" value="0.4 0.7 0.5"/>
+				<Widget type="TabControl" skin="TabControl" position="24 170 736 350" name="SubTab">
+					<Property key="Colour" value="0.7 0.9 1"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
+					<UserString key="tip" value="#{TipTerLayers}"/>
+					<Widget type="TabItem" skin="" position="2 24 554 -4">
+						<Property key="Caption" value="#{Brushes}"/>
+						<UserString key="RelativeTo" value="EditorWnd"/>
+
+						<Widget type="ImageBox" skin="ImageBox" position="20 30 64 64" name="brI0">
+							<Property key="ImageTexture" value="brush0.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="45 100 40 24" name="brT0">
+							<Property key="Caption" value="16"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="90 30 64 64" name="brI1">
+							<Property key="ImageTexture" value="brush1.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="115 100 40 24" name="brT1">
+							<Property key="Caption" value="24"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="160 30 64 64" name="brI2">
+							<Property key="ImageTexture" value="brush2.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="185 100 40 24" name="brT2">
+							<Property key="Caption" value="16"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="230 30 64 64" name="brI3">
+							<Property key="ImageTexture" value="brush3.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="255 100 40 24" name="brT3">
+							<Property key="Caption" value="24"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="300 30 64 64" name="brI4">
+							<Property key="ImageTexture" value="brush4.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="325 100 40 24" name="brT4">
+							<Property key="Caption" value="16"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="370 30 64 64" name="brI5">
+							<Property key="ImageTexture" value="brush5.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="395 100 40 24" name="brT5">
+							<Property key="Caption" value="24"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="440 30 64 64" name="brI6">
+							<Property key="ImageTexture" value="brush6.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="465 100 40 24" name="brT6">
+							<Property key="Caption" value="16"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="510 30 64 64" name="brI7">
+							<Property key="ImageTexture" value="brush7.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="535 100 40 24" name="brT7">
+							<Property key="Caption" value="24"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="580 30 64 64" name="brI8">
+							<Property key="ImageTexture" value="brush8.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="605 100 40 24" name="brT8">
+							<Property key="Caption" value="16"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="650 30 64 64" name="brI9">
+							<Property key="ImageTexture" value="brush9.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="675 100 40 24" name="brT9">
+							<Property key="Caption" value="24"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+
+						<Widget type="ImageBox" skin="ImageBox" position="20 130 64 64" name="brI10">
+							<Property key="ImageTexture" value="brush10.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="45 200 40 24" name="brT10">
+							<Property key="Caption" value="16"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="90 130 64 64" name="brI11">
+							<Property key="ImageTexture" value="brush11.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="115 200 40 24" name="brT11">
+							<Property key="Caption" value="24"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="160 130 64 64" name="brI12">
+							<Property key="ImageTexture" value="brush12.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="185 200 40 24" name="brT12">
+							<Property key="Caption" value="16"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="230 130 64 64" name="brI13">
+							<Property key="ImageTexture" value="brush13.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="255 200 40 24" name="brT13">
+							<Property key="Caption" value="24"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="300 130 64 64" name="brI14">
+							<Property key="ImageTexture" value="brush14.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="325 200 40 24" name="brT14">
+							<Property key="Caption" value="16"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="370 130 64 64" name="brI15">
+							<Property key="ImageTexture" value="brush15.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="395 200 40 24" name="brT15">
+							<Property key="Caption" value="24"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="440 130 64 64" name="brI16">
+							<Property key="ImageTexture" value="brush16.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="465 200 40 24" name="brT16">
+							<Property key="Caption" value="16"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="510 130 64 64" name="brI17">
+							<Property key="ImageTexture" value="brush17.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="535 200 40 24" name="brT17">
+							<Property key="Caption" value="24"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="580 130 64 64" name="brI18">
+							<Property key="ImageTexture" value="brush18.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="605 200 40 24" name="brT18">
+							<Property key="Caption" value="16"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="650 130 64 64" name="brI19">
+							<Property key="ImageTexture" value="brush19.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox"   position="675 200 40 24" name="brT19">
+							<Property key="Caption" value="24"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 554 -4">
+						<Property key="Caption" value="#{Generator}"/>
+						<UserString key="RelativeTo" value="EditorWnd"/>
+						<Widget type="Widget" skin="PanelSkin" position="0 -16 740 380">
+							<Property key="Colour" value="0.141069 0.321637 0.146006"/>
+							<Property key="Alpha" value="0.2"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="288 9 104 32" name="TerrainGenerate">
+							<Property key="Colour" value="0.7 1.0 0.8"/>
+							<Property key="Caption" value="#{NewTerrainGenerate}"/>
+							<Property key="TextColour" value="0.7 1.0 0.8"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipTerrainGenerate}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="16 55 108 24">
+							<Property key="Caption" value="#{TerGenScale}"/>
+							<Property key="TextColour" value="0.6 0.9 0.5"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="132 55 56 24" name="TerGenScaleVal">
+							<Property key="TextColour" value="0.6 1.0 0.8"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="192 55 400 16" name="TerGenScale">
+							<Property key="Colour" value="0.6 0.9 0.5"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="16 80 108 24">
+							<Property key="Caption" value="#{TerGenFreq}"/>
+							<Property key="TextColour" value="0.6 0.9 0.5"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="132 80 56 24" name="TerGenFreqVal">
+							<Property key="TextColour" value="0.6 1.0 0.8"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="192 80 400 16" name="TerGenFreq">
+							<Property key="Colour" value="0.6 0.9 0.5"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="16 121 108 24">
+							<Property key="Caption" value="#{TerGenOct}"/>
+							<Property key="TextColour" value="0.6 0.9 0.7"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="132 121 56 24" name="TerGenOctVal">
+							<Property key="TextColour" value="0.6 1.0 0.9"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="192 121 400 16" name="TerGenOct">
+							<Property key="Colour" value="0.6 0.9 0.7"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="16 146 108 24">
+							<Property key="Caption" value="#{TerGenPers}"/>
+							<Property key="TextColour" value="0.6 0.9 0.7"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="132 146 56 24" name="TerGenPersVal">
+							<Property key="TextColour" value="0.6 1.0 0.9"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="192 146 400 16" name="TerGenPers">
+							<Property key="Colour" value="0.6 0.9 0.7"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="16 171 108 24">
+							<Property key="Caption" value="#{TerGenPow}"/>
+							<Property key="TextColour" value="0.6 0.9 0.7"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="132 171 56 24" name="TerGenPowVal">
+							<Property key="TextColour" value="0.6 1.0 0.9"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="192 171 400 16" name="TerGenPow">
+							<Property key="Colour" value="0.6 0.9 0.7"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="16 212 108 24">
+							<Property key="Caption" value="#{TerGenOfsX}"/>
+							<Property key="TextColour" value="0.6 0.9 0.5"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="132 212 56 24" name="TerGenOfsXVal">
+							<Property key="TextColour" value="0.6 1.0 0.8"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="192 212 400 16" name="TerGenOfsX">
+							<Property key="Colour" value="0.6 0.9 0.5"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="16 237 108 24">
+							<Property key="Caption" value="#{TerGenOfsY}"/>
+							<Property key="TextColour" value="0.6 0.9 0.5"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="132 237 56 24" name="TerGenOfsYVal">
+							<Property key="TextColour" value="0.6 1.0 0.8"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="192 237 400 16" name="TerGenOfsY">
+							<Property key="Colour" value="0.6 0.9 0.5"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 554 -4">
+						<Property key="Caption" value="#{Tools}"/>
+						<UserString key="RelativeTo" value="EditorWnd"/>
+						<Widget type="Button" skin="Button" position="32 40 128 24" name="TerrainHalf">
+							<Property key="Colour" value="0.2 0.7 0.1"/>
+							<Property key="Alpha" value="0.8"/>
+							<Property key="Caption" value="#{TerrainHalf}"/>
+							<Property key="TextColour" value="0.2 0.7 0.1"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipTerrainHalf}"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="32 80 128 24" name="TerrainDouble">
+							<Property key="Colour" value="0.2 0.7 0.1"/>
+							<Property key="Alpha" value="0.8"/>
+							<Property key="Caption" value="#{TerrainDouble}"/>
+							<Property key="TextColour" value="0.2 0.7 0.1"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipTerrainDouble}"/>
+						</Widget>
+					</Widget>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
@@ -1198,6 +1415,7 @@
 					<Property key="TextColour" value="0.4 1 0.4"/>
 					<Property key="Colour" value="0.4 1 0.4"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
+					<UserString key="tip" value="#{TipTerLayers}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="480 60 112 24" name="TerLayOn">
 					<Property key="Caption" value="#{Enabled}"/>
@@ -1464,6 +1682,10 @@
 							<Property key="TextColour" value="0.6 0.8 0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTrailClr}"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="266 131 24 24" name="ClrTrail">
+							<Property key="ImageTexture" value="white.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="16 24 48 24">
 							<Property key="Caption" value="#{dust}"/>
@@ -1850,12 +2072,24 @@
 							<UserString key="tip" value="#{TipGrTerMaxAngle}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 396 116 24">
+							<Property key="Caption" value="#{HeightMin}"/>
+							<Property key="TextColour" value="0.6 0.9 0.6"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipGrTerMinHeight}"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="152 394 64 24" name="GrTerMinHeight">
+							<Property key="Colour" value="0.6 0.9 0.6"/>
+							<Property key="TextColour" value="0.6 0.9 0.6"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipGrTerMinHeight}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 424 116 24">
 							<Property key="Caption" value="#{HeightMax}"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrTerMaxHeight}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="152 394 64 24" name="GrTerMaxHeight">
+						<Widget type="EditBox" skin="EditBox" position="152 422 64 24" name="GrTerMaxHeight">
 							<Property key="Colour" value="0.6 0.9 0.6"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
@@ -2010,6 +2244,7 @@
 							<Property key="Caption" value="#{Used}: "/>
 							<Property key="TextColour" value="0.6 0.8 1"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipVegetGroups}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="128 135 56 24" name="LTrMinScVal">
 							<Property key="TextColour" value="0.6 0.8 0.8"/>
@@ -2348,6 +2583,11 @@
 					<Property key="Alpha" value="0.4"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
+				<Widget type="Widget" skin="PanelSkin" position="24 300 554 132">
+					<Property key="Colour" value="0.9 0.7 0.6"/>
+					<Property key="Alpha" value="0.3"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="36 32 116 24">
 					<Property key="Caption" value="#{SourceTrack}:"/>
 					<Property key="TextColour" value="0.7 0.7 0.9"/>
@@ -2426,6 +2666,12 @@
 					<Property key="Caption" value="#{DeleteRoad}"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
+				<Widget type="Button" skin="Button" position="436 248 128 24" name="DeleteFluids">
+					<Property key="Colour" value="0.3 0.6 1.0"/>
+					<Property key="TextColour" value="0.3 0.6 1.0"/>
+					<Property key="Caption" value="#{DeleteFluids}"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="36 251 112 24">
 					<Property key="Caption" value="#{ScaleMul}"/>
 					<Property key="TextColour" value="0.3 1 0.3"/>
@@ -2441,6 +2687,48 @@
 					<Property key="TextColour" value="0.3 1 0.3"/>
 					<Property key="Colour" value="0.3 1 0.3"/>
 					<Property key="Caption" value="#{ScaleTerHeight}"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+
+				<Widget type="TextBox" skin="TextBox" position="32 310 210 24">
+					<Property key="Caption" value="#{AlignTerrainToRoad}"/>
+					<Property key="TextColour" value="1.0 0.66 0.55"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 340 144 24">
+					<Property key="Caption" value="#{AlignWidthAdd}"/>
+					<Property key="TextColour" value="0.8 0.5 0.5"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="248 340 320 18" name="AlignWidthAdd">
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="180 340 60 24" name="AlignWidthAddVal">
+					<Property key="TextColour" value="0.8 0.5 0.5"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 370 144 24">
+					<Property key="Caption" value="#{AlignWidthMul}"/>
+					<Property key="TextColour" value="0.8 0.5 0.4"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="248 370 320 18" name="AlignWidthMul">
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="180 370 60 24" name="AlignWidthMulVal">
+					<Property key="TextColour" value="0.8 0.5 0.4"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 400 144 24">
+					<Property key="Caption" value="#{AlignSmooth}"/>
+					<Property key="TextColour" value="0.8 0.6 0.2"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="248 400 320 18" name="AlignSmooth">
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="180 400 60 24" name="AlignSmoothVal">
+					<Property key="TextColour" value="0.8 0.6 0.2"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 			</Widget>
@@ -2847,11 +3135,6 @@
 							<Property key="TextColour" value="0.6 0.8 1"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 80 200 24" name="WaterRefraction">
-							<Property key="Caption" value="#{WaterRefraction}"/>
-							<Property key="TextColour" value="0.6 0.8 1"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 110 144 24">
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="Caption" value="#{Size}"/>
@@ -2879,6 +3162,65 @@
 				<Widget type="TextBox" skin="TextBox" position="32 504 304 20">
 					<Property key="Caption" value="#{SREditorVersion} #{GameVersion}"/>
 					<Property key="TextColour" value="0.8 0.9 0.7"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="636 32 124 24">
+					<Property key="TextColour" value="0.5 0.75 1"/>
+					<Property key="Caption" value="#{SetCamTo}:"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="664 88 64 40" name="CamTop">
+					<Property key="Colour" value="0.4 0.65 0.9"/>
+					<Property key="TextColour" value="0.4 0.65 0.9"/>
+					<Property key="Caption" value="#{Top}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="616 92 48 32" name="CamLeft">
+					<Property key="Colour" value="0.6 0.8 1"/>
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="Caption" value="#{Left}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="728 92 48 32" name="CamRight">
+					<Property key="Colour" value="0.6 0.8 1"/>
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="Caption" value="#{Right}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="670 56 52 32" name="CamBack">
+					<Property key="Colour" value="0.6 0.8 1"/>
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="Caption" value="#{Back}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="670 128 52 32" name="CamFront">
+					<Property key="Colour" value="0.6 0.8 1"/>
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="Caption" value="#{Front}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="648 168 96 24" name="CamView1">
+					<Property key="Colour" value="0.5 0.75 1"/>
+					<Property key="TextColour" value="0.5 0.75 1"/>
+					<Property key="Caption" value="#{ViewFront}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="648 192 96 24" name="CamView2">
+					<Property key="Colour" value="0.5 0.75 1"/>
+					<Property key="TextColour" value="0.5 0.75 1"/>
+					<Property key="Caption" value="#{ViewLeft}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="648 216 96 24" name="CamView3">
+					<Property key="Colour" value="0.5 0.75 1"/>
+					<Property key="TextColour" value="0.5 0.75 1"/>
+					<Property key="Caption" value="#{ViewRight}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="648 240 96 24" name="CamView4">
+					<Property key="Colour" value="0.5 0.75 1"/>
+					<Property key="TextColour" value="0.5 0.75 1"/>
+					<Property key="Caption" value="#{ViewStart}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="616 322 128 24">
@@ -2909,19 +3251,6 @@
 				<Widget type="Button" skin="CheckBox" position="616 482 160 24" name="Wireframe">
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
 					<Property key="Caption" value="#{Wireframe} F11"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 200 144 24" name="Minimap">
-					<Property key="Caption" value="#{MinimapAndSize}"/>
-					<Property key="TextColour" value="0.5 0.8 0.3"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="272 202 320 16" name="SizeMinmap">
-					<Property key="Colour" value="0.5 0.8 0.3"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="200 202 60 24" name="SizeMinmapVal">
-					<Property key="TextColour" value="0.5 0.8 0.3"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 96 152 24">
@@ -2989,63 +3318,17 @@
 					<Property key="Colour" value="0.4 0.6 0.4"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="636 32 124 24">
-					<Property key="TextColour" value="0.5 0.75 1"/>
-					<Property key="Caption" value="#{SetCamTo}:"/>
+				<Widget type="Button" skin="CheckBox" position="32 200 144 24" name="Minimap">
+					<Property key="Caption" value="#{MinimapAndSize}"/>
+					<Property key="TextColour" value="0.5 0.8 0.3"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="664 88 64 40" name="CamTop">
-					<Property key="Colour" value="0.4 0.65 0.9"/>
-					<Property key="TextColour" value="0.4 0.65 0.9"/>
-					<Property key="Caption" value="#{Top}"/>
+				<Widget type="Slider" skin="Slider" position="272 202 320 16" name="SizeMinmap">
+					<Property key="Colour" value="0.5 0.8 0.3"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="616 92 48 32" name="CamLeft">
-					<Property key="Colour" value="0.6 0.8 1"/>
-					<Property key="TextColour" value="0.6 0.8 1"/>
-					<Property key="Caption" value="#{Left}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="728 92 48 32" name="CamRight">
-					<Property key="Colour" value="0.6 0.8 1"/>
-					<Property key="TextColour" value="0.6 0.8 1"/>
-					<Property key="Caption" value="#{Right}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="670 56 52 32" name="CamBack">
-					<Property key="Colour" value="0.6 0.8 1"/>
-					<Property key="TextColour" value="0.6 0.8 1"/>
-					<Property key="Caption" value="#{Back}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="670 128 52 32" name="CamFront">
-					<Property key="Colour" value="0.6 0.8 1"/>
-					<Property key="TextColour" value="0.6 0.8 1"/>
-					<Property key="Caption" value="#{Front}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="648 168 96 24" name="CamView1">
-					<Property key="Colour" value="0.5 0.75 1"/>
-					<Property key="TextColour" value="0.5 0.75 1"/>
-					<Property key="Caption" value="#{ViewFront}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="648 192 96 24" name="CamView2">
-					<Property key="Colour" value="0.5 0.75 1"/>
-					<Property key="TextColour" value="0.5 0.75 1"/>
-					<Property key="Caption" value="#{ViewLeft}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="648 216 96 24" name="CamView3">
-					<Property key="Colour" value="0.5 0.75 1"/>
-					<Property key="TextColour" value="0.5 0.75 1"/>
-					<Property key="Caption" value="#{ViewRight}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="648 240 96 24" name="CamView4">
-					<Property key="Colour" value="0.5 0.75 1"/>
-					<Property key="TextColour" value="0.5 0.75 1"/>
-					<Property key="Caption" value="#{ViewStart}"/>
+				<Widget type="TextBox" skin="TextBox" position="200 202 60 24" name="SizeMinmapVal">
+					<Property key="TextColour" value="0.5 0.8 0.3"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 232 152 24">
@@ -3060,6 +3343,11 @@
 					<Property key="Range" value="4"/>
 					<Property key="Colour" value="0.3 0.6 0.3"/>
 					<Property key="Visible" value="false"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 250 360 24" name="AutoBlendmap">
+					<Property key="Caption" value="#{AutoUpdateBlendmap}  alt-F9"/>
+					<Property key="TextColour" value="0.3 0.8 0.3"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 			</Widget>
@@ -3233,7 +3521,7 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 230 312 20">
 							<Property key="Caption" value="#{InputUpdBlendmap}"/>
-							<Property key="TextColour" value="0.7 0.9 0.1"/>
+							<Property key="TextColour" value="0.5 0.7 0.0"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="440 14 256 20">
@@ -3288,11 +3576,6 @@
 					<Widget type="TabItem" skin="" position="2 24 714 444">
 						<Property key="Caption" value="#{Road} 1"/>
 						<UserString key="RelativeTo" value="HelpWnd"/>
-						<Widget type="TextBox" skin="TextBox" position="32 236 320 20">
-							<Property key="Caption" value="#{InputRoadEdit}"/>
-							<Property key="TextColour" value="1.0 0.7 0.0"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 116 320 20">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{InputRoadIns}"/>
@@ -3323,17 +3606,27 @@
 							<Property key="Caption" value="#{InputRoadSelAlt}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 236 320 20">
+							<Property key="Caption" value="#{InputRoadEdit}"/>
+							<Property key="TextColour" value="1.0 0.7 0.0"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 258 320 20">
 							<Property key="TextColour" value="1.0 0.6 0.1"/>
 							<Property key="Caption" value="#{InputRoadRebuild}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 288 320 20">
+							<Property key="TextColour" value="0.9 0.6 0.5"/>
+							<Property key="Caption" value="#{InputRoadAlignTerrain}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 320 320 20">
 							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<Property key="Caption" value="#{InputRoadMerge}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 310 320 20">
+						<Widget type="TextBox" skin="TextBox" position="32 342 320 20">
 							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<Property key="Caption" value="#{InputRoadStats}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
@@ -3629,6 +3922,113 @@
 						<Widget type="TextBox" skin="TextBox" position="32 126 320 20">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{InputObjectsType}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 168 320 20">
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="#{InputObjects1}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 190 320 20">
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="#{InputObjects2}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 126 320 20">
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="Caption" value="#{InputRoadSel}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="408 148 320 20">
+							<Property key="TextColour" value="0.5 0.65 0.8"/>
+							<Property key="Caption" value="#{InputRoadSelAlt}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 714 444">
+						<Property key="Caption" value="#{Shortcuts}"/>
+						<UserString key="RelativeTo" value="HelpWnd"/>
+						<Widget type="TextBox" skin="TextBox" position="32 20 540 20">
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="#{ShortcutsInfo}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 60 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="Q  #{Track}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 80 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="S  #{Sun}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 110 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="H  #{Terrain}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="48 130 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="D  #{Brushes}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 160 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="T  #{Layers}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="48 180 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="B  #{BlendMap}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="48 200 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="P  #{Particles}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="48 220 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="U  #{Surface}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 250 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="R  #{Road}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 270 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="O  #{Tools}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="232 60 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="C  #{Screen}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="232 80 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="G  #{Graphics}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="248 100 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="N  #{Vegetation}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="232 130 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="E  #{Settings}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="232 150 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="I  #{InputHelp}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 					</Widget>

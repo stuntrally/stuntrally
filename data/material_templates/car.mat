@@ -1,14 +1,34 @@
 material car_body
 {
 	parent base
-	diffuseMap body00_red.png
-	number_of_foreachs 2
+	diffuseMap body00_add.png
+	carPaintMap body00_red.png
+	reflMap refl.png
+	refl_map true
+    env_map true
+    car_paint_map true
+    terrain_light_map true
+    terrain_light_map_toggleable true
+    fresnel true
+    fresnelScaleBiasPower 0.79 0.07 4
+    specular 1 1 1 128
 }
 
 material car_glass
 {
 	parent base
 	diffuseMap glass.png
+	depth_write off
+	scene_blend alpha_blend
+	specular 0.9 0.9 0.9 96
+	ambient 0.4 0.4 0.4
+	diffuse 0.9 0.9 0.9
+	fresnelScaleBiasPower 0.75 0.15 4
+	env_map true
+	fresnel true
+	specular_alpha true
+	terrain_light_map true
+	terrain_light_map_toggleable true
 }
 
 material car_ghost
@@ -21,16 +41,139 @@ material car_interior
 {
 	parent base
 	diffuseMap interior.png
+	terrain_light_map true
+	terrain_light_map_toggleable true
 }
 
 material cartire_front
 {
 	parent base
 	diffuseMap wheel.png
+	terrain_light_map true
+	terrain_light_map_toggleable true
 }
 
 material cartire_rear
 {
 	parent base
 	diffuseMap wheel.png
+	terrain_light_map true
+	terrain_light_map_toggleable true
 }
+
+
+// 3S
+
+material car_body_3S
+{
+	parent car_body
+	specMap 3S_spec.png
+	spec_map true
+}
+
+
+// FM
+
+material car_body_FM
+{
+   	parent car_body
+	normalMap FM_normal.png
+	normal_map true
+}
+
+material car_interior_FM
+{
+	parent car_interior
+	normalMap FM_interior_normal.png
+	normal_map true
+	cull_hardware none
+    receives_shadows false
+}
+
+material cartire_front_FM
+{
+	parent cartire_front
+	normalMap wheel_normal.png
+    normal_map true
+}
+
+material cartire_rear_FM
+{
+	parent cartire_front_FM
+}
+
+
+// 360
+
+material car_interior_360
+{
+	parent car_interior
+	cull_hardware none
+	receives_shadows false
+}
+
+
+// ES
+
+material car_body_ES
+{
+    parent car_body
+    normal_map true
+    normalMap ES_normal.png
+    spec_map true
+    specMap ES_spec.png
+}
+
+material car_interior_ES
+{
+    parent car_interior
+    normal_map true
+    normalMap ES_interior_normal.jpg
+}
+
+material cartire_front_ES
+{
+    parent cartire_front
+    normal_map true
+    normalMap ES_wheel_normal.jpg
+    spec_map true
+    specMap ES_wheel_spec.png
+}
+
+material cartire_rear_ES
+{
+    parent cartire_front_ES   
+}
+
+
+
+// RS
+
+material chasis/Material#1
+{
+    parent base
+    envMap ReflectionCube
+    env_map true
+    diffuse 1.0 1.0 1.0
+    ambient 1.0 1.0 1.0
+    specular 0.7 0.7 0.7 32
+    fresnelScaleBiasPower 0.73 0.07 4
+    diffuseMap chasis.png
+}
+
+
+material chasis/Material#2
+{
+	parent car_glass
+	diffuseMap ventanas.png
+}
+
+material chasis/Material_#3
+{
+    parent base
+	ambient 0.6 0.6 0.6
+	diffuse 0.5 0.5 0.5
+	specular 0.2 0.2 0.2 24
+	diffuseMap chasis_a.jpg
+}
+

@@ -1,13 +1,45 @@
 material base
 {
-	shadow_caster_material base_shadowcaster
-
 	diffuse 1.0 1.0 1.0 1.0
 	specular 0.4 0.4 0.4 32
 	ambient 1.0 1.0 1.0
+	emissive 0 0 0
+	specular 0 0 0 32
 
-	number_of_foreachs 8
-	col 0.3 0.9 0.3
+	cull_hardware default
+
+    scene_blend default
+    depth_write default
+    alpha_rejection default
+    
+    alpha_map false
+    normal_map false
+    env_map false
+    refl_map false
+    car_paint_map false
+    terrain_light_map false
+    terrain_light_map_toggleable false
+    
+    lighting true
+	soft_particles false
+    
+    spec_map false
+    
+    bump_scale 1
+    fresnelScaleBiasPower 0.79 0.07 4
+    fresnel false
+    refl_amount 0.1 // only used when fresnel off
+    
+    tree_wind false
+    grass_wind false
+    vertex_colour false
+    
+    receives_shadows true
+    
+    specular_alpha false
+    
+    transparent false // for shadowcaster
+    mrt_output true
 
 	pass
 	{
@@ -17,28 +49,106 @@ material base
 		diffuse $diffuse
 		specular $specular
 		ambient $ambient
-		asdf true
-		testasdf 123ish
-		number_of_foreachs $number_of_foreachs
-		color_multiplier $col
+		emissive $emissive
+		specular $specular
+		
+		cull_hardware $cull_hardware
+	
+        scene_blend $scene_blend
+        alpha_rejection $alpha_rejection
+        depth_write $depth_write
 
-		texture_unit diffuse
+		shader_properties
+		{
+		    alpha_map $alpha_map
+		    normal_map $normal_map
+		    env_map $env_map
+		    refl_map $refl_map
+		    spec_map $spec_map
+		    car_paint_map $car_paint_map
+		    terrain_light_map $terrain_light_map
+		    terrain_light_map_toggleable $terrain_light_map_toggleable
+		    receives_shadows $receives_shadows
+		    refl_amount $refl_amount
+		    lighting $lighting
+		    mrt_output $mrt_output
+		    soft_particles $soft_particles
+		    
+            tree_wind $tree_wind
+            grass_wind $grass_wind
+            vertex_colour $vertex_colour
+		    
+		    specular_alpha $specular_alpha
+		    
+		    fresnel $fresnel
+		    fresnelScaleBiasPower $fresnelScaleBiasPower
+
+		    bump_scale $bump_scale
+		}
+
+		texture_unit diffuseMap
 		{
 			texture $diffuseMap
+			create_in_ffp true
 		}
-	}
-}
-
-
-material base_shadowcaster
-{
-	pass
-	{
-		vertex_program shadowcaster_vertex
-		fragment_program shadowcaster_fragment
-		fog_override true
-
-		// $ refers to context, in this case the material instance that uses this this material as a shadow caster material (shadow_caster_material)
-		cull_hardware $cull_hardware
+		
+		texture_unit sceneDepth
+		{
+		    texture_alias SceneDepth
+		}
+		
+		texture_unit carPaintMap
+		{
+		    texture $carPaintMap
+		}
+		
+		texture_unit alphaMap
+		{
+		    texture $alphaMap
+		}
+		
+		texture_unit normalMap
+		{
+		    texture $normalMap
+		}
+		
+		texture_unit envMap
+		{
+		    texture ReflectionCube
+		}
+		
+		texture_unit reflMap
+		{
+		    texture $reflMap
+		}
+		
+		texture_unit specMap
+		{
+		    texture $specMap
+		}
+		
+		texture_unit terrainLightMap
+		{
+		    texture_alias TerrainLightMap
+		}
+		
+		texture_unit shadowMap0
+        {
+            content_type shadow
+            tex_address_mode clamp
+            filtering none
+        }
+        texture_unit shadowMap1
+        {
+            content_type shadow
+            tex_address_mode clamp
+            filtering none
+        }
+        texture_unit shadowMap2
+        {
+            content_type shadow
+            tex_address_mode clamp
+            filtering none
+        }
 	}
 }

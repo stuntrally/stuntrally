@@ -36,8 +36,9 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "graph_shadow.count",shadow_count);			Param(c,w, "graph_shadow.type", shadow_type);
 	Param(c,w, "graph_shadow.shaders", shaders);			Param(c,w, "graph_shadow.lightmap_size", lightmap_size);
 	Param(c,w, "graph_shadow.filter", shadow_filter);
+	Param(c,w, "graph_shadow.shader_mode", shader_mode);
 	
-	Param(c,w, "graph_reflect.water_reflect", water_reflect); Param(c,w, "graph_reflect.water_refract", water_refract);
+	Param(c,w, "graph_reflect.water_reflect", water_reflect);
 	Param(c,w, "graph_reflect.water_rttsize", water_rttsize);
 
 	Param(c,w, "graph_veget.trees", gui.trees);				Param(c,w, "graph_veget.grass", grass);
@@ -53,9 +54,10 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "set_cam.dx",cam_dx); Param(c,w, "set_cam.dy",cam_dy); Param(c,w, "set_cam.dz",cam_dz);
 
 	Param(c,w, "set.fog", bFog);					Param(c,w, "set.trees", bTrees);
+	Param(c,w, "set.weather", bWeather);
 	Param(c,w, "set.cam_speed", cam_speed);			Param(c,w, "set.cam_inert", cam_inert);
 	Param(c,w, "set.ter_skip", ter_skip);			Param(c,w, "set.road_sphr", road_sphr);
-	Param(c,w, "set.mini_skip", mini_skip);
+	Param(c,w, "set.mini_skip", mini_skip);			Param(c,w, "set.autoBlendmap", autoBlendmap);
 	
 	Param(c,w, "video.windowx", windowx);			Param(c,w, "video.windowy", windowy);
 	Param(c,w, "video.fullscreen", fullscreen);
@@ -66,6 +68,9 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "generate.freq", gen_freq);			Param(c,w, "generate.persist", gen_persist);
 	Param(c,w, "generate.pow", gen_pow);			Param(c,w, "generate.oct", gen_oct);
 	Param(c,w, "generate.ofsx", gen_ofsx);			Param(c,w, "generate.ofsy", gen_ofsy);
+
+	Param(c,w, "teralign.w_mul", al_w_mul);			Param(c,w, "teralign.smooth", al_smooth);
+	Param(c,w, "teralign.w_add", al_w_add);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
@@ -79,20 +84,23 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(2), shadow_filter(1),  /*<+*/
 	shaders(0.5), lightmap_size(0),
 	grass(1.f), trees_dist(1.f), grass_dist(1.f),use_imposters(false),
-	water_reflect(0), water_refract(0), water_rttsize(0),
+	water_reflect(0), water_rttsize(0),
+	shader_mode(""),
 	//  startup
 	autostart(0), ogre_dialog(1), escquit(0), language(""), allow_save(0),
 	isMain(1), inMenu(0),
 	//  settings
 	cam_x(0), cam_y(50),cam_z(-120),  cam_dx(0), cam_dy(0), cam_dz(1),
-	bFog(0), bTrees(0),
+	bFog(0), bTrees(0), bWeather(0), autoBlendmap(1),
 	cam_speed(1.f), cam_inert(1.f),
 	ter_skip(4), road_sphr(1.f), mini_skip(4),
 	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false),
 	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"), x11_capture_mouse(false),
 	//  ter gen
 	gen_scale(20.f), gen_freq(0.2f), gen_oct(3), gen_persist(0.4f),
-	gen_pow(1.5f), gen_ofsx(0.f), gen_ofsy(0.f)
+	gen_pow(1.5f), gen_ofsx(0.f), gen_ofsy(0.f),
+	//  align ter
+	al_w_mul(1.f), al_w_add(8.f), al_smooth(2.f)
 {
 	gui.track = "J1-T";
 	gui.track_user = false;

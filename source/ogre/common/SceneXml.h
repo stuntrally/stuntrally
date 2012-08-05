@@ -90,7 +90,7 @@ public:
 	std::string name;  // mesh file name
 
 	Ogre::SceneNode* nd;  // ogre
-	Ogre::Entity* ent;  
+	Ogre::Entity* ent;
 	class btDefaultMotionState* ms;  // bullet
 	class btCollisionObject* cobj;
 
@@ -135,7 +135,7 @@ public:
 	Ogre::Real grPage, grDist;  // vis
 	Ogre::Real grMinSx,grMinSy, grMaxSx,grMaxSy;  // sizes
 	Ogre::Real grSwayDistr, grSwayLen, grSwaySpeed;  // sway
-	Ogre::Real grTerMaxAngle, grTerMaxHeight;
+	Ogre::Real grTerMaxAngle, grTerMinHeight,grTerMaxHeight;
 	Ogre::String grassMtr, grassColorMap;
 
 	//  trees

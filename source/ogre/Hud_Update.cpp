@@ -373,19 +373,12 @@ void App::UpdateHUD(int carId, float time)
 				hudWonPlace->setColour(clrPlace[pCarM->iWonPlace-1]);
 			}
 			times = String(TR("#{TBLap}  "+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps)));
-		}else
-		{	if (!road)  // score on vdr track
-			if (tim.GetIsDrifting(0))
-				times += String(TR("#{TBScore}  "+fToStr(tim.GetDriftScore(0),0,3)+"+"+fToStr(tim.GetThisDriftScore(0),0,2)));
-			else
-				times += String(TR("#{TBScore}  "+fToStr(tim.GetDriftScore(0),0,3)));
-		}		
-		if (hudTimes) {
+		}
+		if (hudTimes)
 			hudTimes->setCaption(times +
 				String(TR("\n#{TBTime} ")) + GetTimeString(tim.GetPlayerTime(carId))+
 				String(TR("\n#{TBLast} ")) + GetTimeString(tim.GetLastLap(carId))+
 				String(TR("\n#{TBBest} ")) + GetTimeString(tim.GetBestLap(carId, pSet->game.trackreverse)) );
-		}
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------
@@ -399,9 +392,9 @@ void App::UpdateHUD(int carId, float time)
 		if (pSet->car_dbgtxt)
 		{	std::stringstream s1,s2,s3,s4;
 			pCar->DebugPrint(s1, true, false, false, false);  ovU[0]->setCaption(s1.str());
-			//pCar->DebugPrint(s2, false, true, false, false);  ovU[1]->setCaption(s2.str());
-			//pCar->DebugPrint(s3, false, false, true, false);  ovU[2]->setCaption(s3.str());
-			//pCar->DebugPrint(s4, false, false, false, true);  ovU[3]->setCaption(s4.str());
+			pCar->DebugPrint(s2, false, true, false, false);  ovU[1]->setCaption(s2.str());
+			pCar->DebugPrint(s3, false, false, true, false);  ovU[2]->setCaption(s3.str());
+			pCar->DebugPrint(s4, false, false, false, true);  ovU[3]->setCaption(s4.str());
 		}else
 		if (pSet->car_dbgtxt != oldCarTxt)
 		{	ovU[0]->setCaption(""); /*ovU[1]->setCaption(""); ovU[2]->setCaption(""); ovU[3]->setCaption("");*/	}
@@ -488,7 +481,7 @@ void App::UpdateHUD(int carId, float time)
 	//  checkpoint warning  --------
 	if (road && hudWarnChk && pCarM)
 	{
-		/* checks info *
+		/* checks debug *
 		if (ovU[0])  {
 			//"ghost:  "  + GetTimeString(ghost.GetTimeLength()) + "  "  + toStr(ghost.GetNumFrames()) + "\n" +
 			//"ghplay: " + GetTimeString(ghplay.GetTimeLength()) + "  " + toStr(ghplay.GetNumFrames()) + "\n" +
@@ -522,24 +515,9 @@ void App::UpdateHUD(int carId, float time)
 		ovU[2]->setCaption(String(s));
 	}	}/**/
 
-    //update lap, place, race
-	/*timer.GetStagingTimeLeft(), timer.GetPlayerCurrentLap(), race_laps, curplace.first, curplace.second,
-		car.GetEngineRedline(), car.GetEngineRPMLimit(), car.GetSpeedometer(), settings->GetMPH(),
-		debug_info1.str(), debug_info2.str(), debug_info3.str(), debug_info4.str(),/**/
 
-
-	///  debug text  --------
-	/** char s[256];  // wheel ray
-	for (int i=0; i < 4; i++)
-	{
-		sprintf(s, "c %6.3f",
-			pCar->GetWheelContact(WHEEL_POSITION(i)).GetDepth() - pCar->GetTireRadius(WHEEL_POSITION(i)));
-		ovL[i]->setCaption(String(s));
-	}
-	/**/
-	
-	//  wheels ter mtr info
-	#if 0
+	//  wheels ter mtr, surface info  ---------
+	if (pSet->car_dbgsurf && pCar)
 	{
 		String ss = "";
 		static char s_[512];
@@ -562,6 +540,7 @@ void App::UpdateHUD(int carId, float time)
 				,tsu ? tsu->bumpAmplitude : 0	,tsu ? tsu->bumpWaveLength : 0
 				//,lay.dust, lay.mud, lay.dustS	//,lay.tclr.r, lay.tclr.g, lay.tclr.b, lay.tclr.a
 				//,pCar->dynamics.wheel_contact[i].depth, pCar->dynamics.wheel_contact[i].col
+				//pCar->GetWheelContact(WHEEL_POSITION(i)).GetDepth() - pCar->GetTireRadius(WHEEL_POSITION(i)));
 				);
 			ss += String(s_);
 		}
@@ -572,11 +551,10 @@ void App::UpdateHUD(int carId, float time)
 			ss += String(pGame->track.tracksurfaces[i].name.c_str()) + "\n";/**/
 
 		//ovCarDbg->show();
-		if (ovS[4])  {  //ovL[4]->setTop(400);
-			ovS[4]->setColour(ColourValue::White);
-			ovS[4]->setCaption(ss);  }
-	}
-	#endif
+		if (ovX[4])  {  //ovL[4]->setTop(400);
+			//ovX[4]->setColour(ColourValue::White);
+			ovX[4]->setCaption(ss);  }
+	}else
 
 	PROFILER.endBlock("g.hud");
 }

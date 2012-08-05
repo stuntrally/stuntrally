@@ -307,6 +307,19 @@ void App::listCarChng(List* li, size_t pos)
 
 	if (imgCar)  imgCar->setImageTexture(sListCar+".jpg");
 	if (mClient) mClient->updatePlayerInfo(pSet->nickname, sListCar);
+	
+	//  car desc load
+	if (carDesc)
+	{
+		string path = PATHMANAGER::GetCarPath()+"/"+sListCar+"/description.txt";
+		ifstream fi(path.c_str());
+		string sdesc = "", s;
+		while (getline(fi, s))
+			sdesc += s + "\n";
+		fi.close();
+
+		carDesc->setCaption(sdesc);
+	}	
 	changeCar();
 }	
 void App::changeCar()
@@ -413,6 +426,7 @@ void App::chkBltProfilerTxt(WP wp){	ChkEv(bltProfilerTxt);	}
 
 void App::chkCarDbgBars(WP wp){		ChkEv(car_dbgbars);	ShowHUD();	}
 void App::chkCarDbgTxt(WP wp){		ChkEv(car_dbgtxt);	ShowHUD();	}
+void App::chkCarDbgSurf(WP wp){		ChkEv(car_dbgsurf);	ShowHUD();	}
 
 void App::chkGraphs(WP wp){			ChkEv(show_graphs);
 	for (int i=0; i < graphs.size(); ++i)
@@ -435,6 +449,7 @@ void App::chkMultiThread(WP wp){	pSet->multi_thr = pSet->multi_thr ? 0 : 1;  if 
 void App::chkVidEffects(WP wp)
 {
 	ChkEv(all_effects);  recreateCompositor();  //refreshCompositor();
+	changeShadows();
 }
 void App::chkVidBloom(WP wp)
 {		
@@ -489,6 +504,7 @@ void App::slHDRVignettingDarkness(SL)
 void App::chkVidBlur(WP wp)
 {		
 	ChkEv(camblur);  refreshCompositor();
+	changeShadows();
 }
 void App::chkVidSSAA(WP wp)
 {
@@ -497,18 +513,22 @@ void App::chkVidSSAA(WP wp)
 void App::chkVidSSAO(WP wp)
 {		
 	ChkEv(ssao);  refreshCompositor();
+	changeShadows();
 }
 void App::chkVidSoftParticles(WP wp)
 {		
 	ChkEv(softparticles);  refreshCompositor();
+	changeShadows();
 }
 void App::chkVidDepthOfField(WP wp)
 {		
 	ChkEv(dof);  refreshCompositor();
+	changeShadows();
 }
 void App::chkVidGodRays(WP wp)
 {		
 	ChkEv(godrays);  refreshCompositor();
+	changeShadows();
 }
 void App::slBloomInt(SL)
 {
@@ -574,10 +594,9 @@ void App::toggleGui(bool toggle)
 		if (edit)
 		{	std::string path = PATHMANAGER::GetDataPath()+"/../Readme.txt";
 			std::ifstream fi(path.c_str());
-
-			static char buf[2*4096];
-			fi.read(buf,sizeof(buf));
-			String text = buf;
+			String text = "", s;
+			while (getline(fi,s))
+				text += s + "\n";
 
 			text = StringUtil::replaceAll(text, "#", "##");
 			edit->setCaption(UString(text));
@@ -631,6 +650,8 @@ void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
 
 void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 {
+	if (subtab == -1 && (!isFocGui || pSet->inMenu != wnd))  subtab = -2;  // cancel subtab cycling
+
 	isFocGui = true;
 	pSet->isMain = false;  pSet->inMenu = wnd;
 	
@@ -651,7 +672,7 @@ void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 	mWndTabs->setIndexSelected(tab);
 
 	if (!subt)  return;
-	MyGUI::TabControl* tc = (*subt)[t];  if (!tc)  return;
+	MyGUI::TabControl* tc = (*subt)[tab];  if (!tc)  return;
 	int  cnt = tc->getItemCount();
 
 	if (t == tab && subtab == -1)  // cycle subpages if same tab
@@ -659,7 +680,7 @@ void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 			tc->setIndexSelected( (tc->getIndexSelected()-1+cnt) % cnt );
 		else
 			tc->setIndexSelected( (tc->getIndexSelected()+1) % cnt );
-	}else
+	}
 	if (subtab > -1)
 		tc->setIndexSelected( std::min(cnt-1, subtab) );
 }

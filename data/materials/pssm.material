@@ -55,10 +55,10 @@ material PSSM/shadow_caster
 {
 	technique
 	{
-		// all this will do is write depth and depth² to red and green
 		pass
 		{
 			fog_override true
+			cull_hardware none
 			vertex_program_ref PSSM/shadow_caster_vs
 			{
 			}
@@ -74,7 +74,6 @@ material PSSM/shadow_caster_noalpha
 {
 	technique
 	{
-		// all this will do is write depth and depth² to red and green
 		pass
 		{
 			fog_override true
@@ -93,7 +92,6 @@ material PSSM/shadow_caster_nocull
 {
 	technique
 	{
-		// all this will do is write depth and depth² to red and green
 		pass
 		{
 			fog_override true
@@ -113,7 +111,6 @@ material PSSM/shadow_caster_wind
 {
 	technique
 	{
-		// all this will do is write depth and depth² to red and green
 		pass
 		{
 			fog_override true

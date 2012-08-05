@@ -25,7 +25,6 @@
 	#include "../../editor/settings.h"
 	#include "../../vdrift/pathmanager.h"
 #endif
-//#include "MaterialGen/MaterialFactory.h"
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #include "BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h"
 #include "BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h"
@@ -45,6 +44,10 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 	bool hasMatOrig = boost::filesystem::exists(sPathOrig), hasMatCache = boost::filesystem::exists(sPathCache);
 	bool bGenerate = 0, gen = !hasMatOrig && !hasMatCache || bGenerate;  // set 1 to force generate for new vdrift tracks
 
+
+
+	// rewrite this code for new system
+#if 0
 	if (gen)
 	{
 		String sMtrs;
@@ -85,11 +88,7 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 		fileout.close();
 		hasMatCache = true;
 	}
-
-	//  load .matdef
-	LogO(String("Vdrift track .matdef  has Cache:")+ (hasMatCache?"yes":"no") + "  has Orig:" + (hasMatOrig?"yes":"no"));
-	//materialFactory->loadDefsFromFile(hasMatCache ? sMatCache : sMatOrig);
-	//materialFactory->generate(true);
+#endif
 	
 
 	//  meshes  -------------
@@ -123,16 +122,16 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 	ii += i;
 
 	//  static geom  -------------
-	StaticGeometry *sg = mSceneMgr->createStaticGeometry("track");
-	sg->setRegionDimensions(Vector3::UNIT_SCALE * 1000);  // 1000
-	sg->setOrigin(Vector3::ZERO);
-	sg->setCastShadows(true);
+	mStaticGeom = mSceneMgr->createStaticGeometry("track");
+	mStaticGeom->setRegionDimensions(Vector3::UNIT_SCALE * 1000);  // 1000
+	mStaticGeom->setOrigin(Vector3::ZERO);
+	mStaticGeom->setCastShadows(true);
 
 	for (std::vector<Entity*>::iterator it = ents.begin(); it != ents.end(); ++it)
-		sg->addEntity(*it, Vector3::ZERO);
+		mStaticGeom->addEntity(*it, Vector3::ZERO);
 
-	sg->build();
-	//sg->dump("_track-sg.txt");
+	mStaticGeom->build();
+	//mStaticGeom->dump("_track-sg.txt");
 }
 
 

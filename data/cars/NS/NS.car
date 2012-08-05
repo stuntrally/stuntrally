@@ -17,7 +17,7 @@ width = 0.60
 height = 0.46
 offsetL = -0.28
 offsetW = -0.05
-offsetH = 0.675
+offsetH = 0.875
 
 [ engine ] 
 position = 0.0, 1.04, -0.24 
@@ -34,7 +34,7 @@ torque-friction = 0.0006
 # 
 # The following values are from a BNR32 GT-R dyno chart. 
 # 
-torque-curve-00 = 1000, 413.4 
+torque-curve-00 = 1000, 513.4 
 torque-curve-01 = 2000, 515.2 
 torque-curve-02 = 2500, 541.8 
 torque-curve-03 = 3000, 545.9 
@@ -66,7 +66,7 @@ gear-ratio-5 = 0.752
 shift-delay = 0.05 
 
 [ differential ] 
-final-drive = 4.111 
+final-drive = 4.71 
 anti-slip = 600.0 
 
 [ fuel-tank ] 
@@ -152,22 +152,23 @@ c14=0.0        #	Camber influence on vertical shift (Nm/deg/kN**2) C14
 c15=0.0        #	Camber influence on vertical shift (Nm/deg/kN)  C15
 c16=0.63       #	Load influence on vertical shift (Nm/kN)  C16
 c17=1.69        #	Vertical shift at load = 0 (Nm)  C17c0=2.2							
+#---------
 
 
 [ brakes-front ] 
-friction = 0.80 
+friction = 0.90 
 max-pressure = 2.4e6 
-bias = 0.35
+bias = 0.60
 radius = 0.20 
 area = 0.019 
 
 [ brakes-rear ] 
-friction = 0.73 
+friction = 0.83 
 max-pressure = 2.0e6 
-bias = 0.65 
+bias = 0.40
 radius = 0.16 
 area = 0.015 
-handbrake = 1.0 
+handbrake = 2.0 
 
 
 [ driver ] 
@@ -244,20 +245,20 @@ hinge = 0.0, -0.6, 0.0
 # these are used to calculate the weight distribution and balance 
 [ particle-00 ] 
 mass = 65.0 
-position = 0.0, 1.008, -0.45 
+position = 0.0, 1.008, -0.55 
 
-[ particle-01 ] 
-mass = 192.5 
-position = 0.6, -1.48, -0.45
+[ particle-01 ]  # rear
+mass = 222.5 
+position =  0.85,-1.6, -0.65
 
 [ particle-02 ] 
-mass = 192.5 
-position = -0.6, -1.48, -0.45
+mass = 222.5 
+position = -0.85,-1.6, -0.65
 
-[ particle-03 ] 
-mass = 368.0 
-position = 0.65, 1.08, -0.45
+[ particle-03 ]  # front
+mass = 228.0 
+position =  0.8, 1.6, -0.65
 
 [ particle-04 ] 
-mass = 368.0 
-position = -0.65, 1.08, -0.45
+mass = 228.0 
+position = -0.8, 1.6, -0.65

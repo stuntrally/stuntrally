@@ -540,6 +540,7 @@ void ImpostorTexture::renderTextures(bool force)
 	renderViewport->setClearEveryFrame(true);
 	renderViewport->setShadowsEnabled(false);
 	renderViewport->setBackgroundColour(ImpostorPage::getImpostorBackgroundColor());
+	renderViewport->setMaterialScheme ("impostor_rtt");
 	
 	//Set up scene node
 	SceneNode* node = sceneMgr->getSceneNode("ImpostorPage::renderNode");
@@ -583,9 +584,7 @@ void ImpostorTexture::renderTextures(bool force)
 	Real oldFogStart = sceneMgr->getFogStart();
 	Real oldFogEnd = sceneMgr->getFogEnd();
 	sceneMgr->setFog(FOG_NONE);
-	///T no fog when using custom shaders
-	//MaterialFactory::getSingleton().setFog(false);
-	//MaterialFactory::getSingleton().setWind(false);
+
 	
 	// Get current status of the queue mode
 	Ogre::SceneManager::SpecialCaseRenderQueueMode OldSpecialCaseRenderQueueMode = sceneMgr->getSpecialCaseRenderQueueMode();
@@ -698,9 +697,6 @@ void ImpostorTexture::renderTextures(bool force)
 
 	//Re-enable fog
 	sceneMgr->setFog(oldFogMode, oldFogColor, oldFogDensity, oldFogStart, oldFogEnd);
-	///T no fog when using custom shaders
-	//MaterialFactory::getSingleton().setFog(true);
-	//MaterialFactory::getSingleton().setWind(true);
 
 	//Delete camera
 	renderTarget->removeViewport(0);

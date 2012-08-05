@@ -23,6 +23,8 @@
 #include <MyGUI.h>
 #include <OgreShadowCameraSetup.h>
 
+#include "../shiny/Main/Factory.hpp"
+
 
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;
 	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
@@ -31,12 +33,11 @@ namespace BtOgre  {  class DebugDrawer;  }
 namespace MyGUI  {  class MultiList2;  }
 namespace OISB   {  class AnalogAxisAction;  }
 namespace MyGUI  {  class Slider;  }
-class MaterialFactory;
 class GraphView;
 const int CarPosCnt = 8;  // size of poses queue
 
 
-class App : public BaseApp, public GameClientCallback, public MasterClientCallback
+class App : public BaseApp, public GameClientCallback, public MasterClientCallback, public sh::MaterialListener
 {
 public:
 	App(SETTINGS* settings, GAME* game);
@@ -65,17 +66,22 @@ public:
 	Ogre::Quaternion qFixCar,qFixWh;
 
 	//  replay - full, user saves
-	//  ghost - saved when best lap,  ghplay - ghost ride replay, loaded if was on disk
-	//  fr - used when playing replay for hud and sounds
+	//  ghost - saved when best lap
+	//  ghplay - ghost ride replay, loaded if was on disk
+	//  frm - used when playing replay for hud and sounds
 	Replay replay, ghost, ghplay;  ReplayFrame frm[4];
+	Rewind rewind;  // to take car back in time (after crash etc.)
 	const Ogre::String& GetGhostFile();
 
 	Scene sc;  /// scene.xml
 	FluidsXml fluidsXml;  /// fluid params xml
 	BltObjects objs;  // veget collision in bullet
 	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
+
+	// vdrift static
+	Ogre::StaticGeometry* mStaticGeom;
 	
-	// Rain, snow
+	// Weather  rain, snow
 	Ogre::ParticleSystem *pr,*pr2;
 	
 	//  trees
@@ -132,10 +138,10 @@ protected:
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr,
 		Ogre::Real size, bool dyn = false, bool clr = false);
 
-	Ogre::OverlayElement *hudCountdown,*hudNetMsg, *ovL[5],*ovR[5],*ovS[5],*ovU[5],
+	Ogre::OverlayElement *hudCountdown,*hudNetMsg, *ovL[5],*ovR[5],*ovS[5],*ovU[5],*ovX[5],
 		*hudAbs,*hudTcs, *hudTimes, *hudWarnChk,*hudWonPlace, *hudOpp[5][3],*hudOppB;
 	Ogre::Overlay *ovCountdown,*ovNetMsg,
-		*ovAbsTcs, *ovTimes, *ovCarDbg,*ovCarDbgTxt, *ovCam, *ovWarnWin, *ovOpp;
+		*ovAbsTcs, *ovTimes, *ovCarDbg,*ovCarDbgTxt,*ovCarDbgExt, *ovCam, *ovWarnWin, *ovOpp;
 
 	Ogre::String GetTimeString(float time) const;
 	void CreateHUD(bool destroy), ShowHUD(bool hideAll=false), UpdMiniTer();
@@ -146,7 +152,7 @@ protected:
 	///  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	Ogre::String resCar, resTrk, resDrv;
 	void CreateCar();
-	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb,int yb, int xe,int ye);
+	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
 	void CreateTrees(), CreateRoad(), CreateObjects(),DestroyObjects();
 	void CreateFluids(), CreateBltFluids(), UpdateWaterRTT(Ogre::Camera* cam);
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
@@ -169,6 +175,8 @@ protected:
 	// 1 behind map ( map.end() ): loading finished
 	std::map<unsigned int, std::string>::iterator currentLoadingState;
 
+	float mTimer;
+
 
 	///  terrain
 public:
@@ -179,13 +187,24 @@ protected:
 	Ogre::TerrainPaging* mTerrainPaging;  Ogre::PageManager* mPageManager;
 	//Vector3 getNormalAtWorldPosition(Terrain* terrain, Real x, Real z, Real s);
 
-	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
+	int iBlendMaps, blendMapSize;	bool noBlendUpd;  //  mtr from ter  . . . 
 	char* blendMtr;  // mtr [blendMapSize x blendMapSize]
-	void initBlendMaps(Ogre::Terrain* terrain);  bool noBlendUpd;
+	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
 	void configureTerrainDefaults(Ogre::Light* l);
 	float Noise(float x, float zoom, int octaves, float persistance);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
-	Ogre::Real terMaxAng;
+	//     xa  xb
+	//1    .___.
+	//0__./     \.___
+	//   xa-s    xb+s
+	inline float linRange(const float& x, const float& xa, const float& xb, const float& s)  // min, max, smooth range
+	{
+		if (x <= xa-s || x >= xb+s)  return 0.f;
+		if (x >= xa && x <= xb)  return 1.f;
+		if (x < xa)  return (x-xa)/s+1;
+		if (x > xb)  return (xb-x)/s+1;
+		return 0.f;
+	}
 
 public:
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
@@ -327,14 +346,14 @@ protected:
 		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP), chkMiniTer(WP),  // view
 		chkFps(WP), chkWireframe(WP), 
 		chkCamInfo(WP), chkTimes(WP), chkOpponents(WP), chkOpponentsSort(WP), chkCamTilt(WP),
-		chkCarDbgBars(WP), chkCarDbgTxt(WP), chkGraphs(WP),
+		chkCarDbgBars(WP), chkCarDbgTxt(WP), chkCarDbgSurf(WP), chkGraphs(WP),
 		chkBltDebug(WP), chkBltProfilerTxt(WP), chkProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkRearInv(WP),  // car
 		chkMouseCapture(WP), chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP),
 		chkBltLines(WP), chkLoadPics(WP), chkMultiThread(WP),  // startup
 		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // effects
-		chkVidSoftParticles(WP), chkVidGodRays(WP), chkWaterReflect(WP), chkWaterRefract(WP),
+		chkVidSoftParticles(WP), chkVidGodRays(WP), chkWaterReflect(WP),
 		chkVidDepthOfField(WP), 
 		chkVegetCollis(WP), chkCarCollis(WP), chkRoadWCollis(WP);  //game
 	void chkUseImposters(WP wp);
@@ -346,7 +365,7 @@ protected:
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP), toggleWireframe();
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP);
-	MyGUI::ButtonPtr chFps,chWire, chBlt,chBltTxt, chProfTxt, chDbgT,chDbgB, chGraphs,
+	MyGUI::ButtonPtr chFps,chWire, chBlt,chBltTxt, chProfTxt, chDbgT,chDbgB,chDbgS, chGraphs,
 		chTimes,chMinimp,chOpponents;
 
 	///  replay  -----------------------------
@@ -389,7 +408,7 @@ protected:
 	Ogre::String pathTrk[2];  Ogre::String TrkDir();
 	Ogre::String PathListTrk(int user=-1), PathListTrkPrv(int user/*=-1*/, Ogre::String track);
 
-	MyGUI::StaticImagePtr imgCar;
+	MyGUI::StaticImagePtr imgCar;  MyGUI::EditPtr carDesc;
 	void comboBoost(CMB), comboFlip(CMB);
 
 	GuiPopup popup;
@@ -442,6 +461,10 @@ protected:
 	void evEdNetGameName(MyGUI::EditPtr), evEdNetPassword(MyGUI::EditPtr),
 		evEdNetNick(MyGUI::EditPtr), evEdNetServerIP(MyGUI::EditPtr),
 		evEdNetServerPort(MyGUI::EditPtr), evEdNetLocalPort(MyGUI::EditPtr);
+
+
+public:
+	virtual void materialCreated (sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex);
 };
 
 #endif

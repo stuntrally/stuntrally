@@ -60,6 +60,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_show.trackmap", trackmap);			Param(c,w, "hud_show.times", show_times);
 	Param(c,w, "hud_show.caminfo", show_cam);			Param(c,w, "hud_show.cam_tilt", cam_tilt);
 	Param(c,w, "hud_show.car_dbgtxt", car_dbgtxt);		Param(c,w, "hud_show.show_cardbg", car_dbgbars);
+	Param(c,w, "hud_show.car_dbgsurf", car_dbgsurf);
 	Param(c,w, "hud_show.tracks_view", tracks_view);	Param(c,w, "hud_show.check_arrow", check_arrow);
 	Param(c,w, "hud_show.tracks_sort", tracks_sort);	Param(c,w, "hud_show.tracks_sortup", tracks_sortup);
 	Param(c,w, "hud_show.opponents", show_opponents);	Param(c,w, "hud_show.opplist_sort", opplist_sort);
@@ -82,13 +83,14 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "graph_reflect.skip_frames", refl_skip);		Param(c,w, "graph_reflect.faces_once", refl_faces);
 	Param(c,w, "graph_reflect.map_size", refl_size);		Param(c,w, "graph_reflect.dist", refl_dist);
 	Param(c,w, "graph_reflect.mode", refl_mode);
-	Param(c,w, "graph_reflect.water_reflect", water_reflect); Param(c,w, "graph_reflect.water_refract", water_refract);
+	Param(c,w, "graph_reflect.water_reflect", water_reflect);
 	Param(c,w, "graph_reflect.water_rttsize", water_rttsize);
 	
 	Param(c,w, "graph_shadow.dist", shadow_dist);			Param(c,w, "graph_shadow.size", shadow_size);
 	Param(c,w, "graph_shadow.count",shadow_count);			Param(c,w, "graph_shadow.type", shadow_type);
 	Param(c,w, "graph_shadow.shaders", shaders);			Param(c,w, "graph_shadow.lightmap_size", lightmap_size);
 	Param(c,w, "graph_shadow.filter", shadow_filter);
+	Param(c,w, "graph_shadow.shader_mode", shader_mode);
 
 	Param(c,w, "graph_veget.trees", gui.trees);				Param(c,w, "graph_veget.grass", grass);
 	Param(c,w, "graph_veget.trees_dist", trees_dist);		Param(c,w, "graph_veget.grass_dist", grass_dist);
@@ -155,7 +157,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	show_fps(1), show_gauges(1), trackmap(1),
 	show_cam(1), show_times(0), show_digits(1),
 	show_opponents(1), opplist_sort(true), cam_tilt(1),
-	car_dbgtxt(0), car_dbgbars(0), show_graphs(0),
+	car_dbgtxt(0), car_dbgbars(0), car_dbgsurf(0), show_graphs(0),
 	size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0),
 	mini_zoomed(0), mini_rotated(1), mini_terrain(0),
 	tracks_view(0), tracks_sort(0), tracks_sortup(1),
@@ -164,7 +166,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	anisotropy(4),	view_distance(2000), bFog(0),
 	terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2), shaders(0.5),
 	refl_skip(200), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode(1),
-	water_reflect(0), water_refract(0), water_rttsize(0),
+	water_reflect(0), water_rttsize(0),
 	shadow_type(2), shadow_size(2), shadow_count(3), shadow_dist(3000), shadow_filter(1), lightmap_size(0),
 	grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(true),
 	particles(true), trails(true), particles_len(1.f), trails_len(1.f),
@@ -211,7 +213,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	vignettingRadius(2.85), vignettingDarkness(0.34),
 	//  not in gui
 	boostFromExhaust(0), net_local_plr(-1),
-	renderNotActive(false)
+	renderNotActive(false),
+	shader_mode("")
 {
 	//  track
 	gui.track = "J1-T";

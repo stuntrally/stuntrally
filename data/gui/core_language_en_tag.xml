@@ -146,6 +146,7 @@
 	<!--  Car  -->
 	<Tag name="Car">Car</Tag>
 	<Tag name="TipCarsList">Cars list. Press Enter or [New Game] to drive with it.</Tag>
+	<Tag name="TipCarDesc">Car description text.</Tag>
 	<Tag name="TipNewGameCar">Restart game.</Tag>
 
 	<Tag name="ColHue">Color - Hue</Tag>
@@ -303,10 +304,10 @@
 	<Tag name="HDROrigImage">Bloom Darken</Tag>
 	<Tag name="HDRParam1">Exposure</Tag>
 	<Tag name="HDRParam2">Brightness</Tag>
-  <Tag name="HDRParam3">Grain</Tag>
-  <Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
-  <Tag name="HDRVignettingDarkness">Vignetting Darken</Tag>
-  <Tag name="Bloom">Bloom</Tag>
+	<Tag name="HDRParam3">Grain</Tag>
+	<Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
+	<Tag name="HDRVignettingDarkness">Vignetting Darken</Tag>
+	<Tag name="Bloom">Bloom</Tag>
 	<Tag name="Intensity">Intensity</Tag>
 	<Tag name="OrigImage">Darken</Tag>
 	<Tag name="HDR">HDR+Bloom</Tag>
@@ -397,6 +398,7 @@
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="BulletProfilerTxt">Bullet Profiler Times</Tag>
 	<Tag name="CarDebugText">Car debug text </Tag>
+	<Tag name="CarDebugSurfaces">Car tire surfaces</Tag>
 	<Tag name="ProfilerTxt">Profiler times text </Tag>
 
 	<Tag name="Startup">Startup</Tag>
@@ -462,6 +464,7 @@
 	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
 	<Tag name="InputMapNextCamera">Next Camera</Tag>
 	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
+	<Tag name="InputMapRewind">Rewind (time)</Tag>
 
 	<!--  Input  Map  -->
 	<Tag name="InputMapShowOptions">Show options</Tag>
@@ -565,6 +568,7 @@
 	<Tag name="NewTerrainGenerate">New Generate</Tag>
 	<Tag name="TerrainHalf">Half</Tag>
 	<Tag name="TerrainDouble">Double</Tag>
+	<Tag name="Brushes">Brushes</Tag>
 	
 	<Tag name="Enabled">Enabled</Tag>
 	<Tag name="Used">Used</Tag>
@@ -576,6 +580,7 @@
 	<Tag name="scale">Scale</Tag>
 
 	<!--  Terrain  generate  -->
+	<Tag name="Generator">Generator</Tag>
 	<Tag name="TerGenScale">Scale Height</Tag>
 	<Tag name="TerGenFreq">Freq. zoom</Tag>
 	<Tag name="TerGenOct">Octaves</Tag>
@@ -710,8 +715,14 @@
 	<Tag name="ScaleMul">Scale multiplier</Tag>
 	<Tag name="ScaleAll">Scale all</Tag>
 	<Tag name="ScaleTerHeight">Terrain Height</Tag>
-	<Tag name="DeleteRoad">Delete Road</Tag>
 	<Tag name="NeedReload">* need reload</Tag>
+	<Tag name="DeleteRoad">Delete Road</Tag>
+	<Tag name="DeleteFluids">Delete Fluids</Tag>
+
+	<Tag name="AlignTerrainToRoad">Align terrain to road</Tag>
+	<Tag name="AlignWidthAdd">Width add</Tag>
+	<Tag name="AlignWidthMul">Width multipy</Tag>
+	<Tag name="AlignSmooth">Smooth size</Tag>
 
 
 	<!--  Settings  -->
@@ -724,6 +735,8 @@
 	<Tag name="TerUpdSkip">Terrain update skip</Tag>
 	<Tag name="CamInertia">Camera inertia</Tag>
 	<Tag name="MinimapUpdSkip">Minimap update skip</Tag>
+	<Tag name="AutoUpdateBlendmap">Auto update blendmap (slow for big size brushes)</Tag>
+	
 	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="Top">Top</Tag>
 	<Tag name="Left">Left</Tag>
@@ -740,6 +753,8 @@
 <!--  Input/help  -->
 <!--  ............................................................................................................................  -->
 	<Tag name="InputHelp">Input/help</Tag>
+	<Tag name="Shortcuts">Shortcuts</Tag>
+	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
 
 	<!--  Main  -->
 	<Tag name="InputToggleCam">Tab - camera / edit mode toggle</Tag>
@@ -775,7 +790,7 @@
 
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="InputMinimapType">alt-F2,F3 - Prev,next minimap type</Tag>
-	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap</Tag>
+	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
 
 	<!--  Terrain  brush  -->
 	<Tag name="InputBrushParams">Brush parameters</Tag>
@@ -846,6 +861,7 @@
 	<Tag name="InputRoadRebuild">B - rebuild road (after terrain change, etc.)</Tag>
 	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="InputRoadStats">T - road stats window</Tag>
+	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
 
 
 	<!--  Start pos  -->
@@ -886,6 +902,8 @@
 	<Tag name="InputObjectsRot">MMB - rotate Y</Tag>
 	<Tag name="InputObjectsScale">alt-LMB - scale   alt-RMB - scale Y only</Tag>
 	<Tag name="InputObjectsType">[,]  - change object type</Tag>
+	<Tag name="InputObjects1">1 - reset rotation</Tag>
+	<Tag name="InputObjects2">2 - reset scale to 1 (with shift to 0.5)</Tag>
 	
 		
 <!--  ............................................................................................................................  -->
@@ -925,6 +943,7 @@
 	<Tag name="TipRainSnow1">Set 1 Rain/Snow type</Tag>
 	<Tag name="TipRainSnow2">Set 2 Rain/Snow type</Tag>
 	<Tag name="TipRainSnowInt">Rain/Snow intensity (eg. 1000)</Tag> 
+	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
 
 
 	<!--  Terrain  -->
@@ -992,7 +1011,8 @@
 	<Tag name="TipImpDist">Far distance at which models will turn into 2d impostors.</Tag>
 	<Tag name="TipGrDensSmooth">Grass density map - smooth size</Tag>
 	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
-	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass.</Tag>
+	<Tag name="TipGrTerMinHeight">Terrain height below which there won't be any grass (starts fading out for 20m).</Tag>
+	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass (starts fading out for 20m).</Tag>
 	<Tag name="TipSceneryId">Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation.</Tag>
 	<Tag name="TipGrassMaterial">Grass material, chosen to match track's scenery.</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>

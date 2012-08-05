@@ -473,16 +473,13 @@ m_pParentGeom           (parent)
    if (parentMaterial.isNull())
       OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "BatchedGeometry. Empty parent material", "BatchedGeometry::SubBatch::SubBatch");
 
-   // SVA clone material
-   // This function is used to make a single clone of materials used, since the materials
-   // will be modified by the batch system (and it wouldn't be good to modify the original materials
-   // that the user may be using somewhere else).
    {
-      Ogre::String newName = parentMaterial->getName() + "_Batched";
+	  Ogre::String newName = parentMaterial->getName();
       m_ptrMaterial = MaterialManager::getSingleton().getByName(newName, parentMaterial->getGroup());
       if (m_ptrMaterial.isNull())
          m_ptrMaterial = parentMaterial->clone(newName);
    }
+
 
    //Setup vertex/index data structure
    m_pVertexData = m_pSubMesh->vertexData->clone(false);

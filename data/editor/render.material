@@ -50,7 +50,7 @@ material ppx_render_gr		// per pixel  for grass
 }
 
 
-material car_body
+material _car_body
 {
 	technique
 	{

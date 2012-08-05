@@ -6,7 +6,6 @@
 #include "SplitScreen.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "common/RenderConst.h"
-//#include "common/MaterialGen/MaterialFactory.h"
 
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
@@ -15,14 +14,16 @@
 #include <OgreManualObject.h>
 using namespace Ogre;
 
+#include "../shiny/Platforms/Ogre/OgreMaterial.hpp"
+
 
 //  ctors  -----------------------------------------------
 App::App(SETTINGS *settings, GAME *game)
-	:pGame(game), ndLine(0), bGI(0), mThread()
+	:pGame(game), ndLine(0), bGI(0), mThread(), mTimer(0)
 	// ovr
 	,hudCountdown(0),hudNetMsg(0), hudAbs(0),hudTcs(0)
 	,hudTimes(0), hudWarnChk(0),hudWonPlace(0), hudOppB(0)
-	,ovCountdown(0),ovNetMsg(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0)
+	,ovCountdown(0),ovNetMsg(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0),ovCarDbgExt(0)
 	,ovCam(0), ovTimes(0), ovWarnWin(0), ovOpp(0)
 	// hud
 	,asp(1)//,  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
@@ -39,12 +40,12 @@ App::App(SETTINGS *settings, GAME *game)
 	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0), valShadowFilter(0)  // shadow
 	,valSizeGaug(0),valTypeGaug(0), valSizeMinimap(0), valZoomMinimap(0)
 	,valCountdownTime(0),valGraphsType(0),slGraphT(0)  // view
-	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0), chBlt(0),chBltTxt(0)
+	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0),chDbgS(0), chBlt(0),chBltTxt(0)
 	,chFps(0), chWire(0), chProfTxt(0), chGraphs(0)
 	,chTimes(0),chMinimp(0),chOpponents(0)
 	,valVolMaster(0),valVolEngine(0),valVolTires(0),valVolSusp(0),valVolEnv(0)  // sounds
 	,valVolFlSplash(0),valVolFlCont(0),valVolCarCrash(0),valVolCarScrap(0)
-	,imgCar(0), imgTrkIco1(0),imgTrkIco2(0), bnQuit(0)
+	,imgCar(0),carDesc(0), imgTrkIco1(0),imgTrkIco2(0), bnQuit(0)
 	,valLocPlayers(0), edFind(0)
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
 	,valRplName(0),valRplInfo(0),valRplName2(0),valRplInfo2(0), edRplName(0), edRplDesc(0)
@@ -70,6 +71,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,liChamps(0),liStages(0), edChampStage(0),edChampEnd(0), imgChampStage(0), liNetEnd(0)
 	,iEdTire(0),iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
 	,iTireSet(0), bchAbs(0),bchTcs(0), slSSSEff(0),slSSSVel(0)
+	,mStaticGeom(0)
 {
 	pSet = settings;
 	int i,c;
@@ -90,7 +92,7 @@ App::App(SETTINGS *settings, GAME *game)
 		hudOpp[o][c] = 0;
 		
 	for (i=0; i < 5; ++i)
-	{	ovL[i]=0;  ovR[i]=0;  ovS[i]=0;  ovU[i]=0;  }
+	{	ovL[i]=0;  ovR[i]=0;  ovS[i]=0;  ovU[i]=0;  ovX[i]=0;  }
 	
 	//  util for update rot
 	Quaternion qr;  {
@@ -103,7 +105,7 @@ App::App(SETTINGS *settings, GAME *game)
 	{	txGear[i]=0;  txVel[i]=0;  txBFuel[i]=0;  }
 
 	if (pSet->multi_thr)
-		mThread = boost::thread(boost::bind(&App::UpdThr, boost::ref(*this)));;
+		mThread = boost::thread(boost::bind(&App::UpdThr, boost::ref(*this)));
 }
 
 void App::NullHUD()
@@ -152,22 +154,9 @@ App::~App()
 void App::postInit()
 {
 	mSplitMgr->pApp = this;
-	/*
-	materialFactory = new MaterialFactory();
-	materialFactory->pApp = this;
-	materialFactory->setSceneManager(mSceneMgr);
-	materialFactory->setShadows(pSet->shadow_type >= 2);
-	materialFactory->setShadowsDepth(pSet->shadow_type >= 3);
-	materialFactory->setShadowsSoft(pSet->shadow_type == 4);
-	materialFactory->setShaderQuality(pSet->shaders);
-	materialFactory->setShadowsFilterSize(pSet->shadow_filter);
-	materialFactory->setReflect(pSet->water_reflect);
-	materialFactory->setRefract(pSet->water_refract);
-	if (pSet->tex_size == 0)
-		materialFactory->setTexSize(0);
-	else if (pSet->tex_size == 1)
-		materialFactory->setTexSize(4096);
-         */
+
+	mFactory->setMaterialListener(this);
+
 }
 
 void App::setTranslations()
@@ -271,4 +260,31 @@ const String& App::GetGhostFile()
 		+ pSet->game.track + (pSet->game.track_user ? "_u" : "") + (pSet->game.trackreverse ? "_r" : "")
 		+ "_" + pSet->game.car[0] + ".rpl";
 	return file;
+}
+
+
+
+void App::materialCreated (sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex)
+{
+
+	Ogre::Technique* t = static_cast<sh::OgreMaterial*>(m->getMaterial())->getOgreTechniqueForConfiguration (configuration, lodIndex);
+
+	if (pSet->shadow_type <= 1)
+	{
+		t->setShadowCasterMaterial ("");
+		return;
+	}
+
+	// this is just here to set the correct shadow caster
+	if (m->hasProperty ("transparent") && m->hasProperty ("cull_hardware") && sh::retrieveValue<sh::StringValue>(m->getProperty ("cull_hardware"), 0).get() == "none")
+	{
+		// Crash !?
+		///assert(!MaterialManager::getSingleton().getByName("PSSM/shadow_caster_nocull").isNull ());
+		//t->setShadowCasterMaterial("PSSM/shadow_caster_nocull");
+	}
+
+	if (!m->hasProperty ("transparent") || !sh::retrieveValue<sh::BooleanValue>(m->getProperty ("transparent"), 0).get())
+	{
+		t->setShadowCasterMaterial("PSSM/shadow_caster_noalpha");
+	}
 }

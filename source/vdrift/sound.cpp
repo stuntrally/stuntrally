@@ -666,11 +666,12 @@ void SOUND::RemoveSource(SOUNDSOURCE * todel)
 
 //  3D effects
 //--------------------------------------------------------------------------------------------------------------------
-void SOUND::Compute3DEffects(std::list <SOUNDSOURCE *> & sources, const MATHVECTOR <float, 3> & listener_pos, const QUATERNION <float> & listener_rot) const
+void SOUND::Compute3DEffects(std::list <SOUNDSOURCE *> & sources, const MATHVECTOR <float, 3> & listener_pos, const QUATERNION <float> & listener_rot/*, bool is3D*/) const
 {
 	for (std::list <SOUNDSOURCE *>::iterator i = sources.begin(); i != sources.end(); ++i)
 	{
-		if ((*i)->Get3DEffects())
+		//if ((*i)->Get3DEffects())
+		if (listener3D)
 		{
 			MATHVECTOR <float, 3> relvec = (*i)->GetPosition() - listener_pos;
 			float len = relvec.Magnitude();

@@ -12,7 +12,7 @@ using namespace Ogre;
 //  ctor
 //---------------------------------------------------------------------------------------------------------------
 #ifdef ROAD_EDITOR
-SplineRoad::SplineRoad() :
+SplineRoad::SplineRoad(App* papp) : pApp(papp),
 #else
 SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame),
 #endif
@@ -24,7 +24,8 @@ SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame),
 	rebuild(false), iDirtyId(-1), idStr(0),
 	fMarkerScale(1.f), fLodBias(1.f),
 	bCastShadow(0), bRoadWFullCol(0),
-	chksRoadLen(1.f)
+	chksRoadLen(1.f),
+	edWadd(0.f),edWmul(1.f)
 {
 	Defaults();  iTexSize = 1;
 	iMrgSegs = 0;  segsMrg = 0;  iOldHide = -1;
@@ -36,13 +37,14 @@ void SplineRoad::Defaults()
 {
 	sTxtDesc = "";  fScRot = 1.8f;  fScHit = 0.8f;
 	for (int i=0; i<MTRs; ++i)
-	{	sMtrRoad[i] = "";  sMtrPipe[i] = "";  }
+	{	sMtrRoad[i] = "";  sMtrPipe[i] = "";  bMtrPipeGlass[i] = true;  }
 	sMtrWall = "road_wall";  sMtrCol = "road_col";  sMtrWallPipe = "pipe_wall";
+	
 	fHeight = 0.1f;  tcMul = 0.25f;  lenDiv0 = 1.f;  iw0 = 8;  iwPmul = 4;  ilPmul = 1;
 	skLen = 1.f;  skH = 0.12f;
 	setMrgLen = 180.f;  bMerge = false;  lposLen = 10.f;
 	colN = 4; colR = 2.f;
-	iDir = -1;  vStBoxDim = Vector3(1,3,5);  // /long |height -width
+	iDir = -1;  vStBoxDim = Vector3(1,5,12);  // /long |height -width
 	iP1 = 0;  iChkId1 = 0;  iChkId1Rev = 0;
 }
 
@@ -223,7 +225,7 @@ bool SplineRoad::LoadFile(String fname, bool build)
 	n = root->FirstChildElement("mtr");	if (n)  {
 		for (int i=0; i<MTRs; ++i)  {	String si = i==0 ? "" : toStr(i+1);
 			a = n->Attribute(String("road"+si).c_str());	if (a)  sMtrRoad[i] = String(a);
-			a = n->Attribute(String("pipe"+si).c_str());	if (a)  sMtrPipe[i] = String(a);	}
+			a = n->Attribute(String("pipe"+si).c_str());	if (a)  SetMtrPipe(i, String(a));	}
 		a = n->Attribute("wall");	if (a)  sMtrWall = String(a);
 		a = n->Attribute("pipeW");	if (a)  sMtrWallPipe = String(a);
 		a = n->Attribute("col");	if (a)  sMtrCol  = String(a);

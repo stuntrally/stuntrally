@@ -51,11 +51,10 @@
 	diffuse = 0.3 0.5 0.7
 	specular = 0.1 0.1 0.1 32
 	lightingAlpha = 0.4 0.25 0.2 0
-    depthBias = 2
-    ;//problems^^ depthBias should be 0 but then zfight
     transparent = true
     sceneBlend = alpha
 	receivesShadows = false
+	cullHardware = none
 
 [object_box]
 	ambient = 1.0 1.0 1.0

@@ -1,10 +1,13 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
+#include "../ogre/common/Gui_Def.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/RenderConst.h"
+#include "../ogre/common/SceneXml.h"
+#include <OgreTerrain.h>
 #include <MyGUI.h>
 using namespace MyGUI;
 using namespace Ogre;
@@ -47,7 +50,19 @@ void App::UpdEditWnds()
 
 	UpdStartPos();  // StBox visible
 	UpdVisGui();  //br prv..
+
+	UpdMtrWaterDepth();
 }
+
+void App::SetEdMode(ED_MODE newMode)
+{
+	//if (pSet->autoWaterDepth)  //..?
+	if (edMode == ED_Fluids && newMode != ED_Fluids)
+		SaveWaterDepth();  // update, on exit from Fluids editing
+
+	edMode = newMode;	
+}
+
 
 void App::UpdVisGui()
 {
@@ -63,7 +78,7 @@ void App::UpdVisGui()
 	if (!bGuiFocus && mToolTip)  mToolTip->setVisible(false);
 
 	if (ovBrushPrv)
-	if (edMode >= ED_Road || !bEdit())
+	if (edMode >= ED_Road || bMoveCam)
 		ovBrushPrv->hide();  else  ovBrushPrv->show();
 
 	for (int i=0; i < WND_ALL; ++i)
@@ -94,7 +109,7 @@ void App::togPrvCam()
 	static bool oldV = false;
 	if (edMode == ED_PrvCam)  // leave
 	{
-		edMode = edModeOld;
+		SetEdMode(edModeOld);
 		mViewport->setVisibilityMask(RV_MaskAll);
 		rt[RTs].ndMini->setVisible(false);
 		ndCar->setVisible(true);
@@ -110,7 +125,7 @@ void App::togPrvCam()
 	}else  // enter
 	{
 		edModeOld = edMode;
-		edMode = ED_PrvCam;
+		SetEdMode(ED_PrvCam);
 		bMoveCam = true;  UpdVisGui();
 		mViewport->setVisibilityMask(RV_MaskPrvCam);
 		rt[RTs].ndMini->setVisible(true);
@@ -164,9 +179,11 @@ void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
 
 void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 {
+	if (subtab == -1 && (!bGuiFocus || pSet->inMenu != wnd))  subtab = -2;  // cancel subtab cycling
+
 	if (!bGuiFocus)
 	if (edMode != ED_PrvCam)  {
-		bGuiFocus = !bGuiFocus;  UpdVisGui();  /*subtab = -2;*/  }
+		bGuiFocus = !bGuiFocus;  UpdVisGui();  }
 
 	//isFocGui = true;
 	pSet->isMain = false;  pSet->inMenu = wnd;
@@ -186,7 +203,7 @@ void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 	mWndTabs->setIndexSelected(tab);
 
 	if (!subt)  return;
-	MyGUI::TabControl* tc = (*subt)[t];  if (!tc)  return;
+	MyGUI::TabControl* tc = (*subt)[tab];  if (!tc)  return;
 	int  cnt = tc->getItemCount();
 
 	if (t == tab && subtab == -1)  // cycle subpages if same tab
@@ -194,7 +211,7 @@ void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 			tc->setIndexSelected( (tc->getIndexSelected()-1+cnt) % cnt );
 		else
 			tc->setIndexSelected( (tc->getIndexSelected()+1) % cnt );
-	}else
+	}
 	if (subtab > -1)
 		tc->setIndexSelected( std::min(cnt-1, subtab) );
 }
@@ -303,9 +320,12 @@ bool App::KeyPress(const CmdKey &arg)
 		//  save, reload, update
 		case KC_F4:  SaveTrack();	return true;
 		case KC_F5:  LoadTrack();	return true;
-
 		case KC_F8:  UpdateTrack();  return true;
-		case KC_F9:  bTerUpdBlend = true;  return true;
+
+		case KC_F9:  // blendmap
+			if (alt)
+			{	WP wp = chAutoBlendmap;  ChkEv(autoBlendmap);  }
+			else	bTerUpdBlend = true;  return true;
 
    		case KC_F2:  // +-rt num
    			if (alt)
@@ -323,7 +343,8 @@ bool App::KeyPress(const CmdKey &arg)
 					tab->setIndexSelected(i);  if (iTab1==1)  MenuTabChg(tab,i);
 	   			}
    			break;
-   		case KC_F3:
+
+   		case KC_F3:  // tabs,sub
    			if (alt)
    			{	pSet->num_mini = (pSet->num_mini + 1) % (RTs+2);  UpdMiniVis();  }
    			else
@@ -347,8 +368,8 @@ bool App::KeyPress(const CmdKey &arg)
    			break;
 	}
 
-	//  keys in edits
-	if (bGuiFocus && mGUI && !alt && !ctrl)  //  GUI  ---------------------
+	//  GUI  keys in edits  ---------------------
+	if (bGuiFocus && mGUI && !alt && !ctrl)
 	{
 		MyGUI::Char text = arg.text;  bool found = false;
 		if (shift)	// shift-letters,numbers dont work ??
@@ -375,75 +396,77 @@ bool App::KeyPress(const CmdKey &arg)
 	///  Road keys  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 	if (edMode == ED_Road && road && bEdit())
 	{
-	if (iSnap > 0)
-	switch (arg.key)
-	{
-		case KC_1:	road->AddYaw(-1,angSnap,alt);	break;
-		case KC_2:	road->AddYaw( 1,angSnap,alt);	break;
-		case KC_3:	road->AddRoll(-1,angSnap,alt);	break;
-		case KC_4:	road->AddRoll( 1,angSnap,alt);	break;
-	}
-	switch (arg.key)
-	{
-		//  choose 1
-		case KC_SPACE:
-			if (ctrl)	road->CopyNewPoint();
-			else		road->ChoosePoint();  break;
+		if (iSnap > 0)
+		switch (arg.key)
+		{
+			case KC_1:	road->AddYaw(-1,angSnap,alt);	break;
+			case KC_2:	road->AddYaw( 1,angSnap,alt);	break;
+			case KC_3:	road->AddRoll(-1,angSnap,alt);	break;
+			case KC_4:	road->AddRoll( 1,angSnap,alt);	break;
+		}
+		switch (arg.key)
+		{
+			//  choose 1
+			case KC_SPACE:
+				if (ctrl)	road->CopyNewPoint();
+				else		road->ChoosePoint();  break;
+				
+			//  multi sel
+			case KC_BACK:
+				if (alt)		road->SelAll();
+				else if (ctrl)	road->SelClear();
+				else			road->SelAddPoint();  break;
+				
+			//  ter on  first,last
+			case KC_HOME:  case KC_NUMPAD7:
+				if (ctrl)	road->FirstPoint();
+				else		road->ToggleOnTerrain();  break;
+				
+			//  cols
+			case KC_END:  case KC_NUMPAD1:
+				if (ctrl)	road->LastPoint();
+				else		road->ToggleColums();  break;
+
+			//  prev,next
+			case KC_PGUP:	case KC_NUMPAD9:
+				road->PrevPoint();  break;
+			case KC_PGDOWN:	case KC_NUMPAD3:
+				road->NextPoint();  break;
+
+			//  del
+			case KC_DELETE:	case KC_DECIMAL:
+			case KC_NUMPAD5:
+				if (ctrl)	road->DelSel();
+				else		road->Delete();  break;
+
+			//  ins
+			case KC_INSERT:	case KC_NUMPAD0:
+				if (ctrl && !shift && !alt)	{	if (road->CopySel())  Status("Copy",0.6,0.8,1.0);  }
+				else if (!ctrl && shift && !alt)	road->Paste();
+				else if ( ctrl && shift && !alt)	road->Paste(true);
+				else
+				{	road->newP.pos.x = road->posHit.x;
+					road->newP.pos.z = road->posHit.z;
+					if (!sc.ter)
+						road->newP.pos.y = road->posHit.y;
+					road->newP.aType = AT_Both;
+					road->Insert(shift ? INS_Begin : ctrl ? INS_End : alt ? INS_CurPre : INS_Cur);
+				}	break;					  
+
+			case KC_MINUS:   road->ChgMtrId(-1);	break;
+			case KC_EQUALS:  road->ChgMtrId(1);		break;
+
+			case KC_5:	road->ChgAngType(-1);	break;
+			case KC_6:	if (shift)  road->AngZero();  else
+						road->ChgAngType(1);	break;
+
+			case KC_7:  iSnap = (iSnap-1+ciAngSnapsNum)%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];  break;
+			case KC_8:  iSnap = (iSnap+1)%ciAngSnapsNum;                angSnap = crAngSnaps[iSnap];  break;
 			
-		//  multi sel
-		case KC_BACK:
-			if (alt)		road->SelAll();
-			else if (ctrl)	road->SelClear();
-			else			road->SelAddPoint();  break;
-			
-		//  ter on  first,last
-		case KC_HOME:  case KC_NUMPAD7:
-			if (ctrl)	road->FirstPoint();
-			else		road->ToggleOnTerrain();  break;
-			
-		//  cols
-		case KC_END:  case KC_NUMPAD1:
-			if (ctrl)	road->LastPoint();
-			else		road->ToggleColums();  break;
+			case KC_0:  road->Set1stChk();  break;
 
-		//  prev,next
-		case KC_PGUP:	case KC_NUMPAD9:
-			road->PrevPoint();  break;
-		case KC_PGDOWN:	case KC_NUMPAD3:
-			road->NextPoint();  break;
-
-		//  del
-		case KC_DELETE:	case KC_DECIMAL:
-		case KC_NUMPAD5:
-			if (ctrl)	road->DelSel();
-			else		road->Delete();  break;
-
-		//  ins
-		case KC_INSERT:	case KC_NUMPAD0:
-		if (ctrl && !shift && !alt)	{	if (road->CopySel())  Status("Copy",0.6,0.8,1.0);  }
-		else if (!ctrl && shift && !alt)	road->Paste();
-		else if ( ctrl && shift && !alt)	road->Paste(true);
-		else
-		{	road->newP.pos.x = road->posHit.x;
-			road->newP.pos.z = road->posHit.z;
-			if (!sc.ter)
-				road->newP.pos.y = road->posHit.y;
-			road->newP.aType = AT_Both;
-			road->Insert(shift ? INS_Begin : ctrl ? INS_End : alt ? INS_CurPre : INS_Cur);
-		}	break;					  
-
-		case KC_MINUS:   road->ChgMtrId(-1);	break;
-		case KC_EQUALS:  road->ChgMtrId(1);		break;
-
-		case KC_5:	road->ChgAngType(-1);	break;
-		case KC_6:	if (shift)  road->AngZero();  else
-					road->ChgAngType(1);	break;
-
-		case KC_7:  iSnap = (iSnap-1+ciAngSnapsNum)%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];  break;
-		case KC_8:  iSnap = (iSnap+1)%ciAngSnapsNum;                angSnap = crAngSnaps[iSnap];  break;
-		
-		case KC_0:  road->Set1stChk();  break;
-	}
+			case KC_U:  AlignTerToRoad();  break;
+		}
 	}
 
 	//  ter brush shape
@@ -455,6 +478,15 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_COMMA:	mBrOct[curBr] = std::max(1, mBrOct[curBr]-1);  updBrush();  break;
 		case KC_PERIOD:	mBrOct[curBr] = std::min(7, mBrOct[curBr]+1);  updBrush();  break;
 	}
+
+	//  ter brush presets ----
+	if (edMode < ED_Road && alt && arg.key >= KC_1 && arg.key <= KC_0 && !bMoveCam)
+	{
+		int id = arg.key - KC_1;
+		if (shift)  id += 10;
+		SetBrushPreset(id);
+	}
+
 	
 	//  Fluids ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 	if (edMode == ED_Fluids)
@@ -494,7 +526,7 @@ bool App::KeyPress(const CmdKey &arg)
 			case KC_NUMPAD5:
 				if (fls == 1)	sc.fluids.clear();
 				else			sc.fluids.erase(sc.fluids.begin() + iFlCur);
-				iFlCur = std::min(iFlCur, (int)sc.fluids.size()-1);
+				iFlCur = std::max(0, std::min(iFlCur, (int)sc.fluids.size()-1));
 				bRecreateFluids = true;
 				break;
 
@@ -518,23 +550,24 @@ bool App::KeyPress(const CmdKey &arg)
 		switch (arg.key)
 		{
 			case KC_SPACE:
-				iObjCur = -1;  break;  // unselect
+				iObjCur = -1;  PickObject();  UpdObjPick();  break;
 				
 			//  prev,next type
 			case KC_LBRACKET:
-				iObjNew = (iObjNew-1 + objAll)%objAll;  break;
+				iObjTNew = (iObjTNew-1 + objAll)%objAll;  break;
 			case KC_RBRACKET:
-				iObjNew = (iObjNew+1)%objAll;  break;
+				iObjTNew = (iObjTNew+1)%objAll;  break;
 				
 			//  ins
 			case KC_INSERT:	case KC_NUMPAD0:
 			if (road && road->bHitTer)
 			{
-				::Object o;  o.name = vObjNames[iObjNew];
+				::Object o;  o.name = vObjNames[iObjTNew];
 				const Ogre::Vector3& v = road->posHit;
 				o.pos[0] = v.x;  o.pos[1] =-v.z;  o.pos[2] = v.y;  //o.pos.y += 0.5f;
 				//todo: ?dyn objs size, get center,size, rmb height..
-				String s = toStr(sc.objects.size()+1);  // counter for names
+				++iObjLast;
+				String s = toStr(iObjLast);  // counter for names
 
 				//  create object
 				o.ent = mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
@@ -544,9 +577,20 @@ bool App::KeyPress(const CmdKey &arg)
 				o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
 
 				sc.objects.push_back(o);
-				iObjCur = sc.objects.size()-1;
+				//iObjCur = sc.objects.size()-1;  // auto select inserted-
 				UpdObjPick();
 			}	break;
+			
+			//  sel
+			case KC_BACK:
+				if (ctrl)  vObjSel.clear();  // unsel all
+				else
+				if (iObjCur > -1)
+					if (vObjSel.find(iObjCur) == vObjSel.end())
+						vObjSel.insert(iObjCur);  // add to sel
+					else
+						vObjSel.erase(iObjCur);  // unselect
+				break;
 		}
 		if (objs > 0)
 		switch (arg.key)
@@ -589,7 +633,7 @@ bool App::KeyPress(const CmdKey &arg)
 			case KC_2:  // reset scale
 				if (iObjCur >= 0 && sc.objects.size() > 0)
 				{	::Object& o = sc.objects[iObjCur];
-					o.scale = Ogre::Vector3::UNIT_SCALE;
+					o.scale = Ogre::Vector3::UNIT_SCALE * (shift ? 0.5f : 1.f);
 					o.nd->setScale(o.scale);
 					UpdObjPick();
 				}	break;
@@ -604,6 +648,8 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_S:	GuiShortcut(WND_Edit, 2);  return true;  // S Sun
 
 		case KC_H:	GuiShortcut(WND_Edit, 3);  return true;  // H Terrain (Heightmap)
+		 case KC_D:	GuiShortcut(WND_Edit, 3,0);  return true;  //  D -Brushes
+
 		case KC_T:	GuiShortcut(WND_Edit, 4);  return true;  // T Layers (Terrain)
 		 case KC_B:	GuiShortcut(WND_Edit, 4,0);  return true;  //  B -Blendmap
 		 case KC_P:	GuiShortcut(WND_Edit, 4,1);  return true;  //  P -Particles
@@ -615,7 +661,7 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_R:	GuiShortcut(WND_Edit, 6);  return true;  // R Road
 		case KC_O:	GuiShortcut(WND_Edit, 7);  return true;  // O Tools
 
-		case KC_C:	GuiShortcut(WND_Options, 1);  return true;  // S Screen
+		case KC_C:	GuiShortcut(WND_Options, 1);  return true;  // C Screen
 		case KC_G:	GuiShortcut(WND_Options, 2);  return true;  // G Graphics
 		 case KC_N:	GuiShortcut(WND_Options, 2,2);  return true;  // N -Vegetation
 		case KC_E:	GuiShortcut(WND_Options, 3);  return true;  // E Settings
@@ -639,12 +685,15 @@ bool App::KeyPress(const CmdKey &arg)
 			pSet->bFog = !pSet->bFog;  chkFog->setStateSelected(pSet->bFog);  UpdFog();  }  break;
 		//  trees
 		case KC_V:	bTrGrUpd = true;  break;
+		//  weather
+		case KC_P:  {
+			pSet->bWeather = !pSet->bWeather;  chkWeather->setStateSelected(pSet->bWeather);  }  break;
 
 		//  terrain
-		case KC_D:	if (bEdit()){  edMode = ED_Deform;  curBr = 0;  updBrush();  UpdEditWnds();  }	break;
-		case KC_S:	if (bEdit()){  edMode = ED_Smooth;  curBr = 1;  updBrush();  UpdEditWnds();  }	break;
-		case KC_E:	if (bEdit()){  edMode = ED_Height;  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
-		case KC_F:  if (bEdit()){  edMode = ED_Filter;  curBr = 3;  updBrush();  UpdEditWnds();  }
+		case KC_D:	if (bEdit()){  SetEdMode(ED_Deform);  curBr = 0;  updBrush();  UpdEditWnds();  }	break;
+		case KC_S:	if (bEdit()){  SetEdMode(ED_Smooth);  curBr = 1;  updBrush();  UpdEditWnds();  }	break;
+		case KC_E:	if (bEdit()){  SetEdMode(ED_Height);  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
+		case KC_F:  if (bEdit()){  SetEdMode(ED_Filter);  curBr = 3;  updBrush();  UpdEditWnds();  }
 			else  //  focus on find edit
 			if (ctrl && edFind && bGuiFocus &&
 				!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 0)
@@ -655,24 +704,24 @@ bool App::KeyPress(const CmdKey &arg)
 			}	break;
 
 		//  road
-		case KC_R:	if (bEdit()){  edMode = ED_Road;	UpdEditWnds();  }	break;
+		case KC_R:	if (bEdit()){  SetEdMode(ED_Road);	UpdEditWnds();  }	break;
 		case KC_B:  if (road)  road->RebuildRoad(true);  break;
 		case KC_T:	if (mWndRoadStats)  mWndRoadStats->setVisible(!mWndRoadStats->getVisible());  break;
 		case KC_M:  if (road)  road->ToggleMerge();  break;
 
 		//  start pos
-		case KC_Q:	if (bEdit()){  edMode = ED_Start;  UpdEditWnds();  }   break;
+		case KC_Q:	if (bEdit()){  SetEdMode(ED_Start);  UpdEditWnds();  }   break;
 		case KC_SPACE:
 			if (edMode == ED_Start && road)  road->iDir *= -1;  break;
 		//  prv cam
 		case KC_F7:  togPrvCam();  break;
 
 		//  fluids
-		case KC_W:	if (bEdit()){  edMode = ED_Fluids;  UpdEditWnds();  }   break;
+		case KC_W:	if (bEdit()){  SetEdMode(ED_Fluids);  UpdEditWnds();  }   break;
 		case KC_F10:	SaveWaterDepth();   break;
 
 		//  objects
-		case KC_X:	if (bEdit()){  edMode = ED_Objects;  UpdEditWnds();  }   break;
+		case KC_X:	if (bEdit()){  SetEdMode(ED_Objects);  UpdEditWnds();  }   break;
 	}
 
 	return true;

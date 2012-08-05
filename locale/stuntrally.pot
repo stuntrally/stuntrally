@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-07-01 21:15+0300"
+"POT-Creation-Date: 2012-07-26 09:43+0300"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -441,12 +441,12 @@ msgctxt "NetWaitingForOthers"
 msgid "Waiting for others"
 msgstr ""
 
-msgctxt "TipNewTerrainFlat"
-msgid "Create new, flat terrain."
+msgctxt "TipCarDesc"
+msgid "Car description text."
 msgstr ""
 
 msgctxt "TipGrTerMaxHeight"
-msgid "Terrain height above which there won't be any grass."
+msgid "Terrain height above which there won't be any grass (starts fading out for 20m)."
 msgstr ""
 
 msgctxt "InputRoadNew"
@@ -467,6 +467,10 @@ msgstr ""
 
 msgctxt "Input"
 msgid "Input"
+msgstr ""
+
+msgctxt "AlignWidthAdd"
+msgid "Width add"
 msgstr ""
 
 msgctxt "NetReady"
@@ -647,6 +651,10 @@ msgstr ""
 
 msgctxt "MessageBox_Try"
 msgid "Try"
+msgstr ""
+
+msgctxt "InputMapRewind"
+msgid "Rewind (time)"
 msgstr ""
 
 msgctxt "InputKeyAllPreset"
@@ -1245,8 +1253,8 @@ msgctxt "Shaders"
 msgid "Shaders"
 msgstr ""
 
-msgctxt "PipeMaterials"
-msgid "Pipe materials"
+msgctxt "Brushes"
+msgid "Brushes"
 msgstr ""
 
 msgctxt "Exponent"
@@ -1275,6 +1283,10 @@ msgstr ""
 
 msgctxt "Start"
 msgid "start"
+msgstr ""
+
+msgctxt "TipGrTerMinHeight"
+msgid "Terrain height below which there won't be any grass (starts fading out for 20m)."
 msgstr ""
 
 msgctxt "SkirtHeight"
@@ -1405,8 +1417,8 @@ msgctxt "DustSize"
 msgid "dust size"
 msgstr ""
 
-msgctxt "InputUpdBlendmap"
-msgid "F9 - update terrain blendmap"
+msgctxt "Shortcuts"
+msgid "Shortcuts"
 msgstr ""
 
 msgctxt "TipDisableFog"
@@ -1737,8 +1749,8 @@ msgctxt "Leave"
 msgid "Leave (exit)"
 msgstr ""
 
-msgctxt "TipVegetModels"
-msgid "Models (meshes) for vegetation. Found in data/trees/."
+msgctxt "InputRoadMove"
+msgid "- move point"
 msgstr ""
 
 msgctxt "Engine"
@@ -1777,8 +1789,8 @@ msgctxt "TipChangeHue"
 msgid "Change car color (hue)."
 msgstr ""
 
-msgctxt "InputRoadMove"
-msgid "- move point"
+msgctxt "InputUpdBlendmap"
+msgid "F9 - update terrain blendmap (manual)"
 msgstr ""
 
 msgctxt "Intensity"
@@ -1909,6 +1921,10 @@ msgctxt "TipTerrainDouble"
 msgid "Make terrain size double, leaving current haigtmap part in center."
 msgstr ""
 
+msgctxt "InputRoadRMB"
+msgid "RMB (or Num +,-)"
+msgstr ""
+
 msgctxt "TipTerWind"
 msgid "Terrain brush window."
 msgstr ""
@@ -1945,8 +1961,8 @@ msgctxt "Settings"
 msgid "Settings"
 msgstr ""
 
-msgctxt "InputRoadRMB"
-msgid "RMB (or Num +,-)"
+msgctxt "AutoUpdateBlendmap"
+msgid "Auto update blendmap (slow for big size brushes)"
 msgstr ""
 
 msgctxt "Anisotropy"
@@ -1987,6 +2003,10 @@ msgstr ""
 
 msgctxt "InputRoadRoll"
 msgid "- rotate roll / scale sel."
+msgstr ""
+
+msgctxt "CarDebugSurfaces"
+msgid "Car tire surfaces"
 msgstr ""
 
 msgctxt "TrackArea"
@@ -2035,6 +2055,10 @@ msgstr ""
 
 msgctxt "InputRoadPick"
 msgid "Space - pick one/none"
+msgstr ""
+
+msgctxt "TipSceneryId"
+msgid "Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation."
 msgstr ""
 
 msgctxt "TipTrkViewShort"
@@ -2129,8 +2153,8 @@ msgctxt "InputFluidsTileY"
 msgid "; &apos;  - change texture tiling, one coord. only"
 msgstr ""
 
-msgctxt "TipSceneryId"
-msgid "Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation."
+msgctxt "Generator"
+msgid "Generator"
 msgstr ""
 
 msgctxt "TipRoadStats"
@@ -2163,6 +2187,14 @@ msgstr ""
 
 msgctxt "CarStartPos"
 msgid "Car Start Pos"
+msgstr ""
+
+msgctxt "ShortcutsInfo"
+msgid "Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any)."
+msgstr ""
+
+msgctxt "AlignWidthMul"
+msgid "Width multipy"
 msgstr ""
 
 msgctxt "LoadingDesc"
@@ -2389,6 +2421,10 @@ msgctxt "HeightMax"
 msgid "Height Max"
 msgstr ""
 
+msgctxt "PipeMaterials"
+msgid "Pipe materials"
+msgstr ""
+
 msgctxt "Tools"
 msgid "Tools"
 msgstr ""
@@ -2447,6 +2483,10 @@ msgstr ""
 
 msgctxt "InputRoadYaw"
 msgid "- rotate yaw"
+msgstr ""
+
+msgctxt "TipNewTerrainFlat"
+msgid "Create new, flat terrain."
 msgstr ""
 
 msgctxt "Far"
@@ -2569,6 +2609,10 @@ msgctxt "ImpostorDist"
 msgid "Impostors dist."
 msgstr ""
 
+msgctxt "AlignSmooth"
+msgid "Smooth size"
+msgstr ""
+
 msgctxt "TipGrassDens"
 msgid "How dense/rare will the grass be on terrain."
 msgstr ""
@@ -2591,6 +2635,10 @@ msgstr ""
 
 msgctxt "InputHelp"
 msgid "Input/help"
+msgstr ""
+
+msgctxt "TipVegetModels"
+msgid "Models (meshes) for vegetation. Found in data/trees/."
 msgstr ""
 
 msgctxt "Sun"
@@ -2661,8 +2709,16 @@ msgctxt "fluids"
 msgid "fluids (water or mud)"
 msgstr ""
 
+msgctxt "DeleteFluids"
+msgid "Delete Fluids"
+msgstr ""
+
 msgctxt "TBTime"
 msgid "Time"
+msgstr ""
+
+msgctxt "AlignTerrainToRoad"
+msgid "Align terrain to road"
 msgstr ""
 
 msgctxt "InputRoadAltLMB"
@@ -2791,6 +2847,10 @@ msgstr ""
 
 msgctxt "Environment"
 msgid "Environment"
+msgstr ""
+
+msgctxt "InputRoadAlignTerrain"
+msgid "U - Align terrain to road (for selected segments)"
 msgstr ""
 
 msgctxt "GraphicsAll_High"

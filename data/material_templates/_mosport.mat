@@ -1,0 +1,431 @@
+
+material fen_d.png
+{
+	parent 0vdrAlpha
+	diffuseMap fen_d.png
+}
+material bluetent.png
+{
+	parent 0vdrTrk
+	diffuseMap bluetent.png
+}
+material cone.png
+{
+	parent 0vdrTrk
+	diffuseMap cone.png
+}
+material grass_01.png
+{
+	parent 0vdrTrk
+	diffuseMap grass_01.jpg
+}
+material first_hauler.png
+{
+	parent 0vdrAlpha
+	diffuseMap first_hauler.png
+}
+material flag_checkered.png
+{
+	parent 0vdrTrk
+	diffuseMap flag_checkered.png
+}
+material series_flagger.png
+{
+	parent 0vdrTrk
+	diffuseMap series_flagger.png
+}
+material green_booth.png
+{
+	parent 0vdrAlpha
+	diffuseMap green_booth.png
+}
+material gy_bridge.png
+{
+	parent 0vdrAlpha
+	diffuseMap gy_bridge.png
+}
+material bank.png
+{
+	parent 0vdrTrk
+	diffuseMap bank.png
+}
+material whitetent.png
+{
+	parent 0vdrTrk
+	diffuseMap whitetent.png
+}
+material mosbuilding.png
+{
+	parent 0vdrTrk
+	diffuseMap mosbuilding.png
+}
+material roof.png
+{
+	parent 0vdrTrk
+	diffuseMap roof.png
+}
+material npeople_pit.png
+{
+	parent 0vdrAlpha
+	diffuseMap npeople_pit.png
+}
+material grnglow.png
+{
+	parent 0vdrAlpha
+	diffuseMap grnglow.png
+}
+material grlt.png
+{
+	parent 0vdrTrk
+	diffuseMap grlt.png
+}
+material gurdrc.png
+{
+	parent 0vdrAlpha
+	diffuseMap gurdrc.png
+}
+material gurdrcrssa.png
+{
+	parent 0vdrAlpha
+	diffuseMap gurdrcrssa.png
+}
+material lighta.png
+{
+	parent 0vdrAlpha
+	diffuseMap lighta.png
+}
+material rdlt.png
+{
+	parent 0vdrTrk
+	diffuseMap rdlt.png
+}
+material gurdra.png
+{
+	parent 0vdrTrk
+	diffuseMap gurdra.png
+}
+material ylolt.png
+{
+	parent 0vdrTrk
+	diffuseMap ylolt.png
+}
+material pitshed.png
+{
+	parent 0vdrTrk
+	diffuseMap pitshed.png
+}
+material paint.png
+{
+	parent 0vdrTrk
+	diffuseMap paint.png
+}
+material redbridge.png
+{
+	parent 0vdrAlpha
+	diffuseMap redbridge.png
+}
+material redtent.png
+{
+	parent 0vdrTrk
+	diffuseMap redtent.png
+}
+material score_t01.png
+{
+	parent 0vdrTrk
+	diffuseMap score_t01.png
+}
+material startbox.png
+{
+	parent 0vdrTrk
+	diffuseMap startbox.png
+}
+material pitmetal_d.png
+{
+	parent 0vdrTrk
+	diffuseMap pitmetal_d.png
+}
+material building24a_01.png
+{
+	parent 0vdrTrk
+	diffuseMap building24a_01.png
+}
+material tower24a_01.png
+{
+	parent 0vdrAlpha
+	diffuseMap tower24a_01.png
+}
+material lpole.png
+{
+	parent 0vdrTrk
+	diffuseMap lpole.png
+}
+material grass_asphalt1.png
+{
+	parent 0vdrTrk
+	diffuseMap grass_asphalt1.png
+}
+material asphalt_pad.png
+{
+	parent 0vdrTrk
+	diffuseMap asphalt_pad.jpg
+}
+material asphalta_02.png
+{
+	parent 0vdrTrk
+	diffuseMap roadAsphalt.jpg
+}
+material concret_03.png
+{
+	parent 0vdrTrk
+	diffuseMap concret_03.png
+}
+material fence.png
+{
+	parent 0vdrAlpha2
+	diffuseMap fence.png
+}
+material wall.png
+{
+	parent 0vdrTrk
+	diffuseMap wall.png
+}
+material wall_top.png
+{
+	parent 0vdrTrk
+	diffuseMap wall_top.png
+}
+material armco_r_solid.png
+{
+	parent 0vdrTrk
+	diffuseMap armco_r_solid.png
+}
+material armco_l_solid.png
+{
+	parent 0vdrTrk
+	diffuseMap armco_l_solid.png
+}
+material armco_top_solid.png
+{
+	parent 0vdrTrk
+	diffuseMap armco_top_solid.png
+}
+material grass_blend2.png
+{
+	parent 0vdrTrk
+	diffuseMap grass_blend2.jpg
+}
+material grass_asphalt2.png
+{
+	parent 0vdrTrk
+	diffuseMap grass_asphalt2.png
+}
+material grassedger.png
+{
+	parent 0vdrTrk
+	diffuseMap grassedger.jpg
+}
+material grassedge.png
+{
+	parent 0vdrTrk
+	diffuseMap grassedge.jpg
+}
+material dirt.png
+{
+	parent 0vdrTrk
+	diffuseMap dirt.jpg
+}
+material curbing_mid.png
+{
+	parent 0vdrTrk
+	diffuseMap curbing_mid.png
+}
+material tires_w.png
+{
+	parent 0vdrTrk
+	diffuseMap tires_w.png
+}
+material tires_top_w.png
+{
+	parent 0vdrTrk
+	diffuseMap tires_top_w.png
+}
+material tires_end_w.png
+{
+	parent 0vdrTrk
+	diffuseMap tires_end_w.png
+}
+material curbing_left.png
+{
+	parent 0vdrTrk
+	diffuseMap curbing_left.png
+}
+material grass_blend1.png
+{
+	parent 0vdrTrk
+	diffuseMap grass_blend1.jpg
+}
+material curbing.png
+{
+	parent 0vdrTrk
+	diffuseMap curbing.png
+}
+material armch_s.png
+{
+	parent 0vdrTrk
+	diffuseMap armch_s.png
+}
+material dry_grass.png
+{
+	parent 0vdrTrk
+	diffuseMap dry_grass.jpg
+}
+material wall_near.png
+{
+	parent 0vdrTrk
+	diffuseMap wall_near.png
+}
+material wall_panz.png
+{
+	parent 0vdrTrk
+	diffuseMap wall_panz.png
+}
+material tsd_grass_blend.png
+{
+	parent 0vdrTrk
+	diffuseMap tsd_grass_blend.jpg
+}
+material tsd_grass_asphalt.png
+{
+	parent 0vdrTrk
+	diffuseMap tsd_grass_asphalt.png
+}
+material tsd_startline01.png
+{
+	parent 0vdrTrk
+	diffuseMap tsd_startline01.png
+}
+material tsd_paint.png
+{
+	parent 0vdrTrk
+	diffuseMap tsd_paint.png
+}
+material tree_shadow.png
+{
+	parent 0vdrAlpha
+	diffuseMap tree_shadow.png
+}
+material trees_group2a.png
+{
+	parent 0vdrAlpha
+	diffuseMap trees_group2a.png
+}
+material trees_group1a.png
+{
+	parent 0vdrAlpha
+	diffuseMap trees_group1a.png
+}
+material trees_group3c.png
+{
+	parent 0vdrAlpha
+	diffuseMap trees_group3c.png
+}
+material trees_group4c.png
+{
+	parent 0vdrAlpha
+	diffuseMap trees_group4c.png
+}
+material tree01.png
+{
+	parent 0vdrAlpha
+	diffuseMap tree01.png
+}
+material tree04.png
+{
+	parent 0vdrAlpha
+	diffuseMap tree04.png
+}
+material tree07.png
+{
+	parent 0vdrAlpha
+	diffuseMap tree07.png
+}
+material tree16.png
+{
+	parent 0vdrAlpha
+	diffuseMap tree16.png
+}
+material tree17.png
+{
+	parent 0vdrAlpha
+	diffuseMap tree17.png
+}
+material tree18.png
+{
+	parent 0vdrAlpha
+	diffuseMap tree18.png
+}
+material truck_w.png
+{
+	parent 0vdrTrk
+	diffuseMap truck_w.jpg
+}
+material people_tv.png
+{
+	parent 0vdrAlpha
+	diffuseMap people_tv.png
+}
+material bot_wht.png
+{
+	parent 0vdrTrk
+	diffuseMap bot_wht.png
+}
+material drk_whtl.png
+{
+	parent 0vdrTrk
+	diffuseMap drk_whtl.png
+}
+material lgt_whtr.png
+{
+	parent 0vdrTrk
+	diffuseMap lgt_whtr.png
+}
+material posts.png
+{
+	parent 0vdrTrk
+	diffuseMap posts.png
+}
+material bot_red.png
+{
+	parent 0vdrTrk
+	diffuseMap bot_red.png
+}
+material drk_red.png
+{
+	parent 0vdrTrk
+	diffuseMap drk_red.png
+}
+material lgt_red.png
+{
+	parent 0vdrTrk
+	diffuseMap lgt_red.png
+}
+material drk_whtr.png
+{
+	parent 0vdrTrk
+	diffuseMap drk_whtr.png
+}
+material lgt_whtl.png
+{
+	parent 0vdrTrk
+	diffuseMap lgt_whtl.png
+}
+material rgbmap.png
+{
+	parent 0vdrTrk
+	diffuseMap rgbmap.png
+}
+material b_tent03.png
+{
+	parent 0vdrAlpha
+	diffuseMap b_tent03.png
+}

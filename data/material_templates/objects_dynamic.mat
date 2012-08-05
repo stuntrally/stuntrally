@@ -1,0 +1,37 @@
+material fuel_can
+{
+	parent base
+	diffuseMap fuel_can_diff.jpg
+	normalMap fuel_can_norm.jpg
+	specMap fuel_can_spec.jpg
+	normal_map true
+	spec_map true
+	terrain_light_map true
+	ambient 1.50 1.50 1.50
+	diffuse 1.00 1.00 1.00
+    specular 1 1 1 4
+}
+
+material RubberTire
+{
+	parent base
+	diffuseMap big_tire.png
+	terrain_light_map true
+	ambient 0.7 0.7 0.7
+	diffuse 0.5 0.5 0.5
+	specular 0.3 0.3 0.3 32
+}
+
+material concrete_texture
+{
+	parent base
+	diffuseMap concrete_bar.jpg
+	normalMap concrete_bar_norm.jpg
+	specMap concrete_bar_spec.jpg
+	spec_map true
+	normal_map true
+	terrain_light_map true
+	ambient 0.70 0.70 0.70
+	diffuse 1.00 1.00 1.00
+    specular 1 1 1 4
+}

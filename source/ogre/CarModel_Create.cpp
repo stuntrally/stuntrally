@@ -410,49 +410,36 @@ void CarModel::RecreateMaterials()
 	for (int i=0; i<NumMaterials; i++)
 	{
 		sh::Factory::getInstance().destroyMaterialInstance(sMtr[i] + strI);
-		sh::Factory::getInstance().createMaterialInstance(sMtr[i] + strI, sMtr[i], true);
+		sh::MaterialInstance* m = sh::Factory::getInstance().createMaterialInstance(sMtr[i] + strI, sMtr[i]);
+
+		m->setListener (this);
+
+		// change textures for the car
+		if (m->hasProperty ("diffuseMap"))
+		{
+			std::string v = sh::retrieveValue<sh::StringValue>(m->getProperty ("diffuseMap"), 0).get();
+			m->setProperty ("diffuseMap", sh::makeProperty <sh::StringValue>(new sh::StringValue(sDirname + "_" + v)));
+		}
+		if (m->hasProperty ("carPaintMap"))
+		{
+			std::string v = sh::retrieveValue<sh::StringValue>(m->getProperty ("carPaintMap"), 0).get();
+			m->setProperty ("carPaintMap", sh::makeProperty <sh::StringValue>(new sh::StringValue(sDirname + "_" + v)));
+		}
+		if (m->hasProperty ("reflMap"))
+		{
+			std::string v = sh::retrieveValue<sh::StringValue>(m->getProperty ("reflMap"), 0).get();
+			m->setProperty ("reflMap", sh::makeProperty <sh::StringValue>(new sh::StringValue(sDirname + "_" + v)));
+		}
 		sMtr[i] = sMtr[i] + strI;
 	}
+
 	
-	if (!ghost)
-	for (int i=0; i < NumMaterials; i++)
-	{
-		MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[i]);
-		if (!mtr.isNull())
-		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
-			while (techIt.hasMoreElements())
-			{	Technique* tech = techIt.getNext();
-				Technique::PassIterator passIt = tech->getPassIterator();
-				while (passIt.hasMoreElements())
-				{	Pass* pass = passIt.getNext();
-					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
-					while (tusIt.hasMoreElements())
-					{
-						TextureUnitState* tus = tusIt.getNext();
-						String sTex = tus->getTextureName();  //!..
-						
-						// only 1 tire mesh?
-						if ( (i == Mtr_CarTireFront || i == Mtr_CarTireRear) 
-							&& FileExists(sCar + "_wheel.mesh") 
-							&& (tus->getTextureName() == String("wheel_front.png") || tus->getTextureName() == String("wheel_rear.png")) )
-						{
-							// set same texture for both
-							tus->setTextureName(String("wheel.png"));
-						}
-						
-						if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
-							tus->getTextureName() == "ReflectionCube" ||
-							StringUtil::startsWith(tus->getName(), "shadowmap") ||
-							StringUtil::startsWith(tus->getName(), "terrainlightmap") ||
-							StringUtil::startsWith(tus->getTextureName(), "flat_n")))
-						tus->setTextureName(sDirname + "_" + tus->getTextureName());
-		}	}	}	}
-		
-		// set shader params of the cloned material
-		//MaterialFactory::getSingleton().setShaderParams(mtr);
-	}
+	/*
 	
 	ChangeClr(iIndex);
+	*/
+
+	UpdateLightMap();
 }
 
 void CarModel::setMtrName(const String& entName, const String& mtrName)
@@ -491,4 +478,14 @@ void CarModel::CreateReflection()
 		pReflect->sMtr[i] = sMtr[i];
 
 	pReflect->Create();
+}
+
+void CarModel::requestedConfiguration (sh::MaterialInstance* m, const std::string& configuration)
+{
+}
+
+void CarModel::createdConfiguration (sh::MaterialInstance* m, const std::string& configuration)
+{
+	UpdateLightMap();
+	ChangeClr(iIndex);
 }

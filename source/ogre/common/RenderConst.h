@@ -39,7 +39,8 @@ const Ogre::uint32
 	RV_Hud = 2,		// hud and markers
 	RV_Terrain = 4,	// terrain and fluids, for terrain texture
 	RV_Vegetation = 8,  // vegetation, paged geom
-	RV_VegetGrass = 64,  // vegetation, paged geom
+	RV_VegetGrass = 64, // grass, paged geom
+	RV_Objects = 256,  // all objects (static meshes and props)
 	RV_Sky = 32,	// sky, editor only
 
 	RV_Car = 128,			// car,tires in game, (hide in reflection render)
@@ -50,7 +51,7 @@ const Ogre::uint32
 	RV_WaterReflect = RV_Terrain + RV_Vegetation + RV_Road,
 	RV_WaterRefract = RV_Terrain + RV_Vegetation + RV_Road + RV_Car,
 
-	RV_MaskAll = 255,
-	RV_MaskPrvCam = 256;
+	RV_MaskAll = 511,
+	RV_MaskPrvCam = 512;
 
 #endif

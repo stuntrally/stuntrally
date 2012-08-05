@@ -1,0 +1,39 @@
+material TireTrail
+{
+    parent base
+    emissive 1 1 1
+    ambient 0 0 0
+    diffuse 0 0 0 1
+    scene_blend alpha_blend
+    depth_write off
+    depth_bias 3
+    cull_hardware none
+    vertex_colour true
+    diffuseMap white.png
+}
+
+
+material Mud
+{
+	parent Base_particle
+	diffuseMap mud.png
+    alpha_rejection greater 64
+    scene_blend alpha_blend
+    soft_particles true
+}
+
+material Dust
+{
+	parent Base_particle
+	diffuseMap dust.png
+	scene_blend alpha_blend
+	soft_particles true
+}
+
+material Smoke
+{
+	parent Base_particle
+	diffuseMap smoke.png
+	scene_blend alpha_blend
+	soft_particles true
+}

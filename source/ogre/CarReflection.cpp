@@ -83,6 +83,7 @@ void CarReflection::Create()
 			vp->setOverlaysEnabled(false);
 			vp->setVisibilityMask(RV_MaskReflect);
 			vp->setShadowsEnabled(false);
+			vp->setMaterialScheme ("reflection");
 			mRT->setAutoUpdated(false);
 			//mRT->addListener(this);  //-
 			mCam->setPosition(Vector3::ZERO);
@@ -101,25 +102,6 @@ void CarReflection::Create()
 			pRTs[face] = mRT;
 		}
 	}
-	
-	// Iterate through our materials and add an index to ReflectionCube texture reference
-	for (int i=0; i < NumMaterials; i++)
-	{
-		MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[i]);
-		if (!mtr.isNull())
-		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
-			while (techIt.hasMoreElements())
-			{	Technique* tech = techIt.getNext();
-				Technique::PassIterator passIt = tech->getPassIterator();
-				while (passIt.hasMoreElements())
-				{	Pass* pass = passIt.getNext();
-					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
-					while (tusIt.hasMoreElements())
-					{	
-						TextureUnitState* tus = tusIt.getNext();
-						if (tus->getTextureName() == "ReflectionCube")
-							tus->setTextureName(cubetexName);
-	}	}	}	}	}
 }
 
 void CarReflection::Update()

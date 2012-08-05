@@ -5,7 +5,12 @@
 #include "../vdrift/pathmanager.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/RenderConst.h"
-//#include "../ogre/common/MaterialGen/MaterialFactory.h"
+
+#include "../shiny/Main/Factory.hpp"
+#include "../shiny/Platforms/Ogre/OgrePlatform.hpp"
+
+#include <OgreTerrainPaging.h>
+#include <OgreTerrainGroup.h>
 
 #if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 	// dir listing
@@ -26,10 +31,11 @@ App::App()  //  gui wigdets--
 	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0), valShadowFilter(0)  // shadow
 	,brImg(0), wndTabs(0), bnQuit(0)  // brush
 	,valSizeMinmap(0), valCamSpeed(0), valCamInert(0)  // settings
-	,valTerUpd(0), valSizeRoadP(0), valMiniUpd(0)
+	,valTerUpd(0), valSizeRoadP(0), valMiniUpd(0), chAutoBlendmap(0)
 	,cmbSky(0), cmbRain1(0),cmbRain2(0), valRain1Rate(0),valRain2Rate(0)  // sun
 	,valSunPitch(0),valSunYaw(0), valFogStart(0),valFogEnd(0)
-	,edLiAmb(0),edLiDiff(0),edLiSpec(0), edFogClr(0), chkFog(0)
+	,edLiAmb(0),edLiDiff(0),edLiSpec(0), edFogClr(0), chkFog(0), chkWeather(0)
+	,clrAmb(0),clrDiff(0),clrSpec(0), clrFog(0), clrTrail(0)
 	,cmbTexDiff(0),cmbTexNorm(0), imgTexDiff(0), terrain(0)  // terrain
 	,valTerLAll(0),tabsHmap(0),tabsTerLayers(0), idTerLay(0),bTerLay(1)
 	,chkTerLay(0),chkTexNormAuto(0), bTexNormAuto(1), chkTerLNoiseOnly(0)
@@ -40,7 +46,8 @@ App::App()  //  gui wigdets--
 	,edGrassDens(0),edTreesDens(0), edGrPage(0),edGrDist(0), edTrPage(0),edTrDist(0)  // vegetation
 	,edGrMinX(0),edGrMaxX(0), edGrMinY(0),edGrMaxY(0)
 	,edGrSwayDistr(0), edGrSwayLen(0), edGrSwaySpd(0), edTrRdDist(0), edTrImpDist(0)
-	,edGrDensSmooth(0), edGrTerMaxAngle(0),edGrTerMaxHeight(0), edSceneryId(0), cmbGrassMtr(0), cmbGrassClr(0)
+	,edGrDensSmooth(0), edGrTerMaxAngle(0),edGrTerMinHeight(0),edGrTerMaxHeight(0)
+	,edSceneryId(0), cmbGrassMtr(0), cmbGrassClr(0)
 	,cmbPgLay(0), chkPgLay(0), tabsPgLayers(0), idPgLay(0)  //paged layers
 	,imgPaged(0), valLTrAll(0)
 	,valLTrDens(0),valLTrRdDist(0), valLTrMinSc(0),valLTrMaxSc(0), valLTrWindFx(0),valLTrWindFy(0)
@@ -48,21 +55,24 @@ App::App()  //  gui wigdets--
 	,edRdTcMul(0),edRdLenDim(0),edRdWidthSteps(0),edRdHeightOfs(0)  // road
 	,edRdSkirtLen(0),edRdSkirtH(0), edRdMergeLen(0),edRdLodPLen(0)
 	,edRdColN(0),edRdColR(0), edRdPwsM(0),edRdPlsM(0)
+	,edScaleAllMul(0),edScaleTerHMul(0)  // tools
+	,valAlignWidthAdd(0), valAlignWidthMul(0), valAlignSmooth(0)
 	,imgTrkIco1(0),imgTrkIco2(0), edFind(0)
 	,trkMList(0),trkName(0),bListTrackU(0)  // track
 
 	,mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)
-	,bTerUpd(0), curBr(2), bGuiReinit(0), noBlendUpd(0), bGI(0), resList(0)
+	,bTerUpd(0), curBr(2), bGuiReinit(0), noBlendUpd(0), bGI(0), resList(0), brImgSave(-1)
 	,ndPos(0), mpos(0), asp(4.f/3.f)
 	,ndCar(0),entCar(0), ndStBox(0),entStBox(0), ndFluidBox(0),entFluidBox(0), ndObjBox(0),entObjBox(0)
-	,grass(0), trees(0), sun(0), terMaxAng(0.f)
+	,grass(0), trees(0), sun(0), pr(0),pr2(0)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
-
-	,iFlCur(0), bRecreateFluids(0), iObjCur(0), iObjNew(0)
+	,iFlCur(0), bRecreateFluids(0), iObjCur(-1), iObjTNew(0), iObjLast(0)
 	
 	,bTerUpdBlend(1), track(0)
 	,world(0), config(0), dispatcher(0), broadphase(0), solver(0)  //blt
 	,trackObject(0), trackMesh(0)
+
+	,mStaticGeom(0)
 {
 	imgPrv[0]=0; imgMini[0]=0; imgTer[0]=0;  trkDesc[0]=0;
 	
@@ -99,22 +109,53 @@ App::App()  //  gui wigdets--
 
 void App::postInit()
 {
-    /*
-	materialFactory = new MaterialFactory();
-	materialFactory->pApp = this;
-	materialFactory->setSceneManager(mSceneMgr);
-	materialFactory->setShadows(pSet->shadow_type >= 2);
-	materialFactory->setShadowsDepth(pSet->shadow_type >= 3);
-	materialFactory->setShadowsSoft(pSet->shadow_type == 4);
-	materialFactory->setShaderQuality(pSet->shaders);
-	materialFactory->setShadowsFilterSize(pSet->shadow_filter);
-	materialFactory->setReflect(pSet->water_reflect);
-	materialFactory->setRefract(pSet->water_refract);
-	if (pSet->tex_size == 0)
-		materialFactory->setTexSize(0);
-	else if (pSet->tex_size == 1)
-		materialFactory->setTexSize(4096);
-    */
+	sh::OgrePlatform* platform = new sh::OgrePlatform("General", PATHMANAGER::GetDataPath() + "/" + "material_templates");
+	platform->setShaderCachingEnabled (true);
+	platform->setCacheFolder (PATHMANAGER::GetCacheDir());
+	mFactory = new sh::Factory(platform);
+	mFactory->setSharedParameter ("globalColorMultiplier", sh::makeProperty<sh::Vector4>(new sh::Vector4(0.3, 1.0, 0.1, 1.0)));
+	mFactory->setGlobalSetting("fog", "true");
+	mFactory->setGlobalSetting("wind", "true");
+	mFactory->setGlobalSetting("mrt_output", "false");
+	mFactory->setGlobalSetting ("shadows", "false");
+	mFactory->setGlobalSetting ("shadows_pssm", "false");
+	mFactory->setGlobalSetting ("lighting", "true");
+	mFactory->setGlobalSetting ("terrain_composite_map", "false");
+	mFactory->setSharedParameter("pssmSplitPoints", sh::makeProperty<sh::Vector3>(new sh::Vector3(0,0,0)));
+	mFactory->setSharedParameter("shadowFar_fadeStart", sh::makeProperty<sh::Vector4>(new sh::Vector4(0,0,0,0)));
+	mFactory->setSharedParameter ("arrowColour1", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
+	mFactory->setSharedParameter ("arrowColour2", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
+	mFactory->setSharedParameter ("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(0)));
+	mFactory->setSharedParameter ("terrainWorldSize", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(1024)));
+	sh::Factory::getInstance().setGlobalSetting ("terrain_specular", (pSet->ter_mtr >= 1)  ? "true" : "false");
+	sh::Factory::getInstance().setGlobalSetting ("terrain_normal", (pSet->ter_mtr >= 2)  ? "true" : "false");
+	sh::Factory::getInstance().setGlobalSetting ("terrain_parallax", (pSet->ter_mtr >= 3)  ? "true" : "false");
+
+	mFactory->setShaderDebugOutputEnabled (true);
+
+	sh::Language lang;
+	if (pSet->shader_mode == "")
+	{
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		lang = sh::Language_HLSL;
+#else
+		lang = sh::Language_GLSL;
+#endif
+	}
+	else
+	{
+		if (pSet->shader_mode == "glsl")
+			lang = sh::Language_GLSL;
+		else if (pSet->shader_mode == "cg")
+			lang = sh::Language_CG;
+		else if (pSet->shader_mode == "hlsl")
+			lang = sh::Language_HLSL;
+		else
+			assert(0);
+	}
+	mFactory->setCurrentLanguage (lang);
+
+	mFactory->loadAllFiles ();
 }
 
 const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise" };  // static
@@ -127,7 +168,6 @@ App::~App()
 	delete track;  //!
 	delete[] pBrFmask;  pBrFmask = 0;
 
-	//delete materialFactory;
 	delete[] mBrushData;
 	delete road;
 	if (mTerrainPaging)
@@ -142,11 +182,14 @@ App::~App()
 
 void App::destroyScene()
 {
+	//NewCommon(false);  //?
 	if (road)
 	{	road->DestroyRoad();  delete road;  road = 0;  }
 
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
+
+	DestroyWeather();
 
 	delete[] sc.td.hfHeight;
 	delete[] sc.td.hfAngle;

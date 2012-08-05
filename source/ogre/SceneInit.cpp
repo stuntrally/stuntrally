@@ -7,7 +7,6 @@
 #include "../road/Road.h"
 #include "SplitScreen.h"
 #include "common/RenderConst.h"
-//#include "common/MaterialGen/MaterialFactory.h"
 #include "common/GraphView.h"
 
 #include "../network/gameclient.hpp"
@@ -25,6 +24,8 @@ using namespace MyGUI;
 #include <OgreTerrainGroup.h>
 using namespace Ogre;
 
+#include "../shiny/Main/Factory.hpp"
+
 
 //  Create Scene
 //-------------------------------------------------------------------------------------
@@ -33,8 +34,6 @@ void App::createScene()
 	//  tex fil
 	MaterialManager::getSingleton().setDefaultTextureFiltering(TFO_ANISOTROPIC);
 	MaterialManager::getSingleton().setDefaultAnisotropy(pSet->anisotropy);
-
-	mRoot->addResourceLocation(pathTrk[1] + "_previews/", "FileSystem");  //prv user tracks
 	
 	//  restore camNums
 	for (int i=0; i<4; ++i)
@@ -183,12 +182,13 @@ void App::LoadCleanUp()  // 1 first
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
 	///  destroy all  TODO ...
-	///!  remove this crap and destroy everything with* manually  destroyCar, destroyScene, destroyHud
+	///!  remove this and destroy everything with* manually  destroyCar, destroyScene, destroyHud
 	///!  check if scene (track), car changed, omit creating the same if not
 	//mSceneMgr->getRootSceneNode()->removeAndDestroyAllChildren();  // destroy all scenenodes
 	mSceneMgr->destroyAllManualObjects();
 	mSceneMgr->destroyAllEntities();
 	mSceneMgr->destroyAllStaticGeometry();
+	mStaticGeom = 0;
 	//mSceneMgr->destroyAllParticleSystems();
 	mSceneMgr->destroyAllRibbonTrails();
 	mSplitMgr->mGuiSceneMgr->destroyAllManualObjects(); // !?..
@@ -200,7 +200,6 @@ void App::LoadCleanUp()  // 1 first
 	if (pr2) {  mSceneMgr->destroyParticleSystem(pr2);  pr2=0;  }
 
 	terrain = 0;
-	//materialFactory->setTerrain(0);
 	if (mTerrainGroup)
 		mTerrainGroup->removeAllTerrains();
 	if (road)
@@ -300,27 +299,32 @@ void App::LoadScene()  // 3
 	UpdateWaterRTT(mSplitMgr->mCameras.front());
 
 	/// generate materials
-	//materialFactory->generate();
 	refreshCompositor();
 
 	//  fluids
 	CreateFluids();
+
+	//  set sky tex name for water
+	sh::MaterialInstance* m = mFactory->getMaterialInstance (sc.skyMtr);
+	std::string skyTex = sh::retrieveValue<sh::StringValue>(m->getProperty ("texture"), 0).get();
+	sh::Factory::getInstance ().setTextureAlias ("SkyReflection", skyTex);
 	
 
-	//  rain  -----
-	if (!pr && sc.rainEmit > 0)  {
-		pr = mSceneMgr->createParticleSystem("Rain", sc.rainName);
+	//  weather rain,snow  -----
+	if (!pr && sc.rainEmit > 0)
+	{	pr = mSceneMgr->createParticleSystem("Rain", sc.rainName);
 		pr->setVisibilityFlags(RV_Particles);
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr);
 		pr->setRenderQueueGroup(RQG_Weather);
-		pr->getEmitter(0)->setEmissionRate(0);  }
-	//  rain2  =====
-	if (!pr2 && sc.rain2Emit > 0)  {
-		pr2 = mSceneMgr->createParticleSystem("Rain2", sc.rain2Name);
+		pr->getEmitter(0)->setEmissionRate(0);
+	}
+	if (!pr2 && sc.rain2Emit > 0)
+	{	pr2 = mSceneMgr->createParticleSystem("Rain2", sc.rain2Name);
 		pr2->setVisibilityFlags(RV_Particles);
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr2);
 		pr2->setRenderQueueGroup(RQG_Weather);
-		pr2->getEmitter(0)->setEmissionRate(0);  }
+		pr2->getEmitter(0)->setEmissionRate(0);
+	}
 		
 	//  checkpoint arrow
 	if (!bRplPlay)
@@ -375,6 +379,7 @@ void App::LoadCar()  // 4
 	replay.header.networked = mClient ? 1 : 0;
 	replay.header.num_laps = pSet->game.num_laps;
 	}
+	rewind.Clear();
 
 	ghost.InitHeader(pSet->game.track.c_str(), pSet->game.track_user, pSet->game.car[0].c_str(), !bRplPlay);
 	ghost.header.numPlayers = 1;  // ghost always 1 car
@@ -483,9 +488,6 @@ void App::LoadMisc()  // 9 last
 			#endif
 		}
 	
-	// make sure all shader params are loaded
-	//materialFactory->generate();
-
 	try {
 	TexturePtr tex = Ogre::TextureManager::getSingleton().getByName("waterDepth.png");
 	if (!tex.isNull())
@@ -501,7 +503,7 @@ void App::LoadMisc()  // 9 last
 	if (overlay = mgr.getByName("DebugOverlay"))
 		mgr.destroy(overlay);
 	overlay = mgr.create("DebugOverlay");
-	Ogre::CompositorInstance  *compositor= CompositorManager::getSingleton().getCompositorChain(mSplitMgr->mViewports.front())->getCompositor("HDR");
+	//Ogre::CompositorInstance  *compositor= CompositorManager::getSingleton().getCompositorChain(mSplitMgr->mViewports.front())->getCompositor("HDR");
 	for (int i=0; i<3; ++i)
 	{
 		// Set up a debug panel
@@ -512,7 +514,8 @@ void App::LoadMisc()  // 9 last
 			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 		debugMat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
 		//TexturePtr depthTexture = compositor->getTextureInstance("mrt_output",i);
-		TexturePtr depthTexture = compositor->getTextureInstance("rt_bloom0",0);
+		//TexturePtr depthTexture = compositor->getTextureInstance("rt_bloom0",0);
+		TexturePtr depthTexture = mSceneMgr->getShadowTexture (i);
 		if(!depthTexture.isNull())
 		{
 			TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(depthTexture->getName());
@@ -612,7 +615,7 @@ void App::CreateRoad()
 
 	UpdPSSMMaterials();  ///+~-
 
-	road->bCastShadow = pSet->shadow_type >= 3;
+	road->bCastShadow = pSet->shadow_type >= 2;
 	road->bRoadWFullCol = pSet->gui.collis_roadw;
 	road->RebuildRoadInt();
 }

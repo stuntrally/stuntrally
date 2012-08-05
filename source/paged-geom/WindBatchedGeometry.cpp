@@ -195,8 +195,6 @@ void WindBatchedGeometry::WindSubBatch::build()
          vertexBuffers.push_back(static_cast<uchar*>(buffer->lock(HardwareBuffer::HBL_DISCARD)));
          vertexBufferElements.push_back(vertDecl->findElementsBySource(i));
       }
-
-      m_ptrMaterial->getTechnique(0)->getPass(0)->setVertexColourTracking(TVC_AMBIENT);
    }
 
 

@@ -4,7 +4,7 @@
 #include "configfile.h"
 
 
-#define SET_VER  1650  // 1.6+
+#define SET_VER  1660  // 1.6+
 
 
 const static int graph_types = 5;  // total graph types count
@@ -19,7 +19,7 @@ public:
 	bool show_fps, show_gauges, check_arrow, trackmap,
 		mini_zoomed, mini_rotated, mini_terrain,
 		show_cam, show_times, show_digits, show_opponents, cam_tilt,
-		car_dbgbars, car_dbgtxt, ogre_dialog, show_graphs;
+		car_dbgbars, car_dbgtxt, car_dbgsurf, ogre_dialog, show_graphs;
 	float size_gauges, size_minimap, size_arrow, zoom_minimap;
 	int tracks_view, tracks_sort;  bool tracks_sortup;
 	int gauges_type, graphs_type;
@@ -30,11 +30,13 @@ public:
 	float view_distance, terdetail,terdist, road_dist;
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type, shadow_filter;
 	int refl_skip, refl_faces, refl_size;  float refl_dist;
-	bool water_reflect, water_refract; int water_rttsize;
+	bool water_reflect; int water_rttsize;
 	int refl_mode; // 0 static, 1 single, 2 full, explanation: see CarReflection.h
 	bool particles, trails;  float grass, trees_dist, grass_dist;
 	bool use_imposters;
 	float particles_len, trails_len;
+
+	std::string shader_mode;
 
 	//  car  [2] = 0 gravel 1 asphalt
 	bool abs[2], tcs[2], autoshift, autorear, rear_inv, show_mph;

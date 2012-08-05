@@ -421,7 +421,7 @@ void App::ReadTrkStats()
 
 	UpdGuiRdStats(&rd,sc, sListTrack, tim.GetBestLap(0, pSet->gui.trackreverse));
 #else
-	SplineRoad rd;  rd.LoadFile(sRd,false);  // load
+	SplineRoad rd(this);  rd.LoadFile(sRd,false);  // load
 	UpdGuiRdStats(&rd,sc, sListTrack, 0.f);
 #endif
 }
@@ -446,42 +446,6 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const String& sTr
 {
 	int ch = champ ? 1 : 0;
 	
-	//  preview images
-	//---------------------------------------------------------------------------
-	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
-	Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
-
-	String path = PathListTrkPrv(-1, sTrack), s, sGrp = "TrkPrv";
-	resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
-	resMgr.initialiseResourceGroup(sGrp);
-
-	if (imgPrv[ch])  // track view, preview shot
-	{	try
-		{	s = "view.jpg";
-			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  // need to load it first
-			imgPrv[ch]->setImageTexture(s);  // just for dim, doesnt set texture
-			imgPrv[ch]->_setTextureName(path+s);  imgPrv[ch]->setVisible(pSet->tracks_view == 0);
-		} catch(...) {  imgPrv[ch]->setVisible(false);  }  // hide if not found
-	}
-	if (imgTer[ch])  // terrain background
-	{	try
-		{	s = "terrain.jpg";
-			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);
-			imgTer[ch]->setImageTexture(s);
-			imgTer[ch]->_setTextureName(path+s);  imgTer[ch]->setVisible(true);
-		} catch(...) {  imgTer[ch]->setVisible(false);  }
-	}
-	if (imgMini[ch])  // road alpha
-	{	try
-		{	s = "road.png";
-			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);
-			imgMini[ch]->setImageTexture(s);
-			imgMini[ch]->_setTextureName(path+s);  imgMini[ch]->setVisible(true);
-		} catch(...) {  imgMini[ch]->setVisible(false);  }
-	}
-	resMgr.removeResourceLocation(path, sGrp);
-
-
 	//  road stats
 	//---------------------------------------------------------------------------
 	if (stTrk[ch][1])  stTrk[ch][1]->setCaption(fToStr(sc.td.fTerWorldSize/1000.f,3,5)+" km");
@@ -529,4 +493,44 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const String& sTr
 #endif
 	if (trkDesc[ch])  // desc
 		trkDesc[ch]->setCaption(rd->sTxtDesc.c_str());
+
+	
+	//  preview images
+	//---------------------------------------------------------------------------
+	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
+	Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
+
+	String path = PathListTrkPrv(-1, sTrack), s, sGrp = "TrkPrv";
+	resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
+	resMgr.unloadResourceGroup(sGrp);
+	resMgr.initialiseResourceGroup(sGrp);
+
+	if (imgPrv[ch])  // track view, preview shot
+	{	try
+		{	s = "view.jpg";
+			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  // need to load it first
+			imgPrv[ch]->setImageTexture(s);  // just for dim, doesnt set texture
+			imgPrv[ch]->_setTextureName(path+s);  imgPrv[ch]->setVisible(pSet->tracks_view == 0);
+			//texMgr.unload(path+s);
+		} catch(...) {  imgPrv[ch]->setVisible(false);  }  // hide if not found
+	}
+	if (imgTer[ch])  // terrain background
+	{	try
+		{	s = "terrain.jpg";
+			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);
+			imgTer[ch]->setImageTexture(s);
+			imgTer[ch]->_setTextureName(path+s);  imgTer[ch]->setVisible(true);
+			//texMgr.unload(path+s);
+		} catch(...) {  imgTer[ch]->setVisible(false);  }
+	}
+	if (imgMini[ch])  // road alpha
+	{	try
+		{	s = "road.png";
+			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);
+			imgMini[ch]->setImageTexture(s);
+			imgMini[ch]->_setTextureName(path+s);  imgMini[ch]->setVisible(true);
+			//texMgr.unload(path+s);
+		} catch(...) {  imgMini[ch]->setVisible(false);  }
+	}
+	resMgr.removeResourceLocation(path, sGrp);
 }

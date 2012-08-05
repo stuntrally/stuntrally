@@ -243,103 +243,19 @@ restitution = 0.1
 position = -0.60, -1.31, -0.07
 hinge = 0.25, -1.94, 0.0
 
-
-[ contact-points ]
-# used to find the bounds of the car (for collisions)
-# also play into the weight distribution and balance
-mass = 0.1
-position-00 =  1.35,  0.0,  -0.4
-position-01 =  1.3,   1.58, -0.4
-position-02 =  1.3,  -1.58, -0.4
-position-03 =  1.14,  0.86, -0.4
-position-04 =  1.14, -0.86, -0.4
-position-05 =  1.0,   0.96, -0.4
-position-06 =  1.0,  -0.96, -0.4
-position-07 =  1.3,   1.54,  0.42
-position-08 =  1.3,  -1.51,  0.42
-position-09 = -1.37,  1.51, -0.4
-position-10 = -1.37, -1.55, -0.4
-position-11 = -1.29,  0.43, -0.33
-position-12 = -1.29, -0.43, -0.33
-position-13 = -1.36,  0.30, -0.20
-position-14 = -1.36, -0.30, -0.20
-position-15 = -1.3,   1.44,  0.51
-position-16 = -1.3,  -1.44,  0.51
-
 # these are used to calculate the weight distribution and balance
-[ particle-00 ]
+[ particle-00 ]  # rear
 mass = 225
-position = 1.11, -1.3, -0.46
+position =  1.11, -1.3, -0.46
 
 [ particle-01 ]
 mass = 225
 position = -1.11, -1.3, -0.46
 
-[ particle-02 ]
+[ particle-02 ]  # front
 mass = 225
-position = 1.11, 1.3, -0.46
+position =  1.11,  1.3, -0.46
 
 [ particle-03 ]
 mass = 225
-position = -1.11, 1.3, -0.46
-
-[ particle-04 ]
-mass = 3
-position = 1.01, -1.12, 0.02
-
-[ particle-05 ]
-mass = 3
-position = 1.01, 1.12, 0.02
-
-[ particle-06 ]
-mass = 3
-position = -1.01, -1.12, 0.02
-
-[ particle-07 ]
-mass = 3
-position = -1.01, 1.12, 0.02
-
-
-[ particle-08 ]	# Chassis Front
-mass = 13
-position = 0.0, 1.5, -0.15
-
-[ particle-09 ]	#	Cooler front
-mass = 10
-position = -0.0, 1.5, -0.25
-
-[ particle-10 ]	#	Chassis left
-mass = 16
-position = 0.75, 0, -0.10
-
-[ particle-11 ]	#	Chassis right
-mass = 16
-position = -0.75, 0, -0.10 
-
-[ particle-12 ]	#	Motor Env. left
-mass = 6
-position = 0.7, -1.10, -0.0
-
-[ particle-13 ]		# Motor Env. right
-mass = 6
-position = -0.7, -1.10, -0.0
-
-[ particle-14 ]		# Interieur
-mass = 12
-position = 0.00, 0.60, -0.10
-
-[ particle-15 ]		# Chassis top
-mass = 8
-position = 0.00, -0.30, 0.36
-
-[ particle-16 ]		# Joker
-mass = 6
-position = -0.00, 1.0, -0.20
-
-[ particle-17 ]		# gearbox
-mass = 5
-position = 0.00, -1.75, -0.25
-
-[ particle-18 ]		# Chassis rear
-mass = 8
-position = 0.00, -1.80, -0.0
+position = -1.11,  1.3, -0.46

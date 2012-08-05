@@ -1,0 +1,11 @@
+configuration reflection
+{
+    shadows_pssm false
+    fog false
+}
+
+configuration impostor_rtt
+{
+    fog false
+    wind false
+}

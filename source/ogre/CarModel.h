@@ -14,6 +14,8 @@
 #include <OgreMatrix4.h>
 #include <OgreColourValue.h>
 
+#include "../shiny/Main/MaterialInstance.hpp"
+
 
 class SETTINGS;  class GAME;  class CAR;  class Scene;  class App;  class FollowCamera;  class CarReflection;
 
@@ -53,7 +55,7 @@ struct PosInfo
 	{}
 };
 
-class CarModel
+class CarModel : public sh::MaterialInstanceListener
 {
 public:
 	/// -------------------- Car Types ---------------------------
@@ -187,6 +189,11 @@ private:
 	//  Our settings.
 	SETTINGS* pSet;
 	App* pApp;
+
+public:
+    virtual void requestedConfiguration (sh::MaterialInstance* m, const std::string& configuration);
+    virtual void createdConfiguration (sh::MaterialInstance* m, const std::string& configuration);
+
 };
 
 #endif

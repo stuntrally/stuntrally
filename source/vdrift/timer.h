@@ -144,11 +144,12 @@ private:
 			DRIFTSCORE driftscore;
 
 		public:
+			double time_rewind;  // time from race start (for rewind, goes back when rewinding)
 			LAPINFO(const std::string & newcartype) : cartype(newcartype) {Reset();}
 
 			void Reset()
 			{
-				time = totaltime = time_rpl = 0.0;
+				time = totaltime = time_rpl = time_rewind = 0.0;
 				lastlap.Reset();
 				bestlap.Reset();
 				bestlapRace.Reset();
@@ -157,7 +158,7 @@ private:
 
 			void Tick(float dt)
 			{
-				time += dt;  time_rpl += dt;
+				time += dt;  time_rpl += dt;  time_rewind += dt;
 			}
 
 			void Lap(bool countit)
@@ -305,6 +306,7 @@ public:
 	double GetReplayTime(const int carId) {		assert(carId<car.size());	return car[carId].GetTimeReplay();  }  // replay
 	void SetReplayTime(const int carId, double t){assert(carId<car.size());	return car[carId].SetTimeReplay(t);  }
 	void RestartReplay(const int carId)   {		assert(carId<car.size());	return car[carId].RestartReplay();  }
+	double& GetRewindTime(const int carId) {	assert(carId<car.size());	return car[carId].time_rewind;  }  // rewind
 
 	void Reset(int id = -1)
 	{

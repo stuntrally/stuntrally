@@ -1,0 +1,336 @@
+
+
+
+// Jungle trees
+
+material tree.07.branch1.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE
+{
+    parent base
+    alpha_rejection greater 192
+    diffuseMap tree.07.png
+    diffuse 0.5 0.5 0.5
+    tree_wind true
+    terrain_light_map true
+    cull_hardware none
+    receives_shadows false
+    transparent true
+}
+
+material tree.07.leaves.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE
+{
+	parent tree.07.branch1.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE
+}
+
+material tree.07.branch2.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE
+{
+	parent tree.07.branch1.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE
+}
+
+material tree.07.mat/SOLID/TEX/tree.07.png/VertCol
+{
+    parent base
+	diffuseMap tree.07.png
+	terrain_light_map true
+	tree_wind true
+}
+
+material leaves.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE
+{
+	parent base
+	cull_hardware none
+    alpha_rejection greater 192
+	diffuseMap tree.09.png
+	terrain_light_map true
+	diffuse 0.5 0.5 0.5
+	tree_wind true
+	receives_shadows false
+	transparent true
+}
+
+material tree.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE
+{
+	parent leaves.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE
+}
+
+material tree.09.moss.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE
+{
+	parent leaves.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE
+}
+
+material tree.09.branch1.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE
+{
+	parent leaves.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE
+}
+
+material tree.09.mat/SOLID/TEX/tree.09.png/VertCol
+{
+    parent base
+	diffuseMap tree.09.png
+	terrain_light_map true
+	tree_wind true
+}
+
+
+// 3D-diggers
+
+material 3D-Diggers/base
+{
+    parent base
+	transparent true
+	alpha_rejection greater_equal 128
+	terrainLightMap true
+}
+
+material 3D-Diggers/plant1
+{
+	parent 3D-Diggers/base
+	ambient 0.9 0.9 0.9
+	diffuse 0.5 0.5 0.5
+	diffuseMap plant1.png
+	
+}
+
+material 3D-Diggers/plant1sprite
+{
+	parent 3D-Diggers/plant1
+	cull_hardware none
+	receives_shadows false
+}
+
+material 3D-Diggers/plant2
+{
+	parent 3D-Diggers/base
+	ambient 1.0 1.0 1.0
+	diffuse 0.6 0.6 0.6
+	diffuseMap plant2.png
+	receives_shadows false
+}
+
+material 3D-Diggers/farn01
+{
+	parent 3D-Diggers/base
+	diffuseMap farn01.png
+	ambient 0.9 0.9 0.9
+	diffuse 0.7 0.7 0.7
+	specular 0.5 0.5 0.5 32
+	tree_wind true
+	receives_shadows false
+}
+
+material 3D-Diggers/farn02
+{
+	parent 3D-Diggers/farn01
+	diffuseMap farn02.png
+}
+
+material 3D-Diggers/fir01
+{
+    parent base
+    ambient 1.0 1.0 1.0
+    diffuse 0.6 0.6 0.6
+    diffuseMap fir01.png
+    alpha_rejection greater 128
+    transparent true
+    tree_wind true
+    receives_shadows false
+}
+
+material 3D-Diggers/firW1
+{
+    parent 3D-Diggers/fir01
+    diffuseMap fir01w.png
+}
+
+material 3D-Diggers/fir02
+{
+    parent 3D-Diggers/fir01
+    diffuseMap fir02.jpg
+}
+
+material 3D-Diggers/firW2
+{
+    parent 3D-Diggers/fir01
+    diffuseMap fir02w.jpg
+}
+
+material 3D-Diggers/shroom1
+{
+	parent 3D-Diggers/base
+	ambient 0.5 0.5 0.5
+	diffuse 0.6 0.6 0.6
+	diffuseMap shroom1.png
+}
+
+material 3D-Diggers/shroom2
+{
+	parent 3D-Diggers/shroom1
+	diffuseMap shroom2.png
+}
+
+
+// Palms
+
+material palm2
+{
+    parent base
+	diffuseMap palm2_diffuse.png
+	normalMap palm2_normal.png
+	specMap palm2_specular.png
+	spec_map true
+	normal_map true
+	alpha_rejection greater 128
+	specular 0.5 0.5 0.5 32
+	cull_hardware none
+	tree_wind true
+	transparent true
+	receives_shadows false
+}
+
+material Palm
+{
+    parent base
+	diffuseMap palm.png
+	alpha_rejection greater 79
+	ambient 1.0 1.0 1.0
+	diffuse 0.6 0.6 0.6
+	specular 0.3 0.3 0.3 21
+	tree_wind true
+	transparent true
+	receives_shadows false
+}
+
+
+// Gum tree
+material gum_branch
+{
+    parent base
+    diffuseMap gum_branch.png
+    ambient 0.59 0.59 0.59
+    diffuse 0.59 0.59 0.59
+    alpha_rejection greater 128
+    cull_hardware none
+    transparent true
+    tree_wind true
+}
+
+material gum_bark
+{
+    parent base
+    diffuseMap gum_bark.png
+    ambient 0.8 0.8 0.8
+    diffuse 0.64 0.64 0.64
+    specular 0.12 0.12 0.12 32
+    tree_wind true
+}
+
+// Rocks
+
+material rock.05.mat/SOLID/TEX/rockW05.png
+{
+    parent base
+	diffuseMap rock.05w.jpg
+	terrain_light_map true
+	specular 0.5 0.5 0.5 32
+}
+
+material rock.07.mat/SOLID/TEX/rockW05.png
+{
+	parent rock.05.mat/SOLID/TEX/rockW05.png
+}
+
+material rock.05.mat/SOLID/TEX/rock.05.png
+{
+    parent base
+	diffuseMap rock.05.jpg
+	terrain_light_map true
+	specular 0.5 0.5 0.5 32
+}
+
+material rock.07.mat/SOLID/TEX/rock.05.png
+{
+	parent rock.05.mat/SOLID/TEX/rock.05.png
+}
+	
+material rock1
+{
+    parent base
+	//parallax true
+	//parallaxHeight 0.035
+	diffuseMap rock1.png
+	normalMap rock1_normal.png
+	normal_map true
+	terrain_light_map true
+	specular 0.5 0.5 0.5 32
+}
+
+
+
+
+
+material fern_v2
+{
+    parent base
+	transparent true
+	tree_wind true
+	terrain_light_map true
+    alpha_rejection greater 128
+	diffuseMap fern.png
+	normalMap fern_normal.png
+	normal_map true
+	specMap fern_spec.png
+	spec_map true
+	specular 0.5 0.5 0.5 32
+	cull_hardware none
+	receives_shadows false
+}
+	
+material fern2
+{
+    parent base
+	transparent true
+	tree_wind 2
+	terrain_light_map true
+	alpha_rejection greater 128
+	diffuseMap fern2.png
+	normalMap fern2_normal.png
+	normal_map true
+	specMac fern2_spec.png
+	spec_map true
+	specular 0.5 0.5 0.5 32
+    cull_hardware none
+    receives_shadows false
+}
+	
+material palm_plant
+{
+    parent base
+	transparent true
+	tree_wind 2
+	terrain_light_map true
+	alpha_rejection greater 128
+	diffuseMap palm_plant.png
+	normalMap palm_plant_normal.png
+	normal_map true
+	specMap palm_plant_spec.png
+	spec_map true
+	specular 0.5 0.5 0.5 32
+	cull_hardware none
+	receives_shadows false
+}
+
+material jungle_tree
+{
+    parent base
+	transparent true
+	tree_wind true
+	terrain_light_map true
+    alpha_rejection greater 128
+	diffuseMap jungle_tree.png
+	normalMap jungle_tree_normal.png
+	normal_map true
+	specMap jungle_tree_spec.png
+	spec_map true
+	specular 0.5 0.5 0.5 32
+	cull_hardware none
+	receives_shadows false
+}

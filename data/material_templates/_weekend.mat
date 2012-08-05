@@ -1,0 +1,240 @@
+material auto01.tga.png
+{
+	parent 0vdrAlpha
+	diffuseMap auto01.tga.png
+}
+material gjerde02.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap gjerde02.bmp.png
+}
+material busk01.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap busk01.bmp.png
+}
+material statoil10.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap statoil10.tga.png
+}
+material narvesen05.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap narvesen05.tga.png
+}
+material narvesen04.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap narvesen04.tga.png
+}
+material tak01.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap tak01.tga.png
+}
+material statoil07.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap statoil07.tga.png
+}
+material metall03.tga.png
+{
+	parent 0vdrRoad
+	diffuseMap metall03.tga.png
+}
+material mur03.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap mur03.tga.png
+}
+material vegger01.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap vegger01.tga.png
+}
+material vindu01.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap vindu01.tga.png
+}
+material ferge01.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap ferge01.bmp.png
+}
+material ferge02.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap ferge02.bmp.png
+}
+material gjerde01.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap gjerde01.bmp.png
+}
+material grass01.jpg.png
+{
+	parent 0vdrTrk
+	diffuseMap grass01.jpg.png
+}
+material vann01.tga.png
+{
+	parent 0vdrAlpha
+	diffuseMap vann01.tga.png
+}
+material stein03.jpg.png
+{
+	parent 0vdrTrk
+	diffuseMap stein03.jpg.png
+}
+material asfalt01.jpg.png
+{
+	parent 0vdrRoad
+	diffuseMap asfalt01.jpg.png
+}
+material narvesen02.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap narvesen02.tga.png
+}
+material narvesen01.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap narvesen01.tga.png
+}
+material tak02.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap tak02.tga.png
+}
+material narvesen03.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap narvesen03.tga.png
+}
+material politi01.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap politi01.tga.png
+}
+material politi02.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap politi02.tga.png
+}
+material post04.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap post04.tga.png
+}
+material post06.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap post06.tga.png
+}
+material post05.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap post05.tga.png
+}
+material post02.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap post02.bmp.png
+}
+material post03.bmp.png
+{
+	parent 0vdrTrk
+	diffuseMap post03.bmp.png
+}
+material stein02.jpg.png
+{
+	parent 0vdrTrk
+	diffuseMap stein02.jpg.png
+}
+material stein01.jpg.png
+{
+	parent 0vdrTrk
+	diffuseMap stein01.jpg.png
+}
+material statoil02.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap statoil02.tga.png
+}
+material statoil03.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap statoil03.tga.png
+}
+material statoil04.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap statoil04.tga.png
+}
+material statoil01.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap statoil01.tga.png
+}
+material mur02.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap mur02.tga.png
+}
+material statoil06.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap statoil06.tga.png
+}
+material statoil05.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap statoil05.tga.png
+}
+material statoil09.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap statoil09.tga.png
+}
+material statoil08.tga.png
+{
+	parent 0vdrTrk
+	diffuseMap statoil08.tga.png
+}
+material grass02.jpg.png
+{
+	parent 0vdrTrk
+	diffuseMap grass02.jpg.png
+}
+material grass03.jpg.png
+{
+	parent 0vdrTrk
+	diffuseMap grass03.jpg.png
+}
+material tre10.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap tre10.bmp.png
+}
+material tre06.bmp.png
+{
+	parent 0vdrAlpha
+	diffuseMap tre06.bmp.png
+}
+material road07.jpg.png
+{
+	parent 0vdrRoad
+	diffuseMap road07.jpg.png
+}
+material road06.jpg.png
+{
+	parent 0vdrRoad
+	diffuseMap road06.jpg.png
+}
+material road02.jpg.png
+{
+	parent 0vdrRoad
+	diffuseMap road02.jpg.png
+}

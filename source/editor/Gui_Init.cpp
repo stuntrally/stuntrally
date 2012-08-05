@@ -136,7 +136,7 @@ void App::InitGui()
 	GuiCenterMouse();
 	
 	//  hide  ---
-	edMode = ED_Deform;  UpdEditWnds();  // *  UpdVisHit(); //after track
+	SetEdMode(ED_Deform);  UpdEditWnds();  // *  UpdVisHit(); //after track
 	if (!mWndOpts) 
 	{
 		LogO("WARNING: failed to create options window");
@@ -160,6 +160,7 @@ void App::InitGui()
 	Slv(TerUpd, pSet->ter_skip /20.f);
 	Slv(MiniUpd, pSet->mini_skip /20.f);
 	Slv(SizeRoadP, (pSet->road_sphr-0.1f) /11.9f);
+	Chk("AutoBlendmap", chkAutoBlendmap, pSet->autoBlendmap);  chAutoBlendmap = bchk;
 
 	//  set camera btns
 	Btn("CamView1", btnSetCam);  Btn("CamView2", btnSetCam);
@@ -177,13 +178,17 @@ void App::InitGui()
 	if (bnQuit)  {  bnQuit->eventMouseButtonClick += newDelegate(this, &App::btnQuit);  bnQuit->setVisible(false);  }
 	
 
-	///  [Sky]
+	///  [Sun]
 	//----------------------------------------------------------------------------------------------
 	Slv(SunPitch,0);  Slv(SunYaw,0);
 	Slv(FogStart,0);  Slv(FogEnd,0);
 	Chk("FogDisable", chkFogDisable, pSet->bFog);  chkFog = bchk;
-	Ed(LiAmb, editLiAmb);  Ed(LiDiff, editLiDiff);  Ed(LiSpec, editLiSpec);
-	Ed(FogClr, editFogClr);
+	Chk("WeatherDisable", chkWeatherDisable, pSet->bWeather);  chkWeather = bchk;
+	Ed(LiAmb, editLiAmb);  Ed(LiDiff, editLiDiff);  Ed(LiSpec, editLiSpec);  Ed(FogClr, editFogClr);
+	clrAmb = mGUI->findWidget<ImageBox>("ClrAmb");		clrDiff = mGUI->findWidget<ImageBox>("ClrDiff");
+	clrSpec = mGUI->findWidget<ImageBox>("ClrSpec");	clrFog = mGUI->findWidget<ImageBox>("ClrFog");
+	clrTrail = mGUI->findWidget<ImageBox>("ClrTrail");
+	//Todo: on click event - open color r,g,b dialog
 	Slv(Rain1Rate,0);  Slv(Rain2Rate,0);
 
 
@@ -201,6 +206,18 @@ void App::InitGui()
 	Btn("TerrainGenerate", btnTerGenerate);
 	Btn("TerrainHalf", btnTerrainHalf);
 	Btn("TerrainDouble", btnTerrainDouble);
+
+	for (i=0; i < brSetsNum; ++i)  // brush preset
+	{
+		const String s = toStr(i);  const BrushSet& st = brSets[i];
+		StaticImage* img = mGUI->findWidget<StaticImage>("brI"+s,false);
+		img->eventMouseButtonClick += newDelegate(this, &App::btnBrushPreset);
+		img->setUserString("tip", st.name);  img->setNeedToolTip(true);
+		img->eventToolTip += newDelegate(this, &App::notifyToolTip);
+		
+		StaticText* txt = mGUI->findWidget<StaticText>("brT"+s,false);
+		txt->setCaption(fToStr(st.Size,0,2));
+	}
 
 	Slv(TerGenScale,powf(pSet->gen_scale   /160.f, 1.f/2.f));  // generate
 	Slv(TerGenOfsX, (pSet->gen_ofsx+2.f) /4.f);
@@ -239,8 +256,8 @@ void App::InitGui()
 	Ed(GrMinX, editTrGr);  Ed(GrMaxX, editTrGr);  Ed(GrMinY, editTrGr);  Ed(GrMaxY, editTrGr);
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
 	Ed(TrRdDist, editTrGr);  Ed(TrImpDist, editTrGr);
-	Ed(GrDensSmooth, editTrGr);  Ed(GrTerMaxAngle, editTrGr);  Ed(GrTerMaxHeight, editTrGr);
-	Ed(SceneryId, editTrGr);
+	Ed(GrDensSmooth, editTrGr);  Ed(SceneryId, editTrGr);
+	Ed(GrTerMaxAngle, editTrGr);  Ed(GrTerMinHeight, editTrGr);  Ed(GrTerMaxHeight, editTrGr);
 	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);
 	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);
 
@@ -269,9 +286,13 @@ void App::InitGui()
 	Btn("CopySun", btnCopySun);				Btn("CopyTerHmap", btnCopyTerHmap);
 	Btn("CopyTerLayers", btnCopyTerLayers);	Btn("CopyVeget", btnCopyVeget);
 	Btn("CopyRoad", btnCopyRoad);			Btn("CopyRoadPars", btnCopyRoadPars);
-	Btn("DeleteRoad", btnDeleteRoad);
+	Btn("DeleteRoad", btnDeleteRoad);		Btn("DeleteFluids", btnDeleteFluids);
 	Btn("ScaleAll", btnScaleAll);	Ed(ScaleAllMul, editScaleAllMul);
 	Btn("ScaleTerH", btnScaleTerH);	Ed(ScaleTerHMul, editScaleTerHMul);
+
+	Slv(AlignWidthAdd, pSet->al_w_add /20.f);
+	Slv(AlignWidthMul, (pSet->al_w_mul-1.f) /4.f);
+	Slv(AlignSmooth, pSet->al_smooth /6.f);
 	
 
 	///  Fill Combo boxes  . . . . . . .
@@ -370,7 +391,7 @@ void App::InitGui()
 	}
 
 	//---------------------  OBJECTS  ---------------------
-	iObjNew = 0;
+	iObjTNew = 0;
 	strlist lo;  vObjNames.clear();
 	GetFolderIndex(PATHMANAGER::GetDataPath() + "/objects", lo);
 	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)

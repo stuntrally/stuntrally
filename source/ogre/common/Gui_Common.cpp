@@ -3,7 +3,6 @@
 #include "Gui_Def.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
-//#include "MaterialGen/MaterialFactory.h"
 #ifndef ROAD_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../OgreGame.h"
@@ -20,6 +19,9 @@
 using namespace MyGUI;
 using namespace Ogre;
 using namespace std;
+
+
+#include "../shiny/Main/Factory.hpp"
 
 
 
@@ -222,16 +224,8 @@ void App::slWaterSize(SL)
 void App::chkWaterReflect(WP wp)
 {
 	ChkEv(water_reflect);
-	//materialFactory->setReflect(pSet->water_reflect);
 	mWaterRTT.setReflect(pSet->water_reflect);
-	mWaterRTT.recreate();
-}
-
-void App::chkWaterRefract(WP wp)
-{
-	ChkEv(water_refract);
-	//materialFactory->setRefract(pSet->water_refract);
-	mWaterRTT.setRefract(pSet->water_refract);
+	changeShadows ();
 	mWaterRTT.recreate();
 }
 
@@ -293,7 +287,6 @@ void App::GuiInitGraphics()
 	
 	//  water
 	Chk("WaterReflection", chkWaterReflect, pSet->water_reflect);
-	Chk("WaterRefraction", chkWaterRefract, pSet->water_refract);
 	Slv(WaterSize, pSet->water_rttsize /2.f);
 	
 	Cmb(combo, "CmbGraphicsAll", comboGraphicsAll);

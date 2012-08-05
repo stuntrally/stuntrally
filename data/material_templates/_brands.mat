@@ -1,0 +1,825 @@
+material axo1.png
+{
+	parent 0vdrTrk
+	diffuseMap axo1.png
+}
+material foxterm1.png
+{
+	parent 0vdrTrk
+	diffuseMap foxterm1.png
+}
+material mcn.png
+{
+	parent 0vdrTrk
+	diffuseMap mcn.png
+}
+material fordalp1.png
+{
+	parent 0vdrTrk
+	diffuseMap fordalp1.png
+}
+material sidichamp1.png
+{
+	parent 0vdrTrk
+	diffuseMap sidichamp1.png
+}
+material pdkka13.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka13.png
+}
+material infomich1.png
+{
+	parent 0vdrTrk
+	diffuseMap infomich1.png
+}
+material obja10.png
+{
+	parent 0vdrTrk
+	diffuseMap obja10.png
+}
+material triba07.png
+{
+	parent 0vdrAlpha
+	diffuseMap triba07.png
+}
+material distanza3.png
+{
+	parent 0vdrTrk
+	diffuseMap distanza3.png
+}
+material distanza1.png
+{
+	parent 0vdrTrk
+	diffuseMap distanza1.png
+}
+material distanza2.png
+{
+	parent 0vdrTrk
+	diffuseMap distanza2.png
+}
+material distanza4.png
+{
+	parent 0vdrTrk
+	diffuseMap distanza4.png
+}
+material gardrail1.png
+{
+	parent 0vdrTrk
+	diffuseMap gardrail1.png
+}
+material gardrail2.png
+{
+	parent 0vdrTrk
+	diffuseMap gardrail2.png
+}
+material asfalto1.png
+{
+	parent 0vdrRoad
+	diffuseMap asfalto1.png
+}
+material asfalto2.png
+{
+	parent 0vdrRoad
+	diffuseMap asfalto2.png
+}
+material asfalto5.png
+{
+	parent 0vdrTrk
+	diffuseMap asfalto5.png
+}
+material rete1.png
+{
+	parent 0vdrAlpha
+	diffuseMap rete1.png
+}
+material erba1.png
+{
+	parent 0vdrTrk
+	diffuseMap erba1.png
+}
+material erba2.png
+{
+	parent 0vdrTrk
+	diffuseMap erba2.png
+}
+material gomme2.png
+{
+	parent 0vdrTrk
+	diffuseMap gomme2.png
+}
+material terra1.png
+{
+	parent 0vdrTrk
+	diffuseMap terra1.png
+}
+material cordolo1.png
+{
+	parent 0vdrTrk
+	diffuseMap cordolo1.png
+}
+material erba6.png
+{
+	parent 0vdrTrk
+	diffuseMap erba6.png
+}
+material parcheggio1.png
+{
+	parent 0vdrTrk
+	diffuseMap parcheggio1.png
+}
+material asfalto4.png
+{
+	parent 0vdrTrk
+	diffuseMap asfalto4.png
+}
+material terra2.png
+{
+	parent 0vdrTrk
+	diffuseMap terra2.png
+}
+material cordolo2.png
+{
+	parent 0vdrTrk
+	diffuseMap cordolo2.png
+}
+material asfalto3.png
+{
+	parent 0vdrTrk
+	diffuseMap asfalto3.png
+}
+material erba3.png
+{
+	parent 0vdrTrk
+	diffuseMap erba3.png
+}
+material quinta.png
+{
+	parent 0vdrAlpha
+	diffuseMap quinta.png
+}
+material asfalto6.png
+{
+	parent 0vdrTrk
+	diffuseMap asfalto6.png
+}
+material quinta2.png
+{
+	parent 0vdrAlpha
+	diffuseMap quinta2.png
+}
+material gomme1.png
+{
+	parent 0vdrTrk
+	diffuseMap gomme1.png
+}
+material erba5.png
+{
+	parent 0vdrTrk
+	diffuseMap erba5.png
+}
+material erba7.png
+{
+	parent 0vdrTrk
+	diffuseMap erba7.png
+}
+material erba8.png
+{
+	parent 0vdrTrk
+	diffuseMap erba8.png
+}
+material asfalto8.png
+{
+	parent 0vdrTrk
+	diffuseMap asfalto8.png
+}
+material erba4.png
+{
+	parent 0vdrTrk
+	diffuseMap erba4.png
+}
+material asfalto7.png
+{
+	parent 0vdrTrk
+	diffuseMap asfalto7.png
+}
+material asfalto9.png
+{
+	parent 0vdrTrk
+	diffuseMap asfalto9.png
+}
+material obja11.png
+{
+	parent 0vdrTrk
+	diffuseMap obja11.png
+}
+material obja09.png
+{
+	parent 0vdrTrk
+	diffuseMap obja09.png
+}
+material obja13.png
+{
+	parent 0vdrTrk
+	diffuseMap obja13.png
+}
+material obja12.png
+{
+	parent 0vdrTrk
+	diffuseMap obja12.png
+}
+material obja15.png
+{
+	parent 0vdrTrk
+	diffuseMap obja15.png
+}
+material obja16.png
+{
+	parent 0vdrTrk
+	diffuseMap obja16.png
+}
+material obja14.png
+{
+	parent 0vdrTrk
+	diffuseMap obja14.png
+}
+material tanker1.png
+{
+	parent 0vdrTrk
+	diffuseMap tanker1.png
+}
+material triba17.png
+{
+	parent 0vdrAlpha
+	diffuseMap triba17.png
+}
+material obja02.png
+{
+	parent 0vdrTrk
+	diffuseMap obja02.png
+}
+material obja01.png
+{
+	parent 0vdrTrk
+	diffuseMap obja01.png
+}
+material obja03.png
+{
+	parent 0vdrTrk
+	diffuseMap obja03.png
+}
+material triba11.png
+{
+	parent 0vdrTrk
+	diffuseMap triba11.png
+}
+material obja22.png
+{
+	parent 0vdrTrk
+	diffuseMap obja22.png
+}
+material obja21.png
+{
+	parent 0vdrTrk
+	diffuseMap obja21.png
+}
+material obja19.png
+{
+	parent 0vdrTrk
+	diffuseMap obja19.png
+}
+material obja20.png
+{
+	parent 0vdrTrk
+	diffuseMap obja20.png
+}
+material pdkka25.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka25.png
+}
+material obja07.png
+{
+	parent 0vdrTrk
+	diffuseMap obja07.png
+}
+material obja08.png
+{
+	parent 0vdrTrk
+	diffuseMap obja08.png
+}
+material obja04.png
+{
+	parent 0vdrTrk
+	diffuseMap obja04.png
+}
+material obja05.png
+{
+	parent 0vdrTrk
+	diffuseMap obja05.png
+}
+material obja06.png
+{
+	parent 0vdrTrk
+	diffuseMap obja06.png
+}
+material islmarmaglia1.png
+{
+	parent 0vdrTrk
+	diffuseMap islmarmaglia1.png
+}
+material islmarmaglia2.png
+{
+	parent 0vdrTrk
+	diffuseMap islmarmaglia2.png
+}
+material hoccono1.png
+{
+	parent 0vdrTrk
+	diffuseMap hoccono1.png
+}
+material pubblico2.png
+{
+	parent 0vdrAlpha
+	diffuseMap pubblico2.png
+}
+material pubblico1.png
+{
+	parent 0vdrAlpha
+	diffuseMap pubblico1.png
+}
+material steccato1.png
+{
+	parent 0vdrAlpha
+	diffuseMap steccato1.png
+}
+material muretto2.png
+{
+	parent 0vdrTrk
+	diffuseMap muretto2.png
+}
+material tribb02.png
+{
+	parent 0vdrTrk
+	diffuseMap tribb02.png
+}
+material tribb01.png
+{
+	parent 0vdrTrk
+	diffuseMap tribb01.png
+}
+material tribb03.png
+{
+	parent 0vdrTrk
+	diffuseMap tribb03.png
+}
+material triba08.png
+{
+	parent 0vdrTrk
+	diffuseMap triba08.png
+}
+material triba09.png
+{
+	parent 0vdrAlpha
+	diffuseMap triba09.png
+}
+material palaza05.png
+{
+	parent 0vdrAlpha
+	diffuseMap palaza05.png
+}
+material palaza07.png
+{
+	parent 0vdrTrk
+	diffuseMap palaza07.png
+}
+material palaza04.png
+{
+	parent 0vdrTrk
+	diffuseMap palaza04.png
+}
+material palaza03.png
+{
+	parent 0vdrTrk
+	diffuseMap palaza03.png
+}
+material palaza13.png
+{
+	parent 0vdrTrk
+	diffuseMap palaza13.png
+}
+material pdkka14.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka14.png
+}
+material palaza06.png
+{
+	parent 0vdrTrk
+	diffuseMap palaza06.png
+}
+material palaza01.png
+{
+	parent 0vdrTrk
+	diffuseMap palaza01.png
+}
+material palaza12.png
+{
+	parent 0vdrTrk
+	diffuseMap palaza12.png
+}
+material palaza09.png
+{
+	parent 0vdrTrk
+	diffuseMap palaza09.png
+}
+material palaza02.png
+{
+	parent 0vdrTrk
+	diffuseMap palaza02.png
+}
+material palaza17.png
+{
+	parent 0vdrTrk
+	diffuseMap palaza17.png
+}
+material palaza10.png
+{
+	parent 0vdrTrk
+	diffuseMap palaza10.png
+}
+material palaza24.png
+{
+	parent 0vdrTrk
+	diffuseMap palaza24.png
+}
+material palaza23.png
+{
+	parent 0vdrTrk
+	diffuseMap palaza23.png
+}
+material palaza22.png
+{
+	parent 0vdrTrk
+	diffuseMap palaza22.png
+}
+material palaza16.png
+{
+	parent 0vdrTrk
+	diffuseMap palaza16.png
+}
+material palaza11.png
+{
+	parent 0vdrTrk
+	diffuseMap palaza11.png
+}
+material triba02.png
+{
+	parent 0vdrTrk
+	diffuseMap triba02.png
+}
+material triba04.png
+{
+	parent 0vdrTrk
+	diffuseMap triba04.png
+}
+material triba10.png
+{
+	parent 0vdrTrk
+	diffuseMap triba10.png
+}
+material triba13.png
+{
+	parent 0vdrTrk
+	diffuseMap triba13.png
+}
+material triba15.png
+{
+	parent 0vdrTrk
+	diffuseMap triba15.png
+}
+material triba16.png
+{
+	parent 0vdrTrk
+	diffuseMap triba16.png
+}
+material triba03.png
+{
+	parent 0vdrTrk
+	diffuseMap triba03.png
+}
+material triba12.png
+{
+	parent 0vdrTrk
+	diffuseMap triba12.png
+}
+material triba14.png
+{
+	parent 0vdrTrk
+	diffuseMap triba14.png
+}
+material triba01.png
+{
+	parent 0vdrTrk
+	diffuseMap triba01.png
+}
+material triba06.png
+{
+	parent 0vdrAlpha
+	diffuseMap triba06.png
+}
+material triba05.png
+{
+	parent 0vdrTrk
+	diffuseMap triba05.png
+}
+material garage02.png
+{
+	parent 0vdrTrk
+	diffuseMap garage02.png
+}
+material palazb03.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb03.png
+}
+material garage01.png
+{
+	parent 0vdrTrk
+	diffuseMap garage01.png
+}
+material pdkka05.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka05.png
+}
+material pdkka02.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka02.png
+}
+material pdkka15.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka15.png
+}
+material pdkka12.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka12.png
+}
+material pdkka17.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka17.png
+}
+material pdkka04.png
+{
+	parent 0vdrAlpha
+	diffuseMap pdkka04.png
+}
+material pdkka11.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka11.png
+}
+material pdkka08.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka08.png
+}
+material pdkka03.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka03.png
+}
+material pdkka10.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka10.png
+}
+material pdkka01.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka01.png
+}
+material pdkka21.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka21.png
+}
+material pdkka07.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka07.png
+}
+material pdkka06.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka06.png
+}
+material pdkka24.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka24.png
+}
+material pdkka18.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka18.png
+}
+material pdkka19.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka19.png
+}
+material pdkka22.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka22.png
+}
+material pdkka20.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka20.png
+}
+material pdkka09.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka09.png
+}
+material pdkka23.png
+{
+	parent 0vdrTrk
+	diffuseMap pdkka23.png
+}
+material muretto1.png
+{
+	parent 0vdrTrk
+	diffuseMap muretto1.png
+}
+material muretto4.png
+{
+	parent 0vdrTrk
+	diffuseMap muretto4.png
+}
+material muretto3.png
+{
+	parent 0vdrTrk
+	diffuseMap muretto3.png
+}
+material obja18.png
+{
+	parent 0vdrTrk
+	diffuseMap obja18.png
+}
+material obja17.png
+{
+	parent 0vdrTrk
+	diffuseMap obja17.png
+}
+material sema02.png
+{
+	parent 0vdrTrk
+	diffuseMap sema02.png
+}
+material obja24.png
+{
+	parent 0vdrTrk
+	diffuseMap obja24.png
+}
+material obja23.png
+{
+	parent 0vdrTrk
+	diffuseMap obja23.png
+}
+material monstart1.png
+{
+	parent 0vdrTrk
+	diffuseMap monstart1.png
+}
+material monstriscia1.png
+{
+	parent 0vdrTrk
+	diffuseMap monstriscia1.png
+}
+material sema03.png
+{
+	parent 0vdrTrk
+	diffuseMap sema03.png
+}
+material asssem3.png
+{
+	parent 0vdrTrk
+	diffuseMap asssem3.png
+}
+material asssem7.png
+{
+	parent 0vdrTrk
+	diffuseMap asssem7.png
+}
+material sema04.png
+{
+	parent 0vdrTrk
+	diffuseMap sema04.png
+}
+material asss.3.png
+{
+	parent 0vdrTrk
+	diffuseMap asss.3.png
+}
+material fronda2.png
+{
+	parent 0vdrAlpha
+	diffuseMap fronda2.png
+}
+material fronda1.png
+{
+	parent 0vdrAlpha
+	diffuseMap fronda1.png
+}
+material palazb04.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb04.png
+}
+material palazb08.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb08.png
+}
+material palazb09.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb09.png
+}
+material palazb12.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb12.png
+}
+material palazb07.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb07.png
+}
+material palazb05.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb05.png
+}
+material palazb13.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb13.png
+}
+material palazb19.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb19.png
+}
+material palazb17.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb17.png
+}
+material palazb15.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb15.png
+}
+material palazb14.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb14.png
+}
+material palazb18.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb18.png
+}
+material palazb11.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb11.png
+}
+material palazb10.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb10.png
+}
+material palazb02.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb02.png
+}
+material palazb01.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb01.png
+}
+material palazb16.png
+{
+	parent 0vdrTrk
+	diffuseMap palazb16.png
+}

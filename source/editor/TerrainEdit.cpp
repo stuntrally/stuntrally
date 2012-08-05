@@ -1,9 +1,62 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
 #include "OgreApp.h"
+#include <OgreTerrain.h>
 #include <OgreHardwarePixelBuffer.h>
 //#include "../vdrift/settings.h"
 using namespace Ogre;
+
+
+//  Brush Presets data
+//---------------------------------------------------------------------------------------------------------------
+const App::BrushSet App::brSets[App::brSetsNum] = {
+//ED_MODE,curBr,  Size, Intens,  Pow, Freq, Ofs, Oct, EBrShape, Filter, HSet,  Name
+	{ED_Deform,0,  16.f, 10.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Small"},
+	{ED_Deform,0,  32.f, 20.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Medium"},
+	{ED_Deform,0,  40.f, 20.f,   4.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Spike"},
+													
+	{ED_Height,2,  32.f, 20.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Height small"},
+	{ED_Height,2,  64.f, 20.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f, 0.f,   "Height=0 big"},
+													
+	{ED_Smooth,1,  22.f, 30.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Smooth medium"},
+	{ED_Smooth,1,  16.f, 60.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Smooth heavy"},
+													
+	{ED_Filter,3,  16.f, 40.f,   4.f,  1.f,  0.f, 5,  BRS_Sinus,  2.f,-0.01f, "Filter small"},
+	{ED_Filter,3,  32.f, 20.f,   3.f,  1.f,  0.f, 5,  BRS_Sinus,  4.f,-0.01f, "Filter big"},
+	{ED_Filter,3, 128.f, 20.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus,  2.f,-0.01f, "Filter huge"},
+//------------
+	{ED_Deform,0,  32.f, 10.f,   0.5f, 1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Bold"},
+	{ED_Deform,0,  60.f, 30.f,   0.05f,1.f,  0.f, 5,BRS_Triangle,-1.f,-0.01f, "Drop"},
+													
+	{ED_Deform,0,  48.f, 20.f,   2.f,  1.f,  2.5f,5,  BRS_Noise, -1.f,-0.01f, "Noise normal"},
+	{ED_Deform,0,  24.f, 20.f,   4.f,  0.93f,2.7f,5,  BRS_Noise, -1.f,-0.01f, "Noise random"},
+													
+	{ED_Deform,0,  64.f, 20.f,   1.2f, 0.5f, 1.9f,5,  BRS_Noise, -1.f,-0.01f, "Cracks down"},
+	{ED_Deform,0,  60.f, 40.f,   0.7f, 0.4f, 0.f, 5,  BRS_Noise, -1.f,-0.01f, "Cracks"},
+	{ED_Deform,0,  96.f, 20.f,   0.7f, 0.25f,1.9f,5,  BRS_Noise, -1.f,-0.01f, "Cracks big, detail"},
+													
+	{ED_Deform,0,  96.f, 20.f,   7.f,  0.37f,0.9f,7,  BRS_Noise, -1.f,-0.01f, "Noise peaks"},
+	{ED_Deform,0,  60.f, 40.f,   3.3f, 0.4f, 1.1f,5,  BRS_Noise, -1.f,-0.01f, "Rocky scratch"},
+	{ED_Deform,0,  60.f, 20.f,   2.3f, 0.13f,0.f, 5,  BRS_Noise, -1.f,-0.01f, "High Noise, bumps"},
+};
+void App::btnBrushPreset(WP img)
+{
+	int id = 0;
+	sscanf(img->getName().c_str(), "brI%d", &id);
+	SetBrushPreset(id);
+}
+void App::SetBrushPreset(int id)
+{
+	const BrushSet& st = brSets[id];  // copy params
+	SetEdMode(st.edMode);  curBr = st.curBr;
+	mBrSize[curBr] = st.Size;  mBrIntens[curBr] = st.Intens;  mBrShape[curBr] = st.shape;
+	mBrPow[curBr] = st.Pow;  mBrFq[curBr] = st.Fq;  mBrNOf[curBr] = st.NOf;  mBrOct[curBr] = st.Oct;
+	if (st.Filter > 0.f)  mBrFilt = st.Filter;
+	if (st.HSet != -0.01f)  terSetH = st.HSet;
+
+	brImgSave = id;
+	updBrush();  UpdEditWnds();
+}
 
 
 ///  get edit rect
@@ -71,13 +124,13 @@ static float GetAngle(float x, float y)
 		return (x < 0.f) ? PI_d : 0.f;
 	else
 		return (y < 0.f) ? atan2f(-y, x) : (2*PI_d - atan2f(y, x));
-}/**/
+}
 
 
 ///  update brush preview texture  ---------------------------------
 void App::updateBrushPrv(bool first)
 {
-	if (!first && (!ovBrushPrv || edMode >= ED_Road || !bEdit()))  return;
+	if (!first && (!ovBrushPrv || edMode >= ED_Road /*|| bMoveCam/*|| !bEdit()*/))  return;
 	if (!pSet->brush_prv || brushPrvTex.isNull())  return;
 
 	//  Lock texture and fill pixel data
@@ -138,6 +191,16 @@ void App::updateBrushPrv(bool first)
 		}	break;
 	}
 	pbuf->unlock();
+	
+	//  use 1 to save new brush presets images, 0 for release!
+	#if 0
+	if (brImgSave >= 0)
+	{
+		Image im;  brushPrvTex->convertToImage(im);
+		im.save("data/editor/brush"+toStr(brImgSave)+".png");
+		brImgSave = -1;
+	}
+	#endif
 }
 
 ///  fill brush data (shape), after size change
@@ -254,8 +317,11 @@ void App::deform(Vector3 &pos, float dtime, float brMul)
 		}
 	}
 	terrain->dirtyRect(rcMap);
-	GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
-	//initBlendMaps(terrain);
+	if (pSet->autoBlendmap)
+	{
+		GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
+		initBlendMaps(terrain, rcMap.left,rcMap.top, rcMap.right,rcMap.bottom, false);
+	}
 	bTerUpd = true;
 }
 
@@ -287,7 +353,11 @@ void App::height(Vector3 &pos, float dtime, float brMul)
 		}
 	}
 	terrain->dirtyRect(rcMap);
-	GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
+	if (pSet->autoBlendmap)
+	{
+		GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
+		initBlendMaps(terrain, rcMap.left,rcMap.top, rcMap.right,rcMap.bottom, false);
+	}
 	bTerUpd = true;
 }
 
@@ -355,7 +425,11 @@ void App::smoothTer(Vector3 &pos, float avg, float dtime)
 		}
 	}
 	terrain->dirtyRect(rcMap);
-	GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
+	if (pSet->autoBlendmap)
+	{
+		GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
+		initBlendMaps(terrain, rcMap.left,rcMap.top, rcMap.right,rcMap.bottom, false);
+	}
 	bTerUpd = true;
 }
 
@@ -370,7 +444,7 @@ void App::filter(Vector3 &pos, float dtime, float brMul)
 	
 	float *fHmap = terrain->getHeightData();
 	
-	float its = mBrIntens[curBr] * dtime * brMul;
+	float its = mBrIntens[curBr] * dtime * std::min(1.f,brMul);  //mul >1 errors
 	int mapPos, brPos, jj = cy,
 		ter = sc.td.iTerSize, ter2 = ter*ter, ter1 = ter+1;
 
@@ -397,8 +471,11 @@ void App::filter(Vector3 &pos, float dtime, float brMul)
 	}
 
 	terrain->dirtyRect(rcMap);
-	GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
-	//initBlendMaps(terrain);
+	if (pSet->autoBlendmap)
+	{
+		GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
+		initBlendMaps(terrain, rcMap.left,rcMap.top, rcMap.right,rcMap.bottom, false);
+	}
 	bTerUpd = true;
 }
 

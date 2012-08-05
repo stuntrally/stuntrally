@@ -1,0 +1,71 @@
+material base_sky
+{
+    pass
+    {
+        fog_override true
+        lighting off
+        ambient 1 1 1
+        diffuse 0 0 0 1
+        emissive 0 0 0
+        texture_unit skyTex
+        {
+            direct_texture $texture
+            create_in_ffp true
+            tex_address_mode mirror
+        }
+    }
+}
+
+material sky/white
+{
+    parent base_sky
+    texture sky_white.jpg
+}
+
+material sky/light_blue
+{
+    parent base_sky
+    texture sky_lightblue.jpg
+}
+
+material sky/blue_clouds
+{
+    parent base_sky
+    texture sky_photo6.jpg
+}
+
+material sky/gray_clouds
+{
+    parent base_sky
+    texture sky_photo3.jpg
+}
+
+material sky/sunset
+{
+    parent base_sky
+    texture sky_sunset.jpg
+}
+
+material sky/dawn
+{
+    parent base_sky
+    texture sky_dawn.jpg
+}
+
+material sky/duskstormy
+{
+    parent base_sky
+    texture duskstormy.jpg
+}
+
+material sky/dayovercast
+{
+    parent base_sky
+    texture dayovercast.jpg
+}
+
+material sky/magic
+{
+    parent base_sky
+    texture magic.jpg
+}

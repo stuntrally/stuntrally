@@ -5,8 +5,9 @@
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MultiList2.h"
-//#include "../ogre/common/MaterialGen/MaterialFactory.h"
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+#include <OgreTerrain.h>
+#include <OgreTerrainGroup.h>
 using namespace Ogre;
 
 
@@ -58,23 +59,45 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	// key,mb info  ==================
 	if (mStatsOn)
 	{
-		String ss = "";
-		if (shift)  ss += "Shift ";	if (mbLeft)  ss += "LMB ";
-		if (ctrl)  ss += "Ctrl ";	if (mbRight)  ss += "RMB ";
-		if (alt)  ss += "Alt ";		if (mbMiddle)  ss += "MMB ";
-
 		using namespace OIS;
-		for (int i=KC_DIVIDE; i > 0; --i)
-		{	OIS::KeyCode k = (OIS::KeyCode)i;
-			if (k != KC_LSHIFT && k != KC_RSHIFT &&   //opt=
-				k != KC_LCONTROL && k != KC_RCONTROL && 
-				k != KC_LMENU && k != KC_RMENU)
-			if (mKeyboard->isKeyDown(k))
-			{
-				 if (k == KC_DIVIDE)	ss += "Num / ";		else if (k == KC_MULTIPLY)	ss += "Num * ";
+		const int Kmax = KC_DELETE;  // last key
+		static float tkey[Kmax+1] = {0.f,};  // key delay time
+		int i;
+		static bool first=true;
+		if (first)
+		{	first=false;
+			for (i=Kmax; i > 0; --i)  tkey[i] = 0.f;
+		}
+		String ss = "";
+		//  pressed
+		for (i=Kmax; i > 0; --i)
+			if (mKeyboard->isKeyDown( (KeyCode)i ))
+				tkey[i] = 0.2f;  // min time to display
+
+		//  modif
+		if (tkey[KC_LCONTROL] > 0.f || tkey[KC_RCONTROL] > 0.f)	ss += "Ctrl ";
+		if (tkey[KC_LMENU] > 0.f || tkey[KC_RMENU] > 0.f)		ss += "Alt ";
+		if (tkey[KC_LSHIFT] > 0.f || tkey[KC_RSHIFT] > 0.f)		ss += "Shift ";
+
+		//  mouse buttons
+		if (mbLeft)  ss += "LMB ";
+		if (mbRight)  ss += "RMB ";
+		if (mbMiddle)  ss += "MMB ";
+
+		//  all
+		for (i=Kmax; i > 0; --i)
+		{
+			if (tkey[i] > 0.f)
+			{	tkey[i] -= evt.timeSinceLastFrame;  //dec time
+				KeyCode k = (KeyCode)i;
+	
+				 if (k == KC_LSHIFT || k == KC_RSHIFT ||
+					 k == KC_LCONTROL || k == KC_RCONTROL ||
+					 k == KC_LMENU || k == KC_RMENU)		{	}
+			else if (k == KC_DIVIDE)	ss += "Num / ";		else if (k == KC_MULTIPLY)	ss += "Num * ";
 			else if (k == KC_ADD)		ss += "Num + ";		else if (k == KC_SUBTRACT)	ss += "Num - ";
 			else
-				{	 if (k == KC_NUMPAD0)  k = KC_INSERT;	else if (k == KC_DECIMAL)  k = KC_DELETE;
+			{		 if (k == KC_NUMPAD0)  k = KC_INSERT;	else if (k == KC_DECIMAL)  k = KC_DELETE;
 				else if (k == KC_NUMPAD1)  k = KC_END;		else if (k == KC_NUMPAD2)  k = KC_DOWN;
 				else if (k == KC_NUMPAD3)  k = KC_PGDOWN;	else if (k == KC_NUMPAD4)  k = KC_LEFT;
 				else if (k == KC_NUMPAD5)  k = KC_DELETE;	else if (k == KC_NUMPAD6)  k = KC_RIGHT;
@@ -83,15 +106,18 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 					ss += mKeyboard->getAsString(k) + " ";
 		}	}	}
 		
+		//  mouse wheel
 		static int mzd = 0;
-		if (mz != 0)  mzd = 30;
-		if (mzd > 0)  {  ss += "Wheel ";  --mzd;  }
+		if (mz > 0)  mzd = 30;
+		if (mz < 0)  mzd = -30;
+		if (mzd > 0)  {  ss += "Wheel up";  --mzd;  }
+		if (mzd < 0)  {  ss += "Wheel dn";  ++mzd;  }
 		//ovInfo->setCaption(ss);
 		ovDbg->setCaption(ss);
 	}
 
 
-	//  keys dn/up - trklist
+	//  keys up/dn - trklist
 	static float dirU = 0.f,dirD = 0.f;
 	if (bGuiFocus)
 	{	if (isKey(UP)  ||isKey(NUMPAD8))	dirD += evt.timeSinceLastFrame;  else
@@ -211,7 +237,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 
 	///  Terrain  Brush
 	//--------------------------------------------------------------------------------------------------------------------------------
-	else if (edMode < ED_Road && bEdit())
+	else if (edMode < ED_Road /*&& bEdit()*/)
 	{
 		static bool first = true;
 		if (first)  // once, static text
@@ -339,33 +365,28 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	//----------------------------------------------------------------
 	else if (edMode == ED_Objects)
 	{
-		if (sc.objects.empty())
-		{
-			if (objTxt[0])	objTxt[0]->setCaption("None");
-			for (int i=1; i < OBJ_TXT; ++i)
-				if (objTxt[i])  objTxt[i]->setCaption("");
+		if (iObjCur == -1 || sc.objects.empty())
+		{	//  none sel
+			objTxt[0]->setCaption("#20FF20New#C0C0C0    "+toStr(iObjCur)+" / "+toStr(sc.objects.size()));
+			objTxt[1]->setCaption(vObjNames[iObjTNew]);  // all new params ...
+			objTxt[3]->setCaption("");
+			objTxt[4]->setCaption("");
+			objTxt[5]->setCaption("");
 		}else
-		{
-			if (iObjCur == -1)
-			{	//  none sel
-				objTxt[0]->setCaption("Cur/All:  "+toStr(iObjCur)+" / "+toStr(sc.objects.size()));
-				objTxt[1]->setCaption(vObjNames[iObjNew]);  // new params ...
-				objTxt[3]->setCaption("");
-				objTxt[4]->setCaption("");
-				objTxt[5]->setCaption("");
-			}else
-			{	const Object& o = sc.objects[iObjCur];
-				objTxt[0]->setCaption("Cur/All:  "+toStr(iObjCur+1)+" / "+toStr(sc.objects.size()));
-				objTxt[1]->setCaption(o.name);
-				objTxt[3]->setCaption("Pos:  "+fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
-				objTxt[4]->setCaption("Rot:  "+fToStr(o.nd->getOrientation().getYaw().valueDegrees(),1,4));
-				objTxt[5]->setCaption("Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
-			}
-			//  edit
-			if (mz != 0)  // wheel prev/next
-			{	int objs = sc.objects.size();
-				if (objs > 0)  {  iObjCur = (iObjCur-mz+objs)%objs;  UpdObjPick();  }
-			}
+		{	const Object& o = sc.objects[iObjCur];
+			if (vObjSel.empty())
+				objTxt[0]->setCaption("#A0D0FFCur#C0C0C0     "+toStr(iObjCur+1)+" / "+toStr(sc.objects.size()));
+			else
+				objTxt[0]->setCaption("#00FFFFSel#C0C0C0     "+toStr(vObjSel.size())+" / "+toStr(sc.objects.size()));
+			objTxt[1]->setCaption(o.name);
+			objTxt[3]->setCaption("Pos:  "+fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
+			objTxt[4]->setCaption("Rot:  "+fToStr(o.nd->getOrientation().getYaw().valueDegrees(),1,4));
+			objTxt[5]->setCaption("Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
+		}
+		//  edit
+		if (mz != 0)  // wheel prev/next
+		{	int objs = sc.objects.size();
+			if (objs > 0)  {  iObjCur = (iObjCur-mz+objs)%objs;  UpdObjPick();  }
 		}
 	}
 	mz = 0;  // mouse wheel
@@ -402,6 +423,7 @@ void App::processMouse()  //! from Thread, cam vars only
 	//static double m_sumTime = 0.0;
 	//m_sumTime += mDTime;  int num = 0;
 	//while (m_sumTime > m_interval)
+	//if (!alt)
 	{
 		//num++;
 		//m_sumTime -= m_interval;
@@ -601,53 +623,67 @@ void App::editMouse()
 	}
 
 	///  edit objects . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-	if (edMode == ED_Objects && !sc.objects.empty() && iObjCur >= 0)
+	if (edMode == ED_Objects && !sc.objects.empty() && (iObjCur >= 0 || !vObjSel.empty()))
 	{
-		Object& o = sc.objects[iObjCur];
 		const Real fMove(0.5f), fRot(1.5f), fScale(0.02f);  //par speed
-		if (!alt)
+		bool upd = false, sel = !vObjSel.empty();
+		//  selection or picked
+		std::set<int>::iterator it = vObjSel.begin();
+		int i = sel ? *it : iObjCur;
+		while (i >= 0 && i < sc.objects.size())
 		{
-			if (mbLeft)	// move on xz
+			Object& o = sc.objects[i];
+			if (!alt)
 			{
-				Vector3 vx = mCameraT->getRight();	   vx.y = 0;  vx.normalise();
-				Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
-				Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
-				o.pos[0] += vm.x;  o.pos[1] -= vm.z;  // todo: for selection ..
-				o.SetFromBlt();	 UpdObjPick();
+				if (mbLeft)	// move on xz
+				{
+					Vector3 vx = mCameraT->getRight();	   vx.y = 0;  vx.normalise();
+					Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
+					Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
+					o.pos[0] += vm.x;  o.pos[1] -= vm.z;  // todo: for selection ..
+					o.SetFromBlt();	 upd = true;
+				}else
+				if (mbRight)  // move y
+				{
+					Real ym = -vNew.y * fMove * moveMul;
+					o.pos[2] += ym;
+					o.SetFromBlt();	 upd = true;
+				}
+				else
+				if (mbMiddle)  // rot yaw,  ctrl pitch local-
+				{
+					Real xm = vNew.x * fRot * moveMul *PI_d/180.f;
+					QUATERNION <float> qr;
+					if (!ctrl)  qr.Rotate(-xm, 0, 0, 1);  else  qr.Rotate(-xm, 0, 1, 0);
+					o.rot = o.rot * qr;
+					o.SetFromBlt();	 upd = true;
+				}
 			}else
-			if (mbRight)  // move y
 			{
-				Real ym = -vNew.y * fMove * moveMul;
-				o.pos[2] += ym;
-				o.SetFromBlt();	 UpdObjPick();
+				if (mbLeft)  // size xz
+				{
+					//Vector3 vm = Vector3(vNew.y, 0, vNew.x) * fMove * moveMul;
+					float vm = (vNew.y - vNew.x) * fMove * moveMul;
+					o.scale *= 1.f - vm * fScale;
+					//if (o.scale.x < 0.02f)  o.scale.x = 0.02f;
+					o.nd->setScale(o.scale);  upd = true;
+				}else
+				if (mbRight)  // scale y
+				{
+					float vm = (vNew.y - vNew.x) * fMove * moveMul;
+					o.scale.y *= 1.f - vm * fScale;
+					//if (o.scale.y < 0.02f)  o.scale.y = 0.02f;
+					o.nd->setScale(o.scale);  upd = true;
+				}
 			}
-			else
-			if (mbMiddle)  // rot yaw,  ctrl pitch local-
-			{
-				Real xm = vNew.x * fRot * moveMul *PI_d/180.f;
-				QUATERNION <float> qr;
-				if (!ctrl)  qr.Rotate(-xm, 0, 0, 1);  else  qr.Rotate(-xm, 0, 1, 0);
-				o.rot = o.rot * qr;
-				o.SetFromBlt();	 UpdObjPick();
-			}
-		}else
-		{
-			if (mbLeft)  // size xz
-			{
-				//Vector3 vm = Vector3(vNew.y, 0, vNew.x) * fMove * moveMul;
-				float vm = (vNew.y - vNew.x) * fMove * moveMul;
-				o.scale *= 1.f - vm * fScale;
-				//if (o.scale.x < 0.02f)  o.scale.x = 0.02f;
-				o.nd->setScale(o.scale);  UpdObjPick();
-			}else
-			if (mbRight)  // scale y
-			{
-				float vm = (vNew.y - vNew.x) * fMove * moveMul;
-				o.scale.y *= 1.f - vm * fScale;
-				//if (o.scale.y < 0.02f)  o.scale.y = 0.02f;
-				o.nd->setScale(o.scale);  UpdObjPick();
-			}
+			if (sel)
+			{	++it;  // next sel
+				if (it == vObjSel.end())  break;
+				i = *it;
+			}else  break;
 		}
+		if (upd)
+			UpdObjPick();
 	}
 }
 
@@ -767,21 +803,24 @@ bool App::frameEnded(const FrameEvent& evt)
 	if (tu >= pSet->ter_skip)
 	if (bTerUpd)
 	{	bTerUpd = false;  tu = 0;
-		mTerrainGroup->update();
-		//initBlendMaps(terrain);
+		if (mTerrainGroup)
+			mTerrainGroup->update();
 	}	tu++;
 
 	if (bu >= pSet->ter_skip)
 	if (bTerUpdBlend)
 	{	bTerUpdBlend = false;  bu = 0;
 		if (terrain)
+		{
+			GetTerAngles();  // full
 			initBlendMaps(terrain);
+		}
 	}	bu++;
 
 	
 	if (road)  // road
 	{
-		road->bCastShadow = pSet->shadow_type >= 3;
+		road->bCastShadow = pSet->shadow_type >= 2;
 		road->RebuildRoadInt();
 	}
 
@@ -851,7 +890,24 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		TrackListUpd(false);
 	}
 	
-	//materialFactory->update();
+	//  Update rain/snow - depends on camera
+	const Vector3& pos = mCamera->getPosition(), dir = mCamera->getDirection();
+	static Vector3 oldPos = Vector3::ZERO;
+	Vector3 vel = (pos-oldPos)/ (1.0f / mWindow->getLastFPS());  oldPos = pos;
+	Vector3 par = pos + dir * 12 + vel * 0.4;
+	float f = pSet->bWeather ? 0.f : 1.f;
+	if (pr)
+	{
+		ParticleEmitter* pe = pr->getEmitter(0);
+		pe->setPosition(par);
+		pe->setEmissionRate(f * sc.rainEmit);
+	}
+	if (pr2)
+	{
+		ParticleEmitter* pe = pr2->getEmitter(0);
+		pe->setPosition(par);
+		pe->setEmissionRate(f * sc.rain2Emit);
+	}
 	
 	bFirstRenderFrame = false;
 	

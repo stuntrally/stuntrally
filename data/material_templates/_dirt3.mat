@@ -1,0 +1,150 @@
+material ambush-inn.png
+{
+	parent 0vdrTrk
+	diffuseMap ambush-inn.png
+}
+material poutre2_arbor_n.rgb.png
+{
+	parent 0vdrAlpha
+	diffuseMap poutre2_arbor_n.rgb.png
+}
+material barrier-fence_n.png
+{
+	parent 0vdrAlpha
+	diffuseMap barrier-fence_n.png
+}
+material barrier-rusty.png
+{
+	parent 0vdrTrk
+	diffuseMap barrier-rusty.png
+}
+material barrier-wooden_n.png
+{
+	parent 0vdrTrk
+	diffuseMap barrier-wooden_n.png
+}
+material cabin.png
+{
+	parent 0vdrTrk
+	diffuseMap cabin.png
+}
+material tank.png
+{
+	parent 0vdrTrk
+	diffuseMap tank.png
+}
+material dirt-grass2.png
+{
+	parent 0vdrTrk
+	diffuseMap dirt-grass2.png
+}
+material hat.png
+{
+	parent 0vdrTrk
+	diffuseMap hat.png
+}
+material tr-house-arbor_n.png
+{
+	parent 0vdrTrk
+	diffuseMap tr-house-arbor_n.png
+}
+material pit-walls.png
+{
+	parent 0vdrTrk
+	diffuseMap pit-walls.png
+}
+material logo.png
+{
+	parent 0vdrTrk
+	diffuseMap logo.png
+}
+material tree_bush2_arbor_n.png
+{
+	parent 0vdrAlpha
+	diffuseMap tree_bush2_arbor_n.png
+}
+material tree_gum2_arbor_n.png
+{
+	parent 0vdrAlpha
+	diffuseMap tree_gum2_arbor_n.png
+}
+material tree_gum_arbor_n.png
+{
+	parent 0vdrAlpha
+	diffuseMap tree_gum_arbor_n.png
+}
+material grass-clump-arbor_n.png
+{
+	parent 0vdrAlpha
+	diffuseMap grass-clump-arbor_n.png
+}
+material sign-pit_n.png
+{
+	parent 0vdrAlpha
+	diffuseMap sign-pit_n.png
+}
+material sign-left_n.png
+{
+	parent 0vdrAlpha
+	diffuseMap sign-left_n.png
+}
+material advert-ols.png
+{
+	parent 0vdrTrk
+	diffuseMap advert-ols.png
+}
+material advert-joes.png
+{
+	parent 0vdrTrk
+	diffuseMap advert-joes.png
+}
+material advert-cola.png
+{
+	parent 0vdrTrk
+	diffuseMap advert-cola.png
+}
+material stone1.png
+{
+	parent 0vdrTrk
+	diffuseMap stone1.png
+}
+material dirt-pits.png
+{
+	parent 0vdrTrk
+	diffuseMap dirt-pits.png
+}
+material dirt-grass.png
+{
+	parent 0vdrTrk
+	diffuseMap dirt-grass.png
+}
+material dirt-side.png
+{
+	parent 0vdrTrk
+	diffuseMap dirt-side.png
+}
+material newdirt.png
+{
+	parent 0vdrTrk
+	diffuseMap newdirt.png
+}
+material newdirt2.png
+{
+	parent 0vdrTrk
+	diffuseMap newdirt2.png
+}
+material bridgeplanks.png
+{
+	parent 0vdrTrk
+	diffuseMap bridgeplanks.png
+}
+material poutre3_arbor_n.rgb.png
+{
+	parent 0vdrAlpha
+	diffuseMap poutre3_arbor_n.rgb.png
+}
+material try.jpg
+{
+	parent 0vdrTrk
+	diffuseMap try.jpg
+}

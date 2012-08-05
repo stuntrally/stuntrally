@@ -25,7 +25,7 @@ CAR::CAR() :
 	pSet(0), pApp(0), id(0), pCarM(0),
 	last_steer(0),
 	sector(-1),
-	iCamNext(0), bLastChk(0),bLastChkOld(0),
+	iCamNext(0), bLastChk(0),bLastChkOld(0), bRewind(0),
 	fluidHitOld(0),
 	trackPercentCopy(0), bRemoteCar(0),
 	bResetPos(0)
@@ -320,6 +320,8 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	if (bLastChk && !bLastChkOld)
 		ResetPos(false);  // goto last checkpoint
 		//ResetPos(false, shift);  // for 2nd ... press twice?
+	
+	bRewind = inputs[CARINPUT::REWIND];
 }
 
 
@@ -476,4 +478,25 @@ void CAR::SavePosAtCheck()
 	rotLastCheck[1] = rotLastCheck[0];
 	posLastCheck[0] = dynamics.body.GetPosition();
 	rotLastCheck[0] = dynamics.body.GetOrientation();
+}
+
+///  set pos, for rewind
+void CAR::SetPosRewind(const MATHVECTOR<float,3>& pos, const QUATERNION<float>& rot, const MATHVECTOR<float,3>& vel, const MATHVECTOR<float,3>& angvel)
+{
+	SetPosition(pos);
+
+	btTransform transform;
+	transform.setOrigin(ToBulletVector(pos));
+	transform.setRotation(ToBulletQuaternion(rot));
+	dynamics.chassis->setWorldTransform(transform);
+
+	// velocities
+	dynamics.chassis->setLinearVelocity(ToBulletVector(vel));
+	dynamics.chassis->setAngularVelocity(ToBulletVector(angvel));
+
+	dynamics.SynchronizeBody();  // set body from chassis
+	dynamics.UpdateWheelContacts();
+
+	//  steer
+	//dynamics.SetSteering(steer);  last_steer = steer;
 }

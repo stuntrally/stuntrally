@@ -305,8 +305,8 @@ public:
 	bool bResetPos;
 	void ResetPos(bool fromStart=true,int chkId=0);
 	void SavePosAtCheck();
+	void SetPosRewind(const MATHVECTOR<float,3>& pos, const QUATERNION<float>& rot, const MATHVECTOR<float,3>& vel, const MATHVECTOR<float,3>& angvel);
 
-//protected:
 public:
 	CARDYNAMICS dynamics;
 
@@ -372,9 +372,9 @@ public:
 	MATHVECTOR <float, 3> posAtStart, posLastCheck[2];
 	QUATERNION <float> rotAtStart, rotLastCheck[2];
 
-	//  car inputs  (new: cam,chk)
+	//  car inputs (new)
 	int iCamNext;
-	bool bLastChk,bLastChkOld;
+	bool bLastChk,bLastChkOld, bRewind;
 };
 
 #endif

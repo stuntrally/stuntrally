@@ -547,7 +547,23 @@ void CarModel::ChangeClr(int car)
 	color.setHSB(1-c_h,c_s,c_v);  //set, mini pos clr
 	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
 	if (!mtr.isNull())
-		mtr->setDiffuse(color);
+	{
+		Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+		while (techIt.hasMoreElements())
+		{	Technique* tech = techIt.getNext();
+			Technique::PassIterator passIt = tech->getPassIterator();
+			while (passIt.hasMoreElements())
+			{
+				Pass* pass = passIt.getNext();
+
+				if (pass->hasFragmentProgram())
+				{
+					GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+					params->setNamedConstant("carColour", color);
+				}
+			}
+		}
+	}
 
 	if (pNickTxt)
 		pNickTxt->setTextColour(MyGUI::Colour(color.r,color.g,color.b));

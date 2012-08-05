@@ -37,6 +37,8 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include "RandomTable.h"
 #include "../ogre/common/RenderConst.h"
 
+#include "../shiny/Main/Factory.hpp"
+
 #include <limits> //for numeric_limits
 
 using namespace Ogre;
@@ -109,6 +111,18 @@ void GrassLoader::frameUpdate()
 
 		layer->_updateShaders();
 		
+		//Increment animation frame
+		layer->waveCount += ellapsed * (layer->animSpeed * Math::PI);
+		if (layer->waveCount > Math::PI*2) layer->waveCount -= Math::PI*2;
+
+		sh::Factory::getInstance ().setSharedParameter ("grassTimer", sh::makeProperty<sh::FloatValue> (new sh::FloatValue(layer->waveCount)));
+		sh::Factory::getInstance ().setSharedParameter ("grassFrequency", sh::makeProperty<sh::FloatValue> (new sh::FloatValue(layer->animFreq)));
+
+		Vector3 direction = windDir * layer->animMag;
+		sh::Vector4* dir = new sh::Vector4(
+					direction.x, direction.y, direction.z, 0);
+		sh::Factory::getInstance ().setSharedParameter ("grassDirection", sh::makeProperty<sh::Vector4> (dir));
+/*
 		if (layer->material->getTechnique(0)->getPass(0)->hasVertexProgram())
 		{
 			GpuProgramParametersSharedPtr params = layer->material->getTechnique(0)->getPass(0)->getVertexProgramParameters();
@@ -131,6 +145,7 @@ void GrassLoader::frameUpdate()
 
 			}
 		}
+*/
 	}
 }
 
@@ -1120,6 +1135,10 @@ void GrassLayer::_updateShaders()
 			//Calculate fade range
 			float farViewDist = (float)geom->getDetailLevels().front()->getFarRange();
 			float fadeRange = farViewDist / 1.2247449f;
+
+			sh::Factory::getInstance ().setSharedParameter ("grassFadeRange", sh::makeProperty<sh::FloatValue> (new sh::FloatValue(fadeRange)));
+
+
 			//Note: 1.2247449 ~= sqrt(1.5), which is necessary since the far view distance is measured from the centers
 			//of pages, while the vertex shader needs to fade grass completely out (including the closest corner)
 			//before the page center is out of range.
@@ -1190,10 +1209,12 @@ void GrassLayer::_updateShaders()
 			//Now the material (tmpMat) has either been found or just created (depending on whether or not it was already
 			//created). The appropriate vertex shader should be applied and the material is ready for use.
 			
+			/*
 			if (tmpMat->getTechnique(0)->getPass(0)->hasVertexProgram()) {
 			if (tmpMat->getTechnique(0)->getPass(0)->getVertexProgramParameters()->_findNamedConstantDefinition("fadeRange", false))
 				tmpMat->getTechnique(0)->getPass(0)->getVertexProgramParameters()->setNamedConstant("fadeRange", fadeRange);
 			}
+			*/
 
 			//Apply the new material
 			material = tmpMat;

@@ -25,8 +25,9 @@ public:
 	float view_distance, terdetail,terdist, road_dist;
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type, shadow_filter;
 	float grass, trees_dist, grass_dist;
-	bool water_reflect, water_refract; int water_rttsize;
+	bool water_reflect; int water_rttsize;
 	bool use_imposters;
+	std::string shader_mode;
 
 	class GameSet
 	{
@@ -44,7 +45,7 @@ public:
 	bool isMain;  int inMenu;  // last menu id
 
 	//  settings
-	bool bFog, bTrees;
+	bool bFog, bTrees, bWeather, autoBlendmap;
 	int ter_skip, mini_skip;  float road_sphr;
 	float cam_speed, cam_inert, cam_x,cam_y,cam_z, cam_dx,cam_dy,cam_dz;
 	
@@ -55,6 +56,8 @@ public:
 	
 	//  ter generate
 	float gen_freq, gen_persist, gen_pow, gen_scale, gen_ofsx, gen_ofsy;  int gen_oct;
+	//  align ter
+	float al_w_mul, al_w_add, al_smooth;
 	
 //------------------------------------------
 	SETTINGS();
