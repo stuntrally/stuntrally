@@ -172,6 +172,8 @@
 		
 #if MRT
         shInput(float4, viewNormal)
+        shDeclareMrtOutput(1)
+        shDeclareMrtOutput(2)
 #endif
 
 #if (MRT) || (SOFT_PARTICLES)

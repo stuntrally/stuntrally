@@ -132,6 +132,7 @@ void App::postInit()
 	sh::Factory::getInstance().setGlobalSetting ("terrain_normal", (pSet->ter_mtr >= 2)  ? "true" : "false");
 	sh::Factory::getInstance().setGlobalSetting ("terrain_parallax", (pSet->ter_mtr >= 3)  ? "true" : "false");
 	sh::Factory::getInstance().setGlobalSetting ("water_reflect", pSet->water_reflect ? "true" : "false");
+	sh::Factory::getInstance().setGlobalSetting ("water_refract", "false");
 	sh::Factory::getInstance().setGlobalSetting ("shadows_depth", (pSet->shadow_type > 1) ? "true" : "false");
 	sh::Factory::getInstance().setGlobalSetting ("soft_particles", "false");
 	sh::Factory::getInstance ().setSharedParameter ("waterSunFade_sunHeight", sh::makeProperty<sh::Vector2>(new sh::Vector2(1, 0.6)));
