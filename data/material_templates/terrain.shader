@@ -178,6 +178,7 @@
     
 #if MRT
         shDeclareMrtOutput(1)
+        shDeclareMrtOutput(2)
         shUniform(float, far) @shAutoConstant(far, far_clip_distance)
         shUniform(float4x4, wvMat) @shAutoConstant(wvMat, worldview_matrix)
 #endif
@@ -500,6 +501,7 @@
     
 #if MRT
         shDeclareMrtOutput(1)
+        shDeclareMrtOutput(2)
         shUniform(float, far) @shAutoConstant(far, far_clip_distance)
         shUniform(float4x4, wvMat) @shAutoConstant(wvMat, worldview_matrix)
 #endif
