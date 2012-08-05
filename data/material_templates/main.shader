@@ -7,7 +7,7 @@
 
 #define SHADOWS_DEPTH @shGlobalSettingBool(shadows_depth)
 
-#define MRT @shPropertyBool(mrt_output)
+#define MRT @shPropertyBool(mrt_output) && @shGlobalSettingBool(mrt_output)
 
 #if SHADOWS
     #include "shadows.h"
