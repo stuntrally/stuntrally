@@ -91,6 +91,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 	{
 		cmp.setCompositorEnabled((*it), "gbuffer", false);
 		cmp.setCompositorEnabled((*it), "gbuffer1", false);
+		cmp.setCompositorEnabled((*it), "gbuffer1_float", false);
 
 		cmp.setCompositorEnabled((*it), "Bloom", false);
 		cmp.setCompositorEnabled((*it), "HDR", false);
