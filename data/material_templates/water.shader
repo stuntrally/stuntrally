@@ -78,7 +78,7 @@
     
     
     #define SCREEN_REFLECTION @shGlobalSettingBool(water_reflect)
-    #define SCREEN_REFRACTION 1
+    #define SCREEN_REFRACTION @shGlobalSettingBool(water_refract)
 
 
     float fresnel_dielectric(float3 Incoming, float3 Normal, float eta)
