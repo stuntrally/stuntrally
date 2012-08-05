@@ -403,11 +403,27 @@
 			Name="materials"
 			>
 			<File
-				RelativePath=".\data\editor\editor.matdef"
+				RelativePath=".\data\material_templates\arrow.mat"
 				>
 			</File>
 			<File
-				RelativePath=".\data\materials\fluids.matdef"
+				RelativePath=".\data\material_templates\arrow.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\arrow.shaderset"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\car.mat"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\car_particle.mat"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\core.h"
 				>
 			</File>
 			<File
@@ -415,7 +431,31 @@
 				>
 			</File>
 			<File
-				RelativePath=".\data\materials\grass.matdef"
+				RelativePath=".\data\material_templates\grass.mat"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\main.mat"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\main.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\main.shaderset"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\materials.lod"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\objects_dynamic.mat"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\objects_static.mat"
 				>
 			</File>
 			<File
@@ -439,19 +479,63 @@
 				>
 			</File>
 			<File
-				RelativePath=".\data\materials\road.matdef"
+				RelativePath=".\data\material_templates\road.mat"
 				>
 			</File>
 			<File
-				RelativePath=".\data\materials\road_pipe.matdef"
+				RelativePath=".\data\material_templates\road_wall_pipe.mat"
 				>
 			</File>
 			<File
-				RelativePath=".\data\skies\skies.matdef"
+				RelativePath=".\data\material_templates\shadows.h"
 				>
 			</File>
 			<File
-				RelativePath=".\data\trees\trees.matdef"
+				RelativePath=".\data\material_templates\sky.mat"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\stuntrally.configuration"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\terrain.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\terrain.shaderset"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\tire_particle.mat"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\trees.mat"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\vdrift.mat"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\water.mat"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\water.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\water.shaderset"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\water_particle.mat"
+				>
+			</File>
+			<File
+				RelativePath=".\data\material_templates\weather.mat"
 				>
 			</File>
 		</Filter>
@@ -628,6 +712,14 @@
 			</File>
 			<File
 				RelativePath=".\Source\ogre\common\Terrain.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\TerrainMaterial.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\TerrainMaterial.h"
 				>
 			</File>
 			<File
@@ -899,7 +991,7 @@
 			Name="shiny"
 			>
 			<File
-				RelativePath=".\source\shiny\Main\Configuration.cpp"
+				RelativePath=".\source\shiny\Preprocessor\aq.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -919,8 +1011,24 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\source\shiny\Main\Configuration.hpp"
+				RelativePath=".\source\shiny\Preprocessor\cpp_re.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\source\shiny\Main\Factory.cpp"
@@ -947,7 +1055,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\source\shiny\Main\InstanceLoader.cpp"
+				RelativePath=".\source\shiny\Preprocessor\instantiate_cpp_exprgrammar.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -967,8 +1075,124 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\source\shiny\Main\InstanceLoader.hpp"
+				RelativePath=".\source\shiny\Preprocessor\instantiate_cpp_grammar.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Preprocessor\instantiate_cpp_literalgrs.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Preprocessor\instantiate_defined_grammar.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Preprocessor\instantiate_predef_macros.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Preprocessor\instantiate_re2c_lexer.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Preprocessor\instantiate_re2c_lexer_str.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\source\shiny\Main\Language.hpp"
@@ -1191,7 +1415,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\source\shiny\Main\ShaderSetLoader.cpp"
+				RelativePath=".\source\shiny\Preprocessor\token_ids.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -1209,10 +1433,6 @@
 						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\source\shiny\Main\ShaderSetLoader.hpp"
-				>
 			</File>
 			<Filter
 				Name="ogre"
@@ -1263,6 +1483,30 @@
 				</File>
 				<File
 					RelativePath=".\source\shiny\Platforms\Ogre\OgreMaterial.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\shiny\Platforms\Ogre\OgreMaterialSerializer.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\source\shiny\Platforms\Ogre\OgreMaterialSerializer.hpp"
 					>
 				</File>
 				<File
