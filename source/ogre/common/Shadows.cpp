@@ -129,7 +129,6 @@ void App::changeShadows()
 	sh::Factory::getInstance().setGlobalSetting ("terrain_parallax", (pSet->ter_mtr >= 3)  ? "true" : "false");
 
 	mFactory->setGlobalSetting ("water_reflect", pSet->water_reflect ? "true" : "false");
-	mFactory->setGlobalSetting ("water_refract", pSet->water_refract ? "true" : "false");
 
 
 #if !ROAD_EDITOR

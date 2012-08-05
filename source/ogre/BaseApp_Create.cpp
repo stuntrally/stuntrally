@@ -437,7 +437,6 @@ bool BaseApp::setup()
 	sh::Factory::getInstance().setGlobalSetting ("terrain_normal", (pSet->ter_mtr >= 2)  ? "true" : "false");
 	sh::Factory::getInstance().setGlobalSetting ("terrain_parallax", (pSet->ter_mtr >= 3)  ? "true" : "false");
 	sh::Factory::getInstance().setGlobalSetting ("water_reflect", pSet->water_reflect ? "true" : "false");
-	sh::Factory::getInstance().setGlobalSetting ("water_refract", pSet->water_refract ? "true" : "false");
 	sh::Factory::getInstance ().setSharedParameter ("waterEnabled", sh::makeProperty<sh::FloatValue> (new sh::FloatValue(0.0)));
 	sh::Factory::getInstance ().setSharedParameter ("waterLevel", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(0)));
 	sh::Factory::getInstance ().setSharedParameter ("waterTimer", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(0)));

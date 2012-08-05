@@ -246,8 +246,30 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 			}
 		}
 
-		//update soft particle Depth Target
+		// set water refraction to already rendered contents of scene
+		Ogre::TexturePtr refrTex;
+		if (pApp->NeedMRTBuffer ())
+		{
+			Ogre::CompositorInstance  *compositor= Ogre::CompositorManager::getSingleton().getCompositorChain(evt.source)->getCompositor("gbuffer");
+			if (compositor != NULL)
+				refrTex =	compositor->getTextureInstance("mrt_output",0);
+		}
+		else
+		{
+			Ogre::CompositorInstance  *compositor = 0;
+			if (pSet->hdr && pSet->all_effects)
+				compositor = Ogre::CompositorManager::getSingleton().getCompositorChain(evt.source)->getCompositor("gbuffer1_float");
+			else
+				compositor = Ogre::CompositorManager::getSingleton().getCompositorChain(evt.source)->getCompositor("gbuffer1");
+			if (compositor != NULL)
+			{
+				refrTex =	compositor->getTextureInstance("scene",0);
+			}
+		}
+		if (!refrTex.isNull ())
+			sh::Factory::getInstance ().setTextureAlias ("WaterRefraction", refrTex->getName());
 
+		// set soft particle Depth render target name
 		if(pApp->pSet->softparticles && pApp->pSet->all_effects)
 		{
 			Ogre::CompositorInstance  *compositor= Ogre::CompositorManager::getSingleton().getCompositorChain(evt.source)->getCompositor("gbuffer");

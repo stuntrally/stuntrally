@@ -169,8 +169,7 @@ void App::UpdateWaterRTT(Ogre::Camera* cam)
 	//  water RTT
 	mWaterRTT.setViewerCamera(cam);
 	mWaterRTT.setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
-	mWaterRTT.setReflect(1);
-	mWaterRTT.setRefract(1);
+	mWaterRTT.setReflect(pSet->water_reflect);
 	mWaterRTT.mSceneMgr = mSceneMgr;
 	if (!sc.fluids.empty())
 		mWaterRTT.setPlane(Plane(Vector3::UNIT_Y, sc.fluids.front().pos.y));

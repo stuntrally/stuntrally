@@ -229,13 +229,6 @@ void App::chkWaterReflect(WP wp)
 	mWaterRTT.recreate();
 }
 
-void App::chkWaterRefract(WP wp)
-{
-	ChkEv(water_refract);
-	mWaterRTT.setRefract(pSet->water_refract);
-	changeShadows ();
-	mWaterRTT.recreate();}
-
 
 //  init  common
 //----------------------------------------------------------------------------------------------------------------
@@ -294,7 +287,6 @@ void App::GuiInitGraphics()
 	
 	//  water
 	Chk("WaterReflection", chkWaterReflect, pSet->water_reflect);
-	Chk("WaterRefraction", chkWaterRefract, pSet->water_refract);
 	Slv(WaterSize, pSet->water_rttsize /2.f);
 	
 	Cmb(combo, "CmbGraphicsAll", comboGraphicsAll);
