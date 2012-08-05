@@ -53,20 +53,7 @@ void App::CreateFluids()
 
 		String sMtr = fb.id == -1 ? "" : fluidsXml.fls[fb.id].material;  //"Water"+toStr(1+fb.type)
 		MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr);  //par,temp
-		/// \todo
-		/*
-		if (!mtr.isNull())
-		{	//  set sky map
-			MaterialPtr mtrSky = MaterialManager::getSingleton().getByName(sc.skyMtr);
-			//if (!mtrSky.isNull())  {
-			Pass* passSky = mtrSky->getTechnique(0)->getPass(0);
-			TextureUnitState* tusSky = passSky->getTextureUnitState(0);
 
-			Pass* pass = mtr->getTechnique(0)->getPass(0);
-			TextureUnitState* tus = pass->getTextureUnitState(1);
-			if (tus->getName() == "skyMap")  tus->setTextureName(tusSky->getTextureName());
-		}
-		*/
 		efl->setMaterial(mtr);  efl->setCastShadows(false);
 		efl->setRenderQueueGroup(RQG_Fluid);  efl->setVisibilityFlags(RV_Terrain);
 
