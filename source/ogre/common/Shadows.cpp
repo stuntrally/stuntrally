@@ -128,6 +128,10 @@ void App::changeShadows()
 	sh::Factory::getInstance().setGlobalSetting ("terrain_normal", (pSet->ter_mtr >= 2)  ? "true" : "false");
 	sh::Factory::getInstance().setGlobalSetting ("terrain_parallax", (pSet->ter_mtr >= 3)  ? "true" : "false");
 
+	mFactory->setGlobalSetting ("water_reflect", pSet->water_reflect ? "true" : "false");
+	mFactory->setGlobalSetting ("water_refract", pSet->water_refract ? "true" : "false");
+
+
 #if !ROAD_EDITOR
 	sh::Factory::getInstance().setGlobalSetting ("soft_particles", pSet->all_effects && pSet->softparticles  ? "true" : "false");
 	sh::Factory::getInstance().setGlobalSetting ("mrt_output", NeedMRTBuffer () ? "true" : "false");

@@ -21,6 +21,9 @@ using namespace Ogre;
 using namespace std;
 
 
+#include "../shiny/Main/Factory.hpp"
+
+
 
 ///  Gui Init  [Graphics]
 //----------------------------------------------------------------------------------------------------------------
@@ -221,18 +224,17 @@ void App::slWaterSize(SL)
 void App::chkWaterReflect(WP wp)
 {
 	ChkEv(water_reflect);
-	//materialFactory->setReflect(pSet->water_reflect);
 	mWaterRTT.setReflect(pSet->water_reflect);
+	changeShadows ();
 	mWaterRTT.recreate();
 }
 
 void App::chkWaterRefract(WP wp)
 {
 	ChkEv(water_refract);
-	//materialFactory->setRefract(pSet->water_refract);
 	mWaterRTT.setRefract(pSet->water_refract);
-	mWaterRTT.recreate();
-}
+	changeShadows ();
+	mWaterRTT.recreate();}
 
 
 //  init  common

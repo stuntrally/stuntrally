@@ -6,11 +6,18 @@ material Water
         fragment_program water_fragment
         
         cull_hardware none
+        scene_blend alpha_blend
+        depth_write off
         
         texture_unit reflectionMap
         {
             texture_alias WaterReflection
             tex_address_mode clamp
+        }
+        
+        texture_unit reflectionSkyMap
+        {
+            texture_alias SkyReflection
         }
         
         texture_unit refractionMap
