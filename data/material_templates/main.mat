@@ -10,6 +10,7 @@ material base
 
     scene_blend default
     depth_write default
+    depth_bias default
     alpha_rejection default
     
     alpha_map false
@@ -57,6 +58,7 @@ material base
         scene_blend $scene_blend
         alpha_rejection $alpha_rejection
         depth_write $depth_write
+        depth_bias $depth_bias
 
 		shader_properties
 		{
