@@ -141,11 +141,14 @@ void App::CreateHUD(bool destroy)
 	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
 	Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
 
-	String path = PathListTrkPrv(pSet->game.track_user, bRplPlay ? replay.header.track : sListTrack), sGrp = "TrkMini";
+	String path = bRplPlay ? 
+		PathListTrkPrv(replay.header.track_user, replay.header.track) :
+		PathListTrkPrv(pSet->game.track_user, pSet->game.track);
+	const String sRoad = "road.png", sTer = "terrain.jpg", sGrp = "TrkMini";
 	resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
+	resMgr.unloadResourceGroup(sGrp);
 	resMgr.initialiseResourceGroup(sGrp);
 
-	const String sRoad = "road.png", sTer = "terrain.jpg";
 	if (sc.ter)
 	{	try {  texMgr.unload(sRoad);  texMgr.load(sRoad, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  }  catch(...) {  }
 		try {  texMgr.unload(sTer);   texMgr.load(sTer,  sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  }  catch(...) {  }

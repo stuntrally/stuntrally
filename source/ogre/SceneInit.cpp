@@ -34,8 +34,6 @@ void App::createScene()
 	//  tex fil
 	MaterialManager::getSingleton().setDefaultTextureFiltering(TFO_ANISOTROPIC);
 	MaterialManager::getSingleton().setDefaultAnisotropy(pSet->anisotropy);
-
-	mRoot->addResourceLocation(pathTrk[1] + "_previews/", "FileSystem");  //prv user tracks
 	
 	//  restore camNums
 	for (int i=0; i<4; ++i)
@@ -184,7 +182,7 @@ void App::LoadCleanUp()  // 1 first
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
 	///  destroy all  TODO ...
-	///!  remove this crap and destroy everything with* manually  destroyCar, destroyScene, destroyHud
+	///!  remove this and destroy everything with* manually  destroyCar, destroyScene, destroyHud
 	///!  check if scene (track), car changed, omit creating the same if not
 	//mSceneMgr->getRootSceneNode()->removeAndDestroyAllChildren();  // destroy all scenenodes
 	mSceneMgr->destroyAllManualObjects();
