@@ -126,10 +126,16 @@ void App::postInit()
 	mFactory->setSharedParameter ("arrowColour1", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
 	mFactory->setSharedParameter ("arrowColour2", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
 	mFactory->setSharedParameter ("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(0)));
+	mFactory->setSharedParameter ("waterTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(0)));
 	mFactory->setSharedParameter ("terrainWorldSize", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(1024)));
 	sh::Factory::getInstance().setGlobalSetting ("terrain_specular", (pSet->ter_mtr >= 1)  ? "true" : "false");
 	sh::Factory::getInstance().setGlobalSetting ("terrain_normal", (pSet->ter_mtr >= 2)  ? "true" : "false");
 	sh::Factory::getInstance().setGlobalSetting ("terrain_parallax", (pSet->ter_mtr >= 3)  ? "true" : "false");
+	sh::Factory::getInstance().setGlobalSetting ("water_reflect", pSet->water_reflect ? "true" : "false");
+	sh::Factory::getInstance().setGlobalSetting ("shadows_depth", (pSet->shadow_type > 1) ? "true" : "false");
+	sh::Factory::getInstance().setGlobalSetting ("soft_particles", "false");
+	sh::Factory::getInstance ().setSharedParameter ("waterSunFade_sunHeight", sh::makeProperty<sh::Vector2>(new sh::Vector2(1, 0.6)));
+	sh::Factory::getInstance ().setSharedParameter ("windDir_windSpeed", sh::makeProperty<sh::Vector3>(new sh::Vector3(0.5, -0.8, 0.2)));
 
 	mFactory->setShaderDebugOutputEnabled (true);
 
