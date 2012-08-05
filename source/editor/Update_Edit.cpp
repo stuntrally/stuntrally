@@ -11,6 +11,8 @@
 using namespace Ogre;
 
 
+#include "../shiny/Main/Factory.hpp"
+
 //  Update  input, info
 //---------------------------------------------------------------------------------------------------------------
 bool App::frameRenderingQueued(const FrameEvent& evt)
@@ -908,7 +910,14 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		pe->setPosition(par);
 		pe->setEmissionRate(f * sc.rain2Emit);
 	}
-	
+
+	// update shader time
+	/*
+	mTimer += evt.timeSinceLastFrame;
+	mFactory->setSharedParameter ("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
+	mFactory->setSharedParameter ("waterTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
+	*/
+
 	bFirstRenderFrame = false;
 	
 	return true;

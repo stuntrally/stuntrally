@@ -91,15 +91,15 @@ void TerrainMaterial::Profile::createMaterial (const Ogre::String& matName, cons
 	lightMap->setProperty ("direct_texture", sh::makeProperty<sh::StringValue> (new sh::StringValue(terrain->getLightmap()->getName())));
 	lightMap->setProperty ("tex_address_mode", sh::makeProperty<sh::StringValue> (new sh::StringValue("clamp")));
 
-	uint maxLayers = getMaxLayers(terrain);
-	uint numBlendTextures = std::min(terrain->getBlendTextureCount(maxLayers), terrain->getBlendTextureCount());
-	uint numLayers = std::min(maxLayers, static_cast<uint>(terrain->getLayerCount()));
+	unsigned int maxLayers = getMaxLayers(terrain);
+	unsigned int numBlendTextures = std::min(terrain->getBlendTextureCount(maxLayers), terrain->getBlendTextureCount());
+	unsigned int numLayers = std::min(maxLayers, static_cast<unsigned int>(terrain->getLayerCount()));
 
 	p->mShaderProperties.setProperty ("num_layers", sh::makeProperty<sh::StringValue>(new sh::StringValue(Ogre::StringConverter::toString(numLayers))));
 	p->mShaderProperties.setProperty ("num_blendmaps", sh::makeProperty<sh::StringValue>(new sh::StringValue(Ogre::StringConverter::toString(numBlendTextures))));
 
 	// blend maps
-	for (uint i = 0; i < numBlendTextures; ++i)
+	for (unsigned int i = 0; i < numBlendTextures; ++i)
 	{
 		sh::MaterialInstanceTextureUnit* blendTex = p->createTextureUnit ("blendMap" + Ogre::StringConverter::toString(i));
 		blendTex->setProperty ("direct_texture", sh::makeProperty<sh::StringValue> (new sh::StringValue(terrain->getBlendTextureName(i))));
@@ -107,7 +107,7 @@ void TerrainMaterial::Profile::createMaterial (const Ogre::String& matName, cons
 	}
 
 	// layer diffuse
-	for (uint i = 0; i < numLayers; ++i)
+	for (unsigned int i = 0; i < numLayers; ++i)
 	{
 		sh::MaterialInstanceTextureUnit* diffuseTex = p->createTextureUnit ("diffuseMap" + Ogre::StringConverter::toString(i));
 		diffuseTex->setProperty ("direct_texture", sh::makeProperty<sh::StringValue> (new sh::StringValue(terrain->getLayerTextureName(i, 0))));
@@ -116,7 +116,7 @@ void TerrainMaterial::Profile::createMaterial (const Ogre::String& matName, cons
 	}
 
 	// layer normalheight
-	for (uint i = 0; i < numLayers; ++i)
+	for (unsigned int i = 0; i < numLayers; ++i)
 	{
 		sh::MaterialInstanceTextureUnit* normalTex = p->createTextureUnit ("normalMap" + Ogre::StringConverter::toString(i));
 		normalTex->setProperty ("direct_texture", sh::makeProperty<sh::StringValue> (new sh::StringValue(terrain->getLayerTextureName(i, 1))));
@@ -125,7 +125,7 @@ void TerrainMaterial::Profile::createMaterial (const Ogre::String& matName, cons
 	// shadow
 	if (!renderCompositeMap)
 	{
-		for (uint i = 0; i < 3; ++i)
+		for (unsigned int i = 0; i < 3; ++i)
 		{
 			sh::MaterialInstanceTextureUnit* shadowTex = p->createTextureUnit ("shadowMap" + Ogre::StringConverter::toString(i));
 			shadowTex->setProperty ("content_type", sh::makeProperty<sh::StringValue> (new sh::StringValue("shadow")));
@@ -137,10 +137,10 @@ void TerrainMaterial::Profile::createMaterial (const Ogre::String& matName, cons
 	compositeMap->setProperty ("direct_texture", sh::makeProperty<sh::StringValue> (new sh::StringValue(terrain->getCompositeMap()->getName())));
 
 	// uv multipliers
-	uint numUVMul = numLayers / 4;
+	unsigned int numUVMul = numLayers / 4;
 	if (numLayers % 4)
 		++numUVMul;
-	for (uint i = 0; i < numUVMul; ++i)
+	for (unsigned int i = 0; i < numUVMul; ++i)
 	{
 		sh::Vector4* uvMul = new sh::Vector4(
 			terrain->getLayerUVMultiplier(i * 4),
