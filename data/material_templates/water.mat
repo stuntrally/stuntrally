@@ -18,6 +18,7 @@ material Water
         texture_unit reflectionSkyMap
         {
             texture_alias SkyReflection
+            tex_address_mode mirror
         }
         
         texture_unit refractionMap
