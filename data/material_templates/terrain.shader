@@ -7,7 +7,7 @@
 #define COMPOSITE_MAP @shGlobalSettingBool(terrain_composite_map)
 
 #define FOG @shGlobalSettingBool(fog) && !RENDER_COMPOSITE_MAP
-#define MRT !RENDER_COMPOSITE_MAP
+#define MRT (!RENDER_COMPOSITE_MAP && @shGlobalSettingBool(mrt_output))
 
 #define SHADOWS @shGlobalSettingBool(shadows_pssm) && !RENDER_COMPOSITE_MAP
 

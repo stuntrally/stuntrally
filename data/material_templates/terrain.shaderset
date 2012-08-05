@@ -3,7 +3,7 @@ shader_set terrain_vertex
     source terrain.shader
     type vertex
     profiles_cg vs_2_0 vp40 arbvp1
-    profiles_hlsl ps_3_0 vs_2_0
+    profiles_hlsl vs_3_0 vs_2_0
 }
 
 shader_set terrain_fragment
