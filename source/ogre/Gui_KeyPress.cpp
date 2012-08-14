@@ -333,8 +333,8 @@ if (!bAssignKey)
 						{
 						case 1:	changeTrack();	btnNewGame(0);  break;
 						case 2:	changeCar();	btnNewGame(0);  break;
-						case 4:	chatSendMsg();  break;
-						case 5:	btnChampStart(0);  break;
+						case 5:	chatSendMsg();  break;
+						case 6:	btnChampStart(0);  break;
 					}	break;
 				}	}
 				return false;
