@@ -59,7 +59,7 @@ void LoadingBar::start( RenderWindow* window, 		unsigned short numGroupsInit,
 		unsigned int i=1;
 		while (1)
 		{
-			if (ResourceGroupManager::getSingleton().resourceExists("Loading", "loading" + Ogre::StringConverter::toString(i) + ".jpg") )
+			if (ResourceGroupManager::getSingleton().resourceExists("Loading", "loading" + toStr(i) + ".jpg") )
 				i++;
 			else
 				break;
@@ -78,7 +78,7 @@ void LoadingBar::start( RenderWindow* window, 		unsigned short numGroupsInit,
 		unsigned int imgNumber;
 		imgNumber = rand() % (i-1);
 		// set the loading image
-		mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName("loading" + Ogre::StringConverter::toString(imgNumber+1) + ".jpg");
+		mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName("loading" + toStr(imgNumber+1) + ".jpg");
 	}
 	else
 	{			
