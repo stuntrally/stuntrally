@@ -3953,7 +3953,7 @@
 					<Widget type="TabItem" skin="" position="2 24 714 444">
 						<Property key="Caption" value="#{Shortcuts}"/>
 						<UserString key="RelativeTo" value="HelpWnd"/>
-						<Widget type="TextBox" skin="TextBox" position="32 20 540 20">
+						<Widget type="TextBox" skin="TextBox" position="32 20 740 20">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{ShortcutsInfo}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
