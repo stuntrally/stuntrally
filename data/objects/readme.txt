@@ -28,6 +28,23 @@ Author: mtalhalodhi
 License: CC0
 http://www.blendswap.com/blends/misc-objects/wooden-crate/
 
+----  plastic_barrel.mesh
+Author: Nobiax (yughues)
+License: CC0
+http://opengameart.org/content/plastic-barrel-pack
+
+----  cone.mesh
+Road Block Set
+Author: timzero4
+Licensed: CC-BY
+http://www.blendswap.com/blends/misc-objects/road-block-set/
+
+----  wood_block.mesh
+Wood parts
+By B65ISP
+Licensed: CC0
+http://www.blendswap.com/blends/architecture/wood-parts/
+
 ----  0 A.D. resources  ----  see: readme 0 A.D.txt
 pers_*.mesh  pyramid*.mesh  obelisk.mesh
 	binaries\data\mods\public\art\meshes\structural\pers_house_b.dae

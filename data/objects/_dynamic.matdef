@@ -59,13 +59,28 @@
 	diffuse = 0.50 0.50 0.50
 	specular = 0.30 0.30 0.30 6
 
-[TILE]
-	diffuseMap_1024 = crate.jpg
-	diffuseMap_256 = crate_s.jpg
-	normalMap_1024 = crate_norm.jpg
-	normalMap_256 = crate_norm_s.jpg
+[wood_block]
+	diffuseMap_1024 = wood_block.jpg
+	;diffuseMap_256 = wood_block_s.jpg
+	normalMap_1024 = wood_block_norm.jpg
+	;normalMap_256 = wood_block_norm_s.jpg
 	receivesDepthShadows = true
 	terrainLightMap = true
 	ambient = 1.00 1.00 1.00
 	diffuse = 0.50 0.50 0.50
 	specular = 0.30 0.30 0.30 6
+
+[plastic_barrel]
+	diffuseMap_1024 = plastic_diffuse.png
+	;diffuseMap_256 = wood_block_s.jpg
+	normalMap_1024 = plastic_normal.png
+	;normalMap_256 = wood_block_norm_s.jpg
+	specMap_1024 = plastic_specular.png
+	;specMap_256 = fuel_can_spec_s.jpg
+	receivesDepthShadows = true
+	terrainLightMap = true
+	ambient = 1.00 1.00 1.00
+	diffuse = 0.70 0.70 0.70
+	specular = 0.80 0.80 0.80 8
+	shadowPriority = 1.0
+	normalMapPriority = 0.9
