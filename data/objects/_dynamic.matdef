@@ -11,7 +11,6 @@
 	diffuse = 1.00 1.00 1.00
     specular = 1 1 1 4
 
-
 [RubberTire]
 	diffuseMap_1024 = big_tire.png
 	receivesDepthShadows = true
@@ -29,3 +28,16 @@
 	ambient = 0.70 0.70 0.70
 	diffuse = 1.00 1.00 1.00
     specular = 1 1 1 4
+
+[crate2]
+	diffuseMap_1024 = crate2.jpg
+	;diffuseMap_256 = fuel_can_diff_s.jpg
+	;normalMap_1024 = fuel_can_norm.jpg
+	;normalMap_256 = fuel_can_norm_s.jpg
+	;specMap_1024 = fuel_can_spec.jpg
+	;specMap_256 = fuel_can_spec_s.jpg
+	receivesDepthShadows = true
+	terrainLightMap = true
+	ambient = 1.00 1.00 1.00
+	diffuse = 0.70 0.70 0.70
+	specular = 0.70 0.70 0.70 8

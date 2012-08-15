@@ -4,15 +4,26 @@ Author: Clint Bellanger
 License: CC-BY 3.0
 http://opengameart.org/content/big-tire
 
-
 ----  fuel_can.mesh
 Fuel Can
 Author: Nobiax.
 License: Absolutely free to use or to modify in any kind of work (personal, commercial or else).
 http://nobiax.deviantart.com/art/Free-Fuel-Can-Pack-146561906
 
+----  concrete_bar.mesh
+Low Poly Worn Construction Barrier
+By: cr0wb4r
+License: CC-BY-SA
+http://www.blendswap.com/blends/game-engine/low-poly-worn-construction-barrier/
+
+----  crate2*.mesh
+Simple but nice looking Crates
+Author: Veich
+Lincense: CC0
+http://www.blendswap.com/blends/misc-objects/simple-but-nice-looking-crates/
+
 
 ----  0 A.D. resources  ----  see: readme 0 A.D.txt
-pers_house_b.mesh
+pers_*.mesh  pyramid*.mesh  obelisk.mesh
 	binaries\data\mods\public\art\meshes\structural\pers_house_b.dae
 	binaries\data\mods\public\art\textures\skins\structural\pers_struct.dds
