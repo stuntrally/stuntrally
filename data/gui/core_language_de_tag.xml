@@ -10,7 +10,6 @@
 	<Tag name="InpSet_AxisFull">Achse ganz</Tag>
 	<Tag name="InputHeaderTxt4">Ändern</Tag>
 	<Tag name="TerrainDouble">Double</Tag>
-	<Tag name="TipSunDirYaw">Richtung der Sonne - Gierwinkel</Tag>
 	<Tag name="InputStartMeet">Auto wird (nächste + / vorherige -) Strecke Punkte treffen</Tag>
 	<Tag name="TipAutoGearbox">Für manuelle Schaltung den Haken rausnehmen.</Tag>
 	<Tag name="LS_MISC">Fertigstellen</Tag>
@@ -35,6 +34,7 @@
 	<Tag name="TerNormal">Normal</Tag>
 	<Tag name="NeedNewGame">* neues Spiel erforderlich</Tag>
 	<Tag name="InputRoadAngZero">shift-6 - Winkel leeren</Tag>
+	<Tag name="ScaleMul">Skal. Mult.</Tag>
 	<Tag name="TipTrackImg">Bildschirmfoto der ausgewählten Strecke.</Tag>
 	<Tag name="TerLNoiseOnly">Nur Rauschen</Tag>
 	<Tag name="InputValueChange">Jede Bewegung/Werteveränderung mit </Tag>
@@ -180,7 +180,7 @@
 	<Tag name="Always">Immer</Tag>
 	<Tag name="Brush_Offset">Offset</Tag>
 	<Tag name="softparticles">Weiche Partikel</Tag>
-	<Tag name="TipReverse">Streckenrichtung umkehren.</Tag>
+	<Tag name="TipSunDirYaw">Richtung der Sonne - Gierwinkel</Tag>
 	<Tag name="Players">Spieler</Tag>
 	<Tag name="Road_ChkR">ChkR</Tag>
 	<Tag name="MessageBox_No">Nein</Tag>
@@ -333,7 +333,7 @@
 	<Tag name="InputMapShowOptions">Optionen zeigen</Tag>
 	<Tag name="InputCameraMode">Kameramodus</Tag>
 	<Tag name="Enabled">Aktiviert</Tag>
-	<Tag name="RollingDrag">Rollwiderstand</Tag>
+	<Tag name="TipReverse">Streckenrichtung umkehren.</Tag>
 	<Tag name="DidntPass">Durchgefallen</Tag>
 	<Tag name="Road_Cur">Cur</Tag>
 	<Tag name="InputMinimapType">Alt-F2,F3 - Minikartentyp</Tag>
@@ -387,7 +387,7 @@
 	<Tag name="InputTogglePreview">F7 - Vorschaukamera</Tag>
 	<Tag name="GameBy">Ein Spiel von</Tag>
 	<Tag name="SunWeather">Sonne und Wetter</Tag>
-	<Tag name="InputBrushForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
+	<Tag name="RollingDrag">Rollwiderstand</Tag>
 	<Tag name="RplDelete">Löschen</Tag>
 	<Tag name="TipAutoRear">Für manuellen Rückwärtsgang Haken rausnehmen.</Tag>
 	<Tag name="TipToggleModel">Modell aktivieren oder deaktivieren.</Tag>
@@ -432,6 +432,7 @@
 	<Tag name="TipChangeHue">Farbe ändern (Farbton)</Tag>
 	<Tag name="InputRoadMove">- Punkt bewegen</Tag>
 	<Tag name="Intensity">Intensität</Tag>
+	<Tag name="InputBrushForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
 	<Tag name="NetGameName">Spielname</Tag>
 	<Tag name="TexSize">Texturgröße</Tag>
 	<Tag name="TipSunAmbient">Sonnenlicht Umgebungsfarbe (konstant). R G B Komponenten von 0 bis 1 (z.B. 0.4 0.4 0.4)</Tag>
@@ -623,6 +624,7 @@
 	<Tag name="DeleteRoad">Straße löschen</Tag>
 	<Tag name="Setup">Setup</Tag>
 	<Tag name="ReflMode_full">Voll</Tag>
+	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
 	<Tag name="TrackPipes">Röhren</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Höhen-Offset</Tag>
@@ -655,9 +657,9 @@
 	<Tag name="Editor">Editor</Tag>
 	<Tag name="TipTrkViewDetailed">Detaillierte Ansicht.</Tag>
 	<Tag name="AndContributors">und Mitwirkenden.</Tag>
-	<Tag name="InputRoadSelectMany">Auswahl (viele)</Tag>
+	<Tag name="InputObjects1">1 - reset rotation</Tag>
 	<Tag name="Copy">Kopieren</Tag>
-	<Tag name="Reverse">Rückwärts</Tag>
+	<Tag name="InputObjects2">2 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="TipFind">Nach Streckenname suchen</Tag>
 	<Tag name="scale">Skalieren</Tag>
 	<Tag name="UnitMph">mph</Tag>
@@ -682,6 +684,7 @@
 	<Tag name="Near">Nah</Tag>
 	<Tag name="Materials">Materialien</Tag>
 	<Tag name="InputMultiplier">Faktor</Tag>
+	<Tag name="Reverse">Rückwärts</Tag>
 	<Tag name="InputUndo">(rückgängig)</Tag>
 	<Tag name="InputBrushPower">; &apos;  (or alt-Wheel)  -  Power exponent</Tag>
 	<Tag name="CarCollis">Autokollision</Tag>
@@ -757,7 +760,7 @@
 	<Tag name="Collis.">Kollis.</Tag>
 	<Tag name="Scenery">Landschaft</Tag>
 	<Tag name="Track">Strecke</Tag>
-	<Tag name="ScaleMul">Skal. Mult.</Tag>
+	<Tag name="InputRoadSelectMany">Auswahl (viele)</Tag>
 	<Tag name="Never">Nie</Tag>
 	<Tag name="TerGenOct">Oktaven</Tag>
 	<Tag name="Volume">Lautstärke</Tag>
@@ -790,9 +793,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="InputObjects1">1 - reset rotation</Tag>
-	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
-	<Tag name="InputObjects2">2 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
