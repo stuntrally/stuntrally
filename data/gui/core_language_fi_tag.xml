@@ -10,7 +10,6 @@
 	<Tag name="InpSet_AxisFull">Täysi akseli</Tag>
 	<Tag name="InputHeaderTxt4">Muokkaa</Tag>
 	<Tag name="TerrainDouble">Double</Tag>
-	<Tag name="TipSunDirYaw">Sun direction - yaw angle.</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
 	<Tag name="TipAutoGearbox">Poista valinta saadaksesi manuaali vaihteet.</Tag>
 	<Tag name="LS_MISC">Lopetellaan</Tag>
@@ -35,6 +34,7 @@
 	<Tag name="TerNormal">Normaali</Tag>
 	<Tag name="NeedNewGame">* peli tarvitsee aloittaa alusta</Tag>
 	<Tag name="InputRoadAngZero">shift-6  - zero angles</Tag>
+	<Tag name="ScaleMul">Scale multiplier</Tag>
 	<Tag name="TipTrackImg">Kuvankaappaus pelitilanteesta valitulla radalla.</Tag>
 	<Tag name="TerLNoiseOnly">Vain kohina</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
@@ -180,7 +180,7 @@
 	<Tag name="Always">Aina</Tag>
 	<Tag name="Brush_Offset">Offset</Tag>
 	<Tag name="softparticles">Pehmeät hiukkaset</Tag>
-	<Tag name="TipReverse">Reverse track direction.</Tag>
+	<Tag name="TipSunDirYaw">Sun direction - yaw angle.</Tag>
 	<Tag name="Players">Pelaajat</Tag>
 	<Tag name="Road_ChkR">ChkR</Tag>
 	<Tag name="MessageBox_No">Ei</Tag>
@@ -333,7 +333,7 @@
 	<Tag name="InputMapShowOptions">Näytä valinnat</Tag>
 	<Tag name="InputCameraMode">Kameramoodi</Tag>
 	<Tag name="Enabled">Käytössä</Tag>
-	<Tag name="RollingDrag">Rolling Drag</Tag>
+	<Tag name="TipReverse">Reverse track direction.</Tag>
 	<Tag name="DidntPass">Didn't pass</Tag>
 	<Tag name="Road_Cur">Cur</Tag>
 	<Tag name="InputMinimapType">alt-F2,F3 - Prev,next minimap type</Tag>
@@ -387,7 +387,7 @@
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
 	<Tag name="GameBy">Pelin tarjoaa</Tag>
 	<Tag name="SunWeather">Aurinko ja sää</Tag>
-	<Tag name="InputBrushForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
+	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplDelete">Poista</Tag>
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
 	<Tag name="TipToggleModel">Enable or disable this model.</Tag>
@@ -432,6 +432,7 @@
 	<Tag name="TipChangeHue">Vaihda auton värisävyä.</Tag>
 	<Tag name="InputRoadMove">- liikuta pistettä</Tag>
 	<Tag name="Intensity">Voimakkuus</Tag>
+	<Tag name="InputBrushForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
 	<Tag name="NetGameName">Pelin nimi</Tag>
 	<Tag name="TexSize">Tekstuurien koko</Tag>
 	<Tag name="TipSunAmbient">Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)</Tag>
@@ -623,6 +624,7 @@
 	<Tag name="DeleteRoad">Delete Road</Tag>
 	<Tag name="Setup">Setup</Tag>
 	<Tag name="ReflMode_full">Täysi</Tag>
+	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
 	<Tag name="TrackPipes">Putket</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Height offset</Tag>
@@ -655,9 +657,9 @@
 	<Tag name="Editor">Editori</Tag>
 	<Tag name="TipTrkViewDetailed">Detailed list view.</Tag>
 	<Tag name="AndContributors">ja avustajat.</Tag>
-	<Tag name="InputRoadSelectMany">Select (many)</Tag>
+	<Tag name="InputObjects1">1 - reset rotation</Tag>
 	<Tag name="Copy">Kopio</Tag>
-	<Tag name="Reverse">Reverse</Tag>
+	<Tag name="InputObjects2">2 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="TipFind">Enter part of name to find (filters list).</Tag>
 	<Tag name="scale">Skaala</Tag>
 	<Tag name="UnitMph">mph</Tag>
@@ -682,6 +684,7 @@
 	<Tag name="Near">Near</Tag>
 	<Tag name="Materials">Materiaalit</Tag>
 	<Tag name="InputMultiplier">Kerroin</Tag>
+	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="InputUndo">(one time undo)</Tag>
 	<Tag name="InputBrushPower">; &apos;  (or alt-Wheel)  -  Power exponent</Tag>
 	<Tag name="CarCollis">Autojen törmäystunnistus</Tag>
@@ -757,7 +760,7 @@
 	<Tag name="Collis.">Collis.</Tag>
 	<Tag name="Scenery">Scenery</Tag>
 	<Tag name="Track">Rata</Tag>
-	<Tag name="ScaleMul">Scale multiplier</Tag>
+	<Tag name="InputRoadSelectMany">Select (many)</Tag>
 	<Tag name="Never">Ei koskaan</Tag>
 	<Tag name="TerGenOct">Oktaavit</Tag>
 	<Tag name="Volume">Volume</Tag>
@@ -790,9 +793,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="InputObjects1">1 - reset rotation</Tag>
-	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
-	<Tag name="InputObjects2">2 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
