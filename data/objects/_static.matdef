@@ -1,4 +1,3 @@
-
 [pers_struct_dds]
 	diffuseMap_512 = pers_struct.dds
 	ambient = 1.0 1.0 1.0

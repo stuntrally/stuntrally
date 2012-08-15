@@ -31,13 +31,30 @@
 
 [crate2]
 	diffuseMap_1024 = crate2.jpg
-	;diffuseMap_256 = fuel_can_diff_s.jpg
-	;normalMap_1024 = fuel_can_norm.jpg
-	;normalMap_256 = fuel_can_norm_s.jpg
-	;specMap_1024 = fuel_can_spec.jpg
-	;specMap_256 = fuel_can_spec_s.jpg
+	diffuseMap_256 = crate2_s.jpg
+	normalMap_1024 = crate_norm.jpg
+	normalMap_256 = crate_norm_s.jpg
 	receivesDepthShadows = true
 	terrainLightMap = true
 	ambient = 1.00 1.00 1.00
 	diffuse = 0.70 0.70 0.70
-	specular = 0.70 0.70 0.70 8
+	specular = 0.60 0.60 0.60 8
+
+[Crate]
+	diffuseMap_1024 = crate.jpg
+	diffuseMap_256 = crate_s.jpg
+	normalMap_1024 = crate_norm.jpg
+	normalMap_256 = crate_norm_s.jpg
+	receivesDepthShadows = true
+	terrainLightMap = true
+	ambient = 0.90 1.00 1.00
+	diffuse = 0.90 1.00 1.00
+	specular = 0.55 0.60 0.60 32
+
+[road_cone]
+	diffuseMap_256 = road_cone.png
+	receivesDepthShadows = true
+	terrainLightMap = true
+	ambient = 1.00 0.60 0.00
+	diffuse = 0.50 0.30 0.00
+	specular = 0.30 0.30 0.30 4

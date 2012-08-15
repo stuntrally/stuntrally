@@ -22,6 +22,11 @@ Author: Veich
 Lincense: CC0
 http://www.blendswap.com/blends/misc-objects/simple-but-nice-looking-crates/
 
+----  crate.mesh
+Wooden Crate
+Author: mtalhalodhi
+License: CC0
+http://www.blendswap.com/blends/misc-objects/wooden-crate/
 
 ----  0 A.D. resources  ----  see: readme 0 A.D.txt
 pers_*.mesh  pyramid*.mesh  obelisk.mesh
