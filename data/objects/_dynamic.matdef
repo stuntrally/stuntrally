@@ -36,8 +36,8 @@
 	normalMap_256 = crate_norm_s.jpg
 	receivesDepthShadows = true
 	terrainLightMap = true
-	ambient = 1.00 1.00 1.00
-	diffuse = 0.70 0.70 0.70
+	ambient = 0.95 1.00 1.00
+	diffuse = 0.65 0.70 0.70
 	specular = 0.60 0.60 0.60 8
 
 [Crate]
@@ -51,10 +51,21 @@
 	diffuse = 0.90 1.00 1.00
 	specular = 0.55 0.60 0.60 32
 
-[road_cone]
-	diffuseMap_256 = road_cone.png
+[cone]
+	diffuseMap_256 = cone.png
 	receivesDepthShadows = true
 	terrainLightMap = true
-	ambient = 1.00 0.60 0.00
-	diffuse = 0.50 0.30 0.00
-	specular = 0.30 0.30 0.30 4
+	ambient = 1.00 1.00 1.00
+	diffuse = 0.50 0.50 0.50
+	specular = 0.30 0.30 0.30 6
+
+[TILE]
+	diffuseMap_1024 = crate.jpg
+	diffuseMap_256 = crate_s.jpg
+	normalMap_1024 = crate_norm.jpg
+	normalMap_256 = crate_norm_s.jpg
+	receivesDepthShadows = true
+	terrainLightMap = true
+	ambient = 1.00 1.00 1.00
+	diffuse = 0.50 0.50 0.50
+	specular = 0.30 0.30 0.30 6
