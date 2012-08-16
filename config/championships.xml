@@ -79,7 +79,7 @@
 		<track name="G4-River"		laps="1" factor="0.1" />
 		<track name="0W2-qp"		laps="1" factor="0.1" />
 		<track name="0W3-mouth"		laps="1" factor="0.1" />
-		<track name="F4-o4H"		laps="1" factor="0.1" />
+		<track name="F4-OSquare"	laps="1" factor="0.1" />
 		<track name="F6-DC3"		laps="1" factor="0.1" />
 	</championship>
 
@@ -267,7 +267,7 @@
 			descr="Forest championship. All tracks for this scenery in their appearance order.">
 		<track name="F1-Cc"			laps="1" factor="0.1" />
 		<track name="F3-Snail"		laps="1" factor="0.1" />
-		<track name="F4-o4H"		laps="1" factor="0.1" />
+		<track name="F4-OSquare"	laps="1" factor="0.1" />
 		<track name="F6-DC3"		laps="1" factor="0.1" />
 		<track name="F7-blur3"		laps="1" factor="0.1" />
 		<track name="F8-blurX3"		laps="1" factor="0.1" />
@@ -389,7 +389,7 @@
 		<track name="D6-jump0-high"	time="35.6"/>
 		<track name="S5-LoopBasic"	time="72.4"/>
 
-		<track name="F4-o4H"		time="85.3"/>
+		<track name="F4-OSquare"	time="85.3"/>
 		<track name="F6-DC3"		time="52.2"/>
 		<track name="D7-CrossJumps"	time="97.0"/>
 
