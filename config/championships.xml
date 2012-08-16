@@ -6,7 +6,7 @@
 	<championship name="Tutorial Basic" ver="1" difficulty="1" length="3" tutorial="1" 
 			descr="Basic tutorial on simplest tracks. One lap on each track. To learn different road surfaces.">
 		<track name="J3-S"			laps="1" factor="0.1" />
-		<track name="F1-Cc"			laps="1" factor="0.1" />
+		<track name="F1-Slippery"	laps="1" factor="0.1" />
 		<track name="0W1-cross"		laps="1" factor="0.1" />
 	</championship>
 
@@ -265,7 +265,7 @@
 	</championship>
 	<championship name="Forest scenery" ver="1" difficulty="4" length="3" tutorial="3" 
 			descr="Forest championship. All tracks for this scenery in their appearance order.">
-		<track name="F1-Cc"			laps="1" factor="0.1" />
+		<track name="F1-Slippery"	laps="1" factor="0.1" />
 		<track name="F3-Snail"		laps="1" factor="0.1" />
 		<track name="F4-OSquare"	laps="1" factor="0.1" />
 		<track name="F6-DC3"		laps="1" factor="0.1" />
@@ -382,7 +382,7 @@
 		<track name="0W1-cross"		time="62.2"/>
 		<track name="0W2-qp"		time="68.5"/>
 		<track name="0W3-mouth"		time="42.9"/>
-		<track name="F1-Cc"			time="48.5"/>
+		<track name="F1-Slippery"	time="48.5"/>
 		<track name="F3-Snail"		time="38.5"/>
 		<!--18-->
 		<track name="D5-jump8-low"	time="37.5"/>

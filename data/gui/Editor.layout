@@ -58,23 +58,23 @@
 			<Property key="Caption" value="ToolTip Text"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="1068 740 136 120" layer="Back" name="CamWnd">
+	<Widget type="Window" skin="WindowC" position="1068 740 170 120" layer="Back" name="CamWnd">
 		<Property key="Caption" value="#{PreviewCam}"/>
 		<Property key="Colour" value="0.7 0.85 1.0"/>
 		<Property key="Alpha" value="0.5"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="tip" value="#{TipPrevWind}"/>
-		<Widget type="TextBox" skin="TextBox" position="4 0 120 20" name="cam0">
+		<Widget type="TextBox" skin="TextBox" position="4 0 150 20" name="cam0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="F7 - #{Leave}"/>
 			<Property key="TextColour" value="0.8 0.9 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 30 120 20" name="cam1">
+		<Widget type="TextBox" skin="TextBox" position="4 30 150 20" name="cam1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="#{EnterSave}"/>
 			<Property key="TextColour" value="0.66 0.86 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="34 50 120 20" name="cam2">
+		<Widget type="TextBox" skin="TextBox" position="34 50 150 20" name="cam2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="#{Screenshot}"/>
 			<Property key="TextColour" value="0.66 0.86 1.0"/>
