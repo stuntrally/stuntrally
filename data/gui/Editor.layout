@@ -943,7 +943,7 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="436 375 172 24" name="WeatherDisable">
-					<Property key="Caption" value="#{DisableEdit} (P)"/>
+					<Property key="Caption" value="#{DisableEdit} (I)"/>
 					<Property key="TextColour" value="0.6 0.7 0.8"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipDisableWeather}"/>

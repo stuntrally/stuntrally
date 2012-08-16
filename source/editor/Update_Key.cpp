@@ -106,7 +106,7 @@ void App::Status(String s, float r,float g,float b)
 ///  Preview Camera mode  - - - - - - - - - - - - - - - - - - - - - - - -
 void App::togPrvCam()
 {
-	static bool oldV = false;
+	static bool oldV = false, oldI = false;
 	if (edMode == ED_PrvCam)  // leave
 	{
 		SetEdMode(edModeOld);
@@ -116,6 +116,7 @@ void App::togPrvCam()
 
 		UpdFog();  // restore fog, veget
 		if (oldV)  {  bTrGrUpd = true;  oldV = false;  }
+		pSet->bWeather = oldI;
 		mTerrainGlobals->setMaxPixelError(pSet->terdetail);
 
 		sc.camPos = mCameraT->getPosition();
@@ -131,8 +132,9 @@ void App::togPrvCam()
 		rt[RTs].ndMini->setVisible(true);
 		ndCar->setVisible(false);
 
-		UpdFog(true);  // on fog, veget
+		UpdFog(true);  // on fog, veget, weather
 		if (!pSet->bTrees)  {  bTrGrUpd = true;  oldV = true;  }
+		oldI = pSet->bWeather;  pSet->bWeather = false;
 		mTerrainGlobals->setMaxPixelError(0.5f);  //hq ter
 
 		mCamPosOld = mCameraT->getPosition();
@@ -686,7 +688,7 @@ bool App::KeyPress(const CmdKey &arg)
 		//  trees
 		case KC_V:	bTrGrUpd = true;  break;
 		//  weather
-		case KC_P:  {
+		case KC_I:  {
 			pSet->bWeather = !pSet->bWeather;  chkWeather->setStateSelected(pSet->bWeather);  }  break;
 
 		//  terrain
