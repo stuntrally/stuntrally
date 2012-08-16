@@ -12,7 +12,7 @@
 
 	<championship name="Tutorial Bridges" ver="1" difficulty="2" length="3" tutorial="1" 
 			descr="Easy, medium length tutorial on tracks with bridges and bumpy terrain.">
-		<track name="D4-SZ"			laps="1" factor="0.1" />
+		<track name="D4-SBridge"	laps="1" factor="0.1" />
 		<track name="S4-Hills"		laps="1" factor="0.1" />
 	</championship>
 
@@ -20,7 +20,7 @@
 			descr="Tutorial on jumps in tracks, for training jumping. Car velocity before jump is most important.">
 		<track name="D5-jump8-low"	laps="1" factor="0.1" />
 		<track name="D6-jump0-high"	laps="1" factor="0.1" />
-		<track name="D8-HHY"		laps="1" factor="0.1" />
+		<track name="D8-Technical"	laps="1" factor="0.1" />
 	</championship>
 
 	<championship name="Tutorial Loops" ver="1" difficulty="4" length="3" tutorial="1" 
@@ -139,7 +139,7 @@
 	<championship name="Frenzy fellow" ver="3" difficulty="4" length="3" tutorial="0" 
 			descr="Curly tracks, mostly flat, frequently changing directions. Require lots of steering.">
 	<!--<track name="S2-Frenzy"		laps="1" factor="0.1" />-->
-		<track name="F3-osso"		laps="1" factor="0.1" />
+		<track name="F3-Snail"		laps="1" factor="0.1" />
 		<track name="F15-ForestTrip" laps="1" factor="0.1" />
 		<track name="S8-Frenzy2slow" laps="1" factor="0.1" />
 		<track name="0W4-ice-blur"	laps="1" factor="0.1" />
@@ -202,11 +202,11 @@
 		<track name="D1-simple"		laps="1" factor="0.1" /><!---->
 		<track name="D2-Mntn"		laps="1" factor="0.1" />
 		<track name="D3-P"			laps="1" factor="0.1" />
-		<track name="D4-SZ"			laps="1" factor="0.1" />
+		<track name="D4-SBridge"	laps="1" factor="0.1" />
 		<track name="D5-jump8-low"	laps="1" factor="0.1" />
 		<track name="D6-jump0-high"	laps="1" factor="0.1" />
 		<track name="D7-CrossJumps"	laps="1" factor="0.1" />
-		<track name="D8-HHY"		laps="1" factor="0.1" />
+		<track name="D8-Technical"	laps="1" factor="0.1" />
 		<track name="D9-Mud"		laps="1" factor="0.1" />
 		<track name="D10-MudBath"	laps="1" factor="0.15" />
 		<track name="D11-PersianCity" laps="1" factor="0.1" />
@@ -266,7 +266,7 @@
 	<championship name="Forest scenery" ver="1" difficulty="4" length="3" tutorial="3" 
 			descr="Forest championship. All tracks for this scenery in their appearance order.">
 		<track name="F1-Cc"			laps="1" factor="0.1" />
-		<track name="F3-osso"		laps="1" factor="0.1" />
+		<track name="F3-Snail"		laps="1" factor="0.1" />
 		<track name="F4-o4H"		laps="1" factor="0.1" />
 		<track name="F6-DC3"		laps="1" factor="0.1" />
 		<track name="F7-blur3"		laps="1" factor="0.1" />
@@ -375,7 +375,7 @@
 		<track name="TestC3-pipe-big"	time="14.5"/>
 		<track name="TestC4-ow"		time="11.0"/>
 
-		<track name="D4-SZ"			time="71.1"/>
+		<track name="D4-SBridge"	time="71.1"/>
 		<track name="J5-Pipes"		time="31.4"/>
 		<track name="J4-Pipe8"		time="17.5"/>
 		<!--13-->
@@ -383,7 +383,7 @@
 		<track name="0W2-qp"		time="68.5"/>
 		<track name="0W3-mouth"		time="42.9"/>
 		<track name="F1-Cc"			time="48.5"/>
-		<track name="F3-osso"		time="38.5"/>
+		<track name="F3-Snail"		time="38.5"/>
 		<!--18-->
 		<track name="D5-jump8-low"	time="37.5"/>
 		<track name="D6-jump0-high"	time="35.6"/>
@@ -393,7 +393,7 @@
 		<track name="F6-DC3"		time="52.2"/>
 		<track name="D7-CrossJumps"	time="97.0"/>
 
-		<track name="D8-HHY"		time="120.3"/>
+		<track name="D8-Technical"	time="120.3"/>
 		<track name="S6-PipeCrazy"	time="35.3"/>
 		<track name="S7-HighMadness" time="98.0"/>
 		<track name="S8-Frenzy2slow" time="114.6"/>
