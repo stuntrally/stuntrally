@@ -5,7 +5,7 @@
 
 	<championship name="Tutorial Basic" ver="1" difficulty="1" length="3" tutorial="1" 
 			descr="Basic tutorial on simplest tracks. One lap on each track. To learn different road surfaces.">
-		<track name="J3-S"			laps="1" factor="0.1" />
+		<track name="J3-Rocky"		laps="1" factor="0.1" />
 		<track name="F1-Slippery"	laps="1" factor="0.1" />
 		<track name="0W1-cross"		laps="1" factor="0.1" />
 	</championship>
@@ -71,8 +71,8 @@
 		<track name="G3-Butterfly"	laps="1" factor="0.1" />
 		<track name="F7-blur3"		laps="1" factor="0.1" />
 		<track name="J1-T"			laps="1" factor="0.1" />
-		<track name="J9-oNJo"		laps="1" factor="0.1" />
-		<track name="J8-oO"			laps="1" factor="0.1" />
+		<track name="J9-Sharp"		laps="1" factor="0.1" />
+		<track name="J8-Round"		laps="1" factor="0.1" />
 		<track name="I2-S8"			laps="1" factor="0.1" />
 		<track name="I7-Moses"		laps="1" factor="0.1" />
 		<track name="D3-P"			laps="1" factor="0.1" />
@@ -153,7 +153,7 @@
 	<championship name="Fancy circles" ver="2" difficulty="3" length="3" tutorial="0" 
 			descr="The most circullar tracks. Usualy banked, sometimes with easy pipe turns. Require much steering but mostly in same direction.">
 		<track name="J10-Spiral"	laps="1" factor="0.1" />
-		<track name="0W5-O4"		laps="1" factor="0.1" />
+		<track name="0W5-Circles"	laps="1" factor="0.1" />
 		<track name="S9-demo"		laps="1" factor="0.1" />
 		<track name="J19-demo2"		laps="1" factor="0.1" />
 		<track name="0W8-pipe8x8"	laps="1" factor="0.1" />
@@ -214,13 +214,13 @@
 	<championship name="Jungle scenery" ver="2" difficulty="3" length="3" tutorial="3" 
 			descr="Jungle championship. All tracks for this scenery in their appearance order. Part 1 of 2.">
 		<track name="J1-T"			laps="1" factor="0.1" />
-		<track name="J3-S"			laps="1" factor="0.1" />
+		<track name="J3-Rocky"		laps="1" factor="0.1" />
 		<track name="J4-Pipe8"		laps="1" factor="0.1" /><!---->
 		<track name="J5-Pipes"		laps="1" factor="0.1" />
 		<track name="J6-80fun"		laps="1" factor="0.1" />
-		<track name="J7-Jsso"		laps="1" factor="0.1" />
-		<track name="J8-oO"			laps="1" factor="0.1" />
-		<track name="J9-oNJo"		laps="1" factor="0.1" />
+		<track name="J7-Hilly"		laps="1" factor="0.1" />
+		<track name="J8-Round"		laps="1" factor="0.1" />
+		<track name="J9-Sharp"		laps="1" factor="0.1" />
 		<track name="J10-Spiral"	laps="1" factor="0.1" />
 	</championship>
 	<championship name="Jungle 2nd scenery" ver="2" difficulty="4" length="3" tutorial="3" 
@@ -256,7 +256,7 @@
 		<track name="0W2-qp"		laps="1" factor="0.1" />
 		<track name="0W3-mouth"		laps="1" factor="0.1" />
 		<track name="0W4-ice-blur"	laps="1" factor="0.1" />
-		<track name="0W5-O4"		laps="1" factor="0.1" />
+		<track name="0W5-Circles"	laps="1" factor="0.1" />
 		<track name="0W6-88"		laps="1" factor="0.1" />
 		<track name="0W7-LJs-Mntn"	laps="1" factor="0.1" />
 		<track name="0W8-pipe8x8"	laps="1" factor="0.1" />
@@ -367,7 +367,7 @@
 		<!--5-->
 		<track name="D2-Mntn"		time="90.5"/>
 		<track name="D3-P"			time="57.0"/>
-		<track name="J3-S"			time="51.2"/>
+		<track name="J3-Rocky"		time="51.2"/>
 		<track name="S4-Hills"		time="192.8"/>
 		<!--10-->
 		<track name="TestC1-circle"		time="15.3"/>
@@ -399,20 +399,20 @@
 		<track name="S8-Frenzy2slow" time="114.6"/>
 
 		<track name="0W4-ice-blur"	time="24.6"/>
-		<track name="0W5-O4"		time="88.7"/>
+		<track name="0W5-Circles"	time="88.7"/>
 		<!--32-->
 		<track name="J6-80fun"		time="115.7"/>
 		<track name="I1-star3"		time="48.5"/>
 		<track name="S9-demo"		time="35.7"/>
 		<!--36-->
-		<track name="J7-Jsso"		time="55.1"/>
+		<track name="J7-Hilly"		time="55.1"/>
 		<track name="0W6-88"		time="125.5"/>
 
 		<track name="F7-blur3"		time="35.0"/>
 		<track name="F8-blurX3"		time="37.5"/>
 
-		<track name="J8-oO"			time="76.6"/>
-		<track name="J9-oNJo"		time="45.7"/>
+		<track name="J8-Round"		time="76.6"/>
+		<track name="J9-Sharp"		time="45.7"/>
 
 		<track name="0W7-LJs-Mntn"	time="47.8"/>
 		<track name="J10-Spiral"	time="58.0"/>
