@@ -382,7 +382,7 @@ void App::CreateBltTerrain()
 		btTransform tr;  tr.setIdentity();
 		tr.setOrigin(vpl * -0.5 * sc.td.fTerWorldSize);
 
-		btDefaultMotionState* ms = new btDefaultMotionState(tr);
+		btDefaultMotionState* ms = new btDefaultMotionState(tr);  //todo:!del, add col obj not rb
 		btRigidBody::btRigidBodyConstructionInfo rbInfo(0.f,ms,shp);
 		pGame->collision.AddRigidBody(rbInfo);
 	}

@@ -266,7 +266,7 @@
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="440 676 200 160" layer="Back" name="ObjectsWnd">
+	<Widget type="Window" skin="WindowC" position="440 676 200 180" layer="Back" name="ObjectsWnd">
 		<Property key="Caption" value="#{Objects}"/>
 		<Property key="Colour" value="1.0 1.0 1.0"/>
 		<Property key="Alpha" value="0.6"/>
@@ -295,6 +295,15 @@
 		<Widget type="TextBox" skin="TextBox" position="4 100 190 20" name="objTxt5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.7 0.7"/>
+		</Widget>
+		<Widget type="Widget" skin="PanelSkin" position="0 118 190 26" name="objPan">
+			<Property key="Colour" value="1.0 0.9 1.0"/>
+			<Property key="Alpha" value="0.4"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="4 120 190 20" name="objTxt6">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.9 0.9 1.0"/>
 		</Widget>
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="880 32 184 296" layer="Back" name="RoadCur">
@@ -1403,6 +1412,14 @@
 							<Property key="TextColour" value="0.2 0.7 0.1"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerrainDouble}"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="232 40 128 24" name="TerrainMove">
+							<Property key="Colour" value="0.2 0.7 0.1"/>
+							<Property key="Alpha" value="0.8"/>
+							<Property key="Caption" value="#{TerrainMove}"/>
+							<Property key="TextColour" value="0.2 0.7 0.1"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipTerrainMove}"/>
 						</Widget>
 					</Widget>
 				</Widget>

@@ -77,7 +77,7 @@ protected:
 	bool bNewHmap, bTrGrUpd;
 	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget), UpdTrees();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
-	void CreateTrees(), CreateObjects(),DestroyObjects(), UpdObjPick(), PickObject();
+	void CreateTrees(),  CreateObjects(), DestroyObjects(bool clear), UpdObjPick(), PickObject(), ToggleObjSim();
 	void CreateFluids(), DestroyFluids(), CreateBltFluids();
 	void UpdFluidBox(), UpdateWaterRTT(Ogre::Camera* cam), UpdMtrWaterDepth();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
@@ -191,9 +191,10 @@ protected:
 	class btCollisionDispatcher* dispatcher;
 	class bt32BitAxisSweep3* broadphase;
 	class btSequentialImpulseConstraintSolver* solver;
+
 	class btCollisionObject* trackObject;  // vdrift track col
 	class btTriangleIndexVertexArray* trackMesh;
-	void BltWorldInit(), BltWorldDestroy(), BltClear();
+	void BltWorldInit(), BltWorldDestroy(), BltClear(), BltUpdate(float dt);
 
 
 	// Weather  rain, snow
@@ -292,12 +293,13 @@ protected:
 	//  tool windows texts
 	const static int
 		BR_TXT=9, RD_TXT=11, RDS_TXT=9,
-		ST_TXT=6, FL_TXT=6, OBJ_TXT=6;
+		ST_TXT=6, FL_TXT=6, OBJ_TXT=7;
 	MyGUI::StaticTextPtr
 		brTxt[BR_TXT],brVal[BR_TXT],brKey[BR_TXT],
 		rdTxt[RD_TXT],rdVal[RD_TXT],rdKey[RD_TXT],
 		rdTxtSt[RDS_TXT],rdValSt[RDS_TXT],
 		stTxt[ST_TXT], flTxt[FL_TXT], objTxt[OBJ_TXT];
+	MyGUI::WidgetPtr objPan;
 	MyGUI::StaticImagePtr brImg;  MyGUI::TabPtr wndTabs;
 
 	//  main menu
@@ -358,7 +360,7 @@ protected:
 	SLV(TerTriSize);  SLV(TerLScale);
 	MyGUI::EditPtr edTerTriSize, edTerLScale;  MyGUI::Slider* sldTerLScale;
 	void editTerTriSize(MyGUI::EditPtr), editTerLScale(MyGUI::EditPtr);
-	void btnTerrainNew(WP), btnTerGenerate(WP), btnTerrainHalf(WP), btnTerrainDouble(WP);
+	void btnTerrainNew(WP), btnTerGenerate(WP), btnTerrainHalf(WP), btnTerrainDouble(WP), btnTerrainMove(WP);
 	const char* getHMapNew();
 	MyGUI::StaticTextPtr valTerLAll;
 	
@@ -412,6 +414,7 @@ protected:
 	//  [Objects]  ----
 	std::vector<std::string> vObjNames;  int iObjTNew;
 	std::set<int> vObjSel;  int iObjCur,iObjLast;
+	bool objSim;
 	
 
 	//  [Tools]  ----

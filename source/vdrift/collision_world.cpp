@@ -173,7 +173,8 @@ COLLISION_WORLD::COLLISION_WORLD() :
 	config = new btDefaultCollisionConfiguration();
 	dispatcher = new btCollisionDispatcher(config);
 
-	broadphase = new bt32BitAxisSweep3(btVector3(-5000, -5000, -5000), btVector3(5000, 5000, 5000));
+	btScalar ws = 5000;  // world size
+	broadphase = new bt32BitAxisSweep3(btVector3(-ws,-ws,-ws), btVector3(ws,ws,ws));
 	solver = new btSequentialImpulseConstraintSolver();
 	world = new DynamicsWorld(dispatcher, broadphase, solver, config);
 

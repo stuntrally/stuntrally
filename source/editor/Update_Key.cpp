@@ -9,6 +9,9 @@
 #include "../ogre/common/SceneXml.h"
 #include <OgreTerrain.h>
 #include <MyGUI.h>
+#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+#include "BulletCollision/CollisionDispatch/btCollisionObject.h"
+#include "BulletDynamics/Dynamics/btRigidBody.h"
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -723,7 +726,8 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_F10:	SaveWaterDepth();   break;
 
 		//  objects
-		case KC_X:	if (bEdit()){  SetEdMode(ED_Objects);  UpdEditWnds();  }   break;
+		case KC_X:  if (ctrl){  objSim = !objSim;  ToggleObjSim();  }
+			else if (bEdit()){  SetEdMode(ED_Objects);  UpdEditWnds();  }   break;
 	}
 
 	return true;

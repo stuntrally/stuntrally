@@ -95,7 +95,7 @@ void App::NewCommon(bool onlyTerVeget)
 	
 	if (!onlyTerVeget)
 	{
-		DestroyObjects();
+		DestroyObjects(true);
 		DestroyFluids();
 	}
 
@@ -293,7 +293,7 @@ void App::SaveTrackEv()
 	SaveSurf(TrkDir()+"surfaces.txt");
 
 	bool vdr = IsVdrTrack();
-	if (!vdr)  SaveGrassDens();
+	/*if (!vdr)*/  SaveGrassDens();
 	if (!vdr)  SaveWaterDepth();  //?-
 	SaveStartPos(TrkDir()+"track.txt");  //..load/save inside
 	
@@ -439,7 +439,8 @@ void App::BltWorldInit()
 	config = new btDefaultCollisionConfiguration();
 	dispatcher = new btCollisionDispatcher(config);
 
-	broadphase = new bt32BitAxisSweep3(btVector3(-5000, -5000, -5000), btVector3(5000, 5000, 5000));
+	btScalar ws = 5000;  // world size
+	broadphase = new bt32BitAxisSweep3(btVector3(-ws,-ws,-ws), btVector3(ws,ws,ws));
 	solver = new btSequentialImpulseConstraintSolver();
 	world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, config);
 
@@ -504,3 +505,37 @@ void App::BltClear()
 	}
 	actions.resize(0);*/
 }
+
+
+//  update (simulate)
+//-------------------------------------------------------------------------------------
+void App::BltUpdate(float dt)
+{
+	if (!world)  return;
+	
+	///  Simulate
+	//double fixedTimestep(1.0/60.0);  int maxSubsteps(7);
+	double fixedTimestep(1.0/160.0);  int maxSubsteps(24);  // same in game
+	world->stepSimulation(dt, maxSubsteps, fixedTimestep);
+	
+	///  objects - dynamic (props)  -------------------------------------------------------------
+	for (int i=0; i < sc.objects.size(); ++i)
+	{
+		Object& o = sc.objects[i];
+		if (o.ms)
+		{
+			btTransform tr, ofs;
+			o.ms->getWorldTransform(tr);
+			/*const*/ btVector3& p = tr.getOrigin();
+			const btQuaternion& q = tr.getRotation();
+			o.pos[0] = p.x();  o.pos[1] = p.y();  o.pos[2] = p.z();
+			o.rot[0] = q.x();  o.rot[1] = q.y();  o.rot[2] = q.z();  o.rot[3] = q.w();
+			o.SetFromBlt();
+
+			//p.setX(p.getX()+0.01f);  // move test-
+			//tr.setOrigin(p);
+			//o.ms->setWorldTransform(tr);
+		}
+	}
+ }
+ 

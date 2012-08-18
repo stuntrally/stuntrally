@@ -93,6 +93,7 @@ void App::InitGui()
 		
 	if (mWndObjects)
 		for (i=0; i<OBJ_TXT; ++i)	objTxt[i] = mGUI->findWidget<StaticText>("objTxt"+toStr(i),false);
+	objPan = mGUI->findWidget<Widget>("objPan",false);  if (objPan)  objPan->setVisible(false);
 		
 	//  Tabs
 	TabPtr tab;
@@ -206,6 +207,7 @@ void App::InitGui()
 	Btn("TerrainGenerate", btnTerGenerate);
 	Btn("TerrainHalf", btnTerrainHalf);
 	Btn("TerrainDouble", btnTerrainDouble);
+	Btn("TerrainMove", btnTerrainMove);
 
 	for (i=0; i < brSetsNum; ++i)  // brush preset
 	{

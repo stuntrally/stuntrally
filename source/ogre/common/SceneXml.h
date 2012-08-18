@@ -92,7 +92,8 @@ public:
 	Ogre::SceneNode* nd;  // ogre
 	Ogre::Entity* ent;
 	class btDefaultMotionState* ms;  // bullet
-	class btCollisionObject* cobj;
+	class btCollisionObject* co;
+	class btRigidBody* rb;
 
 	Object();
 	void SetFromBlt();

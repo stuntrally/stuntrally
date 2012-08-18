@@ -7,6 +7,8 @@
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/MaterialGen/MaterialFactory.h"
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+#include "LinearMath/btDefaultMotionState.h"
+#include "BulletDynamics/Dynamics/btRigidBody.h"
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
 using namespace Ogre;
@@ -384,6 +386,9 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			objTxt[4]->setCaption("Rot:  "+fToStr(o.nd->getOrientation().getYaw().valueDegrees(),1,4));
 			objTxt[5]->setCaption("Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
 		}
+		objTxt[6]->setCaption(String("Sim: ") + (objSim?"ON":"off") + "      "+toStr(world->getNumCollisionObjects()));
+		objTxt[6]->setTextColour(objSim ? MyGUI::Colour(1.0,0.8,1.0) : MyGUI::Colour(0.97,0.97,1.0));
+
 		//  edit
 		if (mz != 0)  // wheel prev/next
 		{	int objs = sc.objects.size();
@@ -633,7 +638,7 @@ void App::editMouse()
 		int i = sel ? *it : iObjCur;
 		while (i >= 0 && i < sc.objects.size())
 		{
-			Object& o = sc.objects[i];
+			Object& o = sc.objects[i];  bool upd1 = false;
 			if (!alt)
 			{
 				if (mbLeft)	// move on xz
@@ -642,13 +647,13 @@ void App::editMouse()
 					Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
 					Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
 					o.pos[0] += vm.x;  o.pos[1] -= vm.z;  // todo: for selection ..
-					o.SetFromBlt();	 upd = true;
+					o.SetFromBlt();	 upd1 = true;
 				}else
 				if (mbRight)  // move y
 				{
 					Real ym = -vNew.y * fMove * moveMul;
 					o.pos[2] += ym;
-					o.SetFromBlt();	 upd = true;
+					o.SetFromBlt();	 upd1 = true;
 				}
 				else
 				if (mbMiddle)  // rot yaw,  ctrl pitch local-
@@ -657,7 +662,7 @@ void App::editMouse()
 					QUATERNION <float> qr;
 					if (!ctrl)  qr.Rotate(-xm, 0, 0, 1);  else  qr.Rotate(-xm, 0, 1, 0);
 					o.rot = o.rot * qr;
-					o.SetFromBlt();	 upd = true;
+					o.SetFromBlt();	 upd1 = true;
 				}
 			}else
 			{
@@ -667,15 +672,29 @@ void App::editMouse()
 					float vm = (vNew.y - vNew.x) * fMove * moveMul;
 					o.scale *= 1.f - vm * fScale;
 					//if (o.scale.x < 0.02f)  o.scale.x = 0.02f;
-					o.nd->setScale(o.scale);  upd = true;
+					o.nd->setScale(o.scale);  upd1 = true;
 				}else
 				if (mbRight)  // scale y
 				{
 					float vm = (vNew.y - vNew.x) * fMove * moveMul;
 					o.scale.y *= 1.f - vm * fScale;
 					//if (o.scale.y < 0.02f)  o.scale.y = 0.02f;
-					o.nd->setScale(o.scale);  upd = true;
+					o.nd->setScale(o.scale);  upd1 = true;
 				}
+			}
+			if (upd1)
+			{
+				upd = true;
+				/*if (o.rb)
+				{
+					btTransform tr;
+					tr = o.rb->getWorldTransform();
+					btVector3 p = tr.getOrigin();
+					p.setY(p.getX() + 0.01f);
+					tr.setOrigin(p);
+					//tr.setRotation(o.rot);
+					o.rb->setWorldTransform(tr);
+				}*/
 			}
 			if (sel)
 			{	++it;  // next sel
@@ -684,7 +703,9 @@ void App::editMouse()
 			}else  break;
 		}
 		if (upd)
+		{
 			UpdObjPick();
+		}
 	}
 }
 
@@ -912,6 +933,10 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 
 	materialFactory->update();
 	
+	///  simulate
+	if (edMode == ED_Objects && objSim /*&& bEdit()*/)
+		BltUpdate(evt.timeSinceLastFrame);
+
 	bFirstRenderFrame = false;
 	
 	return true;

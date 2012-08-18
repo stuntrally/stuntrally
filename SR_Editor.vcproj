@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain_d.lib ois_d.lib OgreTerrain_d.lib OgrePaging_d.lib OgreRTShaderSystem_d.lib MyGUIEngine_d.lib MyGUI.OgrePlatform_d.lib BulletCollision_debug.lib BulletDynamics_debug.lib LinearMath_debug.lib"
+				AdditionalDependencies="OgreMain_d.lib ois_d.lib OgreTerrain_d.lib OgrePaging_d.lib OgreRTShaderSystem_d.lib MyGUIEngine_d.lib MyGUI.OgrePlatform_d.lib BulletCollision_debug.lib BulletDynamics_debug.lib LinearMath_debug.lib BulletFileLoader_debug.lib BulletWorldImporter_debug.lib"
 				OutputFile="$(ProjectName)_d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Debug;c:\v\ogre\Dependencies\lib\Debug;c:\v\mygui\bin\lib\Debug;c:\v\bullet\bin\lib\Debug;&quot;c:\v\bullet\bullet-2.79\bin\lib\Debug&quot;"
@@ -146,7 +146,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain.lib ois.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib"
+				AdditionalDependencies="OgreMain.lib ois.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib"
 				OutputFile="$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Release;c:\v\ogre\Dependencies\lib\Release;c:\v\mygui\bin\lib\Release;&quot;c:\v\bullet\bullet-2.79\bin\lib\Release&quot;"
@@ -1000,6 +1000,42 @@
 			</File>
 			<File
 				RelativePath=".\source\vdrift\vertexarray.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="btOgre"
+			>
+			<File
+				RelativePath=".\source\btOgre\BtOgre.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\btOgre\BtOgreAnim.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\btOgre\BtOgreDebug.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\btOgre\BtOgreDebug.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\btOgre\BtOgreGP.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\btOgre\BtOgrePG.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\btOgre\DynamicLines.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\btOgre\DynamicLines.h"
 				>
 			</File>
 		</Filter>
