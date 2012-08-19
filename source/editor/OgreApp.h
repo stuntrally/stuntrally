@@ -271,7 +271,7 @@ protected:
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(),updTrkListDim();
 	const static int TcolW[32];
-	const static Ogre::String clrsDiff[8],clrsRating[5],clrsLong[10];
+	const static Ogre::String clrsDiff[9],clrsRating[5],clrsLong[10];
 
 	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;  MyGUI::EditPtr edFind;
 	strlist liTracks,liTracksUser;  void FillTrackLists();

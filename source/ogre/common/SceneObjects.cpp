@@ -57,7 +57,7 @@ public:
 		if (mass)
 			shape->calculateLocalInertia(mass,localInertia);
 		
-		ms = new btDefaultMotionState();  //delete !?..
+		ms = new btDefaultMotionState();
 		ms->setWorldTransform(mTrOfs);
 		btRigidBody* body = new btRigidBody(mass,ms,shape,localInertia);	
 		body->setDamping(0.1f, 0.3f);
@@ -113,7 +113,7 @@ void App::CreateObjects()
 	#endif
 	BulletWorldOffset* fileLoader = new BulletWorldOffset(world);
 
-	///  create
+	///  create  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 	for (int i=0; i < sc.objects.size(); ++i)
 	{
 		Object& o = sc.objects[i];
@@ -131,7 +131,7 @@ void App::CreateObjects()
 		//  add to bullet world (in game)
 		if (!objHasBlt[o.name])
 		{
-			///  static
+			///  static  . . . . . . . . . . . . 
 			Vector3 posO = Vector3(o.pos[0],o.pos[2],-o.pos[1]);
 			Quaternion q(o.rot[0],o.rot[1],o.rot[2],o.rot[3]), q1;
 			Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
@@ -156,7 +156,7 @@ void App::CreateObjects()
 			pGame->collision.shapes.push_back(shape);
 			#endif
 		}
-		else  ///  dynamic
+		else  ///  dynamic  . . . . . . . . . . . . 
 		{
 			// .bullet load
 			fileLoader->mTrOfs.setOrigin(btVector3(o.pos[0],o.pos[1],o.pos[2]));

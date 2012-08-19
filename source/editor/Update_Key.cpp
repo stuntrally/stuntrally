@@ -726,8 +726,8 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_F10:	SaveWaterDepth();   break;
 
 		//  objects
-		case KC_X:  if (ctrl){  objSim = !objSim;  ToggleObjSim();  }
-			else if (bEdit()){  SetEdMode(ED_Objects);  UpdEditWnds();  }   break;
+		case KC_C:	objSim = !objSim;  ToggleObjSim();  break;
+		case KC_X:	if (bEdit()){  SetEdMode(ED_Objects);  UpdEditWnds();  }   break;
 	}
 
 	return true;

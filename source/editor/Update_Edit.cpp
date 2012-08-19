@@ -372,9 +372,9 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		{	//  none sel
 			objTxt[0]->setCaption("#20FF20New#C0C0C0    "+toStr(iObjCur)+" / "+toStr(sc.objects.size()));
 			objTxt[1]->setCaption(vObjNames[iObjTNew]);  // all new params ...
+			objTxt[2]->setCaption("");
 			objTxt[3]->setCaption("");
 			objTxt[4]->setCaption("");
-			objTxt[5]->setCaption("");
 		}else
 		{	const Object& o = sc.objects[iObjCur];
 			if (vObjSel.empty())
@@ -382,12 +382,12 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			else
 				objTxt[0]->setCaption("#00FFFFSel#C0C0C0     "+toStr(vObjSel.size())+" / "+toStr(sc.objects.size()));
 			objTxt[1]->setCaption(o.name);
-			objTxt[3]->setCaption("Pos:  "+fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
-			objTxt[4]->setCaption("Rot:  "+fToStr(o.nd->getOrientation().getYaw().valueDegrees(),1,4));
-			objTxt[5]->setCaption("Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
+			objTxt[2]->setCaption("Pos:  "+fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
+			objTxt[3]->setCaption("Rot:  "+fToStr(o.nd->getOrientation().getYaw().valueDegrees(),1,4));
+			objTxt[4]->setCaption("Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
 		}
-		objTxt[6]->setCaption(String("Sim: ") + (objSim?"ON":"off") + "      "+toStr(world->getNumCollisionObjects()));
-		objTxt[6]->setTextColour(objSim ? MyGUI::Colour(1.0,0.8,1.0) : MyGUI::Colour(0.97,0.97,1.0));
+		objTxt[5]->setCaption(String("Sim: ") + (objSim?"ON":"off") + "      "+toStr(world->getNumCollisionObjects()));
+		objTxt[5]->setTextColour(objSim ? MyGUI::Colour(1.0,0.9,1.0) : MyGUI::Colour(0.77,0.77,0.8));
 
 		//  edit
 		if (mz != 0)  // wheel prev/next

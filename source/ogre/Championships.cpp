@@ -121,7 +121,7 @@ void App::ChampsListUpdate()
 		liChamps->addItem(toStr(n/10)+toStr(n%10), 0);  int l = liChamps->getItemCount()-1;
 		liChamps->setSubItemNameAt(1,l, clr+ ch.name.c_str());
 		liChamps->setSubItemNameAt(2,l, clrsDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
-		liChamps->setSubItemNameAt(3,l, clrsDiff[std::min(7,ntrks*2/3+1)]+ toStr(ntrks));
+		liChamps->setSubItemNameAt(3,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ toStr(ntrks));
 		liChamps->setSubItemNameAt(4,l, clr+ fToStr(100.f * pc.curTrack / ntrks,0,3)+" %");
 		liChamps->setSubItemNameAt(5,l, clr+ fToStr(pc.score,1,5));
 		//length,time;

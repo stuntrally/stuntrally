@@ -274,34 +274,30 @@
 		<UserString key="tip" value="#{TipObjectsWnd}"/>
 		<Widget type="TextBox" skin="TextBox" position="4 0 190 20" name="objTxt0">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.8 0.8 0.8"/>
+			<Property key="TextColour" value="0.9 0.9 0.9"/>
 		</Widget>
 		<Widget type="TextBox" skin="TextBox" position="4 20 190 20" name="objTxt1">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.9 0.9 0.9"/>
+			<Property key="TextColour" value="1.0 1.0 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 40 190 20" name="objTxt2">
+		<Widget type="TextBox" skin="TextBox" position="4 50 190 20" name="objTxt2">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.7 0.7 0.7"/>
+			<Property key="TextColour" value="0.75 0.85 0.95"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 60 190 20" name="objTxt3">
+		<Widget type="TextBox" skin="TextBox" position="4 70 190 20" name="objTxt3">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.7 0.7 0.7"/>
+			<Property key="TextColour" value="0.65 0.81 0.95"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 80 190 20" name="objTxt4">
+		<Widget type="TextBox" skin="TextBox" position="4 90 190 20" name="objTxt4">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.7 0.7 0.7"/>
-		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 100 190 20" name="objTxt5">
-			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.7 0.7 0.7"/>
+			<Property key="TextColour" value="0.61 0.75 0.85"/>
 		</Widget>
 		<Widget type="Widget" skin="PanelSkin" position="0 118 190 26" name="objPan">
 			<Property key="Colour" value="1.0 0.9 1.0"/>
-			<Property key="Alpha" value="0.4"/>
+			<Property key="Alpha" value="0.5"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 120 190 20" name="objTxt6">
+		<Widget type="TextBox" skin="TextBox" position="4 120 190 20" name="objTxt5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.9 1.0"/>
 		</Widget>
@@ -707,7 +703,7 @@
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="256 6 48 24" name="TrkView2icons1">
 					<Property key="ImageTexture" value="track_icons.png"/>
-					<Property key="ImageCoord" value="64 32 64 32"/>
+					<Property key="ImageCoord" value="64 32 96 32"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TrackDifficulties}"/>
 				</Widget>
@@ -3954,6 +3950,11 @@
 						<Widget type="TextBox" skin="TextBox" position="32 190 320 20">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{InputObjects2}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 230 360 20">
+							<Property key="TextColour" value="0.9 0.8 0.9"/>
+							<Property key="Caption" value="#{InputObjectsSimulate}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="376 126 320 20">

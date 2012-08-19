@@ -120,8 +120,8 @@ String App::GetSceneryColor(String name)
 }
 
 // track difficulties colors from value
-const String App::clrsDiff[8] =  // difficulty
-	{"#60C0FF", "#00FF00", "#60FF00", "#C0FF00", "#FFFF00", "#FFC000", "#FF6000", "#FF4040"};
+const String App::clrsDiff[9] =  // difficulty
+	{"#60C0FF", "#00FF00", "#60FF00", "#C0FF00", "#FFFF00", "#FFC000", "#FF6000", "#FF4040", "#B060B0"};
 const String App::clrsRating[5] =  // rating
 	{"#808080", "#606060", "#7090A0", "#60C8D8", "#E0F0FF"};
 const String App::clrsLong[10] =  // long

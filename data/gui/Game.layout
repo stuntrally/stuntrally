@@ -1071,9 +1071,9 @@
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TrackDifficulties}"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="528 226 64 32" name="trkinf2">
+				<Widget type="ImageBox" skin="ImageBox" position="528 226 96 32" name="trkinf2">
 					<Property key="ImageTexture" value="track_icons.png"/>
-					<Property key="ImageCoord" value="64 32 64 32"/>
+					<Property key="ImageCoord" value="64 32 96 32"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="540 204 32 24" name="2ti1">
@@ -1125,6 +1125,11 @@
 					<Property key="TextColour" value="0.86 0.93 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{rating}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="604 254 32 24" name="2ti11">
+					<Property key="TextColour" value="0.86 0.93 1.0"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{objects}"/>
 				</Widget>
 			</Widget>
 		</Widget>
