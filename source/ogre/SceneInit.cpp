@@ -152,7 +152,7 @@ void App::LoadCleanUp()  // 1 first
 {
 	updMouse();
 	
-	DestroyObjects();
+	DestroyObjects(true);
 	
 	DestroyGraphs();
 	

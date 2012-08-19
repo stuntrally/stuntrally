@@ -149,7 +149,7 @@ protected:
 	Ogre::String resCar, resTrk, resDrv;
 	void CreateCar();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
-	void CreateTrees(), CreateRoad(), CreateObjects(),DestroyObjects();
+	void CreateTrees(), CreateRoad(), CreateObjects(),DestroyObjects(bool clear);
 	void CreateFluids(), CreateBltFluids(), UpdateWaterRTT(Ogre::Camera* cam);
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	void NewGame();  void NewGameDoLoad();  bool IsVdrTrack();  bool newGameRpl;
@@ -260,13 +260,14 @@ protected:
 		ReadTrkStats(), ReadTrkStatsChamp(Ogre::String track,bool reverse);
 	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc[2];
 	MyGUI::StaticImagePtr imgPrv[2],imgMini[2],imgTer[2], imgTrkIco1,imgTrkIco2;
-	const static int StTrk = 12, InfTrk = 10;
+	const static int StTrk = 12, InfTrk = 11;
 	MyGUI::StaticTextPtr valTrkNet, stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
 	void updTrkListDim(),updChampListDim();
 	const static int TcolW[32],ChColW[8],StColW[8];
+	const static Ogre::String clrsDiff[8],clrsRating[5],clrsLong[10];
 
 	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;  MyGUI::EditPtr edFind;
 	strlist liTracks,liTracksUser;  void FillTrackLists();

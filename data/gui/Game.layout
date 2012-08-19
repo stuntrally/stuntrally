@@ -206,9 +206,9 @@
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TrackDifficulties}"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="528 226 64 32" name="trkinf2">
+				<Widget type="ImageBox" skin="ImageBox" position="528 226 96 32" name="trkinf2">
 					<Property key="ImageTexture" value="track_icons.png"/>
-					<Property key="ImageCoord" value="64 32 64 32"/>
+					<Property key="ImageCoord" value="64 32 96 32"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="540 204 32 24" name="ti1">
@@ -261,9 +261,14 @@
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{rating}"/>
 				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="604 254 32 24" name="ti11">
+					<Property key="TextColour" value="0.8 0.4 0.6"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{objects}"/>
+				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="256 6 48 24" name="TrkView2icons1">
 					<Property key="ImageTexture" value="track_icons.png"/>
-					<Property key="ImageCoord" value="64 32 64 32"/>
+					<Property key="ImageCoord" value="64 32 96 32"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="304 6 192 24" name="TrkView2icons2">

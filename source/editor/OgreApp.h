@@ -265,12 +265,13 @@ protected:
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const Ogre::String& sTrack, float time, bool champ=false), ReadTrkStats();
 	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc[1];
 	MyGUI::StaticImagePtr imgPrv[1],imgMini[1],imgTer[1], imgTrkIco1,imgTrkIco2;
-	const static int StTrk = 12, InfTrk = 10;
+	const static int StTrk = 12, InfTrk = 11;
 	MyGUI::StaticTextPtr valTrk[1], stTrk[1][StTrk], infTrk[1][InfTrk];  // [1] 2nd is in game (common code)
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(),updTrkListDim();
 	const static int TcolW[32];
+	const static Ogre::String clrsDiff[8],clrsRating[5],clrsLong[10];
 
 	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;  MyGUI::EditPtr edFind;
 	strlist liTracks,liTracksUser;  void FillTrackLists();
