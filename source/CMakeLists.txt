@@ -66,6 +66,7 @@ if(BUILD_EDITOR)
 		ogre/common/*.cpp
 		ogre/common/MaterialGen/*.cpp
 		road/*.cpp
+		btOgre/*.cpp
 	)
 
 	add_executable(${EDITOR_EXE} ${EDITOR_SOURCES})
