@@ -559,29 +559,15 @@ bool App::KeyPress(const CmdKey &arg)
 				
 			//  prev,next type
 			case KC_LBRACKET:
-				iObjTNew = (iObjTNew-1 + objAll)%objAll;  break;
+				SetObjNewType((iObjTNew-1 + objAll) % objAll);  break;
 			case KC_RBRACKET:
-				iObjTNew = (iObjTNew+1)%objAll;  break;
+				SetObjNewType((iObjTNew+1) % objAll);  break;
 				
 			//  ins
 			case KC_INSERT:	case KC_NUMPAD0:
 			if (road && road->bHitTer)
 			{
-				::Object o;  o.name = vObjNames[iObjTNew];
-				const Ogre::Vector3& v = road->posHit;
-				o.pos[0] = v.x;  o.pos[1] =-v.z;  o.pos[2] = v.y;  //o.pos.y += 0.5f;
-				//todo: ?dyn objs size, get center,size, rmb height..
-				++iObjLast;
-				String s = toStr(iObjLast);  // counter for names
-
-				//  create object
-				o.ent = mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
-				o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s);
-				o.SetFromBlt();
-				o.nd->setScale(o.scale);
-				o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
-
-				sc.objects.push_back(o);
+				AddNewObj();
 				//iObjCur = sc.objects.size()-1;  // auto select inserted-
 				UpdObjPick();
 			}	break;
@@ -664,7 +650,8 @@ bool App::KeyPress(const CmdKey &arg)
 		 case KC_M:	GuiShortcut(WND_Edit, 5,1);  return true;  //  M -Models
 
 		case KC_R:	GuiShortcut(WND_Edit, 6);  return true;  // R Road
-		case KC_O:	GuiShortcut(WND_Edit, 7);  return true;  // O Tools
+		case KC_J:	GuiShortcut(WND_Edit, 7);  return true;  // J Objects
+		case KC_O:	GuiShortcut(WND_Edit, 8);  return true;  // O Tools
 
 		case KC_C:	GuiShortcut(WND_Options, 1);  return true;  // C Screen
 		case KC_G:	GuiShortcut(WND_Options, 2);  return true;  // G Graphics

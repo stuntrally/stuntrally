@@ -302,7 +302,7 @@ void App::InitGui()
 
 	GuiInitLang();
 	
-	//---------------------  SKYS  ---------------------
+	//---------------------  Skies  ---------------------
 	Cmb(cmbSky, "SkyCombo", comboSky);
 
 	GetMaterialsFromDef("skies.matdef");
@@ -310,7 +310,7 @@ void App::InitGui()
 	{	const String& s = vsMaterials[i];
 		if (s != "")  cmbSky->addItem(s);  //LogO(s);
 	}
-	//---------------------  WEATHER  ---------------------
+	//---------------------  Weather  ---------------------
 	Cmb(cmbRain1, "Rain1Cmb", comboRain1);  cmbRain1->addItem("");
 	Cmb(cmbRain2, "Rain2Cmb", comboRain2);  cmbRain2->addItem("");
 
@@ -321,7 +321,7 @@ void App::InitGui()
 	}	
 
 
-	//---------------------  TERRAIN  ---------------------
+	//---------------------  Terrain  ---------------------
 	Cmb(cmbTexDiff, "TexDiffuse", comboTexDiff);
 	Cmb(cmbTexNorm, "TexNormal", comboTexNorm);  cmbTexNorm->addItem("flat_n.png");
 
@@ -353,7 +353,7 @@ void App::InitGui()
 		cmbSurfType->addItem(csTRKsurf[i]);
 
 
-	//---------------------  GRASS  ---------------------
+	//---------------------  Grass  ---------------------
 	GetMaterialsFromDef("grass.matdef");
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	String s = vsMaterials[i];
@@ -367,7 +367,7 @@ void App::InitGui()
 			cmbGrassClr->addItem(*i);
 	}
 
-	//---------------------  TREES  ---------------------
+	//---------------------  Trees  ---------------------
 	Cmb(cmbPgLay, "LTrCombo", comboPgLay);
 	strlist lt;
 	GetFolderIndex(PATHMANAGER::GetDataPath() + "/trees", lt);
@@ -375,7 +375,7 @@ void App::InitGui()
 		if (StringUtil::endsWith(*i,".mesh"))  cmbPgLay->addItem(*i);
 
 
-	//---------------------  ROADS  ---------------------
+	//---------------------  Roads  ---------------------
 	GetMaterialsFromDef("road.matdef");
 	GetMaterialsFromDef("road_pipe.matdef", false);
 	for (size_t i=0; i<4; ++i)
@@ -392,13 +392,22 @@ void App::InitGui()
 			for (int i=0; i<4; ++i)  cmbPipeMtr[i]->addItem(s);
 	}
 
-	//---------------------  OBJECTS  ---------------------
-	iObjTNew = 0;
+	//---------------------  Objects  ---------------------
 	strlist lo;  vObjNames.clear();
 	GetFolderIndex(PATHMANAGER::GetDataPath() + "/objects", lo);
 	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh"))
 			vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
+	
+	objList = mGUI->findWidget<List>("ObjList");
+	if (objList)
+	{
+		for (int i=0; i < vObjNames.size(); ++i)
+			objList->addItem(vObjNames[i]);
+
+		objList->setIndexSelected(0);  //objList->findItemIndexWith(modeSel)
+		objList->eventListChangePosition += newDelegate(this, &App::listObjsChng);
+	}
 	//-----------------------------------------------------
 
 	InitGuiScrenRes();

@@ -324,4 +324,61 @@ void App::ToggleObjSim()
 	CreateObjects();
 	UpdObjPick();
 }
+
+///  add new object
+void App::AddNewObj()
+{
+	::Object o;  o.name = vObjNames[iObjTNew];
+	++iObjLast;
+	String s = toStr(iObjLast);  // counter for names
+	///TODO: ?dyn objs size, !?get center,size, rmb height..
+
+	//  pos, rot
+	const Ogre::Vector3& v = road->posHit;
+	o.pos[0] = v.x;  o.pos[1] =-v.z;  o.pos[2] = v.y + objNewH;
+	QUATERNION<float> q,q1;
+	q.SetAxisAngle(objNewYaw+PI_d*0.5f,0,0,-1);  q1.SetAxisAngle(PI_d,0,1,0);
+	o.rot = q1*q;
+
+	//  create object
+	o.ent = mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
+	o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s);
+	o.SetFromBlt();
+	o.nd->setScale(o.scale);
+	o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
+
+	sc.objects.push_back(o);
+}
+
+void App::listObjsChng(WP wp, size_t t)
+{
+	SetObjNewType(t);  // change obj to insert
+}
+
+//  preview model for insert
+void App::SetObjNewType(int tnew)
+{
+	iObjTNew = tnew;
+	if (objNewNd)	{	mSceneMgr->destroySceneNode(objNewNd);  objNewNd = 0;  }
+	if (objNewEnt)	{	mSceneMgr->destroyEntity(objNewEnt);  objNewEnt = 0;  }
+	
+	String name = vObjNames[iObjTNew];
+	objNewEnt = mSceneMgr->createEntity("-oE", name + ".mesh");
+	objNewNd = mSceneMgr->getRootSceneNode()->createChildSceneNode("-oN");
+	objNewNd->attachObject(objNewEnt);  objNewEnt->setVisibilityFlags(RV_Vegetation);
+	UpdObjNewNode();
+}
+
+void App::UpdObjNewNode()
+{
+	if (!road || !objNewNd)  return;
+
+	objNewNd->setVisible(road->bHitTer && bEdit() && iObjCur == -1);
+	Vector3 p = road->posHit;  p.y += objNewH;
+	Quaternion q;  q.FromAngleAxis(Radian(objNewYaw), Vector3::UNIT_Y);
+	
+	objNewNd->setPosition(p);
+	objNewNd->setOrientation(q);
+}
+
 #endif

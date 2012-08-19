@@ -294,7 +294,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		
 		
 		//  edit  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-		if (mz != 0)
+		if (mz != 0 && bEdit())
 			if (alt){			mBrPow[curBr]   *= 1.f - 0.4f*q*mz;  updBrush();  }
 			else if (!shift){	mBrSize[curBr]  *= 1.f - 0.4f*q*mz;  updBrush();  }
 			else				mBrIntens[curBr]*= 1.f - 0.4f*q*mz/0.05;
@@ -332,7 +332,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(SEMICOLON))	{  road->AddBoxW(-q*0.2);  UpdStartPos();  }
 		if (isKey(RBRACKET))	{  road->AddBoxH( q*0.2);  UpdStartPos();  }
 		if (isKey(APOSTROPHE))	{  road->AddBoxW( q*0.2);  UpdStartPos();  }
-		//if (mz > 0)	// snap rot by 15 deg ..
+		//if (mz > 0 && bEdit())	// snap rot by 15 deg ..
 	}
 	///  Fluids
 	//----------------------------------------------------------------
@@ -358,7 +358,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			if (isKey(SEMICOLON )){	fb.tile.y *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
 			if (isKey(APOSTROPHE)){	fb.tile.y *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
 
-			if (mz != 0)  // wheel prev/next
+			if (mz != 0 && bEdit())  // wheel prev/next
 			{	int fls = sc.fluids.size();
 				if (fls > 0)  {  iFlCur = (iFlCur-mz+fls)%fls;  UpdFluidBox();  }
 			}
@@ -368,19 +368,20 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	//----------------------------------------------------------------
 	else if (edMode == ED_Objects)
 	{
+		int objs = sc.objects.size();
 		if (iObjCur == -1 || sc.objects.empty())
 		{	//  none sel
-			objTxt[0]->setCaption("#20FF20New#C0C0C0    "+toStr(iObjCur)+" / "+toStr(sc.objects.size()));
+			objTxt[0]->setCaption("#20FF20New#C0C0C0    "+toStr(iObjCur)+" / "+toStr(objs));
 			objTxt[1]->setCaption(vObjNames[iObjTNew]);  // all new params ...
-			objTxt[2]->setCaption("");
-			objTxt[3]->setCaption("");
+			objTxt[2]->setCaption("Pos H:  "+fToStr(objNewH,2,4));
+			objTxt[3]->setCaption("Rot:  "+fToStr(Radian(objNewYaw).valueDegrees(),2,4));
 			objTxt[4]->setCaption("");
 		}else
 		{	const Object& o = sc.objects[iObjCur];
 			if (vObjSel.empty())
-				objTxt[0]->setCaption("#A0D0FFCur#C0C0C0     "+toStr(iObjCur+1)+" / "+toStr(sc.objects.size()));
+				objTxt[0]->setCaption("#A0D0FFCur#C0C0C0     "+toStr(iObjCur+1)+" / "+toStr(objs));
 			else
-				objTxt[0]->setCaption("#00FFFFSel#C0C0C0     "+toStr(vObjSel.size())+" / "+toStr(sc.objects.size()));
+				objTxt[0]->setCaption("#00FFFFSel#C0C0C0     "+toStr(vObjSel.size())+" / "+toStr(objs));
 			objTxt[1]->setCaption(o.name);
 			objTxt[2]->setCaption("Pos:  "+fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
 			objTxt[3]->setCaption("Rot:  "+fToStr(o.nd->getOrientation().getYaw().valueDegrees(),1,4));
@@ -390,8 +391,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		objTxt[5]->setTextColour(objSim ? MyGUI::Colour(1.0,0.9,1.0) : MyGUI::Colour(0.77,0.77,0.8));
 
 		//  edit
-		if (mz != 0)  // wheel prev/next
-		{	int objs = sc.objects.size();
+		if (mz != 0 && bEdit())  // wheel prev/next
+		{
 			if (objs > 0)  {  iObjCur = (iObjCur-mz+objs)%objs;  UpdObjPick();  }
 		}
 	}
@@ -629,6 +630,23 @@ void App::editMouse()
 	}
 
 	///  edit objects . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+	if (edMode == ED_Objects && iObjCur == -1)  // new properties
+	{
+		const Real fMove(0.5f), fRot(3.0f);
+		if (mbRight)  // move y
+		{
+			Real ym = -vNew.y * fMove * moveMul;
+			objNewH += ym;
+			if (ctrl)  objNewH = shift ? 0.f : 0.53f;  // reset
+		}
+		else
+		if (mbMiddle)  // rot yaw
+		{
+			Real xm = vNew.x * fRot * moveMul *PI_d/180.f;
+			objNewYaw -= xm;
+			if (ctrl)  objNewYaw = 0.f;
+		}
+	}
 	if (edMode == ED_Objects && !sc.objects.empty() && (iObjCur >= 0 || !vObjSel.empty()))
 	{
 		const Real fMove(0.5f), fRot(1.5f), fScale(0.02f);  //par speed
@@ -683,19 +701,8 @@ void App::editMouse()
 				}
 			}
 			if (upd1)
-			{
 				upd = true;
-				/*if (o.rb)
-				{
-					btTransform tr;
-					tr = o.rb->getWorldTransform();
-					btVector3 p = tr.getOrigin();
-					p.setY(p.getX() + 0.01f);
-					tr.setOrigin(p);
-					//tr.setRotation(o.rot);
-					o.rb->setWorldTransform(tr);
-				}*/
-			}
+
 			if (sel)
 			{	++it;  // next sel
 				if (it == vObjSel.end())  break;
@@ -936,6 +943,9 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	///  simulate
 	if (edMode == ED_Objects && objSim /*&& bEdit()*/)
 		BltUpdate(evt.timeSinceLastFrame);
+	
+	if (edMode == ED_Objects)
+		UpdObjNewNode();
 
 	bFirstRenderFrame = false;
 	

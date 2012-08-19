@@ -62,6 +62,12 @@ void App::createScene()  // once, init
 		LoadTrack();
 	else
 	{	bGuiFocus = true;  UpdVisGui();	}
+
+	postInit();  // material factory
+	//materialFactory->generate();
+
+	iObjTNew = 0;
+	//SetObjNewType(0);  //?white
 }
 
 
@@ -427,8 +433,9 @@ bool App::LoadTrackVdr(const std::string & trackname)
 }
 
 
+//---------------------------------------------------------------------------------------------------------------
 ///  Bullet world
-//-------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
 void App::BltWorldInit()
 {
 	if (world)  // create world once

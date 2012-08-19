@@ -55,8 +55,6 @@ public:
 	void postInit();
 	void SetEdMode(ED_MODE newMode);
 	
-	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };
-	
 	MaterialFactory* materialFactory;
 protected:
 	void LoadTrackEv(), SaveTrackEv(), UpdateTrackEv();
@@ -403,7 +401,7 @@ protected:
 	void editLTrMinTerH(MyGUI::EditPtr),editLTrMaxTerH(MyGUI::EditPtr),editLTrFlDepth(MyGUI::EditPtr);
 	
 	
-	///  [Road]  ----
+	//  [Road]  ----
 	MyGUI::ComboBoxPtr cmbRoadMtr[4],cmbPipeMtr[4];
 	void comboRoadMtr(CMB),comboPipeMtr(CMB);
 	MyGUI::EditPtr edRdTcMul,edRdLenDim,edRdWidthSteps,edRdHeightOfs,
@@ -412,10 +410,13 @@ protected:
 	void editRoad(MyGUI::EditPtr);
 
 
-	//  [Objects]  ----
-	std::vector<std::string> vObjNames;  int iObjTNew;
-	std::set<int> vObjSel;  int iObjCur,iObjLast;
-	bool objSim;
+	///  [Objects]  ----
+	std::vector<std::string> vObjNames;
+	void SetObjNewType(int tnew),UpdObjNewNode(), AddNewObj();
+	int iObjCur,iObjLast, iObjTNew;  std::set<int> vObjSel;
+	bool objSim;  float objNewH,objNewYaw;
+	Ogre::SceneNode* objNewNd;  Ogre::Entity* objNewEnt;
+	MyGUI::List* objList;  void listObjsChng(WP,size_t);
 	
 
 	//  [Tools]  ----
