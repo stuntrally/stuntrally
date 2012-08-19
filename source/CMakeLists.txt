@@ -16,7 +16,7 @@ include_directories(btOgre ogre ogre/common paged-geom road tinyxml vdrift bulle
 
 # Compile our libraries
 if (BUILD_GAME OR BUILD_EDITOR)
-	foreach(ourlib   tinyxml oisb paged-geom bullet)
+	foreach(ourlib   tinyxml oisb paged-geom bullet btOgre)
 		add_subdirectory(${ourlib})
 		list(APPEND OURLIBS ${ourlib})
 	endforeach()
@@ -27,7 +27,6 @@ if(BUILD_GAME)
 	# Glob .cpp files needed for the game
 	file(GLOB GAME_SOURCES
 		vdrift/*.cpp
-		btOgre/*.cpp
 		ogre/*.cpp
 		ogre/*/*.cpp
 		ogre/*/*/*.cpp
@@ -66,7 +65,6 @@ if(BUILD_EDITOR)
 		ogre/common/*.cpp
 		ogre/common/MaterialGen/*.cpp
 		road/*.cpp
-		btOgre/*.cpp
 	)
 
 	add_executable(${EDITOR_EXE} ${EDITOR_SOURCES})
