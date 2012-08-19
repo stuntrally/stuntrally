@@ -688,7 +688,7 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_F:  if (bEdit()){  SetEdMode(ED_Filter);  curBr = 3;  updBrush();  UpdEditWnds();  }
 			else  //  focus on find edit
 			if (ctrl && edFind && bGuiFocus &&
-				!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 0)
+				!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 1)
 			{
 				MyGUI::InputManager::getInstance().resetKeyFocusWidget();
 				MyGUI::InputManager::getInstance().setKeyFocusWidget(edFind);
