@@ -78,11 +78,14 @@
 	specular = 0.30 0.30 0.30 6
 
 [plastic_barrel]
-	diffuseMap_512 = plastic_diffuse.jpg
+	diffuseMap_1024 = plastic_diffuse.jpg
+	diffuseMap_256 = plastic_diffuse_s.jpg
 	;--doesnt work_
-	;normalMap_512 = plastic_normal.jpg
-	;normalMap_512 = volcano_7_nh1_s.png
-	specMap_512 = plastic_specular.jpg
+	normalMap_1024 = plastic_normal.jpg
+	normalMap_256 = plastic_normal_s.jpg
+	;normalMap_256 = volcano_7_nh1_s.png
+	specMap_1024 = plastic_specular.jpg
+	specMap_256 = plastic_specular_s.jpg
 	;shadowPriority = 0.8
 	;normalMapPriority = 0.5 
 	receivesDepthShadows = true
@@ -93,7 +96,8 @@
 
 [plastic_big]
 	parent = plastic_barrel
-	diffuseMap_512 = plastic_diff_white.jpg
+	diffuseMap_1024 = plastic_diff_white.jpg
+	diffuseMap_256 = plastic_diff_white_s.jpg
 	ambient = 0.90 1.05 1.05
 	diffuse = 0.75 0.85 0.85
 	specular = 1.00 1.00 1.00 12
