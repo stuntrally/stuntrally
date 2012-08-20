@@ -409,8 +409,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				vw *= wiMul;
 
 				//  last vw = 1st form next seg		
-				if (i==il && seg < segs-1)
-					vw = vwSeg[seg+1];
+				//if (i==il && seg < segs-1)
+				//	vw = vwSeg[seg+1];
 				
 				//  on terrain ~~
 				bool onTer1 = onTer || mP[seg].onTer && i==0 || mP[seg1].onTer && i==il;
