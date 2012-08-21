@@ -350,16 +350,27 @@ void App::AddNewObj()
 	sc.objects.push_back(o);
 }
 
-void App::listObjsChng(WP wp, size_t t)
+//  change obj to insert
+void App::listObjsChngSt(WP wp, size_t t)
 {
-	SetObjNewType(t);  // change obj to insert
+	std::string s = objListSt->getItemNameAt(t).substr(7);
+	for (int i=0; i < vObjNames.size(); ++i)
+		if (s == vObjNames[i])
+		{	SetObjNewType(i);  return;	}
+}
+void App::listObjsChngDyn(WP wp, size_t t)
+{
+	std::string s = objListDyn->getItemNameAt(t).substr(7);
+	for (int i=0; i < vObjNames.size(); ++i)
+		if (s == vObjNames[i])
+		{	SetObjNewType(i);  return;	}
 }
 
 //  preview model for insert
 void App::SetObjNewType(int tnew)
 {
 	iObjTNew = tnew;
-	if (objList)  objList->setIndexSelected(iObjTNew);
+	//if (objList)  objList->setIndexSelected(iObjTNew);
 	if (objNewNd)	{	mSceneMgr->destroySceneNode(objNewNd);  objNewNd = 0;  }
 	if (objNewEnt)	{	mSceneMgr->destroyEntity(objNewEnt);  objNewEnt = 0;  }
 	

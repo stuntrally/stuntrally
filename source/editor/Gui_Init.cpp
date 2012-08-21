@@ -6,6 +6,7 @@
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/Slider.h"
+#include <boost/filesystem.hpp>
 
 using namespace MyGUI;
 using namespace Ogre;
@@ -397,14 +398,25 @@ void App::InitGui()
 		if (StringUtil::endsWith(*i,".mesh"))
 			vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
 	
-	objList = mGUI->findWidget<List>("ObjList");
-	if (objList)
+	objListSt = mGUI->findWidget<List>("ObjListSt");
+	objListDyn = mGUI->findWidget<List>("ObjListDyn");
+	if (objListSt && objListDyn)
 	{
 		for (int i=0; i < vObjNames.size(); ++i)
-			objList->addItem(vObjNames[i]);
-
-		objList->setIndexSelected(0);  //objList->findItemIndexWith(modeSel)
-		objList->eventListChangePosition += newDelegate(this, &App::listObjsChng);
+		{	const std::string& name = vObjNames[i];
+			if (name != "sphere")
+			{
+				if (StringUtil::startsWith(name,"pers_",false))
+					objListSt->addItem("#E0E070"+name);
+				else
+				if (boost::filesystem::exists(PATHMANAGER::GetDataPath()+"/objects/"+ name + ".bullet"))
+					objListDyn->addItem("#80D0FF"+name);  // dynamic
+				else
+					objListSt->addItem("#C8C8C8"+name);
+		}	}
+		//objList->setIndexSelected(0);  //objList->findItemIndexWith(modeSel)
+		objListSt->eventListChangePosition += newDelegate(this, &App::listObjsChngSt);
+		objListDyn->eventListChangePosition += newDelegate(this, &App::listObjsChngDyn);
 	}
 	//-----------------------------------------------------
 

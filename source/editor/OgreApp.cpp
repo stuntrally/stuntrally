@@ -66,7 +66,7 @@ App::App()  //  gui wigdets--
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
 	,iFlCur(0), bRecreateFluids(0)
 	,iObjCur(-1), iObjTNew(0), iObjLast(0), objSim(0)
-	,objNewH(0.53f),objNewYaw(0.f), objNewNd(0),objNewEnt(0), objList(0), objPan(0)
+	,objNewH(0.53f),objNewYaw(0.f), objNewNd(0),objNewEnt(0), objListSt(0),objListDyn(0), objPan(0)
 	
 	,materialFactory(0), bTerUpdBlend(1), track(0)
 	,world(0), config(0), dispatcher(0), broadphase(0), solver(0)  //blt

@@ -2591,7 +2591,10 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Objects}"/>
 				<UserString key="RelativeTo" value="EditorWnd"/>
-				<Widget type="ListBox" skin="ListBox" position="32 32 160 460" name="ObjList">
+				<Widget type="ListBox" skin="ListBox" position="32 32 160 460" name="ObjListDyn">
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="ListBox" skin="ListBox" position="200 32 160 460" name="ObjListSt">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 			</Widget>
