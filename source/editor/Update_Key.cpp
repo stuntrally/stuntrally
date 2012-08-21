@@ -117,6 +117,7 @@ void App::togPrvCam()
 		rt[RTs].ndMini->setVisible(false);
 		ndCar->setVisible(true);
 
+		UpdateWaterRTT(mCamera);
 		UpdFog();  // restore fog, veget
 		if (oldV)  {  bTrGrUpd = true;  oldV = false;  }
 		pSet->bWeather = oldI;
@@ -135,6 +136,7 @@ void App::togPrvCam()
 		rt[RTs].ndMini->setVisible(true);
 		ndCar->setVisible(false);
 
+		UpdateWaterRTT(rt[3].rndCam);
 		UpdFog(true);  // on fog, veget, weather
 		if (!pSet->bTrees)  {  bTrGrUpd = true;  oldV = true;  }
 		oldI = pSet->bWeather;  pSet->bWeather = false;
@@ -243,6 +245,10 @@ bool App::KeyPress(const CmdKey &arg)
 				listTrackChng(trkMList,0);  // upd gui img
 				Status("Preview saved", 1,1,0);
 			}	break;
+
+			case KC_SYSRQ:  // screenshot
+				mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", ".jpg");
+				return true;
 		}
 		return true;  //!
 	}
@@ -318,7 +324,7 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_GRAVE:	//  Gui mode Options
 			toggleGui(true);  return true;
 
-		case KC_SYSRQ:
+		case KC_SYSRQ:  //  screenshot
 			mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", ".jpg");
 			return true;
 
