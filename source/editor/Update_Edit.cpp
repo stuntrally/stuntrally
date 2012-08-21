@@ -127,8 +127,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(DOWN)||isKey(NUMPAD2))	dirU += evt.timeSinceLastFrame;  else
 		{	dirU = 0.f;  dirD = 0.f;  }
 		int d = ctrl ? 4 : 1;
-		if (dirU > 0.0f) {  trkListNext( d);  dirU = -0.12f;  }
-		if (dirD > 0.0f) {  trkListNext(-d);  dirD = -0.12f;  }
+		if (dirU > 0.0f) {  trkListNext( d);  dirU = -0.2f;  }
+		if (dirD > 0.0f) {  trkListNext(-d);  dirD = -0.2f;  }
 	}
 
 	

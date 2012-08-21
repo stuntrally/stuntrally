@@ -191,7 +191,7 @@ void App::SaveGrassDens()
 //-----------------------------------------------------------------------------------------------------------
 void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 {
-	if (evt.source->getViewport(0)->getCamera()->getName() !=  "RttCam3")
+	if (evt.source->getViewport(0)->getCamera()->getName() != "RttCam3")
 	{
 		if (!terrain)  return;
 		MaterialPtr terrainMaterial = terrain->_getMaterial();
@@ -220,8 +220,11 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 		//ndSky->setPosition(mCameraT->getPosition());
 	}
 	else
-	if (road)
-		road->SetForRnd(num == 0 ? "render_clr" : "render_grass");
+		if (road)
+			road->SetForRnd(num == 0 ? "render_clr" : "render_grass");
+
+	///mWaterRTT.setActive(false);  //!.. TODO: disable water refl&refra for terrain rtt! or set cam to top view
+	//mWaterRTT.setViewerCamera(rt[1].rndCam);
 }
 
 void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
@@ -251,6 +254,8 @@ void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 	if (road)  {
 		road->UnsetForRnd();
 		road->UpdLodVis(pSet->road_dist);  }
+
+	//mWaterRTT.setViewerCamera(mCamera);
 
 	//  restore shadows splits todo...
 	//mCamera->setFarClipDistance(pSet->view_distance*1.1f);

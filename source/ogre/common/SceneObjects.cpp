@@ -359,6 +359,7 @@ void App::listObjsChng(WP wp, size_t t)
 void App::SetObjNewType(int tnew)
 {
 	iObjTNew = tnew;
+	if (objList)  objList->setIndexSelected(iObjTNew);
 	if (objNewNd)	{	mSceneMgr->destroySceneNode(objNewNd);  objNewNd = 0;  }
 	if (objNewEnt)	{	mSceneMgr->destroyEntity(objNewEnt);  objNewEnt = 0;  }
 	
@@ -373,7 +374,7 @@ void App::UpdObjNewNode()
 {
 	if (!road || !objNewNd)  return;
 
-	objNewNd->setVisible(road->bHitTer && bEdit() && iObjCur == -1);
+	objNewNd->setVisible(road->bHitTer && bEdit() && iObjCur == -1 && edMode == ED_Objects);
 	Vector3 p = road->posHit;  p.y += objNewH;
 	Quaternion q;  q.FromAngleAxis(Radian(objNewYaw), Vector3::UNIT_Y);
 	

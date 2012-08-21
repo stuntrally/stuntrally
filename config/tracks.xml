@@ -67,7 +67,7 @@
 	<track n="32" name="0W5-Circles"	created="22-12-10" crtver="0.9" modified="22-12-10" scenery="Winter" 	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="2" frenzy="2" long="3" diff="2" rating="1" /> <!--0W5-Circles-->
 <!--32-->																																																									<!--1.0-->
 	<track n="34" name="J6-80fun"		created="22-12-10" crtver="1.0" modified="23-12-10" scenery="Jungle"	author="CH" objects="0" fluids="0" bumps="0" jumps="1" loops="0" pipes="2" banked="1" frenzy="2" long="3" diff="3" rating="3" /> <!--J6-80fun-->
-	<track n="35" name="I1-star3"		created="30-12-10" crtver="1.0" modified="10-09-11" scenery="Island"	author="CH" objects="0" fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="1" long="2" diff="1" rating="1" /> <!--I1-star3-->
+	<track n="35" name="I1-star3"		created="30-12-10" crtver="1.0" modified="10-09-11" scenery="Island"	author="CH" objects="2" fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="1" long="2" diff="1" rating="1" /> <!--I1-star3-->
 	<track n="36" name="S9-demo"	   created="06-01-11" crtver="1.01" modified="06-01-11" scenery="Savanna"	author="CH" objects="0" fluids="0" bumps="1" jumps="0" loops="0" pipes="1" banked="1" frenzy="1" long="1" diff="2" rating="2" /> <!--S9-demo-->
 <!--36-->																																																									<!--1.1-->
 	<track n="37" name="J7-Hilly"		created="03-03-11" crtver="1.1" modified="17-08-12" scenery="Jungle"	author="CH" objects="5" fluids="0" bumps="1" jumps="0" loops="0" pipes="0" banked="2" frenzy="1" long="2" diff="1" rating="2" /> <!--J7-Hilly-->
@@ -99,7 +99,7 @@
 	<track n="56" name="A2-PipeCoil"	created="22-07-11" crtver="1.3" modified="06-08-11" scenery="Australia" author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="4" banked="0" frenzy="4" long="2" diff="4" rating="3" /> <!--A2-PipeCoil-->
 	<track n="57" name="I3-Islands"		created="10-09-11" crtver="1.3" modified="22-10-11" scenery="Island" 	author="CH" objects="0" fluids="3" bumps="1" jumps="0" loops="0" pipes="0" banked="0" frenzy="1" long="3" diff="3" rating="3" /> <!--I3-Islands-->
 <!--57-->																																																									<!--1.4-->
-	<track n="58" name="J11-Temple"		created="21-10-11" crtver="1.4" modified="21-10-11" scenery="Jungle" 	author="CH" objects="0" fluids="2" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="2" long="1" diff="3" rating="3" /> <!--J11-Temple-->
+	<track n="58" name="J11-Temple"		created="21-10-11" crtver="1.4" modified="21-10-11" scenery="Jungle" 	author="CH" objects="2" fluids="2" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="2" long="1" diff="3" rating="3" /> <!--J11-Temple-->
 	<track n="59" name="G2-Coast"		created="22-10-11" crtver="1.4" modified="22-10-11" scenery="Greece" 	author="CH" objects="0" fluids="1" bumps="3" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="3" rating="4" /> <!--G2-Coast-->
 	<track n="60" name="A3-Canyon"		created="22-10-11" crtver="1.4" modified="23-10-11" scenery="Australia" author="CH" objects="0" fluids="0" bumps="1" jumps="0" loops="0" pipes="0" banked="2" frenzy="0" long="5" diff="2" rating="4" /> <!--A3-Canyon-->
 																																																												

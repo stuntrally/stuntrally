@@ -223,7 +223,7 @@ void App::CreateTrees()
 
 				//  check ter angle  ------------
 				int mx = (pos.x + 0.5*tws)/tws*sc.td.iVertsX,
-					my = (pos.z + 0.5*tws)/tws*sc.td.iVertsY;
+					my =(-pos.z + 0.5*tws)/tws*sc.td.iVertsY;
 				int a = std::max(0, std::min(txy, my*sc.td.iVertsX+mx));
 				if (sc.td.hfAngle[a] > pg.maxTerAng)
 					add = false;
