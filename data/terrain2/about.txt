@@ -1,3 +1,8 @@
-Original textures in this folder by OpenGameArt user http://opengameart.org/users/yughues, licensed under CC-0 (Public Domain)
+Original textures by OpenGameArt user http://opengameart.org/users/yughues
 
-edited for use with ogre terrain by scrawl
+licensed under CC-0 (Public Domain)
+
+--- Edited for use with ogre terrain by scrawl
+jungle_rocky
+jungle_rocky2
+leaves
