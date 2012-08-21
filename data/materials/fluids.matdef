@@ -59,16 +59,16 @@
 ; ------------ winter white -----------
 [Water_white]
 	parent = Base_water
-	specular = 0.96 1.0 1.0 128
-	waveBump_Speed_HighFreq_Spec = 0.4 0.8 -0.1 1.0
-	depthPars = 0.7 0.1 0.2
-	deepColour = 0.36 0.59 0.6 1.0
-	deepColour = 0.6 0.79 0.8 1.0
-	shallowColour = 0.45 0.78 0.8 0.85
-	reflectionColour = 0.7 0.77 0.8 1.0
-	reflVal_Refl2_Distort_Opacity = 0.9 1.0 0.1 1.0
-	fresnelPower = 2.0
-	normalMap_1 = water_nh.png
+	specular = 0.99 1.0 1.0 128
+	waveBump_Speed_HighFreq_Spec = 0.2 1.3 -0.1 1.4
+	depthPars = 0.5 0.1 0.2
+	depthColour = 0.2 0.3 0.4 1.0
+	deepColour = 0.5 0.69 0.7 1.0
+	shallowColour = 0.2 0.45 0.5 0.75
+	reflectionColour = 0.91 0.93 0.94 1.0
+	reflVal_Refl2_Distort_Opacity = 0.6 1.0 0.1 1.0
+	;fresnelPower = 3.0
+	normalMap_1 = waveNM.png
 	
 
 ; ------------ island sunset -----------
