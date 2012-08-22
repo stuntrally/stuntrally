@@ -151,9 +151,6 @@
         float2 depthUV = float2(-worldPos.z / terrainWorldSize + 0.5f, worldPos.x / terrainWorldSize + 0.5f);
         float4 depthTex = shSample(depthMap, depthUV);
 
-        if (depthTex.r <= 0)
-            discard;
-
         float2 screenCoords = screenCoordsPassthrough.xy / screenCoordsPassthrough.z;
         screenCoords.y = (1-shSaturate(renderTargetFlipping))+renderTargetFlipping*screenCoords.y;
 

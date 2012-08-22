@@ -12,8 +12,8 @@
 using namespace Ogre;
 
 WaterRTT::WaterRTT() : 
-	mCamera(0), mReflectionTarget(0),
-	mRTTSize(512), mReflect(true),
+	mCamera(0), mReflectionTarget(0), mRefractionTarget(0),
+	mRTTSize(512), mReflect(true), mRefract(true),
 	mViewerCamera(0), mChangedSettings(1), mSceneMgr(0),
 	mNdFluidsRoot(0)
 {
@@ -23,29 +23,37 @@ WaterRTT::WaterRTT() :
 void WaterRTT::create()
 {
 	if (!mSceneMgr)  return;
-	mCamera = mSceneMgr->createCamera("PlaneReflection");
+	mCamera = mSceneMgr->createCamera("PlaneReflectionRefraction");
 	if (mViewerCamera)
 	{
 		mCamera->setFarClipDistance(mViewerCamera->getFarClipDistance());
 		mCamera->setNearClipDistance(mViewerCamera->getNearClipDistance());
 		mCamera->setAspectRatio(mViewerCamera->getAspectRatio());
 	}
-			
-	TexturePtr tex = TextureManager::getSingleton().createManual("PlaneReflection",
-		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D, mRTTSize, mRTTSize, 0, PF_R8G8B8, TU_RENDERTARGET);
+	
+	for (unsigned int i = 0; i < 2; ++i)
+	{
+		if (i==0 && !mReflect) continue;
+		if (i==1 && !mRefract) continue;
+		
+		TexturePtr tex = TextureManager::getSingleton().createManual(i == 0 ? "PlaneReflection" : "PlaneRefraction",
+			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D, mRTTSize, mRTTSize, 0, PF_R8G8B8, TU_RENDERTARGET);
 
-	RenderTarget* rtt = tex->getBuffer()->getRenderTarget();
-	Viewport* vp = rtt->addViewport(mCamera);
-	vp->setOverlaysEnabled(false);
-	vp->setBackgroundColour(ColourValue(0.8f, 0.9f, 1.0f));
-	vp->setShadowsEnabled(false);
-	vp->setMaterialScheme ("reflection");
-	vp->setVisibilityMask(RV_WaterReflect);
-	rtt->addListener(this);
+		RenderTarget* rtt = tex->getBuffer()->getRenderTarget();
+		Viewport* vp = rtt->addViewport(mCamera);
+		vp->setOverlaysEnabled(false);
+		vp->setBackgroundColour(ColourValue(0.8f, 0.9f, 1.0f));
+		vp->setShadowsEnabled(false);
+		vp->setMaterialScheme ("reflection");
+		vp->setVisibilityMask( i == 0 ? RV_WaterReflect : RV_WaterRefract);
+		rtt->addListener(this);
 
-	mReflectionTarget = rtt;
+		if (i == 0) mReflectionTarget = rtt;
+		else mRefractionTarget = rtt;
+	}
 
 	sh::Factory::getInstance ().setTextureAlias ("WaterReflection", "PlaneReflection");
+	sh::Factory::getInstance ().setTextureAlias ("WaterRefraction", "PlaneRefraction");
 }
 
 void WaterRTT::setViewerCamera(Ogre::Camera* cam)
@@ -62,6 +70,7 @@ void WaterRTT::setViewerCamera(Ogre::Camera* cam)
 void WaterRTT::setActive(const bool active)
 {
 	if (mReflectionTarget) mReflectionTarget->setActive(active);
+	if (mRefractionTarget) mRefractionTarget->setActive(active);
 }
 
 void WaterRTT::destroy()
@@ -72,6 +81,11 @@ void WaterRTT::destroy()
 	{
 		TextureManager::getSingleton().remove("PlaneReflection");
 		mReflectionTarget = 0;
+	}
+	if (mRefractionTarget)
+	{
+		TextureManager::getSingleton().remove("PlaneRefraction");
+		mRefractionTarget = 0;
 	}
 }
 

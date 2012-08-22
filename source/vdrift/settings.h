@@ -30,7 +30,7 @@ public:
 	float view_distance, terdetail,terdist, road_dist;
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type, shadow_filter;
 	int refl_skip, refl_faces, refl_size;  float refl_dist;
-	bool water_reflect; int water_rttsize;
+	bool water_reflect, water_refract; int water_rttsize;
 	int refl_mode; // 0 static, 1 single, 2 full, explanation: see CarReflection.h
 	bool particles, trails;  float grass, trees_dist, grass_dist;
 	bool use_imposters;
