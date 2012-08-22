@@ -420,6 +420,8 @@ bool BaseApp::setup()
 	mFactory = new sh::Factory(platform);
 	mFactory->setReadSourceCache (true);
 	mFactory->setWriteSourceCache (true);
+	mFactory->setReadMicrocodeCache (true);
+	mFactory->setWriteMicrocodeCache (true);
 	mFactory->setGlobalSetting("fog", "true");
 	mFactory->setGlobalSetting("wind", "true");
 	mFactory->setGlobalSetting("mrt_output", "false");
