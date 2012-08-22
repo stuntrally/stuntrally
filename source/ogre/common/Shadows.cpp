@@ -120,6 +120,8 @@ void App::changeShadows()
 		mSceneMgr->setShadowTextureCasterMaterial(shadowCasterMat);
 	}
 
+	mSceneMgr->setShadowColour (Ogre::ColourValue(0,0,0,1));
+
 
 	sh::Factory::getInstance().setGlobalSetting ("shadows", "false");
 	sh::Factory::getInstance().setGlobalSetting ("shadows_pssm", (pSet->shadow_type != 0) ? "true" : "false");

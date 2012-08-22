@@ -418,6 +418,8 @@ bool BaseApp::setup()
 	platform->setShaderCachingEnabled (true);
 	platform->setCacheFolder (PATHMANAGER::GetCacheDir());
 	mFactory = new sh::Factory(platform);
+	mFactory->setReadSourceCache (true);
+	mFactory->setWriteSourceCache (true);
 	mFactory->setGlobalSetting("fog", "true");
 	mFactory->setGlobalSetting("wind", "true");
 	mFactory->setGlobalSetting("mrt_output", "false");
