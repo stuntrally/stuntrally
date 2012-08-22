@@ -8,7 +8,7 @@ using namespace Ogre;
 
 TrackInfo::TrackInfo()
 	:n(-1),crtver(0.0),name("none"),scenery("none"),author("none")
-	,fluids(0),bumps(0),jumps(0),loops(0),pipes(0),banked(0),frenzy(0),longn(0)
+	,fluids(0),bumps(0),jumps(0),loops(0),pipes(0),banked(0),frenzy(0),longn(0),objects(0)
 	,diff(0),rating(0), rateuser(0),drivenlaps(0)
 {	}
 
@@ -59,6 +59,7 @@ bool TracksXml::LoadXml(Ogre::String file)
 		a = eTrk->Attribute("loops");		if (a)  t.loops = s2i(a);	a = eTrk->Attribute("pipes");		if (a)  t.pipes = s2i(a);
 		a = eTrk->Attribute("banked");		if (a)  t.banked = s2i(a);	a = eTrk->Attribute("frenzy");		if (a)  t.frenzy = s2i(a);
 		a = eTrk->Attribute("long");		if (a)  t.longn = s2i(a);
+		a = eTrk->Attribute("objects");		if (a)  t.objects = s2i(a);
 
 		a = eTrk->Attribute("diff");		if (a)  t.diff = s2i(a);
 		a = eTrk->Attribute("rating");		if (a)  t.rating = s2i(a);
@@ -74,7 +75,7 @@ bool TracksXml::LoadXml(Ogre::String file)
 }
 
 
-//  Save
+//  Save  (not used yet)
 //--------------------------------------------------------------------------------------------------------------------------------------
 
 bool TracksXml::SaveXml(Ogre::String file)
@@ -99,6 +100,7 @@ bool TracksXml::SaveXml(Ogre::String file)
 		trk.SetAttribute("loops",		toStrC( t.loops ));		trk.SetAttribute("pipes",		toStrC( t.pipes ));
 		trk.SetAttribute("banked",		toStrC( t.banked ));	trk.SetAttribute("frenzy",		toStrC( t.frenzy ));
 		trk.SetAttribute("long",		toStrC( t.longn ));
+		trk.SetAttribute("objects",		toStrC( t.objects ));
 
 		trk.SetAttribute("diff",		toStrC( t.diff ));
 		trk.SetAttribute("rating",		toStrC( t.rating ));

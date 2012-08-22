@@ -61,9 +61,9 @@ void SplineRoad::RebuildRoad(bool full)
 		iDirtyId = iChosen;
 }
 
-void SplineRoad::RebuildRoadInt(bool editorAlign)
+void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 {
-	if (!rebuild && !editorAlign)  return;
+	if (!rebuild && !(editorAlign || bulletFull))  return;
 	rebuild = false;
 
 
@@ -74,7 +74,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign)
 
 	UpdRot(); //
 	
-	if (vSegs.size() != segs || editorAlign)
+	if (vSegs.size() != segs || editorAlign || bulletFull)
 		iDirtyId = -1;  // force full
 		
 	int sMin = 0, sMax = segs;
@@ -334,8 +334,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign)
 
 			//  bullet create
 			bool blt = true;  // game always
-			#ifdef ROAD_EDITOR  // editor only sel segs for align ter tool
-				blt = editorAlign && vSel.find(seg) != vSel.end();
+			#ifdef ROAD_EDITOR  // editor only sel segs for align ter tool, or full for objects sim
+				blt = bulletFull || editorAlign && (vSel.find(seg) != vSel.end());
 			#endif
 			
 
@@ -409,8 +409,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign)
 				vw *= wiMul;
 
 				//  last vw = 1st form next seg		
-				if (i==il && seg < segs-1)
-					vw = vwSeg[seg+1];
+				//if (i==il && seg < segs-1)
+				//	vw = vwSeg[seg+1];
 				
 				//  on terrain ~~
 				bool onTer1 = onTer || mP[seg].onTer && i==0 || mP[seg1].onTer && i==il;

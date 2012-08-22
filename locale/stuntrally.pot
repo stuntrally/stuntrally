@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-07-26 09:43+0300"
+"POT-Creation-Date: 2012-08-19 16:29+0300"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -463,6 +463,10 @@ msgstr ""
 
 msgctxt "TerUpdSkip"
 msgid "Terrain update skip"
+msgstr ""
+
+msgctxt "InputObjects1"
+msgid "1 - reset rotation"
 msgstr ""
 
 msgctxt "Input"
@@ -2037,6 +2041,10 @@ msgctxt "MinimapRotate"
 msgid "Rotate"
 msgstr ""
 
+msgctxt "objects"
+msgid "objects (dynamic)"
+msgstr ""
+
 msgctxt "Yes"
 msgid "Yes"
 msgstr ""
@@ -2549,6 +2557,10 @@ msgctxt "ReflMode_full"
 msgid "Full"
 msgstr ""
 
+msgctxt "TipDisableWeather"
+msgid "Disable weather particles."
+msgstr ""
+
 msgctxt "Length"
 msgid "Length"
 msgstr ""
@@ -2679,6 +2691,10 @@ msgstr ""
 
 msgctxt "Copy"
 msgid "Copy"
+msgstr ""
+
+msgctxt "InputObjects2"
+msgid "2 - reset scale to 1 (with shift to 0.5)"
 msgstr ""
 
 msgctxt "TipFind"

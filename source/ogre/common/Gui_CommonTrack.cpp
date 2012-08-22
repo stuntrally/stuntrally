@@ -26,27 +26,28 @@ using namespace std;
 /*  common sort code,  no info only by name  */
 #define sArg  const TrkL& t2, const TrkL& t1
 #define sortDef  bool t = false/*t1.test < t2.test/**/;  if (!t1.ti || !t2.ti)  return t1.name > t2.name || t;
-const int allSortFunc = 14;
+const int allSortFunc = 15;
 
 //  sorting functions for columns
 /* 0  name    */  bool Sort0 (sArg){  sortDef  return t1.name  < t2.name   || t;  }
 /* 1  n       */  bool Sort1 (sArg){  sortDef  return t1.ti->n < t2.ti->n  || t;  }
-/* 2  scenery */  bool Sort2 (sArg){  sortDef  return t1.ti->scenery < t2.ti->scenery  || t;  }
+/* 2  scenery */  bool Sort2 (sArg){  sortDef  return t1.ti->scenery < t2.ti->scenery || t;  }
 /* 3  crtver  */  bool Sort3 (sArg){  sortDef  return t1.ti->crtver < t2.ti->crtver  || t;  }
 /* 4  diff    */  bool Sort4 (sArg){  sortDef  return t1.ti->diff   < t2.ti->diff    || t;  }
 /* 5  rating  */  bool Sort5 (sArg){  sortDef  return t1.ti->rating < t2.ti->rating  || t;  }
-/* 6  fluids  */  bool Sort6 (sArg){  sortDef  return t1.ti->fluids < t2.ti->fluids  || t;  }
-/* 7  bumps   */  bool Sort7 (sArg){  sortDef  return t1.ti->bumps  < t2.ti->bumps   || t;  }
-/* 8  jumps   */  bool Sort8 (sArg){  sortDef  return t1.ti->jumps  < t2.ti->jumps   || t;  }
-/* 9  loops   */  bool Sort9 (sArg){  sortDef  return t1.ti->loops  < t2.ti->loops   || t;  }
-/* 10 pipes   */  bool Sort10(sArg){  sortDef  return t1.ti->pipes  < t2.ti->pipes   || t;  }
-/* 11 banked  */  bool Sort11(sArg){  sortDef  return t1.ti->banked < t2.ti->banked  || t;  }
-/* 12 frenzy  */  bool Sort12(sArg){  sortDef  return t1.ti->frenzy < t2.ti->frenzy  || t;  }
-/* 13 longn   */  bool Sort13(sArg){  sortDef  return t1.ti->longn  < t2.ti->longn   || t;  }
+/* 6  objects */  bool Sort6 (sArg){  sortDef  return t1.ti->objects < t2.ti->objects || t;  }
+/* 7  fluids  */  bool Sort7 (sArg){  sortDef  return t1.ti->fluids < t2.ti->fluids  || t;  }
+/* 8  bumps   */  bool Sort8 (sArg){  sortDef  return t1.ti->bumps  < t2.ti->bumps   || t;  }
+/* 9  jumps   */  bool Sort9 (sArg){  sortDef  return t1.ti->jumps  < t2.ti->jumps   || t;  }
+/* 10 loops   */  bool Sort10(sArg){  sortDef  return t1.ti->loops  < t2.ti->loops   || t;  }
+/* 11 pipes   */  bool Sort11(sArg){  sortDef  return t1.ti->pipes  < t2.ti->pipes   || t;  }
+/* 12 banked  */  bool Sort12(sArg){  sortDef  return t1.ti->banked < t2.ti->banked  || t;  }
+/* 13 frenzy  */  bool Sort13(sArg){  sortDef  return t1.ti->frenzy < t2.ti->frenzy  || t;  }
+/* 14 longn   */  bool Sort14(sArg){  sortDef  return t1.ti->longn  < t2.ti->longn   || t;  }
 
 //  sorting functions array (to access by column index)
 bool (*TrkSort[allSortFunc])(const TrkL& t1, const TrkL& t2) = {
-	Sort0, Sort1, Sort2, Sort3, Sort4, Sort5, Sort6, Sort7, Sort8, Sort9, Sort10, Sort11, Sort12, Sort13 };
+	Sort0, Sort1, Sort2, Sort3, Sort4, Sort5, Sort6, Sort7, Sort8, Sort9, Sort10, Sort11, Sort12, Sort13, Sort14 };
 
 
 //  done every list sort column change or find edit text change
@@ -112,11 +113,20 @@ String App::GetSceneryColor(String name)
 		case 'A':  c = "#FFA080";  break;   case 'J':  c = "#50FF50";  break;
 		case 'D':  c = "#F0F000";  break;   case 'M':  c = "#A0A000";  break;
 		case 'F':  c = "#A0D000";  break;   case 'S':  c = "#D0FF00";  break;
-		case 'G':  c = "#C0FF00";  break;   case 'T':  c = "#A0A0A0";  break;
-		case 'V':  c = "#202008";  break;   case 'X':  c = "#8080D0";  break;
-		case 'C':  c = "#E0B090";  break;  }
+		case 'G':  c = "#C0FF00";  break;   case 'V':  c = "#1E1E0E";  break;
+		case 'X':  c = "#8080D0";  break;	case 'C':  c = "#E0B090";  break;
+		case 'T':  c = (name.length() > 5 && name.c_str()[4] == 'C') ? "#A0C0D0" : "#A0A0A0";  break;  }  // Test,TestC
 	return c;
 }
+
+// track difficulties colors from value
+const String App::clrsDiff[9] =  // difficulty
+	{"#60C0FF", "#00FF00", "#60FF00", "#C0FF00", "#FFFF00", "#FFC000", "#FF6000", "#FF4040", "#B060B0"};
+const String App::clrsRating[5] =  // rating
+	{"#808080", "#606060", "#7090A0", "#60C8D8", "#E0F0FF"};
+const String App::clrsLong[10] =  // long
+	{"#E0D0D0", "#E8C0C0", "#F0B0B0", "#F8A0A0", "#FF9090", "#FF8080", "#F07070", "#F06060", "#E04040", "#D02020"};
+
 void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 {
 	String c = GetSceneryColor(name);
@@ -129,26 +139,28 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	
 	li->setSubItemNameAt(1,l, c+toStr(ti->n/10)+toStr(ti->n%10));
 	li->setSubItemNameAt(2,l, c+ti->scenery);
-	li->setSubItemNameAt(3,l, c+toStr(ti->crtver));
+	li->setSubItemNameAt(3,l, c+fToStr(ti->crtver,1,3));
 	//list->setSubItemNameAt(4,l, ti->created);  list->setSubItemNameAt(5,l, ti->modified);
-	#define toS(clr,v)  (v > 0) ? (clr "  "+toStr(v)) : " "
-	li->setSubItemNameAt(4,l, toS("#C0D0FF",ti->diff));
-	li->setSubItemNameAt(5,l, toS("#C0E0FF",ti->rating));  //rateuser="0" drivenlaps="0"
-	li->setSubItemNameAt(6,l, toS("#80C0FF",ti->fluids));
-	li->setSubItemNameAt(7,l, toS("#40FF00",ti->bumps));
-	li->setSubItemNameAt(8,l, toS("#FFA030",ti->jumps));
-	li->setSubItemNameAt(9,l, toS("#00FFFF",ti->loops));
-	li->setSubItemNameAt(10,l,toS("#FFFF00",ti->pipes));
-	li->setSubItemNameAt(11,l,toS("#C0C0C0",ti->banked));
-	li->setSubItemNameAt(12,l,toS("#C080FF",ti->frenzy));
-	li->setSubItemNameAt(13,l,toS("#FFA0A0",ti->longn));
+	#define toS(clr,v)  (v > 0) ? (String(clr)+"  "+toStr(v)) : " "
+	li->setSubItemNameAt(4,l, toS(clrsDiff[ti->diff], ti->diff));
+	li->setSubItemNameAt(5,l, toS(clrsRating[ti->rating], ti->rating));
+	//todo: rateuser drivenlaps
+	li->setSubItemNameAt(6,l, toS("#D070A0",ti->objects));
+	li->setSubItemNameAt(7,l, toS("#80C0FF",ti->fluids));
+	li->setSubItemNameAt(8,l, toS("#40FF00",ti->bumps));
+	li->setSubItemNameAt(9,l, toS("#FFA030",ti->jumps));
+	li->setSubItemNameAt(10,l,toS("#00FFFF",ti->loops));
+	li->setSubItemNameAt(11,l,toS("#FFFF00",ti->pipes));
+	li->setSubItemNameAt(12,l,toS("#C0C0C0",ti->banked));
+	li->setSubItemNameAt(13,l,toS("#C080FF",ti->frenzy));
+	li->setSubItemNameAt(14,l,toS(clrsLong[ti->longn], ti->longn));
 }
 
 
 //  Gui Init  [Track]  . . . . . . . . . . . . . . . . . . . 
 //  column widths on tabs: tracks, champs, stages
-const int wi = 32;
-const int App::TcolW[32] = {150, 32, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
+const int wi = 26;
+const int App::TcolW[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
 #ifndef ROAD_EDITOR
 const int App::ChColW[8] = {30, 180, 100, 60, 80, 60, 40};
 const int App::StColW[8] = {30, 180, 100, 90, 80, 70};
@@ -195,8 +207,10 @@ void App::GuiInitTrack()
 	li->addColumn("#80FF80""N", TcolW[c++]);
 	li->addColumn("#80FF80"+TR("#{Scenery}"), TcolW[c++]);
 	li->addColumn("#80FF80""ver", TcolW[c++]);  // created  modified  author-
+
 	li->addColumn("#C0D0FF""diff", TcolW[c++]);
 	li->addColumn("#C0E0FF""*", TcolW[c++]);  // rateuser  drivenlaps ..
+	li->addColumn("#FF80C0""o", TcolW[c++]);
 	li->addColumn("#80C0FF""f", TcolW[c++]);
 	li->addColumn("#40FF00""B", TcolW[c++]);
 	li->addColumn("#FFA030""J", TcolW[c++]);
@@ -298,12 +312,12 @@ void App::updTrkListDim()
 		sw += w;
 		if (c == 4)  wico = w;
 		if (c < 4)  xico1 += w;
-		if (c < 6)  xico2 += w;
+		if (c < 7)  xico2 += w;
 	}
 
 	int xt = 0.018*wi.width, yt = 0.06*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
 	trkMList->setCoord(xt, yt, sw + 8/*frame*/, 0.70/*height*/*wi.height);
-	imgTrkIco1->setCoord(xt + xico1+2, yico, 2*wico, wico);
+	imgTrkIco1->setCoord(xt + xico1+2, yico, 3*wico, wico);
 	imgTrkIco2->setCoord(xt + xico2+2, yico, 8*wico, wico);
 	trkMList->setVisible(true);
 	
@@ -444,10 +458,9 @@ void App::ReadTrkStatsChamp(String track, bool reverse)
 
 void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const String& sTrack, float time, bool champ)
 {
-	int ch = champ ? 1 : 0;
-	
 	//  road stats
 	//---------------------------------------------------------------------------
+	int ch = champ ? 1 : 0;
 	if (stTrk[ch][1])  stTrk[ch][1]->setCaption(fToStr(sc.td.fTerWorldSize/1000.f,3,5)+" km");
 	if (!rd)  return;
 	if (stTrk[ch][0])  stTrk[ch][0]->setCaption(fToStr(rd->st.Length/1000.f,3,5)+" km");
@@ -468,8 +481,10 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const String& sTr
 		if (infTrk[ch][1])  infTrk[ch][1]->setCaption(str0(ti.bumps));		if (infTrk[ch][2])  infTrk[ch][2]->setCaption(str0(ti.jumps));
 		if (infTrk[ch][3])  infTrk[ch][3]->setCaption(str0(ti.loops));		if (infTrk[ch][4])  infTrk[ch][4]->setCaption(str0(ti.pipes));
 		if (infTrk[ch][5])  infTrk[ch][5]->setCaption(str0(ti.banked));		if (infTrk[ch][6])  infTrk[ch][6]->setCaption(str0(ti.frenzy));
-		if (infTrk[ch][7])  infTrk[ch][7]->setCaption(str0(ti.longn));
-		if (infTrk[ch][8])  infTrk[ch][8]->setCaption(toStr(ti.diff));		if (infTrk[ch][9])  infTrk[ch][9]->setCaption(toStr(ti.rating));
+		if (infTrk[ch][7])  infTrk[ch][7]->setCaption(clrsLong[ti.longn] + str0(ti.longn));
+		if (infTrk[ch][8])  infTrk[ch][8]->setCaption(ti.diff==0   ? "" : (clrsDiff[ti.diff] + toStr(ti.diff)));
+		if (infTrk[ch][9])  infTrk[ch][9]->setCaption(ti.rating==0 ? "" : (clrsRating[ti.rating] + toStr(ti.rating)));
+		if (infTrk[ch][10]) infTrk[ch][10]->setCaption(str0(ti.objects));
 	}
 
 #ifndef ROAD_EDITOR  // game

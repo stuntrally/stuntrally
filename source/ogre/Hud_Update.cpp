@@ -32,8 +32,7 @@ bool SortPerc(const CarModel* cm2, const CarModel* cm1)
 	int l2 = cm2->pGame->timer.GetCurrentLap(cm2->iIndex);
 	float p1 = cm1->trackPercent;
 	float p2 = cm2->trackPercent;
-	if (l1 == l2)  return p1 < p2;
-	return l1 < l2;
+	return (l1 < l2) || (l1 == l2 && p1 < p2);
 }
 
 bool SortWin(const CarModel* cm2, const CarModel* cm1)
@@ -42,8 +41,7 @@ bool SortWin(const CarModel* cm2, const CarModel* cm1)
 	int l2 = cm2->pGame->timer.GetCurrentLap(cm2->iIndex);
 	float t1 = cm1->pGame->timer.GetPlayerTimeTot(cm1->iIndex);
 	float t2 = cm2->pGame->timer.GetPlayerTimeTot(cm2->iIndex);
-	if (l1 == l2)  return t1 > t2;
-	return l1 < l2;
+	return (l1 < l2) || (l1 == l2 && t1 > t2);
 }
 
 
@@ -116,11 +114,12 @@ void App::UpdateHUD(int carId, float time)
 			cms.push_back(carModels[o]);
 
 		cms.sort(SortWin);
+		//stable_sort(cms.begin(), cms.end(), SortWin);
 		
 		String msg = "";  int place = 1;  // assing places
-		for (int c = 0; c < carModels.size(); ++c)
+		for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it)
 		{
-			CarModel* cm = carModels[c];
+			CarModel* cm = *it;
 			bool end = pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps;
 			cm->iWonPlace = end ? place++ : 0;  // when ended race
 
@@ -161,9 +160,9 @@ void App::UpdateHUD(int carId, float time)
 		//  upd end list
 		if (mWndNetEnd->getVisible())
 		{	liNetEnd->removeAllItems();
-			for (int c = 0; c < carModels.size(); ++c)
+			for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it)
 			{
-				CarModel* cm = carModels[c];
+				CarModel* cm = *it;
 				//String clr = "#E0F0FF";
 				std::stringstream ss;  // car color to hex str
 				ss << std::hex << std::setfill('0');
@@ -206,10 +205,11 @@ void App::UpdateHUD(int carId, float time)
 
 		ColourValue clr;
 		//if (carModels.size() == carPoses.size())  //-
-		for (int o = 0; o < carModels.size(); ++o)
+		int o = 0;
+		for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it,++o)
 		if (hudOpp[o][0])
 		{
-			CarModel* cm = carModels[o];
+			CarModel* cm = *it;
 			if (cm->pMainNode)
 			{
 				bool bGhost = cm->eType == CarModel::CT_GHOST;
@@ -251,7 +251,8 @@ void App::UpdateHUD(int carId, float time)
 						t = pGame->timer.GetLastLap(cm->iIndex);  // GetPlayerTimeTot
 						lap = pGame->timer.GetPlayerCurrentLap(cm->iIndex);  // not o, sorted index
 					}
-					bool end = pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps;
+					bool end = pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps
+							&& (mClient || pSet->game.local_players > 1);  // multiplay or split
 					hudOpp[o][2]->setCaption(
 						//+ "   " + toStr(lap) + " " + GetTimeString(t)
 						+ end ? cm->sDispName + "  (" + toStr(cm->iWonPlace) + ")" : cm->sDispName);

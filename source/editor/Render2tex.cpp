@@ -41,13 +41,13 @@ void App::Rnd2TexSetup()
 			mSceneMgr->destroyCamera(sCam);  // dont destroy old - const tex sizes opt..
 			
 			///  rnd to tex - same dim as Hmap	// after track load
-			Real fDim = sc.td.fTerWorldSize;  // world dim
+			Real fDim = sc.td.fTerWorldSize;  // world dim  ..vdr
 			Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().createManual(sTex,
 				  ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D,
 				  dim[i], dim[i], 0, PF_R8G8B8A8, TU_RENDERTARGET);
 				  
 			r.rndCam = mSceneMgr->createCamera(sCam);  // up
-			r.rndCam->setPosition(Vector3(0,1000,0));  r.rndCam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
+			r.rndCam->setPosition(Vector3(0,1000,0/*-300..*/));  r.rndCam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
 			r.rndCam->setNearClipDistance(0.5);		r.rndCam->setFarClipDistance(50000);
 			r.rndCam->setAspectRatio(1.0);			if (!full)  r.rndCam->setProjectionType(PT_ORTHOGRAPHIC);
 			r.rndCam->setOrthoWindow(fDim,fDim);	//rt[i].rndCam->setPolygonMode(PM_WIREFRAME);
@@ -80,7 +80,7 @@ void App::Rnd2TexSetup()
 
 	//  pos dot on minimap  . . . . . . . .
 	if (!ndPos)  {
-		mpos = Create2D("hud/CarPos", 0.2f, true);  // dot size
+		mpos = Create2D("hud/CarPosEd", 0.2f, true);  // dot size
 		mpos->setVisibilityFlags(RV_Hud);
 		mpos->setRenderQueueGroup(RQG_Hud3 /*RENDER_QUEUE_OVERLAY+1*/);
 		ndPos = mSceneMgr->getRootSceneNode()->createChildSceneNode(
@@ -154,29 +154,31 @@ void App::SaveGrassDens()
 	for (x = 0;  x <= f; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | left
 	for (x=w-f-1; x < w; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | right
 
-	Image im;  // for trees, before grass angle and height
-	im.loadDynamicImage((uchar*)gd, w,h,1, PF_BYTE_RGBA);
-	im.save(TrkDir()+"objects/roadDensity.png");
-
-	///  terrain - max angle, height for grass  -----------
-	for (y = 0; y < h; ++y) {  b = y*w;
-	for (x = 0; x < w; ++x, ++b)
+	if (!IsVdrTrack())  // vdr trk no grass, only previews
 	{
-		a = (h-1-y) * sc.td.iVertsY / h;  a *= sc.td.iVertsX;
-		a += x * sc.td.iVertsX / w;
-		// would be better to interpolate 4 neighbours, or smooth this map
+		Image im;  // for trees, before grass angle and height
+		im.loadDynamicImage((uchar*)gd, w,h,1, PF_BYTE_RGBA);
+		im.save(TrkDir()+"objects/roadDensity.png");
 
-		v = std::max(0, std::min(255, int(255.f *
-			linRange(sc.td.hfAngle[a], 0.f,sc.grTerMaxAngle,20.f) *
-			linRange(sc.td.hfHeight[a], sc.grTerMinHeight,sc.grTerMaxHeight,20.f) )));
-		v = std::min((int)(gd[b] & 0xFF), v);  // preserve road
-		gd[b] = 0xFF000000 + /*0x010101 */ v;  // no grass
-	}	}
+		///  terrain - max angle, height for grass  -----------
+		for (y = 0; y < h; ++y) {  b = y*w;
+		for (x = 0; x < w; ++x, ++b)
+		{
+			a = (h-1-y) * sc.td.iVertsY / h;  a *= sc.td.iVertsX;
+			a += x * sc.td.iVertsX / w;
+			// would be better to interpolate 4 neighbours, or smooth this map
 
-	//Image im;
-	im.loadDynamicImage((uchar*)gd, w,h,1, PF_BYTE_RGBA);
-	im.save(TrkDir()+"objects/grassDensity.png");
+			v = std::max(0, std::min(255, int(255.f *
+				linRange(sc.td.hfAngle[a], 0.f,sc.grTerMaxAngle,20.f) *
+				linRange(sc.td.hfHeight[a], sc.grTerMinHeight,sc.grTerMaxHeight,20.f) )));
+			v = std::min((int)(gd[b] & 0xFF), v);  // preserve road
+			gd[b] = 0xFF000000 + /*0x010101 */ v;  // no grass
+		}	}
 
+		//Image im;
+		im.loadDynamicImage((uchar*)gd, w,h,1, PF_BYTE_RGBA);
+		im.save(TrkDir()+"objects/grassDensity.png");
+	}
 	delete[] rd;  delete[] gd;  delete[] mask;
 
 	//  road, terrain  ----------------
@@ -190,6 +192,23 @@ void App::SaveGrassDens()
 //-----------------------------------------------------------------------------------------------------------
 void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 {
+/*
+	if (evt.source->getViewport(0)->getCamera()->getName() != "RttCam3")
+	{
+		if (!terrain)  return;
+		MaterialPtr terrainMaterial = terrain->_getMaterial();
+		if (!terrainMaterial.isNull())
+		{
+			for (int i=0; i < terrainMaterial->getNumTechniques(); ++i)
+			{
+				if (terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->_findNamedConstantDefinition("enableShadows"))
+					terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->setNamedConstant("enableShadows", 0.f);
+			}
+		}
+		if (materialFactory)
+			materialFactory->setShadowsEnabled(false);
+	}
+	
 	const String& s = evt.source->getName();
 	int num = atoi(s.substr(s.length()-1, s.length()-1).c_str());
 	
@@ -203,8 +222,12 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 		//ndSky->setPosition(mCameraT->getPosition());
 	}
 	else
-	if (road)
-		road->SetForRnd(num == 0 ? "render_clr" : "render_grass");
+		if (road)
+			road->SetForRnd(num == 0 ? "render_clr" : "render_grass");
+
+	///mWaterRTT.setActive(false);  //!.. TODO: disable water refl&refra for terrain rtt! or set cam to top view
+	//mWaterRTT.setViewerCamera(rt[1].rndCam);
+	*/
 }
 
 void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
@@ -218,6 +241,8 @@ void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 	if (road)  {
 		road->UnsetForRnd();
 		road->UpdLodVis(pSet->road_dist);  }
+
+	//mWaterRTT.setViewerCamera(mCamera);
 
 	//  restore shadows splits todo...
 	//mCamera->setFarClipDistance(pSet->view_distance*1.1f);
@@ -385,12 +410,13 @@ void App::AlignTerToRoad()
 	delete[] rd;  delete[] rh;
 
 
-	//  clear bullet world
+
+	//  clear bullet world  ?todo: will it destroy objects--
 	for (int i=0; i < road->vbtTriMesh.size(); ++i)
 		delete road->vbtTriMesh[i];
 	road->vbtTriMesh.clear();
 	
-	for(int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
+	for (int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
 	{
 		btCollisionObject* obj = world->getCollisionObjectArray()[i];
 		delete obj->getCollisionShape();  //?

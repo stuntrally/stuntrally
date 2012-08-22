@@ -106,12 +106,10 @@ void App::ChampNewGame()
 
 ///  Championships list  fill
 //---------------------------------------------------------------------
-const static char clrDiff[8][8] =  // track difficulty colors
-	{"#60C0FF", "#00FF00", "#60FF00", "#C0FF00", "#FFFF00", "#FFC000", "#FF6000", "#FF4040"};
-
 void App::ChampsListUpdate()
 {
-	const char clrT[4][8] = {"#A0F0FF", "#FFFFB0", "#FFA0A0", "#80FF80"};
+	//  0 normal  1 tutorial  2 test  3 scenery
+	const char clrCh[4][8] = {"#A0F0FF", "#FFFFB0", "#FFA0A0", "#80FF80"};
 
 	liChamps->removeAllItems();  int n=1;
 	for (int i=0; i < champs.champs.size(); ++i,++n)
@@ -119,11 +117,11 @@ void App::ChampsListUpdate()
 		const Champ& ch = champs.champs[i];
 		const ProgressChamp& pc = progress.champs[i];
 		int ntrks = pc.trks.size();
-		const String& clr = clrT[ch.tutorial];
+		const String& clr = clrCh[ch.tutorial];
 		liChamps->addItem(toStr(n/10)+toStr(n%10), 0);  int l = liChamps->getItemCount()-1;
 		liChamps->setSubItemNameAt(1,l, clr+ ch.name.c_str());
-		liChamps->setSubItemNameAt(2,l, clrDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
-		liChamps->setSubItemNameAt(3,l, clrDiff[std::min(7,ntrks*2/3+1)]+ toStr(ntrks));
+		liChamps->setSubItemNameAt(2,l, clrsDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
+		liChamps->setSubItemNameAt(3,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ toStr(ntrks));
 		liChamps->setSubItemNameAt(4,l, clr+ fToStr(100.f * pc.curTrack / ntrks,0,3)+" %");
 		liChamps->setSubItemNameAt(5,l, clr+ fToStr(pc.score,1,5));
 		//length,time;
@@ -156,7 +154,7 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t pos)
 		allTime += time;  // sum trk time, total champ time
 
 		liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
-		liStages->setSubItemNameAt(3,l, clrDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
+		liStages->setSubItemNameAt(3,l, clrsDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
 
 		liStages->setSubItemNameAt(4,l, "#80C0F0"+GetTimeString(time));  //toStr(trk.laps)
 		liStages->setSubItemNameAt(5,l, "#E0F0FF"+fToStr(progress.champs[pos].trks[i].score,1,5));

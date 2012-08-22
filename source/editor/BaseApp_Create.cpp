@@ -321,7 +321,6 @@ bool BaseApp::setup()
 	LogO(String("::: Time Ogre Start: ") + toStr(dt) + " ms");
 
 	createScene();
-	postInit();
 
 	return true;
 };

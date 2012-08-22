@@ -55,9 +55,7 @@ public:
 	// stuff to be executed after BaseApp init
 	void postInit();
 	void SetEdMode(ED_MODE newMode);
-	
-	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };
-	
+
 protected:
 	void LoadTrackEv(), SaveTrackEv(), UpdateTrackEv();
 	enum TrkEvent {  TE_None=0, TE_Load, TE_Save, TE_Update  } eTrkEvent;
@@ -77,7 +75,7 @@ protected:
 	bool bNewHmap, bTrGrUpd;
 	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget), UpdTrees();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
-	void CreateTrees(), CreateObjects(),DestroyObjects(), UpdObjPick(), PickObject();
+	void CreateTrees(),  CreateObjects(), DestroyObjects(bool clear), UpdObjPick(), PickObject(), ToggleObjSim();
 	void CreateFluids(), DestroyFluids(), CreateBltFluids();
 	void UpdFluidBox(), UpdateWaterRTT(Ogre::Camera* cam), UpdMtrWaterDepth();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
@@ -197,9 +195,10 @@ protected:
 	class btCollisionDispatcher* dispatcher;
 	class bt32BitAxisSweep3* broadphase;
 	class btSequentialImpulseConstraintSolver* solver;
+
 	class btCollisionObject* trackObject;  // vdrift track col
 	class btTriangleIndexVertexArray* trackMesh;
-	void BltWorldInit(), BltWorldDestroy(), BltClear();
+	void BltWorldInit(), BltWorldDestroy(), BltClear(), BltUpdate(float dt);
 
 
 	// Weather  rain, snow
@@ -270,12 +269,13 @@ protected:
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const Ogre::String& sTrack, float time, bool champ=false), ReadTrkStats();
 	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc[1];
 	MyGUI::StaticImagePtr imgPrv[1],imgMini[1],imgTer[1], imgTrkIco1,imgTrkIco2;
-	const static int StTrk = 12, InfTrk = 10;
+	const static int StTrk = 12, InfTrk = 11;
 	MyGUI::StaticTextPtr valTrk[1], stTrk[1][StTrk], infTrk[1][InfTrk];  // [1] 2nd is in game (common code)
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(),updTrkListDim();
 	const static int TcolW[32];
+	const static Ogre::String clrsDiff[9],clrsRating[5],clrsLong[10];
 
 	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;  MyGUI::EditPtr edFind;
 	strlist liTracks,liTracksUser;  void FillTrackLists();
@@ -298,12 +298,13 @@ protected:
 	//  tool windows texts
 	const static int
 		BR_TXT=9, RD_TXT=11, RDS_TXT=9,
-		ST_TXT=6, FL_TXT=6, OBJ_TXT=6;
+		ST_TXT=6, FL_TXT=6, OBJ_TXT=7;
 	MyGUI::StaticTextPtr
 		brTxt[BR_TXT],brVal[BR_TXT],brKey[BR_TXT],
 		rdTxt[RD_TXT],rdVal[RD_TXT],rdKey[RD_TXT],
 		rdTxtSt[RDS_TXT],rdValSt[RDS_TXT],
 		stTxt[ST_TXT], flTxt[FL_TXT], objTxt[OBJ_TXT];
+	MyGUI::WidgetPtr objPan;
 	MyGUI::StaticImagePtr brImg;  MyGUI::TabPtr wndTabs;
 
 	//  main menu
@@ -364,7 +365,7 @@ protected:
 	SLV(TerTriSize);  SLV(TerLScale);
 	MyGUI::EditPtr edTerTriSize, edTerLScale;  MyGUI::Slider* sldTerLScale;
 	void editTerTriSize(MyGUI::EditPtr), editTerLScale(MyGUI::EditPtr);
-	void btnTerrainNew(WP), btnTerGenerate(WP), btnTerrainHalf(WP), btnTerrainDouble(WP);
+	void btnTerrainNew(WP), btnTerGenerate(WP), btnTerrainHalf(WP), btnTerrainDouble(WP), btnTerrainMove(WP);
 	const char* getHMapNew();
 	MyGUI::StaticTextPtr valTerLAll;
 	
@@ -406,7 +407,7 @@ protected:
 	void editLTrMinTerH(MyGUI::EditPtr),editLTrMaxTerH(MyGUI::EditPtr),editLTrFlDepth(MyGUI::EditPtr);
 	
 	
-	///  [Road]  ----
+	//  [Road]  ----
 	MyGUI::ComboBoxPtr cmbRoadMtr[4],cmbPipeMtr[4];
 	void comboRoadMtr(CMB),comboPipeMtr(CMB);
 	MyGUI::EditPtr edRdTcMul,edRdLenDim,edRdWidthSteps,edRdHeightOfs,
@@ -415,9 +416,13 @@ protected:
 	void editRoad(MyGUI::EditPtr);
 
 
-	//  [Objects]  ----
-	std::vector<std::string> vObjNames;  int iObjTNew;
-	std::set<int> vObjSel;  int iObjCur,iObjLast;
+	///  [Objects]  ----
+	std::vector<std::string> vObjNames;
+	void SetObjNewType(int tnew),UpdObjNewNode(), AddNewObj();
+	int iObjCur,iObjLast, iObjTNew;  std::set<int> vObjSel;
+	bool objSim;  float objNewH,objNewYaw;
+	Ogre::SceneNode* objNewNd;  Ogre::Entity* objNewEnt;
+	MyGUI::List* objListDyn,*objListSt;  void listObjsChngDyn(WP,size_t),listObjsChngSt(WP,size_t);
 	
 
 	//  [Tools]  ----

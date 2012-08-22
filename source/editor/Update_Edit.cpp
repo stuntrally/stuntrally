@@ -6,6 +6,8 @@
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MultiList2.h"
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+#include "LinearMath/btDefaultMotionState.h"
+#include "BulletDynamics/Dynamics/btRigidBody.h"
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
 using namespace Ogre;
@@ -126,8 +128,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(DOWN)||isKey(NUMPAD2))	dirU += evt.timeSinceLastFrame;  else
 		{	dirU = 0.f;  dirD = 0.f;  }
 		int d = ctrl ? 4 : 1;
-		if (dirU > 0.0f) {  trkListNext( d);  dirU = -0.12f;  }
-		if (dirD > 0.0f) {  trkListNext(-d);  dirD = -0.12f;  }
+		if (dirU > 0.0f) {  trkListNext( d);  dirU = -0.2f;  }
+		if (dirD > 0.0f) {  trkListNext(-d);  dirD = -0.2f;  }
 	}
 
 	
@@ -293,7 +295,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		
 		
 		//  edit  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-		if (mz != 0)
+		if (mz != 0 && bEdit())
 			if (alt){			mBrPow[curBr]   *= 1.f - 0.4f*q*mz;  updBrush();  }
 			else if (!shift){	mBrSize[curBr]  *= 1.f - 0.4f*q*mz;  updBrush();  }
 			else				mBrIntens[curBr]*= 1.f - 0.4f*q*mz/0.05;
@@ -331,7 +333,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(SEMICOLON))	{  road->AddBoxW(-q*0.2);  UpdStartPos();  }
 		if (isKey(RBRACKET))	{  road->AddBoxH( q*0.2);  UpdStartPos();  }
 		if (isKey(APOSTROPHE))	{  road->AddBoxW( q*0.2);  UpdStartPos();  }
-		//if (mz > 0)	// snap rot by 15 deg ..
+		//if (mz > 0 && bEdit())	// snap rot by 15 deg ..
 	}
 	///  Fluids
 	//----------------------------------------------------------------
@@ -357,7 +359,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			if (isKey(SEMICOLON )){	fb.tile.y *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
 			if (isKey(APOSTROPHE)){	fb.tile.y *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
 
-			if (mz != 0)  // wheel prev/next
+			if (mz != 0 && bEdit())  // wheel prev/next
 			{	int fls = sc.fluids.size();
 				if (fls > 0)  {  iFlCur = (iFlCur-mz+fls)%fls;  UpdFluidBox();  }
 			}
@@ -367,27 +369,31 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	//----------------------------------------------------------------
 	else if (edMode == ED_Objects)
 	{
+		int objs = sc.objects.size();
 		if (iObjCur == -1 || sc.objects.empty())
 		{	//  none sel
-			objTxt[0]->setCaption("#20FF20New#C0C0C0    "+toStr(iObjCur)+" / "+toStr(sc.objects.size()));
+			objTxt[0]->setCaption("#20FF20New#C0C0C0    "+toStr(iObjCur)+" / "+toStr(objs));
 			objTxt[1]->setCaption(vObjNames[iObjTNew]);  // all new params ...
-			objTxt[3]->setCaption("");
+			objTxt[2]->setCaption("Pos H:  "+fToStr(objNewH,2,4));
+			objTxt[3]->setCaption("Rot:  "+fToStr(Radian(objNewYaw).valueDegrees(),2,4));
 			objTxt[4]->setCaption("");
-			objTxt[5]->setCaption("");
 		}else
 		{	const Object& o = sc.objects[iObjCur];
 			if (vObjSel.empty())
-				objTxt[0]->setCaption("#A0D0FFCur#C0C0C0     "+toStr(iObjCur+1)+" / "+toStr(sc.objects.size()));
+				objTxt[0]->setCaption("#A0D0FFCur#C0C0C0     "+toStr(iObjCur+1)+" / "+toStr(objs));
 			else
-				objTxt[0]->setCaption("#00FFFFSel#C0C0C0     "+toStr(vObjSel.size())+" / "+toStr(sc.objects.size()));
+				objTxt[0]->setCaption("#00FFFFSel#C0C0C0     "+toStr(vObjSel.size())+" / "+toStr(objs));
 			objTxt[1]->setCaption(o.name);
-			objTxt[3]->setCaption("Pos:  "+fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
-			objTxt[4]->setCaption("Rot:  "+fToStr(o.nd->getOrientation().getYaw().valueDegrees(),1,4));
-			objTxt[5]->setCaption("Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
+			objTxt[2]->setCaption("Pos:  "+fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
+			objTxt[3]->setCaption("Rot:  "+fToStr(o.nd->getOrientation().getYaw().valueDegrees(),1,4));
+			objTxt[4]->setCaption("Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
 		}
+		objTxt[5]->setCaption(String("Sim: ") + (objSim?"ON":"off") + "      "+toStr(world->getNumCollisionObjects()));
+		objTxt[5]->setTextColour(objSim ? MyGUI::Colour(1.0,0.9,1.0) : MyGUI::Colour(0.77,0.77,0.8));
+
 		//  edit
-		if (mz != 0)  // wheel prev/next
-		{	int objs = sc.objects.size();
+		if (mz != 0 && bEdit())  // wheel prev/next
+		{
 			if (objs > 0)  {  iObjCur = (iObjCur-mz+objs)%objs;  UpdObjPick();  }
 		}
 	}
@@ -625,6 +631,23 @@ void App::editMouse()
 	}
 
 	///  edit objects . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+	if (edMode == ED_Objects && iObjCur == -1)  // new properties
+	{
+		const Real fMove(0.5f), fRot(3.0f);
+		if (mbRight)  // move y
+		{
+			Real ym = -vNew.y * fMove * moveMul;
+			objNewH += ym;
+			if (ctrl)  objNewH = shift ? 0.f : 0.53f;  // reset
+		}
+		else
+		if (mbMiddle)  // rot yaw
+		{
+			Real xm = vNew.x * fRot * moveMul *PI_d/180.f;
+			objNewYaw -= xm;
+			if (ctrl)  objNewYaw = 0.f;
+		}
+	}
 	if (edMode == ED_Objects && !sc.objects.empty() && (iObjCur >= 0 || !vObjSel.empty()))
 	{
 		const Real fMove(0.5f), fRot(1.5f), fScale(0.02f);  //par speed
@@ -634,7 +657,7 @@ void App::editMouse()
 		int i = sel ? *it : iObjCur;
 		while (i >= 0 && i < sc.objects.size())
 		{
-			Object& o = sc.objects[i];
+			Object& o = sc.objects[i];  bool upd1 = false;
 			if (!alt)
 			{
 				if (mbLeft)	// move on xz
@@ -643,13 +666,13 @@ void App::editMouse()
 					Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
 					Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
 					o.pos[0] += vm.x;  o.pos[1] -= vm.z;  // todo: for selection ..
-					o.SetFromBlt();	 upd = true;
+					o.SetFromBlt();	 upd1 = true;
 				}else
 				if (mbRight)  // move y
 				{
 					Real ym = -vNew.y * fMove * moveMul;
 					o.pos[2] += ym;
-					o.SetFromBlt();	 upd = true;
+					o.SetFromBlt();	 upd1 = true;
 				}
 				else
 				if (mbMiddle)  // rot yaw,  ctrl pitch local-
@@ -658,7 +681,7 @@ void App::editMouse()
 					QUATERNION <float> qr;
 					if (!ctrl)  qr.Rotate(-xm, 0, 0, 1);  else  qr.Rotate(-xm, 0, 1, 0);
 					o.rot = o.rot * qr;
-					o.SetFromBlt();	 upd = true;
+					o.SetFromBlt();	 upd1 = true;
 				}
 			}else
 			{
@@ -668,16 +691,19 @@ void App::editMouse()
 					float vm = (vNew.y - vNew.x) * fMove * moveMul;
 					o.scale *= 1.f - vm * fScale;
 					//if (o.scale.x < 0.02f)  o.scale.x = 0.02f;
-					o.nd->setScale(o.scale);  upd = true;
+					o.nd->setScale(o.scale);  upd1 = true;
 				}else
 				if (mbRight)  // scale y
 				{
 					float vm = (vNew.y - vNew.x) * fMove * moveMul;
 					o.scale.y *= 1.f - vm * fScale;
 					//if (o.scale.y < 0.02f)  o.scale.y = 0.02f;
-					o.nd->setScale(o.scale);  upd = true;
+					o.nd->setScale(o.scale);  upd1 = true;
 				}
 			}
+			if (upd1)
+				upd = true;
+
 			if (sel)
 			{	++it;  // next sel
 				if (it == vObjSel.end())  break;
@@ -685,7 +711,9 @@ void App::editMouse()
 			}else  break;
 		}
 		if (upd)
+		{
 			UpdObjPick();
+		}
 	}
 }
 
@@ -917,6 +945,14 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	mFactory->setSharedParameter ("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
 	mFactory->setSharedParameter ("waterTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
 	*/
+
+	
+	///  simulate
+	if (edMode == ED_Objects && objSim /*&& bEdit()*/)
+		BltUpdate(evt.timeSinceLastFrame);
+	
+	if (edMode == ED_Objects)
+		UpdObjNewNode();
 
 	bFirstRenderFrame = false;
 	

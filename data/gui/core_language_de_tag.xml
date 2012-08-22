@@ -10,7 +10,6 @@
 	<Tag name="InpSet_AxisFull">Achse ganz</Tag>
 	<Tag name="InputHeaderTxt4">Ändern</Tag>
 	<Tag name="TerrainDouble">Double</Tag>
-	<Tag name="TipSunDirYaw">Richtung der Sonne - Gierwinkel</Tag>
 	<Tag name="InputStartMeet">Auto wird (nächste + / vorherige -) Strecke Punkte treffen</Tag>
 	<Tag name="TipAutoGearbox">Für manuelle Schaltung den Haken rausnehmen.</Tag>
 	<Tag name="LS_MISC">Fertigstellen</Tag>
@@ -35,6 +34,7 @@
 	<Tag name="TerNormal">Normal</Tag>
 	<Tag name="NeedNewGame">* neues Spiel erforderlich</Tag>
 	<Tag name="InputRoadAngZero">shift-6 - Winkel leeren</Tag>
+	<Tag name="ScaleMul">Skal. Mult.</Tag>
 	<Tag name="TipTrackImg">Bildschirmfoto der ausgewählten Strecke.</Tag>
 	<Tag name="TerLNoiseOnly">Nur Rauschen</Tag>
 	<Tag name="InputValueChange">Jede Bewegung/Werteveränderung mit </Tag>
@@ -48,6 +48,7 @@
 	<Tag name="GraphicsAll_Low">Niedrig</Tag>
 	<Tag name="TipPrevWind">Vorschau-Kamerafenster.</Tag>
 	<Tag name="ChampEndFinished">Die Meisterschaft wurde erfolgreich beendet!</Tag>
+	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
 	<Tag name="Version">Version</Tag>
 	<Tag name="InputRoadOnTer">Pos1 - über dem Boden an/aus</Tag>
 	<Tag name="TipSunDiffuse">Farbe des Sonnenlichts. R G B Komponenten von 0 bis 1 (z.B. 0.9 0.9 0.9)</Tag>
@@ -105,12 +106,13 @@
 	<Tag name="TipGrDensSmooth">Grasverteilungsmap - glätten</Tag>
 	<Tag name="NetGame">Spiel</Tag>
 	<Tag name="NetWaitingForOthers">Warte auf Spieler</Tag>
-	<Tag name="TipNewTerrainFlat">Neues, flaches Terrain erzeugen</Tag>
+	<Tag name="TipCarDesc">Car description text.</Tag>
 	<Tag name="InputRoadNew">Strg-Space - Werte des neuen Punktes von ausgewähltem</Tag>
 	<Tag name="Road_New">New</Tag>
 	<Tag name="Top">Oben</Tag>
 	<Tag name="TerUpdSkip">Terrain-Update überspr.</Tag>
 	<Tag name="Input">Eingabe</Tag>
+	<Tag name="AlignWidthAdd">Width add</Tag>
 	<Tag name="NetReady">Bereit</Tag>
 	<Tag name="Road_Height">Height</Tag>
 	<Tag name="InputNoJS">Kein Joystick</Tag>
@@ -152,9 +154,10 @@
 	<Tag name="ViewStart">Ans. Start</Tag>
 	<Tag name="SSS_SpeedFactor">Schnelligkeitsfaktor</Tag>
 	<Tag name="RplRecTime">Aufgenommen</Tag>
-	<Tag name="TipGrTerMaxHeight">Terrain-Höhe, ab der kein Gras mehr da ist.</Tag>
+	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass (starts fading out for 20m).</Tag>
 	<Tag name="InputRoadYaw">- gieren</Tag>
 	<Tag name="MessageBox_Try">Versuchen</Tag>
+	<Tag name="InputMapRewind">Rewind (time)</Tag>
 	<Tag name="InputKeyAllPreset">Voreinstellung</Tag>
 	<Tag name="InpSet_Slow">Langsam</Tag>
 	<Tag name="InputAssignKey">&lt;Zuweisen&gt;</Tag>
@@ -177,7 +180,7 @@
 	<Tag name="Always">Immer</Tag>
 	<Tag name="Brush_Offset">Offset</Tag>
 	<Tag name="softparticles">Weiche Partikel</Tag>
-	<Tag name="TipReverse">Streckenrichtung umkehren.</Tag>
+	<Tag name="TipSunDirYaw">Richtung der Sonne - Gierwinkel</Tag>
 	<Tag name="Players">Spieler</Tag>
 	<Tag name="Road_ChkR">ChkR</Tag>
 	<Tag name="MessageBox_No">Nein</Tag>
@@ -266,7 +269,7 @@
 	<Tag name="Brush_Octaves">Octaves</Tag>
 	<Tag name="Type">Typ</Tag>
 	<Tag name="NetWaiting">Wartend...</Tag>
-	<Tag name="NetStart">Start</Tag>
+	<Tag name="MergeLength">Zusammenf. L.</Tag>
 	<Tag name="InputMinVal">Min. Wert</Tag>
 	<Tag name="RplMaxNumViewports">Max. Anzahl von Ansichten nebeneinander</Tag>
 	<Tag name="SingleRace">Schnelles Spiel</Tag>
@@ -308,10 +311,11 @@
 	<Tag name="InputMoveAxisTip">Achse bewegen, um die Nummer zu sehen</Tag>
 	<Tag name="SplitVertically">Senkrecht teilen</Tag>
 	<Tag name="Start">Start</Tag>
+	<Tag name="TipGrTerMinHeight">Terrain height below which there won't be any grass (starts fading out for 20m).</Tag>
 	<Tag name="Readme">Readme</Tag>
 	<Tag name="InputRoadShiftReverse">Shift-Einfg - Einfügen Shift-Strg-Einfg - umgekehrt</Tag>
 	<Tag name="MinScale">min. Skal.</Tag>
-	<Tag name="MergeLength">Zusammenf. L.</Tag>
+	<Tag name="NetStart">Start</Tag>
 	<Tag name="QuickHelpText">---- Schnellhilfe ----@@Zum navigieren zwischen den Menüs die Tasten Hoch,Runter,Enter,Backspace benutzen.@@Zum Anpassen der Auflösung im Optionsmenü die Kategorie Bildschirm wählen. Grafikvoreinstellungen benutzen, um die Grafik auf die vorhandene Hardware anzupassen.@@Alle Tastenkürzel sind im Optionsmenü im Tab Eingabe ersichtlich.@Für die Benutzung eines Gamecontrollers siehe:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosten eines Multiplayerspiels erfordert eventuell Port Forwarding des Routers.@Beim Verbinden mit einem bereits existierenden Spiel ist dies nicht notwendig.@@Bei Problemen oder Vorschlägen verwenden sie das Bugtracking-System (auf Englisch):@http://code.google.com/p/vdrift-ogre/issues/list@@Für weitere Informationen, siehe Readme und die Wiki-Seiten des Projekts.@</Tag>
 	<Tag name="InputObjectsMove">LMB - bewegen RMB - höhe</Tag>
 	<Tag name="TimesBar">Zeitanzeige</Tag>
@@ -329,7 +333,7 @@
 	<Tag name="InputMapShowOptions">Optionen zeigen</Tag>
 	<Tag name="InputCameraMode">Kameramodus</Tag>
 	<Tag name="Enabled">Aktiviert</Tag>
-	<Tag name="RollingDrag">Rollwiderstand</Tag>
+	<Tag name="TipReverse">Streckenrichtung umkehren.</Tag>
 	<Tag name="DidntPass">Durchgefallen</Tag>
 	<Tag name="Road_Cur">Cur</Tag>
 	<Tag name="InputMinimapType">Alt-F2,F3 - Minikartentyp</Tag>
@@ -338,7 +342,7 @@
 	<Tag name="FluidCont">Gewässertyp</Tag>
 	<Tag name="TrackAutoLoad">Spiel autom. Laden</Tag>
 	<Tag name="DustSize">Staubgröße</Tag>
-	<Tag name="InputUpdBlendmap">F9 - Blendmap aktualisieren</Tag>
+	<Tag name="Shortcuts">Shortcuts</Tag>
 	<Tag name="InputPressButtonTip">Taste drücken, um die Nummer zu sehen</Tag>
 	<Tag name="Friction">Reibung</Tag>
 	<Tag name="Ambient">Umgebung</Tag>
@@ -383,7 +387,7 @@
 	<Tag name="InputTogglePreview">F7 - Vorschaukamera</Tag>
 	<Tag name="GameBy">Ein Spiel von</Tag>
 	<Tag name="SunWeather">Sonne und Wetter</Tag>
-	<Tag name="InputBrushForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
+	<Tag name="RollingDrag">Rollwiderstand</Tag>
 	<Tag name="RplDelete">Löschen</Tag>
 	<Tag name="TipAutoRear">Für manuellen Rückwärtsgang Haken rausnehmen.</Tag>
 	<Tag name="TipToggleModel">Modell aktivieren oder deaktivieren.</Tag>
@@ -418,7 +422,7 @@
 	<Tag name="PreviewCam">Vorschaukamera</Tag>
 	<Tag name="TipModelMinScale">Minimale Skalierung des Modells.</Tag>
 	<Tag name="Leave">Verlassen</Tag>
-	<Tag name="InputRoadMove">- Punkt bewegen</Tag>
+	<Tag name="TipVegetModels">Modelle für die Vegetation. Zu finden in data/trees/.</Tag>
 	<Tag name="GrassSway">Grasschwingung</Tag>
 	<Tag name="Right">Rechts</Tag>
 	<Tag name="Help">Hilfe</Tag>
@@ -426,8 +430,9 @@
 	<Tag name="MotionBlur">Bewegungsunschärfe</Tag>
 	<Tag name="MinimapAndSize">Minimap, Größe</Tag>
 	<Tag name="TipChangeHue">Farbe ändern (Farbton)</Tag>
-	<Tag name="TipVegetModels">Modelle für die Vegetation. Zu finden in data/trees/.</Tag>
+	<Tag name="InputRoadMove">- Punkt bewegen</Tag>
 	<Tag name="Intensity">Intensität</Tag>
+	<Tag name="InputBrushForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
 	<Tag name="NetGameName">Spielname</Tag>
 	<Tag name="TexSize">Texturgröße</Tag>
 	<Tag name="TipSunAmbient">Sonnenlicht Umgebungsfarbe (konstant). R G B Komponenten von 0 bis 1 (z.B. 0.4 0.4 0.4)</Tag>
@@ -458,6 +463,7 @@
 	<Tag name="Water">Wasser</Tag>
 	<Tag name="mud">Schlamm</Tag>
 	<Tag name="NetMasterConnectionError">Keine Verbindung zum Masterserver.</Tag>
+	<Tag name="AutoUpdateBlendmap">Auto update blendmap (slow for big size brushes)</Tag>
 	<Tag name="TipTerWind">Terrain Pinsel-Fenster</Tag>
 	<Tag name="InputMapThrottle">Gas</Tag>
 	<Tag name="TBLap">Runde</Tag>
@@ -478,6 +484,7 @@
 	<Tag name="InputBrushShape">K,L  -  Shape</Tag>
 	<Tag name="TerHQDist">Terrain HQ Dist.</Tag>
 	<Tag name="InputRoadRoll">- rotate roll / scale sel.</Tag>
+	<Tag name="CarDebugSurfaces">Car tire surfaces</Tag>
 	<Tag name="TrackArea">Fläche</Tag>
 	<Tag name="FacesOnce">Seiten auf einmal</Tag>
 	<Tag name="TipTrackDescEditor">Streckenbeschreibung (Klicken zum Editieren).</Tag>
@@ -513,6 +520,7 @@
 	<Tag name="TipBumpFreq">Frequenz zusätzlicher Unebenheiten der Oberfläche (Distanz zwischen diesen)</Tag>
 	<Tag name="InputRoadDel">Entf - ausgew. löschen</Tag>
 	<Tag name="InputFluidsTileY">; &apos; - Textur-Tiling ändern, einseitig</Tag>
+	<Tag name="LS_GAME">Lade Spiel</Tag>
 	<Tag name="TipSceneryId">Landschafts-ID (Wert von 0-20) zur Einteilung von verschiedenen Lichtgegebenheiten.</Tag>
 	<Tag name="TreeMult">Baumanzahl</Tag>
 	<Tag name="TipRoadStats">Statistiken der Straße.</Tag>
@@ -523,6 +531,8 @@
 	<Tag name="LS_ROAD">Lade Straßen</Tag>
 	<Tag name="RoadPoint">Straßenpunkt</Tag>
 	<Tag name="CarStartPos">Auto Startpos.</Tag>
+	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
+	<Tag name="AlignWidthMul">Width multipy</Tag>
 	<Tag name="LoadingDesc">Laden, bitte warten...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximale Höhe des Grasflecks.</Tag>
 	<Tag name="Road_Pipe">Pipe</Tag>
@@ -598,6 +608,7 @@
 	<Tag name="TipTerSize">Resultierende Seitenlänge in Metern. Entspricht der Vertexanzahl multipliziert mit Triangle-Größe.</Tag>
 	<Tag name="speed">Geschw.</Tag>
 	<Tag name="TipTerLHMin">Minimale Terrainhöhe der Ebene.</Tag>
+	<Tag name="TipNewTerrainFlat">Neues, flaches Terrain erzeugen</Tag>
 	<Tag name="Far">Weit</Tag>
 	<Tag name="RplGhosts">Geister</Tag>
 	<Tag name="InputReturnDelay">Zurückkehren</Tag>
@@ -613,6 +624,7 @@
 	<Tag name="DeleteRoad">Straße löschen</Tag>
 	<Tag name="Setup">Setup</Tag>
 	<Tag name="ReflMode_full">Voll</Tag>
+	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
 	<Tag name="TrackPipes">Röhren</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Höhen-Offset</Tag>
@@ -630,6 +642,7 @@
 	<Tag name="NetHost">Host</Tag>
 	<Tag name="Road_AngleAuto">Auto</Tag>
 	<Tag name="ImpostorDist">impostor dist.</Tag>
+	<Tag name="AlignSmooth">Smooth size</Tag>
 	<Tag name="page">Page</Tag>
 	<Tag name="Layers">Schichten</Tag>
 	<Tag name="Quit">Beenden</Tag>
@@ -644,9 +657,9 @@
 	<Tag name="Editor">Editor</Tag>
 	<Tag name="TipTrkViewDetailed">Detaillierte Ansicht.</Tag>
 	<Tag name="AndContributors">und Mitwirkenden.</Tag>
-	<Tag name="InputRoadSelectMany">Auswahl (viele)</Tag>
+	<Tag name="InputObjects1">1 - reset rotation</Tag>
 	<Tag name="Copy">Kopieren</Tag>
-	<Tag name="Reverse">Rückwärts</Tag>
+	<Tag name="InputObjects2">2 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="TipFind">Nach Streckenname suchen</Tag>
 	<Tag name="scale">Skalieren</Tag>
 	<Tag name="UnitMph">mph</Tag>
@@ -654,7 +667,9 @@
 	<Tag name="InputObjectsType">[,] - Objekttyp ändern</Tag>
 	<Tag name="ColHue">Farbton</Tag>
 	<Tag name="fluids">Gewässer</Tag>
+	<Tag name="DeleteFluids">Delete Fluids</Tag>
 	<Tag name="TipLoadTrkEditor">Andere Strecke laden oder aktuelle Strecke neu Laden.</Tag>
+	<Tag name="AlignTerrainToRoad">Align terrain to road</Tag>
 	<Tag name="TerLNoise">Rauschen</Tag>
 	<Tag name="InputRoadAltLMB">Alt-LMB (oder 1,2)</Tag>
 	<Tag name="TerLayers">Terrain-Layer</Tag>
@@ -669,6 +684,7 @@
 	<Tag name="Near">Nah</Tag>
 	<Tag name="Materials">Materialien</Tag>
 	<Tag name="InputMultiplier">Faktor</Tag>
+	<Tag name="Reverse">Rückwärts</Tag>
 	<Tag name="InputUndo">(rückgängig)</Tag>
 	<Tag name="InputBrushPower">; &apos;  (or alt-Wheel)  -  Power exponent</Tag>
 	<Tag name="CarCollis">Autokollision</Tag>
@@ -687,8 +703,9 @@
 	<Tag name="InputTerFilter">F - Filter (Rauschen entfernen)</Tag>
 	<Tag name="InputRoadRebuild">B - Straße anpassen (nach Terrainänderung)</Tag>
 	<Tag name="MessageBox_Ok">Ok</Tag>
-	<Tag name="RplSave">Speichern</Tag>
+	<Tag name="Generator">Generator</Tag>
 	<Tag name="Environment">Umgebung</Tag>
+	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
 	<Tag name="GraphicsAll_High">Hoch</Tag>
 	<Tag name="TipRoadParams">Parameter des Straßenpunkts</Tag>
 	<Tag name="TerGenPow">Potenz (Form)</Tag>
@@ -696,7 +713,7 @@
 	<Tag name="TipImpDist">Distanz, bei der Modelle 2D werden.</Tag>
 	<Tag name="InputMapGeneral">Allgemein</Tag>
 	<Tag name="TipTrkTerImg">Minikarte der ausgewählten Strecke, Sicht von oben.</Tag>
-	<Tag name="LS_GAME">Lade Spiel</Tag>
+	<Tag name="Brushes">Brushes</Tag>
 	<Tag name="TipDisableFog">Nebel zum Bearbeiten aus der Entfernung deaktivieren.</Tag>
 	<Tag name="long">weit</Tag>
 	<Tag name="PipeWStepsMul">Röhren W-Steps Mult.</Tag>
@@ -743,7 +760,7 @@
 	<Tag name="Collis.">Kollis.</Tag>
 	<Tag name="Scenery">Landschaft</Tag>
 	<Tag name="Track">Strecke</Tag>
-	<Tag name="ScaleMul">Skal. Mult.</Tag>
+	<Tag name="InputRoadSelectMany">Auswahl (viele)</Tag>
 	<Tag name="Never">Nie</Tag>
 	<Tag name="TerGenOct">Oktaven</Tag>
 	<Tag name="Volume">Lautstärke</Tag>
@@ -770,26 +787,13 @@
 	<Tag name="TipFogEndDist">Ausklangdistanz des Nebels (Meter)</Tag>
 	<Tag name="Color">Farbe</Tag>
 	<Tag name="CarScrap">Auto-Verschrottung</Tag>
+	<Tag name="RplSave">Speichern</Tag>
 	<Tag name="GraphicsAll_VeryHigh">Sehr hoch</Tag>
 	<Tag name="Pitch">neigen</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="TipCarDesc">Car description text.</Tag>
-	<Tag name="AlignWidthAdd">Width add</Tag>
-	<Tag name="InputMapRewind">Rewind (time)</Tag>
-	<Tag name="Brushes">Brushes</Tag>
-	<Tag name="TipGrTerMinHeight">Terrain height below which there won't be any grass (starts fading out for 20m).</Tag>
-	<Tag name="Shortcuts">Shortcuts</Tag>
-	<Tag name="AutoUpdateBlendmap">Auto update blendmap (slow for big size brushes)</Tag>
-	<Tag name="CarDebugSurfaces">Car tire surfaces</Tag>
-	<Tag name="Generator">Generator</Tag>
-	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
-	<Tag name="AlignWidthMul">Width multipy</Tag>
-	<Tag name="AlignSmooth">Smooth size</Tag>
-	<Tag name="DeleteFluids">Delete Fluids</Tag>
-	<Tag name="AlignTerrainToRoad">Align terrain to road</Tag>
-	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
+	<Tag name="objects">objects (dynamic)</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

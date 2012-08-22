@@ -381,9 +381,16 @@ void App::CreateBltTerrain()
 		btTransform tr;  tr.setIdentity();
 		tr.setOrigin(vpl * -0.5 * sc.td.fTerWorldSize);
 
-		btDefaultMotionState* ms = new btDefaultMotionState(tr);
-		btRigidBody::btRigidBodyConstructionInfo rbInfo(0.f,ms,shp);
-		pGame->collision.AddRigidBody(rbInfo);
+		btCollisionObject* col = new btCollisionObject();
+		col->setCollisionShape(shp);
+		col->setWorldTransform(tr);
+		col->setFriction(0.3);
+		col->setRestitution(0.0);
+		col->setCollisionFlags(col->getCollisionFlags() |
+			btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
+
+		pGame->collision.world->addCollisionObject(col);
+		pGame->collision.shapes.push_back(shp);
 	}
 	#endif
 }

@@ -6,6 +6,7 @@
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/Slider.h"
+#include <boost/filesystem.hpp>
 
 using namespace MyGUI;
 using namespace Ogre;
@@ -93,6 +94,7 @@ void App::InitGui()
 		
 	if (mWndObjects)
 		for (i=0; i<OBJ_TXT; ++i)	objTxt[i] = mGUI->findWidget<StaticText>("objTxt"+toStr(i),false);
+	objPan = mGUI->findWidget<Widget>("objPan",false);  if (objPan)  objPan->setVisible(false);
 		
 	//  Tabs
 	TabPtr tab;
@@ -206,6 +208,7 @@ void App::InitGui()
 	Btn("TerrainGenerate", btnTerGenerate);
 	Btn("TerrainHalf", btnTerrainHalf);
 	Btn("TerrainDouble", btnTerrainDouble);
+	Btn("TerrainMove", btnTerrainMove);
 
 	for (i=0; i < brSetsNum; ++i)  // brush preset
 	{
@@ -300,7 +303,7 @@ void App::InitGui()
 
 	GuiInitLang();
 	
-	//---------------------  SKYS  ---------------------
+	//---------------------  Skies  ---------------------
 	Cmb(cmbSky, "SkyCombo", comboSky);
 
 	GetMaterialsFromDef("skies.matdef");
@@ -308,7 +311,7 @@ void App::InitGui()
 	{	const String& s = vsMaterials[i];
 		if (s != "")  cmbSky->addItem(s);  //LogO(s);
 	}
-	//---------------------  WEATHER  ---------------------
+	//---------------------  Weather  ---------------------
 	Cmb(cmbRain1, "Rain1Cmb", comboRain1);  cmbRain1->addItem("");
 	Cmb(cmbRain2, "Rain2Cmb", comboRain2);  cmbRain2->addItem("");
 
@@ -319,18 +322,16 @@ void App::InitGui()
 	}	
 
 
-	//---------------------  TERRAIN  ---------------------
+	//---------------------  Terrain  ---------------------
 	Cmb(cmbTexDiff, "TexDiffuse", comboTexDiff);
 	Cmb(cmbTexNorm, "TexNormal", comboTexNorm);  cmbTexNorm->addItem("flat_n.png");
 
 	strlist li;
 	GetFolderIndex(PATHMANAGER::GetDataPath() + "/terrain", li);
 	GetFolderIndex(PATHMANAGER::GetDataPath() + "/terrain2", li);
-	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
-		if (StringUtil::endsWith(*i,".txt"))
-			i = li.erase(i);
 
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
+	if (!StringUtil::match(*i, "*.txt", false))
 	{
 		if (!StringUtil::match(*i, "*_prv.*", false))
 		if (StringUtil::match(*i, "*_nh.*", false))
@@ -351,7 +352,7 @@ void App::InitGui()
 		cmbSurfType->addItem(csTRKsurf[i]);
 
 
-	//---------------------  GRASS  ---------------------
+	//---------------------  Grass  ---------------------
 	GetMaterialsFromDef("grass.matdef");
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	String s = vsMaterials[i];
@@ -365,7 +366,7 @@ void App::InitGui()
 			cmbGrassClr->addItem(*i);
 	}
 
-	//---------------------  TREES  ---------------------
+	//---------------------  Trees  ---------------------
 	Cmb(cmbPgLay, "LTrCombo", comboPgLay);
 	strlist lt;
 	GetFolderIndex(PATHMANAGER::GetDataPath() + "/trees", lt);
@@ -373,7 +374,7 @@ void App::InitGui()
 		if (StringUtil::endsWith(*i,".mesh"))  cmbPgLay->addItem(*i);
 
 
-	//---------------------  ROADS  ---------------------
+	//---------------------  Roads  ---------------------
 	GetMaterialsFromDef("road.matdef");
 	GetMaterialsFromDef("road_pipe.matdef", false);
 	for (size_t i=0; i<4; ++i)
@@ -390,13 +391,33 @@ void App::InitGui()
 			for (int i=0; i<4; ++i)  cmbPipeMtr[i]->addItem(s);
 	}
 
-	//---------------------  OBJECTS  ---------------------
-	iObjTNew = 0;
+	//---------------------  Objects  ---------------------
 	strlist lo;  vObjNames.clear();
 	GetFolderIndex(PATHMANAGER::GetDataPath() + "/objects", lo);
 	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh"))
 			vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
+	
+	objListSt = mGUI->findWidget<List>("ObjListSt");
+	objListDyn = mGUI->findWidget<List>("ObjListDyn");
+	if (objListSt && objListDyn)
+	{
+		for (int i=0; i < vObjNames.size(); ++i)
+		{	const std::string& name = vObjNames[i];
+			if (name != "sphere")
+			{
+				if (StringUtil::startsWith(name,"pers_",false))
+					objListSt->addItem("#E0E070"+name);
+				else
+				if (boost::filesystem::exists(PATHMANAGER::GetDataPath()+"/objects/"+ name + ".bullet"))
+					objListDyn->addItem("#80D0FF"+name);  // dynamic
+				else
+					objListSt->addItem("#C8C8C8"+name);
+		}	}
+		//objList->setIndexSelected(0);  //objList->findItemIndexWith(modeSel)
+		objListSt->eventListChangePosition += newDelegate(this, &App::listObjsChngSt);
+		objListDyn->eventListChangePosition += newDelegate(this, &App::listObjsChngDyn);
+	}
 	//-----------------------------------------------------
 
 	InitGuiScrenRes();

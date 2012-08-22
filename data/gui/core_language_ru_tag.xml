@@ -10,7 +10,6 @@
 	<Tag name="InpSet_AxisFull">Axis Full</Tag>
 	<Tag name="InputHeaderTxt4">Изменить</Tag>
 	<Tag name="TerrainDouble">Double</Tag>
-	<Tag name="TipSunDirYaw">Направление солнца</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
 	<Tag name="TipAutoGearbox">Снимите для ручного переключения передач</Tag>
 	<Tag name="LS_MISC">Завершение</Tag>
@@ -35,6 +34,7 @@
 	<Tag name="TerNormal">Нормальный</Tag>
 	<Tag name="NeedNewGame">* нужна Новая Игра</Tag>
 	<Tag name="InputRoadAngZero">shift-6  - zero angles</Tag>
+	<Tag name="ScaleMul">Scale multiplier</Tag>
 	<Tag name="TipTrackImg">Снимок трека для игры</Tag>
 	<Tag name="TerLNoiseOnly">Только шум</Tag>
 	<Tag name="InputValueChange">Наж. клав или движ. мыши измен. знач. с </Tag>
@@ -48,6 +48,7 @@
 	<Tag name="GraphicsAll_Low">Низкий</Tag>
 	<Tag name="TipPrevWind">Preview camera window.</Tag>
 	<Tag name="ChampEndFinished">Вы закончили этот чемпионат.</Tag>
+	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
 	<Tag name="Version">версия</Tag>
 	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
 	<Tag name="TipSunDiffuse">Sun light diffuse (normal) color. R G B components 0 to 1 (eg. 0.9 0.9 0.9)</Tag>
@@ -105,12 +106,13 @@
 	<Tag name="TipGrDensSmooth">Grass density map - smooth size</Tag>
 	<Tag name="NetGame">Игра</Tag>
 	<Tag name="NetWaitingForOthers">Waiting for others</Tag>
-	<Tag name="TipNewTerrainFlat">Создать новый, плоский рельеф.</Tag>
+	<Tag name="TipCarDesc">Car description text.</Tag>
 	<Tag name="InputRoadNew">ctrl-Space - установить новые значения точек из выбранного</Tag>
 	<Tag name="Road_New">New</Tag>
 	<Tag name="Top">Верх</Tag>
 	<Tag name="TerUpdSkip">Пропустить обновление ландшафта</Tag>
 	<Tag name="Input">Ввод</Tag>
+	<Tag name="AlignWidthAdd">Width add</Tag>
 	<Tag name="NetReady">Готов</Tag>
 	<Tag name="Road_Height">Height</Tag>
 	<Tag name="InputNoJS">Нет джойстика</Tag>
@@ -152,9 +154,10 @@
 	<Tag name="ViewStart">View Start</Tag>
 	<Tag name="SSS_SpeedFactor">Speed Factor</Tag>
 	<Tag name="RplRecTime">Recorded   time</Tag>
-	<Tag name="TipGrTerMaxHeight">Высота ландшафта  над которой не будет травы.</Tag>
+	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass (starts fading out for 20m).</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
 	<Tag name="MessageBox_Try">Try</Tag>
+	<Tag name="InputMapRewind">Rewind (time)</Tag>
 	<Tag name="InputKeyAllPreset">Set all from preset</Tag>
 	<Tag name="InpSet_Slow">Slow</Tag>
 	<Tag name="InputAssignKey">&lt;Нажмите клавишу&gt;</Tag>
@@ -177,7 +180,7 @@
 	<Tag name="Always">Всегда</Tag>
 	<Tag name="Brush_Offset">Offset</Tag>
 	<Tag name="softparticles">Мягкие частицы</Tag>
-	<Tag name="TipReverse">Reverse track direction.</Tag>
+	<Tag name="TipSunDirYaw">Направление солнца</Tag>
 	<Tag name="Players">Players</Tag>
 	<Tag name="Road_ChkR">ChkR</Tag>
 	<Tag name="MessageBox_No">No</Tag>
@@ -266,7 +269,7 @@
 	<Tag name="Brush_Octaves">Octaves</Tag>
 	<Tag name="Type">Type</Tag>
 	<Tag name="NetWaiting">Waiting...</Tag>
-	<Tag name="NetStart">Start</Tag>
+	<Tag name="MergeLength">Merge length</Tag>
 	<Tag name="InputMinVal">Мин. значение</Tag>
 	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
 	<Tag name="SingleRace">Single Race</Tag>
@@ -308,10 +311,11 @@
 	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
 	<Tag name="SplitVertically">Split Vertically</Tag>
 	<Tag name="Start">start</Tag>
+	<Tag name="TipGrTerMinHeight">Terrain height below which there won't be any grass (starts fading out for 20m).</Tag>
 	<Tag name="Readme">Readme</Tag>
 	<Tag name="InputRoadShiftReverse">shift-Ins - paste   shift-ctrl-Ins - reversed</Tag>
 	<Tag name="MinScale">min scale</Tag>
-	<Tag name="MergeLength">Merge length</Tag>
+	<Tag name="NetStart">Start</Tag>
 	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions report an issue on (or reply to existing one):@http://code.google.com/p/vdrift-ogre/issues/list@@For more info see Readme and our project's Wiki pages.@</Tag>
 	<Tag name="InputObjectsMove">LMB - move   RMB - height</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
@@ -329,7 +333,7 @@
 	<Tag name="InputMapShowOptions">Показать опции</Tag>
 	<Tag name="InputCameraMode">Режим камеры</Tag>
 	<Tag name="Enabled">Enabled</Tag>
-	<Tag name="RollingDrag">Rolling Drag</Tag>
+	<Tag name="TipReverse">Reverse track direction.</Tag>
 	<Tag name="DidntPass">Didn't pass</Tag>
 	<Tag name="Road_Cur">Cur</Tag>
 	<Tag name="InputMinimapType">alt-F2,F3 - Prev,next minimap type</Tag>
@@ -338,7 +342,7 @@
 	<Tag name="FluidCont">Fluid Cont.</Tag>
 	<Tag name="TrackAutoLoad">Auto Load track</Tag>
 	<Tag name="DustSize">dust size</Tag>
-	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
+	<Tag name="Shortcuts">Shortcuts</Tag>
 	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
 	<Tag name="Friction">Трение</Tag>
 	<Tag name="Ambient">Ambient</Tag>
@@ -383,7 +387,7 @@
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
 	<Tag name="GameBy">A game by</Tag>
 	<Tag name="SunWeather">Солнце и погода</Tag>
-	<Tag name="InputBrushForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
+	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplDelete">Удалить</Tag>
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
 	<Tag name="TipToggleModel">Enable or disable this model.</Tag>
@@ -418,7 +422,7 @@
 	<Tag name="PreviewCam">Preview Camera</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
 	<Tag name="Leave">Leave (exit)</Tag>
-	<Tag name="InputRoadMove">- move point</Tag>
+	<Tag name="TipVegetModels">Models (meshes) for vegetation. Found in data/trees/.</Tag>
 	<Tag name="GrassSway">Grass sway</Tag>
 	<Tag name="Right">Right</Tag>
 	<Tag name="Help">Help</Tag>
@@ -426,8 +430,9 @@
 	<Tag name="MotionBlur">Motion Blur</Tag>
 	<Tag name="MinimapAndSize">Minimap, size</Tag>
 	<Tag name="TipChangeHue">Change car color (hue).</Tag>
-	<Tag name="TipVegetModels">Models (meshes) for vegetation. Found in data/trees/.</Tag>
+	<Tag name="InputRoadMove">- move point</Tag>
 	<Tag name="Intensity">Intensity</Tag>
+	<Tag name="InputBrushForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
 	<Tag name="NetGameName">Game Name</Tag>
 	<Tag name="TexSize">Texture size</Tag>
 	<Tag name="TipSunAmbient">Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)</Tag>
@@ -458,6 +463,7 @@
 	<Tag name="Water">Water</Tag>
 	<Tag name="mud">mud</Tag>
 	<Tag name="NetMasterConnectionError">Couldn't reach the master server.</Tag>
+	<Tag name="AutoUpdateBlendmap">Auto update blendmap (slow for big size brushes)</Tag>
 	<Tag name="TipTerWind">Terrain brush window.</Tag>
 	<Tag name="InputMapThrottle">Throttle</Tag>
 	<Tag name="TBLap">Lap</Tag>
@@ -478,6 +484,7 @@
 	<Tag name="InputBrushShape">K,L  -  Shape</Tag>
 	<Tag name="TerHQDist">Terrain HQ dist</Tag>
 	<Tag name="InputRoadRoll">- rotate roll / scale sel.</Tag>
+	<Tag name="CarDebugSurfaces">Car tire surfaces</Tag>
 	<Tag name="TrackArea">Area</Tag>
 	<Tag name="FacesOnce">Faces at once</Tag>
 	<Tag name="TipTrackDescEditor">Track description text (click to edit).</Tag>
@@ -513,6 +520,7 @@
 	<Tag name="TipBumpFreq">Frequency of additional bumps on surface (distance between them).</Tag>
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
+	<Tag name="LS_GAME">Загрузка игры</Tag>
 	<Tag name="TipSceneryId">Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation.</Tag>
 	<Tag name="TreeMult">Trees multiplier</Tag>
 	<Tag name="TipRoadStats">Whole road statistics.</Tag>
@@ -523,6 +531,8 @@
 	<Tag name="LS_ROAD">Loading Road</Tag>
 	<Tag name="RoadPoint">Road Point</Tag>
 	<Tag name="CarStartPos">Car Start Pos</Tag>
+	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
+	<Tag name="AlignWidthMul">Width multipy</Tag>
 	<Tag name="LoadingDesc">Loading, please wait...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
 	<Tag name="Road_Pipe">Pipe</Tag>
@@ -598,6 +608,7 @@
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
 	<Tag name="speed">speed</Tag>
 	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
+	<Tag name="TipNewTerrainFlat">Создать новый, плоский рельеф.</Tag>
 	<Tag name="Far">Far</Tag>
 	<Tag name="RplGhosts">Ghosts</Tag>
 	<Tag name="InputReturnDelay">Return speed</Tag>
@@ -613,6 +624,7 @@
 	<Tag name="DeleteRoad">Удалить дорогу</Tag>
 	<Tag name="Setup">Setup</Tag>
 	<Tag name="ReflMode_full">Full</Tag>
+	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
 	<Tag name="TrackPipes">Pipes</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Height offset</Tag>
@@ -630,6 +642,7 @@
 	<Tag name="NetHost">Host</Tag>
 	<Tag name="Road_AngleAuto">Auto</Tag>
 	<Tag name="ImpostorDist">Impostors dist.</Tag>
+	<Tag name="AlignSmooth">Smooth size</Tag>
 	<Tag name="page">page</Tag>
 	<Tag name="Layers">Layers</Tag>
 	<Tag name="Quit">Выйти</Tag>
@@ -644,9 +657,9 @@
 	<Tag name="Editor">Редактор</Tag>
 	<Tag name="TipTrkViewDetailed">Detailed list view.</Tag>
 	<Tag name="AndContributors">and contributors.</Tag>
-	<Tag name="InputRoadSelectMany">Выбрать (много)</Tag>
+	<Tag name="InputObjects1">1 - reset rotation</Tag>
 	<Tag name="Copy">Copy</Tag>
-	<Tag name="Reverse">Reverse</Tag>
+	<Tag name="InputObjects2">2 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="TipFind">Enter part of name to find (filters list).</Tag>
 	<Tag name="scale">Scale</Tag>
 	<Tag name="UnitMph">mph</Tag>
@@ -654,7 +667,9 @@
 	<Tag name="InputObjectsType">[,]  - change object type</Tag>
 	<Tag name="ColHue">Color - Hue</Tag>
 	<Tag name="fluids">fluids (water or mud)</Tag>
+	<Tag name="DeleteFluids">Delete Fluids</Tag>
 	<Tag name="TipLoadTrkEditor">Загрузить трек (после изменеия) или Перезагрузить текущий</Tag>
+	<Tag name="AlignTerrainToRoad">Align terrain to road</Tag>
 	<Tag name="TerLNoise">Noise</Tag>
 	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
 	<Tag name="TerLayers">Terrain Layers</Tag>
@@ -669,6 +684,7 @@
 	<Tag name="Near">Near</Tag>
 	<Tag name="Materials">Материалы</Tag>
 	<Tag name="InputMultiplier">Multiplier</Tag>
+	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="InputUndo">(one time undo)</Tag>
 	<Tag name="InputBrushPower">; &apos;  (or alt-Wheel)  -  Power exponent</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
@@ -687,8 +703,9 @@
 	<Tag name="InputTerFilter">F - Filter  (remove noise)</Tag>
 	<Tag name="InputRoadRebuild">B - восстановление дороги (после изменения ландшафта и т.д.)</Tag>
 	<Tag name="MessageBox_Ok">Ok</Tag>
-	<Tag name="RplSave">Сохранить</Tag>
+	<Tag name="Generator">Generator</Tag>
 	<Tag name="Environment">Environment</Tag>
+	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
 	<Tag name="GraphicsAll_High">High</Tag>
 	<Tag name="TipRoadParams">Road point parameters.</Tag>
 	<Tag name="TerGenPow">Power (shape)</Tag>
@@ -696,7 +713,7 @@
 	<Tag name="TipImpDist">Far distance at which models will turn into 2d impostors.</Tag>
 	<Tag name="InputMapGeneral">General</Tag>
 	<Tag name="TipTrkTerImg">Minimap of selected track, view from top.</Tag>
-	<Tag name="LS_GAME">Загрузка игры</Tag>
+	<Tag name="Brushes">Brushes</Tag>
 	<Tag name="TipDisableFog">Disable fog when editing road from distance.</Tag>
 	<Tag name="long">long</Tag>
 	<Tag name="PipeWStepsMul">Pipe W steps mul.</Tag>
@@ -743,7 +760,7 @@
 	<Tag name="Collis.">Collis.</Tag>
 	<Tag name="Scenery">Scenery</Tag>
 	<Tag name="Track">Track</Tag>
-	<Tag name="ScaleMul">Scale multiplier</Tag>
+	<Tag name="InputRoadSelectMany">Выбрать (много)</Tag>
 	<Tag name="Never">Never</Tag>
 	<Tag name="TerGenOct">Octaves</Tag>
 	<Tag name="Volume">Volume</Tag>
@@ -770,26 +787,13 @@
 	<Tag name="TipFogEndDist">Fog end distance [meters].</Tag>
 	<Tag name="Color">цвет</Tag>
 	<Tag name="CarScrap">Car Scrap</Tag>
+	<Tag name="RplSave">Сохранить</Tag>
 	<Tag name="GraphicsAll_VeryHigh">Very High</Tag>
 	<Tag name="Pitch">pitch</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="TipCarDesc">Car description text.</Tag>
-	<Tag name="AlignWidthAdd">Width add</Tag>
-	<Tag name="InputMapRewind">Rewind (time)</Tag>
-	<Tag name="Brushes">Brushes</Tag>
-	<Tag name="TipGrTerMinHeight">Terrain height below which there won't be any grass (starts fading out for 20m).</Tag>
-	<Tag name="Shortcuts">Shortcuts</Tag>
-	<Tag name="AutoUpdateBlendmap">Auto update blendmap (slow for big size brushes)</Tag>
-	<Tag name="CarDebugSurfaces">Car tire surfaces</Tag>
-	<Tag name="Generator">Generator</Tag>
-	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
-	<Tag name="AlignWidthMul">Width multipy</Tag>
-	<Tag name="AlignSmooth">Smooth size</Tag>
-	<Tag name="DeleteFluids">Delete Fluids</Tag>
-	<Tag name="AlignTerrainToRoad">Align terrain to road</Tag>
-	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
+	<Tag name="objects">objects (dynamic)</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

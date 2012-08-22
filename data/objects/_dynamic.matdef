@@ -11,6 +11,12 @@
 	diffuse = 1.00 1.00 1.00
     specular = 1 1 1 4
 
+[fuel_can/green]
+	base = fuel_can
+	diffuseMap_1024 = fuel_can_diff.jpg
+	diffuseMap_256 = fuel_can_diff_s.jpg
+	ambient = 1.50 1.50 0.60
+	diffuse = 1.00 1.00 1.00
 
 [RubberTire]
 	diffuseMap_1024 = big_tire.png
@@ -29,3 +35,75 @@
 	ambient = 0.70 0.70 0.70
 	diffuse = 1.00 1.00 1.00
     specular = 1 1 1 4
+
+[crate2]
+	diffuseMap_1024 = crate2.jpg
+	diffuseMap_256 = crate2_s.jpg
+	normalMap_1024 = crate_norm.jpg
+	normalMap_256 = crate_norm_s.jpg
+	receivesDepthShadows = true
+	terrainLightMap = true
+	ambient = 0.95 1.00 1.00
+	diffuse = 0.65 0.70 0.70
+	specular = 0.60 0.60 0.60 8
+
+[Crate]
+	diffuseMap_1024 = crate.jpg
+	diffuseMap_256 = crate_s.jpg
+	normalMap_1024 = crate_norm.jpg
+	normalMap_256 = crate_norm_s.jpg
+	receivesDepthShadows = true
+	terrainLightMap = true
+	ambient = 0.90 1.00 1.00
+	diffuse = 0.90 1.00 1.00
+	specular = 0.55 0.60 0.60 32
+
+[cone]
+	diffuseMap_256 = cone.png
+	receivesDepthShadows = true
+	terrainLightMap = true
+	ambient = 1.00 1.00 1.00
+	diffuse = 0.50 0.50 0.50
+	specular = 0.30 0.30 0.30 6
+
+[wood_block]
+	diffuseMap_1024 = wood_block.jpg
+	;diffuseMap_256 = wood_block_s.jpg
+	normalMap_1024 = wood_block_norm.jpg
+	;normalMap_256 = wood_block_norm_s.jpg
+	receivesDepthShadows = true
+	terrainLightMap = true
+	ambient = 1.00 1.00 1.00
+	diffuse = 0.50 0.50 0.50
+	specular = 0.30 0.30 0.30 6
+
+[plastic_barrel]
+	diffuseMap_1024 = plastic_diffuse.jpg
+	diffuseMap_256 = plastic_diffuse_s.jpg
+	;--doesnt work_
+	normalMap_1024 = plastic_normal.jpg
+	normalMap_256 = plastic_normal_s.jpg
+	;normalMap_256 = volcano_7_nh1_s.png
+	specMap_1024 = plastic_specular.jpg
+	specMap_256 = plastic_specular_s.jpg
+	;shadowPriority = 0.8
+	;normalMapPriority = 0.5 
+	receivesDepthShadows = true
+	terrainLightMap = true
+	ambient = 1.00 1.00 1.00
+	diffuse = 1.00 1.00 1.00
+	specular = 1.00 1.00 1.00 8
+
+[plastic_big]
+	parent = plastic_barrel
+	diffuseMap_1024 = plastic_diff_white.jpg
+	diffuseMap_256 = plastic_diff_white_s.jpg
+	ambient = 0.90 1.05 1.05
+	diffuse = 0.75 0.85 0.85
+	specular = 1.00 1.00 1.00 12
+	
+[plastic_big_hvy]
+	parent = plastic_big
+	ambient = 0.20 0.55 0.85
+	diffuse = 0.20 0.30 0.45
+	specular = 1.00 1.00 1.00 16

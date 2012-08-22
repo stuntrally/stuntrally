@@ -280,6 +280,7 @@ void App::btnTerrainHalf(WP)
 }
 
 //  Terrain  double  --------------------------------
+#if 1
 void App::btnTerrainDouble(WP)
 {
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str) / 2;
@@ -303,6 +304,73 @@ void App::btnTerrainDouble(WP)
 	delete[] hfData;
 
 	sc.td.iVertsX = dblSize;  sc.td.UpdVals();
+	bNewHmap = true;	UpdateTrack();
+}
+#else
+//  Terrain  resize  --------------------------------
+void App::btnTerrainDouble(WP)
+{
+	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str) / 2;
+	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
+
+	int oldSize = sc.td.iVertsX, newSize = (oldSize-1) * 2 +1;
+	float scale = 1.f / 2.f / 2.f;
+	float* hfData = new float[si];
+	for (int i=0; i < si; ++i)  hfData[i] = 0.f;  // clear out
+	
+	//  resize
+	register int i,j,x,y,a;
+	for (j=0; j < newSize; ++j)
+	{
+		y = scale * j;
+		a = j * newSize;
+		for (i=0; i < newSize; ++i,++a)
+		{
+			x = y * oldSize + scale * i;
+			hfData[a] = sc.td.hfHeight[ x ];
+		}
+	}
+	std::ofstream of;
+	of.open(getHMapNew(), std::ios_base::binary);
+	of.write((const char*)&hfData[0], si * sizeof(float));
+	of.close();
+	delete[] hfData;
+	
+	sc.td.fTriangleSize * scale * 2.f;
+	sc.td.iVertsX = newSize;  sc.td.UpdVals();
+	bNewHmap = true;	UpdateTrack();  SetGuiFromXmls();
+}
+#endif
+
+//  Terrain  move  --------------------------------
+void App::btnTerrainMove(WP)
+{
+	int mx = 10, my = 30;  // par edit gui
+	int newSize = sc.td.iVertsX, si = newSize * newSize;
+	float* hfData = new float[si];
+	
+	//  resize
+	register int i,j,a,aa;
+	for (j=0; j < newSize; ++j)
+	{
+		a = j * newSize;
+		for (i=0; i < newSize; ++i,++a)
+		{
+			aa = std::max(0, std::min(si-1, (j-mx) * newSize + i+my));
+			hfData[a] = sc.td.hfHeight[aa];
+		}
+	}
+	std::ofstream of;
+	of.open(getHMapNew(), std::ios_base::binary);
+	of.write((const char*)&hfData[0], si * sizeof(float));
+	of.close();
+	delete[] hfData;
+	
+	road->SelAll();
+	road->Move(Vector3(my,0,mx) * -sc.td.fTriangleSize);
+	road->SelClear();
+	//start,objects-
+
 	bNewHmap = true;	UpdateTrack();
 }
 

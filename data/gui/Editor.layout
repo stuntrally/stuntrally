@@ -58,23 +58,23 @@
 			<Property key="Caption" value="ToolTip Text"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="1068 740 136 120" layer="Back" name="CamWnd">
+	<Widget type="Window" skin="WindowC" position="1068 740 170 120" layer="Back" name="CamWnd">
 		<Property key="Caption" value="#{PreviewCam}"/>
 		<Property key="Colour" value="0.7 0.85 1.0"/>
 		<Property key="Alpha" value="0.5"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="tip" value="#{TipPrevWind}"/>
-		<Widget type="TextBox" skin="TextBox" position="4 0 120 20" name="cam0">
+		<Widget type="TextBox" skin="TextBox" position="4 0 150 20" name="cam0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="F7 - #{Leave}"/>
 			<Property key="TextColour" value="0.8 0.9 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 30 120 20" name="cam1">
+		<Widget type="TextBox" skin="TextBox" position="4 30 150 20" name="cam1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="#{EnterSave}"/>
 			<Property key="TextColour" value="0.66 0.86 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="34 50 120 20" name="cam2">
+		<Widget type="TextBox" skin="TextBox" position="34 50 150 20" name="cam2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="#{Screenshot}"/>
 			<Property key="TextColour" value="0.66 0.86 1.0"/>
@@ -266,7 +266,7 @@
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="440 676 200 160" layer="Back" name="ObjectsWnd">
+	<Widget type="Window" skin="WindowC" position="440 676 200 180" layer="Back" name="ObjectsWnd">
 		<Property key="Caption" value="#{Objects}"/>
 		<Property key="Colour" value="1.0 1.0 1.0"/>
 		<Property key="Alpha" value="0.6"/>
@@ -274,27 +274,32 @@
 		<UserString key="tip" value="#{TipObjectsWnd}"/>
 		<Widget type="TextBox" skin="TextBox" position="4 0 190 20" name="objTxt0">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.8 0.8 0.8"/>
+			<Property key="TextColour" value="0.9 0.9 0.9"/>
 		</Widget>
 		<Widget type="TextBox" skin="TextBox" position="4 20 190 20" name="objTxt1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.9 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 40 190 20" name="objTxt2">
+		<Widget type="TextBox" skin="TextBox" position="4 50 190 20" name="objTxt2">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.7 0.7 0.7"/>
+			<Property key="TextColour" value="0.75 0.85 0.95"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 60 190 20" name="objTxt3">
+		<Widget type="TextBox" skin="TextBox" position="4 70 190 20" name="objTxt3">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.7 0.7 0.7"/>
+			<Property key="TextColour" value="0.65 0.81 0.95"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 80 190 20" name="objTxt4">
+		<Widget type="TextBox" skin="TextBox" position="4 90 190 20" name="objTxt4">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.7 0.7 0.7"/>
+			<Property key="TextColour" value="0.61 0.75 0.85"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 100 190 20" name="objTxt5">
+		<Widget type="Widget" skin="PanelSkin" position="0 118 190 26" name="objPan">
+			<Property key="Colour" value="1.0 0.9 1.0"/>
+			<Property key="Alpha" value="0.5"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.7 0.7 0.7"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="4 120 190 20" name="objTxt5">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.9 0.9 1.0"/>
 		</Widget>
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="880 32 184 296" layer="Back" name="RoadCur">
@@ -698,7 +703,7 @@
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="256 6 48 24" name="TrkView2icons1">
 					<Property key="ImageTexture" value="track_icons.png"/>
-					<Property key="ImageCoord" value="64 32 64 32"/>
+					<Property key="ImageCoord" value="64 32 96 32"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TrackDifficulties}"/>
 				</Widget>
@@ -943,7 +948,7 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="436 375 172 24" name="WeatherDisable">
-					<Property key="Caption" value="#{DisableEdit} (P)"/>
+					<Property key="Caption" value="#{DisableEdit} (I)"/>
 					<Property key="TextColour" value="0.6 0.7 0.8"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipDisableWeather}"/>
@@ -1403,6 +1408,14 @@
 							<Property key="TextColour" value="0.2 0.7 0.1"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerrainDouble}"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="232 40 128 24" name="TerrainMove">
+							<Property key="Colour" value="0.2 0.7 0.1"/>
+							<Property key="Alpha" value="0.8"/>
+							<Property key="Caption" value="#{TerrainMove}"/>
+							<Property key="TextColour" value="0.2 0.7 0.1"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipTerrainMove}"/>
 						</Widget>
 					</Widget>
 				</Widget>
@@ -2572,6 +2585,16 @@
 				<Widget type="TextBox" skin="TextBox" position="36 140 24 24">
 					<Property key="TextColour" value="0.2 0.9 0.9"/>
 					<Property key="Caption" value="4"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="#{Objects}"/>
+				<UserString key="RelativeTo" value="EditorWnd"/>
+				<Widget type="ListBox" skin="ListBox" position="32 32 160 460" name="ObjListDyn">
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="ListBox" skin="ListBox" position="200 32 160 460" name="ObjListSt">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 			</Widget>
@@ -3934,6 +3957,11 @@
 							<Property key="Caption" value="#{InputObjects2}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 230 360 20">
+							<Property key="TextColour" value="0.9 0.8 0.9"/>
+							<Property key="Caption" value="#{InputObjectsSimulate}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="376 126 320 20">
 							<Property key="TextColour" value="0.7 0.85 1.0"/>
 							<Property key="Caption" value="#{InputRoadSel}"/>
@@ -3948,7 +3976,7 @@
 					<Widget type="TabItem" skin="" position="2 24 714 444">
 						<Property key="Caption" value="#{Shortcuts}"/>
 						<UserString key="RelativeTo" value="HelpWnd"/>
-						<Widget type="TextBox" skin="TextBox" position="32 20 540 20">
+						<Widget type="TextBox" skin="TextBox" position="32 20 740 20">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{ShortcutsInfo}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
@@ -4001,6 +4029,11 @@
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 270 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="J  #{Objects}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 290 240 20">
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<Property key="Caption" value="O  #{Tools}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>

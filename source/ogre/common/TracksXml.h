@@ -27,7 +27,7 @@ public:
 	Date created, modified;
 
 	// track characteristics  (char)
-	int fluids,bumps,jumps,loops,pipes,banked,frenzy,longn;
+	int fluids,bumps,jumps,loops,pipes,banked,frenzy,longn,objects;
 	int diff, rating;
 	int rateuser, drivenlaps;  // todo: user info ...
 

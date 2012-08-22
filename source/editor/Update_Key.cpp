@@ -9,6 +9,9 @@
 #include "../ogre/common/SceneXml.h"
 #include <OgreTerrain.h>
 #include <MyGUI.h>
+#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+#include "BulletCollision/CollisionDispatch/btCollisionObject.h"
+#include "BulletDynamics/Dynamics/btRigidBody.h"
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -106,7 +109,7 @@ void App::Status(String s, float r,float g,float b)
 ///  Preview Camera mode  - - - - - - - - - - - - - - - - - - - - - - - -
 void App::togPrvCam()
 {
-	static bool oldV = false;
+	static bool oldV = false, oldI = false;
 	if (edMode == ED_PrvCam)  // leave
 	{
 		SetEdMode(edModeOld);
@@ -114,8 +117,10 @@ void App::togPrvCam()
 		rt[RTs].ndMini->setVisible(false);
 		ndCar->setVisible(true);
 
+		UpdateWaterRTT(mCamera);
 		UpdFog();  // restore fog, veget
 		if (oldV)  {  bTrGrUpd = true;  oldV = false;  }
+		pSet->bWeather = oldI;
 		mTerrainGlobals->setMaxPixelError(pSet->terdetail);
 
 		sc.camPos = mCameraT->getPosition();
@@ -131,8 +136,10 @@ void App::togPrvCam()
 		rt[RTs].ndMini->setVisible(true);
 		ndCar->setVisible(false);
 
-		UpdFog(true);  // on fog, veget
+		UpdateWaterRTT(rt[3].rndCam);
+		UpdFog(true);  // on fog, veget, weather
 		if (!pSet->bTrees)  {  bTrGrUpd = true;  oldV = true;  }
+		oldI = pSet->bWeather;  pSet->bWeather = false;
 		mTerrainGlobals->setMaxPixelError(0.5f);  //hq ter
 
 		mCamPosOld = mCameraT->getPosition();
@@ -238,6 +245,10 @@ bool App::KeyPress(const CmdKey &arg)
 				listTrackChng(trkMList,0);  // upd gui img
 				Status("Preview saved", 1,1,0);
 			}	break;
+
+			case KC_SYSRQ:  // screenshot
+				mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", ".jpg");
+				return true;
 		}
 		return true;  //!
 	}
@@ -313,7 +324,7 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_GRAVE:	//  Gui mode Options
 			toggleGui(true);  return true;
 
-		case KC_SYSRQ:
+		case KC_SYSRQ:  //  screenshot
 			mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", ".jpg");
 			return true;
 
@@ -554,29 +565,15 @@ bool App::KeyPress(const CmdKey &arg)
 				
 			//  prev,next type
 			case KC_LBRACKET:
-				iObjTNew = (iObjTNew-1 + objAll)%objAll;  break;
+				SetObjNewType((iObjTNew-1 + objAll) % objAll);  break;
 			case KC_RBRACKET:
-				iObjTNew = (iObjTNew+1)%objAll;  break;
+				SetObjNewType((iObjTNew+1) % objAll);  break;
 				
 			//  ins
 			case KC_INSERT:	case KC_NUMPAD0:
 			if (road && road->bHitTer)
 			{
-				::Object o;  o.name = vObjNames[iObjTNew];
-				const Ogre::Vector3& v = road->posHit;
-				o.pos[0] = v.x;  o.pos[1] =-v.z;  o.pos[2] = v.y;  //o.pos.y += 0.5f;
-				//todo: ?dyn objs size, get center,size, rmb height..
-				++iObjLast;
-				String s = toStr(iObjLast);  // counter for names
-
-				//  create object
-				o.ent = mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
-				o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s);
-				o.SetFromBlt();
-				o.nd->setScale(o.scale);
-				o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
-
-				sc.objects.push_back(o);
+				AddNewObj();
 				//iObjCur = sc.objects.size()-1;  // auto select inserted-
 				UpdObjPick();
 			}	break;
@@ -659,7 +656,8 @@ bool App::KeyPress(const CmdKey &arg)
 		 case KC_M:	GuiShortcut(WND_Edit, 5,1);  return true;  //  M -Models
 
 		case KC_R:	GuiShortcut(WND_Edit, 6);  return true;  // R Road
-		case KC_O:	GuiShortcut(WND_Edit, 7);  return true;  // O Tools
+		case KC_J:	GuiShortcut(WND_Edit, 7);  return true;  // J Objects
+		case KC_O:	GuiShortcut(WND_Edit, 8);  return true;  // O Tools
 
 		case KC_C:	GuiShortcut(WND_Options, 1);  return true;  // C Screen
 		case KC_G:	GuiShortcut(WND_Options, 2);  return true;  // G Graphics
@@ -686,7 +684,7 @@ bool App::KeyPress(const CmdKey &arg)
 		//  trees
 		case KC_V:	bTrGrUpd = true;  break;
 		//  weather
-		case KC_P:  {
+		case KC_I:  {
 			pSet->bWeather = !pSet->bWeather;  chkWeather->setStateSelected(pSet->bWeather);  }  break;
 
 		//  terrain
@@ -696,7 +694,7 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_F:  if (bEdit()){  SetEdMode(ED_Filter);  curBr = 3;  updBrush();  UpdEditWnds();  }
 			else  //  focus on find edit
 			if (ctrl && edFind && bGuiFocus &&
-				!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 0)
+				!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 1)
 			{
 				MyGUI::InputManager::getInstance().resetKeyFocusWidget();
 				MyGUI::InputManager::getInstance().setKeyFocusWidget(edFind);
@@ -721,6 +719,7 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_F10:	SaveWaterDepth();   break;
 
 		//  objects
+		case KC_C:	if (edMode == ED_Objects)  {  objSim = !objSim;  ToggleObjSim();  }  break;
 		case KC_X:	if (bEdit()){  SetEdMode(ED_Objects);  UpdEditWnds();  }   break;
 	}
 

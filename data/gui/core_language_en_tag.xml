@@ -128,6 +128,7 @@
 	<Tag name="long">long</Tag>
 	<Tag name="difficulty">difficulty</Tag>
 	<Tag name="rating">rating</Tag>
+	<Tag name="objects">objects (dynamic)</Tag>
 	
 
 	<!--  Track stats  -->
@@ -904,8 +905,9 @@
 	<Tag name="InputObjectsType">[,]  - change object type</Tag>
 	<Tag name="InputObjects1">1 - reset rotation</Tag>
 	<Tag name="InputObjects2">2 - reset scale to 1 (with shift to 0.5)</Tag>
-	
-		
+	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>
+
+
 <!--  ............................................................................................................................  -->
 <!--  Tips  -->
 <!--  ............................................................................................................................  -->
