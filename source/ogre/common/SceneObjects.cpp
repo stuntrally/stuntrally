@@ -351,14 +351,14 @@ void App::AddNewObj()
 }
 
 //  change obj to insert
-void App::listObjsChngSt(WP wp, size_t t)
+void App::listObjsChngSt(MyGUI::List* l, size_t t)
 {
 	std::string s = objListSt->getItemNameAt(t).substr(7);
 	for (int i=0; i < vObjNames.size(); ++i)
 		if (s == vObjNames[i])
 		{	SetObjNewType(i);  return;	}
 }
-void App::listObjsChngDyn(WP wp, size_t t)
+void App::listObjsChngDyn(MyGUI::List* l, size_t t)
 {
 	std::string s = objListDyn->getItemNameAt(t).substr(7);
 	for (int i=0; i < vObjNames.size(); ++i)
