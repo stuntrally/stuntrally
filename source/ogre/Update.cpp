@@ -186,6 +186,13 @@ bool App::frameStart(Real time)
 		SizeGUI();
 		updTrkListDim();  updChampListDim();  // resize lists
 		bSizeHUD = true;
+		
+		if (mSplitMgr)  //  reassign car cameras from new viewports
+		{	std::list<Camera*>::iterator it = mSplitMgr->mCameras.begin();
+			for (int i=0; i < carModels.size(); ++i)
+				if (carModels[i]->fCam && it != mSplitMgr->mCameras.end())
+				{	carModels[i]->fCam->mCamera = *it;  ++it;  }
+		}
 	}
 		
 	///  sort trk list
