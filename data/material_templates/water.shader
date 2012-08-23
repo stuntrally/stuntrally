@@ -49,29 +49,12 @@
 
         #define VISIBILITY 1500.0                   // how far you can look through water
 
-        #define BIG_WAVES_X 0.3                     // strength of big waves
-        #define BIG_WAVES_Y 0.3   
-                          
-        #define MID_WAVES_X 0.3                     // strength of middle sized waves
-        #define MID_WAVES_Y 0.15        
-        
-        #define SMALL_WAVES_X 0.15                  // strength of small waves
-        #define SMALL_WAVES_Y 0.1      
-        
-        #define WAVE_CHOPPYNESS 0.15                // wave choppyness
-        #define WAVE_SCALE 25                      // overall wave scale
-
         #define ABBERATION 0.001                    // chromatic abberation amount
-        #define BUMP 1.5                            // overall water surface bumpiness
-        #define REFL_BUMP 0.08                      // reflection distortion amount
-        #define REFR_BUMP 0.06                      // refraction distortion amount
 
         //#define SCATTER_AMOUNT 3.0                  // amount of sunlight scattering
         //#define SCATTER_COLOUR float3(0.0,1.0,0.95) // colour of sunlight scattering
         
         #define SUN_EXT float3(0.45, 0.55, 0.68)    //sunlight extinction
-        
-        #define SPEC_HARDNESS 256                   // specular highlights hardness
         
 
     // ---------------------------------------------------------------
@@ -106,6 +89,32 @@
 		shInput(float3, screenCoordsPassthrough)
 		shInput(float4, position)
 		shInput(float, depthPassthrough)
+		
+		
+		shUniform(float2, choppyness_scale)  @shUniformProperty2f(choppyness_scale, choppyness_scale)
+		#define WAVE_CHOPPYNESS choppyness_scale.x
+		#define WAVE_SCALE choppyness_scale.y
+		
+		shUniform(float4, smallWaves_midWaves) @shUniformProperty4f(smallWaves_midWaves, smallWaves_midWaves)
+		#define SMALL_WAVES_X smallWaves_midWaves.x
+		#define SMALL_WAVES_Y smallWaves_midWaves.y
+		#define MID_WAVES_X smallWaves_midWaves.z
+		#define MID_WAVES_Y smallWaves_midWaves.w
+		
+		shUniform(float2, bigWaves) @shUniformProperty2f(bigWaves, bigWaves)
+		#define BIG_WAVES_X bigWaves.x
+		#define BIG_WAVES_Y bigWaves.y
+		
+		shUniform(float3, bump) @shUniformProperty3f(bump, bump)
+		#define BUMP bump.x
+		#define REFL_BUMP bump.y
+		#define REFR_BUMP bump.z
+		
+		shUniform(float, specHardness) @shUniformProperty1f(specHardness, specHardness)
+		
+		shUniform(float3, waterColour) @shUniformProperty3f(waterColour, colour)
+		
+		shUniform(float, fresnelMultiplier) @shUniformProperty1f(fresnelMultiplier, fresnelMultiplier)
 		
 		shUniform(float, far) @shAutoConstant(far, far_clip_distance)
 	
@@ -150,6 +159,10 @@
         float4 worldPos = shMatrixMult(worldMatrix, position);
         float2 depthUV = float2(-worldPos.z / terrainWorldSize + 0.5f, worldPos.x / terrainWorldSize + 0.5f);
         float4 depthTex = shSample(depthMap, depthUV);
+        
+        // no need to render below terrain
+        if (depthTex.x == 0)
+            discard;
 
         float2 screenCoords = screenCoordsPassthrough.xy / screenCoordsPassthrough.z;
         screenCoords.y = (1-shSaturate(renderTargetFlipping))+renderTargetFlipping*screenCoords.y;
@@ -209,7 +222,7 @@
         float ior = (cameraPos.y>0)?(1.333/1.0):(1.0/1.333); //air to water; water to air
         float fresnel = fresnel_dielectric(-vVec, normal, ior);
         
-        fresnel = shSaturate(fresnel);
+        fresnel = shSaturate(shSaturate(fresnel) * fresnelMultiplier);
     
         // reflection
         float3 R = reflect(vVec, normal);
@@ -249,13 +262,13 @@
     
     
 		// specular
-        float specular = pow(max(dot(R, lVec), 0.0),SPEC_HARDNESS);
+        float specular = pow(max(dot(R, lVec), 0.0), specHardness);
         
 
         //shOutputColour(0).xyz = shLerp(  shLerp(refraction, scatterColour, lightScatter), reflection, fresnel);
         
         #if SCREEN_REFRACTION
-        refraction = shLerp(refraction, float3(0.0078, 0.3176, 0.400), (depthTex.g * 0.757) * (1-isUnderwater));
+        refraction = shLerp(refraction, waterColour, (depthTex.g * 0.757) * (1-isUnderwater));
         
         shOutputColour(0).xyz = shLerp(  refraction, reflection, fresnel);
         shOutputColour(0).a = 1;
@@ -263,7 +276,7 @@
         shOutputColour(0).xyz = shLerp(shOutputColour(0).xyz, refraction, 1-shoreFade); 
         #else
         float depthAmount = (depthTex.g * 0.757) * (1-isUnderwater);
-        shOutputColour(0).xyz = shLerp(reflection, float3(0.0078, 0.3176, 0.400), depthAmount * (1-fresnel));
+        shOutputColour(0).xyz = shLerp(reflection, waterColour, depthAmount * (1-fresnel));
         shOutputColour(0).a = shSaturate(fresnel * shoreFade + depthAmount);
         #endif
         

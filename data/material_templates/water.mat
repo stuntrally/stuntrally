@@ -1,5 +1,24 @@
 material Water
 {
+    // wave choppiness, wave scale
+    choppyness_scale 0.15 25
+    
+    // small waves XY, medium waves XY
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    
+    // big waves XY
+    bigWaves 0.3 0.3
+    
+    // overall bump, reflection bump, refraction bump
+    bump 1.5 0.08 0.06
+    
+    // reduce this to get less reflection
+    fresnelMultiplier 1.0
+    
+    colour 0.0078 0.3176 0.400
+    
+    specHardness 256
+
     pass
     {
         vertex_program water_vertex
@@ -8,6 +27,17 @@ material Water
         cull_hardware none
         scene_blend alpha_blend
         depth_write off
+        
+        shader_properties
+        {
+            choppyness_scale $choppyness_scale
+            bigWaves $bigWaves
+            smallWaves_midWaves $smallWaves_midWaves
+            bump $bump
+            fresnelMultiplier $fresnelMultiplier
+            colour $colour
+            specHardness $specHardness
+        }
         
         texture_unit reflectionMap
         {
