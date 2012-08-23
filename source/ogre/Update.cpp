@@ -193,6 +193,8 @@ bool App::frameStart(Real time)
 				if (carModels[i]->fCam && it != mSplitMgr->mCameras.end())
 				{	carModels[i]->fCam->mCamera = *it;  ++it;  }
 		}
+		if (!mSplitMgr->mCameras.empty())
+			mWaterRTT.setViewerCamera(*mSplitMgr->mCameras.begin());
 	}
 		
 	///  sort trk list
