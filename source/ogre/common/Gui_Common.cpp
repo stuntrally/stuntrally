@@ -339,7 +339,7 @@ void App::GuiCenterMouse()
 {
 	// mouse center causes problems on x11 with mouse capture=off
 	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-	if (pSet->x11_capture_mouse == false) return;
+	if (!pSet->capture_mouse)  return;
 	#endif
 	
 	int xm = mWindow->getWidth()/2, ym = mWindow->getHeight()/2;

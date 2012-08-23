@@ -60,17 +60,25 @@ void BaseApp::createFrameListener()
 	windowHndStr << windowHnd;
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 
-    #if defined OIS_LINUX_PLATFORM
-    if (!pSet->x11_capture_mouse)
+	#if defined OIS_WIN32_PLATFORM
+    if (!pSet->capture_mouse)
+    {
+		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND" )));
+		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
+		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND")));
+		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
+	}
+    #elif defined OIS_LINUX_PLATFORM
+    if (!pSet->capture_mouse)
     {
 		pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
 		pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
     }
-
     if (pSet->x11_hwmouse)
         pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
     else
         pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("true")));
+
     pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
     #endif
 

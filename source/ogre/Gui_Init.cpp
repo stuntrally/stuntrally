@@ -239,7 +239,7 @@ void App::InitGui()
 		bRmph->eventMouseButtonClick += newDelegate(this, &App::radMph);  }
 
 	//  startup
-	Chk("MouseCapture", chkMouseCapture, pSet->x11_capture_mouse);
+	Chk("MouseCapture", chkMouseCapture, pSet->capture_mouse);
 	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
 	Chk("AutoStart", chkAutoStart, pSet->autostart);
 	Chk("EscQuits", chkEscQuits, pSet->escquit);

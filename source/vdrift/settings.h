@@ -4,7 +4,7 @@
 #include "configfile.h"
 
 
-#define SET_VER  1660  // 1.6+
+#define SET_VER  1700  // 1.7
 
 
 const static int graph_types = 5;  // total graph types count
@@ -76,7 +76,7 @@ public:
 	bool autostart, escquit;
 	bool bltDebug, bltLines, bltProfilerTxt, profilerTxt;
 	bool loadingbackground;
-	bool x11_capture_mouse, x11_hwmouse;
+	bool capture_mouse, x11_hwmouse;
 	bool opplist_sort;
 	
 	//  sim freq (1/interval timestep)
