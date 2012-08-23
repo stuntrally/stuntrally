@@ -122,6 +122,8 @@ protected:
 	float asp, scX,scY, minX,maxX, minY,maxY;  // minimap visible range
 	//  gear, vel
 	MyGUI::TextBox *txGear[4],*txVel[4],*txBFuel[4];
+	//  times bar
+	MyGUI::TextBox *txTimTxt[4],*txTimes[4];  MyGUI::ImageBox *bckTimes[4];
 	//  gauges
 	Ogre::SceneNode *ndRpm[4], *ndVel[4], *ndRpmBk[4], *ndVelBk[4],*ndVelBm[4];
 	Ogre::ManualObject* moRpm[4], *moVel[4], *moRpmBk[4], *moVelBk[4],*moVelBm[4];
@@ -135,9 +137,8 @@ protected:
 		Ogre::Real size, bool dyn = false, bool clr = false);
 
 	Ogre::OverlayElement *hudCountdown,*hudNetMsg, *ovL[5],*ovR[5],*ovS[5],*ovU[5],*ovX[5],
-		*hudAbs,*hudTcs, *hudTimes, *hudWarnChk,*hudWonPlace, *hudOpp[5][3],*hudOppB;
-	Ogre::Overlay *ovCountdown,*ovNetMsg,
-		*ovAbsTcs, *ovTimes, *ovCarDbg,*ovCarDbgTxt,*ovCarDbgExt, *ovCam, *ovWarnWin, *ovOpp;
+		*hudAbs,*hudTcs, *hudWarnChk,*hudWonPlace, *hudOpp[5][3],*hudOppB;
+	Ogre::Overlay *ovCountdown,*ovNetMsg, *ovCam, *ovWarnWin, *ovOpp, *ovAbsTcs, *ovCarDbg,*ovCarDbgTxt,*ovCarDbgExt;
 
 	Ogre::String GetTimeString(float time) const;
 	void CreateHUD(bool destroy), ShowHUD(bool hideAll=false), UpdMiniTer();

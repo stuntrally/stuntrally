@@ -362,8 +362,8 @@ void App::UpdateHUD(int carId, float time)
 			ovWarnWin->show();  else  ovWarnWin->hide();  //ov
 			
 		//  lap num (for many or champ)
-		std::string times;
-		if (pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient)
+		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
+		if (hasLaps)
 		{
 			if (pCarM->iWonPlace > 0 && hudWonPlace)
 			{	
@@ -373,13 +373,13 @@ void App::UpdateHUD(int carId, float time)
 					ColourValue(0.4,1,0.2), ColourValue(1,1,0.3), ColourValue(1,0.7,0.2), ColourValue(1,0.5,0.2) };
 				hudWonPlace->setColour(clrPlace[pCarM->iWonPlace-1]);
 			}
-			times = String(TR("#{TBLap}  "+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps)));
 		}
-		if (hudTimes)
-			hudTimes->setCaption(times +
-				String(TR("\n#{TBTime} ")) + GetTimeString(tim.GetPlayerTime(carId))+
-				String(TR("\n#{TBLast} ")) + GetTimeString(tim.GetLastLap(carId))+
-				String(TR("\n#{TBBest} ")) + GetTimeString(tim.GetBestLap(carId, pSet->game.trackreverse)) );
+		if (txTimes[carId])
+			txTimes[carId]->setCaption(
+				(hasLaps ? "#D0E8F0"+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps) : "") +
+				"\n#E8F4FF" + GetTimeString(tim.GetPlayerTime(carId))+
+				"\n#C0E0F0" + GetTimeString(tim.GetLastLap(carId))+
+				"\n#D8E0F8" + GetTimeString(tim.GetBestLap(carId, pSet->game.trackreverse)) );
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------

@@ -21,9 +21,10 @@ App::App(SETTINGS *settings, GAME *game)
 	:pGame(game), ndLine(0), bGI(0), mThread()
 	// ovr
 	,hudCountdown(0),hudNetMsg(0), hudAbs(0),hudTcs(0)
-	,hudTimes(0), hudWarnChk(0),hudWonPlace(0), hudOppB(0)
-	,ovCountdown(0),ovNetMsg(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0),ovCarDbgExt(0)
-	,ovCam(0), ovTimes(0), ovWarnWin(0), ovOpp(0)
+	,hudWarnChk(0),hudWonPlace(0), hudOppB(0)
+	,ovCam(0), ovWarnWin(0), ovOpp(0)
+	,ovCountdown(0),ovNetMsg(0), ovAbsTcs(0)
+	,ovCarDbg(0),ovCarDbgTxt(0),ovCarDbgExt(0)
 	// hud
 	,asp(1)//,  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
 	,scX(1),scY(1), minX(0),maxX(0), minY(0),maxY(0)
@@ -100,7 +101,8 @@ App::App(SETTINGS *settings, GAME *game)
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixWh = qr;
 
 	for (i=0; i < 4; ++i)
-	{	txGear[i]=0;  txVel[i]=0;  txBFuel[i]=0;  }
+	{	txGear[i]=0;  txVel[i]=0;  txBFuel[i]=0;
+		txTimTxt[i]=0;  txTimes[i]=0;  bckTimes[i]=0;  }
 
 	if (pSet->multi_thr)
 		mThread = boost::thread(boost::bind(&App::UpdThr, boost::ref(*this)));

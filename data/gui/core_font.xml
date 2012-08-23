@@ -34,6 +34,38 @@
 		</Codes>
 	</Resource>
 
+	<!-- Hud Text Font -->
+	<Resource type="ResourceTrueTypeFont" name="font_Vera.20">
+		<Property key="Source" value="DejaVuLGCSans.ttf"/>
+		<Property key="Size" value="30"/>
+		<Property key="Resolution" value="50"/>
+		<Property key="Antialias" value="false"/>
+		<Property key="SpaceWidth" value="4"/>
+		<Property key="TabWidth" value="8"/>
+		<Property key="CursorWidth" value="2"/>
+		<Property key="Distance" value="4"/>
+		<Property key="OffsetHeight" value="0"/>
+		<Codes>
+			<Code range="33 255"/>
+			<!-- polish -->
+			<Code range="260 263"/>
+			<Code range="280 281"/>
+			<Code range="321 324"/>
+			<Code range="346 347"/>
+			<Code range="377 380"/>
+			<!-- romanian -->
+			<Code range="536 539"/>
+			<Code range="258 259"/>
+			<Code range="350 351"/>
+			<Code range="354 355"/>
+			<!-- russian -->
+			<Code range="1025 1105"/>
+			<Code range="8470"/>
+			<Code hide="1026 1039"/>
+			<Code hide="1104"/>
+		</Codes>
+	</Resource>
+
 	<!-- Replay, bigger digits -->
 	<Resource type="ResourceTrueTypeFont" name="font_Vera.24">
 		<Property key="Source" value="DejaVuLGCSans.ttf"/>

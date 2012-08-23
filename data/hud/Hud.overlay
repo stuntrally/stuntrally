@@ -86,51 +86,6 @@ Hud/NetMessages
 }
 
 
-Hud/Times
-{
-	zorder 500
-	container BorderPanel(Hud/TimesPanel)
-	{
-		metrics_mode pixels
-		vert_align top
-		horz_align left
-		left  0
-		width  210
-		top	30
-		height	 115
-		material hud/Times
-
-		element TextArea(Hud/TimesText)
-		{
-			metrics_mode pixels
-			left 20
-			top 9
-			width 200
-			height 60
-			font_name Vera
-			char_height 24
-			caption Times
-			colour_top    0.7 0.8 0.9
-			colour_bottom 0.95 1.0 1.0
-		}
-
-		element TextArea(Hud/TimesCheck)
-		{
-			metrics_mode pixels
-			left 10
-			top 8
-			width 200
-			height 60
-			font_name Vera
-			char_height 24
-			//caption Check
-			colour_top    1.0 0.2 0.2
-			colour_bottom 1.0 0.5 0.4
-		}
-	}
-}
-
-
 Hud/WarnAndWin
 {
 	zorder 500
