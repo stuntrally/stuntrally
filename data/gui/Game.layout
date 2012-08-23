@@ -641,19 +641,24 @@
 					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 188 216 24" name="VegetCollis">
-					<Property key="Caption" value="#{VegetCol}"/>
-					<Property key="TextColour" value="0.6 0.8 0.8"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-				</Widget>
 				<Widget type="Button" skin="CheckBox" position="32 148 216 24" name="CarCollis">
 					<Property key="Caption" value="#{CarCollis}"/>
-					<Property key="TextColour" value="0.6 0.8 0.8"/>
+					<Property key="TextColour" value="0.75 0.87 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 224 216 24" name="RoadWCollis">
+				<Widget type="Button" skin="CheckBox" position="32 188 216 24" name="VegetCollis">
+					<Property key="Caption" value="#{VegetCol}"/>
+					<Property key="TextColour" value="0.6 0.8 1.0"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 228 216 24" name="DynamicObjects">
+					<Property key="Caption" value="#{DynamicObjects}"/>
+					<Property key="TextColour" value="0.6 0.8 1.0"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 268 216 24" name="RoadWCollis">
 					<Property key="Caption" value="#{RoadWallFullCollis}"/>
-					<Property key="TextColour" value="0.6 0.8 0.8"/>
+					<Property key="TextColour" value="0.5 0.7 0.9"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="384 158 256 25" name="chkSplitVertically">

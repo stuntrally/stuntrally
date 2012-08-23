@@ -118,6 +118,9 @@ void App::CreateObjects()
 	{
 		Object& o = sc.objects[i];
 		String s = toStr(i);  // counter for names
+		#ifndef ROAD_EDITOR
+		if (objHasBlt[o.name] && !pSet->game.dyn_objects)  continue;
+		#endif
 
 		//  add to ogre
 		bool no = !objExists[o.name];

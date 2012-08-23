@@ -206,6 +206,8 @@ void App::InitGui()
 	Chk("VegetCollis", chkVegetCollis, pSet->gui.collis_veget);
 	Chk("CarCollis", chkCarCollis, pSet->gui.collis_cars);
 	Chk("RoadWCollis", chkRoadWCollis, pSet->gui.collis_roadw);
+	Chk("DynamicObjects", chkDynObjects, pSet->gui.dyn_objects);
+
 	//  boost, flip combos
 	Cmb(combo, "CmbBoost", comboBoost);
 	if (combo)

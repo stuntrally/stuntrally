@@ -349,9 +349,9 @@ protected:
 		chkMouseCapture(WP), chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP),
 		chkBltLines(WP), chkLoadPics(WP), chkMultiThread(WP),  // startup
 		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // effects
-		chkVidSoftParticles(WP), chkVidGodRays(WP), chkWaterReflect(WP), chkWaterRefract(WP),
-		chkVidDepthOfField(WP), 
-		chkVegetCollis(WP), chkCarCollis(WP), chkRoadWCollis(WP);  //game
+		chkVidSoftParticles(WP), chkVidGodRays(WP), chkVidDepthOfField(WP),
+		chkWaterReflect(WP), chkWaterRefract(WP),
+		chkVegetCollis(WP), chkCarCollis(WP), chkRoadWCollis(WP), chkDynObjects(WP);  //game
 	void chkUseImposters(WP wp);
 
 	// gui car tire set gravel/asphalt

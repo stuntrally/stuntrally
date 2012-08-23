@@ -232,6 +232,7 @@
 	<Tag name="VegetCol">Vegetation collision</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
 	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
+	<Tag name="DynamicObjects">Dynamic Objects</Tag>
 
 	<Tag name="Boost">Boost</Tag>
 	<Tag name="Flip">Flip</Tag>
