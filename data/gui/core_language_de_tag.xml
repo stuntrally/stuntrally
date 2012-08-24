@@ -793,6 +793,10 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
+	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>
+	<Tag name="ObjStatic">Static</Tag>
+	<Tag name="DynamicObjects">Dynamic Objects</Tag>
+	<Tag name="ObjDynamic">Dynamic</Tag>
 	<Tag name="objects">objects (dynamic)</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
