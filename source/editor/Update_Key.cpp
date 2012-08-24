@@ -59,11 +59,18 @@ void App::UpdEditWnds()
 
 void App::SetEdMode(ED_MODE newMode)
 {
+	static bool first = true;
+	if (newMode == ED_Objects && first)
+	{
+		SetObjNewType(iObjTNew);
+		first = false;
+	}
+
 	//if (pSet->autoWaterDepth)  //..?
 	if (edMode == ED_Fluids && newMode != ED_Fluids)
 		SaveWaterDepth();  // update, on exit from Fluids editing
 
-	edMode = newMode;	
+	edMode = newMode;
 }
 
 
@@ -564,10 +571,8 @@ bool App::KeyPress(const CmdKey &arg)
 				iObjCur = -1;  PickObject();  UpdObjPick();  break;
 				
 			//  prev,next type
-			case KC_LBRACKET:
-				SetObjNewType((iObjTNew-1 + objAll) % objAll);  break;
-			case KC_RBRACKET:
-				SetObjNewType((iObjTNew+1) % objAll);  break;
+			case KC_MINUS:	SetObjNewType((iObjTNew-1 + objAll) % objAll);  break;
+			case KC_EQUALS:	SetObjNewType((iObjTNew+1) % objAll);  break;
 				
 			//  ins
 			case KC_INSERT:	case KC_NUMPAD0:

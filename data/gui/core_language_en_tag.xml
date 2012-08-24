@@ -896,14 +896,16 @@
 
 	<!--  Objects  -->
 	<Tag name="Objects">Objects</Tag>
+	<Tag name="ObjDynamic">Dynamic</Tag>
+	<Tag name="ObjStatic">Static</Tag>
 	<Tag name="InputObjectsMode">X - edit Objects</Tag>
 	<Tag name="InputObjectsPrevNext">PgUp,PgDn (or Wheel) - previous/next object</Tag>
 	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
 	<Tag name="InputObjectsDel">Del - delete current</Tag>
 	<Tag name="InputObjectsMove">LMB - move   RMB - height</Tag>
-	<Tag name="InputObjectsRot">MMB - rotate Y</Tag>
+	<Tag name="InputObjectsRot">MMB - rotate yaw   alt-MMB - rotate roll</Tag>
 	<Tag name="InputObjectsScale">alt-LMB - scale   alt-RMB - scale Y only</Tag>
-	<Tag name="InputObjectsType">[,]  - change object type</Tag>
+	<Tag name="InputObjectsType">-,=  - change object type</Tag>
 	<Tag name="InputObjects1">1 - reset rotation</Tag>
 	<Tag name="InputObjects2">2 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>

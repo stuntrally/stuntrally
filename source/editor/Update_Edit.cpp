@@ -657,6 +657,16 @@ void App::editMouse()
 		while (i >= 0 && i < sc.objects.size())
 		{
 			Object& o = sc.objects[i];  bool upd1 = false;
+
+			if (mbMiddle)  // rot yaw,  alt roll local-
+			{
+				Real xm = vNew.x * fRot * moveMul *PI_d/180.f;
+				QUATERNION <float> qr;
+				if (!alt)  qr.Rotate(-xm, 0, 0, 1);  else  qr.Rotate(-xm, 0, 1, 0);
+				o.rot = o.rot * qr;
+				o.SetFromBlt();	 upd1 = true;
+			}
+			else
 			if (!alt)
 			{
 				if (mbLeft)	// move on xz
@@ -673,16 +683,7 @@ void App::editMouse()
 					o.pos[2] += ym;
 					o.SetFromBlt();	 upd1 = true;
 				}
-				else
-				if (mbMiddle)  // rot yaw,  ctrl pitch local-
-				{
-					Real xm = vNew.x * fRot * moveMul *PI_d/180.f;
-					QUATERNION <float> qr;
-					if (!ctrl)  qr.Rotate(-xm, 0, 0, 1);  else  qr.Rotate(-xm, 0, 1, 0);
-					o.rot = o.rot * qr;
-					o.SetFromBlt();	 upd1 = true;
-				}
-			}else
+			}else if (!o.dyn)  // static objs only
 			{
 				if (mbLeft)  // size xz
 				{
@@ -944,8 +945,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	if (edMode == ED_Objects && objSim /*&& bEdit()*/)
 		BltUpdate(evt.timeSinceLastFrame);
 	
-	if (edMode == ED_Objects)
-		UpdObjNewNode();
+	UpdObjNewNode();
 
 	bFirstRenderFrame = false;
 	

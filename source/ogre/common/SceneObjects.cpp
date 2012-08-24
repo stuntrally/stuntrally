@@ -118,8 +118,9 @@ void App::CreateObjects()
 	{
 		Object& o = sc.objects[i];
 		String s = toStr(i);  // counter for names
+		o.dyn = objHasBlt[o.name];
 		#ifndef ROAD_EDITOR
-		if (objHasBlt[o.name] && !pSet->game.dyn_objects)  continue;
+		if (o.dyn && !pSet->game.dyn_objects)  continue;
 		#endif
 
 		//  add to ogre
@@ -132,7 +133,7 @@ void App::CreateObjects()
 		if (no)  continue;
 
 		//  add to bullet world (in game)
-		if (!objHasBlt[o.name])
+		if (!o.dyn)
 		{
 			///  static  . . . . . . . . . . . . 
 			Vector3 posO = Vector3(o.pos[0],o.pos[2],-o.pos[1]);
@@ -155,7 +156,7 @@ void App::CreateObjects()
 				btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 			world->addCollisionObject(bco);
 			#ifndef ROAD_EDITOR
-			o.co = bco;
+			o.co = bco;  o.ms = 0;  o.rb = 0;
 			pGame->collision.shapes.push_back(shape);
 			#endif
 		}
@@ -350,6 +351,7 @@ void App::AddNewObj()
 	o.nd->setScale(o.scale);
 	o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
 
+	o.dyn = boost::filesystem::exists(PATHMANAGER::GetDataPath()+"/objects/"+ o.name + ".bullet");
 	sc.objects.push_back(o);
 }
 
@@ -373,7 +375,6 @@ void App::listObjsChngDyn(MyGUI::List* l, size_t t)
 void App::SetObjNewType(int tnew)
 {
 	iObjTNew = tnew;
-	//if (objList)  objList->setIndexSelected(iObjTNew);
 	if (objNewNd)	{	mSceneMgr->destroySceneNode(objNewNd);  objNewNd = 0;  }
 	if (objNewEnt)	{	mSceneMgr->destroyEntity(objNewEnt);  objNewEnt = 0;  }
 	
@@ -382,13 +383,19 @@ void App::SetObjNewType(int tnew)
 	objNewNd = mSceneMgr->getRootSceneNode()->createChildSceneNode("-oN");
 	objNewNd->attachObject(objNewEnt);  objNewEnt->setVisibilityFlags(RV_Vegetation);
 	UpdObjNewNode();
+
+	if (objListSt)  objListSt->setIndexSelected(-1);  // unselect
+	if (objListDyn) objListDyn->setIndexSelected(-1);
 }
 
 void App::UpdObjNewNode()
 {
 	if (!road || !objNewNd)  return;
 
-	objNewNd->setVisible(road->bHitTer && bEdit() && iObjCur == -1 && edMode == ED_Objects);
+	bool vis = road->bHitTer && bEdit() && iObjCur == -1 && edMode == ED_Objects;
+	objNewNd->setVisible(vis);
+	if (!vis)  return;
+	
 	Vector3 p = road->posHit;  p.y += objNewH;
 	Quaternion q;  q.FromAngleAxis(Radian(objNewYaw), Vector3::UNIT_Y);
 	

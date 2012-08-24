@@ -395,7 +395,7 @@ void App::InitGui()
 	strlist lo;  vObjNames.clear();
 	GetFolderIndex(PATHMANAGER::GetDataPath() + "/objects", lo);
 	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
-		if (StringUtil::endsWith(*i,".mesh"))
+		if (StringUtil::endsWith(*i,".mesh") && (*i) != "sphere.mesh")
 			vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
 	
 	objListSt = mGUI->findWidget<List>("ObjListSt");

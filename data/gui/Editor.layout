@@ -2591,10 +2591,20 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Objects}"/>
 				<UserString key="RelativeTo" value="EditorWnd"/>
-				<Widget type="ListBox" skin="ListBox" position="32 32 160 460" name="ObjListDyn">
+				<Widget type="TextBox" skin="TextBox" position="32 16 128 24">
+					<Property key="Caption" value="#{ObjDynamic}"/>
+					<Property key="TextColour" value="0.7 0.86 1.0"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="ListBox" skin="ListBox" position="200 32 160 460" name="ObjListSt">
+				<Widget type="ListBox" skin="ListBox" position="32 48 180 468" name="ObjListDyn">
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="232 16 128 24">
+					<Property key="Caption" value="#{ObjStatic}"/>
+					<Property key="TextColour" value="0.9 0.9 0.9"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="ListBox" skin="ListBox" position="232 48 180 468" name="ObjListSt">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 			</Widget>
@@ -3373,7 +3383,7 @@
 					<Property key="Visible" value="false"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 250 360 24" name="AutoBlendmap">
+				<Widget type="Button" skin="CheckBox" position="32 250 660 24" name="AutoBlendmap">
 					<Property key="Caption" value="#{AutoUpdateBlendmap}  alt-F9"/>
 					<Property key="TextColour" value="0.3 0.8 0.3"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
