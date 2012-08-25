@@ -194,7 +194,12 @@ bool App::frameStart(Real time)
 				{	carModels[i]->fCam->mCamera = *it;  ++it;  }
 		}
 		if (!mSplitMgr->mCameras.empty())
-			mWaterRTT.setViewerCamera(*mSplitMgr->mCameras.begin());
+		{
+			Camera* cam1 = *mSplitMgr->mCameras.begin();
+			mWaterRTT.setViewerCamera(cam1);
+			if (grass)  grass->setCamera(cam1);
+			if (trees)  trees->setCamera(cam1);
+		}
 	}
 		
 	///  sort trk list
