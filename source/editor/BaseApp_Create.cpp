@@ -161,8 +161,7 @@ BaseApp::BaseApp()
 	,ovPos(0), ovDbg(0), ovInfo(0), ovStat(0)
 	,ovFocus(0), ovFocBck(0), ovBrushPrv(0), ovBrushMtr(0)
 
-	,mStatsOn(0), mShowCamPos(1), mbWireFrame(0)
-	,mx(0),my(0),mz(0),	mGUI(0), mPlatform(0)
+	,mbWireFrame(0), mx(0),my(0),mz(0),  mGUI(0), mPlatform(0)
 
 	,mWndMain(0),mWndEdit(0),mWndHelp(0),mWndOpts(0)
 	,mWndTabsEdit(0),mWndTabsHelp(0),mWndTabsOpts(0)

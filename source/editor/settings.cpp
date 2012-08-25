@@ -44,7 +44,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "graph_veget.trees_dist", trees_dist);		Param(c,w, "graph_veget.grass_dist", grass_dist);
 	Param(c,w, "graph_veget.use_imposters", use_imposters);
 	
-	Param(c,w, "misc.allow_save", allow_save);
+	Param(c,w, "misc.allow_save", allow_save);		Param(c,w, "misc.inputBar", inputBar);		Param(c,w, "misc.camPos", camPos);
 	Param(c,w, "misc.version", version);			Param(c,w, "misc.autostart", autostart);
 	Param(c,w, "misc.ogredialog", ogre_dialog);		Param(c,w, "misc.escquit", escquit);
 	Param(c,w, "misc.language", language);			Param(c,w, "misc.capture_mouse", capture_mouse);
@@ -86,6 +86,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	water_reflect(0), water_refract(0), water_rttsize(0),
 	//  startup
 	autostart(0), ogre_dialog(1), escquit(0), language(""), allow_save(0),
+	inputBar(0), camPos(0),
 	isMain(1), inMenu(0),
 	//  settings
 	cam_x(0), cam_y(50),cam_z(-120),  cam_dx(0), cam_dy(0), cam_dz(1),

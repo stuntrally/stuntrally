@@ -60,7 +60,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 
 
 	// key,mb info  ==================
-	if (mStatsOn)
+	if (pSet->inputBar)
 	{
 		using namespace OIS;
 		const int Kmax = KC_DELETE;  // last key

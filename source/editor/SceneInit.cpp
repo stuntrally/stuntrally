@@ -55,7 +55,8 @@ void App::createScene()  // once, init
 	InitGui();
 	TerCircleInit();
 	createBrushPrv();
-	if (mStatsOn)  mDebugOverlay->show();
+	if (pSet->inputBar)  mDebugOverlay->show();
+	if (!pSet->camPos)  ovPos->hide();
 
 	//  load
 	if (pSet->autostart)

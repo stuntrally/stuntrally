@@ -128,7 +128,7 @@ protected:
 	bool alt, ctrl, shift;  // key modifiers
 	bool mbLeft, mbRight, mbMiddle;  // mouse buttons
 	Ogre::String  mDebugText, mFilText;	// info texts
-	bool mbWireFrame, mShowCamPos, mStatsOn;
+	bool mbWireFrame;
 
 	///  camera upd
 	bool bMoveCam;	int mx,my,mz;  double mDTime;
