@@ -664,7 +664,7 @@
 	<Tag name="scale">Scale</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="HeightMin">Height Min</Tag>
-	<Tag name="InputObjectsType">[,]  - change object type</Tag>
+	<Tag name="InputObjectsType">-,=  - change object type</Tag>
 	<Tag name="ColHue">Color - Hue</Tag>
 	<Tag name="fluids">fluids (water or mud)</Tag>
 	<Tag name="DeleteFluids">Delete Fluids</Tag>
@@ -752,7 +752,7 @@
 	<Tag name="SkirtHeight">Skirt Height</Tag>
 	<Tag name="NewTerrainGenerate">New Generate</Tag>
 	<Tag name="TipTrkScreenEditor">In game screenshot for selected track.</Tag>
-	<Tag name="InputObjectsRot">MMB - rotate Y</Tag>
+	<Tag name="InputObjectsRot">MMB - rotate yaw   alt-MMB - rotate roll</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="InputRoadHeight">- changer la hauteur</Tag>
 	<Tag name="TipSunSpecular">Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)</Tag>
@@ -793,6 +793,10 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
+	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>
+	<Tag name="ObjStatic">Static</Tag>
+	<Tag name="DynamicObjects">Dynamic Objects</Tag>
+	<Tag name="ObjDynamic">Dynamic</Tag>
 	<Tag name="objects">objects (dynamic)</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>

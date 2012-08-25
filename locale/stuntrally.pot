@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-08-19 16:29+0300"
+"POT-Creation-Date: 2012-08-24 23:35+0300"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -227,6 +227,10 @@ msgstr ""
 
 msgctxt "ChampEndFinished"
 msgid "You have finished this championship."
+msgstr ""
+
+msgctxt "MessageBox_No"
+msgid "No"
 msgstr ""
 
 msgctxt "Version"
@@ -553,6 +557,10 @@ msgctxt "InputRoadHeight"
 msgid "- change height"
 msgstr ""
 
+msgctxt "InputObjectsSimulate"
+msgid "C - simulation toggle for dynamic objects"
+msgstr ""
+
 msgctxt "BackMenu"
 msgid "Back"
 msgstr ""
@@ -861,6 +869,10 @@ msgctxt "Fluids"
 msgid "Fluids"
 msgstr ""
 
+msgctxt "TipGrDensSmooth"
+msgid "Grass density map - smooth size"
+msgstr ""
+
 msgctxt "NetNickname"
 msgid "Nickname"
 msgstr ""
@@ -1037,8 +1049,8 @@ msgctxt "CountdownTime"
 msgid "Race countdown time"
 msgstr ""
 
-msgctxt "TipGrDensSmooth"
-msgid "Grass density map - smooth size"
+msgctxt "ObjStatic"
+msgid "Static"
 msgstr ""
 
 msgctxt "InputRoadSelectMany"
@@ -1241,8 +1253,8 @@ msgctxt "length"
 msgid "length"
 msgstr ""
 
-msgctxt "MessageBox_No"
-msgid "No"
+msgctxt "DynamicObjects"
+msgid "Dynamic Objects"
 msgstr ""
 
 msgctxt "ColumnNSides"
@@ -1879,6 +1891,10 @@ msgstr ""
 
 msgctxt "page"
 msgid "page"
+msgstr ""
+
+msgctxt "ObjDynamic"
+msgid "Dynamic"
 msgstr ""
 
 msgctxt "TerGenScale"
@@ -2714,7 +2730,7 @@ msgid "F4 - save track"
 msgstr ""
 
 msgctxt "InputObjectsType"
-msgid "[,]  - change object type"
+msgid "-,=  - change object type"
 msgstr ""
 
 msgctxt "ColHue"
@@ -3038,7 +3054,7 @@ msgid "In game screenshot for selected track."
 msgstr ""
 
 msgctxt "InputObjectsRot"
-msgid "MMB - rotate Y"
+msgid "MMB - rotate yaw   alt-MMB - rotate roll"
 msgstr ""
 
 msgctxt "BulletDebug"
