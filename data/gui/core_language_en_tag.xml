@@ -567,7 +567,7 @@
 	<Tag name="TriSize">Triangle size</Tag>
 	<Tag name="TerrainSize">Terrain size</Tag>
 	<Tag name="NewTerrainFlat">New flat</Tag>
-	<Tag name="NewTerrainGenerate">New Generate</Tag>
+	<Tag name="NewTerrainGenerate">Generate new</Tag>
 	<Tag name="TerrainHalf">Half</Tag>
 	<Tag name="TerrainDouble">Double</Tag>
 	<Tag name="Brushes">Brushes</Tag>
