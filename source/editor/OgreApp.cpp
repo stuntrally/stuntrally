@@ -29,7 +29,7 @@ App::App()  //  gui wigdets--
 	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0), valShadowFilter(0)  // shadow
 	,brImg(0), wndTabs(0), bnQuit(0)  // brush
 	,valSizeMinmap(0), valCamSpeed(0), valCamInert(0)  // settings
-	,valTerUpd(0), valSizeRoadP(0), valMiniUpd(0), chAutoBlendmap(0)
+	,valTerUpd(0), valSizeRoadP(0), valMiniUpd(0), chAutoBlendmap(0), chInputBar(0)
 	,cmbSky(0), cmbRain1(0),cmbRain2(0), valRain1Rate(0),valRain2Rate(0)  // sun
 	,valSunPitch(0),valSunYaw(0), valFogStart(0),valFogEnd(0)
 	,edLiAmb(0),edLiDiff(0),edLiSpec(0), edFogClr(0), chkFog(0), chkWeather(0)

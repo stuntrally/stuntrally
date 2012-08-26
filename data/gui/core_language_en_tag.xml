@@ -739,6 +739,8 @@
 	<Tag name="CamInertia">Camera inertia</Tag>
 	<Tag name="MinimapUpdSkip">Minimap update skip</Tag>
 	<Tag name="AutoUpdateBlendmap">Auto update blendmap (slow for big size brushes)</Tag>
+	<Tag name="EdCamPos">Camera position</Tag>
+	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
 	
 	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="Top">Top</Tag>

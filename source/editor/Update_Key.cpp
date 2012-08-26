@@ -307,16 +307,9 @@ bool App::KeyPress(const CmdKey &arg)
 	switch (arg.key)  //  global keys  ---------------------
 	{
 		//  Show Stats  I
-   		case KC_I:  if (ctrl)
-		{	pSet->inputBar = !pSet->inputBar;
-			if (pSet->inputBar)  mDebugOverlay->show();  else  mDebugOverlay->hide();
-			return true;
-		}
-		else if (alt)
-		{	pSet->camPos = !pSet->camPos;
-			if (pSet->camPos)  ovPos->show();  else  ovPos->hide();
-			return true;
-		}	break;
+   		case KC_I:
+   			if (ctrl)  {  chkInputBar(chInputBar);  return true;  }
+			break;
 
 		//  Wire Frame  F11
 		case KC_F11:

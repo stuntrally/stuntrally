@@ -345,7 +345,11 @@ void App::btnTerrainDouble(WP)
 //  Terrain  move  --------------------------------
 void App::btnTerrainMove(WP)
 {
-	int mx = 10, my = 30;  // par edit gui
+	EditPtr ex = (EditPtr)mWndEdit->findWidget("TerMoveX");
+	EditPtr ey = (EditPtr)mWndEdit->findWidget("TerMoveY");
+	int mx = ex ? s2i(ex->getCaption()) : 0;
+	int my = ey ?-s2i(ey->getCaption()) : 0;
+	
 	int newSize = sc.td.iVertsX, si = newSize * newSize;
 	float* hfData = new float[si];
 	
@@ -821,6 +825,13 @@ void App::chkMouseCapture(WP wp){	ChkEv(capture_mouse);	}
 void App::chkOgreDialog(WP wp){		ChkEv(ogre_dialog);	}
 void App::chkAutoStart(WP wp){		ChkEv(autostart);	}
 void App::chkEscQuits(WP wp){		ChkEv(escquit);		}
+
+void App::chkCamPos(WP wp){			ChkEv(camPos);
+	if (pSet->camPos)  ovPos->show();  else  ovPos->hide();  }
+
+void App::chkInputBar(WP wp){		ChkEv(inputBar);
+	if (pSet->inputBar)  mDebugOverlay->show();  else  mDebugOverlay->hide();  }
+
 
 void App::slMiniUpd(SL)
 {
