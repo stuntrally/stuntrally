@@ -1291,7 +1291,7 @@
 							<Property key="Alpha" value="0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="288 9 104 32" name="TerrainGenerate">
+						<Widget type="Button" skin="Button" position="288 9 200 32" name="TerrainGenerate">
 							<Property key="Colour" value="0.7 1.0 0.8"/>
 							<Property key="Caption" value="#{NewTerrainGenerate}"/>
 							<Property key="TextColour" value="0.7 1.0 0.8"/>
