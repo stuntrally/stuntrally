@@ -515,7 +515,7 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const String& sTr
 	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
 	Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
 
-	String path = PathListTrkPrv(-1, sTrack), s, sGrp = "TrkPrv";
+	String path = PathListTrkPrv(-1, sTrack), s, sGrp = "TrkPrv"+toStr(ch);
 	resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
 	resMgr.unloadResourceGroup(sGrp);
 	resMgr.initialiseResourceGroup(sGrp);
@@ -525,7 +525,7 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const String& sTr
 		{	s = "view.jpg";
 			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  // need to load it first
 			imgPrv[ch]->setImageTexture(s);  // just for dim, doesnt set texture
-			imgPrv[ch]->_setTextureName(path+s);  imgPrv[ch]->setVisible(pSet->tracks_view == 0);
+			imgPrv[ch]->_setTextureName(path+s);  imgPrv[ch]->setVisible(ch == 0 && pSet->tracks_view == 0 || ch == 1);
 			//texMgr.unload(path+s);
 		} catch(...) {  imgPrv[ch]->setVisible(false);  }  // hide if not found
 	}
@@ -535,7 +535,6 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const String& sTr
 			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);
 			imgTer[ch]->setImageTexture(s);
 			imgTer[ch]->_setTextureName(path+s);  imgTer[ch]->setVisible(true);
-			//texMgr.unload(path+s);
 		} catch(...) {  imgTer[ch]->setVisible(false);  }
 	}
 	if (imgMini[ch])  // road alpha
@@ -544,7 +543,6 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const String& sTr
 			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);
 			imgMini[ch]->setImageTexture(s);
 			imgMini[ch]->_setTextureName(path+s);  imgMini[ch]->setVisible(true);
-			//texMgr.unload(path+s);
 		} catch(...) {  imgMini[ch]->setVisible(false);  }
 	}
 	resMgr.removeResourceLocation(path, sGrp);
