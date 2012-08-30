@@ -5,7 +5,7 @@
 	<Tag name="Density">Densité</Tag>
 	<Tag name="InputMapScreenshot">Copie d'écran</Tag>
 	<Tag name="Brush_Filter">Filtre</Tag>
-	<Tag name="TipDustSize">Dust particles size.</Tag>
+	<Tag name="TipDustSize">Taille des particules de sable.</Tag>
 	<Tag name="TipGrassSwayDistr">Grass sway effect distribution (how random).</Tag>
 	<Tag name="InpSet_AxisFull">Axis Full</Tag>
 	<Tag name="InputHeaderTxt4">Éditer</Tag>
@@ -24,7 +24,7 @@
 	<Tag name="Road_AngleManual">Manuel</Tag>
 	<Tag name="ViewDist">View distance</Tag>
 	<Tag name="OpponentsList">Liste des opposants</Tag>
-	<Tag name="RplParticles">Particles (for not transparent ghost)</Tag>
+	<Tag name="RplParticles">Particules (pour les fantômes non transparents).</Tag>
 	<Tag name="Road_Roll">Roll</Tag>
 	<Tag name="PostfilterAA">Post-filter antialiasing</Tag>
 	<Tag name="TipLTrFlDepth">Maximal depth in fluid allowed (set 0 to exclude from fluids).</Tag>
@@ -35,7 +35,7 @@
 	<Tag name="NeedNewGame">* need New Game</Tag>
 	<Tag name="InputRoadAngZero">shift-6  - zero angles</Tag>
 	<Tag name="ScaleMul">Scale multiplier</Tag>
-	<Tag name="TipTrackImg">In game screenshot for selected track.</Tag>
+	<Tag name="TipTrackImg">Capture d'écran du jeu pour la piste sélectionnée.</Tag>
 	<Tag name="TerLNoiseOnly">Only Noise</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
 	<Tag name="Terrain">Terrain</Tag>
@@ -48,6 +48,7 @@
 	<Tag name="GraphicsAll_Low">Bas</Tag>
 	<Tag name="TipPrevWind">Preview camera window.</Tag>
 	<Tag name="ChampEndFinished">Vous avez fini ce championnat</Tag>
+	<Tag name="MessageBox_No">Non</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
 	<Tag name="Version">version</Tag>
 	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
@@ -98,15 +99,15 @@
 	<Tag name="bumps">bumps (bumpy terrain)</Tag>
 	<Tag name="ShadowFilter">Filtre</Tag>
 	<Tag name="Road_Width">Width</Tag>
-	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
+	<Tag name="TipGrTerMaxAngle">Angle du terrain au-dessus duquel il n'y aura pas d'herbe.</Tag>
 	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
 	<Tag name="InputMapResetGame">Recommencer le jeu</Tag>
 	<Tag name="smoke">fumée</Tag>
 	<Tag name="MouseCapture">Capturer la souris</Tag>
 	<Tag name="TipGrDensSmooth">Grass density map - smooth size</Tag>
 	<Tag name="NetGame">Jeu</Tag>
-	<Tag name="NetWaitingForOthers">Waiting for others</Tag>
-	<Tag name="TipCarDesc">Car description text.</Tag>
+	<Tag name="NetWaitingForOthers">En attente des autres</Tag>
+	<Tag name="TipCarDesc">Texte de description de la voiture.</Tag>
 	<Tag name="InputRoadNew">ctrl-Space - set new point's values from picked</Tag>
 	<Tag name="Road_New">Nouveau</Tag>
 	<Tag name="Top">Haut</Tag>
@@ -122,7 +123,7 @@
 	<Tag name="TerLHSm">Height smooth</Tag>
 	<Tag name="CopySource">Set as copy source</Tag>
 	<Tag name="CarCrash">Crash de la Voiture</Tag>
-	<Tag name="LS_OBJS">Loading Objects</Tag>
+	<Tag name="LS_OBJS">Chargement des objets</Tag>
 	<Tag name="TreeRoadDist">Trees to road dist.</Tag>
 	<Tag name="GraphicsAll_Medium">Moyen</Tag>
 	<Tag name="NeedReload">* need reload</Tag>
@@ -130,6 +131,7 @@
 	<Tag name="ViewRight">Vue de droite</Tag>
 	<Tag name="Count">Nombre</Tag>
 	<Tag name="UnitKm">km</Tag>
+	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>
 	<Tag name="BackMenu">Retour</Tag>
 	<Tag name="BasedOn">based on</Tag>
 	<Tag name="ProfilerTxt">Profiler times text </Tag>
@@ -174,7 +176,7 @@
 	<Tag name="AutoRear">Marche aarière automatique</Tag>
 	<Tag name="TerGenFreq">Freq. zoom</Tag>
 	<Tag name="Road_OnTerrain">On Terrain</Tag>
-	<Tag name="ReflMode_single">Unique</Tag>
+	<Tag name="ObjStatic">Static</Tag>
 	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
 	<Tag name="Always">Toujours</Tag>
@@ -183,7 +185,7 @@
 	<Tag name="TipSunDirYaw">Sun direction - yaw angle.</Tag>
 	<Tag name="Players">Joueurs</Tag>
 	<Tag name="Road_ChkR">ChkR</Tag>
-	<Tag name="MessageBox_No">Non</Tag>
+	<Tag name="ABS">ABS (anti blocage des roues)</Tag>
 	<Tag name="Length">Length</Tag>
 	<Tag name="TipCarsList">Cars list. Press Enter or [New Game] to drive with it.</Tag>
 	<Tag name="FluidSplash">Fluid Splash</Tag>
@@ -207,7 +209,7 @@
 	<Tag name="TipTerrainHalf">Resize current terrain heightmap by half (use only for reducing file size).</Tag>
 	<Tag name="wind">vent</Tag>
 	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
-	<Tag name="ChampEndCongrats">Congratulations !</Tag>
+	<Tag name="ChampEndCongrats">Félicitations !</Tag>
 	<Tag name="LS_CAR">Loading car</Tag>
 	<Tag name="MaxScale">max scale</Tag>
 	<Tag name="Fluids">Fluids</Tag>
@@ -252,6 +254,7 @@
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
 	<Tag name="TipNormalTex">Normal texture (Height in alpha).</Tag>
 	<Tag name="CountdownTime">Race countdown time</Tag>
+	<Tag name="ReflMode_single">Unique</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
 	<Tag name="End">fin</Tag>
 	<Tag name="HDR">HDR+Bloom</Tag>
@@ -299,7 +302,7 @@
 	<Tag name="RoadQual">Road far quality</Tag>
 	<Tag name="Brush_Shape">Shape</Tag>
 	<Tag name="length">longueur</Tag>
-	<Tag name="ABS">ABS (anti blocage des roues)</Tag>
+	<Tag name="DynamicObjects">Dynamic Objects</Tag>
 	<Tag name="ColumnNSides">Column N sides</Tag>
 	<Tag name="RplAutoRec">Auto record replay</Tag>
 	<Tag name="Reflections">Reflections</Tag>
@@ -343,6 +346,7 @@
 	<Tag name="TrackAutoLoad">Auto chargement du circuit</Tag>
 	<Tag name="DustSize">dust size</Tag>
 	<Tag name="Shortcuts">Shortcuts</Tag>
+	<Tag name="TerrainMove">Move</Tag>
 	<Tag name="InputPressButtonTip">appuyer sur un bouton pour voir son numéro</Tag>
 	<Tag name="Friction">Friction</Tag>
 	<Tag name="Ambient">Ambient</Tag>
@@ -368,6 +372,7 @@
 	<Tag name="min">min</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle  (no pipe when 0)</Tag>
+	<Tag name="Environment">Environment</Tag>
 	<Tag name="Finished">Finished</Tag>
 	<Tag name="InputMapRestartGame">Nouvelle partie</Tag>
 	<Tag name="Graphics">Graphiques</Tag>
@@ -462,7 +467,7 @@
 	<Tag name="NeedRestart">* need restart</Tag>
 	<Tag name="Water">Water</Tag>
 	<Tag name="mud">mud</Tag>
-	<Tag name="NetMasterConnectionError">Couldn't reach the master server.</Tag>
+	<Tag name="NetMasterConnectionError">Impossible d'atteindre le serveur maître.</Tag>
 	<Tag name="AutoUpdateBlendmap">Auto update blendmap (slow for big size brushes)</Tag>
 	<Tag name="TipTerWind">Terrain brush window.</Tag>
 	<Tag name="InputMapThrottle">Throttle</Tag>
@@ -482,6 +487,7 @@
 	<Tag name="TerGenOfsX">Offset X</Tag>
 	<Tag name="TipTexTiling">Texture tiling length (less means more repeats).</Tag>
 	<Tag name="InputBrushShape">K,L  -  Shape</Tag>
+	<Tag name="TipTerrainMove">Move terrain.</Tag>
 	<Tag name="TerHQDist">Terrain HQ dist</Tag>
 	<Tag name="InputRoadRoll">- rotate roll / scale sel.</Tag>
 	<Tag name="CarDebugSurfaces">Car tire surfaces</Tag>
@@ -492,6 +498,7 @@
 	<Tag name="ViewFront">Vue de devant</Tag>
 	<Tag name="RplTime">Time</Tag>
 	<Tag name="MinimapRotate">Rotate</Tag>
+	<Tag name="objects">objects (dynamic)</Tag>
 	<Tag name="TrackAvgSpeed">Vitesse moyenne</Tag>
 	<Tag name="Yes">Yes</Tag>
 	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
@@ -704,7 +711,7 @@
 	<Tag name="InputRoadRebuild">B - rebuild road (after terrain change, etc.)</Tag>
 	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="Generator">Generator</Tag>
-	<Tag name="Environment">Environment</Tag>
+	<Tag name="ObjDynamic">Dynamic</Tag>
 	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
 	<Tag name="GraphicsAll_High">High</Tag>
 	<Tag name="TipRoadParams">Road point parameters.</Tag>
@@ -793,13 +800,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>
-	<Tag name="ObjStatic">Static</Tag>
-	<Tag name="DynamicObjects">Dynamic Objects</Tag>
-	<Tag name="TerrainMove">Move</Tag>
-	<Tag name="ObjDynamic">Dynamic</Tag>
-	<Tag name="TipTerrainMove">Move terrain.</Tag>
-	<Tag name="objects">objects (dynamic)</Tag>
+	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
+	<Tag name="EdCamPos">Camera position</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

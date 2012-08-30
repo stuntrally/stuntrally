@@ -48,6 +48,7 @@
 	<Tag name="GraphicsAll_Low">Alhainen</Tag>
 	<Tag name="TipPrevWind">Esikatselun kameraikkuna</Tag>
 	<Tag name="ChampEndFinished">Olet suorittanut tämän mestaruuden loppuun.</Tag>
+	<Tag name="MessageBox_No">Ei</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
 	<Tag name="Version">versio</Tag>
 	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
@@ -130,6 +131,7 @@
 	<Tag name="ViewRight">View Right</Tag>
 	<Tag name="Count">Lukumäärä</Tag>
 	<Tag name="UnitKm">km</Tag>
+	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>
 	<Tag name="BackMenu">Takaisin</Tag>
 	<Tag name="BasedOn">pohjautuen</Tag>
 	<Tag name="ProfilerTxt">Profiler times text </Tag>
@@ -174,7 +176,7 @@
 	<Tag name="AutoRear">Automaattinen peruutusvaihde</Tag>
 	<Tag name="TerGenFreq">Freq. zoom</Tag>
 	<Tag name="Road_OnTerrain">On Terrain</Tag>
-	<Tag name="ReflMode_single">Yksittäinen</Tag>
+	<Tag name="ObjStatic">Static</Tag>
 	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
 	<Tag name="Always">Aina</Tag>
@@ -183,7 +185,7 @@
 	<Tag name="TipSunDirYaw">Sun direction - yaw angle.</Tag>
 	<Tag name="Players">Pelaajat</Tag>
 	<Tag name="Road_ChkR">ChkR</Tag>
-	<Tag name="MessageBox_No">Ei</Tag>
+	<Tag name="ABS">ABS (lukkiutumattomat jarrut)</Tag>
 	<Tag name="Length">Pituus</Tag>
 	<Tag name="TipCarsList">Cars list. Press Enter or [New Game] to drive with it.</Tag>
 	<Tag name="FluidSplash">Fluid Splash</Tag>
@@ -252,6 +254,7 @@
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
 	<Tag name="TipNormalTex">Normaalitekstuuri (korkeus alpha-kanavassa).</Tag>
 	<Tag name="CountdownTime">Kilpailun lähtölaskenta</Tag>
+	<Tag name="ReflMode_single">Yksittäinen</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
 	<Tag name="End">loppu</Tag>
 	<Tag name="HDR">HDR+Bloom</Tag>
@@ -299,7 +302,7 @@
 	<Tag name="RoadQual">Tien laatu kaukana</Tag>
 	<Tag name="Brush_Shape">Shape</Tag>
 	<Tag name="length">pituus</Tag>
-	<Tag name="ABS">ABS (lukkiutumattomat jarrut)</Tag>
+	<Tag name="DynamicObjects">Dynamic Objects</Tag>
 	<Tag name="ColumnNSides">Column N sides</Tag>
 	<Tag name="RplAutoRec">Nauhoita uusinta automaattisesti</Tag>
 	<Tag name="Reflections">Heijastukset</Tag>
@@ -343,6 +346,7 @@
 	<Tag name="TrackAutoLoad">Radan automaattinen lataus</Tag>
 	<Tag name="DustSize">pölyn koko</Tag>
 	<Tag name="Shortcuts">Shortcuts</Tag>
+	<Tag name="TerrainMove">Move</Tag>
 	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
 	<Tag name="Friction">Kitka</Tag>
 	<Tag name="Ambient">Ambient</Tag>
@@ -368,6 +372,7 @@
 	<Tag name="min">minimi</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle  (no pipe when 0)</Tag>
+	<Tag name="Environment">Ympäristö</Tag>
 	<Tag name="Finished">Päättynyt</Tag>
 	<Tag name="InputMapRestartGame">Uusi peli</Tag>
 	<Tag name="Graphics">Grafiikat</Tag>
@@ -482,6 +487,7 @@
 	<Tag name="TerGenOfsX">Siirtymä X</Tag>
 	<Tag name="TipTexTiling">Texture tiling length (less means more repeats).</Tag>
 	<Tag name="InputBrushShape">K,L  -  Shape</Tag>
+	<Tag name="TipTerrainMove">Move terrain.</Tag>
 	<Tag name="TerHQDist">Terrain HQ dist</Tag>
 	<Tag name="InputRoadRoll">- rotate roll / scale sel.</Tag>
 	<Tag name="CarDebugSurfaces">Car tire surfaces</Tag>
@@ -492,6 +498,7 @@
 	<Tag name="ViewFront">Näkymä edestä</Tag>
 	<Tag name="RplTime">Aika</Tag>
 	<Tag name="MinimapRotate">Kieritä</Tag>
+	<Tag name="objects">objects (dynamic)</Tag>
 	<Tag name="TrackAvgSpeed">Keskimääräinen nopeus</Tag>
 	<Tag name="Yes">Kyllä</Tag>
 	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
@@ -704,7 +711,7 @@
 	<Tag name="InputRoadRebuild">B - rebuild road (after terrain change, etc.)</Tag>
 	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="Generator">Generator</Tag>
-	<Tag name="Environment">Ympäristö</Tag>
+	<Tag name="ObjDynamic">Dynamic</Tag>
 	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
 	<Tag name="GraphicsAll_High">Korkea</Tag>
 	<Tag name="TipRoadParams">Tien pisteen parametrit.</Tag>
@@ -793,13 +800,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>
-	<Tag name="ObjStatic">Static</Tag>
-	<Tag name="DynamicObjects">Dynamic Objects</Tag>
-	<Tag name="TerrainMove">Move</Tag>
-	<Tag name="ObjDynamic">Dynamic</Tag>
-	<Tag name="TipTerrainMove">Move terrain.</Tag>
-	<Tag name="objects">objects (dynamic)</Tag>
+	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
+	<Tag name="EdCamPos">Camera position</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
