@@ -59,9 +59,9 @@ if (!bAssignKey)
 		MyGUI::TabPtr tab = 0;  MyGUI::TabControl* sub = 0;
 		switch (pSet->inMenu)
 		{	case WND_Game:
-			case WND_Champ:  tab = mWndTabsGame;  sub = vSubTabsGame[tab->getIndexSelected()];  break;
+			case WND_Champ:    tab = mWndTabsGame;  sub = vSubTabsGame[tab->getIndexSelected()];  break;
 			case WND_Replays:  tab = mWndTabsRpl;  break;
-			case WND_Help:  tab = mWndTabsHelp;  break;
+			case WND_Help:     tab = mWndTabsHelp;  break;
 			case WND_Options:  tab = mWndTabsOpts;  sub = vSubTabsOpts[tab->getIndexSelected()];  break;
 		}
 		if (tab)
@@ -229,9 +229,6 @@ if (!bAssignKey)
 		switch (arg.key)
 		{
 			case KC_BACK:
-				if (mClient && !isFocGui)  // show/hide players net wnd
-				{	mWndNetEnd->setVisible(!mWndNetEnd->getVisible());  return true;  }
-					
 				if (mWndChampStage->getVisible())	// back from champs stage wnd
 				{	btnChampStageBack(0);  return true;  }
 
@@ -316,10 +313,6 @@ if (!bAssignKey)
 				return false;
 
 			
-			case KC_F5:		//  new game
-				NewGame();  return false;
-
-
 			case KC_RETURN:		///  close champ wnds
 				if (mWndChampStage->getVisible())
 					btnChampStageStart(0);
@@ -337,6 +330,10 @@ if (!bAssignKey)
 						case 6:	btnChampStart(0);  break;
 					}	break;
 				}	}
+				else
+				if (mClient && !isFocGui)  // show/hide players net wnd
+				{	mWndNetEnd->setVisible(!mWndNetEnd->getVisible());  return true;  }
+
 				return false;
 		}
 	}
