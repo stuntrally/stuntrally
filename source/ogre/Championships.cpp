@@ -425,6 +425,7 @@ void App::ChampFillStageInfo(bool finished)
 
 	String path = PathListTrkPrv(0, trk.name), sGrp = "TrkPrv";
 	resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
+	resMgr.unloadResourceGroup(sGrp);
 	resMgr.initialiseResourceGroup(sGrp);
 
 	if (imgChampStage)
