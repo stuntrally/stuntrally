@@ -94,7 +94,7 @@ There isn't (and won't be) an undo function -
 hit F5 to reload last track state, and F4 to save it.
 After saving, track can be played in game (exports all data).
 
-There is a Editor tutorial Wiki page (link at top)
+There is an Editor Tutorial Wiki page (link at top)
 with videos: 10 chapters, 44 minutes total.
 
 Have fun !
@@ -146,7 +146,7 @@ Testers
 
 Translators
     If you want to help translating into
-	a language, check Wiki page [Localization].
+    a language, check Wiki page [Localization].
 
 Track creators
     If you manage to create an interesting track,
