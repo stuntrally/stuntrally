@@ -4085,6 +4085,11 @@
 							<Property key="Caption" value="O  #{Tools}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 320 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="#{InputFocusFind}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="232 60 240 20">
 							<Property key="TextColour" value="0.6 0.8 1.0"/>

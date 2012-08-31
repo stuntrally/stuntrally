@@ -84,31 +84,32 @@ void App::InitInputGui()
 	}
 
 
+	// use for widgets that should have relative size
+	#define setOrigPos(widget) \
+		widget->setUserString("origPosX", toStr(widget->getPosition().left)); \
+		widget->setUserString("origPosY", toStr(widget->getPosition().top)); \
+		widget->setUserString("origSizeX", toStr(widget->getSize().width)); \
+		widget->setUserString("origSizeY", toStr(widget->getSize().height)); \
+		widget->setUserString("RelativeTo", "OptionsWnd");
+
+	#define CreateText(x,y, w,h, name, text)  {  StaticTextPtr txt =  \
+		tabitem->createWidget<TextBox>("TextBox", x,y, w,h, ALIGN, name);  \
+		txt->setUserString("origPosX", toStr(x)); txt->setUserString("origPosY", toStr(y)); \
+		txt->setUserString("origSizeX", toStr(w)); txt->setUserString("origSizeY", toStr(h)); \
+		txt->setUserString("RelativeTo", "OptionsWnd"); \
+		if (txt)  txt->setCaption(text);  }
+	
+	//  button size and columns positon
+	const int sx = 130, sy = 24,  x0 = 20, x1 = 140, x2 = 285, x3 = 430,  yh = 20,  s0 = x1-x0-5;
+
+
 	///  insert a tab item for every schema (4players,global)
 	std::map<OISB::String, OISB::ActionSchema*> schemas = sys.mActionSchemas;  int i=0;
 	for (std::map<OISB::String, OISB::ActionSchema*>::const_iterator it = schemas.begin(); it != schemas.end(); ++it,++i)
 	{
 		const OISB::String& sPlr = (*it).first;
 		bool playerTab = Ogre::StringUtil::startsWith( sPlr, "player");
-		TabItemPtr tabitem = inputTab->addItem(!playerTab ? TR("#{InputMapGeneral}") : (TR("#{Player} ") + toStr(i)));
-
-		// use for widgets that should have relative size
-		#define setOrigPos(widget) \
-			widget->setUserString("origPosX", toStr(widget->getPosition().left)); \
-			widget->setUserString("origPosY", toStr(widget->getPosition().top)); \
-			widget->setUserString("origSizeX", toStr(widget->getSize().width)); \
-			widget->setUserString("origSizeY", toStr(widget->getSize().height)); \
-			widget->setUserString("RelativeTo", "OptionsWnd");
-
-		#define CreateText(x,y, w,h, name, text)  {  StaticTextPtr txt =  \
-			tabitem->createWidget<TextBox>("TextBox", x,y, w,h, ALIGN, name);  \
-			txt->setUserString("origPosX", toStr(x)); txt->setUserString("origPosY", toStr(y)); \
-			txt->setUserString("origSizeX", toStr(w)); txt->setUserString("origSizeY", toStr(h)); \
-			txt->setUserString("RelativeTo", "OptionsWnd"); \
-			if (txt)  txt->setCaption(text);  }
-		
-		//  button size and columns positon
-		const int sx = 130, sy = 24,  x0 = 20, x1 = 140, x2 = 285, x3 = 430,  yh = 20,  s0 = x1-x0-5;
+		TabItemPtr tabitem = inputTab->addItem(!playerTab ? TR("#{InputMapGeneral}") : ((i>1 ? "" : TR("#{Player} ")) + toStr(i)));
 
 		///  Headers  action, binding, value
 		CreateText(x0,yh, sx,sy, "hdrTxt1_"+sPlr, TR("#90B0F0#{InputHeaderTxt1}"));
@@ -135,10 +136,9 @@ void App::InitInputGui()
 		if (!playerTab)
 		{	y = yc+2*ya;  //  camera infos
 			CreateText(20,y, 280,24, "txtcam1", TR("#A0D0F0#{InputMapNextCamera} / #{InputMapPrevCamera}"));  y+=2*ya;
-			CreateText(40,y, 280,24, "txtcam2", TR("#A0D0F0#{InputCameraTxt1}"));  y+=2*ya;
-			CreateText(40,y, 280,24, "txtcam3", TR("#A0D0F0#{InputCameraTxt2}"));  y+=3*ya;
+			CreateText(40,y, 280,24, "txtcam2", TR("#A0D0F0#{InputCameraTxt1}"));  y+=3*ya;
 			//  replay controls info text
-			CreateText(20,y, 500,24, "txtrpl1", TR("#A0D0F0#{InputRplCtrl0}"));  y+=2*ya;
+			CreateText(20,y, 500,24, "txtrpl1", TR("#A0D0F0#{Replay}:"));  y+=2*ya;
 			CreateText(40,y, 500,24, "txtrpl2", TR("#80B0F0#{InputRplCtrl1}"));  y+=2*ya;
 			CreateText(40,y, 500,24, "txtrpl3", TR("#80B0F0#{InputRplCtrl2}"));  y+=2*ya;
 			CreateText(40,y, 500,24, "txtrpl4", TR("#80B0F0#{InputRplCtrl3}"));  y+=2*ya;
@@ -234,8 +234,44 @@ void App::InitInputGui()
 			}
 		}
 	}
+	
+	TabItemPtr tabitem = inputTab->addItem(TR("#{Other}"));
+	int y = 32, ya = 26 / 2, yb = 20 / 2,  xa = 20, xa1=xa+16, xb = 250, xb1=xb+16;
+	CreateText(xa,y, 500,24, "txtoth1", TR("#A0D0FF#{InputOther1}"));  y+=2*ya;
+	CreateText(xa,y, 500,24, "txtoth2", TR("#A0D0FF#{InputOther2}"));  y+=2*ya;
+	//CreateText(xa,y, 500,24, "txtoth3", TR("#80B0F0#{InputOther3}"));  y+=2*ya;
+	y+=2*ya;
+	CreateText(xa,y, 500,24, "txttir0", TR("#B0C0D0#{TiresEdit}"));  y+=2*ya;
+	CreateText(xa1,y, 500,24, "txttir1", TR("#A0B0C0#{TiresEdit1}"));  y+=2*ya;
+	CreateText(xa1,y, 500,24, "txttir2", TR("#A0B0C0#{TiresEdit2}"));  y+=2*ya;
+	CreateText(xa1,y, 500,24, "txttir3", TR("#A0B0C0#{TiresEdit3}"));  y+=2*ya;
+	CreateText(xa1,y, 500,24, "txttir4", TR("#A0B0C0#{TiresEdit4}"));  y+=3*ya;
+	CreateText(xa,y, 500,24, "txttir4", TR("#90B0D0#{InputMapPrevTab}/#{InputMapNextTab} - #{InputGraphsType}"));  y+=3*ya;
+
+	y = 32;
+	tabitem = inputTab->addItem(TR("#{Shortcuts}"));
+	CreateText(xa,y, 600,24, "txtshc0", TR("#C0E0FF#{ShortcutsInfo}"));  y+=3*yb;
+	CreateText(xa,y, 200,24, "txtshc1", "#A8D0FF"+TR("Q,T  #{Track}"));  y+=2*yb;
+	CreateText(xa,y, 200,24, "txtshc2", "#A8D0FF"+TR("C  #{Car}"));  y+=3*yb;
+	CreateText(xa,y, 200,24, "txtshc3", "#A8D0FF"+TR("W  #{Setup}"));  y+=2*yb;
+	CreateText(xa,y, 200,24, "txtshc4", "#A8D0FF"+TR("U  #{Multiplayer}"));  y+=2*yb;
+	CreateText(xa,y, 200,24, "txtshc5", "#A8D0FF"+TR("H  #{Championship}"));  y+=3*yb;
+	CreateText(xa,y, 200,24, "txtshc6", "#A8D0FF"+TR("R  #{Replay}"));  y+=3*yb;
+	CreateText(xa,y, 200,24, "txtshc7", "#A8D0FF"+TR("#{InputFocusFind}"));  y+=2*yb;
+
+	y = 32 + 3*yb;
+	CreateText(xb,y, 200,24, "txtshd1", "#A8D0FF"+TR("S  #{Screen}"));  y+=2*yb;
+	CreateText(xb1,y, 200,24, "txtshd2", "#A8D0FF"+TR("E  #{Effects}"));  y+=2*yb;
+	CreateText(xb,y, 200,24, "txtshd3", "#A8D0FF"+TR("G  #{Graphics}"));  y+=2*yb;
+	CreateText(xb1,y, 200,24, "txtshd4", "#A8D0FF"+TR("N  #{Vegetation}"));  y+=3*yb;
+	
+	CreateText(xb,y, 200,24, "txtshd5", "#A8D0FF"+TR("V  #{View}"));  y+=2*yb;
+	CreateText(xb1,y, 200,24, "txtshd6", "#A8D0FF"+TR("M  #{Minimap}"));  y+=2*yb;
+	CreateText(xb1,y, 200,24, "txtshd7", "#A8D0FF"+TR("O  #{Other}"));  y+=3*yb;
+	CreateText(xb,y, 200,24, "txtshd8", "#A8D0FF"+TR("I  #{Input}"));  y+=3*yb;
+
 	/**  //dbg start on input  ///remove
-	mWndTabs->setIndexSelected(7);
+	mWndTabsOpts->setIndexSelected(7);
 	inputTab->setIndexSelected(1);  /**/
 }
 

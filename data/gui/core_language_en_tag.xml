@@ -477,13 +477,22 @@
 	<Tag name="InputMapScreenshot">Screenshot</Tag>
 
 	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
-	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
+	<Tag name="InputGraphsType">change graphs type in game</Tag>
 
-	<Tag name="InputRplCtrl0">Replay:</Tag>
 	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
 	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
 	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
+
+	<Tag name="InputOther1">Up,Down - navigate in lists   Enter - start</Tag>
+	<Tag name="InputOther2">Enter - show/hide players window in multiplayer</Tag>
+	<Tag name="InputFocusFind">Ctrl-F  go to find box</Tag>
+
+	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
+	<Tag name="TiresEdit1">PgUp/PgDn - previous, next value</Tag>
+	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
+	<Tag name="TiresEdit3">Home - toggle longitudinal / lateral parameters</Tag>
+	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
 
 
 	<!--  Sound  -->
