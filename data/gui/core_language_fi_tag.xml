@@ -41,6 +41,7 @@
 	<Tag name="Terrain">Maasto</Tag>
 	<Tag name="Surface">Pinta-ala</Tag>
 	<Tag name="Road_Yaw">Yaw</Tag>
+	<Tag name="About">Tietoja</Tag>
 	<Tag name="TBScore">Pisteet</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first  (1)</Tag>
 	<Tag name="HDROrigImage">Bloom Darken</Tag>
@@ -262,7 +263,7 @@
 	<Tag name="TipGrassPatchHeightMin">Minimal grass patch height.</Tag>
 	<Tag name="InputRoadMat">-,=  - road/pipe material  (-1 hidden)</Tag>
 	<Tag name="InputDetailPreset">Set from preset</Tag>
-	<Tag name="About">Tietoja</Tag>
+	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
 	<Tag name="Road_Snap">Snap</Tag>
 	<Tag name="TipSunDirPitch">Sun direction - pitch angle.</Tag>
 	<Tag name="Passed">Läpäisty</Tag>
@@ -445,14 +446,12 @@
 	<Tag name="Shadows">Varjot</Tag>
 	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
-	<Tag name="InputRplCtrl0">Uusinta:</Tag>
 	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
 	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
 	<Tag name="TipGrassSwayLen">Grass sway effect length (scale).</Tag>
 	<Tag name="WaterReflection">Heijastus</Tag>
 	<Tag name="intensity">voimakkuus</Tag>
 	<Tag name="Fog">Sumu</Tag>
-	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
 	<Tag name="InputMapNextTab">Seuraava välilehti</Tag>
 	<Tag name="FrameSkip">Frames skip</Tag>
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
@@ -609,6 +608,7 @@
 	<Tag name="TipToggleLayer">Kytke valittu tekstuurikerros päälle/pois.</Tag>
 	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
 	<Tag name="InputMapNextCamera">Seuraava kamera</Tag>
+	<Tag name="EdCamPos">Camera position</Tag>
 	<Tag name="GraphicsAll_Lowest">Alin</Tag>
 	<Tag name="InputReadyToPlay">(ready to play in game)</Tag>
 	<Tag name="CamInertia">Kameran inertia</Tag>
@@ -800,8 +800,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
-	<Tag name="EdCamPos">Camera position</Tag>
+	<Tag name="InputGraphsType">change graphs type in game</Tag>
+	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
+	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
+	<Tag name="InputFocusFind">Ctrl-F  go to find box</Tag>
+	<Tag name="InputOther1">Up,Down - navigate in lists   Enter - start</Tag>
+	<Tag name="InputOther2">Enter - show/hide players window in multiplayer</Tag>
+	<Tag name="TiresEdit1">PgUp/PgDn - previous, next value</Tag>
+	<Tag name="TiresEdit3">Home - toggle longitudinal / lateral parameters</Tag>
+	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-08-30 18:50+0300"
+"POT-Creation-Date: 2012-08-31 17:29+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -617,6 +617,10 @@ msgctxt "InputMapPrevCamera"
 msgid "Previous Camera"
 msgstr ""
 
+msgctxt "InputFluidsSize"
+msgid "alt-LMB - size   alt-RMB - depth"
+msgstr ""
+
 msgctxt "Brush_Size"
 msgid "Size"
 msgstr ""
@@ -895,6 +899,10 @@ msgstr ""
 
 msgctxt "TerrainError"
 msgid "Terrain error"
+msgstr ""
+
+msgctxt "InputGraphsType"
+msgid "change graphs type in game"
 msgstr ""
 
 msgctxt "NetMasterProtocolError"
@@ -1369,8 +1377,8 @@ msgctxt "InputStartPos"
 msgid "Q - edit car start pos"
 msgstr ""
 
-msgctxt "InputRplCtrl0"
-msgid "Replay:"
+msgctxt "InputPaintColor"
+msgid "C - Paint Color"
 msgstr ""
 
 msgctxt "TipModelRoadDist"
@@ -1445,12 +1453,12 @@ msgctxt "Friction"
 msgid "Friction"
 msgstr ""
 
-msgctxt "Ambient"
-msgid "Ambient"
+msgctxt "InputTerDeform"
+msgid "D - Deform  (LMB up, RMB down)"
 msgstr ""
 
-msgctxt "InputCameraTxt2"
-msgid "with ctrl - switch current car when many"
+msgctxt "Ambient"
+msgid "Ambient"
 msgstr ""
 
 msgctxt "SkirtLength"
@@ -1477,8 +1485,8 @@ msgctxt "Multiplayer"
 msgid "Multiplayer"
 msgstr ""
 
-msgctxt "InputToggleVeget"
-msgid "V - Disable / enable vegetation"
+msgctxt "TiresEdit4"
+msgid "End - toggle align moment parameters"
 msgstr ""
 
 msgctxt "Particles"
@@ -1721,12 +1729,16 @@ msgctxt "Brush_CurrentH"
 msgid "Curr.H"
 msgstr ""
 
+msgctxt "TipDiffuseTex"
+msgid "Diffuse texture (Specular in alpha)."
+msgstr ""
+
 msgctxt "LTrFlDepth"
 msgid "max Depth in fluid"
 msgstr ""
 
-msgctxt "InputFluidsSize"
-msgid "alt-LMB - size   alt-RMB - depth"
+msgctxt "InputToggleVeget"
+msgid "V - Disable / enable vegetation"
 msgstr ""
 
 msgctxt "TexCoordMul"
@@ -2157,8 +2169,8 @@ msgctxt "RplRename"
 msgid "Rename"
 msgstr ""
 
-msgctxt "EnterSave"
-msgid "Enter - save"
+msgctxt "TiresEdit"
+msgid "Tire Edit - (Graphs in mode 4)"
 msgstr ""
 
 msgctxt "InputMapLastChk"
@@ -2309,8 +2321,20 @@ msgctxt "RplRecTime"
 msgid "Recorded   time"
 msgstr ""
 
+msgctxt "InputFocusFind"
+msgid "Ctrl-F  go to find box"
+msgstr ""
+
+msgctxt "InputOther1"
+msgid "Up,Down - navigate in lists   Enter - start"
+msgstr ""
+
 msgctxt "TipModelDens"
 msgid "How often model will appear on track area."
+msgstr ""
+
+msgctxt "InputOther2"
+msgid "Enter - show/hide players window in multiplayer"
 msgstr ""
 
 msgctxt "Road_Yaw"
@@ -2433,12 +2457,16 @@ msgctxt "InputBrushOctaves"
 msgid ", .   -  noise Octaves (detail)"
 msgstr ""
 
-msgctxt "InputTerDeform"
-msgid "D - Deform  (LMB up, RMB down)"
+msgctxt "TiresEdit1"
+msgid "PgUp/PgDn - previous, next value"
 msgstr ""
 
-msgctxt "TipDiffuseTex"
-msgid "Diffuse texture (Specular in alpha)."
+msgctxt "TiresEdit3"
+msgid "Home - toggle longitudinal / lateral parameters"
+msgstr ""
+
+msgctxt "TiresEdit2"
+msgid "1,2 or Num /,* - change value"
 msgstr ""
 
 msgctxt "VegetCol"
@@ -2981,6 +3009,10 @@ msgctxt "TipRoadDist"
 msgid "How far from road will the model appear."
 msgstr ""
 
+msgctxt "EnterSave"
+msgid "Enter - save"
+msgstr ""
+
 msgctxt "DistMult"
 msgid "Distance mul"
 msgstr ""
@@ -3123,10 +3155,6 @@ msgstr ""
 
 msgctxt "TipTerLayers"
 msgid "Terrain texture layers (recommended 2-3, significantly affects Fps). *Auto blendmap supports max 4."
-msgstr ""
-
-msgctxt "InputPaintColor"
-msgid "C - Paint Color"
 msgstr ""
 
 msgctxt "TipSurfType"

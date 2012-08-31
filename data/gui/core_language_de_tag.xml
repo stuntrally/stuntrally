@@ -41,6 +41,7 @@
 	<Tag name="Terrain">Terrain</Tag>
 	<Tag name="Surface">Oberfläche</Tag>
 	<Tag name="Road_Yaw">Yaw</Tag>
+	<Tag name="About">Über</Tag>
 	<Tag name="TBScore">Punkte</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first  (1)</Tag>
 	<Tag name="HDROrigImage">Bloom Darken</Tag>
@@ -262,7 +263,7 @@
 	<Tag name="TipGrassPatchHeightMin">Minimale Höhe des Grasflecks.</Tag>
 	<Tag name="InputRoadMat">-,=  - road/pipe material  (-1 hidden)</Tag>
 	<Tag name="InputDetailPreset">Voreinstellung</Tag>
-	<Tag name="About">Über</Tag>
+	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
 	<Tag name="Road_Snap">Snap</Tag>
 	<Tag name="TipSunDirPitch">Richtung der Sonne - Neigung.</Tag>
 	<Tag name="Passed">Bestanden</Tag>
@@ -445,14 +446,12 @@
 	<Tag name="Shadows">Schatten</Tag>
 	<Tag name="InputRplCtrl2">P - Replay pausieren/fortsetzen</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - vor/zurückspulen (shift - langsam, ctrl,alt - schnell)</Tag>
-	<Tag name="InputRplCtrl0">Wiederholung:</Tag>
 	<Tag name="InputRplCtrl1">Backspace - Steuerung zeigen/verbergen (Ctrl für Maus)</Tag>
 	<Tag name="InputRplCtrl4">K, L - Anderen Spieler für Kamera auswählen</Tag>
 	<Tag name="TipGrassSwayLen">Grasschwingungslänge (Skal.)</Tag>
 	<Tag name="WaterReflection">Spiegelung</Tag>
 	<Tag name="intensity">Intensität</Tag>
 	<Tag name="Fog">Nebel</Tag>
-	<Tag name="InputCameraTxt2">Mit Strg - Auto für Kameraänderung wechseln</Tag>
 	<Tag name="InputMapNextTab">Nächster Tab</Tag>
 	<Tag name="FrameSkip">FrameSkip</Tag>
 	<Tag name="InputTrackScrn">(für Bildschirmfoto)</Tag>
@@ -609,6 +608,7 @@
 	<Tag name="TipToggleLayer">Ausgewählten Textur-Layer aktivieren / deaktivieren.</Tag>
 	<Tag name="TipTrkListEditor">Streckenliste, Klicken zum Auswählen (zum Umbenennen oder Duplizieren). [Strecke Laden] drücken um die Strecke im Editor zu öffnen.</Tag>
 	<Tag name="InputMapNextCamera">Nächste Kamera</Tag>
+	<Tag name="EdCamPos">Camera position</Tag>
 	<Tag name="GraphicsAll_Lowest">Niedrigste</Tag>
 	<Tag name="InputReadyToPlay">(bereit zum Fahren)</Tag>
 	<Tag name="CamInertia">Kameraträgheit</Tag>
@@ -800,8 +800,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
-	<Tag name="EdCamPos">Camera position</Tag>
+	<Tag name="InputGraphsType">change graphs type in game</Tag>
+	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
+	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
+	<Tag name="InputFocusFind">Ctrl-F  go to find box</Tag>
+	<Tag name="InputOther1">Up,Down - navigate in lists   Enter - start</Tag>
+	<Tag name="InputOther2">Enter - show/hide players window in multiplayer</Tag>
+	<Tag name="TiresEdit1">PgUp/PgDn - previous, next value</Tag>
+	<Tag name="TiresEdit3">Home - toggle longitudinal / lateral parameters</Tag>
+	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

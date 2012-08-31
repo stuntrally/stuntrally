@@ -41,6 +41,7 @@
 	<Tag name="Terrain">Teren</Tag>
 	<Tag name="Surface">Nawierzchnia</Tag>
 	<Tag name="Road_Yaw">Obr</Tag>
+	<Tag name="About">O grze</Tag>
 	<Tag name="TBScore">Punkty</Tag>
 	<Tag name="InputRoadChkFirst">0 - ustaw sferę kontrolną jako pierwszą (1)</Tag>
 	<Tag name="HDROrigImage">Blask Ciemniej</Tag>
@@ -262,7 +263,7 @@
 	<Tag name="TipGrassPatchHeightMin">Minimalna wysokość trawy.</Tag>
 	<Tag name="InputRoadMat">-,=   -  materiał drogi/rury (-1 ukryty)</Tag>
 	<Tag name="InputDetailPreset">Wybierz ustawienia</Tag>
-	<Tag name="About">O grze</Tag>
+	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
 	<Tag name="Road_Snap">Przyciąganie</Tag>
 	<Tag name="TipSunDirPitch">Kierunek słońca - kąt nachlenia.</Tag>
 	<Tag name="Passed">Zaliczone</Tag>
@@ -445,14 +446,12 @@
 	<Tag name="Shadows">Cienie</Tag>
 	<Tag name="InputRplCtrl2">P - pauza/wznów powtórkę</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - przewiń do tyłu/do przodu (shift - wolno, ctrl,alt - szybko)</Tag>
-	<Tag name="InputRplCtrl0">Powtórka:</Tag>
 	<Tag name="InputRplCtrl1">Backspace - pokaż/ukryj kontrolki (przytrzymaj ctrl by użyć myszy)</Tag>
 	<Tag name="InputRplCtrl4">K, L - zmień kamerę na innego gracza</Tag>
 	<Tag name="TipGrassSwayLen">Efekt kołysania trawy długość (skala).</Tag>
 	<Tag name="WaterReflection">Odbicie</Tag>
 	<Tag name="intensity">Intensywność</Tag>
 	<Tag name="Fog">Mgła</Tag>
-	<Tag name="InputCameraTxt2">z ctrl - zmień obecne auto, dla wielu</Tag>
 	<Tag name="InputMapNextTab">Następna zakładka</Tag>
 	<Tag name="FrameSkip">Pomijanie klatek</Tag>
 	<Tag name="InputTrackScrn">(dla obrazu trasy)</Tag>
@@ -609,6 +608,7 @@
 	<Tag name="TipToggleLayer">Włącz / wyłącz wybraną warstwę tekstury.</Tag>
 	<Tag name="TipTrkListEditor">Lista tras, kliknij by wybrać (do duplikowania lub zmiany nazwy). Naciśnij [Wczytaj trasę] by zmienić obecną trasę w edytorze.</Tag>
 	<Tag name="InputMapNextCamera">Następny widok</Tag>
+	<Tag name="EdCamPos">Camera position</Tag>
 	<Tag name="GraphicsAll_Lowest">Najniższe</Tag>
 	<Tag name="InputReadyToPlay">(gotowe do gry)</Tag>
 	<Tag name="CamInertia">Bezwładność kamery</Tag>
@@ -800,8 +800,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
-	<Tag name="EdCamPos">Camera position</Tag>
+	<Tag name="InputGraphsType">change graphs type in game</Tag>
+	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
+	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
+	<Tag name="InputFocusFind">Ctrl-F  go to find box</Tag>
+	<Tag name="InputOther1">Up,Down - navigate in lists   Enter - start</Tag>
+	<Tag name="InputOther2">Enter - show/hide players window in multiplayer</Tag>
+	<Tag name="TiresEdit1">PgUp/PgDn - previous, next value</Tag>
+	<Tag name="TiresEdit3">Home - toggle longitudinal / lateral parameters</Tag>
+	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
