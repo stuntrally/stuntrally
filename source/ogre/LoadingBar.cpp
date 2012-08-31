@@ -59,7 +59,7 @@ void LoadingBar::start( RenderWindow* window, 		unsigned short numGroupsInit,
 		unsigned int i=1;
 		while (1)
 		{
-			if (ResourceGroupManager::getSingleton().resourceExists("Loading", "loading" + toStr(i) + ".jpg") )
+			if (ResourceGroupManager::getSingleton().resourceExists("Loading", "loading" + toStr(i) + ".jpg"))
 				i++;
 			else
 				break;
