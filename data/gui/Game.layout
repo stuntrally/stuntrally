@@ -554,11 +554,11 @@
 				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="32 210 200 20" name="tabCarTires">
 					<UserString key="RelativeTo" value="GameWnd"/>
-					<Widget type="TabItem" skin="" position="2 24 562 -8">
+					<Widget type="TabItem" skin="" position="2 24 194 -8">
 						<Property key="Caption" value="#{Gravel}"/>
 						<UserString key="RelativeTo" value="GameWnd"/>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 562 -8">
+					<Widget type="TabItem" skin="" position="2 24 194 -8">
 						<Property key="Caption" value="#{Asphalt}"/>
 						<UserString key="RelativeTo" value="GameWnd"/>
 					</Widget>
@@ -900,11 +900,17 @@
 					<Property key="WordWrap" value="true"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
+				<Widget type="Widget" skin="PanelSkin" position="465 37 310 115">
+					<Property key="Colour" value="0.66 0.8 0.96"/>
+					<Property key="Alpha" value="0.6"/>
+					<Property key="InheritsAlpha" value="false"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabStages">
 				<Property key="Caption" value="#{Stages}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
-				<Widget type="TextBox" skin="TextBox" position="496 48 136 24">
+				<Widget type="TextBox" skin="TextBox" position="496 48 119 24">
 					<Property key="Caption" value="#{Difficulty}"/>
 					<Property key="TextColour" value="0.9 0.4 0.4"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
@@ -913,7 +919,7 @@
 					<Property key="TextColour" value="1.0 0.5 0.5"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="496 80 136 24">
+				<Widget type="TextBox" skin="TextBox" position="496 80 119 24">
 					<Property key="Caption" value="#{Tracks}"/>
 					<Property key="TextColour" value="0.9 0.9 0.1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
@@ -922,7 +928,7 @@
 					<Property key="TextColour" value="1.0 1.0 0.3"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="496 112 136 24">
+				<Widget type="TextBox" skin="TextBox" position="496 112 119 24">
 					<Property key="Caption" value="#{Distance}"/>
 					<Property key="TextColour" value="0.2 0.9 0.2"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
@@ -931,7 +937,7 @@
 					<Property key="TextColour" value="0.4 1.0 0.4"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="496 144 136 24">
+				<Widget type="TextBox" skin="TextBox" position="496 144 119 24">
 					<Property key="Caption" value="#{Time} [m:s.]"/>
 					<Property key="TextColour" value="0.5 0.9 0.8"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
@@ -940,7 +946,7 @@
 					<Property key="TextColour" value="0.75 1.0 0.92"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="496 176 136 24">
+				<Widget type="TextBox" skin="TextBox" position="496 176 119 24">
 					<Property key="Caption" value="#{Progress}"/>
 					<Property key="TextColour" value="0.6 0.75 0.9"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
@@ -949,7 +955,7 @@
 					<Property key="TextColour" value="0.7 0.85 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="496 208 136 24">
+				<Widget type="TextBox" skin="TextBox" position="496 208 119 24">
 					<Property key="Caption" value="#{Score}"/>
 					<Property key="TextColour" value="0.8 0.7 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
@@ -958,7 +964,7 @@
 					<Property key="TextColour" value="0.9 0.8 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="496 240 136 24">
+				<Widget type="TextBox" skin="TextBox" position="496 240 119 24">
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="616 240 80 24">
@@ -1135,6 +1141,27 @@
 					<Property key="TextColour" value="0.86 0.93 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{objects}"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="30 295 36 30" name="btnStagePrev">
+					<Property key="Colour" value="0.6 0.8 1.0"/>
+					<Property key="TextColour" value="0.6 0.8 1.0"/>
+					<Property key="Caption" value="&lt;"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="80 295 36 30" name="btnStageNext">
+					<Property key="Colour" value="0.6 0.8 1.0"/>
+					<Property key="TextColour" value="0.6 0.8 1.0"/>
+					<Property key="Caption" value="&gt;"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="55 220 130 25">
+					<Property key="TextColour" value="0.76 0.8 0.95"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<Property key="Caption" value="#{Stage}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="55 255 70 25" name="StageNum">
+					<Property key="TextColour" value="0.8 0.86 1.0"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 			</Widget>
 		</Widget>
