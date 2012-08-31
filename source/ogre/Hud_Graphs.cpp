@@ -163,8 +163,8 @@ void App::CreateGraphs()
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
 			const int t[3] = {0,1,2};
 			int c = t[i];
-			gv->Create(512, "graph"+toStr(c+1), i==0 ? 0.4f : 0.f);
-			if (i == 0)  gv->CreateGrid(8,1, 0.3f, 0.6f);
+			gv->Create(256, "graph"+toStr(c+1), i==0 ? 0.4f : 0.f);
+			if (i == 0)  gv->CreateGrid(6,0, 0.7f, 1.0f);
 			switch (i)
 			{
 				case 0:  gv->CreateTitle("Accel   x",	c, 0.0f, -2, 24);  break;
@@ -236,10 +236,12 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		{
 			MATHVECTOR <CARDYNAMICS::T, 3> v = dynamics.body.GetForce();
 			(-dynamics.Orientation()).RotateVector(v);
-			float m = dynamics.body.GetMass();		
+			float m = dynamics.body.GetMass();
+			//LogO("mass: "+fToStr(m,1,5)+"  x: "+fToStr(v[0]/m,2,4)+"  y: "+fToStr(v[1]/m,2,4)+"  z: "+fToStr(v[2]/m,2,4));
 
 			for (int i=0; i < 3; ++i)
-				pApp->graphs[i]->AddVal( std::max(0.f, std::min(1.f, float(v[i]/m /80.f +0.5f) )));
+				pApp->graphs[i]->AddVal( std::max(0.f, std::min(1.f, float(
+					v[i]/m *0.63f /9.81f/3.f + (i==2 ? 0.f : 0.5f) ) )));
 		}	break;
 		
 	case 2:  /// tire slide,slip
