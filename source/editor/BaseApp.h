@@ -4,7 +4,7 @@
 #include "../ogre/common/QTimer.h"
 #include "settings.h"
 
-#include <OgreVector3.h>
+/*#include <OgreVector3.h>
 #include <OgreString.h>
 
 #include <OgreOverlay.h>
@@ -12,7 +12,8 @@
 
 #include <OgreRenderTargetListener.h>
 #include <OgreFrameListener.h>
-#include <OgreWindowEventUtilities.h>
+#include <OgreWindowEventUtilities.h>*/
+#include <Ogre.h>
 
 #include <OISKeyboard.h>
 #include <OISMouse.h>
@@ -43,6 +44,10 @@ public:
 	// stuff to be executed in App after BaseApp init
 	virtual void postInit() = 0;
 
+	//AppThr appThr;
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	HANDLE hpr;
+#endif
 	QTimer timer;
 	void OnTimer(double dTime);
 	bool mShutDown;
