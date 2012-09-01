@@ -17,6 +17,8 @@ using namespace Ogre;
 //-------------------------------------------------------------------------------------
 void App::createScene()  // once, init
 {
+	LogO("sizeof: baseApp "+toStr(sizeof(BaseApp))+ " App "+toStr(sizeof(App)));
+
 	//  camera
 	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 	mCamera->setFarClipDistance(pSet->view_distance*1.1f);
