@@ -109,8 +109,8 @@ float SimplexNoise2D(float xin, float yin)
     float x1 = x0 - i1 + G2, x2 = x0 - 1.0f + 2.0f * G2;
     float y1 = y0 - j1 + G2, y2 = y0 - 1.0f + 2.0f * G2;
 
-    int ii = i % 255;
-    int jj = j % 255;
+    int ii = i & 255;
+    int jj = j & 255;
     int gi0 = perm[ii + perm[jj]] % 12;
     int gi1 = perm[ii + i1 + perm[jj + j1]] % 12;
     int gi2 = perm[ii + 1 + perm[jj + 1]] % 12;

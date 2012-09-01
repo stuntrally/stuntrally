@@ -155,7 +155,7 @@ void App::updateBrushPrv(bool first)
 		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
 
-			float c = d * pow( abs(Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*0.5f) * 0.9f;
+			float c = d * pow( fabs(Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*0.5f) * 0.9f;
 			
 			uint8 bR = c * fR, bG = c * fG, bB = c * fB;
 			*p++ = bR;  *p++ = bG;  *p++ = bB;  *p++ = bG > 32 ? 255 : 0;
@@ -221,7 +221,7 @@ void App::updBrush()
 			{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 				float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
 				
-				float c = d * pow( abs(Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*0.5f);
+				float c = d * pow( fabs(Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*0.5f);
 
 				mBrushData[a] = std::max(-1.f, std::min(1.f, c ));
 		}	}	break;
