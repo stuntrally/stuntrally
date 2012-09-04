@@ -133,6 +133,7 @@ void App::updateGameInfoGUI()
 
 		Ogre::String path = PathListTrkPrv(-1, sListTrack), s, sGrp = "TrkPrv";
 		resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
+		resMgr.unloadResourceGroup(sGrp);
 		resMgr.initialiseResourceGroup(sGrp);
 		try
 		{	s = "view.jpg";

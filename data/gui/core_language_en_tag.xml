@@ -232,6 +232,7 @@
 	<Tag name="VegetCol">Vegetation collision</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
 	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
+	<Tag name="DynamicObjects">Dynamic Objects</Tag>
 
 	<Tag name="Boost">Boost</Tag>
 	<Tag name="Flip">Flip</Tag>
@@ -476,13 +477,22 @@
 	<Tag name="InputMapScreenshot">Screenshot</Tag>
 
 	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
-	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
+	<Tag name="InputGraphsType">change graphs type in game</Tag>
 
-	<Tag name="InputRplCtrl0">Replay:</Tag>
 	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
 	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
 	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
+
+	<Tag name="InputOther1">Up,Down - navigate in lists   Enter - start</Tag>
+	<Tag name="InputOther2">Enter - show/hide players window in multiplayer</Tag>
+	<Tag name="InputFocusFind">Ctrl-F  go to find box</Tag>
+
+	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
+	<Tag name="TiresEdit1">PgUp/PgDn - previous, next value</Tag>
+	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
+	<Tag name="TiresEdit3">Home - toggle longitudinal / lateral parameters</Tag>
+	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
 
 
 	<!--  Sound  -->
@@ -566,9 +576,10 @@
 	<Tag name="TriSize">Triangle size</Tag>
 	<Tag name="TerrainSize">Terrain size</Tag>
 	<Tag name="NewTerrainFlat">New flat</Tag>
-	<Tag name="NewTerrainGenerate">New Generate</Tag>
+	<Tag name="NewTerrainGenerate">Generate new</Tag>
 	<Tag name="TerrainHalf">Half</Tag>
 	<Tag name="TerrainDouble">Double</Tag>
+	<Tag name="TerrainMove">Move</Tag>
 	<Tag name="Brushes">Brushes</Tag>
 	
 	<Tag name="Enabled">Enabled</Tag>
@@ -737,6 +748,8 @@
 	<Tag name="CamInertia">Camera inertia</Tag>
 	<Tag name="MinimapUpdSkip">Minimap update skip</Tag>
 	<Tag name="AutoUpdateBlendmap">Auto update blendmap (slow for big size brushes)</Tag>
+	<Tag name="EdCamPos">Camera position</Tag>
+	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
 	
 	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="Top">Top</Tag>
@@ -895,14 +908,16 @@
 
 	<!--  Objects  -->
 	<Tag name="Objects">Objects</Tag>
+	<Tag name="ObjDynamic">Dynamic</Tag>
+	<Tag name="ObjStatic">Static</Tag>
 	<Tag name="InputObjectsMode">X - edit Objects</Tag>
 	<Tag name="InputObjectsPrevNext">PgUp,PgDn (or Wheel) - previous/next object</Tag>
 	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
 	<Tag name="InputObjectsDel">Del - delete current</Tag>
 	<Tag name="InputObjectsMove">LMB - move   RMB - height</Tag>
-	<Tag name="InputObjectsRot">MMB - rotate Y</Tag>
+	<Tag name="InputObjectsRot">MMB - rotate yaw   alt-MMB - rotate roll</Tag>
 	<Tag name="InputObjectsScale">alt-LMB - scale   alt-RMB - scale Y only</Tag>
-	<Tag name="InputObjectsType">[,]  - change object type</Tag>
+	<Tag name="InputObjectsType">-,=  - change object type</Tag>
 	<Tag name="InputObjects1">1 - reset rotation</Tag>
 	<Tag name="InputObjects2">2 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>
@@ -954,7 +969,8 @@
 	<Tag name="TipNewTerrainFlat">Create new, flat terrain.</Tag>
 	<Tag name="TipTerrainGenerate">Generates new terrain from noise functions using all parameters below.</Tag>
 	<Tag name="TipTerrainHalf">Resize current terrain heightmap by half (use only for reducing file size).</Tag>
-	<Tag name="TipTerrainDouble">Make terrain size double, leaving current haigtmap part in center.</Tag>
+	<Tag name="TipTerrainDouble">Make terrain size double, leaving current heightmap part in center.</Tag>
+	<Tag name="TipTerrainMove">Move terrain.</Tag>
 	
 	<Tag name="TipToggleLayer">Turn on/off chosen texture layer.</Tag>
 	<Tag name="TipTerLayers">Terrain texture layers (recommended 2-3, significantly affects Fps). *Auto blendmap supports max 4.</Tag>

@@ -4,10 +4,10 @@
 #include "configfile.h"
 
 
-#define SET_VER  1660  // 1.6+
+#define SET_VER  1700  // 1.7
 
 
-const static int graph_types = 5;  // total graph types count
+const static int graph_types = 6;  // total graph types count
 
 class SETTINGS
 {
@@ -53,7 +53,7 @@ public:
 
 		int local_players, num_laps;  // split
 		//  game setup
-		bool collis_veget, collis_cars, collis_roadw;
+		bool collis_veget, collis_cars, collis_roadw, dyn_objects;
 		int boost_type, flip_type;  float boost_power;
 		float trees;
 		
@@ -78,7 +78,7 @@ public:
 	bool autostart, escquit;
 	bool bltDebug, bltLines, bltProfilerTxt, profilerTxt;
 	bool loadingbackground;
-	bool x11_capture_mouse, x11_hwmouse;
+	bool capture_mouse, x11_hwmouse;
 	bool opplist_sort;
 	
 	//  sim freq (1/interval timestep)

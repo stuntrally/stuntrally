@@ -30,14 +30,15 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 	//  for each car
 	for (int c=0; c < pSet->game.local_players; ++c)
 	{
+		const SplitScreenManager::VPDims& dim = mSplitMgr->mDims[c];
 		//  gauges
 		Real xcRpm,ycRpm, xcVel,ycVel, yMax, xBFuel;  // -1..1
 		if (ndRpmBk[c] && ndVelBk[c] && ndVelBm[c] && ndRpm[c] && ndVel[c])
 		{
-			Real fHudScale = pSet->size_gauges * mSplitMgr->mDims[c].avgsize;
+			Real fHudScale = pSet->size_gauges * dim.avgsize;
 			Real spx = fHudScale *1.1f, spy = spx*asp;
-			xcRpm = mSplitMgr->mDims[c].left + spx;   ycRpm =-mSplitMgr->mDims[c].bottom + spy;
-			xcVel = mSplitMgr->mDims[c].right - spx;  ycVel =-mSplitMgr->mDims[c].bottom + spy;
+			xcRpm = dim.left + spx;   ycRpm =-dim.bottom + spy;
+			xcVel = dim.right - spx;  ycVel =-dim.bottom + spy;
 			yMax = ycVel - fHudScale;  xBFuel = xcVel - fHudScale;
 
 			Vector3 sca(fHudScale,fHudScale*asp,1), sc(fHudScale,fHudScale,1);
@@ -52,23 +53,22 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 		//  minimap
 		if (ndMap[c])
 		{
-			Real fHudSize = pSet->size_minimap * mSplitMgr->mDims[c].avgsize;
+			Real fHudSize = pSet->size_minimap * dim.avgsize;
 			ndMap[c]->setScale(fHudSize,fHudSize*asp,1);
 
 			const Real marg = 1.f + 0.05f;  // from border
-			Real fMiniX = mSplitMgr->mDims[c].right - fHudSize * marg;
-			Real fMiniY =-mSplitMgr->mDims[c].top - fHudSize*asp * marg;
+			Real fMiniX = dim.right - fHudSize * marg;
+			Real fMiniY =-dim.top - fHudSize*asp * marg;
 
 			ndMap[c]->setPosition(Vector3(fMiniX,fMiniY,0.f));
 			//LogO("-- Size car:"+toStr(c)+"  x:"+fToStr(fMiniX,2,4)+" y:"+fToStr(fMiniY,2,4)+"  s:"+fToStr(fHudSize,2,4));
 		}
 
 		//  gear, vel texts
-		if (txGear[c] && txVel[c] && txBFuel[c])
 		{
 			//  current viewport max x,y in pixels
-			int iwx = (mSplitMgr->mDims[c].right +1.f)*0.5f*wx,
-				iwy = (mSplitMgr->mDims[c].bottom+1.f)*0.5f*wy;
+			int iwx = (dim.right +1.f)*0.5f*wx,
+				iwy = (dim.bottom+1.f)*0.5f*wy;
 			int my = (1.f-yMax)*0.5f*wy;  // gauge bottom y
 
 			//  positioning,  min iwy - dont go below viewport bottom
@@ -78,9 +78,18 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 			int bx =(xBFuel+1.f)*0.5f*wx - 10, by = std::min(iwy -36, my + 5);
 				vx = std::min(vx, iwx -100);
 				bx = std::min(bx, iwx -180);  // not too near to vel
-			txGear[c]->setPosition(gx,gy);
-			txVel[c]->setPosition(vx,vy);
-			txBFuel[c]->setPosition(bx,by);
+			if (txGear[c])  txGear[c]->setPosition(gx,gy);
+			if (txVel[c])  txVel[c]->setPosition(vx,vy);
+			if (txBFuel[c])  txBFuel[c]->setPosition(bx,by);
+			
+			bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
+			int itx = (dim.left+1.f)*0.5f*wx,
+				ity = (dim.top +1.f)*0.5f*wy;
+			int tx = itx + 0, ty = ity + 32;
+			if (bckTimes[c])  bckTimes[c]->setPosition(tx,ty);
+			tx += 16;  ty += (hasLaps ? 16 : 4);
+			if (txTimTxt[c])  txTimTxt[c]->setPosition(tx,ty);
+			if (txTimes[c])   txTimes[c]->setPosition(tx+96,ty);
 		}
 	}
 }
@@ -130,6 +139,10 @@ void App::CreateHUD(bool destroy)
 	{	if (txGear[c]) {  mGUI->destroyWidget(txGear[c]);  txGear[c] = 0;  }
 		if (txVel[c])  {  mGUI->destroyWidget(txVel[c]);  txVel[c] = 0;  }
 		if (txBFuel[c])  {  mGUI->destroyWidget(txBFuel[c]);  txBFuel[c] = 0;  }
+
+		if (txTimTxt[c])  {  mGUI->destroyWidget(txTimTxt[c]);  txTimTxt[c] = 0;  }
+		if (txTimes[c])  {  mGUI->destroyWidget(txTimes[c]);  txTimes[c] = 0;  }
+		if (bckTimes[c])  {  mGUI->destroyWidget(bckTimes[c]);  bckTimes[c] = 0;  }
 	}
 	
 	//  minimap from road img
@@ -200,7 +213,7 @@ void App::CreateHUD(bool destroy)
 		ndMap[c]->setVisible(false/*pSet->trackmap*/);
 
 	
-		//  gauges  backgr
+		//  gauges  backgr  -----------
 		String st = toStr(pSet->gauges_type);
 		moRpmBk[c] = Create2D("hud/rpm"+st,scm,1);  moRpmBk[c]->setVisibilityFlags(RV_Hud);
 		moRpmBk[c]->setRenderQueueGroup(RQG_Hud1);
@@ -229,7 +242,7 @@ void App::CreateHUD(bool destroy)
 		ndVel[c]->attachObject(moVel[c]);	ndVel[c]->setScale(0,0,0);	ndVel[c]->setVisible(false);
 
 
-		//  gear, vel text
+		//  gear, vel text  -----------
 		txGear[c] = mGUI->createWidget<TextBox>("TextBox",
 			0,1200, 160,116, Align::Left, "Back", "Gear"+toStr(c));
 		txGear[c]->setVisible(false);
@@ -247,8 +260,30 @@ void App::CreateHUD(bool destroy)
 		txBFuel[c]->setTextColour(Colour(0.6,0.8,1.0));
 		
 
-		//  times text
-		//...
+		//  times text    -----------
+		bckTimes[c] = mGUI->createWidget<ImageBox>("ImageBox",
+			0,1200, 208,120, Align::Left, "Back", "TimP"+toStr(c));
+		//bckTimes[c]->setAlpha(0.9f);
+		bckTimes[c]->setVisible(false);
+		bckTimes[c]->setImageTexture("back_times.png");
+
+		txTimTxt[c] = mGUI->createWidget<TextBox>("TextBox",
+			0,1200, 90,120, Align::Left, "Back", "TimT"+toStr(c));
+		txTimTxt[c]->setVisible(false);
+		txTimTxt[c]->setFontName("font_Vera.20");
+		txTimTxt[c]->setTextShadow(true);
+		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
+		txTimTxt[c]->setCaption(
+			(hasLaps ? String("#D0E8F0")+TR("#{TBLap}") : "")+
+			"\n#E8F4FF"+TR("#{TBTime}") + 
+			"\n#C0E0F0"+TR("#{TBLast}") + 
+			"\n#D8E0F8"+TR("#{TBBest}") );
+
+		txTimes[c] = mGUI->createWidget<TextBox>("TextBox",
+			0,1200, 80,120, Align::Left, "Back", "Tim"+toStr(c));
+		txTimes[c]->setVisible(false);
+		txTimes[c]->setFontName("font_Vera.20");
+		txTimes[c]->setTextShadow(true);
 	}
 	///  tex
 	resMgr.removeResourceLocation(path, sGrp);
@@ -264,7 +299,6 @@ void App::CreateHUD(bool destroy)
 	ovCountdown = ovr.getByName("Hud/Countdown");	hudCountdown = ovr.getOverlayElement("Hud/CountdownText");
 	ovNetMsg = ovr.getByName("Hud/NetMessages");	hudNetMsg = ovr.getOverlayElement("Hud/NetMessagesText");
 
-	ovTimes = ovr.getByName("Hud/Times");		hudTimes = ovr.getOverlayElement("Hud/TimesText");
 	ovOpp = ovr.getByName("Hud/Opponents");		hudOppB = ovr.getOverlayElement("Hud/OpponentsPanel");
 
 	for (int o=0; o < 5; ++o)  for (int c=0; c < 3; ++c)
@@ -309,55 +343,72 @@ void App::ShowHUD(bool hideAll)
 {
 	if (hideAll)
 	{
-		if (ovAbsTcs) ovAbsTcs->hide();
+		if (ovAbsTcs) ovAbsTcs->hide();		if (ovCam)	 ovCam->hide();
 		if (ovNetMsg)  ovNetMsg->hide();	if (ovCountdown)  ovCountdown->hide();
 		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
-		if (ovCam)	 ovCam->hide();			if (ovTimes)  ovTimes->hide();
 		if (ovWarnWin)  ovWarnWin->hide();	if (ovOpp)  ovOpp->hide();
 		if (mFpsOverlay)  mFpsOverlay->hide();
 
 		for (int c=0; c < 4; ++c)
 		{
-			if (txGear[c])  txGear[c]->setVisible(false);	if (txVel[c])  txVel[c]->setVisible(false);
+			if (txGear[c])  txGear[c]->setVisible(false);
+			if (txVel[c])   txVel[c]->setVisible(false);
 			if (txBFuel[c])  txBFuel[c]->setVisible(false);
+
 			if (ndRpmBk[c])  ndRpmBk[c]->setVisible(false);
-			if (ndVelBk[c])	ndVelBk[c]->setVisible(false);	if (ndVelBm[c])	ndVelBm[c]->setVisible(false);
-			if (ndRpm[c])	ndRpm[c]->setVisible(false);	if (ndVel[c])	ndVel[c]->setVisible(false);
+			if (ndVelBk[c])  ndVelBk[c]->setVisible(false);
+			if (ndVelBm[c])  ndVelBm[c]->setVisible(false);
+
+			if (ndRpm[c])  ndRpm[c]->setVisible(false);
+			if (ndVel[c])  ndVel[c]->setVisible(false);
 			if (ndMap[c])  ndMap[c]->setVisible(false);
+
+			if (bckTimes[c])  bckTimes[c]->setVisible(false);
+			if (txTimTxt[c])  txTimTxt[c]->setVisible(false);
+			if (txTimes[c])   txTimes[c]->setVisible(false);
 		}
 		hideMouse();
 		if (mWndRpl)  mWndRpl->setVisible(false);
 	}
 	else
 	{	//this goes each frame..
-		bool show = pSet->show_gauges;
+		bool show = pSet->show_gauges, times = pSet->show_times;
+		bool bfuel = pSet->game.boost_type == 1 || pSet->game.boost_type == 2;
+		
 		if (ovCountdown)  if (show)  ovCountdown->show();  else  ovCountdown->hide();
 		if (ovNetMsg)	if (show)  ovNetMsg->show();  else  ovNetMsg->hide();
-		if (ovAbsTcs){ if (show)  ovAbsTcs->show();   else  ovAbsTcs->hide(); }
+		if (ovAbsTcs){  if (show)  ovAbsTcs->show();  else  ovAbsTcs->hide();  }
 
 		show = pSet->car_dbgbars;
-		if (ovCarDbg){  if (show)  ovCarDbg->show();  else  ovCarDbg->hide();   }
+		if (ovCarDbg){  if (show)  ovCarDbg->show();  else  ovCarDbg->hide();  }
 		show = pSet->car_dbgtxt || pSet->bltProfilerTxt || pSet->profilerTxt;
-		if (ovCarDbgTxt){  if (show)  ovCarDbgTxt->show();  else  ovCarDbgTxt->hide();   }
+		if (ovCarDbgTxt){  if (show)  ovCarDbgTxt->show();  else  ovCarDbgTxt->hide();  }
 		show = pSet->car_dbgsurf;
-		if (ovCarDbgExt){  if (show)  ovCarDbgExt->show();  else  ovCarDbgExt->hide();   }
+		if (ovCarDbgExt){  if (show)  ovCarDbgExt->show();  else  ovCarDbgExt->hide();  }
 
-		if (ovCam)	{  if (pSet->show_cam && !isFocGui)    ovCam->show();    else  ovCam->hide();     }
-		if (ovTimes){  if (pSet->show_times)  ovTimes->show();  else  ovTimes->hide();   }
-		if (ovOpp)  {  if (pSet->show_opponents && (!sc.ter || road && road->getNumPoints() > 0))  ovOpp->show();  else  ovOpp->hide();   }
+		if (ovCam)	{  if (pSet->show_cam && !isFocGui)  ovCam->show();  else  ovCam->hide();  }
+		if (ovOpp)  {  if (pSet->show_opponents && (!sc.ter || road && road->getNumPoints() > 0))  ovOpp->show();  else  ovOpp->hide();  }
 		if (ovWarnWin){  if (pSet->show_times)  ovWarnWin->show();  else  ovWarnWin->hide();  }
-		if (mFpsOverlay) { if (pSet->show_fps) mFpsOverlay->show(); else mFpsOverlay->hide(); }
+		if (mFpsOverlay){  if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();  }
 
 		show = pSet->show_gauges;
 		for (int c=0; c < 4; ++c)
 		{
-			if (txGear[c])  txGear[c]->setVisible(pSet->show_digits);	if (txVel[c])  txVel[c]->setVisible(pSet->show_digits);
-			if (txBFuel[c])  txBFuel[c]->setVisible(show && (pSet->game.boost_type == 1 || pSet->game.boost_type == 2));
+			if (txGear[c])  txGear[c]->setVisible(pSet->show_digits);
+			if (txVel[c])   txVel[c]->setVisible(pSet->show_digits);
+			if (txBFuel[c])  txBFuel[c]->setVisible(show && bfuel);
+
 			if (ndRpmBk[c])  ndRpmBk[c]->setVisible(show);
-			if (ndVelBk[c])	ndVelBk[c]->setVisible(show && !pSet->show_mph);
-			if (ndVelBm[c])	ndVelBm[c]->setVisible(show && pSet->show_mph);
-			if (ndRpm[c])	ndRpm[c]->setVisible(show);		if (ndVel[c])	ndVel[c]->setVisible(show);
+			if (ndVelBk[c])  ndVelBk[c]->setVisible(show && !pSet->show_mph);
+			if (ndVelBm[c])  ndVelBm[c]->setVisible(show && pSet->show_mph);
+
+			if (ndRpm[c])  ndRpm[c]->setVisible(show);
+			if (ndVel[c])  ndVel[c]->setVisible(show);
 			if (ndMap[c])  ndMap[c]->setVisible(pSet->trackmap);
+			
+			if (bckTimes[c])  bckTimes[c]->setVisible(times);
+			if (txTimTxt[c])  txTimTxt[c]->setVisible(times);
+			if (txTimes[c])   txTimes[c]->setVisible(times);
 		}
 		updMouse();
 		if (mWndRpl && !bLoading)  mWndRpl->setVisible(bRplPlay && bRplWnd);  //
@@ -373,8 +424,7 @@ void App::ShowHUDvp(bool vp)	// todo: use vis mask ..
 	if (!vp)
 	{
 		/// for gui viewport ----------------------
-		if (ovOpp)  ovOpp->hide();
-		if (ovTimes)  ovTimes->hide();		if (ovWarnWin)  ovWarnWin->hide();
+		if (ovOpp)  ovOpp->hide();			if (ovWarnWin)  ovWarnWin->hide();
 		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
 		if (ovCountdown)  ovCountdown->hide();  if (ovNetMsg)  ovNetMsg->hide();
 		if (hudAbs)  hudAbs->hide();		if (hudTcs)  hudTcs->hide();

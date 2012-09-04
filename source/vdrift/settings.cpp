@@ -44,7 +44,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.boost_type", gui.boost_type);		Param(c,w, "game.flip_type", gui.flip_type);
 	Param(c,w, "game.boost_power", gui.boost_power);
 	Param(c,w, "game.collis_cars", gui.collis_cars);	Param(c,w, "game.collis_veget", gui.collis_veget);
-	Param(c,w, "game.collis_roadw", gui.collis_roadw);
+	Param(c,w, "game.collis_roadw", gui.collis_roadw);	Param(c,w, "game.dyn_objects", gui.dyn_objects);
 	Param(c,w, "game.track", gui.track);				Param(c,w, "game.track_user", gui.track_user);
 	Param(c,w, "game.trk_reverse", gui.trackreverse);
 	Param(c,w, "game.local_players", gui.local_players); Param(c,w, "game.num_laps", gui.num_laps);
@@ -103,7 +103,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.profilerTxt", profilerTxt);	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);
 	Param(c,w, "misc.language", language);			Param(c,w, "misc.loadingback", loadingbackground);
 	Param(c,w, "misc.version", version);
-	Param(c,w, "misc.x11_hwmouse", x11_hwmouse);	Param(c,w, "misc.x11_capture_mouse", x11_capture_mouse);
+	Param(c,w, "misc.x11_hwmouse", x11_hwmouse);	Param(c,w, "misc.capture_mouse", capture_mouse);
 
 	Param(c,w, "network.nickname", nickname);		Param(c,w, "network.master_server_address", master_server_address);
 	Param(c,w, "network.local_port", local_port);	Param(c,w, "network.master_server_port", master_server_port);
@@ -181,7 +181,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	autostart(0), ogre_dialog(0), escquit(0),
 	bltDebug(0), bltLines(1),  bltProfilerTxt(0), profilerTxt(0),
 	loadingbackground(true),
-	x11_capture_mouse(false), x11_hwmouse(false),
+	capture_mouse(false), x11_hwmouse(false),
 	//  network
 	nickname("Player"), netGameName("Default Game"),
 	master_server_address("localhost"),
@@ -225,7 +225,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	{	gui.car[i] = "ES";  gui.car_hue[i] = 0.4f+0.2f*i;  gui.car_sat[i] = 1.f;  gui.car_val[i] = 1.f;  cam_view[0] = 9;  }
 	//  game
 	gui.local_players = 1;  gui.num_laps = 2;  game.num_laps = 2; 	game.local_players = 1;
-	gui.collis_veget = true;  gui.collis_cars = false;  gui.collis_roadw = false;
+	gui.collis_veget = true;  gui.collis_cars = false;
+	gui.collis_roadw = false;  gui.dyn_objects = true;
 	gui.boost_type = 2;  gui.flip_type = 1;  gui.boost_power = 1.f;
 	gui.trees = 1.f;
 	//

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-08-19 16:29+0300"
+"POT-Creation-Date: 2012-08-31 17:29+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -227,6 +227,10 @@ msgstr ""
 
 msgctxt "ChampEndFinished"
 msgid "You have finished this championship."
+msgstr ""
+
+msgctxt "MessageBox_No"
+msgid "No"
 msgstr ""
 
 msgctxt "Version"
@@ -553,6 +557,10 @@ msgctxt "InputRoadHeight"
 msgid "- change height"
 msgstr ""
 
+msgctxt "InputObjectsSimulate"
+msgid "C - simulation toggle for dynamic objects"
+msgstr ""
+
 msgctxt "BackMenu"
 msgid "Back"
 msgstr ""
@@ -607,6 +615,10 @@ msgstr ""
 
 msgctxt "InputMapPrevCamera"
 msgid "Previous Camera"
+msgstr ""
+
+msgctxt "InputFluidsSize"
+msgid "alt-LMB - size   alt-RMB - depth"
 msgstr ""
 
 msgctxt "Brush_Size"
@@ -861,6 +873,10 @@ msgctxt "Fluids"
 msgid "Fluids"
 msgstr ""
 
+msgctxt "TipGrDensSmooth"
+msgid "Grass density map - smooth size"
+msgstr ""
+
 msgctxt "NetNickname"
 msgid "Nickname"
 msgstr ""
@@ -883,6 +899,10 @@ msgstr ""
 
 msgctxt "TerrainError"
 msgid "Terrain error"
+msgstr ""
+
+msgctxt "InputGraphsType"
+msgid "change graphs type in game"
 msgstr ""
 
 msgctxt "NetMasterProtocolError"
@@ -1037,8 +1057,8 @@ msgctxt "CountdownTime"
 msgid "Race countdown time"
 msgstr ""
 
-msgctxt "TipGrDensSmooth"
-msgid "Grass density map - smooth size"
+msgctxt "ObjStatic"
+msgid "Static"
 msgstr ""
 
 msgctxt "InputRoadSelectMany"
@@ -1241,8 +1261,8 @@ msgctxt "length"
 msgid "length"
 msgstr ""
 
-msgctxt "MessageBox_No"
-msgid "No"
+msgctxt "DynamicObjects"
+msgid "Dynamic Objects"
 msgstr ""
 
 msgctxt "ColumnNSides"
@@ -1357,8 +1377,8 @@ msgctxt "InputStartPos"
 msgid "Q - edit car start pos"
 msgstr ""
 
-msgctxt "InputRplCtrl0"
-msgid "Replay:"
+msgctxt "InputPaintColor"
+msgid "C - Paint Color"
 msgstr ""
 
 msgctxt "TipModelRoadDist"
@@ -1425,20 +1445,20 @@ msgctxt "Shortcuts"
 msgid "Shortcuts"
 msgstr ""
 
-msgctxt "TipDisableFog"
-msgid "Disable fog when editing road from distance."
+msgctxt "TerrainMove"
+msgid "Move"
 msgstr ""
 
 msgctxt "Friction"
 msgid "Friction"
 msgstr ""
 
-msgctxt "Ambient"
-msgid "Ambient"
+msgctxt "InputTerDeform"
+msgid "D - Deform  (LMB up, RMB down)"
 msgstr ""
 
-msgctxt "InputCameraTxt2"
-msgid "with ctrl - switch current car when many"
+msgctxt "Ambient"
+msgid "Ambient"
 msgstr ""
 
 msgctxt "SkirtLength"
@@ -1465,8 +1485,8 @@ msgctxt "Multiplayer"
 msgid "Multiplayer"
 msgstr ""
 
-msgctxt "InputToggleVeget"
-msgid "V - Disable / enable vegetation"
+msgctxt "TiresEdit4"
+msgid "End - toggle align moment parameters"
 msgstr ""
 
 msgctxt "Particles"
@@ -1709,12 +1729,16 @@ msgctxt "Brush_CurrentH"
 msgid "Curr.H"
 msgstr ""
 
+msgctxt "TipDiffuseTex"
+msgid "Diffuse texture (Specular in alpha)."
+msgstr ""
+
 msgctxt "LTrFlDepth"
 msgid "max Depth in fluid"
 msgstr ""
 
-msgctxt "InputFluidsSize"
-msgid "alt-LMB - size   alt-RMB - depth"
+msgctxt "InputToggleVeget"
+msgid "V - Disable / enable vegetation"
 msgstr ""
 
 msgctxt "TexCoordMul"
@@ -1755,6 +1779,10 @@ msgstr ""
 
 msgctxt "InputRoadMove"
 msgid "- move point"
+msgstr ""
+
+msgctxt "EdInputBar"
+msgid "Input bar  Ctrl-I"
 msgstr ""
 
 msgctxt "Engine"
@@ -1881,6 +1909,10 @@ msgctxt "page"
 msgid "page"
 msgstr ""
 
+msgctxt "ObjDynamic"
+msgid "Dynamic"
+msgstr ""
+
 msgctxt "TerGenScale"
 msgid "Scale Height"
 msgstr ""
@@ -1922,7 +1954,7 @@ msgid "Couldn't reach the master server."
 msgstr ""
 
 msgctxt "TipTerrainDouble"
-msgid "Make terrain size double, leaving current haigtmap part in center."
+msgid "Make terrain size double, leaving current heightmap part in center."
 msgstr ""
 
 msgctxt "InputRoadRMB"
@@ -1999,6 +2031,10 @@ msgstr ""
 
 msgctxt "InputBrushShape"
 msgid "K,L  -  Shape"
+msgstr ""
+
+msgctxt "TipTerrainMove"
+msgid "Move terrain."
 msgstr ""
 
 msgctxt "TerHQDist"
@@ -2133,8 +2169,8 @@ msgctxt "RplRename"
 msgid "Rename"
 msgstr ""
 
-msgctxt "EnterSave"
-msgid "Enter - save"
+msgctxt "TiresEdit"
+msgid "Tire Edit - (Graphs in mode 4)"
 msgstr ""
 
 msgctxt "InputMapLastChk"
@@ -2285,8 +2321,20 @@ msgctxt "RplRecTime"
 msgid "Recorded   time"
 msgstr ""
 
+msgctxt "InputFocusFind"
+msgid "Ctrl-F  go to find box"
+msgstr ""
+
+msgctxt "InputOther1"
+msgid "Up,Down - navigate in lists   Enter - start"
+msgstr ""
+
 msgctxt "TipModelDens"
 msgid "How often model will appear on track area."
+msgstr ""
+
+msgctxt "InputOther2"
+msgid "Enter - show/hide players window in multiplayer"
 msgstr ""
 
 msgctxt "Road_Yaw"
@@ -2401,16 +2449,24 @@ msgctxt "TipRainSnow2"
 msgid "Set 2 Rain/Snow type"
 msgstr ""
 
+msgctxt "TipDisableFog"
+msgid "Disable fog when editing road from distance."
+msgstr ""
+
 msgctxt "InputBrushOctaves"
 msgid ", .   -  noise Octaves (detail)"
 msgstr ""
 
-msgctxt "InputTerDeform"
-msgid "D - Deform  (LMB up, RMB down)"
+msgctxt "TiresEdit1"
+msgid "PgUp/PgDn - previous, next value"
 msgstr ""
 
-msgctxt "TipDiffuseTex"
-msgid "Diffuse texture (Specular in alpha)."
+msgctxt "TiresEdit3"
+msgid "Home - toggle longitudinal / lateral parameters"
+msgstr ""
+
+msgctxt "TiresEdit2"
+msgid "1,2 or Num /,* - change value"
 msgstr ""
 
 msgctxt "VegetCol"
@@ -2467,6 +2523,10 @@ msgstr ""
 
 msgctxt "Ping"
 msgid "Ping"
+msgstr ""
+
+msgctxt "EdCamPos"
+msgid "Camera position"
 msgstr ""
 
 msgctxt "GraphicsAll_Lowest"
@@ -2714,7 +2774,7 @@ msgid "F4 - save track"
 msgstr ""
 
 msgctxt "InputObjectsType"
-msgid "[,]  - change object type"
+msgid "-,=  - change object type"
 msgstr ""
 
 msgctxt "ColHue"
@@ -2949,6 +3009,10 @@ msgctxt "TipRoadDist"
 msgid "How far from road will the model appear."
 msgstr ""
 
+msgctxt "EnterSave"
+msgid "Enter - save"
+msgstr ""
+
 msgctxt "DistMult"
 msgid "Distance mul"
 msgstr ""
@@ -3030,7 +3094,7 @@ msgid "Brightness"
 msgstr ""
 
 msgctxt "NewTerrainGenerate"
-msgid "New Generate"
+msgid "Generate new"
 msgstr ""
 
 msgctxt "TipTrkScreenEditor"
@@ -3038,7 +3102,7 @@ msgid "In game screenshot for selected track."
 msgstr ""
 
 msgctxt "InputObjectsRot"
-msgid "MMB - rotate Y"
+msgid "MMB - rotate yaw   alt-MMB - rotate roll"
 msgstr ""
 
 msgctxt "BulletDebug"
@@ -3091,10 +3155,6 @@ msgstr ""
 
 msgctxt "TipTerLayers"
 msgid "Terrain texture layers (recommended 2-3, significantly affects Fps). *Auto blendmap supports max 4."
-msgstr ""
-
-msgctxt "InputPaintColor"
-msgid "C - Paint Color"
 msgstr ""
 
 msgctxt "TipSurfType"

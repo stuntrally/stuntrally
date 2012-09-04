@@ -319,7 +319,8 @@ protected:
 	SLV(SizeMinmap);  SLV(CamSpeed);  SLV(CamInert);
 	SLV(TerUpd);  SLV(SizeRoadP);  SLV(MiniUpd);
 	void chkMinimap(WP), btnSetCam(WP);
-	void chkAutoBlendmap(WP);  MyGUI::ButtonPtr chAutoBlendmap;
+	void chkAutoBlendmap(WP);  MyGUI::ButtonPtr chAutoBlendmap, chInputBar;
+	void chkCamPos(WP), chkInputBar(WP);
 
 	
 

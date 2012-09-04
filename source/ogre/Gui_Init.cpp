@@ -206,6 +206,8 @@ void App::InitGui()
 	Chk("VegetCollis", chkVegetCollis, pSet->gui.collis_veget);
 	Chk("CarCollis", chkCarCollis, pSet->gui.collis_cars);
 	Chk("RoadWCollis", chkRoadWCollis, pSet->gui.collis_roadw);
+	Chk("DynamicObjects", chkDynObjects, pSet->gui.dyn_objects);
+
 	//  boost, flip combos
 	Cmb(combo, "CmbBoost", comboBoost);
 	if (combo)
@@ -239,7 +241,7 @@ void App::InitGui()
 		bRmph->eventMouseButtonClick += newDelegate(this, &App::radMph);  }
 
 	//  startup
-	Chk("MouseCapture", chkMouseCapture, pSet->x11_capture_mouse);
+	Chk("MouseCapture", chkMouseCapture, pSet->capture_mouse);
 	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
 	Chk("AutoStart", chkAutoStart, pSet->autostart);
 	Chk("EscQuits", chkEscQuits, pSet->escquit);
@@ -561,6 +563,10 @@ void App::InitGui()
 	Btn("btnChampStageStart", btnChampStageStart);
 	Btn("btnChampEndClose", btnChampEndClose);
 
+	Btn("btnStageNext", btnStageNext);
+	Btn("btnStagePrev", btnStagePrev);
+    valStageNum = mGUI->findWidget<StaticText>("StageNum");
+
 	edChampStage = (EditBox*)mWndChampStage->findWidget("ChampStageText");
 	edChampEnd = (EditBox*)mWndChampEnd->findWidget("ChampEndText");
 	imgChampStage = (ImageBox*)mWndChampStage->findWidget("ChampStageImg");
@@ -632,12 +638,13 @@ void App::LNext(int rel)
 	switch (pSet->inMenu)
 	{
 	case WND_Game: case WND_Champ:
-		switch (mWndTabsGame->getIndexSelected())	{
-			case 1:  listTrackChng(trkMList,LNext(trkMList, rel));  return;
+		switch (mWndTabsGame->getIndexSelected())
+		{	case 1:  listTrackChng(trkMList,LNext(trkMList, rel));  return;
 			case 2:	 listCarChng(carList,   LNext(carList, rel));  return;
 			case 6:  listChampChng(liChamps,LNext(liChamps, rel));  return;
-			case 7:	 listStageChng(liStages, LNext(liStages, rel));  return;	}
-		break;
+			case 7:	 listStageChng(liStages, LNext(liStages, rel));  return;
+			case 8:	 if (rel > 0)  btnStageNext(0);  else  btnStagePrev(0);  return;
+		}	break;
 	case WND_Replays:
 		listRplChng(rplList,  LNext(rplList, rel));
 		break;

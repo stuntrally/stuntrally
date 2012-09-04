@@ -39,7 +39,7 @@ inline double negPow(double x, double y)
 
 ///  Create Graphs  .-_/\._-
 //-----------------------------------------------------------------------------------
-const int NG = 6;  // tire graphs count (for var load)
+const int NG = 6;  // tire graphs count (for variable load)
 
 void App::CreateGraphs()
 {
@@ -97,7 +97,7 @@ void App::CreateGraphs()
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
 			int c = i%4;
-			gv->Create(512, "graph"+toStr(c+1), c>0 ? 0.f : (i < 14 ? 0.44f : 0.62f));
+			gv->Create(256/*512*/, "graph"+toStr(c+1), c>0 ? 0.f : (i < 14 ? 0.44f : 0.62f));
 			if (c == 0)
 				gv->CreateGrid(10,1, 0.2f, 0.4f);
 
@@ -156,6 +156,27 @@ void App::CreateGraphs()
 			graphs.push_back(gv);
 		}
 		break;
+	
+	case 5:  // car accel
+		for (int i=0; i < 3; ++i)
+		{
+			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			const int t[3] = {0,1,2};
+			int c = t[i];
+			gv->Create(256, "graph"+toStr(c+1), i==0 ? 0.4f : 0.f);
+			if (i == 0)  gv->CreateGrid(6,0, 0.7f, 1.0f);
+			switch (i)
+			{
+				case 0:  gv->CreateTitle("Accel   x",	c, 0.0f, -2, 24);  break;
+				case 1:  gv->CreateTitle("y",			c, 0.12f,-2, 24);  break;
+				case 2:  gv->CreateTitle("z",			c, 0.15f,-2, 24);  break;
+			}
+			gv->SetSize(0.f, 0.24f, 0.4f, 0.30f);
+
+			gv->SetVisible(pSet->show_graphs);
+			graphs.push_back(gv);
+		}	break;
+		break;
 	}
 }
 
@@ -210,6 +231,19 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 	size_t gsi = pApp->graphs.size();
 	switch (pApp->pSet->graphs_type)
 	{
+	case 5:  /// car accel x,y,z
+		if (gsi >= 3)
+		{
+			MATHVECTOR <CARDYNAMICS::T, 3> v = dynamics.body.GetForce();
+			(-dynamics.Orientation()).RotateVector(v);
+			float m = dynamics.body.GetMass();
+			//LogO("mass: "+fToStr(m,1,5)+"  x: "+fToStr(v[0]/m,2,4)+"  y: "+fToStr(v[1]/m,2,4)+"  z: "+fToStr(v[2]/m,2,4));
+
+			for (int i=0; i < 3; ++i)
+				pApp->graphs[i]->AddVal( std::max(0.f, std::min(1.f, float(
+					v[i]/m *0.63f /9.81f/3.f + (i==2 ? 0.f : 0.5f) ) )));
+		}	break;
+		
 	case 2:  /// tire slide,slip
 		if (gsi >= 8)
 		for (int i=0; i < 4; ++i)

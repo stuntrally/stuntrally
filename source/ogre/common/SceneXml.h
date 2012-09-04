@@ -94,6 +94,7 @@ public:
 	class btDefaultMotionState* ms;  // bullet
 	class btCollisionObject* co;
 	class btRigidBody* rb;
+	bool dyn;
 
 	Object();
 	void SetFromBlt();

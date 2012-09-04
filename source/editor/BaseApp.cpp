@@ -25,7 +25,7 @@ void BaseApp::updateStats()
 	}
 
 	//  camera pos, rot
-	if (mShowCamPos)
+	if (pSet->camPos)
 	{
 		const Vector3& pos = /*road ? road->posHit :*/ mCamera->getDerivedPosition();
 		//const Quaternion& rot = mCamera->getDerivedOrientation();

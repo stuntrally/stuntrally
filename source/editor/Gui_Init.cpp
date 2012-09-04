@@ -163,6 +163,8 @@ void App::InitGui()
 	Slv(MiniUpd, pSet->mini_skip /20.f);
 	Slv(SizeRoadP, (pSet->road_sphr-0.1f) /11.9f);
 	Chk("AutoBlendmap", chkAutoBlendmap, pSet->autoBlendmap);  chAutoBlendmap = bchk;
+	Chk("CamPos", chkCamPos, pSet->camPos);
+	Chk("InputBar", chkInputBar, pSet->inputBar);  chInputBar = bchk;
 
 	//  set camera btns
 	Btn("CamView1", btnSetCam);  Btn("CamView2", btnSetCam);
@@ -172,7 +174,7 @@ void App::InitGui()
 	Btn("CamFront", btnSetCam);  Btn("CamBack", btnSetCam);
 
 	//  startup
-	Chk("MouseCapture", chkMouseCapture, pSet->x11_capture_mouse);
+	Chk("MouseCapture", chkMouseCapture, pSet->capture_mouse);
 	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
 	Chk("AutoStart", chkAutoStart, pSet->autostart);
 	Chk("EscQuits", chkEscQuits, pSet->escquit);
@@ -395,7 +397,7 @@ void App::InitGui()
 	strlist lo;  vObjNames.clear();
 	GetFolderIndex(PATHMANAGER::GetDataPath() + "/objects", lo);
 	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
-		if (StringUtil::endsWith(*i,".mesh"))
+		if (StringUtil::endsWith(*i,".mesh") && (*i) != "sphere.mesh")
 			vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
 	
 	objListSt = mGUI->findWidget<List>("ObjListSt");

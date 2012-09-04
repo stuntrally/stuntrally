@@ -36,7 +36,7 @@
 		<track name="S6-PipeCrazy"	laps="1" factor="0.2" />
 	</championship>
 
-	<championship name="Tutorial Asphalt" ver="1" difficulty="4" length="3" tutorial="1" 
+	<championship name="Tutorial Asphalt" ver="1" difficulty="2" length="3" tutorial="1" 
 			descr="Tutorial on asphalt tracks. On 2 circuits.">
 		<track name="brands"		laps="1" factor="0.2" />
 		<track name="zandvoort"		laps="1" factor="0.2" />

@@ -66,6 +66,7 @@ void App::chkRearInv(WP wp){	ChkEv(rear_inv);	if (pGame)  pGame->ProcessNewSetti
 void App::chkVegetCollis(WP wp){	ChkEv(gui.collis_veget);	}
 void App::chkCarCollis(WP wp){		ChkEv(gui.collis_cars);		}
 void App::chkRoadWCollis(WP wp){	ChkEv(gui.collis_roadw);	}
+void App::chkDynObjects(WP wp){		ChkEv(gui.dyn_objects);		}
 
 //  boost, flip
 void App::comboBoost(CMB)
@@ -434,7 +435,7 @@ void App::chkGraphs(WP wp){			ChkEv(show_graphs);
 }
 
 //  Startup
-void App::chkMouseCapture(WP wp){	ChkEv(x11_capture_mouse);	}
+void App::chkMouseCapture(WP wp){	ChkEv(capture_mouse);	}
 void App::chkOgreDialog(WP wp){		ChkEv(ogre_dialog);	}
 void App::chkAutoStart(WP wp){		ChkEv(autostart);	}
 void App::chkEscQuits(WP wp){		ChkEv(escquit);		}

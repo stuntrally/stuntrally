@@ -41,6 +41,7 @@
 	<Tag name="Terrain">Teren</Tag>
 	<Tag name="Surface">Suprafaţă</Tag>
 	<Tag name="Road_Yaw">Yaw</Tag>
+	<Tag name="About">About</Tag>
 	<Tag name="TBScore">Punctaj</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first  (1)</Tag>
 	<Tag name="HDROrigImage">Bloom Darken</Tag>
@@ -48,6 +49,7 @@
 	<Tag name="GraphicsAll_Low">Low</Tag>
 	<Tag name="TipPrevWind">Previzualizeaza fereastra camerei</Tag>
 	<Tag name="ChampEndFinished">You have finished this championship.</Tag>
+	<Tag name="MessageBox_No">No</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
 	<Tag name="Version">versiunea</Tag>
 	<Tag name="InputRoadOnTer">Home - activează lipirea de drum</Tag>
@@ -130,6 +132,7 @@
 	<Tag name="ViewRight">Vezi dreapta</Tag>
 	<Tag name="Count">Contor</Tag>
 	<Tag name="UnitKm">km</Tag>
+	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>
 	<Tag name="BackMenu">Back</Tag>
 	<Tag name="BasedOn">bazat pe</Tag>
 	<Tag name="ProfilerTxt">Profiler times text </Tag>
@@ -174,7 +177,7 @@
 	<Tag name="AutoRear">Dat cu spatele automat</Tag>
 	<Tag name="TerGenFreq">Freq. zoom</Tag>
 	<Tag name="Road_OnTerrain">On Terrain</Tag>
-	<Tag name="ReflMode_single">Singur</Tag>
+	<Tag name="ObjStatic">Static</Tag>
 	<Tag name="SetCamTo">Setează camera la</Tag>
 	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
 	<Tag name="Always">Always</Tag>
@@ -183,7 +186,7 @@
 	<Tag name="TipSunDirYaw">Direcția soarelui - unghiul de giraţie.</Tag>
 	<Tag name="Players">Players</Tag>
 	<Tag name="Road_ChkR">ChkR</Tag>
-	<Tag name="MessageBox_No">No</Tag>
+	<Tag name="ABS">ABS (antiblocare frâne)</Tag>
 	<Tag name="Length">Lungimea</Tag>
 	<Tag name="TipCarsList">Cars list. Press Enter or [New Game] to drive with it.</Tag>
 	<Tag name="FluidSplash">Fluid Splash</Tag>
@@ -252,6 +255,7 @@
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
 	<Tag name="TipNormalTex">Texturi normale(înalțimea în alpha)</Tag>
 	<Tag name="CountdownTime">Race countdown time</Tag>
+	<Tag name="ReflMode_single">Singur</Tag>
 	<Tag name="CamInfoStrings">Tipul,girația,tangaj,distanța,înălțime,viteză,compensare,STÂNGA,DREAPTA,Mijloc,roata,schimbător,rotire,resetare,mișcă,H,Pos</Tag>
 	<Tag name="End">sfârșit</Tag>
 	<Tag name="HDR">HDR+Bloom</Tag>
@@ -259,7 +263,7 @@
 	<Tag name="TipGrassPatchHeightMin">Înălțime minimă patch iarbă</Tag>
 	<Tag name="InputRoadMat">-,=  - road/pipe material  (-1 hidden)</Tag>
 	<Tag name="InputDetailPreset">Set from preset</Tag>
-	<Tag name="About">About</Tag>
+	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
 	<Tag name="Road_Snap">Snap</Tag>
 	<Tag name="TipSunDirPitch">Direcția soarelui - unghiul de tangaj</Tag>
 	<Tag name="Passed">Passed</Tag>
@@ -299,7 +303,7 @@
 	<Tag name="RoadQual">Calitatea in depărtare a traseului</Tag>
 	<Tag name="Brush_Shape">Shape</Tag>
 	<Tag name="length">lungime</Tag>
-	<Tag name="ABS">ABS (antiblocare frâne)</Tag>
+	<Tag name="DynamicObjects">Dynamic Objects</Tag>
 	<Tag name="ColumnNSides">Fețele coloanei N</Tag>
 	<Tag name="RplAutoRec">Autoînregistrare reluare</Tag>
 	<Tag name="Reflections">Reflections</Tag>
@@ -343,6 +347,7 @@
 	<Tag name="TrackAutoLoad">Încarcă automat traseul</Tag>
 	<Tag name="DustSize">Mărime praf</Tag>
 	<Tag name="Shortcuts">Shortcuts</Tag>
+	<Tag name="TerrainMove">Move</Tag>
 	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
 	<Tag name="Friction">Fricțiune</Tag>
 	<Tag name="Ambient">Ambient</Tag>
@@ -368,6 +373,7 @@
 	<Tag name="min">min</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle  (no pipe when 0)</Tag>
+	<Tag name="Environment">Environment</Tag>
 	<Tag name="Finished">Finished</Tag>
 	<Tag name="InputMapRestartGame">New game</Tag>
 	<Tag name="Graphics">Grafică</Tag>
@@ -440,14 +446,12 @@
 	<Tag name="Shadows">Umbre</Tag>
 	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
-	<Tag name="InputRplCtrl0">Replay:</Tag>
 	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
 	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
 	<Tag name="TipGrassSwayLen">Grass sway effect length (scale).</Tag>
 	<Tag name="WaterReflection">Reflection</Tag>
 	<Tag name="intensity">intensitate</Tag>
 	<Tag name="Fog">Ceață</Tag>
-	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
 	<Tag name="InputMapNextTab">Next tab</Tag>
 	<Tag name="FrameSkip">Frames skip</Tag>
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
@@ -482,6 +486,7 @@
 	<Tag name="TerGenOfsX">Offset X</Tag>
 	<Tag name="TipTexTiling">Texture tiling length (less means more repeats).</Tag>
 	<Tag name="InputBrushShape">K,L  -  Shape</Tag>
+	<Tag name="TipTerrainMove">Move terrain.</Tag>
 	<Tag name="TerHQDist">Terrain HQ dist</Tag>
 	<Tag name="InputRoadRoll">- rotate roll / scale sel.</Tag>
 	<Tag name="CarDebugSurfaces">Car tire surfaces</Tag>
@@ -492,6 +497,7 @@
 	<Tag name="ViewFront">vezi fața</Tag>
 	<Tag name="RplTime">Time</Tag>
 	<Tag name="MinimapRotate">Rotate</Tag>
+	<Tag name="objects">objects (dynamic)</Tag>
 	<Tag name="TrackAvgSpeed">Viteza medie</Tag>
 	<Tag name="Yes">Yes</Tag>
 	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
@@ -602,6 +608,7 @@
 	<Tag name="TipToggleLayer">Activează/dezactivează stratul texturii alese.</Tag>
 	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
 	<Tag name="InputMapNextCamera">Next Camera</Tag>
+	<Tag name="EdCamPos">Camera position</Tag>
 	<Tag name="GraphicsAll_Lowest">Lowest</Tag>
 	<Tag name="InputReadyToPlay">(ready to play in game)</Tag>
 	<Tag name="CamInertia">Camera inertia</Tag>
@@ -664,7 +671,7 @@
 	<Tag name="scale">Scale</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="HeightMin">Height Min</Tag>
-	<Tag name="InputObjectsType">[,]  - change object type</Tag>
+	<Tag name="InputObjectsType">-,=  - change object type</Tag>
 	<Tag name="ColHue">Color - Hue</Tag>
 	<Tag name="fluids">fluids (water or mud)</Tag>
 	<Tag name="DeleteFluids">Delete Fluids</Tag>
@@ -688,7 +695,7 @@
 	<Tag name="InputUndo">(one time undo)</Tag>
 	<Tag name="InputBrushPower">; &apos;  (or alt-Wheel)  -  Power exponent</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
-	<Tag name="TipTerrainDouble">Make terrain size double, leaving current haigtmap part in center.</Tag>
+	<Tag name="TipTerrainDouble">Make terrain size double, leaving current heightmap part in center.</Tag>
 	<Tag name="banked">banked</Tag>
 	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
 	<Tag name="NewGame">New Game</Tag>
@@ -704,7 +711,7 @@
 	<Tag name="InputRoadRebuild">B - rebuild road (after terrain change, etc.)</Tag>
 	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="Generator">Generator</Tag>
-	<Tag name="Environment">Environment</Tag>
+	<Tag name="ObjDynamic">Dynamic</Tag>
 	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
 	<Tag name="GraphicsAll_High">High</Tag>
 	<Tag name="TipRoadParams">Parametri punct drum</Tag>
@@ -750,9 +757,9 @@
 	<Tag name="Diff7">Ultra</Tag>
 	<Tag name="Diff4">Hard</Tag>
 	<Tag name="SkirtHeight">Skirt Height</Tag>
-	<Tag name="NewTerrainGenerate">New Generate</Tag>
+	<Tag name="NewTerrainGenerate">Generate new</Tag>
 	<Tag name="TipTrkScreenEditor">Captură de ecran pentru traseul selectat</Tag>
-	<Tag name="InputObjectsRot">MMB - rotate Y</Tag>
+	<Tag name="InputObjectsRot">MMB - rotate yaw   alt-MMB - rotate roll</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="InputRoadHeight">- change height</Tag>
 	<Tag name="TipSunSpecular">Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)</Tag>
@@ -793,7 +800,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="objects">objects (dynamic)</Tag>
+	<Tag name="InputGraphsType">change graphs type in game</Tag>
+	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
+	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
+	<Tag name="InputFocusFind">Ctrl-F  go to find box</Tag>
+	<Tag name="InputOther1">Up,Down - navigate in lists   Enter - start</Tag>
+	<Tag name="InputOther2">Enter - show/hide players window in multiplayer</Tag>
+	<Tag name="TiresEdit1">PgUp/PgDn - previous, next value</Tag>
+	<Tag name="TiresEdit3">Home - toggle longitudinal / lateral parameters</Tag>
+	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -126,6 +126,8 @@ protected:
 	float asp, scX,scY, minX,maxX, minY,maxY;  // minimap visible range
 	//  gear, vel
 	MyGUI::TextBox *txGear[4],*txVel[4],*txBFuel[4];
+	//  times bar
+	MyGUI::TextBox *txTimTxt[4],*txTimes[4];  MyGUI::ImageBox *bckTimes[4];
 	//  gauges
 	Ogre::SceneNode *ndRpm[4], *ndVel[4], *ndRpmBk[4], *ndVelBk[4],*ndVelBm[4];
 	Ogre::ManualObject* moRpm[4], *moVel[4], *moRpmBk[4], *moVelBk[4],*moVelBm[4];
@@ -139,9 +141,8 @@ protected:
 		Ogre::Real size, bool dyn = false, bool clr = false);
 
 	Ogre::OverlayElement *hudCountdown,*hudNetMsg, *ovL[5],*ovR[5],*ovS[5],*ovU[5],*ovX[5],
-		*hudAbs,*hudTcs, *hudTimes, *hudWarnChk,*hudWonPlace, *hudOpp[5][3],*hudOppB;
-	Ogre::Overlay *ovCountdown,*ovNetMsg,
-		*ovAbsTcs, *ovTimes, *ovCarDbg,*ovCarDbgTxt,*ovCarDbgExt, *ovCam, *ovWarnWin, *ovOpp;
+		*hudAbs,*hudTcs, *hudWarnChk,*hudWonPlace, *hudOpp[5][3],*hudOppB;
+	Ogre::Overlay *ovCountdown,*ovNetMsg, *ovCam, *ovWarnWin, *ovOpp, *ovAbsTcs, *ovCarDbg,*ovCarDbgTxt,*ovCarDbgExt;
 
 	Ogre::String GetTimeString(float time) const;
 	void CreateHUD(bool destroy), ShowHUD(bool hideAll=false), UpdMiniTer();
@@ -304,7 +305,8 @@ protected:
 	MyGUI::MultiList2* liChamps, *liStages, *liNetEnd;
 	void listChampChng(MyGUI::MultiList2* li, size_t pos), listStageChng(MyGUI::MultiList2* li, size_t pos);
 	void btnChampStart(WP), btnChampStageBack(WP), btnChampStageStart(WP), btnChampEndClose(WP), btnNetEndClose(WP);
-	MyGUI::EditBox* edChampStage, *edChampEnd;  MyGUI::ImageBox * imgChampStage;
+	void btnStageNext(WP), btnStagePrev(WP);  MyGUI::StaticText* valStageNum;
+	MyGUI::EditBox* edChampStage, *edChampEnd;  MyGUI::ImageBox* imgChampStage;
 	
 
 	///  input tab  -----------------------------------------
@@ -354,9 +356,9 @@ protected:
 		chkMouseCapture(WP), chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP),
 		chkBltLines(WP), chkLoadPics(WP), chkMultiThread(WP),  // startup
 		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // effects
-		chkVidSoftParticles(WP), chkVidGodRays(WP), chkWaterReflect(WP), chkWaterRefract(WP),
-		chkVidDepthOfField(WP), 
-		chkVegetCollis(WP), chkCarCollis(WP), chkRoadWCollis(WP);  //game
+		chkVidSoftParticles(WP), chkVidGodRays(WP), chkVidDepthOfField(WP),
+		chkWaterReflect(WP), chkWaterRefract(WP),
+		chkVegetCollis(WP), chkCarCollis(WP), chkRoadWCollis(WP), chkDynObjects(WP);  //game
 	void chkUseImposters(WP wp);
 
 	// gui car tire set gravel/asphalt

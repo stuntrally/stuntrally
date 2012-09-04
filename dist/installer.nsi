@@ -1,15 +1,15 @@
 
 ; the path where to whole game binaries with data
 ; CHANGE to yours when starting script
-!define BINARY_DIR "E:\SR\"
+!define BINARY_DIR "c:\SR1\"
 ; also change Release Version
-!define PRODUCT_VERSION "1.6"
+!define PRODUCT_VERSION "1.7"
 
 ; redist path should contain both vcredist_x86.exe and
 ; DirectX files: DSETUP.dll, dsetup32.dll, DXSETUP.exe, dxupdate.cab
 ; and (depending on which DX SDK was used when compiling OGRE)
 ; Aug2009_D3DCompiler_42_x86.cab, Aug2009_d3dx9_42_x86.cab
-!define REDIST_DIR "E:\redist"
+!define REDIST_DIR "c:\redist"
 
 
 ; HM NIS Edit Wizard helper defines

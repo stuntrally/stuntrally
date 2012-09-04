@@ -19,6 +19,8 @@ using namespace Ogre;
 //-------------------------------------------------------------------------------------
 void App::createScene()  // once, init
 {
+	LogO("sizeof: baseApp "+toStr(sizeof(BaseApp))+ " App "+toStr(sizeof(App)));
+
 	//  camera
 	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 	mCamera->setFarClipDistance(pSet->view_distance*1.1f);
@@ -57,7 +59,8 @@ void App::createScene()  // once, init
 	InitGui();
 	TerCircleInit();
 	createBrushPrv();
-	if (mStatsOn)  mDebugOverlay->show();
+	if (pSet->inputBar)  mDebugOverlay->show();
+	if (!pSet->camPos)  ovPos->hide();
 
 	//  load
 	if (pSet->autostart)

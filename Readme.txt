@@ -3,21 +3,6 @@
     Stunt Rally - game based on VDrift and OGRE, with Track Editor
     Copyright (C) 2012  Crystal Hammer
 
-    Project's Homepage:  (all links, Issue tracker, Wiki pages)
-            http://code.google.com/p/vdrift-ogre/
-
-    Releases (Windows, Linux, source packs):
-            https://sourceforge.net/projects/stuntrally/files/
-    Git repositories:  (for latest sources, data, and tracks)
-            https://github.com/stuntrally/
-
-    Screenshots gallery:  (from all versions)
-            http://picasaweb.google.com/CryHam/
-    Videos:  (gameplay and editor)
-            http://www.youtube.com/user/TheCrystalHammer
-    Editor tutorial:
-            http://code.google.com/p/vdrift-ogre/wiki/TrackEditor
-
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -33,11 +18,41 @@
     
 ----------------------------------------------------------------------------------
 
+Links
+
+Project's Homepage:  (all links, Wiki pages, Issue tracker (also as Forum))
+        http://code.google.com/p/vdrift-ogre/
+
+Releases  (Windows installer, Linux binaries):
+        https://sourceforge.net/projects/stuntrally/files/
+Git repositories:  (for latest sources, data, and tracks)
+        https://github.com/stuntrally/
+
+Screenshots gallery:  (from all versions)
+        http://picasaweb.google.com/CryHam/
+Videos:  (gameplay and editor)
+        http://www.youtube.com/user/TheCrystalHammer
+Editor tutorial:
+        http://code.google.com/p/vdrift-ogre/wiki/TrackEditor
+
+----------------------------------------------------------------------------------
+
 Description
 
-This game features 79 tracks in 11 sceneries and 10 cars.
+The game features 99 tracks in 13 sceneries and 10 cars.
+Game modes include: Single Race, Tutorials and Championships, Multiplayer,
+Split Screen. Also Replays and Ghost drive are present.
+
 The Track Editor allows modifying and creating tracks.
-Both run on Windows and Linux.
+Both run on Linux and Windows.
+
+The game aims at a rally style of driving (like in Richard Burns Rally),
+with possible stunt elements (loops, jumps).
+It also introduces road pipes, and provides a 3D spline generated road.
+
+For full features list check: http://code.google.com/p/vdrift-ogre/wiki/Features
+
+----------------------------------------------------------------------------------
 
 Hardware requirements
 
@@ -51,18 +66,9 @@ but integrated GPUs (or laptops) can't handle the game.
 
 ----------------------------------------------------------------------------------
 
-About
-
-The game aims at a rally style of driving (like in Richard Burns Rally),
-with stunt elements, similar to the old game Stunts (from year 1990),
-or such playable games like GeneRally or Revolt.
-It also introduces road pipes, and provides a 3D spline generated road.
-
-----------------------------------------------------------------------------------
-
 Running
 
-Run StuntRally. Esc/Tab key shows/hides Options.
+In game Esc/Tab key shows/hides Options.
 
 At first (in Options window) go to tab [Screen] and adjust resolution.
 Pick quick settings preset (from the combobox) according to your GPU.
@@ -71,14 +77,13 @@ Keys used in game can be seen in Options tab [Input].
 If you want to reassign keys, or have a game controller
 go to tab [Input] to configure it and test range.
 
-You can change Track/Car (on their tabs) with Up/Down keys and start with Enter.
 Change cameras with C/X (with shift for main cameras only).
 Cameras can be adjusted in game, by mouse - move mouse to see actions.
 
 All settings and logs are saved to user folder (check Wiki page [Paths]).
 If you have problems running, read Wiki page [Running].
-If it doesn't help, look for [Issues] on project's page, if a similar issue
-doesn't exist report a new issue. Be sure to attach your log files.
+If it doesn't help, report an issue on project's [Issues] page
+(if a similar issue doesn't exist). Be sure to attach your log files.
 
 Editor
 
@@ -88,7 +93,9 @@ Tab key switches between Camera/Edit mode.
 There isn't (and won't be) an undo function -
 hit F5 to reload last track state, and F4 to save it.
 After saving, track can be played in game (exports all data).
-There is a Editor tutorial Wiki page with videos (link at top).
+
+There is an Editor Tutorial Wiki page (link at top)
+with videos: 10 chapters, 44 minutes total.
 
 Have fun !
 
@@ -104,25 +111,16 @@ Car simulation is done by VDrift, a great game by itself (also using Bullet).
 Rendering is done by OGRE, trees/grass by PagedGeometry, Gui by MyGUI.
 
 -- Currently these are used (and need to build before game):
-newer versions can be used
-OGRE 1.8 with plugins: (1.7 works but has fewer effects)
-    RenderSystem_GL, RenderSystem_Direct3D9
-    OgreTerrain, OgrePaging
-    Plugin_ParticleFX
-    Plugin_CgProgramManager
-    OIS
+-- newer versions can be used
+OGRE 1.8 with plugins and OIS 1.2
 MyGUI 3.2
-    MyGUIEngine, MyGUI.OgrePlatform
 Boost 1.43
-    headers, thread, filesystem
-	
--- And for VDrift:
+
 SDL-1.2.14
 libvorbis-1.2.3, libogg-1.1.4
 
 -- These are included in Source (and compiled with project):
 Bullet 2.79
-	BulletCollision, BulletDynamics, LinearMath
 BtOgre *
 OISB *
 PagedGeometry 1.1.0 *
@@ -133,26 +131,33 @@ TinyXML
 
 Help is welcomed
 
-Currently we are 4 developers, we are looking for:
+Currently there is 1 (or 2) active programmers.
+We are looking for skilled and motivated people
+that can help improving the game or editor.
+
+Programmers
+    If you know C++, OGRE or shaders, and could
+    handle one (or some) of the project's [Issues], 
+    or want to do something better and know how to.
+
+Testers
+    If you are able to build from sources,
+    you can test and report bugs or suggestions.
+
+Translators
+    If you want to help translating into
+    a language, check Wiki page [Localization].
 
 Track creators
     If you manage to create an interesting track,
     it could be released in future versions.
 
 Artists
-    If you can create tree/plant / car models,
+    If you can create 3D models (cars,trees,plants,objects etc),
     textures for them or for terrain.
+    Help exporting existing models from Blender to Ogre.
     If you can create/edit sounds for the game.
 
-Programmers
-    If you know C++, OGRE or shaders, and
-    could handle one (or some) of the project's [Issues], 
-    or want to do something better and know how to.
-
-Translators
-    If you want to translate the game into a language,
-    check wiki page [Localization].
-
-If so, let us know by posting on Issue tracker,
-or tell us on IRC at #stuntrally on freenode,
+If so, tell us on IRC at #stuntrally on freenode,
+or by posting on Issue tracker,
 or email me at: cryham (at) g m a i l (dot) com.

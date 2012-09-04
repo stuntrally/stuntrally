@@ -41,6 +41,7 @@
 	<Tag name="Terrain">Teren</Tag>
 	<Tag name="Surface">Nawierzchnia</Tag>
 	<Tag name="Road_Yaw">Obr</Tag>
+	<Tag name="About">O grze</Tag>
 	<Tag name="TBScore">Punkty</Tag>
 	<Tag name="InputRoadChkFirst">0 - ustaw sferę kontrolną jako pierwszą (1)</Tag>
 	<Tag name="HDROrigImage">Blask Ciemniej</Tag>
@@ -48,6 +49,7 @@
 	<Tag name="GraphicsAll_Low">Niskie</Tag>
 	<Tag name="TipPrevWind">Okno podglądu kamery.</Tag>
 	<Tag name="ChampEndFinished">Ukończyłeś to mistrzostwo.</Tag>
+	<Tag name="MessageBox_No">Nie</Tag>
 	<Tag name="InputUpdBlendmap">F9 - odśwież przejścia terenu (ręcznie)</Tag>
 	<Tag name="Version">wersja</Tag>
 	<Tag name="InputRoadOnTer">Home - przełącz na terenie</Tag>
@@ -130,6 +132,7 @@
 	<Tag name="ViewRight">Widok prawy</Tag>
 	<Tag name="Count">Liczba</Tag>
 	<Tag name="UnitKm">km</Tag>
+	<Tag name="InputObjectsSimulate">C - przełącz symulację dla dynamicznych</Tag>
 	<Tag name="BackMenu">Wstecz</Tag>
 	<Tag name="BasedOn">na podstawie</Tag>
 	<Tag name="ProfilerTxt">Czasy profilera </Tag>
@@ -174,7 +177,7 @@
 	<Tag name="AutoRear">Automatyczny wsteczny</Tag>
 	<Tag name="TerGenFreq">Częstotliwość</Tag>
 	<Tag name="Road_OnTerrain">Na Terenie</Tag>
-	<Tag name="ReflMode_single">Pojedyncze</Tag>
+	<Tag name="ObjStatic">Statyczne</Tag>
 	<Tag name="SetCamTo">Ustaw kamerę na</Tag>
 	<Tag name="RoadWallFullCollis">Pełne kolizje ścian dróg</Tag>
 	<Tag name="Always">Zawsze</Tag>
@@ -183,7 +186,7 @@
 	<Tag name="TipSunDirYaw">Kierunek słońca - obrót.</Tag>
 	<Tag name="Players">Gracze</Tag>
 	<Tag name="Road_ChkR">ChkR</Tag>
-	<Tag name="MessageBox_No">Nie</Tag>
+	<Tag name="ABS">ABS (nieblokowanie kół)</Tag>
 	<Tag name="Length">Długość</Tag>
 	<Tag name="TipCarsList">Lista aut. Naciśnij Enter lub [Nowa Gra] by jechać wybranym.</Tag>
 	<Tag name="FluidSplash">Ciecze uderzenie</Tag>
@@ -252,6 +255,7 @@
 	<Tag name="InputFluidsMove">LMB - przesuń RMB - wysokość</Tag>
 	<Tag name="TipNormalTex">Tekstura normalna (wysokość w alpha)</Tag>
 	<Tag name="CountdownTime">Czas odliczania startu</Tag>
+	<Tag name="ReflMode_single">Pojedyncze</Tag>
 	<Tag name="CamInfoStrings">Typ,Kąt,Nachyl,Odl,Wysok,Szybk,Przesun,LEWY,PRAWY,Środkowy,Kółko,shift,Obróć,reset,ruch,Wys,Pozycja</Tag>
 	<Tag name="End">koniec</Tag>
 	<Tag name="HDR">HDR+Blask</Tag>
@@ -259,7 +263,7 @@
 	<Tag name="TipGrassPatchHeightMin">Minimalna wysokość trawy.</Tag>
 	<Tag name="InputRoadMat">-,=   -  materiał drogi/rury (-1 ukryty)</Tag>
 	<Tag name="InputDetailPreset">Wybierz ustawienia</Tag>
-	<Tag name="About">O grze</Tag>
+	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
 	<Tag name="Road_Snap">Przyciąganie</Tag>
 	<Tag name="TipSunDirPitch">Kierunek słońca - kąt nachlenia.</Tag>
 	<Tag name="Passed">Zaliczone</Tag>
@@ -299,7 +303,7 @@
 	<Tag name="RoadQual">Jakość drogi daleko</Tag>
 	<Tag name="Brush_Shape">Kształt</Tag>
 	<Tag name="length">długość</Tag>
-	<Tag name="ABS">ABS (nieblokowanie kół)</Tag>
+	<Tag name="DynamicObjects">Dynamiczne Obiekty</Tag>
 	<Tag name="ColumnNSides">Boków kolumny</Tag>
 	<Tag name="RplAutoRec">Autom. nagrywanie powtórki</Tag>
 	<Tag name="Reflections">Odbicia</Tag>
@@ -343,6 +347,7 @@
 	<Tag name="TrackAutoLoad">Autom. wczytywanie trasy</Tag>
 	<Tag name="DustSize">rozmiar kurzu</Tag>
 	<Tag name="Shortcuts">Skróty</Tag>
+	<Tag name="TerrainMove">Przesuń</Tag>
 	<Tag name="InputPressButtonTip">Naciśnij przycisk by zobaczyć</Tag>
 	<Tag name="Friction">Tarcie</Tag>
 	<Tag name="Ambient">Ambient</Tag>
@@ -368,6 +373,7 @@
 	<Tag name="min">min.</Tag>
 	<Tag name="BumpWavelen">Wyboje: Częstość</Tag>
 	<Tag name="InputRoadPipeAngle">[,] - kąt rury (brak rury gdy 0)</Tag>
+	<Tag name="Environment">Środowisko</Tag>
 	<Tag name="Finished">Ukończone</Tag>
 	<Tag name="InputMapRestartGame">Nowa gra</Tag>
 	<Tag name="Graphics">Grafika</Tag>
@@ -440,14 +446,12 @@
 	<Tag name="Shadows">Cienie</Tag>
 	<Tag name="InputRplCtrl2">P - pauza/wznów powtórkę</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - przewiń do tyłu/do przodu (shift - wolno, ctrl,alt - szybko)</Tag>
-	<Tag name="InputRplCtrl0">Powtórka:</Tag>
 	<Tag name="InputRplCtrl1">Backspace - pokaż/ukryj kontrolki (przytrzymaj ctrl by użyć myszy)</Tag>
 	<Tag name="InputRplCtrl4">K, L - zmień kamerę na innego gracza</Tag>
 	<Tag name="TipGrassSwayLen">Efekt kołysania trawy długość (skala).</Tag>
 	<Tag name="WaterReflection">Odbicie</Tag>
 	<Tag name="intensity">Intensywność</Tag>
 	<Tag name="Fog">Mgła</Tag>
-	<Tag name="InputCameraTxt2">z ctrl - zmień obecne auto, dla wielu</Tag>
 	<Tag name="InputMapNextTab">Następna zakładka</Tag>
 	<Tag name="FrameSkip">Pomijanie klatek</Tag>
 	<Tag name="InputTrackScrn">(dla obrazu trasy)</Tag>
@@ -482,6 +486,7 @@
 	<Tag name="TerGenOfsX">Przesunięcie X</Tag>
 	<Tag name="TipTexTiling">Odległość powtarzania tekstury (mniejsza znaczy więcej powtórzeń).</Tag>
 	<Tag name="InputBrushShape">K,L - Kształt</Tag>
+	<Tag name="TipTerrainMove">Przesuń terren.</Tag>
 	<Tag name="TerHQDist">Odl. terenu HQ</Tag>
 	<Tag name="InputRoadRoll">- przechyl / skaluj zazn.</Tag>
 	<Tag name="CarDebugSurfaces">Powierzchnie pod oponami</Tag>
@@ -492,6 +497,7 @@
 	<Tag name="ViewFront">Widok przód</Tag>
 	<Tag name="RplTime">Czas</Tag>
 	<Tag name="MinimapRotate">Obrót</Tag>
+	<Tag name="objects">obiekty (dynamiczne)</Tag>
 	<Tag name="TrackAvgSpeed">Śred. szybk.</Tag>
 	<Tag name="Yes">Tak</Tag>
 	<Tag name="TipNewDup">Stwórz nową trasę przez zduplikowanie wybranej, używając nowej nazwy (wprować nazwę najpierw).</Tag>
@@ -602,6 +608,7 @@
 	<Tag name="TipToggleLayer">Włącz / wyłącz wybraną warstwę tekstury.</Tag>
 	<Tag name="TipTrkListEditor">Lista tras, kliknij by wybrać (do duplikowania lub zmiany nazwy). Naciśnij [Wczytaj trasę] by zmienić obecną trasę w edytorze.</Tag>
 	<Tag name="InputMapNextCamera">Następny widok</Tag>
+	<Tag name="EdCamPos">Camera position</Tag>
 	<Tag name="GraphicsAll_Lowest">Najniższe</Tag>
 	<Tag name="InputReadyToPlay">(gotowe do gry)</Tag>
 	<Tag name="CamInertia">Bezwładność kamery</Tag>
@@ -664,7 +671,7 @@
 	<Tag name="scale">Skala</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="HeightMin">Wysokość Min</Tag>
-	<Tag name="InputObjectsType">[,] - zmień typ</Tag>
+	<Tag name="InputObjectsType">-,=  -  zmień typ obiektu</Tag>
 	<Tag name="ColHue">Kolor - odcień</Tag>
 	<Tag name="fluids">ciecze (woda lub błoto)</Tag>
 	<Tag name="DeleteFluids">Zmaż Ciecze</Tag>
@@ -688,7 +695,7 @@
 	<Tag name="InputUndo">(jednorazowe cofnij)</Tag>
 	<Tag name="InputBrushPower">; &apos; (lub alt-Kółko) - wykładnik Potęgi</Tag>
 	<Tag name="CarCollis">Kolizja aut</Tag>
-	<Tag name="TipTerrainDouble">Podwój rozmiar terenu, zostawiając obecną część w środku.</Tag>
+	<Tag name="TipTerrainDouble">Rozszerz terren, zostawiając obecny w środku.</Tag>
 	<Tag name="banked">pochyłe</Tag>
 	<Tag name="NetRouterTip">Przekierowanie portów routera może być wymagane aby inni mogli się połaczyć do lokalnego portu.</Tag>
 	<Tag name="NewGame">Nowa Gra</Tag>
@@ -704,7 +711,7 @@
 	<Tag name="InputRoadRebuild">B - przebuduj drogę (po zmianie terenu, itp.)</Tag>
 	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="Generator">Generator</Tag>
-	<Tag name="Environment">Środowisko</Tag>
+	<Tag name="ObjDynamic">Dynamiczne</Tag>
 	<Tag name="InputRoadAlignTerrain">U - Wyrównaj teren do drogi (dla wybranych segmentów).</Tag>
 	<Tag name="GraphicsAll_High">Wysokie</Tag>
 	<Tag name="TipRoadParams">Parametry punktów drogi.</Tag>
@@ -752,7 +759,7 @@
 	<Tag name="SkirtHeight">Wysokość łaty</Tag>
 	<Tag name="NewTerrainGenerate">Generuj nowy</Tag>
 	<Tag name="TipTrkScreenEditor">Zrzut z gry dla wybranej trasy.</Tag>
-	<Tag name="InputObjectsRot">MMB - obróć Y</Tag>
+	<Tag name="InputObjectsRot">MMB - obrót   alt-MMB - pochył</Tag>
 	<Tag name="BulletDebug">debug Bullet</Tag>
 	<Tag name="InputRoadHeight">- zmień wysokość</Tag>
 	<Tag name="TipSunSpecular">Kolor słońca jaskrawy. R G B składowe 0 do 1 (np. 0.6 0.6 0.6)</Tag>
@@ -793,7 +800,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="objects">objects (dynamic)</Tag>
+	<Tag name="InputGraphsType">change graphs type in game</Tag>
+	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
+	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
+	<Tag name="InputFocusFind">Ctrl-F  go to find box</Tag>
+	<Tag name="InputOther1">Up,Down - navigate in lists   Enter - start</Tag>
+	<Tag name="InputOther2">Enter - show/hide players window in multiplayer</Tag>
+	<Tag name="TiresEdit1">PgUp/PgDn - previous, next value</Tag>
+	<Tag name="TiresEdit3">Home - toggle longitudinal / lateral parameters</Tag>
+	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

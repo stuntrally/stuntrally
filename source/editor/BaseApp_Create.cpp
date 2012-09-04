@@ -81,8 +81,16 @@ void BaseApp::createFrameListener()
 	windowHndStr << windowHnd;
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 	
-    #if defined OIS_LINUX_PLATFORM
-    if (!pSet->x11_capture_mouse)
+	#if defined OIS_WIN32_PLATFORM
+    if (!pSet->capture_mouse)
+    {
+		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND" )));
+		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
+		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND")));
+		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
+	}
+    #elif defined OIS_LINUX_PLATFORM
+    if (!pSet->capture_mouse)
     {
 		pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
 		pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("true")));
@@ -153,8 +161,7 @@ BaseApp::BaseApp()
 	,ovPos(0), ovDbg(0), ovInfo(0), ovStat(0)
 	,ovFocus(0), ovFocBck(0), ovBrushPrv(0), ovBrushMtr(0)
 
-	,mStatsOn(0), mShowCamPos(1), mbWireFrame(0)
-	,mx(0),my(0),mz(0),	mGUI(0), mPlatform(0)
+	,mbWireFrame(0), mx(0),my(0),mz(0),  mGUI(0), mPlatform(0)
 
 	,mWndMain(0),mWndEdit(0),mWndHelp(0),mWndOpts(0)
 	,mWndTabsEdit(0),mWndTabsHelp(0),mWndTabsOpts(0)

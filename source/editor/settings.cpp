@@ -45,10 +45,10 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "graph_veget.trees_dist", trees_dist);		Param(c,w, "graph_veget.grass_dist", grass_dist);
 	Param(c,w, "graph_veget.use_imposters", use_imposters);
 	
-	Param(c,w, "misc.allow_save", allow_save);
+	Param(c,w, "misc.allow_save", allow_save);		Param(c,w, "misc.inputBar", inputBar);		Param(c,w, "misc.camPos", camPos);
 	Param(c,w, "misc.version", version);			Param(c,w, "misc.autostart", autostart);
 	Param(c,w, "misc.ogredialog", ogre_dialog);		Param(c,w, "misc.escquit", escquit);
-	Param(c,w, "misc.language", language);			Param(c,w, "misc.x11_capture_mouse", x11_capture_mouse);
+	Param(c,w, "misc.language", language);			Param(c,w, "misc.capture_mouse", capture_mouse);
 	
 	Param(c,w, "set_cam.px",cam_x);  Param(c,w, "set_cam.py",cam_y);  Param(c,w, "set_cam.pz",cam_z);
 	Param(c,w, "set_cam.dx",cam_dx); Param(c,w, "set_cam.dy",cam_dy); Param(c,w, "set_cam.dz",cam_dz);
@@ -88,6 +88,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	shader_mode(""),
 	//  startup
 	autostart(0), ogre_dialog(1), escquit(0), language(""), allow_save(0),
+	inputBar(0), camPos(0),
 	isMain(1), inMenu(0),
 	//  settings
 	cam_x(0), cam_y(50),cam_z(-120),  cam_dx(0), cam_dy(0), cam_dz(1),
@@ -95,7 +96,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	cam_speed(1.f), cam_inert(1.f),
 	ter_skip(4), road_sphr(1.f), mini_skip(4),
 	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false),
-	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"), x11_capture_mouse(false),
+	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"), capture_mouse(false),
 	//  ter gen
 	gen_scale(20.f), gen_freq(0.2f), gen_oct(3), gen_persist(0.4f),
 	gen_pow(1.5f), gen_ofsx(0.f), gen_ofsy(0.f),

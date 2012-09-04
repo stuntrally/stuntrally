@@ -22,9 +22,10 @@ App::App(SETTINGS *settings, GAME *game)
 	:pGame(game), ndLine(0), bGI(0), mThread(), mTimer(0)
 	// ovr
 	,hudCountdown(0),hudNetMsg(0), hudAbs(0),hudTcs(0)
-	,hudTimes(0), hudWarnChk(0),hudWonPlace(0), hudOppB(0)
-	,ovCountdown(0),ovNetMsg(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0),ovCarDbgExt(0)
-	,ovCam(0), ovTimes(0), ovWarnWin(0), ovOpp(0)
+	,hudWarnChk(0),hudWonPlace(0), hudOppB(0)
+	,ovCam(0), ovWarnWin(0), ovOpp(0)
+	,ovCountdown(0),ovNetMsg(0), ovAbsTcs(0)
+	,ovCarDbg(0),ovCarDbgTxt(0),ovCarDbgExt(0)
 	// hud
 	,asp(1)//,  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
 	,scX(1),scY(1), minX(0),maxX(0), minY(0),maxY(0)
@@ -68,7 +69,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,pr(0),pr2(0), sun(0), carIdWin(-1), iCurCar(0), bUpdCarClr(1), iRplCarOfs(0)
 	,lastAxis(-1), axisCnt(0), txtJAxis(0), txtJBtn(0), txtInpDetail(0), panInputDetail(0)
 	,edInputMin(0), edInputMax(0), edInputMul(0), edInputReturn(0), edInputIncrease(0), actDetail(0), cmbInpDetSet(0)
-	,liChamps(0),liStages(0), edChampStage(0),edChampEnd(0), imgChampStage(0), liNetEnd(0)
+	,liChamps(0),liStages(0), edChampStage(0),edChampEnd(0), imgChampStage(0), liNetEnd(0), valStageNum(0)
 	,iEdTire(0),iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
 	,iTireSet(0), bchAbs(0),bchTcs(0), slSSSEff(0),slSSSVel(0)
 	,mStaticGeom(0)
@@ -102,7 +103,8 @@ App::App(SETTINGS *settings, GAME *game)
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixWh = qr;
 
 	for (i=0; i < 4; ++i)
-	{	txGear[i]=0;  txVel[i]=0;  txBFuel[i]=0;  }
+	{	txGear[i]=0;  txVel[i]=0;  txBFuel[i]=0;
+		txTimTxt[i]=0;  txTimes[i]=0;  bckTimes[i]=0;  }
 
 	if (pSet->multi_thr)
 		mThread = boost::thread(boost::bind(&App::UpdThr, boost::ref(*this)));

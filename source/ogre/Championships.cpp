@@ -185,6 +185,7 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t pos)
 //---------------------------------------------------------------------
 void App::listStageChng(MyGUI::MultiList2* li, size_t pos)
 {
+	if (valStageNum)  valStageNum->setVisible(pos!=ITEM_NONE);
 	if (pos==ITEM_NONE)  return;
 	int nch = liChamps->getIndexSelected();
 	if (nch >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
@@ -196,6 +197,8 @@ void App::listStageChng(MyGUI::MultiList2* li, size_t pos)
 
 	if (valTrkNet)  valTrkNet->setCaption(TR("#{Track}: ") + trkName);
 	ReadTrkStatsChamp(trkName, reversed);
+	
+	if (valStageNum)  valStageNum->setCaption(toStr(pos+1) +" / "+ toStr(ch.trks.size()));
 }
 //---------------------------------------------------------------------
 
@@ -215,6 +218,7 @@ void App::btnChampStart(WP)
 		pc.curTrack = 0;
 		//pc.score = 0.f;
 	}
+	// change btn caption to start/continue/restart ?..
 
 	btnNewGame(0);
 }
@@ -274,6 +278,27 @@ void App::ChampLoadEnd()
 		mWndChampStage->setVisible(true);
 	}
 }
+
+void App::btnStageNext(WP)
+{
+	size_t id = liStages->getIndexSelected(), all = liStages->getItemCount();
+	if (all == 0)  return;
+	if (id == ITEM_NONE)  id = 0;
+	id = (id +1) % all;
+	liStages->setIndexSelected(id);
+	listStageChng(liStages, id);
+}
+
+void App::btnStagePrev(WP)
+{
+	size_t id = liStages->getIndexSelected(), all = liStages->getItemCount();
+	if (all == 0)  return;
+	if (id == ITEM_NONE)  id = 0;
+	id = (id + all -1) % all;
+	liStages->setIndexSelected(id);
+	listStageChng(liStages, id);
+}
+
 
 ///  save progress and update it on gui
 void App::ProgressSave(bool upgGui)
@@ -400,6 +425,7 @@ void App::ChampFillStageInfo(bool finished)
 
 	String path = PathListTrkPrv(0, trk.name), sGrp = "TrkPrv";
 	resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
+	resMgr.unloadResourceGroup(sGrp);
 	resMgr.initialiseResourceGroup(sGrp);
 
 	if (imgChampStage)
