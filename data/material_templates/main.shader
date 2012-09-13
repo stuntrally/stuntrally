@@ -352,7 +352,11 @@
 
         float3 lightDir = normalize(lightPosObjSpace.xyz);
 
+#if GRASS_WIND
         float NdotL = max(dot(normal, lightDir), 0);
+#else
+        float NdotL = 1;
+#endif
         float3 diffuse = materialDiffuse.xyz * lightDiffuse.xyz * NdotL * shadow;
     
         float3 eyeDir = normalize(camPosObjSpace.xyz - objSpacePositionPassthrough.xyz);
