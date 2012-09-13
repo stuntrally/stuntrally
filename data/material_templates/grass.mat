@@ -8,9 +8,6 @@ material grass
     vertex_colour true
     terrain_light_map true
     mrt_output false
-	ambient 2.0 2.0 2.0
-	diffuse 0.1 0.1 0.1
-	specular 0.1 0.1 0.1 16
 }
 
 material grassAustralia
