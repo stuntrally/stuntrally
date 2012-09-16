@@ -456,7 +456,8 @@ bool BaseApp::setup()
 	sh::Factory::getInstance ().setSharedParameter ("windDir_windSpeed", sh::makeProperty<sh::Vector3>(new sh::Vector3(0.5, -0.8, 0.2)));
 	sh::Factory::getInstance ().setSharedParameter ("waterSunFade_sunHeight", sh::makeProperty<sh::Vector2>(new sh::Vector2(1, 0.6)));
 
-	mFactory->setShaderDebugOutputEnabled (true);
+	///  uncomment to enable shader output to files
+	//mFactory->setShaderDebugOutputEnabled (true);
 
 	sh::Language lang;
 	if (pSet->shader_mode == "")

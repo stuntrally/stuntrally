@@ -8,6 +8,7 @@ material grass
     vertex_colour true
     terrain_light_map true
     mrt_output false
+    diffuse 0.8 0.8 0.8
 }
 
 material grassAustralia
