@@ -337,8 +337,10 @@
 		
 		// Sample color maps for each projection, at those UV coords.  
 		col1 = shSample(diffuseMap@shIterator, coord1);
-		col2 = shSample(diffuseMap@shIterator, coord2);
-		col3 = shSample(diffuseMap@shIterator, coord3);
+		if (blend_weights.y > 0)
+		    col2 = shSample(diffuseMap@shIterator, coord2);
+		if (blend_weights.z > 0)
+		    col3 = shSample(diffuseMap@shIterator, coord3);
 
 		// Finally, blend the results of the 3 planar projections.  
 		diffuseSpec = col1.xyzw * blend_weights.xxxx +  
@@ -356,8 +358,10 @@
         
         #if NORMAL_MAPPING
 		col1 = shSample(normalMap@shIterator, coord1) * 2 - 1;
-		col2 = shSample(normalMap@shIterator, coord2) * 2 - 1;
-		col3 = shSample(normalMap@shIterator, coord3) * 2 - 1;
+		if (blend_weights.y > 0)
+		    col2 = shSample(normalMap@shIterator, coord2) * 2 - 1;
+		if (blend_weights.z > 0)
+		    col3 = shSample(normalMap@shIterator, coord3) * 2 - 1;
 		TSnormal = col1.xyz * blend_weights.xxx +  
 						col2.xyz * blend_weights.yyy +  
 						col3.xyz * blend_weights.zzz; 
@@ -569,6 +573,7 @@
 #endif
 
     //shOutputColour(0).xy = UV;
+
 
 
     }
