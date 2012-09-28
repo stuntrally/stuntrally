@@ -76,7 +76,7 @@ public:
 	FluidsXml fluidsXml;  /// fluid params xml
 	BltObjects objs;  // veget collision in bullet
 	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
-	
+
 	// Weather  rain, snow
 	Ogre::ParticleSystem *pr,*pr2;
 	
@@ -106,6 +106,7 @@ protected:
 	virtual bool frameStart(Ogre::Real time);  void DoNetworking();
 	virtual bool frameEnd(Ogre::Real time);
 	virtual bool keyPressed( const OIS::KeyEvent &arg );
+	float fLastFrameDT;
 		
 	BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
 	void bltDumpRecursive(class CProfileIterator* profileIterator, int spacing, std::stringstream& os);

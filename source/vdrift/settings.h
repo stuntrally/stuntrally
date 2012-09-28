@@ -7,7 +7,7 @@
 #define SET_VER  1700  // 1.7
 
 
-const static int graph_types = 6;  // total graph types count
+const static int graph_types = 7;  // total graph types count
 
 class SETTINGS
 {

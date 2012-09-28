@@ -102,6 +102,7 @@ void App::DoNetworking()
 bool App::frameStart(Real time)
 {
 	PROFILER.beginBlock(" frameSt");
+	fLastFrameDT = time;
 
 	if (imgBack && pGame)  // show/hide background image
 	{
@@ -390,7 +391,7 @@ bool App::frameStart(Real time)
 		}
 		
 		materialFactory->update();
-		
+
 		// We put this here, because first render frame is rather heavy
 		if (mClient && bLoadingEnd)
 		{

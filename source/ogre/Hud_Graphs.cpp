@@ -3,6 +3,7 @@
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "../vdrift/car.h"
+//#include "../vdrift/quickprof.h"
 
 #include "common/GraphView.h"
 #include "SplitScreen.h"
@@ -176,6 +177,24 @@ void App::CreateGraphs()
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
 		}	break;
+		
+	case 6:  // fps
+		for (int i=0; i < 3; ++i)
+		{
+			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			int c = i;
+			gv->Create(400, "graph"+toStr(c+1), i==0 ? 0.4f : 0.f);
+			if (i == 0)
+			{	gv->CreateGrid(4,0, 0.7f, 1.0f);
+				gv->CreateTitle("Fps 120\n\n\n\n\n\n\n60",	c, 0.0f, -2, 24,10);
+			}
+			gv->SetSize(0.f, 0.24f, 0.4f, 0.30f);
+
+			gv->SetVisible(pSet->show_graphs);
+			graphs.push_back(gv);
+		}	break;
+		
+	default:
 		break;
 	}
 }
@@ -222,6 +241,18 @@ void App::GraphsNewVals()				// Game
 		graphs[0]->AddVal((al+ar)*0.5f);       // vol ampl  cyan
 		graphs[1]->AddVal((al-ar)*0.5f+0.5f);  // pan  yellow  ^L 1  _R 0
 	}	break;
+
+	case 6:  /// fps
+	if (gsi >= 1)
+	{
+		const RenderTarget::FrameStats& stats = mWindow->getStatistics();
+		graphs[0]->AddVal(stats.lastFPS /60.f*0.5f);  // 60 fps in middle
+		//graphs[1]->AddVal(1000.f/PROFILER.getAvgDuration(" frameSt",quickprof::MILLISECONDS) /60.f*0.2f);
+		graphs[1]->AddVal(fLastFrameDT==0.f ? 1.f : (1.f/fLastFrameDT/60.f*0.5f));
+	}	break;
+	
+	default:
+		break;
 	}
 }
 
@@ -262,7 +293,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		}	break;
 		
 	case 4:  /// tire pacejka
-		static int ii = 0;  ii++;  // skip upd cntr
+	{	static int ii = 0;  ii++;  // skip upd cntr
 		int im = pApp->iUpdTireGr > 0 ? 2 : 8;  // faster when editing val
 		if (ii >= im && gsi >= NG*2)
 		{	ii = 0;  pApp->iUpdTireGr = 0;
@@ -462,7 +493,9 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			pApp->graphs[gsi-2]->UpdTitle(ss);
 			pApp->graphs[gsi-1]->UpdTitle(sd);
 			
-		}	break;
+	}	}	break;
 		
+	default:
+		break;
 	}
 }
