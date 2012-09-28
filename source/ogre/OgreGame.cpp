@@ -72,7 +72,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,liChamps(0),liStages(0), edChampStage(0),edChampEnd(0), imgChampStage(0), liNetEnd(0), valStageNum(0)
 	,iEdTire(0),iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
 	,iTireSet(0), bchAbs(0),bchTcs(0), slSSSEff(0),slSSSVel(0)
-	,mStaticGeom(0)
+	,mStaticGeom(0), fLastFrameDT(0.001f)
 {
 	pSet = settings;
 	int i,c;
@@ -158,7 +158,6 @@ void App::postInit()
 	mSplitMgr->pApp = this;
 
 	mFactory->setMaterialListener(this);
-
 }
 
 void App::setTranslations()

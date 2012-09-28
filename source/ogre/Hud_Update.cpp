@@ -412,6 +412,7 @@ void App::UpdateHUD(int carId, float time)
 		if (frame > 10)  //par
 		{	frame = 0;
 			std::string sProf = PROFILER.getAvgSummary(quickprof::MILLISECONDS);
+			//sProf = "PROF "+fToStr(1000.f/PROFILER.getAvgDuration(" frameSt",quickprof::MILLISECONDS), 2,4);
 			ovU[1]->setCaption(sProf);
 		}
 		//if (newPosInfos.size() > 0)

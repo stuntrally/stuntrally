@@ -49,11 +49,18 @@ void App::btnRplLoad(WP)  // Load
 		string car = h.car, trk = h.track;
 		bool usr = h.track_user == 1;
 
+		//trackreverse 	num_laps
+		//collis_veget, collis_cars, collis_roadw, dyn_objects;
+		//int boost_type, flip_type;  float boost_power;
+		//float pre_time;
+
 		//  set game config from replay
 		pSet->game.car[0] = car;  pSet->game.track = trk;  pSet->game.track_user = usr;
 		pSet->game.car_hue[0] = h.hue[0];  pSet->game.car_sat[0] = h.sat[0];  pSet->game.car_val[0] = h.val[0];
+
 		pSet->game.trees = h.ver < 6 ? 1.f : h.trees;  // older didnt have trees saved, so use default 1
 		pSet->game.local_players = h.numPlayers;
+		pSet->game.champ_num = -1;
 		LogO("RPL btn Load  players: "+toStr(h.numPlayers)+" netw: "+ toStr(h.networked));
 
 		for (int p=1; p < h.numPlayers; ++p)
