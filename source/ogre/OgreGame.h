@@ -110,6 +110,7 @@ protected:
 	virtual bool frameStart(Ogre::Real time);  void DoNetworking();
 	virtual bool frameEnd(Ogre::Real time);
 	virtual bool keyPressed( const OIS::KeyEvent &arg );
+	float fLastFrameDT;
 		
 	BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
 	void bltDumpRecursive(class CProfileIterator* profileIterator, int spacing, std::stringstream& os);

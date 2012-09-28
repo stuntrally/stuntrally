@@ -103,6 +103,7 @@ void App::DoNetworking()
 bool App::frameStart(Real time)
 {
 	PROFILER.beginBlock(" frameSt");
+	fLastFrameDT = time;
 
 	if (imgBack && pGame)  // show/hide background image
 	{
