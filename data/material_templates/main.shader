@@ -406,7 +406,9 @@
 #endif
 
         // alpha
+#if !VERTEX_COLOUR
         shOutputColour(0).a = materialDiffuse.a;
+#endif
         
 #if ALPHA_MAP
         shOutputColour(0).a = shSample(alphaMap, float2(UV.x, UV.y * 0.01)).r;
