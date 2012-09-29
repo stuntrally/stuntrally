@@ -427,6 +427,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\data\editor\editor.mat"
+				>
+			</File>
+			<File
 				RelativePath=".\data\materials\fluids.xml"
 				>
 			</File>
@@ -988,7 +992,41 @@
 			</File>
 		</Filter>
 		<Filter
-
+			Name="btOgre"
+			>
+			<File
+				RelativePath=".\source\btOgre\BtOgre.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\btOgre\BtOgreAnim.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\btOgre\BtOgreDebug.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\btOgre\BtOgreDebug.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\btOgre\BtOgreGP.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\btOgre\BtOgrePG.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\btOgre\DynamicLines.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\btOgre\DynamicLines.h"
+				>
+			</File>
+		</Filter>
 		<Filter
 			Name="shiny"
 			>
@@ -1013,6 +1051,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\source\shiny\Extra\core.h"
+				>
+			</File>
+			<File
 				RelativePath=".\source\shiny\Preprocessor\cpp_re.cpp"
 				>
 				<FileConfiguration
@@ -1031,6 +1073,10 @@
 						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Preprocessor\cpp_re.inc"
+				>
 			</File>
 			<File
 				RelativePath=".\source\shiny\Main\Factory.cpp"
@@ -1273,6 +1319,150 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\shiny\Platforms\Ogre\OgreGpuProgram.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Platforms\Ogre\OgreGpuProgram.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Platforms\Ogre\OgreMaterial.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Platforms\Ogre\OgreMaterial.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Platforms\Ogre\OgreMaterialSerializer.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Platforms\Ogre\OgreMaterialSerializer.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Platforms\Ogre\OgrePass.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Platforms\Ogre\OgrePass.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Platforms\Ogre\OgrePlatform.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Platforms\Ogre\OgrePlatform.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Platforms\Ogre\OgreTextureUnitState.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\source\shiny\Platforms\Ogre\OgreTextureUnitState.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\shiny\Main\Platform.cpp"
 				>
 				<FileConfiguration
@@ -1436,191 +1626,6 @@
 					/>
 				</FileConfiguration>
 			</File>
-			<Filter
-				Name="ogre"
-				>
-				<File
-					RelativePath=".\source\shiny\Platforms\Ogre\OgreGpuProgram.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\source\shiny\Platforms\Ogre\OgreGpuProgram.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\shiny\Platforms\Ogre\OgreMaterial.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\source\shiny\Platforms\Ogre\OgreMaterial.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\shiny\Platforms\Ogre\OgreMaterialSerializer.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\source\shiny\Platforms\Ogre\OgreMaterialSerializer.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\shiny\Platforms\Ogre\OgrePass.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\source\shiny\Platforms\Ogre\OgrePass.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\shiny\Platforms\Ogre\OgrePlatform.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\source\shiny\Platforms\Ogre\OgrePlatform.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\shiny\Platforms\Ogre\OgreTextureUnitState.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\source\shiny\Platforms\Ogre\OgreTextureUnitState.hpp"
-					>
-				</File>
-			</Filter>
-
-		<Filter
-			Name="btOgre"
-			>
-			<File
-				RelativePath=".\source\btOgre\BtOgre.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\source\btOgre\BtOgreAnim.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\source\btOgre\BtOgreDebug.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\source\btOgre\BtOgreDebug.h"
-				>
-			</File>
-			<File
-				RelativePath=".\source\btOgre\BtOgreGP.h"
-				>
-			</File>
-			<File
-				RelativePath=".\source\btOgre\BtOgrePG.h"
-				>
-			</File>
-			<File
-				RelativePath=".\source\btOgre\DynamicLines.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\source\btOgre\DynamicLines.h"
-				>
-			</File>
-
 		</Filter>
 	</Files>
 	<Globals>
