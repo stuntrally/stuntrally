@@ -404,7 +404,9 @@
         
         shOutputColour(0).xyz = shLerp (shOutputColour(0).xyz, fogColour, fogValue);
 #endif
-        
+
+        // alpha
+        shOutputColour(0).a = materialDiffuse.a;
         
 #if ALPHA_MAP
         shOutputColour(0).a = shSample(alphaMap, float2(UV.x, UV.y * 0.01)).r;
@@ -434,7 +436,6 @@
 		float tFar = distanceToPixel + thickness;
         float depthAlpha = shSaturate(depthTex - distanceToPixel);
         shOutputColour(0).a *= depthAlpha;
-
 #endif
 
 

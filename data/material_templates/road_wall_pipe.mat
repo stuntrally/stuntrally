@@ -13,7 +13,7 @@ material pipe_wall
     ambient 0.94 0.96 0.98
     diffuse 0.4 0.46 0.5
     specular 0.25 0.267 0.28 4
-    cullHardware none
+    cull_hardware none
 }
 
 material road_wall

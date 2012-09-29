@@ -32,6 +32,25 @@ material hud/CarPos
 	}
 }
 
+material hud/CarPosEd
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+			scene_blend alpha_blend
+			cull_hardware none
+
+			texture_unit
+			{
+				texture carpos0.png
+			}
+		}
+	}
+}
+
 
 //  needle  
 material hud/needleB

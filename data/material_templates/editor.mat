@@ -60,12 +60,12 @@ material sphere_check
 	parent base
 	diffuseMap glass.png
 	ambient 0.4 0.4 0.5
-	diffuse 0.5 0.5 0.6
+	diffuse 0.5 0.5 0.6 0.5
 	specular 0.4 0.4 0.4 32
-	lightingAlpha 0.5 0.25 0.2 0
+	//lightingAlpha 0.5 0.25 0.2 0
 	depth_bias 6
 	transparent true
-	sceneBlend alpha
+	scene_blend alpha_blend
     receives_shadows false
 }
 
@@ -74,10 +74,9 @@ material sphere_check
 material fluid_box
 {
 	parent base
-	//diffuseMap white.png
-	diffuseMap glass.png
+	diffuseMap white.png
 	ambient 0.5 0.7 0.9
-	diffuse 0.3 0.5 0.7
+	diffuse 0.3 0.5 0.7 0.5
 	specular 0.1 0.1 0.1 32
 	//lightingAlpha 0.4 0.25 0.2 0
 	transparent true
@@ -94,9 +93,6 @@ material object_box
 	ambient 1.0 1.0 1.0
 	diffuse 0.9 0.9 0.9
 	specular 0.1 0.1 0.1 32
-	//lightingAlpha 0.0 1.0 0.0 0
-	//transparent true
-	//sceneBlend alpha
     receives_shadows false
 	//cull_hardware none
 }
@@ -112,7 +108,6 @@ material circle_deform
 	specular 0.25 0.3 0.25 32
 	depth_bias 3
     receives_shadows false
-	terrainLightMap false
 }
 
 material circle_filter
@@ -124,7 +119,6 @@ material circle_filter
 	specular 0.1 0.2 0.3 32
 	depth_bias 3
     receives_shadows false
-	terrainLightMap false
 }
 
 material circle_smooth
@@ -136,7 +130,6 @@ material circle_smooth
 	specular 0.15 0.3 0.25 32
 	depth_bias 3
     receives_shadows false
-	terrainLightMap false
 }
 
 material circle_height
@@ -148,9 +141,10 @@ material circle_height
 	specular 0.25 0.3 0.25 32
 	depth_bias 3
     receives_shadows false
-	terrainLightMap false
 }
 
+//  car
+//------------------------------------------------------------
 material car_body
 {
 	parent base
@@ -159,6 +153,5 @@ material car_body
 	diffuse 1.0 1.0 1.0
 	specular 0.7 0.7 0.7 32
     receives_shadows false
-	//receivesDepthShadows false
 	cull_hardware none
 }
