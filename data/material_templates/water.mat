@@ -1,23 +1,28 @@
 material Water
 {
-    // wave choppiness, wave scale
+    //  wave choppiness, wave scale
     choppyness_scale 0.15 25
     
-    // small waves XY, medium waves XY
+    //  small waves XY, medium waves XY
     smallWaves_midWaves 0.15 0.1 0.3 0.15
-    
-    // big waves XY
+    //  big waves XY
     bigWaves 0.3 0.3
     
-    // overall bump, reflection bump, refraction bump
-    bump 1.5 0.08 0.06
+    //  overall bump, reflection bump, refraction bump
+    bump 1.5 0.08 0.12
     
-    // reduce this to get less reflection
+    //  reduce this to get less reflection
     fresnelMultiplier 1.0
+
     
+    //  colors
     colour 0.0078 0.3176 0.400
-    
+    reflectColour 1.0 1.0 1.0
+    //  last a is opacity
+    refractColour 1.0 1.0 1.0 0.0
+    //  specular
     specHardness 256
+    speed 1.0
 
     pass
     {
@@ -26,7 +31,7 @@ material Water
         
         cull_hardware none
         scene_blend alpha_blend
-        depth_write off
+        //depth_write off
         
         shader_properties
         {
@@ -35,8 +40,12 @@ material Water
             smallWaves_midWaves $smallWaves_midWaves
             bump $bump
             fresnelMultiplier $fresnelMultiplier
+
             colour $colour
+            reflectColour $reflectColour
+            refractColour $refractColour
             specHardness $specHardness
+		    speed $speed
         }
         
         texture_unit reflectionMap
@@ -86,6 +95,7 @@ material Water_green
     parent Water
 }
 
+
 material Water_white
 {
     parent Water
@@ -101,12 +111,8 @@ material Water_shore
     parent Water
 }
 
-material Water_dark
-{
-    parent Water
-}
 
-material Grease_jelly
+material Water_dark
 {
     parent Water
 }
@@ -121,17 +127,50 @@ material Water_yellow
     parent Water
 }
 
+
+material Grease_jelly
+{
+    parent Water
+}
+
+
 material Mud_orange
 {
     parent Water
+    bump 1.1 0.06 0.12
+
+    colour 0.6 0.4 0.1
+	reflectColour 0.9 0.6 0.2
+	refractColour 0.6 0.4 0.1 0.7
+	specHardness 16
+    speed 0.1
 }
 
 material Mud_brown
 {
     parent Water
+    bump 1.5 0.16 0.12
+
+    colour 0.4 0.34 0.1
+	reflectColour 0.8 0.68 0.2
+	refractColour 0.4 0.34 0.1 0.85
+	specHardness 32
+    speed 0.03
 }
 
 material Mud_dark
 {
     parent Water
+    choppyness_scale 0.15 35
+    smallWaves_midWaves 0.15 0.15 0.3 0.1
+    bigWaves 0.3 0.2
+    bump 1.5 0.12 0.12
+    fresnelMultiplier 1.0
+
+	colour 0.2 0.17 0.05
+	reflectColour 0.2 0.17 0.05
+	refractColour 0.2 0.17 0.05 1.0
+    //fresnelMultiplier 1.0
+    specHardness 64
+    speed 0.01
 }

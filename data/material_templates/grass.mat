@@ -57,4 +57,5 @@ material grassUnidentified
 {
     parent grass
     diffuseMap grassUnidentified.png
+    diffuse 0.5 0.5 0.5
 }
