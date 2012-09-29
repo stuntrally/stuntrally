@@ -36,3 +36,29 @@ material road_col
     normalMap brass_patina_n.png
     normal_map true
 }
+
+// ----  asphalt pipes, glass is in cg,material
+
+material pipeAsphalt
+{
+    parent base
+	diffuseMap roadAsphalt.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 0.6 0.6 0.6
+	specular 0.3 0.3 0.25 24
+	depth_bias 3
+	cull_hardware none
+    receives_shadows false
+}
+
+material pipeAsphaltRed
+{
+    parent base
+	diffuseMap roadAsphalt.jpg
+	ambient 1.0 0.8 0.7
+	diffuse 1.0 0.6 0.5
+	specular 0.4 0.35 0.3 24
+	depth_bias 3
+	cull_hardware none
+    receives_shadows false
+}
