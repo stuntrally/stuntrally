@@ -142,16 +142,3 @@ material circle_height
 	depth_bias 3
     receives_shadows false
 }
-
-//  car
-//------------------------------------------------------------
-material car_body
-{
-	parent base
-	diffuseMap body_dyn.png
-	ambient 0.5 0.5 0.5
-	diffuse 1.0 1.0 1.0
-	specular 0.7 0.7 0.7 32
-    receives_shadows false
-	cull_hardware none
-}
