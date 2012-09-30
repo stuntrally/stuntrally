@@ -159,17 +159,18 @@ void App::slTexSize(SL)
 		materialFactory->setTexSize(0); // lowest
 	else if (v == 1)
 		materialFactory->setTexSize(4096); // highest
-    */
+	*/
 }
 
 void App::slTerMtr(SL)
 {
-	int v = val*3.f +slHalf;  if (bGI)  pSet->ter_mtr = v;
+	int v = val*4.f +slHalf;  if (bGI)  pSet->ter_mtr = v;
 	if (valTerMtr)
 	{	if (v == 0)  valTerMtr->setCaption("Lowest");  else
 		if (v == 1)  valTerMtr->setCaption("Low");  else
 		if (v == 2)  valTerMtr->setCaption("Normal");  else
-		if (v == 3)  valTerMtr->setCaption("Parallax");  }
+		if (v == 3)  valTerMtr->setCaption("Parallax");  else
+		if (v == 4)  valTerMtr->setCaption("Triplanar");  }
 	//if (bGI)  changeShadows();
 }
 
@@ -255,7 +256,7 @@ void App::GuiInitGraphics()
 	Slv(Anisotropy,	pSet->anisotropy /16.f);
 	Slv(Shaders,	pSet->shaders);
 	Slv(TexSize,	pSet->tex_size /1.f);
-	Slv(TerMtr,		pSet->ter_mtr /3.f);
+	Slv(TerMtr,		pSet->ter_mtr /4.f);
 
 	//  trees/grass
 	Slv(Trees,		powf(pSet->gui.trees /4.f, 0.5f));
@@ -306,9 +307,9 @@ void App::GuiInitGraphics()
 		combo->addItem(TR("#{GraphicsAll_High}"));
 		combo->addItem(TR("#{GraphicsAll_VeryHigh}"));
 		combo->addItem(TR("#{GraphicsAll_Ultra}"));
-    }
-    
-    //  render systems
+	}
+	
+	//  render systems
 	Cmb(combo, "CmbRendSys", comboRenderSystem);
 	if (combo)  {
 		combo->removeAllItems();
@@ -384,7 +385,7 @@ void App::doSizeGUI(EnumeratorWidgetPtr widgets)
 {
 	while (widgets.next())
 	{
-        WidgetPtr wp = widgets.current();
+		WidgetPtr wp = widgets.current();
 		std::string relativeTo = wp->getUserString("RelativeTo");
 
 		if (relativeTo != "")
@@ -436,9 +437,9 @@ void App::GuiInitTooltip()
 
 void App::setToolTips(EnumeratorWidgetPtr widgets)
 {
-    while (widgets.next())
-    {
-        WidgetPtr wp = widgets.current();
+	while (widgets.next())
+	{
+		WidgetPtr wp = widgets.current();
 		wp->setAlign(Align::Default);
 		
 		IntPoint origPos = wp->getPosition();
@@ -449,7 +450,7 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
 		wp->setUserString("origSizeX", toStr(origSize.width));
 		wp->setUserString("origSizeY", toStr(origSize.height));
 		
-        bool tip = wp->isUserString("tip");
+		bool tip = wp->isUserString("tip");
 		if (tip)  // if has tooltip string
 		{
 			// needed for translation
@@ -458,8 +459,8 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
 			wp->eventToolTip += newDelegate(this, &App::notifyToolTip);
 		}
 		//LogO(wp->getName() + (tip ? "  *" : ""));
-        setToolTips(wp->getEnumerator());
-    }
+		setToolTips(wp->getEnumerator());
+	}
 }
 
 void App::notifyToolTip(Widget *sender, const ToolTipInfo &info)

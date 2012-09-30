@@ -138,6 +138,7 @@ void App::postInit()
 	fct.setGlobalSetting("terrain_specular", (pSet->ter_mtr >= 1)  ? "true" : "false");
 	fct.setGlobalSetting("terrain_normal", (pSet->ter_mtr >= 2)  ? "true" : "false");
 	fct.setGlobalSetting("terrain_parallax", (pSet->ter_mtr >= 3)  ? "true" : "false");
+	fct.setGlobalSetting("terrain_triplanar", (pSet->ter_mtr >= 4)  ? "true" : "false");
 	fct.setGlobalSetting("water_reflect", pSet->water_reflect ? "true" : "false");
 	fct.setGlobalSetting("water_refract", "false");
 	fct.setGlobalSetting("shadows_depth", (pSet->shadow_type > 1) ? "true" : "false");

@@ -454,6 +454,7 @@ bool BaseApp::setup()
 	fct.setGlobalSetting("terrain_specular", (pSet->ter_mtr >= 1)  ? "true" : "false");
 	fct.setGlobalSetting("terrain_normal", (pSet->ter_mtr >= 2)  ? "true" : "false");
 	fct.setGlobalSetting("terrain_parallax", (pSet->ter_mtr >= 3)  ? "true" : "false");
+	fct.setGlobalSetting("terrain_triplanar", (pSet->ter_mtr >= 4)  ? "true" : "false");
 	fct.setGlobalSetting("water_reflect", pSet->water_reflect ? "true" : "false");
 	fct.setGlobalSetting("water_refract", pSet->water_refract ? "true" : "false");
 	fct.setSharedParameter("waterEnabled", sh::makeProperty<sh::FloatValue> (new sh::FloatValue(0.0)));

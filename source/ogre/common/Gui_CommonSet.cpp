@@ -65,7 +65,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	case 5:  // Ultra  -------------
 		s.anisotropy = 16;  s.view_distance = 20000;  s.terdetail = 1.0f;  s.terdist = 1000.f;  s.road_dist = 3.0;
-		s.tex_size = 1;  s.ter_mtr = 3;  s.shaders = 1;  s.use_imposters = 1;  s.water_reflect=1;  s.water_refract=1;  s.water_rttsize=2;
+		s.tex_size = 1;  s.ter_mtr = 4;  s.shaders = 1;  s.use_imposters = 1;  s.water_reflect=1;  s.water_refract=1;  s.water_rttsize=2;
 		s.shadow_type = 2;  s.shadow_size = 4;  s.shadow_count = 3;  s.shadow_dist = 3000;  s.shadow_filter = 4;
 		s.gui.trees = 2.f;  s.grass = 2.f;  s.trees_dist = 2.f;  s.grass_dist = 2.f;	break;
 	}

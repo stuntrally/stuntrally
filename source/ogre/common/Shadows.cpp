@@ -129,6 +129,7 @@ void App::changeShadows()
 	sh::Factory::getInstance().setGlobalSetting ("terrain_specular", (pSet->ter_mtr >= 1)  ? "true" : "false");
 	sh::Factory::getInstance().setGlobalSetting ("terrain_normal", (pSet->ter_mtr >= 2)  ? "true" : "false");
 	sh::Factory::getInstance().setGlobalSetting ("terrain_parallax", (pSet->ter_mtr >= 3)  ? "true" : "false");
+	sh::Factory::getInstance().setGlobalSetting ("terrain_triplanar", (pSet->ter_mtr >= 4)  ? "true" : "false");
 
 
 	mFactory->setGlobalSetting ("water_reflect", pSet->water_reflect ? "true" : "false");

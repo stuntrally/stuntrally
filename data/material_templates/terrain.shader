@@ -30,7 +30,7 @@
 #define PARALLAX_SCALE 0.03
 #define PARALLAX_BIAS -0.04
 
-#define TRIPLANAR !RENDER_COMPOSITE_MAP
+#define TRIPLANAR @shGlobalSettingBool(terrain_triplanar) && !RENDER_COMPOSITE_MAP
 
 #if (MRT) || (FOG) || (SHADOWS)
 #define NEED_DEPTH 1
