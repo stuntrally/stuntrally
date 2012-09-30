@@ -54,6 +54,9 @@ void App::createScene()  // once, init
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time load xmls: ") + toStr(dt) + " ms");
 
+
+	postInit();  // material factory
+
 	//  gui
 	bGuiFocus = false/*true*/;  bMoveCam = true;  //*--
 	InitGui();
@@ -67,9 +70,6 @@ void App::createScene()  // once, init
 		LoadTrack();
 	else
 	{	bGuiFocus = true;  UpdVisGui();	}
-
-	postInit();  // material factory
-	//materialFactory->generate();
 
 	iObjTNew = 0;
 	//SetObjNewType(0);  //?white

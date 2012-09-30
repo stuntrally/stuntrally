@@ -203,6 +203,7 @@ protected:
 
 	// Weather  rain, snow
 	Ogre::ParticleSystem *pr,*pr2;  void CreateWeather(),DestroyWeather();
+	float mTimer;
 
 	//  trees
 	class Forests::PagedGeometry *trees, *grass;

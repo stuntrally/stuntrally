@@ -73,7 +73,7 @@ App::App()  //  gui wigdets--
 	,bTerUpdBlend(1), track(0)
 	,world(0), config(0), dispatcher(0), broadphase(0), solver(0)  //blt
 	,trackObject(0), trackMesh(0)
-	,mStaticGeom(0)
+	,mStaticGeom(0), mTimer(0.f)
 {
 	imgPrv[0]=0; imgMini[0]=0; imgTer[0]=0;  trkDesc[0]=0;
 	
@@ -108,36 +108,42 @@ App::App()  //  gui wigdets--
 	track = new TRACK(std::cout, std::cerr);  //!
 }
 
+///  material factory setup
+//---------------------------------------------------------------------------------------------------------------------------
 void App::postInit()
 {
 	sh::OgrePlatform* platform = new sh::OgrePlatform("General", PATHMANAGER::GetDataPath() + "/" + "material_templates");
 	platform->setShaderCachingEnabled (true);
 	platform->setCacheFolder (PATHMANAGER::GetCacheDir());
+	
 	mFactory = new sh::Factory(platform);
-	mFactory->setSharedParameter ("globalColorMultiplier", sh::makeProperty<sh::Vector4>(new sh::Vector4(0.3, 1.0, 0.1, 1.0)));
+	mFactory->setSharedParameter("globalColorMultiplier", sh::makeProperty<sh::Vector4>(new sh::Vector4(0.3, 1.0, 0.1, 1.0)));
 	mFactory->setGlobalSetting("fog", "true");
 	mFactory->setGlobalSetting("wind", "true");
 	mFactory->setGlobalSetting("mrt_output", "false");
-	mFactory->setGlobalSetting ("shadows", "false");
-	mFactory->setGlobalSetting ("shadows_pssm", "false");
-	mFactory->setGlobalSetting ("lighting", "true");
-	mFactory->setGlobalSetting ("terrain_composite_map", "false");
+	mFactory->setGlobalSetting("shadows", "false");
+	mFactory->setGlobalSetting("shadows_pssm", "false");
+	mFactory->setGlobalSetting("lighting", "true");
+	mFactory->setGlobalSetting("terrain_composite_map", "false");
+
 	mFactory->setSharedParameter("pssmSplitPoints", sh::makeProperty<sh::Vector3>(new sh::Vector3(0,0,0)));
 	mFactory->setSharedParameter("shadowFar_fadeStart", sh::makeProperty<sh::Vector4>(new sh::Vector4(0,0,0,0)));
-	mFactory->setSharedParameter ("arrowColour1", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
-	mFactory->setSharedParameter ("arrowColour2", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
-	mFactory->setSharedParameter ("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(0)));
-	mFactory->setSharedParameter ("waterTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(0)));
-	mFactory->setSharedParameter ("terrainWorldSize", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(1024)));
-	sh::Factory::getInstance().setGlobalSetting ("terrain_specular", (pSet->ter_mtr >= 1)  ? "true" : "false");
-	sh::Factory::getInstance().setGlobalSetting ("terrain_normal", (pSet->ter_mtr >= 2)  ? "true" : "false");
-	sh::Factory::getInstance().setGlobalSetting ("terrain_parallax", (pSet->ter_mtr >= 3)  ? "true" : "false");
-	sh::Factory::getInstance().setGlobalSetting ("water_reflect", pSet->water_reflect ? "true" : "false");
-	sh::Factory::getInstance().setGlobalSetting ("water_refract", "false");
-	sh::Factory::getInstance().setGlobalSetting ("shadows_depth", (pSet->shadow_type > 1) ? "true" : "false");
-	sh::Factory::getInstance().setGlobalSetting ("soft_particles", "false");
-	sh::Factory::getInstance ().setSharedParameter ("waterSunFade_sunHeight", sh::makeProperty<sh::Vector2>(new sh::Vector2(1, 0.6)));
-	sh::Factory::getInstance ().setSharedParameter ("windDir_windSpeed", sh::makeProperty<sh::Vector3>(new sh::Vector3(0.5, -0.8, 0.2)));
+	mFactory->setSharedParameter("arrowColour1", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
+	mFactory->setSharedParameter("arrowColour2", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
+	mFactory->setSharedParameter("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(0)));
+	mFactory->setSharedParameter("waterTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(0)));
+	mFactory->setSharedParameter("terrainWorldSize", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(1024)));
+
+	sh::Factory& fct = sh::Factory::getInstance();
+	fct.setGlobalSetting("terrain_specular", (pSet->ter_mtr >= 1)  ? "true" : "false");
+	fct.setGlobalSetting("terrain_normal", (pSet->ter_mtr >= 2)  ? "true" : "false");
+	fct.setGlobalSetting("terrain_parallax", (pSet->ter_mtr >= 3)  ? "true" : "false");
+	fct.setGlobalSetting("water_reflect", pSet->water_reflect ? "true" : "false");
+	fct.setGlobalSetting("water_refract", "false");
+	fct.setGlobalSetting("shadows_depth", (pSet->shadow_type > 1) ? "true" : "false");
+	fct.setGlobalSetting("soft_particles", "false");
+	fct.setSharedParameter("waterSunFade_sunHeight", sh::makeProperty<sh::Vector2>(new sh::Vector2(1, 0.6)));
+	fct.setSharedParameter("windDir_windSpeed", sh::makeProperty<sh::Vector3>(new sh::Vector3(0.5, -0.8, 0.2)));
 
 	///  uncomment to enable shader output to files
 	//mFactory->setShaderDebugOutputEnabled (true);
@@ -145,11 +151,11 @@ void App::postInit()
 	sh::Language lang;
 	if (pSet->shader_mode == "")
 	{
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		lang = sh::Language_HLSL;
-#else
+	#else
 		lang = sh::Language_GLSL;
-#endif
+	#endif
 	}
 	else
 	{

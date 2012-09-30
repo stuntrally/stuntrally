@@ -941,11 +941,9 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	}
 
 	// update shader time
-	/*
 	mTimer += evt.timeSinceLastFrame;
 	mFactory->setSharedParameter ("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
 	mFactory->setSharedParameter ("waterTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
-	*/
 
 	
 	///  simulate
