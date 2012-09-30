@@ -304,6 +304,7 @@ void App::LoadScene()  // 3
 	//  fluids
 	CreateFluids();
 
+
 	//  set sky tex name for water
 	sh::MaterialInstance* m = mFactory->getMaterialInstance (sc.skyMtr);
 	std::string skyTex = sh::retrieveValue<sh::StringValue>(m->getProperty ("texture"), 0).get();

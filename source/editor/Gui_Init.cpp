@@ -475,7 +475,7 @@ void App::CreateRoadSelMtrs()
 
 ///  gui tweak page, material properties
 //------------------------------------------------------------------------------------------------------------
-const std::string sMtr = "Water_blue";  //combo, changable..
+const std::string sMtr = "Mud_orange";  //"Water_blue";  //combo, changable..
 
 void App::CreateGUITweakMtr()
 {
@@ -500,52 +500,61 @@ void App::CreateGUITweakMtr()
 		
 		//  get type
 		std::string sVal = pv->_getStringValue();
-		int size = -1;
-		std::vector<std::string> tokens;
-		boost::split(tokens, sVal, boost::is_any_of(" "));
-		size = tokens.size();
+		//? if (boost::is_alnum(sVal))  continue;
+		bool isStr = false;
+		for (int c=0; c < sVal.length(); ++c)  if (sVal[c] >= 'a' && sVal[c] <= 'z')
+			isStr = true;
 
-		//LogO("PROP: " + name + "  val: " + sVal + "  type:" + toStr(type));
-		const static char ch[6] = "rgbau";
-		const static Colour clrsType[5] = {Colour(0.9,0.9,0.7),Colour(0.8,1.0,0.8),
-					Colour(0.7,0.85,1.0),Colour(0.7,1.0,1.0),Colour(1.0,1.0,1.0)};
-
-		//  for each component (xy,rgb..)
-		for (int i=0; i < size; ++i)
+		if (!isStr)
 		{
-			String nameSi = name + ":" + toStr(size) + "." + toStr(i);  // size and id in name
-			float val = boost::lexical_cast<float> (tokens[i]);
-			int t = std::min(4,i);  const Colour& clr = clrsType[std::max(0,std::min(4,size-1))];
+			//  get size
+			int size = -1;
+			std::vector<std::string> tokens;
+			boost::split(tokens, sVal, boost::is_any_of(" "));
+			size = tokens.size();
 
-			//  name text
-			int x = 0, xs = 140;
-			TextBox* txt = view->createWidget<TextBox>("TextBox", x,y, xs,20, Align::Default, nameSi + ".txt");
-			setOrigPos(txt);  txt->setTextColour(clr);
-			txt->setCaption(size == 1 ? name : name + "." + ch[t]);
+			//LogO("PROP: " + name + "  val: " + sVal + "  type:" + toStr(type));
+			const static char ch[6] = "rgbau";
+			const static Colour clrsType[5] = {Colour(0.9,0.9,0.7),Colour(0.8,1.0,0.8),
+						Colour(0.7,0.85,1.0),Colour(0.7,1.0,1.0),Colour(1.0,1.0,1.0)};
 
-			//  val text
-			x += xs;  xs = 60;
-			TextBox* txtval = view->createWidget<TextBox>("TextBox", x,y, xs,20, Align::Default, nameSi + ".Val");
-			setOrigPos(txtval);  txtval->setTextColour(clr);
-			txtval->setCaption(fToStr(val,3,6));
-			
-			//  slider
-			x += xs;  xs = 400;
-			Slider* sl = view->createWidget<Slider>("Slider", x,y-1, xs,19, Align::Default, nameSi);
-			setOrigPos(sl);  sl->setColour(clr);
-			sl->setValue(val);
-			if (sl->eventValueChanged.empty())  sl->eventValueChanged += newDelegate(this, &App::slTweak);
+			//  for each component (xy,rgb..)
+			for (int i=0; i < size; ++i)
+			{
+				String nameSi = name + ":" + toStr(size) + "." + toStr(i);  // size and id in name
+				float val = boost::lexical_cast<float> (tokens[i]);
+				int t = std::min(4,i);  const Colour& clr = clrsType[std::max(0,std::min(4,size-1))];
 
-			y += 22;
+				//  name text
+				int x = 0, xs = 140;
+				TextBox* txt = view->createWidget<TextBox>("TextBox", x,y, xs,20, Align::Default, nameSi + ".txt");
+				setOrigPos(txt);  txt->setTextColour(clr);
+				txt->setCaption(size == 1 ? name : name + "." + ch[t]);
+
+				//  val text
+				x += xs;  xs = 60;
+				TextBox* txtval = view->createWidget<TextBox>("TextBox", x,y, xs,20, Align::Default, nameSi + ".Val");
+				setOrigPos(txtval);  txtval->setTextColour(clr);
+				txtval->setCaption(fToStr(val,3,6));
+				
+				//  slider
+				x += xs;  xs = 400;
+				Slider* sl = view->createWidget<Slider>("Slider", x,y-1, xs,19, Align::Default, nameSi);
+				setOrigPos(sl);  sl->setColour(clr);
+				sl->setValue(val);  //powf(val * 1.f/2.f, 1.f/2.f));  //v
+				if (sl->eventValueChanged.empty())  sl->eventValueChanged += newDelegate(this, &App::slTweak);
+
+				y += 22;
+			}
+			y += 8;
 		}
-		y += 8;
-		
-		view->setCanvasSize(1100, y+500);  //?..
-		view->setCanvasAlign(Align::Default);
 	}
+	view->setCanvasSize(1100, y+500);  //?..
+	view->setCanvasAlign(Align::Default);
 }
 
 ///  change material property (float component)
+//-----------------------------------------------------------------
 void App::slTweak(Slider* wp, float val)
 {
 	std::string name = wp->getName(), prop = name.substr(0,name.length()-4);
@@ -559,12 +568,13 @@ void App::slTweak(Slider* wp, float val)
 		id = s2i(name.substr(name.length()-1,1));
 		size = s2i(name.substr(name.length()-3,1));
 	}
+	//val = powf(val * 2.f, 2.f);  //v
 
+	sh::MaterialInstance* mat = mFactory->getMaterialInstance(sMtr);
 	if (id == -1)  // 1 float
-		mFactory->getMaterialInstance(sMtr)->setProperty(name, sh::makeProperty<sh::FloatValue>(new sh::FloatValue(val)));
+		mat->setProperty(prop, sh::makeProperty<sh::FloatValue>(new sh::FloatValue(val)));
 	else
 	{
-		sh::MaterialInstance* mat = mFactory->getMaterialInstance(sMtr);
 		sh::PropertyValuePtr& vp = mat->getProperty(prop);
 		switch (size)
 		{

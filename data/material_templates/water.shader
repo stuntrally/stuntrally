@@ -111,8 +111,8 @@
 		#define REFL_BUMP  bump.y
 		#define REFR_BUMP  bump.z
 		
-		shUniform(float, specHardness)  @shUniformProperty1f(specHardness, specHardness)
-		shUniform(float3, waterColour)  @shUniformProperty3f(waterColour, colour)
+		shUniform(float4, specColourAndPower)  @shUniformProperty4f(specColourAndPower, specColourAndPower)
+		shUniform(float4, waterClr)  @shUniformProperty4f(waterClr, colour)
 		shUniform(float, fresnelMultiplier)  @shUniformProperty1f(fresnelMultiplier, fresnelMultiplier)
 		shUniform(float, far)  @shAutoConstant(far, far_clip_distance)
 
@@ -139,9 +139,6 @@
 		shUniform(float, waterTimer)  @shSharedParameter(waterTimer)
 		shUniform(float2, waterSunFade_sunHeight)  @shSharedParameter(waterSunFade_sunHeight)
 		
-		shUniform(float4, sunPosition)  @shAutoConstant(sunPosition, light_position, 0)
-		shUniform(float4, sunSpecular)  @shAutoConstant(sunSpecular, light_specular_colour, 0)
-
 		shUniform(float4x4, worldMatrix)  @shAutoConstant(worldMatrix, world_matrix)
 		shUniform(float, terrainWorldSize)  @shSharedParameter(terrainWorldSize)
 		
@@ -151,6 +148,11 @@
 		shUniform(float4, fogParams)  @shAutoConstant(fogParams, fog_params)
 		
 		shUniform(float4, cameraPos)  @shAutoConstant(cameraPos, camera_position_object_space)
+		shUniform(float4, sunPosition)  @shAutoConstant(sunPosition, light_position, 0)
+
+        shUniform(float4, lightAmbient)  @shAutoConstant(lightAmbient, ambient_light_colour)
+        shUniform(float4, lightDiffuse)  @shAutoConstant(lightDiffuse, light_diffuse_colour)
+        shUniform(float4, lightSpecular)  @shAutoConstant(lightSpecular, light_specular_colour)
 		
 
 	SH_START_PROGRAM
@@ -170,35 +172,26 @@
 
 
 		float2 nCoord = float2(0,0);
-
 	  	float timer = waterTimer * speed;
-	  	nCoord = UV * (WAVE_SCALE * 0.05) + WIND_DIR * timer * (WIND_SPEED*0.04);
-		float3 normal0 = 2.0 * shSample(normalMap, nCoord + float2(-timer*0.015,-timer*0.005)).rgb - 1.0;
-		nCoord = UV * (WAVE_SCALE * 0.1) + WIND_DIR * timer * (WIND_SPEED*0.08)-(normal0.xy/normal0.zz)*WAVE_CHOPPYNESS;
-		float3 normal1 = 2.0 * shSample(normalMap, nCoord + float2(+timer*0.020,+timer*0.015)).rgb - 1.0;
-	 
-	 	nCoord = UV * (WAVE_SCALE * 0.25) + WIND_DIR * timer * (WIND_SPEED*0.07)-(normal1.xy/normal1.zz)*WAVE_CHOPPYNESS;
-		float3 normal2 = 2.0 * shSample(normalMap, nCoord + float2(-timer*0.04,-timer*0.03)).rgb - 1.0;
-		nCoord = UV * (WAVE_SCALE * 0.5) + WIND_DIR * timer * (WIND_SPEED*0.09)-(normal2.xy/normal2.z)*WAVE_CHOPPYNESS;
-		float3 normal3 = 2.0 * shSample(normalMap, nCoord + float2(+timer*0.03,+timer*0.04)).rgb - 1.0;
-	  
-	  	nCoord = UV * (WAVE_SCALE* 1.0) + WIND_DIR * timer * (WIND_SPEED*0.4)-(normal3.xy/normal3.zz)*WAVE_CHOPPYNESS;
-		float3 normal4 = 2.0 * shSample(normalMap, nCoord + float2(-timer*0.02,+timer*0.1)).rgb - 1.0;  
-		nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.xy/normal4.zz)*WAVE_CHOPPYNESS;
-		float3 normal5 = 2.0 * shSample(normalMap, nCoord + float2(+timer*0.1,-timer*0.06)).rgb - 1.0;
+	  	
+nCoord = UV * (WAVE_SCALE * 0.05)+ WIND_DIR * timer * (WIND_SPEED*0.04);											float3 normal0 = 2.0 * shSample(normalMap, nCoord + float2(-timer*0.015,-timer*0.005)).rgb - 1.0;
+nCoord = UV * (WAVE_SCALE * 0.1) + WIND_DIR * timer * (WIND_SPEED*0.08)-(normal0.xy/normal0.zz)*WAVE_CHOPPYNESS;	float3 normal1 = 2.0 * shSample(normalMap, nCoord + float2(+timer*0.020,+timer*0.015)).rgb - 1.0;
+nCoord = UV * (WAVE_SCALE * 0.25)+ WIND_DIR * timer * (WIND_SPEED*0.07)-(normal1.xy/normal1.zz)*WAVE_CHOPPYNESS;	float3 normal2 = 2.0 * shSample(normalMap, nCoord + float2(-timer*0.04,-timer*0.03)).rgb - 1.0;
+nCoord = UV * (WAVE_SCALE * 0.5) + WIND_DIR * timer * (WIND_SPEED*0.09)-(normal2.xy/normal2.zz)*WAVE_CHOPPYNESS;	float3 normal3 = 2.0 * shSample(normalMap, nCoord + float2(+timer*0.03,+timer*0.04)).rgb - 1.0;
+nCoord = UV * (WAVE_SCALE * 1.0) + WIND_DIR * timer * (WIND_SPEED*0.4)-(normal3.xy/normal3.zz)*WAVE_CHOPPYNESS;		float3 normal4 = 2.0 * shSample(normalMap, nCoord + float2(-timer*0.02,+timer*0.1)).rgb - 1.0;
+nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.xy/normal4.zz)*WAVE_CHOPPYNESS;		float3 normal5 = 2.0 * shSample(normalMap, nCoord + float2(+timer*0.1,-timer*0.06)).rgb - 1.0;
+		
 
-	
-		float3 normal = (normal0 * BIG_WAVES_X + normal1 * BIG_WAVES_Y +
-						 normal2 * MID_WAVES_X + normal3 * MID_WAVES_Y +
+		float3 normal = (normal0 * BIG_WAVES_X   + normal1 * BIG_WAVES_Y +
+						 normal2 * MID_WAVES_X   + normal3 * MID_WAVES_Y +
 						 normal4 * SMALL_WAVES_X + normal5 * SMALL_WAVES_Y).xzy;
 		
-		normal = normalize(float3(normal.x * BUMP, normal.y, normal.z * BUMP));
-
-		
 		// normal for sunlight scattering					
-		float3 lNormal = (normal0 * BIG_WAVES_X*0.5 + normal1 * BIG_WAVES_Y*0.5 +
-						  normal2 * MID_WAVES_X*0.2 + normal3 * MID_WAVES_Y*0.2 +
+		float3 lNormal = (normal0 * BIG_WAVES_X*0.5   + normal1 * BIG_WAVES_Y*0.5 +
+						  normal2 * MID_WAVES_X*0.2   + normal3 * MID_WAVES_Y*0.2 +
 						  normal4 * SMALL_WAVES_X*0.1 + normal5 * SMALL_WAVES_Y*0.1).xzy;
+
+		normal  = normalize(float3(normal.x * BUMP, normal.y, normal.z * BUMP));
 		lNormal = normalize(float3(lNormal.x * BUMP, lNormal.y, lNormal.z * BUMP));
 		
 		
@@ -245,7 +238,7 @@
 			#endif
 			refl2.x = 1 - refl2.x / (2*PI);  // yaw   0..1
 			refl2.y = 1 - asin(R.y) / PI*2;  // pitch 0..1
-			float3 reflection = reflectColour * shSample(reflectionSkyMap, refl2).xyz;
+			float3 reflection = reflectColour * shSample(reflectionSkyMap, refl2).rgb;
 		#endif
 		
 		
@@ -260,34 +253,37 @@
 			refraction.g = shSample(refractionMap, (screenCoords-shoreFade*(normal.xz*REFR_BUMP))*1.0-(R.xy*ABBERATION)).g;
 			refraction.b = shSample(refractionMap, (screenCoords-shoreFade*(normal.xz*REFR_BUMP))*1.0-(R.xy*ABBERATION*2.0)).b;
 			
-			 // brighten up the refraction underwater
-			refraction = (cameraPos.y < 0) ? shSaturate(refraction * 1.5) : refraction;
+			 // brighten up the refraction underwater  why?
+			//refraction = (cameraPos.y < 0) ? shSaturate(refraction * 1.5) : refraction;
 		#endif
 	
 	
 		// specular
-		float specular = pow(max(dot(R, lVec), 0.0), specHardness);
+		float specular = pow(max(dot(R, lVec), 0.0), specColourAndPower.w);
+		float3 waterColour = waterClr.rgb * lightDiffuse.rgb;
 
-		//shOutputColour(0).xyz = shLerp(  shLerp(refraction, scatterColour, lightScatter), reflection, fresnel);
+		//shOutputColour(0).rgb = shLerp(  shLerp(refraction, scatterColour, lightScatter), reflection, fresnel);
  		
-		#if SCREEN_REFRACTION
-			refraction = refractColour.rgb * shLerp( refraction, waterColour, depthTex.g * (1-isUnderwater));
-			refraction = shLerp( refraction, waterColour, refractColour.a );       // ^ * 0.757
-			
-			shOutputColour(0).xyz = shLerp( refraction, reflection, fresnel);
-			shOutputColour(0).a = 1;
-			shOutputColour(0).xyz = shLerp( shOutputColour(0).xyz, refraction, (1-shoreFade));
+											//_ no refraction at distant
+		float depthAmount = depthTex.g * shLerp( refractColour.a, 1, fresnel) * (1-isUnderwater);
+		#if SCREEN_REFRACTION																	// mud no refraction inside
+			float3 clr = refractColour.rgb * shLerp( refraction, waterColour,  depthAmount);
+			refraction = waterClr.a > 0.5f ? shLerp( clr,  waterColour, refractColour.a) : clr;
+			shOutputColour(0).rgb = shLerp( refraction, reflection,  fresnel);
+			shOutputColour(0).rgb = shLerp( refraction, shOutputColour(0).rgb,  shoreFade);
+			shOutputColour(0).a = shoreFade;
 		#else
-			float depthAmount = (depthTex.g * 0.757) * (1-isUnderwater);
-			shOutputColour(0).xyz = shLerp( reflection, waterColour, depthAmount * (1-fresnel) );
-			shOutputColour(0).a = shSaturate(fresnel * shoreFade + depthAmount) + refractColour.a;
+			shOutputColour(0).rgb = refractColour.rgb * shLerp( reflection, waterColour,  depthAmount);  //* (1-fresnel)
+			//shOutputColour(0).rgb = shLerp( waterColour, shOutputColour(0).rgb,  shoreFade);
+			shOutputColour(0).a = shSaturate(fresnel * shoreFade + depthAmount);
 		#endif
 		
-		shOutputColour(0).xyz += specular * sunSpecular.xyz;
+		shOutputColour(0).rgb += specular * specColourAndPower.rgb * lightSpecular.rgb;
+		//shOutputColour(0).rgb = shOutputColour(0).rgb*0.001 + waterClr.a * float3(1,1,1);//test
 				
 
 		// fog
-		if (isUnderwater == 1)
+		if (isUnderwater == 1)  // todo .a ..
 		{
 			float waterSunGradient = dot(-vVec, -lVec);
 			waterSunGradient = shSaturate(pow(waterSunGradient*0.7+0.3,2.0));  
@@ -303,7 +299,7 @@
 			darkness = clamp((cameraPos.y+darkness)/darkness,0.2,1.0);
 	
 		
-			float fog = shSaturate(length(cameraPos.xyz-position.xyz) / VISIBILITY);
+			float fog = shSaturate(length(cameraPos.xyz - position.xyz) / VISIBILITY);
 			shOutputColour(0).xyz = shLerp( shOutputColour(0).xyz, watercolour * darkness, shSaturate(fog / waterext));
 		}
 		else
