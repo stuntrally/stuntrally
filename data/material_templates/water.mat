@@ -83,6 +83,17 @@ material Water
 material Water_blue
 {
     parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.08 0.12
+    fresnelMultiplier 1.0
+
+    colour 0.16 0.37 0.45
+    reflectColour 1.0 1.0 1.0
+    refractColour 1.0 1.0 1.0 0.0
+    specHardness 256
+    speed 1.0
 }
 
 material Water_cyan

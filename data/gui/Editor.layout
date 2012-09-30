@@ -3421,6 +3421,18 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="#{Tweak}"/>
+				<UserString key="RelativeTo" value="OptionsWnd"/>
+                <Widget type="ScrollView" skin="ScrollViewEmpty" position="30 10 700 520" name="TweakView">
+                    <Property key="CanvasSize" value="740 1200"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+                    <Widget type="TextBox" skin="TextBox" position="10 10 375 25">
+                        <Property key="Caption" value="#{MaterialProperties}"/>
+						<Property key="TextColour" value="0.8 0.9 1.0"/>
+                    </Widget>
+                </Widget>
+			</Widget>
 		</Widget>
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="844 932 800 600" align="Center" layer="Overlapped" name="HelpWnd">
@@ -4114,6 +4126,11 @@
 						<Widget type="TextBox" skin="TextBox" position="232 150 240 20">
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<Property key="Caption" value="I  #{InputHelp}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="232 170 240 20">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Caption" value="K  #{Tweak}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 					</Widget>

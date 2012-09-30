@@ -666,6 +666,7 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_G:	GuiShortcut(WND_Options, 2);  return true;  // G Graphics
 		 case KC_N:	GuiShortcut(WND_Options, 2,2);  return true;  // N -Vegetation
 		case KC_E:	GuiShortcut(WND_Options, 3);  return true;  // E Settings
+		case KC_K:	GuiShortcut(WND_Options, 4);  return true;  // K Tweak
 
 		case KC_I:	GuiShortcut(WND_Help, 1);  return true;  // I Input/help
 	}

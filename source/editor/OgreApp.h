@@ -266,6 +266,9 @@ protected:
 	Ogre::String GetSceneryColor(Ogre::String name);
 	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
 	
+	//  tweak page
+	void CreateGUITweakMtr(), slTweak(SL);
+	
 	//  track
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const Ogre::String& sTrack, float time, bool champ=false), ReadTrkStats();
 	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc[1];
