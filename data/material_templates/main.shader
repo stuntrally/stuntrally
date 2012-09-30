@@ -407,7 +407,7 @@
 
         // alpha
 #if !VERTEX_COLOUR
-        shOutputColour(0).a = materialDiffuse.a;
+        shOutputColour(0).a *= materialDiffuse.a;
 #endif
         
 #if ALPHA_MAP
