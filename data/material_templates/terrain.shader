@@ -477,9 +477,6 @@
 #if COMPOSITE_MAP
         shOutputColour(0).xyz = float3(1,1,1);
 #endif
-
-        //shOutputColour(0).xyz = float3(1,0,0) * blend_weights.x + float3(0,1,0) * blend_weights.y + float3(0,0,1) * blend_weights.z;
-        //shOutputColour(0).xy = mod(coord1.xy / 100, float2(1,1));
     }
     
     
