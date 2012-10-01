@@ -446,7 +446,7 @@
 #endif
 
 #if SELECTED_GLOW
-        shOutputColour(0).xyz += isSelected * (float3(0.14, 0.22, 0.36) * (0.5f + 0.1f * cos(3.f * time)));
+        shOutputColour(0).xyzw += isSelected * (float3(0.14, 0.22, 0.36) * (0.5f + 0.1f * cos(3.f * time)));
 #endif
 
 #if MRT
