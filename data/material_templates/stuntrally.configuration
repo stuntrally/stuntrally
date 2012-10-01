@@ -3,6 +3,7 @@ configuration reflection
     shadows_pssm false
     fog false
     water_reflect false
+    water_refract false
 }
 
 configuration impostor_rtt
