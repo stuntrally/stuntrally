@@ -192,28 +192,11 @@ void App::SaveGrassDens()
 //-----------------------------------------------------------------------------------------------------------
 void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 {
-/*
-	if (evt.source->getViewport(0)->getCamera()->getName() != "RttCam3")
-	{
-		if (!terrain)  return;
-		MaterialPtr terrainMaterial = terrain->_getMaterial();
-		if (!terrainMaterial.isNull())
-		{
-			for (int i=0; i < terrainMaterial->getNumTechniques(); ++i)
-			{
-				if (terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->_findNamedConstantDefinition("enableShadows"))
-					terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->setNamedConstant("enableShadows", 0.f);
-			}
-		}
-		if (materialFactory)
-			materialFactory->setShadowsEnabled(false);
-	}
-	
 	const String& s = evt.source->getName();
 	int num = atoi(s.substr(s.length()-1, s.length()-1).c_str());
 	
 	//terrain->setVisibilityFlags(0);
-	
+
 	if (num == 3)  // full
 	{
 		rt[3].rndCam->setPosition(mCameraT->getPosition());
@@ -227,7 +210,7 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 
 	///mWaterRTT.setActive(false);  //!.. TODO: disable water refl&refra for terrain rtt! or set cam to top view
 	//mWaterRTT.setViewerCamera(rt[1].rndCam);
-	*/
+	/**/
 }
 
 void App::postRenderTargetUpdate(const RenderTargetEvent &evt)

@@ -427,7 +427,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\data\editor\editor.mat"
+				RelativePath=".\data\material_templates\editor.mat"
 				>
 			</File>
 			<File
@@ -592,6 +592,10 @@
 			</File>
 			<File
 				RelativePath=".\Source\editor\Gui_Init.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\editor\Gui_Tweak.cpp"
 				>
 			</File>
 			<File

@@ -153,8 +153,7 @@ void SplineRoad::UpdLodVis(/*Camera* pCam,*/ float fBias, bool bFull)
 			
 			#ifdef ROAD_EDITOR
 			if (vis)
-				rs.road[i].ent->setMaterialName(
-					rs.sMtrRd + (bSel ? "_sel" : "") );
+				rs.road[i].ent->getSubEntity(0)->setCustomParameter(1, Vector4(bSel ? 1 : 0, 0,0,0));
 			#endif
 			
 			rs.road[i].ent->setVisible(vis);
