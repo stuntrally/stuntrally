@@ -267,7 +267,8 @@ protected:
 	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
 	
 	//  tweak page
-	void CreateGUITweakMtr(), slTweak(SL);
+	void CreateGUITweakMtr(), slTweak(SL),edTweak(MyGUI::EditPtr);
+	void TweakSetMtrPar(std::string name, float val);
 	
 	//  track
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const Ogre::String& sTrack, float time, bool champ=false), ReadTrkStats();

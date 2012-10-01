@@ -82,20 +82,29 @@ namespace MyGUI
 	void Slider::notifyMouse(Widget* _sender, int _left, int _top, MouseButton _id)
 	{
 		//eventMouseButtonPressed(this, _left, _top, _id);
-		//if (MouseButton::Left != _id)
-		//	return;
-
 		const IntPoint& p = mWidgetTrack->getParent()->getAbsolutePosition();
 		const IntSize& s = mWidgetTrack->getParent()->getSize();
 		int iTrack = mWidgetTrack->getSize().width;
 
-		float fx = (_left-iTrack/2 - p.left) / float(s.width - iTrack);
-		//float fy = (_top - p.top) / float(s.height);
-		fx = std::max(0.f, std::min(1.f, fx));
-		
-		mfValue = fx;
-		eventValueChanged(this, mfValue);
-		updateTrack();
+		//  LMB set (in slider range)
+		if (_id == MouseButton::Left)
+		{
+			float fx = (_left-iTrack/2 - p.left) / float(s.width - iTrack);
+			//float fy = (_top - p.top) / float(s.height);
+			fx = std::max(0.f, std::min(1.f, fx));
+			
+			mfValue = fx;
+			eventValueChanged(this, mfValue);
+			updateTrack();
+		}
+		else  //TODO rmb relative change
+		if (_id == MouseButton::Right)
+		{
+			// last mouse pos..?
+			//mfValue += _left - _leftOld;
+			eventValueChanged(this, mfValue);
+			updateTrack();
+		}
 	}
 
 
