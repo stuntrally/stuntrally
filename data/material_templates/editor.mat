@@ -58,11 +58,12 @@ material sphere_hit
 material sphere_check
 {
 	parent base
-	diffuseMap glass.png
-	ambient 0.4 0.4 0.5
+	diffuseMap white.png
+	ambient 0.1 0.1 0.2
 	diffuse 0.5 0.5 0.6 0.5
 	specular 0.4 0.4 0.4 32
 	//lightingAlpha 0.5 0.25 0.2 0
+    depth_write off
 	depth_bias 6
 	transparent true
 	scene_blend alpha_blend
