@@ -6,6 +6,7 @@
 #include <OgreCamera.h>
 #include <OgreMaterialManager.h>
 #include <OgreEntity.h>
+#include <OgreSubEntity.h>
 using namespace Ogre;
 
 
