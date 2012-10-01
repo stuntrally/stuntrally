@@ -129,6 +129,11 @@ material Water_cyan   // G2-Coast
 material Water_green   // J11-Temple
 {
     parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.08 0.12
+    fresnelMultiplier 1.0
 
     colour 0.13 0.16 0.06  0.0
 	reflectColour 0.6 0.8 0.35
@@ -143,19 +148,29 @@ material Water_green   // J11-Temple
 material Water_sunset   // I4-Sunset
 {
     parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.08 0.12
+    fresnelMultiplier 1.0
 
-    colour 0.1 0.3 0.4  0.0
-	reflectColour 0.2 0.2 0.4
-	refractColour 0.2 0.2 0.4  0.0
-	specColourAndPower 0.3 0.3 0.3  64
+    colour 0.80 0.92 1.0  0.0
+	reflectColour 1.0 0.82 0.5
+	refractColour 0.85 0.89 0.99  0.0
+	specColourAndPower 1.0 0.84 0.3  64
 
-    bump2SpecPowerMul 6.0 12 0.4
+    bump2SpecPowerMul 6.0 16 0.8
     speed 1.0
 }
 
 material Water_shore   // I5-Shore
 {
     parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.08 0.12
+    fresnelMultiplier 1.0
 
     colour 1.0 1.0 1.0  0.0
 	reflectColour 0.85 0.9 0.78
@@ -195,9 +210,9 @@ material Grease_jelly   // X1-Magic
     bump 1.5 0.08 0.12
     fresnelMultiplier 1.0
 
-    colour 0.58 0.45 0.9  0.0
+    colour 0.58 0.45 0.9  1.0
 	reflectColour 0.3 0.3 0.2
-	refractColour 0.8 0.8 0.6  0.2
+	refractColour 0.8 0.8 0.6  1.0
 	specColourAndPower 1.0 1.0 1.0  64
 
     bump2SpecPowerMul 6.0 12 0.4

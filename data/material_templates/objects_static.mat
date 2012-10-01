@@ -41,11 +41,17 @@ material obelisk
 material Temple
 {
 	parent base
-    ambient 0.79 0.76 0.49
-    diffuse 0.63 0.62 0.39
+    //ambient 0.79 0.76 0.49
+    //diffuse 0.63 0.62 0.39
+    //specular 0.14 0.14 0.135 32
+
+	diffuseMap pyramid_big.dds
+    ambient 0.70 0.80 0.60
+    diffuse 0.50 0.60 0.45
     specular 0.14 0.14 0.135 32
+	//receivesShadows false
+	//receivesDepthShadows true
 	terrain_light_map true
-	diffuseMap white.png
 }
 
 material DishHole
