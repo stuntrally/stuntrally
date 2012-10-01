@@ -272,8 +272,10 @@ material Mud_dark
 	colour 0.2 0.17 0.05  1.0
 	reflectColour 0.3 0.22 0.11
 	refractColour 0.8 0.8 0.025  1.0
-    specColourAndPower 0.35 0.35 0.35  64
+    //specColourAndPower 0.35 0.35 0.35  64
+    //specColourAndPower 0.34 0.29 0.20  64
+    specColourAndPower 0.31 0.27 0.18  64
 
-    bump2SpecPowerMul 4.0 12 0.3
+    bump2SpecPowerMul 12.0 2.0 0.4
     speed 0.001
 }

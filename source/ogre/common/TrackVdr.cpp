@@ -46,7 +46,7 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 
 
 
-	// rewrite this code for new system
+	//TODO .mat ..rewrite this code for new system
 #if 0
 	if (gen)
 	{

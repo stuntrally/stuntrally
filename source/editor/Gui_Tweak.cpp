@@ -98,6 +98,8 @@ void App::CreateGUITweakMtr()
 	}
 	view->setCanvasSize(1100, y+500);  //?..
 	view->setCanvasAlign(Align::Default);
+
+	doSizeGUI(view->getEnumerator());
 }
 
 //  gui change val events

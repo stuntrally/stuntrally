@@ -472,7 +472,7 @@ protected:
 	bool TrackExists(Ogre::String name);  // util
 
 	std::vector<Ogre::String> vsMaterials;
-	void GetMaterialsFromDef(Ogre::String filename, bool clear=true);
+	//void GetMaterialsFromDef(Ogre::String filename, bool clear=true);
 	void GetMaterials(Ogre::String filename, bool clear=true, Ogre::String type="material");  // ogre resource
 	void GetMaterialsMat(Ogre::String filename, bool clear=true, Ogre::String type="material");  // direct path+file
 };

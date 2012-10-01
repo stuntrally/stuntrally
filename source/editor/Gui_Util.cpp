@@ -505,7 +505,7 @@ bool App::SaveSurf(const std::string& path)
 ///  Get Materials
 //-----------------------------------------------------------------------------------------------------------
 
-void App::GetMaterialsFromDef(String filename, bool clear)
+/*void App::GetMaterialsFromDef(String filename, bool clear)
 {
 	if (clear)
 		vsMaterials.clear();
@@ -525,7 +525,7 @@ void App::GetMaterialsFromDef(String filename, bool clear)
 		
 		seci.getNext();
 	}
-}
+}/**/
 
 void App::GetMaterials(String filename, bool clear, String type)
 {
