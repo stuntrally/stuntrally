@@ -110,6 +110,7 @@
 		#define BUMP  bump.x
 		#define REFL_BUMP  bump.y
 		#define REFR_BUMP  bump.z
+		shUniform(float3, bump2SpecPowerMul)  @shUniformProperty3f(bump2SpecPowerMul, bump2SpecPowerMul)
 		
 		shUniform(float4, specColourAndPower)  @shUniformProperty4f(specColourAndPower, specColourAndPower)
 		shUniform(float4, waterClr)  @shUniformProperty4f(waterClr, colour)
@@ -191,6 +192,7 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 						  normal2 * MID_WAVES_X*0.2   + normal3 * MID_WAVES_Y*0.2 +
 						  normal4 * SMALL_WAVES_X*0.1 + normal5 * SMALL_WAVES_Y*0.1).xzy;
 
+		float3 normalX2 = normalize(float3(normal.x * bump2SpecPowerMul.x, normal.y, normal.z * bump2SpecPowerMul.x));  // n2
 		normal  = normalize(float3(normal.x * BUMP, normal.y, normal.z * BUMP));
 		lNormal = normalize(float3(lNormal.x * BUMP, lNormal.y, lNormal.z * BUMP));
 		
@@ -261,6 +263,11 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 		// specular
 		float specular = pow(max(dot(R, lVec), 0.0), specColourAndPower.w);
 		float3 waterColour = waterClr.rgb * lightDiffuse.rgb;
+
+		// specular2
+		R = reflect(vVec, normalX2);  // n2
+		specular += pow(max(dot(R, lVec), 0.0), bump2SpecPowerMul.y) * bump2SpecPowerMul.z;
+		
 
 		//shOutputColour(0).rgb = shLerp(  shLerp(refraction, scatterColour, lightScatter), reflection, fresnel);
  		

@@ -12,6 +12,9 @@ material Water
     
     //  overall bump, reflection bump, refraction bump
     bump 1.5 0.08 0.12
+
+    //  extra 2nd layer bump and 2nd specular power
+    bump2SpecPowerMul 4.0 64 1.5
     
     //  reduce this to get less reflection
     fresnelMultiplier 1.0
@@ -23,7 +26,7 @@ material Water
     //  last .a is max opacity (refra)
     refractColour 1.0 1.0 1.0  0.75
     //  specular color and power
-    specColourAndPower 1.0 1.0 1.0  256
+    specColourAndPower 1.0 1.0 1.0  32
 
     //  waves anim speed
     speed 1.0
@@ -37,7 +40,6 @@ material Water
         
         cull_hardware none
         scene_blend alpha_blend
-        //depth_write off
         
         shader_properties
         {
@@ -51,6 +53,7 @@ material Water
             reflectColour $reflectColour
             refractColour $refractColour
             specColourAndPower $specColourAndPower
+            bump2SpecPowerMul $bump2SpecPowerMul
 		    speed $speed
         }
         
@@ -99,7 +102,9 @@ material Water_blue   // I3-Islands  J13-Tropic
     colour 0.002 0.37 0.45  0.0
     reflectColour 0.92 1.0 1.0
     refractColour 0.62 0.90 1.0  0.75
+
     specColourAndPower 1.0 1.0 1.0  32
+    bump2SpecPowerMul 6.0 12 0.4
     speed 1.0
 }
 
@@ -109,16 +114,15 @@ material Water_cyan   // G2-Coast
     choppyness_scale 0.15 25
     smallWaves_midWaves 0.15 0.1 0.3 0.15
     bigWaves 0.3 0.3
-    bump 1.5 0.12 0.13
+    bump 1.5 0.10 0.13
     fresnelMultiplier 1.0
 
     colour 0.002 0.45 0.37  0.0
-    reflectColour 0.92 1.0 1.0
+    reflectColour 0.88 1.0 1.0
     refractColour 0.62 1.0 0.9  0.75
-	//colour 0.4 0.7 0.6  0.0
-	//reflectColour 0.6 0.8 0.7
-	//refractColour 0.4 0.9 0.6  0.6
-	specColourAndPower 0.9 1.0 1.0  64
+
+	specColourAndPower 0.99 1.0 1.0  32
+    bump2SpecPowerMul 6.0 12 0.4
     speed 1.0
 }
 
@@ -130,6 +134,8 @@ material Water_green   // J11-Temple
 	reflectColour 0.6 0.8 0.35
 	refractColour 0.6 0.8 0.15  0.5
 	specColourAndPower 0.8 0.9 0.8  128
+
+    bump2SpecPowerMul 6.0 12 0.4
     speed 1.0
 }
 
@@ -142,6 +148,8 @@ material Water_sunset   // I4-Sunset
 	reflectColour 0.2 0.2 0.4
 	refractColour 0.2 0.2 0.4  0.0
 	specColourAndPower 0.3 0.3 0.3  64
+
+    bump2SpecPowerMul 6.0 12 0.4
     speed 1.0
 }
 
@@ -153,6 +161,8 @@ material Water_shore   // I5-Shore
 	reflectColour 0.85 0.9 0.78
 	refractColour 0.6 0.7 0.58  0.2
 	specColourAndPower 0.8 0.8 0.9  16
+
+    bump2SpecPowerMul 6.0 12 0.4
     speed 1.0
 }
 
@@ -169,6 +179,8 @@ material Water_dark   // V1-Dark
 	reflectColour 0.8 0.65 0.5
 	refractColour 0.4 0.65 0.8  0.0
 	specColourAndPower 1.0 0.8 0.3  96
+
+    bump2SpecPowerMul 6.0 12 0.4
     speed 1.0
 }
 
@@ -187,6 +199,8 @@ material Grease_jelly   // X1-Magic
 	reflectColour 0.3 0.3 0.2
 	refractColour 0.8 0.8 0.6  0.2
 	specColourAndPower 1.0 1.0 1.0  64
+
+    bump2SpecPowerMul 6.0 12 0.4
     speed 0.1
 }
 
@@ -206,6 +220,8 @@ material Mud_orange
 	reflectColour 0.6 0.4 0.1
 	refractColour 0.6 0.4 0.1  1.0
 	specColourAndPower 0.4 0.4 0.4  16
+
+    bump2SpecPowerMul 4.0 12 0.3
     speed 0.03
 }
 
@@ -223,6 +239,8 @@ material Mud_brown
 	reflectColour 0.4 0.34 0.1
 	refractColour 0.4 0.34 0.1 1.0
 	specColourAndPower 0.3 0.3 0.3  32
+
+    bump2SpecPowerMul 4.0 12 0.3
     speed 0.01
 }
 
@@ -240,5 +258,7 @@ material Mud_dark
 	reflectColour 0.3 0.22 0.11
 	refractColour 0.8 0.8 0.025  1.0
     specColourAndPower 0.35 0.35 0.35  64
+
+    bump2SpecPowerMul 4.0 12 0.3
     speed 0.001
 }
