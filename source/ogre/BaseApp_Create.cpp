@@ -442,6 +442,7 @@ bool BaseApp::setup()
 	mFactory->setGlobalSetting("lighting", "true");
 	mFactory->setGlobalSetting("terrain_composite_map", "false");
 	mFactory->setGlobalSetting("soft_particles", "false");
+	mFactory->setGlobalSetting("editor", "false");
 
 	mFactory->setSharedParameter("pssmSplitPoints", sh::makeProperty<sh::Vector3>(new sh::Vector3(0,0,0)));
 	mFactory->setSharedParameter("shadowFar_fadeStart", sh::makeProperty<sh::Vector4>(new sh::Vector4(0,0,0,0)));
