@@ -228,15 +228,15 @@ material Mud_orange
     choppyness_scale 0.025 5
     smallWaves_midWaves 0.025 0.15 0.06 0.1
     bigWaves 0.68 0.67
-    bump 2.2 0.2 0.01
+    bump 1.2 0.2 0.01
     fresnelMultiplier 1.0
 
     colour 0.6 0.4 0.1  1.0
 	reflectColour 0.6 0.4 0.1
 	refractColour 0.6 0.4 0.1  1.0
-	specColourAndPower 0.4 0.4 0.4  16
+	specColourAndPower 0.33 0.25 0.2  16
 
-    bump2SpecPowerMul 4.0 12 0.3
+    bump2SpecPowerMul 16.0 8 0.3
     speed 0.03
 }
 
@@ -244,18 +244,22 @@ material Mud_brown
 {
     parent Water
     WaterNormalMap water_nh.png
-    choppyness_scale 0.015 5
+    //choppyness_scale 0.015 5
+    choppyness_scale 0.063 5
     smallWaves_midWaves 0.015 0.15 0.03 0.1
-    bigWaves 0.03 0.2
+    bigWaves 0.2 0.2
     bump 2.2 0.2 0.01
     fresnelMultiplier 1.0
 
-    colour 0.4 0.34 0.1  1.0
-	reflectColour 0.4 0.34 0.1
+    //colour 0.54 0.38 0.1  1.0
+    colour 0.50 0.33 0.1  1.0
+    //colour 0.70 0.47 0.1  1.0
+	reflectColour 0.67 0.42 0.1
 	refractColour 0.4 0.34 0.1 1.0
-	specColourAndPower 0.3 0.3 0.3  32
+	//specColourAndPower 0.31 0.26 0.16  32
+	specColourAndPower 0.26 0.22 0.14  32
 
-    bump2SpecPowerMul 4.0 12 0.3
+    bump2SpecPowerMul 16.0 6.0 0.9
     speed 0.01
 }
 
