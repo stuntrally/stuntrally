@@ -146,9 +146,6 @@ void App::LoadTrackEv()
 	//  water RTT
 	UpdateWaterRTT(mCamera);
 	
-	/// generate materials
-	CreateRoadSelMtrs();
-
 	BltWorldInit();
 
 	LoadSurf();

@@ -58,6 +58,8 @@ public:
 	float gen_freq, gen_persist, gen_pow, gen_scale, gen_ofsx, gen_ofsy;  int gen_oct;
 	//  align ter
 	float al_w_mul, al_w_add, al_smooth;
+	//  tweak
+	std::string tweak_mtr;
 	
 //------------------------------------------
 	SETTINGS();

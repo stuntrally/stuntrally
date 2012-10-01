@@ -307,11 +307,13 @@ void App::InitGui()
 	
 	//---------------------  Skies  ---------------------
 	Cmb(cmbSky, "SkyCombo", comboSky);
+	String sMat = PATHMANAGER::GetDataPath()+"/material_templates/";  // path
 
-	GetMaterialsFromDef("skies.matdef");
+	GetMaterialsMat(sMat+"sky.mat");
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	const String& s = vsMaterials[i];
-		if (s != "")  cmbSky->addItem(s);  //LogO(s);
+		if (s != "" || s != "base_sky")
+			cmbSky->addItem(s);  //LogO(s);
 	}
 	//---------------------  Weather  ---------------------
 	Cmb(cmbRain1, "Rain1Cmb", comboRain1);  cmbRain1->addItem("");
@@ -353,9 +355,8 @@ void App::InitGui()
 	for (i=0; i < TRACKSURFACE::NumTypes; ++i)
 		cmbSurfType->addItem(csTRKsurf[i]);
 
-
 	//---------------------  Grass  ---------------------
-	GetMaterialsFromDef("grass.matdef");
+	GetMaterialsMat(sMat+"grass.mat");
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	String s = vsMaterials[i];
 		if (s.length() > 5)  //!= "grass")
@@ -377,8 +378,8 @@ void App::InitGui()
 
 
 	//---------------------  Roads  ---------------------
-	GetMaterialsFromDef("road.matdef");
-	GetMaterialsFromDef("road_pipe.matdef", false);
+	GetMaterialsMat(sMat+"road.mat");
+	GetMaterialsMat(sMat+"road_wall_pipe.mat",false);
 	for (size_t i=0; i<4; ++i)
 	{
 		Cmb(cmbRoadMtr[i], "RdMtr"+toStr(i+1), comboRoadMtr);
@@ -420,6 +421,18 @@ void App::InitGui()
 		objListSt->eventListChangePosition += newDelegate(this, &App::listObjsChngSt);
 		objListDyn->eventListChangePosition += newDelegate(this, &App::listObjsChngDyn);
 	}
+	
+	//---------------------  Tweak  ---------------------
+	MyGUI::ComboBoxPtr cmbTwk;
+	Cmb(cmbTwk, "TweakMtr", comboTweakMtr);
+
+	GetMaterialsMat(sMat+"water.mat");
+
+	for (size_t i=0; i < vsMaterials.size(); ++i)
+	{	String s = vsMaterials[i];
+			cmbTwk->addItem(s);
+	}
+	cmbTwk->setIndexSelected( cmbTwk->findItemIndexWith(pSet->tweak_mtr) );
 	//-----------------------------------------------------
 
 	InitGuiScrenRes();
@@ -456,13 +469,4 @@ void App::InitGui()
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time Init Gui: ") + toStr(dt) + " ms");
-}
-
-
-void App::CreateRoadSelMtrs()
-{
-	GetMaterialsFromDef("road.matdef");
-	GetMaterialsFromDef("road_pipe.matdef", false);
-	for (size_t i=0; i < vsMaterials.size(); ++i)
-		createRoadSelMtr(vsMaterials[i]);
 }

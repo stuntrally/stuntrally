@@ -148,7 +148,7 @@ protected:
 		
 	void changeShadows(), UpdPSSMMaterials();
 public:
-	Ogre::Vector4 splitPoints; void createRoadSelMtr(Ogre::String sMtrName), CreateRoadSelMtrs();
+	Ogre::Vector4 splitPoints;
 protected:
 	Ogre::ShadowCameraSetupPtr mPSSMSetup;
 
@@ -268,7 +268,7 @@ protected:
 	
 	//  tweak page
 	void CreateGUITweakMtr(), slTweak(SL),edTweak(MyGUI::EditPtr);
-	void TweakSetMtrPar(std::string name, float val);
+	void TweakSetMtrPar(std::string name, float val);  void comboTweakMtr(CMB);
 	
 	//  track
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const Ogre::String& sTrack, float time, bool champ=false), ReadTrkStats();
@@ -472,8 +472,9 @@ protected:
 	bool TrackExists(Ogre::String name);  // util
 
 	std::vector<Ogre::String> vsMaterials;
-	void GetMaterials(Ogre::String filename, bool clear=true, Ogre::String type="material");
 	void GetMaterialsFromDef(Ogre::String filename, bool clear=true);
+	void GetMaterials(Ogre::String filename, bool clear=true, Ogre::String type="material");  // ogre resource
+	void GetMaterialsMat(Ogre::String filename, bool clear=true, Ogre::String type="material");  // direct path+file
 };
 
 #endif

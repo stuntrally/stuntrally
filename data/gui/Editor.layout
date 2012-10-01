@@ -3424,14 +3424,21 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Tweak}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
-                <Widget type="ScrollView" skin="ScrollViewEmpty" position="30 10 700 520" name="TweakView">
-                    <Property key="CanvasSize" value="740 1200"/>
+				<Widget type="TextBox" skin="TextBox" position="32 13 375 24">
+					<Property key="Caption" value="#{MaterialProperties}"/>
+					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
-                    <Widget type="TextBox" skin="TextBox" position="10 10 375 25">
-                        <Property key="Caption" value="#{MaterialProperties}"/>
-						<Property key="TextColour" value="0.8 0.9 1.0"/>
-                    </Widget>
-                </Widget>
+				</Widget>
+				<Widget type="ComboBox" skin="ComboBox" position="256 10 164 24" name="TweakMtr">
+					<Property key="Colour" value="0.7 0.85 1"/>
+					<Property key="TextColour" value="0.7 0.85 1"/>
+					<Property key="ReadOnly" value="true"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="ScrollView" skin="ScrollViewEmpty" position="30 50 700 480" name="TweakView">
+					<Property key="CanvasSize" value="740 1200"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
 			</Widget>
 		</Widget>
 	</Widget>

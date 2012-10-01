@@ -570,6 +570,50 @@ void App::GetMaterials(String filename, bool clear, String type)
 	stream->close();
 }
 
+void App::GetMaterialsMat(String filename, bool clear, String type)
+{
+	if (clear)
+		vsMaterials.clear();
+	
+	std::ifstream stream(filename.c_str(), std::ifstream::in);
+	if (!stream.fail())
+	{	try
+		{	while(!stream.eof())
+			{
+				char ch[256+2];
+				stream.getline(ch,256);
+				std::string line = ch;
+				StringUtil::trim(line);
+ 
+				if (StringUtil::startsWith(line, type/*"material"*/))
+				{
+					//LogO(line);
+					Ogre::vector<String>::type vec = StringUtil::split(line," \t:");
+					bool skipFirst = true;
+					for (Ogre::vector<String>::type::iterator it = vec.begin(); it < vec.end(); ++it)
+					{
+						std::string match = (*it);
+						StringUtil::trim(match);
+						if (!match.empty())
+						{
+							if (skipFirst)
+							{	skipFirst = false;  continue;	}
+
+							//LogO(match);
+							vsMaterials.push_back(match);						
+							break;
+						}
+					}
+			}	}
+		}catch (Ogre::Exception &e)
+		{
+			StringUtil::StrStreamType msg;
+			msg << "Exception: FILE: " << __FILE__ << " LINE: " << __LINE__ << " DESC: " << e.getFullDescription() << std::endl;
+			LogO(msg.str());
+	}	}
+	stream.close();
+}
+
 
 ///  system file, dir
 //-----------------------------------------------------------------------------------------------------------

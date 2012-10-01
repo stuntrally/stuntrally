@@ -71,6 +71,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "teralign.w_mul", al_w_mul);			Param(c,w, "teralign.smooth", al_smooth);
 	Param(c,w, "teralign.w_add", al_w_add);
+	Param(c,w, "tweak.w_add", tweak_mtr);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
@@ -101,7 +102,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	gen_scale(20.f), gen_freq(0.2f), gen_oct(3), gen_persist(0.4f),
 	gen_pow(1.5f), gen_ofsx(0.f), gen_ofsy(0.f),
 	//  align ter
-	al_w_mul(1.f), al_w_add(8.f), al_smooth(2.f)
+	al_w_mul(1.f), al_w_add(8.f), al_smooth(2.f),
+	tweak_mtr("")
 {
 	gui.track = "J1-T";
 	gui.track_user = false;

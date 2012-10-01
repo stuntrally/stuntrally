@@ -18,16 +18,13 @@ using namespace Ogre;
 
 ///  gui tweak page, material properties
 //------------------------------------------------------------------------------------------------------------
-const std::string sMtr = "Water_cyan";  //"Mud_orange";  //"Water_blue";  //combo, changable..
-
 void App::CreateGUITweakMtr()
 {
 	ScrollView* view = mGUI->findWidget<ScrollView>("TweakView",false);
 	if (!view)  return;
 	
-	// clear last view ..
-
-	int y = 36;
+	//  clear last view
+	mGUI->destroyWidgets(view->getEnumerator());
 
 	#define setOrigPos(widget) \
 		widget->setUserString("origPosX", toStr(widget->getPosition().left)); \
@@ -36,8 +33,11 @@ void App::CreateGUITweakMtr()
 		widget->setUserString("origSizeY", toStr(widget->getSize().height)); \
 		widget->setUserString("RelativeTo", "OptionsWnd");
 
-	sh::MaterialInstance* mat = mFactory->getMaterialInstance(sMtr);
+	if (pSet->tweak_mtr == "")  return;
+	sh::MaterialInstance* mat = mFactory->getMaterialInstance(pSet->tweak_mtr);
+	//if (!mat)  return;
 	
+	int y = 0;
 	const sh::PropertyMap& props = mat->listProperties();
 	for (sh::PropertyMap::const_iterator it = props.begin(); it != props.end(); ++it)
 	{
@@ -113,7 +113,7 @@ void App::slTweak(Slider* sl, float val)
 	TweakSetMtrPar(name, val);
 }
 
-void App::edTweak(MyGUI::EditPtr ed)
+void App::edTweak(EditPtr ed)
 {
 	std::string name = ed->getName();  name = name.substr(0,name.length()-1);  // ends with E
 	float val = s2r(ed->getCaption());
@@ -139,7 +139,7 @@ void App::TweakSetMtrPar(std::string name, float val)
 	}
 	//val = powf(val * 2.f, 2.f);  //v
 
-	sh::MaterialInstance* mat = mFactory->getMaterialInstance(sMtr);
+	sh::MaterialInstance* mat = mFactory->getMaterialInstance(pSet->tweak_mtr);
 	if (id == -1)  // 1 float
 		mat->setProperty(prop, sh::makeProperty<sh::FloatValue>(new sh::FloatValue(val)));
 	else
@@ -164,4 +164,11 @@ void App::TweakSetMtrPar(std::string name, float val)
 			}	break;
 		}
 	}
+}
+
+//  pick material from combo
+void App::comboTweakMtr(ComboBoxPtr cmb, size_t val)
+{
+	pSet->tweak_mtr = cmb->getItemNameAt(val);
+	CreateGUITweakMtr();
 }
