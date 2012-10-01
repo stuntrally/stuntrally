@@ -29,6 +29,8 @@
 
 #define SOFT_PARTICLES (@shPropertyBool(soft_particles) && @shGlobalSettingBool(soft_particles))
 
+#define SELECTED_GLOW @shGlobalSettingBool(editor)
+
 
 #if (TERRAIN_LIGHT_MAP) || (ENV_MAP) || (SOFT_PARTICLES)
 #define NEED_WORLD_MATRIX
@@ -269,6 +271,11 @@
 #endif
 
 
+#if SELECTED_GLOW
+        shUniform(float, isSelected) @shAutoConstant(isSelected, custom, 1)
+        shUniform(float, time) @shAutoConstant(time, time, 1)
+#endif
+
 #if SHADOWS
     @shForeach(3)
         shInput(float4, lightSpacePos@shIterator)
@@ -438,6 +445,9 @@
         shOutputColour(0).a *= depthAlpha;
 #endif
 
+#if SELECTED_GLOW
+        shOutputColour(0).xyz += isSelected * (float3(0.14, 0.22, 0.36) * (0.5f + 0.1f * cos(3.f * time)));
+#endif
 
 #if MRT
         shOutputColour(1) = float4(UV.w, normalize(viewNormal.xyz));
