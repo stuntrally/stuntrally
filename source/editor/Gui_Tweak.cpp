@@ -24,7 +24,8 @@ void App::CreateGUITweakMtr()
 	if (!view)  return;
 	
 	//  clear last view
-	mGUI->destroyWidgets(view->getEnumerator());
+	MyGUI::EnumeratorWidgetPtr widgets = view->getEnumerator ();
+	mGUI->destroyWidgets(widgets);
 
 	#define setOrigPos(widget) \
 		widget->setUserString("origPosX", toStr(widget->getPosition().left)); \
