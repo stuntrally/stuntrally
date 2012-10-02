@@ -20,10 +20,11 @@ material Water
     fresnelMultiplier 1.0
 
     //  colors  * * *
-    //  last .a is alpha (1 for mud)
+    //  .a is alpha (1 for mud)
     colour 0.45 0.93 0.80  0.0
-    reflectColour 1.0 1.0 1.0
-    //  last .a is max opacity (refra)
+    //  .a is intensity (1 for water)
+    reflectColour 1.0 1.0 1.0  1.0
+    //  .a is max opacity (refraction)
     refractColour 1.0 1.0 1.0  0.75
     //  specular color and power
     specColourAndPower 1.0 1.0 1.0  32
@@ -100,7 +101,7 @@ material Water_blue   // I3-Islands  J13-Tropic
     fresnelMultiplier 1.0
 
     colour 0.002 0.37 0.45  0.0
-    reflectColour 0.92 1.0 1.0
+    reflectColour 0.92 1.0 1.0  1.0
     refractColour 0.62 0.90 1.0  0.75
 
     specColourAndPower 1.0 1.0 1.0  32
@@ -118,7 +119,7 @@ material Water_cyan   // G2-Coast
     fresnelMultiplier 1.0
 
     colour 0.002 0.45 0.37  0.0
-    reflectColour 0.88 1.0 1.0
+    reflectColour 0.88 1.0 1.0  1.0
     refractColour 0.62 1.0 0.9  0.75
 
 	specColourAndPower 0.99 1.0 1.0  32
@@ -132,15 +133,15 @@ material Water_green   // J11-Temple
     choppyness_scale 0.15 25
     smallWaves_midWaves 0.15 0.1 0.3 0.15
     bigWaves 0.3 0.3
-    bump 1.5 0.08 0.12
+    bump 1.5 0.10 0.16
     fresnelMultiplier 1.0
 
-    colour 0.13 0.16 0.06  0.0
-	reflectColour 0.6 0.8 0.35
-	refractColour 0.6 0.8 0.15  0.5
-	specColourAndPower 0.8 0.9 0.8  128
+    colour 0.29 0.35 0.23  0.0
+	reflectColour 0.8 0.94 0.33  0.6
+	refractColour 0.65 0.74 0.35  0.53
+	specColourAndPower 0.43 0.53 0.42  256
 
-    bump2SpecPowerMul 6.0 12 0.4
+    bump2SpecPowerMul 8.0 4 0.15
     speed 1.0
 }
 
@@ -154,9 +155,9 @@ material Water_sunset   // I4-Sunset
     bump 1.5 0.08 0.12
     fresnelMultiplier 1.0
 
-    colour 0.80 0.92 1.0  0.0
-	reflectColour 1.0 0.82 0.5
-	refractColour 0.85 0.89 0.99  0.0
+    colour 0.38 0.60 0.78  0.0
+	reflectColour 1.0 0.75 0.57  0.9
+	refractColour 0.85 0.89 0.99  0.76
 	specColourAndPower 1.0 0.84 0.3  64
 
     bump2SpecPowerMul 6.0 16 0.8
@@ -173,8 +174,8 @@ material Water_shore   // I5-Shore
     fresnelMultiplier 1.0
 
     colour 1.0 1.0 1.0  0.0
-	reflectColour 0.85 0.9 0.78
-	refractColour 0.6 0.7 0.58  0.2
+	reflectColour 0.85 0.9 0.78  1.0
+	refractColour 0.6 0.7 0.58  0.76
 	specColourAndPower 0.8 0.8 0.9  16
 
     bump2SpecPowerMul 6.0 12 0.4
@@ -187,12 +188,12 @@ material Water_dark   // V1-Dark
     choppyness_scale 0.2 40
     smallWaves_midWaves 0.03 0.2 0.3 0.15
     bigWaves 0.7 0.3
-    bump 1.5 0.08 0.12
+    bump 1.5 0.16 0.12
     fresnelMultiplier 1.0
     
     colour 0.06 0.14 0.2  0.0
-	reflectColour 0.8 0.65 0.5
-	refractColour 0.4 0.65 0.8  0.0
+	reflectColour 0.66 0.59 0.23  1.0
+	refractColour 0.4 0.65 0.8  0.76
 	specColourAndPower 1.0 0.8 0.3  96
 
     bump2SpecPowerMul 6.0 12 0.4
@@ -207,11 +208,11 @@ material Grease_jelly   // X1-Magic
     choppyness_scale 0.15 25
     smallWaves_midWaves 0.15 0.1 0.3 0.15
     bigWaves 0.3 0.3
-    bump 1.5 0.08 0.12
+    bump 1.5 0.32 0.12
     fresnelMultiplier 1.0
 
-    colour 0.58 0.45 0.9  1.0
-	reflectColour 0.3 0.3 0.2
+    colour 0.46 0.33 0.66  1.0
+	reflectColour 0.3 0.3 0.2  1.0
 	refractColour 0.8 0.8 0.6  1.0
 	specColourAndPower 1.0 1.0 1.0  64
 
@@ -228,11 +229,11 @@ material Mud_orange
     choppyness_scale 0.025 5
     smallWaves_midWaves 0.025 0.15 0.06 0.1
     bigWaves 0.68 0.67
-    bump 1.2 0.2 0.01
+    bump 1.2 0.22 0.01
     fresnelMultiplier 1.0
 
-    colour 0.6 0.4 0.1  1.0
-	reflectColour 0.6 0.4 0.1
+    colour 0.63 0.44 0.04  1.0
+	reflectColour 0.6 0.4 0.1  0.57
 	refractColour 0.6 0.4 0.1  1.0
 	specColourAndPower 0.33 0.25 0.2  16
 
@@ -244,22 +245,18 @@ material Mud_brown
 {
     parent Water
     WaterNormalMap water_nh.png
-    //choppyness_scale 0.015 5
     choppyness_scale 0.063 5
     smallWaves_midWaves 0.015 0.15 0.03 0.1
     bigWaves 0.2 0.2
-    bump 2.2 0.2 0.01
+    bump 1.2 0.44 0.01
     fresnelMultiplier 1.0
 
-    //colour 0.54 0.38 0.1  1.0
-    colour 0.50 0.33 0.1  1.0
-    //colour 0.70 0.47 0.1  1.0
-	reflectColour 0.67 0.42 0.1
+    colour 0.50 0.33 0.10  1.0
+	reflectColour 0.64 0.42 0.13  0.2
 	refractColour 0.4 0.34 0.1 1.0
-	//specColourAndPower 0.31 0.26 0.16  32
 	specColourAndPower 0.26 0.22 0.14  32
 
-    bump2SpecPowerMul 16.0 6.0 0.9
+    bump2SpecPowerMul 16.0 2.0 0.9
     speed 0.01
 }
 
@@ -274,10 +271,8 @@ material Mud_dark
     fresnelMultiplier 1.0
 
 	colour 0.2 0.17 0.05  1.0
-	reflectColour 0.3 0.22 0.11
+	reflectColour 0.3 0.22 0.11  1.0
 	refractColour 0.8 0.8 0.025  1.0
-    //specColourAndPower 0.35 0.35 0.35  64
-    //specColourAndPower 0.34 0.29 0.20  64
     specColourAndPower 0.31 0.27 0.18  64
 
     bump2SpecPowerMul 12.0 2.0 0.4

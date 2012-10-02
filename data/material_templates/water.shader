@@ -117,7 +117,7 @@
 		shUniform(float, fresnelMultiplier)  @shUniformProperty1f(fresnelMultiplier, fresnelMultiplier)
 		shUniform(float, far)  @shAutoConstant(far, far_clip_distance)
 
-		shUniform(float3, reflectColour)  @shUniformProperty3f(reflectColour, reflectColour)
+		shUniform(float4, reflectColour)  @shUniformProperty4f(reflectColour, reflectColour)
 		shUniform(float4, refractColour)  @shUniformProperty4f(refractColour, refractColour)
 	
 		#if SCREEN_REFLECTION
@@ -155,6 +155,8 @@
         shUniform(float4, lightDiffuse)  @shAutoConstant(lightDiffuse, light_diffuse_colour)
         shUniform(float4, lightSpecular)  @shAutoConstant(lightSpecular, light_specular_colour)
 		
+
+	//------------------------------------------------------------------------------------------------------------------------------
 
 	SH_START_PROGRAM
 	{
@@ -202,16 +204,16 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 		
 		
 		float isUnderwater = (cameraPos.y > 0) ? 0.0 : 1.0;
-		//float isUnderwater = 0;
 
 	   
 		// sunlight scattering
+		/*
 		float3 pNormal = float3(0,1,0);
 		float3 lR = reflect(lVec, lNormal);
 		float3 llR = reflect(lVec, pNormal);
 		
 		float s = shSaturate(dot(lR, vVec)*2.0-1.2);
-		/*
+
 		float lightScatter = shSaturate(dot(-lVec,lNormal)*0.7+0.3) * s * SCATTER_AMOUNT * waterSunFade_sunHeight.x * shSaturate(1.0-exp(-waterSunFade_sunHeight.y));
 		float3 scatterColour = shLerp(float3(SCATTER_COLOUR)*float3(1.0,0.4,0.0), SCATTER_COLOUR, shSaturate(1.0-exp(-waterSunFade_sunHeight.y*SUN_EXT)));
 		*/
@@ -227,8 +229,9 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 		// reflection
 		float3 R = reflect(vVec, normal);
 		#if SCREEN_REFLECTION
-			float3 reflection = reflectColour * shSample(reflectionMap, screenCoords+(normal.xz*REFL_BUMP)).rgb;
+			float3 reflection = reflectColour.rgb * shSample(reflectionMap, screenCoords+(normal.xz*REFL_BUMP)).rgb;
 		#else
+			// todo..
 			float3 reflNormal = normalize(float3(normal.x * 0.3, normal.y, normal.z * 0.3));
 			R = reflect(vVec, reflNormal);
 			const float PI = 3.1415926536f;
@@ -240,15 +243,13 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 			#endif
 			refl2.x = 1 - refl2.x / (2*PI);  // yaw   0..1
 			refl2.y = 1 - asin(R.y) / PI*2;  // pitch 0..1
-			float3 reflection = reflectColour * shSample(reflectionSkyMap, refl2).rgb;
+			float3 reflection = reflectColour.rgb * shSample(reflectionSkyMap, refl2).rgb;
 		#endif
 		
 		
+		float shoreFade = depthTex.r;  // smooth transition to shore
 		
-		// smooth transition to shore
-		float shoreFade = depthTex.r;
-		
-		// refraction
+		//  Refraction
 		#if SCREEN_REFRACTION
 			float3 refraction = float3(0,0,0);
 			refraction.r = shSample(refractionMap, (screenCoords-shoreFade*(normal.xz*REFR_BUMP))*1.0).r;
@@ -260,26 +261,29 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 		#endif
 	
 	
-		// specular
+		//  specular
 		float specular = pow(max(dot(R, lVec), 0.0), specColourAndPower.w);
 		float3 waterColour = waterClr.rgb * lightDiffuse.rgb;
 
-		// specular2
+		//  specular2
 		R = reflect(vVec, normalX2);  // n2
 		specular += pow(max(dot(R, lVec), 0.0), bump2SpecPowerMul.y) * bump2SpecPowerMul.z;
 		
+		reflection = shLerp( waterColour, reflection,  reflectColour.a);  // reflection instensity
 
-		//shOutputColour(0).rgb = shLerp(  shLerp(refraction, scatterColour, lightScatter), reflection, fresnel);
- 		
-											//_ no refraction at distant
+		
+		//  FINAL Lerp							//_ no refraction at distant
+		//---------------------------------------------------------------
 		float depthAmount = depthTex.g * shLerp( refractColour.a, 1, fresnel) * (1-isUnderwater);
-		#if SCREEN_REFRACTION																	// mud no refraction inside
+		#if SCREEN_REFRACTION
 			float3 clr = refractColour.rgb * shLerp( refraction, waterColour,  depthAmount);
-			refraction = waterClr.a > 0.5f ? shLerp( clr,  waterColour, refractColour.a) : clr;
+			refraction = waterClr.a > 0.5f ? shLerp( clr,  waterColour, refractColour.a) : clr;  // no refraction inside mud
+
 			shOutputColour(0).rgb = shLerp( refraction, reflection,  fresnel);
 			shOutputColour(0).rgb = shLerp( refraction, shOutputColour(0).rgb,  shoreFade);
 			shOutputColour(0).a = shoreFade;
 		#else
+			// todo..
 			shOutputColour(0).rgb = refractColour.rgb * shLerp( reflection, waterColour,  depthAmount);  //* (1-fresnel)
 			//shOutputColour(0).rgb = shLerp( waterColour, shOutputColour(0).rgb,  shoreFade);
 			shOutputColour(0).a = shSaturate(fresnel * shoreFade + depthAmount);
@@ -289,8 +293,8 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 		//shOutputColour(0).rgb = shOutputColour(0).rgb*0.001 + waterClr.a * float3(1,1,1);//test
 				
 
-		// fog
-		if (isUnderwater == 1)  // todo .a ..
+		//  fog
+		if (isUnderwater == 1)  // todo..
 		{
 			float waterSunGradient = dot(-vVec, -lVec);
 			waterSunGradient = shSaturate(pow(waterSunGradient*0.7+0.3,2.0));  
