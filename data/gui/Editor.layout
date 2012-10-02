@@ -553,6 +553,7 @@
 		<Property key="Visible" value="true"/>
 		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Stretch" layer="Back" name="TabWndEdit">
 			<Property key="InheritsAlpha" value="false"/>
+			<Property key="SmoothShow" value="false"/>
 			<Property key="Colour" value="0.7 0.9 1"/>
 			<UserString key="RelativeTo" value="EditorWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
@@ -1058,6 +1059,7 @@
 				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="160 38 340 20" name="TabHMapSize">
 					<Property key="Colour" value="0.7 0.9 1"/>
+					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipTerVertCount}"/>
 					<Widget type="TabItem" skin="" position="2 24 334 -8">
@@ -1096,6 +1098,7 @@
 					<Property key="Colour" value="0.7 0.9 1"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipTerLayers}"/>
+					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 554 -4">
 						<Property key="Caption" value="#{Brushes}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
@@ -1463,6 +1466,7 @@
 					<Property key="Colour" value="0.7 0.9 1"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipTerLayers}"/>
+					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 554 -4">
 						<Property key="Caption" value="#{Layer} 1"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
@@ -1557,6 +1561,7 @@
 					<Property key="ButtonAutoWidth" value="true"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
+					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 730 264">
 						<Property key="Caption" value="#{BlendMap}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
@@ -1889,6 +1894,7 @@
 				<Widget type="TabControl" skin="TabControl" position="16 15 752 497" name="SubTab">
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
+					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 746 469">
 						<Property key="Caption" value="#{Properties}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
@@ -2181,6 +2187,7 @@
 							<Property key="Colour" value="0.6 0.8 0.8"/>
 							<Property key="Visible" value="true"/>
 							<Property key="ButtonWidth" value="40"/>
+							<Property key="SmoothShow" value="false"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipVegetGroups}"/>
 							<Widget type="TabItem" skin="" position="2 24 402 -4">
@@ -2800,6 +2807,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.7 0.9 1"/>
 			<UserString key="RelativeTo" value="OptionsWnd"/>
+			<Property key="SmoothShow" value="false"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="&lt;#{BackMenu}"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
@@ -2811,6 +2819,7 @@
 				<Widget type="TabControl" skin="TabControl" position="16 15 744 460">
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#{Video}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -2907,6 +2916,7 @@
 					<Property key="ButtonAutoWidth" value="true"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 738 372">
 						<Property key="Caption" value="#{Materials}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -3453,6 +3463,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.7 0.9 1"/>
 			<UserString key="RelativeTo" value="HelpWnd"/>
+			<Property key="SmoothShow" value="false"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="&lt;#{BackMenu}"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
@@ -3481,6 +3492,7 @@
 				<Widget type="TabControl" skin="TabControl" position="30 24 720 472" name="SubTab">
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<UserString key="RelativeTo" value="HelpWnd"/>
+					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 714 444">
 						<Property key="Caption" value="#{InputMain}"/>
 						<UserString key="RelativeTo" value="HelpWnd"/>

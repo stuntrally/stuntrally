@@ -82,6 +82,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.7 0.85 1"/>
 			<UserString key="RelativeTo" value="GameWnd"/>
+			<Property key="SmoothShow" value="false"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="&lt;#{BackMenu}"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
@@ -509,6 +510,7 @@
 				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="176 16 568 20" name="tabPlayer">
 					<UserString key="RelativeTo" value="GameWnd"/>
+					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 562 -8">
 						<Property key="Caption" value="#{Player} 1"/>
 						<UserString key="RelativeTo" value="GameWnd"/>
@@ -554,6 +556,7 @@
 				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="32 210 200 20" name="tabCarTires">
 					<UserString key="RelativeTo" value="GameWnd"/>
+					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 194 -8">
 						<Property key="Caption" value="#{Gravel}"/>
 						<UserString key="RelativeTo" value="GameWnd"/>
@@ -713,6 +716,7 @@
 				<UserString key="RelativeTo" value="GameWnd"/>
 				<Widget type="TabControl" skin="TabControl" position="16 15 744 497" name="tabsNet">
 					<Property key="Colour" value="0.73 0.88 1"/>
+					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 738 469">
 						<Property key="Caption" value="#{NetServer}"/>
@@ -1246,6 +1250,7 @@
 		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWndReplays">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.7 0.85 1"/>
+			<Property key="SmoothShow" value="false"/>
 			<UserString key="RelativeTo" value="ReplaysWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="&lt;#{BackMenu}"/>
@@ -1373,6 +1378,7 @@
 		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWndHelp">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.7 0.85 1"/>
+			<Property key="SmoothShow" value="false"/>
 			<UserString key="RelativeTo" value="HelpWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="&lt;#{BackMenu}"/>
@@ -1491,6 +1497,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.7 0.85 1"/>
 			<UserString key="RelativeTo" value="OptionsWnd"/>
+			<Property key="SmoothShow" value="false"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="&lt;#{BackMenu}"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
@@ -1502,6 +1509,7 @@
 				<Widget type="TabControl" skin="TabControl" position="16 15 744 460" name="SubTab">
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#{Video}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -1807,6 +1815,7 @@
 				<Widget type="TabControl" skin="TabControl" position="16 65 744 400" name="SubTab">
 					<Property key="ButtonAutoWidth" value="true"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
+					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 738 372">
 						<Property key="Caption" value="#{Materials}"/>
@@ -2219,6 +2228,7 @@
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Widget type="TabControl" skin="TabControl" position="16 15 744 460" name="SubTab">
 					<Property key="Colour" value="0.73 0.88 1"/>
+					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#{HUD}"/>
@@ -2472,6 +2482,7 @@
 				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="16 15 504 520" name="InputTab">
 					<Property key="Colour" value="0.73 0.88 1"/>
+					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="548 490 244 20" name="axisOutput">
