@@ -34,6 +34,8 @@ material Water
     //  wave normal texture
     WaterNormalMap water_nm.png
 
+    receives_shadows true
+
     pass
     {
         vertex_program water_vertex
@@ -56,6 +58,7 @@ material Water
             specColourAndPower $specColourAndPower
             bump2SpecPowerMul $bump2SpecPowerMul
 		    speed $speed
+		    receives_shadows $receives_shadows
         }
         
         texture_unit reflectionMap
@@ -86,6 +89,25 @@ material Water
             texture waterDepth.png
             tex_address_mode border
             tex_border_colour 1 1 1
+        }
+		
+		texture_unit shadowMap0
+        {
+            content_type shadow
+            tex_address_mode clamp
+            filtering none
+        }
+        texture_unit shadowMap1
+        {
+            content_type shadow
+            tex_address_mode clamp
+            filtering none
+        }
+        texture_unit shadowMap2
+        {
+            content_type shadow
+            tex_address_mode clamp
+            filtering none
         }
     }
 }
