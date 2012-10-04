@@ -1,4 +1,4 @@
-//  base
+//  base  (for all fluids)
 //--------------------------------------------------------
 material Water
 {
@@ -145,6 +145,24 @@ material Water_green   // J11-Temple
     speed 1.0
 }
 
+
+material Water_white   // 0W2-qp
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.08 0.12
+    fresnelMultiplier 1.0
+
+    colour 0.49 0.69 0.78  0.0
+	reflectColour 0.91 0.93 0.94  0.9
+	refractColour 0.76 0.89 0.99  0.76
+	specColourAndPower 0.98 1.0 1.0  64
+
+    bump2SpecPowerMul 6.0 16 0.8
+    speed 1.0
+}
 
 material Water_sunset   // I4-Sunset
 {

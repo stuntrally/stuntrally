@@ -143,7 +143,7 @@ void App::TweakSetMtrPar(std::string name, float val)
 	//val = powf(val * 2.f, 2.f);  //v
 
 	sh::MaterialInstance* mat = mFactory->getMaterialInstance(pSet->tweak_mtr);
-	if (id == -1)  // 1 float
+	if (size == 1)  // 1 float
 		mat->setProperty(prop, sh::makeProperty<sh::FloatValue>(new sh::FloatValue(val)));
 	else
 	{
