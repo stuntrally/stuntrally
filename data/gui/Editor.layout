@@ -3732,6 +3732,11 @@
 							<Property key="Caption" value="#{InputRoadStats}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 364 320 20">
+							<Property key="TextColour" value="0.4 0.5 0.6"/>
+							<Property key="Caption" value="#{InputRoadLooped}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 94 320 20">
 							<Property key="Caption" value="#{InputRoadDel}"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
