@@ -59,7 +59,9 @@ void App::Rnd2TexSetup()
 			rvp->setOverlaysEnabled(false);  rvp->setSkiesEnabled(full);
 			rvp->setVisibilityMask(visMask[i]);
 			rvp->setShadowsEnabled(false);
-			rvp->setMaterialScheme ("reflection");
+
+			if (i != 3)
+				rvp->setMaterialScheme ("reflection");
 		}
 		///  minimap  . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 		if (r.ndMini)  mSceneMgr->destroySceneNode(r.ndMini);
