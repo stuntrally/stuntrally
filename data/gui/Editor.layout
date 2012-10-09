@@ -2434,31 +2434,37 @@
 				<Widget type="ComboBox" skin="ComboBox" position="60 64 136 24" name="RdMtr1">
 					<Property key="Colour" value="0.5 1 1"/>
 					<Property key="TextColour" value="0.5 1 1"/>
+					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="60 88 136 24" name="RdMtr2">
 					<Property key="TextColour" value="0.5 1 1"/>
 					<Property key="Colour" value="0.5 1 1"/>
+					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="60 112 136 24" name="RdMtr3">
 					<Property key="Colour" value="0.5 1 1"/>
 					<Property key="TextColour" value="0.5 1 1"/>
+					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="60 136 136 24" name="RdMtr4">
 					<Property key="TextColour" value="0.5 1 1"/>
 					<Property key="Colour" value="0.5 1 1"/>
+					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="236 64 136 24" name="RdMtrP1">
 					<Property key="Colour" value="1 1 0.5"/>
 					<Property key="TextColour" value="1 1 0.5"/>
+					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="236 88 136 24" name="RdMtrP2">
 					<Property key="Colour" value="1 1 0.5"/>
 					<Property key="TextColour" value="1 1 0.5"/>
+					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="236 112 136 24" name="RdMtrP3">
@@ -2469,6 +2475,7 @@
 				<Widget type="ComboBox" skin="ComboBox" position="236 136 136 24" name="RdMtrP4">
 					<Property key="Colour" value="1 1 0.5"/>
 					<Property key="TextColour" value="1 1 0.5"/>
+					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="236 32 136 24">
