@@ -31,6 +31,8 @@ fragment_program pipe_fp cg
 		param_named_auto camPos camera_position
 		param_named_auto lightPos0 light_position 0
 		param_named_auto iTWMat inverse_transpose_world_matrix
+		param_named_auto isSelected custom 1
+		param_named_auto time time 1
 	}
 }
 

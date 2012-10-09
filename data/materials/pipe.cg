@@ -41,6 +41,8 @@ float4 main_fp(PIn IN,
 	uniform float4 lightPos0,  uniform float3 camPos,
 	uniform float4x4 iTWMat, 
 	uniform sampler2D diffuseMap : TEXUNIT0,
+	uniform float isSelected,
+	uniform float time,
 	uniform sampler2D normalMap : TEXUNIT1): COLOR0
 {
 	float3 ldir = normalize(lightPos0.xyz - (lightPos0.w * IN.wp.xyz));
@@ -58,5 +60,9 @@ float4 main_fp(PIn IN,
 	float3 clrSUM = diffuseTex.rgb * ambient * globalAmbient + diffC + specC;
 	clrSUM = lerp(clrSUM, fogColor, IN.wp.w);
 	float alpha = alphaPars.x + alphaPars.y * diffuse.r + alphaPars.z * specular.r + (1 - diffuseTex.r);
+	
+    clrSUM += isSelected * (float3(0.14, 0.22, 0.36) * (0.5f + 0.1f * cos(3.f * time)));
+	alpha += isSelected * (0.36 * (0.5f + 0.1f * cos(3.f * time)));
+	
 	return float4(clrSUM, alpha);
 }
