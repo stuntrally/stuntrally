@@ -81,10 +81,13 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 	//  update 4 segs only (fast)
 	if (iDirtyId != -1 && segs >= 4)
 	{
-		// else !isLooped case ...
-		sMin =/* max(0,*/ iDirtyId-2;
-		sMax =/* min(segs,*/ iDirtyId+2;
+		sMin = iDirtyId-2;
+		sMax = iDirtyId+2;
+		if (!isLooped)
+			sMin = std::max(0, sMin);
 	}
+	if (!isLooped)  // 1 seg less
+		sMax = std::min(segs-1, sMax);
 	
 	//  full rebuild
 	QTimer ti;  ti.update();  /// time	
@@ -104,8 +107,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 	if (segs > 2)
 	for (int seg=0; seg < segs; ++seg)
 	{
-		//int seg1 = (seg+1) % segs;  // next
-		int seg0 = (seg-1+segs) % segs;  // prev
+		int seg0 = getPrev(seg);
 				
 		if (mP[seg].aType == AT_Manual)
 		{	mP[seg].aYaw = mP[seg].mYaw;  mP[seg].aRoll = mP[seg].mRoll;  }
@@ -161,8 +163,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		LogR("--- seg prepass ---");
 		for (int seg=0; seg < segs; ++seg)
 		{
-			int seg1 = (seg+1) % segs;  // next
-			int seg0 = (seg-1+segs) % segs;  // prev
+			int seg1 = getNext(seg), seg0 = getPrev(seg);
 
 			//  width steps  --
 			Real sp = mP[seg].pipe, sp1 = mP[seg1].pipe, sp0 = mP[seg0].pipe;
@@ -258,7 +259,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		LogR("--- seg prepass2  viwLS  ---");
 		for (int seg=0; seg < segs; ++seg)
 		{
-			int seg1 = (seg+1) % segs;  // next
+			int seg1 = getNext(seg);
 			int il = viL[seg];
 			vector<int> viwL;
 
@@ -306,7 +307,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		while (sNum > 0)
 		{
 			int seg = (segM + segs) % segs;  // iterator
-			int seg1 = (seg+1) % segs;  // next
+			int seg1 = getNext(seg);
 			
 			//if (lod == 0)
 			//LogR("[Seg]  cur: " + toStr(seg) + "/" + toStr(sNumO) + "  all:" + toStr(segs));/**/
@@ -408,10 +409,6 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					wiMul = wiMul*edWmul + edWadd;
 				vw *= wiMul;
 
-				//  last vw = 1st form next seg		
-				//if (i==il && seg < segs-1)
-				//	vw = vwSeg[seg+1];
-				
 				//  on terrain ~~
 				bool onTer1 = onTer || mP[seg].onTer && i==0 || mP[seg1].onTer && i==il;
 

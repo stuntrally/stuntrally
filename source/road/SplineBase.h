@@ -53,7 +53,8 @@ public:
 
 	void clear();
 	void addPoint(const Ogre::Vector3& p);
-	int getNumPoints() const;
+	inline int getNumPoints() const {  return (int)mP.size();  }
+
 
 	const Ogre::Vector3& getPos(int index) const;
 	void setPos(int index, const Ogre::Vector3& value);
@@ -73,6 +74,12 @@ public:
 	void setAutoCalculate(bool autoCalc);
 	
 	SplinePoint& getPoint(int index);
+	
+	//  get next, prev points
+	inline int getPrev(int id) const {  int s = (int)mP.size();  return isLooped ?  (id-1+s) % s : std::max(0,   id-1);  }
+	inline int getNext(int id) const {  int s = (int)mP.size();  return isLooped ?  (id+1) % s   : std::min(s-1, id+1);  }
+	//inline int getPrev(int id, int sub=1) const {  int s = (int)mP.size();  return isLooped ?  (id-sub+s) % s : std::max(0, id-sub);    }
+	//inline int getNext(int id, int add=1) const {  int s = (int)mP.size();  return isLooped ?  (id+add) % s   : std::min(s-1, id+add);  }
 
 
 protected:

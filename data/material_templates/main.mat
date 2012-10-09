@@ -41,6 +41,7 @@ material base
     
     transparent false // for shadowcaster
     mrt_output true
+    diffuse_address_mode wrap
 
 	pass
 	{
@@ -92,6 +93,7 @@ material base
 		{
 			texture $diffuseMap
 			create_in_ffp true
+            tex_address_mode $diffuse_address_mode
 		}
 		
 		texture_unit sceneDepth

@@ -197,22 +197,13 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 	const String& s = evt.source->getName();
 	int num = atoi(s.substr(s.length()-1, s.length()-1).c_str());
 	
-	//terrain->setVisibilityFlags(0);
-
 	if (num == 3)  // full
 	{
 		rt[3].rndCam->setPosition(mCameraT->getPosition());
 		rt[3].rndCam->setDirection(mCameraT->getDirection());
-		//ndSky->setVisible(true);
-		//ndSky->setPosition(mCameraT->getPosition());
 	}
-	else
-		if (road)
-			road->SetForRnd(num == 0 ? "render_clr" : "render_grass");
-
-	///mWaterRTT.setActive(false);  //!.. TODO: disable water refl&refra for terrain rtt! or set cam to top view
-	//mWaterRTT.setViewerCamera(rt[1].rndCam);
-	/**/
+	else if (road)
+		road->SetForRnd(num == 0 ? "render_clr" : "render_grass");
 }
 
 void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
@@ -221,13 +212,12 @@ void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 	int num = atoi(s.substr(s.length()-1, s.length()-1).c_str());
 
 	if (num == 3)  // full
-	{}
-	else
-	if (road)  {
-		road->UnsetForRnd();
-		road->UpdLodVis(pSet->road_dist);  }
-
-	//mWaterRTT.setViewerCamera(mCamera);
+	{
+	}
+	else if (road)
+	{	road->UnsetForRnd();
+		road->UpdLodVis(pSet->road_dist);
+	}
 
 	//  restore shadows splits todo...
 	//mCamera->setFarClipDistance(pSet->view_distance*1.1f);

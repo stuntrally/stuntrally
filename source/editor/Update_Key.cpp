@@ -482,6 +482,10 @@ bool App::KeyPress(const CmdKey &arg)
 			case KC_0:  road->Set1stChk();  break;
 
 			case KC_U:  AlignTerToRoad();  break;
+			
+			//  looped
+			case KC_O:  road->isLooped = !road->isLooped;
+				road->recalcTangents();  road->RebuildRoad(true);  break;
 		}
 	}
 

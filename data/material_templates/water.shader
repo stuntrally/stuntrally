@@ -1,12 +1,19 @@
 #include "core.h"
 
-
-
 // Inspired by Blender GLSL Water by martinsh ( http://devlog-martinsh.blogspot.de/2012/07/waterundewater-shader-wip.html )
 
 
+#define SHADOWS @shGlobalSettingBool(shadows_pssm) && @shPropertyBool(receives_shadows)
+#define SHADOWS_DEPTH @shGlobalSettingBool(shadows_depth)
+
+#if SHADOWS
+    #include "shadows.h"
+#endif
+
 
 #ifdef SH_VERTEX_SHADER
+
+    // ------------------------------------- VERTEX ---------------------------------------
 
 	SH_BEGIN_PROGRAM
 		shUniform(float4x4, wvp)				@shAutoConstant(wvp, worldviewproj_matrix)
@@ -17,6 +24,13 @@
 		shOutput(float4, position)
 		shOutput(float, depthPassthrough)
 
+#if SHADOWS
+    @shForeach(3)
+        shOutput(float4, lightSpacePos@shIterator)
+        shUniform(float4x4, texWorldViewProjMatrix@shIterator) @shAutoConstant(texWorldViewProjMatrix@shIterator, texture_worldviewproj_matrix, @shIterator)
+    @shEndForeach
+#endif
+
 	SH_START_PROGRAM
 	{
 		shOutputPosition = shMatrixMult(wvp, shInputPosition);
@@ -24,13 +38,13 @@
 	   
 	   
 		#if !SH_GLSL
-		float4x4 scalemat = float4x4(   0.5,	0,	  0,	  0.5,
-										0,	  -0.5,   0,	  0.5,
-										0,	  0,	  0.5,	0.5,
-										0,	  0,	  0,	  1   );
+		float4x4 scalemat = float4x4(0.5, 0,    0,   0.5,
+									 0,   -0.5, 0,   0.5,
+									 0,   0,    0.5, 0.5,
+									 0,   0,    0,   1   );
 		#else							
 		mat4 scalemat = mat4(0.5, 0.0, 0.0, 0.0, 
-							 0.0, -0.5, 0.0, 0.0,
+							 0.0,-0.5, 0.0, 0.0,
 							 0.0, 0.0, 0.5, 0.0,
 							 0.5, 0.5, 0.5, 1.0);
 		#endif
@@ -41,11 +55,18 @@
 		position = shInputPosition;
 		
 		depthPassthrough = shOutputPosition.z;
+
+#if SHADOWS
+    @shForeach(3)
+        lightSpacePos@shIterator = shMatrixMult(texWorldViewProjMatrix@shIterator, position);
+    @shEndForeach
+#endif
 	}
 
 #else
+    // ----------------------------------- FRAGMENT ------------------------------------------
 
-	// tweakables ----------------------------------------------------
+	// tweakables
 
 		#define VISIBILITY 1500.0				   // how far you can look through water
 
@@ -56,7 +77,6 @@
 		
 		#define SUN_EXT float3(0.45, 0.55, 0.68)	//sunlight extinction
 		
-
 	// ---------------------------------------------------------------
 	
 	
@@ -155,6 +175,18 @@
         shUniform(float4, lightDiffuse)  @shAutoConstant(lightDiffuse, light_diffuse_colour)
         shUniform(float4, lightSpecular)  @shAutoConstant(lightSpecular, light_specular_colour)
 		
+#if SHADOWS
+    @shForeach(3)
+        shInput(float4, lightSpacePos@shIterator)
+        shSampler2D(shadowMap@shIterator)
+        shUniform(float2, invShadowmapSize@shIterator)  @shAutoConstant(invShadowmapSize@shIterator, inverse_texture_size, @shIterator)
+    @shEndForeach
+		shUniform(float3, pssmSplitPoints)  @shSharedParameter(pssmSplitPoints)
+#endif
+
+#if SHADOWS
+        shUniform(float4, shadowFar_fadeStart) @shSharedParameter(shadowFar_fadeStart)
+#endif
 
 	//------------------------------------------------------------------------------------------------------------------------------
 
@@ -219,20 +251,50 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 		*/
 
 
-		// fresnel
+        //  Shadows
+		#if SHADOWS
+            float shadow = pssmDepthShadow (lightSpacePos0, invShadowmapSize0, shadowMap0, lightSpacePos1, invShadowmapSize1, shadowMap1, lightSpacePos2, invShadowmapSize2, shadowMap2, depthPassthrough, pssmSplitPoints);
+		#endif
+
+		#if SHADOWS
+            float fadeRange = shadowFar_fadeStart.x - shadowFar_fadeStart.y;
+            float fade = 1-((depthPassthrough - shadowFar_fadeStart.y) / fadeRange);
+            shadow = (depthPassthrough > shadowFar_fadeStart.x) ? 1 : ((depthPassthrough > shadowFar_fadeStart.y) ? 1-((1-shadow)*fade) : shadow);
+		#endif
+
+		#if !(SHADOWS)
+            float shadow = 1.0;
+		#endif
+		float shadowVal = (lightDiffuse.g - lightAmbient.g)*1.4;  // approx.
+		
+
+	//#if TERRAIN_LIGHT_MAP
+	//	float shadowingLM;
+	//	float2 worldPos = shMatrixMult(wMat, float4(objSpacePositionPassthrough.xyz, 1)).xz;
+	//	float2 lmTexCoord = (worldPos / terrainWorldSize) + 0.5;
+	//	shadowingLM = shSample(terrainLightMap, lmTexCoord).x;
+ //       #if TERRAIN_LIGHT_MAP_TOGGLEABLE
+	//	shadow = min(shadow, (enableTerrainLightMap == 1) ? shadowingLM : 1.0);
+	//	#else
+	//	shadow = min(shadow, shadowingLM);
+	//	#endif
+	//#endif
+
+
+		//  fresnel
 		float ior = (cameraPos.y>0)?(1.333/1.0):(1.0/1.333); //air to water; water to air
 		float fresnel = fresnel_dielectric(-vVec, normal, ior);
 		
 		fresnel = shSaturate(shSaturate(fresnel) * fresnelMultiplier);
 
 	
-		// reflection
+		//  reflection
 		float3 R = reflect(vVec, normal);
 		#if SCREEN_REFLECTION
 			float3 reflection = reflectColour.rgb * shSample(reflectionMap, screenCoords+(normal.xz*REFL_BUMP)).rgb;
 		#else
-			// todo..
-			float3 reflNormal = normalize(float3(normal.x * 0.3, normal.y, normal.z * 0.3));
+			float3 reflNormal = normalize(float3(normal.x * REFL_BUMP*6, normal.y, normal.z * REFL_BUMP*6));
+			//float3 reflNormal = normalize(float3(0, normal.y, 0));  //test
 			R = reflect(vVec, reflNormal);
 			const float PI = 3.1415926536f;
 			float2 refl2;
@@ -255,38 +317,42 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 			refraction.r = shSample(refractionMap, (screenCoords-shoreFade*(normal.xz*REFR_BUMP))*1.0).r;
 			refraction.g = shSample(refractionMap, (screenCoords-shoreFade*(normal.xz*REFR_BUMP))*1.0-(R.xy*ABBERATION)).g;
 			refraction.b = shSample(refractionMap, (screenCoords-shoreFade*(normal.xz*REFR_BUMP))*1.0-(R.xy*ABBERATION*2.0)).b;
-			
+
 			 // brighten up the refraction underwater  why?
 			//refraction = (cameraPos.y < 0) ? shSaturate(refraction * 1.5) : refraction;
 		#endif
 	
 	
 		//  specular
-		float specular = pow(max(dot(R, lVec), 0.0), specColourAndPower.w);
+		float specular = pow(max(dot(R, lVec), 0.0), specColourAndPower.w) * shadow;
 		float3 waterColour = waterClr.rgb * lightDiffuse.rgb;
+		#if !SCREEN_REFRACTION
+			float3 refraction = shLerp( refractColour.rgb, waterColour.rgb, 0.5);  //old
+		#endif
 
 		//  specular2
 		R = reflect(vVec, normalX2);  // n2
-		specular += pow(max(dot(R, lVec), 0.0), bump2SpecPowerMul.y) * bump2SpecPowerMul.z;
+		specular += pow(max(dot(R, lVec), 0.0), bump2SpecPowerMul.y) * bump2SpecPowerMul.z * (0.3 + 0.7 * shadow);
 		
 		reflection = shLerp( waterColour, reflection,  reflectColour.a);  // reflection instensity
 
 		
 		//  FINAL Lerp							//_ no refraction at distant
 		//---------------------------------------------------------------
-		float depthAmount = depthTex.g * shLerp( refractColour.a, 1, fresnel) * (1-isUnderwater);
-		#if SCREEN_REFRACTION
-			float3 clr = refractColour.rgb * shLerp( refraction, waterColour,  depthAmount);
-			refraction = waterClr.a > 0.5f ? shLerp( clr,  waterColour, refractColour.a) : clr;  // no refraction inside mud
+		float depthAmount = depthTex.g * shLerp( refractColour.a, 1, fresnel) * (1-isUnderwater);  // deep water
 
-			shOutputColour(0).rgb = shLerp( refraction, reflection,  fresnel);
-			shOutputColour(0).rgb = shLerp( refraction, shOutputColour(0).rgb,  shoreFade);
+		float3 clr = refractColour.rgb * shLerp( refraction, waterColour,  depthAmount);
+		refraction = waterClr.a > 0.5 ? shLerp( clr,  waterColour, refractColour.a) : clr;  // no refraction inside mud
+
+		shOutputColour(0).rgb = shLerp( refraction, reflection,  fresnel);
+		shOutputColour(0).rgb = shLerp( refraction, shOutputColour(0).rgb,  shoreFade);
+		shOutputColour(0).rgb *= (1.0-shadowVal + shadowVal * shadow);  // darker in shadow
+
+		#if SCREEN_REFRACTION
 			shOutputColour(0).a = shoreFade;
 		#else
-			// todo..
-			shOutputColour(0).rgb = refractColour.rgb * shLerp( reflection, waterColour,  depthAmount);  //* (1-fresnel)
-			//shOutputColour(0).rgb = shLerp( waterColour, shOutputColour(0).rgb,  shoreFade);
-			shOutputColour(0).a = shSaturate(fresnel * shoreFade + depthAmount);
+			//old  alpha if no refraction present (not in mud)
+			shOutputColour(0).a = shLerp( shoreFade * (0.7 + 0.3 * depthAmount), shoreFade,  waterClr.a);
 		#endif
 		
 		shOutputColour(0).rgb += specular * specColourAndPower.rgb * lightSpecular.rgb;

@@ -380,6 +380,7 @@ void App::InitGui()
 	//---------------------  Roads  ---------------------
 	GetMaterialsMat(sMat+"road.mat");
 	GetMaterialsMat(sMat+"road_wall_pipe.mat",false);
+	GetMaterials("pipe.material",false);
 	for (size_t i=0; i<4; ++i)
 	{
 		Cmb(cmbRoadMtr[i], "RdMtr"+toStr(i+1), comboRoadMtr);

@@ -9,6 +9,7 @@ material grass
     terrain_light_map true
     mrt_output false
     diffuse 0.8 0.8 0.8
+    diffuse_address_mode clamp
 }
 
 material grassAustralia
@@ -33,6 +34,8 @@ material grassJungle
 {
     parent grass
     diffuseMap grassJungle.png
+    ambient 1.4 1.5 1.4
+    diffuse 0.5 0.5 0.5
 }
 
 material grassGreece

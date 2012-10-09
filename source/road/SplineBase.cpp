@@ -7,7 +7,7 @@ using namespace Ogre;
 
 
 SplineBase::SplineBase() :
-	mAutoCalc(1), isLooped(1)
+	mAutoCalc(1), isLooped(1/**/)
 {
 }
 
@@ -34,11 +34,10 @@ Vector3 SplineBase::interpolate(int id, Real t) const
 {
 	//assert (id < mPos.size() && "index out of bounds");
 
-	//  special cases
-	int id1 = (id + 1) % mP.size(); // next
-
+	int id1 = getNext(id);
 	const Vector3& p1 = mP[id].pos, p2 = mP[id1].pos;
 
+	//  special cases
 	if (t == 0.0f)	    return p1;
 	else if(t == 1.0f)  return p2;
 
@@ -57,7 +56,7 @@ Vector3 SplineBase::interpolate(int id, Real t) const
 
 Real SplineBase::interpWidth(int id, Real t) const
 {
-	int id1 = (id + 1) % mP.size();
+	int id1 = getNext(id);
 	const Real& p1 = mP[id].width, p2 = mP[id1].width;
 	if (t == 0.0f)	    return p1;
 	else if(t == 1.0f)  return p2;
@@ -70,7 +69,7 @@ Real SplineBase::interpWidth(int id, Real t) const
 
 Real SplineBase::interpAYaw(int id, Real t) const  // ..
 {
-	int id1 = (id + 1) % mP.size();
+	int id1 = getNext(id);
 	const Real& p1 = mP[id].aYaw, p2 = mP[id1].aYaw;
 	if (t == 0.0f)	    return p1;
 	else if(t == 1.0f)  return p2;
@@ -83,7 +82,7 @@ Real SplineBase::interpAYaw(int id, Real t) const  // ..
 
 Real SplineBase::interpARoll(int id, Real t) const
 {
-	int id1 = (id + 1) % mP.size();
+	int id1 = getNext(id);
 	const Real& p1 = mP[id].aRoll, p2 = mP[id1].aRoll;
 	if (t == 0.0f)	    return p1;
 	else if(t == 1.0f)  return p2;
@@ -98,11 +97,12 @@ Real SplineBase::interpARoll(int id, Real t) const
 void SplineBase::preAngle(int i)
 {
 	//LogO("pre + " + toStr(i));
-	int i1 = (i+1) % mP.size();
+	int i1 = getNext(i);
 	//  more than 180 swirl - wrong at start/end
 	const Real asw = 180;
 	Real ay = mP[i].aYaw, ay1 = mP[i1].aYaw, ay21 = ay1-ay;
 	//Real ar = mP[i].aRoll,ar1 = mP[i1].aRoll,ar21 = ar1-ar;
+
 	while (ay21 > asw) {  LogO(">a1.yw21: "+toStr(ay21)+"  ay2: "+toStr(ay1)+"  ay1: "+toStr(ay));  ay21 -= 2*asw;  ay1 -= 2*asw;  }
 	while (ay21 <-asw) {  LogO("<a2.yw21: "+toStr(ay21)+"  ay2: "+toStr(ay1)+"  ay1: "+toStr(ay));  ay21 += 2*asw;  ay1 += 2*asw;  }
 	//while (ar21 > asw) {  LogO(">a3.rl21: "+toStr(ar21)+"  ar2: "+toStr(ar1)+"  ar1: "+toStr(ar));  ar21 -= 2*asw;  ar1 -= 2*asw;  }
@@ -119,14 +119,13 @@ void SplineBase::recalcTangents()
 	// Catmull-Rom approach
 	//   tangent[i] = 0.5 * (point[i+1] - point[i-1])
 
-	size_t i, num = mP.size();
+	int i, num = mP.size();
 	if (num < 2)  return;
 
-	//if (isLooped)
 	for (i=0; i < num; ++i)
 	{
 		// tangent   next-prev
-		size_t next = (i+1) % num, prev = (i-1+num) % num;
+		int next = getNext(i), prev = getPrev(i);
 		mP[i].tan = 0.5 * (mP[next].pos - mP[prev].pos);
 		mP[i].wtan= 0.5 * (mP[next].width - mP[prev].width);
 		
@@ -135,21 +134,6 @@ void SplineBase::recalcTangents()
 		mP[i].tYaw  = 0.5 * (mP[next].aY - mP[prev].aY);
 		mP[i].tRoll = 0.5 * (mP[next].aR - mP[prev].aR);/**/
 	}
-		/*if (i == 0)  // start
-		{
-			if (isLooped)	// Use numPoints-2 since numPoints-1 is the last point and == [0]
-				mP[i].tan = 0.5 * (mP[1].pos - mP[numPoints-1].pos);
-			else
-				mP[i].tan = 0.5 * (mP[1].pos - mP[0].pos);
-		}
-		else if (i == numPoints-1)  // end
-		{
-			//if (isLooped)	// Use same tangent as already calculated for [0]
-			//	mP[i].tan = mP[0].tan;
-			//else
-			mP[i].tan = 0.5 * (mP[i].pos - mP[i-1].pos);
-		}
-		else*/  // norm   prev-  -next
 }
 
 //  get, set pos
@@ -178,11 +162,6 @@ SplinePoint& SplineBase::getPoint(int index)
 void SplineBase::clear()
 {
 	mP.clear();
-}
-
-int SplineBase::getNumPoints() const
-{
-	return (int)mP.size();
 }
 
 //  add  not used-

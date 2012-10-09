@@ -4,7 +4,6 @@
 #define FOG @shGlobalSettingBool(fog)
 
 #define SHADOWS @shGlobalSettingBool(shadows_pssm) && @shPropertyBool(receives_shadows)
-
 #define SHADOWS_DEPTH @shGlobalSettingBool(shadows_depth)
 
 #define MRT @shPropertyBool(mrt_output) && @shGlobalSettingBool(mrt_output)
@@ -78,7 +77,6 @@
         shUniform(float, windTimer) @shSharedParameter(windTimer)
         shVertexInput(float4, uv1) // windParams
         shVertexInput(float4, uv2) // originPos
-
 #endif
 
 #if GRASS_WIND
@@ -86,7 +84,6 @@
         shUniform(float, grassTimer) @shSharedParameter(grassTimer)
         shUniform(float, grassFrequency) @shSharedParameter(grassFrequency)
         shUniform(float4, grassDirection) @shSharedParameter(grassDirection)
-
 #endif
 
         shOutput(float3, normalPassthrough)
@@ -97,8 +94,8 @@
         shOutput(float4, lightSpacePos@shIterator)
         shUniform(float4x4, texWorldViewProjMatrix@shIterator) @shAutoConstant(texWorldViewProjMatrix@shIterator, texture_worldviewproj_matrix, @shIterator)
     @shEndForeach
-
 #endif
+
     SH_START_PROGRAM
     {
     
