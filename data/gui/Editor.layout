@@ -2470,6 +2470,7 @@
 				<Widget type="ComboBox" skin="ComboBox" position="236 112 136 24" name="RdMtrP3">
 					<Property key="TextColour" value="1 1 0.5"/>
 					<Property key="Colour" value="1 1 0.5"/>
+					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="236 136 136 24" name="RdMtrP4">
