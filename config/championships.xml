@@ -278,6 +278,7 @@
 		<track name="F13-Castle"	laps="1" factor="0.1" />
 		<track name="F14-Maze"		laps="1" factor="0.2" />
 		<track name="F15-ForestTrip" laps="1" factor="0.1" />
+		<track name="F16-Clew"		laps="1" factor="0.2" />
 	</championship>
 	<championship name="Island scenery" ver="1" difficulty="2" length="3" tutorial="3" 
 			descr="Island championship. All tracks for this scenery in their appearance order.">
@@ -290,6 +291,7 @@
 		<track name="I7-Moses"		laps="1" factor="0.1" />
 		<track name="I8-Pharaoh"	laps="1" factor="0.1" />
 		<track name="I9-Web"		laps="1" factor="0.2" />
+		<track name="I10-Treasure"	laps="1" factor="0.1" />
 	</championship>
 	<championship name="Mud and Canyon scenery" ver="1" difficulty="2" length="3" tutorial="3" 
 			descr="Mud championship. All tracks for this scenery in their appearance order.">
@@ -313,6 +315,7 @@
 		<track name="G2-Coast"		laps="1" factor="0.1" />
 		<track name="G3-Butterfly"	laps="1" factor="0.1" />
 		<track name="G4-River"		laps="1" factor="0.1" />
+		<track name="G5-Climb"		laps="1" factor="0.1" />
 	</championship>
 	<championship name="Other sceneries" ver="1" difficulty="4" length="3" tutorial="3" 
 			descr="Other sceneries championship: Volcanic and Unidentified.">
@@ -496,8 +499,12 @@
 		<track name="I9-Web"		time="470.0"/>
 		<track name="S14-Refinery"	time="220.0"/>
 		<!--91-->
-		<track name="A5-TopTwist"	time="184.0"/>
+		<track name="A5-TopTwist"	time="184.0"/><!--..-->
 		<track name="X3-Cloud"		time="117.0"/>
+
+		<track name="F16-Clew"		time="99.0"/>
+		<track name="G5-Climb"		time="284.0"/>
+		<track name="I10-Treasure"	time="90.0"/>
 
 	</times>
 </championships>
