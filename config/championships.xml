@@ -102,6 +102,7 @@
 		<track name="S7-HighMadness" laps="1" factor="0.1" />
 		<track name="A1-StuntPark"	laps="1" factor="0.1" />
 		<track name="D7-CrossJumps"	laps="1" factor="0.1" />
+		<track name="A5-TopTwist"	laps="1" factor="0.15" />
 	</championship>
 
 	<championship name="Pipes mastery" ver="3" difficulty="5" length="3" tutorial="0" 
@@ -128,6 +129,7 @@
 
 	<championship name="Mountain adventure" ver="3" difficulty="4" length="3" tutorial="0" 
 			descr="Tracks placed in mountains and with highest height differences, also with good views. Some quite bumpy.">
+		<track name="G5-Climb"		laps="1" factor="0.1" />
 		<track name="D2-Mntn"		laps="1" factor="0.1" />
 		<track name="F10-MntnTrail"	laps="1" factor="0.1" />
 		<track name="F12-HighPeaks"	laps="1" factor="0.1" />
@@ -170,6 +172,7 @@
 		<track name="S13-Hole"		laps="1" factor="0.1" />
 		<track name="F14-Maze"		laps="1" factor="0.1" />
 		<track name="A4-Snake"		laps="1" factor="0.1" />
+		<track name="F16-Clew"		laps="1" factor="0.1" />
 	</championship>
 
 	<championship name="Insane stunts" ver="1" difficulty="6" length="3" tutorial="0" 
@@ -499,7 +502,7 @@
 		<track name="I9-Web"		time="470.0"/>
 		<track name="S14-Refinery"	time="220.0"/>
 		<!--91-->
-		<track name="A5-TopTwist"	time="184.0"/><!--..-->
+		<track name="A5-TopTwist"	time="184.0"/>
 		<track name="X3-Cloud"		time="117.0"/>
 
 		<track name="F16-Clew"		time="99.0"/>
