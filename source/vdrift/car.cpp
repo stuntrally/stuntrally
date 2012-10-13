@@ -132,8 +132,7 @@ bool CAR::Load(class App* pApp1,
 		manualExhaustPos = true;
 		carconf.GetParam("model_ofs.exhaust-y", exhaustPosition[1]);
 		carconf.GetParam("model_ofs.exhaust-z", exhaustPosition[2]);
-	}
-	else
+	}else
 		manualExhaustPos = false;
 	if (!carconf.GetParam("model_ofs.exhaust-mirror-second", has2exhausts))
 		has2exhausts = false;

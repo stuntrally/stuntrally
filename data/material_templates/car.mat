@@ -5,13 +5,13 @@ material car_body
 	carPaintMap body00_red.png
 	reflMap refl.png
 	refl_map true
-    env_map true
-    car_paint_map true
-    terrain_light_map true
-    terrain_light_map_toggleable true
-    fresnel true
-    fresnelScaleBiasPower 0.79 0.07 4
-    specular 1 1 1 128
+	env_map true
+	car_paint_map true
+	terrain_light_map true
+	terrain_light_map_toggleable true
+	fresnel true
+	fresnelScaleBiasPower 0.79 0.07 4
+	specular 1 1 1 128
 }
 
 material car_glass
@@ -87,14 +87,14 @@ material car_interior_FM
 	normalMap FM_interior_normal.png
 	normal_map true
 	cull_hardware none
-    receives_shadows false
+	receives_shadows false
 }
 
 material cartire_front_FM
 {
 	parent cartire_front
 	normalMap wheel_normal.png
-    normal_map true
+	normal_map true
 }
 
 material cartire_rear_FM
@@ -117,32 +117,32 @@ material car_interior_360
 
 material car_body_ES
 {
-    parent car_body
-    normal_map true
-    normalMap ES_normal.png
-    spec_map true
-    specMap ES_spec.png
+	parent car_body
+	normal_map true
+	normalMap ES_normal.png
+	spec_map true
+	specMap ES_spec.png
 }
 
 material car_interior_ES
 {
-    parent car_interior
-    normal_map true
-    normalMap ES_interior_normal.jpg
+	parent car_interior
+	normal_map true
+	normalMap ES_interior_normal.jpg
 }
 
 material cartire_front_ES
 {
-    parent cartire_front
-    normal_map true
-    normalMap ES_wheel_normal.jpg
-    spec_map true
-    specMap ES_wheel_spec.png
+	parent cartire_front
+	normal_map true
+	normalMap ES_wheel_normal.jpg
+	spec_map true
+	specMap ES_wheel_spec.png
 }
 
 material cartire_rear_ES
 {
-    parent cartire_front_ES   
+	parent cartire_front_ES   
 }
 
 
@@ -151,14 +151,16 @@ material cartire_rear_ES
 
 material chasis/Material#1
 {
-    parent base
-    envMap ReflectionCube
-    env_map true
-    diffuse 1.0 1.0 1.0
-    ambient 1.0 1.0 1.0
-    specular 0.7 0.7 0.7 32
-    fresnelScaleBiasPower 0.73 0.07 4
-    diffuseMap chasis.png
+	parent base
+	envMap ReflectionCube
+	env_map true
+	diffuse 1.0 1.0 1.0
+	ambient 1.0 1.0 1.0
+	specular 0.7 0.7 0.7 32
+	fresnelScaleBiasPower 0.73 0.07 4
+	diffuseMap chasis.png
+	terrain_light_map true
+	terrain_light_map_toggleable true
 }
 
 
@@ -170,10 +172,134 @@ material chasis/Material#2
 
 material chasis/Material_#3
 {
-    parent base
+	parent base
 	ambient 0.6 0.6 0.6
 	diffuse 0.5 0.5 0.5
 	specular 0.2 0.2 0.2 24
 	diffuseMap chasis_a.jpg
+	terrain_light_map true
+	terrain_light_map_toggleable true
 }
 
+
+
+//---------------------------------------------------------------
+
+//  S1
+
+material UPG15000_body  // those 3 not used, but in mesh
+{
+	parent car_body
+}
+material UPG15000_hood
+{
+	parent car_body
+}
+material UPG15000_solider
+{
+	parent car_body
+}
+
+material UPG15000_details
+{
+	parent base
+	diffuseMap S1_Details.png
+	terrain_light_map true
+	terrain_light_map_toggleable true
+}
+
+material UPG15000_detailsA
+{
+	parent base
+	diffuseMap S1_opacity.png
+	//alpha_map S1_opacity.png
+	alpha_rejection greater 192
+	terrain_light_map true
+	terrain_light_map_toggleable true
+}
+
+material UPG15000_light  // back red lights
+{
+	parent base
+	diffuseMap S1_Lights.png
+	diffuse 0.8 0.8 0.8
+	terrain_light_map true
+	terrain_light_map_toggleable true
+}
+
+material UPG15000_window
+{
+	parent car_glass
+	diffuseMap S1_window.png
+	fresnelScaleBiasPower 19.2 0.2 4
+}
+
+material UPG15000_lightglass  // front lights
+{
+	parent car_glass
+	diffuseMap S1_light.png
+	alpha_map S1_light.png
+}
+
+material UPG15000_metal  // front lights frame (silver)
+{
+	parent base
+	diffuseMap S1_metal.png
+	ambient 0.8 0.8 0.8
+	diffuse 0.4 0.4 0.4
+	specular 0.9 0.9 0.9 8
+	terrain_light_map true
+	terrain_light_map_toggleable true
+}
+
+material UPG15000_wheel  // rubber parts between metal (black)
+{
+	parent base
+	diffuseMap S1_rubber.png
+	terrain_light_map true
+	terrain_light_map_toggleable true
+}
+
+//  S1 wheel
+material UPG15000_brake  // old not used
+{
+	parent base
+	diffuseMap S1_brake_old.png
+	terrain_light_map true
+	terrain_light_map_toggleable true
+}
+
+material UPG15000_metalwheel  // yellow
+{
+	parent base
+	diffuseMap S1_MetalWheel.png
+	ambient 0.8 0.7 0.3 1
+	diffuse 0.8 0.7 0.3 1
+	specular 1 1 0.5 32
+	terrain_light_map true
+	terrain_light_map_toggleable true
+}
+
+material UPG15000_tire
+{
+	parent base
+	diffuseMap S1_Tire.png
+	normal_map S1_TireBump.png
+	spec_map S1_Tire.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.5 0.5 0.5
+	specular 0.1 0.1 0.1 8
+	terrain_light_map true
+	terrain_light_map_toggleable true
+}
+
+material S1_brake  // disc,caliper
+{
+	parent base
+	diffuseMap S1_brake.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.8 0.8 0.8 24
+	terrain_light_map true
+	terrain_light_map_toggleable true
+}
