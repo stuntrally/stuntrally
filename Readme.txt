@@ -123,7 +123,7 @@ libvorbis-1.2.3, libogg-1.1.4
 Bullet 2.79
 BtOgre *
 OISB *
-PagedGeometry 1.1.0 *
+PagedGeometry 1.1.1 *
 TinyXML
 * are modified sources
 
