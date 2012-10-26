@@ -10,6 +10,11 @@
     #include "shadows.h"
 #endif
 
+#define EDITOR @shGlobalSettingBool(editor)
+
+#if EDITOR
+	#define WATERDEPTH_SWITCH
+#endif
 
 #ifdef SH_VERTEX_SHADER
 
@@ -188,6 +193,10 @@
         shUniform(float4, shadowFar_fadeStart) @shSharedParameter(shadowFar_fadeStart)
 #endif
 
+#ifdef WATERDEPTH_SWITCH
+	shUniform(float, waterDepth) @shSharedParameter(waterDepth)
+#endif
+
 	//------------------------------------------------------------------------------------------------------------------------------
 
 	SH_START_PROGRAM
@@ -197,6 +206,11 @@
 		float4 worldPos = shMatrixMult(worldMatrix, position);
 		float2 depthUV = float2(-worldPos.z / terrainWorldSize + 0.5f, worldPos.x / terrainWorldSize + 0.5f);
 		float4 depthTex = shSample(depthMap, depthUV);
+
+#ifdef WATERDEPTH_SWITCH
+		if (waterDepth == 0)
+			depthTex = float4(1.0, 1.0, 0.0, 0.0);
+#endif
 		
 		// no need to render below terrain
 		if (depthTex.x == 0)

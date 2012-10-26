@@ -21,6 +21,8 @@
 #include <OgreEntity.h>
 #include "../common/QTimer.h"
 
+#include "../shiny/Main/Factory.hpp"
+
 using namespace Ogre;
 
 
@@ -136,17 +138,8 @@ void App::UpdFluidBox()
 
 void App::UpdMtrWaterDepth()
 {
-	/*
-	if (!materialFactory)  return;
-
 	float fl = edMode == ED_Fluids ? 0.f : 1.f;
-	GetMaterialsFromDef("fluids.matdef");
-	for (int i = 0; i < vsMaterials.size(); ++i)
-	{
-		MaterialPtr mtr = Ogre::MaterialManager::getSingleton().getByName(vsMaterials[i]);
-		materialFactory->setWaterDepth(mtr, fl);
-	}
-	*/
+	sh::Factory::getInstance().setSharedParameter("waterDepth", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(fl)));
 }
 #endif
 

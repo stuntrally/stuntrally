@@ -134,6 +134,7 @@ void App::postInit()
 	mFactory->setSharedParameter("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(0)));
 	mFactory->setSharedParameter("waterTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(0)));
 	mFactory->setSharedParameter("terrainWorldSize", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(1024)));
+	mFactory->setSharedParameter("waterDepth", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(1.0)));
 
 	sh::Factory& fct = sh::Factory::getInstance();
 	fct.setGlobalSetting("terrain_specular", (pSet->ter_mtr >= 1)  ? "true" : "false");
