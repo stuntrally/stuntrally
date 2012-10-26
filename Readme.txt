@@ -23,7 +23,7 @@ Links
 Project's Homepage:  (all links, Wiki pages, Issue tracker (also as Forum))
         http://code.google.com/p/vdrift-ogre/
 
-Releases  (Windows installer, Linux binaries):
+Releases  (Windows installer, Linux binary):
         https://sourceforge.net/projects/stuntrally/files/
 Git repositories:  (for latest sources, data, and tracks)
         https://github.com/stuntrally/
@@ -39,7 +39,7 @@ Editor tutorial:
 
 Description
 
-The game features 99 tracks in 13 sceneries and 10 cars.
+The game features 104 tracks in 13 sceneries and 10 cars.
 Game modes include: Single Race, Tutorials and Championships, Multiplayer,
 Split Screen. Also Replays and Ghost drive are present.
 
@@ -153,9 +153,10 @@ Track creators
     it could be released in future versions.
 
 Artists
-    If you can create 3D models (cars,trees,plants,objects etc),
-    textures for them or for terrain.
     Help exporting existing models from Blender to Ogre.
+    If you can create/edit 3D models
+	(cars, trees, plants, rocks, objects etc),
+    textures for them or for terrain.
     If you can create/edit sounds for the game.
 
 If so, tell us on IRC at #stuntrally on freenode,
