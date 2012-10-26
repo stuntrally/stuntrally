@@ -632,7 +632,7 @@ void ImpostorTexture::renderTextures(bool force)
 	if (!needsRegen){
 		
 		try{
-			texture = TextureManager::getSingleton().load(fileNamePNG, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED); ///T png first
+			texture = TextureManager::getSingleton().load(fileNamePNG, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);  ///T png first
 		}
 		catch (Ogre::Exception&){
 			try{
@@ -644,6 +644,7 @@ void ImpostorTexture::renderTextures(bool force)
 		}
 	}
 #endif
+	static int ii = 0;  ///T
 
 	if (needsRegen){
 		//If this has not been pre-rendered, do so now
@@ -656,7 +657,8 @@ void ImpostorTexture::renderTextures(bool force)
 			Radian pitch = Degree((180.0f * o) * yDivFactor - 90.0f);
 #endif
 
-			for (int i = 0; i < IMPOSTOR_YAW_ANGLES; ++i){ //8 yaw angle renders
+			for (int i = 0; i < IMPOSTOR_YAW_ANGLES; ++i)
+			{	//8 yaw angle renders
 				Radian yaw = Degree((360.0f * i) * xDivFactor); //0, 45, 90, 135, 180, 225, 270, 315
 					
 				//Position camera
@@ -667,12 +669,14 @@ void ImpostorTexture::renderTextures(bool force)
 				//Render the impostor
 				renderViewport->setDimensions((float)(i) * xDivFactor, (float)(o) * yDivFactor, xDivFactor, yDivFactor);
 				renderTarget->update();
+				if (ii == 0) {  ///T  render twice, 1st generated impostor missing on directx
+					renderTarget->update();  ++ii;  }
 			}
 		}
 	
 #ifdef IMPOSTOR_FILE_SAVE
 		//Save RTT to file with respecting the temp dir
-		renderTarget->writeContentsToFile(tempdir + "/" + fileNamePNG); ///T missing /
+		renderTarget->writeContentsToFile(tempdir + "/" + fileNamePNG);  ///T missing /
 
 		//Load the render into the appropriate texture view
 		texture = TextureManager::getSingleton().load(fileNamePNG, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);
