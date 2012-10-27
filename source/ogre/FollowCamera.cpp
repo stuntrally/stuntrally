@@ -636,6 +636,6 @@ void FollowCamera::updFmtTxt()
 		sLEFT+": "+sRotate+"  "+sshift+": "+sPitch+" | "+sRIGHT+": "+smove+"  "+sshift+": "+sHeight+"\n"+
 		sMiddle+": "+smove+","+sH+" | "+sWheel+": "+sPitch;
 	sFmt_Car =
-		sType+": %d %s  "+sHeight+": %3.1f  "+sOffset+": %3.1f %3.1f\n"+
+		sType+": %d %s  "+sHeight+": %4.2f  "+sOffset+": %4.2f %4.2f\n"+
 		sLEFT+": "+sHeight+" | "+sRIGHT+": "+sOffset+" | "+sMiddle+": "+sreset+" "+sOffset+"X";
 }
