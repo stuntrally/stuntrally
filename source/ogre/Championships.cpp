@@ -109,7 +109,9 @@ void App::ChampNewGame()
 void App::ChampsListUpdate()
 {
 	//  0 normal  1 tutorial  2 test  3 scenery
-	const char clrCh[4][8] = {"#A0F0FF", "#FFFFB0", "#FFA0A0", "#80FF80"};
+	//  4 master  2 tut hard
+	const char clrCh[6][8] = {"#A0F0FF", "#FFFFA0", "#FFA0A0", "#80FF80",
+							  "#60C0FF", "#E0E000"};
 
 	liChamps->removeAllItems();  int n=1;
 	for (int i=0; i < champs.champs.size(); ++i,++n)

@@ -1,4 +1,6 @@
 <championships>
+<!--  tutorial=  0 normal  1 tutorial  2 test  3 scenery
+		4 master (very hard)  5 tutorial hard -->
 
 <!--  Tutorials  -->
 <!--========================================================================================================================-->
@@ -23,13 +25,13 @@
 		<track name="D8-Technical"	laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Tutorial Loops" ver="1" difficulty="4" length="3" tutorial="1" 
+	<championship name="Tutorial Loops" ver="1" difficulty="4" length="3" tutorial="5" 
 			descr="Tutorial on tracks with loops. Loops and side loops will appear as well as simple pipe turns and some twists.">
 		<track name="S5-LoopBasic" laps="1" factor="0.1" />
 		<track name="S3-Loops"		laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Tutorial Pipes" ver="1" difficulty="4" length="3" tutorial="1" 
+	<championship name="Tutorial Pipes" ver="1" difficulty="4" length="3" tutorial="5" 
 			descr="Tutorial on tracks with pipes. Some are twisted.">
 		<track name="J5-Pipes"		laps="1" factor="0.1" />
 		<track name="S10-Pipe88"	laps="1" factor="0.2" />
@@ -95,7 +97,7 @@
 		<track name="G1-Long"		laps="1" factor="0.2" />
 	</championship>
 
-	<championship name="Master of Stunts" ver="2" difficulty="5" length="3" tutorial="0" 
+	<championship name="Master of Stunts" ver="2" difficulty="5" length="3" tutorial="4" 
 			descr="Best stunt tracks in game, very twisted and difficult. With plenty of loops, jumps and twisted bridges. Lets you master your stunt driving.">
 		<track name="S3-Loops"		laps="1" factor="0.1" />
 		<track name="J6-80fun"		laps="1" factor="0.1" />
@@ -105,7 +107,7 @@
 		<track name="A5-TopTwist"	laps="1" factor="0.15" />
 	</championship>
 
-	<championship name="Pipes mastery" ver="3" difficulty="5" length="3" tutorial="0" 
+	<championship name="Pipes mastery" ver="3" difficulty="5" length="3" tutorial="4" 
 			descr="Only pipe tracks with high difficulty, extremely curly. Lets you master your pipe driving.">
 		<track name="S6-PipeCrazy"	laps="1" factor="0.1" />
 		<track name="S12-Infinity"	laps="1" factor="0.1" />
@@ -167,7 +169,7 @@
 		<track name="I8-Pharaoh"	laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Curly master" ver="1" difficulty="5" length="3" tutorial="0" 
+	<championship name="Curly master" ver="1" difficulty="5" length="3" tutorial="4" 
 			descr="Curly tracks, driven mad. Require lots of steering, determination and experience.">
 		<track name="S13-Hole"		laps="1" factor="0.1" />
 		<track name="F14-Maze"		laps="1" factor="0.1" />
@@ -175,7 +177,7 @@
 		<track name="F16-Clew"		laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Insane stunts" ver="1" difficulty="6" length="3" tutorial="0" 
+	<championship name="Insane stunts" ver="1" difficulty="6" length="3" tutorial="4" 
 			descr="The most difficult, insanely twisted tracks. Require the most skills and determination. Recommended to do both Stunts and Pipes mastery before.">
 		<track name="A1-StuntPark"	laps="1" factor="0.1" />
 		<track name="S12-Infinity"	laps="1" factor="0.1" />
