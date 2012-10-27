@@ -9,7 +9,7 @@ material bluetent.png
 	parent 0vdrTrk
 	diffuseMap bluetent.png
 }
-material cone.png
+material conem.png
 {
 	parent 0vdrTrk
 	diffuseMap conem.png
@@ -334,7 +334,7 @@ material trees_group4c.png
 	parent 0vdrAlpha
 	diffuseMap trees_group4c.png
 }
-material tree01.png
+material tree01m.png
 {
 	parent 0vdrAlpha
 	diffuseMap tree01m.png
