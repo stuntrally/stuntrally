@@ -157,8 +157,8 @@
 	<track n="98" name="A5-TopTwist"	created="05-09-12" crtver="1.8" modified="05-09-12" scenery="Australia"	author="CH" objects="0" fluids="1" bumps="1" jumps="3" loops="0" pipes="0" banked="2" frenzy="2" long="5" diff="4" rating="3" /> <!--A5-TopTwist-->
 	<track n="99" name="X3-Cloud"	created="05-09-12" crtver="1.8" modified="05-09-12" scenery="Unidentified"	author="CH" objects="0" fluids="0" bumps="0" jumps="1" loops="0" pipes="0" banked="3" frenzy="2" long="5" diff="2" rating="1" /> <!--X3-Cloud-->
 
-	<track n="100" name="F16-Clew"		created="09-10-12" crtver="1.8" modified="09-10-12" scenery="Forest"	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="2" banked="2" frenzy="3" long="2" diff="3" rating="3" /> <!--F16-Clew-->
+	<track n="100" name="F16-Clew"		created="09-10-12" crtver="1.8" modified="09-10-12" scenery="Forest"	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="2" banked="2" frenzy="3" long="2" diff="4" rating="3" /> <!--F16-Clew-->
 	<track n="101" name="G5-Climb"		created="09-10-12" crtver="1.8" modified="09-10-12" scenery="Greece"	author="CH" objects="0" fluids="1" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="0" long="8" diff="2" rating="3" /> <!--G5-Climb-->
-	<track n="102" name="I10-Treasure"	created="11-10-12" crtver="1.8" modified="11-10-12" scenery="Island"	author="CH" objects="3" fluids="2" bumps="3" jumps="0" loops="0" pipes="0" banked="1" frenzy="1" long="2" diff="3" rating="3" /> <!--I10-Treasure-->
+	<track n="102" name="I10-Treasure"	created="11-10-12" crtver="1.8" modified="11-10-12" scenery="Island"	author="CH" objects="3" fluids="2" bumps="3" jumps="0" loops="0" pipes="0" banked="1" frenzy="1" long="2" diff="2" rating="3" /> <!--I10-Treasure-->
 
 </tracks>

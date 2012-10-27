@@ -310,7 +310,7 @@
 		<track name="A2-PipeCoil"	laps="1" factor="0.1" />
 		<track name="A3-Canyon"		laps="1" factor="0.1" />
 		<track name="A4-Snake"		laps="1" factor="0.1" />
-		<track name="A5-TopTwist"	laps="1" factor="0.1" />
+		<track name="A5-TopTwist"	laps="1" factor="0.15" />
 	</championship>
 	<championship name="Greece scenery" ver="1" difficulty="3" length="3" tutorial="3" 
 			descr="Greece championship. All tracks for this scenery in their appearance order.">
@@ -373,7 +373,7 @@
 		<track name="S2-Frenzy"		time="260.0"/>
 		<track name="S3-Loops"		time="72.1"/>
 		<!--5-->
-		<track name="D2-Mntn"		time="90.5"/>
+		<track name="D2-Mntn"		time="88.5"/>
 		<track name="D3-P"			time="57.0"/>
 		<track name="J3-Rocky"		time="51.2"/>
 		<track name="S4-Hills"		time="192.8"/>
@@ -502,11 +502,11 @@
 		<track name="I9-Web"		time="470.0"/>
 		<track name="S14-Refinery"	time="220.0"/>
 		<!--91-->
-		<track name="A5-TopTwist"	time="184.0"/>
+		<track name="A5-TopTwist"	time="182.0"/>
 		<track name="X3-Cloud"		time="117.0"/>
 
 		<track name="F16-Clew"		time="99.0"/>
-		<track name="G5-Climb"		time="284.0"/>
+		<track name="G5-Climb"		time="240.0"/>
 		<track name="I10-Treasure"	time="90.0"/>
 
 	</times>
