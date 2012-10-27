@@ -15,7 +15,11 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
+    The license GPL 3.0 applies only to code written by us.
+	Which is in source dir, subdirs: editor, network, ogre and road.
+    Libraries used have their own licenses.
+    For data licenses look in various .txt files in data subdirs.
 ----------------------------------------------------------------------------------
 
 Links
@@ -155,7 +159,7 @@ Track creators
 Artists
     Help exporting existing models from Blender to Ogre.
     If you can create/edit 3D models
-	(cars, trees, plants, rocks, objects etc),
+    (cars, trees, plants, rocks, objects etc),
     textures for them or for terrain.
     If you can create/edit sounds for the game.
 
