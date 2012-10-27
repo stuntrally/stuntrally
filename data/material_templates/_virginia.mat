@@ -196,7 +196,7 @@ material roadc.png
 material water.png
 {
 	parent 0vdrTrk
-	diffuseMap water.png
+	diffuseMap waterv.png
 }
 material grdr1.png
 {
@@ -386,7 +386,7 @@ material oak1.png
 material tretrnk.png
 {
 	parent 0vdrTrk
-	diffuseMap tretrnk.png
+	diffuseMap tretrnkv.png
 }
 material posgar.png
 {

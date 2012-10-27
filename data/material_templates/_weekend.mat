@@ -1,7 +1,7 @@
 material auto01.tga.png
 {
 	parent 0vdrAlpha
-	diffuseMap auto01.tga.png
+	diffuseMap auto01w.tga.png
 }
 material gjerde02.bmp.png
 {
@@ -11,7 +11,7 @@ material gjerde02.bmp.png
 material busk01.bmp.png
 {
 	parent 0vdrAlpha
-	diffuseMap busk01.bmp.png
+	diffuseMap busk01w.bmp.png
 }
 material statoil10.tga.png
 {
@@ -76,7 +76,7 @@ material gjerde01.bmp.png
 material grass01.jpg.png
 {
 	parent 0vdrTrk
-	diffuseMap grass01.jpg.png
+	diffuseMap grass01w.jpg.png
 }
 material vann01.tga.png
 {
@@ -206,7 +206,7 @@ material statoil08.tga.png
 material grass02.jpg.png
 {
 	parent 0vdrTrk
-	diffuseMap grass02.jpg.png
+	diffuseMap grass02w.jpg.png
 }
 material grass03.jpg.png
 {
@@ -216,12 +216,12 @@ material grass03.jpg.png
 material tre10.bmp.png
 {
 	parent 0vdrAlpha
-	diffuseMap tre10.bmp.png
+	diffuseMap tre10w.bmp.png
 }
 material tre06.bmp.png
 {
 	parent 0vdrAlpha
-	diffuseMap tre06.bmp.png
+	diffuseMap tre06w.bmp.png
 }
 material road07.jpg.png
 {
@@ -236,5 +236,5 @@ material road06.jpg.png
 material road02.jpg.png
 {
 	parent 0vdrRoad
-	diffuseMap road02.jpg.png
+	diffuseMap road02w.jpg.png
 }

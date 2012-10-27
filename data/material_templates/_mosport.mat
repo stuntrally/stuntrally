@@ -12,7 +12,7 @@ material bluetent.png
 material cone.png
 {
 	parent 0vdrTrk
-	diffuseMap cone.png
+	diffuseMap conem.png
 }
 material grass_01.png
 {
@@ -337,7 +337,7 @@ material trees_group4c.png
 material tree01.png
 {
 	parent 0vdrAlpha
-	diffuseMap tree01.png
+	diffuseMap tree01m.png
 }
 material tree04.png
 {
