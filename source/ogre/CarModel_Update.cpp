@@ -463,24 +463,23 @@ void CarModel::RefreshBrakingMaterial()
 	else
 		texName = sDirname + "_body00_add.png";
 	MaterialPtr mtr;
-	for (int i=0; i < NumMaterials; i++)
-	{
-		mtr = MaterialManager::getSingleton().getByName(sMtr[i]);
-		if (!mtr.isNull())
-		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
-			while (techIt.hasMoreElements())
-			{	Technique* tech = techIt.getNext();
-				Technique::PassIterator passIt = tech->getPassIterator();
-				while (passIt.hasMoreElements())
-				{	Pass* pass = passIt.getNext();
-					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
-					while (tusIt.hasMoreElements())
-					{
-						TextureUnitState* tus = tusIt.getNext();
 
-						if (tus->getName() == "blendMap")
-							tus->setTextureName( texName );
-	}	}	}	}	}
+	mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
+	if (!mtr.isNull())
+	{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+		while (techIt.hasMoreElements())
+		{	Technique* tech = techIt.getNext();
+			Technique::PassIterator passIt = tech->getPassIterator();
+			while (passIt.hasMoreElements())
+			{	Pass* pass = passIt.getNext();
+				Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
+				while (tusIt.hasMoreElements())
+				{
+					TextureUnitState* tus = tusIt.getNext();
+
+					if (tus->getName() == "0")
+						tus->setTextureName( texName );
+	}	}	}	}
 }
 
 
