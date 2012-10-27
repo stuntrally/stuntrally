@@ -48,7 +48,7 @@
 	<Tag name="InputObjectsIns">Ins - wstaw nowy, pod kursorem</Tag>
 	<Tag name="GraphicsAll_Low">Niskie</Tag>
 	<Tag name="TipPrevWind">Okno podglądu kamery.</Tag>
-	<Tag name="ChampEndFinished">Ukończyłeś to mistrzostwo.</Tag>
+	<Tag name="InputPaintColor">C - maluj kolor</Tag>
 	<Tag name="MessageBox_No">Nie</Tag>
 	<Tag name="InputUpdBlendmap">F9 - odśwież przejścia terenu (ręcznie)</Tag>
 	<Tag name="Version">wersja</Tag>
@@ -220,6 +220,7 @@
 	<Tag name="NetSettings">Ustawienia</Tag>
 	<Tag name="TipModelMaxScale">Maksymalna skala modelu.</Tag>
 	<Tag name="TerrainError">Bład terenu</Tag>
+	<Tag name="InputGraphsType">zmień typ grafów w grze</Tag>
 	<Tag name="NetMasterProtocolError">Niekompatybilne wersje protokołu - pobierz nowsze Stunt Rally lub skontaktuj się z administratorem serwera.</Tag>
 	<Tag name="No">Nie</Tag>
 	<Tag name="InputStartDir">Space - zmień kierunek drogi (+ lub -)</Tag>
@@ -263,7 +264,7 @@
 	<Tag name="TipGrassPatchHeightMin">Minimalna wysokość trawy.</Tag>
 	<Tag name="InputRoadMat">-,=   -  materiał drogi/rury (-1 ukryty)</Tag>
 	<Tag name="InputDetailPreset">Wybierz ustawienia</Tag>
-	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
+	<Tag name="EdInputBar">Pasek wejścia Ctrl-I</Tag>
 	<Tag name="Road_Snap">Przyciąganie</Tag>
 	<Tag name="TipSunDirPitch">Kierunek słońca - kąt nachlenia.</Tag>
 	<Tag name="Passed">Zaliczone</Tag>
@@ -330,7 +331,7 @@
 	<Tag name="InputRoadMostSel">większość również dla selekcji</Tag>
 	<Tag name="InputTerHeight">E - ustaw Wysokość (RMB zmień jej wartość)</Tag>
 	<Tag name="InputStartPos">Q - edytuj start auta</Tag>
-	<Tag name="Laps">Okrążenia</Tag>
+	<Tag name="ChampEndFinished">Ukończyłeś to mistrzostwo.</Tag>
 	<Tag name="TipModelRoadDist">Dystans od drogi do modeli (globalny, dodawany do wartości każdego modelu).</Tag>
 	<Tag name="TireTrails">Ślady opon</Tag>
 	<Tag name="InputBrushParams">Parametry pędzla</Tag>
@@ -350,15 +351,16 @@
 	<Tag name="TerrainMove">Przesuń</Tag>
 	<Tag name="InputPressButtonTip">Naciśnij przycisk by zobaczyć</Tag>
 	<Tag name="Friction">Tarcie</Tag>
+	<Tag name="TiresEdit1">PgUp/PgDn - poprz., nast. wartość</Tag>
 	<Tag name="Ambient">Ambient</Tag>
-	<Tag name="BulletProfilerTxt">Czasy profilera Bullet</Tag>
 	<Tag name="SkirtLength">Długość łaty</Tag>
 	<Tag name="InputRoadNotOnTer">gdy nie na terenie</Tag>
 	<Tag name="ApplyShadows">Zmień cienie</Tag>
+	<Tag name="TiresEdit2">1,2 lub Num /,* - zmień wartość</Tag>
 	<Tag name="TipFogEndClr">Kolor mgły. R G B składowe 0 to 1 (np. 0.7 0.8 0.9)</Tag>
 	<Tag name="TipGrassColorMap">Mapa koloru trawy, dla scenerii. Zazwyczaj ten sam wybór, co dla materiału trawy. Dodatkowo koloruje trawę.</Tag>
 	<Tag name="Multiplayer">Multiplayer</Tag>
-	<Tag name="VegetCol">Kolizja z wegetacją</Tag>
+	<Tag name="InputToggleVeget">V - wł. / wył. wegetację</Tag>
 	<Tag name="Particles">Cząstki</Tag>
 	<Tag name="Other">Inne</Tag>
 	<Tag name="TipTerLAngSm">Kąt zakres przejściowy</Tag>
@@ -446,12 +448,14 @@
 	<Tag name="Shadows">Cienie</Tag>
 	<Tag name="InputRplCtrl2">P - pauza/wznów powtórkę</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - przewiń do tyłu/do przodu (shift - wolno, ctrl,alt - szybko)</Tag>
+	<Tag name="Laps">Okrążenia</Tag>
 	<Tag name="InputRplCtrl1">Backspace - pokaż/ukryj kontrolki (przytrzymaj ctrl by użyć myszy)</Tag>
 	<Tag name="InputRplCtrl4">K, L - zmień kamerę na innego gracza</Tag>
 	<Tag name="TipGrassSwayLen">Efekt kołysania trawy długość (skala).</Tag>
 	<Tag name="WaterReflection">Odbicie</Tag>
 	<Tag name="intensity">Intensywność</Tag>
 	<Tag name="Fog">Mgła</Tag>
+	<Tag name="BulletProfilerTxt">Czasy profilera Bullet</Tag>
 	<Tag name="InputMapNextTab">Następna zakładka</Tag>
 	<Tag name="FrameSkip">Pomijanie klatek</Tag>
 	<Tag name="InputTrackScrn">(dla obrazu trasy)</Tag>
@@ -519,7 +523,7 @@
 	<Tag name="LS_CLEANUP">Oczyszczanie</Tag>
 	<Tag name="Difficulty">Trudność</Tag>
 	<Tag name="RplRename">Zmień nazwę</Tag>
-	<Tag name="EnterSave">Enter - zapisz</Tag>
+	<Tag name="TiresEdit">Edycja opon - (Grafy w trybie 4)</Tag>
 	<Tag name="InputMapLastChk">Start od poprzedniego punktu kontrolnego</Tag>
 	<Tag name="NetJoinLocked">Gra chroniona</Tag>
 	<Tag name="rating">ocena</Tag>
@@ -539,6 +543,7 @@
 	<Tag name="CarStartPos">Pozycja startowa</Tag>
 	<Tag name="ShortcutsInfo">Naciśnij z alt by szybko przejść do zakładki (lub sub). Kolejne będzie przechodzić po sub-zakładkach (jeśli są).</Tag>
 	<Tag name="AlignWidthMul">Szer. mnożnik</Tag>
+	<Tag name="NetMasterIp">IP serwera</Tag>
 	<Tag name="LoadingDesc">Wczytywanie, proszę czekać...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maksymalna wysokość strony trawy.</Tag>
 	<Tag name="Road_Pipe">Rura</Tag>
@@ -560,7 +565,10 @@
 	<Tag name="Back">Tył</Tag>
 	<Tag name="TipDiffusePrev">Podgląd tekstury koloru diffuse.</Tag>
 	<Tag name="InputTerSmooth">S - Wyrównaj (na płasko)</Tag>
+	<Tag name="InputFocusFind">Ctrl-F idź do pola szukaj</Tag>
+	<Tag name="InputOther1">Góra,Dół - nawigacja w listach  Enter - start</Tag>
 	<Tag name="TipModelDens">Jak często model będzie występował w obszarze trasy.</Tag>
+	<Tag name="InputOther2">Enter - pokaż/ukryj listę graczy w multiplayer</Tag>
 	<Tag name="InpSet_Fast">Szybko</Tag>
 	<Tag name="InputMain">Główna</Tag>
 	<Tag name="NewTerrainFlat">Nowy płaski</Tag>
@@ -593,8 +601,9 @@
 	<Tag name="TipRainSnow2">Ust.2 typ deszcz/śnieg</Tag>
 	<Tag name="TipTerLNoise">Współ. dodatkowego szumu.</Tag>
 	<Tag name="InputTerDeform">D - Deformuj (LMB góra, RMB dół)</Tag>
+	<Tag name="TiresEdit3">Home - przełącz parametry wzdłużne / poprzeczne</Tag>
 	<Tag name="TipDiffuseTex">Tekstura koloru (specular w alpha)</Tag>
-	<Tag name="InputToggleVeget">V - wł. / wył. wegetację</Tag>
+	<Tag name="TiresEdit4">End - przełącz parametry momentu wyrównania</Tag>
 	<Tag name="AntiAliasing">Wygładzanie krawędzi</Tag>
 	<Tag name="RoadStats">Stat. drogi</Tag>
 	<Tag name="FinishedCommaPlace">ukończył, miejsce</Tag>
@@ -608,7 +617,7 @@
 	<Tag name="TipToggleLayer">Włącz / wyłącz wybraną warstwę tekstury.</Tag>
 	<Tag name="TipTrkListEditor">Lista tras, kliknij by wybrać (do duplikowania lub zmiany nazwy). Naciśnij [Wczytaj trasę] by zmienić obecną trasę w edytorze.</Tag>
 	<Tag name="InputMapNextCamera">Następny widok</Tag>
-	<Tag name="EdCamPos">Camera position</Tag>
+	<Tag name="EdCamPos">Pozycja kamery</Tag>
 	<Tag name="GraphicsAll_Lowest">Najniższe</Tag>
 	<Tag name="InputReadyToPlay">(gotowe do gry)</Tag>
 	<Tag name="CamInertia">Bezwładność kamery</Tag>
@@ -622,7 +631,7 @@
 	<Tag name="RplBestOnly">Zapisuj ducha tylko dla lepszych czasów</Tag>
 	<Tag name="InputFluidsMode">W - edytuj ciecze</Tag>
 	<Tag name="Front">Przód</Tag>
-	<Tag name="NetMasterIp">IP serwera</Tag>
+	<Tag name="VegetCol">Kolizja z wegetacją</Tag>
 	<Tag name="TipSurfFrict2">Nie używane.</Tag>
 	<Tag name="Change">Zmień</Tag>
 	<Tag name="Reset">Przywróć</Tag>
@@ -734,6 +743,7 @@
 	<Tag name="TrackLength">Długość</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - resetuj obrót</Tag>
 	<Tag name="TipRoadDist">Jak daleko od drogi będzie się pojawiał model.</Tag>
+	<Tag name="EnterSave">Enter - zapisz</Tag>
 	<Tag name="DistMult">Mnożnik odl.</Tag>
 	<Tag name="InputStartWidth">; &apos; - dostosuj szerokość startu</Tag>
 	<Tag name="Error">Błąd</Tag>
@@ -773,7 +783,6 @@
 	<Tag name="Volume">Głośność</Tag>
 	<Tag name="Brush_Power">Potęga</Tag>
 	<Tag name="TipTerLayers">Liczba warstw tekstur terenu (zalecana 2-3, znacząco obniża wydajność). *Autom. przejścia wspierane do maks. 4.</Tag>
-	<Tag name="InputPaintColor">C - maluj kolor</Tag>
 	<Tag name="TipSurfType">Typ podłoża, wyznacza dźwięk.</Tag>
 	<Tag name="NextStage">Przejście do następnego etapu.</Tag>
 	<Tag name="Engine">Silnik</Tag>
@@ -800,15 +809,9 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="InputGraphsType">change graphs type in game</Tag>
-	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
-	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
-	<Tag name="InputFocusFind">Ctrl-F  go to find box</Tag>
-	<Tag name="InputOther1">Up,Down - navigate in lists   Enter - start</Tag>
-	<Tag name="InputOther2">Enter - show/hide players window in multiplayer</Tag>
-	<Tag name="TiresEdit1">PgUp/PgDn - previous, next value</Tag>
-	<Tag name="TiresEdit3">Home - toggle longitudinal / lateral parameters</Tag>
-	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
+	<Tag name="InputRoadLooped">O - toggle looped</Tag>
+	<Tag name="Tweak">Tweak</Tag>
+	<Tag name="MaterialProperties">Material Properties</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
