@@ -187,9 +187,9 @@ void App::CreateTrees()
 			for (int i = 0; i < cnt; i++)
 			{
 				#if 0  ///  for new objects - test shapes
-					yaw = Degree((i*45)%360);  // grid
-					pos.z = -100 +(i / 10) * 20;  pos.x = -100 +(i % 10) * 20;
-					Real scl = rnd.rand() * (pg.maxScale-pg.minScale) + pg.minScale;
+					yaw = Degree((i*30)%360);  // grid
+					pos.z = -100 +(i / 10) * 10;  pos.x = -100 +(i % 10) * 10;
+					Real scl = pg.minScale;
 				#else
 					yaw = Degree(rnd.rand(360.0));
 					pos.x = getTerPos();  pos.z = getTerPos();
