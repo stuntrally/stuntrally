@@ -126,7 +126,7 @@
 	<Tag name="CarCrash">Auto zderzenie</Tag>
 	<Tag name="LS_OBJS">Ładowanie obiektów</Tag>
 	<Tag name="TreeRoadDist">Odl. od drogi.</Tag>
-	<Tag name="GraphicsAll_Medium">Ś</Tag>
+	<Tag name="GraphicsAll_Medium">Średnie</Tag>
 	<Tag name="NeedReload">* potrzeba przeładowania</Tag>
 	<Tag name="MinimapZoom">Powiększenie</Tag>
 	<Tag name="ViewRight">Widok prawy</Tag>
