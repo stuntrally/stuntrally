@@ -20,7 +20,7 @@ static std::string getSystemLanguage()
 	char *loc = setlocale(LC_ALL, NULL);
 	if (!loc)
 		return default_lang;
-	if (loc == "C")
+	if (memcmp(loc, "C", 2) == 0)
 		return "en";
 
 	//  windows only

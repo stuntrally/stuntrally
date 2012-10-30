@@ -144,7 +144,7 @@ void ImpostorPage::build()
       return;
 
 	// Calculate the average Y value of all the added entities
-   m_vecCenter.y = m_nAveCount > 0 ? m_vecCenter.y /= m_nAveCount : 0;
+	m_vecCenter.y = m_nAveCount > 0 ? m_vecCenter.y / m_nAveCount : 0;
 
 	//Build all batches
 	TImpostorBatchs::iterator it = m_mapImpostorBatches.begin(), iend = m_mapImpostorBatches.end();
