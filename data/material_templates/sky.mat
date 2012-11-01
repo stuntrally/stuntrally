@@ -16,6 +16,12 @@ material base_sky
     }
 }
 
+material sky/dust
+{
+    parent base_sky
+    texture sky_dust.jpg
+}
+
 material sky/white
 {
     parent base_sky
