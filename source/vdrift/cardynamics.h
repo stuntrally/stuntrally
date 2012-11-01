@@ -177,6 +177,7 @@ public:
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
 	float fHitTime, fParIntens,fParVel, fHitForce,fHitForce2,fHitForce3,fCarScrap,fCarScreech;
 	btVector3 velPrev;
+	T time;  // for wind only
 	
 
 // driveline state
