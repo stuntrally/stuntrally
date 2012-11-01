@@ -40,6 +40,7 @@
 #define TREE_WIND @shPropertyBool(tree_wind)
 #define GRASS_WIND @shPropertyBool(grass_wind)
 #define VERTEX_COLOUR @shPropertyBool(vertex_colour)
+#define TWOSIDE_DIFFUSE @shPropertyBool(twoside_diffuse)
 
 #ifdef SH_VERTEX_SHADER
 
@@ -359,7 +360,11 @@
 #if GRASS_WIND
         float NdotL = 1;
 #else
-        float NdotL = max(dot(normal, lightDir), 0);
+		#if TWOSIDE_DIFFUSE
+			float NdotL = abs(dot(normal, lightDir));
+		#else
+			float NdotL = max(dot(normal, lightDir), 0);
+		#endif
 #endif
         float3 diffuse = materialDiffuse.xyz * lightDiffuse.xyz * NdotL * shadow;
     
@@ -367,10 +372,18 @@
         float3 halfAngle = normalize (lightDir + eyeDir);
         
         #if !SPEC_MAP
-        float3 specular = pow(max(dot(normal, halfAngle), 0), materialShininess) * materialSpecular.xyz;
+			#if TWOSIDE_DIFFUSE
+				float3 specular = pow(abs(dot(normal, halfAngle)), materialShininess) * materialSpecular.xyz;
+			#else
+				float3 specular = pow(max(dot(normal, halfAngle), 0), materialShininess) * materialSpecular.xyz;
+			#endif
         #else
-        float4 specTex = shSample(specMap, UV.xy);
-        float3 specular = pow(max(dot(normal, halfAngle), 0), specTex.a * 255) * specTex.xyz;
+	        float4 specTex = shSample(specMap, UV.xy);
+			#if TWOSIDE_DIFFUSE
+			    float3 specular = pow(abs(dot(normal, halfAngle)), specTex.a * 255) * specTex.xyz;
+			#else
+				float3 specular = pow(max(dot(normal, halfAngle), 0), specTex.a * 255) * specTex.xyz;
+			#endif
         #endif
         if (NdotL <= 0)
             specular = float3(0,0,0);
@@ -445,6 +458,7 @@
 #if SELECTED_GLOW
         shOutputColour(0).xyzw += isSelected * (float4(0.14, 0.22, 0.36, 0.36) * (0.5f + 0.1f * cos(3.f * time)));
 #endif
+		//shOutputColour(0).xyz = shOutputColour(0).xyz * 0.001 + normal.xyz;  // normal test
 
 #if MRT
         shOutputColour(1) = float4(UV.w, normalize(viewNormal.xyz));

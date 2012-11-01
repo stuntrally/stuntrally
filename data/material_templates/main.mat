@@ -42,6 +42,7 @@ material base
     transparent false // for shadowcaster
     mrt_output true
     diffuse_address_mode wrap
+    twoside_diffuse false
 
 	pass
 	{
@@ -80,6 +81,7 @@ material base
             tree_wind $tree_wind
             grass_wind $grass_wind
             vertex_colour $vertex_colour
+            twoside_diffuse $twoside_diffuse
 		    
 		    specular_alpha $specular_alpha
 		    
