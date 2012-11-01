@@ -213,7 +213,7 @@ void App::CreateTrees()
 					my = (pos.z + 0.5*tws)/tws*r;
 
 					int c = sc->trRdDist + pg.addTrRdDist;
-					int d = std::max(c, 20);
+					int d = c;  //std::max(c, 20);  //pg.addTrRdDistMax
 					register int ii,jj, rr, rmin = d;
 					for (jj = -d; jj <= d; ++jj)
 					for (ii = -d; ii <= d; ++ii)
@@ -223,14 +223,14 @@ void App::CreateTrees()
 							std::max(0,std::min(r-1, my+jj)), 0).r;
 						
 						rr = abs(ii)+abs(jj);
-						//rr = sqrt(float(ii*ii+jj*jj));
+						//rr = sqrt(float(ii*ii+jj*jj));  // much slower
 						if (cr < 0.75f)  //par-
 							rmin = std::min(rmin, rr);
 					}
 					if (rmin <= c)
 						add = false;
 
-					//if (rmin >= d-2)
+					//if (rmin >= d-2)  // max dist to road
 					//	add = false;
 				}
 				if (!add)  continue;  //?faster
