@@ -20,6 +20,7 @@ void Scene::Default()
 	skyMtr = "World/NoonSky";
 	rainEmit = 0;  rainName = "";
 	rain2Emit = 0;  rain2Name = "";
+	windAmt = 0.f;
 
 	fogMode = FOG_LINEAR;  fogStart = 600;  fogEnd = 1600;
 	fogClr = Vector3(0.73f, 0.86f, 1.0f);  fogExp = 0;
@@ -141,7 +142,8 @@ bool Scene::LoadXml(String file, bool bTer)
 		a = eSky->Attribute("rainEmit");	if (a)  rainEmit = s2i(a);
 		a = eSky->Attribute("rainName");	if (a)  rainName = String(a);
 		a = eSky->Attribute("rain2Emit");	if (a)  rain2Emit = s2i(a);
-		a = eSky->Attribute("rain2Name");	if (a)  rain2Name = String(a);  }
+		a = eSky->Attribute("rain2Name");	if (a)  rain2Name = String(a);
+		a = eSky->Attribute("windAmt");		if (a)  windAmt = s2r(a);	}
 		
 	///  fog
 	eFog = root->FirstChildElement("fog");
@@ -365,6 +367,8 @@ bool Scene::SaveXml(String file)
 		{	sky.SetAttribute("rain2Name",	rain2Name.c_str());
 			sky.SetAttribute("rain2Emit",	toStrC( rain2Emit ));
 		}
+		if (windAmt > 0.f)
+			sky.SetAttribute("windAmt",	toStrC( windAmt ));
 	root.InsertEndChild(sky);
 
 	TiXmlElement fog("fog");

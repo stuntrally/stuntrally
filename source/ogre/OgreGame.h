@@ -73,7 +73,7 @@ public:
 	Rewind rewind;  // to take car back in time (after crash etc.)
 	const Ogre::String& GetGhostFile();
 
-	Scene sc;  /// scene.xml
+	Scene* sc;  /// scene.xml
 	FluidsXml fluidsXml;  /// fluid params xml
 	BltObjects objs;  // veget collision in bullet
 	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
@@ -264,7 +264,7 @@ protected:
 	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
 
 	//  track
-	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const Ogre::String& sTrack, float time, bool champ=false),
+	void UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const Ogre::String& sTrack, float time, bool champ=false),
 		ReadTrkStats(), ReadTrkStatsChamp(Ogre::String track,bool reverse);
 	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc[2];
 	MyGUI::StaticImagePtr imgPrv[2],imgMini[2],imgTer[2], imgTrkIco1,imgTrkIco2;

@@ -82,33 +82,33 @@ void App::CreateTrees()
 	}
 
 	using namespace Forests;
-	Real tws = sc.td.fTerWorldSize * 0.5f;
+	Real tws = sc->td.fTerWorldSize * 0.5f;
 	TBounds tbnd(-tws, -tws, tws, tws);
 	//  pos0 - original  pos - with offset
 	Vector3 pos0 = Vector3::ZERO, pos = Vector3::ZERO;  Radian yaw;
 
 	bool bWind = 1;	 /// WIND
 
-	Real fGrass = pSet->grass * sc.densGrass * 3.0f;  // std::min(pSet->grass, 
+	Real fGrass = pSet->grass * sc->densGrass * 3.0f;  // std::min(pSet->grass, 
 	#ifdef ROAD_EDITOR
-	Real fTrees = pSet->gui.trees * sc.densTrees;
+	Real fTrees = pSet->gui.trees * sc->densTrees;
 	#else
-	Real fTrees = pSet->game.trees * sc.densTrees;
+	Real fTrees = pSet->game.trees * sc->densTrees;
 	#endif
 	
 	if (fGrass > 0.f)
 	{
 		#ifndef ROAD_EDITOR
-		grass = new PagedGeometry(mSplitMgr->mCameras.front(), sc.grPage);  //30
+		grass = new PagedGeometry(mSplitMgr->mCameras.front(), sc->grPage);  //30
 		#else
-		grass = new PagedGeometry(mCamera, sc.grPage);  //30
+		grass = new PagedGeometry(mCamera, sc->grPage);  //30
 		#endif
 		
 		// create dir if not exist
-		boost::filesystem::create_directory(PATHMANAGER::GetCacheDir() + "/" + toStr(sc.sceneryId));
-		grass->setTempDir(PATHMANAGER::GetCacheDir() + "/" + toStr(sc.sceneryId) + "/");
+		boost::filesystem::create_directory(PATHMANAGER::GetCacheDir() + "/" + toStr(sc->sceneryId));
+		grass->setTempDir(PATHMANAGER::GetCacheDir() + "/" + toStr(sc->sceneryId) + "/");
 		
-		grass->addDetailLevel<GrassPage>(sc.grDist * pSet->grass_dist);
+		grass->addDetailLevel<GrassPage>(sc->grDist * pSet->grass_dist);
 
 		GrassLoader *grassLoader = new Forests::GrassLoader(grass);
 		grassLoader->setRenderQueueGroup(RQG_BatchAlpha);
@@ -116,17 +116,17 @@ void App::CreateTrees()
 		grassLoader->setHeightFunction(&getTerrainHeight);
 
 		//  Add grass
-		GrassLayer *l = grassLoader->addLayer(sc.grassMtr);
-		l->setMinimumSize(sc.grMinSx, sc.grMinSy);
-		l->setMaximumSize(sc.grMaxSx, sc.grMaxSy);
-		l->setDensity(fGrass);  l->setSwayDistribution(sc.grSwayDistr);
-		l->setSwayLength(sc.grSwayLen);  l->setSwaySpeed(sc.grSwaySpeed);
+		GrassLayer *l = grassLoader->addLayer(sc->grassMtr);
+		l->setMinimumSize(sc->grMinSx, sc->grMinSy);
+		l->setMaximumSize(sc->grMaxSx, sc->grMaxSy);
+		l->setDensity(fGrass);  l->setSwayDistribution(sc->grSwayDistr);
+		l->setSwayLength(sc->grSwayLen);  l->setSwaySpeed(sc->grSwaySpeed);
 
 		l->setAnimationEnabled(true);  //l->setLightingEnabled(true);
 		l->setRenderTechnique(GRASSTECH_CROSSQUADS);  //GRASSTECH_SPRITE-
 		l->setFadeTechnique(FADETECH_ALPHA);  //FADETECH_GROW-
 
-		l->setColorMap(sc.grassColorMap);
+		l->setColorMap(sc->grassColorMap);
 		l->setDensityMap("grassDensity.png",CHANNEL_RED);
 		l->setMapBounds(tbnd);
 		grass->setShadersEnabled(true);
@@ -141,36 +141,36 @@ void App::CreateTrees()
 	{
 		// fast: 100_ 80 j1T!,  400 400 good sav2f  200 220 both`-
 		#ifndef ROAD_EDITOR
-		trees = new PagedGeometry(mSplitMgr->mCameras.front(), sc.trPage);
+		trees = new PagedGeometry(mSplitMgr->mCameras.front(), sc->trPage);
 		#else
-		trees = new PagedGeometry(mCamera, sc.trPage);
+		trees = new PagedGeometry(mCamera, sc->trPage);
 		#endif
 		
 		// create dir if not exist
-		boost::filesystem::create_directory(PATHMANAGER::GetCacheDir() + "/" + toStr(sc.sceneryId));
-		trees->setTempDir(PATHMANAGER::GetCacheDir() + "/" + toStr(sc.sceneryId) + "/");
+		boost::filesystem::create_directory(PATHMANAGER::GetCacheDir() + "/" + toStr(sc->sceneryId));
+		trees->setTempDir(PATHMANAGER::GetCacheDir() + "/" + toStr(sc->sceneryId) + "/");
 
 		if (bWind)
-			 trees->addDetailLevel<WindBatchPage>(sc.trDist * pSet->trees_dist, 0);
-		else trees->addDetailLevel<BatchPage>	 (sc.trDist * pSet->trees_dist, 0);
+			 trees->addDetailLevel<WindBatchPage>(sc->trDist * pSet->trees_dist, 0);
+		else trees->addDetailLevel<BatchPage>	 (sc->trDist * pSet->trees_dist, 0);
 		if (pSet->use_imposters)
-			trees->addDetailLevel<ImpostorPage>(sc.trDistImp * pSet->trees_dist, 0);
+			trees->addDetailLevel<ImpostorPage>(sc->trDistImp * pSet->trees_dist, 0);
 
 		TreeLoader2D* treeLoader = new TreeLoader2D(trees, tbnd);
 		trees->setPageLoader(treeLoader);
 		treeLoader->setHeightFunction(getTerrainHeightAround /*,userdata*/);
 		treeLoader->setMaximumScale(4);//6
-		tws = sc.td.fTerWorldSize;
-		int r = imgRoadSize, cntr = 0, cntshp = 0, txy = sc.td.iVertsX*sc.td.iVertsY-1;
+		tws = sc->td.fTerWorldSize;
+		int r = imgRoadSize, cntr = 0, cntshp = 0, txy = sc->td.iVertsX*sc->td.iVertsY-1;
 
 		//  set random seed  /// todo: seed in scene.xml and in editor gui...
 		MTRand rnd((MTRand::uint32)1213);
-		#define getTerPos()		(rnd.rand()-0.5) * sc.td.fTerWorldSize
+		#define getTerPos()		(rnd.rand()-0.5) * sc->td.fTerWorldSize
 
 		//  layers
-		for (size_t l=0; l < sc.pgLayers.size(); l++)
+		for (size_t l=0; l < sc->pgLayers.size(); ++l)
 		{
-			PagedLayer& pg = sc.pgLayersAll[sc.pgLayers[l]];
+			PagedLayer& pg = sc->pgLayersAll[sc->pgLayers[l]];
 
 			Entity* ent = mSceneMgr->createEntity(pg.name);
 			ent->setVisibilityFlags(RV_Vegetation);  ///vis+  disable in render targets
@@ -184,11 +184,12 @@ void App::CreateTrees()
 
 			//  num trees  ----------------------------------------------------------------
 			int cnt = fTrees * 6000 * pg.dens;
-			for (int i = 0; i < cnt; i++)
+			for (int i = 0; i < cnt; ++i)
 			{
 				#if 0  ///  for new objects - test shapes
-					yaw = Degree((i*30)%360);  // grid
-					pos.z = -100 +(i / 10) * 10;  pos.x = -100 +(i % 10) * 10;
+					int ii = l*cnt+i;
+					yaw = Degree((ii*30)%360);  // grid
+					pos.z = -100 +(ii / 12) * 10;  pos.x = -100 +(ii % 12) * 10;
 					Real scl = pg.minScale;
 				#else
 					yaw = Degree(rnd.rand(360.0));
@@ -211,21 +212,34 @@ void App::CreateTrees()
 				int mx = (pos.x + 0.5*tws)/tws*r,
 					my = (pos.z + 0.5*tws)/tws*r;
 
-					int c = sc.trRdDist + pg.addTrRdDist;
-					for (int jj = -c; jj <= c; ++jj)
-					for (int ii = -c; ii <= c; ++ii)
-						if (imgRoad.getColourAt(
+					int c = sc->trRdDist + pg.addTrRdDist;
+					int d = std::max(c, 20);
+					register int ii,jj, rr, rmin = d;
+					for (jj = -d; jj <= d; ++jj)
+					for (ii = -d; ii <= d; ++ii)
+					{
+						float cr = imgRoad.getColourAt(
 							std::max(0,std::min(r-1, mx+ii)),
-							std::max(0,std::min(r-1, my+jj)), 0).r < 0.75f)  //par-
-								add = false;
+							std::max(0,std::min(r-1, my+jj)), 0).r;
+						
+						rr = abs(ii)+abs(jj);
+						//rr = sqrt(float(ii*ii+jj*jj));
+						if (cr < 0.75f)  //par-
+							rmin = std::min(rmin, rr);
+					}
+					if (rmin <= c)
+						add = false;
+
+					//if (rmin >= d-2)
+					//	add = false;
 				}
 				if (!add)  continue;  //?faster
 
 				//  check ter angle  ------------
-				int mx = (pos.x + 0.5*tws)/tws*sc.td.iVertsX,
-					my =(-pos.z + 0.5*tws)/tws*sc.td.iVertsY;
-				int a = std::max(0, std::min(txy, my*sc.td.iVertsX+mx));
-				if (sc.td.hfAngle[a] > pg.maxTerAng)
+				int mx = (pos.x + 0.5*tws)/tws*sc->td.iVertsX,
+					my =(-pos.z + 0.5*tws)/tws*sc->td.iVertsY;
+				int a = std::max(0, std::min(txy, my*sc->td.iVertsX+mx));
+				if (sc->td.hfAngle[a] > pg.maxTerAng)
 					add = false;
 
 				if (!add)  continue;  //
@@ -239,9 +253,9 @@ void App::CreateTrees()
 				
 				//  check if in fluids  ------------
 				float fa = 0.f;  // depth
-				for (int fi=0; fi < sc.fluids.size(); ++fi)
+				for (int fi=0; fi < sc->fluids.size(); ++fi)
 				{
-					const FluidBox& fb = sc.fluids[fi];
+					const FluidBox& fb = sc->fluids[fi];
 					if (fb.pos.y - pos.y > 0.f)  // dont check when above fluid, ..or below its size-
 					{
 						const float sizex = fb.size.x*0.5f, sizez = fb.size.z*0.5f;

@@ -478,9 +478,9 @@ void App::updatePoses(float time)
 	
 	
 	///  objects - dynamic (props)  -------------------------------------------------------------
-	for (int i=0; i < sc.objects.size(); ++i)
+	for (int i=0; i < sc->objects.size(); ++i)
 	{
-		Object& o = sc.objects[i];
+		Object& o = sc->objects[i];
 		if (o.ms)
 		{
 			btTransform tr, ofs;

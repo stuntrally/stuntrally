@@ -426,7 +426,7 @@ void App::ReadTrkStats()
 	String sRd = PathListTrk() + "/road.xml";
 	String sSc = PathListTrk() + "/scene.xml";
 
-	Scene sc;  sc.LoadXml(sSc);  // fails to defaults
+	Scene* sc = new Scene();  sc->LoadXml(sSc);  // fails to defaults
 #ifndef ROAD_EDITOR  // game
 	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
 
@@ -438,6 +438,7 @@ void App::ReadTrkStats()
 	SplineRoad rd(this);  rd.LoadFile(sRd,false);  // load
 	UpdGuiRdStats(&rd,sc, sListTrack, 0.f);
 #endif
+	delete sc;
 }
 
 #ifndef ROAD_EDITOR  // game
@@ -446,7 +447,7 @@ void App::ReadTrkStatsChamp(String track, bool reverse)
 	String sRd = pathTrk[0] + track + "/road.xml";
 	String sSc = pathTrk[0] + track + "/scene.xml";
 
-	Scene sc;  sc.LoadXml(sSc);  // fails to defaults
+	Scene* sc = new Scene();  sc->LoadXml(sSc);  // fails to defaults
 	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
 
 	TIMER tim;  tim.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+track+".txt", 0.f, pGame->error_output);
@@ -456,12 +457,12 @@ void App::ReadTrkStatsChamp(String track, bool reverse)
 }
 #endif
 
-void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const String& sTrack, float time, bool champ)
+void App::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTrack, float time, bool champ)
 {
 	//  road stats
 	//---------------------------------------------------------------------------
 	int ch = champ ? 1 : 0;
-	if (stTrk[ch][1])  stTrk[ch][1]->setCaption(fToStr(sc.td.fTerWorldSize/1000.f,3,5)+" km");
+	if (stTrk[ch][1])  stTrk[ch][1]->setCaption(fToStr(sc->td.fTerWorldSize/1000.f,3,5)+" km");
 	if (!rd)  return;
 	if (stTrk[ch][0])  stTrk[ch][0]->setCaption(fToStr(rd->st.Length/1000.f,3,5)+" km");
 

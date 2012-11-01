@@ -22,7 +22,7 @@ void App::Rnd2TexSetup()
 	// visibility:  1 road  2 hud,ed  4 terrain  8 trees  16-car glass  32 sky
 	const Ogre::uint32 visMask[RTs] =
 		{ RV_Road, RV_Road+RV_Objects, RV_Terrain+RV_Objects, RV_MaskAll-RV_Hud };
-	const int dim[RTs] =  //1025: sc.td.iVertsX
+	const int dim[RTs] =  //1025: sc->td.iVertsX
 		{ 1024, 1025, 512, 1024 };
 		
 	AxisAlignedBox big(-100000.0*Vector3::UNIT_SCALE, 100000.0*Vector3::UNIT_SCALE);
@@ -41,7 +41,7 @@ void App::Rnd2TexSetup()
 			mSceneMgr->destroyCamera(sCam);  // dont destroy old - const tex sizes opt..
 			
 			///  rnd to tex - same dim as Hmap	// after track load
-			Real fDim = sc.td.fTerWorldSize;  // world dim  ..vdr
+			Real fDim = sc->td.fTerWorldSize;  // world dim  ..vdr
 			Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().createManual(sTex,
 				  ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D,
 				  dim[i], dim[i], 0, PF_R8G8B8A8, TU_RENDERTARGET);
@@ -119,7 +119,7 @@ void App::SaveGrassDens()
 	PixelBox pb_rd(w,h,1, PF_BYTE_RGBA, rd);
 	rt[1].rndTex->copyContentsToMemory(pb_rd, RenderTarget::FB_FRONT);
 
-	const int f = std::max(0, sc.grDensSmooth);
+	const int f = std::max(0, sc->grDensSmooth);
 	float ff = 0.f;  //2.f / ((f*2+1)*(f*2+1)) / 255.f;
 	register int v,i,j,m,x, a,b,d,y;
 
@@ -166,13 +166,13 @@ void App::SaveGrassDens()
 		for (y = 0; y < h; ++y) {  b = y*w;
 		for (x = 0; x < w; ++x, ++b)
 		{
-			a = (h-1-y) * sc.td.iVertsY / h;  a *= sc.td.iVertsX;
-			a += x * sc.td.iVertsX / w;
+			a = (h-1-y) * sc->td.iVertsY / h;  a *= sc->td.iVertsX;
+			a += x * sc->td.iVertsX / w;
 			// would be better to interpolate 4 neighbours, or smooth this map
 
 			v = std::max(0, std::min(255, int(255.f *
-				linRange(sc.td.hfAngle[a], 0.f,sc.grTerMaxAngle,20.f) *
-				linRange(sc.td.hfHeight[a], sc.grTerMinHeight,sc.grTerMaxHeight,20.f) )));
+				linRange(sc->td.hfAngle[a], 0.f,sc->grTerMaxAngle,20.f) *
+				linRange(sc->td.hfHeight[a], sc->grTerMinHeight,sc->grTerMaxHeight,20.f) )));
 			v = std::min((int)(gd[b] & 0xFF), v);  // preserve road
 			gd[b] = 0xFF000000 + /*0x010101 */ v;  // no grass
 		}	}
@@ -230,7 +230,7 @@ void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 //-----------------------------------------------------------------------------------------------------------
 void App::SaveWaterDepth()
 {
-	if (sc.fluids.empty())
+	if (sc->fluids.empty())
 	{
 		Delete(TrkDir()+"objects/waterDepth.png");  // no tex if no fluids
 		return;
@@ -252,12 +252,12 @@ void App::SaveWaterDepth()
 		//  pos 0..1
 		float fx = float(y)/fh, fz = float(x)/fw;
 		//  pos on ter  -terSize..terSize
-		float wx = (fx-0.5f) * sc.td.fTerWorldSize, wz = -(fz-0.5f) * sc.td.fTerWorldSize;
+		float wx = (fx-0.5f) * sc->td.fTerWorldSize, wz = -(fz-0.5f) * sc->td.fTerWorldSize;
 
 		fa = 0.f;  // fluid y pos
-		for (i=0; i < sc.fluids.size(); ++i)
+		for (i=0; i < sc->fluids.size(); ++i)
 		{
-			const FluidBox& fb = sc.fluids[i];
+			const FluidBox& fb = sc->fluids[i];
 			const float sizex = fb.size.x*0.5f, sizez = fb.size.z*0.5f;
 			//  check rect 2d - no rot !  todo: make 2nd type circle..
 			if (wx > fb.pos.x - sizex && wx < fb.pos.x + sizex &&
@@ -312,7 +312,7 @@ void App::AlignTerToRoad()
 
 	//  terrain
 	float *fHmap = terrain->getHeightData();
-	int w = sc.td.iVertsX, h = w;  float fh = h-1, fw = w-1;
+	int w = sc->td.iVertsX, h = w;  float fh = h-1, fw = w-1;
 
 	float *rd = new float[w*h];  // road depth
 	bool  *rh = new bool[w*h];  // road hit
@@ -328,7 +328,7 @@ void App::AlignTerToRoad()
 		//  pos 0..1
 		fx = float(x)/fh;  fz = float(y)/fw;
 		//  pos on ter  -terSize..terSize
-		wx = (fx-0.5f) * sc.td.fTerWorldSize;  wz = (fz-0.5f) * sc.td.fTerWorldSize;
+		wx = (fx-0.5f) * sc->td.fTerWorldSize;  wz = (fz-0.5f) * sc->td.fTerWorldSize;
 
 		btVector3 from(wx,wz,Len), to(wx,wz,-Len);  // x -z y
 		btCollisionWorld::ClosestRayResultCallback rayRes(from, to);

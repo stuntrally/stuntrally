@@ -130,8 +130,8 @@ void App::togPrvCam()
 		pSet->bWeather = oldI;
 		mTerrainGlobals->setMaxPixelError(pSet->terdetail);
 
-		sc.camPos = mCameraT->getPosition();
-		sc.camDir = mCameraT->getDirection();
+		sc->camPos = mCameraT->getPosition();
+		sc->camDir = mCameraT->getDirection();
 		mCameraT->setPosition( mCamPosOld);
 		mCameraT->setDirection(mCamDirOld);
 	}else  // enter
@@ -151,8 +151,8 @@ void App::togPrvCam()
 
 		mCamPosOld = mCameraT->getPosition();
 		mCamDirOld = mCameraT->getDirection();
-		mCameraT->setPosition( sc.camPos);
-		mCameraT->setDirection(sc.camDir);
+		mCameraT->setPosition( sc->camPos);
+		mCameraT->setDirection(sc->camDir);
 	}
 	UpdEditWnds();
 }
@@ -463,7 +463,7 @@ bool App::KeyPress(const CmdKey &arg)
 				else
 				{	road->newP.pos.x = road->posHit.x;
 					road->newP.pos.z = road->posHit.z;
-					if (!sc.ter)
+					if (!sc->ter)
 						road->newP.pos.y = road->posHit.y;
 					road->newP.aType = AT_Both;
 					road->Insert(shift ? INS_Begin : ctrl ? INS_End : alt ? INS_CurPre : INS_Cur);
@@ -510,7 +510,7 @@ bool App::KeyPress(const CmdKey &arg)
 	
 	//  Fluids ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 	if (edMode == ED_Fluids)
-	{	int fls = sc.fluids.size();
+	{	int fls = sc->fluids.size();
 		switch (arg.key)
 		{
 			//  ins
@@ -520,9 +520,9 @@ bool App::KeyPress(const CmdKey &arg)
 				FluidBox fb;	fb.name = "water blue";
 				fb.pos = road->posHit;	fb.rot = Ogre::Vector3(0.f, 0.f, 0.f);
 				fb.size = Ogre::Vector3(50.f, 20.f, 50.f);	fb.tile = Vector2(0.01f, 0.01f);
-				sc.fluids.push_back(fb);
-				sc.UpdateFluidsId();
-				iFlCur = sc.fluids.size()-1;
+				sc->fluids.push_back(fb);
+				sc->UpdateFluidsId();
+				iFlCur = sc->fluids.size()-1;
 				bRecreateFluids = true;
 			}	break;
 		}
@@ -544,20 +544,20 @@ bool App::KeyPress(const CmdKey &arg)
 			//  del
 			case KC_DELETE:	case KC_DECIMAL:
 			case KC_NUMPAD5:
-				if (fls == 1)	sc.fluids.clear();
-				else			sc.fluids.erase(sc.fluids.begin() + iFlCur);
-				iFlCur = std::max(0, std::min(iFlCur, (int)sc.fluids.size()-1));
+				if (fls == 1)	sc->fluids.clear();
+				else			sc->fluids.erase(sc->fluids.begin() + iFlCur);
+				iFlCur = std::max(0, std::min(iFlCur, (int)sc->fluids.size()-1));
 				bRecreateFluids = true;
 				break;
 
 			//  prev,next type
 			case KC_MINUS:
-			{	FluidBox& fb = sc.fluids[iFlCur];
+			{	FluidBox& fb = sc->fluids[iFlCur];
 				fb.id = (fb.id-1 + fluidsXml.fls.size()) % fluidsXml.fls.size();
 				fb.name = fluidsXml.fls[fb.id].name;
 				bRecreateFluids = true;  }	break;
 			case KC_EQUALS:
-			{	FluidBox& fb = sc.fluids[iFlCur];
+			{	FluidBox& fb = sc->fluids[iFlCur];
 				fb.id = (fb.id+1) % fluidsXml.fls.size();
 				fb.name = fluidsXml.fls[fb.id].name;
 				bRecreateFluids = true;  }	break;
@@ -566,7 +566,7 @@ bool App::KeyPress(const CmdKey &arg)
 
 	//  Objects  | | | | | | | | | | | | | | | | |
 	if (edMode == ED_Objects)
-	{	int objs = sc.objects.size(), objAll = vObjNames.size();
+	{	int objs = sc->objects.size(), objAll = vObjNames.size();
 		switch (arg.key)
 		{
 			case KC_SPACE:
@@ -581,7 +581,7 @@ bool App::KeyPress(const CmdKey &arg)
 			if (road && road->bHitTer)
 			{
 				AddNewObj();
-				//iObjCur = sc.objects.size()-1;  // auto select inserted-
+				//iObjCur = sc->objects.size()-1;  // auto select inserted-
 				UpdObjPick();
 			}	break;
 			
@@ -614,29 +614,29 @@ bool App::KeyPress(const CmdKey &arg)
 			//  del
 			case KC_DELETE:	case KC_DECIMAL:
 			case KC_NUMPAD5:
-				if (iObjCur >= 0 && sc.objects.size() > 0)
-				{	::Object& o = sc.objects[iObjCur];
+				if (iObjCur >= 0 && sc->objects.size() > 0)
+				{	::Object& o = sc->objects[iObjCur];
 					mSceneMgr->destroyEntity(o.ent);
 					mSceneMgr->destroySceneNode(o.nd);
 					
-					if (objs == 1)	sc.objects.clear();
-					else			sc.objects.erase(sc.objects.begin() + iObjCur);
-					iObjCur = std::min(iObjCur, (int)sc.objects.size()-1);
+					if (objs == 1)	sc->objects.clear();
+					else			sc->objects.erase(sc->objects.begin() + iObjCur);
+					iObjCur = std::min(iObjCur, (int)sc->objects.size()-1);
 					UpdObjPick();
 				}	break;
 
 			//  prev,next type
 			case KC_1:  // reset rot
-				if (iObjCur >= 0 && sc.objects.size() > 0)
-				{	::Object& o = sc.objects[iObjCur];
+				if (iObjCur >= 0 && sc->objects.size() > 0)
+				{	::Object& o = sc->objects[iObjCur];
 					o.rot = QUATERNION <float>(0,1,0,0);
 					o.SetFromBlt();
 					UpdObjPick();
 				}	break;
 
 			case KC_2:  // reset scale
-				if (iObjCur >= 0 && sc.objects.size() > 0)
-				{	::Object& o = sc.objects[iObjCur];
+				if (iObjCur >= 0 && sc->objects.size() > 0)
+				{	::Object& o = sc->objects[iObjCur];
 					o.scale = Ogre::Vector3::UNIT_SCALE * (shift ? 0.5f : 1.f);
 					o.nd->setScale(o.scale);
 					UpdObjPick();

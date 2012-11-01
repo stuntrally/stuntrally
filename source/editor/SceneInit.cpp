@@ -44,7 +44,7 @@ void App::createScene()  // once, init
 
 	//  fluids.xml
 	fluidsXml.LoadXml(PATHMANAGER::GetDataPath() + "/materials/fluids.xml");
-	sc.pFluidsXml = &fluidsXml;
+	sc->pFluidsXml = &fluidsXml;
 	LogO(String("**** Loaded fluids.xml: ") + toStr(fluidsXml.fls.size()));
 
 	//  collisions.xml
@@ -139,9 +139,9 @@ void App::LoadTrackEv()
 	{	road->Destroy();  delete road;  road = 0;  }
 
 	// load scene
-	sc.LoadXml(TrkDir()+"scene.xml");
-	sc.vdr = IsVdrTrack();
-	if (sc.vdr)  sc.ter = false;
+	sc->LoadXml(TrkDir()+"scene.xml");
+	sc->vdr = IsVdrTrack();
+	if (sc->vdr)  sc->ter = false;
 	
 	//  water RTT
 	UpdateWaterRTT(mCamera);
@@ -157,15 +157,15 @@ void App::LoadTrackEv()
 
 
 	//  set sky tex name for water
-	sh::MaterialInstance* m = mFactory->getMaterialInstance (sc.skyMtr);
+	sh::MaterialInstance* m = mFactory->getMaterialInstance (sc->skyMtr);
 	std::string skyTex = sh::retrieveValue<sh::StringValue>(m->getProperty ("texture"), 0).get();
 	sh::Factory::getInstance ().setTextureAlias ("SkyReflection", skyTex);
 
 
 	bNewHmap = false;/**/
-	CreateTerrain(bNewHmap,sc.ter);
+	CreateTerrain(bNewHmap,sc->ter);
 
-	if (sc.vdr)  // vdrift track
+	if (sc->vdr)  // vdrift track
 	{
 		if (!LoadTrackVdr(pSet->gui.track))
 			LogO("Error during track loading: " + pSet->gui.track);
@@ -185,7 +185,7 @@ void App::LoadTrackEv()
 	
 	CreateObjects();
 
-	if (pSet->bTrees && sc.ter)
+	if (pSet->bTrees && sc->ter)
 		CreateTrees();  // trees after objects so they aren't inside them
 
 
@@ -292,7 +292,7 @@ void App::SaveTrackEv()
 
 	if (terrain)
 	{	float *fHmap = terrain->getHeightData();
-		int size = sc.td.iVertsX * sc.td.iVertsY * sizeof(float);
+		int size = sc->td.iVertsX * sc->td.iVertsY * sizeof(float);
 
 		String file = TrkDir()+"heightmap.f32";
 		std::ofstream of;
@@ -303,7 +303,7 @@ void App::SaveTrackEv()
 	if (road)
 		road->SaveFile(TrkDir()+"road.xml");
 
-	sc.SaveXml(TrkDir()+"scene.xml");
+	sc->SaveXml(TrkDir()+"scene.xml");
 	SaveSurf(TrkDir()+"surfaces.txt");
 
 	bool vdr = IsVdrTrack();
@@ -320,15 +320,15 @@ void App::SaveTrackEv()
 //-------------------------------------------------------------------------------------
 void App::CreateWeather()
 {
-	if (!pr && !sc.rainName.empty())
-	{	pr = mSceneMgr->createParticleSystem("Rain", sc.rainName);
+	if (!pr && !sc->rainName.empty())
+	{	pr = mSceneMgr->createParticleSystem("Rain", sc->rainName);
 		pr->setVisibilityFlags(RV_Particles);
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr);
 		pr->setRenderQueueGroup(RQG_Weather);
 		pr->getEmitter(0)->setEmissionRate(0);
 	}
-	if (!pr2 && !sc.rain2Name.empty())
-	{	pr2 = mSceneMgr->createParticleSystem("Rain2", sc.rain2Name);
+	if (!pr2 && !sc->rain2Name.empty())
+	{	pr2 = mSceneMgr->createParticleSystem("Rain2", sc->rain2Name);
 		pr2->setVisibilityFlags(RV_Particles);
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr2);
 		pr2->setRenderQueueGroup(RQG_Weather);
@@ -386,7 +386,7 @@ void App::TerCircleUpd()
 	ndTerC->setVisible(edTer);
 	if (!edTer)  return;
 	
-	Real rbr = mBrSize[curBr] * 0.5f * sc.td.fTriangleSize * 0.8f/*?par*/;
+	Real rbr = mBrSize[curBr] * 0.5f * sc->td.fTriangleSize * 0.8f/*?par*/;
 
 	static ED_MODE edOld = ED_ALL;
 	if (edOld != edMode)
@@ -534,9 +534,9 @@ void App::BltUpdate(float dt)
 	world->stepSimulation(dt, maxSubsteps, fixedTimestep);
 	
 	///  objects - dynamic (props)  -------------------------------------------------------------
-	for (int i=0; i < sc.objects.size(); ++i)
+	for (int i=0; i < sc->objects.size(); ++i)
 	{
-		Object& o = sc.objects[i];
+		Object& o = sc->objects[i];
 		if (o.ms)
 		{
 			btTransform tr, ofs;

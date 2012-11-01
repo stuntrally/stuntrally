@@ -50,7 +50,7 @@ void App::createScene()
 
 	//  fluids.xml
 	fluidsXml.LoadXml(PATHMANAGER::GetDataPath() + "/materials/fluids.xml");
-	sc.pFluidsXml = &fluidsXml;
+	sc->pFluidsXml = &fluidsXml;
 	LogO(String("**** Loaded fluids.xml: ") + toStr(fluidsXml.fls.size()));
 
 	//  collisions.xml
@@ -219,13 +219,13 @@ void App::LoadGame()  // 2
 
 
 	// load scene.xml - default if not found
-	//   need to know sc.asphalt before vdrift car load
+	//   need to know sc->asphalt before vdrift car load
 	bool vdr = IsVdrTrack();
-	sc.LoadXml(TrkDir()+"scene.xml", !vdr/*for asphalt*/);
-	sc.vdr = vdr;
+	sc->LoadXml(TrkDir()+"scene.xml", !vdr/*for asphalt*/);
+	sc->vdr = vdr;
 
-	if (!sc.ter)
-	{	sc.td.hfHeight = sc.td.hfAngle = NULL;  }  // sc.td.layerRoad.smoke = 1.f;
+	if (!sc->ter)
+	{	sc->td.hfHeight = sc->td.hfAngle = NULL;  }  // sc->td.layerRoad.smoke = 1.f;
 	
 	// upd car abs,tcs,sss
 	if (pGame)  pGame->ProcessNewSettings();
@@ -262,7 +262,7 @@ void App::LoadGame()  // 2
 		if (et == CarModel::CT_LOCAL && camIt != mSplitMgr->mCameras.end())
 		{	cam = *camIt;  ++camIt;  }
 		
-		CarModel* car = new CarModel(i, et, carName, mSceneMgr, pSet, pGame, &sc, cam, this, startpos_index);
+		CarModel* car = new CarModel(i, et, carName, mSceneMgr, pSet, pGame, sc, cam, this, startpos_index);
 		carModels.push_back(car);
 		
 		if (nick != "")  // set remote nickname
@@ -278,7 +278,7 @@ void App::LoadGame()  // 2
 	{
 		ghplay.LoadFile(GetGhostFile());  // loads ghost play if exists
 		//  always because ghplay can appear during play after best lap
-		CarModel* c = new CarModel(i, CarModel::CT_GHOST, pSet->game.car[0], mSceneMgr, pSet, pGame, &sc, 0, this);
+		CarModel* c = new CarModel(i, CarModel::CT_GHOST, pSet->game.car[0], mSceneMgr, pSet, pGame, sc, 0, this);
 		c->pCar = (*carModels.begin())->pCar;  // based on 1st car
 		carModels.push_back(c);
 		///c->pNickTxt = CreateNickText(i, c->sDispName);  //for ghost too ?
@@ -306,21 +306,21 @@ void App::LoadScene()  // 3
 
 
 	//  set sky tex name for water
-	sh::MaterialInstance* m = mFactory->getMaterialInstance (sc.skyMtr);
+	sh::MaterialInstance* m = mFactory->getMaterialInstance (sc->skyMtr);
 	std::string skyTex = sh::retrieveValue<sh::StringValue>(m->getProperty ("texture"), 0).get();
 	sh::Factory::getInstance ().setTextureAlias ("SkyReflection", skyTex);
 	
 
 	//  weather rain,snow  -----
-	if (!pr && sc.rainEmit > 0)
-	{	pr = mSceneMgr->createParticleSystem("Rain", sc.rainName);
+	if (!pr && sc->rainEmit > 0)
+	{	pr = mSceneMgr->createParticleSystem("Rain", sc->rainName);
 		pr->setVisibilityFlags(RV_Particles);
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr);
 		pr->setRenderQueueGroup(RQG_Weather);
 		pr->getEmitter(0)->setEmissionRate(0);
 	}
-	if (!pr2 && sc.rain2Emit > 0)
-	{	pr2 = mSceneMgr->createParticleSystem("Rain2", sc.rain2Name);
+	if (!pr2 && sc->rain2Emit > 0)
+	{	pr2 = mSceneMgr->createParticleSystem("Rain2", sc->rain2Name);
 		pr2->setVisibilityFlags(RV_Particles);
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr2);
 		pr2->setRenderQueueGroup(RQG_Weather);
@@ -426,8 +426,8 @@ void App::LoadCar()  // 4
 
 void App::LoadTerrain()  // 5
 {
-	CreateTerrain(false,sc.ter);  // common
-	if (sc.ter)
+	CreateTerrain(false,sc->ter);  // common
+	if (sc->ter)
 		CreateBltTerrain();
 	
 	// assign stuff to cars
@@ -438,7 +438,7 @@ void App::LoadTerrain()  // 5
 		(*it)->blendMapSize = blendMapSize;
 	}
 
-	if (sc.vdr)  // vdrift track
+	if (sc->vdr)  // vdrift track
 	{
 		CreateVdrTrack(pSet->game.track, &pGame->track);
 		CreateMinimap();
@@ -462,7 +462,7 @@ void App::LoadObjects()  // 7
 
 void App::LoadTrees()  // 8
 {
-	if (sc.ter)
+	if (sc->ter)
 		CreateTrees();
 }
 

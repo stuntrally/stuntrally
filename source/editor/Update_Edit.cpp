@@ -25,8 +25,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	//  pos on minimap *
 	if (ndPos)
 	{
-		Real x = (0.5 - mCamera->getPosition().z / sc.td.fTerWorldSize);
-		Real y = (0.5 + mCamera->getPosition().x / sc.td.fTerWorldSize);
+		Real x = (0.5 - mCamera->getPosition().z / sc->td.fTerWorldSize);
+		Real y = (0.5 + mCamera->getPosition().x / sc->td.fTerWorldSize);
 		ndPos->setPosition(xm1+(xm2-xm1)*x, ym1+(ym2-ym1)*y, 0);
 		//--------------------------------
 		float angrot = mCamera->getOrientation().getYaw().valueDegrees();
@@ -339,14 +339,14 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	//----------------------------------------------------------------
 	else if (edMode == ED_Fluids)
 	{
-		if (sc.fluids.empty())
+		if (sc->fluids.empty())
 		{
 			if (flTxt[0])	flTxt[0]->setCaption("None");
 			for (int i=1; i < FL_TXT; ++i)
 				if (flTxt[i])  flTxt[i]->setCaption("");
 		}else
-		{	FluidBox& fb = sc.fluids[iFlCur];
-			flTxt[0]->setCaption("Cur/All:  "+toStr(iFlCur+1)+" / "+toStr(sc.fluids.size()));
+		{	FluidBox& fb = sc->fluids[iFlCur];
+			flTxt[0]->setCaption("Cur/All:  "+toStr(iFlCur+1)+" / "+toStr(sc->fluids.size()));
 			flTxt[1]->setCaption(fb.name);
 			flTxt[2]->setCaption("Pos:  "+fToStr(fb.pos.x,1,4)+" "+fToStr(fb.pos.y,1,4)+" "+fToStr(fb.pos.z,1,4));
 			flTxt[3]->setCaption(""/*"Rot:  "+fToStr(fb.rot.x,1,4)*/);
@@ -360,7 +360,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			if (isKey(APOSTROPHE)){	fb.tile.y *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
 
 			if (mz != 0 && bEdit())  // wheel prev/next
-			{	int fls = sc.fluids.size();
+			{	int fls = sc->fluids.size();
 				if (fls > 0)  {  iFlCur = (iFlCur-mz+fls)%fls;  UpdFluidBox();  }
 			}
 		}
@@ -369,8 +369,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	//----------------------------------------------------------------
 	else if (edMode == ED_Objects)
 	{
-		int objs = sc.objects.size();
-		if (iObjCur == -1 || sc.objects.empty())
+		int objs = sc->objects.size();
+		if (iObjCur == -1 || sc->objects.empty())
 		{	//  none sel
 			objTxt[0]->setCaption("#20FF20New#C0C0C0    "+toStr(iObjCur)+" / "+toStr(objs));
 			objTxt[1]->setCaption(vObjNames[iObjTNew]);  // all new params ...
@@ -378,7 +378,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			objTxt[3]->setCaption("Rot:  "+fToStr(Radian(objNewYaw).valueDegrees(),2,4));
 			objTxt[4]->setCaption("");
 		}else
-		{	const Object& o = sc.objects[iObjCur];
+		{	const Object& o = sc->objects[iObjCur];
 			if (vObjSel.empty())
 				objTxt[0]->setCaption("#A0D0FFCur#C0C0C0     "+toStr(iObjCur+1)+" / "+toStr(objs));
 			else
@@ -582,9 +582,9 @@ void App::editMouse()
 	}
 
 	///  edit fluids . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-	if (edMode == ED_Fluids && !sc.fluids.empty())
+	if (edMode == ED_Fluids && !sc->fluids.empty())
 	{
-		FluidBox& fb = sc.fluids[iFlCur];
+		FluidBox& fb = sc->fluids[iFlCur];
 		const Real fMove(0.5f), fRot(1.5f);  //par speed
 		if (!alt)
 		{
@@ -648,16 +648,16 @@ void App::editMouse()
 			if (ctrl)  objNewYaw = 0.f;
 		}
 	}
-	if (edMode == ED_Objects && !sc.objects.empty() && (iObjCur >= 0 || !vObjSel.empty()))
+	if (edMode == ED_Objects && !sc->objects.empty() && (iObjCur >= 0 || !vObjSel.empty()))
 	{
 		const Real fMove(0.5f), fRot(1.5f), fScale(0.02f);  //par speed
 		bool upd = false, sel = !vObjSel.empty();
 		//  selection or picked
 		std::set<int>::iterator it = vObjSel.begin();
 		int i = sel ? *it : iObjCur;
-		while (i >= 0 && i < sc.objects.size())
+		while (i >= 0 && i < sc->objects.size())
 		{
-			Object& o = sc.objects[i];  bool upd1 = false;
+			Object& o = sc->objects[i];  bool upd1 = false;
 
 			if (mbMiddle)  // rot yaw,  alt roll local-
 			{
@@ -773,7 +773,7 @@ bool App::frameEnded(const FrameEvent& evt)
 		road->Pick(mCamera, mx, my,
 			edMode == ED_Road,  !(edMode == ED_Road && bEdit()));
 
-		if (sc.vdr)  // blt ray hit
+		if (sc->vdr)  // blt ray hit
 		{
 			Ray ray = mCamera->getCameraToViewportRay(mx,my);
 			const Vector3& pos = mCamera->getDerivedPosition(), dir = ray.getDirection();
@@ -858,8 +858,8 @@ bool App::frameEnded(const FrameEvent& evt)
 	///**  Render Targets update
 	if (edMode == ED_PrvCam)
 	{
-		sc.camPos = mCameraT->getPosition();
-		sc.camDir = mCameraT->getDirection();
+		sc->camPos = mCameraT->getPosition();
+		sc->camDir = mCameraT->getDirection();
 		if (rt[RTs-1].rndTex)
 			rt[RTs-1].rndTex->update();
 	}else{
@@ -931,13 +931,13 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	{
 		ParticleEmitter* pe = pr->getEmitter(0);
 		pe->setPosition(par);
-		pe->setEmissionRate(f * sc.rainEmit);
+		pe->setEmissionRate(f * sc->rainEmit);
 	}
 	if (pr2)
 	{
 		ParticleEmitter* pe = pr2->getEmitter(0);
 		pe->setPosition(par);
-		pe->setEmissionRate(f * sc.rain2Emit);
+		pe->setEmissionRate(f * sc->rain2Emit);
 	}
 
 	// update shader time

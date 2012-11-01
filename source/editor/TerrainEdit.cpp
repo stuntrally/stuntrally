@@ -63,8 +63,8 @@ void App::SetBrushPreset(int id)
 //--------------------------------------------------------------------------------------------------------------------------
 bool App::getEditRect(Vector3& pos, Rect& rcBrush, Rect& rcMap, int size,  int& cx, int& cy)
 {
-	float tws = sc.td.fTerWorldSize;
-	int t = sc.td.iTerSize;
+	float tws = sc->td.fTerWorldSize;
+	int t = sc->td.iTerSize;
 
 	//  world float to map int
 	int mapX = (pos.x + 0.5*tws)/tws*t, mapY = (-pos.z + 0.5*tws)/tws*t;
@@ -288,7 +288,7 @@ void App::updBrush()
 void App::deform(Vector3 &pos, float dtime, float brMul)
 {
 	Rect rcBrush, rcMap;  int cx,cy;
-	if (!getEditRect(pos, rcBrush, rcMap, sc.td.iTerSize, cx,cy))
+	if (!getEditRect(pos, rcBrush, rcMap, sc->td.iTerSize, cx,cy))
 		return;
 	
 	float *fHmap = terrain->getHeightData();
@@ -298,7 +298,7 @@ void App::deform(Vector3 &pos, float dtime, float brMul)
 	
 	for (int j = rcMap.top; j < rcMap.bottom; ++j,++jj)
 	{
-		mapPos = j * sc.td.iTerSize + rcMap.left;
+		mapPos = j * sc->td.iTerSize + rcMap.left;
 		brPos = jj * BrushMaxSize + cx;
 		//brPos = std::max(0, std::min(BrushMaxSize*BrushMaxSize-1, brPos ));
 
@@ -324,7 +324,7 @@ void App::deform(Vector3 &pos, float dtime, float brMul)
 void App::height(Vector3 &pos, float dtime, float brMul)
 {
 	Rect rcBrush, rcMap;  int cx,cy;
-	if (!getEditRect(pos, rcBrush, rcMap, sc.td.iTerSize, cx,cy))
+	if (!getEditRect(pos, rcBrush, rcMap, sc->td.iTerSize, cx,cy))
 		return;
 	
 	float *fHmap = terrain->getHeightData();
@@ -334,7 +334,7 @@ void App::height(Vector3 &pos, float dtime, float brMul)
 	
 	for (int j = rcMap.top; j < rcMap.bottom; ++j,++jj)
 	{
-		mapPos = j * sc.td.iTerSize + rcMap.left;
+		mapPos = j * sc->td.iTerSize + rcMap.left;
 		brPos = jj * BrushMaxSize + cx;
 
 		for (int i = rcMap.left; i < rcMap.right; ++i)
@@ -370,7 +370,7 @@ void App::smooth(Vector3 &pos, float dtime)
 void App::calcSmoothFactor(Vector3 &pos, float& avg, int& sample_count)
 {
 	Rect rcBrush, rcMap;  int cx,cy;
-	if (!getEditRect(pos, rcBrush, rcMap, sc.td.iTerSize, cx,cy))
+	if (!getEditRect(pos, rcBrush, rcMap, sc->td.iTerSize, cx,cy))
 		return;
 	
 	float *fHmap = terrain->getHeightData();
@@ -380,7 +380,7 @@ void App::calcSmoothFactor(Vector3 &pos, float& avg, int& sample_count)
 	
 	for (int j = rcMap.top;j < rcMap.bottom; ++j)
 	{
-		mapPos = j * sc.td.iTerSize + rcMap.left;
+		mapPos = j * sc->td.iTerSize + rcMap.left;
 		for (int i = rcMap.left;i < rcMap.right; ++i)
 		{
 			avg += fHmap[mapPos];  ++mapPos;
@@ -393,7 +393,7 @@ void App::calcSmoothFactor(Vector3 &pos, float& avg, int& sample_count)
 void App::smoothTer(Vector3 &pos, float avg, float dtime)
 {
 	Rect rcBrush, rcMap;  int cx,cy;
-	if (!getEditRect(pos, rcBrush, rcMap, sc.td.iTerSize, cx,cy))
+	if (!getEditRect(pos, rcBrush, rcMap, sc->td.iTerSize, cx,cy))
 		return;
 	
 	float *fHmap = terrain->getHeightData();
@@ -406,7 +406,7 @@ void App::smoothTer(Vector3 &pos, float avg, float dtime)
 		brushPos = (rcBrush.top + (int)((j - rcMap.top) * mRatio)) * BrushMaxSize;
 		brushPos += rcBrush.left;
 		//**/brushPos += cy * BrushMaxSize + cx;
-		mapPos = j * sc.td.iTerSize + rcMap.left;
+		mapPos = j * sc->td.iTerSize + rcMap.left;
 
 		for(int i = rcMap.left;i < rcMap.right;i++)
 		{
@@ -432,14 +432,14 @@ void App::smoothTer(Vector3 &pos, float avg, float dtime)
 void App::filter(Vector3 &pos, float dtime, float brMul)
 {
 	Rect rcBrush, rcMap;  int cx,cy;
-	if (!getEditRect(pos, rcBrush, rcMap, sc.td.iTerSize, cx,cy))
+	if (!getEditRect(pos, rcBrush, rcMap, sc->td.iTerSize, cx,cy))
 		return;
 	
 	float *fHmap = terrain->getHeightData();
 	
 	float its = mBrIntens[curBr] * dtime * std::min(1.f,brMul);  //mul >1 errors
 	int mapPos, brPos, jj = cy,
-		ter = sc.td.iTerSize, ter2 = ter*ter, ter1 = ter+1;
+		ter = sc->td.iTerSize, ter2 = ter*ter, ter1 = ter+1;
 
 	const float fl = mBrFilt;  const int f = ceil(fl);
 	register int x,y,m,yy,i,j;

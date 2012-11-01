@@ -93,9 +93,9 @@ void App::CreateObjects()
 	using std::map;  using std::string;
 	map<string,bool> objExists, objHasBlt;
 	
-	for (int i=0; i < sc.objects.size(); ++i)
+	for (int i=0; i < sc->objects.size(); ++i)
 	{
-		const string& s = sc.objects[i].name;
+		const string& s = sc->objects[i].name;
 		objExists[s] = false;  objHasBlt[s] = false;
 	}
 	for (map<string,bool>::iterator it = objExists.begin(); it != objExists.end(); ++it)
@@ -114,9 +114,9 @@ void App::CreateObjects()
 	BulletWorldOffset* fileLoader = new BulletWorldOffset(world);
 
 	///  create  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-	for (int i=0; i < sc.objects.size(); ++i)
+	for (int i=0; i < sc->objects.size(); ++i)
 	{
-		Object& o = sc.objects[i];
+		Object& o = sc->objects[i];
 		String s = toStr(i);  // counter for names
 		o.dyn = objHasBlt[o.name];
 		#ifndef ROAD_EDITOR
@@ -185,16 +185,16 @@ void App::CreateObjects()
 	delete fileLoader;
 
 	#ifdef ROAD_EDITOR
-	iObjLast = sc.objects.size();
+	iObjLast = sc->objects.size();
 	#endif
 }
 
 ///  destroy
 void App::DestroyObjects(bool clear)
 {
-	for (int i=0; i < sc.objects.size(); ++i)
+	for (int i=0; i < sc->objects.size(); ++i)
 	{
-		Object& o = sc.objects[i];
+		Object& o = sc->objects[i];
 		// ogre
 		if (o.nd)  mSceneMgr->destroySceneNode(o.nd);  o.nd = 0;
 		#ifdef ROAD_EDITOR  // game has destroyAll
@@ -215,7 +215,7 @@ void App::DestroyObjects(bool clear)
 		#endif
 	}
 	if (clear)
-		sc.objects.clear();
+		sc->objects.clear();
 }
 
 
@@ -228,7 +228,7 @@ void App::UpdObjPick()
 	if (ndStBox)
 		ndStBox->setVisible(edMode == ED_Start && !bMoveCam);
 
-	int objs = sc.objects.size();
+	int objs = sc->objects.size();
 	bool bObjects = edMode == ED_Objects && !bMoveCam && objs > 0 && iObjCur >= 0;
 	if (objs > 0)
 		iObjCur = std::min(iObjCur, objs-1);
@@ -237,7 +237,7 @@ void App::UpdObjPick()
 	ndObjBox->setVisible(bObjects);
 	if (!bObjects)  return;
 	
-	const Object& o = sc.objects[iObjCur];
+	const Object& o = sc->objects[iObjCur];
 	const AxisAlignedBox& ab = o.nd->getAttachedObject(0)->getBoundingBox();
 	Vector3 s = o.scale * ab.getSize();  // * sel obj's node aabb
 
@@ -254,7 +254,7 @@ void App::UpdObjPick()
 
 void App::PickObject()
 {
-	if (sc.objects.empty())  return;
+	if (sc->objects.empty())  return;
 
 	iObjCur = -1;
 	const MyGUI::IntPoint& mp = MyGUI::InputManager::getInstance().getMousePosition();
@@ -276,8 +276,8 @@ void App::PickObject()
 		{
 			int i = -1;
 			//  find obj with same ent name
-			for (int o=0; o < sc.objects.size(); ++o)
-				if (s == sc.objects[o].ent->getName())
+			for (int o=0; o < sc->objects.size(); ++o)
+				if (s == sc->objects[o].ent->getName())
 				{	i = o;  break;  }
 
 			//  pick if closer
@@ -352,7 +352,7 @@ void App::AddNewObj()
 	o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
 
 	o.dyn = boost::filesystem::exists(PATHMANAGER::GetDataPath()+"/objects/"+ o.name + ".bullet");
-	sc.objects.push_back(o);
+	sc->objects.push_back(o);
 }
 
 //  change obj to insert

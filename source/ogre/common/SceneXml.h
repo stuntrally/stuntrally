@@ -115,6 +115,8 @@ public:
 	//  light
 	Ogre::Real ldPitch, ldYaw;  // dir angles
 	Ogre::Vector3 lDir, lAmb,lDiff,lSpec;
+	//  wind
+	float windAmt;  //, windDirYaw, windTurbulFreq,windTurbulAmp;
 
 	//  particles
 	Ogre::String  sParDust, sParMud, sParSmoke;

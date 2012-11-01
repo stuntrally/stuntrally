@@ -106,6 +106,7 @@ App::App()  //  gui wigdets--
 	for (i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }
 
 	track = new TRACK(std::cout, std::cerr);  //!
+	sc = new Scene();
 }
 
 ///  material factory setup
@@ -196,6 +197,7 @@ App::~App()
 		OGRE_DELETE mTerrainGroup;
 
 	OGRE_DELETE mTerrainGlobals;
+	delete sc;
 }
 
 void App::destroyScene()
@@ -209,8 +211,8 @@ void App::destroyScene()
 
 	DestroyWeather();
 
-	delete[] sc.td.hfHeight;
-	delete[] sc.td.hfAngle;
+	delete[] sc->td.hfHeight;
+	delete[] sc->td.hfAngle;
 
 	BaseApp::destroyScene();
 }

@@ -162,7 +162,7 @@ void App::CreateHUD(bool destroy)
 	resMgr.unloadResourceGroup(sGrp);
 	resMgr.initialiseResourceGroup(sGrp);
 
-	if (sc.ter)
+	if (sc->ter)
 	{	try {  texMgr.unload(sRoad);  texMgr.load(sRoad, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  }  catch(...) {  }
 		try {  texMgr.unload(sTer);   texMgr.load(sTer,  sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  }  catch(...) {  }
 	}
@@ -170,8 +170,8 @@ void App::CreateHUD(bool destroy)
 	//if (terrain)
 	for (int c=0; c < plr; ++c)  // for each car
 	{
-		if (sc.ter)
-		{	float t = sc.td.fTerWorldSize*0.5;
+		if (sc->ter)
+		{	float t = sc->td.fTerWorldSize*0.5;
 			minX = -t;  minY = -t;  maxX = t;  maxY = t;  }
 
 		float fMapSizeX = maxX - minX, fMapSizeY = maxY - minY;  // map size
@@ -188,15 +188,15 @@ void App::CreateHUD(bool destroy)
 		MaterialPtr mm = MaterialManager::getSingleton().getByName(sMat);
 		Pass* pass = mm->getTechnique(0)->getPass(0);
 		TextureUnitState* tus = pass->getTextureUnitState(0);
-		if (tus)  tus->setTextureName(sc.ter ? sRoad : "alpha.png");
+		if (tus)  tus->setTextureName(sc->ter ? sRoad : "alpha.png");
 		tus = pass->getTextureUnitState(2);
-		if (tus)  tus->setTextureName(sc.ter ? sTer : "alpha.png");
+		if (tus)  tus->setTextureName(sc->ter ? sTer : "alpha.png");
 		UpdMiniTer();
 		
 
 		float fHudSize = pSet->size_minimap * mSplitMgr->mDims[c].avgsize;
 		SceneNode* rt = scm->getRootSceneNode();
-		if (!sc.vdr)
+		if (!sc->vdr)
 		{	ndMap[c] = rt->createChildSceneNode(Vector3(0,0,0));
 			ndMap[c]->attachObject(m);
 		}
@@ -387,7 +387,7 @@ void App::ShowHUD(bool hideAll)
 		if (ovCarDbgExt){  if (show)  ovCarDbgExt->show();  else  ovCarDbgExt->hide();  }
 
 		if (ovCam)	{  if (pSet->show_cam && !isFocGui)  ovCam->show();  else  ovCam->hide();  }
-		if (ovOpp)  {  if (pSet->show_opponents && (!sc.ter || road && road->getNumPoints() > 0))  ovOpp->show();  else  ovOpp->hide();  }
+		if (ovOpp)  {  if (pSet->show_opponents && (!sc->ter || road && road->getNumPoints() > 0))  ovOpp->show();  else  ovOpp->hide();  }
 		if (ovWarnWin){  if (pSet->show_times)  ovWarnWin->show();  else  ovWarnWin->hide();  }
 		if (mFpsOverlay){  if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();  }
 
@@ -447,7 +447,7 @@ void App::UpdMiniTer()
 	{	Ogre::GpuProgramParametersSharedPtr fparams = pass->getFragmentProgramParameters();
 		if (fparams->_findNamedConstantDefinition("showTerrain",false))
 		{
-			fparams->setNamedConstant("showTerrain", pSet->mini_terrain && sc.ter ? 1.f : 0.f);
+			fparams->setNamedConstant("showTerrain", pSet->mini_terrain && sc->ter ? 1.f : 0.f);
 		}
 	}catch(...){  }
 }

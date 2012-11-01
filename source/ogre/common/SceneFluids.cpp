@@ -38,9 +38,9 @@ void App::CreateFluids()
 	if (!mWaterRTT.mNdFluidsRoot)
 		mWaterRTT.mNdFluidsRoot = mSceneMgr->getRootSceneNode()->createChildSceneNode("FluidsRootNode");
 			
-	for (int i=0; i < sc.fluids.size(); i++)
+	for (int i=0; i < sc->fluids.size(); i++)
 	{
-		FluidBox& fb = sc.fluids[i];
+		FluidBox& fb = sc->fluids[i];
 		//  plane
 		Plane p;  p.normal = Vector3::UNIT_Y;  p.d = 0;
 		String smesh = "WaterMesh"+toStr(i);
@@ -74,9 +74,9 @@ void App::CreateFluids()
 
 void App::CreateBltFluids()
 {
-	for (int i=0; i < sc.fluids.size(); i++)
+	for (int i=0; i < sc->fluids.size(); i++)
 	{
-		FluidBox& fb = sc.fluids[i];
+		FluidBox& fb = sc->fluids[i];
 		///  add bullet trigger box   . . . . . . . . .
 		btVector3 pc(fb.pos.x, -fb.pos.z, fb.pos.y -fb.size.y/2);  // center
 		btTransform tr;  tr.setIdentity();  tr.setOrigin(pc);
@@ -122,7 +122,7 @@ void App::DestroyFluids()
 
 void App::UpdFluidBox()
 {
-	int fls = sc.fluids.size();
+	int fls = sc->fluids.size();
 	bool bFluids = edMode == ED_Fluids && fls > 0 && !bMoveCam;
 	if (fls > 0)
 		iFlCur = std::max(0, std::min(iFlCur, fls-1));
@@ -131,7 +131,7 @@ void App::UpdFluidBox()
 	ndFluidBox->setVisible(bFluids);
 	if (!bFluids)  return;
 	
-	FluidBox& fb = sc.fluids[iFlCur];
+	FluidBox& fb = sc->fluids[iFlCur];
 	ndFluidBox->setPosition(fb.pos);
 	ndFluidBox->setScale(fb.size);
 }
@@ -152,8 +152,8 @@ void App::UpdateWaterRTT(Ogre::Camera* cam)
 	mWaterRTT.setReflect(pSet->water_reflect);
 	mWaterRTT.setRefract(pSet->water_refract);
 	mWaterRTT.mSceneMgr = mSceneMgr;
-	if (!sc.fluids.empty())
-		mWaterRTT.setPlane(Plane(Vector3::UNIT_Y, sc.fluids.front().pos.y));
+	if (!sc->fluids.empty())
+		mWaterRTT.setPlane(Plane(Vector3::UNIT_Y, sc->fluids.front().pos.y));
 	mWaterRTT.recreate();
-	mWaterRTT.setActive(!sc.fluids.empty());
+	mWaterRTT.setActive(!sc->fluids.empty());
 }

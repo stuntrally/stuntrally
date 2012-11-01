@@ -17,49 +17,49 @@ using namespace Ogre;
 void App::comboSky(ComboBoxPtr cmb, size_t val)  // sky materials
 {
 	String s = cmb->getItemNameAt(val);
-	sc.skyMtr = s;  UpdateTrack();
+	sc->skyMtr = s;  UpdateTrack();
 }
 
 void App::comboRain1(ComboBoxPtr cmb, size_t val)  // rain types
 {
-	String s = cmb->getItemNameAt(val);  sc.rainName = s;
+	String s = cmb->getItemNameAt(val);  sc->rainName = s;
 	DestroyWeather();  CreateWeather();
 }
 void App::comboRain2(ComboBoxPtr cmb, size_t val)
 {
-	String s = cmb->getItemNameAt(val);  sc.rain2Name = s;
+	String s = cmb->getItemNameAt(val);  sc->rain2Name = s;
 	DestroyWeather();  CreateWeather();
 }
 
 void App::slRain1Rate(SL)  // rain rates
 {
-	float v = 6000.f * val;		sc.rainEmit = v;
+	float v = 6000.f * val;		sc->rainEmit = v;
 	if (valRain1Rate){	valRain1Rate->setCaption(fToStr(v,0,4));  }	UpdSun();
 }
 void App::slRain2Rate(SL)
 {
-	float v = 6000.f * val;		sc.rain2Emit = v;
+	float v = 6000.f * val;		sc->rain2Emit = v;
 	if (valRain2Rate){	valRain2Rate->setCaption(fToStr(v,0,4));  }	UpdSun();
 }
 
 void App::slSunPitch(SL)  // sun pitch, yaw
 {
-	float v = 90.f * val;	sc.ldPitch = v;
+	float v = 90.f * val;	sc->ldPitch = v;
 	if (valSunPitch){	valSunPitch->setCaption(fToStr(v,1,4));  }	UpdSun();
 }
 void App::slSunYaw(SL)
 {
-	float v = -180.f + 360.f * val;  sc.ldYaw = v;
+	float v = -180.f + 360.f * val;  sc->ldYaw = v;
 	if (valSunYaw){	valSunYaw->setCaption(fToStr(v,1,4));  }  UpdSun();
 }
 void App::slFogStart(SL)  // fog start, end
 {
-	float v = 2000.f * powf(val, 2.f);		sc.fogStart = v;  UpdFog();
+	float v = 2000.f * powf(val, 2.f);		sc->fogStart = v;  UpdFog();
 	if (valFogStart){	valFogStart->setCaption(fToStr(v,0,3));  }
 }
 void App::slFogEnd(SL)
 {
-	float v = 2000.f * powf(val, 2.f);		sc.fogEnd = v;    UpdFog();
+	float v = 2000.f * powf(val, 2.f);		sc->fogEnd = v;    UpdFog();
 	if (valFogEnd){	 valFogEnd->setCaption(fToStr(v,0,3));  }
 }
 
@@ -73,22 +73,22 @@ void App::chkWeatherDisable(WP wp)
 }
 void App::editFogClr(Edit* ed)  // edit fog clr
 {
-	Vector3 c = s2v(ed->getCaption());  sc.fogClr = c;  UpdFog();
+	Vector3 c = s2v(ed->getCaption());  sc->fogClr = c;  UpdFog();
 	if (clrFog)  clrFog->setColour(Colour(c.x,c.y,c.z));
 }
 void App::editLiAmb(Edit* ed)  // edit light clrs
 {
-	Vector3 c = s2v(ed->getCaption());	sc.lAmb = c;  UpdSun();
+	Vector3 c = s2v(ed->getCaption());	sc->lAmb = c;  UpdSun();
 	if (clrAmb)  clrAmb->setColour(Colour(c.x,c.y,c.z));
 }
 void App::editLiDiff(Edit* ed)
 {
-	Vector3 c = s2v(ed->getCaption());	sc.lDiff = c;  UpdSun();
+	Vector3 c = s2v(ed->getCaption());	sc->lDiff = c;  UpdSun();
 	if (clrDiff)  clrDiff->setColour(Colour(c.x,c.y,c.z));
 }
 void App::editLiSpec(Edit* ed)
 {
-	Vector3 c = s2v(ed->getCaption());	sc.lSpec = c;  UpdSun();
+	Vector3 c = s2v(ed->getCaption());	sc->lSpec = c;  UpdSun();
 	if (clrSpec)  clrSpec->setColour(Colour(c.x,c.y,c.z));
 }
 
@@ -101,9 +101,9 @@ void App::editLiSpec(Edit* ed)
 void App::tabTerLayer(TabPtr wp, size_t id)
 {
 	idTerLay = id;  // help vars
-	bTerLay = id < sc.td.ciNumLay;
+	bTerLay = id < sc->td.ciNumLay;
 	float scale = 0.f;
-	TerLayer* lay = &sc.td.layerRoad;
+	TerLayer* lay = &sc->td.layerRoad;
 	noBlendUpd = true;
 
 	//if (tabsTerLayers->getItemSelected()->getCaption().asUTF8() == "Road")
@@ -111,8 +111,8 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 	chkTerLay->setVisible(bTerLay);   chkTexNormAuto->setVisible(bTerLay);
 	imgTexDiff->setVisible(bTerLay);  edTerLScale->setVisible(bTerLay);
 	if (bTerLay)
-	{	if (id >= sc.td.ciNumLay)  return;
-		lay = &sc.td.layersAll[id];
+	{	if (id >= sc->td.ciNumLay)  return;
+		lay = &sc->td.layersAll[id];
 
 		chkTerLay->setStateSelected(lay->on);
 		cmbTexDiff->setIndexSelected( cmbTexDiff->findItemIndexWith(lay->texFile) );
@@ -142,7 +142,7 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 		edTerLScale->setCaption(toStr(scale));
 		editTerLScale(edTerLScale);  }
 	if (valTerLAll)
-		valTerLAll->setCaption("Used: "+toStr(sc.td.layers.size()));
+		valTerLAll->setCaption("Used: "+toStr(sc->td.layers.size()));
 	
 	//  Terrain Particles
 	edLDust->setCaption(toStr(lay->dust));	edLDustS->setCaption(toStr(lay->dustS));
@@ -163,30 +163,30 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 void App::editTerTriSize(EditPtr ed)
 {
 	Real r = std::max(0.1f, s2r(ed->getCaption()) );
-	sc.td.fTriangleSize = r;  sc.td.UpdVals();
+	sc->td.fTriangleSize = r;  sc->td.UpdVals();
 
 	Slider* sl = (Slider*)mWndOpts->findWidget("TerTriSize");  // set slider
 	float v = std::min(1.f, powf((r -0.1f)/5.9f, 0.5f) );
 	if (sl)  sl->setValue(v);
 	// result val text
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str);
-	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
+	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 }
 // |
 void App::slTerTriSize(SL)
 {
 	Real v = 0.1f + 5.9f * powf(val, 2.f);
-	sc.td.fTriangleSize = v;  sc.td.UpdVals();
+	sc->td.fTriangleSize = v;  sc->td.UpdVals();
 	if (edTerTriSize)  edTerTriSize->setCaption(toStr(v));  // set edit
 	// result val text
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str);
-	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
+	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 }
 
 void App::tabHmap(TabPtr wp, size_t id)
 {
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str);
-	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
+	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 }
 
 //  - - - -  Hmap tools  - - - -
@@ -200,19 +200,19 @@ const char* App::getHMapNew()
 void App::btnTerrainNew(WP)
 {
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str);
-	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
+	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 
-	sc.td.iVertsX = size+1;  sc.td.UpdVals();  // new hf
+	sc->td.iVertsX = size+1;  sc->td.UpdVals();  // new hf
 
-	float* hfData = new float[sc.td.iVertsX * sc.td.iVertsY];
-	int siz = sc.td.iVertsX * sc.td.iVertsY * sizeof(float);
+	float* hfData = new float[sc->td.iVertsX * sc->td.iVertsY];
+	int siz = sc->td.iVertsX * sc->td.iVertsY * sizeof(float);
 	
 	//  generate Hmap
-	for (int j=0; j < sc.td.iVertsY; ++j)
+	for (int j=0; j < sc->td.iVertsY; ++j)
 	{
-		int a = j * sc.td.iVertsX;
-		for (int i=0; i < sc.td.iVertsX; ++i,++a)
-			hfData[a] = 0.f;  //sc.td.getHeight(i,j);
+		int a = j * sc->td.iVertsX;
+		for (int i=0; i < sc->td.iVertsX; ++i,++a)
+			hfData[a] = 0.f;  //sc->td.getHeight(i,j);
 	}
 	std::ofstream of;
 	of.open(getHMapNew(), std::ios_base::binary);
@@ -226,15 +226,15 @@ void App::btnTerrainNew(WP)
 //  Terrain  generate  --------------------------------
 void App::btnTerGenerate(WP)
 {
-	float* hfData = new float[sc.td.iVertsX * sc.td.iVertsY];
-	int siz = sc.td.iVertsX * sc.td.iVertsY * sizeof(float);
-	float s = sc.td.fTriangleSize*0.001f,
-		ox = pSet->gen_ofsx *s*sc.td.iVertsX, oy = pSet->gen_ofsy *s*sc.td.iVertsY;
+	float* hfData = new float[sc->td.iVertsX * sc->td.iVertsY];
+	int siz = sc->td.iVertsX * sc->td.iVertsY * sizeof(float);
+	float s = sc->td.fTriangleSize*0.001f,
+		ox = pSet->gen_ofsx *s*sc->td.iVertsX, oy = pSet->gen_ofsy *s*sc->td.iVertsY;
 
 	//  generate noise terrain hmap
-	for (int j=0; j < sc.td.iVertsY; ++j)
-	{	int a = j * sc.td.iVertsX;
-		for (int i=0; i < sc.td.iVertsX; ++i,++a)
+	for (int j=0; j < sc->td.iVertsY; ++j)
+	{	int a = j * sc->td.iVertsX;
+		for (int i=0; i < sc->td.iVertsX; ++i,++a)
 		{
 			float y = Noise(i*s-oy, j*s+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist);
 			y = y >= 0.f ? powf(y, pSet->gen_pow) : -powf(-y, pSet->gen_pow);
@@ -255,18 +255,18 @@ void App::btnTerGenerate(WP)
 void App::btnTerrainHalf(WP)
 {
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str) / 2;
-	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
+	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 
-	int halfSize = (sc.td.iVertsX-1) / 2 +1;
+	int halfSize = (sc->td.iVertsX-1) / 2 +1;
 	float* hfData = new float[halfSize * halfSize];
 	int siz = halfSize * halfSize * sizeof(float);
 	
 	//  resize Hmap by half
 	for (int j=0; j < halfSize; ++j)
 	{
-		int a = j * halfSize, a2 = j*2 * sc.td.iVertsX;
+		int a = j * halfSize, a2 = j*2 * sc->td.iVertsX;
 		for (int i=0; i < halfSize; ++i,++a)
-		{	hfData[a] = sc.td.hfHeight[a2];  a2+=2;  }
+		{	hfData[a] = sc->td.hfHeight[a2];  a2+=2;  }
 	}
 	std::ofstream of;
 	of.open(getHMapNew(), std::ios_base::binary);
@@ -274,8 +274,8 @@ void App::btnTerrainHalf(WP)
 	of.close();
 	delete[] hfData;
 
-	sc.td.fTriangleSize *= 2.f;
-	sc.td.iVertsX = halfSize;  sc.td.UpdVals();
+	sc->td.fTriangleSize *= 2.f;
+	sc->td.iVertsX = halfSize;  sc->td.UpdVals();
 	bNewHmap = true;	UpdateTrack();
 }
 
@@ -284,18 +284,18 @@ void App::btnTerrainHalf(WP)
 void App::btnTerrainDouble(WP)
 {
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str) / 2;
-	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
+	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 
-	int dblSize = (sc.td.iVertsX-1) * 2 +1;
+	int dblSize = (sc->td.iVertsX-1) * 2 +1;
 	float* hfData = new float[dblSize * dblSize];
 	int siz = dblSize * dblSize * sizeof(float);
 	
 	//  resize Hmap by half
-	for (int j=0; j < sc.td.iVertsX; ++j)
+	for (int j=0; j < sc->td.iVertsX; ++j)
 	{
-		int a = (j +dblSize/4) * dblSize + dblSize/4, a2 = j * sc.td.iVertsX;
-		for (int i=0; i < sc.td.iVertsX; ++i,++a)
-		{	hfData[a] = sc.td.hfHeight[a2];  ++a2;  }
+		int a = (j +dblSize/4) * dblSize + dblSize/4, a2 = j * sc->td.iVertsX;
+		for (int i=0; i < sc->td.iVertsX; ++i,++a)
+		{	hfData[a] = sc->td.hfHeight[a2];  ++a2;  }
 	}
 	std::ofstream of;
 	of.open(getHMapNew(), std::ios_base::binary);
@@ -303,7 +303,7 @@ void App::btnTerrainDouble(WP)
 	of.close();
 	delete[] hfData;
 
-	sc.td.iVertsX = dblSize;  sc.td.UpdVals();
+	sc->td.iVertsX = dblSize;  sc->td.UpdVals();
 	bNewHmap = true;	UpdateTrack();
 }
 #else
@@ -311,9 +311,9 @@ void App::btnTerrainDouble(WP)
 void App::btnTerrainDouble(WP)
 {
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str) / 2;
-	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
+	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 
-	int oldSize = sc.td.iVertsX, newSize = (oldSize-1) * 2 +1;
+	int oldSize = sc->td.iVertsX, newSize = (oldSize-1) * 2 +1;
 	float scale = 1.f / 2.f / 2.f;
 	float* hfData = new float[si];
 	for (int i=0; i < si; ++i)  hfData[i] = 0.f;  // clear out
@@ -327,7 +327,7 @@ void App::btnTerrainDouble(WP)
 		for (i=0; i < newSize; ++i,++a)
 		{
 			x = y * oldSize + scale * i;
-			hfData[a] = sc.td.hfHeight[ x ];
+			hfData[a] = sc->td.hfHeight[ x ];
 		}
 	}
 	std::ofstream of;
@@ -336,8 +336,8 @@ void App::btnTerrainDouble(WP)
 	of.close();
 	delete[] hfData;
 	
-	sc.td.fTriangleSize * scale * 2.f;
-	sc.td.iVertsX = newSize;  sc.td.UpdVals();
+	sc->td.fTriangleSize * scale * 2.f;
+	sc->td.iVertsX = newSize;  sc->td.UpdVals();
 	bNewHmap = true;	UpdateTrack();  SetGuiFromXmls();
 }
 #endif
@@ -350,7 +350,7 @@ void App::btnTerrainMove(WP)
 	int mx = ex ? s2i(ex->getCaption()) : 0;
 	int my = ey ?-s2i(ey->getCaption()) : 0;
 	
-	int newSize = sc.td.iVertsX, si = newSize * newSize;
+	int newSize = sc->td.iVertsX, si = newSize * newSize;
 	float* hfData = new float[si];
 	
 	//  resize
@@ -361,7 +361,7 @@ void App::btnTerrainMove(WP)
 		for (i=0; i < newSize; ++i,++a)
 		{
 			aa = std::max(0, std::min(si-1, (j-mx) * newSize + i+my));
-			hfData[a] = sc.td.hfHeight[aa];
+			hfData[a] = sc->td.hfHeight[aa];
 		}
 	}
 	std::ofstream of;
@@ -371,7 +371,7 @@ void App::btnTerrainMove(WP)
 	delete[] hfData;
 	
 	road->SelAll();
-	road->Move(Vector3(my,0,mx) * -sc.td.fTriangleSize);
+	road->Move(Vector3(my,0,mx) * -sc->td.fTriangleSize);
 	road->SelClear();
 	//start,objects-
 
@@ -384,15 +384,15 @@ void App::btnScaleTerH(WP)
 	if (!edScaleTerHMul || !road)  return;
 	Real sf = std::max(0.1f, s2r(edScaleTerHMul->getCaption()) );  // scale mul
 
-	float* hfData = new float[sc.td.iVertsX * sc.td.iVertsY];
-	int siz = sc.td.iVertsX * sc.td.iVertsY * sizeof(float);
+	float* hfData = new float[sc->td.iVertsX * sc->td.iVertsY];
+	int siz = sc->td.iVertsX * sc->td.iVertsY * sizeof(float);
 	
 	//  generate Hmap
-	for (int j=0; j < sc.td.iVertsY; ++j)
+	for (int j=0; j < sc->td.iVertsY; ++j)
 	{
-		int a = j * sc.td.iVertsX;
-		for (int i=0; i < sc.td.iVertsX; ++i,++a)
-			hfData[a] = sc.td.hfHeight[a] * sf;
+		int a = j * sc->td.iVertsX;
+		for (int i=0; i < sc->td.iVertsX; ++i,++a)
+			hfData[a] = sc->td.hfHeight[a] * sf;
 	}
 	std::ofstream of;
 	of.open(getHMapNew(), std::ios_base::binary);
@@ -451,12 +451,12 @@ void App::slTerGenPow(SL)
 void App::chkTerLayOn(WP wp)
 {
 	if (!bTerLay)  return;
-	sc.td.layersAll[idTerLay].on = !sc.td.layersAll[idTerLay].on;
+	sc->td.layersAll[idTerLay].on = !sc->td.layersAll[idTerLay].on;
 	ButtonPtr chk = wp->castType<Button>();
-	chk->setStateSelected(sc.td.layersAll[idTerLay].on);
-	sc.td.UpdLayers();
+	chk->setStateSelected(sc->td.layersAll[idTerLay].on);
+	sc->td.UpdLayers();
 	if (valTerLAll)
-		valTerLAll->setCaption("Used: "+toStr(sc.td.layers.size()));
+		valTerLAll->setCaption("Used: "+toStr(sc->td.layers.size()));
 	//  force update, blendmap sliders crash if not
 	UpdateTrack();
 }
@@ -471,7 +471,7 @@ void App::chkTexNormAutoOn(WP wp)
 void App::comboTexDiff(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	if (bTerLay)  sc.td.layersAll[idTerLay].texFile = s;
+	if (bTerLay)  sc->td.layersAll[idTerLay].texFile = s;
 
 	String sTex,sNorm, sExt;
 	StringUtil::splitBaseFilename(s,sTex,sExt);
@@ -480,7 +480,7 @@ void App::comboTexDiff(ComboBoxPtr cmb, size_t val)
 	//  auto norm
 	if (bTexNormAuto)
 	{	cmbTexNorm->setIndexSelected( cmbTexNorm->findItemIndexWith(sNorm) );
-		if (bTerLay)  sc.td.layersAll[idTerLay].texNorm = sNorm;  }
+		if (bTerLay)  sc->td.layersAll[idTerLay].texNorm = sNorm;  }
 	    
 	//  tex image
     imgTexDiff->setImageTexture(sTex + "_prv.png");
@@ -489,13 +489,13 @@ void App::comboTexDiff(ComboBoxPtr cmb, size_t val)
 void App::comboTexNorm(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	if (bTerLay)  sc.td.layersAll[idTerLay].texNorm = s;
+	if (bTerLay)  sc->td.layersAll[idTerLay].texNorm = s;
 }
 
 void App::editTerLScale(EditPtr ed)
 {
 	Real r = std::max(0.01f, s2r(ed->getCaption()) );
-	if (bTerLay)  sc.td.layersAll[idTerLay].tiling = r;
+	if (bTerLay)  sc->td.layersAll[idTerLay].tiling = r;
 
 	float v = std::min(1.f,std::max(0.f, powf((r - 2.0f)/24.0f, 1.f/1.5f) ));
 	if (sldTerLScale)  sldTerLScale->setValue(v);
@@ -504,7 +504,7 @@ void App::editTerLScale(EditPtr ed)
 void App::slTerLScale(SL)  //  scale layer
 {
 	Real v = 2.0f + 24.0f * powf(val, 1.5f);  // 0.1 + 89.9, 1 + 19
-	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].tiling = v;
+	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].tiling = v;
 	if (edTerLScale)  edTerLScale->setCaption(toStr(v));  // set edit
 }
 
@@ -514,21 +514,21 @@ void App::slTerLScale(SL)  //  scale layer
 void App::slTerLAngMin(SL)
 {
 	float v = 90.f * val;
-	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].angMin = v;
+	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].angMin = v;
 	if (valTerLAngMin){	valTerLAngMin->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;  //initBlendMaps(terrain);
 }
 void App::slTerLAngMax(SL)
 {
 	float v = 90.f * val;
-	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].angMax = v;
+	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].angMax = v;
 	if (valTerLAngMax){	valTerLAngMax->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 void App::slTerLAngSm(SL)
 {
 	float v = 90.f * val;
-	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].angSm = v;
+	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].angSm = v;
 	if (valTerLAngSm){	valTerLAngSm->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
@@ -536,21 +536,21 @@ void App::slTerLAngSm(SL)
 void App::slTerLHMin(SL)
 {
 	float v = -300.f + 600.f * val;
-	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].hMin = v;
+	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].hMin = v;
 	if (valTerLHMin){	valTerLHMin->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 void App::slTerLHMax(SL)
 {
 	float v = -300.f + 600.f * val;
-	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].hMax = v;
+	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].hMax = v;
 	if (valTerLHMax){	valTerLHMax->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 void App::slTerLHSm(SL)
 {
 	float v = 200.f * val;
-	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].hSm = v;
+	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].hSm = v;
 	if (valTerLHSm){	valTerLHSm->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
@@ -558,7 +558,7 @@ void App::slTerLHSm(SL)
 void App::slTerLNoise(SL)
 {
 	float v = -2.f + 4.f * val;
-	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].noise = v;
+	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].noise = v;
 	if (valTerLNoise){	valTerLNoise->setCaption(fToStr(v,2,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
@@ -566,9 +566,9 @@ void App::slTerLNoise(SL)
 void App::chkTerLNoiseOnlyOn(WP wp)
 {
 	if (!bTerLay)  return;
-	sc.td.layersAll[idTerLay].bNoiseOnly = !sc.td.layersAll[idTerLay].bNoiseOnly;
+	sc->td.layersAll[idTerLay].bNoiseOnly = !sc->td.layersAll[idTerLay].bNoiseOnly;
 	ButtonPtr chk = wp->castType<Button>();
-	chk->setStateSelected(sc.td.layersAll[idTerLay].bNoiseOnly);
+	chk->setStateSelected(sc->td.layersAll[idTerLay].bNoiseOnly);
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 
@@ -578,7 +578,7 @@ void App::chkTerLNoiseOnlyOn(WP wp)
 void App::editLDust(EditPtr ed)
 {
 	Real r = s2r(ed->getCaption());
-	TerLayer* l = !bTerLay ? &sc.td.layerRoad : &sc.td.layersAll[idTerLay];
+	TerLayer* l = !bTerLay ? &sc->td.layerRoad : &sc->td.layersAll[idTerLay];
 	String n = ed->getName();
 
 		 if (n=="LDust")   l->dust = r;		else if (n=="LDustS")  l->dustS = r;
@@ -587,8 +587,8 @@ void App::editLDust(EditPtr ed)
 void App::editLTrlClr(EditPtr ed)
 {
 	ColourValue c = s2c(ed->getCaption());
-	if (!bTerLay)   sc.td.layerRoad.tclr = c;
-	else  sc.td.layersAll[idTerLay].tclr = c;
+	if (!bTerLay)   sc->td.layerRoad.tclr = c;
+	else  sc->td.layersAll[idTerLay].tclr = c;
 	if (clrTrail)  clrTrail->setColour(Colour(c.r,c.g,c.b));
 }
 
@@ -597,9 +597,9 @@ void App::comboParDust(ComboBoxPtr cmb, size_t val)
 	String s = cmb->getItemNameAt(val);
 	String n = cmb->getName();
 		 
-		 if (n=="CmbParDust")   sc.sParDust = s;
-	else if (n=="CmbParMud")    sc.sParMud = s;
-	else if (n=="CmbParSmoke")  sc.sParSmoke = s;
+		 if (n=="CmbParDust")   sc->sParDust = s;
+	else if (n=="CmbParMud")    sc->sParMud = s;
+	else if (n=="CmbParSmoke")  sc->sParSmoke = s;
 }
 
 
@@ -632,32 +632,32 @@ void App::editTrGr(EditPtr ed)
 	Real r = s2r(ed->getCaption());
 	String n = ed->getName();
 
-	if (n=="GrassDens")  sc.densGrass = r;	else if (n=="TreesDens")  sc.densTrees = r;
-	else if (n=="GrPage")  sc.grPage = r;	else if (n=="GrDist")  sc.grDist = r;
-	else if (n=="TrPage")  sc.trPage = r;	else if (n=="TrDist")  sc.trDist = r;
+	if (n=="GrassDens")  sc->densGrass = r;	else if (n=="TreesDens")  sc->densTrees = r;
+	else if (n=="GrPage")  sc->grPage = r;	else if (n=="GrDist")  sc->grDist = r;
+	else if (n=="TrPage")  sc->trPage = r;	else if (n=="TrDist")  sc->trDist = r;
 
-	else if (n=="GrMinX")  sc.grMinSx = r;	else if (n=="GrMaxX")  sc.grMaxSx = r;
-	else if (n=="GrMinY")  sc.grMinSy = r;	else if (n=="GrMaxY")  sc.grMaxSy = r;
+	else if (n=="GrMinX")  sc->grMinSx = r;	else if (n=="GrMaxX")  sc->grMaxSx = r;
+	else if (n=="GrMinY")  sc->grMinSy = r;	else if (n=="GrMaxY")  sc->grMaxSy = r;
 
-	else if (n=="GrSwayDistr")  sc.grSwayDistr = r;
-	else if (n=="GrSwayLen")  sc.grSwayLen = r;	else if (n=="GrSwaySpd")  sc.grSwaySpeed = r;
-	else if (n=="TrRdDist")  sc.trRdDist = r;	else if (n=="TrImpDist")  sc.trDistImp = r;
-	else if (n=="GrDensSmooth")  sc.grDensSmooth = r;
-	else if (n=="GrTerMaxAngle")  sc.grTerMaxAngle = r;
-	else if (n=="GrTerMinHeight")  sc.grTerMinHeight = r;
-	else if (n=="GrTerMaxHeight")  sc.grTerMaxHeight = r;
-	else if (n=="SceneryId")  sc.sceneryId = r;
+	else if (n=="GrSwayDistr")  sc->grSwayDistr = r;
+	else if (n=="GrSwayLen")  sc->grSwayLen = r;	else if (n=="GrSwaySpd")  sc->grSwaySpeed = r;
+	else if (n=="TrRdDist")  sc->trRdDist = r;	else if (n=="TrImpDist")  sc->trDistImp = r;
+	else if (n=="GrDensSmooth")  sc->grDensSmooth = r;
+	else if (n=="GrTerMaxAngle")  sc->grTerMaxAngle = r;
+	else if (n=="GrTerMinHeight")  sc->grTerMinHeight = r;
+	else if (n=="GrTerMaxHeight")  sc->grTerMaxHeight = r;
+	else if (n=="SceneryId")  sc->sceneryId = r;
 }
 
 void App::comboGrassMtr(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	sc.grassMtr = s;
+	sc->grassMtr = s;
 }
 void App::comboGrassClr(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	sc.grassColorMap = s;
+	sc->grassColorMap = s;
 }
 
 
@@ -666,13 +666,13 @@ void App::comboGrassClr(ComboBoxPtr cmb, size_t val)
 void App::tabPgLayers(TabPtr wp, size_t id)
 {
 	idPgLay = id;  // help var												
-	const PagedLayer& lay = sc.pgLayersAll[id];
+	const PagedLayer& lay = sc->pgLayersAll[id];
 
 	chkPgLay->setStateSelected(lay.on);
 	cmbPgLay->setIndexSelected( cmbPgLay->findItemIndexWith(lay.name) );
 	if (imgPaged)	imgPaged->setImageTexture(lay.name + ".png");
 	if (valLTrAll)
-		valLTrAll->setCaption("Used: "+toStr(sc.pgLayers.size()));
+		valLTrAll->setCaption("Used: "+toStr(sc->pgLayers.size()));
 
 	//  set slider values
 	Slider* sl;
@@ -691,71 +691,71 @@ void App::tabPgLayers(TabPtr wp, size_t id)
 
 void App::chkPgLayOn(WP wp)
 {
-	sc.pgLayersAll[idPgLay].on = !sc.pgLayersAll[idPgLay].on;
-	sc.UpdPgLayers();
+	sc->pgLayersAll[idPgLay].on = !sc->pgLayersAll[idPgLay].on;
+	sc->UpdPgLayers();
 	ButtonPtr chk = wp->castType<Button>();
-	chk->setStateSelected(sc.pgLayersAll[idPgLay].on);
+	chk->setStateSelected(sc->pgLayersAll[idPgLay].on);
 	if (valLTrAll)
-		valLTrAll->setCaption("Used: "+toStr(sc.pgLayers.size()));
+		valLTrAll->setCaption("Used: "+toStr(sc->pgLayers.size()));
 }
 
 void App::comboPgLay(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	sc.pgLayersAll[idPgLay].name = s;
+	sc->pgLayersAll[idPgLay].name = s;
 	if (imgPaged)	imgPaged->setImageTexture(s + ".png");
 }
 
 void App::slLTrDens(SL)  //  sliders
 {
-	Real v = 0.001f + 1.0f * powf(val, 2.f);  sc.pgLayersAll[idPgLay].dens = v;
+	Real v = 0.001f + 1.0f * powf(val, 2.f);  sc->pgLayersAll[idPgLay].dens = v;
 	if (valLTrDens){  valLTrDens->setCaption(fToStr(v,3,5));  }
 }
 void App::slLTrRdDist(SL)
 {
 	int v = val * 20.f +slHalf;
-	sc.pgLayersAll[idPgLay].addTrRdDist = v;
+	sc->pgLayersAll[idPgLay].addTrRdDist = v;
 	if (valLTrRdDist)  valLTrRdDist->setCaption(toStr(v));
 }
 
 void App::slLTrMinSc(SL)
 {
-	Real v = 6.0f * powf(val, 3.f);		sc.pgLayersAll[idPgLay].minScale = v;
+	Real v = 6.0f * powf(val, 3.f);		sc->pgLayersAll[idPgLay].minScale = v;
 	if (valLTrMinSc){  valLTrMinSc->setCaption(fToStr(v,3,5));  }
 }
 void App::slLTrMaxSc(SL)
 {
-	Real v = 6.0f * powf(val, 3.f);		sc.pgLayersAll[idPgLay].maxScale = v;
+	Real v = 6.0f * powf(val, 3.f);		sc->pgLayersAll[idPgLay].maxScale = v;
 	if (valLTrMaxSc){  valLTrMaxSc->setCaption(fToStr(v,3,5));  }
 }
 
 void App::slLTrWindFx(SL)
 {
-	Real v = 12.0f * powf(val, 3.f);	sc.pgLayersAll[idPgLay].windFx = v;
+	Real v = 12.0f * powf(val, 3.f);	sc->pgLayersAll[idPgLay].windFx = v;
 	if (valLTrWindFx){  valLTrWindFx->setCaption(fToStr(v,3,5));  }
 }
 void App::slLTrWindFy(SL)
 {
-	Real v = 12.0f * powf(val, 3.f);	sc.pgLayersAll[idPgLay].windFy = v;
+	Real v = 12.0f * powf(val, 3.f);	sc->pgLayersAll[idPgLay].windFy = v;
 	if (valLTrWindFy){  valLTrWindFy->setCaption(fToStr(v,3,5));  }
 }
 
 void App::slLTrMaxTerAng(SL)
 {
-	Real v = 90.0f * powf(val, 2.f);	sc.pgLayersAll[idPgLay].maxTerAng = v;
+	Real v = 90.0f * powf(val, 2.f);	sc->pgLayersAll[idPgLay].maxTerAng = v;
 	if (valLTrMaxTerAng){  valLTrMaxTerAng->setCaption(fToStr(v,1,5));  }
 }
 void App::editLTrMinTerH(EditPtr ed)
 {
-	sc.pgLayersAll[idPgLay].minTerH = s2r(ed->getCaption());
+	sc->pgLayersAll[idPgLay].minTerH = s2r(ed->getCaption());
 }
 void App::editLTrMaxTerH(EditPtr ed)
 {
-	sc.pgLayersAll[idPgLay].maxTerH = s2r(ed->getCaption());
+	sc->pgLayersAll[idPgLay].maxTerH = s2r(ed->getCaption());
 }
 void App::editLTrFlDepth(EditPtr ed)
 {
-	sc.pgLayersAll[idPgLay].maxDepth = s2r(ed->getCaption());
+	sc->pgLayersAll[idPgLay].maxDepth = s2r(ed->getCaption());
 }
 
 
@@ -901,7 +901,7 @@ void App::SaveCam()
 void App::btnSetCam(WP wp)
 {
 	String s = wp->getName();
-	Real y0 = 20, xz = sc.td.fTerWorldSize*0.5f, r = 45.f * 0.5f*PI_d/180.f, yt = xz / Math::Tan(r);
+	Real y0 = 20, xz = sc->td.fTerWorldSize*0.5f, r = 45.f * 0.5f*PI_d/180.f, yt = xz / Math::Tan(r);
 
 		 if (s=="CamView1")	{	mCameraT->setPosition(xz*0.8,60,0);  mCameraT->setDirection(-1,-0.3,0);  }
 	else if (s=="CamView2")	{	mCameraT->setPosition(xz*0.6,80,xz*0.6);  mCameraT->setDirection(-1,-0.5,-1);  }

@@ -270,7 +270,7 @@ void GAME::UpdateCarInputs(CAR & car)
 	std::vector <float> carinputs(CARINPUT::ALL, 0.0f);
 	bool forceBrake = timer.waiting || timer.pretime > 0.f;  // race countdown
 
-	int i = pOgreGame->sc.asphalt ? 1 : 0;
+	int i = pOgreGame->sc->asphalt ? 1 : 0;
 	float sss_eff = settings->sss_effect[i], sss_velf = settings->sss_velfactor[i];
 	float carspeed = car.GetSpeed();
 
@@ -478,7 +478,7 @@ void GAME::ProcessNewSettings()
 {
 	if (carcontrols_local.first)
 	{
-		int i = pOgreGame->sc.asphalt ? 1 : 0;
+		int i = pOgreGame->sc->asphalt ? 1 : 0;
 		carcontrols_local.first->SetABS(settings->abs[i]);
 		carcontrols_local.first->SetTCS(settings->tcs[i]);
 		carcontrols_local.first->SetAutoShift(settings->autoshift);

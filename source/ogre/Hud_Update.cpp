@@ -527,9 +527,9 @@ void App::UpdateHUD(int carId, float time)
 		for (int i=0; i<4; ++i)
 		{
 			int mtr = 0;//std::max(0,carPoses[iCurPoses[carId]][carId].whTerMtr[i]);
-			const TRACKSURFACE* tsu = sc.ter ? pCar->dynamics.terSurf[mtr] : pCar->dynamics.wheel_contact[i].surface;
-			mtr = std::max(0, std::min( (int)(sc.td.layers.size())-1, mtr-1));
-			TerLayer& lay = mtr == 0 ? sc.td.layerRoad : sc.td.layersAll[sc.td.layers[mtr]];
+			const TRACKSURFACE* tsu = sc->ter ? pCar->dynamics.terSurf[mtr] : pCar->dynamics.wheel_contact[i].surface;
+			mtr = std::max(0, std::min( (int)(sc->td.layers.size())-1, mtr-1));
+			TerLayer& lay = mtr == 0 ? sc->td.layerRoad : sc->td.layersAll[sc->td.layers[mtr]];
 
 			sprintf(s_,  //"c %6.2f  "
 				"R%d t%d  %s  [%s]  %s  %4.0f  fr %4.2f / %4.2f  ba %4.2f  bw %4.2f \n"
@@ -572,7 +572,7 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 	bool main = b == c;
 	float angBase = carModels[b]->angCarY;
 	
-	bool bZoom = pSet->mini_zoomed && sc.ter, bRot = pSet->mini_rotated && sc.ter;
+	bool bZoom = pSet->mini_zoomed && sc->ter, bRot = pSet->mini_rotated && sc->ter;
 
 	const float vmin[2] = {0.f,-45.f}, rmin[2] = {0.f,-45.f},
 		vsc_mph[2] = {-180.f/100.f, -(180.f+vmin[1])/90.f},
