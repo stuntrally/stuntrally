@@ -37,11 +37,11 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 	//for (float f=-1.f; f<=2.f; f+=0.02f)  // test
 	//	LogO(toStr(f) + " = " + toStr( linRange(f,-0.5f,1.5f,0.2f) ));
 
-	int b = sc.td.layers.size()-1, i;
+	int b = sc->td.layers.size()-1, i;
 	float* pB[6];	TerrainLayerBlendMap* bMap[6];
 	int t = terrain->getLayerBlendMapSize(), x,y;
 	//LogO(String("Ter blendmap size: ")+toStr(t));
-	const float f = 0.8f / t * 2 * sc.td.fTerWorldSize / t * 3.14f;  //par-
+	const float f = 0.8f / t * 2 * sc->td.fTerWorldSize / t * 3.14f;  //par-
 
 	//  mtr map
 	#ifndef ROAD_EDITOR
@@ -65,16 +65,16 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 		hMin[i]=-300.f; hMax[i]=300.f;  noise[i]=1.f;  }
 	
 	//  params from layers
-	for (i=0; i < std::min(5, (int)sc.td.layers.size()); ++i)
+	for (i=0; i < std::min(5, (int)sc->td.layers.size()); ++i)
 	{
-		const TerLayer& l = sc.td.layersAll[sc.td.layers[i]];
+		const TerLayer& l = sc->td.layersAll[sc->td.layers[i]];
 		aMin[i] = l.angMin;	aMax[i] = l.angMax;
 		hMin[i] = l.hMin;	hMax[i] = l.hMax;  noise[i] = l.noise;
 		aSm[i] = l.angSm;	hSm[i] = l.hSm;    bNOnly[i] = l.bNoiseOnly;
 	}
 	
 	//  fill blendmap  ---------------
-	int w = sc.td.iTerSize;
+	int w = sc->td.iTerSize;
 	float ft = t, fw = w;
 	int xB, yB, xE, yE;
 	if (full)
@@ -98,7 +98,7 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 		//  ter angle and height ranges
 		#if 1
 		int tx = (float)(x)/ft * w, ty = (float)(y)/ft * w, tt = ty * w + tx;
-		float a = sc.td.hfAngle[tt], h = fHmap[tt];  // sc.td.hfHeight[tt];
+		float a = sc->td.hfAngle[tt], h = fHmap[tt];  // sc->td.hfHeight[tt];
 		for (i=0; i < b; ++i)  if (!bNOnly[i]) {  const int i1 = i+1;
 			val[i] = m01( val[i1]*noise[i] + linRange(a,aMin[i1],aMax[i1],aSm[i1]) * linRange(h,hMin[i1],hMax[i1],hSm[i1]) );  }
 		#endif
@@ -151,7 +151,7 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 ///  Hmap angles  .....
 void App::GetTerAngles(int xb,int yb, int xe,int ye, bool full)
 {
-	int wx = sc.td.iVertsX, wy = sc.td.iVertsY;
+	int wx = sc->td.iVertsX, wy = sc->td.iVertsY;
 	int xB,xE, yB,yE;
 	if (full)
 	{	xB = 1;  xE = wx-1;
@@ -160,9 +160,9 @@ void App::GetTerAngles(int xb,int yb, int xe,int ye, bool full)
 	{	xB = std::max(1,xb);  xE = std::min(wx-1,xe);
 		yB = std::max(1,yb);  yE = std::min(wy-1,ye);
 	}
-	float* hf = terrain ? terrain->getHeightData() : sc.td.hfHeight;
+	float* hf = terrain ? terrain->getHeightData() : sc->td.hfHeight;
 
-	Real t = sc.td.fTriangleSize * 2.f;
+	Real t = sc->td.fTriangleSize * 2.f;
 	for (int j = yB; j < yE; ++j)  // 1 from borders
 	{
 		int a = j * wx + xB;
@@ -173,24 +173,24 @@ void App::GetTerAngles(int xb,int yb, int xe,int ye, bool full)
 			Vector3 norm = -vx.crossProduct(vz);  norm.normalise();
 			Real ang = Math::ACos(norm.y).valueDegrees();
 
-			sc.td.hfAngle[a] = ang;
+			sc->td.hfAngle[a] = ang;
 		}
 	}
 	if (!full)  return;
 	
 	//  only corner[] vals
-	//sc.td.hfNorm[0] = 0.f;
+	//sc->td.hfNorm[0] = 0.f;
 	
 	//  only border[] vals  todo: like above
 	for (int j=0; j < wy; ++j)  // |
 	{	int a = j * wx;
-		sc.td.hfAngle[a + wx-1] = 0.f;
-		sc.td.hfAngle[a] = 0.f;
+		sc->td.hfAngle[a + wx-1] = 0.f;
+		sc->td.hfAngle[a] = 0.f;
 	}
 	int a = (wy-1) * wx;
 	for (int i=0; i < wx; ++i,++a)  // --
-	{	sc.td.hfAngle[i] = 0.f;
-		sc.td.hfAngle[a] = 0.f;
+	{	sc->td.hfAngle[i] = 0.f;
+		sc->td.hfAngle[a] = 0.f;
 	}
 }
 
@@ -213,7 +213,7 @@ void App::configureTerrainDefaults(Light* l)
 	mTerrainGlobals->setCompositeMapDiffuse(l->getDiffuseColour());  }
 	//mTerrainGlobals->setShadowVal(0.6f);  //+ new, for compositeMap shadow
 
-	mTerrainGlobals->setCompositeMapSize(sc.td.iTerSize-1);  // par,..  1k
+	mTerrainGlobals->setCompositeMapSize(sc->td.iTerSize-1);  // par,..  1k
 	mTerrainGlobals->setCompositeMapDistance(pSet->terdist);  //100
 	mTerrainGlobals->setLightMapSize(ciShadowSizesA[pSet->lightmap_size]);  //256, 2k
 	mTerrainGlobals->setSkirtSize(1);  //`
@@ -221,21 +221,21 @@ void App::configureTerrainDefaults(Light* l)
 
 	// Configure default import settings for if we use imported image
 	Terrain::ImportData& di = mTerrainGroup->getDefaultImportSettings();
-	di.terrainSize = sc.td.iTerSize; // square []-
-	di.worldSize = sc.td.fTerWorldSize;  //di.inputScale = td.Hmax;
+	di.terrainSize = sc->td.iTerSize; // square []-
+	di.worldSize = sc->td.fTerWorldSize;  //di.inputScale = td.Hmax;
 	di.minBatchSize = 33; //17;   //17 o: 33   3 5 9 17 33 65 129
-	di.maxBatchSize = std::min(65, sc.td.iTerSize); //65;  //65 size of one tile in vertices
+	di.maxBatchSize = std::min(65, sc->td.iTerSize); //65;  //65 size of one tile in vertices
 	//const uint16 numPages = 4;  // 2^n
 	//const uint16 numLods = 4;  // 1..8
 	//di.maxBatchSize = (TERRAIN_SIZE-1) / numPages +1;
 	//di.minBatchSize = (di.maxBatchSize-1) >> numLods +1;
 
 	//  textures  iBlendMaps-
-	int ls = sc.td.layers.size();
+	int ls = sc->td.layers.size();
 	di.layerList.resize(ls);
 	for (int i=0; i < ls; ++i)
 	{
-		TerLayer& l = sc.td.layersAll[sc.td.layers[i]];
+		TerLayer& l = sc->td.layersAll[sc->td.layers[i]];
 		di.layerList[i].worldSize = l.tiling;
 		di.layerList[i].textureNames.push_back(l.texFile);
 		di.layerList[i].textureNames.push_back(l.texNorm);
@@ -252,7 +252,7 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 	
 	///  sky
 	Vector3 scl = pSet->view_distance*Vector3::UNIT_SCALE;
-	CreateSkyDome(sc.skyMtr, scl);
+	CreateSkyDome(sc->skyMtr, scl);
 	UpdFog();
 
 	//  light
@@ -266,9 +266,9 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 	{
 		QTimer ti;  ti.update();  /// time
 
-		int wx = sc.td.iVertsX, wy = sc.td.iVertsY, wxy = wx * wy;  //wy=wx
-		delete[] sc.td.hfHeight;  sc.td.hfHeight = new float[wxy];
-		delete[] sc.td.hfAngle;   sc.td.hfAngle = new float[wxy];
+		int wx = sc->td.iVertsX, wy = sc->td.iVertsY, wxy = wx * wy;  //wy=wx
+		delete[] sc->td.hfHeight;  sc->td.hfHeight = new float[wxy];
+		delete[] sc->td.hfAngle;   sc->td.hfAngle = new float[wxy];
 		int siz = wxy * sizeof(float);
 
 		String name = TrkDir() + (bNewHmap ? "heightmap-new.f32" : "heightmap.f32");
@@ -277,7 +277,7 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 		{
 			std::ifstream fi;
 			fi.open(name.c_str(), std::ios_base::binary);
-			fi.read((char*)&sc.td.hfHeight[0], siz);
+			fi.read((char*)&sc->td.hfHeight[0], siz);
 			fi.close();
 		}
 
@@ -302,13 +302,13 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 			mTerrainGroup = 0;
 		}
 		mTerrainGroup = OGRE_NEW TerrainGroup(mSceneMgr, Terrain::ALIGN_X_Z,
-			sc.td.iTerSize, sc.td.fTerWorldSize);
+			sc->td.iTerSize, sc->td.fTerWorldSize);
 		mTerrainGroup->setOrigin(Vector3::ZERO);
 
 		configureTerrainDefaults(sun);
 
-		if (sc.td.hfHeight)
-			mTerrainGroup->defineTerrain(0,0, sc.td.hfHeight);
+		if (sc->td.hfHeight)
+			mTerrainGroup->defineTerrain(0,0, sc->td.hfHeight);
 		else
 			mTerrainGroup->defineTerrain(0,0, 0.f);
 
@@ -339,12 +339,12 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 void App::CreateBltTerrain()
 {
 	btHeightfieldTerrainShape* hfShape = new btHeightfieldTerrainShape(
-		sc.td.iVertsX, sc.td.iVertsY, sc.td.hfHeight, sc.td.fTriangleSize,
+		sc->td.iVertsX, sc->td.iVertsY, sc->td.hfHeight, sc->td.fTriangleSize,
 		/*>?*/-200.f,200.f, 2, PHY_FLOAT,false);
 	
 	hfShape->setUseDiamondSubdivision(true);
 
-	btVector3 scl(sc.td.fTriangleSize, sc.td.fTriangleSize, 1);
+	btVector3 scl(sc->td.fTriangleSize, sc->td.fTriangleSize, 1);
 	hfShape->setLocalScaling(scl);
 	//col->setUserPointer((void*)&gSD_Terrain);
 
@@ -379,7 +379,7 @@ void App::CreateBltTerrain()
 		//shp->setUserPointer(gSD_BorderPlane);
 		
 		btTransform tr;  tr.setIdentity();
-		tr.setOrigin(vpl * -0.5 * sc.td.fTerWorldSize);
+		tr.setOrigin(vpl * -0.5 * sc->td.fTerWorldSize);
 
 		btCollisionObject* col = new btCollisionObject();
 		col->setCollisionShape(shp);
@@ -453,19 +453,19 @@ inline ColourValue Clr3(const Vector3& v)
 
 void App::UpdFog(bool bForce)
 {
-	ColourValue clr = Clr3(sc.fogClr);
+	ColourValue clr = Clr3(sc->fogClr);
 	if (!pSet->bFog || bForce)
-		mSceneMgr->setFog(sc.fogMode, clr, 1.f, sc.fogStart, sc.fogEnd);
+		mSceneMgr->setFog(sc->fogMode, clr, 1.f, sc->fogStart, sc->fogEnd);
 	else
-		mSceneMgr->setFog(sc.fogMode, clr, 1.f, 3000, 3200);
+		mSceneMgr->setFog(sc->fogMode, clr, 1.f, 3000, 3200);
 }
 
 void App::UpdSun()
 {
 	if (!sun)  return;
-	Vector3 dir = SplineRoad::GetRot(sc.ldYaw, -sc.ldPitch);
+	Vector3 dir = SplineRoad::GetRot(sc->ldYaw, -sc->ldPitch);
 	sun->setDirection(dir);
-	sun->setDiffuseColour(Clr3(sc.lDiff));
-	sun->setSpecularColour(Clr3(sc.lSpec));
-	mSceneMgr->setAmbientLight(Clr3(sc.lAmb));
+	sun->setDiffuseColour(Clr3(sc->lDiff));
+	sun->setSpecularColour(Clr3(sc->lSpec));
+	mSceneMgr->setAmbientLight(Clr3(sc->lAmb));
 }

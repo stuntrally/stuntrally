@@ -1,4 +1,86 @@
-//  Rain  ---------
+
+//  SandStorm  @@@@@@@
+particle_system SandStorm
+{
+	material			Dust
+	quota				5000
+	particle_width		2.2
+	particle_height		2.2
+	cull_each			true
+	billboard_type		point
+    sorted				true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-1 -0.1 0.2
+		width	18
+		height	18
+		depth	12  //h
+
+		colour				0.85 0.85 0.40  0.3
+		colour_range_start	0.81 0.82 0.35  0.2
+		colour_range_end	0.89 0.88 0.47  0.4
+
+		emission_rate	200
+		velocity_min	10.6
+		velocity_max	15.2
+		time_to_live_min	0.3
+		time_to_live_max	0.5
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	17
+	}
+}
+
+
+
+//  RainFast  ---------
+particle_system RainFast
+{
+	material			RainDropLong
+	quota				10000
+	particle_width		0.04
+	particle_height		1.22
+
+	cull_each		false
+    sorted			false
+
+	//billboard_type	point
+	billboard_type		oriented_self
+	//renderer			billboard
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 10 0
+		direction	0.1 -1 -0.2
+		width	16
+		height	16
+		depth	12  //h
+
+		colour				0.8 0.8 0.8  0.5
+		colour_range_start	0.8 0.8 0.8  0.6
+		colour_range_end	0.8 0.8 0.8  0.4
+
+		emission_rate	200
+		velocity_min	13.6
+		velocity_max	16.2
+		time_to_live_min	0.1
+		time_to_live_max	0.2
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	17
+	}
+}
+
+
+//  Rain  - - - - -
 particle_system RainFine
 {
 	material			RainDrop
@@ -134,12 +216,59 @@ particle_system Snow
 	{
 		randomness	13
 	}
+}
 
-	//affector ColourFader
+
+//  SnowFine  . . . . .
+particle_system SnowFine
+{
+	material			SnowFlake
+	quota				18000
+	particle_width		0.05
+	particle_height		0.05
+
+	cull_each		false
+    sorted			false
+
+	billboard_type		point
+	//renderer			billboard
+    //sorted			true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	0 -1 0
+		width	18
+		height	18
+		depth	12  //h
+
+		colour				1 1 1  0.6
+		colour_range_start	1 1 1  0.7
+		colour_range_end	1 1 1  0.5
+
+		emission_rate	20
+		velocity_min	3.1
+		velocity_max	4.2
+		time_to_live_min	1.7
+		time_to_live_max	2.2
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	//affector LinearForce
 	//{
-	//	red		-0.018
-	//	green	-0.021
-	//	blue	-0.027
-	//	alpha	-0.140
+	//	force_vector	0 -9.8 0
+	//	force_application	add
 	//}
+
+	affector DirectionRandomiser
+	{
+		randomness	18
+	}
 }

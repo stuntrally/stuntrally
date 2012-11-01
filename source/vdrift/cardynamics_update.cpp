@@ -262,6 +262,18 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 	ApplyAerodynamicsToBody(dt);
 	
 
+	///***  wind ~->
+	if (pScene->windAmt > 0.01f)
+	{
+		float f = body.GetMass()*pScene->windAmt;
+			// simple modulation
+			float n = 1.f + 0.3f * sin(time*4.3f)*cosf(time*7.74f);
+			time += dt;
+		//LogO(fToStr(n,4,6));
+		MATHVECTOR <T, 3> v(-f*n,0,0);  // todo yaw, dir
+		ApplyForce(v);
+	}
+
 	///***  manual car flip over  ---------------------------------------
 	if ((doFlip > 0.01f || doFlip < -0.01f) &&
 		pSet->game.flip_type > 0)

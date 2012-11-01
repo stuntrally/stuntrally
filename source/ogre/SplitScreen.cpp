@@ -232,17 +232,17 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 			Vector3 vel = (pos-oldPos)/ (1.0f / mWindow->getLastFPS());  oldPos = pos;
 			Vector3 dir = evt.source->getCamera()->getDirection();//, up = mCamera->getUp();
 			Vector3 par = pos + dir * 12 + vel * 0.4;
-			if (pApp->pr && pApp->sc.rainEmit > 0)
+			if (pApp->pr && pApp->sc->rainEmit > 0)
 			{
 				ParticleEmitter* pe = pApp->pr->getEmitter(0);
 				pe->setPosition(par);
-				pe->setEmissionRate(pApp->sc.rainEmit);
+				pe->setEmissionRate(pApp->sc->rainEmit);
 			}
-			if (pApp->pr2 && pApp->sc.rain2Emit > 0)
+			if (pApp->pr2 && pApp->sc->rain2Emit > 0)
 			{
 				ParticleEmitter* pe = pApp->pr2->getEmitter(0);
 				pe->setPosition(par);	//pe->setDirection(-up);
-				pe->setEmissionRate(pApp->sc.rain2Emit);
+				pe->setEmissionRate(pApp->sc->rain2Emit);
 			}
 		}
 

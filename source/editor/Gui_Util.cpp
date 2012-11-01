@@ -30,44 +30,44 @@ void App::SetGuiFromXmls()
 
 	//  [Sky]
 	//-----------------------------------------------
-	_Cmb(cmbSky, sc.skyMtr);
-	_Slv(SunPitch, sc.ldPitch /90.f);
-	_Slv(SunYaw,   (sc.ldYaw + 180.f)  /360.f);
-	_Ed(LiAmb, sc.lAmb);  _Ed(LiDiff, sc.lDiff);  _Ed(LiSpec, sc.lSpec);  _Ed(FogClr, sc.fogClr);
-	_Clr(Amb, sc.lAmb);  _Clr(Diff, sc.lDiff);  _Clr(Spec, sc.lSpec);  _Clr(Fog, sc.fogClr);
-	_Slv(FogStart, powf(sc.fogStart /2000.f, 0.5f));
-	_Slv(FogEnd,   powf(sc.fogEnd   /2000.f, 0.5f));
+	_Cmb(cmbSky, sc->skyMtr);
+	_Slv(SunPitch, sc->ldPitch /90.f);
+	_Slv(SunYaw,   (sc->ldYaw + 180.f)  /360.f);
+	_Ed(LiAmb, sc->lAmb);  _Ed(LiDiff, sc->lDiff);  _Ed(LiSpec, sc->lSpec);  _Ed(FogClr, sc->fogClr);
+	_Clr(Amb, sc->lAmb);  _Clr(Diff, sc->lDiff);  _Clr(Spec, sc->lSpec);  _Clr(Fog, sc->fogClr);
+	_Slv(FogStart, powf(sc->fogStart /2000.f, 0.5f));
+	_Slv(FogEnd,   powf(sc->fogEnd   /2000.f, 0.5f));
 
-	_Cmb(cmbRain1, sc.rainName);	_Slv(Rain1Rate, sc.rainEmit /6000.f);
-	_Cmb(cmbRain2, sc.rain2Name);	_Slv(Rain2Rate, sc.rain2Emit /6000.f);	
+	_Cmb(cmbRain1, sc->rainName);	_Slv(Rain1Rate, sc->rainEmit /6000.f);
+	_Cmb(cmbRain2, sc->rain2Name);	_Slv(Rain2Rate, sc->rain2Emit /6000.f);	
 	
 	//  [Terrain]
 	//-----------------------------------------------
-	tabsHmap->setIndexSelected( tabsHmap->findItemIndexWith( toStr(sc.td.iTerSize-1) ));
+	tabsHmap->setIndexSelected( tabsHmap->findItemIndexWith( toStr(sc->td.iTerSize-1) ));
 	tabHmap(0,0);
-	if (edTerTriSize)  edTerTriSize->setCaption(toStr(sc.td.fTriangleSize));
+	if (edTerTriSize)  edTerTriSize->setCaption(toStr(sc->td.fTriangleSize));
 	editTerTriSize(edTerTriSize);
 	
 	tabTerLayer(tabsTerLayers, 0);  // set 1st
-	_Cmb(cmbParDust, sc.sParDust);	_Cmb(cmbParMud,  sc.sParMud);
-	_Cmb(cmbParSmoke,sc.sParSmoke);
+	_Cmb(cmbParDust, sc->sParDust);	_Cmb(cmbParMud,  sc->sParMud);
+	_Cmb(cmbParSmoke,sc->sParSmoke);
 
 	//  [Vegetation]
 	//-----------------------------------------------
-	_Ed(GrassDens, sc.densGrass);	_Ed(TreesDens, sc.densTrees);
-	_Ed(GrPage, sc.grPage);			_Ed(GrDist, sc.grDist);
-	_Ed(TrPage, sc.trPage);			_Ed(TrDist, sc.trDist);
-	_Ed(GrMinX, sc.grMinSx);		_Ed(GrMaxX, sc.grMaxSx);
-	_Ed(GrMinY, sc.grMinSy);		_Ed(GrMaxY, sc.grMaxSy);
-	_Ed(GrSwayDistr, sc.grSwayDistr);  _Ed(GrDensSmooth, sc.grDensSmooth);
-	_Ed(GrSwayLen, sc.grSwayLen);	_Ed(GrSwaySpd, sc.grSwaySpeed);
-	_Ed(TrRdDist, sc.trRdDist);		_Ed(TrImpDist, sc.trDistImp);
-	_Ed(GrTerMaxAngle, sc.grTerMaxAngle);
-	_Ed(GrTerMinHeight, sc.grTerMinHeight);  _Ed(GrTerMaxHeight, sc.grTerMaxHeight);
-	_Ed(SceneryId, sc.sceneryId);
+	_Ed(GrassDens, sc->densGrass);	_Ed(TreesDens, sc->densTrees);
+	_Ed(GrPage, sc->grPage);			_Ed(GrDist, sc->grDist);
+	_Ed(TrPage, sc->trPage);			_Ed(TrDist, sc->trDist);
+	_Ed(GrMinX, sc->grMinSx);		_Ed(GrMaxX, sc->grMaxSx);
+	_Ed(GrMinY, sc->grMinSy);		_Ed(GrMaxY, sc->grMaxSy);
+	_Ed(GrSwayDistr, sc->grSwayDistr);  _Ed(GrDensSmooth, sc->grDensSmooth);
+	_Ed(GrSwayLen, sc->grSwayLen);	_Ed(GrSwaySpd, sc->grSwaySpeed);
+	_Ed(TrRdDist, sc->trRdDist);		_Ed(TrImpDist, sc->trDistImp);
+	_Ed(GrTerMaxAngle, sc->grTerMaxAngle);
+	_Ed(GrTerMinHeight, sc->grTerMinHeight);  _Ed(GrTerMaxHeight, sc->grTerMaxHeight);
+	_Ed(SceneryId, sc->sceneryId);
 	tabPgLayers(tabsPgLayers, 0);
-	_Cmb(cmbGrassMtr,sc.grassMtr);  _Cmb(cmbGrassClr,sc.grassColorMap);
-	//MeshPtr mp = MeshManager::load(sc.pgLayersAll[0].name);
+	_Cmb(cmbGrassMtr,sc->grassMtr);  _Cmb(cmbGrassClr,sc->grassColorMap);
+	//MeshPtr mp = MeshManager::load(sc->pgLayersAll[0].name);
 	//mp->getSubMesh(0)->
 
 	//  [Road]
@@ -144,9 +144,9 @@ void App::btnCopyTerHmap(WP)
 	Copy(from + "/heightmap.f32", name);
 	
 	Scene sF;  sF.LoadXml(from + "/scene.xml");
-	sc.td.iVertsX = sF.td.iTerSize;  //  ter sizes
-	sc.td.fTriangleSize = sF.td.fTriangleSize;
-	sc.td.UpdVals();
+	sc->td.iVertsX = sF.td.iTerSize;  //  ter sizes
+	sc->td.fTriangleSize = sF.td.fTriangleSize;
+	sc->td.UpdVals();
 	bNewHmap = true;
 	SetGuiFromXmls();	UpdateTrack();
 	if (road)  road->UpdAllMarkers();
@@ -159,13 +159,13 @@ void App::btnCopySun(WP)
 	String from = PathCopyTrk();
 	Scene sF;  sF.LoadXml(from + "/scene.xml");
 
-	sc.skyMtr = sF.skyMtr;  // sky
-	sc.rainEmit = sF.rainEmit;  sc.rain2Emit = sF.rain2Emit;
-	sc.rainName = sF.rainName;  sc.rain2Name = sF.rain2Name;
-	sc.fogMode = sF.fogMode;  sc.fogExp = sF.fogExp;  // fog
-	sc.fogClr = sF.fogClr;  sc.fogStart = sF.fogStart;  sc.fogEnd = sF.fogEnd;
-	sc.ldPitch = sF.ldPitch;  sc.ldYaw = sF.ldYaw;  // light
-	sc.lAmb = sF.lAmb;  sc.lDiff = sF.lDiff;  sc.lSpec = sF.lSpec;
+	sc->skyMtr = sF.skyMtr;  // sky
+	sc->rainEmit = sF.rainEmit;  sc->rain2Emit = sF.rain2Emit;
+	sc->rainName = sF.rainName;  sc->rain2Name = sF.rain2Name;
+	sc->fogMode = sF.fogMode;  sc->fogExp = sF.fogExp;  // fog
+	sc->fogClr = sF.fogClr;  sc->fogStart = sF.fogStart;  sc->fogEnd = sF.fogEnd;
+	sc->ldPitch = sF.ldPitch;  sc->ldYaw = sF.ldYaw;  // light
+	sc->lAmb = sF.lAmb;  sc->lDiff = sF.lDiff;  sc->lSpec = sF.lSpec;
 	SetGuiFromXmls();	UpdateTrack();
 	DestroyWeather();  CreateWeather();
 }
@@ -177,11 +177,11 @@ void App::btnCopyTerLayers(WP)
 	String from = PathCopyTrk();
 	Scene sF;  sF.LoadXml(from + "/scene.xml");
 
-	for (int i=0; i < sc.td.ciNumLay; ++i)
-		sc.td.layersAll[i] = sF.td.layersAll[i];
-	sc.sParDust = sF.sParDust;  sc.sParMud = sF.sParMud;
-	sc.sParSmoke = sF.sParSmoke;
-	sc.td.UpdLayers();
+	for (int i=0; i < sc->td.ciNumLay; ++i)
+		sc->td.layersAll[i] = sF.td.layersAll[i];
+	sc->sParDust = sF.sParDust;  sc->sParMud = sF.sParMud;
+	sc->sParSmoke = sF.sParSmoke;
+	sc->td.UpdLayers();
 
 	//  copy grass dens only
 	String sto = from + "/objects";  // from
@@ -198,21 +198,21 @@ void App::btnCopyVeget(WP)
 	String from = PathCopyTrk();
 	Scene sF;  sF.LoadXml(from + "/scene.xml");
 
-	sc.densGrass = sF.densGrass;  sc.densTrees = sF.densTrees;
-	sc.grPage = sF.grPage;  sc.grDist = sF.grDist;
-	sc.trPage = sF.trPage;  sc.trDist = sF.trDist;
-	sc.grMinSx = sF.grMinSx;  sc.grMaxSx = sF.grMaxSx;
-	sc.grMinSy = sF.grMinSy;  sc.grMaxSy = sF.grMaxSy;
-	sc.grSwayDistr = sF.grSwayDistr;  sc.grSwayLen = sF.grSwayLen;
-	sc.grSwaySpeed = sF.grSwaySpeed;
-	sc.grTerMaxAngle = sF.grTerMaxAngle;
-	sc.grTerMinHeight = sF.grTerMinHeight;
-	sc.grTerMaxHeight = sF.grTerMaxHeight;
-	sc.trRdDist = sF.trRdDist;  sc.trDistImp = sF.trDistImp;
-	sc.grassMtr = sF.grassMtr;  sc.grassColorMap = sF.grassColorMap;
+	sc->densGrass = sF.densGrass;  sc->densTrees = sF.densTrees;
+	sc->grPage = sF.grPage;  sc->grDist = sF.grDist;
+	sc->trPage = sF.trPage;  sc->trDist = sF.trDist;
+	sc->grMinSx = sF.grMinSx;  sc->grMaxSx = sF.grMaxSx;
+	sc->grMinSy = sF.grMinSy;  sc->grMaxSy = sF.grMaxSy;
+	sc->grSwayDistr = sF.grSwayDistr;  sc->grSwayLen = sF.grSwayLen;
+	sc->grSwaySpeed = sF.grSwaySpeed;
+	sc->grTerMaxAngle = sF.grTerMaxAngle;
+	sc->grTerMinHeight = sF.grTerMinHeight;
+	sc->grTerMaxHeight = sF.grTerMaxHeight;
+	sc->trRdDist = sF.trRdDist;  sc->trDistImp = sF.trDistImp;
+	sc->grassMtr = sF.grassMtr;  sc->grassColorMap = sF.grassColorMap;
 
-	for (int i=0; i < sc.ciNumPgLay; ++i)
-		sc.pgLayersAll[i] = sF.pgLayersAll[i];
+	for (int i=0; i < sc->ciNumPgLay; ++i)
+		sc->pgLayersAll[i] = sF.pgLayersAll[i];
 
 	SetGuiFromXmls();	UpdateTrack();
 }
@@ -265,7 +265,7 @@ void App::btnDeleteRoad(WP)
 }
 void App::btnDeleteFluids(WP)
 {
-	sc.fluids.clear();
+	sc->fluids.clear();
 	bRecreateFluids = true;
 }
 
@@ -283,15 +283,15 @@ void App::btnScaleAll(WP)
 	road->bSelChng = true;
 	
 	//  fluids
-	for (int i=0; i < sc.fluids.size(); ++i)
+	for (int i=0; i < sc->fluids.size(); ++i)
 	{
-		FluidBox& fb = sc.fluids[i];
+		FluidBox& fb = sc->fluids[i];
 		fb.pos.x *= sf;  fb.pos.z *= sf;
 		fb.size.x *= sf;  fb.size.z *= sf;
 	}
 
 	//  ter
-	sc.td.fTriangleSize *= sf;  sc.td.UpdVals();
+	sc->td.fTriangleSize *= sf;  sc->td.UpdVals();
 	
 	SetGuiFromXmls();	UpdateTrack();
 	
@@ -436,14 +436,14 @@ bool App::LoadSurf()
 				l = 6;
 			else	// B..G  ter layers - used only
 			{
-				int il = secName[1]-'B', im = sc.td.layers.size();
+				int il = secName[1]-'B', im = sc->td.layers.size();
 				if (il < 0) {	LogO("Surf load error: < 0");
 					l = 5;  }  // use 5 - last ter layer
 				else
 				if (il > im-1){	LogO("Surf load error: surf > used, ignoring.  "+toStr(il)+">"+toStr(im-1));
 					l = 5;  }
 				else
-					l = sc.td.layers[il];  // ok
+					l = sc->td.layers[il];  // ok
 			}
 			//LogO(String("Surf load: ")+secName[1]+" "+toStr(l));
 		}
@@ -474,7 +474,7 @@ bool App::SaveSurf(const std::string& path)
 	for (int i=0; i < 7; ++i)  // 6 ter layers + road in [6]
 	{
 		int n = 1;  // not used, L only
-		if (i==6 || (i < 6 && sc.td.layersAll[i].on))  // road always
+		if (i==6 || (i < 6 && sc->td.layersAll[i].on))  // road always
 			n = 2;  // used (on)	- write twice
 		//LogO(String("Surf save: ") + toStr(i) +" x"+ toStr(n));
 		

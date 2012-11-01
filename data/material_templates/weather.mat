@@ -5,6 +5,13 @@ material RainDrop
     scene_blend alpha_blend
 }
 
+material RainDropLong
+{
+    parent Base_particle
+    diffuseMap droplet-long.png
+    scene_blend alpha_blend
+}
+
 material SnowFlake
 {
     parent Base_particle

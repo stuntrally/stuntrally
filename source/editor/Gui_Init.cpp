@@ -204,7 +204,7 @@ void App::InitGui()
 
 	Edt(edTerTriSize, "edTerTriSize", editTerTriSize);
 	Edt(edTerLScale, "edTerLScale", editTerLScale);
-	Slv(TerTriSize,	powf((sc.td.fTriangleSize -0.1f)/5.9f, 0.5f));
+	Slv(TerTriSize,	powf((sc->td.fTriangleSize -0.1f)/5.9f, 0.5f));
 	Slv(TerLScale, 0);  sldTerLScale = sl;
 	Btn("TerrainNew", btnTerrainNew);
 	Btn("TerrainGenerate", btnTerGenerate);

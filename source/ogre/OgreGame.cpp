@@ -19,7 +19,7 @@ using namespace Ogre;
 
 //  ctors  -----------------------------------------------
 App::App(SETTINGS *settings, GAME *game)
-	:pGame(game), ndLine(0), bGI(0), mThread(), mTimer(0)
+	:pGame(game), sc(0), ndLine(0), bGI(0), mThread(), mTimer(0)
 	// ovr
 	,hudCountdown(0),hudNetMsg(0), hudAbs(0),hudTcs(0)
 	,hudWarnChk(0),hudWonPlace(0), hudOppB(0)
@@ -75,9 +75,10 @@ App::App(SETTINGS *settings, GAME *game)
 	,mStaticGeom(0), fLastFrameDT(0.001f)
 {
 	pSet = settings;
-	int i,c;
+	sc = new Scene();
 	NullHUD();
 
+	int i,c;
 	for (c=0; c < 2; ++c)
 	{
 		trkDesc[c]=0;  imgPrv[c]=0; imgMini[c]=0; imgTer[c]=0;
@@ -151,6 +152,7 @@ App::~App()
 	OGRE_DELETE mTerrainGlobals;
 
 	OGRE_DELETE dbgdraw;
+	delete sc;
 }
 
 void App::postInit()
@@ -209,8 +211,8 @@ void App::destroyScene()
 
 	if (pGame)
 		pGame->End();
-	delete[] sc.td.hfHeight;
-	delete[] sc.td.hfAngle;
+	delete[] sc->td.hfHeight;
+	delete[] sc->td.hfAngle;
 	delete[] blendMtr;  blendMtr = 0;
 
 	BaseApp::destroyScene();
