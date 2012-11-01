@@ -524,6 +524,10 @@
 
         shSampler2D(compositeMap)
 
+#if MRT
+	shSampler2D(normalMap)
+#endif
+
 
     SH_START_PROGRAM
     {
@@ -563,7 +567,10 @@
 #endif
 
 #if MRT
-        float3 viewPosition = @shPassthroughReceive(viewDepth);
+        float3 normal = shSample(normalMap, UV).rgb * 2 - 1;
+        normal = normalize(normal);
+
+        float3 viewPosition = @shPassthroughReceive(viewPosition);
         float3 viewNormal = normalize(shMatrixMult(wvMat, float4(normal, 0)).xyz);
         shOutputColour(1) = float4(length(viewPosition) / far, normalize(viewNormal));
         shOutputColour(2) = float4(depth / far, 0, depth / objSpacePosition.w, 0);
