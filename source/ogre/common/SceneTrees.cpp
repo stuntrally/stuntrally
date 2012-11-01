@@ -214,7 +214,7 @@ void App::CreateTrees()
 
 					int c = sc->trRdDist + pg.addTrRdDist;
 					int d = c;  //std::max(c, 20);  //pg.addTrRdDistMax
-					register int ii,jj, rr, rmin = d;
+					register int ii,jj, rr, rmin = 3000;  //d
 					for (jj = -d; jj <= d; ++jj)
 					for (ii = -d; ii <= d; ++ii)
 					{

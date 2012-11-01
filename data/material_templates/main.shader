@@ -333,7 +333,7 @@
 #if SHADOWS
             float fadeRange = shadowFar_fadeStart.x - shadowFar_fadeStart.y;
             float fade = 1-((depthPassthrough - shadowFar_fadeStart.y) / fadeRange);
-            shadow = (depthPassthrough > shadowFar_fadeStart.x) ? 1 : ((depthPassthrough > shadowFar_fadeStart.y) ? 1-((1-shadow)*fade) : shadow);
+            shadow = (depthPassthrough > shadowFar_fadeStart.x) ? 1.0 : ((depthPassthrough > shadowFar_fadeStart.y) ? 1.0-((1.0-shadow)*fade) : shadow);
 #endif
 
 #if !(SHADOWS)
