@@ -1,5 +1,364 @@
+material base-tree  // trunk
+{
+    parent base
+    diffuseMap trunk2m.png
+    //diffuse 0.8 0.8 0.8
+
+    tree_wind true
+    terrain_light_map true
+    //diffuse_address_mode mirror
+}
+
+material base-twig  // leaves
+{
+    parent base
+    alpha_rejection greater 128
+    diffuseMap twig21_0yo.png
+	ambient 1.2 1.2 1.2
+	diffuse 1.0 1.0 1.0
+	specular 0.2 0.2 0.2 32
+
+    tree_wind true
+    terrain_light_map true
+    cull_hardware none
+    receives_shadows false
+    transparent true
+	twoside_diffuse true
+}
+
+//  Autumn
+//---------------------------------------------------------------
+material tree10okyTrunk		{	parent base-tree
+  diffuseMap trunk4m.png  }
+material tree10okyTwig		{	parent base-twig
+  ambient 0.9 0.9 0.9
+  diffuseMap twig39_1or.png  }
+
+material tree11tallTrunk	{	parent base-tree
+  diffuseMap trunk4m.png  }
+material tree11tallTwig		{	parent base-twig
+  diffuseMap twig22_1y.png  }
+
+material tree12smallTrunk	{	parent base-tree
+  diffuseMap trunk4m.png  }
+material tree12smallTwig	{	parent base-twig
+  diffuseMap twig40_2rk.png  }
+
+material tree13bigTrunk		{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree13bigTwig		{	parent base-twig
+  ambient 0.7 0.7 0.7
+  diffuseMap twig38_5or.png  }
+
+material tree14big7kTrunk	{	parent base-tree
+  diffuseMap trunk4m.png  }
+material tree14big7kTwig	{	parent base-twig
+  diffuseMap twig24_1yow.png  }
+
+material tree16tallTrunk	{	parent base-tree
+  ambient 0.9 0.9 0.9
+  diffuseMap trunk115w.png  }
+material tree16tallTwig		{	parent base-twig
+  diffuseMap twig21_0yo.png  }
+
+material tree17tallsmTrunk	{	parent base-tree
+  ambient 0.9 0.9 0.9
+  diffuseMap trunk115w.png  }
+material tree17tallsmTwig	{	parent base-twig
+  ambient 0.9 0.9 0.9
+  diffuseMap twig21_2or.png  }
+
+material tree18tallupTrunk	{	parent base-tree
+  diffuseMap trunk1m.png  }
+material tree18tallupTwig	{	parent base-twig
+  ambient 1.1 1.1 1.1
+  diffuseMap twig26_2yo.png  }
+
+material tree19twideTrunk	{	parent base-tree
+  diffuseMap trunk1m.png  }
+material tree19twideTwig	{	parent base-twig
+  diffuse 0.9 0.9 0.9
+  diffuseMap twig26_1y.png  }
+
+material tree20wideTrunk	{	parent base-tree
+  diffuseMap trunk1m.png  }
+material tree20wideTwig		{	parent base-twig
+  diffuseMap twig26_1y.png  }
+
+material tree25widedTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree25widedTwig	{	parent base-twig
+  ambient 0.9 0.9 0.9
+  diffuseMap twig39_2o.png  }
+
+material tree26hugeasyTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree26hugeasyTwig	{	parent base-twig
+  ambient 0.9 0.9 0.9
+  diffuseMap twig39_1or.png  }
+
+material tree27mtinyTrunk	{	parent base-tree
+  diffuseMap trunk1m.png  }
+material tree27mtinyTwig	{	parent base-twig
+  diffuseMap twig26_2yo.png  }
+
+material tree28mwtTrunk		{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree28mwtTwig		{	parent base-twig
+  diffuseMap twig21_0yo.png  }
 
 
+//  green
+//---------------------------------------------------------------
+material tree19gwideTwig	{	parent base-twig
+  ambient 0.6 0.6 0.6
+  diffuse 1.0 1.0 1.0
+  specular 1.0 1.0 1.0 32
+  normalMap twig39g1_norm.png
+  normal_map true
+  diffuseMap twig39g1.png  }
+
+//material tree21mightyTrunk	{	parent base-tree
+//  diffuseMap trunk2m.png  }
+//material tree21mightyTwig	{	parent base-twig
+//  ambient 0.9 0.9 0.9
+//  diffuseMap twig39_2o.png  }
+
+///  moss ..?
+//material tree22fatTrunk		{	parent base-tree
+//  diffuseMap trunk2m.png  }
+//material tree22fatTwig		{	parent base-twig
+//  //ambient 0.9 0.9 0.7
+//  //diffuseMap twig21_0yo.png  }
+//  diffuseMap twig40_4wg.png  }
+
+//material tree23mtallTrunk	{	parent base-tree
+//  diffuseMap trunk2m.png  }
+//material tree23mtallTwig	{	parent base-twig
+//  diffuseMap twig21_0yo.png  }
+
+//material tree24mupTrunk		{	parent base-tree
+//  diffuseMap trunk2m.png  }
+//material tree24mupTwig		{	parent base-twig
+//  diffuseMap twig38_2y.png  }
+
+///  moss ..+
+material tree29downswpTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree29downswpTwig	{	parent base-twig
+  ambient 0.5 0.9 1.2
+  diffuseMap twig22_3gw.png  }
+
+material tree31kinklowTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree31kinklowTwig	{	parent base-twig
+  diffuseMap twig40_2rk.png  }
+
+material tree32kinkupTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree32kinkupTwig	{	parent base-twig
+  diffuseMap twig24_1yow.png  }
+
+material tree33kinkupTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree33kinkupTwig	{	parent base-twig
+  ambient 1.2 1.2 1.2
+  diffuse 0.8 0.8 0.8
+  diffuseMap twig21_2or.png  }
+
+material tree34stinyTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree34stinyTwig	{	parent base-twig
+  ambient 1.2 1.2 0.9
+  diffuseMap twig24_1yow.png  }
+
+material tree35ballTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree35ballTwig		{	parent base-twig
+  ambient 0.5 0.6 0.7
+  diffuseMap twig39_2o.png  }
+
+//  green
+material tree36upballTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree36upballTwig	{	parent base-twig
+  //ambient 1.2 1.2 0.8
+  diffuseMap twig22g0d.png  }
+
+material tree37wballTrunk	{	parent base-tree
+  ambient 0.8 0.8 0.8
+  diffuseMap trunk1m.png  }
+material tree37wballTwig	{	parent base-twig
+  //ambient 0.9 0.9 0.8
+  diffuseMap twig33g1.png  }
+
+material tree38tallwsphrTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree38tallwsphrTwig	{	parent base-twig
+  diffuseMap twig24g1.png  }
+
+material tree39topsphrTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree39topsphrTwig	{	parent base-twig
+  ambient 0.7 0.7 0.9
+  diffuseMap twig26g1.png  }
+
+material tree40topsmTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree40topsmTwig	{	parent base-twig
+  diffuseMap twig34g2c.png  }  // greece,des`
+  //ambient 0.8 1.1 1.0  //other
+  //diffuseMap twig40_4wg.png  }
+
+
+// trunk114     trunk115w    trunk116    trunk117
+// trunk149j+   trunk152     trunk153
+
+// trunk1 `sm br-gr-cy  maple -amb darker
+// trunk2 +big br  oak
+// trunk3 -cy-gr
+// trunk4 `br
+// trunk5 -blk
+// trunko.jpg ~gn-gr
+
+//  h -too high contr  l -too low contr  d -dark
+//  *used  `^~+ rating
+
+///   birch small ov 2clr green org/ylw
+// *twig21_0yo `    twig21_1y -rg1.2 b.5   *twig21_2or ~.9
+///   bb medium o` dense
+// *twig22_1y ~     twig22_3gw `m   twig22_4g ?l
+///   LL slim ()` dense ok  medium trees?  -not saturated, or rg1.2 b.9
+//  twig24_0o -d?  *twig24_1yow `   twig24_2yo `
+///   -h for bush?
+//  twig25_2og -h   twig25_3yg -h
+
+///   maple + dense 5v  yellow, for big trees
+// *twig26_1y `    *twig26_2yo `l   twig26_3ow -l
+///   birch ` tiny sparse 3v
+//  twig31_0y `
+///   oak new + 7w  red, for smaller trees
+//  twig38_2y `h    twig38_4o ^.7  *twig38_5or `.7   twig38_6r `rg.9 b.5
+// *twig39_1or `.9 *twig39_2o ~.9   twig39_3yo `l  
+// *twig40_2rk `    twig40_3o -     twig40_4wg `mo
+
+///   green
+// *twig21g1  beech
+// *twig22g0d  twig22g1  o`
+//  twig23g1d  big dark leaves  moss?
+// *twig24g1   twig24g2  ll
+// *twig26g1  maple
+
+//  twig38g1   twig39g1  twig39g2y  oak+
+//  twig33g1  acacia..
+//  twig34g1   twig34g2c  willow..  moss
+//  twig37k   empty
+//  twig27p1  will-pine  twig29p1  pine
+
+  //ambient 0.7 0.7 0.7
+  //ambient 0.9 0.9 0.9
+
+material tree41midTrunk		{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree41midTwig		{	parent base-twig
+  ambient 0.3 1.1 1.1
+  diffuseMap twig21_0yo.png  }
+
+material tree42lowTrunk		{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree42lowTwig		{	parent base-twig
+  //ambient 0.8 0.8 0.9
+  //diffuse 0.6 0.6 0.6
+  diffuseMap twig39g1.png  }
+
+material tree43low2Trunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree43low2Twig		{	parent base-twig
+  diffuseMap twig21_0yo.png  }
+
+material tree44low3Trunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree44low3Twig		{	parent base-twig
+  diffuseMap twig21_0yo.png  }
+
+material tree51siteTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree51siteTwig		{	parent base-twig
+  diffuseMap twig21_0yo.png  }
+
+material tree52sitefatTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree52sitefatTwig	{	parent base-twig
+  diffuseMap twig21_0yo.png  }
+
+material tree53siteTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree53siteTwig		{	parent base-twig
+  diffuseMap twig21_0yo.png  }
+
+material tree55sitebigTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree55sitebigTwig	{	parent base-twig
+  diffuseMap twig21_0yo.png  }
+
+
+material tree60bigTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree60bigTwig	{	parent base-twig
+  diffuseMap twig39g1.png  }
+
+material tree61lowupTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }					
+material tree61lowupTwig	{	parent base-twig
+  diffuseMap twig39g1.png  }
+
+material tree62broadUpTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }					  
+material tree62broadUpTwig	{	parent base-twig
+  diffuseMap twig39g1.png  }
+
+material tree63willowTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }					 
+material tree63willowTwig	{	parent base-twig
+  diffuseMap twig39g1.png  }
+
+material tree64willow2Trunk	{	parent base-tree
+  diffuseMap trunk2m.png  }					  
+material tree64willow2Twig	{	parent base-twig
+  diffuseMap twig39g1.png  }
+
+material tree65willow3broadTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }						   
+material tree65willow3broadTwig	{	parent base-twig
+  diffuseMap twig39g1.png  }
+
+material tree66bigUpWideTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }						
+material tree66bigUpWideTwig	{	parent base-twig
+  diffuseMap twig39g1.png  }
+
+material tree67bigDnWideTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }						
+material tree67bigDnWideTwig	{	parent base-twig
+  diffuseMap twig39g1.png  }
+
+material tree68bigUpWTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }					 
+material tree68bigUpWTwig	{	parent base-twig
+  diffuseMap twig39g1.png  }
+
+material tree69bigUpWbTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }					  
+material tree69bigUpWbTwig	{	parent base-twig
+  diffuseMap twig39g1.png  }
+
+material tree70tallUpWTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }					  
+material tree70tallUpWTwig	{	parent base-twig
+  diffuseMap twig39g1.png  }
+  
+
+//-----------------------------------------------------------------------------------------------------------------
 
 // Jungle trees
 

@@ -162,5 +162,7 @@
 	<track n="102" name="I10-Treasure"	created="11-10-12" crtver="1.8" modified="11-10-12" scenery="Island"	author="CH" objects="3" fluids="2" bumps="3" jumps="0" loops="0" pipes="0" banked="1" frenzy="1" long="2" diff="2" rating="3" /> <!--I10-Treasure-->
 <!--96 104-->																																																									<!--1.9-->
 	<track n="103" name="D12-Sandstorm"	created="01-11-12" crtver="1.9" modified="01-11-12" scenery="Desert"	author="CH" objects="0" fluids="0" bumps="2" jumps="1" loops="0" pipes="0" banked="1" frenzy="1" long="1" diff="2" rating="3" /> <!--D12-Sandstorm-->
+	<track n="104" name="T1-Autumn"		created="01-11-12" crtver="1.9" modified="01-11-12" scenery="Autumn"	author="CH" objects="0" fluids="0" bumps="2" jumps="1" loops="0" pipes="0" banked="1" frenzy="1" long="1" diff="2" rating="3" /> <!--T1-Autumn-->
+	<track n="105" name="O1-Moss"		created="01-11-12" crtver="1.9" modified="01-11-12" scenery="Moss"		author="CH" objects="0" fluids="0" bumps="2" jumps="1" loops="0" pipes="0" banked="1" frenzy="1" long="1" diff="2" rating="3" /> <!--O1-Moss-->
 
 </tracks>
