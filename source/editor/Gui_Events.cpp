@@ -669,7 +669,7 @@ void App::tabPgLayers(TabPtr wp, size_t id)
 	const PagedLayer& lay = sc->pgLayersAll[id];
 
 	chkPgLay->setStateSelected(lay.on);
-	cmbPgLay->setIndexSelected( cmbPgLay->findItemIndexWith(lay.name) );
+	cmbPgLay->setIndexSelected( cmbPgLay->findItemIndexWith(lay.name.substr(0,lay.name.length()-5)) );
 	if (imgPaged)	imgPaged->setImageTexture(lay.name + ".png");
 	if (valLTrAll)
 		valLTrAll->setCaption("Used: "+toStr(sc->pgLayers.size()));
@@ -702,8 +702,8 @@ void App::chkPgLayOn(WP wp)
 void App::comboPgLay(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	sc->pgLayersAll[idPgLay].name = s;
-	if (imgPaged)	imgPaged->setImageTexture(s + ".png");
+	sc->pgLayersAll[idPgLay].name = s + ".mesh";
+	if (imgPaged)	imgPaged->setImageTexture(s + ".png");  // prv impostor  todo 3d..
 }
 
 void App::slLTrDens(SL)  //  sliders

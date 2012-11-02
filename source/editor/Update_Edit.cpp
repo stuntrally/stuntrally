@@ -457,7 +457,7 @@ void App::processMouse()  //! from Thread, cam vars only
 		{
 			Real cs = pSet->cam_speed;  Degree cr(pSet->cam_speed);
 			Real fMove = 100*cs;  //par speed
-			Degree fRot = 500*cr, fkRot = 80*cr;
+			Degree fRot = 500*cr, fkRot = 160*cr;
 		
 			static Radian sYaw(0), sPth(0);
 			static Vector3 sMove(0,0,0);
