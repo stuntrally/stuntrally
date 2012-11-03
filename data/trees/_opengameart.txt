@@ -34,3 +34,9 @@ Artist:		tmcintosh (blendswap user)
 License(s):	CC-BY
 Date:		02/08/2012
 Notes:		Texture by yughues (OpenGameArt.org user) [under CC0]
+
+Model:		plant_tropical.mesh
+Url:		http://opengameart.org/content/tropical-plant-02-0
+Artist:		yughues (OpenGameArt.org user)
+License(s):	CC0 (Public Domain)
+Date:		19/04/2012
