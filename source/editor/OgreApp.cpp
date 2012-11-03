@@ -48,10 +48,10 @@ App::App()  //  gui wigdets--
 	,edGrSwayDistr(0), edGrSwayLen(0), edGrSwaySpd(0), edTrRdDist(0), edTrImpDist(0)
 	,edGrDensSmooth(0), edGrTerMaxAngle(0),edGrTerMinHeight(0),edGrTerMaxHeight(0)
 	,edSceneryId(0), cmbGrassMtr(0), cmbGrassClr(0)
-	,cmbPgLay(0), chkPgLay(0), tabsPgLayers(0), idPgLay(0)  //paged layers
-	,imgPaged(0), valLTrAll(0)
+	,cmbPgLay(0), chkPgLay(0), tabsPgLayers(0), idPgLay(0),imgPaged(0), valLTrAll(0)  //paged layers
 	,valLTrDens(0),valLTrRdDist(0), valLTrMinSc(0),valLTrMaxSc(0), valLTrWindFx(0),valLTrWindFy(0)
 	,valLTrMaxTerAng(0),edLTrMinTerH(0),edLTrMaxTerH(0),edLTrFlDepth(0)
+	,chkGrLay(0), tabsGrLayers(0), idGrLay(0),imgGrass(0), valLGrAll(0)  // grass layers
 	,edRdTcMul(0),edRdLenDim(0),edRdWidthSteps(0),edRdHeightOfs(0)  // road
 	,edRdSkirtLen(0),edRdSkirtH(0), edRdMergeLen(0),edRdLodPLen(0)
 	,edRdColN(0),edRdColR(0), edRdPwsM(0),edRdPlsM(0)

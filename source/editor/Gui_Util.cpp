@@ -55,18 +55,16 @@ void App::SetGuiFromXmls()
 	//  [Vegetation]
 	//-----------------------------------------------
 	_Ed(GrassDens, sc->densGrass);	_Ed(TreesDens, sc->densTrees);
-	_Ed(GrPage, sc->grPage);			_Ed(GrDist, sc->grDist);
-	_Ed(TrPage, sc->trPage);			_Ed(TrDist, sc->trDist);
-	_Ed(GrMinX, sc->grMinSx);		_Ed(GrMaxX, sc->grMaxSx);
-	_Ed(GrMinY, sc->grMinSy);		_Ed(GrMaxY, sc->grMaxSy);
-	_Ed(GrSwayDistr, sc->grSwayDistr);  _Ed(GrDensSmooth, sc->grDensSmooth);
-	_Ed(GrSwayLen, sc->grSwayLen);	_Ed(GrSwaySpd, sc->grSwaySpeed);
-	_Ed(TrRdDist, sc->trRdDist);		_Ed(TrImpDist, sc->trDistImp);
-	_Ed(GrTerMaxAngle, sc->grTerMaxAngle);
-	_Ed(GrTerMinHeight, sc->grTerMinHeight);  _Ed(GrTerMaxHeight, sc->grTerMaxHeight);
+	_Ed(TrPage, sc->trPage);		_Ed(TrDist, sc->trDist);
+	_Ed(GrPage, sc->grPage);		_Ed(GrDist, sc->grDist);
+
+	_Ed(TrRdDist, sc->trRdDist);	_Ed(TrImpDist, sc->trDistImp);
+	_Ed(GrDensSmooth, sc->grDensSmooth);
 	_Ed(SceneryId, sc->sceneryId);
-	tabPgLayers(tabsPgLayers, 0);
-	_Cmb(cmbGrassMtr,sc->grassMtr);  _Cmb(cmbGrassClr,sc->grassColorMap);
+
+	tabGrLayers(tabsGrLayers, idGrLay);
+	tabPgLayers(tabsPgLayers, idPgLay);
+
 	//MeshPtr mp = MeshManager::load(sc->pgLayersAll[0].name);
 	//mp->getSubMesh(0)->
 
@@ -199,17 +197,13 @@ void App::btnCopyVeget(WP)
 	Scene sF;  sF.LoadXml(from + "/scene.xml");
 
 	sc->densGrass = sF.densGrass;  sc->densTrees = sF.densTrees;
-	sc->grPage = sF.grPage;  sc->grDist = sF.grDist;
 	sc->trPage = sF.trPage;  sc->trDist = sF.trDist;
-	sc->grMinSx = sF.grMinSx;  sc->grMaxSx = sF.grMaxSx;
-	sc->grMinSy = sF.grMinSy;  sc->grMaxSy = sF.grMaxSy;
-	sc->grSwayDistr = sF.grSwayDistr;  sc->grSwayLen = sF.grSwayLen;
-	sc->grSwaySpeed = sF.grSwaySpeed;
-	sc->grTerMaxAngle = sF.grTerMaxAngle;
-	sc->grTerMinHeight = sF.grTerMinHeight;
-	sc->grTerMaxHeight = sF.grTerMaxHeight;
 	sc->trRdDist = sF.trRdDist;  sc->trDistImp = sF.trDistImp;
-	sc->grassMtr = sF.grassMtr;  sc->grassColorMap = sF.grassColorMap;
+
+	sc->grPage = sF.grPage;  sc->grDist = sF.grDist;
+
+	for (int i=0; i < sc->ciNumGrLay; ++i)
+		sc->grLayersAll[i] = sF.grLayersAll[i];
 
 	for (int i=0; i < sc->ciNumPgLay; ++i)
 		sc->pgLayersAll[i] = sF.pgLayersAll[i];

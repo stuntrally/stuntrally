@@ -27,19 +27,25 @@ void Scene::Default()
 
 	ldPitch = 50.f, ldYaw = 30.f;
 	lDir  = Vector3(0.0f, -1.0f, 0.0f);	lAmb  = Vector3(0.45f, 0.45f, 0.45f);
-	lDiff = Vector3(1.0f, 1.0f, 0.98f);	lSpec = Vector3(0.99f, 0.99f, 0.97f);
+	lDiff = Vector3(0.7f, 0.7f, 0.7f);	lSpec = Vector3(0.99f, 0.99f, 0.97f);
 
 	sParDust = "Dust";  sParMud = "Mud";  sParSmoke = "Smoke";
 
 	td.Default();
 
 	densTrees=0;  densGrass=0;  grDensSmooth=6;
-	grassMtr = "grassJungle";  grassColorMap = "grClrJungle.png";
 	grPage = 80;  grDist = 80;
-	grMinSx = 0.6f;  grMinSy = 0.6f;  grMaxSx = 0.85f;  grMaxSy = 0.9f;
-	grSwayDistr = 4.0f;  grSwayLen = 0.2f;  grSwaySpeed = 0.5f;
+
+	for (int i=0; i < ciNumGrLay; ++i)
+	{
+		SGrassLayer* gr = &grLayersAll[i];
+		gr->on = i == 0;
+		gr->material = "grassJungle";  gr->colorMap = "grClrJungle.png";
+		gr->minSx = 0.6f;  gr->minSy = 0.6f;  gr->maxSx = 0.85f;  gr->maxSy = 0.9f;
+		gr->swayDistr = 4.0f;  gr->swayLen = 0.2f;  gr->swaySpeed = 0.5f;
+		gr->terMaxAng = 30.f;  gr->terMinH = -200.f;  gr->terMaxH = 200.f;
+	}
 	trPage = 200;  trDist = 200;  trDistImp = 800;  trRdDist = 3;
-	grTerMaxAngle = 30.f;  grTerMinHeight = -200.f;  grTerMaxHeight = 200.f;
 
 	camPos = Vector3(10.f,20.f,10.f);  camDir = Vector3(0.f,-0.3f,1.f);
 	sceneryId = 0;
@@ -54,6 +60,16 @@ PagedLayer::PagedLayer()
 	minScale = 0.1f;  maxScale = 0.25f;  ofsY = 0.f;
 	maxTerAng = 50.f;  minTerH = -100.f;  maxTerH = 100.f;
 	maxDepth = 5.f;
+}
+
+SGrassLayer::SGrassLayer()
+{
+	on = 0;
+	dens = 0.1f;
+	minSx = 0.6f; minSy = 0.6f;  maxSx = 0.85f; maxSy = 0.9f;
+	//grSwayDistr, grSwayLen, grSwaySpeed;  // sway
+	//grTerMaxAngle, grTerMinHeight,grTerMaxHeight;
+	material="grassForest";  colorMap="grClrForest.png";
 }
 
 FluidBox::FluidBox()
@@ -262,30 +278,61 @@ bool Scene::LoadXml(String file, bool bTer)
 		a = ePgd->Attribute("densTrees");	if (a)  densTrees = s2r(a);
 		a = ePgd->Attribute("densGrass");	if (a)  densGrass = s2r(a);
 		//  grass
-		a = ePgd->Attribute("grMtr");		if (a)  grassMtr = String(a);
-		a = ePgd->Attribute("grClr");		if (a)  grassColorMap = String(a);
-		//  grass par
 		a = ePgd->Attribute("grPage");		if (a)  grPage = s2r(a);
 		a = ePgd->Attribute("grDist");		if (a)  grDist = s2r(a);
-
-		a = ePgd->Attribute("grMinSx");		if (a)  grMinSx = s2r(a);
-		a = ePgd->Attribute("grMinSy");		if (a)  grMinSy = s2r(a);
-		a = ePgd->Attribute("grMaxSx");		if (a)  grMaxSx = s2r(a);
-		a = ePgd->Attribute("grMaxSy");		if (a)  grMaxSy = s2r(a);
-
-		a = ePgd->Attribute("grSwayDistr");	if (a)  grSwayDistr = s2r(a);
-		a = ePgd->Attribute("grSwayLen");	if (a)  grSwayLen = s2r(a);
-		a = ePgd->Attribute("grSwaySpeed");	if (a)  grSwaySpeed = s2r(a);
 		a = ePgd->Attribute("grDensSmooth");	if (a)  grDensSmooth = s2i(a);
 
-		a = ePgd->Attribute("grTerMaxAngle");	if (a)  grTerMaxAngle = s2r(a);
-		a = ePgd->Attribute("grTerMinHeight");	if (a)  grTerMinHeight = s2r(a);
-		a = ePgd->Attribute("grTerMaxHeight");	if (a)  grTerMaxHeight = s2r(a);
+		#if 1  // old scene.xml (SR ver <= 1.8), 1 grass layer
+		SGrassLayer* gr = &grLayersAll[0];
+		a = ePgd->Attribute("grMtr");		if (a)  gr->material = String(a);
+		a = ePgd->Attribute("grClr");		if (a)  gr->colorMap = String(a);
+		//  grass par
+		a = ePgd->Attribute("grMinSx");		if (a)  gr->minSx = s2r(a);
+		a = ePgd->Attribute("grMinSy");		if (a)  gr->minSy = s2r(a);
+		a = ePgd->Attribute("grMaxSx");		if (a)  gr->maxSx = s2r(a);
+		a = ePgd->Attribute("grMaxSy");		if (a)  gr->maxSy = s2r(a);
+
+		a = ePgd->Attribute("grSwayDistr");	if (a)  gr->swayDistr = s2r(a);
+		a = ePgd->Attribute("grSwayLen");	if (a)  gr->swayLen = s2r(a);
+		a = ePgd->Attribute("grSwaySpeed");	if (a)  gr->swaySpeed = s2r(a);
+
+		a = ePgd->Attribute("grTerMaxAngle");	if (a)  gr->terMaxAng = s2r(a);
+		a = ePgd->Attribute("grTerMinHeight");	if (a)  gr->terMinH = s2r(a);
+		a = ePgd->Attribute("grTerMaxHeight");	if (a)  gr->terMaxH = s2r(a);
+		#endif
+
 		//  trees
 		a = ePgd->Attribute("trPage");		if (a)  trPage = s2r(a);
 		a = ePgd->Attribute("trDist");		if (a)  trDist = s2r(a);
 		a = ePgd->Attribute("trDistImp");	if (a)  trDistImp = s2r(a);
 		a = ePgd->Attribute("trRdDist");	if (a)  trRdDist = s2i(a);
+
+		int grl = 0;
+		TiXmlElement* eGrL = ePgd->FirstChildElement("grass");
+		while (eGrL)
+		{
+			SGrassLayer g;
+			a = eGrL->Attribute("on");		if (a)  g.on = s2i(a);  else  g.on = 1;
+			a = eGrL->Attribute("mtr");		if (a)  g.material = String(a);
+			a = eGrL->Attribute("clr");		if (a)  g.colorMap = String(a);
+			a = eGrL->Attribute("dens");	if (a)  g.dens = s2r(a);
+
+			a = eGrL->Attribute("minSx");	if (a)  g.minSx = s2r(a);
+			a = eGrL->Attribute("maxSx");	if (a)  g.maxSx = s2r(a);
+			a = eGrL->Attribute("minSy");	if (a)  g.minSy = s2r(a);
+			a = eGrL->Attribute("maxSy");	if (a)  g.maxSy = s2r(a);
+
+			a = eGrL->Attribute("swayDistr");	if (a)  g.swayDistr = s2r(a);
+			a = eGrL->Attribute("swayLen");		if (a)  g.swayLen = s2r(a);
+			a = eGrL->Attribute("swaySpeed");	if (a)  g.swaySpeed = s2r(a);
+			
+			a = eGrL->Attribute("terMaxAng");	if (a)  g.terMaxAng = s2r(a);
+			a = eGrL->Attribute("terMinH");		if (a)  g.terMinH = s2r(a);
+			a = eGrL->Attribute("terMaxH");		if (a)  g.terMaxH = s2r(a);
+
+			grLayersAll[grl++] = g;
+			eGrL = eGrL->NextSiblingElement("grass");
+		}
 
 		int pgl = 0;
 		TiXmlElement* ePgL = ePgd->FirstChildElement("layer");
@@ -456,30 +503,40 @@ bool Scene::SaveXml(String file)
 		pgd.SetAttribute("densGrass",	toStrC( densGrass ));
 		pgd.SetAttribute("densTrees",	toStrC( densTrees ));
 		//  grass
-		pgd.SetAttribute("grMtr",		grassMtr.c_str());
-		pgd.SetAttribute("grClr",		grassColorMap.c_str());
-		//  grass par
 		pgd.SetAttribute("grPage",		toStrC( grPage ));
 		pgd.SetAttribute("grDist",		toStrC( grDist ));
-
-		pgd.SetAttribute("grMinSx",		toStrC( grMinSx ));
-		pgd.SetAttribute("grMinSy",		toStrC( grMinSy ));
-		pgd.SetAttribute("grMaxSx",		toStrC( grMaxSx ));
-		pgd.SetAttribute("grMaxSy",		toStrC( grMaxSy ));
-
-		pgd.SetAttribute("grSwayDistr",	toStrC( grSwayDistr ));
-		pgd.SetAttribute("grSwayLen",	toStrC( grSwayLen   ));
-		pgd.SetAttribute("grSwaySpeed",	toStrC( grSwaySpeed ));
 		pgd.SetAttribute("grDensSmooth",toStrC( grDensSmooth ));
 
-		pgd.SetAttribute("grTerMaxAngle",toStrC( grTerMaxAngle ));
-		pgd.SetAttribute("grTerMinHeight",toStrC( grTerMinHeight ));
-		pgd.SetAttribute("grTerMaxHeight",toStrC( grTerMaxHeight ));
 		//  trees
 		pgd.SetAttribute("trPage",		toStrC( trPage ));
 		pgd.SetAttribute("trDist",		toStrC( trDist ));
 		pgd.SetAttribute("trDistImp",	toStrC( trDistImp ));
 		pgd.SetAttribute("trRdDist",	toStrC( trRdDist  ));
+
+		for (int i=0; i < ciNumGrLay; ++i)
+		{
+			const SGrassLayer& g = grLayersAll[i];
+			TiXmlElement grl("grass");
+			grl.SetAttribute("on",		g.on ? 1 : 0);
+			grl.SetAttribute("mtr",		g.material.c_str());
+			grl.SetAttribute("clr",		g.colorMap.c_str());
+			grl.SetAttribute("dens",	toStrC( g.dens ));
+
+			grl.SetAttribute("minSx",	toStrC( g.minSx ));
+			grl.SetAttribute("maxSx",	toStrC( g.maxSx ));
+			grl.SetAttribute("minSy",	toStrC( g.minSy ));
+			grl.SetAttribute("maxSy",	toStrC( g.maxSy ));
+
+			grl.SetAttribute("swayDistr",	toStrC( g.swayDistr ));
+			grl.SetAttribute("swayLen",		toStrC( g.swayLen ));
+			grl.SetAttribute("swaySpeed",	toStrC( g.swaySpeed ));
+			
+			grl.SetAttribute("terMaxAng",	toStrC( g.terMaxAng ));
+			grl.SetAttribute("terMinH",		toStrC( g.terMinH ));
+			grl.SetAttribute("terMaxH",		toStrC( g.terMaxH ));
+
+			pgd.InsertEndChild(grl);
+		}
 
 		for (int i=0; i < ciNumPgLay; ++i)
 		{

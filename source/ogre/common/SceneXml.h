@@ -24,7 +24,6 @@ struct TerLayer		// terrain texture layer
 	//  min,max range and smooth range for angle and height for blendmap
 	float angMin,angMax,angSm, hMin,hMax,hSm;
 	float noise;  bool bNoiseOnly;  // blendmap noise
-
 	TerLayer();
 };
 
@@ -63,8 +62,20 @@ public:
 	Ogre::Real minScale, maxScale, ofsY;
 	Ogre::Real maxTerAng, minTerH, maxTerH;  // terrain
 	Ogre::Real maxDepth;  // in fluid
-	
 	PagedLayer();
+};
+
+
+class SGrassLayer	// grass layer
+{
+public:
+	bool on;
+	Ogre::Real dens;
+	Ogre::Real minSx,minSy, maxSx,maxSy;  // sizes
+	Ogre::Real swayDistr, swayLen, swaySpeed;  // sway
+	Ogre::Real terMaxAng, terMinH, terMaxH;  // terrain
+	Ogre::String material, colorMap;
+	SGrassLayer();
 };
 
 
@@ -76,7 +87,6 @@ public:
 	std::string name;
 	class btCollisionObject* cobj;
 	int idParticles;  // auto set  index for wheel particles  -1 none
-
 	FluidBox();
 };
 
@@ -109,42 +119,42 @@ public:
 	//  sky
 	Ogre::String skyMtr;
 	int  rainEmit,rain2Emit;  Ogre::String rainName,rain2Name;
-	//  fog
-	Ogre::FogMode fogMode;  Ogre::Vector3 fogClr;
-	Ogre::Real  fogExp, fogStart, fogEnd;
 	//  light
 	Ogre::Real ldPitch, ldYaw;  // dir angles
 	Ogre::Vector3 lDir, lAmb,lDiff,lSpec;
+
+	//  fog
+	Ogre::FogMode fogMode;  Ogre::Vector3 fogClr;
+	Ogre::Real  fogExp, fogStart, fogEnd;
 	//  wind
 	float windAmt;  //, windDirYaw, windTurbulFreq,windTurbulAmp;
 
-	//  particles
+
+	//  particle types
 	Ogre::String  sParDust, sParMud, sParSmoke;
 	
-	//  terrain
+	//  Terrain
 	bool ter;  // has terrain
 	bool vdr;  // vdrift track
 	TerData td;
 
-	//  paged layers	
+	
+	//  Vegetation params
+	Ogre::Real densTrees, densGrass;  int grDensSmooth;
+	Ogre::Real grPage, grDist;
+	Ogre::Real trPage, trDist, trDistImp;
+	int trRdDist;  // dist from road to trees
+
+	//  grass layers
+	const static int ciNumGrLay = 6;  // all, for edit
+	SGrassLayer grLayersAll[ciNumGrLay];
+
+	//  paged layers  (models: trees,rocks,etc)
 	const static int ciNumPgLay = 10;  // all, for edit
 	PagedLayer pgLayersAll[ciNumPgLay];
 	std::vector<int> pgLayers;    // active only (on)
 	void UpdPgLayers();
-	
-	//  paged
-	Ogre::Real densTrees, densGrass;  int grDensSmooth;
 
-	//  grass  -todo layers..
-	Ogre::Real grPage, grDist;  // vis
-	Ogre::Real grMinSx,grMinSy, grMaxSx,grMaxSy;  // sizes
-	Ogre::Real grSwayDistr, grSwayLen, grSwaySpeed;  // sway
-	Ogre::Real grTerMaxAngle, grTerMinHeight,grTerMaxHeight;
-	Ogre::String grassMtr, grassColorMap;
-
-	//  trees
-	Ogre::Real trPage, trDist, trDistImp;  // vis
-	int  trRdDist;  // dist from road to trees
 	
 	//  preview cam
 	Ogre::Vector3 camPos,camDir;
@@ -152,11 +162,11 @@ public:
 	//  to force regenerating impostors on different sceneries
 	int sceneryId;
 	
-	//  fuids
+	//  Fuids
 	std::vector<FluidBox> fluids;
 	class FluidsXml* pFluidsXml;  // set this after Load
 	
-	//  objects
+	//  Objects
 	std::vector<Object> objects;
 		
 	//  methods

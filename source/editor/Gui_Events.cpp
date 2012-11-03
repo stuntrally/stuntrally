@@ -9,6 +9,20 @@ using namespace MyGUI;
 using namespace Ogre;
 
 
+///  used value colors  blue,green,yellow,orange,red,black  ..
+const static Colour sUsedClr[8] = {
+	Colour(0.2,0.6,1),Colour(0,1,0.6),Colour(0,1,0),Colour(0.5,1,0),
+	Colour(1,1,0),Colour(1,0.5,0),Colour(1,0,0),Colour(1,0.5,0.5)};
+
+//  yellow at 4: perfScale = 0.5/4
+static void SetUsedStr(MyGUI::StaticTextPtr valUsed, int cnt, int yellowAt)
+{
+	if (!valUsed)  return;
+	valUsed->setCaption(TR("#{Used}") + ": " + toStr(cnt));
+	valUsed->setTextColour(sUsedClr[(int)(std::min(7.f, 4.f*float(cnt)/yellowAt /*(int)(4.f*float(cnt)/float(yellowAt) )*/)) ]);
+}
+
+
 ///  Gui Events
 
 //  [Sky]
@@ -141,8 +155,7 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 	if (bTerLay)  {
 		edTerLScale->setCaption(toStr(scale));
 		editTerLScale(edTerLScale);  }
-	if (valTerLAll)
-		valTerLAll->setCaption("Used: "+toStr(sc->td.layers.size()));
+	SetUsedStr(valTerLAll, sc->td.layers.size(), 3);
 	
 	//  Terrain Particles
 	edLDust->setCaption(toStr(lay->dust));	edLDustS->setCaption(toStr(lay->dustS));
@@ -455,9 +468,8 @@ void App::chkTerLayOn(WP wp)
 	ButtonPtr chk = wp->castType<Button>();
 	chk->setStateSelected(sc->td.layersAll[idTerLay].on);
 	sc->td.UpdLayers();
-	if (valTerLAll)
-		valTerLAll->setCaption("Used: "+toStr(sc->td.layers.size()));
-	//  force update, blendmap sliders crash if not
+	SetUsedStr(valTerLAll, sc->td.layers.size(), 3);
+	//  force update, blendmap sliders crash if not, !! this doesnt save hmap if changed  todo..
 	UpdateTrack();
 }
 
@@ -631,48 +643,91 @@ void App::editTrGr(EditPtr ed)
 {
 	Real r = s2r(ed->getCaption());
 	String n = ed->getName();
+	SGrassLayer* gr = &sc->grLayersAll[idGrLay];
 
 	if (n=="GrassDens")  sc->densGrass = r;	else if (n=="TreesDens")  sc->densTrees = r;
-	else if (n=="GrPage")  sc->grPage = r;	else if (n=="GrDist")  sc->grDist = r;
 	else if (n=="TrPage")  sc->trPage = r;	else if (n=="TrDist")  sc->trDist = r;
-
-	else if (n=="GrMinX")  sc->grMinSx = r;	else if (n=="GrMaxX")  sc->grMaxSx = r;
-	else if (n=="GrMinY")  sc->grMinSy = r;	else if (n=="GrMaxY")  sc->grMaxSy = r;
-
-	else if (n=="GrSwayDistr")  sc->grSwayDistr = r;
-	else if (n=="GrSwayLen")  sc->grSwayLen = r;	else if (n=="GrSwaySpd")  sc->grSwaySpeed = r;
 	else if (n=="TrRdDist")  sc->trRdDist = r;	else if (n=="TrImpDist")  sc->trDistImp = r;
+
+	else if (n=="GrPage")  sc->grPage = r;	else if (n=="GrDist")  sc->grDist = r;
 	else if (n=="GrDensSmooth")  sc->grDensSmooth = r;
-	else if (n=="GrTerMaxAngle")  sc->grTerMaxAngle = r;
-	else if (n=="GrTerMinHeight")  sc->grTerMinHeight = r;
-	else if (n=="GrTerMaxHeight")  sc->grTerMaxHeight = r;
+
+	else if (n=="GrMinX")  gr->minSx = r;	else if (n=="GrMaxX")  gr->maxSx = r;
+	else if (n=="GrMinY")  gr->minSy = r;	else if (n=="GrMaxY")  gr->maxSy = r;
+
+	else if (n=="GrSwayDistr")  gr->swayDistr = r;
+	else if (n=="GrSwayLen")  gr->swayLen = r;	else if (n=="GrSwaySpd")  gr->swaySpeed = r;
+
+	else if (n=="GrTerMaxAngle")  gr->terMaxAng = r;
+	else if (n=="GrTerMinHeight")  gr->terMinH = r;
+	else if (n=="GrTerMaxHeight")  gr->terMaxH = r;
+	
 	else if (n=="SceneryId")  sc->sceneryId = r;
 }
 
 void App::comboGrassMtr(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	sc->grassMtr = s;
+	SGrassLayer* gr = &sc->grLayersAll[idGrLay];
+	gr->material = s;
 }
 void App::comboGrassClr(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	sc->grassColorMap = s;
+	SGrassLayer* gr = &sc->grLayersAll[idGrLay];
+	gr->colorMap = s;
 }
 
 
-///  Vegetation layers  -----------------------------
+///  Grass layers  ----------------------------------------------------------
+
+void App::tabGrLayers(TabPtr wp, size_t id)
+{
+	idGrLay = id;  // help var
+	const SGrassLayer* gr = &sc->grLayersAll[idGrLay];
+
+	chkGrLay->setStateSelected(gr->on);
+	if (imgGrass)	imgGrass->setImageTexture(gr->material + ".png");  // same mtr name as tex
+
+	int used=0;  for (int i=0; i < sc->ciNumGrLay; ++i)  if (sc->grLayersAll[i].on)  ++used;
+	SetUsedStr(valLGrAll, used, 4);
+
+	#define _Ed(name, val)  ed##name->setCaption(toStr(val));
+	#define _Cmb(cmb, str)  cmb->setIndexSelected( cmb->findItemIndexWith(str) );
+	_Cmb(cmbGrassMtr, gr->material);  _Cmb(cmbGrassClr, gr->colorMap);
+
+	_Ed(GrMinX, gr->minSx);		_Ed(GrMaxX, gr->maxSx);
+	_Ed(GrMinY, gr->minSy);		_Ed(GrMaxY, gr->maxSy);
+	_Ed(GrSwayDistr, gr->swayDistr);
+	_Ed(GrSwayLen, gr->swayLen);	_Ed(GrSwaySpd, gr->swaySpeed);
+	
+	_Ed(GrTerMaxAngle, gr->terMaxAng);
+	_Ed(GrTerMinHeight, gr->terMinH);  _Ed(GrTerMaxHeight, gr->terMaxH);
+}
+
+void App::chkGrLayOn(WP wp)
+{
+	sc->grLayersAll[idGrLay].on = !sc->grLayersAll[idGrLay].on;
+	//sc->UpdPgLayers();
+	ButtonPtr chk = wp->castType<Button>();
+	chk->setStateSelected(sc->grLayersAll[idGrLay].on);
+
+	int used=0;  for (int i=0; i < sc->ciNumGrLay; ++i)  if (sc->grLayersAll[i].on)  ++used;
+	SetUsedStr(valLGrAll, used, 4);
+}
+
+
+///  Vegetation layers  -----------------------------------------------------
 
 void App::tabPgLayers(TabPtr wp, size_t id)
 {
-	idPgLay = id;  // help var												
-	const PagedLayer& lay = sc->pgLayersAll[id];
+	idPgLay = id;  // help var
+	const PagedLayer& lay = sc->pgLayersAll[idPgLay];
 
 	chkPgLay->setStateSelected(lay.on);
 	cmbPgLay->setIndexSelected( cmbPgLay->findItemIndexWith(lay.name.substr(0,lay.name.length()-5)) );
 	if (imgPaged)	imgPaged->setImageTexture(lay.name + ".png");
-	if (valLTrAll)
-		valLTrAll->setCaption("Used: "+toStr(sc->pgLayers.size()));
+	SetUsedStr(valLTrAll, sc->pgLayers.size(), 5);
 
 	//  set slider values
 	Slider* sl;
@@ -695,8 +750,7 @@ void App::chkPgLayOn(WP wp)
 	sc->UpdPgLayers();
 	ButtonPtr chk = wp->castType<Button>();
 	chk->setStateSelected(sc->pgLayersAll[idPgLay].on);
-	if (valLTrAll)
-		valLTrAll->setCaption("Used: "+toStr(sc->pgLayers.size()));
+	SetUsedStr(valLTrAll, sc->pgLayers.size(), 5);
 }
 
 void App::comboPgLay(ComboBoxPtr cmb, size_t val)
@@ -890,11 +944,10 @@ void App::chkAutoBlendmap(WP wp)
 //  set camera in settings at exit
 void App::SaveCam()
 {
-	if (mCamera) {
-		Vector3 p = mCamera->getPosition(), d = mCamera->getDirection();
-		pSet->cam_x = p.x;   pSet->cam_y = p.y;   pSet->cam_z = p.z;
-		pSet->cam_dx = d.x;  pSet->cam_dy = d.y;  pSet->cam_dz = d.z;
-	}
+	if (!mCamera)  return;
+	Vector3 p = mCamera->getPosition(), d = mCamera->getDirection();
+	pSet->cam_x = p.x;   pSet->cam_y = p.y;   pSet->cam_z = p.z;
+	pSet->cam_dx = d.x;  pSet->cam_dy = d.y;  pSet->cam_dz = d.z;
 }
 
 //  set predefined camera view

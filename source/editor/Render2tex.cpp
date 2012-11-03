@@ -170,11 +170,17 @@ void App::SaveGrassDens()
 			a += x * sc->td.iVertsX / w;
 			// would be better to interpolate 4 neighbours, or smooth this map
 
+			//for (int i=0; i < sc->ciNumPgLay; ++i)
+			//	if (sc->pgLayersAll[i].on)
+
+			uint uu = 0xFF000000;
+			SGrassLayer* gr = &sc->grLayersAll[0];  ///todo: tab layers..
 			v = std::max(0, std::min(255, int(255.f *
-				linRange(sc->td.hfAngle[a], 0.f,sc->grTerMaxAngle,20.f) *
-				linRange(sc->td.hfHeight[a], sc->grTerMinHeight,sc->grTerMaxHeight,20.f) )));
+				linRange(sc->td.hfAngle[a], 0.f,gr->terMaxAng,20.f) *
+				linRange(sc->td.hfHeight[a], gr->terMinH,gr->terMaxH,20.f) )));
 			v = std::min((int)(gd[b] & 0xFF), v);  // preserve road
-			gd[b] = 0xFF000000 + /*0x010101 */ v;  // no grass
+			uu += v;  // v << (i*8)
+			gd[b] = uu;  // no grass
 		}	}
 
 		//Image im;

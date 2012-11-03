@@ -152,16 +152,20 @@ void GrassLoader::frameUpdate()
 void GrassLoader::loadPage(PageInfo &page)
 {
 	//Generate meshes
+	bool first = true;  ///T
+
 	std::list<GrassLayer*>::iterator it;
-	for (it = layerList.begin(); it != layerList.end(); ++it){
-		GrassLayer *layer = *it;
+	for (it = layerList.begin(); it != layerList.end(); ++it)
+	{	GrassLayer *layer = *it;
+
+		if (first)  ///T once for all layers
+			layer->parent->rTable->resetRandomIndex();
+		first = false;
 
 		// Continue to the next layer if the current page is outside of the layers map boundaries.
 		if(layer->mapBounds.right < page.bounds.left || layer->mapBounds.left > page.bounds.right ||
 		   layer->mapBounds.bottom < page.bounds.top || layer->mapBounds.top > page.bounds.bottom)
-		{
 			continue;
-		}
 		
 		//Calculate how much grass needs to be added
 		Ogre::Real volume = page.bounds.width() * page.bounds.height();
@@ -173,14 +177,14 @@ void GrassLoader::loadPage(PageInfo &page)
 		//Precompute grass locations into an array of floats. A plain array is used for speed;
 		//there's no need to use a dynamic sized array since a maximum size is known.
 		float *position = new float[grassCount*4];
-		if (layer->densityMap){
-			if (layer->densityMap->getFilter() == MAPFILTER_NONE)
+		if (layer->densityMap)
+		{	if (layer->densityMap->getFilter() == MAPFILTER_NONE)
 				grassCount = layer->_populateGrassList_UnfilteredDM(page, position, grassCount);
-			else if (layer->densityMap->getFilter() == MAPFILTER_BILINEAR)
+			else
+			if (layer->densityMap->getFilter() == MAPFILTER_BILINEAR)
 				grassCount = layer->_populateGrassList_BilinearDM(page, position, grassCount);
-		} else {
-			grassCount = layer->_populateGrassList_Uniform(page, position, grassCount);
-		}
+		} else
+				grassCount = layer->_populateGrassList_Uniform(page, position, grassCount);
 
 		//Don't build a mesh unless it contains something
 		if (grassCount != 0){
@@ -883,7 +887,7 @@ unsigned int GrassLayer::_populateGrassList_Uniform(PageInfo page, float *posBuf
 {
 	float *posPtr = posBuff;
 
-	parent->rTable->resetRandomIndex();
+	///T parent->rTable->resetRandomIndex();
 
 	//No density map
 	if (!minY && !maxY)
@@ -951,7 +955,7 @@ unsigned int GrassLayer::_populateGrassList_UnfilteredDM(PageInfo page, float *p
 {
 	float *posPtr = posBuff;
 
-	parent->rTable->resetRandomIndex();
+	///T parent->rTable->resetRandomIndex();
 
 	//Use density map
 	if (!minY && !maxY){
@@ -1024,7 +1028,7 @@ unsigned int GrassLayer::_populateGrassList_BilinearDM(PageInfo page, float *pos
 {
 	float *posPtr = posBuff;
 
-	parent->rTable->resetRandomIndex();
+	///T parent->rTable->resetRandomIndex();
 
 	if (!minY && !maxY){
 		//No height range

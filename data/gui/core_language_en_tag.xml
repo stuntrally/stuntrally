@@ -650,7 +650,9 @@
 
 	<!--  Vegetation  -->
 	<Tag name="Properties">Properties</Tag>
+	<Tag name="Grasses">Grasses</Tag>
 	<Tag name="Models">Models</Tag>
+	<Tag name="Used">Used</Tag>
 	<Tag name="GrassDens">Grass   density</Tag>
 	<Tag name="TreeDens">Trees   density</Tag>
 	<Tag name="Model">Model</Tag>
@@ -663,18 +665,18 @@
 	<Tag name="distance">distance</Tag>
 	<Tag name="min">min</Tag>
 	<Tag name="max">max</Tag>
-	<Tag name="GrassSize">Grass size</Tag>
+	<Tag name="GrassSize">Size</Tag>
 	<Tag name="distribution">distribution</Tag>
 	<Tag name="length">length</Tag>
 	<Tag name="speed">speed</Tag>
 	<Tag name="TreeRoadDist">Trees to road dist.</Tag>
 	<Tag name="ImpostorDist">Impostors dist.</Tag>
-	<Tag name="GrassSway">Grass sway</Tag>
+	<Tag name="GrassSway">Sway</Tag>
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
 	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
 	<Tag name="SceneryId">Scenery Id</Tag>
-	<Tag name="GrMaterial">Grass Material</Tag>
-	<Tag name="GrColorMap">Grass color map</Tag>
+	<Tag name="GrMaterial">Material</Tag>
+	<Tag name="GrColorMap">Color map</Tag>
 
 
 	<!--  Road  -->
@@ -1038,9 +1040,12 @@
 	<Tag name="TipGrTerMinHeight">Terrain height below which there won't be any grass (starts fading out for 20m).</Tag>
 	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass (starts fading out for 20m).</Tag>
 	<Tag name="TipSceneryId">Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation.</Tag>
-	<Tag name="TipGrassMaterial">Grass material, chosen to match track's scenery.</Tag>
+	<Tag name="TipGrassMaterial">Grass material (type) for this layer, chosen to match track's scenery.</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
-
+	<Tag name="TipGrassLayers">Grass layers. Recommended use 1-4.</Tag>
+	<Tag name="TipGrassPrev">Preview image of this grass layer (changed with material).</Tag>
+	<Tag name="TipToggleGrass">Enable or disable this grass layer.</Tag>
+						
 	<!--  Vegetation  models  -->
 	<Tag name="TipVegetGroups">Vegetation model groups (recommended use 4-6), affects performance.</Tag>
 	<Tag name="TipVegetModels">Models (meshes) for vegetation. Found in data/trees/.</Tag>

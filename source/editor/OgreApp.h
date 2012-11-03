@@ -401,16 +401,22 @@ protected:
 	void editTrGr(MyGUI::EditPtr);
 
 	//  paged layers
-	MyGUI::ComboBoxPtr cmbPgLay;  void comboPgLay(CMB);
-	MyGUI::ButtonPtr chkPgLay;  void chkPgLayOn(WP);
 	MyGUI::TabPtr tabsPgLayers;  void tabPgLayers(TAB);
 	int idPgLay;  // tab
+	MyGUI::ButtonPtr chkPgLay;  void chkPgLayOn(WP);
 	MyGUI::StaticImagePtr imgPaged;  MyGUI::StaticTextPtr valLTrAll;
+	MyGUI::ComboBoxPtr cmbPgLay;  void comboPgLay(CMB);
 	SLV(LTrDens);	SLV(LTrRdDist);
 	SLV(LTrMinSc);	SLV(LTrMaxSc);	SLV(LTrWindFx);	SLV(LTrWindFy);
 	SLV(LTrMaxTerAng);
 	MyGUI::EditPtr edLTrMinTerH,edLTrMaxTerH,edLTrFlDepth;
 	void editLTrMinTerH(MyGUI::EditPtr),editLTrMaxTerH(MyGUI::EditPtr),editLTrFlDepth(MyGUI::EditPtr);
+
+	//  grass layers
+	MyGUI::TabPtr tabsGrLayers;  void tabGrLayers(TAB);
+	int idGrLay;  // tab
+	MyGUI::ButtonPtr chkGrLay;  void chkGrLayOn(WP);
+	MyGUI::StaticImagePtr imgGrass;  MyGUI::StaticTextPtr valLGrAll;
 	
 	
 	//  [Road]  ----

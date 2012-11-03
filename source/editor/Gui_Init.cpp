@@ -271,10 +271,14 @@ void App::InitGui()
 	valLTrAll = mGUI->findWidget<StaticText>("LTrAll");
 	Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);
 	Slv(LTrDens, 0);	Slv(LTrRdDist, 0);
-	Slv(LTrMinSc, 0);	Slv(LTrMaxSc, 0);
-	Slv(LTrWindFx, 0);	Slv(LTrWindFy, 0);
+	Slv(LTrMinSc, 0);	Slv(LTrMaxSc, 0);	Slv(LTrWindFx, 0);	Slv(LTrWindFy, 0);
 	Slv(LTrMaxTerAng, 0);  Ed(LTrMinTerH, editLTrMinTerH);  Ed(LTrMaxTerH, editLTrMaxTerH);
 	Ed(LTrFlDepth, editLTrFlDepth);
+
+	imgGrass = mGUI->findWidget<StaticImage>("ImgGrass");
+	Chk("LGrEnabled", chkGrLayOn, 1);  chkGrLay = bchk;
+	valLGrAll = mGUI->findWidget<StaticText>("LGrAll");
+	Tab(tabsGrLayers, "LGrLayTab", tabGrLayers);
 
 	
 	///  [Road]  ------------------------------------

@@ -34,25 +34,6 @@ inline Real getTerrainHeight(const Real x, const Real z, void *userData)
 {
 	return gTerrain->getHeightAtWorldPosition(x, 0, z);
 }
-inline Real getTerrainHeightAround(const Real x, const Real z, void *userData)
-{
-	float h = gTerrain->getHeightAtWorldPosition(x, 0, z);
-	
-	#if 0   // testing..
-	const float d = 0.4f;
-	for (int j=-2; j <= 2; ++j)
-	for (int i=-2; i <= 2; ++i)
-	if (i != 0 && j != 0)
-	{
-		float fx = i * d, fz = j * d;
-		float hh = gTerrain->getHeightAtWorldPosition(x + fx, 0, z + fz);
-		if (hh < h)  // if lower
-			h = hh;
-	}
-	#endif
-
-	return h;
-}
 
 
 void App::CreateTrees()
@@ -115,20 +96,28 @@ void App::CreateTrees()
 		grass->setPageLoader(grassLoader);
 		grassLoader->setHeightFunction(&getTerrainHeight);
 
-		//  Add grass
-		GrassLayer *l = grassLoader->addLayer(sc->grassMtr);
-		l->setMinimumSize(sc->grMinSx, sc->grMinSy);
-		l->setMaximumSize(sc->grMaxSx, sc->grMaxSy);
-		l->setDensity(fGrass);  l->setSwayDistribution(sc->grSwayDistr);
-		l->setSwayLength(sc->grSwayLen);  l->setSwaySpeed(sc->grSwaySpeed);
+		//  Grass layers
+		for (int i=0; i < sc->ciNumGrLay; ++i)
+		{
+			const SGrassLayer* gr = &sc->grLayersAll[i];
+			if (gr->on)
+			{
+				GrassLayer *l = grassLoader->addLayer(gr->material);
+				l->setMinimumSize(gr->minSx, gr->minSy);
+				l->setMaximumSize(gr->maxSx, gr->maxSy);
+				l->setDensity(gr->dens);  l->setSwayDistribution(gr->swayDistr);
+				l->setSwayLength(gr->swayLen);  l->setSwaySpeed(gr->swaySpeed);
 
-		l->setAnimationEnabled(true);  //l->setLightingEnabled(true);
-		l->setRenderTechnique(GRASSTECH_CROSSQUADS);  //GRASSTECH_SPRITE-
-		l->setFadeTechnique(FADETECH_ALPHA);  //FADETECH_GROW-
+				l->setAnimationEnabled(true);  //l->setLightingEnabled(true);
+				l->setRenderTechnique(GRASSTECH_CROSSQUADS);  //GRASSTECH_SPRITE-
+				l->setFadeTechnique(FADETECH_ALPHA);  //FADETECH_GROW-
 
-		l->setColorMap(sc->grassColorMap);
-		l->setDensityMap("grassDensity.png",CHANNEL_RED);
-		l->setMapBounds(tbnd);
+				l->setColorMap(gr->colorMap);
+				l->setDensityMap("grassDensity.png",CHANNEL_RED);  //todo: more..
+				l->setMapBounds(tbnd);
+			}
+		}
+
 		grass->setShadersEnabled(true);
 	}
 	ti.update();  /// time
@@ -158,8 +147,9 @@ void App::CreateTrees()
 
 		TreeLoader2D* treeLoader = new TreeLoader2D(trees, tbnd);
 		trees->setPageLoader(treeLoader);
-		treeLoader->setHeightFunction(getTerrainHeightAround /*,userdata*/);
-		treeLoader->setMaximumScale(4);//6
+		treeLoader->setHeightFunction(getTerrainHeight/*Around /*,userdata*/);
+		treeLoader->setMaximumScale(4);  //6
+		//treeLoader->setMinimumScale(0.5);  // todo: rescale all meshes, range is spread to only 255 vals!
 		tws = sc->td.fTerWorldSize;
 		int r = imgRoadSize, cntr = 0, cntshp = 0, txy = sc->td.iVertsX*sc->td.iVertsY-1;
 
@@ -167,7 +157,7 @@ void App::CreateTrees()
 		MTRand rnd((MTRand::uint32)1213);
 		#define getTerPos()		(rnd.rand()-0.5) * sc->td.fTerWorldSize
 
-		//  layers
+		//  Tree Layers
 		for (size_t l=0; l < sc->pgLayers.size(); ++l)
 		{
 			PagedLayer& pg = sc->pgLayersAll[sc->pgLayers[l]];
