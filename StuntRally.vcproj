@@ -1363,6 +1363,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\data\material_templates\trees_ch.mat"
+					>
+				</File>
+				<File
+					RelativePath=".\data\material_templates\trees_old.mat"
+					>
+				</File>
+				<File
 					RelativePath=".\data\material_templates\vdrift.mat"
 					>
 				</File>
