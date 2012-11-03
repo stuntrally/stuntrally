@@ -179,7 +179,7 @@ void App::CreateGraphs()
 		}	break;
 		
 	case 6:  // fps
-		for (int i=0; i < 3; ++i)
+		for (int i=0; i < 2; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
 			int c = i;
