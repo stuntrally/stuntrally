@@ -283,7 +283,7 @@ bool Scene::LoadXml(String file, bool bTer)
 		a = ePgd->Attribute("grDensSmooth");	if (a)  grDensSmooth = s2i(a);
 
 		#if 1  // old scene.xml (SR ver <= 1.8), 1 grass layer
-		SGrassLayer* gr = &grLayersAll[0];
+		SGrassLayer* gr = &grLayersAll[0];  gr->dens = 1.f;
 		a = ePgd->Attribute("grMtr");		if (a)  gr->material = String(a);
 		a = ePgd->Attribute("grClr");		if (a)  gr->colorMap = String(a);
 		//  grass par

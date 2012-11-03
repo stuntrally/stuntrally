@@ -103,9 +103,9 @@ void App::CreateTrees()
 			if (gr->on)
 			{
 				GrassLayer *l = grassLoader->addLayer(gr->material);
-				l->setMinimumSize(gr->minSx, gr->minSy);
-				l->setMaximumSize(gr->maxSx, gr->maxSy);
-				l->setDensity(gr->dens);  l->setSwayDistribution(gr->swayDistr);
+				l->setMinimumSize(gr->minSx, gr->minSy);  l->setMaximumSize(gr->maxSx, gr->maxSy);
+				l->setDensity(gr->dens * sc->densGrass);
+				l->setSwayDistribution(gr->swayDistr);
 				l->setSwayLength(gr->swayLen);  l->setSwaySpeed(gr->swaySpeed);
 
 				l->setAnimationEnabled(true);  //l->setLightingEnabled(true);
