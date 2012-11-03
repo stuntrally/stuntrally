@@ -599,6 +599,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\editor\Gui_EventsTer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\editor\Gui_Init.cpp"
 				>
 			</File>

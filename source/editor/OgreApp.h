@@ -299,6 +299,9 @@ protected:
 	void Status(Ogre::String s, float r,float g,float b);
 	void SetGuiFromXmls();  bool noBlendUpd;
 
+	const static MyGUI::Colour sUsedClr[8];
+	void SetUsedStr(MyGUI::StaticTextPtr valUsed, int cnt, int yellowAt);
+
 
 	//  tool windows texts
 	const static int
