@@ -62,3 +62,29 @@ material grassUnidentified
     diffuseMap grassUnidentified.png
     diffuse 0.4 0.4 0.4
 }
+
+//  moss
+material grass2  {  parent grass
+    diffuseMap grass2.png  }
+material grass3  {  parent grass
+    diffuseMap grass3.png  }
+material grass4v {  parent grass
+    diffuseMap grass4v.png  }
+material grass5  {  parent grass
+    diffuseMap grass5.png  }
+material grass6-  {  parent grass
+    diffuseMap grass6-.png  }
+material grass7--  {  parent grass
+    diffuseMap grass7--.png  }
+material grass9  {  parent grass
+    diffuseMap grass9.png  }
+material grass10 {  parent grass
+    diffuseMap grass10.png  }
+material grass11 {  parent grass
+    diffuseMap grass11.png  }
+material grass12r- {  parent grass
+    diffuseMap grass12r-.png  }
+material grass14wtr {  parent grass
+    diffuseMap grass14wtr.png  }
+material grass15 {  parent grass
+    diffuseMap grass15.png  }

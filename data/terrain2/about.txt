@@ -1,8 +1,23 @@
-Original textures by OpenGameArt user http://opengameart.org/users/yughues
+Original textures by OpenGameArt user
+http://opengameart.org/users/yughues
 
-licensed under CC-0 (Public Domain)
+License: CC-0 (Public Domain)
 
 --- Edited for use with ogre terrain by scrawl
 jungle_rocky
 jungle_rocky2
 leaves
+
+
+
+Author: Mysteryem (Submitted by qubodup)
+
+mysteryemwarzone2100textures
+
+License(s):  GPL 2.0   GPL 3.0   CC-BY-SA 3.0
+
+http://opengameart.org/content/29-grounds-and-walls-and-water-1024x1024
+
+--- Edited for StuntRally by CryHam
+snow_rocky
+

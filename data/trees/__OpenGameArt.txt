@@ -22,6 +22,12 @@ Artist:		yughues (OpenGameArt.org user)
 License(s):	CC0 (Public Domain)
 Date:		02/05/2012
 
+Model:		jungle_tree.mesh
+License: 	CC0 (Public domain)
+Link: 		http://www.blendswap.com/blends/plants/bge-tree/
+Notes:		Bark texture by OpenGameArt user yughues, licensed CC0
+			low-polying, baked textures & normals in blender by scrawl
+
 Model:		palm_plant.mesh
 Url:		http://opengameart.org/content/palm-plant
 Artist:		yughues (OpenGameArt.org user)
