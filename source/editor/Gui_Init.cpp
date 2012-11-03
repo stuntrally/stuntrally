@@ -258,27 +258,30 @@ void App::InitGui()
 	///  [Vegetation]  ------------------------------------
 	Ed(GrassDens, editTrGr);  Ed(TreesDens, editTrGr);
 	Ed(GrPage, editTrGr);  Ed(GrDist, editTrGr);  Ed(TrPage, editTrGr);  Ed(TrDist, editTrGr);
-	Ed(GrMinX, editTrGr);  Ed(GrMaxX, editTrGr);  Ed(GrMinY, editTrGr);  Ed(GrMaxY, editTrGr);
-	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
 	Ed(TrRdDist, editTrGr);  Ed(TrImpDist, editTrGr);
 	Ed(GrDensSmooth, editTrGr);  Ed(SceneryId, editTrGr);
-	Ed(GrTerMaxAngle, editTrGr);  Ed(GrTerMinHeight, editTrGr);  Ed(GrTerMaxHeight, editTrGr);
-	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);
-	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);
 
 	imgPaged = mGUI->findWidget<StaticImage>("ImgPaged");
 	Chk("LTrEnabled", chkPgLayOn, 1);  chkPgLay = bchk;
 	valLTrAll = mGUI->findWidget<StaticText>("LTrAll");
 	Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);
+
 	Slv(LTrDens, 0);	Slv(LTrRdDist, 0);
 	Slv(LTrMinSc, 0);	Slv(LTrMaxSc, 0);	Slv(LTrWindFx, 0);	Slv(LTrWindFy, 0);
 	Slv(LTrMaxTerAng, 0);  Ed(LTrMinTerH, editLTrMinTerH);  Ed(LTrMaxTerH, editLTrMaxTerH);
 	Ed(LTrFlDepth, editLTrFlDepth);
 
-	imgGrass = mGUI->findWidget<StaticImage>("ImgGrass");
+	///  grass
+	Ed(GrMinX, editTrGr);  Ed(GrMaxX, editTrGr);  Ed(GrMinY, editTrGr);  Ed(GrMaxY, editTrGr);
+	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
+	Ed(GrTerMaxAngle, editTrGr);  Ed(GrTerMinHeight, editTrGr);  Ed(GrTerMaxHeight, editTrGr);
+	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);	imgGrass = mGUI->findWidget<StaticImage>("ImgGrass");
+	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);	imgGrClr = mGUI->findWidget<StaticImage>("ImgGrClr");
+
 	Chk("LGrEnabled", chkGrLayOn, 1);  chkGrLay = bchk;
 	valLGrAll = mGUI->findWidget<StaticText>("LGrAll");
 	Tab(tabsGrLayers, "LGrLayTab", tabGrLayers);
+	Slv(LGrDens, 0);
 
 	
 	///  [Road]  ------------------------------------

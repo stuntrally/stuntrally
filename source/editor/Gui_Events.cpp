@@ -670,12 +670,14 @@ void App::comboGrassMtr(ComboBoxPtr cmb, size_t val)
 	String s = cmb->getItemNameAt(val);
 	SGrassLayer* gr = &sc->grLayersAll[idGrLay];
 	gr->material = s;
+	if (imgGrass)	imgGrass->setImageTexture(gr->material + ".png");  // same mtr name as tex
 }
 void App::comboGrassClr(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
 	SGrassLayer* gr = &sc->grLayersAll[idGrLay];
 	gr->colorMap = s;
+	if (imgGrClr)	imgGrClr->setImageTexture(gr->colorMap);
 }
 
 
@@ -688,12 +690,15 @@ void App::tabGrLayers(TabPtr wp, size_t id)
 
 	chkGrLay->setStateSelected(gr->on);
 	if (imgGrass)	imgGrass->setImageTexture(gr->material + ".png");  // same mtr name as tex
+	if (imgGrClr)	imgGrClr->setImageTexture(gr->colorMap);
 
 	int used=0;  for (int i=0; i < sc->ciNumGrLay; ++i)  if (sc->grLayersAll[i].on)  ++used;
 	SetUsedStr(valLGrAll, used, 4);
 
 	#define _Ed(name, val)  ed##name->setCaption(toStr(val));
 	#define _Cmb(cmb, str)  cmb->setIndexSelected( cmb->findItemIndexWith(str) );
+	Slider* sl;
+	Slv(LGrDens, powf((gr->dens-0.001f) /1.0f, 0.5f));
 	_Cmb(cmbGrassMtr, gr->material);  _Cmb(cmbGrassClr, gr->colorMap);
 
 	_Ed(GrMinX, gr->minSx);		_Ed(GrMaxX, gr->maxSx);
@@ -708,7 +713,7 @@ void App::tabGrLayers(TabPtr wp, size_t id)
 void App::chkGrLayOn(WP wp)
 {
 	sc->grLayersAll[idGrLay].on = !sc->grLayersAll[idGrLay].on;
-	//sc->UpdPgLayers();
+
 	ButtonPtr chk = wp->castType<Button>();
 	chk->setStateSelected(sc->grLayersAll[idGrLay].on);
 
@@ -760,7 +765,13 @@ void App::comboPgLay(ComboBoxPtr cmb, size_t val)
 	if (imgPaged)	imgPaged->setImageTexture(s + ".png");  // prv impostor  todo 3d..
 }
 
-void App::slLTrDens(SL)  //  sliders
+void App::slLGrDens(SL)  //  sliders
+{
+	Real v = 0.001f + 1.0f * powf(val, 2.f);  sc->grLayersAll[idGrLay].dens = v;
+	if (valLGrDens){  valLGrDens->setCaption(fToStr(v,3,5));  }
+}
+
+void App::slLTrDens(SL)
 {
 	Real v = 0.001f + 1.0f * powf(val, 2.f);  sc->pgLayersAll[idPgLay].dens = v;
 	if (valLTrDens){  valLTrDens->setCaption(fToStr(v,3,5));  }

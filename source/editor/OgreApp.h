@@ -416,7 +416,8 @@ protected:
 	MyGUI::TabPtr tabsGrLayers;  void tabGrLayers(TAB);
 	int idGrLay;  // tab
 	MyGUI::ButtonPtr chkGrLay;  void chkGrLayOn(WP);
-	MyGUI::StaticImagePtr imgGrass;  MyGUI::StaticTextPtr valLGrAll;
+	MyGUI::StaticImagePtr imgGrass,imgGrClr;  MyGUI::StaticTextPtr valLGrAll;
+	SLV(LGrDens);
 	
 	
 	//  [Road]  ----

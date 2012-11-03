@@ -1026,6 +1026,11 @@
 	<Tag name="TipModelPageLength">Models Page length (low will reload often, high will cause visible switching).</Tag>
 	<Tag name="TipGrassVisDist">Visibility distance for grass pages.</Tag>
 	<Tag name="TipModelVisDist">Visibility distance for model pages.</Tag>
+	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each models own value).</Tag>
+	<Tag name="TipImpDist">Far distance at which models will turn into 2d impostors.</Tag>
+	<Tag name="TipGrDensSmooth">Grass density map - smooth size</Tag>
+	<Tag name="TipSceneryId">Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation.</Tag>
+
 	<Tag name="TipGrassPatchLengthMin">Minimal grass patch length.</Tag>
 	<Tag name="TipGrassPatchLengthMax">Maximal grass patch length.</Tag>
 	<Tag name="TipGrassPatchHeightMin">Minimal grass patch height.</Tag>
@@ -1033,18 +1038,16 @@
 	<Tag name="TipGrassSwayLen">Grass sway effect length (scale).</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
 	<Tag name="TipGrassSwayDistr">Grass sway effect distribution (how random).</Tag>
-	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each models own value).</Tag>
-	<Tag name="TipImpDist">Far distance at which models will turn into 2d impostors.</Tag>
-	<Tag name="TipGrDensSmooth">Grass density map - smooth size</Tag>
 	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
 	<Tag name="TipGrTerMinHeight">Terrain height below which there won't be any grass (starts fading out for 20m).</Tag>
 	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass (starts fading out for 20m).</Tag>
-	<Tag name="TipSceneryId">Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation.</Tag>
+
 	<Tag name="TipGrassMaterial">Grass material (type) for this layer, chosen to match track's scenery.</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
 	<Tag name="TipGrassLayers">Grass layers. Recommended use 1-4.</Tag>
 	<Tag name="TipGrassPrev">Preview image of this grass layer (changed with material).</Tag>
 	<Tag name="TipToggleGrass">Enable or disable this grass layer.</Tag>
+	<Tag name="TipGrassDens">Grass density for layer (how often it will appear).</Tag>
 						
 	<!--  Vegetation  models  -->
 	<Tag name="TipVegetGroups">Vegetation model groups (recommended use 4-6), affects performance.</Tag>
@@ -1058,10 +1061,12 @@
 	<Tag name="TipWindInflL">Wind influence on model, length scale.</Tag>
 	<Tag name="TipWindInflH">Wind influence on model, height scale.</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
+
 	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
 	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
 	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
 	<Tag name="TipLTrFlDepth">Maximal depth in fluid allowed (set 0 to exclude from fluids).</Tag>
+
 
 	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions report an issue on (or reply to existing one):@http://code.google.com/p/vdrift-ogre/issues/list@@For more info see Readme and our project's Wiki pages.@</Tag>
 

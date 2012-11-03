@@ -2065,6 +2065,10 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassPrev}"/>
 						</Widget>
+                        <Widget type="ImageBox" skin="ImageBox" position="330 230 42 42" name="ImgGrClr">
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipGrassColorMap}"/>
+						</Widget>
 						<Widget type="Button" skin="CheckBox" position="328 55 104 24" name="LGrEnabled">
 							<Property key="Caption" value="#{Enabled}"/>
 							<Property key="Colour" value="0.6 1 0.6"/>
@@ -2078,7 +2082,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassLayers}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="42 124 64 24">
+                        <Widget type="TextBox" skin="TextBox" position="44 124 64 24">
 							<Property key="Caption" value="#{min} x"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
@@ -2090,7 +2094,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMax}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="42 148 64 24">
+                        <Widget type="TextBox" skin="TextBox" position="44 148 64 24">
 							<Property key="Caption" value="#{min} y"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
@@ -2127,23 +2131,23 @@
 							<UserString key="tip" value="#{TipGrassPatchHeightMax}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 100 120 24">
-							<Property key="Caption" value="#{GrassSize}:"/>
+							<Property key="Caption" value="#{GrassSize}"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="48 204 96 24">
+                        <Widget type="TextBox" skin="TextBox" position="44 204 96 24">
 							<Property key="Caption" value="#{distribution}"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassSwayDistr}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="48 228 96 24">
+                        <Widget type="TextBox" skin="TextBox" position="44 228 96 24">
 							<Property key="Caption" value="#{length}"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassSwayLen}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="48 254 96 24">
+                        <Widget type="TextBox" skin="TextBox" position="44 254 96 24">
 							<Property key="Caption" value="#{speed}"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
@@ -2162,7 +2166,7 @@
 							<UserString key="tip" value="#{TipGrassSwaySpd}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 180 96 24">
-							<Property key="Caption" value="#{GrassSway}:"/>
+							<Property key="Caption" value="#{GrassSway}"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
@@ -2238,6 +2242,22 @@
 							<Property key="Caption" value="#{Terrain}"/>
 							<Property key="TextColour" value="0.4 1 0.4"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+                        <Widget type="TextBox" skin="TextBox" position="330 310 104 24">
+							<Property key="Caption" value="#{Density}"/>
+							<Property key="TextColour" value="0.6 1 0.6"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipGrassDens}"/>
+						</Widget>
+                        <Widget type="TextBox" skin="TextBox" position="444 310 56 24" name="LGrDensVal">
+							<Property key="TextColour" value="0.6 1 0.6"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipGrassDens}"/>
+						</Widget>
+                        <Widget type="Slider" skin="Slider" position="330 336 360 16" name="LGrDens">
+							<Property key="Colour" value="0.6 1 0.6"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipGrassDens}"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 746 469">
