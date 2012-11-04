@@ -215,6 +215,7 @@
 		<track name="D9-Mud"		laps="1" factor="0.1" />
 		<track name="D10-MudBath"	laps="1" factor="0.15" />
 		<track name="D11-PersianCity" laps="1" factor="0.1" />
+		<track name="D12-Sandstorm"	laps="1" factor="0.15" /><!---->
 	</championship>
 	<championship name="Jungle scenery" ver="2" difficulty="3" length="3" tutorial="3" 
 			descr="Jungle championship. All tracks for this scenery in their appearance order. Part 1 of 2.">
@@ -296,7 +297,7 @@
 		<track name="I7-Moses"		laps="1" factor="0.1" />
 		<track name="I8-Pharaoh"	laps="1" factor="0.1" />
 		<track name="I9-Web"		laps="1" factor="0.2" />
-		<track name="I10-Treasure"	laps="1" factor="0.1" />
+		<track name="I10-Treasure"	laps="1" factor="0.1" /><!---->
 	</championship>
 	<championship name="Mud and Canyon scenery" ver="1" difficulty="2" length="3" tutorial="3" 
 			descr="Mud championship. All tracks for this scenery in their appearance order.">
@@ -321,6 +322,12 @@
 		<track name="G3-Butterfly"	laps="1" factor="0.1" />
 		<track name="G4-River"		laps="1" factor="0.1" />
 		<track name="G5-Climb"		laps="1" factor="0.1" />
+	</championship>
+	<championship name="Autumn scenery" ver="1" difficulty="2" length="3" tutorial="3" 
+			descr="Autumn championship. All tracks for this scenery in their appearance order.">
+		<track name="T1-Autumn"		laps="1" factor="0.1" /><!---->
+		<track name="T2-RedOakPark"	laps="1" factor="0.1" /><!---->
+		<track name="T3-Orange"		laps="1" factor="0.1" /><!---->
 	</championship>
 	<championship name="Other sceneries" ver="1" difficulty="4" length="3" tutorial="3" 
 			descr="Other sceneries championship: Volcanic and Unidentified.">
@@ -510,6 +517,11 @@
 		<track name="F16-Clew"		time="99.0"/>
 		<track name="G5-Climb"		time="240.0"/>
 		<track name="I10-Treasure"	time="90.0"/>
+
+		<track name="D12-Sandstorm"	time="50.0"/>
+		<track name="T1-Autumn"		time="74.0"/>
+		<track name="T2-RedOakPark"	time="53.0"/>
+		<track name="T3-Orange"		time="55.0"/>
 
 	</times>
 </championships>
