@@ -3,21 +3,18 @@ http://opengameart.org/users/yughues
 
 License: CC-0 (Public Domain)
 
---- Edited for use with ogre terrain by scrawl
+--- Edited for use with ogre terrain by scrawl and CryHam
+
 jungle_rocky
 jungle_rocky2
 leaves
 
+autumn_red
 
 
 Author: Mysteryem (Submitted by qubodup)
-
 mysteryemwarzone2100textures
-
 License(s):  GPL 2.0   GPL 3.0   CC-BY-SA 3.0
-
 http://opengameart.org/content/29-grounds-and-walls-and-water-1024x1024
 
---- Edited for StuntRally by CryHam
 snow_rocky
-
