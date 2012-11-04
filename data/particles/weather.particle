@@ -43,8 +43,8 @@ particle_system RainFast
 {
 	material			RainDropLong
 	quota				10000
-	particle_width		0.04
-	particle_height		1.22
+	particle_width		0.03
+	particle_height		1.52
 
 	cull_each		false
     sorted			false
@@ -57,7 +57,7 @@ particle_system RainFast
 	{
 		angle	0
 		position	0 10 0
-		direction	0.1 -1 -0.2
+		direction	-0.2 -1 0.3
 		width	16
 		height	16
 		depth	12  //h
