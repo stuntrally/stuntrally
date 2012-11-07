@@ -43,7 +43,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "graph_veget.trees", gui.trees);				Param(c,w, "graph_veget.grass", grass);
 	Param(c,w, "graph_veget.trees_dist", trees_dist);		Param(c,w, "graph_veget.grass_dist", grass_dist);
-	Param(c,w, "graph_veget.use_imposters", use_imposters);
+	Param(c,w, "graph_veget.use_imposters", use_imposters); Param(c,w, "graph_veget.imposters_only", imposters_only);
 	
 	Param(c,w, "misc.allow_save", allow_save);		Param(c,w, "misc.inputBar", inputBar);		Param(c,w, "misc.camPos", camPos);
 	Param(c,w, "misc.version", version);			Param(c,w, "misc.autostart", autostart);
@@ -84,7 +84,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	terdetail(1.57), terdist(300), road_dist(1.0), tex_size(1), ter_mtr(2),
 	shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(2), shadow_filter(1),  /*<+*/
 	shaders(0.5), lightmap_size(0),
-	grass(1.f), trees_dist(1.f), grass_dist(1.f),use_imposters(false),
+	grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(false), imposters_only(false),
 	water_reflect(0), water_refract(0), water_rttsize(0),
 	shader_mode(""),
 	//  startup

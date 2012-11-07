@@ -243,11 +243,11 @@ protected:
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);
 	SLV(TexSize);  SLV(TerMtr);  // detail
 	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
-	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(LightmapSize);  SLV(ShadowDist);  SLV(ShadowFilter); // shadow
+	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  SLV(ShadowFilter); // shadow
 	SLV(WaterSize);  SLV(AntiAliasing); // screen
-	void comboTexFilter(CMB), btnShadows(WP), btnShaders(WP), btnTrGrReset(WP);
-	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
-	void chkWaterReflect(WP), chkWaterRefract(WP);
+	void comboTexFilter(CMB), btnShadows(WP), btnShaders(WP), btnTrGrReset(WP),
+		chkWaterReflect(WP), chkWaterRefract(WP),
+		chkUseImposters(WP), chkImpostorsOnly(WP);
 
 	//  tooltip
 	WP mToolTip;  MyGUI::EditPtr mToolTipTxt;
@@ -259,6 +259,7 @@ protected:
 	void comboLanguage(CMB);
 	std::map<std::string, MyGUI::UString> languages; // <short name, display name>
 	bool bGuiReinit;
+	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
 
 	//  init
 	void InitGui();  bool bGI;
@@ -266,19 +267,17 @@ protected:
 	Ogre::String GetSceneryColor(Ogre::String name);
 	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
 	
-	//  tweak page
-	void CreateGUITweakMtr(), slTweak(SL),edTweak(MyGUI::EditPtr);
-	void TweakSetMtrPar(std::string name, float val);  void comboTweakMtr(CMB);
-	
 	//  track
-	void UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const Ogre::String& sTrack, float time, bool champ=false), ReadTrkStats();
+	void UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const Ogre::String& sTrack, float time, bool champ=false),
+		ReadTrkStats();
 	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc[1];
 	MyGUI::StaticImagePtr imgPrv[1],imgMini[1],imgTer[1], imgTrkIco1,imgTrkIco2;
 	const static int StTrk = 12, InfTrk = 11;
 	MyGUI::StaticTextPtr valTrk[1], stTrk[1][StTrk], infTrk[1][InfTrk];  // [1] 2nd is in game (common code)
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
-	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(),updTrkListDim();
+	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
+	void updTrkListDim();
 	const static int TcolW[32];
 	const static Ogre::String clrsDiff[9],clrsRating[5],clrsLong[10];
 
@@ -291,9 +290,9 @@ protected:
 	void InitGuiScrenRes(), btnResChng(WP), ResizeOptWnd();
 	void chkVidFullscr(WP), chkVidVSync(WP);
 
-	void comboGraphicsAll(CMB),
-		comboRenderSystem(MyGUI::ComboBoxPtr wp, size_t val);
+	void comboGraphicsAll(CMB), comboRenderSystem(CMB);
 
+	///-----------------------------------------
 	
 	void UpdVisGui(), UpdEditWnds();
 	void Status(Ogre::String s, float r,float g,float b);
@@ -323,7 +322,6 @@ protected:
 
 	//  [settings]
 	void chkMouseCapture(WP), chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP);  // startup
-	void chkUseImposters(WP wp);
 	SLV(SizeMinmap);  SLV(CamSpeed);  SLV(CamInert);
 	SLV(TerUpd);  SLV(SizeRoadP);  SLV(MiniUpd);
 	void chkMinimap(WP), btnSetCam(WP);
@@ -450,6 +448,11 @@ protected:
 	MyGUI::EditPtr edScaleAllMul;  void editScaleAllMul(MyGUI::EditPtr);
 	MyGUI::EditPtr edScaleTerHMul;  void editScaleTerHMul(MyGUI::EditPtr);
 	SLV(AlignWidthAdd);  SLV(AlignWidthMul);  SLV(AlignSmooth);
+
+
+	//  tweak page
+	void CreateGUITweakMtr(), slTweak(SL),edTweak(MyGUI::EditPtr);
+	void TweakSetMtrPar(std::string name, float val);  void comboTweakMtr(CMB);
 
 
 	//  [Track]  ----

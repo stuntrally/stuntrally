@@ -33,7 +33,7 @@ public:
 	bool water_reflect, water_refract; int water_rttsize;
 	int refl_mode; // 0 static, 1 single, 2 full, explanation: see CarReflection.h
 	bool particles, trails;  float grass, trees_dist, grass_dist;
-	bool use_imposters;
+	bool use_imposters, imposters_only;
 	float particles_len, trails_len;
 
 	std::string shader_mode;

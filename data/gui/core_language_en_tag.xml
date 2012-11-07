@@ -343,7 +343,8 @@
 	<Tag name="DistMult">Distance mul</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
 	<Tag name="Reset">Reset</Tag>
-	<Tag name="UseImposters">Use Imposters</Tag>
+	<Tag name="UseImposters">Use Impostors</Tag>
+	<Tag name="ImpostorsOnly">Impostors Only (low quality)</Tag>
 
 	<Tag name="Reflections">Reflections</Tag>
 	<Tag name="FrameSkip">Frames skip</Tag>

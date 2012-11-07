@@ -94,7 +94,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "graph_veget.trees", gui.trees);				Param(c,w, "graph_veget.grass", grass);
 	Param(c,w, "graph_veget.trees_dist", trees_dist);		Param(c,w, "graph_veget.grass_dist", grass_dist);
-	Param(c,w, "graph_veget.use_imposters", use_imposters);
+	Param(c,w, "graph_veget.use_imposters", use_imposters); Param(c,w, "graph_veget.imposters_only", imposters_only);
 
 	//  misc
 	Param(c,w, "misc.autostartgame", autostart);
@@ -168,7 +168,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	refl_skip(200), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode(1),
 	water_reflect(0), water_refract(0), water_rttsize(0),
 	shadow_type(2), shadow_size(2), shadow_count(3), shadow_dist(3000), shadow_filter(1), lightmap_size(0),
-	grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(true),
+	grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(true), imposters_only(false),
 	particles(true), trails(true), particles_len(1.f), trails_len(1.f),
 	//  car
 	autoshift(1), autorear(1), rear_inv(1), show_mph(0),

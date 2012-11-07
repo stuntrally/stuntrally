@@ -26,7 +26,7 @@ public:
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type, shadow_filter;
 	float grass, trees_dist, grass_dist;
 	bool water_reflect, water_refract; int water_rttsize;
-	bool use_imposters;
+	bool use_imposters, imposters_only;
 	std::string shader_mode;
 
 	class GameSet

@@ -126,12 +126,17 @@ void App::btnTrGrReset(WP wp)
 	setSld(Grass);
 	v = powf((1.f-0.5f) /6.5f, 0.5f);
 	setSld(TreesDist);
+	v = powf((2.f-0.5f) /6.5f, 0.5f);
 	setSld(GrassDist);
 }
 
 void App::chkUseImposters(WP wp)
 {
 	ChkEv(use_imposters);
+}
+void App::chkImpostorsOnly(WP wp)
+{
+	ChkEv(imposters_only);
 }
 void App::slShaders(SL)
 {
@@ -265,6 +270,7 @@ void App::GuiInitGraphics()
 	Slv(GrassDist,	powf((pSet->grass_dist-0.5f) /6.5f, 0.5f));
 	Btn("TrGrReset", btnTrGrReset);
 	Chk("UseImposters", chkUseImposters, pSet->use_imposters);
+	Chk("ImpostorsOnly", chkImpostorsOnly, pSet->imposters_only);
 
 	// screen
 	// find max. fsaa

@@ -2012,8 +2012,13 @@
 							<Property key="TextColour" value="0.7 0.8 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 170 200 26" name="UseImposters">
+						<Widget type="Button" skin="CheckBox" position="32 180 200 26" name="UseImposters">
 							<Property key="Caption" value="#{UseImposters}*"/>
+							<Property key="TextColour" value="0.6 1 0.3"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 210 200 26" name="ImpostorsOnly">
+							<Property key="Caption" value="#{ImpostorsOnly}*"/>
 							<Property key="TextColour" value="0.6 1 0.3"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>

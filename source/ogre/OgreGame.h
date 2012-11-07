@@ -236,6 +236,7 @@ protected:
 	#define SL  MyGUI::Slider* wp, float val
 	#define CMB MyGUI::ComboBox* wp, size_t val // combobox event args
 
+
 	///  Gui common   --------------------------
 	//  graphics
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);
@@ -243,8 +244,9 @@ protected:
 	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
 	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  SLV(ShadowFilter); // shadow
 	SLV(WaterSize);  SLV(AntiAliasing); // screen
-	void comboTexFilter(CMB), btnShadows(WP), btnShaders(WP), btnTrGrReset(WP);
-	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
+	void comboTexFilter(CMB), btnShadows(WP), btnShaders(WP), btnTrGrReset(WP),
+		chkWaterReflect(WP), chkWaterRefract(WP),
+		chkUseImposters(WP), chkImpostorsOnly(WP);
 
 	//  tooltip
 	WP mToolTip;  MyGUI::EditPtr mToolTipTxt;
@@ -256,6 +258,7 @@ protected:
 	void comboLanguage(CMB);
 	std::map<std::string, MyGUI::UString> languages; // <short name, display name>
 	bool bGuiReinit;
+	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
 
 	//  init
 	void InitGui();  bool bGI;
@@ -273,7 +276,7 @@ protected:
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
-	void updTrkListDim(),updChampListDim();
+	void updTrkListDim(), updChampListDim();
 	const static int TcolW[32],ChColW[8],StColW[8];
 	const static Ogre::String clrsDiff[9],clrsRating[5],clrsLong[10];
 
@@ -286,8 +289,7 @@ protected:
 	void InitGuiScrenRes(), btnResChng(WP), ResizeOptWnd();
 	void chkVidFullscr(WP), chkVidVSync(WP), chkVidSSAA(WP);
 
-	void comboGraphicsAll(CMB),
-		comboRenderSystem(CMB);
+	void comboGraphicsAll(CMB), comboRenderSystem(CMB);
 		
 	///-----------------------------------------
 
@@ -358,9 +360,7 @@ protected:
 		chkBltLines(WP), chkLoadPics(WP), chkMultiThread(WP),  // startup
 		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // effects
 		chkVidSoftParticles(WP), chkVidGodRays(WP), chkVidDepthOfField(WP),
-		chkWaterReflect(WP), chkWaterRefract(WP),
 		chkVegetCollis(WP), chkCarCollis(WP), chkRoadWCollis(WP), chkDynObjects(WP);  //game
-	void chkUseImposters(WP wp);
 
 	// gui car tire set gravel/asphalt
 	int iTireSet;

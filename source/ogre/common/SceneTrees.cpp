@@ -139,9 +139,12 @@ void App::CreateTrees()
 		boost::filesystem::create_directory(PATHMANAGER::GetCacheDir() + "/" + toStr(sc->sceneryId));
 		trees->setTempDir(PATHMANAGER::GetCacheDir() + "/" + toStr(sc->sceneryId) + "/");
 
-		if (bWind)
-			 trees->addDetailLevel<WindBatchPage>(sc->trDist * pSet->trees_dist, 0);
-		else trees->addDetailLevel<BatchPage>	 (sc->trDist * pSet->trees_dist, 0);
+		if (!pSet->imposters_only)
+		{
+			if (bWind)
+				 trees->addDetailLevel<WindBatchPage>(sc->trDist * pSet->trees_dist, 0);
+			else trees->addDetailLevel<BatchPage>	 (sc->trDist * pSet->trees_dist, 0);
+		}
 		if (pSet->use_imposters)
 			trees->addDetailLevel<ImpostorPage>(sc->trDistImp * pSet->trees_dist, 0);
 
