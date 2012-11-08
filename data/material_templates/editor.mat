@@ -70,6 +70,15 @@ material sphere_check
     receives_shadows false
 }
 
+material start_box
+{
+	parent sphere_check
+	diffuseMap white.png
+	ambient 0.2 0.2 0.3
+	diffuse 0.1 0.1 0.15 0.5
+	specular 0.1 0.1 0.15 32
+}
+
 //  boxes
 //------------------------------------------------------------
 material fluid_box

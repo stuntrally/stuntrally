@@ -138,6 +138,7 @@ void App::chkImpostorsOnly(WP wp)
 {
 	ChkEv(imposters_only);
 }
+
 void App::slShaders(SL)
 {
 	float v = val;  if (bGI)  pSet->shaders = v;

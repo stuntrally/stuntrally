@@ -78,7 +78,7 @@ void App::UpdStartPos()
 	}
 	if (!ndStBox)
 	{ 	//  start pos box
-		MaterialPtr mtr = Ogre::MaterialManager::getSingleton().getByName("sphere_check");
+		MaterialPtr mtr = Ogre::MaterialManager::getSingleton().getByName("start_box");
 		if (!mtr.isNull())
  		{	ndStBox = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 			entStBox = mSceneMgr->createEntity("cube.mesh");
@@ -128,9 +128,9 @@ void App::UpdStartPos()
 	//Vector3 vcx,vcy,vcz;  q1.ToAxes(vcx,vcy,vcz);
 
 	ndCar->setPosition(p1);    ndCar->setOrientation(q1);
-	/// \todo
-	//ndStBox->setPosition(p1);  ndStBox->setOrientation(q1);
-	/*if (road)
+
+	ndStBox->setPosition(p1);  ndStBox->setOrientation(q1);
+	if (road)
 	ndStBox->setScale(Vector3(1,road->vStBoxDim.y,road->vStBoxDim.z));
 	ndStBox->setVisible(edMode == ED_Start && bEdit());
-*/}
+}
