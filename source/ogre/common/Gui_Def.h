@@ -35,7 +35,7 @@
 
 #define Tab(tab, name, event)  \
 	tab = mGUI->findWidget<Tab>(name);  \
-	if (tab && tab->eventTabChangeSelect.empty()) tab->eventTabChangeSelect += newDelegate(this, &App::event);
+	if (tab && tab->eventTabChangeSelect.empty())  tab->eventTabChangeSelect += newDelegate(this, &App::event);
 		
 		
 //  checkboxes event

@@ -2065,7 +2065,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassPrev}"/>
 						</Widget>
-                        <Widget type="ImageBox" skin="ImageBox" position="330 230 42 42" name="ImgGrClr">
+						<Widget type="ImageBox" skin="ImageBox" position="330 230 42 42" name="ImgGrClr">
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassColorMap}"/>
 						</Widget>
@@ -2082,7 +2082,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassLayers}"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="44 124 64 24">
+						<Widget type="TextBox" skin="TextBox" position="44 124 64 24">
 							<Property key="Caption" value="#{min} x"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
@@ -2094,7 +2094,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMax}"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="44 148 64 24">
+						<Widget type="TextBox" skin="TextBox" position="44 148 64 24">
 							<Property key="Caption" value="#{min} y"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
@@ -2135,19 +2135,19 @@
 							<Property key="TextColour" value="0.6 1 0.4"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="44 204 96 24">
+						<Widget type="TextBox" skin="TextBox" position="44 204 96 24">
 							<Property key="Caption" value="#{distribution}"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassSwayDistr}"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="44 228 96 24">
+						<Widget type="TextBox" skin="TextBox" position="44 228 96 24">
 							<Property key="Caption" value="#{length}"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassSwayLen}"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="44 254 96 24">
+						<Widget type="TextBox" skin="TextBox" position="44 254 96 24">
 							<Property key="Caption" value="#{speed}"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
@@ -2243,18 +2243,18 @@
 							<Property key="TextColour" value="0.4 1 0.4"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="330 310 104 24">
+						<Widget type="TextBox" skin="TextBox" position="330 310 104 24">
 							<Property key="Caption" value="#{Density}"/>
 							<Property key="TextColour" value="0.6 1 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassDens}"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="444 310 56 24" name="LGrDensVal">
+						<Widget type="TextBox" skin="TextBox" position="444 310 56 24" name="LGrDensVal">
 							<Property key="TextColour" value="0.6 1 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassDens}"/>
 						</Widget>
-                        <Widget type="Slider" skin="Slider" position="330 336 360 16" name="LGrDens">
+						<Widget type="Slider" skin="Slider" position="330 336 360 16" name="LGrDens">
 							<Property key="Colour" value="0.6 1 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassDens}"/>
@@ -3603,52 +3603,58 @@
 							<Property key="Caption" value="#{InputToggleGUIMode}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 98 288 20">
-							<Property key="TextColour" value="0.7 0.7 0.1"/>
+						<Widget type="TextBox" skin="TextBox" position="48 98 288 20">
+							<Property key="TextColour" value="0.6 0.6 0.1"/>
 							<Property key="Caption" value="#{InputNextOptTab}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 142 136 20">
+						<Widget type="TextBox" skin="TextBox" position="48 118 288 20">
+							<Property key="TextColour" value="0.5 0.5 0.2"/>
+							<Property key="Caption" value="#{InputNextLayTab}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 152 136 20">
 							<Property key="Caption" value="#{InputSaveTrack}"/>
 							<Property key="TextColour" value="1.0 0.6 0.1"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="172 142 188 20">
-							<Property key="Caption" value="#{InputReadyToPlay}"/>
-							<Property key="TextColour" value="0.8 0.4 0.0"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 164 136 20">
+						<Widget type="TextBox" skin="TextBox" position="32 174 136 20">
 							<Property key="Caption" value="#{InputReloadTrack}"/>
 							<Property key="TextColour" value="0.4 0.7 1.0"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="172 164 188 20">
-							<Property key="Caption" value="#{InputUndo}"/>
-							<Property key="TextColour" value="0.3 0.55 0.8"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 186 136 20">
+						<Widget type="TextBox" skin="TextBox" position="32 196 136 20">
 							<Property key="Caption" value="#{InputUpdate}"/>
 							<Property key="TextColour" value="0.2 0.9 0.5"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="172 186 266 20">
-							<Property key="Caption" value="#{InputAfterChanges}"/>
-							<Property key="TextColour" value="0.1 0.75 0.35"/>
+						<Widget type="TextBox" skin="TextBox" position="32 236 368 20">
+							<Property key="Caption" value="#{InputTogglePreview}"/>
+							<Property key="TextColour" value="0.7 0.86 1"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
+
 						<Widget type="TextBox" skin="TextBox" position="96 14 152 20">
 							<Property key="Caption" value="#{InputMain}"/>
 							<Property key="TextColour" value="0.8 0.8 1.0"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 226 368 20">
-							<Property key="Caption" value="#{InputTogglePreview}"/>
-							<Property key="TextColour" value="0.7 0.86 1"/>
+						<Widget type="TextBox" skin="TextBox" position="172 152 188 20">
+							<Property key="Caption" value="#{InputReadyToPlay}"/>
+							<Property key="TextColour" value="0.8 0.4 0.0"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="172 248 236 20">
+						<Widget type="TextBox" skin="TextBox" position="172 174 188 20">
+							<Property key="Caption" value="#{InputUndo}"/>
+							<Property key="TextColour" value="0.3 0.55 0.8"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="172 196 266 20">
+							<Property key="Caption" value="#{InputAfterChanges}"/>
+							<Property key="TextColour" value="0.1 0.75 0.35"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="172 258 236 20">
 							<Property key="Caption" value="#{InputTrackScrn}"/>
 							<Property key="TextColour" value="0.6 0.76 0.9"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>

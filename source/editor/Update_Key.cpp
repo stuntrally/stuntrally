@@ -230,6 +230,38 @@ void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 		tc->setIndexSelected( std::min(cnt-1, subtab) );
 }
 
+void App::NumTabNext(int rel)
+{
+	if (!bGuiFocus || pSet->isMain || pSet->inMenu != WND_Edit)  return;
+
+	MyGUI::TabPtr tab = 0;
+
+	#define tabNum(event)  {  \
+		int cnt = tab->getItemCount();  \
+		tab->setIndexSelected( (tab->getIndexSelected()+rel+cnt) % cnt );  \
+		event(tab, tab->getIndexSelected());  }
+
+	int id = mWndTabsEdit->getIndexSelected();
+	switch (id)
+	{
+		case 4:  // Layers
+		{	tab = tabsTerLayers;  tabNum(tabTerLayer);
+		}	break;
+		case 5:  // Vegetation
+		{
+			int sid = vSubTabsEdit[id]->getIndexSelected();
+			switch (sid)
+			{
+			case 1:  tab = tabsGrLayers;  tabNum(tabGrLayers);  break;
+			case 2:  tab = tabsPgLayers;  tabNum(tabPgLayers);  break;
+			}
+		}	break;
+	}
+	//Tab(tabsTerLayers, "TabTerLay", tabTerLayer);
+	//Tab(tabsGrLayers, "LGrLayTab", tabGrLayers);
+	//Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);
+}
+
 
 //---------------------------------------------------------------------------------------------------------------
 //  Key Press
@@ -306,19 +338,6 @@ bool App::KeyPress(const CmdKey &arg)
 
 	switch (arg.key)  //  global keys  ---------------------
 	{
-		//  Show Stats  I
-   		case KC_I:
-   			if (ctrl)  {  chkInputBar(chInputBar);  return true;  }
-			break;
-
-		//  Wire Frame  F11
-		case KC_F11:
-		{	mbWireFrame = !mbWireFrame;
-			mCamera->setPolygonMode(mbWireFrame ? PM_WIREFRAME : PM_SOLID);
-			if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
-			return true;
-		}	break;
-
 		case KC_ESCAPE: //  quit
 			if (pSet->escquit)
 			{	inputThreadRunning = false;
@@ -342,6 +361,15 @@ bool App::KeyPress(const CmdKey &arg)
 			if (alt)
 			{	WP wp = chAutoBlendmap;  ChkEv(autoBlendmap);  }
 			else	bTerUpdBlend = true;  return true;
+
+		//  prev num tab (layers,grasses,models)
+   		case KC_1:
+   			if (alt)  {  NumTabNext(-1);  return true;  }
+			break;
+		//  next num tab
+   		case KC_2:
+   			if (alt)  {  NumTabNext(1);  return true;  }
+			break;
 
    		case KC_F2:  // +-rt num
    			if (alt)
@@ -382,6 +410,19 @@ bool App::KeyPress(const CmdKey &arg)
 			if (mWndTabsEdit->getIndexSelected() == 1 && !pSet->isMain && pSet->inMenu == WND_Edit)
 				btnNewGame(0);
    			break;
+
+		//  Wire Frame  F11
+		case KC_F11:
+		{	mbWireFrame = !mbWireFrame;
+			mCamera->setPolygonMode(mbWireFrame ? PM_WIREFRAME : PM_SOLID);
+			if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
+			return true;
+		}	break;
+
+		//  Show Stats  I
+   		case KC_I:
+   			if (ctrl)  {  chkInputBar(chInputBar);  return true;  }
+			break;
 	}
 
 	//  GUI  keys in edits  ---------------------

@@ -315,9 +315,8 @@ protected:
 	MyGUI::StaticImagePtr brImg;  MyGUI::TabPtr wndTabs;
 
 	//  main menu
-	void toggleGui(bool toggle=false), GuiShortcut(WND_Types wnd, int tab, int subtab=-1);
-	void MainMenuBtn(MyGUI::WidgetPtr);
-	void MenuTabChg(MyGUI::TabPtr, size_t);
+	void toggleGui(bool toggle=false), GuiShortcut(WND_Types wnd, int tab, int subtab=-1), NumTabNext(int rel);
+	void MainMenuBtn(MyGUI::WidgetPtr), MenuTabChg(MyGUI::TabPtr, size_t);
 
 
 	//  [settings]

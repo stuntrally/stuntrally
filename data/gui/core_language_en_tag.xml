@@ -782,6 +782,7 @@
 	<Tag name="InputToggleCam">Tab - camera / edit mode toggle</Tag>
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
+	<Tag name="InputNextLayTab">alt-1,2 - prev,next Layer tab</Tag>
 	<Tag name="InputSaveTrack">F4 - save track</Tag>
 	<Tag name="InputReadyToPlay">(ready to play in game)</Tag>
 	<Tag name="InputReloadTrack">F5 - reload track</Tag>
