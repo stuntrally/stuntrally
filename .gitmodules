@@ -1,3 +1,0 @@
-[submodule "source/shiny"]
-	path = source/shiny
-	url = git://github.com/scrawl/shiny.git
