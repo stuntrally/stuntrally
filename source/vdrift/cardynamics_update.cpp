@@ -170,8 +170,9 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 		out.precision(0);
 		out << "pos: " << chassisPosition << std::endl;
 		MATRIX3 <T> inertia = body.GetInertia();
-		out << "inertia:  " << inertia[0] << " " << inertia[4] << " " << inertia[8] << std::endl;
+		out << "inertia: " << inertia[0] << " " << inertia[4] << " " << inertia[8] << std::endl;
 		out << "mass: " << body.GetMass() << std::endl << std::endl;
+		out << "sumWhTest: " << sumWhTest << std::endl << std::endl;
 		out.precision(2);
 		//MATHVECTOR <T, 3> up(0,0,1);
 		//Orientation().RotateVector(up);
@@ -186,14 +187,14 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 		out << std::endl;
 	#endif
 
-	#if 1
+	#if 0
 		engine.DebugPrint(out);  out << std::endl;
 		//fuel_tank.DebugPrint(out);  out << std::endl;  //mass 8- for 3S,ES,FM
 		clutch.DebugPrint(out);  out << std::endl;
 		transmission.DebugPrint(out);	out << std::endl;
 	#endif
 
-	#if 1
+	#if 0
 		if ( drive == RWD )  {
 			out << "(rear)" << std::endl;		rear_differential.DebugPrint(out);	}
 		else if ( drive == FWD )  {
@@ -206,7 +207,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 	#endif
 	}
 
-	#if 1
+	#if 0
 	if (p2)
 	{
 		out << "(front left)" << std::endl;		suspension[FRONT_LEFT].DebugPrint(out);	out << std::endl;
@@ -221,7 +222,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 	}
 	#endif
 
-	#if 1
+	#if 0
 	if (p3)
 	{
 		out << std::endl;
@@ -237,7 +238,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 	}
 	#endif
 
-	#if 1
+	#if 0
 	if (p4)
 	{
 		for (std::vector <CARAERO<T> >::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
@@ -333,6 +334,18 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 		MATHVECTOR <T, 3> tire_friction = ApplyTireForce(i, normal_force[i], wheel_orientation[i]);
 		ApplyWheelTorque(dt, drive_torque[i], i, tire_friction, wheel_orientation[i]);
 	}
+
+	///  test steer wheels ang vel to body yaw torque ..?  L = I*w
+	T sum = 0.0;
+	for(int i = 0; i < WHEEL_POSITION_SIZE; i++)
+	{
+		sum += (i < 2 ? -1 : 1) *//wheel[i].GetAngularVelocity() *
+			(1.0 - sin(wheel[i].GetSteerAngle()*PI_d/180.0) ) * /*(wheel[i].GetSteerAngle() > 0 ? 1 : -1) **/ 10;
+		MATHVECTOR <T, 3> torque(0, 0, sum);
+		//wheel_space.RotateVector(world_wheel_torque);
+		//ApplyTorque(torque);
+	}
+	sumWhTest = sum;
 
 	body.Integrate2(dt);
 	//chassis->integrateVelocities(dt);

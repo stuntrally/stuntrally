@@ -40,7 +40,7 @@ inline double negPow(double x, double y)
 
 ///  Create Graphs  .-_/\._-
 //-----------------------------------------------------------------------------------
-const int NG = 6;  // tire graphs count (for variable load)
+const int NG = 4;  // tire graphs count (for variable load)
 
 void App::CreateGraphs()
 {
@@ -307,7 +307,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			const bool common = 1;  // common range for all
 			const bool cust = 1;
 			//  RANGE  gui sld ..
-			const T fMAX = 9000.0, max_y = pApp->sc->asphalt ? 40.0 : 160.0, max_x = 1.0;
+			const T fMAX = 9000.0, max_y = pApp->sc->asphalt ? 40.0 : 80.0, max_x = 1.0;
 
 			///  Fy lateral --
 			for (int i=0; i < NG; ++i)
@@ -320,7 +320,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				{
 					//T yy = max_y * 2.0 * (x-LEN*0.5) / LEN;
 					T yy = max_y * x / LEN;
-					T n = (NG-1-i) * 0.5 + 0.1;
+					T n = (NG-1-i) * 0.75 + 0.25;
 					T fy = tire.Pacejka_Fy(yy, n, 0, 1.0, maxF); // normF
 					//T fy = tire.Pacejka_Fy(alpha, 3, n-2, 1.0, maxF); // gamma
 					ft[x] = fy;

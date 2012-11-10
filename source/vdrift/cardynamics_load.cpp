@@ -27,7 +27,7 @@ CARDYNAMICS::CARDYNAMICS() :
 	vHitPos(0,0,0), vHitNorm(0,0,0),
 	steerValue(0.f), velPrev(0,0,0),
 	fCarScrap(0.f), fCarScreech(0.f),
-	time(0.0)
+	time(0.0), sumWhTest(0.0)
 {
 	for (int i=0; i<4; ++i)
 	{	bWhOnRoad[i]=0;  terSurf[i]=0;
@@ -766,7 +766,7 @@ void CARDYNAMICS::Init(
 	btRigidBody::btRigidBodyConstructionInfo info(chassisMass, chassisState, chassisShape, chassisInertia);
 	info.m_angularDamping = ang_damp;  // 0.0!+  0.4 old
 	info.m_restitution = 0.0;  //...
-	info.m_friction = 0.6;  /// 0.4~ 0.7
+	info.m_friction = 0.4;  /// 0.4~ 0.7
 	///  chasis^
 	chassis = world.AddRigidBody(info, true, pSet->game.collis_cars);
 	chassis->setActivationState(DISABLE_DEACTIVATION);
@@ -784,7 +784,8 @@ void CARDYNAMICS::Init(
 			WHEEL_POSITION wp = WHEEL_POSITION(w);
 			T whR = GetTire(wp).GetRadius() * 1.2;  //bigger
 			MATHVECTOR <float, 3> wheelpos = GetWheelPosition(wp, 0);
-			wheelpos[2] += whR;
+			wheelpos[0] += coll_Lofs;
+			//wheelpos[2] += whR;
 
 			btSphereShape* whSph = new btSphereShape(whR);
 			//btCylinderShapeX* whSph = new btCylinderShapeX(btVector3(whR,whR,whR));//todo..

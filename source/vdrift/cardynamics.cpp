@@ -614,7 +614,7 @@ MATHVECTOR <T, 3> CARDYNAMICS::ApplyTireForce(int i, const T normal_force, const
 	// apply forces to body
 	MATHVECTOR <T, 3> wheel_normal(0, 0, 1);
 	wheel_space.RotateVector(wheel_normal);
-	MATHVECTOR <T, 3> contactpos = wheel_position[WHEEL_POSITION(i)] - wheel_normal * tire.GetRadius();
+	MATHVECTOR <T, 3> contactpos = wheel_position[WHEEL_POSITION(i)] + wheel_normal * tire.GetRadius() * wheel.GetRollHeight();  ///+
 	ApplyForce(world_friction_force + surface_normal * normal_force + wheel_drag, contactpos - Position());
 
 	return world_friction_force;
@@ -660,9 +660,10 @@ void CARDYNAMICS::ApplyWheelTorque(T dt, T drive_torque, int i, MATHVECTOR <T, 3
 	wheel.Integrate2(dt);
 
 	// apply torque to body
-	MATHVECTOR <T, 3> world_wheel_torque(0, -wheel_torque, 0);
-	wheel_space.RotateVector(world_wheel_torque);
-	ApplyTorque(world_wheel_torque);
+	///+  z yaw  y pitch
+	//MATHVECTOR <T, 3> world_wheel_torque(0, -wheel_torque, 0);
+	//wheel_space.RotateVector(world_wheel_torque);
+	//ApplyTorque(world_wheel_torque);
 }
 
 

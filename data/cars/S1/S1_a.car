@@ -6,7 +6,7 @@ max-angle = 25.1
 angular-damping = 0.0
 
 [ rot_drag ]
-roll  = 10.0
+roll  = 200.0
 pitch = 400.0
 yaw   = 500.0
 yaw2  = 2.0
@@ -24,11 +24,12 @@ width = 0.49
 height = 0.43
 offsetL = 0.0
 offsetW = 0.0
-offsetH = 0.78
+offsetH = 0.26
 
 [ engine ]
-position = 0.0, 0.4, -0.1
-mass = 70.0
+# center, front, up
+position = 0.0, 1.4, 0.6
+mass = 250.0
 max-power = 659360
 peak-engine-rpm = 6500
 rpm-limit = 7000.0
@@ -182,7 +183,7 @@ handbrake = 2.8
 
 [ driver ]
 position = -0.1, 0.4, 0.5
-mass = 80.0
+mass = 10.0
 view-position = 0.2, -0.4, 0.35
 hood-mounted-view-position = -0.57, 0, 0.46
 
@@ -195,8 +196,8 @@ drag-coefficient = 0.35
 position = 0, 2.34, -0.6
 frontal-area = 0.2
 drag-coefficient = 0
-surface-area = 0.3
-lift-coefficient = -0.5
+surface-area = 0.4
+lift-coefficient = -2.5
 efficiency = 0.95
 
 [ wing-rear ]
@@ -204,14 +205,14 @@ position = 0, -2.14, 0.37
 frontal-area = 0.2
 drag-coefficient = 0
 surface-area = 0.5
-lift-coefficient = -0.5
+lift-coefficient = -2.5
 efficiency = 0.95
 
 
 [ wheel-FR ]
-position = 0.74, 1.275, -0.52
-roll-height = 0.2
-mass = 30.0
+position = 0.74, 1.275, -0.02
+roll-height = 0.6
+mass = 15.0
 restitution = 0.1
 
 [ suspension-FR ]
@@ -219,9 +220,9 @@ position = 0.60, 1.275, -0.07
 hinge = -0.71, 0.55, -0.0
 
 [ wheel-FL ]
-position = -0.74, 1.275, -0.52
-roll-height = 0.2
-mass = 30.0
+position = -0.74, 1.275, -0.02
+roll-height = 0.6
+mass = 15.0
 restitution = 0.1
 
 [ suspension-FL ]
@@ -230,9 +231,9 @@ hinge = 0.71, 0.55, 0.0
 
 
 [ wheel-RR ]
-position = 0.74, -1.266, -0.52
-roll-height = 0.2
-mass = 30.0
+position = 0.74, -1.266, -0.02
+roll-height = 0.6
+mass = 15.0
 restitution = 0.1
 
 [ suspension-RR ]
@@ -240,9 +241,9 @@ position = 0.60, -1.266, -0.07
 hinge = -0.25, -1.94, 0.0
 
 [ wheel-RL ]
-position = -0.74, -1.266, -0.52
-roll-height = 0.2
-mass = 30.0
+position = -0.74, -1.266, -0.02
+roll-height = 0.6
+mass = 15.0
 restitution = 0.1
 
 [ suspension-RL ]
@@ -252,17 +253,17 @@ hinge = 0.25, -1.94, 0.0
 
 # these are used to calculate the weight distribution and balance
 [ particle-00 ]  # rear
-mass = 230
-position =  1.0, -1.9, -0.73
+mass = 225
+position =  1.0, -1.5, 0.44
 
 [ particle-01 ]
-mass = 230
-position = -1.0, -1.9, -0.73
+mass = 225
+position = -1.0, -1.5, 0.44
 
 [ particle-02 ]  # front
-mass = 230
-position =  1.0,  1.9, -0.73
+mass = 225
+position =  1.0,  1.5, 0.44
 
 [ particle-03 ]
-mass = 230
-position = -1.0,  1.9, -0.73
+mass = 225
+position = -1.0,  1.5, 0.44

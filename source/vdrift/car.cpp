@@ -160,8 +160,13 @@ bool CAR::Load(class App* pApp1,
 
 		MATHVECTOR<double, 3> position;
 		QUATERNION<double> orientation;
-		position = init_pos;	posAtStart = posLastCheck[0] = posLastCheck[1] = init_pos;
-		orientation = init_rot;	rotAtStart = rotLastCheck[0] = rotLastCheck[1] = init_rot;
+		position = init_pos;	
+		orientation = init_rot;
+		float stOfsY = 0.f;
+		carconf.GetParam("collision.start-offsetY", stOfsY);
+			position[2] += stOfsY;
+		posAtStart = posLastCheck[0] = posLastCheck[1] = position;
+		rotAtStart = rotLastCheck[0] = rotLastCheck[1] = orientation;
 		
 		dynamics.Init(pSet, pApp->sc, &pApp->fluidsXml,
 			world, bodymodel, wheelmodelfront, wheelmodelrear, position, orientation);
