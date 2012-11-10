@@ -52,7 +52,8 @@
 	<object mesh= "fir14w.mesh">
 		<shape type="capsZ" ofs="0 0 30" r="4.1" h="69.0" frict="0.2" restit="0.9" />
 	</object>
-
+	<!--none: plant1 plant2 shroom1_1 shroom1_2 shroom1_3 shroom2_1 shroom2_2 shroom2_3-->
+<!-- new -->
 	<object mesh= "palm.mesh">
 		<shape type="capsZ" ofs="0 0 1.4" r="0.4" h="3.0" frict="0.7" restit="0.9" />
 	</object>
@@ -69,5 +70,56 @@
 		<shape type="capsZ" ofs="-0.2 -0.1 2" r="0.7" h="9.0" frict="0.7" restit="0.9" />
 	</object>
 
-	<!--none: plant1 plant2 shroom1_1 shroom1_2 shroom1_3 shroom2_1 shroom2_2 shroom2_3-->
+<!--Autumn-->
+	<object mesh= "treeAO-25oakWMed.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 1" r="0.5" h="9.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeAOG-17birTall.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 3" r="0.25" h="9.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeAOR-13oakWBig.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 1" r="0.2" h="7.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeAOY-27mplMed.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 1" r="0.44" h="9.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeAR-10oakMed.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 1" r="0.2" h="7.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeAR-26oakWide.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 1" r="0.4" h="9.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeARk-12oakSm.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 1" r="0.12" h="6.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeAW-14LLHuge7k.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 2" r="0.3" h="12.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeAY-11aspTallMed.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 1" r="0.12" h="7.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeAY-19mplBig.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 3" r="0.25" h="12.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeAY-20mplWide.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 2" r="0.24" h="9.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeAY-28aspTallEmp.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 3" r="0.4" h="11.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeAYG-16birTallUp.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 3" r="0.22" h="10.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeAYO-18mplTall.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 3" r="0.22" h="12.0" frict="0.7" restit="0.9" />
+	</object>
+
+<!--Moss-->
+	<object mesh= "treeGY-36aspMed.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 2" r="0.4" h="8.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeGC-29aspDnSwp.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 2" r="0.4" h="8.0" frict="0.7" restit="0.9" />
+	</object>
+
 </collisions>
