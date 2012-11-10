@@ -701,7 +701,7 @@ bool App::KeyPress(const CmdKey &arg)
 		 case KC_U:	GuiShortcut(WND_Edit, 4,2);  return true;  //  U -Surfaces
 
 		case KC_V:	GuiShortcut(WND_Edit, 5);  return true;  // V Vegetation
-		 case KC_M:	GuiShortcut(WND_Edit, 5,1);  return true;  //  M -Models
+		 case KC_M:	GuiShortcut(WND_Edit, 5,2);  return true;  //  M -Models
 
 		case KC_R:	GuiShortcut(WND_Edit, 6);  return true;  // R Road
 		case KC_J:	GuiShortcut(WND_Edit, 7);  return true;  // J Objects

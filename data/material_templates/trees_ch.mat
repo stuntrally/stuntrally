@@ -113,6 +113,24 @@ material tree28mwtTwig		{	parent base-twig
   diffuseMap twig21_0yo.png  }
 
 
+//  moss  ..
+//---------------------------------------------------------------
+material tree29downswpTrunk	{	parent base-tree
+  ambient 0.9 0.9 0.9
+  diffuseMap trunk3m.png  }
+material tree29downswpTwig	{	parent base-twig
+  ambient 0.5 0.9 1.2
+  diffuseMap twig22g1.png  }
+
+material tree36upballTrunk	{	parent base-tree
+  ambient 0.9 0.9 0.7
+  diffuseMap trunk3m.png  }
+material tree36upballTwig	{	parent base-twig
+  ambient 0.76 1.0 0.35
+  diffuseMap twig22g1.png  }
+  //diffuseMap twig22g0d.png  }
+
+
 //  Green  todo..
 //---------------------------------------------------------------
 material tree19gwideTwig	{	parent base-twig
@@ -147,13 +165,7 @@ material tree19gwideTwig	{	parent base-twig
 //material tree24mupTwig		{	parent base-twig
 //  diffuseMap twig38_2y.png  }
 
-///  moss ..+
-material tree29downswpTrunk	{	parent base-tree
-  diffuseMap trunk2m.png  }
-material tree29downswpTwig	{	parent base-twig
-  ambient 0.5 0.9 1.2
-  diffuseMap twig22g1.png  }
-
+//  green
 material tree31kinklowTrunk	{	parent base-tree
   diffuseMap trunk2m.png  }
 material tree31kinklowTwig	{	parent base-twig
@@ -182,13 +194,6 @@ material tree35ballTrunk	{	parent base-tree
 material tree35ballTwig		{	parent base-twig
   ambient 0.5 0.6 0.7
   diffuseMap twig39_2o.png  }
-
-//  green
-material tree36upballTrunk	{	parent base-tree
-  diffuseMap trunk2m.png  }
-material tree36upballTwig	{	parent base-twig
-  //ambient 1.2 1.2 0.8
-  diffuseMap twig22g0d.png  }
 
 material tree37wballTrunk	{	parent base-tree
   ambient 0.8 0.8 0.8
@@ -231,7 +236,7 @@ material tree40topsmTwig	{	parent base-twig
 
 ///   birch small ov 2clr green org/ylw
 // *twig21_0yo `    twig21_1y -rg1.2 b.5   *twig21_2or ~.9
-///   bb medium o` dense
+///   aspen  medium o` dense
 // *twig22_1y ~     twig22_3gw `m   twig22_4g ?l
 ///   LL slim ()` dense ok  medium trees?  -not saturated, or rg1.2 b.9
 //  twig24_0o -d?  *twig24_1yow `   twig24_2yo `
@@ -249,7 +254,7 @@ material tree40topsmTwig	{	parent base-twig
 
 ///   green
 // *twig21g1  beech
-// *twig22g0d  twig22g1  o`
+//  twig22g0d  *twig22g1  aspen
 //  twig23g1d  big dark leaves  moss?
 // *twig24g1   twig24g2  ll
 // *twig26g1  maple
