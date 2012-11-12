@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-10-27 12:44+0300"
+"POT-Creation-Date: 2012-11-12 22:27+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -661,6 +661,10 @@ msgctxt "ViewStart"
 msgid "View Start"
 msgstr ""
 
+msgctxt "TipToggleGrass"
+msgid "Enable or disable this grass layer."
+msgstr ""
+
 msgctxt "SSS_SpeedFactor"
 msgid "Speed Factor"
 msgstr ""
@@ -890,7 +894,7 @@ msgid "Password"
 msgstr ""
 
 msgctxt "UseImposters"
-msgid "Use Imposters"
+msgid "Use Impostors"
 msgstr ""
 
 msgctxt "NetSettings"
@@ -926,7 +930,7 @@ msgid "Width Steps"
 msgstr ""
 
 msgctxt "GrassSway"
-msgid "Grass sway"
+msgid "Sway"
 msgstr ""
 
 msgctxt "TipSpeedSensitiveSteering"
@@ -1042,7 +1046,7 @@ msgid "Half"
 msgstr ""
 
 msgctxt "GrColorMap"
-msgid "Grass color map"
+msgid "Color map"
 msgstr ""
 
 msgctxt "TipBumpAmp"
@@ -1195,6 +1199,10 @@ msgstr ""
 
 msgctxt "Brush_ShapeNoise"
 msgid "Noise"
+msgstr ""
+
+msgctxt "Grasses"
+msgid "Grasses"
 msgstr ""
 
 msgctxt "HDRAdaptationScale"
@@ -1557,6 +1565,10 @@ msgctxt "Finished"
 msgid "Finished"
 msgstr ""
 
+msgctxt "InputNextLayTab"
+msgid "alt-1,2 - prev,next Layer tab"
+msgstr ""
+
 msgctxt "SSS_Effect"
 msgid "Effect"
 msgstr ""
@@ -1591,6 +1603,10 @@ msgstr ""
 
 msgctxt "RplSize"
 msgid "size"
+msgstr ""
+
+msgctxt "TipGrassPrev"
+msgid "Preview image of this grass layer (changed with material)."
 msgstr ""
 
 msgctxt "TipMudInt"
@@ -2222,7 +2238,7 @@ msgid "F1 or ` - GUI mode (toggle Options)"
 msgstr ""
 
 msgctxt "TipGrassMaterial"
-msgid "Grass material, chosen to match track's scenery."
+msgid "Grass material (type) for this layer, chosen to match track's scenery."
 msgstr ""
 
 msgctxt "TipRearThrottleInverse"
@@ -2557,6 +2573,10 @@ msgctxt "ParAmount"
 msgid "Particle amounts"
 msgstr ""
 
+msgctxt "TipGrassLayers"
+msgid "Grass layers. Recommended use 1-4."
+msgstr ""
+
 msgctxt "speed"
 msgid "speed"
 msgstr ""
@@ -2698,7 +2718,7 @@ msgid "Smooth size"
 msgstr ""
 
 msgctxt "TipGrassDens"
-msgid "How dense/rare will the grass be on terrain."
+msgid "Grass density for layer (how often it will appear)."
 msgstr ""
 
 msgctxt "Find"
@@ -3033,6 +3053,10 @@ msgctxt "InputStartWidth"
 msgid "; &apos;  -  adjust start box width (for road width)"
 msgstr ""
 
+msgctxt "ImpostorsOnly"
+msgid "Impostors Only (low quality)"
+msgstr ""
+
 msgctxt "Error"
 msgid "Error"
 msgstr ""
@@ -3042,7 +3066,7 @@ msgid "Resolution"
 msgstr ""
 
 msgctxt "GrassSize"
-msgid "Grass size"
+msgid "Size"
 msgstr ""
 
 msgctxt "Left"
@@ -3058,7 +3082,7 @@ msgid "Space  -  change road direction (+ or -)"
 msgstr ""
 
 msgctxt "GrMaterial"
-msgid "Grass Material"
+msgid "Material"
 msgstr ""
 
 msgctxt "Startup"

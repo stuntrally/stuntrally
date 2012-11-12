@@ -809,9 +809,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
+	<Tag name="TipToggleGrass">Enable or disable this grass layer.</Tag>
+	<Tag name="InputNextLayTab">alt-1,2 - prev,next Layer tab</Tag>
+	<Tag name="Grasses">Grasses</Tag>
 	<Tag name="InputRoadLooped">O - toggle looped</Tag>
+	<Tag name="TipGrassPrev">Preview image of this grass layer (changed with material).</Tag>
 	<Tag name="Tweak">Tweak</Tag>
 	<Tag name="MaterialProperties">Material Properties</Tag>
+	<Tag name="TipGrassLayers">Grass layers. Recommended use 1-4.</Tag>
+	<Tag name="ImpostorsOnly">Impostors Only (low quality)</Tag>
 	<Tag name="GameVersion">1.8</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
