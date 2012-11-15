@@ -24,6 +24,7 @@
 #include <OgreOverlayManager.h>
 
 #include "../../shiny/Main/Factory.hpp"
+#include "../../shiny/Platforms/Ogre/OgreMaterial.hpp"
 
 #include "../common/QTimer.h"
 
@@ -39,34 +40,33 @@ void App::changeShadows()
 	
 	//  get settings
 	bool enabled = pSet->shadow_type != 0;
-	bool bDepth = pSet->shadow_type >= 2;
-	bool bSoft = pSet->shadow_type == 3;
+	bool bDepth = pSet->shadow_type >= Sh_Depth;
+	bool bSoft = pSet->shadow_type == Sh_Soft;
 	
 	pSet->shadow_size = std::max(0,std::min(ciShadowNumSizes-1, pSet->shadow_size));
-	int fTex = /*2048*/ ciShadowSizesA[pSet->shadow_size], fTex2 = fTex/2;
-	int num = /*3*/ pSet->shadow_count;
+	int fTex = ciShadowSizesA[pSet->shadow_size], fTex2 = fTex/2;
+	int num = pSet->shadow_count;
 
 	sh::Vector4* fade = new sh::Vector4(
 		pSet->shadow_dist,
 		pSet->shadow_dist * 0.8, // fade start
 		0, 0);
 
-	sh::Factory::getInstance().setSharedParameter ("shadowFar_fadeStart", sh::makeProperty <sh::Vector4>(fade));
+	mFactory->setSharedParameter("shadowFar_fadeStart", sh::makeProperty<sh::Vector4>(fade));
 
 	if (terrain)
 	{
-		sh::Factory::getInstance ().setSharedParameter ("terrainWorldSize", sh::makeProperty<sh::FloatValue> (new sh::FloatValue(terrain->getWorldSize())));
-		sh::Factory::getInstance ().setTextureAlias ("TerrainLightMap", terrain->getLightmap ()->getName());
+		sh::Factory::getInstance().setSharedParameter("terrainWorldSize", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(terrain->getWorldSize())));
+		sh::Factory::getInstance().setTextureAlias("TerrainLightMap", terrain->getLightmap()->getName());
 	}
 		
 	// disable 4 shadow textures (does not work because no texcoord's left in shader)
-	if (num == 4) num = 3;
+	if (num == 4)  num = 3;
 
 
 	if (!enabled)  {
 		mSceneMgr->setShadowTechnique(SHADOWTYPE_NONE);  /*return;*/ //
 	}
-
 	else
 	{
 		// General scene setup
@@ -75,27 +75,30 @@ void App::changeShadows()
 		mSceneMgr->setShadowFarDistance(pSet->shadow_dist);  // 3000
 		mSceneMgr->setShadowTextureCountPerLightType(Light::LT_DIRECTIONAL, num);
 
-		if (mPSSMSetup.isNull())
+		if (num == 1)  // 1 tex, fast
 		{
-			// shadow camera setup
-			PSSMShadowCameraSetup* pssmSetup = new PSSMShadowCameraSetup();
-			#ifndef ROAD_EDITOR
-			pssmSetup->setSplitPadding(mSplitMgr->mCameras.front()->getNearClipDistance());
-			//pssmSetup->setSplitPadding(10);
-			pssmSetup->calculateSplitPoints(num, mSplitMgr->mCameras.front()->getNearClipDistance(), mSceneMgr->getShadowFarDistance());
-			#else
-			pssmSetup->setSplitPadding(mCamera->getNearClipDistance());
-			//pssmSetup->setSplitPadding(10);
-			pssmSetup->calculateSplitPoints(num, mCamera->getNearClipDistance(), mSceneMgr->getShadowFarDistance());
-			#endif
-			for (int i=0; i < num; ++i)
-			{	//int size = i==0 ? fTex : fTex2;
-				const Real cAdjfA[5] = {2, 1, 0.5, 0.25, 0.125};
-				pssmSetup->setOptimalAdjustFactor(i, cAdjfA[std::min(i, 4)]);
+			ShadowCameraSetupPtr mShadowCameraSetup = ShadowCameraSetupPtr(new LiSPSMShadowCameraSetup());
+			mSceneMgr->setShadowCameraSetup(mShadowCameraSetup);
+		}else
+		{	if (mPSSMSetup.isNull())  // pssm
+			{
+				PSSMShadowCameraSetup* pssmSetup = new PSSMShadowCameraSetup();
+				#ifndef ROAD_EDITOR
+				pssmSetup->setSplitPadding(mSplitMgr->mCameras.front()->getNearClipDistance());
+				pssmSetup->calculateSplitPoints(num, mSplitMgr->mCameras.front()->getNearClipDistance(), mSceneMgr->getShadowFarDistance());
+				#else
+				pssmSetup->setSplitPadding(mCamera->getNearClipDistance());
+				pssmSetup->calculateSplitPoints(num, mCamera->getNearClipDistance(), mSceneMgr->getShadowFarDistance());
+				#endif
+				for (int i=0; i < num; ++i)
+				{	//int size = i==0 ? fTex : fTex2;
+					const Real cAdjfA[5] = {2, 1, 0.5, 0.25, 0.125};
+					pssmSetup->setOptimalAdjustFactor(i, cAdjfA[std::min(i, 4)]);
+				}
+				mPSSMSetup.bind(pssmSetup);
 			}
-			mPSSMSetup.bind(pssmSetup);
+			mSceneMgr->setShadowCameraSetup(mPSSMSetup);
 		}
-		mSceneMgr->setShadowCameraSetup(mPSSMSetup);
 
 		mSceneMgr->setShadowTextureCount(num);
 		for (int i=0; i < num; ++i)
@@ -120,25 +123,24 @@ void App::changeShadows()
 		mSceneMgr->setShadowTextureCasterMaterial(shadowCasterMat);
 	}
 
-	mSceneMgr->setShadowColour (Ogre::ColourValue(0,0,0,1));
+	mSceneMgr->setShadowColour(Ogre::ColourValue(0,0,0,1));
 
 
-	sh::Factory::getInstance().setGlobalSetting ("shadows", "false");
-	sh::Factory::getInstance().setGlobalSetting ("shadows_pssm", (pSet->shadow_type != 0) ? "true" : "false");
-	sh::Factory::getInstance().setGlobalSetting ("shadows_depth", (pSet->shadow_type > 1) ? "true" : "false");
-	sh::Factory::getInstance().setGlobalSetting ("terrain_specular", (pSet->ter_mtr >= 1)  ? "true" : "false");
-	sh::Factory::getInstance().setGlobalSetting ("terrain_normal", (pSet->ter_mtr >= 2)  ? "true" : "false");
-	sh::Factory::getInstance().setGlobalSetting ("terrain_parallax", (pSet->ter_mtr >= 3)  ? "true" : "false");
-	sh::Factory::getInstance().setGlobalSetting ("terrain_triplanar", (pSet->ter_mtr >= 4)  ? "true" : "false");
+	mFactory->setGlobalSetting("shadows", "false");
+	mFactory->setGlobalSetting("shadows_pssm", b2s(pSet->shadow_type != Sh_None));
+	mFactory->setGlobalSetting("shadows_depth", b2s(pSet->shadow_type >= Sh_Depth));
+	mFactory->setGlobalSetting("terrain_specular", b2s(pSet->ter_mtr >= 1));
+	mFactory->setGlobalSetting("terrain_normal",   b2s(pSet->ter_mtr >= 2));
+	mFactory->setGlobalSetting("terrain_parallax", b2s(pSet->ter_mtr >= 3));
+	mFactory->setGlobalSetting("terrain_triplanar",b2s(pSet->ter_mtr >= 4));
 
-
-	mFactory->setGlobalSetting ("water_reflect", pSet->water_reflect ? "true" : "false");
-	mFactory->setGlobalSetting ("water_refract", pSet->water_refract ? "true" : "false");
+	mFactory->setGlobalSetting("water_reflect", b2s(pSet->water_reflect));
+	mFactory->setGlobalSetting("water_refract", b2s(pSet->water_refract));
 
 
 #if !ROAD_EDITOR
-	sh::Factory::getInstance().setGlobalSetting ("soft_particles", pSet->all_effects && pSet->softparticles  ? "true" : "false");
-	sh::Factory::getInstance().setGlobalSetting ("mrt_output", NeedMRTBuffer () ? "true" : "false");
+	mFactory->setGlobalSetting("soft_particles", b2s(pSet->all_effects && pSet->softparticles));
+	mFactory->setGlobalSetting("mrt_output", b2s(NeedMRTBuffer()));
 #endif
 
 	#if 0
@@ -155,11 +157,11 @@ void App::changeShadows()
 	overlay = mgr.create("DebugOverlay");
 	
 	TexturePtr tex;
-	for (size_t i = 0; i < 3; ++i) {
+	for (int i = 0; i < pSet->shadow_count; ++i)
+	{	
 		TexturePtr tex = mSceneMgr->getShadowTexture(i);
 		
 		// Set up a debug panel to display the shadow
-		
 		if (MaterialManager::getSingleton().resourceExists("Ogre/DebugTexture" + toStr(i)))
 			MaterialManager::getSingleton().remove("Ogre/DebugTexture" + toStr(i));
 		MaterialPtr debugMat = MaterialManager::getSingleton().create(
@@ -175,18 +177,15 @@ void App::changeShadows()
 		// destroy container if exists
 		try
 		{
-			if (debugPanel = 
-				static_cast<OverlayContainer*>(
-					mgr.getOverlayElement("Ogre/DebugTexPanel" + toStr(i)
-				)))
+			if (debugPanel = static_cast<OverlayContainer*>(mgr.getOverlayElement("Ogre/DebugTexPanel" + toStr(i))))
 				mgr.destroyOverlayElement(debugPanel);
 		}
 		catch (Ogre::Exception&) {}
 		
 		debugPanel = (OverlayContainer*)
 			(OverlayManager::getSingleton().createOverlayElement("Panel", "Ogre/DebugTexPanel" + StringConverter::toString(i)));
-		debugPanel->_setPosition(0.8, i*0.25);
-		debugPanel->_setDimensions(0.2, 0.24);
+		debugPanel->_setPosition(0.8, i*0.31);  //aspect.. 0.25 0.24
+		debugPanel->_setDimensions(0.2, 0.3);
 		debugPanel->setMaterialName(debugMat->getName());
 		debugPanel->show();
 		overlay->add2D(debugPanel);
@@ -197,11 +196,11 @@ void App::changeShadows()
 	UpdPSSMMaterials();
 
 
-	// rebuild static geom after materials change, avoids crash
+	//  rebuild static geom after materials change
 	if (mStaticGeom)
 	{
-		mStaticGeom->destroy ();
-		mStaticGeom->build ();
+		mStaticGeom->destroy();
+		mStaticGeom->build();
 	}
 
 	ti.update();	/// time
@@ -210,16 +209,69 @@ void App::changeShadows()
 }
 
 
-void App::UpdPSSMMaterials()	/// . . . . . . . . 
+/// . . . . . . . . 
+void App::UpdPSSMMaterials()
 {
-	if (pSet->shadow_type == 0)  return;
+	if (pSet->shadow_type == Sh_None)  return;
+	
+	if (pSet->shadow_count == 1)  // 1 tex
+	{
+		float dist = pSet->shadow_dist;
+		sh::Vector3* splits = new sh::Vector3(dist, 0,0);  //dist*2, dist*3);
+		sh::Factory::getInstance().setSharedParameter("pssmSplitPoints", sh::makeProperty<sh::Vector3>(splits));
+		return;
+	}
+	
 	if (!mPSSMSetup.get())  return;
 	
 	//--  pssm params
 	PSSMShadowCameraSetup* pssmSetup = static_cast<PSSMShadowCameraSetup*>(mPSSMSetup.get());
-	const PSSMShadowCameraSetup::SplitPointList& splitPointList = pssmSetup->getSplitPoints();
+	const PSSMShadowCameraSetup::SplitPointList& sp = pssmSetup->getSplitPoints();
+	const int last = sp.size()-1;
 
-	sh::Vector3* splits = new sh::Vector3(splitPointList[1],splitPointList[2],splitPointList[3]);
+	sh::Vector3* splits = new sh::Vector3(
+		sp[std::min(1,last)], sp[std::min(2,last)], sp[std::min(3,last)] );
 
 	sh::Factory::getInstance().setSharedParameter("pssmSplitPoints", sh::makeProperty<sh::Vector3>(splits));
+}
+
+
+//  . . . . . . . . 
+void App::materialCreated(sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex)
+{
+
+	Ogre::Technique* t = static_cast<sh::OgreMaterial*>(m->getMaterial())->getOgreTechniqueForConfiguration (configuration, lodIndex);
+
+	if (pSet->shadow_type <= Sh_Simple)
+	{
+		t->setShadowCasterMaterial("");
+		return;
+	}
+
+	// this is just here to set the correct shadow caster
+	if (m->hasProperty("transparent") && m->hasProperty("cull_hardware") &&
+		sh::retrieveValue<sh::StringValue>(m->getProperty("cull_hardware"), 0).get() == "none")
+	{
+		// Crash !?
+		///assert(!MaterialManager::getSingleton().getByName("PSSM/shadow_caster_nocull").isNull ());
+		//t->setShadowCasterMaterial("PSSM/shadow_caster_nocull");
+	}
+
+	bool noalpha = !m->hasProperty("transparent") || !sh::retrieveValue<sh::BooleanValue>(m->getProperty("transparent"), 0).get();
+	bool instancing = m->hasProperty("instancing") && sh::retrieveValue<sh::BooleanValue>(m->getProperty("instancing"), 0).get();
+	/// TODO: in settings and gui chk..
+	//instancing = false;
+	//noalpha = true;
+
+	std::string vertex = "PSSM/shadow_caster";
+	if (instancing)  vertex += "_instancing";
+	vertex += "_vs";
+
+	std::string fragment = "PSSM/shadow_caster";
+
+	if (!noalpha)  fragment += "_alpha";
+	fragment += "_ps";
+
+	t->getPass(0)->setShadowCasterVertexProgram(vertex);
+	t->getPass(0)->setShadowCasterFragmentProgram(fragment);
 }

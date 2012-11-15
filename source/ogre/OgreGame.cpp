@@ -14,8 +14,6 @@
 #include <OgreManualObject.h>
 using namespace Ogre;
 
-#include "../shiny/Platforms/Ogre/OgreMaterial.hpp"
-
 
 //  ctors  -----------------------------------------------
 App::App(SETTINGS *settings, GAME *game)
@@ -290,4 +288,19 @@ void App::materialCreated (sh::MaterialInstance* m, const std::string& configura
 	{
 		t->setShadowCasterMaterial("PSSM/shadow_caster_noalpha");
 	}
+	//noalpha = true;
+
+	std::string vertex = "PSSM/shadow_caster";
+	if (instancing) vertex += "_instancing";
+	vertex += "_vs";
+
+	std::string fragment = "PSSM/shadow_caster";
+
+	if (!noalpha) fragment += "_alpha";
+	fragment += "_ps";
+
+	t->getPass (0)->setShadowCasterVertexProgram(vertex);
+	t->getPass (0)->setShadowCasterFragmentProgram(fragment);
+}
+
 }

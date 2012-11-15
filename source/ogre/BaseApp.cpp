@@ -122,7 +122,7 @@ void BaseApp::updateStats()
             batchCount = stats.batchCount;
         }
 
-		mOvrTris->setCaption( fToStr(Real(triCount)/1000.f, 1)+"k");
+		mOvrTris->setCaption( fToStr(Real(triCount)/1000.f,0,4)+"k");
 		mOvrBat->setCaption( toStr(batchCount) );
 
 		mOvrDbg->setCaption( mFilText + "  " + mDebugText );
