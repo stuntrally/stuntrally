@@ -29,9 +29,9 @@ if [ ! -d ./translation_templates ]; then
 	echo "translation_templates does not exist! Please clone stuntrally/translation_templates to create this folder."
 else
 	echo "Uploading new template..."
-	cp stuntrally.pot ./translation_templates/
+	cp stuntrally.pot ./translation_templates/stuntrally/
 	cd translation_templates
-	git add stuntrally.pot
+	git add stuntrally/stuntrally.pot
 	git commit -m "Automatic translation template update"
 	git push origin master
 fi
