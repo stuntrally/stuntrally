@@ -8,6 +8,7 @@
 
 
 const static int graph_types = 7;  // total graph types count
+enum eShadowType  {  Sh_None=0, Sh_Simple, Sh_Depth, Sh_Soft  };
 
 class SETTINGS
 {
@@ -28,7 +29,7 @@ public:
 	int anisotropy, tex_size, ter_mtr;  bool bFog;
 	float shaders;
 	float view_distance, terdetail,terdist, road_dist;
-	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type, shadow_filter;
+	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_filter;  eShadowType shadow_type;
 	int refl_skip, refl_faces, refl_size;  float refl_dist;
 	bool water_reflect, water_refract; int water_rttsize;
 	int refl_mode; // 0 static, 1 single, 2 full, explanation: see CarReflection.h

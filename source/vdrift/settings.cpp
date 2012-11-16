@@ -87,7 +87,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "graph_reflect.water_rttsize", water_rttsize);
 	
 	Param(c,w, "graph_shadow.dist", shadow_dist);			Param(c,w, "graph_shadow.size", shadow_size);
-	Param(c,w, "graph_shadow.count",shadow_count);			Param(c,w, "graph_shadow.type", shadow_type);
+	Param(c,w, "graph_shadow.count",shadow_count);			Param(c,w, "graph_shadow.type", (int&)(shadow_type));
 	Param(c,w, "graph_shadow.shaders", shaders);			Param(c,w, "graph_shadow.lightmap_size", lightmap_size);
 	Param(c,w, "graph_shadow.filter", shadow_filter);
 	Param(c,w, "graph_shadow.shader_mode", shader_mode);
@@ -167,7 +167,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2), shaders(0.5),
 	refl_skip(200), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode(1),
 	water_reflect(0), water_refract(0), water_rttsize(0),
-	shadow_type(2), shadow_size(2), shadow_count(3), shadow_dist(3000), shadow_filter(1), lightmap_size(0),
+	shadow_type(Sh_Depth), shadow_size(2), shadow_count(3), shadow_dist(3000), shadow_filter(1), lightmap_size(0),
 	grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(true), imposters_only(false),
 	particles(true), trails(true), particles_len(1.f), trails_len(1.f),
 	//  car

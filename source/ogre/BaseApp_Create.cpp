@@ -429,35 +429,35 @@ bool BaseApp::setup()
 	platform->setCacheFolder (PATHMANAGER::GetCacheDir());
 
 	mFactory = new sh::Factory(platform);
-	mFactory->setReadSourceCache (true);
-	mFactory->setWriteSourceCache (true);
-	mFactory->setReadMicrocodeCache (true);
-	mFactory->setWriteMicrocodeCache (true);
-	mFactory->setGlobalSetting("fog", "true");
-	mFactory->setGlobalSetting("wind", "true");
-	mFactory->setGlobalSetting("mrt_output", "false");
-	mFactory->setGlobalSetting("shadows", "false");
-	mFactory->setGlobalSetting("shadows_pssm", "false");
-	sh::Factory::getInstance().setGlobalSetting("shadows_depth", (pSet->shadow_type > 1) ? "true" : "false");
-	mFactory->setGlobalSetting("lighting", "true");
-	mFactory->setGlobalSetting("terrain_composite_map", "false");
-	mFactory->setGlobalSetting("soft_particles", "false");
-	mFactory->setGlobalSetting("editor", "false");
-
-	mFactory->setSharedParameter("pssmSplitPoints", sh::makeProperty<sh::Vector3>(new sh::Vector3(0,0,0)));
-	mFactory->setSharedParameter("shadowFar_fadeStart", sh::makeProperty<sh::Vector4>(new sh::Vector4(0,0,0,0)));
-	mFactory->setSharedParameter("arrowColour1", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
-	mFactory->setSharedParameter("arrowColour2", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
-	mFactory->setSharedParameter("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(0)));
-	mFactory->setSharedParameter("terrainWorldSize", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(1024)));
-
 	sh::Factory& fct = sh::Factory::getInstance();
-	fct.setGlobalSetting("terrain_specular", (pSet->ter_mtr >= 1)  ? "true" : "false");
-	fct.setGlobalSetting("terrain_normal", (pSet->ter_mtr >= 2)  ? "true" : "false");
-	fct.setGlobalSetting("terrain_parallax", (pSet->ter_mtr >= 3)  ? "true" : "false");
-	fct.setGlobalSetting("terrain_triplanar", (pSet->ter_mtr >= 4)  ? "true" : "false");
-	fct.setGlobalSetting("water_reflect", pSet->water_reflect ? "true" : "false");
-	fct.setGlobalSetting("water_refract", pSet->water_refract ? "true" : "false");
+	fct.setReadSourceCache (true);
+	fct.setWriteSourceCache (true);
+	fct.setReadMicrocodeCache (true);
+	fct.setWriteMicrocodeCache (true);
+	fct.setGlobalSetting("fog", "true");
+	fct.setGlobalSetting("wind", "true");
+	fct.setGlobalSetting("mrt_output", "false");
+	fct.setGlobalSetting("shadows", "false");
+	fct.setGlobalSetting("shadows_pssm", "false");
+	fct.setGlobalSetting("shadows_depth", b2s(pSet->shadow_type >= Sh_Depth));
+	fct.setGlobalSetting("lighting", "true");
+	fct.setGlobalSetting("terrain_composite_map", "false");
+	fct.setGlobalSetting("soft_particles", "false");
+	fct.setGlobalSetting("editor", "false");
+
+	fct.setSharedParameter("pssmSplitPoints", sh::makeProperty<sh::Vector3>(new sh::Vector3(0,0,0)));
+	fct.setSharedParameter("shadowFar_fadeStart", sh::makeProperty<sh::Vector4>(new sh::Vector4(0,0,0,0)));
+	fct.setSharedParameter("arrowColour1", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
+	fct.setSharedParameter("arrowColour2", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
+	fct.setSharedParameter("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(0)));
+	fct.setSharedParameter("terrainWorldSize", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(1024)));
+
+	fct.setGlobalSetting("terrain_specular", b2s(pSet->ter_mtr >= 1));
+	fct.setGlobalSetting("terrain_normal",   b2s(pSet->ter_mtr >= 2));
+	fct.setGlobalSetting("terrain_parallax", b2s(pSet->ter_mtr >= 3));
+	fct.setGlobalSetting("terrain_triplanar",b2s(pSet->ter_mtr >= 4));
+	fct.setGlobalSetting("water_reflect", b2s(pSet->water_reflect));
+	fct.setGlobalSetting("water_refract", b2s(pSet->water_refract));
 	fct.setSharedParameter("waterEnabled", sh::makeProperty<sh::FloatValue> (new sh::FloatValue(0.0)));
 	fct.setSharedParameter("waterLevel", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(0)));
 	fct.setSharedParameter("waterTimer", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(0)));
@@ -475,21 +475,16 @@ bool BaseApp::setup()
 	#else
 		lang = sh::Language_GLSL;
 	#endif
-	}
-	else
+	}else
 	{
-		if (pSet->shader_mode == "glsl")
-			lang = sh::Language_GLSL;
-		else if (pSet->shader_mode == "cg")
-			lang = sh::Language_CG;
-		else if (pSet->shader_mode == "hlsl")
-			lang = sh::Language_HLSL;
-		else
-			assert(0);
+		if (pSet->shader_mode == "glsl")		lang = sh::Language_GLSL;
+		else if (pSet->shader_mode == "cg")		lang = sh::Language_CG;
+		else if (pSet->shader_mode == "hlsl")	lang = sh::Language_HLSL;
+		else  assert(0);
 	}
-	mFactory->setCurrentLanguage (lang);
+	mFactory->setCurrentLanguage(lang);
 
-	mFactory->loadAllFiles ();
+	mFactory->loadAllFiles();
 
 	postInit();
 
