@@ -216,7 +216,7 @@
 	<Tag name="Fluids">Fluides</Tag>
 	<Tag name="NetNickname">Surnom</Tag>
 	<Tag name="NetPassword">Mot de passe</Tag>
-	<Tag name="UseImposters">Use Imposters</Tag>
+	<Tag name="UseImposters">Use Impostors</Tag>
 	<Tag name="NetSettings">Paramètres</Tag>
 	<Tag name="TipModelMaxScale">Model maximal scale.</Tag>
 	<Tag name="TerrainError">Erreur du terrain</Tag>
@@ -251,7 +251,7 @@
 	<Tag name="Bloom">Bloom</Tag>
 	<Tag name="TipRenameTrk">Rename selected track with new name (change name first).</Tag>
 	<Tag name="TerrainHalf">Moitié</Tag>
-	<Tag name="GrColorMap">Grass color map</Tag>
+	<Tag name="GrColorMap">Color map</Tag>
 	<Tag name="TipBumpAmp">Amplitude of additional bumps on surface (how high).</Tag>
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
 	<Tag name="TipNormalTex">Normal texture (Height in alpha).</Tag>
@@ -431,7 +431,7 @@
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
 	<Tag name="Leave">Quitter</Tag>
 	<Tag name="TipVegetModels">Models (meshes) for vegetation. Found in data/trees/.</Tag>
-	<Tag name="GrassSway">Grass sway</Tag>
+	<Tag name="GrassSway">Sway</Tag>
 	<Tag name="Right">Droite</Tag>
 	<Tag name="Help">Aide</Tag>
 	<Tag name="LODPointsDist">LOD points dist.</Tag>
@@ -536,7 +536,7 @@
 	<Tag name="TipRoadStats">Whole road statistics.</Tag>
 	<Tag name="InputUpdate">F8 - update track</Tag>
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
-	<Tag name="TipGrassMaterial">Grass material, chosen to match track's scenery.</Tag>
+	<Tag name="TipGrassMaterial">Grass material (type) for this layer, chosen to match track's scenery.</Tag>
 	<Tag name="TipRearThrottleInverse">Inverse throttle and brake function in rear gear.</Tag>
 	<Tag name="LS_ROAD">Loading Road</Tag>
 	<Tag name="RoadPoint">Road Point</Tag>
@@ -748,12 +748,12 @@
 	<Tag name="InputStartWidth">; &apos;  -  adjust start box width (for road width)</Tag>
 	<Tag name="Error">Erreur</Tag>
 	<Tag name="Resolution">Résolution</Tag>
-	<Tag name="GrassSize">Grass size</Tag>
+	<Tag name="GrassSize">Size</Tag>
 	<Tag name="Left">Gauche</Tag>
 	<Tag name="InputBrushOctaves">, .   -  noise Octaves (detail)</Tag>
 	<Tag name="InputStartHeight">[,]  -  adjust start box height (bigger for pipes)</Tag>
 	<Tag name="TipDustInt">Dust particles intensity.</Tag>
-	<Tag name="GrMaterial">Grass Material</Tag>
+	<Tag name="GrMaterial">Material</Tag>
 	<Tag name="Startup">Démarrage</Tag>
 	<Tag name="Properties">Properties</Tag>
 	<Tag name="Brush_ShapeTriangle">Triang</Tag>
@@ -809,9 +809,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
+	<Tag name="TipToggleGrass">Enable or disable this grass layer.</Tag>
+	<Tag name="InputNextLayTab">alt-1,2 - prev,next Layer tab</Tag>
+	<Tag name="Grasses">Grasses</Tag>
 	<Tag name="InputRoadLooped">O - toggle looped</Tag>
+	<Tag name="TipGrassPrev">Preview image of this grass layer (changed with material).</Tag>
 	<Tag name="Tweak">Tweak</Tag>
 	<Tag name="MaterialProperties">Material Properties</Tag>
+	<Tag name="TipGrassLayers">Grass layers. Recommended use 1-4.</Tag>
+	<Tag name="ImpostorsOnly">Impostors Only (low quality)</Tag>
 	<Tag name="GameVersion">1.8</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

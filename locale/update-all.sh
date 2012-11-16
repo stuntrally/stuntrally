@@ -25,4 +25,15 @@ for loc in $LOCALES; do
 	`which python2` ./xml_po_parser.py ./translations-export/pofiles/locale/${loc}.po ../data/gui/core_language_${loc}_tag.xml
 done
 
+if [ ! -d ./translation_templates ]; then
+	echo "translation_templates does not exist! Please clone stuntrally/translation_templates to create this folder."
+else
+	echo "Uploading new template..."
+	cp stuntrally.pot ./translation_templates/
+	cd translation_templates
+	git add stuntrally.pot
+	git commit -m "Automatic translation template update"
+	git push origin master
+fi
+
 echo "Done."

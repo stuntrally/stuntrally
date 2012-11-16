@@ -1,4 +1,5 @@
 data/tracks
+locale/translation_templates
 locale/translations-export
 *build
 build*
