@@ -24,6 +24,7 @@ static Ogre::String fToStr(const float v, unsigned short precision, unsigned sho
 #define s2i(s)  Ogre::StringConverter::parseInt(s)
 #define s2c(s)  Ogre::StringConverter::parseColourValue(s)
 #define s2v(s)  Ogre::StringConverter::parseVector3(s)
+#define b2s(b)  (b) ? "true" : "false"
 
 /// translation
 #define TR(s)  MyGUI::LanguageManager::getInstance().replaceTags(s)
