@@ -150,7 +150,7 @@ public:
 
 	bool IsFocGuiInput()  {  return isFocGui || isFocRpl;  }
 	bool IsFocGui();
-	Ogre::RenderWindow* getWindow (){ return mWindow;}
+	Ogre::RenderWindow* getWindow()  {  return mWindow;  }
 protected:
 
 	///  overlay
@@ -177,7 +177,7 @@ protected:
 	//  main menu
 	enum WND_Types {  WND_Game=0, WND_Champ, WND_Replays, WND_Help, WND_Options, WND_ALL  };  // pSet->inMenu
 	MyGUI::WindowPtr mWndMain,mWndGame,mWndReplays,mWndHelp,mWndOpts,  // menu, windows
-		mWndRpl, mWndChampStage,mWndChampEnd, mWndNetEnd;  // rpl controls, champ wnds
+		mWndRpl, mWndChampStage,mWndChampEnd, mWndNetEnd, mWndTweak;  // rpl controls, champ wnds, tools
 	MyGUI::TabPtr mWndTabsGame,mWndTabsOpts,mWndTabsHelp,mWndTabsRpl;  // main tabs on windows
 	MyGUI::WidgetPtr mWndMainPanels[WND_ALL];  MyGUI::ButtonPtr mWndMainBtns[WND_ALL];
 	MyGUI::VectorWidgetPtr vwGui;  // all widgets to destroy

@@ -148,7 +148,7 @@ BaseApp::BaseApp()
 	,isFocGui(0),isFocRpl(0), mGUI(0), mPlatform(0)
 	,mWndTabsGame(0),mWndTabsOpts(0),mWndTabsHelp(0),mWndTabsRpl(0)
 	,mWndMain(0),mWndGame(0),mWndReplays(0),mWndHelp(0),mWndOpts(0)
-	,mWndRpl(0), mWndChampStage(0),mWndChampEnd(0), mWndNetEnd(0)
+	,mWndRpl(0), mWndChampStage(0),mWndChampEnd(0), mWndNetEnd(0), mWndTweak(0)
 	,bSizeHUD(true), bLoading(false), bAssignKey(false), bLoadingEnd(0)
 	,mMasterClient(), mClient(), mLobbyState(DISCONNECTED)
 	,mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0)
@@ -598,7 +598,9 @@ void BaseApp::LoadingOff()
 bool BaseApp::keyReleased( const OIS::KeyEvent &arg )
 {
 	if (bAssignKey) return true;
-	if (isFocGui && mGUI)  {
+	bool tweak = mWndTweak && mWndTweak->getVisible();
+
+	if (mGUI && (isFocGui || tweak))  {
 		MyGUI::InputManager::getInstance().injectKeyRelease(MyGUI::KeyCode::Enum(arg.key));
 		return true;  }
 

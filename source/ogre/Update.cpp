@@ -58,7 +58,9 @@ void App::DoNetworking()
 {
 	bool doNetworking = (mClient && mClient->getState() == P2PGameClient::GAME);
 	// Note that there is no pause when in networked game
-	pGame->pause = bRplPlay ? (bRplPause || isFocGui) : (isFocGui && !doNetworking);
+	bool tweak = mWndTweak && mWndTweak->getVisible();
+	bool gui = isFocGui || tweak;
+	pGame->pause = bRplPlay ? (bRplPause || gui) : (gui && !doNetworking);
 
 	//  handle networking stuff
 	if (doNetworking)

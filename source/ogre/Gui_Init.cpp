@@ -59,6 +59,7 @@ void App::InitGui()
 	mWndChampStage = mGUI->findWidget<Window>("WndChampStage",false);  mWndChampStage->setVisible(false);
 	mWndChampEnd = mGUI->findWidget<Window>("WndChampEnd",false);  mWndChampEnd->setVisible(false);
 	mWndNetEnd = mGUI->findWidget<Window>("WndNetEnd",false);  mWndNetEnd->setVisible(false);
+	mWndTweak = mGUI->findWidget<Window>("WndTweak",false);  mWndTweak->setVisible(false);
 	
 	//  main menu
 	for (int i=0; i < WND_ALL; ++i)

@@ -320,7 +320,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				{
 					//T yy = max_y * 2.0 * (x-LEN*0.5) / LEN;
 					T yy = max_y * x / LEN;
-					T n = (NG-1-i) * 0.75 + 0.25;
+					T n = (NG-1-i+1) * 0.75;
 					T fy = tire.Pacejka_Fy(yy, n, 0, 1.0, maxF); // normF
 					//T fy = tire.Pacejka_Fy(alpha, 3, n-2, 1.0, maxF); // gamma
 					ft[x] = fy;

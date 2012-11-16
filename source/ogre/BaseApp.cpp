@@ -291,5 +291,6 @@ bool BaseApp::IsFocGui()
 	return isFocGui || isFocRpl ||
 		(mWndChampStage && mWndChampStage->getVisible()) ||
 		(mWndChampEnd && mWndChampEnd->getVisible()) ||
-		(mWndNetEnd && mWndNetEnd->getVisible());
+		(mWndNetEnd && mWndNetEnd->getVisible()) ||
+		(mWndTweak && mWndTweak->getVisible());
 }
