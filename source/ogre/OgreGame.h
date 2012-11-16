@@ -328,7 +328,8 @@ protected:
 	int lastAxis, axisCnt;  std::string joyName;  class OISB::AnalogAxisAction* actDetail;
 	MyGUI::EditPtr edInputMin, edInputMax, edInputMul, edInputReturn, edInputIncrease;  void editInput(MyGUI::EditPtr);
 	MyGUI::ComboBox* cmbInpDetSet;  void comboInputPreset(CMB), comboInputKeyAllPreset(CMB);
-	MyGUI::EditPtr edTweak;  void TweakToggle();
+
+	MyGUI::EditPtr edTweak;  void TweakToggle();  MyGUI::StaticTextPtr txtTweakPath;
 
 
 	//  sliders  -----------------------------------------
@@ -470,6 +471,9 @@ protected:
 
 public:
 	virtual void materialCreated (sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex);
+
+	bool GetCarPath(std::string* pathCar/*out*/, std::string* pathSave/*=0*/, std::string* pathSaveDir,
+		std::string carname, bool asphalt, std::string tweakSetup="", bool forceOrig=false);
 };
 
 #endif

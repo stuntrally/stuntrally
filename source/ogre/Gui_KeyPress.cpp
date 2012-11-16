@@ -365,41 +365,73 @@ void App::TweakToggle()
 	bool vis = !mWndTweak->getVisible();
 	mWndTweak->setVisible(vis);
 
-	//std::string path = PATHMANAGER::GetDataPath()+"/cars/S1/S1.car";
-	std::string carname = pSet->game.car[0],
-		path = "/"+carname+"/"+ carname + (sc->asphalt ? "_a":"") + ".car",
-		pathOrig = PATHMANAGER::GetCarPath() + path,
-		pathUser = PATHMANAGER::GetCarPathUser() + path;
+	std::string path, pathUser, pathUserDir;
+	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], sc->asphalt);
 	
-	//  edit
-	static string lastCar = "";
-	if (lastCar != path)
-	{	lastCar = path;
+	//  load  if car changed
+	static string lastPath = "";
+	if (lastPath != path)
+	{	lastPath = path;
 
-		std::ifstream fi(path.c_str());
-		String text = "", s;
-		while (getline(fi,s))
-			text += s + "\n";
-		fi.close();
+		if (!PATHMANAGER::FileExists(path))
+		{
+			edTweak->setCaption("");
+			txtTweakPath->setCaption("Not Found ! " + path);
+		}else
+		{
+			std::ifstream fi(path.c_str());
+			String text = "", s;
+			while (getline(fi,s))
+				text += s + "\n";
+			fi.close();
 
-		text = StringUtil::replaceAll(text, "#", "##");
-		edTweak->setCaption(UString(text));
-		//edit->setVScrollPosition(0);
-		
-		MyGUI::InputManager::getInstance().resetKeyFocusWidget();
-		MyGUI::InputManager::getInstance().setKeyFocusWidget(edTweak);
+			text = StringUtil::replaceAll(text, "#", "##");
+			edTweak->setCaption(UString(text));
+			//edTweak->setVScrollPosition(0);
+			txtTweakPath->setCaption(path);
+			
+			MyGUI::InputManager::getInstance().resetKeyFocusWidget();
+			MyGUI::InputManager::getInstance().setKeyFocusWidget(edTweak);
+		}
 	}
 	
 	//  save and reload  shift-alt-Z
 	if (!vis && shift)
 	{
 		String text = edTweak->getCaption();
-		text = StringUtil::replaceAll(text, "##", "#");
-		
-		std::ofstream fo(pathUser.c_str());
-		fo << text.c_str();
-		fo.close();
-		
-		NewGame();
+		if (text != "")
+		{	text = StringUtil::replaceAll(text, "##", "#");
+			
+			PATHMANAGER::CreateDir(pathUserDir, pGame->error_output);
+			std::ofstream fo(pathUser.c_str());
+			fo << text.c_str();
+			fo.close();
+			
+			NewGame();
+		}
 	}
+}
+///TODO: save tires, ed name, game reload all..
+//  ed car setup name, chk exist, load btn, ed find text?
+
+
+//  Get car file path
+bool App::GetCarPath(std::string* pathCar, std::string* pathSave, std::string* pathSaveDir,
+	std::string carname, bool asphalt, std::string tweakSetup, bool forceOrig)
+{
+	std::string file = carname + (asphalt ? "_a":"") + ".car",
+		pathOrig = PATHMANAGER::GetCarPath()     + "/"+carname+"/"+ file,
+		pathUserD = PATHMANAGER::GetCarPathUser() + "/"+carname+"/"+ (tweakSetup != "" ? tweakSetup+"/" : ""),
+		pathUser = pathUserD + file;
+
+	if (pathSave)  *pathSave = pathUser;
+	if (pathSaveDir)  *pathSaveDir = pathUserD;
+	
+	if (!forceOrig && PATHMANAGER::FileExists(pathUser))
+	{
+		*pathCar = pathUser;
+		return true;
+	}
+	*pathCar = pathOrig;
+	return false;
 }

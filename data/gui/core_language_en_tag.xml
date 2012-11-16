@@ -494,6 +494,10 @@
 	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
 	<Tag name="TiresEdit3">Home - toggle longitudinal / lateral parameters</Tag>
 	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
+	
+	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
+	<Tag name="TweakEdit2">Alt-Shift-Z - save file and reload game</Tag>
+
 
 
 	<!--  Sound  -->

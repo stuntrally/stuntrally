@@ -76,18 +76,13 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 		rot = pGame->track.GetStart(i).second;
 		vStartPos = Vector3(pos[0], pos[2], -pos[1]);  // save in ogre coords
 
-		/**/
-		// bool forceOrig, string setup
-		std::string carname = sDirname,
-			path = "/"+carname+"/"+ carname + (sc->asphalt ? "_a":"") + ".car",
-			pathOrig = PATHMANAGER::GetCarPath() + path,		pathCar = pathOrig,
-			pathUser = PATHMANAGER::GetCarPathUser() + path;
-		//PATHMANAGER::FileExists()
-		/**/
+		//  load car
+		std::string pathCar;
+		pApp->GetCarPath(&pathCar, 0, 0, sDirname, sc->asphalt/*, "", mClient*/);
+		
+		pCar = pGame->LoadCar(pathCar, sDirname, pos, rot, true, false, type == CT_REMOTE, index);
 
-		pCar = pGame->LoadCar(pathCar, carname, pos, rot, true, false, type == CT_REMOTE, index);
-
-		if (!pCar)  LogO("Error creating car " + sDirname);
+		if (!pCar)  LogO("Error creating car " + sDirname + "  path: " + pathCar);
 		else  pCar->pCarM = this;
 	}
 }

@@ -246,7 +246,11 @@ void App::InitInputGui()
 	CreateText(xa1,y, 500,24, "txttir2", TR("#A0B0C0#{TiresEdit2}"));  y+=2*ya;
 	CreateText(xa1,y, 500,24, "txttir3", TR("#A0B0C0#{TiresEdit3}"));  y+=2*ya;
 	CreateText(xa1,y, 500,24, "txttir4", TR("#A0B0C0#{TiresEdit4}"));  y+=3*ya;
-	CreateText(xa,y, 500,24, "txttir4", TR("#90B0D0#{InputMapPrevTab}/#{InputMapNextTab} - #{InputGraphsType}"));  y+=3*ya;
+	CreateText(xa,y, 500,24, "txttir5", TR("#90B0D0#{InputMapPrevTab}/#{InputMapNextTab} - #{InputGraphsType}"));  y+=3*ya;
+
+	CreateText(xa,y, 500,24, "txttir6", TR("#A0B8D0#{TweakEdit1}"));  y+=2*ya;
+	CreateText(xa,y, 500,24, "txttir7", TR("#A0B8D0#{TweakEdit2}"));  y+=2*ya;
+
 
 	y = 32;
 	tabitem = inputTab->addItem(TR("#{Shortcuts}"));

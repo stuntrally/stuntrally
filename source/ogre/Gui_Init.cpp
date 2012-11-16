@@ -446,7 +446,9 @@ void App::InitGui()
     MyGUI::EditPtr edUserDir = mGUI->findWidget<Edit>("EdUserDir");
 	edUserDir->setCaption(PATHMANAGER::GetUserConfigDir());
 	
+	//  tweak
 	edTweak = mGUI->findWidget<Edit>("TweakEdit");
+	txtTweakPath = mGUI->findWidget<StaticText>("TweakPath");
 
 
 	///  input tab  -------
