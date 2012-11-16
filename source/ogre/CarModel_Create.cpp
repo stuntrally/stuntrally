@@ -69,16 +69,23 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 	if (type != CT_GHOST)  // ghost has pCar, dont create
 	{
 		if (startpos_index == -1) startpos_index = iIndex;
-		int i = set->game.collis_cars ? startpos_index : 0;  //  offset car start pos when cars collide
+		int i = set->game.collis_cars ? startpos_index : 0;  // offset when cars collide
 		MATHVECTOR<float, 3> pos(0,10,0);
 		QUATERNION<float> rot;
 		pos = pGame->track.GetStart(i).first;
 		rot = pGame->track.GetStart(i).second;
-		vStartPos = Vector3(pos[0], pos[2], -pos[1]); // save in ogre coords
+		vStartPos = Vector3(pos[0], pos[2], -pos[1]);  // save in ogre coords
 
-		//  offset car start pos when cars collide
-		MATHVECTOR<float, 3> offset(0,0,0);
-		pCar = pGame->LoadCar(sDirname, pos, rot, true, false, type == CT_REMOTE, index, sc->asphalt);
+		/**/
+		// bool forceOrig, string setup
+		std::string carname = sDirname,
+			path = "/"+carname+"/"+ carname + (sc->asphalt ? "_a":"") + ".car",
+			pathOrig = PATHMANAGER::GetCarPath() + path,		pathCar = pathOrig,
+			pathUser = PATHMANAGER::GetCarPathUser() + path;
+		//PATHMANAGER::FileExists()
+		/**/
+
+		pCar = pGame->LoadCar(pathCar, carname, pos, rot, true, false, type == CT_REMOTE, index);
 
 		if (!pCar)  LogO("Error creating car " + sDirname);
 		else  pCar->pCarM = this;

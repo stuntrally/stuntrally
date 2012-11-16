@@ -233,13 +233,13 @@ efficiency = 1
 
 [ wheel-FR ]
 position = 0.8345, 1.12, -0.37			# track +-Y = 1669/2
-roll-height = 0.32
+roll-height = 1.00
 mass = 30.0
 restitution = 0.1
 
 [ wheel-FL ]
 position = -0.8345, 1.12, -0.37
-roll-height = 0.32
+roll-height = 1.00
 mass = 30.0
 restitution = 0.1
 
@@ -256,13 +256,13 @@ hinge = 0.50, 0.90, -0.20
 
 [ wheel-RR ]
 position = 0.8085, -1.51, -0.38			# track +-Y = 1617/2
-roll-height = 0.33
+roll-height = 1.00
 mass = 30.0
 restitution = 0.1
 
 [ wheel-RL ]
 position = -0.8085, -1.51, -0.38
-roll-height = 0.33
+roll-height = 1.00
 mass = 30.0
 restitution = 0.1
 

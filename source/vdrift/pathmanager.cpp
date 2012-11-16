@@ -149,13 +149,19 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 		user_data_dir = (xdg_data_home ? xdg_data_home / shortDir : fs::path(home_dir) / ".local" / shareDir).string();
 	}
 	#endif
+
 	// Create user's data dir and its children
 	CreateDir(user_data_dir, error_output);
 	CreateDir(GetTrackRecordsPath(), error_output);
 	CreateDir(GetScreenShotDir(), error_output);
-	CreateDir(GetTrackPathUser(), error_output);  // user tracks
 	CreateDir(GetReplayPath(), error_output);
 	CreateDir(GetGhostsPath(), error_output);
+	CreateDir(GetTrackPathUser(), error_output);  // user tracks
+
+	CreateDir(GetDataPathUser(), error_output);  // user data
+	CreateDir(GetCarPathUser(), error_output);
+	CreateDir(GetTiresPathUser(), error_output);
+
 
 	// Find game data dir and defaults config dir
 	char *datadir = getenv("STUNTRALLY_DATA_ROOT");
@@ -187,8 +193,8 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 		// TODO: Adding path from config file
 
 		// Loop through the paths and pick the first one that contain some data
-		for (Paths::const_iterator p = dirs.begin(); p != dirs.end(); ++p) {
-			// Data dir
+		for (Paths::const_iterator p = dirs.begin(); p != dirs.end(); ++p)
+		{	// Data dir
 			if (fs::exists(*p / "hud")) game_data_dir = p->string();
 			// Config dir
 			if (fs::exists(*p / "config"))

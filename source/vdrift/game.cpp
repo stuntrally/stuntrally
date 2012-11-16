@@ -132,7 +132,7 @@ bool GAME::InitializeSound()
 
 	if (sound.Init(2048/*1024/*512*/, info_output, error_output))
 	{
-		generic_sounds.SetLibraryPath(PATHMANAGER::GetGenericSoundPath());
+		generic_sounds.SetLibraryPath(PATHMANAGER::GetSoundsPath());
 
 		if (!generic_sounds.Load("tire_squeal", sound.GetDeviceInfo(), error_output))  return false;
 		if (!generic_sounds.Load("grass", sound.GetDeviceInfo(), error_output))  return false;
@@ -397,29 +397,24 @@ void GAME::LeaveGame()
 }
 
 ///  add a car, optionally controlled by the local player
-CAR* GAME::LoadCar(const string & carname, const MATHVECTOR <float, 3> & start_position,
-				   const QUATERNION <float> & start_orientation, bool islocal, bool isai, bool isRemote,
-				   int idCar, bool asphalt)
+CAR* GAME::LoadCar(const string & pathCar, const string & carname, const MATHVECTOR <float, 3> & start_position,
+				   const QUATERNION <float> & start_orientation, bool islocal, bool isai,
+				   bool isRemote, int idCar)
 {
 	CONFIGFILE carconf;
-	if (!carconf.Load(PATHMANAGER::GetCarPath()+"/"+carname+"/"+carname + (asphalt ? "_a":"") + ".car"))
+	if (!carconf.Load(pathCar))
 		return NULL;
 
 	cars.push_back(CAR());
 
-	if (!cars.back().Load(pOgreGame, this, settings, 
-		carconf, PATHMANAGER::GetCarPath(),
-		PATHMANAGER::GetDriverPath()+"/driver2",
-		carname,
+	if (!cars.back().Load(pOgreGame,
+		carconf, carname,
 		start_position, start_orientation,
 		collision,
-		sound.Enabled(),
-		sound.GetDeviceInfo(),
-		generic_sounds,
+		sound.Enabled(), sound.GetDeviceInfo(), generic_sounds,
 		settings->abs || isai,
 		settings->tcs || isai,
-		isRemote,
-		idCar,
+		isRemote, idCar,
 		debugmode, info_output, error_output))
 	{
 		error_output << "Error loading car: " << carname << endl;

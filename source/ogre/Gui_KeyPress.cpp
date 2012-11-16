@@ -182,52 +182,8 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		if (alt)
 			switch (arg.key)
 			{
-				case KC_Z:
-				case KC_T:  // alt-Z,T Tweak
-				{
-					bool vis = !mWndTweak->getVisible();
-					mWndTweak->setVisible(vis);
-					//pGame->pause = vis;
-
-					EditBox* edit = mGUI->findWidget<EditBox>("TweakEdit");
-					std::string path = PATHMANAGER::GetDataPath()+"/cars/S1/S1.car";
-					//pSet->game.car[0]
-					//PATHMANAGER::GetCarPath()+"/"+carname+"/"+carname + (asphalt ? "_a":"") + ".car"))
-					
-					static bool firstT = true;
-					if (firstT)
-					{
-						firstT = false;
-						if (edit)
-						{	
-							std::ifstream fi(path.c_str());
-							String text = "", s;
-							while (getline(fi,s))
-								text += s + "\n";
-							fi.close();
-
-							text = StringUtil::replaceAll(text, "#", "##");
-							edit->setCaption(UString(text));
-							//edit->setVScrollPosition(0);
-							
-							MyGUI::InputManager::getInstance().resetKeyFocusWidget();
-							MyGUI::InputManager::getInstance().setKeyFocusWidget(edit);
-					}	}
-					
-					if (!vis && shift)  // shift-alt-Z apply
-					{
-						String text = edit->getCaption();
-						text = StringUtil::replaceAll(text, "##", "#");
-						
-						std::ofstream fo(path.c_str());
-						fo << text.c_str();
-						fo.close();
-						
-						NewGame();  return false;
-					}
-
-					return true;  
-				}
+				case KC_Z:  // alt-Z Tweak (alt-shift-Z save&reload)
+					TweakToggle();	return true;
 					
 				case KC_Q:	GuiShortcut(WND_Game, 1);	return true;  // Q Track
 				case KC_C:	GuiShortcut(WND_Game, 2);	return true;  // C Car
@@ -399,4 +355,51 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	}
 
 	return true;
+}
+
+///  Tweak read / save file
+//-----------------------------------------------------------------------------------------
+void App::TweakToggle()
+{
+	//  window
+	bool vis = !mWndTweak->getVisible();
+	mWndTweak->setVisible(vis);
+
+	//std::string path = PATHMANAGER::GetDataPath()+"/cars/S1/S1.car";
+	std::string carname = pSet->game.car[0],
+		path = "/"+carname+"/"+ carname + (sc->asphalt ? "_a":"") + ".car",
+		pathOrig = PATHMANAGER::GetCarPath() + path,
+		pathUser = PATHMANAGER::GetCarPathUser() + path;
+	
+	//  edit
+	static string lastCar = "";
+	if (lastCar != path)
+	{	lastCar = path;
+
+		std::ifstream fi(path.c_str());
+		String text = "", s;
+		while (getline(fi,s))
+			text += s + "\n";
+		fi.close();
+
+		text = StringUtil::replaceAll(text, "#", "##");
+		edTweak->setCaption(UString(text));
+		//edit->setVScrollPosition(0);
+		
+		MyGUI::InputManager::getInstance().resetKeyFocusWidget();
+		MyGUI::InputManager::getInstance().setKeyFocusWidget(edTweak);
+	}
+	
+	//  save and reload  shift-alt-Z
+	if (!vis && shift)
+	{
+		String text = edTweak->getCaption();
+		text = StringUtil::replaceAll(text, "##", "#");
+		
+		std::ofstream fo(pathUser.c_str());
+		fo << text.c_str();
+		fo.close();
+		
+		NewGame();
+	}
 }

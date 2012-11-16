@@ -30,24 +30,16 @@ public:
 	CAR();
 	~CAR();
 	
-	bool Load(class App* pApp1, class GAME* pGame,
-		class SETTINGS* settings,
+	bool Load(class App* pApp1,
 		CONFIGFILE & carconf,
-		const std::string & carpath,
-		const std::string & driverpath,
 		const std::string & carname,
-		const MATHVECTOR <float, 3> & init_pos,
-		const QUATERNION <float> & init_rot,
+		const MATHVECTOR <float, 3> & init_pos, const QUATERNION <float> & init_rot,
 		COLLISION_WORLD & world,
-		bool soundenabled,
-		const SOUNDINFO & sound_device_info,
-		const SOUNDBUFFERLIBRARY & soundbufferlibrary,
+		bool soundenabled, const SOUNDINFO & sound_device_info, const SOUNDBUFFERLIBRARY & soundbufferlibrary,
 		bool defaultabs, bool defaulttcs,
-		bool isRemote,
-		int idCar,
+		bool isRemote, int idCar,
 		bool debugmode,
-		std::ostream & info_output,
-		std::ostream & error_output);
+		std::ostream & info_output, std::ostream & error_output);
 	
 	// will align car relative to track surface, returns false if the car isn't near ground
 	void SetPosition(const MATHVECTOR <float, 3> & position);
@@ -351,7 +343,6 @@ public:
 	
 	bool LoadSounds(
 		const std::string & carpath,
-		const std::string & carname,
 		const SOUNDINFO & sound_device_info,
 		const SOUNDBUFFERLIBRARY & soundbufferlibrary,
 		std::ostream & info_output,

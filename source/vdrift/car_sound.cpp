@@ -20,113 +20,15 @@
 //--------------------------------------------------------------------------------------------------------------------------
 bool CAR::LoadSounds(
 	const std::string & carpath,
-	const std::string & carname,
 	const SOUNDINFO & sound_device_info,
 	const SOUNDBUFFERLIBRARY & sndLib,
 	std::ostream & info_output,
 	std::ostream & errOut)
 {
-	//check for sound specification file
-	CONFIGFILE aud;
-	if (aud.Load(carpath+"/"+carname+"/"+carname+".aud"))  // ?
 	{
-		std::list <std::string> sections;
-		aud.GetSectionList(sections);
-		for (std::list <std::string>::iterator i = sections.begin(); i != sections.end(); ++i)
+		if (!soundbuffers["engine.wav"].Load(carpath+"engine.wav", sound_device_info, errOut))
 		{
-			//load the buffer
-			std::string filename;
-			if (!aud.GetParam(*i+".filename", filename, errOut)) return false;
-			if (!soundbuffers[filename].GetLoaded())
-				if (!soundbuffers[filename].Load(carpath+"/"+carname+"/"+filename, sound_device_info, errOut))
-				{
-					errOut << "Error loading sound: " << carpath+"/"+carname+"/"+filename << std::endl;
-					return false;
-				}
-
-			enginesounds.push_back(std::pair <ENGINESOUNDINFO, SOUNDSOURCE> ());
-			ENGINESOUNDINFO & info = enginesounds.back().first;
-			SOUNDSOURCE & sound = enginesounds.back().second;
-
-			if (!aud.GetParam(*i+".MinimumRPM", info.minrpm, errOut)) return false;
-			if (!aud.GetParam(*i+".MaximumRPM", info.maxrpm, errOut)) return false;
-			if (!aud.GetParam(*i+".NaturalRPM", info.naturalrpm, errOut)) return false;
-
-			std::string powersetting;
-			if (!aud.GetParam(*i+".power", powersetting, errOut)) return false;
-			if (powersetting == "on")
-				info.power = ENGINESOUNDINFO::POWERON;
-			else if (powersetting == "off")
-				info.power = ENGINESOUNDINFO::POWEROFF;
-			else //assume it's used in both ways
-				info.power = ENGINESOUNDINFO::BOTH;
-
-			sound.Setup(soundbuffers[filename], true, true, 0.f);
-			sound.Play();
-		}
-
-		//set blend start and end locations -- requires multiple passes
-		std::map <ENGINESOUNDINFO *, ENGINESOUNDINFO *> temporary_to_actual_map;
-		std::list <ENGINESOUNDINFO> poweron_sounds;
-		std::list <ENGINESOUNDINFO> poweroff_sounds;
-		for (std::list <std::pair <ENGINESOUNDINFO, SOUNDSOURCE> >::iterator i = enginesounds.begin(); i != enginesounds.end(); ++i)
-		{
-			ENGINESOUNDINFO & info = i->first;
-			if (info.power == ENGINESOUNDINFO::POWERON)
-			{
-				poweron_sounds.push_back(info);
-				temporary_to_actual_map[&poweron_sounds.back()] = &info;
-			}
-			else if (info.power == ENGINESOUNDINFO::POWEROFF)
-			{
-				poweroff_sounds.push_back(info);
-				temporary_to_actual_map[&poweroff_sounds.back()] = &info;
-			}
-		}
-
-		poweron_sounds.sort();
-		poweroff_sounds.sort();
-
-		//we only support 2 overlapping sounds at once each for poweron and poweroff; this
-		// algorithm fails for other cases (undefined behavior)
-		std::list <ENGINESOUNDINFO> * cursounds = &poweron_sounds;
-		for (int n = 0; n < 2; n++)
-		{
-			if (n == 1)
-				cursounds = &poweroff_sounds;
-
-			for (std::list <ENGINESOUNDINFO>::iterator i = (*cursounds).begin(); i != (*cursounds).end(); ++i)
-			{
-				//set start blend
-				if (i == (*cursounds).begin())
-					i->fullgainrpmstart = i->minrpm;
-				//else, the blend start has been set already by the previous iteration
-
-				//set end blend
-				std::list <ENGINESOUNDINFO>::iterator inext = i;
-				++inext;
-				if (inext == (*cursounds).end())
-					i->fullgainrpmend = i->maxrpm;
-				else
-				{
-					i->fullgainrpmend = inext->minrpm;
-					inext->fullgainrpmstart = i->maxrpm;
-				}
-			}
-
-			//now assign back to the actual infos
-			for (std::list <ENGINESOUNDINFO>::iterator i = (*cursounds).begin(); i != (*cursounds).end(); ++i)
-			{
-				assert(temporary_to_actual_map.find(&(*i)) != temporary_to_actual_map.end());
-				*temporary_to_actual_map[&(*i)] = *i;
-			}
-		}
-	}
-	else  // car engine
-	{
-		if (!soundbuffers["engine.wav"].Load(carpath+"/"+carname+"/engine.wav", sound_device_info, errOut))
-		{
-			errOut << "Unable to load engine sound: "+carpath+"/"+carname+"/engine.wav" << std::endl;
+			errOut << "Unable to load engine sound: "+carpath+"engine.wav" << std::endl;
 			return false;
 		}
 		enginesounds.push_back(std::pair <ENGINESOUNDINFO, SOUNDSOURCE> ());

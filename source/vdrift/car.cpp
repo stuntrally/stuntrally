@@ -51,67 +51,54 @@ CAR::~CAR()
 
 
 //--------------------------------------------------------------------------------------------------------------------------
-bool CAR::Load(class App* pApp1, class GAME* pGame1,
-	SETTINGS* settings,
+bool CAR::Load(class App* pApp1,
 	CONFIGFILE & carconf,
-	const std::string & carpath,
-	const std::string & driverpath,
 	const std::string & carname,
-	const MATHVECTOR <float, 3> & init_pos,
-	const QUATERNION <float> & init_rot,
+	const MATHVECTOR <float, 3> & init_pos, const QUATERNION <float> & init_rot,
 	COLLISION_WORLD & world,
-	bool soundenabled,
-	const SOUNDINFO & sound_device_info,
-	const SOUNDBUFFERLIBRARY & soundbufferlibrary,
+	bool soundenabled, const SOUNDINFO & sound_device_info, const SOUNDBUFFERLIBRARY & soundbufferlibrary,
 	bool defaultabs, bool defaulttcs,
-	bool isRemote,
-	int idCar,
+	bool isRemote, int idCar,
   	bool debugmode,
-  	std::ostream & info_output,
-  	std::ostream & error_output )
+  	std::ostream & info_output, std::ostream & error_output)
 {
-	pGame = pGame1;  pApp = pApp1;
-	pSet = settings;
+	pApp = pApp1;  pGame = pApp->pGame;  pSet = pApp->pSet;
 
 	cartype = carname;
-	bRemoteCar = isRemote;
-	id = idCar;
+	bRemoteCar = isRemote;  id = idCar;
 	std::stringstream nullout;
+	std::string carpath = PATHMANAGER::GetCarPath()+"/"+carname+"/";  // orig dir for .joe
 
 	//load car body graphics
-	if (!LoadInto( carpath+"/"+carname+"/body.joe", bodymodel, error_output))
+	if (!LoadInto( carpath+"body.joe", bodymodel, error_output))
 		/*info_output << "No car body model, continuing without one" << std::endl*/;
 
-	//load driver graphics --
-	//if (!LoadInto( driverpath+"/body.joe", drivermodel, error_output))
-	//	error_output << "Error loading driver graphics: " << driverpath << std::endl;
-
 	//load car interior graphics
-	if (!LoadInto( carpath+"/"+carname+"/interior.joe", interiormodel, nullout ))
+	if (!LoadInto( carpath+"interior.joe", interiormodel, nullout ))
 		/*info_output << "No car interior model exists, continuing without one" << std::endl*/;
 
 	//load car glass graphics
-	if (!LoadInto( carpath+"/"+carname+"/glass.joe", glassmodel, nullout ))
+	if (!LoadInto( carpath+"glass.joe", glassmodel, nullout ))
 		/*info_output << "No car glass model exists, continuing without one" << std::endl*/;
 
 	//load wheel graphics
 	for (int i = 0; i < 2; i++)  // front pair
 	{
-		if (!LoadInto( carpath+"/"+carname+"/wheel_front.joe", wheelmodelfront, error_output))
+		if (!LoadInto( carpath+"wheel_front.joe", wheelmodelfront, error_output))
 			/*info_output << "No car wheel_front model, continuing without one" << std::endl*/;
 
 		//load floating elements
 		std::stringstream nullout;
-		LoadInto( carpath+"/"+carname+"/floating_front.joe", floatingmodelfront, nullout);
+		LoadInto( carpath+"floating_front.joe", floatingmodelfront, nullout);
 	}
 	for (int i = 2; i < 4; i++)  // rear pair
 	{
-		if (!LoadInto( carpath+"/"+carname+"/wheel_rear.joe", wheelmodelrear, error_output))
+		if (!LoadInto( carpath+"wheel_rear.joe", wheelmodelrear, error_output))
 			/*info_output << "No car wheel_rear model, continuing without one" << std::endl*/;
 
 		//load floating elements
 		std::stringstream nullout;
-		LoadInto( carpath+"/"+carname+"/floating_rear.joe", floatingmodelrear, nullout);
+		LoadInto( carpath+"floating_rear.joe", floatingmodelrear, nullout);
 	}
 
 	// get coordinate system version
@@ -188,19 +175,12 @@ bool CAR::Load(class App* pApp1, class GAME* pGame1,
 		if (version == 2) COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(pos[0], pos[1], pos[2]);
 		
 		hood_view_position.Set(pos[0], pos[1], pos[2]);
-		
-		/*if (drivernode) //move the driver model to the coordinates given
-		{
-			MATHVECTOR <float, 3> floatpos;
-			floatpos.Set(pos[0], pos[1], pos[2]);
-			drivernode->GetTransform().SetTranslation(floatpos);
-		}*/
 	}
 
 	//load sounds
 	if (soundenabled)
 	{
-		if (!LoadSounds(carpath, carname, sound_device_info, soundbufferlibrary, info_output, error_output))
+		if (!LoadSounds(carpath, sound_device_info, soundbufferlibrary, info_output, error_output))
 			return false;
 	}
 

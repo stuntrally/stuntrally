@@ -328,6 +328,7 @@ protected:
 	int lastAxis, axisCnt;  std::string joyName;  class OISB::AnalogAxisAction* actDetail;
 	MyGUI::EditPtr edInputMin, edInputMax, edInputMul, edInputReturn, edInputIncrease;  void editInput(MyGUI::EditPtr);
 	MyGUI::ComboBox* cmbInpDetSet;  void comboInputPreset(CMB), comboInputKeyAllPreset(CMB);
+	MyGUI::EditPtr edTweak;  void TweakToggle();
 
 
 	//  sliders  -----------------------------------------

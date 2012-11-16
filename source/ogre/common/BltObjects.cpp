@@ -31,7 +31,10 @@ bool BltObjects::LoadXml()
 	colsMap.clear();
 	colsMapFind = colsMap.end();
 	
-	std::string file = PATHMANAGER::GetTreesPath() + "/collisions.xml";
+	std::string name = "/trees/collisions.xml",  // user
+		file = PATHMANAGER::GetDataPathUser() + name;
+	if (!PATHMANAGER::FileExists(file))  // original
+		file = PATHMANAGER::GetDataPath() + name;
 	TiXmlDocument doc;
 	if (!doc.LoadFile(file.c_str()))  return false;
 		
