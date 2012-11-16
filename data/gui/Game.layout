@@ -1388,7 +1388,7 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Help}"/>
 				<UserString key="RelativeTo" value="HelpWnd"/>
-				<Widget type="EditBox" skin="EditBoxStretch" position="32 16 600 480" name="QuickHelpText">
+				<Widget type="EditBox" skin="EditBoxStretch" position="32 16 600 360" name="QuickHelpText">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
@@ -1414,6 +1414,22 @@
 				<Widget type="ImageBox" skin="ImageBox" position="146 513 64 16">
 					<Property key="ImageTexture" value="en_de.png"/>
 					<Property key="Alpha" value="0.5"/>
+					<UserString key="RelativeTo" value="HelpWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 406 600 24">
+					<Property key="Caption" value="#{UserDir}"/>
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<UserString key="RelativeTo" value="HelpWnd"/>
+				</Widget>				
+				<Widget type="EditBox" skin="EditBox" position="32 430 600 24" name="EdUserDir">
+					<Property key="ReadOnly" value="true"/>
+					<Property key="MultiLine" value="false"/>
+					<Property key="WordWrap" value="false"/>
+					<Property key="VisibleHScroll" value="false"/>
+					<Property key="VisibleVScroll" value="true"/>
+					<Property key="MaxTextLength" value="260"/>
+					<Property key="TextColour" value="0.8 0.9 1.0"/>
+					<Property key="Colour" value="0.8 0.9 1"/>
 					<UserString key="RelativeTo" value="HelpWnd"/>
 				</Widget>
 			</Widget>
@@ -2722,12 +2738,19 @@
 			</Widget>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowCS" position="00 40 860 800" layer="Back" name="WndTweak">
-		<Property key="Alpha" value="0.4"/>
+
+	<Widget type="Window" skin="WindowCS" position="00 36 860 800" layer="Back" name="WndTweak">
+		<Property key="Alpha" value="0.3"/>
 		<Widget type="TextBox" skin="TextBox" position="660 20 144 30">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="Caption" value="#{Volume}"/>
-			<Property key="TextColour" value="0.9 0.96 1.0"/>
+			<Property key="Caption" value="#{Tweak}"/>
+			<Property key="TextColour" value="0.95 1.0 1.0"/>
+			<UserString key="RelativeTo" value="WndTweak"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="660 50 144 30">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Caption" value="Save Apply"/>
+			<Property key="TextColour" value="0.95 1.0 1.0"/>
 			<UserString key="RelativeTo" value="WndTweak"/>
 		</Widget>
 		<Widget type="EditBox" skin="EditBoxStretch" position="10 16 600 500" name="TweakEdit">
@@ -2738,11 +2761,12 @@
 			<Property key="VisibleHScroll" value="false"/>
 			<Property key="VisibleVScroll" value="true"/>
 			<Property key="MaxTextLength" value="16000"/>
-			<Property key="TextColour" value="0.8 0.9 1.0"/>
+			<Property key="TextColour" value="0.9 0.96 1.0"/>
 			<Property key="Colour" value="0.8 0.9 1"/>
 			<UserString key="RelativeTo" value="WndTweak"/>
 		</Widget>
 	</Widget>
+
 	<Widget type="Widget" skin="PanelSkin" position="2212 16 324 96" layer="ToolTip" name="ToolTip">
 		<Property key="Alpha" value="0.8"/>
 		<Property key="Colour" value="0.3 0.5 0.9"/>

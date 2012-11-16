@@ -222,7 +222,7 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 		out << "--- Directories: ---" << ogre_plugin_dir << std::endl;
 		out << "Ogre plugin:  " << ogre_plugin_dir << std::endl;
 		out << "Data:         " << GetDataPath() << std::endl;
-		out << "Default cfg:  " << GetGameConfigDir() << std::endl;
+		//out << "Default cfg:  " << GetGameConfigDir() << std::endl;
 		//out << "Home:         " << home_dir << std::endl;
 		out << "User cfg,log: " << GetUserConfigDir() << std::endl;
 		//out << "User data:    " << GetUserDataDir() << std::endl;
@@ -233,9 +233,10 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 
 bool PATHMANAGER::FileExists(const std::string & filename)
 {
-	std::ifstream test(filename.c_str());
-	if (test)  return true;
-	else  return false;
+	return fs::exists(filename);
+	//std::ifstream test(filename.c_str());
+	//if (test)  return true;
+	//else  return false;
 }
 
 bool PATHMANAGER::CreateDir(const std::string& path, std::ostream & error_output)

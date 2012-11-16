@@ -442,6 +442,11 @@ void App::InitGui()
 	String s = TR("#{QuickHelpText}");
 	s = StringUtil::replaceAll(s, "@", "\n");
 	edHelp->setCaption(s);
+	//  user dir
+    MyGUI::EditPtr edUserDir = mGUI->findWidget<Edit>("EdUserDir");
+	edUserDir->setCaption(PATHMANAGER::GetUserConfigDir());
+	
+	edTweak = mGUI->findWidget<Edit>("TweakEdit");
 
 
 	///  input tab  -------
