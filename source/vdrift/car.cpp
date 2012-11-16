@@ -51,7 +51,7 @@ CAR::~CAR()
 
 
 //--------------------------------------------------------------------------------------------------------------------------
-bool CAR::Load(class App* pApp1,
+bool CAR::Load(class App* pApp1, class GAME* pGame1,
 	SETTINGS* settings,
 	CONFIGFILE & carconf,
 	const std::string & carpath,
@@ -70,8 +70,9 @@ bool CAR::Load(class App* pApp1,
   	std::ostream & info_output,
   	std::ostream & error_output )
 {
-	pApp = pApp1;
+	pGame = pGame1;  pApp = pApp1;
 	pSet = settings;
+
 	cartype = carname;
 	bRemoteCar = isRemote;
 	id = idCar;
@@ -156,7 +157,7 @@ bool CAR::Load(class App* pApp1,
 
 	// load cardynamics
 	{
-		if (!dynamics.Load(carconf, error_output)) return false;
+		if (!dynamics.Load(pGame, carconf, error_output)) return false;
 
 		MATHVECTOR<double, 3> position;
 		QUATERNION<double> orientation;

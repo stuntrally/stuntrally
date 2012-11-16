@@ -40,7 +40,7 @@ namespace {
 std::string PATHMANAGER::ogre_plugin_dir, PATHMANAGER::home_dir,
 	PATHMANAGER::user_config_dir, PATHMANAGER::game_config_dir,
 	PATHMANAGER::user_data_dir, PATHMANAGER::game_data_dir,
-	PATHMANAGER::cache_dir, PATHMANAGER::profile_suffix;
+	PATHMANAGER::cache_dir;
 
 
 void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, bool log_paths)
@@ -241,12 +241,6 @@ bool PATHMANAGER::CreateDir(const std::string& path, std::ostream & error_output
 		return false;
 	}
 	return true;
-}
-
-void PATHMANAGER::SetProfile(const std::string& value)
-{
-	assert(game_data_dir.empty()); // Assert that Init() hasn't been called yet
-	profile_suffix = "." + value;
 }
 
 

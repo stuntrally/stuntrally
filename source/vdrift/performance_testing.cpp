@@ -37,7 +37,7 @@ void PERFORMANCE_TESTING::Test(const std::string & carpath, const std::string & 
 		error_output << "Error loading car configuration file: " << carfile << endl;
 		return;
 	}
-	if (!car.dynamics.Load(carconf, error_output))
+	if (!car.dynamics.Load(0/*!!pGAME*/, carconf, error_output))
 	{
 		error_output << "Error during car dynamics load: " << carfile << endl;
 		return;

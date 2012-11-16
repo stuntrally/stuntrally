@@ -76,7 +76,55 @@ void GAME::Start(std::list <string> & args)
 		forcefeedback.reset(new FORCEFEEDBACK(settings->ff_device, error_output, info_output));
 		ff_update_time = 0;
 	#endif
+	
+	LoadTires();  // load tires
 }
+
+
+bool GAME::LoadTires()
+{
+	std::list <std::string> li;
+	PATHMANAGER::GetFolderIndex(PATHMANAGER::GetTiresPath(), li);
+	for (std::list <std::string>::iterator i = li.begin(); i != li.end(); ++i)
+	{
+		std::string filename = *i;
+		CONFIGFILE c;
+		if (!c.Load(PATHMANAGER::GetTiresPath()+"/"+filename))
+		{	error_output << "Error loading tire file " << filename << "\n";
+			return false;  }
+
+		TIRE_PARAMS<CARDYNAMICS::T> tp;
+		float value;
+
+		for (int i = 0; i < 15; ++i)
+		{
+			int numinfile = i;
+			if (i == 11)		numinfile = 111;
+			else if (i == 12)	numinfile = 112;
+			else if (i > 12)	numinfile -= 1;
+			std::stringstream str;  str << "params.a" << numinfile;
+			if (!c.GetParam(str.str(), value, error_output))  return false;
+			tp.lateral[i] = value;
+		}
+		for (int i = 0; i < 11; ++i)
+		{
+			std::stringstream str;  str << "params.b" << i;
+			if (!c.GetParam(str.str(), value, error_output))  return false;
+			tp.longitudinal[i] = value;
+		}
+		for (int i = 0; i < 18; ++i)
+		{
+			std::stringstream str;  str << "params.c" << i;
+			if (!c.GetParam(str.str(), value, error_output))  return false;
+			tp.aligning[i] = value;
+		}
+		
+		tire_pars_map[filename] = (int)tire_pars.size();
+		tire_pars.push_back(tp);
+	}
+	return true;
+}
+
 
 bool GAME::InitializeSound()
 {
@@ -359,7 +407,7 @@ CAR* GAME::LoadCar(const string & carname, const MATHVECTOR <float, 3> & start_p
 
 	cars.push_back(CAR());
 
-	if (!cars.back().Load(pOgreGame, settings, 
+	if (!cars.back().Load(pOgreGame, this, settings, 
 		carconf, PATHMANAGER::GetCarPath(),
 		PATHMANAGER::GetDriverPath()+"/driver2",
 		carname,
@@ -683,12 +731,6 @@ bool GAME::ParseArguments(std::list <string> & args)
 		continue_game = false;
 	}
 	arghelp["-cartest CAR"] = "Run car performance testing on given CAR.";
-
-	if (!argmap["-profile"].empty())
-	{
-		PATHMANAGER::SetProfile(argmap["-profile"]);
-	}
-	arghelp["-profile PROFILENAME"] = "Store settings, controls, and records under a separate profile.";
 
 	///+
 	//if (argmap.find("-profiling") != argmap.end() || argmap.find("-benchmark") != argmap.end())

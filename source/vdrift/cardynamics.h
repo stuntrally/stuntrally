@@ -32,6 +32,7 @@ friend class PERFORMANCE_TESTING;
 friend class joeserialize::Serializer;
 public:
 	typedef double T;
+	
 	class SETTINGS* pSet;
 	class Scene* pScene;  // for fluids
 	class FluidsXml* pFluids;  // to get fluid params
@@ -40,7 +41,7 @@ public:
 	CARDYNAMICS();
 	~CARDYNAMICS();
 	
-	bool Load(CONFIGFILE & c, std::ostream & error_output);
+	bool Load(class GAME* pGame, CONFIGFILE & c, std::ostream & error_output);
 
 	void Init(
 		class SETTINGS* pSet1, class Scene* pScene1, class FluidsXml* pFluids1,

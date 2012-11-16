@@ -27,7 +27,7 @@ class GAME
 //private:
 public:
 	class App* pOgreGame;
-	double TickPeriod() const {return framerate;}
+	double TickPeriod() const {  return framerate;  }
 	bool OneLoop(double dt);  std::string strProfInfo;
 	QTimer qtim;
 	
@@ -100,6 +100,10 @@ public:
 
 	std::list <CAR> cars;
 	std::pair <CAR*, CARCONTROLMAP_LOCAL> carcontrols_local;
+
+	std::vector < TIRE_PARAMS<CARDYNAMICS::T> > tire_pars;  //new
+	std::map <std::string, int> tire_pars_map;
+	bool LoadTires();
 	
 #ifdef ENABLE_FORCE_FEEDBACK
 	std::auto_ptr <FORCEFEEDBACK> forcefeedback;

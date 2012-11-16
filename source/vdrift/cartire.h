@@ -18,20 +18,30 @@ bool isnan(double number);
 //#include "../ogre/common/Defines.h"
 
 
+template <typename T>  // loaded from .tire file
+class TIRE_PARAMS
+{
+public:
+	std::vector <T> longitudinal; ///< the parameters of the longitudinal pacejka equation.  this is series b
+	std::vector <T> lateral; ///< the parameters of the lateral pacejka equation.  this is series a
+	std::vector <T> aligning; ///< the parameters of the aligning moment pacejka equation.  this is series c
+	TIRE_PARAMS()
+	{	longitudinal.resize(11);
+		lateral.resize(15);
+		aligning.resize(18);  }
+};
+
 template <typename T>
 class CARTIRE
 {
 friend class joeserialize::Serializer;
-private:
 public://
 	//constants (not actually declared as const because they can be changed after object creation)
 	T radius; ///< the total radius of the tire
 	T tread; ///< 1.0 means a pure off-road tire, 0.0 is a pure road tire
 	T rolling_resistance_linear; ///< linear rolling resistance on a hard surface
 	T rolling_resistance_quadratic; ///< quadratic rolling resistance on a hard surface
-	std::vector <T> longitudinal_parameters; ///< the parameters of the longitudinal pacejka equation.  this is series b
-	std::vector <T> transverse_parameters; ///< the parameters of the lateral pacejka equation.  this is series a
-	std::vector <T> aligning_parameters; ///< the parameters of the aligning moment pacejka equation.  this is series c
+	TIRE_PARAMS <T>* params;
 	std::vector <T> sigma_hat; ///< maximum grip in the longitudinal direction
 	std::vector <T> alpha_hat; ///< maximum grip in the lateral direction
 
@@ -71,8 +81,8 @@ public://
 	}
 
 public:
-	//default constructor makes an S2000-like car
-	CARTIRE() : slide(0),slip(0) {longitudinal_parameters.resize(11);transverse_parameters.resize(15);aligning_parameters.resize(18);}
+	//  ctor
+	CARTIRE() : slide(0),slip(0),params(0)  {  }
 
 	void DebugPrint(std::ostream & out)
 	{
@@ -143,18 +153,9 @@ public:
 		rolling_resistance_quadratic = quadratic;
 	}
 
-	void SetPacejkaParameters(const std::vector <T> & longitudinal, const std::vector <T> & lateral, const std::vector <T> & aligning)
+	void SetPacejkaParameters(TIRE_PARAMS<T>* params1)
 	{
-		assert(longitudinal.size() == 11);
-		assert(lateral.size() == 15);
-		assert(aligning.size() == 18);
-		assert(longitudinal_parameters.size() == 11);
-		assert(transverse_parameters.size() == 15);
-		assert(aligning_parameters.size() == 18);
-
-		longitudinal_parameters = longitudinal;
-		transverse_parameters = lateral;
-		aligning_parameters = aligning;
+		params = params1;
 	}
 
 	void SetSlide ( const T& value )
@@ -228,7 +229,7 @@ public:
 
 		sigma = ( patch_speed - V ) /denom;
 
-		tan_alpha = hub_velocity [1] / denom;
+		tan_alpha = hub_velocity[1] / denom;
 
 		alpha = - ( atan2 ( hub_velocity[1],denom ) ) * 180.0/3.141593;
 
@@ -388,7 +389,7 @@ public:
 	///load is the normal force in newtons.
 	T GetMaximumFx(T load) const
 	{
-		const std::vector <T>& b = longitudinal_parameters;
+		const std::vector <T>& b = params->longitudinal;
 		T Fz = load * 0.001;
 		return ( b[1]*Fz + b[2] ) *Fz;
 	}
@@ -396,7 +397,7 @@ public:
 	///load is the normal force in newtons.
 	T GetMaximumFy(T load, T current_camber) const
 	{
-		const std::vector <T>& a = transverse_parameters;
+		const std::vector <T>& a = params->lateral;
 		T Fz = load * 0.001;
 		T gamma = ( current_camber ) * 180.0/3.141593;
 
@@ -409,7 +410,7 @@ public:
 	///load is the normal force in newtons.
 	T GetMaximumMz(T load, T current_camber) const
 	{
-		const std::vector <T>& c = aligning_parameters;
+		const std::vector <T>& c = params->aligning;
 		T Fz = load * 0.001;
 		T gamma = ( current_camber ) * 180.0/3.141593;
 
@@ -422,7 +423,7 @@ public:
 	/// pacejka magic formula function, longitudinal
 	T Pacejka_Fx ( T sigma, T Fz, T friction_coeff, T & maxforce_output )
 	{
-		const std::vector <T>& b = longitudinal_parameters;
+		const std::vector <T>& b = params->longitudinal;
 
 		T D = ( b[1]*Fz + b[2] ) *Fz*friction_coeff;
 		assert ( b[0]* ( b[1]*Fz+b[2] ) != 0 );
@@ -440,7 +441,7 @@ public:
 	/// pacejka magic formula function, lateral
 	T Pacejka_Fy ( T alpha, T Fz, T gamma, T friction_coeff, T & maxforce_output )
 	{
-		const std::vector <T>& a = transverse_parameters;
+		const std::vector <T>& a = params->lateral;
 
 		T D = ( a[1]*Fz+a[2] ) *Fz*friction_coeff;
 		T B = a[3]*sin ( 2.0*atan ( Fz/a[4] ) ) * ( 1.0-a[5]*std::abs ( gamma ) ) / ( a[0]* ( a[1]*Fz+a[2] ) *Fz );
@@ -461,7 +462,7 @@ public:
 	/// pacejka magic formula function, aligning
 	T Pacejka_Mz ( T sigma, T alpha, T Fz, T gamma, T friction_coeff, T & maxforce_output )
 	{
-		const std::vector <T>& c = aligning_parameters;
+		const std::vector <T>& c = params->aligning;
 
 		T D = ( c[1]*Fz+c[2] ) *Fz*friction_coeff;
 		T B = ( c[3]*Fz*Fz+c[4]*Fz ) * ( 1.0-c[6]*std::abs ( gamma ) ) *exp ( -c[5]*Fz ) / ( c[0]*D );
@@ -476,12 +477,7 @@ public:
 		return Mz;
 	}
 
-	bool operator==(const CARTIRE <T> & other) const
-	{
-		return (longitudinal_parameters == other.longitudinal_parameters &&
-				transverse_parameters == other.transverse_parameters &&
-				aligning_parameters == other.aligning_parameters);
-	}
+
 
 	/// optimum steering angle in degrees given load in newtons
 	T GetOptimumSteeringAngle(T load) const

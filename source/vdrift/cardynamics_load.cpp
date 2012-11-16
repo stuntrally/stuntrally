@@ -2,6 +2,7 @@
 #include "cardynamics.h"
 #include "coordinatesystems.h"
 #include "collision_world.h"
+#include "game.h"  // tire params map
 #include "tobullet.h"
 #include "model.h"
 #include "settings.h"
@@ -64,7 +65,7 @@ CARDYNAMICS::~CARDYNAMICS()
 //----------------------------------------------------------------------------------------------------------------------------------
 ///  Load  (.car file)
 //----------------------------------------------------------------------------------------------------------------------------------
-bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
+bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 {
 	QTimer ti;  ti.update(); /// time
 
@@ -355,10 +356,8 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 			//cap hinge to reasonable values
 			for (int i = 0; i < 3; i++)
 			{
-				if (hinge[i] < -100)
-					hinge[i] = -100;
-				if (hinge[i] > 100)
-					hinge[i] = 100;
+				if (hinge[i] < -100)	hinge[i] = -100;
+				if (hinge[i] > 100)		hinge[i] = 100;
 			}
 			if (version == 2)
 				COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(hinge[0],hinge[1],hinge[2]);
@@ -368,10 +367,8 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 			if (!c.GetParam("suspension-"+posshortstr+"R.hinge", hinge, error_output)) return false;
 			for (int i = 0; i < 3; i++)
 			{
-				if (hinge[i] < -100)
-					hinge[i] = -100;
-				if (hinge[i] > 100)
-					hinge[i] = 100;
+				if (hinge[i] < -100)	hinge[i] = -100;
+				if (hinge[i] > 100)		hinge[i] = 100;
 			}
 			if (version == 2)
 				COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(hinge[0],hinge[1],hinge[2]);
@@ -386,26 +383,10 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 		{
 			std::string posstr;
 			WHEEL_POSITION pos;
-			if (i == 0)
-			{
-				posstr = "FL";
-				pos = FRONT_LEFT;
-			}
-			else if (i == 1)
-			{
-				posstr = "FR";
-				pos = FRONT_RIGHT;
-			}
-			else if (i == 2)
-			{
-				posstr = "RL";
-				pos = REAR_LEFT;
-			}
-			else
-			{
-				posstr = "RR";
-				pos = REAR_RIGHT;
-			}
+			if (i == 0)		{	posstr = "FL";	pos = FRONT_LEFT;	}
+			else if (i == 1){	posstr = "FR";	pos = FRONT_RIGHT;	}
+			else if (i == 2){	posstr = "RL";	pos = REAR_LEFT;	}
+			else			{	posstr = "RR";	pos = REAR_RIGHT;	}
 
 			float roll_height, mass;
 			float position[3];
@@ -447,7 +428,7 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 		WHEEL_POSITION leftside = FRONT_LEFT;
 		WHEEL_POSITION rightside = FRONT_RIGHT;
 		float value;
-		bool both = c.GetParam("tire-both.a0", value);
+		bool both = c.GetParam("tire-both.file", value);
 		std::string posstr = both ? "both" : "front";
 
 		for (int p = 0; p < 2; p++)
@@ -459,50 +440,12 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 				if (!both)  posstr = "rear";
 			}
 
-			std::vector <double> longitudinal;
-			std::vector <double> lateral;
-			std::vector <double> aligning;
-			longitudinal.resize(11);
-			lateral.resize(15);
-			aligning.resize(18);
+			std::string tirefile;  // get tire params file
+			if (!c.GetParam("tire-"+posstr+".file", tirefile, error_output)) return false;
+			TIRE_PARAMS<CARDYNAMICS::T>* tp = &pGame->tire_pars[ pGame->tire_pars_map[tirefile] ];
 
-			//read lateral
-			int numinfile;
-			for (int i = 0; i < 15; i++)
-			{
-				numinfile = i;
-				if (i == 11)		numinfile = 111;
-				else if (i == 12)	numinfile = 112;
-				else if (i > 12)	numinfile -= 1;
-				std::stringstream str;
-				str << "tire-"+posstr+".a" << numinfile;
-				float value;
-				if (!c.GetParam(str.str(), value, error_output)) return false;
-				lateral[i] = value;
-			}
-
-			//read longitudinal, error_output)) return false;
-			for (int i = 0; i < 11; i++)
-			{
-				std::stringstream str;
-				str << "tire-"+posstr+".b" << i;
-				float value;
-				if (!c.GetParam(str.str(), value, error_output)) return false;
-				longitudinal[i] = value;
-			}
-
-			//read aligning, error_output)) return false;
-			for (int i = 0; i < 18; i++)
-			{
-				std::stringstream str;
-				str << "tire-"+posstr+".c" << i;
-				float value;
-				if (!c.GetParam(str.str(), value, error_output)) return false;
-				aligning[i] = value;
-			}
-
-			tire[leftside].SetPacejkaParameters(longitudinal, lateral, aligning);
-			tire[rightside].SetPacejkaParameters(longitudinal, lateral, aligning);
+			tire[leftside].SetPacejkaParameters(tp);
+			tire[rightside].SetPacejkaParameters(tp);
 
 			float rolling_resistance[3];
 			if (!c.GetParam("tire-"+posstr+".rolling-resistance", rolling_resistance, error_output)) return false;

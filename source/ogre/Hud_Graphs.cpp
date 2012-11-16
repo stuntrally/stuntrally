@@ -436,10 +436,10 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			if (pApp->iEdTire == 0)
 			{
 				ss += "--Lateral--\n";  sd += "\n";
-				for (int i=0; i < tire.transverse_parameters.size(); ++i)
+				for (int i=0; i < tire.params->lateral.size(); ++i)
 				{
 					//ss += (i == pApp->iCurLat) ? "." : "  ";
-					float f = tire.transverse_parameters[i];
+					float f = tire.params->lateral[i];
 					unsigned short p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
 					ss += sLateral[i][0] +" "+ fToStr(f, p,5);
 					ss += (i == pApp->iCurLat) ? "  <\n" : "\n";
@@ -458,10 +458,10 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			else if (pApp->iEdTire == 1)
 			{
 				ss += "| Longit |\n";  sd += "\n";
-				for (int i=0; i < tire.longitudinal_parameters.size(); ++i)
+				for (int i=0; i < tire.params->longitudinal.size(); ++i)
 				{
 					//ss += (i == pApp->iCurLong) ? "." : "  ";
-					float f = tire.longitudinal_parameters[i];
+					float f = tire.params->longitudinal[i];
 					unsigned short p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
 					ss += sLongit[i][0] +" "+ fToStr(f, p,5);
 					ss += (i == pApp->iCurLong) ? "  <\n" : "\n";
@@ -480,9 +480,9 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			else //if (iEdLong == 2)
 			{
 				ss += "o Align o\n";  sd += "\n";
-				for (int i=0; i < tire.aligning_parameters.size(); ++i)
+				for (int i=0; i < tire.params->aligning.size(); ++i)
 				{
-					float f = tire.aligning_parameters[i];
+					float f = tire.params->aligning[i];
 					unsigned short p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
 					ss += sAlign[i][0] +" "+ fToStr(f, p,5);
 					ss += (i == pApp->iCurAlign) ? "  <\n" : "\n";

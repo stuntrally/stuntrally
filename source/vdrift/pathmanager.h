@@ -18,7 +18,6 @@ private:
 	static std::string user_data_dir;
 	static std::string game_data_dir;
 	static std::string cache_dir;
-	static std::string profile_suffix;
 
 public:
 	static void Init(std::ostream & info_output, std::ostream & error_output, bool log_paths=true);
@@ -43,6 +42,7 @@ public:
 	static std::string GetTrackPath() {              return game_data_dir + "/tracks"; }
 	static std::string GetTrackPathUser() {          return user_data_dir + "/tracks"; }
 	static std::string GetCarPath() {                return game_data_dir + "/cars"; }
+	static std::string GetTiresPath() {              return game_data_dir + "/cars/_tires"; }
 
 	static std::string GetGenericSoundPath() {       return game_data_dir + "/sounds"; }
 	static std::string GetDriverPath() {             return game_data_dir + "/drivers"; }
@@ -52,10 +52,6 @@ public:
 	static bool FileExists(const std::string & filename);
 
 	static bool CreateDir(const std::string& path, std::ostream & error_output);
-
-	// FIXME: Do we intend to use profiles?
-	/// Only call this before Init()
-	static void SetProfile(const std::string& value);
 };
 
 #endif

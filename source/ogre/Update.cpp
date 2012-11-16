@@ -142,24 +142,24 @@ bool App::frameStart(Real time)
 			CARDYNAMICS& cd = carModels[0]->pCar->dynamics;
 			if (iEdTire == 1)  // longit |
 			{
-				T& val = cd.tire[0].longitudinal_parameters[iCurLong];  // modify 1st
+				T& val = cd.tire[0].params->longitudinal[iCurLong];  // modify 1st
 				val += mul*k * (1 + abs(val));
 				for (int i=1; i<4; ++i)
-					cd.tire[i].longitudinal_parameters[iCurLong] = val;  // copy for rest
+					cd.tire[i].params->longitudinal[iCurLong] = val;  // copy for rest
 			}
 			else if (iEdTire == 0)  // lateral --
 			{
-				T& val = cd.tire[0].transverse_parameters[iCurLat];
+				T& val = cd.tire[0].params->lateral[iCurLat];
 				val += mul*k * (1 + abs(val));
 				for (int i=1; i<4; ++i)
-					cd.tire[i].transverse_parameters[iCurLat] = val;
+					cd.tire[i].params->lateral[iCurLat] = val;
 			}
 			else  // align o
 			{
-				T& val = cd.tire[0].aligning_parameters[iCurAlign];
+				T& val = cd.tire[0].params->aligning[iCurAlign];
 				val += mul*k * (1 + abs(val));
 				for (int i=1; i<4; ++i)
-					cd.tire[i].aligning_parameters[iCurAlign] = val;
+					cd.tire[i].params->aligning[iCurAlign] = val;
 			}
 
 			//  update hat, 1st
