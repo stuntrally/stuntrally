@@ -7,7 +7,14 @@
 #define SET_VER  1700  // 1.7
 
 
-const static int graph_types = 7;  // total graph types count
+enum eGraphType  {
+	Gh_Fps=0,
+	Gh_CarAccelG, Gh_BulletHit,
+	Gh_Sound,
+	Gh_TireSlips, Gh_Suspension,
+	Gh_TireEdit, Gh_TorqueCurve,
+	Gh_ALL  };  // total count
+
 enum eShadowType  {  Sh_None=0, Sh_Simple, Sh_Depth, Sh_Soft  };
 
 class SETTINGS
@@ -23,7 +30,7 @@ public:
 		car_dbgbars, car_dbgtxt, car_dbgsurf, ogre_dialog, show_graphs;
 	float size_gauges, size_minimap, size_arrow, zoom_minimap;
 	int tracks_view, tracks_sort;  bool tracks_sortup;
-	int gauges_type, graphs_type;
+	int gauges_type;  eGraphType graphs_type;
 
 	//  graphics
 	int anisotropy, tex_size, ter_mtr;  bool bFog;

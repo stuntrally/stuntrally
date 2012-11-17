@@ -25,36 +25,35 @@ PERFORMANCE_TESTING::PERFORMANCE_TESTING()
 	surface.rollingDrag = 0;
 }
 
-void PERFORMANCE_TESTING::Test(const std::string & carpath, const std::string & carname, std::ostream & info_output, std::ostream & error_output)
+void PERFORMANCE_TESTING::Test(const std::string & carpath, class GAME* pGame,
+	std::ostream & info_output, std::ostream & error_output)
 {
-	info_output << "Beginning car performance test on " << carname << endl;
+	info_output << "Beginning car performance test on: " << carpath << endl;
 
 	//load the car dynamics
-	CONFIGFILE carconf;
-	string carfile = carpath+"/"+carname+"/"+carname+".car";
-	if ( !carconf.Load ( carfile ) )
+	CONFIGFILE cf;
+	if (!cf.Load(carpath))
 	{
-		error_output << "Error loading car configuration file: " << carfile << endl;
+		error_output << "Error loading car configuration file" << endl;
 		return;
 	}
-	if (!car.dynamics.Load(0/*!!pGAME*/, carconf, error_output))
+	if (!car.dynamics.Load(pGame, cf, error_output))
 	{
-		error_output << "Error during car dynamics load: " << carfile << endl;
+		error_output << "Error during car dynamics load" << endl;
 		return;
 	}
 	info_output << "Car dynamics loaded" << endl;
 
-	info_output << carname << " Summary:\n" <<
+	info_output << " CAR Summary:  " << carpath << "\n" <<
 			"Mass (kg) including driver and fuel: " << car.dynamics.GetMass() << "\n" <<
-			"Center of mass (m): " << car.dynamics.center_of_mass <<
-			endl;
+			"Center of mass (m): " << car.dynamics.center_of_mass << endl;
 	
-	std::stringstream statestream;
+	/*std::stringstream statestream;  // ?
 	joeserialize::BinaryOutputSerializer serialize_output(statestream);
 	if (!car.Serialize(serialize_output))
 		error_output << "Serialization error" << endl;
 	//else info_output << "Car state: " << statestream.str();
-	carstate = statestream.str();
+	carstate = statestream.str();*/
 	
 	TestMaxSpeed(info_output, error_output);
 	TestStoppingDistance(false, info_output, error_output);
@@ -133,9 +132,9 @@ void PERFORMANCE_TESTING::TestMaxSpeed(std::ostream & info_output, std::ostream 
 		else
 			inputs[CARINPUT::SHIFT_UP] = 0;*/
 
-		car.HandleInputs(inputs, dt);
+		//car.HandleInputs(inputs, dt);
 
-		car.dynamics.Tick(dt);
+		//car.dynamics.Tick(dt);
 
 		if (car.dynamics.GetSpeed() > maxspeed.second)
 		{
@@ -179,7 +178,7 @@ void PERFORMANCE_TESTING::TestMaxSpeed(std::ostream & info_output, std::ostream 
 				}
 			}
 			lastsecondspeed = car.dynamics.GetSpeed();
-			//std::cout << t << ", " << car.dynamics.GetSpeed() << ", " << car.GetGear() << ", " << car.GetEngineRPM() << std::endl;
+			info_output << t << ", " << car.dynamics.GetSpeed() << ", " << car.GetGear() << ", " << car.GetEngineRPM() << std::endl;
 		}
 
 		t += dt;
@@ -235,9 +234,9 @@ void PERFORMANCE_TESTING::TestStoppingDistance(bool abs, std::ostream & info_out
 			//inputs[CARINPUT::NEUTRAL] = 1.0;
 		}
 
-		car.HandleInputs(inputs, dt);
+		//car.HandleInputs(inputs, dt);
 
-		car.dynamics.Tick(dt);
+		//car.dynamics.Tick(dt);
 
 		if (car.dynamics.GetSpeed() >= brakestartspeed && accelerating) //stop accelerating and hit the brakes
 		{

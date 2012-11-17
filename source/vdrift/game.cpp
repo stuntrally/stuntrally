@@ -718,12 +718,12 @@ bool GAME::ParseArguments(std::list <string> & args)
 	//debugmode = true;
 	arghelp["-debug"] = "Display car debugging information.";
 
-	if (!argmap["-cartest"].empty())
+	//if (!argmap["-cartest"].empty())
 	{
-		PATHMANAGER::Init(info_output, error_output);
-		PERFORMANCE_TESTING perftest;
-		perftest.Test(PATHMANAGER::GetCarPath(), argmap["-cartest"], info_output, error_output);
-		continue_game = false;
+		//PATHMANAGER::Init(info_output, error_output);
+		//PERFORMANCE_TESTING perftest;
+		//perftest.Test(PATHMANAGER::GetCarPath(), , info_output, error_output);
+		//continue_game = false;
 	}
 	arghelp["-cartest CAR"] = "Run car performance testing on given CAR.";
 

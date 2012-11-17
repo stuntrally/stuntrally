@@ -90,11 +90,11 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		}
 		else if (!isFocGui && pSet->show_graphs)  // change graphs type
 		{
-			int& v = pSet->graphs_type;  int vo = v;
-			if (action("PrevTab"))  v = (v-1 + graph_types) % graph_types;
-			if (action("NextTab"))	v = (v+1) % graph_types;
+			int& v = (int&)pSet->graphs_type;  int vo = v;
+			if (action("PrevTab"))  v = (v-1 + Gh_ALL) % Gh_ALL;
+			if (action("NextTab"))	v = (v+1) % Gh_ALL;
 			if (vo != v)
-			{	float fv = float(v) / graph_types;
+			{	float fv = float(v) / Gh_ALL;
 				slGraphsType(slGraphT, fv);  slGraphT->setValue(fv);
 				if (v == 4)  iUpdTireGr = 1;  //upd now
 			}

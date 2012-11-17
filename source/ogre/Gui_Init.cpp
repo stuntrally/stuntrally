@@ -131,7 +131,7 @@ void App::InitGui()
 	Slv(SizeArrow,  (pSet->size_arrow));
 	Slv(ZoomMinimap,powf((pSet->zoom_minimap-1.0f) /9.f, 0.5f));
 	Slv(CountdownTime,  pSet->gui.pre_time / 0.5f /6.f);
-	Slv(GraphsType,	float(pSet->graphs_type) /graph_types);  slGraphT = sl;
+	Slv(GraphsType,	float(pSet->graphs_type) /Gh_ALL);  slGraphT = sl;
 	
 	//  particles/trails
 	Slv(Particles,	powf(pSet->particles_len /4.f, 0.5f));

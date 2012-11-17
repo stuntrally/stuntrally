@@ -49,7 +49,7 @@ void App::CreateGraphs()
 
 	switch (pSet->graphs_type)
 	{
-	case 0:  /// bullet hit
+	case Gh_BulletHit:  /// bullet hit
 		for (int i=0; i < 5; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
@@ -70,7 +70,7 @@ void App::CreateGraphs()
 			graphs.push_back(gv);
 		}	break;
 
-	case 1:  /// sound
+	case Gh_Sound:  /// sound
 		for (int i=0; i < 4; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
@@ -92,8 +92,8 @@ void App::CreateGraphs()
 			graphs.push_back(gv);
 		}	break;
 
-	case 2:  /// tire
-	case 3:	 // susp
+	case Gh_TireSlips:  /// tire
+	case Gh_Suspension:	 // susp
 		for (int i=0; i < 8; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
@@ -114,7 +114,7 @@ void App::CreateGraphs()
 				,"BL [_"			,"BL <v"
 				,"_] BR   slide"	,"v> BR"	};
 
-			int t = pSet->graphs_type == 2 ? 0 : 1;
+			int t = pSet->graphs_type == Gh_TireSlips ? 0 : 1;
 			float x = i%2==0 ? x0 : (t ? x2 : x1);  char y = i/2%2==0 ? -2 : -3;
 			gv->CreateTitle(cgt[i][t], c, x, y, 24);
 
@@ -126,7 +126,7 @@ void App::CreateGraphs()
 			graphs.push_back(gv);
 		}	break;
 
-	case 4:  /// tire pacejka
+	case Gh_TireEdit:  /// tires edit pacejka
 		for (int i=0; i < NG*2; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
@@ -158,7 +158,7 @@ void App::CreateGraphs()
 		}
 		break;
 	
-	case 5:  // car accel
+	case Gh_CarAccelG:  /// car accel
 		for (int i=0; i < 3; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
@@ -178,7 +178,7 @@ void App::CreateGraphs()
 			graphs.push_back(gv);
 		}	break;
 		
-	case 6:  // fps
+	case Gh_Fps:  /// fps
 		for (int i=0; i < 2; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
@@ -189,6 +189,23 @@ void App::CreateGraphs()
 				gv->CreateTitle("Fps 120\n\n\n\n\n\n\n60",	c, 0.0f, -2, 24,10);
 			}
 			gv->SetSize(0.f, 0.24f, 0.4f, 0.30f);
+
+			gv->SetVisible(pSet->show_graphs);
+			graphs.push_back(gv);
+		}	break;
+
+	case Gh_TorqueCurve:  /// torque curves, gears
+		for (int i=0; i < 6; ++i)
+		{
+			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			int c = i%NG;  bool b = i >= NG;
+			gv->Create(512, String("graph")+(b?"B":"A")+toStr(c), i>0 ? 0.f : 0.5f);
+			if (c == 0)
+			{	gv->CreateGrid(10,10, 0.2f, 0.4f);
+				if (b)	gv->CreateTitle("", 5+8+c +2, 0.f, -2, 24);
+				else	gv->CreateTitle("", 5+c   +2, 0.7f, 3, 24);
+			}
+			gv->SetSize(0.00f, 0.40f, 0.35f, 0.50f);
 
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
@@ -206,7 +223,7 @@ void App::GraphsNewVals()				// Game
 	size_t gsi = graphs.size();
 	switch (pSet->graphs_type)
 	{
-	case 0:  /// bullet hit  force,normvel, sndnum,scrap,screech
+	case Gh_BulletHit:  /// bullet hit  force,normvel, sndnum,scrap,screech
 		if (gsi >= 5)
 		if (carModels.size() > 0)
 		{
@@ -219,7 +236,7 @@ void App::GraphsNewVals()				// Game
 		}
 		break;
 
-	case 1:  /// sound  vol,pan, wave L,R
+	case Gh_Sound:  /// sound  vol,pan, wave L,R
 	if (gsi >= 4)
 	{	float minL=1.f,maxL=-1.f,minR=1.f,maxR=-1.f;
 		//for (int i=0; i < 4*512; i+=4)  if (sound.Init(/*2048*/512
@@ -242,7 +259,7 @@ void App::GraphsNewVals()				// Game
 		graphs[1]->AddVal((al-ar)*0.5f+0.5f);  // pan  yellow  ^L 1  _R 0
 	}	break;
 
-	case 6:  /// fps
+	case Gh_Fps:  /// fps
 	if (gsi >= 1)
 	{
 		const RenderTarget::FrameStats& stats = mWindow->getStatistics();
@@ -262,7 +279,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 	size_t gsi = pApp->graphs.size();
 	switch (pApp->pSet->graphs_type)
 	{
-	case 5:  /// car accel x,y,z
+	case Gh_CarAccelG:  /// car accel x,y,z
 		if (gsi >= 3)
 		{
 			MATHVECTOR <CARDYNAMICS::T, 3> v = dynamics.body.GetForce();
@@ -275,7 +292,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 					v[i]/m *0.63f /9.81f/3.f + (i==2 ? 0.f : 0.5f) ) )));
 		}	break;
 		
-	case 2:  /// tire slide,slip
+	case Gh_TireSlips:  /// tire slide,slip
 		if (gsi >= 8)
 		for (int i=0; i < 4; ++i)
 		{
@@ -283,7 +300,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			pApp->graphs[i+4]->AddVal(dynamics.tire[i].slipratio * 0.1f +0.5f);
 		}	break;
 		
-	case 3:  /// suspension
+	case Gh_Suspension:  /// suspension
 		if (gsi >= 8)
 		for (int i=0; i < 4; ++i)
 		{
@@ -292,7 +309,13 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			pApp->graphs[i]->AddVal(susp.GetDisplacementPercent());
 		}	break;
 		
-	case 4:  /// tire pacejka
+	case Gh_TorqueCurve:  /// torque curves, gears
+	{
+		//dynamics.engine.GetTorqueCurve
+		//dynamics.transmission.gear_ratios
+	}	break;
+
+	case Gh_TireEdit:  /// tire pacejka
 	{	static int ii = 0;  ii++;  // skip upd cntr
 		int im = pApp->iUpdTireGr > 0 ? 2 : 8;  // faster when editing val
 		if (ii >= im && gsi >= NG*2)

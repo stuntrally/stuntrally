@@ -240,9 +240,9 @@ void App::slCountdownTime(SL)
 }
 void App::slGraphsType(SL)
 {
-	int v = val * graph_types +slHalf;	if (valGraphsType)	valGraphsType->setCaption(toStr(v));
+	int v = val * Gh_ALL +slHalf;	if (valGraphsType)	valGraphsType->setCaption(toStr(v));
 	if (bGI /*&& pSet->graphs_type != v*/)
-	{	pSet->graphs_type = v;  DestroyGraphs();  CreateGraphs();  }
+	{	pSet->graphs_type = (eGraphType)v;  DestroyGraphs();  CreateGraphs();  }
 }
 
 //  minimap

@@ -22,7 +22,7 @@ private:
 	
 public:
 	PERFORMANCE_TESTING();
-	void Test(const std::string & carpath, const std::string & carname, std::ostream & info_output, std::ostream & error_output);
+	void Test(const std::string & carpath, class GAME* pGame, std::ostream & info_output, std::ostream & error_output);
 };
 
 #endif
