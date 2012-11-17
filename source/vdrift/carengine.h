@@ -43,6 +43,7 @@ class CARENGINE
 		T combustion_torque;
 		bool stalled;
 		
+	public:
 		T GetTorqueCurve(const T cur_throttle, const T cur_rpm) const
 		{
 			if (cur_rpm < 1)
@@ -66,7 +67,6 @@ class CARENGINE
 					(1.0 - friction_factor*throttle_position);
 		}
 		
-	public:
 		//default constructor makes an S2000-like car
 		CARENGINE() : redline(7800), rpm_limit(9000), idle(0.02),
 			start_rpm(1000), stall_rpm(350), fuel_consumption(1e-9), friction(0.000328),

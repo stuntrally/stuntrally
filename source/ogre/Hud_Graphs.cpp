@@ -198,14 +198,17 @@ void App::CreateGraphs()
 		for (int i=0; i < 6; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
-			int c = i%NG;  bool b = i >= NG;
-			gv->Create(512, String("graph")+(b?"B":"A")+toStr(c), i>0 ? 0.f : 0.5f);
+			int c = i;
+			gv->Create(512, String("graphA")+toStr(c), i>0 ? 0.f : 0.2f);
 			if (c == 0)
-			{	gv->CreateGrid(10,10, 0.2f, 0.4f);
-				if (b)	gv->CreateTitle("", 5+8+c +2, 0.f, -2, 24);
-				else	gv->CreateTitle("", 5+c   +2, 0.7f, 3, 24);
-			}
-			gv->SetSize(0.00f, 0.40f, 0.35f, 0.50f);
+			{	gv->CreateGrid(4,4, 0.f, 0.5f);
+				gv->CreateTitle("", 7, 0.9f, -2, 24, 30);
+			}else if (c==1)
+				gv->CreateTitle("Wheel Torque\n2400 Nm", 5, 0.0f, -2, 24, 2);
+			else if (c==2)
+				gv->CreateTitle("Car Vel.\n200 kmh", 6, 0.9f, 3, 24, 2);
+			
+			gv->SetSize(0.00f, 0.40f, 0.45f, 0.50f);
 
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
@@ -276,6 +279,7 @@ void App::GraphsNewVals()				// Game
 //-----------------------------------------------------------------------------------
 void CAR::GraphsNewVals(double dt)		 // CAR
 {	
+	typedef CARDYNAMICS::T T;
 	size_t gsi = pApp->graphs.size();
 	switch (pApp->pSet->graphs_type)
 	{
@@ -310,18 +314,48 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		}	break;
 		
 	case Gh_TorqueCurve:  /// torque curves, gears
-	{
-		//dynamics.engine.GetTorqueCurve
-		//dynamics.transmission.gear_ratios
-	}	break;
+	{	static int ii = 0;  ++ii;  // skip upd cntr
+		if (ii >= 32 && gsi >= 6)
+		{	ii = -60;//-
+
+			const T fin = dynamics.center_differential.GetFinalDrive();
+			const T r = 1.0 / (2 * PI_d * dynamics.tire[0].GetRadius());
+
+			String ss="  gears\n";
+			for (int i=0; i < 6; ++i)
+			{
+				const T gr = dynamics.transmission.GetGearRatio(i+1), grfin = gr * fin;
+				for (int x = 0; x < 512; ++x)
+				{
+					// 100 kmh = 28 car.m/s = 15 wh.rps = 102 eng.rps = 6100 eng.rpm
+					//       / 3.6     /1.95 (2*PI*r)   *6.87 ratio = (3.9 * 1.76) 3rd gear
+					T xx = x/511.0;  // 0..1
+					T vel = xx * 200.0 / 3.6;  // 200 kmh max in m/s
+					T whrps = vel * r;  // wheel revs per sec
+					T rpm = whrps * grfin * 60.0;
+
+					T rmax = dynamics.engine.GetRedline()/**1.4*/, rmin = dynamics.engine.GetStartRPM();
+					T tq = gr * dynamics.engine.GetTorqueCurve(1.0, rpm);
+					if (rpm > rmax)  tq = 0;  //if (rpm < rmin)  tq = 0;
+
+					//T xx = x/511.0;
+					//T rpm = xx * (rmax-rmin) + rmin;
+					
+					pApp->graphs[i]->AddVal( tq / 2400.0 );
+				}
+				//ss += String("gear: ")+toStr(i+1)+" ratio: "+fToStr(gr,3,5)+"\n";
+				ss += toStr(i+1)+": "+fToStr(gr,3,5)+"\n";
+			}
+			ss += "  final\n    "+fToStr(fin,3,5)+"\n";
+			pApp->graphs[0]->UpdTitle(ss);
+		}	}	break;
 
 	case Gh_TireEdit:  /// tire pacejka
-	{	static int ii = 0;  ii++;  // skip upd cntr
-		int im = pApp->iUpdTireGr > 0 ? 2 : 8;  // faster when editing val
+	{	static int ii = 0;  ++ii;  // skip upd cntr
+		const int im = pApp->iUpdTireGr > 0 ? 2 : 8;  // faster when editing val
 		if (ii >= im && gsi >= NG*2)
 		{	ii = 0;  pApp->iUpdTireGr = 0;
 
-			typedef CARDYNAMICS::T T;
 			CARTIRE <T> & tire = dynamics.tire[0];
 			const int LEN = 512;
 			T* ft = new T[LEN];

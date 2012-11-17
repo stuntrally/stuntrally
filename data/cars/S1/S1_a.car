@@ -65,17 +65,17 @@ max-pressure = 93000
 
 [ transmission ]
 gears = 6
-gear-ratio-r = -3.23
-gear-ratio-1 = 3.32
-gear-ratio-2 = 2.40
-gear-ratio-3 = 1.77
-gear-ratio-4 = 1.36
-gear-ratio-5 = 1.02
-gear-ratio-6 = 0.78
+gear-ratio-r = -3.545
+gear-ratio-1 = 3.636
+gear-ratio-2 = 2.375
+gear-ratio-3 = 1.761
+gear-ratio-4 = 1.346
+gear-ratio-5 = 0.971
+gear-ratio-6 = 0.756
 shift-delay = 0.10
 
 [ differential ]
-final-drive = 3.81
+final-drive = 3.90
 anti-slip = 400.0
 
 [ fuel-tank ]
