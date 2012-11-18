@@ -3,6 +3,7 @@
 #include "configfile.h"
 #include "../ogre/OgreGame.h"  // pApp
 #include "../ogre/common/Defines.h"
+using namespace std;
 
 
 PERFORMANCE_TESTING::PERFORMANCE_TESTING()
@@ -16,8 +17,36 @@ PERFORMANCE_TESTING::PERFORMANCE_TESTING()
 	surface.rollingDrag = 1.0;
 }
 
-void PERFORMANCE_TESTING::Test(const std::string & carpath, class App* pApp,
-	std::ostream & info_output, std::ostream & error_output)
+void PERFORMANCE_TESTING::ResetCar()
+{
+	MATHVECTOR <double, 3> initial_position(0,0,0);
+	car.dynamics.SetPosition(initial_position);
+
+	car.dynamics.SetTCS(true);
+	car.dynamics.SetABS(true);
+	car.SetAutoShift(true);
+	car.SetAutoClutch(true);
+}
+
+//  to be called inside a test's main loop
+void PERFORMANCE_TESTING::SimulateFlatRoad()
+{
+	//simulate an infinite, flat road
+	for (int i = 0; i < 4; ++i)
+	{
+		MATHVECTOR <float, 3> wp = car.dynamics.GetWheelPosition(WHEEL_POSITION(i));
+		float depth = wp[2] - car.GetTireRadius(WHEEL_POSITION(i));
+		MATHVECTOR <float, 3> pos(wp[0], wp[1], 0);
+		MATHVECTOR <float, 3> norm(0, 0, 1);
+		car.GetWheelContact(WHEEL_POSITION(i)).Set(pos, norm, depth, &surface, NULL, NULL);
+	}
+}
+
+
+///  Init
+//------------------------------------------------------------------------------------------------------------
+void PERFORMANCE_TESTING::Test(const string & carpath, class App* pApp,
+	ostream & info_output, ostream & error_output)
 {
 	car.pApp = pApp;		car.pGame = pApp->pGame;
 	car.pSet = pApp->pSet;	car.dynamics.pSet = pApp->pSet;
@@ -31,8 +60,8 @@ void PERFORMANCE_TESTING::Test(const std::string & carpath, class App* pApp,
 	if (!car.dynamics.Load(car.pGame, cf, error_output))  {
 		error_output << "Error during car dynamics load" << endl;  return;  }
 	
-	info_output << " Car Summary:  " << carpath << "\n" << std::setprecision(0) <<
-		"Total mass [kg]: " << car.dynamics.GetMass() << "\n" << std::setprecision(3) <<
+	info_output << " Car Summary:  " << carpath << "\n" << setprecision(0) <<
+		"Total mass [kg]: " << car.dynamics.GetMass() << "\n" << setprecision(3) <<
 		"Center of mass [m] L,W,H: " << car.dynamics.center_of_mass << endl;
 
 	//  CARDYNAMICS::Init  stuff
@@ -61,47 +90,21 @@ void PERFORMANCE_TESTING::Test(const std::string & carpath, class App* pApp,
 	info_output << "-----  Car performance test complete" << endl;
 }
 
-void PERFORMANCE_TESTING::ResetCar()
-{
-	MATHVECTOR <double, 3> initial_position(0,0,0);
-	car.dynamics.SetPosition(initial_position);
 
-	car.dynamics.SetTCS(true);
-	car.dynamics.SetABS(true);
-	car.SetAutoShift(true);
-	car.SetAutoClutch(true);
-}
-
-//  to be called inside a test's main loop
-void PERFORMANCE_TESTING::SimulateFlatRoad()
-{
-	//simulate an infinite, flat road
-	for (int i = 0; i < 4; ++i)
-	{
-		MATHVECTOR <float, 3> wp = car.dynamics.GetWheelPosition(WHEEL_POSITION(i));
-		float depth = wp[2] - car.GetTireRadius(WHEEL_POSITION(i));
-		MATHVECTOR <float, 3> pos(wp[0], wp[1], 0);
-		MATHVECTOR <float, 3> norm(0, 0, 1);
-		car.GetWheelContact(WHEEL_POSITION(i)).Set(pos, norm, depth, &surface, NULL, NULL);
-	}
-}
-
-void PERFORMANCE_TESTING::TestMaxSpeed(std::ostream & info_output, std::ostream & error_output)
+///  Test
+//------------------------------------------------------------------------------------------------------------
+void PERFORMANCE_TESTING::TestMaxSpeed(ostream & info_output, ostream & error_output)
 {
 	info_output << "Testing maximum speed" << endl;
-
 	ResetCar();
 
 	double t = 0.0, dt = 0.004, maxtime = 300.0;
-	int i = 0;
+	int i = 0;  const int ii = (int)(0.1/dt);  // write interval
 
-	std::vector <float> inputs(CARINPUT::ALL, 0.0);
-
+	vector <float> inputs(CARINPUT::ALL, 0.0);
 	inputs[CARINPUT::THROTTLE] = 1.0;
 
-	std::pair <float, float> maxspeed;
-	maxspeed.first = 0;
-	maxspeed.second = 0;
+	pair <float, float> maxspeed;  maxspeed.first = 0;  maxspeed.second = 0;
 	float lastsecondspeed = 0;
 	float stopthreshold = 0.001;  // if the accel (in m/s^2) is less than this value, discontinue the testing
 
@@ -134,7 +137,7 @@ void PERFORMANCE_TESTING::TestMaxSpeed(std::ostream & info_output, std::ostream 
 		{
 			maxspeed.first = t;
 			maxspeed.second = vel;
-			std::stringstream dfs;
+			stringstream dfs;
 			dfs << -car.GetTotalAero()[2] << " N; " << -car.GetTotalAero()[2]/car.GetTotalAero()[0] << ":1 lift/drag";
 			downforcestr = dfs.str();
 		}
@@ -160,27 +163,23 @@ void PERFORMANCE_TESTING::TestMaxSpeed(std::ostream & info_output, std::ostream 
 			car.remaining_shift_time = 0;
 		*/
 
-		if (i % (int)(1.0/dt) == 0)  // every second
+		if (i % ii == 0)  // every second
 		{
-			if (1)
-			{
-				if (vel - lastsecondspeed < stopthreshold && vel > 26.0)
-				{
-					//info_output << "Maximum speed attained at " << maxspeed.first << " s" << endl;
-					break;
-				}
-				if (car.GetEngineRPM() < 1)
-				{
-					error_output << "Car stalled during launch, t=" << t << endl;
-					break;
-				}
-			}
-			lastsecondspeed = vel;
+			#if 1
+			if (vel - lastsecondspeed < stopthreshold && vel > 200/3.6)  {
+				//info_output << "Maximum speed attained at " << maxspeed.first << " s" << endl;
+				break;  }
+			if (car.GetEngineRPM() < 1)  {
+				error_output << "Car stalled during launch, t=" << t << endl;
+				break;  }
+			#endif
+
 			///
-			info_output << fToStr(t,1,4) << "s, " << fToStr(vel*3.6, 1,4) << " kmh, gear " << car.GetGear() << ", rpm " << fToStr(car.GetEngineRPM(),0,4)
-				<< ", sli " << fToStr(car.dynamics.tire[0].slide, 1,4)
-				<< ", slp " << fToStr(car.dynamics.tire[1].slide, 1,4)
-				<< std::endl;
+			info_output << fToStr(t,1,4) << "s, " << fToStr(vel*3.6, 1,5) << " d " << fToStr((lastsecondspeed - vel)*3.6, 1,5) << " kmh, gear " << car.dynamics.transmission.GetGear() << ", rpm " << fToStr(car.GetEngineRPM(),0,4)
+				//<< ", sli " << fToStr(car.dynamics.tire[0].slide, 1,4)
+				//<< ", slp " << fToStr(car.dynamics.tire[1].slide, 1,4)
+				<< endl;
+			lastsecondspeed = vel;
 		}
 
 		t += dt;
@@ -197,17 +196,19 @@ void PERFORMANCE_TESTING::TestMaxSpeed(std::ostream & info_output, std::ostream 
 	info_output << "1/4 mile time: " << timetoquarter << " s" << " at " << fToStr(quarterspeed*3.6, 1,4) << " kmh" << endl;
 }
 
-void PERFORMANCE_TESTING::TestStoppingDistance(bool abs, std::ostream & info_output, std::ostream & error_output)
+
+///  Test stop
+//------------------------------------------------------------------------------------------------------------
+void PERFORMANCE_TESTING::TestStoppingDistance(bool abs, ostream & info_output, ostream & error_output)
 {
 	info_output << "Testing stopping distance" << endl;
-
 	ResetCar();
 	car.dynamics.SetABS(abs);
 
 	double t = 0.0, dt = 0.004, maxtime = 300.0;
-	int i = 0;
+	int i = 0;  const int ii = (int)(1.0/dt);  // write interval
 
-	std::vector <float> inputs(CARINPUT::ALL, 0.0);
+	vector <float> inputs(CARINPUT::ALL, 0.0);
 
 	inputs[CARINPUT::THROTTLE] = 1.0;
 
@@ -243,19 +244,16 @@ void PERFORMANCE_TESTING::TestStoppingDistance(bool abs, std::ostream & info_out
 		{
 			accelerating = false;
 			stopstart = car.dynamics.GetWheelPosition(WHEEL_POSITION(0));
-			//info_output  << "hitting the brakes at " << t << ", " << vel << std::endl;
+			//info_output  << "hitting the brakes at " << t << ", " << vel << endl;
 		}
 
 		if (!accelerating && vel < stopthreshold)
-		{
 			break;
-		}
 
-		if (car.GetEngineRPM() < 1)
-		{
+		if (car.GetEngineRPM() < 1)  {
 			error_output << "Car stalled during launch, t=" << t << endl;
-			break;
-		}
+			break;  }
+			
 		/* fixme
 		car.remaining_shift_time-=dt;
 		if (car.remaining_shift_time < 0)
@@ -263,8 +261,8 @@ void PERFORMANCE_TESTING::TestStoppingDistance(bool abs, std::ostream & info_out
 		*/
 
 		///
-		if (i % (int)(1.0/dt) == 0)  // every second
-			info_output  << fToStr(t,0,2) << "s, " << fToStr(vel*3.6,1,4) << " kmh, gear " << car.GetGear() << ", rpm " << fToStr(car.GetEngineRPM(),0,4) << std::endl;
+		if (i % ii == 0)  // every second
+			info_output  << fToStr(t,0,2) << "s, " << fToStr(vel*3.6,1,4) << " kmh, gear " << car.GetGear() << ", rpm " << fToStr(car.GetEngineRPM(),0,4) << endl;
 
 		t += dt;
 		++i;

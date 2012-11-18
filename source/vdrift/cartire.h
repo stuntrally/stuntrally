@@ -7,8 +7,8 @@
 #include <map>
 #include <iostream>
 #include <vector>
-
 #include <cmath>
+
 
 #ifdef _WIN32
 bool isnan(float number);
@@ -25,11 +25,15 @@ public:
 	std::vector <T> longitudinal; ///< the parameters of the longitudinal pacejka equation.  this is series b
 	std::vector <T> lateral; ///< the parameters of the lateral pacejka equation.  this is series a
 	std::vector <T> aligning; ///< the parameters of the aligning moment pacejka equation.  this is series c
+
 	TIRE_PARAMS()
-	{	longitudinal.resize(11);
+	{
+		longitudinal.resize(11);
 		lateral.resize(15);
-		aligning.resize(18);  }
+		aligning.resize(18);
+	}
 };
+
 
 template <typename T>
 class CARTIRE
@@ -37,22 +41,22 @@ class CARTIRE
 friend class joeserialize::Serializer;
 public://
 	//constants (not actually declared as const because they can be changed after object creation)
-	T radius; ///< the total radius of the tire
-	T tread; ///< 1.0 means a pure off-road tire, 0.0 is a pure road tire
+	T radius;  ///< the total radius of the tire
+	T tread;  ///< 1.0 means a pure off-road tire, 0.0 is a pure road tire
 	T rolling_resistance_linear; ///< linear rolling resistance on a hard surface
 	T rolling_resistance_quadratic; ///< quadratic rolling resistance on a hard surface
 	TIRE_PARAMS <T>* params;
-	std::vector <T> sigma_hat; ///< maximum grip in the longitudinal direction
-	std::vector <T> alpha_hat; ///< maximum grip in the lateral direction
+	std::vector <T> sigma_hat;  ///< maximum grip in the longitudinal direction
+	std::vector <T> alpha_hat;  ///< maximum grip in the lateral direction
 
 	//variables
 	T feedback; ///< the force feedback effect value
 
 	//for info only
-	T slide; ///< ratio of tire contact patch speed to road speed, minus one
-	T slip; ///< the angle (in degrees) between the wheel heading and the wheel's actual velocity
-	T slideratio; ///< ratio of the slide to the tire's optimim slide
-	T slipratio; ///< ratio of the slip to the tire's optimim slip
+	T slide;  ///< ratio of tire contact patch speed to road speed, minus one
+	T slip;  ///< the angle (in degrees) between the wheel heading and the wheel's actual velocity
+	T slideratio;  ///< ratio of the slide to the tire's optimim slide
+	T slipratio;  ///< ratio of the slip to the tire's optimim slip
 
 	void FindSigmaHatAlphaHat(T load, T & output_sigmahat, T & output_alphahat, int iterations=400)
 	{
@@ -130,7 +134,6 @@ public:
 		radius = value;
 	}
 
-
 	T GetRadius() const
 	{
 		return radius;
@@ -140,7 +143,6 @@ public:
 	{
 		tread = value;
 	}
-
 
 	T GetTread() const
 	{
@@ -158,27 +160,27 @@ public:
 		params = params1;
 	}
 
-	void SetSlide ( const T& value )
+	void SetSlide(const T& value)
 	{
 		slide = value;
 	}
-
 
 	T GetSlide() const
 	{
 		return slide;
 	}
 
-	void SetSlip ( const T& value )
+	void SetSlip(const T& value)
 	{
 		slip = value;
 	}
-
 
 	T GetSlip() const
 	{
 		return slip;
 	}
+
+
 
 	/// Return the friction vector calculated from the magic formula.
 	/// HUB_VELOCITY is the velocity vector of the wheel's reference
@@ -186,6 +188,7 @@ public:
 	/// with respect to the wheel's frame.
 	/// current_camber is expected in radians.
 	/// normal_force is in units N.
+	//-------------------------------------------------------------------------------------------------------------------------------
 	MATHVECTOR <T, 3> GetForce(
 					T normal_force,
 					T friction_coeff,
@@ -193,7 +196,6 @@ public:
 					const MATHVECTOR <T, 3> & hub_velocity,
 					T patch_speed,
 					T current_camber)
-
 	{
 		assert(friction_coeff > 0);
 
@@ -342,6 +344,8 @@ public:
 		MATHVECTOR <T, 3> outvec(Fx, Fy, Mz);
 		return outvec;
 	}
+	//-------------------------------------------------------------------------------------------------------------------------------
+
 
 	void SetFeedback(T aligning_force)
 	{
@@ -385,8 +389,10 @@ public:
 	{
 		return feedback;
 	}
+	//-------------------------------------------------------------------------------------------------------------------------------
 
-	///load is the normal force in newtons.
+
+	///  load is the normal force in newtons.
 	T GetMaximumFx(T load) const
 	{
 		const std::vector <T>& b = params->longitudinal;
@@ -394,7 +400,6 @@ public:
 		return ( b[1]*Fz + b[2] ) *Fz;
 	}
 
-	///load is the normal force in newtons.
 	T GetMaximumFy(T load, T current_camber) const
 	{
 		const std::vector <T>& a = params->lateral;
@@ -407,7 +412,6 @@ public:
 		return D+Sv;
 	}
 
-	///load is the normal force in newtons.
 	T GetMaximumMz(T load, T current_camber) const
 	{
 		const std::vector <T>& c = params->aligning;
@@ -420,7 +424,8 @@ public:
 		return -(D+Sv);
 	}
 
-	/// pacejka magic formula function, longitudinal
+	///  pacejka magic formula function
+	///  longitudinal
 	T Pacejka_Fx ( T sigma, T Fz, T friction_coeff, T & maxforce_output )
 	{
 		const std::vector <T>& b = params->longitudinal;
@@ -438,7 +443,7 @@ public:
 		return Fx;
 	}
 
-	/// pacejka magic formula function, lateral
+	///  lateral
 	T Pacejka_Fy ( T alpha, T Fz, T gamma, T friction_coeff, T & maxforce_output )
 	{
 		const std::vector <T>& a = params->lateral;
@@ -459,7 +464,7 @@ public:
 		return Fy;
 	}
 
-	/// pacejka magic formula function, aligning
+	///  aligning
 	T Pacejka_Mz ( T sigma, T alpha, T Fz, T gamma, T friction_coeff, T & maxforce_output )
 	{
 		const std::vector <T>& c = params->aligning;
@@ -479,7 +484,7 @@ public:
 
 
 
-	/// optimum steering angle in degrees given load in newtons
+	///  optimum steering angle in degrees given load in newtons
 	T GetOptimumSteeringAngle(T load) const
 	{
 		T sigma_hat(0);
@@ -490,7 +495,7 @@ public:
 		return alpha_hat;
 	}
 
-	///return the slide and slip ratios as a percentage of optimum
+	///  return the slide and slip ratios as a percentage of optimum
 	std::pair <T, T> GetSlideSlipRatios() const
 	{
 		return std::make_pair(slideratio, slipratio);

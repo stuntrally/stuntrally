@@ -357,6 +357,10 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	return true;
 }
 
+
+///  Tweak
+//-----------------------------------------------------------------------------------------------------------
+
 void App::TweakCarSave()
 {
 	String text = edTweak->getCaption();
@@ -398,7 +402,7 @@ void App::TweakCarLoad()
 
 		size_t p = path.find("cars");
 		if (p != string::npos)
-			path = path.substr(p+4, path.length());
+			path = path.substr(p+5, path.length());
 		txtTweakPath->setCaption((user ? "User: " : "Original: ") + path);
 		txtTweakPath->setTextColour(user ? Colour(1,1,0.5) : Colour(0.5,1,1));
 		
@@ -426,8 +430,8 @@ void App::CmbEdTweakTireSet(EditPtr ed)
 void App::TweakTireSave()
 {
 	///TODO: save tires, ed name, game reload all..
-	// ed car setup name, chk exist, load btn
-	// *jump to section  *help on current line
+	// ed car setup name, chk exist, load
+	// jump to section,  help on current line
 	// ed find text? syntax clr?=
 }
 

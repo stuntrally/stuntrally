@@ -93,8 +93,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 		ti.update();	/// time
 		float dt = ti.dt * 1000.f;
 		LogO(String("::: Time car perf test: ") + toStr(dt) + " ms");
-		//pApp->mShutDown = true;
-		exit(0);/*+*/
+		//exit(0);/*+*/
 		#endif
 
 		if (!pCar)  LogO("Error creating car " + sDirname + "  path: " + pathCar);

@@ -46,7 +46,7 @@ void App::newPoses(float time)  // time only for camera update
 		static float t = 0.f;
 		if (pCar->GetSpeed() < 0.5)  t = 0.f;
 		t += time;
-		pGame->info_output << fToStr(t,2,4) << "s, " << fToStr(pCar->GetSpeed()*3.6, 1,4) << " kmh, gear " << pCar->GetGear() << ", rpm " << fToStr(pCar->GetEngineRPM(),0,4)
+		pGame->info_output << fToStr(t,2,5) << "s, " << fToStr(pCar->GetSpeed()*3.6, 1,5) << " kmh, gear " << pCar->GetGear() << ", rpm " << fToStr(pCar->GetEngineRPM(),0,4)
 			<< ", clu " << fToStr(pCar->GetClutch(), 1,4)
 			//<< ", sli " << fToStr(pCar->dynamics.tire[0].slide, 1,4)
 			//<< ", slp " << fToStr(pCar->dynamics.tire[1].slip, 1,4)
