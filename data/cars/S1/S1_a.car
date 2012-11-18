@@ -129,7 +129,7 @@ max-pressure = 3.0e6
 bias = 0.35
 radius = 0.1397
 area = 0.015
-handbrake = 2.8
+handbrake = 4.2
 
 
 [ driver ]
