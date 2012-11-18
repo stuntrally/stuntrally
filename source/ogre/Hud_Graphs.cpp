@@ -54,7 +54,7 @@ void App::CreateGraphs()
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
 			int c = i%5;  /*clr*/
-			gv->Create(512/*len*/, "graph"+toStr(c+1), i==0||i==2 ? 0.52f : 0.f/*alpha*/);
+			gv->Create(256/*len*/, "graph"+toStr(c+1), i==0||i==2 ? 0.52f : 0.f/*alpha*/);
 			switch (i)
 			{
 				case 0:  gv->CreateTitle("norm vel",	c, 0.0f, -2, 24);  break;
@@ -63,8 +63,8 @@ void App::CreateGraphs()
 				case 3:  gv->CreateTitle("scrap",		c, 0.1f, -2, 24);  break;
 				case 4:  gv->CreateTitle("screech",		c, 0.2f, -2, 24);  break;
 			}
-			if (i < 2)	gv->SetSize(0.f, 0.5f, 0.5f, 0.15f);
-			else		gv->SetSize(0.f, 0.35f, 0.5f, 0.15f);
+			if (i < 2)	gv->SetSize(0.f, 0.5f,  0.4f, 0.15f);
+			else		gv->SetSize(0.f, 0.35f, 0.4f, 0.15f);
 
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
@@ -85,8 +85,8 @@ void App::CreateGraphs()
 				case 2:  gv->CreateTitle("wave L",			c, 0.0f,-2, 24);  break;
 				case 3:  gv->CreateTitle("wave R",			c, 0.0f, 2, 24);  break;
 			}
-			if (i < 2)	gv->SetSize(0.00f, 0.24f, 0.40f, 0.25f);
-			else		gv->SetSize(0.60f, 0.24f, 0.40f, 0.25f);
+			if (i < 2)	gv->SetSize(0.00f, 0.24f, 0.4f, 0.25f);
+			else		gv->SetSize(0.60f, 0.24f, 0.4f, 0.25f);
 
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
@@ -118,9 +118,9 @@ void App::CreateGraphs()
 			float x = i%2==0 ? x0 : (t ? x2 : x1);  char y = i/2%2==0 ? -2 : -3;
 			gv->CreateTitle(cgt[i][t], c, x, y, 24);
 
-			if (i < 4)	gv->SetSize(0.00f, 0.24f, 0.40f, 0.25f);
-			//else		gv->SetSize(0.60f, 0.24f, 0.40f, 0.25f);  // right
-			else		gv->SetSize(0.00f, 0.50f, 0.40f, 0.25f);  // top
+			if (i < 4)	gv->SetSize(0.00f, 0.24f, 0.4f, 0.25f);
+			//else		gv->SetSize(0.60f, 0.24f, 0.4f, 0.25f);  // right
+			else		gv->SetSize(0.00f, 0.50f, 0.4f, 0.25f);  // top
 			
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
@@ -316,7 +316,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 	case Gh_TorqueCurve:  /// torque curves, gears
 	{	static int ii = 0;  ++ii;  // skip upd cntr
 		if (ii >= 32 && gsi >= 6)
-		{	ii = -60;//-
+		{	ii = -60;  //todo: double buffer for data, static graphs..
 
 			const T fin = dynamics.center_differential.GetFinalDrive();
 			const T r = 1.0 / (2 * PI_d * dynamics.tire[0].GetRadius());
@@ -336,7 +336,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 
 					T rmax = dynamics.engine.GetRedline()/**1.4*/, rmin = dynamics.engine.GetStartRPM();
 					T tq = gr * dynamics.engine.GetTorqueCurve(1.0, rpm);
-					if (rpm > rmax)  tq = 0;  //if (rpm < rmin)  tq = 0;
+					if (rpm > rmax)  tq = 0;  if (rpm < rmin)  tq = 0;
 
 					//T xx = x/511.0;
 					//T rpm = xx * (rmax-rmin) + rmin;

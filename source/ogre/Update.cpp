@@ -233,7 +233,8 @@ bool App::frameStart(Real time)
 		//  keys up/dn, for lists
 		#define isKey(a)  mKeyboard->isKeyDown(OIS::a)
 		static float dirU = 0.f,dirD = 0.f;
-		if (isFocGui && !pSet->isMain)
+		bool tweak = mWndTweak && mWndTweak->getVisible();
+		if (isFocGui && !pSet->isMain && !tweak)
 		{
 			if (isKey(KC_UP)  ||isKey(KC_NUMPAD8))	dirD += time;  else
 			if (isKey(KC_DOWN)||isKey(KC_NUMPAD2))	dirU += time;  else

@@ -310,7 +310,7 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Car}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
-				<Widget type="ListBox" skin="ListBox" position="14 32 80 256" name="CarList">
+				<Widget type="ListBox" skin="ListBox" position="14 32 80 212" name="CarList">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipCarsList}"/>
 				</Widget>
@@ -321,7 +321,7 @@
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipNewGameCar}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="14 380 416 80" name="CarDesc">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="14 412 416 68" name="CarDesc">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
@@ -581,33 +581,33 @@
 				<Widget type="TextBox" skin="TextBox" position="32 340 200 24">
 					<Property key="Caption" value="#{SpeedSensitiveSteering}"/>
 					<Property key="TextColour" value="0.3 0.9 0.9"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipSpeedSensitiveSteering}"/>
 				</Widget>
 
 				<Widget type="TextBox" skin="TextBox" position="32 370 200 24">
 					<Property key="Caption" value="#{SSS_Effect}"/>
 					<Property key="TextColour" value="0.7 0.9 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="200 370 200 24" name="SSSEffectVal">
 					<Property key="TextColour" value="0.7 0.9 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Slider" skin="Slider" position="32 400 200 16" name="SSSEffect">
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 430 200 24">
 					<Property key="Caption" value="#{SSS_SpeedFactor}"/>
 					<Property key="TextColour" value="0.7 0.9 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="200 430 200 24" name="SSSVelFactorVal">
 					<Property key="TextColour" value="0.7 0.9 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Slider" skin="Slider" position="32 450 200 16" name="SSSVelFactor">
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
@@ -1420,7 +1420,7 @@
 					<Property key="Caption" value="#{UserDir}"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<UserString key="RelativeTo" value="HelpWnd"/>
-				</Widget>				
+				</Widget>
 				<Widget type="EditBox" skin="EditBox" position="32 430 600 24" name="EdUserDir">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="false"/>
@@ -2612,7 +2612,7 @@
 					<Property key="TextColour" value="0.7 1.0 0.7"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="Widget" skin="Panel" position="532 88 236 314" name="PanInputDetail">
+				<Widget type="Widget" skin="PanelSkin" position="532 88 236 314" name="PanInputDetail">
 					<Property key="Colour" value="0.7 0.8 0.9"/>
 					<Property key="Alpha" value="0.8"/>
 					<Property key="InheritsAlpha" value="false"/>
@@ -2739,40 +2739,101 @@
 		</Widget>
 	</Widget>
 
-	<Widget type="Window" skin="WindowCS" position="00 36 860 800" layer="Back" name="WndTweak">
-		<Property key="Alpha" value="0.3"/>
-		<Widget type="Widget" skin="PanelSkin" position="0 0 860 800">
-			<Property key="Alpha" value="0.9"/>
-			<Property key="Colour" value="0.3 0.5 0.9"/>
-		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="660 20 144 30">
+	<Widget type="Window" skin="WindowCS" position="0 64 536 840" align="Default" layer="Popup" name="WndTweak">
+		<Property key="MinSize" value="500 400"/>
+		<Property key="MaxSize" value="2560 1600"/>
+		<Property key="Caption" value="#{Tweak}"/>
+		<Property key="Alpha" value="0.4"/>
+		<Property key="Snap" value="true"/>
+		<Widget type="TabControl" skin="TabControl" position="0 0 790 760" align="Default" layer="Back">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="Caption" value="#{Tweak}"/>
-			<Property key="TextColour" value="0.95 1.0 1.0"/>
+			<Property key="Colour" value="0.7 0.85 1"/>
 			<UserString key="RelativeTo" value="WndTweak"/>
-		</Widget>
-		<!--<Widget type="TextBox" skin="TextBox" position="660 50 144 30">
-			<Property key="InheritsAlpha" value="false"/>
-			<Property key="Caption" value="Save Apply"/>
-			<Property key="TextColour" value="0.95 1.0 1.0"/>
-			<UserString key="RelativeTo" value="WndTweak"/>
-		</Widget>-->
-		<Widget type="EditBox" skin="EditBoxStretch" position="10 30 600 500" name="TweakEdit">
-			<Property key="InheritsAlpha" value="false"/>
-			<Property key="ReadOnly" value="false"/>
-			<Property key="MultiLine" value="true"/>
-			<Property key="WordWrap" value="true"/>
-			<Property key="VisibleHScroll" value="false"/>
-			<Property key="VisibleVScroll" value="true"/>
-			<Property key="MaxTextLength" value="16000"/>
-			<Property key="TextColour" value="0.9 0.96 1.0"/>
-			<Property key="Colour" value="0.45 0.6 0.75"/>
-			<UserString key="RelativeTo" value="WndTweak"/>
-		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="10 8 600 30" name="TweakPath">
-			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.7 1.0 1.0"/>
-			<UserString key="RelativeTo" value="WndTweak"/>
+			<Property key="SmoothShow" value="false"/>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="#{Car}"/>
+				<Property key="Colour" value="1 0.6 0.2"/>
+				<UserString key="RelativeTo" value="WndTweak"/>
+				<Widget type="EditBox" skin="EditBoxStretch" position="10 64 770 480" name="TweakEdit">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="ReadOnly" value="false"/>
+					<Property key="MultiLine" value="true"/>
+					<Property key="WordWrap" value="false"/>
+					<Property key="VisibleHScroll" value="false"/>
+					<Property key="VisibleVScroll" value="true"/>
+					<Property key="MaxTextLength" value="16000"/>
+					<Property key="TextColour" value="0.9 0.96 1.0"/>
+					<Property key="Colour" value="0.45 0.6 0.75"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="12 4 800 24" name="TweakPath">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="TextColour" value="0.7 1.0 1.0"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="108 576 96 24">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Caption" value="#{Tires}"/>
+					<Property key="TextColour" value="0.95 1.0 1.0"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="12 30 88 24">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Caption" value="#{Setup}"/>
+					<Property key="TextColour" value="0.8 0.8 1.0"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>
+				<Widget type="ComboBox" skin="ComboBox" position="160 28 200 24" name="TweakCarSet">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="TextColour" value="0.7 0.7 1.0"/>
+					<Property key="Colour" value="0.6 0.6 0.9"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="420 24 120 32" name="TweakCarLoad">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Caption" value="#{RplLoad}"/>
+					<Property key="TextColour" value="0.6 0.82 1.0"/>
+					<Property key="Colour" value="0.6 0.82 1.0"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="560 24 120 32" name="TweakCarSave">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Caption" value="#{RplSave}"/>
+					<Property key="TextColour" value="1.0 0.6 0.3"/>
+					<Property key="Colour" value="1.0 0.6 0.0"/>
+					<UserString key="tip" value="#{TweakEdit2}"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="#{Tires}"/>
+				<Property key="Colour" value="1 0.6 0.2"/>
+				<UserString key="RelativeTo" value="WndTweak"/>
+				<Widget type="TextBox" skin="TextBox" position="12 30 88 24">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Caption" value="#{Setup}"/>
+					<Property key="TextColour" value="0.9 0.85 1.0"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>
+				<Widget type="ComboBox" skin="ComboBox" position="160 28 200 24" name="TweakTireSet">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="TextColour" value="0.8 0.6 1.0"/>
+					<Property key="Colour" value="0.7 0.5 0.9"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="560 24 120 32" name="TweakTireSave">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Caption" value="#{RplSave}"/>
+					<Property key="TextColour" value="1.0 0.3 0.2"/>
+					<Property key="Colour" value="0.9 0.2 0.1"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="#{Other}"/>
+				<Property key="Colour" value="1 0.6 0.2"/>
+				<UserString key="RelativeTo" value="WndTweak"/>
+			</Widget>
 		</Widget>
 	</Widget>
 
@@ -2798,82 +2859,82 @@
 			<Property key="Alpha" value="0.6"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.8 0.9 1"/>
-			<UserString key="RelativeTo" value="OptionsWnd"/>
+			<UserString key="RelativeTo" value="RplWnd"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="20 1 40 32" name="RplToStart">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="|&lt;"/>
 			<Property key="Alpha" value="0.6"/>
 			<Property key="Colour" value="0.6 0.8 1"/>
-			<UserString key="RelativeTo" value="OptionsWnd"/>
+			<UserString key="RelativeTo" value="RplWnd"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="60 1 40 32" name="RplBack">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="&lt;&lt;"/>
 			<Property key="Alpha" value="0.8"/>
 			<Property key="Colour" value="0.4 0.8 1"/>
-			<UserString key="RelativeTo" value="OptionsWnd"/>
+			<UserString key="RelativeTo" value="RplWnd"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="100 1 64 32" name="RplPlay">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="||"/>
 			<Property key="Colour" value="0 1 1"/>
-			<UserString key="RelativeTo" value="OptionsWnd"/>
+			<UserString key="RelativeTo" value="RplWnd"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="164 1 40 32" name="RplForward">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="&gt;&gt;"/>
 			<Property key="Colour" value="0.4 0.8 1"/>
 			<Property key="Alpha" value="0.8"/>
-			<UserString key="RelativeTo" value="OptionsWnd"/>
+			<UserString key="RelativeTo" value="RplWnd"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="204 1 40 32" name="RplToEnd">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="&gt;|"/>
 			<Property key="Colour" value="0.6 0.8 1"/>
 			<Property key="Alpha" value="0.6"/>
-			<UserString key="RelativeTo" value="OptionsWnd"/>
+			<UserString key="RelativeTo" value="RplWnd"/>
 		</Widget>
 		<Widget type="Widget" skin="PanelSkin" position="280 4 80 26">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.9 0.92 1"/>
 			<Property key="Alpha" value="0.6"/>
-			<UserString key="RelativeTo" value="OptionsWnd"/>
+			<UserString key="RelativeTo" value="RplWnd"/>
 			<Widget type="TextBox" skin="TextBox" position="0 2 75 24" name="RplPercent">
 				<Property key="InheritsAlpha" value="false"/>
 				<Property key="Alpha" value="1"/>
 				<Property key="TextColour" value="0.9 0.92 1.0"/>
 				<Property key="TextAlign" value="Right"/>
 				<Property key="FontName" value="font_Vera.24"/>
-				<UserString key="RelativeTo" value="OptionsWnd"/>
+				<UserString key="RelativeTo" value="RplWnd"/>
 			</Widget>
 		</Widget>
 		<Widget type="Widget" skin="PanelSkin" position="380 4 100 26">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.9 0.96 1.0"/>
 			<Property key="Alpha" value="0.6"/>
-			<UserString key="RelativeTo" value="OptionsWnd"/>
+			<UserString key="RelativeTo" value="RplWnd"/>
 			<Widget type="TextBox" skin="TextBox" position="0 2 105 24" name="RplTimeCur">
 				<Property key="InheritsAlpha" value="false"/>
 				<Property key="Alpha" value="1"/>
 				<Property key="TextColour" value="0.9 0.96 1.0"/>
 				<Property key="TextAlign" value="Center"/>
 				<Property key="FontName" value="font_Vera.24"/>
-				<UserString key="RelativeTo" value="OptionsWnd"/>
+				<UserString key="RelativeTo" value="RplWnd"/>
 			</Widget>
 		</Widget>
 		<Widget type="Widget" skin="PanelSkin" position="500 4 100 26">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.8 0.9 1"/>
 			<Property key="Alpha" value="0.5"/>
-			<UserString key="RelativeTo" value="OptionsWnd"/>
+			<UserString key="RelativeTo" value="RplWnd"/>
 			<Widget type="TextBox" skin="TextBox" position="0 2 105 24" name="RplTimeLen">
 				<Property key="InheritsAlpha" value="false"/>
 				<Property key="Alpha" value="1"/>
 				<Property key="TextColour" value="0.8 0.9 1"/>
 				<Property key="TextAlign" value="Center"/>
 				<Property key="FontName" value="font_Vera.24"/>
-				<UserString key="RelativeTo" value="OptionsWnd"/>
+				<UserString key="RelativeTo" value="RplWnd"/>
 			</Widget>
 		</Widget>
 	</Widget>

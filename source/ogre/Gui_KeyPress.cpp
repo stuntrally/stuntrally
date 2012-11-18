@@ -46,7 +46,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 {
 	// update all keystates  (needed for all action("..") from oisb)
 	if (mOISBsys)
-		mOISBsys->process(0.0001/*?0*/);
+		mOISBsys->process(0.000/*?0*/);
 	
 	// action key == pressed key
 	#define action(s)  actionIsActive(s, mKeyboard->getAsString(arg.key))
@@ -357,6 +357,85 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	return true;
 }
 
+void App::TweakCarSave()
+{
+	String text = edTweak->getCaption();
+	if (text == "")  return;
+	text = StringUtil::replaceAll(text, "##", "#");
+
+	std::string path, pathUser, pathUserDir;
+	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], sc->asphalt);
+	
+	PATHMANAGER::CreateDir(pathUserDir, pGame->error_output);
+	std::ofstream fo(pathUser.c_str());
+	fo << text.c_str();
+	fo.close();
+	
+	NewGame();
+}
+
+void App::TweakCarLoad()
+{
+	std::string path, pathUser, pathUserDir;
+	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], sc->asphalt);
+
+	if (!PATHMANAGER::FileExists(path))
+	{
+		edTweak->setCaption("");
+		txtTweakPath->setCaption("Not Found ! " + path);
+		txtTweakPath->setColour(Colour(1,0,0));
+	}else
+	{
+		std::ifstream fi(path.c_str());
+		String text = "", s;
+		while (getline(fi,s))
+			text += s + "\n";
+		fi.close();
+
+		text = StringUtil::replaceAll(text, "#", "##");
+		edTweak->setCaption(UString(text));
+		//edTweak->setVScrollPosition(0);
+
+		size_t p = path.find("cars");
+		if (p != string::npos)
+			path = path.substr(p+4, path.length());
+		txtTweakPath->setCaption((user ? "User: " : "Original: ") + path);
+		txtTweakPath->setTextColour(user ? Colour(1,1,0.5) : Colour(0.5,1,1));
+		
+		MyGUI::InputManager::getInstance().resetKeyFocusWidget();
+		MyGUI::InputManager::getInstance().setKeyFocusWidget(edTweak);
+	}
+}
+
+void App::CmbTweakCarSet(CMB)
+{
+}
+void App::CmbTweakTireSet(CMB)
+{
+}
+
+void App::CmbEdTweakCarSet(EditPtr ed)
+{
+}
+void App::CmbEdTweakTireSet(EditPtr ed)
+{
+}
+
+
+//  tweak save car and reload game
+void App::TweakTireSave()
+{
+	///TODO: save tires, ed name, game reload all..
+	// ed car setup name, chk exist, load btn
+	// *jump to section  *help on current line
+	// ed find text? syntax clr?=
+}
+
+void App::btnTweakCarSave(WP){	TweakCarSave();  }
+void App::btnTweakCarLoad(WP){	TweakCarLoad();  }
+void App::btnTweakTireSave(WP){	TweakTireSave();  }
+
+
 ///  Tweak read / save file
 //-----------------------------------------------------------------------------------------
 void App::TweakToggle()
@@ -370,49 +449,15 @@ void App::TweakToggle()
 	
 	//  load  if car changed
 	static string lastPath = "";
-	if (lastPath != path)
+	if (lastPath != path || ctrl)  // force reload  ctrl-alt-Z
 	{	lastPath = path;
-
-		if (!PATHMANAGER::FileExists(path))
-		{
-			edTweak->setCaption("");
-			txtTweakPath->setCaption("Not Found ! " + path);
-		}else
-		{
-			std::ifstream fi(path.c_str());
-			String text = "", s;
-			while (getline(fi,s))
-				text += s + "\n";
-			fi.close();
-
-			text = StringUtil::replaceAll(text, "#", "##");
-			edTweak->setCaption(UString(text));
-			//edTweak->setVScrollPosition(0);
-			txtTweakPath->setCaption(path);
-			
-			MyGUI::InputManager::getInstance().resetKeyFocusWidget();
-			MyGUI::InputManager::getInstance().setKeyFocusWidget(edTweak);
-		}
+		TweakCarLoad();
 	}
 	
 	//  save and reload  shift-alt-Z
 	if (!vis && shift)
-	{
-		String text = edTweak->getCaption();
-		if (text != "")
-		{	text = StringUtil::replaceAll(text, "##", "#");
-			
-			PATHMANAGER::CreateDir(pathUserDir, pGame->error_output);
-			std::ofstream fo(pathUser.c_str());
-			fo << text.c_str();
-			fo.close();
-			
-			NewGame();
-		}
-	}
+		TweakCarSave();
 }
-///TODO: save tires, ed name, game reload all..
-//  ed car setup name, chk exist, load btn, ed find text?
 
 
 //  Get car file path
@@ -420,9 +465,9 @@ bool App::GetCarPath(std::string* pathCar, std::string* pathSave, std::string* p
 	std::string carname, bool asphalt, std::string tweakSetup, bool forceOrig)
 {
 	std::string file = carname + (asphalt ? "_a":"") + ".car",
-		pathOrig = PATHMANAGER::GetCarPath()     + "/"+carname+"/"+ file,
+		pathOrig  = PATHMANAGER::GetCarPath()     + "/"+carname+"/"+ file,
 		pathUserD = PATHMANAGER::GetCarPathUser() + "/"+carname+"/"+ (tweakSetup != "" ? tweakSetup+"/" : ""),
-		pathUser = pathUserD + file;
+		pathUser  = pathUserD + file;
 
 	if (pathSave)  *pathSave = pathUser;
 	if (pathSaveDir)  *pathSaveDir = pathUserD;

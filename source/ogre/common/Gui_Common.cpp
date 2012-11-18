@@ -704,12 +704,13 @@ void App::ResizeOptWnd()
 	Real yo = (1.f - ym)*wy, xo = 4.f/3.f * yo;  // opt wnd size in pix
 	ym = (wy - yo)*0.5f;  xm = (wx - xo)*0.5f;
 
-	#ifndef ROAD_EDITOR
+	#ifndef ROAD_EDITOR  // game
 	mWndGame->setCoord(xm, ym, xo, yo);
 	mWndReplays->setCoord(xm, ym, xo, yo);
-	#else
+	//mWndTweak->setCoord(0, 6, xo/3, yo-ym);
+	#else  // editor
 	mWndEdit->setCoord(xm, ym, xo, yo);
-	#endif
+	#endif  // both
 	mWndHelp->setCoord(xm, ym, xo, yo);
 	mWndOpts->setCoord(xm, ym, xo, yo);
 

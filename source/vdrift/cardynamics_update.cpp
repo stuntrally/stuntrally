@@ -150,100 +150,99 @@ void CARDYNAMICS::UpdateBuoyancy()
 ///..........................................................................................................
 void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bool p4 )
 {
-	out.precision(2);  out.width(6);  out << std::fixed;
+	using namespace std;
+	out.precision(2);  out.width(6);  out << fixed;
 	if (p1)
 	{
-		out << std::endl;
-
 	#if 0  //  bullet hit data-
-		out << "hit S : " << fSndForce << std::endl;
-		out << "hit P : " << fParIntens << std::endl;
-		//out << "hit t : " << fHitTime << std::endl;
-		out << "bHitS : " << (bHitSnd?1:0) << " id "<< sndHitN << std::endl;
-		out << "N Vel : " << fNormVel << std::endl;
-		out << "v Vel : " << GetSpeed() << std::endl;
+		out << "hit S : " << fSndForce << endl;
+		out << "hit P : " << fParIntens << endl;
+		//out << "hit t : " << fHitTime << endl;
+		out << "bHitS : " << (bHitSnd?1:0) << " id "<< sndHitN << endl;
+		out << "N Vel : " << fNormVel << endl;
+		out << "v Vel : " << GetSpeed() << endl;
 	#endif
 
 	#if 1	// body
-		out << "---Body---" << std::endl;
-		out << "com: " << center_of_mass << std::endl;
+		//out << "---Body---" << endl;
+		out << "com: " << center_of_mass << endl;
 		out.precision(0);
-		out << "pos: " << chassisPosition << std::endl;
+		out << "mass: " << body.GetMass() << endl;
 		MATRIX3 <T> inertia = body.GetInertia();
-		out << "inertia: " << inertia[0] << " " << inertia[4] << " " << inertia[8] << std::endl;
-		out << "mass: " << body.GetMass() << std::endl << std::endl;
-		out << "sumWhTest: " << sumWhTest << std::endl << std::endl;
+		out << "inertia: " << inertia[0] << " " << inertia[4] << " " << inertia[8] << endl;
+		//out << "pos: " << chassisPosition << endl;
+		//out << "sumWhTest: " << sumWhTest << endl;
 		out.precision(2);
 		//MATHVECTOR <T, 3> up(0,0,1);
 		//Orientation().RotateVector(up);
-		//out << "up: " << up << std::endl;
-		
+		//out << "up: " << up << endl;
+		out << endl;		
 	#endif
 
 	#if 1	// fluids
 		out << "in fluids: " << inFluids.size() <<
-				" wh: " << inFluidsWh[0].size() << inFluidsWh[1].size() << inFluidsWh[2].size() << inFluidsWh[3].size() << std::endl;
-		out << "wh fl H: " << whH[0] << " " << whH[1] << " " << whH[2] << " " << whH[3] << " " << std::endl;
-		out << std::endl;
+				" wh: " << inFluidsWh[0].size() << inFluidsWh[1].size() << inFluidsWh[2].size() << inFluidsWh[3].size() << endl;
+		out << "wh fl H: " << whH[0] << " " << whH[1] << " " << whH[2] << " " << whH[3] << " " << endl;
+		out << endl;
 	#endif
 
 	#if 0
-		engine.DebugPrint(out);  out << std::endl;
-		//fuel_tank.DebugPrint(out);  out << std::endl;  //mass 8- for 3S,ES,FM
-		clutch.DebugPrint(out);  out << std::endl;
-		transmission.DebugPrint(out);	out << std::endl;
+		engine.DebugPrint(out);  out << endl;
+		//fuel_tank.DebugPrint(out);  out << endl;  //mass 8- for 3S,ES,FM
+		clutch.DebugPrint(out);  out << endl;
+		transmission.DebugPrint(out);	out << endl;
 	#endif
 
 	#if 0
 		if ( drive == RWD )  {
-			out << "(rear)" << std::endl;		rear_differential.DebugPrint(out);	}
+			out << "(rear)" << endl;		rear_differential.DebugPrint(out);	}
 		else if ( drive == FWD )  {
-			out << "(front)" << std::endl;		front_differential.DebugPrint(out);	}
+			out << "(front)" << endl;		front_differential.DebugPrint(out);	}
 		else if ( drive == AWD )  {
-			out << "(center)" << std::endl;		center_differential.DebugPrint(out);
-			out << "(front)" << std::endl;		front_differential.DebugPrint(out);
-			out << "(rear)" << std::endl;		rear_differential.DebugPrint(out);	}
-		out << std::endl;
+			out << "(center)" << endl;		center_differential.DebugPrint(out);
+			out << "(front)" << endl;		front_differential.DebugPrint(out);
+			out << "(rear)" << endl;		rear_differential.DebugPrint(out);	}
+		out << endl;
 	#endif
 	}
 
 	#if 0
 	if (p2)
 	{
-		out << "(front left)" << std::endl;		suspension[FRONT_LEFT].DebugPrint(out);	out << std::endl;
-		out << "(front right)" << std::endl;	suspension[FRONT_RIGHT].DebugPrint(out);out << std::endl;
-		out << "(rear left)" << std::endl;		suspension[REAR_LEFT].DebugPrint(out);	out << std::endl;
-		out << "(rear right)" << std::endl;		suspension[REAR_RIGHT].DebugPrint(out);	out << std::endl;
+		out << "(front left)" << endl;		suspension[FRONT_LEFT].DebugPrint(out);	out << endl;
+		out << "(front right)" << endl;	suspension[FRONT_RIGHT].DebugPrint(out);out << endl;
+		out << "(rear left)" << endl;		suspension[REAR_LEFT].DebugPrint(out);	out << endl;
+		out << "(rear right)" << endl;		suspension[REAR_RIGHT].DebugPrint(out);	out << endl;
 
-		out << "(front left)" << std::endl;		brake[FRONT_LEFT].DebugPrint(out);	out << std::endl;
-		out << "(front right)" << std::endl;	brake[FRONT_RIGHT].DebugPrint(out);	out << std::endl;
-		out << "(rear left)" << std::endl;		brake[REAR_LEFT].DebugPrint(out);	out << std::endl;
-		out << "(rear right)" << std::endl;		brake[REAR_RIGHT].DebugPrint(out);
+		out << "(front left)" << endl;		brake[FRONT_LEFT].DebugPrint(out);	out << endl;
+		out << "(front right)" << endl;	brake[FRONT_RIGHT].DebugPrint(out);	out << endl;
+		out << "(rear left)" << endl;		brake[REAR_LEFT].DebugPrint(out);	out << endl;
+		out << "(rear right)" << endl;		brake[REAR_RIGHT].DebugPrint(out);
 	}
 	#endif
 
 	#if 0
 	if (p3)
 	{
-		out << std::endl;
-		out << "(front left)" << std::endl;		wheel[FRONT_LEFT].DebugPrint(out);	out << std::endl;
-		out << "(front right)" << std::endl;	wheel[FRONT_RIGHT].DebugPrint(out);	out << std::endl;
-		out << "(rear left)" << std::endl;		wheel[REAR_LEFT].DebugPrint(out);	out << std::endl;
-		out << "(rear right)" << std::endl;		wheel[REAR_RIGHT].DebugPrint(out);	out << std::endl;
+		out << endl;
+		out << "(front left)" << endl;		wheel[FRONT_LEFT].DebugPrint(out);	out << endl;
+		out << "(front right)" << endl;	wheel[FRONT_RIGHT].DebugPrint(out);	out << endl;
+		out << "(rear left)" << endl;		wheel[REAR_LEFT].DebugPrint(out);	out << endl;
+		out << "(rear right)" << endl;		wheel[REAR_RIGHT].DebugPrint(out);	out << endl;
 
-		out << "(front left)" << std::endl;		tire[FRONT_LEFT].DebugPrint(out);	out << std::endl;
-		out << "(front right)" << std::endl;	tire[FRONT_RIGHT].DebugPrint(out);	out << std::endl;
-		out << "(rear left)" << std::endl;		tire[REAR_LEFT].DebugPrint(out);	out << std::endl;
-		out << "(rear right)" << std::endl;		tire[REAR_RIGHT].DebugPrint(out);
+		out << "(front left)" << endl;		tire[FRONT_LEFT].DebugPrint(out);	out << endl;
+		out << "(front right)" << endl;	tire[FRONT_RIGHT].DebugPrint(out);	out << endl;
+		out << "(rear left)" << endl;		tire[REAR_LEFT].DebugPrint(out);	out << endl;
+		out << "(rear right)" << endl;		tire[REAR_RIGHT].DebugPrint(out);
 	}
 	#endif
 
 	#if 0
 	if (p4)
 	{
-		for (std::vector <CARAERO<T> >::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
+		for (vector <CARAERO<T> >::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
 		{
-			i->DebugPrint(out);	out << std::endl;
+			i->DebugPrint(out);	out << endl;
 		}
 	}
 	#endif

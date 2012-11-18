@@ -446,9 +446,13 @@ void App::InitGui()
     MyGUI::EditPtr edUserDir = mGUI->findWidget<Edit>("EdUserDir");
 	edUserDir->setCaption(PATHMANAGER::GetUserConfigDir());
 	
-	//  tweak
+	///  tweak
 	edTweak = mGUI->findWidget<Edit>("TweakEdit");
 	txtTweakPath = mGUI->findWidget<StaticText>("TweakPath");
+	Btn("TweakCarSave", btnTweakCarSave);  Btn("TweakCarLoad", btnTweakCarLoad);
+	Btn("TweakTireSave", btnTweakTireSave);
+	Cmb(cmbTweakCarSet, "TweakCarSet", CmbTweakCarSet);   cmbTweakCarSet->eventEditTextChange += newDelegate(this, &App::CmbEdTweakCarSet);
+	Cmb(cmbTweakTireSet,"TweakTireSet",CmbTweakTireSet);  cmbTweakTireSet->eventEditTextChange+= newDelegate(this, &App::CmbEdTweakTireSet);
 
 
 	///  input tab  -------

@@ -84,7 +84,7 @@ Car/StatsTxt
 		metrics_mode pixels
 		vert_align top
 		left 3
-		top 20
+		top 30
 		width 600
 		height 800
 		font_name Console
@@ -97,7 +97,7 @@ Car/StatsTxt
 		metrics_mode pixels
 		vert_align top
 		left 303
-		top 20
+		top 30
 		width 300
 		height 800
 		font_name Console
@@ -110,7 +110,7 @@ Car/StatsTxt
 		metrics_mode pixels
 		vert_align top
 		left 603
-		top 20
+		top 30
 		width 300
 		height 800
 		font_name Console
@@ -123,7 +123,7 @@ Car/StatsTxt
 		metrics_mode pixels
 		vert_align top
 		left 903
-		top 20
+		top 30
 		width 600
 		height 800
 		font_name Console
@@ -136,7 +136,7 @@ Car/StatsTxt
 		metrics_mode pixels
 		vert_align top
 		left 1203
-		top 20
+		top 30
 		width 600
 		height 800
 		font_name Console

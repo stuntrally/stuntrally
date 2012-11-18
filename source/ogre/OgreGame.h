@@ -327,9 +327,13 @@ protected:
 	MyGUI::StaticTextPtr txtJAxis, txtJBtn, txtInpDetail;  MyGUI::WidgetPtr panInputDetail;
 	int lastAxis, axisCnt;  std::string joyName;  class OISB::AnalogAxisAction* actDetail;
 	MyGUI::EditPtr edInputMin, edInputMax, edInputMul, edInputReturn, edInputIncrease;  void editInput(MyGUI::EditPtr);
-	MyGUI::ComboBox* cmbInpDetSet;  void comboInputPreset(CMB), comboInputKeyAllPreset(CMB);
+	MyGUI::ComboBoxPtr cmbInpDetSet;  void comboInputPreset(CMB), comboInputKeyAllPreset(CMB);
 
-	MyGUI::EditPtr edTweak;  void TweakToggle();  MyGUI::StaticTextPtr txtTweakPath;
+	///  tweak
+	MyGUI::EditPtr edTweak;  MyGUI::StaticTextPtr txtTweakPath;
+	MyGUI::ComboBoxPtr cmbTweakCarSet, cmbTweakTireSet;  void CmbTweakCarSet(CMB), CmbTweakTireSet(CMB), CmbEdTweakCarSet(MyGUI::EditPtr), CmbEdTweakTireSet(MyGUI::EditPtr);
+	void TweakToggle(), TweakCarSave(),TweakCarLoad(), TweakTireSave();
+	void btnTweakCarSave(WP),btnTweakCarLoad(WP), btnTweakTireSave(WP);
 
 
 	//  sliders  -----------------------------------------
