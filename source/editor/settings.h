@@ -6,6 +6,7 @@
 
 #define SET_VER  1700  // 1.7
 
+enum eShadowType  {  Sh_None=0, Sh_Simple, Sh_Depth, Sh_Soft  };
 
 class SETTINGS
 {
