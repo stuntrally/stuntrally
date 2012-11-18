@@ -28,7 +28,7 @@ CARDYNAMICS::CARDYNAMICS() :
 	vHitPos(0,0,0), vHitNorm(0,0,0),
 	steerValue(0.f), velPrev(0,0,0),
 	fCarScrap(0.f), fCarScreech(0.f),
-	time(0.0), sumWhTest(0.0)
+	time(0.0)//, sumWhTest(0.0)
 {
 	for (int i=0; i<4; ++i)
 	{	bWhOnRoad[i]=0;  terSurf[i]=0;

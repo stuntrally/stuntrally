@@ -5,11 +5,11 @@
 
 //#include <ostream>
 //#include <string>
-//#include <sstream>
 
 class PERFORMANCE_TESTING
 {
-private:
+//private:
+public:
 	CAR car;
 	TRACKSURFACE surface;
 	std::string carstate;
@@ -17,12 +17,10 @@ private:
 	void ResetCar();
 	void TestMaxSpeed(std::ostream & info_output, std::ostream & error_output);
 	void TestStoppingDistance(bool abs, std::ostream & info_output, std::ostream & error_output);
-	float ConvertToMPH(float ms) {return ms*2.23693629;}
-	float ConvertToFeet(float meters) {return meters*3.2808399;}
 	
 public:
 	PERFORMANCE_TESTING();
-	void Test(const std::string & carpath, class GAME* pGame, std::ostream & info_output, std::ostream & error_output);
+	void Test(const std::string & carpath, class App* pApp, std::ostream & info_output, std::ostream & error_output);
 };
 
 #endif

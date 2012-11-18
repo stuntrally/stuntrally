@@ -5,6 +5,7 @@
 #include "../vdrift/mathvector.h"
 #include "../vdrift/track.h"
 #include "../vdrift/game.h"
+#include "../vdrift/performance_testing.h"
 #include "OgreGame.h"
 #include "SplitScreen.h"
 #include "common/SceneXml.h"
@@ -81,6 +82,20 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 		pApp->GetCarPath(&pathCar, 0, 0, sDirname, sc->asphalt/*, "", mClient*/);
 		
 		pCar = pGame->LoadCar(pathCar, sDirname, pos, rot, true, false, type == CT_REMOTE, index);
+
+		///  car perf test ...
+		#if 0
+		QTimer ti;  ti.update();  /// time
+
+			PERFORMANCE_TESTING perf;
+			perf.Test(pathCar, pApp, pGame->info_output, pGame->error_output);
+
+		ti.update();	/// time
+		float dt = ti.dt * 1000.f;
+		LogO(String("::: Time car perf test: ") + toStr(dt) + " ms");
+		//pApp->mShutDown = true;
+		exit(0);/*+*/
+		#endif
 
 		if (!pCar)  LogO("Error creating car " + sDirname + "  path: " + pathCar);
 		else  pCar->pCarM = this;

@@ -2801,8 +2801,8 @@
 					<Property key="Caption" value="#{RplSave}"/>
 					<Property key="TextColour" value="1.0 0.6 0.3"/>
 					<Property key="Colour" value="1.0 0.6 0.0"/>
-					<UserString key="tip" value="#{TweakEdit2}"/>
 					<UserString key="RelativeTo" value="WndTweak"/>
+					<UserString key="tip" value="#{TweakEdit2}"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">

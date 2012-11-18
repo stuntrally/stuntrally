@@ -263,7 +263,7 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 	
 
 	///***  wind ~->
-	if (pScene->windAmt > 0.01f)
+	if (pScene && pScene->windAmt > 0.01f)
 	{
 		float f = body.GetMass()*pScene->windAmt;
 			// simple modulation
@@ -335,16 +335,16 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 	}
 
 	///  test steer wheels ang vel to body yaw torque ..?  L = I*w
-	T sum = 0.0;
-	for(int i = 0; i < WHEEL_POSITION_SIZE; i++)
-	{
-		sum += (i < 2 ? -1 : 1) *//wheel[i].GetAngularVelocity() *
-			(1.0 - sin(wheel[i].GetSteerAngle()*PI_d/180.0) ) * /*(wheel[i].GetSteerAngle() > 0 ? 1 : -1) **/ 10;
-		MATHVECTOR <T, 3> torque(0, 0, sum);
-		//wheel_space.RotateVector(world_wheel_torque);
-		//ApplyTorque(torque);
-	}
-	sumWhTest = sum;
+	//T sum = 0.0;
+	//for(int i = 0; i < WHEEL_POSITION_SIZE; i++)
+	//{
+	//	sum += (i < 2 ? -1 : 1) *//wheel[i].GetAngularVelocity() *
+	//		(1.0 - sin(wheel[i].GetSteerAngle()*PI_d/180.0) ) * /*(wheel[i].GetSteerAngle() > 0 ? 1 : -1) **/ 10;
+	//	MATHVECTOR <T, 3> torque(0, 0, sum);
+	//	//wheel_space.RotateVector(world_wheel_torque);
+	//	//ApplyTorque(torque);
+	//}
+	//sumWhTest = sum;
 
 	body.Integrate2(dt);
 	//chassis->integrateVelocities(dt);

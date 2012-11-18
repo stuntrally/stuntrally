@@ -41,6 +41,19 @@ void App::newPoses(float time)  // time only for camera update
 		QUATERNION <float> rot, whRot[4];
 
 
+		///  car perf test  to compare real...
+		#if 0
+		static float t = 0.f;
+		if (pCar->GetSpeed() < 0.5)  t = 0.f;
+		t += time;
+		pGame->info_output << fToStr(t,2,4) << "s, " << fToStr(pCar->GetSpeed()*3.6, 1,4) << " kmh, gear " << pCar->GetGear() << ", rpm " << fToStr(pCar->GetEngineRPM(),0,4)
+			<< ", clu " << fToStr(pCar->GetClutch(), 1,4)
+			//<< ", sli " << fToStr(pCar->dynamics.tire[0].slide, 1,4)
+			//<< ", slp " << fToStr(pCar->dynamics.tire[1].slip, 1,4)
+			//<< ", f " << pCar->GetWheelContact(WHEEL_POSITION(0)).surface->frictionTread
+			<< std::endl;
+		#endif
+
 		///-----------------------------------------------------------------------
 		//  play  get data from replay / ghost
 		///-----------------------------------------------------------------------

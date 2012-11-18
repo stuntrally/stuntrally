@@ -221,7 +221,8 @@ bool CARDYNAMICS::GetTCSActive() const
 void CARDYNAMICS::SetPosition(const MATHVECTOR<T, 3> & position)
 {
 	body.SetPosition(position);
-	chassis->translate(ToBulletVector(position) - chassis->getCenterOfMassPosition());
+	if (chassis)
+		chassis->translate(ToBulletVector(position) - chassis->getCenterOfMassPosition());
 }
 
 //find the precise starting position for the car (trim out the extra space)
@@ -499,7 +500,7 @@ void CARDYNAMICS::ApplyAerodynamicsToBody(T dt)
 	ApplyTorque(wind_torque);
 
 	// rotational damping/drag
-	if (rot_coef[0] > 0.0)
+	if (rot_coef[0] > 0.0 && chassis)
 	{
 		MATHVECTOR <T, 3> rot_drag = -ToMathVector<T>(chassis->getAngularVelocity());
 		(-Orientation()).RotateVector(rot_drag);  // apply factors in car space
@@ -989,7 +990,7 @@ int CARDYNAMICS::NextGear() const
 	int gear = transmission.GetGear();
 
 	// only autoshift if a shift is not in progress
-	if (shifted)
+	if (shifted /*&& remaining_shift_time < 0.01f*/)
 	{
         if (clutch.GetClutch() == 1.0)
         {
