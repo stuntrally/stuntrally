@@ -868,7 +868,7 @@ void CARDYNAMICS::UpdateTransmission(T dt)
 		}
 
 		T throttle = engine.GetThrottle();
-		throttle = ShiftAutoClutchThrottle(throttle, dt);
+		throttle = shifted ? ShiftAutoClutchThrottle(throttle, dt) : 0.5;  //half full gas during shifting
 		engine.SetThrottle(throttle);
 
 		T new_clutch = AutoClutch(last_auto_clutch, dt);
