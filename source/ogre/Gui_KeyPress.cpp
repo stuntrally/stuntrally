@@ -205,7 +205,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			}
 
 		///* tire edit */
-		if (pSet->graphs_type == 4)
+		if (pSet->graphs_type == Gh_TireEdit && !tweak)
 		{
 			int& iCL = iEdTire==1 ? iCurLong : (iEdTire==0 ? iCurLat : iCurAlign);
 			int iCnt = iEdTire==1 ? 11 : (iEdTire==0 ? 15 : 18);

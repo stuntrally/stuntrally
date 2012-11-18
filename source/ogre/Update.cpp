@@ -129,7 +129,7 @@ bool App::frameStart(Real time)
 
 	//...................................................................
 	///* tire edit */
-	if (pSet->graphs_type == 4 && carModels.size() > 0)
+	if (pSet->graphs_type == Gh_TireEdit && carModels.size() > 0)
 	{
 		int k = (isKey(OIS::KC_1) || isKey(OIS::KC_DIVIDE)  ? -1 : 0)
 			  + (isKey(OIS::KC_2) || isKey(OIS::KC_MULTIPLY) ? 1 : 0);
