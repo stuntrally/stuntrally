@@ -162,7 +162,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		float ratio;
 		int gears;
 
-		c.GetParam("transmission.shift-time", time);
+		c.GetParam("transmission.shift-delay", time);
 		shift_time = time;
 
 		if (!c.GetParam("transmission.gear-ratio-r", ratio, error_output)) return false;
@@ -469,7 +469,6 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			tire[WHEEL_POSITION(i)].CalculateSigmaHatAlphaHat();
 			//todo: copy, left and right tires are same
 			//and make option to have 4 tires the same
-			//tires array[] for all cars, asphalt/gravel, not in each .car file
 		}
 		tir.update(); /// time
 		float dt = tir.dt * 1000.f;
