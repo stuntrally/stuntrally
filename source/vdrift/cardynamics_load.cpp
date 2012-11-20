@@ -115,13 +115,16 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		engine.SetPosition(engine_position);
 		AddMassParticle(engine_mass, engine_position);
 
+		float mul = 1.f;
+		c.GetParam("engine.torque-val-mul", mul);
+
 		float torque_point[3];
 		std::string torque_str("engine.torque-curve-00");
 		std::vector <std::pair <double, double> > torques;
 		int curve_num = 0;
 		while (c.GetParam(torque_str, torque_point))
 		{
-			torques.push_back(std::pair <float, float> (torque_point[0], torque_point[1]));
+			torques.push_back(std::pair <float, float> (torque_point[0], torque_point[1] * mul));
 
 			curve_num++;
 			std::stringstream str;
