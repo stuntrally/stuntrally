@@ -49,7 +49,7 @@ void App::changeShadows()
 
 	sh::Vector4* fade = new sh::Vector4(
 		pSet->shadow_dist,
-		pSet->shadow_dist * 0.8, // fade start
+		pSet->shadow_dist * 0.6, // fade start
 		0, 0);
 
 	mFactory->setSharedParameter("shadowFar_fadeStart", sh::makeProperty<sh::Vector4>(fade));
@@ -127,8 +127,9 @@ void App::changeShadows()
 
 
 	mFactory->setGlobalSetting("shadows", "false");
-	mFactory->setGlobalSetting("shadows_pssm", b2s(pSet->shadow_type != Sh_None));
+	mFactory->setGlobalSetting("shadows_pssm", b2s(pSet->shadow_type > Sh_None /*&& pSet->shadow_count > 1*/));
 	mFactory->setGlobalSetting("shadows_depth", b2s(pSet->shadow_type >= Sh_Depth));
+	
 	mFactory->setGlobalSetting("terrain_specular", b2s(pSet->ter_mtr >= 1));
 	mFactory->setGlobalSetting("terrain_normal",   b2s(pSet->ter_mtr >= 2));
 	mFactory->setGlobalSetting("terrain_parallax", b2s(pSet->ter_mtr >= 3));

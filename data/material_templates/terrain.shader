@@ -549,10 +549,9 @@
 
             float shadow = pssmDepthShadow (lightSpacePos0, invShadowmapSize0, shadowMap0, lightSpacePos1, invShadowmapSize1, shadowMap1, lightSpacePos2, invShadowmapSize2, shadowMap2, depth, pssmSplitPoints);
 
-
-            //float fadeRange = shadowFar_fadeStart.x - shadowFar_fadeStart.y;
-            //float fade = 1-((depthPassthrough - shadowFar_fadeStart.y) / fadeRange);
-            //shadow = (depthPassthrough > shadowFar_fadeStart.x) ? 1.0 : ((depthPassthrough > shadowFar_fadeStart.y) ? 1.0-((1.0-shadow)*fade) : shadow);
+            float fadeRange = shadowFar_fadeStart.x - shadowFar_fadeStart.y;
+            float fade = 1-((depth - shadowFar_fadeStart.y) / fadeRange);
+            shadow = (depth > shadowFar_fadeStart.x) ? 1.0 : ((depth > shadowFar_fadeStart.y) ? 1.0-((1.0-shadow)*fade) : shadow);
 #endif
 
 
