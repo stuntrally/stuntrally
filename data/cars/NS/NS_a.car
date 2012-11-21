@@ -1,10 +1,12 @@
 drive = AWD 
 version = 2
+# all positions have x,y,z dir going + to: right, front, up
 
 [ steering ] 
 max-angle = 24.1
 angular-damping = 0.0
 
+#---------------------------
 [ rot_drag ]
 roll  = 10.0
 pitch = 400.0
@@ -17,6 +19,8 @@ exhaust-y = 0.35
 exhaust-z = -0.54
 exhaust-mirror-second = 0
 
+#  collision shape params
+#---------------------------
 [ collision ]
 manual = 1
 radius = 0.35
@@ -26,6 +30,9 @@ offsetL = -0.28
 offsetW = -0.05
 offsetH = 0.875
 
+
+#  engine
+#---------------------------
 [ engine ] 
 position = 0.0, 1.04, -0.24 
 mass = 150.0 
@@ -59,6 +66,8 @@ radius = 0.1
 area = 0.75 
 max-pressure = 90079.26 
 
+#  gearbox
+#---------------------------
 [ transmission ] 
 gears = 5 
 gear-ratio-r = -3.214 
@@ -79,6 +88,9 @@ capacity = 60
 volume = 60 
 fuel-density = 1.0 
 
+
+#  suspension
+#---------------------------
 [ suspension-front ] 
 spring-constant = 105000
 bounce = 5000
@@ -101,16 +113,19 @@ caster = 0.0
 toe = -1.0 
 anti-roll = 20000 
 
-#---------
+
+#  tires (more in .tire)
+#---------------------------
 [ tire-both ] 
 radius = 0.31595 
 rolling-resistance = 1.3e-2, 6.5e-6 
 rotational-inertia = 10 
 tread = 0.0
 file = asphalt.tire
-#---------
 
 
+#  brakes
+#---------------------------
 [ brakes-front ] 
 friction = 0.90 
 max-pressure = 2.4e6 
@@ -124,7 +139,7 @@ max-pressure = 2.0e6
 bias = 0.40
 radius = 0.16 
 area = 0.015 
-handbrake = 2.0 
+handbrake = 4.8
 
 
 [ driver ] 
@@ -133,6 +148,9 @@ mass = 90.0
 view-position = -0.5, 0, 0.5
 hood-mounted-view-position = -0.5, 0, 0.5
 
+
+#  aerodynamics
+#---------------------------
 [ drag ] 
 position = 0.0, 0.0, 0.2 
 frontal-area = 2.37 
@@ -142,8 +160,8 @@ drag-coefficient = 0.52
 position = 0.0, 1.9, 0.60 
 frontal-area = 0.2 
 drag-coefficient = 0.0 
-surface-area = 0.3 
-lift-coefficient = -0.5 
+surface-area = 0.60
+lift-coefficient = -4.0
 efficiency = 0.95 
 
 [ wing-rear ] 
@@ -151,10 +169,12 @@ position = 0.0, -2.14, 0.37
 frontal-area = 0.05 
 drag-coefficient = 0.0 
 surface-area = 0.5 
-lift-coefficient = -2 
+lift-coefficient = -4.0
 efficiency = 0.95 
 
 
+# wheels front (position and suspension mount)
+#---------------------------
 [ wheel-FR ] 
 position = 0.72, 1.37, -0.50 
 roll-height = 0.31265 
@@ -176,6 +196,8 @@ position = -0.68, 1.37, -0.13
 hinge = 0,0,0 
 
 
+# wheels rear (position and suspension mount)
+#---------------------------
 [ wheel-RR ] 
 position = 0.72, -1.37, -0.49 
 roll-height = 0.3179 
@@ -197,8 +219,9 @@ position = -0.68, -1.37, -0.13
 hinge = 0.0, -0.6, 0.0
 
 
-
-# these are used to calculate the weight distribution and balance 
+# used to calculate the weight distribution and balance
+# (for car total mass and inertia) also use engine has mass and position
+#---------------------------
 [ particle-00 ] 
 mass = 65.0 
 position = 0.0, 1.008, -0.55 

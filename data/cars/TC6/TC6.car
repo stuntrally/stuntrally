@@ -1,8 +1,17 @@
 drive = AWD
 version = 2
+# all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
 max-angle = 33.0
+angular-damping = 0.4
+
+#---------------------------
+[ rot_drag ]
+roll  = 200.0
+pitch = 400.0
+yaw   = 500.0
+yaw2  = 2.0
 
 [ model_ofs ]
 exhaust-x = 2.2
@@ -10,6 +19,8 @@ exhaust-y = 0.45
 exhaust-z = 0.56
 exhaust-mirror-second = 0
 
+#  collision shape params
+#---------------------------
 [ collision ]
 manual = 1
 radius = 0.304
@@ -19,14 +30,15 @@ offsetL = -0.22
 offsetW = 0.03
 offsetH = 0.77
 
+
+#  engine
+#---------------------------
 [ engine ]
 position = 0.0, 1.33, -0.24
 mass = 180.0
-max-power = 659360
 peak-engine-rpm = 6000.0
 rpm-limit = 6500.0
 inertia = 0.40
-idle = 0.02
 start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
@@ -37,7 +49,7 @@ torque-curve-02 = 2500, 562.0
 torque-curve-03 = 3000, 566.07
 torque-curve-04 = 3300, 579.63
 torque-curve-05 = 3500, 593.19
-torque-curve-06 = 3800, 694.54
+torque-curve-06 = 3800, 594.54
 torque-curve-07 = 3900, 601.32
 torque-curve-08 = 4000, 604.03
 torque-curve-09 = 4100, 606.75
@@ -54,8 +66,10 @@ torque-curve-17 = 7000, 450.83
 sliding = 0.27
 radius = 0.15
 area = 0.75
-max-pressure = 93000.0
+max-pressure = 93000
 
+#  gearbox
+#---------------------------
 [ transmission ]
 gears = 5
 gear-ratio-r = -3.545
@@ -76,6 +90,9 @@ capacity = 60.0
 volume = 60.0
 fuel-density = 1.0
 
+
+#  suspension
+#---------------------------
 [ suspension-front ]
 spring-constant = 102000
 #spring-constant = 72000
@@ -92,11 +109,8 @@ anti-roll = 5000
 
 [ suspension-rear ]
 spring-constant = 98000
-#spring-constant = 68000
 bounce = 13000
-#bounce = 7500
 rebound = 9992.14
-#rebound = 5000
 travel = 0.32
 max-compression-velocity = 10.0
 camber = -0.45
@@ -104,16 +118,19 @@ caster = 0.28
 toe = 0.0
 anti-roll = 17000
 
-#---------
+
+#  tires (more in .tire)
+#---------------------------
 [ tire-both ]
 radius = 0.30
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 6.0
 tread = 0.0
-file = gravel.tire
-#---------
+file = gravel_new4b.tire
 
 
+#  brakes
+#---------------------------
 [ brakes-front ]
 friction = 0.73
 max-pressure = 2.5e6
@@ -136,6 +153,9 @@ mass = 90.0
 view-position = 0.4, 0.4, 0.4
 hood-mounted-view-position = -0.7, 0, 0.3
 
+
+#  aerodynamics
+#---------------------------
 [ drag ]
 position = 0.0, 0.0, 0.2
 frontal-area = 2
@@ -145,8 +165,8 @@ drag-coefficient = 0.3
 position = 0.0, 1.9, 0.20
 frontal-area = 0.2
 drag-coefficient = 0.0
-surface-area = 0.3
-lift-coefficient = -0.5
+surface-area = 0.65
+lift-coefficient = -4.0
 efficiency = 0.95
 
 [ wing-rear ]
@@ -154,10 +174,12 @@ position = 0.0, -2.14, 0.37
 frontal-area = 0.05
 drag-coefficient = 0.0
 surface-area = 0.5
-lift-coefficient = -1.2
+lift-coefficient = -4.0
 efficiency = 0.95
 
 
+# wheels front (position and suspension mount)
+#---------------------------
 [ wheel-FR ]
 position = 0.75, 1.26, -0.47
 roll-height = 0.325
@@ -179,6 +201,8 @@ position = -0.66, 1.26, -0.07
 hinge = 3.70, 1.1, -0.43
 
 
+# wheels rear (position and suspension mount)
+#---------------------------
 [ wheel-RR ]
 position = 0.75, -1.28, -0.47
 roll-height = 0.340
@@ -200,7 +224,9 @@ position = -0.66, -1.28, -0.07
 hinge = 3.70, -1.0, -0.43
 
 
-# these are used to calculate the weight distribution and balance
+# used to calculate the weight distribution and balance
+# (for car total mass and inertia) also use engine has mass and position
+#---------------------------
 [ particle-00 ]
 mass = 30.0
 position = 0.0, -1.35, -0.47

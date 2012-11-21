@@ -1,5 +1,6 @@
 drive = AWD
 version = 2
+# all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
 max-angle = 34.2
@@ -10,6 +11,8 @@ exhaust-y = 0.40
 exhaust-z = 0.49
 exhaust-mirror-second = 1
 
+#  collision shape params
+#---------------------------
 [ collision ]
 manual = 1
 radius = 0.333
@@ -19,10 +22,12 @@ offsetL = 0.09
 offsetW = -0.02
 offsetH = 0.8
 
+
+#  engine
+#---------------------------
 [ engine ]
 position = 0.0, -0.6, -0.46
 mass = 80.0
-max-power = 657900
 peak-engine-rpm = 6500.0
 rpm-limit = 6800
 inertia = 0.25
@@ -56,6 +61,8 @@ radius = 0.15
 area = 1.0
 max-pressure = 4e5
 
+#  gearbox
+#---------------------------
 [ transmission ]
 gears = 6
 gear-ratio-r = -3.3
@@ -79,6 +86,9 @@ capacity = 95.0
 volume = 80.0
 fuel-density = 0.8
 
+
+#  suspension
+#---------------------------
 [ suspension-front ]
 spring-constant = 87000
 bounce = 10000
@@ -101,7 +111,9 @@ caster = 0.0
 toe = 0.0
 anti-roll = 12000
 
-#---------
+
+#  tires (more in .tire)
+#---------------------------
 [ tire-both ]
 radius = 0.31265
 rolling-resistance = 1.3e-2, 6.5e-6
@@ -115,6 +127,8 @@ file = gravel.tire
 #rotational-inertia = 15
 
 
+#  brakes
+#---------------------------
 [ brakes-front ]
 friction = 0.93
 max-pressure = 3.0e6
@@ -137,6 +151,9 @@ mass = 80.0
 view-position = 0.3, -0.3, 0.4
 hood-mounted-view-position = -0.6, 0, 0.4
 
+
+#  aerodynamics
+#---------------------------
 [ drag ]
 position = 0.0, 0.0, 0.2
 frontal-area = 2
@@ -159,6 +176,8 @@ lift-coefficient = -3.2
 efficiency = 0.95
 
 
+# wheels front (position and suspension mount)
+#---------------------------
 [ wheel-FR ]
 position = 0.721, 1.193, -0.47
 roll-height = 0.3295
@@ -180,6 +199,8 @@ position = -0.66, 1.14, -0.15
 hinge = 0,0,0
 
 
+# wheels rear (position and suspension mount)
+#---------------------------
 [ wheel-RR ]
 position = 0.721, -1.127, -0.47
 roll-height = 0.3295
@@ -201,8 +222,9 @@ position = -1.12, -0.65, -0.13
 hinge = 0,-0.6,0
 
 
-
-# these are used to calculate the weight distribution and balance
+# used to calculate the weight distribution and balance
+# (for car total mass and inertia) also use engine has mass and position
+#---------------------------
 [ particle-00 ]
 mass = 210.0
 position =  0.9, -1.19, -0.65

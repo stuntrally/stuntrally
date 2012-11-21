@@ -1,7 +1,16 @@
 drive = AWD
+# all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
 max-angle = 30.1
+angular-damping = 0.4
+
+#---------------------------
+[ rot_drag ]
+roll  = 200.0
+pitch = 400.0
+yaw   = 500.0
+yaw2  = 2.0
 
 [ model_ofs ]
 exhaust-x = 2.22
@@ -9,6 +18,8 @@ exhaust-y = 0.45
 exhaust-z = -0.42
 exhaust-mirror-second = 0
 
+#  collision shape params
+#---------------------------
 [ collision ]
 manual = 1
 radius = 0.39
@@ -18,14 +29,16 @@ offsetL = -0.04
 offsetW = -0.03
 offsetH = 0.727
 
+
+#  engine
+#---------------------------
 [ engine ]
+# center, front, up
 position = 1.42, 0.0, -0.44
 mass = 80.0
-max-power = 346000
 peak-engine-rpm = 6750.0
 rpm-limit = 7000.0
 inertia = 0.25
-idle = 0.08
 start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
@@ -56,6 +69,8 @@ radius = 0.15
 area = 0.75
 max-pressure = 95400.0
 
+#  gearbox
+#---------------------------
 [ transmission ]
 gears = 6
 gear-ratio-r = -3.23
@@ -77,6 +92,9 @@ capacity = 0.0492
 volume = 0.0492
 fuel-density = 730.0
 
+
+#  suspension
+#---------------------------
 [ suspension-front ]
 spring-constant = 96200
 bounce = 7050
@@ -99,16 +117,19 @@ caster = 0.28
 toe = 0.0
 anti-roll = 15000
 
-#---------
+
+#  tires (more in .tire)
+#---------------------------
 [ tire-both ]
 radius = 0.3032
 rolling-resistance = 8.0e-3, 6.5e-6
 rotational-inertia = 10.0
 tread = 0.0
 file = gravel.tire
-#---------
 
 
+#  brakes
+#---------------------------
 [ brakes-front ]
 friction = 0.83
 max-pressure = 1.5e6
@@ -131,6 +152,9 @@ mass = 90.0
 view-position = -0.3, -0.4, 0.4
 hood-mounted-view-position = 0, 0.8, 0.3
 
+
+#  aerodynamics
+#---------------------------
 [ drag ]
 position = 0.0, 0.0, 0.2
 frontal-area = 2
@@ -152,6 +176,9 @@ surface-area = 0.5
 lift-coefficient = -2
 efficiency = 0.95
 
+
+# wheels front (position and suspension mount)
+#---------------------------
 [ wheel-FR ]
 position = 1.34, -0.73, -0.54
 roll-height = 0.325
@@ -172,6 +199,9 @@ restitution = 0.1
 position = 1.34, 0.67, -0.07
 hinge = 0,0,0
 
+
+# wheels rear (position and suspension mount)
+#---------------------------
 [ wheel-RR ]
 position = -1.24, -0.71, -0.54
 roll-height = 0.340
@@ -193,7 +223,9 @@ position = -1.24, 0.67, -0.07
 hinge = -1.1,-0.2,0
 
 
-# these are used to calculate the weight distribution and balance
+# used to calculate the weight distribution and balance
+# (for car total mass and inertia) also use engine has mass and position
+#---------------------------
 [ particle-00 ]
 mass = 25.0
 position = -1.35, 0.0, -0.47
