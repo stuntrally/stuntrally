@@ -519,10 +519,11 @@ void CarModel::UpdWhTerMtr()
 	Real tws = sc->td.fTerWorldSize;
 
 	//  wheels
+	txtDbgSurf = "";
 	for (int i=0; i<4; ++i)
 	{
 		Vector3 w = ndWh[i]->getPosition();
-		int mx = (w.x + 0.5*tws)/tws*t, my = (w.z + 0.5*tws)/tws*t;
+		int mx = (w.x + 0.5*tws)/tws*t, my = (-w.z + 0.5*tws)/tws*t;
 		mx = std::max(0,std::min(t-1, mx)), my = std::max(0,std::min(t-1, my));
 
 		int mtr = pCar->dynamics.bWhOnRoad[i] ? 0 : blendMtr[my*t + mx];
@@ -533,6 +534,22 @@ void CarModel::UpdWhTerMtr()
 		TRACKSURFACE* tsu = &pGame->track.tracksurfaces[mtr];
 		pCar->dynamics.terSurf[i] = tsu;
 		pCar->dynamics.bTerrain = true;
+
+		if (pSet->car_dbgsurf)  // dbg info surf  -------
+		{
+		TerLayer& lay = mtr == 0 ? sc->td.layerRoad : sc->td.layersAll[ sc->td.layers[ std::min((int)sc->td.layers.size()-1, mtr-1) ] ];
+		txtDbgSurf += //"mx " + toStr(mx) + " my " + toStr(my) +
+			"R" + toStr(whRoadMtr[i]?1:0) + " t" + toStr(mtr) +
+			" su " + (tsu ? tsu->name : "-") + " " + (tsu ? csTRKsurf[tsu->type] : "-") + " [" + lay.texFile + "] " +
+			"\n     "+
+			" drag " + fToStr(tsu ? tsu->rollingDrag : 0, 1,4) +
+			" fr " + fToStr(tsu ? tsu->frictionTread : 0, 2,4) + //" " + fToStr(tsu ? tsu->frictionNonTread : 0, 2,4) +
+			" ba " + fToStr(tsu ? tsu->bumpAmplitude : 0, 2,4) + " bw " + fToStr(tsu ? tsu->bumpWaveLength : 0, 2,4) +
+			//,lay.dust, lay.mud, lay.dustS	//,lay.tclr.r, lay.tclr.g, lay.tclr.b, lay.tclr.a
+			//,pCar->dynamics.wheel_contact[i].depth, pCar->dynamics.wheel_contact[i].col
+			//,pCar->dynamics.GetWheelContact(WHEEL_POSITION(i)).GetDepth() - 2*pCar->GetTireRadius(WHEEL_POSITION(i))
+			"\n";
+		}
 	}
 }
 

@@ -392,7 +392,7 @@ void App::UpdateHUD(int carId, float time)
 	{
 		if (pSet->car_dbgtxt)
 		{	std::stringstream s1,s2,s3,s4;
-			pCar->DebugPrint(s1, true, false, false, false);  ovU[0]->setCaption(s1.str());
+			pCar->DebugPrint(s1, true, false, false, false);  ovU[0]->setCaption(s1.str());  ovU[0]->setColour(ColourValue::Black);
 			pCar->DebugPrint(s2, false, true, false, false);  ovU[1]->setCaption(s2.str());
 			pCar->DebugPrint(s3, false, false, true, false);  ovU[2]->setCaption(s3.str());
 			pCar->DebugPrint(s4, false, false, false, true);  ovU[3]->setCaption(s4.str());
@@ -522,30 +522,7 @@ void App::UpdateHUD(int carId, float time)
 	if (pSet->car_dbgsurf && pCar)
 	{
 		String ss = "";
-		static char s_[512];
-
-		for (int i=0; i<4; ++i)
-		{
-			int mtr = 0;//std::max(0,carPoses[iCurPoses[carId]][carId].whTerMtr[i]);
-			const TRACKSURFACE* tsu = sc->ter ? pCar->dynamics.terSurf[mtr] : pCar->dynamics.wheel_contact[i].surface;
-			mtr = std::max(0, std::min( (int)(sc->td.layers.size())-1, mtr-1));
-			TerLayer& lay = mtr == 0 ? sc->td.layerRoad : sc->td.layersAll[sc->td.layers[mtr]];
-
-			sprintf(s_,  //"c %6.2f  "
-				"R%d t%d  %s  [%s]  %s  %4.0f  fr %4.2f / %4.2f  ba %4.2f  bw %4.2f \n"
-				//"  d %4.2f m %4.2f ds %3.1f"	//". r%4.2f g%4.2f b%4.2f a%3.1f \n"
-				//,pCar->dynamics.GetWheelContact(WHEEL_POSITION(i)).GetDepth() - 2*pCar->GetTireRadius(WHEEL_POSITION(i))
-				,pCar->dynamics.bWhOnRoad[i], mtr, /*whOnRoad[i]?1:0,*/ lay.texFile.c_str()
-				,tsu ? tsu->name.c_str() : "-", tsu ? csTRKsurf[tsu->type] : "-"
-				,tsu ? tsu->rollingDrag : 0
-				,tsu ? tsu->frictionTread : 0	,tsu ? tsu->frictionNonTread : 0
-				,tsu ? tsu->bumpAmplitude : 0	,tsu ? tsu->bumpWaveLength : 0
-				//,lay.dust, lay.mud, lay.dustS	//,lay.tclr.r, lay.tclr.g, lay.tclr.b, lay.tclr.a
-				//,pCar->dynamics.wheel_contact[i].depth, pCar->dynamics.wheel_contact[i].col
-				//pCar->GetWheelContact(WHEEL_POSITION(i)).GetDepth() - pCar->GetTireRadius(WHEEL_POSITION(i)));
-				);
-			ss += String(s_);
-		}
+		ss = pCarM->txtDbgSurf;
 
 		//  surfaces  info
 		/*ss += "\n";
@@ -554,9 +531,9 @@ void App::UpdateHUD(int carId, float time)
 
 		//ovCarDbg->show();
 		if (ovX[4])  {  //ovL[4]->setTop(400);
-			//ovX[4]->setColour(ColourValue::White);
+			ovX[4]->setColour(ColourValue::Black);
 			ovX[4]->setCaption(ss);  }
-	}else
+	}
 
 	PROFILER.endBlock("g.hud");
 }

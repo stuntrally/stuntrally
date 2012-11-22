@@ -165,7 +165,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 
 	#if 1	// body
 		//out << "---Body---" << endl;  // L| front+back-  W_ left-right+  H/ up+down-
-		out << "com: W right+ " << -center_of_mass[1] << " L front+ " << center_of_mass[0] << " H up+ " << center_of_mass[1] << endl;
+		out << "com: W right+ " << -center_of_mass[1] << " L front+ " << center_of_mass[0] << " H up+ " << center_of_mass[2] << endl;
 		out.precision(0);
 		out << "mass: " << body.GetMass() << endl;
 		MATRIX3 <T> inertia = body.GetInertiaConst();

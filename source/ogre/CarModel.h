@@ -96,6 +96,7 @@ public:
 		
 	//  track surface for wheels
 	void UpdWhTerMtr();
+	Ogre::String txtDbgSurf;
 	
 	//  Update trails
 	void UpdParsTrails(bool visible=true);

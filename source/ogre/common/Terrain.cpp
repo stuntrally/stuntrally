@@ -87,6 +87,8 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 	for (y = yB; y < yE; ++y)  {  int aa = y*t + xB, bb = (t-1-y)*t + xB;
 	for (x = xB; x < xE; ++x,++aa,++bb)
 	{
+		//float fx = f*x*0.2, fy = f*y*0.6;	//  val,val1:  0 0 - [0]   1 0  - [1]   0 1 - [2]
+		//Real p = (b >= 4) ? 3.f : ( (b >= 3) ? 2.f : 1.f );  p += 6;  //test
 		float fx = f*x, fy = f*y;	//  val,val1:  0 0 - [0]   1 0  - [1]   0 1 - [2]
 		const Real p = (b >= 4) ? 3.f : ( (b >= 3) ? 2.f : 1.f ), q = 1.f;
 		if (b >= 1)  val[0] =                      pow(0.5f + 0.5f *sin_(24.f* fx)*cos_(24.f* fy), p);
