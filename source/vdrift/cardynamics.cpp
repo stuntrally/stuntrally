@@ -479,7 +479,7 @@ void CARDYNAMICS::ApplyEngineTorqueToBody()
 {
 	MATHVECTOR <T, 3> engine_torque(-engine.GetTorque(), 0, 0);
 	Orientation().RotateVector(engine_torque);
-	ApplyTorque(engine_torque);
+	ApplyTorque(engine_torque*0.1);  // unwanted in jumps
 }
 
 void CARDYNAMICS::ApplyAerodynamicsToBody(T dt)
@@ -867,8 +867,17 @@ void CARDYNAMICS::UpdateTransmission(T dt)
 		    //std::cout << "start engine" << std::endl;
 		}
 
-		T throttle = engine.GetThrottle();
-		throttle = shifted ? ShiftAutoClutchThrottle(throttle, dt) : 0.5;  //half full gas during shifting
+		/*int inAir = 0;
+		for (int w=0; w<4; ++w)
+		{
+			WHEEL_POSITION wp = WHEEL_POSITION(w);
+			float d = GetWheelContact(wp).GetDepth() - 2*tire[w].GetRadius();
+			if (d > 0.f)  ++inAir;  // in air
+		}/**/
+
+		T throttle = engine.GetThrottle();  
+		//throttle = shifted ? ShiftAutoClutchThrottle(throttle, dt) : (inAir >= 2 ? 0.0 : 0.5);  //half full gas during shifting
+		throttle = ShiftAutoClutchThrottle(throttle, dt);
 		engine.SetThrottle(throttle);
 
 		T new_clutch = AutoClutch(last_auto_clutch, dt);
