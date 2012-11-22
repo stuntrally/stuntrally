@@ -59,3 +59,8 @@
 #	Downforce by ground effect: 180 kg  at 290 km/h
 #
 #---------------------------------------
+#  engine power
+#
+#	P = M x n x 0.10472 
+#	HP = 0.7355 x P (KW)
+#

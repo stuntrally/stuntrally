@@ -34,7 +34,6 @@ start-offsetY = 0.6
 #  engine
 #---------------------------
 [ engine ]
-# center, front, up
 position = 0.04, 1.4, 0.5
 mass = 250.0
 peak-engine-rpm = 6500
@@ -124,7 +123,7 @@ radius = 0.32
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 10.0
 tread = 0.0
-file = old_asphalt.tire
+file = asphalt_new2.tire
 
 
 #  brakes
@@ -142,7 +141,7 @@ max-pressure = 3.0e6
 bias = 0.35
 radius = 0.1397
 area = 0.015
-handbrake = 4.2
+handbrake = 4.7
 
 
 [ driver ]

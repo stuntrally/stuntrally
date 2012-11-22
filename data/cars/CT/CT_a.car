@@ -6,10 +6,11 @@ version = 2
 max-angle = 24.1
 angular-damping = 0.0
 
+#---------------------------
 [ rot_drag ]
-roll  = 10.0
+roll  = 200.0
 pitch = 400.0
-yaw   = 500.0
+yaw   = 300.0
 yaw2  = 2.0
 
 [ model_ofs ]
@@ -26,17 +27,17 @@ radius = 0.333
 width = 0.54
 height = 0.45
 offsetL = 0.09
-offsetW = -0.02
-offsetH = 0.8
+offsetW = -0.01
+offsetH = 0.31
 
 
 #  engine
 #---------------------------
 [ engine ]
-position = 0.0, -0.6, -0.46
+position = 0.0, -0.8, -0.16
 mass = 80.0
-peak-engine-rpm = 6500.0
-rpm-limit = 6800
+peak-engine-rpm = 6900.0
+rpm-limit = 7200
 inertia = 0.25
 start-rpm = 1000
 stall-rpm = 500
@@ -79,7 +80,7 @@ gear-ratio-3 = 1.41
 gear-ratio-4 = 1.12
 gear-ratio-5 = 0.92
 gear-ratio-6 = 0.75
-shift-delay=0.15
+shift-delay=0.12
 
 [ differential ]
 final-drive = 4.04
@@ -170,16 +171,16 @@ drag-coefficient = 0.3
 position = 0.0, 1.2, -0.30
 frontal-area = 0.2
 drag-coefficient = 0.0
-surface-area = 0.3
-lift-coefficient = -0.5
+surface-area = 0.7
+lift-coefficient = -4.0
 efficiency = 0.95
 
 [ wing-rear ]
 position = 0.0, -2.14, 0.07
-frontal-area = 0.05
+frontal-area = 0.1
 drag-coefficient = 0.0
 surface-area = 0.5
-lift-coefficient = -3.2
+lift-coefficient = -3.6
 efficiency = 0.95
 
 
@@ -187,8 +188,8 @@ efficiency = 0.95
 #---------------------------
 [ wheel-FR ]
 position = 0.721, 1.193, -0.47
-roll-height = 0.3295
-mass = 20
+roll-height = 0.32
+mass = 16
 restitution = 0.1
 
 [ suspension-FR ]
@@ -197,8 +198,8 @@ hinge = 0,0,0
 
 [ wheel-FL ]
 position = -0.721, 1.193, -0.47
-roll-height = 0.3295
-mass = 20
+roll-height = 0.32
+mass = 16
 restitution = 0.1
 
 [ suspension-FL ]
@@ -210,8 +211,8 @@ hinge = 0,0,0
 #---------------------------
 [ wheel-RR ]
 position = 0.721, -1.127, -0.47
-roll-height = 0.3295
-mass = 20
+roll-height = 0.32
+mass = 16
 restitution = 0.1
 
 [ suspension-RR ]
@@ -220,8 +221,8 @@ hinge = 0,-0.6,0
 
 [ wheel-RL ]
 position = -0.721, -1.127, -0.47
-roll-height = 0.3295
-mass = 20
+roll-height = 0.32
+mass = 16
 restitution = 0.1
 
 [ suspension-RL ]
@@ -233,18 +234,18 @@ hinge = 0,-0.6,0
 # (for car total mass and inertia) also use engine has mass and position
 #---------------------------
 [ particle-00 ]
-mass = 210.0
-position =  0.9, -1.19, -0.65
+mass = 230.0
+position =  1.1, -1.6, -0.05
 
 [ particle-01 ]
-mass = 210.0
-position = -0.9, -1.19, -0.65
+mass = 230.0
+position = -1.1, -1.6, -0.05
 
 [ particle-02 ]
-mass = 210.0
-position =  0.9, 1.19, -0.65
+mass = 230.0
+position =  1.2, 1.7, -0.05
 
 [ particle-03 ]
-mass = 210.0
-position = -0.9, 1.19, -0.65
+mass = 230.0
+position = -1.2, 1.7, -0.05
 

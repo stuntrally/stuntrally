@@ -3,11 +3,11 @@ version = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
-max-angle = 24.1
+max-angle = 22.1
 angular-damping = 0.0
 
 [ rot_drag ]
-roll  = 10.0
+roll  = 100.0
 pitch = 400.0
 yaw   = 500.0
 yaw2  = 2.0
@@ -28,46 +28,40 @@ manual = 1
 radius = 0.364
 width = 0.63
 height = 0.46
-offsetL = 0.16
+offsetL = 0.02
 offsetW = 0.01
-offsetH = 0.833
+offsetH = 0.28
 
 
 #  engine
 #---------------------------
 [ engine ]
-# center, front, up
-position = 0.0, -0.52, -0.59
+position = 0.0, 1.12, 0.33
 mass = 180.0
 peak-engine-rpm = 7500.0
 rpm-limit = 8500.0
-inertia = 0.2
+inertia = 0.4
 start-rpm = 1000
 stall-rpm = 650
 fuel-consumption = 1e-9
 torque-friction = 0.0002
-torque-curve-00 = 1000, 676.26
-torque-curve-01 = 2000, 685.75
-torque-curve-02 = 2250, 700.66
-torque-curve-03 = 2500, 702.02
-torque-curve-04 = 2750, 706.95
-torque-curve-05 = 3000, 708.08
-torque-curve-06 = 3250, 711.51
-torque-curve-07 = 3500, 718.29
-torque-curve-08 = 3750, 723.71
-torque-curve-09 = 4000, 730.49
-torque-curve-10 = 4250, 729.13
-torque-curve-11 = 4500, 725.07
-torque-curve-12 = 4750, 735.91
-torque-curve-13 = 5000, 748.11
-torque-curve-14 = 5250, 734.56
-torque-curve-15 = 5500, 733.2
-torque-curve-16 = 5750, 729.13
-torque-curve-17 = 6000, 726.42
-torque-curve-18 = 6250, 716.35
-torque-curve-19 = 6500, 706.08
-torque-curve-20 = 6750, 697.95
-torque-curve-21 = 7000, 696.59
+torque-val-mul = 1.0
+torque-curve-00 = 1000, 456.26
+torque-curve-01 = 1500, 475.75
+torque-curve-02 = 2000, 520.66
+torque-curve-03 = 2500, 572.02
+torque-curve-04 = 3000, 618.08
+torque-curve-05 = 3500, 650.29
+torque-curve-06 = 4000, 684.49
+torque-curve-07 = 4500, 725.07
+torque-curve-08 = 5000, 748.11
+torque-curve-09 = 5500, 730.2
+torque-curve-10 = 6000, 707.42
+torque-curve-11 = 6500, 688.08
+torque-curve-12 = 7000, 656.59
+torque-curve-13 = 7500, 626.59
+torque-curve-14 = 8000, 606.59
+torque-curve-15 = 8500, 566.59
 
 [ clutch ]
 sliding = 0.27
@@ -89,7 +83,7 @@ gear-ratio-6 = 0.78
 shift-delay = 0.06
 
 [ differential ]
-final-drive = 4.21
+final-drive = 4.01
 anti-slip = 600.0
 
 [ fuel-tank ]
@@ -154,7 +148,7 @@ max-pressure = 2.5e6
 bias = 0.40
 radius = 0.14
 area = 0.015
-handbrake = 2.8
+handbrake = 3.8
 
 
 [ driver ]
@@ -167,32 +161,32 @@ hood-mounted-view-position = -0.4, 0, 0.5
 #  aerodynamics
 #---------------------------
 [ drag ]
-position = 0.0, 0.0, -0.6
+position = 0.0, 0.0, -0.1
 frontal-area = 2.0
-drag-coefficient = 0.23
+drag-coefficient = 0.33
 
 [ wing-front ]
-position = 0.0, 1.9, 0.60
-frontal-area = 0.2
+position = 0.0, 1.2, 0.20
+frontal-area = 0.01
 drag-coefficient = 0.0
 surface-area = 0.55
-lift-coefficient = -4.0
-efficiency = 0.95
+lift-coefficient = -6.0
+efficiency = 0.86
 
 [ wing-rear ]
-position = 0.0, -1.14, 0.37
-frontal-area = 0.05
+position = 0.0, -1.4, 0.30
+frontal-area = 0.01
 drag-coefficient = 0.0
-surface-area = 0.5
+surface-area = 0.6
 lift-coefficient = -4.0
-efficiency = 0.95
+efficiency = 0.86
 
 
 # wheels front (position and suspension mount)
 #---------------------------
 [ wheel-FR ]
 position = 0.79, 1.51, -0.53
-roll-height = 0.325
+roll-height = 0.9
 mass = 19
 restitution = 0.1
 
@@ -202,7 +196,7 @@ hinge = 0,0,0
 
 [ wheel-FL ]
 position = -0.79, 1.51, -0.53
-roll-height = 0.325
+roll-height = 0.9
 mass = 19
 restitution = 0.1
 
@@ -215,7 +209,7 @@ hinge = 0,0,0
 #---------------------------
 [ wheel-RR ]
 position = 0.80, -1.35, -0.52
-roll-height = 0.340
+roll-height = 0.9
 mass = 19
 restitution = 0.1
 
@@ -225,7 +219,7 @@ hinge = -1.1, 0,0
 
 [ wheel-RL ]
 position = -0.80, -1.35, -0.52
-roll-height = 0.340
+roll-height = 0.9
 mass = 19
 restitution = 0.1
 
@@ -238,17 +232,17 @@ hinge = -1.1, 0, 0
 # (for car total mass and inertia) also use engine has mass and position
 #---------------------------
 [ particle-00 ]  # front
-mass = 213.0
-position =  1.35, 1.7, -0.61
+mass = 233.0
+position =  1.35, 1.6, -0.01
 
 [ particle-01 ]
-mass = 213.0
-position = -1.35, 1.7, -0.61
+mass = 233.0
+position = -1.35, 1.6, -0.01
 
 [ particle-02 ]  # rear
-mass = 213.0
-position =  1.39, -1.7, -0.62
+mass = 233.0
+position =  1.3, -1.67, -0.01
 
 [ particle-03 ]
-mass = 213.0
-position = -1.39, -1.7, -0.62
+mass = 233.0
+position = -1.3, -1.67, -0.01

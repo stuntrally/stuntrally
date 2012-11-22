@@ -4,14 +4,14 @@ version = 2
 
 [ steering ]
 max-angle = 21.0
-angular-damping = 0.0
+angular-damping = 0.1
 
 #---------------------------
 [ rot_drag ]
-roll  = 10.0
+roll  = 200.0
 pitch = 400.0
-yaw   = 200.0
-yaw2  = 1.0
+yaw   = 900.0
+yaw2  = 2.5
 
 #  collision shape params
 #---------------------------
@@ -22,43 +22,39 @@ width = 0.67
 height = 0.45
 offsetL = 0.0
 offsetW = -0.01
-offsetH = 0.7
+offsetH = 0.4
 
 
 #  engine
 #---------------------------
 [ engine ]
-position = 0.0, -1.0, -0.35
-mass = 150.0
+position = 0.0, -0.8, 0.15
+mass = 250.0
 peak-engine-rpm = 8500
 rpm-limit = 9000.0
-inertia = 0.25
+inertia = 0.45
 start-rpm = 1000
 stall-rpm = 500
 fuel-consumption = 0.0001
-#
-#	P = M x n x 0.10472 
-#	HP = 0.7355 x P (KW)
-#
-torque-curve-00 = 1000, 611
-torque-curve-01 = 1500, 602
-torque-curve-02 = 2200, 597
-torque-curve-03 = 2700, 586
-torque-curve-04 = 3200, 577
-torque-curve-05 = 3850, 572
-torque-curve-06 = 4200, 562
-torque-curve-07 = 4800, 555
-torque-curve-08 = 5050, 573
-torque-curve-09 = 5200, 568
-torque-curve-10 = 5775, 561
-torque-curve-11 = 5850, 565
-torque-curve-12 = 6000, 565
-torque-curve-13 = 6800, 542
-torque-curve-14 = 7300, 532
-torque-curve-15 = 7700, 538
-torque-curve-16 = 8000, 535
-torque-curve-17 = 8600, 519
-torque-curve-18 = 9200, 489
+torque-curve-00 = 1000, 311
+torque-curve-01 = 1500, 342
+torque-curve-02 = 2200, 387
+torque-curve-03 = 2700, 426
+torque-curve-04 = 3200, 467
+torque-curve-05 = 3800, 512
+torque-curve-06 = 4200, 546
+torque-curve-07 = 4800, 562
+torque-curve-08 = 5050, 595
+torque-curve-09 = 5200, 611
+torque-curve-10 = 5775, 605
+torque-curve-11 = 5850, 600
+torque-curve-12 = 6000, 592
+torque-curve-13 = 6800, 582
+torque-curve-14 = 7300, 562
+torque-curve-15 = 7700, 548
+torque-curve-16 = 8000, 525
+torque-curve-17 = 8600, 464
+torque-curve-18 = 9200, 419
 
 [ clutch ]
 sliding = 0.025
@@ -77,13 +73,13 @@ gear-ratio-3 = 1.61
 gear-ratio-4 = 1.27
 gear-ratio-5 = 1.03
 gear-ratio-6 = 0.85
-shift-delay=0.15
+shift-delay=0.08
 
 [ differential ]
 final-drive = 4.44
 anti-slip =600.0
-anti-slip-torque = 0.01
-anti-slip-torque-deceleration-factor = 0
+#anti-slip-torque = 0.01
+#anti-slip-torque-deceleration-factor = 0
 
 [ fuel-tank ]
 position = 0.0, -1.50, -0.10
@@ -95,7 +91,7 @@ fuel-density = 0.8
 #  suspension
 #---------------------------
 [ suspension-front ]
-spring-constant = 129865
+spring-constant = 119865
 bounce = 10000.0
 rebound = 9000.0
 travel = 0.22
@@ -106,19 +102,14 @@ toe = 0.2
 anti-roll = 8000
 
 [ suspension-rear ]
-spring-constant = 124062
+spring-constant = 114062
 bounce = 9000.0
 rebound = 8000.0
-## Federweg
 travel = 0.24
 max-compression-velocity = 10.0
-## Radsturz
 camber = -0.45
-## Nachlauf
 caster = 0.28
-## Vorspur?
 toe = 0.1
-## Stabilisator
 anti-roll = 10000
 
 
@@ -152,14 +143,14 @@ max-pressure = 4.0e7
 bias = 0.45
 radius = 0.330 # 330mm
 area = 0.000448 # 16mm x 28mm
-handbrake = 1.6
+handbrake = 3.6
 
 
 [ driver ]
 position = -0.28, 0.12, -0.12
 mass = 90.0
-view-position = 0.3, -0.3, 0.4				# moved driver position
-hood-mounted-view-position = -0.7, 0, 0.4	# static driver position
+view-position = 0.3, -0.3, 0.4
+hood-mounted-view-position = -0.7, 0, 0.4
 
 
 #  aerodynamics
@@ -167,29 +158,29 @@ hood-mounted-view-position = -0.7, 0, 0.4	# static driver position
 [ drag ]
 position = 0.0, 0.15, 0.00
 frontal-area = 2.03
-drag-coefficient = 0.29
+drag-coefficient = 0.43
 
 [ wing-front ]
 position = 0, 1.15, -0.3
 frontal-area = 0.0
 drag-coefficient = 0
-surface-area = 1.0
-lift-coefficient = -0.22
+surface-area = 2.0
+lift-coefficient = -4.6
 efficiency = 1
 
 [ wing-rear ]
 position = 0, -1.50, -0.3
 frontal-area = 0.0
 drag-coefficient = 0
-surface-area = 1.0
-lift-coefficient = -0.20
+surface-area = 1.6
+lift-coefficient = -4.2
 efficiency = 1
 
 
 # wheels front (position and suspension mount)
 #---------------------------
 [ wheel-FR ]
-position = 0.8345, 1.12, -0.37			# track +-Y = 1669/2
+position = 0.8345, 1.12, -0.37
 roll-height = 0.92
 mass = 15.0
 restitution = 0.1
@@ -212,7 +203,7 @@ hinge = 0.50, 0.90, -0.20
 # wheels rear (position and suspension mount)
 #---------------------------
 [ wheel-RR ]
-position = 0.8085, -1.51, -0.38			# track +-Y = 1617/2
+position = 0.8085, -1.51, -0.38
 roll-height = 0.93
 mass = 15.0
 restitution = 0.1
@@ -237,45 +228,17 @@ hinge = 1.00 , -0.0, -0.0
 # (for car total mass and inertia) also use engine has mass and position
 #---------------------------
 [ particle-00 ]	# Chassis Front
-mass = 130
-position =  1.2, 2.1, -0.65
+mass = 220
+position =  1.1, 1.9, -0.05
 
 [ particle-01 ]	#	Cooler front
-mass = 130
-position = -1.2, 2.1, -0.65
+mass = 220
+position = -1.1, 1.9, -0.05
 
 [ particle-02 ]	#	Chassis left
-mass = 160
-position =  1.2, 0, -0.50
+mass = 250
+position =  1.2, -1.9, -0.05
 
 [ particle-03 ]	#	Chassis right
-mass = 160
-position = -1.2, 0, -0.50 
-
-[ particle-04 ]	#	Motor Env. left
-mass = 60
-position =  0.9, -2.1, -0.30
-
-[ particle-05 ]		# Motor Env. right
-mass = 60
-position = -0.9, -2.1, -0.30
-
-[ particle-06 ]		# Interieur
-mass = 120
-position = 0.00, 0.70, -0.50
-
-[ particle-07 ]		# Chassis top
-mass = 80
-position = 0.00, -0.30, -0.30
-
-[ particle-08 ]		# Joker
-mass = 60
-position = 0.00, 1.0, -0.60
-
-[ particle-09 ]		# gearbox
-mass = 50.0
-position = 0.00, -1.75, -0.65
-
-[ particle-10 ]		# Chassis rear
-mass = 80.0
-position = 0.00, -1.10, -0.35
+mass = 250
+position = -1.2, -1.9, -0.05 

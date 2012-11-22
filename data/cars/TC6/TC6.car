@@ -4,7 +4,7 @@ version = 2
 
 [ steering ]
 max-angle = 33.0
-angular-damping = 0.4
+angular-damping = 0.0
 
 #---------------------------
 [ rot_drag ]
@@ -28,7 +28,7 @@ width = 0.556
 height = 0.45
 offsetL = -0.22
 offsetW = 0.03
-offsetH = 0.77
+offsetH = 0.45
 
 
 #  engine
@@ -144,12 +144,12 @@ max-pressure = 2.5e6
 bias = 0.40
 radius = 0.14
 area = 0.015
-handbrake = 5.6
+handbrake = 4.6
 
 
 [ driver ]
 position = 0.35, -0.13, 0.05
-mass = 90.0
+mass = 50.0
 view-position = 0.4, 0.4, 0.4
 hood-mounted-view-position = -0.7, 0, 0.3
 
@@ -182,7 +182,7 @@ efficiency = 0.95
 #---------------------------
 [ wheel-FR ]
 position = 0.75, 1.26, -0.47
-roll-height = 0.325
+roll-height = 0.50
 mass = 20
 restitution = 0.1
 
@@ -192,7 +192,7 @@ hinge = -3.70, 1.1, -0.43
 
 [ wheel-FL ]
 position = -0.75, 1.26, -0.47
-roll-height = 0.325
+roll-height = 0.50
 mass = 20
 restitution = 0.1
 
@@ -205,7 +205,7 @@ hinge = 3.70, 1.1, -0.43
 #---------------------------
 [ wheel-RR ]
 position = 0.75, -1.28, -0.47
-roll-height = 0.340
+roll-height = 0.50
 mass = 20
 restitution = 0.1
 
@@ -215,7 +215,7 @@ hinge = -3.70, -1.0, -0.43
 
 [ wheel-RL ]
 position = -0.75, -1.28, -0.47
-roll-height = 0.340
+roll-height = 0.50
 mass = 20
 restitution = 0.1
 
@@ -229,24 +229,24 @@ hinge = 3.70, -1.0, -0.43
 #---------------------------
 [ particle-00 ]
 mass = 30.0
-position = 0.0, -1.35, -0.47
+position = 0.0, -1.35, -0.12
 
 [ particle-01 ]
 mass = 60.0
-position = 0.0, 0.96, -0.47
+position = 0.0, 0.96, -0.12
 
 [ particle-02 ]  # rear
-mass = 248.0
-position =  1.1,-1.7, -0.58
+mass = 240.0
+position =  1.1,-1.7, -0.14
 
 [ particle-03 ]
-mass = 248.0
-position = -1.1,-1.7, -0.18
+mass = 240.0
+position = -1.1,-1.7, -0.14
 
 [ particle-04 ]  # front
-mass = 247.0
-position =  1.1, 1.7, -0.18
+mass = 240.0
+position =  1.1, 1.7, -0.14
 
 [ particle-05 ]
-mass = 247.0
-position = -1.1, 1.7, -0.18
+mass = 240.0
+position = -1.1, 1.7, -0.14
