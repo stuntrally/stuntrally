@@ -126,7 +126,7 @@ radius = 0.31265
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 14
 tread = 0.0
-file = asphalt.tire
+file = old_asphalt.tire
 #---------
 #  ..?
 #[ tire-rear ]

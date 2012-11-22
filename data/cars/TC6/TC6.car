@@ -132,19 +132,19 @@ file = gravel_new4b.tire
 #  brakes
 #---------------------------
 [ brakes-front ]
-friction = 0.73
+friction = 0.83
 max-pressure = 2.5e6
 bias = 0.60
 radius = 0.17
 area = 0.015
 
 [ brakes-rear ]
-friction = 0.73
+friction = 0.83
 max-pressure = 2.5e6
 bias = 0.40
 radius = 0.14
 area = 0.015
-handbrake = 2.6
+handbrake = 5.6
 
 
 [ driver ]
@@ -237,16 +237,16 @@ position = 0.0, 0.96, -0.47
 
 [ particle-02 ]  # rear
 mass = 248.0
-position =  0.6,-1.7, -0.58
+position =  1.1,-1.7, -0.58
 
 [ particle-03 ]
 mass = 248.0
-position = -0.6,-1.7, -0.58
+position = -1.1,-1.7, -0.18
 
 [ particle-04 ]  # front
 mass = 247.0
-position =  0.6, 1.7, -0.58
+position =  1.1, 1.7, -0.18
 
 [ particle-05 ]
 mass = 247.0
-position = -0.6, 1.7, -0.58
+position = -1.1, 1.7, -0.18

@@ -4,7 +4,7 @@ version = 2
 
 [ steering ] 
 max-angle = 33.19 
-angular-damping = 0.4
+angular-damping = 0.0
 
 #---------------------------
 [ rot_drag ]
@@ -28,7 +28,7 @@ width = 0.60
 height = 0.46
 offsetL = -0.28
 offsetW = -0.05
-offsetH = 0.875
+offsetH = 0.375
 
 
 #  engine
@@ -121,7 +121,7 @@ radius = 0.31595
 rolling-resistance = 1.3e-2, 6.5e-6 
 rotational-inertia = 10 
 tread = 0.0 
-file = gravel.tire
+file = gravel_new4b.tire
 
 
 #  brakes
@@ -224,20 +224,20 @@ hinge = 0.0, -0.6, 0.0
 #---------------------------
 [ particle-00 ] 
 mass = 65.0 
-position = 0.0, 1.008, -0.55 
+position = 0.0, 1.0, 0.25 
 
 [ particle-01 ]  # rear
 mass = 222.5 
-position =  0.85,-1.6, -0.65
+position =  0.85,-1.8, -0.05
 
 [ particle-02 ] 
 mass = 222.5 
-position = -0.85,-1.6, -0.65
+position = -0.85,-1.8, -0.05
 
 [ particle-03 ]  # front
 mass = 228.0 
-position =  0.8, 1.6, -0.65
+position =  0.8, 1.8, -0.05
 
 [ particle-04 ] 
 mass = 228.0 
-position = -0.8, 1.6, -0.65
+position = -0.8, 1.8, -0.05
