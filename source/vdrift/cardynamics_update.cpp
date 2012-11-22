@@ -164,12 +164,13 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 	#endif
 
 	#if 1	// body
-		//out << "---Body---" << endl;
-		out << "com: " << center_of_mass << endl;
+		//out << "---Body---" << endl;  // L| front+back-  W_ left-right+  H/ up+down-
+		out << "com: W right+ " << -center_of_mass[1] << " L front+ " << center_of_mass[0] << " H up+ " << center_of_mass[1] << endl;
 		out.precision(0);
 		out << "mass: " << body.GetMass() << endl;
-		MATRIX3 <T> inertia = body.GetInertia();
-		out << "inertia: " << inertia[0] << " " << inertia[4] << " " << inertia[8] << endl;
+		MATRIX3 <T> inertia = body.GetInertiaConst();
+		out << "inertia: roll " << inertia[0] << " pitch " << inertia[4] << " yaw " << inertia[8] << endl;
+		//out << "inertia: " << inertia[0] << " " << inertia[4] << " " << inertia[8] << " < " << inertia[1] << " " << inertia[2] << " " << inertia[3] << " " << inertia[5] << " " << inertia[6] << " " << inertia[7] << endl;
 		//out << "pos: " << chassisPosition << endl;
 		//out << "sumWhTest: " << sumWhTest << endl;
 		out.precision(2);
@@ -210,12 +211,12 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 	if (p2)
 	{
 		out << "(front left)" << endl;		suspension[FRONT_LEFT].DebugPrint(out);	out << endl;
-		out << "(front right)" << endl;	suspension[FRONT_RIGHT].DebugPrint(out);out << endl;
+		out << "(front right)" << endl;		suspension[FRONT_RIGHT].DebugPrint(out);out << endl;
 		out << "(rear left)" << endl;		suspension[REAR_LEFT].DebugPrint(out);	out << endl;
 		out << "(rear right)" << endl;		suspension[REAR_RIGHT].DebugPrint(out);	out << endl;
 
 		out << "(front left)" << endl;		brake[FRONT_LEFT].DebugPrint(out);	out << endl;
-		out << "(front right)" << endl;	brake[FRONT_RIGHT].DebugPrint(out);	out << endl;
+		out << "(front right)" << endl;		brake[FRONT_RIGHT].DebugPrint(out);	out << endl;
 		out << "(rear left)" << endl;		brake[REAR_LEFT].DebugPrint(out);	out << endl;
 		out << "(rear right)" << endl;		brake[REAR_RIGHT].DebugPrint(out);
 	}
@@ -226,18 +227,18 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 	{
 		out << endl;
 		out << "(front left)" << endl;		wheel[FRONT_LEFT].DebugPrint(out);	out << endl;
-		out << "(front right)" << endl;	wheel[FRONT_RIGHT].DebugPrint(out);	out << endl;
+		out << "(front right)" << endl;		wheel[FRONT_RIGHT].DebugPrint(out);	out << endl;
 		out << "(rear left)" << endl;		wheel[REAR_LEFT].DebugPrint(out);	out << endl;
 		out << "(rear right)" << endl;		wheel[REAR_RIGHT].DebugPrint(out);	out << endl;
 
 		out << "(front left)" << endl;		tire[FRONT_LEFT].DebugPrint(out);	out << endl;
-		out << "(front right)" << endl;	tire[FRONT_RIGHT].DebugPrint(out);	out << endl;
+		out << "(front right)" << endl;		tire[FRONT_RIGHT].DebugPrint(out);	out << endl;
 		out << "(rear left)" << endl;		tire[REAR_LEFT].DebugPrint(out);	out << endl;
 		out << "(rear right)" << endl;		tire[REAR_RIGHT].DebugPrint(out);
 	}
 	#endif
 
-	#if 0
+	#if 1
 	if (p4)
 	{
 		for (vector <CARAERO<T> >::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)

@@ -244,9 +244,6 @@
 
 
 
-
-
-
         float3 normal = shSample(normalMap, UV).rgb * 2 - 1;
         normal = normalize(normal);
         
@@ -488,7 +485,7 @@
     
     
     
-#else // COMPOSITE_MAP
+#else // COMPOSITE_MAP  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 

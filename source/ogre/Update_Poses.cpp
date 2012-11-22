@@ -403,7 +403,7 @@ void App::newPoses(float time)  // time only for camera update
 
 		
 		///  store new pos info in queue  _________
-		if (!isFocGui || mClient)  // dont if gui, but network always
+		if (!(isFocGui || isTweak()) || mClient)  // dont if gui, but network always
 		{
 			int qn = (iCurPoses[c] + 1) % CarPosCnt;  // next index in queue
 			carPoses[qn][c] = pi;

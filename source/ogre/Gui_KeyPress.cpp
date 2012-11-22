@@ -51,7 +51,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	// action key == pressed key
 	#define action(s)  actionIsActive(s, mKeyboard->getAsString(arg.key))
 
-	bool tweak = mWndTweak && mWndTweak->getVisible();
+	bool tweak = isTweak();
 
 	if (!bAssignKey)
 	{

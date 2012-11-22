@@ -80,6 +80,10 @@ public:
 	{
 		return world_inertia_tensor;
 	}
+	const MATRIX3 <T> & GetInertiaConst() const
+	{
+		return inertia_tensor;
+	}
 	
 	void SetOrientation(const QUATERNION <T> & neworient)
 	{
@@ -105,12 +109,12 @@ public:
 		
 		assert (have_old_torque); //you'll get an assert problem unless you call SetInitialTorque at the beginning of the simulation
 		
-#ifdef MODIFIEDVERLET
+	#ifdef MODIFIEDVERLET
 		orientation = orientation + GetSpinFromMomentum(angular_momentum + old_torque*dt*0.5)*dt;
 		orientation.Normalize();
 		angular_momentum = angular_momentum + old_torque * dt * 0.5;
 		RecalculateSecondary();
-#endif
+	#endif
 		
 		integration_step++;
 	}
@@ -120,31 +124,31 @@ public:
 	void Integrate2(const T & dt)
 	{
 		assert(integration_step == 1);
-#ifdef MODIFIEDVERLET
+	#ifdef MODIFIEDVERLET
 		angular_momentum = angular_momentum + torque * dt * 0.5;
-#endif
+	#endif
 		
-#ifdef NSV
+	#ifdef NSV
 		//simple NSV integration
 		angular_momentum = angular_momentum + torque * dt;
 		orientation = orientation + GetSpinFromMomentum(angular_momentum)*dt;
 		orientation.Normalize();
-#endif
+	#endif
 		
-#ifdef EULER
+	#ifdef EULER
 		orientation = orientation + GetSpinFromMomentum(angular_momentum)*dt;
 		orientation.Normalize();
 		angular_momentum = angular_momentum + torque * dt;
-#endif
+	#endif
 		
-#ifdef SUVAT
+	#ifdef SUVAT
 		//orientation = orientation + GetSpinFromMomentum(angular_momentum)*dt + GetSpinFromMomentum(torque)*dt*dt*0.5;
 		orientation = orientation + GetSpinFromMomentum(angular_momentum + torque*dt*0.5)*dt;
 		orientation.Normalize();
 		angular_momentum = angular_momentum + torque * dt;
-#endif
+	#endif
 		
-#ifdef SECOND_ORDER
+	#ifdef SECOND_ORDER
 		MATHVECTOR<T, 3> ang_acc = 
 			world_inverse_inertia_tensor.Multiply(torque - angular_velocity.cross(angular_momentum));
 		MATHVECTOR<T, 3> avg_rot = 
@@ -153,7 +157,7 @@ public:
 			QUATERNION<T>(avg_rot[0], avg_rot[1], avg_rot[2], 0) * orientation * 0.5 * dt;
 		orientation = orientation + dq;
 		orientation.Normalize();
-#endif
+	#endif
 		 // update angular velocity, inertia
 		RecalculateSecondary();
 		
@@ -164,11 +168,11 @@ public:
     ///this must only be called between integrate1 and integrate2 steps
 	const MATHVECTOR<T, 3> GetLockUpTorque(const T dt) const
 	{
-#ifdef MODIFIEDVERLET
+	#ifdef MODIFIEDVERLET
 	    return -angular_momentum * 2 / dt;
-#else
+	#else
         return -angular_momentum / dt;
-#endif
+	#endif
 	}
 	
 	///this must only be called between integrate1 and integrate2 steps

@@ -598,9 +598,8 @@ void BaseApp::LoadingOff()
 bool BaseApp::keyReleased( const OIS::KeyEvent &arg )
 {
 	if (bAssignKey) return true;
-	bool tweak = mWndTweak && mWndTweak->getVisible();
 
-	if (mGUI && (isFocGui || tweak))  {
+	if (mGUI && (isFocGui || isTweak()))  {
 		MyGUI::InputManager::getInstance().injectKeyRelease(MyGUI::KeyCode::Enum(arg.key));
 		return true;  }
 
