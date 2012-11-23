@@ -277,12 +277,9 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 					{	WP wp = chTimes;  ChkEv(show_times);  ShowHUD();  }
 					return false;
 					
-				case KC_F8:		// graphs
+				case KC_F8:		// car debug bars
 					if (ctrl)
-					{	WP wp = chGraphs;  ChkEv(show_graphs);
-						for (int i=0; i < graphs.size(); ++i)
-							graphs[i]->SetVisible(pSet->show_graphs);
-					}
+					{	WP wp = chDbgB;  ChkEv(car_dbgbars);   ShowHUD();  }
 					else		// Minimap
 					if (!shift)
 					{	WP wp = chMinimp;  ChkEv(trackmap);
@@ -296,8 +293,11 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 					else
 					if (shift)	// car debug text
 					{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  ShowHUD();  }
-					else		// car debug bars
-					{	WP wp = chDbgB;  ChkEv(car_dbgbars);   ShowHUD();  }
+					else		// graphs
+					{	WP wp = chGraphs;  ChkEv(show_graphs);
+						for (int i=0; i < graphs.size(); ++i)
+							graphs[i]->SetVisible(pSet->show_graphs);
+					}
 					return true;
 
 				case KC_F11:

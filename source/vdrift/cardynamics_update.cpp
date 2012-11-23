@@ -174,8 +174,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 		//out << "pos: " << chassisPosition << endl;
 		//out << "sumWhTest: " << sumWhTest << endl;
 		out.precision(2);
-		//MATHVECTOR <T, 3> up(0,0,1);
-		//Orientation().RotateVector(up);
+		//MATHVECTOR <T, 3> up(0,0,1);  Orientation().RotateVector(up);
 		//out << "up: " << up << endl;
 		out << endl;		
 	#endif

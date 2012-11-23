@@ -2458,7 +2458,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="388 62 256 24" name="CarDbgBars">
-							<Property key="Caption" value="#{CarDebug}  F9"/>
+							<Property key="Caption" value="#{CarDebug}  ctrl-F8"/>
 							<Property key="TextColour" value="0.7 0.9 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
@@ -2473,7 +2473,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="388 184 256 24" name="Graphs">
-							<Property key="Caption" value="#{Graphs}  ctrl-F8"/>
+							<Property key="Caption" value="#{Graphs}  F9"/>
 							<Property key="TextColour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
