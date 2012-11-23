@@ -447,7 +447,10 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 
 			std::string tirefile;  // get tire params file
 			if (!c.GetParam("tire-"+posstr+".file", tirefile, error_output)) return false;
-			TIRE_PARAMS<CARDYNAMICS::T>* tp = &pGame->tire_pars[ pGame->tire_pars_map[tirefile] ];
+			int it = pGame->tire_pars_map[tirefile]-1;
+			if (it == -1)
+			{	error_output << "Tire file not found\n";  return false;  }
+			TIRE_PARAMS<CARDYNAMICS::T>* tp = &pGame->tire_pars[ it ];
 
 			tire[leftside].SetPacejkaParameters(tp);
 			tire[rightside].SetPacejkaParameters(tp);
