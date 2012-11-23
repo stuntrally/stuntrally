@@ -42,26 +42,26 @@ position = 0.0, 0.52, 0.45
 mass = 230.0
 peak-engine-rpm = 7500.0
 rpm-limit = 8500.0
-inertia = 0.4
+inertia = 0.6
 start-rpm = 1000
 stall-rpm = 650
 fuel-consumption = 1e-9
 torque-friction = 0.0002
 torque-val-mul = 1.05
-torque-curve-00 = 1000, 456
-torque-curve-01 = 1500, 475
-torque-curve-02 = 2000, 520
-torque-curve-03 = 2500, 572
+torque-curve-00 = 1000, 346
+torque-curve-01 = 1500, 415
+torque-curve-02 = 2000, 470
+torque-curve-03 = 2500, 582
 torque-curve-04 = 3000, 618
-torque-curve-05 = 3500, 650
+torque-curve-05 = 3500, 670
 torque-curve-06 = 4000, 714
 torque-curve-07 = 4500, 755
 torque-curve-08 = 5000, 818
-torque-curve-09 = 5500, 760
-torque-curve-10 = 6000, 707
-torque-curve-11 = 6500, 688
-torque-curve-12 = 7000, 656
-torque-curve-13 = 7500, 626
+torque-curve-09 = 5500, 780
+torque-curve-10 = 6000, 727
+torque-curve-11 = 6500, 708
+torque-curve-12 = 7000, 678
+torque-curve-13 = 7500, 646
 torque-curve-14 = 8000, 606
 torque-curve-15 = 8500, 566
 
@@ -82,10 +82,10 @@ gear-ratio-3 = 1.57
 gear-ratio-4 = 1.16
 gear-ratio-5 = 0.92
 gear-ratio-6 = 0.68
-shift-delay = 0.06
+shift-delay = 0.08
 
 [ differential ]
-final-drive = 5.11
+final-drive = 5.51
 anti-slip = 500.0
 
 [ fuel-tank ]
@@ -127,7 +127,7 @@ radius = 0.325
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 10.0
 tread = 0.0
-file = old_asphalt.tire
+file = asphalt_new2.tire
 #---------
 
 #  ..?
@@ -140,17 +140,17 @@ file = old_asphalt.tire
 [ brakes-front ]
 friction = 1.03
 max-pressure = 2.5e6
-bias = 0.60
+bias = 0.55
 radius = 0.17
-area = 0.015
+area = 0.019
 
 [ brakes-rear ]
 friction = 1.03
 max-pressure = 2.5e6
-bias = 0.40
+bias = 0.45
 radius = 0.14
-area = 0.015
-handbrake = 3.8
+area = 0.019
+handbrake = 3.1
 
 
 [ driver ]
