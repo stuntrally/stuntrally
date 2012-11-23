@@ -3,14 +3,13 @@ version = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ] 
-max-angle = 33.1
+max-angle = 33
 angular-damping = 0.0
 
-#---------------------------
 [ rot_drag ]
 roll  = 200.0
 pitch = 400.0
-yaw   = 500.0
+yaw   = 800.0
 yaw2  = 2.0
 
 [ model_ofs ]
@@ -22,13 +21,14 @@ exhaust-mirror-second = 0
 #  collision shape params
 #---------------------------
 [ collision ]
-manual = 1
 radius = 0.35
 width = 0.60
 height = 0.46
-offsetL = -0.28
+posLrear = -2.16
+posLfront = 2.1
+offsetL = -0.12
 offsetW = -0.05
-offsetH = 0.375
+offsetH = 0.31
 start-offsetY = 0.6
 
 
@@ -44,19 +44,19 @@ start-rpm = 1000
 stall-rpm = 350 
 fuel-consumption = 1e-9 
 torque-friction = 0.0001
-torque-curve-00 = 1000, 425.4
-torque-curve-01 = 1500, 431.4
-torque-curve-02 = 2000, 438.95
-torque-curve-03 = 2500, 462.0
-torque-curve-04 = 3000, 466.07
-torque-curve-05 = 3500, 493.19
-torque-curve-06 = 4000, 504.03
-torque-curve-07 = 4500, 495.9
-torque-curve-08 = 5000, 479.63
-torque-curve-09 = 5500, 433.53
-torque-curve-10 = 6000, 398.28
-torque-curve-11 = 6500, 371.16
-torque-curve-12 = 7000, 350.83
+torque-curve-00 = 1000, 425
+torque-curve-01 = 1500, 431
+torque-curve-02 = 2000, 438
+torque-curve-03 = 2500, 462
+torque-curve-04 = 3000, 466
+torque-curve-05 = 3500, 493
+torque-curve-06 = 4000, 504
+torque-curve-07 = 4500, 495
+torque-curve-08 = 5000, 479
+torque-curve-09 = 5500, 433
+torque-curve-10 = 6000, 398
+torque-curve-11 = 6500, 371
+torque-curve-12 = 7000, 350
 
 
 [ clutch ] 

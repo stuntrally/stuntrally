@@ -3,15 +3,14 @@ version = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
-max-angle = 33.19
+max-angle = 33
 angular-damping = 0.0
 
-#---------------------------
 [ rot_drag ]
 roll  = 200.0
 pitch = 400.0
-yaw   = 500.0
-yaw2 = 2.0
+yaw   = 700.0
+yaw2  = 2.0
 
 [ model_ofs ]
 interior-x = 0.05
@@ -25,11 +24,12 @@ exhaust-mirror-second = 1
 #  collision shape params
 #---------------------------
 [ collision ]
-manual = 1
 radius = 0.364
 width = 0.63
 height = 0.46
-offsetL = 0.16
+posLrear = -2.12
+posLfront = 2.0
+offsetL = 0.0
 offsetW = 0.01
 offsetH = 0.23
 start-offsetY = 0.6
@@ -39,7 +39,7 @@ start-offsetY = 0.6
 #---------------------------
 [ engine ]
 position = 0.0, 0.52, 0.45
-mass = 180.0
+mass = 230.0
 peak-engine-rpm = 7500.0
 rpm-limit = 8500.0
 inertia = 0.4
@@ -48,22 +48,22 @@ stall-rpm = 650
 fuel-consumption = 1e-9
 torque-friction = 0.0002
 torque-val-mul = 1.0
-torque-curve-00 = 1000, 456.26
-torque-curve-01 = 1500, 475.75
-torque-curve-02 = 2000, 520.66
-torque-curve-03 = 2500, 572.02
-torque-curve-04 = 3000, 618.08
-torque-curve-05 = 3500, 650.29
-torque-curve-06 = 4000, 684.49
-torque-curve-07 = 4500, 725.07
-torque-curve-08 = 5000, 748.11
-torque-curve-09 = 5500, 730.2
-torque-curve-10 = 6000, 707.42
-torque-curve-11 = 6500, 688.08
-torque-curve-12 = 7000, 656.59
-torque-curve-13 = 7500, 626.59
-torque-curve-14 = 8000, 606.59
-torque-curve-15 = 8500, 566.59
+torque-curve-00 = 1000, 456
+torque-curve-01 = 1500, 475
+torque-curve-02 = 2000, 520
+torque-curve-03 = 2500, 572
+torque-curve-04 = 3000, 618
+torque-curve-05 = 3500, 650
+torque-curve-06 = 4000, 684
+torque-curve-07 = 4500, 725
+torque-curve-08 = 5000, 748
+torque-curve-09 = 5500, 730
+torque-curve-10 = 6000, 707
+torque-curve-11 = 6500, 688
+torque-curve-12 = 7000, 656
+torque-curve-13 = 7500, 626
+torque-curve-14 = 8000, 606
+torque-curve-15 = 8500, 566
 
 [ clutch ]
 sliding = 0.27
@@ -234,17 +234,17 @@ hinge = -1.1, 0, 0
 # (for car total mass and inertia) also use engine has mass and position
 #---------------------------
 [ particle-00 ]  # front
-mass = 233.0
-position =  1.35, 1.6, -0.01
+mass = 253.0
+position =  1.3, 1.6, 0.01
 
 [ particle-01 ]
-mass = 233.0
-position = -1.35, 1.6, -0.01
+mass = 253.0
+position = -1.3, 1.6, 0.01
 
 [ particle-02 ]  # rear
-mass = 233.0
-position =  1.3, -1.67, -0.01
+mass = 253.0
+position =  1.3, -1.67, 0.01
 
 [ particle-03 ]
-mass = 233.0
-position = -1.3, -1.67, -0.01
+mass = 253.0
+position = -1.3, -1.67, 0.01

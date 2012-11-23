@@ -3,10 +3,9 @@ version = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
-max-angle = 24.1
+max-angle = 22
 angular-damping = 0.0
 
-#---------------------------
 [ rot_drag ]
 roll  = 200.0
 pitch = 400.0
@@ -22,21 +21,22 @@ exhaust-mirror-second = 1
 #  collision shape params
 #---------------------------
 [ collision ]
-manual = 1
 radius = 0.333
 width = 0.54
 height = 0.45
+posLrear = -1.97
+posLfront = 1.9
 offsetL = 0.09
 offsetW = -0.01
-offsetH = 0.31
+offsetH = 0.23
 start-offsetY = 0.6
 
 
 #  engine
 #---------------------------
 [ engine ]
-position = 0.0, -0.8, -0.16
-mass = 80.0
+position = 0.0, -0.8, 0.32
+mass = 180.0
 peak-engine-rpm = 6900.0
 rpm-limit = 7200
 inertia = 0.25
@@ -44,25 +44,21 @@ start-rpm = 1000
 stall-rpm = 500
 fuel-consumption = 1e-9
 #torque-friction = 0.0003
-torque-curve-00 = 1000, 521
-torque-curve-01 = 1500, 512
-torque-curve-02 = 2200, 507
-torque-curve-03 = 2700, 506
+torque-curve-00 = 1000, 421
+torque-curve-01 = 1500, 452
+torque-curve-02 = 2200, 477
+torque-curve-03 = 2700, 492
 torque-curve-04 = 3200, 507
-torque-curve-05 = 3850, 502
-torque-curve-06 = 4200, 522
-torque-curve-07 = 4800, 555
-torque-curve-08 = 5050, 573
-torque-curve-09 = 5200, 568
-torque-curve-10 = 5775, 561
-torque-curve-11 = 5850, 565
-torque-curve-12 = 6000, 565
-torque-curve-13 = 6800, 532
-torque-curve-14 = 7300, 532
-torque-curve-15 = 7700, 538
-torque-curve-16 = 8000, 535
-torque-curve-17 = 8600, 509
-torque-curve-18 = 9200, 479
+torque-curve-05 = 3800, 532
+torque-curve-06 = 4200, 562
+torque-curve-07 = 4800, 583
+torque-curve-09 = 5200, 561
+torque-curve-11 = 5600, 542
+torque-curve-12 = 6000, 515
+torque-curve-13 = 6800, 492
+torque-curve-14 = 7300, 472
+torque-curve-15 = 7700, 448
+torque-curve-17 = 8600, 409
 
 [ clutch ]
 sliding = 0.075
@@ -236,17 +232,17 @@ hinge = 0,-0.6,0
 #---------------------------
 [ particle-00 ]
 mass = 230.0
-position =  1.1, -1.6, -0.05
+position =  1.1, -1.6, 0.05
 
 [ particle-01 ]
 mass = 230.0
-position = -1.1, -1.6, -0.05
+position = -1.1, -1.6, 0.05
 
 [ particle-02 ]
 mass = 230.0
-position =  1.2, 1.7, -0.05
+position =  1.2, 1.7, 0.05
 
 [ particle-03 ]
 mass = 230.0
-position = -1.2, 1.7, -0.05
+position = -1.2, 1.7, 0.05
 

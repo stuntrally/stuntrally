@@ -3,10 +3,9 @@ version = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
-max-angle = 16.0
+max-angle = 16
 angular-damping = 0.1
 
-#---------------------------
 [ rot_drag ]
 roll  = 200.0
 pitch = 400.0
@@ -16,13 +15,14 @@ yaw2  = 2.5
 #  collision shape params
 #---------------------------
 [ collision ]
-manual = 1
 radius = 0.32
 width = 0.67
-height = 0.45
-offsetL = 0.0
+height = 0.37
+posLrear = -2.07
+posLfront = 1.98
+offsetL = 0.24
 offsetW = -0.01
-offsetH = 0.4
+offsetH = 0.30
 start-offsetY = 0.5
 
 
@@ -183,13 +183,13 @@ efficiency = 0.8
 #---------------------------
 [ wheel-FR ]
 position = 0.8345, 1.12, -0.37
-roll-height = 1.00
+roll-height = 0.92
 mass = 15.0
 restitution = 0.1
 
 [ wheel-FL ]
 position = -0.8345, 1.12, -0.37
-roll-height = 1.00
+roll-height = 0.92
 mass = 15.0
 restitution = 0.1
 
@@ -206,13 +206,13 @@ hinge = 0.50, 0.90, -0.20
 #---------------------------
 [ wheel-RR ]
 position = 0.8085, -1.51, -0.38
-roll-height = 1.00
+roll-height = 0.93
 mass = 15.0
 restitution = 0.1
 
 [ wheel-RL ]
 position = -0.8085, -1.51, -0.38
-roll-height = 1.00
+roll-height = 0.93
 mass = 15.0
 restitution = 0.1
 

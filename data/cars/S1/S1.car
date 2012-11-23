@@ -6,7 +6,6 @@ version = 2
 max-angle = 28
 angular-damping = 0.0
 
-#---------------------------
 [ rot_drag ]
 roll  = 200.0
 pitch = 400.0
@@ -22,10 +21,11 @@ exhaust-mirror-second = on
 #  collision shape params
 #---------------------------
 [ collision ]
-manual = 1
 radius = 0.4
 width = 0.49
 height = 0.43
+posLrear = -1.92
+posLfront = 1.93
 offsetL = -0.3
 offsetW = 0.0
 offsetH = 0.16
@@ -43,23 +43,23 @@ start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
 torque-val-mul = 1.2
-torque-curve-00 = 1000, 450.4
-torque-curve-01 = 1500, 480.4
-torque-curve-02 = 2000, 508.95
-torque-curve-03 = 2500, 532.0
-torque-curve-04 = 3000, 566.07
-torque-curve-05 = 3300, 579.63
-torque-curve-06 = 3500, 593.19
-torque-curve-07 = 3800, 594.54
-torque-curve-08 = 4000, 604.03
-torque-curve-09 = 4200, 608.10
-torque-curve-10 = 4400, 604.03
-torque-curve-11 = 4600, 575.9
-torque-curve-12 = 4900, 550.63
-torque-curve-13 = 5500, 500.53
-torque-curve-14 = 6000, 458.28
-torque-curve-15 = 6300, 421.16
-torque-curve-16 = 7000, 380.83
+torque-curve-00 = 1000, 450
+torque-curve-01 = 1500, 480
+torque-curve-02 = 2000, 508
+torque-curve-03 = 2500, 532
+torque-curve-04 = 3000, 566
+torque-curve-05 = 3300, 579
+torque-curve-06 = 3500, 593
+torque-curve-07 = 3800, 594
+torque-curve-08 = 4000, 604
+torque-curve-09 = 4200, 608
+torque-curve-10 = 4400, 604
+torque-curve-11 = 4600, 575
+torque-curve-12 = 4900, 550
+torque-curve-13 = 5500, 500
+torque-curve-14 = 6000, 458
+torque-curve-15 = 6300, 421
+torque-curve-16 = 7000, 380
 
 [ clutch ]
 sliding = 0.27

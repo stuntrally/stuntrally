@@ -3,10 +3,9 @@ version = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
-max-angle = 30.1
+max-angle = 30
 angular-damping = 0.0
 
-#---------------------------
 [ rot_drag ]
 roll  = 200.0
 pitch = 400.0
@@ -25,12 +24,11 @@ exhaust-mirror-second = 0
 #  collision shape params
 #---------------------------
 [ collision ]
-manual = 1
 radius = 0.35
 width = 0.5
 height = 0.51
-posLfront = 1.9
-posLback = -1.9
+posLrear = -1.96
+posLfront = 2.06
 offsetL = 0.01
 offsetW = -0.02
 offsetH = 0.32

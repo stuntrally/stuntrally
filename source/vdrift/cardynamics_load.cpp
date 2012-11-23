@@ -29,7 +29,6 @@ CARDYNAMICS::CARDYNAMICS() :
 	steerValue(0.f), velPrev(0,0,0),
 	fCarScrap(0.f), fCarScreech(0.f),
 	time(0.0)//, sumWhTest(0.0)
-	//coll_manual
 	//coll_R, coll_W, coll_H, coll_Hofs, coll_Wofs, coll_Lofs
 	//coll_posLfront, coll_posLback
 {
@@ -667,14 +666,12 @@ void CARDYNAMICS::Init(
 		btScalar w = size.getX()*0.2, r = size.getZ()*0.3, h = 0.45;
 
 		///  spheres
-		if (coll_manual)  // define collision manually
-		{
-			btScalar l0 = 0.f, w0 = 0.f, h0 = 0.f;
-			if (coll_R > 0.f)  r = coll_R;  l0 = coll_Lofs;
-			if (coll_W > 0.f)  w = coll_W;  w0 = coll_Wofs;
-			if (coll_H > 0.f)  h = coll_H;	h0 = coll_Hofs;
-			origin = btVector3(l0, w0, h0);
-		}
+		btScalar l0 = 0.f, w0 = 0.f, h0 = 0.f;
+		if (coll_R > 0.f)  r = coll_R;  l0 = coll_Lofs;
+		if (coll_W > 0.f)  w = coll_W;  w0 = coll_Wofs;
+		if (coll_H > 0.f)  h = coll_H;	h0 = coll_Hofs;
+		origin = btVector3(l0, w0, h0);
+
 		btScalar r2 = r*0.6;
 		btScalar l1 = coll_posLfront, l2 = coll_posLback, l1m = l1*0.5, l2m = l2*0.5;
 
