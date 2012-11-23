@@ -30,14 +30,15 @@ width = 0.56
 height = 0.57
 offsetL = 0.0
 offsetW = -0.02
-offsetH = 0.80
+offsetH = 0.20
+start-offsetY = 0.6
 
 
 #  engine
 #---------------------------
 [ engine ]
 # center, front, up
-position = 0.0, 0.2, -0.1
+position = 0.0, 0.9, 0.4
 mass = 70.0
 peak-engine-rpm = 6500
 rpm-limit = 7000.0
@@ -183,7 +184,7 @@ efficiency = 0.95
 #---------------------------
 [ wheel-FR ]
 position = 0.71, 1.197, -0.441
-roll-height = 0.302
+roll-height = 0.9
 mass = 15.0
 restitution = 0.1
 
@@ -193,7 +194,7 @@ hinge = -0.71, 0.55, -0.0
 
 [ wheel-FL ]
 position = -0.71, 1.197, -0.441
-roll-height = 0.302
+roll-height = 0.9
 mass = 15.0
 restitution = 0.1
 
@@ -206,7 +207,7 @@ hinge = 0.71, 0.55, 0.0
 #---------------------------
 [ wheel-RR ]
 position = 0.71, -1.438, -0.441
-roll-height = 0.302
+roll-height = 0.9
 mass = 15.0
 restitution = 0.1
 
@@ -216,7 +217,7 @@ hinge = -0.25, -1.94, 0.0
 
 [ wheel-RL ]
 position = -0.71, -1.438, -0.441
-roll-height = 0.302
+roll-height = 0.9
 mass = 15.0
 restitution = 0.1
 
@@ -230,16 +231,16 @@ hinge = 0.25, -1.94, 0.0
 #---------------------------
 [ particle-00 ]  # rear
 mass = 230
-position =  1.0, -1.9, -0.60
+position =  1.0, -1.7, -0.00
 
 [ particle-01 ]
 mass = 230
-position = -1.0, -1.9, -0.60
+position = -1.0, -1.7, -0.00
 
 [ particle-02 ]  # front
 mass = 230
-position =  1.0,  1.7, -0.60
+position =  1.0,  1.7, -0.00
 
 [ particle-03 ]
 mass = 230
-position = -1.0,  1.7, -0.60
+position = -1.0,  1.7, -0.00

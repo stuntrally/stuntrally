@@ -8,7 +8,7 @@ angular-damping = 0.0
 
 #---------------------------
 [ rot_drag ]
-roll  = 10.0
+roll  = 200.0
 pitch = 400.0
 yaw   = 500.0
 yaw2  = 2.0
@@ -31,7 +31,8 @@ width = 0.5
 height = 0.51
 offsetL = 0.07
 offsetW = -0.02
-offsetH = 0.86
+offsetH = 0.26
+start-offsetY = 0.6
 
 
 #  engine
@@ -183,7 +184,7 @@ efficiency = 0.95
 #---------------------------
 [ wheel-FR ]
 position = 0.708, 1.43, -0.4
-roll-height = 0.32
+roll-height = 0.95
 mass = 15.0
 restitution = 0.1
 
@@ -193,7 +194,7 @@ hinge = -0.71, 0.55, -0.0
 
 [ wheel-FL ]
 position = -0.708, 1.43, -0.4
-roll-height = 0.32
+roll-height = 0.95
 mass = 15.0
 restitution = 0.1
 
@@ -206,7 +207,7 @@ hinge = 0.71, 0.55, 0.0
 #---------------------------
 [ wheel-RR ]
 position = 0.695, -1.21, -0.4
-roll-height = 0.32
+roll-height = 0.95
 mass = 15.0
 restitution = 0.1
 
@@ -216,7 +217,7 @@ hinge = -0.25, -1.94, 0.0
 
 [ wheel-RL ]
 position = -0.695, -1.21, -0.4
-roll-height = 0.32
+roll-height = 0.95
 mass = 15.0
 restitution = 0.1
 
@@ -230,16 +231,16 @@ hinge = 0.25, -1.94, 0.0
 #---------------------------
 [ particle-00 ]  # rear
 mass = 230
-position =  1.0, -1.9, -0.63
+position =  1.0, -1.9, 0.03
 
 [ particle-01 ]
 mass = 230
-position = -1.0, -1.9, -0.63
+position = -1.0, -1.9, 0.03
 
 [ particle-02 ]  # front
 mass = 230
-position =  1.0,  1.9, -0.63
+position =  1.0,  1.9, 0.03
 
 [ particle-03 ]
 mass = 230
-position = -1.0,  1.9, -0.63
+position = -1.0,  1.9, 0.03

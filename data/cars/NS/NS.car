@@ -3,7 +3,7 @@ version = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ] 
-max-angle = 33.19 
+max-angle = 33.1
 angular-damping = 0.0
 
 #---------------------------
@@ -29,36 +29,35 @@ height = 0.46
 offsetL = -0.28
 offsetW = -0.05
 offsetH = 0.375
+start-offsetY = 0.6
 
 
 #  engine
 #---------------------------
 [ engine ] 
-position = 0.0, 1.04, -0.24 
+position = 0.0, 1.04, 0.44
 mass = 150.0 
-max-power = 650500
 peak-engine-rpm = 6800.0 
 rpm-limit = 8000.0 
 inertia = 0.35 
-idle = 0.02 
 start-rpm = 1000 
 stall-rpm = 350 
 fuel-consumption = 1e-9 
-torque-friction = 0.0006 
-torque-curve-00 = 1000, 513.4 
-torque-curve-01 = 2000, 515.2 
-torque-curve-02 = 2500, 541.8 
-torque-curve-03 = 3000, 545.9 
-torque-curve-04 = 3800, 563.4 
-torque-curve-05 = 4400, 568.0 
-torque-curve-06 = 4600, 566.4 
-torque-curve-07 = 4800, 564.0 
-torque-curve-08 = 5000, 560.7 
-torque-curve-09 = 6000, 531.1 
-torque-curve-10 = 6500, 508.9 
-torque-curve-11 = 7000, 493.4
-torque-curve-12 = 7200, 310.4
-torque-curve-13 = 8000, 189.2 
+torque-friction = 0.0001
+torque-curve-00 = 1000, 425.4
+torque-curve-01 = 1500, 431.4
+torque-curve-02 = 2000, 438.95
+torque-curve-03 = 2500, 462.0
+torque-curve-04 = 3000, 466.07
+torque-curve-05 = 3500, 493.19
+torque-curve-06 = 4000, 504.03
+torque-curve-07 = 4500, 495.9
+torque-curve-08 = 5000, 479.63
+torque-curve-09 = 5500, 433.53
+torque-curve-10 = 6000, 398.28
+torque-curve-11 = 6500, 371.16
+torque-curve-12 = 7000, 350.83
+
 
 [ clutch ] 
 sliding = 0.27 
@@ -76,10 +75,10 @@ gear-ratio-2 = 1.925
 gear-ratio-3 = 1.302 
 gear-ratio-4 = 1.0 
 gear-ratio-5 = 0.752 
-shift-delay = 0.05 
+shift-delay = 0.10
 
 [ differential ] 
-final-drive = 4.71 
+final-drive = 4.21 
 anti-slip = 600.0 
 
 [ fuel-tank ] 
@@ -177,7 +176,7 @@ efficiency = 0.95
 #---------------------------
 [ wheel-FR ] 
 position = 0.72, 1.37, -0.50 
-roll-height = 0.31265 
+roll-height = 0.88
 mass = 20 
 restitution = 0.1 
 
@@ -187,7 +186,7 @@ hinge = 0,0,0
 
 [ wheel-FL ] 
 position = -0.72, 1.37, -0.50 
-roll-height = 0.31265 
+roll-height = 0.88
 mass = 20 
 restitution = 0.1 
 
@@ -200,7 +199,7 @@ hinge = 0,0,0
 #---------------------------
 [ wheel-RR ] 
 position = 0.72, -1.37, -0.49 
-roll-height = 0.3179 
+roll-height = 0.88
 mass = 22 
 restitution = 0.1 
 
@@ -210,7 +209,7 @@ hinge = 0.0, -0.6, 0.0
 
 [ wheel-RL ] 
 position = -0.72, -1.37, -0.49
-roll-height = 0.3179 
+roll-height = 0.88
 mass = 22 
 restitution = 0.1 
 

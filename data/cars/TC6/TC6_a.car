@@ -8,7 +8,7 @@ angular-damping = 0.0
 
 #---------------------------
 [ rot_drag ]
-roll  = 10.0
+roll  = 200.0
 pitch = 400.0
 yaw   = 500.0
 yaw2  = 2.0
@@ -28,13 +28,14 @@ width = 0.556
 height = 0.45
 offsetL = -0.22
 offsetW = 0.03
-offsetH = 0.77
+offsetH = 0.15
+start-offsetY = 0.6
 
 
 #  engine
 #---------------------------
 [ engine ]
-position = 0.0, 1.33, -0.24
+position = 0.0, 1.33, 0.44
 mass = 180.0
 peak-engine-rpm = 6000.0
 rpm-limit = 6500.0
@@ -43,24 +44,19 @@ start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
 torque-friction = 0.0001
-torque-curve-00 = 1000, 525.4
-torque-curve-01 = 2000, 538.95
-torque-curve-02 = 2500, 562.0
-torque-curve-03 = 3000, 566.07
-torque-curve-04 = 3300, 579.63
-torque-curve-05 = 3500, 593.19
-torque-curve-06 = 3800, 594.54
-torque-curve-07 = 3900, 601.32
-torque-curve-08 = 4000, 604.03
-torque-curve-09 = 4100, 606.75
-torque-curve-10 = 4200, 608.10
-torque-curve-11 = 4400, 604.03
-torque-curve-12 = 4600, 595.9
-torque-curve-13 = 4900, 579.63
-torque-curve-14 = 5500, 533.53
-torque-curve-15 = 6000, 498.28
-torque-curve-16 = 6300, 471.16
-torque-curve-17 = 7000, 450.83
+torque-curve-00 = 1000, 425.4
+torque-curve-01 = 1500, 455.4
+torque-curve-02 = 2000, 488.95
+torque-curve-03 = 2500, 512.0
+torque-curve-04 = 3000, 566.07
+torque-curve-05 = 3500, 623.19
+torque-curve-06 = 4000, 644.03
+torque-curve-07 = 4500, 625.9
+torque-curve-08 = 5000, 579.63
+torque-curve-09 = 5500, 533.53
+torque-curve-10 = 6000, 498.28
+torque-curve-11 = 6500, 471.16
+torque-curve-12 = 7000, 450.83
 
 [ clutch ]
 sliding = 0.27
@@ -81,7 +77,7 @@ gear-ratio-5 = 0.731
 shift-delay = 0.14
 
 [ differential ]
-final-drive = 4.285
+final-drive = 3.7
 anti-slip = 600.0
 
 [ fuel-tank ]
@@ -132,24 +128,24 @@ file = old_asphalt.tire
 #  brakes
 #---------------------------
 [ brakes-front ]
-friction = 0.73
+friction = 0.83
 max-pressure = 2.5e6
 bias = 0.60
 radius = 0.17
 area = 0.015
 
 [ brakes-rear ]
-friction = 0.73
+friction = 0.83
 max-pressure = 2.5e6
 bias = 0.40
 radius = 0.14
 area = 0.015
-handbrake = 2.6
+handbrake = 4.6
 
 
 [ driver ]
 position = 0.35, -0.13, 0.05
-mass = 90.0
+mass = 50.0
 view-position = 0.4, 0.4, 0.4
 hood-mounted-view-position = -0.7, 0, 0.3
 
@@ -182,8 +178,8 @@ efficiency = 0.95
 #---------------------------
 [ wheel-FR ]
 position = 0.75, 1.26, -0.47
-roll-height = 0.325
-mass = 20
+roll-height = 0.90
+mass = 17
 restitution = 0.1
 
 [ suspension-FR ]
@@ -192,8 +188,8 @@ hinge = -3.70, 1.1, -0.43
 
 [ wheel-FL ]
 position = -0.75, 1.26, -0.47
-roll-height = 0.325
-mass = 20
+roll-height = 0.90
+mass = 17
 restitution = 0.1
 
 [ suspension-FL ]
@@ -205,8 +201,8 @@ hinge = 3.70, 1.1, -0.43
 #---------------------------
 [ wheel-RR ]
 position = 0.75, -1.28, -0.47
-roll-height = 0.340
-mass = 20
+roll-height = 0.90
+mass = 17
 restitution = 0.1
 
 [ suspension-RR ]
@@ -215,8 +211,8 @@ hinge = -3.70, -1.0, -0.43
 
 [ wheel-RL ]
 position = -0.75, -1.28, -0.47
-roll-height = 0.340
-mass = 20
+roll-height = 0.90
+mass = 17
 restitution = 0.1
 
 [ suspension-RL ]
@@ -229,24 +225,24 @@ hinge = 3.70, -1.0, -0.43
 #---------------------------
 [ particle-00 ]
 mass = 30.0
-position = 0.0, -1.35, -0.47
+position = 0.0, -1.35, 0.22
 
 [ particle-01 ]
 mass = 60.0
-position = 0.0, 0.96, -0.47
+position = 0.0, 0.96, 0.22
 
 [ particle-02 ]  # rear
-mass = 248.0
-position =  0.6,-1.7, -0.58
+mass = 230.0
+position =  1.1,-1.7, 0.05
 
 [ particle-03 ]
-mass = 248.0
-position = -0.6,-1.7, -0.58
+mass = 230.0
+position = -1.1,-1.7, 0.05
 
 [ particle-04 ]  # front
-mass = 247.0
-position =  0.6, 1.7, -0.58
+mass = 230.0
+position =  1.1, 1.7, 0.05
 
 [ particle-05 ]
-mass = 247.0
-position = -0.6, 1.7, -0.58
+mass = 230.0
+position = -1.1, 1.7, 0.05

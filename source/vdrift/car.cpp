@@ -128,6 +128,7 @@ bool CAR::Load(class App* pApp1,
 	///-  custom car collision params
 	dynamics.coll_R = 0.3f;  dynamics.coll_H = 0.45f;  dynamics.coll_W = 0.5f;
 	dynamics.coll_Lofs = 0.f;  dynamics.coll_Wofs = 0.f;  dynamics.coll_Hofs = 0.f;
+	dynamics.coll_posLfront = 1.9f;  dynamics.coll_posLback = -1.9f;
 	dynamics.coll_manual = false;  // normally auto
 
 	if (carconf.GetParam("collision.manual", dynamics.coll_manual))
@@ -139,6 +140,9 @@ bool CAR::Load(class App* pApp1,
 		carconf.GetParam("collision.offsetL", dynamics.coll_Lofs);
 		carconf.GetParam("collision.offsetW", dynamics.coll_Wofs);
 		carconf.GetParam("collision.offsetH", dynamics.coll_Hofs);
+
+		carconf.GetParam("collision.posLrear", dynamics.coll_posLback);
+		carconf.GetParam("collision.posLfront", dynamics.coll_posLfront);
 	}
 	
 

@@ -87,6 +87,7 @@ public:
 /// custom collision params
 	bool coll_manual;  // define collision manually
 	float coll_R, coll_W, coll_H, coll_Hofs, coll_Wofs, coll_Lofs;
+	float coll_posLfront, coll_posLback;
 
 // driveline
 	// driveline input

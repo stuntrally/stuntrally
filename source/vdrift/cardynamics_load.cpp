@@ -29,6 +29,9 @@ CARDYNAMICS::CARDYNAMICS() :
 	steerValue(0.f), velPrev(0,0,0),
 	fCarScrap(0.f), fCarScreech(0.f),
 	time(0.0)//, sumWhTest(0.0)
+	//coll_manual
+	//coll_R, coll_W, coll_H, coll_Hofs, coll_Wofs, coll_Lofs
+	//coll_posLfront, coll_posLback
 {
 	for (int i=0; i<4; ++i)
 	{	bWhOnRoad[i]=0;  terSurf[i]=0;
@@ -659,38 +662,44 @@ void CARDYNAMICS::Init(
 		tr.setOrigin(origin + btVector3(0,0,0.2));
 		chassisShape->addChildShape(tr, hull);
 	#else
-	/// todo: all spheres? from car.xml / all params..
+		/// todo: all params in .car
 		// y| length  x- width  z^ height
 		btScalar w = size.getX()*0.2, r = size.getZ()*0.3, h = 0.45;
 
 		///  spheres
-		btScalar l0 = 0.f, w0 = 0.f, h0 = 0.f;
 		if (coll_manual)  // define collision manually
 		{
+			btScalar l0 = 0.f, w0 = 0.f, h0 = 0.f;
 			if (coll_R > 0.f)  r = coll_R;  l0 = coll_Lofs;
 			if (coll_W > 0.f)  w = coll_W;  w0 = coll_Wofs;
 			if (coll_H > 0.f)  h = coll_H;	h0 = coll_Hofs;
 			origin = btVector3(l0, w0, h0);
 		}
+		btScalar r2 = r*0.6;
+		btScalar l1 = coll_posLfront, l2 = coll_posLback, l1m = l1*0.5, l2m = l2*0.5;
+
 		//LogO("Car shape dims:  r="+toStr(r)+"  w="+toStr(w)+"  h="+toStr(h)+"  h0="+toStr(h0));
 		//LogO("Car offset:  x="+toStr(origin.x())+"  y="+toStr(origin.y())+"  z="+toStr(origin.z()));
 
 		const int numSph = 14;  int i = 0;
 		btScalar rad[numSph];  btVector3 pos[numSph];
-		pos[i] = btVector3( 1.8, -w,    -h);    	rad[i] = r*0.6;  ++i;  // front
-		pos[i] = btVector3( 1.8,  w,    -h);    	rad[i] = r*0.6;  ++i;
-		pos[i] = btVector3( 0.9, -w,    -h);    	rad[i] = r;		 ++i;  // front near
-		pos[i] = btVector3( 0.9,  w,    -h);    	rad[i] = r;		 ++i;
-		pos[i] = btVector3(-0.9, -w,    -h);    	rad[i] = r;		 ++i;  // rear near
-		pos[i] = btVector3(-0.9,  w,    -h);    	rad[i] = r;		 ++i;
-		pos[i] = btVector3(-1.9, -w,    -h);    	rad[i] = r*0.6;  ++i;  // rear
-		pos[i] = btVector3(-1.9,  w,    -h);    	rad[i] = r*0.6;  ++i;
-		pos[i] = btVector3( 0.4, -w*0.8, h*0.2);	rad[i] = r*0.6;  ++i;  // top
-		pos[i] = btVector3( 0.4,  w*0.8, h*0.2);	rad[i] = r*0.6;  ++i;
-		pos[i] = btVector3(-0.3, -w*0.8, h*0.4);	rad[i] = r*0.6;  ++i;
-		pos[i] = btVector3(-0.3,  w*0.8, h*0.4);	rad[i] = r*0.6;  ++i;
-		pos[i] = btVector3(-1.1, -w*0.8, h*0.2);	rad[i] = r*0.6;  ++i;  // top rear
-		pos[i] = btVector3(-1.1,  w*0.8, h*0.2);	rad[i] = r*0.6;  ++i;
+		pos[i] = btVector3( l1 , -w,    -h);    	rad[i] = r2;  ++i;  // front
+		pos[i] = btVector3( l1 ,  w,    -h);    	rad[i] = r2;  ++i;
+		pos[i] = btVector3( l1m, -w,    -h);    	rad[i] = r;   ++i;  // front near
+		pos[i] = btVector3( l1m,  w,    -h);    	rad[i] = r;   ++i;
+
+		pos[i] = btVector3( l2m, -w,    -h);    	rad[i] = r;   ++i;  // rear near
+		pos[i] = btVector3( l2m,  w,    -h);    	rad[i] = r;   ++i;
+		pos[i] = btVector3( l2 , -w,    -h);    	rad[i] = r2;  ++i;  // rear
+		pos[i] = btVector3( l2 ,  w,    -h);    	rad[i] = r2;  ++i;
+
+		pos[i] = btVector3( 0.4, -w*0.8, h*0.2);	rad[i] = r2;  ++i;  // top
+		pos[i] = btVector3( 0.4,  w*0.8, h*0.2);	rad[i] = r2;  ++i;
+		pos[i] = btVector3(-0.3, -w*0.8, h*0.4);	rad[i] = r2;  ++i;
+		pos[i] = btVector3(-0.3,  w*0.8, h*0.4);	rad[i] = r2;  ++i;
+		pos[i] = btVector3(-1.1, -w*0.8, h*0.2);	rad[i] = r2;  ++i;  // top rear
+		pos[i] = btVector3(-1.1,  w*0.8, h*0.2);	rad[i] = r2;  ++i;
+
 		for (i=0; i < numSph; ++i)
 			pos[i] += origin;
 		btMultiSphereShape* chassisShape = new btMultiSphereShape(pos, rad, numSph);

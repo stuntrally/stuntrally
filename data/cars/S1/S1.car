@@ -34,7 +34,6 @@ start-offsetY = 0.6
 #  engine
 #---------------------------
 [ engine ]
-# center, front, up
 position = 0.04, 1.4, 0.5
 mass = 250.0
 peak-engine-rpm = 6500
@@ -124,7 +123,7 @@ radius = 0.32
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 10.0
 tread = 0.0
-file = gravel_new4b.tire
+file = old_gravel.tire
 
 
 #  brakes
@@ -227,16 +226,16 @@ hinge = 0.25, -1.94, 0.0
 #---------------------------
 [ particle-00 ]  # rear
 mass = 230
-position =  1.0, -1.6, -0.06
+position =  1.0, -1.5, -0.06
 
 [ particle-01 ]
 mass = 230
-position = -1.0, -1.6, -0.06
+position = -1.0, -1.5, -0.06
 
 [ particle-02 ]  # front
 mass = 230
-position =  1.0,  1.6, -0.06
+position =  1.0,  1.5, -0.06
 
 [ particle-03 ]
 mass = 230
-position = -1.0,  1.6, -0.06
+position = -1.0,  1.5, -0.06

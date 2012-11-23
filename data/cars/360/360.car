@@ -19,10 +19,11 @@ yaw2  = 2.5
 manual = 1
 radius = 0.32
 width = 0.67
-height = 0.45
-offsetL = 0.0
+height = 0.37
+offsetL = 0.27
 offsetW = -0.01
-offsetH = 0.4
+offsetH = 0.30
+start-offsetY = 0.5
 
 
 #  engine
@@ -36,9 +37,10 @@ inertia = 0.45
 start-rpm = 1000
 stall-rpm = 500
 fuel-consumption = 0.0001
-torque-curve-00 = 1000, 311
-torque-curve-01 = 1500, 342
-torque-curve-02 = 2200, 387
+torque-val-mul = 1.15
+torque-curve-00 = 1000, 341
+torque-curve-01 = 1500, 362
+torque-curve-02 = 2200, 389
 torque-curve-03 = 2700, 426
 torque-curve-04 = 3200, 467
 torque-curve-05 = 3800, 512
@@ -76,7 +78,7 @@ gear-ratio-6 = 0.85
 shift-delay=0.08
 
 [ differential ]
-final-drive = 4.44
+final-drive = 4.0
 anti-slip =600.0
 #anti-slip-torque = 0.01
 #anti-slip-torque-deceleration-factor = 0
@@ -158,23 +160,23 @@ hood-mounted-view-position = -0.7, 0, 0.4
 [ drag ]
 position = 0.0, 0.15, 0.00
 frontal-area = 2.03
-drag-coefficient = 0.43
+drag-coefficient = 0.23
 
 [ wing-front ]
-position = 0, 1.15, -0.3
+position = 0, 1.35, 0.1
 frontal-area = 0.0
 drag-coefficient = 0
-surface-area = 2.0
-lift-coefficient = -4.6
-efficiency = 1
+surface-area = 1.1
+lift-coefficient = -3.6
+efficiency = 0.8
 
 [ wing-rear ]
-position = 0, -1.50, -0.3
+position = 0, -1.40, 0.2
 frontal-area = 0.0
 drag-coefficient = 0
-surface-area = 1.6
-lift-coefficient = -4.2
-efficiency = 1
+surface-area = 1.0
+lift-coefficient = -3.2
+efficiency = 0.8
 
 
 # wheels front (position and suspension mount)
@@ -228,17 +230,17 @@ hinge = 1.00 , -0.0, -0.0
 # (for car total mass and inertia) also use engine has mass and position
 #---------------------------
 [ particle-00 ]	# Chassis Front
-mass = 220
-position =  1.1, 1.9, -0.05
+mass = 230
+position =  1.1, 1.7, -0.05
 
 [ particle-01 ]	#	Cooler front
-mass = 220
-position = -1.1, 1.9, -0.05
+mass = 230
+position = -1.1, 1.7, -0.05
 
 [ particle-02 ]	#	Chassis left
 mass = 250
-position =  1.2, -1.9, -0.05
+position =  1.2, -1.7, -0.05
 
 [ particle-03 ]	#	Chassis right
 mass = 250
-position = -1.2, -1.9, -0.05 
+position = -1.2, -1.7, -0.05 
