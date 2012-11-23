@@ -1,9 +1,11 @@
 #ifndef _CARCLUTCH_H
 #define _CARCLUTCH_H
 
-//#include <iostream>
 #include "joeserialize.h"
 #include "macros.h"
+//#include <iostream>
+#include "../ogre/common/Defines.h"
+
 
 template <typename T>
 class CARCLUTCH
@@ -36,11 +38,11 @@ class CARCLUTCH
 		void DebugPrint(std::ostream & out)
 		{
 			out << "---Clutch---" << std::endl;
-			out << "Position: " << clutch_position << std::endl;
-			out << "Locked: " << locked << std::endl;
-			out << "Torque: " << last_torque << std::endl;
-			out << "Engine: " << engine_speed << std::endl;
-			out << "Drive : " << drive_speed << std::endl;
+			out << "Position " << fToStr(clutch_position, 1,3) << std::endl;
+			out << "Locked  " << locked << std::endl;
+			out << "Torque" << fToStr(last_torque, 0,6) << std::endl;
+			out << "Engine" << fToStr(engine_speed, 0,5) << std::endl;
+			out << "Drive " << fToStr(drive_speed, 0,5) << std::endl;
 		}
 
 		void SetSlidingFriction ( const T& value )

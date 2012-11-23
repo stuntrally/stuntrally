@@ -2,6 +2,7 @@
 #define _TIMER_H
 
 #include "configfile.h"
+#include "../ogre/common/Defines.h"
 
 class TIMER
 {
@@ -125,7 +126,7 @@ private:
 			
 			float GetBonusScore() const
 			{
-				return max_speed / 2.0 + max_angle * 40.0 / 3.141593 + thisdriftscore; //including thisdriftscore here is redundant on purpose to give more points to long drifts
+				return max_speed / 2.0 + max_angle * 40.0 / PI_d + thisdriftscore; //including thisdriftscore here is redundant on purpose to give more points to long drifts
 			}
 	};
 

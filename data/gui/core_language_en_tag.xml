@@ -403,6 +403,7 @@
 	<Tag name="CarDebugText">Car debug text </Tag>
 	<Tag name="CarDebugSurfaces">Car tire surfaces</Tag>
 	<Tag name="ProfilerTxt">Profiler times text </Tag>
+	<Tag name="TextColor">Text color</Tag>
 
 	<Tag name="Startup">Startup</Tag>
 	<Tag name="MouseCapture">Capture mouse</Tag>

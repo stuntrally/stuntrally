@@ -3,8 +3,9 @@
 
 #include "joeserialize.h"
 #include "macros.h"
-
 //#include <iostream>
+#include "../ogre/common/Defines.h"
+
 
 template <typename T>
 class CARTRANSMISSION
@@ -32,9 +33,9 @@ class CARTRANSMISSION
 		void DebugPrint(std::ostream & out)
 		{
 			out << "---Transmission---" << std::endl;
-			out << "Gear ratio: " << gear_ratios[gear] << std::endl;
-			out << "Crankshaft RPM: " << crankshaft_rpm << std::endl;
-			out << "Driveshaft RPM: " << driveshaft_rpm << std::endl;
+			out << "Gear ratio " << gear_ratios[gear] << std::endl;
+			out << "CrankRPM " << fToStr(crankshaft_rpm, 0,5) << std::endl;
+			out << "DriveRPM " << fToStr(driveshaft_rpm, 0,5) << std::endl;
 		}
 		
 		int GetGear() const
@@ -105,8 +106,8 @@ class CARTRANSMISSION
 		///get the rotational speed of the clutch given the rotational speed of the driveshaft
 		T CalculateClutchSpeed(T driveshaft_speed)
 		{
-			driveshaft_rpm = driveshaft_speed * 30.0 / 3.141593;
-			crankshaft_rpm = driveshaft_speed * gear_ratios[gear] * 30.0 / 3.141593;
+			driveshaft_rpm = driveshaft_speed * 30.0 / PI_d;
+			crankshaft_rpm = driveshaft_speed * gear_ratios[gear] * 30.0 / PI_d;
 			return driveshaft_speed * gear_ratios[gear];
 		}
 		

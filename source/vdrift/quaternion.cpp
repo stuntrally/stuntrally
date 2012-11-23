@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "quaternion.h"
 #include "unittest.h"
+#include "../ogre/common/Defines.h"
 
 //#include <iostream>
 using std::ostream;
@@ -42,7 +43,7 @@ QT_TEST(quaternion_test)
 	vec[1] = 0;
 	vec[2] = 1;
 	test1.LoadIdentity();
-	test1.Rotate(3.141593*0.5, 0.0, 1.0, 0.0);
+	test1.Rotate(PI_d*0.5, 0.0, 1.0, 0.0);
 	test1.RotateVector(vec);
 	QT_CHECK_CLOSE(vec[0], 1.0, 0.001);
 	QT_CHECK_CLOSE(vec[1], 0.0, 0.001);
@@ -50,13 +51,13 @@ QT_TEST(quaternion_test)
 	//std::cout << vec[0] << "," << vec[1] << "," << vec[2] << std::endl;
 	
 	test2.LoadIdentity();
-	test1.Rotate(3.141593*0.5, 0.0, 0.0, 1.0);
-	QT_CHECK_CLOSE(test1.GetAngleBetween(test2),3.141593*0.5,0.001);
+	test1.Rotate(PI_d*0.5, 0.0, 0.0, 1.0);
+	QT_CHECK_CLOSE(test1.GetAngleBetween(test2),PI_d*0.5,0.001);
 	
 	test1.LoadIdentity();
-	test1.Rotate(3.141593*0.75, 0.0, 1.0, 0.0);
+	test1.Rotate(PI_d*0.75, 0.0, 1.0, 0.0);
 	test2.LoadIdentity();
-	test2.Rotate(3.141593*0.25, 0.0, 1.0, 0.0);
+	test2.Rotate(PI_d*0.25, 0.0, 1.0, 0.0);
 	
 	vec[0] = 0;
 	vec[1] = 0;

@@ -3,8 +3,9 @@
 
 #include "joeserialize.h"
 #include "macros.h"
-
 #include <iostream>
+#include "../ogre/common/Defines.h"
+
 
 template <typename T>
 class CARBRAKE
@@ -35,11 +36,11 @@ class CARBRAKE
 
 		void DebugPrint(std::ostream & out)
 		{
-			out << "---Brake---" << std::endl;
-			out << "Brake    : " << brake_factor << std::endl;
-			out << "Handbrake: " << handbrake_factor << std::endl;
-			out << "Torque: " << lasttorque << std::endl;
-			out << "Locked: " << locked << std::endl;
+			//out << "---Brake---" << std::endl;
+			//out << "Brake    : " << brake_factor << std::endl;
+			//out << "Handbrake: " << handbrake_factor << std::endl;
+			out << "Torque " << fToStr(lasttorque, 0,5) << std::endl;
+			out << "Locked  " << locked << std::endl;
 		}
 		
 		///brake_factor ranges from 0.0 (no brakes applied) to 1.0 (brakes applied)

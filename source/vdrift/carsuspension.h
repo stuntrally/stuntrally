@@ -9,6 +9,8 @@
 #include "joeserialize.h"
 #include "macros.h"
 #include "linearinterp.h"
+#include "../ogre/common/Defines.h"
+
 
 template <typename T>
 class CARSUSPENSION
@@ -44,11 +46,12 @@ public:
 
 	void DebugPrint(std::ostream & out)
 	{
-		out << "---Suspension---" << std::endl;
-		out << "Displacement: " << displacement << std::endl;
-		out << "Velocity: " << velocity << std::endl;
-		out << "Spring factor: " << spring_factors.Interpolate(displacement) << std::endl;
-		out << "Damp factor: " << damper_factors.Interpolate(std::abs(velocity)) << std::endl;
+		//out << "---Suspension---" << std::endl;
+		out << "Disp  " << fToStr(displacement, 2,4) << std::endl;
+		out << "Vel  " << fToStr(velocity, 2,5) << std::endl;
+		//always 1?..
+		//out << "Spring " << fToStr(spring_factors.Interpolate(displacement), 2,4) << std::endl;
+		//out << "Damp   " << fToStr(damper_factors.Interpolate(std::abs(velocity)), 2,4) << std::endl;
 	}
 
 	void SetHinge ( const MATHVECTOR< T, 3 >& value )

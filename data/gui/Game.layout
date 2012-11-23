@@ -2394,12 +2394,12 @@
 						<Property key="Caption" value="#{Startup}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="CheckBox" position="32 62 256 24" name="MouseCapture">
-							<Property key="TextColour" value="0.5 0.6 0.7"/>
+							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Caption" value="#{MouseCapture}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 94 256 24" name="ShowPictures">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<Property key="Caption" value="#{ShowPictures}*"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
@@ -2424,7 +2424,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 276 256 24" name="MultiThread">
-							<Property key="TextColour" value="0.7 0.8 0.9"/>
+							<Property key="TextColour" value="0.7 0.86 1.0"/>
 							<Property key="Caption" value="#{MultiThread}*"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
@@ -2462,37 +2462,44 @@
 							<Property key="TextColour" value="0.7 0.9 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="408 94 256 24" name="CarDbgTxt">
+						<Widget type="Button" skin="CheckBox" position="388 260 256 24" name="CarDbgTxt">
 							<Property key="Caption" value="#{CarDebugText}  shift-F9"/>
 							<Property key="TextColour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="408 124 256 24" name="CarDbgSurf">
+						<Widget type="Button" skin="CheckBox" position="388 96 256 24" name="CarDbgSurf">
 							<Property key="Caption" value="#{CarDebugSurfaces}  ctrl-F9"/>
 							<Property key="TextColour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="388 184 256 24" name="Graphs">
+						<Widget type="Button" skin="CheckBox" position="388 164 256 24" name="Graphs">
 							<Property key="Caption" value="#{Graphs}  F9"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="TextColour" value="0.75 0.88 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="388 216 48 24" name="GraphsTypeVal">
+						<Widget type="TextBox" skin="TextBox" position="392 196 32 24" name="GraphsTypeVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="410 216 260 18" name="GraphsType">
+						<Widget type="Slider" skin="Slider" position="416 196 260 18" name="GraphsType">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="388 256 148 24">
-							<Property key="Caption" value="#{CarDebugText}"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
+						<Widget type="TextBox" skin="TextBox" position="392 292 32 22" name="DbgTxtCntVal">
+							<Property key="TextColour" value="0.6 0.75 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="388 286 48 24" name="DbgTxtClrVal">
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
+						<Widget type="Slider" skin="Slider" position="416 292 260 16" name="DbgTxtCnt">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="410 286 160 18" name="DbgTxtClr">
+						<Widget type="TextBox" skin="TextBox" position="388 332 148 22">
+							<Property key="Caption" value="#{TextColor}"/>
+							<Property key="TextColour" value="0.5 0.7 0.9"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="392 356 32 22" name="DbgTxtClrVal">
+							<Property key="TextColour" value="0.5 0.7 0.9"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="416 356 160 16" name="DbgTxtClr">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 					</Widget>

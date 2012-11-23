@@ -438,6 +438,11 @@ void App::slDbgTxtClr(SL)
 	int v = val +slHalf;  if (bGI)  pSet->car_dbgtxtclr = v;
 	if (valDbgTxtClr)	valDbgTxtClr->setCaption(toStr(v));
 }
+void App::slDbgTxtCnt(SL)
+{
+	int v = val*8 +slHalf;  if (bGI)  pSet->car_dbgtxtcnt = v;
+	if (valDbgTxtCnt)	valDbgTxtCnt->setCaption(toStr(v));
+}
 
 //  Startup
 void App::chkMouseCapture(WP wp){	ChkEv(capture_mouse);	}

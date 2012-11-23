@@ -7,6 +7,7 @@
 #include "mathvector.h"
 #include "optional.h"
 #include "unittest.h"
+#include "../ogre/common/Defines.h"
 
 //#ifndef
 #define M_PI  3.14159265358979323846
@@ -484,7 +485,7 @@ float AI::calcSpeedLimit(AI_Car *c, const BEZIER* patch, const BEZIER * nextpatc
 	if (real > 0)
 		v2 = sqrt(real);
 	
-	//std::cout << v2 << ", " << sqrt(friction * GRAVITY * adjusted_radius) << ", " << GetPatchRadius(*patch) << ", " << acos((-GetPatchDirection(*patch)).Normalize().dot(GetPatchDirection(*patch->GetNextPatch()).Normalize()))*180.0/3.141593 << " --- " << -GetPatchDirection(*patch) << " --- " << GetPatchDirection(*patch->GetNextPatch()) << std::endl;
+	//std::cout << v2 << ", " << sqrt(friction * GRAVITY * adjusted_radius) << ", " << GetPatchRadius(*patch) << ", " << acos((-GetPatchDirection(*patch)).Normalize().dot(GetPatchDirection(*patch->GetNextPatch()).Normalize()))*180.0/PI_d << " --- " << -GetPatchDirection(*patch) << " --- " << GetPatchDirection(*patch->GetNextPatch()) << std::endl;
 	
 	return v2;
 }
@@ -564,7 +565,7 @@ void AI::updateSteer(AI_Car *c, float dt, const std::list <CAR> & othercars)
 	MATHVECTOR <float, 3> car_position = c->car->GetCenterOfMassPosition();
 	MATHVECTOR <float, 3> car_orientation(0,1,0);
 	QUATERNION <float> fixer;
-	fixer.Rotate(-3.141593*0.5, 0, 0, 1);
+	fixer.Rotate(-PI_d*0.5, 0, 0, 1);
 	(c->car->GetOrientation()*fixer).RotateVector(car_orientation);
 
 	MATHVECTOR <float, 3> desire_orientation = next_position - car_position;
@@ -799,7 +800,7 @@ void AI::analyzeOthers(AI_Car *c, float dt, const std::list <CAR> & othercars)
 		otherdir = otherdir.Normalize(); //resize to unit size
 		if (otherdir[0] > 0) //heading in the same direction
 		{
-			float diffangle = (180.0/3.141593)*asin(otherdir[1]); //positive when other car is pointing to our right
+			float diffangle = (180.0/PI_d)*asin(otherdir[1]); //positive when other car is pointing to our right
 			
 			if (diffangle * -sidedist < 0) //heading toward collision
 			{
@@ -833,7 +834,7 @@ float AI::steerAwayFromOthers(AI_Car *c, float dt, const std::list <CAR> & other
 	const float spacingdistance = 3.5; //how far left and right we target for our spacing in meters (center of mass to center of mass)
 	const float horizontal_meters_per_second = 5.0; //how fast we want to steer away in horizontal meters per second
 	const float speed = std::max(1.0f,c->car->GetVelocity().Magnitude());
-	const float authority = std::min(10.0,(180.0/3.141593)*atan(horizontal_meters_per_second/speed)); //steering bias authority limit magnitude in degrees
+	const float authority = std::min(10.0,(180.0/PI_d)*atan(horizontal_meters_per_second/speed)); //steering bias authority limit magnitude in degrees
 	const float gain = 4.0; //amplify steering command by this factor
 	const float mineta = 1.0; //fastest reaction time in seconds
 	const float etaexponent = 1.0;

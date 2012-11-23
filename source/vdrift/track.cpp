@@ -5,29 +5,24 @@
 #include "reseatable_reference.h"
 #include "tracksurface.h"
 #include "objectloader.h"
-
 #include <functional>
-
 #include <algorithm>
+#include "../ogre/common/Defines.h"
 
 #include <list>
 using std::list;
-
 #include <map>
 using std::pair;
-
 #include <string>
 using std::string;
-
 #include <iostream>
 using std::cout;
 using std::endl;
-
 #include <fstream>
 using std::ifstream;
-
 #include <sstream>
 using std::stringstream;
+
 
 TRACK::TRACK(std::ostream & info, std::ostream & error) 
 : info_output(info),
@@ -329,7 +324,7 @@ bool TRACK::LoadParameters(const std::string & trackpath)
 
 		//due to historical reasons the initial orientation places the car faces the wrong way
 		QUATERNION <float> fixer; 
-		fixer.Rotate(3.141593, 0, 0, 1);
+		fixer.Rotate(PI_d, 0, 0, 1);
 		orient = fixer * orient;
 
 		start_positions.push_back(std::pair <MATHVECTOR <float, 3>, QUATERNION <float> >
@@ -475,7 +470,7 @@ void TRACK::Reverse()
 	for (std::vector <std::pair <MATHVECTOR <float, 3>, QUATERNION <float> > >::iterator i = start_positions.begin();
 		i != start_positions.end(); ++i)
 	{
-		i->second.Rotate(3.141593, 0,0,1);
+		i->second.Rotate(PI_d, 0,0,1);
 	}
 
 	//reverse start positions

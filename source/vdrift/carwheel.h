@@ -7,6 +7,8 @@
 #include "matrix3.h"
 #include "joeserialize.h"
 #include "macros.h"
+#include "../ogre/common/Defines.h"
+
 
 template <typename T>
 class CARWHEEL
@@ -19,10 +21,10 @@ public:
 	
 	void DebugPrint(std::ostream & out)
 	{
-		out << "---Wheel---" << std::endl;
-		out << "Wheel speed: " << GetRPM() << std::endl;
-		out << "Steer angle: " << steer_angle << std::endl;
-		out << "Camber angle: " << camber_deg << std::endl;
+		//out << "---Wheel---" << std::endl;
+		//out << "Speed: " << fToStr(GetRPM(), 1,4) << std::endl;
+		out << "Steer  " << fToStr(steer_angle, 1,5) << std::endl;
+		out << "Camber " << fToStr(camber_deg, 1,5)  << std::endl;
 	}
 
 	void SetExtendedPosition ( const MATHVECTOR< T, 3 >& value )
@@ -32,7 +34,7 @@ public:
 	
 	T GetRPM() const
 	{
-		return rotation.GetAngularVelocity()[0] * 30.0 / 3.141593;
+		return rotation.GetAngularVelocity()[0] * 30.0 / PI_d;
 	}
 	
 	//used for telemetry only

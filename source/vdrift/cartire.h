@@ -1,21 +1,20 @@
 #ifndef _CARTIRE_H
 #define _CARTIRE_H
 
-#include "joeserialize.h"
-#include "macros.h"
-
 #include <map>
 #include <iostream>
 #include <vector>
 #include <cmath>
+
+#include "joeserialize.h"
+#include "macros.h"
+#include "../ogre/common/Defines.h"
 
 
 #ifdef _WIN32
 bool isnan(float number);
 bool isnan(double number);
 #endif
-
-//#include "../ogre/common/Defines.h"
 
 
 template <typename T>  // loaded from .tire file
@@ -90,9 +89,10 @@ public:
 
 	void DebugPrint(std::ostream & out)
 	{
-		out << "---Tire---" << std::endl;
-		out << "Slide ratio: " << slide << std::endl;
-		out << "Slip angle: " << slip << std::endl;
+		//out << "Slide|ratio:" << fToStr(slide, 2,5) << std::endl;
+		//out << "Slip-angle:" << fToStr(slip, 2,6) << std::endl;
+		out << "Slide|  " << fToStr(slide, 2,5) << std::endl;
+		out << "SlipA- " << fToStr(slip, 2,6) << std::endl;
 	}
 
 	void LookupSigmaHatAlphaHat(T normalforce, T & sh, T & ah) const
@@ -233,7 +233,7 @@ public:
 
 		tan_alpha = hub_velocity[1] / denom;
 
-		alpha = - ( atan2 ( hub_velocity[1],denom ) ) * 180.0/3.141593;
+		alpha = - ( atan2 ( hub_velocity[1],denom ) ) * 180.0/PI_d;
 
 		/*crash dyn obj--*/
 		if (isnan(alpha) || isnan(1.f/sigma_hat))
@@ -243,7 +243,7 @@ public:
 		
 		assert(!isnan(alpha));
 
-		T gamma = ( current_camber ) * 180.0/3.141593;
+		T gamma = ( current_camber ) * 180.0/PI_d;
 
 		//beckman method for pre-combining longitudinal and lateral forces
 		T s = sigma / sigma_hat;
@@ -404,7 +404,7 @@ public:
 	{
 		const std::vector <T>& a = params->lateral;
 		T Fz = load * 0.001;
-		T gamma = ( current_camber ) * 180.0/3.141593;
+		T gamma = ( current_camber ) * 180.0/PI_d;
 
 		T D = ( a[1]*Fz+a[2] ) *Fz;
 		T Sv = ( ( a[11]*Fz+a[12] ) *gamma + a[13] ) *Fz+a[14];
@@ -416,7 +416,7 @@ public:
 	{
 		const std::vector <T>& c = params->aligning;
 		T Fz = load * 0.001;
-		T gamma = ( current_camber ) * 180.0/3.141593;
+		T gamma = ( current_camber ) * 180.0/PI_d;
 
 		T D = ( c[1]*Fz+c[2] ) *Fz;
 		T Sv = ( c[14]*Fz*Fz+c[15]*Fz ) *gamma+c[16]*Fz + c[17];

@@ -152,100 +152,109 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 {
 	using namespace std;
 	out.precision(2);  out.width(6);  out << fixed;
+	int cnt = pSet->car_dbgtxtcnt;
+
 	if (p1)
 	{
-	#if 0  //  bullet hit data-
-		out << "hit S : " << fSndForce << endl;
-		out << "hit P : " << fParIntens << endl;
-		//out << "hit t : " << fHitTime << endl;
-		out << "bHitS : " << (bHitSnd?1:0) << " id "<< sndHitN << endl;
-		out << "N Vel : " << fNormVel << endl;
-		out << "v Vel : " << GetSpeed() << endl;
-	#endif
+		#if 0  //  bullet hit data-
+			out << "hit S : " << fSndForce << endl;
+			out << "hit P : " << fParIntens << endl;
+			//out << "hit t : " << fHitTime << endl;
+			out << "bHitS : " << (bHitSnd?1:0) << " id "<< sndHitN << endl;
+			out << "N Vel : " << fNormVel << endl;
+			out << "v Vel : " << GetSpeed() << endl;
+		#endif
 
-	#if 1	// body
-		//out << "---Body---" << endl;  // L| front+back-  W_ left-right+  H/ up+down-
-		out << "com: W right+ " << -center_of_mass[1] << " L front+ " << center_of_mass[0] << " H up+ " << center_of_mass[2] << endl;
-		out.precision(0);
-		out << "mass: " << body.GetMass() << endl;
-		MATRIX3 <T> inertia = body.GetInertiaConst();
-		out << "inertia: roll " << inertia[0] << " pitch " << inertia[4] << " yaw " << inertia[8] << endl;
-		//out << "inertia: " << inertia[0] << " " << inertia[4] << " " << inertia[8] << " < " << inertia[1] << " " << inertia[2] << " " << inertia[3] << " " << inertia[5] << " " << inertia[6] << " " << inertia[7] << endl;
-		//out << "pos: " << chassisPosition << endl;
-		//out << "sumWhTest: " << sumWhTest << endl;
-		out.precision(2);
-		//MATHVECTOR <T, 3> up(0,0,1);  Orientation().RotateVector(up);
-		//out << "up: " << up << endl;
-		out << endl;		
-	#endif
-
-	#if 1	// fluids
-		out << "in fluids: " << inFluids.size() <<
-				" wh: " << inFluidsWh[0].size() << inFluidsWh[1].size() << inFluidsWh[2].size() << inFluidsWh[3].size() << endl;
-		out << "wh fl H: " << whH[0] << " " << whH[1] << " " << whH[2] << " " << whH[3] << " " << endl;
-		out << endl;
-	#endif
-
-	#if 0
-		engine.DebugPrint(out);  out << endl;
-		//fuel_tank.DebugPrint(out);  out << endl;  //mass 8- for 3S,ES,FM
-		clutch.DebugPrint(out);  out << endl;
-		transmission.DebugPrint(out);	out << endl;
-	#endif
-
-	#if 0
-		if ( drive == RWD )  {
-			out << "(rear)" << endl;		rear_differential.DebugPrint(out);	}
-		else if ( drive == FWD )  {
-			out << "(front)" << endl;		front_differential.DebugPrint(out);	}
-		else if ( drive == AWD )  {
-			out << "(center)" << endl;		center_differential.DebugPrint(out);
-			out << "(front)" << endl;		front_differential.DebugPrint(out);
-			out << "(rear)" << endl;		rear_differential.DebugPrint(out);	}
-		out << endl;
-	#endif
-	}
-
-	#if 0
-	if (p2)
-	{
-		out << "(front left)" << endl;		suspension[FRONT_LEFT].DebugPrint(out);	out << endl;
-		out << "(front right)" << endl;		suspension[FRONT_RIGHT].DebugPrint(out);out << endl;
-		out << "(rear left)" << endl;		suspension[REAR_LEFT].DebugPrint(out);	out << endl;
-		out << "(rear right)" << endl;		suspension[REAR_RIGHT].DebugPrint(out);	out << endl;
-
-		out << "(front left)" << endl;		brake[FRONT_LEFT].DebugPrint(out);	out << endl;
-		out << "(front right)" << endl;		brake[FRONT_RIGHT].DebugPrint(out);	out << endl;
-		out << "(rear left)" << endl;		brake[REAR_LEFT].DebugPrint(out);	out << endl;
-		out << "(rear right)" << endl;		brake[REAR_RIGHT].DebugPrint(out);
-	}
-	#endif
-
-	#if 0
-	if (p3)
-	{
-		out << endl;
-		out << "(front left)" << endl;		wheel[FRONT_LEFT].DebugPrint(out);	out << endl;
-		out << "(front right)" << endl;		wheel[FRONT_RIGHT].DebugPrint(out);	out << endl;
-		out << "(rear left)" << endl;		wheel[REAR_LEFT].DebugPrint(out);	out << endl;
-		out << "(rear right)" << endl;		wheel[REAR_RIGHT].DebugPrint(out);	out << endl;
-
-		out << "(front left)" << endl;		tire[FRONT_LEFT].DebugPrint(out);	out << endl;
-		out << "(front right)" << endl;		tire[FRONT_RIGHT].DebugPrint(out);	out << endl;
-		out << "(rear left)" << endl;		tire[REAR_LEFT].DebugPrint(out);	out << endl;
-		out << "(rear right)" << endl;		tire[REAR_RIGHT].DebugPrint(out);
-	}
-	#endif
-
-	#if 1
-	if (p4)
-	{
-		for (vector <CARAERO<T> >::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
+		//  body
 		{
-			i->DebugPrint(out);	out << endl;
+			//out << "---Body---" << endl;  // L| front+back-  W_ left-right+  H/ up+down-
+			out << "com: W right+ " << -center_of_mass[1] << " L front+ " << center_of_mass[0] << " H up+ " << center_of_mass[2] << endl;
+			out.precision(0);
+			out << "mass: " << body.GetMass() << endl;
+			MATRIX3 <T> inertia = body.GetInertiaConst();
+			out << "inertia: roll " << inertia[0] << " pitch " << inertia[4] << " yaw " << inertia[8] << endl;
+			//out << "inertia: " << inertia[0] << " " << inertia[4] << " " << inertia[8] << " < " << inertia[1] << " " << inertia[2] << " " << inertia[3] << " " << inertia[5] << " " << inertia[6] << " " << inertia[7] << endl;
+			//out << "pos: " << chassisPosition << endl;
+			//out << "sumWhTest: " << sumWhTest << endl;
+			out.precision(2);
+			//MATHVECTOR <T, 3> up(0,0,1);  Orientation().RotateVector(up);
+			//out << "up: " << up << endl;
+			out << endl;
+		}
+
+		//  fluids
+		if (cnt > 2)
+		{	out << "in fluids: " << inFluids.size() <<
+					" wh: " << inFluidsWh[0].size() << inFluidsWh[1].size() << inFluidsWh[2].size() << inFluidsWh[3].size() << endl;
+			out << "wh fl H: " << fToStr(whH[0],1,3) << " " << fToStr(whH[1],1,3) << " " << fToStr(whH[2],1,3) << " " << fToStr(whH[3],1,3) << " \n\n";
+		}
+
+		if (cnt > 3)
+		{
+			engine.DebugPrint(out);  out << endl;
+			//fuel_tank.DebugPrint(out);  out << endl;  //mass 8- for 3S,ES,FM
+			clutch.DebugPrint(out);  out << endl;
+			transmission.DebugPrint(out);	out << endl;
+		}
+
+		if (cnt > 4)
+		{
+			out << "---Differential---\n";
+			if (drive == RWD)  {
+				out << " rear\n";		rear_differential.DebugPrint(out);	}
+			else if (drive == FWD)  {
+				out << " front\n";		front_differential.DebugPrint(out);	}
+			else if (drive == AWD)  {
+				out << " center\n";		center_differential.DebugPrint(out);
+				out << " front\n";		front_differential.DebugPrint(out);
+				out << " rear\n";		rear_differential.DebugPrint(out);	}
+			out << endl;
 		}
 	}
-	#endif
+
+	if (p2)
+	{
+		out << "\n\n\n\n";
+		if (cnt > 5)
+		{
+			out << "---Brake---\n";
+			out << " FL [^" << endl;		brake[FRONT_LEFT].DebugPrint(out);
+			out << " FR ^]" << endl;		brake[FRONT_RIGHT].DebugPrint(out);
+			out << " RL [_" << endl;		brake[REAR_LEFT].DebugPrint(out);
+			out << " RR _]" << endl;		brake[REAR_RIGHT].DebugPrint(out);
+		}
+		if (cnt > 7)
+		{
+			out << "\n---Suspension---\n";
+			out << " FL [^" << endl;		suspension[FRONT_LEFT].DebugPrint(out);
+			out << " FR ^]" << endl;		suspension[FRONT_RIGHT].DebugPrint(out);
+			out << " RL [_" << endl;		suspension[REAR_LEFT].DebugPrint(out);
+			out << " RR _]" << endl;		suspension[REAR_RIGHT].DebugPrint(out);
+		}
+	}
+
+	if (p3)
+		if (cnt > 6)
+		{
+			out << "---Wheel---\n";
+			out << " FL [^" << endl;		wheel[FRONT_LEFT].DebugPrint(out);
+			out << " FR ^]" << endl;		wheel[FRONT_RIGHT].DebugPrint(out);
+			out << " RL [_" << endl;		wheel[REAR_LEFT].DebugPrint(out);
+			out << " RR _]" << endl;		wheel[REAR_RIGHT].DebugPrint(out);
+			out << "\n---Tire---\n";
+			out << " FL [^" << endl;		tire[FRONT_LEFT].DebugPrint(out);
+			out << " FR ^]" << endl;		tire[FRONT_RIGHT].DebugPrint(out);
+			out << " RL [_" << endl;		tire[REAR_LEFT].DebugPrint(out);
+			out << " RR _]" << endl;		tire[REAR_RIGHT].DebugPrint(out);
+		}
+
+	if (p4)
+		if (cnt > 1)
+		{
+			out << "---Aerodynamic---\n";
+			for (vector <CARAERO<T> >::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
+				i->DebugPrint(out);
+		}
 }
 ///..........................................................................................................
 

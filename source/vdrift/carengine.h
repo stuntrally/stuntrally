@@ -12,6 +12,8 @@
 #include "mathvector.h"
 #include "joeserialize.h"
 #include "macros.h"
+#include "../ogre/common/Defines.h"
+
 
 template <typename T>
 class CARENGINE
@@ -57,11 +59,9 @@ class CARENGINE
 		
 		T GetFrictionTorque(T cur_angvel, T friction_factor, T throttle_position)
 		{
-			T velsign = 1.0;
-			if (cur_angvel < 0)
-				velsign = -1.0;
+			T velsign = cur_angvel < 0 ? -1.0 : 1.0;
 			T A = 0;
-			T B = -1300*friction;
+			T B = -230*friction;  //par..
 			T C = 0;
 			return (A + cur_angvel * B + -velsign * C * cur_angvel * cur_angvel) *
 					(1.0 - friction_factor*throttle_position);
@@ -72,11 +72,11 @@ class CARENGINE
 			start_rpm(1000), stall_rpm(350), fuel_consumption(1e-9), friction(0.000328),
 			throttle_position(0.0), clutch_torque(0.0), out_of_gas(false),
 			rev_limit_exceeded(false), friction_torque(0), combustion_torque(0), stalled(false)
-				    {
-					    MATRIX3 <T> inertia;
-					    inertia.Scale(0.25);
-					    crankshaft.SetInertia(inertia);
-				    }
+	    {
+		    MATRIX3 <T> inertia;
+		    inertia.Scale(0.25);
+		    crankshaft.SetInertia(inertia);
+	    }
 
 		void SetInertia ( const T& value )
 		{
@@ -160,7 +160,7 @@ class CARENGINE
 		
 		const T GetRPM() const
 		{
-			return crankshaft.GetAngularVelocity()[0] * 30.0 / 3.141593;
+			return crankshaft.GetAngularVelocity()[0] * 30.0 / PI_d;
 		}
 		
 		///set the throttle position where 0.0 is no throttle and 1.0 is full throttle
@@ -184,7 +184,7 @@ class CARENGINE
 		void StartEngine()
 		{
 			MATHVECTOR <T, 3> v;
-			v[0] = start_rpm * 3.141593 / 30.0;
+			v[0] = start_rpm * PI_d / 30.0;
 			crankshaft.SetAngularVelocity(v);
 		}
 		
@@ -209,14 +209,14 @@ class CARENGINE
 		void DebugPrint(std::ostream & out)
 		{
 			out << "---Engine---" << std::endl;
-			out << "Throttle: " << throttle_position << std::endl;
-			out << "Combustion: " << combustion_torque << std::endl;
-			out << "Clutch  : " << -clutch_torque << std::endl;
-			out << "Friction: " << friction_torque << std::endl;
-			out << "Total   : " << GetTorque() << std::endl;
-			out << "RPM: " << GetRPM() << std::endl;
-			out << "Exceeded: " << rev_limit_exceeded << std::endl;
-			out << "Running: " << !stalled << std::endl;
+			//out << "Throttle " << fToStr(throttle_position, 0,1) << std::endl;
+			out << "Cmbst " << fToStr(combustion_torque, 0,5) << std::endl;
+			//out << "Clutch  " << fToStr(-clutch_torque, 0,5) << std::endl;
+			out << "Frict " << fToStr(friction_torque, 0,5) << std::endl;
+			out << "Total " << fToStr(GetTorque(), 0,5) << std::endl;
+			out << "RPM   " << fToStr(GetRPM(), 0,4) << std::endl;
+			//out << "Exceeded: " << rev_limit_exceeded << std::endl;
+			//out << "Running: " << !stalled << std::endl;
 		}
 		
 		///return the sum of all torques acting on the engine (except clutch forces)
@@ -318,7 +318,7 @@ class CARENGINE
 			//calculate idle throttle position
 			for (idle = 0; idle < 1.0; idle += 0.01)
 			{
-				if (GetTorqueCurve(idle, start_rpm) > -GetFrictionTorque(start_rpm*3.141593/30.0, 1.0, idle))
+				if (GetTorqueCurve(idle, start_rpm) > -GetFrictionTorque(start_rpm*PI_d/30.0, 1.0, idle))
 				{
 					//std::cout << "Found idle throttle: " << idle << ", " << GetTorqueCurve(idle, start_rpm) << ", " << friction_torque << std::endl;
 					break;

@@ -3,8 +3,9 @@
 
 #include "joeserialize.h"
 #include "macros.h"
-
 //#include <iostream>
+#include "../ogre/common/Defines.h"
+
 
 ///a differential that supports speed-sensitive limited slip functionality.  epicyclic (torque splitting) operation is also provided.
 template <typename T>
@@ -36,11 +37,11 @@ class CARDIFFERENTIAL
 
 		void DebugPrint(std::ostream & out)
 		{
-			out << "---Differential---" << std::endl;
-			out << "1 RPM: " << side1_speed * 30.0 / 3.141593 << std::endl;
-			out << "2 RPM: " << side2_speed * 30.0 / 3.141593 << std::endl;
-			out << "1 Torque: " << side1_torque << std::endl;
-			out << "2 Torque: " << side2_torque << std::endl;
+			//out << "---Differential---" << std::endl;
+			out << "1 RPM" << fToStr(side1_speed * 30.0 / PI_d, 0,5) << std::endl;
+			out << "2 RPM" << fToStr(side2_speed * 30.0 / PI_d, 0,5) << std::endl;
+			out << "1 Trq" << fToStr(side1_torque, 0,6) << std::endl;
+			out << "2 Trq" << fToStr(side2_torque, 0,6) << std::endl;
 		}
 
 		void SetFinalDrive ( const T& value )

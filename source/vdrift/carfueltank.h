@@ -1,11 +1,12 @@
 #ifndef _CARFUELTANK_H
 #define _CARFUELTANK_H
 
-//#include <iostream>
-
 #include "mathvector.h"
 #include "joeserialize.h"
 #include "macros.h"
+//#include <iostream>
+#include "../ogre/common/Defines.h"
+
 
 template <typename T>
 class CARFUELTANK
@@ -35,9 +36,9 @@ class CARFUELTANK
 		void DebugPrint(std::ostream & out)
 		{
 			out << "---Fuel Tank---" << std::endl;
-			out << "Current volume: " << volume << std::endl;
-			out << "Capacity: " << capacity << std::endl;
-			out << "Mass: " << mass << std::endl;
+			out << "Cur vol " << volume << std::endl;
+			out << "Capacity " << capacity << std::endl;
+			out << "Mass " << mass << std::endl;
 		}
 
 	void SetCapacity ( const T& value )

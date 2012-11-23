@@ -43,7 +43,7 @@ QUATERNION <T> CARDYNAMICS::GetWheelOrientation(WHEEL_POSITION wp) const
 	QUATERNION <T> siderot;
 	if(wp == FRONT_RIGHT || wp == REAR_RIGHT)
 	{
-		siderot.Rotate(3.141593, 0, 0, 1);
+		siderot.Rotate(PI_d, 0, 0, 1);
 	}
 	return chassisRotation * GetWheelSteeringAndSuspensionOrientation(wp) * wheel[wp].GetOrientation() * siderot;
 }
@@ -255,7 +255,7 @@ void CARDYNAMICS::SetSteering ( const T value )
 	T steerangle = value * maxangle; //steering angle in degrees
 
 	//ackermann stuff
-	T alpha = std::abs ( steerangle * 3.141593/180.0 ); //outside wheel steering angle in radians
+	T alpha = std::abs ( steerangle * PI_d/180.0 ); //outside wheel steering angle in radians
 	T B = wheel[FRONT_LEFT].GetExtendedPosition() [1]
 		- wheel[FRONT_RIGHT].GetExtendedPosition() [1]; //distance between front wheels
 	T L = wheel[FRONT_LEFT].GetExtendedPosition() [0]
@@ -276,8 +276,8 @@ void CARDYNAMICS::SetSteering ( const T value )
 		left_wheel_angle = -beta;
 	}
 
-	left_wheel_angle *= 180.0/3.141593;
-	right_wheel_angle *= 180.0/3.141593;
+	left_wheel_angle *= 180.0/PI_d;
+	right_wheel_angle *= 180.0/PI_d;
 
 	wheel[FRONT_LEFT].SetSteerAngle ( left_wheel_angle );
 	wheel[FRONT_RIGHT].SetSteerAngle ( right_wheel_angle );
@@ -413,16 +413,16 @@ MATHVECTOR <T, 3> CARDYNAMICS::GetLocalWheelPosition(WHEEL_POSITION wp, T displa
 QUATERNION <T> CARDYNAMICS::GetWheelSteeringAndSuspensionOrientation ( WHEEL_POSITION wp ) const
 {
 	QUATERNION <T> steer;
-	steer.Rotate ( -wheel[wp].GetSteerAngle() * 3.141593/180.0, 0, 0, 1 );
+	steer.Rotate ( -wheel[wp].GetSteerAngle() * PI_d/180.0, 0, 0, 1 );
 
 	QUATERNION <T> camber;
-	T camber_rotation = -suspension[wp].GetCamber() * 3.141593/180.0;
+	T camber_rotation = -suspension[wp].GetCamber() * PI_d/180.0;
 	if ( wp == 1 || wp == 3 )
 		camber_rotation = -camber_rotation;
 	camber.Rotate ( camber_rotation, 1, 0, 0 );
 
 	QUATERNION <T> toe;
-	T toe_rotation = suspension[wp].GetToe() * 3.141593/180.0;
+	T toe_rotation = suspension[wp].GetToe() * PI_d/180.0;
 	if ( wp == 0 || wp == 2 )
 		toe_rotation = -toe_rotation;
 	toe.Rotate ( toe_rotation, 0, 0, 1 );
@@ -524,7 +524,7 @@ MATHVECTOR <T, 3> CARDYNAMICS::UpdateSuspension ( int i , T dt )
 	const TRACKSURFACE & surface = wheel_contact[i].GetSurface();
 	T phase = 0;
 	if (surface.bumpWaveLength > 0.0001)
-		phase = 2 * 3.141593 * ( posx+posz ) / surface.bumpWaveLength;
+		phase = 2 * PI_d * ( posx+posz ) / surface.bumpWaveLength;
 	T shift = 2.0 * sin ( phase*1.414214 );
 	T amplitude = 0.25 * surface.bumpAmplitude;
 	T bumpoffset = amplitude * ( sin ( phase + shift ) + sin ( 1.414214*phase ) - 2.0 );
@@ -579,7 +579,7 @@ MATHVECTOR <T, 3> CARDYNAMICS::ApplyTireForce(int i, const T normal_force, const
 	wheel_space.RotateVector(wheel_axis); // wheel axis in world space (wheel plane normal)
 	T camber_sin = wheel_axis.dot(surface_normal);
 	T camber_rad = asin(camber_sin);
-	wheel.SetCamberDeg(camber_rad * 180.0/3.141593);
+	wheel.SetCamberDeg(camber_rad * 180.0/PI_d);
 
 	// tire space(SAE Tire Coordinate System)
 	// surface normal is z-axis
@@ -909,7 +909,7 @@ T CARDYNAMICS::CalculateDriveshaftRPM() const
 		driveshaft_speed = center_differential.GetDriveshaftSpeed ( front_speed, rear_speed );
 	}
 
-	return transmission.GetClutchSpeed ( driveshaft_speed ) * 30.0 / 3.141593;
+	return transmission.GetClutchSpeed ( driveshaft_speed ) * 30.0 / PI_d;
 }
 
 bool CARDYNAMICS::WheelDriven(int i) const

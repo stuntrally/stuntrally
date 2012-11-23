@@ -1,11 +1,11 @@
 #ifndef _CARAERO_H
 #define _CARAERO_H
 
-////#include <iostream>
-
 #include "mathvector.h"
 #include "joeserialize.h"
 #include "macros.h"
+#include "../ogre/common/Defines.h"
+
 
 template <typename T>
 class CARAERO
@@ -36,9 +36,9 @@ class CARAERO
 
 		void DebugPrint(std::ostream & out)
 		{
-			out << "---Aerodynamic---" << std::endl;
-			out << "Drag: " << drag_vector << std::endl;
-			out << "Lift: " << lift_vector << std::endl;
+			out << "---" << std::endl;
+			out << "Drag " << fToStr(drag_vector[0], 0,4) <<" "<< fToStr(drag_vector[1], 0,4) <<" "<< fToStr(drag_vector[2], 0,5) << std::endl;
+			out << "Lift " << fToStr(lift_vector[0], 0,4) <<" "<< fToStr(lift_vector[1], 0,4) <<" "<< fToStr(lift_vector[2], 0,5) << std::endl;
 		}
 		
 		void Set(const MATHVECTOR <T, 3> & newpos, T new_drag_frontal_area, T new_drag_coefficient, T new_lift_surface_area,

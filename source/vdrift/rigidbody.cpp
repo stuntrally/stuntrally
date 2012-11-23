@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "rigidbody.h"
 #include "unittest.h"
+#include "../ogre/common/Defines.h"
 
 //#include <iostream>
 using std::cout;
@@ -13,7 +14,7 @@ QT_TEST(rigidbody_test)
 	QUATERNION <float> quat;
 	initpos.Set(0,0,10);
 	body.SetPosition(initpos);
-	quat.Rotate(-3.141593*0.5, 1, 0, 0);
+	quat.Rotate(-PI_d*0.5, 1, 0, 0);
 	body.SetOrientation(quat);
 
 	MATHVECTOR <float, 3> localcoords;
