@@ -2483,6 +2483,18 @@
 						<Widget type="Slider" skin="Slider" position="410 216 260 18" name="GraphsType">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="388 256 148 24">
+							<Property key="Caption" value="#{CarDebugText}"/>
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="388 286 48 24" name="DbgTxtClrVal">
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="410 286 160 18" name="DbgTxtClr">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
 					</Widget>
 				</Widget>
 			</Widget>

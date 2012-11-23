@@ -141,12 +141,12 @@ protected:
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr,
 		Ogre::Real size, bool dyn = false, bool clr = false);
 
-	Ogre::OverlayElement *hudCountdown,*hudNetMsg, *ovL[5],*ovR[5],*ovS[5],*ovU[5],*ovX[5],
+	Ogre::OverlayElement *hudCountdown,*hudNetMsg, *ovL[5],*ovR[5],*ovS[5], *ovU[5],*ovX[5],
 		*hudAbs,*hudTcs, *hudWarnChk,*hudWonPlace, *hudOpp[5][3],*hudOppB;
 	Ogre::Overlay *ovCountdown,*ovNetMsg, *ovCam, *ovWarnWin, *ovOpp, *ovAbsTcs, *ovCarDbg,*ovCarDbgTxt,*ovCarDbgExt;
 
 	Ogre::String GetTimeString(float time) const;
-	void CreateHUD(bool destroy), ShowHUD(bool hideAll=false), UpdMiniTer();
+	void CreateHUD(bool destroy), ShowHUD(bool hideAll=false), UpdMiniTer(), UpdDbgTxtClr();
 	Ogre::Vector3 projectPoint(const Ogre::Camera* cam, const Ogre::Vector3& pos);  // 2d xy, z - out info
 	MyGUI::TextBox* CreateNickText(int carId, Ogre::String text);
 
@@ -340,7 +340,7 @@ protected:
 	SLV(Particles);  SLV(Trails);
 	SLV(ReflSkip);  SLV(ReflSize);  SLV(ReflFaces);  SLV(ReflDist);  SLV(ReflMode); // refl
 	SLV(SizeGaug);  SLV(TypeGaug);  SLV(SizeMinimap);  SLV(SizeArrow);  SLV(ZoomMinimap);
-	SLV(CountdownTime);  SLV(GraphsType);  MyGUI::Slider* slGraphT; // view
+	SLV(CountdownTime);  SLV(DbgTxtClr);  SLV(GraphsType);  MyGUI::Slider* slGraphT; // view
 	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolSusp);  SLV(VolEnv);  // sounds
 	SLV(VolFlSplash);  SLV(VolFlCont);  SLV(VolCarCrash);  SLV(VolCarScrap);
 	

@@ -30,7 +30,7 @@ public:
 		car_dbgbars, car_dbgtxt, car_dbgsurf, ogre_dialog, show_graphs;
 	float size_gauges, size_minimap, size_arrow, zoom_minimap;
 	int tracks_view, tracks_sort;  bool tracks_sortup;
-	int gauges_type;  eGraphType graphs_type;
+	int gauges_type;  eGraphType graphs_type;  int car_dbgtxtclr;
 
 	//  graphics
 	int anisotropy, tex_size, ter_mtr;  bool bFog;

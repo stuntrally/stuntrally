@@ -267,7 +267,7 @@ void App::UpdateHUD(int carId, float time)
 	//Commenting this code out for now as it is not needed for pixel motion blur
 	//   Set motion blur intensity for this viewport, depending on car's linear velocity
 	// -----------------------------------------------------------------------------------
-	/*if (pSet->motionblur)
+	/*if (pSet->motionblur)  //TODO: restore old motion blur
 	{
 		// use velocity squared to achieve an exponential motion blur - and its faster too - wow :)
 		float speed = pCar->GetVelocity().MagnitudeSquared();
@@ -385,6 +385,12 @@ void App::UpdateHUD(int carId, float time)
 	//-------------------------------------------------------------------------------------------------------------------
 	///  debug infos
 	//-------------------------------------------------------------------------------------------------------------------
+	
+	static int oldTxtClr = -2;  // clr upd
+	if (oldTxtClr != pSet->car_dbgtxtclr)
+	{	oldTxtClr = pSet->car_dbgtxtclr;
+		UpdDbgTxtClr();
+	}
 
 	//  car debug text  --------
 	static bool oldCarTxt = false;
@@ -392,7 +398,7 @@ void App::UpdateHUD(int carId, float time)
 	{
 		if (pSet->car_dbgtxt)
 		{	std::stringstream s1,s2,s3,s4;
-			pCar->DebugPrint(s1, true, false, false, false);  ovU[0]->setCaption(s1.str());  ovU[0]->setColour(ColourValue::Black);
+			pCar->DebugPrint(s1, true, false, false, false);  ovU[0]->setCaption(s1.str());
 			pCar->DebugPrint(s2, false, true, false, false);  ovU[1]->setCaption(s2.str());
 			pCar->DebugPrint(s3, false, false, true, false);  ovU[2]->setCaption(s3.str());
 			pCar->DebugPrint(s4, false, false, false, true);  ovU[3]->setCaption(s4.str());
@@ -531,11 +537,20 @@ void App::UpdateHUD(int carId, float time)
 
 		//ovCarDbg->show();
 		if (ovX[4])  {  //ovL[4]->setTop(400);
-			ovX[4]->setColour(ColourValue::Black);
 			ovX[4]->setCaption(ss);  }
 	}
 
 	PROFILER.endBlock("g.hud");
+}
+
+void App::UpdDbgTxtClr()
+{
+	ColourValue c = pSet->car_dbgtxtclr ? ColourValue::Black : ColourValue::White;
+	for (int i=0; i<5; ++i)
+	{
+		if (ovU[i])  ovU[i]->setColour(c);
+		if (ovX[i])  ovX[i]->setColour(c);
+	}
 }
 
 

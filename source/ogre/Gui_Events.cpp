@@ -433,6 +433,11 @@ void App::chkGraphs(WP wp){			ChkEv(show_graphs);
 	for (int i=0; i < graphs.size(); ++i)
 		graphs[i]->SetVisible(pSet->show_graphs);
 }
+void App::slDbgTxtClr(SL)
+{
+	int v = val +slHalf;  if (bGI)  pSet->car_dbgtxtclr = v;
+	if (valDbgTxtClr)	valDbgTxtClr->setCaption(toStr(v));
+}
 
 //  Startup
 void App::chkMouseCapture(WP wp){	ChkEv(capture_mouse);	}

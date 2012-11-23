@@ -191,6 +191,7 @@ void App::InitGui()
 	Chk("CarDbgTxt", chkCarDbgTxt, pSet->car_dbgtxt);		chDbgT = bchk;
 	Chk("CarDbgSurf", chkCarDbgSurf, pSet->car_dbgsurf);	chDbgS = bchk;
 	Chk("Graphs", chkGraphs, pSet->show_graphs);		chGraphs = bchk;
+	Slv(DbgTxtClr, pSet->car_dbgtxtclr);
 
 	//  car setup  todo: for each player ..
 	Chk("CarABS",  chkAbs, pSet->abs[0]);  bchAbs = bchk;
