@@ -218,7 +218,7 @@ hinge = -1.1,-0.2,0
 
 
 # used to calculate the weight distribution and balance
-# (for car total mass and inertia) also use engine has mass and position
+# (for car total mass and inertia) also use engine mass and position
 #---------------------------
 [ particle-00 ]
 mass = 25.0

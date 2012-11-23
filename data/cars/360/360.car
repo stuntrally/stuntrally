@@ -163,10 +163,10 @@ frontal-area = 2.03
 drag-coefficient = 0.23
 
 [ wing-front ]
-position = 0, 1.35, 0.1
+position = 0, 1.45, 0.2
 frontal-area = 0.0
 drag-coefficient = 0
-surface-area = 1.1
+surface-area = 0.8
 lift-coefficient = -3.6
 efficiency = 0.8
 
@@ -174,8 +174,8 @@ efficiency = 0.8
 position = 0, -1.40, 0.2
 frontal-area = 0.0
 drag-coefficient = 0
-surface-area = 1.0
-lift-coefficient = -3.2
+surface-area = 0.8
+lift-coefficient = -4.7
 efficiency = 0.8
 
 
@@ -227,7 +227,7 @@ hinge = 1.00 , -0.0, -0.0
 
 
 # used to calculate the weight distribution and balance
-# (for car total mass and inertia) also use engine has mass and position
+# (for car total mass and inertia) also use engine mass and position
 #---------------------------
 [ particle-00 ]	# Chassis Front
 mass = 230

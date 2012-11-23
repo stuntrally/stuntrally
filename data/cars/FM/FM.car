@@ -39,7 +39,7 @@ start-offsetY = 0.6
 #---------------------------
 [ engine ]
 position = 0.0, 0.9, 0.4
-mass = 70.0
+mass = 180.0
 peak-engine-rpm = 6500
 rpm-limit = 7000.0
 inertia = 0.25
@@ -161,15 +161,15 @@ frontal-area = 2.0
 drag-coefficient = 0.25
 
 [ wing-front ]
-position = 0, 2.34, -0.6
+position = 0, 1.34, 0.4
 frontal-area = 0.2
 drag-coefficient = 0
-surface-area = 0.55
+surface-area = 0.5
 lift-coefficient = -4.0
 efficiency = 0.95
 
 [ wing-rear ]
-position = 0, -2.14, 0.37
+position = 0, -1.14, 0.3
 frontal-area = 0.2
 drag-coefficient = 0
 surface-area = 0.5
@@ -224,20 +224,20 @@ hinge = 0.25, -1.94, 0.0
 
 
 # used to calculate the weight distribution and balance
-# (for car total mass and inertia) also use engine has mass and position
+# (for car total mass and inertia) also use engine mass and position
 #---------------------------
 [ particle-00 ]  # rear
 mass = 230
-position =  1.0, -1.7, 0.06
+position =  1.04, -1.7, 0.06
 
 [ particle-01 ]
 mass = 230
-position = -1.0, -1.7, 0.06
+position = -1.04, -1.7, 0.06
 
 [ particle-02 ]  # front
 mass = 230
-position =  1.0,  1.7, 0.06
+position =  1.06,  1.7, 0.06
 
 [ particle-03 ]
 mass = 230
-position = -1.0,  1.7, 0.06
+position = -1.06,  1.7, 0.06
