@@ -334,7 +334,7 @@ float CAR::GetTireSquealAmount(WHEEL_POSITION i, float* slide, float* s1, float*
 	QUATERNION <float> wheelspace;
 	wheelspace = dynamics.GetUprightOrientation(WHEEL_POSITION(i));
 	(-wheelspace).RotateVector(groundvel);
-	float wheelspeed = dynamics.GetWheel(WHEEL_POSITION(i)).GetAngularVelocity()*dynamics.GetTire(WHEEL_POSITION(i)).GetRadius();
+	float wheelspeed = dynamics.GetWheel(WHEEL_POSITION(i)).GetAngularVelocity()*dynamics.GetWheel(WHEEL_POSITION(i)).GetRadius();
 	groundvel[0] -= wheelspeed;
 	groundvel[1] *= 2.0;
 	groundvel[2] = 0;

@@ -455,14 +455,14 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			tire[leftside].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
 			tire[rightside].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
 
-			float tread;
+			//float tread;
 			float radius;
 			if (!c.GetParam("tire-"+posstr+".radius", radius, error_output)) return false;
-			tire[leftside].SetRadius(radius);
-			tire[rightside].SetRadius(radius);
-			if (!c.GetParam("tire-"+posstr+".tread", tread, error_output)) return false;
-			tire[leftside].SetTread(tread);
-			tire[rightside].SetTread(tread);
+			wheel[leftside].SetRadius(radius);
+			wheel[rightside].SetRadius(radius);
+			//if (!c.GetParam("tire-"+posstr+".tread", tread, error_output)) return false;
+			//tire[leftside].SetTread(tread);
+			//tire[rightside].SetTread(tread);
 		}
 
 		
@@ -731,7 +731,7 @@ void CARDYNAMICS::Init(
 		for (int w=0; w < 4; ++w)
 		{
 			WHEEL_POSITION wp = WHEEL_POSITION(w);
-			T whR = GetTire(wp).GetRadius() * 1.2;  //bigger
+			T whR = GetWheel(wp).GetRadius() * 1.2;  //bigger par..
 			MATHVECTOR <float, 3> wheelpos = GetWheelPosition(wp, 0);
 			wheelpos[0] += coll_Lofs;
 			//wheelpos[2] += whR;

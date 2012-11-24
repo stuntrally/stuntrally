@@ -319,7 +319,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		{	ii = -60;  //todo: double buffer for data, static graphs..
 
 			const T fin = dynamics.center_differential.GetFinalDrive();
-			const T r = 1.0 / (2 * PI_d * dynamics.tire[0].GetRadius());
+			const T r = 1.0 / (2 * PI_d * dynamics.wheel[0].GetRadius());
 
 			String ss="  gears\n";
 			for (int i=0; i < 6; ++i)

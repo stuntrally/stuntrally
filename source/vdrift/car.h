@@ -60,7 +60,7 @@ public:
 
 	float GetTireRadius(const WHEEL_POSITION wpos) const
 	{
-		return dynamics.GetTire(wpos).GetRadius();
+		return dynamics.GetWheel(wpos).GetRadius();
 	}
 
 	COLLISION_CONTACT & GetWheelContact(WHEEL_POSITION wheel_index)

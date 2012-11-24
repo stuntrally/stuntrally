@@ -167,16 +167,16 @@ T CARDYNAMICS::GetSpeedMPS() const
 	for ( int i = 0; i < 4; i++ ) assert ( !isnan ( wheel[WHEEL_POSITION ( i ) ].GetAngularVelocity() ) );
 	if ( drive == RWD )
 	{
-		return ( left_rear_wheel_speed+right_rear_wheel_speed ) * 0.5 * tire[REAR_LEFT].GetRadius();
+		return ( left_rear_wheel_speed+right_rear_wheel_speed ) * 0.5 * wheel[REAR_LEFT].GetRadius();
 	}
 	else if ( drive == FWD )
 	{
-		return ( left_front_wheel_speed+right_front_wheel_speed ) * 0.5 * tire[FRONT_LEFT].GetRadius();
+		return ( left_front_wheel_speed+right_front_wheel_speed ) * 0.5 * wheel[FRONT_LEFT].GetRadius();
 	}
 	else if ( drive == AWD )
 	{
-		return ( ( left_rear_wheel_speed+right_rear_wheel_speed ) * 0.5 * tire[REAR_LEFT].GetRadius() +
-		         ( left_front_wheel_speed+right_front_wheel_speed ) * 0.5 * tire[FRONT_LEFT].GetRadius() ) *0.5;
+		return ( ( left_rear_wheel_speed+right_rear_wheel_speed ) * 0.5 * wheel[REAR_LEFT].GetRadius() +
+		         ( left_front_wheel_speed+right_front_wheel_speed ) * 0.5 * wheel[FRONT_LEFT].GetRadius() ) *0.5;
 	}
 
 	assert ( 0 );
@@ -529,7 +529,7 @@ MATHVECTOR <T, 3> CARDYNAMICS::UpdateSuspension ( int i , T dt )
 	T amplitude = 0.25 * surface.bumpAmplitude;
 	T bumpoffset = amplitude * ( sin ( phase + shift ) + sin ( 1.414214*phase ) - 2.0 );
 	//T ray_offset = 0.2;  //*! wheel ray origin is offset by 1 meter relative to wheel extended position
-	T displacement = /*ray_offset +*/ 2.0*tire[i].GetRadius() - wheel_contact[i].GetDepth() + bumpoffset;
+	T displacement = /*ray_offset +*/ 2.0*wheel[i].GetRadius() - wheel_contact[i].GetDepth() + bumpoffset;
 
 	// compute suspension force
 	T springdampforce = suspension[WHEEL_POSITION ( i ) ].Update ( dt , displacement );
@@ -594,10 +594,11 @@ MATHVECTOR <T, 3> CARDYNAMICS::ApplyTireForce(int i, const T normal_force, const
 	hub_velocity[2] = 0; // unused
 
 	// rearward speed of the contact patch
-	T patch_speed = wheel.GetAngularVelocity() * tire.GetRadius();
+	T patch_speed = wheel.GetAngularVelocity() * wheel.GetRadius();
 
 	// friction force in tire space
-	T friction_coeff = tire.GetTread() * surface.frictionTread + (1.0 - tire.GetTread()) * surface.frictionNonTread;
+	//T friction_coeff = tire.GetTread() * surface.frictionTread + (1.0 - tire.GetTread()) * surface.frictionNonTread;
+	T friction_coeff = surface.frictionTread;
 	T roll_friction_coeff = surface.rollResistanceCoefficient;
 	MATHVECTOR <T, 3> friction_force(0);
 	if(friction_coeff > 0)
@@ -615,7 +616,7 @@ MATHVECTOR <T, 3> CARDYNAMICS::ApplyTireForce(int i, const T normal_force, const
 	// apply forces to body
 	MATHVECTOR <T, 3> wheel_normal(0, 0, 1);
 	wheel_space.RotateVector(wheel_normal);
-	MATHVECTOR <T, 3> contactpos = wheel_position[WHEEL_POSITION(i)] + wheel_normal * tire.GetRadius() * wheel.GetRollHeight();  ///+
+	MATHVECTOR <T, 3> contactpos = wheel_position[WHEEL_POSITION(i)] + wheel_normal * wheel.GetRadius() * wheel.GetRollHeight();  ///+
 	ApplyForce(world_friction_force + surface_normal * normal_force + wheel_drag, contactpos - Position());
 
 	return world_friction_force;
@@ -633,7 +634,7 @@ void CARDYNAMICS::ApplyWheelTorque(T dt, T drive_torque, int i, MATHVECTOR <T, 3
 	(-wheel_space).RotateVector(tire_friction);
 
 	// torques acting on wheel
-	T friction_torque = tire_friction[0] * tire.GetRadius();
+	T friction_torque = tire_friction[0] * wheel.GetRadius();
 	T wheel_torque = drive_torque - friction_torque;
 	T lock_up_torque = wheel.GetLockUpTorque(dt) - wheel_torque;	// torque needed to lock the wheel
 	T angVel = wheel.GetAngularVelocity();  if (angVel < 0.0)  angVel = -angVel; //
@@ -674,7 +675,7 @@ void CARDYNAMICS::InterpolateWheelContacts(T dt)
 	for (int i = 0; i < WHEEL_POSITION_SIZE; i++)
 	{
 		MATHVECTOR <float, 3> raystart = LocalToWorld(wheel[i].GetExtendedPosition());
-		raystart = raystart - raydir * tire[i].GetRadius();  //*!
+		raystart = raystart - raydir * wheel[i].GetRadius();  //*!
 		float raylen = 1;  //!par
 		GetWheelContact(WHEEL_POSITION(i)).CastRay(raystart, raydir, raylen);
 	}
@@ -871,7 +872,7 @@ void CARDYNAMICS::UpdateTransmission(T dt)
 		for (int w=0; w<4; ++w)
 		{
 			WHEEL_POSITION wp = WHEEL_POSITION(w);
-			float d = GetWheelContact(wp).GetDepth() - 2*tire[w].GetRadius();
+			float d = GetWheelContact(wp).GetDepth() - 2*wheel[w].GetRadius();
 			if (d > 0.f)  ++inAir;  // in air
 		}/**/
 

@@ -40,8 +40,8 @@ class CARTIRE
 friend class joeserialize::Serializer;
 public://
 	//constants (not actually declared as const because they can be changed after object creation)
-	T radius;  ///< the total radius of the tire
-	T tread;  ///< 1.0 means a pure off-road tire, 0.0 is a pure road tire
+	//T radius;  ///< the total radius of the tire
+	//T tread;  ///< 1.0 means a pure off-road tire, 0.0 is a pure road tire
 	T rolling_resistance_linear; ///< linear rolling resistance on a hard surface
 	T rolling_resistance_quadratic; ///< quadratic rolling resistance on a hard surface
 	TIRE_PARAMS <T>* params;
@@ -59,9 +59,9 @@ public://
 
 	void FindSigmaHatAlphaHat(T load, T & output_sigmahat, T & output_alphahat, int iterations=400)
 	{
-		T x, y, ymax, junk;
+		T x, y, ymax, junk, x4 = 4.0/iterations, x40 = 40.0/iterations;
 		ymax = 0;
-		for (x = -2; x < 2; x += 4.0/iterations)
+		for (x = -2; x < 2; x += x4)
 		{
 			y = Pacejka_Fx(x, load, 1.0, junk);
 			if (y > ymax)
@@ -70,9 +70,8 @@ public://
 				ymax = y;
 			}
 		}
-
 		ymax = 0;
-		for (x = -20; x < 20; x += 40.0/iterations)
+		for (x = -20; x < 20; x += x40)
 		{
 			y = Pacejka_Fy(x, load, 0, 1.0, junk);
 			if (y > ymax)
@@ -129,25 +128,7 @@ public:
 		}
 	}
 
-	void SetRadius ( const T& value )
-	{
-		radius = value;
-	}
 
-	T GetRadius() const
-	{
-		return radius;
-	}
-
-	void SetTread ( const T& value )
-	{
-		tread = value;
-	}
-
-	T GetTread() const
-	{
-		return tread;
-	}
 
 	void SetRollingResistance(T linear, T quadratic)
 	{
@@ -160,25 +141,15 @@ public:
 		params = params1;
 	}
 
-	void SetSlide(const T& value)
-	{
-		slide = value;
-	}
-
 	T GetSlide() const
 	{
 		return slide;
 	}
 
-	void SetSlip(const T& value)
-	{
-		slip = value;
-	}
-
-	T GetSlip() const
-	{
-		return slip;
-	}
+	//T GetSlip() const
+	//{
+	//	return slip;
+	//}
 
 
 

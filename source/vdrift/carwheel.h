@@ -170,6 +170,16 @@ public:
 	}
 		
 	T fluidRes;  /// new: fluid resistance
+
+	void SetRadius ( const T& value )
+	{
+		radius = value;
+	}
+
+	T GetRadius() const
+	{
+		return radius;
+	}
 	
 private:
 	//constants (not actually declared as const because they can be changed after object creation)
@@ -182,6 +192,7 @@ private:
 	T additional_inertia;
 	T inertia_cache;
 	T steer_angle; ///<negative values cause steering to the left
+	T radius;  ///< the total radius of the tire
 	
 	//for info only
 	T angvel;

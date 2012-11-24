@@ -105,7 +105,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 				const FluidParams& fp = pFluids->fls[fb->id];
 
 				WHEEL_POSITION wp = WHEEL_POSITION(w);
-				float whR = GetTire(wp).GetRadius() * 1.2f;  //bigger par
+				float whR = GetWheel(wp).GetRadius() * 1.2f;  //bigger par
 				MATHVECTOR <float, 3> wheelpos = GetWheelPosition(wp, 0);
 				wheelpos[2] -= whR;
 				whP[w] = fp.idParticles;
@@ -432,7 +432,7 @@ void CARDYNAMICS::UpdateWheelContacts()
 	{
 		COLLISION_CONTACT & wheelContact = wheel_contact[WHEEL_POSITION(i)];
 		MATHVECTOR <float, 3> raystart = LocalToWorld(wheel[i].GetExtendedPosition());
-		raystart = raystart - raydir * tire[i].GetRadius();  //*!
+		raystart = raystart - raydir * wheel[i].GetRadius();  //*!
 		float raylen = 1;  // !par
 		
 		//vRayStarts[i] = raystart;  // info
