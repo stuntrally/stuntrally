@@ -23,7 +23,7 @@ private:
 	//secondary
 	MATHVECTOR <Dbl,3> old_force; //this is only necessary state information for the verlet-like integrators
 	
-	//constants
+	// constants
 	Dbl inverse_mass;
 	
 	//housekeeping

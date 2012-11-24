@@ -264,7 +264,7 @@ private:
 
 	std::vector <LAPINFO> car;
 
-	//variables for drawing text
+	// variables for drawing text
 
 	bool loaded;
 	CONFIGFILE trackrecords; //the track records configfile

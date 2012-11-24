@@ -417,7 +417,7 @@ void CONFIGFILE::DebugPrint(ostream & out)
 	for (bucketed_hashmap <std::string, CONFIGVARIABLE>::iterator i = variables.begin(); i != variables.end(); ++i)
 	{
 		//cout << incsuccess << endl;
-		//variables.IteratorGet()->DebugPrint();
+		// variables.IteratorGet()->DebugPrint();
 		vlist.push_back(*i);
 	}
 	
@@ -546,7 +546,7 @@ bool CONFIGFILE::Write(bool with_brackets, string save_as)
 		for (bucketed_hashmap <std::string, CONFIGVARIABLE>::iterator i = variables.begin(); i != variables.end(); ++i)
 		{
 			//cout << incsuccess << endl;
-			//variables.IteratorGet()->DebugPrint();
+			// variables.IteratorGet()->DebugPrint();
 			vlist.push_back(*i);
 		}
 		

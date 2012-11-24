@@ -927,11 +927,23 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Source\vdrift\caraerodynamicdevice.h"
+					RelativePath=".\source\vdrift\caraero.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\vdrift\caraero.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\vdrift\carbrake.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\Source\vdrift\carbrake.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\vdrift\carclutch.cpp"
 					>
 				</File>
 				<File
@@ -948,6 +960,10 @@
 				</File>
 				<File
 					RelativePath=".\Source\vdrift\cardefs.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\vdrift\cardifferential.cpp"
 					>
 				</File>
 				<File
@@ -971,6 +987,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\vdrift\carengine.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\vdrift\carengine.h"
 					>
 				</File>
@@ -979,7 +999,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\vdrift\carsuspension.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\vdrift\carsuspension.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\vdrift\cartire.cpp"
 					>
 				</File>
 				<File
@@ -987,7 +1015,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\vdrift\cartransmission.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\vdrift\cartransmission.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\vdrift\carwheel.cpp"
 					>
 				</File>
 				<File

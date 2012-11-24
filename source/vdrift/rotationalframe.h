@@ -30,7 +30,7 @@ private:
 	MATRIX3 <Dbl> world_inertia_tensor;
 	MATHVECTOR <Dbl, 3> angular_velocity; ///< calculated from angular_momentum, cached here
 	
-	//constants
+	// constants
 	MATRIX3 <Dbl> inverse_inertia_tensor; //used for calculations every frame
 	MATRIX3 <Dbl> inertia_tensor; //used for the GetInertia function only
 	

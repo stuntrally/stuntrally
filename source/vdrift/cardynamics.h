@@ -15,7 +15,7 @@
 #include "cartire.h"
 #include "cardefs.h"
 #include "carbrake.h"
-#include "caraerodynamicdevice.h"
+#include "caraero.h"
 #include "joeserialize.h"
 #include "macros.h"
 #include "collision_contact.h"

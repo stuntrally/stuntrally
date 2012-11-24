@@ -21,6 +21,7 @@ bool isnan(float number) {return (number != number);}
 bool isnan(double number) {return (number != number);}
 #endif
 
+
 CAR::CAR() :
 	pSet(0), pApp(0), id(0), pCarM(0),
 	last_steer(0),
