@@ -332,11 +332,6 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			suspension[posl].SetSpringFactorPoints(spring_factor_points);
 			suspension[posr].SetSpringFactorPoints(spring_factor_points);
 
-			// deprecated
-			//if (!c.GetParam("suspension-"+posstr+".max-compression-velocity", maxcompvel, error_output)) return false;
-			//suspension[posl].SetMaxCompressionVelocity(maxcompvel);
-			//suspension[posr].SetMaxCompressionVelocity(maxcompvel);
-
 			if (!c.GetParam("suspension-"+posstr+".travel", travel, error_output)) return false;
 			suspension[posl].SetTravel(travel);
 			suspension[posr].SetTravel(travel);

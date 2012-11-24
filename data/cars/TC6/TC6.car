@@ -91,13 +91,9 @@ fuel-density = 1.0
 #---------------------------
 [ suspension-front ]
 spring-constant = 102000
-#spring-constant = 72000
 bounce = 13050
-#bounce = 7500
 rebound = 10700
-#rebound = 5000
 travel = 0.32
-max-compression-velocity = 10.0
 camber = -1.33
 caster = 6.12
 toe = 0.0
@@ -108,7 +104,6 @@ spring-constant = 98000
 bounce = 13000
 rebound = 9992.14
 travel = 0.32
-max-compression-velocity = 10.0
 camber = -0.45
 caster = 0.28
 toe = 0.0
