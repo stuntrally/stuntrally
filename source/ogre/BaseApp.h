@@ -165,7 +165,7 @@ protected:
 
 	///  Gui
 	bool isFocGui,isFocRpl;  // gui shown
-	bool isTweak() {  return mWndTweak && mWndTweak->getVisible();  }
+	bool isTweak();
 	MyGUI::Gui* mGUI;
 	MyGUI::ImageBox* imgBack;
 	

@@ -292,5 +292,10 @@ bool BaseApp::IsFocGui()
 		(mWndChampStage && mWndChampStage->getVisible()) ||
 		(mWndChampEnd && mWndChampEnd->getVisible()) ||
 		(mWndNetEnd && mWndNetEnd->getVisible()) ||
-		(mWndTweak && mWndTweak->getVisible());
+	(mWndTweak && mWndTweak->getVisible());
+}
+
+bool BaseApp::isTweak() 
+{
+	return mWndTweak && mWndTweak->getVisible();
 }
