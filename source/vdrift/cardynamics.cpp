@@ -162,7 +162,7 @@ Dbl CARDYNAMICS::GetSpeedMPS() const
 	Dbl right_front_wheel_speed = wheel[FRONT_RIGHT].GetAngularVelocity();
 	Dbl left_rear_wheel_speed = wheel[REAR_LEFT].GetAngularVelocity();
 	Dbl right_rear_wheel_speed = wheel[REAR_RIGHT].GetAngularVelocity();
-	for ( int i = 0; i < 4; i++ ) assert ( !isnan ( wheel[WHEEL_POSITION ( i ) ].GetAngularVelocity() ) );
+	for ( int i = 0; i < 4; i++ ) assert ( !isnan ( wheel[WHEEL_POSITION(i) ].GetAngularVelocity() ) );
 	if ( drive == RWD )
 	{
 		return ( left_rear_wheel_speed+right_rear_wheel_speed ) * 0.5 * wheel[REAR_LEFT].GetRadius();
@@ -497,7 +497,7 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::UpdateSuspension ( int i , Dbl dt )
 	Dbl displacement = /*ray_offset +*/ 2.0*wheel[i].GetRadius() - wheel_contact[i].GetDepth() + bumpoffset;
 
 	// compute suspension force
-	Dbl springdampforce = suspension[WHEEL_POSITION ( i ) ].Update ( dt , displacement );
+	Dbl springdampforce = suspension[WHEEL_POSITION(i) ].Update ( dt , displacement );
 
 	//do anti-roll
 	int otheri = i;
@@ -505,8 +505,8 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::UpdateSuspension ( int i , Dbl dt )
 		otheri++;
 	else
 		otheri--;
-	Dbl antirollforce = suspension[WHEEL_POSITION ( i ) ].GetAntiRollK() *
-	                  ( suspension[WHEEL_POSITION ( i ) ].GetDisplacement()-
+	Dbl antirollforce = suspension[WHEEL_POSITION(i) ].GetAntiRollK() *
+	                  ( suspension[WHEEL_POSITION(i) ].GetDisplacement()-
 	                    suspension[WHEEL_POSITION ( otheri ) ].GetDisplacement() );
 	//suspension[WHEEL_POSITION(i)].SetAntiRollInfo(antirollforce);
 	if (isnan ( antirollforce ))  antirollforce = 0.f;//crash dyn obj
@@ -566,11 +566,13 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::ApplyTireForce(int i, const Dbl normal_force, con
 	Dbl friction_coeff = surface.frictionTread;
 	Dbl roll_friction_coeff = surface.rollResistanceCoefficient;
 	MATHVECTOR<Dbl,3> friction_force(0);
-	if(friction_coeff > 0)
-		friction_force = tire.GetForce(normal_force, friction_coeff, roll_friction_coeff, hub_velocity, patch_speed, camber_rad);
+	if (friction_coeff > 0)
+		friction_force = tire.GetForce(
+			normal_force, friction_coeff, roll_friction_coeff,
+			hub_velocity, patch_speed, camber_rad, &wheel.slips);
 
 	// set force feedback (aligning torque in tire space)
-	tire.SetFeedback(friction_force[2]);
+	wheel.SetFeedback(friction_force[2]);
 
 	// friction force in world space
 	MATHVECTOR<Dbl,3> world_friction_force = x_axis * friction_force[0] + y_axis * friction_force[1];
@@ -766,7 +768,7 @@ void CARDYNAMICS::CalculateDriveTorque ( Dbl * wheel_drive_torque, Dbl clutch_to
 		wheel_drive_torque[REAR_RIGHT] = diff_rear.GetSide2Torque();
 	}
 
-	for ( int i = 0; i < WHEEL_POSITION_SIZE; i++ ) assert ( !isnan ( wheel_drive_torque[WHEEL_POSITION ( i ) ] ) );
+	for ( int i = 0; i < WHEEL_POSITION_SIZE; i++ ) assert ( !isnan ( wheel_drive_torque[WHEEL_POSITION(i) ] ) );
 }
 
 Dbl CARDYNAMICS::CalculateDriveshaftSpeed()
@@ -776,7 +778,7 @@ Dbl CARDYNAMICS::CalculateDriveshaftSpeed()
 	Dbl right_front_wheel_speed = wheel[FRONT_RIGHT].GetAngularVelocity();
 	Dbl left_rear_wheel_speed = wheel[REAR_LEFT].GetAngularVelocity();
 	Dbl right_rear_wheel_speed = wheel[REAR_RIGHT].GetAngularVelocity();
-	for ( int i = 0; i < 4; i++ ) assert ( !isnan ( wheel[WHEEL_POSITION ( i ) ].GetAngularVelocity() ) );
+	for ( int i = 0; i < 4; i++ ) assert ( !isnan ( wheel[WHEEL_POSITION(i) ].GetAngularVelocity() ) );
 	if ( drive == RWD )
 	{
 		driveshaft_speed = diff_rear.CalculateDriveshaftSpeed ( left_rear_wheel_speed, right_rear_wheel_speed );
@@ -859,7 +861,7 @@ Dbl CARDYNAMICS::CalculateDriveshaftRPM() const
 	Dbl right_front_wheel_speed = wheel[FRONT_RIGHT].GetAngularVelocity();
 	Dbl left_rear_wheel_speed = wheel[REAR_LEFT].GetAngularVelocity();
 	Dbl right_rear_wheel_speed = wheel[REAR_RIGHT].GetAngularVelocity();
-	for ( int i = 0; i < 4; i++ ) assert ( !isnan ( wheel[WHEEL_POSITION ( i ) ].GetAngularVelocity() ) );
+	for ( int i = 0; i < 4; i++ ) assert ( !isnan ( wheel[WHEEL_POSITION(i) ].GetAngularVelocity() ) );
 	if ( drive == RWD )
 	{
 		driveshaft_speed = diff_rear.GetDriveshaftSpeed ( left_rear_wheel_speed, right_rear_wheel_speed );
@@ -1010,7 +1012,7 @@ void CARDYNAMICS::DoTCS ( int i, Dbl suspension_force )
 	{
 		//see if we're spinning faster than the rest of the wheels
 		Dbl maxspindiff = 0;
-		Dbl myrotationalspeed = wheel[WHEEL_POSITION ( i ) ].GetAngularVelocity();
+		Dbl myrotationalspeed = wheel[WHEEL_POSITION(i) ].GetAngularVelocity();
 		for ( int i2 = 0; i2 < WHEEL_POSITION_SIZE; i2++ )
 		{
 			Dbl spindiff = myrotationalspeed - wheel[WHEEL_POSITION ( i2 ) ].GetAngularVelocity();
@@ -1025,13 +1027,13 @@ void CARDYNAMICS::DoTCS ( int i, Dbl suspension_force )
 		{
 			//sp is the ideal slip ratio given tire loading
 			Dbl sp ( 0 ), ah ( 0 );
-			tire[WHEEL_POSITION ( i ) ].LookupSigmaHatAlphaHat ( suspension_force, sp, ah );
+			tire[WHEEL_POSITION(i) ].LookupSigmaHatAlphaHat ( suspension_force, sp, ah );
 
 			Dbl sense = 1.0;
 			if ( transmission.GetGear() < 0 )
 				sense = -1.0;
 
-			Dbl error = tire[WHEEL_POSITION ( i ) ].GetSlide() * sense - sp;
+			Dbl error = wheel[WHEEL_POSITION(i)].slips.slide * sense - sp;
 			Dbl thresholdeng = 0.0;
 			Dbl thresholddis = -sp/2.0;
 
@@ -1064,7 +1066,7 @@ void CARDYNAMICS::DoTCS ( int i, Dbl suspension_force )
 void CARDYNAMICS::DoABS ( int i, Dbl suspension_force )
 {
 	Dbl braketresh = 0.1;
-	Dbl brakesetting = brake[WHEEL_POSITION ( i ) ].GetBrakeFactor();
+	Dbl brakesetting = brake[WHEEL_POSITION(i) ].GetBrakeFactor();
 
 	//only active if brakes commanded past threshold
 	if ( brakesetting > braketresh )
@@ -1081,9 +1083,9 @@ void CARDYNAMICS::DoABS ( int i, Dbl suspension_force )
 		{
 			//sp is the ideal slip ratio given tire loading
 			Dbl sp ( 0 ), ah ( 0 );
-			tire[WHEEL_POSITION ( i ) ].LookupSigmaHatAlphaHat ( suspension_force, sp, ah );
+			tire[WHEEL_POSITION(i) ].LookupSigmaHatAlphaHat ( suspension_force, sp, ah );
 
-			Dbl error = - tire[WHEEL_POSITION ( i ) ].GetSlide() - sp;
+			Dbl error = -wheel[WHEEL_POSITION(i)].slips.slide - sp;
 			Dbl thresholdeng = 0.0;
 			Dbl thresholddis = -sp/2.0;
 
@@ -1100,7 +1102,7 @@ void CARDYNAMICS::DoABS ( int i, Dbl suspension_force )
 		abs_active[i] = false;
 
 	if ( abs_active[i] )
-		brake[WHEEL_POSITION ( i ) ].SetBrakeFactor ( 0.0 );
+		brake[WHEEL_POSITION(i) ].SetBrakeFactor ( 0.0 );
 }
 
 ///Set the maximum steering angle in degrees

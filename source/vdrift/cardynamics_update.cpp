@@ -195,7 +195,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 			transmission.DebugPrint(out);	out << endl;
 		}
 
-		if (cnt > 4)
+		if (cnt > 5)
 		{
 			out << "---Differential---\n";
 			if (drive == RWD)  {
@@ -213,7 +213,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 	if (p2)
 	{
 		out << "\n\n\n\n";
-		if (cnt > 5)
+		if (cnt > 4)
 		{
 			out << "---Brake---\n";
 			out << " FL [^" << endl;		brake[FRONT_LEFT].DebugPrint(out);
@@ -239,11 +239,6 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 			out << " FR ^]" << endl;		wheel[FRONT_RIGHT].DebugPrint(out);
 			out << " RL [_" << endl;		wheel[REAR_LEFT].DebugPrint(out);
 			out << " RR _]" << endl;		wheel[REAR_RIGHT].DebugPrint(out);
-			out << "\n---Tire---\n";
-			out << " FL [^" << endl;		tire[FRONT_LEFT].DebugPrint(out);
-			out << " FR ^]" << endl;		tire[FRONT_RIGHT].DebugPrint(out);
-			out << " RL [_" << endl;		tire[REAR_LEFT].DebugPrint(out);
-			out << " RR _]" << endl;		tire[REAR_RIGHT].DebugPrint(out);
 		}
 
 	if (p4)
@@ -388,7 +383,7 @@ void CARDYNAMICS::Tick(Dbl dt)
 
 		UpdateBody(internal_dt, drive_torque);
 
-		feedback += 0.5 * (tire[FRONT_LEFT].GetFeedback() + tire[FRONT_RIGHT].GetFeedback());
+		feedback += 0.5 * (wheel[FRONT_LEFT].GetFeedback() + wheel[FRONT_RIGHT].GetFeedback());
 	}
 
 	feedback /= (num_repeats + 1);

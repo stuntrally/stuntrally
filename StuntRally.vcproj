@@ -1031,6 +1031,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\vdrift\dbl.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\vdrift\enginesoundinfo.h"
 					>
 				</File>

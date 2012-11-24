@@ -9,7 +9,7 @@
 #include "dbl.h"
 #include "mathvector.h"
 #include "../ogre/common/Defines.h"
-
+#include "carwheel.h"
 
 #ifdef _WIN32
 bool isnan(float number);
@@ -35,54 +35,32 @@ public:
 
 class CARTIRE
 {
-public://
+public:
 	// constants
-	Dbl rolling_resistance_linear;	///< linear rolling resistance on a hard surface
-	Dbl rolling_resistance_quadratic;	///< quadratic rolling resistance on a hard surface
 	TIRE_PARAMS* params;
 	std::vector <Dbl> sigma_hat;	///< maximum grip in the longitudinal direction
 	std::vector <Dbl> alpha_hat;	///< maximum grip in the lateral direction
 
-	// variables
-	Dbl feedback;	///< the force feedback effect value
-
-	//for info only
-	Dbl slide;	///< ratio of tire contact patch speed to road speed, minus one
-	Dbl slip;	///< the angle (in degrees) between the wheel heading and the wheel's actual velocity
-	Dbl slideratio;	///< ratio of the slide to the tire's optimim slide
-	Dbl slipratio;	///< ratio of the slip to the tire's optimim slip
+	// no variables - 1 tire for all wheels
 
 	void FindSigmaHatAlphaHat(Dbl load, Dbl & output_sigmahat, Dbl & output_alphahat, int iterations=400);
 
 public:
 	//  ctor
 	CARTIRE()
-		: slide(0), slip(0), params(0)
+		: params(0)
 	{	}
-
-	void DebugPrint(std::ostream & out);
 
 	void LookupSigmaHatAlphaHat(Dbl normalforce, Dbl & sh, Dbl & ah) const;
 	void CalculateSigmaHatAlphaHat(int tablesize=20);
 	
-	Dbl GetRollingResistance(const Dbl velocity, const Dbl normal_force, const Dbl rolling_resistance_factor) const;
-	void SetRollingResistance(Dbl linear, Dbl quadratic)
-	{
-		rolling_resistance_linear = linear;
-		rolling_resistance_quadratic = quadratic;
-	}
-
 	void SetPacejkaParameters(TIRE_PARAMS* params1)	{	params = params1;	}
-
-	Dbl GetSlide() const	{	return slide;	}
-
-	void SetFeedback(Dbl aligning_force)	{	feedback = aligning_force;	}
-	Dbl GetFeedback() const					{	return feedback;	}
 
 
 	/// Return the friction vector calculated from the magic formula.
 	MATHVECTOR<Dbl,3> GetForce (Dbl normal_force, Dbl friction_coeff, Dbl roll_friction_coeff,
-					const MATHVECTOR<Dbl,3> & hub_velocity, Dbl patch_speed, Dbl current_camber);
+					const MATHVECTOR<Dbl,3> & hub_velocity, Dbl patch_speed, Dbl current_camber,
+					CARWHEEL::SlideSlip* slips);  //out
 
 	Dbl GetMaximumFx (Dbl load) const;
 	Dbl GetMaximumFy (Dbl load, Dbl current_camber) const;
@@ -92,12 +70,6 @@ public:
 	Dbl Pacejka_Fy (Dbl alpha, Dbl Fz, Dbl gamma, Dbl friction_coeff, Dbl & maxforce_output);
 	Dbl Pacejka_Mz (Dbl sigma, Dbl alpha, Dbl Fz, Dbl gamma, Dbl friction_coeff, Dbl & maxforce_output);
 	Dbl GetOptimumSteeringAngle(Dbl load) const;
-
-	///  return the slide and slip ratios as a percentage of optimum
-	std::pair <Dbl, Dbl> GetSlideSlipRatios() const
-	{
-		return std::make_pair(slideratio, slipratio);
-	}
 };
 
 #endif

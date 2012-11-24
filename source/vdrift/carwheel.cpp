@@ -8,6 +8,10 @@ void CARWHEEL::DebugPrint(std::ostream & out)
 	//out << "Speed: " << fToStr(GetRPM(), 1,4) << std::endl;
 	out << "Steer  " << fToStr(steer_angle, 1,5) << std::endl;
 	out << "Camber " << fToStr(camber_deg, 1,5)  << std::endl;
+	//out << "Slide|ratio:" << fToStr(slips.slideratio, 2,5) << std::endl;
+	//out << "Slip-angle:" << fToStr(slips.slipratio, 2,6) << std::endl;
+	out << "Slide|  " << fToStr(slips.slide, 2,5) << std::endl;
+	out << "SlipA- " << fToStr(slips.slip, 2,6) << std::endl;
 }
 
 void CARWHEEL::SetInertia(Dbl new_inertia)

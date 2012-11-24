@@ -342,23 +342,16 @@ float CAR::GetTireSquealAmount(WHEEL_POSITION i, float* slide, float* s1, float*
 	float squeal = (groundvel.Magnitude() - 3.0) * 0.2;
 	if (slide)  *slide = squeal + 0.6;
 
-	std::pair <double, double> slideslip = dynamics.GetTire(i).GetSlideSlipRatios();
-	if (s1)  *s1 = slideslip.first;
-	if (s2)  *s2 = slideslip.second;
-	double maxratio = std::max(std::abs(slideslip.first), std::abs(slideslip.second));
+	Dbl slideratio = dynamics.GetWheel(i).slips.slideratio;
+	Dbl slipratio = dynamics.GetWheel(i).slips.slipratio;
+	if (s1)  *s1 = slideratio;
+	if (s2)  *s2 = slipratio;
+	double maxratio = std::max(std::abs(slideratio), std::abs(slipratio));
 	float squealfactor = std::max(0.0, maxratio - 1.0);
 	squeal *= squealfactor;
 	if (squeal < 0)  squeal = 0;
 	if (squeal > 1)  squeal = 1;
 	return squeal;
-}
-
-void CAR::EnableGlass(bool enable)
-{
-	/*if (glassdraw)
-	{
-		glassdraw->SetDrawEnable(enable);
-	}*/
 }
 
 

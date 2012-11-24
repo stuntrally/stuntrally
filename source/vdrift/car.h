@@ -188,8 +188,6 @@ public:
 	// returns a float from 0.0 to 1.0 with the amount of tire squealing going on
 	float GetTireSquealAmount(WHEEL_POSITION i, float* slide=0, float* s1=0, float* s2=0) const;
 	
-	void EnableGlass(bool enable);
-
 	void DebugPrint(std::ostream & out, bool p1, bool p2, bool p3, bool p4)
 	{
 		dynamics.DebugPrint(out, p1, p2, p3, p4);

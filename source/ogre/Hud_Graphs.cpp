@@ -55,7 +55,7 @@ void App::CreateGraphs()
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
 			int c = i%5;  /*clr*/
 			gv->Create(256/*len*/, "graph"+toStr(c+1), i==0||i==2 ? 0.52f : 0.f/*alpha*/);
-			switch (i)
+			switch(i)
 			{
 				case 0:  gv->CreateTitle("norm vel",	c, 0.0f, -2, 24);  break;
 				case 1:  gv->CreateTitle("hit force",	c, 0.15f,-2, 24);  break;
@@ -78,7 +78,7 @@ void App::CreateGraphs()
 			gv->Create(2*512, "graph"+toStr(c+1), c>0 ? 0.f : 0.4f);
 			if (c == 0)
 				gv->CreateGrid(2,1, 0.4f, 0.5f);  //64,256
-			switch (i)
+			switch(i)
 			{
 				case 0:  gv->CreateTitle("vol ampl.",		c, 0.0f,-2, 24);  break;
 				case 1:  gv->CreateTitle("pan: L up R dn",	c, 0.0f, 2, 24);  break;
@@ -166,7 +166,7 @@ void App::CreateGraphs()
 			int c = t[i];
 			gv->Create(256, "graph"+toStr(c+1), i==0 ? 0.4f : 0.f);
 			if (i == 0)  gv->CreateGrid(6,0, 0.7f, 1.0f);
-			switch (i)
+			switch(i)
 			{
 				case 0:  gv->CreateTitle("Accel   x",	c, 0.0f, -2, 24);  break;
 				case 1:  gv->CreateTitle("y",			c, 0.12f,-2, 24);  break;
@@ -299,8 +299,8 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		if (gsi >= 8)
 		for (int i=0; i < 4; ++i)
 		{
-			pApp->graphs[i]->AddVal(negPow(dynamics.tire[i].slideratio, 0.2) * 0.12f +0.5f);
-			pApp->graphs[i+4]->AddVal(dynamics.tire[i].slipratio * 0.1f +0.5f);
+			pApp->graphs[i]->AddVal(negPow(dynamics.wheel[i].slips.slideratio, 0.2) * 0.12f +0.5f);
+			pApp->graphs[i+4]->AddVal(dynamics.wheel[i].slips.slipratio * 0.1f +0.5f);
 		}	break;
 		
 	case Gh_Suspension:  /// suspension

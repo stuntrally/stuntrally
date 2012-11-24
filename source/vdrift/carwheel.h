@@ -13,37 +13,67 @@ class CARWHEEL
 {
 private:
 	// constants
-	MATHVECTOR<Dbl,3> extended_position; ///< the position of the wheel when the suspension is fully extended (zero g)
-	Dbl roll_height; ///< how far off the road lateral forces are applied to the chassis
-	Dbl mass; ///< the mass of the wheel
-	ROTATIONALFRAME rotation; ///< a simulation of wheel rotation.  this contains the wheel orientation, angular velocity, angular acceleration, and inertia tensor
+	MATHVECTOR<Dbl,3> extended_position;	///< the position of the wheel when the suspension is fully extended (zero g)
+	Dbl roll_height;	///< how far off the road lateral forces are applied to the chassis
+	Dbl mass;			///< the mass of the wheel
+	ROTATIONALFRAME rotation;	///< a simulation of wheel rotation.  this contains the wheel orientation, angular velocity, angular acceleration, and inertia tensor
+
+	//Dbl rolling_resistance_linear;		///< linear rolling resistance on a hard surface  	not used_
+	//Dbl rolling_resistance_quadratic;	///< quadratic rolling resistance on a hard surface
 	
 	// variables
 	Dbl additional_inertia;
 	Dbl inertia_cache;
-	Dbl steer_angle; ///<negative values cause steering to the left
-	Dbl radius;  ///< the total radius of the tire
-	
+	Dbl steer_angle;	///<negative values cause steering to the left
+	Dbl radius;		///< the total radius of the tire
+	Dbl feedback;	///< the force feedback effect value
+
 	//for info only
 	Dbl angvel;
 	Dbl camber_deg;
 
 public:
+	//for info only
+	struct SlideSlip
+	{
+		Dbl slide;	///< ratio of tire contact patch speed to road speed, minus one
+		Dbl slip;	///< the angle (in degrees) between the wheel heading and the wheel's actual velocity
+		Dbl slideratio;	///< ratio of the slide to the tire's optimim slide
+		Dbl slipratio;	///< ratio of the slip to the tire's optimim slip
+
+		SlideSlip()
+			:slide(0),slip(0),slideratio(0),slipratio(0)
+		{	}
+	} slips;
+
+	Dbl fluidRes;  /// new: fluid resistance
+	
+public:
 	//default constructor makes an S2000-like car
 	CARWHEEL()
-		:roll_height(0.29), mass(18.14), inertia_cache(10.0)
-		,steer_angle(0), fluidRes(0.f)
+		:roll_height(0.9), mass(18.1), inertia_cache(10.0)
+		,steer_angle(0.), fluidRes(0.)
+		,radius(0.3), feedback(0.)
 	{	SetInertia(10.0);	}
 	
 	void DebugPrint(std::ostream & out);
 
-	void SetExtendedPosition (const MATHVECTOR<Dbl,3>& value)	{	extended_position = value;	}
-	MATHVECTOR<Dbl,3> GetExtendedPosition() const			{	return extended_position;	}
-	
-	Dbl GetRPM() const
+
+	//  not used_
+	/*Dbl GetRollingResistance(const Dbl velocity, const Dbl normal_force, const Dbl rolling_resistance_factor) const;
+	void SetRollingResistance(Dbl linear, Dbl quadratic)
 	{
-		return rotation.GetAngularVelocity()[0] * 30.0 / PI_d;
-	}
+		rolling_resistance_linear = linear;
+		rolling_resistance_quadratic = quadratic;
+	}*/
+	void SetFeedback(Dbl aligning_force)	{	feedback = aligning_force;	}
+	Dbl GetFeedback() const					{	return feedback;	}
+
+
+	void SetExtendedPosition (const MATHVECTOR<Dbl,3>& value)	{	extended_position = value;	}
+	MATHVECTOR<Dbl,3> GetExtendedPosition() const				{	return extended_position;	}
+	
+	Dbl GetRPM() const		{	return rotation.GetAngularVelocity()[0] * 30.0 / PI_d;	}
 	
 	//used for telemetry only
 	const Dbl & GetAngVelInfo()		{	return angvel;	}
@@ -55,6 +85,12 @@ public:
 		return rotation.SetAngularVelocity(v);
 	}
 
+	Dbl GetSteerAngle() const				{	return steer_angle;		}
+	void SetSteerAngle (const Dbl& value)	{	steer_angle = value;	}
+
+	void SetRadius (const Dbl& value)	{	radius = value;		}
+	Dbl GetRadius() const				{	return radius;		}
+
 	void SetRollHeight (const Dbl& value)	{	roll_height = value;	}
 	Dbl GetRollHeight() const				{	return roll_height;		}
 
@@ -62,13 +98,18 @@ public:
 	Dbl GetMass() const				{	return mass;	}
 	
 	void SetInertia(Dbl new_inertia);
-	
 	Dbl GetInertia() const	{	return inertia_cache;	}
+
 	
 	void SetInitialConditions()
 	{
 		MATHVECTOR<Dbl,3> v;
 		rotation.SetInitialTorque(v);
+	}
+	void ZeroForces()
+	{
+		MATHVECTOR<Dbl,3> v;
+		rotation.SetTorque(v);
 	}
 	
 	void Integrate1(const Dbl dt)	{	rotation.Integrate1(dt);	}
@@ -78,26 +119,12 @@ public:
 	Dbl GetTorque()		{	return rotation.GetTorque()[1];		}
 	
 	Dbl GetLockUpTorque(const Dbl dt) const	{	return rotation.GetLockUpTorque(dt)[1];		}
-	
-	void ZeroForces()
-	{
-		MATHVECTOR<Dbl,3> v;
-		rotation.SetTorque(v);
-	}
-	
+		
 	const QUATERNION<Dbl> & GetOrientation() const	{	return rotation.GetOrientation();	}
-
-	Dbl GetSteerAngle() const				{	return steer_angle;		}
-	void SetSteerAngle (const Dbl& value)	{	steer_angle = value;	}
 	
 	void SetAdditionalInertia (const Dbl& value);
 
 	void SetCamberDeg (const Dbl& value)	{	camber_deg = value;		}
-		
-	Dbl fluidRes;  /// new: fluid resistance
-
-	void SetRadius (const Dbl& value)	{	radius = value;		}
-	Dbl GetRadius() const				{	return radius;		}
 };
 
 #endif

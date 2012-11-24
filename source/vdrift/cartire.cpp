@@ -2,15 +2,6 @@
 #include "cartire.h"
 
 
-void CARTIRE::DebugPrint(std::ostream & out)
-{
-	//out << "Slide|ratio:" << fToStr(slide, 2,5) << std::endl;
-	//out << "Slip-angle:" << fToStr(slip, 2,6) << std::endl;
-	out << "Slide|  " << fToStr(slide, 2,5) << std::endl;
-	out << "SlipA- " << fToStr(slip, 2,6) << std::endl;
-}
-
-
 void CARTIRE::FindSigmaHatAlphaHat(Dbl load, Dbl & output_sigmahat, Dbl & output_alphahat, int iterations)
 {
 	Dbl x, y, ymax, junk, x4 = 4.0/iterations, x40 = 40.0/iterations;
@@ -79,12 +70,13 @@ void CARTIRE::LookupSigmaHatAlphaHat(Dbl normalforce, Dbl & sh, Dbl & ah) const
 /// normal_force is in units N.
 //-------------------------------------------------------------------------------------------------------------------------------
 MATHVECTOR<Dbl,3> CARTIRE::GetForce(
-				Dbl normal_force,
-				Dbl friction_coeff,
-				Dbl roll_friction_coeff,
-				const MATHVECTOR<Dbl,3> & hub_velocity,
-				Dbl patch_speed,
-				Dbl current_camber)
+		Dbl normal_force,
+		Dbl friction_coeff,
+		Dbl roll_friction_coeff,
+		const MATHVECTOR<Dbl,3> & hub_velocity,
+		Dbl patch_speed,
+		Dbl current_camber,
+		CARWHEEL::SlideSlip* slips)
 {
 	assert(friction_coeff > 0);
 
@@ -160,7 +152,7 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 	//Dbl maxforce = longitudinal_parameters[2] * 7.0;
 	//std::cout << maxforce << ", " << max_Fx << ", " << max_Fy << ", " << Fx << ", " << Fy << std::endl;
 
-	//combining method 0: no combining! :-)
+	//combining method 0: no combining
 
 	//combining method 1: traction circle
 	//determine to what extent the tires are long (x) gripping vs lat (y) gripping
@@ -221,10 +213,13 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 			slide = 1.0;
 	}*/
 
-	slide = sigma;
-	slip = alpha;
-	slideratio = s;
-	slipratio = a;
+	if (slips)  // out
+	{
+		slips->slide = sigma;
+		slips->slip = alpha;
+		slips->slideratio = s;
+		slips->slipratio = a;
+	}
 
 	//std::cout << slide << ", " << slip << std::endl;
 
@@ -234,7 +229,7 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 //-------------------------------------------------------------------------------------------------------------------------------
 
 
-Dbl CARTIRE::GetRollingResistance(const Dbl velocity, const Dbl normal_force, const Dbl rolling_resistance_factor) const
+/*Dbl CARTIRE::GetRollingResistance(const Dbl velocity, const Dbl normal_force, const Dbl rolling_resistance_factor) const
 {
 	// surface influence on rolling resistance
 	Dbl rolling_resistance = rolling_resistance_linear * rolling_resistance_factor;
@@ -248,7 +243,7 @@ Dbl CARTIRE::GetRollingResistance(const Dbl velocity, const Dbl normal_force, co
 	if (velocity < 0) resistance = -resistance;
 	
 	return resistance;
-}
+}*/
 
 void CARTIRE::CalculateSigmaHatAlphaHat(int tablesize)
 {
