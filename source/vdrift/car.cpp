@@ -55,7 +55,7 @@ CAR::~CAR()
 bool CAR::Load(class App* pApp1,
 	CONFIGFILE & carconf,
 	const std::string & carname,
-	const MATHVECTOR <float, 3> & init_pos, const QUATERNION <float> & init_rot,
+	const MATHVECTOR<float,3> & init_pos, const QUATERNION<float> & init_rot,
 	COLLISION_WORLD & world,
 	bool soundenabled, const SOUNDINFO & sound_device_info, const SOUNDBUFFERLIBRARY & soundbufferlibrary,
 	bool defaultabs, bool defaulttcs,
@@ -147,7 +147,7 @@ bool CAR::Load(class App* pApp1,
 	{
 		if (!dynamics.Load(pGame, carconf, error_output)) return false;
 
-		MATHVECTOR<double, 3> position;
+		MATHVECTOR<double,3> position;
 		QUATERNION<double> orientation;
 		position = init_pos;	
 		orientation = init_rot;
@@ -209,14 +209,14 @@ bool CAR::LoadInto(const std::string & joefile, MODEL_JOE03 & output_model,	std:
 	return true;
 }
 
-void CAR::SetPosition(const MATHVECTOR <float, 3> & new_position)
+void CAR::SetPosition(const MATHVECTOR<float,3> & new_position)
 {
-	MATHVECTOR <double,3> newpos;
+	MATHVECTOR<double,3> newpos;
 	newpos = new_position;
 	dynamics.SetPosition(newpos);
 	dynamics.AlignWithGround();//--
 
-	QUATERNION <float> rot;
+	QUATERNION<float> rot;
 	rot = dynamics.GetOrientation();
 }
 
@@ -330,9 +330,9 @@ float CAR::GetTireSquealAmount(WHEEL_POSITION i, float* slide, float* s1, float*
 	if (inAir)  // not on ground 
 		return 0;
 
-	MATHVECTOR <float, 3> groundvel;
+	MATHVECTOR<float,3> groundvel;
 	groundvel = dynamics.GetWheelVelocity(WHEEL_POSITION(i));
-	QUATERNION <float> wheelspace;
+	QUATERNION<float> wheelspace;
 	wheelspace = dynamics.GetUprightOrientation(WHEEL_POSITION(i));
 	(-wheelspace).RotateVector(groundvel);
 	float wheelspeed = dynamics.GetWheel(WHEEL_POSITION(i)).GetAngularVelocity()*dynamics.GetWheel(WHEEL_POSITION(i)).GetRadius();
@@ -359,13 +359,6 @@ void CAR::EnableGlass(bool enable)
 	{
 		glassdraw->SetDrawEnable(enable);
 	}*/
-}
-
-bool CAR::Serialize(joeserialize::Serializer & s)
-{
-	_SERIALIZE_(s,dynamics);
-	_SERIALIZE_(s,last_steer);
-	return true;
 }
 
 
@@ -427,8 +420,8 @@ void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 ///------------------------------------------------------------------------------------------------------------------------------
 void CAR::ResetPos(bool fromStart, int chkId)
 {
-	MATHVECTOR <Dbl, 3> pos = fromStart ? posAtStart : posLastCheck[chkId];
-	QUATERNION <Dbl> rot =    fromStart ? rotAtStart : rotLastCheck[chkId];
+	MATHVECTOR<Dbl,3> pos = fromStart ? posAtStart : posLastCheck[chkId];
+	QUATERNION<Dbl> rot =    fromStart ? rotAtStart : rotLastCheck[chkId];
 	SetPosition(pos);
 
 	btTransform transform;
@@ -447,7 +440,7 @@ void CAR::ResetPos(bool fromStart, int chkId)
 	dynamics.engine.SetInitialConditions();
 	for (int w=0; w < 4; ++w)
 	{
-		MATHVECTOR <Dbl, 3> zero(0,0,0);
+		MATHVECTOR<Dbl,3> zero(0,0,0);
 		dynamics.wheel[w].SetAngularVelocity(0);
 		//dynamics.wheel_velocity[w] = zero;
 	}

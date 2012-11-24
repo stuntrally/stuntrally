@@ -27,8 +27,8 @@ private:
 	//metrics
 	float radius;
 	float radiusxz;
-	MATHVECTOR <float, 3> bboxmin;
-	MATHVECTOR <float, 3> bboxmax;
+	MATHVECTOR<float,3> bboxmin;
+	MATHVECTOR<float,3> bboxmax;
 	
 	void RequireMetrics() const
 	{
@@ -68,7 +68,6 @@ public:
 	bool Serialize(joeserialize::Serializer & s)
 	{
 		_SERIALIZE_(s,mesh);
-		
 		return true;
 	}
 	
@@ -89,7 +88,7 @@ public:
 	//"metrics"
 	float GetRadius() const {RequireMetrics();return radius + 0.5f;}
 	float GetRadiusXZ() const {RequireMetrics();return radiusxz;}
-	MATHVECTOR <float, 3> GetCenter() {return (bboxmax + bboxmin) * 0.5;}
+	MATHVECTOR<float,3> GetCenter() {return (bboxmax + bboxmin) * 0.5;}
 	
 	bool HaveMeshData() const {return (mesh.GetNumFaces() > 0);}
 	bool HaveMeshMetrics() const {return generatedmetrics;}
@@ -119,5 +118,3 @@ public:
 };
 
 #endif
-
-

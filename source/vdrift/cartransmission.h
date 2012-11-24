@@ -2,15 +2,12 @@
 #define _CARTRANSMISSION_H
 
 #include "dbl.h"
-#include "joeserialize.h"
-#include "macros.h"
 #include <iostream>
 #include "../ogre/common/Defines.h"
 
 
 class CARTRANSMISSION
 {
-friend class joeserialize::Serializer;
 private:
 	// constants
 	std::map <int, Dbl> gear_ratios;	///< gear number and ratio.  reverse gears are negative integers. neutral is zero.
@@ -62,8 +59,6 @@ public:
 	
 	///get the rotational speed of the clutch given the rotational speed of the driveshaft (const)
 	Dbl GetClutchSpeed(Dbl driveshaft_speed) const;
-	
-	bool Serialize(joeserialize::Serializer & s);
 };
 
 #endif

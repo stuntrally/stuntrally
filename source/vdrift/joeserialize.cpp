@@ -15,21 +15,9 @@
 #include "unittest.h"
 #include "../ogre/OgreGame.h"
 
-using std::cout;
-using std::cerr;
-using std::endl;
-using std::list;
-using std::map;
-using std::string;
-using std::stringstream;
-using std::istream;
-using std::ostream;
-using std::ifstream;
-using std::ofstream;
-using std::pair;
-using std::vector;
-
+using namespace std;
 using namespace joeserialize;
+
 
 class TEST_VERTEX
 {
@@ -50,7 +38,7 @@ class TEST_VERTEX
 		}
 };
 
-ostream& operator <<(ostream &os,const TEST_VERTEX &v)
+ostream& operator<<(ostream &os,const TEST_VERTEX &v)
 {
 	os << v.x << "," << v.y << "," << v.z;
 	return os;

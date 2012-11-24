@@ -35,12 +35,3 @@ void CARDIFFERENTIAL::ComputeWheelTorques(Dbl driveshaft_torque)
 	side1_torque = torque*(1.0-torque_split) - drag;
 	side2_torque = torque*torque_split + drag;
 }
-
-bool CARDIFFERENTIAL::Serialize(joeserialize::Serializer & s)
-{
-	_SERIALIZE_(s,side1_speed);
-	_SERIALIZE_(s,side2_speed);
-	_SERIALIZE_(s,side1_torque);
-	_SERIALIZE_(s,side2_torque);
-	return true;
-}

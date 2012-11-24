@@ -65,14 +65,14 @@ void ROADSTRIP::GenerateSpacePartitioning()
 	aabb_part.Optimize();
 }
 
-bool ROADSTRIP::Collide(const MATHVECTOR <float, 3> & origin, const MATHVECTOR <float, 3> & direction, float seglen, MATHVECTOR <float, 3> & outtri, const BEZIER * & colpatch, MATHVECTOR <float, 3> & normal) const
+bool ROADSTRIP::Collide(const MATHVECTOR<float,3> & origin, const MATHVECTOR<float,3> & direction, float seglen, MATHVECTOR<float,3> & outtri, const BEZIER * & colpatch, MATHVECTOR<float,3> & normal) const
 {
 	std::list <ROADPATCH *> candidates;
 	aabb_part.Query(AABB<float>::RAY(origin, direction, seglen), candidates);
 	bool col = false;
 	for (std::list <ROADPATCH *>::iterator i = candidates.begin(); i != candidates.end(); ++i)
 	{
-		MATHVECTOR <float, 3> coltri, colnorm;
+		MATHVECTOR<float,3> coltri, colnorm;
 		if ((*i)->Collide(origin, direction, seglen, coltri, colnorm))
 		{
 			if (!col || (coltri-origin).Magnitude() < (outtri-origin).Magnitude())

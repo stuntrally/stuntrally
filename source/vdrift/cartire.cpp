@@ -78,11 +78,11 @@ void CARTIRE::LookupSigmaHatAlphaHat(Dbl normalforce, Dbl & sh, Dbl & ah) const
 /// current_camber is expected in radians.
 /// normal_force is in units N.
 //-------------------------------------------------------------------------------------------------------------------------------
-MATHVECTOR <Dbl, 3> CARTIRE::GetForce(
+MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 				Dbl normal_force,
 				Dbl friction_coeff,
 				Dbl roll_friction_coeff,
-				const MATHVECTOR <Dbl, 3> & hub_velocity,
+				const MATHVECTOR<Dbl,3> & hub_velocity,
 				Dbl patch_speed,
 				Dbl current_camber)
 {
@@ -105,7 +105,7 @@ MATHVECTOR <Dbl, 3> CARTIRE::GetForce(
 	const Dbl EPSILON = 1e-6;
 	if (Fz < EPSILON)
 	{
-		MATHVECTOR <Dbl, 3> zero(0);
+		MATHVECTOR<Dbl,3> zero(0);
 		//std::cout << "Tire off ground detected: " << normal_force << ", " << Fz << std::endl;
 		return zero;
 	}
@@ -127,7 +127,7 @@ MATHVECTOR <Dbl, 3> CARTIRE::GetForce(
 	/*crash dyn obj--*/
 	if (isnan(alpha) || isnan(1.f/sigma_hat))
 	{
-		MATHVECTOR <Dbl, 3> outvec(0, 0, 0);
+		MATHVECTOR<Dbl,3> outvec(0, 0, 0);
 		return outvec;	}
 	
 	assert(!isnan(alpha));
@@ -228,7 +228,7 @@ MATHVECTOR <Dbl, 3> CARTIRE::GetForce(
 
 	//std::cout << slide << ", " << slip << std::endl;
 
-	MATHVECTOR <Dbl, 3> outvec(Fx, Fy, Mz);
+	MATHVECTOR<Dbl,3> outvec(Fx, Fy, Mz);
 	return outvec;
 }
 //-------------------------------------------------------------------------------------------------------------------------------

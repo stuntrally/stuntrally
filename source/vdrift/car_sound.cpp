@@ -109,8 +109,8 @@ void CAR::GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist)
 void CAR::UpdateSounds(float dt)
 {
 	float rpm, throttle, speed, dynVel;
-	MATHVECTOR <float,3> pos, engPos, whPos[4], hitPos;  // car, engine, wheels pos
-	QUATERNION <float> rot;
+	MATHVECTOR<float,3> pos, engPos, whPos[4], hitPos;  // car, engine, wheels pos
+	QUATERNION<float> rot;
 	TRACKSURFACE::TYPE surfType[4];
 	float squeal[4],whVel[4], suspVel[4],suspDisp[4];
 	float whH_all = 0.f;  bool mud = false;
@@ -209,8 +209,8 @@ void CAR::UpdateSounds(float dt)
 	///  listener  ------------------------------------------
 	if (!bRemoteCar)
 	{
-		MATHVECTOR <float,3> campos = pos;
-		QUATERNION <float> camrot;// = rot;
+		MATHVECTOR<float,3> campos = pos;
+		QUATERNION<float> camrot;// = rot;
 		using namespace Ogre;
 		if (pCarM && pCarM->fCam)
 		{	//  pos
@@ -224,7 +224,7 @@ void CAR::UpdateSounds(float dt)
 			camrot[0] = b.x;  camrot[1] = b.y;  camrot[2] = b.z;  camrot[3] = b.w;
 		}
 		if (pApp->pGame->sound.Enabled())
-			pApp->pGame->sound.SetListener(campos, camrot, MATHVECTOR <float,3>(),
+			pApp->pGame->sound.SetListener(campos, camrot, MATHVECTOR<float,3>(),
 				pApp->mSplitMgr->mNumViewports == 1);  // 3D for 1 player
 
 		/*bool incar = false;//

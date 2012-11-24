@@ -6,17 +6,14 @@
 #include "mathvector.h"
 #include "rotationalframe.h"
 #include "matrix3.h"
-#include "joeserialize.h"
-#include "macros.h"
 #include "../ogre/common/Defines.h"
 
 
 class CARWHEEL
 {
-friend class joeserialize::Serializer;
 private:
 	// constants
-	MATHVECTOR <Dbl, 3> extended_position; ///< the position of the wheel when the suspension is fully extended (zero g)
+	MATHVECTOR<Dbl,3> extended_position; ///< the position of the wheel when the suspension is fully extended (zero g)
 	Dbl roll_height; ///< how far off the road lateral forces are applied to the chassis
 	Dbl mass; ///< the mass of the wheel
 	ROTATIONALFRAME rotation; ///< a simulation of wheel rotation.  this contains the wheel orientation, angular velocity, angular acceleration, and inertia tensor
@@ -41,7 +38,7 @@ public:
 	void DebugPrint(std::ostream & out);
 
 	void SetExtendedPosition (const MATHVECTOR<Dbl,3>& value)	{	extended_position = value;	}
-	MATHVECTOR< Dbl, 3 > GetExtendedPosition() const			{	return extended_position;	}
+	MATHVECTOR<Dbl,3> GetExtendedPosition() const			{	return extended_position;	}
 	
 	Dbl GetRPM() const
 	{
@@ -54,7 +51,7 @@ public:
 	Dbl GetAngularVelocity() const	{	return rotation.GetAngularVelocity()[1];	}
 	void SetAngularVelocity(Dbl angvel)
 	{
-		MATHVECTOR <Dbl, 3> v(0, angvel, 0);
+		MATHVECTOR<Dbl,3> v(0, angvel, 0);
 		return rotation.SetAngularVelocity(v);
 	}
 
@@ -70,7 +67,7 @@ public:
 	
 	void SetInitialConditions()
 	{
-		MATHVECTOR <Dbl, 3> v;
+		MATHVECTOR<Dbl,3> v;
 		rotation.SetInitialTorque(v);
 	}
 	
@@ -84,17 +81,15 @@ public:
 	
 	void ZeroForces()
 	{
-		MATHVECTOR <Dbl, 3> v;
+		MATHVECTOR<Dbl,3> v;
 		rotation.SetTorque(v);
 	}
 	
-	const QUATERNION <Dbl> & GetOrientation() const	{	return rotation.GetOrientation();	}
+	const QUATERNION<Dbl> & GetOrientation() const	{	return rotation.GetOrientation();	}
 
 	Dbl GetSteerAngle() const				{	return steer_angle;		}
 	void SetSteerAngle (const Dbl& value)	{	steer_angle = value;	}
 	
-	bool Serialize(joeserialize::Serializer & s);
-
 	void SetAdditionalInertia (const Dbl& value);
 
 	void SetCamberDeg (const Dbl& value)	{	camber_deg = value;		}

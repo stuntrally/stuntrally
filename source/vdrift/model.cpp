@@ -17,7 +17,7 @@ void MODEL::GenerateMeshMetrics()
 	vnum = vnum / 3;
 	for ( int v = 0; v < vnum; v++ )
 	{
-		MATHVECTOR <float, 3> temp;
+		MATHVECTOR<float,3> temp;
 
 		temp.Set ( verts + v*3 );
 		
@@ -44,7 +44,7 @@ void MODEL::GenerateMeshMetrics()
 		}
 
 		float r = temp.Magnitude();
-		MATHVECTOR <float, 2> tempxz;
+		MATHVECTOR<float, 2> tempxz;
 		tempxz.Set(temp[0], temp[2]);
 		float rxz = tempxz.Magnitude();
 		if ( r > radius )
@@ -56,11 +56,11 @@ void MODEL::GenerateMeshMetrics()
 	bboxmin.Set(minv[0], minv[1], minv[2]);
 	bboxmax.Set(maxv[0], maxv[1], maxv[2]);
 	
-	MATHVECTOR <float, 3> center;
+	MATHVECTOR<float,3> center;
 	center = (bboxmin + bboxmax)*0.5;
 	radius = (bboxmin - center).Magnitude();
 	
-	MATHVECTOR <float, 3> minv_noy = bboxmin;
+	MATHVECTOR<float,3> minv_noy = bboxmin;
 	minv_noy[1] = 0;
 	center[1] = 0;
 	radiusxz = (minv_noy - center).Magnitude();

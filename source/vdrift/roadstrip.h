@@ -13,12 +13,12 @@ public:
 	bool ReadFrom(std::istream & openfile, std::ostream & error_output);
 	
 	bool Collide(
-		const MATHVECTOR <float, 3> & origin,
-		const MATHVECTOR <float, 3> & direction,
+		const MATHVECTOR<float,3> & origin,
+		const MATHVECTOR<float,3> & direction,
 		float seglen,
-		MATHVECTOR <float, 3> & outtri,
+		MATHVECTOR<float,3> & outtri,
 		const BEZIER * & colpatch,
-		MATHVECTOR <float, 3> & normal) const;
+		MATHVECTOR<float,3> & normal) const;
 	
 	void Reverse();
 	

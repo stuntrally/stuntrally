@@ -99,9 +99,9 @@ App::App(SETTINGS *settings, GAME *game)
 	
 	//  util for update rot
 	Quaternion qr;  {
-	QUATERNION <double> fix;  fix.Rotate(PI_d, 0, 1, 0);
+	QUATERNION<double> fix;  fix.Rotate(PI_d, 0, 1, 0);
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixCar = qr;  }
-	QUATERNION <double> fix;  fix.Rotate(PI_d/2, 0, 1, 0);
+	QUATERNION<double> fix;  fix.Rotate(PI_d/2, 0, 1, 0);
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixWh = qr;
 
 	for (i=0; i < 4; ++i)

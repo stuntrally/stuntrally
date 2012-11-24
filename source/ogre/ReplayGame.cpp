@@ -47,11 +47,11 @@ void ReplayHeader::SafeEnd0()
 
 ReplayFrame::ReplayFrame() :
 	//:time(0.0)
-	//MATHVECTOR <float,3> pos, whPos[4];
-	//QUATERNION <float> rot, whRot[4];
+	//MATHVECTOR<float,3> pos, whPos[4];
+	//QUATERNION<float> rot, whRot[4];
 	//float rpm,vel, clutch;  int gear;
 	throttle(0)//, steer
-	//MATHVECTOR <float,3> posEngn;
+	//MATHVECTOR<float,3> posEngn;
 	//float speed, dynVel;
 	//char surfType[4], whTerMtr[4];  //TRACKSURFACE::TYPE
 	//float squeal[4], slide[4], whVel[4];

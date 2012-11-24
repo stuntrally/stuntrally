@@ -199,7 +199,7 @@ void App::CreateMinimap()
 			for (int ix=0; ix<4; ++ix)
 			
 			{
-				const MATHVECTOR <float,3>& vec = (*i).GetPatch().GetPoint(ix,iy);
+				const MATHVECTOR<float,3>& vec = (*i).GetPatch().GetPoint(ix,iy);
 
 				Real x = vec[0], y = vec[2];
 				if (x < minX)  minX = x;	if (x > maxX)  maxX = x;
@@ -225,7 +225,7 @@ void App::CreateMinimap()
 			for (int y=0; y<4; ++y)
 			for (int x=0; x<4; ++x)
 			{
-				const MATHVECTOR <float,3>& vec = (*i).GetPatch().GetPoint(x,y);
+				const MATHVECTOR<float,3>& vec = (*i).GetPatch().GetPoint(x,y);
 				p[a][0] = vec[0];  p[a][1] = vec[2];  p[a][2] = vec[1];  a++;
 			}
 			a = 0;
@@ -313,7 +313,7 @@ void App::CreateRoadBezier()
 	{
 		#define VDR_LEN  // to get whole track length
 		#ifdef VDR_LEN
-		MATHVECTOR <float,3> vec0;  float length = 0.f;
+		MATHVECTOR<float,3> vec0;  float length = 0.f;
 		#endif
 		const std::list <ROADPATCH>& pats = (*it).GetPatchList();
 		for (std::list <ROADPATCH>::const_iterator i = pats.begin(); i != pats.end(); ++i)
@@ -322,7 +322,7 @@ void App::CreateRoadBezier()
 			for (int y=0; y<4; ++y)
 			for (int x=0; x<4; ++x)
 			{
-				const MATHVECTOR <float,3>& vec = (*i).GetPatch().GetPoint(x,y);
+				const MATHVECTOR<float,3>& vec = (*i).GetPatch().GetPoint(x,y);
 				p[a][0] = vec[2];  p[a][1] = vec[1] + 0.2f/*ofs up*/;  p[a][2] = -vec[0];  a++;
 				
 				#ifdef VDR_LEN

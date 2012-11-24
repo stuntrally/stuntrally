@@ -94,8 +94,8 @@ public:
 class Object		// object - mesh (static) or prop (dynamic)
 {
 public:
-	MATHVECTOR <float, 3> pos;
-	QUATERNION <float> rot;
+	MATHVECTOR<float,3> pos;
+	QUATERNION<float> rot;
 	Ogre::Vector3 scale;
 	std::string name;  // mesh file name
 

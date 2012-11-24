@@ -458,7 +458,7 @@ void App::UpdateHUD(int carId, float time)
 			float slide = /*-1.f*/0.f, sLong = 0.f, sLat = 0.f;
 			float squeal = pCar->GetTireSquealAmount((WHEEL_POSITION)w, &slide, &sLong, &sLat);
 
-			//MATHVECTOR <float,3> vwhVel = pCar->dynamics.GetWheelVelocity((WHEEL_POSITION)w);
+			//MATHVECTOR<float,3> vwhVel = pCar->dynamics.GetWheelVelocity((WHEEL_POSITION)w);
 			//float whVel = vwhVel.Magnitude() * 3.6f;
 
 			/**  //  info

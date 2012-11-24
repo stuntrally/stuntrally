@@ -57,7 +57,7 @@ public:
 	
 	// cast ray into collision world, returns first hit, caster is excluded fom hits
 	bool CastRay(
-		const MATHVECTOR <float,3> & position, const MATHVECTOR <float,3> & direction, const float length,
+		const MATHVECTOR<float,3> & position, const MATHVECTOR<float,3> & direction, const float length,
 		const btCollisionObject * caster, COLLISION_CONTACT & contact,
 		int* pOnRoad, bool ignoreCars, bool ignoreFluids) const;
 	

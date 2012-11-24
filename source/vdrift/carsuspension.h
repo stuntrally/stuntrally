@@ -7,18 +7,15 @@
 #include "dbl.h"
 #include "mathvector.h"
 #include "linearframe.h"
-#include "joeserialize.h"
-#include "macros.h"
 #include "linearinterp.h"
 #include "../ogre/common/Defines.h"
 
 
 class CARSUSPENSION
 {
-friend class joeserialize::Serializer;
 private:
 	// constants
-	MATHVECTOR <Dbl, 3> hinge;	///< the point that the wheels are rotated around as the suspension compresses
+	MATHVECTOR<Dbl,3> hinge;	///< the point that the wheels are rotated around as the suspension compresses
 	Dbl spring_constant;	///< the suspension spring constant
 	Dbl bounce;		///< suspension compression damping
 	Dbl rebound;	///< suspension decompression damping
@@ -46,8 +43,8 @@ public:
 
 	void DebugPrint(std::ostream & out);
 
-	void SetHinge ( const MATHVECTOR< Dbl, 3 >& value )	{	hinge = value;	}
-	const MATHVECTOR< Dbl, 3 > & GetHinge() const		{	return hinge;	}
+	void SetHinge ( const MATHVECTOR<Dbl,3>& value )	{	hinge = value;	}
+	const MATHVECTOR<Dbl,3> & GetHinge() const		{	return hinge;	}
 
 	void SetBounce (const Dbl& value)	{	bounce = value;		}
 	Dbl GetBounce() const				{	return bounce;		}
@@ -88,12 +85,6 @@ public:
 	const Dbl GetForce(Dbl displacement, Dbl velocity);
 
 	const Dbl & GetVelocity() const	{	return velocity;	}
-
-	bool Serialize(joeserialize::Serializer & s)
-	{
-		_SERIALIZE_(s,displacement);
-		return true;
-	}
 
 	void SetDamperFactorPoints(std::vector <std::pair <Dbl, Dbl> > & curve);
 	void SetSpringFactorPoints(std::vector <std::pair <Dbl, Dbl> > & curve);

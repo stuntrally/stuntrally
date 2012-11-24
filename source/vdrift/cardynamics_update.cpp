@@ -28,7 +28,7 @@ void CARDYNAMICS::Update()
 	chassis->getMotionState()->getWorldTransform(tr);
 	chassisRotation = ToMathQuaternion<Dbl>(tr.getRotation());
 	chassisCenterOfMass = ToMathVector<Dbl>(tr.getOrigin());
-	MATHVECTOR <Dbl, 3> com = center_of_mass;
+	MATHVECTOR<Dbl,3> com = center_of_mass;
 	chassisRotation.RotateVector(com);
 	chassisPosition = chassisCenterOfMass - com;
 	
@@ -93,7 +93,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 	{
 		if (inFluidsWh[w].size() > 0)  // 0 or 1 is there
 		{
-			MATHVECTOR <Dbl, 3> up(0,0,1);
+			MATHVECTOR<Dbl,3> up(0,0,1);
 			Orientation().RotateVector(up);
 			float upZ = std::max(0.f, (float)up[2]);
 			
@@ -104,7 +104,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 
 				WHEEL_POSITION wp = WHEEL_POSITION(w);
 				float whR = GetWheel(wp).GetRadius() * 1.2f;  //bigger par
-				MATHVECTOR <float, 3> wheelpos = GetWheelPosition(wp, 0);
+				MATHVECTOR<float,3> wheelpos = GetWheelPosition(wp, 0);
 				wheelpos[2] -= whR;
 				whP[w] = fp.idParticles;
 				
@@ -118,16 +118,16 @@ void CARDYNAMICS::UpdateBuoyancy()
 					//bool inAir = GetWheelContact(wp).col == NULL;
 
 					//  bump, adds some noise
-					MATHVECTOR <Dbl, 3> whPos = GetWheelPosition(wp) - chassisPosition;
+					MATHVECTOR<Dbl,3> whPos = GetWheelPosition(wp) - chassisPosition;
 					float bump = sinf(whPos[0]*fp.bumpFqX)*cosf(whPos[1]*fp.bumpFqY);
 					
 					float f = std::min(fp.whMaxAngVel, std::max(-fp.whMaxAngVel, (float)wheel[w].GetAngularVelocity() ));
-					QUATERNION <Dbl> steer;
+					QUATERNION<Dbl> steer;
 					float angle = -wheel[wp].GetSteerAngle() * fp.whSteerMul  + bump * fp.bumpAng;
 					steer.Rotate(angle * PI_d/180.f, 0, 0, 1);
 
 					//  forwards, side, up
-					MATHVECTOR <Dbl, 3> force(whH[w] * fp.whForceLong * f, 0, /*^ 0*/100.f * whH[w] * fp.whForceUp * upZ);
+					MATHVECTOR<Dbl,3> force(whH[w] * fp.whForceLong * f, 0, /*^ 0*/100.f * whH[w] * fp.whForceUp * upZ);
 					(Orientation()*steer).RotateVector(force);
 					
 					//  wheel spin resistance
@@ -175,7 +175,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 			//out << "pos: " << chassisPosition << endl;
 			//out << "sumWhTest: " << sumWhTest << endl;
 			out.precision(2);
-			//MATHVECTOR <Dbl, 3> up(0,0,1);  Orientation().RotateVector(up);
+			//MATHVECTOR<Dbl,3> up(0,0,1);  Orientation().RotateVector(up);
 			//out << "up: " << up << endl;
 			out << endl;
 		}
@@ -277,7 +277,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 			float n = 1.f + 0.3f * sin(time*4.3f)*cosf(time*7.74f);
 			time += dt;
 		//LogO(fToStr(n,4,6));
-		MATHVECTOR <Dbl, 3> v(-f*n,0,0);  // todo yaw, dir
+		MATHVECTOR<Dbl,3> v(-f*n,0,0);  // todo yaw, dir
 		ApplyForce(v);
 	}
 
@@ -295,7 +295,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 			if (boostFuel < 0.f)  boostFuel = 0.f;
 			if (boostFuel <= 0.f)  t = 0.0;
 		}
-		MATHVECTOR <Dbl, 3> v(t,0,0);
+		MATHVECTOR<Dbl,3> v(t,0,0);
 		Orientation().RotateVector(v);
 		ApplyTorque(v);
 	}
@@ -313,7 +313,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 		if (boostVal > 0.01f)
 		{
 			float f = body.GetMass() * boostVal * 16.f * pSet->game.boost_power;  // power
-			MATHVECTOR <Dbl, 3> v(f,0,0);
+			MATHVECTOR<Dbl,3> v(f,0,0);
 			Orientation().RotateVector(v);
 			ApplyForce(v);
 		}
@@ -333,11 +333,11 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	Dbl normal_force[WHEEL_POSITION_SIZE];
 	for(int i = 0; i < WHEEL_POSITION_SIZE; i++)
 	{
-		MATHVECTOR <Dbl, 3> suspension_force = UpdateSuspension(i, dt);
+		MATHVECTOR<Dbl,3> suspension_force = UpdateSuspension(i, dt);
 		normal_force[i] = suspension_force.dot(wheel_contact[i].GetNormal());
 		if (normal_force[i] < 0) normal_force[i] = 0;
 
-		MATHVECTOR <Dbl, 3> tire_friction = ApplyTireForce(i, normal_force[i], wheel_orientation[i]);
+		MATHVECTOR<Dbl,3> tire_friction = ApplyTireForce(i, normal_force[i], wheel_orientation[i]);
 		ApplyWheelTorque(dt, drive_torque[i], i, tire_friction, wheel_orientation[i]);
 	}
 
@@ -347,7 +347,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	//{
 	//	sum += (i < 2 ? -1 : 1) *//wheel[i].GetAngularVelocity() *
 	//		(1.0 - sin(wheel[i].GetSteerAngle()*PI_d/180.0) ) * /*(wheel[i].GetSteerAngle() > 0 ? 1 : -1) **/ 10;
-	//	MATHVECTOR <Dbl, 3> torque(0, 0, sum);
+	//	MATHVECTOR<Dbl,3> torque(0, 0, sum);
 	//	//wheel_space.RotateVector(world_wheel_torque);
 	//	//ApplyTorque(torque);
 	//}
@@ -401,15 +401,13 @@ void CARDYNAMICS::Tick(Dbl dt)
 
 	const float tacho_factor = 0.1;
 	tacho_rpm = engine.GetRPM() * tacho_factor + tacho_rpm * (1.0 - tacho_factor);
-
-	UpdateTelemetry(dt);
 }
 
 void CARDYNAMICS::SynchronizeBody()
 {
-	MATHVECTOR<Dbl, 3> v = ToMathVector<Dbl>(chassis->getLinearVelocity());
-	MATHVECTOR<Dbl, 3> w = ToMathVector<Dbl>(chassis->getAngularVelocity());
-	MATHVECTOR<Dbl, 3> p = ToMathVector<Dbl>(chassis->getCenterOfMassPosition());
+	MATHVECTOR<Dbl,3> v = ToMathVector<Dbl>(chassis->getLinearVelocity());
+	MATHVECTOR<Dbl,3> w = ToMathVector<Dbl>(chassis->getAngularVelocity());
+	MATHVECTOR<Dbl,3> p = ToMathVector<Dbl>(chassis->getCenterOfMassPosition());
 	QUATERNION<Dbl> q = ToMathQuaternion<Dbl>(chassis->getOrientation());
 	body.SetPosition(p);
 	body.SetOrientation(q);
@@ -425,11 +423,11 @@ void CARDYNAMICS::SynchronizeChassis()
 
 void CARDYNAMICS::UpdateWheelContacts()
 {
-	MATHVECTOR <float, 3> raydir = GetDownVector();
+	MATHVECTOR<float,3> raydir = GetDownVector();
 	for (int i = 0; i < WHEEL_POSITION_SIZE; i++)
 	{
 		COLLISION_CONTACT & wheelContact = wheel_contact[WHEEL_POSITION(i)];
-		MATHVECTOR <float, 3> raystart = LocalToWorld(wheel[i].GetExtendedPosition());
+		MATHVECTOR<float,3> raystart = LocalToWorld(wheel[i].GetExtendedPosition());
 		raystart = raystart - raydir * wheel[i].GetRadius();  //*!
 		float raylen = 1;  // !par
 		

@@ -58,9 +58,3 @@ Dbl CARTRANSMISSION::GetClutchSpeed(Dbl driveshaft_speed) const
 	assert(i != gear_ratios.end());
 	return driveshaft_speed * i->second;
 }
-
-bool CARTRANSMISSION::Serialize(joeserialize::Serializer & s)
-{
-	_SERIALIZE_(s,gear);
-	return true;
-}

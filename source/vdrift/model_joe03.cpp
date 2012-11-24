@@ -128,8 +128,8 @@ static bool NeedsNormalSwap(JOEObject & Object)
 		int normal_flip_count = 0;
 		for (int i = 0; i < Object.info.num_faces; i++)
 		{
-			MATHVECTOR <float,3> tri[3];
-			MATHVECTOR <float,3> norms[3];
+			MATHVECTOR<float,3> tri[3];
+			MATHVECTOR<float,3> norms[3];
 			for (unsigned int v = 0; v < 3; v++)
 			{
 				assert(Object.frames[f].faces[i].vertexIndex[v] < Object.frames[f].num_verts);
@@ -137,10 +137,10 @@ static bool NeedsNormalSwap(JOEObject & Object)
 				tri[v].Set(Object.frames[f].verts[Object.frames[f].faces[i].vertexIndex[v]].vertex);
 				norms[v].Set(Object.frames[f].normals[Object.frames[f].faces[i].normalIndex[v]].vertex);
 			}
-			MATHVECTOR <float,3> norm;
+			MATHVECTOR<float,3> norm;
 			for (unsigned int v = 0; v < 3; v++)
 				norm = norm + norms[v];
-			MATHVECTOR <float,3> tnorm = (tri[2] - tri[0]).cross(tri[1] - tri[0]);
+			MATHVECTOR<float,3> tnorm = (tri[2] - tri[0]).cross(tri[1] - tri[0]);
 			if (tnorm.Magnitude() > 0.0001 && norm.Magnitude() > 0.0001)
 			{
 				norm = norm.Normalize();
@@ -280,7 +280,7 @@ void MODEL_JOE03::ReadData ( FILE * m_FilePointer, JOEPACK * pack, JOEObject & O
 	{
 		for ( int v = 0; v < Object.frames[i].num_verts; v++ )
 		{
-			MATHVECTOR <float, 3> temp;
+			MATHVECTOR<float,3> temp;
 
 			temp.Set ( Object.frames[i].verts[v].vertex );
 			temp = temp * MODEL_SCALE;

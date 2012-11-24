@@ -3,14 +3,11 @@
 
 #include "dbl.h"
 #include "mathvector.h"
-#include "joeserialize.h"
-#include "macros.h"
 #include "../ogre/common/Defines.h"
 
 
 class CARAERO
 {
-friend class joeserialize::Serializer;
 private:
 	// constants
 	Dbl air_density;	///the current air density in kg/m^3
@@ -19,13 +16,13 @@ private:
 	Dbl lift_surface_area;	///the wing surface area in m^2
 	Dbl lift_coefficient;	///a unitless lift coefficient
 	Dbl lift_efficiency;	///the efficiency of the wing, a unitless value from 0.0 to 1.0
-	MATHVECTOR <Dbl, 3> position;	///the position that the drag and lift forces are applied on the body
+	MATHVECTOR<Dbl,3> position;	///the position that the drag and lift forces are applied on the body
 	
 	// variables
 	
 	//for info only
-	mutable MATHVECTOR <Dbl, 3> lift_vector;
-	mutable MATHVECTOR <Dbl, 3> drag_vector;
+	mutable MATHVECTOR<Dbl,3> lift_vector;
+	mutable MATHVECTOR<Dbl,3> drag_vector;
 	
 	
 public:
@@ -36,7 +33,7 @@ public:
 
 	void DebugPrint(std::ostream & out);
 	
-	void Set(const MATHVECTOR <Dbl, 3> & newpos, Dbl new_drag_frontal_area, Dbl new_drag_coefficient,
+	void Set(const MATHVECTOR<Dbl,3> & newpos, Dbl new_drag_frontal_area, Dbl new_drag_coefficient,
 		Dbl new_lift_surface_area, Dbl new_lift_coefficient, Dbl new_lift_efficiency)
 	{
 		position = newpos;
@@ -47,12 +44,12 @@ public:
 		lift_efficiency = new_lift_efficiency;
 	}
 
-	const MATHVECTOR< Dbl, 3 > & GetPosition() const
+	const MATHVECTOR<Dbl,3> & GetPosition() const
 	{
 		return position;
 	}
 
-	MATHVECTOR <Dbl, 3> GetForce(const MATHVECTOR <Dbl, 3> & bodyspace_wind_vector) const;
+	MATHVECTOR<Dbl,3> GetForce(const MATHVECTOR<Dbl,3> & bodyspace_wind_vector) const;
 	
 	Dbl GetAerodynamicDownforceCoefficient() const
 	{
@@ -64,13 +61,8 @@ public:
 		return 0.5 * air_density * (drag_coefficient * drag_frontal_area + lift_coefficient * lift_coefficient * lift_surface_area * (1.0-lift_efficiency));
 	}
 	
-	bool Serialize(joeserialize::Serializer & s)
-	{
-		return true;
-	}
-
-	MATHVECTOR< Dbl, 3 > GetLiftVector() const	{	return lift_vector;		}
-	MATHVECTOR< Dbl, 3 > GetDragVector() const	{	return drag_vector;		}
+	MATHVECTOR<Dbl,3> GetLiftVector() const	{	return lift_vector;		}
+	MATHVECTOR<Dbl,3> GetDragVector() const	{	return drag_vector;		}
 };
 
 #endif

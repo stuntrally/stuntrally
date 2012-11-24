@@ -1,25 +1,28 @@
 #ifndef _QUATERNION_H
 #define _QUATERNION_H
 
-//#include <vector>
-//#include <cassert>
+#include <vector>
+#include <cassert>
 //#include <cmath>
-//#include <iostream>
+#include <iostream>
 
 #include "mathvector.h"
 #include "joeserialize.h"
+
 
 template <typename T>
 class QUATERNION
 {
 friend class joeserialize::Serializer;
 private:
-	T v[4]; //x y z w
+	T v[4];  //x y z w
 	
 public:
 	typedef size_t size_type;
 	
-	QUATERNION() {LoadIdentity();}
+	QUATERNION()
+	{	LoadIdentity();  }
+	
 	QUATERNION(const T & nx, const T & ny, const T & nz, const T & nw)
 	{
 		v[0] = nx;
@@ -27,7 +30,7 @@ public:
 		v[2] = nz;
 		v[3] = nw;
 	}
-	QUATERNION(const QUATERNION <T> & other)
+	QUATERNION(const QUATERNION<T> & other)
 	{
 		*this = other;
 	}
@@ -51,18 +54,18 @@ public:
 		return v[n];
 	}
 	
-	const T & x() const {return v[0];}
-	const T & y() const {return v[1];}
-	const T & z() const {return v[2];}
-	const T & w() const {return v[3];}
+	const T & x() const {  return v[0];  }
+	const T & y() const {  return v[1];  }
+	const T & z() const {  return v[2];  }
+	const T & w() const {  return v[3];  }
 	
-	T & x() {return v[0];}
-	T & y() {return v[1];}
-	T & z() {return v[2];}
-	T & w() {return v[3];}
+	T & x() {  return v[0];  }
+	T & y() {  return v[1];  }
+	T & z() {  return v[2];  }
+	T & w() {  return v[3];  }
 	
 	template <typename T2>
-	const QUATERNION <T> & operator = (const QUATERNION <T2> & other)
+	const QUATERNION<T> & operator = (const QUATERNION<T2> & other)
 	{
 		for (size_type i = 0; i < 4; ++i)
 			v[i] = other[i];
@@ -155,7 +158,7 @@ public:
 	}
 	
 	///has the potential to return a un-normalized quaternion
-	QUATERNION <T> operator*(const QUATERNION <T> & quat2 ) const
+	QUATERNION<T> operator*(const QUATERNION<T> & quat2 ) const
 	{
 		/*QUATERNION output(v[3]*quat2.v[0] + v[0]*quat2.v[3] + v[1]*quat2.v[2] - v[2]*quat2.v[1],
 			v[3]*quat2.v[1] + v[1]*quat2.v[3] + v[2]*quat2.v[0] - v[0]*quat2.v[2],
@@ -185,7 +188,7 @@ public:
 	}
 	
 	///has the potential to return a un-normalized quaternion
-	QUATERNION <T> operator*(const T & scalar ) const
+	QUATERNION<T> operator*(const T & scalar) const
 	{
 		QUATERNION output(v[0]*scalar, v[1]*scalar, v[2]*scalar, v[3]*scalar);
 		
@@ -194,7 +197,7 @@ public:
 	}
 	
 	///has the potential to return a un-normalized quaternion
-	QUATERNION <T> operator+(const QUATERNION <T> & quat2) const
+	QUATERNION<T> operator+(const QUATERNION<T> & quat2) const
 	{
 		QUATERNION output(v[0]+quat2.v[0], v[1]+quat2.v[1], v[2]+quat2.v[2], v[3]+quat2.v[3]);
 		
@@ -203,7 +206,7 @@ public:
 	}
 	
 	template <typename T2>
-	bool operator== (const QUATERNION <T2> & other) const
+	bool operator==(const QUATERNION<T2> & other) const
 	{
 		bool same(true);
 		
@@ -216,13 +219,13 @@ public:
 	}
 	
 	template <typename T2>
-	bool operator!= (const QUATERNION <T2> & other) const
+	bool operator!=(const QUATERNION<T2> & other) const
 	{
 		return !(*this == other);
 	}
 	
 	///returns the conjugate
-	QUATERNION <T> operator-() const
+	QUATERNION<T> operator-() const
 	{
 		QUATERNION qtemp;
 		qtemp.v[3] = v[3];
@@ -273,7 +276,7 @@ public:
 	}
 	
 	///get the scalar angle (in radians) between two quaternions
-	const T GetAngleBetween(const QUATERNION <T> & quat2) const
+	const T GetAngleBetween(const QUATERNION<T> & quat2) const
 	{
 		//establish a forward vector
 		T forward[3];
@@ -298,7 +301,7 @@ public:
 	}
 	
 	///interpolate between this quaternion and another by scalar amount t [0,1] and return the result
-	QUATERNION <T> QuatSlerp (const QUATERNION <T> & quat2, const T & t) const
+	QUATERNION<T> QuatSlerp (const QUATERNION<T> & quat2, const T & t) const
 	{
 		T to1[4];
 		T omega, cosom, sinom, scale0, scale1;
@@ -344,7 +347,7 @@ public:
 		}
 		
 		//calculate final values
-		QUATERNION <T> qout;
+		QUATERNION<T> qout;
 		qout.v[0] = scale0 * v[0] + scale1 * to1[0];
 		qout.v[1] = scale0 * v[1] + scale1 * to1[1];
 		qout.v[2] = scale0 * v[2] + scale1 * to1[2];
@@ -373,11 +376,11 @@ public:
 			T upy, 
 			T upz)
 	{
-		MATHVECTOR <T,3> forward(centerx-eyex, centery-eyey, centerz-eyez);
-		MATHVECTOR <T,3> up(upx, upy, upz);
+		MATHVECTOR<T,3> forward(centerx-eyex, centery-eyey, centerz-eyez);
+		MATHVECTOR<T,3> up(upx, upy, upz);
 
 		forward = forward.Normalize();
-		MATHVECTOR <T,3> side = (forward.cross(up)).Normalize();
+		MATHVECTOR<T,3> side = (forward.cross(up)).Normalize();
 		up = side.cross(forward);
 
 		T m[16];
@@ -449,7 +452,7 @@ public:
 };
 
 template <typename T>
-std::ostream & operator << (std::ostream &os, const QUATERNION <T> & v)
+std::ostream & operator << (std::ostream &os, const QUATERNION<T> & v)
 {
 	os << "x=" << v[0] << ", y=" << v[1] << ", z=" << v[2] << ", w=" << v[3];
 	return os;

@@ -87,19 +87,19 @@ void AI::update(float dt, TRACK* track_p, const std::list <CAR> & othercars)
 	}
 }
 
-MATHVECTOR <float, 3> TransformToWorldspace(const MATHVECTOR <float, 3> & bezierspace)
+MATHVECTOR<float,3> TransformToWorldspace(const MATHVECTOR<float,3> & bezierspace)
 {
-	return MATHVECTOR <float, 3> (bezierspace[2], bezierspace[0], bezierspace[1]);
+	return MATHVECTOR<float,3> (bezierspace[2], bezierspace[0], bezierspace[1]);
 }
 
-MATHVECTOR <float, 3> TransformToPatchspace(const MATHVECTOR <float, 3> & bezierspace)
+MATHVECTOR<float,3> TransformToPatchspace(const MATHVECTOR<float,3> & bezierspace)
 {
-	return MATHVECTOR <float, 3> (bezierspace[1], bezierspace[2], bezierspace[0]);
+	return MATHVECTOR<float,3> (bezierspace[1], bezierspace[2], bezierspace[0]);
 }
 
 QT_TEST(ai_test)
 {
-	MATHVECTOR <float, 3> testvec(1,2,3);
+	MATHVECTOR<float,3> testvec(1,2,3);
 	QT_CHECK_EQUAL(testvec, TransformToWorldspace(TransformToPatchspace(testvec)));
 	QT_CHECK_EQUAL(testvec, TransformToPatchspace(TransformToWorldspace(testvec)));
 }
@@ -119,22 +119,22 @@ const BEZIER * GetCurrentPatch(const CAR *c)
 	return curr_patch;
 }
 
-MATHVECTOR <float, 3> GetPatchFrontCenter(const BEZIER & patch)
+MATHVECTOR<float,3> GetPatchFrontCenter(const BEZIER & patch)
 {
 	return (patch.GetPoint(0,0) + patch.GetPoint(0,3)) * 0.5;
 }
 
-MATHVECTOR <float, 3> GetPatchBackCenter(const BEZIER & patch)
+MATHVECTOR<float,3> GetPatchBackCenter(const BEZIER & patch)
 {
 	return (patch.GetPoint(3,0) + patch.GetPoint(3,3)) * 0.5;
 }
 
-MATHVECTOR <float, 3> GetPatchDirection(const BEZIER & patch)
+MATHVECTOR<float,3> GetPatchDirection(const BEZIER & patch)
 {
 	return (GetPatchFrontCenter(patch) - GetPatchBackCenter(patch)) * 0.5;
 }
 
-MATHVECTOR <float, 3> GetPatchWidthVector(const BEZIER & patch)
+MATHVECTOR<float,3> GetPatchWidthVector(const BEZIER & patch)
 {
 	return ((patch.GetPoint(0,0) + patch.GetPoint(3,0)) -
 			(patch.GetPoint(0,3) + patch.GetPoint(3,3))) * 0.5;
@@ -146,10 +146,10 @@ double GetPatchRadius(const BEZIER & patch)
 	{
 		double track_radius = 0;
 		
-		/*MATHVECTOR <float, 3> d1 = -GetPatchDirection(patch);
-		MATHVECTOR <float, 3> d2 = GetPatchDirection(*patch.GetNextPatch());*/
-		MATHVECTOR <float, 3> d1 = -(patch.GetNextPatch()->GetRacingLine() - patch.GetRacingLine());
-		MATHVECTOR <float, 3> d2 = patch.GetNextPatch()->GetNextPatch()->GetRacingLine() - patch.GetNextPatch()->GetRacingLine();
+		/*MATHVECTOR<float,3> d1 = -GetPatchDirection(patch);
+		MATHVECTOR<float,3> d2 = GetPatchDirection(*patch.GetNextPatch());*/
+		MATHVECTOR<float,3> d1 = -(patch.GetNextPatch()->GetRacingLine() - patch.GetRacingLine());
+		MATHVECTOR<float,3> d2 = patch.GetNextPatch()->GetNextPatch()->GetRacingLine() - patch.GetNextPatch()->GetRacingLine();
 		d1[1] = 0;
 		d2[1] = 0;
 		float d1mag = d1.Magnitude();
@@ -171,8 +171,8 @@ double GetPatchRadius(const BEZIER & patch)
 ///trim the patch's width in-place
 void TrimPatch(BEZIER & patch, float trimleft_front, float trimright_front, float trimleft_back, float trimright_back)
 {
-	MATHVECTOR <float, 3> frontvector = (patch.GetPoint(0,3) - patch.GetPoint(0,0));
-	MATHVECTOR <float, 3> backvector = (patch.GetPoint(3,3) - patch.GetPoint(3,0));
+	MATHVECTOR<float,3> frontvector = (patch.GetPoint(0,3) - patch.GetPoint(0,0));
+	MATHVECTOR<float,3> backvector = (patch.GetPoint(3,3) - patch.GetPoint(3,0));
 	float frontwidth = frontvector.Magnitude();
 	float backwidth = backvector.Magnitude();
 	if (trimleft_front + trimright_front > frontwidth)
@@ -188,21 +188,21 @@ void TrimPatch(BEZIER & patch, float trimleft_front, float trimright_front, floa
 		trimright_back *= scale;
 	}
 	
-	MATHVECTOR <float, 3> newfl = patch.GetPoint(0,0);
-	MATHVECTOR <float, 3> newfr = patch.GetPoint(0,3);
-	MATHVECTOR <float, 3> newbl = patch.GetPoint(3,0);
-	MATHVECTOR <float, 3> newbr = patch.GetPoint(3,3);
+	MATHVECTOR<float,3> newfl = patch.GetPoint(0,0);
+	MATHVECTOR<float,3> newfr = patch.GetPoint(0,3);
+	MATHVECTOR<float,3> newbl = patch.GetPoint(3,0);
+	MATHVECTOR<float,3> newbr = patch.GetPoint(3,3);
 	
 	if (frontvector.Magnitude() > 0.001)
 	{
-		MATHVECTOR <float, 3> trimdirection_front = frontvector.Normalize();
+		MATHVECTOR<float,3> trimdirection_front = frontvector.Normalize();
 		newfl = patch.GetPoint(0,0) + trimdirection_front*trimleft_front;
 		newfr = patch.GetPoint(0,3) - trimdirection_front*trimright_front;
 	}
 	
 	if (backvector.Magnitude() > 0.001)
 	{
-		MATHVECTOR <float, 3> trimdirection_back = backvector.Normalize();
+		MATHVECTOR<float,3> trimdirection_back = backvector.Normalize();
 		newbl = patch.GetPoint(3,0) + trimdirection_back*trimleft_back;
 		newbr = patch.GetPoint(3,3) - trimdirection_back*trimright_back;
 	}
@@ -231,15 +231,15 @@ BEZIER AI::RevisePatch(const BEZIER * origpatch, bool use_racingline, AI_Car *c,
 	
 	//check for revisions due to other cars
 	/*const float trim_falloff_distance = 100.0; //trim fallof distance in meters per (meters per second)
-	const MATHVECTOR <float, 3> throttle_axis(-1,0,0); //positive is in front of the car
+	const MATHVECTOR<float,3> throttle_axis(-1,0,0); //positive is in front of the car
 	std::map <const CAR *, PATH_REVISION> & revmap = path_revisions;
 	for (std::map <const CAR *, PATH_REVISION>::iterator i = revmap.begin(); i != revmap.end(); i++)
 	{
 		if (i->first != c->car)
 		{
 			//compute relative info
-			MATHVECTOR <float, 3> myvel = c->car->GetVelocity();
-			MATHVECTOR <float, 3> othervel = i->first->GetVelocity();
+			MATHVECTOR<float,3> myvel = c->car->GetVelocity();
+			MATHVECTOR<float,3> othervel = i->first->GetVelocity();
 			(-c->car->GetOrientation()).RotateVector(myvel);
 			(-i->first->GetOrientation()).RotateVector(othervel);
 			float speed_diff = myvel.dot(throttle_axis) - othervel.dot(throttle_axis); //positive if other car is faster //actually positive if my car is faster, right?
@@ -308,7 +308,7 @@ void AI::updateGasBrake(AI_Car *c, float dt, TRACK* track_p, const std::list <CA
 	BEZIER curr_patch = RevisePatch(curr_patch_ptr, c->use_racingline, c, othercars);
 	//BEZIER curr_patch = *curr_patch_ptr;
 
-	MATHVECTOR <float, 3> patch_direction = TransformToWorldspace(GetPatchDirection(curr_patch));
+	MATHVECTOR<float,3> patch_direction = TransformToWorldspace(GetPatchDirection(curr_patch));
 	
 	//this version uses the velocity along tangent vector. it should calculate a lower current speed,
 	//hence higher gas value or lower brake value
@@ -533,7 +533,7 @@ void AI::updateSteer(AI_Car *c, float dt, const std::list <CAR> & othercars)
 			c->car->GetVelocity().Magnitude() * LOOKAHEAD_FACTOR2;
 	lookahead = 1.0;
 	float length = 0.0;
-	MATHVECTOR <float, 3> dest_point = GetPatchFrontCenter(next_patch);
+	MATHVECTOR<float,3> dest_point = GetPatchFrontCenter(next_patch);
 	
 	while (length < lookahead)
 	{
@@ -561,14 +561,14 @@ void AI::updateSteer(AI_Car *c, float dt, const std::list <CAR> & othercars)
 		}
 	}
 
-	MATHVECTOR <float, 3> next_position = TransformToWorldspace(dest_point);
-	MATHVECTOR <float, 3> car_position = c->car->GetCenterOfMassPosition();
-	MATHVECTOR <float, 3> car_orientation(0,1,0);
-	QUATERNION <float> fixer;
+	MATHVECTOR<float,3> next_position = TransformToWorldspace(dest_point);
+	MATHVECTOR<float,3> car_position = c->car->GetCenterOfMassPosition();
+	MATHVECTOR<float,3> car_orientation(0,1,0);
+	QUATERNION<float> fixer;
 	fixer.Rotate(-PI_d*0.5, 0, 0, 1);
 	(c->car->GetOrientation()*fixer).RotateVector(car_orientation);
 
-	MATHVECTOR <float, 3> desire_orientation = next_position - car_position;
+	MATHVECTOR<float,3> desire_orientation = next_position - car_position;
 
 	//car's direction on the horizontal plane
 	car_orientation[2] = 0;
@@ -611,11 +611,11 @@ void AI::updateSteer(AI_Car *c, float dt, const std::list <CAR> & othercars)
 
 ///note that carposition must be in patch space
 ///returns distance from left side of the track
-float GetHorizontalDistanceAlongPatch(const BEZIER & patch, MATHVECTOR <float, 3> carposition)
+float GetHorizontalDistanceAlongPatch(const BEZIER & patch, MATHVECTOR<float,3> carposition)
 {
-	MATHVECTOR <float, 3> leftside = (patch.GetPoint(0,0) + patch.GetPoint(3,0))*0.5;
-	MATHVECTOR <float, 3> rightside = (patch.GetPoint(0,3) + patch.GetPoint(3,3))*0.5;
-	MATHVECTOR <float, 3> patchwidthvector = rightside - leftside;
+	MATHVECTOR<float,3> leftside = (patch.GetPoint(0,0) + patch.GetPoint(3,0))*0.5;
+	MATHVECTOR<float,3> rightside = (patch.GetPoint(0,3) + patch.GetPoint(3,3))*0.5;
+	MATHVECTOR<float,3> patchwidthvector = rightside - leftside;
 	return patchwidthvector.Normalize().dot(carposition-leftside);
 }
 
@@ -685,8 +685,8 @@ void AI::analyzeOthers(AI_Car *c, float dt, const std::list <CAR> & othercars)
 	
 	//std::cout << speed << ": " << authority << std::endl;
 	
-	const MATHVECTOR <float, 3> steer_right_axis(0,-1,0);
-	const MATHVECTOR <float, 3> throttle_axis(1,0,0); //positive is in front of the car
+	const MATHVECTOR<float,3> steer_right_axis(0,-1,0);
+	const MATHVECTOR<float,3> throttle_axis(1,0,0); //positive is in front of the car
 	
 #ifdef VISUALIZE_AI_DEBUG
 	c->avoidancedraw->ClearLine();
@@ -699,7 +699,7 @@ void AI::analyzeOthers(AI_Car *c, float dt, const std::list <CAR> & othercars)
 			struct AI_Car::OTHERCARINFO & info = c->othercars[&(*i)];
 			
 			//find direction of othercar in our frame
-			MATHVECTOR <float, 3> relative_position = i->GetCenterOfMassPosition() - c->car->GetCenterOfMassPosition();
+			MATHVECTOR<float,3> relative_position = i->GetCenterOfMassPosition() - c->car->GetCenterOfMassPosition();
 			(-c->car->GetOrientation()).RotateVector(relative_position);
 			
 			//std::cout << relative_position.dot(throttle_axis) << ", " << relative_position.dot(steer_right_axis) << std::endl;
@@ -708,8 +708,8 @@ void AI::analyzeOthers(AI_Car *c, float dt, const std::list <CAR> & othercars)
 			float fore_position = relative_position.dot(throttle_axis);
 			//float speed_diff = i->GetVelocity().dot(throttle_axis) - c->car->GetVelocity().dot(throttle_axis); //positive if other car is faster
 			
-			MATHVECTOR <float, 3> myvel = c->car->GetVelocity();
-			MATHVECTOR <float, 3> othervel = i->GetVelocity();
+			MATHVECTOR<float,3> myvel = c->car->GetVelocity();
+			MATHVECTOR<float,3> othervel = i->GetVelocity();
 			(-c->car->GetOrientation()).RotateVector(myvel);
 			(-i->GetOrientation()).RotateVector(othervel);
 			float speed_diff = othervel.dot(throttle_axis) - myvel.dot(throttle_axis); //positive if other car is faster
@@ -773,7 +773,7 @@ void AI::analyzeOthers(AI_Car *c, float dt, const std::list <CAR> & othercars)
 	
 	float eta = 1000;
 	float min_horizontal_distance = 1000;
-	QUATERNION <float> otherorientation;
+	QUATERNION<float> otherorientation;
 	
 	for (std::map <const CAR *, AI_Car::OTHERCARINFO>::iterator i = c->othercars.begin(); i != c->othercars.end(); i++)
 	{
@@ -792,8 +792,8 @@ void AI::analyzeOthers(AI_Car *c, float dt, const std::list <CAR> & othercars)
 	float d = std::abs(sidedist) - spacingdistance*0.5;
 	if (d < spacingdistance)
 	{
-		const MATHVECTOR <float, 3> forward(1,0,0);
-		MATHVECTOR <float, 3> otherdir = forward;
+		const MATHVECTOR<float,3> forward(1,0,0);
+		MATHVECTOR<float,3> otherdir = forward;
 		otherorientation.RotateVector(otherdir); //rotate to worldspace
 		(-c->car->GetOrientation()).RotateVector(otherdir); //rotate to this car space
 		otherdir[2] = 0; //remove vertical component
@@ -905,13 +905,13 @@ void AI::updatePlan(const std::list <CAR> & allcars, float dt)
 			const BEZIER & patch = *origpatch;
 			
 			const float car_radius = 1.5; //treat a car like a circle
-			MATHVECTOR <float, 3> carpos = TransformToPatchspace(i->GetCenterOfMassPosition());
-			MATHVECTOR <float, 3> leftside = (patch.GetPoint(0,0) + patch.GetPoint(3,0))*0.5;
-			MATHVECTOR <float, 3> rightside = (patch.GetPoint(0,3) + patch.GetPoint(3,3))*0.5;
-			MATHVECTOR <float, 3> patchwidthvector = rightside - leftside;
-			MATHVECTOR <float, 3> frontcenter = (patch.GetPoint(0,0) + patch.GetPoint(0,3))*0.5;
-			MATHVECTOR <float, 3> backcenter = (patch.GetPoint(3,0) + patch.GetPoint(3,3))*0.5;
-			MATHVECTOR <float, 3> patchdirectionvector = frontcenter - backcenter;
+			MATHVECTOR<float,3> carpos = TransformToPatchspace(i->GetCenterOfMassPosition());
+			MATHVECTOR<float,3> leftside = (patch.GetPoint(0,0) + patch.GetPoint(3,0))*0.5;
+			MATHVECTOR<float,3> rightside = (patch.GetPoint(0,3) + patch.GetPoint(3,3))*0.5;
+			MATHVECTOR<float,3> patchwidthvector = rightside - leftside;
+			MATHVECTOR<float,3> frontcenter = (patch.GetPoint(0,0) + patch.GetPoint(0,3))*0.5;
+			MATHVECTOR<float,3> backcenter = (patch.GetPoint(3,0) + patch.GetPoint(3,3))*0.5;
+			MATHVECTOR<float,3> patchdirectionvector = frontcenter - backcenter;
 			
 			float patchwidth = patchwidthvector.Magnitude();
 			float caroffsetfromleft = patchwidthvector.Normalize().dot(carpos-leftside);

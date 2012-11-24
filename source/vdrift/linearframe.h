@@ -3,25 +3,24 @@
 
 #include "dbl.h"
 #include "mathvector.h"
-#include "joeserialize.h"
-#include "macros.h"
+
 
 //#define EULER
 //#define NSV
 //#define MODIFIEDVERLET
 #define SUVAT
 
+
 class LINEARFRAME
 {
-friend class joeserialize::Serializer;
 private:
 	//primary
-	MATHVECTOR <Dbl,3> position;
-	MATHVECTOR <Dbl,3> momentum;
-	MATHVECTOR <Dbl,3> force;
+	MATHVECTOR<Dbl,3> position;
+	MATHVECTOR<Dbl,3> momentum;
+	MATHVECTOR<Dbl,3> force;
 	
 	//secondary
-	MATHVECTOR <Dbl,3> old_force; //this is only necessary state information for the verlet-like integrators
+	MATHVECTOR<Dbl,3> old_force; //this is only necessary state information for the verlet-like integrators
 	
 	// constants
 	Dbl inverse_mass;
@@ -36,7 +35,7 @@ private:
 		have_old_force = true;
 	}
 	
-	MATHVECTOR <Dbl,3> GetVelocityFromMomentum(const MATHVECTOR <Dbl,3> & moment) const
+	MATHVECTOR<Dbl,3> GetVelocityFromMomentum(const MATHVECTOR<Dbl,3> & moment) const
 	{
 		return moment*inverse_mass;
 	}
@@ -55,12 +54,12 @@ public:
 		return 1.0 / inverse_mass;
 	}
 	
-	void SetPosition(const MATHVECTOR <Dbl,3> & newpos)
+	void SetPosition(const MATHVECTOR<Dbl,3> & newpos)
 	{
 		position = newpos;
 	}
 	
-	void SetVelocity(const MATHVECTOR <Dbl,3> & velocity)
+	void SetVelocity(const MATHVECTOR<Dbl,3> & velocity)
 	{
 		momentum = velocity / inverse_mass;
 	}
@@ -113,20 +112,20 @@ public:
 	}
 	
 	///this must only be called between integrate1 and integrate2 steps
-	void ApplyForce(const MATHVECTOR <Dbl,3> & f)
+	void ApplyForce(const MATHVECTOR<Dbl,3> & f)
 	{
 		assert(integration_step == 1);
 		force = force + f;
 	}
 	
-	void SetForce(const MATHVECTOR <Dbl,3> & f)
+	void SetForce(const MATHVECTOR<Dbl,3> & f)
 	{
 		assert(integration_step == 1);
 		force = f;
 	}
 	
 	///this must be called once at sim start to set the initial force present
-	void SetInitialForce(const MATHVECTOR <Dbl, 3> & newforce)
+	void SetInitialForce(const MATHVECTOR<Dbl,3> & newforce)
 	{
 		assert(integration_step == 0);
 		
@@ -134,28 +133,19 @@ public:
 		have_old_force = true;
 	}
 
-	const MATHVECTOR <Dbl,3> & GetPosition() const
+	const MATHVECTOR<Dbl,3> & GetPosition() const
 	{
 		return position;
 	}
 	
-	const MATHVECTOR <Dbl,3> GetVelocity() const
+	const MATHVECTOR<Dbl,3> GetVelocity() const
 	{
 		return GetVelocityFromMomentum(momentum);
 	}
 	
-	const MATHVECTOR <Dbl,3> & GetForce() const
+	const MATHVECTOR<Dbl,3> & GetForce() const
 	{
 		return old_force;
-	}
-	
-	bool Serialize(joeserialize::Serializer & s)
-	{
-		_SERIALIZE_(s,position);
-		_SERIALIZE_(s,momentum);
-		_SERIALIZE_(s,force);
-		RecalculateSecondary();
-		return true;
 	}
 };
 

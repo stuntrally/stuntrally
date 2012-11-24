@@ -38,10 +38,3 @@ Dbl CARCLUTCH::GetTorque (Dbl n_engine_speed, Dbl n_drive_speed)
 	last_torque = torque;
 	return torque;
 }
-
-bool CARCLUTCH::Serialize(joeserialize::Serializer & s)
-{
-	_SERIALIZE_(s,clutch_position);
-	_SERIALIZE_(s,locked);
-	return true;
-}

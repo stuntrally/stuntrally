@@ -302,7 +302,7 @@ bool TRACK::LoadParameters(const std::string & trackpath)
 	float f1;
 	while (param.GetParam(sp_name.str(), f3))
 	{
-		MATHVECTOR <float, 3> pos(f3[2], f3[0], f3[1]);
+		MATHVECTOR<float,3> pos(f3[2], f3[0], f3[1]);
 
 		sp_name.str("");
 		sp_name << "start orientation-xyz " << sp_num;
@@ -319,15 +319,15 @@ bool TRACK::LoadParameters(const std::string & trackpath)
 			return false;
 		}
 
-		QUATERNION <float> orient(f3[2], f3[0], f3[1], f1);
-		//QUATERNION <float> orient(f3[0], f3[1], f3[2], f1);
+		QUATERNION<float> orient(f3[2], f3[0], f3[1], f1);
+		//QUATERNION<float> orient(f3[0], f3[1], f3[2], f1);
 
 		//due to historical reasons the initial orientation places the car faces the wrong way
-		QUATERNION <float> fixer; 
+		QUATERNION<float> fixer; 
 		fixer.Rotate(PI_d, 0, 0, 1);
 		orient = fixer * orient;
 
-		start_positions.push_back(std::pair <MATHVECTOR <float, 3>, QUATERNION <float> >
+		start_positions.push_back(std::pair <MATHVECTOR<float,3>, QUATERNION<float> >
 				(pos, orient));
 
 		sp_num++;
@@ -467,7 +467,7 @@ void TRACK::Reverse()
 
 
 	//flip start positions
-	for (std::vector <std::pair <MATHVECTOR <float, 3>, QUATERNION <float> > >::iterator i = start_positions.begin();
+	for (std::vector <std::pair <MATHVECTOR<float,3>, QUATERNION<float> > >::iterator i = start_positions.begin();
 		i != start_positions.end(); ++i)
 	{
 		i->second.Rotate(PI_d, 0,0,1);
@@ -514,16 +514,16 @@ bool TRACK::LoadRoads(const std::string & trackpath, bool reverse)
 }
 
 bool TRACK::CastRay(
-	const MATHVECTOR <float, 3> & origin,
-	const MATHVECTOR <float, 3> & direction,
-	float seglen, MATHVECTOR <float, 3> & outtri,
+	const MATHVECTOR<float,3> & origin,
+	const MATHVECTOR<float,3> & direction,
+	float seglen, MATHVECTOR<float,3> & outtri,
 	const BEZIER * & colpatch,
-	MATHVECTOR <float, 3> & normal) const
+	MATHVECTOR<float,3> & normal) const
 {
 	bool col = false;
 	for (std::list <ROADSTRIP>::const_iterator i = roads.begin(); i != roads.end(); ++i)
 	{
-		MATHVECTOR <float, 3> coltri, colnorm;
+		MATHVECTOR<float,3> coltri, colnorm;
 		const BEZIER * colbez = NULL;
 		if (i->Collide(origin, direction, seglen, coltri, colbez, colnorm))
 		{
@@ -593,20 +593,20 @@ optional <const BEZIER *> ROADSTRIP::FindBezierAtOffset(const BEZIER * bezier, i
 	}
 }
 
-std::pair <MATHVECTOR <float, 3>, QUATERNION <float> > TRACK::GetStart(unsigned int index)
+std::pair <MATHVECTOR<float,3>, QUATERNION<float> > TRACK::GetStart(unsigned int index)
 {
 	assert(!start_positions.empty());
 	unsigned int laststart = 0;  // force auto gen  // start_positions.size()-1;
 	
 	if (index > laststart || start_positions.empty())
 	{
-		std::pair <MATHVECTOR <float, 3>, QUATERNION <float> > sp;
+		std::pair <MATHVECTOR<float,3>, QUATERNION<float> > sp;
 		if (!start_positions.empty())
 			sp = start_positions[laststart];
 		else
-			sp = std::make_pair(MATHVECTOR <float, 3>(0,0,0), QUATERNION <float>(0,0,0,1));
+			sp = std::make_pair(MATHVECTOR<float,3>(0,0,0), QUATERNION<float>(0,0,0,1));
 			
-		MATHVECTOR <float, 3> backward(-6,0,0);  // par dist back
+		MATHVECTOR<float,3> backward(-6,0,0);  // par dist back
 		backward = backward * (index-laststart);
 		sp.second.RotateVector(backward);
 		sp.first = sp.first + backward;

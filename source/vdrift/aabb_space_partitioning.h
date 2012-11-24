@@ -69,7 +69,7 @@ class AABB_SPACE_PARTITIONING_NODE
 			children.resize(ideal_children_per_node);
 	
 			//determine the average center position of all objects
-			MATHVECTOR <float, 3> avgcenter;
+			MATHVECTOR<float,3> avgcenter;
 			int numobj = objects.size();
 			float incamount = 1.0 / numobj;
 			for (typename objectlist_type::iterator i = objects.begin(); i != objects.end(); ++i)
@@ -78,9 +78,9 @@ class AABB_SPACE_PARTITIONING_NODE
 			}
 	
 			//find axis of maximum change, so we know where to split
-			MATHVECTOR <float, 3> axismask;
+			MATHVECTOR<float,3> axismask;
 			axismask.Set(1,0,0);
-			MATHVECTOR <float, 3> bboxsize = bbox.GetSize();
+			MATHVECTOR<float,3> bboxsize = bbox.GetSize();
 			if (bboxsize[0] > bboxsize[1] && bboxsize[0] > bboxsize[2])
 			{
 				axismask.Set(1,0,0);

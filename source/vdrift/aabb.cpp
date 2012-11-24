@@ -17,8 +17,8 @@ QT_TEST(aabb_test)
 	AABB <float> box1;
 	AABB <float> box2;
 	
-	MATHVECTOR <float, 3> c1;
-	MATHVECTOR <float, 3> c2;
+	MATHVECTOR<float,3> c1;
+	MATHVECTOR<float,3> c2;
 	
 	c1.Set(-1,-1,-1);
 	c2.Set(1,1,1);
@@ -37,8 +37,8 @@ QT_TEST(aabb_test)
 	
 	QT_CHECK(!box1.Intersect(box3));
 	
-	MATHVECTOR <float, 3> orig;
-	MATHVECTOR <float, 3> dir;
+	MATHVECTOR<float,3> orig;
+	MATHVECTOR<float,3> dir;
 	orig.Set(0,0,4);
 	dir.Set(0,0,-1);
 	

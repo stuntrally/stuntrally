@@ -19,7 +19,7 @@ PERFORMANCE_TESTING::PERFORMANCE_TESTING()
 
 void PERFORMANCE_TESTING::ResetCar()
 {
-	MATHVECTOR <double, 3> initial_position(0,0,0);
+	MATHVECTOR<double,3> initial_position(0,0,0);
 	car.dynamics.SetPosition(initial_position);
 
 	car.dynamics.SetTCS(true);
@@ -34,10 +34,10 @@ void PERFORMANCE_TESTING::SimulateFlatRoad()
 	//simulate an infinite, flat road
 	for (int i = 0; i < 4; ++i)
 	{
-		MATHVECTOR <float, 3> wp = car.dynamics.GetWheelPosition(WHEEL_POSITION(i));
+		MATHVECTOR<float,3> wp = car.dynamics.GetWheelPosition(WHEEL_POSITION(i));
 		float depth = wp[2] - car.GetTireRadius(WHEEL_POSITION(i));
-		MATHVECTOR <float, 3> pos(wp[0], wp[1], 0);
-		MATHVECTOR <float, 3> norm(0, 0, 1);
+		MATHVECTOR<float,3> pos(wp[0], wp[1], 0);
+		MATHVECTOR<float,3> norm(0, 0, 1);
 		car.GetWheelContact(WHEEL_POSITION(i)).Set(pos, norm, depth, &surface, NULL, NULL);
 	}
 }
@@ -65,7 +65,7 @@ void PERFORMANCE_TESTING::Test(const string & carpath, class App* pApp,
 		"Center of mass [m] L,W,H: " << car.dynamics.center_of_mass << endl;
 
 	//  CARDYNAMICS::Init  stuff
-	MATHVECTOR <Dbl, 3> zero(0,0,0);  QUATERNION <Dbl> orientation;
+	MATHVECTOR<Dbl,3> zero(0,0,0);  QUATERNION<Dbl> orientation;
 	//car.dynamics.body.SetPosition(position);
 	car.dynamics.body.SetOrientation(orientation);
 	car.dynamics.body.SetInitialForce(zero);
@@ -213,7 +213,7 @@ void PERFORMANCE_TESTING::TestStoppingDistance(bool abs, ostream & info_output, 
 	inputs[CARINPUT::THROTTLE] = 1.0;
 
 	float stopthreshold = 0.1; //if the speed (in m/s) is less than this value, discontinue the testing
-	MATHVECTOR <double, 3> stopstart; //where the stopping starts
+	MATHVECTOR<double,3> stopstart; //where the stopping starts
 	float brakestartspeed = 26.82; //speed at which to start braking, in m/s (26.82 m/s is 60 mph)
 
 	bool accelerating = true; //switches to false once 60 mph is reached
@@ -268,7 +268,7 @@ void PERFORMANCE_TESTING::TestStoppingDistance(bool abs, ostream & info_output, 
 		++i;
 	}
 
-	MATHVECTOR <double, 3> stopend = car.dynamics.GetWheelPosition(WHEEL_POSITION(0));
+	MATHVECTOR<double,3> stopend = car.dynamics.GetWheelPosition(WHEEL_POSITION(0));
 
 	info_output << "60-0 stopping distance ";
 	if (abs)	info_output << "(ABS)";

@@ -81,7 +81,7 @@ void CARENGINE::ComputeForces()
 
 void CARENGINE::ApplyForces()
 {
-	MATHVECTOR <Dbl, 3> total_torque(0);
+	MATHVECTOR<Dbl,3> total_torque(0);
 	
 	total_torque[0] += combustion_torque;
 	total_torque[0] += friction_torque;
@@ -135,14 +135,4 @@ void CARENGINE::SetTorqueCurve(Dbl max_power_rpm, std::vector <std::pair <Dbl, D
 			break;
 		}
 	}
-}
-
-bool CARENGINE::Serialize(joeserialize::Serializer & s)
-{
-	_SERIALIZE_(s,throttle_position);
-	_SERIALIZE_(s,clutch_torque);
-	_SERIALIZE_(s,out_of_gas);
-	_SERIALIZE_(s,rev_limit_exceeded);
-	_SERIALIZE_(s,crankshaft);
-	return true;
 }

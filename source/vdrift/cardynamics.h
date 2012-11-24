@@ -16,8 +16,6 @@
 #include "cardefs.h"
 #include "carbrake.h"
 #include "caraero.h"
-#include "joeserialize.h"
-#include "macros.h"
 #include "collision_contact.h"
 #include "cartelemetry.h"
 #include "../btOgre/BtOgreDebug.h"
@@ -27,10 +25,10 @@ class CONFIGFILE;
 class COLLISION_WORLD;
 class FluidBox;
 
+
 class CARDYNAMICS : public btActionInterface
 {
 friend class PERFORMANCE_TESTING;
-friend class joeserialize::Serializer;
 public:
 
 	class SETTINGS* pSet;
@@ -49,8 +47,8 @@ public:
 		const MODEL & chassisModel,
 		const MODEL & wheelModelFront,
 		const MODEL & wheelModelRear,
-		const MATHVECTOR <Dbl, 3> & position,
-		const QUATERNION <Dbl> & orientation);
+		const MATHVECTOR<Dbl,3> & position,
+		const QUATERNION<Dbl> & orientation);
 
 // bullet interface
 	virtual void updateAction(btCollisionWorld * collisionWorld, btScalar dt);
@@ -58,15 +56,15 @@ public:
 
 // graphics interface, interpolated!
 	void Update(), UpdateBuoyancy(); // update interpolated chassis state
-	const MATHVECTOR <Dbl, 3> & GetCenterOfMassPosition() const;
-	const MATHVECTOR <Dbl, 3> & GetPosition() const;
-	const QUATERNION <Dbl> & GetOrientation() const;
-	MATHVECTOR <Dbl, 3> GetWheelPosition(WHEEL_POSITION wp) const;
-	MATHVECTOR <Dbl, 3> GetWheelPosition(WHEEL_POSITION wp, Dbl displacement_percent) const; // for debugging
-	QUATERNION <Dbl> GetWheelOrientation(WHEEL_POSITION wp) const;
+	const MATHVECTOR<Dbl,3> & GetCenterOfMassPosition() const;
+	const MATHVECTOR<Dbl,3> & GetPosition() const;
+	const QUATERNION<Dbl> & GetOrientation() const;
+	MATHVECTOR<Dbl,3> GetWheelPosition(WHEEL_POSITION wp) const;
+	MATHVECTOR<Dbl,3> GetWheelPosition(WHEEL_POSITION wp, Dbl displacement_percent) const; // for debugging
+	QUATERNION<Dbl> GetWheelOrientation(WHEEL_POSITION wp) const;
 
-	QUATERNION <Dbl> GetUprightOrientation(WHEEL_POSITION wp) const;
-	MATHVECTOR <Dbl, 3> GetWheelVelocity(WHEEL_POSITION wp) const;
+	QUATERNION<Dbl> GetUprightOrientation(WHEEL_POSITION wp) const;
+	MATHVECTOR<Dbl,3> GetWheelVelocity(WHEEL_POSITION wp) const;
 
 // collision world interface
 	const COLLISION_CONTACT & GetWheelContact(WHEEL_POSITION wp) const;
@@ -80,9 +78,9 @@ public:
 // chassis
 	float GetMass() const;
 	Dbl GetSpeed() const;
-	MATHVECTOR <Dbl, 3> GetVelocity() const;
-	MATHVECTOR <Dbl, 3> GetAngularVelocity() const;
-	MATHVECTOR <Dbl, 3> GetEnginePosition() const;
+	MATHVECTOR<Dbl,3> GetVelocity() const;
+	MATHVECTOR<Dbl,3> GetAngularVelocity() const;
+	MATHVECTOR<Dbl,3> GetEnginePosition() const;
 
 /// custom collision params
 	float coll_R, coll_W, coll_H, coll_Hofs, coll_Wofs, coll_Lofs;
@@ -120,7 +118,7 @@ public:
 	bool GetTCSActive() const;
 
 // cardynamics
-	void SetPosition(const MATHVECTOR<Dbl, 3> & pos);
+	void SetPosition(const MATHVECTOR<Dbl,3> & pos);
 
 	// move the car along z-axis until it is touching the ground, false on error
 	void AlignWithGround();
@@ -136,27 +134,22 @@ public:
 	const CARTIRE & GetTire(WHEEL_POSITION pos) const {  return tire[pos];  }
 	const CARSUSPENSION & GetSuspension(WHEEL_POSITION pos) const {  return suspension[pos];  }
 
-	MATHVECTOR <Dbl, 3> GetTotalAero() const;
+	MATHVECTOR<Dbl,3> GetTotalAero() const;
 	
 	Dbl GetAerodynamicDownforceCoefficient() const;
 	Dbl GetAeordynamicDragCoefficient() const;
 
-	MATHVECTOR< Dbl, 3 > GetLastBodyForce() const;
+	MATHVECTOR<Dbl,3> GetLastBodyForce() const;
 	
 	Dbl GetFeedback() const;
-
-	void UpdateTelemetry(float dt);
 
 	// print debug info to the given ostream.  set p1, p2, etc if debug info part 1, and/or part 2, etc is desired
 	void DebugPrint(std::ostream & out, bool p1, bool p2, bool p3, bool p4);
 
-	bool Serialize(joeserialize::Serializer & s);
-
-//protected:
 public:
 // chassis state
 	RIGIDBODY body;
-	MATHVECTOR <Dbl, 3> center_of_mass;
+	MATHVECTOR<Dbl,3> center_of_mass;
 	COLLISION_WORLD * world;
 	btRigidBody * chassis, * whTrigs;
 
@@ -168,9 +161,9 @@ public:
 	//float sumWhTest;  //test dbg out
 
 	// interpolated chassis state
-	MATHVECTOR <Dbl, 3> chassisPosition;
-	MATHVECTOR <Dbl, 3> chassisCenterOfMass;
-	QUATERNION <Dbl> chassisRotation;
+	MATHVECTOR<Dbl,3> chassisPosition;
+	MATHVECTOR<Dbl,3> chassisCenterOfMass;
+	QUATERNION<Dbl> chassisRotation;
 	
 	// manual flip over, rocket boost
 	float doFlip, doBoost, boostFuel, boostVal;
@@ -211,42 +204,42 @@ public:
 	std::vector <int> tcs_active;
 	
 // cardynamics state
-	std::vector <MATHVECTOR <Dbl, 3> > wheel_velocity;
-	std::vector <MATHVECTOR <Dbl, 3> > wheel_position;
-	std::vector <QUATERNION <Dbl> > wheel_orientation;
+	std::vector <MATHVECTOR<Dbl,3> > wheel_velocity;
+	std::vector <MATHVECTOR<Dbl,3> > wheel_position;
+	std::vector <QUATERNION<Dbl> > wheel_orientation;
 	std::vector <COLLISION_CONTACT> wheel_contact;
 	
 	std::vector <CARSUSPENSION> suspension;
 	std::vector <CARTIRE> tire;
 	std::vector <CARAERO> aerodynamics;
 
-	std::list <std::pair <Dbl, MATHVECTOR <Dbl, 3> > > mass_only_particles;
+	std::list <std::pair <Dbl, MATHVECTOR<Dbl,3> > > mass_only_particles;
 	
 	Dbl maxangle;
 	Dbl feedback;
 	
 	Dbl ang_damp;  Dbl rot_coef[4];  /// new
 	
-	MATHVECTOR <Dbl, 3> lastbodyforce; //< held so external classes can extract it for things such as applying physics to camera mounts
+	MATHVECTOR<Dbl,3> lastbodyforce; //< held so external classes can extract it for things such as applying physics to camera mounts
 	
 	//CARTELEMETRY telemetry;
 
 // chassis, cardynamics
-	MATHVECTOR <Dbl, 3> GetDownVector() const;
+	MATHVECTOR<Dbl,3> GetDownVector() const;
 
 	// wrappers (to be removed)
-	QUATERNION <Dbl> Orientation() const;
-	MATHVECTOR <Dbl, 3> Position() const;
+	QUATERNION<Dbl> Orientation() const;
+	MATHVECTOR<Dbl,3> Position() const;
 
-	MATHVECTOR <Dbl, 3> LocalToWorld(const MATHVECTOR <Dbl, 3> & local) const;
-	MATHVECTOR <Dbl, 3> GetLocalWheelPosition(WHEEL_POSITION wp, Dbl displacement_percent) const;
+	MATHVECTOR<Dbl,3> LocalToWorld(const MATHVECTOR<Dbl,3> & local) const;
+	MATHVECTOR<Dbl,3> GetLocalWheelPosition(WHEEL_POSITION wp, Dbl displacement_percent) const;
 
-	QUATERNION <Dbl> GetWheelSteeringAndSuspensionOrientation(WHEEL_POSITION wp) const;
-	MATHVECTOR <Dbl, 3> GetWheelPositionAtDisplacement(WHEEL_POSITION wp, Dbl displacement_percent) const;
+	QUATERNION<Dbl> GetWheelSteeringAndSuspensionOrientation(WHEEL_POSITION wp) const;
+	MATHVECTOR<Dbl,3> GetWheelPositionAtDisplacement(WHEEL_POSITION wp, Dbl displacement_percent) const;
 	
-	void ApplyForce(const MATHVECTOR <Dbl, 3> & force);
-	void ApplyForce(const MATHVECTOR <Dbl, 3> & force, const MATHVECTOR <Dbl, 3> & offset);
-	void ApplyTorque(const MATHVECTOR <Dbl, 3> & torque);
+	void ApplyForce(const MATHVECTOR<Dbl,3> & force);
+	void ApplyForce(const MATHVECTOR<Dbl,3> & force, const MATHVECTOR<Dbl,3> & offset);
+	void ApplyTorque(const MATHVECTOR<Dbl,3> & torque);
 
 	void UpdateWheelVelocity();
 	void UpdateWheelTransform();
@@ -258,13 +251,13 @@ public:
 	void ApplyAerodynamicsToBody(Dbl dt);
 
 	// update suspension diplacement, return suspension force
-	MATHVECTOR <Dbl, 3> UpdateSuspension(int i, Dbl dt);
+	MATHVECTOR<Dbl,3> UpdateSuspension(int i, Dbl dt);
 
 	// apply tire friction to body, return friction in world space
-	MATHVECTOR <Dbl, 3> ApplyTireForce(int i, const Dbl normal_force, const QUATERNION <Dbl> & wheel_space);
+	MATHVECTOR<Dbl,3> ApplyTireForce(int i, const Dbl normal_force, const QUATERNION<Dbl> & wheel_space);
 
 	// apply wheel torque to chassis
-	void ApplyWheelTorque(Dbl dt, Dbl drive_torque, int i, MATHVECTOR <Dbl, 3> tire_friction, const QUATERNION <Dbl> & wheel_space);
+	void ApplyWheelTorque(Dbl dt, Dbl drive_torque, int i, MATHVECTOR<Dbl,3> tire_friction, const QUATERNION<Dbl> & wheel_space);
 
 	// advance chassis(body, suspension, wheels) simulation by dt
 	void UpdateBody(Dbl dt, Dbl drive_torque[]);
@@ -328,10 +321,10 @@ public:
 	
 	void SetDrive(const std::string & newdrive);
 	
-	void AddMassParticle(Dbl newmass, MATHVECTOR <Dbl, 3> newpos);
+	void AddMassParticle(Dbl newmass, MATHVECTOR<Dbl,3> newpos);
 
 	void AddAerodynamicDevice(
-		const MATHVECTOR <Dbl, 3> & newpos,
+		const MATHVECTOR<Dbl,3> & newpos,
 		Dbl drag_frontal_area,
 		Dbl drag_coefficient,
 		Dbl lift_surface_area,

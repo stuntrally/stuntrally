@@ -7,8 +7,6 @@
 
 #include "cardefs.h"
 #include "sound.h"
-#include "joeserialize.h"
-#include "macros.h"
 #include "suspensionbumpdetection.h"
 #include "crashdetection.h"
 #include "enginesoundinfo.h"
@@ -21,7 +19,6 @@ namespace protocol {  struct CarStatePackage;  }
 class CAR
 {
 friend class PERFORMANCE_TESTING;
-friend class joeserialize::Serializer;
 public:
 	class GAME* pGame;
 	class App* pApp;
@@ -32,7 +29,7 @@ public:
 	bool Load(class App* pApp1,
 		CONFIGFILE & carconf,
 		const std::string & carname,
-		const MATHVECTOR <float, 3> & init_pos, const QUATERNION <float> & init_rot,
+		const MATHVECTOR<float,3> & init_pos, const QUATERNION<float> & init_rot,
 		COLLISION_WORLD & world,
 		bool soundenabled, const SOUNDINFO & sound_device_info, const SOUNDBUFFERLIBRARY & soundbufferlibrary,
 		bool defaultabs, bool defaulttcs,
@@ -41,7 +38,7 @@ public:
 		std::ostream & info_output, std::ostream & error_output);
 	
 	// will align car relative to track surface, returns false if the car isn't near ground
-	void SetPosition(const MATHVECTOR <float, 3> & position);
+	void SetPosition(const MATHVECTOR<float,3> & position);
 	
 	void Update(double dt);
 
@@ -50,9 +47,9 @@ public:
 	void GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist);
 
 
-	const MATHVECTOR <float, 3> GetWheelPosition(const WHEEL_POSITION wpos) const
+	const MATHVECTOR<float,3> GetWheelPosition(const WHEEL_POSITION wpos) const
 	{
-		MATHVECTOR <float, 3> v;
+		MATHVECTOR<float,3> v;
 		v = dynamics.GetWheelPosition(wpos);
 		return v;
 	}
@@ -181,7 +178,7 @@ public:
 		return dynamics.GetSpeed();
 	}
 	
-	MATHVECTOR <float, 3> GetTotalAero() const
+	MATHVECTOR<float,3> GetTotalAero() const
 	{
 		return dynamics.GetTotalAero();
 	}
@@ -198,8 +195,6 @@ public:
 		dynamics.DebugPrint(out, p1, p2, p3, p4);
 	}
 	
-	bool Serialize(joeserialize::Serializer & s);
-
 /// AI interface
 	int GetEngineRPM() const
 	{
@@ -211,23 +206,23 @@ public:
 		return dynamics.GetEngine().GetStallRPM();
 	}
 
-	MATHVECTOR <float, 3> GetCenterOfMassPosition() const
+	MATHVECTOR<float,3> GetCenterOfMassPosition() const
 	{
-		MATHVECTOR <float,3> pos;
+		MATHVECTOR<float,3> pos;
 		pos = dynamics.GetCenterOfMassPosition();
 		return pos;
 	}
 
-	MATHVECTOR <float, 3> GetPosition() const
+	MATHVECTOR<float,3> GetPosition() const
 	{
-		MATHVECTOR <float,3> pos;
+		MATHVECTOR<float,3> pos;
 		pos = dynamics.GetPosition();
 		return pos;
 	}
 
-	QUATERNION <float> GetOrientation() const
+	QUATERNION<float> GetOrientation() const
 	{
-		QUATERNION <float> q;
+		QUATERNION<float> q;
 		q = dynamics.GetOrientation();
 		return q;
 	}
@@ -247,16 +242,16 @@ public:
 		return dynamics.GetMass();
 	}
 
-	MATHVECTOR <float, 3> GetVelocity() const
+	MATHVECTOR<float,3> GetVelocity() const
 	{
-		MATHVECTOR <float, 3> vel;
+		MATHVECTOR<float,3> vel;
 		vel = dynamics.GetVelocity();
 		return vel;
 	}
 
-	MATHVECTOR <float, 3> GetAngularVelocity() const
+	MATHVECTOR<float,3> GetAngularVelocity() const
 	{
-		MATHVECTOR <float, 3> vel;
+		MATHVECTOR<float,3> vel;
 		vel = dynamics.GetAngularVelocity();
 		return vel;
 	}
@@ -304,7 +299,7 @@ public:
 
 	MODEL_JOE03 bodymodel, interiormodel, glassmodel, drivermodel;
 	
-	MATHVECTOR<float, 3> driver_view_position, hood_view_position;
+	MATHVECTOR<float,3> driver_view_position, hood_view_position;
 	
 	SUSPENSIONBUMPDETECTION suspbump[4];
 	CRASHDETECTION crashdetection,crashdetection2;
@@ -360,8 +355,8 @@ public:
 
 	
 	//  for new game reset  and goto last checkp.
-	MATHVECTOR <Dbl, 3> posAtStart, posLastCheck[2];
-	QUATERNION <Dbl> rotAtStart, rotLastCheck[2];
+	MATHVECTOR<Dbl,3> posAtStart, posLastCheck[2];
+	QUATERNION<Dbl> rotAtStart, rotLastCheck[2];
 
 	//  car inputs (new)
 	int iCamNext;

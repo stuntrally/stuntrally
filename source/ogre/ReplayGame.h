@@ -55,15 +55,15 @@ struct ReplayFrame
 	//  time  since game start
 	double time;
 	//  car & wheels
-	MATHVECTOR <float,3> pos, whPos[4];
-	QUATERNION <float> rot, whRot[4];
+	MATHVECTOR<float,3> pos, whPos[4];
+	QUATERNION<float> rot, whRot[4];
 
 	//  hud
 	float rpm,vel, clutch;  int gear;  //char
 
 	//  sound, input
 	float throttle, steer;
-	MATHVECTOR <float,3> posEngn;  //snd engine pos --
+	MATHVECTOR<float,3> posEngn;  //snd engine pos --
 	float speed, dynVel;
 
 	//  wheel trails, particles, snd
@@ -98,8 +98,8 @@ struct RewindFrame
 	//  time  since game start
 	double time;
 	//  car
-	MATHVECTOR <float,3> pos, vel, angvel;
-	QUATERNION <float> rot;
+	MATHVECTOR<float,3> pos, vel, angvel;
+	QUATERNION<float> rot;
 	//engine rpm?..
 };
 

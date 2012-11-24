@@ -7,38 +7,38 @@
 void CARDYNAMICS::debugDraw(btIDebugDraw* debugDrawer)
 {	}
 
-const MATHVECTOR <Dbl, 3> & CARDYNAMICS::GetCenterOfMassPosition() const
+const MATHVECTOR<Dbl,3> & CARDYNAMICS::GetCenterOfMassPosition() const
 {
 	return chassisCenterOfMass;
 }
 
-const MATHVECTOR <Dbl, 3> & CARDYNAMICS::GetPosition() const
+const MATHVECTOR<Dbl,3> & CARDYNAMICS::GetPosition() const
 {
 	return chassisPosition;
 }
 
-const QUATERNION <Dbl> & CARDYNAMICS::GetOrientation() const
+const QUATERNION<Dbl> & CARDYNAMICS::GetOrientation() const
 {
 	return chassisRotation;
 }
 
-MATHVECTOR <Dbl, 3> CARDYNAMICS::GetWheelPosition(WHEEL_POSITION wp) const
+MATHVECTOR<Dbl,3> CARDYNAMICS::GetWheelPosition(WHEEL_POSITION wp) const
 {
-	MATHVECTOR <Dbl, 3> pos = GetLocalWheelPosition(wp, suspension[wp].GetDisplacementPercent());
+	MATHVECTOR<Dbl,3> pos = GetLocalWheelPosition(wp, suspension[wp].GetDisplacementPercent());
 	chassisRotation.RotateVector(pos);
 	return pos + chassisPosition;
 }
 
-MATHVECTOR <Dbl, 3> CARDYNAMICS::GetWheelPosition(WHEEL_POSITION wp, Dbl displacement_percent) const
+MATHVECTOR<Dbl,3> CARDYNAMICS::GetWheelPosition(WHEEL_POSITION wp, Dbl displacement_percent) const
 {
-	MATHVECTOR <Dbl, 3> pos = GetLocalWheelPosition(wp, displacement_percent);
+	MATHVECTOR<Dbl,3> pos = GetLocalWheelPosition(wp, displacement_percent);
 	chassisRotation.RotateVector(pos);
 	return pos + chassisPosition;
 }
 
-QUATERNION <Dbl> CARDYNAMICS::GetWheelOrientation(WHEEL_POSITION wp) const
+QUATERNION<Dbl> CARDYNAMICS::GetWheelOrientation(WHEEL_POSITION wp) const
 {
-	QUATERNION <Dbl> siderot;
+	QUATERNION<Dbl> siderot;
 	if(wp == FRONT_RIGHT || wp == REAR_RIGHT)
 	{
 		siderot.Rotate(PI_d, 0, 0, 1);
@@ -46,13 +46,13 @@ QUATERNION <Dbl> CARDYNAMICS::GetWheelOrientation(WHEEL_POSITION wp) const
 	return chassisRotation * GetWheelSteeringAndSuspensionOrientation(wp) * wheel[wp].GetOrientation() * siderot;
 }
 
-QUATERNION <Dbl> CARDYNAMICS::GetUprightOrientation(WHEEL_POSITION wp) const
+QUATERNION<Dbl> CARDYNAMICS::GetUprightOrientation(WHEEL_POSITION wp) const
 {
 	return chassisRotation * GetWheelSteeringAndSuspensionOrientation(wp);
 }
 
 /// worldspace wheel center position
-MATHVECTOR <Dbl, 3> CARDYNAMICS::GetWheelVelocity ( WHEEL_POSITION wp ) const
+MATHVECTOR<Dbl,3> CARDYNAMICS::GetWheelVelocity ( WHEEL_POSITION wp ) const
 {
 	return wheel_velocity[wp];
 }
@@ -78,21 +78,21 @@ Dbl CARDYNAMICS::GetSpeed() const
 	//return chassis->getLinearVelocity().length();
 }
 
-MATHVECTOR <Dbl, 3> CARDYNAMICS::GetVelocity() const
+MATHVECTOR<Dbl,3> CARDYNAMICS::GetVelocity() const
 {
 	return body.GetVelocity();
 	//return ToMathVector<Dbl>(chassis->getLinearVelocity());
 }
 
-MATHVECTOR <Dbl, 3> CARDYNAMICS::GetAngularVelocity() const
+MATHVECTOR<Dbl,3> CARDYNAMICS::GetAngularVelocity() const
 {
 	return body.GetAngularVelocity();
 	//return ToMathVector<Dbl>(chassis->getAngularVelocity());
 }
 
-MATHVECTOR <Dbl, 3> CARDYNAMICS::GetEnginePosition() const
+MATHVECTOR<Dbl,3> CARDYNAMICS::GetEnginePosition() const
 {
-	MATHVECTOR <Dbl, 3> offset = engine.GetPosition();
+	MATHVECTOR<Dbl,3> offset = engine.GetPosition();
 	Orientation().RotateVector(offset);
 	return offset + chassisPosition;
 }
@@ -216,7 +216,7 @@ bool CARDYNAMICS::GetTCSActive() const
 	return tcs && ( tcs_active[0]||tcs_active[1]||tcs_active[2]||tcs_active[3] );
 }
 
-void CARDYNAMICS::SetPosition(const MATHVECTOR<Dbl, 3> & position)
+void CARDYNAMICS::SetPosition(const MATHVECTOR<Dbl,3> & position)
 {
 	body.SetPosition(position);
 	if (chassis)
@@ -241,7 +241,7 @@ void CARDYNAMICS::AlignWithGround()
 			}
 	}/**/  //--
 	
-	//MATHVECTOR <Dbl, 3> trimmed_position = Position() + GetDownVector() * min_height;
+	//MATHVECTOR<Dbl,3> trimmed_position = Position() + GetDownVector() * min_height;
 	//SetPosition(Position()/*trimmed_position*/);
 }
 
@@ -286,9 +286,9 @@ Dbl CARDYNAMICS::GetMaxSteeringAngle() const
 	return maxangle;
 }
 
-MATHVECTOR <Dbl, 3> CARDYNAMICS::GetTotalAero() const
+MATHVECTOR<Dbl,3> CARDYNAMICS::GetTotalAero() const
 {
-	MATHVECTOR <Dbl, 3> downforce = 0;
+	MATHVECTOR<Dbl,3> downforce = 0;
 	for ( std::vector <CARAERO>::const_iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i )
 	{
 		downforce = downforce + i->GetLiftVector() +  i->GetDragVector();
@@ -312,7 +312,7 @@ Dbl CARDYNAMICS::GetAeordynamicDragCoefficient() const
 	return coeff;
 }
 
-MATHVECTOR< Dbl, 3 > CARDYNAMICS::GetLastBodyForce() const
+MATHVECTOR<Dbl,3> CARDYNAMICS::GetLastBodyForce() const
 {
 	return lastbodyforce;
 }
@@ -322,62 +322,29 @@ Dbl CARDYNAMICS::GetFeedback() const
 	return feedback;
 }
 
-void CARDYNAMICS::UpdateTelemetry ( float dt )
-{
-	//telemetry.Update ( dt );
-}
 
-bool CARDYNAMICS::Serialize ( joeserialize::Serializer & s )
+MATHVECTOR<Dbl,3> CARDYNAMICS::GetDownVector() const
 {
-	_SERIALIZE_ ( s,body );
-	_SERIALIZE_ ( s,engine );
-	_SERIALIZE_ ( s,clutch );
-	_SERIALIZE_ ( s,transmission );
-	_SERIALIZE_ ( s,diff_front );
-	_SERIALIZE_ ( s,diff_rear );
-	_SERIALIZE_ ( s,diff_center );
-	_SERIALIZE_ ( s,fuel_tank );
-	_SERIALIZE_ ( s,suspension );
-	_SERIALIZE_ ( s,wheel );
-	_SERIALIZE_ ( s,brake );
-	_SERIALIZE_ ( s,tire );
-	_SERIALIZE_ ( s,aerodynamics );
-	_SERIALIZE_ ( s,wheel_velocity );
-	_SERIALIZE_ ( s,abs );
-	_SERIALIZE_ ( s,abs_active );
-	_SERIALIZE_ ( s,tcs );
-	_SERIALIZE_ ( s,tcs_active );
-	_SERIALIZE_ (s,last_auto_clutch);
-	_SERIALIZE_ (s,remaining_shift_time);
-	_SERIALIZE_ (s,shift_gear);
-	_SERIALIZE_ (s,shifted);
-	_SERIALIZE_ (s,autoshift);
-	_SERIALIZE_ (s,autorear);
-	return true;
-}
-
-MATHVECTOR <Dbl, 3> CARDYNAMICS::GetDownVector() const
-{
-	MATHVECTOR <Dbl, 3> v(0, 0, -1);
+	MATHVECTOR<Dbl,3> v(0, 0, -1);
 	Orientation().RotateVector(v);
 	return v;
 }
 
-QUATERNION <Dbl> CARDYNAMICS::Orientation() const
+QUATERNION<Dbl> CARDYNAMICS::Orientation() const
 {
 	return body.GetOrientation();
 	//return ToMathQuaternion<Dbl>(chassis->getOrientation());
 }
 
-MATHVECTOR <Dbl, 3> CARDYNAMICS::Position() const
+MATHVECTOR<Dbl,3> CARDYNAMICS::Position() const
 {
 	return body.GetPosition();
 	//return ToMathVector<Dbl>(chassis->getCenterOfMassPosition());
 }
 
-MATHVECTOR <Dbl, 3> CARDYNAMICS::LocalToWorld(const MATHVECTOR <Dbl, 3> & local) const
+MATHVECTOR<Dbl,3> CARDYNAMICS::LocalToWorld(const MATHVECTOR<Dbl,3> & local) const
 {
-	MATHVECTOR <Dbl,3> position = local - center_of_mass;
+	MATHVECTOR<Dbl,3> position = local - center_of_mass;
 	body.GetOrientation().RotateVector(position);
 	return position + body.GetPosition();
 	//btVector3 position = chassis->getCenterOfMassTransform().getBasis() * ToBulletVector(local - center_of_mass);
@@ -386,40 +353,40 @@ MATHVECTOR <Dbl, 3> CARDYNAMICS::LocalToWorld(const MATHVECTOR <Dbl, 3> & local)
 }
 
 //simple hinge (arc) suspension displacement
-MATHVECTOR <Dbl, 3> CARDYNAMICS::GetLocalWheelPosition(WHEEL_POSITION wp, Dbl displacement_percent) const
+MATHVECTOR<Dbl,3> CARDYNAMICS::GetLocalWheelPosition(WHEEL_POSITION wp, Dbl displacement_percent) const
 {
 	//const
-	const MATHVECTOR <Dbl, 3> & wheelext = wheel[wp].GetExtendedPosition();
-	const MATHVECTOR <Dbl, 3> & hinge = suspension[wp].GetHinge();
-	MATHVECTOR <Dbl, 3> relwheelext = wheelext - hinge;
-	MATHVECTOR <Dbl, 3> up (0, 0, 1);
-	MATHVECTOR <Dbl, 3> rotaxis = up.cross ( relwheelext.Normalize() );
+	const MATHVECTOR<Dbl,3> & wheelext = wheel[wp].GetExtendedPosition();
+	const MATHVECTOR<Dbl,3> & hinge = suspension[wp].GetHinge();
+	MATHVECTOR<Dbl,3> relwheelext = wheelext - hinge;
+	MATHVECTOR<Dbl,3> up (0, 0, 1);
+	MATHVECTOR<Dbl,3> rotaxis = up.cross ( relwheelext.Normalize() );
 	Dbl hingeradius = relwheelext.Magnitude();
 	Dbl travel = suspension[wp].GetTravel();
 	//const
 
 	Dbl displacement = displacement_percent * travel;
 	Dbl displacementradians = displacement / hingeradius;
-	QUATERNION <Dbl> hingerotate;
+	QUATERNION<Dbl> hingerotate;
 	hingerotate.Rotate ( -displacementradians, rotaxis[0], rotaxis[1], rotaxis[2] );
-	MATHVECTOR <Dbl, 3> localwheelpos = relwheelext;
+	MATHVECTOR<Dbl,3> localwheelpos = relwheelext;
 	hingerotate.RotateVector ( localwheelpos );
 	return localwheelpos + hinge;
 }
 
 ///returns the orientation of the wheel due only to steering and suspension
-QUATERNION <Dbl> CARDYNAMICS::GetWheelSteeringAndSuspensionOrientation ( WHEEL_POSITION wp ) const
+QUATERNION<Dbl> CARDYNAMICS::GetWheelSteeringAndSuspensionOrientation ( WHEEL_POSITION wp ) const
 {
-	QUATERNION <Dbl> steer;
+	QUATERNION<Dbl> steer;
 	steer.Rotate ( -wheel[wp].GetSteerAngle() * PI_d/180.0, 0, 0, 1 );
 
-	QUATERNION <Dbl> camber;
+	QUATERNION<Dbl> camber;
 	Dbl camber_rotation = -suspension[wp].GetCamber() * PI_d/180.0;
 	if ( wp == 1 || wp == 3 )
 		camber_rotation = -camber_rotation;
 	camber.Rotate ( camber_rotation, 1, 0, 0 );
 
-	QUATERNION <Dbl> toe;
+	QUATERNION<Dbl> toe;
 	Dbl toe_rotation = suspension[wp].GetToe() * PI_d/180.0;
 	if ( wp == 0 || wp == 2 )
 		toe_rotation = -toe_rotation;
@@ -430,24 +397,24 @@ QUATERNION <Dbl> CARDYNAMICS::GetWheelSteeringAndSuspensionOrientation ( WHEEL_P
 
 /// worldspace position of the center of the wheel when the suspension is compressed
 /// by the displacement_percent where 1.0 is fully compressed
-MATHVECTOR <Dbl, 3> CARDYNAMICS::GetWheelPositionAtDisplacement(WHEEL_POSITION wp, Dbl displacement_percent) const
+MATHVECTOR<Dbl,3> CARDYNAMICS::GetWheelPositionAtDisplacement(WHEEL_POSITION wp, Dbl displacement_percent) const
 {
 	return LocalToWorld(GetLocalWheelPosition(wp, displacement_percent));
 }
 
-void CARDYNAMICS::ApplyForce(const MATHVECTOR <Dbl, 3> & force)
+void CARDYNAMICS::ApplyForce(const MATHVECTOR<Dbl,3> & force)
 {
 	body.ApplyForce(force);
 	//chassis->applyCentralForce(ToBulletVector(force));
 }
 
-void CARDYNAMICS::ApplyForce(const MATHVECTOR <Dbl, 3> & force, const MATHVECTOR <Dbl, 3> & offset)
+void CARDYNAMICS::ApplyForce(const MATHVECTOR<Dbl,3> & force, const MATHVECTOR<Dbl,3> & offset)
 {
 	body.ApplyForce(force, offset);
 	//chassis->applyForce(ToBulletVector(force), ToBulletVector(offset));
 }
 
-void CARDYNAMICS::ApplyTorque(const MATHVECTOR <Dbl, 3> & torque)
+void CARDYNAMICS::ApplyTorque(const MATHVECTOR<Dbl,3> & torque)
 {
 	body.ApplyTorque(torque);
 	//if(torque.MagnitudeSquared() > 1E-6)
@@ -475,20 +442,20 @@ void CARDYNAMICS::UpdateWheelTransform()
 
 void CARDYNAMICS::ApplyEngineTorqueToBody()
 {
-	MATHVECTOR <Dbl, 3> engine_torque(-engine.GetTorque(), 0, 0);
+	MATHVECTOR<Dbl,3> engine_torque(-engine.GetTorque(), 0, 0);
 	Orientation().RotateVector(engine_torque);
 	ApplyTorque(engine_torque*0.1);  // unwanted in jumps
 }
 
 void CARDYNAMICS::ApplyAerodynamicsToBody(Dbl dt)
 {
-	MATHVECTOR <Dbl, 3> wind_force(0);
-	MATHVECTOR <Dbl, 3> wind_torque(0);
-	MATHVECTOR <Dbl, 3> air_velocity = -GetVelocity();
+	MATHVECTOR<Dbl,3> wind_force(0);
+	MATHVECTOR<Dbl,3> wind_torque(0);
+	MATHVECTOR<Dbl,3> air_velocity = -GetVelocity();
 	(-Orientation()).RotateVector(air_velocity);
 	for(std::vector <CARAERO>::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
 	{
-		MATHVECTOR <Dbl, 3> force = i->GetForce(air_velocity);
+		MATHVECTOR<Dbl,3> force = i->GetForce(air_velocity);
 		wind_force = wind_force + force;
 		wind_torque = wind_torque + (i->GetPosition() - center_of_mass).cross(force);
 	}
@@ -500,7 +467,7 @@ void CARDYNAMICS::ApplyAerodynamicsToBody(Dbl dt)
 	// rotational damping/drag
 	if (rot_coef[0] > 0.0 && chassis)
 	{
-		MATHVECTOR <Dbl, 3> rot_drag = -ToMathVector<Dbl>(chassis->getAngularVelocity());
+		MATHVECTOR<Dbl,3> rot_drag = -ToMathVector<Dbl>(chassis->getAngularVelocity());
 		(-Orientation()).RotateVector(rot_drag);  // apply factors in car space
 			// linear 50000 test big  10000 heavy  1000 light
 			// sqare 2.5 ok, limits max rot vel-
@@ -514,7 +481,7 @@ void CARDYNAMICS::ApplyAerodynamicsToBody(Dbl dt)
 	}
 }
 
-MATHVECTOR <Dbl, 3> CARDYNAMICS::UpdateSuspension ( int i , Dbl dt )
+MATHVECTOR<Dbl,3> CARDYNAMICS::UpdateSuspension ( int i , Dbl dt )
 {
 	// displacement
 	const Dbl posx = wheel_contact[i].GetPosition() [0];
@@ -547,16 +514,16 @@ MATHVECTOR <Dbl, 3> CARDYNAMICS::UpdateSuspension ( int i , Dbl dt )
 
 	//find the vector direction to apply the suspension force
 #ifdef SUSPENSION_FORCE_DIRECTION
-	const MATHVECTOR <Dbl, 3> & wheelext = wheel[i].GetExtendedPosition();
-	const MATHVECTOR <Dbl, 3> & hinge = suspension[i].GetHinge();
-	MATHVECTOR <Dbl, 3> relwheelext = wheelext - hinge;
-	MATHVECTOR <Dbl, 3> up ( 0,0,1 );
-	MATHVECTOR <Dbl, 3> rotaxis = up.cross ( relwheelext.Normalize() );
-	MATHVECTOR <Dbl, 3> forcedirection = relwheelext.Normalize().cross ( rotaxis );
+	const MATHVECTOR<Dbl,3> & wheelext = wheel[i].GetExtendedPosition();
+	const MATHVECTOR<Dbl,3> & hinge = suspension[i].GetHinge();
+	MATHVECTOR<Dbl,3> relwheelext = wheelext - hinge;
+	MATHVECTOR<Dbl,3> up ( 0,0,1 );
+	MATHVECTOR<Dbl,3> rotaxis = up.cross ( relwheelext.Normalize() );
+	MATHVECTOR<Dbl,3> forcedirection = relwheelext.Normalize().cross ( rotaxis );
 	//std::cout << i << ". " << forcedirection << std::endl;
-	MATHVECTOR <Dbl, 3> suspension_force = forcedirection * ( antirollforce+springdampforce );
+	MATHVECTOR<Dbl,3> suspension_force = forcedirection * ( antirollforce+springdampforce );
 #else
-	MATHVECTOR <Dbl, 3> suspension_force(0, 0, antirollforce + springdampforce);
+	MATHVECTOR<Dbl,3> suspension_force(0, 0, antirollforce + springdampforce);
 #endif
 	Orientation().RotateVector(suspension_force);
 	return suspension_force;
@@ -564,16 +531,16 @@ MATHVECTOR <Dbl, 3> CARDYNAMICS::UpdateSuspension ( int i , Dbl dt )
 
 
 // aplies tire friction  to car, returns friction in world space
-MATHVECTOR <Dbl, 3> CARDYNAMICS::ApplyTireForce(int i, const Dbl normal_force, const QUATERNION <Dbl> & wheel_space)
+MATHVECTOR<Dbl,3> CARDYNAMICS::ApplyTireForce(int i, const Dbl normal_force, const QUATERNION<Dbl> & wheel_space)
 {
 	CARWHEEL & wheel = this->wheel[WHEEL_POSITION(i)];
 	CARTIRE & tire = this->tire[WHEEL_POSITION(i)];
 	const COLLISION_CONTACT & wheel_contact = this->wheel_contact[WHEEL_POSITION(i)];
 	const TRACKSURFACE & surface = wheel_contact.GetSurface();
-	const MATHVECTOR <Dbl, 3> surface_normal = wheel_contact.GetNormal();
+	const MATHVECTOR<Dbl,3> surface_normal = wheel_contact.GetNormal();
 
 	// camber relative to surface(clockwise in wheel heading direction)
-	MATHVECTOR <Dbl, 3> wheel_axis(0, 1, 0);
+	MATHVECTOR<Dbl,3> wheel_axis(0, 1, 0);
 	wheel_space.RotateVector(wheel_axis); // wheel axis in world space (wheel plane normal)
 	Dbl camber_sin = wheel_axis.dot(surface_normal);
 	Dbl camber_rad = asin(camber_sin);
@@ -582,11 +549,11 @@ MATHVECTOR <Dbl, 3> CARDYNAMICS::ApplyTireForce(int i, const Dbl normal_force, c
 	// tire space(SAE Tire Coordinate System)
 	// surface normal is z-axis
 	// wheel axis projected on surface plane is y-axis
-	MATHVECTOR <Dbl, 3> y_axis = wheel_axis - surface_normal * camber_sin;
-	MATHVECTOR <Dbl, 3> x_axis = y_axis.cross(surface_normal);
+	MATHVECTOR<Dbl,3> y_axis = wheel_axis - surface_normal * camber_sin;
+	MATHVECTOR<Dbl,3> x_axis = y_axis.cross(surface_normal);
 
 	// wheel center velocity in tire space
-	MATHVECTOR <Dbl, 3> hub_velocity;
+	MATHVECTOR<Dbl,3> hub_velocity;
 	hub_velocity[0] = x_axis.dot(wheel_velocity[WHEEL_POSITION(i)]);
 	hub_velocity[1] = y_axis.dot(wheel_velocity[WHEEL_POSITION(i)]);
 	hub_velocity[2] = 0; // unused
@@ -598,7 +565,7 @@ MATHVECTOR <Dbl, 3> CARDYNAMICS::ApplyTireForce(int i, const Dbl normal_force, c
 	//Dbl friction_coeff = tire.GetTread() * surface.frictionTread + (1.0 - tire.GetTread()) * surface.frictionNonTread;
 	Dbl friction_coeff = surface.frictionTread;
 	Dbl roll_friction_coeff = surface.rollResistanceCoefficient;
-	MATHVECTOR <Dbl, 3> friction_force(0);
+	MATHVECTOR<Dbl,3> friction_force(0);
 	if(friction_coeff > 0)
 		friction_force = tire.GetForce(normal_force, friction_coeff, roll_friction_coeff, hub_velocity, patch_speed, camber_rad);
 
@@ -606,21 +573,21 @@ MATHVECTOR <Dbl, 3> CARDYNAMICS::ApplyTireForce(int i, const Dbl normal_force, c
 	tire.SetFeedback(friction_force[2]);
 
 	// friction force in world space
-	MATHVECTOR <Dbl, 3> world_friction_force = x_axis * friction_force[0] + y_axis * friction_force[1];
+	MATHVECTOR<Dbl,3> world_friction_force = x_axis * friction_force[0] + y_axis * friction_force[1];
 
 	// fake viscous friction (sand, gravel, mud)
-	MATHVECTOR <Dbl, 3> wheel_drag = - (x_axis * hub_velocity[0] + y_axis * hub_velocity[1]) * surface.rollingDrag;
+	MATHVECTOR<Dbl,3> wheel_drag = - (x_axis * hub_velocity[0] + y_axis * hub_velocity[1]) * surface.rollingDrag;
 
 	// apply forces to body
-	MATHVECTOR <Dbl, 3> wheel_normal(0, 0, 1);
+	MATHVECTOR<Dbl,3> wheel_normal(0, 0, 1);
 	wheel_space.RotateVector(wheel_normal);
-	MATHVECTOR <Dbl, 3> contactpos = wheel_position[WHEEL_POSITION(i)] + wheel_normal * wheel.GetRadius() * wheel.GetRollHeight();  ///+
+	MATHVECTOR<Dbl,3> contactpos = wheel_position[WHEEL_POSITION(i)] + wheel_normal * wheel.GetRadius() * wheel.GetRollHeight();  ///+
 	ApplyForce(world_friction_force + surface_normal * normal_force + wheel_drag, contactpos - Position());
 
 	return world_friction_force;
 }
 
-void CARDYNAMICS::ApplyWheelTorque(Dbl dt, Dbl drive_torque, int i, MATHVECTOR <Dbl, 3> tire_friction, const QUATERNION <Dbl> & wheel_space)
+void CARDYNAMICS::ApplyWheelTorque(Dbl dt, Dbl drive_torque, int i, MATHVECTOR<Dbl,3> tire_friction, const QUATERNION<Dbl> & wheel_space)
 {
 	CARWHEEL & wheel = this->wheel[WHEEL_POSITION(i)];
 	CARTIRE & tire = this->tire[WHEEL_POSITION(i)];
@@ -661,7 +628,7 @@ void CARDYNAMICS::ApplyWheelTorque(Dbl dt, Dbl drive_torque, int i, MATHVECTOR <
 
 	// apply torque to body
 	///+  z yaw  y pitch
-	//MATHVECTOR <Dbl, 3> world_wheel_torque(0, -wheel_torque, 0);
+	//MATHVECTOR<Dbl,3> world_wheel_torque(0, -wheel_torque, 0);
 	//wheel_space.RotateVector(world_wheel_torque);
 	//ApplyTorque(world_wheel_torque);
 }
@@ -669,10 +636,10 @@ void CARDYNAMICS::ApplyWheelTorque(Dbl dt, Dbl drive_torque, int i, MATHVECTOR <
 
 void CARDYNAMICS::InterpolateWheelContacts(Dbl dt)
 {
-	MATHVECTOR <float, 3> raydir = GetDownVector();
+	MATHVECTOR<float,3> raydir = GetDownVector();
 	for (int i = 0; i < WHEEL_POSITION_SIZE; i++)
 	{
-		MATHVECTOR <float, 3> raystart = LocalToWorld(wheel[i].GetExtendedPosition());
+		MATHVECTOR<float,3> raystart = LocalToWorld(wheel[i].GetExtendedPosition());
 		raystart = raystart - raydir * wheel[i].GetRadius();  //*!
 		float raylen = 1;  //!par
 		GetWheelContact(WHEEL_POSITION(i)).CastRay(raystart, raydir, raylen);
@@ -683,7 +650,7 @@ void CARDYNAMICS::InterpolateWheelContacts(Dbl dt)
 /// then store this information in the rigid body
 void CARDYNAMICS::UpdateMass()
 {
-	typedef std::pair <Dbl, MATHVECTOR <Dbl, 3> > MASS_PAIR;
+	typedef std::pair <Dbl, MATHVECTOR<Dbl,3> > MASS_PAIR;
 
 	Dbl total_mass ( 0 );
 
@@ -714,7 +681,7 @@ void CARDYNAMICS::UpdateMass()
 	for ( std::list <MASS_PAIR>::iterator i = mass_only_particles.begin(); i != mass_only_particles.end(); ++i )
 	{
 		//transform into the rigid body coordinates
-		MATHVECTOR <Dbl, 3> position = i->second - center_of_mass;
+		MATHVECTOR<Dbl,3> position = i->second - center_of_mass;
 		Dbl mass = i->first;
 
 		//add the current mass to the inertia tensor
@@ -1158,14 +1125,14 @@ void CARDYNAMICS::SetDrive ( const std::string & newdrive )
 		assert ( 0 ); //shouldn't ever happen unless there's an error in the code
 }
 
-void CARDYNAMICS::AddMassParticle ( Dbl newmass, MATHVECTOR <Dbl, 3> newpos )
+void CARDYNAMICS::AddMassParticle ( Dbl newmass, MATHVECTOR<Dbl,3> newpos )
 {
-	mass_only_particles.push_back ( std::pair <Dbl, MATHVECTOR <Dbl, 3> > ( newmass, newpos ) );
+	mass_only_particles.push_back ( std::pair <Dbl, MATHVECTOR<Dbl,3> > ( newmass, newpos ) );
 	//std::cout << "adding mass particle " << newmass << " at " << newpos << std::endl;
 }
 
 void CARDYNAMICS::AddAerodynamicDevice (
-	const MATHVECTOR <Dbl, 3> & newpos,
+	const MATHVECTOR<Dbl,3> & newpos,
 	Dbl drag_frontal_area,
 	Dbl drag_coefficient,
 	Dbl lift_surface_area,

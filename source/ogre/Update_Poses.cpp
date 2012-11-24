@@ -37,8 +37,8 @@ void App::newPoses(float time)  // time only for camera update
 		bool bGhost = carM->eType == CarModel::CT_GHOST;
 		
 		//  local data  car,wheels
-		MATHVECTOR <float,3> pos, whPos[4];
-		QUATERNION <float> rot, whRot[4];
+		MATHVECTOR<float,3> pos, whPos[4];
+		QUATERNION<float> rot, whRot[4];
 
 
 		///  car perf test  to compare real...

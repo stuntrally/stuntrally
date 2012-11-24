@@ -7,8 +7,6 @@
 #include <cmath>
 
 #include "dbl.h"
-#include "joeserialize.h"
-#include "macros.h"
 #include "mathvector.h"
 #include "../ogre/common/Defines.h"
 
@@ -37,7 +35,6 @@ public:
 
 class CARTIRE
 {
-friend class joeserialize::Serializer;
 public://
 	// constants
 	Dbl rolling_resistance_linear;	///< linear rolling resistance on a hard surface
@@ -84,14 +81,8 @@ public:
 
 
 	/// Return the friction vector calculated from the magic formula.
-	MATHVECTOR <Dbl, 3> GetForce (Dbl normal_force, Dbl friction_coeff, Dbl roll_friction_coeff,
-					const MATHVECTOR <Dbl, 3> & hub_velocity, Dbl patch_speed, Dbl current_camber);
-
-	bool Serialize(joeserialize::Serializer & s)
-	{
-		_SERIALIZE_(s,feedback);
-		return true;
-	}
+	MATHVECTOR<Dbl,3> GetForce (Dbl normal_force, Dbl friction_coeff, Dbl roll_friction_coeff,
+					const MATHVECTOR<Dbl,3> & hub_velocity, Dbl patch_speed, Dbl current_camber);
 
 	Dbl GetMaximumFx (Dbl load) const;
 	Dbl GetMaximumFy (Dbl load, Dbl current_camber) const;

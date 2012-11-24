@@ -68,27 +68,27 @@ class MATHPLANE
 		}
 	
 		/*///scalar multiplication
-		MATHVECTOR <T, 3> operator * (const T & scalar) const
+		MATHVECTOR<T,3> operator * (const T & scalar) const
 		{
-			return MATHVECTOR <T, 3> (v.x*scalar,v.y*scalar,v.z*scalar);
+			return MATHVECTOR<T,3> (v.x*scalar,v.y*scalar,v.z*scalar);
 		}
 	
 		///scalar division
-		MATHVECTOR <T, 3> operator / (const T & scalar) const
+		MATHVECTOR<T,3> operator / (const T & scalar) const
 		{
 			assert(scalar != 0);
 			T invscalar = 1.0/scalar;
 			return (*this)*invscalar;
 		}
 	
-		MATHVECTOR <T, 3> operator + (const MATHVECTOR <T, 3> & other) const
+		MATHVECTOR<T,3> operator + (const MATHVECTOR<T,3> & other) const
 		{
-			return MATHVECTOR <T, 3> (v.x+other.v.x,v.y+other.v.y,v.z+other.v.z);
+			return MATHVECTOR<T,3> (v.x+other.v.x,v.y+other.v.y,v.z+other.v.z);
 		}
 	
-		MATHVECTOR <T, 3> operator - (const MATHVECTOR <T, 3> & other) const
+		MATHVECTOR<T,3> operator - (const MATHVECTOR<T,3> & other) const
 		{
-			return MATHVECTOR <T, 3> (v.x-other.v.x,v.y-other.v.y,v.z-other.v.z);;
+			return MATHVECTOR<T,3> (v.x-other.v.x,v.y-other.v.y,v.z-other.v.z);;
 		}*/
 	
 		template <typename T2>
@@ -115,12 +115,12 @@ class MATHPLANE
 		}
 	
 		/*///inversion
-		MATHVECTOR <T, 3> operator-() const
+		MATHVECTOR<T,3> operator-() const
 		{
-			return MATHVECTOR <T, 3> (-v.x, -v.y, -v.z);
+			return MATHVECTOR<T,3> (-v.x, -v.y, -v.z);
 		}*/
 		
-		T DistanceToPoint(const MATHVECTOR <T, 3> & point) const
+		T DistanceToPoint(const MATHVECTOR<T,3> & point) const
 		{
 			T abcsq = v.a*v.a+v.b*v.b+v.c*v.c;
 			assert(abcsq != 0);

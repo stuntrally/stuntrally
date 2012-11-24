@@ -101,9 +101,9 @@ class MATRIX3
 		
 		const T * GetArray() const {return data;}
 		
-		MATHVECTOR <T, 3> Multiply(const MATHVECTOR <T, 3> & v) const
+		MATHVECTOR<T,3> Multiply(const MATHVECTOR<T,3> & v) const
 		{
-			MATHVECTOR <T, 3> output;
+			MATHVECTOR<T,3> output;
 			output.Set(v[0]*data[0] + v[1]*data[3] + v[2]*data[6],
 				   v[0]*data[1] + v[1]*data[4] + v[2]*data[7], 
        				   v[0]*data[2] + v[1]*data[5] + v[2]*data[8]);
@@ -167,7 +167,7 @@ class MATRIX3
 		}
 
 		// returns false on error
-		static bool Diagonalize(MATRIX3<T>& m, MATRIX3<T>& v, MATHVECTOR<T, 3>& w)
+		static bool Diagonalize(MATRIX3<T>& m, MATRIX3<T>& v, MATHVECTOR<T,3>& w)
 		{
 			double sm[3][3], ev[3][3], ew[3];
 			for(int i = 0; i < 3; i++)

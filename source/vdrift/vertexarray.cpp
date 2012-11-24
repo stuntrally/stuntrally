@@ -531,11 +531,11 @@ void VERTEXARRAY::SetTo2DButton(float x, float y, float w, float h, float sidewi
 	//y1 = 1.0 - y1;
 	//y2 = 1.0 - y2;
 	
-	MATHVECTOR <float, 2> corner1;
-	MATHVECTOR <float, 2> corner2;
-	MATHVECTOR <float, 2> dim;
+	MATHVECTOR<float, 2> corner1;
+	MATHVECTOR<float, 2> corner2;
+	MATHVECTOR<float, 2> dim;
 	dim.Set(w,h);
-	MATHVECTOR <float, 2> center;
+	MATHVECTOR<float, 2> center;
 	center.Set(x,y);
 	corner1 = center - dim*0.5;
 	corner2 = center + dim*0.5;
@@ -577,15 +577,15 @@ void VERTEXARRAY::SetTo2DBox(float x, float y, float w, float h, float marginwid
 	//y1 = 1.0 - y1;
 	//y2 = 1.0 - y2;
 	
-	MATHVECTOR <float, 2> corner1;
-	MATHVECTOR <float, 2> corner2;
-	MATHVECTOR <float, 2> dim;
+	MATHVECTOR<float, 2> corner1;
+	MATHVECTOR<float, 2> corner2;
+	MATHVECTOR<float, 2> dim;
 	dim.Set(w,h);
-	MATHVECTOR <float, 2> center;
+	MATHVECTOR<float, 2> center;
 	center.Set(x,y);
 	corner1 = center - dim*0.5;
 	corner2 = center + dim*0.5;
-	MATHVECTOR <float, 2> margin;
+	MATHVECTOR<float, 2> margin;
 	margin.Set(marginwidth, marginheight);
 	
 	float lxmax = std::max((corner1-margin)[0],std::min(clipx,corner1[0]));
@@ -700,7 +700,7 @@ void VERTEXARRAY::Translate(float x, float y, float z)
 
 void VERTEXARRAY::Rotate(float a, float x, float y, float z)
 {
-	QUATERNION <float> q;
+	QUATERNION<float> q;
 	q.Rotate(a,x,y,z);
 	
 	assert(vertices.size() % 3 == 0);

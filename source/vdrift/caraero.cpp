@@ -9,7 +9,7 @@ void CARAERO::DebugPrint(std::ostream & out)
 	out << "Lift " << fToStr(lift_vector[0], 0,4) <<" "<< fToStr(lift_vector[1], 0,4) <<" "<< fToStr(lift_vector[2], 0,5) << std::endl;
 }
 
-MATHVECTOR <Dbl, 3> CARAERO::GetForce(const MATHVECTOR <Dbl, 3> & bodyspace_wind_vector) const
+MATHVECTOR<Dbl,3> CARAERO::GetForce(const MATHVECTOR<Dbl,3> & bodyspace_wind_vector) const
 {
 	//calculate drag force
 	drag_vector = bodyspace_wind_vector * bodyspace_wind_vector.Magnitude() * 0.5 *
@@ -22,9 +22,9 @@ MATHVECTOR <Dbl, 3> CARAERO::GetForce(const MATHVECTOR <Dbl, 3> & bodyspace_wind
 	const Dbl k = 0.5 * air_density * wind_speed * wind_speed;
 	const Dbl lift = k * lift_coefficient * lift_surface_area;
 	const Dbl drag = -lift_coefficient * lift * (1.0 -  lift_efficiency);
-	lift_vector = MATHVECTOR <Dbl, 3> (drag, 0, lift);
+	lift_vector = MATHVECTOR<Dbl,3> (drag, 0, lift);
 	
-	MATHVECTOR <Dbl, 3> force = drag_vector + lift_vector;
+	MATHVECTOR<Dbl,3> force = drag_vector + lift_vector;
 	
 	return force;
 }

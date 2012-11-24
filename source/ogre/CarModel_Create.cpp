@@ -71,7 +71,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 	{
 		if (startpos_index == -1) startpos_index = iIndex;
 		int i = set->game.collis_cars ? startpos_index : 0;  // offset when cars collide
-		MATHVECTOR<float, 3> pos(0,10,0);
+		MATHVECTOR<float,3> pos(0,10,0);
 		QUATERNION<float> rot;
 		pos = pGame->track.GetStart(i).first;
 		rot = pGame->track.GetStart(i).second;

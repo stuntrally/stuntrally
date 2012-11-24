@@ -173,7 +173,7 @@ private:
 	float computed_gain1, last_computed_gain1;  // c-computed
 	float computed_gain2, last_computed_gain2;
 
-	MATHVECTOR <float,3> position, velocity;
+	MATHVECTOR<float,3> position, velocity;
 	const SOUNDBUFFER * buffer;
 	std::list <SOUNDFILTER> filters;
 
@@ -225,11 +225,11 @@ public:
 	void SetGainSmooth(const float newgain, const float dt);
 	void SetPitchSmooth(const float newpitch, const float dt);
 
-	const MATHVECTOR <float,3>& GetPosition() const {  return position;  }
-	void SetPosition(const MATHVECTOR <float,3>& pos) {  position = pos;  }
-	void SetVelocity(const MATHVECTOR <float,3>& vel) {  velocity = vel;  }
+	const MATHVECTOR<float,3>& GetPosition() const {  return position;  }
+	void SetPosition(const MATHVECTOR<float,3>& pos) {  position = pos;  }
+	void SetVelocity(const MATHVECTOR<float,3>& vel) {  velocity = vel;  }
 
-	const MATHVECTOR <float,3> & GetVelocity() const {  return velocity;  }
+	const MATHVECTOR<float,3> & GetVelocity() const {  return velocity;  }
 	void Set3DEffects(bool new3d) {  effects3d = new3d;  }
 	bool Get3DEffects() const	  {  return effects3d;  }
 
@@ -270,8 +270,8 @@ private:
 	float gain_estimate;
 	SOUNDFILTER volume_filter;
 
-	MATHVECTOR <float,3> lpos, lvel;  // listener
-	QUATERNION <float> lrot;
+	MATHVECTOR<float,3> lpos, lvel;  // listener
+	QUATERNION<float> lrot;
 	bool listener3D;  // enable 3D (1 viewport), disabled in split screen
 	
 	std::list <SOUNDSOURCE *> sourcelist;
@@ -293,9 +293,9 @@ public:
 	void RemoveSource(SOUNDSOURCE * todel);
 	void Clear() {  sourcelist.clear();  }
 
-	void SetListener(const MATHVECTOR <float,3> & npos, const QUATERNION <float> & nrot, const MATHVECTOR <float,3> & nvel, bool is3D)
+	void SetListener(const MATHVECTOR<float,3> & npos, const QUATERNION<float> & nrot, const MATHVECTOR<float,3> & nvel, bool is3D)
 	{	lpos = npos;  lrot = nrot;  lvel = nvel;  listener3D = is3D;  }
-	void Compute3DEffects(std::list <SOUNDSOURCE *> & sources, const MATHVECTOR <float,3> & listener_pos, const QUATERNION <float> & listener_rot) const;
+	void Compute3DEffects(std::list <SOUNDSOURCE *> & sources, const MATHVECTOR<float,3> & listener_pos, const QUATERNION<float> & listener_rot) const;
 	void Compute3DEffects(std::list <SOUNDSOURCE *> & sources) const {  Compute3DEffects(sources, lpos, lrot);  }
 
 	void SetMasterVolume(float newvol) {  volume_filter.SetFilterOrder0(newvol);  }

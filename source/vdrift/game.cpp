@@ -403,8 +403,8 @@ void GAME::LeaveGame()
 }
 
 ///  add a car, optionally controlled by the local player
-CAR* GAME::LoadCar(const string & pathCar, const string & carname, const MATHVECTOR <float, 3> & start_position,
-				   const QUATERNION <float> & start_orientation, bool islocal, bool isai,
+CAR* GAME::LoadCar(const string & pathCar, const string & carname, const MATHVECTOR<float,3> & start_position,
+				   const QUATERNION<float> & start_orientation, bool islocal, bool isai,
 				   bool isRemote, int idCar)
 {
 	CONFIGFILE carconf;
@@ -604,12 +604,12 @@ void GAME::UpdateDriftScore(CAR & car, double dt)
 	int carId = 0;
 
 	//car's direction on the horizontal plane
-	MATHVECTOR <float, 3> car_orientation(1,0,0);
+	MATHVECTOR<float,3> car_orientation(1,0,0);
 	car.GetOrientation().RotateVector(car_orientation);
 	car_orientation[2] = 0;
 
 	//car's velocity on the horizontal plane
-	MATHVECTOR <float, 3> car_velocity = car.GetVelocity();
+	MATHVECTOR<float,3> car_velocity = car.GetVelocity();
 	car_velocity[2] = 0;
 	float car_speed = car_velocity.Magnitude();
 

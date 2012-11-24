@@ -21,11 +21,3 @@ Dbl CARBRAKE::GetTorque()
 	lasttorque = torque;
 	return torque;
 }
-
-bool CARBRAKE::Serialize(joeserialize::Serializer & s)
-{
-	_SERIALIZE_(s,brake_factor);
-	_SERIALIZE_(s,handbrake_factor);
-	_SERIALIZE_(s,locked);
-	return true;
-}

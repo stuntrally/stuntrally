@@ -72,7 +72,7 @@ public:
 	
 	int DeferredLoadTotalObjects();
 
-	std::pair <MATHVECTOR <float, 3>, QUATERNION <float> > GetStart(unsigned int index);
+	std::pair <MATHVECTOR<float,3>, QUATERNION<float> > GetStart(unsigned int index);
 	
 	int GetNumStartPositions()
 	{
@@ -85,11 +85,11 @@ public:
 	}
 	
 	bool CastRay(
-		const MATHVECTOR <float, 3> & origin,
-		const MATHVECTOR <float, 3> & direction,
-		float seglen, MATHVECTOR <float, 3> & outtri,
+		const MATHVECTOR<float,3> & origin,
+		const MATHVECTOR<float,3> & direction,
+		float seglen, MATHVECTOR<float,3> & outtri,
 		const BEZIER * & colpatch,
-		MATHVECTOR <float, 3> & normal) const;
+		MATHVECTOR<float,3> & normal) const;
 	
 	const std::list <ROADSTRIP> & GetRoadList() const
 	{
@@ -138,7 +138,7 @@ private:
 	std::map <std::string, TEXTURE_GL> texture_library;
 	std::list <TRACK_OBJECT> objects;
 	bool vertical_tracking_skyboxes;
-	std::vector <std::pair <MATHVECTOR <float, 3>, QUATERNION <float> > > start_positions;
+	std::vector <std::pair <MATHVECTOR<float,3>, QUATERNION<float> > > start_positions;
 
 	// does the track use Surface types (surfaces.txt)
 public:

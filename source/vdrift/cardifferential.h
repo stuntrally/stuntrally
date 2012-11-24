@@ -2,8 +2,6 @@
 #define _CARDIFFERENTIAL_H
 
 #include "dbl.h"
-#include "joeserialize.h"
-#include "macros.h"
 #include <iostream>
 #include "../ogre/common/Defines.h"
 
@@ -11,7 +9,6 @@
 ///a differential that supports speed-sensitive limited slip functionality.  epicyclic (torque splitting) operation is also provided.
 class CARDIFFERENTIAL
 {
-friend class joeserialize::Serializer;
 private:
 	// constants
 	Dbl final_drive;	///< the gear ratio of the differential
@@ -65,8 +62,6 @@ public:
 
 	void SetFinalDrive(const Dbl& value){	final_drive = value;	}
 	Dbl GetFinalDrive() const			{	return final_drive;		}
-	
-	bool Serialize(joeserialize::Serializer & s);
 };
 
 #endif

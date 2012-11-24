@@ -21,18 +21,18 @@ public:
 	///return true if the ray starting at the given origin going in the given direction intersects this patch.
 	/// output the contact point and normal to the given outtri and normal variables.
 	bool Collide(
-		const MATHVECTOR <float, 3> & origin,
-		const MATHVECTOR <float, 3> & direction,
+		const MATHVECTOR<float,3> & origin,
+		const MATHVECTOR<float,3> & direction,
 		float seglen,
-		MATHVECTOR <float, 3> & outtri,
-		MATHVECTOR <float, 3> & normal) const;
+		MATHVECTOR<float,3> & outtri,
+		MATHVECTOR<float,3> & normal) const;
 
 	float GetTrackCurvature() const
 	{
 		return track_curvature;
 	}
 
-	MATHVECTOR <float, 3> GetRacingLine() const
+	MATHVECTOR<float,3> GetRacingLine() const
 	{
 		return racing_line;
 	}
@@ -58,7 +58,7 @@ public:
 private:
 	BEZIER patch;
 	float track_curvature;
-	MATHVECTOR <float, 3> racing_line;
+	MATHVECTOR<float,3> racing_line;
 	
 	//DRAWABLE * racingline_draw;
 public:	

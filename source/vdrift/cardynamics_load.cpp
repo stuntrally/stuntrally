@@ -84,7 +84,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 	{
 		float engine_mass, engine_redline, engine_rpm_limit, engine_inertia,
 			engine_start_rpm, engine_stall_rpm, engine_fuel_consumption;
-		MATHVECTOR <double, 3> engine_position;
+		MATHVECTOR<double,3> engine_position;
 
 		if (!c.GetParam("engine.peak-engine-rpm", engine_redline, error_output)) return false; //used only for the redline graphics
 		engine.SetRedline(engine_redline);
@@ -266,7 +266,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 	//load the fuel tank
 	{
 		float pos[3];
-		MATHVECTOR <double, 3> position;
+		MATHVECTOR<double,3> position;
 		float capacity;
 		float volume;
 		float fuel_density;
@@ -306,7 +306,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 
 			float spring_constant, bounce, rebound, travel, camber, caster, toe, anti_roll;//, maxcompvel;
 			float hinge[3];
-			MATHVECTOR <double, 3> tempvec;
+			MATHVECTOR<double,3> tempvec;
 
 			if (!c.GetParam("suspension-"+posstr+".spring-constant", spring_constant, error_output)) return false;
 			suspension[posl].SetSpringConstant(spring_constant);
@@ -388,7 +388,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 
 			float roll_height, mass;
 			float position[3];
-			MATHVECTOR <double, 3> tempvec;
+			MATHVECTOR<double,3> tempvec;
 
 			if (!c.GetParam("wheel-"+posstr+".mass", mass, error_output)) return false;
 			wheel[pos].SetMass(mass);
@@ -478,7 +478,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 
 	//load the mass-only particles
 	{
-		MATHVECTOR <double, 3> position;
+		MATHVECTOR<double,3> position;
 		float pos[3];
 		float mass;
 
@@ -544,7 +544,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 	{
 		float mass;
 		float pos[3];
-		MATHVECTOR <double, 3> position;
+		MATHVECTOR<double,3> position;
 
 		if (!c.GetParam("driver.mass", mass, error_output)) return false;
 		if (!c.GetParam("driver.position", pos, error_output)) return false;
@@ -560,7 +560,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 	{
 		float drag_area, drag_c, lift_area, lift_c, lift_eff;
 		float pos[3];
-		MATHVECTOR <double, 3> position;
+		MATHVECTOR<double,3> position;
 
 		if (!c.GetParam("drag.frontal-area", drag_area, error_output)) return false;
 		if (!c.GetParam("drag.drag-coefficient", drag_c, error_output)) return false;
@@ -606,13 +606,13 @@ void CARDYNAMICS::Init(
 	const MODEL & chassisModel,
 	const MODEL & wheelModelFront,
 	const MODEL & wheelModelRear,
-	const MATHVECTOR <Dbl, 3> & position,
-	const QUATERNION <Dbl> & orientation)
+	const MATHVECTOR<Dbl,3> & position,
+	const QUATERNION<Dbl> & orientation)
 {
 	pSet = pSet1;  pScene = pScene1;  pFluids = pFluids1;
 	this->world = &world;
 
-	MATHVECTOR <Dbl, 3> zero(0, 0, 0);
+	MATHVECTOR<Dbl,3> zero(0, 0, 0);
 	body.SetPosition(position);
 	body.SetOrientation(orientation);
 	body.SetInitialForce(zero);
@@ -629,7 +629,7 @@ void CARDYNAMICS::Init(
 	AABB <float> box = chassisModel.GetAABB();
 	for (int i = 0; i < 4; i++)
 	{
-		MATHVECTOR <float, 3> wheelpos = GetLocalWheelPosition(WHEEL_POSITION(i), 0);
+		MATHVECTOR<float,3> wheelpos = GetLocalWheelPosition(WHEEL_POSITION(i), 0);
 
 		const MODEL * wheelmodel = &wheelModelFront;
 		if (i > 1) wheelmodel = &wheelModelRear;
@@ -646,7 +646,7 @@ void CARDYNAMICS::Init(
 
 
 	///  chassis shape  ---------------------------------------------------------
-	const MATHVECTOR <Dbl, 3> verticalMargin(0, 0, 0.3);
+	const MATHVECTOR<Dbl,3> verticalMargin(0, 0, 0.3);
 	btVector3 origin = ToBulletVector(box.GetCenter() + verticalMargin - center_of_mass);
 	btVector3 size = ToBulletVector(box.GetSize() - verticalMargin);
 
@@ -730,7 +730,7 @@ void CARDYNAMICS::Init(
 		{
 			WHEEL_POSITION wp = WHEEL_POSITION(w);
 			Dbl whR = GetWheel(wp).GetRadius() * 1.2;  //bigger par..
-			MATHVECTOR <float, 3> wheelpos = GetWheelPosition(wp, 0);
+			MATHVECTOR<float,3> wheelpos = GetWheelPosition(wp, 0);
 			wheelpos[0] += coll_Lofs;
 			//wheelpos[2] += whR;
 

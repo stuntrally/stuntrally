@@ -11,12 +11,12 @@ QT_TEST(rotationalframe_test)
 	{
 	ROTATIONALFRAME frame;
 	//frame.SetInertia(1.0);
-	QUATERNION <double> initorient;
+	QUATERNION<double> initorient;
 	frame.SetOrientation(initorient);
-	MATHVECTOR <double, 3> initv;
+	MATHVECTOR<double,3> initv;
 	initv.Set(0,0,0);
 	frame.SetAngularVelocity(initv);
-	MATHVECTOR <double, 3> torque;
+	MATHVECTOR<double,3> torque;
 	torque.Set(0,0,0);
 	frame.SetInitialTorque(torque);
 	
@@ -40,12 +40,12 @@ QT_TEST(rotationalframe_test)
 	{
 		ROTATIONALFRAME frame;
 		//frame.SetInertia(1.0);
-		QUATERNION <double> initorient;
+		QUATERNION<double> initorient;
 		frame.SetOrientation(initorient);
-		MATHVECTOR <double, 3> initv;
+		MATHVECTOR<double,3> initv;
 		initv.Set(0,0,0);
 		frame.SetAngularVelocity(initv);
-		MATHVECTOR <double, 3> torque;
+		MATHVECTOR<double,3> torque;
 		torque.Set(0,1,0);
 		frame.SetInitialTorque(torque);
 		MATRIX3 <double> inertia;

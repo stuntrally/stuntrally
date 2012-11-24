@@ -8,12 +8,12 @@ using std::ostream;
 
 QT_TEST(quaternion_test)
 {
-	QUATERNION <float> test1;
+	QUATERNION<float> test1;
 	QT_CHECK_EQUAL(test1.x(),0.0);
 	QT_CHECK_EQUAL(test1.y(),0.0);
 	QT_CHECK_EQUAL(test1.z(),0.0);
 	QT_CHECK_EQUAL(test1.w(),1.0);
-	QUATERNION <float> test2;
+	QUATERNION<float> test2;
 	test2.LoadIdentity();
 	QT_CHECK_EQUAL(test1,test2);
 	test1.w() = 0.7;
