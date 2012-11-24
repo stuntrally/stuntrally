@@ -26,12 +26,12 @@ exhaust-mirror-second = 1
 [ collision ]
 radius = 0.3
 width = 0.56
-height = 0.48
-posLrear = -1.91
-posLfront = 1.81
-offsetL = 0.0
+height = 0.58
+posLrear = -1.89
+posLfront = 1.85
+offsetL = -0.12
 offsetW = -0.02
-offsetH = 0.30
+offsetH = 0.22
 start-offsetY = 0.6
 
 
@@ -141,7 +141,7 @@ max-pressure = 3.0e6
 bias = 0.40
 radius = 0.13
 area = 0.013
-handbrake = 2.2
+handbrake = 3.6
 
 
 [ driver ]
@@ -178,7 +178,7 @@ efficiency = 0.95
 # wheels front (position and suspension mount)
 #---------------------------
 [ wheel-FR ]
-position = 0.71, 1.197, -0.441
+position = 0.71, 1.197, -0.50
 roll-height = 0.9
 mass = 15.0
 restitution = 0.1
@@ -188,7 +188,7 @@ position = 0.60, 1.28, -0.07
 hinge = -0.71, 0.55, -0.0
 
 [ wheel-FL ]
-position = -0.71, 1.197, -0.441
+position = -0.71, 1.197, -0.50
 roll-height = 0.9
 mass = 15.0
 restitution = 0.1
@@ -201,7 +201,7 @@ hinge = 0.71, 0.55, 0.0
 # wheels rear (position and suspension mount)
 #---------------------------
 [ wheel-RR ]
-position = 0.71, -1.438, -0.441
+position = 0.71, -1.438, -0.50
 roll-height = 0.9
 mass = 15.0
 restitution = 0.1
@@ -211,7 +211,7 @@ position = 0.60, -1.31, -0.07
 hinge = -0.25, -1.94, 0.0
 
 [ wheel-RL ]
-position = -0.71, -1.438, -0.441
+position = -0.71, -1.438, -0.50
 roll-height = 0.9
 mass = 15.0
 restitution = 0.1

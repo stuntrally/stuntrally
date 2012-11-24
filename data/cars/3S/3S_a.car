@@ -36,10 +36,10 @@ start-offsetY = 0.6
 #---------------------------
 [ engine ]
 position = 0.0, 1.2, 0.6
-mass = 300.0
+mass = 230.0
 peak-engine-rpm = 6500
 rpm-limit = 7000.0
-inertia = 0.65
+inertia = 0.40
 start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
@@ -63,7 +63,7 @@ torque-curve-15 = 6500, 471
 torque-curve-16 = 7000, 450
 
 [ clutch ]
-sliding = 0.27
+sliding = 0.21
 radius = 0.15
 area = 0.75
 max-pressure = 93000
@@ -82,7 +82,7 @@ gear-ratio-6 = 0.78
 shift-delay = 0.16
 
 [ differential ]
-final-drive = 3.81
+final-drive = 4.21
 anti-slip = 400.0
 
 [ fuel-tank ]
@@ -155,7 +155,7 @@ hood-mounted-view-position = -0.6, 0, 0.5
 [ drag ]
 position = 0.0, 0.0, -0.60
 frontal-area = 2.0
-drag-coefficient = 0.25
+drag-coefficient = 0.33
 
 [ wing-front ]
 position = 0, 2.34, -0.6
@@ -163,7 +163,7 @@ frontal-area = 0.2
 drag-coefficient = 0
 surface-area = 0.55
 lift-coefficient = -4.0
-efficiency = 0.95
+efficiency = 0.90
 
 [ wing-rear ]
 position = 0, -2.14, 0.37
@@ -171,7 +171,7 @@ frontal-area = 0.2
 drag-coefficient = 0
 surface-area = 0.53
 lift-coefficient = -4.0
-efficiency = 0.95
+efficiency = 0.90
 
 
 # wheels front (position and suspension mount)

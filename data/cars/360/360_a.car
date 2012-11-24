@@ -33,43 +33,43 @@ position = 0.0, -0.8, 0.15
 mass = 250.0
 peak-engine-rpm = 8500
 rpm-limit = 9000.0
-inertia = 0.45
+inertia = 0.33
 start-rpm = 1000
 stall-rpm = 500
 fuel-consumption = 0.0001
-torque-val-mul = 1.15
-torque-curve-00 = 1000, 341
+torque-val-mul = 1.1
+torque-curve-00 = 1000, 331
 torque-curve-01 = 1500, 362
 torque-curve-02 = 2200, 389
 torque-curve-03 = 2700, 426
 torque-curve-04 = 3200, 467
 torque-curve-05 = 3800, 512
 torque-curve-06 = 4200, 546
-torque-curve-07 = 4800, 562
+torque-curve-07 = 4800, 578
 torque-curve-08 = 5050, 595
 torque-curve-09 = 5200, 611
 torque-curve-10 = 5775, 605
 torque-curve-11 = 5850, 600
-torque-curve-12 = 6000, 592
-torque-curve-13 = 6800, 582
-torque-curve-14 = 7300, 562
-torque-curve-15 = 7700, 548
-torque-curve-16 = 8000, 525
-torque-curve-17 = 8600, 464
+torque-curve-12 = 6000, 586
+torque-curve-13 = 6800, 544
+torque-curve-14 = 7300, 516
+torque-curve-15 = 7700, 498
+torque-curve-16 = 8000, 475
+torque-curve-17 = 8600, 454
 torque-curve-18 = 9200, 419
 
 [ clutch ]
-sliding = 0.025
+sliding = 0.10
 radius = 0.15
 area = 1.0
-max-pressure = 4e5
+max-pressure = 60000
 
 #  gearbox
 #---------------------------
 [ transmission ]
 gears = 6
 gear-ratio-r = -3.29
-gear-ratio-1 = 3.20
+gear-ratio-1 = 3.29
 gear-ratio-2 = 2.16
 gear-ratio-3 = 1.61
 gear-ratio-4 = 1.27
@@ -78,7 +78,7 @@ gear-ratio-6 = 0.85
 shift-delay=0.08
 
 [ differential ]
-final-drive = 4.0
+final-drive = 4.84
 anti-slip =600.0
 #anti-slip-torque = 0.01
 #anti-slip-torque-deceleration-factor = 0
@@ -158,7 +158,7 @@ hood-mounted-view-position = -0.7, 0, 0.4
 [ drag ]
 position = 0.0, 0.15, 0.00
 frontal-area = 2.03
-drag-coefficient = 0.23
+drag-coefficient = 0.33
 
 [ wing-front ]
 position = 0, 1.45, 0.2
@@ -166,7 +166,7 @@ frontal-area = 0.0
 drag-coefficient = 0
 surface-area = 0.8
 lift-coefficient = -3.6
-efficiency = 0.8
+efficiency = 0.95
 
 [ wing-rear ]
 position = 0, -1.40, 0.2
@@ -174,7 +174,7 @@ frontal-area = 0.0
 drag-coefficient = 0
 surface-area = 0.8
 lift-coefficient = -4.7
-efficiency = 0.8
+efficiency = 0.95
 
 
 # wheels front (position and suspension mount)

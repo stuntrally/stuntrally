@@ -43,13 +43,13 @@ start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
 torque-val-mul = 1.2
-torque-curve-00 = 1000, 450
-torque-curve-01 = 1500, 480
-torque-curve-02 = 2000, 508
-torque-curve-03 = 2500, 532
-torque-curve-04 = 3000, 566
-torque-curve-05 = 3300, 579
-torque-curve-06 = 3500, 593
+torque-curve-00 = 1000, 405
+torque-curve-01 = 1500, 445
+torque-curve-02 = 2100, 465
+torque-curve-03 = 2600, 485
+torque-curve-04 = 3000, 506
+torque-curve-05 = 3300, 529
+torque-curve-06 = 3500, 553
 torque-curve-07 = 3800, 594
 torque-curve-08 = 4000, 604
 torque-curve-09 = 4200, 608
@@ -121,7 +121,7 @@ radius = 0.32
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 10.0
 tread = 0.0
-file = old_gravel.tire
+file = gravel_new4b.tire
 
 
 #  brakes
@@ -139,7 +139,7 @@ max-pressure = 3.0e6
 bias = 0.4
 radius = 0.1397
 area = 0.015
-handbrake = 4.8
+handbrake = 4.9
 
 
 [ driver ]
@@ -224,16 +224,16 @@ hinge = 0.25, -1.94, 0.0
 #---------------------------
 [ particle-00 ]  # rear
 mass = 230
-position =  1.0, -1.5, -0.06
+position =  1.0, -1.65, -0.06
 
 [ particle-01 ]
 mass = 230
-position = -1.0, -1.5, -0.06
+position = -1.0, -1.65, -0.06
 
 [ particle-02 ]  # front
 mass = 230
-position =  1.0,  1.5, -0.06
+position =  1.0,  1.65, -0.06
 
 [ particle-03 ]
 mass = 230
-position = -1.0,  1.5, -0.06
+position = -1.0,  1.65, -0.06

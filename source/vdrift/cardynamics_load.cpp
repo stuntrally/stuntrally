@@ -453,11 +453,12 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			//tire[leftside].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
 			//tire[rightside].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
 
-			//float tread;
 			float radius;
 			if (!c.GetParam("tire-"+posstr+".radius", radius, error_output))  return false;
 			wheel[leftside].SetRadius(radius);
 			wheel[rightside].SetRadius(radius);
+
+			//float tread;
 			//if (!c.GetParam("tire-"+posstr+".tread", tread, error_output))  return false;
 			//tire[leftside].SetTread(tread);
 			//tire[rightside].SetTread(tread);

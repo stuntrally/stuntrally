@@ -35,36 +35,35 @@ start-offsetY = 0.6
 #  engine
 #---------------------------
 [ engine ]
-position = 0.0, -0.8, 0.32
-mass = 180.0
+position = 0.0, -1.4, 0.32
+mass = 220.0
 peak-engine-rpm = 6900.0
 rpm-limit = 7200
 inertia = 0.25
 start-rpm = 1000
 stall-rpm = 500
 fuel-consumption = 1e-9
-#torque-friction = 0.0003
-torque-curve-00 = 1000, 421
-torque-curve-01 = 1500, 452
-torque-curve-02 = 2200, 477
-torque-curve-03 = 2700, 492
-torque-curve-04 = 3200, 507
-torque-curve-05 = 3800, 532
-torque-curve-06 = 4200, 562
-torque-curve-07 = 4800, 583
-torque-curve-09 = 5200, 561
-torque-curve-11 = 5600, 542
-torque-curve-12 = 6000, 515
-torque-curve-13 = 6800, 492
-torque-curve-14 = 7300, 472
-torque-curve-15 = 7700, 448
-torque-curve-17 = 8600, 409
+torque-friction = 0.0003
+torque-curve-00 = 1000, 381
+torque-curve-01 = 1500, 412
+torque-curve-02 = 2000, 447
+torque-curve-03 = 2500, 476
+torque-curve-04 = 3000, 527
+torque-curve-05 = 3500, 562
+torque-curve-06 = 4000, 582
+torque-curve-07 = 4500, 553
+torque-curve-09 = 5000, 511
+torque-curve-11 = 5500, 492
+torque-curve-12 = 6000, 465
+torque-curve-13 = 6500, 422
+torque-curve-14 = 7000, 382
+torque-curve-15 = 7500, 348
 
 [ clutch ]
-sliding = 0.075
+sliding = 0.12
 radius = 0.15
 area = 1.0
-max-pressure = 4e5
+max-pressure = 60000
 
 #  gearbox
 #---------------------------
@@ -80,7 +79,7 @@ gear-ratio-6 = 0.75
 shift-delay=0.12
 
 [ differential ]
-final-drive = 4.04
+final-drive = 4.64
 anti-slip = 600.0
 #anti-slip-torque = 0.01
 #anti-slip-torque-deceleration-factor = 0
@@ -118,15 +117,15 @@ anti-roll = 12000
 #  tires (more in .tire)
 #---------------------------
 [ tire-both ]
-radius = 0.31265
+radius = 0.313
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 14
 tread = 0.0
-file = old_asphalt.tire
+file = asphalt_new2.tire
 #---------
 #  ..?
 #[ tire-rear ]
-#radius = 0.3179
+#radius = 0.318
 #rotational-inertia = 15
 
 
@@ -136,16 +135,16 @@ file = old_asphalt.tire
 friction = 0.93
 max-pressure = 3.0e6
 bias = 0.55
-radius = 0.14
+radius = 0.17
 area = 0.015
 
 [ brakes-rear ]
 friction = 0.93
 max-pressure = 3.0e6
 bias = 0.45
-radius = 0.14
+radius = 0.17
 area = 0.015
-handbrake = 1.8
+handbrake = 3.2
 
 
 [ driver ]
@@ -163,20 +162,20 @@ frontal-area = 2
 drag-coefficient = 0.3
 
 [ wing-front ]
-position = 0.0, 1.2, -0.30
-frontal-area = 0.2
+position = 0.0, 1.1, -0.30
+frontal-area = 0.0
 drag-coefficient = 0.0
 surface-area = 0.7
 lift-coefficient = -4.0
-efficiency = 0.95
+efficiency = 0.94
 
 [ wing-rear ]
-position = 0.0, -2.14, 0.07
-frontal-area = 0.1
+position = 0.0, -1.2, 0.07
+frontal-area = 0.0
 drag-coefficient = 0.0
 surface-area = 0.5
 lift-coefficient = -3.6
-efficiency = 0.95
+efficiency = 0.94
 
 
 # wheels front (position and suspension mount)
@@ -228,19 +227,19 @@ hinge = 0,-0.6,0
 # used to calculate the weight distribution and balance
 # (for car total mass and inertia) also use engine mass and position
 #---------------------------
-[ particle-00 ]
+[ particle-00 ]    # rear
 mass = 230.0
-position =  1.1, -1.6, 0.05
+position =  1.2, -1.8, 0.05
 
 [ particle-01 ]
 mass = 230.0
-position = -1.1, -1.6, 0.05
+position = -1.2, -1.8, 0.05
 
-[ particle-02 ]
+[ particle-02 ]    # front
 mass = 230.0
-position =  1.2, 1.7, 0.05
+position =  1.1, 1.5, 0.05
 
 [ particle-03 ]
 mass = 230.0
-position = -1.2, 1.7, 0.05
+position = -1.1, 1.5, 0.05
 
