@@ -1,19 +1,19 @@
 #ifndef _CARTRANSMISSION_H
 #define _CARTRANSMISSION_H
 
+#include "dbl.h"
 #include "joeserialize.h"
 #include "macros.h"
 //#include <iostream>
 #include "../ogre/common/Defines.h"
 
 
-template <typename T>
 class CARTRANSMISSION
 {
 	friend class joeserialize::Serializer;
 	private:
 		//constants (not actually declared as const because they can be changed after object creation)
-		std::map <int, T> gear_ratios; ///< gear number and ratio.  reverse gears are negative integers. neutral is zero.
+		std::map <int, Dbl> gear_ratios; ///< gear number and ratio.  reverse gears are negative integers. neutral is zero.
 		int forward_gears; ///< the number of consecutive forward gears
 		int reverse_gears; ///< the number of consecutive reverse gears
 		
@@ -21,8 +21,8 @@ class CARTRANSMISSION
 		int gear; ///< the current gear
 		
 		//for info only
-		T driveshaft_rpm;
-		T crankshaft_rpm;
+		Dbl driveshaft_rpm;
+		Dbl crankshaft_rpm;
 		
 		
 	public:
@@ -60,7 +60,7 @@ class CARTRANSMISSION
 		}
 		
 		///ratio is: driveshaft speed / crankshaft speed
-		void SetGearRatio(int gear, T ratio)
+		void SetGearRatio(int gear, Dbl ratio)
 		{
 			gear_ratios[gear] = ratio;
 			
@@ -83,28 +83,28 @@ class CARTRANSMISSION
 			}
 		}
 		
-		T GetGearRatio(int gear) const
+		Dbl GetGearRatio(int gear) const
 		{
-			T ratio = 1.0;
-			typename std::map <int, T>::const_iterator i = gear_ratios.find(gear);
+			Dbl ratio = 1.0;
+			std::map <int, Dbl>::const_iterator i = gear_ratios.find(gear);
 			if (i != gear_ratios.end())
 				ratio = i->second;
 			return ratio;
 		}
 		
-		T GetCurrentGearRatio() const
+		Dbl GetCurrentGearRatio() const
 		{
 			return GetGearRatio(gear);
 		}
 		
 		///get the torque on the driveshaft due to the given torque at the clutch
-		T GetTorque(T clutch_torque)
+		Dbl GetTorque(Dbl clutch_torque)
 		{
 			return clutch_torque*gear_ratios[gear];
 		}
 		
 		///get the rotational speed of the clutch given the rotational speed of the driveshaft
-		T CalculateClutchSpeed(T driveshaft_speed)
+		Dbl CalculateClutchSpeed(Dbl driveshaft_speed)
 		{
 			driveshaft_rpm = driveshaft_speed * 30.0 / PI_d;
 			crankshaft_rpm = driveshaft_speed * gear_ratios[gear] * 30.0 / PI_d;
@@ -112,9 +112,9 @@ class CARTRANSMISSION
 		}
 		
 		///get the rotational speed of the clutch given the rotational speed of the driveshaft (const)
-		T GetClutchSpeed(T driveshaft_speed) const
+		Dbl GetClutchSpeed(Dbl driveshaft_speed) const
 		{
-			typename std::map <int, T>::const_iterator i = gear_ratios.find(gear);
+			std::map <int, Dbl>::const_iterator i = gear_ratios.find(gear);
 			assert(i != gear_ratios.end());
 			return driveshaft_speed * i->second;
 		}

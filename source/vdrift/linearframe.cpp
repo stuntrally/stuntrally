@@ -8,7 +8,7 @@ using std::endl;
 
 QT_TEST(linearframe_test)
 {
-	LINEARFRAME <double> frame;
+	LINEARFRAME frame;
 	frame.SetMass(1.0);
 	MATHVECTOR <double, 3> initpos;
 	initpos.Set(0,0,0);

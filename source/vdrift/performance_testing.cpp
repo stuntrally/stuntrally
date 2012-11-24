@@ -65,7 +65,7 @@ void PERFORMANCE_TESTING::Test(const string & carpath, class App* pApp,
 		"Center of mass [m] L,W,H: " << car.dynamics.center_of_mass << endl;
 
 	//  CARDYNAMICS::Init  stuff
-	MATHVECTOR <CARDYNAMICS::T, 3> zero(0,0,0);  QUATERNION <CARDYNAMICS::T> orientation;
+	MATHVECTOR <Dbl, 3> zero(0,0,0);  QUATERNION <Dbl> orientation;
 	//car.dynamics.body.SetPosition(position);
 	car.dynamics.body.SetOrientation(orientation);
 	car.dynamics.body.SetInitialForce(zero);

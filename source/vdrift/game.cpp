@@ -98,7 +98,7 @@ bool GAME::LoadTires()
 			{	error_output << "Error loading tire file " << filename << "\n";
 				return false;  }
 
-			TIRE_PARAMS<CARDYNAMICS::T> tp;
+			TIRE_PARAMS tp;
 			float value;
 
 			for (int i = 0; i < 15; ++i)

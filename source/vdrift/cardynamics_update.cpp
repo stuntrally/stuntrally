@@ -8,8 +8,6 @@
 #include "../ogre/common/Defines.h"
 #include "../ogre/common/SceneXml.h"
 
-typedef CARDYNAMICS::T T;
-
 
 // executed as last function(after integration) in bullet singlestepsimulation
 void CARDYNAMICS::updateAction(btCollisionWorld * collisionWorld, btScalar dt)
@@ -28,9 +26,9 @@ void CARDYNAMICS::Update()
 	if (!chassis)  return;//
 	btTransform tr;
 	chassis->getMotionState()->getWorldTransform(tr);
-	chassisRotation = ToMathQuaternion<T>(tr.getRotation());
-	chassisCenterOfMass = ToMathVector<T>(tr.getOrigin());
-	MATHVECTOR <T, 3> com = center_of_mass;
+	chassisRotation = ToMathQuaternion<Dbl>(tr.getRotation());
+	chassisCenterOfMass = ToMathVector<Dbl>(tr.getOrigin());
+	MATHVECTOR <Dbl, 3> com = center_of_mass;
 	chassisRotation.RotateVector(com);
 	chassisPosition = chassisCenterOfMass - com;
 	
@@ -95,7 +93,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 	{
 		if (inFluidsWh[w].size() > 0)  // 0 or 1 is there
 		{
-			MATHVECTOR <T, 3> up(0,0,1);
+			MATHVECTOR <Dbl, 3> up(0,0,1);
 			Orientation().RotateVector(up);
 			float upZ = std::max(0.f, (float)up[2]);
 			
@@ -120,16 +118,16 @@ void CARDYNAMICS::UpdateBuoyancy()
 					//bool inAir = GetWheelContact(wp).col == NULL;
 
 					//  bump, adds some noise
-					MATHVECTOR <T, 3> whPos = GetWheelPosition(wp) - chassisPosition;
+					MATHVECTOR <Dbl, 3> whPos = GetWheelPosition(wp) - chassisPosition;
 					float bump = sinf(whPos[0]*fp.bumpFqX)*cosf(whPos[1]*fp.bumpFqY);
 					
 					float f = std::min(fp.whMaxAngVel, std::max(-fp.whMaxAngVel, (float)wheel[w].GetAngularVelocity() ));
-					QUATERNION <T> steer;
+					QUATERNION <Dbl> steer;
 					float angle = -wheel[wp].GetSteerAngle() * fp.whSteerMul  + bump * fp.bumpAng;
 					steer.Rotate(angle * PI_d/180.f, 0, 0, 1);
 
 					//  forwards, side, up
-					MATHVECTOR <T, 3> force(whH[w] * fp.whForceLong * f, 0, /*^ 0*/100.f * whH[w] * fp.whForceUp * upZ);
+					MATHVECTOR <Dbl, 3> force(whH[w] * fp.whForceLong * f, 0, /*^ 0*/100.f * whH[w] * fp.whForceUp * upZ);
 					(Orientation()*steer).RotateVector(force);
 					
 					//  wheel spin resistance
@@ -171,13 +169,13 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 			out << "com: W right+ " << -center_of_mass[1] << " L front+ " << center_of_mass[0] << " H up+ " << center_of_mass[2] << endl;
 			out.precision(0);
 			out << "mass: " << body.GetMass() << endl;
-			MATRIX3 <T> inertia = body.GetInertiaConst();
+			MATRIX3 <Dbl> inertia = body.GetInertiaConst();
 			out << "inertia: roll " << inertia[0] << " pitch " << inertia[4] << " yaw " << inertia[8] << endl;
 			//out << "inertia: " << inertia[0] << " " << inertia[4] << " " << inertia[8] << " < " << inertia[1] << " " << inertia[2] << " " << inertia[3] << " " << inertia[5] << " " << inertia[6] << " " << inertia[7] << endl;
 			//out << "pos: " << chassisPosition << endl;
 			//out << "sumWhTest: " << sumWhTest << endl;
 			out.precision(2);
-			//MATHVECTOR <T, 3> up(0,0,1);  Orientation().RotateVector(up);
+			//MATHVECTOR <Dbl, 3> up(0,0,1);  Orientation().RotateVector(up);
 			//out << "up: " << up << endl;
 			out << endl;
 		}
@@ -201,13 +199,13 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 		{
 			out << "---Differential---\n";
 			if (drive == RWD)  {
-				out << " rear\n";		rear_differential.DebugPrint(out);	}
+				out << " rear\n";		diff_rear.DebugPrint(out);	}
 			else if (drive == FWD)  {
-				out << " front\n";		front_differential.DebugPrint(out);	}
+				out << " front\n";		diff_front.DebugPrint(out);	}
 			else if (drive == AWD)  {
-				out << " center\n";		center_differential.DebugPrint(out);
-				out << " front\n";		front_differential.DebugPrint(out);
-				out << " rear\n";		rear_differential.DebugPrint(out);	}
+				out << " center\n";		diff_center.DebugPrint(out);
+				out << " front\n";		diff_front.DebugPrint(out);
+				out << " rear\n";		diff_rear.DebugPrint(out);	}
 			out << endl;
 		}
 	}
@@ -252,14 +250,14 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 		if (cnt > 1)
 		{
 			out << "---Aerodynamic---\n";
-			for (vector <CARAERO<T> >::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
+			for (vector <CARAERO>::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
 				i->DebugPrint(out);
 		}
 }
 ///..........................................................................................................
 
 
-void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
+void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 {
 	body.Integrate1(dt);
 	//chassis->clearForces();
@@ -279,7 +277,7 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 			float n = 1.f + 0.3f * sin(time*4.3f)*cosf(time*7.74f);
 			time += dt;
 		//LogO(fToStr(n,4,6));
-		MATHVECTOR <T, 3> v(-f*n,0,0);  // todo yaw, dir
+		MATHVECTOR <Dbl, 3> v(-f*n,0,0);  // todo yaw, dir
 		ApplyForce(v);
 	}
 
@@ -287,7 +285,7 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 	if ((doFlip > 0.01f || doFlip < -0.01f) &&
 		pSet->game.flip_type > 0)
 	{
-		MATRIX3 <T> inertia = body.GetInertia();
+		MATRIX3 <Dbl> inertia = body.GetInertia();
 		btVector3 inrt(inertia[0], inertia[4], inertia[8]);
 		float t = inrt[inrt.maxAxis()] * doFlip * 12.f;  // strength
 
@@ -297,7 +295,7 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 			if (boostFuel < 0.f)  boostFuel = 0.f;
 			if (boostFuel <= 0.f)  t = 0.0;
 		}
-		MATHVECTOR <T, 3> v(t,0,0);
+		MATHVECTOR <Dbl, 3> v(t,0,0);
 		Orientation().RotateVector(v);
 		ApplyTorque(v);
 	}
@@ -315,7 +313,7 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 		if (boostVal > 0.01f)
 		{
 			float f = body.GetMass() * boostVal * 16.f * pSet->game.boost_power;  // power
-			MATHVECTOR <T, 3> v(f,0,0);
+			MATHVECTOR <Dbl, 3> v(f,0,0);
 			Orientation().RotateVector(v);
 			ApplyForce(v);
 		}
@@ -332,24 +330,24 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 	///***  -------------------------------------------------------------
 	
 
-	T normal_force[WHEEL_POSITION_SIZE];
+	Dbl normal_force[WHEEL_POSITION_SIZE];
 	for(int i = 0; i < WHEEL_POSITION_SIZE; i++)
 	{
-		MATHVECTOR <T, 3> suspension_force = UpdateSuspension(i, dt);
+		MATHVECTOR <Dbl, 3> suspension_force = UpdateSuspension(i, dt);
 		normal_force[i] = suspension_force.dot(wheel_contact[i].GetNormal());
 		if (normal_force[i] < 0) normal_force[i] = 0;
 
-		MATHVECTOR <T, 3> tire_friction = ApplyTireForce(i, normal_force[i], wheel_orientation[i]);
+		MATHVECTOR <Dbl, 3> tire_friction = ApplyTireForce(i, normal_force[i], wheel_orientation[i]);
 		ApplyWheelTorque(dt, drive_torque[i], i, tire_friction, wheel_orientation[i]);
 	}
 
 	///  test steer wheels ang vel to body yaw torque ..?  L = I*w
-	//T sum = 0.0;
+	//Dbl sum = 0.0;
 	//for(int i = 0; i < WHEEL_POSITION_SIZE; i++)
 	//{
 	//	sum += (i < 2 ? -1 : 1) *//wheel[i].GetAngularVelocity() *
 	//		(1.0 - sin(wheel[i].GetSteerAngle()*PI_d/180.0) ) * /*(wheel[i].GetSteerAngle() > 0 ? 1 : -1) **/ 10;
-	//	MATHVECTOR <T, 3> torque(0, 0, sum);
+	//	MATHVECTOR <Dbl, 3> torque(0, 0, sum);
 	//	//wheel_space.RotateVector(world_wheel_torque);
 	//	//ApplyTorque(torque);
 	//}
@@ -375,7 +373,7 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 
 //  Tick
 //---------------------------------------------------------------------------------
-void CARDYNAMICS::Tick(T dt)
+void CARDYNAMICS::Tick(Dbl dt)
 {
 	// has to happen before UpdateDriveline, overrides clutch, throttle
 	UpdateTransmission(dt);
@@ -384,7 +382,7 @@ void CARDYNAMICS::Tick(T dt)
 	const float internal_dt = dt / num_repeats;
 	for(int i = 0; i < num_repeats; ++i)
 	{
-		T drive_torque[WHEEL_POSITION_SIZE];
+		Dbl drive_torque[WHEEL_POSITION_SIZE];
 
 		UpdateDriveline(internal_dt, drive_torque);
 
@@ -409,10 +407,10 @@ void CARDYNAMICS::Tick(T dt)
 
 void CARDYNAMICS::SynchronizeBody()
 {
-	MATHVECTOR<T, 3> v = ToMathVector<T>(chassis->getLinearVelocity());
-	MATHVECTOR<T, 3> w = ToMathVector<T>(chassis->getAngularVelocity());
-	MATHVECTOR<T, 3> p = ToMathVector<T>(chassis->getCenterOfMassPosition());
-	QUATERNION<T> q = ToMathQuaternion<T>(chassis->getOrientation());
+	MATHVECTOR<Dbl, 3> v = ToMathVector<Dbl>(chassis->getLinearVelocity());
+	MATHVECTOR<Dbl, 3> w = ToMathVector<Dbl>(chassis->getAngularVelocity());
+	MATHVECTOR<Dbl, 3> p = ToMathVector<Dbl>(chassis->getCenterOfMassPosition());
+	QUATERNION<Dbl> q = ToMathQuaternion<Dbl>(chassis->getOrientation());
 	body.SetPosition(p);
 	body.SetOrientation(q);
 	body.SetVelocity(v);

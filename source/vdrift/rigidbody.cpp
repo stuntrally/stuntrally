@@ -9,9 +9,9 @@ using std::endl;
 
 QT_TEST(rigidbody_test)
 {
-	RIGIDBODY <float> body;
-	MATHVECTOR <float, 3> initpos;
-	QUATERNION <float> quat;
+	RIGIDBODY body;
+	MATHVECTOR <Dbl, 3> initpos;
+	QUATERNION <Dbl> quat;
 	initpos.Set(0,0,10);
 	body.SetPosition(initpos);
 	quat.Rotate(-PI_d*0.5, 1, 0, 0);

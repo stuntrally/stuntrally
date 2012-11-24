@@ -10,8 +10,6 @@
 #include "Buoyancy.h"
 #include "../ogre/common/QTimer.h"
 
-typedef CARDYNAMICS::T T;
-
 
 CARDYNAMICS::CARDYNAMICS() :
 	world(NULL), chassis(NULL), whTrigs(0),
@@ -199,22 +197,22 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 
 		if (drivetype == "RWD")
 		{
-			rear_differential.SetFinalDrive(final_drive);
-			rear_differential.SetAntiSlip(anti_slip, anti_slip_torque, anti_slip_torque_deceleration_factor);
+			diff_rear.SetFinalDrive(final_drive);
+			diff_rear.SetAntiSlip(anti_slip, anti_slip_torque, anti_slip_torque_deceleration_factor);
 		}
 		else if (drivetype == "FWD")
 		{
-			front_differential.SetFinalDrive(final_drive);
-			front_differential.SetAntiSlip(anti_slip, anti_slip_torque, anti_slip_torque_deceleration_factor);
+			diff_front.SetFinalDrive(final_drive);
+			diff_front.SetAntiSlip(anti_slip, anti_slip_torque, anti_slip_torque_deceleration_factor);
 		}
 		else if (drivetype == "AWD")
 		{
-			rear_differential.SetFinalDrive(1.0);
-			rear_differential.SetAntiSlip(anti_slip, anti_slip_torque, anti_slip_torque_deceleration_factor);
-			front_differential.SetFinalDrive(1.0);
-			front_differential.SetAntiSlip(anti_slip, anti_slip_torque, anti_slip_torque_deceleration_factor);
-			center_differential.SetFinalDrive(final_drive);
-			center_differential.SetAntiSlip(anti_slip, anti_slip_torque, anti_slip_torque_deceleration_factor);
+			diff_rear.SetFinalDrive(1.0);
+			diff_rear.SetAntiSlip(anti_slip, anti_slip_torque, anti_slip_torque_deceleration_factor);
+			diff_front.SetFinalDrive(1.0);
+			diff_front.SetAntiSlip(anti_slip, anti_slip_torque, anti_slip_torque_deceleration_factor);
+			diff_center.SetFinalDrive(final_drive);
+			diff_center.SetAntiSlip(anti_slip, anti_slip_torque, anti_slip_torque_deceleration_factor);
 		}
 		else
 		{
@@ -445,7 +443,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			int it = pGame->tire_pars_map[tirefile]-1;
 			if (it == -1)
 			{	error_output << "Tire file not found\n";  return false;  }
-			TIRE_PARAMS<CARDYNAMICS::T>* tp = &pGame->tire_pars[ it ];
+			TIRE_PARAMS* tp = &pGame->tire_pars[ it ];
 
 			tire[leftside].SetPacejkaParameters(tp);
 			tire[rightside].SetPacejkaParameters(tp);
@@ -608,13 +606,13 @@ void CARDYNAMICS::Init(
 	const MODEL & chassisModel,
 	const MODEL & wheelModelFront,
 	const MODEL & wheelModelRear,
-	const MATHVECTOR <T, 3> & position,
-	const QUATERNION <T> & orientation)
+	const MATHVECTOR <Dbl, 3> & position,
+	const QUATERNION <Dbl> & orientation)
 {
 	pSet = pSet1;  pScene = pScene1;  pFluids = pFluids1;
 	this->world = &world;
 
-	MATHVECTOR <T, 3> zero(0, 0, 0);
+	MATHVECTOR <Dbl, 3> zero(0, 0, 0);
 	body.SetPosition(position);
 	body.SetOrientation(orientation);
 	body.SetInitialForce(zero);
@@ -648,7 +646,7 @@ void CARDYNAMICS::Init(
 
 
 	///  chassis shape  ---------------------------------------------------------
-	const MATHVECTOR <T, 3> verticalMargin(0, 0, 0.3);
+	const MATHVECTOR <Dbl, 3> verticalMargin(0, 0, 0.3);
 	btVector3 origin = ToBulletVector(box.GetCenter() + verticalMargin - center_of_mass);
 	btVector3 size = ToBulletVector(box.GetSize() - verticalMargin);
 
@@ -702,8 +700,8 @@ void CARDYNAMICS::Init(
 	#endif
 
 
-	T chassisMass = body.GetMass();// * 0.4;  // Magic multiplier makes collisions better - problem: mud is very different
-	MATRIX3 <T> inertia = body.GetInertia();
+	Dbl chassisMass = body.GetMass();// * 0.4;  // Magic multiplier makes collisions better - problem: mud is very different
+	MATRIX3 <Dbl> inertia = body.GetInertia();
 	btVector3 chassisInertia(inertia[0], inertia[4], inertia[8]);
 
 	btTransform transform;
@@ -731,7 +729,7 @@ void CARDYNAMICS::Init(
 		for (int w=0; w < 4; ++w)
 		{
 			WHEEL_POSITION wp = WHEEL_POSITION(w);
-			T whR = GetWheel(wp).GetRadius() * 1.2;  //bigger par..
+			Dbl whR = GetWheel(wp).GetRadius() * 1.2;  //bigger par..
 			MATHVECTOR <float, 3> wheelpos = GetWheelPosition(wp, 0);
 			wheelpos[0] += coll_Lofs;
 			//wheelpos[2] += whR;

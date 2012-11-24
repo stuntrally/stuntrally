@@ -3,44 +3,42 @@
 #include "tobullet.h"
 #include "../ogre/common/Defines.h"
 
-typedef CARDYNAMICS::T T;
-
 
 void CARDYNAMICS::debugDraw(btIDebugDraw* debugDrawer)
 {	}
 
-const MATHVECTOR <T, 3> & CARDYNAMICS::GetCenterOfMassPosition() const
+const MATHVECTOR <Dbl, 3> & CARDYNAMICS::GetCenterOfMassPosition() const
 {
 	return chassisCenterOfMass;
 }
 
-const MATHVECTOR <T, 3> & CARDYNAMICS::GetPosition() const
+const MATHVECTOR <Dbl, 3> & CARDYNAMICS::GetPosition() const
 {
 	return chassisPosition;
 }
 
-const QUATERNION <T> & CARDYNAMICS::GetOrientation() const
+const QUATERNION <Dbl> & CARDYNAMICS::GetOrientation() const
 {
 	return chassisRotation;
 }
 
-MATHVECTOR <T, 3> CARDYNAMICS::GetWheelPosition(WHEEL_POSITION wp) const
+MATHVECTOR <Dbl, 3> CARDYNAMICS::GetWheelPosition(WHEEL_POSITION wp) const
 {
-	MATHVECTOR <T, 3> pos = GetLocalWheelPosition(wp, suspension[wp].GetDisplacementPercent());
+	MATHVECTOR <Dbl, 3> pos = GetLocalWheelPosition(wp, suspension[wp].GetDisplacementPercent());
 	chassisRotation.RotateVector(pos);
 	return pos + chassisPosition;
 }
 
-MATHVECTOR <T, 3> CARDYNAMICS::GetWheelPosition(WHEEL_POSITION wp, T displacement_percent) const
+MATHVECTOR <Dbl, 3> CARDYNAMICS::GetWheelPosition(WHEEL_POSITION wp, Dbl displacement_percent) const
 {
-	MATHVECTOR <T, 3> pos = GetLocalWheelPosition(wp, displacement_percent);
+	MATHVECTOR <Dbl, 3> pos = GetLocalWheelPosition(wp, displacement_percent);
 	chassisRotation.RotateVector(pos);
 	return pos + chassisPosition;
 }
 
-QUATERNION <T> CARDYNAMICS::GetWheelOrientation(WHEEL_POSITION wp) const
+QUATERNION <Dbl> CARDYNAMICS::GetWheelOrientation(WHEEL_POSITION wp) const
 {
-	QUATERNION <T> siderot;
+	QUATERNION <Dbl> siderot;
 	if(wp == FRONT_RIGHT || wp == REAR_RIGHT)
 	{
 		siderot.Rotate(PI_d, 0, 0, 1);
@@ -48,13 +46,13 @@ QUATERNION <T> CARDYNAMICS::GetWheelOrientation(WHEEL_POSITION wp) const
 	return chassisRotation * GetWheelSteeringAndSuspensionOrientation(wp) * wheel[wp].GetOrientation() * siderot;
 }
 
-QUATERNION <T> CARDYNAMICS::GetUprightOrientation(WHEEL_POSITION wp) const
+QUATERNION <Dbl> CARDYNAMICS::GetUprightOrientation(WHEEL_POSITION wp) const
 {
 	return chassisRotation * GetWheelSteeringAndSuspensionOrientation(wp);
 }
 
 /// worldspace wheel center position
-MATHVECTOR <T, 3> CARDYNAMICS::GetWheelVelocity ( WHEEL_POSITION wp ) const
+MATHVECTOR <Dbl, 3> CARDYNAMICS::GetWheelVelocity ( WHEEL_POSITION wp ) const
 {
 	return wheel_velocity[wp];
 }
@@ -74,27 +72,27 @@ float CARDYNAMICS::GetMass() const
 	return body.GetMass();
 }
 
-T CARDYNAMICS::GetSpeed() const
+Dbl CARDYNAMICS::GetSpeed() const
 {
 	return body.GetVelocity().Magnitude();
 	//return chassis->getLinearVelocity().length();
 }
 
-MATHVECTOR <T, 3> CARDYNAMICS::GetVelocity() const
+MATHVECTOR <Dbl, 3> CARDYNAMICS::GetVelocity() const
 {
 	return body.GetVelocity();
-	//return ToMathVector<T>(chassis->getLinearVelocity());
+	//return ToMathVector<Dbl>(chassis->getLinearVelocity());
 }
 
-MATHVECTOR <T, 3> CARDYNAMICS::GetAngularVelocity() const
+MATHVECTOR <Dbl, 3> CARDYNAMICS::GetAngularVelocity() const
 {
 	return body.GetAngularVelocity();
-	//return ToMathVector<T>(chassis->getAngularVelocity());
+	//return ToMathVector<Dbl>(chassis->getAngularVelocity());
 }
 
-MATHVECTOR <T, 3> CARDYNAMICS::GetEnginePosition() const
+MATHVECTOR <Dbl, 3> CARDYNAMICS::GetEnginePosition() const
 {
-	MATHVECTOR <T, 3> offset = engine.GetPosition();
+	MATHVECTOR <Dbl, 3> offset = engine.GetPosition();
 	Orientation().RotateVector(offset);
 	return offset + chassisPosition;
 }
@@ -158,12 +156,12 @@ void CARDYNAMICS::SetAutoRear(bool value)
 	autorear = value;
 }
 
-T CARDYNAMICS::GetSpeedMPS() const
+Dbl CARDYNAMICS::GetSpeedMPS() const
 {
-	T left_front_wheel_speed = wheel[FRONT_LEFT].GetAngularVelocity();
-	T right_front_wheel_speed = wheel[FRONT_RIGHT].GetAngularVelocity();
-	T left_rear_wheel_speed = wheel[REAR_LEFT].GetAngularVelocity();
-	T right_rear_wheel_speed = wheel[REAR_RIGHT].GetAngularVelocity();
+	Dbl left_front_wheel_speed = wheel[FRONT_LEFT].GetAngularVelocity();
+	Dbl right_front_wheel_speed = wheel[FRONT_RIGHT].GetAngularVelocity();
+	Dbl left_rear_wheel_speed = wheel[REAR_LEFT].GetAngularVelocity();
+	Dbl right_rear_wheel_speed = wheel[REAR_RIGHT].GetAngularVelocity();
 	for ( int i = 0; i < 4; i++ ) assert ( !isnan ( wheel[WHEEL_POSITION ( i ) ].GetAngularVelocity() ) );
 	if ( drive == RWD )
 	{
@@ -183,7 +181,7 @@ T CARDYNAMICS::GetSpeedMPS() const
 	return 0;
 }
 
-T CARDYNAMICS::GetTachoRPM() const
+Dbl CARDYNAMICS::GetTachoRPM() const
 {
 	return tacho_rpm;
 }
@@ -218,7 +216,7 @@ bool CARDYNAMICS::GetTCSActive() const
 	return tcs && ( tcs_active[0]||tcs_active[1]||tcs_active[2]||tcs_active[3] );
 }
 
-void CARDYNAMICS::SetPosition(const MATHVECTOR<T, 3> & position)
+void CARDYNAMICS::SetPosition(const MATHVECTOR<Dbl, 3> & position)
 {
 	body.SetPosition(position);
 	if (chassis)
@@ -231,11 +229,11 @@ void CARDYNAMICS::AlignWithGround()
 	UpdateWheelTransform();
 	UpdateWheelContacts();
 	
-	/*T min_height = 0;
+	/*Dbl min_height = 0;
 	bool no_min_height = true;
 	for (int i = 0; i < WHEEL_POSITION_SIZE; i++)
 		{
-		T height = wheel_contact[i].GetDepth() - 2 * tire[i].GetRadius();
+		Dbl height = wheel_contact[i].GetDepth() - 2 * tire[i].GetRadius();
 		if (height < min_height || no_min_height)
 			{
 			min_height = height;
@@ -243,27 +241,27 @@ void CARDYNAMICS::AlignWithGround()
 			}
 	}/**/  //--
 	
-	//MATHVECTOR <T, 3> trimmed_position = Position() + GetDownVector() * min_height;
+	//MATHVECTOR <Dbl, 3> trimmed_position = Position() + GetDownVector() * min_height;
 	//SetPosition(Position()/*trimmed_position*/);
 }
 
 //TODO: adjustable ackermann-like parameters
 ///set the steering angle to "value", where 1.0 is maximum right lock and -1.0 is maximum left lock.
-void CARDYNAMICS::SetSteering ( const T value )
+void CARDYNAMICS::SetSteering ( const Dbl value )
 {
 	steerValue = value;
-	T steerangle = value * maxangle; //steering angle in degrees
+	Dbl steerangle = value * maxangle; //steering angle in degrees
 
 	//ackermann stuff
-	T alpha = std::abs ( steerangle * PI_d/180.0 ); //outside wheel steering angle in radians
-	T B = wheel[FRONT_LEFT].GetExtendedPosition() [1]
+	Dbl alpha = std::abs ( steerangle * PI_d/180.0 ); //outside wheel steering angle in radians
+	Dbl B = wheel[FRONT_LEFT].GetExtendedPosition() [1]
 		- wheel[FRONT_RIGHT].GetExtendedPosition() [1]; //distance between front wheels
-	T L = wheel[FRONT_LEFT].GetExtendedPosition() [0]
+	Dbl L = wheel[FRONT_LEFT].GetExtendedPosition() [0]
 		- wheel[REAR_LEFT].GetExtendedPosition() [0]; //distance between front and rear wheels
-	T beta = atan2 ( 1.0, ( ( 1.0/ ( tan ( alpha ) ) )-B/L ) ); //inside wheel steering angle in radians
+	Dbl beta = atan2 ( 1.0, ( ( 1.0/ ( tan ( alpha ) ) )-B/L ) ); //inside wheel steering angle in radians
 
-	T left_wheel_angle = 0;
-	T right_wheel_angle = 0;
+	Dbl left_wheel_angle = 0;
+	Dbl right_wheel_angle = 0;
 
 	if ( value >= 0 )
 	{
@@ -283,43 +281,43 @@ void CARDYNAMICS::SetSteering ( const T value )
 	wheel[FRONT_RIGHT].SetSteerAngle ( right_wheel_angle );
 }
 
-T CARDYNAMICS::GetMaxSteeringAngle() const
+Dbl CARDYNAMICS::GetMaxSteeringAngle() const
 {
 	return maxangle;
 }
 
-MATHVECTOR <T, 3> CARDYNAMICS::GetTotalAero() const
+MATHVECTOR <Dbl, 3> CARDYNAMICS::GetTotalAero() const
 {
-	MATHVECTOR <T, 3> downforce = 0;
-	for ( std::vector <CARAERO<T> >::const_iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i )
+	MATHVECTOR <Dbl, 3> downforce = 0;
+	for ( std::vector <CARAERO>::const_iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i )
 	{
 		downforce = downforce + i->GetLiftVector() +  i->GetDragVector();
 	}
 	return downforce;
 }
 
-T CARDYNAMICS::GetAerodynamicDownforceCoefficient() const
+Dbl CARDYNAMICS::GetAerodynamicDownforceCoefficient() const
 {
-	T coeff = 0.0;
-	for ( std::vector <CARAERO <T> >::const_iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i )
+	Dbl coeff = 0.0;
+	for ( std::vector <CARAERO>::const_iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i )
 		coeff += i->GetAerodynamicDownforceCoefficient();
 	return coeff;
 }
 
-T CARDYNAMICS::GetAeordynamicDragCoefficient() const
+Dbl CARDYNAMICS::GetAeordynamicDragCoefficient() const
 {
-	T coeff = 0.0;
-	for ( std::vector <CARAERO <T> >::const_iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i )
+	Dbl coeff = 0.0;
+	for ( std::vector <CARAERO>::const_iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i )
 		coeff += i->GetAeordynamicDragCoefficient();
 	return coeff;
 }
 
-MATHVECTOR< T, 3 > CARDYNAMICS::GetLastBodyForce() const
+MATHVECTOR< Dbl, 3 > CARDYNAMICS::GetLastBodyForce() const
 {
 	return lastbodyforce;
 }
 
-T CARDYNAMICS::GetFeedback() const
+Dbl CARDYNAMICS::GetFeedback() const
 {
 	return feedback;
 }
@@ -335,9 +333,9 @@ bool CARDYNAMICS::Serialize ( joeserialize::Serializer & s )
 	_SERIALIZE_ ( s,engine );
 	_SERIALIZE_ ( s,clutch );
 	_SERIALIZE_ ( s,transmission );
-	_SERIALIZE_ ( s,front_differential );
-	_SERIALIZE_ ( s,rear_differential );
-	_SERIALIZE_ ( s,center_differential );
+	_SERIALIZE_ ( s,diff_front );
+	_SERIALIZE_ ( s,diff_rear );
+	_SERIALIZE_ ( s,diff_center );
 	_SERIALIZE_ ( s,fuel_tank );
 	_SERIALIZE_ ( s,suspension );
 	_SERIALIZE_ ( s,wheel );
@@ -358,71 +356,71 @@ bool CARDYNAMICS::Serialize ( joeserialize::Serializer & s )
 	return true;
 }
 
-MATHVECTOR <T, 3> CARDYNAMICS::GetDownVector() const
+MATHVECTOR <Dbl, 3> CARDYNAMICS::GetDownVector() const
 {
-	MATHVECTOR <T, 3> v(0, 0, -1);
+	MATHVECTOR <Dbl, 3> v(0, 0, -1);
 	Orientation().RotateVector(v);
 	return v;
 }
 
-QUATERNION <T> CARDYNAMICS::Orientation() const
+QUATERNION <Dbl> CARDYNAMICS::Orientation() const
 {
 	return body.GetOrientation();
-	//return ToMathQuaternion<T>(chassis->getOrientation());
+	//return ToMathQuaternion<Dbl>(chassis->getOrientation());
 }
 
-MATHVECTOR <T, 3> CARDYNAMICS::Position() const
+MATHVECTOR <Dbl, 3> CARDYNAMICS::Position() const
 {
 	return body.GetPosition();
-	//return ToMathVector<T>(chassis->getCenterOfMassPosition());
+	//return ToMathVector<Dbl>(chassis->getCenterOfMassPosition());
 }
 
-MATHVECTOR <T, 3> CARDYNAMICS::LocalToWorld(const MATHVECTOR <T, 3> & local) const
+MATHVECTOR <Dbl, 3> CARDYNAMICS::LocalToWorld(const MATHVECTOR <Dbl, 3> & local) const
 {
-	MATHVECTOR <T,3> position = local - center_of_mass;
+	MATHVECTOR <Dbl,3> position = local - center_of_mass;
 	body.GetOrientation().RotateVector(position);
 	return position + body.GetPosition();
 	//btVector3 position = chassis->getCenterOfMassTransform().getBasis() * ToBulletVector(local - center_of_mass);
 	//position = position + chassis->getCenterOfMassTransform().getOrigin();
-	//return ToMathVector <T> (position);
+	//return ToMathVector <Dbl> (position);
 }
 
 //simple hinge (arc) suspension displacement
-MATHVECTOR <T, 3> CARDYNAMICS::GetLocalWheelPosition(WHEEL_POSITION wp, T displacement_percent) const
+MATHVECTOR <Dbl, 3> CARDYNAMICS::GetLocalWheelPosition(WHEEL_POSITION wp, Dbl displacement_percent) const
 {
 	//const
-	const MATHVECTOR <T, 3> & wheelext = wheel[wp].GetExtendedPosition();
-	const MATHVECTOR <T, 3> & hinge = suspension[wp].GetHinge();
-	MATHVECTOR <T, 3> relwheelext = wheelext - hinge;
-	MATHVECTOR <T, 3> up (0, 0, 1);
-	MATHVECTOR <T, 3> rotaxis = up.cross ( relwheelext.Normalize() );
-	T hingeradius = relwheelext.Magnitude();
-	T travel = suspension[wp].GetTravel();
+	const MATHVECTOR <Dbl, 3> & wheelext = wheel[wp].GetExtendedPosition();
+	const MATHVECTOR <Dbl, 3> & hinge = suspension[wp].GetHinge();
+	MATHVECTOR <Dbl, 3> relwheelext = wheelext - hinge;
+	MATHVECTOR <Dbl, 3> up (0, 0, 1);
+	MATHVECTOR <Dbl, 3> rotaxis = up.cross ( relwheelext.Normalize() );
+	Dbl hingeradius = relwheelext.Magnitude();
+	Dbl travel = suspension[wp].GetTravel();
 	//const
 
-	T displacement = displacement_percent * travel;
-	T displacementradians = displacement / hingeradius;
-	QUATERNION <T> hingerotate;
+	Dbl displacement = displacement_percent * travel;
+	Dbl displacementradians = displacement / hingeradius;
+	QUATERNION <Dbl> hingerotate;
 	hingerotate.Rotate ( -displacementradians, rotaxis[0], rotaxis[1], rotaxis[2] );
-	MATHVECTOR <T, 3> localwheelpos = relwheelext;
+	MATHVECTOR <Dbl, 3> localwheelpos = relwheelext;
 	hingerotate.RotateVector ( localwheelpos );
 	return localwheelpos + hinge;
 }
 
 ///returns the orientation of the wheel due only to steering and suspension
-QUATERNION <T> CARDYNAMICS::GetWheelSteeringAndSuspensionOrientation ( WHEEL_POSITION wp ) const
+QUATERNION <Dbl> CARDYNAMICS::GetWheelSteeringAndSuspensionOrientation ( WHEEL_POSITION wp ) const
 {
-	QUATERNION <T> steer;
+	QUATERNION <Dbl> steer;
 	steer.Rotate ( -wheel[wp].GetSteerAngle() * PI_d/180.0, 0, 0, 1 );
 
-	QUATERNION <T> camber;
-	T camber_rotation = -suspension[wp].GetCamber() * PI_d/180.0;
+	QUATERNION <Dbl> camber;
+	Dbl camber_rotation = -suspension[wp].GetCamber() * PI_d/180.0;
 	if ( wp == 1 || wp == 3 )
 		camber_rotation = -camber_rotation;
 	camber.Rotate ( camber_rotation, 1, 0, 0 );
 
-	QUATERNION <T> toe;
-	T toe_rotation = suspension[wp].GetToe() * PI_d/180.0;
+	QUATERNION <Dbl> toe;
+	Dbl toe_rotation = suspension[wp].GetToe() * PI_d/180.0;
 	if ( wp == 0 || wp == 2 )
 		toe_rotation = -toe_rotation;
 	toe.Rotate ( toe_rotation, 0, 0, 1 );
@@ -432,24 +430,24 @@ QUATERNION <T> CARDYNAMICS::GetWheelSteeringAndSuspensionOrientation ( WHEEL_POS
 
 /// worldspace position of the center of the wheel when the suspension is compressed
 /// by the displacement_percent where 1.0 is fully compressed
-MATHVECTOR <T, 3> CARDYNAMICS::GetWheelPositionAtDisplacement(WHEEL_POSITION wp, T displacement_percent) const
+MATHVECTOR <Dbl, 3> CARDYNAMICS::GetWheelPositionAtDisplacement(WHEEL_POSITION wp, Dbl displacement_percent) const
 {
 	return LocalToWorld(GetLocalWheelPosition(wp, displacement_percent));
 }
 
-void CARDYNAMICS::ApplyForce(const MATHVECTOR <T, 3> & force)
+void CARDYNAMICS::ApplyForce(const MATHVECTOR <Dbl, 3> & force)
 {
 	body.ApplyForce(force);
 	//chassis->applyCentralForce(ToBulletVector(force));
 }
 
-void CARDYNAMICS::ApplyForce(const MATHVECTOR <T, 3> & force, const MATHVECTOR <T, 3> & offset)
+void CARDYNAMICS::ApplyForce(const MATHVECTOR <Dbl, 3> & force, const MATHVECTOR <Dbl, 3> & offset)
 {
 	body.ApplyForce(force, offset);
 	//chassis->applyForce(ToBulletVector(force), ToBulletVector(offset));
 }
 
-void CARDYNAMICS::ApplyTorque(const MATHVECTOR <T, 3> & torque)
+void CARDYNAMICS::ApplyTorque(const MATHVECTOR <Dbl, 3> & torque)
 {
 	body.ApplyTorque(torque);
 	//if(torque.MagnitudeSquared() > 1E-6)
@@ -462,7 +460,7 @@ void CARDYNAMICS::UpdateWheelVelocity()
 	{
 		wheel_velocity[i] = body.GetVelocity(wheel_position[i] - body.GetPosition());
 		//btVector3 offset = ToBulletVector(wheel_position[i]) - chassis->getCenterOfMassPosition();
-		//wheel_velocity[i] = ToMathVector<T>(chassis->getVelocityInLocalPoint(offset));
+		//wheel_velocity[i] = ToMathVector<Dbl>(chassis->getVelocityInLocalPoint(offset));
 	}
 }
 
@@ -477,20 +475,20 @@ void CARDYNAMICS::UpdateWheelTransform()
 
 void CARDYNAMICS::ApplyEngineTorqueToBody()
 {
-	MATHVECTOR <T, 3> engine_torque(-engine.GetTorque(), 0, 0);
+	MATHVECTOR <Dbl, 3> engine_torque(-engine.GetTorque(), 0, 0);
 	Orientation().RotateVector(engine_torque);
 	ApplyTorque(engine_torque*0.1);  // unwanted in jumps
 }
 
-void CARDYNAMICS::ApplyAerodynamicsToBody(T dt)
+void CARDYNAMICS::ApplyAerodynamicsToBody(Dbl dt)
 {
-	MATHVECTOR <T, 3> wind_force(0);
-	MATHVECTOR <T, 3> wind_torque(0);
-	MATHVECTOR <T, 3> air_velocity = -GetVelocity();
+	MATHVECTOR <Dbl, 3> wind_force(0);
+	MATHVECTOR <Dbl, 3> wind_torque(0);
+	MATHVECTOR <Dbl, 3> air_velocity = -GetVelocity();
 	(-Orientation()).RotateVector(air_velocity);
-	for(std::vector <CARAERO <T> >::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
+	for(std::vector <CARAERO>::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
 	{
-		MATHVECTOR <T, 3> force = i->GetForce(air_velocity);
+		MATHVECTOR <Dbl, 3> force = i->GetForce(air_velocity);
 		wind_force = wind_force + force;
 		wind_torque = wind_torque + (i->GetPosition() - center_of_mass).cross(force);
 	}
@@ -502,7 +500,7 @@ void CARDYNAMICS::ApplyAerodynamicsToBody(T dt)
 	// rotational damping/drag
 	if (rot_coef[0] > 0.0 && chassis)
 	{
-		MATHVECTOR <T, 3> rot_drag = -ToMathVector<T>(chassis->getAngularVelocity());
+		MATHVECTOR <Dbl, 3> rot_drag = -ToMathVector<Dbl>(chassis->getAngularVelocity());
 		(-Orientation()).RotateVector(rot_drag);  // apply factors in car space
 			// linear 50000 test big  10000 heavy  1000 light
 			// sqare 2.5 ok, limits max rot vel-
@@ -516,23 +514,23 @@ void CARDYNAMICS::ApplyAerodynamicsToBody(T dt)
 	}
 }
 
-MATHVECTOR <T, 3> CARDYNAMICS::UpdateSuspension ( int i , T dt )
+MATHVECTOR <Dbl, 3> CARDYNAMICS::UpdateSuspension ( int i , Dbl dt )
 {
 	// displacement
-	const T posx = wheel_contact[i].GetPosition() [0];
-	const T posz = wheel_contact[i].GetPosition() [2];
+	const Dbl posx = wheel_contact[i].GetPosition() [0];
+	const Dbl posz = wheel_contact[i].GetPosition() [2];
 	const TRACKSURFACE & surface = wheel_contact[i].GetSurface();
-	T phase = 0;
+	Dbl phase = 0;
 	if (surface.bumpWaveLength > 0.0001)
 		phase = 2 * PI_d * ( posx+posz ) / surface.bumpWaveLength;
-	T shift = 2.0 * sin ( phase*1.414214 );
-	T amplitude = 0.25 * surface.bumpAmplitude;
-	T bumpoffset = amplitude * ( sin ( phase + shift ) + sin ( 1.414214*phase ) - 2.0 );
-	//T ray_offset = 0.2;  //*! wheel ray origin is offset by 1 meter relative to wheel extended position
-	T displacement = /*ray_offset +*/ 2.0*wheel[i].GetRadius() - wheel_contact[i].GetDepth() + bumpoffset;
+	Dbl shift = 2.0 * sin ( phase*1.414214 );
+	Dbl amplitude = 0.25 * surface.bumpAmplitude;
+	Dbl bumpoffset = amplitude * ( sin ( phase + shift ) + sin ( 1.414214*phase ) - 2.0 );
+	//Dbl ray_offset = 0.2;  //*! wheel ray origin is offset by 1 meter relative to wheel extended position
+	Dbl displacement = /*ray_offset +*/ 2.0*wheel[i].GetRadius() - wheel_contact[i].GetDepth() + bumpoffset;
 
 	// compute suspension force
-	T springdampforce = suspension[WHEEL_POSITION ( i ) ].Update ( dt , displacement );
+	Dbl springdampforce = suspension[WHEEL_POSITION ( i ) ].Update ( dt , displacement );
 
 	//do anti-roll
 	int otheri = i;
@@ -540,7 +538,7 @@ MATHVECTOR <T, 3> CARDYNAMICS::UpdateSuspension ( int i , T dt )
 		otheri++;
 	else
 		otheri--;
-	T antirollforce = suspension[WHEEL_POSITION ( i ) ].GetAntiRollK() *
+	Dbl antirollforce = suspension[WHEEL_POSITION ( i ) ].GetAntiRollK() *
 	                  ( suspension[WHEEL_POSITION ( i ) ].GetDisplacement()-
 	                    suspension[WHEEL_POSITION ( otheri ) ].GetDisplacement() );
 	//suspension[WHEEL_POSITION(i)].SetAntiRollInfo(antirollforce);
@@ -549,16 +547,16 @@ MATHVECTOR <T, 3> CARDYNAMICS::UpdateSuspension ( int i , T dt )
 
 	//find the vector direction to apply the suspension force
 #ifdef SUSPENSION_FORCE_DIRECTION
-	const MATHVECTOR <T, 3> & wheelext = wheel[i].GetExtendedPosition();
-	const MATHVECTOR <T, 3> & hinge = suspension[i].GetHinge();
-	MATHVECTOR <T, 3> relwheelext = wheelext - hinge;
-	MATHVECTOR <T, 3> up ( 0,0,1 );
-	MATHVECTOR <T, 3> rotaxis = up.cross ( relwheelext.Normalize() );
-	MATHVECTOR <T, 3> forcedirection = relwheelext.Normalize().cross ( rotaxis );
+	const MATHVECTOR <Dbl, 3> & wheelext = wheel[i].GetExtendedPosition();
+	const MATHVECTOR <Dbl, 3> & hinge = suspension[i].GetHinge();
+	MATHVECTOR <Dbl, 3> relwheelext = wheelext - hinge;
+	MATHVECTOR <Dbl, 3> up ( 0,0,1 );
+	MATHVECTOR <Dbl, 3> rotaxis = up.cross ( relwheelext.Normalize() );
+	MATHVECTOR <Dbl, 3> forcedirection = relwheelext.Normalize().cross ( rotaxis );
 	//std::cout << i << ". " << forcedirection << std::endl;
-	MATHVECTOR <T, 3> suspension_force = forcedirection * ( antirollforce+springdampforce );
+	MATHVECTOR <Dbl, 3> suspension_force = forcedirection * ( antirollforce+springdampforce );
 #else
-	MATHVECTOR <T, 3> suspension_force(0, 0, antirollforce + springdampforce);
+	MATHVECTOR <Dbl, 3> suspension_force(0, 0, antirollforce + springdampforce);
 #endif
 	Orientation().RotateVector(suspension_force);
 	return suspension_force;
@@ -566,41 +564,41 @@ MATHVECTOR <T, 3> CARDYNAMICS::UpdateSuspension ( int i , T dt )
 
 
 // aplies tire friction  to car, returns friction in world space
-MATHVECTOR <T, 3> CARDYNAMICS::ApplyTireForce(int i, const T normal_force, const QUATERNION <T> & wheel_space)
+MATHVECTOR <Dbl, 3> CARDYNAMICS::ApplyTireForce(int i, const Dbl normal_force, const QUATERNION <Dbl> & wheel_space)
 {
-	CARWHEEL<T> & wheel = this->wheel[WHEEL_POSITION(i)];
-	CARTIRE<T> & tire = this->tire[WHEEL_POSITION(i)];
+	CARWHEEL & wheel = this->wheel[WHEEL_POSITION(i)];
+	CARTIRE & tire = this->tire[WHEEL_POSITION(i)];
 	const COLLISION_CONTACT & wheel_contact = this->wheel_contact[WHEEL_POSITION(i)];
 	const TRACKSURFACE & surface = wheel_contact.GetSurface();
-	const MATHVECTOR <T, 3> surface_normal = wheel_contact.GetNormal();
+	const MATHVECTOR <Dbl, 3> surface_normal = wheel_contact.GetNormal();
 
 	// camber relative to surface(clockwise in wheel heading direction)
-	MATHVECTOR <T, 3> wheel_axis(0, 1, 0);
+	MATHVECTOR <Dbl, 3> wheel_axis(0, 1, 0);
 	wheel_space.RotateVector(wheel_axis); // wheel axis in world space (wheel plane normal)
-	T camber_sin = wheel_axis.dot(surface_normal);
-	T camber_rad = asin(camber_sin);
+	Dbl camber_sin = wheel_axis.dot(surface_normal);
+	Dbl camber_rad = asin(camber_sin);
 	wheel.SetCamberDeg(camber_rad * 180.0/PI_d);
 
 	// tire space(SAE Tire Coordinate System)
 	// surface normal is z-axis
 	// wheel axis projected on surface plane is y-axis
-	MATHVECTOR <T, 3> y_axis = wheel_axis - surface_normal * camber_sin;
-	MATHVECTOR <T, 3> x_axis = y_axis.cross(surface_normal);
+	MATHVECTOR <Dbl, 3> y_axis = wheel_axis - surface_normal * camber_sin;
+	MATHVECTOR <Dbl, 3> x_axis = y_axis.cross(surface_normal);
 
 	// wheel center velocity in tire space
-	MATHVECTOR <T, 3> hub_velocity;
+	MATHVECTOR <Dbl, 3> hub_velocity;
 	hub_velocity[0] = x_axis.dot(wheel_velocity[WHEEL_POSITION(i)]);
 	hub_velocity[1] = y_axis.dot(wheel_velocity[WHEEL_POSITION(i)]);
 	hub_velocity[2] = 0; // unused
 
 	// rearward speed of the contact patch
-	T patch_speed = wheel.GetAngularVelocity() * wheel.GetRadius();
+	Dbl patch_speed = wheel.GetAngularVelocity() * wheel.GetRadius();
 
 	// friction force in tire space
-	//T friction_coeff = tire.GetTread() * surface.frictionTread + (1.0 - tire.GetTread()) * surface.frictionNonTread;
-	T friction_coeff = surface.frictionTread;
-	T roll_friction_coeff = surface.rollResistanceCoefficient;
-	MATHVECTOR <T, 3> friction_force(0);
+	//Dbl friction_coeff = tire.GetTread() * surface.frictionTread + (1.0 - tire.GetTread()) * surface.frictionNonTread;
+	Dbl friction_coeff = surface.frictionTread;
+	Dbl roll_friction_coeff = surface.rollResistanceCoefficient;
+	MATHVECTOR <Dbl, 3> friction_force(0);
 	if(friction_coeff > 0)
 		friction_force = tire.GetForce(normal_force, friction_coeff, roll_friction_coeff, hub_velocity, patch_speed, camber_rad);
 
@@ -608,25 +606,25 @@ MATHVECTOR <T, 3> CARDYNAMICS::ApplyTireForce(int i, const T normal_force, const
 	tire.SetFeedback(friction_force[2]);
 
 	// friction force in world space
-	MATHVECTOR <T, 3> world_friction_force = x_axis * friction_force[0] + y_axis * friction_force[1];
+	MATHVECTOR <Dbl, 3> world_friction_force = x_axis * friction_force[0] + y_axis * friction_force[1];
 
 	// fake viscous friction (sand, gravel, mud)
-	MATHVECTOR <T, 3> wheel_drag = - (x_axis * hub_velocity[0] + y_axis * hub_velocity[1]) * surface.rollingDrag;
+	MATHVECTOR <Dbl, 3> wheel_drag = - (x_axis * hub_velocity[0] + y_axis * hub_velocity[1]) * surface.rollingDrag;
 
 	// apply forces to body
-	MATHVECTOR <T, 3> wheel_normal(0, 0, 1);
+	MATHVECTOR <Dbl, 3> wheel_normal(0, 0, 1);
 	wheel_space.RotateVector(wheel_normal);
-	MATHVECTOR <T, 3> contactpos = wheel_position[WHEEL_POSITION(i)] + wheel_normal * wheel.GetRadius() * wheel.GetRollHeight();  ///+
+	MATHVECTOR <Dbl, 3> contactpos = wheel_position[WHEEL_POSITION(i)] + wheel_normal * wheel.GetRadius() * wheel.GetRollHeight();  ///+
 	ApplyForce(world_friction_force + surface_normal * normal_force + wheel_drag, contactpos - Position());
 
 	return world_friction_force;
 }
 
-void CARDYNAMICS::ApplyWheelTorque(T dt, T drive_torque, int i, MATHVECTOR <T, 3> tire_friction, const QUATERNION <T> & wheel_space)
+void CARDYNAMICS::ApplyWheelTorque(Dbl dt, Dbl drive_torque, int i, MATHVECTOR <Dbl, 3> tire_friction, const QUATERNION <Dbl> & wheel_space)
 {
-	CARWHEEL<T> & wheel = this->wheel[WHEEL_POSITION(i)];
-	CARTIRE<T> & tire = this->tire[WHEEL_POSITION(i)];
-	CARBRAKE<T> & brake = this->brake[WHEEL_POSITION(i)];
+	CARWHEEL & wheel = this->wheel[WHEEL_POSITION(i)];
+	CARTIRE & tire = this->tire[WHEEL_POSITION(i)];
+	CARBRAKE & brake = this->brake[WHEEL_POSITION(i)];
 
 	// tire force / torque
 	wheel.Integrate1(dt);
@@ -634,11 +632,11 @@ void CARDYNAMICS::ApplyWheelTorque(T dt, T drive_torque, int i, MATHVECTOR <T, 3
 	(-wheel_space).RotateVector(tire_friction);
 
 	// torques acting on wheel
-	T friction_torque = tire_friction[0] * wheel.GetRadius();
-	T wheel_torque = drive_torque - friction_torque;
-	T lock_up_torque = wheel.GetLockUpTorque(dt) - wheel_torque;	// torque needed to lock the wheel
-	T angVel = wheel.GetAngularVelocity();  if (angVel < 0.0)  angVel = -angVel; //
-	T brake_torque = brake.GetTorque()
+	Dbl friction_torque = tire_friction[0] * wheel.GetRadius();
+	Dbl wheel_torque = drive_torque - friction_torque;
+	Dbl lock_up_torque = wheel.GetLockUpTorque(dt) - wheel_torque;	// torque needed to lock the wheel
+	Dbl angVel = wheel.GetAngularVelocity();  if (angVel < 0.0)  angVel = -angVel; //
+	Dbl brake_torque = brake.GetTorque()
 		+ wheel.fluidRes * angVel;  /// fluid resistance
 
 	// brake and rolling resistance torque should never exceed lock up torque
@@ -663,13 +661,13 @@ void CARDYNAMICS::ApplyWheelTorque(T dt, T drive_torque, int i, MATHVECTOR <T, 3
 
 	// apply torque to body
 	///+  z yaw  y pitch
-	//MATHVECTOR <T, 3> world_wheel_torque(0, -wheel_torque, 0);
+	//MATHVECTOR <Dbl, 3> world_wheel_torque(0, -wheel_torque, 0);
 	//wheel_space.RotateVector(world_wheel_torque);
 	//ApplyTorque(world_wheel_torque);
 }
 
 
-void CARDYNAMICS::InterpolateWheelContacts(T dt)
+void CARDYNAMICS::InterpolateWheelContacts(Dbl dt)
 {
 	MATHVECTOR <float, 3> raydir = GetDownVector();
 	for (int i = 0; i < WHEEL_POSITION_SIZE; i++)
@@ -685,9 +683,9 @@ void CARDYNAMICS::InterpolateWheelContacts(T dt)
 /// then store this information in the rigid body
 void CARDYNAMICS::UpdateMass()
 {
-	typedef std::pair <T, MATHVECTOR <T, 3> > MASS_PAIR;
+	typedef std::pair <Dbl, MATHVECTOR <Dbl, 3> > MASS_PAIR;
 
-	T total_mass ( 0 );
+	Dbl total_mass ( 0 );
 
 	center_of_mass.Set ( 0,0,0 );
 
@@ -710,14 +708,14 @@ void CARDYNAMICS::UpdateMass()
 	center_of_mass = center_of_mass * ( 1.0 / total_mass );
 
 	//calculate the inertia tensor
-	MATRIX3 <T> inertia;
+	MATRIX3 <Dbl> inertia;
 	for ( int i = 0; i < 9; i++ )
 		inertia[i] = 0;
 	for ( std::list <MASS_PAIR>::iterator i = mass_only_particles.begin(); i != mass_only_particles.end(); ++i )
 	{
 		//transform into the rigid body coordinates
-		MATHVECTOR <T, 3> position = i->second - center_of_mass;
-		T mass = i->first;
+		MATHVECTOR <Dbl, 3> position = i->second - center_of_mass;
+		Dbl mass = i->first;
 
 		//add the current mass to the inertia tensor
 		inertia[0] += mass * ( position[1] * position[1] + position[2] * position[2] );
@@ -734,14 +732,14 @@ void CARDYNAMICS::UpdateMass()
 	body.SetInertia ( inertia );
 }
 
-void CARDYNAMICS::UpdateDriveline(T dt, T drive_torque[])
+void CARDYNAMICS::UpdateDriveline(Dbl dt, Dbl drive_torque[])
 {
 	engine.Integrate1(dt);
 
-	T driveshaft_speed = CalculateDriveshaftSpeed();
-	T clutch_speed = transmission.CalculateClutchSpeed(driveshaft_speed);
-	T crankshaft_speed = engine.GetAngularVelocity();
-	T engine_drag = clutch.GetTorque(crankshaft_speed, clutch_speed);
+	Dbl driveshaft_speed = CalculateDriveshaftSpeed();
+	Dbl clutch_speed = transmission.CalculateClutchSpeed(driveshaft_speed);
+	Dbl crankshaft_speed = engine.GetAngularVelocity();
+	Dbl engine_drag = clutch.GetTorque(crankshaft_speed, clutch_speed);
 	engine_drag += 0.1;  // fixes clutch stall bug when car vel = 0 and all wheels in air
 
 	engine.ComputeForces();
@@ -756,7 +754,7 @@ void CARDYNAMICS::UpdateDriveline(T dt, T drive_torque[])
 }
 
 ///apply forces on the engine due to drag from the clutch
-void CARDYNAMICS::ApplyClutchTorque ( T engine_drag, T clutch_speed )
+void CARDYNAMICS::ApplyClutchTorque ( Dbl engine_drag, Dbl clutch_speed )
 {
 	if ( transmission.GetGear() == 0 )
 	{
@@ -770,9 +768,9 @@ void CARDYNAMICS::ApplyClutchTorque ( T engine_drag, T clutch_speed )
 
 /// calculate the drive torque that the engine applies to each wheel,
 /// and put the output into the supplied 4-element array
-void CARDYNAMICS::CalculateDriveTorque ( T * wheel_drive_torque, T clutch_torque )
+void CARDYNAMICS::CalculateDriveTorque ( Dbl * wheel_drive_torque, Dbl clutch_torque )
 {
-	T driveshaft_torque = transmission.GetTorque ( clutch_torque );
+	Dbl driveshaft_torque = transmission.GetTorque ( clutch_torque );
 	assert ( !isnan ( driveshaft_torque ) );
 
 	for ( int i = 0; i < WHEEL_POSITION_SIZE; i++ )
@@ -780,57 +778,57 @@ void CARDYNAMICS::CalculateDriveTorque ( T * wheel_drive_torque, T clutch_torque
 
 	if ( drive == RWD )
 	{
-		rear_differential.ComputeWheelTorques ( driveshaft_torque );
-		wheel_drive_torque[REAR_LEFT] = rear_differential.GetSide1Torque();
-		wheel_drive_torque[REAR_RIGHT] = rear_differential.GetSide2Torque();
+		diff_rear.ComputeWheelTorques ( driveshaft_torque );
+		wheel_drive_torque[REAR_LEFT] = diff_rear.GetSide1Torque();
+		wheel_drive_torque[REAR_RIGHT] = diff_rear.GetSide2Torque();
 	}
 	else if ( drive == FWD )
 	{
-		front_differential.ComputeWheelTorques ( driveshaft_torque );
-		wheel_drive_torque[FRONT_LEFT] = front_differential.GetSide1Torque();
-		wheel_drive_torque[FRONT_RIGHT] = front_differential.GetSide2Torque();
+		diff_front.ComputeWheelTorques ( driveshaft_torque );
+		wheel_drive_torque[FRONT_LEFT] = diff_front.GetSide1Torque();
+		wheel_drive_torque[FRONT_RIGHT] = diff_front.GetSide2Torque();
 	}
 	else if ( drive == AWD )
 	{
-		center_differential.ComputeWheelTorques ( driveshaft_torque );
-		front_differential.ComputeWheelTorques ( center_differential.GetSide1Torque() );
-		rear_differential.ComputeWheelTorques ( center_differential.GetSide2Torque() );
-		wheel_drive_torque[FRONT_LEFT] = front_differential.GetSide1Torque();
-		wheel_drive_torque[FRONT_RIGHT] = front_differential.GetSide2Torque();
-		wheel_drive_torque[REAR_LEFT] = rear_differential.GetSide1Torque();
-		wheel_drive_torque[REAR_RIGHT] = rear_differential.GetSide2Torque();
+		diff_center.ComputeWheelTorques ( driveshaft_torque );
+		diff_front.ComputeWheelTorques ( diff_center.GetSide1Torque() );
+		diff_rear.ComputeWheelTorques ( diff_center.GetSide2Torque() );
+		wheel_drive_torque[FRONT_LEFT] = diff_front.GetSide1Torque();
+		wheel_drive_torque[FRONT_RIGHT] = diff_front.GetSide2Torque();
+		wheel_drive_torque[REAR_LEFT] = diff_rear.GetSide1Torque();
+		wheel_drive_torque[REAR_RIGHT] = diff_rear.GetSide2Torque();
 	}
 
 	for ( int i = 0; i < WHEEL_POSITION_SIZE; i++ ) assert ( !isnan ( wheel_drive_torque[WHEEL_POSITION ( i ) ] ) );
 }
 
-T CARDYNAMICS::CalculateDriveshaftSpeed()
+Dbl CARDYNAMICS::CalculateDriveshaftSpeed()
 {
-	T driveshaft_speed = 0.0;
-	T left_front_wheel_speed = wheel[FRONT_LEFT].GetAngularVelocity();
-	T right_front_wheel_speed = wheel[FRONT_RIGHT].GetAngularVelocity();
-	T left_rear_wheel_speed = wheel[REAR_LEFT].GetAngularVelocity();
-	T right_rear_wheel_speed = wheel[REAR_RIGHT].GetAngularVelocity();
+	Dbl driveshaft_speed = 0.0;
+	Dbl left_front_wheel_speed = wheel[FRONT_LEFT].GetAngularVelocity();
+	Dbl right_front_wheel_speed = wheel[FRONT_RIGHT].GetAngularVelocity();
+	Dbl left_rear_wheel_speed = wheel[REAR_LEFT].GetAngularVelocity();
+	Dbl right_rear_wheel_speed = wheel[REAR_RIGHT].GetAngularVelocity();
 	for ( int i = 0; i < 4; i++ ) assert ( !isnan ( wheel[WHEEL_POSITION ( i ) ].GetAngularVelocity() ) );
 	if ( drive == RWD )
 	{
-		driveshaft_speed = rear_differential.CalculateDriveshaftSpeed ( left_rear_wheel_speed, right_rear_wheel_speed );
+		driveshaft_speed = diff_rear.CalculateDriveshaftSpeed ( left_rear_wheel_speed, right_rear_wheel_speed );
 	}
 	else if ( drive == FWD )
 	{
-		driveshaft_speed = front_differential.CalculateDriveshaftSpeed ( left_front_wheel_speed, right_front_wheel_speed );
+		driveshaft_speed = diff_front.CalculateDriveshaftSpeed ( left_front_wheel_speed, right_front_wheel_speed );
 	}
 	else if ( drive == AWD )
 	{
-		driveshaft_speed = center_differential.CalculateDriveshaftSpeed (
-		                       front_differential.CalculateDriveshaftSpeed ( left_front_wheel_speed, right_front_wheel_speed ),
-		                       rear_differential.CalculateDriveshaftSpeed ( left_rear_wheel_speed, right_rear_wheel_speed ) );
+		driveshaft_speed = diff_center.CalculateDriveshaftSpeed (
+		                       diff_front.CalculateDriveshaftSpeed ( left_front_wheel_speed, right_front_wheel_speed ),
+		                       diff_rear.CalculateDriveshaftSpeed ( left_rear_wheel_speed, right_rear_wheel_speed ) );
 	}
 
 	return driveshaft_speed;
 }
 
-void CARDYNAMICS::UpdateTransmission(T dt)
+void CARDYNAMICS::UpdateTransmission(Dbl dt)
 {
 	driveshaft_rpm = CalculateDriveshaftRPM();
 
@@ -841,10 +839,10 @@ void CARDYNAMICS::UpdateTransmission(T dt)
 		///  auto Rear gear
 		if (autorear)
 		{
-			T gas = engine.GetThrottle();
+			Dbl gas = engine.GetThrottle();
 			gas -= brake[0].GetBrakeFactor();
 			if (transmission.GetGear() == -1)  gas *= -1;
-			const T spdmarg = 1.0;
+			const Dbl spdmarg = 1.0;
 			if (gas <-0.5 && GetSpeedMPS() < spdmarg && gear == 1)  gear =-1;  else
 			if (gas > 0.5 && GetSpeedMPS() >-spdmarg && gear ==-1)  gear = 1;
 		}
@@ -876,38 +874,38 @@ void CARDYNAMICS::UpdateTransmission(T dt)
 			if (d > 0.f)  ++inAir;  // in air
 		}/**/
 
-		T throttle = engine.GetThrottle();  
+		Dbl throttle = engine.GetThrottle();  
 		//throttle = shifted ? ShiftAutoClutchThrottle(throttle, dt) : (inAir >= 2 ? 0.0 : 0.5);  //half full gas during shifting
 		throttle = ShiftAutoClutchThrottle(throttle, dt);
 		engine.SetThrottle(throttle);
 
-		T new_clutch = AutoClutch(last_auto_clutch, dt);
+		Dbl new_clutch = AutoClutch(last_auto_clutch, dt);
 		clutch.SetClutch(new_clutch);
 		last_auto_clutch = new_clutch;
 	}
 }
 
-T CARDYNAMICS::CalculateDriveshaftRPM() const
+Dbl CARDYNAMICS::CalculateDriveshaftRPM() const
 {
-	T driveshaft_speed = 0.0;
-	T left_front_wheel_speed = wheel[FRONT_LEFT].GetAngularVelocity();
-	T right_front_wheel_speed = wheel[FRONT_RIGHT].GetAngularVelocity();
-	T left_rear_wheel_speed = wheel[REAR_LEFT].GetAngularVelocity();
-	T right_rear_wheel_speed = wheel[REAR_RIGHT].GetAngularVelocity();
+	Dbl driveshaft_speed = 0.0;
+	Dbl left_front_wheel_speed = wheel[FRONT_LEFT].GetAngularVelocity();
+	Dbl right_front_wheel_speed = wheel[FRONT_RIGHT].GetAngularVelocity();
+	Dbl left_rear_wheel_speed = wheel[REAR_LEFT].GetAngularVelocity();
+	Dbl right_rear_wheel_speed = wheel[REAR_RIGHT].GetAngularVelocity();
 	for ( int i = 0; i < 4; i++ ) assert ( !isnan ( wheel[WHEEL_POSITION ( i ) ].GetAngularVelocity() ) );
 	if ( drive == RWD )
 	{
-		driveshaft_speed = rear_differential.GetDriveshaftSpeed ( left_rear_wheel_speed, right_rear_wheel_speed );
+		driveshaft_speed = diff_rear.GetDriveshaftSpeed ( left_rear_wheel_speed, right_rear_wheel_speed );
 	}
 	else if ( drive == FWD )
 	{
-		driveshaft_speed = front_differential.GetDriveshaftSpeed ( left_front_wheel_speed, right_front_wheel_speed );
+		driveshaft_speed = diff_front.GetDriveshaftSpeed ( left_front_wheel_speed, right_front_wheel_speed );
 	}
 	else if ( drive == AWD )
 	{
-		T front_speed = front_differential.GetDriveshaftSpeed ( left_front_wheel_speed, right_front_wheel_speed );
-		T rear_speed = rear_differential.GetDriveshaftSpeed ( left_rear_wheel_speed, right_rear_wheel_speed );
-		driveshaft_speed = center_differential.GetDriveshaftSpeed ( front_speed, rear_speed );
+		Dbl front_speed = diff_front.GetDriveshaftSpeed ( left_front_wheel_speed, right_front_wheel_speed );
+		Dbl rear_speed = diff_rear.GetDriveshaftSpeed ( left_rear_wheel_speed, right_rear_wheel_speed );
+		driveshaft_speed = diff_center.GetDriveshaftSpeed ( front_speed, rear_speed );
 	}
 
 	return transmission.GetClutchSpeed ( driveshaft_speed ) * 30.0 / PI_d;
@@ -918,11 +916,11 @@ bool CARDYNAMICS::WheelDriven(int i) const
 	return (1 << i) & drive;
 }
 
-T CARDYNAMICS::AutoClutch(T last_clutch, T dt) const
+Dbl CARDYNAMICS::AutoClutch(Dbl last_clutch, Dbl dt) const
 {
-	const T threshold = 1000.0;
-	const T margin = 100.0;
-	const T geareffect = 1.0; //zero to 1, defines special consideration of first/reverse gear
+	const Dbl threshold = 1000.0;
+	const Dbl margin = 100.0;
+	const Dbl geareffect = 1.0; //zero to 1, defines special consideration of first/reverse gear
 
 	//take into account locked brakes
 	bool willlock(true);
@@ -935,18 +933,18 @@ T CARDYNAMICS::AutoClutch(T last_clutch, T dt) const
 	}
 	if (willlock) return 0;
 
-	const T rpm = engine.GetRPM();
-	const T maxrpm = engine.GetRPMLimit();
-	const T stallrpm = engine.GetStallRPM() + margin * (maxrpm / 2000.0);
+	const Dbl rpm = engine.GetRPM();
+	const Dbl maxrpm = engine.GetRPMLimit();
+	const Dbl stallrpm = engine.GetStallRPM() + margin * (maxrpm / 2000.0);
 	const int gear = transmission.GetGear();
 
-	T gearfactor = 1.0;
+	Dbl gearfactor = 1.0;
 	if (gear <= 1)
 		gearfactor = 2.0;
-	T thresh = threshold * (maxrpm/7000.0) * ((1.0-geareffect)+gearfactor*geareffect) + stallrpm;
+	Dbl thresh = threshold * (maxrpm/7000.0) * ((1.0-geareffect)+gearfactor*geareffect) + stallrpm;
 	if (clutch.IsLocked())
 		thresh *= 0.5;
-	T clutch = (rpm-stallrpm) / (thresh-stallrpm);
+	Dbl clutch = (rpm-stallrpm) / (thresh-stallrpm);
 
 	//std::cout << rpm << ", " << stallrpm << ", " << threshold << ", " << clutch << std::endl;
 
@@ -955,21 +953,21 @@ T CARDYNAMICS::AutoClutch(T last_clutch, T dt) const
 	if (clutch > 1.0)
 		clutch = 1.0;
 
-	T newauto = clutch * ShiftAutoClutch();
+	Dbl newauto = clutch * ShiftAutoClutch();
 
 	//rate limit the autoclutch
-	const T min_engage_time = 0.05; //the fastest time in seconds for auto-clutch engagement
-	const T engage_rate_limit = 1.0/min_engage_time;
-	const T rate = (last_clutch - newauto)/dt; //engagement rate in clutch units per second
+	const Dbl min_engage_time = 0.05; //the fastest time in seconds for auto-clutch engagement
+	const Dbl engage_rate_limit = 1.0/min_engage_time;
+	const Dbl rate = (last_clutch - newauto)/dt; //engagement rate in clutch units per second
 	if (rate > engage_rate_limit)
 		newauto = last_clutch - engage_rate_limit*dt;
 
     return newauto;
 }
 
-T CARDYNAMICS::ShiftAutoClutch() const
+Dbl CARDYNAMICS::ShiftAutoClutch() const
 {
-	T shift_clutch = 1.0;
+	Dbl shift_clutch = 1.0;
 	if (remaining_shift_time > shift_time * 0.5)
 	    shift_clutch = 0.0;
 	else if (remaining_shift_time > 0.0)
@@ -977,7 +975,7 @@ T CARDYNAMICS::ShiftAutoClutch() const
 	return shift_clutch;
 }
 
-T CARDYNAMICS::ShiftAutoClutchThrottle(T throttle, T dt)
+Dbl CARDYNAMICS::ShiftAutoClutchThrottle(Dbl throttle, Dbl dt)
 {
 	if(remaining_shift_time > 0.0)
 	{
@@ -1021,34 +1019,34 @@ int CARDYNAMICS::NextGear() const
 	return gear;
 }
 
-T CARDYNAMICS::DownshiftRPM(int gear) const
+Dbl CARDYNAMICS::DownshiftRPM(int gear) const
 {
-	T shift_down_point = 0.0;
+	Dbl shift_down_point = 0.0;
 	if (gear > 1)
 	{
-        T current_gear_ratio = transmission.GetGearRatio(gear);
-        T lower_gear_ratio = transmission.GetGearRatio(gear - 1);
-		T peak_engine_speed = engine.GetRedline();
+        Dbl current_gear_ratio = transmission.GetGearRatio(gear);
+        Dbl lower_gear_ratio = transmission.GetGearRatio(gear - 1);
+		Dbl peak_engine_speed = engine.GetRedline();
 		shift_down_point = 0.9 * peak_engine_speed / lower_gear_ratio * current_gear_ratio;
 	}					  // 0.5 def-
 	return shift_down_point;
 }
 
 ///do traction control system (wheelspin prevention) calculations and modify the throttle position if necessary
-void CARDYNAMICS::DoTCS ( int i, T suspension_force )
+void CARDYNAMICS::DoTCS ( int i, Dbl suspension_force )
 {
-	T gasthresh = 0.1;
-	T gas = engine.GetThrottle();
+	Dbl gasthresh = 0.1;
+	Dbl gas = engine.GetThrottle();
 
 	//only active if throttle commanded past threshold
 	if ( gas > gasthresh )
 	{
 		//see if we're spinning faster than the rest of the wheels
-		T maxspindiff = 0;
-		T myrotationalspeed = wheel[WHEEL_POSITION ( i ) ].GetAngularVelocity();
+		Dbl maxspindiff = 0;
+		Dbl myrotationalspeed = wheel[WHEEL_POSITION ( i ) ].GetAngularVelocity();
 		for ( int i2 = 0; i2 < WHEEL_POSITION_SIZE; i2++ )
 		{
-			T spindiff = myrotationalspeed - wheel[WHEEL_POSITION ( i2 ) ].GetAngularVelocity();
+			Dbl spindiff = myrotationalspeed - wheel[WHEEL_POSITION ( i2 ) ].GetAngularVelocity();
 			if ( spindiff < 0 )
 				spindiff = -spindiff;
 			if ( spindiff > maxspindiff )
@@ -1059,16 +1057,16 @@ void CARDYNAMICS::DoTCS ( int i, T suspension_force )
 		if ( maxspindiff > 1.0 )
 		{
 			//sp is the ideal slip ratio given tire loading
-			T sp ( 0 ), ah ( 0 );
+			Dbl sp ( 0 ), ah ( 0 );
 			tire[WHEEL_POSITION ( i ) ].LookupSigmaHatAlphaHat ( suspension_force, sp, ah );
 
-			T sense = 1.0;
+			Dbl sense = 1.0;
 			if ( transmission.GetGear() < 0 )
 				sense = -1.0;
 
-			T error = tire[WHEEL_POSITION ( i ) ].GetSlide() * sense - sp;
-			T thresholdeng = 0.0;
-			T thresholddis = -sp/2.0;
+			Dbl error = tire[WHEEL_POSITION ( i ) ].GetSlide() * sense - sp;
+			Dbl thresholdeng = 0.0;
+			Dbl thresholddis = -sp/2.0;
 
 			if ( error > thresholdeng && ! tcs_active[i] )
 				tcs_active[i] = true;
@@ -1078,7 +1076,7 @@ void CARDYNAMICS::DoTCS ( int i, T suspension_force )
 
 			if ( tcs_active[i] )
 			{
-				T curclutch = clutch.GetClutch();
+				Dbl curclutch = clutch.GetClutch();
 				if ( curclutch > 1 ) curclutch = 1;
 				if ( curclutch < 0 ) curclutch = 0;
 
@@ -1096,15 +1094,15 @@ void CARDYNAMICS::DoTCS ( int i, T suspension_force )
 }
 
 ///do anti-lock brake system calculations and modify the brake force if necessary
-void CARDYNAMICS::DoABS ( int i, T suspension_force )
+void CARDYNAMICS::DoABS ( int i, Dbl suspension_force )
 {
-	T braketresh = 0.1;
-	T brakesetting = brake[WHEEL_POSITION ( i ) ].GetBrakeFactor();
+	Dbl braketresh = 0.1;
+	Dbl brakesetting = brake[WHEEL_POSITION ( i ) ].GetBrakeFactor();
 
 	//only active if brakes commanded past threshold
 	if ( brakesetting > braketresh )
 	{
-		T maxspeed = 0;
+		Dbl maxspeed = 0;
 		for ( int i2 = 0; i2 < WHEEL_POSITION_SIZE; i2++ )
 		{
 			if ( wheel[WHEEL_POSITION ( i2 ) ].GetAngularVelocity() > maxspeed )
@@ -1115,12 +1113,12 @@ void CARDYNAMICS::DoABS ( int i, T suspension_force )
 		if ( maxspeed > 6.0 )
 		{
 			//sp is the ideal slip ratio given tire loading
-			T sp ( 0 ), ah ( 0 );
+			Dbl sp ( 0 ), ah ( 0 );
 			tire[WHEEL_POSITION ( i ) ].LookupSigmaHatAlphaHat ( suspension_force, sp, ah );
 
-			T error = - tire[WHEEL_POSITION ( i ) ].GetSlide() - sp;
-			T thresholdeng = 0.0;
-			T thresholddis = -sp/2.0;
+			Dbl error = - tire[WHEEL_POSITION ( i ) ].GetSlide() - sp;
+			Dbl thresholdeng = 0.0;
+			Dbl thresholddis = -sp/2.0;
 
 			if ( error > thresholdeng && ! abs_active[i] )
 				abs_active[i] = true;
@@ -1139,11 +1137,11 @@ void CARDYNAMICS::DoABS ( int i, T suspension_force )
 }
 
 ///Set the maximum steering angle in degrees
-void CARDYNAMICS::SetMaxSteeringAngle ( T newangle )
+void CARDYNAMICS::SetMaxSteeringAngle ( Dbl newangle )
 {
 	maxangle = newangle;
 }
-void CARDYNAMICS::SetAngDamp( T newang )
+void CARDYNAMICS::SetAngDamp( Dbl newang )
 {
 	ang_damp = newang;
 }
@@ -1160,21 +1158,21 @@ void CARDYNAMICS::SetDrive ( const std::string & newdrive )
 		assert ( 0 ); //shouldn't ever happen unless there's an error in the code
 }
 
-void CARDYNAMICS::AddMassParticle ( T newmass, MATHVECTOR <T, 3> newpos )
+void CARDYNAMICS::AddMassParticle ( Dbl newmass, MATHVECTOR <Dbl, 3> newpos )
 {
-	mass_only_particles.push_back ( std::pair <T, MATHVECTOR <T, 3> > ( newmass, newpos ) );
+	mass_only_particles.push_back ( std::pair <Dbl, MATHVECTOR <Dbl, 3> > ( newmass, newpos ) );
 	//std::cout << "adding mass particle " << newmass << " at " << newpos << std::endl;
 }
 
 void CARDYNAMICS::AddAerodynamicDevice (
-	const MATHVECTOR <T, 3> & newpos,
-	T drag_frontal_area,
-	T drag_coefficient,
-	T lift_surface_area,
-	T lift_coefficient,
-	T lift_efficiency )
+	const MATHVECTOR <Dbl, 3> & newpos,
+	Dbl drag_frontal_area,
+	Dbl drag_coefficient,
+	Dbl lift_surface_area,
+	Dbl lift_coefficient,
+	Dbl lift_efficiency )
 {
-	aerodynamics.push_back ( CARAERO<T>() );
+	aerodynamics.push_back ( CARAERO() );
 	aerodynamics.back().Set ( newpos, drag_frontal_area, drag_coefficient, lift_surface_area,
 	                          lift_coefficient, lift_efficiency );
 }

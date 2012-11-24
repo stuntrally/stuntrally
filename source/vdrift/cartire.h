@@ -6,6 +6,7 @@
 #include <vector>
 #include <cmath>
 
+#include "dbl.h"
 #include "joeserialize.h"
 #include "macros.h"
 #include "../ogre/common/Defines.h"
@@ -17,13 +18,12 @@ bool isnan(double number);
 #endif
 
 
-template <typename T>  // loaded from .tire file
-class TIRE_PARAMS
+class TIRE_PARAMS		// loaded from .tire file
 {
 public:
-	std::vector <T> longitudinal; ///< the parameters of the longitudinal pacejka equation.  this is series b
-	std::vector <T> lateral; ///< the parameters of the lateral pacejka equation.  this is series a
-	std::vector <T> aligning; ///< the parameters of the aligning moment pacejka equation.  this is series c
+	std::vector <Dbl> longitudinal; ///< the parameters of the longitudinal pacejka equation.  this is series b
+	std::vector <Dbl> lateral; ///< the parameters of the lateral pacejka equation.  this is series a
+	std::vector <Dbl> aligning; ///< the parameters of the aligning moment pacejka equation.  this is series c
 
 	TIRE_PARAMS()
 	{
@@ -34,32 +34,31 @@ public:
 };
 
 
-template <typename T>
 class CARTIRE
 {
 friend class joeserialize::Serializer;
 public://
 	//constants (not actually declared as const because they can be changed after object creation)
-	//T radius;  ///< the total radius of the tire
-	//T tread;  ///< 1.0 means a pure off-road tire, 0.0 is a pure road tire
-	T rolling_resistance_linear; ///< linear rolling resistance on a hard surface
-	T rolling_resistance_quadratic; ///< quadratic rolling resistance on a hard surface
-	TIRE_PARAMS <T>* params;
-	std::vector <T> sigma_hat;  ///< maximum grip in the longitudinal direction
-	std::vector <T> alpha_hat;  ///< maximum grip in the lateral direction
+	//Dbl radius;  ///< the total radius of the tire
+	//Dbl tread;  ///< 1.0 means a pure off-road tire, 0.0 is a pure road tire
+	Dbl rolling_resistance_linear; ///< linear rolling resistance on a hard surface
+	Dbl rolling_resistance_quadratic; ///< quadratic rolling resistance on a hard surface
+	TIRE_PARAMS* params;
+	std::vector <Dbl> sigma_hat;  ///< maximum grip in the longitudinal direction
+	std::vector <Dbl> alpha_hat;  ///< maximum grip in the lateral direction
 
 	//variables
-	T feedback; ///< the force feedback effect value
+	Dbl feedback; ///< the force feedback effect value
 
 	//for info only
-	T slide;  ///< ratio of tire contact patch speed to road speed, minus one
-	T slip;  ///< the angle (in degrees) between the wheel heading and the wheel's actual velocity
-	T slideratio;  ///< ratio of the slide to the tire's optimim slide
-	T slipratio;  ///< ratio of the slip to the tire's optimim slip
+	Dbl slide;  ///< ratio of tire contact patch speed to road speed, minus one
+	Dbl slip;  ///< the angle (in degrees) between the wheel heading and the wheel's actual velocity
+	Dbl slideratio;  ///< ratio of the slide to the tire's optimim slide
+	Dbl slipratio;  ///< ratio of the slip to the tire's optimim slip
 
-	void FindSigmaHatAlphaHat(T load, T & output_sigmahat, T & output_alphahat, int iterations=400)
+	void FindSigmaHatAlphaHat(Dbl load, Dbl & output_sigmahat, Dbl & output_alphahat, int iterations=400)
 	{
-		T x, y, ymax, junk, x4 = 4.0/iterations, x40 = 40.0/iterations;
+		Dbl x, y, ymax, junk, x4 = 4.0/iterations, x40 = 40.0/iterations;
 		ymax = 0;
 		for (x = -2; x < 2; x += x4)
 		{
@@ -94,7 +93,7 @@ public:
 		out << "SlipA- " << fToStr(slip, 2,6) << std::endl;
 	}
 
-	void LookupSigmaHatAlphaHat(T normalforce, T & sh, T & ah) const
+	void LookupSigmaHatAlphaHat(Dbl normalforce, Dbl & sh, Dbl & ah) const
 	{
 		assert(!sigma_hat.empty());
 		assert(!alpha_hat.empty());
@@ -102,8 +101,8 @@ public:
 
 		int HAT_ITERATIONS = sigma_hat.size();
 
-		T HAT_LOAD = 0.5;
-		T nf = normalforce * 0.001;
+		Dbl HAT_LOAD = 0.5;
+		Dbl nf = normalforce * 0.001;
 		if (nf < HAT_LOAD)
 		{
 			sh = sigma_hat[0];
@@ -117,7 +116,7 @@ public:
 		else
 		{
 			int lbound;
-			T blend;
+			Dbl blend;
 			lbound = (int)(nf/HAT_LOAD);
 			lbound--;
 			if (lbound < 0)
@@ -130,23 +129,23 @@ public:
 
 
 
-	void SetRollingResistance(T linear, T quadratic)
+	void SetRollingResistance(Dbl linear, Dbl quadratic)
 	{
 		rolling_resistance_linear = linear;
 		rolling_resistance_quadratic = quadratic;
 	}
 
-	void SetPacejkaParameters(TIRE_PARAMS<T>* params1)
+	void SetPacejkaParameters(TIRE_PARAMS* params1)
 	{
 		params = params1;
 	}
 
-	T GetSlide() const
+	Dbl GetSlide() const
 	{
 		return slide;
 	}
 
-	//T GetSlip() const
+	//Dbl GetSlip() const
 	//{
 	//	return slip;
 	//}
@@ -160,45 +159,45 @@ public:
 	/// current_camber is expected in radians.
 	/// normal_force is in units N.
 	//-------------------------------------------------------------------------------------------------------------------------------
-	MATHVECTOR <T, 3> GetForce(
-					T normal_force,
-					T friction_coeff,
-					T roll_friction_coeff,
-					const MATHVECTOR <T, 3> & hub_velocity,
-					T patch_speed,
-					T current_camber)
+	MATHVECTOR <Dbl, 3> GetForce(
+					Dbl normal_force,
+					Dbl friction_coeff,
+					Dbl roll_friction_coeff,
+					const MATHVECTOR <Dbl, 3> & hub_velocity,
+					Dbl patch_speed,
+					Dbl current_camber)
 	{
 		assert(friction_coeff > 0);
 
-		T sigma_hat(0);
-		T alpha_hat(0);
+		Dbl sigma_hat(0);
+		Dbl alpha_hat(0);
 
 		LookupSigmaHatAlphaHat(normal_force, sigma_hat, alpha_hat);
 
 		//std::cout << hub_velocity << " -- " << patch_speed << std::endl;
 
-		T Fz = normal_force * 0.001;
+		Dbl Fz = normal_force * 0.001;
 
 		//cap Fz at a magic number to prevent explosions
 		if (Fz > 30)
 			Fz = 30;
 
 		//std::cout << normal_force << std::endl;
-		const T EPSILON = 1e-6;
+		const Dbl EPSILON = 1e-6;
 		if (Fz < EPSILON)
 		{
-			MATHVECTOR <T, 3> zero(0);
+			MATHVECTOR <Dbl, 3> zero(0);
 			//std::cout << "Tire off ground detected: " << normal_force << ", " << Fz << std::endl;
 			return zero;
 		}
 
-		T sigma = 0.0;
-		T tan_alpha = 0.0;
-		T alpha = 0.0;
+		Dbl sigma = 0.0;
+		Dbl tan_alpha = 0.0;
+		Dbl alpha = 0.0;
 
-		T V = hub_velocity[0];
+		Dbl V = hub_velocity[0];
 
-		T denom = std::max ( std::abs ( V ), 0.1 );
+		Dbl denom = std::max ( std::abs ( V ), 0.1 );
 
 		sigma = ( patch_speed - V ) /denom;
 
@@ -209,37 +208,37 @@ public:
 		/*crash dyn obj--*/
 		if (isnan(alpha) || isnan(1.f/sigma_hat))
 		{
-			MATHVECTOR <T, 3> outvec(0, 0, 0);
+			MATHVECTOR <Dbl, 3> outvec(0, 0, 0);
 			return outvec;	}
 		
 		assert(!isnan(alpha));
 
-		T gamma = ( current_camber ) * 180.0/PI_d;
+		Dbl gamma = ( current_camber ) * 180.0/PI_d;
 
 		//beckman method for pre-combining longitudinal and lateral forces
-		T s = sigma / sigma_hat;
+		Dbl s = sigma / sigma_hat;
 		assert(!isnan(s));
-		T a = alpha / alpha_hat;
+		Dbl a = alpha / alpha_hat;
 		assert(!isnan(a));
-		T rho = std::max ( sqrt ( s*s+a*a ), 0.0001); //the constant is arbitrary; just trying to avoid divide-by-zero
+		Dbl rho = std::max ( sqrt ( s*s+a*a ), 0.0001); //the constant is arbitrary; just trying to avoid divide-by-zero
 		assert(!isnan(rho));
 
-		T max_Fx(0);
-		T Fx = ( s / rho ) *Pacejka_Fx ( rho*sigma_hat, Fz, friction_coeff, max_Fx );
+		Dbl max_Fx(0);
+		Dbl Fx = ( s / rho ) *Pacejka_Fx ( rho*sigma_hat, Fz, friction_coeff, max_Fx );
 		//std::cout << "s=" << s << ", rho=" << rho << ", sigma_hat=" << sigma_hat << ", Fz=" << Fz << ", friction_coeff=" << friction_coeff << ", Fx=" << Fx << std::endl;
 		assert(!isnan(Fx));
-		T max_Fy(0);
-		T Fy = ( a / rho ) *Pacejka_Fy ( rho*alpha_hat, Fz, gamma, friction_coeff, max_Fy );
+		Dbl max_Fy(0);
+		Dbl Fy = ( a / rho ) *Pacejka_Fy ( rho*alpha_hat, Fz, gamma, friction_coeff, max_Fy );
 		//std::cout << "s=" << s << ", a=" << a << ", rho=" << rho << ", Fy=" << Fy << std::endl;
 		assert(!isnan(Fy));
-		T max_Mz(0);
-		T Mz = Pacejka_Mz ( sigma, alpha, Fz, gamma, friction_coeff, max_Mz );
+		Dbl max_Mz(0);
+		Dbl Mz = Pacejka_Mz ( sigma, alpha, Fz, gamma, friction_coeff, max_Mz );
 
-		//T slip_x = -sigma / ( 1.0 + generic_abs ( sigma ) );
-		//T slip_y = tan_alpha / ( 1.0+generic_abs ( sigma-1.0 ) );
-		//T total_slip = std::sqrt ( slip_x * slip_x + slip_y * slip_y );
+		//Dbl slip_x = -sigma / ( 1.0 + generic_abs ( sigma ) );
+		//Dbl slip_y = tan_alpha / ( 1.0+generic_abs ( sigma-1.0 ) );
+		//Dbl total_slip = std::sqrt ( slip_x * slip_x + slip_y * slip_y );
 
-		//T maxforce = longitudinal_parameters[2] * 7.0;
+		//Dbl maxforce = longitudinal_parameters[2] * 7.0;
 		//std::cout << maxforce << ", " << max_Fx << ", " << max_Fy << ", " << Fx << ", " << Fy << std::endl;
 
 		//combining method 0: no combining! :-)
@@ -281,7 +280,7 @@ public:
 		}
 		else
 		{
-			T scale = sqrt(1.0-(Fy/max_Fy)*(Fy/max_Fy));
+			Dbl scale = sqrt(1.0-(Fy/max_Fy)*(Fy/max_Fy));
 			if (isnan(scale))
 				Fx = 0;
 			else
@@ -312,28 +311,28 @@ public:
 
 		//std::cout << slide << ", " << slip << std::endl;
 
-		MATHVECTOR <T, 3> outvec(Fx, Fy, Mz);
+		MATHVECTOR <Dbl, 3> outvec(Fx, Fy, Mz);
 		return outvec;
 	}
 	//-------------------------------------------------------------------------------------------------------------------------------
 
 
-	void SetFeedback(T aligning_force)
+	void SetFeedback(Dbl aligning_force)
 	{
 		feedback = aligning_force;
 	}
 
-	T GetRollingResistance(const T velocity, const T normal_force, const T rolling_resistance_factor) const
+	Dbl GetRollingResistance(const Dbl velocity, const Dbl normal_force, const Dbl rolling_resistance_factor) const
 	{
 		// surface influence on rolling resistance
-		T rolling_resistance = rolling_resistance_linear * rolling_resistance_factor;
+		Dbl rolling_resistance = rolling_resistance_linear * rolling_resistance_factor;
 		
 		// heat due to tire deformation increases rolling resistance
 		// approximate by quadratic function
 		rolling_resistance += velocity * velocity * rolling_resistance_quadratic;
 		
 		// rolling resistance magnitude
-		T resistance = -normal_force * rolling_resistance;
+		Dbl resistance = -normal_force * rolling_resistance;
 		if (velocity < 0) resistance = -resistance;
 		
 		return resistance;
@@ -341,12 +340,12 @@ public:
 
 	void CalculateSigmaHatAlphaHat(int tablesize=20)
 	{
-		T HAT_LOAD = 0.5;
+		Dbl HAT_LOAD = 0.5;
 		sigma_hat.resize(tablesize, 0);
 		alpha_hat.resize(tablesize, 0);
 		for (int i = 0; i < tablesize; i++)
 		{
-			FindSigmaHatAlphaHat((T)(i+1)*HAT_LOAD, sigma_hat[i], alpha_hat[i]);
+			FindSigmaHatAlphaHat((Dbl)(i+1)*HAT_LOAD, sigma_hat[i], alpha_hat[i]);
 		}
 	}
 
@@ -356,7 +355,7 @@ public:
 		return true;
 	}
 
-	T GetFeedback() const
+	Dbl GetFeedback() const
 	{
 		return feedback;
 	}
@@ -364,49 +363,49 @@ public:
 
 
 	///  load is the normal force in newtons.
-	T GetMaximumFx(T load) const
+	Dbl GetMaximumFx(Dbl load) const
 	{
-		const std::vector <T>& b = params->longitudinal;
-		T Fz = load * 0.001;
+		const std::vector <Dbl>& b = params->longitudinal;
+		Dbl Fz = load * 0.001;
 		return ( b[1]*Fz + b[2] ) *Fz;
 	}
 
-	T GetMaximumFy(T load, T current_camber) const
+	Dbl GetMaximumFy(Dbl load, Dbl current_camber) const
 	{
-		const std::vector <T>& a = params->lateral;
-		T Fz = load * 0.001;
-		T gamma = ( current_camber ) * 180.0/PI_d;
+		const std::vector <Dbl>& a = params->lateral;
+		Dbl Fz = load * 0.001;
+		Dbl gamma = ( current_camber ) * 180.0/PI_d;
 
-		T D = ( a[1]*Fz+a[2] ) *Fz;
-		T Sv = ( ( a[11]*Fz+a[12] ) *gamma + a[13] ) *Fz+a[14];
+		Dbl D = ( a[1]*Fz+a[2] ) *Fz;
+		Dbl Sv = ( ( a[11]*Fz+a[12] ) *gamma + a[13] ) *Fz+a[14];
 
 		return D+Sv;
 	}
 
-	T GetMaximumMz(T load, T current_camber) const
+	Dbl GetMaximumMz(Dbl load, Dbl current_camber) const
 	{
-		const std::vector <T>& c = params->aligning;
-		T Fz = load * 0.001;
-		T gamma = ( current_camber ) * 180.0/PI_d;
+		const std::vector <Dbl>& c = params->aligning;
+		Dbl Fz = load * 0.001;
+		Dbl gamma = ( current_camber ) * 180.0/PI_d;
 
-		T D = ( c[1]*Fz+c[2] ) *Fz;
-		T Sv = ( c[14]*Fz*Fz+c[15]*Fz ) *gamma+c[16]*Fz + c[17];
+		Dbl D = ( c[1]*Fz+c[2] ) *Fz;
+		Dbl Sv = ( c[14]*Fz*Fz+c[15]*Fz ) *gamma+c[16]*Fz + c[17];
 
 		return -(D+Sv);
 	}
 
 	///  pacejka magic formula function
 	///  longitudinal
-	T Pacejka_Fx ( T sigma, T Fz, T friction_coeff, T & maxforce_output )
+	Dbl Pacejka_Fx ( Dbl sigma, Dbl Fz, Dbl friction_coeff, Dbl & maxforce_output )
 	{
-		const std::vector <T>& b = params->longitudinal;
+		const std::vector <Dbl>& b = params->longitudinal;
 
-		T D = ( b[1]*Fz + b[2] ) *Fz*friction_coeff;
+		Dbl D = ( b[1]*Fz + b[2] ) *Fz*friction_coeff;
 		assert ( b[0]* ( b[1]*Fz+b[2] ) != 0 );
-		T B = ( b[3]*Fz+b[4] ) *exp ( -b[5]*Fz ) / ( b[0]* ( b[1]*Fz+b[2] ) );
-		T E = ( b[6]*Fz*Fz+b[7]*Fz+b[8] );
-		T S = ( 100*sigma + b[9]*Fz+b[10] );
-		T Fx = D*sin ( b[0] * atan ( S*B+E* ( atan ( S*B )-S*B ) ) );
+		Dbl B = ( b[3]*Fz+b[4] ) *exp ( -b[5]*Fz ) / ( b[0]* ( b[1]*Fz+b[2] ) );
+		Dbl E = ( b[6]*Fz*Fz+b[7]*Fz+b[8] );
+		Dbl S = ( 100*sigma + b[9]*Fz+b[10] );
+		Dbl Fx = D*sin ( b[0] * atan ( S*B+E* ( atan ( S*B )-S*B ) ) );
 
 		maxforce_output = D;
 
@@ -415,17 +414,17 @@ public:
 	}
 
 	///  lateral
-	T Pacejka_Fy ( T alpha, T Fz, T gamma, T friction_coeff, T & maxforce_output )
+	Dbl Pacejka_Fy ( Dbl alpha, Dbl Fz, Dbl gamma, Dbl friction_coeff, Dbl & maxforce_output )
 	{
-		const std::vector <T>& a = params->lateral;
+		const std::vector <Dbl>& a = params->lateral;
 
-		T D = ( a[1]*Fz+a[2] ) *Fz*friction_coeff;
-		T B = a[3]*sin ( 2.0*atan ( Fz/a[4] ) ) * ( 1.0-a[5]*std::abs ( gamma ) ) / ( a[0]* ( a[1]*Fz+a[2] ) *Fz );
+		Dbl D = ( a[1]*Fz+a[2] ) *Fz*friction_coeff;
+		Dbl B = a[3]*sin ( 2.0*atan ( Fz/a[4] ) ) * ( 1.0-a[5]*std::abs ( gamma ) ) / ( a[0]* ( a[1]*Fz+a[2] ) *Fz );
 		assert(!isnan(B));
-		T E = a[6]*Fz+a[7];
-		T S = alpha + a[8]*gamma+a[9]*Fz+a[10];
-		T Sv = ( ( a[11]*Fz+a[12] ) *gamma + a[13] ) *Fz+a[14];
-		T Fy = D*sin ( a[0]*atan ( S*B+E* ( atan ( S*B )-S*B ) ) ) +Sv;
+		Dbl E = a[6]*Fz+a[7];
+		Dbl S = alpha + a[8]*gamma+a[9]*Fz+a[10];
+		Dbl Sv = ( ( a[11]*Fz+a[12] ) *gamma + a[13] ) *Fz+a[14];
+		Dbl Fy = D*sin ( a[0]*atan ( S*B+E* ( atan ( S*B )-S*B ) ) ) +Sv;
 		
 		maxforce_output = D+Sv;
 
@@ -436,16 +435,16 @@ public:
 	}
 
 	///  aligning
-	T Pacejka_Mz ( T sigma, T alpha, T Fz, T gamma, T friction_coeff, T & maxforce_output )
+	Dbl Pacejka_Mz ( Dbl sigma, Dbl alpha, Dbl Fz, Dbl gamma, Dbl friction_coeff, Dbl & maxforce_output )
 	{
-		const std::vector <T>& c = params->aligning;
+		const std::vector <Dbl>& c = params->aligning;
 
-		T D = ( c[1]*Fz+c[2] ) *Fz*friction_coeff;
-		T B = ( c[3]*Fz*Fz+c[4]*Fz ) * ( 1.0-c[6]*std::abs ( gamma ) ) *exp ( -c[5]*Fz ) / ( c[0]*D );
-		T E = ( c[7]*Fz*Fz+c[8]*Fz+c[9] ) * ( 1.0-c[10]*std::abs ( gamma ) );
-		T S = alpha + c[11]*gamma+c[12]*Fz+c[13];
-		T Sv = ( c[14]*Fz*Fz+c[15]*Fz ) *gamma+c[16]*Fz + c[17];
-		T Mz = D*sin ( c[0]*atan ( S*B+E* ( atan ( S*B )-S*B ) ) ) +Sv;
+		Dbl D = ( c[1]*Fz+c[2] ) *Fz*friction_coeff;
+		Dbl B = ( c[3]*Fz*Fz+c[4]*Fz ) * ( 1.0-c[6]*std::abs ( gamma ) ) *exp ( -c[5]*Fz ) / ( c[0]*D );
+		Dbl E = ( c[7]*Fz*Fz+c[8]*Fz+c[9] ) * ( 1.0-c[10]*std::abs ( gamma ) );
+		Dbl S = alpha + c[11]*gamma+c[12]*Fz+c[13];
+		Dbl Sv = ( c[14]*Fz*Fz+c[15]*Fz ) *gamma+c[16]*Fz + c[17];
+		Dbl Mz = D*sin ( c[0]*atan ( S*B+E* ( atan ( S*B )-S*B ) ) ) +Sv;
 
 		maxforce_output = D+Sv;
 
@@ -456,10 +455,10 @@ public:
 
 
 	///  optimum steering angle in degrees given load in newtons
-	T GetOptimumSteeringAngle(T load) const
+	Dbl GetOptimumSteeringAngle(Dbl load) const
 	{
-		T sigma_hat(0);
-		T alpha_hat(0);
+		Dbl sigma_hat(0);
+		Dbl alpha_hat(0);
 
 		LookupSigmaHatAlphaHat(load, sigma_hat, alpha_hat);
 
@@ -467,7 +466,7 @@ public:
 	}
 
 	///  return the slide and slip ratios as a percentage of optimum
-	std::pair <T, T> GetSlideSlipRatios() const
+	std::pair <Dbl, Dbl> GetSlideSlipRatios() const
 	{
 		return std::make_pair(slideratio, slipratio);
 	}

@@ -1,6 +1,7 @@
 #ifndef _CARWHEEL_H
 #define _CARWHEEL_H
 
+#include "dbl.h"
 #include <iostream>
 #include "mathvector.h"
 #include "rotationalframe.h"
@@ -10,7 +11,6 @@
 #include "../ogre/common/Defines.h"
 
 
-template <typename T>
 class CARWHEEL
 {
 friend class joeserialize::Serializer;
@@ -27,121 +27,121 @@ public:
 		out << "Camber " << fToStr(camber_deg, 1,5)  << std::endl;
 	}
 
-	void SetExtendedPosition ( const MATHVECTOR< T, 3 >& value )
+	void SetExtendedPosition ( const MATHVECTOR<Dbl,3>& value )
 	{
 		extended_position = value;
 	}
 	
-	T GetRPM() const
+	Dbl GetRPM() const
 	{
 		return rotation.GetAngularVelocity()[0] * 30.0 / PI_d;
 	}
 	
 	//used for telemetry only
-	const T & GetAngVelInfo()
+	const Dbl & GetAngVelInfo()
 	{
 		return angvel;
 	}
 	
-	T GetAngularVelocity() const
+	Dbl GetAngularVelocity() const
 	{
 		return rotation.GetAngularVelocity()[1];
 	}
 	
-	void SetAngularVelocity(T angvel)
+	void SetAngularVelocity(Dbl angvel)
 	{
-		MATHVECTOR <T, 3> v(0, angvel, 0);
+		MATHVECTOR <Dbl, 3> v(0, angvel, 0);
 		return rotation.SetAngularVelocity(v);
 	}
 
-	MATHVECTOR< T, 3 > GetExtendedPosition() const
+	MATHVECTOR< Dbl, 3 > GetExtendedPosition() const
 	{
 		return extended_position;
 	}
 
-	void SetRollHeight ( const T& value )
+	void SetRollHeight ( const Dbl& value )
 	{
 		roll_height = value;
 	}
 
-	T GetRollHeight() const
+	Dbl GetRollHeight() const
 	{
 		return roll_height;
 	}
 
-	void SetMass ( const T& value )
+	void SetMass ( const Dbl& value )
 	{
 		mass = value;
 	}
 
-	T GetMass() const
+	Dbl GetMass() const
 	{
 		return mass;
 	}
 	
-	void SetInertia(T new_inertia)
+	void SetInertia(Dbl new_inertia)
 	{
 		inertia_cache = new_inertia;
-		MATRIX3 <T> inertia;
+		MATRIX3 <Dbl> inertia;
 		inertia.Scale(new_inertia);
 		rotation.SetInertia(inertia);
 	}
 	
-	T GetInertia() const
+	Dbl GetInertia() const
 	{
 		return inertia_cache;
 	}
 	
 	void SetInitialConditions()
 	{
-		MATHVECTOR <T, 3> v;
+		MATHVECTOR <Dbl, 3> v;
 		rotation.SetInitialTorque(v);
 	}
 	
-	void Integrate1(const T dt)
+	void Integrate1(const Dbl dt)
 	{
 		rotation.Integrate1(dt);
 	}
 		
-	void Integrate2(const T dt)
+	void Integrate2(const Dbl dt)
 	{
 		rotation.Integrate2(dt);
 	}
 	
-	void SetTorque(const T torque)
+	void SetTorque(const Dbl torque)
 	{
-		MATHVECTOR <T, 3> v(0, torque, 0);
+		MATHVECTOR <Dbl, 3> v(0, torque, 0);
 		rotation.SetTorque(v);
 		angvel = GetAngularVelocity();
 	}
 	
-	T GetTorque()
+	Dbl GetTorque()
 	{
 		return rotation.GetTorque()[1];
 	}
 	
-	T GetLockUpTorque(const T dt) const
+	Dbl GetLockUpTorque(const Dbl dt) const
 	{
 	    return rotation.GetLockUpTorque(dt)[1];
 	}
 	
 	void ZeroForces()
 	{
-		MATHVECTOR <T, 3> v;
+		MATHVECTOR <Dbl, 3> v;
 		rotation.SetTorque(v);
 	}
 	
-	const QUATERNION <T> & GetOrientation() const
+	const QUATERNION <Dbl> & GetOrientation() const
 	{
 		return rotation.GetOrientation();
 	}
 
-	T GetSteerAngle() const
+	Dbl GetSteerAngle() const
 	{
 		return steer_angle;
 	}
 
-	void SetSteerAngle ( const T& value )
+	void SetSteerAngle ( const Dbl& value )
 	{
 		steer_angle = value;
 	}
@@ -153,50 +153,50 @@ public:
 		return true;
 	}
 
-	void SetAdditionalInertia ( const T& value )
+	void SetAdditionalInertia ( const Dbl& value )
 	{
 		additional_inertia = value;
 		
-		MATRIX3 <T> inertia;
+		MATRIX3 <Dbl> inertia;
 		inertia.Scale(inertia_cache + additional_inertia);
 		rotation.SetInertia(inertia);
 		
 		//std::cout << inertia_cache << " + " << additional_inertia << " = " << inertia_cache + additional_inertia << std::endl;
 	}
 
-	void SetCamberDeg ( const T& value )
+	void SetCamberDeg ( const Dbl& value )
 	{
 		camber_deg = value;
 	}
 		
-	T fluidRes;  /// new: fluid resistance
+	Dbl fluidRes;  /// new: fluid resistance
 
-	void SetRadius ( const T& value )
+	void SetRadius ( const Dbl& value )
 	{
 		radius = value;
 	}
 
-	T GetRadius() const
+	Dbl GetRadius() const
 	{
 		return radius;
 	}
 	
 private:
 	//constants (not actually declared as const because they can be changed after object creation)
-	MATHVECTOR <T, 3> extended_position; ///< the position of the wheel when the suspension is fully extended (zero g)
-	T roll_height; ///< how far off the road lateral forces are applied to the chassis
-	T mass; ///< the mass of the wheel
-	ROTATIONALFRAME <T> rotation; ///< a simulation of wheel rotation.  this contains the wheel orientation, angular velocity, angular acceleration, and inertia tensor
+	MATHVECTOR <Dbl, 3> extended_position; ///< the position of the wheel when the suspension is fully extended (zero g)
+	Dbl roll_height; ///< how far off the road lateral forces are applied to the chassis
+	Dbl mass; ///< the mass of the wheel
+	ROTATIONALFRAME rotation; ///< a simulation of wheel rotation.  this contains the wheel orientation, angular velocity, angular acceleration, and inertia tensor
 	
 	//variables
-	T additional_inertia;
-	T inertia_cache;
-	T steer_angle; ///<negative values cause steering to the left
-	T radius;  ///< the total radius of the tire
+	Dbl additional_inertia;
+	Dbl inertia_cache;
+	Dbl steer_angle; ///<negative values cause steering to the left
+	Dbl radius;  ///< the total radius of the tire
 	
 	//for info only
-	T angvel;
-	T camber_deg;
+	Dbl angvel;
+	Dbl camber_deg;
 };
 
 #endif

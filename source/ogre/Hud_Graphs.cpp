@@ -279,14 +279,13 @@ void App::GraphsNewVals()				// Game
 //-----------------------------------------------------------------------------------
 void CAR::GraphsNewVals(double dt)		 // CAR
 {	
-	typedef CARDYNAMICS::T T;
 	size_t gsi = pApp->graphs.size();
 	switch (pApp->pSet->graphs_type)
 	{
 	case Gh_CarAccelG:  /// car accel x,y,z
 		if (gsi >= 3)
 		{
-			MATHVECTOR <CARDYNAMICS::T, 3> v = dynamics.body.GetForce();
+			MATHVECTOR <Dbl, 3> v = dynamics.body.GetForce();
 			(-dynamics.Orientation()).RotateVector(v);
 			float m = dynamics.body.GetMass();
 			//LogO("mass: "+fToStr(m,1,5)+"  x: "+fToStr(v[0]/m,2,4)+"  y: "+fToStr(v[1]/m,2,4)+"  z: "+fToStr(v[2]/m,2,4));
@@ -308,7 +307,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		if (gsi >= 8)
 		for (int i=0; i < 4; ++i)
 		{
-			const CARSUSPENSION <CARDYNAMICS::T> & susp = dynamics.GetSuspension((WHEEL_POSITION)i);
+			const CARSUSPENSION& susp = dynamics.GetSuspension((WHEEL_POSITION)i);
 			pApp->graphs[i+4]->AddVal(negPow(susp.GetVelocity(), 0.5) * 0.2f +0.5f);
 			pApp->graphs[i]->AddVal(susp.GetDisplacementPercent());
 		}	break;
@@ -318,28 +317,28 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		if (ii >= 32 && gsi >= 6)
 		{	ii = -60;  //todo: double buffer for data, static graphs..
 
-			const T fin = dynamics.center_differential.GetFinalDrive();
-			const T r = 1.0 / (2 * PI_d * dynamics.wheel[0].GetRadius());
+			const Dbl fin = dynamics.diff_center.GetFinalDrive();
+			const Dbl r = 1.0 / (2 * PI_d * dynamics.wheel[0].GetRadius());
 
 			String ss="  gears\n";
 			for (int i=0; i < 6; ++i)
 			{
-				const T gr = dynamics.transmission.GetGearRatio(i+1), grfin = gr * fin;
+				const Dbl gr = dynamics.transmission.GetGearRatio(i+1), grfin = gr * fin;
 				for (int x = 0; x < 512; ++x)
 				{
 					// 100 kmh = 28 car.m/s = 15 wh.rps = 102 eng.rps = 6100 eng.rpm
 					//       / 3.6     /1.95 (2*PI*r)   *6.87 ratio = (3.9 * 1.76) 3rd gear
-					T xx = x/511.0;  // 0..1
-					T vel = xx * 200.0 / 3.6;  // 200 kmh max in m/s
-					T whrps = vel * r;  // wheel revs per sec
-					T rpm = whrps * grfin * 60.0;
+					Dbl xx = x/511.0;  // 0..1
+					Dbl vel = xx * 200.0 / 3.6;  // 200 kmh max in m/s
+					Dbl whrps = vel * r;  // wheel revs per sec
+					Dbl rpm = whrps * grfin * 60.0;
 
-					T rmax = dynamics.engine.GetRedline()/**1.4*/, rmin = dynamics.engine.GetStartRPM();
-					T tq = gr * dynamics.engine.GetTorqueCurve(1.0, rpm);
+					Dbl rmax = dynamics.engine.GetRedline()/**1.4*/, rmin = dynamics.engine.GetStartRPM();
+					Dbl tq = gr * dynamics.engine.GetTorqueCurve(1.0, rpm);
 					if (rpm > rmax)  tq = 0;  if (rpm < rmin)  tq = 0;
 
-					//T xx = x/511.0;
-					//T rpm = xx * (rmax-rmin) + rmin;
+					//Dbl xx = x/511.0;
+					//Dbl rpm = xx * (rmax-rmin) + rmin;
 					
 					pApp->graphs[i]->AddVal( tq / 2400.0 );
 				}
@@ -356,15 +355,15 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		if (ii >= im && gsi >= NG*2)
 		{	ii = 0;  pApp->iUpdTireGr = 0;
 
-			CARTIRE <T> & tire = dynamics.tire[0];
+			CARTIRE& tire = dynamics.tire[0];
 			const int LEN = 512;
-			T* ft = new T[LEN];
+			Dbl* ft = new Dbl[LEN];
 
-			T fmin, fmax, frng, maxF;
+			Dbl fmin, fmax, frng, maxF;
 			const bool common = 1;  // common range for all
 			const bool cust = 1;
 			//  RANGE  gui sld ..
-			const T fMAX = 9000.0, max_y = pApp->sc->asphalt ? 40.0 : 80.0, max_x = 1.0;
+			const Dbl fMAX = 9000.0, max_y = pApp->sc->asphalt ? 40.0 : 80.0, max_x = 1.0;
 
 			///  Fy lateral --
 			for (int i=0; i < NG; ++i)
@@ -375,11 +374,11 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				
 				for (int x=0; x < LEN; ++x)
 				{
-					//T yy = max_y * 2.0 * (x-LEN*0.5) / LEN;
-					T yy = max_y * x / LEN;
-					T n = (NG-1-i+1) * 0.65;
-					T fy = tire.Pacejka_Fy(yy, n, 0, 1.0, maxF); // normF
-					//T fy = tire.Pacejka_Fy(alpha, 3, n-2, 1.0, maxF); // gamma
+					//Dbl yy = max_y * 2.0 * (x-LEN*0.5) / LEN;
+					Dbl yy = max_y * x / LEN;
+					Dbl n = (NG-1-i+1) * 0.65;
+					Dbl fy = tire.Pacejka_Fy(yy, n, 0, 1.0, maxF); // normF
+					//Dbl fy = tire.Pacejka_Fy(alpha, 3, n-2, 1.0, maxF); // gamma
 					ft[x] = fy;
 
 					if (comi)  // get min, max
@@ -410,10 +409,10 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				
 				for (int x=0; x < LEN; ++x)
 				{
-					//T xx = max_x * 2.0 * (x-LEN*0.5) / LEN;
-					T xx = max_x * x / LEN;
-					T n = (NG-1-i+1) * 0.65;
-					T fx = tire.Pacejka_Fx(xx, n, 1.0, maxF); // normF
+					//Dbl xx = max_x * 2.0 * (x-LEN*0.5) / LEN;
+					Dbl xx = max_x * x / LEN;
+					Dbl n = (NG-1-i+1) * 0.65;
+					Dbl fx = tire.Pacejka_Fx(xx, n, 1.0, maxF); // normF
 					ft[x] = fx;
 
 					if (comi)  // get min, max
@@ -439,7 +438,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			//  update edit values text and descr
 			///----------------------------------------------------
 			String ss,sd;
-			//const CARTIRE <CARDYNAMICS::T>& tire = pCar->dynamics.tire[0];
+			//const CARTIRE <Dbl>& tire = pCar->dynamics.tire[0];
 			const static String sLateral[15][2] = {
 				"  a0","Shape factor",
 				"  a1","Load infl. on friction coeff",

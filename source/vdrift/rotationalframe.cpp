@@ -9,7 +9,7 @@ using std::endl;
 QT_TEST(rotationalframe_test)
 {
 	{
-	ROTATIONALFRAME <double> frame;
+	ROTATIONALFRAME frame;
 	//frame.SetInertia(1.0);
 	QUATERNION <double> initorient;
 	frame.SetOrientation(initorient);
@@ -38,7 +38,7 @@ QT_TEST(rotationalframe_test)
 	}
 	
 	{
-		ROTATIONALFRAME <double> frame;
+		ROTATIONALFRAME frame;
 		//frame.SetInertia(1.0);
 		QUATERNION <double> initorient;
 		frame.SetOrientation(initorient);

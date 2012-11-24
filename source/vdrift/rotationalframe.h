@@ -1,6 +1,7 @@
 #ifndef _ROTATIONALFRAME_H
 #define _ROTATIONALFRAME_H
 
+#include "dbl.h"
 #include "quaternion.h"
 #include "mathvector.h"
 #include "matrix3.h"
@@ -14,25 +15,24 @@
 //Samuel R. Buss second order angular momentum(and energy) preserving integrator
 //#define SECOND_ORDER
 
-template <typename T>
 class ROTATIONALFRAME
 {
 private:
 	//primary
-	QUATERNION <T> orientation;
-	MATHVECTOR <T, 3> angular_momentum;
-	MATHVECTOR <T, 3> torque;
+	QUATERNION <Dbl> orientation;
+	MATHVECTOR <Dbl, 3> angular_momentum;
+	MATHVECTOR <Dbl, 3> torque;
 	
 	//secondary
-	MATHVECTOR <T, 3> old_torque; //this is only state information for the verlet-like integrators
-	MATRIX3 <T> orientmat; ///< 3x3 orientation matrix generated during inertia tensor rotation to worldspace and cached here
-	MATRIX3 <T> world_inverse_inertia_tensor; ///< inverse inertia tensor in worldspace, cached here
-	MATRIX3 <T> world_inertia_tensor;
-	MATHVECTOR <T, 3> angular_velocity; ///< calculated from angular_momentum, cached here
+	MATHVECTOR <Dbl, 3> old_torque; //this is only state information for the verlet-like integrators
+	MATRIX3 <Dbl> orientmat; ///< 3x3 orientation matrix generated during inertia tensor rotation to worldspace and cached here
+	MATRIX3 <Dbl> world_inverse_inertia_tensor; ///< inverse inertia tensor in worldspace, cached here
+	MATRIX3 <Dbl> world_inertia_tensor;
+	MATHVECTOR <Dbl, 3> angular_velocity; ///< calculated from angular_momentum, cached here
 	
 	//constants
-	MATRIX3 <T> inverse_inertia_tensor; //used for calculations every frame
-	MATRIX3 <T> inertia_tensor; //used for the GetInertia function only
+	MATRIX3 <Dbl> inverse_inertia_tensor; //used for calculations every frame
+	MATRIX3 <Dbl> inertia_tensor; //used for the GetInertia function only
 	
 	//housekeeping
 	bool have_old_torque;
@@ -49,25 +49,25 @@ private:
 	}
 	
 	///this call depends on having orientmat and world_inverse_inertia_tensor calculated
-	MATHVECTOR <T, 3> GetAngularVelocityFromMomentum(const MATHVECTOR <T, 3> & moment) const
+	MATHVECTOR <Dbl, 3> GetAngularVelocityFromMomentum(const MATHVECTOR <Dbl, 3> & moment) const
 	{
 		return world_inverse_inertia_tensor.Multiply(moment);
 	}
 	
-	QUATERNION <T> GetSpinFromMomentum(const MATHVECTOR <T, 3> & ang_moment) const
+	QUATERNION <Dbl> GetSpinFromMomentum(const MATHVECTOR <Dbl, 3> & ang_moment) const
 	{
-		const MATHVECTOR <T, 3> ang_vel = GetAngularVelocityFromMomentum(ang_moment);
-		QUATERNION <T> qav = QUATERNION <T> (ang_vel[0], ang_vel[1], ang_vel[2], 0);
+		const MATHVECTOR <Dbl, 3> ang_vel = GetAngularVelocityFromMomentum(ang_moment);
+		QUATERNION <Dbl> qav = QUATERNION <Dbl> (ang_vel[0], ang_vel[1], ang_vel[2], 0);
 		return (qav * orientation) * 0.5;
 	}
 	
 public:
 	ROTATIONALFRAME() : have_old_torque(false),integration_step(0) {}
 	
-	void SetInertia(const MATRIX3 <T> & inertia)
+	void SetInertia(const MATRIX3 <Dbl> & inertia)
 	{
 		//inertia.DebugPrint(std::cout);
-		MATHVECTOR <T, 3> angvel_old = GetAngularVelocityFromMomentum(angular_momentum);
+		MATHVECTOR <Dbl, 3> angvel_old = GetAngularVelocityFromMomentum(angular_momentum);
 		inertia_tensor = inertia;
 		inverse_inertia_tensor = inertia_tensor.Inverse();
 		world_inverse_inertia_tensor = orientmat.Transpose().Multiply(inverse_inertia_tensor).Multiply(orientmat);
@@ -76,34 +76,34 @@ public:
 		angular_velocity = GetAngularVelocityFromMomentum(angular_momentum);
 	}
 	
-	const MATRIX3 <T> & GetInertia() const
+	const MATRIX3 <Dbl> & GetInertia() const
 	{
 		return world_inertia_tensor;
 	}
-	const MATRIX3 <T> & GetInertiaConst() const
+	const MATRIX3 <Dbl> & GetInertiaConst() const
 	{
 		return inertia_tensor;
 	}
 	
-	void SetOrientation(const QUATERNION <T> & neworient)
+	void SetOrientation(const QUATERNION <Dbl> & neworient)
 	{
 		orientation = neworient;
 	}
 	
-	void SetAngularVelocity(const MATHVECTOR <T, 3> & newangvel)
+	void SetAngularVelocity(const MATHVECTOR <Dbl, 3> & newangvel)
 	{
 		angular_momentum = world_inertia_tensor.Multiply(newangvel);
 		angular_velocity = newangvel;
 	}
 	
-	const MATHVECTOR <T, 3> GetAngularVelocity() const
+	const MATHVECTOR <Dbl, 3> GetAngularVelocity() const
 	{
 		return angular_velocity;
 	}
 	
 	///this is a modified velocity verlet integration method that relies on a two-step calculation.
 	/// both steps must be executed each frame and forces can only be set between steps 1 and 2
-	void Integrate1(const T & dt)
+	void Integrate1(const Dbl & dt)
 	{
 		assert(integration_step == 0);
 		
@@ -121,7 +121,7 @@ public:
 	
 	///this is a modified velocity verlet integration method that relies on a two-step calculation.
 	/// both steps must be executed each frame and forces must be set between steps 1 and 2
-	void Integrate2(const T & dt)
+	void Integrate2(const Dbl & dt)
 	{
 		assert(integration_step == 1);
 	#ifdef MODIFIEDVERLET
@@ -149,12 +149,12 @@ public:
 	#endif
 		
 	#ifdef SECOND_ORDER
-		MATHVECTOR<T, 3> ang_acc = 
+		MATHVECTOR<Dbl, 3> ang_acc = 
 			world_inverse_inertia_tensor.Multiply(torque - angular_velocity.cross(angular_momentum));
-		MATHVECTOR<T, 3> avg_rot = 
+		MATHVECTOR<Dbl, 3> avg_rot = 
 			angular_velocity + ang_acc * dt/2.0 + ang_acc.cross(angular_velocity) * dt * dt/12.0;
-		QUATERNION<T> dq = 
-			QUATERNION<T>(avg_rot[0], avg_rot[1], avg_rot[2], 0) * orientation * 0.5 * dt;
+		QUATERNION<Dbl> dq = 
+			QUATERNION<Dbl>(avg_rot[0], avg_rot[1], avg_rot[2], 0) * orientation * 0.5 * dt;
 		orientation = orientation + dq;
 		orientation.Normalize();
 	#endif
@@ -166,7 +166,7 @@ public:
 	}
 	
     ///this must only be called between integrate1 and integrate2 steps
-	const MATHVECTOR<T, 3> GetLockUpTorque(const T dt) const
+	const MATHVECTOR<Dbl, 3> GetLockUpTorque(const Dbl dt) const
 	{
 	#ifdef MODIFIEDVERLET
 	    return -angular_momentum * 2 / dt;
@@ -176,25 +176,25 @@ public:
 	}
 	
 	///this must only be called between integrate1 and integrate2 steps
-	void ApplyTorque(const MATHVECTOR <T, 3> & t)
+	void ApplyTorque(const MATHVECTOR <Dbl, 3> & t)
 	{
 		assert(integration_step == 1);
 		torque = torque + t;
 	}
 	
-	void SetTorque(const MATHVECTOR <T, 3> & t)
+	void SetTorque(const MATHVECTOR <Dbl, 3> & t)
 	{
 		assert(integration_step == 1);
 		torque = t;
 	}
 	
-	const MATHVECTOR <T, 3> & GetTorque()
+	const MATHVECTOR <Dbl, 3> & GetTorque()
 	{
 		return old_torque;
 	}
 	
 	///this must be called once at sim start to set the initial torque present
-	void SetInitialTorque(const MATHVECTOR <T, 3> & t)
+	void SetInitialTorque(const MATHVECTOR <Dbl, 3> & t)
 	{
 		assert(integration_step == 0);
 		
@@ -202,7 +202,7 @@ public:
 		have_old_torque = true;
 	}
 
-	const QUATERNION <T> & GetOrientation() const
+	const QUATERNION <Dbl> & GetOrientation() const
 	{
 		return orientation;
 	}

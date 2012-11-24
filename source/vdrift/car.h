@@ -1,6 +1,7 @@
 #ifndef _CAR_H
 #define _CAR_H
 
+#include "dbl.h"
 #include "cardynamics.h"
 #include "model_joe03.h"
 
@@ -14,12 +15,10 @@
 
 class BEZIER;
 class PERFORMANCE_TESTING;
+namespace protocol {  struct CarStatePackage;  }
 
-namespace protocol {
-	struct CarStatePackage;
-}
 
-class CAR 
+class CAR
 {
 friend class PERFORMANCE_TESTING;
 friend class joeserialize::Serializer;
@@ -361,8 +360,8 @@ public:
 
 	
 	//  for new game reset  and goto last checkp.
-	MATHVECTOR <float, 3> posAtStart, posLastCheck[2];
-	QUATERNION <float> rotAtStart, rotLastCheck[2];
+	MATHVECTOR <Dbl, 3> posAtStart, posLastCheck[2];
+	QUATERNION <Dbl> rotAtStart, rotLastCheck[2];
 
 	//  car inputs (new)
 	int iCamNext;

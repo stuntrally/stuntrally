@@ -426,8 +426,8 @@ void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 ///------------------------------------------------------------------------------------------------------------------------------
 void CAR::ResetPos(bool fromStart, int chkId)
 {
-	MATHVECTOR <float, 3> pos = fromStart ? posAtStart : posLastCheck[chkId];
-	QUATERNION <float> rot =    fromStart ? rotAtStart : rotLastCheck[chkId];
+	MATHVECTOR <Dbl, 3> pos = fromStart ? posAtStart : posLastCheck[chkId];
+	QUATERNION <Dbl> rot =    fromStart ? rotAtStart : rotLastCheck[chkId];
 	SetPosition(pos);
 
 	btTransform transform;
@@ -446,7 +446,7 @@ void CAR::ResetPos(bool fromStart, int chkId)
 	dynamics.engine.SetInitialConditions();
 	for (int w=0; w < 4; ++w)
 	{
-		MATHVECTOR <CARDYNAMICS::T, 3> zero(0,0,0);
+		MATHVECTOR <Dbl, 3> zero(0,0,0);
 		dynamics.wheel[w].SetAngularVelocity(0);
 		//dynamics.wheel_velocity[w] = zero;
 	}

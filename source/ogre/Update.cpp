@@ -136,26 +136,25 @@ bool App::frameStart(Real time)
 		{
 			double mul = shift ? 0.2 : (ctrl ? 4.0 : 1.0);
 			mul *= 0.005;  // par
-			typedef CARDYNAMICS::T T;
 
 			CARDYNAMICS& cd = carModels[0]->pCar->dynamics;
 			if (iEdTire == 1)  // longit |
 			{
-				T& val = cd.tire[0].params->longitudinal[iCurLong];  // modify 1st
+				Dbl& val = cd.tire[0].params->longitudinal[iCurLong];  // modify 1st
 				val += mul*k * (1 + abs(val));
 				for (int i=1; i<4; ++i)
 					cd.tire[i].params->longitudinal[iCurLong] = val;  // copy for rest
 			}
 			else if (iEdTire == 0)  // lateral --
 			{
-				T& val = cd.tire[0].params->lateral[iCurLat];
+				Dbl& val = cd.tire[0].params->lateral[iCurLat];
 				val += mul*k * (1 + abs(val));
 				for (int i=1; i<4; ++i)
 					cd.tire[i].params->lateral[iCurLat] = val;
 			}
 			else  // align o
 			{
-				T& val = cd.tire[0].params->aligning[iCurAlign];
+				Dbl& val = cd.tire[0].params->aligning[iCurAlign];
 				val += mul*k * (1 + abs(val));
 				for (int i=1; i<4; ++i)
 					cd.tire[i].params->aligning[iCurAlign] = val;

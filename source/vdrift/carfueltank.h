@@ -1,6 +1,7 @@
 #ifndef _CARFUELTANK_H
 #define _CARFUELTANK_H
 
+#include "dbl.h"
 #include "mathvector.h"
 #include "joeserialize.h"
 #include "macros.h"
@@ -8,19 +9,18 @@
 #include "../ogre/common/Defines.h"
 
 
-template <typename T>
 class CARFUELTANK
 {
 	friend class joeserialize::Serializer;
 	private:
 		//constants (not actually declared as const because they can be changed after object creation)
-		T capacity;
-		T density;
-		MATHVECTOR <T, 3> position;
+		Dbl capacity;
+		Dbl density;
+		MATHVECTOR <Dbl, 3> position;
 		
 		//variables
-		T mass;
-		T volume;
+		Dbl mass;
+		Dbl volume;
 		
 		//for info only
 		
@@ -41,34 +41,34 @@ class CARFUELTANK
 			out << "Mass " << mass << std::endl;
 		}
 
-	void SetCapacity ( const T& value )
+	void SetCapacity ( const Dbl& value )
 	{
 		capacity = value;
 	}
 
-	void SetDensity ( const T& value )
+	void SetDensity ( const Dbl& value )
 	{
 		density = value;
 		UpdateMass();
 	}
 
-	void SetPosition ( const MATHVECTOR< T, 3 >& value )
+	void SetPosition ( const MATHVECTOR< Dbl, 3 >& value )
 	{
 		position = value;
 	}
 	
 
-	MATHVECTOR< T, 3 > GetPosition() const
+	MATHVECTOR< Dbl, 3 > GetPosition() const
 	{
 		return position;
 	}
 
-	T GetMass() const
+	Dbl GetMass() const
 	{
 		return mass;
 	}
 
-	void SetVolume ( const T& value )
+	void SetVolume ( const Dbl& value )
 	{
 		volume = value;
 		UpdateMass();
@@ -81,9 +81,9 @@ class CARFUELTANK
 	
 	bool Empty () const {return (volume <= 0.0);}
 	
-	T FuelPercent() const {return volume / capacity;}
+	Dbl FuelPercent() const {return volume / capacity;}
 	
-	void Consume(T amount)
+	void Consume(Dbl amount)
 	{
 		volume -= amount;
 		if (volume < 0.0)

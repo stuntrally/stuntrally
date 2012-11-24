@@ -1,6 +1,7 @@
 #ifndef _GAME_H
 #define _GAME_H
 
+#include "dbl.h"
 #include "settings.h"
 #include "pathmanager.h"
 #include "mathvector.h"
@@ -101,7 +102,7 @@ public:
 	std::list <CAR> cars;
 	std::pair <CAR*, CARCONTROLMAP_LOCAL> carcontrols_local;
 
-	std::vector < TIRE_PARAMS<CARDYNAMICS::T> > tire_pars;  //new
+	std::vector < TIRE_PARAMS> tire_pars;  //new
 	std::map <std::string, int> tire_pars_map;
 	bool LoadTires();
 	

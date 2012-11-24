@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 
+#include "dbl.h"
 #include "mathvector.h"
 #include "linearframe.h"
 #include "joeserialize.h"
@@ -12,30 +13,29 @@
 #include "../ogre/common/Defines.h"
 
 
-template <typename T>
 class CARSUSPENSION
 {
 friend class joeserialize::Serializer;
 private:
 	//constants (not actually declared as const because they can be changed after object creation)
-	MATHVECTOR <T, 3> hinge; ///< the point that the wheels are rotated around as the suspension compresses
-	T spring_constant; ///< the suspension spring constant
-	T bounce; ///< suspension compression damping
-	T rebound; ///< suspension decompression damping
-	T travel; ///< how far the suspension can travel from the zero-g fully extended position around the hinge arc before wheel travel is stopped
-	T anti_roll_k; ///< the spring constant for the anti-roll bar
-	LINEARINTERP <T> damper_factors;
-	LINEARINTERP <T> spring_factors;
+	MATHVECTOR <Dbl, 3> hinge; ///< the point that the wheels are rotated around as the suspension compresses
+	Dbl spring_constant; ///< the suspension spring constant
+	Dbl bounce; ///< suspension compression damping
+	Dbl rebound; ///< suspension decompression damping
+	Dbl travel; ///< how far the suspension can travel from the zero-g fully extended position around the hinge arc before wheel travel is stopped
+	Dbl anti_roll_k; ///< the spring constant for the anti-roll bar
+	LINEARINTERP <Dbl> damper_factors;
+	LINEARINTERP <Dbl> spring_factors;
 
-	T camber; ///< camber angle in degrees. sign convention depends on the side
-	T caster; ///< caster angle in degrees. sign convention depends on the side
-	T toe; ///< toe angle in degrees. sign convention depends on the side
+	Dbl camber; ///< camber angle in degrees. sign convention depends on the side
+	Dbl caster; ///< caster angle in degrees. sign convention depends on the side
+	Dbl toe; ///< toe angle in degrees. sign convention depends on the side
 
 	//variables
-	T overtravel; ///< the amount past the travel that the suspension was requested to compress
-	T displacement; ///< a linear representation of the suspension displacement.  in actuality the displacement is about the arc formed by the hinge
-	T velocity;
-	T force;
+	Dbl overtravel; ///< the amount past the travel that the suspension was requested to compress
+	Dbl displacement; ///< a linear representation of the suspension displacement.  in actuality the displacement is about the arc formed by the hinge
+	Dbl velocity;
+	Dbl force;
 
 public:
 	//default constructor makes an S2000-like car
@@ -54,109 +54,109 @@ public:
 		//out << "Damp   " << fToStr(damper_factors.Interpolate(std::abs(velocity)), 2,4) << std::endl;
 	}
 
-	void SetHinge ( const MATHVECTOR< T, 3 >& value )
+	void SetHinge ( const MATHVECTOR< Dbl, 3 >& value )
 	{
 		hinge = value;
 	}
 
-	const MATHVECTOR< T, 3 > & GetHinge() const
+	const MATHVECTOR< Dbl, 3 > & GetHinge() const
 	{
 		return hinge;
 	}
 
-	void SetBounce ( const T& value )
+	void SetBounce ( const Dbl& value )
 	{
 		bounce = value;
 	}
 
-	T GetBounce() const
+	Dbl GetBounce() const
 	{
 		return bounce;
 	}
 
-	void SetRebound ( const T& value )
+	void SetRebound ( const Dbl& value )
 	{
 		rebound = value;
 	}
 
-	T GetRebound() const
+	Dbl GetRebound() const
 	{
 		return rebound;
 	}
 
-	void SetTravel ( const T& value )
+	void SetTravel ( const Dbl& value )
 	{
 		travel = value;
 	}
 
-	T GetTravel() const
+	Dbl GetTravel() const
 	{
 		return travel;
 	}
 
-	void SetAntiRollK ( const T& value )
+	void SetAntiRollK ( const Dbl& value )
 	{
 		anti_roll_k = value;
 	}
 
-	T GetAntiRollK() const
+	Dbl GetAntiRollK() const
 	{
 		return anti_roll_k;
 	}
 
-	void SetCamber ( const T& value )
+	void SetCamber ( const Dbl& value )
 	{
 		camber = value;
 	}
 
-	T GetCamber() const
+	Dbl GetCamber() const
 	{
 		return camber;
 	}
 
-	void SetCaster ( const T& value )
+	void SetCaster ( const Dbl& value )
 	{
 		caster = value;
 	}
 
-	T GetCaster() const
+	Dbl GetCaster() const
 	{
 		return caster;
 	}
 
-	void SetToe ( const T& value )
+	void SetToe ( const Dbl& value )
 	{
 		toe = value;
 	}
 
-	T GetToe() const
+	Dbl GetToe() const
 	{
 		return toe;
 	}
 
-	void SetSpringConstant ( const T& value )
+	void SetSpringConstant ( const Dbl& value )
 	{
 		spring_constant = value;
 	}
 
-	T GetSpringConstant() const
+	Dbl GetSpringConstant() const
 	{
 		return spring_constant;
 	}
 
-	const T & GetDisplacement() const
+	const Dbl & GetDisplacement() const
 	{
 		return displacement;
 	}
 
 	///Return the displacement in percent of max travel where 0.0 is fully extended and 1.0 is fully compressed
-	T GetDisplacementPercent() const
+	Dbl GetDisplacementPercent() const
 	{
 		return displacement / travel;
 	}
 
 	///compute the suspension force for the given time interval and external displacement
-	T Update(T dt, T ext_displacement)
+	Dbl Update(Dbl dt, Dbl ext_displacement)
 	{
 		// clamp external displacement
 		overtravel = ext_displacement - travel;
@@ -167,12 +167,12 @@ public:
 		else if (ext_displacement < 0)
 			ext_displacement = 0;
 
-		T new_displacement;
+		Dbl new_displacement;
 /*
-		const T inv_mass = 1/20.0;
-		const T tire_stiffness = 250000;
+		const Dbl inv_mass = 1/20.0;
+		const Dbl tire_stiffness = 250000;
 
-		T ext_force = tire_stiffness * ext_displacement;
+		Dbl ext_force = tire_stiffness * ext_displacement;
 
 		// predict new displacement
 		new_displacement = displacement + velocity * dt + 0.5 * force * inv_mass * dt * dt;
@@ -199,30 +199,30 @@ public:
 		return -force;
 	}
 
-	const T GetForce(T displacement, T velocity)
+	const Dbl GetForce(Dbl displacement, Dbl velocity)
 	{
-		T damping = bounce;
+		Dbl damping = bounce;
 		if (velocity < 0) damping = rebound;
 
 		//compute damper factor based on curve
-		T dampfactor = damper_factors.Interpolate(std::abs(velocity));
+		Dbl dampfactor = damper_factors.Interpolate(std::abs(velocity));
 
 		//compute spring factor based on curve
-		T springfactor = spring_factors.Interpolate(displacement);
+		Dbl springfactor = spring_factors.Interpolate(displacement);
 
-		T spring_force = -displacement * spring_constant * springfactor; //when compressed, the spring force will push the car in the positive z direction
-		T damp_force = -velocity * damping * dampfactor; //when compression is increasing, the damp force will push the car in the positive z direction
-		T force = spring_force + damp_force;
+		Dbl spring_force = -displacement * spring_constant * springfactor; //when compressed, the spring force will push the car in the positive z direction
+		Dbl damp_force = -velocity * damping * dampfactor; //when compression is increasing, the damp force will push the car in the positive z direction
+		Dbl force = spring_force + damp_force;
 
 		return force;
 	}
 
-	const T & GetVelocity() const
+	const Dbl & GetVelocity() const
 	{
 		return velocity;
 	}
 
-	//void SetAntiRollInfo(const T value)
+	//void SetAntiRollInfo(const Dbl value)
 	//{
 	//	antiroll_force = value;
 	//}
@@ -233,25 +233,25 @@ public:
 		return true;
 	}
 
-	T GetOvertravel() const
+	Dbl GetOvertravel() const
 	{
 		return overtravel;
 	}
 
-	void SetDamperFactorPoints(std::vector <std::pair <T, T> > & curve)
+	void SetDamperFactorPoints(std::vector <std::pair <Dbl, Dbl> > & curve)
 	{
 		//std::cout << "Damper factors: " << std::endl;
-		for (typename std::vector <std::pair <T, T> >::iterator i = curve.begin(); i != curve.end(); i++)
+		for (std::vector <std::pair <Dbl, Dbl> >::iterator i = curve.begin(); i != curve.end(); i++)
 		{
 			//std::cout << i->first << ", " << i->second << std::endl;
 			damper_factors.AddPoint(i->first, i->second);
 		}
 	}
 
-	void SetSpringFactorPoints(std::vector <std::pair <T, T> > & curve)
+	void SetSpringFactorPoints(std::vector <std::pair <Dbl, Dbl> > & curve)
 	{
 		//std::cout << "Spring factors: " << std::endl;
-		for (typename std::vector <std::pair <T, T> >::iterator i = curve.begin(); i != curve.end(); i++)
+		for (std::vector <std::pair <Dbl, Dbl> >::iterator i = curve.begin(); i != curve.end(); i++)
 		{
 			//std::cout << i->first << ", " << i->second << std::endl;
 			spring_factors.AddPoint(i->first, i->second);

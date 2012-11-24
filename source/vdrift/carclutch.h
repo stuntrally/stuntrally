@@ -1,32 +1,32 @@
 #ifndef _CARCLUTCH_H
 #define _CARCLUTCH_H
 
+#include "dbl.h"
 #include "joeserialize.h"
 #include "macros.h"
 //#include <iostream>
 #include "../ogre/common/Defines.h"
 
 
-template <typename T>
 class CARCLUTCH
 {
 	friend class joeserialize::Serializer;
 	private:
 		//constants (not actually declared as const because they can be changed after object creation)
-		T sliding_friction; ///< torque on the clutch is found by dividing the clutch pressure by the value in the area tag and multiplying by the radius and sliding (friction) parameters
-		T radius; ///< torque on the clutch is found by dividing the clutch pressure by the value in the area tag and multiplying by the radius and sliding (friction) parameters
-		T area; ///< torque on the clutch is found by dividing the clutch pressure by the value in the area tag and multiplying by the radius and sliding (friction) parameters
-		T max_pressure; ///< maximum allowed pressure on the plates
-		T threshold; ///< the clutch pretends to be fully engaged when engine speed - transmission speeds is less than m_threshold * normal force
+		Dbl sliding_friction; ///< torque on the clutch is found by dividing the clutch pressure by the value in the area tag and multiplying by the radius and sliding (friction) parameters
+		Dbl radius; ///< torque on the clutch is found by dividing the clutch pressure by the value in the area tag and multiplying by the radius and sliding (friction) parameters
+		Dbl area; ///< torque on the clutch is found by dividing the clutch pressure by the value in the area tag and multiplying by the radius and sliding (friction) parameters
+		Dbl max_pressure; ///< maximum allowed pressure on the plates
+		Dbl threshold; ///< the clutch pretends to be fully engaged when engine speed - transmission speeds is less than m_threshold * normal force
 		
 		//variables
-		T clutch_position;
+		Dbl clutch_position;
 		bool locked;
 		
 		//for info only
-		T last_torque;
-		T engine_speed;
-		T drive_speed;
+		Dbl last_torque;
+		Dbl engine_speed;
+		Dbl drive_speed;
 		
 		
 	public:
@@ -45,48 +45,48 @@ class CARCLUTCH
 			out << "Drive " << fToStr(drive_speed, 0,5) << std::endl;
 		}
 
-		void SetSlidingFriction ( const T& value )
+		void SetSlidingFriction ( const Dbl& value )
 		{
 			sliding_friction = value;
 		}
 	
-		void SetRadius ( const T& value )
+		void SetRadius ( const Dbl& value )
 		{
 			radius = value;
 		}
 	
-		void SetArea ( const T& value )
+		void SetArea ( const Dbl& value )
 		{
 			area = value;
 		}
 	
-		void SetMaxPressure ( const T& value )
+		void SetMaxPressure ( const Dbl& value )
 		{
 			max_pressure = value;
 		}
 		
 		///set the clutch engagement, where 1.0 is fully engaged
-		void SetClutch ( const T& value )
+		void SetClutch ( const Dbl& value )
 		{
 			clutch_position = value;
 		}
 		
-		T GetClutch() const
+		Dbl GetClutch() const
 		{
 			return clutch_position;
 		}
 		
 		// clutch is modeled as limited higly viscous coupling
-		T GetTorque ( T n_engine_speed, T n_drive_speed )
+		Dbl GetTorque ( Dbl n_engine_speed, Dbl n_drive_speed )
 		{
 			engine_speed = n_engine_speed;
 			drive_speed = n_drive_speed;
-			T new_speed_diff = engine_speed - drive_speed;
+			Dbl new_speed_diff = engine_speed - drive_speed;
             locked = true;
 		
-            T torque_capacity = sliding_friction * max_pressure * area * radius; // constant
-			T max_torque = clutch_position * torque_capacity;
-			T friction_torque = max_torque * new_speed_diff;    // viscous coupling (locked clutch)
+            Dbl torque_capacity = sliding_friction * max_pressure * area * radius; // constant
+			Dbl max_torque = clutch_position * torque_capacity;
+			Dbl friction_torque = max_torque * new_speed_diff;    // viscous coupling (locked clutch)
 			if (friction_torque > max_torque)
 			{
 			    friction_torque  = max_torque;
@@ -98,7 +98,7 @@ class CARCLUTCH
 			    locked = false;
 			}
 			
-			T torque = friction_torque;
+			Dbl torque = friction_torque;
 			last_torque = torque;
 			return torque;
 		}
@@ -108,7 +108,7 @@ class CARCLUTCH
 			return locked;
 		}
 		
-		T GetLastTorque() const
+		Dbl GetLastTorque() const
 		{
 			return last_torque;
 		}
