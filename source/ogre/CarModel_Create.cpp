@@ -140,7 +140,7 @@ CarModel::~CarModel()
 //-------------------------------------------------------------------------------------------------------
 void CarModel::Create(int car)
 {
-	if (!pCar) return;
+	if (!pCar)  return;
 	String strI = toStr(iIndex);
 	
 	bool ghost = eType == CT_GHOST && pSet->rpl_alpha;  //1 || for ghost test

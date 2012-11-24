@@ -160,7 +160,7 @@ void App::slTexSize(SL)
 	{	if (v == 0)  valTexSize->setCaption("Small");  else
 		if (v == 1)  valTexSize->setCaption("Big");  }
 	/*
-	if (!materialFactory) return;
+	if (!materialFactory)  return;
 	if (v == 0)
 		materialFactory->setTexSize(0); // lowest
 	else if (v == 1)
@@ -607,7 +607,7 @@ void App::slAntiAliasing(SL)
 void App::btnResChng(WP)
 {
 	if (!resList)  return;
-	if (resList->getIndexSelected() == MyGUI::ITEM_NONE) return;
+	if (resList->getIndexSelected() == MyGUI::ITEM_NONE)  return;
 	String mode = resList->getItemNameAt(resList->getIndexSelected());
 
 	pSet->windowx = StringConverter::parseInt(StringUtil::split(mode, "x")[0]);

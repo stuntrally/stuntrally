@@ -146,7 +146,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 
 /// print debug info to the given ostream.  set p1, p2, etc if debug info part 1, and/or part 2, etc is desired
 ///..........................................................................................................
-void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bool p4 )
+void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, bool p4 )
 {
 	using namespace std;
 	out.precision(2);  out.width(6);  out << fixed;
@@ -171,7 +171,9 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 			out << "mass: " << body.GetMass() << endl;
 			MATRIX3 <Dbl> inertia = body.GetInertiaConst();
 			out << "inertia: roll " << inertia[0] << " pitch " << inertia[4] << " yaw " << inertia[8] << endl;
-			//out << "inertia: " << inertia[0] << " " << inertia[4] << " " << inertia[8] << " < " << inertia[1] << " " << inertia[2] << " " << inertia[3] << " " << inertia[5] << " " << inertia[6] << " " << inertia[7] << endl;
+			//out << "inertia: " << inertia[0] <<" "<< inertia[4] <<" "<< inertia[8] <<" < "<< inertia[1] <<" "<< inertia[2] <<" "<< inertia[3] <<" "<< inertia[5] <<" "<< inertia[6] <<" "<< inertia[7] << endl;
+			//MATHVECTOR<Dbl,3> av = GetAngularVelocity();  Orientation().RotateVector(av);
+			//out << "ang vel: " << fToStr(av[0],2,5) <<" "<< fToStr(av[1],2,5) <<" "<< fToStr(av[2],2,5) << endl;
 			//out << "pos: " << chassisPosition << endl;
 			//out << "sumWhTest: " << sumWhTest << endl;
 			out.precision(2);
@@ -276,13 +278,15 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 		ApplyForce(v);
 	}
 
-	///***  manual car flip over  ---------------------------------------
+	///***  manual car flip over  ----------------------------
 	if ((doFlip > 0.01f || doFlip < -0.01f) &&
 		pSet->game.flip_type > 0)
 	{
-		MATRIX3 <Dbl> inertia = body.GetInertia();
-		btVector3 inrt(inertia[0], inertia[4], inertia[8]);
-		float t = inrt[inrt.maxAxis()] * doFlip * 12.f;  // strength
+		MATHVECTOR<Dbl,3> av = GetAngularVelocity();  Orientation().RotateVector(av);
+		Dbl angvel = fabs(av[0]);
+		if (angvel < 2.0)  // max rot vel allowed
+		{
+		float t = 20000.f * doFlip;  // strength
 
 		if (pSet->game.flip_type == 1)  // fuel dec
 		{
@@ -293,9 +297,10 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 		MATHVECTOR<Dbl,3> v(t,0,0);
 		Orientation().RotateVector(v);
 		ApplyTorque(v);
+		}
 	}
 
-	///***  boost  ------------------------------------------------------
+	///***  boost  -------------------------------------------
 	if (doBoost > 0.01f	&& pSet->game.boost_type > 0)
 	{
 		boostVal = doBoost;
@@ -322,7 +327,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 		if (boostFuel > gfBoostFuelMax)  boostFuel = gfBoostFuelMax;
 	}
 	//LogO(toStr(boostFuel));
-	///***  -------------------------------------------------------------
+	///***  --------------------------------------------------
 	
 
 	Dbl normal_force[WHEEL_POSITION_SIZE];
@@ -366,7 +371,8 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	}
 }
 
-//  Tick
+
+///  Tick  (one Simulation step)
 //---------------------------------------------------------------------------------
 void CARDYNAMICS::Tick(Dbl dt)
 {
@@ -397,6 +403,8 @@ void CARDYNAMICS::Tick(Dbl dt)
 	const float tacho_factor = 0.1;
 	tacho_rpm = engine.GetRPM() * tacho_factor + tacho_rpm * (1.0 - tacho_factor);
 }
+//---------------------------------------------------------------------------------
+
 
 void CARDYNAMICS::SynchronizeBody()
 {
@@ -433,4 +441,59 @@ void CARDYNAMICS::UpdateWheelContacts()
 		if (bTerrain)  ///  terrain surf from blendmap
 			wheelContact.SetSurface(terSurf[i]);
 	}
+}
+
+
+/// calculate the center of mass, calculate the total mass of the body, calculate the inertia tensor
+/// then store this information in the rigid body
+void CARDYNAMICS::UpdateMass()
+{
+	typedef std::pair <Dbl, MATHVECTOR<Dbl,3> > MASS_PAIR;
+
+	Dbl total_mass(0);
+
+	center_of_mass.Set(0,0,0);
+
+	// calculate the total mass, and center of mass
+	for ( std::list <MASS_PAIR>::iterator i = mass_only_particles.begin(); i != mass_only_particles.end(); ++i )
+	{
+		// add the current mass to the total mass
+		total_mass += i->first;
+
+		// incorporate the current mass into the center of mass
+		center_of_mass = center_of_mass + i->second * i->first;
+	}
+
+	// account for fuel
+	total_mass += fuel_tank.GetMass();
+	center_of_mass =  center_of_mass + fuel_tank.GetPosition() * fuel_tank.GetMass();
+
+	body.SetMass(total_mass);
+
+	center_of_mass = center_of_mass * (1.0 / total_mass);
+
+	// calculate the inertia tensor
+	MATRIX3 <Dbl> inertia;
+	for (int i = 0; i < 9; ++i)
+		inertia[i] = 0;
+
+	for (std::list <MASS_PAIR>::iterator i = mass_only_particles.begin(); i != mass_only_particles.end(); ++i)
+	{
+		// transform into the rigid body coordinates
+		MATHVECTOR<Dbl,3> pos = i->second - center_of_mass;
+		Dbl mass = i->first;
+
+		// add the current mass to the inertia tensor
+		inertia[0] += mass * ( pos[1] * pos[1] + pos[2] * pos[2] );
+		inertia[1] -= mass * ( pos[0] * pos[1] );
+		inertia[2] -= mass * ( pos[0] * pos[2] );
+		inertia[3] = inertia[1];
+		inertia[4] += mass * ( pos[2] * pos[2] + pos[0] * pos[0] );
+		inertia[5] -= mass * ( pos[1] * pos[2] );
+		inertia[6] = inertia[2];
+		inertia[7] = inertia[5];
+		inertia[8] += mass * ( pos[0] * pos[0] + pos[1] * pos[1] );
+	}
+	// inertia.DebugPrint(std::cout);
+	body.SetInertia( inertia );
 }

@@ -133,7 +133,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	/// dont get anything from pCar or car.dynamics here
 	/// all must be read from posInfo (it is filled from vdrift car or from replay)
 	
-	if (!pMainNode) return;
+	if (!pMainNode)  return;
 
 	//  set car pos and rot
 	pMainNode->setPosition(posInfo.pos);

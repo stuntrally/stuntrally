@@ -391,7 +391,7 @@ namespace MyGUI
 
 	void OgreD3D11RenderManager::destroyTexture(ITexture* _texture)
 	{
-		if (_texture == nullptr) return;
+		if (_texture == nullptr)  return;
 
 		MapTexture::iterator item = mTextures.find(_texture->getName());
 		MYGUI_PLATFORM_ASSERT(item != mTextures.end(), "Texture '" << _texture->getName() << "' not found");

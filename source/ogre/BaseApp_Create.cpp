@@ -214,7 +214,7 @@ bool BaseApp::configure()
 {
 	if (pSet->ogre_dialog)
 	{
-		if (!mRoot->showConfigDialog()) return false;
+		if (!mRoot->showConfigDialog())  return false;
 		mWindow = mRoot->initialise(true, "Stunt Rally");
 	}else{
 		RenderSystem* rs;
@@ -597,7 +597,7 @@ void BaseApp::LoadingOff()
 //-------------------------------------------------------------------------------------
 bool BaseApp::keyReleased( const OIS::KeyEvent &arg )
 {
-	if (bAssignKey) return true;
+	if (bAssignKey)  return true;
 
 	if (mGUI && (isFocGui || isTweak()))  {
 		MyGUI::InputManager::getInstance().injectKeyRelease(MyGUI::KeyCode::Enum(arg.key));
@@ -610,7 +610,7 @@ bool BaseApp::keyReleased( const OIS::KeyEvent &arg )
 //-------------------------------------------------------------------------------------
 bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 {
-	if (bAssignKey) return true;
+	if (bAssignKey)  return true;
 	if (IsFocGui() && mGUI)  {
 		MyGUI::InputManager::getInstance().injectMouseMove(arg.state.X.abs, arg.state.Y.abs, arg.state.Z.abs);
 		return true;  }
@@ -629,7 +629,7 @@ bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 using namespace OIS;
 bool BaseApp::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
-	if (bAssignKey) return true;
+	if (bAssignKey)  return true;
 	if (IsFocGui() && mGUI)  {
 		MyGUI::InputManager::getInstance().injectMousePress(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 		return true;  }
@@ -642,7 +642,7 @@ bool BaseApp::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 
 bool BaseApp::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
-	if (bAssignKey) return true;
+	if (bAssignKey)  return true;
 	if (IsFocGui() && mGUI)  {
 		MyGUI::InputManager::getInstance().injectMouseRelease(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 		return true;  }

@@ -35,7 +35,7 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player,
 
 	lastinputs = inputs;
 
-	if (OISB::System::getSingletonPtr() == NULL) return inputs;
+	if (OISB::System::getSingletonPtr() == NULL)  return inputs;
 	
 	const std::string sPlr = "Player" + toStr(player+1) + "/";
 

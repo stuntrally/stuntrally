@@ -169,7 +169,7 @@ namespace OISB
  
 	void System::process(Real delta)
 	{
-		if (!mInitialized) return;
+		if (!mInitialized)  return;
 		
 		mOISMouse->capture();
 		mOISKeyboard->capture();
@@ -417,11 +417,11 @@ namespace OISB
 
 	int System::processSchemaXML(rapidxml::xml_node<>* schemaNode)
 	{
-		if(!schemaNode) return 1;
+		if(!schemaNode)  return 1;
 		ActionSchema* schema=0;
 
 		// check for missing name
-		if(!schemaNode->first_attribute("name")) return 2;
+		if(!schemaNode->first_attribute("name"))  return 2;
 
 		std::string schema_name = schemaNode->first_attribute("name")->value();
 		if (!hasActionSchema(schema_name))
@@ -438,7 +438,7 @@ namespace OISB
 
 	int System::processActionXML(rapidxml::xml_node<>* actionNode, ActionSchema* schema)
 	{
-		if(!actionNode) return 1;
+		if(!actionNode)  return 1;
 
 		std::string type="", name="";
 
@@ -478,7 +478,7 @@ namespace OISB
 
 	int System::processActionBindingXML(rapidxml::xml_node<>* bindingNode, Action *action)
 	{
-		if(!bindingNode || !action) return 1;
+		if(!bindingNode || !action)  return 1;
 		OISB::Binding* binding = action->createBinding();
 		binding->mOptional = bindingNode->first_attribute("optional");
 		for (rapidxml::xml_node<> *child = bindingNode->first_node("bind"); child; child = child->next_sibling())
@@ -489,7 +489,7 @@ namespace OISB
 	
 	int System::processActionBindXML(rapidxml::xml_node<>* bindNode, Binding *binding, Action *action)
 	{
-		if(!bindNode || !action) return 1;
+		if(!bindNode || !action)  return 1;
 	
 		std::string role = "";
 		if(bindNode->first_attribute("role"))

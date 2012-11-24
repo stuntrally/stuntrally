@@ -249,7 +249,7 @@ namespace OISB
 
     bool Binding::isAnyBindableActive() const
     {
-		if (mBindables.size() == 0) return false;
+		if (mBindables.size() == 0)  return false;
         for (BindableList::const_iterator it = mBindables.begin(); it != mBindables.end(); ++it)
         {
             Bindable* bindable = it->second;
@@ -265,7 +265,7 @@ namespace OISB
 
     bool Binding::areAllBindablesActive() const
     {
-		if (mBindables.size() == 0) return false;
+		if (mBindables.size() == 0)  return false;
         for (BindableList::const_iterator it = mBindables.begin(); it != mBindables.end(); ++it)
         {
             Bindable* bindable = it->second;

@@ -53,7 +53,7 @@ void MotionBlurListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::Materia
 
 void MotionBlurListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
 {
-	if (pass_id != 120) return;
+	if (pass_id != 120)  return;
 	//Ogre::LogManager::getSingleton().logMessage("notifyMaterialRender");
 	try
 	{	mat->load();

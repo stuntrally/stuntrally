@@ -983,6 +983,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\vdrift\cardynamics_simulate.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\source\vdrift\cardynamics_update.cpp"
 					>
 				</File>

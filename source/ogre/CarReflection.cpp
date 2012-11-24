@@ -62,7 +62,7 @@ void CarReflection::Create()
 	int size = ciShadowSizesA[pSet->refl_size];  // /2 ?
 
 	//  create cube render texture
-	if (! (pSet->refl_mode == 1 && iIndex != 0) )
+	if ( !(pSet->refl_mode == 1 && iIndex != 0) )
 	{
 		cubetex = tm->createManual(cubetexName, 
 			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_CUBE_MAP, 
@@ -107,9 +107,9 @@ void CarReflection::Create()
 void CarReflection::Update()
 {
 	// update only if we created
-	if ( pSet->refl_mode == 1 && iIndex != 0 ) return;
+	if (pSet->refl_mode == 1 && iIndex != 0)  return;
 	// static: only 1st frame
-	if ( pSet->refl_mode == 0 && bFirstFrame == false ) return;
+	if (pSet->refl_mode == 0 && bFirstFrame == false)  return;
 		
 	//  skip frames
 	if (++iCounter >= pSet->refl_skip || bFirstFrame)
@@ -128,7 +128,7 @@ void CarReflection::Update()
 			
 			if (cam)
 			{	
-				cam->setPosition ( camPosition );
+				cam->setPosition( camPosition );
 				
 				// Set skydome position to camera
 				if (pApp->ndSky)

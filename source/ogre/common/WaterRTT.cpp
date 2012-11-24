@@ -91,7 +91,7 @@ void WaterRTT::destroy()
 
 void WaterRTT::recreate()
 {
-	if (!mChangedSettings) return;
+	if (!mChangedSettings)  return;
 	mChangedSettings = false;
 	destroy();
 	create();

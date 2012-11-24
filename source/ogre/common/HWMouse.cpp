@@ -82,7 +82,7 @@ HWMouse::~HWMouse()
 
 void HWMouse::show()
 {
-	if (mVisible) return;
+	if (mVisible)  return;
 #if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
 	XDefineCursor(x11Display, x11Window, x11Cursor);
 	XFlush(x11Display);
@@ -92,7 +92,7 @@ void HWMouse::show()
 
 void HWMouse::hide()
 {
-	if (!mVisible) return;
+	if (!mVisible)  return;
 #if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
 	XDefineCursor(x11Display, x11Window, x11Cursor_hidden);
 	XFlush(x11Display);

@@ -5,25 +5,24 @@
 #include "mathvector.h"
 #include "quaternion.h"
 #include "rigidbody.h"
+
 #include "carengine.h"
 #include "carclutch.h"
 #include "cartransmission.h"
-#include "cardifferential.h"
 #include "carfueltank.h"
+#include "cardifferential.h"
+#include "caraero.h"
+
 #include "carsuspension.h"
 #include "carwheel.h"
 #include "cartire.h"
-#include "cardefs.h"
 #include "carbrake.h"
-#include "caraero.h"
+
+#include "cardefs.h"
 #include "collision_contact.h"
-#include "cartelemetry.h"
 #include "../btOgre/BtOgreDebug.h"
 
-class MODEL;
-class CONFIGFILE;
-class COLLISION_WORLD;
-class FluidBox;
+class MODEL;  class CONFIGFILE;  class COLLISION_WORLD;  class FluidBox;
 
 
 class CARDYNAMICS : public btActionInterface
@@ -44,31 +43,29 @@ public:
 	void Init(
 		class SETTINGS* pSet1, class Scene* pScene1, class FluidsXml* pFluids1,
 		COLLISION_WORLD & world,
-		const MODEL & chassisModel,
-		const MODEL & wheelModelFront,
-		const MODEL & wheelModelRear,
+		const MODEL & chassisModel, const MODEL & wheelModelFront, const MODEL & wheelModelRear,
 		const MATHVECTOR<Dbl,3> & position,
 		const QUATERNION<Dbl> & orientation);
 
 // bullet interface
 	virtual void updateAction(btCollisionWorld * collisionWorld, btScalar dt);
-	virtual void debugDraw(btIDebugDraw * debugDrawer);
+	virtual void debugDraw(btIDebugDraw * debugDrawer)	{	}
 
 // graphics interface, interpolated!
 	void Update(), UpdateBuoyancy(); // update interpolated chassis state
-	const MATHVECTOR<Dbl,3> & GetCenterOfMassPosition() const;
-	const MATHVECTOR<Dbl,3> & GetPosition() const;
-	const QUATERNION<Dbl> & GetOrientation() const;
+	const MATHVECTOR<Dbl,3> & GetCenterOfMassPosition() const	{	return chassisCenterOfMass;		}
+	const MATHVECTOR<Dbl,3> & GetPosition() const	{	return chassisPosition;		}
+	const QUATERNION<Dbl> & GetOrientation() const	{	return chassisRotation;		}
 	MATHVECTOR<Dbl,3> GetWheelPosition(WHEEL_POSITION wp) const;
 	MATHVECTOR<Dbl,3> GetWheelPosition(WHEEL_POSITION wp, Dbl displacement_percent) const; // for debugging
 	QUATERNION<Dbl> GetWheelOrientation(WHEEL_POSITION wp) const;
 
 	QUATERNION<Dbl> GetUprightOrientation(WHEEL_POSITION wp) const;
-	MATHVECTOR<Dbl,3> GetWheelVelocity(WHEEL_POSITION wp) const;
+	MATHVECTOR<Dbl,3> GetWheelVelocity(WHEEL_POSITION wp) const		{	return wheel_velocity[wp];	}	// worldspace wheel center position
 
 // collision world interface
-	const COLLISION_CONTACT & GetWheelContact(WHEEL_POSITION wp) const;
-	COLLISION_CONTACT & GetWheelContact(WHEEL_POSITION wp);
+	const COLLISION_CONTACT & GetWheelContact(WHEEL_POSITION wp) const	{	return wheel_contact[wp];	}
+	COLLISION_CONTACT & GetWheelContact(WHEEL_POSITION wp)				{	return wheel_contact[wp];	}
 
 /// set from terrain blendmap
 	bool bTerrain;
@@ -88,19 +85,13 @@ public:
 
 // driveline
 	// driveline input
-	void StartEngine();
-	void ShiftGear(int value);
-	void SetThrottle(float value);
-	void SetClutch(float value);
-	void SetBrake(float value);
-	void SetHandBrake(float value);
-	void SetAutoClutch(bool value);
-	void SetAutoShift(bool value);
-	void SetAutoRear(bool value);
+	void StartEngine();  void ShiftGear(int value);
+	void SetThrottle(float value);		void SetClutch(float value);
+	void SetBrake(float value);			void SetHandBrake(float value);
+	void SetAutoClutch(bool value);		void SetAutoShift(bool value);	void SetAutoRear(bool value);
 
 	// speedometer/tachometer based on driveshaft rpm
-	Dbl GetSpeedMPS() const;
-	Dbl GetTachoRPM() const;
+	Dbl GetSpeedMPS() const;  Dbl GetTachoRPM() const;
 
 	// driveline state access
 	const CARENGINE & GetEngine() const {  return engine;  }
@@ -110,12 +101,8 @@ public:
 	const CARWHEEL & GetWheel(WHEEL_POSITION pos) const {  return wheel[pos];  }
 
 // traction control
-	void SetABS(const bool newabs);
-	bool GetABSEnabled() const;
-	bool GetABSActive() const;
-	void SetTCS(const bool newtcs);
-	bool GetTCSEnabled() const;
-	bool GetTCSActive() const;
+	void SetABS(const bool newabs);  bool GetABSEnabled() const;  bool GetABSActive() const;
+	void SetTCS(const bool newtcs);  bool GetTCSEnabled() const;  bool GetTCSActive() const;
 
 // cardynamics
 	void SetPosition(const MATHVECTOR<Dbl,3> & pos);
@@ -126,12 +113,12 @@ public:
 	// set the steering angle to "value", where 1.0 is maximum right lock and -1.0 is maximum left lock.
 	void SetSteering(const Dbl value);
 	Dbl steerValue;  // copy from SetSteering
-	Dbl GetSteering() const {return steerValue;}
+	Dbl GetSteering() const {	return steerValue;	}
 
 	// get the maximum steering angle in degrees
-	Dbl GetMaxSteeringAngle() const;
+	Dbl GetMaxSteeringAngle() const		{	return maxangle;	}
 
-	const CARTIRE & GetTire(WHEEL_POSITION pos) const {  return tire[pos];  }
+	const CARTIRE & GetTire(WHEEL_POSITION pos) const			  {  return tire[pos];  }
 	const CARSUSPENSION & GetSuspension(WHEEL_POSITION pos) const {  return suspension[pos];  }
 
 	MATHVECTOR<Dbl,3> GetTotalAero() const;
@@ -139,9 +126,8 @@ public:
 	Dbl GetAerodynamicDownforceCoefficient() const;
 	Dbl GetAeordynamicDragCoefficient() const;
 
-	MATHVECTOR<Dbl,3> GetLastBodyForce() const;
-	
-	Dbl GetFeedback() const;
+	MATHVECTOR<Dbl,3> GetLastBodyForce() const	{	return lastbodyforce;	}
+	Dbl GetFeedback() const	{	return feedback;	}
 
 	// print debug info to the given ostream.  set p1, p2, etc if debug info part 1, and/or part 2, etc is desired
 	void DebugPrint(std::ostream & out, bool p1, bool p2, bool p3, bool p4);
@@ -151,7 +137,7 @@ public:
 	RIGIDBODY body;
 	MATHVECTOR<Dbl,3> center_of_mass;
 	COLLISION_WORLD * world;
-	btRigidBody * chassis, * whTrigs;
+	btRigidBody *chassis, *whTrigs;
 
 	///  for buoyancy
 	float whH[4];  // wheel submerge 0..1
@@ -161,8 +147,7 @@ public:
 	//float sumWhTest;  //test dbg out
 
 	// interpolated chassis state
-	MATHVECTOR<Dbl,3> chassisPosition;
-	MATHVECTOR<Dbl,3> chassisCenterOfMass;
+	MATHVECTOR<Dbl,3> chassisPosition, chassisCenterOfMass;
 	QUATERNION<Dbl> chassisRotation;
 	
 	// manual flip over, rocket boost
@@ -175,37 +160,28 @@ public:
 	Dbl time;  // for wind only
 	
 
-// driveline state
+// driveline state  -----------------
 	CARFUELTANK fuel_tank;
 	CARENGINE engine;
 	CARCLUTCH clutch;
 	CARTRANSMISSION transmission;
-	CARDIFFERENTIAL diff_front;
-	CARDIFFERENTIAL diff_rear;
-	CARDIFFERENTIAL diff_center;
+	CARDIFFERENTIAL diff_front, diff_rear, diff_center;
 	std::vector <CARBRAKE> brake;
 	std::vector <CARWHEEL> wheel;
 	
 	enum { FWD = 3, RWD = 12, AWD = 15 } drive;
-	Dbl driveshaft_rpm;
-	Dbl tacho_rpm;
+	Dbl driveshaft_rpm, tacho_rpm;
 
-	bool autoclutch, autoshift, autorear;
-	bool shifted;
+	bool autoclutch, autoshift, autorear, shifted;
 	int shift_gear;
-	Dbl last_auto_clutch;
-	Dbl remaining_shift_time;
-	Dbl shift_time;
+	Dbl last_auto_clutch, remaining_shift_time, shift_time;
 
 // traction control state
-	bool abs;
-	bool tcs;
-	std::vector <int> abs_active;
-	std::vector <int> tcs_active;
+	bool abs, tcs;
+	std::vector <int> abs_active, tcs_active;
 	
-// cardynamics state
-	std::vector <MATHVECTOR<Dbl,3> > wheel_velocity;
-	std::vector <MATHVECTOR<Dbl,3> > wheel_position;
+// cardynamics state  -----------------
+	std::vector <MATHVECTOR<Dbl,3> > wheel_velocity, wheel_position;
 	std::vector <QUATERNION<Dbl> > wheel_orientation;
 	std::vector <COLLISION_CONTACT> wheel_contact;
 	
@@ -215,14 +191,10 @@ public:
 
 	std::list <std::pair <Dbl, MATHVECTOR<Dbl,3> > > mass_only_particles;
 	
-	Dbl maxangle;
-	Dbl feedback;
-	
+	Dbl feedback, maxangle;
 	Dbl ang_damp;  Dbl rot_coef[4];  /// new
 	
-	MATHVECTOR<Dbl,3> lastbodyforce; //< held so external classes can extract it for things such as applying physics to camera mounts
-	
-	//CARTELEMETRY telemetry;
+	MATHVECTOR<Dbl,3> lastbodyforce;  //< held so external classes can extract it for things such as applying physics to camera mounts
 
 // chassis, cardynamics
 	MATHVECTOR<Dbl,3> GetDownVector() const;
@@ -244,92 +216,58 @@ public:
 	void UpdateWheelVelocity();
 	void UpdateWheelTransform();
 
-	// apply engine torque to chassis
-	void ApplyEngineTorqueToBody();
-	
-	// apply aerodynamic forces / torques to chassis
-	void ApplyAerodynamicsToBody(Dbl dt);
+	void ApplyEngineTorqueToBody();		// apply engine torque to chassis
+	void ApplyAerodynamicsToBody(Dbl dt);	// apply aerodynamic forces / torques to chassis
 
-	// update suspension diplacement, return suspension force
-	MATHVECTOR<Dbl,3> UpdateSuspension(int i, Dbl dt);
+	MATHVECTOR<Dbl,3> UpdateSuspension(int i, Dbl dt);	// update suspension diplacement, return suspension force
 
 	// apply tire friction to body, return friction in world space
 	MATHVECTOR<Dbl,3> ApplyTireForce(int i, const Dbl normal_force, const QUATERNION<Dbl> & wheel_space);
-
 	// apply wheel torque to chassis
 	void ApplyWheelTorque(Dbl dt, Dbl drive_torque, int i, MATHVECTOR<Dbl,3> tire_friction, const QUATERNION<Dbl> & wheel_space);
 
-	// advance chassis(body, suspension, wheels) simulation by dt
-	void UpdateBody(Dbl dt, Dbl drive_torque[]);
-
-	// cardynamics
-	void Tick(Dbl dt);
-
+	void Tick(Dbl dt);  /// update simulation
+	void UpdateBody(Dbl dt, Dbl drive_torque[]);	// advance chassis(body, suspension, wheels) simulation by dt
+	void UpdateMass();
 	void SynchronizeBody();
 	void SynchronizeChassis();
 
 	void UpdateWheelContacts();
-
 	void InterpolateWheelContacts(Dbl dt);
 
-	void UpdateMass();
-
 // driveline
-	// update engine, return wheel drive torque
-	void UpdateDriveline(Dbl dt, Dbl drive_torque[]);
-	
-	// apply clutch torque to engine
-	void ApplyClutchTorque(Dbl engine_drag, Dbl clutch_speed);
+	void UpdateDriveline(Dbl dt, Dbl drive_torque[]);	// update engine, return wheel drive torque
+	void ApplyClutchTorque(Dbl engine_drag, Dbl clutch_speed);	// apply clutch torque to engine
 
-	// calculate wheel drive torque
-	void CalculateDriveTorque(Dbl wheel_drive_torque[], Dbl clutch_torque);
-
-	// calculate driveshaft speed given wheel angular velocity
-	Dbl CalculateDriveshaftSpeed();
-
-	// calculate throttle, clutch, gear
-	void UpdateTransmission(Dbl dt);
-
-	// calculate clutch driveshaft rpm
-	Dbl CalculateDriveshaftRPM() const;
-
-	bool WheelDriven(int i) const;
+	void CalculateDriveTorque(Dbl wheel_drive_torque[], Dbl clutch_torque);		// calculate wheel drive torque
+	Dbl CalculateDriveshaftSpeed();		// calculate driveshaft speed given wheel angular velocity
+	void UpdateTransmission(Dbl dt);	// calculate throttle, clutch, gear
+	Dbl CalculateDriveshaftRPM() const;	// calculate clutch driveshaft rpm
 	
 	Dbl AutoClutch(Dbl last_clutch, Dbl dt) const;
-	
 	Dbl ShiftAutoClutch() const;
 	Dbl ShiftAutoClutchThrottle(Dbl throttle, Dbl dt);
 	
-	// calculate next gear based on engine rpm
-	int NextGear() const;
-	
-	// calculate downshift point based on gear, engine rpm
-	Dbl DownshiftRPM(int gear) const;
+	int NextGear() const;	// calculate next gear based on engine rpm
+	Dbl DownshiftRPM(int gear) const;	// calculate downshift point based on gear, engine rpm
 
 // traction control
-	// do traction control system calculations and modify the throttle position if necessary
-	void DoTCS(int i, Dbl normal_force);
-
-	// do anti-lock brake system calculations and modify the brake force if necessary
-	void DoABS(int i, Dbl normal_force);
+	void DoTCS(int i, Dbl normal_force);	// do traction control system calculations and modify the throttle position if necessary
+	void DoABS(int i, Dbl normal_force);	// do anti-lock brake system calculations and modify the brake force if necessary
 
 // cardynamics initialization
 	//Set the maximum steering angle in degrees
-	void SetMaxSteeringAngle(Dbl newangle);
-
-	void SetAngDamp( Dbl newang );
+	void SetMaxSteeringAngle(Dbl newangle)	{	maxangle = newangle;	}
+	void SetAngDamp(Dbl newang)				{	ang_damp = newang;	}
 	
 	void SetDrive(const std::string & newdrive);
+	bool WheelDriven(int i) const  {	return (1 << i) & drive;	}
 	
 	void AddMassParticle(Dbl newmass, MATHVECTOR<Dbl,3> newpos);
 
-	void AddAerodynamicDevice(
-		const MATHVECTOR<Dbl,3> & newpos,
-		Dbl drag_frontal_area,
-		Dbl drag_coefficient,
-		Dbl lift_surface_area,
-		Dbl lift_coefficient,
-		Dbl lift_efficiency);
+	void AddAerodynamicDevice( const MATHVECTOR<Dbl,3> & newpos,
+		Dbl drag_frontal_area, Dbl drag_coefficient,
+		Dbl lift_surface_area, Dbl lift_coefficient, Dbl lift_efficiency);
 		
 	char IsBraking() const;
 };
