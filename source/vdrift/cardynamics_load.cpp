@@ -435,16 +435,6 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 				if (!both)  posstr = "rear";
 			}
 
-			/*std::string tirefile;  // get tire params file
-			if (!c.GetParam("tire-"+posstr+".file", tirefile, error_output))  return false;
-			int it = pGame->tire_pars_map[tirefile]-1;
-			if (it == -1)
-			{	error_output << "Tire file not found\n";  return false;  }
-			TIRE_PARAMS* tp = &pGame->tire_pars[ it ];
-
-			tire[leftside].SetPacejkaParameters(tp);
-			tire[rightside].SetPacejkaParameters(tp);*/
-
 			//float rolling_resistance[3];
 			//if (!c.GetParam("tire-"+posstr+".rolling-resistance", rolling_resistance, error_output))  return false;
 			//tire[leftside].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
@@ -454,9 +444,6 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			if (!c.GetParam("tire-"+posstr+".radius", radius, error_output))  return false;
 			wheel[leftside].SetRadius(radius);
 			wheel[rightside].SetRadius(radius);
-
-			//tire[leftside] = 0;  /// init to 1st from scene..
-			//tire[rightside] = 0;
 
 			//float tread;
 			//if (!c.GetParam("tire-"+posstr+".tread", tread, error_output))  return false;
@@ -705,9 +692,9 @@ void CARDYNAMICS::Init(
 	chassisState->setWorldTransform(transform);
 
 	btRigidBody::btRigidBodyConstructionInfo info(chassisMass, chassisState, chassisShape, chassisInertia);
-	info.m_angularDamping = ang_damp;  // 0.0!+  0.4 old
+	info.m_angularDamping = ang_damp;
 	info.m_restitution = 0.0;  //...
-	info.m_friction = 0.1;  /// 0.4~ 0.7
+	info.m_friction = 0.4;  /// 0.4~ 0.7
 	///  chasis^
 	chassis = world.AddRigidBody(info, true, pSet->game.collis_cars);
 	chassis->setActivationState(DISABLE_DEACTIVATION);

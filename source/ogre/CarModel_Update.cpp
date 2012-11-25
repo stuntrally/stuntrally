@@ -529,8 +529,8 @@ void CarModel::UpdWhTerMtr()
 		txtDbgSurf += //"mx " + toStr(mx) + " my " + toStr(my) +
 			( iRd == 0	? ( "T" + toStr(cd.whTerMtr[i]) )
 						: ( (iRd==2 ? "P" : "R") + toStr(cd.whRoadMtr[i]) )  ) +
-			(!tsu ? "  su --" : (
-				"  su " + tsu->name + " " + csTRKsurf[tsu->type] + //" [" + lay.texFile + "] " +
+			(!tsu ? "  --" : (
+				"  " + tsu->name + " " + csTRKsurf[tsu->type] + //" [" + lay.texFile + "] " +
 				"\n      "+
 				tsu->tireName +
 				"\n     "+
