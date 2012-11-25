@@ -84,7 +84,7 @@ void App::CreateBltFluids()
 
 		btCollisionShape* bshp = 0;
 		bshp = new btBoxShape(btVector3(fb.size.x/2,fb.size.z/2, fb.size.y/2));
-		//shp->setUserPointer((void*)7777);
+		//shp->setUserPointer((void*)SU_Fluid);
 
 		btCollisionObject* bco = new btCollisionObject();
 		bco->setActivationState(DISABLE_SIMULATION);

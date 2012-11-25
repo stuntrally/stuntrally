@@ -8,39 +8,31 @@
 #include <functional>
 #include <algorithm>
 #include "../ogre/common/Defines.h"
+#include "game.h"  // for tires map
 
 #include <list>
-using std::list;
 #include <map>
-using std::pair;
 #include <string>
-using std::string;
 #include <iostream>
-using std::cout;
-using std::endl;
 #include <fstream>
-using std::ifstream;
 #include <sstream>
-using std::stringstream;
+using namespace std;
 
 
-TRACK::TRACK(std::ostream & info, std::ostream & error) 
-: info_output(info),
-  error_output(error),
-  texture_size("large"),
-  vertical_tracking_skyboxes(false),
-  usesurfaces(false),
-  //racingline_node(NULL),
-  loaded(false),
-  cull(false)
+TRACK::TRACK(ostream & info, ostream & error) 
+	:pGame(0),
+	info_output(info), error_output(error),
+	texture_size("large"),
+	vertical_tracking_skyboxes(false),
+	usesurfaces(false),
+	//racingline_node(NULL),
+	loaded(false),
+	cull(false)
 {
 	roadSurf.type = TRACKSURFACE::ASPHALT;
-	roadSurf.bumpWaveLength = 1;
-	roadSurf.bumpAmplitude = 0;
-	roadSurf.frictionNonTread = 1;
-	roadSurf.frictionTread = 1;
-	roadSurf.rollResistanceCoefficient = 1;
-	roadSurf.rollingDrag = 0;
+	roadSurf.bumpWaveLength = 1;  roadSurf.bumpAmplitude = 0;
+	roadSurf.frictionTread = 1;  //roadSurf.frictionNonTread = 1;
+	roadSurf.rollingDrag = 0;  //roadSurf.rollResist = 1;
 }
 
 TRACK::~TRACK()
@@ -49,12 +41,12 @@ TRACK::~TRACK()
 }
 
 bool TRACK::Load(
-	const std::string & trackpath,
-	const std::string & effects_texturepath,
+	const string & trackpath,
+	const string & effects_texturepath,
 	//SCENENODE & rootnode,
 	bool reverse,
 	int anisotropy,
-	const std::string & texsize)
+	const string & texsize)
 {
 	Clear();
 
@@ -70,7 +62,7 @@ bool TRACK::Load(
 	//load roads
 	if (!LoadRoads(trackpath, reverse))
 	{
-		error_output << "Error during road loading; continuing with an unsmoothed track" << std::endl;
+		error_output << "Error during road loading; continuing with an unsmoothed track" << endl;
 		ClearRoads();
 	}
 
@@ -93,7 +85,7 @@ bool TRACK::Load(
 	return true;
 }
 
-bool TRACK::LoadLapSequence(const std::string & trackpath, bool reverse)
+bool TRACK::LoadLapSequence(const string & trackpath, bool reverse)
 {
 	string parampath = trackpath + "/track.txt";
 	CONFIGFILE trackconfig;
@@ -111,7 +103,7 @@ bool TRACK::LoadLapSequence(const std::string & trackpath, bool reverse)
 		for (int l = 0; l < lapmarkers; l++)
 		{
 			float lapraw[3];
-			std::stringstream lapname;
+			stringstream lapname;
 			lapname << "lap sequence " << l;
 			trackconfig.GetParam(lapname.str(), lapraw);
 			int roadid = lapraw[0];
@@ -120,12 +112,12 @@ bool TRACK::LoadLapSequence(const std::string & trackpath, bool reverse)
 			//info_output << "Looking for lap sequence: " << roadid << ", " << patchid << endl;
 
 			int curroad = 0;
-			for (std::list <ROADSTRIP>::iterator i = roads.begin(); i != roads.end(); ++i)
+			for (list <ROADSTRIP>::iterator i = roads.begin(); i != roads.end(); ++i)
 			{
 				if (curroad == roadid)
 				{
 					int curpatch = 0;
-					for (std::list <ROADPATCH>::const_iterator p = i->GetPatchList().begin(); p != i->GetPatchList().end(); ++p)
+					for (list <ROADPATCH>::const_iterator p = i->GetPatchList().begin(); p != i->GetPatchList().end(); ++p)
 					{
 						if (curpatch == patchid)
 						{
@@ -160,7 +152,7 @@ bool TRACK::LoadLapSequence(const std::string & trackpath, bool reverse)
 	}
 
 	if (lapmarkers == 0)
-		info_output << "No lap sequence found; lap timing will not be possible" << std::endl;
+		info_output << "No lap sequence found; lap timing will not be possible" << endl;
 	else
 		info_output << "Track timing sectors: " << lapmarkers << endl;
 
@@ -168,10 +160,10 @@ bool TRACK::LoadLapSequence(const std::string & trackpath, bool reverse)
 }
 
 bool TRACK::DeferredLoad(
-	const std::string & trackpath,
+	const string & trackpath,
 	bool reverse,
 	int anisotropy,
-	const std::string & texsize,
+	const string & texsize,
 	bool dynamicshadowsenabled,
 	bool doagressivecombining)
 {
@@ -191,7 +183,7 @@ bool TRACK::DeferredLoad(
 	//load roads
 	if (!LoadRoads(trackpath, reverse))
 	{
-		error_output << "Error during road loading; continuing with an unsmoothed track" << std::endl;
+		error_output << "Error during road loading; continuing with an unsmoothed track" << endl;
 		ClearRoads();
 	}
 
@@ -247,8 +239,8 @@ void TRACK::Clear()
 
 bool TRACK::CreateRacingLines(
 	//SCENENODE * parentnode, 
-	/*const std::string & texturepath,
-	const std::string & texsize*/)
+	/*const string & texturepath,
+	const string & texsize*/)
 {
 	/*assert(parentnode);
 	if (!racingline_node)
@@ -266,14 +258,14 @@ bool TRACK::CreateRacingLines(
 	
 	K1999 k1999data;
 	int n = 0;
-	for (std::list <ROADSTRIP>::iterator i = roads.begin(); i != roads.end(); ++i,++n)
+	for (list <ROADSTRIP>::iterator i = roads.begin(); i != roads.end(); ++i,++n)
 	{
 		if (k1999data.LoadData(&(*i)))
 		{
 			k1999data.CalcRaceLine();
 			k1999data.UpdateRoadStrip(&(*i));
 		}
-		//else error_output << "Couldn't create racing line for roadstrip " << n << std::endl;
+		//else error_output << "Couldn't create racing line for roadstrip " << n << endl;
 		
 		//i->CreateRacingLine(racingline_node, racingline_texture, error_output);
 	}
@@ -281,7 +273,7 @@ bool TRACK::CreateRacingLines(
 	return true;
 }
 
-bool TRACK::LoadParameters(const std::string & trackpath)
+bool TRACK::LoadParameters(const string & trackpath)
 {
 	string parampath = trackpath + "/track.txt";
 	CONFIGFILE param;
@@ -296,7 +288,7 @@ bool TRACK::LoadParameters(const std::string & trackpath)
 	//cout << vertical_tracking_skyboxes << endl;
 
 	int sp_num = 0;
-	std::stringstream sp_name;
+	stringstream sp_name;
 	sp_name << "start position " << sp_num;
 	float f3[3];
 	float f1;
@@ -327,7 +319,7 @@ bool TRACK::LoadParameters(const std::string & trackpath)
 		fixer.Rotate(PI_d, 0, 0, 1);
 		orient = fixer * orient;
 
-		start_positions.push_back(std::pair <MATHVECTOR<float,3>, QUATERNION<float> >
+		start_positions.push_back(pair <MATHVECTOR<float,3>, QUATERNION<float> >
 				(pos, orient));
 
 		sp_num++;
@@ -338,7 +330,7 @@ bool TRACK::LoadParameters(const std::string & trackpath)
 	return true;
 }
 
-bool TRACK::LoadSurfaces(const std::string & trackpath)
+bool TRACK::LoadSurfaces(const string & trackpath)
 {
 	string path = trackpath + "/surfaces.txt";
 	CONFIGFILE param;
@@ -350,14 +342,14 @@ bool TRACK::LoadSurfaces(const std::string & trackpath)
 	
 	usesurfaces = true;
 	
-	std::list <std::string> sectionlist;
+	list <string> sectionlist;
 	param.GetSectionList(sectionlist);
 	
 	// set the size of track surfaces to hold new elements
 	//tracksurfaces.resize(sectionlist.size());
 	tracksurfaces.clear();//
 	
-	for (std::list<std::string>::const_iterator section = sectionlist.begin(); section != sectionlist.end(); ++section)
+	for (list<string>::const_iterator section = sectionlist.begin(); section != sectionlist.end(); ++section)
 	{
 		TRACKSURFACE surf;
 		surf.name = *section;
@@ -374,24 +366,41 @@ bool TRACK::LoadSurfaces(const std::string & trackpath)
 		param.GetParam(*section + ".BumpAmplitude", temp, error_output);
 		surf.bumpAmplitude = temp;
 		
-		param.GetParam(*section + ".FrictionNonTread", temp, error_output);
-		surf.frictionNonTread = temp;
+		//param.GetParam(*section + ".FrictionNonTread", temp, error_output);  //not used
+		//surf.frictionNonTread = temp;
 		
 		param.GetParam(*section + ".FrictionTread", temp, error_output);
 		surf.frictionTread = temp;
 		
-		param.GetParam(*section + ".RollResistanceCoefficient", temp, error_output);
-		surf.rollResistanceCoefficient = temp;
+		//param.GetParam(*section + ".RollResistanceCoefficient", temp, error_output);  //not used
+		//surf.rollResist = temp;
 		
 		param.GetParam(*section + ".RollingDrag", temp, error_output);
 		surf.rollingDrag = temp;
+
+		///---
+		string tireFile;
+		if (!param.GetParam(*section + "." + "Tire", tireFile, error_output))
+		{
+			tireFile = "gravel_new4b";  // default surface if not found
+			error_output << "Surface: Tire file not found, using default: " << tireFile << endl;
+		}
+		id = pGame->tires_map[tireFile]-1;
+		if (id == -1)
+		{	id = 0;
+			error_output << "Surface: Tire id not found in map, using 0." << endl;
+		}
+		//error_output << "Tires size: " << pGame->tires.size() << endl;
+		surf.tire = &pGame->tires[id];
+		surf.tireName = tireFile;
+		///---
 		
 		tracksurfaces.push_back(surf);//
 		//info_output << "  new surface: " << surf.name << " ID:" << id << " bumpA:" << surf.bumpAmplitude << endl;//
 		if (surf.name == "R")  // for road
 			roadSurf = surf;
 		
-		//std::list<TRACKSURFACE>::iterator it = tracksurfaces.begin();
+		//list<TRACKSURFACE>::iterator it = tracksurfaces.begin();
 		//while(indexnum-- > 0) it++;
 		//*it = tempsurface;
 	}
@@ -401,7 +410,7 @@ bool TRACK::LoadSurfaces(const std::string & trackpath)
 }
 
 bool TRACK::BeginObjectLoad(
-	const std::string & trackpath,
+	const string & trackpath,
 	//SCENENODE & sceneroot,
 	int anisotropy,
 	bool dynamicshadowsenabled,
@@ -416,14 +425,14 @@ bool TRACK::BeginObjectLoad(
 	return true;
 }
 
-std::pair <bool,bool> TRACK::ContinueObjectLoad()
+pair <bool,bool> TRACK::ContinueObjectLoad()
 {
 	assert(objload.get());
 	return objload->ContinueObjectLoad(this, model_library, texture_library,
 		objects, tracksurfaces, usesurfaces, vertical_tracking_skyboxes, texture_size);
 }
 
-bool TRACK::LoadObjects(const std::string & trackpath, /*SCENENODE & sceneroot,*/ int anisotropy)
+bool TRACK::LoadObjects(const string & trackpath, /*SCENENODE & sceneroot,*/ int anisotropy)
 {
 	BeginObjectLoad(trackpath, /*sceneroot,*/ anisotropy, false, false);
 	pair <bool,bool> loadstatus = ContinueObjectLoad();
@@ -441,7 +450,7 @@ void TRACK::Reverse()
 	{
 		int counts = 0;
 
-		for (std::list <ROADSTRIP>::iterator i = roads.begin(); i != roads.end(); ++i)
+		for (list <ROADSTRIP>::iterator i = roads.begin(); i != roads.end(); ++i)
 		{
 			optional <const BEZIER *> newstartline = i->FindBezierAtOffset(lapsequence[0],-1);
 			if (newstartline)
@@ -459,28 +468,28 @@ void TRACK::Reverse()
 	{
 		//reverse the lap sequence, but keep the first bezier where it is (remember, the track is a loop)
 		//so, for example, now instead of 1 2 3 4 we should have 1 4 3 2
-		std::vector <const BEZIER *>::iterator secondbezier = lapsequence.begin();
+		vector <const BEZIER *>::iterator secondbezier = lapsequence.begin();
 		++secondbezier;
 		assert(secondbezier != lapsequence.end());
-		std::reverse(secondbezier, lapsequence.end());
+		reverse(secondbezier, lapsequence.end());
 	}
 
 
 	//flip start positions
-	for (std::vector <std::pair <MATHVECTOR<float,3>, QUATERNION<float> > >::iterator i = start_positions.begin();
+	for (vector <pair <MATHVECTOR<float,3>, QUATERNION<float> > >::iterator i = start_positions.begin();
 		i != start_positions.end(); ++i)
 	{
 		i->second.Rotate(PI_d, 0,0,1);
 	}
 
 	//reverse start positions
-	std::reverse(start_positions.begin(), start_positions.end());
+	reverse(start_positions.begin(), start_positions.end());
 
 	//reverse roads
-	std::for_each(roads.begin(), roads.end(), std::mem_fun_ref(&ROADSTRIP::Reverse));
+	for_each(roads.begin(), roads.end(), mem_fun_ref(&ROADSTRIP::Reverse));
 }
 
-bool TRACK::LoadRoads(const std::string & trackpath, bool reverse)
+bool TRACK::LoadRoads(const string & trackpath, bool reverse)
 {
 	ClearRoads();
 
@@ -488,7 +497,7 @@ bool TRACK::LoadRoads(const std::string & trackpath, bool reverse)
 	trackfile.open((trackpath + "/roads.trk").c_str());
 	if (!trackfile)
 	{
-		//error_output << "Error opening roads file: " << trackpath + "/roads.trk" << std::endl;
+		//error_output << "Error opening roads file: " << trackpath + "/roads.trk" << endl;
 		//return false;
 	}
 
@@ -521,7 +530,7 @@ bool TRACK::CastRay(
 	MATHVECTOR<float,3> & normal) const
 {
 	bool col = false;
-	for (std::list <ROADSTRIP>::const_iterator i = roads.begin(); i != roads.end(); ++i)
+	for (list <ROADSTRIP>::const_iterator i = roads.begin(); i != roads.end(); ++i)
 	{
 		MATHVECTOR<float,3> coltri, colnorm;
 		const BEZIER * colbez = NULL;
@@ -543,10 +552,10 @@ bool TRACK::CastRay(
 
 optional <const BEZIER *> ROADSTRIP::FindBezierAtOffset(const BEZIER * bezier, int offset) const
 {
-	std::list <ROADPATCH>::const_iterator it = patches.end(); //this iterator will hold the found ROADPATCH
+	list <ROADPATCH>::const_iterator it = patches.end(); //this iterator will hold the found ROADPATCH
 
 	//search for the roadpatch containing the bezier and store an iterator to it in "it"
-	for (std::list <ROADPATCH>::const_iterator i = patches.begin(); i != patches.end(); ++i)
+	for (list <ROADPATCH>::const_iterator i = patches.begin(); i != patches.end(); ++i)
 	{
 		if (&i->GetPatch() == bezier)
 		{
@@ -566,7 +575,7 @@ optional <const BEZIER *> ROADSTRIP::FindBezierAtOffset(const BEZIER * bezier, i
 			if (curoffset < 0)
 			{
 				//why is this so difficult?  all i'm trying to do is make the iterator loop around
-				std::list <ROADPATCH>::const_reverse_iterator rit(it);
+				list <ROADPATCH>::const_reverse_iterator rit(it);
 				if (rit == patches.rend())
 					rit = patches.rbegin();
 				rit++;
@@ -593,18 +602,18 @@ optional <const BEZIER *> ROADSTRIP::FindBezierAtOffset(const BEZIER * bezier, i
 	}
 }
 
-std::pair <MATHVECTOR<float,3>, QUATERNION<float> > TRACK::GetStart(unsigned int index)
+pair <MATHVECTOR<float,3>, QUATERNION<float> > TRACK::GetStart(unsigned int index)
 {
 	assert(!start_positions.empty());
 	unsigned int laststart = 0;  // force auto gen  // start_positions.size()-1;
 	
 	if (index > laststart || start_positions.empty())
 	{
-		std::pair <MATHVECTOR<float,3>, QUATERNION<float> > sp;
+		pair <MATHVECTOR<float,3>, QUATERNION<float> > sp;
 		if (!start_positions.empty())
 			sp = start_positions[laststart];
 		else
-			sp = std::make_pair(MATHVECTOR<float,3>(0,0,0), QUATERNION<float>(0,0,0,1));
+			sp = make_pair(MATHVECTOR<float,3>(0,0,0), QUATERNION<float>(0,0,0,1));
 			
 		MATHVECTOR<float,3> backward(-6,0,0);  // par dist back
 		backward = backward * (index-laststart);

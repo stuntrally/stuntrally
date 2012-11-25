@@ -1,14 +1,14 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
 #include "collision_world.h"
-
 #include "tobullet.h"
 #include "collision_contact.h"
 #include "model.h"
 #include "track.h"
 #include "cardynamics.h"
 //#include "car.h"//
-#include <OgreLogManager.h>
+#include "../ogre/OgreGame.h"  //
+#include <iostream>
 
 
 ///  hit callback (accurate)
@@ -165,8 +165,8 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 
 
 ///  ctor bullet world
-COLLISION_WORLD::COLLISION_WORLD() :
-	config(0), dispatcher(0), broadphase(0), solver(0), world(0), cdOld(0),
+COLLISION_WORLD::COLLISION_WORLD() : pApp(0),
+	config(0), dispatcher(0), broadphase(0), solver(0), world(0), cdOld(0), 
 	track(NULL), trackObject(NULL), trackMesh(NULL),
 	fixedTimestep(1.0/60.0), maxSubsteps(7)  // default, set from settings
 {
@@ -387,96 +387,134 @@ struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 };
 
 
+//--------------------------------------------------------------------------------------------------------------------------------
 //  Ray
-//-------------------------------------------------------------------------------------------------------------------------------
+///-------------------------------------------------------------------------------------------------------------------------------
 bool COLLISION_WORLD::CastRay(
 	const MATHVECTOR<float,3> & origin,
-	const MATHVECTOR<float,3> & direction,
-	const float length,
+	const MATHVECTOR<float,3> & direction, const float length,
 	const btCollisionObject * caster,
-	COLLISION_CONTACT & contact,
-	int* pOnRoad, bool ignoreCars, bool ignoreFluids) const
+	COLLISION_CONTACT & contact,  //out
+	CARDYNAMICS* cd, int w, //out pCarDyn, nWheel
+	bool ignoreCars, bool ignoreFluids) const
 {
 	btVector3 from = ToBulletVector(origin);
 	btVector3 to = ToBulletVector(origin + direction * length);
-	MyRayResultCallback rayCallback(from, to, caster, ignoreCars, ignoreFluids);
+	MyRayResultCallback res(from, to, caster, ignoreCars, ignoreFluids);
 	
-	MATHVECTOR<float,3> p, n;  float d;
-	const TRACKSURFACE * s = TRACKSURFACE::None();
-	const BEZIER * b = NULL;
-	btCollisionObject * c = NULL;
+	//  data to set
+	MATHVECTOR<float,3> pos, norm;  float dist;
+	const TRACKSURFACE * surf = TRACKSURFACE::None();
+	btCollisionObject * col = NULL;  const BEZIER * bzr = NULL;
 	
-	// track geometry collision
-	world->rayTest(from, to, rayCallback);
-	bool geometryHit = rayCallback.hasHit();
+	world->rayTest(from, to, res);
+
+	bool geometryHit = res.hasHit();
 	if (geometryHit)
 	{
-		p = ToMathVector<float>(rayCallback.m_hitPointWorld);
-		n = ToMathVector<float>(rayCallback.m_hitNormalWorld);
-		d = rayCallback.m_closestHitFraction * length;
-		c = rayCallback.m_collisionObject;
-		if (c->isStaticObject() /*&& (c->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE == 0)*/)
+		pos = ToMathVector<float>(res.m_hitPointWorld);
+		norm = ToMathVector<float>(res.m_hitNormalWorld);
+		dist = res.m_closestHitFraction * length;
+		col = res.m_collisionObject;
+
+		if (col->isStaticObject() /*&& (c->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE == 0)*/)
 		{
-			void * ptr = c->getCollisionShape()->getUserPointer();
-			if (ptr == (void*)7777)  // road
+			int ptrU = (int)col->getCollisionShape()->getUserPointer(), su = ptrU & 0xFF00, mtr = ptrU & 0xFF;  //void*
+
+			///  set surface, basing on shape type  -----------------
+			
+			if (ptrU)
+			switch (su)
 			{
-				s = trackSurface[0];
-				*pOnRoad = 1;
+			case SU_Road:  // road
+				surf = &track->tracksurfaces[0];  // [mtr];
+				if (cd)
+				{	cd->iWhOnRoad[w] = 1;   cd->whRoadMtr[w] = mtr;  cd->whTerMtr[w] = 0;  }
+				break;
+
+			case SU_Pipe:  // pipe
+				surf = &track->tracksurfaces[0];
+				if (cd)
+				{	cd->iWhOnRoad[w] = 2;   cd->whRoadMtr[w] = mtr;  cd->whTerMtr[w] = 0;  }
+				break;
+
+			case SU_Terrain:  // Terrain  get surface from blendmap mtr
+			{
+				int t = pApp->blendMapSize;
+				float tws = pApp->sc->td.fTerWorldSize;
+
+				int mx = (pos[0] + 0.5*tws)/tws*t;  mx = std::max(0,std::min(t-1, mx));
+				int my = (pos[1] + 0.5*tws)/tws*t;  my = std::max(0,std::min(t-1, my));
+
+				int mtr = pApp->blendMtr[my*t + mx];
+				if (cd)
+				{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = mtr;  }
+			
+				surf = &track->tracksurfaces[std::max(0,std::min(mtr, (int)track->tracksurfaces.size()-1))];
+			}	break;
+			
+				//case SU_RoadWall: //case SU_RoadColumn:
+				//case SU_Vegetation: case SU_Border:
+				//case SU_ObjectStatic: //case SU_ObjectDynamic:
+			default:
+				surf = &track->tracksurfaces[0];  // road
+				//surf = trackSurface[0];
+				if (cd)
+				{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 0;  }
+				break;
 			}
-			if (ptr == (void*)7788)  // pipe
+			else  //if (ptrU == 0)
 			{
-				s = trackSurface[0];
-				*pOnRoad = 2;
-			}
-			else if (ptr == 0)
-			{
-				*pOnRoad = 0;
-				void * ptr = c->getUserPointer();
+				if (cd)
+				{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 0;  }
+
+				void * ptr = col->getUserPointer();
 				if (ptr != NULL)
 				{
 					const TRACK_OBJECT * const obj = reinterpret_cast <const TRACK_OBJECT * const> (ptr);
 					assert(obj);
-					s = obj->GetSurface();
+					surf = obj->GetSurface();
 				}
 				else  // track geometry
 				{
-					int shapeId = rayCallback.m_shapeId;
+					int shapeId = res.m_shapeId;
 					//assert(shapeId >= 0 && shapeId < trackSurface.size());
 					if (shapeId >= trackSurface.size() || shapeId < 0)  shapeId = 0;  //crash hf-
-					//if (trackSurface.size() > 0)
-					s = trackSurface[shapeId];
+					if (trackSurface.size() > 0)
+						surf = trackSurface[shapeId];
 				}
 			}
 		}
 		
-		// track bezierpatch collision
+		//  track bezierpatch collision
 		if (track != NULL)
 		{
-			MATHVECTOR<float,3> bezierspace_raystart(origin[1], origin[2], origin[0]);
-			MATHVECTOR<float,3> bezierspace_dir(direction[1], direction[2], direction[0]);
-			MATHVECTOR<float,3> colpoint, colnormal;
+			MATHVECTOR<float,3> bs_pos(origin[1], origin[2], origin[0]);  //bezierspace
+			MATHVECTOR<float,3> bs_dir(direction[1], direction[2], direction[0]);
+			MATHVECTOR<float,3> colpos, colnorm;
 			const BEZIER * colpatch = NULL;
-			bool bezierHit = track->CastRay(bezierspace_raystart, bezierspace_dir, length, colpoint, colpatch, colnormal);
+			bool bezierHit = track->CastRay(bs_pos, bs_dir, length, colpos, colpatch, colnorm);
 			if (bezierHit)
 			{
-				p = MATHVECTOR<float,3> (colpoint[2], colpoint[0], colpoint[1]);
-				n = MATHVECTOR<float,3> (colnormal[2], colnormal[0], colnormal[1]);
-				d = (colpoint - bezierspace_raystart).Magnitude();
-				s = track->GetRoadSurface();
-				b = colpatch;
-				c = NULL;
-				*pOnRoad = 1;
+				pos = MATHVECTOR<float,3> (colpos[2], colpos[0], colpos[1]);
+				norm = MATHVECTOR<float,3> (colnorm[2], colnorm[0], colnorm[1]);
+				dist = (colpos - bs_pos).Magnitude();
+				surf = track->GetRoadSurface();
+				bzr = colpatch;  col = NULL;
+				if (cd)
+				{	cd->iWhOnRoad[w] = 1;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 0;  }
 			}
 		}
 
-		contact.Set(p, n, d, s, b, c);
+		contact.Set(pos, norm, dist, surf, bzr, col);
 		return true;
 	}
 	
-	// should only happen on vehicle rollover
-	contact.Set(origin + direction * length, -direction, length, s, b, c);
+	//  should only happen on vehicle rollover
+	contact.Set(origin + direction * length, -direction, length, surf, bzr, col);
 	return false;
 }
+///-------------------------------------------------------------------------------------------------------------------------------
 
 
 void COLLISION_WORLD::DebugPrint(std::ostream & out)

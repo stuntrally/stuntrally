@@ -9,12 +9,9 @@ using namespace std;
 PERFORMANCE_TESTING::PERFORMANCE_TESTING()
 {
 	surface.type = TRACKSURFACE::ASPHALT;
-	surface.bumpWaveLength = 10;
-	surface.bumpAmplitude = 0.01;
-	surface.frictionNonTread = 1;
-	surface.frictionTread = 1;
-	surface.rollResistanceCoefficient = 0.2;
-	surface.rollingDrag = 1.0;
+	surface.bumpWaveLength = 10;  surface.bumpAmplitude = 0.01;
+	surface.frictionTread = 1;  //surface.frictionNonTread = 1;
+	surface.rollingDrag = 1.0;  //surface.rollResistanceCoefficient = 0.2;
 }
 
 void PERFORMANCE_TESTING::ResetCar()

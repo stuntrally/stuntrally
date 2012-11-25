@@ -500,55 +500,47 @@ void CarModel::UpdParsTrails(bool visible)
 }
 
 
-///  terrain mtr from blend maps
+///  just to display info on wheel surfaces
 //-------------------------------------------------------------------------------------------------------
 void CarModel::UpdWhTerMtr()
 {
 	if (!pCar || !ndWh[0])  return;
-	if (!terrain || !blendMtr)	// vdr trk
-	{
-		for (int i=0; i<4; ++i)  // for particles/trails only
-		{	whTerMtr[i] = pCar->dynamics.bWhOnRoad[i] ? 0 : 1;
-			whRoadMtr[i] = pCar->dynamics.bWhOnRoad[i];  }
-		return;
-	}
-	// if whTerMtr == 0 wheel is on road and mtr is in whRoadMtr (now only for road/pipe)
-	// TODO: road has only 1 surface, extend to 4, editor tabs, surfaces.txt, alpha transition?...
+	//int t = blendMapSize;
+	//Real tws = sc->td.fTerWorldSize;
 
-	int t = blendMapSize;
-	Real tws = sc->td.fTerWorldSize;
-
-	//  wheels
 	txtDbgSurf = "";
 	for (int i=0; i<4; ++i)
 	{
-		Vector3 w = ndWh[i]->getPosition();
-		int mx = (w.x + 0.5*tws)/tws*t, my = (-w.z + 0.5*tws)/tws*t;
-		mx = std::max(0,std::min(t-1, mx)), my = std::max(0,std::min(t-1, my));
+		//Vector3 w = ndWh[i]->getPosition();
+		//int mx = (w.x + 0.5*tws)/tws*t, my = (-w.z + 0.5*tws)/tws*t;
+		//mx = std::max(0,std::min(t-1, mx)), my = std::max(0,std::min(t-1, my));
 
-		int mtr = pCar->dynamics.bWhOnRoad[i] ? 0 : blendMtr[my*t + mx];
-		whTerMtr[i] = mtr;
-		whRoadMtr[i] = pCar->dynamics.bWhOnRoad[i];
+		//int mtr = pCar->dynamics.bWhOnRoad[i] ? 0 : blendMtr[my*t + mx];
+		//whTerMtr[i] = mtr;
+		//whRoadMtr[i] = pCar->dynamics.bWhOnRoad[i];
 
-		///  vdr set surface for wheel
-		TRACKSURFACE* tsu = &pGame->track.tracksurfaces[mtr];
-		pCar->dynamics.terSurf[i] = tsu;
-		pCar->dynamics.bTerrain = true;
+		const CARDYNAMICS& cd = pCar->dynamics;  int iRd = cd.iWhOnRoad[i];
+		const TRACKSURFACE* tsu = cd.GetWheelContact(WHEEL_POSITION(i)).GetSurfacePtr();
+		//pCar->dynamics.bTerrain = true;
 
 		if (pSet->car_dbgsurf)  // dbg info surf  -------
 		{
-		TerLayer& lay = mtr == 0 ? sc->td.layerRoad : sc->td.layersAll[ sc->td.layers[ std::min((int)sc->td.layers.size()-1, mtr-1) ] ];
+		//TerLayer& lay = /*mtr == 0 ? sc->td.layerRoad :*/ sc->td.layersAll[ sc->td.layers[ std::min((int)sc->td.layers.size()-1, mtr-1) ] ];
 		txtDbgSurf += //"mx " + toStr(mx) + " my " + toStr(my) +
-			"R" + toStr(whRoadMtr[i]?1:0) + " t" + toStr(mtr) +
-			" su " + (tsu ? tsu->name : "-") + " " + (tsu ? csTRKsurf[tsu->type] : "-") + " [" + lay.texFile + "] " +
-			"\n     "+
-			" drag " + fToStr(tsu ? tsu->rollingDrag : 0, 1,4) +
-			" fr " + fToStr(tsu ? tsu->frictionTread : 0, 2,4) + //" " + fToStr(tsu ? tsu->frictionNonTread : 0, 2,4) +
-			" ba " + fToStr(tsu ? tsu->bumpAmplitude : 0, 2,4) + " bw " + fToStr(tsu ? tsu->bumpWaveLength : 0, 2,4) +
-			//,lay.dust, lay.mud, lay.dustS	//,lay.tclr.r, lay.tclr.g, lay.tclr.b, lay.tclr.a
-			//,pCar->dynamics.wheel_contact[i].depth, pCar->dynamics.wheel_contact[i].col
-			//,pCar->dynamics.GetWheelContact(WHEEL_POSITION(i)).GetDepth() - 2*pCar->GetTireRadius(WHEEL_POSITION(i))
-			"\n";
+			( iRd == 0	? ( "T" + toStr(cd.whTerMtr[i]) )
+						: ( (iRd==2 ? "P" : "R") + toStr(cd.whRoadMtr[i]) )  ) +
+			(!tsu ? "  su --" : (
+				"  su " + tsu->name + " " + csTRKsurf[tsu->type] + //" [" + lay.texFile + "] " +
+				"\n      "+
+				tsu->tireName +
+				"\n     "+
+				" drag " + fToStr(tsu->rollingDrag, 1,4) + " fr " + fToStr(tsu->frictionTread, 2,4) +
+				" ba " + fToStr(tsu->bumpAmplitude, 2,4) + " bw " + fToStr(tsu->bumpWaveLength, 2,4) +
+				"  ti0 " + fToStr(tsu->tire->longitudinal[0], 3,5)
+				//,lay.dust, lay.mud, lay.dustS	//,lay.tclr.r, lay.tclr.g, lay.tclr.b, lay.tclr.a
+				//,pCar->dynamics.wheel_contact[i].depth, pCar->dynamics.wheel_contact[i].col
+				//,pCar->dynamics.GetWheelContact(WHEEL_POSITION(i)).GetDepth() - 2*pCar->GetTireRadius(WHEEL_POSITION(i))
+			)) + "\n";
 		}
 	}
 }

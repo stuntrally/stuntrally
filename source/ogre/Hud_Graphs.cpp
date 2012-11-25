@@ -355,7 +355,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		if (ii >= im && gsi >= NG*2)
 		{	ii = 0;  pApp->iUpdTireGr = 0;
 
-			CARTIRE& tire = dynamics.tire[0];
+			const CARTIRE* tire = dynamics.GetTire(FRONT_LEFT);
 			const int LEN = 512;
 			Dbl* ft = new Dbl[LEN];
 
@@ -377,8 +377,8 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 					//Dbl yy = max_y * 2.0 * (x-LEN*0.5) / LEN;
 					Dbl yy = max_y * x / LEN;
 					Dbl n = (NG-1-i+1) * 0.65;
-					Dbl fy = tire.Pacejka_Fy(yy, n, 0, 1.0, maxF); // normF
-					//Dbl fy = tire.Pacejka_Fy(alpha, 3, n-2, 1.0, maxF); // gamma
+					Dbl fy = tire->Pacejka_Fy(yy, n, 0, 1.0, maxF); // normF
+					//Dbl fy = tire->Pacejka_Fy(alpha, 3, n-2, 1.0, maxF); // gamma
 					ft[x] = fy;
 
 					if (comi)  // get min, max
@@ -412,7 +412,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 					//Dbl xx = max_x * 2.0 * (x-LEN*0.5) / LEN;
 					Dbl xx = max_x * x / LEN;
 					Dbl n = (NG-1-i+1) * 0.65;
-					Dbl fx = tire.Pacejka_Fx(xx, n, 1.0, maxF); // normF
+					Dbl fx = tire->Pacejka_Fx(xx, n, 1.0, maxF); // normF
 					ft[x] = fx;
 
 					if (comi)  // get min, max
@@ -492,10 +492,10 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			if (pApp->iEdTire == 0)
 			{
 				ss += "--Lateral--\n";  sd += "\n";
-				for (int i=0; i < tire.params->lateral.size(); ++i)
+				for (int i=0; i < tire->lateral.size(); ++i)
 				{
 					//ss += (i == pApp->iCurLat) ? "." : "  ";
-					float f = tire.params->lateral[i];
+					float f = tire->lateral[i];
 					unsigned short p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
 					ss += sLateral[i][0] +" "+ fToStr(f, p,5);
 					ss += (i == pApp->iCurLat) ? "  <\n" : "\n";
@@ -503,21 +503,21 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				}
 
 				ss += "\nalpha hat\n";
-				//for (int a=0; a < tire.alpha_hat.size(); ++a)
-				//	ss += "  "+fToStr( tire.alpha_hat[a], 3,5) + "\n";
+				//for (int a=0; a < tire->alpha_hat.size(); ++a)
+				//	ss += "  "+fToStr( tire->alpha_hat[a], 3,5) + "\n";
 
-				int z = (int)tire.alpha_hat.size()-1;
-				ss += "  "+fToStr( tire.alpha_hat[0], 3,5) + "\n";
-				ss += "  "+fToStr( tire.alpha_hat[z/2], 3,5) + "\n";
-				ss += "  "+fToStr( tire.alpha_hat[z], 3,5) + "\n";
+				int z = (int)tire->alpha_hat.size()-1;
+				ss += "  "+fToStr( tire->alpha_hat[0], 3,5) + "\n";
+				ss += "  "+fToStr( tire->alpha_hat[z/2], 3,5) + "\n";
+				ss += "  "+fToStr( tire->alpha_hat[z], 3,5) + "\n";
 			}
 			else if (pApp->iEdTire == 1)
 			{
 				ss += "| Longit |\n";  sd += "\n";
-				for (int i=0; i < tire.params->longitudinal.size(); ++i)
+				for (int i=0; i < tire->longitudinal.size(); ++i)
 				{
 					//ss += (i == pApp->iCurLong) ? "." : "  ";
-					float f = tire.params->longitudinal[i];
+					float f = tire->longitudinal[i];
 					unsigned short p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
 					ss += sLongit[i][0] +" "+ fToStr(f, p,5);
 					ss += (i == pApp->iCurLong) ? "  <\n" : "\n";
@@ -525,20 +525,20 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				}
 
 				ss += "\nsigma hat\n";
-				//for (int a=0; a < tire.sigma_hat.size(); ++a)
-				//	ss += "  "+fToStr( tire.sigma_hat[a], 3,5) + "\n";
+				//for (int a=0; a < tire->sigma_hat.size(); ++a)
+				//	ss += "  "+fToStr( tire->sigma_hat[a], 3,5) + "\n";
 
-				int z = (int)tire.sigma_hat.size()-1;
-				ss += "  "+fToStr( tire.sigma_hat[0], 3,5) + "\n";
-				ss += "  "+fToStr( tire.sigma_hat[z/2], 3,5) + "\n";
-				ss += "  "+fToStr( tire.sigma_hat[z], 3,5) + "\n";
+				int z = (int)tire->sigma_hat.size()-1;
+				ss += "  "+fToStr( tire->sigma_hat[0], 3,5) + "\n";
+				ss += "  "+fToStr( tire->sigma_hat[z/2], 3,5) + "\n";
+				ss += "  "+fToStr( tire->sigma_hat[z], 3,5) + "\n";
 			}
 			else //if (iEdLong == 2)
 			{
 				ss += "o Align o\n";  sd += "\n";
-				for (int i=0; i < tire.params->aligning.size(); ++i)
+				for (int i=0; i < tire->aligning.size(); ++i)
 				{
-					float f = tire.params->aligning[i];
+					float f = tire->aligning[i];
 					unsigned short p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
 					ss += sAlign[i][0] +" "+ fToStr(f, p,5);
 					ss += (i == pApp->iCurAlign) ? "  <\n" : "\n";
@@ -548,7 +548,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			
 			pApp->graphs[gsi-2]->UpdTitle(ss);
 			pApp->graphs[gsi-1]->UpdTitle(sd);
-			
+
 	}	}	break;
 		
 	default:

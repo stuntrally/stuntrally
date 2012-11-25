@@ -295,16 +295,18 @@ void App::CreateTrees()
 						bshp = new btCapsuleShapeZ(shp->radius * scl, shp->height * scl);
 					else
 						bshp = new btSphereShape(shp->radius * scl);
-					//shp->setUserPointer((void*)7777);  // mark as vegetation ..
+					bshp->setUserPointer((void*)SU_Vegetation);
 
 					btCollisionObject* bco = new btCollisionObject();
 					bco->setActivationState(DISABLE_SIMULATION);
 					bco->setCollisionShape(bshp);	bco->setWorldTransform(tr);
-					bco->setFriction(shp->friction);	bco->setRestitution(shp->restitution);
+					bco->setFriction(shp->friction);   //+
+					bco->setRestitution(shp->restitution);
 					bco->setCollisionFlags(bco->getCollisionFlags() |
 						btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 					pGame->collision.world->addCollisionObject(bco);
-					pGame->collision.shapes.push_back(bshp);  cntshp++;
+					pGame->collision.shapes.push_back(bshp);
+					++cntshp;
 				}
 				#endif
 			}

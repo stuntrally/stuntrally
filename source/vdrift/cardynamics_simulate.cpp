@@ -131,9 +131,9 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::ApplyTireForce(int i, const Dbl normal_force, con
 {
 	//  aplies tire friction  to car, returns friction in world space
 	CARWHEEL & wheel = this->wheel[WHEEL_POSITION(i)];
-	CARTIRE & tire = this->tire[WHEEL_POSITION(i)];
 	const COLLISION_CONTACT & wheel_contact = this->wheel_contact[WHEEL_POSITION(i)];
 	const TRACKSURFACE & surface = wheel_contact.GetSurface();
+	const CARTIRE* tire = surface.tire;  // this->tire[WHEEL_POSITION(i)];
 	const MATHVECTOR<Dbl,3> surface_normal = wheel_contact.GetNormal();
 
 	//  camber relative to surface(clockwise in wheel heading direction)
@@ -161,11 +161,11 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::ApplyTireForce(int i, const Dbl normal_force, con
 	//  friction force in tire space
 	//Dbl friction_coeff = tire.GetTread() * surface.frictionTread + (1.0 - tire.GetTread()) * surface.frictionNonTread;
 	Dbl friction_coeff = surface.frictionTread;
-	Dbl roll_friction_coeff = surface.rollResistanceCoefficient;
+	//Dbl roll_friction_coeff = surface.rollResistanceCoefficient;
 	MATHVECTOR<Dbl,3> friction_force(0);
 	if (friction_coeff > 0)
-		friction_force = tire.GetForce(
-			normal_force, friction_coeff, roll_friction_coeff,
+		friction_force = tire->GetForce(
+			normal_force, friction_coeff, //roll_friction_coeff,
 			hub_velocity, patch_speed, camber_rad, &wheel.slips);
 
 	//  set force feedback (aligning torque in tire space)
@@ -190,7 +190,7 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::ApplyTireForce(int i, const Dbl normal_force, con
 void CARDYNAMICS::ApplyWheelTorque(Dbl dt, Dbl drive_torque, int i, MATHVECTOR<Dbl,3> tire_friction, const QUATERNION<Dbl> & wheel_space)
 {
 	CARWHEEL & wheel = this->wheel[WHEEL_POSITION(i)];
-	CARTIRE & tire = this->tire[WHEEL_POSITION(i)];
+	//CARTIRE* tire = this->tire[WHEEL_POSITION(i)];
 	CARBRAKE & brake = this->brake[WHEEL_POSITION(i)];
 
 	//  tire force / torque
@@ -404,9 +404,9 @@ void CARDYNAMICS::UpdateTransmission(Dbl dt)
 			Dbl gas = engine.GetThrottle();
 			gas -= brake[0].GetBrakeFactor();
 			if (transmission.GetGear() == -1)  gas *= -1;
-			const Dbl spdmarg = 1.0;
-			if (gas <-0.5 && GetSpeedMPS() < spdmarg && gear == 1)  gear =-1;  else
-			if (gas > 0.5 && GetSpeedMPS() >-spdmarg && gear ==-1)  gear = 1;
+			const Dbl spdmarg = 2.0;
+			if (gas <-0.2 && GetSpeedMPS() < spdmarg && gear == 1)  gear =-1;  else
+			if (gas > 0.2 && GetSpeedMPS() >-spdmarg && gear ==-1)  gear = 1;
 		}
 		ShiftGear(gear);
 	}
@@ -588,7 +588,7 @@ void CARDYNAMICS::DoTCS(int i, Dbl suspension_force)
 		{
 			//sp is the ideal slip ratio given tire loading
 			Dbl sp(0), ah(0);
-			tire[WHEEL_POSITION(i)].LookupSigmaHatAlphaHat( suspension_force, sp, ah );
+			GetTire(WHEEL_POSITION(i))->LookupSigmaHatAlphaHat( suspension_force, sp, ah );
 
 			Dbl sense = 1.0;
 			if (transmission.GetGear() < 0)
@@ -642,7 +642,7 @@ void CARDYNAMICS::DoABS(int i, Dbl suspension_force)
 		{
 			//sp is the ideal slip ratio given tire loading
 			Dbl sp(0), ah(0);
-			tire[WHEEL_POSITION(i)].LookupSigmaHatAlphaHat( suspension_force, sp, ah );
+			GetTire(WHEEL_POSITION(i))->LookupSigmaHatAlphaHat( suspension_force, sp, ah );
 
 			Dbl error = -wheel[WHEEL_POSITION(i)].slips.slide - sp;
 			Dbl thresholdeng = 0.0;

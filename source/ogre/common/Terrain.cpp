@@ -87,8 +87,8 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 	for (y = yB; y < yE; ++y)  {  int aa = y*t + xB, bb = (t-1-y)*t + xB;
 	for (x = xB; x < xE; ++x,++aa,++bb)
 	{
-		//float fx = f*x*0.2, fy = f*y*0.6;	//  val,val1:  0 0 - [0]   1 0  - [1]   0 1 - [2]
-		//Real p = (b >= 4) ? 3.f : ( (b >= 3) ? 2.f : 1.f );  p += 6;  //test
+		//float fx = f*x*0.2, fy = f*y*0.4;	//  val,val1:  0 0 - [0]   1 0  - [1]   0 1 - [2]
+		//Real p = (b >= 4) ? 3.f : ( (b >= 3) ? 2.f : 1.f );  p += 3;  //test
 		float fx = f*x, fy = f*y;	//  val,val1:  0 0 - [0]   1 0  - [1]   0 1 - [2]
 		const Real p = (b >= 4) ? 3.f : ( (b >= 3) ? 2.f : 1.f ), q = 1.f;
 		if (b >= 1)  val[0] =                      pow(0.5f + 0.5f *sin_(24.f* fx)*cos_(24.f* fy), p);
@@ -348,23 +348,18 @@ void App::CreateBltTerrain()
 
 	btVector3 scl(sc->td.fTriangleSize, sc->td.fTriangleSize, 1);
 	hfShape->setLocalScaling(scl);
-	//col->setUserPointer((void*)&gSD_Terrain);
-
-	/*btRigidBody::btRigidBodyConstructionInfo infoHm(0.f, 0, hfShape);
-	infoHm.m_restitution = 0.5;  //
-	infoHm.m_friction = 0.9;  ///.. 0.9~
-	pGame->collision.AddRigidBody(infoHm);/**/
+	hfShape->setUserPointer((void*)SU_Terrain);
 
 	btCollisionObject* col = new btCollisionObject();
 	col->setCollisionShape(hfShape);
 	//col->setWorldTransform(tr);
-	col->setFriction(0.9);
-	col->setRestitution(0.5);
+	col->setFriction(0.9);   //+
+	col->setRestitution(0.0);
 	col->setCollisionFlags(col->getCollisionFlags() |
 		btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 	#ifndef ROAD_EDITOR  // game
 		pGame->collision.world->addCollisionObject(col);
-		pGame->collision.shapes.push_back(hfShape);/**/
+		pGame->collision.shapes.push_back(hfShape);
 	#else
 		world->addCollisionObject(col);
 	#endif
@@ -374,11 +369,11 @@ void App::CreateBltTerrain()
 	const float px[4] = {-1, 1, 0, 0};
 	const float py[4] = { 0, 0,-1, 1};
 
-	for (int i=0; i < 4; i++)
+	for (int i=0; i < 4; ++i)
 	{
 		btVector3 vpl(px[i], py[i], 0);
 		btCollisionShape* shp = new btStaticPlaneShape(vpl,0);
-		//shp->setUserPointer(gSD_BorderPlane);
+		shp->setUserPointer((void*)SU_Border);
 		
 		btTransform tr;  tr.setIdentity();
 		tr.setOrigin(vpl * -0.5 * sc->td.fTerWorldSize);
@@ -386,7 +381,7 @@ void App::CreateBltTerrain()
 		btCollisionObject* col = new btCollisionObject();
 		col->setCollisionShape(shp);
 		col->setWorldTransform(tr);
-		col->setFriction(0.3);
+		col->setFriction(0.3);   //+
 		col->setRestitution(0.0);
 		col->setCollisionFlags(col->getCollisionFlags() |
 			btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);

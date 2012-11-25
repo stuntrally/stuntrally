@@ -273,12 +273,9 @@ std::pair <bool,bool> OBJECTLOADER::ContinueObjectLoad(	TRACK* track,
 			{
 				TRACKSURFACE surface;
 				surface.setType(surface_type);
-				surface.bumpWaveLength = bump_wavelength;
-				surface.bumpAmplitude = bump_amplitude;
-				surface.frictionNonTread = friction_notread;
-				surface.frictionTread = friction_tread;
-				surface.rollResistanceCoefficient = rolling_resistance;
-				surface.rollingDrag = rolling_drag;
+				surface.bumpWaveLength = bump_wavelength;  surface.bumpAmplitude = bump_amplitude;
+				surface.frictionTread = friction_tread;  //surface.frictionNonTread = friction_notread;
+				surface.rollingDrag = rolling_drag;  //surface.rollResist = rolling_resistance;
 				
 				// could use hash here(assume we dont have many surfaces)
 				std::vector<TRACKSURFACE>::reverse_iterator ri;

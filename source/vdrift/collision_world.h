@@ -42,6 +42,8 @@ class COLLISION_WORLD
 public:
 	COLLISION_WORLD();
 	~COLLISION_WORLD();
+
+	class App* pApp;  //for blend mtr
 	
 	btCollisionObject * AddCollisionObject(const MODEL & model);
 	
@@ -59,7 +61,8 @@ public:
 	bool CastRay(
 		const MATHVECTOR<float,3> & position, const MATHVECTOR<float,3> & direction, const float length,
 		const btCollisionObject * caster, COLLISION_CONTACT & contact,
-		int* pOnRoad, bool ignoreCars, bool ignoreFluids) const;
+		class CARDYNAMICS* pCarDyn, int nWheel, //
+		bool ignoreCars, bool ignoreFluids) const;
 	
 	// update world physics
 	void Update(double dt, bool profiling);
@@ -92,7 +95,7 @@ public:
 	TRACK * track;
 	btCollisionObject * trackObject;
 	btTriangleIndexVertexArray * trackMesh;
-	btAlignedObjectArray<const TRACKSURFACE *> trackSurface;
+	btAlignedObjectArray<const TRACKSURFACE *> trackSurface;  //---remove
 	
 	btCollisionShape * AddMeshShape(const MODEL & model);
 	btIndexedMesh GetIndexedMesh(const MODEL & model);

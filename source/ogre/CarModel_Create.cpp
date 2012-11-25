@@ -55,7 +55,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 
 		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
 		ndBrake[w] = 0;
-		wht[w] = 0.f;  whTerMtr[w] = 0;  whRoadMtr[w] = 0;
+		wht[w] = 0.f;
 	}
 	for (int i=0; i < 2; i++)
 		pb[i] = 0;

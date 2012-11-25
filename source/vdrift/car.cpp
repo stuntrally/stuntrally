@@ -16,11 +16,6 @@
 #include "tobullet.h"
 #include "game.h"  //sound
 
-#ifdef _WIN32
-bool isnan(float number) {return (number != number);}
-bool isnan(double number) {return (number != number);}
-#endif
-
 
 CAR::CAR() :
 	pSet(0), pApp(0), id(0), pCarM(0),
@@ -185,7 +180,7 @@ bool CAR::Load(class App* pApp1,
 			return false;
 	}
 
-	mz_nominalmax = (GetTireMaxMz(FRONT_LEFT) + GetTireMaxMz(FRONT_RIGHT))*0.5;
+	//mz_nominalmax = (GetTireMaxMz(FRONT_LEFT) + GetTireMaxMz(FRONT_RIGHT))*0.5;  //!! ff
 
 	return true;
 }

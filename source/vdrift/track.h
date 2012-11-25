@@ -44,6 +44,8 @@ public:
 	TRACK(std::ostream & info, std::ostream & error);
 	~TRACK();
 	
+	class GAME* pGame;  // for tire map
+
 	void Clear();
 
 	///---- mesh list for ogre ----

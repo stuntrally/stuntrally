@@ -449,13 +449,13 @@ bool App::LoadSurf()
 		Ogre::ConfigFile::SettingsMultiMap::iterator i;
 		for (i = settings->begin(); i != settings->end(); ++i)
 		{
-				 if (i->first == "ID")							su[l].setType( s2i(i->second) );
-			else if (i->first == "BumpWaveLength")				su[l].bumpWaveLength = s2r(i->second);
-			else if (i->first == "BumpAmplitude")				su[l].bumpAmplitude = s2r(i->second);
-			else if (i->first == "FrictionNonTread")			su[l].frictionNonTread = s2r(i->second);
-			else if (i->first == "FrictionTread")				su[l].frictionTread = s2r(i->second);
-			else if (i->first == "RollResistanceCoefficient")	su[l].rollResistanceCoefficient = s2r(i->second);
-			else if (i->first == "RollingDrag")					su[l].rollingDrag = s2r(i->second);
+				 if (i->first == "ID")				su[l].setType( s2i(i->second) );
+			else if (i->first == "BumpWaveLength")	su[l].bumpWaveLength = s2r(i->second);
+			else if (i->first == "BumpAmplitude")	su[l].bumpAmplitude = s2r(i->second);
+			else if (i->first == "FrictionTread")	su[l].frictionTread = s2r(i->second);
+			else if (i->first == "RollingDrag")		su[l].rollingDrag = s2r(i->second);
+			else if (i->first == "Tire")		
+				su[l].tireName = i->second;
 		}
 	}
 	return true;
@@ -486,10 +486,10 @@ bool App::SaveSurf(const std::string& path)
 			cf.SetParam(ss + ".ID", surf.type);
 			cf.SetParam(ss + ".BumpWaveLength", surf.bumpWaveLength);
 			cf.SetParam(ss + ".BumpAmplitude", surf.bumpAmplitude);
-			cf.SetParam(ss + ".FrictionNonTread", surf.frictionNonTread);
 			cf.SetParam(ss + ".FrictionTread", surf.frictionTread);
-			cf.SetParam(ss + ".RollResistanceCoefficient", surf.rollResistanceCoefficient);
 			cf.SetParam(ss + ".RollingDrag", surf.rollingDrag);
+			if (surf.tireName != "DEFAULT")
+				cf.SetParam(ss + ".Tire", surf.tireName);
 		}
 	}
 	return cf.Write(true, path);

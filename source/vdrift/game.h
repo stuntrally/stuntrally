@@ -102,8 +102,8 @@ public:
 	std::list <CAR> cars;
 	std::pair <CAR*, CARCONTROLMAP_LOCAL> carcontrols_local;
 
-	std::vector < TIRE_PARAMS> tire_pars;  //new
-	std::map <std::string, int> tire_pars_map;
+	std::vector <CARTIRE> tires;  //new
+	std::map <std::string, int> tires_map;
 	bool LoadTires();
 	
 #ifdef ENABLE_FORCE_FEEDBACK

@@ -387,7 +387,8 @@ protected:
 	
 	//  ter surfaces
 	MyGUI::ComboBoxPtr cmbSurfType;  void comboSurfType(CMB);
-	MyGUI::EditPtr edSuBumpWave, edSuBumpAmp, edSuRollDrag, edSuFrict, edSuFrict2;
+	MyGUI::ComboBoxPtr cmbSurfTire;  void comboSurfTire(CMB);
+	MyGUI::EditPtr edSuBumpWave, edSuBumpAmp, edSuRollDrag, edSuFrict2;
 	void editSurf(MyGUI::EditPtr);
 	
 

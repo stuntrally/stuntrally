@@ -127,7 +127,7 @@ void App::newPoses(float time)  // time only for camera update
 				pi.whVel[w] = cd.GetWheelVelocity(wp).Magnitude();
 				pi.whSlide[w] = -1.f;  pi.whSqueal[w] = pCar->GetTireSquealAmount(wp, &pi.whSlide[w]);
 				pi.whR[w] = pCar->GetTireRadius(wp);//
-				pi.whTerMtr[w] = carM->whTerMtr[w];  pi.whRoadMtr[w] = carM->whRoadMtr[w];
+				pi.whTerMtr[w] = cd.whTerMtr[w];  pi.whRoadMtr[w] = cd.whRoadMtr[w];
 				pi.whH[w] = cd.whH[w];  pi.whP[w] = cd.whP[w];
 				pi.whAngVel[w] = cd.wheel[w].GetAngularVelocity();
 				if (w < 2)  pi.whSteerAng[w] = cd.wheel[w].GetSteerAngle();
@@ -212,7 +212,7 @@ void App::newPoses(float time)  // time only for camera update
 					if (w < 2)
 						fr.whSteerAng[w] = cd.wheel[w].GetSteerAngle();
 					//replay.header.whR[w] = pCar->GetTireRadius(wp);//
-					fr.whTerMtr[w] = carM->whTerMtr[w];  fr.whRoadMtr[w] = carM->whRoadMtr[w];
+					fr.whTerMtr[w] = cd.whTerMtr[w];  fr.whRoadMtr[w] = cd.whRoadMtr[w];
 					//  fluids
 					fr.whH[w] = cd.whH[w];  fr.whP[w] = cd.whP[w];
 					fr.whAngVel[w] = cd.wheel[w].GetAngularVelocity();

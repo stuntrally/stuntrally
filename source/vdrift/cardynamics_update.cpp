@@ -312,7 +312,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 		}
 		if (boostVal > 0.01f)
 		{
-			float f = body.GetMass() * boostVal * 16.f * pSet->game.boost_power;  // power
+			float f = body.GetMass() * boostVal * 12.f * pSet->game.boost_power;  // power
 			MATHVECTOR<Dbl,3> v(f,0,0);
 			Orientation().RotateVector(v);
 			ApplyForce(v);
@@ -434,12 +434,7 @@ void CARDYNAMICS::UpdateWheelContacts()
 		raystart = raystart - raydir * wheel[i].GetRadius();  //*!
 		float raylen = 1;  // !par
 		
-		//vRayStarts[i] = raystart;  // info
-		//vRayDirs[i] = raystart + raydir * raylen;
-		
-		world->CastRay(raystart, raydir, raylen, chassis, wheelContact, /*R+*/&bWhOnRoad[i], !pSet->game.collis_cars, true);
-		if (bTerrain)  ///  terrain surf from blendmap
-			wheelContact.SetSurface(terSurf[i]);
+		world->CastRay(raystart, raydir, raylen, chassis, wheelContact, this,i, !pSet->game.collis_cars, true);
 	}
 }
 

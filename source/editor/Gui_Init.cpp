@@ -251,8 +251,8 @@ void App::InitGui()
 
 	Cmb(cmbSurfType, "SurfType", comboSurfType);
 	Ed(SuBumpWave, editSurf);	Ed(SuBumpAmp, editSurf);
-	Ed(SuRollDrag, editSurf);
-	Ed(SuFrict, editSurf);	Ed(SuFrict2, editSurf);
+	Ed(SuRollDrag, editSurf);	Ed(SuFrict2, editSurf);
+	Cmb(cmbSurfTire, "SurfTire", comboSurfTire);
 
 	
 	///  [Vegetation]  ------------------------------------
@@ -361,6 +361,15 @@ void App::InitGui()
 	//  surfaces
 	for (i=0; i < TRACKSURFACE::NumTypes; ++i)
 		cmbSurfType->addItem(csTRKsurf[i]);
+	
+	//  tires
+	PATHMANAGER::GetFolderIndex(PATHMANAGER::GetTiresPath(), li);
+	for (std::list <std::string>::iterator i = li.begin(); i != li.end(); ++i)
+	{
+		std::string file = *i;
+		if (file.find(".tire") != std::string::npos)
+			cmbSurfTire->addItem(file.substr(0, file.length()-5));
+	}
 
 	//---------------------  Grass  ---------------------
 	GetMaterialsMat(sMat+"grass.mat");

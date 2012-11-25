@@ -114,10 +114,6 @@ public:
 	//  Handles our cube map.
 	CarReflection* pReflect;
 		
-	int whTerMtr[4],whRoadMtr[4];
-	//  needed to set track surface
-	char* blendMtr; int blendMapSize;
-	
 	Ogre::Terrain* terrain;
 	
 	//  VDrift car (can be null)

@@ -44,12 +44,15 @@ public:
 		mTrOfs.setIdentity();
 	}
 	
+	//todo: shape->setUserPointer((void*)SU_ObjectDynamic);  // mark shapes..
+	
 	btCollisionObject* createCollisionObject(const btTransform& startTransform,btCollisionShape* shape, const char* bodyName)
 	{
 		return createRigidBody(false,0,startTransform,shape,bodyName);
 	}
 
-	btRigidBody*  createRigidBody(bool isDynamic, btScalar mass, const btTransform& startTransform,btCollisionShape* shape,const char* bodyName)
+	btRigidBody* createRigidBody(bool isDynamic, btScalar mass, const btTransform& startTransform,
+								btCollisionShape* shape, const char* bodyName)
 	{
 		btVector3 localInertia;
 		localInertia.setZero();
@@ -145,13 +148,14 @@ void App::CreateObjects()
 			Matrix4 tre;  tre.makeTransform(posO,o.scale,rotO);
 			BtOgre::StaticMeshToShapeConverter converter(o.ent, tre);
 			btCollisionShape* shape = converter.createTrimesh();  //=new x2 todo:del?...
-			shape->setUserPointer((void*)0);  // mark
+			shape->setUserPointer((void*)SU_ObjectStatic);  // mark
 
 			btCollisionObject* bco = new btCollisionObject();
 			btTransform tr;  tr.setIdentity();  //tr.setOrigin(btVector3(pos.x,-pos.z,pos.y));
 			bco->setActivationState(DISABLE_SIMULATION);  // WANTS_DEACTIVATION
 			bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
-			bco->setFriction(0.7f);  bco->setRestitution(0.f);
+			bco->setFriction(0.7f);   //+
+			bco->setRestitution(0.f);
 			bco->setCollisionFlags(bco->getCollisionFlags() |
 				btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 			world->addCollisionObject(bco);

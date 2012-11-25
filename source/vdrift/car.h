@@ -256,23 +256,23 @@ public:
 
 	float GetTireMaxFx(WHEEL_POSITION tire_index) const
 	{
-		return dynamics.GetTire(tire_index).GetMaximumFx(GetMass()*0.25*9.81);
+		return dynamics.GetTire(tire_index)->GetMaximumFx(GetMass()*0.25*9.81);
 	}
 
 	float GetTireMaxFy(WHEEL_POSITION tire_index) const
 	{
-		return dynamics.GetTire(tire_index).GetMaximumFy(GetMass()*0.25*9.81, 0.0);
+		return dynamics.GetTire(tire_index)->GetMaximumFy(GetMass()*0.25*9.81, 0.0);
 	}
 	
 	float GetTireMaxMz(WHEEL_POSITION tire_index) const
 	{
-		return dynamics.GetTire(tire_index).GetMaximumMz(GetMass()*0.25*9.81, 0.0);
+		return dynamics.GetTire(tire_index)->GetMaximumMz(GetMass()*0.25*9.81, 0.0);
 	}
 	
 	// optimum steering angle in degrees
 	float GetOptimumSteeringAngle() const
 	{
-		return dynamics.GetTire(FRONT_LEFT).GetOptimumSteeringAngle(GetMass()*0.25*9.81);
+		return dynamics.GetTire(FRONT_LEFT)->GetOptimumSteeringAngle(GetMass()*0.25*9.81);
 	}
 
 	// maximum steering angle in degrees

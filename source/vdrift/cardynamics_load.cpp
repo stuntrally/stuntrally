@@ -20,18 +20,19 @@ CARDYNAMICS::CARDYNAMICS() :
 	shift_time(0.2),
 	abs(false), tcs(false),
 	maxangle(45.0), ang_damp(0.4),
-	bTerrain(false), pSet(0), pScene(0), poly(NULL),
+	/*bTerrain(false),*/ pSet(0), pScene(0), poly(NULL),
 	doBoost(0), doFlip(0), boostFuel(0), boostVal(0),
 	fHitTime(0), fHitForce(0), fParIntens(0), fParVel(0), //hit
 	vHitPos(0,0,0), vHitNorm(0,0,0),
 	steerValue(0.f), velPrev(0,0,0),
 	fCarScrap(0.f), fCarScreech(0.f),
-	time(0.0)//, sumWhTest(0.0)
+	time(0.0)
 	//coll_R, coll_W, coll_H, coll_Hofs, coll_Wofs, coll_Lofs
 	//coll_posLfront, coll_posLback
 {
 	for (int i=0; i<4; ++i)
-	{	bWhOnRoad[i]=0;  terSurf[i]=0;
+	{	iWhOnRoad[i]=0;
+		whTerMtr[i]=0;  whRoadMtr[i]=0;
 		whH[i]=0.f;  whP[i]=-1;
 	}
 	boostFuel = gfBoostFuelStart;
@@ -41,7 +42,7 @@ CARDYNAMICS::CARDYNAMICS() :
 
 	suspension.resize( WHEEL_POSITION_SIZE );
 	wheel.resize( WHEEL_POSITION_SIZE );
-	tire.resize( WHEEL_POSITION_SIZE );
+	//tire.resize( WHEEL_POSITION_SIZE );
 	wheel_velocity.resize(WHEEL_POSITION_SIZE);
 	wheel_position.resize( WHEEL_POSITION_SIZE );
 	wheel_orientation.resize( WHEEL_POSITION_SIZE );
@@ -69,7 +70,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 {
 	QTimer ti;  ti.update(); /// time
 
-	bTerrain = false;
+	//bTerrain = false;
 	std::string drive = "RWD";
 	int version(1);
 	c.GetParam("version", version);
@@ -128,9 +129,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 
 			curve_num++;
 			std::stringstream str;
-			str << "engine.torque-curve-";
-			str.width(2);
-			str.fill('0');
+			str << "engine.torque-curve-";  str.width(2);  str.fill('0');
 			str << curve_num;
 			torque_str = str.str();
 		}
@@ -267,9 +266,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 	{
 		float pos[3];
 		MATHVECTOR<double,3> position;
-		float capacity;
-		float volume;
-		float fuel_density;
+		float capacity, volume, fuel_density;
 
 		if (!c.GetParam("fuel-tank.capacity", capacity, error_output))  return false;
 		fuel_tank.SetCapacity(capacity);
@@ -438,7 +435,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 				if (!both)  posstr = "rear";
 			}
 
-			std::string tirefile;  // get tire params file
+			/*std::string tirefile;  // get tire params file
 			if (!c.GetParam("tire-"+posstr+".file", tirefile, error_output))  return false;
 			int it = pGame->tire_pars_map[tirefile]-1;
 			if (it == -1)
@@ -446,7 +443,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			TIRE_PARAMS* tp = &pGame->tire_pars[ it ];
 
 			tire[leftside].SetPacejkaParameters(tp);
-			tire[rightside].SetPacejkaParameters(tp);
+			tire[rightside].SetPacejkaParameters(tp);*/
 
 			//float rolling_resistance[3];
 			//if (!c.GetParam("tire-"+posstr+".rolling-resistance", rolling_resistance, error_output))  return false;
@@ -458,6 +455,9 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			wheel[leftside].SetRadius(radius);
 			wheel[rightside].SetRadius(radius);
 
+			//tire[leftside] = 0;  /// init to 1st from scene..
+			//tire[rightside] = 0;
+
 			//float tread;
 			//if (!c.GetParam("tire-"+posstr+".tread", tread, error_output))  return false;
 			//tire[leftside].SetTread(tread);
@@ -465,7 +465,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		}
 
 		
-		QTimer tir;  tir.update(); /// time
+		/*QTimer tir;  tir.update(); /// time
 		for (int i = 0; i < 4; i++)
 		{
 			tire[WHEEL_POSITION(i)].CalculateSigmaHatAlphaHat();
@@ -474,7 +474,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		}
 		tir.update(); /// time
 		float dt = tir.dt * 1000.f;
-		LogO(Ogre::String(":::: Time tires: ") + toStr(dt) + " ms");
+		LogO(Ogre::String(":::: Time tires: ") + toStr(dt) + " ms");*/
 	}
 
 	//load the mass-only particles
@@ -496,9 +496,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 				AddMassParticle(mass, position);
 				paramnum++;
 				std::stringstream str;
-				str << "contact-points.position-";
-				str.width(2);
-				str.fill('0');
+				str << "contact-points.position-";  str.width(2);  str.fill('0');
 				str << paramnum;
 				paramname = str.str();
 			}
@@ -515,9 +513,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			AddMassParticle(mass, position);
 			paramnum++;
 			std::stringstream str;
-			str << "particle-";
-			str.width(2);
-			str.fill('0');
+			str << "particle-";  str.width(2);  str.fill('0');
 			str << paramnum;
 			paramname = str.str();
 		}
@@ -604,11 +600,8 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 void CARDYNAMICS::Init(
 	class SETTINGS* pSet1, class Scene* pScene1, class FluidsXml* pFluids1,
 	COLLISION_WORLD & world,
-	const MODEL & chassisModel,
-	const MODEL & wheelModelFront,
-	const MODEL & wheelModelRear,
-	const MATHVECTOR<Dbl,3> & position,
-	const QUATERNION<Dbl> & orientation)
+	const MODEL & chassisModel, const MODEL & wheelModelFront, const MODEL & wheelModelRear,
+	const MATHVECTOR<Dbl,3> & position, const QUATERNION<Dbl> & orientation)
 {
 	pSet = pSet1;  pScene = pScene1;  pFluids = pFluids1;
 	this->world = &world;
@@ -714,7 +707,7 @@ void CARDYNAMICS::Init(
 	btRigidBody::btRigidBodyConstructionInfo info(chassisMass, chassisState, chassisShape, chassisInertia);
 	info.m_angularDamping = ang_damp;  // 0.0!+  0.4 old
 	info.m_restitution = 0.0;  //...
-	info.m_friction = 0.4;  /// 0.4~ 0.7
+	info.m_friction = 0.1;  /// 0.4~ 0.7
 	///  chasis^
 	chassis = world.AddRigidBody(info, true, pSet->game.collis_cars);
 	chassis->setActivationState(DISABLE_DEACTIVATION);

@@ -915,6 +915,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\vdrift\cartire.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\cartire.h"
+				>
+			</File>
+			<File
 				RelativePath=".\source\vdrift\joepack.cpp"
 				>
 			</File>

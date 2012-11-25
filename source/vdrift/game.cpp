@@ -39,6 +39,7 @@ GAME::GAME(std::ostream & info_out, std::ostream & err_out, SETTINGS* pSettings)
 	track(info_out, err_out), /*tracknode(NULL),*/
 	framerate(1.0 / pSettings->game_fq)
 {
+	track.pGame = this;
 	carcontrols_local.first = NULL;
 	//  sim iv from settings
 	collision.fixedTimestep = 1.0 / pSettings->blt_fq;
@@ -78,28 +79,29 @@ void GAME::Start(std::list <string> & args)
 	#endif
 	
 	LoadTires();  // load tires
+	info_output << "Loaded: " << tires.size() << " tires." << endl;
 }
 
 
 bool GAME::LoadTires()
 {
-	tire_pars.clear();
-	tire_pars_map.clear();
+	tires.clear();
+	tires_map.clear();
 	
 	std::list <std::string> li;
 	PATHMANAGER::GetFolderIndex(PATHMANAGER::GetTiresPath(), li);
 	for (std::list <std::string>::iterator i = li.begin(); i != li.end(); ++i)
 	{
-		std::string filename = *i;
-		if (filename.find(".tire") != std::string::npos)
+		std::string file = *i;
+		if (file.find(".tire") != std::string::npos)
 		{
 			CONFIGFILE c;
-			if (!c.Load(PATHMANAGER::GetTiresPath()+"/"+filename))
-			{	error_output << "Error loading tire file " << filename << "\n";
+			if (!c.Load(PATHMANAGER::GetTiresPath()+"/"+file))
+			{	error_output << "Error loading tire file " << file << "\n";
 				return false;  }
 
-			TIRE_PARAMS tp;
-			float value;
+			file = file.substr(0, file.length()-5);
+			CARTIRE ct;  float value;
 
 			for (int i = 0; i < 15; ++i)
 			{
@@ -109,27 +111,30 @@ bool GAME::LoadTires()
 				else if (i > 12)	numinfile -= 1;
 				std::stringstream str;  str << "params.a" << numinfile;
 				if (!c.GetParam(str.str(), value, error_output))  return false;
-				tp.lateral[i] = value;
+				ct.lateral[i] = value;
 			}
 			for (int i = 0; i < 11; ++i)
 			{
 				std::stringstream str;  str << "params.b" << i;
 				if (!c.GetParam(str.str(), value, error_output))  return false;
-				tp.longitudinal[i] = value;
+				ct.longitudinal[i] = value;
 			}
 			for (int i = 0; i < 18; ++i)
 			{
 				std::stringstream str;  str << "params.c" << i;
 				if (!c.GetParam(str.str(), value, error_output))  return false;
-				tp.aligning[i] = value;
+				ct.aligning[i] = value;
 			}
+			ct.CalculateSigmaHatAlphaHat();
 			
-			tire_pars.push_back(tp);  //+1
-			tire_pars_map[filename] = (int)tire_pars.size();
+			tires.push_back(ct);
+			tires_map[file] = (int)tires.size();  //+1, 0 = not found
+			TRACKSURFACE::pTireDefault = &ct;  //-
 		}
 	}
 	return true;
 }
+CARTIRE* TRACKSURFACE::pTireDefault = 0;  //-
 
 
 bool GAME::InitializeSound()

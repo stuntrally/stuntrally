@@ -1776,18 +1776,21 @@
 							<UserString key="tip" value="#{TipParType3}"/>
 						</Widget>
 						<Widget type="ComboBox" skin="ComboBox" position="64 56 96 24" name="CmbParDust">
+							<Property key="ReadOnly" value="true"/>
 							<Property key="Colour" value="0.8 0.8 0.2"/>
 							<Property key="TextColour" value="0.8 0.8 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipParType1}"/>
 						</Widget>
 						<Widget type="ComboBox" skin="ComboBox" position="224 56 92 24" name="CmbParMud">
+							<Property key="ReadOnly" value="true"/>
 							<Property key="Colour" value="0.8 0.7 0.2"/>
 							<Property key="TextColour" value="0.8 0.7 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipParType2}"/>
 						</Widget>
 						<Widget type="ComboBox" skin="ComboBox" position="388 56 92 24" name="CmbParSmoke">
+							<Property key="ReadOnly" value="true"/>
 							<Property key="Colour" value="0.7 0.7 0.7"/>
 							<Property key="TextColour" value="0.7 0.7 0.7"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
@@ -1824,11 +1827,31 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipBumpAmp}"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="16 24 52 24">
+							<Property key="Caption" value="#{Type}"/>
+							<Property key="TextColour" value="1 0.6 0.6"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipSurfType}"/>
+						</Widget>
 						<Widget type="ComboBox" skin="ComboBox" position="72 21 112 24" name="SurfType">
+							<Property key="ReadOnly" value="true"/>
 							<Property key="Colour" value="1 0.7 0.7"/>
 							<Property key="TextColour" value="1 0.7 0.7"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipSurfType}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="16 171 52 24">
+							<Property key="Caption" value="#{Tires}"/>
+							<Property key="TextColour" value="0.7 0.7 1"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipSurfType}"/>
+						</Widget>
+						<Widget type="ComboBox" skin="ComboBox" position="72 168 162 24" name="SurfTire">
+							<Property key="ReadOnly" value="true"/>
+							<Property key="Colour" value="0.8 0.8 1"/>
+							<Property key="TextColour" value="0.8 0.8 1"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<!--<UserString key="tip" value="#{TipSurfType}"/>-->
 						</Widget>
 						<Widget type="EditBox" skin="EditBox" position="148 78 80 24" name="SuRollDrag">
 							<Property key="Colour" value="1 0.75 0.3"/>
@@ -1836,24 +1859,18 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipRollDrag}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="148 118 80 24" name="SuFrict">
+						<!--<Widget type="EditBox" skin="EditBox" position="148 118 80 24" name="SuFrict">
 							<Property key="Colour" value="1 0.6 0.2"/>
 							<Property key="TextColour" value="1 0.6 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipSurfFrict}"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="148 148 80 24" name="SuFrict2">
-							<Property key="Colour" value="1 0.4 0"/>
-							<Property key="TextColour" value="1 0.4 0"/>
-							<Property key="Alpha" value="0.45"/>
+						</Widget>-->
+						<Widget type="EditBox" skin="EditBox" position="148 118 80 24" name="SuFrict2">
+							<Property key="Colour" value="1 0.6 0.2"/>
+							<Property key="TextColour" value="1 0.6 0.2"/>
+							<!--<Property key="Alpha" value="0.45"/>-->
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipSurfFrict2}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="16 24 52 24">
-							<Property key="Caption" value="#{Type}"/>
-							<Property key="TextColour" value="1 0.6 0.6"/>
-							<UserString key="RelativeTo" value="EditorWnd"/>
-							<UserString key="tip" value="#{TipSurfType}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="292 80 128 24">
 							<Property key="Caption" value="#{BumpWavelen}"/>
@@ -1873,12 +1890,12 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipSurfFrict}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="16 150 120 24">
+						<!--<Widget type="TextBox" skin="TextBox" position="16 150 120 24">
 							<Property key="Caption" value="#{FrictionTread}"/>
 							<Property key="TextColour" value="1 0.4 0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipSurfFrict2}"/>
-						</Widget>
+						</Widget>-->
 						<Widget type="TextBox" skin="TextBox" position="16 80 120 24">
 							<Property key="Caption" value="#{RollingDrag}"/>
 							<Property key="TextColour" value="1 0.7 0"/>

@@ -76,6 +76,8 @@ App::App(SETTINGS *settings, GAME *game)
 	,edTweak(0), txtTweakPath(0), cmbTweakCarSet(0), cmbTweakTireSet(0)
 {
 	pSet = settings;
+	pGame->collision.pApp = this;
+	
 	sc = new Scene();
 	NullHUD();
 

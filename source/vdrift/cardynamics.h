@@ -51,7 +51,7 @@ public:
 	virtual void updateAction(btCollisionWorld * collisionWorld, btScalar dt);
 	virtual void debugDraw(btIDebugDraw * debugDrawer)	{	}
 
-// graphics interface, interpolated!
+// graphics interface, interpolated
 	void Update(), UpdateBuoyancy(); // update interpolated chassis state
 	const MATHVECTOR<Dbl,3> & GetCenterOfMassPosition() const	{	return chassisCenterOfMass;		}
 	const MATHVECTOR<Dbl,3> & GetPosition() const	{	return chassisPosition;		}
@@ -68,9 +68,8 @@ public:
 	COLLISION_CONTACT & GetWheelContact(WHEEL_POSITION wp)				{	return wheel_contact[wp];	}
 
 /// set from terrain blendmap
-	bool bTerrain;
-	int bWhOnRoad[WHEEL_POSITION_SIZE];
-	TRACKSURFACE* terSurf[WHEEL_POSITION_SIZE];
+	int iWhOnRoad[4];  //, whSU_Type[4];
+	int whTerMtr[4], whRoadMtr[4];
 
 // chassis
 	float GetMass() const;
@@ -118,7 +117,7 @@ public:
 	// get the maximum steering angle in degrees
 	Dbl GetMaxSteeringAngle() const		{	return maxangle;	}
 
-	const CARTIRE & GetTire(WHEEL_POSITION pos) const			  {  return tire[pos];  }
+	/*const*/ CARTIRE* GetTire(WHEEL_POSITION pos) const		  {  return wheel_contact[pos].GetSurface().tire;  }
 	const CARSUSPENSION & GetSuspension(WHEEL_POSITION pos) const {  return suspension[pos];  }
 
 	MATHVECTOR<Dbl,3> GetTotalAero() const;
@@ -186,7 +185,7 @@ public:
 	std::vector <COLLISION_CONTACT> wheel_contact;
 	
 	std::vector <CARSUSPENSION> suspension;
-	std::vector <CARTIRE> tire;
+	//std::vector <CARTIRE*> tire;  // changed on contact, from surface
 	std::vector <CARAERO> aerodynamics;
 
 	std::list <std::pair <Dbl, MATHVECTOR<Dbl,3> > > mass_only_particles;

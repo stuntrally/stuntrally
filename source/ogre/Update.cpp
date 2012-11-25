@@ -140,31 +140,31 @@ bool App::frameStart(Real time)
 			CARDYNAMICS& cd = carModels[0]->pCar->dynamics;
 			if (iEdTire == 1)  // longit |
 			{
-				Dbl& val = cd.tire[0].params->longitudinal[iCurLong];  // modify 1st
+				Dbl& val = cd.GetTire(FRONT_LEFT)->longitudinal[iCurLong];  // modify 1st
 				val += mul*k * (1 + abs(val));
 				for (int i=1; i<4; ++i)
-					cd.tire[i].params->longitudinal[iCurLong] = val;  // copy for rest
+					cd.GetTire(WHEEL_POSITION(i))->longitudinal[iCurLong] = val;  // copy for rest
 			}
 			else if (iEdTire == 0)  // lateral --
 			{
-				Dbl& val = cd.tire[0].params->lateral[iCurLat];
+				Dbl& val = cd.GetTire(FRONT_LEFT)->lateral[iCurLat];
 				val += mul*k * (1 + abs(val));
 				for (int i=1; i<4; ++i)
-					cd.tire[i].params->lateral[iCurLat] = val;
+					cd.GetTire(WHEEL_POSITION(i))->lateral[iCurLat] = val;
 			}
 			else  // align o
 			{
-				Dbl& val = cd.tire[0].params->aligning[iCurAlign];
+				Dbl& val = cd.GetTire(FRONT_LEFT)->aligning[iCurAlign];
 				val += mul*k * (1 + abs(val));
 				for (int i=1; i<4; ++i)
-					cd.tire[i].params->aligning[iCurAlign] = val;
+					cd.GetTire(WHEEL_POSITION(i))->aligning[iCurAlign] = val;
 			}
 
 			//  update hat, 1st
-			cd.tire[0].CalculateSigmaHatAlphaHat();
+			cd.GetTire(FRONT_LEFT)->CalculateSigmaHatAlphaHat();
 			for (int i=1; i<4; ++i)  // copy for rest
-			{	cd.tire[i].sigma_hat = cd.tire[0].sigma_hat;
-				cd.tire[i].alpha_hat = cd.tire[0].alpha_hat;
+			{	cd.GetTire(WHEEL_POSITION(i))->sigma_hat = cd.GetTire(FRONT_LEFT)->sigma_hat;
+				cd.GetTire(WHEEL_POSITION(i))->alpha_hat = cd.GetTire(FRONT_LEFT)->alpha_hat;
 			}
 			iUpdTireGr = 1;
 		}

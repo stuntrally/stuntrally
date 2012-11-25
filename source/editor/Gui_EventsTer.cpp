@@ -67,11 +67,12 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 	//  Surfaces
 	int i = idTerLay;  //bTerLay ? idTerLay+1 : 0;  // road at 0
 	cmbSurfType->setIndexSelected(su[i].type);
+	cmbSurfTire->setIndexSelected(cmbSurfTire->findItemIndexWith(su[i].tireName));
 	edSuBumpWave->setCaption(toStr(su[i].bumpWaveLength));
 	edSuBumpAmp->setCaption(toStr(su[i].bumpAmplitude));
 	edSuRollDrag->setCaption(toStr(su[i].rollingDrag));
-	edSuFrict->setCaption(toStr(su[i].frictionNonTread));
-	edSuFrict2->setCaption(toStr(su[i].frictionTread));  //-not used, rollResistanceCoefficient too
+	//edSuFrict->setCaption(toStr(su[i].frictionNonTread));  //-not used, rollResistanceCoefficient too
+	edSuFrict2->setCaption(toStr(su[i].frictionTread));
 	noBlendUpd = false;
 }
 
@@ -525,6 +526,12 @@ void App::comboSurfType(ComboBoxPtr cmb, size_t val)
 	su[i].setType(val);
 }
 
+void App::comboSurfTire(ComboBoxPtr cmb, size_t val)
+{
+	int i = idTerLay;  //bTerLay ? idTerLay+1 : 0;  // road at 0
+	su[i].tireName = cmb->getItemNameAt(val);
+}
+
 void App::editSurf(EditPtr ed)
 {
 	Real r = s2r(ed->getCaption());
@@ -533,6 +540,5 @@ void App::editSurf(EditPtr ed)
 		if (ed == edSuBumpWave)   su[i].bumpWaveLength = r;
 	else if (ed == edSuBumpAmp)   su[i].bumpAmplitude = r;
 	else if (ed == edSuRollDrag)  su[i].rollingDrag = r;
-	else if (ed == edSuFrict)     su[i].frictionNonTread = r;
 	else if (ed == edSuFrict2)    su[i].frictionTread = r;
 }

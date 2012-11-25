@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "cartire.h"
+#include "cardefs.h"
 
 
 void CARTIRE::FindSigmaHatAlphaHat(Dbl load, Dbl & output_sigmahat, Dbl & output_alphahat, int iterations)
@@ -72,11 +73,11 @@ void CARTIRE::LookupSigmaHatAlphaHat(Dbl normalforce, Dbl & sh, Dbl & ah) const
 MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 		Dbl normal_force,
 		Dbl friction_coeff,
-		Dbl roll_friction_coeff,
+		//Dbl roll_friction_coeff,
 		const MATHVECTOR<Dbl,3> & hub_velocity,
 		Dbl patch_speed,
 		Dbl current_camber,
-		CARWHEEL::SlideSlip* slips)
+		CARWHEEL::SlideSlip* slips) const
 {
 	assert(friction_coeff > 0);
 
@@ -262,43 +263,43 @@ void CARTIRE::CalculateSigmaHatAlphaHat(int tablesize)
 ///  load is the normal force in newtons.
 Dbl CARTIRE::GetMaximumFx(Dbl load) const
 {
-	const std::vector <Dbl>& b = params->longitudinal;
+	const std::vector <Dbl>& b = longitudinal;
 	Dbl Fz = load * 0.001;
-	return ( b[1]*Fz + b[2] ) *Fz;
+	return (b[1]*Fz + b[2]) * Fz;
 }
 
 Dbl CARTIRE::GetMaximumFy(Dbl load, Dbl current_camber) const
 {
-	const std::vector <Dbl>& a = params->lateral;
+	const std::vector <Dbl>& a = lateral;
 	Dbl Fz = load * 0.001;
-	Dbl gamma = ( current_camber ) * 180.0/PI_d;
+	Dbl gamma = current_camber * 180.0/PI_d;
 
-	Dbl D = ( a[1]*Fz+a[2] ) *Fz;
-	Dbl Sv = ( ( a[11]*Fz+a[12] ) *gamma + a[13] ) *Fz+a[14];
+	Dbl D = (a[1]*Fz + a[2]) *Fz;
+	Dbl Sv = ((a[11]*Fz + a[12]) * gamma + a[13]) *Fz + a[14];
 
 	return D+Sv;
 }
 
 Dbl CARTIRE::GetMaximumMz(Dbl load, Dbl current_camber) const
 {
-	const std::vector <Dbl>& c = params->aligning;
+	const std::vector <Dbl>& c = aligning;
 	Dbl Fz = load * 0.001;
-	Dbl gamma = ( current_camber ) * 180.0/PI_d;
+	Dbl gamma = current_camber * 180.0/PI_d;
 
-	Dbl D = ( c[1]*Fz+c[2] ) *Fz;
-	Dbl Sv = ( c[14]*Fz*Fz+c[15]*Fz ) *gamma+c[16]*Fz + c[17];
+	Dbl D = (c[1]*Fz + c[2]) *Fz;
+	Dbl Sv = (c[14]*Fz*Fz + c[15]*Fz) * gamma + c[16]*Fz + c[17];
 
 	return -(D+Sv);
 }
 
 ///  pacejka magic formula function
 ///  longitudinal
-Dbl CARTIRE::Pacejka_Fx (Dbl sigma, Dbl Fz, Dbl friction_coeff, Dbl & maxforce_output)
+Dbl CARTIRE::Pacejka_Fx (Dbl sigma, Dbl Fz, Dbl friction_coeff, Dbl & maxforce_output) const
 {
-	const std::vector <Dbl>& b = params->longitudinal;
+	const std::vector <Dbl>& b = longitudinal;
 
-	Dbl D = ( b[1]*Fz + b[2] ) *Fz*friction_coeff;
-	assert ( b[0]* ( b[1]*Fz+b[2] ) != 0 );
+	Dbl D = (b[1]*Fz + b[2]) *Fz *friction_coeff;
+	assert(b[0]* (b[1]*Fz + b[2]) != 0);
 	Dbl B = ( b[3]*Fz+b[4] ) *exp ( -b[5]*Fz ) / ( b[0]* ( b[1]*Fz+b[2] ) );
 	Dbl E = ( b[6]*Fz*Fz+b[7]*Fz+b[8] );
 	Dbl S = ( 100*sigma + b[9]*Fz+b[10] );
@@ -311,9 +312,9 @@ Dbl CARTIRE::Pacejka_Fx (Dbl sigma, Dbl Fz, Dbl friction_coeff, Dbl & maxforce_o
 }
 
 ///  lateral
-Dbl CARTIRE::Pacejka_Fy (Dbl alpha, Dbl Fz, Dbl gamma, Dbl friction_coeff, Dbl & maxforce_output)
+Dbl CARTIRE::Pacejka_Fy (Dbl alpha, Dbl Fz, Dbl gamma, Dbl friction_coeff, Dbl & maxforce_output) const
 {
-	const std::vector <Dbl>& a = params->lateral;
+	const std::vector <Dbl>& a = lateral;
 
 	Dbl D = ( a[1]*Fz+a[2] ) *Fz*friction_coeff;
 	Dbl B = a[3]*sin ( 2.0*atan ( Fz/a[4] ) ) * ( 1.0-a[5]*std::abs ( gamma ) ) / ( a[0]* ( a[1]*Fz+a[2] ) *Fz );
@@ -332,9 +333,9 @@ Dbl CARTIRE::Pacejka_Fy (Dbl alpha, Dbl Fz, Dbl gamma, Dbl friction_coeff, Dbl &
 }
 
 ///  aligning
-Dbl CARTIRE::Pacejka_Mz (Dbl sigma, Dbl alpha, Dbl Fz, Dbl gamma, Dbl friction_coeff, Dbl & maxforce_output)
+Dbl CARTIRE::Pacejka_Mz (Dbl sigma, Dbl alpha, Dbl Fz, Dbl gamma, Dbl friction_coeff, Dbl & maxforce_output) const
 {
-	const std::vector <Dbl>& c = params->aligning;
+	const std::vector <Dbl>& c = aligning;
 
 	Dbl D = ( c[1]*Fz+c[2] ) *Fz*friction_coeff;
 	Dbl B = ( c[3]*Fz*Fz+c[4]*Fz ) * ( 1.0-c[6]*std::abs ( gamma ) ) *exp ( -c[5]*Fz ) / ( c[0]*D );
@@ -359,4 +360,65 @@ Dbl CARTIRE::GetOptimumSteeringAngle(Dbl load) const
 	LookupSigmaHatAlphaHat(load, sigma_hat, alpha_hat);
 
 	return alpha_hat;
+}
+
+
+//-------------------------------------------------------------------------------------------------------------------------------
+/*const*/CARTIRE * CARTIRE::None()  // default, inited, won't crash, not to be used in game
+{
+	static CARTIRE s;
+	static bool init = true;
+	if (init)
+	{	init = false;
+		int i=0;
+		s.lateral[i++] = 1.61;
+		s.lateral[i++] = -0;
+		s.lateral[i++] = 2775;
+		s.lateral[i++] = 2220;
+		s.lateral[i++] = 19.6;
+		s.lateral[i++] = 0.013;
+		s.lateral[i++] = -0.14;
+		s.lateral[i++] = 0.14;
+		s.lateral[i++] = 0.019;
+		s.lateral[i++] = -0.019;
+		s.lateral[i++] = -0.18;
+		s.lateral[i++] = 0;
+		s.lateral[i++] = 0;
+		s.lateral[i++] = 0;
+		s.lateral[i++] = 0;
+		i = 0;
+		s.longitudinal[i++] = 1.73;
+		s.longitudinal[i++] = -0.49;
+		s.longitudinal[i++] = 3439;
+		s.longitudinal[i++] = 279;
+		s.longitudinal[i++] = 470;
+		s.longitudinal[i++] = 0;
+		s.longitudinal[i++] = 0.0008;
+		s.longitudinal[i++] = 0.005;
+		s.longitudinal[i++] = -0.024;
+		s.longitudinal[i++] = 0;
+		s.longitudinal[i++] = 0;
+		i = 0;
+		s.aligning[i++] = 2.10;
+		s.aligning[i++] = -3.9;
+		s.aligning[i++] = -3.9;
+		s.aligning[i++] = -1.26;
+		s.aligning[i++] = -8.20;
+		s.aligning[i++] = 0.025;
+		s.aligning[i++] = 0;
+		s.aligning[i++] = 0.044;
+		s.aligning[i++] = -0.58;
+		s.aligning[i++] = 0.18;
+		s.aligning[i++] = 0.043;
+		s.aligning[i++] = 0.048;
+		s.aligning[i++] = -0.0035;
+		s.aligning[i++] = -0.18;
+		s.aligning[i++] = 0.14;
+		s.aligning[i++] = -1.029;
+		s.aligning[i++] = 0.27;
+		s.aligning[i++] = -1.1;
+
+		s.CalculateSigmaHatAlphaHat();
+	}
+	return &s;
 }

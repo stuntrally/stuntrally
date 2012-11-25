@@ -659,11 +659,11 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				MeshPtr mesh = MeshManager::getSingleton().createManual(sMesh,"General");
 				SubMesh* sm = mesh->createSubMesh();
 				
-				int id = max(0,mP[seg].idMtr);
+				int mtrId = max(0,mP[seg].idMtr);
 				if (isPipe(seg))
-					rs.sMtrRd = sMtrPipe[id];
+					rs.sMtrRd = sMtrPipe[mtrId];
 				else
-					rs.sMtrRd = sMtrRoad[id] + (onTer ? "_ter" :"");
+					rs.sMtrRd = sMtrRoad[mtrId] + (onTer ? "_ter" :"");
 
 				CreateMesh(sm, aabox, pos,norm,clr,tcs, idx, rs.sMtrRd);
 
@@ -809,18 +809,15 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					
 					//  Road  ~
 					btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
-					shape->setUserPointer(isPipe(seg) ? (void*)7788 : (void*)7777);  // mark as road,  + mtrId..
+					void* su = (void*)( (isPipe(seg) ? SU_Pipe : SU_Road) + mtrId );
+					shape->setUserPointer(su);  // mark as road/pipe + mtrId
 					
-					//btRigidBody::btRigidBodyConstructionInfo infoT(0.f, 0, shape);
-					//infoT.m_restitution = 0.0f;
-					//infoT.m_friction = 0.8f;  // 1 like terrain
-					//pGame->collision.AddRigidBody(infoT);  // old
-
 					btCollisionObject* bco = new btCollisionObject();
 					btTransform tr;  tr.setIdentity();  //tr.setOrigin(pc);
 					bco->setActivationState(DISABLE_SIMULATION);
 					bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
-					bco->setFriction(0.8f);  bco->setRestitution(0.f);  //`
+					bco->setFriction(0.8f);   //+
+					bco->setRestitution(0.f);
 					bco->setCollisionFlags(bco->getCollisionFlags() |
 						btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 					#ifdef ROAD_EDITOR
@@ -848,12 +845,13 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 						}
 						
 						btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
-						shape->setUserPointer((void*)7777);  //-  + road mtr id todo...
+						shape->setUserPointer((void*)SU_RoadWall);  //wall and column same object..
 						
 						btCollisionObject* bco = new btCollisionObject();
 						bco->setActivationState(DISABLE_SIMULATION);
 						bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
-						bco->setFriction(0.1f);  bco->setRestitution(0.f);  //`
+						bco->setFriction(0.1f);   //+
+						bco->setRestitution(0.f);
 						bco->setCollisionFlags(bco->getCollisionFlags() |
 							btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 						pGame->collision.world->addCollisionObject(bco);

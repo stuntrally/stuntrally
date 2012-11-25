@@ -42,7 +42,7 @@ App::App()  //  gui wigdets--
 	,valTerTriSize(0),edTerTriSize(0), edTerLScale(0),sldTerLScale(0)
 	,edLDust(0),edLDustS(0), edLMud(0),edLSmoke(0), edLTrlClr(0)  //ter particles
 	,cmbParDust(0),cmbParMud(0),cmbParSmoke(0)
-	,cmbSurfType(0),edSuBumpWave(0),edSuBumpAmp(0),edSuRollDrag(0),edSuFrict(0),edSuFrict2(0)  //ter surfaces
+	,cmbSurfType(0),cmbSurfTire(0),edSuBumpWave(0),edSuBumpAmp(0),edSuRollDrag(0),/*edSuFrict(0),*/edSuFrict2(0)  //ter surfaces
 	,edGrassDens(0),edTreesDens(0), edGrPage(0),edGrDist(0), edTrPage(0),edTrDist(0)  // vegetation
 	,edGrMinX(0),edGrMaxX(0), edGrMinY(0),edGrMaxY(0)
 	,edGrSwayDistr(0), edGrSwayLen(0), edGrSwaySpd(0), edTrRdDist(0), edTrImpDist(0)

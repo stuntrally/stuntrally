@@ -432,11 +432,7 @@ void App::LoadTerrain()  // 5
 	
 	// assign stuff to cars
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		(*it)->terrain = terrain;
-		(*it)->blendMtr = blendMtr;
-		(*it)->blendMapSize = blendMapSize;
-	}
 
 	if (sc->vdr)  // vdrift track
 	{
