@@ -30,7 +30,6 @@ public:
 public:
 	//  ctor
 	CARTIRE()
-		//: name("DEFAULT")
 	{
 		longitudinal.resize(11, 0.0);
 		lateral.resize(15, 0.0);

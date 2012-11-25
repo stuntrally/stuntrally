@@ -4,7 +4,8 @@
 #include "../vdrift/configfile.h"
 
 
-#define SET_VER  1700  // 1.7
+#define SET_VER  1900  // 1.9
+
 
 enum eShadowType  {  Sh_None=0, Sh_Simple, Sh_Depth, Sh_Soft  };
 
