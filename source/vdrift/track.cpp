@@ -27,7 +27,8 @@ TRACK::TRACK(ostream & info, ostream & error)
 	usesurfaces(false),
 	//racingline_node(NULL),
 	loaded(false),
-	cull(false)
+	cull(false),
+	sDefaultTire("gravel")
 {
 	roadSurf.type = TRACKSURFACE::ASPHALT;
 	roadSurf.bumpWaveLength = 1;  roadSurf.bumpAmplitude = 0;
@@ -382,7 +383,7 @@ bool TRACK::LoadSurfaces(const string & trackpath)
 		string tireFile;
 		if (!param.GetParam(*section + "." + "Tire", tireFile, error_output))
 		{
-			tireFile = "gravel_new4b";  // default surface if not found
+			tireFile = sDefaultTire;  // default surface if not found
 			error_output << "Surface: Tire file not found, using default: " << tireFile << endl;
 		}
 		id = pGame->tires_map[tireFile]-1;

@@ -19,7 +19,7 @@ interior-z = 0
 exhaust-x = 2.13
 exhaust-y = 0.31
 exhaust-z = 0.40
-exhaust-mirror-second = 0
+exhaust-mirror-second = 1
 
 #  collision shape params
 #---------------------------
@@ -122,7 +122,6 @@ radius = 0.31
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 10.0
 tread = 0.0
-file = gravel_new4b.tire
 
 
 #  brakes

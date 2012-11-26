@@ -117,7 +117,6 @@ radius = 0.30
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 6.0
 tread = 0.0
-file = gravel_new4b.tire
 
 
 #  brakes
@@ -126,14 +125,14 @@ file = gravel_new4b.tire
 friction = 0.83
 max-pressure = 2.5e6
 bias = 0.60
-radius = 0.17
+radius = 0.19
 area = 0.015
 
 [ brakes-rear ]
 friction = 0.83
 max-pressure = 2.5e6
 bias = 0.40
-radius = 0.14
+radius = 0.19
 area = 0.015
 handbrake = 4.6
 

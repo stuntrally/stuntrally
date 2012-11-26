@@ -121,7 +121,6 @@ radius = 0.313
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 14
 tread = 0.0
-file = gravel_new4b.tire
 #---------
 #  ..?
 #[ tire-rear ]

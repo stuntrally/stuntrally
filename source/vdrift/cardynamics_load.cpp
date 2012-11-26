@@ -423,7 +423,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		WHEEL_POSITION leftside = FRONT_LEFT;
 		WHEEL_POSITION rightside = FRONT_RIGHT;
 		float value;
-		bool both = c.GetParam("tire-both.file", value);
+		bool both = c.GetParam("tire-both.radius", value);
 		std::string posstr = both ? "both" : "front";
 
 		for (int p = 0; p < 2; p++)

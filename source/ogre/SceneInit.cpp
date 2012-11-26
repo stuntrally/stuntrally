@@ -215,14 +215,15 @@ void App::LoadGame()  // 2
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 	
 	pGame->NewGameDoCleanup();
-	pGame->NewGameDoLoadTrack();
-
 
 	// load scene.xml - default if not found
 	//   need to know sc->asphalt before vdrift car load
 	bool vdr = IsVdrTrack();
 	sc->LoadXml(TrkDir()+"scene.xml", !vdr/*for asphalt*/);
 	sc->vdr = vdr;
+	pGame->track.sDefaultTire = sc->asphalt ? "asphalt" : "gravel";  //*
+
+	pGame->NewGameDoLoadTrack();
 
 	if (!sc->ter)
 	{	sc->td.hfHeight = sc->td.hfAngle = NULL;  }  // sc->td.layerRoad.smoke = 1.f;

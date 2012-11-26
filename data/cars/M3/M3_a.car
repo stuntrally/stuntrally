@@ -77,8 +77,8 @@ gear-ratio-5 = 1.00
 shift-delay = 0.20
 
 [ differential ]
-final-drive = 3.73
-anti-slip = 600.0
+final-drive = 4.13
+anti-slip = 200.0
 
 [ fuel-tank ]
 position = -0.26, -0.17, -0.56 
@@ -117,7 +117,6 @@ radius = 0.3032
 rolling-resistance = 8.0e-3, 6.5e-6
 rotational-inertia = 10.0
 tread = 0.0
-file = old_asphalt.tire
 
 
 #  brakes
@@ -165,7 +164,7 @@ position = -2.14, 0.0, 0.37
 frontal-area = 0.05
 drag-coefficient = 0.0
 surface-area = 0.5
-lift-coefficient = -2
+lift-coefficient = -0.5
 efficiency = 0.95
 
 
