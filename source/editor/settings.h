@@ -6,6 +6,7 @@
 
 #define SET_VER  1900  // 1.9
 
+enum eShadowType  {  Sh_None=0, Sh_Simple, Sh_Depth, Sh_Soft  };
 
 enum eShadowType  {  Sh_None=0, Sh_Simple, Sh_Depth, Sh_Soft  };
 

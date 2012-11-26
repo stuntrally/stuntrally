@@ -1,5 +1,7 @@
 data/tracks
+locale/translation_templates
 locale/translations-export
+locale/stuntrally.pot
 *build
 build*
 Debug*
