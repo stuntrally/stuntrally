@@ -90,7 +90,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 		world->CastRay(pos+ofs2,dir, HMaxDepth,NULL, ct20, 0,0, true, false);
 		world->CastRay(pos-ofs2,dir, HMaxDepth,NULL, ct21, 0,0, true, false);
 
-		if (ct0.GetObject() && ct1.GetObject() && ct20.GetObject() && ct21.GetObject() )
+		if (ct0.GetColObj() && ct1.GetColObj() && ct20.GetColObj() && ct21.GetColObj() )
 			tilt = (GetAngle(Rdist, ct1.GetDepth() - ct0.GetDepth()) +
 				GetAngle(2.f*Rdist, ct21.GetDepth() - ct20.GetDepth())) * 0.5f;
 		//else  LogO(String("no hit: ")+(ct0.col?"1":"0")+(ct1.col?" 1":" 0"));

@@ -40,7 +40,9 @@ inline double negPow(double x, double y)
 
 ///  Create Graphs  .-_/\._-
 //-----------------------------------------------------------------------------------
-const int NG = 4;  // tire graphs count (for variable load)
+const int TireNG = 4,	// tire graphs count (for variable load)
+	TireLenG = 256;		// tire graphs data length
+const static String TireVar[2] = {"variable Load", "variable camber"};
 
 void App::CreateGraphs()
 {
@@ -58,7 +60,7 @@ void App::CreateGraphs()
 			switch(i)
 			{
 				case 0:  gv->CreateTitle("norm vel",	c, 0.0f, -2, 24);  break;
-				case 1:  gv->CreateTitle("hit force",	c, 0.15f,-2, 24);  break;
+				case 1:  gv->CreateTitle("Car Hit force",c, 0.15f,-2, 24);  break;
 				case 2:  gv->CreateTitle("N snd",		c, 0.0f, -2, 24);  break;
 				case 3:  gv->CreateTitle("scrap",		c, 0.1f, -2, 24);  break;
 				case 4:  gv->CreateTitle("screech",		c, 0.2f, -2, 24);  break;
@@ -75,12 +77,12 @@ void App::CreateGraphs()
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
 			int c = i%2*2;
-			gv->Create(2*512, "graph"+toStr(c+1), c>0 ? 0.f : 0.4f);
+			gv->Create(i < 2 ? 512 : 2*512, "graph"+toStr(c+1), c>0 ? 0.f : 0.4f);
 			if (c == 0)
 				gv->CreateGrid(2,1, 0.4f, 0.5f);  //64,256
 			switch(i)
 			{
-				case 0:  gv->CreateTitle("vol ampl.",		c, 0.0f,-2, 24);  break;
+				case 0:  gv->CreateTitle("Sound vol ampl.",	c, 0.0f,-2, 24);  break;
 				case 1:  gv->CreateTitle("pan: L up R dn",	c, 0.0f, 2, 24);  break;
 				case 2:  gv->CreateTitle("wave L",			c, 0.0f,-2, 24);  break;
 				case 3:  gv->CreateTitle("wave R",			c, 0.0f, 2, 24);  break;
@@ -105,14 +107,14 @@ void App::CreateGraphs()
 			const static float x0 = 0.0f, x1 = 0.07f, x2 = 0.08f;
 			const static char* cgt[8][2] = {
 				// Front ^ Back/Rear v  Left L< Right R>
-				 "FL [^"			,"FL <^"
-				,"^] FR   long |"	,"^> FR susp pos"
-				,"BL [_"			,"BL <v"
-				,"_] BR   slip"		,"v> BR"
-				,"FL [^"			,"FL <^"
-				,"^] FR   lat --"	,"^> FR susp vel"
-				,"BL [_"			,"BL <v"
-				,"_] BR   slide"	,"v> BR"	};
+				 "FL [^"				,"FL <^"
+				,"^] FR   longit |"		,"^> FR  suspension pos"
+				,"BL [_"				,"BL <v"
+				,"_] BR   Tire slip"	,"v> BR"
+				,"FL [^"				,"FL <^"
+				,"^] FR   lateral --"	,"^> FR  susp vel"
+				,"BL [_"				,"BL <v"
+				,"_] BR   Tire slide"	,"v> BR"	};
 
 			int t = pSet->graphs_type == Gh_TireSlips ? 0 : 1;
 			float x = i%2==0 ? x0 : (t ? x2 : x1);  char y = i/2%2==0 ? -2 : -3;
@@ -127,32 +129,36 @@ void App::CreateGraphs()
 		}	break;
 
 	case Gh_TireEdit:  /// tires edit pacejka
-		for (int i=0; i < NG*2; ++i)
+		for (int i=0; i < TireNG*2; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
-			int c = i%NG;  bool b = i >= NG;
-			gv->Create(512, String("graph")+(b?"B":"A")+toStr(c), i>0 ? 0.f : 0.5f);
+			int c = i%TireNG;  bool b = i >= TireNG;
+			gv->Create(TireLenG, String("graph")+(b?"B":"A")+toStr(c), i>0 ? 0.f : 0.4f, true);
 			if (c == 0)
 			{	gv->CreateGrid(10,10, 0.2f, 0.4f);
 				if (b)	gv->CreateTitle("", 5+8+c +2, 0.f, -2, 24);
 				else	gv->CreateTitle("", 5+c   +2, 0.7f, 3, 24);
-			}
-			gv->SetSize(0.00f, 0.40f, 0.35f, 0.50f);
+			}else if (c == 1)
+				gv->CreateTitle("Tire forces", 5, 0.3f, -2, 24);
+			else if (c == 2)
+				gv->CreateTitle("", 5, 0.5f, -2, 24);
+			
+			gv->SetSize(0.00f, 0.41f, 0.35f, 0.50f);
 
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
 		}
 		{	//  edit vals area
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
-			gv->Create(1, "graphA6", 0.3f);  gv->CreateTitle("", 5+1, 0.f, -2, 24, 30);
-			gv->SetSize(0.70f, 0.40f, 0.10f, 0.50f);
+			gv->Create(1, "graphA6", 0.4f);  gv->CreateTitle("", 5+1, 0.f, -2, 24, 30/*, true*/);
+			gv->SetSize(0.73f, 0.48f, 0.07f, 0.44f);
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
 
 			//  vals descr
 			gv = new GraphView(scm,mWindow,mGUI);
-			gv->Create(1, "graphB6", 0.1f);  gv->CreateTitle("", 5+8, 0.f, -2, 24, 30);
-			gv->SetSize(0.80f, 0.40f, 0.20f, 0.50f);
+			gv->Create(1, "graphB6", 0.3f);  gv->CreateTitle("", 5+8, 0.f, -2, 24, 30/*, true*/);
+			gv->SetSize(0.80f, 0.48f, 0.20f, 0.44f);
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
 		}
@@ -164,13 +170,13 @@ void App::CreateGraphs()
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
 			const int t[3] = {0,1,2};
 			int c = t[i];
-			gv->Create(256, "graph"+toStr(c+1), i==0 ? 0.4f : 0.f);
+			gv->Create(256, "graph"+toStr(c+1), i==0 ? 0.45f : 0.f);
 			if (i == 0)  gv->CreateGrid(6,0, 0.7f, 1.0f);
 			switch(i)
 			{
-				case 0:  gv->CreateTitle("Accel   x",	c, 0.0f, -2, 24);  break;
-				case 1:  gv->CreateTitle("y",			c, 0.12f,-2, 24);  break;
-				case 2:  gv->CreateTitle("z",			c, 0.15f,-2, 24);  break;
+				case 0:  gv->CreateTitle("\n\n\n\n\n\n\n0 x",					c, 0.0f, -2, 24, 12);  break;
+				case 1:  gv->CreateTitle("Car accel G's\n\n\n\n\n\n\n       y",	c, 0.f,-2, 24, 12);  break;
+				case 2:  gv->CreateTitle("\n\n\n\n\n\n\n\n\n\n\n0 z",			c, 0.f,-2, 24, 12);  break;
 			}
 			gv->SetSize(0.f, 0.24f, 0.4f, 0.30f);
 
@@ -186,7 +192,7 @@ void App::CreateGraphs()
 			gv->Create(400, "graph"+toStr(c+1), i==0 ? 0.4f : 0.f);
 			if (i == 0)
 			{	gv->CreateGrid(4,0, 0.7f, 1.0f);
-				gv->CreateTitle("Fps 120\n\n\n\n\n\n\n60",	c, 0.0f, -2, 24,10);
+				gv->CreateTitle("120  Fps\n\n\n\n\n\n\n60",	c, 0.0f, -2, 24,10);
 			}
 			gv->SetSize(0.f, 0.24f, 0.4f, 0.30f);
 
@@ -199,14 +205,14 @@ void App::CreateGraphs()
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
 			int c = i;
-			gv->Create(512, String("graphA")+toStr(c), i>0 ? 0.f : 0.2f);
+			gv->Create(512, String("graphA")+toStr(c), i>0 ? 0.f : 0.25f, true);
 			if (c == 0)
 			{	gv->CreateGrid(4,4, 0.f, 0.5f);
-				gv->CreateTitle("", 7, 0.9f, -2, 24, 30);
+				gv->CreateTitle("", 7, 0.86f, -2, 24, 30);
 			}else if (c==1)
-				gv->CreateTitle("Wheel Torque\n2400 Nm", 5, 0.0f, -2, 24, 2);
+				gv->CreateTitle("Wheel  Torque curves\n2400 Nm", 5, 0.0f, -2, 24, 2);
 			else if (c==2)
-				gv->CreateTitle("Car Vel.\n200 kmh", 6, 0.9f, 3, 24, 2);
+				gv->CreateTitle("Car Vel.\n200 kmh", 6, 0.86f, 3, 24, 2);
 			
 			gv->SetSize(0.00f, 0.40f, 0.45f, 0.50f);
 
@@ -314,8 +320,8 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		
 	case Gh_TorqueCurve:  /// torque curves, gears
 	{	static int ii = 0;  ++ii;  // skip upd cntr
-		if (ii >= 32 && gsi >= 6)
-		{	ii = -60;  //todo: double buffer for data, static graphs..
+		if (ii >= 1 && gsi >= 6)
+		{	ii = 0;
 
 			const Dbl fin = dynamics.diff_center.GetFinalDrive();
 			const Dbl r = 1.0 / (2 * PI_d * dynamics.wheel[0].GetRadius());
@@ -342,6 +348,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 					
 					pApp->graphs[i]->AddVal( tq / 2400.0 );
 				}
+				pApp->graphs[i]->SetUpdate();
 				//ss += String("gear: ")+toStr(i+1)+" ratio: "+fToStr(gr,3,5)+"\n";
 				ss += toStr(i+1)+": "+fToStr(gr,3,5)+"\n";
 			}
@@ -352,12 +359,11 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 	case Gh_TireEdit:  /// tire pacejka
 	{	static int ii = 0;  ++ii;  // skip upd cntr
 		const int im = pApp->iUpdTireGr > 0 ? 2 : 8;  // faster when editing val
-		if (ii >= im && gsi >= NG*2)
+		if (ii >= im && gsi >= TireNG*2)
 		{	ii = 0;  pApp->iUpdTireGr = 0;
 
 			const CARTIRE* tire = dynamics.GetTire(FRONT_LEFT);
-			const int LEN = 512;
-			Dbl* ft = new Dbl[LEN];
+			Dbl* ft = new Dbl[TireLenG];
 
 			Dbl fmin, fmax, frng, maxF;
 			const bool common = 1;  // common range for all
@@ -366,19 +372,19 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			const Dbl fMAX = 9000.0, max_y = pApp->sc->asphalt ? 40.0 : 80.0, max_x = 1.0;
 
 			///  Fy lateral --
-			for (int i=0; i < NG; ++i)
+			for (int i=0; i < TireNG; ++i)
 			{
 				bool comi = common || i == 0;
 				if (comi)
 				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
 				
-				for (int x=0; x < LEN; ++x)
+				for (int x=0; x < TireLenG; ++x)
 				{
 					//Dbl yy = max_y * 2.0 * (x-LEN*0.5) / LEN;
-					Dbl yy = max_y * x / LEN;
-					Dbl n = (NG-1-i+1) * 0.65;
-					Dbl fy = tire->Pacejka_Fy(yy, n, 0, 1.0, maxF); // normF
-					//Dbl fy = tire->Pacejka_Fy(alpha, 3, n-2, 1.0, maxF); // gamma
+					Dbl yy = max_y * x / TireLenG;
+					Dbl n = (TireNG-1-i+1) * 0.65;
+					Dbl fy = !pApp->iTireLoad ? tire->Pacejka_Fy(yy, n, 0, 1.0, maxF)  // normF
+											: tire->Pacejka_Fy(yy, 3, n-2, 1.0, maxF); // camber
 					ft[x] = fy;
 
 					if (comi)  // get min, max
@@ -390,8 +396,9 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				if (cust)
 				{	fmax = fMAX;  fmin = 0.0;  frng = 1.0 / (fmax - fmin);  }
 				
-				for (int x = 0; x < 512; ++x)
+				for (int x = 0; x < TireLenG; ++x)
 					pApp->graphs[i]->AddVal( (ft[x] - fmin) * frng );
+				pApp->graphs[i]->SetUpdate();
 
 				if (i==0)
 					pApp->graphs[i]->UpdTitle("Fy Lateral--\n"  //#33FF77
@@ -401,18 +408,20 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			}
 
 			///  Fx long |
-			for (int i=0; i < NG; ++i)
+			for (int i=0; i < TireNG; ++i)
 			{
 				bool comi = common || i == 0;
 				if (comi)
 				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
 				
-				for (int x=0; x < LEN; ++x)
+				for (int x=0; x < TireLenG; ++x)
 				{
 					//Dbl xx = max_x * 2.0 * (x-LEN*0.5) / LEN;
-					Dbl xx = max_x * x / LEN;
-					Dbl n = (NG-1-i+1) * 0.65;
-					Dbl fx = tire->Pacejka_Fx(xx, n, 1.0, maxF); // normF
+					Dbl xx = max_x * x / TireLenG;
+					Dbl n = (TireNG-1-i+1) * 0.65;
+					Dbl fx = pApp->iEdTire != 2 ? tire->Pacejka_Fx(xx, n, 1.0, maxF)  // normF
+							 : (!pApp->iTireLoad ? tire->Pacejka_Mz(xx, 0, n, 0.0, 1.0, maxF)    // align- norm
+												 : tire->Pacejka_Mz(xx, 0, n, 0.0, 1.0, maxF));  // align- camber
 					ft[x] = fx;
 
 					if (comi)  // get min, max
@@ -424,11 +433,12 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				if (cust)
 				{	fmax = fMAX;  fmin = 0.0;  frng = 1.0 / (fmax - fmin);  }
 				
-				for (int x = 0; x < 512; ++x)
-					pApp->graphs[i+NG]->AddVal( (ft[x] - fmin) * frng );
+				for (int x = 0; x < TireLenG; ++x)
+					pApp->graphs[i+TireNG]->AddVal( (ft[x] - fmin) * frng );
+				pApp->graphs[i+TireNG]->SetUpdate();
 
 				if (i==0)
-					pApp->graphs[i+NG]->UpdTitle("Fx Longit |\n"
+					pApp->graphs[i+TireNG]->UpdTitle("Fx Longit |\n"
 						//"min: "+fToStr((float)fmin,2,4)+"\n"+
 						"max y "+fToStr((float)fmax,0,1)+
 						"  x "+fToStr(max_x,0,1)+"\n");
@@ -437,72 +447,75 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			
 			//  update edit values text and descr
 			///----------------------------------------------------
-			String ss,sd;
-			//const CARTIRE <Dbl>& tire = pCar->dynamics.tire[0];
 			const static String sLateral[15][2] = {
-				"  a0","Shape factor",
-				"  a1","Load infl. on friction coeff",
-				"  a2","Lateral friction coeff at load = 0",
-				"  a3","Maximum stiffness",
-				"  a4","Load at maximum stiffness",
-				"  a5","Camber infl. on stiffness",
+				"  a0","#F0FFFFShape factor",
+				"  a1","#C0E0FFLoad infl. on friction coeff",
+				"  a2","#F0FFFFLateral friction coeff at load = 0",
+				"  a3","#F0FFFFMaximum stiffness",
+				"  a4","#F0FFFFLoad at maximum stiffness",
+				"  a5","#C0E0FF-Camber infl. on stiffness",
 				"  a6","Curvature change with load",
 				"  a7","Curvature at load = 0",
-				"  a8","Horiz. shift because of camber",
-				"  a9","Load infl. on horizontal shift",
-				" a10","Horizontal shift at load = 0",
-				"a111","Camber infl. on vertical shift",
-				"a112","Camber infl. on vertical shift",
-				" a12","Load infl. on vertical shift",
-				" a13","Vertical shift at load = 0" };
+				"  a8","#A0C0D0  -Horiz. shift because of camber",
+				"  a9","  Load infl. on horizontal shift",
+				" a10","  Horizontal shift at load = 0",
+				"a111","  -Camber infl. on vertical shift",
+				"a112","  -Camber infl. on vertical shift",
+				" a12","  Load infl. on vertical shift",
+				" a13","  Vertical shift at load = 0" };
 			const static String sLongit[13][2] = {
-				" b0","Shape factor",
-				" b1","Load infl. on long. friction coeff",
-				" b2","Longitudinal friction coeff at load = 0",
-				" b3","Curvature factor of stiffness",
-				" b4","Change of stiffness with load at load = 0",
-				" b5","Change of progressivity of stiffness/load",
-				" b6","Curvature change with load^2",
-				" b7","Curvature change with load",
-				" b8","Curvature at load = 0",
-				" b9","Load infl. on horizontal shift",
-				"b10","Horizontal shift at load = 0",
-				"b11","Load infl. on vertical shift",
-				"b12","Vertical shift at load = 0" };
+				"  b0","#FFFFF0Shape factor",
+				"  b1","#F0F0A0Load infl. on long. friction coeff",
+				"  b2","#FFFFF0Longit. friction coeff at load = 0",
+				"  b3","#F0F0A0Curvature factor of stiffness",
+				"  b4","#F0F0A0Change of stiffness with load at load = 0",
+				"  b5","#E0C080Change of progressivity/load",  //of stiffness
+				"  b6","Curvature change with load^2",
+				"  b7","Curvature change with load",
+				"  b8","Curvature at load = 0",
+				"  b9","#D0D0A0  Load infl. on horizontal shift",
+				" b10","  Horizontal shift at load = 0",
+				" b11","  Load infl. on vertical shift",
+				" b12","  Vertical shift at load = 0" };
 			const static String sAlign[18][2] = {
-				" c0","Shape factor",
+				" c0","#E0FFE0Shape factor",
 				" c1","Load infl. of peak value",
 				" c2","Load infl. of peak value",
 				" c3","Curvature factor of stiffness",
 				" c4","Change of stiffness with load at load = 0",
-				" c5","Change of progressivity of stiffness/load",
-				" c6","Camber infl. on stiffness",
+				" c5","Change of progressivity/load",
+				" c6","-Camber infl. on stiffness",
 				" c7","Curvature change with load",
 				" c8","Curvature change with load",
 				" c9","Curvature at load = 0",
-				"c10","Camber infl. of stiffness",
-				"c11","Camber infl. on horizontal shift",
-				"c12","Load infl. on horizontal shift",
-				"c13","Horizontal shift at load = 0",
-				"c14","Camber infl. on vertical shift",
-				"c15","Camber infl. on vertical shift",
-				"c16","Load infl. on vertical shift",
-				"c17","Vertical shift at load = 0" };
+				"c10","-Camber infl. of stiffness",
+				"c11","  -Camber infl. on horizontal shift",
+				"c12","  Load infl. on horizontal shift",
+				"c13","  Horizontal shift at load = 0",
+				"c14","  -Camber infl. on vertical shift",
+				"c15","  -Camber infl. on vertical shift",
+				"c16","  Load infl. on vertical shift",
+				"c17","  Vertical shift at load = 0" };
+			const static String sCommon = "#C8C8F0Pacejka's Magic Formula coeffs\n";
 
+			String ss,sd;
 			if (pApp->iEdTire == 0)
 			{
-				ss += "--Lateral--\n";  sd += "\n";
+				ss += "#A0F0FF--Lateral--\n";  sd += sCommon;
 				for (int i=0; i < tire->lateral.size(); ++i)
 				{
 					//ss += (i == pApp->iCurLat) ? "." : "  ";
 					float f = tire->lateral[i];
-					unsigned short p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
+					char p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
+					bool cur = (i == pApp->iCurLat);
+
+					ss += cur ? "#A0EEFF" : "#E0FFFF";
 					ss += sLateral[i][0] +" "+ fToStr(f, p,5);
-					ss += (i == pApp->iCurLat) ? "  <\n" : "\n";
+					ss += cur ? "  <\n" : "\n";
 					sd += sLateral[i][1] +"\n";
 				}
 
-				ss += "\nalpha hat\n";
+				ss += "\n#C0F0F0alpha hat\n";
 				//for (int a=0; a < tire->alpha_hat.size(); ++a)
 				//	ss += "  "+fToStr( tire->alpha_hat[a], 3,5) + "\n";
 
@@ -513,18 +526,21 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			}
 			else if (pApp->iEdTire == 1)
 			{
-				ss += "| Longit |\n";  sd += "\n";
+				ss += "#FFFF70| Longit |\n";  sd += sCommon;
 				for (int i=0; i < tire->longitudinal.size(); ++i)
 				{
 					//ss += (i == pApp->iCurLong) ? "." : "  ";
 					float f = tire->longitudinal[i];
-					unsigned short p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
+					char p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
+					bool cur = (i == pApp->iCurLong);
+
+					ss += cur ? "#FFE090" : "#FFFFD0";
 					ss += sLongit[i][0] +" "+ fToStr(f, p,5);
-					ss += (i == pApp->iCurLong) ? "  <\n" : "\n";
+					ss += cur ? "  <\n" : "\n";
 					sd += sLongit[i][1] +"\n";
 				}
 
-				ss += "\nsigma hat\n";
+				ss += "\n#F0F0C0sigma hat\n";
 				//for (int a=0; a < tire->sigma_hat.size(); ++a)
 				//	ss += "  "+fToStr( tire->sigma_hat[a], 3,5) + "\n";
 
@@ -533,21 +549,25 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				ss += "  "+fToStr( tire->sigma_hat[z/2], 3,5) + "\n";
 				ss += "  "+fToStr( tire->sigma_hat[z], 3,5) + "\n";
 			}
-			else //if (iEdLong == 2)
+			else //if (pApp->iEdTire == 2)
 			{
-				ss += "o Align o\n";  sd += "\n";
+				ss += "#D0FFD0o Align o\n";  sd += sCommon;
 				for (int i=0; i < tire->aligning.size(); ++i)
 				{
 					float f = tire->aligning[i];
-					unsigned short p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
+					char p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
+					bool cur = (i == pApp->iCurAlign);
+
+					ss += cur ? "#80FF80" : "#E0FFE0";
 					ss += sAlign[i][0] +" "+ fToStr(f, p,5);
-					ss += (i == pApp->iCurAlign) ? "  <\n" : "\n";
+					ss += cur ? "  <\n" : "\n";
 					sd += sAlign[i][1] +"\n";
 				}
 			}
 			
 			pApp->graphs[gsi-2]->UpdTitle(ss);
 			pApp->graphs[gsi-1]->UpdTitle(sd);
+			pApp->graphs[2]->UpdTitle(TireVar[pApp->iTireLoad]); //-
 
 	}	}	break;
 		

@@ -4,26 +4,14 @@
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "OgreGame.h"
-#include "FollowCamera.h"
-#include "SplitScreen.h"
 #include "common/Gui_Def.h"
-#include "common/RenderConst.h"
 #include "common/GraphView.h"
 #include "common/Slider.h"
-#include "../network/masterclient.hpp"
-#include "../network/gameclient.hpp"
-
-#include <MyGUI_PointerManager.h>
+#include "FollowCamera.h"
 #include <OIS/OIS.h>
 #include "../oisb/OISB.h"
-#include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
 
-#include <OgreRoot.h>
-#include <OgreTerrain.h>
-#include <OgreMaterialManager.h>
-#include <OgreOverlay.h>
-#include <OgreRenderWindow.h>
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;
@@ -212,6 +200,9 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			switch (arg.key)
 			{
 				case KC_HOME: case KC_NUMPAD7:  // mode long/lat
+				if (ctrl)
+					iTireLoad = 1-iTireLoad;
+				else
 					iEdTire = iEdTire==1 ? 0 : 1;  iUpdTireGr=1;  return true;
 
 				case KC_END: case KC_NUMPAD1:	// mode align
@@ -355,189 +346,4 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	}
 
 	return true;
-}
-
-
-///  Tweak
-//-----------------------------------------------------------------------------------------------------------
-
-void App::TweakCarSave()
-{
-	String text = edTweak->getCaption();
-	if (text == "")  return;
-	text = StringUtil::replaceAll(text, "##", "#");
-	text = StringUtil::replaceAll(text, "#E5F4FF", "");  //!
-
-	std::string path, pathUser, pathUserDir;
-	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], sc->asphalt);
-	
-	PATHMANAGER::CreateDir(pathUserDir, pGame->error_output);
-	std::ofstream fo(pathUser.c_str());
-	fo << text.c_str();
-	fo.close();
-	
-	NewGame();
-}
-
-void App::TweakCarLoad()
-{
-	std::string path, pathUser, pathUserDir;
-	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], sc->asphalt);
-
-	if (!PATHMANAGER::FileExists(path))
-	{
-		edTweak->setCaption("");
-		txtTweakPath->setCaption("Not Found ! " + path);
-		txtTweakPath->setColour(Colour(1,0,0));
-	}else
-	{
-		std::ifstream fi(path.c_str());
-		String text = "", s;
-		while (getline(fi,s))
-			text += s + "\n";
-		fi.close();
-
-		text = StringUtil::replaceAll(text, "#", "##");
-		text = StringUtil::replaceAll(text, "#E5F4FF", "");  //!
-		edTweak->setCaption(UString(text));
-		//edTweak->setVScrollPosition(0);
-
-		size_t p = path.find("cars");
-		if (p != string::npos)
-			path = path.substr(p+5, path.length());
-		txtTweakPath->setCaption((user ? "User: " : "Original: ") + path);
-		txtTweakPath->setTextColour(user ? Colour(1,1,0.5) : Colour(0.5,1,1));
-		
-		MyGUI::InputManager::getInstance().resetKeyFocusWidget();
-		MyGUI::InputManager::getInstance().setKeyFocusWidget(edTweak);
-	}
-}
-
-void App::CmbTweakCarSet(CMB)
-{
-}
-void App::CmbTweakTireSet(CMB)
-{
-}
-
-void App::CmbEdTweakCarSet(EditPtr ed)
-{
-}
-void App::CmbEdTweakTireSet(EditPtr ed)
-{
-}
-
-
-//  tweak save car and reload game
-void App::TweakTireSave()
-{
-	///TODO: save tires, ed name, game reload all..
-	// ed car setup name, chk exist, load
-	// jump to section,  help on current line
-	// ed find text? syntax clr?=
-/*	name = asphalt
-	version = 1
-
-	[ params ]
-	#--------	Lateral force
-	a0=0.776		#	Shape factor												A0
-	a1=-0          #	Load infl. on lat. friction coeff (*1000)  (1/kN)			A1
-	a2=3087         #	Lateral friction coefficient at load = 0 (*1000)			A2
-	a3=2165          #	Maximum stiffness   (N/deg)									A3
-	a4=18.0          #	Load at maximum stiffness   (kN)							A4
-	a5=0.013        #	Camber influence on stiffness   (%/deg/100)					A5
-	a6=-0.14        #	Curvature change with load									A6
-	a7=0.14         #	Curvature at load = 0										A7
-	a8=0.019        #	Horizontal shift because of camber  (deg/deg)				A8
-	a9=-0.019       #	Load influence on horizontal shift  (deg/kN)				A9
-	a10=-0.18       #	Horizontal shift at load = 0  (deg)							A10
-	a111=0          #	Camber influence on vertical shift  (N/deg/kN)				A11.1
-	a112=0.0       #	Camber influence on vertical shift  (N/deg/kN**2)			A11.2
-	a12=0.0        #	Load influence on vertical shift  (N/kN)					A12
-	a13=0.0        #	Vertical shift at load = 0  (N)								A13
-	#--------	Longitudinal force
-	b0=1.55         #	Shape factor   B0
-	b1=-0.49        #	Load infl. on long. friction coeff (*1000)  (1/kN)   B1
-	b2=3439         #	Longitudinal friction coefficient at load = 0 (*1000)  B2
-	b3=85.5         #	Curvature factor of stiffness   (N/%/kN**2) . B3
-	b4=470.0        #	Change of stiffness with load at load = 0 (N/%/kN)   B4
-	b5=0.0          #	Change of progressivity of stiffness/load (1/kN)   B5
-	b6=0.0008       #	Curvature change with load   B6
-	b7=0.005        #	Curvature change with load   B7
-	b8=-0.024       #	Curvature at load = 0   B8
-	b9=0.00        #	Load influence on horizontal shift   (%/kN)   B9
-	b10=0.0         #	Horizontal shift at load = 0   (%)   B10
-	b11=0           #	Load influence on vertical shift   (N/kN)   B11
-	b12=0           #	Vertical shift at load = 0   (N)   B12
-	#---------	Aligning moment
-	c0=2.10         #	Shape factor   C0
-	c1=-3.9         #	Load influence of peak value   (Nm/kN**2)   C1
-	c2=-3.9         #	Load influence of peak value   (Nm/kN)   C2
-	c3=-1.26        #	Curvature factor of stiffness   (Nm/deg/kN**2) C3		
-	c4=-8.20        #	Change of stiffness with load at load = 0 (Nm/deg/kN)   C4
-	c5=0.025        #	Change of progressivity of stiffness/load (1/kN)   C5
-	c6=0.0          #	Camber influence on stiffness   (%/deg/100)   C6
-	c7=0.044        #	Curvature change with load   C7
-	c8=-0.58        #	Curvature change with load   C8
-	c9=0.18         #	Curvature at load = 0   C9
-	c10=0.043       #	Camber influence of stiffness   C10
-	c11=0.048       #	Camber influence on horizontal shift (deg/deg)  C11
-	c12=-0.0035     #	Load influence on horizontal shift (deg/kN)  C1
-	c13=-0.18       #	Horizontal shift at load = 0 (deg)  C13
-	c14=0.14        #	Camber influence on vertical shift (Nm/deg/kN**2) C14
-	c15=-1.029      #	Camber influence on vertical shift (Nm/deg/kN)  C15
-	c16=0.27        #	Load influence on vertical shift (Nm/kN)  C16
-	c17=-1.1        #	Vertical shift at load = 0 (Nm)  C17c0=2.2							
-	#---------
-*/
-}
-
-void App::btnTweakCarSave(WP){	TweakCarSave();  }
-void App::btnTweakCarLoad(WP){	TweakCarLoad();  }
-void App::btnTweakTireSave(WP){	TweakTireSave();  }
-
-
-///  Tweak read / save file
-//-----------------------------------------------------------------------------------------
-void App::TweakToggle()
-{
-	//  window
-	bool vis = !mWndTweak->getVisible();
-	mWndTweak->setVisible(vis);
-
-	std::string path, pathUser, pathUserDir;
-	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], sc->asphalt);
-	
-	//  load  if car changed
-	static string lastPath = "";
-	if (lastPath != path || ctrl)  // force reload  ctrl-alt-Z
-	{	lastPath = path;
-		TweakCarLoad();
-	}
-	
-	//  save and reload  shift-alt-Z
-	if (!vis && shift)
-		TweakCarSave();
-}
-
-
-//  Get car file path
-bool App::GetCarPath(std::string* pathCar, std::string* pathSave, std::string* pathSaveDir,
-	std::string carname, bool asphalt, std::string tweakSetup, bool forceOrig)
-{
-	std::string file = carname + (asphalt ? "_a":"") + ".car",
-		pathOrig  = PATHMANAGER::GetCarPath()     + "/"+carname+"/"+ file,
-		pathUserD = PATHMANAGER::GetCarPathUser() + "/"+carname+"/"+ (tweakSetup != "" ? tweakSetup+"/" : ""),
-		pathUser  = pathUserD + file;
-
-	if (pathSave)  *pathSave = pathUser;
-	if (pathSaveDir)  *pathSaveDir = pathUserD;
-	
-	if (!forceOrig && PATHMANAGER::FileExists(pathUser))
-	{
-		*pathCar = pathUser;
-		return true;
-	}
-	*pathCar = pathOrig;
-	return false;
 }

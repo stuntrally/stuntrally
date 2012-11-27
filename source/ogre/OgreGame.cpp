@@ -70,10 +70,10 @@ App::App(SETTINGS *settings, GAME *game)
 	,lastAxis(-1), axisCnt(0), txtJAxis(0), txtJBtn(0), txtInpDetail(0), panInputDetail(0)
 	,edInputMin(0), edInputMax(0), edInputMul(0), edInputReturn(0), edInputIncrease(0), actDetail(0), cmbInpDetSet(0)
 	,liChamps(0),liStages(0), edChampStage(0),edChampEnd(0), imgChampStage(0), liNetEnd(0), valStageNum(0)
-	,iEdTire(0),iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
+	,iEdTire(0), iTireLoad(0), iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
 	,iTireSet(0), bchAbs(0),bchTcs(0), slSSSEff(0),slSSSVel(0)
 	,mStaticGeom(0), fLastFrameDT(0.001f)
-	,edTweak(0), txtTweakPath(0), cmbTweakCarSet(0), cmbTweakTireSet(0)
+	,edTweak(0), txtTweakPath(0), cmbTweakCarSet(0), cmbTweakTireSet(0), txtTweakTire(0)
 {
 	pSet = settings;
 	pGame->collision.pApp = this;

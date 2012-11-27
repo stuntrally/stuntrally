@@ -55,7 +55,7 @@ public:
 	
 	std::vector<GraphView*> graphs;  /// graphs
 	void CreateGraphs(),DestroyGraphs(),UpdateGraphs(),GraphsNewVals();
-	int iEdTire, iCurLat,iCurLong,iCurAlign, iUpdTireGr;  ///* tire edit */
+	int iEdTire, iTireLoad, iCurLat,iCurLong,iCurAlign, iUpdTireGr;  ///* tire edit */
 	
 	// This list holds new positions info for every CarModel
 	PosInfo carPoses[CarPosCnt][8];  // [carsNum8]
@@ -332,7 +332,7 @@ protected:
 	MyGUI::ComboBoxPtr cmbInpDetSet;  void comboInputPreset(CMB), comboInputKeyAllPreset(CMB);
 
 	///  tweak
-	MyGUI::EditPtr edTweak;  MyGUI::StaticTextPtr txtTweakPath;
+	MyGUI::EditPtr edTweak;  MyGUI::StaticTextPtr txtTweakPath, txtTweakTire;
 	MyGUI::ComboBoxPtr cmbTweakCarSet, cmbTweakTireSet;  void CmbTweakCarSet(CMB), CmbTweakTireSet(CMB), CmbEdTweakCarSet(MyGUI::EditPtr), CmbEdTweakTireSet(MyGUI::EditPtr);
 	void TweakToggle(), TweakCarSave(),TweakCarLoad(), TweakTireSave();
 	void btnTweakCarSave(WP),btnTweakCarLoad(WP), btnTweakTireSave(WP);

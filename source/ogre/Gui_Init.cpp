@@ -4,10 +4,7 @@
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "OgreGame.h"
-//#include "common/MaterialGen/MaterialGenerator.h"
-
 #include <boost/filesystem.hpp>
-
 #include <OgreRoot.h>
 #include <OgreRenderWindow.h>
 #include <OgreOverlay.h>
@@ -451,9 +448,10 @@ void App::InitGui()
 	///  tweak
 	edTweak = mGUI->findWidget<Edit>("TweakEdit");
 	txtTweakPath = mGUI->findWidget<StaticText>("TweakPath");
-	Btn("TweakCarSave", btnTweakCarSave);  Btn("TweakCarLoad", btnTweakCarLoad);
-	Btn("TweakTireSave", btnTweakTireSave);
-	Cmb(cmbTweakCarSet, "TweakCarSet", CmbTweakCarSet);   cmbTweakCarSet->eventEditTextChange += newDelegate(this, &App::CmbEdTweakCarSet);
+	txtTweakTire = mGUI->findWidget<StaticText>("TweakTireSaved");
+	Btn("TweakCarSave", btnTweakCarSave);  //Btn("TweakCarLoad", btnTweakCarLoad);
+	Btn("TweakTireSave", btnTweakTireSave);  //Btn("TweakTireLoad", btnTweakCarLoad);
+	//Cmb(cmbTweakCarSet, "TweakCarSet", CmbTweakCarSet);   cmbTweakCarSet->eventEditTextChange += newDelegate(this, &App::CmbEdTweakCarSet);
 	Cmb(cmbTweakTireSet,"TweakTireSet",CmbTweakTireSet);  cmbTweakTireSet->eventEditTextChange+= newDelegate(this, &App::CmbEdTweakTireSet);
 
 

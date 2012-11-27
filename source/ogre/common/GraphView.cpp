@@ -17,6 +17,7 @@ GraphView::GraphView(SceneManager* pSceneMgr, RenderWindow* pWindow, MyGUI::Gui*
 	:mSceneMgr(pSceneMgr), mWindow(pWindow), mGui(pGui)
 	,moLine(0),moBack(0),moGrid(0), node(0), iCurX(0)
 	,txt(0), txPosX(0.f), txH(0), txAlignY(-2)
+	,buffered(0), manualUpd(0)
 {  }
 
 //  same as in graph1..5 materials
@@ -61,9 +62,10 @@ void GraphView::moSetup(ManualObject* mo, bool dynamic, Ogre::uint8 RQG)
 	mo->setVisibilityFlags(RV_Hud);
 }
 
-void GraphView::Create(int length, String sMtr, float backAlpha)
+void GraphView::Create(int length, String sMtr, float backAlpha, bool buffered1)
 {
 	vals.resize(length);  iCurX = 0;  //size-1
+	buffered = buffered1;  manualUpd = buffered;//
 	node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	
 	//  graph line  ----------------------
@@ -140,7 +142,7 @@ void GraphView::CreateGrid(int numH, int numV, /*char clr,*/ float clr, float al
 	node->attachObject(moGrid);
 }
 
-// todo: auto val range ?
+/// todo: auto val range, auto grid lines, value texts..
 // gui tab [big]= edit pos,size,value,text,range,etc. save in graphs.xml
 
 
@@ -201,6 +203,7 @@ void GraphView::SetSize(float posX,float posY,float sizeX,float sizeY)  // [0..1
 //  Destroy
 void GraphView::Destroy()
 {
+	manualUpd = false;
 	if (mGui && txt)  {  mGui->destroyWidget(txt);  txt = 0;  }
 	if (moLine) {	mSceneMgr->destroyManualObject(moLine);  moLine = 0;  }
 	if (moBack) {	mSceneMgr->destroyManualObject(moBack);  moBack = 0;  }
@@ -230,9 +233,15 @@ void GraphView::AddVal(float val)
 
 //  Update  (on screen)
 //------------------------------------------------------------------
+void GraphView::SetUpdate()
+{
+	manualUpd = true;  // buffered
+}
 void GraphView::Update()
 {
 	if (!node || !moLine)  return;
+	if (buffered && !manualUpd)  return;
+	manualUpd = false;
 	
 	size_t size = vals.size();
 	int i = iCurX % size;  // vals id

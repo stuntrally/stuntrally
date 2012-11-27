@@ -45,7 +45,8 @@ public:
 	~TRACK();
 	
 	class GAME* pGame;  // for tire map
-	std::string sDefaultTire;
+	bool asphalt;  // for car config switch
+	std::string sDefaultTire;  //
 
 	void Clear();
 

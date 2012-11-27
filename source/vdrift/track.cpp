@@ -384,7 +384,7 @@ bool TRACK::LoadSurfaces(const string & trackpath)
 		if (!param.GetParam(*section + "." + "Tire", tireFile, error_output))
 		{
 			tireFile = sDefaultTire;  // default surface if not found
-			error_output << "Surface: Tire file not found, using default: " << tireFile << endl;
+			//error_output << "Surface: Tire file not found, using default: " << tireFile << endl;
 		}
 		id = pGame->tires_map[tireFile]-1;
 		if (id == -1)

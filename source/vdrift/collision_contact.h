@@ -25,7 +25,7 @@ public:
 	const TRACKSURFACE & GetSurface() const		{	return *surface;	}
 	
 	const BEZIER * GetPatch() const				{	return patch;	}
-	const btCollisionObject * GetObject() const	{	return col;	}
+	const btCollisionObject * GetColObj() const	{	return col;	}
 
 	
 	//  set contact data  (used by ray cast)

@@ -20,7 +20,8 @@ public:
 	//  Create
 	void Create(int length,			// values buffer length
 				Ogre::String sMtr,	// material for line
-				float backAlpha);	// background transparency 0..1
+				float backAlpha,	// background transparency 0..1
+				bool buffered=false);	// for static graphs, if true no update is done, do it after adding all new values
 
 	void CreateGrid(int numH,		// == horizontal lines number   1 only frame
 					int numV,		// || vertical lines number		2 frame with center, 4 frame and 3 lines, etc.
@@ -45,13 +46,15 @@ public:
 	
 	//  Update, fill
 	void AddVal(float val);  // adds value at end of graph, moves left (in buffer)
-	void Update();  // ogre update (on screen)
+	void Update();		// ogre update (on screen)
+	void SetUpdate();	// request update when buffered
 
 	void UpdTitle(Ogre::String title);
 
 protected:
 	std::vector<float> vals;  // values buffer
 	int iCurX;  // cur id to insert new val
+	bool buffered, manualUpd;
 
 	Ogre::SceneManager* mSceneMgr;  // for creating
 	Ogre::RenderWindow* mWindow;    // gui resolution-

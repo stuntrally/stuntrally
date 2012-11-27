@@ -450,18 +450,6 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			//tire[leftside].SetTread(tread);
 			//tire[rightside].SetTread(tread);
 		}
-
-		
-		/*QTimer tir;  tir.update(); /// time
-		for (int i = 0; i < 4; i++)
-		{
-			tire[WHEEL_POSITION(i)].CalculateSigmaHatAlphaHat();
-			//todo: copy, left and right tires are same
-			//and make option to have 4 tires the same
-		}
-		tir.update(); /// time
-		float dt = tir.dt * 1000.f;
-		LogO(Ogre::String(":::: Time tires: ") + toStr(dt) + " ms");*/
 	}
 
 	//load the mass-only particles
@@ -508,9 +496,11 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 
 	//load the max steering angle
 	{
-		float maxangle = 45.0f;
+		float maxangle = 30.f;
 		if (!c.GetParam("steering.max-angle", maxangle, error_output))  return false;
-		SetMaxSteeringAngle ( maxangle );
+		if (pGame->track.asphalt)  //*** config par
+			maxangle *= 0.7f;
+		SetMaxSteeringAngle( maxangle );
 	}
 	///car angular damping -new
 	{

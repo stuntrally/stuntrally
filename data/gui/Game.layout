@@ -2796,7 +2796,7 @@
 					<Property key="TextColour" value="0.95 1.0 1.0"/>
 					<UserString key="RelativeTo" value="WndTweak"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="12 30 88 24">
+				<!--<Widget type="TextBox" skin="TextBox" position="12 30 88 24">
 					<Property key="InheritsAlpha" value="false"/>
 					<Property key="Caption" value="#{Setup}"/>
 					<Property key="TextColour" value="0.8 0.8 1.0"/>
@@ -2814,7 +2814,7 @@
 					<Property key="TextColour" value="0.6 0.82 1.0"/>
 					<Property key="Colour" value="0.6 0.82 1.0"/>
 					<UserString key="RelativeTo" value="WndTweak"/>
-				</Widget>
+				</Widget>-->
 				<Widget type="Button" skin="Button" position="560 24 120 32" name="TweakCarSave">
 					<Property key="InheritsAlpha" value="false"/>
 					<Property key="Caption" value="#{RplSave}"/>
@@ -2840,6 +2840,24 @@
 					<Property key="Colour" value="0.7 0.5 0.9"/>
 					<UserString key="RelativeTo" value="WndTweak"/>
 				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="12 30 88 24">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Caption" value="#{Setup}"/>
+					<Property key="TextColour" value="0.8 0.8 1.0"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="12 60 400 24" name="TweakTireSaved">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="TextColour" value="0.8 0.8 1.0"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>
+				<!--<Widget type="Button" skin="Button" position="420 24 120 32" name="TweakTireLoad">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Caption" value="#{RplLoad}"/>
+					<Property key="TextColour" value="0.6 0.82 1.0"/>
+					<Property key="Colour" value="0.6 0.82 1.0"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>-->
 				<Widget type="Button" skin="Button" position="560 24 120 32" name="TweakTireSave">
 					<Property key="InheritsAlpha" value="false"/>
 					<Property key="Caption" value="#{RplSave}"/>

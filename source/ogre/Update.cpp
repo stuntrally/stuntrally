@@ -138,33 +138,34 @@ bool App::frameStart(Real time)
 			mul *= 0.005;  // par
 
 			CARDYNAMICS& cd = carModels[0]->pCar->dynamics;
+			CARTIRE* tire = cd.GetTire(FRONT_LEFT);
 			if (iEdTire == 1)  // longit |
 			{
-				Dbl& val = cd.GetTire(FRONT_LEFT)->longitudinal[iCurLong];  // modify 1st
+				Dbl& val = tire->longitudinal[iCurLong];  // modify 1st
 				val += mul*k * (1 + abs(val));
 				for (int i=1; i<4; ++i)
 					cd.GetTire(WHEEL_POSITION(i))->longitudinal[iCurLong] = val;  // copy for rest
 			}
 			else if (iEdTire == 0)  // lateral --
 			{
-				Dbl& val = cd.GetTire(FRONT_LEFT)->lateral[iCurLat];
+				Dbl& val = tire->lateral[iCurLat];
 				val += mul*k * (1 + abs(val));
 				for (int i=1; i<4; ++i)
 					cd.GetTire(WHEEL_POSITION(i))->lateral[iCurLat] = val;
 			}
 			else  // align o
 			{
-				Dbl& val = cd.GetTire(FRONT_LEFT)->aligning[iCurAlign];
+				Dbl& val = tire->aligning[iCurAlign];
 				val += mul*k * (1 + abs(val));
 				for (int i=1; i<4; ++i)
 					cd.GetTire(WHEEL_POSITION(i))->aligning[iCurAlign] = val;
 			}
 
 			//  update hat, 1st
-			cd.GetTire(FRONT_LEFT)->CalculateSigmaHatAlphaHat();
+			tire->CalculateSigmaHatAlphaHat();
 			for (int i=1; i<4; ++i)  // copy for rest
-			{	cd.GetTire(WHEEL_POSITION(i))->sigma_hat = cd.GetTire(FRONT_LEFT)->sigma_hat;
-				cd.GetTire(WHEEL_POSITION(i))->alpha_hat = cd.GetTire(FRONT_LEFT)->alpha_hat;
+			{	cd.GetTire(WHEEL_POSITION(i))->sigma_hat = tire->sigma_hat;
+				cd.GetTire(WHEEL_POSITION(i))->alpha_hat = tire->alpha_hat;
 			}
 			iUpdTireGr = 1;
 		}

@@ -221,6 +221,7 @@ void App::LoadGame()  // 2
 	bool vdr = IsVdrTrack();
 	sc->LoadXml(TrkDir()+"scene.xml", !vdr/*for asphalt*/);
 	sc->vdr = vdr;
+	pGame->track.asphalt = sc->asphalt;  //*
 	pGame->track.sDefaultTire = sc->asphalt ? "asphalt" : "gravel";  //*
 
 	pGame->NewGameDoLoadTrack();
