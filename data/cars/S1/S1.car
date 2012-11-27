@@ -34,7 +34,7 @@ start-offsetY = 0.6
 #  engine
 #---------------------------
 [ engine ]
-position = 0.04, 1.4, 0.5
+position = 0.04, 1.4, 0.3
 mass = 250.0
 peak-engine-rpm = 6500
 rpm-limit = 7000.0
@@ -142,7 +142,7 @@ handbrake = 4.9
 
 
 [ driver ]
-position = -0.3, 0.4, 0.5
+position = -0.3, 0.4, 0.2
 mass = 50.0
 view-position = 0.2, -0.4, 0.35
 hood-mounted-view-position = -0.57, 0, 0.46
@@ -222,17 +222,17 @@ hinge = 0.25, -1.94, 0.0
 # (for car total mass and inertia) also use engine mass and position
 #---------------------------
 [ particle-00 ]  # rear
-mass = 230
-position =  1.0, -1.65, -0.06
+mass = 235
+position =  1.0, -1.7, -0.06
 
 [ particle-01 ]
-mass = 230
-position = -1.0, -1.65, -0.06
+mass = 235
+position = -1.0, -1.7, -0.06
 
 [ particle-02 ]  # front
-mass = 230
-position =  1.0,  1.65, -0.06
+mass = 235
+position =  1.0,  1.7, -0.06
 
 [ particle-03 ]
-mass = 230
-position = -1.0,  1.65, -0.06
+mass = 235
+position = -1.0,  1.7, -0.06
