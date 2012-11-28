@@ -64,6 +64,7 @@ if(BUILD_EDITOR)
 		vdrift/track_object.cpp
 		vdrift/model_joe03.cpp
 		vdrift/roadpatch.cpp
+		vdrift/cartire.cpp
 		ogre/QTimer.cpp
 		ogre/common/*.cpp
 		ogre/common/MaterialGen/*.cpp
