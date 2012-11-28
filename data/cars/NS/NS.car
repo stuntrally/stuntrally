@@ -39,16 +39,17 @@ position = 0.0, 1.04, 0.44
 mass = 150.0 
 peak-engine-rpm = 6800.0 
 rpm-limit = 8000.0 
-inertia = 0.35 
+inertia = 0.4
 start-rpm = 1000 
 stall-rpm = 350 
 fuel-consumption = 1e-9 
 torque-friction = 0.0001
-torque-curve-00 = 1000, 425
-torque-curve-01 = 1500, 431
-torque-curve-02 = 2000, 438
-torque-curve-03 = 2500, 462
-torque-curve-04 = 3000, 466
+torque-val-mul = 1.1
+torque-curve-00 = 1000, 365
+torque-curve-01 = 1500, 411
+torque-curve-02 = 2000, 428
+torque-curve-03 = 2500, 453
+torque-curve-04 = 3000, 472
 torque-curve-05 = 3500, 493
 torque-curve-06 = 4000, 504
 torque-curve-07 = 4500, 495
@@ -60,10 +61,10 @@ torque-curve-12 = 7000, 350
 
 
 [ clutch ] 
-sliding = 0.27 
-radius = 0.1 
+sliding = 0.2
+radius = 0.1
 area = 0.75 
-max-pressure = 90079.26 
+max-pressure = 70000
 
 #  gearbox
 #---------------------------
@@ -114,7 +115,7 @@ anti-roll = 20000
 #  tires (more in .tire)
 #---------------------------
 [ tire-both ] 
-radius = 0.31595 
+radius = 0.316
 rolling-resistance = 1.3e-2, 6.5e-6 
 rotational-inertia = 10 
 tread = 0.0 
@@ -139,8 +140,8 @@ handbrake = 4.8
 
 
 [ driver ] 
-position = -0.38, -0.05, 0.13
-mass = 90.0
+position = -0.02, -0.05, 0.13
+mass = 80.0
 view-position = -0.5, 0, 0.5
 hood-mounted-view-position = -0.5, 0, 0.5
 
@@ -153,20 +154,20 @@ frontal-area = 2.37
 drag-coefficient = 0.52 
 
 [ wing-front ] 
-position = 0.0, 1.9, 0.60 
-frontal-area = 0.2 
-drag-coefficient = 0.0 
+position = 0.0, 1.9, 0.60
+frontal-area = 0.1
+drag-coefficient = 0.0
 surface-area = 0.60
 lift-coefficient = -4.0
-efficiency = 0.95 
+efficiency = 0.92
 
 [ wing-rear ] 
-position = 0.0, -2.14, 0.37 
-frontal-area = 0.05 
-drag-coefficient = 0.0 
-surface-area = 0.5 
+position = 0.0, -1.5, 0.30
+frontal-area = 0.05
+drag-coefficient = 0.0
+surface-area = 0.5
 lift-coefficient = -4.0
-efficiency = 0.95 
+efficiency = 0.92
 
 
 # wheels front (position and suspension mount)
@@ -184,7 +185,7 @@ hinge = 0,0,0
 [ wheel-FL ] 
 position = -0.72, 1.37, -0.50 
 roll-height = 0.88
-mass = 20 
+mass = 20
 restitution = 0.1 
 
 [ suspension-FL ] 

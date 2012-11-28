@@ -44,6 +44,7 @@ start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
 torque-friction = 0.0001
+torque-val-mul = 0.90
 torque-curve-00 = 1000, 425
 torque-curve-01 = 1500, 455
 torque-curve-02 = 2000, 488
@@ -153,14 +154,14 @@ drag-coefficient = 0.3
 
 [ wing-front ]
 position = 0.0, 1.9, 0.20
-frontal-area = 0.2
+frontal-area = 0.1
 drag-coefficient = 0.0
 surface-area = 0.65
 lift-coefficient = -4.0
 efficiency = 0.95
 
 [ wing-rear ]
-position = 0.0, -2.14, 0.37
+position = 0.0, -1.5, 0.30
 frontal-area = 0.05
 drag-coefficient = 0.0
 surface-area = 0.5
@@ -227,16 +228,16 @@ position = 0.0, 0.96, 0.11
 
 [ particle-02 ]  # rear
 mass = 230.0
-position =  1.1,-1.7, 0.01
+position =  1.05,-1.7, 0.01
 
 [ particle-03 ]
 mass = 230.0
-position = -1.1,-1.7, 0.01
+position = -1.05,-1.7, 0.01
 
 [ particle-04 ]  # front
 mass = 230.0
-position =  1.1, 1.7, 0.01
+position =  1.05, 1.7, 0.01
 
 [ particle-05 ]
 mass = 230.0
-position = -1.1, 1.7, 0.01
+position = -1.05, 1.7, 0.01
