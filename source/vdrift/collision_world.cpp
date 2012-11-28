@@ -419,7 +419,7 @@ bool COLLISION_WORLD::CastRay(
 
 		if (col->isStaticObject() /*&& (c->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE == 0)*/)
 		{
-			int ptrU = (int)col->getCollisionShape()->getUserPointer(), su = ptrU & 0xFF00, mtr = ptrU & 0xFF;  //void*
+			long long ptrU = (long long)col->getCollisionShape()->getUserPointer(), su = ptrU & 0xFF00, mtr = ptrU & 0xFF;  //void*
 
 			///  set surface, basing on shape type  -----------------
 			
