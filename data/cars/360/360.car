@@ -149,7 +149,7 @@ handbrake = 3.6
 position = -0.28, 0.12, -0.12
 mass = 90.0
 view-position = 0.3, -0.3, 0.4
-hood-mounted-view-position = -0.7, 0, 0.4
+hood-mounted-view-position = -0.7, 0, 0.45
 
 
 #  aerodynamics

@@ -122,17 +122,17 @@ tread = 0.0
 #  brakes
 #---------------------------
 [ brakes-front ]
-friction = 0.83
-max-pressure = 1.5e6
-bias = 0.55
-radius = 0.17
+friction = 0.87
+max-pressure = 2.5e6
+bias = 0.6
+radius = 0.18
 area = 0.015
 
 [ brakes-rear ]
-friction = 0.83
-max-pressure = 1.5e6
-bias = 0.45
-radius = 0.14
+friction = 0.87
+max-pressure = 2.5e6
+bias = 0.4
+radius = 0.18
 area = 0.015
 handbrake = 4.5
 
@@ -141,7 +141,7 @@ handbrake = 4.5
 position = 0, 0.37, -0.03
 mass = 90.0
 view-position = -0.3, -0.4, 0.4
-hood-mounted-view-position = 0, 0.8, 0.3
+hood-mounted-view-position = 0, 0.8, 0.36
 
 
 #  aerodynamics
