@@ -11,6 +11,7 @@
 #include "ChampsXml.h"
 
 #include "ReplayGame.h"
+#include "../vdrift/cardefs.h"
 #include "CarModel.h"
 #include "CarReflection.h"
 
@@ -56,6 +57,9 @@ public:
 	std::vector<GraphView*> graphs;  /// graphs
 	void CreateGraphs(),DestroyGraphs(),UpdateGraphs(),GraphsNewVals();
 	int iEdTire, iTireLoad, iCurLat,iCurLong,iCurAlign, iUpdTireGr;  ///* tire edit */
+	//  car perf test
+	bool bPerfTest;  EPerfTest iPerfTestStage;
+	void PerfLogVel(class CAR* pCar, float time);
 	
 	// This list holds new positions info for every CarModel
 	PosInfo carPoses[CarPosCnt][8];  // [carsNum8]

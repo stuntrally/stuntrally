@@ -37,6 +37,8 @@ enum CARINPUT
 	ALL
 };  }
 
+enum EPerfTest {PT_StartWait=0, PT_Accel, PT_Brake};
+
 const int Ncrashsounds = 12, Nwatersounds = 3;
 
 #ifdef _WIN32

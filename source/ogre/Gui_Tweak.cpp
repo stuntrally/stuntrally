@@ -194,7 +194,7 @@ void App::TweakToggle()
 bool App::GetCarPath(std::string* pathCar, std::string* pathSave, std::string* pathSaveDir,
 	std::string carname, bool asphalt, std::string tweakSetup, bool forceOrig)
 {
-	std::string file = carname /*+ (asphalt ? "_a":"")*/ + ".car",
+	std::string file = carname + ".car",
 		pathOrig  = PATHMANAGER::GetCarPath()     + "/"+carname+"/"+ file,
 		pathUserD = PATHMANAGER::GetCarPathUser() + "/"+carname+"/"+ (tweakSetup != "" ? tweakSetup+"/" : ""),
 		pathUser  = pathUserD + file;

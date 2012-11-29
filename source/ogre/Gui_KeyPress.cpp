@@ -102,11 +102,15 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 
 		//  new game - reload   not in multiplayer
 		if (action("RestartGame") && !mClient)
-		{	NewGame();  return false;	}
+		{
+			bPerfTest = ctrl;  // ctrl-F5 start perf test
+			iPerfTestStage = PT_StartWait;
+			NewGame();  return false;
+		}
 
 		//  new game - fast (same track & cars)
 		if (action("ResetGame") && !mClient)
-		{
+		{	
 			for (int c=0; c < carModels.size(); ++c)
 			{
 				CarModel* cm = carModels[c];

@@ -30,7 +30,8 @@ public:
 	
 	const std::vector <float> & ProcessInput(int player,
 		float carspeed, float sss_effect, float sss_velfactor,
-		bool forceBrake=false);  // for race countdown
+		bool forceBrake=false,  // for race countdown
+		bool bPerfTest=false, EPerfTest iPerfTestStage=PT_StartWait);  // perf test
 };
 
 #endif

@@ -74,6 +74,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,iTireSet(0), bchAbs(0),bchTcs(0), slSSSEff(0),slSSSVel(0)
 	,mStaticGeom(0), fLastFrameDT(0.001f)
 	,edTweak(0), txtTweakPath(0), cmbTweakCarSet(0), cmbTweakTireSet(0), txtTweakTire(0)
+	,bPerfTest(0),iPerfTestStage(PT_StartWait)
 {
 	pSet = settings;
 	pGame->collision.pApp = this;

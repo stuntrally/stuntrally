@@ -29,16 +29,43 @@ bool action(const std::string& name)
 
 ///  Process Input
 const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player,
-	float carspeed, float sss_effect, float sss_velfactor, bool forceBrake)
+	float carspeed, float sss_effect, float sss_velfactor,
+	bool forceBrake, bool bPerfTest, EPerfTest iPerfTestStage)
 {
 	assert(inputs.size() == CARINPUT::ALL);
 
 	lastinputs = inputs;
-
-	if (OISB::System::getSingletonPtr() == NULL)  return inputs;
 	
+	if (OISB::System::getSingletonPtr() == NULL)  return inputs;
 	const std::string sPlr = "Player" + toStr(player+1) + "/";
 
+	//-----------------------------------------------------------------
+	if (bPerfTest)  // Perf test, automatic car input
+	{
+  		//CLUTCH //?-
+		inputs[CARINPUT::THROTTLE] = iPerfTestStage == PT_Accel ? 1.f : 0.f;
+		inputs[CARINPUT::BRAKE]    = iPerfTestStage == PT_Brake ? 1.f : 0.f;
+
+		inputs[CARINPUT::STEER_RIGHT] = 0.f;
+		inputs[CARINPUT::STEER_LEFT]  = 0.f;
+		
+		inputs[CARINPUT::SHIFT_UP]   = 0.f;
+		inputs[CARINPUT::SHIFT_DOWN] = 0.f;
+		
+		inputs[CARINPUT::HANDBRAKE] = iPerfTestStage == PT_StartWait ? 1.f : 0.f;
+		inputs[CARINPUT::BOOST]     = 0.f;
+		inputs[CARINPUT::FLIP]      = 0.f;
+		
+		inputs[CARINPUT::PREV_CAM]	= action(sPlr+"PrevCamera");
+		inputs[CARINPUT::NEXT_CAM]	= action(sPlr+"NextCamera");
+
+		inputs[CARINPUT::LAST_CHK]	= 0.f;
+		inputs[CARINPUT::REWIND]	= 0.f;
+
+		return inputs;
+	}
+	//-----------------------------------------------------------------
+	
 	//  throttle, brake
 	bool oneAxis = false;  // when brake not bound
 	OISB::AnalogAxisAction* act = static_cast<OISB::AnalogAxisAction*>(
@@ -48,17 +75,17 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player,
 		if (binding)
 			oneAxis = binding->getNumBindables() == 0;  }
 
-if (oneAxis)
-{
-	const float val = forceBrake ? 0.f : analogAction(sPlr+"Throttle", true);
-	inputs[CARINPUT::THROTTLE] = val > 0.f ?  val : 0.f;
-	inputs[CARINPUT::BRAKE]    = val < 0.f ? -val : 0.f;
-}else{
-	inputs[CARINPUT::THROTTLE] = forceBrake ? 0.f : analogAction(sPlr+"Throttle");
-	const float val = forceBrake ? 0.f : analogAction(sPlr+"Brake");
-	const float deadzone = 0.0001f;  // sensible deadzone for braking
-	inputs[CARINPUT::BRAKE]    = (val < deadzone) ? 0.f : val;  
-}
+	if (oneAxis)
+	{
+		const float val = forceBrake ? 0.f : analogAction(sPlr+"Throttle", true);
+		inputs[CARINPUT::THROTTLE] = val > 0.f ?  val : 0.f;
+		inputs[CARINPUT::BRAKE]    = val < 0.f ? -val : 0.f;
+	}else{
+		inputs[CARINPUT::THROTTLE] = forceBrake ? 0.f : analogAction(sPlr+"Throttle");
+		const float val = forceBrake ? 0.f : analogAction(sPlr+"Brake");
+		const float deadzone = 0.0001f;  // sensible deadzone for braking
+		inputs[CARINPUT::BRAKE]    = (val < deadzone) ? 0.f : val;  
+	}
 
 	//  steering
 	float val = forceBrake ? 0.f : analogAction(sPlr+"Steering", true);

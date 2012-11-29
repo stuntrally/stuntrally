@@ -15,6 +15,18 @@
 using namespace Ogre;
 
 
+//  perf log car vel
+void App::PerfLogVel(CAR* pCar, float time)
+{
+	pGame->info_output << fToStr(time,2,5) << "s, " << fToStr(pCar->GetSpeed()*3.6f, 1,5) << " kmh, gear " << pCar->GetGear() << ", rpm " << fToStr(pCar->GetEngineRPM(),0,4) \
+		//<< ", clu " << fToStr(pCar->GetClutch(), 1,4)
+		//<< ", sli " << fToStr(pCar->dynamics.tire[0].slide, 1,4)
+		//<< ", slp " << fToStr(pCar->dynamics.tire[1].slip, 1,4)
+		//<< ", f " << pCar->GetWheelContact(WHEEL_POSITION(0)).surface->frictionTread
+		// !... downforce, drag
+		<< std::endl;
+}
+
 
 //  newPoses - Get new car pos from game
 //---------------------------------------------------------------------------------------------------------------
@@ -41,18 +53,116 @@ void App::newPoses(float time)  // time only for camera update
 		QUATERNION<float> rot, whRot[4];
 
 
-		///  car perf test  to compare real...
-		#if 0
-		static float t = 0.f;
-		if (pCar->GetSpeed() < 0.5)  t = 0.f;
-		t += time;
-		pGame->info_output << fToStr(t,2,5) << "s, " << fToStr(pCar->GetSpeed()*3.6, 1,5) << " kmh, gear " << pCar->GetGear() << ", rpm " << fToStr(pCar->GetEngineRPM(),0,4)
-			<< ", clu " << fToStr(pCar->GetClutch(), 1,4)
-			//<< ", sli " << fToStr(pCar->dynamics.tire[0].slide, 1,4)
-			//<< ", slp " << fToStr(pCar->dynamics.tire[1].slip, 1,4)
-			//<< ", f " << pCar->GetWheelContact(WHEEL_POSITION(0)).surface->frictionTread
-			<< std::endl;
-		#endif
+		///  car perf test  logic ...
+		//-----------------------------------------------------------------------
+		if (bPerfTest && c==0)
+		{
+			static float ti = 0.f;
+			static int vi = 0;
+			//const float logvel = 10.f, MaxVel = 160.f;  // kmh
+			const float logvel = 10.f, MaxVel = 160.f;  // kmh
+			float timeQuarterMile = 0.f;  const float distQuarterMile = 402.336;  //m
+			static MATHVECTOR<Dbl,3> posSt, dist;
+			static String s0to60,s0to100,s0to160;  float timeStop160,timeStop100,timeStop60;
+
+			switch (iPerfTestStage)
+			{
+				case PT_StartWait:
+				{	int whStill = 0;
+					for (int i=0; i<4; ++i)
+					{
+						WHEEL_POSITION wp = (WHEEL_POSITION)i;
+						bool inAir = pCar->GetWheelContact(wp).GetColObj() == NULL;
+						const CARSUSPENSION& susp = pCar->dynamics.GetSuspension(wp);
+						if (!inAir && susp.GetVelocity() < 0.001)  ++whStill;
+					}
+					if (whStill == 4)
+					{
+						iPerfTestStage = PT_Accel;  ti = 0.f;  vi = 0;
+						posSt = pCar->GetPosition();  timeQuarterMile = 0.f;
+					}
+				}	break;
+			
+				case PT_Accel:
+				{
+					dist = pCar->GetPosition() - posSt;
+					if (timeQuarterMile < 0.01f && dist.Magnitude() > distQuarterMile)
+						timeQuarterMile = ti;  // will be 0 if didnt drive that far
+					//LogO("dist: "+fToStr(dist.Magnitude(),2,5));
+
+					float kmh = pCar->GetSpeed()*3.6f;
+					int ikmh = 	vi * logvel;
+					if (kmh >= ikmh)
+					{	PerfLogVel(pCar,ti);
+						if (ikmh == 60)    s0to60 = "Time [s] 0.. 60 kmh: "+fToStr(ti,2,5);
+						if (ikmh == 100)  s0to100 = "Time [s] 0..100 kmh: "+fToStr(ti,2,5);
+						if (ikmh == 160)  s0to160 = "Time [s] 0..160 kmh: "+fToStr(ti,2,5);
+						++vi;
+					}
+					if (kmh >= MaxVel)
+					{	//PerfLogVel(pCar,t);
+						iPerfTestStage = PT_Brake;  ti = 0.f;  vi = 0;
+					}
+				}	break;
+			
+				case PT_Brake:
+				{
+					float kmh = pCar->GetSpeed()*3.6f;
+					int ikmh = 	MaxVel - vi * logvel;
+					if (kmh <= ikmh)
+					{	PerfLogVel(pCar,ti);
+						if (ikmh == 100)  timeStop100 = ti;  //160-100
+						if (ikmh == 60)   timeStop60 = ti;  // 160-60
+						++vi;
+					}
+					if (kmh <= 1.f)
+					{	PerfLogVel(pCar,ti);
+						bPerfTest = false;  timeStop160 = ti;  ti = 0.f;
+						
+						//  engine stats
+						//------------------------
+						pGame->info_output << std::string("====  CAR engine  ====\n");
+						const CARENGINE& eng = pCar->dynamics.engine;
+						float maxTrq = 0.f, maxPwr = 0.f;
+						int rpmMaxTq = 0, rpmMaxPwr = 0;
+
+						for (int r = eng.GetStartRPM(); r < eng.GetRPMLimit(); r += 10)
+						{	float tq = eng.GetTorqueCurve(1.0, r);
+							float pwr = tq * 2.0 * PI_d * r / 60.0 * 0.001;  //kW  // 1kW = 1.341 bhp
+							if (tq > maxTrq)  {  maxTrq = tq;  rpmMaxTq = r;  }
+							if (pwr > maxPwr)  {  maxPwr = pwr;  rpmMaxPwr = r;  }
+							if (r % 100 == 0)
+								pGame->info_output << "rpm: "+fToStr(r,0,4)+" Nm:"+fToStr(tq,0,4)+" bhp:"+fToStr(pwr*1.341,0,4)+"\n";
+						}
+
+						//  summary
+						//------------------------------------------------
+						const MATHVECTOR<Dbl,3>& com = pCar->dynamics.center_of_mass;
+						pGame->info_output << std::string("====  CAR Perf test summary  ====\n") +
+							"Car:  "+pCar->pCarM->sDirname+"\n"+
+							"Mass [kg]:  "+fToStr(pCar->GetMass(),0,4)+"\n"+
+							"Center of mass [m] L,W,H:  "+fToStr(com[0],3,5)+", "+fToStr(com[1],3,5)+", "+fToStr(com[2],3,5)+"\n"+
+							"Max torque [Nm]:  "+fToStr(maxTrq,1,5)+" at "+fToStr(rpmMaxTq,0,4)+" rpm\n"+
+							//"Max power  [kW]:  "+fToStr(maxPwr,3,5)+" at "+fToStr(rpmMaxPwr,0,4)+" rpm\n"+
+							"Max power  [bhp]: "+fToStr(maxPwr*1.341,1,5)+" at "+fToStr(rpmMaxPwr,0,4)+" rpm\n"+
+							s0to60+"\n"+
+							s0to100+"\n"+
+							s0to160+"\n"+
+							//"1/4 mile (402m) time:  "+fToStr(timeQuarterMile,2,5)+"\n"+
+							"Stop time 160..0 kmh:  "+fToStr(timeStop160,2,5)+"\n"+
+							"Stop time 100..0 kmh:  "+fToStr(timeStop160-timeStop100,2,5)+"\n"+
+							"Stop time  60..0 kmh:  "+fToStr(timeStop160-timeStop60,2,5)+"\n"+
+							"====\n";
+						/*TODO
+						Maximum speed: 237.6 kmh at 16.9 s
+						Downforce, drag at each speed,  1696.53 N; -1.92506:1 lift/drag
+						*/
+					}
+				}	break;
+			}
+			ti += time;
+		}
+
 
 		///-----------------------------------------------------------------------
 		//  play  get data from replay / ghost

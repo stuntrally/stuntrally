@@ -381,7 +381,8 @@ bool TRACK::LoadSurfaces(const string & trackpath)
 
 		///---
 		string tireFile;
-		if (!param.GetParam(*section + "." + "Tire", tireFile, error_output))
+		//if (!param.GetParam(*section + "." + "Tire", tireFile, error_output))
+		if (!param.GetParam(*section + "." + "Tire", tireFile))
 		{
 			tireFile = sDefaultTire;  // default surface if not found
 			//error_output << "Surface: Tire file not found, using default: " << tireFile << endl;

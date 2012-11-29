@@ -83,7 +83,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 		
 		pCar = pGame->LoadCar(pathCar, sDirname, pos, rot, true, false, type == CT_REMOTE, index);
 
-		///  car perf test ...
+		///  car perf test  not working...
 		#if 0
 		QTimer ti;  ti.update();  /// time
 

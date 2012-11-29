@@ -333,7 +333,8 @@ void GAME::UpdateCarInputs(CAR & car)
 	float sss_eff = settings->sss_effect[i], sss_velf = settings->sss_velfactor[i];
 	float carspeed = car.GetSpeed();
 
-	carinputs = carcontrols_local.second.ProcessInput(car.id, carspeed, sss_eff, sss_velf, forceBrake);
+	carinputs = carcontrols_local.second.ProcessInput(car.id, carspeed, sss_eff, sss_velf,
+		forceBrake, pOgreGame->bPerfTest, pOgreGame->iPerfTestStage);
 
 	car.HandleInputs(carinputs, TickPeriod());
 }
