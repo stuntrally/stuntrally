@@ -51,6 +51,42 @@ void App::CreateGraphs()
 
 	switch (pSet->graphs_type)
 	{
+	case Gh_Fps:  /// fps
+		for (int i=0; i < 2; ++i)
+		{
+			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			int c = i;
+			gv->Create(400, "graph"+toStr(c+1), i==0 ? 0.4f : 0.f);
+			if (i == 0)
+			{	gv->CreateGrid(4,0, 0.7f, 1.0f);
+				gv->CreateTitle("120  Fps\n\n\n\n\n\n\n60",	c, 0.0f, -2, 24,10);
+			}
+			gv->SetSize(0.f, 0.24f, 0.4f, 0.30f);
+
+			gv->SetVisible(pSet->show_graphs);
+			graphs.push_back(gv);
+		}	break;
+
+	case Gh_CarAccelG:  /// car accel
+		for (int i=0; i < 3; ++i)
+		{
+			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			const int t[3] = {0,1,2};
+			int c = t[i];
+			gv->Create(256, "graph"+toStr(c+1), i==0 ? 0.45f : 0.f);
+			if (i == 0)  gv->CreateGrid(6,0, 0.7f, 1.0f);
+			switch(i)
+			{
+				case 0:  gv->CreateTitle("\n\n\n\n\n\n\n0 x",					c, 0.0f, -2, 24, 12);  break;
+				case 1:  gv->CreateTitle("Car accel G's\n\n\n\n\n\n\n       y",	c, 0.f,-2, 24, 12);  break;
+				case 2:  gv->CreateTitle("\n\n\n\n\n\n\n\n\n\n\n0 z",			c, 0.f,-2, 24, 12);  break;
+			}
+			gv->SetSize(0.f, 0.24f, 0.4f, 0.30f);
+
+			gv->SetVisible(pSet->show_graphs);
+			graphs.push_back(gv);
+		}	break;
+
 	case Gh_BulletHit:  /// bullet hit
 		for (int i=0; i < 5; ++i)
 		{
@@ -128,6 +164,7 @@ void App::CreateGraphs()
 			graphs.push_back(gv);
 		}	break;
 
+
 	case Gh_TireEdit:  /// tires edit pacejka
 		for (int i=0; i < TireNG*2; ++i)
 		{
@@ -164,54 +201,18 @@ void App::CreateGraphs()
 		}
 		break;
 	
-	case Gh_CarAccelG:  /// car accel
-		for (int i=0; i < 3; ++i)
-		{
-			GraphView* gv = new GraphView(scm,mWindow,mGUI);
-			const int t[3] = {0,1,2};
-			int c = t[i];
-			gv->Create(256, "graph"+toStr(c+1), i==0 ? 0.45f : 0.f);
-			if (i == 0)  gv->CreateGrid(6,0, 0.7f, 1.0f);
-			switch(i)
-			{
-				case 0:  gv->CreateTitle("\n\n\n\n\n\n\n0 x",					c, 0.0f, -2, 24, 12);  break;
-				case 1:  gv->CreateTitle("Car accel G's\n\n\n\n\n\n\n       y",	c, 0.f,-2, 24, 12);  break;
-				case 2:  gv->CreateTitle("\n\n\n\n\n\n\n\n\n\n\n0 z",			c, 0.f,-2, 24, 12);  break;
-			}
-			gv->SetSize(0.f, 0.24f, 0.4f, 0.30f);
-
-			gv->SetVisible(pSet->show_graphs);
-			graphs.push_back(gv);
-		}	break;
-		
-	case Gh_Fps:  /// fps
-		for (int i=0; i < 2; ++i)
-		{
-			GraphView* gv = new GraphView(scm,mWindow,mGUI);
-			int c = i;
-			gv->Create(400, "graph"+toStr(c+1), i==0 ? 0.4f : 0.f);
-			if (i == 0)
-			{	gv->CreateGrid(4,0, 0.7f, 1.0f);
-				gv->CreateTitle("120  Fps\n\n\n\n\n\n\n60",	c, 0.0f, -2, 24,10);
-			}
-			gv->SetSize(0.f, 0.24f, 0.4f, 0.30f);
-
-			gv->SetVisible(pSet->show_graphs);
-			graphs.push_back(gv);
-		}	break;
 
 	case Gh_TorqueCurve:  /// torque curves, gears
 		for (int i=0; i < 6; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
-			int c = i;
-			gv->Create(512, String("graphA")+toStr(c), i>0 ? 0.f : 0.25f, true);
-			if (c == 0)
+			gv->Create(512, String("graphA")+toStr(i), i>0 ? 0.f : 0.25f, true);
+			if (i == 0)
 			{	gv->CreateGrid(4,4, 0.f, 0.5f);
 				gv->CreateTitle("", 7, 0.86f, -2, 24, 30);
-			}else if (c==1)
+			}else if (i==1)
 				gv->CreateTitle("Wheel  Torque curves\n2400 Nm", 5, 0.0f, -2, 24, 2);
-			else if (c==2)
+			else if (i==2)
 				gv->CreateTitle("Car Vel.\n200 kmh", 6, 0.86f, 3, 24, 2);
 			
 			gv->SetSize(0.00f, 0.40f, 0.45f, 0.50f);
@@ -220,6 +221,25 @@ void App::CreateGraphs()
 			graphs.push_back(gv);
 		}	break;
 		
+	case Gh_Engine:  /// engine torque, power
+		for (int i=0; i < 2; ++i)
+		{
+			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			gv->Create(512, String("graph")+toStr(i*3+1), i>0 ? 0.f : 0.4f, true);
+			if (i == 0)
+			{	gv->CreateGrid(8,8, 0.f, 0.5f);
+				gv->CreateTitle("Engine Torque  900 Nm", 0, 0.0f, -2, 24, 30);
+			}else if (i==1)
+				gv->CreateTitle("\nPower 600 bhp", 3, 0.0f, -2, 24, 2);
+			//rpm min,max..
+			
+			gv->SetSize(0.00f, 0.41f, 0.35f, 0.50f);
+
+			gv->SetVisible(pSet->show_graphs);
+			graphs.push_back(gv);
+		}	break;
+		
+
 	default:
 		break;
 	}
@@ -317,10 +337,11 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			pApp->graphs[i+4]->AddVal(negPow(susp.GetVelocity(), 0.5) * 0.2f +0.5f);
 			pApp->graphs[i]->AddVal(susp.GetDisplacementPercent());
 		}	break;
+
 		
 	case Gh_TorqueCurve:  /// torque curves, gears
 	{	static int ii = 0;  ++ii;  // skip upd cntr
-		if (ii >= 1 && gsi >= 6)
+		if (ii >= 10 && gsi >= 6)
 		{	ii = 0;
 
 			const Dbl fin = dynamics.diff_center.GetFinalDrive();
@@ -343,9 +364,6 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 					Dbl tq = gr * dynamics.engine.GetTorqueCurve(1.0, rpm);
 					if (rpm > rmax)  tq = 0;  if (rpm < rmin)  tq = 0;
 
-					//Dbl xx = x/511.0;
-					//Dbl rpm = xx * (rmax-rmin) + rmin;
-					
 					pApp->graphs[i]->AddVal( tq / 2400.0 );
 				}
 				pApp->graphs[i]->SetUpdate();
@@ -354,9 +372,37 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			}
 			ss += "  final\n    "+fToStr(fin,3,5)+"\n";
 			pApp->graphs[0]->UpdTitle(ss);
-		}	}	break;
+	}	}	break;
+
+		
+	case Gh_Engine:  /// engine torque, power
+	{	static int ii = 0;  ++ii;  // skip upd cntr
+		if (ii >= 10 && gsi >= 2)
+		{	ii = 0;
+			const CARENGINE& eng = dynamics.engine;
+			float maxTrq = 0.f, maxPwr = 0.f;
+			int rpmMaxTq = 0, rpmMaxPwr = 0;
+			float rmin = eng.GetStartRPM(), rmax = eng.GetRedline()/*RPMLimit()*/, rng = rmax - rmin;
+
+			for (int x = 0; x < 512; ++x)
+			{
+				float r = x/512.f * rng + rmin;
+				float tq = eng.GetTorqueCurve(1.0, r);
+				float pwr = tq * 2.0 * PI_d * r / 60.0 * 0.001 * 1.341;  //kW  // 1kW = 1.341 bhp
+				if (tq > maxTrq)  {  maxTrq = tq;  rpmMaxTq = r;  }
+				if (pwr > maxPwr)  {  maxPwr = pwr;  rpmMaxPwr = r;  }
+
+				pApp->graphs[0]->AddVal( tq / 900.0 );
+				pApp->graphs[1]->AddVal( pwr / 600.0 );
+			}
+			pApp->graphs[0]->SetUpdate();
+			pApp->graphs[1]->SetUpdate();
+			//pApp->graphs[0]->UpdTitle(ss);
+	}	}	break;
+		
 
 	case Gh_TireEdit:  /// tire pacejka
+	//. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 	{	static int ii = 0;  ++ii;  // skip upd cntr
 		const int im = pApp->iUpdTireGr > 0 ? 2 : 8;  // faster when editing val
 		if (ii >= im && gsi >= TireNG*2)

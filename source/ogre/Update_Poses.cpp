@@ -131,8 +131,8 @@ void App::newPoses(float time)  // time only for camera update
 							float pwr = tq * 2.0 * PI_d * r / 60.0 * 0.001;  //kW  // 1kW = 1.341 bhp
 							if (tq > maxTrq)  {  maxTrq = tq;  rpmMaxTq = r;  }
 							if (pwr > maxPwr)  {  maxPwr = pwr;  rpmMaxPwr = r;  }
-							if (r % 100 == 0)
-								pGame->info_output << "rpm: "+fToStr(r,0,4)+" Nm:"+fToStr(tq,0,4)+" bhp:"+fToStr(pwr*1.341,0,4)+"\n";
+							//if (r % 100 == 0)
+							//	pGame->info_output << "rpm: "+fToStr(r,0,4)+" Nm:"+fToStr(tq,0,4)+" bhp:"+fToStr(pwr*1.341,0,4)+"\n";
 						}
 
 						//  summary

@@ -12,7 +12,8 @@ enum eGraphType  {
 	Gh_CarAccelG, Gh_BulletHit,
 	Gh_Sound,
 	Gh_TireSlips, Gh_Suspension,
-	Gh_TireEdit, Gh_TorqueCurve,
+	Gh_TireEdit, Gh_TorqueCurve, Gh_Engine,
+	//TODO: Gh_Clutch, Gh_Diffs, tire friction circles,
 	Gh_ALL  };  // total count
 
 enum eShadowType  {  Sh_None=0, Sh_Simple, Sh_Depth, Sh_Soft  };
