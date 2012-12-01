@@ -399,7 +399,7 @@ void CARDYNAMICS::UpdateTransmission(Dbl dt)
 		int gear = NextGear();
 		
 		///  auto Rear gear
-		if (autorear && shifted)
+		if (autorear && shifted && remaining_shift_time <= 0)
 		{
 			Dbl gas = engine.GetThrottle()*0.8;
 			gas -= brake[0].GetBrakeFactor();
@@ -412,7 +412,7 @@ void CARDYNAMICS::UpdateTransmission(Dbl dt)
 	}
 
 	remaining_shift_time -= dt;
-	if (remaining_shift_time < 0) remaining_shift_time = 0;
+	if (remaining_shift_time < 0)  remaining_shift_time = 0;
 
 	if (remaining_shift_time <= shift_time * 0.5 && !shifted)
 	{
