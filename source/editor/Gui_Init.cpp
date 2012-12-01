@@ -319,7 +319,7 @@ void App::InitGui()
 	GetMaterialsMat(sMat+"sky.mat");
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	const String& s = vsMaterials[i];
-		if (s != "" || s != "base_sky")
+		if (s != "" && s != "base_sky")
 			cmbSky->addItem(s);  //LogO(s);
 	}
 	//---------------------  Weather  ---------------------
