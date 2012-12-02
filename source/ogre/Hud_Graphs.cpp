@@ -399,7 +399,8 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			pApp->graphs[1]->SetUpdate();
 			//pApp->graphs[0]->UpdTitle(ss);
 	}	}	break;
-		
+
+	//dynamics.diff_center.GetSide1Speed
 
 	case Gh_TireEdit:  /// tire pacejka
 	//. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
@@ -467,7 +468,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 					Dbl n = (TireNG-1-i+1) * 0.65;
 					Dbl fx = pApp->iEdTire != 2 ? tire->Pacejka_Fx(xx, n, 1.0, maxF)  // normF
 							 : (!pApp->iTireLoad ? tire->Pacejka_Mz(xx, 0, n, 0.0, 1.0, maxF)    // align- norm
-												 : tire->Pacejka_Mz(xx, 0, n, 0.0, 1.0, maxF));  // align- camber
+												 : tire->Pacejka_Mz(0, xx, n, 0.0, 1.0, maxF));  // align- camber
 					ft[x] = fx;
 
 					if (comi)  // get min, max

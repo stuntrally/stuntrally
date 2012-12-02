@@ -199,9 +199,6 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 			Fx = Fx*scale;
 	}/**/
 
-	// rolling resistance (broken)  /// todo: is it fixed ?--
-	//Fx += GetRollingResistance(hub_velocity[0] / radius, normal_force, roll_friction_coeff);
-
 	assert(!isnan(Fx));
 	assert(!isnan(Fy));
 
@@ -229,22 +226,6 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 }
 //-------------------------------------------------------------------------------------------------------------------------------
 
-
-/*Dbl CARTIRE::GetRollingResistance(const Dbl velocity, const Dbl normal_force, const Dbl rolling_resistance_factor) const
-{
-	// surface influence on rolling resistance
-	Dbl rolling_resistance = rolling_resistance_linear * rolling_resistance_factor;
-	
-	// heat due to tire deformation increases rolling resistance
-	// approximate by quadratic function
-	rolling_resistance += velocity * velocity * rolling_resistance_quadratic;
-	
-	// rolling resistance magnitude
-	Dbl resistance = -normal_force * rolling_resistance;
-	if (velocity < 0) resistance = -resistance;
-	
-	return resistance;
-}*/
 
 void CARTIRE::CalculateSigmaHatAlphaHat(int tablesize)
 {

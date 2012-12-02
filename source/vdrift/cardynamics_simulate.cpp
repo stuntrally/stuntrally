@@ -190,7 +190,6 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::ApplyTireForce(int i, const Dbl normal_force, con
 void CARDYNAMICS::ApplyWheelTorque(Dbl dt, Dbl drive_torque, int i, MATHVECTOR<Dbl,3> tire_friction, const QUATERNION<Dbl> & wheel_space)
 {
 	CARWHEEL & wheel = this->wheel[WHEEL_POSITION(i)];
-	//CARTIRE* tire = this->tire[WHEEL_POSITION(i)];
 	CARBRAKE & brake = this->brake[WHEEL_POSITION(i)];
 
 	//  tire force / torque
@@ -209,20 +208,23 @@ void CARDYNAMICS::ApplyWheelTorque(Dbl dt, Dbl drive_torque, int i, MATHVECTOR<D
 	//  brake and rolling resistance torque should never exceed lock up torque
 	if (lock_up_torque >= 0 && lock_up_torque > brake_torque)
 	{
-		brake.WillLock(false);
-		wheel_torque += brake_torque;   // brake torque has same direction as lock up torque
+		brake.WillLock(false);  wheel_torque += brake_torque;   // brake torque has same direction as lock up torque
 	}
 	else if (lock_up_torque < 0 && lock_up_torque < -brake_torque)
 	{
-		brake.WillLock(false);
-		wheel_torque -= brake_torque;
+		brake.WillLock(false);  wheel_torque -= brake_torque;
 	}else
 	{
-		brake.WillLock(true);
-		wheel_torque = wheel.GetLockUpTorque(dt);
+		brake.WillLock(true);   wheel_torque = wheel.GetLockUpTorque(dt);
 	}
 
-	wheel.SetTorque(wheel_torque);
+	//set wheel torque due to tire rolling resistance
+	Dbl rolling_resistance = wheel.GetRollingResistance(wheel.GetAngularVelocity(), wheel_contact[i].GetSurface().rollingResist);
+	Dbl tire_rolling_resistance_torque = - rolling_resistance * wheel.GetRadius();  //- tire_friction_torque;
+	//assert(!isnan(tire_rolling_resistance_torque));
+	
+	LogO(fToStr(wheel_torque, 4,9)+" r "+fToStr(tire_rolling_resistance_torque, 4,9));
+	wheel.SetTorque(wheel_torque*0.5 + tire_rolling_resistance_torque);
 	wheel.Integrate2(dt);
 
 	//  apply torque to body  -not wanted in jumps
@@ -239,8 +241,8 @@ void CARDYNAMICS::InterpolateWheelContacts(Dbl dt)
 	for (int i = 0; i < WHEEL_POSITION_SIZE; ++i)
 	{
 		MATHVECTOR<float,3> raystart = LocalToWorld(wheel[i].GetExtendedPosition());
-		raystart = raystart - raydir * wheel[i].GetRadius();  //*!
-		float raylen = 1;  //!par
+		raystart = raystart - raydir * wheel[i].GetRadius();
+		const float raylen = 1;  //par-
 		GetWheelContact(WHEEL_POSITION(i)).CastRay(raystart, raydir, raylen);
 	}
 }

@@ -29,7 +29,7 @@ void CARWHEEL::SetTorque(const Dbl torque)
 	angvel = GetAngularVelocity();
 }
 
-void CARWHEEL::SetAdditionalInertia (const Dbl& value)
+/*void CARWHEEL::SetAdditionalInertia (const Dbl& value)
 {
 	additional_inertia = value;
 	
@@ -38,4 +38,20 @@ void CARWHEEL::SetAdditionalInertia (const Dbl& value)
 	rotation.SetInertia(inertia);
 	
 	//std::cout << inertia_cache << " + " << additional_inertia << " = " << inertia_cache + additional_inertia << std::endl;
+}*/
+
+Dbl CARWHEEL::GetRollingResistance(const Dbl velocity, const Dbl rolling_resistance_factor) const
+{
+	// surface influence on rolling resistance
+	Dbl rolling_resistance = rolling_res_lin * rolling_resistance_factor;
+
+	// heat due to tire deformation increases rolling resistance
+	// approximate by quadratic function
+	rolling_resistance += velocity * velocity * rolling_res_quad;
+
+	// rolling resistance direction
+	Dbl resistance = rolling_resistance;
+	if (velocity < 0)  resistance = -resistance;
+
+	return resistance;
 }

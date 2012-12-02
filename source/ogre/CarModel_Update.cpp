@@ -527,16 +527,15 @@ void CarModel::UpdWhTerMtr()
 		{
 		//TerLayer& lay = /*mtr == 0 ? sc->td.layerRoad :*/ sc->td.layersAll[ sc->td.layers[ std::min((int)sc->td.layers.size()-1, mtr-1) ] ];
 		txtDbgSurf += //"mx " + toStr(mx) + " my " + toStr(my) +
-			( iRd == 0	? ( "T" + toStr(cd.whTerMtr[i]) )
+			( iRd == 0	? ( "T" + toStr(cd.whTerMtr[i]) )  // Terrain/Pipe/Road
 						: ( (iRd==2 ? "P" : "R") + toStr(cd.whRoadMtr[i]) )  ) +
 			(!tsu ? "  --" : (
 				"  " + tsu->name + " " + csTRKsurf[tsu->type] + //" [" + lay.texFile + "] " +
-				"\n      "+
-				tsu->tireName +
-				"\n     "+
-				" drag " + fToStr(tsu->rollingDrag, 1,4) + " fr " + fToStr(tsu->frictionTread, 2,4) +
-				" ba " + fToStr(tsu->bumpAmplitude, 2,4) + " bw " + fToStr(tsu->bumpWaveLength, 2,4) +
-				"  ti0 " + fToStr(tsu->tire->longitudinal[0], 3,5)
+				"\n      "+ tsu->tireName + "\n     "+
+				" dr " + fToStr(tsu->rollingDrag, 0,3) + " rr " + fToStr(tsu->rollingResist, 1,3) +
+				"  fr " + fToStr(tsu->frictionTread, 2,4) +
+				"  ba " + fToStr(tsu->bumpAmplitude, 2,4) + " bw " + fToStr(tsu->bumpWaveLength, 2,4) +
+				"  b0 " + fToStr(tsu->tire->longitudinal[0], 3,5)
 				//,lay.dust, lay.mud, lay.dustS	//,lay.tclr.r, lay.tclr.g, lay.tclr.b, lay.tclr.a
 				//,pCar->dynamics.wheel_contact[i].depth, pCar->dynamics.wheel_contact[i].col
 				//,pCar->dynamics.GetWheelContact(WHEEL_POSITION(i)).GetDepth() - 2*pCar->GetTireRadius(WHEEL_POSITION(i))

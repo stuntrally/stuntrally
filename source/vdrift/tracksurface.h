@@ -17,7 +17,7 @@ public:
 	TYPE type;
 	float bumpWaveLength, bumpAmplitude;
 	float frictionTread;  //, frictionNonTread;
-	float rollingDrag;  //, rollResist;
+	float rollingDrag, rollingResist;
 	std::string name, tireName;  // .tire file source (without ".tire")
 
 	CARTIRE* tire;  /// tire params set
@@ -28,7 +28,7 @@ public:
 		type(GRASS),
 		bumpWaveLength(10.f), bumpAmplitude(0.f),
 		frictionTread(1.0f), //frictionNonTread(0.9f),
-		rollingDrag(1.f), //rollResist(1.f),
+		rollingDrag(1.f), rollingResist(1.f),
 		tireName("DEFAULT"),
 		tire(CARTIRE::None())
 	{	}
@@ -43,7 +43,7 @@ public:
 		return (type == t.type)
 			&& (bumpWaveLength == t.bumpWaveLength)	&& (bumpAmplitude == t.bumpAmplitude)
 			&& (frictionTread == t.frictionTread) //&& (frictionNonTread == t.frictionNonTread)
-			//&& (rollResist == t.rollResist)
+			&& (rollingResist == t.rollingResist)
 			&& (rollingDrag == t.rollingDrag) && (tire == t.tire);
 	}
 	

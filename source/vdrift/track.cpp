@@ -373,8 +373,8 @@ bool TRACK::LoadSurfaces(const string & trackpath)
 		param.GetParam(*section + ".FrictionTread", temp, error_output);
 		surf.frictionTread = temp;
 		
-		//param.GetParam(*section + ".RollResistanceCoefficient", temp, error_output);  //not used
-		//surf.rollResist = temp;
+		if (param.GetParam(*section + ".RollResistance", temp))
+			surf.rollingResist = temp;
 		
 		param.GetParam(*section + ".RollingDrag", temp, error_output);
 		surf.rollingDrag = temp;

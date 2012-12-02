@@ -18,11 +18,11 @@ private:
 	Dbl mass;			///< the mass of the wheel
 	ROTATIONALFRAME rotation;	///< a simulation of wheel rotation.  this contains the wheel orientation, angular velocity, angular acceleration, and inertia tensor
 
-	//Dbl rolling_resistance_linear;		///< linear rolling resistance on a hard surface  	not used_
-	//Dbl rolling_resistance_quadratic;	///< quadratic rolling resistance on a hard surface
+	Dbl rolling_res_lin;	///< linear rolling resistance on a hard surface
+	Dbl rolling_res_quad;	///< quadratic rolling resistance on a hard surface
 	
 	// variables
-	Dbl additional_inertia;
+	//Dbl additional_inertia;
 	Dbl inertia_cache;
 	Dbl steer_angle;	///<negative values cause steering to the left
 	Dbl radius;		///< the total radius of the tire
@@ -54,20 +54,18 @@ public:
 		:roll_height(0.9), mass(18.1), inertia_cache(10.0)
 		,steer_angle(0.), fluidRes(0.)
 		,radius(0.3), feedback(0.)
+		,rolling_res_lin(1.3e-2)
+		,rolling_res_quad(6.5e-6)
 	{	SetInertia(10.0);	}
 	
 	void DebugPrint(std::ostream & out);
 
 
-	//  not used_
-	/*Dbl GetRollingResistance(const Dbl velocity, const Dbl normal_force, const Dbl rolling_resistance_factor) const;
+	Dbl GetRollingResistance(const Dbl velocity, const Dbl rolling_resistance_factor) const;
 	void SetRollingResistance(Dbl linear, Dbl quadratic)
 	{
-		rolling_resistance_linear = linear;
-		rolling_resistance_quadratic = quadratic;
-	}*/
-	void SetFeedback(Dbl aligning_force)	{	feedback = aligning_force;	}
-	Dbl GetFeedback() const					{	return feedback;	}
+		rolling_res_lin = linear;  rolling_res_quad = quadratic;
+	}
 
 
 	void SetExtendedPosition (const MATHVECTOR<Dbl,3>& value)	{	extended_position = value;	}
@@ -98,7 +96,10 @@ public:
 	Dbl GetMass() const				{	return mass;	}
 	
 	void SetInertia(Dbl new_inertia);
-	Dbl GetInertia() const	{	return inertia_cache;	}
+	Dbl GetInertia() const			{	return inertia_cache;	}
+
+	void SetFeedback(Dbl aligning_force)	{	feedback = aligning_force;	}
+	Dbl GetFeedback() const					{	return feedback;	}
 
 	
 	void SetInitialConditions()
@@ -122,7 +123,7 @@ public:
 		
 	const QUATERNION<Dbl> & GetOrientation() const	{	return rotation.GetOrientation();	}
 	
-	void SetAdditionalInertia (const Dbl& value);
+	//void SetAdditionalInertia (const Dbl& value);
 
 	void SetCamberDeg (const Dbl& value)	{	camber_deg = value;		}
 };
