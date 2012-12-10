@@ -101,8 +101,7 @@ std::pair <bool,bool> OBJECTLOADER::ContinueObjectLoad(	TRACK* track,
 	std::map <std::string, MODEL_JOE03> & model_library,
 	std::map <std::string, TEXTURE_GL> & texture_library,
 	std::list <TRACK_OBJECT> & objects,
-	std::vector <TRACKSURFACE> & surfaces,
-	bool usesurfaces, bool vertical_tracking_skyboxes,
+	bool vertical_tracking_skyboxes,
  	const std::string & texture_size)
 {
 	std::string model_name;
@@ -112,7 +111,7 @@ std::pair <bool,bool> OBJECTLOADER::ContinueObjectLoad(	TRACK* track,
 
 	if (!(GetParam(objectfile, model_name)))
 	{
-		info_output << "Track loading was successful: " << model_library.size() << " models, " << texture_library.size() << " textures, " << surfaces.size() << " surfaces" << std::endl;
+		info_output << "Track loading was successful: " << model_library.size() << " models, " << texture_library.size() << " textures, " << /*surfaces.size() << " surfaces" << */std::endl;
 		//Optimize();
 		//info_output << "Objects before optimization: " << unoptimized_scene.GetDrawableList().size() << ", objects after optimization: " << sceneroot.GetDrawableList().size() << std::endl;
 		//unoptimized_scene.Clear();
@@ -259,40 +258,7 @@ std::pair <bool,bool> OBJECTLOADER::ContinueObjectLoad(	TRACK* track,
 			d.SetVerticalTrack(true);
 		}*/
 		
-		const TRACKSURFACE * surfacePtr = NULL;
-		if (collideable || driveable)
-		{
-			if(/*1||*/usesurfaces)
-			{
-				assert(surface_type >= 0 && surface_type < (int)surfaces.size());
-				std::vector<TRACKSURFACE>::iterator it = surfaces.begin();
-				while(surface_type-- > 0) ++it;
-				surfacePtr = &*it;
-			}
-			else
-			{
-				TRACKSURFACE surface;
-				surface.setType(surface_type);
-				surface.bumpWaveLength = bump_wavelength;  surface.bumpAmplitude = bump_amplitude;
-				surface.frictionTread = friction_tread;  //surface.frictionNonTread = friction_notread;
-				surface.rollingDrag = rolling_drag;  //surface.rollResist = rolling_resistance;
-				
-				// could use hash here(assume we dont have many surfaces)
-				std::vector<TRACKSURFACE>::reverse_iterator ri;
-				for(ri = surfaces.rbegin(); ri != surfaces.rend(); ++ri)
-				{
-					if (*ri == surface) break;
-				}
-				if (ri == surfaces.rend())
-				{
-					surfaces.push_back(surface);
-					ri = surfaces.rbegin();
-				}
-				surfacePtr = &*ri;/**/
-			}
-		}
-
-		TRACK_OBJECT object(model, diffuse, surfacePtr);
+		TRACK_OBJECT object(model, diffuse, /*surfacePtr*/collideable || driveable );
 		objects.push_back(object);
 
 		///-------------  push for ogre

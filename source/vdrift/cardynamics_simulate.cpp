@@ -223,7 +223,7 @@ void CARDYNAMICS::ApplyWheelTorque(Dbl dt, Dbl drive_torque, int i, MATHVECTOR<D
 	Dbl tire_rolling_resistance_torque = - rolling_resistance * wheel.GetRadius();  //- tire_friction_torque;
 	//assert(!isnan(tire_rolling_resistance_torque));
 	
-	LogO(fToStr(wheel_torque, 4,9)+" r "+fToStr(tire_rolling_resistance_torque, 4,9));
+		//LogO(fToStr(wheel_torque, 4,9)+" r "+fToStr(tire_rolling_resistance_torque, 4,9));
 	wheel.SetTorque(wheel_torque*0.5 + tire_rolling_resistance_torque);
 	wheel.Integrate2(dt);
 

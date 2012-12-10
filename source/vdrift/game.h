@@ -12,6 +12,9 @@
 #include "collision_contact.h"
 #include "carcontrolmap_local.h"
 
+#include "cartire.h"
+#include "tracksurface.h"
+
 #include "sound.h"
 #include "track.h"
 
@@ -102,9 +105,14 @@ public:
 	std::list <CAR> cars;
 	std::pair <CAR*, CARCONTROLMAP_LOCAL> carcontrols_local;
 
-	std::vector <CARTIRE> tires;  //new
-	std::map <std::string, int> tires_map;
+	// todo: move outside of GAME..
+	std::vector <CARTIRE> tires;  /// New  all tires
+	std::map <std::string, int> tires_map;  // name to tires id
 	bool LoadTires();
+
+	std::vector <TRACKSURFACE> su;  /// New  all surfaces
+	std::map <std::string, int> su_map;  // name to su id
+	bool LoadAllSurfaces();
 	
 #ifdef ENABLE_FORCE_FEEDBACK
 	std::auto_ptr <FORCEFEEDBACK> forcefeedback;

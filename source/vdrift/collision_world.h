@@ -95,7 +95,6 @@ public:
 	TRACK * track;
 	btCollisionObject * trackObject;
 	btTriangleIndexVertexArray * trackMesh;
-	btAlignedObjectArray<const TRACKSURFACE *> trackSurface;  //---remove
 	
 	btCollisionShape * AddMeshShape(const MODEL & model);
 	btIndexedMesh GetIndexedMesh(const MODEL & model);

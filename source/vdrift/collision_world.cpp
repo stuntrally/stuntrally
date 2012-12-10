@@ -8,6 +8,7 @@
 #include "cardynamics.h"
 //#include "car.h"//
 #include "../ogre/OgreGame.h"  //
+#include "game.h"  //
 #include <iostream>
 
 
@@ -262,27 +263,28 @@ void COLLISION_WORLD::SetTrack(TRACK * t)
 	// setup new track
 	track = t;
 	trackMesh = new btTriangleIndexVertexArray();
-	trackSurface.resize(0);
+	//trackSurface.resize(0);
 	const std::list<TRACK_OBJECT> & objects = track->GetTrackObjects();
 	for(std::list<TRACK_OBJECT>::const_iterator ob = objects.begin(); ob != objects.end(); ++ob)
 	{
-		if(ob->GetSurface() != NULL)
+		if(ob->HasSurface())
 		{
 			MODEL & model = *ob->GetModel();
 			btIndexedMesh mesh = GetIndexedMesh(model);
 			trackMesh->addIndexedMesh(mesh);
-			const TRACKSURFACE * surface = ob->GetSurface();
-			trackSurface.push_back(surface);
+			//const TRACKSURFACE * surface = ob->GetSurface();
+			//trackSurface.push_back(surface);
 		}
 	}
 	
 	//  no objs track
-	if (trackSurface.size()==0)
+	/*if (trackSurface.size()==0)
 	{
 		static TRACKSURFACE surface;
 		trackSurface.push_back(&surface);
 	}
-	else  ///
+	else*/  ///
+	if (!objects.empty())
 	{
 		// can not use QuantizedAabbCompression because of the track size
 		btCollisionShape * trackShape = new btBvhTriangleMeshShape(trackMesh, false);
@@ -419,7 +421,8 @@ bool COLLISION_WORLD::CastRay(
 
 		if (col->isStaticObject() /*&& (c->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE == 0)*/)
 		{
-			long long ptrU = (long long)col->getCollisionShape()->getUserPointer(), su = ptrU & 0xFF00, mtr = ptrU & 0xFF;  //void*
+			long long ptrU = (long long)col->getCollisionShape()->getUserPointer(),
+				su = ptrU & 0xFF00, mtr = ptrU & 0xFF;  //void*
 
 			///  set surface, basing on shape type  -----------------
 			
@@ -427,16 +430,18 @@ bool COLLISION_WORLD::CastRay(
 			switch (su)
 			{
 			case SU_Road:  // road
-				surf = &track->tracksurfaces[0];  // [mtr];
+			{	int id = pApp->sc->td.layerRoad.surfId;
+				surf = &pApp->pGame->su[id]; //&track->tracksurfaces[0];  // [mtr];
 				if (cd)
 				{	cd->iWhOnRoad[w] = 1;   cd->whRoadMtr[w] = mtr;  cd->whTerMtr[w] = 0;  }
-				break;
+			}	break;
 
 			case SU_Pipe:  // pipe
-				surf = &track->tracksurfaces[0];
+			{	int id = pApp->sc->td.layerRoad.surfId;
+				surf = &pApp->pGame->su[id]; //&track->tracksurfaces[0];
 				if (cd)
 				{	cd->iWhOnRoad[w] = 2;   cd->whRoadMtr[w] = mtr;  cd->whTerMtr[w] = 0;  }
-				break;
+			}	break;
 
 			case SU_Terrain:  // Terrain  get surface from blendmap mtr
 			{
@@ -446,29 +451,37 @@ bool COLLISION_WORLD::CastRay(
 				int mx = (pos[0] + 0.5*tws)/tws*t;  mx = std::max(0,std::min(t-1, mx));
 				int my = (pos[1] + 0.5*tws)/tws*t;  my = std::max(0,std::min(t-1, my));
 
-				int mtr = pApp->blendMtr[my*t + mx];
+				int mtr = pApp->blendMtr[my*t + mx]-1;
 				if (cd)
 				{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = mtr;  }
 			
-				surf = &track->tracksurfaces[std::max(0,std::min(mtr, (int)track->tracksurfaces.size()-1))];
+				int id = pApp->sc->td.layersAll[mtr].surfId;
+				surf = &pApp->pGame->su[id];  /*\?All*/
+				//surf = 0;//&track->tracksurfaces[std::max(0,std::min(mtr, (int)track->tracksurfaces.size()-1))];
 			}	break;
 			
 				//case SU_RoadWall: //case SU_RoadColumn:
 				//case SU_Vegetation: case SU_Border:
 				//case SU_ObjectStatic: //case SU_ObjectDynamic:
 			default:
-				surf = &track->tracksurfaces[0];  // road
+			{	//surf = 0; //&track->tracksurfaces[0];  // road
 				//surf = trackSurface[0];
 				if (cd)
 				{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 0;  }
-				break;
+
+				int id = pApp->sc->td.layerRoad.surfId;
+				surf = &pApp->pGame->su[id];
+			}	break;
 			}
 			else  //if (ptrU == 0)
 			{
 				if (cd)
 				{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 0;  }
 
-				void * ptr = col->getUserPointer();
+				int id = pApp->sc->td.layersAll[0].surfId;  //0 only 1st
+				surf = &pApp->pGame->su[id];
+
+				/*void * ptr = col->getUserPointer();
 				if (ptr != NULL)
 				{
 					const TRACK_OBJECT * const obj = reinterpret_cast <const TRACK_OBJECT * const> (ptr);
@@ -481,8 +494,8 @@ bool COLLISION_WORLD::CastRay(
 					//assert(shapeId >= 0 && shapeId < trackSurface.size());
 					if (shapeId >= trackSurface.size() || shapeId < 0)  shapeId = 0;  //crash hf-
 					if (trackSurface.size() > 0)
-						surf = trackSurface[shapeId];
-				}
+						surf = 0;//trackSurface[shapeId];
+				}*/
 			}
 		}
 		
@@ -499,10 +512,13 @@ bool COLLISION_WORLD::CastRay(
 				pos = MATHVECTOR<float,3> (colpos[2], colpos[0], colpos[1]);
 				norm = MATHVECTOR<float,3> (colnorm[2], colnorm[0], colnorm[1]);
 				dist = (colpos - bs_pos).Magnitude();
-				surf = track->GetRoadSurface();
+				//surf = 0;//track->GetRoadSurface();
 				bzr = colpatch;  col = NULL;
 				if (cd)
 				{	cd->iWhOnRoad[w] = 1;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 0;  }
+
+				int id = pApp->sc->td.layerRoad.surfId;
+				surf = &pApp->pGame->su[id];  /*\?All*/
 			}
 		}
 
@@ -537,7 +553,7 @@ void COLLISION_WORLD::Clear()
 		delete trackMesh;
 		trackMesh = NULL;
 	}
-	trackSurface.resize(0);
+	//trackSurface.resize(0);
 
 	// remove constraint before deleting rigid body
 	for(int i = 0; i < constraints.size(); i++)

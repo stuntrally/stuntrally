@@ -8,6 +8,7 @@
 const static char csTRKsurf[8/*NumTypes*/][10] =
 {	"[none]", "Asphalt", "Grass", "Gravel", "Concrete", "Sand", "Cobbles", "[all]"	};
 
+
 class TRACKSURFACE
 {
 public:

@@ -4,11 +4,13 @@
 #include "FluidsXml.h"
 #include "tinyxml.h"
 #include <OgreSceneNode.h>
+#include "../vdrift/game.h"  // for surfaces map
 
 using namespace Ogre;
 
 
 Scene::Scene()
+	: pGame(0)
 {
 	pFluidsXml = 0;
 	Default();
@@ -115,6 +117,25 @@ void Scene::UpdateFluidsId()
 		if (id == -1)
 			LogO("! Scene fluid name: " + fluids[i].name + " not found in xml !");
 	}
+}
+
+void Scene::UpdateSurfId()
+{
+	if (!pGame)  return;
+	//  update surfId from surfName
+	//  terrain
+	for (int i=0; i < td.ciNumLay; ++i)
+	{
+		const std::string& s = td.layersAll[i].surfName;
+		int id = pGame->su_map[s]-1;
+		if (id == -1)  id = 0;  // default if not found
+		td.layersAll[i].surfId = id;  // cached
+	}
+	//  road
+	const std::string& s = td.layerRoad.surfName;
+	int id = pGame->su_map[s]-1;
+	if (id == -1)  id = 0;
+	td.layerRoad.surfId = id;
 }
 
 
@@ -236,9 +257,10 @@ bool Scene::LoadXml(String file, bool bTer)
 			TerLayer lay, *l = road ? &td.layerRoad : &lay;
 
 			a = eTex->Attribute("on");		if (a)  l->on = s2i(a);  else  l->on = 1;
-			a = eTex->Attribute("scale");	if (a)  l->tiling = s2r(a);
 			a = eTex->Attribute("file");	if (a)  l->texFile = String(a);
 			a = eTex->Attribute("fnorm");	if (a)  l->texNorm = String(a);
+			a = eTex->Attribute("scale");	if (a)  l->tiling = s2r(a);
+			a = eTex->Attribute("surf");	if (a)  l->surfName = String(a);
 
 			a = eTex->Attribute("dust");	if (a)  l->dust = s2r(a);
 			a = eTex->Attribute("dustS");	if (a)  l->dustS = s2r(a);
@@ -387,6 +409,8 @@ bool Scene::LoadXml(String file, bool bTer)
 	}
 	
 	UpdateFluidsId();
+
+	UpdateSurfId();
 	
 	return true;
 }
@@ -469,6 +493,7 @@ bool Scene::SaveXml(String file)
 			tex.SetAttribute("file",	l->texFile.c_str());
 			tex.SetAttribute("fnorm",	l->texNorm.c_str());
 			tex.SetAttribute("scale",	toStrC( l->tiling ));
+			tex.SetAttribute("surf",	l->texNorm.c_str());
 			#define setDmst()  \
 				tex.SetAttribute("dust",	toStrC( l->dust ));  \
 				tex.SetAttribute("dustS",	toStrC( l->dustS )); \
@@ -623,7 +648,8 @@ TerLayer::TerLayer() : on(true), tiling(4.f),
 	dust(0.f),dustS(0.2f), mud(0.f), smoke(0.f), tclr(ColourValue::Black),
 	angMin(0.f),angMax(90.f), angSm(20.f),
 	hMin(-300.f),hMax(300.f), hSm(20.f),
-	noise(1.f), bNoiseOnly(1)
+	noise(1.f), bNoiseOnly(1),
+	surfName("Default"), surfId(0)  //!
 {	}
 
 void TerData::UpdVals()

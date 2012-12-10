@@ -78,11 +78,98 @@ void GAME::Start(std::list <string> & args)
 		ff_update_time = 0;
 	#endif
 	
-	LoadTires();  // load tires
+	LoadTires();  /// load tires New
+	info_output << "Loaded: " << tires.size() << " tires." << endl;
+
+	LoadAllSurfaces();  /// load surfaces New
 	info_output << "Loaded: " << tires.size() << " tires." << endl;
 }
 
 
+///  Surfaces  all in data/cars/surfaces.cfg
+//------------------------------------------------------------------------------------------------------------------------------
+bool GAME::LoadAllSurfaces()
+{
+	su.clear();
+	su_map.clear();
+
+	string path = PATHMANAGER::GetCarPath() + "/surfaces.cfg";
+	CONFIGFILE param;
+	if (!param.Load(path))
+	{
+		error_output << "Can't find surfaces configfile: " << path << endl;
+		return false;
+	}
+	
+	std::list <string> sectionlist;
+	param.GetSectionList(sectionlist);
+	
+	for (std::list<string>::const_iterator section = sectionlist.begin(); section != sectionlist.end(); ++section)
+	{
+		TRACKSURFACE surf;
+		surf.name = *section;
+		
+		int id;
+		param.GetParam(*section + ".ID", id);  // for sound..
+		//-assert(indexnum >= 0 && indexnum < (int)tracksurfaces.size());
+		surf.setType(id);
+		
+		float temp = 0.0;
+		param.GetParam(*section + ".BumpWaveLength", temp, error_output);
+		surf.bumpWaveLength = temp;
+		
+		param.GetParam(*section + ".BumpAmplitude", temp, error_output);
+		surf.bumpAmplitude = temp;
+		
+		//param.GetParam(*section + ".FrictionNonTread", temp, error_output);  //not used
+		//surf.frictionNonTread = temp;
+		
+		param.GetParam(*section + ".FrictionTread", temp, error_output);
+		surf.frictionTread = temp;
+		
+		if (param.GetParam(*section + ".RollResistance", temp))
+			surf.rollingResist = temp;
+		
+		param.GetParam(*section + ".RollingDrag", temp, error_output);
+		surf.rollingDrag = temp;
+
+		///---  Tire  ---
+		string tireFile;
+		//if (!param.GetParam(*section + "." + "Tire", tireFile, error_output))
+		if (!param.GetParam(*section + "." + "Tire", tireFile))
+		{
+			tireFile = track.sDefaultTire;  // default surface if not found
+			//error_output << "Surface: Tire file not found, using default: " << tireFile << endl;
+		}
+		id = tires_map[tireFile]-1;
+		if (id == -1)
+		{	id = 0;
+			error_output << "Surface: Tire id not found in map, using 0." << endl;
+		}
+		//error_output << "Tires size: " << pGame->tires.size() << endl;
+		surf.tire = &tires[id];
+		surf.tireName = tireFile;
+		///---
+		
+		//tracksurfaces.push_back(surf);//
+		//info_output << "  new surface: " << surf.name << " ID:" << id << " bumpA:" << surf.bumpAmplitude << endl;//
+		//if (surf.name == "R")  // for road
+		//	roadSurf = surf;
+		
+		//list<TRACKSURFACE>::iterator it = tracksurfaces.begin();
+		//while(indexnum-- > 0) it++;
+		//*it = tempsurface;
+
+
+		su.push_back(surf);
+		su_map[surf.name] = (int)su.size();  //+1, 0 = not found
+	}
+
+	return true;
+}
+
+///  Tires  all in data/cars/_tires/*.tire
+//------------------------------------------------------------------------------------------------------------------------------
 bool GAME::LoadTires()
 {
 	tires.clear();
@@ -135,6 +222,7 @@ bool GAME::LoadTires()
 	return true;
 }
 CARTIRE* TRACKSURFACE::pTireDefault = 0;  //-
+//------------------------------------------------------------------------------------------------------------------------------
 
 
 bool GAME::InitializeSound()

@@ -24,6 +24,9 @@ struct TerLayer		// terrain texture layer
 	//  min,max range and smooth range for angle and height for blendmap
 	float angMin,angMax,angSm, hMin,hMax,hSm;
 	float noise;  bool bNoiseOnly;  // blendmap noise
+	
+	//  surface params bind
+	std::string surfName;  int surfId;
 	TerLayer();
 };
 
@@ -43,7 +46,7 @@ public:
 	const static int ciNumLay = 6;  // all, for edit
 	TerLayer layersAll[ciNumLay];
 	std::vector<int> layers;  // active only (on)
-	TerLayer layerRoad;
+	TerLayer layerRoad;  // road[4]+pipe[4]  //todo...
 	void UpdLayers();
 	
 	//  methods
@@ -170,7 +173,8 @@ public:
 	std::vector<Object> objects;
 		
 	//  methods
-	Scene();  void Default(), UpdateFluidsId();
+	Scene();  void Default(), UpdateFluidsId(), UpdateSurfId();
+	class GAME* pGame;  // for all surfaces by name
 	bool LoadXml(Ogre::String file, bool bTer = true), SaveXml(Ogre::String file);
 };
 

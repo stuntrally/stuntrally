@@ -121,11 +121,6 @@ public:
 		return direction == DIRECTION_REVERSE;
 	}
 
-	const TRACKSURFACE * GetRoadSurface() const
-	{
-		return &roadSurf;
-	}
-	
 	const std::list<TRACK_OBJECT> & GetTrackObjects()
 	{
 		return objects;
@@ -144,15 +139,6 @@ private:
 	bool vertical_tracking_skyboxes;
 	std::vector <std::pair <MATHVECTOR<float,3>, QUATERNION<float> > > start_positions;
 
-	// does the track use Surface types (surfaces.txt)
-public:
-	bool usesurfaces;
-	
-	// using list to avoid reallocation
-	std::vector <TRACKSURFACE> tracksurfaces;
-	
-	// default road surface (asphalt)
-	TRACKSURFACE roadSurf;
 private:
 	
 	enum
@@ -175,8 +161,6 @@ private:
 		const std::string & texsize*/);
 	
 	bool LoadParameters(const std::string & trackpath);
-	
-	bool LoadSurfaces(const std::string & trackpath);
 	
 	bool LoadObjects(
 		const std::string & trackpath,

@@ -11,14 +11,14 @@ public:
 	TRACK_OBJECT(
 		MODEL * model,
 		TEXTURE_GL * texture,
-		const TRACKSURFACE * surface);
+		bool surface);
 	
 	MODEL * GetModel() const
 	{
 		return model;
 	}
 
-	const TRACKSURFACE * GetSurface() const
+	bool HasSurface() const
 	{
 		return surface;
 	}
@@ -26,7 +26,8 @@ public:
 private:
 	MODEL * model;
 	TEXTURE_GL * texture;
-	const TRACKSURFACE * surface;
+	//const TRACKSURFACE * surface; //old
+	bool surface;
 };
 
 #endif

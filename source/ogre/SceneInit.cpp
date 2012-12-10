@@ -20,8 +20,8 @@
 #include <MyGUI_OgrePlatform.h>
 #include "common/MyGUI_D3D11.h"
 #include <MyGUI_PointerManager.h>
-using namespace MyGUI;
 #include <OgreTerrainGroup.h>
+using namespace MyGUI;
 using namespace Ogre;
 
 #include "../shiny/Main/Factory.hpp"
@@ -219,6 +219,7 @@ void App::LoadGame()  // 2
 	// load scene.xml - default if not found
 	//   need to know sc->asphalt before vdrift car load
 	bool vdr = IsVdrTrack();
+	sc->pGame = pGame;
 	sc->LoadXml(TrkDir()+"scene.xml", !vdr/*for asphalt*/);
 	sc->vdr = vdr;
 	pGame->track.asphalt = sc->asphalt;  //*

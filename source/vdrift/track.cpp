@@ -24,16 +24,10 @@ TRACK::TRACK(ostream & info, ostream & error)
 	info_output(info), error_output(error),
 	texture_size("large"),
 	vertical_tracking_skyboxes(false),
-	usesurfaces(false),
-	//racingline_node(NULL),
 	loaded(false),
 	cull(false),
 	sDefaultTire("gravel")
 {
-	roadSurf.type = TRACKSURFACE::ASPHALT;
-	roadSurf.bumpWaveLength = 1;  roadSurf.bumpAmplitude = 0;
-	roadSurf.frictionTread = 1;  //roadSurf.frictionNonTread = 1;
-	roadSurf.rollingDrag = 0;  //roadSurf.rollResist = 1;
 }
 
 TRACK::~TRACK()
@@ -57,9 +51,6 @@ bool TRACK::Load(
 	if (!LoadParameters(trackpath))
 		return false;
 	
-	if (!LoadSurfaces(trackpath))
-		info_output << "No surfaces file. Continuing with standard surfaces" << endl;
-
 	//load roads
 	if (!LoadRoads(trackpath, reverse))
 	{
@@ -177,10 +168,6 @@ bool TRACK::DeferredLoad(
 	if (!LoadParameters(trackpath))
 		return false;
 
-	if (!LoadSurfaces(trackpath))
-		info_output << "No Surfaces File. Continuing with standard surfaces" << endl;
-	size_t num = tracksurfaces.size();
-	
 	//load roads
 	if (!LoadRoads(trackpath, reverse))
 	{
@@ -226,7 +213,6 @@ int TRACK::DeferredLoadTotalObjects()
 void TRACK::Clear()
 {
 	objects.clear();
-	tracksurfaces.clear();
 	model_library.clear();
 	/**/ogre_meshes.clear();///
 	texture_library.clear();
@@ -235,7 +221,6 @@ void TRACK::Clear()
 	start_positions.clear();
 	//racingline_node = NULL;
 	loaded = false;
-	usesurfaces = false;
 }
 
 bool TRACK::CreateRacingLines(
@@ -331,85 +316,6 @@ bool TRACK::LoadParameters(const string & trackpath)
 	return true;
 }
 
-bool TRACK::LoadSurfaces(const string & trackpath)
-{
-	string path = trackpath + "/surfaces.txt";
-	CONFIGFILE param;
-	if (!param.Load(path))
-	{
-		info_output << "Can't find surfaces configfile: " << path << endl;
-		return false;
-	}
-	
-	usesurfaces = true;
-	
-	list <string> sectionlist;
-	param.GetSectionList(sectionlist);
-	
-	// set the size of track surfaces to hold new elements
-	//tracksurfaces.resize(sectionlist.size());
-	tracksurfaces.clear();//
-	
-	for (list<string>::const_iterator section = sectionlist.begin(); section != sectionlist.end(); ++section)
-	{
-		TRACKSURFACE surf;
-		surf.name = *section;
-		
-		int id;
-		param.GetParam(*section + ".ID", id);
-		//-assert(indexnum >= 0 && indexnum < (int)tracksurfaces.size());
-		surf.setType(id);
-		
-		float temp = 0.0;
-		param.GetParam(*section + ".BumpWaveLength", temp, error_output);
-		surf.bumpWaveLength = temp;
-		
-		param.GetParam(*section + ".BumpAmplitude", temp, error_output);
-		surf.bumpAmplitude = temp;
-		
-		//param.GetParam(*section + ".FrictionNonTread", temp, error_output);  //not used
-		//surf.frictionNonTread = temp;
-		
-		param.GetParam(*section + ".FrictionTread", temp, error_output);
-		surf.frictionTread = temp;
-		
-		if (param.GetParam(*section + ".RollResistance", temp))
-			surf.rollingResist = temp;
-		
-		param.GetParam(*section + ".RollingDrag", temp, error_output);
-		surf.rollingDrag = temp;
-
-		///---
-		string tireFile;
-		//if (!param.GetParam(*section + "." + "Tire", tireFile, error_output))
-		if (!param.GetParam(*section + "." + "Tire", tireFile))
-		{
-			tireFile = sDefaultTire;  // default surface if not found
-			//error_output << "Surface: Tire file not found, using default: " << tireFile << endl;
-		}
-		id = pGame->tires_map[tireFile]-1;
-		if (id == -1)
-		{	id = 0;
-			error_output << "Surface: Tire id not found in map, using 0." << endl;
-		}
-		//error_output << "Tires size: " << pGame->tires.size() << endl;
-		surf.tire = &pGame->tires[id];
-		surf.tireName = tireFile;
-		///---
-		
-		tracksurfaces.push_back(surf);//
-		//info_output << "  new surface: " << surf.name << " ID:" << id << " bumpA:" << surf.bumpAmplitude << endl;//
-		if (surf.name == "R")  // for road
-			roadSurf = surf;
-		
-		//list<TRACKSURFACE>::iterator it = tracksurfaces.begin();
-		//while(indexnum-- > 0) it++;
-		//*it = tempsurface;
-	}
-	info_output << "Found and loaded surfaces file" << endl;
-	
-	return true;
-}
 
 bool TRACK::BeginObjectLoad(
 	const string & trackpath,
@@ -431,7 +337,7 @@ pair <bool,bool> TRACK::ContinueObjectLoad()
 {
 	assert(objload.get());
 	return objload->ContinueObjectLoad(this, model_library, texture_library,
-		objects, tracksurfaces, usesurfaces, vertical_tracking_skyboxes, texture_size);
+		objects, vertical_tracking_skyboxes, texture_size);
 }
 
 bool TRACK::LoadObjects(const string & trackpath, /*SCENENODE & sceneroot,*/ int anisotropy)

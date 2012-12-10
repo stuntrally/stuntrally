@@ -38,8 +38,7 @@ public:
 		std::map <std::string, MODEL_JOE03> & model_library,
 		std::map <std::string, TEXTURE_GL> & texture_library,
 		std::list <TRACK_OBJECT> & objects,
-		std::vector <TRACKSURFACE> & surfaces,
-		bool usesurfaces, bool vertical_tracking_skyboxes,
+		bool vertical_tracking_skyboxes,
 		const std::string & texture_size);
 
 	///optimize the drawables by grouping them

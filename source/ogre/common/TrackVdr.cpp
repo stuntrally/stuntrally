@@ -488,7 +488,7 @@ void App::CreateVdrTrackBlt()
 	const std::list<TRACK_OBJECT> & objects = track->GetTrackObjects();
 	for (std::list<TRACK_OBJECT>::const_iterator ob = objects.begin(); ob != objects.end(); ++ob)
 	{
-		if (ob->GetSurface() != NULL)
+		//if (ob->GetSurface() != NULL)
 		{
 			MODEL & model = *ob->GetModel();
 			btIndexedMesh mesh = GetIndexedMesh(model);
