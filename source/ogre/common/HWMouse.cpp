@@ -30,10 +30,10 @@ HWMouse::HWMouse(size_t windowID, const int xhot, const int yhot, const std::str
 	Image im;
 	im.load(filename, ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME);
 	
-    XcursorImage* cursorImage = XcursorImageCreate(im.getWidth(), im.getHeight());
-    cursorImage->xhot = xhot;
-    cursorImage->yhot = yhot;
-    
+	XcursorImage* cursorImage = XcursorImageCreate(im.getWidth(), im.getHeight());
+	cursorImage->xhot = xhot;
+	cursorImage->yhot = yhot;
+
 	// fill pixels
 	int c = 0;
 	for (int y=0; y<im.getHeight(); ++y)
