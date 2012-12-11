@@ -90,8 +90,8 @@ void GAME::Start(std::list <string> & args)
 //------------------------------------------------------------------------------------------------------------------------------
 bool GAME::LoadAllSurfaces()
 {
-	su.clear();
-	su_map.clear();
+	surfaces.clear();
+	surf_map.clear();
 
 	string path = PATHMANAGER::GetCarPath() + "/surfaces.cfg";
 	CONFIGFILE param;
@@ -161,8 +161,8 @@ bool GAME::LoadAllSurfaces()
 		//*it = tempsurface;
 
 
-		su.push_back(surf);
-		su_map[surf.name] = (int)su.size();  //+1, 0 = not found
+		surfaces.push_back(surf);
+		surf_map[surf.name] = (int)surfaces.size();  //+1, 0 = not found
 	}
 
 	return true;

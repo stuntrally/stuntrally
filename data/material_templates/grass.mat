@@ -16,16 +16,22 @@ material grassAustralia
 {
     parent grass
     diffuseMap grassAustralia.png
+    ambient 1.4 1.5 1.4
+    diffuse 0.5 0.5 0.5
 }
 material grassDesert
 {
     parent grass
     diffuseMap grassDesert.png
+    ambient 1.4 1.5 1.4
+    diffuse 0.5 0.5 0.5
 }
 material grassForest
 {
     parent grass
     diffuseMap grassForest.png
+    ambient 1.4 1.5 1.4
+    diffuse 0.5 0.5 0.5
 }
 material grassJungle
 {
@@ -38,21 +44,28 @@ material grassGreece
 {
     parent grass
     diffuseMap grassGreece.png
+    ambient 1.4 1.5 1.4
+    diffuse 0.5 0.5 0.5
 }
 material grassSavanna
 {
     parent grass
     diffuseMap grassSavanna.png
+    ambient 1.4 1.5 1.4
+    diffuse 0.5 0.5 0.5
 }
 material grassWinter
 {
     parent grass
     diffuseMap grassWinter.png
+    ambient 1.4 1.5 1.4
+    diffuse 0.5 0.5 0.5
 }
 material grassUnidentified
 {
     parent grass
     diffuseMap grassUnidentified.png
+    ambient 1.4 1.5 1.4
     diffuse 0.4 0.4 0.4
 }
 

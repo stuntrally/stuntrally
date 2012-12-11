@@ -110,8 +110,8 @@ public:
 	std::map <std::string, int> tires_map;  // name to tires id
 	bool LoadTires();
 
-	std::vector <TRACKSURFACE> su;  /// New  all surfaces
-	std::map <std::string, int> su_map;  // name to su id
+	std::vector <TRACKSURFACE> surfaces;  /// New  all surfaces
+	std::map <std::string, int> surf_map;  // name to surface id
 	bool LoadAllSurfaces();
 	
 #ifdef ENABLE_FORCE_FEEDBACK

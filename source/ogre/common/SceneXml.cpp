@@ -127,14 +127,20 @@ void Scene::UpdateSurfId()
 	for (int i=0; i < td.ciNumLay; ++i)
 	{
 		const std::string& s = td.layersAll[i].surfName;
-		int id = pGame->su_map[s]-1;
-		if (id == -1)  id = 0;  // default if not found
+		int id = pGame->surf_map[s]-1;
+		if (id == -1)
+		{	id = 0;  // default if not found
+			LogO("Warning: Surface not found (terrain): "+s);
+		}
 		td.layersAll[i].surfId = id;  // cached
 	}
 	//  road
 	const std::string& s = td.layerRoad.surfName;
-	int id = pGame->su_map[s]-1;
-	if (id == -1)  id = 0;
+	int id = pGame->surf_map[s]-1;
+	if (id == -1)
+	{	id = 0;
+		LogO("Warning: Surface not found (road): "+s);
+	}
 	td.layerRoad.surfId = id;
 }
 

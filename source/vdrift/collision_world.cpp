@@ -418,6 +418,7 @@ bool COLLISION_WORLD::CastRay(
 		norm = ToMathVector<float>(res.m_hitNormalWorld);
 		dist = res.m_closestHitFraction * length;
 		col = res.m_collisionObject;
+		const TerData& td = pApp->sc->td;
 
 		if (col->isStaticObject() /*&& (c->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE == 0)*/)
 		{
@@ -425,61 +426,64 @@ bool COLLISION_WORLD::CastRay(
 				su = ptrU & 0xFF00, mtr = ptrU & 0xFF;  //void*
 
 			///  set surface, basing on shape type  -----------------
-			
+
 			if (ptrU)
 			switch (su)
 			{
-			case SU_Road:  // road
-			{	int id = pApp->sc->td.layerRoad.surfId;
-				surf = &pApp->pGame->su[id]; //&track->tracksurfaces[0];  // [mtr];
-				if (cd)
-				{	cd->iWhOnRoad[w] = 1;   cd->whRoadMtr[w] = mtr;  cd->whTerMtr[w] = 0;  }
-			}	break;
+				case SU_Road:  // road
+				{
+					int id = td.layerRoad.surfId;  // Road[mtr].
+					surf = &pApp->pGame->surfaces[id];
 
-			case SU_Pipe:  // pipe
-			{	int id = pApp->sc->td.layerRoad.surfId;
-				surf = &pApp->pGame->su[id]; //&track->tracksurfaces[0];
-				if (cd)
-				{	cd->iWhOnRoad[w] = 2;   cd->whRoadMtr[w] = mtr;  cd->whTerMtr[w] = 0;  }
-			}	break;
+					if (cd)
+					{	cd->iWhOnRoad[w] = 1;   cd->whRoadMtr[w] = mtr;  cd->whTerMtr[w] = 0;  }
+				}	break;
 
-			case SU_Terrain:  // Terrain  get surface from blendmap mtr
-			{
-				int t = pApp->blendMapSize;
-				float tws = pApp->sc->td.fTerWorldSize;
+				case SU_Pipe:  // pipe
+				{
+					int id = td.layerRoad.surfId;
+					surf = &pApp->pGame->surfaces[id];
 
-				int mx = (pos[0] + 0.5*tws)/tws*t;  mx = std::max(0,std::min(t-1, mx));
-				int my = (pos[1] + 0.5*tws)/tws*t;  my = std::max(0,std::min(t-1, my));
+					if (cd)
+					{	cd->iWhOnRoad[w] = 2;   cd->whRoadMtr[w] = mtr;  cd->whTerMtr[w] = 0;  }
+				}	break;
 
-				int mtr = pApp->blendMtr[my*t + mx]-1;
-				if (cd)
-				{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = mtr;  }
-			
-				int id = pApp->sc->td.layersAll[mtr].surfId;
-				surf = &pApp->pGame->su[id];  /*\?All*/
-				//surf = 0;//&track->tracksurfaces[std::max(0,std::min(mtr, (int)track->tracksurfaces.size()-1))];
-			}	break;
-			
+				case SU_Terrain:  // Terrain  get surface from blendmap mtr
+				{
+					int t = pApp->blendMapSize;
+					float tws = td.fTerWorldSize;
+
+					int mx = (pos[0] + 0.5*tws)/tws*t;  mx = std::max(0,std::min(t-1, mx));
+					int my = (pos[1] + 0.5*tws)/tws*t;  my = std::max(0,std::min(t-1, my));
+
+					int mtr = pApp->blendMtr[my*t + mx]-1;
+
+					int id = td.layersAll[td.layers[mtr]].surfId;
+					surf = &pApp->pGame->surfaces[id];
+
+					if (cd)
+					{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = mtr;  }
+				}	break;
+				
 				//case SU_RoadWall: //case SU_RoadColumn:
 				//case SU_Vegetation: case SU_Border:
 				//case SU_ObjectStatic: //case SU_ObjectDynamic:
-			default:
-			{	//surf = 0; //&track->tracksurfaces[0];  // road
-				//surf = trackSurface[0];
-				if (cd)
-				{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 0;  }
+				default:
+				{
+					int id = td.layerRoad.surfId;
+					surf = &pApp->pGame->surfaces[id];
 
-				int id = pApp->sc->td.layerRoad.surfId;
-				surf = &pApp->pGame->su[id];
-			}	break;
+					if (cd)
+					{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 0;  }
+				}	break;
 			}
 			else  //if (ptrU == 0)
 			{
+				int id = td.layersAll[0].surfId;  //0 only 1st
+				surf = &pApp->pGame->surfaces[id];
+
 				if (cd)
 				{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 0;  }
-
-				int id = pApp->sc->td.layersAll[0].surfId;  //0 only 1st
-				surf = &pApp->pGame->su[id];
 
 				/*void * ptr = col->getUserPointer();
 				if (ptr != NULL)
@@ -514,11 +518,12 @@ bool COLLISION_WORLD::CastRay(
 				dist = (colpos - bs_pos).Magnitude();
 				//surf = 0;//track->GetRoadSurface();
 				bzr = colpatch;  col = NULL;
+
+				int id = td.layerRoad.surfId;
+				surf = &pApp->pGame->surfaces[id];
+
 				if (cd)
 				{	cd->iWhOnRoad[w] = 1;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 0;  }
-
-				int id = pApp->sc->td.layerRoad.surfId;
-				surf = &pApp->pGame->su[id];  /*\?All*/
 			}
 		}
 
