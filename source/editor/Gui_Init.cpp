@@ -249,10 +249,13 @@ void App::InitGui()
 	Cmb(cmbParMud,  "CmbParMud",  comboParDust);
 	Cmb(cmbParSmoke,"CmbParSmoke",comboParDust);
 
-	Cmb(cmbSurfType, "SurfType", comboSurfType);
-	Ed(SuBumpWave, editSurf);	Ed(SuBumpAmp, editSurf);
-	Ed(SuRollDrag, editSurf);	Ed(SuFrict2, editSurf);
-	Cmb(cmbSurfTire, "SurfTire", comboSurfTire);
+	Cmb(cmbSurface, "Surface", comboSurface);
+	txtSuBumpWave	= mGUI->findWidget<StaticText>("SuBumpWave");
+	txtSuBumpAmp	= mGUI->findWidget<StaticText>("SuBumpAmp");
+	txtSuRollDrag	= mGUI->findWidget<StaticText>("SuRollDrag");
+	txtSuFrict		= mGUI->findWidget<StaticText>("SuFrict");
+	txtSurfTire		= mGUI->findWidget<StaticText>("SurfTire");
+	txtSurfType		= mGUI->findWidget<StaticText>("SurfType");
 
 	
 	///  [Vegetation]  ------------------------------------
@@ -359,17 +362,9 @@ void App::InitGui()
 	}
 	
 	//  surfaces
-	for (i=0; i < TRACKSURFACE::NumTypes; ++i)
-		cmbSurfType->addItem(csTRKsurf[i]);
+	for (size_t i=0; i < surfaces.size(); ++i)
+		cmbSurface->addItem(surfaces[i].name);
 	
-	//  tires
-	PATHMANAGER::GetFolderIndex(PATHMANAGER::GetTiresPath(), li);
-	for (std::list <std::string>::iterator i = li.begin(); i != li.end(); ++i)
-	{
-		std::string file = *i;
-		if (file.find(".tire") != std::string::npos)
-			cmbSurfTire->addItem(file.substr(0, file.length()-5));
-	}
 
 	//---------------------  Grass  ---------------------
 	GetMaterialsMat(sMat+"grass.mat");

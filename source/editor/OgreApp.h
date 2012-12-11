@@ -46,7 +46,10 @@ public:
 	FluidsXml fluidsXml;  /// fluid params xml
 	BltObjects objs;  // veget collision in bullet
 
-	TRACKSURFACE su[8];  bool LoadSurf(), SaveSurf(const Ogre::String& trk);
+	std::vector <TRACKSURFACE> surfaces;  /// New  all surfaces
+	std::map <std::string, int> surf_map;  // name to surface id
+	bool LoadAllSurfaces();
+
 	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 
 	void UpdWndTitle(), SaveCam();
@@ -386,10 +389,8 @@ protected:
 	MyGUI::ComboBoxPtr cmbParDust,cmbParMud,cmbParSmoke;  void comboParDust(CMB);
 	
 	//  ter surfaces
-	MyGUI::ComboBoxPtr cmbSurfType;  void comboSurfType(CMB);
-	MyGUI::ComboBoxPtr cmbSurfTire;  void comboSurfTire(CMB);
-	MyGUI::EditPtr edSuBumpWave, edSuBumpAmp, edSuRollDrag, edSuFrict2;
-	void editSurf(MyGUI::EditPtr);
+	MyGUI::ComboBoxPtr cmbSurface;  void comboSurface(CMB), UpdSurfInfo();
+	MyGUI::StaticTextPtr txtSurfTire, txtSuBumpWave,txtSuBumpAmp, txtSuRollDrag, txtSuFrict, txtSurfType;
 	
 
 	///  [Vegetation]  ----

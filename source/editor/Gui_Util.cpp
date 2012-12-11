@@ -98,9 +98,9 @@ void App::btnNewGame(WP)
 /// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 //  track files
-const int cnTrkFm = 5, cnTrkFd = 2, cnTrkFo = 2, cnTrkFp = 3;
+const int cnTrkFm = 4, cnTrkFd = 2, cnTrkFo = 2, cnTrkFp = 3;
 const Ogre::String
-	csTrkFm[cnTrkFm] = {"/heightmap.f32", "/road.xml", "/scene.xml", "/surfaces.txt", "/track.txt"},  // copy, new
+	csTrkFm[cnTrkFm] = {"/heightmap.f32", "/road.xml", "/scene.xml", "/track.txt"},  // copy, new
 	csTrkFo[cnTrkFo] = {"/grassDensity.png", "/waterDepth.png"},
 	csTrkFp[cnTrkFp] = {"/view.jpg", "/road.png", "/terrain.jpg"},
 	csTrkFd[cnTrkFd] = {"/heightmap-new.f32", "/records.txt"};  // del
@@ -396,104 +396,6 @@ void App::msgTrackDel(Message* sender, MessageBoxStyle result)
 		LoadTrack();  //load 1st if deleted cur
 }
 
-
-
-//-----------------------------------------------------------------------------------------------------------
-//  Surfaces
-//-----------------------------------------------------------------------------------------------------------
-
-bool App::LoadSurf()
-{
-	std::string path = TrkDir()+"surfaces.txt";
-	Ogre::ConfigFile cf;
-	try {  cf.load(path);  }
-	catch (Ogre::Exception&){  LogO("Can't find surfaces configfile: " + path);  return false;  }
-	
-	Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
-	Ogre::String secName, key, value;
-
-	while (seci.hasMoreElements())
-	{		
-		secName = seci.peekNextKey();
-		if (secName == Ogre::StringUtil::BLANK)
-		{	seci.getNext();  continue;  }
-
-		int l = -1;
-		if (secName[1] == 'L')		// " L_0 " to " L_6 " from editor
-		{
-			l = secName[3]-'0';		// 0..5 ter layers, 6 road
-			//LogO(String("Surf load: ")+secName[1]+" "+toStr(l));
-		}
-		else	// " A " to " G " from game  (L read after for both)
-		{
-			if (secName[1] == 'A')  // A  road
-				l = 6;
-			else	// B..G  ter layers - used only
-			{
-				int il = secName[1]-'B', im = sc->td.layers.size();
-				if (il < 0) {	LogO("Surf load error: < 0");
-					l = 5;  }  // use 5 - last ter layer
-				else
-				if (il > im-1){	LogO("Surf load error: surf > used, ignoring.  "+toStr(il)+">"+toStr(im-1));
-					l = 5;  }
-				else
-					l = sc->td.layers[il];  // ok
-			}
-			//LogO(String("Surf load: ")+secName[1]+" "+toStr(l));
-		}
-		if (l == -1)  {  l = 0;  LogO("Surf load error: -1");  }
-
-		TRACKSURFACE surf;  // assign default, read params
-		su[l] = surf;
-		Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
-		Ogre::ConfigFile::SettingsMultiMap::iterator i;
-		for (i = settings->begin(); i != settings->end(); ++i)
-		{
-				 if (i->first == "ID")				su[l].setType( s2i(i->second) );
-			else if (i->first == "BumpWaveLength")	su[l].bumpWaveLength = s2r(i->second);
-			else if (i->first == "BumpAmplitude")	su[l].bumpAmplitude = s2r(i->second);
-			else if (i->first == "FrictionTread")	su[l].frictionTread = s2r(i->second);
-			else if (i->first == "RollingDrag")		su[l].rollingDrag = s2r(i->second);
-			else if (i->first == "Tire")		
-				su[l].tireName = i->second;
-		}
-	}
-	return true;
-}
-
-bool App::SaveSurf(const std::string& path)
-{
-	CONFIGFILE cf;
-	int u = 0;  // used counter
-	for (int i=0; i < 7; ++i)  // 6 ter layers + road in [6]
-	{
-		int n = 1;  // not used, L only
-		if (i==6 || (i < 6 && sc->td.layersAll[i].on))  // road always
-			n = 2;  // used (on)	- write twice
-		//LogO(String("Surf save: ") + toStr(i) +" x"+ toStr(n));
-		
-		//    A .. G    used only, for game (A-road)
-		//  L_0 .. L_6  all, for editor (6-road)
-		for (int nn=0; nn < n; ++nn)
-		{
-			std::string ss;
-			if (nn==0)	ss = "L_"+toStr(i); // editor all
-			else  if (i==6)  ss = "A";      // used road
-			else  {  ss = 'B'+u;  u++;  }   // used ter
-			//LogO(String("Surf save: ") + toStr(i) +" x"+ toStr(n)+"-"+toStr(nn) +" "+ ss);
-
-			const TRACKSURFACE& surf = su[i];  // read and set params
-			cf.SetParam(ss + ".ID", surf.type);
-			cf.SetParam(ss + ".BumpWaveLength", surf.bumpWaveLength);
-			cf.SetParam(ss + ".BumpAmplitude", surf.bumpAmplitude);
-			cf.SetParam(ss + ".FrictionTread", surf.frictionTread);
-			cf.SetParam(ss + ".RollingDrag", surf.rollingDrag);
-			if (surf.tireName != "DEFAULT")
-				cf.SetParam(ss + ".Tire", surf.tireName);
-		}
-	}
-	return cf.Write(true, path);
-}
 
 
 ///  Get Materials

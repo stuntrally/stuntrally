@@ -151,15 +151,6 @@ bool GAME::LoadAllSurfaces()
 		surf.tireName = tireFile;
 		///---
 		
-		//tracksurfaces.push_back(surf);//
-		//info_output << "  new surface: " << surf.name << " ID:" << id << " bumpA:" << surf.bumpAmplitude << endl;//
-		//if (surf.name == "R")  // for road
-		//	roadSurf = surf;
-		
-		//list<TRACKSURFACE>::iterator it = tracksurfaces.begin();
-		//while(indexnum-- > 0) it++;
-		//*it = tempsurface;
-
 
 		surfaces.push_back(surf);
 		surf_map[surf.name] = (int)surfaces.size();  //+1, 0 = not found

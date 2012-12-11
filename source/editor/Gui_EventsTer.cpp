@@ -5,6 +5,7 @@
 #include <fstream>
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/Slider.h"
+#include "../vdrift/pathmanager.h"
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -65,14 +66,9 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 	edLTrlClr->setCaption(toStr(lay->tclr));  if (clrTrail)  clrTrail->setColour(Colour(lay->tclr.r,lay->tclr.g,lay->tclr.b));
 	
 	//  Surfaces
-	int i = idTerLay;  //bTerLay ? idTerLay+1 : 0;  // road at 0
-	cmbSurfType->setIndexSelected(su[i].type);
-	cmbSurfTire->setIndexSelected(cmbSurfTire->findItemIndexWith(su[i].tireName));
-	edSuBumpWave->setCaption(toStr(su[i].bumpWaveLength));
-	edSuBumpAmp->setCaption(toStr(su[i].bumpAmplitude));
-	edSuRollDrag->setCaption(toStr(su[i].rollingDrag));
-	//edSuFrict->setCaption(toStr(su[i].frictionNonTread));  //-not used, rollResistanceCoefficient too
-	edSuFrict2->setCaption(toStr(su[i].frictionTread));
+	cmbSurface->setCaption( !bTerLay ? sc->td.layerRoad.surfName : sc->td.layersAll[idTerLay].surfName );
+	UpdSurfInfo();
+
 	noBlendUpd = false;
 }
 
@@ -520,25 +516,88 @@ void App::comboParDust(ComboBoxPtr cmb, size_t val)
 
 ///  Terrain Surface  -----------------------------
 //
-void App::comboSurfType(ComboBoxPtr cmb, size_t val)
+void App::comboSurface(ComboBoxPtr cmb, size_t val)
 {
-	int i = idTerLay;  //bTerLay ? idTerLay+1 : 0;  // road at 0
-	su[i].setType(val);
+	if (!bTerLay)
+		sc->td.layerRoad.surfName = cmb->getCaption();
+	else
+		sc->td.layersAll[idTerLay].surfName = cmb->getCaption();
+	UpdSurfInfo();
 }
 
-void App::comboSurfTire(ComboBoxPtr cmb, size_t val)
+void App::UpdSurfInfo()
 {
-	int i = idTerLay;  //bTerLay ? idTerLay+1 : 0;  // road at 0
-	su[i].tireName = cmb->getItemNameAt(val);
+	std::string s = cmbSurface->getCaption();
+	int id = surf_map[s]-1;
+	if (id == -1)  return;  //not found..
+	const TRACKSURFACE& su = surfaces[id];
+
+	txtSurfTire->setCaption(su.tireName);
+	txtSuBumpWave->setCaption(fToStr(su.bumpWaveLength, 1,3));
+	txtSuBumpAmp->setCaption(fToStr(su.bumpAmplitude, 2,4));
+	txtSuRollDrag->setCaption(fToStr(su.rollingDrag, 1,3));
+	txtSuFrict->setCaption(fToStr(su.frictionTread, 2,4));
+	txtSurfType->setCaption(csTRKsurf[su.type]);
 }
 
-void App::editSurf(EditPtr ed)
-{
-	Real r = s2r(ed->getCaption());
-	int i = idTerLay;  //bTerLay ? idTerLay+1 : 0;
 
-		if (ed == edSuBumpWave)   su[i].bumpWaveLength = r;
-	else if (ed == edSuBumpAmp)   su[i].bumpAmplitude = r;
-	else if (ed == edSuRollDrag)  su[i].rollingDrag = r;
-	else if (ed == edSuFrict2)    su[i].frictionTread = r;
+///  Surfaces  all in data/cars/surfaces.cfg
+//------------------------------------------------------------------------------------------------------------------------------
+bool App::LoadAllSurfaces()
+{
+	surfaces.clear();
+	surf_map.clear();
+
+	std::string path = PATHMANAGER::GetCarPath() + "/surfaces.cfg";
+	CONFIGFILE param;
+	if (!param.Load(path))
+	{
+		LogO("Can't find surfaces configfile: " + path);
+		return false;
+	}
+	
+	std::list <std::string> sectionlist;
+	param.GetSectionList(sectionlist);
+	
+	for (std::list<std::string>::const_iterator section = sectionlist.begin(); section != sectionlist.end(); ++section)
+	{
+		TRACKSURFACE surf;
+		surf.name = *section;
+		
+		int id;
+		param.GetParam(*section + ".ID", id);  // for sound..
+		//-assert(indexnum >= 0 && indexnum < (int)tracksurfaces.size());
+		surf.setType(id);
+		
+		float temp = 0.0;
+		param.GetParam(*section + ".BumpWaveLength", temp);
+		surf.bumpWaveLength = temp;
+		
+		param.GetParam(*section + ".BumpAmplitude", temp);
+		surf.bumpAmplitude = temp;
+		
+		//param.GetParam(*section + ".FrictionNonTread", temp);  //not used
+		//surf.frictionNonTread = temp;
+		
+		param.GetParam(*section + ".FrictionTread", temp);
+		surf.frictionTread = temp;
+		
+		if (param.GetParam(*section + ".RollResistance", temp))
+			surf.rollingResist = temp;
+		
+		param.GetParam(*section + ".RollingDrag", temp);
+		surf.rollingDrag = temp;
+
+		///---  Tire  ---
+		std::string tireFile;
+		if (!param.GetParam(*section + "." + "Tire", tireFile))
+			tireFile = "Default";  // default surface if not found
+		surf.tireName = tireFile;
+		///---
+		
+		surfaces.push_back(surf);
+		surf_map[surf.name] = (int)surfaces.size();  //+1, 0 = not found
+	}
+
+	return true;
 }

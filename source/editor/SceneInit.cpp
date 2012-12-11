@@ -50,6 +50,9 @@ void App::createScene()  // once, init
 	//  collisions.xml
 	objs.LoadXml();
 	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
+	
+	//  surfaces.cfg
+	LoadAllSurfaces();
 
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
@@ -148,7 +151,6 @@ void App::LoadTrackEv()
 	
 	BltWorldInit();
 
-	LoadSurf();
 	UpdWndTitle();
 
 	CreateFluids();
@@ -304,11 +306,11 @@ void App::SaveTrackEv()
 		road->SaveFile(TrkDir()+"road.xml");
 
 	sc->SaveXml(TrkDir()+"scene.xml");
-	SaveSurf(TrkDir()+"surfaces.txt");
 
 	bool vdr = IsVdrTrack();
 	/*if (!vdr)*/  SaveGrassDens();
 	if (!vdr)  SaveWaterDepth();  //?-
+
 	SaveStartPos(TrkDir()+"track.txt");  //..load/save inside
 	
 	Delete(getHMapNew());
