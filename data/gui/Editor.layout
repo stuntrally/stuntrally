@@ -1866,7 +1866,7 @@
 						<Widget type="TextBox" skin="TextBox" position="148 128 80 24" name="SuFrict">
 							<Property key="TextColour" value="1 0.6 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
-							<UserString key="tip" value="#{TipSurfFrict2}"/>
+							<UserString key="tip" value="#{TipSurfFrict}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="292 90 128 24">
 							<Property key="Caption" value="#{BumpWavelen}"/>

@@ -499,7 +499,7 @@ bool Scene::SaveXml(String file)
 			tex.SetAttribute("file",	l->texFile.c_str());
 			tex.SetAttribute("fnorm",	l->texNorm.c_str());
 			tex.SetAttribute("scale",	toStrC( l->tiling ));
-			tex.SetAttribute("surf",	l->texNorm.c_str());
+			tex.SetAttribute("surf",	l->surfName.c_str());
 			#define setDmst()  \
 				tex.SetAttribute("dust",	toStrC( l->dust ));  \
 				tex.SetAttribute("dustS",	toStrC( l->dustS )); \

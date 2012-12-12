@@ -1023,7 +1023,6 @@
 	<Tag name="TipSurfType">Type of surface, determines sound.</Tag>
 	<Tag name="TipRollDrag">Drag for wheels, bigger will make them slow down faster (eg. 140 for snow, 80 for grass).</Tag>
 	<Tag name="TipSurfFrict">Surface friction (eg. 1.0 asphalt, 0.7 gravel, 0.5 ice).</Tag>
-	<Tag name="TipSurfFrict2">Not used.</Tag>
 
 
 	<!--  Vegetation  -->

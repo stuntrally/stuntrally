@@ -66,7 +66,8 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 	edLTrlClr->setCaption(toStr(lay->tclr));  if (clrTrail)  clrTrail->setColour(Colour(lay->tclr.r,lay->tclr.g,lay->tclr.b));
 	
 	//  Surfaces
-	cmbSurface->setCaption( !bTerLay ? sc->td.layerRoad.surfName : sc->td.layersAll[idTerLay].surfName );
+	cmbSurface->setIndexSelected( cmbSurface->findItemIndexWith(
+		!bTerLay ? sc->td.layerRoad.surfName : sc->td.layersAll[idTerLay].surfName ));
 	UpdSurfInfo();
 
 	noBlendUpd = false;
@@ -518,10 +519,11 @@ void App::comboParDust(ComboBoxPtr cmb, size_t val)
 //
 void App::comboSurface(ComboBoxPtr cmb, size_t val)
 {
+	std::string s = cmb->getItemNameAt(val);
 	if (!bTerLay)
-		sc->td.layerRoad.surfName = cmb->getCaption();
+		sc->td.layerRoad.surfName = s;
 	else
-		sc->td.layersAll[idTerLay].surfName = cmb->getCaption();
+		sc->td.layersAll[idTerLay].surfName = s;
 	UpdSurfInfo();
 }
 
