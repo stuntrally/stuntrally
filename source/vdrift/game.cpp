@@ -204,6 +204,7 @@ bool GAME::LoadTires()
 				ct.aligning[i] = value;
 			}
 			ct.CalculateSigmaHatAlphaHat();
+
 			
 			tires.push_back(ct);
 			tires_map[file] = (int)tires.size();  //+1, 0 = not found

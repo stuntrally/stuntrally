@@ -461,8 +461,8 @@ bool COLLISION_WORLD::CastRay(
 					int id = td.layersAll[td.layers[mtr]].surfId;
 					surf = &pApp->pGame->surfaces[id];
 
-					if (cd)
-					{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = mtr;  }
+					if (cd)                                              // mtr 0 = not on terrain
+					{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = mtr + 1;  }
 				}	break;
 				
 				//case SU_RoadWall: //case SU_RoadColumn:
@@ -483,7 +483,7 @@ bool COLLISION_WORLD::CastRay(
 				surf = &pApp->pGame->surfaces[id];
 
 				if (cd)
-				{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 0;  }
+				{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 1;  }
 
 				/*void * ptr = col->getUserPointer();
 				if (ptr != NULL)
