@@ -1128,6 +1128,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\data\cars\surfaces.cfg"
+				>
+			</File>
+			<File
 				RelativePath=".\config\tracks.xml"
 				>
 			</File>
