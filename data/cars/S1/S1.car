@@ -29,7 +29,7 @@ posLfront = 1.93
 offsetL = -0.3
 offsetW = 0.0
 offsetH = 0.16
-start-offsetY = 0.6
+start-offsetY = 0.64
 
 #  engine
 #---------------------------
@@ -38,7 +38,7 @@ position = 0.04, 1.4, 0.3
 mass = 250.0
 peak-engine-rpm = 6500
 rpm-limit = 7000.0
-inertia = 0.50
+inertia = 0.30
 start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
@@ -102,6 +102,10 @@ camber = -1.33
 caster = 0.32
 toe = 0.0
 anti-roll = 26000.0
+#spring-factor-1 = 0.052, 1.0
+#spring-factor-2 = 0.055, 4.2
+#damper-factor-1 = 0.08,1.0
+#damper-factor-2 = 0.1, 0.7
 
 [ suspension-rear ]
 spring-constant = 100000.0
@@ -112,7 +116,10 @@ camber = -0.45
 caster = 0.33
 toe = 0.2
 anti-roll = 20000.0
-
+#spring-factor-1 = 0.052, 1.0
+#spring-factor-2 = 0.055, 4.2
+#damper-factor-1 = 0.08,1.0
+#damper-factor-2 = 0.1, 0.7
 
 #  tires (more in .tire)
 #---------------------------
@@ -175,7 +182,7 @@ efficiency = 0.95
 # wheels front (position and suspension mount)
 #---------------------------
 [ wheel-FR ]
-position = 0.74, 1.275, -0.52
+position = 0.74, 1.275, -0.54
 roll-height = 0.8
 mass = 15.0
 restitution = 0.1
@@ -185,7 +192,7 @@ position = 0.60, 1.275, -0.57
 hinge = -0.71, 0.55, -0.0
 
 [ wheel-FL ]
-position = -0.74, 1.275, -0.52
+position = -0.74, 1.275, -0.54
 roll-height = 0.8
 mass = 15.0
 restitution = 0.1
@@ -198,7 +205,7 @@ hinge = 0.71, 0.55, 0.0
 # wheels rear (position and suspension mount)
 #---------------------------
 [ wheel-RR ]
-position = 0.74, -1.266, -0.52
+position = 0.74, -1.266, -0.54
 roll-height = 0.8
 mass = 15.0
 restitution = 0.1
@@ -208,7 +215,7 @@ position = 0.60, -1.266, -0.57
 hinge = -0.25, -1.94, 0.0
 
 [ wheel-RL ]
-position = -0.74, -1.266, -0.52
+position = -0.74, -1.266, -0.54
 roll-height = 0.8
 mass = 15.0
 restitution = 0.1

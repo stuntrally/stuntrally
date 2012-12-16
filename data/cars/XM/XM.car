@@ -3,7 +3,7 @@ version = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
-max-angle = 33
+max-angle = 26
 angular-damping = 0.0
 
 [ rot_drag ]
@@ -32,7 +32,7 @@ posLfront = 2.0
 offsetL = 0.0
 offsetW = 0.01
 offsetH = 0.23
-start-offsetY = 0.6
+start-offsetY = 0.65
 
 
 #  engine
@@ -47,14 +47,15 @@ start-rpm = 1000
 stall-rpm = 650
 fuel-consumption = 1e-9
 torque-friction = 0.0002
-torque-val-mul = 0.90
-torque-curve-00 = 1000, 346
-torque-curve-01 = 1500, 415
-torque-curve-02 = 2000, 460
-torque-curve-03 = 2500, 562
-torque-curve-04 = 3000, 618
-torque-curve-05 = 3500, 670
-torque-curve-06 = 4000, 714
+#torque-val-mul = 0.90
+torque-val-mul = 1.25
+torque-curve-00 = 1000, 246
+torque-curve-01 = 1500, 335
+torque-curve-02 = 2000, 440
+torque-curve-03 = 2500, 542
+torque-curve-04 = 3000, 608
+torque-curve-05 = 3500, 650
+torque-curve-06 = 4000, 704
 torque-curve-07 = 4500, 755
 torque-curve-08 = 5000, 818
 torque-curve-09 = 5500, 780
@@ -66,10 +67,10 @@ torque-curve-14 = 8000, 606
 torque-curve-15 = 8500, 566
 
 [ clutch ]
-sliding = 0.10
+sliding = 0.70
 radius = 0.15
 area = 0.75
-max-pressure = 73000
+max-pressure = 83000
 
 #  gearbox
 #---------------------------

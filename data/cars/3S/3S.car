@@ -3,7 +3,7 @@ version = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
-max-angle = 35
+max-angle = 26
 angular-damping = 0.0
 
 [ rot_drag ]
@@ -29,7 +29,7 @@ posLfront = 1.92
 offsetL = -0.3
 offsetW = 0.0
 offsetH = 0.19
-start-offsetY = 0.6
+start-offsetY = 0.62
 
 
 #  engine
