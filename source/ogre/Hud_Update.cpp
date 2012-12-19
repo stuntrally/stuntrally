@@ -374,12 +374,23 @@ void App::UpdateHUD(int carId, float time)
 				hudWonPlace->setColour(clrPlace[pCarM->iWonPlace-1]);
 			}
 		}
+		//  times
+		float last = tim.GetLastLap(carId), best = tim.GetBestLap(carId, pSet->game.trackreverse);
+		//  track time, score
+		float timeBest = std::max(0.1f, /*pSet->game.track_user ? 0.f :*/ champs.trkTimes[pSet->game.track]);
+		timeBest *= 1.0f + 0.1f;  // mostly 0.1
+		const float decFactor = 1.5f;  // more means score will drop faster for longer times
+		float timeCur = last < 0.1f ? best : last;
+		float score = (1.f + (timeBest-timeCur)/timeBest * decFactor) * 100.f;
+		
 		if (txTimes[carId])
 			txTimes[carId]->setCaption(
-				(hasLaps ? "#D0E8F0"+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps) : "") +
+				(hasLaps ? "#D0E8FF"+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps) : "") +
 				"\n#E8F4FF" + GetTimeString(tim.GetPlayerTime(carId))+
-				"\n#C0E0F0" + GetTimeString(tim.GetLastLap(carId))+
-				"\n#D8E0F8" + GetTimeString(tim.GetBestLap(carId, pSet->game.trackreverse)) );
+				"\n#C0E0F0" + GetTimeString(last)+
+				"\n#D8E0F8" + GetTimeString(best)+
+				"\n#C0E8C0" + GetTimeString(timeBest)+
+				"\n#90D090" + fToStr(score,1,4) );  //,2,5
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------
@@ -506,7 +517,7 @@ void App::UpdateHUD(int carId, float time)
 		//if (show != pCarM->iChkWrong)  //-
 		bool place = pSet->game.local_players > 1 || mClient, won = pCarM->iWonPlace > 0;
 			if (show)  {  hudWarnChk->show();  if (place && !won)  hudWonPlace->hide();  }
-			else  {       hudWarnChk->hide();  if (place && won)  hudWonPlace->show();  }
+			else  {       hudWarnChk->hide();  if (place && won)   hudWonPlace->show();  }
 		pCarM->iChkWrong = show;
 	}
 

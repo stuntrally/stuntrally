@@ -262,13 +262,13 @@ void App::CreateHUD(bool destroy)
 
 		//  times text    -----------
 		bckTimes[c] = mGUI->createWidget<ImageBox>("ImageBox",
-			0,1200, 208,120, Align::Left, "Back", "TimP"+toStr(c));
+			0,1200, 208,160, Align::Left, "Back", "TimP"+toStr(c));
 		//bckTimes[c]->setAlpha(0.9f);
 		bckTimes[c]->setVisible(false);
 		bckTimes[c]->setImageTexture("back_times.png");
 
 		txTimTxt[c] = mGUI->createWidget<TextBox>("TextBox",
-			0,1200, 90,120, Align::Left, "Back", "TimT"+toStr(c));
+			0,1200, 90,160, Align::Left, "Back", "TimT"+toStr(c));
 		txTimTxt[c]->setVisible(false);
 		txTimTxt[c]->setFontName("font_Vera.20");
 		txTimTxt[c]->setTextShadow(true);
@@ -277,10 +277,12 @@ void App::CreateHUD(bool destroy)
 			(hasLaps ? String("#D0E8F0")+TR("#{TBLap}") : "")+
 			"\n#E8F4FF"+TR("#{TBTime}") + 
 			"\n#C0E0F0"+TR("#{TBLast}") + 
-			"\n#D8E0F8"+TR("#{TBBest}") );
+			"\n#D8E0F8"+TR("#{TBBest}") +
+			"\n#A0D0A0"+TR("#{Track}") +
+			"\n#80D080"+TR("#{TBScore}") );
 
 		txTimes[c] = mGUI->createWidget<TextBox>("TextBox",
-			0,1200, 80,120, Align::Left, "Back", "Tim"+toStr(c));
+			0,1200, 80,160, Align::Left, "Back", "Tim"+toStr(c));
 		txTimes[c]->setVisible(false);
 		txTimes[c]->setFontName("font_Vera.20");
 		txTimes[c]->setTextShadow(true);
