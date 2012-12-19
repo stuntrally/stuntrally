@@ -374,23 +374,29 @@ void App::UpdateHUD(int carId, float time)
 				hudWonPlace->setColour(clrPlace[pCarM->iWonPlace-1]);
 			}
 		}
+
 		//  times
 		float last = tim.GetLastLap(carId), best = tim.GetBestLap(carId, pSet->game.trackreverse);
-		//  track time, score
-		float timeBest = std::max(0.1f, /*pSet->game.track_user ? 0.f :*/ champs.trkTimes[pSet->game.track]);
-		timeBest *= 1.0f + 0.1f;  // mostly 0.1
-		const float decFactor = 1.5f;  // more means score will drop faster for longer times
 		float timeCur = last < 0.1f ? best : last;
-		float score = (1.f + (timeBest-timeCur)/timeBest * decFactor) * 100.f;
+		//  track time, score
+		float timeBest = /*pSet->game.track_user ? 0.f :*/ champs.trkTimes[pSet->game.track];
+		float score = 0.f;  bool b = false;
+		if (timeBest > 0.f && timeCur > 0.f)
+		{
+			timeBest *= 1.0f + 0.1f;  // factor mostly 0.1
+			const float decFactor = 1.5f;
+			score = (1.f + (timeBest-timeCur)/timeBest * decFactor) * 100.f;
+			b = true;
+		}
 		
 		if (txTimes[carId])
 			txTimes[carId]->setCaption(
 				(hasLaps ? "#D0E8FF"+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps) : "") +
-				"\n#E8F4FF" + GetTimeString(tim.GetPlayerTime(carId))+
-				"\n#C0E0F0" + GetTimeString(last)+
-				"\n#D8E0F8" + GetTimeString(best)+
-				"\n#C0E8C0" + GetTimeString(timeBest)+
-				"\n#90D090" + fToStr(score,1,4) );  //,2,5
+				"\n#C0E0F0" + GetTimeString(tim.GetPlayerTime(carId))+
+				"\n#80C0F0" + GetTimeString(last)+
+				"\n#70D0D0" + GetTimeString(best)+
+				"\n#80E080" + GetTimeString(timeBest)+
+				"\n#C0C030" + (b ? fToStr(score,1,4) : "--") );  //,2,5
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------

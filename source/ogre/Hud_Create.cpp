@@ -262,7 +262,7 @@ void App::CreateHUD(bool destroy)
 
 		//  times text    -----------
 		bckTimes[c] = mGUI->createWidget<ImageBox>("ImageBox",
-			0,1200, 208,160, Align::Left, "Back", "TimP"+toStr(c));
+			0,1200, 208,170, Align::Left, "Back", "TimP"+toStr(c));
 		//bckTimes[c]->setAlpha(0.9f);
 		bckTimes[c]->setVisible(false);
 		bckTimes[c]->setImageTexture("back_times.png");
@@ -275,11 +275,11 @@ void App::CreateHUD(bool destroy)
 		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
 		txTimTxt[c]->setCaption(
 			(hasLaps ? String("#D0E8F0")+TR("#{TBLap}") : "")+
-			"\n#E8F4FF"+TR("#{TBTime}") + 
-			"\n#C0E0F0"+TR("#{TBLast}") + 
-			"\n#D8E0F8"+TR("#{TBBest}") +
-			"\n#A0D0A0"+TR("#{Track}") +
-			"\n#80D080"+TR("#{TBScore}") );
+			"\n#C0E0F0"+TR("#{TBTime}") + 
+			"\n#80C0F0"+TR("#{TBLast}") + 
+			"\n#80E0E0"+TR("#{TBBest}") +
+			"\n#70D070"+TR("#{Track}") +
+			"\n#D0D040"+TR("#{TBScore}") );
 
 		txTimes[c] = mGUI->createWidget<TextBox>("TextBox",
 			0,1200, 80,160, Align::Left, "Back", "Tim"+toStr(c));
