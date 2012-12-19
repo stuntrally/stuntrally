@@ -159,8 +159,6 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 	CreateDir(GetTrackPathUser(), error_output);  // user tracks
 
 	CreateDir(GetDataPathUser(), error_output);  // user data
-	CreateDir(GetCarPathUser(), error_output);
-	CreateDir(GetTiresPathUser(), error_output);
 
 
 	// Find game data dir and defaults config dir

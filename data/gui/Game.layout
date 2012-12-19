@@ -2771,7 +2771,7 @@
 			</Widget>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowCS" position="900 204 536 840" align="Default" layer="Popup" name="WndTweak">
+	<Widget type="Window" skin="WindowCS" position="0 40 536 840" align="Default" layer="Popup" name="WndTweak">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="MaxSize" value="2560 1600"/>
 		<Property key="Caption" value="#{Tweak}"/>

@@ -54,9 +54,9 @@ void App::TweakCarLoad()
 		edTweak->setCaption(UString(text));
 		//edTweak->setVScrollPosition(0);
 
-		size_t p = path.find("cars");
+		size_t p = path.find("carsim");
 		if (p != string::npos)
-			path = path.substr(p+5, path.length());
+			path = path.substr(p+7, path.length());
 		txtTweakPath->setCaption((user ? "User: " : "Original: ") + path);
 		txtTweakPath->setTextColour(user ? Colour(1,1,0.5) : Colour(0.5,1,1));
 		
@@ -95,7 +95,9 @@ void App::TweakTireSave()
 	//#define f2s(f)  fToStr(f, 4,6);
 	
 	string file = cmbTweakTireSet->getCaption();
-	file = PATHMANAGER::GetTiresPathUser()+"/"+file+".tire";
+	string pathUserT = PATHMANAGER::GetDataPathUser() + "/carsim/" + pSet->game.sim_mode + "/tires/";
+	PATHMANAGER::CreateDir(pathUserT, pGame->error_output);
+	file = pathUserT+"/"+file+".tire";
 	if (PATHMANAGER::FileExists(file))
 	{
 		if (txtTweakTire)
@@ -195,9 +197,9 @@ bool App::GetCarPath(std::string* pathCar, std::string* pathSave, std::string* p
 	std::string carname, bool asphalt, std::string tweakSetup, bool forceOrig)
 {
 	std::string file = carname + ".car",
-		pathOrig  = PATHMANAGER::GetCarPath()     + "/"+carname+"/"+ file,
-		pathUserD = PATHMANAGER::GetCarPathUser() + "/"+carname+"/"+ (tweakSetup != "" ? tweakSetup+"/" : ""),
-		pathUser  = pathUserD + file;
+		pathOrig  = PATHMANAGER::GetCarSimPath()          + "/" + pSet->game.sim_mode + "/cars/" + file,
+		pathUserD = PATHMANAGER::GetDataPathUser() + "/carsim/" + pSet->game.sim_mode + "/cars/",
+		pathUser  = pathUserD + file;                          // (tweakSetup != "" ? tweakSetup+"/" : "")
 
 	if (pathSave)  *pathSave = pathUser;
 	if (pathSaveDir)  *pathSaveDir = pathUserD;
