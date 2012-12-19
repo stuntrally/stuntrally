@@ -25,6 +25,7 @@ private:
 	Dbl stall_rpm;	///< RPM at which the engine dies
 	Dbl fuel_consumption;	///< fuel consumed each second (in liters) is the fuel-consumption parameter times RPM times throttle
 	Dbl friction;	///< friction coefficient from the engine; this is calculated algorithmically
+	Dbl frict_coeffB;	///< friction coefficient
 
 	std::map <Dbl, Dbl> torque_map;  ///< a set of RPMs that map to torque values
 	Dbl mass;
@@ -45,16 +46,7 @@ private:
 	
 public:
 	//default constructor makes an S2000-like car
-	CARENGINE()
-		:redline(7800), rpm_limit(9000), idle(0.02)
-		,start_rpm(1000), stall_rpm(350), fuel_consumption(1e-9), friction(0.000328)
-		,throttle_position(0.0), clutch_torque(0.0), out_of_gas(false)
-		,rev_limit_exceeded(false), friction_torque(0), combustion_torque(0), stalled(false)
-    {
-	    MATRIX3 <Dbl> inertia;
-	    inertia.Scale(0.25);
-	    crankshaft.SetInertia(inertia);
-    }
+	CARENGINE();
 
 	Dbl GetTorqueCurve(const Dbl cur_throttle, const Dbl cur_rpm) const;
 	
@@ -71,6 +63,9 @@ public:
 	{
 		return crankshaft.GetInertia()[0];
 	}
+	
+	void SetFrictionB (const Dbl& value){	frict_coeffB = value;	}
+	Dbl GetFrictionB() const			{	return frict_coeffB;	}
 
 	void SetRPMLimit (const Dbl& value)	{	rpm_limit = value;	}
 	Dbl GetRPMLimit() const				{	return rpm_limit;	}

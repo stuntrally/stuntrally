@@ -80,7 +80,7 @@ public:
 
 /// custom collision params
 	float coll_R, coll_W, coll_H, coll_Hofs, coll_Wofs, coll_Lofs;
-	float coll_posLfront, coll_posLback;
+	float coll_posLfront, coll_posLback, coll_friction;
 
 // driveline
 	// driveline input

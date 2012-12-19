@@ -30,6 +30,8 @@ offsetL = -0.3
 offsetW = 0.0
 offsetH = 0.16
 start-offsetY = 0.64
+friction = 0.4
+
 
 #  engine
 #---------------------------
@@ -42,6 +44,7 @@ inertia = 0.30
 start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
+friction = 230
 torque-val-mul = 1.2
 torque-curve-00 = 1000, 405
 torque-curve-01 = 1500, 445

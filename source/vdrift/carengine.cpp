@@ -2,6 +2,17 @@
 #include "carengine.h"
 
 
+CARENGINE::CARENGINE()
+	:redline(7800), rpm_limit(9000), idle(0.02), frict_coeffB(230)
+	,start_rpm(1000), stall_rpm(350), fuel_consumption(1e-9), friction(0.000328)
+	,throttle_position(0.0), clutch_torque(0.0), out_of_gas(false)
+	,rev_limit_exceeded(false), friction_torque(0), combustion_torque(0), stalled(false)
+{
+    MATRIX3 <Dbl> inertia;
+    inertia.Scale(0.25);
+    crankshaft.SetInertia(inertia);
+}
+
 Dbl CARENGINE::GetTorqueCurve(const Dbl cur_throttle, const Dbl cur_rpm) const
 {
 	if (cur_rpm < 1)
@@ -16,10 +27,9 @@ Dbl CARENGINE::GetTorqueCurve(const Dbl cur_throttle, const Dbl cur_rpm) const
 Dbl CARENGINE::GetFrictionTorque(Dbl cur_angvel, Dbl friction_factor, Dbl throttle_position)
 {
 	Dbl velsign = cur_angvel < 0 ? -1.0 : 1.0;
-	Dbl A = 0;
-	Dbl B = -230*friction;  //par..
-	Dbl C = 0;
-	return (A + cur_angvel * B + -velsign * C * cur_angvel * cur_angvel) *
+	Dbl B = frict_coeffB * friction;
+	//return (A - cur_angvel * B - velsign * C * cur_angvel * cur_angvel) *
+	return (- cur_angvel * B) *
 			(1.0 - friction_factor*throttle_position);
 }
 

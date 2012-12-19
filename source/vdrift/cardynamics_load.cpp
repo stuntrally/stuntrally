@@ -83,7 +83,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 
 	//load the engine
 	{
-		float engine_mass, engine_redline, engine_rpm_limit, engine_inertia,
+		float engine_mass, engine_redline, engine_rpm_limit, engine_inertia, engine_friction,
 			engine_start_rpm, engine_stall_rpm, engine_fuel_consumption;
 		MATHVECTOR<double,3> engine_position;
 
@@ -95,6 +95,9 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 
 		if (!c.GetParam("engine.inertia", engine_inertia, error_output))  return false;
 		engine.SetInertia(engine_inertia);
+
+		if (!c.GetParam("engine.friction", engine_friction, error_output))  return false;
+		engine.SetFrictionB(engine_friction);
 
 		if (!c.GetParam("engine.start-rpm", engine_start_rpm, error_output))  return false;
 		engine.SetStartRPM(engine_start_rpm);
@@ -685,7 +688,7 @@ void CARDYNAMICS::Init(
 	btRigidBody::btRigidBodyConstructionInfo info(chassisMass, chassisState, chassisShape, chassisInertia);
 	info.m_angularDamping = ang_damp;
 	info.m_restitution = 0.0;  //...
-	info.m_friction = 0.4;  /// 0.4~ 0.7
+	info.m_friction = coll_friction;  /// 0.4~ 0.7
 	///  chasis^
 	chassis = world.AddRigidBody(info, true, pSet->game.collis_cars);
 	chassis->setActivationState(DISABLE_DEACTIVATION);
