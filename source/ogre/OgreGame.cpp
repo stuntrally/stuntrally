@@ -42,6 +42,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,valSizeGaug(0),valTypeGaug(0), valSizeMinimap(0), valZoomMinimap(0)
 	,valCountdownTime(0), valDbgTxtClr(0),valDbgTxtCnt(0), valGraphsType(0),slGraphT(0)  // view
 	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0),chDbgS(0), chBlt(0),chBltTxt(0)
+	,bRsimEasy(0), bRsimNorm(0), bReloadSim(true)
 	,chFps(0), chWire(0), chProfTxt(0), chGraphs(0)
 	,chTimes(0),chMinimp(0),chOpponents(0)
 	,valVolMaster(0),valVolEngine(0),valVolTires(0),valVolSusp(0),valVolEnv(0)  // sounds

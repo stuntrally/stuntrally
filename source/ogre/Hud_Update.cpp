@@ -393,10 +393,10 @@ void App::UpdateHUD(int carId, float time)
 			txTimes[carId]->setCaption(
 				(hasLaps ? "#D0E8FF"+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps) : "") +
 				"\n#C0E0F0" + GetTimeString(tim.GetPlayerTime(carId))+
-				"\n#80C0F0" + GetTimeString(last)+
-				"\n#70D0D0" + GetTimeString(best)+
+				"\n#80C8FF" + GetTimeString(last)+
+				"\n#80E0E0" + GetTimeString(best)+
 				"\n#80E080" + GetTimeString(timeBest)+
-				"\n#C0C030" + (b ? fToStr(score,1,4) : "--") );  //,2,5
+				"\n#D0D040" + (b ? fToStr(score,1,4) : "--") );  //,2,5
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------

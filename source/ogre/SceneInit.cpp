@@ -215,7 +215,10 @@ void App::LoadGame()  // 2
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 	
 	pGame->NewGameDoCleanup();
-
+	if (bReloadSim)
+	{	bReloadSim = false;
+		pGame->ReloadSimData();
+	}
 	// load scene.xml - default if not found
 	//   need to know sc->asphalt before vdrift car load
 	bool vdr = IsVdrTrack();

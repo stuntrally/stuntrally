@@ -398,6 +398,9 @@ void App::chkGauges(WP wp){			ChkEv(show_gauges);	ShowHUD();	}
 void App::radKmh(WP wp){	bRkmh->setStateSelected(true);  bRmph->setStateSelected(false);  pSet->show_mph = false;  ShowHUD();  }
 void App::radMph(WP wp){	bRkmh->setStateSelected(false);  bRmph->setStateSelected(true);  pSet->show_mph = true;   ShowHUD();  }
 
+void App::radSimEasy(WP){	bRsimEasy->setStateSelected(true);  bRsimNorm->setStateSelected(false);  pSet->gui.sim_mode = "easy";  	bReloadSim = true;  }
+void App::radSimNorm(WP){	bRsimEasy->setStateSelected(false);  bRsimNorm->setStateSelected(true);  pSet->gui.sim_mode = "normal"; bReloadSim = true;  }
+
 void App::chkArrow(WP wp){			ChkEv(check_arrow); if (arrowRotNode) arrowRotNode->setVisible(pSet->check_arrow);  }
 void App::chkMinimap(WP wp){		ChkEv(trackmap);
 	for (int c=0; c < 4; ++c)

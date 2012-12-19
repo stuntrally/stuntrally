@@ -279,7 +279,7 @@ void App::CreateHUD(bool destroy)
 			"\n#80C0F0"+TR("#{TBLast}") + 
 			"\n#80E0E0"+TR("#{TBBest}") +
 			"\n#70D070"+TR("#{Track}") +
-			"\n#D0D040"+TR("#{TBScore}") );
+			"\n#C0C030"+TR("#{TBScore}") );
 
 		txTimes[c] = mGUI->createWidget<TextBox>("TextBox",
 			0,1200, 80,160, Align::Left, "Back", "Tim"+toStr(c));

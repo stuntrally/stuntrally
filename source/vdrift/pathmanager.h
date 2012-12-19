@@ -40,9 +40,10 @@ public:
 	static std::string GetTrackPath() {        return game_data_dir + "/tracks"; }
 	static std::string GetTrackPathUser() {    return user_data_dir + "/tracks"; }
 
+	static std::string GetCarSimPath() {       return game_data_dir + "/carsim"; }
 	static std::string GetCarPath() {          return game_data_dir + "/cars"; }
 	static std::string GetCarPathUser() {      return user_data_dir + "/data/cars"; }
-	static std::string GetTiresPath() {        return game_data_dir + "/cars/_tires"; }
+	//static std::string GetTiresPath() {        return game_data_dir + "/cars/_tires"; }
 	static std::string GetTiresPathUser() {    return user_data_dir + "/data/tires"; }
 
 	static std::string GetSoundsPath() {       return game_data_dir + "/sounds"; }

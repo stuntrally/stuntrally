@@ -63,6 +63,7 @@ public:
 
 		int local_players, num_laps;  // split
 		//  game setup
+		std::string sim_mode;
 		bool collis_veget, collis_cars, collis_roadw, dyn_objects;
 		int boost_type, flip_type;  float boost_power;
 		float trees;

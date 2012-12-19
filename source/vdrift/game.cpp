@@ -78,11 +78,16 @@ void GAME::Start(std::list <string> & args)
 		ff_update_time = 0;
 	#endif
 	
-	LoadTires();  /// load tires New
+	//ReloadSimData();  // later (need game.sim_mode)
+}
+
+void GAME::ReloadSimData()  /// New
+{
+	LoadTires();
 	info_output << "Loaded: " << tires.size() << " tires." << endl;
 
-	LoadAllSurfaces();  /// load surfaces New
-	info_output << "Loaded: " << tires.size() << " tires." << endl;
+	LoadAllSurfaces();
+	info_output << "Loaded: " << surfaces.size() << " surfaces." << endl;
 }
 
 
@@ -93,7 +98,7 @@ bool GAME::LoadAllSurfaces()
 	surfaces.clear();
 	surf_map.clear();
 
-	string path = PATHMANAGER::GetCarPath() + "/surfaces.cfg";
+	string path = PATHMANAGER::GetCarSimPath() + "/" + settings->game.sim_mode + "/surfaces.cfg";
 	CONFIGFILE param;
 	if (!param.Load(path))
 	{
@@ -166,15 +171,16 @@ bool GAME::LoadTires()
 	tires.clear();
 	tires_map.clear();
 	
+	string path = PATHMANAGER::GetCarSimPath() + "/" + settings->game.sim_mode + "/tires";
 	std::list <std::string> li;
-	PATHMANAGER::GetFolderIndex(PATHMANAGER::GetTiresPath(), li);
+	PATHMANAGER::GetFolderIndex(path, li);
 	for (std::list <std::string>::iterator i = li.begin(); i != li.end(); ++i)
 	{
 		std::string file = *i;
 		if (file.find(".tire") != std::string::npos)
 		{
 			CONFIGFILE c;
-			if (!c.Load(PATHMANAGER::GetTiresPath()+"/"+file))
+			if (!c.Load(path+"/"+file))
 			{	error_output << "Error loading tire file " << file << "\n";
 				return false;  }
 

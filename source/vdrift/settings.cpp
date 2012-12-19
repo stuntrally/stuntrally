@@ -46,7 +46,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.collis_cars", gui.collis_cars);	Param(c,w, "game.collis_veget", gui.collis_veget);
 	Param(c,w, "game.collis_roadw", gui.collis_roadw);	Param(c,w, "game.dyn_objects", gui.dyn_objects);
 	Param(c,w, "game.track", gui.track);				Param(c,w, "game.track_user", gui.track_user);
-	Param(c,w, "game.trk_reverse", gui.trackreverse);
+	Param(c,w, "game.trk_reverse", gui.trackreverse);	Param(c,w, "game.sim_mode", gui.sim_mode);
 	Param(c,w, "game.local_players", gui.local_players); Param(c,w, "game.num_laps", gui.num_laps);
 	Param(c,w, "game.split_vertically", split_vertically);
 	
@@ -222,6 +222,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	gui.track = "J1-T";
 	gui.track_user = false;
 	gui.trackreverse = false;
+	gui.sim_mode = "easy";
 	//  cars
 	for (int i=0; i < 4; ++i)
 	{	gui.car[i] = "ES";  gui.car_hue[i] = 0.4f+0.2f*i;  gui.car_sat[i] = 1.f;  gui.car_val[i] = 1.f;  cam_view[0] = 9;  }

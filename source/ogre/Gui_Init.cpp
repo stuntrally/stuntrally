@@ -233,12 +233,23 @@ void App::InitGui()
 	valLocPlayers = mGUI->findWidget<StaticText>("valLocPlayers");
 	if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->gui.local_players));
 
+	//  sim mode radio
+	bRsimEasy = mGUI->findWidget<Button>("SimModeEasy");
+	bRsimNorm = mGUI->findWidget<Button>("SimModeNorm");
+	bool bNorm = pSet->gui.sim_mode == "normal";
+	bool bEasy = pSet->gui.sim_mode == "easy";
+	//if (!bNorm)  !DirExist(..pSet->gui.sim_mode
+	//	pSet->gui.sim_mode = "easy";
+	bRsimEasy->setStateSelected(bEasy);  bRsimEasy->eventMouseButtonClick += newDelegate(this, &App::radSimEasy);
+	bRsimNorm->setStateSelected(bNorm);  bRsimNorm->eventMouseButtonClick += newDelegate(this, &App::radSimNorm);
+
 	//  kmh/mph radio
 	bRkmh = mGUI->findWidget<Button>("kmh");
 	bRmph = mGUI->findWidget<Button>("mph");
 	if (bRkmh && bRmph)  {  bRkmh->setStateSelected(!pSet->show_mph);  bRmph->setStateSelected(pSet->show_mph);
 		bRkmh->eventMouseButtonClick += newDelegate(this, &App::radKmh);
 		bRmph->eventMouseButtonClick += newDelegate(this, &App::radMph);  }
+
 
 	//  startup
 	Chk("MouseCapture", chkMouseCapture, pSet->capture_mouse);
