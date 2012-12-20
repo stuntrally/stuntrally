@@ -31,8 +31,8 @@ posLrear = -1.95
 posLfront = 2.06
 offsetL = -0.06
 offsetW = -0.02
-offsetH = 0.32
-start-offsetY = 0.6
+offsetH = 0.82
+start-offsetY = 0.1
 friction = 0.4
 
 
@@ -130,14 +130,14 @@ tread = 0.0
 #---------------------------
 [ brakes-front ]
 friction = 0.9
-max-pressure = 3.0e6
+max-pressure = 4.0e6
 bias = 0.6
 radius = 0.1397
 area = 0.015
 
 [ brakes-rear ]
 friction = 0.9
-max-pressure = 3.0e6
+max-pressure = 4.0e6
 bias = 0.4
 radius = 0.1397
 area = 0.015
@@ -226,16 +226,16 @@ hinge = 0.25, -1.94, 0.0
 #---------------------------
 [ particle-00 ]  # rear
 mass = 230
-position =  1.1, -1.9, 0.08
+position =  1.1, -1.9, -0.42
 
 [ particle-01 ]
 mass = 230
-position = -1.1, -1.9, 0.08
+position = -1.1, -1.9, -0.42
 
 [ particle-02 ]  # front
 mass = 230
-position =  1.1,  1.9, 0.08
+position =  1.1,  1.9, -0.42
 
 [ particle-03 ]
 mass = 230
-position = -1.1,  1.9, 0.08
+position = -1.1,  1.9, -0.42

@@ -117,7 +117,7 @@ anti-roll = 17000
 [ tire-both ]
 radius = 0.30
 rolling-resistance = 1.3e-2, 6.5e-6
-rotational-inertia = 6.0
+rotational-inertia = 0.6
 tread = 0.0
 
 

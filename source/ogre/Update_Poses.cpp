@@ -59,10 +59,10 @@ void App::newPoses(float time)  // time only for camera update
 		{
 			static float ti = 0.f;
 			static int vi = 0;
-			const int logvel = 10, MaxVel = 120;  // 220 kmh max to test
+			const int logvel = 10, MaxVel = 210;  // 120 220 kmh max to test
 			const float distQuarterMile = 402.336;  //m
 
-			static float timeQuarterMile = 0.f;
+			static float timeQM=0.f,velAtQM=0.f;  // quarter mile
 			static float t0to60=0,t0to100=0,t0to160=0,t0to200=0;  // accel
 			static float tMaxTo0=0,tMaxTo60=0,tMaxTo100=0,tMaxTo160=0;  // brake
 
@@ -84,10 +84,10 @@ void App::newPoses(float time)  // time only for camera update
 					if (whStill == 4)
 					{
 						iPerfTestStage = PT_Accel;  ti = 0.f;  vi = 0;
-						posSt = pCar->GetPosition();  timeQuarterMile = 0.f;
+						posSt = pCar->GetPosition();  timeQM = 0.f;
 					}
 					kmhOld = 0.f;
-					timeQuarterMile = 0.f;
+					timeQM = 0.f;  velAtQM = 0.f;
 					t0to60=0; t0to100=0; t0to160=0; t0to200=0;
 					tMaxTo0=0; tMaxTo60=0; tMaxTo100=0; tMaxTo160=0;
 				}	break;
@@ -95,8 +95,10 @@ void App::newPoses(float time)  // time only for camera update
 				case PT_Accel:
 				{
 					dist = pCar->GetPosition() - posSt;
-					if (timeQuarterMile < 0.01f && dist.Magnitude() > distQuarterMile)
-						timeQuarterMile = ti;  // will be 0 if didnt drive that far
+					if (timeQM == 0.f && dist.Magnitude() > distQuarterMile)
+					{	timeQM = ti;  // will be 0 if didnt drive that far
+						velAtQM = kmh;
+					}
 					//LogO("dist: "+fToStr(dist.Magnitude(),2,5));
 
 					int ikmh = 	vi * logvel;
@@ -108,9 +110,9 @@ void App::newPoses(float time)  // time only for camera update
 						if (ikmh == 200)  t0to200 = ti;
 						++vi;
 					}
-					//if (kmh >= MaxVel)
-					if (kmh >= MaxVel ||
-						kmh > 250 && kmh - kmhOld < 0.0006)  //top speed..
+					if (timeQM > 0.f &&
+						kmh >= MaxVel) //||
+						//kmh > 250 && kmh - kmhOld < 0.0006)  //top speed..
 					{	//PerfLogVel(pCar,t);
 						iPerfTestStage = PT_Brake;  ti = 0.f;  vi = 0;
 					}
@@ -160,7 +162,7 @@ void App::newPoses(float time)  // time only for camera update
 							"Time [s] 0..100 kmh: "+fToStr(t0to100,2,5)+"\n"+
 							"Time [s] 0..160 kmh: "+fToStr(t0to160,2,5)+"\n"+
 							"Time [s] 0..200 kmh: "+fToStr(t0to200,2,5)+"\n"+
-							"1/4 mile (402m) time:  "+fToStr(timeQuarterMile,2,5)+"\n"+
+							"1/4 mile (402m) time:  "+fToStr(timeQM,2,5)+" at "+fToStr(velAtQM,2,5)+" kmh\n"+
 							"Stop time 160..0 kmh:  "+fToStr(tMaxTo0-tMaxTo160,2,5)+"\n"+
 							"Stop time 100..0 kmh:  "+fToStr(tMaxTo0-tMaxTo100,2,5)+"\n"+
 							"Stop time  60..0 kmh:  "+fToStr(tMaxTo0-tMaxTo60,2,5)+"\n"+
@@ -174,19 +176,19 @@ void App::newPoses(float time)  // time only for camera update
 						{
 							std::string path, pathUser, pathUserDir;
 							bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], sc->asphalt);
-							path = pathUserDir + "stats.txt";
+							path = pathUserDir + pCar->pCarM->sDirname + "_stats.txt";
 							
 							PATHMANAGER::CreateDir(pathUserDir, pGame->error_output);
 							std::ofstream fo(path.c_str());
 							fo << 
 							"Mass [kg]:  "+fToStr(pCar->GetMass(),0,4)+"\n"+
-							"Max torque [Nm]:  "+fToStr(maxTrq,1,5)+" at "+fToStr(rpmMaxTq,0,4)+" rpm\n"+
+							"Max torque [Nm]:  "+fToStr(maxTrq      ,1,5)+" at "+fToStr(rpmMaxTq ,0,4)+" rpm\n"+
 							"Max power  [bhp]: "+fToStr(maxPwr*1.341,1,5)+" at "+fToStr(rpmMaxPwr,0,4)+" rpm\n"+
 							"Time [s] 0.. 60 kmh: "+fToStr(t0to60 ,3,6)+"\n"+
 							"Time [s] 0..100 kmh: "+fToStr(t0to100,3,6)+"\n"+
 							"Time [s] 0..160 kmh: "+fToStr(t0to160,3,6)+"\n"+
 							"Time [s] 0..200 kmh: "+fToStr(t0to200,3,6)+"\n"+
-							"1/4 mile (402m) time:  "+fToStr(timeQuarterMile,2,5)+"\n"+
+							"1/4 mile (402m) time:  "+fToStr(timeQM,2,5)+" at "+fToStr(velAtQM,2,5)+" kmh\n"+
 							"Stop time 160..0 kmh:  "+fToStr(tMaxTo0-tMaxTo160,2,5)+"\n"+
 							"Stop time 100..0 kmh:  "+fToStr(tMaxTo0-tMaxTo100,2,5)+"\n";
 						}

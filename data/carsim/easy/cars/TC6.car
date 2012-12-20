@@ -28,15 +28,15 @@ posLrear = -1.92
 posLfront = 2.0
 offsetL = -0.22
 offsetW = 0.03
-offsetH = 0.15
-start-offsetY = 0.6
+offsetH = 0.65
+start-offsetY = 0.1
 friction = 0.4
 
 
 #  engine
 #---------------------------
 [ engine ]
-position = 0.0, 1.33, 0.44
+position = 0.0, 1.33, 0.04
 mass = 180.0
 peak-engine-rpm = 6000.0
 rpm-limit = 6500.0
@@ -117,7 +117,7 @@ anti-roll = 17000
 [ tire-both ]
 radius = 0.30
 rolling-resistance = 1.3e-2, 6.5e-6
-rotational-inertia = 6.0
+rotational-inertia = 10.0
 tread = 0.0
 
 
@@ -125,14 +125,14 @@ tread = 0.0
 #---------------------------
 [ brakes-front ]
 friction = 0.83
-max-pressure = 2.5e6
+max-pressure = 3.1e6
 bias = 0.60
 radius = 0.19
 area = 0.015
 
 [ brakes-rear ]
 friction = 0.83
-max-pressure = 2.5e6
+max-pressure = 3.1e6
 bias = 0.40
 radius = 0.19
 area = 0.015
@@ -221,24 +221,24 @@ hinge = 3.70, -1.0, -0.43
 #---------------------------
 [ particle-00 ]
 mass = 30.0
-position = 0.0, -1.35, 0.12
+position = 0.0, -1.35, -0.32
 
 [ particle-01 ]
 mass = 60.0
-position = 0.0, 0.96, 0.11
+position = 0.0, 0.96, -0.31
 
 [ particle-02 ]  # rear
 mass = 230.0
-position =  1.05,-1.7, 0.01
+position =  1.05,-1.7, -0.49
 
 [ particle-03 ]
 mass = 230.0
-position = -1.05,-1.7, 0.01
+position = -1.05,-1.7, -0.49
 
 [ particle-04 ]  # front
 mass = 230.0
-position =  1.05, 1.7, 0.01
+position =  1.05, 1.7, -0.49
 
 [ particle-05 ]
 mass = 230.0
-position = -1.05, 1.7, 0.01
+position = -1.05, 1.7, -0.49

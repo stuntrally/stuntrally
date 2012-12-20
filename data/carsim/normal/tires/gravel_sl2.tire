@@ -2,26 +2,26 @@
 #--------	Lateral force
 a0=1.33	# Shape factor  A0
 a1=-0	# Load infl. on lat. friction coeff (*1000)  (1/kN)  A1
-a2=2828	# Lateral friction coefficient at load = 0 (*1000)  2
-a3=667	# Maximum stiffness   (N/deg)  A3
-a4=13	# Load at maximum stiffness   (kN)  A4
-a5=0.013	# Camber influence on stiffness   (%/deg/100)  A5
-a6=-0.36	# Curvature change with load  A6
-a7=1	# Curvature at load = 0	 A7
-a8=-0.03	# Horizontal shift because of camber  (deg/deg)  A8
-a9=-0.006	# Load influence on horizontal shift  (deg/kN)  A9
-a10=-0.032	# Horizontal shift at load = 0  (deg)  A10
+a2=2602.93	# Lateral friction coefficient at load = 0 (*1000)  2
+a3=1184.19	# Maximum stiffness   (N/deg)  A3
+a4=13.3535	# Load at maximum stiffness   (kN)  A4
+a5=0.000910636	# Camber influence on stiffness   (%/deg/100)  A5
+a6=-0.780353	# Curvature change with load  A6
+a7=1.01828	# Curvature at load = 0	 A7
+a8=-0.00442138	# Horizontal shift because of camber  (deg/deg)  A8
+a9=0.00302399	# Load influence on horizontal shift  (deg/kN)  A9
+a10=0.000511183	# Horizontal shift at load = 0  (deg)  A10
 a111=0	# Camber influence on vertical shift  (N/deg/kN)  A11.1
 a112=0	# Camber influence on vertical shift  (N/deg/kN**2)  A11.2
 a12=0	# Load influence on vertical shift  (N/kN)  A12
 a13=0	# Vertical shift at load = 0  (N)  A13
 #--------	Longitudinal force
-b0=1.66845	# Shape factor   B0
+b0=1.76222	# Shape factor   B0
 b1=0	# Load infl. on long. friction coeff (*1000)  (1/kN)   B1
 b2=2166.2	# Longitudinal friction coefficient at load = 0 (*1000)  B2
 b3=148	# Curvature factor of stiffness   (N/%/kN**2)   B3
 b4=229	# Change of stiffness with load at load = 0 (N/%/kN)   B4
-b5=0.257879	# Change of progressivity of stiffness/load (1/kN)   B5
+b5=0.410283	# Change of progressivity of stiffness/load (1/kN)   B5
 b6=0	# Curvature change with load   B6
 b7=0	# Curvature change with load   B7
 b8=-0	# Curvature at load = 0   B8

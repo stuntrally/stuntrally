@@ -22,8 +22,8 @@ posLrear = -2.07
 posLfront = 1.98
 offsetL = 0.24
 offsetW = -0.01
-offsetH = 0.30
-start-offsetY = 0.46
+offsetH = 0.80
+start-offsetY = -0.04
 friction = 0.4
 
 
@@ -120,7 +120,7 @@ anti-roll = 10000
 [ tire-both ]
 radius = 0.32
 rolling-resistance = 1.3e-2, 6.5e-6
-rotational-inertia = 4.0
+rotational-inertia = 10.0
 tread = 0.0
 #---------
 #  ..?
@@ -230,16 +230,16 @@ hinge = 1.00 , -0.0, -0.0
 #---------------------------
 [ particle-00 ]	# Chassis Front
 mass = 230
-position =  1.1, 1.7, -0.05
+position =  1.1, 1.7, -0.55
 
 [ particle-01 ]	#	Cooler front
 mass = 230
-position = -1.1, 1.7, -0.05
+position = -1.1, 1.7, -0.55
 
 [ particle-02 ]	#	Chassis left
 mass = 250
-position =  1.2, -1.7, -0.05
+position =  1.2, -1.7, -0.55
 
 [ particle-03 ]	#	Chassis right
 mass = 250
-position = -1.2, -1.7, -0.05 
+position = -1.2, -1.7, -0.55

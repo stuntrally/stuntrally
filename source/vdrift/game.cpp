@@ -84,10 +84,9 @@ void GAME::Start(std::list <string> & args)
 void GAME::ReloadSimData()  /// New
 {
 	LoadTires();
-	info_output << "Loaded: " << tires.size() << " tires." << endl;
-
 	LoadAllSurfaces();
-	info_output << "Loaded: " << surfaces.size() << " surfaces." << endl;
+
+	info_output << "Carsim: " << settings->game.sim_mode << ". Loaded: " << tires.size() << " tires, " << surfaces.size() << " surfaces." << endl;
 }
 
 
