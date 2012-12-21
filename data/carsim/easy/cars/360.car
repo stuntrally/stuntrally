@@ -61,10 +61,7 @@ torque-curve-17 = 8600, 454
 torque-curve-18 = 9200, 419
 
 [ clutch ]
-sliding = 0.10
-radius = 0.15
-area = 1.0
-max-pressure = 60000
+max-torque-mul = 1.3
 
 #  gearbox
 #---------------------------

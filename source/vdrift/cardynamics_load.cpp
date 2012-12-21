@@ -119,7 +119,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		engine.SetPosition(engine_position);
 		AddMassParticle(engine_mass, engine_position);
 
-		float mul = 1.f;
+		float mul = 1.f, max_torque = 0;
 		c.GetParam("engine.torque-val-mul", mul);
 
 		float torque_point[3];
@@ -128,6 +128,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		int curve_num = 0;
 		while (c.GetParam(torque_str, torque_point))
 		{
+			max_torque = std::max(max_torque, torque_point[1] * mul);
 			torques.push_back(std::pair <float, float> (torque_point[0], torque_point[1] * mul));
 
 			curve_num++;
@@ -142,23 +143,14 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			return false;
 		}
 		engine.SetTorqueCurve(engine_redline, torques);
-	}
 
-	//load the clutch
-	{
-		float sliding, radius, area, max_pressure;
-
-		if (!c.GetParam("clutch.sliding", sliding, error_output))  return false;
-		clutch.SetSlidingFriction(sliding);
-
-		if (!c.GetParam("clutch.radius", radius, error_output))  return false;
-		clutch.SetRadius(radius);
-
-		if (!c.GetParam("clutch.area", area, error_output))  return false;
-		clutch.SetArea(area);
-
-		if (!c.GetParam("clutch.max-pressure", max_pressure, error_output))  return false;
-		clutch.SetMaxPressure(max_pressure);
+		//load the clutch
+		{
+			float mul;  //max_torque = sliding * radius * area * max_pressure;
+			//if (!c.GetParam("clutch.max-torque", max_torque, error_output))  return false;
+			if (!c.GetParam("clutch.max-torque-mul", mul, error_output))  return false;
+			clutch.SetMaxTorque(max_torque * mul);
+		}
 	}
 
 	//load the transmission
@@ -186,12 +178,12 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 
 	//load the differential(s)
 	{
-		float final_drive, anti_slip, anti_slip_torque(0), anti_slip_torque_deceleration_factor(0);
+		float final_drive, a, a_tq(0), a_tq_dec(0);
 
 		if (!c.GetParam("differential.final-drive", final_drive, error_output))  return false;
-		if (!c.GetParam("differential.anti-slip", anti_slip, error_output))  return false;
-		c.GetParam("differential.anti-slip-torque", anti_slip_torque);
-		c.GetParam("differential.anti-slip-torque-deceleration-factor", anti_slip_torque_deceleration_factor);
+		if (!c.GetParam("differential.anti-slip", a, error_output))  return false;
+		c.GetParam("differential.anti-slip-torque", a_tq);
+		c.GetParam("differential.anti-slip-torque-deceleration-factor", a_tq_dec);
 
 		std::string drivetype;
 		if (!c.GetParam("drive", drivetype, error_output))  return false;
@@ -200,21 +192,23 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		if (drivetype == "RWD")
 		{
 			diff_rear.SetFinalDrive(final_drive);
-			diff_rear.SetAntiSlip(anti_slip, anti_slip_torque, anti_slip_torque_deceleration_factor);
+			diff_rear.SetAntiSlip(a, a_tq, a_tq_dec);
 		}
 		else if (drivetype == "FWD")
 		{
 			diff_front.SetFinalDrive(final_drive);
-			diff_front.SetAntiSlip(anti_slip, anti_slip_torque, anti_slip_torque_deceleration_factor);
+			diff_front.SetAntiSlip(a, a_tq, a_tq_dec);
 		}
 		else if (drivetype == "AWD")
 		{
 			diff_rear.SetFinalDrive(1.0);
-			diff_rear.SetAntiSlip(anti_slip, anti_slip_torque, anti_slip_torque_deceleration_factor);
+			diff_rear.SetAntiSlip(a, a_tq, a_tq_dec);
+
 			diff_front.SetFinalDrive(1.0);
-			diff_front.SetAntiSlip(anti_slip, anti_slip_torque, anti_slip_torque_deceleration_factor);
+			diff_front.SetAntiSlip(a, a_tq, a_tq_dec);
+
 			diff_center.SetFinalDrive(final_drive);
-			diff_center.SetAntiSlip(anti_slip, anti_slip_torque, anti_slip_torque_deceleration_factor);
+			diff_center.SetAntiSlip(a, a_tq, a_tq_dec);
 		}
 		else
 		{

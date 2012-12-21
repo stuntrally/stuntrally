@@ -6,19 +6,27 @@
 #include "../ogre/common/Defines.h"
 
 
-///a differential that supports speed-sensitive limited slip functionality.  epicyclic (torque splitting) operation is also provided.
+/// differential that supports speed-sensitive limited slip functionality.
 class CARDIFFERENTIAL
 {
 private:
 	// constants
 	Dbl final_drive;	///< the gear ratio of the differential
-	Dbl anti_slip;		///< this allows modelling of speed-sensitive limited-slip differentials.  this is the maximum anti_slip torque that will be applied and, for speed-sensitive limited-slip differentials, the anti-slip multiplier that's always applied.
-	Dbl anti_slip_torque;	///< this allows modelling of torque sensitive limited-slip differentials.  this is the anti_slip dependence on torque.
-	Dbl anti_slip_torque_deceleration_factor;	///< this allows modelling of torque sensitive limited-slip differentials that are 1.5 or 2-way.  set it to 0.0 for 1-way LSD, 1.0 for 2-way LSD, and somewhere in between for 1.5-way LSD.
-	Dbl torque_split;	///< this allows modelling of epicyclic differentials.  this value ranges from 0.0 to 1.0 where 0.0 applies all torque to side1
+	Dbl anti_slip;		///< allows modelling of speed-sensitive limited-slip differentials.
+						///  this is the maximum anti_slip torque that will be applied and,
+						///  for speed-sensitive limited-slip differentials,
+						///  the anti-slip multiplier that's always applied.
+	Dbl anti_slip_torque;	///< this allows modelling of torque sensitive limited-slip differentials.
+							///  this is the anti_slip dependence on torque.
+	Dbl anti_slip_torque_decel_factor;
+						///< allows modelling of torque sensitive limited-slip differentials
+						///  that are 1.5 or 2-way.  set it to 0.0 for 1-way LSD,
+						///  1.0 for 2-way LSD, and somewhere in between for 1.5-way LSD.
+	Dbl torque_split;	///< allows modelling of epicyclic (torque splitting) differentials.
+						///  this value ranges from 0.0 to 1.0 where 0.0 applies all torque to side1
 	
 	// variables
-	///by convention, side1 is left or front, side2 is right or rear.
+	/// by convention, side1 is left or front, side2 is right or rear.
 	Dbl side1_speed, side2_speed;
 	Dbl side1_torque, side2_torque;
 
@@ -34,7 +42,7 @@ public:
 	{
 		anti_slip = as;
 		anti_slip_torque = ast;
-		anti_slip_torque_deceleration_factor = astdf;
+		anti_slip_torque_decel_factor = astdf;
 	}
 	
 	Dbl CalculateDriveshaftSpeed(Dbl new_side1_speed, Dbl new_side2_speed)

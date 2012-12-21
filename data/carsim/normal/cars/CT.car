@@ -62,10 +62,7 @@ torque-curve-14 = 7000, 382
 torque-curve-15 = 7500, 348
 
 [ clutch ]
-sliding = 0.12
-radius = 0.15
-area = 1.0
-max-pressure = 60000
+max-torque-mul = 1.2
 
 #  gearbox
 #---------------------------

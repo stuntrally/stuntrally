@@ -20,7 +20,8 @@ Dbl CARCLUTCH::GetTorque (Dbl n_engine_speed, Dbl n_drive_speed)
 	Dbl new_speed_diff = engine_speed - drive_speed;
     locked = true;
 
-    Dbl torque_capacity = sliding_friction * max_pressure * area * radius; // constant
+    //Dbl torque_capacity = sliding_friction * max_pressure * area * radius;  // constant
+    Dbl torque_capacity = clutch_max_torque;  // constant
 	Dbl max_torque = clutch_position * torque_capacity;
 	Dbl friction_torque = max_torque * new_speed_diff;    // viscous coupling (locked clutch)
 	if (friction_torque > max_torque)
