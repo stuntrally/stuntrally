@@ -40,8 +40,8 @@ inline double negPow(double x, double y)
 
 ///  Create Graphs  .-_/\._-
 //-----------------------------------------------------------------------------------
-const int TireNG = 4,	// tire graphs count (for variable load)
-	TireLenG = 256;		// tire graphs data length
+const int TireNG = 4,    // tire graphs count (for variable load)
+        TireLenG = 256;  // tire graphs data length
 const static String TireVar[2] = {"variable Load", "variable camber"};
 
 void App::CreateGraphs()
@@ -131,7 +131,7 @@ void App::CreateGraphs()
 		}	break;
 
 	case Gh_TireSlips:  /// tire
-	case Gh_Suspension:	 // susp
+	case Gh_Suspension:	 /// susp
 		for (int i=0; i < 8; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
@@ -239,6 +239,50 @@ void App::CreateGraphs()
 			graphs.push_back(gv);
 		}	break;
 		
+	case Gh_Clutch:
+		for (int i=0; i < 4; ++i)
+		{
+			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			gv->Create(160, String("graph")+toStr(3-i), i==0 ? 0.43f : i==3 ? 0.3f : 0.f);
+			if (i == 3)
+			{	gv->CreateGrid(6,1, 0.f, 0.3f);
+				gv->CreateTitle("Gear", 5, 0.0f, -2, 24, 1);
+				gv->SetSize(0.f, 0.27f, 0.36f, 0.07f);
+			}else
+			{	if (i == 0)
+				{	gv->CreateGrid(4,1, 0.f, 0.2f);
+					gv->CreateTitle("Rpm 7500", 2, 0.0f, -2, 24, 1);
+				}else if (i==1)
+					gv->CreateTitle("\nClutch", 1, 0.0f, -2, 24, 2);
+				else if (i==2)
+					gv->CreateTitle("\n\nLocked", 0, 0.0f, -2, 24, 3);
+				gv->SetSize(0.f, 0.34f, 0.36f, 0.27f);
+			}
+			gv->SetVisible(pSet->show_graphs);
+			graphs.push_back(gv);
+		}	break;
+
+	case Gh_Diffs:
+		for (int i=0; i < 3; ++i)
+		{
+			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			gv->Create(256, String("graph")+toStr(i+1), i==0 ? 0.4f : i==2 ? 0.3f : 0.f);
+			if (i == 2)
+			{	gv->CreateGrid(4,1, 0.f, 0.3f);
+				gv->CreateTitle("Center", 2, 0.0f, -2, 24, 1);
+				gv->SetSize(0.00f, 0.27f, 0.36f, 0.2f);
+			}else
+			{	if (i == 0)
+				{	gv->CreateGrid(4,1, 0.f, 0.3f);
+					gv->CreateTitle("Front", 0, 0.0f, -2, 24, 1);
+				}else if (i==1)
+					gv->CreateTitle("\nRear", 1, 0.0f, -2, 24, 2);
+				gv->SetSize(0.00f, 0.47f, 0.36f, 0.15f);
+			}
+			gv->SetVisible(pSet->show_graphs);
+			graphs.push_back(gv);
+		}	break;
+		
 
 	default:
 		break;
@@ -306,6 +350,7 @@ void App::GraphsNewVals()				// Game
 void CAR::GraphsNewVals(double dt)		 // CAR
 {	
 	size_t gsi = pApp->graphs.size();
+	if (pApp->pSet->graphs_type != Gh_TireEdit)
 	switch (pApp->pSet->graphs_type)
 	{
 	case Gh_CarAccelG:  /// car accel x,y,z
@@ -400,9 +445,37 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			//pApp->graphs[0]->UpdTitle(ss);
 	}	}	break;
 
-	//dynamics.diff_center.GetSide1Speed
+	
+	case Gh_Clutch:  /// clutch,rpm,gears
+		if (gsi >= 4)
+		{
+			const CARENGINE& eng = dynamics.engine;
+			const CARCLUTCH& clu = dynamics.clutch;
+			pApp->graphs[0]->AddVal(eng.GetRPM() / 7500.0);
+			pApp->graphs[1]->AddVal(clu.GetClutch() * 0.3f + 0.15f);
+			pApp->graphs[2]->AddVal(clu.IsLocked() ? 0.15f : 0.f);
+			pApp->graphs[3]->AddVal(GetGear() / 6.f);
+		}	break;
 
-	case Gh_TireEdit:  /// tire pacejka
+
+	case Gh_Diffs:  /// differentials
+		if (gsi >= 3)
+		for (int i=0; i < 3; ++i)
+		{
+			CARDIFFERENTIAL* diff;
+			switch (i)
+			{
+			case 0: diff = &dynamics.diff_front;  break;
+			case 1: diff = &dynamics.diff_rear;  break;
+			case 2: diff = &dynamics.diff_center;  break;
+			}
+			Dbl d = diff->GetSide1Speed() - diff->GetSide2Speed();
+			d = negPow(d, 0.4)*0.07 + 0.5;
+			pApp->graphs[i]->AddVal(d);
+		}	break;
+		
+	}
+	else  ///Gh_TireEdit:  /// tire pacejka
 	//. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 	{	static int ii = 0;  ++ii;  // skip upd cntr
 		const int im = pApp->iUpdTireGr > 0 ? 2 : 8;  // faster when editing val
@@ -615,10 +688,6 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			pApp->graphs[gsi-2]->UpdTitle(ss);
 			pApp->graphs[gsi-1]->UpdTitle(sd);
 			pApp->graphs[2]->UpdTitle(TireVar[pApp->iTireLoad]); //-
-
-	}	}	break;
-		
-	default:
-		break;
+		}
 	}
 }

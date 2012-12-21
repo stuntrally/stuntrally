@@ -68,7 +68,7 @@ torque-curve-14 = 8000, 606
 torque-curve-15 = 8500, 566
 
 [ clutch ]
-max-torque-mul = 1.5
+max-torque-mul = 1.3
 
 #  gearbox
 #---------------------------
