@@ -550,7 +550,7 @@ bool App::LoadAllSurfaces()
 	surfaces.clear();
 	surf_map.clear();
 
-	std::string path = PATHMANAGER::GetCarPath() + "/surfaces.cfg";
+	std::string path = PATHMANAGER::GetCarSimPath() + "/normal/surfaces.cfg";
 	CONFIGFILE param;
 	if (!param.Load(path))
 	{

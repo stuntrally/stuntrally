@@ -519,7 +519,9 @@ bool Scene::SaveXml(String file)
 		}
 		l = &td.layerRoad;
 		TiXmlElement tex("texture");
-		tex.SetAttribute("road",	1);  setDmst();
+		tex.SetAttribute("road",	1);
+		tex.SetAttribute("surf",	l->surfName.c_str());
+		setDmst();
 		ter.InsertEndChild(tex);
 	
 		TiXmlElement par("par");
