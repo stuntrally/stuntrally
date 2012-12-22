@@ -46,7 +46,7 @@ public:
 	void NullHUD();
 	
 	class GAME* pGame;  ///*
-	void updatePoses(float time), newPoses(float time);
+	void updatePoses(float time), newPoses(float time), newPerfTest(float time);
 	void UpdThr();
 	
 	// stuff to be executed after BaseApp init
@@ -336,17 +336,20 @@ protected:
 	MyGUI::ComboBoxPtr cmbInpDetSet;  void comboInputPreset(CMB), comboInputKeyAllPreset(CMB);
 
 	///  tweak
-	MyGUI::EditPtr edTweak;  MyGUI::StaticTextPtr txtTweakPath, txtTweakTire;
+	MyGUI::EditPtr edTweak,edPerfTest;  MyGUI::TabPtr tabTweak;
+	MyGUI::StaticTextPtr txtTweakPath, txtTweakTire;
 	MyGUI::ComboBoxPtr cmbTweakCarSet, cmbTweakTireSet;  void CmbTweakCarSet(CMB), CmbTweakTireSet(CMB), CmbEdTweakCarSet(MyGUI::EditPtr), CmbEdTweakTireSet(MyGUI::EditPtr);
 	void TweakToggle(), TweakCarSave(),TweakCarLoad(), TweakTireSave();
 	void btnTweakCarSave(WP),btnTweakCarLoad(WP), btnTweakTireSave(WP);
+	//  graphs
+	MyGUI::ComboBox* cmbGraphs;  void comboGraphs(CMB);  MyGUI::StaticTextPtr valGraphsType;
 
 
 	//  sliders  -----------------------------------------
 	SLV(Particles);  SLV(Trails);
 	SLV(ReflSkip);  SLV(ReflSize);  SLV(ReflFaces);  SLV(ReflDist);  SLV(ReflMode); // refl
 	SLV(SizeGaug);  SLV(TypeGaug);  SLV(SizeMinimap);  SLV(SizeArrow);  SLV(ZoomMinimap);
-	SLV(CountdownTime);  SLV(GraphsType);  MyGUI::Slider* slGraphT; // view
+	SLV(CountdownTime);  // view
 	SLV(DbgTxtClr);  SLV(DbgTxtCnt);
 	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolSusp);  SLV(VolEnv);  // sounds
 	SLV(VolFlSplash);  SLV(VolFlCont);  SLV(VolCarCrash);  SLV(VolCarScrap);

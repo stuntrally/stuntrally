@@ -43,6 +43,16 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 
 	if (!bAssignKey)
 	{
+		//  change tweak tabs
+		//----------------------------------------------------------------------------------------
+		if (mWndTweak->getVisible())
+		{	if (action("PrevTab")) {  // prev gui subtab
+				int num = tabTweak->getItemCount();
+				tabTweak->setIndexSelected( (tabTweak->getIndexSelected() - 1 + num) % num );  }
+			else if (action("NextTab")) {  // next gui subtab
+				int num = tabTweak->getItemCount();
+				tabTweak->setIndexSelected( (tabTweak->getIndexSelected() + 1) % num );  }
+		}else
 		//  change gui tabs
 		if (isFocGui && !pSet->isMain)
 		{
@@ -64,16 +74,18 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 						sub->setIndexSelected( (sub->getIndexSelected() + 1) % num );  }  }
 			}else
 			{	int num = tab->getItemCount()-1, i = 0, n = 0;
-				if (action("PrevTab")) {
-					i = tab->getIndexSelected();
+				if (action("PrevTab"))
+				{	i = tab->getIndexSelected();
 					do{  if (i==1)  i = num;  else  --i;  ++n;  }
 					while (n < num && tab->getButtonWidthAt(i) == 1);
-					tab->setIndexSelected(i);  MenuTabChg(tab,i);  return true;  }
-				else if (action("NextTab")) {
-					i = tab->getIndexSelected();
+					tab->setIndexSelected(i);  MenuTabChg(tab,i);  return true;
+				} else
+				if (action("NextTab"))
+				{	i = tab->getIndexSelected();
 					do{  if (i==num)  i = 1;  else  ++i;  ++n;  }
 					while (n < num && tab->getButtonWidthAt(i) == 1);
-					tab->setIndexSelected(i);  MenuTabChg(tab,i);  return true;  }
+					tab->setIndexSelected(i);  MenuTabChg(tab,i);  return true;
+				}
 			}
 		}
 		else if (!isFocGui && pSet->show_graphs)  // change graphs type
@@ -82,11 +94,14 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			if (action("PrevTab"))  v = (v-1 + Gh_ALL) % Gh_ALL;
 			if (action("NextTab"))	v = (v+1) % Gh_ALL;
 			if (vo != v)
-			{	float fv = float(v) / Gh_ALL;
-				slGraphsType(slGraphT, fv);  slGraphT->setValue(fv);
+			{
+				cmbGraphs->setIndexSelected(v);
+				comboGraphs(cmbGraphs, v);
 				if (v == 4)  iUpdTireGr = 1;  //upd now
 			}
 		}
+		//----------------------------------------------------------------------------------------
+
 
 		//  gui on/off  or close wnds
 		if (action("ShowOptions") && !alt)
@@ -222,6 +237,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		
 		
 		//  not main menus
+		//--------------------------------------------------------------------------------------------------------------
 		//if (/*&& !pSet->isMain*/)
 		if (!tweak)
 		{

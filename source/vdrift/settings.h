@@ -12,9 +12,19 @@ enum eGraphType  {
 	Gh_CarAccelG, Gh_BulletHit,
 	Gh_Sound,
 	Gh_TireSlips, Gh_Suspension,
-	Gh_TireEdit, Gh_TorqueCurve, Gh_Engine,
+	Gh_TireEdit,
+	Gh_TorqueCurve, Gh_Engine,
 	Gh_Clutch, Gh_Diffs, //todo: tire friction circles,
 	Gh_ALL  };  // total count
+const static std::string csGraphNames[Gh_ALL] = {
+	"Fps graphics perf.",
+	"Car Accel G's", "Car Hit chassis",
+	"Sound volume & pan, wave",
+	"Tires slip| & slide-", "Suspension pos & vel",
+	"Tire Edit (Pacejka params)*",
+	"Torque Curve, gears", "Engine torque & power",
+	"Clutch, Rpm, Gear", "Differentials"
+	};
 
 enum eShadowType  {  Sh_None=0, Sh_Simple, Sh_Depth, Sh_Soft  };
 

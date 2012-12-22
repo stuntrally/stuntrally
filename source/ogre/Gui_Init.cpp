@@ -128,7 +128,16 @@ void App::InitGui()
 	Slv(SizeArrow,  (pSet->size_arrow));
 	Slv(ZoomMinimap,powf((pSet->zoom_minimap-1.0f) /9.f, 0.5f));
 	Slv(CountdownTime,  pSet->gui.pre_time / 0.5f /6.f);
-	Slv(GraphsType,	float(pSet->graphs_type) /Gh_ALL);  slGraphT = sl;
+
+	valGraphsType = mGUI->findWidget<StaticText>("GraphsTypeVal",false);
+	Cmb(combo, "CmbGraphsType", comboGraphs);  cmbGraphs = combo;
+	if (combo)
+	{	combo->removeAllItems();
+		for (int i=0; i < Gh_ALL; ++i)
+			combo->addItem(csGraphNames[i]);
+		combo->setIndexSelected(pSet->graphs_type);
+	}
+	valGraphsType->setCaption(toStr(pSet->graphs_type));
 	
 	//  particles/trails
 	Slv(Particles,	powf(pSet->particles_len /4.f, 0.5f));
@@ -458,6 +467,8 @@ void App::InitGui()
 	
 	///  tweak
 	edTweak = mGUI->findWidget<Edit>("TweakEdit");
+	edPerfTest = mGUI->findWidget<Edit>("TweakPerfTest");
+	tabTweak = mGUI->findWidget<Tab>("TabTweak");
 	txtTweakPath = mGUI->findWidget<StaticText>("TweakPath");
 	txtTweakTire = mGUI->findWidget<StaticText>("TweakTireSaved");
 	Btn("TweakCarSave", btnTweakCarSave);  //Btn("TweakCarLoad", btnTweakCarLoad);

@@ -238,12 +238,6 @@ void App::slCountdownTime(SL)
 	float v = (int)(val * 6.f +slHalf) * 0.5f;	if (bGI)  {  pSet->gui.pre_time = v;  }
 	if (valCountdownTime){	valCountdownTime->setCaption(fToStr(v,1,4));  }
 }
-void App::slGraphsType(SL)
-{
-	int v = val * Gh_ALL +slHalf;	if (valGraphsType)	valGraphsType->setCaption(toStr(v));
-	if (bGI /*&& pSet->graphs_type != v*/)
-	{	pSet->graphs_type = (eGraphType)v;  DestroyGraphs();  CreateGraphs();  }
-}
 
 //  minimap
 void App::slSizeMinimap(SL)
@@ -436,6 +430,13 @@ void App::chkGraphs(WP wp){			ChkEv(show_graphs);
 	for (int i=0; i < graphs.size(); ++i)
 		graphs[i]->SetVisible(pSet->show_graphs);
 }
+void App::comboGraphs(CMB)
+{
+	if (valGraphsType)	valGraphsType->setCaption(toStr(val));
+	if (bGI /*&& pSet->graphs_type != v*/)
+	{	pSet->graphs_type = (eGraphType)val;  DestroyGraphs();  CreateGraphs();  }
+}
+
 void App::slDbgTxtClr(SL)
 {
 	int v = val +slHalf;  if (bGI)  pSet->car_dbgtxtclr = v;

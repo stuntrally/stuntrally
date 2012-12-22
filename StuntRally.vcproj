@@ -1767,6 +1767,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\Update_PerfTest.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\source\ogre\Update_Poses.cpp"
 					>
 				</File>

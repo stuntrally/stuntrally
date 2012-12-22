@@ -40,7 +40,8 @@ App::App(SETTINGS *settings, GAME *game)
 	,valReflSkip(0), valReflSize(0), valReflFaces(0), valReflDist(0), valWaterSize(0)  // refl
 	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0), valShadowFilter(0)  // shadow
 	,valSizeGaug(0),valTypeGaug(0), valSizeMinimap(0), valZoomMinimap(0)
-	,valCountdownTime(0), valDbgTxtClr(0),valDbgTxtCnt(0), valGraphsType(0),slGraphT(0)  // view
+	,valCountdownTime(0), valDbgTxtClr(0),valDbgTxtCnt(0)
+	,cmbGraphs(0), valGraphsType(0) //,slGraphT(0)  // view
 	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0),chDbgS(0), chBlt(0),chBltTxt(0)
 	,bRsimEasy(0), bRsimNorm(0), bReloadSim(true)
 	,chFps(0), chWire(0), chProfTxt(0), chGraphs(0)
@@ -74,7 +75,8 @@ App::App(SETTINGS *settings, GAME *game)
 	,iEdTire(0), iTireLoad(0), iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
 	,iTireSet(0), bchAbs(0),bchTcs(0), slSSSEff(0),slSSSVel(0)
 	,mStaticGeom(0), fLastFrameDT(0.001f)
-	,edTweak(0), txtTweakPath(0), cmbTweakCarSet(0), cmbTweakTireSet(0), txtTweakTire(0)
+	,edTweak(0),edPerfTest(0),tabTweak(0)
+	,txtTweakPath(0), cmbTweakCarSet(0), cmbTweakTireSet(0), txtTweakTire(0)
 	,bPerfTest(0),iPerfTestStage(PT_StartWait)
 {
 	pSet = settings;

@@ -171,6 +171,7 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 			out << "mass: " << body.GetMass() << endl;
 			MATRIX3 <Dbl> inertia = body.GetInertiaConst();
 			out << "inertia: roll " << inertia[0] << " pitch " << inertia[4] << " yaw " << inertia[8] << endl;
+			
 			//out << "inertia: " << inertia[0] <<" "<< inertia[4] <<" "<< inertia[8] <<" < "<< inertia[1] <<" "<< inertia[2] <<" "<< inertia[3] <<" "<< inertia[5] <<" "<< inertia[6] <<" "<< inertia[7] << endl;
 			//MATHVECTOR<Dbl,3> av = GetAngularVelocity();  Orientation().RotateVector(av);
 			//out << "ang vel: " << fToStr(av[0],2,5) <<" "<< fToStr(av[1],2,5) <<" "<< fToStr(av[2],2,5) << endl;
@@ -183,7 +184,7 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 		}
 
 		//  fluids
-		if (cnt > 2)
+		if (cnt > 1)
 		{	out << "in fluids: " << inFluids.size() <<
 					" wh: " << inFluidsWh[0].size() << inFluidsWh[1].size() << inFluidsWh[2].size() << inFluidsWh[3].size() << endl;
 			out << "wh fl H: " << fToStr(whH[0],1,3) << " " << fToStr(whH[1],1,3) << " " << fToStr(whH[2],1,3) << " " << fToStr(whH[3],1,3) << " \n\n";
@@ -244,9 +245,18 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 		}
 
 	if (p4)
-		if (cnt > 1)
+		if (cnt > 0)
 		{
 			out << "---Aerodynamic---\n";
+			Dbl down = GetAerodynamicDownforceCoefficient();
+			Dbl drag = GetAeordynamicDragCoefficient();
+			out << "down: " << fToStr(down,2,5) << "  drag: " << fToStr(drag,2,4) << endl;
+
+			MATHVECTOR<Dbl,3> aero = GetTotalAero();
+			out << "total: " << endl;
+			out << fToStr(aero[0],0,5) << " " << fToStr(aero[1],0,4) << " " << fToStr(aero[2],0,6) << endl;
+
+		if (cnt > 2)
 			for (vector <CARAERO>::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
 				i->DebugPrint(out);
 		}
