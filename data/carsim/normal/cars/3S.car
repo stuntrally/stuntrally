@@ -40,32 +40,32 @@ position = 0.0, 1.2, 0.6
 mass = 230.0
 peak-engine-rpm = 6500
 rpm-limit = 7000.0
-inertia = 0.40
+inertia = 0.25
 start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
 friction = 230
-torque-val-mul = 1.0
-torque-curve-00 = 1000, 405
-torque-curve-01 = 1500, 445
-torque-curve-02 = 2100, 465
-torque-curve-03 = 2600, 485
-torque-curve-04 = 3000, 506
-torque-curve-05 = 3300, 529
-torque-curve-06 = 3500, 553
-torque-curve-07 = 3800, 594
-torque-curve-08 = 4000, 604
-torque-curve-09 = 4200, 608
-torque-curve-10 = 4400, 604
-torque-curve-11 = 4600, 595
-torque-curve-12 = 4900, 579
-torque-curve-13 = 5500, 533
-torque-curve-14 = 6000, 498
-torque-curve-15 = 6500, 471
-torque-curve-16 = 7000, 450
+torque-val-mul = 0.8
+torque-curve-00 = 1000, 215
+torque-curve-01 = 1500, 265
+torque-curve-02 = 2100, 325
+torque-curve-03 = 2600, 396
+torque-curve-04 = 3000, 456
+torque-curve-05 = 3300, 492
+torque-curve-06 = 3500, 528
+torque-curve-07 = 3800, 560
+torque-curve-08 = 4000, 580
+torque-curve-09 = 4200, 590
+torque-curve-10 = 4400, 594
+torque-curve-11 = 4600, 585
+torque-curve-12 = 4900, 568
+torque-curve-13 = 5500, 508
+torque-curve-14 = 6000, 468
+torque-curve-15 = 6500, 431
+torque-curve-16 = 7000, 370
 
 [ clutch ]
-max-torque-mul = 1.2
+max-torque-mul = 1.1
 
 #  gearbox
 #---------------------------
@@ -77,8 +77,8 @@ gear-ratio-2 = 2.40
 gear-ratio-3 = 1.77
 gear-ratio-4 = 1.36
 gear-ratio-5 = 1.02
-gear-ratio-6 = 0.78
-shift-delay = 0.16
+gear-ratio-6 = 0.76
+shift-delay = 0.12
 
 [ differential ]
 final-drive = 4.21
@@ -129,15 +129,15 @@ tread = 0.0
 friction = 0.9
 max-pressure = 3.0e6
 bias = 0.6
-radius = 0.1397
-area = 0.015
+radius = 0.13
+area = 0.014
 
 [ brakes-rear ]
 friction = 0.9
 max-pressure = 3.0e6
 bias = 0.4
-radius = 0.1397
-area = 0.015
+radius = 0.13
+area = 0.014
 handbrake = 4.8
 
 
@@ -153,7 +153,7 @@ hood-mounted-view-position = -0.6, 0, 0.5
 [ drag ]
 position = 0.0, 0.0, -0.60
 frontal-area = 2.0
-drag-coefficient = 0.33
+drag-coefficient = 0.20
 
 [ wing-front ]
 position = 0, 2.34, -0.6
@@ -161,7 +161,7 @@ frontal-area = 0.2
 drag-coefficient = 0
 surface-area = 0.55
 lift-coefficient = -4.0
-efficiency = 0.90
+efficiency = 0.92
 
 [ wing-rear ]
 position = 0, -2.14, 0.37
@@ -169,7 +169,7 @@ frontal-area = 0.2
 drag-coefficient = 0
 surface-area = 0.53
 lift-coefficient = -4.0
-efficiency = 0.90
+efficiency = 0.92
 
 
 # wheels front (position and suspension mount)

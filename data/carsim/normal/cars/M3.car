@@ -44,7 +44,7 @@ start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
 friction = 230
-torque-val-mul = 1.0
+torque-val-mul = 0.8
 torque-curve-00 = 1000, 365
 torque-curve-01 = 1500, 401
 torque-curve-02 = 2000, 428
@@ -76,7 +76,7 @@ gear-ratio-5 = 1.00
 shift-delay = 0.20
 
 [ differential ]
-final-drive = 4.13
+final-drive = 3.83
 anti-slip = 200.0
 
 [ fuel-tank ]
@@ -124,15 +124,15 @@ tread = 0.0
 friction = 0.87
 max-pressure = 2.5e6
 bias = 0.6
-radius = 0.18
-area = 0.015
+radius = 0.15
+area = 0.014
 
 [ brakes-rear ]
 friction = 0.87
 max-pressure = 2.5e6
 bias = 0.4
-radius = 0.18
-area = 0.015
+radius = 0.15
+area = 0.014
 handbrake = 4.5
 
 
@@ -152,19 +152,19 @@ drag-coefficient = 0.3
 
 [ wing-front ]
 position = 1.9, 0.0, 0.60
-frontal-area = 0.2
+frontal-area = 0.1
 drag-coefficient = 0.0
-surface-area = 0.3
-lift-coefficient = -0.5
-efficiency = 0.95
+surface-area = 0.6
+lift-coefficient = -3.5
+efficiency = 0.86
 
 [ wing-rear ]
-position = -2.14, 0.0, 0.37
+position = -1.8, 0.0, 0.37
 frontal-area = 0.05
 drag-coefficient = 0.0
 surface-area = 0.5
-lift-coefficient = -0.5
-efficiency = 0.95
+lift-coefficient = -3.5
+efficiency = 0.86
 
 
 # wheels front (position and suspension mount)

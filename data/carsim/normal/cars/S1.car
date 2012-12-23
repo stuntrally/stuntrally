@@ -45,24 +45,24 @@ start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
 friction = 230
-torque-val-mul = 1.2
+torque-val-mul = 0.8
 torque-curve-00 = 1000, 405
 torque-curve-01 = 1500, 445
 torque-curve-02 = 2100, 465
 torque-curve-03 = 2600, 485
-torque-curve-04 = 3000, 506
-torque-curve-05 = 3300, 529
-torque-curve-06 = 3500, 553
+torque-curve-04 = 3000, 516
+torque-curve-05 = 3300, 549
+torque-curve-06 = 3500, 573
 torque-curve-07 = 3800, 594
 torque-curve-08 = 4000, 604
 torque-curve-09 = 4200, 608
 torque-curve-10 = 4400, 604
-torque-curve-11 = 4600, 575
+torque-curve-11 = 4600, 585
 torque-curve-12 = 4900, 550
-torque-curve-13 = 5500, 500
-torque-curve-14 = 6000, 458
-torque-curve-15 = 6300, 421
-torque-curve-16 = 7000, 380
+torque-curve-13 = 5500, 510
+torque-curve-14 = 6000, 468
+torque-curve-15 = 6300, 441
+torque-curve-16 = 7000, 400
 
 [ clutch ]
 max-torque-mul = 1.1
@@ -81,7 +81,7 @@ gear-ratio-6 = 0.756
 shift-delay = 0.06
 
 [ differential ]
-final-drive = 3.90
+final-drive = 4.10
 anti-slip = 400.0
 
 [ fuel-tank ]
@@ -160,7 +160,7 @@ hood-mounted-view-position = -0.55, 0, 0.46
 [ drag ]
 position = 0.0, 0.0, -0.60
 frontal-area = 2.0
-drag-coefficient = 0.25
+drag-coefficient = 0.20
 
 [ wing-front ]
 position = 0, 2.34, -0.6

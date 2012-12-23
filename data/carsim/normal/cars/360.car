@@ -39,26 +39,24 @@ start-rpm = 1000
 stall-rpm = 500
 fuel-consumption = 0.0001
 friction = 230
-torque-val-mul = 1.1
-torque-curve-00 = 1000, 331
-torque-curve-01 = 1500, 362
-torque-curve-02 = 2200, 389
+torque-val-mul = 0.8
+torque-curve-00 = 1000, 325
+torque-curve-01 = 1500, 360
+torque-curve-02 = 2200, 388
 torque-curve-03 = 2700, 426
-torque-curve-04 = 3200, 467
-torque-curve-05 = 3800, 512
-torque-curve-06 = 4200, 546
-torque-curve-07 = 4800, 578
-torque-curve-08 = 5050, 595
-torque-curve-09 = 5200, 611
-torque-curve-10 = 5775, 605
-torque-curve-11 = 5850, 600
-torque-curve-12 = 6000, 586
-torque-curve-13 = 6800, 544
-torque-curve-14 = 7300, 516
-torque-curve-15 = 7700, 498
-torque-curve-16 = 8000, 475
-torque-curve-17 = 8600, 454
-torque-curve-18 = 9200, 419
+torque-curve-04 = 3200, 452
+torque-curve-05 = 3800, 482
+torque-curve-06 = 4200, 511
+torque-curve-07 = 4800, 555
+torque-curve-08 = 5200, 576
+torque-curve-09 = 5600, 580
+torque-curve-10 = 6000, 576
+torque-curve-11 = 6500, 554
+torque-curve-12 = 7000, 526
+torque-curve-13 = 7500, 498
+torque-curve-14 = 8000, 475
+torque-curve-15 = 8500, 454
+torque-curve-16 = 9000, 409
 
 [ clutch ]
 max-torque-mul = 1.3
@@ -130,17 +128,17 @@ tread = 0.0
 #---------------------------
 [ brakes-front ]
 friction = 0.9
-max-pressure = 4.0e7
+max-pressure = 4.3e7
 bias = 0.55
 radius = 0.335
-area = 0.000488
+area = 0.0006
 
 [ brakes-rear ]
 friction = 0.9
-max-pressure = 4.0e7
+max-pressure = 4.3e7
 bias = 0.45
-radius = 0.330 # 330mm
-area = 0.000448 # 16mm x 28mm
+radius = 0.330
+area = 0.0006
 handbrake = 3.6
 
 
