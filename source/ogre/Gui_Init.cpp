@@ -247,8 +247,6 @@ void App::InitGui()
 	bRsimNorm = mGUI->findWidget<Button>("SimModeNorm");
 	bool bNorm = pSet->gui.sim_mode == "normal";
 	bool bEasy = pSet->gui.sim_mode == "easy";
-	//if (!bNorm)  !DirExist(..pSet->gui.sim_mode
-	//	pSet->gui.sim_mode = "easy";
 	bRsimEasy->setStateSelected(bEasy);  bRsimEasy->eventMouseButtonClick += newDelegate(this, &App::radSimEasy);
 	bRsimNorm->setStateSelected(bNorm);  bRsimNorm->eventMouseButtonClick += newDelegate(this, &App::radSimNorm);
 
@@ -344,13 +342,21 @@ void App::InitGui()
 	updReplaysList();
 
 
-	//  car color buttons . . . . .
+	///  Car
+	//------------------------------------------------------------
 	const int clrBtn = 28;
-	Real hsv[clrBtn][3] = {
-	{0.43,0.80,0.80}, {0.47,0.90,0.85}, {0.50,0.33,0.90}, {0.54,0.69,0.80}, {0.51,0.80,0.44}, {0.43,0.57,0.30}, {0.41,0.43,0.22}, 
-	{0.75,0.90,0.90}, {0.70,0.80,0.80},	{0.86,1.00,0.97}, {0.91,1.00,1.00}, {0.00,0.97,0.93}, {0.35,0.70,0.40}, {0.37,0.78,0.23}, 
-	{0.28,0.00,0.10}, {0.83,0.00,0.58}, {0.41,0.00,0.88}, {0.42,0.20,0.94}, {0.63,0.19,0.62}, {0.80,0.52,0.32}, {0.62,0.99,0.05}, 
-	{0.05,0.17,0.66}, {0.11,0.49,0.31},	{0.24,0.90,0.26}, {0.28,0.57,0.17}, {0.27,0.34,0.23}, {0.34,0.41,0.42}, {0.38,1.00,0.70}, 
+	Real hsv[clrBtn][3] = {  // color buttons
+	{0.00,0.97,0.93}, {0.91,1.00,1.00}, {0.86,1.00,0.97},  // red,ornage,yellow
+	{0.75,0.90,0.90}, {0.70,0.80,0.80},  // green
+	{0.54,0.69,0.80}, {0.51,0.80,0.44},  // cyan
+	{0.43,0.57,0.30}, {0.41,0.43,0.22},  // dark-cyan
+	{0.37,0.78,0.23}, {0.35,0.70,0.40}, {0.38,1.00,0.70},  // dark-blue
+	{0.43,0.80,0.80}, {0.47,0.90,0.85}, // sky-blue
+	{0.50,0.33,0.90}, {0.42,0.20,0.94}, // sky-white	
+	{0.63,0.19,0.62}, {0.80,0.52,0.32}, {0.62,0.85,0.05},  // olive-
+	{0.28,0.00,0.10}, {0.83,0.00,0.58}, {0.41,0.00,0.88},  // black-white
+	{0.05,0.17,0.66}, {0.11,0.49,0.31},  // pink-white-
+	{0.24,0.90,0.26}, {0.28,0.57,0.17}, {0.27,0.34,0.23}, {0.38,0.36,0.55},  // dark violet
 	};
 	for (int i=0; i < clrBtn; ++i)
 	{
@@ -364,6 +370,9 @@ void App::InitGui()
 	}
 	Btn("CarClrRandom", btnCarClrRandom);
 	Slv(NumLaps, (pSet->gui.num_laps - 1) / 20.f);
+
+	txCarStatsTxt = mGUI->findWidget<StaticText>("CarStatsTxt");
+	txCarStatsVals = mGUI->findWidget<StaticText>("CarStatsVals");
 	
 	TabPtr tPlr = mGUI->findWidget<Tab>("tabPlayer");
 	if (tPlr)  tPlr->eventTabChangeSelect += newDelegate(this, &App::tabPlayer);

@@ -407,7 +407,9 @@ protected:
 	void msgRplDelete(MyGUI::Message*, MyGUI::MessageBoxStyle);
 	
 	void btnNumPlayers(WP);  void chkSplitVert(WP);
-	MyGUI::StaticTextPtr valLocPlayers;
+	MyGUI::StaticTextPtr valLocPlayers,
+		txCarStatsTxt, txCarStatsVals;  void UpdCarStatsTxt();  // car stats
+	
 
 public:
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
@@ -485,10 +487,11 @@ protected:
 
 
 public:
-	virtual void materialCreated (sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex);
+	virtual void materialCreated(sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex);
 
-	bool GetCarPath(std::string* pathCar/*out*/, std::string* pathSave/*=0*/, std::string* pathSaveDir,
-		std::string carname, bool asphalt, std::string tweakSetup="", bool forceOrig=false);
+	bool GetCarPath(std::string* pathCar/*out*/,
+		std::string* pathSave/*=0*/, std::string* pathSaveDir/*=0*/,
+		std::string carname, /*std::string tweakSetup="",*/ bool forceOrig=false);
 };
 
 #endif

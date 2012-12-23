@@ -79,16 +79,16 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 
 		//  load car
 		std::string pathCar;
-		pApp->GetCarPath(&pathCar, 0, 0, sDirname, sc->asphalt/*, "", mClient*/);
+		pApp->GetCarPath(&pathCar, 0, 0, sDirname, pApp->mClient);  // force orig for newtorked games
 		
 		pCar = pGame->LoadCar(pathCar, sDirname, pos, rot, true, false, type == CT_REMOTE, index);
 
-		///  car perf test  not working...
+		///  vdr car perf test  not working gears...
 		#if 0
 		QTimer ti;  ti.update();  /// time
 
-			PERFORMANCE_TESTING perf;
-			perf.Test(pathCar, pApp, pGame->info_output, pGame->error_output);
+		PERFORMANCE_TESTING perf;
+		perf.Test(pathCar, pApp, pGame->info_output, pGame->error_output);
 
 		ti.update();	/// time
 		float dt = ti.dt * 1000.f;

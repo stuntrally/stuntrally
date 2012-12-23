@@ -21,7 +21,7 @@ const static std::string csGraphNames[Gh_ALL] = {
 	"Car Accel G's", "Car Hit chassis",
 	"Sound volume & pan, wave",
 	"Tires slip| & slide-", "Suspension pos & vel",
-	"Tire Edit (Pacejka params)*",
+	"Tire Edit (Pacejka coeffs)*",
 	"Torque Curve, gears", "Engine torque & power",
 	"Clutch, Rpm, Gear", "Differentials"
 	};

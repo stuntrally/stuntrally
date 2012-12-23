@@ -21,7 +21,7 @@ void App::TweakCarSave()
 	text = StringUtil::replaceAll(text, "#E5F4FF", "");  //!
 
 	std::string path, pathUser, pathUserDir;
-	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], sc->asphalt);
+	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0]);
 	
 	PATHMANAGER::CreateDir(pathUserDir, pGame->error_output);
 	std::ofstream fo(pathUser.c_str());
@@ -34,7 +34,7 @@ void App::TweakCarSave()
 void App::TweakCarLoad()
 {
 	std::string path, pathUser, pathUserDir;
-	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], sc->asphalt);
+	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0]);
 
 	if (!PATHMANAGER::FileExists(path))
 	{
@@ -177,7 +177,7 @@ void App::TweakToggle()
 	mWndTweak->setVisible(vis);
 
 	std::string path, pathUser, pathUserDir;
-	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], sc->asphalt);
+	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0]);
 	
 	//  load  if car changed
 	static string lastPath = "";
@@ -193,8 +193,9 @@ void App::TweakToggle()
 
 
 //  Get car file path
-bool App::GetCarPath(std::string* pathCar, std::string* pathSave, std::string* pathSaveDir,
-	std::string carname, bool asphalt, std::string tweakSetup, bool forceOrig)
+bool App::GetCarPath(std::string* pathCar,
+	std::string* pathSave, std::string* pathSaveDir,
+	std::string carname, /*std::string tweakSetup,*/ bool forceOrig)
 {
 	std::string file = carname + ".car",
 		pathOrig  = PATHMANAGER::GetCarSimPath()          + "/" + pSet->game.sim_mode + "/cars/" + file,

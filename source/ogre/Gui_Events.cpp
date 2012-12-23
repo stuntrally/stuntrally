@@ -316,11 +316,40 @@ void App::listCarChng(List* li, size_t pos)
 		carDesc->setCaption(sdesc);
 	}	
 	changeCar();
+	UpdCarStatsTxt();
 }	
 void App::changeCar()
 {
 	pSet->gui.car[iCurCar] = sListCar;
 }
+
+///  car stats txt
+void App::UpdCarStatsTxt()
+{
+	std::string path;
+	//GetCarPath(&path, 0, 0, sListCar, true);
+	//path = path.substr(0, path.length()-4) + "_stats.txt";
+	path = PATHMANAGER::GetCarSimPath() + "/" + pSet->gui.sim_mode + "/cars/" + sListCar + "_stats.txt";
+
+	string txt(""), vals(""), s;
+	ifstream fi(path.c_str());
+	if (fi.good())
+	{
+		int i = 0;
+		while (getline(fi, s))
+		{
+			if (i % 2 == 0)
+				txt += s + "\n";
+			else
+				vals += s + "\n";
+			++i;
+		}
+		fi.close();
+	}
+	txCarStatsTxt->setCaption(txt);
+	txCarStatsVals->setCaption(vals);
+}
+
 
 //  track
 void App::changeTrack()
