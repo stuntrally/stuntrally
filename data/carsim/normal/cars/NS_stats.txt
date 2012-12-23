@@ -1,14 +1,14 @@
 Mass
 1322 kg
 Max Torque
-504 Nm at 4090 rpm
+454 Nm at 4090 rpm
 Max Power
-341 bhp at 5500 rpm
+317 bhp at 6520 rpm
 Time 0 to 100 kmh
- 3.5 s
+ 3.8 s
 Time 0 to 160 kmh
- 8.5 s
+ 8.7 s
 Time 0 to 200 kmh
-18.6 s
+15.7 s
 Stop time 100 to 0 kmh
  2.6 s

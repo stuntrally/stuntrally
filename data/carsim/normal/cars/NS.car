@@ -45,7 +45,7 @@ start-rpm = 1000
 stall-rpm = 350 
 fuel-consumption = 1e-9 
 friction = 230
-torque-val-mul = 1.0
+torque-val-mul = 0.9
 torque-curve-00 = 1000, 191
 torque-curve-01 = 1500, 262
 torque-curve-02 = 2000, 334
@@ -55,10 +55,10 @@ torque-curve-05 = 3500, 493
 torque-curve-06 = 4000, 504
 torque-curve-07 = 4500, 498
 torque-curve-08 = 5000, 473
-torque-curve-09 = 5500, 441
-torque-curve-10 = 6000, 397
-torque-curve-11 = 6500, 366
-torque-curve-12 = 7000, 330
+torque-curve-09 = 5500, 446
+torque-curve-10 = 6000, 411
+torque-curve-11 = 6500, 386
+torque-curve-12 = 7000, 350
 
 
 [ clutch ] 
@@ -148,7 +148,7 @@ hood-mounted-view-position = -0.5, 0, 0.60
 #---------------------------
 [ drag ] 
 position = 0.0, 0.0, 0.2 
-frontal-area = 2.37 
+frontal-area = 2
 drag-coefficient = 0.22 
 
 [ wing-front ] 
@@ -157,7 +157,7 @@ frontal-area = 0.1
 drag-coefficient = 0.0
 surface-area = 0.60
 lift-coefficient = -4.0
-efficiency = 0.92
+efficiency = 0.95
 
 [ wing-rear ] 
 position = 0.0, -1.5, 0.30
@@ -165,7 +165,7 @@ frontal-area = 0.05
 drag-coefficient = 0.0
 surface-area = 0.5
 lift-coefficient = -4.0
-efficiency = 0.92
+efficiency = 0.95
 
 
 # wheels front (position and suspension mount)
