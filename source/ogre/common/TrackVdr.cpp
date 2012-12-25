@@ -40,7 +40,7 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 	//  materials  -------------
 	std::vector<OGRE_MESH>& meshes = pTrack->ogre_meshes;
 	std::string sMatCache = strack + ".matdef", sMatOrig = "_" + sMatCache,
-		sPathCache = PATHMANAGER::GetShaderCacheDir() + "/" + sMatCache, sPathOrig = TrkDir() +"objects/"+ sMatOrig;
+		sPathCache = PATHMANAGER::ShaderCacheDir() + "/" + sMatCache, sPathOrig = TrkDir() +"objects/"+ sMatOrig;
 	bool hasMatOrig = boost::filesystem::exists(sPathOrig), hasMatCache = boost::filesystem::exists(sPathCache);
 	bool bGenerate = 0, gen = !hasMatOrig && !hasMatCache || bGenerate;  // set 1 to force generate for new vdrift tracks
 

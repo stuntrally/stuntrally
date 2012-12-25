@@ -88,10 +88,10 @@ void BaseApp::createFrameListener()
 	OISB::System::getSingleton().initialize(mInputManager);
 
 	LogO("*** input load keys.xml ***");
-	if (boost::filesystem::exists(PATHMANAGER::GetUserConfigDir() + "/keys.xml"))
-		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
+	if (boost::filesystem::exists(PATHMANAGER::UserConfigDir() + "/keys.xml"))
+		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::UserConfigDir() + "/keys.xml");
 	else
-		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/keys-default.xml");
+		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GameConfigDir() + "/keys-default.xml");
 
 	LogO("*** input set callbacks ***");
 	mKeyboard = OISB::System::getSingleton().getOISKeyboard();
@@ -262,8 +262,8 @@ bool BaseApp::setup()
 	
 	// Dynamic plugin loading
 	int net = pSet->net_local_plr;
-	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg",
-		PATHMANAGER::GetUserConfigDir() + "/ogre" + (net >= 0 ? toStr(net) : "") + ".log");
+	mRoot = OGRE_NEW Root("", PATHMANAGER::UserConfigDir() + "/ogreset.cfg",
+		PATHMANAGER::UserConfigDir() + "/ogre" + (net >= 0 ? toStr(net) : "") + ".log");
 	LogO("*** start setup ***");
 
 	#ifdef _DEBUG
@@ -275,12 +275,12 @@ bool BaseApp::setup()
 	// when show ogre dialog is on, load both rendersystems so user can select
 	if (pSet->ogre_dialog)
 	{
-		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
+		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
+		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
 		try
 		{
-			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
+			mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
 		}
 		catch(...)
 		{
@@ -291,9 +291,9 @@ bool BaseApp::setup()
 	else
 	{
 		if (pSet->rendersystem == "OpenGL Rendering Subsystem")
-			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
+			mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		else if (pSet->rendersystem == "Direct3D9 Rendering Subsystem")
-			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
+			mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
 		/*else if (pSet->rendersystem == "Direct3D11 Rendering Subsystem")
 		{
 			try
@@ -307,8 +307,8 @@ bool BaseApp::setup()
 		}/**/
 	}
 
-	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
-	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_CgProgramManager" + D_SUFFIX);
+	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
+	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Plugin_CgProgramManager" + D_SUFFIX);
 	//mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_OctreeSceneManager" + D_SUFFIX);  // test, bad
 
 	#ifdef _DEBUG
@@ -322,10 +322,10 @@ bool BaseApp::setup()
 		mShaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
  
 		// Add the shader libs resource location.
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(PATHMANAGER::GetDataPath()+"/RTShaderLib", "FileSystem");
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(PATHMANAGER::Data()+"/RTShaderLib", "FileSystem");
  
 		// Set shader cache path.
-		mShaderGenerator->setShaderCachePath(PATHMANAGER::GetShaderCacheDir());		
+		mShaderGenerator->setShaderCachePath(PATHMANAGER::ShaderCacheDir());		
  
 		// Create and register the material manager listener.
 		mMaterialMgrListener = new MaterialMgrListener(mShaderGenerator);
@@ -362,7 +362,7 @@ bool BaseApp::setup()
 	mPlatform = new MyGUI::OgrePlatform();
 	#endif
 	
-	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetUserConfigDir() + "/MyGUI.log");
+	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::UserConfigDir() + "/MyGUI.log");
 	mGUI = new MyGUI::Gui();
 	
 	mGUI->initialise("core.xml");
@@ -380,7 +380,7 @@ bool BaseApp::setup()
 		setlocale(LC_NUMERIC, "C");  }
 	
 	// valid?
-	if (!boost::filesystem::exists(PATHMANAGER::GetDataPath() + "/gui/core_language_" + pSet->language + "_tag.xml"))
+	if (!boost::filesystem::exists(PATHMANAGER::Data() + "/gui/core_language_" + pSet->language + "_tag.xml"))
 		pSet->language = "en";
 		
 	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
@@ -424,9 +424,9 @@ bool BaseApp::setup()
 
 
 	///  material factory setup
-	sh::OgrePlatform* platform = new sh::OgrePlatform("General", PATHMANAGER::GetDataPath() + "/" + "material_templates");
+	sh::OgrePlatform* platform = new sh::OgrePlatform("General", PATHMANAGER::Data() + "/" + "material_templates");
 	platform->setShaderCachingEnabled (true);
-	platform->setCacheFolder (PATHMANAGER::GetCacheDir());
+	platform->setCacheFolder (PATHMANAGER::CacheDir());
 
 	mFactory = new sh::Factory(platform);
 	sh::Factory& fct = sh::Factory::getInstance();
@@ -503,7 +503,7 @@ void BaseApp::destroyScene()
 
 	if (bCache)
 	{
-		Ogre::String microcodeCacheFileName =PATHMANAGER::GetCacheDir() + "/" + "shadercache.txt";
+		Ogre::String microcodeCacheFileName =PATHMANAGER::CacheDir() + "/" + "shadercache.txt";
 		std::fstream inp;
 		inp.open(microcodeCacheFileName.c_str(), std::ios::out | std::ios::binary);
 		Ogre::DataStreamPtr shaderCache (OGRE_NEW FileStreamDataStream(microcodeCacheFileName, &inp, false));
@@ -517,7 +517,7 @@ void BaseApp::setupResources()
 {
 	// Load resource paths from config file
 	ConfigFile cf;
-	std::string s = PATHMANAGER::GetGameConfigDir() + "/resources.cfg";
+	std::string s = PATHMANAGER::GameConfigDir() + "/resources.cfg";
 	cf.load(s);
 
 	// Go through all sections & settings in the file
@@ -534,7 +534,7 @@ void BaseApp::setupResources()
 			typeName = i->first;
 			archName = i->second;
 			ResourceGroupManager::getSingleton().addResourceLocation(
-				PATHMANAGER::GetDataPath() + "/" + archName, typeName, secName);
+				PATHMANAGER::Data() + "/" + archName, typeName, secName);
 		}
 	}
 
@@ -552,7 +552,7 @@ void BaseApp::loadResources()
 	GpuProgramManager::getSingletonPtr()->setSaveMicrocodesToCache(bCache);
 	if (bCache)
 	{
-		Ogre::String microcodeCacheFileName =PATHMANAGER::GetCacheDir() + "/" + "shadercache.txt";
+		Ogre::String microcodeCacheFileName =PATHMANAGER::CacheDir() + "/" + "shadercache.txt";
 		if (boost::filesystem::exists(microcodeCacheFileName) && bCache)
 		{
 			std::ifstream inp;
@@ -684,7 +684,7 @@ void BaseApp::windowClosed(RenderWindow* rw)
 	if (rw == mWindow)
 	if (mInputManager)
 	{
-		OISB::System::getSingleton().saveActionSchemaToXMLFile(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
+		OISB::System::getSingleton().saveActionSchemaToXMLFile(PATHMANAGER::UserConfigDir() + "/keys.xml");
 		OISB::System::getSingleton().finalize();
 		delete mOISBsys;  mOISBsys = 0;
 		mInputManager = 0;

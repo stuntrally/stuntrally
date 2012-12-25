@@ -23,12 +23,12 @@
 //  load settings from default file
 void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 {
-	settings->Load(PATHMANAGER::GetGameConfigDir() + "/game-default.cfg");
+	settings->Load(PATHMANAGER::GameConfigDir() + "/game-default.cfg");
 	settings->Save(setFile);
 	//  delete old keys.xml too
-	std::string sKeys = PATHMANAGER::GetUserConfigDir() + "/keys.xml";
+	std::string sKeys = PATHMANAGER::UserConfigDir() + "/keys.xml";
 	if (boost::filesystem::exists(sKeys))
-		boost::filesystem::rename(sKeys, PATHMANAGER::GetUserConfigDir() + "/keys_old.xml");
+		boost::filesystem::rename(sKeys, PATHMANAGER::UserConfigDir() + "/keys_old.xml");
 }
 
 
@@ -45,7 +45,7 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 	PATHMANAGER::Init(dummy, dummy);
 
 	// Open the log file
-	std::string logfilename = PATHMANAGER::GetUserConfigDir() + "/log.txt";
+	std::string logfilename = PATHMANAGER::UserConfigDir() + "/log.txt";
 	std::ofstream logfile(logfilename.c_str());
 	if (!logfile)
 	{
@@ -73,7 +73,7 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 	///  Load Settings
 	//----------------------------------------------------------------
 	SETTINGS* settings = new SETTINGS();
-	std::string setFile = PATHMANAGER::GetSettingsFile();
+	std::string setFile = PATHMANAGER::SettingsFile();
 	
 	if (!PATHMANAGER::FileExists(setFile))
 	{
@@ -84,7 +84,7 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 	if (settings->version != SET_VER)  // loaded older, use default
 	{
 		info_output << "Settings found, but older version - loading defaults." << std::endl;
-		boost::filesystem::rename(setFile, PATHMANAGER::GetUserConfigDir() + "/game_old.cfg");
+		boost::filesystem::rename(setFile, PATHMANAGER::UserConfigDir() + "/game_old.cfg");
 		LoadDefaultSet(settings,setFile);
 		settings->Load(setFile);  // LOAD
 	}

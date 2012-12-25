@@ -103,12 +103,12 @@ void App::CreateObjects()
 	}
 	for (map<string,bool>::iterator it = objExists.begin(); it != objExists.end(); ++it)
 	{
-		bool ex = boost::filesystem::exists(PATHMANAGER::GetDataPath()+"/objects/"+ (*it).first + ".mesh");
+		bool ex = boost::filesystem::exists(PATHMANAGER::Data()+"/objects/"+ (*it).first + ".mesh");
 		(*it).second = ex;
 		if (!ex)  LogO("CreateObjects mesh doesn't exist: " + (*it).first + ".mesh");
 	}
 	for (map<string,bool>::iterator it = objHasBlt.begin(); it != objHasBlt.end(); ++it)
-		(*it).second = boost::filesystem::exists(PATHMANAGER::GetDataPath()+"/objects/"+ (*it).first + ".bullet");
+		(*it).second = boost::filesystem::exists(PATHMANAGER::Data()+"/objects/"+ (*it).first + ".bullet");
 
 	//  loader
 	#ifndef ROAD_EDITOR
@@ -170,7 +170,7 @@ void App::CreateObjects()
 			fileLoader->mTrOfs.setOrigin(btVector3(o.pos[0],o.pos[1],o.pos[2]));
 			fileLoader->mTrOfs.setRotation(btQuaternion(o.rot[0],o.rot[1],o.rot[2],o.rot[3]));
 			//fileLoader->setVerboseMode(true);//
-			std::string file = PATHMANAGER::GetDataPath()+"/objects/"+o.name+".bullet";
+			std::string file = PATHMANAGER::Data()+"/objects/"+o.name+".bullet";
 
 			if (fileLoader->loadFile(file.c_str()))
 			{
@@ -355,7 +355,7 @@ void App::AddNewObj()
 	o.nd->setScale(o.scale);
 	o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
 
-	o.dyn = boost::filesystem::exists(PATHMANAGER::GetDataPath()+"/objects/"+ o.name + ".bullet");
+	o.dyn = boost::filesystem::exists(PATHMANAGER::Data()+"/objects/"+ o.name + ".bullet");
 	sc->objects.push_back(o);
 }
 

@@ -207,7 +207,7 @@ void BaseApp::recreateCompositor()
 	//  add when needed
 	if (!ResourceGroupManager::getSingleton().resourceGroupExists("Effects"))
 	{
-		std::string sPath = PATHMANAGER::GetDataPath() + "/compositor";
+		std::string sPath = PATHMANAGER::Data() + "/compositor";
 		mRoot->addResourceLocation(sPath, "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/gbuffer", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/bloom", "FileSystem", "Effects");

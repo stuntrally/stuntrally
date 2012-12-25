@@ -472,7 +472,7 @@ void App::InitGui()
 	edHelp->setCaption(s);
 	//  user dir
     MyGUI::EditPtr edUserDir = mGUI->findWidget<Edit>("EdUserDir");
-	edUserDir->setCaption(PATHMANAGER::GetUserConfigDir());
+	edUserDir->setCaption(PATHMANAGER::UserConfigDir());
 	
 	///  tweak
 	edTweak = mGUI->findWidget<Edit>("TweakEdit");
@@ -499,10 +499,10 @@ void App::InitGui()
     if (carList)
     {	carList->removeAllItems();  int ii = 0;  bool bFound = false;
 		strlist li;
-		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetCarPath(), li);
+		PATHMANAGER::GetFolderIndex(PATHMANAGER::Cars(), li);
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
-			if (boost::filesystem::exists(PATHMANAGER::GetCarPath() + "/" + *i + "/about.txt"))  {
+			if (boost::filesystem::exists(PATHMANAGER::Cars() + "/" + *i + "/about.txt"))  {
 				carList->addItem(*i);
 				if (*i == pSet->gui.car[0]) {  carList->setIndexSelected(ii);  bFound = true;  }
 				ii++;  }

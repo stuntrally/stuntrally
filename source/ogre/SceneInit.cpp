@@ -43,13 +43,13 @@ void App::createScene()
 	QTimer ti;  ti.update();  /// time
 
 	//  tracks.xml
-	tracksXml.LoadXml(PATHMANAGER::GetGameConfigDir() + "/tracks.xml");
+	tracksXml.LoadXml(PATHMANAGER::GameConfigDir() + "/tracks.xml");
 
 	//  championships.xml, progress.xml
 	ChampsXmlLoad();
 
 	//  fluids.xml
-	fluidsXml.LoadXml(PATHMANAGER::GetDataPath() + "/materials/fluids.xml");
+	fluidsXml.LoadXml(PATHMANAGER::Data() + "/materials/fluids.xml");
 	sc->pFluidsXml = &fluidsXml;
 	LogO(String("**** Loaded fluids.xml: ") + toStr(fluidsXml.fls.size()));
 

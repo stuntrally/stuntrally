@@ -77,8 +77,8 @@ App::App()  //  gui wigdets--
 {
 	imgPrv[0]=0; imgMini[0]=0; imgTer[0]=0;  trkDesc[0]=0;
 	
-	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
-	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
+	pathTrk[0] = PATHMANAGER::Tracks() + "/";
+	pathTrk[1] = PATHMANAGER::TracksUser() + "/";
 	resTrk = "";  strFSerrors = "";
 
 	mBrSize[0] = 16.f;	mBrSize[1] = 24.f;	mBrSize[2] = 16.f;	mBrSize[3] = 16.f;
@@ -113,9 +113,9 @@ App::App()  //  gui wigdets--
 //---------------------------------------------------------------------------------------------------------------------------
 void App::postInit()
 {
-	sh::OgrePlatform* platform = new sh::OgrePlatform("General", PATHMANAGER::GetDataPath() + "/" + "material_templates");
+	sh::OgrePlatform* platform = new sh::OgrePlatform("General", PATHMANAGER::Data() + "/" + "material_templates");
 	platform->setShaderCachingEnabled (true);
-	platform->setCacheFolder (PATHMANAGER::GetCacheDir());
+	platform->setCacheFolder (PATHMANAGER::CacheDir());
 	
 	mFactory = new sh::Factory(platform);
 	mFactory->setSharedParameter("globalColorMultiplier", sh::makeProperty<sh::Vector4>(new sh::Vector4(0.3, 1.0, 0.1, 1.0)));

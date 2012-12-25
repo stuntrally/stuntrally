@@ -97,7 +97,7 @@ bool GAME::LoadAllSurfaces()
 	surfaces.clear();
 	surf_map.clear();
 
-	string path = PATHMANAGER::GetCarSimPath() + "/" + settings->game.sim_mode + "/surfaces.cfg";
+	string path = PATHMANAGER::CarSim() + "/" + settings->game.sim_mode + "/surfaces.cfg";
 	CONFIGFILE param;
 	if (!param.Load(path))
 	{
@@ -170,7 +170,7 @@ bool GAME::LoadTires()
 	tires.clear();
 	tires_map.clear();
 	
-	string path = PATHMANAGER::GetCarSimPath() + "/" + settings->game.sim_mode + "/tires";
+	string path = PATHMANAGER::CarSim() + "/" + settings->game.sim_mode + "/tires";
 	std::list <std::string> li;
 	PATHMANAGER::GetFolderIndex(path, li);
 	for (std::list <std::string>::iterator i = li.begin(); i != li.end(); ++i)
@@ -228,7 +228,7 @@ bool GAME::InitializeSound()
 
 	if (sound.Init(2048/*1024/*512*/, info_output, error_output))
 	{
-		generic_sounds.SetLibraryPath(PATHMANAGER::GetSoundsPath());
+		generic_sounds.SetLibraryPath(PATHMANAGER::Sounds());
 
 		if (!generic_sounds.Load("tire_squeal", sound.GetDeviceInfo(), error_output))  return false;
 		if (!generic_sounds.Load("grass", sound.GetDeviceInfo(), error_output))  return false;
@@ -289,7 +289,7 @@ void GAME::End()
 		sound.Pause(true); //stop the sound thread
 
 	///+
-	settings->Save(PATHMANAGER::GetSettingsFile()); //save settings first incase later deinits cause crashes
+	settings->Save(PATHMANAGER::SettingsFile()); //save settings first incase later deinits cause crashes
 
 	collision.Clear();
 	track.Clear();
@@ -457,7 +457,7 @@ bool GAME::NewGameDoLoadMisc(float pre_time)
 	}
 
 	//load the timer
-	if (!timer.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+settings->game.track+".txt", pre_time, error_output))
+	if (!timer.Load(PATHMANAGER::Records()+"/"+settings->game.track+".txt", pre_time, error_output))
 		return false;
 
 	//add cars to the timer system
@@ -544,7 +544,7 @@ bool GAME::LoadTrack(const string & trackname)
 
 	//load the track
 	if (!track.DeferredLoad(
-		(settings->game.track_user ? PATHMANAGER::GetTrackPathUser() : PATHMANAGER::GetTrackPath()) + "/" + trackname,
+		(settings->game.track_user ? PATHMANAGER::TracksUser() : PATHMANAGER::Tracks()) + "/" + trackname,
 		settings->game.trackreverse,
 		/**/0, "large", true, false))
 	{

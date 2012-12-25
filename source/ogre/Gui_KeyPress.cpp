@@ -146,7 +146,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		//if (action("Screenshot"))  //isnt working
 		const OISB::Action* act = OISB::System::getSingleton().lookupAction("General/Screenshot",false);
 		if (act && act->isActive())
-		{	mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", ".jpg");
+		{	mWindow->writeContentsToTimestampedFile(PATHMANAGER::Screenshots() + "/", ".jpg");
 			return false;	}
 		
 		using namespace OIS;

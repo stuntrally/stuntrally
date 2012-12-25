@@ -14,11 +14,11 @@ using namespace MyGUI;
 //---------------------------------------------------------------------
 void App::ChampsXmlLoad()
 {
-	champs.LoadXml(PATHMANAGER::GetGameConfigDir() + "/championships.xml");
+	champs.LoadXml(PATHMANAGER::GameConfigDir() + "/championships.xml");
 	LogO(String("**** Loaded Championships: ") + toStr(champs.champs.size()));
 	
 	ProgressXml oldprog;
-	oldprog.LoadXml(PATHMANAGER::GetUserConfigDir() + "/progress.xml");
+	oldprog.LoadXml(PATHMANAGER::UserConfigDir() + "/progress.xml");
 
 	int chs = champs.champs.size();
 	
@@ -305,7 +305,7 @@ void App::btnStagePrev(WP)
 ///  save progress and update it on gui
 void App::ProgressSave(bool upgGui)
 {
-	progress.SaveXml(PATHMANAGER::GetUserConfigDir() + "/progress.xml");
+	progress.SaveXml(PATHMANAGER::UserConfigDir() + "/progress.xml");
 	if (!upgGui)
 		return;
 	ChampsListUpdate();

@@ -432,7 +432,7 @@ void App::ReadTrkStats()
 #ifndef ROAD_EDITOR  // game
 	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
 
-	TIMER tim;  tim.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+sListTrack+".txt", 0.f, pGame->error_output);
+	TIMER tim;  tim.Load(PATHMANAGER::Records()+"/"+sListTrack+".txt", 0.f, pGame->error_output);
 	tim.AddCar(sListCar);
 
 	UpdGuiRdStats(&rd,sc, sListTrack, tim.GetBestLap(0, pSet->gui.trackreverse));
@@ -452,7 +452,7 @@ void App::ReadTrkStatsChamp(String track, bool reverse)
 	Scene* sc = new Scene();  sc->LoadXml(sSc);  // fails to defaults
 	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
 
-	TIMER tim;  tim.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+track+".txt", 0.f, pGame->error_output);
+	TIMER tim;  tim.Load(PATHMANAGER::Records()+"/"+track+".txt", 0.f, pGame->error_output);
 	tim.AddCar(sListCar);
 
 	UpdGuiRdStats(&rd,sc, track, tim.GetBestLap(0, reverse), true);

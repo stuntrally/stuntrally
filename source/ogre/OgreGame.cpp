@@ -93,8 +93,8 @@ App::App(SETTINGS *settings, GAME *game)
 		for (i=0; i < StTrk;  ++i)  stTrk[c][i] = 0;
 		for (i=0; i < InfTrk; ++i)  infTrk[c][i] = 0;
 	}	
-	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
-	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
+	pathTrk[0] = PATHMANAGER::Tracks() + "/";
+	pathTrk[1] = PATHMANAGER::TracksUser() + "/";
 	resCar = "";  resTrk = "";  resDrv = "";
 	sListCar = "";  sListTrack = "";
 
@@ -267,7 +267,7 @@ String App::GetTimeString(float time) const
 const String& App::GetGhostFile()
 {
 	static String file;
-	file = PATHMANAGER::GetGhostsPath() + "/"
+	file = PATHMANAGER::Ghosts() + "/"
 		+ pSet->game.track + (pSet->game.track_user ? "_u" : "") + (pSet->game.trackreverse ? "_r" : "")
 		+ "_" + pSet->game.car[0] + ".rpl";
 	return file;

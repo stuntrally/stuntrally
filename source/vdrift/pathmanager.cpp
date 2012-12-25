@@ -37,9 +37,9 @@ namespace {
 
 
 //  static vars
-std::string PATHMANAGER::ogre_plugin_dir, PATHMANAGER::home_dir,
-	PATHMANAGER::user_config_dir, PATHMANAGER::game_config_dir,
-	PATHMANAGER::user_data_dir, PATHMANAGER::game_data_dir,
+std::string PATHMANAGER::ogre_plugin, PATHMANAGER::home_dir,
+	PATHMANAGER::user_config, PATHMANAGER::game_config,
+	PATHMANAGER::user_data, PATHMANAGER::game_data,
 	PATHMANAGER::cache_dir;
 
 
@@ -49,17 +49,17 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 
 	// Set Ogre plugins dir
 	{
-		ogre_plugin_dir = "";
+		ogre_plugin = "";
 		char *plugindir = getenv("OGRE_PLUGIN_DIR");
 		if (plugindir) {
-			ogre_plugin_dir = plugindir;
+			ogre_plugin = plugindir;
 		#ifndef _WIN32
 		} else if (fs::exists(fs::path(OGRE_PLUGIN_DIR) / "RenderSystem_GL.so")) {
-			ogre_plugin_dir = OGRE_PLUGIN_DIR;
+			ogre_plugin = OGRE_PLUGIN_DIR;
 		#endif
 		} else {
 			#ifdef _WIN32
-			ogre_plugin_dir = ".";
+			ogre_plugin = ".";
 			#else
 			Paths dirs;
 			#if defined(__amd64__) || defined(__amd64) || defined(__x86_64__) || defined(_M_X64)
@@ -74,10 +74,10 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 			// Loop through the paths and pick the first one that contain a plugin
 			for (Paths::const_iterator p = dirs.begin(); p != dirs.end(); ++p) {
 				if (fs::exists(*p / "OGRE/RenderSystem_GL.so")) {
-					ogre_plugin_dir = (*p / "OGRE").string();
+					ogre_plugin = (*p / "OGRE").string();
 					break;
 				} else if (fs::exists(*p / "ogre/RenderSystem_GL.so")) {
-					ogre_plugin_dir = (*p / "ogre").string();
+					ogre_plugin = (*p / "ogre").string();
 					break;
 				}
 			}
@@ -114,8 +114,8 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 	#ifndef _WIN32 // POSIX
 	{
 		char const* conf = getenv("XDG_CONFIG_HOME");
-		if (conf) user_config_dir = (fs::path(conf) / "stuntrally").string();
-		else user_config_dir = (fs::path(home_dir) / ".config" / "stuntrally").string();
+		if (conf) user_config = (fs::path(conf) / "stuntrally").string();
+		else user_config = (fs::path(home_dir) / ".config" / "stuntrally").string();
 	}
 	#else // Windows
 	{
@@ -132,39 +132,39 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 				if (AppDir[i] == '\\') str += '/';
 				else str += AppDir[i];
 			}
-			user_config_dir = (fs::path(str) / "stuntrally").string();
+			user_config = (fs::path(str) / "stuntrally").string();
 		}
 	}
 	#endif
 	// Create user's config dir
-	CreateDir(user_config_dir, error_output);
+	CreateDir(user_config, error_output);
 
 	// Find user's data dir (for additional data)
 	#ifdef _WIN32
-	user_data_dir = user_config_dir;  // APPDATA/stuntrally
+	user_data = user_config;  // APPDATA/stuntrally
 	#else
 	{
 		fs::path shareDir = SHARED_DATA_DIR;
 		char const* xdg_data_home = getenv("XDG_DATA_HOME");
-		user_data_dir = (xdg_data_home ? xdg_data_home / shortDir : fs::path(home_dir) / ".local" / shareDir).string();
+		user_data = (xdg_data_home ? xdg_data_home / shortDir : fs::path(home_dir) / ".local" / shareDir).string();
 	}
 	#endif
 
 	// Create user's data dir and its children
-	CreateDir(user_data_dir, error_output);
-	CreateDir(GetTrackRecordsPath(), error_output);
-	CreateDir(GetScreenShotDir(), error_output);
-	CreateDir(GetReplayPath(), error_output);
-	CreateDir(GetGhostsPath(), error_output);
-	CreateDir(GetTrackPathUser(), error_output);  // user tracks
+	CreateDir(user_data, error_output);
+	CreateDir(Records(), error_output);
+	CreateDir(Screenshots(), error_output);
+	CreateDir(Replays(), error_output);
+	CreateDir(Ghosts(), error_output);
+	CreateDir(TracksUser(), error_output);  // user tracks
 
-	CreateDir(GetDataPathUser(), error_output);  // user data
+	CreateDir(DataUser(), error_output);  // user data
 
 
 	// Find game data dir and defaults config dir
 	char *datadir = getenv("STUNTRALLY_DATA_ROOT");
 	if (datadir)
-		game_data_dir = std::string(datadir);
+		game_data = std::string(datadir);
 	else
 	{	fs::path shareDir = SHARED_DATA_DIR;
 		Paths dirs;
@@ -193,36 +193,36 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 		// Loop through the paths and pick the first one that contain some data
 		for (Paths::const_iterator p = dirs.begin(); p != dirs.end(); ++p)
 		{	// Data dir
-			if (fs::exists(*p / "hud")) game_data_dir = p->string();
+			if (fs::exists(*p / "hud")) game_data = p->string();
 			// Config dir
 			if (fs::exists(*p / "config"))
-				game_config_dir = (*p / "config").string();
+				game_config = (*p / "config").string();
 			// Check if both are found
-			if (!game_data_dir.empty() && !game_config_dir.empty()) break;
+			if (!game_data.empty() && !game_config.empty()) break;
 		}
 	}
 
 	// Find cache dir
 	#ifdef _WIN32
-	cache_dir = user_config_dir + "/cache";  // APPDATA/stuntrally/cache
+	cache_dir = user_config + "/cache";  // APPDATA/stuntrally/cache
 	#else
 	char const* xdg_cache_home = getenv("XDG_CACHE_HOME");
 	cache_dir = (xdg_cache_home ? xdg_cache_home / shortDir : fs::path(home_dir) / ".cache" / shortDir).string();
 	#endif
 	// Create cache dir
 	CreateDir(cache_dir, error_output);
-	CreateDir(GetShaderCacheDir(), error_output);
+	CreateDir(ShaderCacheDir(), error_output);
 
 	// Print diagnostic info
 	if (log_paths)
 	{
 		std::stringstream out;
-		out << "--- Directories: ---" << ogre_plugin_dir << std::endl;
-		out << "Ogre plugin:  " << ogre_plugin_dir << std::endl;
-		out << "Data:         " << GetDataPath() << std::endl;
+		out << "--- Directories: ---" << ogre_plugin << std::endl;
+		out << "Ogre plugin:  " << ogre_plugin << std::endl;
+		out << "Data:         " << Data() << std::endl;
 		//out << "Default cfg:  " << GetGameConfigDir() << std::endl;
 		//out << "Home:         " << home_dir << std::endl;
-		out << "User cfg,log: " << GetUserConfigDir() << std::endl;
+		out << "User cfg,log: " << UserConfigDir() << std::endl;
 		//out << "User data:    " << GetUserDataDir() << std::endl;
 		//out << "Cache:        " << GetCacheDir() << std::endl;
 		info_output << out.str();
@@ -272,7 +272,8 @@ bool PATHMANAGER::GetFolderIndex(std::string folderpath, std::list <std::string>
 	}
 	else
 		return false;
-#else 	//------End POSIX-specific folder listing code ---- Start WIN32 Specific code
+#else
+//------Folder listing for WIN32
 	HANDLE          hList;
 	TCHAR           szDir[MAX_PATH+1];
 	WIN32_FIND_DATA FileData;
@@ -304,7 +305,8 @@ bool PATHMANAGER::GetFolderIndex(std::string folderpath, std::list <std::string>
 	}
 
 	FindClose(hList);
-#endif //------End WIN32 specific folder listing code
+#endif
+//------End
 	
 	//remove non-matcthing extensions
 	if (!extension.empty())

@@ -253,7 +253,7 @@ bool BaseApp::setup()
 	}
 	
 	// Dynamic plugin loading
-	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset_ed.cfg", PATHMANAGER::GetUserConfigDir() + "/ogre_ed.log");
+	mRoot = OGRE_NEW Root("", PATHMANAGER::UserConfigDir() + "/ogreset_ed.cfg", PATHMANAGER::UserConfigDir() + "/ogre_ed.log");
 
 	#ifdef _DEBUG
 		#define D_SUFFIX "_d"
@@ -264,24 +264,24 @@ bool BaseApp::setup()
 	// when show ogre dialog is on, load both rendersystems so user can select
 	if (pSet->ogre_dialog)
 	{
-		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
+		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
-		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
+		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
+		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
 		#endif
 	}
 	else
 	{
 		if (pSet->rendersystem == "OpenGL Rendering Subsystem")
-			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
+			mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		else if (pSet->rendersystem == "Direct3D9 Rendering Subsystem")
-			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
+			mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
 		else if (pSet->rendersystem == "Direct3D11 Rendering Subsystem")
-			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
+			mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
 	}
 
-	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
-	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_CgProgramManager" + D_SUFFIX);
+	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
+	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Plugin_CgProgramManager" + D_SUFFIX);
 
 	setupResources();
 
@@ -303,7 +303,7 @@ bool BaseApp::setup()
 	mPlatform = new MyGUI::OgrePlatform();
 	#endif
 
-	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetUserConfigDir() + "/MyGUI.log");
+	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::UserConfigDir() + "/MyGUI.log");
 	mGUI = new MyGUI::Gui();
 	mGUI->initialise("core.xml");
 	
@@ -316,7 +316,7 @@ bool BaseApp::setup()
 		setlocale(LC_NUMERIC, "C");  }  //needed?		
 	
 	// valid?
-	if (!boost::filesystem::exists(PATHMANAGER::GetDataPath() + "/gui/core_language_" + pSet->language + "_tag.xml"))
+	if (!boost::filesystem::exists(PATHMANAGER::Data() + "/gui/core_language_" + pSet->language + "_tag.xml"))
 		pSet->language = "en";
 		
 	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
@@ -338,7 +338,7 @@ void BaseApp::setupResources()
 {
 	// Load resource paths from config file
 	ConfigFile cf;
-	cf.load(PATHMANAGER::GetGameConfigDir() + "/resources_ed.cfg");
+	cf.load(PATHMANAGER::GameConfigDir() + "/resources_ed.cfg");
 
 	// Go through all sections & settings in the file
 	ConfigFile::SectionIterator seci = cf.getSectionIterator();
@@ -354,7 +354,7 @@ void BaseApp::setupResources()
 			typeName = i->first;
 			archName = i->second;
 			ResourceGroupManager::getSingleton().addResourceLocation(
-				PATHMANAGER::GetDataPath() + "/" + archName, typeName, secName);
+				PATHMANAGER::Data() + "/" + archName, typeName, secName);
 		}
 	}
 }

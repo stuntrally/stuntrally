@@ -63,7 +63,7 @@ bool CAR::Load(class App* pApp1,
 	cartype = carname;
 	bRemoteCar = isRemote;  id = idCar;
 	std::stringstream nullout;
-	std::string carpath = PATHMANAGER::GetCarPath()+"/"+carname+"/";  // orig dir for .joe
+	std::string carpath = PATHMANAGER::Cars()+"/"+carname+"/";  // orig dir for .joe
 
 	//load car body graphics
 	if (!LoadInto( carpath+"body.joe", bodymodel, error_output))

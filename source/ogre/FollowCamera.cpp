@@ -554,7 +554,7 @@ bool FollowCamera::loadCameras()
 	Destroy();
 
 	TiXmlDocument file;
-	if (file.LoadFile((PATHMANAGER::GetCarPath() + "/cameras.xml").c_str()))
+	if (file.LoadFile((PATHMANAGER::Cars() + "/cameras.xml").c_str()))
 	{
 		TiXmlElement* root = file.RootElement();
 		if (!root) {  /*mErrorDialog->show(String("Error loading Cameras !!"), false );  return false;*/  }

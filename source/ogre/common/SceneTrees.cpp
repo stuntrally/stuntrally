@@ -86,8 +86,8 @@ void App::CreateTrees()
 		#endif
 		
 		// create dir if not exist
-		boost::filesystem::create_directory(PATHMANAGER::GetCacheDir() + "/" + toStr(sc->sceneryId));
-		grass->setTempDir(PATHMANAGER::GetCacheDir() + "/" + toStr(sc->sceneryId) + "/");
+		boost::filesystem::create_directory(PATHMANAGER::CacheDir() + "/" + toStr(sc->sceneryId));
+		grass->setTempDir(PATHMANAGER::CacheDir() + "/" + toStr(sc->sceneryId) + "/");
 		
 		grass->addDetailLevel<GrassPage>(sc->grDist * pSet->grass_dist);
 
@@ -136,8 +136,8 @@ void App::CreateTrees()
 		#endif
 		
 		// create dir if not exist
-		boost::filesystem::create_directory(PATHMANAGER::GetCacheDir() + "/" + toStr(sc->sceneryId));
-		trees->setTempDir(PATHMANAGER::GetCacheDir() + "/" + toStr(sc->sceneryId) + "/");
+		boost::filesystem::create_directory(PATHMANAGER::CacheDir() + "/" + toStr(sc->sceneryId));
+		trees->setTempDir(PATHMANAGER::CacheDir() + "/" + toStr(sc->sceneryId) + "/");
 
 		if (!pSet->imposters_only)
 		{

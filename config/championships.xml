@@ -523,5 +523,8 @@
 		<track name="T2-RedOakPark"	time="53.0"/>
 		<track name="T3-Orange"		time="55.0"/>
 
+		<track name="O1-Moss"		time="41.0"/>
+		<track name="O3-Moss3"		time="63.0"/>
+
 	</times>
 </championships>

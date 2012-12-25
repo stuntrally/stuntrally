@@ -12,7 +12,7 @@
 //  load settings from default file
 void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 {
-	settings->Load(PATHMANAGER::GetGameConfigDir() + "/editor-default.cfg");
+	settings->Load(PATHMANAGER::GameConfigDir() + "/editor-default.cfg");
 	settings->Save(setFile);
 }
 
@@ -35,7 +35,7 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 	///  Load Settings
 	//----------------------------------------------------------------
 	SETTINGS* settings = new SETTINGS();
-	std::string setFile = PATHMANAGER::GetEditorSetFile();
+	std::string setFile = PATHMANAGER::EditorSetFile();
 
 	if (!PATHMANAGER::FileExists(setFile))
 	{
@@ -46,7 +46,7 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 	if (settings->version != SET_VER)  // loaded older, use default
 	{
 		std::cout << "Settings found, but older version - loading defaults." << std::endl;
-		boost::filesystem::rename(setFile, PATHMANAGER::GetUserConfigDir() + "/editor_old.cfg");
+		boost::filesystem::rename(setFile, PATHMANAGER::UserConfigDir() + "/editor_old.cfg");
 		LoadDefaultSet(settings,setFile);
 		settings->Load(setFile);  // LOAD
 	}

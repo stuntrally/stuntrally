@@ -286,7 +286,7 @@ bool App::KeyPress(const CmdKey &arg)
 			}	break;
 
 			case KC_SYSRQ:  // screenshot
-				mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", ".jpg");
+				mWindow->writeContentsToTimestampedFile(PATHMANAGER::Screenshots() + "/", ".jpg");
 				return true;
 		}
 		return true;  //!
@@ -349,7 +349,7 @@ bool App::KeyPress(const CmdKey &arg)
 			toggleGui(true);  return true;
 
 		case KC_SYSRQ:  //  screenshot
-			mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", ".jpg");
+			mWindow->writeContentsToTimestampedFile(PATHMANAGER::Screenshots() + "/", ".jpg");
 			return true;
 
 		//  save, reload, update

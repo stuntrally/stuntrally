@@ -306,7 +306,7 @@ void App::listCarChng(List* li, size_t pos)
 	//  car desc load
 	if (carDesc)
 	{
-		string path = PATHMANAGER::GetCarPath()+"/"+sListCar+"/description.txt";
+		string path = PATHMANAGER::Cars()+"/"+sListCar+"/description.txt";
 		ifstream fi(path.c_str());
 		string sdesc = "", s;
 		while (getline(fi, s))
@@ -329,7 +329,7 @@ void App::UpdCarStatsTxt()
 	std::string path;
 	//GetCarPath(&path, 0, 0, sListCar, true);
 	//path = path.substr(0, path.length()-4) + "_stats.txt";
-	path = PATHMANAGER::GetCarSimPath() + "/" + pSet->gui.sim_mode + "/cars/" + sListCar + "_stats.txt";
+	path = PATHMANAGER::CarSim() + "/" + pSet->gui.sim_mode + "/cars/" + sListCar + "_stats.txt";
 
 	string txt(""), vals(""), s;
 	ifstream fi(path.c_str());
@@ -636,7 +636,7 @@ void App::toggleGui(bool toggle)
 		first = false;
 		EditBox* edit = mGUI->findWidget<EditBox>("Readme");
 		if (edit)
-		{	std::string path = PATHMANAGER::GetDataPath()+"/../Readme.txt";
+		{	std::string path = PATHMANAGER::Data()+"/../Readme.txt";
 			std::ifstream fi(path.c_str());
 			String text = "", s;
 			while (getline(fi,s))

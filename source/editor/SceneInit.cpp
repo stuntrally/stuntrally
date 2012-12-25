@@ -39,11 +39,11 @@ void App::createScene()  // once, init
 	QTimer ti;  ti.update();  /// time
 
 	//  tracks.xml
-	tracksXml.LoadXml(PATHMANAGER::GetGameConfigDir() + "/tracks.xml");
-	//tracksXml.SaveXml(PATHMANAGER::GetGameConfigDir() + "/tracks2.xml");
+	tracksXml.LoadXml(PATHMANAGER::GameConfigDir() + "/tracks.xml");
+	//tracksXml.SaveXml(PATHMANAGER::GameConfigDir() + "/tracks2.xml");
 
 	//  fluids.xml
-	fluidsXml.LoadXml(PATHMANAGER::GetDataPath() + "/materials/fluids.xml");
+	fluidsXml.LoadXml(PATHMANAGER::Data() + "/materials/fluids.xml");
 	sc->pFluidsXml = &fluidsXml;
 	LogO(String("**** Loaded fluids.xml: ") + toStr(fluidsXml.fls.size()));
 
@@ -421,7 +421,7 @@ void App::TerCircleUpd()
 bool App::LoadTrackVdr(const std::string & trackname)
 {
 	if (!track->DeferredLoad(
-		(pSet->gui.track_user ? PATHMANAGER::GetTrackPathUser() : PATHMANAGER::GetTrackPath()) + "/" + trackname,
+		(pSet->gui.track_user ? PATHMANAGER::TracksUser() : PATHMANAGER::Tracks()) + "/" + trackname,
 		false/*trackreverse*/,
 		/**/0, "large", true, false))
 	{

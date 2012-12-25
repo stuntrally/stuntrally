@@ -148,9 +148,9 @@ void CarModel::Create(int car)
 	//  Resource locations -----------------------------------------
 	/// Add a resource group for this car
 	ResourceGroupManager::getSingleton().createResourceGroup("Car" + strI);
-	resCar = PATHMANAGER::GetCarPath() + "/" + sDirname + "/textures";
-	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::GetCarPath() + "/" + sDirname, "FileSystem", "Car" + strI);
-	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::GetCarPath() + "/" + sDirname + "/textures", "FileSystem", "Car" + strI);
+	resCar = PATHMANAGER::Cars() + "/" + sDirname + "/textures";
+	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::Cars() + "/" + sDirname, "FileSystem", "Car" + strI);
+	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::Cars() + "/" + sDirname + "/textures", "FileSystem", "Car" + strI);
 	
 	String sCar = resCar + "/" + sDirname;
 	
@@ -193,7 +193,7 @@ void CarModel::Create(int car)
 	//  body  ----------------------
 
 	sCar = resCar + "/" + sDirname;
-	String sCar2 = PATHMANAGER::GetCarPath() + "/" + sDirname + "/" + sDirname;
+	String sCar2 = PATHMANAGER::Cars() + "/" + sDirname + "/" + sDirname;
 	if (FileExists(sCar2 + "_body.mesh"))
 	{
 		Entity* eCar = mSceneMgr->createEntity("Car"+ strI, sDirname + "_" + "body.mesh", "Car" + strI);

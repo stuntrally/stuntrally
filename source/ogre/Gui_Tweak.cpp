@@ -95,7 +95,7 @@ void App::TweakTireSave()
 	//#define f2s(f)  fToStr(f, 4,6);
 	
 	string file = cmbTweakTireSet->getCaption();
-	string pathUserT = PATHMANAGER::GetDataPathUser() + "/carsim/" + pSet->game.sim_mode + "/tires/";
+	string pathUserT = PATHMANAGER::DataUser() + "/carsim/" + pSet->game.sim_mode + "/tires/";
 	PATHMANAGER::CreateDir(pathUserT, pGame->error_output);
 	file = pathUserT+"/"+file+".tire";
 	if (PATHMANAGER::FileExists(file))
@@ -198,8 +198,8 @@ bool App::GetCarPath(std::string* pathCar,
 	std::string carname, /*std::string tweakSetup,*/ bool forceOrig)
 {
 	std::string file = carname + ".car",
-		pathOrig  = PATHMANAGER::GetCarSimPath()          + "/" + pSet->game.sim_mode + "/cars/" + file,
-		pathUserD = PATHMANAGER::GetDataPathUser() + "/carsim/" + pSet->game.sim_mode + "/cars/",
+		pathOrig  = PATHMANAGER::CarSim()          + "/" + pSet->game.sim_mode + "/cars/" + file,
+		pathUserD = PATHMANAGER::DataUser() + "/carsim/" + pSet->game.sim_mode + "/cars/",
 		pathUser  = pathUserD + file;                          // (tweakSetup != "" ? tweakSetup+"/" : "")
 
 	if (pathSave)  *pathSave = pathUser;
