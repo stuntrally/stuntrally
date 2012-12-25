@@ -45,7 +45,7 @@ start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
 friction = 230
-torque-val-mul = 0.8
+torque-val-mul = 0.83
 torque-curve-00 = 1000, 305
 torque-curve-01 = 1500, 375
 torque-curve-02 = 2100, 425
@@ -81,7 +81,7 @@ gear-ratio-6 = 0.756
 shift-delay = 0.06
 
 [ differential ]
-final-drive = 4.30
+final-drive = 4.40
 anti-slip = 400.0
 
 [ fuel-tank ]
@@ -229,17 +229,17 @@ hinge = 0.25, -1.94, 0.0
 # (for car total mass and inertia) also use engine mass and position
 #---------------------------
 [ particle-00 ]  # rear
-mass = 235
+mass = 245
 position =  1.0, -1.7, -0.06
 
 [ particle-01 ]
-mass = 235
+mass = 245
 position = -1.0, -1.7, -0.06
 
 [ particle-02 ]  # front
-mass = 235
+mass = 245
 position =  1.0,  1.7, -0.06
 
 [ particle-03 ]
-mass = 235
+mass = 245
 position = -1.0,  1.7, -0.06

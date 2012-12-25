@@ -45,7 +45,7 @@ start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
 friction = 230
-torque-val-mul = 0.7
+torque-val-mul = 0.75
 torque-curve-00 = 1000, 355
 torque-curve-01 = 1500, 410
 torque-curve-02 = 2000, 450
@@ -76,7 +76,7 @@ gear-ratio-5 = 0.731
 shift-delay = 0.14
 
 [ differential ]
-final-drive = 4.2
+final-drive = 4.4
 anti-slip = 600.0
 
 [ fuel-tank ]

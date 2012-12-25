@@ -222,17 +222,17 @@ hinge = 0.25, -1.94, 0.0
 # (for car total mass and inertia) also use engine mass and position
 #---------------------------
 [ particle-00 ]  # rear
-mass = 230
+mass = 250
 position =  1.0, -1.9, -0.03
 
 [ particle-01 ]
-mass = 230
+mass = 250
 position = -1.0, -1.9, -0.03
 
 [ particle-02 ]  # front
-mass = 230
+mass = 250
 position =  1.0,  1.9, -0.03
 
 [ particle-03 ]
-mass = 230
+mass = 250
 position = -1.0,  1.9, -0.03
