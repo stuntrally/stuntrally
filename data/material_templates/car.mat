@@ -84,6 +84,8 @@ material car_body_FM
 material car_interior_FM
 {
 	parent car_interior
+	ambient 0.4 0.4 0.4
+	diffuse 0.3 0.3 0.3
 	normalMap FM_interior_normal.png
 	normal_map true
 	cull_hardware none
@@ -147,38 +149,20 @@ material cartire_rear_ES
 
 
 
-// RS
+// NS
 
-material chasis/Material#1
+material car_interior_NS
 {
-	parent base
-	envMap ReflectionCube
-	env_map true
-	diffuse 1.0 1.0 1.0
-	ambient 1.0 1.0 1.0
-	specular 0.7 0.7 0.7 32
-	fresnelScaleBiasPower 0.73 0.07 4
-	diffuseMap chasis.png
-	terrain_light_map true
-	terrain_light_map_toggleable true
+	parent car_interior
+	ambient 0.3 0.3 0.3
+	diffuse 0.6 0.6 0.6
 }
 
-
-material chasis/Material#2
+material car_interior_TC6
 {
-	parent car_glass
-	diffuseMap ventanas.png
-}
-
-material chasis/Material_#3
-{
-	parent base
-	ambient 0.6 0.6 0.6
-	diffuse 0.5 0.5 0.5
-	specular 0.2 0.2 0.2 24
-	diffuseMap chasis_a.jpg
-	terrain_light_map true
-	terrain_light_map_toggleable true
+	parent car_interior
+	ambient 0.5 0.5 0.5
+	diffuse 0.8 0.8 0.8
 }
 
 

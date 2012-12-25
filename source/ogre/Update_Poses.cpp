@@ -154,7 +154,7 @@ void App::newPoses(float time)  // time only for camera update
 		if (pCar->bRewind)  // do rewind (go back)
 		{
 			double& gtime = pGame->timer.GetRewindTime(c);
-			gtime = std::max(0.0, gtime - time * 4.f);  //par speed
+			gtime = std::max(0.0, gtime - time * 5.f);  //par speed
 
 			RewindFrame rf;
 			bool ok = rewind.GetFrame(gtime, &rf, c);

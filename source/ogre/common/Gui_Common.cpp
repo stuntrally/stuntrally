@@ -121,8 +121,9 @@ void App::btnTrGrReset(WP wp)
 	Slider* sl;  float v;
 	#define setSld(name)  sl##name(0,v);  \
 		sl = (Slider*)mWndOpts->findWidget(#name);  if (sl)  sl->setValue(v);
-	v = powf(1.f /4.f, 0.5f);
+	v = powf(1.5f /4.f, 0.5f);
 	setSld(Trees);
+	v = powf(1.f /4.f, 0.5f);
 	setSld(Grass);
 	v = powf((1.f-0.5f) /6.5f, 0.5f);
 	setSld(TreesDist);

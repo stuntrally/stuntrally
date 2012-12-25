@@ -9,8 +9,10 @@ material TireTrail
     depth_bias 3
     cull_hardware none
     vertex_colour true
-    diffuseMap white.png
-    diffuse_address_mode clamp
+    diffuseMap trail.png
+    //alpha_map true
+    //alphaMap trail.png
+    //diffuse_address_mode mirror  // 2d texture not supported
 }
 
 
