@@ -347,10 +347,6 @@ public:
 	int GetCurrentLap(unsigned int index) {assert(index<car.size());return car[index].GetCurrentLap();}
 
 
-	///return the place (first element) out of total (second element)  _not used_
-	std::pair <int, int> GetCarPlace(int index);
-	std::pair <int, int> GetPlayerPlace(const int carId) {	return GetCarPlace(carId);	}
-	
 	float GetDriftScore(unsigned int index) const
 	{
 		assert(index<car.size());

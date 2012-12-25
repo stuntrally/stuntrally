@@ -202,7 +202,7 @@ void App::updateBrushPrv(bool first)
 //--------------------------------------------------------------------------------------------------------------------------
 void App::updBrush()
 {
-	if (mBrSize[curBr] < 1)  mBrSize[curBr] = 1;
+	if (mBrSize[curBr] < 2)  mBrSize[curBr] = 2;
 	if (mBrSize[curBr] > BrushMaxSize)  mBrSize[curBr] = BrushMaxSize;
 	if (mBrFq[curBr] < 0.1)  mBrFq[curBr] = 0.1;
 	if (mBrPow[curBr] < 0.02)  mBrPow[curBr] = 0.02;

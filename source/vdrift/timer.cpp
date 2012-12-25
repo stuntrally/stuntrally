@@ -2,13 +2,6 @@
 #include "timer.h"
 #include "unittest.h"
 
-//#include <string>
-//#include <sstream>
-
-using std::string;
-using std::endl;
-using std::vector;
-using std::stringstream;
 
 bool TIMER::Load(const std::string & trackrecordspath, float stagingtime, std::ostream & error_output)
 {
@@ -71,14 +64,14 @@ bool TIMER::Lap(const int carId, const int prevsector, const int nextsector, con
 	{
 		std::stringstream secstr;
 		secstr << "sector " << nextsector;
-		string lastcar;
+		std::string lastcar;
 		/*if (trackrecords.GetParam("last.car", lastcar))
 		{
 			if (lastcar != car[carId].GetCarType()) //clear last lap time
 			trackrecords.SetParam("last.sector 0", (float)0.0);
 		}*/
-		trackrecords.SetParam(string(bTrackReverse ? "rev_" : "") + "last." + secstr.str(), (float) car[carId].GetTime());
-		trackrecords.SetParam(string(bTrackReverse ? "rev_" : "") + "last.car", car[carId].GetCarType());
+		trackrecords.SetParam(std::string(bTrackReverse ? "rev_" : "") + "last." + secstr.str(), (float) car[carId].GetTime());
+		trackrecords.SetParam(std::string(bTrackReverse ? "rev_" : "") + "last.car", car[carId].GetCarType());
 
 		float prevbest = 0;
 		bool haveprevbest = trackrecords.GetParam(
@@ -100,59 +93,9 @@ bool TIMER::Lap(const int carId, const int prevsector, const int nextsector, con
 	return newbest;
 }
 
+
 bool TIMER::LapNetworkTime(const int carId, const double curtime)
 {
 	car[carId].LapWithTime(true, curtime);
 	return false;
-}
-
-
-class PLACE
-{
-    private:
-        int index;
-        int laps;
-        double distance;
-
-    public:
-        PLACE(int newindex, int newlaps, double newdistance) : index(newindex), laps(newlaps), distance(newdistance) {}
-
-        int GetIndex() const {return index;}
-
-        bool operator< (const PLACE & other) const
-        {
-            if (laps == other.laps)
-                return distance > other.distance;
-            else
-                return laps > other.laps;
-        }
-};
-
-std::pair <int, int> TIMER::GetCarPlace(int index)
-{
-    assert(index<(int)car.size());
-    assert(index >= 0);
-
-    int place = 1;
-    int total = car.size();
-
-    std::list <PLACE> distances;
-
-    for (int i = 0; i < (int)car.size(); i++)
-    {
-        distances.push_back(PLACE(i, car[i].GetCurrentLap(), car[i].GetLapDistance()));
-    }
-
-    distances.sort();
-
-    int curplace = 1;
-    for (std::list <PLACE>::iterator i = distances.begin(); i != distances.end(); ++i)
-    {
-        if (i->GetIndex() == index)
-            place = curplace;
-
-        curplace++;
-    }
-
-    return std::make_pair(place, total);
 }
