@@ -17,13 +17,14 @@ yaw2  = 2.5
 [ collision ]
 radius = 0.32
 width = 0.67
-height = 0.37
+height = 0.39
 posLrear = -2.07
 posLfront = 1.98
 offsetL = 0.24
 offsetW = -0.01
-offsetH = 0.30
+offsetH = 0.29
 start-offsetY = 0.46
+fluidTrigH = 0.07
 friction = 0.4
 
 

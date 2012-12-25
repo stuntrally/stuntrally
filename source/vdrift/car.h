@@ -72,10 +72,10 @@ public:
 		return dynamics.GetEngine().GetRedline();
 	}
 
-	int GetEngineRPMLimit() const
-	{
-		return dynamics.GetEngine().GetRPMLimit();
-	}
+	//int GetEngineRPMLimit() const
+	//{
+	//	return dynamics.GetEngine().GetRPMLimit();
+	//}
 
 
 	int GetGear() const

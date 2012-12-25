@@ -28,8 +28,9 @@ posLrear = -2.16
 posLfront = 2.1
 offsetL = -0.12
 offsetW = -0.05
-offsetH = 0.81
+offsetH = 0.61
 start-offsetY = 0.16
+fluidTrigH = 0.35
 friction = 0.4
 
 
@@ -40,24 +41,24 @@ position = 0.0, 1.04, 0.44
 mass = 150.0 
 peak-engine-rpm = 6800.0 
 rpm-limit = 8000.0 
-inertia = 0.4
+inertia = 0.40
 start-rpm = 1000 
 stall-rpm = 350 
 fuel-consumption = 1e-9 
-friction = 230
-torque-val-mul = 1.1
-torque-curve-00 = 1000, 365
-torque-curve-01 = 1500, 411
-torque-curve-02 = 2000, 428
-torque-curve-03 = 2500, 453
-torque-curve-04 = 3000, 472
+friction = 430
+torque-val-mul = 0.67
+torque-curve-00 = 1000, 191
+torque-curve-01 = 1500, 262
+torque-curve-02 = 2000, 334
+torque-curve-03 = 2500, 398
+torque-curve-04 = 3000, 456
 torque-curve-05 = 3500, 493
 torque-curve-06 = 4000, 504
-torque-curve-07 = 4500, 495
-torque-curve-08 = 5000, 479
-torque-curve-09 = 5500, 433
-torque-curve-10 = 6000, 398
-torque-curve-11 = 6500, 371
+torque-curve-07 = 4500, 498
+torque-curve-08 = 5000, 473
+torque-curve-09 = 5500, 446
+torque-curve-10 = 6000, 411
+torque-curve-11 = 6500, 386
 torque-curve-12 = 7000, 350
 
 
@@ -123,17 +124,17 @@ tread = 0.0
 #---------------------------
 [ brakes-front ] 
 friction = 0.90 
-max-pressure = 3.4e6 
+max-pressure = 3.0e6 
 bias = 0.60
-radius = 0.20 
-area = 0.019 
+radius = 0.15
+area = 0.014
 
 [ brakes-rear ] 
-friction = 0.83 
+friction = 0.90
 max-pressure = 3.0e6 
 bias = 0.40
-radius = 0.16 
-area = 0.015 
+radius = 0.15
+area = 0.014
 handbrake = 4.8
 
 
@@ -148,8 +149,8 @@ hood-mounted-view-position = -0.5, 0, 0.60
 #---------------------------
 [ drag ] 
 position = 0.0, 0.0, 0.2 
-frontal-area = 2.37 
-drag-coefficient = 0.52 
+frontal-area = 2
+drag-coefficient = 0.22 
 
 [ wing-front ] 
 position = 0.0, 1.9, 0.60
@@ -157,7 +158,7 @@ frontal-area = 0.1
 drag-coefficient = 0.0
 surface-area = 0.60
 lift-coefficient = -4.0
-efficiency = 0.92
+efficiency = 0.95
 
 [ wing-rear ] 
 position = 0.0, -1.5, 0.30
@@ -165,7 +166,7 @@ frontal-area = 0.05
 drag-coefficient = 0.0
 surface-area = 0.5
 lift-coefficient = -4.0
-efficiency = 0.92
+efficiency = 0.95
 
 
 # wheels front (position and suspension mount)
@@ -173,7 +174,7 @@ efficiency = 0.92
 [ wheel-FR ] 
 position = 0.72, 1.37, -0.50 
 roll-height = 0.88
-mass = 20 
+mass = 16 
 restitution = 0.1 
 
 [ suspension-FR ] 
@@ -183,7 +184,7 @@ hinge = 0,0,0
 [ wheel-FL ] 
 position = -0.72, 1.37, -0.50 
 roll-height = 0.88
-mass = 20
+mass = 16
 restitution = 0.1 
 
 [ suspension-FL ] 
@@ -196,7 +197,7 @@ hinge = 0,0,0
 [ wheel-RR ] 
 position = 0.72, -1.37, -0.49 
 roll-height = 0.88
-mass = 22 
+mass = 17
 restitution = 0.1 
 
 [ suspension-RR ] 
@@ -206,7 +207,7 @@ hinge = 0.0, -0.6, 0.0
 [ wheel-RL ] 
 position = -0.72, -1.37, -0.49
 roll-height = 0.88
-mass = 22 
+mass = 17
 restitution = 0.1 
 
 [ suspension-RL ] 

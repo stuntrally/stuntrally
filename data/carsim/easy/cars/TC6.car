@@ -23,13 +23,14 @@ exhaust-mirror-second = 0
 [ collision ]
 radius = 0.304
 width = 0.556
-height = 0.45
+height = 0.44
 posLrear = -1.92
 posLfront = 2.0
 offsetL = -0.22
 offsetW = 0.03
-offsetH = 0.65
+offsetH = 0.63
 start-offsetY = 0.1
+fluidTrigH = 0.45
 friction = 0.4
 
 
@@ -44,21 +45,21 @@ inertia = 0.40
 start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
-friction = 230
-torque-val-mul = 0.90
-torque-curve-00 = 1000, 425
-torque-curve-01 = 1500, 455
-torque-curve-02 = 2000, 488
+friction = 430
+torque-val-mul = 0.6
+torque-curve-00 = 1000, 355
+torque-curve-01 = 1500, 425
+torque-curve-02 = 2000, 468
 torque-curve-03 = 2500, 512
-torque-curve-04 = 3000, 566
+torque-curve-04 = 3000, 560
 torque-curve-05 = 3500, 623
 torque-curve-06 = 4000, 644
 torque-curve-07 = 4500, 625
 torque-curve-08 = 5000, 579
-torque-curve-09 = 5500, 533
-torque-curve-10 = 6000, 498
-torque-curve-11 = 6500, 471
-torque-curve-12 = 7000, 450
+torque-curve-09 = 5500, 530
+torque-curve-10 = 6000, 493
+torque-curve-11 = 6500, 461
+torque-curve-12 = 7000, 440
 
 [ clutch ]
 max-torque-mul = 1.1
@@ -122,17 +123,17 @@ tread = 0.0
 #---------------------------
 [ brakes-front ]
 friction = 0.83
-max-pressure = 3.1e6
+max-pressure = 2.5e6
 bias = 0.60
-radius = 0.19
-area = 0.015
+radius = 0.18
+area = 0.014
 
 [ brakes-rear ]
 friction = 0.83
-max-pressure = 3.1e6
+max-pressure = 2.5e6
 bias = 0.40
-radius = 0.19
-area = 0.015
+radius = 0.18
+area = 0.014
 handbrake = 4.6
 
 

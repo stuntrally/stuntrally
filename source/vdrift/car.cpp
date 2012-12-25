@@ -2,7 +2,6 @@
 #include "car.h"
 #include "cardefs.h"
 #include "configfile.h"
-#include "coordinatesystems.h"
 #include "collision_world.h"
 #include "tracksurface.h"
 #include "configfile.h"
@@ -125,19 +124,20 @@ bool CAR::Load(class App* pApp1,
 	dynamics.coll_R = 0.3f;  dynamics.coll_H = 0.45f;  dynamics.coll_W = 0.5f;
 	dynamics.coll_Lofs = 0.f;  dynamics.coll_Wofs = 0.f;  dynamics.coll_Hofs = 0.f;
 	dynamics.coll_posLfront = 1.9f;  dynamics.coll_posLback = -1.9f;
-	dynamics.coll_friction = 0.4f;
+	dynamics.coll_friction = 0.4f;   dynamics.coll_flTrig_H = 0.f;
 
 	carconf.GetParam("collision.radius", dynamics.coll_R);
-	carconf.GetParam("collision.width", dynamics.coll_W);
+	carconf.GetParam("collision.width",  dynamics.coll_W);
 	carconf.GetParam("collision.height", dynamics.coll_H);
 
 	carconf.GetParam("collision.offsetL", dynamics.coll_Lofs);
 	carconf.GetParam("collision.offsetW", dynamics.coll_Wofs);
 	carconf.GetParam("collision.offsetH", dynamics.coll_Hofs);
 
-	carconf.GetParam("collision.posLrear", dynamics.coll_posLback);
+	carconf.GetParam("collision.posLrear",  dynamics.coll_posLback);
 	carconf.GetParam("collision.posLfront", dynamics.coll_posLfront);
-	carconf.GetParam("collision.friction", dynamics.coll_friction);
+	carconf.GetParam("collision.friction",  dynamics.coll_friction);
+	carconf.GetParam("collision.fluidTrigH",dynamics.coll_flTrig_H);
 	
 
 	// load cardynamics
@@ -165,14 +165,10 @@ bool CAR::Load(class App* pApp1,
 	{
 		float pos[3];
 		if (!carconf.GetParam("driver.view-position", pos, error_output))  return false;
-		if (version == 2) COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(pos[0], pos[1], pos[2]);
-		
-		driver_view_position.Set(pos[0], pos[1], pos[2]);
+		driver_view_position.Set(pos[1], -pos[0], pos[2]);
 		
 		if (!carconf.GetParam("driver.hood-mounted-view-position", pos, error_output))  return false;
-		if (version == 2) COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(pos[0], pos[1], pos[2]);
-		
-		hood_view_position.Set(pos[0], pos[1], pos[2]);
+		hood_view_position.Set(pos[1], -pos[0], pos[2]);
 	}
 
 	//load sounds

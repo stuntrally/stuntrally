@@ -31,8 +31,9 @@ posLrear = -1.89
 posLfront = 1.85
 offsetL = -0.12
 offsetW = -0.02
-offsetH = 0.72
+offsetH = 0.62
 start-offsetY = 0.20
+fluidTrigH = 0.3
 friction = 0.4
 
 
@@ -43,27 +44,26 @@ position = 0.0, 0.9, 0.4
 mass = 180.0
 peak-engine-rpm = 6500
 rpm-limit = 7000.0
-inertia = 0.25
+inertia = 0.40
 start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
-friction = 230
-torque-val-mul = 1.0
-torque-curve-00 = 1000, 465
-torque-curve-01 = 1500, 485
-torque-curve-02 = 2000, 501
-torque-curve-03 = 2500, 532
-torque-curve-04 = 3000, 566
-torque-curve-05 = 3300, 579
-torque-curve-06 = 3500, 593
-torque-curve-07 = 3900, 601
-torque-curve-08 = 4200, 608
-torque-curve-09 = 4600, 595
-torque-curve-10 = 4900, 579
-torque-curve-11 = 5500, 533
-torque-curve-12 = 6000, 498
-torque-curve-13 = 6400, 471
-torque-curve-14 = 7000, 450
+friction = 430
+torque-val-mul = 0.6
+torque-curve-00 = 1000, 265
+torque-curve-01 = 1500, 315
+torque-curve-02 = 2000, 361
+torque-curve-03 = 2500, 432
+torque-curve-04 = 3000, 486
+torque-curve-05 = 3500, 543
+torque-curve-06 = 3900, 571
+torque-curve-07 = 4200, 578
+torque-curve-08 = 4600, 565
+torque-curve-09 = 4900, 549
+torque-curve-10 = 5500, 503
+torque-curve-11 = 6000, 468
+torque-curve-12 = 6500, 431
+torque-curve-13 = 7000, 380
 
 [ clutch ]
 max-torque-mul = 1.1
@@ -128,14 +128,14 @@ tread = 0.0
 #---------------------------
 [ brakes-front ]
 friction = 0.9
-max-pressure = 4.0e6
+max-pressure = 3.0e6
 bias = 0.60
 radius = 0.13
 area = 0.013
 
 [ brakes-rear ]
 friction = 0.9
-max-pressure = 4.0e6
+max-pressure = 3.0e6
 bias = 0.40
 radius = 0.13
 area = 0.013

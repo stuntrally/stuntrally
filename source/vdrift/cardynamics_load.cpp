@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "cardynamics.h"
-#include "coordinatesystems.h"
 #include "collision_world.h"
 #include "game.h"  // tire params map
 #include "tobullet.h"
@@ -62,6 +61,12 @@ CARDYNAMICS::~CARDYNAMICS()
 	delete poly;
 }
 
+static void ConvertV2to1(float & x, float & y, float & z)
+{
+	float tx = x, ty = y, tz = z;
+	x = ty;  y = -tx;  z = tz;
+}
+
 
 //----------------------------------------------------------------------------------------------------------------------------------
 ///  Load  (.car file)
@@ -90,8 +95,8 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		if (!c.GetParam("engine.peak-engine-rpm", engine_redline, error_output))  return false; //used only for the redline graphics
 		engine.SetRedline(engine_redline);
 
-		if (!c.GetParam("engine.rpm-limit", engine_rpm_limit, error_output))  return false;
-		engine.SetRPMLimit(engine_rpm_limit);
+		//if (!c.GetParam("engine.rpm-limit", engine_rpm_limit, error_output))  return false;
+		//engine.SetRPMLimit(engine_rpm_limit);
 
 		if (!c.GetParam("engine.inertia", engine_inertia, error_output))  return false;
 		engine.SetInertia(engine_inertia);
@@ -110,10 +115,8 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 
 		if (!c.GetParam("engine.mass", engine_mass, error_output))  return false;
 		if (!c.GetParam("engine.position", temp_vec3, error_output))  return false;
-		if (version == 2)
-		{
-			COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(temp_vec3[0],temp_vec3[1],temp_vec3[2]);
-		}
+		if (version == 2)  ConvertV2to1(temp_vec3[0],temp_vec3[1],temp_vec3[2]);
+
 		engine_position.Set(temp_vec3[0],temp_vec3[1],temp_vec3[2]);
 		engine.SetMass(engine_mass);
 		engine.SetPosition(engine_position);
@@ -275,8 +278,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		fuel_tank.SetDensity(fuel_density);
 
 		if (!c.GetParam("fuel-tank.position", pos, error_output))  return false;
-		if (version == 2)
-			COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(pos[0],pos[1],pos[2]);
+		if (version == 2)  ConvertV2to1(pos[0],pos[1],pos[2]);
 		position.Set(pos[0],pos[1],pos[2]);
 		fuel_tank.SetPosition(position);
 		//AddMassParticle(fuel_density*volume, position);
@@ -351,8 +353,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 				if (hinge[i] < -100)	hinge[i] = -100;
 				if (hinge[i] > 100)		hinge[i] = 100;
 			}
-			if (version == 2)
-				COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(hinge[0],hinge[1],hinge[2]);
+			if (version == 2)  ConvertV2to1(hinge[0],hinge[1],hinge[2]);
 			tempvec.Set(hinge[0],hinge[1], hinge[2]);
 			suspension[posl].SetHinge(tempvec);
 
@@ -362,8 +363,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 				if (hinge[i] < -100)	hinge[i] = -100;
 				if (hinge[i] > 100)		hinge[i] = 100;
 			}
-			if (version == 2)
-				COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(hinge[0],hinge[1],hinge[2]);
+			if (version == 2)  ConvertV2to1(hinge[0],hinge[1],hinge[2]);
 			tempvec.Set(hinge[0],hinge[1], hinge[2]);
 			suspension[posr].SetHinge(tempvec);
 		}
@@ -391,8 +391,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			wheel[pos].SetRollHeight(roll_height);
 
 			if (!c.GetParam("wheel-"+posstr+".position", position, error_output))  return false;
-			if (version == 2)
-				COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(position[0],position[1],position[2]);
+			if (version == 2)  ConvertV2to1(position[0],position[1],position[2]);
 			tempvec.Set(position[0],position[1], position[2]);
 			wheel[pos].SetExtendedPosition(tempvec);
 
@@ -463,8 +462,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			std::stringstream output_supression;
 			while (c.GetParam(paramname, pos))
 			{
-				if (version == 2)
-					COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(pos[0],pos[1],pos[2]);
+				if (version == 2)  ConvertV2to1(pos[0],pos[1],pos[2]);
 				position.Set(pos[0],pos[1],pos[2]);
 				AddMassParticle(mass, position);
 				paramnum++;
@@ -480,8 +478,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		while (c.GetParam(paramname+".mass", mass))
 		{
 			if (!c.GetParam(paramname+".position", pos, error_output))  return false;
-			if (version == 2)
-				COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(pos[0],pos[1],pos[2]);
+			if (version == 2)  ConvertV2to1(pos[0],pos[1],pos[2]);
 			position.Set(pos[0],pos[1],pos[2]);
 			AddMassParticle(mass, position);
 			paramnum++;
@@ -520,10 +517,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 
 		if (!c.GetParam("driver.mass", mass, error_output))  return false;
 		if (!c.GetParam("driver.position", pos, error_output))  return false;
-		if (version == 2)
-		{
-			COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(pos[0],pos[1],pos[2]);
-		}
+		if (version == 2)  ConvertV2to1(pos[0],pos[1],pos[2]);
 		position.Set(pos[0], pos[1], pos[2]);
 		AddMassParticle(mass, position);
 	}
@@ -537,8 +531,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		if (!c.GetParam("drag.frontal-area", drag_area, error_output))  return false;
 		if (!c.GetParam("drag.drag-coefficient", drag_c, error_output))  return false;
 		if (!c.GetParam("drag.position", pos, error_output))  return false;
-		if (version == 2)
-			COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(pos[0],pos[1],pos[2]);
+		if (version == 2)  ConvertV2to1(pos[0],pos[1],pos[2]);
 		position.Set(pos[0], pos[1], pos[2]);
 		AddAerodynamicDevice(position, drag_area, drag_c, 0,0,0);
 
@@ -553,8 +546,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			if (!c.GetParam("wing-"+wingpos+".lift-coefficient", lift_c, error_output))  return false;
 			if (!c.GetParam("wing-"+wingpos+".efficiency", lift_eff, error_output))  return false;
 			if (!c.GetParam("wing-"+wingpos+".position", pos, error_output))  return false;
-			if (version == 2)
-				COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(pos[0],pos[1],pos[2]);
+			if (version == 2)  ConvertV2to1(pos[0],pos[1],pos[2]);
 			position.Set(pos[0], pos[1], pos[2]);
 			AddAerodynamicDevice(position, drag_area, drag_c, lift_area, lift_c, lift_eff);
 		}
@@ -693,15 +685,14 @@ void CARDYNAMICS::Init(
 
 	///  join chassis and wheel triggers
 	//________________________________________________________
-	//if (pScene->fluids.size() > 0)  // if fluids on scene ..load scene before car?
 	{
 		for (int w=0; w < 4; ++w)
 		{
 			WHEEL_POSITION wp = WHEEL_POSITION(w);
 			Dbl whR = GetWheel(wp).GetRadius() * 1.2;  //bigger par..
-			MATHVECTOR<float,3> wheelpos = GetWheelPosition(wp, 0);
+			MATHVECTOR<float,3> wheelpos = GetWheelPosition(wp, 0);  //par
 			wheelpos[0] += coll_Lofs;
-			//wheelpos[2] += whR;
+			wheelpos[2] += coll_flTrig_H;
 
 			btSphereShape* whSph = new btSphereShape(whR);
 			//btCylinderShapeX* whSph = new btCylinderShapeX(btVector3(whR,whR,whR));//todo..

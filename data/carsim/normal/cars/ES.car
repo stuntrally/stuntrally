@@ -3,7 +3,7 @@ version = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
-max-angle = 30
+max-angle = 27
 angular-damping = 0.0
 
 [ rot_drag ]
@@ -33,6 +33,7 @@ offsetL = -0.06
 offsetW = -0.02
 offsetH = 0.32
 start-offsetY = 0.6
+fluidTrigH = 0.0
 friction = 0.4
 
 

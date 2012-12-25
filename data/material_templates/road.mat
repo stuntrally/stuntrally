@@ -2,9 +2,9 @@ material road_terrain
 {
 	parent base
 	
-    alpha_map true
     depth_write off
     scene_blend alpha_blend
+    alpha_map true
     alphaMap roadAlpha.png
     depth_bias 3
     terrain_light_map true

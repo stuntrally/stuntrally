@@ -27,8 +27,9 @@ posLrear = -1.98
 posLfront = 1.82
 offsetL = -0.08
 offsetW = -0.03
-offsetH = 0.23
+offsetH = 0.22
 start-offsetY = 0.65
+fluidTrigH = 0.0
 friction = 0.4
 
 
@@ -139,8 +140,8 @@ handbrake = 4.5
 [ driver ]
 position = 0, 0.37, -0.03
 mass = 90.0
-view-position = -0.3, -0.4, 0.4
-hood-mounted-view-position = 0, 0.8, 0.36
+view-position = 0.4, -0.3, 0.4
+hood-mounted-view-position = -0.8, 0, 0.36
 
 
 #  aerodynamics

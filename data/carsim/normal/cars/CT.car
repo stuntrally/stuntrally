@@ -26,10 +26,11 @@ width = 0.54
 height = 0.45
 posLrear = -1.97
 posLfront = 1.9
-offsetL = 0.09
+offsetL = 0.29
 offsetW = -0.01
 offsetH = 0.23
 start-offsetY = 0.62
+fluidTrigH = 0.0
 friction = 0.4
 
 

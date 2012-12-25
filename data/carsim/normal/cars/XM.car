@@ -33,6 +33,7 @@ offsetL = 0.0
 offsetW = 0.01
 offsetH = 0.23
 start-offsetY = 0.65
+fluidTrigH = 0.0
 friction = 0.4
 
 
@@ -43,7 +44,7 @@ position = 0.0, 0.52, 0.45
 mass = 230.0
 peak-engine-rpm = 7500.0
 rpm-limit = 8500.0
-inertia = 0.3
+inertia = 0.30
 start-rpm = 1000
 stall-rpm = 650
 fuel-consumption = 1e-9

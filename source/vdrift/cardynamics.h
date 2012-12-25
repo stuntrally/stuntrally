@@ -79,12 +79,12 @@ public:
 	MATHVECTOR<Dbl,3> GetEnginePosition() const;
 
 /// custom collision params
-	float coll_R, coll_W, coll_H, coll_Hofs, coll_Wofs, coll_Lofs;
+	float coll_R, coll_W, coll_H, coll_Hofs, coll_Wofs, coll_Lofs, coll_flTrig_H;
 	float coll_posLfront, coll_posLback, coll_friction;
 
 // driveline
 	// driveline input
-	void StartEngine();  void ShiftGear(int value);
+	void StartEngine();					void ShiftGear(int value);
 	void SetThrottle(float value);		void SetClutch(float value);
 	void SetBrake(float value);			void SetHandBrake(float value);
 	void SetAutoClutch(bool value);		void SetAutoShift(bool value);	void SetAutoRear(bool value);

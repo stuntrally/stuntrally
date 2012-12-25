@@ -369,7 +369,7 @@ void CarModel::Create(int car)
 			if (!whTrl[w])
 			{	NameValuePairList params;
 				params["numberOfChains"] = "1";
-				params["maxElements"] = toStr(320 * pSet->trails_len);  //80
+				params["maxElements"] = toStr(320 * pSet->trails_len);
 
 				whTrl[w] = (RibbonTrail*)mSceneMgr->createMovableObject("RibbonTrail", &params);
 				whTrl[w]->setInitialColour(0, 0.1,0.1,0.1, 0);

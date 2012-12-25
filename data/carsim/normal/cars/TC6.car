@@ -23,13 +23,14 @@ exhaust-mirror-second = 0
 [ collision ]
 radius = 0.304
 width = 0.556
-height = 0.45
+height = 0.44
 posLrear = -1.92
 posLfront = 2.0
 offsetL = -0.22
 offsetW = 0.03
-offsetH = 0.15
+offsetH = 0.17
 start-offsetY = 0.6
+fluidTrigH = 0.0
 friction = 0.4
 
 
@@ -40,12 +41,12 @@ position = 0.0, 1.33, 0.44
 mass = 180.0
 peak-engine-rpm = 6000.0
 rpm-limit = 6500.0
-inertia = 0.40
+inertia = 0.30
 start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
 friction = 230
-torque-val-mul = 0.80
+torque-val-mul = 0.8
 torque-curve-00 = 1000, 355
 torque-curve-01 = 1500, 425
 torque-curve-02 = 2000, 468
