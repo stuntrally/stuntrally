@@ -452,6 +452,7 @@ void CARDYNAMICS::UpdateTransmission(Dbl dt)
 
 Dbl CARDYNAMICS::AutoClutch(Dbl last_clutch, Dbl dt) const
 {
+#if 1
 	const Dbl threshold = 1000.0;
 	const Dbl margin = 100.0;
 	const Dbl geareffect = 1.0; //zero to 1, defines special consideration of first/reverse gear
@@ -466,7 +467,7 @@ Dbl CARDYNAMICS::AutoClutch(Dbl last_clutch, Dbl dt) const
 	if (willlock)  return 0;
 
 	const Dbl rpm = engine.GetRPM();
-	const Dbl maxrpm = engine.GetRPMLimit();
+	const Dbl maxrpm = engine.GetRedline();  //GetRPMLimit();
 	const Dbl stallrpm = engine.GetStallRPM() + margin * (maxrpm / 2000.0);
 	const int gear = transmission.GetGear();
 
@@ -493,6 +494,29 @@ Dbl CARDYNAMICS::AutoClutch(Dbl last_clutch, Dbl dt) const
 		newauto = last_clutch - engage_rate_limit*dt;
 
     return newauto;
+#else
+	btScalar rpm = engine.GetRPM();
+	btScalar stallrpm = engine.GetStallRPM();
+	btScalar clutchrpm = driveshaft_rpm; //clutch rpm on driveshaft/transmission side
+
+	// clutch slip
+	btScalar clutch = (5.0 * rpm + clutchrpm) / (9.0 * stallrpm) - 1.5;
+	if (clutch < 0.0) clutch = 0.0;
+	else if (clutch > 1.0) clutch = 1.0;
+
+	// shift time
+	clutch *= ShiftAutoClutch();
+
+	// rate limit the autoclutch
+	btScalar min_engage_time = 0.05;
+	btScalar engage_limit = dt / min_engage_time;
+	if (last_clutch - clutch > engage_limit)
+	{
+		clutch = last_clutch - engage_limit;
+	}
+
+	return clutch;
+#endif
 }
 
 
@@ -529,23 +553,17 @@ int CARDYNAMICS::NextGear() const
 	int gear = transmission.GetGear();
 
 	// only autoshift if a shift is not in progress
-	if (shifted /*&& remaining_shift_time < 0.01f*/)
-	{
-        if (clutch.GetClutch() == 1.0)
-        {
-            // shift up when driveshaft speed exceeds engine redline
-            // we do not shift up from neutral/reverse
-            if (driveshaft_rpm > engine.GetRedline() && gear > 0)
-            {
-                return gear + 1;
-            }
-            // shift down when driveshaft speed below shift_down_point
-            // we do not auto shift down from 1st gear to neutral
-            if (driveshaft_rpm < DownshiftRPM(gear) && gear > 1)
-            {
-                return gear - 1;
-            }
-        }
+	if (shifted /*&& remaining_shift_time < 0.01f*/ &&
+        clutch.GetClutch() == 1.0)
+    {
+        // shift up when driveshaft speed exceeds engine redline
+        if (driveshaft_rpm > engine.GetRedline() && gear > 0)
+			// car vel < wheel vel	slip < 1.5 ?
+            return gear + 1;
+
+        // shift down when driveshaft speed below shift_down_point
+        if (driveshaft_rpm < DownshiftRPM(gear) && gear > 1)
+            return gear - 1;
     }
 	return gear;
 }
@@ -559,7 +577,7 @@ Dbl CARDYNAMICS::DownshiftRPM(int gear) const
         Dbl lower_gear_ratio = transmission.GetGearRatio(gear - 1);
 		Dbl peak_engine_speed = engine.GetRedline();
 		shift_down_point = 0.9 * peak_engine_speed / lower_gear_ratio * current_gear_ratio;
-	}					  // 0.5 def-
+	}					// 0.9 par-
 	return shift_down_point;
 }
 

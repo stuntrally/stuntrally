@@ -175,9 +175,9 @@ void App::CreateGraphs()
 			{	gv->CreateGrid(10,10, 0.2f, 0.4f);
 				if (b)	gv->CreateTitle("", 5+8+c +2, 0.f, -2, 24);
 				else	gv->CreateTitle("", 5+c   +2, 0.7f, 3, 24);
-			}else if (c == 1)
+			}else if (i == 1)
 				gv->CreateTitle("Tire forces", 5, 0.3f, -2, 24);
-			else if (c == 2)
+			else if (i == 2)
 				gv->CreateTitle("", 5, 0.5f, -2, 24);
 			
 			gv->SetSize(0.00f, 0.41f, 0.35f, 0.50f);
@@ -203,17 +203,19 @@ void App::CreateGraphs()
 	
 
 	case Gh_TorqueCurve:  /// torque curves, gears
-		for (int i=0; i < 6; ++i)
+		for (int w=0; w < 6*2; ++w)
 		{
+			int i = w % 6, n = w / 6;
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
-			gv->Create(512, String("graphA")+toStr(i), i>0 ? 0.f : 0.25f, true);
+			gv->Create(512, String("graph")+(n>0 ? "B":"A")+toStr(i), w>0 ? 0.f : 0.3f, true);
+			if (n == 0)
 			if (i == 0)
-			{	gv->CreateGrid(4,4, 0.f, 0.5f);
-				gv->CreateTitle("", 7, 0.86f, -2, 24, 30);
+			{	gv->CreateGrid(4,5, 0.f, 0.5f);
+				gv->CreateTitle("", /*2*/5, 0.7f, -2, 24, 30);
 			}else if (i==1)
 				gv->CreateTitle("Wheel  Torque curves\n2400 Nm", 5, 0.0f, -2, 24, 2);
 			else if (i==2)
-				gv->CreateTitle("Car Vel.\n200 kmh", 6, 0.86f, 3, 24, 2);
+				gv->CreateTitle("Car Vel.\n250 kmh", 6, 0.86f, 3, 24, 2);
 			
 			gv->SetSize(0.00f, 0.40f, 0.45f, 0.50f);
 
@@ -386,34 +388,49 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		
 	case Gh_TorqueCurve:  /// torque curves, gears
 	{	static int ii = 0;  ++ii;  // skip upd cntr
-		if (ii >= 10 && gsi >= 6)
+		if (ii >= 1/*! 10*/ && gsi >= 6*2)
 		{	ii = 0;
 
 			const Dbl fin = dynamics.diff_center.GetFinalDrive();
 			const Dbl r = 1.0 / (2 * PI_d * dynamics.wheel[0].GetRadius());
 
-			String ss="  gears\n";
+			String ss="  gears  rpm\n";
 			for (int i=0; i < 6; ++i)
 			{
 				const Dbl gr = dynamics.transmission.GetGearRatio(i+1), grfin = gr * fin;
+				Dbl engRpm = dynamics.GetEngine().GetRPM();
+				Dbl downRpm = dynamics.DownshiftRPM(i+1);
+				bool bCur = (i+1 == GetGear()) && dynamics.clutch.GetClutch() > 0.9f;
+				Dbl rmax = dynamics.engine.GetRedline(),
+				    rmin = dynamics.engine.GetStartRPM(), rng = rmax-rmin;
+				Dbl rpmOld = 0;
 				for (int x = 0; x < 512; ++x)
 				{
 					// 100 kmh = 28 car.m/s = 15 wh.rps = 102 eng.rps = 6100 eng.rpm
 					//       / 3.6     /1.95 (2*PI*r)   *6.87 ratio = (3.9 * 1.76) 3rd gear
 					Dbl xx = x/511.0;  // 0..1
-					Dbl vel = xx * 200.0 / 3.6;  // 200 kmh max in m/s
+					Dbl vel = xx * 250.0 / 3.6;  // 250 kmh max, in m/s
 					Dbl whrps = vel * r;  // wheel revs per sec
-					Dbl rpm = whrps * grfin * 60.0;
+					Dbl rpm = whrps * grfin * 60.0;  // engine rpm
 
-					Dbl rmax = dynamics.engine.GetRedline()/**1.4*/, rmin = dynamics.engine.GetStartRPM();
 					Dbl tq = gr * dynamics.engine.GetTorqueCurve(1.0, rpm);
-					if (rpm > rmax)  tq = 0;  if (rpm < rmin)  tq = 0;
+					if (rpm > rmax)  tq = 0.0;  if (rpm < rmin)  tq = 0.0;  // lines down
 
-					pApp->graphs[i]->AddVal( tq / 2400.0 );
+					Dbl v = tq / 2400.0;  // 2400 max
+					if (bCur && engRpm > rpmOld && engRpm <= rpm)  // cur rpm mark
+						v = 1.0;
+
+					pApp->graphs[i]->AddVal(v);  // torque
+					if (i>0)
+					{	v = rpm < downRpm  //downRpm > rpmOld && downRpm <= rpm
+							? 0.0 : std::max(0.0, std::min(1.0, (rpm-rmin)/rng ));  // rpm range
+						pApp->graphs[i+6]->AddVal(v);  }
+					rpmOld = rpm;
 				}
 				pApp->graphs[i]->SetUpdate();
+				pApp->graphs[i+6]->SetUpdate();
 				//ss += String("gear: ")+toStr(i+1)+" ratio: "+fToStr(gr,3,5)+"\n";
-				ss += toStr(i+1)+": "+fToStr(gr,3,5)+"\n";
+				ss += toStr(i+1)+": "+fToStr(gr,3,5)+"  "+fToStr(downRpm,0,4)+"\n";
 			}
 			ss += "  final\n    "+fToStr(fin,3,5)+"\n";
 			pApp->graphs[0]->UpdTitle(ss);
