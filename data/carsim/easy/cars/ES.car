@@ -32,7 +32,7 @@ posLfront = 2.06
 offsetL = -0.06
 offsetW = -0.02
 offsetH = 0.69
-start-offsetY = 0.1
+start-offsetY = 0.21
 fluidTrigH = 0.3
 friction = 0.4
 
@@ -41,26 +41,25 @@ friction = 0.4
 #---------------------------
 [ engine ]
 position = 0.0, 0.4, 0.3
-mass = 190.0
-peak-engine-rpm = 6500
-rpm-limit = 7000.0
-inertia = 0.40
+mass = 240.0
+rpm-limit = 7000
+inertia = 0.30
 start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
 friction = 430
-torque-val-mul = 0.76
+torque-val-mul = 1.05
 torque-curve-00 = 1000, 203
 torque-curve-01 = 1500, 241
 torque-curve-02 = 2000, 271
 torque-curve-03 = 2500, 301
 torque-curve-04 = 3000, 345
 torque-curve-05 = 3500, 375
-torque-curve-06 = 4000, 400
+torque-curve-06 = 4000, 410
 torque-curve-07 = 4500, 423
 torque-curve-08 = 5000, 418
 torque-curve-09 = 5500, 396
-torque-curve-10 = 6000, 382
+torque-curve-10 = 6000, 372
 torque-curve-11 = 6500, 350
 torque-curve-12 = 7000, 303
 torque-curve-13 = 8000, 259
@@ -82,7 +81,7 @@ gear-ratio-6 = 0.693
 shift-delay = 0.10
 
 [ differential ] 
-final-drive = 4.538
+final-drive = 4.8
 anti-slip = 600.0 
 
 [ fuel-tank ]
@@ -144,7 +143,7 @@ handbrake = 4.8
 
 [ driver ]
 position = -0.38, 0.023, 0.1
-mass = 80.0
+mass = 60.0
 view-position = 0, -0.4, 0.5
 hood-mounted-view-position = -0.8, 0, 0.5
 
@@ -223,17 +222,17 @@ hinge = 0.25, -1.94, 0.0
 # (for car total mass and inertia) also use engine mass and position
 #---------------------------
 [ particle-00 ]  # rear
-mass = 230
+mass = 250
 position =  1.1, -1.9, -0.42
 
 [ particle-01 ]
-mass = 230
+mass = 250
 position = -1.1, -1.9, -0.42
 
 [ particle-02 ]  # front
-mass = 230
+mass = 250
 position =  1.1,  1.9, -0.42
 
 [ particle-03 ]
-mass = 230
+mass = 250
 position = -1.1,  1.9, -0.42

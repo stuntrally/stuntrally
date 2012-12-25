@@ -33,8 +33,7 @@ friction = 0.4
 [ engine ]
 position = 0.0, -0.8, 0.15
 mass = 250.0
-peak-engine-rpm = 8500
-rpm-limit = 9000.0
+rpm-limit = 8000
 inertia = 0.33
 start-rpm = 1000
 stall-rpm = 500
@@ -76,7 +75,7 @@ gear-ratio-6 = 0.85
 shift-delay=0.08
 
 [ differential ]
-final-drive = 4.84
+final-drive = 4.54
 anti-slip =600.0
 #anti-slip-torque = 0.01
 #anti-slip-torque-deceleration-factor = 0
@@ -154,8 +153,8 @@ hood-mounted-view-position = -0.7, 0, 0.45
 #---------------------------
 [ drag ]
 position = 0.0, 0.15, 0.00
-frontal-area = 2.03
-drag-coefficient = 0.33
+frontal-area = 1.6
+drag-coefficient = 0.20
 
 [ wing-front ]
 position = 0, 1.45, 0.2

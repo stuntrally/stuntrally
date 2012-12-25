@@ -39,7 +39,6 @@ friction = 0.4
 [ engine ]
 position = 0.0, -1.6, 0.32
 mass = 220.0
-peak-engine-rpm = 6900.0
 rpm-limit = 7200
 inertia = 0.25
 start-rpm = 1000
@@ -57,10 +56,10 @@ torque-curve-06 = 4000, 582
 torque-curve-07 = 4500, 553
 torque-curve-09 = 5000, 511
 torque-curve-11 = 5500, 492
-torque-curve-12 = 6000, 465
-torque-curve-13 = 6500, 422
-torque-curve-14 = 7000, 382
-torque-curve-15 = 7500, 348
+torque-curve-12 = 6000, 485
+torque-curve-13 = 6500, 462
+torque-curve-14 = 7000, 442
+torque-curve-15 = 7500, 408
 
 [ clutch ]
 max-torque-mul = 1.2

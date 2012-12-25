@@ -39,19 +39,18 @@ friction = 0.4
 [ engine ]
 position = 0.04, 1.4, 0.3
 mass = 250.0
-peak-engine-rpm = 6500
-rpm-limit = 7000.0
+rpm-limit = 7000
 inertia = 0.30
 start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
 friction = 230
 torque-val-mul = 0.8
-torque-curve-00 = 1000, 405
-torque-curve-01 = 1500, 445
-torque-curve-02 = 2100, 465
-torque-curve-03 = 2600, 485
-torque-curve-04 = 3000, 516
+torque-curve-00 = 1000, 305
+torque-curve-01 = 1500, 375
+torque-curve-02 = 2100, 425
+torque-curve-03 = 2600, 465
+torque-curve-04 = 3000, 506
 torque-curve-05 = 3300, 549
 torque-curve-06 = 3500, 573
 torque-curve-07 = 3800, 594
@@ -82,7 +81,7 @@ gear-ratio-6 = 0.756
 shift-delay = 0.06
 
 [ differential ]
-final-drive = 4.10
+final-drive = 4.30
 anti-slip = 400.0
 
 [ fuel-tank ]

@@ -88,39 +88,36 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 
 	//load the engine
 	{
-		float engine_mass, engine_redline, engine_rpm_limit, engine_inertia, engine_friction,
-			engine_start_rpm, engine_stall_rpm, engine_fuel_consumption;
-		MATHVECTOR<double,3> engine_position;
+		float mass, rpm_limit, inertia, friction,
+			start_rpm, stall_rpm, fuel_consumption;
+		MATHVECTOR<double,3> position;
 
-		if (!c.GetParam("engine.peak-engine-rpm", engine_redline, error_output))  return false; //used only for the redline graphics
-		engine.SetRedline(engine_redline);
+		if (!c.GetParam("engine.rpm-limit", rpm_limit, error_output))  return false;
+		engine.SetRpmMax(rpm_limit);
 
-		//if (!c.GetParam("engine.rpm-limit", engine_rpm_limit, error_output))  return false;
-		//engine.SetRPMLimit(engine_rpm_limit);
+		if (!c.GetParam("engine.inertia", inertia, error_output))  return false;
+		engine.SetInertia(inertia);
 
-		if (!c.GetParam("engine.inertia", engine_inertia, error_output))  return false;
-		engine.SetInertia(engine_inertia);
+		if (!c.GetParam("engine.friction", friction, error_output))  return false;
+		engine.SetFrictionB(friction);
 
-		if (!c.GetParam("engine.friction", engine_friction, error_output))  return false;
-		engine.SetFrictionB(engine_friction);
+		if (!c.GetParam("engine.start-rpm", start_rpm, error_output))  return false;
+		engine.SetStartRPM(start_rpm);
 
-		if (!c.GetParam("engine.start-rpm", engine_start_rpm, error_output))  return false;
-		engine.SetStartRPM(engine_start_rpm);
+		if (!c.GetParam("engine.stall-rpm", stall_rpm, error_output))  return false;
+		engine.SetStallRPM(stall_rpm);
 
-		if (!c.GetParam("engine.stall-rpm", engine_stall_rpm, error_output))  return false;
-		engine.SetStallRPM(engine_stall_rpm);
+		if (!c.GetParam("engine.fuel-consumption", fuel_consumption, error_output))  return false;
+		engine.SetFuelConsumption(fuel_consumption);
 
-		if (!c.GetParam("engine.fuel-consumption", engine_fuel_consumption, error_output))  return false;
-		engine.SetFuelConsumption(engine_fuel_consumption);
-
-		if (!c.GetParam("engine.mass", engine_mass, error_output))  return false;
+		if (!c.GetParam("engine.mass", mass, error_output))  return false;
 		if (!c.GetParam("engine.position", temp_vec3, error_output))  return false;
 		if (version == 2)  ConvertV2to1(temp_vec3[0],temp_vec3[1],temp_vec3[2]);
 
-		engine_position.Set(temp_vec3[0],temp_vec3[1],temp_vec3[2]);
-		engine.SetMass(engine_mass);
-		engine.SetPosition(engine_position);
-		AddMassParticle(engine_mass, engine_position);
+		position.Set(temp_vec3[0],temp_vec3[1],temp_vec3[2]);
+		engine.SetMass(mass);
+		engine.SetPosition(position);
+		AddMassParticle(mass, position);
 
 		float mul = 1.f, max_torque = 0;
 		c.GetParam("engine.torque-val-mul", mul);
@@ -145,7 +142,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			error_output << "You must define at least 2 torque curve points." << std::endl;
 			return false;
 		}
-		engine.SetTorqueCurve(engine_redline, torques);
+		engine.SetTorqueCurve(rpm_limit, torques);
 
 		//load the clutch
 		{

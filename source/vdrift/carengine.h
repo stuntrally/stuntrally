@@ -18,7 +18,7 @@ class CARENGINE
 {
 private:
 	// constants
-	Dbl redline;	///< the redline in RPMs
+	Dbl rpm_max;	///< the redline in RPMs
 	//Dbl rpm_limit;	///< peak engine RPMs after which limiting occurs
 	Dbl idle;		///< idle throttle percentage; this is calculated algorithmically
 	Dbl start_rpm;	///< initial condition RPM
@@ -67,11 +67,8 @@ public:
 	void SetFrictionB (const Dbl& value){	frict_coeffB = value;	}
 	Dbl GetFrictionB() const			{	return frict_coeffB;	}
 
-	//void SetRPMLimit (const Dbl& value)	{	rpm_limit = value;	}
-	//Dbl GetRPMLimit() const				{	return rpm_limit;	}
-
-	void SetRedline (const Dbl& value)	{	redline = value;	}
-	Dbl GetRedline() const				{	return redline;		}
+	void SetRpmMax (const Dbl& value)	{	rpm_max = value;	}
+	Dbl GetRpmMax() const				{	return rpm_max;		}
 	
 	Dbl GetIdle() const		{	return idle;	}
 

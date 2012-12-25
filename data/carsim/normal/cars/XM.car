@@ -42,8 +42,7 @@ friction = 0.4
 [ engine ]
 position = 0.0, 0.52, 0.45
 mass = 230.0
-peak-engine-rpm = 7500.0
-rpm-limit = 8500.0
+rpm-limit = 8000
 inertia = 0.30
 start-rpm = 1000
 stall-rpm = 650
@@ -169,7 +168,7 @@ frontal-area = 0.0
 drag-coefficient = 0.0
 surface-area = 0.55
 lift-coefficient = -4.0
-efficiency = 0.88
+efficiency = 0.90
 
 [ wing-rear ]
 position = 0.0, -1.4, 0.30
@@ -177,7 +176,7 @@ frontal-area = 0.0
 drag-coefficient = 0.0
 surface-area = 0.6
 lift-coefficient = -3.0
-efficiency = 0.88
+efficiency = 0.90
 
 
 # wheels front (position and suspension mount)

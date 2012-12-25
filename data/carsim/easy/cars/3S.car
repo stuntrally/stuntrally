@@ -29,7 +29,7 @@ posLfront = 1.92
 offsetL = -0.3
 offsetW = 0.0
 offsetH = 0.59
-start-offsetY = 0.12
+start-offsetY = 0.22
 fluidTrigH = 0.3
 friction = 0.4
 
@@ -39,8 +39,7 @@ friction = 0.4
 [ engine ]
 position = 0.0, 1.2, 0.6
 mass = 230.0
-peak-engine-rpm = 6500
-rpm-limit = 7000.0
+rpm-limit = 6500
 inertia = 0.40
 start-rpm = 1000
 stall-rpm = 400
@@ -223,17 +222,17 @@ hinge = 0.25, -1.94, 0.0
 # (for car total mass and inertia) also use engine mass and position
 #---------------------------
 [ particle-00 ]  # rear
-mass = 230
+mass = 250
 position =  1.0, -1.9, -0.53
 
 [ particle-01 ]
-mass = 230
+mass = 250
 position = -1.0, -1.9, -0.53
 
 [ particle-02 ]  # front
-mass = 230
+mass = 250
 position =  1.0,  1.9, -0.53
 
 [ particle-03 ]
-mass = 230
+mass = 250
 position = -1.0,  1.9, -0.53

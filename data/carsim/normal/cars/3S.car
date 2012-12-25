@@ -39,8 +39,7 @@ friction = 0.4
 [ engine ]
 position = 0.0, 1.2, 0.6
 mass = 230.0
-peak-engine-rpm = 6500
-rpm-limit = 7000.0
+rpm-limit = 6500
 inertia = 0.25
 start-rpm = 1000
 stall-rpm = 400

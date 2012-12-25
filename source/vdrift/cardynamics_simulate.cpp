@@ -467,7 +467,7 @@ Dbl CARDYNAMICS::AutoClutch(Dbl last_clutch, Dbl dt) const
 	if (willlock)  return 0;
 
 	const Dbl rpm = engine.GetRPM();
-	const Dbl maxrpm = engine.GetRedline();  //GetRPMLimit();
+	const Dbl maxrpm = engine.GetRpmMax();  //GetRPMLimit();
 	const Dbl stallrpm = engine.GetStallRPM() + margin * (maxrpm / 2000.0);
 	const int gear = transmission.GetGear();
 
@@ -534,7 +534,7 @@ Dbl CARDYNAMICS::ShiftAutoClutchThrottle(Dbl throttle, Dbl dt)
 {
 	if (remaining_shift_time > 0.0)
 	{
-	    if (engine.GetRPM() < driveshaft_rpm && engine.GetRPM() < engine.GetRedline())
+	    if (engine.GetRPM() < driveshaft_rpm && engine.GetRPM() < engine.GetRpmMax())
 	    {
 	        remaining_shift_time += dt;
             return 1.0;
@@ -557,7 +557,7 @@ int CARDYNAMICS::NextGear() const
         clutch.GetClutch() == 1.0)
     {
         // shift up when driveshaft speed exceeds engine redline
-        if (driveshaft_rpm > engine.GetRedline() && gear > 0)
+        if (driveshaft_rpm > engine.GetRpmMax() && gear > 0)
 			// car vel < wheel vel	slip < 1.5 ?
             return gear + 1;
 
@@ -575,7 +575,7 @@ Dbl CARDYNAMICS::DownshiftRPM(int gear) const
 	{
         Dbl current_gear_ratio = transmission.GetGearRatio(gear);
         Dbl lower_gear_ratio = transmission.GetGearRatio(gear - 1);
-		Dbl peak_engine_speed = engine.GetRedline();
+		Dbl peak_engine_speed = engine.GetRpmMax();
 		shift_down_point = 0.9 * peak_engine_speed / lower_gear_ratio * current_gear_ratio;
 	}					// 0.9 par-
 	return shift_down_point;

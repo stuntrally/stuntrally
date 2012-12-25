@@ -3,7 +3,7 @@
 
 
 CARENGINE::CARENGINE()
-	:redline(7800), /*rpm_limit(9000),*/ idle(0.02), frict_coeffB(230)
+	:rpm_max(7800), /*rpm_limit(9000),*/ idle(0.02), frict_coeffB(230)
 	,start_rpm(1000), stall_rpm(350), fuel_consumption(1e-9), friction(0.000328)
 	,throttle_position(0.0), clutch_torque(0.0), out_of_gas(false)
 	,rev_limit_exceeded(false), friction_torque(0), combustion_torque(0), stalled(false)
@@ -64,7 +64,7 @@ void CARENGINE::ComputeForces()
 	
 	//engine drive torque
 	Dbl friction_factor = 1.0; //used to make sure we allow friction to work if we're out of gas or above the rev limit
-	Dbl rev_limit = redline+500; //rpm_limit;
+	Dbl rev_limit = rpm_max+500; //rpm_limit;
 	if (rev_limit_exceeded)
 		rev_limit -= 100.0; //tweakable
 	

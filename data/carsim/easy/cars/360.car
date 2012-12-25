@@ -23,7 +23,7 @@ posLfront = 1.98
 offsetL = 0.24
 offsetW = -0.01
 offsetH = 0.70
-start-offsetY = -0.04
+start-offsetY = 0.10
 fluidTrigH = 0.4
 friction = 0.4
 
@@ -33,14 +33,13 @@ friction = 0.4
 [ engine ]
 position = 0.0, -0.8, 0.15
 mass = 250.0
-peak-engine-rpm = 8500
-rpm-limit = 9000.0
+rpm-limit = 8000
 inertia = 0.40
 start-rpm = 1000
 stall-rpm = 500
 fuel-consumption = 0.0001
 friction = 430
-torque-val-mul = 0.6
+torque-val-mul = 0.8
 torque-curve-00 = 1000, 325
 torque-curve-01 = 1500, 360
 torque-curve-02 = 2200, 388
@@ -154,8 +153,8 @@ hood-mounted-view-position = -0.7, 0, 0.45
 #---------------------------
 [ drag ]
 position = 0.0, 0.15, 0.00
-frontal-area = 2.03
-drag-coefficient = 0.33
+frontal-area = 1.6
+drag-coefficient = 0.20
 
 [ wing-front ]
 position = 0, 1.45, 0.2

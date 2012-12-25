@@ -2,7 +2,6 @@
 #include "car.h"
 #include "cardefs.h"
 #include "configfile.h"
-#include "coordinatesystems.h"
 #include "collision_world.h"
 #include "tracksurface.h"
 #include "configfile.h"

@@ -67,16 +67,6 @@ public:
 	bool bRemoteCar;
 	void HandleInputs(const std::vector <float> & inputs, float dt);
 	
-	int GetEngineRedline() const
-	{
-		return dynamics.GetEngine().GetRedline();
-	}
-
-	//int GetEngineRPMLimit() const
-	//{
-	//	return dynamics.GetEngine().GetRPMLimit();
-	//}
-
 
 	int GetGear() const
 	{
