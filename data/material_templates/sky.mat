@@ -46,6 +46,12 @@ material sky/gray_clouds
     texture sky_photo3.jpg
 }
 
+material sky/dark_clouds
+{
+    parent base_sky
+    texture sky_p3dark.jpg
+}
+
 material sky/sunset
 {
     parent base_sky

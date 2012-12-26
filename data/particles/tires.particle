@@ -89,7 +89,9 @@ particle_system Dust
 	}
 }
 
-//  Mud
+
+//  Mud  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
 particle_system Mud
 {
 	material			Mud
@@ -146,6 +148,100 @@ particle_system Mud
 	//	blue	-0.027
 	//	alpha	-0.140
 	//}
+}
+
+
+//  Mud
+particle_system MudDark
+{
+	material			Mud
+	quota				1000
+	particle_width		0.24
+	particle_height		0.24
+	cull_each			false
+	billboard_type		point
+	//renderer			billboard
+    //sorted			true
+
+	emitter Box
+	{
+		angle	15
+		position	0 0.2 0
+		direction	0 1 0
+		width	0.6
+		height	0.5
+		depth	0.3  //h
+
+		colour				0.6 0.6 0.4  1
+		colour_range_start	0.5 0.5 0.3  0.9
+		colour_range_end	0.7 0.7 0.5  1.0
+
+		//emission_rate	20
+		velocity_min	2.1
+		velocity_max	3.8
+		time_to_live_min	0.5
+		time_to_live_max	1
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 360
+		rotation_speed_range_start -220
+		rotation_speed_range_end 220
+	}
+	affector LinearForce
+	{
+		force_vector	0 -9.8 0
+		force_application	add
+	}
+}
+
+
+//  Wet Dust
+particle_system WetDust
+{
+	material			FluidMudSoft
+	quota				1000
+	particle_width		0.5
+	particle_height		0.5
+	cull_each			false
+	billboard_type		point
+	//renderer			billboard
+    //sorted			true
+
+	emitter Box
+	{
+		angle	10
+		position	0 0.2 0
+		direction	0 1 0
+		width	0.4
+		height	0.4
+		depth	0.3  //h
+
+		colour				1.2 0.2 1.2  0.6
+		colour_range_start	1.2 0.2 1.2  0.5
+		colour_range_end	1.3 0.3 1.2  0.7
+
+		//emission_rate	20
+		velocity_min	1.1
+		velocity_max	2.8
+		time_to_live_min	0.5
+		time_to_live_max	1
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 360
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector LinearForce
+	{
+		force_vector	0 -4.0 0
+		force_application	add
+	}
 }
 
 

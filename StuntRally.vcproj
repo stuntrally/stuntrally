@@ -1335,11 +1335,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\data\particles\car.particle"
+					>
+				</File>
+				<File
 					RelativePath=".\data\material_templates\car_particle.mat"
 					>
 				</File>
 				<File
 					RelativePath=".\data\material_templates\core.h"
+					>
+				</File>
+				<File
+					RelativePath=".\data\particles\fluids.particle"
 					>
 				</File>
 				<File
@@ -1403,6 +1411,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\data\particles\tires.particle"
+					>
+				</File>
+				<File
 					RelativePath=".\data\material_templates\trees.mat"
 					>
 				</File>
@@ -1436,6 +1448,10 @@
 				</File>
 				<File
 					RelativePath=".\data\material_templates\weather.mat"
+					>
+				</File>
+				<File
+					RelativePath=".\data\particles\weather.particle"
 					>
 				</File>
 			</Filter>

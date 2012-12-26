@@ -37,6 +37,94 @@ particle_system SandStorm
 }
 
 
+//  Rain Storm  ========
+particle_system RainStorm
+{
+	material			Dust
+	quota				5000
+	particle_width		2.2
+	particle_height		4.2
+	cull_each			true
+	billboard_type		point
+    sorted				true
+
+	emitter Box
+	{
+		angle	0
+		position	0 10 0
+		direction	-0.2 -1 0.3
+		width	38
+		height	38
+		depth	22  //h
+
+		colour				0.25 0.25 0.25  0.2
+		colour_range_start	0.22 0.22 0.22  0.2
+		colour_range_end	0.28 0.28 0.28  0.3
+
+		emission_rate	200
+		velocity_min	15.6
+		velocity_max	25.2
+		time_to_live_min	0.3
+		time_to_live_max	0.5
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 360
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	17
+	}
+}
+
+
+
+//  RainFastA  ---------
+particle_system RainFastA
+{
+	material			RainDropLong
+	quota				10000
+	particle_width		0.03
+	particle_height		1.52
+
+	cull_each		false
+    sorted			false
+
+	//billboard_type	point
+	billboard_type		oriented_self
+	//renderer			billboard
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 10 0
+		direction	-0.2 -1 0.3
+		width	16
+		height	16
+		depth	12  //h
+
+		colour				0.8 0.8 0.8  0.4
+		colour_range_start	0.8 0.8 0.8  0.3
+		colour_range_end	0.8 0.8 0.8  0.5
+
+		emission_rate	200
+		velocity_min	13.6
+		velocity_max	16.2
+		time_to_live_min	0.1
+		time_to_live_max	0.2
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	17
+	}
+}
+
 
 //  RainFast  ---------
 particle_system RainFast

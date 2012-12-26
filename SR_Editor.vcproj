@@ -431,6 +431,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\data\particles\fluids.particle"
+				>
+			</File>
+			<File
 				RelativePath=".\data\materials\fluids.xml"
 				>
 			</File>
@@ -515,6 +519,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\data\particles\tires.particle"
+				>
+			</File>
+			<File
 				RelativePath=".\data\material_templates\trees.mat"
 				>
 			</File>
@@ -548,6 +556,10 @@
 			</File>
 			<File
 				RelativePath=".\data\material_templates\weather.mat"
+				>
+			</File>
+			<File
+				RelativePath=".\data\particles\weather.particle"
 				>
 			</File>
 		</Filter>
