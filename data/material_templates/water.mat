@@ -167,6 +167,25 @@ material Water_green   // J11-Temple
     speed 1.0
 }
 
+material Water_moss   // O2-Mouse
+{
+    parent Water
+    choppyness_scale 0.27 35
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.238 0.404
+    fresnelMultiplier 1.0
+
+    colour 0.166 0.273 0.268  0.0
+    //reflectColour 0.66 0.86 0.85  1.0
+    reflectColour 0.54 0.72 0.59  1.0
+    refractColour 0.62 0.84 0.76 0.75
+
+	specColourAndPower 0.66 0.78 0.88  62
+    bump2SpecPowerMul 6.0 12 0.4
+    speed 1.0
+}
+
 
 material Water_white   // 0W2-qp
 {

@@ -731,14 +731,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Source\vdrift\coordinatesystems.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Source\vdrift\coordinatesystems.h"
-					>
-				</File>
-				<File
 					RelativePath=".\Source\vdrift\crashdetection.cpp"
 					>
 				</File>
