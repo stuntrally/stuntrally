@@ -225,7 +225,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 
 		int whMtr = posInfo.whTerMtr[w];
 		int whRd = posInfo.whRoadMtr[w];
-		bool pipe = whRd >= 30;  //old: whRd == 2;
+		bool pipe = whRd >= 30 && whRd < 60;  //old: whRd == 2;
 		//todo: road,pipe 4mtr [whRd] layer params..
 		float whVel = posInfo.whVel[w] * 3.6f;  //kmh
 		float slide = posInfo.whSlide[w], squeal = posInfo.whSqueal[w];
