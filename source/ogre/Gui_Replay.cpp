@@ -35,7 +35,7 @@ void App::btnRplLoad(WP)  // Load
 	if (i == MyGUI::ITEM_NONE)  return;
 
 	String name = rplList->getItemNameAt(i).substr(7);
-	string file = (pSet->rpl_listview == 2 ? PATHMANAGER::Ghosts() : PATHMANAGER::Replays()) + "/" + name + ".rpl";
+	string file = GetRplListDir() + "/" + name + ".rpl";
 
 	if (!replay.LoadFile(file))
 	{
@@ -48,6 +48,7 @@ void App::btnRplLoad(WP)  // Load
 		const ReplayHeader& h = replay.header;
 		string car = h.car, trk = h.track;
 		bool usr = h.track_user == 1;
+		//todo: check if cars, trk exist..
 
 		//trackreverse 	num_laps
 		//collis_veget, collis_cars, collis_roadw, dyn_objects;
@@ -99,7 +100,7 @@ void App::listRplChng(List* li, size_t pos)
 {
 	size_t i = li->getIndexSelected();  if (i == ITEM_NONE)  return;
 	String name = li->getItemNameAt(i).substr(7);
-	string file = (pSet->rpl_listview == 2 ? PATHMANAGER::Ghosts() : PATHMANAGER::Replays()) + "/" + name + ".rpl";
+	string file = GetRplListDir() + "/" + name + ".rpl";
 	if (!valRplName)  return;  valRplName->setCaption(name);
 	if (!valRplInfo)  return;  edRplName->setCaption(name);
 	
@@ -113,7 +114,8 @@ void App::listRplChng(List* li, size_t pos)
 		ss = String(TR("#{Car}: ")) + rpl.header.car + "       "+
 			(rpl.header.numPlayers == 1 ? "" : (TR("#{Players}: ") + toStr(rpl.header.numPlayers))) + "  " +
 			(rpl.header.networked == 0 ? "" : "M") +  //TR("#{Multiplayer}")
-			"\n" + TR("#{RplTime}: ") + GetTimeString(rpl.GetTimeLength());
+			"\n" + TR("#{RplTime}: ") + GetTimeString(rpl.GetTimeLength()) +
+			"\n#90A0B0" + TR("#{Simulation}: ") + rpl.header.sim_mode;
 		if (rpl.header.networked == 1)  // list nicks
 			ss += String("\n#90C0E0")+rpl.header.nicks[0]+"  "+rpl.header.nicks[1]+"  "+rpl.header.nicks[2]+"  "+rpl.header.nicks[3];
 		//else  // other cars, car colors ..
@@ -213,12 +215,14 @@ void App::updReplaysList()
 	rplList->removeAllItems();
 
 	strlist li;
-	PATHMANAGER::GetFolderIndex((pSet->rpl_listview == 2 ? PATHMANAGER::Ghosts() : PATHMANAGER::Replays()), li, "rpl");
+	PATHMANAGER::GetFolderIndex(GetRplListDir(), li, "rpl");
 	
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 	if (StringUtil::endsWith(*i, ".rpl"))
 	{
 		String s = *i;  s = StringUtil::replaceAll(s,".rpl","");
+		String slow = s;  StringUtil::toLowerCase(slow);
+		if (sRplFind == "" || strstr(slow.c_str(), sRplFind.c_str()) != 0)
 		if (pSet->rpl_listview != 1 || StringUtil::startsWith(s,pSet->game.track, false))
 		{
 			String ch = " ";  // 1st A-Z char for scenery
@@ -248,7 +252,7 @@ void App::msgRplDelete(Message* sender, MessageBoxStyle result)
 	if (result != MessageBoxStyle::Yes)  return;
 	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
 	string name = rplList->getItemNameAt(i).substr(7);
-	string file = (pSet->rpl_listview == 2 ? PATHMANAGER::Ghosts() : PATHMANAGER::Replays()) +"/"+ name + ".rpl";
+	string file = GetRplListDir() +"/"+ name + ".rpl";
 
 	if (boost::filesystem::exists(file))
 		boost::filesystem::remove(file);

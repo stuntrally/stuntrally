@@ -72,7 +72,7 @@ bool TRACK::Load(
 		//return false;
 	}
 
-	info_output << "Track loading was successful: " << model_library.size() << " models, " << texture_library.size() << " textures" << endl;
+	info_output << "Track loaded: " << model_library.size() << " models, " << texture_library.size() << " textures" << endl;
 
 	return true;
 }

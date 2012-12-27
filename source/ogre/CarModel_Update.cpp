@@ -459,14 +459,9 @@ void CarModel::UpdateLightMap()
 
 void CarModel::RefreshBrakingMaterial()
 {
-	std::string texName;
-	if (bBraking)
-	texName = sDirname + "_body00_brake.png";
-	else
-		texName = sDirname + "_body00_add.png";
-	MaterialPtr mtr;
+	std::string texName = sDirname + (bBraking ? "_body00_brake.png" : "_body00_add.png");
 
-	mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
+	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
 	if (!mtr.isNull())
 	{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
 		while (techIt.hasMoreElements())

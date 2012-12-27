@@ -42,6 +42,7 @@ struct ReplayHeader
 	float trees;      // trees multipler
 	char num_laps;
 	char networked;   // if 1, was networked, so use nicks when playing
+	char sim_mode[32];// easy, normal, etc
 
 	ReplayHeader();
 	void Default(), SafeEnd0();

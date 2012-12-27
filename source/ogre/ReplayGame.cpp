@@ -20,7 +20,7 @@ void ReplayHeader::Default()
 	memset(track, 0, sizeof(track));  track_user = 0;
 	memset(car, 0, sizeof(car));
 
-	ver = 8;
+	ver = 9;
 	frameSize = sizeof(ReplayFrame);
 	numPlayers = 1;
 	trees = 1.f;
@@ -35,6 +35,7 @@ void ReplayHeader::Default()
 	memset(cars, 0, sizeof(cars));
 	memset(nicks, 0, sizeof(nicks));		
 	memset(descr, 0, sizeof(descr));
+	memset(sim_mode, 0, sizeof(sim_mode));
 }
 
 void ReplayHeader::SafeEnd0()
@@ -42,7 +43,7 @@ void ReplayHeader::SafeEnd0()
 	track[62]=0;
 	car[31]=0;      cars[0][31]=0;  cars[1][31]=0;  cars[2][31]=0;
 	nicks[0][31]=0; nicks[1][31]=0; nicks[2][31]=0; nicks[3][31]=0;
-	descr[127]=0;
+	descr[127]=0;  sim_mode[31]=0;
 }
 
 ReplayFrame::ReplayFrame() :
@@ -111,6 +112,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	memcpy(&header, buf, sizeof(ReplayHeader));
 	header.numPlayers = std::max(1, std::min(4, header.numPlayers));  // range 1..4
 	header.SafeEnd0();
+	if (header.ver < 9)  header.sim_mode[0]=0;  // versions below 9 have no sim mode
 
     #ifdef LOG_RPL
 		if (!onlyHdr)

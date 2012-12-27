@@ -520,7 +520,7 @@ CAR* GAME::LoadCar(const string & pathCar, const string & carname, const MATHVEC
 	}
 	else
 	{
-		info_output << "Car loading was successful: " << carname << endl;
+		info_output << "Car loaded: " << carname << endl;
 
 		if (islocal)
 		{

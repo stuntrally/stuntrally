@@ -282,10 +282,13 @@ void App::LoadGame()  // 2
 	ghplay.Clear();
 	if (!bRplPlay && pSet->rpl_ghost && !mClient)
 	{
-		ghplay.LoadFile(GetGhostFile());  // loads ghost play if exists
+		std::string ghCar = pSet->game.car[0], orgCar = ghCar;
+		ghplay.LoadFile(GetGhostFile(/***&ghCar*/));  // loads ghost play if exists
+		bool other = ghCar != orgCar;
+		
 		//  always because ghplay can appear during play after best lap
-		CarModel* c = new CarModel(i, CarModel::CT_GHOST, pSet->game.car[0], mSceneMgr, pSet, pGame, sc, 0, this);
-		c->pCar = (*carModels.begin())->pCar;  // based on 1st car
+		CarModel* c = new CarModel(i, CarModel::CT_GHOST, ghCar/*orgCar*/, mSceneMgr, pSet, pGame, sc, 0, this);
+		/***/c->pCar = (*carModels.begin())->pCar;  // based on 1st car  !!..ghCar
 		carModels.push_back(c);
 		///c->pNickTxt = CreateNickText(i, c->sDispName);  //for ghost too ?
 	}
@@ -385,6 +388,7 @@ void App::LoadCar()  // 4
 	replay.header.trees = pSet->game.trees;
 	replay.header.networked = mClient ? 1 : 0;
 	replay.header.num_laps = pSet->game.num_laps;
+	strcpy(replay.header.sim_mode, pSet->game.sim_mode.c_str());
 	}
 	rewind.Clear();
 

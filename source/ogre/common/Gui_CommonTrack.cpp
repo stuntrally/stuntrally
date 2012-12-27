@@ -198,6 +198,10 @@ void App::GuiInitTrack()
 		infTrk[0][i] = mGUI->findWidget<StaticText>("ti"+toStr(i+1), false);
 		
 	Edt(edFind, "TrackFind", edTrkFind);
+	#ifndef ROAD_EDITOR
+	EditPtr ed;
+	Edt(ed, "RplFind", edRplFind);
+	#endif
 
 	ButtonPtr btn;
 	Btn("TrkView1", btnTrkView1);	Btn("TrkView2", btnTrkView2);
@@ -268,6 +272,20 @@ void App::edTrkFind(EditPtr ed)
 	}
 	TrackListUpd(false);
 }
+
+#ifndef ROAD_EDITOR
+void App::edRplFind(EditPtr ed)
+{
+	String s = ed->getCaption();
+	if (s == "")
+		sRplFind = "";
+	else
+	{	sRplFind = s;
+		StringUtil::toLowerCase(sRplFind);
+	}
+	updReplaysList();
+}
+#endif
 
 
 //  view change

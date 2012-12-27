@@ -385,7 +385,7 @@ void App::UpdateHUD(int carId, float time)
 		{
 			timeBest *= 1.0f + 0.1f;  // factor mostly 0.1
 			const float decFactor = 1.5f;
-			score = (1.f + (timeBest-timeCur)/timeBest * decFactor) * 100.f;
+			score = std::max(0.f, (1.f + (timeBest-timeCur)/timeBest * decFactor) * 100.f);
 			b = true;
 		}
 		

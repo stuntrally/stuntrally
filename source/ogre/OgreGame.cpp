@@ -263,16 +263,51 @@ String App::GetTimeString(float time) const
 		return "-:--.---";
 }
 
+
 //  ghost filename
-const String& App::GetGhostFile()
+//
+using std::string;
+string ghostFile(SETTINGS* pSet, string sim_mode, string car)
+{
+	return PATHMANAGER::Ghosts()+"/" +sim_mode+"/"
+		+ pSet->game.track + (pSet->game.track_user ? "_u" : "") + (pSet->game.trackreverse ? "_r" : "")
+		+ "_" + car + ".rpl";
+}
+const String& App::GetGhostFile(std::string* ghCar)
 {
 	static String file;
-	file = PATHMANAGER::Ghosts() + "/"
-		+ pSet->game.track + (pSet->game.track_user ? "_u" : "") + (pSet->game.trackreverse ? "_r" : "")
-		+ "_" + pSet->game.car[0] + ".rpl";
+	string sim_mode = pSet->game.sim_mode, car = pSet->game.car[0];
+	file = ghostFile(pSet, sim_mode, car);
+	if (PATHMANAGER::FileExists(file))
+		return file;
+	
+	//  if doesnt exist look for other cars, then other sim modes
+	size_t i=0,n=0;  bool srch = true;
+	if (ghCar)
+	while (srch)
+	{
+		string car = carList->getItemNameAt(i);
+		file = ghostFile(pSet, sim_mode, car);
+
+		if (PATHMANAGER::FileExists(file))
+		{	srch = false;  *ghCar = car;  }  // use same car. would have to recreate ghost car on lap!
+		++i;
+		if (i >= carList->getItemCount())
+		{	i = 0;
+			if (sim_mode == "easy")  sim_mode = "normal";
+			else  sim_mode = "easy";
+			++n;  if (n==2)  srch = false;  // only those 2
+		}
+	}
 	return file;
 }
 
+std::string App::GetRplListDir()
+{
+	return (pSet->rpl_listview == 2
+		? (PATHMANAGER::Ghosts() + pSet->gui.sim_mode)
+		: PATHMANAGER::Replays() );
+}
 
 
 void App::materialCreated (sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex)

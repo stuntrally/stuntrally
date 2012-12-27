@@ -67,7 +67,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 	
 
 	//  get car start pos from track  ------
-	if (type != CT_GHOST)  // ghost has pCar, dont create
+	/***/if (type != CT_GHOST)  // ghost has pCar, dont create
 	{
 		if (startpos_index == -1) startpos_index = iIndex;
 		int i = set->game.collis_cars ? startpos_index : 0;  // offset when cars collide
@@ -416,13 +416,15 @@ void CarModel::RecreateMaterials()
 	
 	// if specialised car material (e.g. car_body_FM) exists, use this one instead of e.g. car_body
 	// useful macro for choosing between these 2 variants
-	#define chooseMat(s) MaterialManager::getSingleton().resourceExists( "car" + String(s) + "_" + sDirname) ? "car"+String(s) + "_" + sDirname : "car"+String(s)
+	#define chooseMat(s)  MaterialManager::getSingleton().resourceExists("car"+String(s) + "_"+sDirname) ? "car"+String(s) + "_"+sDirname : "car"+String(s)
 	
 	//  ghost car has no interior, particles, trails and uses same material for all meshes
 	if (!ghost)
 	{	sMtr[Mtr_CarBody]     = chooseMat("_body");		sMtr[Mtr_CarTireFront]  = chooseMat("tire_front");
 		sMtr[Mtr_CarInterior] = chooseMat("_interior");	sMtr[Mtr_CarTireRear]   = chooseMat("tire_rear");
 		sMtr[Mtr_CarGlass]    = chooseMat("_glass");
+		//if (sDirname == "S1")
+		//	sMtr[Mtr_CarBody] = "UPG15000_light";
 	}else
 	for (int i=0; i < NumMaterials; ++i)
 		sMtr[i] = "car_ghost";  //+s old mtr..
@@ -434,23 +436,23 @@ void CarModel::RecreateMaterials()
 		sh::Factory::getInstance().destroyMaterialInstance(sMtr[i] + strI);
 		sh::MaterialInstance* m = sh::Factory::getInstance().createMaterialInstance(sMtr[i] + strI, sMtr[i]);
 
-		m->setListener (this);
+		m->setListener(this);
 
 		// change textures for the car
-		if (m->hasProperty ("diffuseMap"))
+		if (m->hasProperty("diffuseMap"))
 		{
-			std::string v = sh::retrieveValue<sh::StringValue>(m->getProperty ("diffuseMap"), 0).get();
-			m->setProperty ("diffuseMap", sh::makeProperty <sh::StringValue>(new sh::StringValue(sDirname + "_" + v)));
+			std::string v = sh::retrieveValue<sh::StringValue>(m->getProperty("diffuseMap"), 0).get();
+			m->setProperty("diffuseMap", sh::makeProperty<sh::StringValue>(new sh::StringValue(sDirname + "_" + v)));
 		}
-		if (m->hasProperty ("carPaintMap"))
+		if (m->hasProperty("carPaintMap"))
 		{
-			std::string v = sh::retrieveValue<sh::StringValue>(m->getProperty ("carPaintMap"), 0).get();
-			m->setProperty ("carPaintMap", sh::makeProperty <sh::StringValue>(new sh::StringValue(sDirname + "_" + v)));
+			std::string v = sh::retrieveValue<sh::StringValue>(m->getProperty("carPaintMap"), 0).get();
+			m->setProperty("carPaintMap", sh::makeProperty<sh::StringValue>(new sh::StringValue(sDirname + "_" + v)));
 		}
-		if (m->hasProperty ("reflMap"))
+		if (m->hasProperty("reflMap"))
 		{
-			std::string v = sh::retrieveValue<sh::StringValue>(m->getProperty ("reflMap"), 0).get();
-			m->setProperty ("reflMap", sh::makeProperty <sh::StringValue>(new sh::StringValue(sDirname + "_" + v)));
+			std::string v = sh::retrieveValue<sh::StringValue>(m->getProperty("reflMap"), 0).get();
+			m->setProperty("reflMap", sh::makeProperty<sh::StringValue>(new sh::StringValue(sDirname + "_" + v)));
 		}
 		sMtr[i] = sMtr[i] + strI;
 	}
@@ -505,11 +507,11 @@ void CarModel::CreateReflection()
 	pReflect->Create();
 }
 
-void CarModel::requestedConfiguration (sh::MaterialInstance* m, const std::string& configuration)
+void CarModel::requestedConfiguration(sh::MaterialInstance* m, const std::string& configuration)
 {
 }
 
-void CarModel::createdConfiguration (sh::MaterialInstance* m, const std::string& configuration)
+void CarModel::createdConfiguration(sh::MaterialInstance* m, const std::string& configuration)
 {
 	UpdateLightMap();
 	ChangeClr(iIndex);

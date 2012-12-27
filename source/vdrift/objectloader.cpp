@@ -111,7 +111,7 @@ std::pair <bool,bool> OBJECTLOADER::ContinueObjectLoad(	TRACK* track,
 
 	if (!(GetParam(objectfile, model_name)))
 	{
-		info_output << "Track loading was successful: " << model_library.size() << " models, " << texture_library.size() << " textures, " << /*surfaces.size() << " surfaces" << */std::endl;
+		info_output << "Track loaded: " << model_library.size() << " models, " << texture_library.size() << " textures, " << /*surfaces.size() << " surfaces" << */std::endl;
 		//Optimize();
 		//info_output << "Objects before optimization: " << unoptimized_scene.GetDrawableList().size() << ", objects after optimization: " << sceneroot.GetDrawableList().size() << std::endl;
 		//unoptimized_scene.Clear();

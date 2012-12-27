@@ -1297,7 +1297,7 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Replay}"/>
 				<UserString key="RelativeTo" value="ReplaysWnd"/>
-				<Widget type="ListBox" skin="ListBox" position="14 16 186 504" name="RplList">
+				<Widget type="ListBox" skin="ListBox" position="14 16 186 440" name="RplList">
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="Button" skin="RadioButton" position="224 416 160 24" name="RplBtnAll">
@@ -1360,6 +1360,19 @@
 				</Widget>
 				<Widget type="EditBox" skin="EditBox" position="224 224 240 24" name="RplNameEdit">
 					<Property key="Colour" value="0.8 0.9 1"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="16 468 84 24">
+					<Property key="Caption" value="#{Find}:"/>
+					<Property key="TextColour" value="0.7 0.8 0.9"/>
+					<UserString key="tip" value="#{TipFind}"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
+				</Widget>
+				<Widget type="EditBox" skin="EditBox" position="16 492 88 24" name="RplFind">
+					<Property key="Colour" value="0.7 0.8 0.9"/>
+					<Property key="MaxTextLength" value="20"/>
+					<Property key="TextColour" value="0.8 0.9 1.0"/>
+					<UserString key="tip" value="#{TipFind}"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 			</Widget>
@@ -2921,82 +2934,82 @@
 			<Property key="Alpha" value="0.6"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.8 0.9 1"/>
-			<UserString key="RelativeTo" value="RplWnd"/>
+			<UserString key="RelativeTo" value="OptionsWnd"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="20 1 40 32" name="RplToStart">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="|&lt;"/>
 			<Property key="Alpha" value="0.6"/>
 			<Property key="Colour" value="0.6 0.8 1"/>
-			<UserString key="RelativeTo" value="RplWnd"/>
+			<UserString key="RelativeTo" value="OptionsWnd"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="60 1 40 32" name="RplBack">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="&lt;&lt;"/>
 			<Property key="Alpha" value="0.8"/>
 			<Property key="Colour" value="0.4 0.8 1"/>
-			<UserString key="RelativeTo" value="RplWnd"/>
+			<UserString key="RelativeTo" value="OptionsWnd"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="100 1 64 32" name="RplPlay">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="||"/>
 			<Property key="Colour" value="0 1 1"/>
-			<UserString key="RelativeTo" value="RplWnd"/>
+			<UserString key="RelativeTo" value="OptionsWnd"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="164 1 40 32" name="RplForward">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="&gt;&gt;"/>
 			<Property key="Colour" value="0.4 0.8 1"/>
 			<Property key="Alpha" value="0.8"/>
-			<UserString key="RelativeTo" value="RplWnd"/>
+			<UserString key="RelativeTo" value="OptionsWnd"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="204 1 40 32" name="RplToEnd">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="&gt;|"/>
 			<Property key="Colour" value="0.6 0.8 1"/>
 			<Property key="Alpha" value="0.6"/>
-			<UserString key="RelativeTo" value="RplWnd"/>
+			<UserString key="RelativeTo" value="OptionsWnd"/>
 		</Widget>
 		<Widget type="Widget" skin="PanelSkin" position="280 4 80 26">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.9 0.92 1"/>
 			<Property key="Alpha" value="0.6"/>
-			<UserString key="RelativeTo" value="RplWnd"/>
+			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Widget type="TextBox" skin="TextBox" position="0 2 75 24" name="RplPercent">
 				<Property key="InheritsAlpha" value="false"/>
 				<Property key="Alpha" value="1"/>
 				<Property key="TextColour" value="0.9 0.92 1.0"/>
 				<Property key="TextAlign" value="Right"/>
 				<Property key="FontName" value="font_Vera.24"/>
-				<UserString key="RelativeTo" value="RplWnd"/>
+				<UserString key="RelativeTo" value="OptionsWnd"/>
 			</Widget>
 		</Widget>
 		<Widget type="Widget" skin="PanelSkin" position="380 4 100 26">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.9 0.96 1.0"/>
 			<Property key="Alpha" value="0.6"/>
-			<UserString key="RelativeTo" value="RplWnd"/>
+			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Widget type="TextBox" skin="TextBox" position="0 2 105 24" name="RplTimeCur">
 				<Property key="InheritsAlpha" value="false"/>
 				<Property key="Alpha" value="1"/>
 				<Property key="TextColour" value="0.9 0.96 1.0"/>
 				<Property key="TextAlign" value="Center"/>
 				<Property key="FontName" value="font_Vera.24"/>
-				<UserString key="RelativeTo" value="RplWnd"/>
+				<UserString key="RelativeTo" value="OptionsWnd"/>
 			</Widget>
 		</Widget>
 		<Widget type="Widget" skin="PanelSkin" position="500 4 100 26">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.8 0.9 1"/>
 			<Property key="Alpha" value="0.5"/>
-			<UserString key="RelativeTo" value="RplWnd"/>
+			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Widget type="TextBox" skin="TextBox" position="0 2 105 24" name="RplTimeLen">
 				<Property key="InheritsAlpha" value="false"/>
 				<Property key="Alpha" value="1"/>
 				<Property key="TextColour" value="0.8 0.9 1"/>
 				<Property key="TextAlign" value="Center"/>
 				<Property key="FontName" value="font_Vera.24"/>
-				<UserString key="RelativeTo" value="RplWnd"/>
+				<UserString key="RelativeTo" value="OptionsWnd"/>
 			</Widget>
 		</Widget>
 	</Widget>

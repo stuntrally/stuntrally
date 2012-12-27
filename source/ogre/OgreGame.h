@@ -75,7 +75,7 @@ public:
 	//  frm - used when playing replay for hud and sounds
 	Replay replay, ghost, ghplay;  ReplayFrame frm[4];
 	Rewind rewind;  // to take car back in time (after crash etc.)
-	const Ogre::String& GetGhostFile();
+	const Ogre::String& GetGhostFile(std::string* ghCar=NULL);  std::string GetRplListDir();
 
 	Scene* sc;  /// scene.xml
 	FluidsXml fluidsXml;  /// fluid params xml
@@ -286,7 +286,8 @@ protected:
 	const static int TcolW[32],ChColW[8],StColW[8];
 	const static Ogre::String clrsDiff[9],clrsRating[5],clrsLong[10];
 
-	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;  MyGUI::EditPtr edFind;
+	void edTrkFind(MyGUI::EditPtr),edRplFind(MyGUI::EditPtr);
+	Ogre::String sTrkFind,sRplFind;  MyGUI::EditPtr edFind;
 	strlist liTracks,liTracksUser;  void FillTrackLists();
 	std::list<TrkL> liTrk;
 

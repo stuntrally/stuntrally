@@ -151,14 +151,13 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 	#endif
 
 	// Create user's data dir and its children
+	///--------------------------------------------------
 	CreateDir(user_data, error_output);
 	CreateDir(Records(), error_output);
-	CreateDir(Records()+"/easy", error_output);  // todo: list dir carsim/ and create all
-	CreateDir(Records()+"/normal", error_output);
-	
-	CreateDir(Screenshots(), error_output);
-	CreateDir(Replays(), error_output);
 	CreateDir(Ghosts(), error_output);
+	
+	CreateDir(Replays(), error_output);
+	CreateDir(Screenshots(), error_output);
 	CreateDir(TracksUser(), error_output);  // user tracks
 
 	CreateDir(DataUser(), error_output);  // user data
@@ -203,6 +202,17 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 			// Check if both are found
 			if (!game_data.empty() && !game_config.empty()) break;
 		}
+	}
+
+
+	//  Subdirs for each sim_mode
+	///--------------------------------------------------
+	std::list <std::string> li;
+	PATHMANAGER::GetFolderIndex(PATHMANAGER::CarSim(), li);
+	for (std::list <std::string>::iterator i = li.begin(); i != li.end(); ++i)
+	{
+		CreateDir(Records()+"/"+*i, error_output);
+		CreateDir(Ghosts()+"/"+*i, error_output);
 	}
 
 	// Find cache dir
