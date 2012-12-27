@@ -33,9 +33,12 @@
 #include "Compositor.h"
 using namespace Ogre;
 
-
 #include "../shiny/Main/Factory.hpp"
 #include "../shiny/Platforms/Ogre/OgrePlatform.hpp"
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+#include "resource.h"
+#endif
 
 
 //  Create
@@ -240,6 +243,12 @@ bool BaseApp::configure()
 		if (pSet->renderNotActive)
 			mWindow->setDeactivateOnFocusChange(false);
 	}
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		HWND hwnd;
+		mWindow->getCustomAttribute("WINDOW", (void*)&hwnd);
+		LONG iconID = (LONG)LoadIcon(GetModuleHandle(0), MAKEINTRESOURCE(IDI_ICON1));
+		SetClassLong(hwnd, GCL_HICON, iconID);
+	#endif
 	mLoadingBar->bBackgroundImage = pSet->loadingbackground;
 	return true;
 }

@@ -682,6 +682,14 @@
 					RelativePath=".\source\ogre\pch.h"
 					>
 				</File>
+				<File
+					RelativePath=".\source\ogre\resource.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\StuntRally.rc"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Collis"

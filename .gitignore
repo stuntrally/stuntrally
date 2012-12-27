@@ -6,15 +6,8 @@ locale/stuntrally.pot
 build*
 Debug*
 Release*
-game.cfg
-editor.cfg
-ogreset.cfg
-ogre.log
-log.txt
-MyGUI.log
 *.dll
 *.pdb
-screens
 bin
 StuntRally*.*
 SR?Editor*.*

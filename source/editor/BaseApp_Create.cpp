@@ -17,6 +17,11 @@ using namespace Ogre;
 
 #include "../ogre/common/MyGUI_D3D11.h"
 
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+#include "resource.h"
+#endif
+
+
 void TimThread(BaseApp* pA)
 {
 	while (pA->inputThreadRunning)
@@ -26,8 +31,6 @@ void TimThread(BaseApp* pA)
 		boost::this_thread::sleep(boost::posix_time::milliseconds(pA->timer.iv*1000));
 	}
 }
-
-/**/
 
 
 //  Camera
@@ -234,7 +237,12 @@ bool BaseApp::configure()
 
 		mWindow = mRoot->createRenderWindow("SR Editor", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
 	}
-
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		HWND hwnd;
+		mWindow->getCustomAttribute("WINDOW", (void*)&hwnd);
+		LONG iconID = (LONG)LoadIcon(GetModuleHandle(0), MAKEINTRESOURCE(IDI_ICON1));
+		SetClassLong(hwnd, GCL_HICON, iconID);
+	#endif
 	return true;
 }
 
