@@ -153,6 +153,9 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 	// Create user's data dir and its children
 	CreateDir(user_data, error_output);
 	CreateDir(Records(), error_output);
+	CreateDir(Records()+"/easy", error_output);  // todo: list dir carsim/ and create all
+	CreateDir(Records()+"/normal", error_output);
+	
 	CreateDir(Screenshots(), error_output);
 	CreateDir(Replays(), error_output);
 	CreateDir(Ghosts(), error_output);

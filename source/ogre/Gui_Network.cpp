@@ -161,9 +161,9 @@ void App::uploadGameInfo()
 	string trackname = sListTrack;
 	string simmode = pSet->gui.sim_mode;
 	
-	memcpy(game.name, 0, sizeof(game.name));
-	memcpy(game.track, 0, sizeof(game.track));
-	memcpy(game.sim_mode, 0, sizeof(game.sim_mode));
+	memset(game.name, 0, sizeof(game.name));
+	memset(game.track, 0, sizeof(game.track));
+	memset(game.sim_mode, 0, sizeof(game.sim_mode));
 	strcpy(game.name, gamename.c_str());
 	strcpy(game.track, trackname.c_str());
 	strcpy(game.sim_mode, simmode.c_str());

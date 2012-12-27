@@ -457,7 +457,7 @@ bool GAME::NewGameDoLoadMisc(float pre_time)
 	}
 
 	//load the timer
-	if (!timer.Load(PATHMANAGER::Records()+"/"+settings->game.track+".txt", pre_time, error_output))
+	if (!timer.Load(PATHMANAGER::Records()+"/"+ settings->game.sim_mode+"/"+ settings->game.track+".txt", pre_time, error_output))
 		return false;
 
 	//add cars to the timer system
