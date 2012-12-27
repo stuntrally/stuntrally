@@ -434,6 +434,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 					rpmOld = rpm;
 				}
 				pApp->graphs[i]->SetUpdate();
+				if (i>0)
 				pApp->graphs[i+6]->SetUpdate();
 
 				//  text  ------

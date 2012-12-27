@@ -445,7 +445,7 @@ bool COLLISION_WORLD::CastRay(
 					surf = &pApp->pGame->surfaces[id];
 
 					if (cd)
-					{	cd->iWhOnRoad[w] = 2;   cd->whRoadMtr[w] = mtr;  cd->whTerMtr[w] = 0;  }
+					{	cd->iWhOnRoad[w] = 2;   cd->whRoadMtr[w] = mtr+30;  cd->whTerMtr[w] = 0;  }
 				}	break;
 
 				case SU_Terrain:  // Terrain  get surface from blendmap mtr
@@ -462,7 +462,7 @@ bool COLLISION_WORLD::CastRay(
 					surf = &pApp->pGame->surfaces[id];
 
 					if (cd)                                              // mtr 0 = not on terrain
-					{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = mtr + 1;  }
+					{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 60;  cd->whTerMtr[w] = mtr + 1;  }
 				}	break;
 				
 				//case SU_RoadWall: //case SU_RoadColumn:
@@ -474,7 +474,7 @@ bool COLLISION_WORLD::CastRay(
 					surf = &pApp->pGame->surfaces[id];
 
 					if (cd)
-					{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 0;  }
+					{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 80;  cd->whTerMtr[w] = 0;  }
 				}	break;
 			}
 			else  //if (ptrU == 0)

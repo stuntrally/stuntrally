@@ -225,6 +225,8 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 
 		int whMtr = posInfo.whTerMtr[w];
 		int whRd = posInfo.whRoadMtr[w];
+		bool pipe = whRd >= 30;  //old: whRd == 2;
+		//todo: road,pipe 4mtr [whRd] layer params..
 		float whVel = posInfo.whVel[w] * 3.6f;  //kmh
 		float slide = posInfo.whSlide[w], squeal = posInfo.whSqueal[w];
 			//LogO(" slide:"+fToStr(slide,3,5)+" squeal:"+fToStr(squeal,3,5));
@@ -265,7 +267,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		TerLayer& lay = whMtr==0 ? sc->td.layerRoad : sc->td.layersAll[sc->td.layers[mtr]];
 		emitD *= lay.dust;  emitM *= lay.mud;  sizeD *= lay.dustS;  emitS *= lay.smoke;
 
-		if (whRd == 2)  emitD = 0;  // no dust in pipes
+		if (pipe)  emitD = 0;  // no dust in pipes
 		if (posInfo.whH[w] > 0.1f)  emitD = 0;  // no dust in fluids
 
 		bool ghost = eType == CT_GHOST;  // opt dis for ghost
@@ -350,7 +352,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 				ndWhE[w]->setOrientation(posInfo.rot);
 			}
 			//float al = 1.f; // test  //squeal-
-			float al = ((whRd == 2 ? 0.f : trlC) + 0.6f * std::min(1.f, 0.7f * wht[w]) ) * onGr;  // par+
+			float al = ((pipe ? 0.f : trlC) + 0.6f * std::min(1.f, 0.7f * wht[w]) ) * onGr;  // par+
 			if (whTrl[w])	whTrl[w]->setInitialColour(0,
 				lay.tclr.r,lay.tclr.g,lay.tclr.b, lay.tclr.a * al/**/);
 		}

@@ -490,14 +490,14 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				struct stWiPntW {  Real x,y, uv, nx,ny;  };  // wall width points
 				const static stWiPntW wiPntW[iwW+1][2] = {  // section shape
 					//  normal road                     //  pipe wall
-					{{-0.5f, -0.1f, 0.0f,  1.0f, 0.0f}, {-0.28f, 0.7f, 0.0f, -1.0f, 0.0f}},
+					{{-0.5f, -0.1f, 0.0f,  1.0f, 0.0f}, {-0.28f, 0.68f,0.0f, -1.0f, 0.0f}},
 					{{-0.5f,  1.2f, 0.5f,  0.5f, 0.5f}, {-0.28f, 0.5f, 0.2f, -0.5f, 0.5f}},
 					{{-0.56f, 1.2f, 0.2f, -0.5f, 0.5f}, {-0.28f, 0.0f, 0.2f, -0.5f, 0.0f}},
 					{{-0.56f,-0.9f, 1.6f, -0.5f,-0.5f}, {-0.2f, -0.9f, 0.5f, -0.1f,-0.5f}},
 					{{ 0.56f,-0.9f, 3.0f,  0.5f,-0.5f}, { 0.2f, -0.9f, 0.5f,  0.1f,-0.5f}},
 					{{ 0.56f, 1.2f, 1.6f,  0.5f, 0.5f}, { 0.28f, 0.0f, 0.2f,  0.5f, 0.0f}},
 					{{ 0.5f,  1.2f, 0.2f, -0.5f, 0.5f}, { 0.28f, 0.5f, 0.2f,  0.5f, 0.5f}},
-					{{ 0.5f, -0.1f, 0.5f, -1.0f, 0.0f}, { 0.28f, 0.7f, 0.2f,  1.0f, 0.0f}}};
+					{{ 0.5f, -0.1f, 0.5f, -1.0f, 0.0f}, { 0.28f, 0.68f,0.2f,  1.0f, 0.0f}}};
 				Real uv = 0.f;  // tc long
 
 				if (!onTer)
