@@ -2089,95 +2089,120 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassLayers}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="44 124 64 24">
+						<Widget type="TextBox" skin="TextBox" position="252 55 120 24">
+							<Property key="Caption" value="#{GrassSize}"/>
+							<Property key="TextColour" value="0.6 1 0.4"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 56 64 24">
 							<Property key="Caption" value="#{min} x"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMin}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="178 124 64 24">
-							<Property key="Caption" value="#{max} x"/>
-							<Property key="TextColour" value="0.6 1 0.4"/>
+						<Widget type="Slider" skin="Slider" position="32 76 250 16" name="GrMinX">
+							<Property key="Colour" value="0.6 1 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
-							<UserString key="tip" value="#{TipGrassPatchLengthMax}"/>
+							<UserString key="tip" value="#{TipGrassPatchLengthMin}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="44 148 64 24">
-							<Property key="Caption" value="#{min} y"/>
-							<Property key="TextColour" value="0.6 0.9 0.3"/>
-							<UserString key="RelativeTo" value="EditorWnd"/>
-							<UserString key="tip" value="#{TipGrassPatchHeightMin}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="178 148 64 24">
-							<Property key="Caption" value="#{max} y"/>
-							<Property key="TextColour" value="0.6 1 0.4"/>
-							<UserString key="RelativeTo" value="EditorWnd"/>
-							<UserString key="tip" value="#{TipGrassPatchHeightMax}"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="96 122 56 24" name="GrMinX">
+						<Widget type="TextBox" skin="TextBox" position="112 56 56 24" name="GrMinXVal">
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<Property key="Colour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMin}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="232 122 56 24" name="GrMaxX">
+
+						<Widget type="TextBox" skin="TextBox" position="32 96 64 24">
+							<Property key="Caption" value="#{max} x"/>
+							<Property key="TextColour" value="0.6 1 0.4"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipGrassPatchLengthMax}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="32 116 250 16" name="GrMaxX">
+							<Property key="Colour" value="0.6 1 0.6"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipGrassPatchLengthMin}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="112 96 56 24" name="GrMaxXVal">
 							<Property key="Colour" value="0.6 1 0.4"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMax}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="96 146 56 24" name="GrMinY">
-							<Property key="Colour" value="0.6 0.9 0.3"/>
-							<Property key="TextColour" value="0.6 0.9 0.3"/>
+
+						<Widget type="TextBox" skin="TextBox" position="32 136 64 24">
+							<Property key="Caption" value="#{min} y"/>
+							<Property key="TextColour" value="0.2 0.9 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassPatchHeightMin}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="232 146 56 24" name="GrMaxY">
-							<Property key="Colour" value="0.6 1 0.4"/>
-							<Property key="TextColour" value="0.6 1 0.4"/>
+						<Widget type="Slider" skin="Slider" position="32 156 250 16" name="GrMinY">
+							<Property key="Colour" value="0.2 1 0.4"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipGrassPatchLengthMin}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="112 136 56 24" name="GrMinYVal">
+							<Property key="Colour" value="0.2 0.9 0.2"/>
+							<Property key="TextColour" value="0.2 0.9 0.2"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipGrassPatchHeightMin}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 176 64 24">
+							<Property key="Caption" value="#{max} y"/>
+							<Property key="TextColour" value="0.2 1 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassPatchHeightMax}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 100 120 24">
-							<Property key="Caption" value="#{GrassSize}"/>
-							<Property key="TextColour" value="0.6 1 0.4"/>
+						<Widget type="Slider" skin="Slider" position="32 196 250 16" name="GrMaxY">
+							<Property key="Colour" value="0.2 1 0.4"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipGrassPatchLengthMin}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="44 204 96 24">
+						<Widget type="TextBox" skin="TextBox" position="112 176 56 24" name="GrMaxYVal">
+							<Property key="Colour" value="0.2 1 0.2"/>
+							<Property key="TextColour" value="0.2 1 0.2"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipGrassPatchHeightMax}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="44 244 96 24">
 							<Property key="Caption" value="#{distribution}"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassSwayDistr}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="44 228 96 24">
+						<Widget type="TextBox" skin="TextBox" position="44 268 96 24">
 							<Property key="Caption" value="#{length}"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassSwayLen}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="44 254 96 24">
+						<Widget type="TextBox" skin="TextBox" position="44 294 96 24">
 							<Property key="Caption" value="#{speed}"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassSwaySpd}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="152 225 56 24" name="GrSwayLen">
+						<Widget type="EditBox" skin="EditBox" position="152 265 56 24" name="GrSwayLen">
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<Property key="Colour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassSwayLen}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="152 251 56 24" name="GrSwaySpd">
+						<Widget type="EditBox" skin="EditBox" position="152 291 56 24" name="GrSwaySpd">
 							<Property key="Colour" value="0.6 0.9 0.3"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassSwaySpd}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 180 96 24">
+						<Widget type="TextBox" skin="TextBox" position="32 220 96 24">
 							<Property key="Caption" value="#{GrassSway}"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="152 201 56 24" name="GrSwayDistr">
+						<Widget type="EditBox" skin="EditBox" position="152 241 56 24" name="GrSwayDistr">
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<Property key="Colour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
@@ -2223,7 +2248,7 @@
 							<Property key="TextColour" value="0.4 1.0 0.3"/>
 							<Property key="Colour" value="0.3 0.7 0.2"/>
 							<Property key="ReadOnly" value="true"/>
-							<UserString key="tip" value="#{TipGrassMaterial}"/>
+							<!--<UserString key="tip" value="#{TipGrassMaterial}"/>-->
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
 						<Widget type="ComboBox" skin="ComboBox" position="330 190 170 25" name="CmbGrClr">

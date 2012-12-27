@@ -122,9 +122,6 @@ void App::editTrGr(EditPtr ed)
 	else if (n=="GrPage")  sc->grPage = r;	else if (n=="GrDist")  sc->grDist = r;
 	else if (n=="GrDensSmooth")  sc->grDensSmooth = r;
 
-	else if (n=="GrMinX")  gr->minSx = r;	else if (n=="GrMaxX")  gr->maxSx = r;
-	else if (n=="GrMinY")  gr->minSy = r;	else if (n=="GrMaxY")  gr->maxSy = r;
-
 	else if (n=="GrSwayDistr")  gr->swayDistr = r;
 	else if (n=="GrSwayLen")  gr->swayLen = r;	else if (n=="GrSwaySpd")  gr->swaySpeed = r;
 
@@ -171,8 +168,11 @@ void App::tabGrLayers(TabPtr wp, size_t id)
 	Slv(LGrDens, powf((gr->dens-0.001f) /1.0f, 0.5f));
 	_Cmb(cmbGrassMtr, gr->material);  _Cmb(cmbGrassClr, gr->colorMap);
 
-	_Ed(GrMinX, gr->minSx);		_Ed(GrMaxX, gr->maxSx);
-	_Ed(GrMinY, gr->minSy);		_Ed(GrMaxY, gr->maxSy);
+	Slv(GrMinX, powf((gr->minSx-0.1f) /4.0f, 1.f/2.f));
+	Slv(GrMaxX, powf((gr->maxSx-0.1f) /4.0f, 1.f/2.f));
+	Slv(GrMinY, powf((gr->minSy-0.1f) /4.0f, 1.f/2.f));
+	Slv(GrMaxY, powf((gr->maxSy-0.1f) /4.0f, 1.f/2.f));
+
 	_Ed(GrSwayDistr, gr->swayDistr);
 	_Ed(GrSwayLen, gr->swayLen);	_Ed(GrSwaySpd, gr->swaySpeed);
 	
@@ -234,6 +234,28 @@ void App::comboPgLay(ComboBoxPtr cmb, size_t val)
 	sc->pgLayersAll[idPgLay].name = s + ".mesh";
 	if (imgPaged)	imgPaged->setImageTexture(s + ".png");  // prv impostor  todo 3d..
 }
+
+void App::slGrMinX(SL)
+{
+	Real v = 0.1f + 4.0f * powf(val, 2.f);  sc->grLayersAll[idGrLay].minSx = v;
+	if (valGrMinX){  valGrMinX->setCaption(fToStr(v,2,4));  }
+}
+void App::slGrMaxX(SL)
+{
+	Real v = 0.1f + 4.0f * powf(val, 2.f);  sc->grLayersAll[idGrLay].maxSx = v;
+	if (valGrMaxX){  valGrMaxX->setCaption(fToStr(v,2,4));  }
+}
+void App::slGrMinY(SL)
+{
+	Real v = 0.1f + 4.0f * powf(val, 2.f);  sc->grLayersAll[idGrLay].minSy = v;
+	if (valGrMinY){  valGrMinY->setCaption(fToStr(v,2,4));  }
+}
+void App::slGrMaxY(SL)
+{
+	Real v = 0.1f + 4.0f * powf(val, 2.f);  sc->grLayersAll[idGrLay].maxSy = v;
+	if (valGrMaxY){  valGrMaxY->setCaption(fToStr(v,2,4));  }
+}
+
 
 void App::slLGrDens(SL)  //  sliders
 {

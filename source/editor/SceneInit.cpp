@@ -61,7 +61,7 @@ void App::createScene()  // once, init
 
 	postInit();  // material factory
 
-	//  gui
+	//  gui  * * *
 	if (pSet->startInMain)
 		pSet->isMain = true;
 		

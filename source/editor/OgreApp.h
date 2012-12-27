@@ -395,8 +395,8 @@ protected:
 	
 
 	///  [Vegetation]  ----
+	SLV(GrMinX);  SLV(GrMaxX);  SLV(GrMinY);  SLV(GrMaxY);
 	MyGUI::EditPtr edGrassDens,edTreesDens, edGrPage,edGrDist, edTrPage,edTrDist,
-		edGrMinX,edGrMaxX, edGrMinY,edGrMaxY,
 		edGrSwayDistr, edGrSwayLen, edGrSwaySpd, edTrRdDist, edTrImpDist,
 		edGrDensSmooth, edGrTerMaxAngle,edGrTerMinHeight,edGrTerMaxHeight, edSceneryId;
 	MyGUI::ComboBoxPtr cmbGrassMtr;  void comboGrassMtr(CMB);

@@ -44,7 +44,7 @@ App::App()  //  gui wigdets--
 	,cmbParDust(0),cmbParMud(0),cmbParSmoke(0)
 	,cmbSurface(0),txtSurfTire(0),txtSuBumpWave(0),txtSuBumpAmp(0),txtSuRollDrag(0),txtSuFrict(0),txtSurfType(0)  //ter surfaces
 	,edGrassDens(0),edTreesDens(0), edGrPage(0),edGrDist(0), edTrPage(0),edTrDist(0)  // vegetation
-	,edGrMinX(0),edGrMaxX(0), edGrMinY(0),edGrMaxY(0)
+	,valGrMinX(0),valGrMaxX(0),valGrMinY(0),valGrMaxY(0)
 	,edGrSwayDistr(0), edGrSwayLen(0), edGrSwaySpd(0), edTrRdDist(0), edTrImpDist(0)
 	,edGrDensSmooth(0), edGrTerMaxAngle(0),edGrTerMinHeight(0),edGrTerMaxHeight(0)
 	,edSceneryId(0), cmbGrassMtr(0), cmbGrassClr(0)
