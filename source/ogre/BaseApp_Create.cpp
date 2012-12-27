@@ -67,9 +67,9 @@ void BaseApp::createFrameListener()
 	#if defined OIS_WIN32_PLATFORM
     if (!pSet->capture_mouse)
     {
-		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND" )));
 		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
-		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND")));
+		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_BACKGROUND" )));  //DISCL_FOREGROUND
+		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_BACKGROUND")));
 		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
 	}
     #elif defined OIS_LINUX_PLATFORM
@@ -105,8 +105,8 @@ void BaseApp::createFrameListener()
 	mMouse->capture();
 	mKeyboard->capture();
 
-        if (pSet->x11_hwmouse)
-                mHWMouse = new HWMouse(windowHnd, 8, 8, "pointer.png");
+	if (pSet->x11_hwmouse)
+		mHWMouse = new HWMouse(windowHnd, 8, 8, "pointer.png");
 	
 	// add listener for all joysticks
 	for (std::vector<OISB::JoyStick*>::iterator it=mOISBsys->mJoysticks.begin();
@@ -176,8 +176,8 @@ BaseApp::~BaseApp()
 	delete mLoadingBar;
 	delete mSplitMgr;
 
-        if (pSet->x11_hwmouse)
-                delete mHWMouse;
+	if (pSet->x11_hwmouse)
+		delete mHWMouse;
 	
 	if (mGUI)  {
 		mGUI->shutdown();  delete mGUI;  mGUI = 0;  }
@@ -202,7 +202,7 @@ BaseApp::~BaseApp()
 	}
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		mRoot->unloadPlugin("RenderSystem_Direct3D9");
-		mRoot->unloadPlugin("RenderSystem_Direct3D11");
+		//mRoot->unloadPlugin("RenderSystem_Direct3D11");
 	#endif
 	mRoot->unloadPlugin("RenderSystem_GL");
 
@@ -246,8 +246,12 @@ bool BaseApp::configure()
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		HWND hwnd;
 		mWindow->getCustomAttribute("WINDOW", (void*)&hwnd);
-		LONG iconID = (LONG)LoadIcon(GetModuleHandle(0), MAKEINTRESOURCE(IDI_ICON1));
+		HINSTANCE hInst = (HINSTANCE)GetModuleHandle(NULL);
+		LONG iconID = (LONG)LoadIcon(hInst, MAKEINTRESOURCE(IDI_ICON1));
 		SetClassLong(hwnd, GCL_HICON, iconID);
+		//SetClassLong(hwnd, GCL_HCURSOR, (LONG)LoadCursor(hInst, MAKEINTRESOURCE(IDC_CROSS)));
+		ShowCursor(0);
+		SetCursor(0);
 	#endif
 	mLoadingBar->bBackgroundImage = pSet->loadingbackground;
 	return true;
@@ -287,14 +291,9 @@ bool BaseApp::setup()
 		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
-		try
-		{
-			mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
-		}
-		catch(...)
-		{
-			//Ignore D3D11 plugin is not available
-		}
+		/*try
+		{	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
+		} catch(...) {  }/**/
 		#endif
 	}
 	else
@@ -304,16 +303,9 @@ bool BaseApp::setup()
 		else if (pSet->rendersystem == "Direct3D9 Rendering Subsystem")
 			mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
 		/*else if (pSet->rendersystem == "Direct3D11 Rendering Subsystem")
-		{
-			try
-			{
-				mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
-			}
-			catch(...)
-			{
-				//Ignore D3D11 plugin is not available
-			}
-		}/**/
+		try
+		{	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
+		} catch(...) {  }/**/
 	}
 
 	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
@@ -706,24 +698,24 @@ void BaseApp::showMouse()
 {
 	if (!mGUI)  return;
 
-        if (pSet->x11_hwmouse)
-                mHWMouse->show();
+	if (pSet->x11_hwmouse)
+		mHWMouse->show();
 	
 	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-        if (pSet->x11_hwmouse)
-                MyGUI::PointerManager::getInstance().setVisible(false);
-        else
-                MyGUI::PointerManager::getInstance().setVisible(true);
+	if (pSet->x11_hwmouse)
+		MyGUI::PointerManager::getInstance().setVisible(false);
+	else
+		MyGUI::PointerManager::getInstance().setVisible(true);
 	#else
-	MyGUI::PointerManager::getInstance().setVisible(true);
+		MyGUI::PointerManager::getInstance().setVisible(true);
 	#endif
 }
 void BaseApp::hideMouse()
 {
 	if (!mGUI)  return;
 
-        if (pSet->x11_hwmouse)
-                mHWMouse->hide();
+	if (pSet->x11_hwmouse)
+		mHWMouse->hide();
                 
 	MyGUI::PointerManager::getInstance().setVisible(false);
 }

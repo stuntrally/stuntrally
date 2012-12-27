@@ -87,9 +87,9 @@ void BaseApp::createFrameListener()
 	#if defined OIS_WIN32_PLATFORM
     if (!pSet->capture_mouse)
     {
-		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND" )));
-		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
-		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND")));
+		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE" )));
+		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_BACKGROUND")));  //DISCL_FOREGROUND
+		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_BACKGROUND")));
 		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
 	}
     #elif defined OIS_LINUX_PLATFORM
@@ -112,8 +112,8 @@ void BaseApp::createFrameListener()
 	mMouse->setEventCallback(this);
 	mKeyboard->setEventCallback(this);
 	
-	//mMouse->capture();
-	//mKeyboard->capture();
+	mMouse->capture();
+	mKeyboard->capture();
 	//mHWMouse = new HWMouse(windowHnd, 8, 8, "pointer.png");
 
 	windowResized(mWindow);
@@ -240,8 +240,12 @@ bool BaseApp::configure()
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		HWND hwnd;
 		mWindow->getCustomAttribute("WINDOW", (void*)&hwnd);
-		LONG iconID = (LONG)LoadIcon(GetModuleHandle(0), MAKEINTRESOURCE(IDI_ICON1));
+		HINSTANCE hInst = (HINSTANCE)GetModuleHandle(NULL);
+		LONG iconID = (LONG)LoadIcon(hInst, MAKEINTRESOURCE(IDI_ICON1));
 		SetClassLong(hwnd, GCL_HICON, iconID);
+		//SetClassLong(hwnd, GCL_HCURSOR, (LONG)LoadCursor(hInst, MAKEINTRESOURCE(IDC_CROSS)));
+		ShowCursor(0);
+		SetCursor(0);
 	#endif
 	return true;
 }
