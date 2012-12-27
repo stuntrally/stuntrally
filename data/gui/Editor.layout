@@ -3407,9 +3407,9 @@
 					<Property key="Caption" value="#{MouseCapture}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="616 386 160 24" name="OgreDialog">
-					<Property key="TextColour" value="0.7 0.8 0.9"/>
-					<Property key="Caption" value="#{OgreDialog}"/>
+				<Widget type="Button" skin="CheckBox" position="616 386 160 24" name="StartInMain">
+					<Property key="TextColour" value="0.6 0.7 0.8"/>
+					<Property key="Caption" value="#{StartInMain}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="616 418 160 24" name="AutoStart">
@@ -3422,9 +3422,9 @@
 					<Property key="Caption" value="#{EscQuit}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="616 482 160 24" name="Wireframe">
-					<Property key="TextColour" value="0.7 0.8 0.9"/>
-					<Property key="Caption" value="#{Wireframe} F11"/>
+				<Widget type="Button" skin="CheckBox" position="616 482 160 24" name="OgreDialog">
+					<Property key="TextColour" value="0.5 0.6 0.7"/>
+					<Property key="Caption" value="#{OgreDialog}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 96 152 24">
@@ -3532,6 +3532,11 @@
 				<Widget type="Button" skin="CheckBox" position="32 330 360 24" name="InputBar">
 					<Property key="Caption" value="#{EdInputBar}"/>
 					<Property key="TextColour" value="0.65 0.7 0.75"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 360 160 24" name="Wireframe">
+					<Property key="TextColour" value="0.7 0.8 0.9"/>
+					<Property key="Caption" value="#{Wireframe} F11"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 			</Widget>

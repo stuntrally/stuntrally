@@ -899,7 +899,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		SizeGUI();
 		updTrkListDim();
 		
-		LoadTrack();  // shouldnt be needed but ...
+		//LoadTrack();  // shouldnt be needed ...
 	}
 	
 	if (bRecreateFluids)

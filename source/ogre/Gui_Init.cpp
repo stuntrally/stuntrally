@@ -260,12 +260,16 @@ void App::InitGui()
 
 	//  startup
 	Chk("MouseCapture", chkMouseCapture, pSet->capture_mouse);
-	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
+	Chk("StartInMain", chkStartInMain, pSet->startInMain);
+
 	Chk("AutoStart", chkAutoStart, pSet->autostart);
 	Chk("EscQuits", chkEscQuits, pSet->escquit);
+	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
+
 	Chk("BltLines", chkBltLines, pSet->bltLines);
 	Chk("ShowPictures", chkLoadPics, pSet->loadingbackground);
 	Chk("MultiThread", chkMultiThread, pSet->multi_thr > 0);
+
 	
 	//  effects
 	Chk("AllEffects", chkVidEffects, pSet->all_effects);

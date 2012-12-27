@@ -62,17 +62,23 @@ void App::createScene()  // once, init
 	postInit();  // material factory
 
 	//  gui
+	if (pSet->startInMain)
+		pSet->isMain = true;
+		
 	bGuiFocus = false/*true*/;  bMoveCam = true;  //*--
 	InitGui();
+
 	TerCircleInit();
 	createBrushPrv();
+
 	if (pSet->inputBar)  mDebugOverlay->show();
 	if (!pSet->camPos)  ovPos->hide();
 
 	//  load
 	if (pSet->autostart)
 		LoadTrack();
-	else
+
+	if (!pSet->autostart)
 	{	bGuiFocus = true;  UpdVisGui();	}
 
 	iObjTNew = 0;
@@ -481,6 +487,7 @@ void App::BltClear()
 	track = NULL;
 	DestroyVdrTrackBlt();
 	
+	if (world)
 	for(int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
 	{
 		btCollisionObject* obj = world->getCollisionObjectArray()[i];

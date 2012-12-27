@@ -43,7 +43,7 @@ public:
 	bool capture_mouse, inputBar,camPos;
 	//  misc
 	std::string language;
-	bool isMain;  int inMenu;  // last menu id
+	bool isMain, startInMain;  int inMenu;  // last menu id
 
 	//  settings
 	bool bFog, bTrees, bWeather, autoBlendmap;

@@ -418,6 +418,7 @@
 	<Tag name="BulletLines">Bullet debug lines</Tag>
 	<Tag name="ShowPictures">Show pictures while loading</Tag>
 	<Tag name="MultiThread">Multi Threaded</Tag>
+	<Tag name="StartInMain">Start in main menu</Tag>
 
 	
 	<!--  Input  -->

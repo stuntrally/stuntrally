@@ -38,7 +38,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	}
 
 	//  game
-	Param(c,w, "game.in_menu", inMenu);			Param(c,w, "game.in_main", isMain);
+	Param(c,w, "game.start_in_main", startInMain);
+	Param(c,w, "game.in_menu", inMenu);				Param(c,w, "game.in_main", isMain);
 	Param(c,w, "game.pre_time", gui.pre_time);
 	Param(c,w, "game.champ_num", gui.champ_num);
 	Param(c,w, "game.boost_type", gui.boost_type);		Param(c,w, "game.flip_type", gui.flip_type);
@@ -175,7 +176,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  car
 	autoshift(1), autorear(1), rear_inv(1), show_mph(0),
 	//  misc
-	isMain(1), inMenu(0), rpl_rec(0),
+	isMain(1), startInMain(1), inMenu(0), rpl_rec(0),
 	split_vertically(true), language(""), // "" = autodetect lang
 	//  joystick
 	ff_device("/dev/input/event0"), ff_gain(1.0), ff_invert(false),

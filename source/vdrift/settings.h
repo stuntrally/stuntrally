@@ -88,7 +88,7 @@ public:
 	
 	//  misc
 	bool split_vertically;  std::string language;
-	bool isMain;  int inMenu;  // last menu id
+	bool isMain, startInMain;  int inMenu;  // last menu id
 	
 	//  joystick ff
 	std::string ff_device;	float ff_gain;	bool ff_invert;

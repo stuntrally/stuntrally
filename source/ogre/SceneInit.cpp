@@ -64,7 +64,10 @@ void App::createScene()
 	LogO(String("::: Time load xmls: ") + toStr(dt) + " ms");
 
 
-	//  gui
+	//  gui  * * *
+	if (pSet->startInMain)
+		pSet->isMain = true;
+
 	if (!pSet->autostart)  isFocGui = true;
 	InitGui();
 

@@ -2448,14 +2448,14 @@
 							<Property key="Caption" value="#{MouseCapture}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 94 256 24" name="ShowPictures">
-							<Property key="TextColour" value="0.5 0.6 0.7"/>
-							<Property key="Caption" value="#{ShowPictures}*"/>
+						<Widget type="Button" skin="CheckBox" position="32 94 160 24" name="StartInMain">
+							<Property key="TextColour" value="0.6 0.7 0.8"/>
+							<Property key="Caption" value="#{StartInMain}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 126 256 24" name="OgreDialog">
-							<Property key="TextColour" value="0.5 0.6 0.7"/>
-							<Property key="Caption" value="#{OgreDialog}"/>
+						<Widget type="Button" skin="CheckBox" position="32 126  256 24" name="MultiThread">
+							<Property key="TextColour" value="0.7 0.86 1.0"/>
+							<Property key="Caption" value="#{MultiThread}*"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 168 256 24" name="AutoStart">
@@ -2468,14 +2468,19 @@
 							<Property key="Caption" value="#{EscQuit}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 244 256 24" name="BltLines">
+						<Widget type="Button" skin="CheckBox" position="332 62 256 24" name="BltLines">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Caption" value="#{BulletLines}*"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 276 256 24" name="MultiThread">
-							<Property key="TextColour" value="0.7 0.86 1.0"/>
-							<Property key="Caption" value="#{MultiThread}*"/>
+						<Widget type="Button" skin="CheckBox" position="332 94 256 24" name="OgreDialog">
+							<Property key="TextColour" value="0.5 0.6 0.7"/>
+							<Property key="Caption" value="#{OgreDialog}"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="332 126 256 24" name="ShowPictures">
+							<Property key="TextColour" value="0.5 0.6 0.7"/>
+							<Property key="Caption" value="#{ShowPictures}*"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 					</Widget>

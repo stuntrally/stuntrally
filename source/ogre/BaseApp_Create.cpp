@@ -69,7 +69,7 @@ void BaseApp::createFrameListener()
     {
 		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
 		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_BACKGROUND" )));  //DISCL_FOREGROUND
-		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_BACKGROUND")));
+		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND")));
 		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
 	}
     #elif defined OIS_LINUX_PLATFORM

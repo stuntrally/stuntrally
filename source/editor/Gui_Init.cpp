@@ -175,9 +175,12 @@ void App::InitGui()
 
 	//  startup
 	Chk("MouseCapture", chkMouseCapture, pSet->capture_mouse);
-	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
+	Chk("StartInMain", chkStartInMain, pSet->startInMain);
+
 	Chk("AutoStart", chkAutoStart, pSet->autostart);
 	Chk("EscQuits", chkEscQuits, pSet->escquit);
+	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
+
 	bnQuit = mGUI->findWidget<Button>("Quit");
 	if (bnQuit)  {  bnQuit->eventMouseButtonClick += newDelegate(this, &App::btnQuit);  bnQuit->setVisible(false);  }
 	

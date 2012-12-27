@@ -323,7 +323,8 @@ protected:
 
 
 	//  [settings]
-	void chkMouseCapture(WP), chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP);  // startup
+	void chkMouseCapture(WP), chkOgreDialog(WP),
+		chkAutoStart(WP), chkEscQuits(WP), chkStartInMain(WP);  // startup
 	SLV(SizeMinmap);  SLV(CamSpeed);  SLV(CamInert);
 	SLV(TerUpd);  SLV(SizeRoadP);  SLV(MiniUpd);
 	void chkMinimap(WP), btnSetCam(WP);

@@ -478,10 +478,13 @@ void App::slDbgTxtCnt(SL)
 }
 
 //  Startup
-void App::chkMouseCapture(WP wp){	ChkEv(capture_mouse);	}
-void App::chkOgreDialog(WP wp){		ChkEv(ogre_dialog);	}
+void App::chkMouseCapture(WP wp){	ChkEv(capture_mouse);  }
+void App::chkStartInMain(WP wp)	{	ChkEv(startInMain);    }
+
 void App::chkAutoStart(WP wp){		ChkEv(autostart);	}
 void App::chkEscQuits(WP wp){		ChkEv(escquit);		}
+void App::chkOgreDialog(WP wp){		ChkEv(ogre_dialog);	}
+
 void App::chkBltLines(WP wp){		ChkEv(bltLines);	}
 void App::chkLoadPics(WP wp){		ChkEv(loadingbackground);	}
 void App::chkMultiThread(WP wp){	pSet->multi_thr = pSet->multi_thr ? 0 : 1;  if (wp) {
