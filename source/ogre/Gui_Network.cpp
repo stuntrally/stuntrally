@@ -23,12 +23,12 @@ using namespace MyGUI;
 
 namespace
 {
-	std::string yesno(bool cond)
+	string yesno(bool cond)
 	{
 		return cond ? TR("#{Yes}") : TR("#{No}");
 	}
 
-	void inline raiseError(const std::string& what, const std::string& title = TR("#{Error}"))
+	void inline raiseError(const string& what, const string& title = TR("#{Error}"))
 	{
 		Message::createMessageBox("Message", title, what, MessageBoxStyle::IconError | MessageBoxStyle::Ok);
 	}
@@ -46,11 +46,12 @@ void App::rebuildGameList()
 	for (protocol::GameList::const_iterator it = list.begin(); it != list.end(); ++it)
 	{
 		listServers->addItem("#C0FFC0"+UString(it->second.name));  int l = listServers->getItemCount()-1;
-		listServers->setSubItemNameAt(1, l, "#50FF50"+std::string(it->second.track));
+		listServers->setSubItemNameAt(1, l, "#50FF50"+string(it->second.track));
 		listServers->setSubItemNameAt(2, l, "#80FFC0"+toStr((int)it->second.laps));
 		listServers->setSubItemNameAt(3, l, "#FFFF00"+toStr((int)it->second.players));
 		listServers->setSubItemNameAt(4, l, "#80FFFF"+yesno((bool)it->second.collisions));
-		listServers->setSubItemNameAt(5, l, "#A0D0FF"+TR(sBoost[it->second.boost_type]));
+		listServers->setSubItemNameAt(5, l, "#D0D0FF"+string(it->second.sim_mode));
+		listServers->setSubItemNameAt(6, l, "#A0D0FF"+TR(sBoost[it->second.boost_type]));
 		listServers->setSubItemNameAt(iColLock, l, "#FF6060"+yesno((bool)it->second.locked));
 		listServers->setSubItemNameAt(iColHost, l, "#FF9000"+net::IPv4(it->second.address));
 		listServers->setSubItemNameAt(iColPort, l, "#FFB000"+toStr((int)it->second.port));
@@ -97,11 +98,11 @@ void App::updateGameInfo()
 {
 	//  set game config
 	if (netGameInfo.name && edNetGameName)
-	{	std::string name(netGameInfo.name);
+	{	string name(netGameInfo.name);
 		edNetGameName->setCaption(name);
 	}
 	if (netGameInfo.track)
-	{	std::string track(netGameInfo.track);
+	{	string track(netGameInfo.track);
 		sListTrack = track;
 		ReadTrkStats();
 	}
@@ -117,6 +118,7 @@ void App::updateGameSet()
 	pSet->game.boost_type = netGameInfo.boost_type;
 	pSet->game.boost_power = netGameInfo.boost_power;
 	pSet->game.trackreverse = netGameInfo.reversed;
+	pSet->game.sim_mode = netGameInfo.sim_mode;  LogO("== Netw sim mode: " + pSet->game.sim_mode);
 }
 
 void App::updateGameInfoGUI()
@@ -155,10 +157,16 @@ void App::uploadGameInfo()
 	if (!mMasterClient || !mClient || !edNetGameName || !pSet)
 		return;
 	protocol::GameInfo game;
-	std::string gamename = edNetGameName->getCaption();
-	std::string trackname = sListTrack;
-	std::memcpy(game.name, gamename.c_str(), 32);
-	std::memcpy(game.track, trackname.c_str(), 32);
+	string gamename = edNetGameName->getCaption();
+	string trackname = sListTrack;
+	string simmode = pSet->gui.sim_mode;
+	
+	memcpy(game.name, 0, sizeof(game.name));
+	memcpy(game.track, 0, sizeof(game.track));
+	memcpy(game.sim_mode, 0, sizeof(game.sim_mode));
+	strcpy(game.name, gamename.c_str());
+	strcpy(game.track, trackname.c_str());
+	strcpy(game.sim_mode, simmode.c_str());
 	game.players = mClient->getPeerCount()+1;
 
 	game.collisions = pSet->gui.collis_cars;  // game set
@@ -167,7 +175,7 @@ void App::uploadGameInfo()
 	game.boost_type = pSet->gui.boost_type;
 	game.boost_power = pSet->gui.boost_power;
 	game.reversed = pSet->gui.trackreverse;
-
+	
 	game.port = pSet->local_port;
 	game.locked = !edNetPassword->getCaption().empty();
 	mMasterClient->updateGame(game); // Upload to master server
@@ -232,7 +240,7 @@ void App::peerInfo(PeerInfo peer)
 	bRebuildPlayerList = true;
 }
 
-void App::peerMessage(PeerInfo peer, std::string msg)
+void App::peerMessage(PeerInfo peer, string msg)
 {
 	boost::mutex::scoped_lock lock(netGuiMutex);
 
@@ -291,7 +299,7 @@ void App::error(string what)
 	AddChatMsg("#FF3030", UString("ERROR! ") + what);
 }
 
-void App::join(std::string host, std::string port, std::string password)
+void App::join(string host, string port, string password)
 {
 	try
 	{	mClient.reset(new P2PGameClient(this, pSet->local_port));
@@ -331,8 +339,8 @@ void App::evBtnNetJoin(WP)
 	//  TODO: Comparing against localized string is EVIL!
 	if (listServers->getSubItemNameAt(iColLock, i).substr(7) == TR("#{No}"))
 	{
-		std::string host = listServers->getSubItemNameAt(iColHost, i).substr(7);
-		std::string port = listServers->getSubItemNameAt(iColPort, i).substr(7);
+		string host = listServers->getSubItemNameAt(iColHost, i).substr(7);
+		string port = listServers->getSubItemNameAt(iColPort, i).substr(7);
 		
 		join(host, port, "");
 	}else{
@@ -350,8 +358,8 @@ void App::evBtnNetJoinLockedClose()
 	if (popup.btnResult != 0 || !listServers || !pSet)  return;
 	size_t i = listServers->getIndexSelected();  if (i == ITEM_NONE)  return;
 
-	std::string host = listServers->getSubItemNameAt(iColHost, i);
-	std::string port = listServers->getSubItemNameAt(iColPort, i);
+	string host = listServers->getSubItemNameAt(iColHost, i);
+	string port = listServers->getSubItemNameAt(iColPort, i);
 	
 	join(host, port, popup.edit0);  // host, port, password
 }

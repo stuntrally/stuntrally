@@ -71,7 +71,8 @@ struct HandshakePackage {
 		master_protocol_version(MASTER_PROTOCOL_VERSION),
 		game_protocol_version(GAME_PROTOCOL_VERSION)
 	{
-		std::memcpy(password, passwd.c_str(), 16);
+		memset(password, 0, sizeof(password));
+		strcpy(password, passwd.c_str());
 	}
 };
 
@@ -86,18 +87,21 @@ struct GameInfo {
 	uint32_t address;   // Set by server
 	uint16_t port;      // Set by client
 	uint32_t timestamp; // Set by server
-	uint8_t players;    // Set by client
-	uint8_t collisions; // Set by client
-	uint8_t laps;       // Set by client
-	uint8_t locked;     // Set by client
-	uint8_t reversed;   // Set by client
-	uint8_t flip_type;  // Set by client
-	uint8_t boost_type; // Set by client
-	float boost_power;  // Set by client
-	char name[32];      // Set by client
-	char track[32];     // Set by client
 
-	GameInfo(): packet_type(GAME_STATUS), id() { name[0] = '\0'; track[0] = '\0'; }
+	uint8_t players;    // Set by client, all below
+	uint8_t collisions;
+	uint8_t laps;
+	uint8_t locked;
+	uint8_t reversed;
+	uint8_t flip_type;
+	uint8_t boost_type;
+	float boost_power;
+	char name[32];
+	char track[32];
+	char sim_mode[32];
+
+	GameInfo(): packet_type(GAME_STATUS), id() {
+		name[0] = '\0';  track[0] = '\0';  sim_mode[0] = '\0';  }
 
 	bool operator==(const GameInfo& other) { return id == other.id; }
 	bool operator!=(const GameInfo& other) { return !(*this == other); }

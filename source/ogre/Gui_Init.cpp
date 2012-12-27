@@ -394,14 +394,15 @@ void App::InitGui()
 	valNetGames = mGUI->findWidget<StaticText>("valNetGames");
 	listServers = mGUI->findWidget<MultiList>("MListServers");  int c=0;
 	if (listServers)
-	{	listServers->addColumn("#C0FFC0"+TR("#{Game name}"), 180);  ++c;
-		listServers->addColumn("#50FF50"+TR("#{Track}"), 140);  ++c;
-		listServers->addColumn("#80FFC0"+TR("#{Laps}"), 70);  ++c;
-		listServers->addColumn("#FFFF00"+TR("#{Players}"), 70);  ++c;
-		listServers->addColumn("#80FFFF"+TR("#{Collis.}"), 80);  ++c;
-		listServers->addColumn("#A0D0FF"+TR("#{Boost}"), 100);  ++c;
-		listServers->addColumn("#FF6060"+TR("#{Locked}"), 70);  iColLock = c;  ++c;
-		listServers->addColumn("#FF9000"+TR("#{NetHost}"), 130);  iColHost = c;  ++c;
+	{	listServers->addColumn("#C0FFC0"+TR("#{Game name}"), 160);  ++c;
+		listServers->addColumn("#50FF50"+TR("#{Track}"), 120);  ++c;
+		listServers->addColumn("#80FFC0"+TR("#{Laps}"), 60);  ++c;
+		listServers->addColumn("#FFFF00"+TR("#{Players}"), 60);  ++c;
+		listServers->addColumn("#80FFFF"+TR("#{Collis.}"), 70);  ++c;
+		listServers->addColumn("#A0D0FF"+TR("#{Simulation}"), 80);  ++c;
+		listServers->addColumn("#A0D0FF"+TR("#{Boost}"), 90);  ++c;
+		listServers->addColumn("#FF6060"+TR("#{Locked}"), 60);  iColLock = c;  ++c;
+		listServers->addColumn("#FF9000"+TR("#{NetHost}"), 140);  iColHost = c;  ++c;
 		listServers->addColumn("#FFB000"+TR("#{NetPort}"), 80);  iColPort = c;  ++c;
 	}
 	Btn("btnNetRefresh", evBtnNetRefresh);  btnNetRefresh = btn;

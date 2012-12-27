@@ -248,6 +248,7 @@
 	<Tag name="SplitVertically">Split Vertically</Tag>
 	<Tag name="NumLaps">Number of laps</Tag>
 
+	<Tag name="Simulation">Simulation</Tag>
 	<Tag name="SimMode">Simulation mode (difficulty)</Tag>
 	<Tag name="SimModeEasy">Easy (beginner)</Tag>
 	<Tag name="SimModeNormal">Normal (simulation)</Tag>
