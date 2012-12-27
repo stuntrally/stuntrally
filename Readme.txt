@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------------
 
     Stunt Rally - game based on VDrift and OGRE, with Track Editor
-    Copyright (C) 2012  Crystal Hammer
+    Copyright (C) 2013  Crystal Hammer
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,13 +24,15 @@
 
 Links
 
-Project's Homepage:  (all links, Wiki pages, Issue tracker (also as Forum))
+Project's Homepage:  (all links, Wiki pages)
         http://code.google.com/p/vdrift-ogre/
 
-Releases  (Windows installer, Linux binary):
+Releases:  (Windows installer, Linux binary)
         https://sourceforge.net/projects/stuntrally/files/
 Git repositories:  (for latest sources, data, and tracks)
         https://github.com/stuntrally/
+Forums:  (Report bugs, issues, ideas, comments, etc):
+        http://forum.freegamedev.net/viewforum.php?f=77
 
 Screenshots gallery:  (from all versions)
         http://picasaweb.google.com/CryHam/
@@ -43,7 +45,7 @@ Editor tutorial:
 
 Description
 
-The game features 104 tracks in 13 sceneries and 10 cars.
+The game features 111 tracks in 15 sceneries and 10 cars.
 Game modes include: Single Race, Tutorials and Championships, Multiplayer,
 Split Screen. Also Replays and Ghost drive are present.
 
@@ -66,7 +68,7 @@ with Shader Model 3.0 supported.
 
 It is possible to run on older,
 (e.g. on 1 core CPU and GeForce 7600 GT, with 30 fps),
-but integrated GPUs (or laptops) can't handle the game.
+but integrated GPUs (or laptops) can't handle the game well.
 
 ----------------------------------------------------------------------------------
 
@@ -86,8 +88,8 @@ Cameras can be adjusted in game, by mouse - move mouse to see actions.
 
 All settings and logs are saved to user folder (check Wiki page [Paths]).
 If you have problems running, read Wiki page [Running].
-If it doesn't help, report an issue on project's [Issues] page
-(if a similar issue doesn't exist). Be sure to attach your log files.
+If it doesn't help, report an issue on Forum [SR Bugs & Help]
+(if a similar topic doesn't exist). Be sure to attach your log files.
 
 Editor
 
@@ -124,7 +126,7 @@ SDL-1.2.14
 libvorbis-1.2.3, libogg-1.1.4
 
 -- These are included in Source (and compiled with project):
-Bullet 2.79
+Bullet 2.79 (need this version)
 BtOgre *
 OISB *
 PagedGeometry 1.1.1 *
@@ -164,5 +166,5 @@ Artists
     If you can create/edit sounds for the game.
 
 If so, tell us on IRC at #stuntrally on freenode,
-or by posting on Issue tracker,
+or by posting on Forum,
 or email me at: cryham (at) g m a i l (dot) com.
