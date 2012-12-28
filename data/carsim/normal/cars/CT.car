@@ -101,6 +101,7 @@ camber = -1.0
 caster = 1.0
 toe = -0.5
 anti-roll = 18000
+factors-file = first
 
 [ suspension-rear ]
 spring-constant = 86000
@@ -111,6 +112,7 @@ camber = -0.5
 caster = 0.0
 toe = 0.0
 anti-roll = 12000
+factors-file = first
 
 
 #  tires (more in .tire)

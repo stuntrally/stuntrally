@@ -97,16 +97,18 @@ camber = -1.33
 caster = 6.12
 toe = 0.0
 anti-roll = 5000
+factors-file = first
 
 [ suspension-rear ]
 spring-constant = 98000
 bounce = 13000
-rebound = 9992.14
+rebound = 10000
 travel = 0.32
 camber = -0.45
 caster = 0.28
 toe = 0.0
 anti-roll = 17000
+factors-file = first
 
 
 #  tires (more in .tire)
