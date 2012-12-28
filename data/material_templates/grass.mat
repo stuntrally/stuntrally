@@ -69,12 +69,21 @@ material grassUnidentified
     diffuse 0.4 0.4 0.4
 }
 
-//  moss, new
+//  new  +
 material grass2  {  parent grass
     diffuseMap grass2.png  }
 
+material grass2g  {  parent grass
+    diffuseMap grass2g.png  }
+
 material grass3  {  parent grass
     diffuseMap grass3.png  }
+
+material grass3g  {  parent grass
+    diffuseMap grass3g.png  }
+
+material grass3y  {  parent grass
+    diffuseMap grass3y.png  }
 
 material grass4v {  parent grass
     diffuseMap grass4v.png  }
@@ -82,29 +91,23 @@ material grass4v {  parent grass
 material grass5  {  parent grass
     diffuseMap grass5.png  }
 
-material grass6-  {  parent grass
-    diffuseMap grass6-.png  }
-
-material grass7--  {  parent grass
-    diffuseMap grass7--.png  }
-
 material grass9r  {  parent grass
     diffuseMap grass9r.png  }
 
 material grass10 {  parent grass
     diffuseMap grass10.png  }
 
-material grass11 {  parent grass
-    diffuseMap grass11.png  }
-
-material grass12r- {  parent grass
-    diffuseMap grass12r-.png  }
-
-material grass14wtr {  parent grass
-    diffuseMap grass14wtr.png  }
+material grass12y- {  parent grass
+    diffuseMap grass12y-.png  }
 
 material grass15 {  parent grass
     diffuseMap grass15.png  }
+
+material grass15g {  parent grass
+    diffuseMap grass15g.png  }
+
+material grass16g {  parent grass
+    diffuseMap grass16g.png  }
 
 material grass16r {  parent grass
     diffuseMap grass16r.png  }
@@ -112,31 +115,5 @@ material grass16r {  parent grass
 material grass17 {  parent grass
     diffuseMap grass17.png  }
 
-material grass18 {  parent grass
-    diffuseMap grass18.png  }
-
-material grass19 {  parent grass
-    diffuseMap grass19.png  }
-
-material grass20 {  parent grass
-    diffuseMap grass20.png  }
-
-
-material grass_01 {  parent grass
-    diffuseMap grass_01.png  }
-
-material grass_02 {  parent grass
-    diffuseMap grass_02.png  }
-
-material grass_03 {  parent grass
-    diffuseMap grass_03.png  }
-
-material grass_04 {  parent grass
-    diffuseMap grass_04.png  }
-
-material grass_05 {  parent grass
-    diffuseMap grass_05.png  }
-
-material grass_06 {  parent grass
-    diffuseMap grass_06.png  }
-
+material grass18gw {  parent grass
+    diffuseMap grass18gw.png  }
