@@ -2089,13 +2089,13 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassLayers}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="252 55 120 24">
+						<Widget type="TextBox" skin="TextBox" position="252 55 70 24">
 							<Property key="Caption" value="#{GrassSize}"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="32 56 64 24">
+						<Widget type="TextBox" skin="TextBox" position="32 56 64 16">
 							<Property key="Caption" value="#{min} x"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
@@ -2113,7 +2113,7 @@
 							<UserString key="tip" value="#{TipGrassPatchLengthMin}"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="32 96 64 24">
+						<Widget type="TextBox" skin="TextBox" position="32 96 64 16">
 							<Property key="Caption" value="#{max} x"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
@@ -2131,7 +2131,7 @@
 							<UserString key="tip" value="#{TipGrassPatchLengthMax}"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="32 136 64 24">
+						<Widget type="TextBox" skin="TextBox" position="32 136 64 16">
 							<Property key="Caption" value="#{min} y"/>
 							<Property key="TextColour" value="0.2 0.9 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
@@ -2149,7 +2149,7 @@
 							<UserString key="tip" value="#{TipGrassPatchHeightMin}"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="32 176 64 24">
+						<Widget type="TextBox" skin="TextBox" position="32 176 64 16">
 							<Property key="Caption" value="#{max} y"/>
 							<Property key="TextColour" value="0.2 1 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>

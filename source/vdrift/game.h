@@ -114,6 +114,10 @@ public:
 	std::map <std::string, int> surf_map;  // name to surface id
 	bool LoadAllSurfaces();
 	
+	std::vector <std::vector <std::pair<double, double> > > suspS,suspD;  /// New  all suspension factors files (spring, damper)
+	std::map <std::string, int> suspS_map,suspD_map;  // name to susp id
+	bool LoadSusp();
+	
 #ifdef ENABLE_FORCE_FEEDBACK
 	std::auto_ptr <FORCEFEEDBACK> forcefeedback;
 	double ff_update_time;

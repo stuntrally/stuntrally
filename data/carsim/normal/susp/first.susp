@@ -1,0 +1,19 @@
+[ suspension ]
+
+spring-factor-1 = 0.02, 0.2
+spring-factor-2 = 0.08, 1.0
+spring-factor-3 = 0.2, 1.5
+spring-factor-4 = 0.4, 5.0
+spring-factor-5 = 0.5, 15
+
+damper-factor-1 = 0.06, 1.2
+
+
+# spring-factor-n = x, y
+#   x - suspension displacement in meters (relative to the "zero force" position)
+#   y - factor to be applied to the spring coefficient
+
+# damper-factor-n = x,y
+#   x - is an absolute value of suspension velocity in m/s
+#   y - is the factor to be applied to the damping coefficient,
+#  	    (bounce or rebound, depending on the direction of travel).

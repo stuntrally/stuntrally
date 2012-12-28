@@ -376,7 +376,7 @@ void App::InitGui()
 		if (s.length() > 5)  //!= "grass")
 			cmbGrassMtr->addItem(s);
 	}
-	GetFolderIndex(PATHMANAGER::Data() + "/materials", li);
+	GetFolderIndex(PATHMANAGER::Data() + "/grass", li);
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 	{
 		if (StringUtil::startsWith(*i, "grClr", false))

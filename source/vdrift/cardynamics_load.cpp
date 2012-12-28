@@ -8,6 +8,7 @@
 #include "../ogre/common/Defines.h"
 #include "Buoyancy.h"
 #include "../ogre/common/QTimer.h"
+using namespace std;
 
 
 CARDYNAMICS::CARDYNAMICS() :
@@ -71,17 +72,17 @@ static void ConvertV2to1(float & x, float & y, float & z)
 //----------------------------------------------------------------------------------------------------------------------------------
 ///  Load  (.car file)
 //----------------------------------------------------------------------------------------------------------------------------------
-bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
+bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 {
 	QTimer ti;  ti.update(); /// time
 
 	//bTerrain = false;
-	std::string drive = "RWD";
+	string drive = "RWD";
 	int version(1);
 	c.GetParam("version", version);
 	if (version > 2)
 	{
-		error_output << "Unsupported car version: " << version << std::endl;
+		error_output << "Unsupported car version: " << version << endl;
 		return false;
 	}
 	float temp_vec3[3];
@@ -123,23 +124,23 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		c.GetParam("engine.torque-val-mul", mul);
 
 		float torque_point[3];
-		std::string torque_str("engine.torque-curve-00");
-		std::vector <std::pair <double, double> > torques;
+		string torque_str("engine.torque-curve-00");
+		vector <pair <double, double> > torques;
 		int curve_num = 0;
 		while (c.GetParam(torque_str, torque_point))
 		{
-			max_torque = std::max(max_torque, torque_point[1] * mul);
-			torques.push_back(std::pair <float, float> (torque_point[0], torque_point[1] * mul));
+			max_torque = max(max_torque, torque_point[1] * mul);
+			torques.push_back(pair <float, float> (torque_point[0], torque_point[1] * mul));
 
 			curve_num++;
-			std::stringstream str;
+			stringstream str;
 			str << "engine.torque-curve-";  str.width(2);  str.fill('0');
 			str << curve_num;
 			torque_str = str.str();
 		}
 		if (torques.size() <= 1)
 		{
-			error_output << "You must define at least 2 torque curve points." << std::endl;
+			error_output << "You must define at least 2 torque curve points." << endl;
 			return false;
 		}
 		engine.SetTorqueCurve(rpm_limit, torques);
@@ -169,7 +170,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 
 		for (int i = 0; i < gears; i++)
 		{
-			std::stringstream s;
+			stringstream s;
 			s << "transmission.gear-ratio-" << i+1;
 			if (!c.GetParam(s.str(), ratio, error_output))  return false;
 			transmission.SetGearRatio(i+1, ratio);
@@ -185,7 +186,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		c.GetParam("differential.anti-slip-torque", a_tq);
 		c.GetParam("differential.anti-slip-torque-deceleration-factor", a_tq_dec);
 
-		std::string drivetype;
+		string drivetype;
 		if (!c.GetParam("drive", drivetype, error_output))  return false;
 		SetDrive(drivetype);
 
@@ -212,7 +213,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		}
 		else
 		{
-			error_output << "Unknown drive type: " << drive << std::endl;
+			error_output << "Unknown drive type: " << drive << endl;
 			return false;
 		}
 	}
@@ -221,7 +222,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 	{
 		for (int i = 0; i < 2; i++)
 		{
-			std::string pos = "front";
+			string pos = "front";
 			WHEEL_POSITION left = FRONT_LEFT;
 			WHEEL_POSITION right = FRONT_RIGHT;
 			if (i == 1)
@@ -285,8 +286,8 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 	{
 		for (int i = 0; i < 2; i++)
 		{
-			std::string posstr = "front";
-			std::string posshortstr = "F";
+			string posstr = "front";
+			string posshortstr = "F";
 			WHEEL_POSITION posl = FRONT_LEFT;
 			WHEEL_POSITION posr = FRONT_RIGHT;
 			if (i == 1)
@@ -313,15 +314,33 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			suspension[posl].SetRebound(rebound);
 			suspension[posr].SetRebound(rebound);
 
-			std::vector <std::pair <double, double> > damper_factor_points;
-			c.GetPoints("suspension-"+posstr, "damper-factor", damper_factor_points);
-			suspension[posl].SetDamperFactorPoints(damper_factor_points);
-			suspension[posr].SetDamperFactorPoints(damper_factor_points);
+			string file;
+			if (c.GetParam("suspension-"+posstr+".factors-file", file))
+			{
+				int id = pGame->suspS_map[file]-1;
+				if (id == -1)  {  id = 0;
+					error_output << "Can't find suspension spring factors file: " << file << endl;  }
 
-			std::vector <std::pair <double, double> > spring_factor_points;
-			c.GetPoints("suspension-"+posstr, "spring-factor", spring_factor_points);
-			suspension[posl].SetSpringFactorPoints(spring_factor_points);
-			suspension[posr].SetSpringFactorPoints(spring_factor_points);
+				suspension[posl].SetSpringFactorPoints(pGame->suspS[id]);
+				suspension[posr].SetSpringFactorPoints(pGame->suspS[id]);
+
+				id = pGame->suspD_map[file]-1;
+				if (id == -1)  {  id = 0;
+					error_output << "Can't find suspension damper factors file: " << file << endl;  }
+				
+				suspension[posl].SetDamperFactorPoints(pGame->suspD[id]);
+				suspension[posr].SetDamperFactorPoints(pGame->suspD[id]);
+			}else
+			{	//  factor points
+				vector <pair <double, double> > damper, spring;
+				c.GetPoints("suspension-"+posstr, "damper-factor", damper);
+				suspension[posl].SetDamperFactorPoints(damper);
+				suspension[posr].SetDamperFactorPoints(damper);
+
+				c.GetPoints("suspension-"+posstr, "spring-factor", spring);
+				suspension[posl].SetSpringFactorPoints(spring);
+				suspension[posr].SetSpringFactorPoints(spring);
+			}
 
 			if (!c.GetParam("suspension-"+posstr+".travel", travel, error_output))  return false;
 			suspension[posl].SetTravel(travel);
@@ -370,7 +389,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			std::string posstr;
+			string posstr;
 			WHEEL_POSITION pos;
 			if (i == 0)		{	posstr = "FL";	pos = FRONT_LEFT;	}
 			else if (i == 1){	posstr = "FR";	pos = FRONT_RIGHT;	}
@@ -417,7 +436,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		WHEEL_POSITION rightside = FRONT_RIGHT;
 		float value;
 		bool both = c.GetParam("tire-both.radius", value);
-		std::string posstr = both ? "both" : "front";
+		string posstr = both ? "both" : "front";
 
 		for (int p = 0; p < 2; p++)
 		{
@@ -455,22 +474,22 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 		if (c.GetParam("contact-points.mass", mass))
 		{
 			int paramnum(0);
-			std::string paramname("contact-points.position-00");
-			std::stringstream output_supression;
+			string paramname("contact-points.position-00");
+			stringstream output_supression;
 			while (c.GetParam(paramname, pos))
 			{
 				if (version == 2)  ConvertV2to1(pos[0],pos[1],pos[2]);
 				position.Set(pos[0],pos[1],pos[2]);
 				AddMassParticle(mass, position);
 				paramnum++;
-				std::stringstream str;
+				stringstream str;
 				str << "contact-points.position-";  str.width(2);  str.fill('0');
 				str << paramnum;
 				paramname = str.str();
 			}
 		}
 
-		std::string paramname = "particle-00";
+		string paramname = "particle-00";
 		int paramnum = 0;
 		while (c.GetParam(paramname+".mass", mass))
 		{
@@ -479,7 +498,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 			position.Set(pos[0],pos[1],pos[2]);
 			AddMassParticle(mass, position);
 			paramnum++;
-			std::stringstream str;
+			stringstream str;
 			str << "particle-";  str.width(2);  str.fill('0');
 			str << paramnum;
 			paramname = str.str();
@@ -534,7 +553,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, std::ostream & error_output)
 
 		for (int i = 0; i < 2; i++)
 		{
-			std::string wingpos = "front";
+			string wingpos = "front";
 			if (i == 1)
 				wingpos = "rear";
 			if (!c.GetParam("wing-"+wingpos+".frontal-area", drag_area, error_output))  return false;

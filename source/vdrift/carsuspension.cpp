@@ -76,20 +76,20 @@ const Dbl CARSUSPENSION::GetForce(Dbl displacement, Dbl velocity)
 
 void CARSUSPENSION::SetDamperFactorPoints(std::vector <std::pair <Dbl, Dbl> > & curve)
 {
-	//std::cout << "Damper factors: " << std::endl;
 	for (std::vector <std::pair <Dbl, Dbl> >::iterator i = curve.begin(); i != curve.end(); i++)
 	{
-		//std::cout << i->first << ", " << i->second << std::endl;
 		damper_factors.AddPoint(i->first, i->second);
+		//LogO("sus damper "+fToStr(i->first,2,4)+" "+fToStr(i->second,2,4));
 	}
+	//LogO("sus d--");
 }
 
 void CARSUSPENSION::SetSpringFactorPoints(std::vector <std::pair <Dbl, Dbl> > & curve)
 {
-	//std::cout << "Spring factors: " << std::endl;
 	for (std::vector <std::pair <Dbl, Dbl> >::iterator i = curve.begin(); i != curve.end(); i++)
 	{
-		//std::cout << i->first << ", " << i->second << std::endl;
 		spring_factors.AddPoint(i->first, i->second);
+		//LogO("sus spring "+fToStr(i->first,2,4)+" "+fToStr(i->second,2,4));
 	}
+	//LogO("sus s--");
 }

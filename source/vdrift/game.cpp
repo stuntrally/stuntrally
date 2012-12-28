@@ -19,16 +19,12 @@
 #include "../ogre/FollowCamera.h"
 #include "../oisb/OISBSystem.h"
 
-
 #define M_PI  3.14159265358979323846
-
-using std::string;
-using std::endl;
-using std::pair;
+using namespace std;
 
 
 ///  ctor
-GAME::GAME(std::ostream & info_out, std::ostream & err_out, SETTINGS* pSettings) :
+GAME::GAME(ostream & info_out, ostream & err_out, SETTINGS* pSettings) :
 	settings(pSettings), info_output(info_out), error_output(err_out),
 	frame(0), displayframe(0), clocktime(0), target_time(0),
 	//framerate(0.01f),  ///~  0.004+  o:0.01
@@ -48,7 +44,7 @@ GAME::GAME(std::ostream & info_out, std::ostream & err_out, SETTINGS* pSettings)
 
 
 //  start the game with the given arguments
-void GAME::Start(std::list <string> & args)
+void GAME::Start(list <string> & args)
 {
 	if (!ParseArguments(args))
 		return;
@@ -69,7 +65,7 @@ void GAME::Start(std::list <string> & args)
 	InitializeSound(); //if sound initialization fails, that's okay, it'll disable itself
 
 	//initialize GUI
-	std::map<string, string> optionmap;
+	map<string, string> optionmap;
 	LoadSaveOptions(LOAD, optionmap);
 
 	//initialize force feedback
@@ -85,8 +81,9 @@ void GAME::ReloadSimData()  /// New
 {
 	LoadTires();
 	LoadAllSurfaces();
+	LoadSusp();
 
-	info_output << "Carsim: " << settings->game.sim_mode << ". Loaded: " << tires.size() << " tires, " << surfaces.size() << " surfaces." << endl;
+	info_output << "Carsim: " << settings->game.sim_mode << ". Loaded: " << tires.size() << " tires, " << surfaces.size() << " surfaces, " << suspS.size() << "=" << suspD.size() << " suspensions." << endl;
 }
 
 
@@ -105,10 +102,10 @@ bool GAME::LoadAllSurfaces()
 		return false;
 	}
 	
-	std::list <string> sectionlist;
+	list <string> sectionlist;
 	param.GetSectionList(sectionlist);
 	
-	for (std::list<string>::const_iterator section = sectionlist.begin(); section != sectionlist.end(); ++section)
+	for (list<string>::const_iterator section = sectionlist.begin(); section != sectionlist.end(); ++section)
 	{
 		TRACKSURFACE surf;
 		surf.name = *section;
@@ -159,7 +156,6 @@ bool GAME::LoadAllSurfaces()
 		surfaces.push_back(surf);
 		surf_map[surf.name] = (int)surfaces.size();  //+1, 0 = not found
 	}
-
 	return true;
 }
 
@@ -171,12 +167,12 @@ bool GAME::LoadTires()
 	tires_map.clear();
 	
 	string path = PATHMANAGER::CarSim() + "/" + settings->game.sim_mode + "/tires";
-	std::list <std::string> li;
+	list <string> li;
 	PATHMANAGER::GetFolderIndex(path, li);
-	for (std::list <std::string>::iterator i = li.begin(); i != li.end(); ++i)
+	for (list <string>::iterator i = li.begin(); i != li.end(); ++i)
 	{
-		std::string file = *i;
-		if (file.find(".tire") != std::string::npos)
+		string file = *i;
+		if (file.find(".tire") != string::npos)
 		{
 			CONFIGFILE c;
 			if (!c.Load(path+"/"+file))
@@ -192,19 +188,19 @@ bool GAME::LoadTires()
 				if (i == 11)		numinfile = 111;
 				else if (i == 12)	numinfile = 112;
 				else if (i > 12)	numinfile -= 1;
-				std::stringstream str;  str << "params.a" << numinfile;
+				stringstream str;  str << "params.a" << numinfile;
 				if (!c.GetParam(str.str(), value, error_output))  return false;
 				ct.lateral[i] = value;
 			}
 			for (int i = 0; i < 11; ++i)
 			{
-				std::stringstream str;  str << "params.b" << i;
+				stringstream str;  str << "params.b" << i;
 				if (!c.GetParam(str.str(), value, error_output))  return false;
 				ct.longitudinal[i] = value;
 			}
 			for (int i = 0; i < 18; ++i)
 			{
-				std::stringstream str;  str << "params.c" << i;
+				stringstream str;  str << "params.c" << i;
 				if (!c.GetParam(str.str(), value, error_output))  return false;
 				ct.aligning[i] = value;
 			}
@@ -219,6 +215,42 @@ bool GAME::LoadTires()
 	return true;
 }
 CARTIRE* TRACKSURFACE::pTireDefault = 0;  //-
+
+///  Suspension factors
+//------------------------------------------------------------------------------------------------------------------------------
+bool GAME::LoadSusp()
+{
+	suspS.clear();  suspS_map.clear();
+	suspD.clear();  suspD_map.clear();
+	
+	string path = PATHMANAGER::CarSim() + "/" + settings->game.sim_mode + "/susp";
+	list <string> li;
+	PATHMANAGER::GetFolderIndex(path, li);
+	for (list <string>::iterator i = li.begin(); i != li.end(); ++i)
+	{
+		string file = *i;
+		if (file.find(".susp") != string::npos)
+		{
+			CONFIGFILE c;
+			if (!c.Load(path+"/"+file))
+			{	error_output << "Error loading susp file " << file << "\n";
+				return false;  }
+
+			file = file.substr(0, file.length()-5);
+
+			//  factor points
+			vector <pair <double, double> > damper, spring;
+			c.GetPoints("suspension", "damper-factor", damper);
+			c.GetPoints("suspension", "spring-factor", spring);
+
+			suspS.push_back(spring);
+			suspD.push_back(damper);
+			suspS_map[file] = (int)suspS.size();  //+1, 0 = not found
+			suspD_map[file] = (int)suspD.size();
+		}
+	}
+	return true;
+}
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -370,7 +402,7 @@ void GAME::AdvanceGameLogic(double dt)
 
 			PROFILER.beginBlock("-physics");
 			///~~  clear fluids for each car
-			for (std::list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
+			for (list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
 			{
 				(*i).dynamics.inFluids.clear();
 				(*i).dynamics.velPrev = (*i).dynamics.chassis->getLinearVelocity();
@@ -386,7 +418,7 @@ void GAME::AdvanceGameLogic(double dt)
 			///	OISB::System::getSingleton().process(dt);  // input update  single thread
 
 			int i = 0;
-			for (std::list <CAR>::iterator it = cars.begin(); it != cars.end(); ++it, ++i)
+			for (list <CAR>::iterator it = cars.begin(); it != cars.end(); ++it, ++i)
 				UpdateCar(*it, TickPeriod());
 			PROFILER.endBlock("-car-sim");
 
@@ -411,7 +443,7 @@ void GAME::UpdateCar(CAR & car, double dt)
 
 void GAME::UpdateCarInputs(CAR & car)
 {
-	std::vector <float> carinputs(CARINPUT::ALL, 0.0f);
+	vector <float> carinputs(CARINPUT::ALL, 0.0f);
 	bool forceBrake = timer.waiting || timer.pretime > 0.f;  // race countdown
 
 	int i = pOgreGame->sc->asphalt ? 1 : 0;
@@ -448,11 +480,11 @@ bool GAME::NewGameDoLoadMisc(float pre_time)
 	opponents.clear();
 
 	//send car sounds to the sound subsystem
-	for (std::list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
+	for (list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
 	{
-		std::list <SOUNDSOURCE *> soundlist;
+		list <SOUNDSOURCE *> soundlist;
 		i->GetSoundList(soundlist);
-		for (std::list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); ++s)
+		for (list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); ++s)
 			sound.AddSource(**s);
 	}
 
@@ -461,7 +493,7 @@ bool GAME::NewGameDoLoadMisc(float pre_time)
 		return false;
 
 	//add cars to the timer system
-	for (std::list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
+	for (list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
 		timer.AddCar(i->GetCarType());
 	timer.AddCar("ghost");
 
@@ -480,11 +512,11 @@ void GAME::LeaveGame()
 
 	if (sound.Enabled())
 	{
-		for (std::list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
+		for (list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
 		{
-			std::list <SOUNDSOURCE *> soundlist;
+			list <SOUNDSOURCE *> soundlist;
 			i->GetSoundList(soundlist);
-			for (std::list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
+			for (list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
 				sound.RemoveSource(*s);
 		}
 	}
@@ -582,29 +614,29 @@ bool SortStringPairBySecond (const pair<string,string> & first, const pair<strin
 	return first.second < second.second;
 }
 
-void GAME::LoadSaveOptions(OPTION_ACTION action, std::map<string, string> & options)
+void GAME::LoadSaveOptions(OPTION_ACTION action, map<string, string> & options)
 {
 	if (action == LOAD) //load from the settings class to the options map
 	{
 		CONFIGFILE tempconfig;
 		settings->Serialize(true, tempconfig);
-		std::list <string> paramlistoutput;
+		list <string> paramlistoutput;
 		tempconfig.GetParamList(paramlistoutput);
-		for (std::list <string>::iterator i = paramlistoutput.begin(); i != paramlistoutput.end(); ++i)
+		for (list <string>::iterator i = paramlistoutput.begin(); i != paramlistoutput.end(); ++i)
 		{
 			string val;
 			tempconfig.GetParam(*i, val);
 			options[*i] = val;
-			//std::cout << "LOAD - PARAM: " << *i << " = " << val << endl;
+			//cout << "LOAD - PARAM: " << *i << " = " << val << endl;
 		}
 	}
 	else //save from the options map to the settings class
 	{
 		CONFIGFILE tempconfig;
-		for (std::map<string, string>::iterator i = options.begin(); i != options.end(); ++i)
+		for (map<string, string>::iterator i = options.begin(); i != options.end(); ++i)
 		{
 			tempconfig.SetParam(i->first, i->second);
-			//std::cout << "SAVE - PARAM: " << i->first << " = " << i->second << endl;
+			//cout << "SAVE - PARAM: " << i->first << " = " << i->second << endl;
 		}
 		settings->Serialize(false, tempconfig);
 
@@ -666,7 +698,7 @@ void GAME::UpdateForceFeedback(float dt)
 			//double center = sin( timefactor * 2 * M_PI * motion_frequency ) * motion_amplitude;
 			double force = feedback;
 
-			//std::cout << "ff_update_time: " << ff_update_time << " force: " << force << std::endl;
+			//cout << "ff_update_time: " << ff_update_time << " force: " << force << endl;
 			forcefeedback->update(force, &feedback, ffdt, error_output);
 		}
 	}
@@ -743,20 +775,20 @@ void GAME::UpdateDriftScore(CAR & car, double dt)
 		//bonus score calculation is now done in TIMER
 		timer.UpdateMaxDriftAngleSpeed(carId, car_angle, car_speed);
 
-		//std::cout << timer.GetDriftScore(carId) << " + " << timer.GetThisDriftScore(carId) << endl;
+		//cout << timer.GetDriftScore(carId) << " + " << timer.GetThisDriftScore(carId) << endl;
 	}
 
 	if (settings->multi_thr != 1)
 		timer.SetIsDrifting(carId, is_drifting, on_track && !spin_out);
 
-	//std::cout << is_drifting << ", " << on_track << ", " << car_angle << endl;
+	//cout << is_drifting << ", " << on_track << ", " << car_angle << endl;
 }
 
 
 //  break up the input into a vector of strings using the token characters given
-std::vector <string> Tokenize(const string & input, const string & tokens)
+vector <string> Tokenize(const string & input, const string & tokens)
 {
-	std::vector <string> out;
+	vector <string> out;
 
 	unsigned int pos = 0;
 	unsigned int lastpos = 0;
@@ -774,22 +806,22 @@ std::vector <string> Tokenize(const string & input, const string & tokens)
 	return out;
 }
 
-bool GAME::ParseArguments(std::list <string> & args)
+bool GAME::ParseArguments(list <string> & args)
 {
 	bool continue_game(true);
 
-	std::map <string, string> arghelp;
-	std::map <string, string> argmap;
+	map <string, string> arghelp;
+	map <string, string> argmap;
 
 	//generate an argument map
-	for (std::list <string>::iterator i = args.begin(); i != args.end(); ++i)
+	for (list <string>::iterator i = args.begin(); i != args.end(); ++i)
 	{
 		if ((*i)[0] == '-')
 		{
 			argmap[*i] = "";
 		}
 
-		std::list <string>::iterator n = i;
+		list <string>::iterator n = i;
 		n++;
 		if (n != args.end())
 		{
@@ -858,10 +890,10 @@ bool GAME::ParseArguments(std::list <string> & args)
 	{
 		string helpstr;
 		unsigned int longest = 0;
-		for (std::map <string,string>::iterator i = arghelp.begin(); i != arghelp.end(); ++i)
+		for (map <string,string>::iterator i = arghelp.begin(); i != arghelp.end(); ++i)
 			if (i->first.size() > longest)
 				longest = i->first.size();
-		for (std::map <string,string>::iterator i = arghelp.begin(); i != arghelp.end(); ++i)
+		for (map <string,string>::iterator i = arghelp.begin(); i != arghelp.end(); ++i)
 		{
 			helpstr.append(i->first);
 			for (unsigned int n = 0; n < longest+3-i->first.size(); n++)

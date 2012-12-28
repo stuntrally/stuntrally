@@ -423,11 +423,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\data\hud\Camera.overlay"
+				>
+			</File>
+			<File
 				RelativePath=".\data\material_templates\car.mat"
 				>
 			</File>
 			<File
 				RelativePath=".\data\material_templates\car_particle.mat"
+				>
+			</File>
+			<File
+				RelativePath=".\data\hud\CarDbg.overlay"
 				>
 			</File>
 			<File
@@ -447,7 +455,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\data\hud\Focus.material"
+				>
+			</File>
+			<File
+				RelativePath=".\data\hud\FpsDbg.overlay"
+				>
+			</File>
+			<File
 				RelativePath=".\data\material_templates\grass.mat"
+				>
+			</File>
+			<File
+				RelativePath=".\data\hud\Hud.material"
+				>
+			</File>
+			<File
+				RelativePath=".\data\hud\Hud.overlay"
 				>
 			</File>
 			<File
