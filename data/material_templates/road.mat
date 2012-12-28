@@ -40,6 +40,29 @@ material roadJungle
 }
 
 
+// Jungle dark new
+
+material roadJDark_ter
+{
+	parent road_terrain
+	diffuseMap roadJDark.jpg
+	ambient 0.7 0.7 0.8
+	diffuse 0.70 0.60 0.80
+	specular 0.43 0.43 0.40 48
+	normal_map true
+	normalMap ice_3_nh1.png
+}
+
+material roadJDark
+{
+	parent road
+	diffuseMap roadJDark.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 0.3 0.3 0.25 48
+}
+
+
 // Asphalt
 
 material roadAsphalt
