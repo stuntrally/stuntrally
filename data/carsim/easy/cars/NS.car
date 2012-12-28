@@ -91,8 +91,8 @@ fuel-density = 1.0
 #---------------------------
 [ suspension-front ] 
 spring-constant = 105000
-bounce = 5000
-rebound = 14500
+bounce = 13000
+rebound = 7500
 travel = 0.24
 camber = -1.0 
 caster = 0.0 
@@ -102,8 +102,8 @@ factors-file = first
 
 [ suspension-rear ] 
 spring-constant = 98750
-bounce = 5000
-rebound = 14500
+bounce = 12000
+rebound = 6000
 travel = 0.25
 camber = -0.5 
 caster = 0.0 
