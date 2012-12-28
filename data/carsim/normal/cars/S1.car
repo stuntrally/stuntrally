@@ -81,7 +81,7 @@ gear-ratio-6 = 0.756
 shift-delay = 0.06
 
 [ differential ]
-final-drive = 4.40
+final-drive = 4.50
 anti-slip = 400.0
 
 [ fuel-tank ]
@@ -225,16 +225,16 @@ hinge = 0.25, -1.94, 0.0
 #---------------------------
 [ particle-00 ]  # rear
 mass = 245
-position =  1.0, -1.7, -0.06
+position =  1.0, -1.6, -0.06
 
 [ particle-01 ]
 mass = 245
-position = -1.0, -1.7, -0.06
+position = -1.0, -1.6, -0.06
 
 [ particle-02 ]  # front
 mass = 245
-position =  1.0,  1.7, -0.06
+position =  1.0,  1.6, -0.06
 
 [ particle-03 ]
 mass = 245
-position = -1.0,  1.7, -0.06
+position = -1.0,  1.6, -0.06
