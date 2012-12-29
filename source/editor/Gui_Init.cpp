@@ -387,6 +387,7 @@ void App::InitGui()
 	Cmb(cmbPgLay, "LTrCombo", comboPgLay);
 	strlist lt;
 	GetFolderIndex(PATHMANAGER::Data() + "/trees", lt);
+	GetFolderIndex(PATHMANAGER::Data() + "/trees2", lt);
 	for (strlist::iterator i = lt.begin(); i != lt.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh"))  {
 			std::string s = *i;  s = s.substr(0, s.length()-5);
