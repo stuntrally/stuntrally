@@ -1,4 +1,4 @@
-//  CH trees (from SnappyTree)
+//  CH trees
 //-----------------------------------------------------------------------------------------------------------------
 
 //  trunk
@@ -30,6 +30,7 @@ material base-twig
     transparent true
 	twoside_diffuse true
 }
+
 
 //  Autumn
 //---------------------------------------------------------------
@@ -113,7 +114,7 @@ material tree28mwtTwig		{	parent base-twig
   diffuseMap twig21_0yo.png  }
 
 
-//  moss  ..
+//  Moss  ..
 //---------------------------------------------------------------
 material tree29downswpTrunk	{	parent base-tree
   ambient 0.9 0.9 0.9
@@ -131,76 +132,100 @@ material tree36upballTwig	{	parent base-twig
   //diffuseMap twig22g0d.png  }
 
 
+//  Greece
+//---------------------------------------------------------------
+material tree32kinkupTrunk	{	parent base-tree
+  ambient 1.6 1.6 1.4
+  diffuse 1.3 1.3 1.2
+  diffuseMap trunk5m.png  }
+material tree32kinkupTwig	{	parent base-twig
+  diffuseMap twigP27c.png  }  // WW cyan dragon
+
+material tree37wballTrunk	{	parent base-tree
+  diffuseMap trunk1m.png  }
+material tree37wballTwig	{	parent base-twig
+  diffuseMap twig33g1.png  }  // norm green aca
+
+material tree41midTrunk		{	parent base-tree
+  diffuseMap trunk4m.png  }
+material tree41midTwig		{	parent base-twig
+  ambient 0.9 1.0 0.9
+  diffuse 0.9 1.0 0.9
+  diffuseMap twig22g1.png  }
+
+
 //  Green  todo..
 //---------------------------------------------------------------
 material tree19gwideTwig	{	parent base-twig
-  ambient 0.6 0.6 0.6
-  diffuse 1.0 1.0 1.0
-  specular 1.0 1.0 1.0 32
+  //ambient 0.55 0.5 0.6  // dark+
+  //diffuse 1.1 0.9 1.2
+  //specular 1.1 0.9 1.2 32
+  ambient 0.9 0.85 0.95
+  diffuse 1.05 0.95 1.1
+  specular 1.05 0.95 1.1 32
   normalMap twig39g1_norm.png
   normal_map true
-  diffuseMap twig39g1.png  }
+  diffuseMap twig39g1.png  }  //tall  forest+
 
-//material tree21mightyTrunk	{	parent base-tree
-//  diffuseMap trunk2m.png  }
-//material tree21mightyTwig	{	parent base-twig
-//  ambient 0.9 0.9 0.9
-//  diffuseMap twig39_2o.png  }
+//material tree19gwideTwig	{	parent base-twig
+//  ambient 0.9 0.9 0.8
+//  diffuse 0.9 0.9 0.8
+//  specular 0.9 0.9 0.8 40
+//  normalMap twig25g_norm.png
+//  normal_map true
+//  diffuseMap twig25g.png  }  //tall  forest+
 
-///  moss ..?
-//material tree22fatTrunk		{	parent base-tree
-//  diffuseMap trunk2m.png  }
-//material tree22fatTwig		{	parent base-twig
-//  //ambient 0.9 0.9 0.7
-//  //diffuseMap twig21_0yo.png  }
-//  diffuseMap twig40_4wg.png  }
 
-//material tree23mtallTrunk	{	parent base-tree
-//  diffuseMap trunk2m.png  }
-//material tree23mtallTwig	{	parent base-twig
-//  diffuseMap twig21_0yo.png  }
+material tree22fatTrunk		{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree22fatTwig		{	parent base-twig
+  //ambient 0.9 0.9 0.7
+  //diffuseMap twig21_0yo.png  }
+  diffuseMap twig34g2c.png  }  // wil,  Greece`
+  //normalMap twig39g1_norm.png
+  //normal_map true
+  //specular 1.1 0.9 1.2 32
+  //diffuseMap twig39g1.png  }  //+
 
-//material tree24mupTrunk		{	parent base-tree
-//  diffuseMap trunk2m.png  }
-//material tree24mupTwig		{	parent base-twig
-//  diffuseMap twig38_2y.png  }
 
-//  green
 material tree31kinklowTrunk	{	parent base-tree
   diffuseMap trunk2m.png  }
 material tree31kinklowTwig	{	parent base-twig
-  diffuseMap twig40_2rk.png  }
+  //ambient 1.2 1.2 1.2  //-
+  //diffuse 1.1 1.1 1.1
+  //ambient 0.7 0.8 1.1  //`-  gr-cyan-wh  Greece+
+  //diffuse 0.7 0.8 1.1
+  //specular 0.1 0.1 0.1 32
+  //diffuseMap twig29p1.png  }
+  diffuseMap twig22g0d.png  }  // twig22g1+ yel-wh
 
-material tree32kinkupTrunk	{	parent base-tree
-  diffuseMap trunk2m.png  }
-material tree32kinkupTwig	{	parent base-twig
-  diffuseMap twig24_1yow.png  }
 
 material tree33kinkupTrunk	{	parent base-tree
-  diffuseMap trunk2m.png  }
+  diffuseMap trunk4m.png  }
 material tree33kinkupTwig	{	parent base-twig
   ambient 1.2 1.2 1.2
   diffuse 0.8 0.8 0.8
-  diffuseMap twig21_2or.png  }
+  diffuseMap twig24g1.png  }  //tall gr-yel  greece/forest+
+
 
 material tree34stinyTrunk	{	parent base-tree
   diffuseMap trunk2m.png  }
 material tree34stinyTwig	{	parent base-twig
-  ambient 1.2 1.2 0.9
-  diffuseMap twig24_1yow.png  }
+  ambient 0.9 1.2 1.1
+  diffuseMap twigP27y.png  }  // W kink empty  Greece~
+
 
 material tree35ballTrunk	{	parent base-tree
   diffuseMap trunk2m.png  }
 material tree35ballTwig		{	parent base-twig
-  ambient 0.5 0.6 0.7
-  diffuseMap twig39_2o.png  }
+  //diffuseMap twig39g1.png  }  // normal
+  ambient 1.0 1.0 1.05
+  diffuse 1.15 1.15 1.2
+  specular 0.6 0.6 0.7 32
+  normalMap twig39g1_norm.png
+  normal_map true
+  diffuseMap twig39g1.png  }  //tall  Jungle+ /forest
 
-material tree37wballTrunk	{	parent base-tree
-  ambient 0.8 0.8 0.8
-  diffuseMap trunk1m.png  }
-material tree37wballTwig	{	parent base-twig
-  //ambient 0.9 0.9 0.8
-  diffuseMap twig33g1.png  }
 
 material tree38tallwsphrTrunk	{	parent base-tree
   diffuseMap trunk2m.png  }
@@ -238,10 +263,10 @@ material tree40topsmTwig	{	parent base-twig
 // *twig21_0yo `    twig21_1y -rg1.2 b.5   *twig21_2or ~.9
 ///   aspen  medium o` dense
 // *twig22_1y ~     twig22_3gw `m   twig22_4g ?l
-///   LL slim ()` dense ok  medium trees?  -not saturated, or rg1.2 b.9
+///   LL slim ()` plum  dense ok  medium trees?  -not saturated, or rg1.2 b.9
 //  twig24_0o -d?  *twig24_1yow `   twig24_2yo `
-///   -h for bush?
-//  twig25_2og -h   twig25_3yg -h
+///   OO slim bigger
+//  twig25g
 
 ///   maple + dense 5v  yellow, for big trees
 // *twig26_1y `    *twig26_2yo `l   twig26_3ow -l
@@ -268,11 +293,6 @@ material tree40topsmTwig	{	parent base-twig
   //ambient 0.7 0.7 0.7
   //ambient 0.9 0.9 0.9
 
-material tree41midTrunk		{	parent base-tree
-  diffuseMap trunk2m.png  }
-material tree41midTwig		{	parent base-twig
-  ambient 0.3 1.1 1.1
-  diffuseMap twig21_0yo.png  }
 
 material tree42lowTrunk		{	parent base-tree
   diffuseMap trunk2m.png  }
