@@ -169,3 +169,14 @@ material rock1
 	terrain_light_map true
 	specular 0.5 0.5 0.5 32
 }
+
+
+material rock_y2  // greece yellow
+{
+    parent base
+	diffuseMap rock_n2-GYel.jpg
+	normalMap rock_n2_norm.png
+	normal_map true
+	terrain_light_map true
+	specular 0.4 0.4 0.35 32
+}
