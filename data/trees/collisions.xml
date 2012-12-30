@@ -121,5 +121,21 @@
 	<object mesh= "treeGC-29aspDnSwp.mesh">
 		<shape type="capsZ" ofs="0.0 0.0 2" r="0.4" h="8.0" frict="0.7" restit="0.9" />
 	</object>
+	
+<!--Greece-->
+	<object mesh= "treeGC-32draUp.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 2" r="0.43" h="8.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeGG-37acaTall.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 2" r="0.31" h="8.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeGW-41aspMid.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 2" r="0.25" h="8.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "rock_n2-GYel.mesh">
+		<shape type="sphere" ofs="1 0.3 0.4" r="2.2" frict="0.2" restit="0.9" />
+		<shape type="sphere" ofs="-2.2 0.1 0.8" r="2.1" frict="0.2" restit="0.9" />
+	</object>
+
 
 </collisions>
