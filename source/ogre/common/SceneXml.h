@@ -61,7 +61,7 @@ public:
 	bool on;
 	Ogre::String name;  Ogre::Real dens;
 	Ogre::Real windFx, windFy;
-	int addTrRdDist;  // dist to road
+	int addRdist, maxRdist;  // add,max dist to road
 	Ogre::Real minScale, maxScale, ofsY;
 	Ogre::Real maxTerAng, minTerH, maxTerH;  // terrain
 	Ogre::Real maxDepth;  // in fluid

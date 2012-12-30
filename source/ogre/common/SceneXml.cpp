@@ -58,7 +58,7 @@ void Scene::Default()
 PagedLayer::PagedLayer()
 {
 	on = 0;  name = "";  dens = 0.1f;
-	windFx = 0.0f;  windFy = 0.0f;  addTrRdDist = 0;
+	windFx = 0.0f;  windFy = 0.0f;  addRdist = 0;  maxRdist = 100;
 	minScale = 0.1f;  maxScale = 0.25f;  ofsY = 0.f;
 	maxTerAng = 50.f;  minTerH = -100.f;  maxTerH = 100.f;
 	maxDepth = 5.f;
@@ -373,7 +373,8 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = ePgL->Attribute("minScale");	if (a)  l.minScale = s2r(a);
 			a = ePgL->Attribute("maxScale");	if (a)  l.maxScale = s2r(a);
 			a = ePgL->Attribute("ofsY");		if (a)  l.ofsY = s2r(a);
-			a = ePgL->Attribute("addTrRdDist");	if (a)  l.addTrRdDist = s2i(a);
+			a = ePgL->Attribute("addTrRdDist");	if (a)  l.addRdist = s2i(a);
+			a = ePgL->Attribute("maxRdist");	if (a)  l.maxRdist = s2i(a);
 			a = ePgL->Attribute("windFx");		if (a)  l.windFx = s2r(a);
 			a = ePgL->Attribute("windFy");		if (a)  l.windFy = s2r(a);
 			a = ePgL->Attribute("maxTerAng");	if (a)  l.maxTerAng = s2r(a);
@@ -581,7 +582,8 @@ bool Scene::SaveXml(String file)
 			pgl.SetAttribute("minScale",	toStrC( l.minScale ));
 			pgl.SetAttribute("maxScale",	toStrC( l.maxScale ));
 			pgl.SetAttribute("ofsY",		toStrC( l.ofsY ));
-			pgl.SetAttribute("addTrRdDist",	toStrC( l.addTrRdDist ));
+			pgl.SetAttribute("addTrRdDist",	toStrC( l.addRdist ));
+			pgl.SetAttribute("maxRdist",	toStrC( l.maxRdist ));
 			pgl.SetAttribute("windFx",		toStrC( l.windFx ));
 			pgl.SetAttribute("windFy",		toStrC( l.windFy ));
 			pgl.SetAttribute("maxTerAng",	toStrC( l.maxTerAng ));

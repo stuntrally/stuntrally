@@ -409,7 +409,7 @@ protected:
 	MyGUI::ButtonPtr chkPgLay;  void chkPgLayOn(WP);
 	MyGUI::StaticImagePtr imgPaged;  MyGUI::StaticTextPtr valLTrAll;
 	MyGUI::ComboBoxPtr cmbPgLay;  void comboPgLay(CMB);
-	SLV(LTrDens);	SLV(LTrRdDist);
+	SLV(LTrDens);	SLV(LTrRdDist);  SLV(LTrRdDistMax);
 	SLV(LTrMinSc);	SLV(LTrMaxSc);	SLV(LTrWindFx);	SLV(LTrWindFy);
 	SLV(LTrMaxTerAng);
 	MyGUI::EditPtr edLTrMinTerH,edLTrMaxTerH,edLTrFlDepth;

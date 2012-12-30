@@ -207,7 +207,8 @@ void App::tabPgLayers(TabPtr wp, size_t id)
 	//  set slider values
 	Slider* sl;
 	Slv(LTrDens, powf((lay.dens-0.001f) /1.0f, 0.5f));
-	Slv(LTrRdDist, lay.addTrRdDist /20.f);
+	Slv(LTrRdDist, lay.addRdist /20.f);
+	Slv(LTrRdDistMax, lay.maxRdist /20.f);
 
 	Slv(LTrMinSc, powf(lay.minScale /6.0f, 1.f/3.f));
 	Slv(LTrMaxSc, powf(lay.maxScale /6.0f, 1.f/3.f));
@@ -271,8 +272,14 @@ void App::slLTrDens(SL)
 void App::slLTrRdDist(SL)
 {
 	int v = val * 20.f +slHalf;
-	sc->pgLayersAll[idPgLay].addTrRdDist = v;
+	sc->pgLayersAll[idPgLay].addRdist = v;
 	if (valLTrRdDist)  valLTrRdDist->setCaption(toStr(v));
+}
+void App::slLTrRdDistMax(SL)
+{
+	int v = val * 20.f +slHalf;
+	sc->pgLayersAll[idPgLay].maxRdist = v;
+	if (valLTrRdDistMax)  valLTrRdDistMax->setCaption(toStr(v));
 }
 
 void App::slLTrMinSc(SL)
