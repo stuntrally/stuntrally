@@ -337,3 +337,62 @@ material Mud_dark
     bump2SpecPowerMul 12.0 2.0 0.4
     speed 0.001
 }
+
+//  Mud  Jungle Dark
+//--------------------------------------------------------
+material Mud_orange_JD
+{
+    parent Water
+    WaterNormalMap water_nh.png
+    choppyness_scale 0.021 5
+    smallWaves_midWaves 0.025 0.15 0.06 0.1
+    bigWaves 0.68 0.67
+    bump 1.2 0.22 0.01
+    fresnelMultiplier 1.0
+
+    colour 0.314 0.336 0.031  1.0
+	reflectColour 0.54 0.40 0.15  0.72
+	refractColour 0.6 0.4 0.1  1.0
+	specColourAndPower 0.41 0.33 0.16  16
+
+    bump2SpecPowerMul 16.0 5 0.85
+    speed 0.03
+}
+
+material Mud_brown_JD
+{
+    parent Water
+    WaterNormalMap water_nh.png
+    choppyness_scale 0.063 5
+    smallWaves_midWaves 0.015 0.15 0.03 0.1
+    bigWaves 0.2 0.2
+    bump 1.2 0.44 0.01
+    fresnelMultiplier 1.0
+
+    colour 0.258 0.268 0.10  1.0
+	reflectColour 0.273 0.307 0.130  0.297
+	refractColour 0.338 0.34 0.1 1.0
+	specColourAndPower 0.238 0.266 0.063  32
+
+    bump2SpecPowerMul 16.0 2.0 0.9
+    speed 0.01
+}
+
+material Mud_dark_JD
+{
+    parent Water
+    WaterNormalMap water_nh.png
+    choppyness_scale 0.015 5
+    smallWaves_midWaves 0.015 0.15 0.03 0.1
+    bigWaves 0.03 0.2
+    bump 2.2 0.2 0.01
+    fresnelMultiplier 1.0
+
+	colour 0.154 0.17 0.05  1.0
+	reflectColour 0.215 0.22 0.11  1.0
+	refractColour 0.8 0.8 0.025  1.0
+    specColourAndPower 0.283 0.30 0.18  64
+
+    bump2SpecPowerMul 12.0 2.0 0.4
+    speed 0.001
+}

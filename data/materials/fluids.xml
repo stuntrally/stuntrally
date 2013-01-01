@@ -40,6 +40,19 @@
 		bumpFqX="21.2" bumpFqY="26.2" bumpAmp="0.8" bumpAngle="30" whSteerMul="1.3" idParticles="2" />
 
 
+	<fluid name="mud soft JD"	material="Mud_orange_JD" density="600"  angDamp="1.2" linDamp="0.6" heightDamp="3"
+		bWhForce="1" whMaxAngVel="20" whSpinDamp="20"  whForceLong="160" whForceUp="30"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.8" bumpAngle="10" whSteerMul="1" idParticles="1" />
+
+	<fluid name="mud med JD"		material="Mud_brown_JD"  density="800"  angDamp="1.7" linDamp="0.8" heightDamp="6"
+		bWhForce="1" whMaxAngVel="60" whSpinDamp="25"  whForceLong="80" whForceUp="15"
+		bumpFqX="22.2" bumpFqY="23.2" bumpAmp="0.8" bumpAngle="20" whSteerMul="1.5" idParticles="1" />
+
+	<fluid name="mud hard JD"	material="Mud_dark_JD"  density="1000" angDamp="2.2" linDamp="1.3" heightDamp="10"
+		bWhForce="1" whMaxAngVel="50" whSpinDamp="30"  whForceLong="80" whForceUp="10"
+		bumpFqX="21.2" bumpFqY="26.2" bumpAmp="0.8" bumpAngle="30" whSteerMul="1.3" idParticles="2" />
+
+
 	<fluid name="grease jelly"	material="Grease_jelly" density="800"  angDamp="1.2" linDamp="0.4" heightDamp="3"
 		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="50"
 		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="3" idParticles="-1" />
