@@ -132,7 +132,7 @@ void App::editTrGr(EditPtr ed)
 	else if (n=="GrTerMaxHeight")  gr->terMaxH = r;
 	else if (n=="GrTerSmHeight")  gr->terHSm = r;
 	
-	else if (n=="SceneryId")  sc->sceneryId = r;
+	else if (n=="SceneryId")  sc->sceneryId = ed->getCaption();
 }
 
 void App::comboGrassMtr(ComboBoxPtr cmb, size_t val)

@@ -38,6 +38,25 @@ void App::createScene()  // once, init
 
 	QTimer ti;  ti.update();  /// time
 
+
+	///  ..tool..  (remove alpha channel for ter tex prv img)
+	#if 0
+	Ogre::Image im;
+	im.load("jungle_5d.png", "General");
+
+	PixelBox pb = im.getPixelBox();
+	int w = pb.getWidth(), h = pb.getHeight();
+	for(int j=0; j < h; ++j)
+	for(int i=0; i < w; ++i)
+	{
+		ColourValue c = pb.getColourAt(i,j,0);
+		c.a = 1.f;
+		pb.setColourAt(c,i,j,0);
+	}
+	im.save(PATHMANAGER::Data()+"/prv.png");
+	#endif
+
+
 	//  tracks.xml
 	tracksXml.LoadXml(PATHMANAGER::GameConfigDir() + "/tracks.xml");
 	//tracksXml.SaveXml(PATHMANAGER::GameConfigDir() + "/tracks2.xml");

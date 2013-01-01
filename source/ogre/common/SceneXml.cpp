@@ -50,7 +50,7 @@ void Scene::Default()
 	trPage = 200;  trDist = 200;  trDistImp = 800;  trRdDist = 3;
 
 	camPos = Vector3(10.f,20.f,10.f);  camDir = Vector3(0.f,-0.3f,1.f);
-	sceneryId = 0;
+	sceneryId = "0";
 	fluids.clear();  //
 	objects.clear();  //
 }
@@ -69,7 +69,7 @@ SGrassLayer::SGrassLayer()
 	on = false;
 	dens = 0.1f;
 	minSx = 0.6f; minSy = 0.6f;  maxSx = 0.85f; maxSy = 0.9f;
-	//swayDistr, swayLen, swaySpeed;
+	swayDistr = 4.f;  swayLen = 0.2f; swaySpeed = 0.5f;
 	terMaxAng = 30.f;  terAngSm = 20.f;
 	terMinH = -100.f;  terMaxH = 100.f;  terHSm = 20.f;
 	material = "grassForest";  colorMap = "grClrForest.png";
@@ -209,7 +209,7 @@ bool Scene::LoadXml(String file, bool bTer)
 	eLi = root->FirstChildElement("light");
 	if (eLi)
 	{
-		a = eLi->Attribute("sceneryId");	if (a)  sceneryId = s2i(a);  ///
+		a = eLi->Attribute("sceneryId");	if (a)  sceneryId = std::string(a);  ///
 		a = eLi->Attribute("pitch");		if (a)  ldPitch = s2r(a);
 		a = eLi->Attribute("yaw");			if (a)  ldYaw = s2r(a);
 		a = eLi->Attribute("dir");			if (a)  {  lDir = s2v(a);
@@ -466,7 +466,7 @@ bool Scene::SaveXml(String file)
 	root.InsertEndChild(fog);
 
 	TiXmlElement li("light");
-		li.SetAttribute("sceneryId",	toStrC( sceneryId ));
+		li.SetAttribute("sceneryId",	sceneryId.c_str() );
 		li.SetAttribute("pitch",		toStrC( ldPitch ));
 		li.SetAttribute("yaw",			toStrC( ldYaw ));
 		li.SetAttribute("ambient",		toStrC( lAmb ));

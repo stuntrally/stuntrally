@@ -164,7 +164,7 @@ public:
 	Ogre::Vector3 camPos,camDir;
 	
 	//  to force regenerating impostors on different sceneries
-	int sceneryId;
+	std::string sceneryId;
 	
 	//  Fuids
 	std::vector<FluidBox> fluids;

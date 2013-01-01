@@ -60,7 +60,7 @@ void App::SetGuiFromXmls()
 
 	_Ed(TrRdDist, sc->trRdDist);	_Ed(TrImpDist, sc->trDistImp);
 	_Ed(GrDensSmooth, sc->grDensSmooth);
-	_Ed(SceneryId, sc->sceneryId);
+	edSceneryId->setCaption(sc->sceneryId);
 
 	tabGrLayers(tabsGrLayers, idGrLay);
 	tabPgLayers(tabsPgLayers, idPgLay);
