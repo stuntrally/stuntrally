@@ -391,7 +391,9 @@ void App::comboTexDiff(ComboBoxPtr cmb, size_t val)
 
 	//  auto norm
 	if (bTexNormAuto)
-	{	cmbTexNorm->setIndexSelected( cmbTexNorm->findItemIndexWith(sNorm) );
+	{	size_t id = cmbTexNorm->findItemIndexWith(sNorm);
+		if (id != ITEM_NONE)  // set only if found
+			cmbTexNorm->setIndexSelected(id);
 		if (bTerLay)  sc->td.layersAll[idTerLay].texNorm = sNorm;  }
 	    
 	//  tex image
