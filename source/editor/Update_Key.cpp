@@ -428,24 +428,22 @@ bool App::KeyPress(const CmdKey &arg)
 	//  GUI  keys in edits  ---------------------
 	if (bGuiFocus && mGUI && !alt && !ctrl)
 	{
-		MyGUI::Char text = arg.text;  bool found = false;
-		if (shift)	// shift-letters,numbers dont work ??
-		{
+		//MyGUI::Char text = arg.text;  // odd input issue, dont use arg.text
+		MyGUI::Char text = mKC[arg.key];
+		bool found = false;
+		{	//  shift-letters,numbers dont work, done here
 			const static int num = 21;
 			const static MyGUI::Char chT[num][2] = {
 				{'0',')'},{'1','!'},{'2','@'},{'3','#'},{'4','$'},{'5','%'},{'6','^'},{'7','&'},{'8','*'},{'9','('},
 				{'`','~'},{'-','_'},{'=','+'},{'[','{'},{']','}'},{'\\','|'},{';',':'},{'\'','\"'},{',','<'},{'.','>'},{'/','?'}};
 			if (text >= 'a' && text <= 'z')
-			{	text += 'A'-'a';  found = true;  }
+			{	if (shift)  text += 'A'-'a';  found = true;  }
 			else
 			for (int i=0; i < num; ++i)
 				if (text == chT[i][0])
-				{	text = chT[i][1];  found = true;  break;	}
+				{	if (shift)  text = chT[i][1];  found = true;  break;  }
 		}
-		if (arg.key == KC_ESCAPE || arg.key == KC_BACK)
-		{	text = 0;  found = true;  }
-		//if (found)
-			MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(arg.key), text);
+		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(arg.key), text);
 		return true;
 	}
 

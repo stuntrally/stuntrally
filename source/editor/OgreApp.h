@@ -37,6 +37,7 @@ namespace MyGUI  {  class MultiList2;  class Slider;  }
 
 namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  class Light;  }
 
+
 class App : public BaseApp, public Ogre::RenderTargetListener
 {
 public:
@@ -227,6 +228,7 @@ protected:
 	///-----------------------------------------------------------------------------------------------------------------
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------	
+	std::map<OIS::KeyCode, MyGUI::Char> mKC;
 	//  size
 	void SizeGUI(); void doSizeGUI(MyGUI::EnumeratorWidgetPtr);
 	std::vector<MyGUI::TabControl*> vSubTabsEdit,vSubTabsHelp,vSubTabsOpts;

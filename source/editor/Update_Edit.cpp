@@ -734,15 +734,16 @@ bool App::frameEnded(const FrameEvent& evt)
 	}
 	
 	///  input event queues  ------------------------------------
-	for (int i=0; i < i_cmdKeyRel; ++i)
-	{	const CmdKey& k = cmdKeyRel[i];
-		MyGUI::InputManager::getInstance().injectKeyRelease(MyGUI::KeyCode::Enum(k.key));  }
-	i_cmdKeyRel = 0;
 
 	for (int i=0; i < i_cmdKeyPress; ++i)
 	{	const CmdKey& k = cmdKeyPress[i];
 		KeyPress(k);  }
 	i_cmdKeyPress = 0;
+
+	for (int i=0; i < i_cmdKeyRel; ++i)
+	{	const CmdKey& k = cmdKeyRel[i];
+		MyGUI::InputManager::getInstance().injectKeyRelease(MyGUI::KeyCode::Enum(k.key));  }
+	i_cmdKeyRel = 0;
 
 	for (int i=0; i < i_cmdMouseMove; ++i)
 	{	const CmdMouseMove& c = cmdMouseMove[i];
