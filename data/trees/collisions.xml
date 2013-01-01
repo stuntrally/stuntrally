@@ -53,6 +53,7 @@
 		<shape type="capsZ" ofs="0 0 30" r="4.1" h="69.0" frict="0.2" restit="0.9" />
 	</object>
 	<!--none: plant1 plant2 shroom1_1 shroom1_2 shroom1_3 shroom2_1 shroom2_2 shroom2_3-->
+
 <!-- new -->
 	<object mesh= "palm.mesh">
 		<shape type="capsZ" ofs="0 0 1.4" r="0.4" h="3.0" frict="0.7" restit="0.9" />
@@ -137,5 +138,12 @@
 		<shape type="sphere" ofs="-2.2 0.1 0.8" r="2.1" frict="0.2" restit="0.9" />
 	</object>
 
+<!--Desert-->
+	<object mesh= "treeD-22desMed.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 2" r="0.4" h="4.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "treeD-34desTiny.mesh">
+		<shape type="capsZ" ofs="0.0 0.0 2" r="0.4" h="4.0" frict="0.7" restit="0.9" />
+	</object>
 
 </collisions>

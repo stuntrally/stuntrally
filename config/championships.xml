@@ -382,7 +382,7 @@
 		<track name="S2-Frenzy"		time="208.0"/>
 		<track name="S3-Loops"		time="72.1"/>
 		<!--5-->
-		<track name="D2-Mntn"		time="88.5"/>
+		<track name="D2-Mntn"		time="74.5"/>
 		<track name="D3-P"			time="57.0"/>
 		<track name="J3-Rocky"		time="51.2"/>
 		<track name="S4-Hills"		time="192.8"/>
@@ -392,7 +392,7 @@
 		<track name="TestC3-pipe-big"	time="14.5"/>
 		<track name="TestC4-ow"		time="11.0"/>
 
-		<track name="D4-SBridge"	time="71.1"/>
+		<track name="D4-SBridge"	time="63.1"/>
 		<track name="J5-Pipes"		time="31.4"/>
 		<track name="J4-Pipe8"		time="17.5"/>
 		<!--13-->
