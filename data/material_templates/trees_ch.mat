@@ -154,6 +154,23 @@ material tree41midTwig		{	parent base-twig
   diffuseMap twig22g1.png  }
 
 
+//  Desert
+//---------------------------------------------------------------
+
+material tree22fatTrunk		{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree22fatTwig		{	parent base-twig
+  ambient 0.9 0.9 0.7
+  diffuseMap twigP2b4.png  }
+  //diffuseMap twigP27c.png  }  // wil,  Greece`
+
+material tree34stinyTrunk	{	parent base-tree
+  diffuseMap trunk2m.png  }
+material tree34stinyTwig	{	parent base-twig
+  ambient 0.9 1.2 1.1
+  diffuseMap twigP27y.png  }  // W kink empty  Greece~
+
+
 //  Green  todo..
 //---------------------------------------------------------------
 material tree19gwideTwig	{	parent base-twig
@@ -176,18 +193,6 @@ material tree19gwideTwig	{	parent base-twig
 //  diffuseMap twig25g.png  }  //tall  forest+
 
 
-material tree22fatTrunk		{	parent base-tree
-  diffuseMap trunk2m.png  }
-material tree22fatTwig		{	parent base-twig
-  //ambient 0.9 0.9 0.7
-  //diffuseMap twig21_0yo.png  }
-  diffuseMap twig34g2c.png  }  // wil,  Greece`
-  //normalMap twig39g1_norm.png
-  //normal_map true
-  //specular 1.1 0.9 1.2 32
-  //diffuseMap twig39g1.png  }  //+
-
-
 material tree31kinklowTrunk	{	parent base-tree
   diffuseMap trunk2m.png  }
 material tree31kinklowTwig	{	parent base-twig
@@ -206,13 +211,6 @@ material tree33kinkupTwig	{	parent base-twig
   ambient 1.2 1.2 1.2
   diffuse 0.8 0.8 0.8
   diffuseMap twig24g1.png  }  //tall gr-yel  greece/forest+
-
-
-material tree34stinyTrunk	{	parent base-tree
-  diffuseMap trunk2m.png  }
-material tree34stinyTwig	{	parent base-twig
-  ambient 0.9 1.2 1.1
-  diffuseMap twigP27y.png  }  // W kink empty  Greece~
 
 
 material tree35ballTrunk	{	parent base-tree
