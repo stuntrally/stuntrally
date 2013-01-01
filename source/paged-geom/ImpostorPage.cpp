@@ -35,7 +35,7 @@ using namespace Ogre;
 using namespace Forests;
 
 // static members initialization
-Ogre::uint  Forests::ImpostorPage::s_nImpostorResolution    = 128*2;
+Ogre::uint  Forests::ImpostorPage::s_nImpostorResolution    = 256;
 Ogre::uint  Forests::ImpostorPage::s_nSelfInstances         = 0;
 Ogre::uint  Forests::ImpostorPage::s_nUpdateInstanceID      = 0;
 ColourValue Forests::ImpostorPage::s_clrImpostorBackground  = ColourValue(0.0f, 0.3f, 0.0f, 0.0f);

@@ -176,8 +176,8 @@ void App::SaveGrassDens()
 			uint uu = 0xFF000000;
 			SGrassLayer* gr = &sc->grLayersAll[0];  ///todo: tab layers..
 			v = std::max(0, std::min(255, int(255.f *
-				linRange(sc->td.hfAngle[a], 0.f,gr->terMaxAng,20.f) *
-				linRange(sc->td.hfHeight[a], gr->terMinH,gr->terMaxH,20.f) )));
+				linRange(sc->td.hfAngle[a], 0.f,gr->terMaxAng, gr->terAngSm) *
+				linRange(sc->td.hfHeight[a], gr->terMinH,gr->terMaxH, gr->terHSm) )));
 			v = std::min((int)(gd[b] & 0xFF), v);  // preserve road
 			uu += v;  // v << (i*8)
 			gd[b] = uu;  // no grass

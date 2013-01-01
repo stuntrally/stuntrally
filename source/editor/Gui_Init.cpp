@@ -280,7 +280,8 @@ void App::InitGui()
 	///  grass
 	Slv(GrMinX, 0);  Slv(GrMaxX, 0);  Slv(GrMinY, 0);  Slv(GrMaxY, 0);
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
-	Ed(GrTerMaxAngle, editTrGr);  Ed(GrTerMinHeight, editTrGr);  Ed(GrTerMaxHeight, editTrGr);
+	Ed(GrTerMaxAngle, editTrGr);  Ed(GrTerSmAngle, editTrGr);
+	Ed(GrTerMinHeight, editTrGr);  Ed(GrTerMaxHeight, editTrGr);  Ed(GrTerSmHeight, editTrGr);
 	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);	imgGrass = mGUI->findWidget<StaticImage>("ImgGrass");
 	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);	imgGrClr = mGUI->findWidget<StaticImage>("ImgGrClr");
 

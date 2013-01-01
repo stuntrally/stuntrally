@@ -619,6 +619,7 @@
 	<Tag name="TerLAngSm">Angle smooth</Tag>
 	<Tag name="HeightMin">Height Min</Tag>
 	<Tag name="HeightMax">Height Max</Tag>
+	<Tag name="smooth">smooth</Tag>
 	<Tag name="TerLHSm">Height smooth</Tag>
 	<Tag name="TerLNoise">Noise</Tag>
 	<Tag name="TerLNoiseOnly">Only Noise</Tag>
@@ -1051,8 +1052,8 @@
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
 	<Tag name="TipGrassSwayDistr">Grass sway effect distribution (how random).</Tag>
 	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
-	<Tag name="TipGrTerMinHeight">Terrain height below which there won't be any grass (starts fading out for 20m).</Tag>
-	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass (starts fading out for 20m).</Tag>
+	<Tag name="TipGrTerMinHeight">Terrain height below which there won't be any grass (starts fading out, for smooth distance).</Tag>
+	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass (starts fading out, for smooth distance).</Tag>
 
 	<Tag name="TipGrassMaterial">Grass material (type) for this layer, chosen to match track's scenery.</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>

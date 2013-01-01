@@ -126,8 +126,11 @@ void App::editTrGr(EditPtr ed)
 	else if (n=="GrSwayLen")  gr->swayLen = r;	else if (n=="GrSwaySpd")  gr->swaySpeed = r;
 
 	else if (n=="GrTerMaxAngle")  gr->terMaxAng = r;
+	else if (n=="GrTerSmAngle")  gr->terAngSm = r;
+
 	else if (n=="GrTerMinHeight")  gr->terMinH = r;
 	else if (n=="GrTerMaxHeight")  gr->terMaxH = r;
+	else if (n=="GrTerSmHeight")  gr->terHSm = r;
 	
 	else if (n=="SceneryId")  sc->sceneryId = r;
 }
@@ -176,8 +179,9 @@ void App::tabGrLayers(TabPtr wp, size_t id)
 	_Ed(GrSwayDistr, gr->swayDistr);
 	_Ed(GrSwayLen, gr->swayLen);	_Ed(GrSwaySpd, gr->swaySpeed);
 	
-	_Ed(GrTerMaxAngle, gr->terMaxAng);
-	_Ed(GrTerMinHeight, gr->terMinH);  _Ed(GrTerMaxHeight, gr->terMaxH);
+	_Ed(GrTerMaxAngle, gr->terMaxAng);  _Ed(GrTerSmAngle, gr->terAngSm);
+	_Ed(GrTerMinHeight, gr->terMinH);  _Ed(GrTerSmHeight, gr->terHSm);
+	_Ed(GrTerMaxHeight, gr->terMaxH);
 }
 
 void App::chkGrLayOn(WP wp)

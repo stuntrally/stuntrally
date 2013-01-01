@@ -2208,6 +2208,18 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassSwayDistr}"/>
 						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 332 136 24">
+							<Property key="Caption" value="#{Terrain}"/>
+							<Property key="TextColour" value="0.4 1 0.4"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="242 332 116 24">
+							<Property key="Caption" value="#{smooth}"/>
+							<Property key="TextColour" value="0.5 0.7 0.5"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipGrTerMaxAngle}"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 364 116 24">
 							<Property key="Caption" value="#{AngleMax}"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
@@ -2215,8 +2227,8 @@
 							<UserString key="tip" value="#{TipGrTerMaxAngle}"/>
 						</Widget>
 						<Widget type="EditBox" skin="EditBox" position="152 362 64 24" name="GrTerMaxAngle">
-							<Property key="Colour" value="0.6 0.9 0.6"/>
-							<Property key="TextColour" value="0.6 0.9 0.6"/>
+							<Property key="Colour" value="0.6 0.9 0.7"/>
+							<Property key="TextColour" value="0.6 0.9 0.7"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrTerMaxAngle}"/>
 						</Widget>
@@ -2237,6 +2249,18 @@
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrTerMaxHeight}"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="242 362 56 24" name="GrTerSmAngle">
+							<Property key="Colour" value="0.6 0.8 0.7"/>
+							<Property key="TextColour" value="0.6 0.8 0.7"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<!--<UserString key="tip" value="#{TipGrTerMinHeight}"/>-->
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="242 396 56 24" name="GrTerSmHeight">
+							<Property key="Colour" value="0.6 0.8 0.6"/>
+							<Property key="TextColour" value="0.6 0.8 0.6"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<!--<UserString key="tip" value="#{TipGrTerMinHeight}"/>-->
 						</Widget>
 						<Widget type="EditBox" skin="EditBox" position="152 422 64 24" name="GrTerMaxHeight">
 							<Property key="Colour" value="0.6 0.9 0.6"/>
@@ -2269,11 +2293,6 @@
 							<Property key="Caption" value="#{GrColorMap}"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrassColorMap}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 332 136 24">
-							<Property key="Caption" value="#{Terrain}"/>
-							<Property key="TextColour" value="0.4 1 0.4"/>
-							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="330 310 104 24">
 							<Property key="Caption" value="#{Density}"/>

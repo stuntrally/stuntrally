@@ -76,7 +76,8 @@ public:
 	Ogre::Real dens;
 	Ogre::Real minSx,minSy, maxSx,maxSy;  // sizes
 	Ogre::Real swayDistr, swayLen, swaySpeed;  // sway
-	Ogre::Real terMaxAng, terMinH, terMaxH;  // terrain
+	Ogre::Real terMaxAng, terAngSm;       // max terrain angle, smooth
+	Ogre::Real terMinH, terMaxH, terHSm;  // terrain height
 	Ogre::String material, colorMap;
 	SGrassLayer();
 };

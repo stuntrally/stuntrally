@@ -66,12 +66,13 @@ PagedLayer::PagedLayer()
 
 SGrassLayer::SGrassLayer()
 {
-	on = 0;
+	on = false;
 	dens = 0.1f;
 	minSx = 0.6f; minSy = 0.6f;  maxSx = 0.85f; maxSy = 0.9f;
-	//grSwayDistr, grSwayLen, grSwaySpeed;  // sway
-	//grTerMaxAngle, grTerMinHeight,grTerMaxHeight;
-	material="grassForest";  colorMap="grClrForest.png";
+	//swayDistr, swayLen, swaySpeed;
+	terMaxAng = 30.f;  terAngSm = 20.f;
+	terMinH = -100.f;  terMaxH = 100.f;  terHSm = 20.f;
+	material = "grassForest";  colorMap = "grClrForest.png";
 }
 
 FluidBox::FluidBox()
@@ -310,7 +311,7 @@ bool Scene::LoadXml(String file, bool bTer)
 		a = ePgd->Attribute("grDist");		if (a)  grDist = s2r(a);
 		a = ePgd->Attribute("grDensSmooth");	if (a)  grDensSmooth = s2i(a);
 
-		#if 1  // old scene.xml (SR ver <= 1.8), 1 grass layer
+	#if 1  // old scene.xml (SR ver <= 1.8), 1 grass layer
 		SGrassLayer* gr = &grLayersAll[0];  gr->dens = 1.f;
 		a = ePgd->Attribute("grMtr");		if (a)  gr->material = String(a);
 		a = ePgd->Attribute("grClr");		if (a)  gr->colorMap = String(a);
@@ -327,7 +328,7 @@ bool Scene::LoadXml(String file, bool bTer)
 		a = ePgd->Attribute("grTerMaxAngle");	if (a)  gr->terMaxAng = s2r(a);
 		a = ePgd->Attribute("grTerMinHeight");	if (a)  gr->terMinH = s2r(a);
 		a = ePgd->Attribute("grTerMaxHeight");	if (a)  gr->terMaxH = s2r(a);
-		#endif
+	#endif
 
 		//  trees
 		a = ePgd->Attribute("trPage");		if (a)  trPage = s2r(a);
@@ -355,8 +356,11 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = eGrL->Attribute("swaySpeed");	if (a)  g.swaySpeed = s2r(a);
 			
 			a = eGrL->Attribute("terMaxAng");	if (a)  g.terMaxAng = s2r(a);
+			a = eGrL->Attribute("terAngSm");	if (a)  g.terAngSm = s2r(a);
+
 			a = eGrL->Attribute("terMinH");		if (a)  g.terMinH = s2r(a);
 			a = eGrL->Attribute("terMaxH");		if (a)  g.terMaxH = s2r(a);
+			a = eGrL->Attribute("terHSm");		if (a)  g.terHSm = s2r(a);
 
 			grLayersAll[grl++] = g;
 			eGrL = eGrL->NextSiblingElement("grass");
@@ -566,8 +570,13 @@ bool Scene::SaveXml(String file)
 			grl.SetAttribute("swaySpeed",	toStrC( g.swaySpeed ));
 			
 			grl.SetAttribute("terMaxAng",	toStrC( g.terMaxAng ));
+			if (g.terAngSm != 20.f)
+			grl.SetAttribute("terAngSm",	toStrC( g.terAngSm ));
+
 			grl.SetAttribute("terMinH",		toStrC( g.terMinH ));
 			grl.SetAttribute("terMaxH",		toStrC( g.terMaxH ));
+			if (g.terHSm != 20.f)
+			grl.SetAttribute("terHSm",		toStrC( g.terHSm ));
 
 			pgd.InsertEndChild(grl);
 		}
