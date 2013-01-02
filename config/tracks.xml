@@ -1,16 +1,13 @@
 <tracks>
 <!--VDrift-->
-	<track n="00" name="zandvoort"		created="10-12-09" crtver="0.1" modified="19-05-12" scenery="Asphalt"	author="VDrift"	objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="1" long="4" diff="2" rating="1" />   <!--zandvoort-->
+	<track n="00" name="zandvoort"		created="10-12-09" crtver="0.1" modified="19-05-12" scenery="Asphalt"	author="VDrift"	objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="1" long="4" diff="2" rating="2" />   <!--zandvoort-->
 	<track n="00" name="weekend"		created="10-12-09" crtver="1.7" modified="19-05-12" scenery="Asphalt"	author="VDrift"	objects="0" fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="1" frenzy="0" long="6" diff="1" rating="2" />   <!--weekend-->
 	<track n="00" name="virginia"		created="10-12-09" crtver="1.7" modified="19-05-12" scenery="Asphalt"	author="VDrift"	objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="5" diff="1" rating="0" />   <!--virginia-->
 	<track n="00" name="ruudskogen"		created="10-12-09" crtver="1.7" modified="19-05-12" scenery="Asphalt"	author="VDrift"	objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="2" frenzy="0" long="3" diff="1" rating="2" />   <!--ruudskogen-->
-<!--<track n="00" name="road_atlanta"	created="10-12-09" crtver="1.7" modified="19-05-12" scenery="Asphalt"	author="VDrift"	objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="4" diff="1" rating="0" />--><!--road_atlanta-->
 	<track n="00" name="mosport"		created="10-12-09" crtver="1.7" modified="19-05-12" scenery="Asphalt"	author="VDrift"	objects="0" fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="1" frenzy="1" long="4" diff="2" rating="2" />   <!--mosport-->
-<!--<track n="00" name="lagunaseca"		created="10-12-09" crtver="1.7" modified="19-05-12" scenery="Asphalt"	author="VDrift"	objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="4" diff="2" rating="1" />--><!--lagunaseca-->
 	<track n="00" name="detroit"		created="10-12-09" crtver="1.7" modified="19-05-12" scenery="Asphalt"	author="VDrift"	objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="3" rating="1" />   <!--detroit-->
 	<track n="00" name="dirt3"			created="10-12-09" crtver="1.7" modified="19-05-12" scenery="Desert"	author="VDrift"	objects="0" fluids="0" bumps="0" jumps="1" loops="0" pipes="0" banked="0" frenzy="0" long="2" diff="2" rating="3" />   <!--dirt3-->
 	<track n="00" name="brands"			created="10-12-09" crtver="1.7" modified="19-05-12" scenery="Asphalt"	author="VDrift"	objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="4" diff="1" rating="1" />   <!--brands-->
-<!--<track n="00" name="a1ring"			created="10-12-09" crtver="1.7" modified="19-05-12" scenery="Asphalt"	author="VDrift"	objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="4" diff="1" rating="0" />--><!--a1ring-->
 <!--Test-->																																																									<!--Test-->
 <track n="01" name="Test1-Flat"			created="10-07-10" crtver="0.3" modified="20-07-10" scenery="Jungle"	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="0" diff="0" rating="0" /> <!--Test1-Flat-->
 <track n="01" name="Test1-FlatD"		created="22-11-12" crtver="1.9" modified="22-11-12" scenery="Desert"	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="0" diff="0" rating="0" /> <!--Test1-FlatD-->
@@ -35,7 +32,7 @@
 <track n="107" name="Test11-Jumps"		created="21-11-12" crtver="1.9" modified="21-11-12" scenery="Desert"	author="CH" objects="0" fluids="0" bumps="0" jumps="2" loops="0" pipes="0" banked="0" frenzy="0" long="0" diff="0" rating="0" /> <!--Test11-Jumps-->
 <!--1-->																																																									<!--0.4-->
 	<track n="01" name="J1-T"			created="06-06-10" crtver="0.2" modified="06-06-10" scenery="Jungle"	author="CH" objects="0" fluids="0" bumps="1" jumps="0" loops="0" pipes="0" banked="0" frenzy="2" long="1" diff="1" rating="0" /> <!--J1-T-->
-	<track n="02" name="D1-simple"		created="25-07-10" crtver="0.3" modified="01-01+13" scenery="Desert"	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="0" /> <!--D1-simple-->
+	<track n="02" name="D1-simple"		created="25-07-10" crtver="0.3" modified="01-01+13" scenery="Desert"	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="2" /> <!--D1-simple-->
 	<track n="04" name="S2-Frenzy"		created="31-07-10" crtver="0.3" modified="31-12+12" scenery="Savanna"	author="CH" objects="0" fluids="2" bumps="1" jumps="1" loops="0" pipes="0" banked="2" frenzy="3" long="6" diff="3" rating="2" /> <!--S2-Frenzy-->
 	<track n="05" name="S3-Loops"		created="10-08-10" crtver="0.4" modified="31-12+12" scenery="Savanna"	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="4" pipes="0" banked="1" frenzy="2" long="2" diff="5" rating="3" /> <!--S3-Loops-->
 <!--5-->																																																									<!--0.6-->
