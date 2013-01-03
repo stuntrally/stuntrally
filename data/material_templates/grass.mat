@@ -70,6 +70,7 @@ material grassUnidentified
 }
 
 //  new  +
+
 material grass2  {  parent grass
     diffuseMap grass2.png  }
 
@@ -91,11 +92,21 @@ material grass4v {  parent grass
 material grass5  {  parent grass
     diffuseMap grass5.png  }
 
-material grass6r  {  parent grass
-    diffuseMap grass6r.png  }
+
+	material grass6r  {  parent grass
+		diffuseMap grass6r.png  }
 
 material grass6s  {  parent grass
     diffuseMap grass6s.png  }
+
+material grass7wg  {  parent grass
+    diffuseMap grass7wg.png  }
+
+	material grass7wy  {  parent grass
+		diffuseMap grass7wy.png  }
+
+	material grass8g  {  parent grass
+		diffuseMap grass8g.png  }
 
 material grass9r  {  parent grass
     diffuseMap grass9r.png  }
@@ -103,17 +114,18 @@ material grass9r  {  parent grass
 material grass10 {  parent grass
     diffuseMap grass10.png  }
 
-material grass11w {  parent grass
-    diffuseMap grass11w.png  }
+	material grass11w {  parent grass
+		diffuseMap grass11w.png  }
 
 material grass11wg {  parent grass
     diffuseMap grass11wg.png  }
 
+
+	material grass12o {  parent grass
+		diffuseMap grass12o.png  }
+
 material grass12y- {  parent grass
     diffuseMap grass12y-.png  }
-
-material grass12o {  parent grass
-    diffuseMap grass12o.png  }
 
 material grass15 {  parent grass
     diffuseMap grass15.png  }
@@ -127,8 +139,12 @@ material grass16g {  parent grass
 material grass16r {  parent grass
     diffuseMap grass16r.png  }
 
+	material grass16rd {  parent grass
+		diffuseMap grass16rd.png  }
+
 material grass16o {  parent grass
     diffuseMap grass16o.png  }
+
 
 material grass17 {  parent grass
     diffuseMap grass17.png  }
@@ -136,11 +152,20 @@ material grass17 {  parent grass
 material grass17r {  parent grass
     diffuseMap grass17r.png  }
 
+	material grass18 {  parent grass
+		diffuseMap grass18.png  }
+
 material grass18gw {  parent grass
     diffuseMap grass18gw.png  }
 
 material grass18w {  parent grass
     diffuseMap grass18w.png  }
+
+	material grass19 {  parent grass
+		diffuseMap grass19.png  }
+
+	material grass20 {  parent grass
+		diffuseMap grass20.png  }
 
 material grass20p {  parent grass
     diffuseMap grass20p.png  }
@@ -152,30 +177,8 @@ material grassXc {  parent grass
 material grassXv {  parent grass
     diffuseMap grassXv.png  }
 
-material grassX10 {  parent grass
-    diffuseMap grassX10.png  }
-
 material grassX10b {  parent grass
     diffuseMap grassX10b.png  }
 
-material grassX13or {  parent grass
-    diffuseMap grassX13or.png  }
-
 material grassX13p {  parent grass
     diffuseMap grassX13p.png  }
-
-material grassX13rw {  parent grass
-    diffuseMap grassX13rw.png  }
-
-
-material grassWb {  parent grass
-    diffuseMap grassWb.png  }
-
-material grassWc {  parent grass
-    diffuseMap grassWc.png  }
-
-material grassWg {  parent grass
-    diffuseMap grassWg.png  }
-
-material grassWy {  parent grass
-    diffuseMap grassWy.png  }
