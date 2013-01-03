@@ -226,7 +226,8 @@ void App::btnTerrainDouble(WP)
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str) / 2;
 	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 
-	int oldSize = sc->td.iVertsX, newSize = (oldSize-1) * 2 +1;
+	int oldSize = sc->td.iVertsX, osi = oldSize*oldSize,
+		newSize = (oldSize-1) * 2 +1;
 	float scale = 1.f / 2.f / 2.f;
 	float* hfData = new float[si];
 	for (int i=0; i < si; ++i)  hfData[i] = 0.f;  // clear out
@@ -240,6 +241,7 @@ void App::btnTerrainDouble(WP)
 		for (i=0; i < newSize; ++i,++a)
 		{
 			x = y * oldSize + scale * i;
+			x = std::max(0, std::min(osi-1, x));
 			hfData[a] = sc->td.hfHeight[ x ];
 		}
 	}
