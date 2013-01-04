@@ -312,8 +312,8 @@ particle_system SnowFine
 {
 	material			SnowFlake
 	quota				18000
-	particle_width		0.05
-	particle_height		0.05
+	particle_width		0.07
+	particle_height		0.07
 
 	cull_each		false
     sorted			false
@@ -336,19 +336,19 @@ particle_system SnowFine
 		colour_range_end	1 1 1  0.5
 
 		emission_rate	20
-		velocity_min	3.1
-		velocity_max	4.2
-		time_to_live_min	1.7
-		time_to_live_max	2.2
+		velocity_min	2.1
+		velocity_max	3.2
+		time_to_live_min	2.0
+		time_to_live_max	2.5
 	}
 
-	affector Rotator
-	{
-		rotation_range_start 0
-		rotation_range_end 220
-		rotation_speed_range_start -20
-		rotation_speed_range_end 20
-	}
+	//affector Rotator
+	//{
+	//	rotation_range_start 0
+	//	rotation_range_end 220
+	//	rotation_speed_range_start -20
+	//	rotation_speed_range_end 20
+	//}
 	//affector LinearForce
 	//{
 	//	force_vector	0 -9.8 0
@@ -357,6 +357,6 @@ particle_system SnowFine
 
 	affector DirectionRandomiser
 	{
-		randomness	18
+		randomness	8
 	}
 }

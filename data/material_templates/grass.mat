@@ -58,6 +58,7 @@ material grassWinter
 {
     parent grass
     diffuseMap grassWinter.png
+    alpha_rejection greater_equal 220
     ambient 1.4 1.5 1.4
     diffuse 0.5 0.5 0.5
 }
@@ -102,8 +103,8 @@ material grass6s  {  parent grass
 material grass7wg  {  parent grass
     diffuseMap grass7wg.png  }
 
-	material grass7wy  {  parent grass
-		diffuseMap grass7wy.png  }
+material grass7wy  {  parent grass
+	diffuseMap grass7wy.png  }
 
 	material grass8g  {  parent grass
 		diffuseMap grass8g.png  }
@@ -152,14 +153,14 @@ material grass17 {  parent grass
 material grass17r {  parent grass
     diffuseMap grass17r.png  }
 
-	material grass18 {  parent grass
-		diffuseMap grass18.png  }
-
 material grass18gw {  parent grass
     diffuseMap grass18gw.png  }
 
 material grass18w {  parent grass
     diffuseMap grass18w.png  }
+
+material grass18wg {  parent grass
+	diffuseMap grass18wg.png  }
 
 	material grass19 {  parent grass
 		diffuseMap grass19.png  }
