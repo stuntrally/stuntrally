@@ -12,6 +12,7 @@ material grass
     diffuse_address_mode clamp
 }
 
+//  old  -
 material grassAustralia
 {
     parent grass
@@ -94,8 +95,8 @@ material grass5  {  parent grass
     diffuseMap grass5.png  }
 
 
-	material grass6r  {  parent grass
-		diffuseMap grass6r.png  }
+material grass6r  {  parent grass
+	diffuseMap grass6r.png  }
 
 material grass6s  {  parent grass
     diffuseMap grass6s.png  }
@@ -122,8 +123,8 @@ material grass11wg {  parent grass
     diffuseMap grass11wg.png  }
 
 
-	material grass12o {  parent grass
-		diffuseMap grass12o.png  }
+material grass12o {  parent grass
+	diffuseMap grass12o.png  }
 
 material grass12y- {  parent grass
     diffuseMap grass12y-.png  }
@@ -140,8 +141,8 @@ material grass16g {  parent grass
 material grass16r {  parent grass
     diffuseMap grass16r.png  }
 
-	material grass16rd {  parent grass
-		diffuseMap grass16rd.png  }
+	material grass16rr {  parent grass
+		diffuseMap grass16rr.png  }
 
 material grass16o {  parent grass
     diffuseMap grass16o.png  }
@@ -162,11 +163,11 @@ material grass18w {  parent grass
 material grass18wg {  parent grass
 	diffuseMap grass18wg.png  }
 
-	material grass19 {  parent grass
-		diffuseMap grass19.png  }
+material grass19 {  parent grass
+	diffuseMap grass19.png  }
 
-	material grass20 {  parent grass
-		diffuseMap grass20.png  }
+material grass20 {  parent grass
+	diffuseMap grass20.png  }
 
 material grass20p {  parent grass
     diffuseMap grass20p.png  }

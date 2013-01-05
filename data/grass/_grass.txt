@@ -1,4 +1,4 @@
-grass2.png .. grass15
+grass2.png .. grass20
 
 Plants textures Pack 01,02,03,04
 Author: yughues
@@ -9,6 +9,7 @@ http://opengameart.org/content/plants-textures-pack-02
 http://opengameart.org/content/plants-textures-pack-03
 http://opengameart.org/content/plants-textures-pack-04
 
+many colored by CryHam for SR
 
 ---- Old
 grassJungle.png  rest is colored
