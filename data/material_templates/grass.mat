@@ -107,8 +107,8 @@ material grass7wg  {  parent grass
 material grass7wy  {  parent grass
 	diffuseMap grass7wy.png  }
 
-	material grass8g  {  parent grass
-		diffuseMap grass8g.png  }
+material grass8g  {  parent grass
+	diffuseMap grass8g.png  }
 
 material grass9r  {  parent grass
     diffuseMap grass9r.png  }

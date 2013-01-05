@@ -113,7 +113,7 @@
 																																																												
 	<track n="65" name="V1-Dark"		created="03-11-11" crtver="1.4" modified="04-11-11" scenery="Volcanic" 	author="CH" objects="0" fluids="1" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="0" long="1" diff="1" rating="2" /> <!--V1-Dark-->
 	<track n="66" name="I5-Shore"		created="04-11-11" crtver="1.4" modified="04-11-11" scenery="Island" 	author="CH" objects="2" fluids="1" bumps="1" jumps="1" loops="0" pipes="0" banked="1" frenzy="1" long="2" diff="2" rating="2" /> <!--I5-Shore-->
-	<track n="67" name="X1-Magic"	created="05-11-11" crtver="1.4" modified="03-01+13" scenery="Unidentified" 	author="CH" objects="0" fluids="2" bumps="2" jumps="0" loops="0" pipes="1" banked="2" frenzy="1" long="1" diff="3" rating="2" /> <!--X1-Magic-->
+	<track n="67" name="X1-Magic"		created="05-11-11" crtver="1.4" modified="03-01+13" scenery="Unidentif" author="CH" objects="0" fluids="2" bumps="2" jumps="0" loops="0" pipes="1" banked="2" frenzy="1" long="1" diff="3" rating="2" /> <!--X1-Magic-->
 																																																												
 	<track n="68" name="D9-Mud"			created="06-11-11" crtver="1.4" modified="06-11-11" scenery="Desert" 	author="CH" objects="0" fluids="3" bumps="0" jumps="1" loops="0" pipes="0" banked="0" frenzy="0" long="1" diff="1" rating="1" /> <!--D9-Mud-->
 	<track n="69" name="J14-Muddy"		created="06-11-11" crtver="1.4" modified="30-12+12" scenery="Jungle" 	author="CH" objects="2" fluids="5" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="1" long="1" diff="3" rating="3" /> <!--J14-Muddy-->
@@ -123,7 +123,7 @@
 <!--71-->																																																									<!--1.5-->
 	<track n="72" name="J15-Swamp"		created="12-01-12" crtver="1.5" modified="13-01-12" scenery="Jungle" 	author="CH" objects="0" fluids="3" bumps="4" jumps="0" loops="0" pipes="0" banked="1" frenzy="1" long="3" diff="3" rating="3" /> <!--J15-Swamp-->
 	<track n="73" name="A4-Snake"		created="12-01-12" crtver="1.5" modified="03-01+13" scenery="Australia" author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="3" banked="3" frenzy="4" long="2" diff="5" rating="3" /> <!--A4-Snake-->
-	<track n="74" name="X2-Swirl"	created="13-01-12" crtver="1.5" modified="03-01+13" scenery="Unidentified" 	author="CH" objects="0" fluids="2" bumps="0" jumps="0" loops="2" pipes="3" banked="2" frenzy="1" long="3" diff="3" rating="2" /> <!--X2-Swirl-->
+	<track n="74" name="X2-Swirl"		created="13-01-12" crtver="1.5" modified="03-01+13" scenery="Unidentif" author="CH" objects="0" fluids="2" bumps="0" jumps="0" loops="2" pipes="3" banked="2" frenzy="1" long="3" diff="3" rating="2" /> <!--X2-Swirl-->
 																																																												
 	<track n="75" name="F12-HighPeaks"	created="14-01-12" crtver="1.5" modified="14-01-12" scenery="Forest" 	author="CH" objects="0" fluids="1" bumps="2" jumps="0" loops="0" pipes="0" banked="2" frenzy="2" long="7" diff="3" rating="4" /> <!--F12-HighPeaks-->
 	<track n="76" name="D10-MudBath"	created="04-02-12" crtver="1.5" modified="05-02-12" scenery="Desert"	author="CH" objects="0" fluids="5" bumps="3" jumps="2" loops="0" pipes="0" banked="1" frenzy="0" long="3" diff="4" rating="3" /> <!--D10-MudBath-->
@@ -132,7 +132,7 @@
 	<track n="78" name="I6-Flooded"		created="09-04-12" crtver="1.6" modified="09-04-12" scenery="Island" 	author="CH" objects="2" fluids="2" bumps="0" jumps="0" loops="0" pipes="0" banked="1" frenzy="2" long="1" diff="3" rating="3" /> <!--I6-Flooded-->
 	<track n="79" name="J16-MudMad"		created="09-04-12" crtver="1.6" modified="01-01+13" scenery="Jungle" 	author="CH" objects="1" fluids="5" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="1" long="1" diff="4" rating="2" /> <!--J16-MudMad-->
 																																																												
-	<track n="80" name="C1-Hairpins"	created="09-04-12" crtver="1.6" modified="09-04-12" scenery="Canyon" 	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="4" frenzy="2" long="2" diff="3" rating="3" /> <!--C1-Hairpins-->
+	<track n="80" name="C1-Hairpins"	created="09-04-12" crtver="1.6" modified="05-01+13" scenery="Canyon" 	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="4" frenzy="2" long="2" diff="3" rating="3" /> <!--C1-Hairpins-->
 	<track n="81" name="0W10-Whirl"		created="10-04-12" crtver="1.6" modified="05-01+13" scenery="Winter" 	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="2" frenzy="2" long="2" diff="1" rating="3" /> <!--0W10-Whirl-->
 	<track n="82" name="F13-Castle"		created="12-04-12" crtver="1.6" modified="12-04-12" scenery="Forest" 	author="CH" objects="2" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="2" frenzy="3" long="2" diff="2" rating="2" /> <!--F13-Castle-->
 																																																												
@@ -140,7 +140,7 @@
 <track n="84" name="J17-JungleCanyons"	created="16-04-12" crtver="1.6" modified="16-04-12" scenery="Jungle"	author="TV" objects="1" fluids="1" bumps="0" jumps="2" loops="0" pipes="0" banked="1" frenzy="1" long="6" diff="2" rating="4" /> <!--J17-JungleCanyon-->
 	<track n="85" name="I8-Pharaoh"		created="09-04-12" crtver="1.6" modified="30-07-12" scenery="Island"	author="CH" objects="0" fluids="1" bumps="0" jumps="2" loops="0" pipes="0" banked="3" frenzy="2" long="2" diff="2" rating="3" /> <!--I8-Pharaoh-->
 <!--79-->																																																									<!--1.7-->
-	<track n="86" name="C2-CanyonRun"	created="27-05-12" crtver="1.7" modified="27-05-12" scenery="Canyon"	author="CH" objects="1" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="4" frenzy="2" long="3" diff="2" rating="3" /> <!--C2-CanyonRun-->
+	<track n="86" name="C2-CanyonRun"	created="27-05-12" crtver="1.7" modified="05-01+13" scenery="Canyon"	author="CH" objects="1" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="4" frenzy="2" long="3" diff="2" rating="3" /> <!--C2-CanyonRun-->
 	<track n="87" name="V2-Volcanic"	created="09-06-12" crtver="1.7" modified="10-06-12" scenery="Volcanic"	author="CH" objects="0" fluids="2" bumps="2" jumps="1" loops="0" pipes="0" banked="1" frenzy="0" long="6" diff="3" rating="3" /> <!--V2-Volcanic-->
 																																																												
 	<track n="88" name="J18-Tiny"		created="10-06-12" crtver="1.7" modified="30-12+12" scenery="Jungle"	author="CH" objects="3" fluids="2" bumps="0" jumps="0" loops="0" pipes="0" banked="3" frenzy="2" long="1" diff="3" rating="3" /> <!--J18-Tiny-->
@@ -148,7 +148,7 @@
 	<track n="90" name="V3-Crater"		created="10-06-12" crtver="1.7" modified="10-06-12" scenery="Volcanic"	author="CH" objects="0" fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="2" frenzy="2" long="2" diff="1" rating="2" /> <!--V3-Crater-->
 																																																												
 	<track n="91" name="F14-Maze"		created="11-06-12" crtver="1.7" modified="11-06-12" scenery="Forest"	author="CH" objects="1" fluids="0" bumps="1" jumps="0" loops="0" pipes="1" banked="2" frenzy="5" long="3" diff="4" rating="3" /> <!--F14-Maze-->
-	<track n="92" name="C3-Vast"		created="11-06-12" crtver="1.7" modified="12-06-12" scenery="Canyon"	author="CH" objects="0" fluids="0" bumps="1" jumps="1" loops="0" pipes="0" banked="1" frenzy="0" long="8" diff="2" rating="3" /> <!--C3-Vast-->
+	<track n="92" name="C3-Vast"		created="11-06-12" crtver="1.7" modified="05-01+13" scenery="Canyon"	author="CH" objects="0" fluids="0" bumps="0" jumps="1" loops="0" pipes="0" banked="1" frenzy="0" long="8" diff="1" rating="3" /> <!--C3-Vast-->
 	<track n="93" name="F15-ForestTrip"	created="01-06-12" crtver="1.7" modified="29-06-12" scenery="Forest" author="krash" objects="0" fluids="1" bumps="2" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="2" rating="3" /> <!--F15-ForestTrip-->
 																																																												
 	<track n="94" name="J19-demo2"		created="23-07-12" crtver="1.7" modified="12-08-12" scenery="Jungle"	author="CH" objects="2" fluids="2" bumps="0" jumps="1" loops="1" pipes="1" banked="2" frenzy="2" long="2" diff="2" rating="2" /> <!--J19-demo2-->
@@ -157,7 +157,7 @@
 	<track n="97" name="S14-Refinery"	created="02-08-12" crtver="1.7" modified="31-12+12" scenery="Savanna"	author="CH" objects="0" fluids="0" bumps="1" jumps="2" loops="5" pipes="3" banked="4" frenzy="3" long="5" diff="6" rating="4" /> <!--S14-Refinery-->
 <!--91 99-->																																																									<!--1.8-->
 	<track n="98" name="A5-TopTwist"	created="05-09-12" crtver="1.8" modified="05-01+13" scenery="Australia"	author="CH" objects="0" fluids="1" bumps="1" jumps="3" loops="0" pipes="0" banked="2" frenzy="2" long="5" diff="4" rating="3" /> <!--A5-TopTwist-->
-	<track n="99" name="X3-Cloud"	created="05-09-12" crtver="1.8" modified="03-01+13" scenery="Unidentified"	author="CH" objects="0" fluids="0" bumps="0" jumps="1" loops="0" pipes="0" banked="3" frenzy="2" long="5" diff="2" rating="1" /> <!--X3-Cloud-->
+	<track n="99" name="X3-Cloud"		created="05-09-12" crtver="1.8" modified="03-01+13" scenery="Unidentif"	author="CH" objects="0" fluids="0" bumps="0" jumps="1" loops="0" pipes="0" banked="3" frenzy="2" long="5" diff="2" rating="1" /> <!--X3-Cloud-->
 
 	<track n="100" name="F16-Clew"		created="09-10-12" crtver="1.8" modified="09-10-12" scenery="Forest"	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="2" banked="2" frenzy="3" long="2" diff="4" rating="3" /> <!--F16-Clew-->
 	<track n="101" name="G5-Climb"		created="09-10-12" crtver="1.8" modified="30-12+12" scenery="Greece"	author="CH" objects="0" fluids="1" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="0" long="8" diff="2" rating="4" /> <!--G5-Climb-->
