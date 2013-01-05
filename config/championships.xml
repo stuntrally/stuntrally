@@ -415,8 +415,8 @@
 		<track name="S7-HighMadness" time="98.0"/>
 		<track name="S8-Frenzy2slow" time="114.6"/>
 
-		<track name="0W4-ice-blur"	time="24.6"/>
-		<track name="0W5-Circles"	time="88.7"/>
+		<track name="0W4-ice-blur"	time="30.6"/>
+		<track name="0W5-Circles"	time="92.7"/>
 		<!--32-->
 		<track name="J6-80fun"		time="115.7"/>
 		<track name="I1-star3"		time="48.5"/>
@@ -487,7 +487,7 @@
 		<track name="J16-MudMad"	time="71.5"/>
 
 		<track name="C1-Hairpins"	time="67.0"/>
-		<track name="0W10-Whirl"	time="66.5"/>
+		<track name="0W10-Whirl"	time="74.5"/>
 		<track name="F13-Castle"	time="110.0"/>
 		
 		<track name="I7-Moses"		time="64.0"/>
@@ -518,7 +518,7 @@
 		<track name="G5-Climb"		time="240.0"/>
 		<track name="I10-Treasure"	time="90.0"/>
 
-		<track name="D12-Sandstorm"	time="50.0"/>
+		<track name="D12-Sandstorm"	time="60.0"/>
 		<track name="T1-Autumn"		time="74.0"/>
 		<track name="T2-RedOakPark"	time="53.0"/>
 		<track name="T3-Orange"		time="55.0"/>
