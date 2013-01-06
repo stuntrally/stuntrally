@@ -171,6 +171,7 @@ material rock1
 }
 
 
+//  new
 material rock_y2  // greece yellow
 {
     parent base
@@ -179,4 +180,64 @@ material rock_y2  // greece yellow
 	normal_map true
 	terrain_light_map true
 	specular 0.4 0.4 0.35 32
+}
+
+material rock_n1
+{
+    parent base
+	diffuseMap rock_n1.jpg
+	//normalMap rock1_norm.png
+	//normal_map true
+	terrain_light_map true
+	specular 0.5 0.5 0.5 32
+}
+
+material rock_n2
+{
+    parent base
+	diffuseMap rock_n2.png
+	//normalMap rock1_norm.png
+	//normal_map true
+	terrain_light_map true
+	specular 0.15 0.15 0.1 32
+}
+
+material rock_n3
+{
+    parent base
+	diffuseMap rock_n3.jpg
+	//normalMap rock1_norm.png
+	//normal_map true
+	terrain_light_map true
+	specular 0.5 0.5 0.5 32
+}
+
+material rock_n4
+{
+    parent base
+	diffuseMap rock_n4.jpg
+	//normalMap rock1_norm.png
+	//normal_map true
+	terrain_light_map true
+	specular 0.5 0.5 0.5 32
+}
+
+material rock_n5
+{
+    parent base
+	diffuseMap rock_n5.jpg
+	//normalMap rock1_norm.png
+	//normal_map true
+	terrain_light_map true
+	specular 0.5 0.5 0.5 32
+}
+
+material rock_n5v
+{
+    parent base
+	diffuseMap rock_n5.jpg
+	//normalMap rock1_norm.png
+	//normal_map true
+	terrain_light_map true
+	specular 0.5 0.5 0.5 32
 }
