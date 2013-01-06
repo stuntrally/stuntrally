@@ -172,6 +172,12 @@ material grass20 {  parent grass
 material grass20p {  parent grass
     diffuseMap grass20p.png  }
 
+material gplant1 {  parent grass
+    diffuseMap gplant1.png  }
+
+	material gplant2 {  parent grass
+    	diffuseMap gplant2.png  }
+
 
 material grassXc {  parent grass
     diffuseMap grassXc.png  }
