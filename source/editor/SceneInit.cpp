@@ -62,7 +62,7 @@ void App::createScene()  // once, init
 	//tracksXml.SaveXml(PATHMANAGER::GameConfigDir() + "/tracks2.xml");
 
 	//  fluids.xml
-	fluidsXml.LoadXml(PATHMANAGER::Data() + "/materials/fluids.xml");
+	fluidsXml.LoadXml(PATHMANAGER::Data() + "/materials2/fluids.xml");
 	sc->pFluidsXml = &fluidsXml;
 	LogO(String("**** Loaded fluids.xml: ") + toStr(fluidsXml.fls.size()));
 

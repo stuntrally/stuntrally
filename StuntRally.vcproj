@@ -1295,51 +1295,51 @@
 				Name="materials"
 				>
 				<File
-					RelativePath=".\data\material_templates\_brands.mat"
+					RelativePath=".\data\materials\_brands.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\_detroit.mat"
+					RelativePath=".\data\materials\_detroit.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\_dirt3.mat"
+					RelativePath=".\data\materials\_dirt3.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\_mosport.mat"
+					RelativePath=".\data\materials\_mosport.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\_ruudskogen.mat"
+					RelativePath=".\data\materials\_ruudskogen.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\_virginia.mat"
+					RelativePath=".\data\materials\_virginia.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\_weekend.mat"
+					RelativePath=".\data\materials\_weekend.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\_zandvoort.mat"
+					RelativePath=".\data\materials\_zandvoort.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\arrow.mat"
+					RelativePath=".\data\materials\arrow.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\arrow.shader"
+					RelativePath=".\data\materials\arrow.shader"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\arrow.shaderset"
+					RelativePath=".\data\materials\arrow.shaderset"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\car.mat"
+					RelativePath=".\data\materials\car.mat"
 					>
 				</File>
 				<File
@@ -1347,11 +1347,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\car_particle.mat"
+					RelativePath=".\data\materials\car_particle.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\core.h"
+					RelativePath=".\data\materials\core.h"
 					>
 				</File>
 				<File
@@ -1359,63 +1359,63 @@
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\grass.mat"
+					RelativePath=".\data\materials\grass.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\main.mat"
+					RelativePath=".\data\materials\main.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\main.shader"
+					RelativePath=".\data\materials\main.shader"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\main.shaderset"
+					RelativePath=".\data\materials\main.shaderset"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\materials.lod"
+					RelativePath=".\data\materials\materials.lod"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\objects_dynamic.mat"
+					RelativePath=".\data\materials\objects_dynamic.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\objects_static.mat"
+					RelativePath=".\data\materials\objects_static.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\road.mat"
+					RelativePath=".\data\materials\road.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\road_wall_pipe.mat"
+					RelativePath=".\data\materials\road_wall_pipe.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\shadows.h"
+					RelativePath=".\data\materials\shadows.h"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\sky.mat"
+					RelativePath=".\data\materials\sky.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\stuntrally.configuration"
+					RelativePath=".\data\materials\stuntrally.configuration"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\terrain.shader"
+					RelativePath=".\data\materials\terrain.shader"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\terrain.shaderset"
+					RelativePath=".\data\materials\terrain.shaderset"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\tire_particle.mat"
+					RelativePath=".\data\materials\tire_particle.mat"
 					>
 				</File>
 				<File
@@ -1423,39 +1423,39 @@
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\trees.mat"
+					RelativePath=".\data\materials\trees.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\trees_ch.mat"
+					RelativePath=".\data\materials\trees_ch.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\trees_old.mat"
+					RelativePath=".\data\materials\trees_old.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\vdrift.mat"
+					RelativePath=".\data\materials\vdrift.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\water.mat"
+					RelativePath=".\data\materials\water.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\water.shader"
+					RelativePath=".\data\materials\water.shader"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\water.shaderset"
+					RelativePath=".\data\materials\water.shaderset"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\water_particle.mat"
+					RelativePath=".\data\materials\water_particle.mat"
 					>
 				</File>
 				<File
-					RelativePath=".\data\material_templates\weather.mat"
+					RelativePath=".\data\materials\weather.mat"
 					>
 				</File>
 				<File

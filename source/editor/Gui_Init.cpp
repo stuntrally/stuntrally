@@ -321,7 +321,7 @@ void App::InitGui()
 	
 	//---------------------  Skies  ---------------------
 	Cmb(cmbSky, "SkyCombo", comboSky);
-	String sMat = PATHMANAGER::Data()+"/material_templates/";  // path
+	String sMat = PATHMANAGER::Data()+"/materials/";  // path
 
 	GetMaterialsMat(sMat+"sky.mat");
 	for (size_t i=0; i < vsMaterials.size(); ++i)
