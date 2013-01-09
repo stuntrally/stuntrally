@@ -328,6 +328,7 @@
 		<track name="T1-Autumn"		laps="1" factor="0.1" /><!---->
 		<track name="T2-RedOakPark"	laps="1" factor="0.1" /><!---->
 		<track name="T3-Orange"		laps="1" factor="0.1" /><!---->
+		<track name="T4-Scary"		laps="1" factor="0.1" /><!---->
 	</championship>
 	<championship name="Other sceneries" ver="1" difficulty="4" length="3" tutorial="3" 
 			descr="Other sceneries championship: Volcanic and Unidentified.">
