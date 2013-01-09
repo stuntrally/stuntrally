@@ -16,7 +16,7 @@ void shadow_caster_vs(
 	oDepth.y = oPosition.w;
 
 	// clamp z to zero. seem to do the trick. :-/
-	oPosition.z = max(oPosition.z, 0);
+	//oPosition.z = max(oPosition.z, 0);
 	
 	oUv = uv;
 }
@@ -49,7 +49,7 @@ void shadow_caster_wind_vs(
 	oDepth.y = oPosition.w;
 
 	// clamp z to zero. seem to do the trick. :-/
-	oPosition.z = max(oPosition.z, 0);
+	//oPosition.z = max(oPosition.z, 0);
 	
 	oUv = uv;
 }
