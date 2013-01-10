@@ -85,10 +85,18 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 		//  cast 2 rays - 2 times, average 2 angles
 		COLLISION_CONTACT ct0,ct1,ct20,ct21;
 		MATHVECTOR<float,3> ofs(ax*0.5f,ay*0.5f,0),ofs2(ax,ay,0);
-		world->CastRay(pos+ofs, dir, HMaxDepth,NULL, ct0,  0,0, true, false);
-		world->CastRay(pos-ofs, dir, HMaxDepth,NULL, ct1,  0,0, true, false);
-		world->CastRay(pos+ofs2,dir, HMaxDepth,NULL, ct20, 0,0, true, false);
-		world->CastRay(pos-ofs2,dir, HMaxDepth,NULL, ct21, 0,0, true, false);
+		world->CastRay(pos+ofs, dir, HMaxDepth,chassis, ct0,  0,0, true, true);
+		world->CastRay(pos-ofs, dir, HMaxDepth,chassis, ct1,  0,0, true, true);
+		world->CastRay(pos+ofs2,dir, HMaxDepth,chassis, ct20, 0,0, true, true);
+		world->CastRay(pos-ofs2,dir, HMaxDepth,chassis, ct21, 0,0, true, true);
+
+		#ifdef CAM_TILT_DBG
+			MATHVECTOR<float,3> v;
+			v = pos+ofs;  posHit[0] = Vector3(v[0],v[2]- ct0.GetDepth(), -v[1]);
+			v = pos-ofs;  posHit[1] = Vector3(v[0],v[2]- ct1.GetDepth(), -v[1]);
+			v = pos+ofs2; posHit[2] = Vector3(v[0],v[2]- ct20.GetDepth(),-v[1]); 
+			v = pos-ofs2; posHit[3] = Vector3(v[0],v[2]- ct21.GetDepth(),-v[1]);
+		#endif
 
 		if (ct0.GetColObj() && ct1.GetColObj() && ct20.GetColObj() && ct21.GetColObj() )
 			tilt = (GetAngle(Rdist, ct1.GetDepth() - ct0.GetDepth()) +
@@ -99,7 +107,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 		if (tilt < r0 && tilt >-angMin) {  Radian d = tilt-angMin;  tilt = std::min(r0, tilt + d*d*5.f);  }
 		if (tilt > r0 && tilt < angMin) {  Radian d =-angMin-tilt;  tilt = std::max(r0, tilt - d*d*5.f);  }
 
-		//LogO("d  "+fToStr(ct0.depth,3,5)+" "+fToStr(ct1.depth,3,5)+"  t "+fToStr(tilt.valueDegrees(),3,5));
+		//LogO("a "+fToStr(angCarY,3,5)+" d  "+fToStr(ct0.GetDepth(),3,5)+" "+fToStr(ct1.GetDepth(),3,5)+"  t "+fToStr(tilt.valueDegrees(),3,5));
 	}
 	//  smooth tilt angle
 	mATilt += std::min(maxDiff, std::max(-maxDiff, tilt - mATilt)) * time * smoothSpeed;
@@ -249,7 +257,7 @@ Vector3 FollowCamera::moveAboveTerrain(const Vector3& camPos)
 	
 	// shoot our ray
 	COLLISION_CONTACT contact;
-	mWorld->CastRay( origin, direction, distance, body, contact, &pOnRoad, true, true );
+	mWorld->CastRay( origin, direction, distance, body, contact, &pOnRoad, true, false );
 	
 	if (contact.col != NULL)
 	{
@@ -503,9 +511,10 @@ FollowCamera::FollowCamera(Camera* cam,	SETTINGS* pSet1) :
 	ovInfo(0),ovName(0), first(true), ca(0),
     mCamera(cam), mTerrain(0), pSet(pSet1),
     mLook(Vector3::ZERO), mPosNodeOld(Vector3::ZERO), mVel(0),
-    mAPitch(0.f),mAYaw(0.f), mATilt(0.f)
+    mAPitch(0.f),mAYaw(0.f), mATilt(0.f),
+    chassis(0)
     #ifdef CAM_BLT
-    ,shape(0), body(0), state(0)
+    ,mWorld(0), shape(0), body(0), state(0)
     #endif
 { 
     #ifdef CAM_BLT

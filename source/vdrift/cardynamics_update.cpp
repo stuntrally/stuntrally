@@ -444,7 +444,7 @@ void CARDYNAMICS::UpdateWheelContacts()
 		raystart = raystart - raydir * wheel[i].GetRadius();  //*!
 		float raylen = 1;  // !par
 		
-		world->CastRay(raystart, raydir, raylen, chassis, wheelContact, this,i, !pSet->game.collis_cars, true);
+		world->CastRay( raystart, raydir, raylen, chassis, wheelContact, this,i, !pSet->game.collis_cars, false );
 	}
 }
 

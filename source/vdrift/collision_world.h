@@ -62,7 +62,7 @@ public:
 		const MATHVECTOR<float,3> & position, const MATHVECTOR<float,3> & direction, const float length,
 		const btCollisionObject * caster, COLLISION_CONTACT & contact,
 		class CARDYNAMICS* pCarDyn, int nWheel, //
-		bool ignoreCars, bool ignoreFluids) const;
+		bool ignoreCars, bool camRay) const;
 	
 	// update world physics
 	void Update(double dt, bool profiling);
