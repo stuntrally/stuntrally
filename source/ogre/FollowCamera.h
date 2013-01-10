@@ -36,7 +36,10 @@ public:
 namespace Ogre {  class TerrainGroup;  class Camera;  class OverlayElement;  class SceneNode;  }
 class PosInfo;  class SETTINGS;
 
+
 //#define CAM_BLT
+
+//#define CAM_TILT_DBG  // show wheels in ray hit poses
 
 
 class FollowCamera
@@ -58,14 +61,19 @@ public:
 
 	Ogre::Vector3 camPosFinal;  //, camLookFinal;  Ogre::Quaternion camRotFinal;
 	bool manualOrient;
+	class btRigidBody* chassis;
+
+	#ifdef CAM_TILT_DBG
+		Ogre::Vector3 posHit[4];
+	#endif
 
     #ifdef CAM_BLT  // bullet
-	class COLLISION_WORLD* mWorld;
-	
-	// collision objs for raycast
-	class btSphereShape* shape;
-	class btDefaultMotionState* state;
-	class btRigidBody* body;
+		class COLLISION_WORLD* mWorld;
+		
+		// collision objs for raycast
+		class btSphereShape* shape;
+		class btDefaultMotionState* state;
+		class btRigidBody* body;
 	#endif
 	
 	///  update, simulates camera

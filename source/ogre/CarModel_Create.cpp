@@ -160,6 +160,7 @@ void CarModel::Create(int car)
 	if (mCamera)
 	{
 		fCam = new FollowCamera(mCamera, pSet);
+		fCam->chassis = pCar->dynamics.chassis;
 		fCam->loadCameras();
 		
 		//  set in-car camera position to driver position

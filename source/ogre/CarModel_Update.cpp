@@ -220,7 +220,13 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	for (int w=0; w < 4; ++w)
 	{
 		float wR = posInfo.whR[w];
+		#ifdef CAM_TILT_DBG  // cam debug test only
+			if (fCam)
+				ndWh[w]->setPosition(fCam->posHit[w]);
+			ndWh[w]->setScale(0.5f*Vector3::UNIT_SCALE);
+		#else
 		ndWh[w]->setPosition(posInfo.whPos[w]);
+		#endif
 		ndWh[w]->setOrientation(posInfo.whRot[w]);
 
 		int whMtr = posInfo.whTerMtr[w];
