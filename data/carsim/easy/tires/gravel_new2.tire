@@ -19,9 +19,9 @@ a112=0          #	Camber influence on vertical shift  (N/deg/kN**2)			A11.2
 a12=0           #	Load influence on vertical shift  (N/kN)					A12
 a13=0           #	Vertical shift at load = 0  (N)								A13
 #--------	Longitudinal force
-b0=1.73         #	Shape factor   B0
+b0=1.63         #	Shape factor   B0
 b1=0            #	Load infl. on long. friction coeff (*1000)  (1/kN)   B1
-b2=2645         #	Longitudinal friction coefficient at load = 0 (*1000)  B2
+b2=3445         #	Longitudinal friction coefficient at load = 0 (*1000)  B2
 b3=513          #	Curvature factor of stiffness   (N/%/kN**2) . B3
 b4=211          #	Change of stiffness with load at load = 0 (N/%/kN)   B4
 b5=0            #	Change of progressivity of stiffness/load (1/kN)   B5
