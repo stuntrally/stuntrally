@@ -28,7 +28,7 @@ App::App()  //  gui wigdets--
 	:mToolTip(0), mToolTipTxt(0)
 	,valAnisotropy(0), valViewDist(0), valTerDetail(0), valTerDist(0), valRoadDist(0)  //detail graphics
 	,valTrees(0), valGrass(0), valTreesDist(0), valGrassDist(0), valWaterSize(0)  //paged
-	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0), valShadowFilter(0)  // shadow
+	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0)//, valShadowFilter(0)  // shadow
 	,brImg(0), wndTabs(0), bnQuit(0)  // brush
 	,valSizeMinmap(0), valCamSpeed(0), valCamInert(0)  // settings
 	,valTerUpd(0), valSizeRoadP(0), valMiniUpd(0), chAutoBlendmap(0), chInputBar(0)
