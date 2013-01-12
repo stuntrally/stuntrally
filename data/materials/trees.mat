@@ -1,4 +1,4 @@
-//  Trees  (NEW stuff)
+//  Trees  NEW
 
 //  Gum tree
 material gum_branch
@@ -126,9 +126,11 @@ material palm_plant
 	specMap palm_plant_spec.png
 	spec_map true
 	ambient 1.5 1.5 1.5
+	diffuse 1.5 1.5 1.5
 	specular 0.5 0.5 0.5 32
 	cull_hardware none
 	//receives_shadows false
+	twoside_diffuse true
 }
 
 

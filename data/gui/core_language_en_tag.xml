@@ -1036,13 +1036,13 @@
 	<Tag name="TipGrassDens">How dense/rare will the grass be on terrain.</Tag>
 	<Tag name="TipTreeDens">How many models (trees, rocks, etc.) will be on track.</Tag>
 	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
-	<Tag name="TipModelPageLength">Models Page length (low will reload often, high will cause visible switching).</Tag>
+	<Tag name="TipModelPageLength">Models Page length (low will reload often and make too many batches, high will cause visible switching and make too many drawn triangles).</Tag>
 	<Tag name="TipGrassVisDist">Visibility distance for grass pages.</Tag>
-	<Tag name="TipModelVisDist">Visibility distance for model pages.</Tag>
+	<Tag name="TipModelVisDist">Visibility distance for 3d models, after this they turn into 2d impostors.</Tag>
 	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each models own value).</Tag>
-	<Tag name="TipImpDist">Far distance at which models will turn into 2d impostors.</Tag>
-	<Tag name="TipGrDensSmooth">Grass density map - smooth size</Tag>
-	<Tag name="TipSceneryId">Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation.</Tag>
+	<Tag name="TipImpDist">Far distance at which the 2d impostors dissapear.</Tag>
+	<Tag name="TipGrDensSmooth">Grass density map - smooth size. Higher will make a smoother transition from road to grass.</Tag>
+	<Tag name="TipSceneryId">Name id of track, that has similar lighting (or this track's if has unique). Used for impostors generation.</Tag>
 
 	<Tag name="TipGrassPatchLengthMin">Minimal grass patch length.</Tag>
 	<Tag name="TipGrassPatchLengthMax">Maximal grass patch length.</Tag>
@@ -1051,7 +1051,7 @@
 	<Tag name="TipGrassSwayLen">Grass sway effect length (scale).</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
 	<Tag name="TipGrassSwayDistr">Grass sway effect distribution (how random).</Tag>
-	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
+	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass (starts fading out, for smooth angle).</Tag>
 	<Tag name="TipGrTerMinHeight">Terrain height below which there won't be any grass (starts fading out, for smooth distance).</Tag>
 	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass (starts fading out, for smooth distance).</Tag>
 
@@ -1060,7 +1060,7 @@
 	<Tag name="TipGrassLayers">Grass layers. Recommended use 1-4.</Tag>
 	<Tag name="TipGrassPrev">Preview image of this grass layer (changed with material).</Tag>
 	<Tag name="TipToggleGrass">Enable or disable this grass layer.</Tag>
-	<Tag name="TipGrassDens">Grass density for layer (how often it will appear).</Tag>
+	<Tag name="TipGrassLayerDens">Grass density for layer (how often it will appear).</Tag>
 						
 	<!--  Vegetation  models  -->
 	<Tag name="TipVegetGroups">Vegetation model groups (recommended use 4-6), affects performance.</Tag>
