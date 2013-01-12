@@ -26,14 +26,15 @@ for loc in $LOCALES; do
 done
 
 if [ ! -d ./translation_templates ]; then
-	echo "translation_templates does not exist! Please clone stuntrally/translation_templates to create this folder."
-else
-	echo "Uploading new template..."
-	cp stuntrally.pot ./translation_templates/stuntrally/
-	cd translation_templates
-	git add stuntrally/stuntrally.pot
-	git commit -m "Automatic translation template update"
-	git push origin master
+	echo "Cloning translation_templates"
+	git clone git@github.com:stuntrally/translation_templates.git
 fi
+
+echo "Uploading new template..."
+cp stuntrally.pot ./translation_templates/stuntrally/
+cd translation_templates
+git add stuntrally/stuntrally.pot
+git commit -m "Automatic translation template update"
+git push origin master
 
 echo "Done."
