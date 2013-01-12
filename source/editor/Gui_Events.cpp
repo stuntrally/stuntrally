@@ -113,24 +113,25 @@ void App::editTrGr(EditPtr ed)
 {
 	Real r = s2r(ed->getCaption());
 	String n = ed->getName();
-	SGrassLayer* gr = &sc->grLayersAll[idGrLay];
+	SGrassLayer* gr = &sc->grLayersAll[idGrLay], *g0 = &sc->grLayersAll[0];
 
-	if (n=="GrassDens")  sc->densGrass = r;	else if (n=="TreesDens")  sc->densTrees = r;
-	else if (n=="TrPage")  sc->trPage = r;	else if (n=="TrDist")  sc->trDist = r;
-	else if (n=="TrRdDist")  sc->trRdDist = r;	else if (n=="TrImpDist")  sc->trDistImp = r;
+	if (n=="GrassDens")  sc->densGrass = r;    else if (n=="TreesDens")  sc->densTrees = r;
+	else if (n=="TrPage")  sc->trPage = r;     else if (n=="TrDist")  sc->trDist = r;
+	else if (n=="TrRdDist")  sc->trRdDist = r; else if (n=="TrImpDist")  sc->trDistImp = r;
 
-	else if (n=="GrPage")  sc->grPage = r;	else if (n=="GrDist")  sc->grDist = r;
+	else if (n=="GrPage")  sc->grPage = r;   else if (n=="GrDist")  sc->grDist = r;
 	else if (n=="GrDensSmooth")  sc->grDensSmooth = r;
 
-	else if (n=="GrSwayDistr")  gr->swayDistr = r;
-	else if (n=="GrSwayLen")  gr->swayLen = r;	else if (n=="GrSwaySpd")  gr->swaySpeed = r;
+	else if (n=="GrSwayDistr")  g0->swayDistr = r;
+	else if (n=="GrSwayLen")  g0->swayLen = r;
+	else if (n=="GrSwaySpd")  g0->swaySpeed = r;
 
-	else if (n=="GrTerMaxAngle")  gr->terMaxAng = r;
-	else if (n=="GrTerSmAngle")  gr->terAngSm = r;
+	else if (n=="GrTerMaxAngle")  g0->terMaxAng = r;  // todo: more, grass channels
+	else if (n=="GrTerSmAngle")  g0->terAngSm = r;
 
-	else if (n=="GrTerMinHeight")  gr->terMinH = r;
-	else if (n=="GrTerMaxHeight")  gr->terMaxH = r;
-	else if (n=="GrTerSmHeight")  gr->terHSm = r;
+	else if (n=="GrTerMinHeight")  g0->terMinH = r;
+	else if (n=="GrTerMaxHeight")  g0->terMaxH = r;
+	else if (n=="GrTerSmHeight")  g0->terHSm = r;
 	
 	else if (n=="SceneryId")  sc->sceneryId = ed->getCaption();
 }
@@ -156,7 +157,7 @@ void App::comboGrassClr(ComboBoxPtr cmb, size_t val)
 void App::tabGrLayers(TabPtr wp, size_t id)
 {
 	idGrLay = id;  // help var
-	const SGrassLayer* gr = &sc->grLayersAll[idGrLay];
+	const SGrassLayer* gr = &sc->grLayersAll[idGrLay], *g0 = &sc->grLayersAll[0];
 
 	chkGrLay->setStateSelected(gr->on);
 	if (imgGrass)	imgGrass->setImageTexture(gr->material + ".png");  // same mtr name as tex
@@ -176,12 +177,13 @@ void App::tabGrLayers(TabPtr wp, size_t id)
 	Slv(GrMinY, powf((gr->minSy-0.1f) /4.0f, 1.f/2.f));
 	Slv(GrMaxY, powf((gr->maxSy-0.1f) /4.0f, 1.f/2.f));
 
-	_Ed(GrSwayDistr, gr->swayDistr);
-	_Ed(GrSwayLen, gr->swayLen);	_Ed(GrSwaySpd, gr->swaySpeed);
+	_Ed(GrSwayDistr, g0->swayDistr);
+	_Ed(GrSwayLen, g0->swayLen);
+	_Ed(GrSwaySpd, g0->swaySpeed);
 	
-	_Ed(GrTerMaxAngle, gr->terMaxAng);  _Ed(GrTerSmAngle, gr->terAngSm);
-	_Ed(GrTerMinHeight, gr->terMinH);  _Ed(GrTerSmHeight, gr->terHSm);
-	_Ed(GrTerMaxHeight, gr->terMaxH);
+	_Ed(GrTerMaxAngle, g0->terMaxAng);  _Ed(GrTerSmAngle, g0->terAngSm);
+	_Ed(GrTerMinHeight, g0->terMinH);  _Ed(GrTerSmHeight, g0->terHSm);
+	_Ed(GrTerMaxHeight, g0->terMaxH);
 }
 
 void App::chkGrLayOn(WP wp)
