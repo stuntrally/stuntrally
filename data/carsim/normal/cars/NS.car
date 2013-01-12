@@ -117,7 +117,7 @@ factors-file = first
 [ tire-both ] 
 radius = 0.316
 rolling-resistance = 1.3e-2, 6.5e-6 
-rotational-inertia = 0.8
+rotational-inertia = 1.2
 tread = 0.0 
 
 

@@ -40,7 +40,7 @@ friction = 0.4
 position = 0.04, 1.4, 0.3
 mass = 250.0
 rpm-limit = 6500
-inertia = 0.30
+inertia = 0.27
 start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
@@ -121,7 +121,7 @@ factors-file = first
 [ tire-both ]
 radius = 0.32
 rolling-resistance = 1.3e-2, 6.5e-6
-rotational-inertia = 0.8
+rotational-inertia = 1.2
 tread = 0.0
 
 
@@ -131,14 +131,14 @@ tread = 0.0
 friction = 0.9
 max-pressure = 3.0e6
 bias = 0.6
-radius = 0.1397
+radius = 0.14
 area = 0.015
 
 [ brakes-rear ]
 friction = 0.9
 max-pressure = 3.0e6
 bias = 0.4
-radius = 0.1397
+radius = 0.14
 area = 0.015
 handbrake = 4.9
 

@@ -7,8 +7,8 @@ Max Power
 Time 0 to 100 kmh
  3.5 s
 Time 0 to 160 kmh
- 8.1 s
+ 8.2 s
 Time 0 to 200 kmh
-14.3 s
+14.5 s
 Stop time 100 to 0 kmh
  2.6 s

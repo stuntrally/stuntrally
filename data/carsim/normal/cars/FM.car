@@ -43,7 +43,7 @@ friction = 0.4
 position = 0.0, 0.9, 0.4
 mass = 190.0
 rpm-limit = 6700
-inertia = 0.25
+inertia = 0.26
 start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
@@ -121,7 +121,7 @@ factors-file = first
 [ tire-both ]
 radius = 0.302
 rolling-resistance = 1.3e-2, 6.5e-6
-rotational-inertia = 0.7
+rotational-inertia = 1.05
 tread = 0.0
 
 
