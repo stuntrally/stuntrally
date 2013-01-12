@@ -20,11 +20,11 @@ if (BUILD_GAME OR BUILD_EDITOR)
 		add_subdirectory(${ourlib})
 		list(APPEND OURLIBS ${ourlib})
 	endforeach()
-endif()
 
-add_subdirectory(shiny)
-list(APPEND OURLIBS "shiny")
-list(APPEND OURLIBS "shiny.OgrePlatform")
+	add_subdirectory(shiny)
+	list(APPEND OURLIBS "shiny")
+	list(APPEND OURLIBS "shiny.OgrePlatform")
+endif()
 
 # Game executable
 if(BUILD_GAME)
