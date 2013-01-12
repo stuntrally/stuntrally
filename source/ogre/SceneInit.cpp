@@ -283,7 +283,7 @@ void App::LoadGame()  // 2
 
 	/// ghost car - last in carModels
 	ghplay.Clear();
-	if (!bRplPlay && pSet->rpl_ghost && !mClient)
+	if (!bRplPlay/*|| pSet->rpl_show_ghost)*/ && pSet->rpl_ghost && !mClient)
 	{
 		std::string ghCar = pSet->game.car[0], orgCar = ghCar;
 		ghplay.LoadFile(GetGhostFile(/***&ghCar*/));  // loads ghost play if exists

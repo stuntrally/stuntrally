@@ -386,6 +386,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 
 		
 	case Gh_TorqueCurve:  /// torque curves, gears
+	//. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 	{	static int ii = 0;  ++ii;  // skip upd cntr
 		if (ii >= 1/*! 10*/ && gsi >= 6*2)
 		{	ii = 0;
@@ -485,8 +486,22 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			const CARENGINE& eng = dynamics.engine;
 			const CARCLUTCH& clu = dynamics.clutch;
 			pApp->graphs[0]->AddVal(eng.GetRPM() / 7500.0);
+			#if 0
+				MATHVECTOR<Dbl,3> vel = dynamics.GetVelocity(), vx(1,0,0);
+				dynamics.Orientation().RotateVector(vx);
+				Dbl d = vel.dot(vx),
+					velCar = vel.Magnitude() * (d >= 0.0 ? 1 : -1), velWh = dynamics.GetSpeedMPS();
+				//pApp->graphs[1]->AddVal(velCar * 0.02f));
+				//pApp->graphs[2]->AddVal(velWh * 0.02f);
+				if (velWh < 1.1f && velWh > -1.1f)
+					d = 1.f;
+				else
+					d = fabs(velCar >= velWh ? velCar/velWh : velWh/velCar);
+				pApp->graphs[2]->AddVal(/*std::min(1.f, std::max(1.f,*/ d * 0.5f);
+			#else
 			pApp->graphs[1]->AddVal(clu.GetClutch() * 0.3f + 0.15f);
 			pApp->graphs[2]->AddVal(clu.IsLocked() ? 0.15f : 0.f);
+			#endif
 			pApp->graphs[3]->AddVal(GetGear() / 6.f);
 		}	break;
 

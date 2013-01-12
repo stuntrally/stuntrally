@@ -154,13 +154,14 @@ void App::slShaders(SL)
 	//if (materialFactory) materialFactory->setShaderQuality(v);
 }
 
+#if 0
 void App::slTexSize(SL)
 {
 	int v = val*1.f +slHalf;  if (bGI)  pSet->tex_size = v;
 	if (valTexSize)
 	{	if (v == 0)  valTexSize->setCaption("Small");  else
 		if (v == 1)  valTexSize->setCaption("Big");  }
-	/*
+	/* TODO
 	if (!materialFactory)  return;
 	if (v == 0)
 		materialFactory->setTexSize(0); // lowest
@@ -168,6 +169,7 @@ void App::slTexSize(SL)
 		materialFactory->setTexSize(4096); // highest
 	*/
 }
+#endif
 
 void App::slTerMtr(SL)
 {
@@ -215,12 +217,12 @@ void App::slShadowDist(SL)
 	if (valShadowDist){  valShadowDist->setCaption(fToStr(v,0,2)+" m");  }
 }
 
-void App::slShadowFilter(SL)
+/*void App::slShadowFilter(SL)
 {
 	int v = 1 + 3 * val +slHalf;  if (bGI)  pSet->shadow_filter = v;
 	//if (materialFactory)  materialFactory->setShadowsFilterSize(v);  //TODO..
 	if (valShadowFilter)  valShadowFilter->setCaption(toStr(v));
-}
+}*/
 
 //  water
 void App::slWaterSize(SL)
@@ -262,7 +264,7 @@ void App::GuiInitGraphics()
 	Cmb(combo, "TexFiltering", comboTexFilter);
 	Slv(Anisotropy,	pSet->anisotropy /16.f);
 	Slv(Shaders,	pSet->shaders);
-	Slv(TexSize,	pSet->tex_size /1.f);
+	//Slv(TexSize,	pSet->tex_size /1.f);
 	Slv(TerMtr,		pSet->ter_mtr /4.f);
 
 	//  trees/grass
@@ -293,7 +295,7 @@ void App::GuiInitGraphics()
 	//  shadows
 	Slv(ShadowType,	pSet->shadow_type /2.f);
 	Slv(ShadowCount,(pSet->shadow_count-1) /2.f);
-	Slv(ShadowFilter, (pSet->shadow_filter-1) /3.f);
+	//Slv(ShadowFilter, (pSet->shadow_filter-1) /3.f);
 	Slv(ShadowSize,	pSet->shadow_size /float(ciShadowNumSizes));
 	Slv(ShadowDist,	powf((pSet->shadow_dist -20.f)/4780.f, 1.f/3.f));
 	Btn("Apply", btnShadows);
