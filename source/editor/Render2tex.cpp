@@ -174,7 +174,7 @@ void App::SaveGrassDens()
 			//	if (sc->pgLayersAll[i].on)
 
 			uint uu = 0xFF000000;
-			SGrassLayer* gr = &sc->grLayersAll[0];  ///todo: tab layers..
+			SGrassLayer* gr = &sc->grLayersAll[0];  ///todo: grass channels, ter range in r,g,b,a..
 			v = std::max(0, std::min(255, int(255.f *
 				linRange(sc->td.hfAngle[a], 0.f,gr->terMaxAng, gr->terAngSm) *
 				linRange(sc->td.hfHeight[a], gr->terMinH,gr->terMaxH, gr->terHSm) )));
