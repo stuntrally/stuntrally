@@ -49,14 +49,14 @@
 <!--  Championships  -->
 <!--========================================================================================================================-->
 
-	<championship name="Short Rally" ver="1" difficulty="2" length="3" tutorial="0" 
+	<championship name="Short Rally" ver="2" difficulty="2" length="3" tutorial="0" 
 			descr="Best short tracks in game, for rally fans, in interesting sceneries.">
-		<track name="F8-blurX3"		laps="1" factor="0.1" />
-		<track name="J12-Fog"		laps="1" factor="0.1" />
+		<track name="I4-Sunset"		laps="1" factor="0.1" />
 		<track name="F11-Dawn"		laps="1" factor="0.1" />
+		<track name="F8-blurX3"		laps="1" factor="0.1" />
 		<track name="0W7-LJs-Mntn"	laps="1" factor="0.1" />
 		<track name="I1-star3"		laps="1" factor="0.1" />
-		<track name="I4-Sunset"		laps="1" factor="0.1" />
+		<track name="J12-Fog"		laps="1" factor="0.1" />
 		<track name="M1-Hills"		laps="1" factor="0.1" />
 	</championship>
 
@@ -68,21 +68,32 @@
 		<track name="I5-Shore"		laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Yet more rally" ver="1" difficulty="3" length="3" tutorial="0" 
-			descr="Other short tracks in game. Some quite circullar. Several stages.">
+	<championship name="Yet more rally" ver="2" difficulty="3" length="3" tutorial="0" 
+			descr="Other short tracks in game. Some quite circullar.">
+		<track name="T1-Autumn"		laps="1" factor="0.1" />
+		<track name="I10-Treasure"	laps="1" factor="0.1" />
 		<track name="G3-Butterfly"	laps="1" factor="0.1" />
-		<track name="F7-blur3"		laps="1" factor="0.1" />
-		<track name="J1-T"			laps="1" factor="0.1" />
 		<track name="J9-Sharp"		laps="1" factor="0.1" />
-		<track name="J8-Round"		laps="1" factor="0.1" />
-		<track name="I2-S8"			laps="1" factor="0.1" />
-		<track name="I7-Moses"		laps="1" factor="0.1" />
 		<track name="D3-P"			laps="1" factor="0.1" />
 		<track name="G4-River"		laps="1" factor="0.1" />
-		<track name="0W2-qp"		laps="1" factor="0.1" />
-		<track name="0W3-mouth"		laps="1" factor="0.1" />
 		<track name="F4-OSquare"	laps="1" factor="0.1" />
+		<track name="I7-Moses"		laps="1" factor="0.1" />
+		<track name="0W2-qp"		laps="1" factor="0.1" />
+		<track name="I2-S8"			laps="1" factor="0.1" />
+	</championship>
+
+	<championship name="Fast fun" ver="1" difficulty="3" length="3" tutorial="0" 
+			descr="Fast, short tracks in game. Some quite curly and banked. Driven flat-out.">
+		<track name="D1-simple"		laps="1" factor="0.1" />
+		<track name="F7-blur3"		laps="1" factor="0.1" />
+		<track name="T3-Orange"		laps="1" factor="0.1" />
+		<track name="J1-T"			laps="1" factor="0.1" />
+		<track name="O1-Moss"		laps="1" factor="0.1" />
 		<track name="F6-DC3"		laps="1" factor="0.1" />
+		<track name="J8-Round"		laps="1" factor="0.1" />
+		<track name="0W3-mouth"		laps="1" factor="0.1" />
+		<track name="C2-CanyonRun"	laps="1" factor="0.1" />
+		<track name="T2-RedOakPark"	laps="1" factor="0.1" />
 	</championship>
 
 	<championship name="Long trip" ver="1" difficulty="3" length="3" tutorial="0" 
@@ -116,7 +127,7 @@
 	</championship>
 
 	<championship name="Mud and water fan" ver="2" difficulty="4" length="3" tutorial="0" 
-			descr="A collection of tracks that have either water or mud drive through areas. Mostly in jungle.">
+			descr="A collection of tracks that have either water or mud drive through areas. Mostly in jungle, some are slippery and tricky.">
 		<track name="I3-Islands"	laps="1" factor="0.1" />
 		<track name="D9-Mud"		laps="1" factor="0.1" />
 		<track name="J11-Temple"	laps="1" factor="0.1" />
@@ -129,25 +140,25 @@
 		<track name="J18-Tiny"		laps="1" factor="0.15" />
 	</championship>
 
-	<championship name="Mountain adventure" ver="3" difficulty="4" length="3" tutorial="0" 
+	<championship name="Mountain adventure" ver="4" difficulty="4" length="3" tutorial="0" 
 			descr="Tracks placed in mountains and with highest height differences, also with good views. Some quite bumpy.">
 		<track name="G5-Climb"		laps="1" factor="0.1" />
 		<track name="D2-Mntn"		laps="1" factor="0.1" />
-		<track name="F10-MntnTrail"	laps="1" factor="0.1" />
 		<track name="F12-HighPeaks"	laps="1" factor="0.1" />
 		<track name="F13-Castle"	laps="1" factor="0.1" />
 		<track name="M2-Bumps"		laps="1" factor="0.1" />
 		<track name="0W7-LJs-Mntn"	laps="1" factor="0.1" />
+		<track name="F10-MntnTrail"	laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Frenzy fellow" ver="3" difficulty="4" length="3" tutorial="0" 
+	<championship name="Frenzy fellow" ver="4" difficulty="4" length="3" tutorial="0" 
 			descr="Curly tracks, mostly flat, frequently changing directions. Require lots of steering.">
-	<!--<track name="S2-Frenzy"		laps="1" factor="0.1" />-->
+		<track name="S2-Frenzy"		laps="1" factor="0.1" />
 		<track name="F3-Snail"		laps="1" factor="0.1" />
-		<track name="F15-ForestTrip" laps="1" factor="0.1" />
+		<track name="O2-Mouse"		laps="1" factor="0.1" />
 		<track name="S8-Frenzy2slow" laps="1" factor="0.1" />
-		<track name="0W4-ice-blur"	laps="1" factor="0.1" />
 		<track name="0W9-IceFrenzy"	laps="1" factor="0.1" />
+		<track name="0W4-ice-blur"	laps="1" factor="0.1" />
 		<track name="F9-MadMntn"	laps="1" factor="0.1" />
 		<track name="0W10-Whirl"	laps="1" factor="0.1" />
 		<track name="C1-Hairpins"	laps="1" factor="0.1" />
@@ -204,7 +215,7 @@
 
 	<championship name="Desert scenery" ver="1" difficulty="2" length="3" tutorial="3" 
 			descr="Desert championship. All tracks for this scenery in their appearance order.">
-		<track name="D1-simple"		laps="1" factor="0.1" /><!---->
+		<track name="D1-simple"		laps="1" factor="0.1" />
 		<track name="D2-Mntn"		laps="1" factor="0.1" />
 		<track name="D3-P"			laps="1" factor="0.1" />
 		<track name="D4-SBridge"	laps="1" factor="0.1" />
@@ -243,7 +254,7 @@
 	</championship>
 	<championship name="Savanna scenery" ver="1" difficulty="5" length="3" tutorial="3" 
 			descr="Savanna championship. All tracks for this scenery in their appearance order.">
-		<track name="S2-Frenzy"		laps="1" factor="0.1" /><!---->
+		<track name="S2-Frenzy"		laps="1" factor="0.1" />
 		<track name="S3-Loops"		laps="1" factor="0.1" />
 		<track name="S4-Hills"		laps="1" factor="0.1" />
 		<track name="S5-LoopBasic"	laps="1" factor="0.1" />
@@ -297,10 +308,10 @@
 		<track name="I7-Moses"		laps="1" factor="0.1" />
 		<track name="I8-Pharaoh"	laps="1" factor="0.1" />
 		<track name="I9-Web"		laps="1" factor="0.2" />
-		<track name="I10-Treasure"	laps="1" factor="0.1" /><!---->
+		<track name="I10-Treasure"	laps="1" factor="0.1" />
 	</championship>
 	<championship name="Mud and Canyon scenery" ver="1" difficulty="2" length="3" tutorial="3" 
-			descr="Mud championship. All tracks for this scenery in their appearance order.">
+			descr="Mud and Canyon championship. All tracks for those sceneries in their appearance order.">
 		<track name="M1-Hills"		laps="1" factor="0.1" />
 		<track name="M2-Bumps"		laps="1" factor="0.1" />
 		<track name="C1-Hairpins"	laps="1" factor="0.1" />
@@ -323,12 +334,14 @@
 		<track name="G4-River"		laps="1" factor="0.1" />
 		<track name="G5-Climb"		laps="1" factor="0.1" />
 	</championship>
-	<championship name="Autumn scenery" ver="1" difficulty="2" length="3" tutorial="3" 
-			descr="Autumn championship. All tracks for this scenery in their appearance order.">
-		<track name="T1-Autumn"		laps="1" factor="0.1" /><!---->
-		<track name="T2-RedOakPark"	laps="1" factor="0.1" /><!---->
-		<track name="T3-Orange"		laps="1" factor="0.1" /><!---->
+	<championship name="Autumn and Moss scenery" ver="1" difficulty="2" length="3" tutorial="3" 
+			descr="Autumn and Moss championship. All tracks for those sceneries in their appearance order.">
+		<track name="T1-Autumn"		laps="1" factor="0.1" />
+		<track name="T2-RedOakPark"	laps="1" factor="0.1" />
+		<track name="T3-Orange"		laps="1" factor="0.1" />
 		<track name="T4-Scary"		laps="1" factor="0.1" /><!---->
+		<track name="O1-Moss"		laps="1" factor="0.1" />
+		<track name="O2-Mouse"		laps="1" factor="0.1" />
 	</championship>
 	<championship name="Other sceneries" ver="1" difficulty="4" length="3" tutorial="3" 
 			descr="Other sceneries championship: Volcanic and Unidentified.">
@@ -378,7 +391,7 @@
 		<track name="detroit"		time="112.0"/>
 		<track name="brands"		time="95.0"/>
 	<!--0-->
-		<track name="J1-T"			time="57"/>
+		<track name="J1-T"			time="55"/>
 		<track name="D1-simple"		time="77.0"/>
 		<track name="S2-Frenzy"		time="208.0"/>
 		<track name="S3-Loops"		time="74.1"/>
@@ -388,9 +401,9 @@
 		<track name="J3-Rocky"		time="51.2"/>
 		<track name="S4-Hills"		time="192.8"/>
 		<!--10-->
-		<track name="TestC1-circle"		time="15.3"/>
-		<track name="TestC2-pipe-half"	time="8.0"/>
-		<track name="TestC3-pipe-big"	time="14.5"/>
+		<track name="TestC1-circle"		time="17.3"/>
+		<track name="TestC2-pipe-half"	time="13.0"/>
+		<track name="TestC3-pipe-big"	time="21.5"/>
 		<track name="TestC4-ow"		time="11.0"/>
 
 		<track name="D4-SBridge"	time="68.1"/>
@@ -472,9 +485,9 @@
 		<track name="S13-Hole"		time="93.7"/>
 		<track name="0W9-IceFrenzy"	time="126.0"/>
 
-		<track name="TestC5-egg"	time="7.2"/>
+		<track name="TestC5-egg"	time="9.2"/>
 		<track name="TestC6-temp"	time="6.6"/>
-		<track name="TestC7-oc"		time="13.0"/>
+		<track name="TestC7-oc"		time="16.0"/>
 		<!--71-->
 		<track name="J15-Swamp"		time="127.6"/>
 		<track name="A4-Snake"		time="113.3"/>
@@ -496,7 +509,7 @@
 		<track name="I8-Pharaoh"	time="77.4"/>
 		<!--79-->
 		<track name="C2-CanyonRun"	time="76.4"/>
-		<track name="V2-Volcanic"	time="205.0"/>
+		<track name="V2-Volcanic"	time="219.0"/>
 
 		<track name="J18-Tiny"		time="34.5"/>
 		<track name="G4-River"		time="37.0"/>
@@ -506,7 +519,7 @@
 		<track name="C3-Vast"		time="288.0"/>
 
 		<track name="F15-ForestTrip" time="145.0"/>
-		<track name="TestC8-align"	 time="18.5" />
+		<track name="TestC8-align"	 time="20.5" />
 		<track name="J19-demo2"		 time="68.0"/>
 		<track name="D11-PersianCity" time="64.0"/>
 		<track name="I9-Web"		time="470.0"/>
@@ -524,7 +537,7 @@
 		<track name="T2-RedOakPark"	time="53.0"/>
 		<track name="T3-Orange"		time="61.0"/>
 
-		<track name="O1-Moss"		time="44.0"/><!--^..-->
+		<track name="O1-Moss"		time="44.0"/>
 		<track name="O2-Mouse"		time="61.0"/>
 		<track name="T4-Scary"		time="115.0"/>
 
