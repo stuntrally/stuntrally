@@ -3,7 +3,7 @@
 
 
 CARENGINE::CARENGINE()
-	:rpm_max(7800), /*rpm_limit(9000),*/ idle(0.02), frict_coeffB(230)
+	:rpm_max(7800), /*rpm_limit(9000),*/ idle(0.02), frict_coeffB(230), real_pow_tq_mul(1.0)
 	,start_rpm(1000), stall_rpm(350), fuel_consumption(1e-9), friction(0.000328)
 	,throttle_position(0.0), clutch_torque(0.0), out_of_gas(false)
 	,rev_limit_exceeded(false), friction_torque(0), combustion_torque(0), stalled(false)

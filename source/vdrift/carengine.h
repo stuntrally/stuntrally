@@ -47,6 +47,7 @@ private:
 public:
 	//default constructor makes an S2000-like car
 	CARENGINE();
+	Dbl real_pow_tq_mul;
 
 	Dbl GetTorqueCurve(const Dbl cur_throttle, const Dbl cur_rpm) const;
 	

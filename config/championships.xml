@@ -19,7 +19,7 @@
 	</championship>
 
 	<championship name="Tutorial Jumps" ver="2" difficulty="3" length="3" tutorial="1" 
-			descr="Tutorial on jumps in tracks, for training jumping. Car velocity before jump is most important.">
+			descr="Tutorial on jumps in tracks, for training jumping. Car velocity before jump is most important. In easy mode, you need little boost to reach it.">
 		<track name="D5-jump8-low"	laps="1" factor="0.1" />
 		<track name="D6-jump0-high"	laps="1" factor="0.1" />
 		<track name="D8-Technical"	laps="1" factor="0.1" />

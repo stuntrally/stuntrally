@@ -124,14 +124,17 @@ void App::newPerfTest(float time)
 
 				//  summary
 				//------------------------------------------------
+				maxPwr *= 1.341;  // kW to bhp
+				Dbl m = eng.real_pow_tq_mul;  // factor to match real cars data
 				const MATHVECTOR<Dbl,3>& com = pCar->dynamics.center_of_mass;
 				std::string sResult = 
 					"Car:  "+pCar->pCarM->sDirname+"\n"+
 					"Center of mass [m] L,W,H:  "+fToStr(com[0],3,5)+", "+fToStr(com[1],3,5)+", "+fToStr(com[2],3,5)+"\n"+
 					"Mass [kg]:  "+fToStr(pCar->GetMass(),0,4)+"\n"+
 					"---\n"+
-					"Max torque [Nm]:  "+fToStr(maxTrq      ,1,5)+" at "+fToStr(rpmMaxTq ,0,4)+" rpm\n"+
-					"Max power  [bhp]:  "+fToStr(maxPwr*1.341,1,5)+" at "+fToStr(rpmMaxPwr,0,4)+" rpm\n"+  //"Max power  [kW]:  "+fToStr(maxPwr,3,5)+
+					"Max torque [Nm]:  " +fToStr(maxTrq*m,1,5)+" ("+fToStr(maxTrq,1,5)+") at "+fToStr(rpmMaxTq ,0,4)+" rpm\n"+
+					"Max power  [bhp]:  "+fToStr(maxPwr*m,1,5)+" ("+fToStr(maxPwr,1,5)+") at "+fToStr(rpmMaxPwr,0,4)+" rpm\n"+
+					"Ratio [bhp/tonne]:  "+fToStr(maxPwr / (pCar->GetMass() * 0.001) ,1,5)+"\n"+
 					"------\n"+
 					"Time [s] 0.. 60 kmh:  "+fToStr(t0to60 ,2,5)+"  down "+fToStr(down60 ,0,4)+"  drag "+fToStr(drag60 ,0,4)+"\n"+
 					"Time [s] 0..100 kmh:  "+fToStr(t0to100,2,5)+"  down "+fToStr(down100,0,4)+"  drag "+fToStr(drag100,0,4)+"\n"+
@@ -162,8 +165,8 @@ void App::newPerfTest(float time)
 					std::ofstream fo(path.c_str());
 					//fo << sResult;
 					fo << "Mass\n" << fToStr(pCar->GetMass(),0,4) << " kg\n";
-					fo << "Max Torque\n" << fToStr(maxTrq      ,0,3) << " Nm at " << fToStr(rpmMaxTq ,0,4) << " rpm\n";
-					fo << "Max Power\n"  << fToStr(maxPwr*1.341,0,3) << " bhp at " << fToStr(rpmMaxPwr,0,4) << " rpm\n";
+					fo << "Max Torque\n" << fToStr(maxTrq*m,0,3) << " Nm at " << fToStr(rpmMaxTq ,0,4) << " rpm\n";
+					fo << "Max Power\n"  << fToStr(maxPwr*m,0,3) << " bhp at " << fToStr(rpmMaxPwr,0,4) << " rpm\n";
 					fo << "Time 0 to 100 kmh\n" << fToStr(t0to100,1,4) << " s\n";
 					fo << "Time 0 to 160 kmh\n" << fToStr(t0to160,1,4) << " s\n";
 					if (bNorm)
