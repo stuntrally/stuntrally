@@ -372,6 +372,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		for (int i=0; i < 4; ++i)
 		{
 			pApp->graphs[i]->AddVal(negPow(dynamics.wheel[i].slips.slideratio, 0.2) * 0.12f +0.5f);
+			//pApp->graphs[i]->AddVal(dynamics.wheel[i].slips.slide * 0.1f +0.5f);
 			pApp->graphs[i+4]->AddVal(dynamics.wheel[i].slips.slipratio * 0.1f +0.5f);
 		}	break;
 		

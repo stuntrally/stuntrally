@@ -405,10 +405,11 @@ void CARDYNAMICS::UpdateTransmission(Dbl dt)
 		{
 			Dbl gas = engine.GetThrottle()*0.8;
 			gas -= brake[0].GetBrakeFactor();
+			Dbl g = gas;
 			if (transmission.GetGear() == -1)  gas *= -1;
 			const Dbl spdmarg = 2.0;
-			if (gas <-0.5 && GetSpeedMPS() < spdmarg && gear == 1)  gear =-1;  else
-			if (gas > 0.5 && GetSpeedMPS() >-spdmarg && gear ==-1)  gear = 1;
+			if (g <-0.5 && GetSpeed() < spdmarg && gear == 1)  gear =-1;  else
+			if (g <-0.5 && GetSpeed() < spdmarg && gear ==-1)  gear = 1;
 		}
 		ShiftGear(gear);
 	}
