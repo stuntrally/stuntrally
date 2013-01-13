@@ -553,7 +553,19 @@ int CARDYNAMICS::NextGear() const
 {
 	int gear = transmission.GetGear();
 
+	Dbl avg_slide = 0.f;
+	for (int i=0; i < 4; ++i)
+	{
+		Dbl sl = fabs(wheel[i].slips.slide);
+		avg_slide += sl;
+	}
+	bool allow = true;
+	avg_slide *= 0.25;
+	if (avg_slide > 1.0)  //par?
+		allow = false;
+
 	// only autoshift if a shift is not in progress
+	if (allow)
 	if (shifted /*&& remaining_shift_time < 0.01f*/ &&
         clutch.GetClutch() == 1.0)
     {
