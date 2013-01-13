@@ -152,6 +152,11 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 			if (!c.GetParam("clutch.max-torque-mul", mul, error_output))  return false;
 			clutch.SetMaxTorque(max_torque * mul);
 		}
+
+		//  factor for stats  -
+		mul = 1.f;
+		if (c.GetParam("engine.real-pow-tq-mul", mul))
+			engine.real_pow_tq_mul = mul;
 	}
 
 	//load the transmission

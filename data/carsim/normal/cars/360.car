@@ -57,6 +57,7 @@ torque-curve-13 = 7500, 498
 torque-curve-14 = 8000, 475
 torque-curve-15 = 8500, 454
 torque-curve-16 = 9000, 409
+real-pow-tq-mul = 1.2
 
 [ clutch ]
 max-torque-mul = 1.3
