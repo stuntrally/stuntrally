@@ -305,7 +305,7 @@ const String& App::GetGhostFile(std::string* ghCar)
 std::string App::GetRplListDir()
 {
 	return (pSet->rpl_listview == 2
-		? (PATHMANAGER::Ghosts() + pSet->gui.sim_mode)
+		? (PATHMANAGER::Ghosts() + "/" + pSet->gui.sim_mode)
 		: PATHMANAGER::Replays() );
 }
 
