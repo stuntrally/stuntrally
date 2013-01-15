@@ -31,8 +31,9 @@ if [ ! -d ./translation_templates ]; then
 fi
 
 echo "Uploading new template..."
-cp stuntrally.pot ./translation_templates/stuntrally/
 cd translation_templates
+git pull origin master
+cp ../stuntrally.pot ./stuntrally/
 git add stuntrally/stuntrally.pot
 git commit -m "Automatic translation template update"
 git push origin master
