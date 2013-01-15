@@ -5,8 +5,8 @@ Maintainer: Tapio Vierros <tapiovierros@gmail.com>
 Uploaders: Tapio Vierros <tapiovierros@gmail.com>
 Build-Depends: debhelper (>= 7),
  cmake (>= 2.6), pkg-config, quilt,
- libogre-dev (>= 1.7.0), libmygui-dev, libois-dev,
- libboost-thread-dev (>= 1.36), libboost-filesystem-dev (>= 1.36),
+ libogre-dev (>= 1.8.0), libmygui-dev, libois-dev,
+ libboost-thread-dev (>= 1.43), libboost-filesystem-dev (>= 1.43),
  libsdl-dev, libogg-dev, libvorbis-dev, libfreeimage-dev
 Standards-Version: 3.9.1
 Homepage: http://code.google.com/p/vdrift-ogre/
