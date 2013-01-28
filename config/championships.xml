@@ -524,14 +524,14 @@
 		<track name="D11-PersianCity" time="64.0"/>
 		<track name="I9-Web"		time="470.0"/>
 		<track name="S14-Refinery"	time="220.0"/>
-		<!--91-->
+		<!--91 99-->
 		<track name="A5-TopTwist"	time="182.0"/>
 		<track name="X3-Cloud"		time="130.0"/>
 
 		<track name="F16-Clew"		time="99.0"/>
 		<track name="G5-Climb"		time="245.0"/>
 		<track name="I10-Treasure"	time="94.0"/>
-
+		<!--96 104-->
 		<track name="D12-Sandstorm"	time="58.0"/>
 		<track name="T1-Autumn"		time="76.0"/>
 		<track name="T2-RedOakPark"	time="53.0"/>
@@ -540,6 +540,8 @@
 		<track name="O1-Moss"		time="44.0"/>
 		<track name="O2-Mouse"		time="61.0"/>
 		<track name="T4-Scary"		time="115.0"/>
+		<!--111-->
+		<track name="A6-Cannon"		time="450.0"/>
 
 	</times>
 </championships>
