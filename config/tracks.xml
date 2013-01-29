@@ -56,7 +56,7 @@
 	<track n="22" name="S5-LoopBasic"	created="04-12-10" crtver="0.9" modified="31-12-12" scenery="Savanna"	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="3" pipes="1" banked="2" frenzy="0" long="2" diff="4" rating="2" /> <!--S5-LoopBasic-->
 																																																												
 	<track n="23" name="F4-OSquare"		created="04-12-10" crtver="0.9" modified="06-01-13" scenery="Forest" 	author="CH" objects="0" fluids="0" bumps="1" jumps="1" loops="0" pipes="0" banked="0" frenzy="1" long="3" diff="1" rating="1" /> <!--F4-OSquare-->
-	<track n="25" name="F6-DC3"			created="05-12-10" crtver="0.9" modified="06-01-13" scenery="Forest" 	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="2" long="2" diff="2" rating="1" /> <!--F6-DC3-->
+	<track n="25" name="F6-DC3"			created="05-12-10" crtver="0.9" modified="06-01-13" scenery="Forest" 	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="2" long="2" diff="2" rating="2" /> <!--F6-DC3-->
 																																																												
 	<track n="26" name="D7-CrossJumps"	created="05-12-10" crtver="0.9" modified="01-01-13" scenery="Desert" 	author="CH" objects="0" fluids="0" bumps="0" jumps="3" loops="0" pipes="0" banked="0" frenzy="0" long="4" diff="3" rating="2" /> <!--D7-CrossJumps-->
 	<track n="27" name="D8-Technical"	created="05-12-10" crtver="0.9" modified="01-01-13" scenery="Desert"	author="CH" objects="2" fluids="0" bumps="0" jumps="2" loops="0" pipes="0" banked="3" frenzy="0" long="5" diff="4" rating="4" /> <!--D8-Technical-->
@@ -172,6 +172,7 @@
 	<track n="108" name="O2-Mouse"		created="09-11-12" crtver="1.9" modified="26-12-12" scenery="Moss"		author="CH" objects="0" fluids="2" bumps="0" jumps="0" loops="0" pipes="0" banked="3" frenzy="3" long="2" diff="3" rating="3" /> <!--O2-Mouse-->
 	<track n="109" name="T4-Scary"		created="10-11-12" crtver="1.9" modified="26-12-12" scenery="Autumn"	author="CH" objects="1" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="2" frenzy="1" long="3" diff="2" rating="3" /> <!--T4-Scary-->
 <!--111-->																																																										<!--2.0-->
-	<track n="110" name="A6-Cannon"		created="28-01-13" crtver="2.0" modified="28-01-13" scenery="Australia"	author="CH" objects="0" fluids="0" bumps="2" jumps="1" loops="0" pipes="0" banked="2" frenzy="1" long="7" diff="3" rating="3" /> <!--A6-Cannon-->
+	<track n="110" name="T5-Twister"	created="25-01-13" crtver="2.0" modified="25-01-13" scenery="Autumn" author="wowie" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="3" frenzy="2" long="1" diff="3" rating="2" /> <!--T5-Twister-->
+	<track n="111" name="A6-Cannon"		created="28-01-13" crtver="2.0" modified="28-01-13" scenery="Australia"	author="CH" objects="0" fluids="0" bumps="2" jumps="2" loops="0" pipes="0" banked="2" frenzy="1" long="8" diff="3" rating="3" /> <!--A6-Cannon-->
 
 </tracks>
