@@ -305,8 +305,8 @@ public:
 	double GetPlayerTimeTot(const int carId) {	assert(carId<car.size());	return car[carId].GetTimeTotal();	}
 	double GetPlayerTime(const int carId) {		assert(carId<car.size());	return car[carId].GetTime();	}
 	double GetReplayTime(const int carId) {		assert(carId<car.size());	return car[carId].GetTimeReplay();  }  // replay
-	void SetReplayTime(const int carId, double t){assert(carId<car.size());	return car[carId].SetTimeReplay(t);  }
-	void RestartReplay(const int carId)   {		assert(carId<car.size());	return car[carId].RestartReplay();  }
+	void SetReplayTime(const int carId, double t){assert(carId<car.size());	car[carId].SetTimeReplay(t);  }
+	void RestartReplay(const int carId)   {		assert(carId<car.size());	car[carId].RestartReplay();  }
 	double& GetRewindTime(const int carId) {	assert(carId<car.size());	return car[carId].time_rewind;  }  // rewind
 
 	void Reset(int id = -1)
