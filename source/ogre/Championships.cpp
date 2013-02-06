@@ -415,7 +415,7 @@ void App::ChampFillStageInfo(bool finished)
 			"#FFFF60"+TR("#{Score}") + ": " + fToStr(score,1,5) + "\n";
 		s += "#80C0FF"+TR("#{ScoreNeeded}") + ": " + fToStr(pass,1,5) + "\n\n";
 		
-		bool passed = score >= trk.passScore;
+		bool passed = score >= pass;
 		if (passed)
 			s += "#00FF00"+TR("#{Passed}")+".\n"+TR("#{NextStage}.");
 		else
