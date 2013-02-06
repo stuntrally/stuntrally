@@ -270,7 +270,7 @@ void App::CreateMinimap()
 	float marg = 1.f + 0.1f;  // from border
 	float fMiniX = 1 - fHudSize * marg, fMiniY = 1 - fHudSize*asp * marg;
 
-	int plr = 1;  //mSplitMgr->mNumViewports;
+	int plr = 1;  //todo?: mSplitMgr->mNumViewports;
 	for (int i=0; i < plr; ++i)
 	{
 		ndMap[i] = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));

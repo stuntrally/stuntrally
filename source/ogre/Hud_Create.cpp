@@ -27,6 +27,7 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 {
 	float wx = mWindow->getWidth(), wy = mWindow->getHeight();
 	asp = wx/wy;
+	bool vdrSpl = sc->vdr && pSet->game.local_players > 1;
 	//  for each car
 	for (int c=0; c < pSet->game.local_players; ++c)
 	{
@@ -54,10 +55,11 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 		if (ndMap[c])
 		{
 			Real fHudSize = pSet->size_minimap * dim.avgsize;
-			ndMap[c]->setScale(fHudSize,fHudSize*asp,1);
+			ndMap[c]->setScale((vdrSpl ? 2 : 1)*fHudSize,fHudSize*asp,1);
 
 			const Real marg = 1.f + 0.05f;  // from border
-			Real fMiniX = dim.right - fHudSize * marg;
+			//Real fMiniX = dim.right - fHudSize * marg;
+			Real fMiniX = vdrSpl ? (1.f - 2.f*fHudSize * marg) : (dim.right - fHudSize * marg);
 			Real fMiniY =-dim.top - fHudSize*asp * marg;
 
 			ndMap[c]->setPosition(Vector3(fMiniX,fMiniY,0.f));
@@ -206,11 +208,12 @@ void App::CreateHUD(bool destroy)
 			vMoPos[c][i] = Create2D("hud/CarPos", scm, 0.4f, true, true);
 			vMoPos[c][i]->setVisibilityFlags(RV_Hud);  vMoPos[c][i]->setRenderQueueGroup(RQG_Hud3);
 				  
-			vNdPos[c][i] = ndMap[c]->createChildSceneNode();
+			vNdPos[c][i] = ndMap[c] ? ndMap[c]->createChildSceneNode() : ndMap[0]->createChildSceneNode();
 			vNdPos[c][i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
 			vNdPos[c][i]->attachObject(vMoPos[c][i]);  //vNdPos[i]->setVisible(false);
 		}
-		ndMap[c]->setVisible(false/*pSet->trackmap*/);
+		if (ndMap[c])
+			ndMap[c]->setVisible(false/*pSet->trackmap*/);
 
 	
 		//  gauges  backgr  -----------
