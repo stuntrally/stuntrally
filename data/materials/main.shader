@@ -1,6 +1,5 @@
 #include "core.h"
 
-
 #define FOG @shGlobalSettingBool(fog)
 
 #define SHADOWS @shGlobalSettingBool(shadows_pssm) && @shPropertyBool(receives_shadows)
@@ -287,6 +286,10 @@
         shUniform(float4, shadowFar_fadeStart) @shSharedParameter(shadowFar_fadeStart)
 #endif
 
+float square(float x)
+{
+	return x * x;
+}
 
     SH_START_PROGRAM
     {
@@ -320,11 +323,6 @@
         
         normal = normalize (shMatrixMult( transpose(tbn), TSnormal ));
 #endif
-
-        float3 ambient = materialAmbient.xyz * lightAmbient.xyz;
-        
-        
-    
     
         // shadows
 #if SHADOWS
@@ -355,40 +353,170 @@
 #endif
 
 
-        float3 lightDir = normalize(lightPosObjSpace.xyz);
+  float3 lightDir = normalize(lightPosObjSpace.xyz);
 
 #if GRASS_WIND
-        float NdotL = 1;
+  float n_dot_l = 1;
 #else
-		#if TWOSIDE_DIFFUSE
-			float NdotL = abs(dot(normal, lightDir));
-		#else
-			float NdotL = max(dot(normal, lightDir), 0);
-		#endif
+	#if TWOSIDE_DIFFUSE
+		float n_dot_l = abs(dot(normal, lightDir));
+	#else
+		float n_dot_l = max(dot(normal, lightDir), 0);
+	#endif
 #endif
-        float3 diffuse = materialDiffuse.xyz * lightDiffuse.xyz * NdotL * shadow;
     
-        float3 eyeDir = normalize(camPosObjSpace.xyz - objSpacePositionPassthrough.xyz);
-        float3 halfAngle = normalize (lightDir + eyeDir);
-        
-        #if !SPEC_MAP
-			#if TWOSIDE_DIFFUSE
-				float3 specular = pow(abs(dot(normal, halfAngle)), materialShininess) * materialSpecular.xyz;
-			#else
-				float3 specular = pow(max(dot(normal, halfAngle), 0), materialShininess) * materialSpecular.xyz;
-			#endif
-        #else
-	        float4 specTex = shSample(specMap, UV.xy);
-			#if TWOSIDE_DIFFUSE
-			    float3 specular = pow(abs(dot(normal, halfAngle)), specTex.a * 255) * specTex.xyz;
-			#else
-				float3 specular = pow(max(dot(normal, halfAngle), 0), specTex.a * 255) * specTex.xyz;
-			#endif
-        #endif
-        if (NdotL <= 0)
-            specular = float3(0,0,0);
+  float3 eyeDir = normalize(camPosObjSpace.xyz - objSpacePositionPassthrough.xyz);
+  float3 halfAngle = normalize (lightDir + eyeDir);
+	
+	float4 specTex = float4(1,1,1,1);
 
-        shOutputColour(0).xyz = shOutputColour(0).xyz * (ambient + diffuse + materialEmissive.xyz) + specular * lightSpecular.xyz * shadow;
+#if SPEC_MAP
+	specTex = shSample(specMap, UV.xy);
+	float ts = specTex.a * 255;
+#else
+	float ts = materialShininess;
+#endif
+	
+#if TWOSIDE_DIFFUSE
+	float n_dot_h = abs(dot(normal, halfAngle));
+#else 
+	float n_dot_h = max(dot(normal, halfAngle), 0);
+#endif
+	
+	float specular_coeff = 0;
+  
+	if (n_dot_l > 0)
+	{
+		///////////////////////////////////////////
+		//blinn-phong
+		///////////////////////////////////////////
+		/**
+    specular_coeff = pow(n_dot_h, ts) / n_dot_l;
+		/**/
+    
+    ///////////////////////////////////////////
+    //cook torrance
+    ///////////////////////////////////////////
+    /**/
+    float v_dot_h = dot(eyeDir, halfAngle);
+		float n_dot_v = dot(normal, eyeDir);
+		float one_over_n_dot_v = 1.0 / n_dot_v;
+		
+		//beckmann term
+		float cm = 0.1; //tweakable
+		float m = cm * cm;
+		float t = n_dot_h * n_dot_h;
+		float d = exp( (t - 1) / (m * t) ) / (m * t * t);
+		
+		//fresnel term
+		float cf = 0.1; //tweakable
+		float f = cf + ( 1 - cf ) * pow( 1 - v_dot_h, 5 );
+		
+		n_dot_h = n_dot_h + n_dot_h;
+		
+		//geometric term
+		float g = 0;
+		if(n_dot_v < n_dot_l)
+		{
+      if(n_dot_v * n_dot_h < v_dot_h)
+			{
+        g = n_dot_h / v_dot_h;
+			}
+			else
+			{
+        g = one_over_n_dot_v;
+			}
+		}
+    else
+		{
+      if(n_dot_l * n_dot_h < v_dot_h)
+			{
+        g = n_dot_h * n_dot_l / (v_dot_h * n_dot_v);
+			}
+			else
+			{
+        g = one_over_n_dot_v;
+			}
+		}
+		
+		specular_coeff = (d * g * f) / n_dot_l;
+		/**/
+		
+		///////////////////////////////////////////
+    //ward
+    ///////////////////////////////////////////
+    /**
+		//tweakables
+		float ax = 0.8;
+		float ay = 0.075;
+#if NORMAL_MAP
+		float3 xx = tangentPassthrough.xyz;
+		float3 yy = binormal;
+#else
+		//tweakables
+		float3 xx = cross( normal, float3( 1, 0, 0 ) );
+		float3 yy = cross( normal, float3( 0, 1, 0 ) );
+#endif
+		
+		float exponent = -( square( dot( halfAngle, xx ) / ax ) + 
+												square( dot( halfAngle, yy ) / ay ) ) / square( n_dot_h );
+												
+		specular_coeff = ( 1.0 / ( 4.0 * 3.14159265 * ax * ay * sqrt( n_dot_l * dot( eyeDir, normal ) ) ) ) * exp( exponent );
+		n_dot_l /= 3.14159265;
+		/**/
+		
+		///////////////////////////////////////////
+    //ashikhman-shirley
+    ///////////////////////////////////////////
+    /**
+#if NORMAL_MAP
+		float3 xx = tangentPassthrough.xyz;
+		float3 yy = binormal;
+#else
+		//tweakables
+		float3 xx = cross( normal, float3( 1, 0, 0 ) );
+		float3 yy = cross( normal, float3( 0, 1, 0 ) );
+#endif
+		
+		float h_dot_v = dot( halfAngle, eyeDir );
+		float h_dot_x = dot( halfAngle, xx );
+		float h_dot_y = dot( halfAngle, yy );
+		float n_dot_v = dot( normal, eyeDir );
+		
+		//fresnel term
+		float cf = 0.1; //tweakable
+		float f = cf + ( 1 - cf ) * pow( 1 - h_dot_v, 5 );
+		
+		//tweakables
+		float nu = 100;
+		float nv = 100;
+		float norm_s = sqrt( ( nu + 1 ) * nv ) / ( 8 * 3.14159265 );
+		float n = ( nu * square( h_dot_x ) + nv * square( h_dot_y ) ) / ( 1 - square( n_dot_h ) );
+		
+		float rho_s = norm_s * f * pow( n_dot_h, n ) / ( h_dot_v * max( n_dot_v, n_dot_l ) );
+		specular_coeff = rho_s;
+		
+		float rd = 1;
+		float rho_d = 28 / ( 23 * 3.14159265 ) * rd * ( 1 - pow( 1 - n_dot_v / 2, 5 ) ) * ( 1 - pow( 1 - n_dot_l / 2, 5 ) );
+		n_dot_l = rho_d;
+		/**/
+	}
+	
+	float3 diffuse_albedo = shOutputColour(0).xyz;
+	float3 specular_albedo = specTex.xyz;
+	
+	float3 emissive_color = materialEmissive.xyz;
+	float3 ambient_color = materialAmbient.xyz;
+	float3 diffuse_color = materialDiffuse.xyz;
+	float3 specular_color = materialSpecular.xyz;
+	
+	float3 light_ambient_color = lightAmbient.xyz;
+	float3 light_diffuse_color = lightDiffuse.xyz;
+	float3 light_specular_color = lightSpecular.xyz;
+
+  shOutputColour(0).xyz =  ambient_color * diffuse_albedo * light_ambient_color + emissive_color +
+														(diffuse_albedo * diffuse_color * light_diffuse_color * n_dot_l + 
+														 specular_albedo * specular_color * light_specular_color * specular_coeff) * shadow;
 
 #if ENV_MAP           
         float3 r = reflect( -eyeDir, normal );
@@ -431,7 +559,7 @@
 
 #if SPECULAR_ALPHA
         // bump alpha with specular
-        shOutputColour(0).a = min(shOutputColour(0).a + specular.x ,1);
+        shOutputColour(0).a = min(shOutputColour(0).a + (specular_albedo * specular_color * light_specular_color * specular_coeff).x ,1);
 #endif
 
 #if GRASS_WIND
