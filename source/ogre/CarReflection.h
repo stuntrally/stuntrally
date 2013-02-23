@@ -38,7 +38,7 @@ public:
 	// Since we support a "Skip frames" feature to increase performance,
 	// we have to update the render targets manually.
 	// This method should be called once every frame.
-	void Update();
+	void Update(bool first = false);  // use first = true to force update all 6 maps
 	
 	// Position of the cameras; will be set by CarModel::Update
 	Ogre::Vector3 camPosition;
@@ -80,11 +80,6 @@ private:
 	// The cube map textures have an index too, so we need this to get the right texture / material.
 	unsigned int iIndex;
 	
-	// First frame? (i.e. was Update() never called before?
-	// This is needed so that on the first frame, regardless of frame skip / faces at once settings,
-	// the full cube map will be rendered.
-	bool bFirstFrame;
-
 	// Settings, needed to get the user settings for cube maps
 	SETTINGS* pSet;
 	

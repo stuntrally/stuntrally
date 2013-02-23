@@ -179,7 +179,7 @@ protected:
 	// e.g.: 0, Cleaning up or 3, Loading scene
 	std::map<unsigned int, std::string> loadingStates;
 	// 1 behind map ( map.end() ): loading finished
-	std::map<unsigned int, std::string>::iterator currentLoadingState;
+	std::map<unsigned int, std::string>::iterator curLoadState;
 
 	float mTimer;
 

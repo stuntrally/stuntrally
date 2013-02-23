@@ -118,7 +118,7 @@ void App::NewGame()
 	toggleGui(false);  // hide gui
 	mWndNetEnd->setVisible(false);
  
-	bLoading = true;
+	bLoading = true;  iLoad1stFrames = 0;
 	carIdWin = 1;
 
 	bRplPlay = 0;
@@ -146,7 +146,7 @@ void App::NewGame()
 	mFpsOverlay->hide();  // hide FPS
 	hideMouse();
 
-	currentLoadingState = loadingStates.begin();
+	curLoadState = loadingStates.begin();
 }
 
 /* *  Loading steps (in this order)  * */
@@ -558,25 +558,26 @@ void App::LoadMisc()  // 9 last
 //---------------------------------------------------------------------------------------------------------------
 void App::NewGameDoLoad()
 {
-	if (currentLoadingState == loadingStates.end())
+	if (curLoadState == loadingStates.end())
 	{
-		// Loading finished.
+		// Loading finished
 		bLoading = false;
-		LoadingOff();
+		//.LoadingOff();
+		mLoadingBar->mLoadingBarElement->setWidth( mLoadingBar->mProgressBarMaxSize );  // 100 %
 				
 		ShowHUD();
 		if (pSet->show_fps)
 			mFpsOverlay->show();
-		mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
+		//.mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
 
-		ChampLoadEnd();
+		//.ChampLoadEnd();
 		//boost::this_thread::sleep(boost::posix_time::milliseconds(6000 * mClient->getId())); // Test loading synchronization
-		bLoadingEnd = true;
+		//.bLoadingEnd = true;
 		return;
 	}
-	// Do the next loading step.
-	unsigned int perc = 0;
-	switch ( (*currentLoadingState).first )
+	//  Do the next loading step
+	int perc = 0;
+	switch ( (*curLoadState).first )
 	{
 		case LS_CLEANUP:	LoadCleanUp();	perc = 3;	break;
 		case LS_GAME:		LoadGame();		perc = 10;	break;
@@ -591,14 +592,13 @@ void App::NewGameDoLoad()
 		case LS_MISC:		LoadMisc();		perc = 80;	break;
 	}
 
-	// Update label.
-	mLoadingBar->mLoadingCommentElement->setCaption( (*currentLoadingState).second );
-	
-	// Set %
+	//  Update label
+	mLoadingBar->mLoadingCommentElement->setCaption( (*curLoadState).second );
+	//  Set %
 	mLoadingBar->mLoadingBarElement->setWidth( mLoadingBar->mProgressBarMaxSize * (perc/100.0) );
 
-	// Go to next loading step.
-	++currentLoadingState;
+	//  next loading step
+	++curLoadState;
 }
 
 

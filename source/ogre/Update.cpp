@@ -224,6 +224,21 @@ bool App::frameStart(Real time)
 	}
 	else 
 	{
+		///  loading end  ------
+		const int iFr = 3;
+		if (iLoad1stFrames >= 0)
+		{	++iLoad1stFrames;
+			if (iLoad1stFrames == iFr)
+			{
+				LoadingOff();  // hide loading overlay
+				mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
+				ChampLoadEnd();
+				bLoadingEnd = true;
+				iLoad1stFrames = -1;  // end
+			}
+		}
+		
+		
 		bool bFirstFrame = (carModels.size()>0 && carModels.front()->bGetStPos) ? true : false;
 		
 		if (isFocGui && mWndTabsOpts->getIndexSelected() == 4 && pSet->inMenu == WND_Options && !pSet->isMain)
@@ -345,7 +360,7 @@ bool App::frameStart(Real time)
 		PROFILER.beginBlock("g.refl");
 		for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		if ((*it)->eType != CarModel::CT_GHOST && (*it)->pReflect)
-			(*it)->pReflect->Update();
+			(*it)->pReflect->Update(iLoad1stFrames < iFr);
 		PROFILER.endBlock("g.refl");
 
 		//  trees

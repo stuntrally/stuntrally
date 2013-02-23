@@ -346,7 +346,7 @@ void App::CreateHUD(bool destroy)
 //---------------------------------------------------------------------------------------------------------------
 void App::ShowHUD(bool hideAll)
 {
-	if (hideAll)
+	if (hideAll || iLoad1stFrames >= 0)  // still loading
 	{
 		if (ovAbsTcs) ovAbsTcs->hide();		if (ovCam)	 ovCam->hide();
 		if (ovNetMsg)  ovNetMsg->hide();	if (ovCountdown)  ovCountdown->hide();
