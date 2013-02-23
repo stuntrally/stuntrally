@@ -56,6 +56,7 @@ void App::btnRplLoad(WP)  // Load
 		//float pre_time;
 
 		//  set game config from replay
+		pSet->game = pSet->gui;
 		pSet->game.car[0] = car;  pSet->game.track = trk;  pSet->game.track_user = usr;
 		pSet->game.car_hue[0] = h.hue[0];  pSet->game.car_sat[0] = h.sat[0];  pSet->game.car_val[0] = h.val[0];
 
