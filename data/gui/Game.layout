@@ -2408,6 +2408,11 @@
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="232 176 140 24" name="MiniBorder">
+							<Property key="Caption" value="#{MinimapBorder}"/>
+							<Property key="TextColour" value="0.7 0.8 0.9"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 176 140 24" name="MiniTer">
 							<Property key="Caption" value="#{MinimapTerrain}"/>
 							<Property key="TextColour" value="0.7 0.8 0.9"/>

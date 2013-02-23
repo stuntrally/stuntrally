@@ -1379,11 +1379,59 @@
 					>
 				</File>
 				<File
+					RelativePath=".\data\materials2\normal.cg"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials2\normal.program"
+					>
+				</File>
+				<File
 					RelativePath=".\data\materials\objects_dynamic.mat"
 					>
 				</File>
 				<File
 					RelativePath=".\data\materials\objects_static.mat"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials2\occluder.cg"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials2\occluder.program"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials2\pipe.cg"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials2\pipe.material"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials2\pssm.cg"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials2\pssm.material"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials2\psvsm.cg"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials2\psvsm.material"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials2\rnd.cg"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials2\rnd.material"
 					>
 				</File>
 				<File

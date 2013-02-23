@@ -432,6 +432,7 @@ void App::chkMinimap(WP wp){		ChkEv(trackmap);
 void App::chkMiniZoom(WP wp){		ChkEv(mini_zoomed);		}
 void App::chkMiniRot(WP wp){		ChkEv(mini_rotated);	}
 void App::chkMiniTer(WP wp){		ChkEv(mini_terrain);	UpdMiniTer();  }
+void App::chkMiniBorder(WP wp){		ChkEv(mini_border);		UpdMiniTer();  }
 
 void App::chkReverse(WP wp){		ChkEv(gui.trackreverse);	ReadTrkStats();  }
 

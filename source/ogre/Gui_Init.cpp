@@ -175,7 +175,7 @@ void App::InitGui()
 	
 	Chk("Minimap", chkMinimap, pSet->trackmap);	chMinimp = bchk;
 	Chk("MiniZoom", chkMiniZoom, pSet->mini_zoomed);  Chk("MiniRot", chkMiniRot, pSet->mini_rotated);
-	Chk("MiniTer", chkMiniTer, pSet->mini_terrain);
+	Chk("MiniTer", chkMiniTer, pSet->mini_terrain);   Chk("MiniBorder", chkMiniBorder, pSet->mini_border);
 
 	Chk("CamInfo", chkCamInfo, pSet->show_cam);
 	Chk("CamTilt", chkCamTilt, pSet->cam_tilt);

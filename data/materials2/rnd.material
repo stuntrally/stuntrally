@@ -112,7 +112,8 @@ material circle_minimap
 			}
 			texture_unit circleMap
 			{
-				tex_address_mode clamp
+				tex_address_mode border
+				tex_border_colour 0 0 0 0
 				texture circleMini.png
 			}
 			texture_unit terMap
