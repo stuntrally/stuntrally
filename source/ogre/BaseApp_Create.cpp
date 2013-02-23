@@ -326,7 +326,7 @@ bool BaseApp::setup()
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(PATHMANAGER::Data()+"/RTShaderLib", "FileSystem");
  
 		// Set shader cache path.
-		mShaderGenerator->setShaderCachePath(PATHMANAGER::ShaderCacheDir());		
+		mShaderGenerator->setShaderCachePath(PATHMANAGER::ShaderDir());		
  
 		// Create and register the material manager listener.
 		mMaterialMgrListener = new MaterialMgrListener(mShaderGenerator);
@@ -427,7 +427,7 @@ bool BaseApp::setup()
 	///  material factory setup
 	sh::OgrePlatform* platform = new sh::OgrePlatform("General", PATHMANAGER::Data() + "/" + "materials");
 	platform->setShaderCachingEnabled (true);
-	platform->setCacheFolder (PATHMANAGER::CacheDir());
+	platform->setCacheFolder (PATHMANAGER::ShaderDir());
 
 	mFactory = new sh::Factory(platform);
 	sh::Factory& fct = sh::Factory::getInstance();
@@ -504,10 +504,10 @@ void BaseApp::destroyScene()
 
 	if (bCache)
 	{
-		Ogre::String microcodeCacheFileName =PATHMANAGER::CacheDir() + "/" + "shadercache.txt";
+		Ogre::String file = PATHMANAGER::ShaderDir() + "/shadercache.txt";
 		std::fstream inp;
-		inp.open(microcodeCacheFileName.c_str(), std::ios::out | std::ios::binary);
-		Ogre::DataStreamPtr shaderCache (OGRE_NEW FileStreamDataStream(microcodeCacheFileName, &inp, false));
+		inp.open(file.c_str(), std::ios::out | std::ios::binary);
+		Ogre::DataStreamPtr shaderCache (OGRE_NEW FileStreamDataStream(file, &inp, false));
 		GpuProgramManager::getSingleton().saveMicrocodeCache(shaderCache);
 	}
 }
@@ -553,12 +553,12 @@ void BaseApp::loadResources()
 	GpuProgramManager::getSingletonPtr()->setSaveMicrocodesToCache(bCache);
 	if (bCache)
 	{
-		Ogre::String microcodeCacheFileName =PATHMANAGER::CacheDir() + "/" + "shadercache.txt";
-		if (boost::filesystem::exists(microcodeCacheFileName) && bCache)
+		Ogre::String file = PATHMANAGER::ShaderDir() + "/shadercache.txt";
+		if (boost::filesystem::exists(file) && bCache)
 		{
 			std::ifstream inp;
-			inp.open(microcodeCacheFileName.c_str(), std::ios::in | std::ios::binary);
-			Ogre::DataStreamPtr shaderCache(OGRE_NEW FileStreamDataStream(microcodeCacheFileName, &inp, false));
+			inp.open(file.c_str(), std::ios::in | std::ios::binary);
+			Ogre::DataStreamPtr shaderCache(OGRE_NEW FileStreamDataStream(file, &inp, false));
 			GpuProgramManager::getSingleton().loadMicrocodeCache(shaderCache);
 		}
 	}

@@ -223,8 +223,8 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 	cache_dir = (xdg_cache_home ? xdg_cache_home / shortDir : fs::path(home_dir) / ".cache" / shortDir).string();
 	#endif
 	// Create cache dir
-	CreateDir(cache_dir, error_output);
-	CreateDir(ShaderCacheDir(), error_output);
+	CreateDir(CacheDir(), error_output);
+	CreateDir(ShaderDir(), error_output);
 
 	// Print diagnostic info
 	if (log_paths)
