@@ -43,6 +43,14 @@ material base
     mrt_output true
     diffuse_address_mode wrap
     twoside_diffuse false
+    
+    lightmodel blinnphong
+    beckmann_term 0.1
+		fresnel_term 0.1
+		diffuse_mul 1
+		spec_mul 1
+		aniso_term_x 0.5
+		aniso_term_y 0.5
 
 	pass
 	{
@@ -89,6 +97,14 @@ material base
 		    fresnelScaleBiasPower $fresnelScaleBiasPower
 
 		    bump_scale $bump_scale
+		    
+		    lightmodel $lightmodel
+		    beckmann_term $beckmann_term
+		    fresnel_term $fresnel_term
+		    diffuse_mul $diffuse_mul
+		    spec_mul $spec_mul
+		    aniso_term_x $aniso_term_x
+		    aniso_term_y $aniso_term_y
 		}
 
 		texture_unit diffuseMap

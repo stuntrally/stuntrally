@@ -12,6 +12,8 @@ material car_body
 	fresnel true
 	fresnelScaleBiasPower 0.79 0.07 4
 	specular 1 1 1 128
+	lightmodel cooktorrance
+	beckmann_term 0.25
 }
 
 material car_glass
@@ -43,6 +45,7 @@ material car_interior
 	diffuseMap interior.png
 	terrain_light_map true
 	terrain_light_map_toggleable true
+	lightmodel ashikhmanshirley
 }
 
 material cartire_front

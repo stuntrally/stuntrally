@@ -25,6 +25,11 @@
 #define TERRAIN_LIGHT_MAP @shPropertyBool(terrain_light_map)
 #define TERRAIN_LIGHT_MAP_TOGGLEABLE @shPropertyBool(terrain_light_map_toggleable)
 
+#define BLINNPHONG @shPropertyEqual(lightmodel, blinnphong)
+#define COOKTORRANCE @shPropertyEqual(lightmodel, cooktorrance)
+#define WARD @shPropertyEqual(lightmodel, ward)
+#define ASHIKHMANSHIRLEY @shPropertyEqual(lightmodel, ashikhmanshirley)
+
 #define SOFT_PARTICLES (@shPropertyBool(soft_particles) && @shGlobalSettingBool(soft_particles))
 
 #define SELECTED_GLOW @shGlobalSettingBool(editor)
@@ -214,6 +219,22 @@
         shInput(float3, tangentPassthrough)
         shUniform(float, bumpScale) @shUniformProperty1f(bumpScale, bump_scale)
 #endif
+				
+#if COOKTORRANCE
+	shUniform(float, beckmann_term)    @shUniformProperty1f(beckmann_term, beckmann_term)
+#endif
+	
+#if COOKTORRANCE || ASHIKHMANSHIRLEY
+	shUniform(float, fresnel_term)    @shUniformProperty1f(fresnel_term, fresnel_term)
+#endif
+	
+#if WARD || ASHIKHMANSHIRLEY
+	shUniform(float, aniso_term_x)    @shUniformProperty1f(aniso_term_x, aniso_term_x)
+	shUniform(float, aniso_term_y)    @shUniformProperty1f(aniso_term_y, aniso_term_y)
+#endif
+	
+	shUniform(float, diffuse_mul)    @shUniformProperty1f(diffuse_mul, diffuse_mul)
+	shUniform(float, spec_mul)    @shUniformProperty1f(spec_mul, spec_mul)
 
 #if ENV_MAP
         shSamplerCube(envMap)
@@ -390,26 +411,29 @@ float square(float x)
 		///////////////////////////////////////////
 		//blinn-phong
 		///////////////////////////////////////////
-		/**
+		/**/
+#if BLINNPHONG
     specular_coeff = pow(n_dot_h, ts) / n_dot_l;
+#endif
 		/**/
     
     ///////////////////////////////////////////
     //cook torrance
     ///////////////////////////////////////////
     /**/
+#if COOKTORRANCE
     float v_dot_h = dot(eyeDir, halfAngle);
 		float n_dot_v = dot(normal, eyeDir);
 		float one_over_n_dot_v = 1.0 / n_dot_v;
 		
 		//beckmann term
-		float cm = 0.1; //tweakable
+		float cm = beckmann_term; //tweakable
 		float m = cm * cm;
 		float t = n_dot_h * n_dot_h;
 		float d = exp( (t - 1) / (m * t) ) / (m * t * t);
 		
 		//fresnel term
-		float cf = 0.1; //tweakable
+		float cf = fresnel_term; //tweakable
 		float f = cf + ( 1 - cf ) * pow( 1 - v_dot_h, 5 );
 		
 		n_dot_h = n_dot_h + n_dot_h;
@@ -440,15 +464,17 @@ float square(float x)
 		}
 		
 		specular_coeff = (d * g * f) / n_dot_l;
+#endif
 		/**/
 		
 		///////////////////////////////////////////
     //ward
     ///////////////////////////////////////////
-    /**
+    /**/
+#if WARD
 		//tweakables
-		float ax = 0.8;
-		float ay = 0.075;
+		float ax = aniso_term_x;
+		float ay = aniso_term_y;
 #if NORMAL_MAP
 		float3 xx = tangentPassthrough.xyz;
 		float3 yy = binormal;
@@ -463,12 +489,14 @@ float square(float x)
 												
 		specular_coeff = ( 1.0 / ( 4.0 * 3.14159265 * ax * ay * sqrt( n_dot_l * dot( eyeDir, normal ) ) ) ) * exp( exponent );
 		n_dot_l /= 3.14159265;
+#endif
 		/**/
 		
 		///////////////////////////////////////////
     //ashikhman-shirley
     ///////////////////////////////////////////
-    /**
+    /**/
+#if ASHIKHMANSHIRLEY
 #if NORMAL_MAP
 		float3 xx = tangentPassthrough.xyz;
 		float3 yy = binormal;
@@ -484,21 +512,21 @@ float square(float x)
 		float n_dot_v = dot( normal, eyeDir );
 		
 		//fresnel term
-		float cf = 0.1; //tweakable
+		float cf = fresnel_term; //tweakable
 		float f = cf + ( 1 - cf ) * pow( 1 - h_dot_v, 5 );
 		
 		//tweakables
-		float nu = 100;
-		float nv = 100;
+		float nu = aniso_term_x * 1000;
+		float nv = aniso_term_y * 1000;
 		float norm_s = sqrt( ( nu + 1 ) * nv ) / ( 8 * 3.14159265 );
 		float n = ( nu * square( h_dot_x ) + nv * square( h_dot_y ) ) / ( 1 - square( n_dot_h ) );
 		
 		float rho_s = norm_s * f * pow( n_dot_h, n ) / ( h_dot_v * max( n_dot_v, n_dot_l ) );
 		specular_coeff = rho_s;
 		
-		float rd = 1;
-		float rho_d = 28 / ( 23 * 3.14159265 ) * rd * ( 1 - pow( 1 - n_dot_v / 2, 5 ) ) * ( 1 - pow( 1 - n_dot_l / 2, 5 ) );
+		float rho_d = 28 / ( 23 * 3.14159265 ) * ( 1 - pow( 1 - n_dot_v / 2, 5 ) ) * ( 1 - pow( 1 - n_dot_l / 2, 5 ) );
 		n_dot_l = rho_d;
+#endif
 		/**/
 	}
 	
@@ -515,8 +543,8 @@ float square(float x)
 	float3 light_specular_color = lightSpecular.xyz;
 
   shOutputColour(0).xyz =  ambient_color * diffuse_albedo * light_ambient_color + emissive_color +
-														(diffuse_albedo * diffuse_color * light_diffuse_color * n_dot_l + 
-														 specular_albedo * specular_color * light_specular_color * specular_coeff) * shadow;
+														(diffuse_albedo * diffuse_color * light_diffuse_color * n_dot_l * diffuse_mul + 
+														 specular_albedo * specular_color * light_specular_color * specular_coeff * spec_mul) * shadow;
 
 #if ENV_MAP           
         float3 r = reflect( -eyeDir, normal );
