@@ -452,6 +452,8 @@ void App::UpdMiniTer()
 	{	Ogre::GpuProgramParametersSharedPtr fparams = pass->getFragmentProgramParameters();
 		if (fparams->_findNamedConstantDefinition("showTerrain",false))
 			fparams->setNamedConstant("showTerrain", pSet->mini_terrain && sc->ter ? 1.f : 0.f);
+		if (fparams->_findNamedConstantDefinition("showBorder",false))
+			fparams->setNamedConstant("showBorder", pSet->mini_border && sc->ter ? 1.f : 0.f);
 	}
 	catch(...){  }
 }
