@@ -6,23 +6,27 @@
 float depthShadowPCF (shTexture2D shadowMap, float4 shadowMapPos, float2 offset)
 {
     float4 smp = shadowMapPos / shadowMapPos.w;
-    //shadowMapPos /= shadowMapPos.w;
     
-		//float3 o = float3(offset.xy, -offset.x) * 0.3;
     float3 o = float3(0.0005, 0.0005, 0.0005);
     
     
-    float c =   (smp.z <= FIXED_BIAS + shSample(shadowMap, smp.xy - o.xy).r) ? 1 : 0; // top left
+    /*float c =   (smp.z <= FIXED_BIAS + shSample(shadowMap, smp.xy - o.xy).r) ? 1 : 0; // top left
     c +=        (smp.z <= FIXED_BIAS + shSample(shadowMap, smp.xy + o.xy).r) ? 1 : 0; // bottom right
     c +=        (smp.z <= FIXED_BIAS + shSample(shadowMap, smp.xy + o.zy).r) ? 1 : 0; // bottom left
-    c +=        (smp.z <= FIXED_BIAS + shSample(shadowMap, smp.xy - o.zy).r) ? 1 : 0; // top right
-		
-		/*float c =   (shadowMapPos.z <= FIXED_BIAS + shSample(shadowMap, shadowMapPos.xy - o.xy).r) ? 1 : 0; // top left
-    c +=        (shadowMapPos.z <= FIXED_BIAS + shSample(shadowMap, shadowMapPos.xy + o.xy).r) ? 1 : 0; // bottom right
-    c +=        (shadowMapPos.z <= FIXED_BIAS + shSample(shadowMap, shadowMapPos.xy + o.zy).r) ? 1 : 0; // bottom left
-    c +=        (shadowMapPos.z <= FIXED_BIAS + shSample(shadowMap, shadowMapPos.xy - o.zy).r) ? 1 : 0; // top right*/
-    return c / 4;
+    c +=        (smp.z <= FIXED_BIAS + shSample(shadowMap, smp.xy - o.zy).r) ? 1 : 0; // top right*/
+
+    //return c / 4;
     
+    float sum = 0;
+    for( float y = -1.5; y <= 1.5; y += 1.0 )
+		{
+			for( float x = -1.5; x <= 1.5; x += 1.0 )
+			{
+				sum += (smp.z <= FIXED_BIAS + shSample(shadowMap, smp.xy + float2(x, y) * offset).r) ? 1 : 0;
+			}
+		}
+		
+		return sum / 16;
 }
 
 #else
