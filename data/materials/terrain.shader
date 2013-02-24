@@ -363,9 +363,9 @@
 		    col2 = shSample(normalMap@shIterator, coord2) * 2 - 1;
 		if (blend_weights.z > 0)
 		    col3 = shSample(normalMap@shIterator, coord3) * 2 - 1;
-		TSnormal = col1.xyz * blend_weights.xxx +  
+		TSnormal = normalize(col1.xyz * blend_weights.xxx +  
 						col2.xyz * blend_weights.yyy +  
-						col3.xyz * blend_weights.zzz; 
+						col3.xyz * blend_weights.zzz); 
         #endif
 #else 
    
@@ -393,7 +393,7 @@
         // normal
         
         #if NORMAL_MAPPING
-        TSnormal = shSample(normalMap@shIterator, layerUV@shIterator).xyz * 2 - 1;
+        TSnormal = normalize(shSample(normalMap@shIterator, layerUV@shIterator).xyz * 2 - 1);
         #endif
 #endif
 
@@ -478,6 +478,8 @@
 #if COMPOSITE_MAP
         shOutputColour(0).xyz = float3(1,1,1);
 #endif
+
+
     }
     
     
