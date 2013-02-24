@@ -14,8 +14,8 @@
 using namespace Ogre;
 
 
-CarReflection::CarReflection(SETTINGS* set, App* app, SceneManager* sceneMgr, unsigned int index) :
-	bFirstFrame(true), iCam(0), iCounter(0)
+CarReflection::CarReflection(SETTINGS* set, App* app, SceneManager* sceneMgr, unsigned int index)
+	: iCam(0), iCounter(0)
 {
 	pSet = set;
 	pApp = app;
@@ -46,7 +46,7 @@ CarReflection::~CarReflection()
 
 void CarReflection::Create()
 {
-	bFirstFrame = true;
+	//bFirstFrame = true;
 	if (pSet->refl_mode == 1)  cubetexName = "ReflectionCube"; // single: use 1st cubemap
 	else if (pSet->refl_mode == 2)
 	{
@@ -104,19 +104,22 @@ void CarReflection::Create()
 	}
 }
 
-void CarReflection::Update()
+void CarReflection::Update(bool first)
 {
-	// update only if we created
-	if (pSet->refl_mode == 1 && iIndex != 0)  return;
-	// static: only 1st frame
-	if (pSet->refl_mode == 0 && bFirstFrame == false)  return;
+	if (!first)
+	{
+		// update only if we created
+		if (pSet->refl_mode == 1 && iIndex != 0)  return;
+		// static: only 1st frame
+		if (pSet->refl_mode == 0)  return;
+	}
 		
 	//  skip frames
-	if (++iCounter >= pSet->refl_skip || bFirstFrame)
+	if (++iCounter >= pSet->refl_skip || first)
 	{
 		iCounter = 0;
-		//  cube faces at once
-		int fc = bFirstFrame ? 6 : pSet->refl_faces;
+		//  all cube faces at once
+		int fc = first ? 6 : pSet->refl_faces;
 		for (int i=0; i < fc; ++i)
 		{
 			++iCam;  if (iCam > 5)  iCam = 0;  // next
@@ -156,6 +159,4 @@ void CarReflection::Update()
 	//Image im;
 	//cubetex->convertToImage(im);
 	//im.save("cube.dds");
-
-	bFirstFrame = false;
 }

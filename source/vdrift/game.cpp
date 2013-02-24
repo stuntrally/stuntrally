@@ -910,6 +910,7 @@ bool GAME::ParseArguments(list <string> & args)
 
 void GAME::UpdateTimer()
 {
-	timer.Tick(TickPeriod());
+	if (pOgreGame->iLoad1stFrames == -1)  // ended loading
+		timer.Tick(TickPeriod());
 	//timer.DebugPrint(info_output);
 }

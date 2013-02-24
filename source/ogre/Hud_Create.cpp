@@ -346,7 +346,7 @@ void App::CreateHUD(bool destroy)
 //---------------------------------------------------------------------------------------------------------------
 void App::ShowHUD(bool hideAll)
 {
-	if (hideAll)
+	if (hideAll || iLoad1stFrames >= 0)  // still loading
 	{
 		if (ovAbsTcs) ovAbsTcs->hide();		if (ovCam)	 ovCam->hide();
 		if (ovNetMsg)  ovNetMsg->hide();	if (ovCountdown)  ovCountdown->hide();
@@ -451,10 +451,11 @@ void App::UpdMiniTer()
 	try
 	{	Ogre::GpuProgramParametersSharedPtr fparams = pass->getFragmentProgramParameters();
 		if (fparams->_findNamedConstantDefinition("showTerrain",false))
-		{
 			fparams->setNamedConstant("showTerrain", pSet->mini_terrain && sc->ter ? 1.f : 0.f);
-		}
-	}catch(...){  }
+		if (fparams->_findNamedConstantDefinition("showBorder",false))
+			fparams->setNamedConstant("showBorder", pSet->mini_border && sc->ter ? 1.f : 0.f);
+	}
+	catch(...){  }
 }
 
 

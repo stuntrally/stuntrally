@@ -179,7 +179,7 @@ protected:
 	// e.g.: 0, Cleaning up or 3, Loading scene
 	std::map<unsigned int, std::string> loadingStates;
 	// 1 behind map ( map.end() ): loading finished
-	std::map<unsigned int, std::string>::iterator currentLoadingState;
+	std::map<unsigned int, std::string>::iterator curLoadState;
 
 	float mTimer;
 
@@ -366,7 +366,7 @@ protected:
 	
 	//  checks
 	void chkGauges(WP),	chkArrow(WP), chkDigits(WP),
-		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP), chkMiniTer(WP),  // view
+		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP), chkMiniTer(WP), chkMiniBorder(WP),  // view
 		chkFps(WP), chkWireframe(WP), 
 		chkCamInfo(WP), chkTimes(WP), chkOpponents(WP), chkOpponentsSort(WP), chkCamTilt(WP),
 		chkCarDbgBars(WP), chkCarDbgTxt(WP), chkCarDbgSurf(WP), chkGraphs(WP),

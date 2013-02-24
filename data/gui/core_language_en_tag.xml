@@ -390,6 +390,8 @@
 	<Tag name="MinimapZoom">Zoom</Tag>
 	<Tag name="MinimapRotate">Rotate</Tag>
 	<Tag name="MinimapTerrain">Terrain</Tag>
+	<Tag name="MinimapBorder">Border</Tag>
+	
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="OpponentsList">Opponents List</Tag>
 	<Tag name="OpponentsSorted">Opponents Sorted</Tag>

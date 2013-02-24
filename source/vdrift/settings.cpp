@@ -71,6 +71,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_size.gauges", size_gauges);			Param(c,w, "hud_size.minimap", size_minimap);
 	Param(c,w, "hud_size.mini_zoom", zoom_minimap);		Param(c,w, "hud_size.mini_zoomed", mini_zoomed);
 	Param(c,w, "hud_size.mini_rotated", mini_rotated);	Param(c,w, "hud_size.mini_terrain", mini_terrain);
+	Param(c,w, "hud_size.mini_border", mini_border);
 	Param(c,w, "hud_size.arrow", size_arrow);			Param(c,w, "hud_size.gauges_type", gauges_type);
 
 	//  graphics
@@ -162,7 +163,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	car_dbgtxt(0), car_dbgbars(0), car_dbgsurf(0), show_graphs(0),
 	car_dbgtxtclr(0), car_dbgtxtcnt(0),
 	size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0),
-	mini_zoomed(0), mini_rotated(1), mini_terrain(0),
+	mini_zoomed(0), mini_rotated(1), mini_terrain(0), mini_border(1),
 	tracks_view(0), tracks_sort(0), tracks_sortup(1),
 	check_arrow(0), size_arrow(0.2), gauges_type(1),graphs_type(Gh_Fps),
 	//  graphics

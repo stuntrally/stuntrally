@@ -33,17 +33,6 @@ void TIMER::Unload()
 
 void TIMER::Tick(float dt)
 {
-	//float elapsed_time = dt;
-
-	//pretime -= dt;
-	//if (pretime > 0)
-	//	elapsed_time -= dt;
-
-	//if (pretime < 0)
-	//	elapsed_time += -pretime;
-
-	//assert(elapsed_time >= 0);
-
 	if (pretime > 0.f && !waiting)
 	{	pretime -= dt;
 		dt = 0.f;  }
