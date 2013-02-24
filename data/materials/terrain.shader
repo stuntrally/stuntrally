@@ -363,9 +363,9 @@
 		    col2 = shSample(normalMap@shIterator, coord2) * 2 - 1;
 		if (blend_weights.z > 0)
 		    col3 = shSample(normalMap@shIterator, coord3) * 2 - 1;
-		TSnormal = col1.xyz * blend_weights.xxx +  
+		TSnormal = normalize(col1.xyz * blend_weights.xxx +  
 						col2.xyz * blend_weights.yyy +  
-						col3.xyz * blend_weights.zzz; 
+						col3.xyz * blend_weights.zzz); 
         #endif
 #else 
    
@@ -393,13 +393,14 @@
         // normal
         
         #if NORMAL_MAPPING
-        TSnormal = shSample(normalMap@shIterator, layerUV@shIterator).xyz * 2 - 1;
+        TSnormal = normalize(shSample(normalMap@shIterator, layerUV@shIterator).xyz * 2 - 1);
         #endif
 #endif
 
         #if NORMAL_MAPPING
         NdotL = max(dot(TSnormal, TSlightDir), 0);
-        specular = pow(max(dot(TSnormal, TShalfAngle), 0), SPECULAR_EXPONENT) * diffuseSpec.a;
+				if(NdotL > 0)
+					specular = pow(max(dot(TSnormal, TShalfAngle), 0), SPECULAR_EXPONENT) * diffuseSpec.a / NdotL;
         
         #if @shIterator == 0
         litRes.x = NdotL;
@@ -444,9 +445,12 @@
         lightDir = normalize(lightDir);
         float3 halfAngle = normalize(lightDir + eyeDir);
         
-        float specular = pow(max(dot(normal, halfAngle), 0), SPECULAR_EXPONENT);
+				float NdotL = max(dot(normal, lightDir), 0);
+				float specular = 0;
+				if(NdotL > 0)
+					specular = pow(max(dot(normal, halfAngle), 0), SPECULAR_EXPONENT) / NdotL;
 
-        diffuse += lightDiffuse0.xyz * max(dot(normal, lightDir), 0) * shadow;
+        diffuse += lightDiffuse0.xyz * NdotL  * shadow;
     
         shOutputColour(0).xyz *= (lightAmbient.xyz + diffuse);
         #if SPECULAR
@@ -596,3 +600,4 @@
     
 
 #endif
+
