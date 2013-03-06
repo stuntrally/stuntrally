@@ -141,6 +141,15 @@ void SplineRoad::DestroySeg(int id)
 			mSceneMgr->destroySceneNode(rs.wall[l].node);
 			Ogre::MeshManager::getSingleton().remove(rs.wall[l].smesh);
 		}
+		if (rs.blend[l].ent)  // > blend
+		{
+			rs.blend[l].node->detachAllObjects();
+			#ifdef ROAD_EDITOR
+			mSceneMgr->destroyEntity(rs.blend[l].ent);
+			#endif
+			mSceneMgr->destroySceneNode(rs.blend[l].node);
+			Ogre::MeshManager::getSingleton().remove(rs.blend[l].smesh);
+		}
 	}
 	if (rs.col.ent)  // | column
 	{

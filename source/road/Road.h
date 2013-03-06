@@ -35,8 +35,8 @@ struct RoadSeg
 		SegData() : node(0), ent(0), smesh("") {}
 	};
 	
-	SegData road[LODs], wall[LODs], col;
-	Ogre::String sMtrRd,sMtrWall;  int mtrId;
+	SegData road[LODs], wall[LODs], col, blend[LODs];
+	Ogre::String sMtrRd,sMtrWall,sMtrB;  int mtrId;
 	
 	std::vector<Ogre::Vector3> lpos;  //points for lod dist
 	int nTri[LODs], mrgLod;
@@ -114,7 +114,7 @@ private:
 	void AddMesh(Ogre::MeshPtr mesh, Ogre::String sMesh, const Ogre::AxisAlignedBox& aabox,
 		Ogre::Entity** pEnt, Ogre::SceneNode** pNode, Ogre::String sEnd);
 
-	std::vector<Ogre::uint16> idx;	// mesh indices
+	std::vector<Ogre::uint16> idx, idxB;	// mesh indices
 //#ifndef ROAD_EDITOR
 	std::vector<Ogre::Vector3> posBt;  // for bullet trimesh
 	std::vector<class btTriangleMesh*> vbtTriMesh;  // for delete
@@ -122,7 +122,7 @@ private:
 	std::vector<Ogre::Vector3>* at_pos;
 	//  add triangle, with index check
 	inline void addTri(int f1, int f2, int f3, int i);
-	int at_size, at_ilBt;  bool bltTri;  // pars for addTri
+	int at_size, at_ilBt;  bool bltTri,blendTri;  // pars for addTri
 
 	//  markers
 	void AddMarker(Ogre::Vector3 pos), SelectMarker(bool bHide=false),

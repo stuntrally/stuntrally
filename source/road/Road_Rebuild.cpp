@@ -295,12 +295,12 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		///  segment
 		//--------------------------------------------------------------------------------------------------------------------------
 
-		//>  mesh data  W-wall  C-column
-		vector<Vector4> clr0/*empty*/, clr;
-		vector<Vector3> pos,norm, posW,normW, posC,normC, posLod;
-		vector<Vector2> tcs, tcsW, tcsC;
+		//>  mesh data  W-wall  C-column  B-blend
+		vector<Vector4> clr0/*empty*/, clr, clrB;
+		vector<Vector3> pos,norm, posW,normW, posC,normC, posLod, posB,normB;
+		vector<Vector2> tcs, tcsW, tcsC, tcsB;
 		Real tc1 = 0;  ltc = 0;
-		int iLmrg = 0, iLmrgW = 0, iLmrgC = 0;
+		int iLmrg = 0, iLmrgW = 0, iLmrgC = 0, iLmrgB = 0;
 		Vector3 vlOld;
 
 		int sNum = sMax - sMin, segM = sMin;//, sNumO = sNum;
@@ -326,11 +326,12 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			}
 			
 			if (bNew)  //> new seg data
-			{	iLmrg = 0;	iLmrgW = 0;  iLmrgC = 0;
+			{	iLmrg = 0;	iLmrgW = 0;  iLmrgC = 0;  iLmrgB = 0;
 
 				pos.clear();  norm.clear();  tcs.clear();  clr.clear();
 				posW.clear(); normW.clear(); tcsW.clear();
 				posC.clear(); normC.clear(); tcsC.clear();
+				posB.clear(); normB.clear(); tcsB.clear(); clrB.clear();
 			}
 
 			//  bullet create
@@ -345,7 +346,28 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			if (!rs.empty && lod == 0)
 				DestroySeg(seg);
 
+
+			//  material
+			int mid = mP[seg].idMtr, mtrId = max(0,mid);
+			if (isPipe(seg))
+				rs.sMtrRd = sMtrPipe[mtrId];
+			else
+				rs.sMtrRd = sMtrRoad[mtrId] + (onTer ? "_ter" :"");
+
+			/// >  blend 2 materials
+			bool hasBlend = false;
+			if (mid != mP[seg1].idMtr && !isPipe(seg1))
+			{
+				hasBlend = true;
+				int mtrB = max(0,mP[seg1].idMtr);
+				if (isPipe(seg1))
+					rs.sMtrB = sMtrPipe[mtrB];
+				else
+					rs.sMtrB = sMtrRoad[mtrB] + (onTer ? "_ter" :"");
+			}
 			
+			
+			//  seg params  -----------------
 			const int iwW = 7;  // wall  width steps - types..
 			const int iwC = colN;  // column  polygon steps
 						
@@ -368,7 +390,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			Real tcBeg = (seg > 0) ? vSegTc[seg-1] : 0.f,  tcEnd  = vSegTc[seg],  tcRng  = tcEnd - tcBeg;
 			Real tcBeg0= (seg > 0) ? vSegTc0[seg-1]: 0.f,  tcEnd0 = vSegTc0[seg], tcRng0 = tcEnd0 - tcBeg0;
 			Real tcRmul = tcRng0 / tcRng;
-
+			
 
 			//------------------------------------------------------------------------------------
 			//  Length  vertices
@@ -431,6 +453,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				Real trp = (p1 == 0.f) ? 1.f - l01 : l01;
 				//LogR("   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw)
 				//	/*+(bNew?"  New ":"") +(bNxt?"  Nxt ":"")/**/);
+				if (hasBlend)
+					++iLmrgB;
 				
 				///  road ~    Width  vertices
 				//-----------------------------------------------------------------------------------------------------------------
@@ -472,13 +496,18 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					//  ---~~~====~~~---
 					Real brdg = min(1.f, abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
 					Real h = max(0.f, 1.f - abs(vP.y - yTer) / 30.f);  // for grass dens tex
-					Real blend = 0.f;  //rand()%1000/1000.f; // TODO: blend 2materials...?
-					Vector4 c(brdg,pipe, blend, h);
+					Vector4 c(brdg,pipe, 1.f, h);
+					Vector2 tc(tcw * 1.f /**2p..*/, tc * tcMul);
 
 					//>  data road
-					pos.push_back(vP);	norm.push_back(vN);
-					tcs.push_back(Vector2(tcw * 1.f /**2p..*/, tc * tcMul));
-					clr.push_back(c);
+					pos.push_back(vP);  norm.push_back(vN);
+					tcs.push_back(tc);  clr.push_back(c);
+					if (hasBlend)
+					{	// alpha, transition
+						c.z = std::max(0.f, std::min(1.f, float(i)/il ));  //rand()%1000/1000.f;
+						posB.push_back(vP);  normB.push_back(vN);
+						tcsB.push_back(tc);  clrB.push_back(c);
+					}					
 					//#
 					if (vP.y < stMinH)  stMinH = vP.y;
 					if (vP.y > stMaxH)  stMaxH = vP.y;
@@ -584,15 +613,17 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			//---------------------------------------------------------------------------------------------------------
 			///  create mesh  indices
 			//---------------------------------------------------------------------------------------------------------
+			blendTri = false;
 			if (bNxt && !pos.empty())  /*Merging*/
 			{
 				String sEnd = toStr(idStr);  ++idStr;
-				String sMesh = "rd.mesh." + sEnd, sMeshW = sMesh + "W", sMeshC = sMesh + "C";
+				String sMesh = "rd.mesh." + sEnd, sMeshW = sMesh + "W", sMeshC = sMesh + "C", sMeshB = sMesh + "B";
 
 				posBt.clear();
 				idx.clear();  // set for addTri
+				idxB.clear();
 				at_pos = &pos;  at_size = pos.size();  at_ilBt = iLmrg-2;
-				bltTri = blt;
+				bltTri = blt;  blendTri = hasBlend;
 				
 				///  road ~
 				int iiw = 0;  //LogR( " __idx");
@@ -648,6 +679,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 						iiw += iw + 1;
 					}
 				vSegs[seg].nTri[lod] = idx.size()/3;
+				blendTri = false;
 
 
 				//  create Ogre Mesh
@@ -659,15 +691,9 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				MeshPtr mesh = MeshManager::getSingleton().createManual(sMesh,"General");
 				SubMesh* sm = mesh->createSubMesh();
 				
-				int mtrId = max(0,mP[seg].idMtr);
-				if (isPipe(seg))
-					rs.sMtrRd = sMtrPipe[mtrId];
-				else
-					rs.sMtrRd = sMtrRoad[mtrId] + (onTer ? "_ter" :"");
-
 				CreateMesh(sm, aabox, pos,norm,clr,tcs, idx, rs.sMtrRd);
 
-				MeshPtr meshW, meshC;  // ] |
+				MeshPtr meshW, meshC, meshB;  // ] | >
 				bool wall = !posW.empty();
 				if (wall)
 				{
@@ -679,6 +705,12 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				{
 					meshC = MeshManager::getSingleton().createManual(sMeshC,"General");
 					meshC->createSubMesh();
+				}
+				if (hasBlend)
+				{
+					meshB = MeshManager::getSingleton().createManual(sMeshB,"General");
+					sm = meshB->createSubMesh();
+					CreateMesh(sm, aabox, posB,normB,clrB,tcsB, idxB, rs.sMtrB);
 				}
 				//*=*/wall = 0;  cols = 0;  // test
 
@@ -742,8 +774,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				
 								
 				//  add Mesh to Scene  -----------------------------------------
-				Entity* ent = 0, *entW = 0, *entC = 0;
-				SceneNode* node = 0, *nodeW = 0, *nodeC = 0;
+				Entity* ent = 0, *entW = 0, *entC = 0, *entB = 0;
+				SceneNode* node = 0, *nodeW = 0, *nodeC = 0, *nodeB = 0;
 
 				AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
 				if (wPglass)
@@ -759,19 +791,25 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				if (cols /*&& !posC.empty()*/)
 				{
 					AddMesh(meshC, sMeshC, aabox, &entC, &nodeC, "C."+sEnd);
-					entC->setVisible(true);  
+					entC->setVisible(true);
 					if (bCastShadow)
 						entC->setCastShadows(true);
 				}
+				if (hasBlend)
+				{
+					AddMesh(meshB, sMeshB, aabox, &entB, &nodeB, "B."+sEnd);
+					entB->setRenderQueueGroup(RQG_RoabBlend);
+				}
+
 				if (bCastShadow && !onTer)
 					ent->setCastShadows(true);
 
 				
 				//>>  store ogre data  ------------
-				rs.road[lod].node = node;	rs.wall[lod].node = nodeW;
-				rs.road[lod].ent = ent;		rs.wall[lod].ent = entW;
-				rs.road[lod].mesh = mesh;	rs.wall[lod].mesh = meshW;
-				rs.road[lod].smesh = sMesh; rs.wall[lod].smesh = sMeshW;
+				rs.road[lod].node = node;	rs.wall[lod].node = nodeW;	 rs.blend[lod].node = nodeB;
+				rs.road[lod].ent = ent;		rs.wall[lod].ent = entW;	 rs.blend[lod].ent = entB;
+				rs.road[lod].mesh = mesh;	rs.wall[lod].mesh = meshW;	 rs.blend[lod].mesh = meshB;
+				rs.road[lod].smesh = sMesh; rs.wall[lod].smesh = sMeshW; rs.blend[lod].smesh = sMeshB;
 				if (lod==0)  {
 					rs.col.node = nodeC;
 					rs.col.ent = entC;
@@ -898,7 +936,11 @@ void SplineRoad::addTri(int f1, int f2, int f3, int i)
 	if (f3 >= at_size || f3 > fmax)  {  LogRE("idx too big: "+toStr(f3)+" >= "+toStr(at_size));  ok = 0;  }
 	if (!ok)  return;/**/
 
-	idx.push_back(f1);	idx.push_back(f2);	idx.push_back(f3);
+	idx.push_back(f1);  idx.push_back(f2);  idx.push_back(f3);
+	if (blendTri)
+	{
+		idxB.push_back(f1);  idxB.push_back(f2);  idxB.push_back(f3);
+	}
 
 	if (bltTri && i > 0 && i < at_ilBt)
 	{

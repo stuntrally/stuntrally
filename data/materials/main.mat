@@ -29,7 +29,7 @@ material base
     bump_scale 1
     fresnelScaleBiasPower 0.79 0.07 4
     fresnel false
-    refl_amount 0.1 // only used when fresnel off
+    refl_amount 0.1  // only used when fresnel off
     
     tree_wind false
     grass_wind false
@@ -39,10 +39,12 @@ material base
     
     specular_alpha false
     
-    transparent false // for shadowcaster
+    transparent false  // for shadowcaster
     mrt_output true
     diffuse_address_mode wrap
+	//  extras
     twoside_diffuse false
+    road_blend false
 
 	pass
 	{
@@ -82,6 +84,7 @@ material base
             grass_wind $grass_wind
             vertex_colour $vertex_colour
             twoside_diffuse $twoside_diffuse
+            road_blend $road_blend
 		    
 		    specular_alpha $specular_alpha
 		    

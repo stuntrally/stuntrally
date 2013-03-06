@@ -360,7 +360,7 @@ bool App::frameStart(Real time)
 		PROFILER.beginBlock("g.refl");
 		for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		if ((*it)->eType != CarModel::CT_GHOST && (*it)->pReflect)
-			(*it)->pReflect->Update(iLoad1stFrames < iFr && iLoad1stFrames >= 0);
+			(*it)->pReflect->Update(iLoad1stFrames >= 0);
 		PROFILER.endBlock("g.refl");
 
 		//  trees

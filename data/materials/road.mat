@@ -1,19 +1,24 @@
 material road_terrain
 {
 	parent base
-	
     depth_write off
     scene_blend alpha_blend
     alpha_map true
     alphaMap roadAlpha.png
     depth_bias 3
     terrain_light_map true
+	road_blend true
 }
 
+//  bridges
 material road
 {
     parent base
+    scene_blend alpha_blend
+    alpha_map true
+    alphaMap white.png
     depth_bias 3
+	road_blend true
 }
 
 

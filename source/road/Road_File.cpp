@@ -160,6 +160,8 @@ void SplineRoad::UpdLodVis(/*Camera* pCam,*/ float fBias, bool bFull)
 			rs.road[i].ent->setVisible(vis);
 			if (rs.wall[i].ent)
 				rs.wall[i].ent->setVisible(vis);
+			if (rs.blend[i].ent)
+				rs.blend[i].ent->setVisible(vis);
 			//if (rs.col.ent && i==0)
 			//	rs.col.ent->setVisible(vis);
 			if (vis) {  ++iVis;  iTris += rs.nTri[i];  }
@@ -182,6 +184,8 @@ void SplineRoad::SetForRnd(String sMtr)
 			rs.road[i].ent->setMaterial(mat);
 			if (rs.wall[i].ent)
 				rs.wall[i].ent->setVisible(false);
+			if (rs.blend[i].ent)
+				rs.blend[i].ent->setVisible(false);
 		}
 		if (rs.col.ent)
 			rs.col.ent->setVisible(false);

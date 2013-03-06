@@ -11,6 +11,7 @@ const Ogre::uint8
 	RQG_Sky = Ogre::RENDER_QUEUE_SKIES_EARLY,	// 5
 	
 	RQG_BatchOpaque  = Ogre::RENDER_QUEUE_MAIN,	// 50  paged geom
+	RQG_RoabBlend    = Ogre::RENDER_QUEUE_6,
 	RQG_BatchAlpha   = Ogre::RENDER_QUEUE_7,	// 70  paged geom transparent
 
 	RQG_Fluid        = Ogre::RENDER_QUEUE_7+1,

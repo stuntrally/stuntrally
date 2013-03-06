@@ -41,6 +41,7 @@
 #define GRASS_WIND @shPropertyBool(grass_wind)
 #define VERTEX_COLOUR @shPropertyBool(vertex_colour)
 #define TWOSIDE_DIFFUSE @shPropertyBool(twoside_diffuse)
+#define ROAD_BLEND @shPropertyBool(road_blend)
 
 #ifdef SH_VERTEX_SHADER
 
@@ -63,7 +64,7 @@
 		shOutput(float3, screenPosition)
 #endif
  
-#if VERTEX_COLOUR
+#if VERTEX_COLOUR || ROAD_BLEND
         shColourInput(float4)
         shOutput(float4, vertexColour)
 #endif
@@ -134,7 +135,7 @@
 
         normalPassthrough = normal.xyz;
 
-#if VERTEX_COLOUR
+#if VERTEX_COLOUR || ROAD_BLEND
         vertexColour = colour;
 #endif
 
@@ -192,7 +193,7 @@
 #endif
 
 
-#if VERTEX_COLOUR
+#if VERTEX_COLOUR || ROAD_BLEND
         shInput(float4, vertexColour)
 #endif
 		
@@ -453,6 +454,10 @@
 		float tFar = distanceToPixel + thickness;
         float depthAlpha = shSaturate(depthTex - distanceToPixel);
         shOutputColour(0).a *= depthAlpha;
+#endif
+
+#if ROAD_BLEND 
+		shOutputColour(0).a *= vertexColour.b;
 #endif
 
 #if SELECTED_GLOW
