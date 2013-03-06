@@ -497,16 +497,16 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					Real brdg = min(1.f, abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
 					Real h = max(0.f, 1.f - abs(vP.y - yTer) / 30.f);  // for grass dens tex
 					Vector4 c(brdg,pipe, 1.f, h);
-					Vector2 tc(tcw * 1.f /**2p..*/, tc * tcMul);
+					Vector2 vtc(tcw * 1.f /**2p..*/, tc * tcMul);
 
 					//>  data road
-					pos.push_back(vP);  norm.push_back(vN);
-					tcs.push_back(tc);  clr.push_back(c);
+					pos.push_back(vP);   norm.push_back(vN);
+					tcs.push_back(vtc);  clr.push_back(c);
 					if (hasBlend)
 					{	// alpha, transition
 						c.z = std::max(0.f, std::min(1.f, float(i)/il ));  //rand()%1000/1000.f;
-						posB.push_back(vP);  normB.push_back(vN);
-						tcsB.push_back(tc);  clrB.push_back(c);
+						posB.push_back(vP);   normB.push_back(vN);
+						tcsB.push_back(vtc);  clrB.push_back(c);
 					}					
 					//#
 					if (vP.y < stMinH)  stMinH = vP.y;
