@@ -349,21 +349,16 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 			//  material
 			int mid = mP[seg].idMtr, mtrId = max(0,mid);
-			if (isPipe(seg))
-				rs.sMtrRd = sMtrPipe[mtrId];
-			else
-				rs.sMtrRd = sMtrRoad[mtrId] + (onTer ? "_ter" :"");
+			bool pp = isPipe(seg);
+			rs.sMtrRd = pp ? sMtrPipe[mtrId] : (sMtrRoad[mtrId] + (onTer ? "_ter" :""));
 
 			/// >  blend 2 materials
 			bool hasBlend = false;
-			if (mid != mP[seg1].idMtr && !isPipe(seg1))
+			if (mid != mP[seg1].idMtr && !pp && !isPipe(seg1))
 			{
 				hasBlend = true;
 				int mtrB = max(0,mP[seg1].idMtr);
-				if (isPipe(seg1))
-					rs.sMtrB = sMtrPipe[mtrB];
-				else
-					rs.sMtrB = sMtrRoad[mtrB] + (onTer ? "_ter" :"");
+				rs.sMtrB = sMtrRoad[mtrB] + (onTer ? "_ter" :"");
 			}
 			
 			
