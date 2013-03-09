@@ -164,8 +164,11 @@ void App::CreateTrees()
 		for (size_t l=0; l < sc->pgLayers.size(); ++l)
 		{
 			PagedLayer& pg = sc->pgLayersAll[sc->pgLayers[l]];
+			String file = pg.name;
+			if (!ResourceGroupManager::getSingleton().resourceExistsInAnyGroup(file))
+				file = "sphere.mesh";  // if not found
 
-			Entity* ent = mSceneMgr->createEntity(pg.name);
+			Entity* ent = mSceneMgr->createEntity(file);
 			ent->setVisibilityFlags(RV_Vegetation);  ///vis+  disable in render targets
 			if (pg.windFx > 0.f)  {
 				trees->setCustomParam(ent->getName(), "windFactorX", pg.windFx);
