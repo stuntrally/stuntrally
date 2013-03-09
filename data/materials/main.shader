@@ -122,6 +122,12 @@
         {
             float offset = sin(grassTimer + oldposx * grassFrequency);
             position += grassDirection * offset;
+            
+            // todo: grass deform under car ..
+			//float3 car = float3(0,0,0);
+			//float d = length(position - car), r = 10;
+			//if (d < r)
+			//	position.y = position.y * ((d)/r);
         }
 #endif
 
@@ -286,6 +292,7 @@
 
 #if SHADOWS
         shUniform(float4, shadowFar_fadeStart) @shSharedParameter(shadowFar_fadeStart)
+        shUniform(float, shadowBias)  @shUniformProperty1f(shadowBias, shadowBias)
 #endif
 
 
@@ -329,7 +336,7 @@
     
         // shadows
 #if SHADOWS
-            float shadow = pssmDepthShadow (lightSpacePos0, invShadowmapSize0, shadowMap0, lightSpacePos1, invShadowmapSize1, shadowMap1, lightSpacePos2, invShadowmapSize2, shadowMap2, depthPassthrough, pssmSplitPoints);
+            float shadow = pssmDepthShadow (lightSpacePos0, invShadowmapSize0, shadowMap0, lightSpacePos1, invShadowmapSize1, shadowMap1, lightSpacePos2, invShadowmapSize2, shadowMap2, depthPassthrough, pssmSplitPoints, shadowBias);
 #endif
 
 #if SHADOWS

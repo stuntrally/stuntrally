@@ -34,17 +34,17 @@ material base
     tree_wind false
     grass_wind false
     vertex_colour false
-    
-    receives_shadows true
-    
     specular_alpha false
     
+    receives_shadows true
+        
     transparent false  // for shadowcaster
     mrt_output true
     diffuse_address_mode wrap
 	//  extras
     twoside_diffuse false
     road_blend false
+	shadowBias 0
 
 	pass
 	{
@@ -83,10 +83,11 @@ material base
             tree_wind $tree_wind
             grass_wind $grass_wind
             vertex_colour $vertex_colour
+		    specular_alpha $specular_alpha
+
             twoside_diffuse $twoside_diffuse
             road_blend $road_blend
-		    
-		    specular_alpha $specular_alpha
+            shadowBias $shadowBias
 		    
 		    fresnel $fresnel
 		    fresnelScaleBiasPower $fresnelScaleBiasPower

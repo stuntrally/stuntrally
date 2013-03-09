@@ -1,25 +1,25 @@
 Model:		gum_tree.mesh
 Url:		http://www.opengameart.org/content/gum-tree
-Artist:		lattice (OpenGameArt.org user)
-License(s):	CC-BY 3.0
+Artist:		lattice (OpenGameArt user)
+License:	CC-BY 3.0
 Date:		04/11/2010
 
 Model:		palm2.mesh
 Url: 		http://opengameart.org/content/palm-tree-v2
-Artist:		yughues (OpenGameArt.org user)
-License(s):	CC0 (Public Domain)
+Artist:		yughues (OpenGameArt user)
+License:	CC0 (Public Domain)
 Date:		12/23/2011
 
 Model:		fern.mesh
 Url: 		http://opengameart.org/content/fern-v21-double-sided-pack
-Artist:		yughues (OpenGameArt.org user)
-License(s):	CC0 (Public Domain)
+Artist:		yughues (OpenGameArt user)
+License:	CC0 (Public Domain)
 Date:		02/04/2012
 
 Model:		fern2.mesh
 Url:		http://opengameart.org/content/fern-pack
-Artist:		yughues (OpenGameArt.org user)
-License(s):	CC0 (Public Domain)
+Artist:		yughues (OpenGameArt user)
+License:	CC0 (Public Domain)
 Date:		02/05/2012
 
 Model:		jungle_tree.mesh
@@ -30,19 +30,31 @@ Notes:		Bark texture by OpenGameArt user yughues, licensed CC0
 
 Model:		palm_plant.mesh
 Url:		http://opengameart.org/content/palm-plant
-Artist:		yughues (OpenGameArt.org user)
-License(s):	CC0 (Public Domain)
+Artist:		yughues (OpenGameArt user)
+License:	CC0 (Public Domain)
 Date:		02/05/2012
 
 Model:		rock.mesh
 Url:		http://www.blendswap.com/blends/landscapes/toddmcintosh_nature_rocks2/
 Artist:		tmcintosh (blendswap user)
-License(s):	CC-BY
+License:	CC-BY
 Date:		02/08/2012
-Notes:		Texture by yughues (OpenGameArt.org user) [under CC0]
+Notes:		Texture by yughues (OpenGameArt user) [under CC0]
 
 Model:		plant_tropical.mesh
 Url:		http://opengameart.org/content/tropical-plant-02-0
-Artist:		yughues (OpenGameArt.org user)
-License(s):	CC0 (Public Domain)
+Artist:		yughues (OpenGameArt user)
+License:	CC0 (Public Domain)
 Date:		19/04/2012
+
+Model:		cactus.mesh
+Url:		http://opengameart.org/content/freebies-mundo-commissions
+Artist:		yughues (OpenGameArt user)
+License:	CC0 (Public Domain)
+Date:		18/08/2012
+
+Models:		rock_n1 - n5.mesh
+Url:		http://opengameart.org/content/rocks-0
+Artist:		yughues (OpenGameArt user)
+License:	CC0 (Public Domain)
+Date:		29/08/2012

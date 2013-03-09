@@ -157,6 +157,74 @@ material plant_tropical
 }
 
 
+//  cactus
+
+material cactus
+{
+    parent base
+	transparent true
+	tree_wind false
+	terrain_light_map true
+	alpha_rejection greater 128
+	diffuseMap cactus.png
+	normalMap cactus_norm.png
+	normal_map true
+	ambient 1.4 1.4 1.4
+	diffuse 1.0 1.0 1.0
+	specular 0.2 0.2 0.2 32
+}
+
+
+//  Pine new
+//------------------------------------------------------------------
+
+material pine_tree
+{
+    parent base
+	transparent true
+	tree_wind true
+	terrain_light_map true
+	alpha_rejection greater 128
+	diffuseMap pine_diff.png
+	//normalMap plant_tropical_norm_m.png
+	//normal_map true
+	//specMap palm_plant_spec.png
+	//spec_map true
+	ambient 1.5 1.5 1.5
+	specular 0.57 0.6 0.5 24
+	cull_hardware none
+	//receives_shadows false
+	//twoside_diffuse true
+	shadowBias 0.0001
+}
+
+
+//  Bushes
+//------------------------------------------------------------------
+
+material bush_05
+{
+    parent base
+	transparent true
+	tree_wind true
+	terrain_light_map true
+	alpha_rejection greater 128
+	diffuseMap bush_05.png
+	//normalMap plant_tropical_norm_m.png
+	//normal_map true
+	//specMap palm_plant_spec.png
+	//spec_map true
+	ambient 1.0 1.0 1.0
+	diffuse 1.0 1.0 1.0
+	specular 0.57 0.6 0.5 24
+	transparent true
+	cull_hardware none
+	//receives_shadows false
+	twoside_diffuse true
+	shadowBias 0.0001
+}
+
+
 //  Rocks
 //------------------------------------------------------------------
 
@@ -184,12 +252,23 @@ material rock_y2  // greece yellow
 	specular 0.4 0.4 0.35 32
 }
 
+
 material rock_n1
 {
     parent base
 	diffuseMap rock_n1.jpg
-	//normalMap rock1_norm.png
-	//normal_map true
+	normalMap rock_n1_norm.png
+	normal_map true
+	terrain_light_map true
+	specular 0.5 0.5 0.5 32
+}
+
+material rocks_n1
+{
+    parent base
+	diffuseMap rock_n1.jpg
+	normalMap rock_n1_norm.png
+	normal_map true
 	terrain_light_map true
 	specular 0.5 0.5 0.5 32
 }
@@ -197,19 +276,19 @@ material rock_n1
 material rock_n2
 {
     parent base
-	diffuseMap rock_n2.png
-	//normalMap rock1_norm.png
-	//normal_map true
+	diffuseMap rock_n2.jpg
+	normalMap rock_n2_norm.png
+	normal_map true
 	terrain_light_map true
-	specular 0.15 0.15 0.1 32
+	specular 0.5 0.5 0.5 32
 }
 
 material rock_n3
 {
     parent base
 	diffuseMap rock_n3.jpg
-	//normalMap rock1_norm.png
-	//normal_map true
+	normalMap rock_n3_norm.png
+	normal_map true
 	terrain_light_map true
 	specular 0.5 0.5 0.5 32
 }
@@ -218,8 +297,8 @@ material rock_n4
 {
     parent base
 	diffuseMap rock_n4.jpg
-	//normalMap rock1_norm.png
-	//normal_map true
+	normalMap rock_n4_norm.png
+	normal_map true
 	terrain_light_map true
 	specular 0.5 0.5 0.5 32
 }
@@ -228,18 +307,8 @@ material rock_n5
 {
     parent base
 	diffuseMap rock_n5.jpg
-	//normalMap rock1_norm.png
-	//normal_map true
-	terrain_light_map true
-	specular 0.5 0.5 0.5 32
-}
-
-material rock_n5v
-{
-    parent base
-	diffuseMap rock_n5.jpg
-	//normalMap rock1_norm.png
-	//normal_map true
+	normalMap rock_n5_norm.png
+	normal_map true
 	terrain_light_map true
 	specular 0.5 0.5 0.5 32
 }
