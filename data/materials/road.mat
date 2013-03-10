@@ -335,6 +335,26 @@ material roadSnow_ter
 	normalMap volcano_7_nh1.png
 }
 
+material roadSnowGrn
+{
+    parent road
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 0.6 0.62 0.62 18
+	diffuseMap roadSnowGrn.jpg
+}
+
+material roadSnowGrn_ter
+{
+    parent road_terrain
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 0.6 0.62 0.62 18
+	diffuseMap roadSnowGrn.jpg
+	normal_map true
+	normalMap volcano_7_nh1.png
+}
+
 
 // Desert
 

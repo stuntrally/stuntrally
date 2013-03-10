@@ -178,113 +178,110 @@ material cactus
 //  Pine
 //------------------------------------------------------------------
 
-material pine1full
+material pine_base
 {
     parent base
 	transparent true
 	tree_wind true
 	terrain_light_map true
 	alpha_rejection greater 128
+
+	diffuseMap white.png
+	//normalMap pine_half_norm.png
+	//normal_map true
+	ambient 1.2 1.2 1.2
+	diffuse 0.8 0.8 0.8
+	specular 0.8 0.8 0.8 24
+
+	cull_hardware none
+	//twoside_diffuse true
+	shadowBias 0.0001
+}
+
+material pine1full
+{
+    parent pine_base
 	diffuseMap pine_full.png
 	normalMap pine_full_norm.png
 	normal_map true
 	ambient 1.2 1.22 1.22
 	diffuse 0.8 0.82 0.82
 	specular 1.0 1.0 1.0 32
-	cull_hardware none
-	//twoside_diffuse true
-	shadowBias 0.0001
 }
 
 material pine2full
 {
-    parent base
-	transparent true
-	tree_wind true
-	terrain_light_map true
-	alpha_rejection greater 128
+    parent pine_base
 	diffuseMap pine_full.png
 	normalMap pine_full_norm.png
 	normal_map true
 	ambient 1.2 1.21 1.21
 	diffuse 0.8 0.81 0.81
 	specular 1.0 1.0 1.0 16
-	cull_hardware none
-	//twoside_diffuse true
-	shadowBias 0.0001
 }
 
 material pine3full
 {
-    parent base
-	transparent true
-	tree_wind true
-	terrain_light_map true
-	alpha_rejection greater 128
+    parent pine_base
 	diffuseMap pine_full.png
 	normalMap pine_full_norm.png
 	normal_map true
 	ambient 1.2 1.21 1.21
 	diffuse 0.8 0.81 0.81
 	specular 1.0 1.0 1.0 24
-	cull_hardware none
-	//twoside_diffuse true
-	shadowBias 0.0001
 }
 
 
 material pine1half
 {
-    parent base
-	transparent true
-	tree_wind true
-	terrain_light_map true
-	alpha_rejection greater 128
+    parent pine_base
 	diffuseMap pine_half.png
 	normalMap pine_half_norm.png
 	normal_map true
-	ambient 1.0 1.01 1.01
-	diffuse 1.0 1.01 1.01
-	specular 0.7 0.7 0.7 16
-	cull_hardware none
-	twoside_diffuse true
-	shadowBias 0.0001
+	specular 0.9 0.9 0.9 16
 }
 
 material pine2half
 {
-    parent base
-	transparent true
-	tree_wind true
-	terrain_light_map true
-	alpha_rejection greater 128
+    parent pine_base
 	diffuseMap pine_half.png
 	normalMap pine_half_norm.png
 	normal_map true
-	ambient 1.0 1.02 1.02
-	diffuse 1.0 1.02 1.02
-	specular 0.8 0.8 0.8 24
-	cull_hardware none
-	twoside_diffuse true
-	shadowBias 0.0001
+	specular 0.9 0.9 0.9 16
 }
 
 material pine3half
 {
-    parent base
-	transparent true
-	tree_wind true
-	terrain_light_map true
-	alpha_rejection greater 128
+    parent pine_base
 	diffuseMap pine_half.png
 	normalMap pine_half_norm.png
 	normal_map true
-	ambient 1.0 1.02 1.02
-	diffuse 1.0 1.02 1.02
-	specular 0.8 0.8 0.8 24
-	cull_hardware none
-	twoside_diffuse true
-	shadowBias 0.0001
+	specular 0.9 0.9 0.9 16
+}
+
+
+material pine1norm
+{
+    parent pine_base
+	diffuseMap pine_norm_gr.png
+	normalMap pine_half_norm.png
+	normal_map true
+}
+
+material pine2norm
+{
+    parent pine_base
+	diffuseMap pine_norm_cc.png
+	normalMap pine_norm.png
+	normal_map true
+}
+
+material pine3norm
+{
+    parent pine_base
+	diffuseMap pine_norm_cc.png
+	normalMap pine_norm.png
+	normal_map true
 }
 
 
@@ -361,7 +358,7 @@ material rock_w1  //w
 	terrain_light_map true
 	ambient 1.0 1.02 1.02
 	diffuse 1.0 1.02 1.02
-	specular 0.5 0.5 0.5 32
+	specular 0.8 0.8 0.8 32
 }
 
 material rocks_n1
