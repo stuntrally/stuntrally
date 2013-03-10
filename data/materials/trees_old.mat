@@ -121,6 +121,7 @@ material 3D-Diggers/farn02
 	diffuseMap farn02.png
 }
 
+
 material 3D-Diggers/fir01
 {
     parent base
@@ -133,23 +134,34 @@ material 3D-Diggers/fir01
     receives_shadows false
 }
 
+material 3D-Diggers/fir02
+{
+    parent base
+    ambient 1.0 1.0 1.0
+    diffuse 0.6 0.6 0.6
+    diffuseMap fir02.jpg
+    tree_wind true
+    receives_shadows false
+}
+
 material 3D-Diggers/firW1
 {
     parent 3D-Diggers/fir01
+    ambient 0.9 0.9 0.9
+    diffuse 0.9 0.92 0.92
     diffuseMap fir01w.png
-}
-
-material 3D-Diggers/fir02
-{
-    parent 3D-Diggers/fir01
-    diffuseMap fir02.jpg
+	twoside_diffuse true
+	//receives_shadows true
+	//shadowBias 0.0001
 }
 
 material 3D-Diggers/firW2
 {
-    parent 3D-Diggers/fir01
+    parent 3D-Diggers/fir02
     diffuseMap fir02w.jpg
+    transparent false
 }
+
 
 material 3D-Diggers/shroom1
 {
