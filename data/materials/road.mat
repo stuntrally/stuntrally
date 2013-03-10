@@ -290,23 +290,26 @@ material roadIce
     parent road
 	ambient 1.0 1.0 1.0
 	diffuse 0.9 0.9 0.9
-	specular 0.9 0.92 0.92 32
+	specular 1.0 1.02 1.02 48
 	envMap ReflectionCube
 	env_map true
-	refl_amount 0.1
+	refl_amount 0.15
+	bump_scale 0.15
+	normal_map true
+	normalMap volcano_7_nh1.png
 	diffuseMap roadSnow.jpg
 }
 
 material roadIce_ter
 {
     parent road_terrain
-	ambient 1.0 1.0 1.0
-	diffuse 0.9 0.9 0.9
+	ambient 1.02 1.0 1.0
+	diffuse 0.92 0.9 0.9
 	specular 0.9 0.92 0.92 32
 	envMap ReflectionCube
 	env_map true
-	refl_amount 0.1
-	bump_scale 0.7
+	refl_amount 0.15
+	bump_scale 0.3
 	normal_map true
 	normalMap volcano_7_nh1.png
 	diffuseMap roadSnow.jpg

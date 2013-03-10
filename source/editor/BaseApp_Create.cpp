@@ -350,6 +350,7 @@ void BaseApp::setupResources()
 {
 	// Load resource paths from config file
 	ConfigFile cf;
+	//TODO: small textures pSet->tex_size;
 	cf.load(PATHMANAGER::GameConfigDir() + "/resources_ed.cfg");
 
 	// Go through all sections & settings in the file
