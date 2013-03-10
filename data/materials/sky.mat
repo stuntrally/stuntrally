@@ -28,6 +28,12 @@ material sky/white
     texture sky_white.jpg
 }
 
+material sky/white2
+{
+    parent base_sky
+    texture sky_white2.jpg
+}
+
 material sky/light_blue
 {
     parent base_sky
