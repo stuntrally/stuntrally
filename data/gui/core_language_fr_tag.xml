@@ -811,7 +811,6 @@
 	<Tag name="SimMode">Simulation mode (difficulty)</Tag>
 	<Tag name="TipToggleGrass">Enable or disable this grass layer.</Tag>
 	<Tag name="MinimapBorder">Border</Tag>
-	<Tag name="LANG_PT">Português</Tag>
 	<Tag name="Simulation">Simulation</Tag>
 	<Tag name="InputNextLayTab">alt-1,2 - prev,next Layer tab</Tag>
 	<Tag name="Grasses">Grasses</Tag>
@@ -839,5 +838,6 @@
 	<Tag name="LANG_RO">Română</Tag>
 	<Tag name="LANG_FR">Français</Tag>
 	<Tag name="LANG_RU">Русский</Tag>
+	<Tag name="LANG_PT">Português</Tag>
 
 </MyGUI>
