@@ -24,18 +24,22 @@ LOCALES="de fi ro pl fr ru"
 for loc in $LOCALES; do
 	`which python2` ./xml_po_parser.py ./translations-export/pofiles/locale/${loc}.po ../data/gui/core_language_${loc}_tag.xml
 done
+# Special case for Brazilian Portuguese
+`which python2` ./xml_po_parser.py ./translations-export/pofiles/locale/pt_BR.po ../data/gui/core_language_pt_tag.xml
 
 if [ ! -d ./translation_templates ]; then
 	echo "Cloning translation_templates"
 	git clone git@github.com:stuntrally/translation_templates.git
 fi
 
-echo "Uploading new template..."
-cd translation_templates
-git pull origin master
-cp ../stuntrally.pot ./stuntrally/
-git add stuntrally/stuntrally.pot
-git commit -m "Automatic translation template update"
-git push origin master
+if [ "$1" != "--no-upload" ]; then
+	echo "Uploading new template..."
+	cd translation_templates
+	git pull origin master
+	cp ../stuntrally.pot ./stuntrally/
+	git add stuntrally/stuntrally.pot
+	git commit -m "Automatic translation template update"
+	git push origin master
+fi
 
 echo "Done."

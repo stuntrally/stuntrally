@@ -528,7 +528,8 @@ void App::GuiInitLang()
 	languages["ro"] = TR("#{LANG_RO}");  //Romanian
 	languages["fr"] = TR("#{LANG_FR}");  //French
 	languages["ru"] = TR("#{LANG_RU}");  //Russian
-	
+	languages["pt"] = TR("#{LANG_PT}");  //Portuguese
+
 	ComboBoxPtr combo = mGUI->findWidget<ComboBox>("Lang");
 	if (!combo)  return;
 	combo->eventComboChangePosition += newDelegate(this, &App::comboLanguage);
