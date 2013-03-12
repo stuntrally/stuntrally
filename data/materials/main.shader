@@ -434,7 +434,7 @@
         shOutputColour(0).a *= materialDiffuse.a;
         
 #if ALPHA_MAP
-        shOutputColour(0).a = shSample(alphaMap, float2(UV.x, UV.y * 0.01)).r;
+        shOutputColour(0).a = shSample(alphaMap, float2(UV.x, UV.y * 0.025)).r;
 #endif
 
 #if SPECULAR_ALPHA
