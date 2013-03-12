@@ -518,7 +518,8 @@ void BaseApp::setupResources()
 {
 	// Load resource paths from config file
 	ConfigFile cf;
-	std::string s = PATHMANAGER::GameConfigDir() + "/resources.cfg";
+	std::string s = PATHMANAGER::GameConfigDir() +
+		(pSet->tex_size > 0 ? "/resources.cfg" : "/resources_s.cfg");
 	cf.load(s);
 
 	// Go through all sections & settings in the file

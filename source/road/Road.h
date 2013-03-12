@@ -192,8 +192,6 @@ public:
 	int iP1;  // 1st chk - road point index (not reversed) for mP[]
 	int iChkId1,iChkId1Rev;  // 1st chekpoint index (and for reversed) for mChks[]
 
-	int iTexSize;  //setting textures size for mtr name _s, call rebuild after change
-	
 	// params for editor tool: align terrain to road
 	float edWadd,edWmul;  // const added width and width multipler for whole road
 };

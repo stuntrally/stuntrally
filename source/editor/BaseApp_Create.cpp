@@ -350,8 +350,9 @@ void BaseApp::setupResources()
 {
 	// Load resource paths from config file
 	ConfigFile cf;
-	//TODO: small textures pSet->tex_size;
-	cf.load(PATHMANAGER::GameConfigDir() + "/resources_ed.cfg");
+	std::string s = PATHMANAGER::GameConfigDir() +
+		(pSet->tex_size > 0 ? "/resources_ed.cfg" : "/resources_s_ed.cfg");
+	cf.load(s);
 
 	// Go through all sections & settings in the file
 	ConfigFile::SectionIterator seci = cf.getSectionIterator();

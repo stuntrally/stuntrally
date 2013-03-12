@@ -28,7 +28,7 @@ SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame),
 	chksRoadLen(1.f),
 	edWadd(0.f),edWmul(1.f)
 {
-	Defaults();  iTexSize = 1;
+	Defaults();
 	iMrgSegs = 0;  segsMrg = 0;  iOldHide = -1;
 	st.Length = 0.f;  st.WidthAvg = 0.f;  st.HeightDiff = 0.f;
 	st.OnTer = 0.f;  st.Pipes = 0.f;

@@ -146,7 +146,7 @@ void App::slShaders(SL)
 	if (valShaders)
 	{	valShaders->setCaption("Very low");
 		if (v > 0.2)  valShaders->setCaption("Low");
-		if (v > 0.4) valShaders->setCaption("Medium");
+		if (v > 0.4)  valShaders->setCaption("Medium");
 		if (v > 0.6)  valShaders->setCaption("High");
 		if (v > 0.8)  valShaders->setCaption("Ultra");
 	}
@@ -154,22 +154,13 @@ void App::slShaders(SL)
 	//if (materialFactory) materialFactory->setShaderQuality(v);
 }
 
-#if 0
 void App::slTexSize(SL)
 {
 	int v = val*1.f +slHalf;  if (bGI)  pSet->tex_size = v;
 	if (valTexSize)
 	{	if (v == 0)  valTexSize->setCaption("Small");  else
 		if (v == 1)  valTexSize->setCaption("Big");  }
-	/* TODO
-	if (!materialFactory)  return;
-	if (v == 0)
-		materialFactory->setTexSize(0); // lowest
-	else if (v == 1)
-		materialFactory->setTexSize(4096); // highest
-	*/
 }
-#endif
 
 void App::slTerMtr(SL)
 {
@@ -264,7 +255,7 @@ void App::GuiInitGraphics()
 	Cmb(combo, "TexFiltering", comboTexFilter);
 	Slv(Anisotropy,	pSet->anisotropy /16.f);
 	Slv(Shaders,	pSet->shaders);
-	//Slv(TexSize,	pSet->tex_size /1.f);
+	Slv(TexSize,	pSet->tex_size /1.f);
 	Slv(TerMtr,		pSet->ter_mtr /4.f);
 
 	//  trees/grass

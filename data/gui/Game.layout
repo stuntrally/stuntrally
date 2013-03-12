@@ -1916,8 +1916,8 @@
 							<Property key="TextColour" value="0.2 1 0.2"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<!--<Widget type="TextBox" skin="TextBox" position="32 110 144 24">
-							<Property key="Caption" value="#{TexSize}"/>
+						<Widget type="TextBox" skin="TextBox" position="32 110 144 24">
+							<Property key="Caption" value="#{TexSize}**"/>
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -1928,7 +1928,7 @@
 						<Widget type="TextBox" skin="TextBox" position="180 110 60 24" name="TexSizeVal">
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>-->
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 140 144 24">
 							<Property key="Caption" value="#{Terrain}"/>
 							<Property key="Colour" value="0 0 0"/>
