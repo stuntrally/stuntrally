@@ -68,6 +68,27 @@ material roadJDark
 }
 
 
+material roadJDarkD_ter
+{
+	parent road_terrain
+	diffuseMap roadJDarkD.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.70 0.70 0.70
+	specular 0.43 0.43 0.40 40
+	normal_map true
+	normalMap ice_3_nh1.png
+}
+
+material roadJDarkD
+{
+	parent road
+	diffuseMap roadJDarkD.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 0.3 0.3 0.3 40
+}
+
+
 // Asphalt
 
 material roadAsphalt
