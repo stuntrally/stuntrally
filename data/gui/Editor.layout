@@ -2418,7 +2418,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipModelPrev}"/>
 						</Widget>
-						
+
 						<Widget type="TextBox" skin="TextBox" position="16 131 104 20">
 							<Property key="Caption" value="#{MinScale}"/>
 							<Property key="TextColour" value="0.6 0.8 0.8"/>
@@ -2882,16 +2882,27 @@
 					<Property key="Caption" value="1.0"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="436 210 128 24" name="DeleteRoad">
-					<Property key="Colour" value="1 0.7 0.5"/>
-					<Property key="TextColour" value="1 0.7 0.5"/>
-					<Property key="Caption" value="#{DeleteRoad}"/>
+				<Widget type="TextBox" skin="TextBox" position="640 180 108 24">
+					<Property key="Caption" value="#{Delete}"/>
+					<Property key="TextColour" value="1.0 0.4 0.4"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="436 248 128 24" name="DeleteFluids">
-					<Property key="Colour" value="0.3 0.6 1.0"/>
-					<Property key="TextColour" value="0.3 0.6 1.0"/>
-					<Property key="Caption" value="#{DeleteFluids}"/>
+				<Widget type="Button" skin="Button" position="640 210 108 24" name="DeleteRoad">
+					<Property key="Colour" value="1 0.7 0.4"/>
+					<Property key="TextColour" value="1 0.7 0.4"/>
+					<Property key="Caption" value="#{Road}"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="640 240 108 24" name="DeleteFluids">
+					<Property key="Colour" value="0.4 0.7 1.0"/>
+					<Property key="TextColour" value="0.4 0.7 1.0"/>
+					<Property key="Caption" value="#{Fluids}"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="640 270 108 24" name="DeleteObjects">
+					<Property key="Colour" value="0.7 0.7 0.7"/>
+					<Property key="TextColour" value="0.7 0.7 0.7"/>
+					<Property key="Caption" value="#{Objects}"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="36 251 112 24">

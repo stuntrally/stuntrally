@@ -262,6 +262,11 @@ void App::btnDeleteFluids(WP)
 	sc->fluids.clear();
 	bRecreateFluids = true;
 }
+void App::btnDeleteObjects(WP)
+{
+	DestroyObjects(true);
+	iObjCur = -1;
+}
 
 void App::btnScaleAll(WP)
 {

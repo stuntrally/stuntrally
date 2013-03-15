@@ -155,14 +155,14 @@
 <track n="95" name="D11-PersianCity"	created="31-07-12" crtver="1.7" modified="31-07-12" scenery="Desert"	author="CH" objects="2" fluids="0" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="2" long="1" diff="2" rating="3" /> <!--D11-PersianCity-->
 	<track n="96" name="I9-Web"			created="01-08-12" crtver="1.7" modified="09-01-13" scenery="Island"	author="CH" objects="0" fluids="2" bumps="0" jumps="2" loops="0" pipes="0" banked="5" frenzy="3" long="9" diff="5" rating="3" /> <!--I9-Web-->
 	<track n="97" name="S14-Refinery"	created="02-08-12" crtver="1.7" modified="31-12-12" scenery="Savanna"	author="CH" objects="0" fluids="0" bumps="1" jumps="2" loops="5" pipes="3" banked="4" frenzy="3" long="5" diff="6" rating="4" /> <!--S14-Refinery-->
-<!--91 99-->																																																									<!--1.8-->
+<!--91 99-->																																																								<!--1.8-->
 	<track n="98" name="A5-TopTwist"	created="05-09-12" crtver="1.8" modified="05-01-13" scenery="Australia"	author="CH" objects="0" fluids="1" bumps="1" jumps="3" loops="0" pipes="0" banked="2" frenzy="2" long="5" diff="4" rating="3" /> <!--A5-TopTwist-->
 	<track n="99" name="X3-Cloud"		created="05-09-12" crtver="1.8" modified="03-01-13" scenery="Unidentif"	author="CH" objects="0" fluids="0" bumps="0" jumps="1" loops="0" pipes="0" banked="3" frenzy="2" long="5" diff="2" rating="2" /> <!--X3-Cloud-->
 
 	<track n="100" name="F16-Clew"		created="09-10-12" crtver="1.8" modified="06-01-13" scenery="Forest"	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="2" banked="2" frenzy="3" long="2" diff="4" rating="3" /> <!--F16-Clew-->
-	<track n="101" name="G5-Climb"		created="09-10-12" crtver="1.8" modified="30-12-12" scenery="Greece"	author="CH" objects="0" fluids="1" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="0" long="8" diff="2" rating="4" /> <!--G5-Climb-->
+	<track n="101" name="G5-Climb"		created="09-10-12" crtver="1.8" modified="30-12-12" scenery="Greece"	author="CH" objects="0" fluids="1" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="0" long="7" diff="2" rating="4" /> <!--G5-Climb-->
 	<track n="102" name="I10-Treasure"	created="11-10-12" crtver="1.8" modified="09-01-13" scenery="Island"	author="CH" objects="3" fluids="2" bumps="3" jumps="0" loops="0" pipes="0" banked="1" frenzy="1" long="2" diff="2" rating="4" /> <!--I10-Treasure-->
-<!--96 104-->																																																									<!--1.9-->
+<!--96 104-->																																																								<!--1.9-->
 	<track n="103" name="D12-Sandstorm"	created="01-11-12" crtver="1.9" modified="01-11-12" scenery="Desert"	author="CH" objects="0" fluids="0" bumps="2" jumps="1" loops="0" pipes="0" banked="1" frenzy="1" long="1" diff="3" rating="2" /> <!--D12-Sandstorm-->
 	<track n="104" name="T1-Autumn"		created="01-11-12" crtver="1.9" modified="03-11-12" scenery="Autumn"	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="2" frenzy="1" long="2" diff="2" rating="2" /> <!--T1-Autumn-->
 	<track n="105" name="T2-RedOakPark"	created="04-11-12" crtver="1.9" modified="04-11-12" scenery="Autumn"	author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="2" frenzy="2" long="1" diff="2" rating="3" /> <!--T2-RedOakPark-->
@@ -171,10 +171,10 @@
 	<track n="107" name="O1-Moss"		created="01-11-12" crtver="1.9" modified="09-11-12" scenery="Moss"		author="CH" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="2" frenzy="1" long="1" diff="2" rating="3" /> <!--O1-Moss-->
 	<track n="108" name="O2-Mouse"		created="09-11-12" crtver="1.9" modified="26-12-12" scenery="Moss"		author="CH" objects="0" fluids="2" bumps="0" jumps="0" loops="0" pipes="0" banked="3" frenzy="3" long="2" diff="3" rating="3" /> <!--O2-Mouse-->
 	<track n="109" name="T4-Scary"		created="10-11-12" crtver="1.9" modified="26-12-12" scenery="Autumn"	author="CH" objects="1" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="2" frenzy="1" long="3" diff="2" rating="3" /> <!--T4-Scary-->
-<!--111-->																																																										<!--2.0-->
+<!--111-->																																																									<!--2.0-->
 	<track n="110" name="T5-Twister"	created="25-01-13" crtver="2.0" modified="25-01-13" scenery="Autumn" author="wowie" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="3" frenzy="2" long="1" diff="3" rating="2" /> <!--T5-Twister-->
 	<track n="111" name="A6-Cannon"		created="28-01-13" crtver="2.0" modified="28-01-13" scenery="Australia"	author="CH" objects="0" fluids="0" bumps="2" jumps="2" loops="0" pipes="0" banked="2" frenzy="1" long="8" diff="3" rating="3" /> <!--A6-Cannon-->
 	<track n="112" name="0W11-Glacier"	created="13-03-13" crtver="2.0" modified="14-03-13" scenery="Winter"	author="CH" objects="1" fluids="1" bumps="2" jumps="1" loops="0" pipes="0" banked="1" frenzy="0" long="5" diff="2" rating="4" /> <!--0W11-Glacier-->
-<track n="113" name="J20-JungleMaze"	created="14-03-13" crtver="2.0" modified="14-03-13" scenery="Jungle"	author="CH" objects="0" fluids="1" bumps="2" jumps="1" loops="0" pipes="0" banked="2" frenzy="2" long="6" diff="3" rating="4" /> <!--J20-JungleMaze-->
+<track n="113" name="J20-JungleMaze"	created="14-03-13" crtver="2.0" modified="14-03-13" scenery="Jungle"	author="CH" objects="0" fluids="1" bumps="2" jumps="1" loops="0" pipes="0" banked="2" frenzy="3" long="7" diff="3" rating="4" /> <!--J20-JungleMaze-->
 
 </tracks>

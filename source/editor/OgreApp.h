@@ -449,7 +449,7 @@ protected:
 	void btnTrkCopySel(WP);  bool ChkTrkCopy();
 	void btnCopySun(WP), btnCopyTerHmap(WP), btnCopyTerLayers(WP),
 		btnCopyVeget(WP), btnCopyRoad(WP), btnCopyRoadPars(WP);
-	void btnScaleAll(WP),btnScaleTerH(WP), btnDeleteRoad(WP),btnDeleteFluids(WP);
+	void btnScaleAll(WP),btnScaleTerH(WP), btnDeleteRoad(WP),btnDeleteFluids(WP),btnDeleteObjects(WP);
 	MyGUI::EditPtr edScaleAllMul;  void editScaleAllMul(MyGUI::EditPtr);
 	MyGUI::EditPtr edScaleTerHMul;  void editScaleTerHMul(MyGUI::EditPtr);
 	SLV(AlignWidthAdd);  SLV(AlignWidthMul);  SLV(AlignSmooth);
