@@ -130,6 +130,7 @@ Bullet 2.79 (need this version)
 BtOgre *
 OISB *
 PagedGeometry 1.1.1 *
+shiny
 TinyXML
 * are modified sources
 

@@ -302,9 +302,44 @@ void App::SaveWaterDepth()
 }
 
 
+
 ///  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 ///  align terrain to road selected segments
 //-----------------------------------------------------------------------------------------------------------
+struct RayResult : public btCollisionWorld::RayResultCallback
+{
+	RayResult(const btVector3& rayFromWorld, const btVector3& rayToWorld)
+		: m_rayFromWorld(rayFromWorld), m_rayToWorld(rayToWorld)
+	{	}
+
+	btVector3	m_rayFromWorld;//used to calculate hitPointWorld from hitFraction
+	btVector3	m_rayToWorld;
+
+	btVector3	m_hitNormalWorld;
+	btVector3	m_hitPointWorld;
+		
+	virtual	btScalar addSingleResult(btCollisionWorld::LocalRayResult& rayResult, bool normalInWorldSpace)
+	{
+		btCollisionObject* obj = rayResult.m_collisionObject;
+		if (obj->getUserPointer() != (void*)111)  // allow only road
+			return 1.0;
+
+		//caller already does the filter on the m_closestHitFraction
+		btAssert(rayResult.m_hitFraction <= m_closestHitFraction);
+		
+		m_closestHitFraction = rayResult.m_hitFraction;
+		m_collisionObject = obj;
+		
+		if (normalInWorldSpace)
+			m_hitNormalWorld = rayResult.m_hitNormalLocal;
+		else  ///need to transform normal into worldspace
+			m_hitNormalWorld = m_collisionObject->getWorldTransform().getBasis()*rayResult.m_hitNormalLocal;
+
+		m_hitPointWorld.setInterpolate3(m_rayFromWorld,m_rayToWorld,rayResult.m_hitFraction);
+		return rayResult.m_hitFraction;
+	}
+};
+
 void App::AlignTerToRoad()
 {
 	if (road->vSel.empty())  return;
@@ -314,7 +349,6 @@ void App::AlignTerToRoad()
 	road->edWmul = pSet->al_w_mul;
 	road->edWadd = pSet->al_w_add;
 	road->RebuildRoadInt(true);
-	//todo: get min max x,z from sel segs aabb-s (rect only, not whole terrain)
 
 	//  terrain
 	float *fHmap = terrain->getHeightData();
@@ -337,7 +371,7 @@ void App::AlignTerToRoad()
 		wx = (fx-0.5f) * sc->td.fTerWorldSize;  wz = (fz-0.5f) * sc->td.fTerWorldSize;
 
 		btVector3 from(wx,wz,Len), to(wx,wz,-Len);  // x -z y
-		btCollisionWorld::ClosestRayResultCallback rayRes(from, to);
+		RayResult rayRes(from, to);
 		world->rayTest(from, to, rayRes);
 
 		//  terrain height if not hit
@@ -392,7 +426,7 @@ void App::AlignTerToRoad()
 
 
 
-	//  clear bullet world  ?todo: will it destroy objects--
+	//  clear bullet world
 	for (int i=0; i < road->vbtTriMesh.size(); ++i)
 		delete road->vbtTriMesh[i];
 	road->vbtTriMesh.clear();
@@ -400,17 +434,20 @@ void App::AlignTerToRoad()
 	for (int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
 	{
 		btCollisionObject* obj = world->getCollisionObjectArray()[i];
-		delete obj->getCollisionShape();  //?
-		
-		btRigidBody* body = btRigidBody::upcast(obj);
-		if (body && body->getMotionState())
-			delete body->getMotionState();
+		if (obj->getUserPointer() == (void*)111)  // only road
+		{
+			delete obj->getCollisionShape();  //?
+			
+			btRigidBody* body = btRigidBody::upcast(obj);
+			if (body && body->getMotionState())
+				delete body->getMotionState();
 
-		ShapeData* sd = static_cast<ShapeData*>(obj->getUserPointer());
-		delete sd;
+			ShapeData* sd = static_cast<ShapeData*>(obj->getUserPointer());
+			delete sd;
 
-		world->removeCollisionObject(obj);
-		delete obj;
+			world->removeCollisionObject(obj);
+			delete obj;
+		}
 	}
 
 

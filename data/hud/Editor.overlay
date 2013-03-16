@@ -181,11 +181,11 @@ Editor/FpsOverlay
 			font_name Console
 			char_height 20
 			//caption Pos
-			colour_top	0.31 0.52 0.63
-			colour_bottom 0.87 0.93 0.98
+			//colour_top	0.31 0.52 0.63
+			//colour_bottom 0.87 0.93 0.98
+			colour_top	0.01 0.02 0.03
+			colour_bottom 0.07 0.13 0.18
 		}
-
-	
 	}
 }
 

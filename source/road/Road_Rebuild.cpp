@@ -855,6 +855,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 						btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 					#ifdef ROAD_EDITOR
 						pApp->world->addCollisionObject(bco);
+						bco->setUserPointer((void*)111);  // mark road
 					#else
 						pGame->collision.world->addCollisionObject(bco);
 						pGame->collision.shapes.push_back(shape);
