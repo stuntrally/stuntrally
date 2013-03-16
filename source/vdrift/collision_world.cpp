@@ -381,8 +381,7 @@ struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 
 		if (normalInWorldSpace)
 			m_hitNormalWorld = rayResult.m_hitNormalLocal;
-		else
-			///need to transform normal into worldspace
+		else  ///need to transform normal into worldspace
 			m_hitNormalWorld = m_collisionObject->getWorldTransform().getBasis()*rayResult.m_hitNormalLocal;
 
 		m_hitPointWorld.setInterpolate3(m_rayFromWorld,m_rayToWorld,rayResult.m_hitFraction);

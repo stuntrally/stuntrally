@@ -394,8 +394,8 @@ bool SplineRoad::SaveFile(String fname)
 			if (!onTer || !onTer1 || !onTer_1)
 			{	p.SetAttribute("a",  toStr( mP[i].mYaw ).c_str());
 				p.SetAttribute("ar", toStr( mP[i].mRoll ).c_str());
-				p.SetAttribute("aT", toStr( (int)mP[i].aType ).c_str());
 			}
+			p.SetAttribute("aT", toStr( (int)mP[i].aType ).c_str());
 
 			if (mP[i].cols != 1)
 				p.SetAttribute("col", toStr( mP[i].cols ).c_str());

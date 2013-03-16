@@ -504,7 +504,7 @@ bool App::KeyPress(const CmdKey &arg)
 					road->newP.pos.z = road->posHit.z;
 					if (!sc->ter)
 						road->newP.pos.y = road->posHit.y;
-					road->newP.aType = AT_Both;
+					//road->newP.aType = AT_Both;
 					road->Insert(shift ? INS_Begin : ctrl ? INS_End : alt ? INS_CurPre : INS_Cur);
 				}	break;					  
 

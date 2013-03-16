@@ -189,7 +189,7 @@ SplinePoint::SplinePoint()
 void SplinePoint::SetDefault()
 {
 	pos = Vector3::ZERO;  tan = Vector3::ZERO;  onTer = 1;
-	width = 6;  aYaw = 0;  aRoll = 0;
-	mYaw = 0;  mRoll = 0;  aType = AT_Manual;
+	width = 7;  aYaw = 0;  aRoll = 0;
+	mYaw = 0;  mRoll = 0;  aType = AT_Both;
 	cols = 1;  pipe = 0;  idMtr = 0;  chkR = 0;
 }
