@@ -209,6 +209,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				 case KC_M:	GuiShortcut(WND_Options, 3,1);	return true;  // M -Minimap
 				 case KC_O:	GuiShortcut(WND_Options, 3,3);	return true;  // O -Other
 				case KC_I:	GuiShortcut(WND_Options, 4);	return true;  // I Input
+				case KC_P:	GuiShortcut(WND_Options, 5);	return true;  // P Sound
 			}
 
 		///* tire edit */

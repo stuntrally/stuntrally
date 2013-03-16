@@ -139,14 +139,25 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	pMainNode->setPosition(posInfo.pos);
 	pMainNode->setOrientation(posInfo.rot);
 
+	
+	///()  grass sphere pos
+	Vector3 vx(1,0,0);  // car x dir
+	vx = posInfo.rot * vx * 1.1;  //par
+	posSph[0] = posInfo.pos + vx;  posSph[0].y += 0.5f;
+	posSph[1] = posInfo.pos - vx;  posSph[1].y += 0.5f;
+	if (ndSph)  // sph test
+	{	ndSph->setPosition(posSph[0]);		//par
+		ndSph->setScale(Vector3::UNIT_SCALE * 1.7 *2/0.6f);
+	}
+
 	//  set camera view
 	if (fCam)
 		fCam->Apply(posInfoCam/*posInfo*/);
 
-
 	//  upd rotY for minimap
 	Quaternion q = posInfo.rot * Quaternion(Degree(90),Vector3(0,1,0));
 	angCarY = q.getYaw().valueDegrees() + 90.f;
+
 	
 	//  brake state
 	bool braking = posInfo.braking;

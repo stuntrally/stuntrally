@@ -273,6 +273,7 @@ void App::InitInputGui()
 	CreateText(xb1,y, 200,24, "txtshd6", "#A8D0FF"+TR("M  #{Minimap}"));  y+=2*yb;
 	CreateText(xb1,y, 200,24, "txtshd7", "#A8D0FF"+TR("O  #{Other}"));  y+=3*yb;
 	CreateText(xb,y, 200,24, "txtshd8", "#A8D0FF"+TR("I  #{Input}"));  y+=3*yb;
+	CreateText(xb,y, 200,24, "txtshd8", "#A8D0FF"+TR("P  #{Sound}"));  y+=3*yb;
 
 	/**  //dbg start on input  ///remove
 	mWndTabsOpts->setIndexSelected(7);

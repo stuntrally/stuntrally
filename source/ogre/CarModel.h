@@ -106,7 +106,8 @@ public:
 	FollowCamera* fCam;
 	
 	//  Main node. later, we will add sub-nodes for body, interior, glass and wheels.
-	Ogre::SceneNode* pMainNode;
+	Ogre::SceneNode* pMainNode, *ndSph;
+	Ogre::Vector3 posSph[2];
 	
 	void setVisible(bool visible);  // hide/show
 	bool mbVisible;  float hideTime;

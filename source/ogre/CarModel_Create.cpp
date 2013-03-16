@@ -35,7 +35,7 @@ using namespace Ogre;
 CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 	SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s,
 	Camera* cam, App* app, int startpos_index) :
-	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""),
+	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), ndSph(0),
 	mCamera(0), pReflect(0), pApp(app), color(1,1,0),
 	bLightMapEnabled(true), bBraking(false),
 	hideTime(1.f), mbVisible(true),
@@ -183,6 +183,19 @@ void CarModel::Create(int car)
 		
 	//  reflection
 	CreateReflection();
+
+
+	///()  grass sphere test
+	#if 0
+	Entity* es = mSceneMgr->createEntity("CarS"+ strI, "sphere.mesh", "Car" + strI);
+	es->setRenderQueueGroup(RQG_CarGhost);
+	MaterialPtr mtr = MaterialManager::getSingleton().getByName("pipeGlass");
+	es->setMaterial(mtr);
+	//AxisAlignedBox aa = es->getBoundingBox();
+	ndSph = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	ndSph->attachObject(es);
+	#endif
+
 
 	//  car Models:  body, interior, glass  -------
 	//vis flags:  2 not rendered in reflections  16 off by in-car camera

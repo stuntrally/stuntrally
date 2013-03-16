@@ -86,6 +86,10 @@
 		shUniform(float, grassTimer)  @shSharedParameter(grassTimer)
 		shUniform(float, grassFrequency)  @shSharedParameter(grassFrequency)
 		shUniform(float4, grassDirection)  @shSharedParameter(grassDirection)
+
+		shUniform(float4x4, world)  @shAutoConstant(world, world_matrix)
+		shUniform(float4, posSph0)  @shSharedParameter(posSph0)  // car grass colision spheres pos,r^2
+		shUniform(float4, posSph1)  @shSharedParameter(posSph1)
 #endif
 
 		shOutput(float3, normalPassthrough)
@@ -119,15 +123,44 @@
 
 		//  grass
 #if GRASS_WIND
+		float4 opos = shMatrixMult(world, position);
 		float oldposx = position.x;
 		if (uv0.y == 0.0f)
 		{
 			float offset = sin(grassTimer + oldposx * grassFrequency);
 			position += grassDirection * offset;
+			
+   			#if 1
+			///()  grass deform under car
+			// sphere:  (x - x0)^2 + (y - y0)^2 + (z - z0)^2 = r^2
+			float r = posSph0.w;  // sphere radius^2
+			if (r > 0.f)
+			{			
+				float3 sph = posSph0.xyz;  // sphere pos
+				float dx = opos.x - sph.x,  dz = opos.z - sph.z; //, dy = opos.y - sph.y;
+				dx *= dx;  dz *= dz;  //dy *= dy;
+				//if (dx + dy + dz < r)  // sphere
+				if (dx + dz < r)  // circle (very high grasses too)
+				{
+					float y_on_sph = sph.y - sqrt(r - dx - dz);
+					if (position.y > y_on_sph)
+					{	position.y = y_on_sph;  opos.y = y_on_sph;  }
+				}
+				sph = posSph1.xyz;  // 2nd
+				dx = opos.x - sph.x;  dz = opos.z - sph.z;
+				dx *= dx;  dz *= dz;
+				if (dx + dz < r)
+				{
+					float y_on_sph = sph.y - sqrt(r - dx - dz);
+					if (position.y > y_on_sph)
+						position.y = y_on_sph;
+				}
+			}
+			#endif
 		}
 #endif
-
 		shOutputPosition = shMatrixMult(wvp, position);
+
 
 #if SOFT_PARTICLES
 		screenPosition = float3(shOutputPosition.xy, shOutputPosition.w);

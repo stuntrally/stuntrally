@@ -665,8 +665,20 @@ void App::editMouse()
 			{
 				Real xm = vNew.x * fRot * moveMul *PI_d/180.f;
 				QUATERNION <float> qr;
+				//if (alt)  qr.Rotate(-xm, 1, 0, 0);  else  if (shift)  qr.Rotate(-xm, 0, 1, 0);  else  qr.Rotate(-xm, 0, 0, 1);
 				if (!alt)  qr.Rotate(-xm, 0, 0, 1);  else  qr.Rotate(-xm, 0, 1, 0);
 				o.rot = o.rot * qr;
+				/** Quaternion q(o.rot.w(),o.rot.x(),o.rot.y(),o.rot.z());
+				Degree deg;  Vector3 ax;
+				q.ToAngleAxis(deg,ax);
+				if (alt)  deg += Radian(xm);
+				else
+				{
+					Matrix3 m;  m.FromAngleAxis(Vector3::UNIT_X, Radian(xm));
+					ax = m *ax;
+				}
+				q.FromAngleAxis(deg,ax);
+				o.rot = QUATERNION<float>(q.x,q.y,q.z,q.w);/**/
 				o.SetFromBlt();	 upd1 = true;
 			}
 			else
@@ -945,9 +957,15 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 
 	// update shader time
 	mTimer += evt.timeSinceLastFrame;
-	mFactory->setSharedParameter ("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
-	mFactory->setSharedParameter ("waterTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
+	mFactory->setSharedParameter("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
+	mFactory->setSharedParameter("waterTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
 
+	/*if (ndCar && road)  ///()  grass sphere test
+	{
+		const Vector3& p = ndCar->getPosition();  Real r = road->vStBoxDim.z/2;  r *= r;
+		mFactory->setSharedParameter("posSph0", sh::makeProperty <sh::Vector4>(new sh::Vector4(p.x,p.y,p.z,r)));
+		mFactory->setSharedParameter("posSph1", sh::makeProperty <sh::Vector4>(new sh::Vector4(p.x,p.y,p.z,r)));
+	}/**/
 	
 	///  simulate
 	if (edMode == ED_Objects && objSim /*&& bEdit()*/)

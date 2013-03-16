@@ -410,15 +410,29 @@ bool App::frameStart(Real time)
 		
 		//  update shader time
 		mTimer += time;
-		mFactory->setSharedParameter ("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
-		mFactory->setSharedParameter ("waterTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
+		mFactory->setSharedParameter("windTimer",  sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
+		mFactory->setSharedParameter("waterTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(mTimer)));
 
 
-		// We put this here, because first render frame is rather heavy
+		///()  grass sphere pos
+		if (carModels.size() > 0)
+		{			//par
+			Real r = 1.7;  r *= r;
+			const Vector3* p = &carModels[0]->posSph[0];
+			mFactory->setSharedParameter("posSph0", sh::makeProperty <sh::Vector4>(new sh::Vector4(p->x,p->y,p->z,r)));
+			p = &carModels[0]->posSph[1];
+			mFactory->setSharedParameter("posSph1", sh::makeProperty <sh::Vector4>(new sh::Vector4(p->x,p->y,p->z,r)));
+		}else
+		{	mFactory->setSharedParameter("posSph0", sh::makeProperty <sh::Vector4>(new sh::Vector4(0,0,500,-1)));
+			mFactory->setSharedParameter("posSph1", sh::makeProperty <sh::Vector4>(new sh::Vector4(0,0,500,-1)));
+		}
+
+
+		//  Signal loading finished to the peers
 		if (mClient && bLoadingEnd)
 		{
 			bLoadingEnd = false;
-			mClient->loadingFinished();  // Signal loading finished to the peers
+			mClient->loadingFinished();
 		}
 		
 		PROFILER.endBlock(" frameSt");
@@ -427,6 +441,7 @@ bool App::frameStart(Real time)
 	}
 	PROFILER.endBlock(" frameSt");
 }
+
 bool App::frameEnd(Real time)
 {
 	return true;
