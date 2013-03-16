@@ -234,9 +234,10 @@ bool App::frameStart(Real time)
 				mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
 				ChampLoadEnd();
 				bLoadingEnd = true;
-				iLoad1stFrames = -1;  // end
+				iLoad1stFrames = -1;  // for refl
 			}
-		}
+		}else if (iLoad1stFrames >= -1)
+			--iLoad1stFrames;  // -2 end
 		
 		
 		bool bFirstFrame = (carModels.size()>0 && carModels.front()->bGetStPos) ? true : false;
@@ -360,7 +361,7 @@ bool App::frameStart(Real time)
 		PROFILER.beginBlock("g.refl");
 		for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		if ((*it)->eType != CarModel::CT_GHOST && (*it)->pReflect)
-			(*it)->pReflect->Update(iLoad1stFrames >= 0);
+			(*it)->pReflect->Update(iLoad1stFrames == -1);
 		PROFILER.endBlock("g.refl");
 
 		//  trees

@@ -444,7 +444,8 @@ void GAME::UpdateCar(CAR & car, double dt)
 void GAME::UpdateCarInputs(CAR & car)
 {
 	vector <float> carinputs(CARINPUT::ALL, 0.0f);
-	bool forceBrake = timer.waiting || timer.pretime > 0.f;  // race countdown
+	//  race countdown or loading
+	bool forceBrake = timer.waiting || timer.pretime > 0.f || pOgreGame->iLoad1stFrames > -2;
 
 	int i = pOgreGame->sc->asphalt ? 1 : 0;
 	float sss_eff = settings->sss_effect[i], sss_velf = settings->sss_velfactor[i];
@@ -910,7 +911,7 @@ bool GAME::ParseArguments(list <string> & args)
 
 void GAME::UpdateTimer()
 {
-	if (pOgreGame->iLoad1stFrames == -1)  // ended loading
+	if (pOgreGame->iLoad1stFrames == -2)  // ended loading
 		timer.Tick(TickPeriod());
 	//timer.DebugPrint(info_output);
 }
