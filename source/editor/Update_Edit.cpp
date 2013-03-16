@@ -614,7 +614,9 @@ void App::editMouse()
 		{
 			if (mbLeft)  // size xz
 			{
-				Vector3 vm = Vector3(vNew.y, 0, vNew.x) * fMove * moveMul;
+				Vector3 vx = mCameraT->getRight();      vx.y = 0;  vx.normalise();  vx.x = abs(vx.x);  vx.z = abs(vx.z);
+				Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();  vz.x = abs(vz.x);  vz.z = abs(vz.z);
+				Vector3 vm = (vNew.y * vz + vNew.x * vx) * fMove * moveMul;
 				fb.size += vm;
 				if (fb.size.x < 0.2f)  fb.size.x = 0.2f;
 				if (fb.size.z < 0.2f)  fb.size.z = 0.2f;
@@ -672,7 +674,7 @@ void App::editMouse()
 			{
 				if (mbLeft)	// move on xz
 				{
-					Vector3 vx = mCameraT->getRight();	   vx.y = 0;  vx.normalise();
+					Vector3 vx = mCameraT->getRight();      vx.y = 0;  vx.normalise();
 					Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
 					Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
 					o.pos[0] += vm.x;  o.pos[1] -= vm.z;  // todo: for selection ..
