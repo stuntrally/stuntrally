@@ -543,6 +543,8 @@
 		<!--111-->
 		<track name="T5-Twister"	time="63.0"/>
 		<track name="A6-Cannon"		time="450.0"/>
+		<track name="0W11-Glacier"	time="150.0"/>
+		<track name="J20-JungleMaze" time="290.0"/>
 
 	</times>
 </championships>
