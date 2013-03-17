@@ -428,14 +428,15 @@ void App::InitGui()
 	
 	objListSt = mGUI->findWidget<List>("ObjListSt");
 	objListDyn = mGUI->findWidget<List>("ObjListDyn");
-	if (objListSt && objListDyn)
+	objListBld = mGUI->findWidget<List>("ObjListBld");
+	if (objListSt && objListDyn && objListDyn)
 	{
 		for (int i=0; i < vObjNames.size(); ++i)
 		{	const std::string& name = vObjNames[i];
 			if (name != "sphere")
 			{
 				if (StringUtil::startsWith(name,"pers_",false))
-					objListSt->addItem("#E0E070"+name);
+					objListBld->addItem("#E0E070"+name);  // buildings
 				else
 				if (boost::filesystem::exists(PATHMANAGER::Data()+"/objects/"+ name + ".bullet"))
 					objListDyn->addItem("#80D0FF"+name);  // dynamic
@@ -443,8 +444,9 @@ void App::InitGui()
 					objListSt->addItem("#C8C8C8"+name);
 		}	}
 		//objList->setIndexSelected(0);  //objList->findItemIndexWith(modeSel)
-		objListSt->eventListChangePosition += newDelegate(this, &App::listObjsChngSt);
-		objListDyn->eventListChangePosition += newDelegate(this, &App::listObjsChngDyn);
+		objListSt->eventListChangePosition += newDelegate(this, &App::listObjsChng);
+		objListDyn->eventListChangePosition += newDelegate(this, &App::listObjsChng);
+		objListBld->eventListChangePosition += newDelegate(this, &App::listObjsChng);
 	}
 	
 	//---------------------  Tweak  ---------------------

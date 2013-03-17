@@ -933,6 +933,8 @@
 	<Tag name="Objects">Objects</Tag>
 	<Tag name="ObjDynamic">Dynamic</Tag>
 	<Tag name="ObjStatic">Static</Tag>
+	<Tag name="ObjBuildings">Buildings</Tag>
+
 	<Tag name="InputObjectsMode">X - edit Objects</Tag>
 	<Tag name="InputObjectsPrevNext">PgUp,PgDn (or Wheel) - previous/next object</Tag>
 	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>

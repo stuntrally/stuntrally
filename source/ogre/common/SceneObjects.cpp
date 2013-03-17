@@ -360,16 +360,9 @@ void App::AddNewObj()
 }
 
 //  change obj to insert
-void App::listObjsChngSt(MyGUI::List* l, size_t t)
+void App::listObjsChng(MyGUI::List* l, size_t t)
 {
-	std::string s = objListSt->getItemNameAt(t).substr(7);
-	for (int i=0; i < vObjNames.size(); ++i)
-		if (s == vObjNames[i])
-		{	SetObjNewType(i);  return;	}
-}
-void App::listObjsChngDyn(MyGUI::List* l, size_t t)
-{
-	std::string s = objListDyn->getItemNameAt(t).substr(7);
+	std::string s = l->getItemNameAt(t).substr(7);
 	for (int i=0; i < vObjNames.size(); ++i)
 		if (s == vObjNames[i])
 		{	SetObjNewType(i);  return;	}
@@ -390,6 +383,7 @@ void App::SetObjNewType(int tnew)
 
 	if (objListSt)  objListSt->setIndexSelected(-1);  // unselect
 	if (objListDyn) objListDyn->setIndexSelected(-1);
+	if (objListBld) objListBld->setIndexSelected(-1);
 }
 
 void App::UpdObjNewNode()

@@ -441,7 +441,7 @@ protected:
 	int iObjCur,iObjLast, iObjTNew;  std::set<int> vObjSel;
 	bool objSim;  float objNewH,objNewYaw;
 	Ogre::SceneNode* objNewNd;  Ogre::Entity* objNewEnt;
-	MyGUI::List* objListDyn,*objListSt;  void listObjsChngDyn(MyGUI::List* l,size_t),listObjsChngSt(MyGUI::List* l,size_t);
+	MyGUI::List* objListDyn,*objListSt,*objListBld;  void listObjsChng(MyGUI::List* l,size_t);
 	
 
 	//  [Tools]  ----

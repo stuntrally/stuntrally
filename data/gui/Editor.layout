@@ -2806,18 +2806,26 @@
 				<UserString key="RelativeTo" value="EditorWnd"/>
 				<Widget type="TextBox" skin="TextBox" position="32 16 128 24">
 					<Property key="Caption" value="#{ObjDynamic}"/>
-					<Property key="TextColour" value="0.7 0.86 1.0"/>
+					<Property key="TextColour" value="0.6 0.82 1.0"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="ListBox" skin="ListBox" position="32 48 180 468" name="ObjListDyn">
+				<Widget type="ListBox" skin="ListBox" position="32 48 140 468" name="ObjListDyn">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="232 16 128 24">
+				<Widget type="TextBox" skin="TextBox" position="192 16 128 24">
 					<Property key="Caption" value="#{ObjStatic}"/>
-					<Property key="TextColour" value="0.9 0.9 0.9"/>
+					<Property key="TextColour" value="0.92 0.92 0.92"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="ListBox" skin="ListBox" position="232 48 180 468" name="ObjListSt">
+				<Widget type="ListBox" skin="ListBox" position="192 48 150 468" name="ObjListSt">
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="362 16 128 24">
+					<Property key="Caption" value="#{ObjBuildings}"/>
+					<Property key="TextColour" value="0.95 0.95 0.5"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="ListBox" skin="ListBox" position="362 48 150 468" name="ObjListBld">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 			</Widget>
