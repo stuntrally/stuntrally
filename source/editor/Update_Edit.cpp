@@ -10,10 +10,9 @@
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
+#include "../shiny/Main/Factory.hpp"
 using namespace Ogre;
 
-
-#include "../shiny/Main/Factory.hpp"
 
 //  Update  input, info
 //---------------------------------------------------------------------------------------------------------------
@@ -913,6 +912,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		//bSizeHUD = true;
 		SizeGUI();
 		updTrkListDim();
+		viewCanvas->setCoord(GetViewSize());
 		
 		//LoadTrack();  // shouldnt be needed ...
 	}
@@ -935,6 +935,25 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		pSet->tracks_sortup = trkMList->mSortUp;
 		TrackListUpd(false);
 	}
+
+	
+	//--  3d view upd  (is global in window)
+	static bool oldVis = false;
+	int tab = mWndTabsEdit->getIndexSelected(), st5 = vSubTabsEdit[5]->getIndexSelected();
+	bool vis = mWndEdit && mWndEdit->getVisible() && (tab == 7 || tab == 5 && st5 == 2);
+	if (oldVis != vis)
+	{	oldVis = vis;
+		viewCanvas->setVisible(vis);
+	}
+	if (tiViewUpd >= 0.f)
+		tiViewUpd += evt.timeSinceLastFrame;
+	if (tiViewUpd > 0.1f)  //par delay
+	{	tiViewUpd = -1.f;
+		viewBox.clearScene();
+		if (viewMesh != "" && ResourceGroupManager::getSingleton().resourceExistsInAnyGroup(viewMesh))
+			viewBox.injectObject(viewMesh);
+	}
+	
 	
 	//  Update rain/snow - depends on camera
 	const Vector3& pos = mCamera->getPosition(), dir = mCamera->getDirection();
@@ -966,6 +985,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		mFactory->setSharedParameter("posSph0", sh::makeProperty <sh::Vector4>(new sh::Vector4(p.x,p.y,p.z,r)));
 		mFactory->setSharedParameter("posSph1", sh::makeProperty <sh::Vector4>(new sh::Vector4(p.x,p.y,p.z,r)));
 	}/**/
+
 	
 	///  simulate
 	if (edMode == ED_Objects && objSim /*&& bEdit()*/)

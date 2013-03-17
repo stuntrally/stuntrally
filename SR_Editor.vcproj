@@ -551,11 +551,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\data\materials\rnd.cg"
+				RelativePath=".\data\materials2\rnd.cg"
 				>
 			</File>
 			<File
-				RelativePath=".\data\materials2\rnd.cg"
+				RelativePath=".\data\materials\rnd.cg"
 				>
 			</File>
 			<File
@@ -796,6 +796,18 @@
 			</File>
 			<File
 				RelativePath=".\source\ogre\common\MultiList2.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\RenderBox.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\RenderBoxScene.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\RenderBoxScene.h"
 				>
 			</File>
 			<File

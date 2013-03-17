@@ -21,8 +21,8 @@ void App::InitGui()
 	QTimer ti;  ti.update();  /// time
 
 	//  new widgets
-	MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
-	MyGUI::FactoryManager::getInstance().registerFactory<Slider>("Widget");
+	FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
+	FactoryManager::getInstance().registerFactory<Slider>("Widget");
 	int i;
 
 	//  load layout - wnds
@@ -271,7 +271,7 @@ void App::InitGui()
 	Ed(TrRdDist, editTrGr);  Ed(TrImpDist, editTrGr);
 	Ed(GrDensSmooth, editTrGr);  Ed(SceneryId, editTrGr);
 
-	imgPaged = mGUI->findWidget<StaticImage>("ImgPaged");
+	//imgPaged = mGUI->findWidget<StaticImage>("ImgPaged");
 	Chk("LTrEnabled", chkPgLayOn, 1);  chkPgLay = bchk;
 	valLTrAll = mGUI->findWidget<StaticText>("LTrAll");
 	Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);
@@ -450,7 +450,7 @@ void App::InitGui()
 	}
 	
 	//---------------------  Tweak  ---------------------
-	MyGUI::ComboBoxPtr cmbTwk;
+	ComboBoxPtr cmbTwk;
 	Cmb(cmbTwk, "TweakMtr", comboTweakMtr);
 
 	GetMaterialsMat(sMat+"water.mat");
@@ -490,10 +490,31 @@ void App::InitGui()
     {	Btn("NewGame"+toStr(i), btnNewGame);  }
 
 	CreateGUITweakMtr();
+	
+
+	///  3d view []  (veget models, objects)
+	//--------------------------------------------
+	//rndCanvas = mGUI->findWidget<Canvas>("CanVeget");  //?
+	viewCanvas = mWndEdit->createWidget<Canvas>("Canvas", GetViewSize(), Align::Stretch);
+	viewCanvas->setInheritsAlpha(false);
+	viewCanvas->setPointer("hand");
+	viewCanvas->setVisible(false);
+	viewBox.setCanvas(viewCanvas);
+	viewBox.setBackgroundColour(Colour(0.32,0.35,0.37,0.7));
+	viewBox.setAutoRotation(true);
+	viewBox.setMouseRotation(true);
+	
 
 	bGI = true;  // gui inited, gui events can now save vals
 
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time Init Gui: ") + toStr(dt) + " ms");
+}
+
+
+IntCoord App::GetViewSize()
+{
+	IntCoord ic = mWndEdit->getClientCoord();
+	return IntCoord(ic.width*0.62f, ic.height*0.45f, ic.width*0.34f, ic.height*0.45f);
 }

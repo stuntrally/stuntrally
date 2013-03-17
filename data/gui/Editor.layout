@@ -2345,6 +2345,12 @@
 							<Property key="SmoothShow" value="false"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipVegetGroups}"/>
+
+							<!--<Widget type="Canvas" skin="Canvas" position="564 296 172 164" align="Stretch" name="CanVeget">
+								<Property key="InheritsAlpha" value="false"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipModelPrev}"/>
+							</Widget>-->
 							<Widget type="TabItem" skin="" position="2 24 522 -4">
 								<Property key="Caption" value="1"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
@@ -2435,13 +2441,13 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipVegetGroups}"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="560 95 180 180" name="ImgPaged">
+						<!--<Widget type="ImageBox" skin="ImageBox" position="560 95 180 180" name="ImgPaged">
 							<Property key="ImageTile" value="256 256"/>
 							<Property key="ImageCoord" value="0 256 256 512"/>
 							<Property key="ImageIndex" value="0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipModelPrev}"/>
-						</Widget>
+						</Widget>-->
 
 						<Widget type="TextBox" skin="TextBox" position="16 131 104 20">
 							<Property key="Caption" value="#{MinScale}"/>
@@ -2498,12 +2504,12 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipWindInflH}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="184 187 360 16" name="LTrWindFx">
+                        <Widget type="Slider" skin="Slider" position="184 187 272 16" name="LTrWindFx">
 							<Property key="Colour" value="0.6 0.7 0.8"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipWindInflL}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="184 212 360 16" name="LTrWindFy">
+                        <Widget type="Slider" skin="Slider" position="184 212 272 16" name="LTrWindFy">
 							<Property key="Colour" value="0.6 0.7 0.8"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipWindInflH}"/>
@@ -2520,7 +2526,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipRoadDist2}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="184 246 360 16" name="LTrRdDist">
+                        <Widget type="Slider" skin="Slider" position="184 246 272 16" name="LTrRdDist">
 							<Property key="Colour" value="0.9 0.7 0.4"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipRoadDist2}"/>
@@ -2534,7 +2540,7 @@
 							<Property key="TextColour" value="0.8 0.7 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="184 270 360 16" name="LTrRdDistMax">
+                        <Widget type="Slider" skin="Slider" position="184 270 272 16" name="LTrRdDistMax">
 							<Property key="Colour" value="0.8 0.7 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
@@ -2550,7 +2556,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipLTrMaxTerAng}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="184 328 360 16" name="LTrMaxTerAng">
+                        <Widget type="Slider" skin="Slider" position="184 328 272 16" name="LTrMaxTerAng">
 							<Property key="Colour" value="0.6 0.9 0.5"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipLTrMaxTerAng}"/>
@@ -2809,23 +2815,23 @@
 					<Property key="TextColour" value="0.6 0.82 1.0"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="ListBox" skin="ListBox" position="32 48 140 468" name="ObjListDyn">
+				<Widget type="ListBox" skin="ListBox" position="32 48 130 468" name="ObjListDyn">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="192 16 128 24">
+				<Widget type="TextBox" skin="TextBox" position="182 16 128 24">
 					<Property key="Caption" value="#{ObjStatic}"/>
 					<Property key="TextColour" value="0.92 0.92 0.92"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="ListBox" skin="ListBox" position="192 48 150 468" name="ObjListSt">
+				<Widget type="ListBox" skin="ListBox" position="182 48 140 468" name="ObjListSt">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="362 16 128 24">
+				<Widget type="TextBox" skin="TextBox" position="342 16 128 24">
 					<Property key="Caption" value="#{ObjBuildings}"/>
 					<Property key="TextColour" value="0.95 0.95 0.5"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="ListBox" skin="ListBox" position="362 48 150 468" name="ObjListBld">
+				<Widget type="ListBox" skin="ListBox" position="342 48 140 468" name="ObjListBld">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 			</Widget>

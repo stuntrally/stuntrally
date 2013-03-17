@@ -20,6 +20,8 @@
 #include <OgreString.h>
 
 #include <MyGUI.h>
+#include "../ogre/common/RenderBoxScene.h"
+
 
 const int ciShadowNumSizes = 5;
 const int ciShadowSizesA[ciShadowNumSizes] = {256,512,1024,2048,4096};
@@ -36,6 +38,7 @@ namespace Forests {  class PagedGeometry;  }
 namespace MyGUI  {  class MultiList2;  class Slider;  }
 
 namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  class Light;  }
+
 
 
 class App : public BaseApp, public Ogre::RenderTargetListener
@@ -405,7 +408,10 @@ protected:
 	MyGUI::ComboBoxPtr cmbGrassMtr;  void comboGrassMtr(CMB);
 	MyGUI::ComboBoxPtr cmbGrassClr;  void comboGrassClr(CMB);
 	void editTrGr(MyGUI::EditPtr);
-
+	//  3d view  (veget,objs)
+	MyGUI::Canvas* viewCanvas;  wraps::RenderBoxScene viewBox;  MyGUI::IntCoord GetViewSize();
+	Ogre::String viewMesh;  void Upd3DView(Ogre::String mesh);  float tiViewUpd;
+	
 	//  paged layers
 	MyGUI::TabPtr tabsPgLayers;  void tabPgLayers(TAB);
 	int idPgLay;  // tab

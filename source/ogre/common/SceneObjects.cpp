@@ -365,7 +365,11 @@ void App::listObjsChng(MyGUI::List* l, size_t t)
 	std::string s = l->getItemNameAt(t).substr(7);
 	for (int i=0; i < vObjNames.size(); ++i)
 		if (s == vObjNames[i])
-		{	SetObjNewType(i);  return;	}
+		{
+			SetObjNewType(i);
+			Upd3DView(s+".mesh");
+			return;
+		}
 }
 
 //  preview model for insert

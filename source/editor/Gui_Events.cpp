@@ -207,7 +207,8 @@ void App::tabPgLayers(TabPtr wp, size_t id)
 
 	chkPgLay->setStateSelected(lay.on);
 	cmbPgLay->setIndexSelected( cmbPgLay->findItemIndexWith(lay.name.substr(0,lay.name.length()-5)) );
-	if (imgPaged)	imgPaged->setImageTexture(lay.name + ".png");
+	Upd3DView(lay.name);
+	//if (imgPaged)	imgPaged->setImageTexture(lay.name + ".png");
 	SetUsedStr(valLTrAll, sc->pgLayers.size(), 5);
 
 	//  set slider values
@@ -237,10 +238,18 @@ void App::chkPgLayOn(WP wp)
 
 void App::comboPgLay(ComboBoxPtr cmb, size_t val)
 {
-	String s = cmb->getItemNameAt(val);
-	sc->pgLayersAll[idPgLay].name = s + ".mesh";
-	if (imgPaged)	imgPaged->setImageTexture(s + ".png");  // prv impostor  todo 3d..
+	String s = cmb->getItemNameAt(val) + ".mesh";
+	sc->pgLayersAll[idPgLay].name = s;
+	Upd3DView(s);
+	//if (imgPaged)	imgPaged->setImageTexture(s + ".png");
 }
+
+void App::Upd3DView(String mesh)
+{
+	viewMesh = mesh;
+	tiViewUpd = 0.f;
+}
+
 
 void App::slGrMinX(SL)
 {

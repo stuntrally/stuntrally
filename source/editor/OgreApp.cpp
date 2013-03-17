@@ -49,6 +49,7 @@ App::App()  //  gui wigdets--
 	,edGrSwayDistr(0), edGrSwayLen(0), edGrSwaySpd(0), edTrRdDist(0), edTrImpDist(0), edGrDensSmooth(0)
 	,edGrTerMaxAngle(0),edGrTerSmAngle(0), edGrTerMinHeight(0),edGrTerMaxHeight(0),edGrTerSmHeight(0)
 	,edSceneryId(0), cmbGrassMtr(0), cmbGrassClr(0)
+	,viewCanvas(0), tiViewUpd(-1.f)
 	,cmbPgLay(0), chkPgLay(0), tabsPgLayers(0), idPgLay(0),imgPaged(0), valLTrAll(0)  //paged layers
 	,valLTrDens(0), valLTrRdDist(0),valLTrRdDistMax(0)
 	,valLTrMinSc(0),valLTrMaxSc(0), valLTrWindFx(0),valLTrWindFy(0)
@@ -206,6 +207,8 @@ const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise" };  
 
 App::~App()
 {
+	viewBox.destroy();
+
 	BltWorldDestroy();
 	
 	delete track;  //!
