@@ -44,7 +44,8 @@ void App::InitGui()
 		if (name == "RoadStats")  {  mWndRoadStats = *it;	(*it)->setPosition(0,328);	} else
 
 		if (name == "FluidsWnd")  {  mWndFluids = *it;	(*it)->setPosition(0,64);	} else
-		if (name == "ObjectsWnd") {  mWndObjects = *it;	(*it)->setPosition(0,64);	}
+		if (name == "ObjectsWnd") {  mWndObjects = *it;	(*it)->setPosition(0,64);	} else
+		if (name == "RiversWnd")  {  mWndRivers = *it;	(*it)->setPosition(0,64);	}
 	}
 	if (mWndRoadStats)  mWndRoadStats->setVisible(false);
 
@@ -95,6 +96,9 @@ void App::InitGui()
 	if (mWndObjects)
 		for (i=0; i<OBJ_TXT; ++i)	objTxt[i] = mGUI->findWidget<StaticText>("objTxt"+toStr(i),false);
 	objPan = mGUI->findWidget<Widget>("objPan",false);  if (objPan)  objPan->setVisible(false);
+
+	if (mWndRivers)
+		for (i=0; i<RI_TXT; ++i)	riTxt[i] = mGUI->findWidget<StaticText>("riTxt"+toStr(i),false);
 		
 	//  Tabs
 	TabPtr tab;
@@ -236,7 +240,7 @@ void App::InitGui()
 	Slv(TerGenPow,  powf(pSet->gen_pow     /6.f,  1.f/2.f));
 
 
-	///  [Layers]
+	///  [Layers]  ------------------------------------
 	Chk("TerLayOn", chkTerLayOn, 1);  chkTerLay = bchk;
 	valTerLAll = mGUI->findWidget<StaticText>("TerLayersAll");
 	Chk("TexNormAuto", chkTexNormAutoOn, 1);  chkTexNormAuto = bchk;

@@ -63,7 +63,6 @@
 		<Property key="Colour" value="0.7 0.85 1.0"/>
 		<Property key="Alpha" value="0.5"/>
 		<Property key="Snap" value="true"/>
-		<UserString key="tip" value="#{TipPrevWind}"/>
 		<Widget type="TextBox" skin="TextBox" position="4 0 150 20" name="cam0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="F7 - #{Leave}"/>
@@ -85,7 +84,6 @@
 		<Property key="Colour" value="0.3 0.36 0.4"/>
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
-		<UserString key="tip" value="#{TipTerWind}"/>
 		<Widget type="TextBox" skin="TextBox" position="4 5 70 20" name="brTxt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 1.0"/>
@@ -209,7 +207,6 @@
 		<Property key="Colour" value="0.7 0.7 1.0"/>
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
-		<UserString key="tip" value="#{TipTerWind}"/>
 		<Widget type="TextBox" skin="TextBox" position="4 5 150 20" name="stTxt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 1.0"/>
@@ -240,7 +237,6 @@
 		<Property key="Colour" value="0.1 0.3 0.5"/>
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
-		<UserString key="tip" value="#{TipFluidsWnd}"/>
 		<Widget type="TextBox" skin="TextBox" position="4 0 160 20" name="flTxt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 1.0"/>
@@ -266,12 +262,42 @@
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
 	</Widget>
+	<Widget type="Window" skin="WindowC" position="32 676 180 160" layer="Back" name="RiversWnd">
+		<Property key="Caption" value="#{Rivers}"/>
+		<!--<Property key="Colour" value="0.5 0.7 0.9"/>-->
+		<Property key="Colour" value="0.9 0.9 0.2"/>
+		<Property key="Alpha" value="0.6"/>
+		<Property key="Snap" value="true"/>
+		<Widget type="TextBox" skin="TextBox" position="4 0 160 20" name="riTxt0">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.86 1.0"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="4 20 160 20" name="riTxt1">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.8 0.9 1.0"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="4 40 160 20" name="riTxt2">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.6 0.75 0.9"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="4 60 160 20" name="riTxt3">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.6 0.75 0.9"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="4 80 160 20" name="riTxt4">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.6 0.8 1.0"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="4 100 160 20" name="riTxt5">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.6 0.8 1.0"/>
+		</Widget>
+	</Widget>
 	<Widget type="Window" skin="WindowC" position="440 676 200 180" layer="Back" name="ObjectsWnd">
 		<Property key="Caption" value="#{Objects}"/>
 		<Property key="Colour" value="1.0 1.0 1.0"/>
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
-		<UserString key="tip" value="#{TipObjectsWnd}"/>
 		<Widget type="TextBox" skin="TextBox" position="4 0 190 20" name="objTxt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.9 0.9"/>
@@ -307,7 +333,6 @@
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Caption" value="#{RoadPoint}"/>
 		<Property key="Snap" value="true"/>
-		<UserString key="tip" value="#{TipRoadParams}"/>
 		<Widget type="TextBox" skin="TextBox" position="4 0 130 20" name="rdTxt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 1.0 0.5"/>
@@ -462,7 +487,6 @@
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Caption" value="#{RoadStats}"/>
 		<Property key="Snap" value="true"/>
-		<UserString key="tip" value="#{TipRoadStats}"/>
 		<Widget type="TextBox" skin="TextBox" position="4 0 120 20" name="rdTxtSt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.68 0.82 1.0"/>

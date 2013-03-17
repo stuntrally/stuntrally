@@ -944,18 +944,15 @@
 	<Tag name="InputObjects1">1 - reset rotation</Tag>
 	<Tag name="InputObjects2">2 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>
+	
+
+	<!--  Rivers  -->
+	<Tag name="Rivers">Rivers</Tag>
 
 
 <!--  ............................................................................................................................  -->
 <!--  Tips  -->
 <!--  ............................................................................................................................  -->
-
-	<!--  Wnds  -->
-	<Tag name="TipPrevWind">Preview camera window.</Tag>
-	<Tag name="TipTerWind">Terrain brush window.</Tag>
-	<Tag name="TipRoadParams">Road point parameters.</Tag>
-	<Tag name="TipRoadStats">Whole road statistics.</Tag>
-	<Tag name="TipFluidsWnd">Fluid parameters window.</Tag>
 
 	<!--  Track  -->
 	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>

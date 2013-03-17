@@ -51,6 +51,8 @@ void App::UpdEditWnds()
 
 	if (mWndObjects) mWndObjects->setVisible(edMode == ED_Objects);
 
+	if (mWndRivers)  mWndRivers->setVisible(edMode == ED_Rivers);
+
 	UpdStartPos();  // StBox visible
 	UpdVisGui();  //br prv..
 
@@ -336,7 +338,9 @@ bool App::KeyPress(const CmdKey &arg)
 		case WND_Options:  tab = mWndTabsOpts;  sub = vSubTabsOpts[tab->getIndexSelected()];  break;
 	}
 
-	switch (arg.key)  //  global keys  ---------------------
+	//  global keys
+	//------------------------------------------------------------------------------------------------------------------------------
+	switch (arg.key)
 	{
 		case KC_ESCAPE: //  quit
 			if (pSet->escquit)
@@ -448,7 +452,7 @@ bool App::KeyPress(const CmdKey &arg)
 	}
 
 
-	///  Road keys  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+	///  Road keys  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 	if (edMode == ED_Road && road && bEdit())
 	{
 		if (iSnap > 0)
@@ -538,7 +542,7 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_PERIOD:	mBrOct[curBr] = std::min(7, mBrOct[curBr]+1);  updBrush();  break;
 	}
 
-	//  ter brush presets ----
+	//  ter brush presets  ----
 	if (edMode < ED_Road && alt && arg.key >= KC_1 && arg.key <= KC_0 && !bMoveCam)
 	{
 		int id = arg.key - KC_1;
@@ -547,7 +551,7 @@ bool App::KeyPress(const CmdKey &arg)
 	}
 
 	
-	//  Fluids ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+	//  Fluids  ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 	if (edMode == ED_Fluids)
 	{	int fls = sc->fluids.size();
 		switch (arg.key)
@@ -603,7 +607,7 @@ bool App::KeyPress(const CmdKey &arg)
 		}
 	}
 
-	//  Objects  | | | | | | | | | | | | | | | | |
+	//  Objects  | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |
 	if (edMode == ED_Objects)
 	{	int objs = sc->objects.size(), objAll = vObjNames.size();
 		switch (arg.key)
@@ -683,7 +687,13 @@ bool App::KeyPress(const CmdKey &arg)
 		}
 	}
 
-	///  Common Keys  * * * * * * * * * * * * *
+	//  Rivers  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	if (edMode == ED_Rivers)
+	{
+		
+	}
+
+	///  Common Keys  ************************************************************************************************************
 	if (alt)
 	switch (arg.key)
 	{
@@ -768,6 +778,9 @@ bool App::KeyPress(const CmdKey &arg)
 		//  objects
 		case KC_C:	if (edMode == ED_Objects)  {  objSim = !objSim;  ToggleObjSim();  }  break;
 		case KC_X:	if (bEdit()){  SetEdMode(ED_Objects);  UpdEditWnds();  }   break;
+		
+		//  rivers
+		///case KC_A:	if (bEdit()){  SetEdMode(ED_Rivers);  UpdEditWnds();  }	break;
 	}
 
 	return true;

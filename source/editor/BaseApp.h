@@ -137,7 +137,7 @@ protected:
 
 	enum ED_MODE
 	{	ED_Deform=0, ED_Smooth, ED_Height, ED_Filter, /*ED_Paint,*/
-		ED_Road, ED_Start, ED_PrvCam, ED_Fluids, ED_Objects, ED_ALL
+		ED_Road, ED_Start, ED_PrvCam, ED_Fluids, ED_Objects, ED_Rivers, ED_ALL
 	} edMode,edModeOld;
 
 
@@ -152,7 +152,7 @@ protected:
 	MyGUI::WidgetPtr  // tool windows
 		mWndBrush, mWndCam, mWndStart,
 		mWndRoadCur, mWndRoadStats,
-		mWndFluids, mWndObjects;
+		mWndFluids, mWndObjects, mWndRivers;
 	MyGUI::VectorWidgetPtr vwGui;  // all widgets to destroy
 
 	//  main menu

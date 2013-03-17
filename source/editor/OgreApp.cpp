@@ -103,6 +103,7 @@ App::App()  //  gui wigdets--
 	for (i=0; i<ST_TXT; ++i)  stTxt[i]=0;
 	for (i=0; i<FL_TXT; ++i)  flTxt[i]=0;
 	for (i=0; i<OBJ_TXT;++i)  objTxt[i]=0;
+	for (i=0; i<RI_TXT; ++i)  riTxt[i]=0;
 	
 	for (i=0; i < StTrk; ++i)  stTrk[0][i] = 0;
 	for (i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }
