@@ -291,7 +291,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	}
 	if (tiViewUpd >= 0.f)
 		tiViewUpd += evt.timeSinceLastFrame;
-	if (tiViewUpd > 0.1f)  //par delay
+	if (tiViewUpd > 0.0f)  //par delay 0.1
 	{	tiViewUpd = -1.f;
 		viewBox.clearScene();
 		if (viewMesh != "" && ResourceGroupManager::getSingleton().resourceExistsInAnyGroup(viewMesh))
