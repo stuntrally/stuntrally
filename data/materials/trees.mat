@@ -32,8 +32,6 @@ material palm2
 	diffuseMap palm2_diffuse.png
 	normalMap palm2_normal.png
 	specMap palm2_specular.png
-	spec_map true
-	normal_map true
 	alpha_rejection greater 128
 	specular 0.5 0.5 0.5 32
 	cull_hardware none
@@ -67,9 +65,7 @@ material jungle_tree
     alpha_rejection greater 128
 	diffuseMap jungle_tree.png
 	normalMap jungle_tree_normal.png
-	normal_map true
 	specMap jungle_tree_spec.png
-	spec_map true
 	specular 0.5 0.5 0.5 32
 	cull_hardware none
 	receives_shadows false
@@ -88,9 +84,7 @@ material fern_v2
     alpha_rejection greater 128
 	diffuseMap fern.png
 	normalMap fern_normal.png
-	normal_map true
 	specMap fern_spec.png
-	spec_map true
 	specular 0.5 0.5 0.5 32
 	cull_hardware none
 	receives_shadows false
@@ -105,9 +99,7 @@ material fern2
 	alpha_rejection greater 128
 	diffuseMap fern2.png
 	normalMap fern2_normal.png
-	normal_map true
 	specMap fern2_spec.png
-	spec_map true
 	specular 0.5 0.5 0.5 32
     cull_hardware none
     receives_shadows false
@@ -122,9 +114,7 @@ material palm_plant
 	alpha_rejection greater 128
 	diffuseMap palm_plant.png
 	normalMap palm_plant_normal.png
-	normal_map true
 	specMap palm_plant_spec.png
-	spec_map true
 	ambient 1.5 1.5 1.5
 	diffuse 1.5 1.5 1.5
 	specular 0.5 0.5 0.5 32
@@ -146,9 +136,7 @@ material plant_tropical
 	alpha_rejection greater 128
 	diffuseMap plant_tropical_m.png
 	normalMap plant_tropical_norm_m.png
-	normal_map true
 	//specMap palm_plant_spec.png
-	//spec_map true
 	ambient 1.5 1.5 1.5
 	specular 0.57 0.6 0.5 24
 	cull_hardware none
@@ -168,7 +156,6 @@ material cactus
 	alpha_rejection greater 128
 	diffuseMap cactus.png
 	normalMap cactus_norm.png
-	normal_map true
 	ambient 1.4 1.4 1.4
 	diffuse 1.0 1.0 1.0
 	specular 0.2 0.2 0.2 32
@@ -188,7 +175,6 @@ material pine_base
 
 	diffuseMap white.png
 	//normalMap pine_half_norm.png
-	//normal_map true
 	ambient 1.2 1.2 1.2
 	diffuse 0.8 0.8 0.8
 	specular 0.8 0.8 0.8 24
@@ -203,7 +189,6 @@ material pine1full
     parent pine_base
 	diffuseMap pine_full.png
 	normalMap pine_full_norm.png
-	normal_map true
 	ambient 1.2 1.22 1.22
 	diffuse 0.8 0.82 0.82
 	specular 1.0 1.0 1.0 32
@@ -214,7 +199,6 @@ material pine2full
     parent pine_base
 	diffuseMap pine_full.png
 	normalMap pine_full_norm.png
-	normal_map true
 	ambient 1.2 1.21 1.21
 	diffuse 0.8 0.81 0.81
 	specular 1.0 1.0 1.0 16
@@ -225,7 +209,6 @@ material pine3full
     parent pine_base
 	diffuseMap pine_full.png
 	normalMap pine_full_norm.png
-	normal_map true
 	ambient 1.2 1.21 1.21
 	diffuse 0.8 0.81 0.81
 	specular 1.0 1.0 1.0 24
@@ -237,7 +220,6 @@ material pine1half
     parent pine_base
 	diffuseMap pine_half.png
 	normalMap pine_half_norm.png
-	normal_map true
 	specular 0.9 0.9 0.9 16
 }
 
@@ -246,7 +228,6 @@ material pine2half
     parent pine_base
 	diffuseMap pine_half.png
 	normalMap pine_half_norm.png
-	normal_map true
 	specular 0.9 0.9 0.9 16
 }
 
@@ -255,7 +236,6 @@ material pine3half
     parent pine_base
 	diffuseMap pine_half.png
 	normalMap pine_half_norm.png
-	normal_map true
 	specular 0.9 0.9 0.9 16
 }
 
@@ -265,7 +245,6 @@ material pine1norm
     parent pine_base
 	diffuseMap pine_norm_gr.png
 	normalMap pine_half_norm.png
-	normal_map true
 }
 
 material pine2norm
@@ -273,7 +252,6 @@ material pine2norm
     parent pine_base
 	diffuseMap pine_norm_cc.png
 	normalMap pine_norm.png
-	normal_map true
 }
 
 material pine3norm
@@ -281,7 +259,6 @@ material pine3norm
     parent pine_base
 	diffuseMap pine_norm_cc.png
 	normalMap pine_norm.png
-	normal_map true
 }
 
 
@@ -297,9 +274,7 @@ material bush_05
 	alpha_rejection greater 128
 	diffuseMap bush_05.png
 	//normalMap plant_tropical_norm_m.png
-	//normal_map true
 	//specMap palm_plant_spec.png
-	//spec_map true
 	ambient 1.0 1.0 1.0
 	diffuse 1.0 1.0 1.0
 	specular 0.57 0.6 0.5 24
@@ -321,7 +296,6 @@ material rock1
 	//parallaxHeight 0.035
 	diffuseMap rock1.png
 	normalMap rock1_normal.png
-	normal_map true
 	terrain_light_map true
 	specular 0.5 0.5 0.5 32
 }
@@ -333,7 +307,6 @@ material rock_y2  // greece yellow
     parent base
 	diffuseMap rock_n2-GYel.jpg
 	normalMap rock_n2_norm.png
-	normal_map true
 	terrain_light_map true
 	specular 0.4 0.4 0.35 32
 }
@@ -344,7 +317,6 @@ material rock_n1
     parent base
 	diffuseMap rock_n1.jpg
 	normalMap rock_n1_norm.png
-	normal_map true
 	terrain_light_map true
 	specular 0.5 0.5 0.5 32
 }
@@ -354,7 +326,6 @@ material rock_w1  //w
     parent base
 	diffuseMap rock_n1-W.jpg
 	normalMap rock_n1_norm.png
-	normal_map true
 	terrain_light_map true
 	ambient 1.0 1.02 1.02
 	diffuse 1.0 1.02 1.02
@@ -366,7 +337,6 @@ material rocks_n1
     parent base
 	diffuseMap rock_n1.jpg
 	normalMap rock_n1_norm.png
-	normal_map true
 	terrain_light_map true
 	specular 0.5 0.5 0.5 32
 }
@@ -376,7 +346,6 @@ material rock_n2
     parent base
 	diffuseMap rock_n2.jpg
 	normalMap rock_n2_norm.png
-	normal_map true
 	terrain_light_map true
 	specular 0.5 0.5 0.5 32
 }
@@ -386,7 +355,6 @@ material rock_n3
     parent base
 	diffuseMap rock_n3.jpg
 	normalMap rock_n3_norm.png
-	normal_map true
 	terrain_light_map true
 	specular 0.5 0.5 0.5 32
 }
@@ -396,7 +364,6 @@ material rock_n4
     parent base
 	diffuseMap rock_n4.jpg
 	normalMap rock_n4_norm.png
-	normal_map true
 	terrain_light_map true
 	specular 0.5 0.5 0.5 32
 }
@@ -406,7 +373,6 @@ material rock_w4  //w
     parent base
 	diffuseMap rock_n4-W.jpg
 	normalMap rock_n4_norm.png
-	normal_map true
 	terrain_light_map true
 	ambient 1.0 1.02 1.02
 	diffuse 1.0 1.02 1.02
@@ -418,7 +384,6 @@ material rock_n5
     parent base
 	diffuseMap rock_n5.jpg
 	normalMap rock_n5_norm.png
-	normal_map true
 	terrain_light_map true
 	specular 0.5 0.5 0.5 32
 }
@@ -428,7 +393,6 @@ material rock_w5v  //w
     parent base
 	diffuseMap rock_n5v-W.jpg
 	normalMap rock_n5_norm.png
-	normal_map true
 	terrain_light_map true
 	ambient 1.0 1.02 1.02
 	diffuse 1.0 1.02 1.02

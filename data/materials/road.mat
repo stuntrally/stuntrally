@@ -3,7 +3,6 @@ material road_terrain
 	parent base
     depth_write off
     scene_blend alpha_blend
-    alpha_map true
     alphaMap roadAlpha.png
     depth_bias 3
     terrain_light_map true
@@ -15,7 +14,6 @@ material road
 {
     parent base
     scene_blend alpha_blend
-    alpha_map true
     alphaMap white.png
     depth_bias 3
 	road_blend true
@@ -31,7 +29,6 @@ material roadJungle_ter
 	ambient 1.02 1.0 1.0
 	diffuse 0.65 0.65 0.65
 	specular 0.2 0.2 0.15 32
-	normal_map true
 	normalMap ice_3_nh1.png
 }
 
@@ -54,7 +51,6 @@ material roadJDark_ter
 	ambient 0.7 0.7 0.8
 	diffuse 0.70 0.60 0.80
 	specular 0.43 0.43 0.40 48
-	normal_map true
 	normalMap ice_3_nh1.png
 }
 
@@ -75,7 +71,6 @@ material roadJDarkD_ter
 	ambient 0.7 0.7 0.7
 	diffuse 0.70 0.70 0.70
 	specular 0.43 0.43 0.40 40
-	normal_map true
 	normalMap ice_3_nh1.png
 }
 
@@ -108,7 +103,6 @@ material roadAsphalt_ter
 	diffuse 0.66 0.65 0.6
 	specular 0.36 0.34 0.3 38
 	normalMap volcano_7_nh1.png
-	normal_map true
 }
 
 
@@ -130,7 +124,6 @@ material roadGDesert_ter
     ambient 0.84 0.94 0.74
 	diffuse 0.63 0.65 0.62
 	specular 0.23 0.23 0.22 32
-	normal_map true
 	normalMap volcano_7_nh1.png
 }
 
@@ -153,7 +146,6 @@ material roadSand_ter
     ambient 0.94 0.94 0.94
 	diffuse 0.82 0.82 0.82
 	specular 0.23 0.23 0.22 32
-	normal_map true
 	normalMap volcano_7_nh1.png
 }
 
@@ -177,7 +169,6 @@ material roadSand2_ter
 	specular 0.23 0.23 0.22 32
 	diffuseMap roadSand2.jpg
 	normalMap volcano_7_nh1.png
-	normal_map true
 }	
 
 
@@ -199,7 +190,6 @@ material roadSandShore_ter
     ambient 0.85 0.75 0.6
 	diffuse 0.85 0.75 0.6
 	specular 0.31 0.32 0.33 32
-	normal_map true
 	normalMap volcano_7_nh1.png
 }
 
@@ -222,7 +212,6 @@ material roadSandSet_ter
 	ambient 0.94 0.94 0.94
 	diffuse 0.82 0.82 0.82
 	specular 0.23 0.23 0.22 32
-	normal_map true
 	normalMap ice_3_nh1.png
 }
 
@@ -245,7 +234,6 @@ material roadSandDark_ter
 	ambient 0.6 0.6 0.4
 	diffuse 0.52 0.62 0.42
 	specular 0.3 0.3 0.2 24
-	normal_map true
 	normalMap ice_3_nh1.png
 }
 
@@ -277,7 +265,6 @@ material roadSandMagic_ter
 	refl_amount 0.15
 	bump_scale 0.3
 	normalMap ice_3_nh1.png
-	normal_map true
 }
 
 
@@ -298,7 +285,6 @@ material roadMud_ter
 	ambient 1.0 1.0 1.0
 	diffuse 0.7 0.7 0.7
 	specular 0.3 0.3 0.3 64
-	normal_map true
 	normalMap ice_3_nh1.png
 	diffuseMap roadMud.jpg
 }
@@ -316,7 +302,6 @@ material roadIce
 	env_map true
 	refl_amount 0.15
 	bump_scale 0.15
-	normal_map true
 	normalMap volcano_7_nh1.png
 	diffuseMap roadSnow.jpg
 }
@@ -331,7 +316,6 @@ material roadIce_ter
 	env_map true
 	refl_amount 0.15
 	bump_scale 0.3
-	normal_map true
 	normalMap volcano_7_nh1.png
 	diffuseMap roadSnow.jpg
 }
@@ -355,7 +339,6 @@ material roadSnow_ter
 	diffuse 0.8 0.8 0.8
 	specular 0.6 0.62 0.62 18
 	diffuseMap roadSnow.jpg
-	normal_map true
 	normalMap volcano_7_nh1.png
 }
 
@@ -375,7 +358,6 @@ material roadSnowGrn_ter
 	diffuse 0.8 0.8 0.8
 	specular 0.6 0.62 0.62 18
 	diffuseMap roadSnowGrn.jpg
-	normal_map true
 	normalMap volcano_7_nh1.png
 }
 
@@ -420,7 +402,6 @@ material roadSavannah_ter
 	diffuse 0.8 0.8 0.8
 	specular 0.1 0.1 0.08 24
 	diffuseMap roadSavannah.jpg
-	normal_map true
 	normalMap volcano_7_nh1.png
 }
 	
@@ -455,7 +436,6 @@ material roadMoss_ter
 	ambient 0.7 0.7 0.7
 	diffuse 0.6 0.6 0.6
 	specular 0.15 0.24 0.25 96
-	normal_map true
 	//normalMap water_nh.png
 	normalMap volcano_7_nh1.png
 }

@@ -4,9 +4,7 @@ material car_body
 	diffuseMap body00_add.png
 	carPaintMap body00_red.png
 	reflMap refl.png
-	refl_map true
 	env_map true
-	car_paint_map true
 	terrain_light_map true
 	terrain_light_map_toggleable true
 	fresnel true
@@ -68,7 +66,6 @@ material car_body_3S
 {
 	parent car_body
 	specMap 3S_spec.png
-	spec_map true
 }
 
 
@@ -78,7 +75,6 @@ material car_body_FM
 {
    	parent car_body
 	normalMap FM_normal.png
-	normal_map true
 }
 
 material car_interior_FM
@@ -87,7 +83,6 @@ material car_interior_FM
 	ambient 0.4 0.4 0.4
 	diffuse 0.3 0.3 0.3
 	normalMap FM_interior_normal.png
-	normal_map true
 	cull_hardware none
 	receives_shadows false
 }
@@ -96,7 +91,6 @@ material cartire_front_FM
 {
 	parent cartire_front
 	normalMap wheel_normal.png
-	normal_map true
 }
 
 material cartire_rear_FM
@@ -120,25 +114,20 @@ material car_interior_360
 material car_body_ES
 {
 	parent car_body
-	normal_map true
 	normalMap ES_normal.png
-	spec_map true
 	specMap ES_spec.png
 }
 
 material car_interior_ES
 {
 	parent car_interior
-	normal_map true
 	normalMap ES_interior_normal.jpg
 }
 
 material cartire_front_ES
 {
 	parent cartire_front
-	normal_map true
 	normalMap ES_wheel_normal.jpg
-	spec_map true
 	specMap ES_wheel_spec.png
 }
 
@@ -196,7 +185,6 @@ material UPG15000_detailsA
 {
 	parent base
 	diffuseMap S1_opacity.png
-	//alpha_map S1_opacity.png
 	alpha_rejection greater 192
 	terrain_light_map true
 	terrain_light_map_toggleable true
@@ -222,7 +210,6 @@ material UPG15000_lightglass  // front lights
 {
 	parent car_glass
 	diffuseMap S1_light.png
-	alpha_map S1_light.png
 }
 
 material UPG15000_metal  // front lights frame (silver)
@@ -268,8 +255,6 @@ material UPG15000_tire
 {
 	parent base
 	diffuseMap S1_Tire.png
-	normal_map S1_TireBump.png
-	spec_map S1_Tire.png
 	ambient 0.6 0.6 0.6
 	diffuse 0.5 0.5 0.5
 	specular 0.1 0.1 0.1 8

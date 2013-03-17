@@ -182,7 +182,6 @@ material tree19gwideTwig	{	parent base-twig
   diffuse 1.05 0.95 1.1
   specular 1.05 0.95 1.1 32
   normalMap twig39g1_norm.png
-  normal_map true
   diffuseMap twig39g1.png  }  //tall  forest+
 
 //material tree19gwideTwig	{	parent base-twig
@@ -190,7 +189,6 @@ material tree19gwideTwig	{	parent base-twig
 //  diffuse 0.9 0.9 0.8
 //  specular 0.9 0.9 0.8 40
 //  normalMap twig25g_norm.png
-//  normal_map true
 //  diffuseMap twig25g.png  }  //tall  forest+
 
 
@@ -222,7 +220,6 @@ material tree35ballTwig		{	parent base-twig
   diffuse 1.15 1.15 1.2
   specular 0.6 0.6 0.7 32
   normalMap twig39g1_norm.png
-  normal_map true
   diffuseMap twig39g1.png  }  //tall  Jungle+ /forest
 
 

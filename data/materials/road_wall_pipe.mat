@@ -7,7 +7,6 @@ material pipe_wall
     diffuseMap brass_patina.jpg
     normalMap brass_patina_n.png
     envMap ReflectionCube
-    normal_map true
     env_map true
     refl_amount 0.1
     ambient 0.94 0.96 0.98
@@ -35,7 +34,6 @@ material road_col
     specular 0.25 0.25 0.25 24
     diffuseMap concrete03.png
     normalMap brass_patina_n.png
-    normal_map true
 }
 
 // ----  asphalt pipes, glass is in cg,material

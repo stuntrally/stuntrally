@@ -16,13 +16,13 @@
 #define NEED_DEPTH
 #endif
 
-#define ALPHA_MAP  @shPropertyBool(alpha_map)
-#define NORMAL_MAP  @shPropertyBool(normal_map)
+#define ALPHA_MAP  @shPropertyHasValue(alphaMap)
+#define NORMAL_MAP  @shPropertyHasValue(normalMap)
 #define ENV_MAP  @shPropertyBool(env_map)
 #define FRESNEL  @shPropertyBool(fresnel)
-#define REFL_MAP  @shPropertyBool(refl_map)
-#define SPEC_MAP  @shPropertyBool(spec_map)
-#define CAR_PAINT_MAP  @shPropertyBool(car_paint_map)
+#define REFL_MAP  @shPropertyHasValue(reflMap)
+#define SPEC_MAP  @shPropertyHasValue(specMap)
+#define CAR_PAINT_MAP  @shPropertyHasValue(carPaintMap)
 
 #define TERRAIN_LIGHT_MAP  @shPropertyBool(terrain_light_map)
 #define TERRAIN_LIGHT_MAP_TOGGLEABLE  @shPropertyBool(terrain_light_map_toggleable)
