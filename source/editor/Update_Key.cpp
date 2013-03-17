@@ -712,7 +712,7 @@ bool App::KeyPress(const CmdKey &arg)
 		 case KC_M:	GuiShortcut(WND_Edit, 5,2);  return true;  //  M -Models
 
 		case KC_R:	GuiShortcut(WND_Edit, 6);  return true;  // R Road
-		case KC_J:	GuiShortcut(WND_Edit, 7);  return true;  // J Objects
+		case KC_X:	GuiShortcut(WND_Edit, 7);  return true;  // X Objects
 		case KC_O:	GuiShortcut(WND_Edit, 8);  return true;  // O Tools
 
 		case KC_C:	GuiShortcut(WND_Options, 1);  return true;  // C Screen

@@ -4338,7 +4338,7 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 270 240 20">
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
-							<Property key="Caption" value="J  #{Objects}"/>
+							<Property key="Caption" value="X  #{Objects}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 290 240 20">
