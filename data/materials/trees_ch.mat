@@ -19,16 +19,17 @@ material base-twig
     parent base
     alpha_rejection greater 128
     diffuseMap twig21_0yo.png
-	ambient 1.2 1.2 1.2
-	diffuse 1.0 1.0 1.0
+	ambient 1.3 1.3 1.3
+	diffuse 0.9 0.9 0.9
 	specular 0.2 0.2 0.2 32
 
     tree_wind true
     terrain_light_map true
     cull_hardware none
-    receives_shadows false
     transparent true
 	twoside_diffuse true
+    receives_shadows true
+	shadowBias 0.0001
 }
 
 
