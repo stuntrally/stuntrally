@@ -128,6 +128,7 @@ namespace wraps
 				viewport->setClearEveryFrame(true);
 				viewport->setOverlaysEnabled(false);
 
+				viewport->setMaterialScheme("reflection");  ///+ no shadows
 			}
 		}
 
