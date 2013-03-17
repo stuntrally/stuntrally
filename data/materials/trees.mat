@@ -106,7 +106,7 @@ material fern2
 	diffuseMap fern2.png
 	normalMap fern2_normal.png
 	normal_map true
-	specMac fern2_spec.png
+	specMap fern2_spec.png
 	spec_map true
 	specular 0.5 0.5 0.5 32
     cull_hardware none
