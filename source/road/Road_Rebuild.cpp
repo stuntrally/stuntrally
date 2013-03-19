@@ -349,12 +349,12 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 			//  material
 			int mid = mP[seg].idMtr, mtrId = max(0,mid);
-			bool pp = isPipe(seg);
-			rs.sMtrRd = pp ? sMtrPipe[mtrId] : (sMtrRoad[mtrId] + (onTer ? "_ter" :""));
+			bool pipe = isPipe(seg);
+			rs.sMtrRd = pipe ? sMtrPipe[mtrId] : (sMtrRoad[mtrId] + (onTer ? "_ter" :""));
 
 			/// >  blend 2 materials
 			bool hasBlend = false;
-			if (mid != mP[seg1].idMtr && !pp && !isPipe(seg1))
+			if (mid != mP[seg1].idMtr && !pipe && !isPipe(seg1))
 			{
 				hasBlend = true;
 				int mtrB = max(0,mP[seg1].idMtr);
@@ -712,7 +712,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 				///  wall ]
 				//------------------------------------------------------------------------------------
-				bool wPglass = isPipe(seg) && bMtrPipeGlass[ mP[seg].idMtr ];  // wall pipe glass mtr
+				bool pipeGlass = pipe && bMtrPipeGlass[ mP[seg].idMtr ];  // pipe glass mtr
 				if (wall)
 				{
 					idx.clear();
@@ -731,7 +731,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					const int Wid[4/*6*/][3] = {{2,1,0},{3,2,0},{5,4,7},{6,5,7}/*,{7,3,0},{4,3,7}*/};
 					int i,f, b = posW.size()-iwW-1;
 
-					if (!isPipe(seg))  //  no fronts in pipes
+					if (!pipe)  //  no fronts in pipes
 					for (f=0; f < 4; ++f)
 					{
 						for (i=0; i<=2; ++i)  idx.push_back( Wid[f][i] );
@@ -740,7 +740,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					vSegs[seg].nTri[lod] += idx.size()/3;
 
 					sm = meshW->getSubMesh(0);   // for glass only..
-					rs.sMtrWall = !wPglass ? sMtrWall : sMtrWallPipe;
+					rs.sMtrWall = !pipeGlass ? sMtrWall : sMtrWallPipe;
 					if (!posW.empty())
 						CreateMesh(sm, aabox, posW,normW,clr0,tcsW, idx, rs.sMtrWall);
 				}
@@ -773,7 +773,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				SceneNode* node = 0, *nodeW = 0, *nodeC = 0, *nodeB = 0;
 
 				AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
-				if (wPglass)
+				if (pipeGlass)
 				{
 					ent->setRenderQueueGroup(RQG_PipeGlass);
 					//ent->setCastShadows(true);
@@ -842,8 +842,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					
 					//  Road  ~
 					btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
-					void* su = (void*)( (isPipe(seg) ? SU_Pipe : SU_Road) + mtrId );
-					shape->setUserPointer(su);  // mark as road/pipe + mtrId
+					int su = (pipe ? SU_Pipe : SU_Road) + mtrId;
+					shape->setUserPointer((void*)su);  // mark as road/pipe + mtrId
 					
 					btCollisionObject* bco = new btCollisionObject();
 					btTransform tr;  tr.setIdentity();  //tr.setOrigin(pc);

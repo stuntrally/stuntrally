@@ -331,8 +331,10 @@ btCollisionShape * COLLISION_WORLD::AddMeshShape(const MODEL & model)
 
 struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 {
-	MyRayResultCallback(const btVector3 & rayFromWorld, const btVector3 & rayToWorld, const btCollisionObject * exclude, bool ignoreCars, bool camRay)
-		: m_rayFromWorld(rayFromWorld), m_rayToWorld(rayToWorld), m_exclude(exclude), m_shapeId(0), bIgnoreCars(ignoreCars), bCamRay(camRay)
+	MyRayResultCallback(const btVector3 & rayFromWorld, const btVector3 & rayToWorld,
+			const btCollisionObject * exclude, bool ignoreCars, bool camTilt, bool camDist)//, bool ignoreGlass)
+		: m_rayFromWorld(rayFromWorld), m_rayToWorld(rayToWorld), m_exclude(exclude), m_shapeId(0)
+		, bIgnoreCars(ignoreCars), bCamTilt(camTilt), bCamDist(camDist)
 	{	}
 
 	btVector3	m_rayFromWorld;//used to calculate hitPointWorld from hitFraction
@@ -343,21 +345,21 @@ struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 	
 	int m_shapeId;
 	const btCollisionObject * m_exclude;
-	bool bIgnoreCars,bCamRay;
+	bool bIgnoreCars,bCamTilt,bCamDist;
 		
 	virtual	btScalar	addSingleResult(btCollisionWorld::LocalRayResult& rayResult, bool normalInWorldSpace)
 	{
 		btCollisionObject* obj = rayResult.m_collisionObject;
 		if (obj == m_exclude)
 			return 1.0;
-			
+					
 		//  no other cars collision (for wheel raycasts)
 		ShapeData* sd = (ShapeData*)obj->getUserPointer();
 		if (bIgnoreCars && sd && sd->type == ST_Car)
 			return 1.0;
 		
 		//  car ignores fluids (camera not)
-		if (!bCamRay && sd && sd->type == ST_Fluid)
+		if (!bCamTilt && sd && sd->type == ST_Fluid)
 			return 1.0;
 
 		//  always ignore wheel triggers
@@ -365,8 +367,16 @@ struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 			return 1.0;
 
 		//  cam ingores dynamic objects (car not)
-		if (bCamRay && !obj->isStaticObject())
+		if (bCamTilt && !obj->isStaticObject())
 			return 1.0;
+
+		//  cam dist ray only for terrain, // todo: would work for rest but loops and pipe glass ..
+		if (bCamDist)
+		{
+			int su = (int)obj->getCollisionShape()->getUserPointer();
+			if (su != SU_Terrain)
+				return 1.0;
+		}
 				
 		//caller already does the filter on the m_closestHitFraction
 		btAssert(rayResult.m_hitFraction <= m_closestHitFraction);
@@ -399,11 +409,11 @@ bool COLLISION_WORLD::CastRay(
 	const btCollisionObject * caster,
 	COLLISION_CONTACT & contact,  //out
 	CARDYNAMICS* cd, int w, //out pCarDyn, nWheel
-	bool ignoreCars, bool camRay) const
+	bool ignoreCars, bool camTilt, bool camDist) const
 {
 	btVector3 from = ToBulletVector(origin);
 	btVector3 to = ToBulletVector(origin + direction * length);
-	MyRayResultCallback res(from, to, caster, ignoreCars, camRay);
+	MyRayResultCallback res(from, to, caster, ignoreCars, camTilt, camDist);
 	
 	//  data to set
 	MATHVECTOR<float,3> pos, norm;  float dist;
