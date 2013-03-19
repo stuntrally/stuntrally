@@ -271,7 +271,6 @@ void App::InitGui()
 	Ed(TrRdDist, editTrGr);  Ed(TrImpDist, editTrGr);
 	Ed(GrDensSmooth, editTrGr);  Ed(SceneryId, editTrGr);
 
-	//imgPaged = mGUI->findWidget<StaticImage>("ImgPaged");
 	Chk("LTrEnabled", chkPgLayOn, 1);  chkPgLay = bchk;
 	valLTrAll = mGUI->findWidget<StaticText>("LTrAll");
 	Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);

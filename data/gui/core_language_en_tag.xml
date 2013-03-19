@@ -939,12 +939,16 @@
 	<Tag name="InputObjectsPrevNext">PgUp,PgDn (or Wheel) - previous/next object</Tag>
 	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
 	<Tag name="InputObjectsDel">Del - delete current</Tag>
-	<Tag name="InputObjectsMove">LMB - move   RMB - height</Tag>
-	<Tag name="InputObjectsRot">MMB - rotate yaw   alt-MMB - rotate roll</Tag>
-	<Tag name="InputObjectsScale">alt-LMB - scale   alt-RMB - scale Y only</Tag>
+
+	<Tag name="InputObjectsMove">1 - Move   LMB - plane XZ  RMB - Y height</Tag>
+	<Tag name="InputObjectsRot">2 - Rotate local (alt- global)  LMB: Z  RMB: Y  MMB: X</Tag>
+	<Tag name="InputObjectsScale">3 - Scale   LMB - uniform XYZ  RMB: Y  MMB: Z</Tag>
+
+	<Tag name="InputObjectsMoveReset">shift-1 - move to cursor / reset new height</Tag>
+	<Tag name="InputObjectsRotReset">shift-2 - reset rotation</Tag>
+	<Tag name="InputObjectsScaleReset">shift-3 - reset scale to 1 (with shift to 0.5)</Tag>
+
 	<Tag name="InputObjectsType">-,=  - change object type</Tag>
-	<Tag name="InputObjects1">1 - reset rotation</Tag>
-	<Tag name="InputObjects2">2 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>
 	
 

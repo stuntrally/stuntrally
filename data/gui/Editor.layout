@@ -293,7 +293,7 @@
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="440 676 200 180" layer="Back" name="ObjectsWnd">
+	<Widget type="Window" skin="WindowC" position="440 676 210 180" layer="Back" name="ObjectsWnd">
 		<Property key="Caption" value="#{Objects}"/>
 		<Property key="Colour" value="1.0 1.0 1.0"/>
 		<Property key="Alpha" value="0.6"/>
@@ -2441,13 +2441,6 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipVegetGroups}"/>
 						</Widget>
-						<!--<Widget type="ImageBox" skin="ImageBox" position="560 95 180 180" name="ImgPaged">
-							<Property key="ImageTile" value="256 256"/>
-							<Property key="ImageCoord" value="0 256 256 512"/>
-							<Property key="ImageIndex" value="0"/>
-							<UserString key="RelativeTo" value="EditorWnd"/>
-							<UserString key="tip" value="#{TipModelPrev}"/>
-						</Widget>-->
 
 						<Widget type="TextBox" skin="TextBox" position="16 131 104 20">
 							<Property key="Caption" value="#{MinScale}"/>
@@ -2504,12 +2497,12 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipWindInflH}"/>
 						</Widget>
-                        <Widget type="Slider" skin="Slider" position="184 187 272 16" name="LTrWindFx">
+						<Widget type="Slider" skin="Slider" position="184 187 272 16" name="LTrWindFx">
 							<Property key="Colour" value="0.6 0.7 0.8"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipWindInflL}"/>
 						</Widget>
-                        <Widget type="Slider" skin="Slider" position="184 212 272 16" name="LTrWindFy">
+						<Widget type="Slider" skin="Slider" position="184 212 272 16" name="LTrWindFy">
 							<Property key="Colour" value="0.6 0.7 0.8"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipWindInflH}"/>
@@ -2526,7 +2519,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipRoadDist2}"/>
 						</Widget>
-                        <Widget type="Slider" skin="Slider" position="184 246 272 16" name="LTrRdDist">
+						<Widget type="Slider" skin="Slider" position="184 246 272 16" name="LTrRdDist">
 							<Property key="Colour" value="0.9 0.7 0.4"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipRoadDist2}"/>
@@ -2540,7 +2533,7 @@
 							<Property key="TextColour" value="0.8 0.7 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-                        <Widget type="Slider" skin="Slider" position="184 270 272 16" name="LTrRdDistMax">
+						<Widget type="Slider" skin="Slider" position="184 270 272 16" name="LTrRdDistMax">
 							<Property key="Colour" value="0.8 0.7 0.3"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
@@ -2556,7 +2549,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipLTrMaxTerAng}"/>
 						</Widget>
-                        <Widget type="Slider" skin="Slider" position="184 328 272 16" name="LTrMaxTerAng">
+						<Widget type="Slider" skin="Slider" position="184 328 272 16" name="LTrMaxTerAng">
 							<Property key="Colour" value="0.6 0.9 0.5"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipLTrMaxTerAng}"/>
@@ -3501,7 +3494,7 @@
 					<Property key="Caption" value="#{ViewRight}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="648 240 96 24" name="CamView4">
+				<Widget type="Button" skin="Button" position="648 248 96 24" name="CamView4">
 					<Property key="Colour" value="0.5 0.75 1"/>
 					<Property key="TextColour" value="0.5 0.75 1"/>
 					<Property key="Caption" value="#{ViewStart}"/>
@@ -4171,12 +4164,12 @@
 							<Property key="Caption" value="#{InputFluidsPrevNext}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="376 66 320 20">
+						<Widget type="TextBox" skin="TextBox" position="376 80 320 20">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{InputFluidsIns}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="376 88 320 20">
+						<Widget type="TextBox" skin="TextBox" position="376 102 320 20">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{InputFluidsDel}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
@@ -4220,49 +4213,39 @@
 							<Property key="Caption" value="#{InputObjectsMode}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="376 44 320 20">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Caption" value="#{InputObjectsPrevNext}"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="376 66 320 20">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Caption" value="#{InputObjectsIns}"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="376 88 320 20">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Caption" value="#{InputObjectsDel}"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 44 320 20">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
+						<Widget type="TextBox" skin="TextBox" position="32 44 520 20">
+							<Property key="TextColour" value="0.6 1.0 0.6"/>
 							<Property key="Caption" value="#{InputObjectsMove}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 66 320 20">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
+						<Widget type="TextBox" skin="TextBox" position="32 66 520 20">
+							<Property key="TextColour" value="1.0 0.6 0.6"/>
 							<Property key="Caption" value="#{InputObjectsRot}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 88 320 20">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Caption" value="#{InputObjectsScale}"/>
+						<Widget type="TextBox" skin="TextBox" position="32 88 520 20">
+							<Property key="TextColour" value="0.5 1.0 1.0"/>
+							<Property key="Caption" value="#{InputObjectsRotReset}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 88 520 20">
+							<Property key="TextColour" value="0.5 1.0 1.0"/>
+							<Property key="Caption" value="#{InputObjectsScaleReset}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 126 320 20">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="TextColour" value="0.6 0.76 0.9"/>
 							<Property key="Caption" value="#{InputObjectsType}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 168 320 20">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Caption" value="#{InputObjects1}"/>
+							<Property key="Caption" value="#{InputObjectsMoveReset}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 190 320 20">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Caption" value="#{InputObjects2}"/>
+							<Property key="Caption" value="#{InputObjectsMoveReset}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 230 360 20">
@@ -4270,12 +4253,27 @@
 							<Property key="Caption" value="#{InputObjectsSimulate}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="376 126 320 20">
+						<Widget type="TextBox" skin="TextBox" position="376 44 320 20">
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="#{InputObjectsPrevNext}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 80 320 20">
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="#{InputObjectsIns}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 102 320 20">
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="#{InputObjectsDel}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 140 320 20">
 							<Property key="TextColour" value="0.7 0.85 1.0"/>
 							<Property key="Caption" value="#{InputRoadSel}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="408 148 320 20">
+						<Widget type="TextBox" skin="TextBox" position="408 160 300 20">
 							<Property key="TextColour" value="0.5 0.65 0.8"/>
 							<Property key="Caption" value="#{InputRoadSelAlt}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>

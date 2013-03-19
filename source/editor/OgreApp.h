@@ -415,8 +415,7 @@ protected:
 	//  paged layers
 	MyGUI::TabPtr tabsPgLayers;  void tabPgLayers(TAB);
 	int idPgLay;  // tab
-	MyGUI::ButtonPtr chkPgLay;  void chkPgLayOn(WP);
-	MyGUI::StaticImagePtr imgPaged;  MyGUI::StaticTextPtr valLTrAll;
+	MyGUI::ButtonPtr chkPgLay;  void chkPgLayOn(WP);  MyGUI::StaticTextPtr valLTrAll;
 	MyGUI::ComboBoxPtr cmbPgLay;  void comboPgLay(CMB);
 	SLV(LTrDens);	SLV(LTrRdDist);  SLV(LTrRdDistMax);
 	SLV(LTrMinSc);	SLV(LTrMaxSc);	SLV(LTrWindFx);	SLV(LTrWindFy);
@@ -442,11 +441,11 @@ protected:
 
 
 	///  [Objects]  ----
+	enum ED_OBJ {  EO_Move=0, EO_Rotate, EO_Scale  } objEd;
 	std::vector<std::string> vObjNames;
 	void SetObjNewType(int tnew),UpdObjNewNode(), AddNewObj();
 	int iObjCur,iObjLast, iObjTNew;  std::set<int> vObjSel;
-	bool objSim;  float objNewH,objNewYaw;
-	Ogre::SceneNode* objNewNd;  Ogre::Entity* objNewEnt;
+	bool objSim;  Object objNew;
 	MyGUI::List* objListDyn,*objListSt,*objListBld;  void listObjsChng(MyGUI::List* l,size_t);
 	
 

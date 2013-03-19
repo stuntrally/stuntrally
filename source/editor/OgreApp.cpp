@@ -50,7 +50,7 @@ App::App()  //  gui wigdets--
 	,edGrTerMaxAngle(0),edGrTerSmAngle(0), edGrTerMinHeight(0),edGrTerMaxHeight(0),edGrTerSmHeight(0)
 	,edSceneryId(0), cmbGrassMtr(0), cmbGrassClr(0)
 	,viewCanvas(0), tiViewUpd(-1.f)
-	,cmbPgLay(0), chkPgLay(0), tabsPgLayers(0), idPgLay(0),imgPaged(0), valLTrAll(0)  //paged layers
+	,cmbPgLay(0), chkPgLay(0), tabsPgLayers(0), idPgLay(0), valLTrAll(0)  //paged layers
 	,valLTrDens(0), valLTrRdDist(0),valLTrRdDistMax(0)
 	,valLTrMinSc(0),valLTrMaxSc(0), valLTrWindFx(0),valLTrWindFy(0)
 	,valLTrMaxTerAng(0),edLTrMinTerH(0),edLTrMaxTerH(0),edLTrFlDepth(0), valLGrDens(0)
@@ -70,8 +70,7 @@ App::App()  //  gui wigdets--
 	,grass(0), trees(0), sun(0), pr(0),pr2(0)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
 	,iFlCur(0), bRecreateFluids(0)
-	,iObjCur(-1), iObjTNew(0), iObjLast(0), objSim(0)
-	,objNewH(0.53f),objNewYaw(0.f), objNewNd(0),objNewEnt(0)
+	,iObjCur(-1), iObjTNew(0), iObjLast(0), objSim(0), objEd(EO_Rotate)
 	,objListSt(0),objListDyn(0),objListBld(0), objPan(0)
 	
 	,bTerUpdBlend(1), track(0)

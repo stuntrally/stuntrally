@@ -364,24 +364,18 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	else if (edMode == ED_Objects)
 	{
 		int objs = sc->objects.size();
-		if (iObjCur == -1 || sc->objects.empty())
-		{	//  none sel
-			objTxt[0]->setCaption("#20FF20New#C0C0C0    "+toStr(iObjCur)+" / "+toStr(objs));
-			objTxt[1]->setCaption(vObjNames[iObjTNew]);  // all new params ...
-			objTxt[2]->setCaption("Pos H:  "+fToStr(objNewH,2,4));
-			objTxt[3]->setCaption("Rot:  "+fToStr(Radian(objNewYaw).valueDegrees(),2,4));
-			objTxt[4]->setCaption("");
-		}else
-		{	const Object& o = sc->objects[iObjCur];
-			if (vObjSel.empty())
-				objTxt[0]->setCaption("#A0D0FFCur#C0C0C0     "+toStr(iObjCur+1)+" / "+toStr(objs));
-			else
-				objTxt[0]->setCaption("#00FFFFSel#C0C0C0     "+toStr(vObjSel.size())+" / "+toStr(objs));
-			objTxt[1]->setCaption(o.name);
-			objTxt[2]->setCaption("Pos:  "+fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
-			objTxt[3]->setCaption("Rot:  "+fToStr(o.nd->getOrientation().getYaw().valueDegrees(),1,4));
-			objTxt[4]->setCaption("Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
-		}
+		bool bNew = iObjCur == -1;
+		const Object& o = bNew || sc->objects.empty() ? objNew : sc->objects[iObjCur];
+		const Quaternion& q = o.nd->getOrientation();
+		//Quaternion q(o.rot.w(),o.rot.x(),o.rot.y(),o.rot.z());
+		objTxt[0]->setCaption((bNew ? "#80FF80New#B0D0B0     " : "#A0D0FFCur#B0B0D0     ")
+							+(vObjSel.empty() ? (bNew ? "-" : toStr(iObjCur+1))+" / "+toStr(objs)
+							: "#00FFFFSel  "+toStr(vObjSel.size())));
+		objTxt[1]->setCaption(bNew ? vObjNames[iObjTNew] : o.name);
+		objTxt[2]->setCaption(String(objEd==EO_Move  ?"#60FF60":"")+"Pos:  "+fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
+		objTxt[3]->setCaption(String(objEd==EO_Rotate?"#FFA0A0":"")+"Rot:  y "+fToStr(q.getYaw().valueDegrees(),0,3)+" p "+fToStr(q.getPitch().valueDegrees(),0,3)+" r "+fToStr(q.getRoll().valueDegrees(),0,3));
+		objTxt[4]->setCaption(String(objEd==EO_Scale ?"#60F0FF":"")+"Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
+
 		objTxt[5]->setCaption(String("Sim: ") + (objSim?"ON":"off") + "      "+toStr(world->getNumCollisionObjects()));
 		objTxt[5]->setTextColour(objSim ? MyGUI::Colour(1.0,0.9,1.0) : MyGUI::Colour(0.77,0.77,0.8));
 
@@ -460,8 +454,7 @@ void App::editMouse()
 	}
 
 	///  edit start pos	 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-	if (edMode == ED_Start /*&&
-		vStartPos.size() >= 4 && vStartRot.size() >= 4*/)
+	if (edMode == ED_Start /*&&	vStartPos.size() >= 4 && vStartRot.size() >= 4*/)
 	{
 		const Real fMove(0.5f), fRot(0.05f);  //par speed
 		const int n = 0;  // 1st entry - all same / edit 4..
@@ -569,88 +562,64 @@ void App::editMouse()
 	}
 
 	///  edit objects . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-	if (edMode == ED_Objects && iObjCur == -1)  // new properties
-	{
-		const Real fMove(0.5f), fRot(3.0f);
-		if (mbRight)  // move y
-		{
-			Real ym = -vNew.y * fMove * moveMul;
-			objNewH += ym;
-			if (ctrl)  objNewH = shift ? 0.f : 0.53f;  // reset
-		}
-		else
-		if (mbMiddle)  // rot yaw
-		{
-			Real xm = vNew.x * fRot * moveMul *PI_d/180.f;
-			objNewYaw -= xm;
-			if (ctrl)  objNewYaw = 0.f;
-		}
-	}
-	if (edMode == ED_Objects && !sc->objects.empty() && (iObjCur >= 0 || !vObjSel.empty()))
+	bool mbAny = mbLeft || mbMiddle || mbRight;
+	if (edMode == ED_Objects && mbAny)
 	{
 		const Real fMove(0.5f), fRot(1.5f), fScale(0.02f);  //par speed
 		bool upd = false, sel = !vObjSel.empty();
-		//  selection or picked
+		//  selection, picked or new
 		std::set<int>::iterator it = vObjSel.begin();
 		int i = sel ? *it : iObjCur;
-		while (i >= 0 && i < sc->objects.size())
+		while (i == -1 || (i >= 0 && i < sc->objects.size()))
 		{
-			Object& o = sc->objects[i];  bool upd1 = false;
+			Object& o = i == -1 ? objNew : sc->objects[i];
+			bool upd1 = false;
 
-			if (mbMiddle)  // rot yaw,  alt roll local-
+			switch (objEd)
 			{
-				Real xm = vNew.x * fRot * moveMul *PI_d/180.f;
-				QUATERNION <float> qr;
-				//if (alt)  qr.Rotate(-xm, 1, 0, 0);  else  if (shift)  qr.Rotate(-xm, 0, 1, 0);  else  qr.Rotate(-xm, 0, 0, 1);
-				if (!alt)  qr.Rotate(-xm, 0, 0, 1);  else  qr.Rotate(-xm, 0, 1, 0);
-				o.rot = o.rot * qr;
-				/** Quaternion q(o.rot.w(),o.rot.x(),o.rot.y(),o.rot.z());
-				Degree deg;  Vector3 ax;
-				q.ToAngleAxis(deg,ax);
-				if (alt)  deg += Radian(xm);
-				else
+				case EO_Move:
 				{
-					Matrix3 m;  m.FromAngleAxis(Vector3::UNIT_X, Radian(xm));
-					ax = m *ax;
-				}
-				q.FromAngleAxis(deg,ax);
-				o.rot = QUATERNION<float>(q.x,q.y,q.z,q.w);/**/
-				o.SetFromBlt();	 upd1 = true;
-			}
-			else
-			if (!alt)
-			{
-				if (mbLeft)	// move on xz
+					if (mbLeft && i != -1)  // move on xz
+					{
+						Vector3 vx = mCameraT->getRight();      vx.y = 0;  vx.normalise();
+						Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
+						Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
+						o.pos[0] += vm.x;  o.pos[1] -= vm.z;  // todo: for selection ..
+						o.SetFromBlt();	 upd1 = true;
+					}else
+					if (mbRight)  // move y
+					{
+						Real ym = -vNew.y * fMove * moveMul;
+						o.pos[2] += ym;
+						o.SetFromBlt();	 upd1 = true;
+					}
+				}	break;
+
+				case EO_Rotate:
 				{
-					Vector3 vx = mCameraT->getRight();      vx.y = 0;  vx.normalise();
-					Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
-					Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
-					o.pos[0] += vm.x;  o.pos[1] -= vm.z;  // todo: for selection ..
+					Real xm = -vNew.x * fRot * moveMul *PI_d/180.f;
+					Quaternion q(o.rot.w(),o.rot.x(),o.rot.y(),o.rot.z());
+					Radian r = Radian(xm);  Quaternion qr;
+
+					qr.FromAngleAxis(r, mbLeft ? Vector3::UNIT_Z : (mbRight ? Vector3::UNIT_Y : Vector3::UNIT_X));
+					if (alt)  q = qr * q;  else  q = q * qr;
+					o.rot = QUATERNION<float>(q.x,q.y,q.z,q.w);
+					//o.rot = QUATERNION<float>::SetAxisAngle ..
 					o.SetFromBlt();	 upd1 = true;
-				}else
-				if (mbRight)  // move y
-				{
-					Real ym = -vNew.y * fMove * moveMul;
-					o.pos[2] += ym;
-					o.SetFromBlt();	 upd1 = true;
-				}
-			}else if (!o.dyn)  // static objs only
-			{
-				if (mbLeft)  // size xz
-				{
-					//Vector3 vm = Vector3(vNew.y, 0, vNew.x) * fMove * moveMul;
-					float vm = (vNew.y - vNew.x) * fMove * moveMul;
-					o.scale *= 1.f - vm * fScale;
-					//if (o.scale.x < 0.02f)  o.scale.x = 0.02f;
-					o.nd->setScale(o.scale);  upd1 = true;
-				}else
-				if (mbRight)  // scale y
+				}	break;
+
+				case EO_Scale:
+				if (!o.dyn)  // static objs only
 				{
 					float vm = (vNew.y - vNew.x) * fMove * moveMul;
-					o.scale.y *= 1.f - vm * fScale;
-					//if (o.scale.y < 0.02f)  o.scale.y = 0.02f;
+					if (mbLeft)  // xyz
+						o.scale *= 1.f - vm * fScale;
+					else if (mbRight)  // y
+						o.scale.y *= 1.f - vm * fScale;
+					else  // z
+						o.scale.z *= 1.f - vm * fScale;
 					o.nd->setScale(o.scale);  upd1 = true;
-				}
+				}	break;
 			}
 			if (upd1)
 				upd = true;
@@ -659,7 +628,7 @@ void App::editMouse()
 			{	++it;  // next sel
 				if (it == vObjSel.end())  break;
 				i = *it;
-			}else  break;
+			}else  break;  // only 1
 		}
 		if (upd)
 			UpdObjPick();

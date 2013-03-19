@@ -243,8 +243,10 @@ void App::UpdObjPick()
 	
 	const Object& o = sc->objects[iObjCur];
 	const AxisAlignedBox& ab = o.nd->getAttachedObject(0)->getBoundingBox();
+	//Vector3 p = ab.getCenter();
 	Vector3 s = o.scale * ab.getSize();  // * sel obj's node aabb
 
+		//Vector3 posO = Vector3(o.pos[0]+p.x,o.pos[2]+p.z,-o.pos[1]-p.y);
 		Vector3 posO = Vector3(o.pos[0],o.pos[2],-o.pos[1]);
 		Quaternion q(o.rot[0],o.rot[1],o.rot[2],o.rot[3]), q1;
 		Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
@@ -336,17 +338,15 @@ void App::ToggleObjSim()
 ///  add new object
 void App::AddNewObj()
 {
-	::Object o;  o.name = vObjNames[iObjTNew];
+	::Object o = objNew;
+	o.name = vObjNames[iObjTNew];
 	++iObjLast;
 	String s = toStr(iObjLast);  // counter for names
 	///TODO: ?dyn objs size, !?get center,size, rmb height..
 
 	//  pos, rot
 	const Ogre::Vector3& v = road->posHit;
-	o.pos[0] = v.x;  o.pos[1] =-v.z;  o.pos[2] = v.y + objNewH;
-	QUATERNION<float> q,q1;
-	q.SetAxisAngle(objNewYaw+PI_d*0.5f,0,0,-1);  q1.SetAxisAngle(PI_d,0,1,0);
-	o.rot = q1*q;
+	o.pos[0] = v.x;  o.pos[1] =-v.z;  o.pos[2] = v.y + objNew.pos[2];
 
 	//  create object
 	o.ent = mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
@@ -376,13 +376,15 @@ void App::listObjsChng(MyGUI::List* l, size_t t)
 void App::SetObjNewType(int tnew)
 {
 	iObjTNew = tnew;
-	if (objNewNd)	{	mSceneMgr->destroySceneNode(objNewNd);  objNewNd = 0;  }
-	if (objNewEnt)	{	mSceneMgr->destroyEntity(objNewEnt);  objNewEnt = 0;  }
+	if (objNew.nd)	{	mSceneMgr->destroySceneNode(objNew.nd);  objNew.nd = 0;  }
+	if (objNew.ent)	{	mSceneMgr->destroyEntity(objNew.ent);  objNew.ent = 0;  }
 	
 	String name = vObjNames[iObjTNew];
-	objNewEnt = mSceneMgr->createEntity("-oE", name + ".mesh");
-	objNewNd = mSceneMgr->getRootSceneNode()->createChildSceneNode("-oN");
-	objNewNd->attachObject(objNewEnt);  objNewEnt->setVisibilityFlags(RV_Vegetation);
+	objNew.dyn = boost::filesystem::exists(PATHMANAGER::Data()+"/objects/"+ name + ".bullet");
+	if (objNew.dyn)  objNew.scale = Vector3::UNIT_SCALE;  // dyn no scale
+	objNew.ent = mSceneMgr->createEntity("-oE", name + ".mesh");
+	objNew.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("-oN");
+	objNew.nd->attachObject(objNew.ent);  objNew.ent->setVisibilityFlags(RV_Vegetation);
 	UpdObjNewNode();
 
 	if (objListSt)  objListSt->setIndexSelected(-1);  // unselect
@@ -392,17 +394,16 @@ void App::SetObjNewType(int tnew)
 
 void App::UpdObjNewNode()
 {
-	if (!road || !objNewNd)  return;
+	if (!road || !objNew.nd)  return;
 
 	bool vis = road->bHitTer && bEdit() && iObjCur == -1 && edMode == ED_Objects;
-	objNewNd->setVisible(vis);
+	objNew.nd->setVisible(vis);
 	if (!vis)  return;
 	
-	Vector3 p = road->posHit;  p.y += objNewH;
-	Quaternion q;  q.FromAngleAxis(Radian(objNewYaw), Vector3::UNIT_Y);
-	
-	objNewNd->setPosition(p);
-	objNewNd->setOrientation(q);
+	Vector3 p = road->posHit;  p.y += objNew.pos[2];
+	objNew.SetFromBlt();
+	objNew.nd->setPosition(p);
+	objNew.nd->setScale(objNew.scale);
 }
 
 #endif

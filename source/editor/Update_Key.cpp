@@ -639,7 +639,8 @@ bool App::KeyPress(const CmdKey &arg)
 						vObjSel.erase(iObjCur);  // unselect
 				break;
 		}
-		if (objs > 0)
+		::Object* o = iObjCur == -1 ? &objNew :
+					((iObjCur >= 0 && objs > 0 && iObjCur < objs) ? &sc->objects[iObjCur] : 0);
 		switch (arg.key)
 		{
 			//  first, last
@@ -657,7 +658,7 @@ bool App::KeyPress(const CmdKey &arg)
 			//  del
 			case KC_DELETE:	case KC_DECIMAL:
 			case KC_NUMPAD5:
-				if (iObjCur >= 0 && sc->objects.size() > 0)
+				if (iObjCur >= 0 && objs > 0)
 				{	::Object& o = sc->objects[iObjCur];
 					mSceneMgr->destroyEntity(o.ent);
 					mSceneMgr->destroySceneNode(o.nd);
@@ -668,21 +669,37 @@ bool App::KeyPress(const CmdKey &arg)
 					UpdObjPick();
 				}	break;
 
-			//  prev,next type
-			case KC_1:  // reset rot
-				if (iObjCur >= 0 && sc->objects.size() > 0)
-				{	::Object& o = sc->objects[iObjCur];
-					o.rot = QUATERNION <float>(0,1,0,0);
-					o.SetFromBlt();
-					UpdObjPick();
+			//  move,rot,scale
+			case KC_1:
+				if (!shift)  objEd = EO_Move;
+				else if (o)
+				{
+					if (iObjCur == -1)  // reset h
+					{
+						o->pos[2] = 0.f;  o->SetFromBlt();  UpdObjPick();  }
+					}
+					else if (road)  // move to ter
+					{
+						const Ogre::Vector3& v = road->posHit;
+						o->pos[0] = v.x;  o->pos[1] =-v.z;  o->pos[2] = v.y + objNew.pos[2];
+						o->SetFromBlt();  UpdObjPick();
+					}
 				}	break;
 
-			case KC_2:  // reset scale
-				if (iObjCur >= 0 && sc->objects.size() > 0)
-				{	::Object& o = sc->objects[iObjCur];
-					o.scale = Ogre::Vector3::UNIT_SCALE * (shift ? 0.5f : 1.f);
-					o.nd->setScale(o.scale);
-					UpdObjPick();
+			case KC_2:
+				if (!shift)  objEd = EO_Rotate;
+				else if (o)  // reset rot
+				{
+					o->rot = QUATERNION<float>(0,1,0,0);
+					o->SetFromBlt();  UpdObjPick();
+				}	break;
+
+			case KC_3:
+				if (!shift)  objEd = EO_Scale;
+				else if (o)  // reset scale
+				{
+					o->scale = Ogre::Vector3::UNIT_SCALE * (ctrl ? 0.5f : 1.f);
+					o->nd->setScale(o->scale);  UpdObjPick();
 				}	break;
 		}
 	}
