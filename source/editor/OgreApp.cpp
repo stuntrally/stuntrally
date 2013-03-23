@@ -81,6 +81,8 @@ App::App()  //  gui wigdets--
 	,trackObject(0), trackMesh(0)
 	,mStaticGeom(0), mTimer(0.f)
 {
+	mEditor = new sh::Editor();
+
 	imgPrv[0]=0; imgMini[0]=0; imgTer[0]=0;  trkDesc[0]=0;
 	
 	pathTrk[0] = PATHMANAGER::Tracks() + "/";
@@ -151,6 +153,8 @@ const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise" };  
 
 App::~App()
 {
+	delete mEditor;
+
 	viewBox.destroy();
 
 	BltWorldDestroy();

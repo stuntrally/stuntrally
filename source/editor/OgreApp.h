@@ -19,6 +19,8 @@
 #include <OgreVector3.h>
 #include <OgreString.h>
 
+#include "../shiny/Editor/Editor.hpp"
+
 #include <MyGUI.h>
 #include "../ogre/common/RenderBoxScene.h"
 
@@ -125,6 +127,7 @@ protected:
 
 	// materials
 	sh::Factory* mFactory;
+	sh::Editor* mEditor;
 	
 	
 	///  terrain

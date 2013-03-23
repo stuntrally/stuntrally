@@ -1,5 +1,7 @@
 #include "MaterialInstancePass.hpp"
 
+#include <fstream>
+
 namespace sh
 {
 
@@ -12,5 +14,27 @@ namespace sh
 	std::vector <MaterialInstanceTextureUnit> MaterialInstancePass::getTexUnits ()
 	{
 		return mTexUnits;
+	}
+
+	void MaterialInstancePass::save(std::ofstream &stream)
+	{
+		if (mShaderProperties.listProperties().size())
+		{
+			stream << "\t\t" << "shader_properties" << '\n';
+			stream << "\t\t{\n";
+			mShaderProperties.save(stream, "\t\t\t");
+			stream << "\t\t}\n";
+		}
+
+		PropertySetGet::save(stream, "\t\t");
+
+		for (std::vector <MaterialInstanceTextureUnit>::iterator it = mTexUnits.begin();
+			 it != mTexUnits.end(); ++it)
+		{
+			stream << "\t\ttexture_unit " << it->getName() << '\n';
+			stream << "\t\t{\n";
+			it->save(stream, "\t\t\t");
+			stream << "\t\t}\n";
+		}
 	}
 }

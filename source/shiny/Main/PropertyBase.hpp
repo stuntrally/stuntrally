@@ -151,9 +151,15 @@ namespace sh
 
 		virtual ~PropertySetGet() {}
 
-		void copyAll (PropertySet* target, PropertySetGet* context); ///< call setProperty for each property/value pair stored in \a this
+		void save (std::ofstream& stream, const std::string& indentation);
+
+		void copyAll (PropertySet* target, PropertySetGet* context, bool copyParent=true);
+		///< call setProperty for each property/value pair stored in \a this
+		void copyAll (PropertySetGet* target, PropertySetGet* context, bool copyParent=true);
+		///< call setProperty for each property/value pair stored in \a this
 
 		void setParent (PropertySetGet* parent);
+		PropertySetGet* getParent () { return mParent; }
 		void setContext (PropertySetGet* context);
 		PropertySetGet* getContext();
 
@@ -162,7 +168,7 @@ namespace sh
 
 		const PropertyMap& listProperties() { return mProperties; }
 
-		bool hasProperty (const std::string& name);
+		bool hasProperty (const std::string& name) const;
 
 	private:
 		PropertyMap mProperties;

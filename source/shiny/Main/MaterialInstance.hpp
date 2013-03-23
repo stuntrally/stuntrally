@@ -54,6 +54,11 @@ namespace sh
 
 		virtual void setProperty (const std::string& name, PropertyValuePtr value);
 
+		void setSourceFile(const std::string& sourceFile) { mSourceFile = sourceFile; }
+
+		std::string getSourceFile() { return mSourceFile; }
+		///< get the name of the file this material was read from, or empty if it was created dynamically by code
+
 	private:
 		void setParentInstance (const std::string& name);
 		std::string getParentInstance ();
@@ -65,14 +70,7 @@ namespace sh
 
 		void setShadersEnabled (bool enabled);
 
-		void setSourceFile(const std::string& sourceFile) { mSourceFile = sourceFile; }
-
-		std::string getSourceFile() { return mSourceFile; }
-		///< get the name of the file this material was read from, or empty if it was created dynamically by code
-
 		void save (std::ofstream& stream);
-		///< this will only save the properties, not the passes and texture units, and as such
-		/// is only intended to be used for derived materials
 
 		friend class Factory;
 

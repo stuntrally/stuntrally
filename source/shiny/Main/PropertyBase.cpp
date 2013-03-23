@@ -6,6 +6,8 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 
+#include <fstream>
+
 namespace sh
 {
 
@@ -241,7 +243,7 @@ namespace sh
 			return mProperties[name];
 	}
 
-	bool PropertySetGet::hasProperty (const std::string& name)
+	bool PropertySetGet::hasProperty (const std::string& name) const
 	{
 		bool found = (mProperties.find(name) != mProperties.end());
 
@@ -256,13 +258,35 @@ namespace sh
 			return true;
 	}
 
-	void PropertySetGet::copyAll (PropertySet* target, PropertySetGet* context)
+	void PropertySetGet::copyAll (PropertySet* target, PropertySetGet* context, bool copyParent)
 	{
-		if (mParent)
+		if (mParent && copyParent)
 			mParent->copyAll (target, context);
 		for (PropertyMap::iterator it = mProperties.begin(); it != mProperties.end(); ++it)
 		{
 			target->setProperty(it->first, it->second, context);
+		}
+	}
+
+	void PropertySetGet::copyAll (PropertySetGet* target, PropertySetGet* context, bool copyParent)
+	{
+		if (mParent && copyParent)
+			mParent->copyAll (target, context);
+		for (PropertyMap::iterator it = mProperties.begin(); it != mProperties.end(); ++it)
+		{
+			std::string val = retrieveValue<StringValue>(it->second, this).get();
+			target->setProperty(it->first, sh::makeProperty(new sh::StringValue(val)));
+		}
+	}
+
+	void PropertySetGet::save(std::ofstream &stream, const std::string& indentation)
+	{
+		for (PropertyMap::iterator it = mProperties.begin(); it != mProperties.end(); ++it)
+		{
+			if (typeid( *(it->second) ) == typeid(LinkedValue))
+				stream << indentation << it->first << " " << "$" + static_cast<LinkedValue*>(&*(it->second))->_getStringValue() << '\n';
+			else
+				stream << indentation << it->first << " " << retrieveValue<StringValue>(it->second, this).get() << '\n';
 		}
 	}
 }

@@ -22,8 +22,7 @@ if (BUILD_GAME OR BUILD_EDITOR)
 	endforeach()
 
 	add_subdirectory(shiny)
-	list(APPEND OURLIBS "shiny")
-	list(APPEND OURLIBS "shiny.OgrePlatform")
+        list(APPEND OURLIBS ${SHINY_LIBRARIES})
 endif()
 
 # Game executable

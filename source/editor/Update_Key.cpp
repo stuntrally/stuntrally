@@ -423,6 +423,14 @@ bool App::KeyPress(const CmdKey &arg)
 			return true;
 		}	break;
 
+		//  Material editor  F12
+		case KC_F12:
+		{
+			mEditor->show();
+			return true;
+		}	break;
+
+
 		//  Show Stats  I
    		case KC_I:
    			if (ctrl)  {  chkInputBar(chInputBar);  return true;  }

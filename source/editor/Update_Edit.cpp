@@ -16,6 +16,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	if (!BaseApp::frameRenderingQueued(evt))
 		return false;
 
+	mEditor->update();
+
 	//  pos on minimap *
 	if (ndPos)
 	{

@@ -125,8 +125,13 @@ namespace sh
 		/// \note The default is off (no cache reading)
 		void setReadMicrocodeCache(bool read) { mReadMicrocodeCache = read; }
 
-		/// Saves all the materials that were initially loaded from the file with this name
-		void saveMaterials (const std::string& filename);
+		/// Lists all materials currently registered with the factory. Whether they are
+		/// loaded or not does not matter.
+		void listMaterials (std::vector<std::string>& out);
+
+		/// Saves all materials, by default to the file they were loaded from.
+		/// If you wish to save them elsewhere, use MaterialInstance::setSourceFile first.
+		void saveAll ();
 
 		static Factory& getInstance();
 		///< Return instance of this class.

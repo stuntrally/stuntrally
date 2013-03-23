@@ -206,13 +206,21 @@ namespace sh
 
 		if (mParent)
 		{
-			stream << "\t" << static_cast<MaterialInstance*>(mParent)->getName() << "\n";
+			stream << "\t" << "parent " << static_cast<MaterialInstance*>(mParent)->getName() << "\n";
 		}
 
 		const PropertyMap& properties = listProperties ();
 		for (PropertyMap::const_iterator it = properties.begin(); it != properties.end(); ++it)
 		{
 			stream << "\t" << it->first << " " << retrieveValue<StringValue>(getProperty(it->first), NULL).get() << "\n";
+		}
+
+		for (PassVector::iterator it = mPasses.begin(); it != mPasses.end(); ++it)
+		{
+			stream << "\tpass" << '\n';
+			stream << "\t{" << '\n';
+			it->save(stream);
+			stream << "\t}" << '\n';
 		}
 
 		stream << "}\n";

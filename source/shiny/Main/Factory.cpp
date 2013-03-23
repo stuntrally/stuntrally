@@ -571,17 +571,35 @@ namespace sh
 		return p;
 	}
 
-	void Factory::saveMaterials (const std::string& filename)
+	void Factory::saveAll ()
 	{
-		std::ofstream file;
-		file.open (filename.c_str ());
-
+		std::map<std::string, std::ofstream*> files;
 		for (MaterialMap::iterator it = mMaterials.begin(); it != mMaterials.end(); ++it)
 		{
-			it->second.save(file);
+			if (it->second.getSourceFile().empty())
+				continue;
+			if (files.find(it->second.getSourceFile()) == files.end())
+			{
+				std::ofstream* stream = new std::ofstream();
+				stream->open (it->second.getSourceFile().c_str());
+
+				files[it->second.getSourceFile()] = stream;
+			}
+			it->second.save (*files[it->second.getSourceFile()]);
 		}
 
-		file.close();
+		for (std::map<std::string, std::ofstream*>::iterator it = files.begin(); it != files.end(); ++it)
+		{
+			delete it->second;
+		}
+	}
+
+	void Factory::listMaterials(std::vector<std::string> &out)
+	{
+		for (MaterialMap::iterator it = mMaterials.begin(); it != mMaterials.end(); ++it)
+		{
+			out.push_back(it->first);
+		}
 	}
 
 	void Factory::_ensureMaterial(const std::string& name, const std::string& configuration)
