@@ -373,7 +373,7 @@ struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 		//  cam dist ray only for terrain, // todo: would work for rest but loops and pipe glass ..
 		if (bCamDist)
 		{
-			int su = (int)obj->getCollisionShape()->getUserPointer();
+			int su = (long)obj->getCollisionShape()->getUserPointer();
 			if (su != SU_Terrain)
 				return 1.0;
 		}

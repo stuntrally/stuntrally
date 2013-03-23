@@ -676,7 +676,7 @@ bool App::KeyPress(const CmdKey &arg)
 				{
 					if (iObjCur == -1)  // reset h
 					{
-						o->pos[2] = 0.f;  o->SetFromBlt();  UpdObjPick();  }
+						o->pos[2] = 0.f;  o->SetFromBlt();  UpdObjPick();
 					}
 					else if (road)  // move to ter
 					{
