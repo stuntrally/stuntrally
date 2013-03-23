@@ -16,6 +16,21 @@ void App::ChampsXmlLoad()
 {
 	champs.LoadXml(PATHMANAGER::GameConfigDir() + "/championships.xml");
 	LogO(String("**** Loaded Championships: ") + toStr(champs.champs.size()));
+
+	/* stats */
+	float time = 0.f;  int trks = 0;
+	for (std::map<std::string, float>::const_iterator it = champs.trkTimes.begin();
+		it != champs.trkTimes.end(); ++it)
+	{
+		const string& trk = (*it).first;
+		if (trk.substr(0,4) != "Test")
+		{
+			//if (!(trk[0] >= 'a' && trk[0] <= 'z'))  // sr only
+				time += (*it).second;
+			++trks;
+	}	}
+	LogO("Total tracks: "+ toStr(trks) + ", total time: "+ GetTimeString(time/60.f)+" h:m");
+	/**/
 	
 	ProgressXml oldprog;
 	oldprog.LoadXml(PATHMANAGER::UserConfigDir() + "/progress.xml");
@@ -338,10 +353,10 @@ void App::ChampionshipAdvance(float timeCur)
 
 	const float decFactor = 1.5f;  // more means score will drop faster for longer times
 	/**/  // test score +-10 sec diff
-	for (int i=-10; i <= 10; ++i)
+	for (int i=-3; i <= 3; ++i)
 	{
-		float score = (1.f + (timeBest-timeCur-i)/timeBest * decFactor) * 100.f;
-		LogO("|| var, add time: "+toStr(i)+" sec, score: "+toStr(score));
+		float score = (1.f + (timeBest-timeCur-i*3)/timeBest * decFactor) * 100.f;
+		LogO("|| var, add time: "+toStr(i*3)+" sec, score: "+toStr(score));
 	}/**/
 	float score = (1.f + (timeBest-timeCur)/timeBest * decFactor) * 100.f;
 	float pass = trk.passScore * (pSet->game.sim_mode == "normal" ? 1.f : 0.75);  // 80 normal, 60 easy
