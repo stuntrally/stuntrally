@@ -40,8 +40,11 @@ namespace sh
 		MaterialInstance (const std::string& name, Factory* f);
 		virtual ~MaterialInstance ();
 
+		PassVector* getParentPasses(); ///< gets the passes of the top-most parent
+
+		PassVector* getPasses(); ///< get our passes (for derived materials, none)
+
 		MaterialInstancePass* createPass ();
-		PassVector getPasses(); ///< gets the passes of the top-most parent
 
 		/// @attention Because the backend material passes are created on demand, the returned material here might not contain anything yet!
 		/// The only place where you should use this method, is for the MaterialInstance given by the MaterialListener::materialCreated event!

@@ -52,6 +52,7 @@ public:
 	SynchronizationState* mSync;
 	bool mIgnoreGlobalSettingChange;
 	bool mIgnoreConfigurationChange;
+	bool mIgnoreMaterialChange;
 
 	std::queue<Action*> mActionQueue;
 	std::vector<Query*> mQueries;
@@ -64,6 +65,8 @@ private:
 	// material tab
 	QStringListModel* mMaterialModel;
 	QSortFilterProxyModel* mMaterialProxyModel;
+
+	QStandardItemModel* mMaterialPropertyModel;
 
 	// global settings tab
 	QStandardItemModel* mGlobalSettingsModel;
@@ -95,6 +98,7 @@ private slots:
 	void on_actionNewConfiguration_triggered();
 	void on_actionDeleteConfiguration_triggered();
 	void on_actionDeleteConfigurationProperty_triggered();
+	void on_actionCloneMaterial_triggered();
 };
 
 }

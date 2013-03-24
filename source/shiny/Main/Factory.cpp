@@ -507,9 +507,8 @@ namespace sh
 		return &mConfigurations[name];
 	}
 
-	void Factory::registerConfiguration (const std::string& name, Configuration configuration)
+	void Factory::createConfiguration (const std::string& name)
 	{
-		mConfigurations[name] = configuration;
 		mConfigurations[name].setParent (&mGlobalSettings);
 	}
 

@@ -75,11 +75,11 @@ namespace sh
 		bool useShaders = mShadersEnabled || !allowFixedFunction;
 
 		// get passes of the top-most parent
-		PassVector passes = getPasses();
-		if (passes.size() == 0)
+		PassVector* passes = getParentPasses();
+		if (passes->size() == 0)
 			throw std::runtime_error ("material \"" + mName + "\" does not have any passes");
 
-		for (PassVector::iterator it = passes.begin(); it != passes.end(); ++it)
+		for (PassVector::iterator it = passes->begin(); it != passes->end(); ++it)
 		{
 			boost::shared_ptr<Pass> pass = mMaterial->createPass (configuration, lodIndex);
 			it->copyAll (pass.get(), this);
@@ -107,9 +107,9 @@ namespace sh
 						v->setUniformParameters (pass, &it->mShaderProperties);
 
 						std::vector<std::string> sharedParams = v->getSharedParameters ();
-						for (std::vector<std::string>::iterator it = sharedParams.begin(); it != sharedParams.end(); ++it)
+						for (std::vector<std::string>::iterator it2 = sharedParams.begin(); it2 != sharedParams.end(); ++it2)
 						{
-							pass->addSharedParameter (GPT_Vertex, *it);
+							pass->addSharedParameter (GPT_Vertex, *it2);
 						}
 
 						std::vector<std::string> vector = v->getUsedSamplers ();
@@ -126,9 +126,9 @@ namespace sh
 						f->setUniformParameters (pass, &it->mShaderProperties);
 
 						std::vector<std::string> sharedParams = f->getSharedParameters ();
-						for (std::vector<std::string>::iterator it = sharedParams.begin(); it != sharedParams.end(); ++it)
+						for (std::vector<std::string>::iterator it2 = sharedParams.begin(); it2 != sharedParams.end(); ++it2)
 						{
-							pass->addSharedParameter (GPT_Fragment, *it);
+							pass->addSharedParameter (GPT_Fragment, *it2);
 						}
 
 						std::vector<std::string> vector = f->getUsedSamplers ();
@@ -138,9 +138,9 @@ namespace sh
 			}
 
 			// create texture units
-			std::vector<MaterialInstanceTextureUnit> texUnits = it->getTexUnits();
+			std::vector<MaterialInstanceTextureUnit>* texUnits = it->getTexUnits();
 			int i=0;
-			for (std::vector<MaterialInstanceTextureUnit>::iterator texIt = texUnits.begin(); texIt  != texUnits.end(); ++texIt )
+			for (std::vector<MaterialInstanceTextureUnit>::iterator texIt = texUnits->begin(); texIt  != texUnits->end(); ++texIt )
 			{
 				// only create those that are needed by the shader, OR those marked to be created in fixed function pipeline if shaders are disabled
 				bool foundVertex = std::find(usedTextureSamplersVertex.begin(), usedTextureSamplersVertex.end(), texIt->getName()) != usedTextureSamplersVertex.end();
@@ -180,12 +180,17 @@ namespace sh
 		return &mPasses.back();
 	}
 
-	PassVector MaterialInstance::getPasses()
+	PassVector* MaterialInstance::getParentPasses()
 	{
 		if (mParent)
-			return static_cast<MaterialInstance*>(mParent)->getPasses();
+			return static_cast<MaterialInstance*>(mParent)->getParentPasses();
 		else
-			return mPasses;
+			return &mPasses;
+	}
+
+	PassVector* MaterialInstance::getPasses()
+	{
+		return &mPasses;
 	}
 
 	void MaterialInstance::setShadersEnabled (bool enabled)

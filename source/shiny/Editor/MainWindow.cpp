@@ -14,6 +14,7 @@ sh::MainWindow::MainWindow(QWidget *parent)
 	, mRequestShowWindow(false)
 	, mIgnoreGlobalSettingChange(false)
 	, mIgnoreConfigurationChange(false)
+	, mIgnoreMaterialChange(false)
 {
 	ui->setupUi(this);
 
@@ -35,6 +36,10 @@ sh::MainWindow::MainWindow(QWidget *parent)
 
 	connect(ui->materialList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
 			this,								SLOT(onMaterialSelectionChanged(QModelIndex,QModelIndex)));
+
+	mMaterialPropertyModel = new QStandardItemModel(0, 1, this);
+
+	ui->materialView->setModel(mMaterialPropertyModel);
 
 
 	mGlobalSettingsModel = new QStandardItemModel(0, 2, this);
@@ -89,6 +94,7 @@ void sh::MainWindow::onIdle()
 	boost::mutex::scoped_lock lock(mSync->mUpdateMutex);
 
 
+	mIgnoreMaterialChange = true;
 	QString selected;
 
 	QModelIndex selectedIndex = ui->materialList->selectionModel()->currentIndex();
@@ -101,7 +107,6 @@ void sh::MainWindow::onIdle()
 	{
 		list.push_back(QString::fromStdString(*it));
 	}
-
 
 	if (mMaterialModel->stringList() != list)
 	{
@@ -119,6 +124,7 @@ void sh::MainWindow::onIdle()
 				}
 			}
 	}
+	mIgnoreMaterialChange = false;
 
 	mIgnoreGlobalSettingChange = true;
 	for (std::map<std::string, std::string>::const_iterator it = mState.mGlobalSettingsMap.begin();
@@ -213,6 +219,7 @@ void sh::MainWindow::onIdle()
 					}
 				}
 			}
+			delete *it;
 			it = mQueries.erase(it);
 		}
 		else
@@ -222,6 +229,13 @@ void sh::MainWindow::onIdle()
 
 void sh::MainWindow::onMaterialSelectionChanged (const QModelIndex & current, const QModelIndex & previous)
 {
+	if (mIgnoreMaterialChange)
+		return;
+
+	QModelIndex selectedIndex = ui->materialList->selectionModel()->currentIndex();
+	QString name = mMaterialProxyModel->data(selectedIndex, Qt::DisplayRole).toString();
+
+	requestQuery(new sh::MaterialQuery(name.toStdString()));
 }
 
 void sh::MainWindow::onConfigurationSelectionChanged (const QString& current)
@@ -332,4 +346,22 @@ void sh::MainWindow::on_actionDeleteConfigurationProperty_triggered()
 
 	queueAction(new sh::ActionDeleteConfigurationProperty(configurationName, propertyName));
 	requestQuery(new sh::ConfigurationQuery(configurationName));
+}
+
+void sh::MainWindow::on_actionCloneMaterial_triggered()
+{
+	QModelIndex selectedIndex = ui->materialList->selectionModel()->currentIndex();
+	QString name = mMaterialProxyModel->data(selectedIndex, Qt::DisplayRole).toString();
+	if (name.isEmpty())
+		return;
+
+	QInputDialog dialog(this);
+
+	QString text = QInputDialog::getText(this, tr("Clone material"),
+											  tr("Name:"));
+
+	if (!text.isEmpty())
+	{
+		queueAction(new ActionCloneMaterial(name.toStdString(), text.toStdString()));
+	}
 }

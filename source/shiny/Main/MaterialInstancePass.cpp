@@ -11,9 +11,9 @@ namespace sh
 		return &mTexUnits.back();
 	}
 
-	std::vector <MaterialInstanceTextureUnit> MaterialInstancePass::getTexUnits ()
+	std::vector <MaterialInstanceTextureUnit>* MaterialInstancePass::getTexUnits ()
 	{
-		return mTexUnits;
+		return &mTexUnits;
 	}
 
 	void MaterialInstancePass::save(std::ofstream &stream)

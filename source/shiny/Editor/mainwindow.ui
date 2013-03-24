@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <property name="accessibleName">
@@ -63,7 +63,25 @@
             </item>
            </layout>
           </widget>
-          <widget class="QTableView" name="tableView"/>
+          <widget class="QWidget" name="verticalLayoutWidget2">
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <widget class="QTreeView" name="materialView"/>
+            </item>
+            <item>
+             <widget class="QToolBar" name="toolBar4">
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <addaction name="actionNewMaterialProperty"/>
+              <addaction name="actionDeleteMaterialProperty"/>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -88,7 +106,7 @@
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
              <widget class="QListWidget" name="configurationList"/>
@@ -107,7 +125,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget2">
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
              <widget class="QTableView" name="configurationView"/>
@@ -272,13 +290,38 @@
   </action>
   <action name="actionDeleteConfigurationProperty">
    <property name="icon">
-    <iconset theme="edit-delete"/>
+    <iconset theme="edit-delete">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Delete</string>
    </property>
    <property name="toolTip">
     <string>Delete property</string>
+   </property>
+  </action>
+  <action name="actionDeleteMaterialProperty">
+   <property name="icon">
+    <iconset theme="remove">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Delete</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete item</string>
+   </property>
+  </action>
+  <action name="actionNewMaterialProperty">
+   <property name="icon">
+    <iconset theme="add">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>New property</string>
    </property>
   </action>
  </widget>

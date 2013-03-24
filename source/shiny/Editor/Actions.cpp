@@ -17,6 +17,8 @@ namespace sh
 		sh::MaterialInstance* material = sh::Factory::getInstance().createMaterialInstance(
 					mDestName, sourceMaterialParent);
 		sourceMaterial->copyAll(material, sourceMaterial, false);
+
+		material->setSourceFile(sourceMaterial->getSourceFile());
 	}
 
 	void ActionSaveAll::execute()
@@ -32,7 +34,7 @@ namespace sh
 	void ActionCreateConfiguration::execute()
 	{
 		sh::Configuration newConfiguration;
-		sh::Factory::getInstance().registerConfiguration(mName, newConfiguration);
+		sh::Factory::getInstance().createConfiguration(mName);
 	}
 
 	void ActionDeleteConfiguration::execute()

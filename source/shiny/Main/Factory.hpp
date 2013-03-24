@@ -93,8 +93,8 @@ namespace sh
 		/// Get a MaterialInstance by name
 		MaterialInstance* getMaterialInstance (const std::string& name);
 
-		/// Register a configuration, which can then be used by switching the active material scheme
-		void registerConfiguration (const std::string& name, Configuration configuration);
+		/// Create a configuration, which can then be altered by using Factory::getConfiguration
+		void createConfiguration (const std::string& name);
 
 		/// Register a lod configuration, which can then be used by setting up lod distance values for the material \n
 		/// 0 refers to highest lod, so use 1 or higher as index parameter
