@@ -38,7 +38,9 @@ sh::MainWindow::MainWindow(QWidget *parent)
 	connect(ui->materialList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
 			this,								SLOT(onMaterialSelectionChanged(QModelIndex,QModelIndex)));
 
-	mMaterialPropertyModel = new QStandardItemModel(0, 1, this);
+	mMaterialPropertyModel = new QStandardItemModel(0, 2, this);
+	connect(mMaterialPropertyModel,	SIGNAL(itemChanged(QStandardItem*)),
+			this,					SLOT(onMaterialPropertyChanged(QStandardItem*)));
 
 	ui->materialView->setModel(mMaterialPropertyModel);
 
@@ -226,6 +228,31 @@ void sh::MainWindow::onIdle()
 					}
 				}
 			}
+			else if (typeid(**it) == typeid(MaterialQuery))
+			{
+				MaterialQuery* q = static_cast<MaterialQuery*>(*it);
+				mMaterialPropertyModel->clear();
+
+				for (std::map<std::string, MaterialProperty>::const_iterator it = q->mProperties.begin();
+					 it != q->mProperties.end(); ++it)
+				{
+					QColor color = ui->configurationView->palette().color(QPalette::Disabled, QPalette::WindowText);
+
+					QList<QStandardItem*> toAdd;
+					QStandardItem* name = new QStandardItem(QString::fromStdString(it->first));
+					name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
+					if (it->second.mInherited)
+						name->setData(color, Qt::ForegroundRole);
+					QStandardItem* value = new QStandardItem(QString::fromStdString(it->second.mValue));
+					if (it->second.mInherited)
+						value->setData(color, Qt::ForegroundRole);
+
+					toAdd.push_back(name);
+					toAdd.push_back(value);
+
+					mMaterialPropertyModel->appendRow(toAdd);
+				}
+			}
 			delete *it;
 			it = mQueries.erase(it);
 		}
@@ -371,4 +398,17 @@ void sh::MainWindow::on_actionCloneMaterial_triggered()
 	{
 		queueAction(new ActionCloneMaterial(name.toStdString(), text.toStdString()));
 	}
+}
+
+void sh::MainWindow::onMaterialPropertyChanged(QStandardItem *item)
+{
+	QModelIndex selectedIndex = ui->materialList->selectionModel()->currentIndex();
+	QString name = mMaterialProxyModel->data(selectedIndex, Qt::DisplayRole).toString();
+	if (name.isEmpty())
+		return;
+
+	std::string key = mMaterialPropertyModel->data(mMaterialPropertyModel->index(item->row(), 0)).toString().toStdString();
+	std::string value = mMaterialPropertyModel->data(mMaterialPropertyModel->index(item->row(), 1)).toString().toStdString();
+
+	queueAction(new ActionChangeMaterialProperty(name.toStdString(), key, value));
 }

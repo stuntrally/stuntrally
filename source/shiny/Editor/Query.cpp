@@ -25,7 +25,8 @@ void MaterialQuery::executeImpl()
 {
 	sh::MaterialInstance* instance = sh::Factory::getInstance().getMaterialInstance(mName);
 
-	mParent = static_cast<sh::MaterialInstance*>(instance->getParent())->getName();
+	if (instance->getParent())
+		mParent = static_cast<sh::MaterialInstance*>(instance->getParent())->getName();
 
 	const sh::PropertyMap& ourProperties = instance->listProperties();
 

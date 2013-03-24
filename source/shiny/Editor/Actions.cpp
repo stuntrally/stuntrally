@@ -55,4 +55,10 @@ namespace sh
 		c->deleteProperty(mKey);
 		sh::Factory::getInstance().notifyConfigurationChanged();
 	}
+
+	void ActionChangeMaterialProperty::execute()
+	{
+		sh::MaterialInstance* m = sh::Factory::getInstance().getMaterialInstance(mName);
+		m->setProperty(mKey, sh::makeProperty(new sh::StringValue(mValue)));
+	}
 }

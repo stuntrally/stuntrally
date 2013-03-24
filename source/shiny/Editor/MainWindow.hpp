@@ -90,6 +90,7 @@ public slots:
 
 	void onGlobalSettingChanged (QStandardItem* item);
 	void onConfigurationChanged (QStandardItem* item);
+	void onMaterialPropertyChanged (QStandardItem* item);
 
 private slots:
 	void on_lineEdit_textEdited(const QString &arg1);

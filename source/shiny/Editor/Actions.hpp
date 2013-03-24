@@ -102,6 +102,19 @@ namespace sh
 		std::string mKey;
 	};
 
+	class ActionChangeMaterialProperty : public Action
+	{
+	public:
+		ActionChangeMaterialProperty (const std::string& name, const std::string& key, const std::string& value)
+			: mName(name), mKey(key), mValue(value) {}
+
+		virtual void execute();
+	private:
+		std::string mName;
+		std::string mKey;
+		std::string mValue;
+	};
+
 }
 
 #endif
