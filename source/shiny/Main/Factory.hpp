@@ -129,6 +129,9 @@ namespace sh
 		/// loaded or not does not matter.
 		void listMaterials (std::vector<std::string>& out);
 
+		/// Lists current name & value of all global settings.
+		void listGlobalSettings (std::map<std::string, std::string>& out);
+
 		/// Saves all materials, by default to the file they were loaded from.
 		/// If you wish to save them elsewhere, use MaterialInstance::setSourceFile first.
 		void saveAll ();

@@ -5,6 +5,7 @@
 
 #include <QSortFilterProxyModel>
 #include <QStringListModel>
+#include <QStandardItemModel>
 
 #include <queue>
 
@@ -33,13 +34,22 @@ public:
 	SynchronizationState* mSync;
 	std::vector<std::string> mMaterialList;
 
+	std::map<std::string, std::string> mGlobalSettingsMap;
+	bool mIgnoreGlobalSettingChange;
+
 	std::queue<Action*> mActionQueue;
 
 private:
 	Ui::MainWindow *ui;
 
+	// material tab
 	QStringListModel* mModel;
 	QSortFilterProxyModel* mProxyModel;
+
+	// global settings tab
+	QStandardItemModel* mGlobalSettingsModel;
+
+	void queueAction(Action* action);
 
 
 protected:
@@ -50,11 +60,14 @@ public slots:
 
 	void onSelectionChanged (const QModelIndex & current, const QModelIndex & previous);
 
+	void onGlobalSettingChanged (QStandardItem* item);
+
 private slots:
-	void on_actionNew_triggered();
 	void on_lineEdit_textEdited(const QString &arg1);
-	void on_actionDelete_triggered();
 	void on_actionSave_triggered();
+	void on_actionNewMaterial_triggered();
+	void on_actionDeleteMaterial_triggered();
+	void on_actionQuit_triggered();
 };
 
 }

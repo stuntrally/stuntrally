@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab">
        <property name="accessibleName">
@@ -74,7 +74,7 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <widget class="QTableWidget" name="tableWidget"/>
+         <widget class="QTableView" name="globalSettingsView"/>
         </item>
        </layout>
       </widget>

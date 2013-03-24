@@ -41,6 +41,18 @@ namespace sh
 		virtual void execute();
 	};
 
+	class ActionChangeGlobalSetting : public Action
+	{
+	public:
+		ActionChangeGlobalSetting(const std::string& name, const std::string& newValue)
+			: mName(name), mNewValue(newValue) {}
+
+		virtual void execute();
+	private:
+		std::string mName;
+		std::string mNewValue;
+	};
+
 }
 
 #endif

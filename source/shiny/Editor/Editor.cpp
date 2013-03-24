@@ -58,20 +58,29 @@ namespace sh
 		if (!mMainWindow)
 			return;
 
-		boost::mutex::scoped_lock lock(mSync.mUpdateMutex);
 
-		// execute pending actions
-		while (mMainWindow->mActionQueue.size())
 		{
-			Action* action = mMainWindow->mActionQueue.front();
-			action->execute();
-			delete action;
-			mMainWindow->mActionQueue.pop();
+			boost::mutex::scoped_lock lock(mSync.mActionMutex);
+
+			// execute pending actions
+			while (mMainWindow->mActionQueue.size())
+			{
+				Action* action = mMainWindow->mActionQueue.front();
+				action->execute();
+				delete action;
+				mMainWindow->mActionQueue.pop();
+			}
 		}
+
+		boost::mutex::scoped_lock lock2(mSync.mUpdateMutex);
 
 		// update the list of materials
 		mMainWindow->mMaterialList.clear();
 		sh::Factory::getInstance().listMaterials(mMainWindow->mMaterialList);
+
+		// update global settings
+		mMainWindow->mGlobalSettingsMap.clear();
+		sh::Factory::getInstance().listGlobalSettings(mMainWindow->mGlobalSettingsMap);
 	}
 
 

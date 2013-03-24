@@ -24,4 +24,9 @@ namespace sh
 		sh::Factory::getInstance().saveAll();
 	}
 
+	void ActionChangeGlobalSetting::execute()
+	{
+		sh::Factory::getInstance().setGlobalSetting(mName, mNewValue);
+	}
+
 }

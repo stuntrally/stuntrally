@@ -25,6 +25,8 @@ namespace sh
 		boost::condition_variable mWorkerConditionVariable;
 
 		boost::mutex mUpdateMutex;
+
+		boost::mutex mActionMutex;
 	};
 
 	class Editor

@@ -602,6 +602,16 @@ namespace sh
 		}
 	}
 
+	void Factory::listGlobalSettings(std::map<std::string, std::string> &out)
+	{
+		const PropertyMap& properties = mGlobalSettings.listProperties();
+
+		for (PropertyMap::const_iterator it = properties.begin(); it != properties.end(); ++it)
+		{
+			out[it->first] = retrieveValue<StringValue>(mGlobalSettings.getProperty(it->first), NULL).get();
+		}
+	}
+
 	void Factory::_ensureMaterial(const std::string& name, const std::string& configuration)
 	{
 		MaterialInstance* m = searchInstance (name);
