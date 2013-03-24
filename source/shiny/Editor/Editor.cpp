@@ -15,12 +15,18 @@ namespace sh
 		: mMainWindow(NULL)
 		, mApplication(NULL)
 		, mInitialized(false)
+		, mThread(NULL)
 	{
 	}
 
 	Editor::~Editor()
 	{
-		mThread->join();
+		if (mMainWindow)
+			mMainWindow->mRequestExit = true;
+
+		if (mThread)
+			mThread->join();
+		delete mThread;
 	}
 
 	void Editor::show()

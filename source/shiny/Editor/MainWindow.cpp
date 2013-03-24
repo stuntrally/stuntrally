@@ -12,6 +12,7 @@ sh::MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 	, ui(new Ui::MainWindow)
 	, mRequestShowWindow(false)
+	, mRequestExit(false)
 	, mIgnoreGlobalSettingChange(false)
 	, mIgnoreConfigurationChange(false)
 	, mIgnoreMaterialChange(false)
@@ -89,6 +90,12 @@ void sh::MainWindow::onIdle()
 	{
 		mRequestShowWindow = false;
 		show();
+	}
+
+	if (mRequestExit)
+	{
+		QApplication::exit();
+		return;
 	}
 
 	boost::mutex::scoped_lock lock(mSync->mUpdateMutex);

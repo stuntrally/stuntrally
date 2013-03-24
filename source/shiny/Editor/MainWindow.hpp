@@ -48,6 +48,8 @@ public:
 
 	// really should be an std::atomic
 	volatile bool mRequestShowWindow;
+	// dito
+	volatile bool mRequestExit;
 
 	SynchronizationState* mSync;
 	bool mIgnoreGlobalSettingChange;
