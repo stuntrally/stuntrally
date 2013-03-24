@@ -233,7 +233,7 @@ namespace sh
 
 	template <typename T>
 	/// Create a property of any type
-	/// Example: sh::makeProperty\<sh::Vector4\> (new sh::Vector4(1, 1, 1, 1))
+	/// Example: sh::makeProperty (new sh::Vector4(1, 1, 1, 1))
 	inline PropertyValuePtr makeProperty (T* p)
 	{
 		return PropertyValuePtr ( static_cast<PropertyValue*>(p) );

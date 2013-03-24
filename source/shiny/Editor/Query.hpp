@@ -37,6 +37,7 @@ protected:
 
 struct TextureUnitInfo
 {
+	std::string mName;
 	std::map<std::string, std::string> mProperties;
 };
 

@@ -51,6 +51,50 @@ void MaterialQuery::executeImpl()
 		}
 	}
 
+	std::vector<MaterialInstancePass>* passes = instance->getPasses();
+	for (std::vector<MaterialInstancePass>::iterator it = passes->begin(); it != passes->end(); ++it)
+	{
+		mPasses.push_back(PassInfo());
+
+		const sh::PropertyMap& passProperties = it->listProperties();
+		for (PropertyMap::const_iterator pit = passProperties.begin(); pit != passProperties.end(); ++pit)
+		{
+			PropertyValuePtr property = it->getProperty(pit->first);
+			if (typeid(*property).name() == typeid(sh::LinkedValue).name())
+				mPasses.back().mProperties[pit->first] = "$" + property->_getStringValue();
+			else
+				mPasses.back().mProperties[pit->first] =
+						retrieveValue<sh::StringValue>(property, NULL).get();
+		}
+
+		const sh::PropertyMap& shaderProperties = it->mShaderProperties.listProperties();
+		for (PropertyMap::const_iterator pit = shaderProperties.begin(); pit != shaderProperties.end(); ++pit)
+		{
+			PropertyValuePtr property = it->mShaderProperties.getProperty(pit->first);
+			if (typeid(*property).name() == typeid(sh::LinkedValue).name())
+				mPasses.back().mShaderProperties[pit->first] = "$" + property->_getStringValue();
+			else
+				mPasses.back().mShaderProperties[pit->first] =
+						retrieveValue<sh::StringValue>(property, NULL).get();
+		}
+
+		std::vector<MaterialInstanceTextureUnit>* texUnits = it->getTexUnits();
+		for (std::vector<MaterialInstanceTextureUnit>::iterator tIt = texUnits->begin(); tIt != texUnits->end(); ++tIt)
+		{
+			mPasses.back().mTextureUnits.push_back(TextureUnitInfo());
+			mPasses.back().mTextureUnits.back().mName = tIt->getName();
+			const sh::PropertyMap& unitProperties = tIt->listProperties();
+			for (PropertyMap::const_iterator pit = unitProperties.begin(); pit != unitProperties.end(); ++pit)
+			{
+				PropertyValuePtr property = tIt->getProperty(pit->first);
+				if (typeid(*property).name() == typeid(sh::LinkedValue).name())
+					mPasses.back().mTextureUnits.back().mProperties[pit->first] = "$" + property->_getStringValue();
+				else
+					mPasses.back().mTextureUnits.back().mProperties[pit->first] =
+							retrieveValue<sh::StringValue>(property, NULL).get();
+			}
+		}
+	}
 
 }
 

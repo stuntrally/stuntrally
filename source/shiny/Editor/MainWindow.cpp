@@ -252,6 +252,78 @@ void sh::MainWindow::onIdle()
 
 					mMaterialPropertyModel->appendRow(toAdd);
 				}
+
+				for (std::vector<PassInfo>::iterator it = q->mPasses.begin();
+					 it != q->mPasses.end(); ++it)
+				{
+					QStandardItem* passItem = new QStandardItem (QString("pass"));
+
+					if (it->mShaderProperties.size())
+					{
+						QStandardItem* shaderPropertiesItem = new QStandardItem (QString("shader_properties"));
+
+						for (std::map<std::string, std::string>::iterator pit = it->mShaderProperties.begin();
+							 pit != it->mShaderProperties.end(); ++pit)
+						{
+							QList<QStandardItem*> toAdd;
+							QStandardItem* name = new QStandardItem(QString::fromStdString(pit->first));
+							name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
+							QStandardItem* value = new QStandardItem(QString::fromStdString(pit->second));
+
+							toAdd.push_back(name);
+							toAdd.push_back(value);
+
+							shaderPropertiesItem->appendRow(toAdd);
+						}
+						passItem->appendRow(shaderPropertiesItem);
+					}
+
+					for (std::map<std::string, std::string>::iterator pit = it->mProperties.begin();
+						 pit != it->mProperties.end(); ++pit)
+					{
+
+						QList<QStandardItem*> toAdd;
+						QStandardItem* name = new QStandardItem(QString::fromStdString(pit->first));
+						name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
+						QStandardItem* value = new QStandardItem(QString::fromStdString(pit->second));
+
+						toAdd.push_back(name);
+						toAdd.push_back(value);
+
+						passItem->appendRow(toAdd);
+					}
+
+					for (std::vector<TextureUnitInfo>::iterator tIt = it->mTextureUnits.begin();
+						 tIt != it->mTextureUnits.end(); ++tIt)
+					{
+						QStandardItem* unitItem = new QStandardItem (QString("texture_unit"));
+						QStandardItem* nameItem = new QStandardItem (QString::fromStdString(tIt->mName));
+
+						QList<QStandardItem*> texUnit;
+						texUnit << unitItem << nameItem;
+
+						for (std::map<std::string, std::string>::iterator pit = tIt->mProperties.begin();
+							 pit != tIt->mProperties.end(); ++pit)
+						{
+							QList<QStandardItem*> toAdd;
+							QStandardItem* name = new QStandardItem(QString::fromStdString(pit->first));
+							name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
+							QStandardItem* value = new QStandardItem(QString::fromStdString(pit->second));
+
+							toAdd.push_back(name);
+							toAdd.push_back(value);
+
+							unitItem->appendRow(toAdd);
+						}
+
+						passItem->appendRow(texUnit);
+					}
+
+					QList<QStandardItem*> toAdd;
+					toAdd << passItem;
+					toAdd << new QStandardItem(QString(""));
+					mMaterialPropertyModel->appendRow(toAdd);
+				}
 			}
 			delete *it;
 			it = mQueries.erase(it);
@@ -267,6 +339,9 @@ void sh::MainWindow::onMaterialSelectionChanged (const QModelIndex & current, co
 		return;
 
 	QModelIndex selectedIndex = ui->materialList->selectionModel()->currentIndex();
+	if (!selectedIndex.isValid())
+		return;
+
 	QString name = mMaterialProxyModel->data(selectedIndex, Qt::DisplayRole).toString();
 
 	requestQuery(new sh::MaterialQuery(name.toStdString()));
