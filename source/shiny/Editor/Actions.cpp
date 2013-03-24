@@ -29,4 +29,21 @@ namespace sh
 		sh::Factory::getInstance().setGlobalSetting(mName, mNewValue);
 	}
 
+	void ActionCreateConfiguration::execute()
+	{
+		sh::Configuration newConfiguration;
+		sh::Factory::getInstance().registerConfiguration(mName, newConfiguration);
+	}
+
+	void ActionDeleteConfiguration::execute()
+	{
+		sh::Factory::getInstance().destroyConfiguration(mName);
+	}
+
+	void ActionChangeConfiguration::execute()
+	{
+		sh::Configuration* c = sh::Factory::getInstance().getConfiguration(mName);
+		c->setProperty(mKey, sh::makeProperty(new sh::StringValue(mValue)));
+		sh::Factory::getInstance().notifyConfigurationChanged();
+	}
 }

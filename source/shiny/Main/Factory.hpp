@@ -12,9 +12,21 @@ namespace sh
 {
 	class Platform;
 
+	class Configuration : public PropertySetGet
+	{
+	public:
+		void setSourceFile (const std::string& file) { mSourceFile = file ; }
+		std::string getSourceFile () { return mSourceFile; }
+
+		void save(const std::string& name, std::ofstream &stream);
+
+	private:
+		std::string mSourceFile;
+	};
+
 	typedef std::map<std::string, MaterialInstance> MaterialMap;
 	typedef std::map<std::string, ShaderSet> ShaderSetMap;
-	typedef std::map<std::string, PropertySetGet> ConfigurationMap;
+	typedef std::map<std::string, Configuration> ConfigurationMap;
 	typedef std::map<int, PropertySetGet> LodConfigurationMap;
 	typedef std::map<std::string, int> LastModifiedMap;
 
@@ -82,7 +94,7 @@ namespace sh
 		MaterialInstance* getMaterialInstance (const std::string& name);
 
 		/// Register a configuration, which can then be used by switching the active material scheme
-		void registerConfiguration (const std::string& name, PropertySetGet configuration);
+		void registerConfiguration (const std::string& name, Configuration configuration);
 
 		/// Register a lod configuration, which can then be used by setting up lod distance values for the material \n
 		/// 0 refers to highest lod, so use 1 or higher as index parameter
@@ -132,8 +144,18 @@ namespace sh
 		/// Lists current name & value of all global settings.
 		void listGlobalSettings (std::map<std::string, std::string>& out);
 
-		/// Saves all materials, by default to the file they were loaded from.
-		/// If you wish to save them elsewhere, use MaterialInstance::setSourceFile first.
+		/// Lists configuration names.
+		void listConfigurationNames (std::vector<std::string>& out);
+
+		/// Lists current name & value of settings for a given configuration.
+		void listConfigurationSettings (const std::string& name, std::map<std::string, std::string>& out);
+
+		void destroyConfiguration (const std::string& name);
+
+		void notifyConfigurationChanged();
+
+		/// Saves all materials and configurations, by default to the file they were loaded from.
+		/// If you wish to save them elsewhere, use setSourceFile first.
 		void saveAll ();
 
 		static Factory& getInstance();
@@ -145,11 +167,13 @@ namespace sh
 		/// You will probably never have to use this.
 		void _ensureMaterial(const std::string& name, const std::string& configuration);
 
+
+		Configuration* getConfiguration (const std::string& name);
+
 	private:
 
 		MaterialInstance* requestMaterial (const std::string& name, const std::string& configuration, unsigned short lodIndex);
 		ShaderSet* getShaderSet (const std::string& name);
-		PropertySetGet* getConfiguration (const std::string& name);
 		Platform* getPlatform ();
 
 		PropertySetGet* getCurrentGlobalSettings();

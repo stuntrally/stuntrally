@@ -53,6 +53,43 @@ namespace sh
 		std::string mNewValue;
 	};
 
+	class ActionCreateConfiguration : public Action
+	{
+	public:
+		ActionCreateConfiguration(const std::string& name)
+			: mName(name) {}
+
+		virtual void execute();
+	private:
+		std::string mName;
+
+	};
+
+	class ActionDeleteConfiguration : public Action
+	{
+	public:
+		ActionDeleteConfiguration(const std::string& name)
+			: mName(name) {}
+
+		virtual void execute();
+	private:
+		std::string mName;
+
+	};
+
+	class ActionChangeConfiguration : public Action
+	{
+	public:
+		ActionChangeConfiguration (const std::string& name, const std::string& key, const std::string& value)
+			: mName(name), mKey(key), mValue(value) {}
+
+		virtual void execute();
+	private:
+		std::string mName;
+		std::string mKey;
+		std::string mValue;
+	};
+
 }
 
 #endif

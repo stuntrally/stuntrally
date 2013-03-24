@@ -20,6 +20,7 @@ set(SOURCE_FILES
     MainWindow.cpp
     Editor.cpp
     Actions.cpp
+    Query.cpp
     NewMaterialDialog.cpp
     mainwindow.ui
     newmaterialdialog.ui

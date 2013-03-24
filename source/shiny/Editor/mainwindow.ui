@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab">
        <property name="accessibleName">
@@ -88,7 +88,7 @@
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <widget class="QWidget" name="verticalLayoutWidget_2">
+          <widget class="QWidget" name="">
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
              <widget class="QListWidget" name="configurationList"/>
@@ -107,7 +107,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QListView" name="listView"/>
+          <widget class="QTableView" name="configurationView"/>
          </widget>
         </item>
        </layout>

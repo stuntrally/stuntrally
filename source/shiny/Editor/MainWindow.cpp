@@ -4,6 +4,8 @@
 #include <QCloseEvent>
 #include <QTimer>
 
+#include <QInputDialog>
+
 #include "Editor.hpp"
 
 sh::MainWindow::MainWindow(QWidget *parent)
@@ -11,6 +13,7 @@ sh::MainWindow::MainWindow(QWidget *parent)
 	, ui(new Ui::MainWindow)
 	, mRequestShowWindow(false)
 	, mIgnoreGlobalSettingChange(false)
+	, mIgnoreConfigurationChange(false)
 {
 	ui->setupUi(this);
 
@@ -18,20 +21,20 @@ sh::MainWindow::MainWindow(QWidget *parent)
 	connect(timer, SIGNAL(timeout()), this, SLOT(onIdle()));
 	timer->start(50);
 
-	mModel = new QStringListModel(this);
+	mMaterialModel = new QStringListModel(this);
 
-	mProxyModel = new QSortFilterProxyModel(this);
-	mProxyModel->setSourceModel(mModel);
-	mProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
-	mProxyModel->setDynamicSortFilter(true);
-	mProxyModel->setSortCaseSensitivity(Qt::CaseInsensitive);
+	mMaterialProxyModel = new QSortFilterProxyModel(this);
+	mMaterialProxyModel->setSourceModel(mMaterialModel);
+	mMaterialProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+	mMaterialProxyModel->setDynamicSortFilter(true);
+	mMaterialProxyModel->setSortCaseSensitivity(Qt::CaseInsensitive);
 
-	ui->materialList->setModel(mProxyModel);
+	ui->materialList->setModel(mMaterialProxyModel);
 	ui->materialList->setSelectionMode(QAbstractItemView::SingleSelection);
 	ui->materialList->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
 	connect(ui->materialList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
-			this,								SLOT(onSelectionChanged(QModelIndex,QModelIndex)));
+			this,								SLOT(onMaterialSelectionChanged(QModelIndex,QModelIndex)));
 
 
 	mGlobalSettingsModel = new QStandardItemModel(0, 2, this);
@@ -41,10 +44,27 @@ sh::MainWindow::MainWindow(QWidget *parent)
 			this,					SLOT(onGlobalSettingChanged(QStandardItem*)));
 
 	ui->globalSettingsView->setModel(mGlobalSettingsModel);
-	ui->globalSettingsView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+	ui->globalSettingsView->verticalHeader()->setResizeMode(QHeaderView::ResizeToContents);
 	ui->globalSettingsView->verticalHeader()->hide();
 	ui->globalSettingsView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+	ui->globalSettingsView->setSelectionMode(QAbstractItemView::SingleSelection);
 
+	ui->configurationList->setSelectionMode(QAbstractItemView::SingleSelection);
+	ui->configurationList->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	connect(ui->configurationList,	SIGNAL(currentTextChanged(QString)),
+							this,	SLOT(onConfigurationSelectionChanged(QString)));
+
+	mConfigurationModel = new QStandardItemModel(0, 2, this);
+	mConfigurationModel->setHorizontalHeaderItem(0, new QStandardItem(QString("Name")));
+	mConfigurationModel->setHorizontalHeaderItem(1, new QStandardItem(QString("Value")));
+	connect(mConfigurationModel,	SIGNAL(itemChanged(QStandardItem*)),
+			this,					SLOT(onConfigurationChanged(QStandardItem*)));
+
+	ui->configurationView->setModel(mConfigurationModel);
+	ui->configurationView->verticalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+	ui->configurationView->verticalHeader()->hide();
+	ui->configurationView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+	ui->configurationView->setSelectionMode(QAbstractItemView::SingleSelection);
 }
 
 sh::MainWindow::~MainWindow()
@@ -68,30 +88,31 @@ void sh::MainWindow::onIdle()
 
 	boost::mutex::scoped_lock lock(mSync->mUpdateMutex);
 
+
 	QString selected;
 
 	QModelIndex selectedIndex = ui->materialList->selectionModel()->currentIndex();
 	if (selectedIndex.isValid())
-		selected = mModel->data(selectedIndex, Qt::DisplayRole).toString();
+		selected = mMaterialModel->data(selectedIndex, Qt::DisplayRole).toString();
 
 	QStringList list;
 
-	for (std::vector<std::string>::const_iterator it = mMaterialList.begin(); it != mMaterialList.end(); ++it)
+	for (std::vector<std::string>::const_iterator it = mState.mMaterialList.begin(); it != mState.mMaterialList.end(); ++it)
 	{
 		list.push_back(QString::fromStdString(*it));
 	}
 
 
-	if (mModel->stringList() != list)
+	if (mMaterialModel->stringList() != list)
 	{
-		mModel->setStringList(list);
+		mMaterialModel->setStringList(list);
 
 		// quick hack to keep our selection when the model has changed
 		if (!selected.isEmpty())
-			for (int i=0; i<mModel->rowCount(); ++i)
+			for (int i=0; i<mMaterialModel->rowCount(); ++i)
 			{
-				const QModelIndex& index = mModel->index(i,0);
-				if (mModel->data(index, Qt::DisplayRole).toString() == selected)
+				const QModelIndex& index = mMaterialModel->index(i,0);
+				if (mMaterialModel->data(index, Qt::DisplayRole).toString() == selected)
 				{
 					ui->materialList->setCurrentIndex(index);
 					break;
@@ -99,42 +120,96 @@ void sh::MainWindow::onIdle()
 			}
 	}
 
-	//if (mGlobalSettingsModel->rowCount() == 0)
+	mIgnoreGlobalSettingChange = true;
+	for (std::map<std::string, std::string>::const_iterator it = mState.mGlobalSettingsMap.begin();
+		 it != mState.mGlobalSettingsMap.end(); ++it)
 	{
-		mIgnoreGlobalSettingChange = true;
-		for (std::map<std::string, std::string>::const_iterator it = mGlobalSettingsMap.begin();
-			 it != mGlobalSettingsMap.end(); ++it)
+		QList<QStandardItem *> list = mGlobalSettingsModel->findItems(QString::fromStdString(it->first));
+		if (!list.empty()) // item was already there
 		{
-			QList<QStandardItem *> list = mGlobalSettingsModel->findItems(QString::fromStdString(it->first));
-			if (!list.empty()) // item was already there
+			// if it changed, set the value column
+			if (mGlobalSettingsModel->data(mGlobalSettingsModel->index(list.front()->row(), 1)).toString()
+					!= QString::fromStdString(it->second))
 			{
-				// if it changed, set the value column
-				if (mGlobalSettingsModel->data(mGlobalSettingsModel->index(list.front()->row(), 1)).toString()
-						!= QString::fromStdString(it->second))
-				{
-					std::cout << "changing " << it->first << " to " << it->second << std::endl;
-
-					mGlobalSettingsModel->setItem(list.front()->row(), 1, new QStandardItem(QString::fromStdString(it->second)));
-				}
-			}
-			else // item wasn't there; insert new row
-			{
-				QList<QStandardItem*> toAdd;
-				QStandardItem* name = new QStandardItem(QString::fromStdString(it->first));
-				name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
-				QStandardItem* value = new QStandardItem(QString::fromStdString(it->second));
-				toAdd.push_back(name);
-				toAdd.push_back(value);
-				mGlobalSettingsModel->appendRow(toAdd);
+				mGlobalSettingsModel->setItem(list.front()->row(), 1, new QStandardItem(QString::fromStdString(it->second)));
 			}
 		}
-		mIgnoreGlobalSettingChange = false;
+		else // item wasn't there; insert new row
+		{
+			QList<QStandardItem*> toAdd;
+			QStandardItem* name = new QStandardItem(QString::fromStdString(it->first));
+			name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
+			QStandardItem* value = new QStandardItem(QString::fromStdString(it->second));
+			toAdd.push_back(name);
+			toAdd.push_back(value);
+			mGlobalSettingsModel->appendRow(toAdd);
+		}
 	}
+	mIgnoreGlobalSettingChange = false;
 
+
+	mIgnoreConfigurationChange = true;
+	QList<QListWidgetItem*> selected_ = ui->configurationList->selectedItems();
+	QString selectedStr;
+	if (selected_.size())
+		selectedStr = selected_.front()->text();
+
+	ui->configurationList->clear();
+
+	for (std::vector<std::string>::const_iterator it = mState.mConfigurationList.begin(); it != mState.mConfigurationList.end(); ++it)
+		ui->configurationList->addItem(QString::fromStdString(*it));
+
+	if (!selectedStr.isEmpty())
+		for (int i=0; i<ui->configurationList->count(); ++i)
+		{
+			if (ui->configurationList->item(i)->text() == selectedStr)
+			{
+				ui->configurationList->setCurrentItem(ui->configurationList->item(i), QItemSelectionModel::ClearAndSelect);
+			}
+		}
+
+	mIgnoreConfigurationChange = false;
+
+
+	// process query results
+	boost::mutex::scoped_lock lock2(mSync->mQueryMutex);
+	for (std::vector<Query*>::iterator it = mQueries.begin(); it != mQueries.end();)
+	{
+		if ((*it)->mDone)
+		{
+			if (typeid(**it) == typeid(ConfigurationQuery))
+			{
+				ConfigurationQuery* q = static_cast<ConfigurationQuery*>(*it);
+				while (mConfigurationModel->rowCount())
+					mConfigurationModel->removeRow(0);
+				for (std::map<std::string, std::string>::iterator it = q->mProperties.begin();
+					 it != q->mProperties.end(); ++it)
+				{
+					QList<QStandardItem*> toAdd;
+					QStandardItem* name = new QStandardItem(QString::fromStdString(it->first));
+					name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
+					QStandardItem* value = new QStandardItem(QString::fromStdString(it->second));
+					toAdd.push_back(name);
+					toAdd.push_back(value);
+					mConfigurationModel->appendRow(toAdd);
+				}
+			}
+			it = mQueries.erase(it);
+		}
+		else
+			++it;
+	}
 }
 
-void sh::MainWindow::onSelectionChanged (const QModelIndex & current, const QModelIndex & previous)
+void sh::MainWindow::onMaterialSelectionChanged (const QModelIndex & current, const QModelIndex & previous)
 {
+}
+
+void sh::MainWindow::onConfigurationSelectionChanged (const QString& current)
+{
+	if (mIgnoreConfigurationChange)
+		return;
+	requestQuery(new sh::ConfigurationQuery(current.toStdString()));
 }
 
 void sh::MainWindow::onGlobalSettingChanged(QStandardItem *item)
@@ -148,9 +223,22 @@ void sh::MainWindow::onGlobalSettingChanged(QStandardItem *item)
 	queueAction(new sh::ActionChangeGlobalSetting(name, value));
 }
 
+void sh::MainWindow::onConfigurationChanged (QStandardItem* item)
+{
+	QList<QListWidgetItem*> items = ui->configurationList->selectedItems();
+	if (items.size())
+	{
+		std::string name = items.front()->text().toStdString();
+		std::string key = mConfigurationModel->data(mConfigurationModel->index(item->row(), 0)).toString().toStdString();
+		std::string value = mConfigurationModel->data(mConfigurationModel->index(item->row(), 1)).toString().toStdString();
+
+		queueAction(new sh::ActionChangeConfiguration(name, key, value));
+	}
+}
+
 void sh::MainWindow::on_lineEdit_textEdited(const QString &arg1)
 {
-	mProxyModel->setFilterFixedString(arg1);
+	mMaterialProxyModel->setFilterFixedString(arg1);
 }
 
 void sh::MainWindow::on_actionSave_triggered()
@@ -166,7 +254,7 @@ void sh::MainWindow::on_actionNewMaterial_triggered()
 void sh::MainWindow::on_actionDeleteMaterial_triggered()
 {
 	QModelIndex selectedIndex = ui->materialList->selectionModel()->currentIndex();
-	QString name = mProxyModel->data(selectedIndex, Qt::DisplayRole).toString();
+	QString name = mMaterialProxyModel->data(selectedIndex, Qt::DisplayRole).toString();
 
 	queueAction (new sh::ActionDeleteMaterial(name.toStdString()));
 }
@@ -177,8 +265,33 @@ void sh::MainWindow::queueAction(Action* action)
 	mActionQueue.push(action);
 }
 
+void sh::MainWindow::requestQuery(Query *query)
+{
+	boost::mutex::scoped_lock lock(mSync->mActionMutex);
+	mQueries.push_back(query);
+}
 
 void sh::MainWindow::on_actionQuit_triggered()
 {
 	hide();
+}
+
+void sh::MainWindow::on_actionNewConfiguration_triggered()
+{
+	QInputDialog dialog(this);
+
+	QString text = QInputDialog::getText(this, tr("New Configuration"),
+											  tr("Configuration name:"));
+
+	if (!text.isEmpty())
+	{
+		queueAction(new ActionCreateConfiguration(text.toStdString()));
+	}
+}
+
+void sh::MainWindow::on_actionDeleteConfiguration_triggered()
+{
+	QList<QListWidgetItem*> items = ui->configurationList->selectedItems();
+	if (items.size())
+		queueAction(new ActionDeleteConfiguration(items.front()->text().toStdString()));
 }

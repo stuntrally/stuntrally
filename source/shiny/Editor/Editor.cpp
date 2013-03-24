@@ -71,16 +71,31 @@ namespace sh
 				mMainWindow->mActionQueue.pop();
 			}
 		}
+		{
+			boost::mutex::scoped_lock lock(mSync.mQueryMutex);
+
+			// execute pending queries
+			for (std::vector<Query*>::iterator it = mMainWindow->mQueries.begin(); it != mMainWindow->mQueries.end(); ++it)
+			{
+				Query* query = *it;
+				if (!query->mDone)
+					query->execute();
+			}
+		}
 
 		boost::mutex::scoped_lock lock2(mSync.mUpdateMutex);
 
 		// update the list of materials
-		mMainWindow->mMaterialList.clear();
-		sh::Factory::getInstance().listMaterials(mMainWindow->mMaterialList);
+		mMainWindow->mState.mMaterialList.clear();
+		sh::Factory::getInstance().listMaterials(mMainWindow->mState.mMaterialList);
 
 		// update global settings
-		mMainWindow->mGlobalSettingsMap.clear();
-		sh::Factory::getInstance().listGlobalSettings(mMainWindow->mGlobalSettingsMap);
+		mMainWindow->mState.mGlobalSettingsMap.clear();
+		sh::Factory::getInstance().listGlobalSettings(mMainWindow->mState.mGlobalSettingsMap);
+
+		// update configuration list
+		mMainWindow->mState.mConfigurationList.clear();
+		sh::Factory::getInstance().listConfigurationNames(mMainWindow->mState.mConfigurationList);
 	}
 
 

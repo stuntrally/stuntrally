@@ -86,8 +86,9 @@ namespace sh
 					break;
 				}
 
-				PropertySetGet newConfiguration;
+				Configuration newConfiguration;
 				newConfiguration.setParent(&mGlobalSettings);
+				newConfiguration.setSourceFile (it->second->mFileName);
 
 				std::vector<ScriptNode*> props = it->second->getChildren();
 				for (std::vector<ScriptNode*>::const_iterator propIt = props.begin(); propIt != props.end(); ++propIt)
@@ -466,6 +467,14 @@ namespace sh
 		}
 	}
 
+	void Factory::notifyConfigurationChanged()
+	{
+		for (MaterialMap::iterator it = mMaterials.begin(); it != mMaterials.end(); ++it)
+		{
+			it->second.destroyAll();
+		}
+	}
+
 	MaterialInstance* Factory::getMaterialInstance (const std::string& name)
 	{
 		return findInstance(name);
@@ -493,15 +502,20 @@ namespace sh
 			return "";
 	}
 
-	PropertySetGet* Factory::getConfiguration (const std::string& name)
+	Configuration* Factory::getConfiguration (const std::string& name)
 	{
 		return &mConfigurations[name];
 	}
 
-	void Factory::registerConfiguration (const std::string& name, PropertySetGet configuration)
+	void Factory::registerConfiguration (const std::string& name, Configuration configuration)
 	{
 		mConfigurations[name] = configuration;
 		mConfigurations[name].setParent (&mGlobalSettings);
+	}
+
+	void Factory::destroyConfiguration(const std::string &name)
+	{
+		mConfigurations.erase(name);
 	}
 
 	void Factory::registerLodConfiguration (int index, PropertySetGet configuration)
@@ -580,12 +594,34 @@ namespace sh
 				continue;
 			if (files.find(it->second.getSourceFile()) == files.end())
 			{
+				/// \todo check if this is actually the same file, since there can be different paths to the same file
 				std::ofstream* stream = new std::ofstream();
 				stream->open (it->second.getSourceFile().c_str());
 
 				files[it->second.getSourceFile()] = stream;
 			}
 			it->second.save (*files[it->second.getSourceFile()]);
+		}
+
+		for (std::map<std::string, std::ofstream*>::iterator it = files.begin(); it != files.end(); ++it)
+		{
+			delete it->second;
+		}
+		files.clear();
+
+		for (ConfigurationMap::iterator it = mConfigurations.begin(); it != mConfigurations.end(); ++it)
+		{
+			if (it->second.getSourceFile().empty())
+				continue;
+			if (files.find(it->second.getSourceFile()) == files.end())
+			{
+				/// \todo check if this is actually the same file, since there can be different paths to the same file
+				std::ofstream* stream = new std::ofstream();
+				stream->open (it->second.getSourceFile().c_str());
+
+				files[it->second.getSourceFile()] = stream;
+			}
+			it->second.save (it->first, *files[it->second.getSourceFile()]);
 		}
 
 		for (std::map<std::string, std::ofstream*>::iterator it = files.begin(); it != files.end(); ++it)
@@ -609,6 +645,24 @@ namespace sh
 		for (PropertyMap::const_iterator it = properties.begin(); it != properties.end(); ++it)
 		{
 			out[it->first] = retrieveValue<StringValue>(mGlobalSettings.getProperty(it->first), NULL).get();
+		}
+	}
+
+	void Factory::listConfigurationSettings(const std::string& name, std::map<std::string, std::string> &out)
+	{
+		const PropertyMap& properties = mConfigurations[name].listProperties();
+
+		for (PropertyMap::const_iterator it = properties.begin(); it != properties.end(); ++it)
+		{
+			out[it->first] = retrieveValue<StringValue>(mConfigurations[name].getProperty(it->first), NULL).get();
+		}
+	}
+
+	void Factory::listConfigurationNames(std::vector<std::string> &out)
+	{
+		for (ConfigurationMap::const_iterator it = mConfigurations.begin(); it != mConfigurations.end(); ++it)
+		{
+			out.push_back(it->first);
 		}
 	}
 
@@ -657,5 +711,13 @@ namespace sh
 			}
 		}
 		return ret;
+	}
+
+	void Configuration::save(const std::string& name, std::ofstream &stream)
+	{
+		stream << "configuration " << name << '\n';
+		stream << "{\n";
+		PropertySetGet::save(stream, "\t");
+		stream << "}\n";
 	}
 }

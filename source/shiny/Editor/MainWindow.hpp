@@ -4,12 +4,13 @@
 #include <QMainWindow>
 
 #include <QSortFilterProxyModel>
-#include <QStringListModel>
 #include <QStandardItemModel>
+#include <QStringListModel>
 
 #include <queue>
 
 #include "Actions.hpp"
+#include "Query.hpp"
 
 namespace Ui {
 class MainWindow;
@@ -18,7 +19,24 @@ class MainWindow;
 namespace sh
 {
 
-class SynchronizationState;
+struct SynchronizationState;
+
+
+/**
+ * @brief A snapshot of the material system's state. Lock the mUpdateMutex before accessing.
+ */
+struct MaterialSystemState
+{
+	std::vector<std::string> mMaterialList;
+
+	std::map<std::string, std::string> mGlobalSettingsMap;
+
+	std::vector<std::string> mConfigurationList;
+
+	std::vector<std::string> mMaterialFiles;
+	std::vector<std::string> mConfigurationFiles;
+};
+
 
 class MainWindow : public QMainWindow
 {
@@ -32,25 +50,29 @@ public:
 	volatile bool mRequestShowWindow;
 
 	SynchronizationState* mSync;
-	std::vector<std::string> mMaterialList;
-
-	std::map<std::string, std::string> mGlobalSettingsMap;
 	bool mIgnoreGlobalSettingChange;
+	bool mIgnoreConfigurationChange;
 
 	std::queue<Action*> mActionQueue;
+	std::vector<Query*> mQueries;
+
+	MaterialSystemState mState;
 
 private:
 	Ui::MainWindow *ui;
 
 	// material tab
-	QStringListModel* mModel;
-	QSortFilterProxyModel* mProxyModel;
+	QStringListModel* mMaterialModel;
+	QSortFilterProxyModel* mMaterialProxyModel;
 
 	// global settings tab
 	QStandardItemModel* mGlobalSettingsModel;
 
-	void queueAction(Action* action);
+	// configuration tab
+	QStandardItemModel* mConfigurationModel;
 
+	void queueAction(Action* action);
+	void requestQuery(Query* query);
 
 protected:
 	void closeEvent(QCloseEvent *event);
@@ -58,9 +80,11 @@ protected:
 public slots:
 	void onIdle();
 
-	void onSelectionChanged (const QModelIndex & current, const QModelIndex & previous);
+	void onMaterialSelectionChanged (const QModelIndex & current, const QModelIndex & previous);
+	void onConfigurationSelectionChanged (const QString& current);
 
 	void onGlobalSettingChanged (QStandardItem* item);
+	void onConfigurationChanged (QStandardItem* item);
 
 private slots:
 	void on_lineEdit_textEdited(const QString &arg1);
@@ -68,6 +92,8 @@ private slots:
 	void on_actionNewMaterial_triggered();
 	void on_actionDeleteMaterial_triggered();
 	void on_actionQuit_triggered();
+	void on_actionNewConfiguration_triggered();
+	void on_actionDeleteConfiguration_triggered();
 };
 
 }

@@ -27,6 +27,7 @@ namespace sh
 		boost::mutex mUpdateMutex;
 
 		boost::mutex mActionMutex;
+		boost::mutex mQueryMutex;
 	};
 
 	class Editor
