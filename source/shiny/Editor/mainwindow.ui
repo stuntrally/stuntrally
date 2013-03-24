@@ -107,7 +107,24 @@
             </item>
            </layout>
           </widget>
-          <widget class="QTableView" name="configurationView"/>
+          <widget class="QWidget" name="layoutWidget">
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QTableView" name="configurationView"/>
+            </item>
+            <item>
+             <widget class="QToolBar" name="toolBar2_2">
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <addaction name="actionDeleteConfigurationProperty"/>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -251,6 +268,17 @@
    </property>
    <property name="toolTip">
     <string>Create a new configuration</string>
+   </property>
+  </action>
+  <action name="actionDeleteConfigurationProperty">
+   <property name="icon">
+    <iconset theme="edit-delete"/>
+   </property>
+   <property name="text">
+    <string>Delete</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete property</string>
    </property>
   </action>
  </widget>

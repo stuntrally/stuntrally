@@ -166,6 +166,8 @@ namespace sh
 		virtual void setProperty (const std::string& name, PropertyValuePtr value);
 		PropertyValuePtr& getProperty (const std::string& name);
 
+		void deleteProperty (const std::string& name);
+
 		const PropertyMap& listProperties() { return mProperties; }
 
 		bool hasProperty (const std::string& name) const;

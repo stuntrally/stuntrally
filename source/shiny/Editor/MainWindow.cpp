@@ -193,6 +193,25 @@ void sh::MainWindow::onIdle()
 					toAdd.push_back(value);
 					mConfigurationModel->appendRow(toAdd);
 				}
+
+				// add items that are in global settings, but not in this configuration (with a "inactive" color)
+				for (std::map<std::string, std::string>::const_iterator it = mState.mGlobalSettingsMap.begin();
+					 it != mState.mGlobalSettingsMap.end(); ++it)
+				{
+					if (q->mProperties.find(it->first) == q->mProperties.end())
+					{
+						QColor color = ui->configurationView->palette().color(QPalette::Disabled, QPalette::WindowText);
+						QList<QStandardItem*> toAdd;
+						QStandardItem* name = new QStandardItem(QString::fromStdString(it->first));
+						name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
+						name->setData(color, Qt::ForegroundRole);
+						QStandardItem* value = new QStandardItem(QString::fromStdString(it->second));
+						value->setData(color, Qt::ForegroundRole);
+						toAdd.push_back(name);
+						toAdd.push_back(value);
+						mConfigurationModel->appendRow(toAdd);
+					}
+				}
 			}
 			it = mQueries.erase(it);
 		}
@@ -233,6 +252,8 @@ void sh::MainWindow::onConfigurationChanged (QStandardItem* item)
 		std::string value = mConfigurationModel->data(mConfigurationModel->index(item->row(), 1)).toString().toStdString();
 
 		queueAction(new sh::ActionChangeConfiguration(name, key, value));
+
+		requestQuery(new sh::ConfigurationQuery(name));
 	}
 }
 
@@ -294,4 +315,21 @@ void sh::MainWindow::on_actionDeleteConfiguration_triggered()
 	QList<QListWidgetItem*> items = ui->configurationList->selectedItems();
 	if (items.size())
 		queueAction(new ActionDeleteConfiguration(items.front()->text().toStdString()));
+}
+
+void sh::MainWindow::on_actionDeleteConfigurationProperty_triggered()
+{
+	QList<QListWidgetItem*> items = ui->configurationList->selectedItems();
+	if (items.empty())
+		return;
+	std::string configurationName = items.front()->text().toStdString();
+
+	QModelIndex current = ui->configurationView->currentIndex();
+	if (!current.isValid())
+		return;
+
+	std::string propertyName = mConfigurationModel->data(mConfigurationModel->index(current.row(), 0)).toString().toStdString();
+
+	queueAction(new sh::ActionDeleteConfigurationProperty(configurationName, propertyName));
+	requestQuery(new sh::ConfigurationQuery(configurationName));
 }

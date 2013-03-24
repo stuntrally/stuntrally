@@ -228,6 +228,11 @@ namespace sh
 		mProperties [name] = value;
 	}
 
+	void PropertySetGet::deleteProperty(const std::string &name)
+	{
+		mProperties.erase(name);
+	}
+
 	PropertyValuePtr& PropertySetGet::getProperty (const std::string& name)
 	{
 		bool found = (mProperties.find(name) != mProperties.end());

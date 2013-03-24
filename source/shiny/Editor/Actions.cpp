@@ -46,4 +46,11 @@ namespace sh
 		c->setProperty(mKey, sh::makeProperty(new sh::StringValue(mValue)));
 		sh::Factory::getInstance().notifyConfigurationChanged();
 	}
+
+	void ActionDeleteConfigurationProperty::execute()
+	{
+		sh::Configuration* c = sh::Factory::getInstance().getConfiguration(mName);
+		c->deleteProperty(mKey);
+		sh::Factory::getInstance().notifyConfigurationChanged();
+	}
 }

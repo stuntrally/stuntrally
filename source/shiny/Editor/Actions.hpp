@@ -90,6 +90,18 @@ namespace sh
 		std::string mValue;
 	};
 
+	class ActionDeleteConfigurationProperty : public Action
+	{
+	public:
+		ActionDeleteConfigurationProperty (const std::string& name, const std::string& key)
+			: mName(name), mKey(key) {}
+
+		virtual void execute();
+	private:
+		std::string mName;
+		std::string mKey;
+	};
+
 }
 
 #endif

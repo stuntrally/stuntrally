@@ -94,6 +94,7 @@ private slots:
 	void on_actionQuit_triggered();
 	void on_actionNewConfiguration_triggered();
 	void on_actionDeleteConfiguration_triggered();
+	void on_actionDeleteConfigurationProperty_triggered();
 };
 
 }
