@@ -79,6 +79,9 @@ private:
 	void queueAction(Action* action);
 	void requestQuery(Query* query);
 
+	void buildMaterialModel (MaterialQuery* data);
+	void buildConfigurationModel (ConfigurationQuery* data);
+
 protected:
 	void closeEvent(QCloseEvent *event);
 

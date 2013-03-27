@@ -76,6 +76,9 @@
                 <height>16</height>
                </size>
               </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonIconOnly</enum>
+              </property>
               <addaction name="actionNewMaterialProperty"/>
               <addaction name="actionDeleteMaterialProperty"/>
              </widget>
@@ -224,9 +227,6 @@
    <property name="toolTip">
     <string>Delete selected material</string>
    </property>
-   <property name="shortcut">
-    <string>Del</string>
-   </property>
   </action>
   <action name="actionChange_parent">
    <property name="text">
@@ -303,9 +303,7 @@
   </action>
   <action name="actionDeleteMaterialProperty">
    <property name="icon">
-    <iconset theme="remove">
-     <normaloff/>
-    </iconset>
+    <iconset theme="remove"/>
    </property>
    <property name="text">
     <string>Delete</string>

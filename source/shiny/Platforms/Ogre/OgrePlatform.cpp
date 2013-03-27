@@ -4,6 +4,7 @@
 
 #include <OgreDataStream.h>
 #include <OgreGpuProgramManager.h>
+#include <OgreHighLevelGpuProgramManager.h>
 #include <OgreRoot.h>
 
 #include "OgreMaterial.hpp"
@@ -74,6 +75,11 @@ namespace sh
 	{
 		OgreMaterial* material = new OgreMaterial(name, mResourceGroup);
 		return boost::shared_ptr<Material> (material);
+	}
+
+	void OgrePlatform::destroyGpuProgram(const std::string &name)
+	{
+		Ogre::HighLevelGpuProgramManager::getSingleton().remove(name);
 	}
 
 	boost::shared_ptr<GpuProgram> OgrePlatform::createGpuProgram (

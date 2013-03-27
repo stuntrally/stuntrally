@@ -9,7 +9,6 @@ namespace sh
 	Platform::Platform (const std::string& basePath)
 		: mBasePath(basePath)
 		, mCacheFolder("./")
-		, mShaderCachingEnabled(false)
 	{
 	}
 
@@ -55,11 +54,6 @@ namespace sh
 	void Platform::setCacheFolder (const std::string& folder)
 	{
 		mCacheFolder = folder;
-	}
-
-	void Platform::setShaderCachingEnabled (bool enabled)
-	{
-		mShaderCachingEnabled = enabled;
 	}
 
 	std::string Platform::getCacheFolder() const

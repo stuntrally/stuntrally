@@ -12,6 +12,8 @@
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
+
+#include "../shiny/Main/Factory.hpp"
 using namespace MyGUI;
 using namespace Ogre;
 

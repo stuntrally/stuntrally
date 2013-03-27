@@ -141,8 +141,8 @@ App::App()  //  gui wigdets--
 void App::postInit()
 {
 	sh::OgrePlatform* platform = new sh::OgrePlatform("General", PATHMANAGER::Data() + "/" + "materials");
-	platform->setShaderCachingEnabled(true);
-	platform->setCacheFolder(PATHMANAGER::ShaderDir());
+
+	platform->setCacheFolder (PATHMANAGER::CacheDir());
 	
 	mFactory = new sh::Factory(platform);
 	SetFactoryDefaults();
@@ -154,6 +154,7 @@ const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise" };  
 App::~App()
 {
 	delete mEditor;
+	delete mFactory;
 
 	viewBox.destroy();
 

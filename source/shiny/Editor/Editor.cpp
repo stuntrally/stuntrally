@@ -61,6 +61,8 @@ namespace sh
 
 	void Editor::update()
 	{
+		sh::Factory::getInstance().doMonitorShaderFiles();
+
 		if (!mMainWindow)
 			return;
 

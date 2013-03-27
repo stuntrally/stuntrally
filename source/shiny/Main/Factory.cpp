@@ -51,8 +51,6 @@ namespace sh
 	{
 		assert(mCurrentLanguage != Language_None);
 
-		bool removeBinaryCache = false;
-
 		if (boost::filesystem::exists (mPlatform->getCacheFolder () + "/lastModified.txt"))
 		{
 			std::ifstream file;
@@ -138,82 +136,7 @@ namespace sh
 		}
 
 		// load shader sets
-		{
-			ScriptLoader shaderSetLoader(".shaderset");
-			ScriptLoader::loadAllFiles (&shaderSetLoader, mPlatform->getBasePath());
-			std::map <std::string, ScriptNode*> nodes = shaderSetLoader.getAllConfigScripts();
-			for (std::map <std::string, ScriptNode*>::const_iterator it = nodes.begin();
-				it != nodes.end(); ++it)
-			{
-				if (!(it->second->getName() == "shader_set"))
-				{
-					std::cerr << "sh::Factory: Warning: Unsupported root node type \"" << it->second->getName() << "\" for file type .shaderset" << std::endl;
-					break;
-				}
-
-				if (!it->second->findChild("profiles_cg"))
-					throw std::runtime_error ("missing \"profiles_cg\" field for \"" + it->first + "\"");
-				if (!it->second->findChild("profiles_hlsl"))
-					throw std::runtime_error ("missing \"profiles_hlsl\" field for \"" + it->first + "\"");
-				if (!it->second->findChild("source"))
-					throw std::runtime_error ("missing \"source\" field for \"" + it->first + "\"");
-				if (!it->second->findChild("type"))
-					throw std::runtime_error ("missing \"type\" field for \"" + it->first + "\"");
-
-				std::vector<std::string> profiles_cg;
-				boost::split (profiles_cg, it->second->findChild("profiles_cg")->getValue(), boost::is_any_of(" "));
-				std::string cg_profile;
-				for (std::vector<std::string>::iterator it2 = profiles_cg.begin(); it2 != profiles_cg.end(); ++it2)
-				{
-					if (mPlatform->isProfileSupported(*it2))
-					{
-						cg_profile = *it2;
-						break;
-					}
-				}
-
-				std::vector<std::string> profiles_hlsl;
-				boost::split (profiles_hlsl, it->second->findChild("profiles_hlsl")->getValue(), boost::is_any_of(" "));
-				std::string hlsl_profile;
-				for (std::vector<std::string>::iterator it2 = profiles_hlsl.begin(); it2 != profiles_hlsl.end(); ++it2)
-				{
-					if (mPlatform->isProfileSupported(*it2))
-					{
-						hlsl_profile = *it2;
-						break;
-					}
-				}
-
-				std::string sourceAbsolute = mPlatform->getBasePath() + "/" + it->second->findChild("source")->getValue();
-				std::string sourceRelative = it->second->findChild("source")->getValue();
-
-				ShaderSet newSet (it->second->findChild("type")->getValue(), cg_profile, hlsl_profile,
-								  sourceAbsolute,
-								  mPlatform->getBasePath(),
-								  it->first,
-								  &mGlobalSettings);
-
-				int lastModified = boost::filesystem::last_write_time (boost::filesystem::path(sourceAbsolute));
-				mShadersLastModifiedNew[sourceRelative] = lastModified;
-				if (mShadersLastModified.find(sourceRelative) != mShadersLastModified.end())
-				{
-					if (mShadersLastModified[sourceRelative] != lastModified)
-					{
-						// delete any outdated shaders based on this shader set
-						if (removeCache (it->first))
-							removeBinaryCache = true;
-					}
-				}
-				else
-				{
-					// if we get here, this is either the first run or a new shader file was added
-					// in both cases we can safely delete
-					if (removeCache (it->first))
-						removeBinaryCache = true;
-				}
-				mShaderSets.insert(std::make_pair(it->first, newSet));
-			}
-		}
+		bool removeBinaryCache = reloadShaders();
 
 		// load materials
 		{
@@ -316,6 +239,8 @@ namespace sh
 
 	Factory::~Factory ()
 	{
+		mShaderSets.clear();
+
 		if (mPlatform->supportsShaderSerialization () && mWriteMicrocodeCache)
 		{
 			std::string file = mPlatform->getCacheFolder () + "/" + mBinaryCacheName;
@@ -710,6 +635,119 @@ namespace sh
 			}
 		}
 		return ret;
+	}
+
+	bool Factory::reloadShaders()
+	{
+		mShaderSets.clear();
+		notifyConfigurationChanged();
+
+		bool removeBinaryCache = false;
+		ScriptLoader shaderSetLoader(".shaderset");
+		ScriptLoader::loadAllFiles (&shaderSetLoader, mPlatform->getBasePath());
+		std::map <std::string, ScriptNode*> nodes = shaderSetLoader.getAllConfigScripts();
+		for (std::map <std::string, ScriptNode*>::const_iterator it = nodes.begin();
+			it != nodes.end(); ++it)
+		{
+			if (!(it->second->getName() == "shader_set"))
+			{
+				std::cerr << "sh::Factory: Warning: Unsupported root node type \"" << it->second->getName() << "\" for file type .shaderset" << std::endl;
+				break;
+			}
+
+			if (!it->second->findChild("profiles_cg"))
+				throw std::runtime_error ("missing \"profiles_cg\" field for \"" + it->first + "\"");
+			if (!it->second->findChild("profiles_hlsl"))
+				throw std::runtime_error ("missing \"profiles_hlsl\" field for \"" + it->first + "\"");
+			if (!it->second->findChild("source"))
+				throw std::runtime_error ("missing \"source\" field for \"" + it->first + "\"");
+			if (!it->second->findChild("type"))
+				throw std::runtime_error ("missing \"type\" field for \"" + it->first + "\"");
+
+			std::vector<std::string> profiles_cg;
+			boost::split (profiles_cg, it->second->findChild("profiles_cg")->getValue(), boost::is_any_of(" "));
+			std::string cg_profile;
+			for (std::vector<std::string>::iterator it2 = profiles_cg.begin(); it2 != profiles_cg.end(); ++it2)
+			{
+				if (mPlatform->isProfileSupported(*it2))
+				{
+					cg_profile = *it2;
+					break;
+				}
+			}
+
+			std::vector<std::string> profiles_hlsl;
+			boost::split (profiles_hlsl, it->second->findChild("profiles_hlsl")->getValue(), boost::is_any_of(" "));
+			std::string hlsl_profile;
+			for (std::vector<std::string>::iterator it2 = profiles_hlsl.begin(); it2 != profiles_hlsl.end(); ++it2)
+			{
+				if (mPlatform->isProfileSupported(*it2))
+				{
+					hlsl_profile = *it2;
+					break;
+				}
+			}
+
+			std::string sourceAbsolute = mPlatform->getBasePath() + "/" + it->second->findChild("source")->getValue();
+			std::string sourceRelative = it->second->findChild("source")->getValue();
+
+			ShaderSet newSet (it->second->findChild("type")->getValue(), cg_profile, hlsl_profile,
+							  sourceAbsolute,
+							  mPlatform->getBasePath(),
+							  it->first,
+							  &mGlobalSettings);
+
+			int lastModified = boost::filesystem::last_write_time (boost::filesystem::path(sourceAbsolute));
+			mShadersLastModifiedNew[sourceRelative] = lastModified;
+			if (mShadersLastModified.find(sourceRelative) != mShadersLastModified.end())
+			{
+				if (mShadersLastModified[sourceRelative] != lastModified)
+				{
+					// delete any outdated shaders based on this shader set
+					if (removeCache (it->first))
+						removeBinaryCache = true;
+					mShadersLastModified[sourceRelative] = lastModified;
+				}
+			}
+			else
+			{
+				// if we get here, this is either the first run or a new shader file was added
+				// in both cases we can safely delete
+				if (removeCache (it->first))
+					removeBinaryCache = true;
+				mShadersLastModified[sourceRelative] = lastModified;
+			}
+			mShaderSets.insert(std::make_pair(it->first, newSet));
+		}
+
+		return removeBinaryCache;
+	}
+
+	void Factory::doMonitorShaderFiles()
+	{
+		bool reload=false;
+		ScriptLoader shaderSetLoader(".shaderset");
+		ScriptLoader::loadAllFiles (&shaderSetLoader, mPlatform->getBasePath());
+		std::map <std::string, ScriptNode*> nodes = shaderSetLoader.getAllConfigScripts();
+		for (std::map <std::string, ScriptNode*>::const_iterator it = nodes.begin();
+			it != nodes.end(); ++it)
+		{
+
+			std::string sourceAbsolute = mPlatform->getBasePath() + "/" + it->second->findChild("source")->getValue();
+			std::string sourceRelative = it->second->findChild("source")->getValue();
+
+			int lastModified = boost::filesystem::last_write_time (boost::filesystem::path(sourceAbsolute));
+			if (mShadersLastModified.find(sourceRelative) != mShadersLastModified.end())
+			{
+				if (mShadersLastModified[sourceRelative] != lastModified)
+				{
+					reload=true;
+					break;
+				}
+			}
+		}
+		if (reload)
+			reloadShaders();
 	}
 
 	void Configuration::save(const std::string& name, std::ofstream &stream)

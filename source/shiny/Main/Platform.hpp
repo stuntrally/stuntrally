@@ -79,8 +79,6 @@ namespace sh
 		Platform (const std::string& basePath);
 		virtual ~Platform ();
 
-		void setShaderCachingEnabled (bool enabled);
-
 		/// set the folder to use for shader caching
 		void setCacheFolder (const std::string& folder);
 
@@ -92,6 +90,8 @@ namespace sh
 			const std::string& compileArguments,
 			const std::string& name, const std::string& profile,
 			const std::string& source, Language lang) = 0;
+
+		virtual void destroyGpuProgram (const std::string& name) = 0;
 
 		virtual void setSharedParameter (const std::string& name, PropertyValuePtr value) = 0;
 
@@ -105,6 +105,7 @@ namespace sh
 		friend class Factory;
 		friend class MaterialInstance;
 		friend class ShaderInstance;
+		friend class ShaderSet;
 
 	protected:
 		/**
@@ -130,9 +131,6 @@ namespace sh
 
 		std::string mCacheFolder;
 		Factory* mFactory;
-
-	protected:
-		bool mShaderCachingEnabled;
 
 	private:
 		void setFactory (Factory* factory);

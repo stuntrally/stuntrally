@@ -39,6 +39,8 @@ sh::MainWindow::MainWindow(QWidget *parent)
 			this,								SLOT(onMaterialSelectionChanged(QModelIndex,QModelIndex)));
 
 	mMaterialPropertyModel = new QStandardItemModel(0, 2, this);
+	mMaterialPropertyModel->setHorizontalHeaderItem(0, new QStandardItem(QString("Name")));
+	mMaterialPropertyModel->setHorizontalHeaderItem(1, new QStandardItem(QString("Value")));
 	connect(mMaterialPropertyModel,	SIGNAL(itemChanged(QStandardItem*)),
 			this,					SLOT(onMaterialPropertyChanged(QStandardItem*)));
 
@@ -193,138 +195,10 @@ void sh::MainWindow::onIdle()
 		if ((*it)->mDone)
 		{
 			if (typeid(**it) == typeid(ConfigurationQuery))
-			{
-				ConfigurationQuery* q = static_cast<ConfigurationQuery*>(*it);
-				while (mConfigurationModel->rowCount())
-					mConfigurationModel->removeRow(0);
-				for (std::map<std::string, std::string>::iterator it = q->mProperties.begin();
-					 it != q->mProperties.end(); ++it)
-				{
-					QList<QStandardItem*> toAdd;
-					QStandardItem* name = new QStandardItem(QString::fromStdString(it->first));
-					name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
-					QStandardItem* value = new QStandardItem(QString::fromStdString(it->second));
-					toAdd.push_back(name);
-					toAdd.push_back(value);
-					mConfigurationModel->appendRow(toAdd);
-				}
-
-				// add items that are in global settings, but not in this configuration (with a "inactive" color)
-				for (std::map<std::string, std::string>::const_iterator it = mState.mGlobalSettingsMap.begin();
-					 it != mState.mGlobalSettingsMap.end(); ++it)
-				{
-					if (q->mProperties.find(it->first) == q->mProperties.end())
-					{
-						QColor color = ui->configurationView->palette().color(QPalette::Disabled, QPalette::WindowText);
-						QList<QStandardItem*> toAdd;
-						QStandardItem* name = new QStandardItem(QString::fromStdString(it->first));
-						name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
-						name->setData(color, Qt::ForegroundRole);
-						QStandardItem* value = new QStandardItem(QString::fromStdString(it->second));
-						value->setData(color, Qt::ForegroundRole);
-						toAdd.push_back(name);
-						toAdd.push_back(value);
-						mConfigurationModel->appendRow(toAdd);
-					}
-				}
-			}
+				buildConfigurationModel(static_cast<ConfigurationQuery*>(*it));
 			else if (typeid(**it) == typeid(MaterialQuery))
-			{
-				MaterialQuery* q = static_cast<MaterialQuery*>(*it);
-				mMaterialPropertyModel->clear();
+				buildMaterialModel(static_cast<MaterialQuery*>(*it));
 
-				for (std::map<std::string, MaterialProperty>::const_iterator it = q->mProperties.begin();
-					 it != q->mProperties.end(); ++it)
-				{
-					QColor color = ui->configurationView->palette().color(QPalette::Disabled, QPalette::WindowText);
-
-					QList<QStandardItem*> toAdd;
-					QStandardItem* name = new QStandardItem(QString::fromStdString(it->first));
-					name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
-					if (it->second.mInherited)
-						name->setData(color, Qt::ForegroundRole);
-					QStandardItem* value = new QStandardItem(QString::fromStdString(it->second.mValue));
-					if (it->second.mInherited)
-						value->setData(color, Qt::ForegroundRole);
-
-					toAdd.push_back(name);
-					toAdd.push_back(value);
-
-					mMaterialPropertyModel->appendRow(toAdd);
-				}
-
-				for (std::vector<PassInfo>::iterator it = q->mPasses.begin();
-					 it != q->mPasses.end(); ++it)
-				{
-					QStandardItem* passItem = new QStandardItem (QString("pass"));
-
-					if (it->mShaderProperties.size())
-					{
-						QStandardItem* shaderPropertiesItem = new QStandardItem (QString("shader_properties"));
-
-						for (std::map<std::string, std::string>::iterator pit = it->mShaderProperties.begin();
-							 pit != it->mShaderProperties.end(); ++pit)
-						{
-							QList<QStandardItem*> toAdd;
-							QStandardItem* name = new QStandardItem(QString::fromStdString(pit->first));
-							name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
-							QStandardItem* value = new QStandardItem(QString::fromStdString(pit->second));
-
-							toAdd.push_back(name);
-							toAdd.push_back(value);
-
-							shaderPropertiesItem->appendRow(toAdd);
-						}
-						passItem->appendRow(shaderPropertiesItem);
-					}
-
-					for (std::map<std::string, std::string>::iterator pit = it->mProperties.begin();
-						 pit != it->mProperties.end(); ++pit)
-					{
-
-						QList<QStandardItem*> toAdd;
-						QStandardItem* name = new QStandardItem(QString::fromStdString(pit->first));
-						name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
-						QStandardItem* value = new QStandardItem(QString::fromStdString(pit->second));
-
-						toAdd.push_back(name);
-						toAdd.push_back(value);
-
-						passItem->appendRow(toAdd);
-					}
-
-					for (std::vector<TextureUnitInfo>::iterator tIt = it->mTextureUnits.begin();
-						 tIt != it->mTextureUnits.end(); ++tIt)
-					{
-						QStandardItem* unitItem = new QStandardItem (QString("texture_unit"));
-						QStandardItem* nameItem = new QStandardItem (QString::fromStdString(tIt->mName));
-
-						QList<QStandardItem*> texUnit;
-						texUnit << unitItem << nameItem;
-
-						for (std::map<std::string, std::string>::iterator pit = tIt->mProperties.begin();
-							 pit != tIt->mProperties.end(); ++pit)
-						{
-							QList<QStandardItem*> toAdd;
-							QStandardItem* name = new QStandardItem(QString::fromStdString(pit->first));
-							name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
-							QStandardItem* value = new QStandardItem(QString::fromStdString(pit->second));
-
-							toAdd.push_back(name);
-							toAdd.push_back(value);
-
-							unitItem->appendRow(toAdd);
-						}
-
-						passItem->appendRow(texUnit);
-					}
-
-					QList<QStandardItem*> toAdd;
-					toAdd << passItem;
-					toAdd << new QStandardItem(QString(""));
-					mMaterialPropertyModel->appendRow(toAdd);
-				}
-			}
 			delete *it;
 			it = mQueries.erase(it);
 		}
@@ -477,6 +351,7 @@ void sh::MainWindow::on_actionCloneMaterial_triggered()
 
 void sh::MainWindow::onMaterialPropertyChanged(QStandardItem *item)
 {
+	std::cout << "emit " << std::endl;
 	QModelIndex selectedIndex = ui->materialList->selectionModel()->currentIndex();
 	QString name = mMaterialProxyModel->data(selectedIndex, Qt::DisplayRole).toString();
 	if (name.isEmpty())
@@ -486,4 +361,142 @@ void sh::MainWindow::onMaterialPropertyChanged(QStandardItem *item)
 	std::string value = mMaterialPropertyModel->data(mMaterialPropertyModel->index(item->row(), 1)).toString().toStdString();
 
 	queueAction(new ActionChangeMaterialProperty(name.toStdString(), key, value));
+}
+
+void sh::MainWindow::buildMaterialModel(MaterialQuery *data)
+{
+	mMaterialPropertyModel->clear();
+
+	mMaterialPropertyModel->setHorizontalHeaderItem(0, new QStandardItem(QString("Name")));
+	mMaterialPropertyModel->setHorizontalHeaderItem(1, new QStandardItem(QString("Value")));
+
+	for (std::map<std::string, MaterialProperty>::const_iterator it = data->mProperties.begin();
+		 it != data->mProperties.end(); ++it)
+	{
+		QColor color = ui->configurationView->palette().color(QPalette::Disabled, QPalette::WindowText);
+
+		QList<QStandardItem*> toAdd;
+		QStandardItem* name = new QStandardItem(QString::fromStdString(it->first));
+		name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
+		if (it->second.mInherited)
+			name->setData(color, Qt::ForegroundRole);
+		QStandardItem* value = new QStandardItem(QIcon::fromTheme("edit-delete"), QString::fromStdString(it->second.mValue));
+		if (it->second.mInherited)
+			value->setData(color, Qt::ForegroundRole);
+
+		value->setCheckable(true);
+
+		toAdd.push_back(name);
+		toAdd.push_back(value);
+
+		mMaterialPropertyModel->appendRow(toAdd);
+	}
+
+	for (std::vector<PassInfo>::iterator it = data->mPasses.begin();
+		 it != data->mPasses.end(); ++it)
+	{
+		QStandardItem* passItem = new QStandardItem (QString("pass"));
+
+		if (it->mShaderProperties.size())
+		{
+			QStandardItem* shaderPropertiesItem = new QStandardItem (QString("shader_properties"));
+
+			for (std::map<std::string, std::string>::iterator pit = it->mShaderProperties.begin();
+				 pit != it->mShaderProperties.end(); ++pit)
+			{
+				QList<QStandardItem*> toAdd;
+				QStandardItem* name = new QStandardItem(QString::fromStdString(pit->first));
+				name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
+				QStandardItem* value = new QStandardItem(QString::fromStdString(pit->second));
+
+				toAdd.push_back(name);
+				toAdd.push_back(value);
+
+				shaderPropertiesItem->appendRow(toAdd);
+			}
+			passItem->appendRow(shaderPropertiesItem);
+		}
+
+		for (std::map<std::string, std::string>::iterator pit = it->mProperties.begin();
+			 pit != it->mProperties.end(); ++pit)
+		{
+
+			QList<QStandardItem*> toAdd;
+			QStandardItem* name = new QStandardItem(QString::fromStdString(pit->first));
+			name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
+			QStandardItem* value = new QStandardItem(QString::fromStdString(pit->second));
+
+			toAdd.push_back(name);
+			toAdd.push_back(value);
+
+			passItem->appendRow(toAdd);
+		}
+
+		for (std::vector<TextureUnitInfo>::iterator tIt = it->mTextureUnits.begin();
+			 tIt != it->mTextureUnits.end(); ++tIt)
+		{
+			QStandardItem* unitItem = new QStandardItem (QString("texture_unit"));
+			QStandardItem* nameItem = new QStandardItem (QString::fromStdString(tIt->mName));
+
+			QList<QStandardItem*> texUnit;
+			texUnit << unitItem << nameItem;
+
+			for (std::map<std::string, std::string>::iterator pit = tIt->mProperties.begin();
+				 pit != tIt->mProperties.end(); ++pit)
+			{
+				QList<QStandardItem*> toAdd;
+				QStandardItem* name = new QStandardItem(QString::fromStdString(pit->first));
+				name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
+				QStandardItem* value = new QStandardItem(QString::fromStdString(pit->second));
+
+				toAdd.push_back(name);
+				toAdd.push_back(value);
+
+				unitItem->appendRow(toAdd);
+			}
+
+			passItem->appendRow(texUnit);
+		}
+
+		QList<QStandardItem*> toAdd;
+		toAdd << passItem;
+		toAdd << new QStandardItem(QString(""));
+		mMaterialPropertyModel->appendRow(toAdd);
+	}
+}
+
+void sh::MainWindow::buildConfigurationModel(ConfigurationQuery *data)
+{
+	while (mConfigurationModel->rowCount())
+		mConfigurationModel->removeRow(0);
+	for (std::map<std::string, std::string>::iterator it = data->mProperties.begin();
+		 it != data->mProperties.end(); ++it)
+	{
+		QList<QStandardItem*> toAdd;
+		QStandardItem* name = new QStandardItem(QString::fromStdString(it->first));
+		name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
+		QStandardItem* value = new QStandardItem(QString::fromStdString(it->second));
+		toAdd.push_back(name);
+		toAdd.push_back(value);
+		mConfigurationModel->appendRow(toAdd);
+	}
+
+	// add items that are in global settings, but not in this configuration (with a "inactive" color)
+	for (std::map<std::string, std::string>::const_iterator it = mState.mGlobalSettingsMap.begin();
+		 it != mState.mGlobalSettingsMap.end(); ++it)
+	{
+		if (data->mProperties.find(it->first) == data->mProperties.end())
+		{
+			QColor color = ui->configurationView->palette().color(QPalette::Disabled, QPalette::WindowText);
+			QList<QStandardItem*> toAdd;
+			QStandardItem* name = new QStandardItem(QString::fromStdString(it->first));
+			name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
+			name->setData(color, Qt::ForegroundRole);
+			QStandardItem* value = new QStandardItem(QString::fromStdString(it->second));
+			value->setData(color, Qt::ForegroundRole);
+			toAdd.push_back(name);
+			toAdd.push_back(value);
+			mConfigurationModel->appendRow(toAdd);
+		}
+	}
 }
