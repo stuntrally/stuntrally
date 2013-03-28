@@ -56,9 +56,59 @@ namespace sh
 		sh::Factory::getInstance().notifyConfigurationChanged();
 	}
 
-	void ActionChangeMaterialProperty::execute()
+	void ActionSetMaterialProperty::execute()
 	{
 		sh::MaterialInstance* m = sh::Factory::getInstance().getMaterialInstance(mName);
 		m->setProperty(mKey, sh::makeProperty(new sh::StringValue(mValue)));
+	}
+
+	void ActionDeleteMaterialProperty::execute()
+	{
+		sh::MaterialInstance* m = sh::Factory::getInstance().getMaterialInstance(mName);
+		m->deleteProperty(mKey);
+	}
+
+	void ActionSetPassProperty::execute()
+	{
+		sh::MaterialInstance* m = sh::Factory::getInstance().getMaterialInstance(mName);
+		assert (m->getPasses()->size() > mPassIndex);
+		m->getPasses()->at(mPassIndex).setProperty (mKey, sh::makeProperty(new sh::StringValue(mValue)));
+	}
+
+	void ActionDeletePassProperty::execute()
+	{
+		sh::MaterialInstance* m = sh::Factory::getInstance().getMaterialInstance(mName);
+		assert (m->getPasses()->size() > mPassIndex);
+		m->getPasses()->at(mPassIndex).deleteProperty(mKey);
+	}
+
+	void ActionSetShaderProperty::execute()
+	{
+		sh::MaterialInstance* m = sh::Factory::getInstance().getMaterialInstance(mName);
+		assert (m->getPasses()->size() > mPassIndex);
+		m->getPasses()->at(mPassIndex).mShaderProperties.setProperty (mKey, sh::makeProperty(new sh::StringValue(mValue)));
+	}
+
+	void ActionDeleteShaderProperty::execute()
+	{
+		sh::MaterialInstance* m = sh::Factory::getInstance().getMaterialInstance(mName);
+		assert (m->getPasses()->size() > mPassIndex);
+		m->getPasses()->at(mPassIndex).mShaderProperties.deleteProperty (mKey);
+	}
+
+	void ActionSetTextureProperty::execute()
+	{
+		sh::MaterialInstance* m = sh::Factory::getInstance().getMaterialInstance(mName);
+		assert (m->getPasses()->size() > mPassIndex);
+		assert (m->getPasses()->at(mPassIndex).getTexUnits()->size() > mTextureIndex);
+		m->getPasses()->at(mPassIndex).getTexUnits()->at(mTextureIndex).setProperty(mKey, sh::makeProperty(new sh::StringValue(mValue)));
+	}
+
+	void ActionDeleteTextureProperty::execute()
+	{
+		sh::MaterialInstance* m = sh::Factory::getInstance().getMaterialInstance(mName);
+		assert (m->getPasses()->size() > mPassIndex);
+		assert (m->getPasses()->at(mPassIndex).getTexUnits()->size() > mTextureIndex);
+		m->getPasses()->at(mPassIndex).getTexUnits()->at(mTextureIndex).deleteProperty(mKey);
 	}
 }

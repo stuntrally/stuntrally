@@ -53,6 +53,8 @@ namespace sh
 		std::string mNewValue;
 	};
 
+	// configuration
+
 	class ActionCreateConfiguration : public Action
 	{
 	public:
@@ -102,10 +104,12 @@ namespace sh
 		std::string mKey;
 	};
 
-	class ActionChangeMaterialProperty : public Action
+	// material
+
+	class ActionSetMaterialProperty : public Action
 	{
 	public:
-		ActionChangeMaterialProperty (const std::string& name, const std::string& key, const std::string& value)
+		ActionSetMaterialProperty (const std::string& name, const std::string& key, const std::string& value)
 			: mName(name), mKey(key), mValue(value) {}
 
 		virtual void execute();
@@ -113,6 +117,107 @@ namespace sh
 		std::string mName;
 		std::string mKey;
 		std::string mValue;
+	};
+
+	class ActionDeleteMaterialProperty : public Action
+	{
+	public:
+		ActionDeleteMaterialProperty (const std::string& name, const std::string& key)
+			: mName(name), mKey(key) {}
+
+		virtual void execute();
+	private:
+		std::string mName;
+		std::string mKey;
+	};
+
+	// pass
+
+	class ActionSetPassProperty : public Action
+	{
+	public:
+		ActionSetPassProperty (const std::string& name, int passIndex, const std::string& key, const std::string& value)
+			: mName(name), mPassIndex(passIndex), mKey(key), mValue(value) {}
+
+		virtual void execute();
+	private:
+		std::string mName;
+		int mPassIndex;
+		std::string mKey;
+		std::string mValue;
+	};
+
+	class ActionDeletePassProperty : public Action
+	{
+	public:
+		ActionDeletePassProperty (const std::string& name, int passIndex, const std::string& key)
+			: mName(name), mPassIndex(passIndex), mKey(key) {}
+
+		virtual void execute();
+	private:
+		std::string mName;
+		int mPassIndex;
+		std::string mKey;
+	};
+
+	// shader
+
+	class ActionSetShaderProperty : public Action
+	{
+	public:
+		ActionSetShaderProperty (const std::string& name, int passIndex, const std::string& key, const std::string& value)
+			: mName(name), mPassIndex(passIndex), mKey(key), mValue(value) {}
+
+		virtual void execute();
+	private:
+		std::string mName;
+		int mPassIndex;
+		std::string mKey;
+		std::string mValue;
+	};
+
+	class ActionDeleteShaderProperty : public Action
+	{
+	public:
+		ActionDeleteShaderProperty (const std::string& name, int passIndex, const std::string& key)
+			: mName(name), mPassIndex(passIndex), mKey(key) {}
+
+		virtual void execute();
+	private:
+		std::string mName;
+		int mPassIndex;
+		std::string mKey;
+	};
+
+	// texture unit
+
+	class ActionSetTextureProperty : public Action
+	{
+	public:
+		ActionSetTextureProperty (const std::string& name, int passIndex, int textureIndex, const std::string& key, const std::string& value)
+			: mName(name), mPassIndex(passIndex), mTextureIndex(textureIndex), mKey(key), mValue(value) {}
+
+		virtual void execute();
+	private:
+		std::string mName;
+		int mPassIndex;
+		int mTextureIndex;
+		std::string mKey;
+		std::string mValue;
+	};
+
+	class ActionDeleteTextureProperty : public Action
+	{
+	public:
+		ActionDeleteTextureProperty (const std::string& name, int passIndex, int textureIndex, const std::string& key)
+			: mName(name), mPassIndex(passIndex), mTextureIndex(textureIndex), mKey(key) {}
+
+		virtual void execute();
+	private:
+		std::string mName;
+		int mPassIndex;
+		int mTextureIndex;
+		std::string mKey;
 	};
 
 }

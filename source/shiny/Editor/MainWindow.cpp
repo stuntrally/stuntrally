@@ -360,7 +360,7 @@ void sh::MainWindow::onMaterialPropertyChanged(QStandardItem *item)
 	std::string key = mMaterialPropertyModel->data(mMaterialPropertyModel->index(item->row(), 0)).toString().toStdString();
 	std::string value = mMaterialPropertyModel->data(mMaterialPropertyModel->index(item->row(), 1)).toString().toStdString();
 
-	queueAction(new ActionChangeMaterialProperty(name.toStdString(), key, value));
+	queueAction(new ActionSetMaterialProperty(name.toStdString(), key, value));
 }
 
 void sh::MainWindow::buildMaterialModel(MaterialQuery *data)
