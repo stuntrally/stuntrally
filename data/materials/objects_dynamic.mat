@@ -3,19 +3,19 @@ material fuel_can
 	parent base
 	diffuseMap fuel_can_diff.jpg
 	normalMap fuel_can_norm.jpg
-	specMap fuel_can_spec.jpg
+	specMap fuel_can_spec.png
 	terrain_light_map true
 	ambient 1.50 1.50 1.50
 	diffuse 1.00 1.00 1.00
-    specular 1 1 1 4
+	specular 0.6 0.6 0.6 4
 }
 
 material fuen_can/green
 {
-    parent fuel_can
-    diffuseMap fuel_can_diff.jpg
-    ambient 1.5 1.5 0.6
-    diffuse 1 1 1
+	parent fuel_can
+	diffuseMap fuel_can_diff.jpg
+	ambient 1.5 1.5 0.6
+	diffuse 1 1 1
 }
 
 material RubberTire
@@ -37,34 +37,34 @@ material concrete_texture
 	terrain_light_map true
 	ambient 0.70 0.70 0.70
 	diffuse 1.00 1.00 1.00
-    specular 1 1 1 4
+	specular 1 1 1 4
 }
 
 material crate2
 {
-    parent base
-    diffuseMap crate2.jpg
-    normalMap crate_norm.jpg
-    terrain_light_map true
-    ambient 0.95 1 1
-    diffuse 0.65 0.7 0.7
-    specular 0.6 0.6 0.6 8
+	parent base
+	diffuseMap crate2.jpg
+	normalMap crate_norm.jpg
+	terrain_light_map true
+	ambient 0.95 1 1
+	diffuse 0.65 0.7 0.7
+	specular 0.6 0.6 0.6 8
 }
 
 material Crate
 {
-    parent base
-    diffuseMap crate.jpg
-    normalMap crate_norm.jpg
-    terrain_light_map true
-    ambient 0.9 1 1
-    diffuse 0.9 1 1
-    specular 0.55 0.6 0.6 32
+	parent base
+	diffuseMap crate.jpg
+	normalMap crate_norm.jpg
+	terrain_light_map true
+	ambient 0.9 1 1
+	diffuse 0.9 1 1
+	specular 0.55 0.6 0.6 32
 }
 
 material cone
 {
-    parent base
+	parent base
 	diffuseMap cone.png
 	terrain_light_map true
 	ambient 1.00 1.00 1.00
@@ -74,10 +74,10 @@ material cone
 
 material wood_block
 {
-    parent base
+	parent base
 	diffuseMap wood_block.jpg
 	normalMap wood_block_norm.jpg
-    terrain_light_map true
+	terrain_light_map true
 	ambient 1.00 1.00 1.00
 	diffuse 0.50 0.50 0.50
 	specular 0.30 0.30 0.30 6
@@ -85,7 +85,7 @@ material wood_block
 
 material plastic_barrel
 {
-    parent base
+	parent base
 	diffuseMap plastic_diffuse.jpg
 	normalMap plastic_normal.jpg
 	specMap plastic_specular.jpg
@@ -111,11 +111,3 @@ material plastic_big_hvy
 	diffuse 0.20 0.30 0.45
 	specular 1.00 1.00 1.00 16
 }
-	
-	
-	
-	
-	
-	
-	
-	
