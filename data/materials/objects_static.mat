@@ -2,16 +2,19 @@ material pers_struct_dds
 {
 	parent base
 	diffuseMap pers_struct.dds
+	normalMap pers_struct_norm.png
 	ambient 1.0 1.0 1.0
 	diffuse 1.0 1.0 1.0
-	specular 0.25 0.25 0.25 3
+	specular 0.4 0.4 0.3 6
 	terrain_light_map true
+	bump_scale 1.3
 }
 
 material pyramid_small
 {
 	parent base
 	diffuseMap pyramid_small.dds
+	normalMap pyramid_small_norm.png
 	ambient 0.8 0.8 0.8
 	diffuse 0.7 0.7 0.7
 	specular 0.4 0.4 0.4 16
@@ -22,6 +25,7 @@ material pyramid_big
 {
 	parent base
 	diffuseMap pyramid_big.dds
+	normalMap pyramid_big_norm.png
 	ambient 1.0 1.0 1.0
 	diffuse 0.8 0.8 0.8
 	specular 0.3 0.3 0.3 8
@@ -32,6 +36,7 @@ material obelisk
 {
 	parent base
 	diffuseMap obelisk.png
+	normalMap obelisk_norm.png
 	ambient 1.0 0.92 0.7
 	diffuse 1.0 0.92 0.7
 	specular 0.2 0.2 0.2 8
@@ -44,21 +49,24 @@ material Temple
 	//ambient 0.79 0.76 0.49
 	//diffuse 0.63 0.62 0.39
 	//specular 0.14 0.14 0.135 32
-
 	diffuseMap pyramid_big.dds
+	normalMap pyramid_big_norm.png
 	ambient 0.47 0.58 0.49
 	diffuse 0.57 0.70 0.60
-	specular 0.14 0.14 0.135 32
+	specular 0.24 0.24 0.235 32
 	//receivesShadows false
 	//receivesDepthShadows true
 	terrain_light_map true
+	bump_scale 1.5
 }
 
 material DishHole
 {
 	parent base
 	diffuseMap pyramid_big.dds
+	normalMap pyramid_big_norm.png
 	ambient 1 1 1
 	diffuse 0.8 0.8 0.8
 	specular 0.4 0.4 0.4 16
+	bump_scale 0.6
 }

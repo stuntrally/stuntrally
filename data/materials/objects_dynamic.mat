@@ -11,23 +11,16 @@ material fuel_can
 	bump_scale 0.2
 }
 
-material fuen_can/green
-{
-	parent fuel_can
-	diffuseMap fuel_can_diff.jpg
-	ambient 1.5 1.5 0.6
-	diffuse 1 1 1
-}
-
 material RubberTire
 {
 	parent base
 	diffuseMap big_tire.png
+	normalMap big_tire_norm.png
 	specMap big_tire_spec.png
 	terrain_light_map true
 	ambient 0.7 0.7 0.7
 	diffuse 0.5 0.5 0.5
-	specular 0.3 0.3 0.3 32
+	specular 0.3 0.3 0.3 24
 }
 
 material concrete_texture
