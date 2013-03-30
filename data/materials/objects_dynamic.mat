@@ -8,6 +8,7 @@ material fuel_can
 	ambient 1.50 1.50 1.50
 	diffuse 1.00 1.00 1.00
 	specular 0.6 0.6 0.6 4
+	bump_scale 0.2
 }
 
 material fuen_can/green
@@ -22,6 +23,7 @@ material RubberTire
 {
 	parent base
 	diffuseMap big_tire.png
+	specMap big_tire_spec.png
 	terrain_light_map true
 	ambient 0.7 0.7 0.7
 	diffuse 0.5 0.5 0.5
@@ -88,7 +90,7 @@ material plastic_barrel
 	parent base
 	diffuseMap plastic_diffuse.jpg
 	normalMap plastic_normal.jpg
-	specMap plastic_specular.jpg
+	specMap plastic_specular.png
 	terrain_light_map true
 	ambient 1.00 1.00 1.00
 	diffuse 1.00 1.00 1.00
@@ -102,12 +104,14 @@ material plastic_big
 	ambient 0.90 1.05 1.05
 	diffuse 0.75 0.85 0.85
 	specular 1.00 1.00 1.00 12
+	bump_scale 0.4
 }
 
 material plastic_big_hvy
 {
 	parent plastic_big
-	ambient 0.20 0.55 0.85
-	diffuse 0.20 0.30 0.45
+	ambient 0.20 0.55 0.80
+	diffuse 0.20 0.35 0.45
 	specular 1.00 1.00 1.00 16
+	bump_scale 0.6
 }
