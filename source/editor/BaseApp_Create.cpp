@@ -71,6 +71,7 @@ void BaseApp::createFrameListener()
 	ovFocus = ovr.getOverlayElement("Editor/FocusText"); ovFocBck = ovr.getOverlayElement("Editor/FocusPanel");
 		ovFps= ovr.getOverlayElement("Editor/CurrFps");		ovTri= ovr.getOverlayElement("Editor/NumTris");
 		ovBat= ovr.getOverlayElement("Editor/NumBatches");	ovPos= ovr.getOverlayElement("Editor/Pos");
+		ovMem= ovr.getOverlayElement("Editor/Memory");
 	mDebugOverlay= ovr.getByName("Editor/DebugOverlay");  //mDebugOverlay->show();
 	ovDbg = ovr.getOverlayElement("Editor/DebugText");
 	ovInfo= ovr.getOverlayElement("Editor/Info");
@@ -160,7 +161,7 @@ BaseApp::BaseApp()
 	,mbLeft(0), mbRight(0), mbMiddle(0)
 	,ndSky(0), road(0)
 
-	,mDebugOverlay(0), ovSt(0), ovFps(0), ovTri(0), ovBat(0)
+	,mDebugOverlay(0), ovSt(0), ovFps(0), ovTri(0), ovBat(0), ovMem(0)
 	,ovPos(0), ovDbg(0), ovInfo(0), ovStat(0)
 	,ovFocus(0), ovFocBck(0), ovBrushPrv(0), ovBrushMtr(0)
 
@@ -267,6 +268,7 @@ bool BaseApp::setup()
 	
 	// Dynamic plugin loading
 	mRoot = OGRE_NEW Root("", PATHMANAGER::UserConfigDir() + "/ogreset_ed.cfg", PATHMANAGER::UserConfigDir() + "/ogre_ed.log");
+	//LogManager::getSingleton().setLogDetail(LL_BOREME);  //-
 
 	#ifdef _DEBUG
 		#define D_SUFFIX "_d"
@@ -305,6 +307,7 @@ bool BaseApp::setup()
 	createCamera();
 
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+	mSceneMgr->setFog(FOG_NONE);
 
 	createResourceListener();
 	loadResources();

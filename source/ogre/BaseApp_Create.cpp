@@ -50,9 +50,8 @@ void BaseApp::createFrameListener()
 	Ogre::OverlayManager& ovr = OverlayManager::getSingleton();
 	mFpsOverlay = ovr.getByName("Core/FpsOverlay");  //mFpsOverlay->show();//
 	mDebugOverlay = ovr.getByName("Core/DebugOverlay");  //mDebugOverlay->show();//*
-	mOvrFps = ovr.getOverlayElement("Core/CurrFps"),
-	mOvrTris= ovr.getOverlayElement("Core/NumTris"),
-	mOvrBat = ovr.getOverlayElement("Core/NumBatches"),
+	mOvrFps = ovr.getOverlayElement("Core/CurrFps");	mOvrTris= ovr.getOverlayElement("Core/NumTris");
+	mOvrBat = ovr.getOverlayElement("Core/NumBatches"); mOvrMem = ovr.getOverlayElement("Core/Memory");
 	mOvrDbg = ovr.getOverlayElement("Core/DebugText");
 
 	InitKeyNamesMap();
@@ -154,7 +153,7 @@ BaseApp::BaseApp()
 	,mWndRpl(0), mWndChampStage(0),mWndChampEnd(0), mWndNetEnd(0), mWndTweak(0)
 	,bSizeHUD(true), bLoading(false), iLoad1stFrames(0), bAssignKey(false), bLoadingEnd(0)
 	,mMasterClient(), mClient(), mLobbyState(DISCONNECTED)
-	,mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0)
+	,mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrMem(0), mOvrDbg(0)
 	,mbShowCamPos(0), ndSky(0),	mbWireFrame(0)
 	,iCurCam(0), mSplitMgr(0), motionBlurIntensity(0.9), pressedKeySender(0)
 {
@@ -426,8 +425,8 @@ bool BaseApp::setup()
 
 	///  material factory setup
 	sh::OgrePlatform* platform = new sh::OgrePlatform("General", PATHMANAGER::Data() + "/" + "materials");
-	platform->setShaderCachingEnabled (true);
-	platform->setCacheFolder (PATHMANAGER::ShaderDir());
+	platform->setShaderCachingEnabled(true);
+	platform->setCacheFolder(PATHMANAGER::ShaderDir());
 
 	mFactory = new sh::Factory(platform);
 	sh::Factory& fct = sh::Factory::getInstance();

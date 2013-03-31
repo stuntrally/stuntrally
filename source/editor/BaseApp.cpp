@@ -4,6 +4,7 @@
 #include "../road/Road.h"
 using namespace Ogre;
 
+
 ///  Fps stats
 //------------------------------------------------------------------------
 void BaseApp::updateStats()
@@ -29,24 +30,19 @@ void BaseApp::updateStats()
 	{
 		const Vector3& pos = /*road ? road->posHit :*/ mCamera->getDerivedPosition();
 		//const Quaternion& rot = mCamera->getDerivedOrientation();
-
-		//sprintf(s, "Pos: %5.1f %5.1f %5.1f", //  |  Rot: %6.3f %6.3f %6.3f %6.3f",
-						//pos.x, pos.y, pos.z/*,  rot.x, rot.y, rot.z, rot.w*/ );
-		//ovPos->setCaption( String(s) + "  " + mFilText );
 		String s = "Pos: "+fToStr(pos.x,1)+" " + fToStr(pos.y,1) + " " + fToStr(pos.z,1);
 					//+", // | Rot: " +fToStr(rot.x,3) + " "+fToStr(rot.y,3)+" "+fToStr(rot.z,3)+" "+fToStr(rot.w,3);
-		ovPos->setCaption(s + "  " + mFilText);
+		ovPos->setCaption(s);
 	}
 
-	{//  Fps, Tri, Bat
-		const RenderTarget::FrameStats& stats = mWindow->getStatistics();
+	//  Fps, Tri, Bat
+	{	const RenderTarget::FrameStats& stats = mWindow->getStatistics();
+		size_t mem = TextureManager::getSingleton().getMemoryUsage() + MeshManager::getSingleton().getMemoryUsage();
 
-		ovFps->setCaption( fToStr(stats.lastFPS,1) );
-		ovTri->setCaption( toStr(int(stats.triangleCount/1000.f))+"k" );
-		ovBat->setCaption( toStr(stats.batchCount) );
-		//sprintf(s, "%5.1f", stats.lastFPS );	ovFps->setCaption( s );
-		//sprintf(s, "%5.1fk", Real(stats.triangleCount)/1000.f );	ovTri->setCaption( s );
-		//sprintf(s, "%4lu", stats.batchCount );	ovBat->setCaption( s );
+		ovFps->setCaption(fToStr(stats.lastFPS,1,5) );
+		ovTri->setCaption(iToStr(int(stats.triangleCount/1000.f),4)+"k");
+		ovBat->setCaption(iToStr(stats.batchCount,3) );
+		ovMem->setCaption(iToStr(mem/1024/1024,3)+"M" );
 	}
 }
 

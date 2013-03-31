@@ -141,16 +141,16 @@ CarModel::~CarModel()
 void CarModel::Create(int car)
 {
 	if (!pCar)  return;
-	String strI = toStr(iIndex);
+	String strI = toStr(iIndex), sCarI = "Car" + strI;
 	
 	bool ghost = eType == CT_GHOST && pSet->rpl_alpha;  //1 || for ghost test
 	
 	//  Resource locations -----------------------------------------
 	/// Add a resource group for this car
-	ResourceGroupManager::getSingleton().createResourceGroup("Car" + strI);
+	ResourceGroupManager::getSingleton().createResourceGroup(sCarI);
 	resCar = PATHMANAGER::Cars() + "/" + sDirname + "/textures";
-	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::Cars() + "/" + sDirname, "FileSystem", "Car" + strI);
-	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::Cars() + "/" + sDirname + "/textures", "FileSystem", "Car" + strI);
+	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::Cars() + "/" + sDirname, "FileSystem", sCarI);
+	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::Cars() + "/" + sDirname + "/textures", "FileSystem", sCarI);
 	
 	String sCar = resCar + "/" + sDirname;
 	
@@ -187,7 +187,7 @@ void CarModel::Create(int car)
 
 	///()  grass sphere test
 	#if 0
-	Entity* es = mSceneMgr->createEntity("CarS"+ strI, "sphere.mesh", "Car" + strI);
+	Entity* es = mSceneMgr->createEntity("CarS"+ strI, "sphere.mesh", sCarI);
 	es->setRenderQueueGroup(RQG_CarGhost);
 	MaterialPtr mtr = MaterialManager::getSingleton().getByName("pipeGlass");
 	es->setMaterial(mtr);
@@ -210,11 +210,11 @@ void CarModel::Create(int car)
 	String sCar2 = PATHMANAGER::Cars() + "/" + sDirname + "/" + sDirname;
 	if (FileExists(sCar2 + "_body.mesh"))
 	{
-		Entity* eCar = mSceneMgr->createEntity("Car"+ strI, sDirname + "_" + "body.mesh", "Car" + strI);
+		Entity* eCar = mSceneMgr->createEntity("Car"+ strI, sDirname + "_" + "body.mesh", sCarI);
 		bodyBox = eCar->getBoundingBox();
 		if (ghost)  {  eCar->setRenderQueueGroup(g);  eCar->setCastShadows(false);  }
 		ncart->attachObject(eCar);  eCar->setVisibilityFlags(RV_Car);
-		if (sDirname == "S1")  // todo.. in pCar->
+		if (sDirname == "S1" || sDirname == "N1")  // todo.. in pCar->
 			ncart->setOrientation(Quaternion(Degree(90),Vector3::UNIT_Y)*Quaternion(Degree(180),Vector3::UNIT_X));
 		
 		//MeshPtr mesh = eCar->getMesh();
@@ -234,7 +234,7 @@ void CarModel::Create(int car)
 	if (!ghost)
 	if (FileExists(sCar2 + "_interior.mesh"))
 	{
-		Entity* eInter = mSceneMgr->createEntity("Car.interior"+ strI, sDirname + "_" + "interior.mesh", "Car" + strI);
+		Entity* eInter = mSceneMgr->createEntity("Car.interior"+ strI, sDirname + "_" + "interior.mesh", sCarI);
 		//eInter->setCastShadows(false);
 		if (ghost)  {  eInter->setRenderQueueGroup(g);  eInter->setCastShadows(false);  }
 		ncart->attachObject(eInter);  eInter->setVisibilityFlags(RV_Car);
@@ -250,7 +250,7 @@ void CarModel::Create(int car)
 
 	if (FileExists(sCar2 + "_glass.mesh"))
 	{
-		Entity* eGlass = mSceneMgr->createEntity("Car.glass"+ strI, sDirname + "_" + "glass.mesh", "Car" + strI);
+		Entity* eGlass = mSceneMgr->createEntity("Car.glass"+ strI, sDirname + "_" + "glass.mesh", sCarI);
 		if (ghost)  {  eGlass->setRenderQueueGroup(g);  eGlass->setCastShadows(false);  }  else
 			eGlass->setRenderQueueGroup(RQG_CarGlass);  eGlass->setVisibilityFlags(RV_CarGlass);
 		ncart->attachObject(eGlass);
@@ -272,21 +272,21 @@ void CarModel::Create(int car)
 		String siw = "Wheel"+ strI + "_" +toStr(w);
 		if (FileExists(sCar2 + "_wheel.mesh"))  // 1 mesh for both
 		{
-			Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_wheel.mesh", "Car" + strI);
+			Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_wheel.mesh", sCarI);
 			if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 			ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 		}else{
 			if (w < 2 && FileExists(sCar2 + "_wheel_front.mesh"))
 			{
-				Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_" + "wheel_front.mesh", "Car" + strI);
+				Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_" + "wheel_front.mesh", sCarI);
 				if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 				ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 			}else
 			if (FileExists(sCar2 + "_wheel_rear.mesh"))
 			{
-				Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_" + "wheel_rear.mesh", "Car" + strI);
+				Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_" + "wheel_rear.mesh", sCarI);
 				if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 				ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
@@ -305,7 +305,7 @@ void CarModel::Create(int car)
 		//! todo: add a param to car file to control which wheels have brakes
 		if (FileExists(sCar2 + "_brake.mesh"))
 		{
-			Entity* eBrake = mSceneMgr->createEntity(siw + "_brake", sDirname + "_brake.mesh", "Car" + strI);
+			Entity* eBrake = mSceneMgr->createEntity(siw + "_brake", sDirname + "_brake.mesh", sCarI);
 			if (ghost)  {  eBrake->setRenderQueueGroup(g);  eBrake->setCastShadows(false);  }
 			eBrake->setVisibilityFlags(RV_Car);
 			ndBrake[w] = ndWh[w]->createChildSceneNode();
@@ -407,9 +407,9 @@ void CarModel::Create(int car)
 	//  this snippet makes sure the brake texture is pre-loaded.
 	//  since it is not used until you actually brake, we have to explicitely declare it
 	if (FileExists(sCar + "_body00_brake.png"))
-		ResourceGroupManager::getSingleton().declareResource(sDirname + "_body00_brake.png", "Texture", "Car" + strI);
+		ResourceGroupManager::getSingleton().declareResource(sDirname + "_body00_brake.png", "Texture", sCarI);
 	if (FileExists(sCar + "_body00_add.png"))
-		ResourceGroupManager::getSingleton().declareResource(sDirname + "_body00_add.png", "Texture", "Car" + strI);
+		ResourceGroupManager::getSingleton().declareResource(sDirname + "_body00_add.png", "Texture", sCarI);
 	
 	//  now just preload the whole resource group
 	ResourceGroupManager::getSingleton().initialiseResourceGroup("Car" + strI);
@@ -478,16 +478,11 @@ void CarModel::RecreateMaterials()
 
 void CarModel::setMtrName(const String& entName, const String& mtrName)
 {
-	Entity* ent; ManualObject* manual;
-
 	if (mSceneMgr->hasEntity(entName))
-	{
 		mSceneMgr->getEntity(entName)->setMaterialName(mtrName);
-	}
-	else if (mSceneMgr->hasManualObject(entName))
-	{
+	else
+	if (mSceneMgr->hasManualObject(entName))
 		mSceneMgr->getManualObject(entName)->setMaterialName(0, mtrName);
-	}
 }
 
 void CarModel::setMtrNames()
@@ -498,16 +493,17 @@ void CarModel::setMtrNames()
 		FileExists(resCar + "/" + sDirname + "_body00_red.png"))
 		setMtrName("Car"+strI, sMtr[Mtr_CarBody]);
 
-	if (sDirname == "S1")
-		return;  ///
+	if (sDirname == "S1" || sDirname == "S8" || sDirname == "N1")
+		return;  /// par in .car ..
 		
 	setMtrName("Car.interior"+strI, sMtr[Mtr_CarInterior]);
 	setMtrName("Car.glass"+strI, sMtr[Mtr_CarGlass]);
 
 	for (int w=0; w < 4; ++w)
 	{
-		setMtrName("Wheel"+strI+"_"+toStr(w), w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear]);
-		setMtrName("Wheel"+strI+"_"+toStr(w)+"_brake", w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear]);
+		String sw = "Wheel"+strI+"_"+toStr(w), sm = w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear];
+		setMtrName(sw,          sm);
+		setMtrName(sw+"_brake", sm);
 	}
 }
 

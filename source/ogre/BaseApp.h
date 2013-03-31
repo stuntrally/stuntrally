@@ -155,7 +155,7 @@ protected:
 
 	///  overlay
 	Ogre::Overlay* mDebugOverlay, *mFpsOverlay;  // fps stats
-	Ogre::OverlayElement* mOvrFps, *mOvrTris, *mOvrBat, *mOvrDbg;
+	Ogre::OverlayElement* mOvrFps, *mOvrTris, *mOvrBat, *mOvrMem, *mOvrDbg;
 
 	bool alt, ctrl, shift;  // key modifiers
 	bool mbLeft, mbRight, mbMiddle;  // mouse buttons

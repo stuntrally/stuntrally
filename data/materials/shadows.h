@@ -27,7 +27,6 @@ float depthShadowPCF (shTexture2D shadowMap, float4 shadowMapPos, float2 offset,
 
 #else
 
-
 float depthShadowPCF (shTexture2D shadowMap, float4 shadowMapPos, float2 offset, float bias)
 {
     shadowMapPos /= shadowMapPos.w;
@@ -40,29 +39,16 @@ float depthShadowPCF (shTexture2D shadowMap, float4 shadowMapPos, float2 offset,
     c +=        shSample(shadowMap, shadowMapPos.xy + o.zy).r; // bottom left
     c +=        shSample(shadowMap, shadowMapPos.xy - o.zy).r; // top right
     return c / 4;
-   
 }
 
 #endif
 
 
-float pssmDepthShadow (
-
-    float4 lightSpacePos0,
-    float2 invShadowmapSize0,
-    shTexture2D shadowMap0,
-    
-    float4 lightSpacePos1,
-    float2 invShadowmapSize1,
-    shTexture2D shadowMap1,
-    
-    float4 lightSpacePos2,
-    float2 invShadowmapSize2,
-    shTexture2D shadowMap2,
-    
-    float depth,
-    float3 pssmSplitPoints,
-    float bias)
+float pssmDepthShadow(
+    float4 lightSpacePos0, float2 invShadowmapSize0, shTexture2D shadowMap0,
+    float4 lightSpacePos1, float2 invShadowmapSize1, shTexture2D shadowMap1,
+    float4 lightSpacePos2, float2 invShadowmapSize2, shTexture2D shadowMap2,
+    float depth, float3 pssmSplitPoints, float bias)
 
 {
     float shadow;
