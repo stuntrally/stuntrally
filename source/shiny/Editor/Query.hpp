@@ -56,6 +56,7 @@ struct MaterialProperty
 	{
 		Texture,
 		Boolean,
+		Shader,
 		Misc
 	};
 

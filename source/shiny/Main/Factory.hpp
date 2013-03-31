@@ -150,6 +150,9 @@ namespace sh
 		/// Lists current name & value of settings for a given configuration.
 		void listConfigurationSettings (const std::string& name, std::map<std::string, std::string>& out);
 
+		/// Lists shader sets.
+		void listShaderSets (std::vector<std::string>& out);
+
 		/// \note This only works if microcode caching is disabled, as there is currently no way to remove the cache
 		/// through the Ogre API. Luckily, this is already fixed in Ogre 1.9.
 		bool reloadShaders();

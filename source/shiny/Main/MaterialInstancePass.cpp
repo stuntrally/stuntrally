@@ -11,11 +11,6 @@ namespace sh
 		return &mTexUnits.back();
 	}
 
-	std::vector <MaterialInstanceTextureUnit>* MaterialInstancePass::getTexUnits ()
-	{
-		return &mTexUnits;
-	}
-
 	void MaterialInstancePass::save(std::ofstream &stream)
 	{
 		if (mShaderProperties.listProperties().size())

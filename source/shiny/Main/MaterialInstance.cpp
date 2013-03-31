@@ -91,8 +91,10 @@ namespace sh
 			PropertySetGet* context = this;
 
 			// create or retrieve shaders
-			bool hasVertex = it->hasProperty("vertex_program");
-			bool hasFragment = it->hasProperty("fragment_program");
+			bool hasVertex = it->hasProperty("vertex_program")
+					&& !retrieveValue<StringValue>(it->getProperty("vertex_program"), context).get().empty();
+			bool hasFragment = it->hasProperty("fragment_program")
+					&& !retrieveValue<StringValue>(it->getProperty("fragment_program"), context).get().empty();
 			if (useShaders)
 			{
 				it->setContext(context);
@@ -138,7 +140,7 @@ namespace sh
 			}
 
 			// create texture units
-			std::vector<MaterialInstanceTextureUnit>* texUnits = it->getTexUnits();
+			std::vector<MaterialInstanceTextureUnit>* texUnits = &it->mTexUnits;
 			int i=0;
 			for (std::vector<MaterialInstanceTextureUnit>::iterator texIt = texUnits->begin(); texIt  != texUnits->end(); ++texIt )
 			{
@@ -178,6 +180,12 @@ namespace sh
 		mPasses.push_back (MaterialInstancePass());
 		mPasses.back().setContext(this);
 		return &mPasses.back();
+	}
+
+	void MaterialInstance::deletePass(int index)
+	{
+		assert(mPasses.size() > index);
+		mPasses.erase(mPasses.begin()+index);
 	}
 
 	PassVector* MaterialInstance::getParentPasses()

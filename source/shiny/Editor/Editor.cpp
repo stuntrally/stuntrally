@@ -104,6 +104,10 @@ namespace sh
 		// update configuration list
 		mMainWindow->mState.mConfigurationList.clear();
 		sh::Factory::getInstance().listConfigurationNames(mMainWindow->mState.mConfigurationList);
+
+		// update shader list
+		mMainWindow->mState.mShaderSets.clear();
+		sh::Factory::getInstance().listShaderSets(mMainWindow->mState.mShaderSets);
 	}
 
 

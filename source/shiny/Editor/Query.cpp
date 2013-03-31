@@ -78,7 +78,7 @@ void MaterialQuery::executeImpl()
 						retrieveValue<sh::StringValue>(property, NULL).get();
 		}
 
-		std::vector<MaterialInstanceTextureUnit>* texUnits = it->getTexUnits();
+		std::vector<MaterialInstanceTextureUnit>* texUnits = &it->mTexUnits;
 		for (std::vector<MaterialInstanceTextureUnit>::iterator tIt = texUnits->begin(); tIt != texUnits->end(); ++tIt)
 		{
 			mPasses.back().mTextureUnits.push_back(TextureUnitInfo());

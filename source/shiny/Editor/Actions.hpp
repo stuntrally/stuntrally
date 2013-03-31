@@ -133,6 +133,29 @@ namespace sh
 
 	// pass
 
+	class ActionCreatePass : public Action
+	{
+	public:
+		ActionCreatePass (const std::string& name)
+			: mName(name) {}
+
+		virtual void execute();
+	private:
+		std::string mName;
+	};
+
+	class ActionDeletePass : public Action
+	{
+	public:
+		ActionDeletePass (const std::string& name, int passIndex)
+			: mName(name), mPassIndex(passIndex) {}
+
+		virtual void execute();
+	private:
+		std::string mName;
+		int mPassIndex;
+	};
+
 	class ActionSetPassProperty : public Action
 	{
 	public:
@@ -190,6 +213,49 @@ namespace sh
 	};
 
 	// texture unit
+
+	class ActionCreateTextureUnit : public Action
+	{
+	public:
+		ActionCreateTextureUnit (const std::string& name, int passIndex, const std::string& texUnitName)
+			: mName(name), mPassIndex(passIndex), mTexUnitName(texUnitName) {}
+
+		virtual void execute();
+
+	private:
+		std::string mName;
+		int mPassIndex;
+		std::string mTexUnitName;
+	};
+
+	class ActionDeleteTextureUnit : public Action
+	{
+	public:
+		ActionDeleteTextureUnit (const std::string& name, int passIndex, int textureIndex)
+			: mName(name), mPassIndex(passIndex), mTextureIndex(textureIndex) {}
+
+		virtual void execute();
+
+	private:
+		std::string mName;
+		int mPassIndex;
+		int mTextureIndex;
+	};
+
+	class ActionMoveTextureUnit : public Action
+	{
+	public:
+		ActionMoveTextureUnit (const std::string& name, int passIndex, int textureIndex, bool moveUp)
+			: mName(name), mPassIndex(passIndex), mTextureIndex(textureIndex), mMoveUp(moveUp) {}
+
+		virtual void execute();
+
+	private:
+		std::string mName;
+		int mPassIndex;
+		int mTextureIndex;
+		bool mMoveUp;
+	};
 
 	class ActionSetTextureProperty : public Action
 	{

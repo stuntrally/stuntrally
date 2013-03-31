@@ -35,6 +35,8 @@ struct MaterialSystemState
 
 	std::vector<std::string> mMaterialFiles;
 	std::vector<std::string> mConfigurationFiles;
+
+	std::vector<std::string> mShaderSets;
 };
 
 
@@ -82,6 +84,14 @@ private:
 	void buildMaterialModel (MaterialQuery* data);
 	void buildConfigurationModel (ConfigurationQuery* data);
 
+	QString getSelectedMaterial();
+
+	/// get the context of an index in the material property model
+	void getContext(QModelIndex index, int* passIndex, int* textureIndex, bool useParent=true);
+
+	std::string getPropertyKey(QModelIndex index);
+	std::string getPropertyValue(QModelIndex index);
+
 protected:
 	void closeEvent(QCloseEvent *event);
 
@@ -95,6 +105,8 @@ public slots:
 	void onConfigurationChanged (QStandardItem* item);
 	void onMaterialPropertyChanged (QStandardItem* item);
 
+	void onContextMenuRequested(const QPoint& point);
+
 private slots:
 	void on_lineEdit_textEdited(const QString &arg1);
 	void on_actionSave_triggered();
@@ -105,6 +117,9 @@ private slots:
 	void on_actionDeleteConfiguration_triggered();
 	void on_actionDeleteConfigurationProperty_triggered();
 	void on_actionCloneMaterial_triggered();
+	void on_actionCreatePass_triggered();
+	void on_actionDeleteProperty_triggered();
+	void on_actionNewProperty_triggered();
 };
 
 }

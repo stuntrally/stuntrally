@@ -6,24 +6,27 @@ set(QT_USE_QTGUI 1)
 # Headers that must be preprocessed
 set(SHINY_EDITOR_HEADER_MOC
     MainWindow.hpp
+    NewMaterialDialog.hpp
+    AddPropertyDialog.hpp
 )
 
 set(SHINY_EDITOR_UI
     mainwindow.ui
     newmaterialdialog.ui
+    addpropertydialog.ui
 )
 
 QT4_WRAP_CPP(MOC_SRCS ${SHINY_EDITOR_HEADER_MOC})
 QT4_WRAP_UI(UI_HDRS ${SHINY_EDITOR_UI})
 
 set(SOURCE_FILES
+    NewMaterialDialog.cpp
+    AddPropertyDialog.cpp
     MainWindow.cpp
     Editor.cpp
     Actions.cpp
     Query.cpp
-    NewMaterialDialog.cpp
-    mainwindow.ui
-    newmaterialdialog.ui
+    ${SHINY_EDITOR_UI} # Just to have them in the IDE's file explorer
 )
 
 include(${QT_USE_FILE})

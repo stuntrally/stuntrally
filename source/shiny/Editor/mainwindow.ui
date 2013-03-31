@@ -79,8 +79,8 @@
               <property name="toolButtonStyle">
                <enum>Qt::ToolButtonIconOnly</enum>
               </property>
-              <addaction name="actionNewMaterialProperty"/>
-              <addaction name="actionDeleteMaterialProperty"/>
+              <addaction name="actionNewProperty"/>
+              <addaction name="actionDeleteProperty"/>
              </widget>
             </item>
            </layout>
@@ -301,9 +301,11 @@
     <string>Delete property</string>
    </property>
   </action>
-  <action name="actionDeleteMaterialProperty">
+  <action name="actionDeleteProperty">
    <property name="icon">
-    <iconset theme="remove"/>
+    <iconset theme="remove">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Delete</string>
@@ -312,7 +314,7 @@
     <string>Delete item</string>
    </property>
   </action>
-  <action name="actionNewMaterialProperty">
+  <action name="actionNewProperty">
    <property name="icon">
     <iconset theme="add">
      <normaloff/>
@@ -320,6 +322,14 @@
    </property>
    <property name="text">
     <string>New property</string>
+   </property>
+  </action>
+  <action name="actionCreatePass">
+   <property name="icon">
+    <iconset theme="edit-add"/>
+   </property>
+   <property name="text">
+    <string>Create pass</string>
    </property>
   </action>
  </widget>

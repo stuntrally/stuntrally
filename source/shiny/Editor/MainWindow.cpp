@@ -5,6 +5,7 @@
 #include <QTimer>
 
 #include <QInputDialog>
+#include <QMessageBox>
 
 #include "Editor.hpp"
 
@@ -45,7 +46,9 @@ sh::MainWindow::MainWindow(QWidget *parent)
 			this,					SLOT(onMaterialPropertyChanged(QStandardItem*)));
 
 	ui->materialView->setModel(mMaterialPropertyModel);
-
+	ui->materialView->setContextMenuPolicy(Qt::CustomContextMenu);
+	connect(ui->materialView,	SIGNAL(customContextMenuRequested(QPoint)),
+				this,			SLOT(onContextMenuRequested(QPoint)));
 
 	mGlobalSettingsModel = new QStandardItemModel(0, 2, this);
 	mGlobalSettingsModel->setHorizontalHeaderItem(0, new QStandardItem(QString("Name")));
@@ -212,13 +215,18 @@ void sh::MainWindow::onMaterialSelectionChanged (const QModelIndex & current, co
 	if (mIgnoreMaterialChange)
 		return;
 
+	QString name = getSelectedMaterial();
+	if (!name.isEmpty())
+		requestQuery(new sh::MaterialQuery(name.toStdString()));
+}
+
+QString sh::MainWindow::getSelectedMaterial()
+{
 	QModelIndex selectedIndex = ui->materialList->selectionModel()->currentIndex();
 	if (!selectedIndex.isValid())
-		return;
+		return QString("");
 
-	QString name = mMaterialProxyModel->data(selectedIndex, Qt::DisplayRole).toString();
-
-	requestQuery(new sh::MaterialQuery(name.toStdString()));
+	return mMaterialProxyModel->data(selectedIndex, Qt::DisplayRole).toString();
 }
 
 void sh::MainWindow::onConfigurationSelectionChanged (const QString& current)
@@ -349,18 +357,104 @@ void sh::MainWindow::on_actionCloneMaterial_triggered()
 	}
 }
 
+void sh::MainWindow::onContextMenuRequested(const QPoint &point)
+{
+	QPoint globalPos = ui->materialView->viewport()->mapToGlobal(point);
+
+	QMenu menu;
+
+	QList <QAction*> actions;
+	actions.push_back(ui->actionDeleteProperty);
+	actions.push_back(ui->actionNewProperty);
+	actions.push_back(ui->actionCreatePass);
+	menu.addActions(actions);
+
+	menu.exec(globalPos);
+}
+
+void sh::MainWindow::getContext(QModelIndex index, int* passIndex, int* textureIndex, bool useParent)
+{
+	if (passIndex)
+	{
+		*passIndex = 0;
+		for (int i=0; i<mMaterialPropertyModel->rowCount(); ++i)
+		{
+			if (mMaterialPropertyModel->data(mMaterialPropertyModel->index(i, 0)).toString() == QString("pass"))
+			{
+				if (mMaterialPropertyModel->index(i, 0) == (useParent ? index.parent() : index))
+					break;
+				++passIndex;
+			}
+		}
+	}
+	if (textureIndex)
+	{
+		*textureIndex = 0;
+		for (int i=0; i<mMaterialPropertyModel->rowCount(index.parent().parent()); ++i)
+		{
+			if (index.parent().parent().parent().child(i, 0).data().toString() == QString("texture_unit"))
+			{
+				if (index.parent().parent().parent().child(i, 0) == index.parent().parent())
+					break;
+				++(*textureIndex);
+			}
+		}
+	}
+}
+
+std::string sh::MainWindow::getPropertyKey(QModelIndex index)
+{
+	if (!index.parent().isValid())
+		return mMaterialPropertyModel->data(mMaterialPropertyModel->index(index.row(), 0)).toString().toStdString();
+	else
+		return index.parent().child(index.row(), 0).data().toString().toStdString();
+}
+
+std::string sh::MainWindow::getPropertyValue(QModelIndex index)
+{
+	if (!index.parent().isValid())
+		return mMaterialPropertyModel->data(mMaterialPropertyModel->index(index.row(), 1)).toString().toStdString();
+	else
+		return index.parent().child(index.row(), 1).data().toString().toStdString();
+}
+
 void sh::MainWindow::onMaterialPropertyChanged(QStandardItem *item)
 {
-	std::cout << "emit " << std::endl;
-	QModelIndex selectedIndex = ui->materialList->selectionModel()->currentIndex();
-	QString name = mMaterialProxyModel->data(selectedIndex, Qt::DisplayRole).toString();
-	if (name.isEmpty())
+	QString material = getSelectedMaterial();
+	if (material.isEmpty())
 		return;
 
-	std::string key = mMaterialPropertyModel->data(mMaterialPropertyModel->index(item->row(), 0)).toString().toStdString();
-	std::string value = mMaterialPropertyModel->data(mMaterialPropertyModel->index(item->row(), 1)).toString().toStdString();
-
-	queueAction(new ActionSetMaterialProperty(name.toStdString(), key, value));
+	if (!item->index().parent().isValid())
+	{
+		// top level material property
+		queueAction(new ActionSetMaterialProperty(
+				material.toStdString(), getPropertyKey(item->index()), getPropertyValue(item->index())));
+	}
+	else if (item->index().parent().data().toString() == "pass")
+	{
+		// pass property
+		int passIndex;
+		getContext(item->index(), &passIndex, NULL);
+		/// \todo if shaders are changed, check that the material provides all properties needed by the shader
+		queueAction(new ActionSetPassProperty(
+				material.toStdString(), passIndex, getPropertyKey(item->index()), getPropertyValue(item->index())));
+	}
+	else if (item->index().parent().data().toString() == "shader_properties")
+	{
+		// shader property
+		int passIndex;
+		getContext(item->index(), &passIndex, NULL);
+		queueAction(new ActionSetShaderProperty(
+				material.toStdString(), passIndex, getPropertyKey(item->index()), getPropertyValue(item->index())));
+	}
+	else if (item->index().parent().data().toString() == "texture_unit")
+	{
+		// texture property
+		int passIndex, textureIndex;
+		getContext(item->index(), &passIndex, &textureIndex);
+		queueAction(new ActionSetTextureProperty(
+				material.toStdString(), passIndex, textureIndex, getPropertyKey(item->index()), getPropertyValue(item->index())));
+	}
 }
 
 void sh::MainWindow::buildMaterialModel(MaterialQuery *data)
@@ -499,4 +593,90 @@ void sh::MainWindow::buildConfigurationModel(ConfigurationQuery *data)
 			mConfigurationModel->appendRow(toAdd);
 		}
 	}
+}
+
+void sh::MainWindow::on_actionCreatePass_triggered()
+{
+	QString material = getSelectedMaterial();
+	if (!material.isEmpty())
+	{
+		mMaterialPropertyModel->appendRow(new QStandardItem(QString("pass")));
+		queueAction (new ActionCreatePass(material.toStdString()));
+	}
+}
+
+void sh::MainWindow::on_actionDeleteProperty_triggered()
+{
+	QModelIndex selectedIndex = ui->materialView->selectionModel()->currentIndex();
+	QString material = getSelectedMaterial();
+	if (material.isEmpty())
+		return;
+
+	if (getPropertyKey(selectedIndex) == "pass")
+	{
+		// delete whole pass
+		int passIndex;
+		getContext(selectedIndex, &passIndex, NULL, false);
+		if (passIndex == 0)
+		{
+			QMessageBox msgBox;
+			msgBox.setText("The first pass can not be deleted.");
+			msgBox.exec();
+		}
+		else
+		{
+			queueAction(new ActionDeletePass(material.toStdString(), passIndex));
+			mMaterialPropertyModel->removeRow(selectedIndex.row(), selectedIndex.parent());
+		}
+	}
+	else if (getPropertyKey(selectedIndex) == "texture_unit")
+	{
+		// delete whole texture unit
+		int passIndex, textureIndex;
+		getContext(selectedIndex, &passIndex, &textureIndex, false);
+		queueAction(new ActionDeleteTextureUnit(material.toStdString(), passIndex, textureIndex));
+		mMaterialPropertyModel->removeRow(selectedIndex.row(), selectedIndex.parent());
+	}
+	else if (!selectedIndex.parent().isValid())
+	{
+		/// \todo check if any linked values depend on this, and if so, warn the user before deleting
+		// top level material property
+		queueAction(new ActionDeleteMaterialProperty(
+				material.toStdString(), getPropertyKey(selectedIndex)));
+
+		/// \todo inherited properties should not be removed, only change their color
+		mMaterialPropertyModel->removeRow(selectedIndex.row());
+	}
+	else if (selectedIndex.parent().data().toString() == "pass")
+	{
+		// pass property
+		int passIndex;
+		getContext(selectedIndex, &passIndex, NULL);
+		queueAction(new ActionDeletePassProperty(
+				material.toStdString(), passIndex, getPropertyKey(selectedIndex)));
+		mMaterialPropertyModel->removeRow(selectedIndex.row(), selectedIndex.parent());
+	}
+	else if (selectedIndex.parent().data().toString() == "shader_properties")
+	{
+		// shader property
+		int passIndex;
+		getContext(selectedIndex, &passIndex, NULL);
+		queueAction(new ActionDeleteShaderProperty(
+				material.toStdString(), passIndex, getPropertyKey(selectedIndex)));
+		mMaterialPropertyModel->removeRow(selectedIndex.row(), selectedIndex.parent());
+	}
+	else if (selectedIndex.parent().data().toString() == "texture_unit")
+	{
+		// texture property
+		int passIndex, textureIndex;
+		getContext(selectedIndex, &passIndex, &textureIndex);
+		queueAction(new ActionDeleteTextureProperty(
+				material.toStdString(), passIndex, textureIndex, getPropertyKey(selectedIndex)));
+		mMaterialPropertyModel->removeRow(selectedIndex.row(), selectedIndex.parent());
+	}
+}
+
+void sh::MainWindow::on_actionNewProperty_triggered()
+{
+
 }

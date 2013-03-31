@@ -22,8 +22,6 @@ namespace sh
 
 		PropertySetGet mShaderProperties;
 
-		std::vector <MaterialInstanceTextureUnit>* getTexUnits ();
-	private:
 		std::vector <MaterialInstanceTextureUnit> mTexUnits;
 	};
 }

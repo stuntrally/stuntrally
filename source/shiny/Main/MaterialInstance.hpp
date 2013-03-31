@@ -25,6 +25,7 @@ namespace sh
 	public:
 		virtual void requestedConfiguration (MaterialInstance* m, const std::string& configuration) = 0; ///< called before creating
 		virtual void createdConfiguration (MaterialInstance* m, const std::string& configuration) = 0; ///< called after creating
+		virtual ~MaterialInstanceListener(){}
 	};
 
 	/**
@@ -45,6 +46,7 @@ namespace sh
 		PassVector* getPasses(); ///< get our passes (for derived materials, none)
 
 		MaterialInstancePass* createPass ();
+		void deletePass (int index);
 
 		/// @attention Because the backend material passes are created on demand, the returned material here might not contain anything yet!
 		/// The only place where you should use this method, is for the MaterialInstance given by the MaterialListener::materialCreated event!

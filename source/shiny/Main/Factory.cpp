@@ -590,6 +590,14 @@ namespace sh
 		}
 	}
 
+	void Factory::listShaderSets(std::vector<std::string> &out)
+	{
+		for (ShaderSetMap::const_iterator it = mShaderSets.begin(); it != mShaderSets.end(); ++it)
+		{
+			out.push_back(it->first);
+		}
+	}
+
 	void Factory::_ensureMaterial(const std::string& name, const std::string& configuration)
 	{
 		MaterialInstance* m = searchInstance (name);
