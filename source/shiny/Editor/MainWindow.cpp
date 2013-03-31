@@ -520,10 +520,12 @@ void sh::MainWindow::buildMaterialModel(MaterialQuery *data)
 		 it != data->mPasses.end(); ++it)
 	{
 		QStandardItem* passItem = new QStandardItem (QString("pass"));
+		passItem->setFlags(passItem->flags() &= ~Qt::ItemIsEditable);
 
 		if (it->mShaderProperties.size())
 		{
 			QStandardItem* shaderPropertiesItem = new QStandardItem (QString("shader_properties"));
+			shaderPropertiesItem->setFlags(shaderPropertiesItem->flags() &= ~Qt::ItemIsEditable);
 
 			for (std::map<std::string, std::string>::iterator pit = it->mShaderProperties.begin();
 				 pit != it->mShaderProperties.end(); ++pit)
@@ -560,6 +562,7 @@ void sh::MainWindow::buildMaterialModel(MaterialQuery *data)
 			 tIt != it->mTextureUnits.end(); ++tIt)
 		{
 			QStandardItem* unitItem = new QStandardItem (QString("texture_unit"));
+			unitItem->setFlags(unitItem->flags() &= ~Qt::ItemIsEditable);
 			QStandardItem* nameItem = new QStandardItem (QString::fromStdString(tIt->mName));
 
 			QList<QStandardItem*> texUnit;
@@ -634,7 +637,9 @@ void sh::MainWindow::on_actionCreatePass_triggered()
 	QString material = getSelectedMaterial();
 	if (!material.isEmpty())
 	{
-		mMaterialPropertyModel->appendRow(new QStandardItem(QString("pass")));
+		QStandardItem* item = new QStandardItem(QString("pass"));
+		item->setFlags(item->flags() &= ~Qt::ItemIsEditable);
+		mMaterialPropertyModel->appendRow(item);
 		queueAction (new ActionCreatePass(material.toStdString()));
 	}
 }
@@ -801,6 +806,7 @@ void sh::MainWindow::on_actionCreateTextureUnit_triggered()
 					QList<QStandardItem*> items;
 					items << new QStandardItem("texture_unit");
 					items << new QStandardItem(text);
+					items.front()->setFlags(items.front()->flags() &= ~Qt::ItemIsEditable);
 					mMaterialPropertyModel->itemFromIndex(mMaterialPropertyModel->index(i, 0))->appendRow(items);
 					break;
 				}
