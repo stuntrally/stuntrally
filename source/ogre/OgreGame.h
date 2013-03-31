@@ -50,7 +50,7 @@ public:
 	void UpdThr();
 	
 	// stuff to be executed after BaseApp init
-	void postInit();
+	void postInit(), SetFactoryDefaults();
 	
 	void setTranslations();
 	

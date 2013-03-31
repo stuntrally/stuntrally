@@ -429,62 +429,6 @@ bool BaseApp::setup()
 	platform->setCacheFolder(PATHMANAGER::ShaderDir());
 
 	mFactory = new sh::Factory(platform);
-	sh::Factory& fct = sh::Factory::getInstance();
-	fct.setReadSourceCache (true);
-	fct.setWriteSourceCache (true);
-	fct.setReadMicrocodeCache (true);
-	fct.setWriteMicrocodeCache (true);
-	fct.setGlobalSetting("fog", "true");
-	fct.setGlobalSetting("wind", "true");
-	fct.setGlobalSetting("mrt_output", "false");
-	fct.setGlobalSetting("shadows", "false");
-	fct.setGlobalSetting("shadows_pssm", "false");
-	fct.setGlobalSetting("shadows_depth", b2s(pSet->shadow_type >= Sh_Depth));
-	fct.setGlobalSetting("lighting", "true");
-	fct.setGlobalSetting("terrain_composite_map", "false");
-	fct.setGlobalSetting("soft_particles", "false");
-	fct.setGlobalSetting("editor", "false");
-
-	fct.setSharedParameter("pssmSplitPoints", sh::makeProperty<sh::Vector3>(new sh::Vector3(0,0,0)));
-	fct.setSharedParameter("shadowFar_fadeStart", sh::makeProperty<sh::Vector4>(new sh::Vector4(0,0,0,0)));
-	fct.setSharedParameter("arrowColour1", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
-	fct.setSharedParameter("arrowColour2", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
-	fct.setSharedParameter("windTimer", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(0)));
-	fct.setSharedParameter("terrainWorldSize", sh::makeProperty <sh::FloatValue>(new sh::FloatValue(1024)));
-
-	fct.setGlobalSetting("terrain_specular", b2s(pSet->ter_mtr >= 1));
-	fct.setGlobalSetting("terrain_normal",   b2s(pSet->ter_mtr >= 2));
-	fct.setGlobalSetting("terrain_parallax", b2s(pSet->ter_mtr >= 3));
-	fct.setGlobalSetting("terrain_triplanar",b2s(pSet->ter_mtr >= 4));
-	fct.setGlobalSetting("water_reflect", b2s(pSet->water_reflect));
-	fct.setGlobalSetting("water_refract", b2s(pSet->water_refract));
-	fct.setSharedParameter("waterEnabled", sh::makeProperty<sh::FloatValue> (new sh::FloatValue(0.0)));
-	fct.setSharedParameter("waterLevel", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(0)));
-	fct.setSharedParameter("waterTimer", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(0)));
-	fct.setSharedParameter("windDir_windSpeed", sh::makeProperty<sh::Vector3>(new sh::Vector3(0.5, -0.8, 0.2)));
-	fct.setSharedParameter("waterSunFade_sunHeight", sh::makeProperty<sh::Vector2>(new sh::Vector2(1, 0.6)));
-
-	///  uncomment to enable shader output to files
-	//mFactory->setShaderDebugOutputEnabled (true);
-
-	sh::Language lang;
-	if (pSet->shader_mode == "")
-	{
-	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-		lang = sh::Language_HLSL;
-	#else
-		lang = sh::Language_GLSL;
-	#endif
-	}else
-	{
-		if (pSet->shader_mode == "glsl")		lang = sh::Language_GLSL;
-		else if (pSet->shader_mode == "cg")		lang = sh::Language_CG;
-		else if (pSet->shader_mode == "hlsl")	lang = sh::Language_HLSL;
-		else  assert(0);
-	}
-	mFactory->setCurrentLanguage(lang);
-
-	mFactory->loadAllFiles();
 
 	postInit();
 

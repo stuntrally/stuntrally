@@ -165,6 +165,8 @@ App::~App()
 
 void App::postInit()
 {
+	SetFactoryDefaults();
+
 	mSplitMgr->pApp = this;
 
 	mFactory->setMaterialListener(this);

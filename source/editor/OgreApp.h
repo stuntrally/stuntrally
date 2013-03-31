@@ -60,7 +60,7 @@ public:
 	void LoadTrack(), SaveTrack(), UpdateTrack();
 	
 	// stuff to be executed after BaseApp init
-	void postInit();
+	void postInit(), SetFactoryDefaults();
 	void SetEdMode(ED_MODE newMode);
 
 protected:
