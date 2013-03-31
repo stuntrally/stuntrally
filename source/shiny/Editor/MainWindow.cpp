@@ -9,6 +9,8 @@
 
 #include "Editor.hpp"
 
+#include "AddPropertyDialog.hpp"
+
 sh::MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 	, ui(new Ui::MainWindow)
@@ -364,39 +366,67 @@ void sh::MainWindow::onContextMenuRequested(const QPoint &point)
 	QMenu menu;
 
 	QList <QAction*> actions;
-	actions.push_back(ui->actionDeleteProperty);
 	actions.push_back(ui->actionNewProperty);
+	actions.push_back(ui->actionDeleteProperty);
 	actions.push_back(ui->actionCreatePass);
+	actions.push_back(ui->actionCreateTextureUnit);
 	menu.addActions(actions);
 
 	menu.exec(globalPos);
 }
 
-void sh::MainWindow::getContext(QModelIndex index, int* passIndex, int* textureIndex, bool useParent)
+void sh::MainWindow::getContext(QModelIndex index, int* passIndex, int* textureIndex, bool* isInPass, bool* isInTextureUnit)
 {
 	if (passIndex)
 	{
 		*passIndex = 0;
-		for (int i=0; i<mMaterialPropertyModel->rowCount(); ++i)
+		if (isInPass)
+			*isInPass = false;
+		QModelIndex passModelIndex = index;
+		// go up until we find the pass item.
+		while (getPropertyKey(passModelIndex) != "pass" && passModelIndex.isValid())
+			passModelIndex = passModelIndex.parent();
+
+		if (passModelIndex.isValid())
 		{
-			if (mMaterialPropertyModel->data(mMaterialPropertyModel->index(i, 0)).toString() == QString("pass"))
+			for (int i=0; i<mMaterialPropertyModel->rowCount(); ++i)
 			{
-				if (mMaterialPropertyModel->index(i, 0) == (useParent ? index.parent() : index))
-					break;
-				++passIndex;
+				if (mMaterialPropertyModel->data(mMaterialPropertyModel->index(i, 0)).toString() == QString("pass"))
+				{
+					if (mMaterialPropertyModel->index(i, 0) == passModelIndex)
+					{
+						if (isInPass)
+							*isInPass = true;
+						break;
+					}
+					++(*passIndex);
+				}
 			}
 		}
 	}
 	if (textureIndex)
 	{
 		*textureIndex = 0;
-		for (int i=0; i<mMaterialPropertyModel->rowCount(index.parent().parent()); ++i)
+		if (isInTextureUnit)
+			*isInTextureUnit = false;
+		QModelIndex texModelIndex = index;
+		// go up until we find the texture_unit item.
+		while (getPropertyKey(texModelIndex) != "texture_unit" && texModelIndex.isValid())
+			texModelIndex = texModelIndex.parent();
+		if (texModelIndex.isValid())
 		{
-			if (index.parent().parent().parent().child(i, 0).data().toString() == QString("texture_unit"))
+			for (int i=0; i<mMaterialPropertyModel->rowCount(texModelIndex.parent()); ++i)
 			{
-				if (index.parent().parent().parent().child(i, 0) == index.parent().parent())
-					break;
-				++(*textureIndex);
+				if (texModelIndex.parent().child(i, 0).data().toString() == QString("texture_unit"))
+				{
+					if (texModelIndex.parent().child(i, 0) == texModelIndex)
+					{
+						if (isInTextureUnit)
+							*isInTextureUnit = true;
+						break;
+					}
+					++(*textureIndex);
+				}
 			}
 		}
 	}
@@ -557,6 +587,10 @@ void sh::MainWindow::buildMaterialModel(MaterialQuery *data)
 		toAdd << new QStandardItem(QString(""));
 		mMaterialPropertyModel->appendRow(toAdd);
 	}
+
+	ui->materialView->expandAll();
+	ui->materialView->resizeColumnToContents(0);
+	ui->materialView->resizeColumnToContents(1);
 }
 
 void sh::MainWindow::buildConfigurationModel(ConfigurationQuery *data)
@@ -616,7 +650,7 @@ void sh::MainWindow::on_actionDeleteProperty_triggered()
 	{
 		// delete whole pass
 		int passIndex;
-		getContext(selectedIndex, &passIndex, NULL, false);
+		getContext(selectedIndex, &passIndex, NULL);
 		if (passIndex == 0)
 		{
 			QMessageBox msgBox;
@@ -633,7 +667,7 @@ void sh::MainWindow::on_actionDeleteProperty_triggered()
 	{
 		// delete whole texture unit
 		int passIndex, textureIndex;
-		getContext(selectedIndex, &passIndex, &textureIndex, false);
+		getContext(selectedIndex, &passIndex, &textureIndex);
 		queueAction(new ActionDeleteTextureUnit(material.toStdString(), passIndex, textureIndex));
 		mMaterialPropertyModel->removeRow(selectedIndex.row(), selectedIndex.parent());
 	}
@@ -678,5 +712,101 @@ void sh::MainWindow::on_actionDeleteProperty_triggered()
 
 void sh::MainWindow::on_actionNewProperty_triggered()
 {
+	QModelIndex selectedIndex = ui->materialView->selectionModel()->currentIndex();
+	QString material = getSelectedMaterial();
+	if (material.isEmpty())
+		return;
 
+	AddPropertyDialog* dialog = new AddPropertyDialog(this);
+	dialog->exec();
+	QString name = dialog->mName;
+	QString defaultValue = "";
+
+	if (!name.isEmpty())
+	{
+		int passIndex, textureIndex;
+		bool isInPass, isInTextureUnit;
+		getContext(selectedIndex, &passIndex, &textureIndex, &isInPass, &isInTextureUnit);
+
+		QList<QStandardItem*> items;
+		items << new QStandardItem(name);
+		items << new QStandardItem(defaultValue);
+
+		if (isInTextureUnit)
+		{
+			queueAction(new ActionSetTextureProperty(
+							material.toStdString(), passIndex, textureIndex, name.toStdString(), defaultValue.toStdString()));
+			if (selectedIndex.parent().data().toString() == "texture_unit")
+				mMaterialPropertyModel->itemFromIndex(selectedIndex.parent())->appendRow(items);
+			else
+				mMaterialPropertyModel->itemFromIndex(selectedIndex)->appendRow(items);
+		}
+		else if (isInPass)
+		{
+			if (selectedIndex.parent().child(selectedIndex.row(),0).data().toString() == "shader_properties"
+				|| selectedIndex.parent().data().toString() == "shader_properties")
+			{
+				queueAction(new ActionSetShaderProperty(
+								material.toStdString(), passIndex, name.toStdString(), defaultValue.toStdString()));
+				if (selectedIndex.parent().data().toString() == "shader_properties")
+					mMaterialPropertyModel->itemFromIndex(selectedIndex.parent())->appendRow(items);
+				else
+					mMaterialPropertyModel->itemFromIndex(selectedIndex)->appendRow(items);
+			}
+			else
+			{
+				queueAction(new ActionSetPassProperty(
+								material.toStdString(), passIndex, name.toStdString(), defaultValue.toStdString()));
+				if (selectedIndex.parent().data().toString() == "pass")
+					mMaterialPropertyModel->itemFromIndex(selectedIndex.parent())->appendRow(items);
+				else
+					mMaterialPropertyModel->itemFromIndex(selectedIndex)->appendRow(items);
+			}
+		}
+		else
+		{
+			queueAction(new ActionSetMaterialProperty(
+							material.toStdString(), name.toStdString(), defaultValue.toStdString()));
+			mMaterialPropertyModel->appendRow(items);
+		}
+	}
+}
+
+void sh::MainWindow::on_actionCreateTextureUnit_triggered()
+{
+	QString material = getSelectedMaterial();
+	if (material.isEmpty())
+		return;
+
+	QInputDialog dialog(this);
+
+	QString text = QInputDialog::getText(this, tr("New texture unit"),
+											  tr("Texture unit name (for referencing in shaders):"));
+	if (!text.isEmpty())
+	{
+		QModelIndex selectedIndex = ui->materialView->selectionModel()->currentIndex();
+		int passIndex;
+		getContext(selectedIndex, &passIndex, NULL);
+		queueAction(new ActionCreateTextureUnit(material.toStdString(), passIndex, text.toStdString()));
+
+
+		// add to model
+		int index = 0;
+		for (int i=0; i<mMaterialPropertyModel->rowCount(); ++i)
+		{
+			if (mMaterialPropertyModel->data(mMaterialPropertyModel->index(i, 0)).toString() == QString("pass"))
+			{
+				if (index == passIndex)
+				{
+					QList<QStandardItem*> items;
+					items << new QStandardItem("texture_unit");
+					items << new QStandardItem(text);
+					mMaterialPropertyModel->itemFromIndex(mMaterialPropertyModel->index(i, 0))->appendRow(items);
+					break;
+				}
+
+				++index;
+			}
+		}
+	}
 }

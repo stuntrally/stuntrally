@@ -332,6 +332,14 @@
     <string>Create pass</string>
    </property>
   </action>
+  <action name="actionCreateTextureUnit">
+   <property name="icon">
+    <iconset theme="edit-add"/>
+   </property>
+   <property name="text">
+    <string>Create texture unit</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

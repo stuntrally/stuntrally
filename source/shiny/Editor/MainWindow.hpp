@@ -87,7 +87,7 @@ private:
 	QString getSelectedMaterial();
 
 	/// get the context of an index in the material property model
-	void getContext(QModelIndex index, int* passIndex, int* textureIndex, bool useParent=true);
+	void getContext(QModelIndex index, int* passIndex, int* textureIndex, bool* isInPass=NULL, bool* isInTextureUnit=NULL);
 
 	std::string getPropertyKey(QModelIndex index);
 	std::string getPropertyValue(QModelIndex index);
@@ -120,6 +120,7 @@ private slots:
 	void on_actionCreatePass_triggered();
 	void on_actionDeleteProperty_triggered();
 	void on_actionNewProperty_triggered();
+	void on_actionCreateTextureUnit_triggered();
 };
 
 }
