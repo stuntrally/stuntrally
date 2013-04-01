@@ -177,46 +177,46 @@ efficiency = 0.95
 # wheels front (position and suspension mount)
 #---------------------------
 [ wheel-FR ]
-position = 0.74, 1.275, -0.54
+position = 0.72, 1.275, -0.58
 roll-height = 0.8
 mass = 15.0
 restitution = 0.1
 
 [ suspension-FR ]
-position = 0.60, 1.275, -0.57
+position = 0.58, 1.275, -0.61
 hinge = -0.71, 0.55, -0.0
 
 [ wheel-FL ]
-position = -0.74, 1.275, -0.54
+position = -0.72, 1.275, -0.58
 roll-height = 0.8
 mass = 15.0
 restitution = 0.1
 
 [ suspension-FL ]
-position = -0.60, 1.275, -0.57
+position = -0.58, 1.275, -0.61
 hinge = 0.71, 0.55, 0.0
 
 
 # wheels rear (position and suspension mount)
 #---------------------------
 [ wheel-RR ]
-position = 0.74, -1.266, -0.54
+position = 0.72, -1.266, -0.58
 roll-height = 0.8
 mass = 15.0
 restitution = 0.1
 
 [ suspension-RR ]
-position = 0.60, -1.266, -0.57
+position = 0.58, -1.266, -0.61
 hinge = -0.25, -1.94, 0.0
 
 [ wheel-RL ]
-position = -0.74, -1.266, -0.54
+position = -0.72, -1.266, -0.58
 roll-height = 0.8
 mass = 15.0
 restitution = 0.1
 
 [ suspension-RL ]
-position = -0.60, -1.266, -0.57
+position = -0.58, -1.266, -0.61
 hinge = 0.25, -1.94, 0.0
 
 
