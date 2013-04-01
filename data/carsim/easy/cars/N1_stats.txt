@@ -9,4 +9,4 @@ Time 0 to 100 kmh
 Time 0 to 160 kmh
 14.2 s
 Stop time 100 to 0 kmh
- 3.9 s
+ 3.7 s

@@ -28,7 +28,7 @@ CAR::CAR() :
 	//dynamics.pCar = this;
 	vInteriorOffset[0]=0;
 	vInteriorOffset[1]=0;
-	vInteriorOffset[2]=0;
+	vInteriorOffset[2]=0;  boostOffsetY=0;
 	
 	for (int i = 0; i < 4; i++)
 	{
@@ -104,10 +104,11 @@ bool CAR::Load(class App* pApp1,
 	///-  custom interior model offset--
 	vInteriorOffset[0] = 0.f;
 	vInteriorOffset[1] = 0.f;
-	vInteriorOffset[2] = 0.f;
+	vInteriorOffset[2] = 0.f;  boostOffsetY = 0.f;
 	carconf.GetParam("model_ofs.interior-x", vInteriorOffset[0]);
 	carconf.GetParam("model_ofs.interior-y", vInteriorOffset[1]);
 	carconf.GetParam("model_ofs.interior-z", vInteriorOffset[2]);
+	carconf.GetParam("model_ofs.boost-y", boostOffsetY);
 	
 	///-  custom exhaust pos for boost particles
 	if (carconf.GetParam("model_ofs.exhaust-x", exhaustPosition[0]))
