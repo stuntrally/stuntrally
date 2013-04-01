@@ -1,5 +1,6 @@
 #include "Editor.hpp"
 
+
 #include <QApplication>
 #include <QTimer>
 
@@ -11,6 +12,7 @@
 
 namespace sh
 {
+
 	Editor::Editor()
 		: mMainWindow(NULL)
 		, mApplication(NULL)
@@ -111,8 +113,5 @@ namespace sh
 
 		mMainWindow->mState.mErrors += sh::Factory::getInstance().getErrorLog();
 	}
-
-
-
 
 }

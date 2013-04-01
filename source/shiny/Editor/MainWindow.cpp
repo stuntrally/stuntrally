@@ -27,6 +27,11 @@ sh::MainWindow::MainWindow(QWidget *parent)
 	connect(timer, SIGNAL(timeout()), this, SLOT(onIdle()));
 	timer->start(50);
 
+	QList<int> sizes;
+	sizes << 250;
+	sizes << 550;
+	ui->splitter->setSizes(sizes);
+
 	mMaterialModel = new QStringListModel(this);
 
 	mMaterialProxyModel = new QSortFilterProxyModel(this);

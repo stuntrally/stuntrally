@@ -46,10 +46,23 @@
              </widget>
             </item>
             <item>
-             <widget class="QListView" name="materialList"/>
+             <widget class="QListView" name="materialList">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QToolBar" name="toolBar1">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="iconSize">
                <size>
                 <width>16</width>
@@ -66,10 +79,23 @@
           <widget class="QWidget" name="verticalLayoutWidget2">
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
-             <widget class="QTreeView" name="materialView"/>
+             <widget class="QTreeView" name="materialView">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>1</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QToolBar" name="toolBar4">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>1</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="iconSize">
                <size>
                 <width>16</width>
@@ -228,7 +254,6 @@
    <addaction name="menuMaterial"/>
    <addaction name="menuHistory"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionQuit">
    <property name="icon">
     <iconset theme="application-exit">

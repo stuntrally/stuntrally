@@ -23,6 +23,7 @@ if (BUILD_GAME OR BUILD_EDITOR)
 
 	add_subdirectory(shiny)
         list(APPEND OURLIBS ${SHINY_LIBRARIES})
+        add_definitions(${SHINY_BUILD_EDITOR_FLAG})
 endif()
 
 # Game executable

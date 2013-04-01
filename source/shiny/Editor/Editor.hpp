@@ -1,11 +1,11 @@
 #ifndef SH_EDITOR_H
 #define SH_EDITOR_H
 
+#if SHINY_BUILD_MATERIAL_EDITOR
 class QApplication;
 
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
-
 
 namespace boost
 {
@@ -18,14 +18,7 @@ namespace sh
 
 	struct SynchronizationState
 	{
-		// Signals that Editor::update has been invoked.
-		boost::condition_variable mMainConditionVariable;
-
-		// Signals when a worker thread is finished.
-		boost::condition_variable mWorkerConditionVariable;
-
 		boost::mutex mUpdateMutex;
-
 		boost::mutex mActionMutex;
 		boost::mutex mQueryMutex;
 	};
@@ -33,12 +26,13 @@ namespace sh
 	class Editor
 	{
 	public:
+
 		Editor();
 		~Editor();
 
 		void show();
-
 		void update();
+
 
 	private:
 		bool mInitialized;
@@ -56,5 +50,24 @@ namespace sh
 	};
 
 }
+
+#else
+
+// Dummy implementation, so that the user's code does not have to be polluted with #ifdefs
+namespace sh
+{
+
+	class Editor
+	{
+	public:
+		Editor() {}
+		~Editor() {}
+		void show() {}
+		void update() {}
+
+	};
+}
+
+#endif
 
 #endif
