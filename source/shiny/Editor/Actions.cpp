@@ -181,4 +181,15 @@ namespace sh
 
 		sh::Factory::getInstance().notifyConfigurationChanged();
 	}
+
+	void ActionChangeTextureUnitName::execute()
+	{
+		sh::MaterialInstance* m = sh::Factory::getInstance().getMaterialInstance(mName);
+		assert (m->getPasses()->size() > mPassIndex);
+		assert (m->getPasses()->at(mPassIndex).mTexUnits.size() > mTextureIndex);
+
+		m->getPasses()->at(mPassIndex).mTexUnits[mTextureIndex].setName(mTexUnitName);
+
+		sh::Factory::getInstance().notifyConfigurationChanged();
+	}
 }

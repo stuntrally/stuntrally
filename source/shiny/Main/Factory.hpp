@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include <sstream>
 
 #include "MaterialInstance.hpp"
 #include "ShaderSet.hpp"
@@ -170,6 +171,10 @@ namespace sh
 		/// If you wish to save them elsewhere, use setSourceFile first.
 		void saveAll ();
 
+		/// Returns the error log as a string, then clears it.
+		/// Note: Errors are also written to the standard error output, or thrown if they are fatal.
+		std::string getErrorLog ();
+
 		static Factory& getInstance();
 		///< Return instance of this class.
 
@@ -207,6 +212,8 @@ namespace sh
 
 		std::map<TextureUnitState*, std::string> mTextureAliasInstances;
 
+		void logError (const std::string& msg);
+
 		friend class Platform;
 		friend class MaterialInstance;
 		friend class ShaderInstance;
@@ -223,6 +230,7 @@ namespace sh
 		bool mWriteMicrocodeCache;
 		bool mReadSourceCache;
 		bool mWriteSourceCache;
+		std::stringstream mErrorLog;
 
 		MaterialMap mMaterials;
 		ShaderSetMap mShaderSets;

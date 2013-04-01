@@ -108,6 +108,8 @@ namespace sh
 		// update shader list
 		mMainWindow->mState.mShaderSets.clear();
 		sh::Factory::getInstance().listShaderSets(mMainWindow->mState.mShaderSets);
+
+		mMainWindow->mState.mErrors += sh::Factory::getInstance().getErrorLog();
 	}
 
 

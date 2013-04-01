@@ -69,13 +69,15 @@ namespace sh
 		std::string getParentInstance ();
 
 		void create (Platform* platform);
-		void createForConfiguration (const std::string& configuration, unsigned short lodIndex);
+		bool createForConfiguration (const std::string& configuration, unsigned short lodIndex);
 
 		void destroyAll ();
 
 		void setShadersEnabled (bool enabled);
 
 		void save (std::ofstream& stream);
+
+		bool mFailedToCreate;
 
 		friend class Factory;
 

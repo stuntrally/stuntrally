@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>430</width>
-    <height>394</height>
+    <width>647</width>
+    <height>512</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="sh::ColoredTabWidget" name="tabWidget">
       <property name="currentIndex">
        <number>0</number>
       </property>
@@ -150,6 +150,43 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Errors</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QTextEdit" name="errorLog">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="clearButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Clear</string>
+            </property>
+            <property name="icon">
+             <iconset theme="edit-clear"/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDialogButtonBox" name="buttonBox"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -159,7 +196,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>430</width>
+     <width>647</width>
      <height>25</height>
     </rect>
    </property>
@@ -326,7 +363,9 @@
   </action>
   <action name="actionCreatePass">
    <property name="icon">
-    <iconset theme="edit-add"/>
+    <iconset theme="edit-add">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Create pass</string>
@@ -334,13 +373,23 @@
   </action>
   <action name="actionCreateTextureUnit">
    <property name="icon">
-    <iconset theme="edit-add"/>
+    <iconset theme="edit-add">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Create texture unit</string>
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>sh::ColoredTabWidget</class>
+   <extends>QTabWidget</extends>
+   <header>ColoredTabWidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

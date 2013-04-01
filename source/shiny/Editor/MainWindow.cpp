@@ -8,7 +8,7 @@
 #include <QMessageBox>
 
 #include "Editor.hpp"
-
+#include "ColoredTabWidget.hpp"
 #include "AddPropertyDialog.hpp"
 
 sh::MainWindow::MainWindow(QWidget *parent)
@@ -19,6 +19,7 @@ sh::MainWindow::MainWindow(QWidget *parent)
 	, mIgnoreGlobalSettingChange(false)
 	, mIgnoreConfigurationChange(false)
 	, mIgnoreMaterialChange(false)
+	, mIgnoreMaterialPropertyChange(false)
 {
 	ui->setupUi(this);
 
@@ -37,6 +38,7 @@ sh::MainWindow::MainWindow(QWidget *parent)
 	ui->materialList->setModel(mMaterialProxyModel);
 	ui->materialList->setSelectionMode(QAbstractItemView::SingleSelection);
 	ui->materialList->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	ui->materialList->setAlternatingRowColors(true);
 
 	connect(ui->materialList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
 			this,								SLOT(onMaterialSelectionChanged(QModelIndex,QModelIndex)));
@@ -47,8 +49,15 @@ sh::MainWindow::MainWindow(QWidget *parent)
 	connect(mMaterialPropertyModel,	SIGNAL(itemChanged(QStandardItem*)),
 			this,					SLOT(onMaterialPropertyChanged(QStandardItem*)));
 
-	ui->materialView->setModel(mMaterialPropertyModel);
+	mMaterialSortModel = new PropertySortModel(this);
+	mMaterialSortModel->setSourceModel(mMaterialPropertyModel);
+	mMaterialSortModel->setDynamicSortFilter(true);
+	mMaterialSortModel->setSortCaseSensitivity(Qt::CaseInsensitive);
+
+	ui->materialView->setModel(mMaterialSortModel);
 	ui->materialView->setContextMenuPolicy(Qt::CustomContextMenu);
+	ui->materialView->setAlternatingRowColors(true);
+	ui->materialView->setSortingEnabled(true);
 	connect(ui->materialView,	SIGNAL(customContextMenuRequested(QPoint)),
 				this,			SLOT(onContextMenuRequested(QPoint)));
 
@@ -192,6 +201,14 @@ void sh::MainWindow::onIdle()
 
 	mIgnoreConfigurationChange = false;
 
+	if (!mState.mErrors.empty())
+	{
+		ui->errorLog->append(QString::fromStdString(mState.mErrors));
+		mState.mErrors = "";
+		QColor color = ui->tabWidget->palette().color(QPalette::Normal, QPalette::Link);
+		ui->tabWidget->tabBar()->setTabTextColor(3, color);
+	}
+
 
 	// process query results
 	boost::mutex::scoped_lock lock2(mSync->mQueryMutex);
@@ -203,6 +220,25 @@ void sh::MainWindow::onIdle()
 				buildConfigurationModel(static_cast<ConfigurationQuery*>(*it));
 			else if (typeid(**it) == typeid(MaterialQuery))
 				buildMaterialModel(static_cast<MaterialQuery*>(*it));
+			else if (typeid(**it) == typeid(MaterialPropertyQuery))
+			{
+				MaterialPropertyQuery* q = static_cast<MaterialPropertyQuery*>(*it);
+				mIgnoreMaterialPropertyChange = true;
+				if (getSelectedMaterial().toStdString() == q->mName)
+				{
+					for (int i=0; i<mMaterialPropertyModel->rowCount(); ++i)
+					{
+						if (mMaterialPropertyModel->item(i,0)->text() == QString::fromStdString(q->mPropertyName))
+						{
+							mMaterialPropertyModel->item(i,1)->setText(QString::fromStdString(q->mValue));
+							if (mMaterialPropertyModel->item(i,1)->isCheckable())
+								mMaterialPropertyModel->item(i,1)->setCheckState ((q->mValue == "true")
+										? Qt::Checked : Qt::Unchecked);
+						}
+					}
+				}
+				mIgnoreMaterialPropertyChange = false;
+			}
 
 			delete *it;
 			it = mQueries.erase(it);
@@ -389,6 +425,8 @@ void sh::MainWindow::getContext(QModelIndex index, int* passIndex, int* textureI
 
 		if (passModelIndex.isValid())
 		{
+			if (passModelIndex.column() != 0)
+				passModelIndex = passModelIndex.parent().child(passModelIndex.row(), 0);
 			for (int i=0; i<mMaterialPropertyModel->rowCount(); ++i)
 			{
 				if (mMaterialPropertyModel->data(mMaterialPropertyModel->index(i, 0)).toString() == QString("pass"))
@@ -415,6 +453,8 @@ void sh::MainWindow::getContext(QModelIndex index, int* passIndex, int* textureI
 			texModelIndex = texModelIndex.parent();
 		if (texModelIndex.isValid())
 		{
+			if (texModelIndex.column() != 0)
+				texModelIndex = texModelIndex.parent().child(texModelIndex.row(), 0);
 			for (int i=0; i<mMaterialPropertyModel->rowCount(texModelIndex.parent()); ++i)
 			{
 				if (texModelIndex.parent().child(i, 0).data().toString() == QString("texture_unit"))
@@ -450,15 +490,58 @@ std::string sh::MainWindow::getPropertyValue(QModelIndex index)
 
 void sh::MainWindow::onMaterialPropertyChanged(QStandardItem *item)
 {
+	if (mIgnoreMaterialPropertyChange)
+		return;
+
 	QString material = getSelectedMaterial();
 	if (material.isEmpty())
 		return;
+
+	// handle checkboxes being checked/unchecked
+	std::string value = getPropertyValue(item->index());
+	if (item->data(Qt::UserRole).toInt() == MaterialProperty::Boolean)
+	{
+		if (item->checkState() == Qt::Checked && value != "true")
+			value = "true";
+		else if (item->checkState() == Qt::Unchecked && value == "true")
+			value = "false";
+		item->setText(QString::fromStdString(value));
+	}
+
+	// handle inherited properties being changed, i.e. overridden by the current (derived) material
+	if (item->data(Qt::UserRole+1).toInt() == MaterialProperty::Inherited_Unchanged)
+	{
+		QColor normalColor = ui->materialView->palette().color(QPalette::Normal, QPalette::WindowText);
+		mIgnoreMaterialPropertyChange = true;
+		mMaterialPropertyModel->item(item->index().row(), 0)
+				->setData(QVariant(MaterialProperty::Inherited_Changed), Qt::UserRole+1);
+		mMaterialPropertyModel->item(item->index().row(), 0)
+				->setData(normalColor, Qt::ForegroundRole);
+		mMaterialPropertyModel->item(item->index().row(), 1)
+				->setData(QVariant(MaterialProperty::Inherited_Changed), Qt::UserRole+1);
+		mMaterialPropertyModel->item(item->index().row(), 1)
+				->setData(normalColor, Qt::ForegroundRole);
+		mIgnoreMaterialPropertyChange = false;
+
+		ui->materialView->scrollTo(mMaterialSortModel->mapFromSource(item->index()));
+	}
 
 	if (!item->index().parent().isValid())
 	{
 		// top level material property
 		queueAction(new ActionSetMaterialProperty(
-				material.toStdString(), getPropertyKey(item->index()), getPropertyValue(item->index())));
+				material.toStdString(), getPropertyKey(item->index()), value));
+	}
+	else if (getPropertyKey(item->index()) == "texture_unit")
+	{
+		// texture unit name changed
+		int passIndex, textureIndex;
+		getContext(item->index(), &passIndex, &textureIndex);
+		std::cout << "passIndex " << passIndex << " " << textureIndex << std::endl;
+
+		queueAction(new ActionChangeTextureUnitName(
+				material.toStdString(), passIndex, textureIndex, value));
+
 	}
 	else if (item->index().parent().data().toString() == "pass")
 	{
@@ -467,7 +550,7 @@ void sh::MainWindow::onMaterialPropertyChanged(QStandardItem *item)
 		getContext(item->index(), &passIndex, NULL);
 		/// \todo if shaders are changed, check that the material provides all properties needed by the shader
 		queueAction(new ActionSetPassProperty(
-				material.toStdString(), passIndex, getPropertyKey(item->index()), getPropertyValue(item->index())));
+				material.toStdString(), passIndex, getPropertyKey(item->index()), value));
 	}
 	else if (item->index().parent().data().toString() == "shader_properties")
 	{
@@ -475,7 +558,7 @@ void sh::MainWindow::onMaterialPropertyChanged(QStandardItem *item)
 		int passIndex;
 		getContext(item->index(), &passIndex, NULL);
 		queueAction(new ActionSetShaderProperty(
-				material.toStdString(), passIndex, getPropertyKey(item->index()), getPropertyValue(item->index())));
+				material.toStdString(), passIndex, getPropertyKey(item->index()), value));
 	}
 	else if (item->index().parent().data().toString() == "texture_unit")
 	{
@@ -483,7 +566,7 @@ void sh::MainWindow::onMaterialPropertyChanged(QStandardItem *item)
 		int passIndex, textureIndex;
 		getContext(item->index(), &passIndex, &textureIndex);
 		queueAction(new ActionSetTextureProperty(
-				material.toStdString(), passIndex, textureIndex, getPropertyKey(item->index()), getPropertyValue(item->index())));
+				material.toStdString(), passIndex, textureIndex, getPropertyKey(item->index()), value));
 	}
 }
 
@@ -497,23 +580,7 @@ void sh::MainWindow::buildMaterialModel(MaterialQuery *data)
 	for (std::map<std::string, MaterialProperty>::const_iterator it = data->mProperties.begin();
 		 it != data->mProperties.end(); ++it)
 	{
-		QColor color = ui->configurationView->palette().color(QPalette::Disabled, QPalette::WindowText);
-
-		QList<QStandardItem*> toAdd;
-		QStandardItem* name = new QStandardItem(QString::fromStdString(it->first));
-		name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
-		if (it->second.mInherited)
-			name->setData(color, Qt::ForegroundRole);
-		QStandardItem* value = new QStandardItem(QIcon::fromTheme("edit-delete"), QString::fromStdString(it->second.mValue));
-		if (it->second.mInherited)
-			value->setData(color, Qt::ForegroundRole);
-
-		value->setCheckable(true);
-
-		toAdd.push_back(name);
-		toAdd.push_back(value);
-
-		mMaterialPropertyModel->appendRow(toAdd);
+		addProperty(mMaterialPropertyModel->invisibleRootItem(), it->first, it->second);
 	}
 
 	for (std::vector<PassInfo>::iterator it = data->mPasses.begin();
@@ -521,41 +588,26 @@ void sh::MainWindow::buildMaterialModel(MaterialQuery *data)
 	{
 		QStandardItem* passItem = new QStandardItem (QString("pass"));
 		passItem->setFlags(passItem->flags() &= ~Qt::ItemIsEditable);
+		passItem->setData(QVariant(static_cast<int>(MaterialProperty::Object)), Qt::UserRole);
 
 		if (it->mShaderProperties.size())
 		{
 			QStandardItem* shaderPropertiesItem = new QStandardItem (QString("shader_properties"));
 			shaderPropertiesItem->setFlags(shaderPropertiesItem->flags() &= ~Qt::ItemIsEditable);
+			shaderPropertiesItem->setData(QVariant(static_cast<int>(MaterialProperty::Object)), Qt::UserRole);
 
-			for (std::map<std::string, std::string>::iterator pit = it->mShaderProperties.begin();
+			for (std::map<std::string, MaterialProperty>::iterator pit = it->mShaderProperties.begin();
 				 pit != it->mShaderProperties.end(); ++pit)
 			{
-				QList<QStandardItem*> toAdd;
-				QStandardItem* name = new QStandardItem(QString::fromStdString(pit->first));
-				name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
-				QStandardItem* value = new QStandardItem(QString::fromStdString(pit->second));
-
-				toAdd.push_back(name);
-				toAdd.push_back(value);
-
-				shaderPropertiesItem->appendRow(toAdd);
+				addProperty(shaderPropertiesItem, pit->first, pit->second);
 			}
 			passItem->appendRow(shaderPropertiesItem);
 		}
 
-		for (std::map<std::string, std::string>::iterator pit = it->mProperties.begin();
+		for (std::map<std::string, MaterialProperty>::iterator pit = it->mProperties.begin();
 			 pit != it->mProperties.end(); ++pit)
 		{
-
-			QList<QStandardItem*> toAdd;
-			QStandardItem* name = new QStandardItem(QString::fromStdString(pit->first));
-			name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
-			QStandardItem* value = new QStandardItem(QString::fromStdString(pit->second));
-
-			toAdd.push_back(name);
-			toAdd.push_back(value);
-
-			passItem->appendRow(toAdd);
+			addProperty(passItem, pit->first, pit->second);
 		}
 
 		for (std::vector<TextureUnitInfo>::iterator tIt = it->mTextureUnits.begin();
@@ -563,23 +615,17 @@ void sh::MainWindow::buildMaterialModel(MaterialQuery *data)
 		{
 			QStandardItem* unitItem = new QStandardItem (QString("texture_unit"));
 			unitItem->setFlags(unitItem->flags() &= ~Qt::ItemIsEditable);
+			unitItem->setData(QVariant(static_cast<int>(MaterialProperty::Object)), Qt::UserRole);
 			QStandardItem* nameItem = new QStandardItem (QString::fromStdString(tIt->mName));
+			nameItem->setData(QVariant(static_cast<int>(MaterialProperty::Object)), Qt::UserRole);
 
 			QList<QStandardItem*> texUnit;
 			texUnit << unitItem << nameItem;
 
-			for (std::map<std::string, std::string>::iterator pit = tIt->mProperties.begin();
+			for (std::map<std::string, MaterialProperty>::iterator pit = tIt->mProperties.begin();
 				 pit != tIt->mProperties.end(); ++pit)
 			{
-				QList<QStandardItem*> toAdd;
-				QStandardItem* name = new QStandardItem(QString::fromStdString(pit->first));
-				name->setFlags(name->flags() &= ~Qt::ItemIsEditable);
-				QStandardItem* value = new QStandardItem(QString::fromStdString(pit->second));
-
-				toAdd.push_back(name);
-				toAdd.push_back(value);
-
-				unitItem->appendRow(toAdd);
+				addProperty(unitItem, pit->first, pit->second);
 			}
 
 			passItem->appendRow(texUnit);
@@ -594,6 +640,44 @@ void sh::MainWindow::buildMaterialModel(MaterialQuery *data)
 	ui->materialView->expandAll();
 	ui->materialView->resizeColumnToContents(0);
 	ui->materialView->resizeColumnToContents(1);
+}
+
+void sh::MainWindow::addProperty(QStandardItem *parent, const std::string &key, MaterialProperty value, bool scrollTo)
+{
+	QList<QStandardItem*> toAdd;
+	QStandardItem* keyItem = new QStandardItem(QString::fromStdString(key));
+	keyItem->setFlags(keyItem->flags() &= ~Qt::ItemIsEditable);
+	keyItem->setData(QVariant(value.mType), Qt::UserRole);
+	keyItem->setData(QVariant(value.mSource), Qt::UserRole+1);
+	toAdd.push_back(keyItem);
+
+	QStandardItem* valueItem = NULL;
+	if (value.mSource != MaterialProperty::None)
+	{
+		valueItem = new QStandardItem(QString::fromStdString(value.mValue));
+		valueItem->setData(QVariant(value.mType), Qt::UserRole);
+		valueItem->setData(QVariant(value.mSource), Qt::UserRole+1);
+		toAdd.push_back(valueItem);
+	}
+
+
+	if (value.mSource == MaterialProperty::Inherited_Unchanged)
+	{
+		QColor color = ui->configurationView->palette().color(QPalette::Disabled, QPalette::WindowText);
+		keyItem->setData(color, Qt::ForegroundRole);
+		if (valueItem)
+			valueItem->setData(color, Qt::ForegroundRole);
+	}
+	if (value.mType == MaterialProperty::Boolean && valueItem)
+	{
+		valueItem->setCheckable(true);
+		valueItem->setCheckState((value.mValue == "true") ? Qt::Checked : Qt::Unchecked);
+	}
+
+	parent->appendRow(toAdd);
+
+	if (scrollTo)
+		ui->materialView->scrollTo(mMaterialSortModel->mapFromSource(keyItem->index()));
 }
 
 void sh::MainWindow::buildConfigurationModel(ConfigurationQuery *data)
@@ -637,19 +721,21 @@ void sh::MainWindow::on_actionCreatePass_triggered()
 	QString material = getSelectedMaterial();
 	if (!material.isEmpty())
 	{
-		QStandardItem* item = new QStandardItem(QString("pass"));
-		item->setFlags(item->flags() &= ~Qt::ItemIsEditable);
-		mMaterialPropertyModel->appendRow(item);
+		addProperty(mMaterialPropertyModel->invisibleRootItem(),
+					"pass", MaterialProperty("", MaterialProperty::Object, MaterialProperty::None), true);
+
 		queueAction (new ActionCreatePass(material.toStdString()));
 	}
 }
 
 void sh::MainWindow::on_actionDeleteProperty_triggered()
 {
-	QModelIndex selectedIndex = ui->materialView->selectionModel()->currentIndex();
+	QModelIndex selectedIndex = mMaterialSortModel->mapToSource(ui->materialView->selectionModel()->currentIndex());
 	QString material = getSelectedMaterial();
 	if (material.isEmpty())
 		return;
+
+	mIgnoreMaterialPropertyChange = true;
 
 	if (getPropertyKey(selectedIndex) == "pass")
 	{
@@ -678,13 +764,38 @@ void sh::MainWindow::on_actionDeleteProperty_triggered()
 	}
 	else if (!selectedIndex.parent().isValid())
 	{
-		/// \todo check if any linked values depend on this, and if so, warn the user before deleting
 		// top level material property
-		queueAction(new ActionDeleteMaterialProperty(
-				material.toStdString(), getPropertyKey(selectedIndex)));
+		MaterialProperty::Source source = static_cast<MaterialProperty::Source>(
+					mMaterialPropertyModel->itemFromIndex(selectedIndex)->data(Qt::UserRole+1).toInt());
+		if (source == MaterialProperty::Inherited_Unchanged)
+		{
+			QMessageBox msgBox;
+			msgBox.setText("Inherited properties can not be deleted.");
+			msgBox.exec();
+		}
+		else
+		{
+			queueAction(new ActionDeleteMaterialProperty(
+					material.toStdString(), getPropertyKey(selectedIndex)));
+			std::cout << "source is " << source << std::endl;
+			if (source == MaterialProperty::Inherited_Changed)
+			{
+				QColor inactiveColor = ui->materialView->palette().color(QPalette::Disabled, QPalette::WindowText);
+				mMaterialPropertyModel->item(selectedIndex.row(), 0)
+						->setData(QVariant(MaterialProperty::Inherited_Unchanged), Qt::UserRole+1);
+				mMaterialPropertyModel->item(selectedIndex.row(), 0)
+						->setData(inactiveColor, Qt::ForegroundRole);
+				mMaterialPropertyModel->item(selectedIndex.row(), 1)
+						->setData(QVariant(MaterialProperty::Inherited_Unchanged), Qt::UserRole+1);
+				mMaterialPropertyModel->item(selectedIndex.row(), 1)
+						->setData(inactiveColor, Qt::ForegroundRole);
 
-		/// \todo inherited properties should not be removed, only change their color
-		mMaterialPropertyModel->removeRow(selectedIndex.row());
+				// make sure to update the property's value
+				requestQuery(new sh::MaterialPropertyQuery(material.toStdString(), getPropertyKey(selectedIndex)));
+			}
+			else
+				mMaterialPropertyModel->removeRow(selectedIndex.row());
+		}
 	}
 	else if (selectedIndex.parent().data().toString() == "pass")
 	{
@@ -713,38 +824,49 @@ void sh::MainWindow::on_actionDeleteProperty_triggered()
 				material.toStdString(), passIndex, textureIndex, getPropertyKey(selectedIndex)));
 		mMaterialPropertyModel->removeRow(selectedIndex.row(), selectedIndex.parent());
 	}
+	mIgnoreMaterialPropertyChange = false;
 }
 
 void sh::MainWindow::on_actionNewProperty_triggered()
 {
-	QModelIndex selectedIndex = ui->materialView->selectionModel()->currentIndex();
+	QModelIndex selectedIndex = mMaterialSortModel->mapToSource(ui->materialView->selectionModel()->currentIndex());
 	QString material = getSelectedMaterial();
 	if (material.isEmpty())
 		return;
 
 	AddPropertyDialog* dialog = new AddPropertyDialog(this);
 	dialog->exec();
-	QString name = dialog->mName;
+	QString propertyName = dialog->mName;
 	QString defaultValue = "";
 
-	if (!name.isEmpty())
+	/// \todo check if this property name exists already
+
+	if (!propertyName.isEmpty())
 	{
 		int passIndex, textureIndex;
 		bool isInPass, isInTextureUnit;
 		getContext(selectedIndex, &passIndex, &textureIndex, &isInPass, &isInTextureUnit);
 
 		QList<QStandardItem*> items;
-		items << new QStandardItem(name);
+		QStandardItem* keyItem = new QStandardItem(propertyName);
+		keyItem->setFlags(keyItem->flags() &= ~Qt::ItemIsEditable);
+		items << keyItem;
 		items << new QStandardItem(defaultValue);
+
+		// figure out which item the new property should be a child of
+		QModelIndex parentIndex = selectedIndex;
+		if (selectedIndex.data(Qt::UserRole) != MaterialProperty::Object)
+			parentIndex = selectedIndex.parent();
+		QStandardItem* parentItem;
+		if (!parentIndex.isValid())
+			parentItem = mMaterialPropertyModel->invisibleRootItem();
+		else
+			parentItem = mMaterialPropertyModel->itemFromIndex(parentIndex);
 
 		if (isInTextureUnit)
 		{
 			queueAction(new ActionSetTextureProperty(
-							material.toStdString(), passIndex, textureIndex, name.toStdString(), defaultValue.toStdString()));
-			if (selectedIndex.parent().data().toString() == "texture_unit")
-				mMaterialPropertyModel->itemFromIndex(selectedIndex.parent())->appendRow(items);
-			else
-				mMaterialPropertyModel->itemFromIndex(selectedIndex)->appendRow(items);
+							material.toStdString(), passIndex, textureIndex, propertyName.toStdString(), defaultValue.toStdString()));
 		}
 		else if (isInPass)
 		{
@@ -752,28 +874,24 @@ void sh::MainWindow::on_actionNewProperty_triggered()
 				|| selectedIndex.parent().data().toString() == "shader_properties")
 			{
 				queueAction(new ActionSetShaderProperty(
-								material.toStdString(), passIndex, name.toStdString(), defaultValue.toStdString()));
-				if (selectedIndex.parent().data().toString() == "shader_properties")
-					mMaterialPropertyModel->itemFromIndex(selectedIndex.parent())->appendRow(items);
-				else
-					mMaterialPropertyModel->itemFromIndex(selectedIndex)->appendRow(items);
+								material.toStdString(), passIndex, propertyName.toStdString(), defaultValue.toStdString()));
 			}
 			else
 			{
 				queueAction(new ActionSetPassProperty(
-								material.toStdString(), passIndex, name.toStdString(), defaultValue.toStdString()));
-				if (selectedIndex.parent().data().toString() == "pass")
-					mMaterialPropertyModel->itemFromIndex(selectedIndex.parent())->appendRow(items);
-				else
-					mMaterialPropertyModel->itemFromIndex(selectedIndex)->appendRow(items);
+								material.toStdString(), passIndex, propertyName.toStdString(), defaultValue.toStdString()));
 			}
 		}
 		else
 		{
 			queueAction(new ActionSetMaterialProperty(
-							material.toStdString(), name.toStdString(), defaultValue.toStdString()));
-			mMaterialPropertyModel->appendRow(items);
+							material.toStdString(), propertyName.toStdString(), defaultValue.toStdString()));
 		}
+
+		addProperty(parentItem, propertyName.toStdString(),
+					MaterialProperty (defaultValue.toStdString(), MaterialProperty::Misc, MaterialProperty::Normal), true);
+
+		/// \todo scroll to newly added property
 	}
 }
 
@@ -789,11 +907,10 @@ void sh::MainWindow::on_actionCreateTextureUnit_triggered()
 											  tr("Texture unit name (for referencing in shaders):"));
 	if (!text.isEmpty())
 	{
-		QModelIndex selectedIndex = ui->materialView->selectionModel()->currentIndex();
+		QModelIndex selectedIndex = mMaterialSortModel->mapToSource(ui->materialView->selectionModel()->currentIndex());
 		int passIndex;
 		getContext(selectedIndex, &passIndex, NULL);
 		queueAction(new ActionCreateTextureUnit(material.toStdString(), passIndex, text.toStdString()));
-
 
 		// add to model
 		int index = 0;
@@ -803,11 +920,8 @@ void sh::MainWindow::on_actionCreateTextureUnit_triggered()
 			{
 				if (index == passIndex)
 				{
-					QList<QStandardItem*> items;
-					items << new QStandardItem("texture_unit");
-					items << new QStandardItem(text);
-					items.front()->setFlags(items.front()->flags() &= ~Qt::ItemIsEditable);
-					mMaterialPropertyModel->itemFromIndex(mMaterialPropertyModel->index(i, 0))->appendRow(items);
+					addProperty(mMaterialPropertyModel->itemFromIndex(mMaterialPropertyModel->index(i, 0)),
+								"texture_unit", MaterialProperty(text.toStdString(), MaterialProperty::Object), true);
 					break;
 				}
 
@@ -815,4 +929,17 @@ void sh::MainWindow::on_actionCreateTextureUnit_triggered()
 			}
 		}
 	}
+}
+
+void sh::MainWindow::on_clearButton_clicked()
+{
+	ui->errorLog->clear();
+}
+
+void sh::MainWindow::on_tabWidget_currentChanged(int index)
+{
+	QColor color = ui->tabWidget->palette().color(QPalette::Normal, QPalette::WindowText);
+
+	if (index == 3)
+		ui->tabWidget->tabBar()->setTabTextColor(3, color);
 }

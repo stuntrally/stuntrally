@@ -214,6 +214,21 @@ namespace sh
 
 	// texture unit
 
+	class ActionChangeTextureUnitName : public Action
+	{
+	public:
+		ActionChangeTextureUnitName (const std::string& name, int passIndex, int textureIndex, const std::string& texUnitName)
+			: mName(name), mPassIndex(passIndex), mTextureIndex(textureIndex), mTexUnitName(texUnitName) {}
+
+		virtual void execute();
+
+	private:
+		std::string mName;
+		int mPassIndex;
+		int mTextureIndex;
+		std::string mTexUnitName;
+	};
+
 	class ActionCreateTextureUnit : public Action
 	{
 	public:

@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_HPP
-#define MAINWINDOW_HPP
+#ifndef SHINY_EDITOR_MAINWINDOW_HPP
+#define SHINY_EDITOR_MAINWINDOW_HPP
 
 #include <QMainWindow>
 
@@ -11,6 +11,8 @@
 
 #include "Actions.hpp"
 #include "Query.hpp"
+
+#include "PropertySortModel.hpp"
 
 namespace Ui {
 class MainWindow;
@@ -37,8 +39,9 @@ struct MaterialSystemState
 	std::vector<std::string> mConfigurationFiles;
 
 	std::vector<std::string> mShaderSets;
-};
 
+	std::string mErrors;
+};
 
 class MainWindow : public QMainWindow
 {
@@ -54,9 +57,12 @@ public:
 	volatile bool mRequestExit;
 
 	SynchronizationState* mSync;
+
+	/// \todo Is there a better way to ignore manual model changes?
 	bool mIgnoreGlobalSettingChange;
 	bool mIgnoreConfigurationChange;
 	bool mIgnoreMaterialChange;
+	bool mIgnoreMaterialPropertyChange;
 
 	std::queue<Action*> mActionQueue;
 	std::vector<Query*> mQueries;
@@ -71,6 +77,7 @@ private:
 	QSortFilterProxyModel* mMaterialProxyModel;
 
 	QStandardItemModel* mMaterialPropertyModel;
+	PropertySortModel* mMaterialSortModel;
 
 	// global settings tab
 	QStandardItemModel* mGlobalSettingsModel;
@@ -91,6 +98,8 @@ private:
 
 	std::string getPropertyKey(QModelIndex index);
 	std::string getPropertyValue(QModelIndex index);
+
+	void addProperty (QStandardItem* parent, const std::string& key, MaterialProperty value, bool scrollTo=false);
 
 protected:
 	void closeEvent(QCloseEvent *event);
@@ -121,6 +130,8 @@ private slots:
 	void on_actionDeleteProperty_triggered();
 	void on_actionNewProperty_triggered();
 	void on_actionCreateTextureUnit_triggered();
+	void on_clearButton_clicked();
+	void on_tabWidget_currentChanged(int index);
 };
 
 }

@@ -128,6 +128,7 @@ namespace sh
 		if (mSharedParameters.find(name) == mSharedParameters.end())
 		{
 			params = Ogre::GpuProgramManager::getSingleton().createSharedParameters(name);
+
 			Ogre::GpuConstantType type;
 			if (typeid(*value) == typeid(Vector4))
 				type = Ogre::GCT_FLOAT4;

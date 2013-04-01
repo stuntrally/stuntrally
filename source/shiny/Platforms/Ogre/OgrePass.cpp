@@ -105,7 +105,17 @@ namespace sh
 		else if (type == GPT_Fragment)
 			params = mPass->getFragmentProgramParameters();
 
-		params->addSharedParameters (name);
+		try
+		{
+			params->addSharedParameters (name);
+		}
+		catch (Ogre::Exception& e)
+		{
+			std::stringstream msg;
+			msg << "Could not create a shared parameter instance for '"
+				   << name << "'. Make sure this shared parameter has a value set (via Factory::setSharedParameter)!";
+			throw std::runtime_error(msg.str());
+		}
 	}
 
 	void OgrePass::setTextureUnitIndex (int programType, const std::string& name, int index)

@@ -41,8 +41,9 @@ namespace sh
 			mValue = false;
 		else
 		{
-			std::cerr << "sh::BooleanValue: Warning: Unrecognized value \"" << in << "\" for property value of type BooleanValue" << std::endl;
-			mValue = false;
+			std::stringstream msg;
+			msg << "sh::BooleanValue: Warning: Unrecognized value \"" << in << "\" for property value of type BooleanValue";
+			throw std::runtime_error(msg.str());
 		}
 	}
 
@@ -185,12 +186,16 @@ namespace sh
 	void PropertySet::setProperty (const std::string& name, PropertyValuePtr &value, PropertySetGet* context)
 	{
 		if (!setPropertyOverride (name, value, context))
-			std::cerr << "sh::PropertySet: Warning: No match for property with name '" << name << "'" << std::endl;
+		{
+			std::stringstream msg;
+			msg << "sh::PropertySet: Warning: No match for property with name '" << name << "'";
+			throw std::runtime_error(msg.str());
+		}
 	}
 
 	bool PropertySet::setPropertyOverride (const std::string& name, PropertyValuePtr &value, PropertySetGet* context)
 	{
-		// if we got here, none of the sub-classes was able to make use of the property
+		// if we got here, none of the sub-classes were able to make use of the property
 		return false;
 	}
 

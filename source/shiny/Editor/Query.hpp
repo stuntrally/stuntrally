@@ -5,6 +5,8 @@
 #include <map>
 #include <vector>
 
+#include "../Main/PropertyBase.hpp"
+
 namespace sh
 {
 
@@ -34,39 +36,50 @@ protected:
 };
 
 
-
-struct TextureUnitInfo
-{
-	std::string mName;
-	std::map<std::string, std::string> mProperties;
-};
-
-struct PassInfo
-{
-	std::map<std::string, std::string> mShaderProperties;
-
-	std::map<std::string, std::string> mProperties;
-	std::vector<TextureUnitInfo> mTextureUnits;
-};
-
 struct MaterialProperty
 {
 
 	enum Type
 	{
 		Texture,
+		Color,
 		Boolean,
 		Shader,
-		Misc
+		Misc,
+		Linked,
+		Object // child object, i.e. pass, texture unit, shader properties
+	};
+
+	enum Source
+	{
+		Normal,
+		Inherited_Changed,
+		Inherited_Unchanged,
+		None // there is no property source (e.g. a pass, which does not have a name)
 	};
 
 	MaterialProperty() {}
-	MaterialProperty (const std::string& value, Type type, bool inherited)
-		: mValue(value), mType(type), mInherited(inherited) {}
+	MaterialProperty (const std::string& value, Type type, Source source=Normal)
+		: mValue(value), mType(type), mSource(source) {}
 
 	std::string mValue;
 	Type mType;
-	bool mInherited;
+	Source mSource;
+};
+
+
+struct TextureUnitInfo
+{
+	std::string mName;
+	std::map<std::string, MaterialProperty> mProperties;
+};
+
+struct PassInfo
+{
+	std::map<std::string, MaterialProperty> mShaderProperties;
+
+	std::map<std::string, MaterialProperty> mProperties;
+	std::vector<TextureUnitInfo> mTextureUnits;
 };
 
 class MaterialQuery : public Query
@@ -81,6 +94,24 @@ public:
 
 protected:
 	std::string mName;
+	virtual void executeImpl();
+
+	MaterialProperty::Type getType (const std::string& key, PropertyValuePtr value);
+};
+
+class MaterialPropertyQuery : public Query
+{
+public:
+	MaterialPropertyQuery(const std::string& name, const std::string& propertyName)
+		: mName(name), mPropertyName(propertyName)
+	{
+	}
+
+	std::string mValue;
+
+	std::string mName;
+	std::string mPropertyName;
+protected:
 	virtual void executeImpl();
 };
 

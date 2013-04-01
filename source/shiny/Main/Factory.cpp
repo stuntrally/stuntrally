@@ -293,15 +293,16 @@ namespace sh
 			while (i>0)
 			{
 				--i;
-				m->createForConfiguration (configuration, i);
-
-				if (mListener)
+				if (m->createForConfiguration (configuration, i) && mListener)
 					mListener->materialCreated (m, configuration, i);
+				else
+					return NULL;
 			}
 
-			m->createForConfiguration (configuration, lodIndex);
-			if (mListener)
+			if (m->createForConfiguration (configuration, lodIndex) && mListener)
 				mListener->materialCreated (m, configuration, lodIndex);
+			else
+				return NULL;
 		}
 		return m;
 	}
@@ -365,6 +366,12 @@ namespace sh
 
 	ShaderSet* Factory::getShaderSet (const std::string& name)
 	{
+		if (mShaderSets.find(name) == mShaderSets.end())
+		{
+			std::stringstream msg;
+			msg << "Shader '" << name << "' not found";
+			throw std::runtime_error(msg.str());
+		}
 		return &mShaderSets.find(name)->second;
 	}
 
@@ -756,6 +763,18 @@ namespace sh
 		}
 		if (reload)
 			reloadShaders();
+	}
+
+	void Factory::logError(const std::string &msg)
+	{
+		mErrorLog << msg << '\n';
+	}
+
+	std::string Factory::getErrorLog()
+	{
+		std::string errors = mErrorLog.str();
+		mErrorLog.str("");
+		return errors;
 	}
 
 	void Configuration::save(const std::string& name, std::ofstream &stream)

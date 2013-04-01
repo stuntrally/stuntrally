@@ -8,6 +8,7 @@ set(SHINY_EDITOR_HEADER_MOC
     MainWindow.hpp
     NewMaterialDialog.hpp
     AddPropertyDialog.hpp
+    PropertySortModel.hpp
 )
 
 set(SHINY_EDITOR_UI
@@ -22,14 +23,19 @@ QT4_WRAP_UI(UI_HDRS ${SHINY_EDITOR_UI})
 set(SOURCE_FILES
     NewMaterialDialog.cpp
     AddPropertyDialog.cpp
+    ColoredTabWidget.hpp
     MainWindow.cpp
     Editor.cpp
     Actions.cpp
     Query.cpp
+    PropertySortModel.cpp
     ${SHINY_EDITOR_UI} # Just to have them in the IDE's file explorer
 )
 
 include(${QT_USE_FILE})
+
+set (CMAKE_INCLUDE_CURRENT_DIR "true")
+
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 add_library(${SHINY_EDITOR_LIBRARY} STATIC ${SOURCE_FILES} ${MOC_SRCS} ${UI_HDRS})
