@@ -1,6 +1,9 @@
-ES
+Car from blendswap
 
-Model by VeTi (wklimas.weebly.com), published on blendswap.com under CC-BY-SA
-	http://www.blendswap.com/3D-models/vehicles/mitsubshi-lancer-evo-9/
+Model by VeTi (wklimas.weebly.com)
+License: CC-BY-SA
+http://www.blendswap.com/3D-models/vehicles/mitsubshi-lancer-evo-9/
 	
-retopology, import, settings & textures by scrawl
+Retopology, import, settings & textures by scrawl
+Low poly version
+http://www.blendswap.com/blends/view/24668

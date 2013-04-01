@@ -1,4 +1,5 @@
-CT
+Car from VDrift
+
 Model by www.vis-art.de
 Import settings and texturing by Dick Maurer
 Specs and tweaks by Cotharyus

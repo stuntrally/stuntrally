@@ -1,3 +1,6 @@
-N1
+Car from Super Racing
  
-Model from Super Racing (UPG13000)
+Model name UPG13000
+http://sourceforge.net/projects/superracing/
+
+Import and settings by CryHam
