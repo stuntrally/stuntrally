@@ -20,7 +20,7 @@
 class SETTINGS;  class GAME;  class CAR;  class Scene;  class App;  class FollowCamera;  class CarReflection;
 
 namespace Ogre {  class SceneNode;  class Terrain;  class Camera;  class SceneManager;
-	class ParticleSystem;  class Entity;  class RibbonTrail;  class ManualObject;  }
+	class ParticleSystem;  class Entity;  class RibbonTrail;  class ManualObject;  class AxisAlignedBox;  }
 namespace MyGUI {  class TextBox;  }
 
 
@@ -81,6 +81,10 @@ public:
 	//  Create car (also calls CreateReflection)
 	void Create(int car);
 	void CreateReflection();
+	void CreatePart(Ogre::SceneNode* ndCar, Ogre::Vector3 vPofs,
+		Ogre::String sCar2, Ogre::String sCarI, Ogre::String sMesh, Ogre::String sEnt,
+		bool ghost, Ogre::uint32 visFlags,
+		Ogre::AxisAlignedBox* bbox=0, Ogre::String stMtr="", class VERTEXARRAY* var=0);
 	
 	void RecreateMaterials();
 	void setMtrNames(); // assign materials to entity / manualobject
