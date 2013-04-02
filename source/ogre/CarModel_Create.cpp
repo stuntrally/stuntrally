@@ -226,6 +226,11 @@ void CarModel::Create(int car)
 		if (mCar){	bodyBox = mCar->getBoundingBox();
 			if (ghost)  {  mCar->setRenderQueueGroup(g);  mCar->setCastShadows(false);  }
 			ncart->attachObject(mCar);  mCar->setVisibilityFlags(RV_Car);  }
+
+		/** ///  save .mesh
+		MeshPtr mpCar = mCar->convertToMesh("MeshCar");
+		MeshSerializer* msr = new MeshSerializer();
+		msr->exportMesh(mpCar.getPointer(), sDirname+"_body.mesh");/**/
 	}
 
 	//  interior  ----------------------
@@ -235,14 +240,17 @@ void CarModel::Create(int car)
 	if (FileExists(sCar2 + "_interior.mesh"))
 	{
 		Entity* eInter = mSceneMgr->createEntity("Car.interior"+ strI, sDirname + "_" + "interior.mesh", sCarI);
-		//eInter->setCastShadows(false);
 		if (ghost)  {  eInter->setRenderQueueGroup(g);  eInter->setCastShadows(false);  }
 		ncart->attachObject(eInter);  eInter->setVisibilityFlags(RV_Car);
 	}else{
 		ManualObject* mInter = pApp->CreateModel(mSceneMgr, sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh, vPofs, false, false, "Car.interior"+strI);
-		//mInter->setCastShadows(false);
 		if (mInter){  if (ghost)  {  mInter->setRenderQueueGroup(g);  mInter->setCastShadows(false);  }
 			ncart->attachObject(mInter);  mInter->setVisibilityFlags(RV_Car);  }
+
+		/** ///  save .mesh
+		MeshPtr mpCar = mInter->convertToMesh("MeshInter");
+		MeshSerializer* msr = new MeshSerializer();
+		msr->exportMesh(mpCar.getPointer(), sDirname+"_interior.mesh");/**/
 	}
 	
 	//  glass  ----------------------
@@ -258,13 +266,13 @@ void CarModel::Create(int car)
 		ManualObject* mGlass = pApp->CreateModel(mSceneMgr, sMtr[Mtr_CarGlass], &pCar->glassmodel.mesh, vPofs, false, false, "Car.glass"+strI);
 		if (mGlass){  mGlass->setRenderQueueGroup(ghost ? g : RQG_CarGlass);  if (ghost)  mGlass->setCastShadows(false);
 			ncart->attachObject(mGlass);  mGlass->setVisibilityFlags(RV_CarGlass);  }
+
+		/** ///  save .mesh
+		MeshPtr mpCar = mGlass->convertToMesh("MeshGlass");
+		MeshSerializer* msr = new MeshSerializer();
+		msr->exportMesh(mpCar.getPointer(), sDirname+"_glass.mesh");/**/
 	}
 	
-	///  save .mesh
-	/**  MeshPtr mpCar = mCar->convertToMesh("MeshCar");
-	MeshSerializer* msr = new MeshSerializer();
-	msr->exportMesh(mpCar.getPointer(), "car.mesh");/**/
-
 
 	//  wheels  ----------------------
 	for (int w=0; w < 4; ++w)
@@ -297,7 +305,13 @@ void CarModel::Create(int car)
 				if (mWh)  {
 				if (ghost)  {  mWh->setRenderQueueGroup(g);  mWh->setCastShadows(false);  }
 				ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-				ndWh[w]->attachObject(mWh);  mWh->setVisibilityFlags(RV_Car);  }
+				ndWh[w]->attachObject(mWh);  mWh->setVisibilityFlags(RV_Car);
+
+				/** ///  save .mesh
+				MeshPtr mpCar = mWh->convertToMesh("MeshWheel");
+				MeshSerializer* msr = new MeshSerializer();
+				msr->exportMesh(mpCar.getPointer(), sDirname+"_wheel.mesh");/**/
+				}
 			}
 		}
 		
@@ -444,7 +458,7 @@ void CarModel::RecreateMaterials()
 
 	// copy material to a new material with index
 	MaterialPtr mat;
-	for (int i=0; i < NumMaterials; ++i)
+	for (int i=0; i < 1/*NumMaterials*/; ++i)
 	{
 		sh::Factory::getInstance().destroyMaterialInstance(sMtr[i] + strI);
 		sh::MaterialInstance* m = sh::Factory::getInstance().createMaterialInstance(sMtr[i] + strI, sMtr[i]);
@@ -495,6 +509,7 @@ void CarModel::setMtrNames()
 	if (pCar && pCar->bRotFix)
 		return;
 		
+	#if 0
 	setMtrName("Car.interior"+strI, sMtr[Mtr_CarInterior]);
 	setMtrName("Car.glass"+strI, sMtr[Mtr_CarGlass]);
 
@@ -504,6 +519,7 @@ void CarModel::setMtrNames()
 		setMtrName(sw,          sm);
 		setMtrName(sw+"_brake", sm);
 	}
+	#endif
 }
 
 //  ----------------- Reflection ------------------------
