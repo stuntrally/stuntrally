@@ -214,7 +214,7 @@ void CarModel::Create(int car)
 		bodyBox = eCar->getBoundingBox();
 		if (ghost)  {  eCar->setRenderQueueGroup(g);  eCar->setCastShadows(false);  }
 		ncart->attachObject(eCar);  eCar->setVisibilityFlags(RV_Car);
-		if (sDirname == "S1" || sDirname == "N1")  // todo.. in pCar->
+		if (pCar->bRotFix)
 			ncart->setOrientation(Quaternion(Degree(90),Vector3::UNIT_Y)*Quaternion(Degree(180),Vector3::UNIT_X));
 		
 		//MeshPtr mesh = eCar->getMesh();
@@ -335,10 +335,11 @@ void CarModel::Create(int car)
 				Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
 					bcenter = bodyBox.getMaximum() + bodyBox.getMinimum();
 				//LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
-				Vector3 vp = (sDirname == "S1") ?
+				Vector3 vp = pCar->bRotFix ?
 					Vector3(bsize.z * 0.97, bsize.y * 0.65, bsize.x * 0.65 * (i==0 ? 1 : -1)) :
 					Vector3(bsize.x * 0.97, bsize.y * 0.65, bsize.z * 0.65 * (i==0 ? 1 : -1));
 					//Vector3(1.9 /*back*/, 0.1 /*up*/, 0.6 * (i==0 ? 1 : -1)/*sides*/
+				vp += Vector3(0,pCar->boostOffsetY,0);
 				SceneNode* nb = pMainNode->createChildSceneNode(bcenter+vp);
 				nb->attachObject(pb[i]);
 			}else{
@@ -437,8 +438,6 @@ void CarModel::RecreateMaterials()
 	{	sMtr[Mtr_CarBody]     = chooseMat("_body");		sMtr[Mtr_CarTireFront]  = chooseMat("tire_front");
 		sMtr[Mtr_CarInterior] = chooseMat("_interior");	sMtr[Mtr_CarTireRear]   = chooseMat("tire_rear");
 		sMtr[Mtr_CarGlass]    = chooseMat("_glass");
-		//if (sDirname == "S1")
-		//	sMtr[Mtr_CarBody] = "UPG15000_light";
 	}else
 	for (int i=0; i < NumMaterials; ++i)
 		sMtr[i] = "car_ghost";  //+s old mtr..
@@ -493,8 +492,8 @@ void CarModel::setMtrNames()
 		FileExists(resCar + "/" + sDirname + "_body00_red.png"))
 		setMtrName("Car"+strI, sMtr[Mtr_CarBody]);
 
-	if (sDirname == "S1" || sDirname == "S8" || sDirname == "N1")
-		return;  /// par in .car ..
+	if (pCar && pCar->bRotFix)
+		return;
 		
 	setMtrName("Car.interior"+strI, sMtr[Mtr_CarInterior]);
 	setMtrName("Car.glass"+strI, sMtr[Mtr_CarGlass]);

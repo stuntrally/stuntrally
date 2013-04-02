@@ -13,6 +13,7 @@ yaw   = 500.0
 yaw2  = 2.0
 
 [ model_ofs ]
+rot_fix = on
 exhaust-x = 2.2
 exhaust-y = 0.39
 exhaust-z = -0.5
