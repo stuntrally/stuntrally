@@ -47,7 +47,6 @@
 	<Tag name="HDROrigImage">Bloom Darken</Tag>
 	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
 	<Tag name="GraphicsAll_Low">Bas</Tag>
-	<Tag name="TipPrevWind">Preview camera window.</Tag>
 	<Tag name="InputPaintColor">C - Paint Color</Tag>
 	<Tag name="MessageBox_No">Non</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
@@ -70,7 +69,7 @@
 	<Tag name="InputHeaderTxt1">Action</Tag>
 	<Tag name="DepthOfField">Profondeur du terrain</Tag>
 	<Tag name="Game">Jeu</Tag>
-	<Tag name="InputObjectsScale">alt-LMB - scale   alt-RMB - scale Y only</Tag>
+	<Tag name="InputObjectsScale">3 - Scale   LMB - uniform XYZ  RMB: Y  MMB: Z</Tag>
 	<Tag name="TipTerLNoiseOnly">Use only noise (no angle or height ranges)</Tag>
 	<Tag name="AllEffects">Effects Enabled</Tag>
 	<Tag name="RepeatStage">Repeating stage</Tag>
@@ -309,7 +308,6 @@
 	<Tag name="RplAutoRec">Auto record replay</Tag>
 	<Tag name="Reflections">Reflections</Tag>
 	<Tag name="PipeMaterials">Pipe materials</Tag>
-	<Tag name="Exponent">exponent</Tag>
 	<Tag name="InputFluidsPrevNext">PgUp,PgDn (or Wheel) - previous/next fluid</Tag>
 	<Tag name="Yaw">yaw</Tag>
 	<Tag name="Detail">Detail</Tag>
@@ -322,7 +320,7 @@
 	<Tag name="MinScale">min scale</Tag>
 	<Tag name="NetStart">Démarrer</Tag>
 	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions use our Forum:@http://forum.freegamedev.net/viewforum.php?f=77@@For more info see Readme and our project's Wiki pages.@</Tag>
-	<Tag name="InputObjectsMove">LMB - move   RMB - height</Tag>
+	<Tag name="InputObjectsMove">1 - Move   LMB - plane XZ  RMB - Y height</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="Screenshot">capture d'écran</Tag>
 	<Tag name="Models">Modèles</Tag>
@@ -357,7 +355,6 @@
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
 	<Tag name="ApplyShadows">Apply Shadows</Tag>
 	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
-	<Tag name="TipFogEndClr">Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
 	<Tag name="Multiplayer">Multijoueur</Tag>
 	<Tag name="InputToggleVeget">V - Deactiver / activer la végétation</Tag>
@@ -387,7 +384,6 @@
 	<Tag name="RplSize">taille</Tag>
 	<Tag name="TipMudInt">Mud particles intensity.</Tag>
 	<Tag name="HeightMax">Height Max</Tag>
-	<Tag name="Mode">mode</Tag>
 	<Tag name="NetWrongPassword">Mot de passe incorrect.</Tag>
 	<Tag name="ScaleAll">Scale all</Tag>
 	<Tag name="InpSet_KeyFull">Key Full</Tag>
@@ -472,7 +468,6 @@
 	<Tag name="mud">mud</Tag>
 	<Tag name="NetMasterConnectionError">Impossible d'atteindre le serveur maître.</Tag>
 	<Tag name="AutoUpdateBlendmap">Auto update blendmap (slow for big size brushes)</Tag>
-	<Tag name="TipTerWind">Terrain brush window.</Tag>
 	<Tag name="InputMapThrottle">Throttle</Tag>
 	<Tag name="TBLap">Lap</Tag>
 	<Tag name="Road_AngleBoth">Both</Tag>
@@ -533,7 +528,6 @@
 	<Tag name="LS_GAME">Loading game</Tag>
 	<Tag name="TipSceneryId">Name id of track, that has similar lighting (or this track's if has unique). Used for impostors generation.</Tag>
 	<Tag name="TreeMult">Trees multiplier</Tag>
-	<Tag name="TipRoadStats">Whole road statistics.</Tag>
 	<Tag name="InputUpdate">F8 - update track</Tag>
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
 	<Tag name="TipGrassMaterial">Grass material (type) for this layer, chosen to match track's scenery.</Tag>
@@ -636,7 +630,6 @@
 	<Tag name="Reset">Reset</Tag>
 	<Tag name="ParAmount">Particle amounts</Tag>
 	<Tag name="TipDeleteTrk">Permanently delete selected track.</Tag>
-	<Tag name="DeleteRoad">Delete Road</Tag>
 	<Tag name="Setup">Setup</Tag>
 	<Tag name="ReflMode_full">Full</Tag>
 	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
@@ -672,9 +665,7 @@
 	<Tag name="Editor">Editor</Tag>
 	<Tag name="TipTrkViewDetailed">Detailed list view.</Tag>
 	<Tag name="AndContributors">and contributors.</Tag>
-	<Tag name="InputObjects1">1 - reset rotation</Tag>
 	<Tag name="Copy">Copier</Tag>
-	<Tag name="InputObjects2">2 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="TipFind">Enter part of name to find (filters list).</Tag>
 	<Tag name="scale">Scale</Tag>
 	<Tag name="UnitMph">mph</Tag>
@@ -682,7 +673,6 @@
 	<Tag name="InputObjectsType">-,=  - change object type</Tag>
 	<Tag name="ColHue">Color - Hue</Tag>
 	<Tag name="fluids">fluids (water or mud)</Tag>
-	<Tag name="DeleteFluids">Delete Fluids</Tag>
 	<Tag name="TipLoadTrkEditor">Load track (after change) or Reload current track.</Tag>
 	<Tag name="AlignTerrainToRoad">Align terrain to road</Tag>
 	<Tag name="TerLNoise">Bruit</Tag>
@@ -695,7 +685,6 @@
 	<Tag name="InputRoadEdit">R - edit road mode</Tag>
 	<Tag name="jumps">jumps</Tag>
 	<Tag name="TBBest">Best</Tag>
-	<Tag name="TipFluidsWnd">Fluid parameters window.</Tag>
 	<Tag name="Near">Near</Tag>
 	<Tag name="Materials">Matériels</Tag>
 	<Tag name="InputMultiplier">Multiplier</Tag>
@@ -722,7 +711,6 @@
 	<Tag name="ObjDynamic">Dynamic</Tag>
 	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
 	<Tag name="GraphicsAll_High">High</Tag>
-	<Tag name="TipRoadParams">Road point parameters.</Tag>
 	<Tag name="TerGenPow">Power (shape)</Tag>
 	<Tag name="Used">Used</Tag>
 	<Tag name="TipImpDist">Far distance at which the 2d impostors dissapear.</Tag>
@@ -768,7 +756,7 @@
 	<Tag name="SkirtHeight">Skirt Height</Tag>
 	<Tag name="NewTerrainGenerate">Generate new</Tag>
 	<Tag name="TipTrkScreenEditor">In game screenshot for selected track.</Tag>
-	<Tag name="InputObjectsRot">MMB - rotate yaw   alt-MMB - rotate roll</Tag>
+	<Tag name="InputObjectsRot">2 - Rotate local (alt- global)  LMB: Z  RMB: Y  MMB: X</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="InputRoadHeight">- changer la hauteur</Tag>
 	<Tag name="TipSunSpecular">Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)</Tag>
@@ -809,25 +797,38 @@
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
 	<Tag name="SimMode">Simulation mode (difficulty)</Tag>
+	<Tag name="TipFogHStart">Height fog start height [meters] at which fog starts getting denser for smooth distance.</Tag>
+	<Tag name="Rivers">Rivers</Tag>
 	<Tag name="TipToggleGrass">Enable or disable this grass layer.</Tag>
 	<Tag name="MinimapBorder">Border</Tag>
 	<Tag name="Simulation">Simulation</Tag>
+	<Tag name="InputObjectsRotReset">shift-2 - reset rotation</Tag>
+	<Tag name="TipFogClr2">Fog end color when looking away from sun.</Tag>
 	<Tag name="InputNextLayTab">alt-1,2 - prev,next Layer tab</Tag>
 	<Tag name="Grasses">Grasses</Tag>
+	<Tag name="FogHeight">Height</Tag>
+	<Tag name="TipFogHSmooth">Height fog smooth distance [meters].</Tag>
+	<Tag name="TipFogClrH">Fog color for height fog.</Tag>
+	<Tag name="TipFogClrRGBA">R G B A components 0 to 1 (eg. 0.7 0.8 0.9 1). Last can be used to lower maximum density (1 is full).</Tag>
 	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
 	<Tag name="InputRoadLooped">O - toggle looped</Tag>
 	<Tag name="TipGrassPrev">Preview image of this grass layer (changed with material).</Tag>
 	<Tag name="SimModeEasy">Easy (beginner)</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - save file and reload game</Tag>
-	<Tag name="Tweak">Tweak</Tag>
-	<Tag name="MaterialProperties">Material Properties</Tag>
 	<Tag name="TipGrassLayers">Grass layers. Recommended use 1-4.</Tag>
+	<Tag name="Tweak">Tweak</Tag>
+	<Tag name="FogNormal">Normal</Tag>
+	<Tag name="MaterialProperties">Material Properties</Tag>
+	<Tag name="TipFogClr">Fog end color when looking under sun.</Tag>
 	<Tag name="UserDir">User Path (logs, configs, user data, etc)</Tag>
 	<Tag name="TipGrassLayerDens">Grass density for layer (how often it will appear).</Tag>
 	<Tag name="TextColor">Text color</Tag>
+	<Tag name="InputObjectsMoveReset">shift-1 - move to cursor / reset new height</Tag>
 	<Tag name="StartInMain">Start in main menu</Tag>
+	<Tag name="ObjBuildings">Buildings</Tag>
 	<Tag name="SimModeNormal">Normal (simulation)</Tag>
 	<Tag name="ImpostorsOnly">Impostors Only (low quality)</Tag>
+	<Tag name="InputObjectsScaleReset">shift-3 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="smooth">smooth</Tag>
 	<Tag name="GameVersion">1.9</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
