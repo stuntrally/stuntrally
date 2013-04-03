@@ -54,7 +54,7 @@
 
 	SH_START_PROGRAM
 	{
-		shOutputColour(0) = shSample(diffuseMap, shMatrixMult(textureMatrix,float4(uvPassthrough,0,1)));
+		shOutputColour(0) = shSample(diffuseMap, shMatrixMult(textureMatrix,float4(uvPassthrough,0,1)).xy);
 
 		//#if FOG
 		float3 lightDir = lightPosObjSpace.xyz; // directional
