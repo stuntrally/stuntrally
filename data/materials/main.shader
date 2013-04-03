@@ -416,9 +416,9 @@
 		
 		#if !SPEC_MAP
 			#if TWOSIDE_DIFFUSE
-				float3 specular = pow(abs(dot(normal, halfAngle)), materialShininess * 8) * materialSpecular.xyz;
+				float3 specular = pow(abs(dot(normal, halfAngle)), materialShininess) * materialSpecular.xyz;
 			#else
-				float3 specular = pow(max(dot(normal, halfAngle), 0), materialShininess * 8) * materialSpecular.xyz;
+				float3 specular = pow(max(dot(normal, halfAngle), 0), materialShininess) * materialSpecular.xyz;
 			#endif
 		#else
 			float4 specTex = shSample(specMap, UV.xy);
