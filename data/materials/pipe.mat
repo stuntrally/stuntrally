@@ -287,7 +287,7 @@ material pipeGlass
 	parent pipe_glass
 	ambient 0.35 0.48 0.55
 	diffuse 0.76 0.82 0.90
-	diffuseMap roadGlassCdirt.png
+	diffuseMap roadGlassC_dirt.png
 	specMap roadGlass_spec1l.png
 	//normalMap roadGlassD_norm.png
 	//bump_scale 0.1
@@ -298,7 +298,7 @@ material pipeGlassCyan
 	parent pipe_glass
 	ambient 0.34 0.71 0.71
 	diffuse 0.5 0.67 0.73
-	diffuseMap roadGlassCdirt2.png
+	diffuseMap roadGlassC_dirt2.png
 	specMap roadGlass_spec2h.png
 }
 
@@ -307,7 +307,7 @@ material pipeGlassRed
 	parent pipe_glass
 	ambient 0.8 0.4 0.3
 	diffuse 0.6 0.3 0.2
-	diffuseMap roadGlassF.png
+	diffuseMap roadGlassD.png
 	specMap roadGlass_spec0.png
 }
 
@@ -316,7 +316,7 @@ material pipeGlassOrange
 	parent pipe_glass
 	ambient 0.6 0.35 0.1
 	diffuse 0.8 0.35 0.1
-	diffuseMap roadGlassF.png
+	diffuseMap roadGlassD.png
 	specMap roadGlass_spec0.png
 }
 
@@ -325,7 +325,7 @@ material pipeGlassYellow
 	parent pipe_glass
 	ambient 0.8 0.8 0.2
 	diffuse 0.6 0.6 0.1
-	diffuseMap roadGlassF.png
+	diffuseMap roadGlassD.png
 	specMap roadGlass_spec0.png
 }
 
