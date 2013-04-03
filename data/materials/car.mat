@@ -482,19 +482,12 @@ material S8_glass
 {
 	parent car_glass
 	diffuseMap S8_window.png
-	fresnelScaleBiasPower 19.2 0.2 4
+	//fresnelScaleBiasPower 1.2 0.2 4
 }
 material S8_glass_pure
 {
-	parent S8_glass
-}
-material S8_break_lights
-{
-	parent S8_glass
-}
-material S8_car_light
-{
-	parent S8_glass
+	parent car_glass
+	diffuseMap S8_window.png
 }
 
 material S8_base
@@ -506,85 +499,183 @@ material S8_base
 	specular 0.9 0.9 0.9 8
 }
 
-material S8_expanded_metal
-{
-	parent S8_base
-}
 material S8_sign
 {
 	parent S8_base
+	ambient 0.6 0.6 0.6
+	diffuse 0.6 0.6 0.6
+	specular 0.9 0.9 0.9 8
 }
 material S8_carpaint
 {
 	parent S8_base
+	ambient 0.6 0.6 0.6
+	diffuse 0.6 0.6 0.6
+	specular 0.9 0.9 0.9 8
 }
-material S8_lights_back_interior_3
+
+material S8_chrome_strip_arch_front
 {
 	parent S8_base
+	ambient 0.6 0.6 0.6
+	diffuse 0.6 0.6 0.6
+	specular 0.9 0.9 0.9 8
+}
+material S8_mirror
+{
+	parent S8_base
+	ambient 0.6 0.6 0.6
+	diffuse 0.6 0.6 0.6
+	specular 0.9 0.9 0.9 8
+}
+
+material S8_white_plast
+{
+	parent S8_base
+	ambient 0.6 0.6 0.6
+	diffuse 0.6 0.6 0.6
+	specular 0.9 0.9 0.9 8
+}
+
+//  lights
+material S8_chrome  // exhaust-,  lamps front
+{
+	parent S8_base
+	diffuseMap white.png
+	ambient 0.5 0.5 0.5
+	diffuse 0.8 0.8 0.8
+	specular 0.9 0.9 0.9 16
+}
+material S8_car_light  // front bulbs
+{
+	parent S8_base
+	diffuseMap white.png
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 0.9 0.9 0.9 8
 }
 material S8_break_lights
 {
 	parent S8_base
+	ambient 1.0 0.2 0.2
+	diffuse 1.0 0.2 0.2
+	specular 1.0 0.4 0.4 8
 }
+
+material S8_lights_back_interior
+{
+	parent S8_base
+	diffuseMap white.png
+	ambient 1.0 0.2 0.2
+	diffuse 1.0 0.2 0.2
+	specular 1.0 0.8 0.8 8
+}
+material S8_lights_back_interior_2
+{
+	parent S8_base
+	diffuseMap white.png
+	ambient 1.0 0.2 0.2
+	diffuse 1.0 0.2 0.2
+	specular 1.0 0.8 0.8 8
+}
+material S8_lights_back_interior_3
+{
+	parent S8_base
+	diffuseMap white.png
+	ambient 1.0 0.2 0.2
+	diffuse 1.0 0.2 0.2
+	specular 1.0 0.8 0.8 8
+}
+
 material S8_red_glossy
 {
 	parent S8_base
+	diffuseMap white.png
+	ambient 1.0 0.2 0.2
+	diffuse 1.0 0.2 0.2
+	specular 1.0 0.2 0.0 8
 }
-material S8_chrome_strip_arch_front
+material S8_car_light_orange
 {
 	parent S8_base
+	diffuseMap white.png
+	ambient 1.0 0.5 0.1
+	diffuse 1.0 0.5 0.1
+	specular 0.5 0.25 0.0 8
 }
 
-material S8_chrome_mate
-{
-	parent car_base
-	diffuseMap white.png
-	ambient 0.6 0.6 0.6
-	diffuse 0.6 0.6 0.6
-	specular 0.9 0.9 0.9 8
-}
 
-material S8_black_plast
+material S8_chrome_mate  // front
 {
-	parent car_base
-	diffuseMap white.png
-	ambient 0.6 0.6 0.6
-	diffuse 0.6 0.6 0.6
-	specular 0.9 0.9 0.9 8
-}
-material S8_interior
-{
-	parent car_base
+	parent S8_base
 	diffuseMap white.png
 	ambient 0.7 0.7 0.7
 	diffuse 0.7 0.7 0.7
-	specular 0.5 0.5 0.5 8
+	specular 0.7 0.7 0.7 8
 }
-material S8_undercarriage
+
+material S8_undercarriage  // front inside -cooler
 {
-	parent car_base
+	parent S8_base
+	diffuseMap random.png
+	ambient 0.3 0.3 0.3
+	diffuse 0.3 0.3 0.3
+	specular 0.3 0.3 0.3 4
+}
+material S8_expanded_metal  // front inside
+{
+	parent S8_base
 	diffuseMap white.png
 	ambient 0.5 0.5 0.5
 	diffuse 0.5 0.5 0.5
-	specular 0.5 0.5 0.5 8
-}
-material S8_chrome
-{
-	parent car_base
-	diffuseMap white.png
-	ambient 0.7 0.7 0.7
-	diffuse 0.7 0.7 0.7
-	specular 0.9 0.9 0.9 8
+	specular 0.7 0.7 0.7 4
 }
 
-material cartire_front_S8
+material S8_black_plast  // rubber, wipers, front-, back bottom, over wheels  split?
 {
-	parent UPG15000_wheel
-	//parent UPG15000_metalwheel  // yellow
+	parent S8_base
+	diffuseMap white.png
+	ambient 0.2 0.2 0.2
+	diffuse 0.3 0.3 0.3
+	specular 0.1 0.1 0.1 4
 }
-material cartire_rear_S8
+
+material S8_interior  // all +  split?  // todo: texture..
 {
-	parent UPG15000_wheel
+	parent S8_base
+	diffuseMap white.png
+	ambient 0.5 0.5 0.5
+	diffuse 0.4 0.4 0.4
+	specular 0.2 0.2 0.2 4
+}
+
+//  wheel
+material S8_rim  // yellow
+{
+	parent S8_base
+	diffuseMap S8_Rim.png
+	ambient 0.8 0.7 0.3 1
+	diffuse 0.8 0.7 0.3 1
+	specular 1 1 0.5 32
+}
+
+material S8_tire
+{
+	parent S8_base
+	diffuseMap S8_Tire.png
+	normalMap S8_Tire_norm.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.5 0.5 0.5
+	specular 0.1 0.1 0.1 8
+}
+
+material S8_brake  // disc,caliper
+{
+	parent S8_base
+	diffuseMap S8_brake.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.8 0.8 0.8 24
 }
 
 
