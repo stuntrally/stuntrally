@@ -65,30 +65,7 @@ void App::slSunYaw(SL)
 	float v = -180.f + 360.f * val;  sc->ldYaw = v;
 	if (valSunYaw){	valSunYaw->setCaption(fToStr(v,1,4));  }  UpdSun();
 }
-void App::slFogStart(SL)  // fog start, end
-{
-	float v = 2000.f * powf(val, 2.f);		sc->fogStart = v;  UpdFog();
-	if (valFogStart){	valFogStart->setCaption(fToStr(v,0,3));  }
-}
-void App::slFogEnd(SL)
-{
-	float v = 2000.f * powf(val, 2.f);		sc->fogEnd = v;    UpdFog();
-	if (valFogEnd){	 valFogEnd->setCaption(fToStr(v,0,3));  }
-}
 
-void App::chkFogDisable(WP wp)  // chk fog disable
-{
-	ChkEv(bFog);  UpdFog();
-}
-void App::chkWeatherDisable(WP wp)
-{
-	ChkEv(bWeather);
-}
-void App::editFogClr(Edit* ed)  // edit fog clr
-{
-	Vector3 c = s2v(ed->getCaption());  sc->fogClr = c;  UpdFog();
-	if (clrFog)  clrFog->setColour(Colour(c.x,c.y,c.z));
-}
 void App::editLiAmb(Edit* ed)  // edit light clrs
 {
 	Vector3 c = s2v(ed->getCaption());	sc->lAmb = c;  UpdSun();
@@ -103,6 +80,63 @@ void App::editLiSpec(Edit* ed)
 {
 	Vector3 c = s2v(ed->getCaption());	sc->lSpec = c;  UpdSun();
 	if (clrSpec)  clrSpec->setColour(Colour(c.x,c.y,c.z));
+}
+
+//  fog
+void App::slFogStart(SL)  // fog start, end
+{
+	float v = 2000.f * powf(val, 2.f);		sc->fogStart = v;  UpdFog();
+	if (valFogStart){	valFogStart->setCaption(fToStr(v,0,3));  }
+}
+void App::slFogEnd(SL)
+{
+	float v = 2000.f * powf(val, 2.f);		sc->fogEnd = v;    UpdFog();
+	if (valFogEnd){	 valFogEnd->setCaption(fToStr(v,0,3));  }
+}
+void App::slFogHStart(SL)
+{
+	float v = 2000.f * powf(val, 2.f);		sc->fogHStart = v;  UpdFog();
+	if (valFogHStart){	valFogHStart->setCaption(fToStr(v,0,3));  }
+}
+void App::slFogHEnd(SL)
+{
+	float v = 2000.f * powf(val, 2.f);		sc->fogHEnd = v;    UpdFog();
+	if (valFogHEnd){	 valFogHEnd->setCaption(fToStr(v,0,3));  }
+}
+void App::slFogHeight(SL)  // edit-
+{
+	float v = -300.f + 600.f * powf(val, 2.f);		sc->fogHeight = v;  UpdFog();
+	if (valFogHeight){	valFogHeight->setCaption(fToStr(v,1,4));  }
+}
+void App::slFogHDensity(SL)
+{
+	float v = 200.f * powf(val, 2.f);		sc->fogHDensity = v;    UpdFog();
+	if (valFogHDensity){	valFogHDensity->setCaption(fToStr(v,1,4));  }
+}
+
+void App::editFogClr(Edit* ed)  // edit fog clr
+{
+	Vector4 c = s2v4(ed->getCaption());  sc->fogClr = c;  UpdFog();
+	if (clrFog)  clrFog->setColour(Colour(c.x,c.y,c.z));
+}
+void App::editFogClr2(Edit* ed)
+{
+	Vector4 c = s2v4(ed->getCaption());  sc->fogClr2 = c;  UpdFog();
+	if (clrFog2)  clrFog2->setColour(Colour(c.x,c.y,c.z));
+}
+void App::editFogClrH(Edit* ed)
+{
+	Vector4 c = s2v4(ed->getCaption());  sc->fogClrH = c;  UpdFog();
+	if (clrFogH)  clrFogH->setColour(Colour(c.x,c.y,c.z));
+}
+
+void App::chkFogDisable(WP wp)  // chk fog disable
+{
+	ChkEv(bFog);  UpdFog();
+}
+void App::chkWeatherDisable(WP wp)
+{
+	ChkEv(bWeather);
 }
 
 

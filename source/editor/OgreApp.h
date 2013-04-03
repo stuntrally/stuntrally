@@ -342,10 +342,12 @@ protected:
 	MyGUI::ComboBoxPtr cmbSky, cmbRain1,cmbRain2;
 	void comboSky(CMB), comboRain1(CMB),comboRain2(CMB);
 	SLV(Rain1Rate);  SLV(Rain2Rate);
-	SLV(SunPitch);  SLV(SunYaw);  SLV(FogStart);  SLV(FogEnd);
-	MyGUI::EditPtr edLiAmb,edLiDiff,edLiSpec, edFogClr;
-	MyGUI::ImageBox* clrAmb,*clrDiff,*clrSpec, *clrFog;
-	void editLiAmb(MyGUI::EditPtr),editLiDiff(MyGUI::EditPtr),editLiSpec(MyGUI::EditPtr), editFogClr(MyGUI::EditPtr);
+	SLV(SunPitch);  SLV(SunYaw);
+	SLV(FogStart); SLV(FogEnd);  SLV(FogHStart); SLV(FogHEnd);  SLV(FogHeight); SLV(FogHDensity);
+	MyGUI::EditPtr edLiAmb,edLiDiff,edLiSpec, edFogClr,edFogClr2,edFogClrH;
+	MyGUI::ImageBox* clrAmb,*clrDiff,*clrSpec, *clrFog,*clrFog2,*clrFogH;
+	void editFogClr(MyGUI::EditPtr),editFogClr2(MyGUI::EditPtr),editFogClrH(MyGUI::EditPtr);
+	void editLiAmb(MyGUI::EditPtr),editLiDiff(MyGUI::EditPtr),editLiSpec(MyGUI::EditPtr);
 	void chkFogDisable(WP),chkWeatherDisable(WP);  MyGUI::ButtonPtr chkFog, chkWeather;
 
 	

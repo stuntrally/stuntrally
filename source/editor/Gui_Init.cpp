@@ -192,14 +192,15 @@ void App::InitGui()
 	///  [Sun]
 	//----------------------------------------------------------------------------------------------
 	Slv(SunPitch,0);  Slv(SunYaw,0);
-	Slv(FogStart,0);  Slv(FogEnd,0);
+	Slv(FogStart,0);  Slv(FogEnd,0);  Slv(FogHStart,0);  Slv(FogHEnd,0);  Slv(FogHeight,0);  Slv(FogHDensity,0);
 	Chk("FogDisable", chkFogDisable, pSet->bFog);  chkFog = bchk;
 	Chk("WeatherDisable", chkWeatherDisable, pSet->bWeather);  chkWeather = bchk;
-	Ed(LiAmb, editLiAmb);  Ed(LiDiff, editLiDiff);  Ed(LiSpec, editLiSpec);  Ed(FogClr, editFogClr);
+	Ed(LiAmb, editLiAmb);  Ed(LiDiff, editLiDiff);  Ed(LiSpec, editLiSpec);
+	Ed(FogClr, editFogClr);  Ed(FogClr2, editFogClr2);  Ed(FogClrH, editFogClrH);
 	clrAmb = mGUI->findWidget<ImageBox>("ClrAmb");		clrDiff = mGUI->findWidget<ImageBox>("ClrDiff");
-	clrSpec = mGUI->findWidget<ImageBox>("ClrSpec");	clrFog = mGUI->findWidget<ImageBox>("ClrFog");
-	clrTrail = mGUI->findWidget<ImageBox>("ClrTrail");
-	//Todo: on click event - open color r,g,b dialog
+	clrSpec = mGUI->findWidget<ImageBox>("ClrSpec");	clrTrail = mGUI->findWidget<ImageBox>("ClrTrail");
+	clrFog = mGUI->findWidget<ImageBox>("ClrFog");	clrFog2 = mGUI->findWidget<ImageBox>("ClrFog2");
+	clrFogH = mGUI->findWidget<ImageBox>("ClrFogH");	//Todo: on click event - open color r,g,b dialog
 	Slv(Rain1Rate,0);  Slv(Rain2Rate,0);
 
 
@@ -403,7 +404,7 @@ void App::InitGui()
 	//---------------------  Roads  ---------------------
 	GetMaterialsMat(sMat+"road.mat");
 	GetMaterialsMat(sMat+"road_wall_pipe.mat",false);
-	GetMaterials("pipe.material",false);
+	GetMaterialsMat(sMat+"pipe.mat",false);
 	for (size_t i=0; i<4; ++i)
 	{
 		Cmb(cmbRoadMtr[i], "RdMtr"+toStr(i+1), comboRoadMtr);
@@ -453,6 +454,9 @@ void App::InitGui()
 	Cmb(cmbTwk, "TweakMtr", comboTweakMtr);
 
 	GetMaterialsMat(sMat+"water.mat");
+	GetMaterialsMat(sMat+"pipe.mat",false);
+	GetMaterialsMat(sMat+"road.mat",false);
+	//objects_static
 
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	String s = vsMaterials[i];

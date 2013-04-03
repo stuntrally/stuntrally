@@ -33,9 +33,10 @@ App::App()  //  gui wigdets--
 	,valSizeMinmap(0), valCamSpeed(0), valCamInert(0)  // settings
 	,valTerUpd(0), valSizeRoadP(0), valMiniUpd(0), chAutoBlendmap(0), chInputBar(0)
 	,cmbSky(0), cmbRain1(0),cmbRain2(0), valRain1Rate(0),valRain2Rate(0)  // sun
-	,valSunPitch(0),valSunYaw(0), valFogStart(0),valFogEnd(0)
-	,edLiAmb(0),edLiDiff(0),edLiSpec(0), edFogClr(0), chkFog(0), chkWeather(0)
-	,clrAmb(0),clrDiff(0),clrSpec(0), clrFog(0), clrTrail(0)
+	,valSunPitch(0),valSunYaw(0), edLiAmb(0),edLiDiff(0),edLiSpec(0), chkFog(0), chkWeather(0)
+	,valFogStart(0),valFogEnd(0), valFogHStart(0),valFogHEnd(0), valFogHeight(0),valFogHDensity(0)
+	,edFogClr(0),edFogClr2(0),edFogClrH(0)
+	,clrAmb(0),clrDiff(0),clrSpec(0), clrFog(0),clrFog2(0),clrFogH(0), clrTrail(0)
 	,cmbTexDiff(0),cmbTexNorm(0), imgTexDiff(0), terrain(0)  // terrain
 	,valTerLAll(0),tabsHmap(0),tabsTerLayers(0), idTerLay(0),bTerLay(1)
 	,chkTerLay(0),chkTexNormAuto(0), bTexNormAuto(1), chkTerLNoiseOnly(0)

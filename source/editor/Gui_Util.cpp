@@ -32,11 +32,16 @@ void App::SetGuiFromXmls()
 	//-----------------------------------------------
 	_Cmb(cmbSky, sc->skyMtr);
 	_Slv(SunPitch, sc->ldPitch /90.f);
-	_Slv(SunYaw,   (sc->ldYaw + 180.f)  /360.f);
-	_Ed(LiAmb, sc->lAmb);  _Ed(LiDiff, sc->lDiff);  _Ed(LiSpec, sc->lSpec);  _Ed(FogClr, sc->fogClr);
-	_Clr(Amb, sc->lAmb);  _Clr(Diff, sc->lDiff);  _Clr(Spec, sc->lSpec);  _Clr(Fog, sc->fogClr);
+	_Slv(SunYaw,   (sc->ldYaw + 180.f) /360.f);
+	_Ed(LiAmb, sc->lAmb);  _Ed(LiDiff, sc->lDiff);  _Ed(LiSpec, sc->lSpec);
+	_Clr(Amb, sc->lAmb);  _Clr(Diff, sc->lDiff);  _Clr(Spec, sc->lSpec);
+	//  fog
+	_Clr(Fog, sc->fogClr);  _Clr(Fog2, sc->fogClr2);  _Clr(FogH, sc->fogClrH);
+	_Ed(FogClr, sc->fogClr);  _Ed(FogClr2, sc->fogClr2);  _Ed(FogClrH, sc->fogClrH);
 	_Slv(FogStart, powf(sc->fogStart /2000.f, 0.5f));
 	_Slv(FogEnd,   powf(sc->fogEnd   /2000.f, 0.5f));
+	_Slv(FogHStart,powf(sc->fogHStart/2000.f, 0.5f));  _Slv(FogHeight,  powf((sc->fogHeight +300.f) /600.f, 0.5f));
+	_Slv(FogHEnd,  powf(sc->fogHEnd  /2000.f, 0.5f));  _Slv(FogHDensity,powf(sc->fogHDensity /200.f, 1/ 2.f));
 
 	_Cmb(cmbRain1, sc->rainName);	_Slv(Rain1Rate, sc->rainEmit /6000.f);
 	_Cmb(cmbRain2, sc->rain2Name);	_Slv(Rain2Rate, sc->rain2Emit /6000.f);	
@@ -160,8 +165,12 @@ void App::btnCopySun(WP)
 	sc->skyMtr = sF.skyMtr;  // sky
 	sc->rainEmit = sF.rainEmit;  sc->rain2Emit = sF.rain2Emit;
 	sc->rainName = sF.rainName;  sc->rain2Name = sF.rain2Name;
-	sc->fogMode = sF.fogMode;  sc->fogExp = sF.fogExp;  // fog
-	sc->fogClr = sF.fogClr;  sc->fogStart = sF.fogStart;  sc->fogEnd = sF.fogEnd;
+
+	sc->fogClr = sF.fogClr;  sc->fogClr2 = sF.fogClr2;  sc->fogClrH = sF.fogClrH;
+	sc->fogStart = sF.fogStart;  sc->fogEnd = sF.fogEnd;
+	sc->fogHStart = sF.fogHStart;  sc->fogHEnd = sF.fogHEnd;
+	sc->fogHDensity = sF.fogHDensity;  sc->fogHeight = sF.fogHeight;
+
 	sc->ldPitch = sF.ldPitch;  sc->ldYaw = sF.ldYaw;  // light
 	sc->lAmb = sF.lAmb;  sc->lDiff = sF.lDiff;  sc->lSpec = sF.lSpec;
 	SetGuiFromXmls();	UpdateTrack();

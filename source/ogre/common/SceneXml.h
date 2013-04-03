@@ -128,8 +128,12 @@ public:
 	Ogre::Vector3 lDir, lAmb,lDiff,lSpec;
 
 	//  fog
-	Ogre::FogMode fogMode;  Ogre::Vector3 fogClr;
-	Ogre::Real  fogExp, fogStart, fogEnd;
+	Ogre::Real fogStart, fogEnd;  // lin range
+	Ogre::Vector4 fogClr,fogClr2;  // 2colors sun-away  .a = intensity
+
+	Ogre::Vector4 fogClrH;  // height fog color
+	Ogre::Real fogHeight, fogHDensity, fogHStart, fogHEnd;
+
 	//  wind
 	float windAmt;  //, windDirYaw, windTurbulFreq,windTurbulAmp;
 

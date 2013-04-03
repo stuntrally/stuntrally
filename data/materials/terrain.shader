@@ -2,35 +2,35 @@
 
 
 
-#define RENDER_COMPOSITE_MAP @shPropertyBool(composite_map)
+#define RENDER_COMPOSITE_MAP  @shPropertyBool(composite_map)
 
-#define COMPOSITE_MAP @shGlobalSettingBool(terrain_composite_map)
+#define COMPOSITE_MAP  @shGlobalSettingBool(terrain_composite_map)
 
-#define FOG @shGlobalSettingBool(fog) && !RENDER_COMPOSITE_MAP
-#define MRT (!RENDER_COMPOSITE_MAP && @shGlobalSettingBool(mrt_output))
+#define FOG  @shGlobalSettingBool(fog) && !RENDER_COMPOSITE_MAP
+#define MRT  (!RENDER_COMPOSITE_MAP && @shGlobalSettingBool(mrt_output))
 
-#define SHADOWS @shGlobalSettingBool(shadows_pssm) && !RENDER_COMPOSITE_MAP
+#define SHADOWS  @shGlobalSettingBool(shadows_pssm) && !RENDER_COMPOSITE_MAP
 
-#define SHADOWS_DEPTH @shGlobalSettingBool(shadows_depth)
+#define SHADOWS_DEPTH  @shGlobalSettingBool(shadows_depth)
 
 #if SHADOWS
 #include "shadows.h"
 #endif
 
-#define NUM_LAYERS @shPropertyString(num_layers)
+#define NUM_LAYERS  @shPropertyString(num_layers)
 
-#define NORMAL_MAPPING @shGlobalSettingBool(terrain_normal)
+#define NORMAL_MAPPING  @shGlobalSettingBool(terrain_normal)
 
-#define SPECULAR @shGlobalSettingBool(terrain_specular) && !RENDER_COMPOSITE_MAP
+#define SPECULAR  @shGlobalSettingBool(terrain_specular) && !RENDER_COMPOSITE_MAP
 
-#define SPECULAR_EXPONENT 32
+#define SPECULAR_EXPONENT  32
 
-#define PARALLAX_MAPPING @shGlobalSettingBool(terrain_parallax) && !RENDER_COMPOSITE_MAP && NORMAL_MAPPING
+#define PARALLAX_MAPPING  @shGlobalSettingBool(terrain_parallax) && !RENDER_COMPOSITE_MAP && NORMAL_MAPPING
 
-#define PARALLAX_SCALE 0.03
-#define PARALLAX_BIAS -0.04
+#define PARALLAX_SCALE  0.03
+#define PARALLAX_BIAS  -0.04
 
-#define TRIPLANAR @shGlobalSettingBool(terrain_triplanar) && !RENDER_COMPOSITE_MAP
+#define TRIPLANAR  @shGlobalSettingBool(terrain_triplanar) && !RENDER_COMPOSITE_MAP
 
 #if (MRT) || (FOG) || (SHADOWS)
 #define NEED_DEPTH 1
@@ -60,10 +60,10 @@
     // ------------------------------------- VERTEX ---------------------------------------
 
     SH_BEGIN_PROGRAM
-        shUniform(float4x4, worldMatrix) @shAutoConstant(worldMatrix, world_matrix)
-        shUniform(float4x4, viewProjMatrix) @shAutoConstant(viewProjMatrix, viewproj_matrix)
+        shUniform(float4x4, worldMatrix)  @shAutoConstant(worldMatrix, world_matrix)
+        shUniform(float4x4, viewProjMatrix)  @shAutoConstant(viewProjMatrix, viewproj_matrix)
         
-        shUniform(float2, lodMorph) @shAutoConstant(lodMorph, custom, 1001)
+        shUniform(float2, lodMorph)  @shAutoConstant(lodMorph, custom, 1001)
         
         shVertexInput(float2, uv0)
         shVertexInput(float2, uv1) // lodDelta, lodThreshold
@@ -158,9 +158,11 @@
         shSampler2D(normalMap@shIterator)
     @shEndForeach
     
+#if TRIPLANAR || FOG
+        shUniform(float4x4, worldMatrix)  @shAutoConstant(worldMatrix, world_matrix)
+#endif
 #if TRIPLANAR
-        shUniform(float4x4, worldMatrix) @shAutoConstant(worldMatrix, world_matrix)
-        shUniform(float, terrainWorldSize) @shSharedParameter(terrainWorldSize)
+        shUniform(float, terrainWorldSize)  @shSharedParameter(terrainWorldSize)
 #endif
 
 
@@ -170,8 +172,11 @@
     @shEndForeach
     
 #if FOG
-        shUniform(float3, fogColour) @shAutoConstant(fogColour, fog_colour)
-        shUniform(float4, fogParams) @shAutoConstant(fogParams, fog_params)
+        shUniform(float4, fogParams)  @shAutoConstant(fogParams, fog_params)
+		shUniform(float4, fogColorSun)   @shSharedParameter(fogColorSun)
+		shUniform(float4, fogColorAway)  @shSharedParameter(fogColorAway)
+		shUniform(float4, fogColorH)     @shSharedParameter(fogColorH)
+		shUniform(float4, fogParamsH)    @shSharedParameter(fogParamsH)
 #endif
     
         @shPassthroughFragmentInputs
@@ -179,19 +184,19 @@
 #if MRT
         shDeclareMrtOutput(1)
         shDeclareMrtOutput(2)
-        shUniform(float, far) @shAutoConstant(far, far_clip_distance)
-        shUniform(float4x4, wvMat) @shAutoConstant(wvMat, worldview_matrix)
+        shUniform(float, far)  @shAutoConstant(far, far_clip_distance)
+        shUniform(float4x4, wvMat)  @shAutoConstant(wvMat, worldview_matrix)
 #endif
 
 
-        shUniform(float4, lightAmbient)                       @shAutoConstant(lightAmbient, ambient_light_colour)
+        shUniform(float4, lightAmbient)                  @shAutoConstant(lightAmbient, ambient_light_colour)
     @shForeach(1)
-        shUniform(float4, lightPosObjSpace@shIterator)        @shAutoConstant(lightPosObjSpace@shIterator, light_position_object_space, @shIterator)
-        shUniform(float4, lightSpecular@shIterator)        @shAutoConstant(lightSpecular@shIterator, light_specular_colour, @shIterator)
-        shUniform(float4, lightDiffuse@shIterator)            @shAutoConstant(lightDiffuse@shIterator, light_diffuse_colour, @shIterator)
+        shUniform(float4, lightPosObjSpace@shIterator)   @shAutoConstant(lightPosObjSpace@shIterator, light_position_object_space, @shIterator)
+        shUniform(float4, lightSpecular@shIterator)      @shAutoConstant(lightSpecular@shIterator, light_specular_colour, @shIterator)
+        shUniform(float4, lightDiffuse@shIterator)       @shAutoConstant(lightDiffuse@shIterator, light_diffuse_colour, @shIterator)
     @shEndForeach
     
-        shUniform(float3, eyePosObjSpace)                     @shAutoConstant(eyePosObjSpace, camera_position_object_space)
+        shUniform(float3, eyePosObjSpace)                @shAutoConstant(eyePosObjSpace, camera_position_object_space)
 
 
 
@@ -204,7 +209,7 @@
 #endif
 
 #if SHADOWS
-        shUniform(float4, shadowFar_fadeStart) @shSharedParameter(shadowFar_fadeStart)
+        shUniform(float4, shadowFar_fadeStart)  @shSharedParameter(shadowFar_fadeStart)
 #endif
 
 
@@ -463,9 +468,20 @@
     
         
 #if FOG
-        float fogValue = shSaturate((depth - fogParams.y) * fogParams.w);
-        
-        shOutputColour(0).xyz = shLerp (shOutputColour(0).xyz, fogColour, fogValue);
+        float worldPosY = shMatrixMult(worldMatrix, float4(objSpacePosition.xyz, 1)).y;
+
+		///_ calculate fog
+        float fogDepth = shSaturate((depth - fogParams.y) * fogParams.w);  // w = 1 / (max - min)
+        float fogDepthH = shSaturate((depth - fogParamsH.z) * fogParamsH.w);
+
+        float fogDir = dot( normalize(eyeDir.xz), normalize(lightDir.xz) ) * 0.5 + 0.5;
+        float fogH = shSaturate( (fogParamsH.x/*h*/ - worldPosY) * fogParamsH.y/*dens*/);        
+
+        float4 fogClrDir = shLerp( fogColorAway, fogColorSun, fogDir);
+        float4 fogClrFinal = shLerp( fogClrDir, fogColorH, fogH);
+		float fogL = shLerp( fogDepth * fogClrDir.a, fogDepthH * fogColorH.a, fogH);
+
+        shOutputColour(0).xyz = shLerp( shOutputColour(0).xyz, fogClrFinal.rgb, fogL);
 #endif
 
 #if MRT
@@ -497,8 +513,15 @@
     SH_BEGIN_PROGRAM
     
 #if FOG
-        shUniform(float3, fogColour) @shAutoConstant(fogColour, fog_colour)
-        shUniform(float4, fogParams) @shAutoConstant(fogParams, fog_params)
+        shUniform(float4, fogParams)  @shAutoConstant(fogParams, fog_params)
+		shUniform(float4, fogColorSun)   @shSharedParameter(fogColorSun)
+		shUniform(float4, fogColorAway)  @shSharedParameter(fogColorAway)
+		shUniform(float4, fogColorH)     @shSharedParameter(fogColorH)
+		shUniform(float4, fogParamsH)    @shSharedParameter(fogParamsH)
+
+        shUniform(float3, eyePosObjSpace)    @shAutoConstant(eyePosObjSpace, camera_position_object_space)
+		shUniform(float4, lightPosObjSpace)	 @shAutoConstant(lightPosObjSpace, light_position_object_space)
+		shUniform(float4x4, worldMatrix)  @shAutoConstant(worldMatrix, world_matrix)
 #endif
     
         @shPassthroughFragmentInputs
@@ -567,10 +590,23 @@
         shOutputColour(0) = float4(shSample(compositeMap, UV).xyz, 1);
 
         
-#if FOG
-        float fogValue = shSaturate((depth - fogParams.y) * fogParams.w);
-        
-        shOutputColour(0).xyz = shLerp (shOutputColour(0).xyz, fogColour, fogValue);
+#if FOG  
+		float3 lightDir = lightPosObjSpace.xyz; // directional
+		float3 eyeDir = eyePosObjSpace.xyz - objSpacePosition.xyz;
+        float worldPosY = shMatrixMult(worldMatrix, float4(objSpacePosition.xyz, 1)).y;
+
+		///_ calculate fog
+        float fogDepth = shSaturate((depth - fogParams.y) * fogParams.w);  // w = 1 / (max - min)
+        float fogDepthH = shSaturate((depth - fogParamsH.z) * fogParamsH.w);
+
+        float fogDir = dot( normalize(eyeDir.xz), normalize(lightDir.xz) ) * 0.5 + 0.5;
+        float fogH = shSaturate( (fogParamsH.x/*h*/ - worldPosY) * fogParamsH.y/*dens*/);        
+
+        float4 fogClrDir = shLerp( fogColorAway, fogColorSun, fogDir);
+        float4 fogClrFinal = shLerp( fogClrDir, fogColorH, fogH);
+		float fogL = shLerp( fogDepth * fogClrDir.a, fogDepthH * fogColorH.a, fogH);
+
+        shOutputColour(0).xyz = shLerp( shOutputColour(0).xyz, fogClrFinal.rgb, fogL);
 #endif
 
 #if MRT
@@ -588,8 +624,6 @@
 
 
     }
-
-
 
 
 

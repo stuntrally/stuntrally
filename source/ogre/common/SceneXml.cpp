@@ -24,8 +24,9 @@ void Scene::Default()
 	rain2Emit = 0;  rain2Name = "";
 	windAmt = 0.f;
 
-	fogMode = FOG_LINEAR;  fogStart = 600;  fogEnd = 1600;
-	fogClr = Vector3(0.73f, 0.86f, 1.0f);  fogExp = 0;
+	fogStart = 600;  fogEnd = 1600;
+	fogClr = fogClr2 = fogClrH = Vector4(0.73f, 0.86f, 1.0f, 1.f);
+	fogHeight = -300.f;  fogHDensity = 100.f;  fogHStart = 0;  fogHEnd = 400;
 
 	ldPitch = 50.f, ldYaw = 30.f;
 	lDir  = Vector3(0.0f, -1.0f, 0.0f);	lAmb  = Vector3(0.45f, 0.45f, 0.45f);
@@ -168,7 +169,7 @@ bool Scene::LoadXml(String file, bool bTer)
 	//pgLayers.clear();
 
 	// read
-	TiXmlElement* eSky,*eFog,*eLi,*eTer,*ePgd,*eCam,*eFls,*eObjs,*eCar;
+	TiXmlElement* eSky,*eFog,*eFogH,*eLi,*eTer,*ePgd,*eCam,*eFls,*eObjs,*eCar;
 	const char* a;
 
 
@@ -193,16 +194,20 @@ bool Scene::LoadXml(String file, bool bTer)
 	eFog = root->FirstChildElement("fog");
 	if (eFog)
 	{
-		a = eFog->Attribute("mode");		if (a)  {	String s = a;
-			if (s == "lin")   fogMode = FOG_LINEAR;  else
-			if (s == "exp")   fogMode = FOG_EXP;    else
-			if (s == "exp2")  fogMode = FOG_EXP2;  else
-			if (s == "none")  fogMode = FOG_NONE;
-		}
-		a = eFog->Attribute("exp");			if (a)  fogExp = s2r(a);
 		a = eFog->Attribute("linStart");	if (a)  fogStart = s2r(a);
 		a = eFog->Attribute("linEnd");		if (a)  fogEnd = s2r(a);
-		a = eFog->Attribute("color");		if (a)  fogClr = s2v(a);
+		a = eFog->Attribute("color");		if (a)  fogClr = s2v4(a);
+		a = eFog->Attribute("color2");		if (a)  fogClr2 = s2v4(a);  else  fogClr2 = fogClr;
+	}
+	///  fog H
+	eFogH = root->FirstChildElement("fogH");
+	if (eFogH)
+	{
+		a = eFogH->Attribute("color");		if (a)  fogClrH = s2v4(a);
+		a = eFogH->Attribute("height");		if (a)  fogHeight = s2r(a);
+		a = eFogH->Attribute("dens");		if (a)  fogHDensity = s2r(a);
+		a = eFogH->Attribute("linStart");	if (a)  fogHStart = s2r(a);
+		a = eFogH->Attribute("linEnd");		if (a)  fogHEnd = s2r(a);
 	}
 
 	///  light
@@ -454,16 +459,19 @@ bool Scene::SaveXml(String file)
 	root.InsertEndChild(sky);
 
 	TiXmlElement fog("fog");
-		switch (fogMode) {
-			case FOG_LINEAR: fog.SetAttribute("mode", "lin");  break;
-			case FOG_EXP:    fog.SetAttribute("mode", "exp");  break;
-			case FOG_EXP2:   fog.SetAttribute("mode", "exp2");  break;
-			case FOG_NONE:   fog.SetAttribute("mode", "none");  break;  }
 		fog.SetAttribute("color",		toStrC( fogClr ));
-		fog.SetAttribute("exp",			toStrC( fogExp ));
+		fog.SetAttribute("color2",		toStrC( fogClr2 ));
 		fog.SetAttribute("linStart",	toStrC( fogStart ));
 		fog.SetAttribute("linEnd",		toStrC( fogEnd ));
 	root.InsertEndChild(fog);
+
+	TiXmlElement fogH("fogH");
+		fogH.SetAttribute("color",		toStrC( fogClrH ));
+		fogH.SetAttribute("height",		toStrC( fogHeight ));
+		fogH.SetAttribute("dens",		toStrC( fogHDensity ));
+		fogH.SetAttribute("linStart",	toStrC( fogHStart ));
+		fogH.SetAttribute("linEnd",		toStrC( fogHEnd ));
+	root.InsertEndChild(fogH);
 
 	TiXmlElement li("light");
 		li.SetAttribute("sceneryId",	sceneryId.c_str() );

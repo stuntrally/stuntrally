@@ -170,11 +170,17 @@
 		
 		shUniform(float, renderTargetFlipping)  @shAutoConstant(renderTargetFlipping, render_target_flipping)
 		
-		shUniform(float3, fogColor)  @shAutoConstant(fogColor, fog_colour)
-		shUniform(float4, fogParams)  @shAutoConstant(fogParams, fog_params)
+	//#if FOG
+        shUniform(float4, fogParams)  @shAutoConstant(fogParams, fog_params)
+		shUniform(float4, fogColorSun)   @shSharedParameter(fogColorSun)
+		shUniform(float4, fogColorAway)  @shSharedParameter(fogColorAway)
+		shUniform(float4, fogColorH)     @shSharedParameter(fogColorH)
+		shUniform(float4, fogParamsH)    @shSharedParameter(fogParamsH)
+	//#endif
 		
 		shUniform(float4, cameraPos)  @shAutoConstant(cameraPos, camera_position_object_space)
 		shUniform(float4, sunPosition)  @shAutoConstant(sunPosition, light_position, 0)
+		shUniform(float4, lightPosObjSpace)	 @shAutoConstant(lightPosObjSpace, light_position_object_space)
 
         shUniform(float4, lightAmbient)  @shAutoConstant(lightAmbient, ambient_light_colour)
         shUniform(float4, lightDiffuse)  @shAutoConstant(lightDiffuse, light_diffuse_colour)
@@ -395,8 +401,27 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 		}
 		else
 		{
-			float fogValue = shSaturate((depthPassthrough - fogParams.y) * fogParams.w);
-			shOutputColour(0).xyz = shLerp( shOutputColour(0).xyz, fogColor, fogValue);
+		//#if FOG
+		float3 lightDir = lightPosObjSpace.xyz; // directional
+		float3 eyeDir = cameraPos.xyz - position.xyz;
+
+		///_ calculate fog
+		float fogDepth = shSaturate((depthPassthrough - fogParams.y) * fogParams.w);  // w = 1 / (max - min)
+		float fogDepthH = shSaturate((depthPassthrough - fogParamsH.z) * fogParamsH.w);
+
+		float fogDir = dot( normalize(eyeDir.xz), normalize(lightDir.xz) ) * 0.5 + 0.5;
+		float fogH = shSaturate( (fogParamsH.x/*h*/ - worldPos.y) * fogParamsH.y/*dens*/);
+
+		float4 fogClrDir = shLerp( fogColorAway, fogColorSun, fogDir);
+		float4 fogClrFinal = shLerp( fogClrDir, fogColorH, fogH);
+		float fogL = shLerp( fogDepth * fogClrDir.a, fogDepthH * fogColorH.a, fogH);
+
+		shOutputColour(0).xyz = shLerp( shOutputColour(0).xyz, fogClrFinal.rgb, fogL);
+		//#endif
+
+		// old FOG
+		//float fogValue = shSaturate((depthPassthrough - fogParams.y) * fogParams.w);
+		//shOutputColour(0).xyz = shLerp( shOutputColour(0).xyz, fogColor, fogValue);
 		}
 
 	}

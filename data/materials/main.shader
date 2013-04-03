@@ -31,7 +31,7 @@
 #define SELECTED_GLOW  @shGlobalSettingBool(editor)
 #define SPECULAR_ALPHA  @shPropertyBool(specular_alpha)
 
-#if (TERRAIN_LIGHT_MAP) || (ENV_MAP) || (SOFT_PARTICLES)
+#if (TERRAIN_LIGHT_MAP) || (ENV_MAP) || (SOFT_PARTICLES) || (FOG)
 #define NEED_WORLD_MATRIX
 #endif
 
@@ -235,7 +235,7 @@
 #endif
 		
 #ifdef NEED_WORLD_MATRIX
-		shUniform(float4x4, wMat)  @shAutoConstant(wMat, world_matrix)
+		shUniform(float4x4, worldMatrix)  @shAutoConstant(worldMatrix, world_matrix)
 #endif
 		
 		
@@ -289,8 +289,11 @@
 		shUniform(float3, camPosObjSpace)	   @shAutoConstant(camPosObjSpace, camera_position_object_space)
 		
 #if FOG
-		shUniform(float3, fogColour)  @shAutoConstant(fogColour, fog_colour)
-		shUniform(float4, fogParams)  @shAutoConstant(fogParams, fog_params)
+        shUniform(float4, fogParams)  @shAutoConstant(fogParams, fog_params)
+		shUniform(float4, fogColorSun)   @shSharedParameter(fogColorSun)
+		shUniform(float4, fogColorAway)  @shSharedParameter(fogColorAway)
+		shUniform(float4, fogColorH)     @shSharedParameter(fogColorH)
+		shUniform(float4, fogParamsH)    @shSharedParameter(fogParamsH)
 #endif
 
 
@@ -383,7 +386,7 @@
 
 #if TERRAIN_LIGHT_MAP
 		float shadowingLM;
-		float2 worldPos = shMatrixMult(wMat, float4(objSpacePositionPassthrough.xyz, 1)).xz;
+		float2 worldPos = shMatrixMult(worldMatrix, float4(objSpacePositionPassthrough.xyz, 1)).xz;
 		float2 lmTexCoord = (worldPos / terrainWorldSize) + 0.5;
 		shadowingLM = shSample(terrainLightMap, lmTexCoord).x;
 		#if TERRAIN_LIGHT_MAP_TOGGLEABLE
@@ -413,9 +416,9 @@
 		
 		#if !SPEC_MAP
 			#if TWOSIDE_DIFFUSE
-				float3 specular = pow(abs(dot(normal, halfAngle)), materialShininess) * materialSpecular.xyz;
+				float3 specular = pow(abs(dot(normal, halfAngle)), materialShininess * 8) * materialSpecular.xyz;
 			#else
-				float3 specular = pow(max(dot(normal, halfAngle), 0), materialShininess) * materialSpecular.xyz;
+				float3 specular = pow(max(dot(normal, halfAngle), 0), materialShininess * 8) * materialSpecular.xyz;
 			#endif
 		#else
 			float4 specTex = shSample(specMap, UV.xy);
@@ -432,7 +435,7 @@
 
 #if ENV_MAP		   
 		float3 r = reflect( -eyeDir, normal );
-		r = normalize(shMatrixMult(wMat, float4(r, 0)).xyz); 
+		r = normalize(shMatrixMult(worldMatrix, float4(r, 0)).xyz); 
 		
 		r.z = -r.z;
 		float4 envColor = shCubicSample(envMap, r);
@@ -455,10 +458,25 @@
 
 
 #if FOG
-		float fogValue = shSaturate((depthPassthrough - fogParams.y) * fogParams.w);
-		
-		shOutputColour(0).xyz = shLerp (shOutputColour(0).xyz, fogColour, fogValue);
+        float worldPosY = shMatrixMult(worldMatrix, float4(objSpacePositionPassthrough.xyz, 1)).y;
+
+		///_ calculate fog
+        float fogDepth = shSaturate((depthPassthrough - fogParams.y) * fogParams.w);  // w = 1 / (max - min)
+        float fogDepthH = shSaturate((depthPassthrough - fogParamsH.z) * fogParamsH.w);
+
+        float fogDir = dot( normalize(eyeDir.xz), normalize(lightDir.xz) ) * 0.5 + 0.5;
+        float fogH = shSaturate( (fogParamsH.x/*h*/ - worldPosY) * fogParamsH.y/*dens*/);
+
+        float4 fogClrDir = shLerp( fogColorAway, fogColorSun, fogDir);
+        float4 fogClrFinal = shLerp( fogClrDir, fogColorH, fogH);
+		float fogL = shLerp( fogDepth * fogClrDir.a, fogDepthH * fogColorH.a, fogH);
+
+        shOutputColour(0).xyz = shLerp( shOutputColour(0).xyz, fogClrFinal.rgb, fogL);
 #endif
+		// old FOG
+		//float fogValue = shSaturate((depthPassthrough - fogParams.y) * fogParams.w);
+		//shOutputColour(0).xyz = shLerp (shOutputColour(0).xyz, fogColour, fogValue);
+
 
 		//  alpha
 		shOutputColour(0).a *= materialDiffuse.a;
@@ -469,7 +487,11 @@
 
 #if SPECULAR_ALPHA
 		//  bump alpha with specular
-		shOutputColour(0).a = min(shOutputColour(0).a + specular.x ,1);
+		//#if ENV_MAP
+		//shOutputColour(0).a = min(shOutputColour(0).a + specular.x + reflectionFactor*0.3,1);
+		//#else
+		shOutputColour(0).a = min(shOutputColour(0).a + specular.x,1);
+		//#endif
 #endif
 
 
@@ -485,7 +507,7 @@
 		screenUV += (viewportSize.zw) * 0.5;
 		screenUV.y =(1-shSaturate(flip))+flip*screenUV.y;
 		float depthTex = shSample(sceneDepth, screenUV).x * far;
-		float4 worldPos = shMatrixMult(wMat, float4(objSpacePositionPassthrough.xyz, 1));
+		float4 worldPos = shMatrixMult(worldMatrix, float4(objSpacePositionPassthrough.xyz, 1));
 		float distanceToPixel = length(worldPos.xyz - camPosWS.xyz);
 		float thickness = 0.5;
 		float tNear = distanceToPixel - thickness;
@@ -500,7 +522,7 @@
 #endif
 
 #if SELECTED_GLOW
-		shOutputColour(0).xyzw += isSelected * (float4(0.14, 0.22, 0.36, 0.36) * (0.5f + 0.1f * cos(3.f * time)));
+		shOutputColour(0).xyzw += isSelected * (float4(0.0, 0.4, 1.0, 0.5) * (0.5 + 0.1 * cos(4.0 * time)));
 #endif
 		//shOutputColour(0).xyz = shOutputColour(0).xyz * 0.001 + normal.xyz;  // normal test
 

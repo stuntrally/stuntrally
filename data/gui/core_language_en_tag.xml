@@ -565,20 +565,22 @@
 	<Tag name="Sky">Sky</Tag>
 	<Tag name="SunDir">Sun dir.</Tag>
 	<Tag name="Yaw">yaw</Tag>
+	<Tag name="Pitch">pitch</Tag>
 
 	<Tag name="Light">Light</Tag>
 	<Tag name="Ambient">Ambient</Tag>
 	<Tag name="Diffuse">Diffuse</Tag>
 	<Tag name="Specular">Specular</Tag>
+
 	<Tag name="Fog">Fog</Tag>
+	<Tag name="FogNormal">Normal</Tag>
+	<Tag name="FogHeight">Height</Tag>
+	<Tag name="FogHeight">Height</Tag>
 	<Tag name="Color">color</Tag>
 	<Tag name="Start">start</Tag>
 	<Tag name="End">end</Tag>
-	<Tag name="Mode">mode</Tag>
-	<Tag name="Exponent">exponent</Tag>
-	<Tag name="DisableEdit">Disable for edit</Tag>
-	<Tag name="Pitch">pitch</Tag>
 
+	<Tag name="DisableEdit">Disable for edit</Tag>
 	<Tag name="Weather">Weather</Tag>
 	<Tag name="set1">set1</Tag>
 	<Tag name="set2">set2</Tag>
@@ -979,10 +981,17 @@
 	<Tag name="TipSunAmbient">Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)</Tag>
 	<Tag name="TipSunDiffuse">Sun light diffuse (normal) color. R G B components 0 to 1 (eg. 0.9 0.9 0.9)</Tag>
 	<Tag name="TipSunSpecular">Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)</Tag>
-	<Tag name="TipFogEndClr">Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)</Tag>
+
+	<Tag name="TipFogClr">Fog end color when looking under sun.</Tag>
+	<Tag name="TipFogClr2">Fog end color when looking away from sun.</Tag>
+	<Tag name="TipFogClrH">Fog color for height fog.</Tag>
+	<Tag name="TipFogClrRGBA">R G B A components 0 to 1 (eg. 0.7 0.8 0.9 1). Last can be used to lower maximum density (1 is full).</Tag>
 	<Tag name="TipFogStartDist">Fog start distance [meters].</Tag>
 	<Tag name="TipFogEndDist">Fog end distance [meters].</Tag>
+	<Tag name="TipFogHStart">Height fog start height [meters] at which fog starts getting denser for smooth distance.</Tag>
+	<Tag name="TipFogHSmooth">Height fog smooth distance [meters].</Tag>
 	<Tag name="TipDisableFog">Disable fog when editing road from distance.</Tag>
+
 	<Tag name="TipRainSnow1">Set 1 Rain/Snow type</Tag>
 	<Tag name="TipRainSnow2">Set 2 Rain/Snow type</Tag>
 	<Tag name="TipRainSnowInt">Rain/Snow intensity (eg. 1000)</Tag> 

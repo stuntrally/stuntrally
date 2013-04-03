@@ -1,0 +1,424 @@
+material pipe_glass
+{
+	ambient 1.0 1.0 1.0
+	diffuse 1.0 1.0 1.0 1.0
+	specular 0.4 0.4 0.4 32
+	emissive 0 0 0
+	specular 0 0 0 32
+
+	scene_blend alpha_blend
+	depth_write off
+	depth_bias 3
+	alpha_rejection default
+	
+	env_map false
+	terrain_light_map false
+	terrain_light_map_toggleable false
+	
+	lighting true
+	soft_particles false
+		
+	bump_scale 1
+	fresnelScaleBiasPower 0.79 0.07 4
+	fresnel false
+	refl_amount 0.1  // only used when fresnel off
+	
+	tree_wind false
+	grass_wind false
+	vertex_colour false
+	specular_alpha true
+	
+	receives_shadows true
+		
+	transparent false  // for shadowcaster
+	mrt_output true
+	diffuse_address_mode wrap
+	//  extras
+	twoside_diffuse true
+	road_blend false
+	shadowBias 0
+	
+	normalMap
+	reflMap
+	alphaMap
+	carPaintMap
+	specMap
+
+	pass
+	{
+		vertex_program main_vertex
+		fragment_program main_fragment
+
+		diffuse $diffuse
+		specular $specular
+		ambient $ambient
+		emissive $emissive
+		specular $specular
+		
+		cull_hardware clockwise
+	
+		scene_blend $scene_blend
+		alpha_rejection $alpha_rejection
+		depth_write $depth_write
+		depth_bias $depth_bias
+
+		shader_properties
+		{
+			normalMap $normalMap
+			reflMap $reflMap
+			alphaMap $alphaMap
+			carPaintMap $carPaintMap
+			specMap $specMap
+		
+			env_map $env_map
+			terrain_light_map $terrain_light_map
+			terrain_light_map_toggleable $terrain_light_map_toggleable
+			receives_shadows $receives_shadows
+			refl_amount $refl_amount
+			lighting $lighting
+			mrt_output $mrt_output
+			soft_particles $soft_particles
+			
+			tree_wind $tree_wind
+			grass_wind $grass_wind
+			vertex_colour $vertex_colour
+			specular_alpha $specular_alpha
+
+			twoside_diffuse $twoside_diffuse
+			road_blend $road_blend
+			shadowBias $shadowBias
+			
+			fresnel $fresnel
+			fresnelScaleBiasPower $fresnelScaleBiasPower
+
+			bump_scale $bump_scale
+		}
+
+		texture_unit diffuseMap
+		{
+			texture $diffuseMap
+			create_in_ffp true
+			tex_address_mode $diffuse_address_mode
+		}
+		
+		texture_unit sceneDepth
+		{
+			texture_alias SceneDepth
+		}
+		
+		texture_unit carPaintMap
+		{
+			texture $carPaintMap
+		}
+		
+		texture_unit alphaMap
+		{
+			texture $alphaMap
+		}
+		
+		texture_unit normalMap
+		{
+			texture $normalMap
+		}
+		
+		texture_unit envMap
+		{
+			cubic_texture ReflectionCube combinedUVW
+		}
+		
+		texture_unit reflMap
+		{
+			texture $reflMap
+		}
+		
+		texture_unit specMap
+		{
+			texture $specMap
+		}
+		
+		texture_unit terrainLightMap
+		{
+			texture_alias TerrainLightMap
+		}
+		
+		texture_unit shadowMap0
+		{
+			content_type shadow
+			tex_address_mode clamp
+			filtering none
+		}
+		texture_unit shadowMap1
+		{
+			content_type shadow
+			tex_address_mode clamp
+			filtering none
+		}
+		texture_unit shadowMap2
+		{
+			content_type shadow
+			tex_address_mode clamp
+			filtering none
+		}
+	}
+
+	pass
+	{
+		vertex_program main_vertex
+		fragment_program main_fragment
+
+		diffuse $diffuse
+		specular $specular
+		ambient $ambient
+		emissive $emissive
+		specular $specular
+		
+		cull_hardware anticlockwise
+	
+		scene_blend $scene_blend
+		alpha_rejection $alpha_rejection
+		depth_write $depth_write
+		depth_bias $depth_bias
+
+		shader_properties
+		{
+			normalMap $normalMap
+			reflMap $reflMap
+			alphaMap $alphaMap
+			carPaintMap $carPaintMap
+			specMap $specMap
+		
+			env_map $env_map
+			terrain_light_map $terrain_light_map
+			terrain_light_map_toggleable $terrain_light_map_toggleable
+			receives_shadows $receives_shadows
+			refl_amount $refl_amount
+			lighting $lighting
+			mrt_output $mrt_output
+			soft_particles $soft_particles
+			
+			tree_wind $tree_wind
+			grass_wind $grass_wind
+			vertex_colour $vertex_colour
+			specular_alpha $specular_alpha
+
+			twoside_diffuse $twoside_diffuse
+			road_blend $road_blend
+			shadowBias $shadowBias
+			
+			fresnel $fresnel
+			fresnelScaleBiasPower $fresnelScaleBiasPower
+
+			bump_scale $bump_scale
+		}
+
+		texture_unit diffuseMap
+		{
+			texture $diffuseMap
+			create_in_ffp true
+			tex_address_mode $diffuse_address_mode
+		}
+		
+		texture_unit sceneDepth
+		{
+			texture_alias SceneDepth
+		}
+		
+		texture_unit carPaintMap
+		{
+			texture $carPaintMap
+		}
+		
+		texture_unit alphaMap
+		{
+			texture $alphaMap
+		}
+		
+		texture_unit normalMap
+		{
+			texture $normalMap
+		}
+		
+		texture_unit envMap
+		{
+			cubic_texture ReflectionCube combinedUVW
+		}
+		
+		texture_unit reflMap
+		{
+			texture $reflMap
+		}
+		
+		texture_unit specMap
+		{
+			texture $specMap
+		}
+		
+		texture_unit terrainLightMap
+		{
+			texture_alias TerrainLightMap
+		}
+		
+		texture_unit shadowMap0
+		{
+			content_type shadow
+			tex_address_mode clamp
+			filtering none
+		}
+		texture_unit shadowMap1
+		{
+			content_type shadow
+			tex_address_mode clamp
+			filtering none
+		}
+		texture_unit shadowMap2
+		{
+			content_type shadow
+			tex_address_mode clamp
+			filtering none
+		}
+	}
+}
+
+
+//----------------------------------------------------
+
+material pipeGlass
+{
+	parent pipe_glass
+	ambient 0.35 0.48 0.55
+	diffuse 0.76 0.82 0.90
+	diffuseMap roadGlassCdirt.png
+	specMap roadGlass_spec1l.png
+	//normalMap roadGlassD_norm.png
+	//bump_scale 0.1
+}
+
+material pipeGlassCyan
+{
+	parent pipe_glass
+	ambient 0.34 0.71 0.71
+	diffuse 0.5 0.67 0.73
+	diffuseMap roadGlassCdirt2.png
+	specMap roadGlass_spec2h.png
+}
+
+material pipeGlassRed
+{
+	parent pipe_glass
+	ambient 0.8 0.4 0.3
+	diffuse 0.6 0.3 0.2
+	diffuseMap roadGlassF.png
+	specMap roadGlass_spec0.png
+}
+
+material pipeGlassOrange
+{
+	parent pipe_glass
+	ambient 0.6 0.35 0.1
+	diffuse 0.8 0.35 0.1
+	diffuseMap roadGlassF.png
+	specMap roadGlass_spec0.png
+}
+
+material pipeGlassYellow
+{
+	parent pipe_glass
+	ambient 0.8 0.8 0.2
+	diffuse 0.6 0.6 0.1
+	diffuseMap roadGlassF.png
+	specMap roadGlass_spec0.png
+}
+
+
+//  asphalt pipes
+//----------------------------------------------------
+
+//  todo: with shadows..
+//material pipeAsphalt
+//{
+//	parent pipe_glass
+//	depth_write on
+//	transparent false
+//	diffuseMap roadAsphalt.jpg
+//	ambient 1.0 1.0 1.0
+//	diffuse 0.6 0.6 0.6
+//	specular 0.3 0.3 0.25 24
+//	shadowBias 0.0002
+//}
+//
+//material pipeAsphaltRed
+//{
+//	parent pipe_glass
+//	depth_write on
+//	transparent false
+//	diffuseMap roadAsphalt.jpg
+//	ambient 1.0 0.8 0.7
+//	diffuse 1.0 0.6 0.5
+//	specular 0.4 0.35 0.3 24
+//	shadowBias 0.0002
+//}
+
+material pipeAsphalt
+{
+	parent base
+	diffuseMap roadAsphalt.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 0.6 0.6 0.6
+	specular 0.3 0.3 0.25 24
+	depth_bias 3
+	cull_hardware none
+	receives_shadows false
+}
+
+material pipeAsphaltRed
+{
+	parent base
+	diffuseMap roadAsphalt.jpg
+	ambient 1.0 0.8 0.7
+	diffuse 1.0 0.6 0.5
+	specular 0.4 0.35 0.3 24
+	depth_bias 3
+	cull_hardware none
+	receives_shadows false
+}
+
+//----------------------------------------------------
+
+
+//  Wall
+
+material pipe_wall
+{
+	parent base
+	depth_bias 3
+	diffuseMap brass_patina.jpg
+	normalMap brass_patina_n.png
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.1
+	ambient 0.94 0.96 0.98
+	diffuse 0.4 0.46 0.5
+	specular 0.25 0.267 0.28 4
+	cull_hardware none
+}
+
+material road_wall
+{
+	parent pipe_wall
+	ambient 0.9 0.96 0.98
+	diffuse 0.6 0.66 0.7
+	specular 0.24 0.267 0.28 4
+	cull_hardware clockwise
+}
+
+//  Column
+
+material road_col
+{
+	parent base
+	ambient 0.78 0.80 0.80
+	diffuse 0.54 0.55 0.55
+	specular 0.25 0.25 0.25 24
+	diffuseMap concrete03.png
+	normalMap brass_patina_n.png
+}

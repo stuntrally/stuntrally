@@ -444,18 +444,26 @@ void App::CreateSkyDome(String sMater, Vector3 sc)
 	ndSky->setScale(sc);
 }
 
+//  fog
+void App::UpdFog(bool bForce)
+{
+	const ColourValue clr(0.5,0.6,0.7,1);
+	bool ok = !pSet->bFog || bForce;
+	if (ok)
+		mSceneMgr->setFog(FOG_LINEAR, clr, 1.f, sc->fogStart, sc->fogEnd);
+	else
+		mSceneMgr->setFog(FOG_NONE, clr, 1.f, 9000, 9200);
+
+	mFactory->setSharedParameter("fogColorSun",  sh::makeProperty<sh::Vector4>(new sh::Vector4(sc->fogClr2.x, sc->fogClr2.y, sc->fogClr2.z, sc->fogClr2.w)));
+	mFactory->setSharedParameter("fogColorAway", sh::makeProperty<sh::Vector4>(new sh::Vector4(sc->fogClr.x,  sc->fogClr.y,  sc->fogClr.z,  sc->fogClr.w)));
+	mFactory->setSharedParameter("fogColorH",    sh::makeProperty<sh::Vector4>(new sh::Vector4(sc->fogClrH.x, sc->fogClrH.y, sc->fogClrH.z, sc->fogClrH.w)));
+	mFactory->setSharedParameter("fogParamsH",   sh::makeProperty<sh::Vector4>(new sh::Vector4(
+		sc->fogHeight, ok ? 1.f/sc->fogHDensity : 0.f, sc->fogHStart, 1.f/(sc->fogHEnd - sc->fogHStart) )));
+}
+
 inline ColourValue Clr3(const Vector3& v)
 {
 	return ColourValue(v.x, v.y, v.z);
-}
-
-void App::UpdFog(bool bForce)
-{
-	ColourValue clr = Clr3(sc->fogClr);
-	if (!pSet->bFog || bForce)
-		mSceneMgr->setFog(sc->fogMode, clr, 1.f, sc->fogStart, sc->fogEnd);
-	else
-		mSceneMgr->setFog(sc->fogMode, clr, 1.f, 3000, 3200);
 }
 
 void App::UpdSun()
