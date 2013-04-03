@@ -508,7 +508,7 @@ void App::InitGui()
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
 			if (boost::filesystem::exists(PATHMANAGER::Cars() + "/" + *i + "/about.txt"))  {
-				carList->addItem(*i);
+				carList->addItem(GetCarClr(*i));
 				if (*i == pSet->gui.car[0]) {  carList->setIndexSelected(ii);  bFound = true;  }
 				ii++;  }
 		}

@@ -149,7 +149,7 @@ protected:
 		*hudAbs,*hudTcs, *hudWarnChk,*hudWonPlace, *hudOpp[5][3],*hudOppB;
 	Ogre::Overlay *ovCountdown,*ovNetMsg, *ovCam, *ovWarnWin, *ovOpp, *ovAbsTcs, *ovCarDbg,*ovCarDbgTxt,*ovCarDbgExt;
 
-	Ogre::String GetTimeString(float time) const;
+	Ogre::String GetTimeString(float time) const, GetCarClr(Ogre::String car) const;
 	void CreateHUD(bool destroy), ShowHUD(bool hideAll=false), UpdMiniTer(), UpdDbgTxtClr();
 	Ogre::Vector3 projectPoint(const Ogre::Camera* cam, const Ogre::Vector3& pos);  // 2d xy, z - out info
 	MyGUI::TextBox* CreateNickText(int carId, Ogre::String text);

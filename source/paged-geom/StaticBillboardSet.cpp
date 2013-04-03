@@ -474,6 +474,8 @@ MaterialPtr StaticBillboardSet::getFadeMaterial(const Ogre::MaterialPtr &protoMa
                                                 Real visibleDist_, Real invisibleDist_)
 {
    assert(false);
+   MaterialPtr m;  //! 0
+   return m;
 }
 
 

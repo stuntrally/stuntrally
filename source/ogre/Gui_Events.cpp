@@ -101,7 +101,7 @@ void App::tabPlayer(TabPtr wp, size_t id)
 {
 	iCurCar = id;
 	//  update gui for this car (color h,s,v, name, img)
-	size_t i = carList->findItemIndexWith(pSet->gui.car[iCurCar]);
+	size_t i = carList->findItemIndexWith(GetCarClr(pSet->gui.car[iCurCar]));
 	if (i != ITEM_NONE)
 	{	carList->setIndexSelected(i);
 		listCarChng(carList, i);
@@ -298,7 +298,7 @@ void App::slVolCarScrap(SL)
 void App::listCarChng(List* li, size_t pos)
 {
 	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
-	const UString& sl = li->getItemNameAt(i);	sListCar = sl;
+	const UString& sl = li->getItemNameAt(i).substr(7);  sListCar = sl;
 
 	if (imgCar)  imgCar->setImageTexture(sListCar+".jpg");
 	if (mClient) mClient->updatePlayerInfo(pSet->nickname, sListCar);

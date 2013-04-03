@@ -250,6 +250,7 @@ ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr, Real s, b
 	return m;
 }
 
+
 //  hud util
 String App::GetTimeString(float time) const
 {
@@ -263,6 +264,21 @@ String App::GetTimeString(float time) const
 		return ss;
 	}else
 		return "-:--.---";
+}
+
+String App::GetCarClr(String car) const
+{
+	//  asphalt, both, rally
+	//const static String clrA = "#FFA0A0", clrB = "#F0F0B0", clrR = "#80FFFF";
+	const static String clrA = "#FF9090", clrB = "#E0E000", clrR = "#80F8FF";
+	String s = "#C0D0E0";  // default clr
+
+	     if (car=="360") s=clrA;   else if (car=="3S")  s=clrB;   else if (car=="CT")  s=clrA;
+	else if (car=="ES")  s=clrR;   else if (car=="FM")  s=clrR;   else if (car=="M3")  s=clrB;
+	else if (car=="N1")  s=clrB;   else if (car=="NS")  s=clrB;   else if (car=="S1")  s=clrR;
+	else if (car=="S8")  s=clrR;   else if (car=="TC6") s=clrR;   else if (car=="XM")  s=clrA;
+	else if (car=="XZ")  s=clrA;
+	return s + car;
 }
 
 
@@ -288,7 +304,7 @@ const String& App::GetGhostFile(std::string* ghCar)
 	if (ghCar)
 	while (srch)
 	{
-		string car = carList->getItemNameAt(i);
+		string car = carList->getItemNameAt(i).substr(7);
 		file = ghostFile(pSet, sim_mode, car);
 
 		if (PATHMANAGER::FileExists(file))
