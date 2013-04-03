@@ -1,0 +1,27 @@
+material ImposterBase
+{
+	depth_write default
+	scene_blend default
+	alpha_rejection default
+
+	scroll default
+
+	diffuseMap
+	pass
+	{
+		vertex_program imposter_vertex
+		fragment_program imposter_fragment
+		scene_blend $scene_blend
+		alpha_rejection $alpha_rejection
+		depth_write $depth_write
+		cull_hardware none
+		
+		texture_unit diffuseMap
+		{
+			create_in_ffp true
+			texture $diffuseMap
+			scroll $scroll
+		}
+	}
+}
+

@@ -78,7 +78,7 @@
 
     #define shSamplerCube(name) uniform samplerCube name; @shUseSampler(name)
 
-    #define shMatrixMult(m, v) (m * v)
+    #define shMatrixMult(m, v) (m * (v))
 
     #define shOutputPosition gl_Position
 

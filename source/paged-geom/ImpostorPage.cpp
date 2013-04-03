@@ -29,6 +29,9 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/QTimer.h"
 
+#include "../shiny/Main/Factory.hpp"
+#include "../shiny/Platforms/Ogre/OgreMaterial.hpp"
+
 namespace Forests {
 
 using namespace Ogre;
@@ -418,26 +421,26 @@ loader(0)
 	//Set up materials
 	for (int o = 0; o < IMPOSTOR_YAW_ANGLES; ++o){
 	for (int i = 0; i < IMPOSTOR_PITCH_ANGLES; ++i){
-		material[i][o] = MaterialManager::getSingleton().create(getUniqueID("ImpostorMaterial"), "Impostors");
+		std::string matId = getUniqueID("ImpostorMaterial");
+		sh::MaterialInstance* m = sh::Factory::getInstance ().createMaterialInstance (matId, "ImposterBase");
+		m->setProperty("diffuseMap", sh::makeProperty ((texture->getName())));
 
-		Material *m = material[i][o].getPointer();
-		Pass *p = m->getTechnique(0)->getPass(0);
-		
-		TextureUnitState *t = p->createTextureUnitState(texture->getName());
-		
-		t->setTextureUScroll((float)o / IMPOSTOR_YAW_ANGLES);
-		t->setTextureVScroll((float)i / IMPOSTOR_PITCH_ANGLES);
+		material[i][o] = MaterialManager::getSingleton().getByName(matId);
 
-		p->setLightingEnabled(false);
-		m->setReceiveShadows(false);
-		
+		float uscroll = (float)o / IMPOSTOR_YAW_ANGLES;
+		float vscroll = (float)i / IMPOSTOR_PITCH_ANGLES;
+
+		m->setProperty("scroll", sh::makeProperty(Ogre::StringConverter::toString(uscroll) + " " + Ogre::StringConverter::toString(vscroll)));
+
 		if (group->getBlendMode() == ALPHA_REJECT_IMPOSTOR){
-			p->setAlphaRejectSettings(CMPF_GREATER_EQUAL, 128);
+			m->setProperty("alpha_rejection", sh::makeProperty ("greater_equal " + Ogre::StringConverter::toString(128)));
 			//p->setAlphaRejectSettings(CMPF_GREATER_EQUAL, 64);
 		} else if (group->getBlendMode() == ALPHA_BLEND_IMPOSTOR){
-			p->setSceneBlending(SBF_SOURCE_ALPHA, SBF_ONE_MINUS_SOURCE_ALPHA);
-			p->setDepthWriteEnabled(false);  
+			m->setProperty("scene_blend", sh::makeProperty<sh::StringValue>(new sh::StringValue("src_alpha one_minus_src_alpha")));
+			m->setProperty("depth_write", sh::makeProperty<sh::StringValue>(new sh::StringValue("off")));
 		}
+
+		sh::Factory::getInstance ()._ensureMaterial (matId, "Default");
 	}
 	}
 }
@@ -447,11 +450,9 @@ void ImpostorTexture::updateMaterials()
 	for (int o = 0; o < IMPOSTOR_YAW_ANGLES; ++o){
 		for (int i = 0; i < IMPOSTOR_PITCH_ANGLES; ++i){
 			Material *m = material[i][o].getPointer();
-			Pass *p = m->getTechnique(0)->getPass(0);
 
-			TextureUnitState *t = p->getTextureUnitState(0);
-
-			t->setTextureName(texture->getName());
+			sh::Factory::getInstance().getMaterialInstance(m->getName())->setProperty("diffuseMap", sh::makeProperty(texture->getName()));
+			sh::Factory::getInstance ()._ensureMaterial (m->getName(), "Default");
 		}
 	}
 }
