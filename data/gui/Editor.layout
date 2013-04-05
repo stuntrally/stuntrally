@@ -932,7 +932,7 @@
 							<Property key="Caption" value="#{Color}1"/>
 							<Property key="TextColour" value="0.8 0.9 1"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
-							<UserString key="tip" value="#{TipFogEndClr}"/>
+							<UserString key="tip" value="#{TipFogClr} #{TipFogClrRGBA}"/>
 						</Widget>
 						<Widget type="EditBox" skin="EditBox" position="116 8 164 24" name="FogClr">
 							<Property key="TextColour" value="0.8 0.9 1"/>
@@ -954,7 +954,7 @@
 							<Property key="TextColour" value="0.8 0.9 1"/>
 							<Property key="Colour" value="0.8 0.9 1"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
-							<UserString key="tip" value="#{TipFogEndClr2}"/>
+							<UserString key="tip" value="#{TipFogClr2} #{TipFogClrRGBA}"/>
 						</Widget>
 						<Widget type="ImageBox" skin="ImageBox" position="288 36 24 24" name="ClrFog2">
 							<Property key="ImageTexture" value="white.png"/>

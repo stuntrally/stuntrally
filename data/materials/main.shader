@@ -414,25 +414,32 @@
 		float3 eyeDir = normalize(camPosObjSpace.xyz - objSpacePositionPassthrough.xyz);
 		float3 halfAngle = normalize (lightDir + eyeDir);
 		
+		#if ENV_MAP		
+			float spec_mul = 1;  //4
+		#else
+			float spec_mul = 1;
+		#endif
+
+		#if TWOSIDE_DIFFUSE
+			float specDot = abs(dot(normal, halfAngle));
+		#else
+			float specDot = max(dot(normal, halfAngle), 0);
+		#endif
+		
 		#if !SPEC_MAP
-			#if TWOSIDE_DIFFUSE
-				float3 specular = pow(abs(dot(normal, halfAngle)), materialShininess) * materialSpecular.xyz;
-			#else
-				float3 specular = pow(max(dot(normal, halfAngle), 0), materialShininess) * materialSpecular.xyz;
-			#endif
+			float3 specular = pow(specDot, spec_mul * materialShininess) * materialSpecular.xyz;
 		#else
 			float4 specTex = shSample(specMap, UV.xy);
-			#if TWOSIDE_DIFFUSE
-				float3 specular = pow(abs(dot(normal, halfAngle)), specTex.a * 255) * specTex.xyz;
-			#else
-				float3 specular = pow(max(dot(normal, halfAngle), 0), specTex.a * 255) * specTex.xyz;
-			#endif
+			float3 specular = pow(specDot, spec_mul * specTex.a * 255) * specTex.xyz;
 		#endif
+		
 		if (NdotL <= 0)
 			specular = float3(0,0,0);
 
 		shOutputColour(0).xyz = shOutputColour(0).xyz * (ambient + diffuse + materialEmissive.xyz) + specular * lightSpecular.xyz * shadow;
 
+		
+		//  reflection
 #if ENV_MAP		   
 		float3 r = reflect( -eyeDir, normal );
 		r = normalize(shMatrixMult(worldMatrix, float4(r, 0)).xyz); 

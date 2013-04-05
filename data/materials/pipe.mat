@@ -302,6 +302,24 @@ material pipeGlassCyan
 	specMap roadGlass_spec2h.png
 }
 
+material pipeGlassBlue
+{
+	parent pipe_glass
+	ambient 0.30 0.47 0.57
+	diffuse 0.46 0.61 0.72
+	diffuseMap roadGlassD.png
+	specMap roadGlass_spec0.png
+}
+
+material pipeGlassGreen	
+{
+	parent pipe_glass
+	ambient 0.45 0.46 0.2
+	diffuse 0.35 0.6 0.1
+	diffuseMap roadGlassC_dirt2.png
+	specMap roadGlass_spec2h.png
+}
+
 material pipeGlassRed
 {
 	parent pipe_glass
@@ -320,13 +338,61 @@ material pipeGlassOrange
 	specMap roadGlass_spec0.png
 }
 
+
+material pipeGlassBlueD
+{
+	parent pipe_glass
+	ambient 0.0 0.0 0.47
+	diffuse 0.5 1.0 1.0
+	diffuseMap roadGlassC_dirt2.png
+	specMap roadGlass_spec2h.png
+	normalMap volcano_7_nh1.png
+	bump_scale 1
+}
+
+material pipeGlassWhiteB
+{
+	parent pipe_glass
+	ambient 0.0 0.0 0.47
+	diffuse 1.5 2.0 3.0
+	diffuseMap roadGlassC_dirt2.png
+	specMap roadGlass_spec2h.png
+	normalMap volcano_7_nh1.png
+	bump_scale 2
+}
+
+material pipeGlassWhiteV
+{
+	parent pipe_glass
+	ambient 0.35 0.0 0.33
+	diffuse 1.5 2.0 3.0
+	diffuseMap roadGlassC_dirt2.png
+	specMap roadGlass_spec2h.png
+	normalMap ice_3_nh1.png
+	bump_scale 0.5
+}
+
+
+material pipeGlassViolet
+{
+	parent pipe_glass
+	ambient 0.4 0.4 0.6
+	diffuse 0.6 0.5 0.9
+	diffuseMap roadGlassD.png
+	specMap roadGlass_spec2h.png
+	normalMap ice_3_nh1.png
+	bump_scale 1
+}
+
 material pipeGlassYellow
 {
 	parent pipe_glass
-	ambient 0.8 0.8 0.2
-	diffuse 0.6 0.6 0.1
-	diffuseMap roadGlassD.png
-	specMap roadGlass_spec0.png
+	ambient 0.9 0.75 0.1
+	diffuse 1.0 1.0 0.6
+	diffuseMap roadGlassC_dirt2.png
+	specMap roadGlass_spec2h.png
+	normalMap volcano_7_nh1.png
+	bump_scale 1
 }
 
 
@@ -393,9 +459,11 @@ material pipe_wall
 	depth_bias 3
 	diffuseMap brass_patina.jpg
 	normalMap brass_patina_n.png
+
 	envMap ReflectionCube
 	env_map true
 	refl_amount 0.1
+
 	ambient 0.94 0.96 0.98
 	diffuse 0.4 0.46 0.5
 	specular 0.25 0.267 0.28 4
@@ -410,6 +478,33 @@ material road_wall
 	specular 0.24 0.267 0.28 4
 	cull_hardware clockwise
 }
+
+
+material road_wall_JDark
+{
+	parent road_wall
+	ambient 0.4 0.47 0.38
+	diffuse 0.31 0.35 0.25
+	specular 0.25 0.26 0.24 16
+	diffuseMap brass_patina.jpg
+	normalMap volcano_7_nh1.png
+	bump_scale 4.0
+}
+
+material road_wall_Jungle
+{
+	parent road_wall
+	//ambient 0.62 0.68 0.55
+	//diffuse 0.39 0.54 0.38
+	ambient 0.69 0.77 0.65
+	//diffuse 0.41 0.58 0.32
+	diffuse 0.54 0.61 0.48
+	specular 0.18 0.21 0.14 8
+	diffuseMap brass_patina.jpg
+	normalMap volcano_7_nh1.png
+	bump_scale 2.0
+}
+
 
 //  Column
 
