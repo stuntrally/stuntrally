@@ -456,7 +456,8 @@ void App::InitGui()
 	GetMaterialsMat(sMat+"water.mat");
 	GetMaterialsMat(sMat+"pipe.mat",false);
 	GetMaterialsMat(sMat+"road.mat",false);
-	//objects_static
+	GetMaterialsMat(sMat+"objects_static.mat",false);
+	//GetMaterialsMat(sMat+"objects_static.mat",false);
 
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	String s = vsMaterials[i];
