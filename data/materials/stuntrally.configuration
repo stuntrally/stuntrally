@@ -8,6 +8,7 @@ configuration reflection
 
 configuration impostor_rtt
 {
+    shadows_pssm false
     fog false
     wind false
 }
