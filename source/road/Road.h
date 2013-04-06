@@ -164,7 +164,7 @@ public:
 	void SetMtrPipe(int i, Ogre::String sMtr);
 
 	Ogre::Real fHeight;	// above terrain  ?for each point-
-	Ogre::Real tcMul;		// tex coord mul / unit length
+	Ogre::Real tcMul,tcMulW,tcMulP,tcMulPW,tcMulC;	// tex coord mul per unit length - road,wall,pipe,pipewall,column
 
 	Ogre::Real lenDiv0;	// triangle dim in length
 	int  iw0;		// width divs

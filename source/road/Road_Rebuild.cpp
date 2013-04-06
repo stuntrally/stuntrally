@@ -453,6 +453,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				
 				///  road ~    Width  vertices
 				//-----------------------------------------------------------------------------------------------------------------
+				Real tcL = tc * (pipe ? tcMulP : tcMul);
 				for (int w=0; w <= iw; ++w)  // width +1
 				{
 					//  pos create
@@ -492,7 +493,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					Real brdg = min(1.f, abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
 					Real h = max(0.f, 1.f - abs(vP.y - yTer) / 30.f);  // for grass dens tex
 					Vector4 c(brdg,pipe, 1.f, h);
-					Vector2 vtc(tcw * 1.f /**2p..*/, tc * tcMul);
+					Vector2 vtc(tcw * 1.f /**2p..*/, tcL);
 
 					//>  data road
 					pos.push_back(vP);   norm.push_back(vN);
@@ -527,7 +528,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				if (!onTer)
 				if (i >= 0 && i <= il)  // length +1
 				{	++iLmrgW;
-
+					Real tcLW = tc * (pipe ? tcMulPW : tcMulW);
 					for (int w=0; w <= iwW; ++w)  // width +1
 					{
 						int pp = (p1 > 0.f || p2 > 0.f) ? 1 : 0;  //  pipe wall
@@ -542,7 +543,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 						//>  data Wall
 						posW.push_back(vP);  normW.push_back(vN);
-						tcsW.push_back(0.25f * Vector2(uv, tc * tcMul));  //pars
+						tcsW.push_back(0.25f * Vector2(uv, tcLW));  //pars
 					}
 				}
 				
@@ -561,7 +562,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 						Real a = Real(w)/iwC *2*PI_d,  //+PI_d/4.f
 							x = r*cosf(a), y = r*sinf(a);
 
-						Vector3 vlXZ(vl.x,0,vl.z);	Real fl = 1.f/max(0.01f, vlXZ.length());
+						Vector3 vlXZ(vl.x, 0.f, vl.z);  Real fl = 1.f/max(0.01f, vlXZ.length());
 						Vector3 vP = vL0 + fl * vl * x + vwn * y;
 						Real yy;
 
@@ -575,11 +576,11 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 						}
 						ht += yy;
 
-						Vector3 vN(vP.x-vL0.x,0,vP.z-vL0.z);  vN.normalise();
+						Vector3 vN(vP.x-vL0.x, 0.f, vP.z-vL0.z);  vN.normalise();
 
 						//>  data Col
 						posC.push_back(vP);  normC.push_back(vN);
-						tcsC.push_back(Vector2( Real(w)/iwC * 4, ht * 0.2f ));  //pars
+						tcsC.push_back(Vector2( Real(w)/iwC * 4, ht * tcMulC ));  //pars
 					}
 				}
 				

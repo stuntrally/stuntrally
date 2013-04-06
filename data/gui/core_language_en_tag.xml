@@ -119,6 +119,7 @@
 	<Tag name="TipFind">Enter part of name to find (filters list).</Tag>
 	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
 	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
+
 	<Tag name="fluids">fluids (water or mud)</Tag>
 	<Tag name="bumps">bumps (bumpy terrain)</Tag>
 	<Tag name="jumps">jumps</Tag>
@@ -699,6 +700,10 @@
 
 	<!--  Road  -->
 	<Tag name="Road">Road</Tag>
+	<Tag name="Pipe">Pipe</Tag>
+	<Tag name="Wall">Wall</Tag>
+	<Tag name="Column">Column</Tag>
+	<Tag name="Advanced">Advanced</Tag>
 	<Tag name="RoadMaterials">Road materials</Tag>
 	<Tag name="PipeMaterials">Pipe materials</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>

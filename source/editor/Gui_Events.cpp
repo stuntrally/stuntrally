@@ -396,20 +396,38 @@ void App::comboPipeMtr(ComboBoxPtr cmb, size_t val)
 	road->SetMtrPipe(id, s);  road->RebuildRoad(true);  UpdPSSMMaterials();
 }
 
+void App::comboRoadWMtr(ComboBoxPtr cmb, size_t val)
+{
+	String s = cmb->getItemNameAt(val);
+	road->sMtrWall = s;  road->RebuildRoad(true);  UpdPSSMMaterials();
+}
+void App::comboPipeWMtr(ComboBoxPtr cmb, size_t val)
+{
+	String s = cmb->getItemNameAt(val);
+	road->sMtrWallPipe = s;  road->RebuildRoad(true);  UpdPSSMMaterials();
+}
+void App::comboRoadColMtr(ComboBoxPtr cmb, size_t val)
+{
+	String s = cmb->getItemNameAt(val);
+	road->sMtrCol = s;  road->RebuildRoad(true);  UpdPSSMMaterials();
+}
+
 void App::editRoad(EditPtr ed)
 {
 	if (!road)  return;
 	Real r = s2r(ed->getCaption());
 	String n = ed->getName();
 
-		 if (n=="RdTcMul")		road->tcMul = r;	else if (n=="RdColN")	road->colN = std::max(3.f, r);
-	else if (n=="RdLenDim")		road->lenDiv0 = r;	else if (n=="RdColR")	road->colR = r;
+		 if (n=="RdTcMul")		road->tcMul = r;	else if (n=="RdTcMulP")	road->tcMulP = r;
+	else if (n=="RdTcMulW")		road->tcMulW = r;	else if (n=="RdTcMulPW") road->tcMulPW = r;  else if (n=="RdTcMulC")	road->tcMulC = r;
+	else if (n=="RdColR")		road->colR = r;		else if (n=="RdColN")	road->colN = std::max(3.f, r);
+	else if (n=="RdLenDim")		road->lenDiv0 = r;	
 	else if (n=="RdWidthSteps")	road->iw0 = r;		else if (n=="RdPwsM")	road->iwPmul = r;
 	else if (n=="RdHeightOfs")	road->fHeight = r;	else if (n=="RdPlsM")	road->ilPmul = r;
 	else if (n=="RdSkirtLen")	road->skLen = r;	else if (n=="RdSkirtH")	road->skH = r;
 	else if (n=="RdMergeLen")	road->setMrgLen = r;
 	else if (n=="RdLodPLen")	road->lposLen = r;
-	//road->RebuildRoad(true);  //on Enter-
+	//road->RebuildRoad(true);  //on Enter ?..
 }
 
 void App::slAlignWidthAdd(SL)

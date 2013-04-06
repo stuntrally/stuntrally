@@ -434,9 +434,10 @@ protected:
 	
 	
 	//  [Road]  ----
-	MyGUI::ComboBoxPtr cmbRoadMtr[4],cmbPipeMtr[4];
-	void comboRoadMtr(CMB),comboPipeMtr(CMB);
-	MyGUI::EditPtr edRdTcMul,edRdLenDim,edRdWidthSteps,edRdHeightOfs,
+	MyGUI::ComboBoxPtr cmbRoadMtr[4],cmbPipeMtr[4],cmbRoadWMtr,cmbPipeWMtr,cmbRoadColMtr;
+	void comboRoadMtr(CMB),comboPipeMtr(CMB),comboRoadWMtr(CMB),comboPipeWMtr(CMB),comboRoadColMtr(CMB);
+	MyGUI::EditPtr edRdTcMul,edRdTcMulW,edRdTcMulP,edRdTcMulPW,edRdTcMulC,
+		edRdLenDim,edRdWidthSteps,edRdHeightOfs,
 		edRdSkirtLen,edRdSkirtH, edRdMergeLen,edRdLodPLen,
 		edRdColN,edRdColR, edRdPwsM,edRdPlsM;
 	void editRoad(MyGUI::EditPtr);

@@ -56,7 +56,8 @@ App::App()  //  gui wigdets--
 	,valLTrMinSc(0),valLTrMaxSc(0), valLTrWindFx(0),valLTrWindFy(0)
 	,valLTrMaxTerAng(0),edLTrMinTerH(0),edLTrMaxTerH(0),edLTrFlDepth(0), valLGrDens(0)
 	,chkGrLay(0), tabsGrLayers(0), idGrLay(0), imgGrass(0),imgGrClr(0), valLGrAll(0)  // grass layers
-	,edRdTcMul(0),edRdLenDim(0),edRdWidthSteps(0),edRdHeightOfs(0)  // road
+	,edRdTcMul(0),edRdTcMulW(0),edRdTcMulP(0),edRdTcMulPW(0),edRdTcMulC(0)
+	,edRdLenDim(0),edRdWidthSteps(0),edRdHeightOfs(0)  // road
 	,edRdSkirtLen(0),edRdSkirtH(0), edRdMergeLen(0),edRdLodPLen(0)
 	,edRdColN(0),edRdColR(0), edRdPwsM(0),edRdPlsM(0)
 	,edScaleAllMul(0),edScaleTerHMul(0)  // tools
@@ -73,6 +74,7 @@ App::App()  //  gui wigdets--
 	,iFlCur(0), bRecreateFluids(0)
 	,iObjCur(-1), iObjTNew(0), iObjLast(0), objSim(0), objEd(EO_Rotate)
 	,objListSt(0),objListDyn(0),objListBld(0), objPan(0)
+	,cmbRoadWMtr(0),cmbPipeWMtr(0),cmbRoadColMtr(0)
 	
 	,bTerUpdBlend(1), track(0)
 	,world(0), config(0), dispatcher(0), broadphase(0), solver(0)  //blt

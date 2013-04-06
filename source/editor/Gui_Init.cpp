@@ -296,7 +296,9 @@ void App::InitGui()
 
 	
 	///  [Road]  ------------------------------------
-	Ed(RdTcMul, editRoad);  Ed(RdLenDim, editRoad);  Ed(RdWidthSteps,editRoad);
+	Ed(RdTcMul, editRoad);  Ed(RdTcMulW, editRoad);
+	Ed(RdTcMulP, editRoad);  Ed(RdTcMulPW, editRoad);  Ed(RdTcMulC, editRoad);
+	Ed(RdLenDim, editRoad);  Ed(RdWidthSteps,editRoad);
 	Ed(RdHeightOfs, editRoad);  Ed(RdSkirtLen, editRoad);  Ed(RdSkirtH, editRoad);
 	Ed(RdMergeLen, editRoad);  Ed(RdLodPLen, editRoad);
 	Ed(RdColN, editRoad);  Ed(RdColR, editRoad);
@@ -411,13 +413,21 @@ void App::InitGui()
 		Cmb(cmbPipeMtr[i], "RdMtrP"+toStr(i+1), comboPipeMtr);
 		if (i>0)  {  cmbRoadMtr[i]->addItem("");  cmbPipeMtr[i]->addItem("");  }
 	}
+	Cmb(cmbRoadWMtr, "RdMtrW1", comboRoadWMtr);
+	Cmb(cmbPipeWMtr, "RdMtrPW1", comboPipeWMtr);
+	Cmb(cmbRoadColMtr, "RdMtrC1", comboRoadColMtr);
+
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	String s = vsMaterials[i];
 		if (StringUtil::startsWith(s,"road") && !StringUtil::startsWith(s,"road_") && !StringUtil::endsWith(s,"_ter") && s != "road")
 			for (int i=0; i<4; ++i)  cmbRoadMtr[i]->addItem(s);
 		if (StringUtil::startsWith(s,"pipe") && !StringUtil::startsWith(s,"pipe_"))
 			for (int i=0; i<4; ++i)  cmbPipeMtr[i]->addItem(s);
+		if (StringUtil::startsWith(s,"road_wall"))  cmbRoadWMtr->addItem(s);
+		if (StringUtil::startsWith(s,"pipe_wall"))  cmbPipeWMtr->addItem(s);
+		if (StringUtil::startsWith(s,"road_col"))  cmbRoadColMtr->addItem(s);
 	}
+
 
 	//---------------------  Objects  ---------------------
 	strlist lo;  vObjNames.clear();
@@ -448,6 +458,7 @@ void App::InitGui()
 		objListDyn->eventListChangePosition += newDelegate(this, &App::listObjsChng);
 		objListBld->eventListChangePosition += newDelegate(this, &App::listObjsChng);
 	}
+
 	
 	//---------------------  Tweak  ---------------------
 	ComboBoxPtr cmbTwk;
@@ -457,7 +468,6 @@ void App::InitGui()
 	GetMaterialsMat(sMat+"pipe.mat",false);
 	GetMaterialsMat(sMat+"road.mat",false);
 	GetMaterialsMat(sMat+"objects_static.mat",false);
-	//GetMaterialsMat(sMat+"objects_static.mat",false);
 
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	String s = vsMaterials[i];

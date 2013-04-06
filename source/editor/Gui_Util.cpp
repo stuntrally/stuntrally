@@ -78,11 +78,15 @@ void App::SetGuiFromXmls()
 	for (int i=0; i < 4/*MTRs*/; ++i)
 	{	_Cmb(cmbRoadMtr[i], road->sMtrRoad[i]);
 		_Cmb(cmbPipeMtr[i], road->sMtrPipe[i]);  }
+	_Cmb(cmbRoadWMtr, road->sMtrWall);  _Cmb(cmbRoadColMtr, road->sMtrCol);
+	_Cmb(cmbPipeWMtr, road->sMtrWallPipe);
 
-	_Ed(RdTcMul,	road->tcMul);		_Ed(RdColN, road->colN);
-	_Ed(RdLenDim,	road->lenDiv0);		_Ed(RdColR, road->colR);
-	_Ed(RdWidthSteps,road->iw0);		_Ed(RdPwsM, road->iwPmul);
-	_Ed(RdHeightOfs,road->fHeight);		_Ed(RdPlsM, road->ilPmul);
+	_Ed(RdTcMul, road->tcMul);  _Ed(RdTcMulW, road->tcMul);
+	_Ed(RdTcMulP, road->tcMul); _Ed(RdTcMulPW, road->tcMul);  _Ed(RdTcMulC, road->tcMul);
+	_Ed(RdColN, road->colN);		_Ed(RdColR, road->colR);
+	_Ed(RdLenDim, road->lenDiv0);	_Ed(RdWidthSteps,road->iw0);
+	_Ed(RdPwsM, road->iwPmul);		_Ed(RdPlsM, road->ilPmul);
+	_Ed(RdHeightOfs,road->fHeight);
 	_Ed(RdSkirtLen,	road->skLen);		_Ed(RdSkirtH,	road->skH);
 	_Ed(RdMergeLen,	road->setMrgLen);	_Ed(RdLodPLen,	road->lposLen);
 	bGI = true;
