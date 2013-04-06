@@ -38,9 +38,9 @@ void App::SetGuiFromXmls()
 	//  fog
 	_Clr(Fog, sc->fogClr);  _Clr(Fog2, sc->fogClr2);  _Clr(FogH, sc->fogClrH);
 	_Ed(FogClr, sc->fogClr);  _Ed(FogClr2, sc->fogClr2);  _Ed(FogClrH, sc->fogClrH);
-	_Slv(FogStart, powf(sc->fogStart /2000.f, 0.5f));
-	_Slv(FogEnd,   powf(sc->fogEnd   /2000.f, 0.5f));
-	_Slv(FogHStart,powf(sc->fogHStart/2000.f, 0.5f));  _Slv(FogHeight,  powf((sc->fogHeight +300.f) /600.f, 0.5f));
+	_Slv(FogStart, powf(sc->fogStart /2000.f, 0.5f));  _Slv(FogEnd,   powf(sc->fogEnd   /2000.f, 0.5f));
+	_Slv(FogHStart,powf(sc->fogHStart/2000.f, 0.5f));
+	_Slv(FogHeight, (sc->fogHeight +200.f) /400.f );
 	_Slv(FogHEnd,  powf(sc->fogHEnd  /2000.f, 0.5f));  _Slv(FogHDensity,powf(sc->fogHDensity /200.f, 1/ 2.f));
 
 	_Cmb(cmbRain1, sc->rainName);	_Slv(Rain1Rate, sc->rainEmit /6000.f);

@@ -105,7 +105,7 @@ void App::slFogHEnd(SL)
 }
 void App::slFogHeight(SL)  // edit-
 {
-	float v = -300.f + 600.f * powf(val, 2.f);		sc->fogHeight = v;  UpdFog();
+	float v = -200.f + 400.f * val;			sc->fogHeight = v;  UpdFog();
 	if (valFogHeight){	valFogHeight->setCaption(fToStr(v,1,4));  }
 }
 void App::slFogHDensity(SL)
