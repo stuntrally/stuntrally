@@ -291,7 +291,7 @@ bool SplineRoad::LoadFile(String fname, bool build)
 		a = n->Attribute("ay");		if (a)  newP.mRoll = s2r(a);  else  {
 		  a = n->Attribute("ar");	if (a)  newP.mRoll = s2r(a);  else  newP.mRoll = 0.f;  }
 		  
-		a = n->Attribute("aT");		if (a)  newP.aType = (AngType)s2i(a);
+		a = n->Attribute("aT");		if (a)  newP.aType = (AngType)s2i(a);  else  newP.aType = AT_Both;
 
 		a = n->Attribute("onTer");	newP.onTer = (a && a[0]=='0') ? false : true;
 		a = n->Attribute("col");	newP.cols = !a ? 1 : s2i(a);
