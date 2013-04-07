@@ -273,7 +273,8 @@ material Water_blue_dark   // E1
 	//refractColour 0.62 0.84 0.76  0.75
     //colour 0.64 0.66 0.67  0.0
     colour 0.44 0.60 0.717  0.0
-	reflectColour 0.953 0.98 1.0  1.0
+	//reflectColour 0.953 0.98 1.0  1.0
+	reflectColour 0.77 0.82 0.83  0.95
 	refractColour 0.506 0.557 0.475  0.75
 
 	specColourAndPower 0.66 0.78 0.88  62
