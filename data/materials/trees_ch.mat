@@ -172,6 +172,18 @@ material tree34stinyTwig	{	parent base-twig
   diffuseMap twigP27y.png  }  // W kink empty  Greece~
 
 
+//  Finland
+//---------------------------------------------------------------
+material tree16GtallTwig	{	parent base-twig
+  ambient 0.9 0.9 0.9
+  diffuseMap twig21g1.png  }
+
+material tree17GtallsmTwig	{	parent base-twig
+  ambient 0.8 0.8 0.8
+  diffuseMap twig21g1.png  }
+
+
+
 //  Green  todo..
 //---------------------------------------------------------------
 material tree19gwideTwig	{	parent base-twig
