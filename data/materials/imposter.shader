@@ -3,8 +3,6 @@
 #ifdef SH_VERTEX_SHADER
 
 	SH_BEGIN_PROGRAM
-		shUniform(float, uScroll)
-		shUniform(float, vScroll)
 		shUniform (float4, preRotatedQuad[4])
 
 		shUniform(float4x4, worldViewProj)  @shAutoConstant(worldViewProj, worldviewproj_matrix)
@@ -14,6 +12,8 @@
 		shOutput(float4, objSpacePosition)
 		shOutput(float2, uvPassthrough)
 		shOutput(float, depthPassthrough)
+		
+				shUniform(float4x4, textureMatrix) @shAutoConstant(textureMatrix, texture_matrix, 0)
 
 	SH_START_PROGRAM
 	{
@@ -23,9 +23,7 @@
 		float4 pos = vCenter + (preRotatedQuad[int(normal.z)] * vScale);
 		shOutputPosition = shMatrixMult( worldViewProj, pos );
 
-		uvPassthrough = uv0;
-		uvPassthrough.x += uScroll;
-		uvPassthrough.y += vScroll;
+		uvPassthrough = shMatrixMult(textureMatrix,float4(uv0,0,1)).xy;
 		
 		objSpacePosition = pos;
 		depthPassthrough = shOutputPosition.z;
@@ -49,12 +47,12 @@
 		shUniform(float4, cameraPos)  @shAutoConstant(cameraPos, camera_position_object_space)
 		shUniform(float4, lightPosObjSpace)	 @shAutoConstant(lightPosObjSpace, light_position_object_space)
 
-		shUniform(float4x4, textureMatrix) @shAutoConstant(textureMatrix, texture_matrix, 0)
+
 		shUniform(float4x4, worldMatrix)  @shAutoConstant(worldMatrix, world_matrix)
 
 	SH_START_PROGRAM
 	{
-		shOutputColour(0) = shSample(diffuseMap, shMatrixMult(textureMatrix,float4(uvPassthrough,0,1)).xy);
+		shOutputColour(0) = shSample(diffuseMap, uvPassthrough);
 
 		//#if FOG
 		float3 lightDir = lightPosObjSpace.xyz; // directional

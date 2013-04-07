@@ -526,12 +526,9 @@ void StaticBillboardSet::updateAll(const Vector3 &cameraDirection)
    };
 
    // Shaders uniform variables
-   static const Ogre::String uScroll = "uScroll", vScroll = "vScroll", preRotatedQuad0 = "preRotatedQuad[0]",
+   static const Ogre::String preRotatedQuad0 = "preRotatedQuad[0]",
       preRotatedQuad1 = "preRotatedQuad[1]", preRotatedQuad2 = "preRotatedQuad[2]", preRotatedQuad3 = "preRotatedQuad[3]";
 
-   // SVA for Ogre::Material hack
-   const GpuConstantDefinition *pGPU_ConstDef_preRotatedQuad0 = 0,
-      *pGPU_ConstDef_uScroll = 0, *pGPU_ConstDef_vScroll = 0;
 
    // For each material in use by the billboard system..
    bool firstIteraion = true;
@@ -542,56 +539,41 @@ void StaticBillboardSet::updateAll(const Vector3 &cameraDirection)
 
       // Ensure material is set up with the vertex shader
 	  sh::Factory::getInstance ()._ensureMaterial (mat->getName(), "Default");
-	  sh::MaterialInstance* m = sh::Factory::getInstance ().getMaterialInstance (mat->getName());
-	  Pass* p = static_cast<sh::OgreMaterial*>(m->getMaterial ())->getOgreTechniqueForConfiguration ("Default")->getPass(0);
 
-			if (!p->hasVertexProgram())
-			{
+	  Ogre::MaterialPtr m = MaterialManager::getSingleton().getByName(mat->getName());
+	  for (int t=0; t<m->getNumTechniques(); ++t)
+	  {
+		  Ogre::Technique* technique = m->getTechnique(t);
+		  for (int p=0; p<technique->getNumPasses(); ++p)
+		  {
+			  Pass* pass = technique->getPass(p);
 
-			  GpuProgramParametersSharedPtr params = p->getVertexProgramParameters();
-			  params->setNamedAutoConstant(uScroll, GpuProgramParameters::ACT_CUSTOM);
-			  params->setNamedAutoConstant(vScroll, GpuProgramParameters::ACT_CUSTOM);
-			  params->setNamedAutoConstant(preRotatedQuad0, GpuProgramParameters::ACT_CUSTOM);
-			  params->setNamedAutoConstant(preRotatedQuad1, GpuProgramParameters::ACT_CUSTOM);
-			  params->setNamedAutoConstant(preRotatedQuad2, GpuProgramParameters::ACT_CUSTOM);
-			  params->setNamedAutoConstant(preRotatedQuad3, GpuProgramParameters::ACT_CUSTOM);
+			  if (!pass->hasVertexProgram())
+				  continue;
 
+			  // SVA for Ogre::Material hack
+			  const GpuConstantDefinition *pGPU_ConstDef_preRotatedQuad0 = 0;
+			  // Which prerotated quad use
+			  const float *pQuad = i1->second->getOrigin() == BBO_CENTER ? preRotatedQuad_BBO_CENTER : preRotatedQuad_BBO_BOTTOM_CENTER;
+
+			  // Update the vertex shader parameters
+			  GpuProgramParametersSharedPtr params = pass->getVertexProgramParameters();
+
+			  // SVA some hack of Ogre::Material.
+			  // Since material are cloned and use same vertex shader "Sprite_vp" hardware GPU indices
+			  // must be same. I don`t know planes of Ogre Team to change this behaviour.
+			  // Therefore this may be unsafe code. Instead of 3 std::map lookups(map::find(const Ogre::String&)) do only 1
+			  {
+				 const GpuConstantDefinition *def = params->_findNamedConstantDefinition(preRotatedQuad0, true);
+				 if (def != pGPU_ConstDef_preRotatedQuad0) // new material, reread
+				 {
+					pGPU_ConstDef_preRotatedQuad0 = def;
+				 }
+			  }
+
+			  params->_writeRawConstants(pGPU_ConstDef_preRotatedQuad0->physicalIndex, pQuad, 16);
 		  }
-			if (!p->hasFragmentProgram())
-			{
-				//++i1;
-				//continue;
-		  }
-
-
-      // Which prerotated quad use
-      const float *pQuad = i1->second->getOrigin() == BBO_CENTER ? preRotatedQuad_BBO_CENTER : preRotatedQuad_BBO_BOTTOM_CENTER;
-
-      // Update the vertex shader parameters
-      GpuProgramParametersSharedPtr params = p->getVertexProgramParameters();
-      //params->setNamedConstant(preRotatedQuad0, pQuad, 4);
-      //params->setNamedConstant(uScroll, p->getTextureUnitState(0)->getTextureUScroll());
-      //params->setNamedConstant(vScroll, p->getTextureUnitState(0)->getTextureVScroll());
-
-      // SVA some hack of Ogre::Material.
-      // Since material are cloned and use same vertex shader "Sprite_vp" hardware GPU indices
-      // must be same. I don`t know planes of Ogre Team to change this behaviour.
-      // Therefore this may be unsafe code. Instead of 3 std::map lookups(map::find(const Ogre::String&)) do only 1
-      {
-         const GpuConstantDefinition *def = params->_findNamedConstantDefinition(preRotatedQuad0, true);
-         if (def != pGPU_ConstDef_preRotatedQuad0) // new material, reread
-         {
-            pGPU_ConstDef_preRotatedQuad0 = def;
-            pGPU_ConstDef_uScroll         = params->_findNamedConstantDefinition(uScroll, true);
-            pGPU_ConstDef_vScroll         = params->_findNamedConstantDefinition(vScroll, true);
-         }
-      }
-
-      float fUScroll = (float)p->getTextureUnitState(0)->getTextureUScroll(),
-         fVScroll = (float)p->getTextureUnitState(0)->getTextureVScroll();
-	  params->_writeRawConstants(pGPU_ConstDef_preRotatedQuad0->physicalIndex, pQuad, 16);
-      params->_writeRawConstants(pGPU_ConstDef_uScroll->physicalIndex, &fUScroll, 1);
-      params->_writeRawConstants(pGPU_ConstDef_vScroll->physicalIndex, &fVScroll, 1);
+	  }
 
       ++i1; // next material in billboard system
    }
