@@ -280,7 +280,7 @@ material pipe_glass
 }
 
 
-//----------------------------------------------------
+//--------------------------------------------------------------------------------------
 
 material pipeGlass
 {
@@ -448,10 +448,9 @@ material pipeAsphaltRed
 	receives_shadows false
 }
 
-//----------------------------------------------------
 
-
-//  Wall
+//  road  Wall
+//--------------------------------------------------------------------------------------
 
 material pipe_wall
 {
@@ -479,7 +478,7 @@ material road_wall
 	cull_hardware clockwise
 }
 
-
+//  Jungle
 material road_wall_JDark
 {
 	parent road_wall
@@ -494,10 +493,7 @@ material road_wall_JDark
 material road_wall_Jungle
 {
 	parent road_wall
-	//ambient 0.62 0.68 0.55
-	//diffuse 0.39 0.54 0.38
 	ambient 0.69 0.77 0.65
-	//diffuse 0.41 0.58 0.32
 	diffuse 0.54 0.61 0.48
 	specular 0.18 0.21 0.14 8
 	diffuseMap brass_patina.jpg
@@ -505,8 +501,91 @@ material road_wall_Jungle
 	bump_scale 2.0
 }
 
+//  winter
+material road_wall_Winter
+{
+	parent road_wall
+	ambient 0.97 0.99 1.0
+	diffuse 0.9 0.93 0.93
+	specular 0.6 0.6 0.6 8
+	diffuseMap concrete1w.jpg
+	normalMap concrete_norm.jpg
+	bump_scale 2.0
+}
+
+
+//  pipe Wall
+//----------------------------------------------------
+
+material pipe_wall_JDark
+{
+	parent pipe_wall
+	ambient 0.4 0.47 0.38
+	diffuse 0.31 0.35 0.25
+	specular 0.25 0.26 0.24 16
+	diffuseMap brass_patina.jpg
+	normalMap volcano_7_nh1.png
+	bump_scale 4.0
+}
+
+material pipe_wall_Jungle
+{
+	parent pipe_wall
+	ambient 0.69 0.77 0.65
+	diffuse 0.54 0.61 0.48
+	specular 0.18 0.21 0.14 8
+	diffuseMap brass_patina.jpg
+	normalMap volcano_7_nh1.png
+	bump_scale 2.0
+}
+
+material pipe_wall_Red
+{
+	parent pipe_wall
+	ambient 1.0 0.47 0.40
+	diffuse 1.0 0.61 0.48
+	specular 0.68 0.34 0.24 16
+	diffuseMap brass_patina.jpg
+	normalMap volcano_7_nh1.png
+	bump_scale 2.0
+}
+
+material pipe_wall_Orange
+{
+	parent pipe_wall
+	ambient 1.0 0.67 0.50
+	diffuse 1.0 0.81 0.68
+	specular 0.68 0.54 0.44 16
+	diffuseMap brass_patina.jpg
+	normalMap volcano_7_nh1.png
+	bump_scale 2.0
+}
+
+material pipe_wall_Yellow
+{
+	parent pipe_wall
+	ambient 0.9 0.9 0.3
+	diffuse 1.0 1.0 0.7
+	specular 0.8 0.8 0.7 16
+	diffuseMap brass_patina.jpg
+	normalMap ice_3_nh1.png
+	bump_scale 2.0
+}
+
+material pipe_wall_Winter
+{
+	parent pipe_wall
+	ambient 0.97 0.99 1.0
+	diffuse 0.9 0.93 0.93
+	specular 0.6 0.6 0.6 8
+	diffuseMap concrete1w.jpg
+	normalMap concrete_norm.jpg
+	bump_scale 2.0
+}
+
 
 //  Column
+//--------------------------------------------------------------------------------------
 
 material road_col
 {
@@ -516,4 +595,37 @@ material road_col
 	specular 0.25 0.25 0.25 24
 	diffuseMap concrete03.png
 	normalMap brass_patina_n.png
+	bump_scale 4
+}
+
+material road_col_Dark
+{
+	parent base
+	ambient 0.44 0.44 0.40
+	diffuse 0.55 0.60 0.55
+	specular 0.35 0.36 0.35 32
+	diffuseMap brass_patina.jpg
+	normalMap volcano_7_nh1.png
+}
+
+material road_col_Blue
+{
+	parent base
+	ambient 0.50 0.65 0.80
+	diffuse 0.45 0.60 0.75
+	specular 0.2 0.35 0.5 40
+	diffuseMap brass_patina.jpg
+	normalMap ice_3_nh1.png
+	bump_scale 2
+}
+
+material road_col_Winter
+{
+	parent road_wall
+	ambient 1.2 1.24 1.34
+	diffuse 1.0 1.14 1.24
+	specular 0.43 0.42 0.41 8
+	diffuseMap concrete03.png
+	normalMap concrete_norm.jpg
+	bump_scale 2.0
 }

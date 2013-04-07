@@ -238,6 +238,28 @@ material roadSandDark_ter
 }
 
 
+// stone gray
+material roadStone
+{
+	parent road
+	diffuseMap roadSnow.jpg
+	ambient 0.727 0.684 0.467
+	diffuse 0.537 0.486 0.389
+	specular 0.3 0.3 0.3 14
+}
+
+material roadStone_ter
+{
+	parent road_terrain
+	diffuseMap roadSnow.jpg
+	ambient 0.727 0.684 0.467
+	diffuse 0.537 0.486 0.389
+	specular 0.3 0.3 0.3 14
+	normalMap ice_3_nh1.png
+	bump_scale 1
+}
+
+
 // Magic
 
 material roadSandMagic
@@ -447,4 +469,78 @@ material roadMoss
 	ambient 0.7 0.7 0.7
 	diffuse 0.5 0.5 0.5
 	specular 0.15 0.24 0.25 48
+}
+
+
+
+///  test new gravel
+
+material roadNdirt_ter
+{
+	parent road_terrain
+	diffuseMap rdDirt.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.2 0.2 0.2 48
+}
+material roadNdirt
+{
+	parent road
+	diffuseMap rdDirt.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.2 0.2 0.2 48
+}
+
+material roadNgravel_ter
+{
+	parent road_terrain
+	diffuseMap rdGravel.jpg
+	normalMap rdGravel_norm.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.2 0.2 0.2 24
+}
+material roadNgravel
+{
+	parent road
+	diffuseMap rdGravel.jpg
+	normalMap rdGravel_norm.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.2 0.2 0.2 48
+}
+
+material roadNmud_ter
+{
+	parent road_terrain
+	diffuseMap rdMud.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.2 0.2 0.2 48
+}
+material roadNmud
+{
+	parent road
+	diffuseMap rdMud.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.2 0.2 0.2 48
+}
+
+material roadNpacked_ter
+{
+	parent road_terrain
+	diffuseMap rdPacked.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.2 0.2 0.2 48
+}
+material roadNpacked
+{
+	parent road
+	diffuseMap rdPacked.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.2 0.2 0.2 48
 }
