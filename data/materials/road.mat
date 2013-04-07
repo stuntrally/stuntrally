@@ -506,11 +506,9 @@ material roadNgravel_ter
 material roadNgravel
 {
 	parent road
-	diffuseMap roadSnow.jpg
-	//ambient 0.58 0.55 0.37
-	//diffuse 0.537 0.486 0.389
-	ambient 0.46 0.44 0.296
-	diffuse 0.43 0.39 0.31
+	diffuseMap roadAsphalt.jpg
+	ambient 1.2 1.2 1.2
+	diffuse 0.8 0.8 0.8
 	specular 0.2 0.2 0.2 32
 }
 
