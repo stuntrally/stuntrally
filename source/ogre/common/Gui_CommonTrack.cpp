@@ -117,7 +117,7 @@ String App::GetSceneryColor(String name)
 		case 'A':  c = "#FFA080";  break;	case 'D':  c = "#F0F000";  break;
 		case 'V':  c = "#1E1E0E";  break;	case 'X':  c = "#8080D0";  break;
 		case 'C':  c = "#E0B090";  break;	case 'M':  c = "#A0A000";  break;
-		case 'O':  c = "#70F0B0";  break;	}
+		case 'O':  c = "#70F0B0";  break;	case 'E':  c = "#A0E080";  break;	}
 	return c;
 }
 

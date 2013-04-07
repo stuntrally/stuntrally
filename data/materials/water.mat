@@ -259,6 +259,47 @@ material Water_dark   // V1-Dark
     speed 1.0
 }
 
+material Water_blue_dark   // E1
+{
+    parent Water
+    choppyness_scale 0.27 35
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.309 0.297
+    bump 0.87 0.121 0.354
+    fresnelMultiplier 1.0
+    
+	//colour 0.281 0.338 0.475  0.0
+	//reflectColour 0.768 0.834 0.768  1.0
+	//refractColour 0.62 0.84 0.76  0.75
+    //colour 0.64 0.66 0.67  0.0
+    colour 0.44 0.60 0.717  0.0
+	reflectColour 0.953 0.98 1.0  1.0
+	refractColour 0.506 0.557 0.475  0.75
+
+	specColourAndPower 0.66 0.78 0.88  62
+    bump2SpecPowerMul 2.0 12 0.4
+    speed 1.0
+}
+
+//material Water_blue_dark   // E1
+//{
+//    parent Water
+//    choppyness_scale 0.17 65
+//    //smallWaves_midWaves 0.15 0.10 0.30 0.549
+//    smallWaves_midWaves 0.072 0.797 0.336 0.775
+//    bigWaves 0.73 0.49
+//    bump 1.0 0.082 0.10
+//    fresnelMultiplier 1.0
+//    
+//    colour 0.281 0.35 0.40  0.0
+//	reflectColour 0.768 0.834 0.768  1.0
+//	refractColour 0.62 0.84 0.76  0.75
+//	specColourAndPower 0.535 0.613 0.66  24
+//
+//    bump2SpecPowerMul 2.0 3 0.4
+//    speed 1.0
+//}
+
 
 material Grease_jelly   // X1-Magic
 {
