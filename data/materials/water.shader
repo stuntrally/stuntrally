@@ -247,8 +247,8 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 						  normal4 * SMALL_WAVES_X*0.1 + normal5 * SMALL_WAVES_Y*0.1).xzy;
 
 		float3 normalX2 = normalize(float3(normal.x * bump2SpecPowerMul.x, normal.y, normal.z * bump2SpecPowerMul.x));  // n2
-		normal  = normalize(float3(normal.x * BUMP, normal.y, normal.z * BUMP));
-		lNormal = normalize(float3(lNormal.x * BUMP, lNormal.y, lNormal.z * BUMP));
+		normal  = normalize(float3(normal.x * BUMP, normal.y, -normal.z * BUMP));
+		lNormal = normalize(float3(lNormal.x * BUMP, lNormal.y, -lNormal.z * BUMP));
 		
 		
 		float3 lVec = normalize(sunPosition.xyz);
