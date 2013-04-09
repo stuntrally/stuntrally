@@ -513,6 +513,32 @@ material road_wall_Winter
 	bump_scale 2.0
 }
 
+//  australia
+material road_wall_Red
+{
+	parent road_wall
+	ambient 0.93 0.87 0.81
+	diffuse 0.678 0.61 0.59
+	specular 0.33 0.31 0.27 16
+	//diffuseMap concrete1w.jpg
+	//normalMap concrete_norm.jpg
+	diffuseMap brass_patina.jpg
+	normalMap volcano_7_nh1.png
+	bump_scale 3.0
+}
+
+//  desert
+material road_wall_Desert
+{
+	parent road_wall
+	ambient 0.8 0.8 0.6
+	diffuse 0.6 0.6 0.4
+	specular 0.3 0.3 0.2 16
+	diffuseMap concrete1w.jpg
+	normalMap concrete_norm.jpg
+	bump_scale 1.0
+}
+
 
 //  pipe Wall
 //----------------------------------------------------
@@ -539,6 +565,7 @@ material pipe_wall_Jungle
 	bump_scale 2.0
 }
 
+//  australia
 material pipe_wall_Red
 {
 	parent pipe_wall
@@ -627,5 +654,27 @@ material road_col_Winter
 	specular 0.43 0.42 0.41 8
 	diffuseMap concrete03.png
 	normalMap concrete_norm.jpg
+	bump_scale 2.0
+}
+
+material road_col_Red
+{
+	parent road_wall
+	ambient 0.78 .70 0.68
+	diffuse 0.60 0.54 0.50
+	specular 0.30 0.30 0.29 24
+	diffuseMap concrete03.png
+	normalMap concrete_norm.jpg
+	bump_scale 2.0
+}
+
+material road_col_Desert
+{
+	parent road_wall
+	ambient 0.59 0.59 0.35
+	diffuse 0.54 0.53 0.40
+	specular 0.30 0.30 0.29 8
+	diffuseMap concrete1w.jpg
+	normalMap volcano_7_nh1.png
 	bump_scale 2.0
 }

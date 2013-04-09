@@ -515,11 +515,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\data\materials2\pipe.cg"
-				>
-			</File>
-			<File
-				RelativePath=".\data\materials2\pipe.material"
+				RelativePath=".\data\materials\pipe.mat"
 				>
 			</File>
 			<File
