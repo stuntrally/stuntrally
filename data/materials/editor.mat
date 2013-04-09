@@ -79,6 +79,18 @@ material start_box
 	specular 0.1 0.1 0.15 32
 }
 
+material CarBodyEd
+{
+	parent base
+	diffuseMap body_dyn.png
+	ambient 1.2 1.0 0.8
+	diffuse 1.0 1.0 1.0
+	specular 0.7 0.7 0.7 32
+	cull_hardware none
+    receives_shadows false
+}
+
+
 //  boxes
 //------------------------------------------------------------
 material fluid_box
