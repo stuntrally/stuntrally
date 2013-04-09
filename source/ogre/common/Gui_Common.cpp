@@ -634,7 +634,7 @@ bool ResSort(const ScrRes& r1, const ScrRes& r2)
 	return (r1.w <= r2.w) && (r1.h <= r2.h);
 }
 
-void App::InitGuiScrenRes()
+void App::InitGuiScreenRes()
 {
 	ButtonPtr bchk;
 	Chk("FullScreen", chkVidFullscr, pSet->fullscreen);

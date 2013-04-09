@@ -495,7 +495,7 @@ void App::InitGui()
 	InitInputGui();
 	panInputDetail = mGUI->findWidget<Widget>("PanInputDetail");
 	
-	InitGuiScrenRes();
+	InitGuiScreenRes();
 	
 	
 	///  cars list

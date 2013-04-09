@@ -476,7 +476,7 @@ void App::InitGui()
 	cmbTwk->setIndexSelected( cmbTwk->findItemIndexWith(pSet->tweak_mtr) );
 	//-----------------------------------------------------
 
-	InitGuiScrenRes();
+	InitGuiScreenRes();
 	
 
 	///  [Track]

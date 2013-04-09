@@ -293,7 +293,7 @@ protected:
 
 	//  screen
 	MyGUI::ListPtr resList;
-	void InitGuiScrenRes(), btnResChng(WP), ResizeOptWnd();
+	void InitGuiScreenRes(), btnResChng(WP), ResizeOptWnd();
 	void chkVidFullscr(WP), chkVidVSync(WP), chkVidSSAA(WP);
 
 	void comboGraphicsAll(CMB), comboRenderSystem(CMB);
