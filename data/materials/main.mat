@@ -125,7 +125,7 @@ material base
 		
 		texture_unit envMap
 		{
-		    cubic_texture ReflectionCube combinedUVW
+		    texture_alias CubeReflection
 		}
 		
 		texture_unit reflMap

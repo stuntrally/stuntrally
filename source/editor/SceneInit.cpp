@@ -184,9 +184,10 @@ void App::LoadTrackEv()
 
 
 	//  set sky tex name for water
-	sh::MaterialInstance* m = mFactory->getMaterialInstance (sc->skyMtr);
-	std::string skyTex = sh::retrieveValue<sh::StringValue>(m->getProperty ("texture"), 0).get();
-	sh::Factory::getInstance ().setTextureAlias ("SkyReflection", skyTex);
+	sh::MaterialInstance* m = mFactory->getMaterialInstance(sc->skyMtr);
+	std::string skyTex = sh::retrieveValue<sh::StringValue>(m->getProperty("texture"), 0).get();
+	sh::Factory::getInstance().setTextureAlias("SkyReflection", skyTex);
+	sh::Factory::getInstance().setTextureAlias("CubeReflection", "ReflectionCube");
 
 
 	bNewHmap = false;/**/

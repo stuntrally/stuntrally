@@ -318,9 +318,9 @@ void App::LoadScene()  // 3
 
 
 	//  set sky tex name for water
-	sh::MaterialInstance* m = mFactory->getMaterialInstance (sc->skyMtr);
-	std::string skyTex = sh::retrieveValue<sh::StringValue>(m->getProperty ("texture"), 0).get();
-	sh::Factory::getInstance ().setTextureAlias ("SkyReflection", skyTex);
+	sh::MaterialInstance* m = mFactory->getMaterialInstance(sc->skyMtr);
+	std::string skyTex = sh::retrieveValue<sh::StringValue>(m->getProperty("texture"), 0).get();
+	sh::Factory::getInstance ().setTextureAlias("SkyReflection", skyTex);
 	
 
 	//  weather rain,snow  -----
@@ -446,6 +446,8 @@ void App::LoadTerrain()  // 5
 	// assign stuff to cars
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		(*it)->terrain = terrain;
+	
+	sh::Factory::getInstance().setTextureAlias("CubeReflection", "ReflectionCube");
 
 	if (sc->vdr)  // vdrift track
 	{
