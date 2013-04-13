@@ -76,8 +76,8 @@ App::App(SETTINGS *settings, GAME *game)
 	,iEdTire(0), iTireLoad(0), iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
 	,iTireSet(0), bchAbs(0),bchTcs(0), slSSSEff(0),slSSSVel(0)
 	,mStaticGeom(0), fLastFrameDT(0.001f)
-	,edTweak(0),edPerfTest(0),tabTweak(0)
-	,txtTweakPath(0), cmbTweakCarSet(0), cmbTweakTireSet(0), txtTweakTire(0)
+	,edTweak(0),edPerfTest(0),edTweakCol(0),tabTweak(0)
+	,txtTweakPath(0),cmbTweakCarSet(0), cmbTweakTireSet(0),txtTweakTire(0), txtTweakPathCol(0)
 	,bPerfTest(0),iPerfTestStage(PT_StartWait)
 {
 	pSet = settings;

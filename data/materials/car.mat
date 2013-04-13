@@ -13,8 +13,11 @@ material car_body
 	reflMap refl.png
 	env_map true
 	fresnel true
-  	fresnelScaleBiasPower 0.81 0.07 4
-	specular 1 1 1 128
+	fresnelScaleBiasPower 0.81 0.10 3
+	specular 1 1 1  16 //x4
+	glossiness 0.5
+	fresnelScaleBiasPower2 0.71 0.10 6
+	specular2 4 1 0  2 //x4
 }
 
 material car_glass
@@ -23,10 +26,10 @@ material car_glass
 	diffuseMap glass.png
 	depth_write off
 	scene_blend alpha_blend
-	ambient 0.6 0.6 0.6
+	ambient 0.9 0.9 0.9
 	diffuse 0.9 0.9 0.9
-	specular 1.5 1.5 1.5 128
-	fresnelScaleBiasPower 1.85 0.35 2
+	specular 1.5 1.5 1.5  96 //x4
+	fresnelScaleBiasPower 0.95 0.16 2
 	env_map true
 	fresnel true
 	specular_alpha true
@@ -242,6 +245,21 @@ material FM_brake
 // ES
 //---------------------------------------------------------------
 
+material SphereTest
+{
+	parent car_base
+	diffuseMap white.png
+	//reflMap refl.png
+	env_map true
+    fresnel false
+    refl_amount 1.0
+	//fresnel true
+	//fresnelScaleBiasPower 0.81 0.67 4
+  	ambient 0.3 0.3 0.3
+  	diffuse 0.3 0.3 0.3
+	specular 1 1 1  8 //x4
+}
+
 material car_body_ES
 {
 	parent car_body
@@ -448,7 +466,7 @@ material UPG13000_metalwheel  // wheel rim
 	diffuseMap N1_MetalWheel.png
 	ambient 0.8 0.8 0.8
 	diffuse 0.8 0.8 0.8
-	specular 1 1 1 16
+	specular 1 1 1  4 //x4
 	//reflMap refl.png
 	env_map true
 	//fresnelScaleBiasPower 0.75 0.15 4
@@ -644,7 +662,7 @@ material S8_interior  // all +  split?  // todo: texture..
 {
 	parent S8_base
 	diffuseMap white.png
-	ambient 0.5 0.5 0.5
+	ambient 0.3 0.3 0.3
 	diffuse 0.4 0.4 0.4
 	specular 0.2 0.2 0.2 4
 }

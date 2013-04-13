@@ -268,7 +268,7 @@ material roadSandMagic
     parent road
 	ambient 0.34 0.28 0.76
 	diffuse 0.42 0.52 0.92
-	specular 0.3 0.6 1.0 64
+	specular 0.3 0.6 1.0  16 //x4
 	diffuseMap roadSandSet.jpg
 	envMap ReflectionCube
 	env_map true
@@ -281,7 +281,7 @@ material roadSandMagic_ter
     parent road_terrain
 	ambient 0.34 0.28 0.76
 	diffuse 0.42 0.52 0.92
-	specular 0.3 0.6 1.0 64
+	specular 0.3 0.6 1.0  16 //x4
 	diffuseMap roadSandSet.jpg
 	envMap ReflectionCube
 	env_map true
@@ -320,7 +320,7 @@ material roadIce
     parent road
 	ambient 1.0 1.0 1.0
 	diffuse 0.9 0.9 0.9
-	specular 1.0 1.02 1.02 48
+	specular 1.0 1.02 1.02  12 //x4
 	envMap ReflectionCube
 	env_map true
 	refl_amount 0.15
@@ -334,7 +334,7 @@ material roadIce_ter
     parent road_terrain
 	ambient 1.02 1.0 1.0
 	diffuse 0.92 0.9 0.9
-	specular 0.9 0.92 0.92 32
+	specular 0.9 0.92 0.92  8 //x4
 	envMap ReflectionCube
 	env_map true
 	refl_amount 0.15

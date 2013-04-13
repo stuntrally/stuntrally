@@ -25,6 +25,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 		char ss[64];  sprintf(ss, "car%d.", i+1);   std::string s = ss;
 		Param(c,w, s+"car", gui.car[i]);				Param(c,w, s+"clr_hue", gui.car_hue[i]);
 		Param(c,w, s+"clr_sat", gui.car_sat[i]);		Param(c,w, s+"clr_val", gui.car_val[i]);
+		Param(c,w, s+"clr_gloss", gui.car_gloss[i]);
 		Param(c,w, s+"camera", cam_view[i]);
 	}
 	Param(c,w, "car1.autotrans", autoshift);	//todo: this for all 4 cars..
@@ -221,13 +222,12 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	shader_mode("")
 {
 	//  track
-	gui.track = "J1-T";
-	gui.track_user = false;
-	gui.trackreverse = false;
+	gui.track = "J1-T";  gui.track_user = false;  gui.trackreverse = false;
 	gui.sim_mode = "easy";
 	//  cars
 	for (int i=0; i < 4; ++i)
-	{	gui.car[i] = "ES";  gui.car_hue[i] = 0.4f+0.2f*i;  gui.car_sat[i] = 1.f;  gui.car_val[i] = 1.f;  cam_view[0] = 9;  }
+	{	gui.car[i] = "ES";  cam_view[0] = 9;  gui.car_gloss[i] = 0.5f;
+		gui.car_hue[i] = 0.4f+0.2f*i;  gui.car_sat[i] = 1.f;  gui.car_val[i] = 1.f;  }
 	//  game
 	gui.local_players = 1;  gui.num_laps = 2;  game.num_laps = 2; 	game.local_players = 1;
 	gui.collis_veget = true;  gui.collis_cars = false;

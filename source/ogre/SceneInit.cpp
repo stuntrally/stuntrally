@@ -56,6 +56,7 @@ void App::createScene()
 	//  collisions.xml
 	objs.LoadXml();
 	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
+
 	LogO(String("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
 	LogO(String("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
 
@@ -184,6 +185,16 @@ void App::LoadCleanUp()  // 1 first
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
+	//  rain/snow
+	if (pr)  {  mSceneMgr->destroyParticleSystem(pr);   pr=0;  }
+	if (pr2) {  mSceneMgr->destroyParticleSystem(pr2);  pr2=0;  }
+
+	terrain = 0;
+	if (mTerrainGroup)
+		mTerrainGroup->removeAllTerrains();
+	if (road)
+	{	road->DestroyRoad();  delete road;  road = 0;  }
+
 	///  destroy all  TODO ...
 	///!  remove this and destroy everything with* manually  destroyCar, destroyScene, destroyHud
 	///!  check if scene (track), car changed, omit creating the same if not
@@ -197,16 +208,8 @@ void App::LoadCleanUp()  // 1 first
 	mSplitMgr->mGuiSceneMgr->destroyAllManualObjects(); // !?..
 	NullHUD();
 	MeshManager::getSingleton().removeAll();  // destroy all meshes
-
-	//  rain/snow
-	if (pr)  {  mSceneMgr->destroyParticleSystem(pr);   pr=0;  }
-	if (pr2) {  mSceneMgr->destroyParticleSystem(pr2);  pr2=0;  }
-
-	terrain = 0;
-	if (mTerrainGroup)
-		mTerrainGroup->removeAllTerrains();
-	if (road)
-	{	road->DestroyRoad();  delete road;  road = 0;  }
+	Ogre::TextureManager::getSingleton().removeUnreferencedResources();
+	Ogre::TextureManager::getSingleton().setMemoryBudget(256*1024*1024);
 }
 
 void App::LoadGame()  // 2

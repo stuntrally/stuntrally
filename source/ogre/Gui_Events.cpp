@@ -131,6 +131,13 @@ void App::slCarClrV(SL)
 	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
 }
+void App::slCarClrGloss(SL)
+{
+	Real v = val;  if (bGI)  pSet->gui.car_gloss[iCurCar] = v;
+	if (valCarClrGloss){	valCarClrGloss->setCaption(fToStr(v,2,4));  }
+	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
+		carModels[iCurCar]->ChangeClr(iCurCar);
+}
 
 void App::imgBtnCarClr(WP img)
 {

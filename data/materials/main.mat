@@ -1,44 +1,47 @@
 material base
 {
-	diffuse 1.0 1.0 1.0 1.0
-	specular 0.4 0.4 0.4 32
 	ambient 1.0 1.0 1.0
+	diffuse 1.0 1.0 1.0 1.0
+	specular 0 0 0  32
 	emissive 0 0 0
-	specular 0 0 0 32
-
-	cull_hardware default
+	//if env_map true, spec power gets mul by x4
 
     scene_blend default
     depth_write default
     depth_bias default
     alpha_rejection default
-    
-    env_map false
-    terrain_light_map false
-    terrain_light_map_toggleable false
+	cull_hardware default
     
     lighting true
-	soft_particles false
-        
+    terrain_light_map false
+    terrain_light_map_toggleable false
+    receives_shadows true
+            
     bump_scale 1
+    env_map false
     fresnelScaleBiasPower 0.79 0.07 4
     fresnel false
     refl_amount 0.1  // only used when fresnel off
     
+    //  extras1
     tree_wind false
     grass_wind false
     vertex_colour false
     specular_alpha false
-    
-    receives_shadows true
-        
+	soft_particles false
+            
     transparent false  // for shadowcaster
     mrt_output true
     diffuse_address_mode wrap
-	//  extras
+
+	//  extras2
     twoside_diffuse false
     road_blend false
 	shadowBias 0
+	//  car body only
+	glossiness 0.5
+    fresnelScaleBiasPower2 0.79 0.07 4
+	specular2 0 0 0  32
 	
 	normalMap
 	reflMap
@@ -55,14 +58,12 @@ material base
 		specular $specular
 		ambient $ambient
 		emissive $emissive
-		specular $specular
-		
-		cull_hardware $cull_hardware
-	
+			
         scene_blend $scene_blend
         alpha_rejection $alpha_rejection
         depth_write $depth_write
         depth_bias $depth_bias
+		cull_hardware $cull_hardware
 
 		shader_properties
 		{
@@ -92,6 +93,10 @@ material base
 		    
 		    fresnel $fresnel
 		    fresnelScaleBiasPower $fresnelScaleBiasPower
+
+			glossiness $glossiness
+		    fresnelScaleBiasPower2 $fresnelScaleBiasPower2
+			specular2 $specular2
 
 		    bump_scale $bump_scale
 		}

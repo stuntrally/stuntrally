@@ -91,14 +91,14 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabTrack">
 				<Property key="Caption" value="#{Track}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
-				<Widget type="Button" skin="CheckBox" position="380 496 120 24" name="ReverseOn">
+                <Widget type="Button" skin="CheckBox" position="380 504 120 24" name="ReverseOn">
 					<Property key="Caption" value="#{Reverse}"/>
 					<Property key="Colour" value="0.8 1 0.6"/>
 					<Property key="TextColour" value="0.8 1 0.5"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipReverse}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="176 488 136 32" name="NewGame1">
+                <Widget type="Button" skin="Button" position="176 496 136 32" name="NewGame1">
 					<Property key="Caption" value="#{NewGame}"/>
 					<Property key="Colour" value="0.6 1.0 0.3"/>
 					<Property key="TextColour" value="0.3 1 0.2"/>
@@ -109,11 +109,11 @@
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipTrackImg}"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="528 280 240 240" name="TrkTerImg">
+                <Widget type="ImageBox" skin="ImageBox" position="528 288 240 240" name="TrkTerImg">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipTrkTerImg}"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="527 280 240 238" name="TrackMap">
+                <Widget type="ImageBox" skin="ImageBox" position="527 288 240 238" name="TrackMap">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipTrackMap}"/>
 				</Widget>
@@ -186,7 +186,7 @@
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipTrackDesc}"/>
 				</Widget>-->
-				<Widget type="EditBox" skin="EditBoxEmpty" position="176 367 336 75" name="TrackDesc">
+                <Widget type="EditBox" skin="EditBoxEmpty" position="176 367 336 85" name="TrackDesc">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
@@ -300,13 +300,13 @@
 					<UserString key="tip" value="#{TipTrkViewDetailed}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="16 468 84 24">
+                <Widget type="TextBox" skin="TextBox" position="16 476 84 24">
 					<Property key="Caption" value="#{Find}:"/>
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
 					<UserString key="tip" value="#{TipFind}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="16 492 88 24" name="TrackFind">
+                <Widget type="EditBox" skin="EditBox" position="16 500 88 24" name="TrackFind">
 					<Property key="Colour" value="0.7 0.8 0.9"/>
 					<Property key="MaxTextLength" value="20"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
@@ -322,11 +322,11 @@
 					<Property key="TextColour" value="0.74 0.88 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ListBox" skin="ListBox" position="14 40 88 192" name="CarList">
+                <Widget type="ListBox" skin="ListBox" position="14 40 88 200" name="CarList">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipCarsList}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="176 488 136 32" name="NewGame2">
+                <Widget type="Button" skin="Button" position="176 496 136 32" name="NewGame2">
 					<Property key="Caption" value="#{NewGame}"/>
 					<Property key="Colour" value="0.6 1.0 0.3"/>
 					<Property key="TextColour" value="0.3 1 0.2"/>
@@ -349,14 +349,14 @@
 					<Property key="TextColour" value="0.74 0.88 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Widget" skin="PanelSkin" position="14 400 420 84" name="PanCarDesc">
+                <Widget type="Widget" skin="PanelSkin" position="14 408 420 84" name="PanCarDesc">
 					<Property key="Colour" value="0.8 0.9 1.0"/>
 					<Property key="Alpha" value="0.6"/>
 					<Property key="InheritsAlpha" value="false"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipCarDesc}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="18 404 416 76" name="CarDesc">
+                <Widget type="EditBox" skin="EditBoxEmpty" position="18 412 416 76" name="CarDesc">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
@@ -374,58 +374,78 @@
 					<Property key="TextColour" value="0.6 0.7 0.8"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="448 200 320 320" name="CarImg">
+                <Widget type="ImageBox" skin="ImageBox" position="448 208 320 320" name="CarImg">
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="336 63 511 10">
+                <Widget type="ImageBox" skin="ImageBox" position="336 48 511 10">
 					<Property key="ImageTexture" value="hue_bar.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="320 74 448 18" name="CarClrH">
-					<UserString key="RelativeTo" value="GameWnd"/>
-					<UserString key="tip" value="#{TipChangeHue}"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="270 74 42 24" name="CarClrHVal">
-					<Property key="TextColour" value="0.8 0.9 1.0"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-					<UserString key="tip" value="#{TipChangeHue}"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="320 104 448 18" name="CarClrS">
-					<UserString key="RelativeTo" value="GameWnd"/>
-					<UserString key="tip" value="#{TipChangeSat}"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="270 104 42 24" name="CarClrSVal">
-					<Property key="TextColour" value="0.8 0.9 1.0"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-					<UserString key="tip" value="#{TipChangeSat}"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="320 134 448 18" name="CarClrV">
-					<UserString key="RelativeTo" value="GameWnd"/>
-					<UserString key="tip" value="#{TipChangeBright}"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="270 134 42 24" name="CarClrVVal">
-					<Property key="TextColour" value="0.8 0.9 1.0"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-					<UserString key="tip" value="#{TipChangeBright}"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="176 74 88 24">
+
+                <Widget type="TextBox" skin="TextBox" position="176 60 88 24">
 					<Property key="Caption" value="#{ColHue}"/>
-					<Property key="TextColour" value="0.5 0.8 1.0"/>
+					<Property key="TextColour" value="0.5 0.75 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeHue}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="176 104 88 24">
-					<Property key="TextColour" value="0.7 0.8 0.9"/>
+                <Widget type="Slider" skin="Slider" position="320 60 448 18" name="CarClrH">
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipChangeHue}"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="270 60 42 24" name="CarClrHVal">
+					<Property key="TextColour" value="0.7 0.85 1.0"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipChangeHue}"/>
+				</Widget>
+
+                <Widget type="TextBox" skin="TextBox" position="176 88 88 24">
+					<Property key="TextColour" value="0.6 0.7 0.8"/>
 					<Property key="Caption" value="#{ColSat}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeSat}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="176 134 88 24">
+                <Widget type="Slider" skin="Slider" position="320 88 448 18" name="CarClrS">
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipChangeSat}"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="270 88 42 24" name="CarClrSVal">
+					<Property key="TextColour" value="0.7 0.8 0.9"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipChangeSat}"/>
+				</Widget>
+
+                <Widget type="TextBox" skin="TextBox" position="176 112 88 24">
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
 					<Property key="Caption" value="#{ColBright}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeBright}"/>
 				</Widget>
+                <Widget type="Slider" skin="Slider" position="320 112 448 18" name="CarClrV">
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipChangeBright}"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="270 112 42 24" name="CarClrVVal">
+					<Property key="TextColour" value="0.65 0.8 0.95"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipChangeBright}"/>
+				</Widget>
+
+                <Widget type="TextBox" skin="TextBox" position="176 140 88 24">
+					<Property key="TextColour" value="0.7 0.85 1.0"/>
+					<Property key="Caption" value="#{ColGloss}"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipChangeGloss}"/>
+				</Widget>
+                <Widget type="Slider" skin="Slider" position="320 140 448 18" name="CarClrGloss">
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipChangeGloss}"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="270 140 42 24" name="CarClrGlossVal">
+					<Property key="TextColour" value="0.8 0.9 1.0"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipChangeGloss}"/>
+				</Widget>
+
 				<Widget type="ImageBox" skin="ImageBox" position="180 168 18 18" name="carClr0">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
@@ -2905,7 +2925,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 784 732">
-				<Property key="Caption" value="Test"/>
+				<Property key="Caption" value="#{Car}Test"/>
 				<UserString key="RelativeTo" value="WndTweak"/>
 				<Widget type="EditBox" skin="EditBoxStretch" position="10 64 770 480" name="TweakPerfTest">
 					<Property key="InheritsAlpha" value="false"/>
@@ -2918,6 +2938,43 @@
 					<Property key="TextColour" value="0.86 0.94 1"/>
 					<Property key="Colour" value="0.73 0.86 0.95"/>
 					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 784 732">
+				<Property key="Caption" value="collisions"/>
+				<Property key="Colour" value="1 0.6 0.2"/>
+				<UserString key="RelativeTo" value="WndTweak"/>
+				<Widget type="EditBox" skin="EditBoxStretch" position="10 44 770 500" name="TweakEditCol">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="ReadOnly" value="false"/>
+					<Property key="MultiLine" value="true"/>
+					<Property key="WordWrap" value="false"/>
+					<Property key="VisibleHScroll" value="false"/>
+					<Property key="VisibleVScroll" value="true"/>
+					<Property key="MaxTextLength" value="16000"/>
+					<Property key="TextColour" value="0.95 0.98 1.0"/>
+					<Property key="Colour" value="0.35 0.45 0.65"/>
+			        <Property key="FontHeight" value="17"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="20 12 800 24" name="TweakPathCol">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="TextColour" value="0.7 1.0 1.0"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="108 576 96 24">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Caption" value="#{Tires}"/>
+					<Property key="TextColour" value="0.95 1.0 1.0"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="560 4 120 32" name="TweakColSave">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Caption" value="#{RplSave}"/>
+					<Property key="TextColour" value="0.6 0.6 1.0"/>
+					<Property key="Colour" value="0.6 0.6 1.0"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+					<UserString key="tip" value="#{TweakEdit2}"/>
 				</Widget>
 			</Widget>
 		</Widget>

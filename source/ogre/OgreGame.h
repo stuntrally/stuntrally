@@ -337,11 +337,13 @@ protected:
 	MyGUI::ComboBoxPtr cmbInpDetSet;  void comboInputPreset(CMB), comboInputKeyAllPreset(CMB);
 
 	///  tweak
-	MyGUI::EditPtr edTweak,edPerfTest;  MyGUI::TabPtr tabTweak;
-	MyGUI::StaticTextPtr txtTweakPath, txtTweakTire;
-	MyGUI::ComboBoxPtr cmbTweakCarSet, cmbTweakTireSet;  void CmbTweakCarSet(CMB), CmbTweakTireSet(CMB), CmbEdTweakCarSet(MyGUI::EditPtr), CmbEdTweakTireSet(MyGUI::EditPtr);
+	MyGUI::EditPtr edTweak,edPerfTest, edTweakCol;  MyGUI::TabPtr tabTweak;
+	MyGUI::StaticTextPtr txtTweakPath, txtTweakTire, txtTweakPathCol;
+	MyGUI::ComboBoxPtr cmbTweakCarSet, cmbTweakTireSet;
+	void CmbTweakCarSet(CMB), CmbTweakTireSet(CMB), CmbEdTweakCarSet(MyGUI::EditPtr), CmbEdTweakTireSet(MyGUI::EditPtr);
 	void TweakToggle(), TweakCarSave(),TweakCarLoad(), TweakTireSave();
-	void btnTweakCarSave(WP),btnTweakCarLoad(WP), btnTweakTireSave(WP);
+	void TweakColUpd(bool user), TweakColLoad(),TweakColSave();
+	void btnTweakCarSave(WP),btnTweakCarLoad(WP), btnTweakTireSave(WP), btnTweakColSave(WP);
 	//  graphs
 	MyGUI::ComboBox* cmbGraphs;  void comboGraphs(CMB);  MyGUI::StaticTextPtr valGraphsType;
 
@@ -355,7 +357,7 @@ protected:
 	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolSusp);  SLV(VolEnv);  // sounds
 	SLV(VolFlSplash);  SLV(VolFlCont);  SLV(VolCarCrash);  SLV(VolCarScrap);
 	
-	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // car clr
+	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  SLV(CarClrGloss);  // car clr
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
 	SLV(DepthOfFieldFocus);  SLV(DepthOfFieldFar);  // dof
 	SLV(HDRParam1);  SLV(HDRParam2);  SLV(HDRParam3);  // hdr

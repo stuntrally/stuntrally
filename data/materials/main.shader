@@ -242,6 +242,10 @@
 #if CAR_PAINT_MAP
 		shSampler2D(carPaintMap)
 		shUniform(float3, carColour)
+
+		shUniform(float, glossiness)
+	    shUniform(float3, fresnelScaleBiasPower2)
+		shUniform(float4, specular2)
 #endif
 		
 #if ALPHA_MAP
@@ -415,7 +419,7 @@
 		float3 halfAngle = normalize (lightDir + eyeDir);
 		
 		#if ENV_MAP		
-			float spec_mul = 1;  //4
+			float spec_mul = 4;  //x4
 		#else
 			float spec_mul = 1;
 		#endif
@@ -426,11 +430,18 @@
 			float specDot = max(dot(normal, halfAngle), 0);
 		#endif
 		
+		#if CAR_PAINT_MAP
+			materialShininess = shLerp(materialShininess, specular2.w/*!*/, glossiness);
+			float3 matSpec = shLerp(materialSpecular.xyz, /*float3(1,0,-1)?*/+specular2.xyz, glossiness);
+		#else
+			float3 matSpec = materialSpecular.xyz;
+		#endif
+
 		#if !SPEC_MAP
-			float3 specular = pow(specDot, spec_mul * materialShininess) * materialSpecular.xyz;
+			float3 specular = pow(specDot, spec_mul * materialShininess) * matSpec;
 		#else
 			float4 specTex = shSample(specMap, UV.xy);
-			float3 specular = pow(specDot, spec_mul * specTex.a * 255) * specTex.xyz;
+			float3 specular = pow(specDot, /*spec_mul */ specTex.a * 255) * specTex.xyz * matSpec;
 		#endif
 		
 		if (NdotL <= 0)
@@ -455,7 +466,12 @@
 		
 		#if FRESNEL
 			float facing = 1.0 - max(abs(dot(-eyeDir, normal)), 0);
-			reflectionFactor *= shSaturate(fresnelScaleBiasPower.y + fresnelScaleBiasPower.x * pow(facing, fresnelScaleBiasPower.z));
+			#if CAR_PAINT_MAP
+				float3 fSBP = shLerp(fresnelScaleBiasPower, fresnelScaleBiasPower2, glossiness);
+			#else
+				float3 fSBP = fresnelScaleBiasPower;
+			#endif
+			reflectionFactor *= shSaturate(fSBP.y + fSBP.x * pow(facing, fSBP.z));
 		#else
 			reflectionFactor *= reflAmount;
 		#endif
@@ -494,11 +510,11 @@
 
 #if SPECULAR_ALPHA
 		//  bump alpha with specular
-		//#if ENV_MAP
-		//shOutputColour(0).a = min(shOutputColour(0).a + specular.x + reflectionFactor*0.3,1);
-		//#else
-		shOutputColour(0).a = min(shOutputColour(0).a + specular.x,1);
-		//#endif
+		#if ENV_MAP																	// par                // par
+		shOutputColour(0).a = min(shOutputColour(0).a + specular.g + pow(envColor.g, 4) * reflectionFactor * 0.8, 1);
+		#else
+		shOutputColour(0).a = min(shOutputColour(0).a + specular.g, 1);
+		#endif
 #endif
 
 

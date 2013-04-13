@@ -155,9 +155,11 @@
 	<Tag name="ColHue">Color - Hue</Tag>
 	<Tag name="ColSat">Saturation</Tag>
 	<Tag name="ColBright">Brightness</Tag>
+	<Tag name="ColGloss">Glossiness</Tag>
 	<Tag name="TipChangeHue">Change car color (hue).</Tag>
 	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
 	<Tag name="TipChangeBright">Change car color brightness (dark-light).</Tag>
+	<Tag name="TipChangeGloss">Change car color glossiness (matte-shiny).</Tag>
 	<Tag name="CarClrRandom">Random</Tag>
 
 

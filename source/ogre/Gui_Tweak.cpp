@@ -168,6 +168,62 @@ void App::btnTweakCarLoad(WP){	TweakCarLoad();  }
 void App::btnTweakTireSave(WP){	TweakTireSave();  }
 
 
+//  Tweak collisions
+//-----------------------------------------------------------------------------------------
+
+void App::TweakColSave()
+{
+	String text = edTweakCol->getCaption();
+	if (text == "")  return;
+	text = StringUtil::replaceAll(text, "##", "#");
+	//text = StringUtil::replaceAll(text, "#E5F4FF", "");  //!
+
+	std::string path = PATHMANAGER::DataUser() + "/trees";
+	PATHMANAGER::CreateDir(path, pGame->error_output);
+	path += "/collisions.xml";
+	std::ofstream fo(path.c_str());
+	fo << text.c_str();
+	fo.close();
+	TweakColUpd(true);
+	
+	objs.LoadXml();
+	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
+	NewGame();
+}
+
+void App::TweakColUpd(bool user)
+{
+	txtTweakPathCol->setCaption((user ? "User" : "Original"));
+	txtTweakPathCol->setTextColour(user ? Colour(1,1,0.5) : Colour(0.5,1,1));
+}
+
+void App::TweakColLoad()
+{
+	bool user = true;
+	std::string name = "/trees/collisions.xml",  // user
+		file = PATHMANAGER::DataUser() + name;
+	if (!PATHMANAGER::FileExists(file))  // original
+	{	file = PATHMANAGER::Data() + name;  user = false;  }
+
+	std::ifstream fi(file.c_str());
+	String text = "", s;
+	while (getline(fi,s))
+		text += s + "\n";
+	fi.close();
+
+	text = StringUtil::replaceAll(text, "#", "##");
+	//text = StringUtil::replaceAll(text, "#E5F4FF", "");  //!
+	edTweakCol->setCaption(UString(text));
+	
+	TweakColUpd(user);
+		
+	MyGUI::InputManager::getInstance().resetKeyFocusWidget();
+	MyGUI::InputManager::getInstance().setKeyFocusWidget(edTweakCol);
+}
+
+void App::btnTweakColSave(WP){	TweakColSave();  }
+
+
 ///  Tweak read / save file
 //-----------------------------------------------------------------------------------------
 void App::TweakToggle()
@@ -184,11 +240,15 @@ void App::TweakToggle()
 	if (lastPath != path || ctrl)  // force reload  ctrl-alt-Z
 	{	lastPath = path;
 		TweakCarLoad();
+		TweakColLoad();
 	}
 	
 	//  save and reload  shift-alt-Z
 	if (!vis && shift)
+	if (tabTweak && tabTweak->getIndexSelected() < 2)
 		TweakCarSave();
+	else
+		TweakColSave();
 }
 
 

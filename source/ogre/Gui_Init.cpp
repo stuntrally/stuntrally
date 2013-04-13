@@ -481,12 +481,15 @@ void App::InitGui()
 	
 	///  tweak
 	edTweak = mGUI->findWidget<Edit>("TweakEdit");
+	edTweakCol = mGUI->findWidget<Edit>("TweakEditCol");
 	edPerfTest = mGUI->findWidget<Edit>("TweakPerfTest");
 	tabTweak = mGUI->findWidget<Tab>("TabTweak");
 	txtTweakPath = mGUI->findWidget<StaticText>("TweakPath");
+	txtTweakPathCol = mGUI->findWidget<StaticText>("TweakPathCol");
 	txtTweakTire = mGUI->findWidget<StaticText>("TweakTireSaved");
 	Btn("TweakCarSave", btnTweakCarSave);  //Btn("TweakCarLoad", btnTweakCarLoad);
 	Btn("TweakTireSave", btnTweakTireSave);  //Btn("TweakTireLoad", btnTweakCarLoad);
+	Btn("TweakColSave", btnTweakColSave);
 	//Cmb(cmbTweakCarSet, "TweakCarSet", CmbTweakCarSet);   cmbTweakCarSet->eventEditTextChange += newDelegate(this, &App::CmbEdTweakCarSet);
 	Cmb(cmbTweakTireSet,"TweakTireSet",CmbTweakTireSet);  cmbTweakTireSet->eventEditTextChange+= newDelegate(this, &App::CmbEdTweakTireSet);
 
@@ -650,9 +653,11 @@ void App::UpdCarClrSld(bool upd)
 	Slv(CarClrH, pSet->gui.car_hue[iCurCar]);
 	Slv(CarClrS, pSet->gui.car_sat[iCurCar]);
 	Slv(CarClrV, pSet->gui.car_val[iCurCar]);
+	Slv(CarClrGloss, pSet->gui.car_gloss[iCurCar]);
 	pSet->game.car_hue[iCurCar] = pSet->gui.car_hue[iCurCar];  // copy to apply
 	pSet->game.car_sat[iCurCar] = pSet->gui.car_sat[iCurCar];
 	pSet->game.car_val[iCurCar] = pSet->gui.car_val[iCurCar];
+	pSet->game.car_gloss[iCurCar] = pSet->gui.car_gloss[iCurCar];
 	bUpdCarClr = true;
 }
 
