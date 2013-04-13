@@ -798,6 +798,8 @@
 	<Tag name="RplAll">Tous</Tag>
 	<Tag name="SimMode">Simulation mode (difficulty)</Tag>
 	<Tag name="TipFogHStart">Height fog start height [meters] at which fog starts getting denser for smooth distance.</Tag>
+	<Tag name="Pipe">Pipe</Tag>
+	<Tag name="TipChangeGloss">Change car color glossiness (matte-shiny).</Tag>
 	<Tag name="Rivers">Rivers</Tag>
 	<Tag name="TipToggleGrass">Enable or disable this grass layer.</Tag>
 	<Tag name="MinimapBorder">Border</Tag>
@@ -816,6 +818,7 @@
 	<Tag name="SimModeEasy">Easy (beginner)</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - save file and reload game</Tag>
 	<Tag name="TipGrassLayers">Grass layers. Recommended use 1-4.</Tag>
+	<Tag name="Advanced">Advanced</Tag>
 	<Tag name="Tweak">Tweak</Tag>
 	<Tag name="FogNormal">Normal</Tag>
 	<Tag name="MaterialProperties">Material Properties</Tag>
@@ -827,7 +830,10 @@
 	<Tag name="StartInMain">Start in main menu</Tag>
 	<Tag name="ObjBuildings">Buildings</Tag>
 	<Tag name="SimModeNormal">Normal (simulation)</Tag>
+	<Tag name="ColGloss">Glossiness</Tag>
+	<Tag name="Column">Column</Tag>
 	<Tag name="ImpostorsOnly">Impostors Only (low quality)</Tag>
+	<Tag name="Wall">Wall</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="smooth">smooth</Tag>
 	<Tag name="GameVersion">1.9</Tag>
