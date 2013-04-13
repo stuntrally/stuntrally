@@ -431,17 +431,19 @@
 		#endif
 		
 		#if CAR_PAINT_MAP
+			float smul = shLerp(1, specular2.w / materialShininess, glossiness);
 			materialShininess = shLerp(materialShininess, specular2.w, glossiness);
 			float3 matSpec = shLerp(materialSpecular.xyz, specular2.xyz, glossiness);
 		#else
 			float3 matSpec = materialSpecular.xyz;
+			float smul = 1;
 		#endif
 
 		#if !SPEC_MAP
 			float3 specular = pow(specDot, spec_mul * materialShininess) * matSpec;
 		#else
 			float4 specTex = shSample(specMap, UV.xy);
-			float3 specular = pow(specDot, /*spec_mul */ specTex.a * 255) * specTex.xyz * matSpec;
+			float3 specular = pow(specDot, /*spec_mul */ specTex.a * 255 * smul) * specTex.xyz * matSpec;
 		#endif
 		
 		if (NdotL <= 0)
