@@ -12,12 +12,13 @@ material car_body
 	carPaintMap body00_red.png
 	reflMap refl.png
 	env_map true
+
 	fresnel true
 	fresnelScaleBiasPower 0.81 0.10 3
-	specular 1 1 1  16 //x4
+	specular 1 1.05 1.1  20 //x4
 	glossiness 0.5
 	fresnelScaleBiasPower2 0.71 0.10 6
-	specular2 4 1 0  2 //x4
+	specular2 0.7 0.65 0.6  1 //x4
 }
 
 material car_glass

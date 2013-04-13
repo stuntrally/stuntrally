@@ -244,8 +244,8 @@
 		shUniform(float3, carColour)
 
 		shUniform(float, glossiness)
-	    shUniform(float3, fresnelScaleBiasPower2)
-		shUniform(float4, specular2)
+	    shUniform(float3, fresnelScaleBiasPower2)  @shUniformProperty3f(fresnelScaleBiasPower2, fresnelScaleBiasPower2)
+		shUniform(float4, specular2)  @shUniformProperty4f(specular2, specular2)
 #endif
 		
 #if ALPHA_MAP
@@ -431,8 +431,8 @@
 		#endif
 		
 		#if CAR_PAINT_MAP
-			materialShininess = shLerp(materialShininess, specular2.w/*!*/, glossiness);
-			float3 matSpec = shLerp(materialSpecular.xyz, /*float3(1,0,-1)?*/+specular2.xyz, glossiness);
+			materialShininess = shLerp(materialShininess, specular2.w, glossiness);
+			float3 matSpec = shLerp(materialSpecular.xyz, specular2.xyz, glossiness);
 		#else
 			float3 matSpec = materialSpecular.xyz;
 		#endif
