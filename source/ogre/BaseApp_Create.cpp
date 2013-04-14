@@ -425,7 +425,6 @@ bool BaseApp::setup()
 
 	///  material factory setup
 	sh::OgrePlatform* platform = new sh::OgrePlatform("General", PATHMANAGER::Data() + "/materials");
-	platform->setShaderCachingEnabled(true);
 	platform->setCacheFolder(PATHMANAGER::ShaderDir());
 
 	mFactory = new sh::Factory(platform);
