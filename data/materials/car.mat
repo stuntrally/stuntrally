@@ -2,7 +2,7 @@ material car_base
 {
 	parent base
 	terrain_light_map true
-	terrain_light_map_toggleable false
+	terrain_light_map_toggleable true
 }
 
 material car_body
@@ -27,8 +27,8 @@ material car_glass
 	diffuseMap glass.png
 	depth_write off
 	scene_blend alpha_blend
-	ambient 0.9 0.9 0.9
-	diffuse 0.9 0.9 0.9
+	ambient 1.9 1.9 1.9
+	diffuse 1.9 1.9 1.9
 	specular 1.5 1.5 1.5  96 //x4
 
 	env_map true
@@ -37,11 +37,11 @@ material car_glass
 	//cull_hardware none
 	twoside_diffuse true
 
-	fresnelScaleBiasPower 0.50 0.3 32
+	fresnelScaleBiasPower 0.80 0.3 4
 	//  env clr mul,  al clr mul,  al clr pow,  al ifluence mul fin
 	//env_alpha 1.4  1.6 2  0.6
 	//env_alpha 1.5  1.1 1.5  0.8
-	env_alpha 2.5  0.6 2.5  0.8
+	env_alpha 1.1  1.1 1.1  0.8
 }
 
 material car_ghost
@@ -169,6 +169,7 @@ material TC6_glass
 {
 	parent car_glass
 	diffuseMap TC6_glass.png
+	reflMap TC6_glass_refl.png
 	cull_hardware none
 }
 material TC6_interior
@@ -182,6 +183,10 @@ material TC6_wheel
 {
 	parent car_wheel
 	diffuseMap TC6_wheel.png
+	specMap TC6_wheel_spec.png
+	//normalMap flat_n.png
+	diffuse 1 1 1
+	specular 1 1 1 8
 }
 
 
@@ -770,4 +775,116 @@ material 360_brake
 //---------------------------------------------------------------
 //  XZ
 
+material XZ_glass
+{
+	parent car_glass
+	diffuseMap XZ_glass.png
+}
 
+material XZ_material
+{
+	parent car_base
+	diffuseMap white.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.6 0.6 0.6
+	specular 0.9 0.9 0.9 8
+}
+
+material XZ_plastic  // interior, wing, over wheels, bottom
+{
+	parent car_base
+	diffuseMap XZ_interior.png
+	ambient 0.2 0.2 0.2
+	diffuse 0.2 0.2 0.2
+	specular 0.2 0.2 0.2 4
+}
+
+material XZ_blinker  // back red lights
+{
+	parent car_base
+	diffuseMap XZ_rear_lights.png
+	ambient 0.8 0.8 0.8
+	diffuse 0.8 0.8 0.8
+	specular 0.8 0.8 0.8 32
+}
+
+material XZ_chrome  // grille front
+{
+	parent car_base
+	diffuseMap white.png
+	ambient 0.2 0.2 0.2
+	diffuse 0.2 0.2 0.2
+	specular 0.2 0.2 0.2 16
+}
+
+material XZ_chrome_matt
+{
+	parent car_base
+	diffuseMap white.png
+	ambient 0.3 0.3 0.3
+	diffuse 0.3 0.3 0.3
+	specular 0.1 0.1 0.1 4
+}
+
+material XZ_light  // front lights o
+{
+	parent car_base
+	diffuseMap white.png
+	ambient 0.9 0.9 0.8
+	diffuse 0.9 0.9 0.8
+	specular 0.9 0.9 0.9 8
+}
+
+material XZ_insides
+{
+	parent car_base
+	diffuseMap XZ_interior.png
+	ambient 0.4 0.4 0.4
+	diffuse 0.5 0.5 0.5
+	specular 0.1 0.1 0.1 4
+}
+
+//  XZ wheel
+
+material XZ_wheel_chrome  // rim
+{
+	parent car_base
+	diffuseMap XZ_Tire.png
+	ambient 0.1 0.1 0.1
+	diffuse 0.1 0.1 0.1
+	specular 1 1 1 4
+	env_map true
+	fresnel true
+	fresnelScaleBiasPower 0.6 0.15 4
+}
+
+material XZ_wheel_chrome2  // caliper
+{
+	parent car_base
+	diffuseMap XZ_Tire.png
+	normalMap XZ_Tire_norm.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.6 0.6 0.6
+	specular 0.6 0.6 0.6 8
+}
+
+material XZ_wheel_disc
+{
+	parent car_base
+	diffuseMap XZ_Tire.png
+	normalMap XZ_Tire_norm.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.5 0.5 0.5
+	specular 0.4 0.4 0.3 8
+}
+
+material XZ_tire
+{
+	parent car_base
+	diffuseMap XZ_Tire.png
+	normalMap XZ_Tire_norm.png
+	ambient 0.4 0.4 0.4
+	diffuse 0.2 0.2 0.2
+	specular 0.2 0.2 0.2 8
+	//bump_scale 1.5
+}
