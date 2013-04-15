@@ -794,9 +794,9 @@ material XZ_plastic  // interior, wing, over wheels, bottom
 {
 	parent car_base
 	diffuseMap XZ_interior.png
-	ambient 0.2 0.2 0.2
-	diffuse 0.2 0.2 0.2
-	specular 0.2 0.2 0.2 4
+	ambient 0.7 0.7 0.7
+	diffuse 0.5 0.5 0.5
+	specular 0.1 0.1 0.1 4
 }
 
 material XZ_blinker  // back red lights
