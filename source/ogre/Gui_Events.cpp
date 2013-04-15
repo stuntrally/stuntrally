@@ -144,6 +144,7 @@ void App::imgBtnCarClr(WP img)
 	pSet->gui.car_hue[iCurCar] = s2r(img->getUserString("h"));
 	pSet->gui.car_sat[iCurCar] = s2r(img->getUserString("s"));
 	pSet->gui.car_val[iCurCar] = s2r(img->getUserString("v"));
+	pSet->gui.car_gloss[iCurCar] = s2r(img->getUserString("g"));
 	UpdCarClrSld();
 }
 void App::btnCarClrRandom(WP)
@@ -151,6 +152,7 @@ void App::btnCarClrRandom(WP)
 	pSet->gui.car_hue[iCurCar] = Math::UnitRandom();
 	pSet->gui.car_sat[iCurCar] = Math::UnitRandom();
 	pSet->gui.car_val[iCurCar] = Math::UnitRandom();
+	pSet->gui.car_gloss[iCurCar] = Math::UnitRandom();
 	UpdCarClrSld();
 }
 

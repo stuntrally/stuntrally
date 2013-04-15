@@ -27,7 +27,6 @@ material base
     tree_wind false
     grass_wind false
     vertex_colour false
-    specular_alpha false
 	soft_particles false
             
     transparent false  // for shadowcaster
@@ -42,6 +41,10 @@ material base
 	glossiness 0.5
     fresnelScaleBiasPower2 0.79 0.07 4
 	specular2 0 0 0  32
+	//  glass only
+    specular_alpha false
+    env_alpha 0 0 0 0
+	
 	
 	normalMap
 	reflMap
@@ -97,6 +100,7 @@ material base
 			glossiness $glossiness
 		    fresnelScaleBiasPower2 $fresnelScaleBiasPower2
 			specular2 $specular2
+			env_alpha $env_alpha
 
 		    bump_scale $bump_scale
 		}

@@ -247,6 +247,11 @@
 	    shUniform(float3, fresnelScaleBiasPower2)  @shUniformProperty3f(fresnelScaleBiasPower2, fresnelScaleBiasPower2)
 		shUniform(float4, specular2)  @shUniformProperty4f(specular2, specular2)
 #endif
+
+#if SPECULAR_ALPHA
+		shUniform(float4, env_alpha)  @shUniformProperty4f(env_alpha, env_alpha)
+#endif
+	
 		
 #if ALPHA_MAP
 		shSampler2D(alphaMap)
@@ -458,7 +463,12 @@
 		r = normalize(shMatrixMult(worldMatrix, float4(r, 0)).xyz); 
 		
 		r.z = -r.z;
+		#if SPECULAR_ALPHA
+		//float4 envColor = pow(shCubicSample(envMap, r) * env_alpha.x, env_alpha.z);
+		float4 envColor = shCubicSample(envMap, r) * env_alpha.x;
+		#else
 		float4 envColor = shCubicSample(envMap, r);
+		#endif
 		
 		float reflectionFactor = 1;
 		
@@ -478,7 +488,7 @@
 			reflectionFactor *= reflAmount;
 		#endif
 		
-		shOutputColour(0).xyz = shLerp (shOutputColour(0).xyz, envColor.xyz, reflectionFactor);
+		shOutputColour(0).xyz = shLerp(shOutputColour(0).xyz, envColor.xyz, reflectionFactor);
 #endif
 
 
@@ -513,7 +523,7 @@
 #if SPECULAR_ALPHA
 		//  bump alpha with specular
 		#if ENV_MAP																	// par                // par
-		shOutputColour(0).a = min(shOutputColour(0).a + specular.g + pow(envColor.g, 4) * reflectionFactor * 0.8, 1);
+		shOutputColour(0).a = min(shOutputColour(0).a + specular.g + pow(envColor.g * env_alpha.y, env_alpha.z) * reflectionFactor * env_alpha.w, 1);
 		#else
 		shOutputColour(0).a = min(shOutputColour(0).a + specular.g, 1);
 		#endif
