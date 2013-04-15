@@ -45,7 +45,7 @@ start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
 friction = 230
-torque-val-mul = 0.82
+torque-val-mul = 0.83
 torque-curve-00 = 1000, 305
 torque-curve-01 = 1500, 375
 torque-curve-02 = 2100, 425
@@ -120,7 +120,7 @@ factors-file = first
 #  tires (more in .tire)
 #---------------------------
 [ tire-both ]
-radius = 0.32
+radius = 0.33
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 1.2
 tread = 0.0
@@ -178,46 +178,46 @@ efficiency = 0.95
 # wheels front (position and suspension mount)
 #---------------------------
 [ wheel-FR ]
-position = 0.74, 1.267, -0.54
+position = 0.77, 1.267, -0.57
 roll-height = 0.8
 mass = 15.0
 restitution = 0.1
 
 [ suspension-FR ]
-position = 0.60, 1.267, -0.57
+position = 0.63, 1.267, -0.60
 hinge = -0.71, 0.55, -0.0
 
 [ wheel-FL ]
-position = -0.74, 1.267, -0.54
+position = -0.77, 1.267, -0.57
 roll-height = 0.8
 mass = 15.0
 restitution = 0.1
 
 [ suspension-FL ]
-position = -0.60, 1.267, -0.57
+position = -0.63, 1.267, -0.60
 hinge = 0.71, 0.55, 0.0
 
 
 # wheels rear (position and suspension mount)
 #---------------------------
 [ wheel-RR ]
-position = 0.74, -1.336, -0.54
+position = 0.77, -1.336, -0.57
 roll-height = 0.8
 mass = 15.0
 restitution = 0.1
 
 [ suspension-RR ]
-position = 0.60, -1.336, -0.57
+position = 0.63, -1.336, -0.60
 hinge = -0.25, -1.94, 0.0
 
 [ wheel-RL ]
-position = -0.74, -1.336, -0.54
+position = -0.77, -1.336, -0.57
 roll-height = 0.8
 mass = 15.0
 restitution = 0.1
 
 [ suspension-RL ]
-position = -0.60, -1.336, -0.57
+position = -0.63, -1.336, -0.60
 hinge = 0.25, -1.94, 0.0
 
 

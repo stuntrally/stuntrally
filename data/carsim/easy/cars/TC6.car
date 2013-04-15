@@ -114,7 +114,7 @@ factors-file = first
 #  tires (more in .tire)
 #---------------------------
 [ tire-both ]
-radius = 0.30
+radius = 0.31
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 10.0
 tread = 0.0
@@ -172,46 +172,46 @@ efficiency = 0.95
 # wheels front (position and suspension mount)
 #---------------------------
 [ wheel-FR ]
-position = 0.75, 1.26, -0.47
+position = 0.75, 1.24, -0.50
 roll-height = 0.90
 mass = 17
 restitution = 0.1
 
 [ suspension-FR ]
-position = 0.66, 1.26, -0.07
+position = 0.66, 1.24, -0.10
 hinge = -3.70, 1.1, -0.43
 
 [ wheel-FL ]
-position = -0.75, 1.26, -0.47
+position = -0.75, 1.24, -0.50
 roll-height = 0.90
 mass = 17
 restitution = 0.1
 
 [ suspension-FL ]
-position = -0.66, 1.26, -0.07
+position = -0.66, 1.24, -0.10
 hinge = 3.70, 1.1, -0.43
 
 
 # wheels rear (position and suspension mount)
 #---------------------------
 [ wheel-RR ]
-position = 0.75, -1.28, -0.47
+position = 0.75, -1.28, -0.50
 roll-height = 0.90
 mass = 17
 restitution = 0.1
 
 [ suspension-RR ]
-position = 0.66, -1.28, -0.07
+position = 0.66, -1.28, -0.10
 hinge = -3.70, -1.0, -0.43
 
 [ wheel-RL ]
-position = -0.75, -1.28, -0.47
+position = -0.75, -1.28, -0.50
 roll-height = 0.90
 mass = 17
 restitution = 0.1
 
 [ suspension-RL ]
-position = -0.66, -1.28, -0.07
+position = -0.66, -1.28, -0.10
 hinge = 3.70, -1.0, -0.43
 
 
