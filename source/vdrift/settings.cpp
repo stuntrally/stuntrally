@@ -229,7 +229,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	{	gui.car[i] = "ES";  cam_view[0] = 9;  gui.car_gloss[i] = 0.5f;
 		gui.car_hue[i] = 0.4f+0.2f*i;  gui.car_sat[i] = 1.f;  gui.car_val[i] = 1.f;  }
 	//  game
-	gui.local_players = 1;  gui.num_laps = 2;  game.num_laps = 2; 	game.local_players = 1;
+	gui.local_players = 1;  gui.num_laps = 2;
 	gui.collis_veget = true;  gui.collis_cars = false;
 	gui.collis_roadw = false;  gui.dyn_objects = true;
 	gui.boost_type = 2;  gui.flip_type = 1;  gui.boost_power = 1.f;
@@ -237,6 +237,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//
 	gui.rpl_rec = 1;
 	gui.champ_num = -1;  gui.pre_time = 2.f;
+	game = gui;
 	//  car setup
 	abs[0] = 0;  abs[1] = 0;
 	tcs[0] = 0;  tcs[1] = 0;
