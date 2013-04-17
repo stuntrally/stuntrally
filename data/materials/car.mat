@@ -626,10 +626,10 @@ material S8_lights_back_interior_3
 material S8_red_glossy
 {
 	parent S8_base
-	diffuseMap white.png
+	diffuseMap S8_rear_lights.png
 	ambient 1.0 0.2 0.2
 	diffuse 1.0 0.2 0.2
-	specular 1.0 0.2 0.0 8
+	specular 0.3 0.1 0.1 24
 }
 material S8_car_light_orange
 {
@@ -637,7 +637,7 @@ material S8_car_light_orange
 	diffuseMap white.png
 	ambient 1.0 0.5 0.1
 	diffuse 1.0 0.5 0.1
-	specular 0.5 0.25 0.0 8
+	specular 0.5 0.25 0.0 16
 }
 
 
