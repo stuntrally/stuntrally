@@ -322,7 +322,7 @@
 					<Property key="TextColour" value="0.74 0.88 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-                <Widget type="ListBox" skin="ListBox" position="14 40 88 200" name="CarList">
+                <Widget type="ListBox" skin="ListBox" position="14 40 88 204" name="CarList">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipCarsList}"/>
 				</Widget>
@@ -333,14 +333,14 @@
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipNewGameCar}"/>
 				</Widget>
-				<Widget type="Widget" skin="PanelSkin" position="14 240 420 154" name="PanCarStats">
+				<Widget type="Widget" skin="PanelSkin" position="14 248 420 154" name="PanCarStats">
 					<Property key="Colour" value="0.1 0.4 0.7"/>
 					<Property key="Alpha" value="0.15"/>
 					<Property key="InheritsAlpha" value="false"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipCarDesc}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="16 246 200 150" name="CarStatsTxt">
+				<Widget type="TextBox" skin="TextBox" position="16 254 200 150" name="CarStatsTxt">
 					<Property key="TextAlign" value="Right Top"/>
 					<Property key="TextColour" value="0.63 0.85 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>

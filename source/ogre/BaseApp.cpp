@@ -117,10 +117,27 @@ void BaseApp::updateStats()
 			triCount = stats.triangleCount;
 			batchCount = stats.batchCount;
 		}
+		/*int t = triCount, b = batchCount;
 
+		//  add rtts
+		RenderSystem::RenderTargetIterator iter = mRoot->getRenderSystem()->getRenderTargetIterator();
+		while (iter.hasMoreElements())
+		{
+			RenderTarget* rt = iter.getNext();
+			//*LogO(rt->getName());
+			//if (rt->isAutoUpdated())
+			{
+				batchCount += rt->getBatchCount();
+				triCount += rt->getTriangleCount();
+			}
+		}*/
+
+		//  update
 		mOvrFps->setCaption(fToStr(stats.lastFPS,1,5) );
 		mOvrTris->setCaption(iToStr(int(triCount/1000.f),4)+"k");
-		mOvrBat->setCaption(iToStr(batchCount,3) );
+		mOvrBat->setCaption(iToStr(batchCount,3));
+		//mOvrTris->setCaption(iToStr(int(triCount/1000.f),4)+"k"+"\n"+iToStr(int(t/1000.f),4));
+		//mOvrBat->setCaption(iToStr(batchCount,3)+"\n"+iToStr(batchCount,3) );
 		mOvrMem->setCaption(iToStr(mem/1024/1024,3)+"M" );
 
 		mOvrDbg->setCaption( mFilText + "  " + mDebugText );

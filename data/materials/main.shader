@@ -428,13 +428,20 @@
 		#else
 			float spec_mul = 1;
 		#endif
-
+		
+		shOutputColour(0).xyz *= (ambient + diffuse + materialEmissive.xyz);
+		
+		
+		//  specular
+		float3 specular = float3(0,0,0);
+		if (NdotL > 0 && shadow > 0)
+		{
 		#if TWOSIDE_DIFFUSE
 			float specDot = abs(dot(normal, halfAngle));
 		#else
 			float specDot = max(dot(normal, halfAngle), 0);
 		#endif
-		
+
 		#if CAR_PAINT_MAP
 			float smul = shLerp(1, specular2.w / materialShininess, glossiness);
 			float shininess = shLerp(materialShininess, specular2.w, glossiness);
@@ -446,17 +453,20 @@
 		#endif
 
 		#if !SPEC_MAP
-			float3 specular = pow(specDot, spec_mul * shininess) * matSpec;
+			specular = pow(specDot, spec_mul * shininess) * matSpec;
+			#if CAR_PAINT_MAP
+			specular += pow(specDot, 1024) * matSpec;  // sun on car body
+			#endif
 		#else
 			float4 specTex = shSample(specMap, UV.xy);
-			float3 specular = pow(specDot, /*spec_mul */ specTex.a * 255 * smul) * specTex.xyz * matSpec;
+			specular = pow(specDot, /*spec_mul */ specTex.a * 255 * smul) * specTex.xyz * matSpec;
+			#if CAR_PAINT_MAP
+			specular += pow(specDot, 1024) * specTex.xyz * matSpec;
+			#endif
 		#endif
+		shOutputColour(0).xyz += specular * lightSpecular.xyz * shadow;
+		}
 		
-		if (NdotL <= 0)
-			specular = float3(0,0,0);
-
-		shOutputColour(0).xyz = shOutputColour(0).xyz * (ambient + diffuse + materialEmissive.xyz) + specular * lightSpecular.xyz * shadow;
-
 		
 		//  reflection
 #if ENV_MAP		   
@@ -465,7 +475,6 @@
 		
 		r.z = -r.z;
 		#if SPECULAR_ALPHA
-		//float4 envColor = pow(shCubicSample(envMap, r) * env_alpha.x, env_alpha.z);
 		float4 envColor = shCubicSample(envMap, r) * env_alpha.x;
 		#else
 		float4 envColor = shCubicSample(envMap, r);

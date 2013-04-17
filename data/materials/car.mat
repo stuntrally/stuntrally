@@ -29,7 +29,7 @@ material car_glass
 	scene_blend alpha_blend
 	ambient 1.9 1.9 1.9
 	diffuse 1.9 1.9 1.9
-	specular 1.5 1.5 1.5  96 //x4
+	specular 1.2 1.2 1.2  96 //x4
 
 	env_map true
 	fresnel true
