@@ -503,15 +503,33 @@ void App::InitGui()
 	
 	///  cars list
     //------------------------------------------------------------------------
-    carList = mGUI->findWidget<List>("CarList");
-    if (carList)
+	TabItem* cartab = (TabItem*)mWndGame->findWidget("TabCar");
+	carList = cartab->createWidget<MultiList2>("MultiListBox",16,48,200,110, Align::Left | Align::VStretch);
+	carList->setColour(Colour(0.7,0.85,1.0));
+	carList->removeAllColumns();  int n=0;
+	carList->addColumn("#C8E0F0"+TR("#{Car}"), TcolC[n++]);
+	carList->addColumn("#C0F0FF""v", TcolC[n++]);
+	carList->addColumn("#C0C8D0""Year", TcolC[n++]);
+	carList->addColumn(" ", TcolC[n++]);
+	std::map<std::string,int> vel, yr;
+	vel["360"]= 8;  yr["360"]= 1999;  vel["3S"] = 3;  yr["3S"] = 2004;  vel["CT"] = 6;  yr["CT"] = 2003;
+	vel["ES"] = 5;  yr["ES"] = 2006;  vel["FM"] = 5;  yr["FM"] = 2000;  vel["M3"] = 1;  yr["M3"] = 1985;
+	vel["N1"] = 5;  yr["N1"] = 2006;  vel["NS"] = 4;  yr["NS"] = 2002;  vel["S1"] = 4;  yr["S1"] = 2005;
+	vel["S8"] = 5;  yr["S8"] = 2008;  vel["TC6"]= 4;  yr["TC6"]= 2003;  vel["XM"] = 9;  yr["XM"] = 2000;
+	vel["XZ"] = 9;  yr["XZ"] = 2009;
+
+    //if (carList)
     {	carList->removeAllItems();  int ii = 0;  bool bFound = false;
 		strlist li;
 		PATHMANAGER::GetFolderIndex(PATHMANAGER::Cars(), li);
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
 			if (boost::filesystem::exists(PATHMANAGER::Cars() + "/" + *i + "/about.txt"))  {
-				carList->addItem(GetCarClr(*i));
+				String s = *i, clr = GetCarClr(*i);
+				carList->addItem(clr+ s);  int l = carList->getItemCount()-1;
+				carList->setSubItemNameAt(1,l, clr+ toStr(vel[s]));
+				carList->setSubItemNameAt(2,l, clr+ toStr(yr[s]));
+
 				if (*i == pSet->gui.car[0]) {  carList->setIndexSelected(ii);  bFound = true;  }
 				ii++;  }
 		}
@@ -692,7 +710,7 @@ void App::LNext(int rel)
 	{
 	case WND_Game: case WND_Champ:
 		switch (mWndTabsGame->getIndexSelected())
-		{	case 1:  listTrackChng(trkMList,LNext(trkMList, rel));  return;
+		{	case 1:  listTrackChng(trkList,LNext(trkList, rel));  return;
 			case 2:	 listCarChng(carList,   LNext(carList, rel));  return;
 			case 6:  listChampChng(liChamps,LNext(liChamps, rel));  return;
 			case 7:	 listStageChng(liStages, LNext(liStages, rel));  return;

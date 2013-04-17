@@ -275,7 +275,7 @@ protected:
 	//  track
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const Ogre::String& sTrack, float time, bool champ=false),
 		ReadTrkStats(), ReadTrkStatsChamp(Ogre::String track,bool reverse);
-	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc[2];
+	MyGUI::MultiList2* trkList;  MyGUI::EditPtr trkDesc[2];
 	MyGUI::StaticImagePtr imgPrv[2],imgMini[2],imgTer[2], imgTrkIco1,imgTrkIco2;
 	const static int StTrk = 12, InfTrk = 11;
 	MyGUI::StaticTextPtr valTrkNet, stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
@@ -283,7 +283,7 @@ protected:
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
 	void updTrkListDim(), updChampListDim();
-	const static int TcolW[32],ChColW[8],StColW[8];
+	const static int TcolW[32],TcolC[5],ChColW[8],StColW[8];
 	const static Ogre::String clrsDiff[9],clrsRating[5],clrsLong[10];
 
 	void edTrkFind(MyGUI::EditPtr),edRplFind(MyGUI::EditPtr);
@@ -423,9 +423,9 @@ protected:
 
 	//  game
 	void btnNewGame(WP),btnNewGameStart(WP);
-	MyGUI::ListPtr carList, rplList;  void updReplaysList();
+	MyGUI::MultiList2* carList;  MyGUI::ListPtr rplList;  void updReplaysList();
 	void listRplChng(MyGUI::List* li, size_t pos),  changeCar();
-	void listCarChng(MyGUI::List* li, size_t pos),  changeTrack();
+	void listCarChng(MyGUI::MultiList2* li, size_t pos),  changeTrack();
 	int LNext(MyGUI::MultiList2* lp, int rel), LNext(MyGUI::ListPtr lp, int rel),
 		LNext(MyGUI::MultiList* lp, int rel);  // util next in list
 	void LNext(int rel);  void tabPlayer(MyGUI::TabPtr wp, size_t id);

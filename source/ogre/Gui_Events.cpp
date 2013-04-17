@@ -10,6 +10,7 @@
 #include "common/RenderConst.h"
 #include "common/GraphView.h"
 #include "common/Slider.h"
+#include "common/MultiList2.h"
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 
@@ -304,7 +305,7 @@ void App::slVolCarScrap(SL)
 //  [Game] 	. . . . . . . . . . . . . . . . . . . .    --- lists ----    . . . . . . . . . . . . . . . . . . . .
 
 //  car
-void App::listCarChng(List* li, size_t pos)
+void App::listCarChng(MultiList2* li, size_t pos)
 {
 	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
 	const UString& sl = li->getItemNameAt(i).substr(7);  sListCar = sl;

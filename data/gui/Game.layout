@@ -314,18 +314,9 @@
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 			</Widget>
-			<Widget type="TabItem" skin="" position="2 24 794 572">
+			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabCar">
 				<Property key="Caption" value="#{Car}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
-				<Widget type="TextBox" skin="TextBox" position="16 18 80 22">
-					<Property key="Caption" value="#{Car}"/>
-					<Property key="TextColour" value="0.74 0.88 1"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-				</Widget>
-                <Widget type="ListBox" skin="ListBox" position="14 40 88 204" name="CarList">
-					<UserString key="RelativeTo" value="GameWnd"/>
-					<UserString key="tip" value="#{TipCarsList}"/>
-				</Widget>
                 <Widget type="Button" skin="Button" position="176 496 136 32" name="NewGame2">
 					<Property key="Caption" value="#{NewGame}"/>
 					<Property key="Colour" value="0.6 1.0 0.3"/>
@@ -345,7 +336,8 @@
 					<Property key="TextColour" value="0.63 0.85 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="240 246 180 150" name="CarStatsVals">
+				<Widget type="TextBox" skin="TextBox" position="240 254 180 150" name="CarStatsVals">
+					<Property key="TextAlign" value="Left Top"/>
 					<Property key="TextColour" value="0.74 0.88 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>

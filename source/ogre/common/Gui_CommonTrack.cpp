@@ -55,16 +55,16 @@ bool (*TrkSort[allSortFunc])(const TrkL& t1, const TrkL& t2) = {
 //-----------------------------------------------------------------------------------------------------------
 void App::TrackListUpd(bool resetNotFound)
 {
-	if (trkMList)
-	{	trkMList->removeAllItems();
+	if (trkList)
+	{	trkList->removeAllItems();
 		int ii = 0, si = -1;  bool bFound = false;
 
 		//  sort
-		int numFunc = min(allSortFunc-1, (int)trkMList->mSortColumnIndex);
+		int numFunc = min(allSortFunc-1, (int)trkList->mSortColumnIndex);
 		std::list<TrkL> liTrk2 = liTrk;  // copy
 		//liTrk2.sort(TrkSort[0]);
 		liTrk2.sort(TrkSort[numFunc]);
-		if (trkMList->mSortUp)  liTrk2.reverse();
+		if (trkList->mSortUp)  liTrk2.reverse();
 		
 		//  original
 		for (std::list<TrkL>::iterator i = liTrk2.begin(); i != liTrk2.end(); ++i)
@@ -74,7 +74,7 @@ void App::TrackListUpd(bool resetNotFound)
 			{
 				AddTrkL(name, 0, (*i).ti);
 				if (!pSet->gui.track_user && name == pSet->gui.track)  {  si = ii;
-					trkMList->setIndexSelected(si);
+					trkList->setIndexSelected(si);
 					bFound = true;  bListTrackU = 0;  }
 				ii++;
 		}	}
@@ -86,7 +86,7 @@ void App::TrackListUpd(bool resetNotFound)
 			{
 				AddTrkL("*" + (*i) + "*", 1, 0);
 				if (pSet->gui.track_user && name == pSet->gui.track)  {  si = ii;
-					trkMList->setIndexSelected(si);
+					trkList->setIndexSelected(si);
 					bFound = true;  bListTrackU = 1;  }
 				ii++;
 		}	}
@@ -99,7 +99,7 @@ void App::TrackListUpd(bool resetNotFound)
 			#endif
 		}
 		if (si > -1)  // center
-			trkMList->beginToItemAt(max(0, si-11));
+			trkList->beginToItemAt(max(0, si-11));
 	}
 }
 
@@ -133,7 +133,7 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 {
 	String c = GetSceneryColor(name);
 
-	MultiList2* li = trkMList;
+	MultiList2* li = trkList;
 	li->addItem(c+name, 0);
 
 	if (!ti)  return;  //  details
@@ -164,6 +164,7 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 const int wi = 26;
 const int App::TcolW[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
 #ifndef ROAD_EDITOR
+const int App::TcolC[5] = {33, 17, 40, 20};
 const int App::ChColW[8] = {30, 180, 100, 60, 80, 60, 40};
 const int App::StColW[8] = {30, 180, 100, 90, 80, 70};
 #endif
@@ -181,10 +182,10 @@ void App::GuiInitTrack()
 	//li->setUserString("RelativeTo", "OptionsWnd");
 	//*li->setAlpha(0.8);*/  li->setInheritsAlpha(false);
 	
-	trkMList = li;  if (!li)  LogO("Error: No MListTracks in layout !");
-   	trkMList->eventListChangePosition += newDelegate(this, &App::listTrackChng);
+	trkList = li;  if (!li)  LogO("Error: No MListTracks in layout !");
+   	trkList->eventListChangePosition += newDelegate(this, &App::listTrackChng);
    	//..trkMList->eventListSelectAccept += newDelegate(this, &App::btnNewGameStart);
-   	trkMList->setVisible(false);
+   	trkList->setVisible(false);
 	
 	//  preview images
 	imgPrv[0] = mGUI->findWidget<StaticImage>("TrackImg");
@@ -229,11 +230,11 @@ void App::GuiInitTrack()
 
 	FillTrackLists();  //once
 
-	trkMList->mSortColumnIndex = pSet->tracks_sort;  // from set
-	trkMList->mSortUp = pSet->tracks_sortup;
+	trkList->mSortColumnIndex = pSet->tracks_sort;  // from set
+	trkList->mSortUp = pSet->tracks_sortup;
 
     TrackListUpd(true);  //upd
-	listTrackChng(trkMList,0);
+	listTrackChng(trkList,0);
 
 	ChangeTrackView();
 }
@@ -315,20 +316,21 @@ void App::ChangeTrackView()
 //  adjust list size, columns
 void App::updTrkListDim()
 {
-	if (!trkMList)  return;
+	//  tracks list  ----------
+	if (!trkList)  return;
 	bool full = pSet->tracks_view;
 
-	int sum = 0, cnt = trkMList->getColumnCount();
-	for (int c=0; c < cnt; ++c)  sum += TcolW[c];
+	int c, sum = 0, cnt = trkList->getColumnCount();
+	for (c=0; c < cnt; ++c)  sum += TcolW[c];
 
 	const IntCoord& wi = mWndOpts->getCoord();
 	int sw = 0, xico1 = 0, xico2 = 0, wico = 0;
 
-	for (int c=0; c < cnt; ++c)
+	for (c=0; c < cnt; ++c)
 	{
 		int w = c==cnt-1 ? 18 : (full || c==0 || c==cnt-1 ?
 			float(TcolW[c]) / sum * 0.63/*width*/ * wi.width * 0.97/*frame*/ : 0);
-		trkMList->setColumnWidthAt(c, w);
+		trkList->setColumnWidthAt(c, w);
 		sw += w;
 		if (c == 4)  wico = w;
 		if (c < 4)  xico1 += w;
@@ -336,10 +338,26 @@ void App::updTrkListDim()
 	}
 
 	int xt = 0.018*wi.width, yt = 0.06*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
-	trkMList->setCoord(xt, yt, sw + 8/*frame*/, 0.70/*height*/*wi.height);
+	trkList->setCoord(xt, yt, sw + 8/*frame*/, 0.70/*height*/*wi.height);
 	imgTrkIco1->setCoord(xt + xico1+2, yico, 3*wico, wico);
 	imgTrkIco2->setCoord(xt + xico2+2, yico, 8*wico, wico);
-	trkMList->setVisible(true);
+	trkList->setVisible(true);
+
+	//  car list  ----------
+	#ifndef ROAD_EDITOR
+	sum = 0;  sw = 0;  cnt = carList->getColumnCount();
+	for (c=0; c < cnt; ++c)  sum += TcolC[c];
+
+	for (c=0; c < cnt; ++c)
+	{
+		int w = (c==cnt-1) ? 18 : (float(TcolC[c]) / sum * 0.18/*width*/ * wi.width * 0.97/*frame*/);
+		carList->setColumnWidthAt(c, w);
+		sw += w;
+	}
+
+	xt = 0.018*wi.width;  yt = 0.03*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
+	carList->setCoord(xt, yt, sw + 8/*frame*/, 0.36/*height*/*wi.height);
+	#endif
 	
 	#ifndef ROAD_EDITOR
 	if (panelNetTrack)  {
