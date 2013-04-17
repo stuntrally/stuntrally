@@ -102,8 +102,9 @@ void App::tabPlayer(TabPtr wp, size_t id)
 {
 	iCurCar = id;
 	//  update gui for this car (color h,s,v, name, img)
-	size_t i = carList->findItemIndexWith(GetCarClr(pSet->gui.car[iCurCar]));
-	if (i != ITEM_NONE)
+	string c = pSet->gui.car[iCurCar], s = GetCarClr(c)+c;
+	for (size_t i=0; i < carList->getItemCount(); ++i)
+	if (carList->getItemNameAt(i) == s)
 	{	carList->setIndexSelected(i);
 		listCarChng(carList, i);
 	}
