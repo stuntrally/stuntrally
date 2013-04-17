@@ -40,7 +40,8 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 	bLightMapEnabled(true), bBraking(false),
 	hideTime(1.f), mbVisible(true),
 	iCamNextOld(0), bLastChkOld(0), bWrongChk(0),
-	angCarY(0), vStartPos(0,0,0), pNickTxt(0)
+	angCarY(0), vStartPos(0,0,0), pNickTxt(0),
+	all_subs(0), all_tris(0)  //stats
 {
 	iIndex = index;  sDirname = name;  mSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
@@ -135,11 +136,27 @@ CarModel::~CarModel()
 }
 
 	
+//  log mesh stats
+void CarModel::LogMeshInfo(const Entity* ent, const String& name)
+{
+	//return;
+	const MeshPtr& msh = ent->getMesh();
+	int tris=0, subs = msh->getNumSubMeshes();
+	for (int i=0; i < subs; ++i)
+	{
+		SubMesh* sm = msh->getSubMesh(i);
+		tris += sm->indexData->indexCount;
+	}
+	all_tris += tris;
+	all_subs += subs;
+	LogO("MESH info:  "+name+"\t sub: "+toStr(subs)+"  tri: "+fToStr(tris/1000.f,1,4)+"k");
+}
+
 //---------------------------------------------------
 void CarModel::CreatePart(SceneNode* ndCar, Vector3 vPofs,
 	String sCar2, String sCarI, String sMesh, String sEnt,
 	bool ghost, uint32 visFlags,
-	AxisAlignedBox* bbox, String stMtr, VERTEXARRAY* var)
+	AxisAlignedBox* bbox, String stMtr, VERTEXARRAY* var, bool bLogInfo)
 {
 	if (FileExists(sCar2 + sMesh))
 	{
@@ -148,6 +165,7 @@ void CarModel::CreatePart(SceneNode* ndCar, Vector3 vPofs,
 		if (ghost)  {  ent->setRenderQueueGroup(RQG_CarGhost);  ent->setCastShadows(false);  }
 		else  if (visFlags == RV_CarGlass)  ent->setRenderQueueGroup(RQG_CarGlass);
 		ndCar->attachObject(ent);  ent->setVisibilityFlags(visFlags);
+		if (bLogInfo)  LogMeshInfo(ent, sDirname + sMesh);
 	}
 	else
 	{	ManualObject* mo = pApp->CreateModel(mSceneMgr, stMtr, var, vPofs, false, false, sCarI+sEnt);
@@ -179,6 +197,7 @@ void CarModel::Create(int car)
 	String sCar = sCars + "/" + sDirname;
 	
 	bool ghost = eType == CT_GHOST && pSet->rpl_alpha;  //1 || for ghost test
+	bool bLogInfo = eType != CT_GHOST;  // log mesh info
 	
 	//  Resource locations -----------------------------------------
 	/// Add a resource group for this car
@@ -227,18 +246,20 @@ void CarModel::Create(int car)
 	//-------------------------------------------------
 	Vector3 vPofs(0,0,0);
 	AxisAlignedBox bodyBox;  uint8 g = RQG_CarGhost;
+	all_subs=0;  all_tris=0;  //stats
 	
 	if (pCar->bRotFix)
 		ndCar->setOrientation(Quaternion(Degree(90),Vector3::UNIT_Y)*Quaternion(Degree(180),Vector3::UNIT_X));
 
-	CreatePart(ndCar, vPofs, sCar, sCarI, "_body.mesh",     "",  ghost, RV_Car,  &bodyBox, sMtr[Mtr_CarBody], &pCar->bodymodel.mesh);
+
+	CreatePart(ndCar, vPofs, sCar, sCarI, "_body.mesh",     "",  ghost, RV_Car,  &bodyBox,  sMtr[Mtr_CarBody], &pCar->bodymodel.mesh,     bLogInfo);
 
 	vPofs = Vector3(pCar->vInteriorOffset[0],pCar->vInteriorOffset[1],pCar->vInteriorOffset[2]);  //x+ back y+ down z+ right
 	if (!ghost)
-	CreatePart(ndCar, vPofs, sCar, sCarI, "_interior.mesh", "i", ghost, RV_Car,     0, sMtr[Mtr_CarInterior], &pCar->interiormodel.mesh);
+	CreatePart(ndCar, vPofs, sCar, sCarI, "_interior.mesh", "i", ghost, RV_Car,      0, sMtr[Mtr_CarBody]+"i", &pCar->interiormodel.mesh, bLogInfo);
 
 	vPofs = Vector3::ZERO;
-	CreatePart(ndCar, vPofs, sCar, sCarI, "_glass.mesh",    "g", ghost, RV_CarGlass,   0, sMtr[Mtr_CarGlass], &pCar->glassmodel.mesh);
+	CreatePart(ndCar, vPofs, sCar, sCarI, "_glass.mesh",    "g", ghost, RV_CarGlass, 0, sMtr[Mtr_CarBody]+"g", &pCar->glassmodel.mesh,    bLogInfo);
 	
 
 	//  wheels  ----------------------
@@ -249,11 +270,13 @@ void CarModel::Create(int car)
 
 		if (FileExists(sCar + "_wheel.mesh"))
 		{
+			String name = sDirname + "_wheel.mesh";
 			Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_wheel.mesh", sCarI);
 			if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
+			if (bLogInfo && w==0)  LogMeshInfo(eWh, name);
 		}else
-		{	ManualObject* mWh = pApp->CreateModel(mSceneMgr, sMtr[Mtr_CarTireFront], &pCar->wheelmodelfront.mesh, vPofs, true, false, siw);
+		{	ManualObject* mWh = pApp->CreateModel(mSceneMgr, sMtr[Mtr_CarBody]+siw, &pCar->wheelmodelfront.mesh, vPofs, true, false, siw);
 			if (mWh)  {
 			if (ghost)  {  mWh->setRenderQueueGroup(g);  mWh->setCastShadows(false);  }
 			ndWh[w]->attachObject(mWh);  mWh->setVisibilityFlags(RV_Car);  }
@@ -261,12 +284,16 @@ void CarModel::Create(int car)
 		
 		if (FileExists(sCar + "_brake.mesh"))
 		{
-			Entity* eBrake = mSceneMgr->createEntity(siw + "_brake", sDirname + "_brake.mesh", sCarI);
+			String name = sDirname + "_brake.mesh";
+			Entity* eBrake = mSceneMgr->createEntity(siw + "_brake", name, sCarI);
 			if (ghost)  {  eBrake->setRenderQueueGroup(g);  eBrake->setCastShadows(false);  }
 			ndBrake[w] = ndWh[w]->createChildSceneNode();
 			ndBrake[w]->attachObject(eBrake);  eBrake->setVisibilityFlags(RV_Car);
+			if (bLogInfo && w==0)  LogMeshInfo(eBrake, name);
 		}
 	}
+	if (bLogInfo)  // all
+		LogO("MESH info:  "+sDirname+"\t ALL sub: "+toStr(all_subs)+"  tri: "+fToStr(all_tris/1000.f,1,4)+"k");
 
 
 	///  world hit sparks  ------------------------
@@ -389,9 +416,8 @@ void CarModel::RecreateMaterials()
 	
 	//  ghost car has no interior, particles, trails and uses same material for all meshes
 	if (!ghost)
-	{	sMtr[Mtr_CarBody]     = chooseMat("_body");		sMtr[Mtr_CarTireFront]  = chooseMat("tire_front");
-		sMtr[Mtr_CarInterior] = chooseMat("_interior");	sMtr[Mtr_CarTireRear]   = chooseMat("tire_rear");
-		sMtr[Mtr_CarGlass]    = chooseMat("_glass");
+	{	sMtr[Mtr_CarBody]     = chooseMat("_body");
+		sMtr[Mtr_CarBrake]    = chooseMat("_glass");
 	}else
 	for (int i=0; i < NumMaterials; ++i)
 		sMtr[i] = "car_ghost";
@@ -448,18 +474,6 @@ void CarModel::setMtrNames()
 
 	if (pCar && pCar->bRotFix)
 		return;
-		
-	#if 0
-	setMtrName("Car.interior"+strI, sMtr[Mtr_CarInterior]);
-	setMtrName("Car.glass"+strI, sMtr[Mtr_CarGlass]);
-
-	for (int w=0; w < 4; ++w)
-	{
-		String sw = "Wheel"+strI+"_"+toStr(w), sm = w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear];
-		setMtrName(sw,          sm);
-		setMtrName(sw+"_brake", sm);
-	}
-	#endif
 }
 
 //  ----------------- Reflection ------------------------
