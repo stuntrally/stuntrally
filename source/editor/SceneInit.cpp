@@ -39,7 +39,8 @@ void App::createScene()  // once, init
 	QTimer ti;  ti.update();  /// time
 
 
-	///  ..tool..  (remove alpha channel for ter tex prv img)
+	/// .. Tool ..........................
+	//  (remove alpha channel for ter tex prv img)
 	#if 0
 	Ogre::Image im;
 	im.load("jungle_5d.png", "General");
@@ -76,6 +77,47 @@ void App::createScene()  // once, init
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time load xmls: ") + toStr(dt) + " ms");
+
+
+	/// ... Tool tracks ...........................
+	#if 0
+	ti.update();  /// time
+	LogO("ALL tracks ---------");
+	std::map<std::string, int> noCol,minSc;
+
+	for (int i=0; i < tracksXml.trks.size(); ++i)
+	{	//  foreach track
+		std::string trk = tracksXml.trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
+		Scene sc;  sc.LoadXml(path +"scene.xml");
+		//sc.SaveXml(path +"scene1.xml");  // resave
+		//SplineRoad rd(this);  rd.LoadFile(path+"road.xml");
+		//rd.SaveFile(path+"road1.xml");  // resave
+		for (int l=0; l < Scene::ciNumPgLay; ++l)
+		{
+			const PagedLayer& lay = sc.pgLayersAll[l];
+			const String& s = lay.name;  //.mesh
+			if (!s.empty())
+			{
+				if (lay.on && !objs.Find(s) && noCol[s]==0)
+				{	noCol[s] = 1;
+					LogO("All: " + trk + "  no collision.xml for  " + s);
+				}
+				if (lay.on && !ResourceGroupManager::getSingleton().resourceExistsInAnyGroup(s))
+					LogO("All: " + trk + "  Not Found !!!  " + s);
+
+				if (lay.minScale < 0.3f && minSc[s]==0)
+				{	minSc[s] = 1;
+					LogO("All: " + trk + "  scale < 0.3  model  " + s + "  val " + fToStr(lay.minScale,2,4) +" "+ fToStr(lay.maxScale,2,4));
+				}
+				//if (lay.maxScale > 4.f)   LogO("All: " + trk + "  scale > 4  model  "   + s + "  val " + fToStr(lay.maxScale,2,4));
+		}	}
+	}
+	
+	ti.update();  dt = ti.dt * 1000.f;  /// time
+	LogO(String("::: Time upd all tracks: ") + toStr(dt) + " ms");
+	LogO("ALL tracks ---------");
+	exit(0);
+	#endif
 
 
 	postInit();  // material factory
