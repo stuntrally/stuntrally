@@ -14,10 +14,10 @@ material car_body
 	env_map true
 
 	fresnel true
-	fresnelScaleBiasPower 0.81 0.10 3
-	specular 1 1.05 1.1  20 //x4
+	fresnelScaleBiasPower 1.31 0.10 4
+	specular 1.02 1.02 1.0  20 //x4
 	glossiness 0.5
-	fresnelScaleBiasPower2 0.71 0.10 6
+	fresnelScaleBiasPower2 1.00 0.10 4
 	specular2 0.7 0.65 0.6  1 //x4
 }
 
@@ -37,11 +37,11 @@ material car_glass
 	//cull_hardware none
 	twoside_diffuse true
 
-	fresnelScaleBiasPower 0.80 0.3 4
+	//fresnelScaleBiasPower 0.8 0.3 4
+	fresnelScaleBiasPower 0.3 0.5 1.5
 	//  env clr mul,  al clr mul,  al clr pow,  al ifluence mul fin
-	//env_alpha 1.4  1.6 2  0.6
 	//env_alpha 1.5  1.1 1.5  0.8
-	env_alpha 1.1  1.1 1.1  0.8
+	env_alpha 1.1  1.2 0.9  1.2
 }
 
 material car_ghost

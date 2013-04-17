@@ -485,6 +485,7 @@
 			#endif
 			reflectionFactor *= shSaturate(fSBP.y + fSBP.x * pow(facing, fSBP.z));
 		#else
+			float facing = reflAmount;
 			reflectionFactor *= reflAmount;
 		#endif
 		
@@ -523,7 +524,7 @@
 #if SPECULAR_ALPHA
 		//  bump alpha with specular
 		#if ENV_MAP																	// par                // par
-		shOutputColour(0).a = min(shOutputColour(0).a + specular.g + pow(envColor.g * env_alpha.y, env_alpha.z) * reflectionFactor * env_alpha.w, 1);
+		shOutputColour(0).a = min(shOutputColour(0).a + specular.g + pow(envColor.g * env_alpha.y, env_alpha.z) * facing * env_alpha.w, 1);
 		#else
 		shOutputColour(0).a = min(shOutputColour(0).a + specular.g, 1);
 		#endif
