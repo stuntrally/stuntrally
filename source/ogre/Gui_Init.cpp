@@ -681,25 +681,24 @@ void App::UpdCarClrSld(bool upd)
 
 
 //  next/prev in list by key
-int App::LNext(MyGUI::MultiList2* lp, int rel)
+int App::LNext(MyGUI::MultiList2* lp, int rel, int ofs)
 {
 	int i = std::max(0, std::min((int)lp->getItemCount()-1, (int)lp->getIndexSelected()+rel ));
 	lp->setIndexSelected(i);
-	lp->beginToItemAt(std::max(0, i-11));  // center
+	lp->beginToItemAt(std::max(0, i-ofs));  // center
 	return i;
 }
 int App::LNext(MyGUI::MultiList* lp, int rel)
 {
 	int i = std::max(0, std::min((int)lp->getItemCount()-1, (int)lp->getIndexSelected()+rel ));
 	lp->setIndexSelected(i);
-	//lp->beginToItemAt(std::max(0, i-11));  // center
 	return i;
 }
-int App::LNext(MyGUI::ListPtr lp, int rel)
+int App::LNext(MyGUI::ListPtr lp, int rel, int ofs)
 {
 	int i = std::max(0, std::min((int)lp->getItemCount()-1, (int)lp->getIndexSelected()+rel ));
 	lp->setIndexSelected(i);
-	lp->beginToItemAt(std::max(0, i-11));  // center
+	lp->beginToItemAt(std::max(0, i-ofs));  // center
 	return i;
 }
 
@@ -710,14 +709,14 @@ void App::LNext(int rel)
 	{
 	case WND_Game: case WND_Champ:
 		switch (mWndTabsGame->getIndexSelected())
-		{	case 1:  listTrackChng(trkList,LNext(trkList, rel));  return;
-			case 2:	 listCarChng(carList,   LNext(carList, rel));  return;
-			case 6:  listChampChng(liChamps,LNext(liChamps, rel));  return;
-			case 7:	 listStageChng(liStages, LNext(liStages, rel));  return;
+		{	case 1:  listTrackChng(trkList,  LNext(trkList, rel, 11));  return;
+			case 2:	 listCarChng(carList,    LNext(carList, rel, 5));  return;
+			case 6:  listChampChng(liChamps, LNext(liChamps, rel, 8));  return;
+			case 7:	 listStageChng(liStages, LNext(liStages, rel, 8));  return;
 			case 8:	 if (rel > 0)  btnStageNext(0);  else  btnStagePrev(0);  return;
 		}	break;
 	case WND_Replays:
-		listRplChng(rplList,  LNext(rplList, rel));
+		listRplChng(rplList,  LNext(rplList, rel, 11));
 		break;
 	}
 }

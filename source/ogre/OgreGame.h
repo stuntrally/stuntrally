@@ -426,7 +426,7 @@ protected:
 	MyGUI::MultiList2* carList;  MyGUI::ListPtr rplList;  void updReplaysList();
 	void listRplChng(MyGUI::List* li, size_t pos),  changeCar();
 	void listCarChng(MyGUI::MultiList2* li, size_t pos),  changeTrack();
-	int LNext(MyGUI::MultiList2* lp, int rel), LNext(MyGUI::ListPtr lp, int rel),
+	int LNext(MyGUI::MultiList2* lp, int rel, int ofs), LNext(MyGUI::ListPtr lp, int rel, int ofs),
 		LNext(MyGUI::MultiList* lp, int rel);  // util next in list
 	void LNext(int rel);  void tabPlayer(MyGUI::TabPtr wp, size_t id);
 
