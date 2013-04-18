@@ -3,3 +3,5 @@ Car from VDrift
 Model by Kevin Miller
 Import and textures by Dick Maurer
 Car settings by Joe Venzon, modded by Cotharyus.
+
+Wheel from Super Racing (UPG06000)
