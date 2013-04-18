@@ -806,6 +806,41 @@ material UPG16000_metalwheel
     //refl_amount 0.2
 }
 
+//  XM
+material UPG36000_Tire
+{
+	parent car_base
+	diffuseMap XM_Tire.png
+	normalMap XM_Tire_norm.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.5 0.5 0.5
+	specular 0.1 0.1 0.1 4
+}
+
+material UPG36000_brake
+{
+	parent car_base
+	diffuseMap XM_Brake.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.5 0.5 0.5
+	specular 1 1 1 8
+}
+
+material UPG36000_metalWheel
+{
+	parent car_base
+	diffuseMap XM_metalWheel.png
+	normalMap XM_metalWheel_norm.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.7 0.7 0.7
+	specular 1 1 1 32
+	env_map true
+	fresnel true
+	fresnelScaleBiasPower 0.7 0.15 3
+    //fresnel false
+    //refl_amount 0.2
+}
+
 
 //---------------------------------------------------------------
 //  XZ
