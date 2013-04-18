@@ -513,7 +513,7 @@ material UPG13000_tire
 
 
 //---------------------------------------------------------------
-//  S8
+//  S8   // Todo: reduce material count, use texture
 
 material S8_glass
 {
@@ -769,6 +769,41 @@ material 360_brake
 	ambient 0.6 0.6 0.6
 	diffuse 0.3 0.3 0.3
 	specular 1 1 1 8
+}
+
+//  TC6
+material UPG16000_tire
+{
+	parent car_base
+	diffuseMap TC6_Tire.png
+	normalMap TC6_Tire_norm.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.5 0.5 0.5
+	specular 0.1 0.1 0.1 4
+}
+
+material UPG16000_brake
+{
+	parent car_base
+	diffuseMap TC6_Brake.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.3 0.3 0.3
+	specular 1 1 1 8
+}
+
+material UPG16000_metalwheel
+{
+	parent car_base
+	diffuseMap TC6_MetalWheel.png
+	normalMap TC6_MetalWheel_norm.png
+	ambient 0.8 0.8 0.8
+	diffuse 0.9 0.9 0.9
+	specular 1 1 1 32
+	env_map true
+	fresnel true
+	fresnelScaleBiasPower 0.7 0.15 3
+    //fresnel false
+    //refl_amount 0.2
 }
 
 

@@ -247,10 +247,6 @@
 	    shUniform(float3, fresnelScaleBiasPower2)  @shUniformProperty3f(fresnelScaleBiasPower2, fresnelScaleBiasPower2)
 		shUniform(float4, specular2)  @shUniformProperty4f(specular2, specular2)
 #endif
-
-#if SPECULAR_ALPHA
-		shUniform(float4, env_alpha)  @shUniformProperty4f(env_alpha, env_alpha)
-#endif
 	
 		
 #if ALPHA_MAP
@@ -274,6 +270,10 @@
 		shUniform(float3, fresnelScaleBiasPower)  @shUniformProperty3f(fresnelScaleBiasPower, fresnelScaleBiasPower)
 	#else
 		shUniform(float, reflAmount)	 @shUniformProperty1f(reflAmount, refl_amount)
+	#endif
+
+	#if SPECULAR_ALPHA
+		shUniform(float4, env_alpha)  @shUniformProperty4f(env_alpha, env_alpha)
 	#endif
 #endif
 
