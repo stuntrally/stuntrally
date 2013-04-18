@@ -2,3 +2,5 @@ Car from VDrift
 
 Model by Ny
 Settings based on Dick Maurer's work with the TC
+
+wheel from Super Racing (UPG16000)
