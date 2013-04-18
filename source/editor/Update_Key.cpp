@@ -167,10 +167,10 @@ void App::trkListNext(int rel)
 		&& !pSet->isMain && pSet->inMenu == WND_Edit;
 	if (!b)  return;
 	
-	int i = std::max(0, std::min((int)trkMList->getItemCount()-1, (int)trkMList->getIndexSelected()+rel ));
-	trkMList->setIndexSelected(i);
-	trkMList->beginToItemAt(std::max(0, i-11));  // center
-	listTrackChng(trkMList,i);
+	int i = std::max(0, std::min((int)trkList->getItemCount()-1, (int)trkList->getIndexSelected()+rel ));
+	trkList->setIndexSelected(i);
+	trkList->beginToItemAt(std::max(0, i-11));  // center
+	listTrackChng(trkList,i);
 }
 
 void App::MainMenuBtn(MyGUI::WidgetPtr wp)
@@ -283,7 +283,7 @@ bool App::KeyPress(const CmdKey &arg)
 			case KC_RETURN:  // save screen
 			{	int u = pSet->allow_save ? pSet->gui.track_user : 1;
 				rt[RTs-1].rndTex->writeContentsToFile(pathTrk[u] + pSet->gui.track + "/preview/view.jpg");
-				listTrackChng(trkMList,0);  // upd gui img
+				listTrackChng(trkList,0);  // upd gui img
 				Status("Preview saved", 1,1,0);
 			}	break;
 

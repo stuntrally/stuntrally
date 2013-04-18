@@ -63,7 +63,7 @@ App::App()  //  gui wigdets--
 	,edScaleAllMul(0),edScaleTerHMul(0)  // tools
 	,valAlignWidthAdd(0), valAlignWidthMul(0), valAlignSmooth(0)
 	,imgTrkIco1(0),imgTrkIco2(0), edFind(0)
-	,trkMList(0),trkName(0),bListTrackU(0)  // track
+	,trkList(0),trkName(0),bListTrackU(0)  // track
 
 	,mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)
 	,bTerUpd(0), curBr(2), bGuiReinit(0), noBlendUpd(0), bGI(0), resList(0), brImgSave(-1)

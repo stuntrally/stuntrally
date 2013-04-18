@@ -242,7 +242,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	
 	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;
-		mGUI->destroyWidgets(vwGui);  bnQuit=0;mWndOpts=0;trkMList=0; //todo: rest too..
+		mGUI->destroyWidgets(vwGui);  bnQuit=0;mWndOpts=0;trkList=0; //todo: rest too..
 		InitGui();
 		SetGuiFromXmls();
 		bWindowResized = true;
@@ -269,14 +269,14 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	}
 	
 	///  sort trk list
-	if (trkMList && (trkMList->mSortColumnIndex != trkMList->mSortColumnIndexOld
-		|| trkMList->mSortUp != trkMList->mSortUpOld))
+	if (trkList && (trkList->mSortColumnIndex != trkList->mSortColumnIndexOld
+		|| trkList->mSortUp != trkList->mSortUpOld))
 	{
-		trkMList->mSortColumnIndexOld = trkMList->mSortColumnIndex;
-		trkMList->mSortUpOld = trkMList->mSortUp;
+		trkList->mSortColumnIndexOld = trkList->mSortColumnIndex;
+		trkList->mSortUpOld = trkList->mSortUp;
 
-		pSet->tracks_sort = trkMList->mSortColumnIndex;  // to set
-		pSet->tracks_sortup = trkMList->mSortUp;
+		pSet->tracks_sort = trkList->mSortColumnIndex;  // to set
+		pSet->tracks_sortup = trkList->mSortUp;
 		TrackListUpd(false);
 	}
 

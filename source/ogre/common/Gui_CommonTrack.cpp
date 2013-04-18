@@ -184,7 +184,7 @@ void App::GuiInitTrack()
 	
 	trkList = li;  if (!li)  LogO("Error: No MListTracks in layout !");
    	trkList->eventListChangePosition += newDelegate(this, &App::listTrackChng);
-   	//..trkMList->eventListSelectAccept += newDelegate(this, &App::btnNewGameStart);
+   	//..trkList->eventListSelectAccept += newDelegate(this, &App::btnNewGameStart);
    	trkList->setVisible(false);
 	
 	//  preview images
