@@ -22,10 +22,10 @@ fi
 echo "Generating languages..."
 LOCALES="de fi ro pl fr ru"
 for loc in $LOCALES; do
-	`which python2` ./xml_po_parser.py ./translations-export/pofiles/locale/${loc}.po ../data/gui/core_language_${loc}_tag.xml
+	`which python2` ./xml_po_parser.py ./translations-export/pofiles/stuntrally/${loc}.po ../data/gui/core_language_${loc}_tag.xml
 done
 # Special case for Brazilian Portuguese
-`which python2` ./xml_po_parser.py ./translations-export/pofiles/locale/pt_BR.po ../data/gui/core_language_pt_tag.xml
+`which python2` ./xml_po_parser.py ./translations-export/pofiles/stuntrally/pt_BR.po ../data/gui/core_language_pt_tag.xml
 
 if [ ! -d ./translation_templates ]; then
 	echo "Cloning translation_templates"
