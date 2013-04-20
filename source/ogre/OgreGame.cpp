@@ -269,16 +269,16 @@ String App::GetTimeString(float time) const
 
 String App::GetCarClr(String car) const
 {
-	//  asphalt, both, rally
+	//  asphalt, both, rally, slow
 	//const static String clrA = "#FFA0A0", clrB = "#F0F0B0", clrR = "#80FFFF";
-	const static String clrA = "#FF9090", clrB = "#E0E000", clrR = "#80F8FF";
+	const static String clrA = "#FF9090", clrB = "#E0E000", clrR = "#80F8FF", clrS = "#B0B080";
 	String s = "#C0D0E0";  // default clr
 
 	     if (car=="360") s=clrA;   else if (car=="3S")  s=clrB;   else if (car=="CT")  s=clrA;
-	else if (car=="ES")  s=clrR;   else if (car=="FM")  s=clrR;   else if (car=="M3")  s=clrB;
+	else if (car=="ES")  s=clrR;   else if (car=="FM")  s=clrR;   else if (car=="M3")  s=clrS;
 	else if (car=="N1")  s=clrB;   else if (car=="NS")  s=clrB;   else if (car=="S1")  s=clrR;
 	else if (car=="S8")  s=clrR;   else if (car=="TC6") s=clrR;   else if (car=="XM")  s=clrA;
-	else if (car=="XZ")  s=clrA;
+	else if (car=="XZ")  s=clrA;   else if (car=="LK4") s=clrS;
 	return s;
 }
 

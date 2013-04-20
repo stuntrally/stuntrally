@@ -958,3 +958,127 @@ material XZ_tire
 	specular 0.2 0.2 0.2 8
 	//bump_scale 1.5
 }
+
+
+//---------------------------------------------------------------
+//  LK4   // Todo: reduce material count, use texture
+
+material LK4_rim
+{
+	parent car_base
+	diffuseMap white.png
+	ambient 0.4 0.4 0.4
+	diffuse 0.5 0.5 0.5
+	specular 1 1 1 4
+	env_map true
+	fresnel true
+	fresnelScaleBiasPower 0.7 0.15 4
+}
+
+material LK4_tire
+{
+	parent car_base
+	diffuseMap white.png
+	//normalMap XZ_Tire_norm.png
+	ambient 0.3 0.3 0.3
+	diffuse 0.2 0.2 0.2
+	specular 0.2 0.2 0.2 8
+	//bump_scale 1.5
+}
+
+material LK4_body  //-
+{
+	parent car_base
+	diffuseMap white.png
+	ambient 0.6 0.6 0.1
+	diffuse 0.7 0.7 0.1
+	specular 0.1 0.1 0.1 4
+}
+
+material LK4_metmat  // rear mid
+{
+	parent car_base
+	diffuseMap white.png
+	ambient 0.4 0.4 0.4
+	diffuse 0.5 0.5 0.5
+	specular 0.2 0.2 0.2 4
+}
+
+material LK4_chrome
+{
+	parent car_base
+	diffuseMap white.png
+	ambient 0.3 0.3 0.3
+	diffuse 0.5 0.5 0.5
+	specular 0.8 0.8 0.8 8
+}
+
+//  lights
+material LK4_lights  // front
+{
+	parent car_base
+	diffuseMap white.png
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 0.6 0.6 0.6 8
+}
+//material LK4_red
+//{
+//	parent car_base
+//	diffuseMap white.png
+//	ambient 0.7 0.15 0.15
+//	diffuse 0.7 0.15 0.15
+//	specular 0.1 0.1 0.1 4
+//}
+
+material LK4_orange  // side
+{
+	parent car_base
+	diffuseMap white.png
+	ambient 0.7 0.35 0.1
+	diffuse 0.7 0.35 0.1
+	specular 0.1 0.1 0.1 4
+}
+material LK4_reds  // rear red
+{
+	parent car_base
+	diffuseMap white.png
+	ambient 0.7 0.15 0.15
+	diffuse 0.7 0.15 0.15
+	specular 0.1 0.1 0.1 4
+}
+
+material LK4_plast1  // bottom, over wheels
+{
+	parent car_base
+	diffuseMap white.png
+	ambient 0.4 0.4 0.4
+	diffuse 0.5 0.5 0.5
+	specular 0.2 0.2 0.2 6
+}
+
+material LK4_plast2  // inside
+{
+	parent car_base
+	diffuseMap white.png
+	ambient 0.2 0.2 0.2
+	diffuse 0.3 0.3 0.3
+	specular 0.1 0.1 0.1 4
+}
+
+material LK4_inside  // chairs
+{
+	parent car_base
+	diffuseMap white.png
+	ambient 0.3 0.3 0.3
+	diffuse 0.4 0.4 0.4
+	specular 0.1 0.1 0.1 4
+}
+
+
+material LK4_glass
+{
+	parent car_glass
+	diffuseMap LK4_glass.png
+	cull_hardware none
+}

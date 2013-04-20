@@ -355,8 +355,8 @@ void App::updTrkListDim()
 		sw += w;
 	}
 
-	xt = 0.018*wi.width;  yt = 0.03*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
-	carList->setCoord(xt, yt, sw + 8/*frame*/, 0.36/*height*/*wi.height);
+	xt = 0.018*wi.width;  yt = 0.024*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
+	carList->setCoord(xt, yt, sw + 8/*frame*/, 0.39/*height*/*wi.height);
 	#endif
 	
 	#ifndef ROAD_EDITOR
