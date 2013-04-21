@@ -36,7 +36,7 @@ void App::newPerfTest(float time)
 
 	CarModel* carM = carModels[0];
 	CAR* pCar = carM->pCar;
-	bool bNorm = pSet->game.sim_mode == "normal" && pCar->pCarM->sDirname != "M3";
+	bool bNorm = pSet->game.sim_mode == "normal" && pCar->pCarM->sDirname != "M3" && pCar->pCarM->sDirname != "LK4";
 	static MATHVECTOR<Dbl,3> posSt, dist;
 	float kmh = pCar->GetSpeed()*3.6f;  static float kmhOld = 0.f;
 

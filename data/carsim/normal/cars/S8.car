@@ -3,7 +3,7 @@ version = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
-max-angle = 28
+max-angle = 27
 angular-damping = 0.0
 
 [ rot_drag ]
@@ -45,7 +45,7 @@ start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
 friction = 230
-torque-val-mul = 0.83
+torque-val-mul = 0.79
 torque-curve-00 = 1000, 305
 torque-curve-01 = 1500, 375
 torque-curve-02 = 2100, 425
@@ -225,17 +225,17 @@ hinge = 0.25, -1.94, 0.0
 # (for car total mass and inertia) also use engine mass and position
 #---------------------------
 [ particle-00 ]  # rear
-mass = 245
+mass = 242
 position =  1.0, -1.6, -0.06
 
 [ particle-01 ]
-mass = 245
+mass = 242
 position = -1.0, -1.6, -0.06
 
 [ particle-02 ]  # front
-mass = 245
+mass = 242
 position =  1.0,  1.6, -0.06
 
 [ particle-03 ]
-mass = 245
+mass = 242
 position = -1.0,  1.6, -0.06

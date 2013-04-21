@@ -321,7 +321,7 @@ void CarModel::Create(int car)
 					Vector3(bsize.z * 0.97, bsize.y * 0.65, bsize.x * 0.65 * (i==0 ? 1 : -1)) :
 					Vector3(bsize.x * 0.97, bsize.y * 0.65, bsize.z * 0.65 * (i==0 ? 1 : -1));
 					//Vector3(1.9 /*back*/, 0.1 /*up*/, 0.6 * (i==0 ? 1 : -1)/*sides*/
-				vp += Vector3(0,pCar->boostOffsetY,0);
+				vp += Vector3(pCar->boostOffset[0],pCar->boostOffset[1],pCar->boostOffset[2]);
 				SceneNode* nb = pMainNode->createChildSceneNode(bcenter+vp);
 				nb->attachObject(pb[i]);
 			}else{

@@ -14,6 +14,8 @@ yaw2  = 2.0
 
 [ model_ofs ]
 rot_fix = on
+boost-x = -0.22
+boost-z = -0.33
 interior-x = 0.05
 interior-y = 0.083
 interior-z = 0

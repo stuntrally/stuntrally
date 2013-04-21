@@ -335,7 +335,7 @@ public:
 	void GraphsNewVals(double dt);
 	
 	///-- models offset
-	float vInteriorOffset[3], boostOffsetY;  bool bRotFix;
+	float vInteriorOffset[3], boostOffset[3];  bool bRotFix;
 	// exhaust position for boost particles 
 	bool manualExhaustPos; // if true, use values below, if false, guess from bounding box
 	float exhaustPosition[3]; // position of first exhaust

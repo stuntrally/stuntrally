@@ -512,10 +512,10 @@ void App::InitGui()
 	carList->addColumn("#C0C8D0""Year", TcolC[n++]);
 	carList->addColumn(" ", TcolC[n++]);
 	std::map<std::string,int> vel, yr;
-	vel["360"]= 8;  yr["360"]= 1999;  vel["3S"] = 3;  yr["3S"] = 2003;  vel["CT"] = 6;  yr["CT"] = 1998;
+	vel["360"]= 8;  yr["360"]= 1999;  vel["3S"] = 3;  yr["3S"] = 2003;  vel["CT"] = 7;  yr["CT"] = 1998;
 	vel["ES"] = 5;  yr["ES"] = 2006;  vel["FM"] = 5;  yr["FM"] = 2000;  vel["M3"] = 1;  yr["M3"] = 1985;
 	vel["N1"] = 5;  yr["N1"] = 1999;  vel["NS"] = 4;  yr["NS"] = 1989;  vel["S1"] = 5;  yr["S1"] = 2005;
-	vel["S8"] = 5;  yr["S8"] = 2008;  vel["TC6"]= 4;  yr["TC6"]= 1994;  vel["XM"] = 9;  yr["XM"] = 1995;
+	vel["S8"] = 5;  yr["S8"] = 2008;  vel["TC6"]= 4;  yr["TC6"]= 1994;  vel["XM"] = 8;  yr["XM"] = 1995;
 	vel["XZ"] = 9;  yr["XZ"] = 2007;  vel["LK4"]= 2;  yr["LK4"]= 2008;
 
     //if (carList)
