@@ -4,7 +4,7 @@ material pipe_glass
 	diffuse 1.0 1.0 1.0 1.0
 	specular 0.4 0.4 0.4 32
 	emissive 0 0 0
-	specular 0 0 0 32
+	specular 1 1 1 24
 
 	scene_blend alpha_blend
 	depth_write off
