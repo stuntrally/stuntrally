@@ -43,6 +43,13 @@ material car_glass
 	//env_alpha 1.5  1.1 1.5  0.8
 	env_alpha 1.1  1.2 0.9  1.2
 }
+material car_glass2  // 1 mesh, 2 sided
+{
+	parent car_glass
+	diffuseMap glass.png
+	cull_hardware none
+	depth_write on
+}
 
 material car_ghost
 {
@@ -68,10 +75,9 @@ material car_wheel
 
 material 360_glass
 {
-	parent car_glass
+	parent car_glass2
 	diffuseMap 360_glass.png
 	reflMap 360_glass_refl.png
-	cull_hardware none
 }
 material 360_interior
 {
@@ -93,9 +99,8 @@ material 360_wheel
 
 material 3S_glass
 {
-	parent car_glass
+	parent car_glass2
 	diffuseMap 3S_glass.png
-	cull_hardware none
 }
 material 3S_interior
 {
@@ -111,9 +116,8 @@ material 3S_wheel
 
 material CT_glass
 {
-	parent car_glass
+	parent car_glass2
 	diffuseMap CT_glass.png
-	cull_hardware none
 }
 material CT_interior
 {
@@ -129,9 +133,8 @@ material CT_wheel
 
 material M3_glass
 {
-	parent car_glass
+	parent car_glass2
 	diffuseMap M3_glass.png
-	cull_hardware none
 }
 material M3_interior
 {
@@ -147,9 +150,8 @@ material M3_wheel
 
 material NS_glass
 {
-	parent car_glass
+	parent car_glass2
 	diffuseMap NS_glass.png
-	cull_hardware none
 }
 material NS_interior
 {
@@ -167,10 +169,9 @@ material NS_wheel
 
 material TC6_glass
 {
-	parent car_glass
+	parent car_glass2
 	diffuseMap TC6_glass.png
 	reflMap TC6_glass_refl.png
-	cull_hardware none
 }
 material TC6_interior
 {
@@ -192,9 +193,8 @@ material TC6_wheel
 
 material XM_glass
 {
-	parent car_glass
+	parent car_glass2
 	diffuseMap XM_glass.png
-	cull_hardware none
 }
 material XM_interior
 {
@@ -517,7 +517,7 @@ material UPG13000_tire
 
 material S8_glass
 {
-	parent car_glass
+	parent car_glass2
 	diffuseMap S8_window.png
 }
 material S8_glass_pure
@@ -1078,7 +1078,6 @@ material LK4_inside  // chairs
 
 material LK4_glass
 {
-	parent car_glass
+	parent car_glass2
 	diffuseMap LK4_glass.png
-	cull_hardware none
 }
