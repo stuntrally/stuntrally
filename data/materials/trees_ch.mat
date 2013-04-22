@@ -122,6 +122,7 @@ material tree29downswpTrunk	{	parent base-tree
   diffuseMap trunk3m.png  }
 material tree29downswpTwig	{	parent base-twig
   ambient 0.5 0.9 1.2
+  receives_shadows false
   diffuseMap twig22g1.png  }
 
 material tree36upballTrunk	{	parent base-tree
@@ -129,6 +130,7 @@ material tree36upballTrunk	{	parent base-tree
   diffuseMap trunk3m.png  }
 material tree36upballTwig	{	parent base-twig
   ambient 0.76 1.0 0.35
+  receives_shadows false
   diffuseMap twig22g1.png  }
   //diffuseMap twig22g0d.png  }
 
