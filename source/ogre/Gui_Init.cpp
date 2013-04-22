@@ -348,7 +348,7 @@ void App::InitGui()
 
 	///  Car
 	//------------------------------------------------------------
-	const int clrBtn = 28;
+	const int clrBtn = 29;
 	Real hsv[clrBtn][4] = {  // color buttons  hue,sat,val,gloss
 	{0.00,0.97,0.90,0.3}, {0.91,1.00,1.00,0.5}, {0.86,1.00,0.97,0.8},  // red,ornage,yellow
 	{0.75,0.95,0.90,1.0}, {0.70,1.00,0.70,0.03},  // green
@@ -359,8 +359,8 @@ void App::InitGui()
 	{0.50,0.33,0.90,0.9}, {0.42,0.20,0.94,0.5}, // sky-white
 	{0.63,0.21,0.62,0.1}, {0.80,0.52,0.32,0.1}, {0.62,0.74,0.12,0.8},  // olive-
 	{0.28,0.00,0.06,0.1}, {0.83,0.00,0.20,0.0}, {0.41,0.00,0.78,0.15},  // black-white
-	{0.83,0.15,0.31,0.0}, {0.91,0.40,0.37,0.0}, {0.20,0.40,0.37,0.05},  // pink-white-
-	{0.24,0.90,0.26,0.04},{0.28,0.57,0.17,0.3}, {0.27,0.38,0.23,0.03},  // dark violet
+	{0.83,0.30,0.31,0.0}, {0.91,0.40,0.37,0.0}, {0.20,0.40,0.37,0.05},  // pink-white-
+	{0.24,0.90,0.26,0.04},{0.28,0.57,0.17,0.3}, {0.27,0.38,0.23,0.03}, {0.05,0.64,0.27,0.10},  // dark violet
 	};
 	for (int i=0; i < clrBtn; ++i)
 	{
@@ -671,7 +671,7 @@ void App::UpdCarClrSld(bool upd)
 	Slv(CarClrH, pSet->gui.car_hue[iCurCar]);
 	Slv(CarClrS, pSet->gui.car_sat[iCurCar]);
 	Slv(CarClrV, pSet->gui.car_val[iCurCar]);
-	Slv(CarClrGloss, pSet->gui.car_gloss[iCurCar]);
+	Slv(CarClrGloss, powf(pSet->gui.car_gloss[iCurCar], 1.f/ 1.6f));
 	pSet->game.car_hue[iCurCar] = pSet->gui.car_hue[iCurCar];  // copy to apply
 	pSet->game.car_sat[iCurCar] = pSet->gui.car_sat[iCurCar];
 	pSet->game.car_val[iCurCar] = pSet->gui.car_val[iCurCar];

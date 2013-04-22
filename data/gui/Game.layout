@@ -550,6 +550,10 @@
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="740 168 18 18" name="carClr28">
+					<Property key="ImageTexture" value="white.png"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="176 16 568 20" name="tabPlayer">
 					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
