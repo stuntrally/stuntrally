@@ -22,6 +22,9 @@ CarReflection::CarReflection(SETTINGS* set, App* app, SceneManager* sceneMgr, un
 	iIndex = index;
 	pSceneMgr = sceneMgr;
 	iCounter = pSet->refl_skip;
+
+	for (int i=0; i < 6; ++i)
+	{	pCams[i] = 0;  pRTs[i] = 0;  }
 }
 
 CarReflection::~CarReflection()
