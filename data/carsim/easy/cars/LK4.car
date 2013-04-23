@@ -14,6 +14,7 @@ yaw2  = 2.0
 
 [ model_ofs ]
 rot_fix = on
+boost-y = -0.6
 exhaust-x = 2.2
 exhaust-y = 0.45
 exhaust-z = 0.56
@@ -29,9 +30,9 @@ posLrear = -1.88
 posLfront = 2.14
 offsetL = -0.22
 offsetW = 0.03
-offsetH = 0.27
-start-offsetY = 0.75
-fluidTrigH = 0.0
+offsetH = 0.58
+start-offsetY = 0.57
+fluidTrigH = 0.3
 friction = 0.4
 
 
@@ -42,15 +43,15 @@ position = 0.0, 1.33, 0.44
 mass = 180.0
 rpm-limit = 6300
 inertia = 0.30
-start-rpm = 1000
+start-rpm = 900
 stall-rpm = 400
 fuel-consumption = 1e-9
 friction = 230
-torque-val-mul = 0.75
+torque-val-mul = 0.60
 torque-curve-00 = 1000, 355
 torque-curve-01 = 1500, 410
 torque-curve-02 = 2000, 450
-torque-curve-03 = 2500, 500
+torque-curve-03 = 2500, 510
 torque-curve-04 = 3000, 555
 torque-curve-05 = 3500, 623
 torque-curve-06 = 4000, 644
@@ -78,7 +79,7 @@ gear-ratio-6 = 0.601
 shift-delay = 0.14
 
 [ differential ]
-final-drive = 9.4
+final-drive = 8.4
 anti-slip = 600.0
 
 [ fuel-tank ]
@@ -222,16 +223,16 @@ hinge = 3.70, -1.0, -0.43
 #---------------------------
 [ particle-00 ]  # rear
 mass = 330.0
-position =  1.05,-1.7, 0.2
+position =  1.05,-1.7, -0.2
 
 [ particle-01 ]
 mass = 330.0
-position = -1.05,-1.7, 0.2
+position = -1.05,-1.7, -0.2
 
 [ particle-02 ]  # front
 mass = 330.0
-position =  1.05, 1.7, 0.2
+position =  1.05, 1.7, -0.2
 
 [ particle-03 ]
 mass = 330.0
-position = -1.05, 1.7, 0.2
+position = -1.05, 1.7, -0.2

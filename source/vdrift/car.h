@@ -335,8 +335,11 @@ public:
 	void GraphsNewVals(double dt);
 	
 	///-- models offset
-	float vInteriorOffset[3], boostOffset[3];  bool bRotFix;
-	// exhaust position for boost particles 
+	float interiorOffset[3], boostOffset[3];
+	bool bRotFix;
+	std::string sBrakeMtr;
+
+	// exhaust position for boost particles
 	bool manualExhaustPos; // if true, use values below, if false, guess from bounding box
 	float exhaustPosition[3]; // position of first exhaust
 	bool has2exhausts; // car has 2nd exhaust ; if true, mirror exhaust 1 for position

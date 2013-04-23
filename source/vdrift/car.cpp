@@ -26,7 +26,7 @@ CAR::CAR() :
 	bResetPos(0)
 {
 	//dynamics.pCar = this;
-	vInteriorOffset[0]=0;  vInteriorOffset[1]=0;  vInteriorOffset[2]=0;
+	interiorOffset[0]=0;  interiorOffset[1]=0;  interiorOffset[2]=0;
 	boostOffset[0]=0;  boostOffset[1]=0;  boostOffset[2]=0;
 	bRotFix = false;
 	
@@ -102,17 +102,17 @@ bool CAR::Load(class App* pApp1,
 	
 	
 	///-  custom interior model offset--
-	vInteriorOffset[0] = 0.f;  vInteriorOffset[1] = 0.f;  vInteriorOffset[2] = 0.f;
+	interiorOffset[0] = 0.f;  interiorOffset[1] = 0.f;  interiorOffset[2] = 0.f;
 	boostOffset[0] = 0.f;  boostOffset[1] = 0.f;  boostOffset[2] = 0.f;
 	bRotFix = false;
-	carconf.GetParam("model_ofs.interior-x", vInteriorOffset[0]);
-	carconf.GetParam("model_ofs.interior-y", vInteriorOffset[1]);
-	carconf.GetParam("model_ofs.interior-z", vInteriorOffset[2]);
+	carconf.GetParam("model_ofs.interior-x", interiorOffset[0]);
+	carconf.GetParam("model_ofs.interior-y", interiorOffset[1]);
+	carconf.GetParam("model_ofs.interior-z", interiorOffset[2]);
 	carconf.GetParam("model_ofs.boost-x", boostOffset[0]);
 	carconf.GetParam("model_ofs.boost-y", boostOffset[1]);
 	carconf.GetParam("model_ofs.boost-z", boostOffset[2]);
 	carconf.GetParam("model_ofs.rot_fix", bRotFix);
-	//todo: brake material name..
+	carconf.GetParam("model_ofs.brake_mtr", sBrakeMtr);
 	
 	///-  custom exhaust pos for boost particles
 	if (carconf.GetParam("model_ofs.exhaust-x", exhaustPosition[0]))
@@ -155,7 +155,7 @@ bool CAR::Load(class App* pApp1,
 		orientation = init_rot;
 		float stOfsY = 0.f;
 		carconf.GetParam("collision.start-offsetY", stOfsY);
-			position[2] += stOfsY;
+			position[2] += stOfsY -0.4;  //!
 		posAtStart = posLastCheck[0] = posLastCheck[1] = position;
 		rotAtStart = rotLastCheck[0] = rotLastCheck[1] = orientation;
 		

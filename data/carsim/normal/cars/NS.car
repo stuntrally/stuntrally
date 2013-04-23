@@ -29,7 +29,7 @@ posLfront = 2.1
 offsetL = -0.12
 offsetW = -0.05
 offsetH = 0.23
-start-offsetY = 0.66
+start-offsetY = 0.64
 fluidTrigH = 0.0
 friction = 0.4
 
