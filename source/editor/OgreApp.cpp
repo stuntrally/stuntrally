@@ -40,7 +40,7 @@ App::App()  //  gui wigdets--
 	,clrAmb(0),clrDiff(0),clrSpec(0), clrFog(0),clrFog2(0),clrFogH(0), clrTrail(0)
 	,cmbTexDiff(0),cmbTexNorm(0), imgTexDiff(0), terrain(0)  // terrain
 	,valTerLAll(0),tabsHmap(0),tabsTerLayers(0), idTerLay(0),bTerLay(1)
-	,chkTerLay(0),chkTexNormAuto(0), bTexNormAuto(1), chkTerLNoiseOnly(0)
+	,chkTerLay(0),chkTexNormAuto(0), bTexNormAuto(1), chkTerLNoiseOnly(0), chkTerLayTripl(0)
 	,valTerTriSize(0),edTerTriSize(0), edTerLScale(0),sldTerLScale(0)
 	,edLDust(0),edLDustS(0), edLMud(0),edLSmoke(0), edLTrlClr(0)  //ter particles
 	,cmbParDust(0),cmbParMud(0),cmbParSmoke(0)

@@ -346,6 +346,7 @@
 	<Tag name="RoadQual">Road far quality</Tag>
 	<Tag name="Textures">Textures</Tag>
 	<Tag name="Anisotropy">Anisotropy</Tag>
+	<Tag name="Triplanar">Triplanar</Tag>
 
 	<Tag name="Vegetation">Vegetation</Tag>
 	<Tag name="TreeMult">Trees multiplier</Tag>
@@ -1015,6 +1016,7 @@
 	<Tag name="TipTerrainMove">Move terrain.</Tag>
 	
 	<Tag name="TipToggleLayer">Turn on/off chosen texture layer.</Tag>
+	<Tag name="TipToggleTriplanar">When using graphics option triplanar one, this layer (one only) will have triplanar mapping.</Tag>
 	<Tag name="TipTerLayers">Terrain texture layers (recommended 2-3, significantly affects Fps). *Auto blendmap supports max 4.</Tag>
 	<Tag name="TipTerVertCount">Terrain vertex count on one side (squares). Apply with buttons [New Flat] or [Resize].</Tag>
 	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>

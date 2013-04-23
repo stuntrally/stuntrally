@@ -245,6 +245,7 @@ void App::InitGui()
 	Chk("TerLayOn", chkTerLayOn, 1);  chkTerLay = bchk;
 	valTerLAll = mGUI->findWidget<StaticText>("TerLayersAll");
 	Chk("TexNormAuto", chkTexNormAutoOn, 1);  chkTexNormAuto = bchk;
+	Chk("TerLayTripl", chkTerLayTriplOn, 1);  chkTerLayTripl = bchk;
 	
 	Slv(TerLAngMin,0);  Slv(TerLHMin,0);  Slv(TerLAngSm,0);  // blendmap
 	Slv(TerLAngMax,0);  Slv(TerLHMax,0);  Slv(TerLHSm,0);

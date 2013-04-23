@@ -356,7 +356,8 @@ protected:
 	void comboTexDiff(CMB), comboTexNorm(CMB);
 	MyGUI::StaticImagePtr imgTexDiff;
 
-	MyGUI::ButtonPtr chkTerLay,chkTerLNoiseOnly;  void chkTerLayOn(WP),chkTerLNoiseOnlyOn(WP);  // on
+	MyGUI::ButtonPtr chkTerLay,chkTerLNoiseOnly,chkTerLayTripl;
+	void chkTerLayOn(WP),chkTerLNoiseOnlyOn(WP),chkTerLayTriplOn(WP);  // on
 	MyGUI::TabPtr tabsHmap;	  void tabHmap(TAB);  // tabs
 	MyGUI::TabPtr tabsTerLayers; void tabTerLayer(TAB);
 	int idTerLay;  bool bTerLay;  // help vars

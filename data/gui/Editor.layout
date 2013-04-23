@@ -1601,6 +1601,13 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipToggleLayer}"/>
 				</Widget>
+				<Widget type="Button" skin="CheckBox" position="192 170 112 24" name="TerLayTripl">
+					<Property key="Caption" value="#{Triplanar} 1"/>
+					<Property key="TextColour" value="0.6 0.8 0.6"/>
+					<Property key="Colour" value="0.6 0.8 0.6"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+					<UserString key="tip" value="#{TipToggleTriplanar}"/>
+				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="32 16 560 24" name="TabTerLay">
 					<Property key="Colour" value="0.7 0.9 1"/>
 					<Property key="SmoothShow" value="false"/>
@@ -3420,7 +3427,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 190 144 24">
-							<Property key="Caption" value="Triplanar"/>
+							<Property key="Caption" value="#{Triplanar}"/>
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>

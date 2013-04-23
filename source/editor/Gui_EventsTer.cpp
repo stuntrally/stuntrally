@@ -25,8 +25,9 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 
 	//if (tabsTerLayers->getItemSelected()->getCaption().asUTF8() == "Road")
 	cmbTexDiff->setVisible(bTerLay);  cmbTexNorm->setVisible(bTerLay);
-	chkTerLay->setVisible(bTerLay);   chkTexNormAuto->setVisible(bTerLay);
+	chkTerLay->setVisible(bTerLay);   chkTexNormAuto->setVisible(bTerLay);  chkTerLayTripl->setVisible(bTerLay);
 	imgTexDiff->setVisible(bTerLay);  edTerLScale->setVisible(bTerLay);
+	
 	if (bTerLay)
 	{	if (id >= sc->td.ciNumLay)  return;
 		lay = &sc->td.layersAll[id];
@@ -52,7 +53,9 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 		Slv(TerLAngSm, lay->angSm/90.f);	Slv(TerLHSm, lay->hSm/200.f);
 		Slv(TerLNoise, (lay->noise+2.f)/4.f);
 		chkTerLNoiseOnly->setStateSelected(lay->bNoiseOnly);
+		chkTerLayTripl->setStateSelected(lay->triplanar);
 	}
+
 	//  scale layer
 	sldTerLScale->setVisible(bTerLay);
 	if (bTerLay)  {
@@ -373,6 +376,15 @@ void App::chkTerLayOn(WP wp)
 	SetUsedStr(valTerLAll, sc->td.layers.size(), 3);
 	//  force update, blendmap sliders crash if not, !! this doesnt save hmap if changed  todo..
 	UpdateTrack();
+}
+
+void App::chkTerLayTriplOn(WP wp)
+{
+	if (!bTerLay)  return;
+	sc->td.layersAll[idTerLay].triplanar = !sc->td.layersAll[idTerLay].triplanar;
+	ButtonPtr chk = wp->castType<Button>();
+	chk->setStateSelected(sc->td.layersAll[idTerLay].triplanar);
+	sc->td.UpdLayers();
 }
 
 void App::chkTexNormAutoOn(WP wp)
