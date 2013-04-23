@@ -70,10 +70,8 @@ void App::slViewDist(SL)
 //  ter detail
 void App::slTerDetail(SL)
 {
-	Real v = 20.f * powf(val, 2.f);  if (bGI)  {  pSet->terdetail = v;
-		if (mTerrainGlobals)
-			mTerrainGlobals->setMaxPixelError(v);  }
-	if (valTerDetail){	valTerDetail->setCaption(fToStr(v, 1,4)+" %");  }
+	Real v = 2.f * val;  if (bGI)  {  pSet->terdetail = v;  UpdTerErr();  }
+	if (valTerDetail){	valTerDetail->setCaption(fToStr(v, 2,4));  }
 }
 
 //  ter dist
@@ -255,7 +253,7 @@ void App::GuiInitGraphics()
 	Slider* sl;  size_t v;
 
 	//  detail
-	Slv(TerDetail,	powf(pSet->terdetail /20.f, 0.5f));
+	Slv(TerDetail,	pSet->terdetail /2.f);
 	Slv(TerDist,	powf(pSet->terdist /2000.f, 0.5f));
 	Slv(ViewDist,	powf((pSet->view_distance -50.f)/19950.f, 0.5f));
 	Slv(RoadDist,	powf(pSet->road_dist /4.f, 0.5f));

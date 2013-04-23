@@ -200,6 +200,12 @@ void App::GetTerAngles(int xb,int yb, int xe,int ye, bool full)
 
 ///  Setup Terrain
 //--------------------------------------------------------------------------------------------------------------------------
+void App::UpdTerErr()
+{
+	if (mTerrainGlobals)
+		mTerrainGlobals->setMaxPixelError(pSet->terdetail * sc->td.errorNorm);  // 1.7 ..20
+}
+
 void App::configureTerrainDefaults(Light* l)
 {
 	TerrainMaterialGeneratorPtr matGen;
@@ -207,7 +213,8 @@ void App::configureTerrainDefaults(Light* l)
 	matGen.bind(matGenP);
 
 	mTerrainGlobals->setDefaultMaterialGenerator(matGen);
-	mTerrainGlobals->setMaxPixelError(pSet->terdetail);  // 1- 4-8+
+	UpdTerErr();
+
 	//mTerrainGlobals->setUseRayBoxDistanceCalculation(true);
 	//mTerrainGlobals->getDefaultMaterialGenerator()->setDebugLevel(1);
 	if (l)  {

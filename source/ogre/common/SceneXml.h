@@ -40,6 +40,7 @@ public:
 	//  size
 	int iVertsX, iVertsY, iTerSize;  // size in vertices
 	float fTriangleSize, fTerWorldSize;  // scale size
+	float errorNorm;  // terrain error % at default quality
 	void UpdVals();
 
 	//  layers	

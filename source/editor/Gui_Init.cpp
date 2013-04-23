@@ -211,6 +211,7 @@ void App::InitGui()
 	Tab(tabsTerLayers, "TabTerLay", tabTerLayer);
 
 	Edt(edTerTriSize, "edTerTriSize", editTerTriSize);
+	Edt(edTerErrorNorm, "edTerErrorNorm", editTerErrorNorm);
 	Edt(edTerLScale, "edTerLScale", editTerLScale);
 	Slv(TerTriSize,	powf((sc->td.fTriangleSize -0.1f)/5.9f, 0.5f));
 	Slv(TerLScale, 0);  sldTerLScale = sl;
@@ -232,13 +233,13 @@ void App::InitGui()
 		txt->setCaption(fToStr(st.Size,0,2));
 	}
 
-	Slv(TerGenScale,powf(pSet->gen_scale   /160.f, 1.f/2.f));  // generate
+	Slv(TerGenScale,powf(pSet->gen_scale /160.f, 1.f/2.f));  // generate
 	Slv(TerGenOfsX, (pSet->gen_ofsx+2.f) /4.f);
 	Slv(TerGenOfsY, (pSet->gen_ofsy+2.f) /4.f);
 	Slv(TerGenOct,  Real(pSet->gen_oct)	/9.f);
 	Slv(TerGenFreq, pSet->gen_freq    /0.7f);
 	Slv(TerGenPers, pSet->gen_persist /0.7f);
-	Slv(TerGenPow,  powf(pSet->gen_pow     /6.f,  1.f/2.f));
+	Slv(TerGenPow,  powf(pSet->gen_pow /6.f,  1.f/2.f));
 
 
 	///  [Layers]  ------------------------------------

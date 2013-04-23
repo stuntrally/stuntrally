@@ -52,6 +52,7 @@ void App::SetGuiFromXmls()
 	tabHmap(0,0);
 	if (edTerTriSize)  edTerTriSize->setCaption(toStr(sc->td.fTriangleSize));
 	editTerTriSize(edTerTriSize);
+	if (edTerErrorNorm)  edTerErrorNorm->setCaption(fToStr(sc->td.errorNorm,2,4));
 	
 	tabTerLayer(tabsTerLayers, 0);  // set 1st
 	_Cmb(cmbParDust, sc->sParDust);	_Cmb(cmbParMud,  sc->sParMud);

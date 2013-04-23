@@ -105,6 +105,13 @@ void App::tabHmap(TabPtr wp, size_t id)
 	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 }
 
+void App::editTerErrorNorm(MyGUI::EditPtr ed)
+{
+	Real r = std::max(0.f, s2r(ed->getCaption()) );
+	sc->td.errorNorm = r;  UpdTerErr();
+}
+
+
 //  - - - -  Hmap tools  - - - -
 const char* App::getHMapNew()
 {

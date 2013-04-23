@@ -253,7 +253,8 @@ bool Scene::LoadXml(String file, bool bTer)
 		a = eTer->Attribute("size");		if (a)  td.iVertsX = s2i(a);
 		a = eTer->Attribute("triangle");	if (a)  td.fTriangleSize = s2r(a);
 
-		//a = eTer->Attribute("terErr");	if (a)  td. = s2i(a);  //...
+		a = eTer->Attribute("errNorm");		if (a)  td.errorNorm = s2i(a);
+
 		//a = eTer->Attribute("shadowMap");	if (a)  td. = s2i(a);
 		//a = eTer->Attribute("blendMap");	if (a)  td. = s2i(a);
 		//a = eTer->Attribute("compositeMap");	if (a)  td. = s2i(a);
@@ -502,6 +503,7 @@ bool Scene::SaveXml(String file)
 	TiXmlElement ter("terrain");
 		ter.SetAttribute("size",		toStrC( td.iVertsX ));
 		ter.SetAttribute("triangle",	toStrC( td.fTriangleSize ));
+		ter.SetAttribute("errNorm",		toStrC( td.errorNorm ));
 		//terErr, shadowMap, blendMap, compositeMap
 
 		const TerLayer* l;
@@ -657,6 +659,7 @@ void TerData::Default()
 	iVertsX = 512*2 +1;
 	fTriangleSize = 1.f;  // scale
 	triplanar1Layer = 8;  // off
+	errorNorm = 1.7;
 
 	for (int i=0; i < ciNumLay; ++i)
 	{	

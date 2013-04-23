@@ -196,7 +196,7 @@ public:
 	char* blendMtr;  // mtr [blendMapSize x blendMapSize]
 protected:
 	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
-	void configureTerrainDefaults(Ogre::Light* l);
+	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
 	float Noise(float x, float zoom, int octaves, float persistance);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
 	//     xa  xb

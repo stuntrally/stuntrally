@@ -130,7 +130,7 @@ void App::togPrvCam()
 		UpdFog();  // restore fog, veget
 		if (oldV)  {  bTrGrUpd = true;  oldV = false;  }
 		pSet->bWeather = oldI;
-		mTerrainGlobals->setMaxPixelError(pSet->terdetail);
+		UpdTerErr();
 
 		sc->camPos = mCameraT->getPosition();
 		sc->camDir = mCameraT->getDirection();

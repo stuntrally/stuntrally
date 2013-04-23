@@ -137,7 +137,7 @@ protected:
 
 	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
 	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
-	void configureTerrainDefaults(Ogre::Light* l);
+	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
 	float Noise(float x, float zoom, int octaves, float persistence);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
 	//     xa  xb
@@ -381,8 +381,8 @@ protected:
 	
 	//  ter size
 	SLV(TerTriSize);  SLV(TerLScale);
-	MyGUI::EditPtr edTerTriSize, edTerLScale;  MyGUI::Slider* sldTerLScale;
-	void editTerTriSize(MyGUI::EditPtr), editTerLScale(MyGUI::EditPtr);
+	MyGUI::EditPtr edTerTriSize, edTerLScale, edTerErrorNorm;  MyGUI::Slider* sldTerLScale;
+	void editTerTriSize(MyGUI::EditPtr), editTerLScale(MyGUI::EditPtr), editTerErrorNorm(MyGUI::EditPtr);
 	void btnTerrainNew(WP), btnTerGenerate(WP), btnTerrainHalf(WP), btnTerrainDouble(WP), btnTerrainMove(WP);
 	const char* getHMapNew();
 	MyGUI::StaticTextPtr valTerLAll;
