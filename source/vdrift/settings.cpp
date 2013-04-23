@@ -79,7 +79,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "graph_detail.anisotropy", anisotropy);		Param(c,w, "graph_detail.view_dist", view_distance);
 	Param(c,w, "graph_detail.ter_detail", terdetail);		Param(c,w, "graph_detail.ter_dist", terdist);
 	Param(c,w, "graph_detail.road_dist", road_dist);		Param(c,w, "graph_detail.tex_size", tex_size);
-	Param(c,w, "graph_detail.ter_mtr", ter_mtr);
+	Param(c,w, "graph_detail.ter_mtr", ter_mtr);			Param(c,w, "graph_detail.ter_tripl", ter_tripl);
 
 	Param(c,w, "graph_par.particles", particles);			Param(c,w, "graph_par.trails", trails);
 	Param(c,w, "graph_par.particles_len", particles_len);	Param(c,w, "graph_par.trail_len", trails_len);
@@ -169,7 +169,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	check_arrow(0), size_arrow(0.2), gauges_type(1),graphs_type(Gh_Fps),
 	//  graphics
 	anisotropy(4),	view_distance(2000), bFog(0),
-	terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2), shaders(0.5),
+	terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2), ter_tripl(0), shaders(0.5),
 	refl_skip(200), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode(1),
 	water_reflect(0), water_refract(0), water_rttsize(0),
 	shadow_type(Sh_Depth), shadow_size(2), shadow_count(3), shadow_dist(3000), shadow_filter(1), lightmap_size(0),

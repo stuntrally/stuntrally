@@ -519,7 +519,13 @@ void App::SetFactoryDefaults()
 	fct.setGlobalSetting("terrain_specular", b2s(pSet->ter_mtr >= 1));
 	fct.setGlobalSetting("terrain_normal",   b2s(pSet->ter_mtr >= 2));
 	fct.setGlobalSetting("terrain_parallax", b2s(pSet->ter_mtr >= 3));
-	fct.setGlobalSetting("terrain_triplanar",b2s(pSet->ter_mtr >= 4));
+	fct.setGlobalSetting("terrain_triplanar1",   b2s(pSet->ter_tripl == 1));
+	fct.setGlobalSetting("terrain_triplanarFull",b2s(pSet->ter_tripl == 2));
+
+	fct.setGlobalSetting("terrain_triplanar1onLayer0", b2s(false));
+	fct.setGlobalSetting("terrain_triplanar1onLayer1", b2s(false));
+	fct.setGlobalSetting("terrain_triplanar1onLayer2", b2s(false));
+	fct.setGlobalSetting("terrain_triplanar1onLayer3", b2s(false));
 
 	fct.setGlobalSetting("water_reflect", b2s(pSet->water_reflect));
 	fct.setGlobalSetting("water_refract", b2s(pSet->water_refract));

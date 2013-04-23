@@ -31,7 +31,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "graph_detail.anisotropy", anisotropy);		Param(c,w, "graph_detail.view_dist", view_distance);
 	Param(c,w, "graph_detail.ter_detail", terdetail);		Param(c,w, "graph_detail.ter_dist", terdist);
 	Param(c,w, "graph_detail.road_dist", road_dist);		Param(c,w, "graph_detail.tex_size", tex_size);
-	Param(c,w, "graph_detail.ter_mtr", ter_mtr);
+	Param(c,w, "graph_detail.ter_mtr", ter_mtr);			Param(c,w, "graph_detail.ter_tripl", ter_tripl);
 
 	Param(c,w, "graph_shadow.dist", shadow_dist);			Param(c,w, "graph_shadow.size", shadow_size);
 	Param(c,w, "graph_shadow.count",shadow_count);			Param(c,w, "graph_shadow.type", shadow_type);
@@ -82,7 +82,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	tracks_view(0), tracks_sort(0), tracks_sortup(0),
 	//  graphics
 	anisotropy(8),	view_distance(3600),
-	terdetail(1.57), terdist(300), road_dist(1.0), tex_size(1), ter_mtr(2),
+	terdetail(1.57), terdist(300), road_dist(1.0), tex_size(1), ter_mtr(2), ter_tripl(0),
 	shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(2), shadow_filter(1),  /*<+*/
 	shaders(0.5), lightmap_size(0),
 	grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(false), imposters_only(false),

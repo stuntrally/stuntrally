@@ -133,7 +133,13 @@ void App::changeShadows()
 	mFactory->setGlobalSetting("terrain_specular", b2s(pSet->ter_mtr >= 1));
 	mFactory->setGlobalSetting("terrain_normal",   b2s(pSet->ter_mtr >= 2));
 	mFactory->setGlobalSetting("terrain_parallax", b2s(pSet->ter_mtr >= 3));
-	mFactory->setGlobalSetting("terrain_triplanar",b2s(pSet->ter_mtr >= 4));
+	mFactory->setGlobalSetting("terrain_triplanar1",   b2s(pSet->ter_tripl == 1));
+	mFactory->setGlobalSetting("terrain_triplanarFull",b2s(pSet->ter_tripl == 2));
+
+	mFactory->setGlobalSetting("terrain_triplanar1onLayer0", b2s(sc->td.triplanar1Layer == 0));
+	mFactory->setGlobalSetting("terrain_triplanar1onLayer1", b2s(sc->td.triplanar1Layer == 1));
+	mFactory->setGlobalSetting("terrain_triplanar1onLayer2", b2s(sc->td.triplanar1Layer == 2));
+	mFactory->setGlobalSetting("terrain_triplanar1onLayer3", b2s(sc->td.triplanar1Layer == 3));
 
 	mFactory->setGlobalSetting("water_reflect", b2s(pSet->water_reflect));
 	mFactory->setGlobalSetting("water_refract", b2s(pSet->water_refract));

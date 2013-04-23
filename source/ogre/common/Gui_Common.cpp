@@ -150,7 +150,6 @@ void App::slShaders(SL)
 		if (v > 0.6)  valShaders->setCaption("High");
 		if (v > 0.8)  valShaders->setCaption("Ultra");
 	}
-		
 	//if (materialFactory) materialFactory->setShaderQuality(v);
 }
 
@@ -164,15 +163,25 @@ void App::slTexSize(SL)
 
 void App::slTerMtr(SL)
 {
-	int v = val*4.f +slHalf;  if (bGI)  pSet->ter_mtr = v;
+	int v = val*3.f +slHalf;  if (bGI)  pSet->ter_mtr = v;
 	if (valTerMtr)
 	{	if (v == 0)  valTerMtr->setCaption("Lowest");  else
 		if (v == 1)  valTerMtr->setCaption("Low");  else
 		if (v == 2)  valTerMtr->setCaption("Normal");  else
-		if (v == 3)  valTerMtr->setCaption("Parallax");  else
-		if (v == 4)  valTerMtr->setCaption("Triplanar");  }
+		if (v == 3)  valTerMtr->setCaption("Parallax");  }
 	//if (bGI)  changeShadows();
 }
+
+void App::slTerTripl(SL)
+{
+	int v = val*2.f +slHalf;  if (bGI)  pSet->ter_tripl = v;
+	if (valTerTripl)
+	{	if (v == 0)  valTerTripl->setCaption("Off");  else
+		if (v == 1)  valTerTripl->setCaption("One");  else
+		if (v == 2)  valTerTripl->setCaption("Full");  }
+	//if (bGI)  changeShadows();
+}
+
 
 
 //  shadows
@@ -256,7 +265,8 @@ void App::GuiInitGraphics()
 	Slv(Anisotropy,	pSet->anisotropy /16.f);
 	Slv(Shaders,	pSet->shaders);
 	Slv(TexSize,	pSet->tex_size /1.f);
-	Slv(TerMtr,		pSet->ter_mtr /4.f);
+	Slv(TerMtr,		pSet->ter_mtr /3.f);
+	Slv(TerTripl,	pSet->ter_tripl /2.f);
 
 	//  trees/grass
 	Slv(Trees,		powf(pSet->gui.trees /4.f, 0.5f));

@@ -37,6 +37,7 @@ App::App(SETTINGS *settings, GAME *game)
 	// gui
 	,mToolTip(0), mToolTipTxt(0), carList(0), trkList(0), resList(0), btRplPl(0)
 	,valAnisotropy(0), valViewDist(0), valTerDetail(0), valTerDist(0), valRoadDist(0)  // detail
+	,valTexSize(0), valTerMtr(0), valTerTripl(0), valAntiAliasing(0)  // detail
 	,valTrees(0), valGrass(0), valTreesDist(0), valGrassDist(0)  // paged
 	,valReflSkip(0), valReflSize(0), valReflFaces(0), valReflDist(0), valWaterSize(0)  // refl
 	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0)//, valShadowFilter(0)  // shadow
@@ -188,13 +189,6 @@ void App::setTranslations()
 	loadingStates.insert(std::make_pair(LS_TREES, String(TR("#{LS_TREES}"))));
 
 	loadingStates.insert(std::make_pair(LS_MISC, String(TR("#{LS_MISC}"))));
-}
-
-void App::recreateCarMtr()
-{
-	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); ++it) {
-		(*it)->RecreateMaterials(); (*it)->setMtrNames();
-	}
 }
 
 void App::destroyScene()

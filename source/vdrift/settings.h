@@ -45,7 +45,7 @@ public:
 	int car_dbgtxtclr, car_dbgtxtcnt;
 
 	//  graphics
-	int anisotropy, tex_size, ter_mtr;  bool bFog;
+	int anisotropy, tex_size, ter_mtr, ter_tripl;  bool bFog;
 	float shaders;
 	float view_distance, terdetail,terdist, road_dist;
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_filter;  eShadowType shadow_type;

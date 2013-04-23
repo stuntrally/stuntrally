@@ -254,7 +254,7 @@ void CarModel::Create(int car)
 
 	CreatePart(ndCar, vPofs, sCar, sCarI, "_body.mesh",     "",  ghost, RV_Car,  &bodyBox,  sMtr[Mtr_CarBody], &pCar->bodymodel.mesh,     bLogInfo);
 
-	vPofs = Vector3(pCar->vInteriorOffset[0],pCar->vInteriorOffset[1],pCar->vInteriorOffset[2]);  //x+ back y+ down z+ right
+	vPofs = Vector3(pCar->interiorOffset[0],pCar->interiorOffset[1],pCar->interiorOffset[2]);  //x+ back y+ down z+ right
 	if (!ghost)
 	CreatePart(ndCar, vPofs, sCar, sCarI, "_interior.mesh", "i", ghost, RV_Car,      0, sMtr[Mtr_CarBody]+"i", &pCar->interiormodel.mesh, bLogInfo);
 
@@ -413,7 +413,7 @@ void CarModel::RecreateMaterials()
 	// if specialised car material (e.g. car_body_FM) exists, use this one instead of e.g. car_body
 	// useful macro for choosing between these 2 variants
 	#define chooseMat(s)  MaterialManager::getSingleton().resourceExists("car"+String(s) + "_"+sDirname) ? "car"+String(s) + "_"+sDirname : "car"+String(s)
-	
+
 	//  ghost car has no interior, particles, trails and uses same material for all meshes
 	if (!ghost)
 	{	sMtr[Mtr_CarBody]     = chooseMat("_body");
@@ -422,7 +422,7 @@ void CarModel::RecreateMaterials()
 	for (int i=0; i < NumMaterials; ++i)
 		sMtr[i] = "car_ghost";
 
-	// copy material to a new material with index
+	//  copy material to a new material with index
 	MaterialPtr mat;
 	for (int i=0; i < 1/*NumMaterials*/; ++i)
 	{

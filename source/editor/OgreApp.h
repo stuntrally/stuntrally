@@ -249,7 +249,7 @@ protected:
 	///  Gui common   --------------------------
 	//  graphics
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);
-	SLV(TexSize);  SLV(TerMtr);  // detail
+	SLV(TexSize);  SLV(TerMtr);  SLV(TerTripl);  // detail
 	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
 	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  //SLV(ShadowFilter); // shadow
 	SLV(WaterSize);  SLV(AntiAliasing); // screen

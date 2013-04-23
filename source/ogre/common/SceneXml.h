@@ -14,7 +14,7 @@ namespace Ogre {  class SceneNode;  class Entity;  }
 
 struct TerLayer		// terrain texture layer
 {
-	bool on;
+	bool on, triplanar;
 	float tiling;   // texture repeat
 	Ogre::String texFile, texNorm;  // textures
 
@@ -48,6 +48,7 @@ public:
 	std::vector<int> layers;  // active only (on)
 	TerLayer layerRoad;  // road[4]+pipe[4]  //todo...
 	void UpdLayers();
+	int triplanar1Layer;  //which should have triplanar most (eg high mountains)
 	
 	//  methods
 	TerData();	void Default();

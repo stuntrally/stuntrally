@@ -289,6 +289,7 @@ bool Scene::LoadXml(String file, bool bTer)
 
 			a = eTex->Attribute("noise");	if (a)  l->noise = s2r(a);
 			a = eTex->Attribute("nOnly");	if (a)  l->bNoiseOnly = s2i(a) > 0;  else  l->bNoiseOnly = true;
+			a = eTex->Attribute("triplanar");	if (a)  l->triplanar = true;  else  l->triplanar = false;
 
 			if (!road && il < td.ciNumLay)
 				td.layersAll[il++] = lay;
@@ -528,6 +529,7 @@ bool Scene::SaveXml(String file)
 			tex.SetAttribute("hSm",		toStrC( l->hSm ));
 			tex.SetAttribute("noise",	toStrC( l->noise ));
 			tex.SetAttribute("nOnly",	l->bNoiseOnly ? 1 : 0);
+			if (l->triplanar)  tex.SetAttribute("triplanar", 1);
 			ter.InsertEndChild(tex);
 		}
 		l = &td.layerRoad;
@@ -654,6 +656,7 @@ void TerData::Default()
 {
 	iVertsX = 512*2 +1;
 	fTriangleSize = 1.f;  // scale
+	triplanar1Layer = 8;  // off
 
 	for (int i=0; i < ciNumLay; ++i)
 	{	
@@ -671,7 +674,7 @@ void TerData::Default()
 	//layers:  1- 230 fps  2- 180 fps  3- 140 fps
 }
 
-TerLayer::TerLayer() : on(true), tiling(4.f),
+TerLayer::TerLayer() : on(true), tiling(4.f), triplanar(false),
 	dust(0.f),dustS(0.2f), mud(0.f), smoke(0.f), tclr(ColourValue::Black),
 	angMin(0.f),angMax(90.f), angSm(20.f),
 	hMin(-300.f),hMax(300.f), hSm(20.f),
@@ -691,11 +694,15 @@ void TerData::UpdVals()
 //------------------------------------------
 void TerData::UpdLayers()
 {
-	layers.clear();
+	layers.clear();  int li = 0;  triplanar1Layer = 8;
 	for (int i=0; i < ciNumLay; ++i)
 	{
 		if (layersAll[i].on)
+		{
+			if (layersAll[i].triplanar)  triplanar1Layer = li;
+			++li;
 			layers.push_back(i);
+		}
 	}
 }
 

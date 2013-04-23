@@ -30,7 +30,15 @@
 #define PARALLAX_SCALE  0.03
 #define PARALLAX_BIAS  -0.04
 
-#define TRIPLANAR  @shGlobalSettingBool(terrain_triplanar) && !RENDER_COMPOSITE_MAP
+#define TRIPLANAR_1     @shGlobalSettingBool(terrain_triplanar1)    && !RENDER_COMPOSITE_MAP
+#define TRIPLANAR_FULL  @shGlobalSettingBool(terrain_triplanarFull) && !RENDER_COMPOSITE_MAP
+#define TRIPLANAR  (TRIPLANAR_1) || (TRIPLANAR_FULL)
+//  1 layer triplanar only
+#define TRIPLANAR1_L0   @shGlobalSettingBool(terrain_triplanar1onLayer0)
+#define TRIPLANAR1_L1   @shGlobalSettingBool(terrain_triplanar1onLayer1)
+#define TRIPLANAR1_L2   @shGlobalSettingBool(terrain_triplanar1onLayer2)
+#define TRIPLANAR1_L3   @shGlobalSettingBool(terrain_triplanar1onLayer3)
+
 
 #if (MRT) || (FOG) || (SHADOWS)
 #define NEED_DEPTH 1
@@ -316,64 +324,49 @@
         float specularAmount = 0;
 #endif
         
-        float uvMul;
-        
         float3 albedo = float3(0,0,0);
         float4 diffuseSpec;
+        float uvMul;
         
         
         // per layer calculations
     @shForeach(@shPropertyString(num_layers))
     
     
+///---------------------------------------------------------------------------------------------
 #if TRIPLANAR
+
+	#if (TRIPLANAR_FULL) || (TRIPLANAR1_L0 && @shIterator == 0) || (TRIPLANAR1_L1 && @shIterator == 1) || (TRIPLANAR1_L2 && @shIterator == 2) || (TRIPLANAR1_L3 && @shIterator == 3)
+		/// triplanar on all  or on this layer
 
 		coord1 = wPos.yz * uvMul@shPropertyString(uv_component_@shIterator);
 		coord2 = wPos.zx * uvMul@shPropertyString(uv_component_@shIterator);
 		coord3 = wPos.xy * uvMul@shPropertyString(uv_component_@shIterator);
 		
-		
         // parallax
         #if PARALLAX_MAPPING
-		if (blend_weights.x > 0) coord1 += TSeyeDir.xy * ( shSample(normalMap@shIterator, coord1).a * PARALLAX_SCALE + PARALLAX_BIAS );
-		if (blend_weights.y > 0) coord2 += TSeyeDir.xy * ( shSample(normalMap@shIterator, coord2).a * PARALLAX_SCALE + PARALLAX_BIAS );
-		if (blend_weights.z > 0) coord3 += TSeyeDir.xy * ( shSample(normalMap@shIterator, coord3).a * PARALLAX_SCALE + PARALLAX_BIAS );
+		if (blend_weights.x > 0)  coord1 += TSeyeDir.xy * ( shSample(normalMap@shIterator, coord1).a * PARALLAX_SCALE + PARALLAX_BIAS );
+		if (blend_weights.y > 0)  coord2 += TSeyeDir.xy * ( shSample(normalMap@shIterator, coord2).a * PARALLAX_SCALE + PARALLAX_BIAS );
+		if (blend_weights.z > 0)  coord3 += TSeyeDir.xy * ( shSample(normalMap@shIterator, coord3).a * PARALLAX_SCALE + PARALLAX_BIAS );
         #endif
 
-		
-		// Sample color maps for each projection, at those UV coords.  
-		col1 = shSample(diffuseMap@shIterator, coord1);
-		if (blend_weights.y > 0)
-		    col2 = shSample(diffuseMap@shIterator, coord2);
-		if (blend_weights.z > 0)
-		    col3 = shSample(diffuseMap@shIterator, coord3);
+		// Sample color maps for each projection, at those UV coords.
+									col1 = shSample(diffuseMap@shIterator, coord1);
+		if (blend_weights.y > 0)	col2 = shSample(diffuseMap@shIterator, coord2);
+		if (blend_weights.z > 0)	col3 = shSample(diffuseMap@shIterator, coord3);
 
-		// Finally, blend the results of the 3 planar projections.  
-		diffuseSpec = col1.xyzw * blend_weights.xxxx +  
-						col2.xyzw * blend_weights.yyyy +  
-						col3.xyzw * blend_weights.zzzz; 
-
-        #if @shIterator == 0
-        // first layer doesn't need a blend map
-        albedo = diffuseSpec.rgb;
-        #else
-        albedo = shLerp(albedo, diffuseSpec.rgb, blendValues@shPropertyString(blendmap_component_@shIterator));
-        #endif
+		// Finally, blend the results of the 3 planar projections.
+		diffuseSpec = col1.xyzw * blend_weights.xxxx +  col2.xyzw * blend_weights.yyyy +  col3.xyzw * blend_weights.zzzz; 
 
         // normal
-        
         #if NORMAL_MAPPING
-		col1 = shSample(normalMap@shIterator, coord1) * 2 - 1;
-		if (blend_weights.y > 0)
-		    col2 = shSample(normalMap@shIterator, coord2) * 2 - 1;
-		if (blend_weights.z > 0)
-		    col3 = shSample(normalMap@shIterator, coord3) * 2 - 1;
-		TSnormal = normalize(col1.xyz * blend_weights.xxx +  
-						col2.xyz * blend_weights.yyy +  
-						col3.xyz * blend_weights.zzz); 
+									col1 = shSample(normalMap@shIterator, coord1) * 2 - 1;
+		if (blend_weights.y > 0)	col2 = shSample(normalMap@shIterator, coord2) * 2 - 1;
+		if (blend_weights.z > 0)	col3 = shSample(normalMap@shIterator, coord3) * 2 - 1;
+		TSnormal = normalize(col1.xyz * blend_weights.xxx +  col2.xyz * blend_weights.yyy +  col3.xyz * blend_weights.zzz);
         #endif
-#else 
-   
+	#else
+		/// no triplanar on layer
         uvMul = uvMul@shPropertyString(uv_component_@shIterator);
 
         // parallax
@@ -383,42 +376,60 @@
         float2 layerUV@shIterator = UV * uvMul;
         #endif
         
-        
-        // albedo
         diffuseSpec = shSample(diffuseMap@shIterator, layerUV@shIterator);
+            
+        // normal
+        #if NORMAL_MAPPING
+        TSnormal = normalize(shSample(normalMap@shIterator, layerUV@shIterator).xyz * 2 - 1);
+        #endif
+	#endif
+
+#else	///  no triplanar
+        uvMul = uvMul@shPropertyString(uv_component_@shIterator);
+
+        // parallax
+        #if PARALLAX_MAPPING
+        float2 layerUV@shIterator = UV * uvMul + TSeyeDir.xy * ( shSample(normalMap@shIterator, UV * uvMul).a * PARALLAX_SCALE + PARALLAX_BIAS );
+        #else
+        float2 layerUV@shIterator = UV * uvMul;
+        #endif
         
+        diffuseSpec = shSample(diffuseMap@shIterator, layerUV@shIterator);
+            
+        // normal
+        #if NORMAL_MAPPING
+        TSnormal = normalize(shSample(normalMap@shIterator, layerUV@shIterator).xyz * 2 - 1);
+        #endif
+#endif
+///---------------------------------------------------------------------------------------------
+
+
+        // albedo
         #if @shIterator == 0
         // first layer doesn't need a blend map
         albedo = diffuseSpec.rgb;
         #else
         albedo = shLerp(albedo, diffuseSpec.rgb, blendValues@shPropertyString(blendmap_component_@shIterator));
         #endif
-    
-    
-        // normal
-        
-        #if NORMAL_MAPPING
-        TSnormal = normalize(shSample(normalMap@shIterator, layerUV@shIterator).xyz * 2 - 1);
-        #endif
-#endif
 
-        #if NORMAL_MAPPING
+
+	#if NORMAL_MAPPING
         NdotL = max(dot(TSnormal, TSlightDir), 0);
         specular = pow(max(dot(TSnormal, TShalfAngle), 0), SPECULAR_EXPONENT) * diffuseSpec.a;
         
         #if @shIterator == 0
-        litRes.x = NdotL;
-        #if SPECULAR
-        litRes.y = specular;
-        #endif
+	        litRes.x = NdotL;
+		    #if SPECULAR
+			litRes.y = specular;
+			#endif
         #else
-        litRes.x = shLerp (litRes.x, NdotL, blendValues@shPropertyString(blendmap_component_@shIterator));
-        #if SPECULAR
-        litRes.y = shLerp (litRes.y, specular, blendValues@shPropertyString(blendmap_component_@shIterator));
-        #endif
+			litRes.x = shLerp (litRes.x, NdotL, blendValues@shPropertyString(blendmap_component_@shIterator));
+			#if SPECULAR
+			litRes.y = shLerp (litRes.y, specular, blendValues@shPropertyString(blendmap_component_@shIterator));
+			#endif
         #endif
         
-        #else
+	#else
         
         #if @shIterator == 0
         specularAmount = diffuseSpec.a;
@@ -426,20 +437,19 @@
         specularAmount = shLerp (specularAmount, diffuseSpec.a, blendValues@shPropertyString(blendmap_component_@shIterator));
         #endif
         
-        #endif
+	#endif
         
         
     @shEndForeach
+
         
         shOutputColour(0) = float4(1,1,1,1);
        
-
         shOutputColour(0).rgb *= albedo;
         
         
         
-        // Lighting 
-
+        // Lighting
 
 #if !NORMAL_MAPPING
         // no normal mapping - light all layers at once
