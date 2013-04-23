@@ -30,15 +30,12 @@
 #define PARALLAX_SCALE  0.03
 #define PARALLAX_BIAS  -0.04
 
-#define TRIPLANAR_1     @shGlobalSettingBool(terrain_triplanar1)    && !RENDER_COMPOSITE_MAP
-#define TRIPLANAR_FULL  @shGlobalSettingBool(terrain_triplanarFull) && !RENDER_COMPOSITE_MAP
-#define TRIPLANAR  (TRIPLANAR_1) || (TRIPLANAR_FULL)
+#define TRIPLANAR_TYPE @shGlobalSettingString(terrain_triplanarType)
+#define TRIPLANAR_FULL (TRIPLANAR_TYPE == 2)
+#define TRIPLANAR_1 (TRIPLANAR_TYPE == 1)
+#define TRIPLANAR  (TRIPLANAR_TYPE) && !RENDER_COMPOSITE_MAP
 //  1 layer triplanar only
-#define TRIPLANAR1_L0   @shGlobalSettingBool(terrain_triplanar1onLayer0)
-#define TRIPLANAR1_L1   @shGlobalSettingBool(terrain_triplanar1onLayer1)
-#define TRIPLANAR1_L2   @shGlobalSettingBool(terrain_triplanar1onLayer2)
-#define TRIPLANAR1_L3   @shGlobalSettingBool(terrain_triplanar1onLayer3)
-
+#define TRIPLANAR_LAYER @shGlobalSettingBool(terrain_triplanarLayer)
 
 #if (MRT) || (FOG) || (SHADOWS)
 #define NEED_DEPTH 1
@@ -336,7 +333,7 @@
 ///---------------------------------------------------------------------------------------------
 #if TRIPLANAR
 
-	#if (TRIPLANAR_FULL) || (TRIPLANAR1_L0 && @shIterator == 0) || (TRIPLANAR1_L1 && @shIterator == 1) || (TRIPLANAR1_L2 && @shIterator == 2) || (TRIPLANAR1_L3 && @shIterator == 3)
+	#if (TRIPLANAR_FULL) || (TRIPLANAR_LAYER == @shIterator)
 		/// triplanar on all  or on this layer
 
 		coord1 = wPos.yz * uvMul@shPropertyString(uv_component_@shIterator);
