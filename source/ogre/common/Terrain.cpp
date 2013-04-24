@@ -223,9 +223,9 @@ void App::configureTerrainDefaults(Light* l)
 	mTerrainGlobals->setCompositeMapDiffuse(l->getDiffuseColour());  }
 	//mTerrainGlobals->setShadowVal(0.6f);  //+ new, for compositeMap shadow
 
-	mTerrainGlobals->setCompositeMapSize(sc->td.iTerSize-1);  // par,..  1k
-	mTerrainGlobals->setCompositeMapDistance(pSet->terdist);  //100
-	mTerrainGlobals->setLightMapSize(ciShadowSizesA[pSet->lightmap_size]);  //256, 2k
+	mTerrainGlobals->setCompositeMapSize(sc->td.iTerSize-1);  // par, ..1k
+	mTerrainGlobals->setCompositeMapDistance(pSet->terdist);  //400
+	mTerrainGlobals->setLightMapSize(ciShadowSizesA[pSet->lightmap_size]);  //256 ..2k
 	mTerrainGlobals->setSkirtSize(1);  //`
 	//matProfile->setLightmapEnabled(false);
 
@@ -238,8 +238,8 @@ void App::configureTerrainDefaults(Light* l)
 	// not 33 65^, _65 129 makes less batches
 	di.minBatchSize = 65;
 	di.maxBatchSize = Terrain::TERRAIN_MAX_BATCH_SIZE;  // 129
-	LogO("Terrain size: "+toStr(sc->td.iTerSize)+" err:"+fToStr(mTerrainGlobals->getMaxPixelError(),2,4)+
-		"  ter max:"+toStr(Terrain::TERRAIN_MAX_BATCH_SIZE)+"  max: "+toStr(di.maxBatchSize)+"  min: "+toStr(di.minBatchSize));
+	LogO("Terrain size: "+toStr(sc->td.iTerSize)+"  err:"+fToStr(mTerrainGlobals->getMaxPixelError(),2,4)+
+		"  batch: "+toStr(di.minBatchSize)+" "+toStr(di.maxBatchSize)+" /"+toStr(Terrain::TERRAIN_MAX_BATCH_SIZE));
 
 	//  textures  iBlendMaps-
 	int ls = sc->td.layers.size();
