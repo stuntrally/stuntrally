@@ -35,7 +35,7 @@
 #define TRIPLANAR_1 (TRIPLANAR_TYPE == 1)
 #define TRIPLANAR  (TRIPLANAR_TYPE) && !RENDER_COMPOSITE_MAP
 //  1 layer triplanar only
-#define TRIPLANAR_LAYER @shGlobalSettingBool(terrain_triplanarLayer)
+#define TRIPLANAR_LAYER @shGlobalSettingString(terrain_triplanarLayer)
 
 #if (MRT) || (FOG) || (SHADOWS)
 #define NEED_DEPTH 1
