@@ -1202,10 +1202,6 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipTerVertCount}"/>
 					<Widget type="TabItem" skin="" position="2 24 334 -8">
-						<Property key="Caption" value="64"/>
-						<UserString key="RelativeTo" value="EditorWnd"/>
-					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 334 -8">
 						<Property key="Caption" value="128"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 					</Widget>
@@ -1239,7 +1235,7 @@
 					<Property key="TextColour" value="0.5 0.6 0.4"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="200 146 56 24" name="edTerErrorNorm">
+				<Widget type="EditBox" skin="EditBox" position="168 146 56 24" name="edTerErrorNorm">
 					<Property key="Colour" value="0.5 0.6 0.4"/>
 					<Property key="TextColour" value="0.7 0.8 0.6"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
