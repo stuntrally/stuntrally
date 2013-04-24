@@ -54,6 +54,9 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 	Quaternion  orient = orientGoal * qO;
 	Vector3  ofs = orient * ca->mOffset,  goalLook = posGoal + ofs;
 
+	first = iFirst < 2;  ///par few first frames after reset
+	if (iFirst < 10)  // after reset
+	{	++iFirst;	mDistReduce = 0.f;  mATilt = 0.f;  }
 
 	///  Camera Tilt from terrain/road slope under car
 	//-------------------------------------------------------------------------------------------
@@ -162,7 +165,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 		{	Quaternion  orient = orientGoal * qR;
 			Quaternion  ory;  ory.FromAngleAxis(orient.getYaw(), Vector3::UNIT_Y);
 
-			if (first)  {  qq = ory;  first = false;  }
+			if (first)  {  qq = ory;  }
 			else  qq = orient.Slerp(ca->mSpeed * time, qq, ory, true);
 
 			//  smooth dist from vel
@@ -200,7 +203,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 			mAPitch += (ca->mPitch - mAPitch) * dtmul;
 			mAYaw += (ca->mYaw - mAYaw) * dtmul;
 			
-			if (first)  {  Pos = goalPos;  mAPitch = ca->mPitch;  mAYaw = ca->mYaw;  first = false;  }
+			if (first)  {  Pos = goalPos;  mAPitch = ca->mPitch;  mAYaw = ca->mYaw;  }
 			camPosFinal = Pos;
 			camRotFinal = Quaternion(Degree(mAYaw),Vector3(0,1,0)) * Quaternion(Degree(mAPitch),Vector3(1,0,0));
 			manualOrient = true;
@@ -215,7 +218,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 			camPosFinal = pos + ofs;
 		
 			goalLook = posGoal + ofs;
-			if (first)	{	mLook = goalLook;  first = false;  }
+			if (first)	{	mLook = goalLook;  }
 
 			addLook = (goalLook - mLook) * dtmul;//Rot;
 			mLook += addLook;
@@ -238,21 +241,25 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 	//Vector3 d = camRotFinal * Vector3::UNIT_Z;  d.normalise();
 	Vector3 d = camPosFinal - p;  d.normalise();
 	MATHVECTOR<float,3> pos1(p.x,-p.z,p.y), dir(d.x,-d.z,d.y);  //dir = dir.Normalize();
-		
-	COLLISION_CONTACT ct;
-	float maxLen = (p - camPosFinal).length();  //cam near
-	world->CastRay(pos1, dir, maxLen,chassis, ct,  0,0, true, true, true/*+*/);
-	//dbgLen = -maxLen;
-
-	if (ct.GetColObj())
+	
+	if (!first)
 	{
-		float len = ct.GetDepth();  //dbgLen = len;
-		if (ct.GetDepth() < maxLen)
+		COLLISION_CONTACT ct;
+		float maxLen = (p - camPosFinal).length();  //cam near
+		world->CastRay(pos1, dir, maxLen,chassis, ct,  0,0, true, true, true/*+*/);
+		//dbgLen = -maxLen;
+	
+		if (ct.GetColObj())
 		{
-			Real dist = maxLen - len;
-			if (dist > mDistReduce)
-				mDistReduce = dist;
-	}	}
+			float len = ct.GetDepth();  //dbgLen = len;
+			len -= 0.2f + ct.GetNormal()[2];  ///par  normal up, flat terrain, move closer
+			if (len < maxLen)
+			{
+				Real dist = maxLen - len;
+				if (dist > mDistReduce)
+					mDistReduce = dist;
+		}	}
+	}
 
 	//  save result in out posInfo
 	posOut->camPos = mDistReduce > 0.001f ? (camPosFinal - d * mDistReduce) : camPosFinal;
@@ -289,11 +296,8 @@ void FollowCamera::Apply(const PosInfo& posIn)
 	//boost::this_thread::sleep(boost::posix_time::milliseconds(rand()%20));
 	if (!mCamera)  return;
 
-	#if 0  //todo: ter check..
-	mCamera->setPosition( moveAboveTerrain(posIn.camPos) );
-	#else
+	//mCamera->setPosition( moveAboveTerrain(posIn.camPos) );
 	mCamera->setPosition(posIn.camPos);
-	#endif
 	mCamera->setOrientation(posIn.camRot);
 }
 
@@ -457,7 +461,7 @@ void FollowCamera::updAngle()
 	miCurrent = std::max(0, std::min(miCount-1, miCurrent));
 
 	CameraAngle* c = mCameraAngles[miCurrent];
-	if (ca->mType != c->mType)	first = true;  // changed type, reset
+	if (ca->mType != c->mType)	First();  // changed type, reset
     *ca = *c;  // copy
     mDistReduce = 0.f;  //reset
 
@@ -512,13 +516,18 @@ void FollowCamera::setCamera(int ang)
 //  ctors
 
 FollowCamera::FollowCamera(Camera* cam,	SETTINGS* pSet1) :
-	ovInfo(0),ovName(0), first(true), ca(0),
+	ovInfo(0),ovName(0), first(true), iFirst(0), ca(0),
     mCamera(cam), mTerrain(0), chassis(0), pSet(pSet1),
     mLook(Vector3::ZERO), mPosNodeOld(Vector3::ZERO), mVel(0),
     mAPitch(0.f),mAYaw(0.f), mATilt(0.f), mDistReduce(0.f)
 { 
 	ca = new CameraAngle();
 	ss[0]=0;
+}
+
+void FollowCamera::First()
+{
+	first = true;  iFirst = 0;
 }
 
 FollowCamera::~FollowCamera()

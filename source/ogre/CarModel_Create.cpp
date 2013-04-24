@@ -39,7 +39,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 	mCamera(0), pReflect(0), pApp(app), color(1,1,0),
 	bLightMapEnabled(true), bBraking(false),
 	hideTime(1.f), mbVisible(true),
-	iCamNextOld(0), bLastChkOld(0), bWrongChk(0),
+	iCamNextOld(0), bLastChkOld(0), bWrongChk(0),  iFirst(0),
 	angCarY(0), vStartPos(0,0,0), pNickTxt(0),
 	all_subs(0), all_tris(0)  //stats
 {
@@ -379,7 +379,7 @@ void CarModel::Create(int car)
 			whTrl[w]->setTrailLength(90 * pSet->trails_len);  //30
 			whTrl[w]->setInitialColour(0, 0.1f,0.1f,0.1f, 0);
 			whTrl[w]->setColourChange(0, 0.0,0.0,0.0, /*fade*/0.08f * 1.f / pSet->trails_len);
-			whTrl[w]->setInitialWidth(0, 0.2f);  //0.16f  0.18 0.2
+			whTrl[w]->setInitialWidth(0, 0.f);
 		}
 	}
 

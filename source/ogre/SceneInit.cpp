@@ -495,13 +495,11 @@ void App::LoadMisc()  // 9 last
 	
 	// Camera settings
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); ++it)
+	{	(*it)->First();
 		if ((*it)->fCam)
-		{	(*it)->fCam->first = true;
-			(*it)->fCam->mTerrain = mTerrainGroup;
-			#if 0
-			(*it)->fCam->mWorld = &(pGame->collision);
-			#endif
-		}
+		{	(*it)->fCam->mTerrain = mTerrainGroup;
+			//(*it)->fCam->mWorld = &(pGame->collision);
+	}	}
 	
 	try {
 	TexturePtr tex = Ogre::TextureManager::getSingleton().getByName("waterDepth.png");
@@ -678,7 +676,7 @@ void App::CreateRoad()
 	// Camera settings
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		if ((*it)->fCam)
-		{	(*it)->fCam->first = true;
+		{	(*it)->fCam->First();
 			(*it)->fCam->mTerrain = mTerrainGroup;
 			#if 0
 			(*it)->fCam->mWorld = &(pGame->collision);

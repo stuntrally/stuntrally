@@ -75,9 +75,11 @@ public:
 
 
 	//  Camera Angles
-	CameraAngle* ca;  bool first;
+	CameraAngle* ca;
 	int miCount, miCurrent;
 	std::vector<CameraAngle*> mCameraAngles;
+	//  first (after change, reset etc)
+	bool first;  int iFirst;  void First();
 
 	bool loadCameras();  void saveCamera(), Destroy();
 	void updAngle(), incCur(int dir);

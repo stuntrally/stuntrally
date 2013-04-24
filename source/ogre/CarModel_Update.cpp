@@ -370,8 +370,12 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 			}
 			//float al = 1.f; // test  //squeal-
 			float al = ((pipe ? 0.f : trlC) + 0.6f * std::min(1.f, 0.7f * wht[w]) ) * onGr;  // par+
-			if (whTrl[w])	whTrl[w]->setInitialColour(0,
+			if (whTrl[w])
+			{	whTrl[w]->setInitialColour(0,
 				lay.tclr.r,lay.tclr.g,lay.tclr.b, lay.tclr.a * al/**/);
+				if (iFirst > 10)  //par
+					whTrl[w]->setInitialWidth(0, 0.2f);  //par, from car.. tire width
+			}
 		}
 	}
 
@@ -400,22 +404,30 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		}
 	}
 	
+	if (iFirst <= 10)  ++iFirst;  //par
+	
 	UpdateKeys();
 }
 
 //-------------------------------------------------------------------------------------------------------
+void CarModel::First()
+{
+	if (fCam)  fCam->First();
+	iFirst = 0;
+
+	for (int w=0; w < 4; ++w)  // hide trails
+	if (whTrl[w])
+		whTrl[w]->setInitialWidth(0, 0.f);
+}
+
 void CarModel::UpdateKeys()
 {
 	if (!pCar)  return;
 
 	///  goto last checkp - reset cam
 	if (pCar->bLastChk && !bLastChkOld)
-	{
-		if (fCam)
-			fCam->first = true;
-		else
-			LogO("no fCam");
-	}
+		First();
+		
 	bLastChkOld = pCar->bLastChk;
 
 	///  change Cameras  ---------------------------------
@@ -438,8 +450,6 @@ void CarModel::UpdateKeys()
 					it != pApp->mSplitMgr->mViewports.end(); ++it)
 					(*it)->setVisibilityMask(visMask);
 			}
-
-
 		}
 	}
 	iCamNextOld = pCar->iCamNext;
@@ -453,7 +463,7 @@ void CarModel::UpdateKeys()
 void CarModel::UpdateLightMap()
 {
 	MaterialPtr mtr;
-	for (int i=0; i < NumMaterials; i++)
+	for (int i=0; i < NumMaterials; ++i)
 	{
 		mtr = MaterialManager::getSingleton().getByName(sMtr[i]);
 		if (!mtr.isNull())
@@ -462,16 +472,13 @@ void CarModel::UpdateLightMap()
 			{	Technique* tech = techIt.getNext();
 				Technique::PassIterator passIt = tech->getPassIterator();
 				while (passIt.hasMoreElements())
-				{
-					Pass* pass = passIt.getNext();
-
+				{	Pass* pass = passIt.getNext();
 					if (pass->hasFragmentProgram())
 					{
 						GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
 						params->setIgnoreMissingParams(true); // don't throw exception if material doesnt use lightmap
 						params->setNamedConstant("enableTerrainLightMap", bLightMapEnabled ? Real(1) : Real(0));
-					}
-	}	}	}	}
+	}	}	}	}	}
 }
 
 void CarModel::RefreshBrakingMaterial()
@@ -490,7 +497,6 @@ void CarModel::RefreshBrakingMaterial()
 				while (tusIt.hasMoreElements())
 				{
 					TextureUnitState* tus = tusIt.getNext();
-
 					if (tus->getName() == "0")
 						tus->setTextureName( texName );
 	}	}	}	}
@@ -567,25 +573,21 @@ void CarModel::ChangeClr(int car)
 	float c_h = pSet->gui.car_hue[car], c_s = pSet->gui.car_sat[car],
 	      c_v = pSet->gui.car_val[car], gloss = pSet->gui.car_gloss[car];
 	color.setHSB(1-c_h, c_s, c_v);  //set, mini pos clr
+
 	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
 	if (!mtr.isNull())
-	{
-		Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+	{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
 		while (techIt.hasMoreElements())
 		{	Technique* tech = techIt.getNext();
 			Technique::PassIterator passIt = tech->getPassIterator();
 			while (passIt.hasMoreElements())
-			{
-				Pass* pass = passIt.getNext();
+			{	Pass* pass = passIt.getNext();
 				if (pass->hasFragmentProgram())
 				{
 					GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
 					params->setNamedConstant("carColour", color);
 					params->setNamedConstant("glossiness", 1 - gloss);
-				}
-			}
-		}
-	}
+	}	}	}	}
 
 	if (pNickTxt)
 		pNickTxt->setTextColour(MyGUI::Colour(color.r,color.g,color.b));

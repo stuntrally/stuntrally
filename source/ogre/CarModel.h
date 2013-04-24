@@ -95,6 +95,10 @@ public:
 	//  Call this every vdrift substep with new position info
 	void Update(PosInfo& posInfo, PosInfo& posInfoCam, float time);
 	void UpdateKeys();  // for camera X,C, last chk F12
+
+	//  reset camera after pos change etc	
+	void First();
+	int iFirst;
 	
 	//  Car color, After these values are changed, ChangeClr() should be called
 	Ogre::ColourValue color;  // for minimap pos tri color  //float hue, sat, val;
@@ -157,7 +161,9 @@ private:
 	enum EParTypes {  PAR_Smoke=0, PAR_Mud, PAR_Dust, PAR_Water, PAR_MudHard, PAR_MudSoft, PAR_ALL };
 	Ogre::ParticleSystem* par[PAR_ALL][4];
 	Ogre::ParticleSystem* pb[2], *ph;  // boost-car rear, sparks-world hit
+public:
 	Ogre::RibbonTrail* whTrl[4];  // tire trail
+private:
 	Ogre::Real wht[4];  // spin time (approx tire temp.)
 	
 	//  Nodes

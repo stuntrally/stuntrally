@@ -160,7 +160,7 @@ void App::newPoses(float time)  // time only for camera update
 			bool ok = rewind.GetFrame(gtime, &rf, c);
 
 			pCar->SetPosRewind(rf.pos, rf.rot, rf.vel, rf.angvel);
-			carModels[c]->fCam->first = true;
+			carModels[c]->First();
 		}
 		else  // save data
 		{

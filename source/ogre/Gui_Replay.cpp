@@ -23,7 +23,7 @@ void App::slRplPosEv(SL)  // change play pos
 	pGame->timer.SetReplayTime(0, v);
 
 	FollowCamera* fCam = (*carModels.begin())->fCam;
-	fCam->first = true;  // instant change
+	fCam->First();  // instant change
 	//for (int i=0; i < 10; ++i)
 	//	fCam->update(abs(v-oldt)/10.f, 0);  //..?
 }

@@ -130,7 +130,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			{
 				CarModel* cm = carModels[c];
 				if (cm->pCar)  cm->pCar->bResetPos = true;
-				if (cm->fCam)  cm->fCam->first = true;
+				cm->First();
 				cm->ResetChecks();
 				cm->iWonPlace = 0;  cm->iWonPlaceOld = 0;
 				cm->iWonMsgTime = 0.f;
