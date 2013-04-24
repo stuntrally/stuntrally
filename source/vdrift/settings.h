@@ -4,7 +4,7 @@
 #include "configfile.h"
 
 
-#define SET_VER  1900  // 1.9
+#define SET_VER  2000  // 2.0
 
 
 enum eGraphType  {
