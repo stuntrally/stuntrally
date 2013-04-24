@@ -62,13 +62,13 @@ For full features list check: http://code.google.com/p/vdrift-ogre/wiki/Features
 
 Hardware requirements
 
-The recommended minimum hardware is:
+The minimum hardware is:
 a CPU with 2 cores, and GPU: GeForce 9600 GT or Radeon HD 3870,
-with Shader Model 3.0 supported.
+with Shader Model 3.0 supported and 256 MB GPU RAM.
 
 It is possible to run on older,
 (e.g. on 1 core CPU and GeForce 7600 GT, with 30 fps),
-but integrated GPUs (or laptops) can't handle the game well.
+but integrated GPUs (or laptops) can't handle the game well (or at all).
 
 ----------------------------------------------------------------------------------
 
@@ -113,8 +113,8 @@ For newest sources and how to compile them check
 project's Wiki page [Compiling].
 
 We are using CMake and C++.
-Car simulation is done by VDrift, a great game by itself (also using Bullet).
-Rendering is done by OGRE, trees/grass by PagedGeometry, Gui by MyGUI.
+Car simulation is done by VDrift also using bullet. Rendering by OGRE.
+Trees/grass by PagedGeometry, Gui by MyGUI, materials managed by shiny.
 
 -- Currently these are used (and need to build before game):
 -- newer versions can be used
@@ -124,6 +124,7 @@ Boost 1.43
 
 SDL-1.2.14
 libvorbis-1.2.3, libogg-1.1.4
+ENet 1.3.x
 
 -- These are included in Source (and compiled with project):
 Bullet 2.79 (need this version)
