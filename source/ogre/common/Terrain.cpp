@@ -233,12 +233,13 @@ void App::configureTerrainDefaults(Light* l)
 	Terrain::ImportData& di = mTerrainGroup->getDefaultImportSettings();
 	di.terrainSize = sc->td.iTerSize; // square []-
 	di.worldSize = sc->td.fTerWorldSize;  //di.inputScale = td.Hmax;
-	di.minBatchSize = 33; //17;   //17 o: 33   3 5 9 17 33 65 129
-	di.maxBatchSize = std::min(65, sc->td.iTerSize); //65;  //65 size of one tile in vertices
-	//const uint16 numPages = 4;  // 2^n
-	//const uint16 numLods = 4;  // 1..8
-	//di.maxBatchSize = (TERRAIN_SIZE-1) / numPages +1;
-	//di.minBatchSize = (di.maxBatchSize-1) >> numLods +1;
+	//di.minBatchSize = 33;  // 17 33 65 129
+	//di.maxBatchSize = std::min(65, sc->td.iTerSize);  // 65 size of one tile in vertices
+	// not 33 65^, _65 129 makes less batches
+	di.minBatchSize = 65;
+	di.maxBatchSize = Terrain::TERRAIN_MAX_BATCH_SIZE;  // 129
+	LogO("Terrain size: "+toStr(sc->td.iTerSize)+" err:"+fToStr(mTerrainGlobals->getMaxPixelError(),2,4)+
+		"  ter max:"+toStr(Terrain::TERRAIN_MAX_BATCH_SIZE)+"  max: "+toStr(di.maxBatchSize)+"  min: "+toStr(di.minBatchSize));
 
 	//  textures  iBlendMaps-
 	int ls = sc->td.layers.size();
