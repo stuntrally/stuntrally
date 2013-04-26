@@ -565,7 +565,9 @@ void App::NewGameDoLoad()
 	{
 		// Loading finished
 		bLoading = false;
-		//.LoadingOff();
+		#ifdef DEBUG  //todo: doesnt hide later, why?
+		LoadingOff();
+		#endif
 		mLoadingBar->mLoadingBarElement->setWidth( mLoadingBar->mProgressBarMaxSize );  // 100 %
 				
 		ShowHUD();

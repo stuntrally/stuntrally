@@ -89,15 +89,21 @@ void App::createScene()  // once, init
 	{	//  foreach track
 		std::string trk = tracksXml.trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
 		Scene sc;  sc.LoadXml(path +"scene.xml");
-		//sc.SaveXml(path +"scene1.xml");  // resave
-		//SplineRoad rd(this);  rd.LoadFile(path+"road.xml");
-		//rd.SaveFile(path+"road1.xml");  // resave
 		for (int l=0; l < Scene::ciNumPgLay; ++l)
 		{
-			const PagedLayer& lay = sc.pgLayersAll[l];
+			PagedLayer& lay = sc.pgLayersAll[l];
 			const String& s = lay.name;  //.mesh
+				
+			//  checks
 			if (!s.empty())
 			{
+				//  rescale for pagedgeom
+				/**if (s.substr(0,3)=="fir")
+				{
+					lay.minScale *= 10.f;  lay.maxScale *= 10.f;
+					lay.windFx *= 0.1f;  lay.windFy *= 0.1f;
+				}/**/
+
 				if (lay.on && !objs.Find(s) && noCol[s]==0)
 				{	noCol[s] = 1;
 					LogO("All: " + trk + "  no collision.xml for  " + s);
@@ -111,6 +117,9 @@ void App::createScene()  // once, init
 				}
 				//if (lay.maxScale > 4.f)   LogO("All: " + trk + "  scale > 4  model  "   + s + "  val " + fToStr(lay.maxScale,2,4));
 		}	}
+		sc.SaveXml(path +"scene.xml");  /// resave
+		//SplineRoad rd(this);  rd.LoadFile(path+"road.xml");
+		//rd.SaveFile(path+"road1.xml");  // resave
 	}
 	
 	ti.update();  dt = ti.dt * 1000.f;  /// time
@@ -181,7 +190,7 @@ void App::NewCommon(bool onlyTerVeget)
 		DestroyObjects(true);
 		DestroyFluids();
 	}
-
+		
 	//  terrain
 	terrain = 0;
 	if (mTerrainGroup)

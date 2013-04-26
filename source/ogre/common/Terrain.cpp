@@ -220,9 +220,8 @@ void App::configureTerrainDefaults(Light* l)
 	if (l)  {
 	mTerrainGlobals->setLightMapDirection(l->getDerivedDirection());
 	mTerrainGlobals->setCompositeMapAmbient(mSceneMgr->getAmbientLight());
-	mTerrainGlobals->setCompositeMapDiffuse(l->getDiffuseColour());  }
-	//mTerrainGlobals->setShadowVal(0.6f);  //+ new, for compositeMap shadow
-
+	mTerrainGlobals->setCompositeMapDiffuse(l->getDiffuseColour());
+	}
 	mTerrainGlobals->setCompositeMapSize(sc->td.iTerSize-1);  // par, ..1k
 	mTerrainGlobals->setCompositeMapDistance(pSet->terdist);  //400
 	mTerrainGlobals->setLightMapSize(ciShadowSizesA[pSet->lightmap_size]);  //256 ..2k

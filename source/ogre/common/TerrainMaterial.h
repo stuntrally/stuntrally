@@ -37,6 +37,7 @@ public:
 
 	private:
 		sh::MaterialInstance* mMaterial;
+		Ogre::String mMatName, mMatNameComp;
 
 		void createMaterial (const Ogre::String& matName, const Ogre::Terrain* terrain, bool renderCompositeMap);
 
