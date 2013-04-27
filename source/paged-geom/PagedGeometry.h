@@ -194,7 +194,7 @@ public:
 	\brief Sets the output directory for the imposter pages
 	*/
 	void setTempDir(Ogre::String dir);
-	Ogre::String getTempdir() { return this->tempdir; };
+	Ogre::String getTempDir() { return this->tempdir; };
 
 	/**
 	\brief Gets the camera which is used to calculate levels of detail.

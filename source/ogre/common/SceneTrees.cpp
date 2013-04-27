@@ -53,13 +53,12 @@ void App::CreateTrees()
 	imgRoadSize = imgRoad.getWidth();  // square[]
 		
 	// remove old BinFolder's (paged geom temp resource groups)
-	if (ResourceGroupManager::getSingleton().resourceGroupExists("BinFolder"))
+	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
+	if (resMgr.resourceGroupExists("BinFolder"))
 	{
-		StringVectorPtr locations = ResourceGroupManager::getSingleton().listResourceLocations("BinFolder");
+		StringVectorPtr locations = resMgr.listResourceLocations("BinFolder");
 		for (StringVector::const_iterator it=locations->begin(); it!=locations->end(); ++it)
-		{
-			ResourceGroupManager::getSingleton().removeResourceLocation( (*it), "BinFolder" );
-		}
+			resMgr.removeResourceLocation( (*it), "BinFolder" );
 	}
 
 	using namespace Forests;
@@ -123,7 +122,7 @@ void App::CreateTrees()
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time Grass: ") + toStr(dt) + " ms");
-
+	
 
 	//---------------------------------------------- Trees ----------------------------------------------
 	if (fTrees > 0.f)
@@ -139,6 +138,7 @@ void App::CreateTrees()
 		boost::filesystem::create_directory(PATHMANAGER::CacheDir() + "/" + sc->sceneryId);
 		trees->setTempDir(PATHMANAGER::CacheDir() + "/" + sc->sceneryId + "/");
 
+		//ImpostorPage* ipg = 0;
 		if (!pSet->imposters_only)
 		{
 			if (bWind)
@@ -146,7 +146,10 @@ void App::CreateTrees()
 			else trees->addDetailLevel<BatchPage>	 (sc->trDist * pSet->trees_dist, 0);
 		}
 		if (pSet->use_imposters)
+		{
 			trees->addDetailLevel<ImpostorPage>(sc->trDistImp * pSet->trees_dist, 0);
+			resMgr.addResourceLocation(trees->getTempDir(), "FileSystem", "BinFolder");
+		}
 
 		TreeLoader2D* treeLoader = new TreeLoader2D(trees, tbnd);
 		trees->setPageLoader(treeLoader);
@@ -164,15 +167,34 @@ void App::CreateTrees()
 		for (size_t l=0; l < sc->pgLayers.size(); ++l)
 		{
 			PagedLayer& pg = sc->pgLayersAll[sc->pgLayers[l]];
-			String file = pg.name;
-			if (!ResourceGroupManager::getSingleton().resourceExistsInAnyGroup(file))
-				file = "sphere.mesh";  // if not found
+			String file = pg.name, fpng = file+".png";
 
 			Entity* ent = mSceneMgr->createEntity(file);
 			ent->setVisibilityFlags(RV_Vegetation);  ///vis+  disable in render targets
 			if (pg.windFx > 0.f)  {
 				trees->setCustomParam(ent->getName(), "windFactorX", pg.windFx);
 				trees->setCustomParam(ent->getName(), "windFactorY", pg.windFy);  }
+
+
+			if (!resMgr.resourceExistsInAnyGroup(file))
+				file = "sphere.mesh";  // if not found, put white sphere
+			else
+			if (pSet->use_imposters)  /// preload impostor textures
+			{
+				if (!resMgr.resourceExistsInAnyGroup(fpng))
+				{
+					ImpostorPage group(mSceneMgr, trees);
+					ImpostorTexture* it = new ImpostorTexture(&group, ent, true);  // only to renderTextures()
+					delete it;
+				}
+				if (resMgr.resourceExistsInAnyGroup(fpng))
+				try
+				{	TextureManager::getSingleton().load(fpng, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);  ///T png first
+					resMgr.declareResource(fpng, "Texture", "BinFolder");  // preload
+				}catch (Ogre::Exception&)
+				{	}
+			}			
+
 
 			///  collision object
 			const BltCollision* col = objs.Find(pg.name);
@@ -319,6 +341,13 @@ void App::CreateTrees()
 				#endif
 			}
 		}
+		if (pSet->use_imposters)
+		{
+			resMgr.initialiseResourceGroup("BinFolder");
+			resMgr.loadResourceGroup("BinFolder");
+		}
+		trees->update();
+		
 		LogO(String("***** Vegetation objects count: ") + toStr(cntr) + "  shapes: " + toStr(cntshp));
 	}
 	//imgRoadSize = 0;

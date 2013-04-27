@@ -387,8 +387,8 @@ unsigned long ImpostorTexture::GUID = 0;
 
 //Do not use this constructor yourself - instead, call getTexture()
 //to get/create an ImpostorTexture for an Entity.
-ImpostorTexture::ImpostorTexture(ImpostorPage *group, Entity *entity) :
-	loader(0)
+ImpostorTexture::ImpostorTexture(ImpostorPage *group, Entity *entity, bool onlyToRender) :
+	loader(0), bOnlyToRender(onlyToRender)
 {
 	//Store scene manager and entity
 	ImpostorTexture::sceneMgr = group->getParentPagedGeometry()->getSceneManager();
@@ -417,12 +417,13 @@ ImpostorTexture::ImpostorTexture(ImpostorPage *group, Entity *entity) :
 	renderTextures(false);
 
 	//Set up materials
+	if (!bOnlyToRender)
 	for (int o = 0; o < IMPOSTOR_YAW_ANGLES; ++o)
 	for (int i = 0; i < IMPOSTOR_PITCH_ANGLES; ++i)
 	{
 		std::string matId = getUniqueID("ImpostorMaterial");
 		sh::MaterialInstance* m = sh::Factory::getInstance().createMaterialInstance(matId, "ImposterBase");
-		m->setProperty("diffuseMap", sh::makeProperty((texture->getName())));
+		m->setProperty("diffuseMap", sh::makeProperty(texture->getName()));
 
 		material[i][o] = MaterialManager::getSingleton().getByName(matId);
 
@@ -455,27 +456,30 @@ void ImpostorTexture::updateMaterials()
 
 ImpostorTexture::~ImpostorTexture()
 {
-	//Delete materials
-	for (int o = 0; o < IMPOSTOR_YAW_ANGLES; ++o)
-	for (int i = 0; i < IMPOSTOR_PITCH_ANGLES; ++i)
+	if (!bOnlyToRender)
 	{
-		assert (!material[i][o].isNull());
-		String matName(material[i][o]->getName());
-		sh::Factory::getInstance().destroyMaterialInstance(matName);
+		//Delete materials
+		for (int o = 0; o < IMPOSTOR_YAW_ANGLES; ++o)
+		for (int i = 0; i < IMPOSTOR_PITCH_ANGLES; ++i)
+		{
+			assert (!material[i][o].isNull());
+			String matName(material[i][o]->getName());
+			sh::Factory::getInstance().destroyMaterialInstance(matName);
 
-		//material[i][o].setNull();
-		//if (MaterialManager::getSingletonPtr())
-		//	MaterialManager::getSingleton().remove(matName);
-	}
+			//material[i][o].setNull();
+			//if (MaterialManager::getSingletonPtr())
+			//	MaterialManager::getSingleton().remove(matName);
+		}
 
-	//Delete textures
-	assert(!texture.isNull());
-	String texName(texture->getName());
-	texture.setNull();
-	if (TextureManager::getSingletonPtr())
-	{
-		TextureManager::getSingleton().remove(texName);
-		TextureManager::getSingleton().unload(texName);
+		//Delete textures
+		assert(!texture.isNull());
+		String texName(texture->getName());
+		texture.setNull();
+		if (TextureManager::getSingletonPtr())
+		{
+			TextureManager::getSingleton().remove(texName);
+			TextureManager::getSingleton().unload(texName);
+		}
 	}
 
 	//Remove self from list of ImpostorTexture's
@@ -608,57 +612,48 @@ void ImpostorTexture::renderTextures(bool force)
 	String strKey = entityKey;
 
 	///T
-	/*
-	char key[32] = {0};
-	uint32 i = 0;
-	for (String::const_iterator it = entityKey.begin(); it != entityKey.end(); ++it)
-	{
-	key[i] ^= *it;
-	i = (i+1) % sizeof(key);
-	}
-	for (i = 0; i < sizeof(key); ++i)
-	key[i] = (key[i] % 26) + 'A';
-	*/
-
-	String tempdir = this->group->getParentPagedGeometry()->getTempdir();
+	String tempdir = this->group->getParentPagedGeometry()->getTempDir();
 	ResourceGroupManager::getSingleton().addResourceLocation(tempdir, "FileSystem", "BinFolder");
 
-	///T
-	String fileNamePNG = strKey + ".png";
-	String fileNameDDS = strKey + ".dds";
+	String fileNamePNG = strKey + ".png";  //only
 
 	//Attempt to load the pre-render file if allowed
+	bool pre = false;
 	needsRegen = force || group->getParentPagedGeometry()->forceRegenImpostors;  ///T
-	if (!needsRegen){
+	if (!needsRegen)
+	{
+		bool has = ResourceGroupManager::getSingleton().resourceExistsInAnyGroup(fileNamePNG);
+		if (has)
+		try{	// get preloaded
+			texture = TextureManager::getSingleton().getByName(fileNamePNG, "BinFolder");
+			pre = true;
+		}catch (Ogre::Exception&)
+		{	has = false;	}
 
-		try{
-			texture = TextureManager::getSingleton().load(fileNamePNG, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);  ///T png first
-		}
-		catch (Ogre::Exception&){
-			try{
-				texture = TextureManager::getSingleton().load(fileNameDDS, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);
-			}
-			catch (Ogre::Exception&){
-				needsRegen = true;
-			}
+		if (!has)  // load
+		{	try{
+				texture = TextureManager::getSingleton().load(fileNamePNG, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);
+			}catch (Ogre::Exception&)
+			{	needsRegen = true;	}  // create
 		}
 	}
 #endif
 	static int ii = 0;  ///T
 
-	if (needsRegen){
-		//If this has not been pre-rendered, do so now
+	if (needsRegen)
+	{	//If this has not been pre-rendered, do so now
 		const float xDivFactor = 1.0f / IMPOSTOR_YAW_ANGLES;
 		const float yDivFactor = 1.0f / IMPOSTOR_PITCH_ANGLES;
-		for (int o = 0; o < IMPOSTOR_PITCH_ANGLES; ++o){ //4 pitch angle renders
-#ifdef IMPOSTOR_RENDER_ABOVE_ONLY
+		for (int o = 0; o < IMPOSTOR_PITCH_ANGLES; ++o)
+		{	// 4 pitch angle renders
+			#ifdef IMPOSTOR_RENDER_ABOVE_ONLY
 			Radian pitch = Degree((90.0f * o) * yDivFactor); //0, 22.5, 45, 67.5
-#else
+			#else
 			Radian pitch = Degree((180.0f * o) * yDivFactor - 90.0f);
-#endif
+			#endif
 
 			for (int i = 0; i < IMPOSTOR_YAW_ANGLES; ++i)
-			{	//8 yaw angle renders
+			{	// 4 yaw angle renders
 				Radian yaw = Degree((360.0f * i) * xDivFactor); //0, 45, 90, 135, 180, 225, 270, 315
 
 				//Position camera
@@ -728,7 +723,7 @@ void ImpostorTexture::renderTextures(bool force)
 	ti.update();	///T  /// time
 	float dt = ti.dt * 1000.f;
 	Ogre::LogManager::getSingleton().logMessage(String("::: Time Impostor: ") +
-		toStr(dt) + " ms (" + strKey + ") " + (needsRegen ? " Generated" : " loaded"));
+		toStr(dt) + " ms (" + strKey + ") " + (needsRegen ? " Generated" : (pre ? " preloaded" : " loaded")));
 }
 
 String ImpostorTexture::removeInvalidCharacters(String s)
