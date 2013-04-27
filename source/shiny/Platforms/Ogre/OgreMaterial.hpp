@@ -18,7 +18,7 @@ namespace sh
 		virtual boost::shared_ptr<Pass> createPass (const std::string& configuration, unsigned short lodIndex);
 		virtual bool createConfiguration (const std::string& name, unsigned short lodIndex);
 
-		virtual void unloadIfUnreferenced();
+		virtual bool isUnreferenced();
 		virtual void ensureLoaded();
 
 		virtual void removeAll ();

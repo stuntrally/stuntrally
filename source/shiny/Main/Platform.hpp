@@ -68,7 +68,7 @@ namespace sh
 		virtual bool createConfiguration (const std::string& name, unsigned short lodIndex) = 0; ///< @return false if already exists
 		virtual void removeAll () = 0; ///< remove all configurations
 
-		virtual void unloadIfUnreferenced() = 0;
+		virtual bool isUnreferenced() = 0;
 		virtual void ensureLoaded() = 0;
 
 		virtual void setLodLevels (const std::string& lodLevels) = 0;

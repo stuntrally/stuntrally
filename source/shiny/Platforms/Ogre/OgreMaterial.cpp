@@ -29,13 +29,10 @@ namespace sh
 			mMaterial = Ogre::MaterialManager::getSingleton().getByName(mName);
 	}
 
-	void OgreMaterial::unloadIfUnreferenced()
+	bool OgreMaterial::isUnreferenced()
 	{
-		if (!mMaterial.isNull() && mMaterial.useCount() <= 1)
-		{
-			removeAll();
-			mMaterial.setNull();
-		}
+		// Resource system internals hold 3 shared pointers, we hold one, so usecount of 4 means unused
+		return (!mMaterial.isNull() && mMaterial.useCount() <= Ogre::ResourceGroupManager::RESOURCE_SYSTEM_NUM_REFERENCE_COUNTS+1);
 	}
 
 	OgreMaterial::~OgreMaterial()

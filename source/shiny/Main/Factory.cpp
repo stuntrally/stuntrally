@@ -781,7 +781,8 @@ namespace sh
 	{
 		for (MaterialMap::iterator it = mMaterials.begin(); it != mMaterials.end(); ++it)
 		{
-			it->second.getMaterial()->unloadIfUnreferenced();
+			if (it->second.getMaterial()->isUnreferenced())
+				it->second.destroyAll();
 		}
 	}
 
