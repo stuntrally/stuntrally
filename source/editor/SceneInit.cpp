@@ -202,6 +202,10 @@ void App::NewCommon(bool onlyTerVeget)
 	if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
 		resTrk = TrkDir() + "objects";
 	mRoot->addResourceLocation(resTrk, "FileSystem");
+
+	Ogre::MeshManager::getSingleton().unloadUnreferencedResources();
+	sh::Factory::getInstance().unloadUnreferencedMaterials();
+	Ogre::TextureManager::getSingleton().unloadUnreferencedResources();
 }
 //---------------------------------------------------------------------------------------------------------------
 void App::LoadTrack()
@@ -281,10 +285,6 @@ void App::LoadTrackEv()
 	if (!tex.isNull())
 		tex->reload();
 	} catch(...) {  }
-
-	Ogre::MeshManager::getSingleton().unloadUnreferencedResources();
-	sh::Factory::getInstance().unloadUnreferencedMaterials();
-	Ogre::TextureManager::getSingleton().unloadUnreferencedResources();
 
 	Status("Loaded", 0.5,0.7,1.0);
 
