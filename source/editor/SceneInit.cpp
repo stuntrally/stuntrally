@@ -282,6 +282,9 @@ void App::LoadTrackEv()
 		tex->reload();
 	} catch(...) {  }
 
+	Ogre::MeshManager::getSingleton().unloadUnreferencedResources();
+	sh::Factory::getInstance().unloadUnreferencedMaterials();
+	Ogre::TextureManager::getSingleton().unloadUnreferencedResources();
 
 	Status("Loaded", 0.5,0.7,1.0);
 

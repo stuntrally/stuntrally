@@ -208,7 +208,6 @@ void App::LoadCleanUp()  // 1 first
 	mSplitMgr->mGuiSceneMgr->destroyAllManualObjects(); // !?..
 	NullHUD();
 	MeshManager::getSingleton().removeAll();  // destroy all meshes
-	Ogre::TextureManager::getSingleton().removeUnreferencedResources();
 	Ogre::TextureManager::getSingleton().setMemoryBudget(256*1024*1024);
 }
 
@@ -506,6 +505,10 @@ void App::LoadMisc()  // 9 last
 	if (!tex.isNull())
 		tex->reload();
 	} catch(...) {  }
+
+	Ogre::MeshManager::getSingleton().unloadUnreferencedResources();
+	sh::Factory::getInstance().unloadUnreferencedMaterials();
+	Ogre::TextureManager::getSingleton().unloadUnreferencedResources();
 	
 	/// rendertextures debug
 	#if 0

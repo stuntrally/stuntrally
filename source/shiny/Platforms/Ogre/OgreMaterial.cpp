@@ -15,11 +15,27 @@ namespace sh
 	OgreMaterial::OgreMaterial (const std::string& name, const std::string& resourceGroup)
 		: Material()
 	{
+		mName = name;
 		assert (Ogre::MaterialManager::getSingleton().getByName(name).isNull() && "Material already exists");
 		mMaterial = Ogre::MaterialManager::getSingleton().create (name, resourceGroup);
 		mMaterial->removeAllTechniques();
 		mMaterial->createTechnique()->setSchemeName (sDefaultTechniqueName);
 		mMaterial->compile();
+	}
+
+	void OgreMaterial::ensureLoaded()
+	{
+		if (mMaterial.isNull())
+			mMaterial = Ogre::MaterialManager::getSingleton().getByName(mName);
+	}
+
+	void OgreMaterial::unloadIfUnreferenced()
+	{
+		if (!mMaterial.isNull() && mMaterial.useCount() <= 1)
+		{
+			removeAll();
+			mMaterial.setNull();
+		}
 	}
 
 	OgreMaterial::~OgreMaterial()
@@ -34,6 +50,8 @@ namespace sh
 
 	void OgreMaterial::removeAll ()
 	{
+		if (mMaterial.isNull())
+			return;
 		mMaterial->removeAllTechniques();
 		mMaterial->createTechnique()->setSchemeName (sDefaultTechniqueName);
 		mMaterial->compile();
