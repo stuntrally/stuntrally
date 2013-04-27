@@ -208,8 +208,6 @@ void App::LoadCleanUp()  // 1 first
 	mSplitMgr->mGuiSceneMgr->destroyAllManualObjects(); // !?..
 	NullHUD();
 
-	Ogre::TextureManager::getSingleton().setMemoryBudget(256*1024*1024);
-
 	// remove junk from previous tracks
 	Ogre::MeshManager::getSingleton().unloadUnreferencedResources();
 	sh::Factory::getInstance().unloadUnreferencedMaterials();
