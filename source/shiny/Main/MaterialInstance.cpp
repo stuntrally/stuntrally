@@ -1,6 +1,7 @@
 #include "MaterialInstance.hpp"
 
 #include <stdexcept>
+#include <iostream>
 
 #include "Factory.hpp"
 #include "ShaderSet.hpp"
