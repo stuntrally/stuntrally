@@ -137,7 +137,7 @@ CarModel::~CarModel()
 
 	
 //  log mesh stats
-void CarModel::LogMeshInfo(const Entity* ent, const String& name)
+void CarModel::LogMeshInfo(const Entity* ent, const String& name, int mul)
 {
 	//return;
 	const MeshPtr& msh = ent->getMesh();
@@ -147,8 +147,8 @@ void CarModel::LogMeshInfo(const Entity* ent, const String& name)
 		SubMesh* sm = msh->getSubMesh(i);
 		tris += sm->indexData->indexCount;
 	}
-	all_tris += tris;
-	all_subs += subs;
+	all_tris += tris * mul;  //wheels x4
+	all_subs += subs * mul;
 	LogO("MESH info:  "+name+"\t sub: "+toStr(subs)+"  tri: "+fToStr(tris/1000.f,1,4)+"k");
 }
 
@@ -225,9 +225,7 @@ void CarModel::Create(int car)
 				(*it)->mOffset = Vector3(pCar->hood_view_position[0], pCar->hood_view_position[2], -pCar->hood_view_position[1]);
 		}
 	}
-	
-	RecreateMaterials();
-		
+			
 	CreateReflection();
 
 
@@ -274,7 +272,7 @@ void CarModel::Create(int car)
 			Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_wheel.mesh", sCarI);
 			if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
-			if (bLogInfo && w==0)  LogMeshInfo(eWh, name);
+			if (bLogInfo && w==0)  LogMeshInfo(eWh, name, 4);
 		}else
 		{	ManualObject* mWh = pApp->CreateModel(mSceneMgr, sMtr[Mtr_CarBody]+siw, &pCar->wheelmodelfront.mesh, vPofs, true, false, siw);
 			if (mWh)  {
@@ -289,15 +287,16 @@ void CarModel::Create(int car)
 			if (ghost)  {  eBrake->setRenderQueueGroup(g);  eBrake->setCastShadows(false);  }
 			ndBrake[w] = ndWh[w]->createChildSceneNode();
 			ndBrake[w]->attachObject(eBrake);  eBrake->setVisibilityFlags(RV_Car);
-			if (bLogInfo && w==0)  LogMeshInfo(eBrake, name);
+			if (bLogInfo && w==0)  LogMeshInfo(eBrake, name, 4);
 		}
 	}
 	if (bLogInfo)  // all
 		LogO("MESH info:  "+sDirname+"\t ALL sub: "+toStr(all_subs)+"  tri: "+fToStr(all_tris/1000.f,1,4)+"k");
 
 
-	///  world hit sparks  ------------------------
-	//if (!ghost)//-
+	//  Particles
+	//-------------------------------------------------
+	///  world hit sparks
 	if (!ph)  {
 		ph = mSceneMgr->createParticleSystem("Hit" + strI, "Sparks");
 		ph->setVisibilityFlags(RV_Particles);
@@ -385,7 +384,9 @@ void CarModel::Create(int car)
 
 
 	UpdParsTrails();
-			
+
+	RecreateMaterials();
+		
 	setMtrNames();
 	
 	//  this snippet makes sure the brake texture is pre-loaded.
@@ -469,12 +470,24 @@ void CarModel::setMtrNames()
 {
 	String strI = toStr(iIndex);
 
-	if (FileExists(resCar + "/" + sDirname + "_body00_add.png") ||
-		FileExists(resCar + "/" + sDirname + "_body00_red.png"))
-		setMtrName("Car"+strI, sMtr[Mtr_CarBody]);
+	//if (FileExists(resCar + "/" + sDirname + "_body00_add.png") ||
+	//	FileExists(resCar + "/" + sDirname + "_body00_red.png"))
+	setMtrName("Car"+strI, sMtr[Mtr_CarBody]);
 
 	if (pCar && pCar->bRotFix)
 		return;
+
+	#if 0
+	setMtrName("Car.interior"+strI, sMtr[Mtr_CarInterior]);
+	setMtrName("Car.glass"+strI, sMtr[Mtr_CarGlass]);
+
+	for (int w=0; w < 4; ++w)
+	{
+		String sw = "Wheel"+strI+"_"+toStr(w), sm = w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear];
+		setMtrName(sw,          sm);
+		setMtrName(sw+"_brake", sm);
+	}
+	#endif
 }
 
 //  ----------------- Reflection ------------------------

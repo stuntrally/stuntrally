@@ -164,7 +164,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	if (bBraking != braking)
 	{
 		bBraking = braking;
-		RefreshBrakingMaterial();
+		UpdateBraking();
 	}
 	
 	//  terrain lightmap enable/disable (depending on distance to terrain)
@@ -179,20 +179,18 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		{
 			if (bLightMapEnabled)
 			{
-				changed = true;
-				bLightMapEnabled = false;
+				changed = true;  bLightMapEnabled = false;
 			}
 		}
 		else if (!bLightMapEnabled)
 		{
-			changed = true;
-			bLightMapEnabled = true;
+			changed = true;  bLightMapEnabled = true;
 		}
 	}
 	//  if no terrain, disable
 	else if (bLightMapEnabled)
 	{
-		changed = true; bLightMapEnabled = false;
+		changed = true;  bLightMapEnabled = false;
 	}
 	
 	if (changed)
@@ -476,12 +474,12 @@ void CarModel::UpdateLightMap()
 					if (pass->hasFragmentProgram())
 					{
 						GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
-						params->setIgnoreMissingParams(true); // don't throw exception if material doesnt use lightmap
-						params->setNamedConstant("enableTerrainLightMap", bLightMapEnabled ? Real(1) : Real(0));
+						params->setIgnoreMissingParams(true);  // don't throw exception if material doesnt use lightmap
+						params->setNamedConstant("enableTerrainLightMap", bLightMapEnabled ? 1.f : 0.f);
 	}	}	}	}	}
 }
 
-void CarModel::RefreshBrakingMaterial()
+void CarModel::UpdateBraking()
 {
 	std::string texName = sDirname + (bBraking ? "_body00_brake.png" : "_body00_add.png");
 
@@ -497,8 +495,8 @@ void CarModel::RefreshBrakingMaterial()
 				while (tusIt.hasMoreElements())
 				{
 					TextureUnitState* tus = tusIt.getNext();
-					if (tus->getName() == "0")
-						tus->setTextureName( texName );
+					if (tus->getName() == "diffuseMap")
+					{	tus->setTextureName( texName );  return;  }
 	}	}	}	}
 }
 

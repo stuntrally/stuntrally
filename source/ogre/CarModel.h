@@ -85,7 +85,7 @@ public:
 		Ogre::String sCar2, Ogre::String sCarI, Ogre::String sMesh, Ogre::String sEnt,
 		bool ghost, Ogre::uint32 visFlags,
 		Ogre::AxisAlignedBox* bbox=0, Ogre::String stMtr="", class VERTEXARRAY* var=0, bool bLogInfo=true);
-	void LogMeshInfo(const Ogre::Entity* ent, const Ogre::String& name);
+	void LogMeshInfo(const Ogre::Entity* ent, const Ogre::String& name, int mul=1);
 	int all_subs, all_tris;  //stats
 	
 	void RecreateMaterials();
@@ -183,7 +183,7 @@ private:
 		
 	//  brake state
 	bool bBraking;
-	void RefreshBrakingMaterial();
+	void UpdateBraking();
 	
 	//  lightmap enable/disable depending on dist. to terrain
 	bool bLightMapEnabled;
