@@ -14,7 +14,7 @@ material base
     
     lighting true
     terrain_light_map false
-    terrain_light_map_toggleable false
+    terrain_light_map_toggleable false  // true only for cars
     receives_shadows true
             
     bump_scale 1

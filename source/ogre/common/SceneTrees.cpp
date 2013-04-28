@@ -175,6 +175,17 @@ void App::CreateTrees()
 				trees->setCustomParam(ent->getName(), "windFactorX", pg.windFx);
 				trees->setCustomParam(ent->getName(), "windFactorY", pg.windFy);  }
 
+			#if 1  // log info
+			const MeshPtr& msh = ent->getMesh();
+			int tris=0, subs = msh->getNumSubMeshes();
+			for (int i=0; i < subs; ++i)
+			{
+				SubMesh* sm = msh->getSubMesh(i);
+				tris += sm->indexData->indexCount;
+			}
+			LogO("TREE info:  "+file+"\t sub: "+toStr(subs)+"  tri: "+fToStr(tris/1000.f,1,4)+"k");
+			#endif
+
 
 			if (!resMgr.resourceExistsInAnyGroup(file))
 				file = "sphere.mesh";  // if not found, put white sphere
