@@ -134,10 +134,12 @@ private:
 	{
 		private:
 			double time_rpl;  // time from race start (for replay)
-			double time;      // running time for this lap
+			double time;      // lap time
+			
 			LAPTIME lastlap;  // last lap time
 			LAPTIME bestlap;  // best lap time (also from local records)
 			LAPTIME bestlapRace;  // best lap time, for current race only
+			
 			double totaltime; // total time of a race (>=1 laps)
 			int num_laps;     // current lap
 			std::string cartype;
@@ -146,11 +148,12 @@ private:
 
 		public:
 			double time_rewind;  // time from race start (for rewind, goes back when rewinding)
+			double time_rewGh;   // lap time for ghost (goes back when rewinding)
 			LAPINFO(const std::string & newcartype) : cartype(newcartype) {Reset();}
 
 			void Reset()
 			{
-				time = totaltime = time_rpl = time_rewind = 0.0;
+				time = totaltime = time_rpl = time_rewind = time_rewGh = 0.0;
 				lastlap.Reset();
 				bestlap.Reset();
 				bestlapRace.Reset();
@@ -159,7 +162,7 @@ private:
 
 			void Tick(float dt)
 			{
-				time += dt;  time_rpl += dt;  time_rewind += dt;
+				time += dt;  time_rpl += dt;  time_rewind += dt;  time_rewGh += dt;
 			}
 
 			void Lap(bool countit)
@@ -172,7 +175,7 @@ private:
 				}
 
 				totaltime += time;
-				time = 0.0;
+				time = 0.0;  time_rewGh = 0.0;
 				num_laps++;
 			}
 
@@ -186,7 +189,7 @@ private:
 				}
 
 				totaltime += curtime;
-				time = 0.0;
+				time = 0.0;  time_rewGh = 0.0;
 				num_laps++;
 			}
 
@@ -201,12 +204,12 @@ private:
 			
 			void RestartReplay()  // replay play restart
 			{
-				time = time_rpl = 0.0;
+				time = time_rpl = time_rewGh = 0.0;
 			}			
 
 			void SetTimeReplay(double t)  // replay play
 			{
-				time = time_rpl = t;
+				time = time_rpl = time_rewGh = t;
 			}	
 			
 			double GetTimeReplay() const  // for replay
@@ -308,6 +311,7 @@ public:
 	void SetReplayTime(const int carId, double t){assert(carId<car.size());	car[carId].SetTimeReplay(t);  }
 	void RestartReplay(const int carId)   {		assert(carId<car.size());	car[carId].RestartReplay();  }
 	double& GetRewindTime(const int carId) {	assert(carId<car.size());	return car[carId].time_rewind;  }  // rewind
+	double& GetRewindTimeGh(const int carId) {	assert(carId<car.size());	return car[carId].time_rewGh;  }  // rewind
 
 	void Reset(int id = -1)
 	{

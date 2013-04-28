@@ -16,6 +16,8 @@ using namespace Ogre;
 
 
 //  newPoses - Get new car pos from game
+//  caution: called from GAME, 2nd thread, no Ogre stuff here
+/// Todo: move arrow update and ChampionshipAdvance to updatePoses ...
 //---------------------------------------------------------------------------------------------------------------
 void App::newPoses(float time)  // time only for camera update
 {
@@ -24,7 +26,7 @@ void App::newPoses(float time)  // time only for camera update
 	PROFILER.beginBlock(".newPos ");
 
 	double rplTime = pGame->timer.GetReplayTime(0);
-	double lapTime = pGame->timer.GetPlayerTime(0);
+	double lapTime = pGame->timer.GetPlayerTime(0), rewTime = pGame->timer.GetRewindTimeGh(0)/*: lapTime*/;
 
 	//  iterate through all car models and set new pos info (from vdrift sim or replay)
 	CarModel* carM0 = carModels[0];
@@ -52,7 +54,7 @@ void App::newPoses(float time)  // time only for camera update
 		if (bGhost)
 		{
 			ReplayFrame rf;
-			bool ok = ghplay.GetFrame(lapTime, &rf, 0);
+			bool ok = ghplay.GetFrame(rewTime, &rf, 0);
 			//  car
 			pos = rf.pos;  rot = rf.rot;  pi.speed = rf.speed;
 			pi.fboost = rf.fboost;  pi.steer = rf.steer;
@@ -155,6 +157,8 @@ void App::newPoses(float time)  // time only for camera update
 		{
 			double& gtime = pGame->timer.GetRewindTime(c);
 			gtime = std::max(0.0, gtime - time * 5.f);  //par speed
+			double& ghtim = pGame->timer.GetRewindTimeGh(c);
+			ghtim = std::max(0.0, ghtim - time * 5.f);  //rewind ghost time too
 
 			RewindFrame rf;
 			bool ok = rewind.GetFrame(gtime, &rf, c);
