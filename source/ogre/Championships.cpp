@@ -329,6 +329,7 @@ void App::ProgressSave(bool upgGui)
 
 
 ///  championship advance logic
+//  caution: called from GAME, 2nd thread, no Ogre stuff here
 //---------------------------------------------------------------------
 void App::ChampionshipAdvance(float timeCur)
 {
@@ -439,21 +440,24 @@ void App::ChampFillStageInfo(bool finished)
 	edChampStage->setCaption(s);
 	
 	//  preview image
-	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
-	Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
+	if (!finished)  // only at champ start
+	{
+		ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
+		Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
 
-	String path = PathListTrkPrv(0, trk.name), sGrp = "TrkPrv";
-	resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
-	resMgr.unloadResourceGroup(sGrp);
-	resMgr.initialiseResourceGroup(sGrp);
+		String path = PathListTrkPrv(0, trk.name), sGrp = "TrkPrv";
+		resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
+		resMgr.unloadResourceGroup(sGrp);
+		resMgr.initialiseResourceGroup(sGrp);
 
-	if (imgChampStage)
-	{	try
-		{	s = "view.jpg";
-			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  // need to load it first
-			imgChampStage->setImageTexture(s);  // just for dim, doesnt set texture
-			imgChampStage->_setTextureName(path+s);
-		} catch(...) {  }
+		if (imgChampStage)
+		{	try
+			{	s = "view.jpg";
+				texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  // need to load it first
+				imgChampStage->setImageTexture(s);  // just for dim, doesnt set texture
+				imgChampStage->_setTextureName(path+s);
+			} catch(...) {  }
+		}
+		resMgr.removeResourceLocation(path, sGrp);
 	}
-	resMgr.removeResourceLocation(path, sGrp);
 }
