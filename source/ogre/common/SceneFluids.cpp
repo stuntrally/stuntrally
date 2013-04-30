@@ -31,8 +31,8 @@ using namespace Ogre;
 //----------------------------------------------------------------------------------------------------------------------
 void App::CreateFluids()
 {
-	#ifdef ROAD_EDITOR
 	vFlNd.clear();  vFlEnt.clear();  vFlSMesh.clear();
+	#ifdef ROAD_EDITOR
 	UpdFluidBox();
 	#endif
 	if (!mWaterRTT.mNdFluidsRoot)
@@ -62,9 +62,8 @@ void App::CreateFluids()
 		SceneNode* nfl = mWaterRTT.mNdFluidsRoot->createChildSceneNode(
 			fb.pos/*, Quaternion(Degree(fb.rot.x),Vector3::UNIT_Y)*/);
 		nfl->attachObject(efl);
-		#ifdef ROAD_EDITOR
+
 		vFlSMesh.push_back(smesh);  vFlEnt.push_back(efl);  vFlNd.push_back(nfl);
-		#endif
 
 		#ifndef ROAD_EDITOR  // game
 		CreateBltFluids();
@@ -108,7 +107,6 @@ void App::CreateBltFluids()
 	#endif
 }
 
-#ifdef ROAD_EDITOR
 void App::DestroyFluids()
 {
 	for (int i=0; i < vFlSMesh.size(); ++i)
@@ -121,6 +119,7 @@ void App::DestroyFluids()
 	vFlNd.clear();  vFlEnt.clear();  vFlSMesh.clear();
 }
 
+#ifdef ROAD_EDITOR
 void App::UpdFluidBox()
 {
 	int fls = sc->fluids.size();

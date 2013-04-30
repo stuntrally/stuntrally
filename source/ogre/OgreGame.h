@@ -158,9 +158,13 @@ protected:
 	void CreateCar();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
 	void CreateTrees(), CreateRoad(), CreateObjects(),DestroyObjects(bool clear);
-	void CreateFluids(), CreateBltFluids(), UpdateWaterRTT(Ogre::Camera* cam);
+	void CreateFluids(), CreateBltFluids(), UpdateWaterRTT(Ogre::Camera* cam), DestroyFluids();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	void NewGame();  void NewGameDoLoad();  bool IsVdrTrack();  bool newGameRpl;
+	//  fluids to destroy
+	std::vector<Ogre::String/*MeshPtr*/> vFlSMesh;
+	std::vector<Ogre::Entity*> vFlEnt;
+	std::vector<Ogre::SceneNode*> vFlNd;
 	// vdrift:
 	void CreateVdrTrack(std::string strack, class TRACK* pTrack),
 		CreateRacingLine(), CreateMinimap(), CreateRoadBezier();

@@ -157,6 +157,8 @@ void App::LoadCleanUp()  // 1 first
 {
 	updMouse();
 	
+	DestroyFluids();
+
 	DestroyObjects(true);
 	
 	DestroyGraphs();
