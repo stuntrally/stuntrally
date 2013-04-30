@@ -2157,7 +2157,7 @@
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>-->
-						<Widget type="Slider" skin="Slider" position="248 50 320 16" name="ShadowType">
+						<Widget type="Slider" skin="Slider" position="248 50 320 18" name="ShadowType">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="248 80 320 18" name="ShadowSize">

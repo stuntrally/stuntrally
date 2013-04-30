@@ -106,7 +106,7 @@ void App::ChampNewGame()
 		pSet->game.num_laps = trk.laps;
 
 		pSet->game.boost_type = 1;  // from trk.?
-		pSet->game.flip_type = 1;
+		pSet->game.flip_type = 2;
 		pSet->game.boost_power = 1.f;
 		//pSet->game.trees = 1.f;  // >=1 ?
 		//pSet->game.collis_veget = true;
