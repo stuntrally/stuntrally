@@ -60,8 +60,9 @@
 		<track name="M1-Hills"		laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Master of Rally" ver="1" difficulty="4" length="3" tutorial="0" 
+	<championship name="Master of Rally" ver="2" difficulty="4" length="3" tutorial="0" 
 			descr="Best medium long tracks in game, for rally fans, with great views.">
+		<track name="E1-Lakes"		laps="1" factor="0.1" />
 		<track name="G2-Coast"		laps="1" factor="0.1" />
 		<track name="J13-Tropic"	laps="1" factor="0.1" />
 		<track name="A3-Canyon"		laps="1" factor="0.1" />
@@ -541,7 +542,7 @@
 		<track name="TestC8-align"	 time="20.5" />
 		<track name="J19-demo2"		 time="68.0"/>
 		<track name="D11-PersianCity" time="64.0"/>
-		<track name="I9-Web"		time="470.0"/>
+		<track name="I9-Web"		time="350.0"/>
 		<track name="S14-Refinery"	time="220.0"/>
 		<!--91 99-->
 		<track name="A5-TopTwist"	time="182.0"/>
