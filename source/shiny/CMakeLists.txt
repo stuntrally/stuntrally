@@ -64,7 +64,7 @@ endif()
 
 set(SHINY_LIBRARY ${SHINY_LIBRARY} PARENT_SCOPE)
 
-#add_subdirectory(Editor)
+add_subdirectory(Editor)
 
 set(SHINY_BUILD_EDITOR_FLAG ${SHINY_BUILD_EDITOR_FLAG} PARENT_SCOPE)
 
