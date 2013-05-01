@@ -79,7 +79,7 @@
 		<track name="G4-River"		laps="1" factor="0.1" />
 		<track name="F4-OSquare"	laps="1" factor="0.1" />
 		<track name="I7-Moses"		laps="1" factor="0.1" />
-		<track name="0W2-qp"		laps="1" factor="0.1" />
+		<track name="0W2-Wet"		laps="1" factor="0.1" />
 		<track name="I2-S8"			laps="1" factor="0.1" />
 	</championship>
 
@@ -287,7 +287,7 @@
 	<championship name="Winter scenery" ver="1" difficulty="3" length="3" tutorial="3" 
 			descr="Winter championship. All tracks for this scenery in their appearance order.">
 		<track name="0W1-cross"		laps="1" factor="0.1" />
-		<track name="0W2-qp"		laps="1" factor="0.1" />
+		<track name="0W2-Wet"		laps="1" factor="0.1" />
 		<track name="0W3-mouth"		laps="1" factor="0.1" />
 		<track name="0W4-ice-blur"	laps="1" factor="0.1" />
 		<track name="0W5-Circles"	laps="1" factor="0.1" />
@@ -431,7 +431,7 @@
 		<track name="J4-Pipe8"		time="17.5"/>
 		<!--13-->
 		<track name="0W1-cross"		time="70.0"/>
-		<track name="0W2-qp"		time="78.5"/>
+		<track name="0W2-Wet"		time="78.5"/>
 		<track name="0W3-mouth"		time="41.5"/>
 		<track name="F1-Slippery"	time="55.5"/>
 		<track name="F3-Snail"		time="41.5"/>
