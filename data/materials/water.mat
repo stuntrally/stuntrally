@@ -187,7 +187,7 @@ material Water_moss   // O2-Mouse
 }
 
 
-material Water_white   // 0W2-qp
+material Water_white   // 0W2-Wet
 {
     parent Water
     choppyness_scale 0.15 25
