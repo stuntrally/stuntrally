@@ -99,23 +99,22 @@ if (MSVC)
 		vdrift/*.cpp
 	)
 
-    foreach( src_file ${GAME_SOURCES} )
-        set_source_files_properties(
-            ${src_file}
-            PROPERTIES
-            COMPILE_FLAGS "/Yupch.h"
-            )	
+	foreach( src_file ${GAME_SOURCES} )
+		set_source_files_properties(
+			${src_file}
+			PROPERTIES
+			COMPILE_FLAGS "/Yupch.h"
+		)
 	endforeach( src_file ${GAME_SOURCES} )
-	
-    set_source_files_properties(editor/pch.cpp
-        PROPERTIES
-        COMPILE_FLAGS "/Ycpch.h"
-        )
-		
-    set_source_files_properties(ogre/pch.cpp
-        PROPERTIES
-        COMPILE_FLAGS "/Ycpch.h"
-        )
 
+	set_source_files_properties(editor/pch.cpp
+		PROPERTIES
+		COMPILE_FLAGS "/Ycpch.h"
+	)
+
+	set_source_files_properties(ogre/pch.cpp
+		PROPERTIES
+		COMPILE_FLAGS "/Ycpch.h"
+	)
 endif (MSVC)
 
