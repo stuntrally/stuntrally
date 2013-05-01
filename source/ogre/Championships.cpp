@@ -438,6 +438,7 @@ void App::ChampFillStageInfo(bool finished)
 			s += "#FF8000"+TR("#{DidntPass}")+".\n"+TR("#{RepeatStage}.");
 	}
 	edChampStage->setCaption(s);
+	btChampStage->setCaption(finished ? TR("#{MessageBox_Continue}") : TR("#{ChampStart}"));
 	
 	//  preview image
 	if (!finished)  // only at champ start

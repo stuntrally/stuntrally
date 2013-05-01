@@ -629,7 +629,7 @@ void App::InitGui()
 
 	Btn("btnChampStart", btnChampStart);
 	Btn("btnChampStageBack", btnChampStageBack);
-	Btn("btnChampStageStart", btnChampStageStart);
+	Btn("btnChampStageStart", btnChampStageStart);  btChampStage = btn;
 	Btn("btnChampEndClose", btnChampEndClose);
 
 	Btn("btnStageNext", btnStageNext);
