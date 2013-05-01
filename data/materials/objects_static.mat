@@ -74,3 +74,22 @@ material DishHole
 	specular 0.4 0.4 0.4 16
 	bump_scale 0.6
 }
+
+material watchtower
+{
+	parent base
+	diffuseMap watchtower.jpg
+	normalMap watchtower_norm.jpg
+	ambient 1 1 1
+	diffuse 0.8 0.8 0.8
+	specular 0.5 0.5 0.45 16
+}
+
+material watchtower2
+{
+	parent base
+	diffuseMap watchtower2.jpg
+	ambient 1 1 1
+	diffuse 0.8 0.8 0.8
+	specular 0.1 0.1 0.1 8
+}

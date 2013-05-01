@@ -36,16 +36,28 @@ http://opengameart.org/content/plastic-barrel-pack
 ----  cone.mesh
 Road Block Set
 Author: timzero4
-Licensed: CC-BY
+License: CC-BY
 http://www.blendswap.com/blends/misc-objects/road-block-set/
 
 ----  wood_block.mesh
 Wood parts
 By B65ISP
-Licensed: CC0
+License: CC0
 http://www.blendswap.com/blends/architecture/wood-parts/
 
 ----  0 A.D. resources  ----  see: readme 0 A.D.txt
 pers_*.mesh  pyramid*.mesh  obelisk.mesh
 	binaries\data\mods\public\art\meshes\structural\pers_house_b.dae
 	binaries\data\mods\public\art\textures\skins\structural\pers_struct.dds
+
+----  watchtower.mesh
+wooden watch tower
+Author: DennisH2010
+License: CC-BY
+http://www.blendswap.com/blends/view/61653
+
+----  watchtower2.mesh
+Watchtower-Wood
+Author: atze
+License: CC0
+http://opengameart.org/content/watchtower-wood
