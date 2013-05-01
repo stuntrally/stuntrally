@@ -164,7 +164,7 @@ void App::UpdateHUD(int carId, float time)
 			{
 				CarModel* cm = *it;
 				char hex[16];
-				sprintf_s(hex, sizeof(hex), "%02x%02x%02x", int(cm->color.r * 255), int(cm->color.g * 255), int(cm->color.b * 255));
+				sprintf(hex, "%02x%02x%02x", int(cm->color.r * 255), int(cm->color.g * 255), int(cm->color.b * 255));
 				String clr = String("#") + hex;
 
 				liNetEnd->addItem(""/*clr+ toStr(c+1)*/, 0);  int l = liNetEnd->getItemCount()-1;
