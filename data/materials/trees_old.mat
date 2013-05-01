@@ -6,12 +6,15 @@ material tree.07.branch1.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE
     parent base
     alpha_rejection greater 192
     diffuseMap tree.07.png
-    diffuse 0.5 0.5 0.5
+	normalMap tree.07_norm.png
     tree_wind true
     terrain_light_map true
     cull_hardware none
     receives_shadows false
     transparent true
+    diffuse 0.5 0.5 0.5
+    specular 0.5 0.5 0.5 64
+	bump_scale 2.0
 }
 
 material tree.07.leaves.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE
@@ -28,8 +31,12 @@ material tree.07.mat/SOLID/TEX/tree.07.png/VertCol
 {
     parent base
 	diffuseMap tree.07.png
+	normalMap tree.07_norm.png
 	terrain_light_map true
 	tree_wind true
+	diffuse 0.8 0.8 0.8
+    specular 0.2 0.2 0.2 16
+	bump_scale 2.0
 }
 
 material leaves.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE
@@ -38,11 +45,14 @@ material leaves.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE
 	cull_hardware none
     alpha_rejection greater 192
 	diffuseMap tree.09.png
+	normalMap tree.09_norm.png
 	terrain_light_map true
-	diffuse 0.5 0.5 0.5
 	tree_wind true
 	receives_shadows false
 	transparent true
+	diffuse 0.5 0.5 0.5
+    specular 0.4 0.4 0.4 120
+	bump_scale 2.0
 }
 
 material tree.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE
@@ -64,8 +74,12 @@ material tree.09.mat/SOLID/TEX/tree.09.png/VertCol
 {
     parent base
 	diffuseMap tree.09.png
+	normalMap tree.09_norm.png
 	terrain_light_map true
 	tree_wind true
+	diffuse 0.8 0.8 0.8
+    specular 0.2 0.2 0.2 16
+	bump_scale 2.0
 }
 
 

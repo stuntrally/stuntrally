@@ -65,8 +65,8 @@ material jungle_tree
     alpha_rejection greater 128
 	diffuseMap jungle_tree.png
 	normalMap jungle_tree_normal.png
-	specMap jungle_tree_spec.png
-	specular 0.5 0.5 0.5 32
+	//specMap jungle_tree_spec.png
+	specular 0.4 0.4 0.4 32
 	cull_hardware none
 	receives_shadows false
 }
