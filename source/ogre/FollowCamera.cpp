@@ -240,10 +240,10 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 	Vector3 p = posGoal;  p.y += 1.f;  //up
 	//Vector3 d = camRotFinal * Vector3::UNIT_Z;  d.normalise();
 	Vector3 d = camPosFinal - p;  d.normalise();
-	MATHVECTOR<float,3> pos1(p.x,-p.z,p.y), dir(d.x,-d.z,d.y);  //dir = dir.Normalize();
 	
-	if (!first)
+	if (!first && ca->mType != CAM_Arena)
 	{
+		MATHVECTOR<float,3> pos1(p.x,-p.z,p.y), dir(d.x,-d.z,d.y);  //dir = dir.Normalize();
 		COLLISION_CONTACT ct;
 		float maxLen = (p - camPosFinal).length();  //cam near
 		world->CastRay(pos1, dir, maxLen,chassis, ct,  0,0, true, true, true/*+*/);
