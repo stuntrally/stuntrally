@@ -644,6 +644,7 @@ void App::InitGui()
 	//  netw end list
 	Btn("btnNetEndClose", btnNetEndClose);
 	li = mWndNetEnd->createWidget<MultiList2>("MultiListBox",4,42,632,360, Align::Left | Align::VStretch);
+	li->setInheritsAlpha(false);  li->setColour(Colour(0.8,0.9,1,1));
 	li->removeAllColumns();
 	li->addColumn("", 40);  //N
 	li->addColumn(TR("#{TBPlace}"), 60);

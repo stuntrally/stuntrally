@@ -163,11 +163,9 @@ void App::UpdateHUD(int carId, float time)
 			for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it)
 			{
 				CarModel* cm = *it;
-				//String clr = "#E0F0FF";
-				std::stringstream ss;  // car color to hex str
-				ss << std::hex << std::setfill('0');
-				ss << (cm->color.getAsARGB() & 0xFFFFFF);
-				String clr = "#"+ss.str();
+				char hex[16];
+				sprintf_s(hex, sizeof(hex), "%02x%02x%02x", int(cm->color.r * 255), int(cm->color.g * 255), int(cm->color.b * 255));
+				String clr = String("#") + hex;
 
 				liNetEnd->addItem(""/*clr+ toStr(c+1)*/, 0);  int l = liNetEnd->getItemCount()-1;
 				liNetEnd->setSubItemNameAt(1,l, clr+ (cm->iWonPlace == 0 ? "--" : toStr(cm->iWonPlace)));
