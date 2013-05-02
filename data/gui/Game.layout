@@ -1410,9 +1410,14 @@
 					<Property key="Caption" value="#{RplBestOnly}"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 100 380 24" name="RplChkAlpha">
+				<!--<Widget type="Button" skin="CheckBox" position="32 100 380 24" name="RplChkAlpha">
 					<Property key="TextColour" value="0.76 0.9 1"/>
 					<Property key="Caption" value="#{RplAlpha}*"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
+				</Widget>-->
+				<Widget type="Button" skin="CheckBox" position="32 100 380 24" name="RplChkRewind">
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="Caption" value="#{RplRewindGhost}"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="32 140 380 24" name="RplChkParticles">

@@ -26,7 +26,8 @@ void App::newPoses(float time)  // time only for camera update
 	PROFILER.beginBlock(".newPos ");
 
 	double rplTime = pGame->timer.GetReplayTime(0);
-	double lapTime = pGame->timer.GetPlayerTime(0), rewTime = pGame->timer.GetRewindTimeGh(0)/*: lapTime*/;
+	double lapTime = pGame->timer.GetPlayerTime(0);
+	double rewTime = pSet->rpl_ghostrewind ? pGame->timer.GetRewindTimeGh(0) : lapTime;
 
 	//  iterate through all car models and set new pos info (from vdrift sim or replay)
 	CarModel* carM0 = carModels[0];

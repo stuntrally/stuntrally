@@ -440,7 +440,7 @@ void App::chkMinimap(WP wp){		ChkEv(trackmap);
 	for (int c=0; c < 4; ++c)
 		if (ndMap[c])  ndMap[c]->setVisible(pSet->trackmap);
 }
-void App::chkMiniZoom(WP wp){		ChkEv(mini_zoomed);		}
+void App::chkMiniZoom(WP wp){		ChkEv(mini_zoomed);		UpdMiniTer();  }
 void App::chkMiniRot(WP wp){		ChkEv(mini_rotated);	}
 void App::chkMiniTer(WP wp){		ChkEv(mini_terrain);	UpdMiniTer();  }
 void App::chkMiniBorder(WP wp){		ChkEv(mini_border);		UpdMiniTer();  }

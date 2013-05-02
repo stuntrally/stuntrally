@@ -400,7 +400,8 @@ protected:
 	MyGUI::Slider* slRplPos;  void slRplPosEv(SL);
 	MyGUI::EditPtr edRplName, edRplDesc;
 	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP), btnRplRename(WP),  // btn
-		chkRplAutoRec(WP),chkRplChkGhost(WP),chkRplChkBestOnly(WP),chkRplChkAlpha(WP),chkRplChkPar(WP),  // replay
+		chkRplAutoRec(WP),chkRplChkGhost(WP),chkRplChkBestOnly(WP),
+		chkRplChkAlpha(WP),chkRplChkPar(WP),chkRplChkRewind(WP),  // replay
 		btnRplToStart(WP),btnRplToEnd(WP), btnRplPlay(WP),  // controls
 		btnRplCur(WP),btnRplAll(WP),btnRplGhosts(WP);  // radio
 	MyGUI::ButtonPtr rbRplCur, rbRplAll, rbRplGhosts;
