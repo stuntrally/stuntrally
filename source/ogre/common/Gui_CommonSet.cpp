@@ -55,21 +55,21 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 		s.gui.trees = 0.5f;  s.grass = 1.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
 	case 3:  // High  -------------
-		s.anisotropy = 4;  s.view_distance = 6000;  s.terdetail = 1.3f;  s.terdist = 200.f;  s.road_dist = 1.6;
+		s.anisotropy = 4;  s.view_distance = 6000;  s.terdetail = 1.2f;  s.terdist = 200.f;  s.road_dist = 1.6;
 		s.tex_size = 1;  s.ter_mtr = 2;  s.ter_tripl = 0;  s.shaders = 0.75;  s.use_imposters = 1;  s.imposters_only = 0;
 		s.water_reflect = 1;  s.water_refract = 0;  s.water_rttsize = 1;
 		s.shadow_type = Sh_Depth;  s.shadow_size = 2;  s.shadow_count = 1;  s.shadow_dist = 1000;  s.shadow_filter = 2;
 		s.gui.trees = 1.f;  s.grass = 1.f;  s.trees_dist = 1.f;  s.grass_dist = 2.f;	break;
 
 	case 4:  // Very High  -------------
-		s.anisotropy = 8;  s.view_distance = 8000;  s.terdetail = 1.2f;  s.terdist = 400.f;  s.road_dist = 2.0;
+		s.anisotropy = 4;  s.view_distance = 8000;  s.terdetail = 1.0f;  s.terdist = 500.f;  s.road_dist = 2.0;
 		s.tex_size = 1;  s.ter_mtr = 3;  s.ter_tripl = 1;  s.shaders = 1;  s.use_imposters = 1;  s.imposters_only = 0;
 		s.water_reflect = 1;  s.water_refract = 1;  s.water_rttsize = 1;
 		s.shadow_type = Sh_Depth;  s.shadow_size = 3;  s.shadow_count = 2;  s.shadow_dist = 2000;  s.shadow_filter = 2;
 		s.gui.trees = 1.5f;  s.grass = 1.f;  s.trees_dist = 1.f;  s.grass_dist = 3.f;	break;
 
 	case 5:  // Ultra  -------------
-		s.anisotropy = 16;  s.view_distance = 20000;  s.terdetail = 1.0f;  s.terdist = 1000.f;  s.road_dist = 3.0;
+		s.anisotropy = 8;  s.view_distance = 20000;  s.terdetail = 0.8f;  s.terdist = 1000.f;  s.road_dist = 3.0;
 		s.tex_size = 1;  s.ter_mtr = 3;  s.ter_tripl = 2;  s.shaders = 1;  s.use_imposters = 1;  s.imposters_only = 0;
 		s.water_reflect = 1;  s.water_refract = 1;  s.water_rttsize = 2;
 		s.shadow_type = Sh_Depth;  s.shadow_size = 3;  s.shadow_count = 3;  s.shadow_dist = 3000;  s.shadow_filter = 4;
@@ -79,7 +79,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	s.particles = val >= 1;  s.trails = val >= 1;
 	
 	s.rpl_rec   = val >= 1;
-	s.rpl_ghost = val >= 1;  s.rpl_alpha = val <= 1;
+	s.rpl_ghost = val >= 1;  s.rpl_alpha = false; //val <= 1;
 	
 	s.all_effects = val >= 3;  // only bloom on High
 	s.bloom = val >= 2;
@@ -98,23 +98,23 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	case 1:  // Low  -------------
 		s.particles_len = 1.f;  s.trails_len = 1.f;
-		s.refl_mode = 0;  s.refl_skip = 100;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 50.f;  break;
+		s.refl_mode = 0;  s.refl_skip = 70;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 50.f;  break;
 
 	case 2:  // Medium  -------------
 		s.particles_len = 1.f;  s.trails_len = 1.5f;
-		s.refl_mode = 1;  s.refl_skip = 70;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 100.f;  break;
+		s.refl_mode = 1;  s.refl_skip = 40;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 100.f;  break;
 
 	case 3:  // High  -------------
 		s.particles_len = 1.2f;  s.trails_len = 2.f;
-		s.refl_mode = 1;  s.refl_skip = 40;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 150.f;  break;
+		s.refl_mode = 1;  s.refl_skip = 10;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 150.f;  break;
 
 	case 4:  // Very High  -------------
 		s.particles_len = 1.5f;  s.trails_len = 3.f;
-		s.refl_mode = 1;  s.refl_skip = 10;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 200.f;  break;
+		s.refl_mode = 1;  s.refl_skip = 0;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 200.f;  break;
 
 	case 5:  // Ultra  -------------
 		s.particles_len = 1.5f;  s.trails_len = 4.f;
-		s.refl_mode = 1;  s.refl_skip = 1;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 300.f;  break;
+		s.refl_mode = 1;  s.refl_skip = 0;  s.refl_faces = 1;  s.refl_size = 1;  s.refl_dist = 300.f;  break;
 	}
 #endif
 
@@ -170,7 +170,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	
 	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
 	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);
-	Chk("RplChkAlpha", chkRplChkAlpha, pSet->rpl_alpha);
+	//Chk("RplChkAlpha", chkRplChkAlpha, pSet->rpl_alpha);
 #endif
 
 #ifdef ROAD_EDITOR  /// editor only
