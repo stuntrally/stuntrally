@@ -681,8 +681,23 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 			np.y = mp.x*sinf(a) + mp.y*cosf(a);  mp = -np;
 		}
 	}
-	float xp = std::min(1.f, std::max(-1.f,  (mp.x - minX)*scX*2.f-1.f )),
-		  yp = std::min(1.f, std::max(-1.f, -(mp.y - minY)*scY*2.f+1.f ));
+	float xp =  (mp.x - minX)*scX*2.f-1.f,
+		  yp = -(mp.y - minY)*scY*2.f+1.f;
+
+	//  clamp to circle
+	if (bZoom /*&& bRot*/)
+	{
+		float d = xp*xp + yp*yp;
+		const float dd = pSet->mini_border ? 0.95f : 0.85f;
+		if (d > dd*dd)
+		{	d = dd/sqrt(d);
+			xp *= d;  yp *= d;
+		}
+	}else
+	{	// clamp to square
+		xp = std::min(1.f, std::max(-1.f, xp ));
+		yp = std::min(1.f, std::max(-1.f, yp ));
+	}
 	
 	bool bGhost = carModels[c]->eType == CarModel::CT_GHOST,
 		bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
