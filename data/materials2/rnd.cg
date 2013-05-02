@@ -84,12 +84,13 @@ float4 circle_ps(in float4 p : POSITION,
 				in float4 clr : COLOR,  // tc 0..1
 	uniform float showTerrain,  // bool
 	uniform float showBorder,
+	uniform float square,
 	uniform sampler2D roadMap : TEXUNIT0,
 	uniform sampler2D circleMap : TEXUNIT1,
 	uniform sampler2D terMap : TEXUNIT2): COLOR0
 {
 	float4 road = tex2D(roadMap, uv);
-	float4 cir = tex2D(circleMap, clr.xy);
+	float4 cir = square > 0.5f ? float4(1,0,1,1) : tex2D(circleMap, clr.xy);
 	float4 ter = tex2D(terMap, uv);
 
 	float3 cl, bcl = float3(1.1,1.4,1.5);  //border color

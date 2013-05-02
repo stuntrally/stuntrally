@@ -449,11 +449,13 @@ void App::UpdMiniTer()
 	Pass* pass = mm->getTechnique(0)->getPass(0);
 	if (!pass)  return;
 	try
-	{	Ogre::GpuProgramParametersSharedPtr fparams = pass->getFragmentProgramParameters();
-		if (fparams->_findNamedConstantDefinition("showTerrain",false))
-			fparams->setNamedConstant("showTerrain", pSet->mini_terrain && sc->ter ? 1.f : 0.f);
-		if (fparams->_findNamedConstantDefinition("showBorder",false))
-			fparams->setNamedConstant("showBorder", pSet->mini_border && sc->ter ? 1.f : 0.f);
+	{	Ogre::GpuProgramParametersSharedPtr par = pass->getFragmentProgramParameters();
+		if (par->_findNamedConstantDefinition("showTerrain",false))
+			par->setNamedConstant("showTerrain", pSet->mini_terrain && sc->ter ? 1.f : 0.f);
+		if (par->_findNamedConstantDefinition("showBorder",false))
+			par->setNamedConstant("showBorder", pSet->mini_border && sc->ter ? 1.f : 0.f);
+		if (par->_findNamedConstantDefinition("square",false))
+			par->setNamedConstant("square", pSet->mini_zoomed && sc->ter ? 0.f : 1.f);
 	}
 	catch(...){  }
 }
