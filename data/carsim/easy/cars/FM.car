@@ -146,7 +146,7 @@ handbrake = 3.6
 [ driver ]
 position = -0.38, 0.023, 0.1
 mass = 80.0
-view-position = 0.2, -0.4, 0.5
+view-position = 0.06, -0.39, 0.5
 hood-mounted-view-position = -0.7, 0, 0.43
 
 

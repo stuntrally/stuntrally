@@ -145,8 +145,8 @@ handbrake = 4.1
 [ driver ]
 position = 0.35, -0.13, 0.05
 mass = 50.0
-view-position = 0.4, 0.4, 0.4
-hood-mounted-view-position = -0.7, 0, 0.44
+view-position = 0.15, -0.42, 0.57
+hood-mounted-view-position = -0.77, 0, 0.56
 
 
 #  aerodynamics

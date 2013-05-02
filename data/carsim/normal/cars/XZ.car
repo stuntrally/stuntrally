@@ -87,7 +87,7 @@ gear-ratio-6 = 0.79
 shift-delay = 0.08
 
 [ differential ]
-final-drive = 4.71
+final-drive = 5.0
 anti-slip = 500.0
 
 [ fuel-tank ]
@@ -157,8 +157,8 @@ handbrake = 3.1
 [ driver ]
 position = -0.4, -0.15, -0.5
 mass = 80.0
-view-position = -0.4, 0, 0.5
-hood-mounted-view-position = -0.4, 0, 0.54
+view-position = -0.02, -0.40, 0.30
+hood-mounted-view-position = -0.4, 0, 0.50
 
 
 #  aerodynamics
