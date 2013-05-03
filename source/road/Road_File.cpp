@@ -44,7 +44,7 @@ void SplineRoad::Defaults()
 	tcMul = 0.1f;  tcMulW = 0.2f;  tcMulP = 0.1f;  tcMulPW = 0.3f;  tcMulC = 0.2f;
 
 	lenDiv0 = 1.f;  iw0 = 8;  iwPmul = 4;  ilPmul = 1;
-	skLen = 1.f;  skH = 0.12f;  fHeight = 0.1f;
+	skirtLen = 1.f;  skirtH = 0.12f;  fHeight = 0.1f;
 	setMrgLen = 180.f;  bMerge = false;  lposLen = 10.f;
 	colN = 4; colR = 2.f;
 	iDir = -1;  vStBoxDim = Vector3(1,5,12);  // /long |height -width
@@ -250,8 +250,8 @@ bool SplineRoad::LoadFile(String fname, bool build)
 		a = n->Attribute("heightOfs");	if (a)  fHeight = s2r(a);
 	}
 	n = root->FirstChildElement("mrg");	if (n)  {
-		a = n->Attribute("skirtLen");	if (a)  skLen = s2r(a);
-		a = n->Attribute("skirtH");		if (a)  skH   = s2r(a);
+		a = n->Attribute("skirtLen");	if (a)  skirtLen = s2r(a);
+		a = n->Attribute("skirtH");		if (a)  skirtH   = s2r(a);
 
 		a = n->Attribute("merge");		if (a)  bMerge  = s2i(a) > 0;
 		a = n->Attribute("mergeLen");	if (a)  setMrgLen = s2r(a);
@@ -359,8 +359,8 @@ bool SplineRoad::SaveFile(String fname)
 	root.InsertEndChild(dim);
 
 	TiXmlElement mrg("mrg");
-		mrg.SetAttribute("skirtLen",	toStr( skLen ).c_str());
-		mrg.SetAttribute("skirtH",		toStr( skH ).c_str());
+		mrg.SetAttribute("skirtLen",	toStr( skirtLen ).c_str());
+		mrg.SetAttribute("skirtH",		toStr( skirtH ).c_str());
 
 		mrg.SetAttribute("merge",		"1");  // always 1 for game, 0 set in editor
 		mrg.SetAttribute("mergeLen",	toStr( setMrgLen ).c_str());

@@ -163,17 +163,17 @@ public:
 	Ogre::String  sMtrRoad[MTRs], sMtrWall,sMtrWallPipe, sMtrCol;
 	void SetMtrPipe(int i, Ogre::String sMtr);
 
-	Ogre::Real fHeight;	// above terrain  ?for each point-
+	Ogre::Real fHeight;	 // above terrain  ?for each point-
 	Ogre::Real tcMul,tcMulW,tcMulP,tcMulPW,tcMulC;	// tex coord mul per unit length - road,wall,pipe,pipewall,column
 
-	Ogre::Real lenDiv0;	// triangle dim in length
+	Ogre::Real lenDiv0;	 // triangle dim in length
 	int  iw0;		// width divs
 
-	Ogre::Real skLen,skH; // skirt dims (for hiding gaps)
+	Ogre::Real skirtLen,skirtH;//, skirtPipeMul;  // skirt dims (for hiding gaps)
 
-	Ogre::Real setMrgLen; // length below which segments are merged
+	Ogre::Real setMrgLen;  // length below which segments are merged
 	bool bMerge;
-	Ogre::Real lposLen;   // length between LOD points
+	Ogre::Real lposLen;    // length between LOD points
 
 	int  colN;		// column regular polygon sides
 	Ogre::Real colR;		// column radius
@@ -186,11 +186,11 @@ public:
 	Ogre::String  sTxtDesc;  // track description text
 	
 	std::vector<CheckSphere> mChks;  // checkpoint spheres
-	Ogre::Real chksRoadLen;  // for %, sum of all mChks[].dist (without last)
+	Ogre::Real chksRoadLen;   // for %, sum of all mChks[].dist (without last)
 	Ogre::Vector3 vStBoxDim;  // start/finish box half dimensions
 	int iDir;  // -1 or +1  if road points go +/-1 with car start orientation
-	int iP1;  // 1st chk - road point index (not reversed) for mP[]
-	int iChkId1,iChkId1Rev;  // 1st chekpoint index (and for reversed) for mChks[]
+	int iP1;   // 1st chk - road point index (not reversed) for mP[]
+	int iChkId1,iChkId1Rev;   // 1st chekpoint index (and for reversed) for mChks[]
 
 	// params for editor tool: align terrain to road
 	float edWadd,edWmul;  // const added width and width multipler for whole road

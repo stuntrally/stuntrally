@@ -361,6 +361,10 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				rs.sMtrB = sMtrRoad[mtrB] + (onTer ? "_ter" :"");
 			}
 			
+			//  skirt /\ not for bridges
+			bool useSkirt = onTer || pipe;  // pipe own factor..
+			Real skLen = useSkirt ? skirtLen : 0.f, skH = useSkirt ? skirtH : 0.f;
+			
 			
 			//  seg params  -----------------
 			const int iwW = 7;  // wall  width steps - types..

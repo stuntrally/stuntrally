@@ -424,7 +424,7 @@ void App::editRoad(EditPtr ed)
 	else if (n=="RdLenDim")		road->lenDiv0 = r;	
 	else if (n=="RdWidthSteps")	road->iw0 = r;		else if (n=="RdPwsM")	road->iwPmul = r;
 	else if (n=="RdHeightOfs")	road->fHeight = r;	else if (n=="RdPlsM")	road->ilPmul = r;
-	else if (n=="RdSkirtLen")	road->skLen = r;	else if (n=="RdSkirtH")	road->skH = r;
+	else if (n=="RdSkirtLen")	road->skirtLen = r;	else if (n=="RdSkirtH")	road->skirtH = r;
 	else if (n=="RdMergeLen")	road->setMrgLen = r;
 	else if (n=="RdLodPLen")	road->lposLen = r;
 	//road->RebuildRoad(true);  //on Enter ?..

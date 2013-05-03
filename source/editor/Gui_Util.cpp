@@ -88,7 +88,7 @@ void App::SetGuiFromXmls()
 	_Ed(RdLenDim, road->lenDiv0);	_Ed(RdWidthSteps,road->iw0);
 	_Ed(RdPwsM, road->iwPmul);		_Ed(RdPlsM, road->ilPmul);
 	_Ed(RdHeightOfs,road->fHeight);
-	_Ed(RdSkirtLen,	road->skLen);		_Ed(RdSkirtH,	road->skH);
+	_Ed(RdSkirtLen,	road->skirtLen);	_Ed(RdSkirtH,	road->skirtH);
 	_Ed(RdMergeLen,	road->setMrgLen);	_Ed(RdLodPLen,	road->lposLen);
 	bGI = true;
 }
@@ -251,7 +251,7 @@ void App::btnCopyRoadPars(WP)
 	road->lenDiv0 = rd.lenDiv0;	road->colR = rd.colR;
 	road->iw0 =	rd.iw0;			road->iwPmul = rd.iwPmul;
 	road->fHeight =	rd.fHeight;	road->ilPmul = rd.ilPmul;
-	road->skLen = rd.skLen;		road->skH = rd.skH;
+	road->skirtLen = rd.skirtLen;	road->skirtH = rd.skirtH;
 	road->setMrgLen = rd.setMrgLen;  road->lposLen = rd.lposLen;
 
 	SetGuiFromXmls();	road->RebuildRoad(true);

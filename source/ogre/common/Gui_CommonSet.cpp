@@ -83,7 +83,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	
 	s.all_effects = val >= 3;  // only bloom on High
 	s.bloom = val >= 2;
-	s.motionblur = false;  s.camblur = false;  // blur always off  // TODO: new blur is b0rked in gl ..restore old implementation ?
+	s.motionblur = false;  s.camblur = false;  // blur always off
 	s.softparticles = val >= 4;
 	s.ssao = val >= 5;
 	s.dof = val >= 5;
