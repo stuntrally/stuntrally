@@ -89,6 +89,7 @@
 	<Tag name="TBPlace">Miejsce</Tag>
 	<Tag name="AngleMax">Kąt Max</Tag>
 	<Tag name="MessageBox_Retry">Ponów</Tag>
+	<Tag name="TipToggleTriplanar">When using graphics option triplanar one, this layer (one only) will have triplanar mapping.</Tag>
 	<Tag name="InputKeyboardEmulation">Emulacja klawiatury</Tag>
 	<Tag name="HDRAdaptationScale">Skala dostosowania</Tag>
 	<Tag name="TBLast">Ostatni</Tag>
@@ -198,6 +199,7 @@
 	<Tag name="Model">Model</Tag>
 	<Tag name="InpSet_AxisHalf">Oś, połowa</Tag>
 	<Tag name="PipeLStepsMul">Kroków długości dla rur</Tag>
+	<Tag name="Triplanar">Triplanar</Tag>
 	<Tag name="View">Widok</Tag>
 	<Tag name="TriSize">Rozmiar trójkąta</Tag>
 	<Tag name="CarDebug">Paski zawieszenia, poślizgu | -</Tag>
@@ -836,8 +838,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="TipToggleTriplanar">When using graphics option triplanar one, this layer (one only) will have triplanar mapping.</Tag>
-	<Tag name="Triplanar">Triplanar</Tag>
+	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
+	<Tag name="TipTerErrorNorm">Default terrain error in percent. Less for flat, more for high terrains.</Tag>
 	<Tag name="GameVersion">2.0</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
