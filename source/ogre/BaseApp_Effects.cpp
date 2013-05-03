@@ -78,7 +78,7 @@ void BaseApp::createViewports()
 bool BaseApp::AnyEffectEnabled()
 {
 	//any new effect need to be added here to have UI Rendered on it
-	return pSet->all_effects && (pSet->softparticles || pSet->bloom || pSet->hdr || pSet->motionblur || pSet->camblur ||pSet->ssaa || pSet->ssao || pSet->godrays || pSet->dof || pSet->filmgrain);
+	return pSet->all_effects && (pSet->softparticles || pSet->bloom || pSet->hdr || pSet->motionblur || pSet->camblur || pSet->ssaa || pSet->ssao || pSet->godrays || pSet->dof || pSet->filmgrain);
 }
 
 bool BaseApp::NeedMRTBuffer()
@@ -114,7 +114,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 			cmp.setCompositorEnabled((*it), "DepthOfField", false);
 			cmp.setCompositorEnabled((*it), "GodRays", false);
 			cmp.setCompositorEnabled((*it), "gbufferFinalizer", false);
-			cmp.setCompositorEnabled((*it), "CamBlur", false);
+			//cmp.setCompositorEnabled((*it), "CamBlur", false);
 		}else
         {
 			cmp.setCompositorEnabled((*it), "ssaoNoMRT", false);
@@ -171,7 +171,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		cmp.setCompositorEnabled((*it), "HDR", pSet->hdr && NeedMRTBuffer());
 		cmp.setCompositorEnabled((*it), "HDRNoMRT", pSet->hdr && !NeedMRTBuffer());
 		cmp.setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
-		cmp.setCompositorEnabled((*it), "CamBlur", pSet->camblur);
+		//cmp.setCompositorEnabled((*it), "CamBlur", pSet->camblur);
 		cmp.setCompositorEnabled((*it), "FXAA", pSet->ssaa);
 		cmp.setCompositorEnabled((*it), "FilmGrain", pSet->hdr);
 
@@ -213,9 +213,9 @@ void BaseApp::recreateCompositor()
 		mRoot->addResourceLocation(sPath + "/bloom", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/hdr", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/motionblur", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/camblur", "FileSystem", "Effects");
+		//mRoot->addResourceLocation(sPath + "/camblur", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/ssaa", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/smaa", "FileSystem", "Effects");
+		//mRoot->addResourceLocation(sPath + "/smaa", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/fxaa", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/ssao", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/softparticles", "FileSystem", "Effects");
@@ -370,11 +370,11 @@ void BaseApp::recreateCompositor()
 		mMotionBlurLogic = new MotionBlurLogic(this);
 		cmp.registerCompositorLogic("Motion Blur", mMotionBlurLogic);
 	}
-	if (!mCameraBlurLogic)
+	/*if (!mCameraBlurLogic)
 	{
 		mCameraBlurLogic = new CameraBlurLogic(this);
 		cmp.registerCompositorLogic("CamBlur", mCameraBlurLogic);
-	}
+	}*/
 
 
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); ++it)
@@ -405,7 +405,7 @@ void BaseApp::recreateCompositor()
 		}
 		cmp.addCompositor((*it), "GodRays");
 		cmp.addCompositor((*it), "Bloom");
-		cmp.addCompositor((*it), "CamBlur");
+		//cmp.addCompositor((*it), "CamBlur");
 		cmp.addCompositor((*it), "Motion Blur");
 		cmp.addCompositor((*it), "FXAA");
 		cmp.addCompositor((*it), "FilmGrain");

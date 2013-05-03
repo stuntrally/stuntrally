@@ -562,7 +562,7 @@ void App::slHDRVignettingDarkness(SL)
 
 void App::chkVidBlur(WP wp)
 {		
-	ChkEv(camblur);  refreshCompositor();
+	ChkEv(motionblur);  refreshCompositor();
 	changeShadows();
 }
 void App::chkVidSSAA(WP wp)

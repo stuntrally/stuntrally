@@ -164,7 +164,7 @@ void App::InitGui()
     //------------------------------------------------------------------------
 	bnQuit = mGUI->findWidget<Button>("Quit");
 	if (bnQuit)  {  bnQuit->eventMouseButtonClick += newDelegate(this, &App::btnQuit);  bnQuit->setVisible(isFocGui);  }
-	Chk("SMAA", chkVidSSAA, pSet->ssaa);
+	//Chk("SMAA", chkVidSSAA, pSet->ssaa);
 	Chk("ReverseOn", chkReverse, pSet->gui.trackreverse);
 	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
 
@@ -287,7 +287,7 @@ void App::InitGui()
 	Slv(HDRVignettingRadius, pSet->vignettingRadius/10);
 	Slv(HDRVignettingDarkness, pSet->vignettingDarkness);
 	
-	Chk("MotionBlur", chkVidBlur, pSet->camblur);
+	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
 	Chk("ssao", chkVidSSAO, pSet->ssao);
 
 	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);
