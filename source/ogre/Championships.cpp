@@ -3,6 +3,7 @@
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "OgreGame.h"
+#include "../road/Road.h"
 #include "common/MultiList2.h"
 
 using namespace std;
@@ -420,8 +421,22 @@ void App::ChampFillStageInfo(bool finished)
 
 	String s;
 	s = "#80FFE0"+ ch.name + "\n\n" +
-		"#80FFC0"+TR("#{Stage}") + ": " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()) + "\n" +
-		"#80FF80"+TR("#{Track}") + ": " + trk.name + "\n\n";
+		"#80FFC0"+ TR("#{Stage}") + ":  " + toStr(pc.curTrack+1) + " / " + toStr(ch.trks.size()) + "\n" +
+		"#80FF80"+ TR("#{Track}") + ":  " + trk.name + "\n\n";
+
+	if (!finished)  // track info at start
+	{
+		int id = tracksXml.trkmap[trk.name];
+		if (id > 0)
+		{
+			const TrackInfo* ti = &tracksXml.trks[id-1];
+			s += "#A0D0FF"+ TR("#{Difficulty}:  ") + clrsDiff[ti->diff] + TR("#{Diff"+toStr(ti->diff)+"}") + "\n";
+			if (road)
+			{	Real len = road->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);
+				s += "#A0D0FF"+ TR("#{Distance}:  ") + "#B0E0FF" + fToStr(len, 1,4) + (pSet->show_mph ? " mi" : " km") + "\n\n";
+				s += "#A8B8C8"+ road->sTxtDesc;
+		}	}
+	}
 
 	if (finished)
 	{

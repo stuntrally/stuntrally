@@ -1242,7 +1242,7 @@
 			<Property key="MultiLine" value="true"/>
 			<Property key="WordWrap" value="true"/>
 		</Widget>
-		<Widget type="EditBox" skin="EditBoxEmpty" position="32 24 328 288" name="ChampStageText">
+        <Widget type="EditBox" skin="EditBoxEmpty" position="32 24 312 308" name="ChampStageText">
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ReadOnly" value="true"/>

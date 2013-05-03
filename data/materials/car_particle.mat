@@ -10,7 +10,6 @@ material Base_particle
 }
 
 
-
 material Boost
 {
     parent Base_particle
