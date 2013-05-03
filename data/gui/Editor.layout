@@ -1231,9 +1231,10 @@
 				</Widget>
 
 				<Widget type="TextBox" skin="TextBox" position="32 150 140 24" >
-					<Property key="Caption" value="Terrain Error %"/>
+					<Property key="Caption" value="#{TerrainError} %"/>
 					<Property key="TextColour" value="0.5 0.6 0.4"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
+					<UserString key="tip" value="#{TipTerErrorNorm}"/>
 				</Widget>
 				<Widget type="EditBox" skin="EditBox" position="168 146 56 24" name="edTerErrorNorm">
 					<Property key="Colour" value="0.5 0.6 0.4"/>
