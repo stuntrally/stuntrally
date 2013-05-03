@@ -167,7 +167,9 @@ void App::trkListNext(int rel)
 		&& !pSet->isMain && pSet->inMenu == WND_Edit;
 	if (!b)  return;
 	
-	int i = std::max(0, std::min((int)trkList->getItemCount()-1, (int)trkList->getIndexSelected()+rel ));
+	size_t cnt = trkList->getItemCount();
+	if (cnt == 0)  return;
+	int i = std::max(0, std::min((int)cnt-1, (int)trkList->getIndexSelected()+rel ));
 	trkList->setIndexSelected(i);
 	trkList->beginToItemAt(std::max(0, i-11));  // center
 	listTrackChng(trkList,i);
