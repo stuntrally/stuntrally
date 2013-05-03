@@ -410,10 +410,8 @@ uint32 ColorMap::_getColorAt_Bilinear(Ogre::Real x, Ogre::Real z, const TRect<Re
 	assert(pixels);
 
 	// Early out if the coordinates are outside map bounds.
-	if(x < mapBounds.left || x >= mapBounds.right || z < mapBounds.top || z >= mapBounds.bottom)
-	{
+	if (x < mapBounds.left || x >= mapBounds.right || z < mapBounds.top || z >= mapBounds.bottom)
 		return 0xFFFFFFFF;
-	}
 
 	uint32 mapWidth = (uint32)pixels->getWidth();
 	uint32 mapHeight = (uint32)pixels->getHeight();
@@ -422,7 +420,7 @@ uint32 ColorMap::_getColorAt_Bilinear(Ogre::Real x, Ogre::Real z, const TRect<Re
 
 	uint32 xIndex = (uint32)xIndexFloat;
 	uint32 zIndex = (uint32)zIndexFloat;
-	if (xIndex < 0 || zIndex < 0 || xIndex > mapWidth-1 || zIndex > mapHeight-1)
+	if (xIndex < 0 || zIndex < 0 || xIndex >= mapWidth-1 || zIndex >= mapHeight-1)
 		return 0xFFFFFFFF;
 
 	Ogre::Real xRatio = xIndexFloat - xIndex;
