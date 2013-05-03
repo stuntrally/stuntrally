@@ -776,9 +776,11 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
 				if (pipeGlass)
 				{
-					ent->setRenderQueueGroup(RQG_PipeGlass);
 					//ent->setCastShadows(true);
-				}
+					ent->setRenderQueueGroup(RQG_PipeGlass);
+				}else
+					ent->setRenderQueueGroup(RQG_Road);
+
 				if (wall /*&& !posW.empty()*/)
 				{
 					AddMesh(meshW, sMeshW, aabox, &entW, &nodeW, "W."+sEnd);
@@ -794,7 +796,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				if (hasBlend)
 				{
 					AddMesh(meshB, sMeshB, aabox, &entB, &nodeB, "B."+sEnd);
-					entB->setRenderQueueGroup(RQG_RoabBlend);
+					entB->setRenderQueueGroup(RQG_RoadBlend);
 				}
 
 				if (bCastShadow && !onTer)
