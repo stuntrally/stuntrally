@@ -355,7 +355,11 @@ void App::CreateTrees()
 		if (pSet->use_imposters)
 		{
 			resMgr.initialiseResourceGroup("BinFolder");
-			resMgr.loadResourceGroup("BinFolder");
+			try  {
+				resMgr.loadResourceGroup("BinFolder");
+			}catch (Ogre::Exception& e)  {  // does throw not found impostors png sometimes, why?
+				LogO(e.getFullDescription());
+			}
 		}
 		trees->update();
 		
