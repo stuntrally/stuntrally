@@ -685,20 +685,26 @@ void App::UpdCarClrSld(bool upd)
 //  next/prev in list by key
 int App::LNext(MyGUI::MultiList2* lp, int rel, int ofs)
 {
-	int i = std::max(0, std::min((int)lp->getItemCount()-1, (int)lp->getIndexSelected()+rel ));
+	size_t cnt = lp->getItemCount();
+	if (cnt==0)  return 0;
+	int i = std::max(0, std::min((int)cnt-1, (int)lp->getIndexSelected()+rel ));
 	lp->setIndexSelected(i);
 	lp->beginToItemAt(std::max(0, i-ofs));  // center
 	return i;
 }
 int App::LNext(MyGUI::MultiList* lp, int rel)
 {
-	int i = std::max(0, std::min((int)lp->getItemCount()-1, (int)lp->getIndexSelected()+rel ));
+	size_t cnt = lp->getItemCount();
+	if (cnt==0)  return 0;
+	int i = std::max(0, std::min((int)cnt-1, (int)lp->getIndexSelected()+rel ));
 	lp->setIndexSelected(i);
 	return i;
 }
 int App::LNext(MyGUI::ListPtr lp, int rel, int ofs)
 {
-	int i = std::max(0, std::min((int)lp->getItemCount()-1, (int)lp->getIndexSelected()+rel ));
+	size_t cnt = lp->getItemCount();
+	if (cnt==0)  return 0;
+	int i = std::max(0, std::min((int)cnt-1, (int)lp->getIndexSelected()+rel ));
 	lp->setIndexSelected(i);
 	lp->beginToItemAt(std::max(0, i-ofs));  // center
 	return i;
