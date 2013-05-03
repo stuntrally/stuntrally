@@ -1,3 +1,48 @@
+//index ,this will need to change if any of the render queue groups ranges are changing,we should have a way to set this @runtime
+//0-69 scenes without alpha (trees are there for somereason)
+//70-83 alpha objects including particles
+//84-95 environment objects(weather ) .also ghost(we may change this part later)
+//95-98 UI overlays
+//99 needles (because they are manual objects they intersect with depth by default ,need to clear buffer before rendering them)
+
+compositor gbuffer
+{
+    technique
+    {
+		compositor_logic GBuffer
+		
+        // temporary textures
+		texture mrt_output target_width target_height PF_FLOAT16_RGBA PF_FLOAT16_RGBA PF_FLOAT16_RGBA chain_scope depth_pool 2
+		
+        // the scene we want to modulate
+        target mrt_output
+        {
+			input none
+			pass clear 
+			{
+			}
+			pass render_scene
+			{
+				//anything before objects with alpha (ex.particles)
+				first_render_queue 0
+				last_render_queue 69         
+			}
+
+		}
+
+		target_output
+        {
+            input none
+
+			pass render_quad
+            {
+                material RenderScene
+                input 0 mrt_output 0
+          }
+		}
+    }
+}
+
 compositor gbufferNoMRT
 {
     technique
@@ -20,8 +65,75 @@ compositor gbufferNoMRT
     }
 }
 
-// for ogre 1.7
-compositor gbufferUIRender17
+compositor gbufferFinalizer1
+{
+    technique
+    {
+		target_output
+        {
+            input previous
+
+			shadows off
+			pass render_scene
+            {
+                // everything after particles render queue
+	      		first_render_queue 84
+	    		last_render_queue 100
+            }
+			
+		}
+    }
+}
+
+compositor gbufferFinalizer
+{
+		
+    technique
+    {
+	    texture hardparticles target_width target_height PF_R8G8B8A8 depth_pool 2 no_fsaa
+		texture previousscene target_width target_height PF_FLOAT16_RGB
+     
+		target previousscene 
+		{
+			input previous
+		}
+		target hardparticles
+        {
+            input none
+			shadows off
+			pass clear
+            {
+					buffers colour
+					colour_value 0 0 0 0
+           }
+		   pass render_quad
+           {
+               material SceneRenderNoDepth
+               input 0 previousscene
+           }	
+		   pass render_scene
+           {
+               // everything after particles render queue
+	      	   first_render_queue 70
+	    	   last_render_queue 94
+           }			
+		}
+		target_output
+        {
+            input none
+			pass clear
+            {
+           }
+			pass render_quad
+            {
+                material SceneRenderNoDepth
+                input 0 hardparticles
+            }
+		}
+    }
+}
+
+compositor gbufferUIRender
 {
     technique
     {
@@ -37,10 +149,7 @@ compositor gbufferUIRender17
             }
 			pass clear
             {
-				clear
-				{
-					buffers depth
-            	}
+				buffers depth
             }
 			pass render_scene
             {
@@ -51,3 +160,4 @@ compositor gbufferUIRender17
 		}
     }
 }
+

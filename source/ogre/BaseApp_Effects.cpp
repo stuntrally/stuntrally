@@ -13,12 +13,6 @@
 //#include "common/MaterialGen/MaterialGenerator.h"
 using namespace Ogre;
 
-#if OGRE_VERSION_MINOR >= 8
-	#define UI_RENDER "gbufferUIRender"
-#else
-	#define UI_RENDER "gbufferUIRender17"
-#endif
-
 
 
 /** This class demonstrates basic usage of the RTShader system.
@@ -122,7 +116,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		cmp.setCompositorEnabled((*it), "Motion Blur", false);
 		cmp.setCompositorEnabled((*it), "FXAA", false);
 		cmp.setCompositorEnabled((*it), "FilmGrain", false);
-		cmp.setCompositorEnabled((*it), UI_RENDER, false);
+		cmp.setCompositorEnabled((*it), "gbufferUIRender", false);
 	}
 
 	if (!pSet->all_effects || disableAll)
@@ -189,7 +183,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 			cmp.setCompositorEnabled((*it), "ssaoNoMRT", pSet->ssao);
 		}
 
-		cmp.setCompositorEnabled((*it), UI_RENDER, AnyEffectEnabled());
+		cmp.setCompositorEnabled((*it), "gbufferUIRender", AnyEffectEnabled());
 	}
 }
 
@@ -409,7 +403,7 @@ void BaseApp::recreateCompositor()
 		cmp.addCompositor((*it), "Motion Blur");
 		cmp.addCompositor((*it), "FXAA");
 		cmp.addCompositor((*it), "FilmGrain");
-		cmp.addCompositor((*it), UI_RENDER);
+		cmp.addCompositor((*it), "gbufferUIRender");
 
 	}
 
