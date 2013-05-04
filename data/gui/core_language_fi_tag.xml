@@ -226,7 +226,7 @@
 	<Tag name="UseImposters">Use Impostors</Tag>
 	<Tag name="NetSettings">Asetukset</Tag>
 	<Tag name="TipModelMaxScale">Model maximal scale.</Tag>
-	<Tag name="TerrainError">Maaston virhe</Tag>
+	<Tag name="TerrainError">Terrain Error</Tag>
 	<Tag name="InputGraphsType">change graphs type in game</Tag>
 	<Tag name="NetMasterProtocolError">Incompatible protocol version - update Stunt Rally or contact server administrator.</Tag>
 	<Tag name="No">Ei</Tag>
@@ -403,6 +403,7 @@
 	<Tag name="TipMudInt">Mutahiukkasten voimakkuus</Tag>
 	<Tag name="HeightMax">Height Max</Tag>
 	<Tag name="NetWrongPassword">Väärä salasana.</Tag>
+	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
 	<Tag name="ScaleAll">Skaalaa kaikkia</Tag>
 	<Tag name="InpSet_KeyFull">Key Full</Tag>
 	<Tag name="InputMapPrevTab">Edellinen välilehti</Tag>
@@ -662,6 +663,7 @@
 	<Tag name="Setup">Setup</Tag>
 	<Tag name="ReflMode_full">Täysi</Tag>
 	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
+	<Tag name="TipTerErrorNorm">Default terrain error in percent. Less for flat, more for high terrains.</Tag>
 	<Tag name="TrackPipes">Putket</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Height offset</Tag>
@@ -838,8 +840,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
-	<Tag name="TipTerErrorNorm">Default terrain error in percent. Less for flat, more for high terrains.</Tag>
+	<Tag name="GraphicsAll_Impossible">Impossible</Tag>
+	<Tag name="GraphicsAll_Higher">Higher</Tag>
 	<Tag name="GameVersion">2.0</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

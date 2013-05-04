@@ -226,7 +226,7 @@
 	<Tag name="UseImposters">Użyj atrap</Tag>
 	<Tag name="NetSettings">Ustawienia</Tag>
 	<Tag name="TipModelMaxScale">Maksymalna skala modelu.</Tag>
-	<Tag name="TerrainError">Bład terenu</Tag>
+	<Tag name="TerrainError">Terrain Error</Tag>
 	<Tag name="InputGraphsType">zmień typ grafów w grze</Tag>
 	<Tag name="NetMasterProtocolError">Niekompatybilne wersje protokołu - pobierz nowsze Stunt Rally lub skontaktuj się z administratorem serwera.</Tag>
 	<Tag name="No">Nie</Tag>
@@ -403,6 +403,7 @@
 	<Tag name="TipMudInt">Intensywność cząstek błota.</Tag>
 	<Tag name="HeightMax">Wysokość Max</Tag>
 	<Tag name="NetWrongPassword">Nieprawidłowe hasło.</Tag>
+	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
 	<Tag name="ScaleAll">Skaluj wszystko</Tag>
 	<Tag name="InpSet_KeyFull">Klawisz, pełny</Tag>
 	<Tag name="InputMapPrevTab">Poprzednia zakładka</Tag>
@@ -662,6 +663,7 @@
 	<Tag name="Setup">Ustawienia</Tag>
 	<Tag name="ReflMode_full">Pełne</Tag>
 	<Tag name="TipDisableWeather">Wyłącz cząstki pogody.</Tag>
+	<Tag name="TipTerErrorNorm">Default terrain error in percent. Less for flat, more for high terrains.</Tag>
 	<Tag name="TrackPipes">Rury</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Przesunięcie wysokości</Tag>
@@ -838,8 +840,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
-	<Tag name="TipTerErrorNorm">Default terrain error in percent. Less for flat, more for high terrains.</Tag>
+	<Tag name="GraphicsAll_Impossible">Impossible</Tag>
+	<Tag name="GraphicsAll_Higher">Higher</Tag>
 	<Tag name="GameVersion">2.0</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
