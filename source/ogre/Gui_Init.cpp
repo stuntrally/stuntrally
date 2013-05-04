@@ -26,6 +26,7 @@ void App::InitGui()
 	popup.mGUI = mGUI;
 	popup.mPlatform = mPlatform;
 	QTimer ti;  ti.update();  /// time
+	loadReadme = true;
 
 
 	///  background image

@@ -645,22 +645,22 @@ void App::toggleGui(bool toggle)
 	if (mWndOpts)	mWndOpts->setVisible(notMain && pSet->inMenu == WND_Options);
 	
 	//  fill Readme editbox from file
-	static bool first = true;
-	if (mWndHelp && mWndHelp->getVisible() && first)
+	if (mWndHelp && mWndHelp->getVisible() && loadReadme)
 	{
-		first = false;
-		EditBox* edit = mGUI->findWidget<EditBox>("Readme");
+		loadReadme = false;
+		EditBox* edit = mGUI->findWidget<EditBox>("Readme",false);
 		if (edit)
 		{	std::string path = PATHMANAGER::Data()+"/../Readme.txt";
 			std::ifstream fi(path.c_str());
-			String text = "", s;
-			while (getline(fi,s))
-				text += s + "\n";
+			if (fi.good())
+			{	String text = "", s;
+				while (getline(fi,s))
+					text += s + "\n";
 
-			text = StringUtil::replaceAll(text, "#", "##");
-			edit->setCaption(UString(text));
-			edit->setVScrollPosition(0);
-	}	}
+				text = StringUtil::replaceAll(text, "#", "##");
+				edit->setCaption(UString(text));
+				edit->setVScrollPosition(0);
+	}	}	}
 
 	///  update track tab, for champs wnd
 	bool game = pSet->inMenu == WND_Game, champ = pSet->inMenu == WND_Champ, gc = game || champ;

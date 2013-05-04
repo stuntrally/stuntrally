@@ -305,8 +305,7 @@ protected:
 	//  main menu
 	void toggleGui(bool toggle=true), GuiShortcut(WND_Types wnd, int tab, int subtab=-1);
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
-	void MainMenuBtn(MyGUI::WidgetPtr);
-	void MenuTabChg(MyGUI::TabPtr, size_t);
+	void MainMenuBtn(MyGUI::WidgetPtr), MenuTabChg(MyGUI::TabPtr, size_t);  bool loadReadme;
 
 	///  championships
 	ChampsXml champs;  ProgressXml progress;

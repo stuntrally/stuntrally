@@ -80,7 +80,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,mStaticGeom(0), fLastFrameDT(0.001f)
 	,edTweak(0),edPerfTest(0),edTweakCol(0),tabTweak(0)
 	,txtTweakPath(0),cmbTweakCarSet(0), cmbTweakTireSet(0),txtTweakTire(0), txtTweakPathCol(0)
-	,bPerfTest(0),iPerfTestStage(PT_StartWait)
+	,bPerfTest(0),iPerfTestStage(PT_StartWait), loadReadme(1)
 {
 	pSet = settings;
 	pGame->collision.pApp = this;

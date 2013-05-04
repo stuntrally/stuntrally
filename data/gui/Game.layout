@@ -578,19 +578,19 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Setup}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
-				<Widget type="Button" skin="CheckBox" position="32 70 256 24" name="CarGear">
+				<Widget type="Button" skin="CheckBox" position="32 70 320 24" name="CarGear">
 					<Property key="Caption" value="#{AutoGearbox}"/>
 					<Property key="TextColour" value="0.8 0.9 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipAutoGearbox}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 100 256 24" name="CarRear">
+				<Widget type="Button" skin="CheckBox" position="32 100 320 24" name="CarRear">
 					<Property key="Caption" value="#{AutoRear}"/>
 					<Property key="TextColour" value="0.65 0.8 0.9"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipAutoRear}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 130 256 24" name="CarRearThrInv">
+				<Widget type="Button" skin="CheckBox" position="32 130 320 24" name="CarRearThrInv">
 					<Property key="Caption" value="#{RearThrottleInverse}"/>
 					<Property key="TextColour" value="0.65 0.8 0.9"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
@@ -620,13 +620,13 @@
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipTCS}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 340 200 24">
+				<Widget type="TextBox" skin="TextBox" position="32 340 300 24">
 					<Property key="Caption" value="#{SpeedSensitiveSteering}"/>
 					<Property key="TextColour" value="0.3 0.9 0.9"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipSpeedSensitiveSteering}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 370 200 24">
+				<Widget type="TextBox" skin="TextBox" position="32 370 300 24">
 					<Property key="Caption" value="#{SSS_Effect}"/>
 					<Property key="TextColour" value="0.7 0.9 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
@@ -659,7 +659,7 @@
 					<Property key="Colour" value="0.4 0.5 0.6"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 66 226 24">
+				<Widget type="TextBox" skin="TextBox" position="32 66 280 24">
 					<Property key="Caption" value="#{SimMode}"/>
 					<Property key="TextColour" value="0.7 0.85 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
@@ -696,22 +696,22 @@
 					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 248 216 24" name="CarCollis">
+				<Widget type="Button" skin="CheckBox" position="32 248 300 24" name="CarCollis">
 					<Property key="Caption" value="#{CarCollis}"/>
 					<Property key="TextColour" value="0.75 0.87 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 288 216 24" name="VegetCollis">
+				<Widget type="Button" skin="CheckBox" position="32 288 300 24" name="VegetCollis">
 					<Property key="Caption" value="#{VegetCol}"/>
 					<Property key="TextColour" value="0.6 0.8 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 328 216 24" name="DynamicObjects">
+				<Widget type="Button" skin="CheckBox" position="32 328 300 24" name="DynamicObjects">
 					<Property key="Caption" value="#{DynamicObjects}"/>
 					<Property key="TextColour" value="0.6 0.8 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 368 216 24" name="RoadWCollis">
+				<Widget type="Button" skin="CheckBox" position="32 368 300 24" name="RoadWCollis">
 					<Property key="Caption" value="#{RoadWallFullCollis}"/>
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
