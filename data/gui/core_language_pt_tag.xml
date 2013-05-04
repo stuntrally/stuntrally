@@ -226,7 +226,7 @@
 	<Tag name="UseImposters">Usar impostores</Tag>
 	<Tag name="NetSettings">Configurações</Tag>
 	<Tag name="TipModelMaxScale">Escala máxima do modelo.</Tag>
-	<Tag name="TerrainError">Erro no terreno</Tag>
+	<Tag name="TerrainError">Terrain Error</Tag>
 	<Tag name="InputGraphsType">change graphs type in game</Tag>
 	<Tag name="NetMasterProtocolError">Versão de protocolo incompatível - atualize o Stunt Rally ou contate o administrador do servidor.</Tag>
 	<Tag name="No">No</Tag>
@@ -403,6 +403,7 @@
 	<Tag name="TipMudInt">Mud particles intensity.</Tag>
 	<Tag name="HeightMax">Height Max</Tag>
 	<Tag name="NetWrongPassword">Wrong password.</Tag>
+	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
 	<Tag name="ScaleAll">Scale all</Tag>
 	<Tag name="InpSet_KeyFull">Key Full</Tag>
 	<Tag name="InputMapPrevTab">Previous tab</Tag>
@@ -662,6 +663,7 @@
 	<Tag name="Setup">Setup</Tag>
 	<Tag name="ReflMode_full">Full</Tag>
 	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
+	<Tag name="TipTerErrorNorm">Default terrain error in percent. Less for flat, more for high terrains.</Tag>
 	<Tag name="TrackPipes">Pipes</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Height offset</Tag>
@@ -838,8 +840,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
-	<Tag name="TipTerErrorNorm">Default terrain error in percent. Less for flat, more for high terrains.</Tag>
+	<Tag name="GraphicsAll_Impossible">Impossible</Tag>
+	<Tag name="GraphicsAll_Higher">Higher</Tag>
 	<Tag name="GameVersion">2.0</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

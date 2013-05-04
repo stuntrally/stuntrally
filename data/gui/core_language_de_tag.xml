@@ -226,7 +226,7 @@
 	<Tag name="UseImposters">Nutze Betrüger</Tag>
 	<Tag name="NetSettings">Einstellungen</Tag>
 	<Tag name="TipModelMaxScale">Maximale Skalierung des Modells.</Tag>
-	<Tag name="TerrainError">Terrainabweichung</Tag>
+	<Tag name="TerrainError">Terrain Error</Tag>
 	<Tag name="InputGraphsType">change graphs type in game</Tag>
 	<Tag name="NetMasterProtocolError">Inkompatibles protokoll - Spiel aktualisieren oder Server-Administrator kontaktieren.</Tag>
 	<Tag name="No">Nein</Tag>
@@ -403,6 +403,7 @@
 	<Tag name="TipMudInt">Intensität der Schlammpartikel.</Tag>
 	<Tag name="HeightMax">Höhe Max</Tag>
 	<Tag name="NetWrongPassword">Falsches Passwort.</Tag>
+	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
 	<Tag name="ScaleAll">Alle skalieren</Tag>
 	<Tag name="InpSet_KeyFull">Taste ganz</Tag>
 	<Tag name="InputMapPrevTab">Vorheriger Tab</Tag>
@@ -662,6 +663,7 @@
 	<Tag name="Setup">Setup</Tag>
 	<Tag name="ReflMode_full">Voll</Tag>
 	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
+	<Tag name="TipTerErrorNorm">Default terrain error in percent. Less for flat, more for high terrains.</Tag>
 	<Tag name="TrackPipes">Röhren</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Höhen-Offset</Tag>
@@ -838,8 +840,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
-	<Tag name="TipTerErrorNorm">Default terrain error in percent. Less for flat, more for high terrains.</Tag>
+	<Tag name="GraphicsAll_Impossible">Impossible</Tag>
+	<Tag name="GraphicsAll_Higher">Higher</Tag>
 	<Tag name="GameVersion">2.0</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
