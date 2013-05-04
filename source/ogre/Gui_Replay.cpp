@@ -115,7 +115,7 @@ void App::listRplChng(List* li, size_t pos)
 		ss = String(TR("#{Car}: ")) + rpl.header.car + "       "+
 			(rpl.header.numPlayers == 1 ? "" : (TR("#{Players}: ") + toStr(rpl.header.numPlayers))) + "  " +
 			(rpl.header.networked == 0 ? "" : "M") +  //TR("#{Multiplayer}")
-			"\n" + TR("#{RplTime}: ") + GetTimeString(rpl.GetTimeLength()) +
+			"\n#C0D8F0" + TR("#{RplTime}: ") + GetTimeString(rpl.GetTimeLength()) +
 			"\n#90A0B0" + TR("#{Simulation}: ") + rpl.header.sim_mode;
 		if (rpl.header.networked == 1)  // list nicks
 			ss += String("\n#90C0E0")+rpl.header.nicks[0]+"  "+rpl.header.nicks[1]+"  "+rpl.header.nicks[2]+"  "+rpl.header.nicks[3];
@@ -128,8 +128,8 @@ void App::listRplChng(List* li, size_t pos)
 		std::time_t ti = boost::filesystem::last_write_time(file);
 		if (!std::strftime(stm, 126, "%d.%b'%y  %a %H:%M", std::localtime(&ti)))  stm[0]=0;
 		
-		ss =/*"Time: "+*/String(stm)+"\n"+
-			String(TR("#{RplFileSize}: ")) + fToStr( float(size)/1000000.f, 2,5) + TR(" #{UnitMB}\n") +
+		ss =/*"Time: "+*/String(stm)+"\n#A0A0A0"+
+			String(TR("#{RplFileSize}: ")) + fToStr( float(size)/1000000.f, 2,5) + TR(" #{UnitMB}") + "\n#808080" +
 			TR("#{RplVersion}: ") + toStr(rpl.header.ver) + "     " + toStr(rpl.header.frameSize) + "B";
 		if (valRplInfo2)  valRplInfo2->setCaption(ss);
 	}
