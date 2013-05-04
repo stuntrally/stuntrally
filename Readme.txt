@@ -67,7 +67,6 @@ a CPU with 2 cores, and GPU: GeForce 9600 GT or Radeon HD 3870,
 with Shader Model 3.0 supported and 256 MB GPU RAM.
 
 It is possible to run on older,
-(e.g. on 1 core CPU and GeForce 7600 GT, with 30 fps),
 but integrated GPUs (or laptops) can't handle the game well (or at all).
 
 ----------------------------------------------------------------------------------
@@ -77,7 +76,8 @@ Running
 In game Esc/Tab key shows/hides Options.
 
 At first (in Options window) go to tab [Screen] and adjust resolution.
-Pick quick settings preset (from the combobox) according to your GPU.
+On [Graphics] tab pick settings preset according to your GPU.
+Restart after changing preset, changing it in game is not recommended.
 
 Keys used in game can be seen in Options tab [Input].
 If you want to reassign keys, or have a game controller
@@ -88,7 +88,7 @@ Cameras can be adjusted in game, by mouse - move mouse to see actions.
 
 All settings and logs are saved to user folder (check Wiki page [Paths]).
 If you have problems running, read Wiki page [Running].
-If it doesn't help, report an issue on Forum [SR Bugs & Help]
+If it doesn't help, report on IRC or make an issue on Forum [SR Bugs & Help]
 (if a similar topic doesn't exist). Be sure to attach your log files.
 
 Editor
@@ -120,11 +120,11 @@ Trees/grass by PagedGeometry, Gui by MyGUI, materials managed by shiny.
 -- newer versions can be used
 OGRE 1.8 with plugins and OIS 1.2
 MyGUI 3.2
-Boost 1.43
+Boost 1.49
 
-SDL-1.2.14
-libvorbis-1.2.3, libogg-1.1.4
-ENet 1.3.x
+SDL-1.2.15
+libvorbis-1.3.3, libogg-1.3.0
+ENet 1.3.4
 
 -- These are included in Source (and compiled with project):
 Bullet 2.79 (need this version)
@@ -143,14 +143,22 @@ Currently there is 1 (or 2) active programmers.
 We are looking for skilled and motivated people
 that can help improving the game or editor.
 
+Testers
+    If you are able to build from sources,
+    you can test and report bugs or suggestions.
+
 Programmers
     If you know C++, OGRE or shaders, and could
     handle one (or some) of the project's [Issues], 
     or want to do something better and know how to.
 
-Testers
-    If you are able to build from sources,
-    you can test and report bugs or suggestions.
+Artists
+    Help exporting existing models from Blender to Ogre.
+    Editing meshes for game, uv unwrap, texturing etc.
+    If you can create/edit 3D models
+    (cars, trees, plants, rocks, objects etc),
+    textures for them or for terrain.
+    If you can record/edit sounds for the game.
 
 Translators
     If you want to help translating into
@@ -159,13 +167,6 @@ Translators
 Track creators
     If you manage to create an interesting track,
     it could be released in future versions.
-
-Artists
-    Help exporting existing models from Blender to Ogre.
-    If you can create/edit 3D models
-    (cars, trees, plants, rocks, objects etc),
-    textures for them or for terrain.
-    If you can create/edit sounds for the game.
 
 If so, tell us on IRC at #stuntrally on freenode,
 or by posting on Forum,
