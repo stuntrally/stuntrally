@@ -147,7 +147,8 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	ButtonPtr bchk;  Slider* sl;
 #ifndef ROAD_EDITOR  /// game only
 	// duplicated code..
-	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
+	Chk("ParticlesOn", chkParticles, pSet->particles);
+	Chk("TrailsOn", chkTrails, pSet->trails);
 	Slv(Particles,	powf(pSet->particles_len /4.f, 0.5f));
 	Slv(Trails,		powf(pSet->trails_len /4.f, 0.5f));
 
@@ -160,12 +161,10 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	Chk("AllEffects", chkVidEffects, pSet->all_effects);
 	Chk("Bloom", chkVidBloom, pSet->bloom);
 	//Chk("HDR", chkVidHDR, pSet->hdr);
-	Chk("MotionBlur", chkVidBlur, pSet->camblur);
+	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
 	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);
 	Chk("ssao", chkVidSSAO, pSet->ssao);
 	Chk("DepthOfField", chkVidDepthOfField, pSet->dof);
-	Chk("godrays", chkVidGodRays, pSet->godrays);
-	Chk("ssao", chkVidSSAO, pSet->ssao);
 	Chk("godrays", chkVidGodRays, pSet->godrays);
 	
 	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
@@ -178,6 +177,9 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	Slv(TerUpd, pSet->ter_skip /20.f);
 	Slv(MiniUpd, pSet->mini_skip /20.f);
 #endif
+
+	Chk("UseImposters", chkUseImposters, pSet->use_imposters);
+	Chk("ImpostorsOnly", chkImpostorsOnly, pSet->imposters_only);
 
 	Chk("WaterReflection", chkWaterReflect, pSet->water_reflect);
 	Chk("WaterRefraction", chkWaterRefract, pSet->water_refract);

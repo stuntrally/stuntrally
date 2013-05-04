@@ -20,8 +20,8 @@
 
 #define Chk(name, event, var)  \
 	bchk = mGUI->findWidget<Button>(name);  \
-	if (bchk && bchk->eventMouseButtonClick.empty())  {  bchk->eventMouseButtonClick += newDelegate(this, &App::event);  \
-		bchk->setStateSelected(var);  }
+	if (bchk && bchk->eventMouseButtonClick.empty())  {  bchk->eventMouseButtonClick += newDelegate(this, &App::event);  }  \
+	if (bchk)  bchk->setStateSelected(var);
 
 #define Edt(edit, name, event)  \
 	edit = mGUI->findWidget<EditBox>(name);  \
