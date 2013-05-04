@@ -547,11 +547,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\data\materials\rnd.cg"
+				RelativePath=".\data\materials2\rnd.cg"
 				>
 			</File>
 			<File
-				RelativePath=".\data\materials2\rnd.cg"
+				RelativePath=".\data\materials\rnd.cg"
 				>
 			</File>
 			<File
@@ -652,6 +652,10 @@
 			</File>
 			<File
 				RelativePath=".\data\gui\core_language_en_tag.xml"
+				>
+			</File>
+			<File
+				RelativePath=".\config\editor-default.cfg"
 				>
 			</File>
 			<File

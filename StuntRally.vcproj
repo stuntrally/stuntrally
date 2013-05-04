@@ -1076,6 +1076,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\config\game-default.cfg"
+				>
+			</File>
+			<File
 				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\game.cfg"
 				>
 			</File>
@@ -1117,6 +1121,10 @@
 			</File>
 			<File
 				RelativePath=".\source\ogre\common\QTimer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Readme.txt"
 				>
 			</File>
 			<File

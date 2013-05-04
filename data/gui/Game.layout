@@ -2275,12 +2275,12 @@
 					<Widget type="TabItem" skin="" position="2 24 738 372">
 						<Property key="Caption" value="#{Water}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
-						<Widget type="Button" skin="CheckBox" position="32 50 200 24" name="WaterReflection">
+						<Widget type="Button" skin="CheckBox" position="32 48 200 24" name="WaterReflection">
 							<Property key="Caption" value="#{WaterReflection}"/>
 							<Property key="TextColour" value="0.6 0.8 1"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 80 200 24" name="WaterRefraction">
+						<Widget type="Button" skin="CheckBox" position="32 78 200 24" name="WaterRefraction">
 							<Property key="Caption" value="#{WaterRefraction}"/>
 							<Property key="TextColour" value="0.6 0.8 1"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -2307,27 +2307,27 @@
 					<Widget type="TabItem" skin="" position="2 24 738 372">
 						<Property key="Caption" value="#{Particles}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
-						<Widget type="Slider" skin="Slider" position="248 53 320 18" name="Particles">
+						<Widget type="Slider" skin="Slider" position="248 50 320 18" name="Particles">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="248 83 320 18" name="Trails">
+						<Widget type="Slider" skin="Slider" position="248 80 320 18" name="Trails">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 50 146 24" name="ParticlesOn">
+						<Widget type="Button" skin="CheckBox" position="32 48 146 24" name="ParticlesOn">
 							<Property key="Caption" value="#{Particles}"/>
 							<Property key="TextColour" value="1 0.9 0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 80 146 24" name="TrailsOn">
+						<Widget type="Button" skin="CheckBox" position="32 78 146 24" name="TrailsOn">
 							<Property key="Caption" value="#{TireTrails}*"/>
 							<Property key="TextColour" value="1.0 0.8 0.6"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="180 53 60 24" name="ParticlesVal">
+						<Widget type="TextBox" skin="TextBox" position="180 50 60 24" name="ParticlesVal">
 							<Property key="TextColour" value="1 0.9 0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="180 83 60 24" name="TrailsVal">
+						<Widget type="TextBox" skin="TextBox" position="180 80 60 24" name="TrailsVal">
 							<Property key="TextColour" value="1.0 0.8 0.6"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>

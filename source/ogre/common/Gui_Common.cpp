@@ -142,11 +142,11 @@ void App::slShaders(SL)
 {
 	float v = val;  if (bGI)  pSet->shaders = v;
 	if (valShaders)
-	{	valShaders->setCaption("Very low");
-		if (v > 0.2)  valShaders->setCaption("Low");
-		if (v > 0.4)  valShaders->setCaption("Medium");
-		if (v > 0.6)  valShaders->setCaption("High");
-		if (v > 0.8)  valShaders->setCaption("Ultra");
+	{	valShaders->setCaption(TR("#{GraphicsAll_Lowest}"));
+		if (v > 0.2)  valShaders->setCaption(TR("#{GraphicsAll_Low}"));
+		if (v > 0.4)  valShaders->setCaption(TR("#{GraphicsAll_Medium}"));
+		if (v > 0.6)  valShaders->setCaption(TR("#{GraphicsAll_High}"));
+		if (v > 0.8)  valShaders->setCaption(TR("#{GraphicsAll_VeryHigh}"));
 	}
 	//if (materialFactory) materialFactory->setShaderQuality(v);
 }
@@ -163,9 +163,9 @@ void App::slTerMtr(SL)
 {
 	int v = val*3.f +slHalf;  if (bGI)  pSet->ter_mtr = v;
 	if (valTerMtr)
-	{	if (v == 0)  valTerMtr->setCaption("Lowest");  else
-		if (v == 1)  valTerMtr->setCaption("Low");  else
-		if (v == 2)  valTerMtr->setCaption("Normal");  else
+	{	if (v == 0)  valTerMtr->setCaption(TR("#{GraphicsAll_Lowest}"));  else
+		if (v == 1)  valTerMtr->setCaption(TR("#{GraphicsAll_Medium}"));  else
+		if (v == 2)  valTerMtr->setCaption(TR("#{GraphicsAll_High}"));  else
 		if (v == 3)  valTerMtr->setCaption("Parallax");  }
 	//if (bGI)  changeShadows();
 }
@@ -314,8 +314,10 @@ void App::GuiInitGraphics()
 		combo->addItem(TR("#{GraphicsAll_Low}"));
 		combo->addItem(TR("#{GraphicsAll_Medium}"));
 		combo->addItem(TR("#{GraphicsAll_High}"));
+		combo->addItem(TR("#{GraphicsAll_Higher}"));
 		combo->addItem(TR("#{GraphicsAll_VeryHigh}"));
 		combo->addItem(TR("#{GraphicsAll_Ultra}"));
+		combo->addItem(TR("#{GraphicsAll_Impossible}"));
 	}
 	
 	//  render systems
