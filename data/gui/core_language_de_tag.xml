@@ -316,7 +316,7 @@
 	<Tag name="TipFogHSmooth">Height fog smooth distance [meters].</Tag>
 	<Tag name="Brush_Shape">Form</Tag>
 	<Tag name="length">Länge</Tag>
-	<Tag name="DynamicObjects">dynamische Objekte</Tag>
+	<Tag name="DynamicObjects">Dynamische Objekte</Tag>
 	<Tag name="TipFogClrH">Fog color for height fog.</Tag>
 	<Tag name="ColumnNSides">Säulen N sides</Tag>
 	<Tag name="RplAutoRec">Automatisch aufnehmen</Tag>
@@ -403,7 +403,7 @@
 	<Tag name="TipMudInt">Intensität der Schlammpartikel.</Tag>
 	<Tag name="HeightMax">Höhe Max</Tag>
 	<Tag name="NetWrongPassword">Falsches Passwort.</Tag>
-	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
+	<Tag name="RplRewindGhost">Geist zurückspulen</Tag>
 	<Tag name="ScaleAll">Alle skalieren</Tag>
 	<Tag name="InpSet_KeyFull">Taste ganz</Tag>
 	<Tag name="InputMapPrevTab">Vorheriger Tab</Tag>
@@ -529,6 +529,7 @@
 	<Tag name="TipTrkViewShort">Kurzansicht.</Tag>
 	<Tag name="TipSmokeInt">Intensität der Rauchpartikel.</Tag>
 	<Tag name="MessageBox_Ignore">Ignorieren</Tag>
+	<Tag name="GraphicsAll_Impossible">Unmöglich</Tag>
 	<Tag name="TerrainBrush">Terrain Pinsel</Tag>
 	<Tag name="TipTexNormAuto">Wenn angewählt, wird die Normaltextur automatisch mit der Diffusetextur ausgewählt (+ _nh im Dateinamen)</Tag>
 	<Tag name="TrackBestTime">Beste Zeit</Tag>
@@ -541,6 +542,7 @@
 	<Tag name="Diff5">Sehr schwierig</Tag>
 	<Tag name="LS_CLEANUP">Aufräumen</Tag>
 	<Tag name="Difficulty">Schwierigkeitsgrad</Tag>
+	<Tag name="GraphicsAll_Higher">Höher</Tag>
 	<Tag name="RplRename">Umbenennen</Tag>
 	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
 	<Tag name="InputMapLastChk">Zurücksetzen</Tag>
@@ -840,8 +842,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="GraphicsAll_Impossible">Impossible</Tag>
-	<Tag name="GraphicsAll_Higher">Higher</Tag>
 	<Tag name="GameVersion">2.0</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
