@@ -128,6 +128,8 @@ void CarModel::UpdTrackPercent()
 //-------------------------------------------------------------------------------------------------------
 void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 {	
+	pReflect->camPosition = pMainNode->getPosition();
+
 	if (!posInfo.bNew)  return;  // new only ?
 	posInfo.bNew = false;
 	/// dont get anything from pCar or car.dynamics here
@@ -376,9 +378,6 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 			}
 		}
 	}
-
-	// Reflection
-	pReflect->camPosition = pMainNode->getPosition();
 	
 	// blendmaps
 	UpdWhTerMtr();
