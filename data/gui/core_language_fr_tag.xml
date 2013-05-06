@@ -529,6 +529,7 @@
 	<Tag name="TipTrkViewShort">Short list view.</Tag>
 	<Tag name="TipSmokeInt">Smoke particles intensity.</Tag>
 	<Tag name="MessageBox_Ignore">Ignore</Tag>
+	<Tag name="GraphicsAll_Impossible">Impossible</Tag>
 	<Tag name="TerrainBrush">Terrain brush</Tag>
 	<Tag name="TipTexNormAuto">When checked, Normal texture is automatically set from Diffuse texture (+ _nh in filename).</Tag>
 	<Tag name="TrackBestTime">Best time</Tag>
@@ -541,6 +542,7 @@
 	<Tag name="Diff5">Very Hard</Tag>
 	<Tag name="LS_CLEANUP">Cleaning up</Tag>
 	<Tag name="Difficulty">Difficulty</Tag>
+	<Tag name="GraphicsAll_Higher">Higher</Tag>
 	<Tag name="RplRename">Rename</Tag>
 	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
 	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
@@ -840,8 +842,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="GraphicsAll_Impossible">Impossible</Tag>
-	<Tag name="GraphicsAll_Higher">Higher</Tag>
 	<Tag name="GameVersion">2.0</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
