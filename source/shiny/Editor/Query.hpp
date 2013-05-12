@@ -15,6 +15,7 @@ class Query
 public:
 	Query()
 		: mDone(false) {}
+	virtual ~Query();
 
 	void execute();
 

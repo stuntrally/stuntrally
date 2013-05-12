@@ -201,7 +201,7 @@ namespace sh
 		return &mPasses.back();
 	}
 
-	void MaterialInstance::deletePass(int index)
+	void MaterialInstance::deletePass(unsigned int index)
 	{
 		assert(mPasses.size() > index);
 		mPasses.erase(mPasses.begin()+index);

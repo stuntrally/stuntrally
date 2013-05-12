@@ -46,7 +46,7 @@ namespace sh
 		PassVector* getPasses(); ///< get our passes (for derived materials, none)
 
 		MaterialInstancePass* createPass ();
-		void deletePass (int index);
+		void deletePass (unsigned int index);
 
 		/// @attention Because the backend material passes are created on demand, the returned material here might not contain anything yet!
 		/// The only place where you should use this method, is for the MaterialInstance given by the MaterialListener::materialCreated event!
