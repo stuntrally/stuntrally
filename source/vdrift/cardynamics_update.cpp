@@ -329,6 +329,8 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 		}
 	}else
 		boostVal = 0.f;
+	
+	fBoostFov += (boostVal - fBoostFov) * 0.0005f;  //par speed (delay smooth)
 		
 	//  add fuel over time
 	if (pSet->game.boost_type == 2)

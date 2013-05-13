@@ -150,7 +150,7 @@ public:
 	QUATERNION<Dbl> chassisRotation;
 	
 	// manual flip over, rocket boost
-	float doFlip, doBoost, boostFuel, boostVal;
+	float doFlip, doBoost, boostFuel, boostVal, fBoostFov;
 
 	std::list<FluidBox*> inFluids,inFluidsWh[4];  /// list of fluids this car is in (if any)
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
