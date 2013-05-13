@@ -8,6 +8,7 @@
 #include "../vdrift/settings.h"
 #include "../road/Road.h"
 #include "MyGUI_PointerManager.h"
+#include "../vdrift/car.h"
 
 #include "../shiny/Main/Factory.hpp"
 
@@ -208,7 +209,6 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		pApp->ShowHUDvp(true);
 		pApp->UpdateHUD(carId, 1.f / mWindow->getLastFPS());
 
-
 		///  Set skybox pos to camera  - TODO: fix, sky is center only for last player ...
 		//  idea: with compositor this needs separate sky nodes (own sky for each player) and showing 1 sky for 1 player
 		if (pApp->ndSky)
@@ -243,6 +243,16 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 				ParticleEmitter* pe = pApp->pr2->getEmitter(0);
 				pe->setPosition(par);	//pe->setDirection(-up);
 				pe->setEmissionRate(pApp->sc->rain2Emit);
+			}
+		}
+
+		// Change FOV when boosting
+		if (pApp && carId < pApp->carModels.size()) {
+			CAR* pCar = pApp->carModels[carId]->pCar;
+			if (pCar) {
+				const float minFOV = 70, maxFOV = 100;
+				float fov = minFOV + ((maxFOV-minFOV) * pCar->dynamics.doBoost);
+				evt.source->getCamera()->setFOVy(Degree(fov));
 			}
 		}
 
