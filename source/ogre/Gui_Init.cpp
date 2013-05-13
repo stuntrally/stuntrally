@@ -295,6 +295,7 @@ void App::InitGui()
 	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);
 	Chk("DepthOfField", chkVidDepthOfField, pSet->dof);
 	Chk("godrays", chkVidGodRays, pSet->godrays);
+	Chk("BoostFOV", chkVidBoostFOV, pSet->boost_fov);
 
 	Slv(BlurIntens, pSet->motionblurintensity);
 	Slv(DepthOfFieldFocus, powf(pSet->depthOfFieldFocus/2000.f, 0.5f));

@@ -1759,6 +1759,11 @@
 							<Property key="TextColour" value="0.6 1 0.3"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="28 304 152 24" name="BoostFOV">
+							<Property key="Caption" value="#{BoostFOV}"/>
+							<Property key="TextColour" value="0.6 1 0.3"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#{HDRTab}"/>

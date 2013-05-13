@@ -55,6 +55,7 @@ public:
 	bool particles, trails;  float grass, trees_dist, grass_dist;
 	bool use_imposters, imposters_only;
 	float particles_len, trails_len;
+	bool boost_fov;
 
 	std::string shader_mode;
 

@@ -137,6 +137,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video_eff.godrays", godrays);
 	Param(c,w, "video_eff.dof", dof);
 	Param(c,w, "video_eff.dof_focus", depthOfFieldFocus);	Param(c,w, "video_eff.dof_far", depthOfFieldFar);
+	Param(c,w, "video_eff.boost_fov", boost_fov);
 	//  effects hdr
 	Param(c,w, "video_eff.hdr", hdr);					Param(c,w, "video_eff.hdr_p1", hdrParam1);
 	Param(c,w, "video_eff.hdr_p2", hdrParam2);			Param(c,w, "video_eff.hdr_p3", hdrParam3);
@@ -174,7 +175,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	water_reflect(0), water_refract(0), water_rttsize(0),
 	shadow_type(Sh_Depth), shadow_size(2), shadow_count(3), shadow_dist(3000), shadow_filter(1), lightmap_size(0),
 	grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(true), imposters_only(false),
-	particles(true), trails(true), particles_len(1.f), trails_len(1.f),
+	particles(true), trails(true), particles_len(1.f), trails_len(1.f), boost_fov(true),
 	//  car
 	autoshift(1), autorear(1), rear_inv(1), show_mph(0),
 	//  misc

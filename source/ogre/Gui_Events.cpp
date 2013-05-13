@@ -589,6 +589,10 @@ void App::chkVidGodRays(WP wp)
 	ChkEv(godrays);  refreshCompositor();
 	changeShadows();
 }
+void App::chkVidBoostFOV(WP wp)
+{		
+	ChkEv(boost_fov);
+}
 void App::slBloomInt(SL)
 {
 	Real v = val;  if (bGI)  pSet->bloomintensity = v;

@@ -247,11 +247,12 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		}
 
 		// Change FOV when boosting
-		//if (pSet->boost_fov)  // todo: gui chk, setting..
-		if (pApp && carId < pApp->carModels.size())
-		{	CAR* pCar = pApp->carModels[carId]->pCar;
+		if (pApp->pSet->boost_fov && carId < pApp->carModels.size())
+		{
+			CAR* pCar = pApp->carModels[carId]->pCar;
 			if (pCar)
-			{	const static Real minFOV = 45, maxFOV = 60, rangeFOV = maxFOV-minFOV;  //par
+			{
+				const static Real minFOV = 45, maxFOV = 60, rangeFOV = maxFOV-minFOV;  //par
 				float fov = minFOV + rangeFOV * pCar->dynamics.fBoostFov;
 				evt.source->getCamera()->setFOVy(Degree(fov));
 			}
