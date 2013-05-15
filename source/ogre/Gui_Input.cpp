@@ -73,7 +73,7 @@ void App::InitInputGui()
 		combo->addItem(TR("#{InpSet_AxisHalf}"));
 		combo->addItem(TR("#{InpSet_AxisHalfInv}"));
 		combo->addItem(TR("#{InpSet_AxisFull}"));
-		combo->addItem(TR("#{InpSet_AxisFullInverse}"));
+		combo->addItem(TR("#{InpSet_AxisFullInv}"));
     }
 	//  key emul presets combo
 	Cmb(combo, "CmbInputKeysAllPreset", comboInputKeyAllPreset);
