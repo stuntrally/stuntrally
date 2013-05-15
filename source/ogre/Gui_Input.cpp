@@ -427,7 +427,7 @@ void App::comboInputPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 	const Real aMin[6] = {0,-1, 0,  -2,  -1, -1};
 	const Real aMax[6] = {1, 1, 2,   0,   1,  1};
 	const Real aMul[6] = {1, 1, 0.5,-0.5, 1, -1};
-	val = std::min((size_t)4, val-1);
+	val = std::min((size_t)5, val-1);
 	Real vMin = aMin[val];  if (edInputMin)  edInputMin->setCaption(toStr(vMin));
 	Real vMax = aMax[val];  if (edInputMax)  edInputMax->setCaption(toStr(vMax));
 	Real vMul = aMul[val];  if (edInputMul)  edInputMul->setCaption(toStr(vMul));
