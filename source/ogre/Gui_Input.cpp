@@ -415,8 +415,11 @@ void App::editInput(MyGUI::EditPtr ed)
 	actDetail->setProperty("InverseMul",vMul);
 	Real vRet = s2r(edInputReturn->getCaption());  // keyboard only
 	Real vInc = s2r(edInputIncrease->getCaption());
-	actDetail->setProperty("ReturnDecSpeed",vRet);	actDetail->setProperty("DecSpeed",vInc);
-	actDetail->setProperty("ReturnIncSpeed",vRet);	actDetail->setProperty("IncSpeed",vInc);
+	if (actDetail->getActionType() != OISB::AT_ANALOG_AXIS) {
+		// AnalogAxisAction doesn't have these properties
+		actDetail->setProperty("ReturnDecSpeed",vRet);	actDetail->setProperty("DecSpeed",vInc);
+		actDetail->setProperty("ReturnIncSpeed",vRet);	actDetail->setProperty("IncSpeed",vInc);
+	}
 	if (cmbInpDetSet)  cmbInpDetSet->setIndexSelected(0);
 }
 
