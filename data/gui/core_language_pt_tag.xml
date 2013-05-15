@@ -8,6 +8,7 @@
 	<Tag name="TipDustSize">Tamanho das partículas de poeira.</Tag>
 	<Tag name="TipGrassSwayDistr">Distribuição do efeito de ondulação da grama (quanto aleatório).</Tag>
 	<Tag name="InpSet_AxisFull">Eixo completo</Tag>
+	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
 	<Tag name="InputHeaderTxt4">Editar</Tag>
 	<Tag name="TerrainDouble">Duplo</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>

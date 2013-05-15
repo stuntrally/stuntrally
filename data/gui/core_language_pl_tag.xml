@@ -8,6 +8,7 @@
 	<Tag name="TipDustSize">Wielkość cząstek kurzu.</Tag>
 	<Tag name="TipGrassSwayDistr">Dystrybucja efektu chwiania trawy (jak losowo).</Tag>
 	<Tag name="InpSet_AxisFull">Oś, pełna</Tag>
+	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
 	<Tag name="InputHeaderTxt4">Edytuj</Tag>
 	<Tag name="TerrainDouble">Podwojenie</Tag>
 	<Tag name="InputStartMeet">auto napotka (następne+ / poprzednie-) numery punktów</Tag>
