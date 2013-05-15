@@ -8,6 +8,7 @@
 	<Tag name="TipDustSize">Taille des particules de sable.</Tag>
 	<Tag name="TipGrassSwayDistr">Grass sway effect distribution (how random).</Tag>
 	<Tag name="InpSet_AxisFull">Axe complet</Tag>
+	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
 	<Tag name="InputHeaderTxt4">Éditer</Tag>
 	<Tag name="TerrainDouble">Double</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>

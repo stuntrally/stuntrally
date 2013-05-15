@@ -73,6 +73,7 @@ void App::InitInputGui()
 		combo->addItem(TR("#{InpSet_AxisHalf}"));
 		combo->addItem(TR("#{InpSet_AxisHalfInv}"));
 		combo->addItem(TR("#{InpSet_AxisFull}"));
+		combo->addItem(TR("#{InpSet_AxisFullInverse}"));
     }
 	//  key emul presets combo
 	Cmb(combo, "CmbInputKeysAllPreset", comboInputKeyAllPreset);
@@ -422,10 +423,10 @@ void App::editInput(MyGUI::EditPtr ed)
 void App::comboInputPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 {
 	if (!actDetail || val==0)  return;
-	//key half, key full, axis half, axis half inversed, axis full
-	const Real aMin[5] = {0,-1, 0,  -2,  -1};
-	const Real aMax[5] = {1, 1, 2,   0,   1};
-	const Real aMul[5] = {1, 1, 0.5,-0.5, 1};
+	//key half, key full, axis half, axis half inversed, axis full, axis full inversed
+	const Real aMin[6] = {0,-1, 0,  -2,  -1, -1};
+	const Real aMax[6] = {1, 1, 2,   0,   1,  1};
+	const Real aMul[6] = {1, 1, 0.5,-0.5, 1, -1};
 	val = std::min((size_t)4, val-1);
 	Real vMin = aMin[val];  if (edInputMin)  edInputMin->setCaption(toStr(vMin));
 	Real vMax = aMax[val];  if (edInputMax)  edInputMax->setCaption(toStr(vMax));
