@@ -8,6 +8,7 @@
 	<Tag name="TipDustSize">Pölyhiukkasten koko.</Tag>
 	<Tag name="TipGrassSwayDistr">Ruohikon huojunnan jakauma (satunnaisuus)</Tag>
 	<Tag name="InpSet_AxisFull">Täysi akseli</Tag>
+	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
 	<Tag name="InputHeaderTxt4">Muokkaa</Tag>
 	<Tag name="TerrainDouble">Kaksinkertainen</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
