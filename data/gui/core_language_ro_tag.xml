@@ -8,6 +8,7 @@
 	<Tag name="TipDustSize">Mărimea particulelor de praf.</Tag>
 	<Tag name="TipGrassSwayDistr">Efect de distribuție iarbă (cum variază).</Tag>
 	<Tag name="InpSet_AxisFull">Axis Full</Tag>
+	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
 	<Tag name="InputHeaderTxt4">Edit</Tag>
 	<Tag name="TerrainDouble">Double</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
