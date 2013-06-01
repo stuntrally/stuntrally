@@ -60,7 +60,7 @@
 		<track name="M1-Hills"		laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Master of Rally" ver="2" difficulty="4" tutorial="0" 
+	<championship name="Master of Rally" ver="2" difficulty="4" tutorial="6" 
 			descr="Best medium long tracks in game, for rally fans, with great views.">
 		<track name="E1-Lakes"		laps="1" factor="0.1" />
 		<track name="G2-Coast"		laps="1" factor="0.1" />
@@ -129,7 +129,7 @@
 		<track name="X2-Swirl"		laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Mud and water fan" ver="2" difficulty="4" tutorial="0" 
+	<championship name="Mud and water fan" ver="2" difficulty="4" tutorial="6" 
 			descr="A collection of tracks that have either water or mud drive through areas. Mostly in jungle, some are slippery and tricky.">
 		<track name="I3-Islands"	laps="1" factor="0.1" />
 		<track name="D9-Mud"		laps="1" factor="0.1" />
@@ -143,7 +143,7 @@
 		<track name="J18-Tiny"		laps="1" factor="0.15" />
 	</championship>
 
-	<championship name="Mountain adventure" ver="4" difficulty="4" tutorial="0" 
+	<championship name="Mountain adventure" ver="4" difficulty="4" tutorial="6" 
 			descr="Tracks placed in mountains and with highest height differences, also with good views. Some quite bumpy.">
 		<track name="G5-Climb"		laps="1" factor="0.1" />
 		<track name="D2-Mntn"		laps="1" factor="0.1" />
@@ -156,7 +156,17 @@
 		<track name="V4-Spikeland"	laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Frenzy fellow" ver="4" difficulty="4" tutorial="0" 
+	<championship name="Bumpy shorts" ver="1" difficulty="4" tutorial="6" 
+			descr="Few short, but very bumpy tracks.">
+		<track name="M2-Bumps"		laps="1" factor="0.1" />
+		<track name="D2-Mntn"		laps="1" factor="0.1" />
+		<track name="V4-Spikeland"	laps="1" factor="0.1" />
+		<track name="I10-Treasure"	laps="1" factor="0.1" />
+		<!--<track name="J15-Swamp"	laps="1" factor="0.1" />-->
+		<!--<track name="F10-MntnTrail"	laps="1" factor="0.1" />-->
+	</championship>
+
+	<championship name="Frenzy fellow" ver="4" difficulty="4" tutorial="6" 
 			descr="Curly tracks, mostly flat, frequently changing directions. Require lots of steering.">
 		<track name="S2-Frenzy"		laps="1" factor="0.1" />
 		<track name="F3-Snail"		laps="1" factor="0.1" />
@@ -182,6 +192,7 @@
 		<track name="X1-Magic"		laps="1" factor="0.1" />
 		<track name="V1-Dark"		laps="1" factor="0.1" />
 		<track name="V3-Crater"		laps="1" factor="0.1" />
+		<track name="0W12-Peaks"	laps="1" factor="0.1" />
 		<track name="I8-Pharaoh"	laps="1" factor="0.1" />
 	</championship>
 
@@ -202,7 +213,7 @@
 		<track name="I9-Web"		laps="1" factor="0.2" />
 	</championship>
 
-	<championship name="Extreme weather" ver="1" difficulty="4" tutorial="0" 
+	<championship name="Extreme weather" ver="1" difficulty="4" tutorial="6" 
 			descr="Short tracks in difficult conditions. Heavy rain, snow, fog or dark.">
 		<track name="D12-Sandstorm"	laps="1" factor="0.15" />
 		<track name="T5-Twister"	laps="1" factor="0.15" />
@@ -571,6 +582,7 @@
 
 		<track name="E1-Lakes"		time="120.0"/>
 		<!--116-->
+		<track name="0W12-Peaks"	time="38.0"/>
 		<track name="V4-Spikeland"	time="78.0"/>
 
 	</times>
