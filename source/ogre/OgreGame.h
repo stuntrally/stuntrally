@@ -365,7 +365,7 @@ protected:
 	SLV(HDRBloomInt);  SLV(HDRBloomOrig);  SLV(HDRAdaptationScale);
 	SLV(HDRVignettingRadius);  SLV(HDRVignettingDarkness);
 	SLV(NumLaps);  SLV(RplNumViewports);  // setup
-	SLV(SSSEffect);  SLV(SSSVelFactor);
+	SLV(SSSEffect);  SLV(SSSVelFactor);  SLV(SteerRange);
 	
 	//  checks
 	void chkGauges(WP),	chkArrow(WP), chkDigits(WP),
@@ -385,7 +385,7 @@ protected:
 	// gui car tire set gravel/asphalt
 	int iTireSet;
 	void tabTireSet(MyGUI::TabPtr wp, size_t id);
-	MyGUI::ButtonPtr bchAbs,bchTcs;  MyGUI::Slider* slSSSEff,*slSSSVel;
+	MyGUI::ButtonPtr bchAbs,bchTcs;  MyGUI::Slider* slSSSEff,*slSSSVel,*slSteerRng;
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP), toggleWireframe();
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP);

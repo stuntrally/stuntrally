@@ -28,14 +28,15 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 		Param(c,w, s+"clr_gloss", gui.car_gloss[i]);
 		Param(c,w, s+"camera", cam_view[i]);
 	}
-	Param(c,w, "car1.autotrans", autoshift);	//todo: this for all 4 cars..
+	//todo: this for all 4 cars..
+	Param(c,w, "car1.autotrans", autoshift);
 	Param(c,w, "car1.autorear", autorear);		Param(c,w, "car1.autorear_inv", rear_inv);
 	for (int i=0; i <= 1; ++i)
 	{	std::string s = i==1 ? "A":"";
-		Param(c,w, "car1.abs"+s, abs[i]);
-		Param(c,w, "car1.tcs"+s, tcs[i]);
+		Param(c,w, "car1.abs"+s, abs[i]);		Param(c,w, "car1.tcs"+s, tcs[i]);
 		Param(c,w, "car1.sss_effect"+s, sss_effect[i]);
 		Param(c,w, "car1.sss_velfactor"+s, sss_velfactor[i]);
+		Param(c,w, "car1.steer_range"+s, steer_range[i]);
 	}
 
 	//  game
@@ -244,4 +245,6 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	tcs[0] = 0;  tcs[1] = 0;
 	sss_effect[0] = 0.f;  sss_effect[1] = 0.85f;
 	sss_velfactor[0] = 1.f;  sss_velfactor[1] = 1.f;
+	//steer_range[0] = 1.0;  steer_range[1] = 0.7;
+	steer_range[0] = 0.81;  steer_range[1] = 0.57;
 }

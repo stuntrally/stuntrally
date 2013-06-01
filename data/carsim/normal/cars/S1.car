@@ -38,7 +38,7 @@ friction = 0.4
 #  engine
 #---------------------------
 [ engine ]
-position = 0.04, 1.4, 0.3
+position = 0.04, 0.4, 0.3
 mass = 250.0
 rpm-limit = 6500
 inertia = 0.27
@@ -142,7 +142,7 @@ max-pressure = 3.0e6
 bias = 0.4
 radius = 0.14
 area = 0.015
-handbrake = 4.9
+handbrake = 3.9
 
 
 [ driver ]
@@ -227,16 +227,16 @@ hinge = 0.25, -1.94, 0.0
 #---------------------------
 [ particle-00 ]  # rear
 mass = 245
-position =  1.0, -1.6, -0.06
+position =  0.8, -1.1, -0.06
 
 [ particle-01 ]
 mass = 245
-position = -1.0, -1.6, -0.06
+position = -0.8, -1.1, -0.06
 
 [ particle-02 ]  # front
 mass = 245
-position =  1.0,  1.6, -0.06
+position =  0.8,  1.1, -0.06
 
 [ particle-03 ]
 mass = 245
-position = -1.0,  1.6, -0.06
+position = -0.8,  1.1, -0.06

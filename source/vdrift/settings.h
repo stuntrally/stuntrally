@@ -59,10 +59,11 @@ public:
 
 	std::string shader_mode;
 
-	//  car  [2] = 0 gravel 1 asphalt
+	//  car setup  [2] = 0 gravel 1 asphalt
 	bool abs[2], tcs[2], autoshift, autorear, rear_inv, show_mph;
 	float sss_effect[2], sss_velfactor[2];
-	int cam_view[4];//
+	float steer_range[2];
+	int cam_view[4];
 
 	//---------------  game config
 	class GameSet

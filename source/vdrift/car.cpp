@@ -262,7 +262,7 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 		float steer_value = inputs[CARINPUT::STEER_RIGHT];
 		if (std::abs(inputs[CARINPUT::STEER_LEFT]) > std::abs(inputs[CARINPUT::STEER_RIGHT])) //use whichever control is larger
 			steer_value = -inputs[CARINPUT::STEER_LEFT];
-		dynamics.SetSteering(steer_value);
+		dynamics.SetSteering(steer_value, /*<car setup> mul*/ pSet->steer_range[pGame->track.asphalt]);
 		last_steer = steer_value;
 	}
 
@@ -401,7 +401,8 @@ void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 	dynamics.UpdateWheelContacts();
 
 	//  steer
-	dynamics.SetSteering(state.steer);	last_steer = state.steer;
+	dynamics.SetSteering(state.steer, /**/pSet->steer_range[pGame->track.asphalt]);
+	last_steer = state.steer;
 	dynamics.doBoost = state.boost / 255.f;  // unpack from uint8
 	dynamics.SetBrake(state.brake / 255.f);
 	trackPercentCopy = state.trackPercent / 255.f * 100.f;

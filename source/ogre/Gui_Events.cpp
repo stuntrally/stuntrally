@@ -46,6 +46,8 @@ void App::tabTireSet(MyGUI::TabPtr wp, size_t id)
 	slSSSEff->setValue(v);  valSSSEffect->setCaption(fToStr(v,2,4));
 	v = pSet->sss_velfactor[iTireSet];
 	slSSSVel->setValue(v/2.f);  valSSSVelFactor->setCaption(fToStr(v,2,4));
+	v = pSet->steer_range[iTireSet];
+	slSteerRng->setValue(v-0.3f);  valSteerRange->setCaption(fToStr(v,2,4));
 }
 void App::slSSSEffect(SL)
 {
@@ -56,6 +58,11 @@ void App::slSSSVelFactor(SL)
 {
 	Real v = 2.f * val;  if (bGI)  pSet->sss_velfactor[iTireSet] = v;
 	if (valSSSVelFactor){	valSSSVelFactor->setCaption(fToStr(v,2,4));  }
+}
+void App::slSteerRange(SL)
+{
+	Real v = val +0.3f;  if (bGI)  pSet->steer_range[iTireSet] = v;
+	if (valSteerRange){		valSteerRange->setCaption(fToStr(v,2,4));  }
 }
 
 void App::chkGear(WP wp){		ChkEv(autoshift);	if (pGame)  pGame->ProcessNewSettings();	}

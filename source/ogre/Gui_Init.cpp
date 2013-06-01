@@ -212,6 +212,7 @@ void App::InitGui()
 	if (tTires)  tTires->eventTabChangeSelect += newDelegate(this, &App::tabTireSet);
 	Slv(SSSEffect,	pSet->sss_effect[0]);  slSSSEff = sl;
 	Slv(SSSVelFactor, pSet->sss_velfactor[0]/2.f);  slSSSVel = sl;
+	Slv(SteerRange, pSet->steer_range[0]-0.3f);  slSteerRng = sl;
 
 	//  game
 	Chk("VegetCollis", chkVegetCollis, pSet->gui.collis_veget);

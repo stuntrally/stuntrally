@@ -142,7 +142,7 @@ max-pressure = 3.5e7
 bias = 0.45
 radius = 0.330
 area = 0.0006
-handbrake = 3.6
+handbrake = 2.6
 
 
 [ driver ]
@@ -228,16 +228,16 @@ hinge = 1.00 , -0.0, -0.0
 #---------------------------
 [ particle-00 ]	# Chassis Front
 mass = 230
-position =  1.1, 1.7, -0.05
+position =  0.8, 1.1, -0.05
 
 [ particle-01 ]	#	Cooler front
 mass = 230
-position = -1.1, 1.7, -0.05
+position = -0.8, 1.1, -0.05
 
 [ particle-02 ]	#	Chassis left
 mass = 250
-position =  1.2, -1.7, -0.05
+position =  0.8, -1.1, -0.05
 
 [ particle-03 ]	#	Chassis right
 mass = 250
-position = -1.2, -1.7, -0.05 
+position = -0.8, -1.1, -0.05 

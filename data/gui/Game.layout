@@ -650,6 +650,18 @@
 				<Widget type="Slider" skin="Slider" position="32 450 200 16" name="SSSVelFactor">
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="332 370 300 24">
+					<Property key="Caption" value="#{SteerRange}"/>
+					<Property key="TextColour" value="0.8 0.9 1.0"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="600 370 200 24" name="SteerRangeVal">
+					<Property key="TextColour" value="0.8 0.9 1.0"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="332 400 300 16" name="SteerRange">
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Game}"/>

@@ -5,10 +5,10 @@
 
 
 //  set the steering angle to "value", where 1.0 is maximum right lock and -1.0 is maximum left lock.
-void CARDYNAMICS::SetSteering(const Dbl value)
+void CARDYNAMICS::SetSteering(const Dbl value, const Dbl range_mul)
 {
 	steerValue = value;
-	Dbl steerangle = value * maxangle;  //steering angle in degrees
+	Dbl steerangle = value * maxangle * range_mul;  //steering angle in degrees
 
 	//ackermann stuff
 	Dbl alpha = std::abs( steerangle * PI_d/180.0 );  //outside wheel steering angle in radians

@@ -136,7 +136,7 @@ max-pressure = 2.5e6
 bias = 0.40
 radius = 0.18
 area = 0.014
-handbrake = 4.6
+handbrake = 3.6
 
 
 [ driver ]
@@ -229,16 +229,16 @@ position = 0.0, 0.96, 0.11
 
 [ particle-02 ]  # rear
 mass = 230.0
-position =  1.05,-1.7, 0.01
+position =  0.65,-1.17, 0.01
 
 [ particle-03 ]
 mass = 230.0
-position = -1.05,-1.7, 0.01
+position = -0.65,-1.17, 0.01
 
 [ particle-04 ]  # front
 mass = 230.0
-position =  1.05, 1.7, 0.01
+position =  0.65, 1.17, 0.01
 
 [ particle-05 ]
 mass = 230.0
-position = -1.05, 1.7, 0.01
+position = -0.65, 1.17, 0.01
