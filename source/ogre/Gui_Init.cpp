@@ -532,8 +532,8 @@ void App::InitGui()
 			if (boost::filesystem::exists(PATHMANAGER::Cars() + "/" + *i + "/about.txt"))  {
 				String s = *i, clr = GetCarClr(*i);
 				carList->addItem(clr+ s);  int l = carList->getItemCount()-1;
-				carList->setSubItemNameAt(1,l, clr+ toStr(vel[s]));
-				carList->setSubItemNameAt(2,l, clr+ toStr(yr[s]));
+				carList->setSubItemNameAt(1,l, clr+ toStr(vel[s]));  int y = yr[s]%100;
+				carList->setSubItemNameAt(2,l, clr+ "\'"+toStr(y/10)+toStr(y%10));
 
 				if (*i == pSet->gui.car[0]) {  carList->setIndexSelected(ii);  bFound = true;  }
 				ii++;  }
