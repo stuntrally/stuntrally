@@ -650,16 +650,39 @@
 				<Widget type="Slider" skin="Slider" position="32 450 200 16" name="SSSVelFactor">
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="332 370 300 24">
+				<Widget type="TextBox" skin="TextBox" position="332 340 300 24">
 					<Property key="Caption" value="#{SteerRange}"/>
-					<Property key="TextColour" value="0.8 0.9 1.0"/>
+					<Property key="TextColour" value="0.85 1.0 0.92"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="600 370 200 24" name="SteerRangeVal">
-					<Property key="TextColour" value="0.8 0.9 1.0"/>
+				<Widget type="TextBox" skin="TextBox" position="332 370 300 24">
+					<Property key="Caption" value="#{Simulation}"/>
+					<Property key="TextColour" value="0.6 1.0 0.8"/>
+					<UserString key="tip" value="#{TipSteerSim}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="332 400 300 16" name="SteerRange">
+				<Widget type="TextBox" skin="TextBox" position="600 370 200 24" name="SteerRangeSimVal">
+					<Property key="TextColour" value="0.6 1.0 0.8"/>
+					<UserString key="tip" value="#{TipSteerSim}"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="332 400 300 16" name="SteerRangeSim">
+					<UserString key="tip" value="#{TipSteerSim}"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="332 430 300 24">
+					<Property key="Caption" value="#{Surface}"/>
+					<Property key="TextColour" value="0.6 0.8 0.7"/>
+					<UserString key="tip" value="#{TipSteerSurf}"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="600 430 200 24" name="SteerRangeSurfVal">
+					<Property key="TextColour" value="0.6 0.8 0.7"/>
+					<UserString key="tip" value="#{TipSteerSurf}"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="332 450 300 16" name="SteerRangeSurf">
+					<UserString key="tip" value="#{TipSteerSurf}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 			</Widget>

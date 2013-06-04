@@ -38,6 +38,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 		Param(c,w, "car1.sss_velfactor"+s, sss_velfactor[i]);
 		Param(c,w, "car1.steer_range"+s, steer_range[i]);
 	}
+	Param(c,w, "car1.steer_sim_easy", steer_sim_easy);
+	Param(c,w, "car1.steer_sim_normal", steer_sim_normal);
 
 	//  game
 	Param(c,w, "game.start_in_main", startInMain);
@@ -226,10 +228,12 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  track
 	gui.track = "J1-T";  gui.track_user = false;  gui.trackreverse = false;
 	gui.sim_mode = "easy";
+
 	//  cars
 	for (int i=0; i < 4; ++i)
 	{	gui.car[i] = "ES";  cam_view[0] = 9;  gui.car_gloss[i] = 0.5f;
 		gui.car_hue[i] = 0.4f+0.2f*i;  gui.car_sat[i] = 1.f;  gui.car_val[i] = 1.f;  }
+
 	//  game
 	gui.local_players = 1;  gui.num_laps = 2;
 	gui.collis_veget = true;  gui.collis_cars = false;
@@ -240,11 +244,12 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	gui.rpl_rec = 1;
 	gui.champ_num = -1;  gui.pre_time = 2.f;
 	game = gui;
-	//  car setup
+
+	//  car setup  (update in game-default.cfg)
 	abs[0] = 0;  abs[1] = 0;
 	tcs[0] = 0;  tcs[1] = 0;
 	sss_effect[0] = 0.f;  sss_effect[1] = 0.85f;
 	sss_velfactor[0] = 1.f;  sss_velfactor[1] = 1.f;
-	//steer_range[0] = 1.0;  steer_range[1] = 0.7;
-	steer_range[0] = 0.81;  steer_range[1] = 0.57;
+	steer_range[0] = 1.0;  steer_range[1] = 0.7;
+	steer_sim_easy = 0.51;  steer_sim_normal = 0.81;
 }

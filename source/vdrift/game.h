@@ -72,6 +72,7 @@ public:
 	void LoadingScreen(float progress, float max);
 	void ProcessNewSettings();
 	void UpdateForceFeedback(float dt);
+	float GetSteerRange() const;  //inline?
 
 //  vars
 

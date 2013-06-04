@@ -73,7 +73,7 @@ public:
 
 // chassis
 	float GetMass() const;
-	Dbl GetSpeed() const;
+	Dbl GetSpeed() const;  Dbl GetSpeedDir() const;
 	MATHVECTOR<Dbl,3> GetVelocity() const;
 	MATHVECTOR<Dbl,3> GetAngularVelocity() const;
 	MATHVECTOR<Dbl,3> GetEnginePosition() const;
@@ -110,7 +110,7 @@ public:
 	void AlignWithGround();
 
 	// set the steering angle to "value", where 1.0 is maximum right lock and -1.0 is maximum left lock.
-	void SetSteering(const Dbl value, const Dbl range_mul);
+	void SetSteering(const Dbl value, const float range_mul);
 	Dbl steerValue;  // copy from SetSteering
 	Dbl GetSteering() const {	return steerValue;	}
 

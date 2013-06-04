@@ -194,7 +194,10 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 					
 				case KC_Q:	GuiShortcut(WND_Game, 1);	return true;  // Q Track
 				case KC_C:	GuiShortcut(WND_Game, 2);	return true;  // C Car
-				case KC_W:	GuiShortcut(WND_Game, 4);	return true;  // W Setup
+
+				case KC_T:	GuiShortcut(WND_Game, 3);	return true;  // T Car Setup
+				case KC_W:	GuiShortcut(WND_Game, 4);	return true;  // W Game Setup
+
 				case KC_U:	GuiShortcut(WND_Game, 5);	return true;  // U Multiplayer
 				case KC_H:	GuiShortcut(WND_Champ,6);	return true;  // H Champs
 

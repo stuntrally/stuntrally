@@ -381,6 +381,7 @@
 		<track name="V2-Volcanic"	laps="1" factor="0.1" />
 		<track name="V3-Crater"		laps="1" factor="0.1" />
 		<track name="V4-Spikeland"	laps="1" factor="0.1" />
+		<track name="V5-Sad"		laps="1" factor="0.1" />
 		<track name="X1-Magic"		laps="1" factor="0.1" />
 		<track name="X2-Swirl"		laps="1" factor="0.1" />
 		<track name="X3-Cloud"		laps="1" factor="0.1" />

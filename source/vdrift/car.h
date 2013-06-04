@@ -167,6 +167,11 @@ public:
 	{
 		return dynamics.GetSpeed();
 	}
+
+	float GetSpeedDir()
+	{
+		return dynamics.GetSpeedDir();
+	}
 	
 	MATHVECTOR<float,3> GetTotalAero() const
 	{

@@ -225,7 +225,9 @@
 	<Tag name="TipSpeedSensitiveSteering">Decreases steering range with higher velocity.</Tag>
 	<Tag name="SSS_Effect">Effect</Tag>
 	<Tag name="SSS_SpeedFactor">Speed Factor</Tag>
-	<Tag name="SteerRange">Steering range multiplier</Tag>
+	<Tag name="SteerRange">Steering range multipliers</Tag>
+	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
+	<Tag name="TipSteerSurf">Steering range multiplier, for surface (Gravel,Asphalt).</Tag>
 
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
 	<Tag name="TipAutoGearbox">Uncheck for manual gears changing.</Tag>
@@ -767,7 +769,7 @@
 
 	<Tag name="AlignTerrainToRoad">Align terrain to road</Tag>
 	<Tag name="AlignWidthAdd">Width add</Tag>
-	<Tag name="AlignWidthMul">Width multipy</Tag>
+	<Tag name="AlignWidthMul">Width multiply</Tag>
 	<Tag name="AlignSmooth">Smooth size</Tag>
 
 
@@ -1070,7 +1072,7 @@
 	<Tag name="TipModelPageLength">Models Page length (low will reload often and make too many batches, high will cause visible switching and make too many drawn triangles).</Tag>
 	<Tag name="TipGrassVisDist">Visibility distance for grass pages.</Tag>
 	<Tag name="TipModelVisDist">Visibility distance for 3d models, after this they turn into 2d impostors.</Tag>
-	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each models own value).</Tag>
+	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each model's own value).</Tag>
 	<Tag name="TipImpDist">Far distance at which the 2d impostors dissapear.</Tag>
 	<Tag name="TipGrDensSmooth">Grass density map - smooth size. Higher will make a smoother transition from road to grass.</Tag>
 	<Tag name="TipSceneryId">Name id of track, that has similar lighting (or this track's if has unique). Used for impostors generation.</Tag>
