@@ -228,16 +228,16 @@ position = 0.96, 0.0, -0.2
 
 [ particle-02 ]  # rear
 mass = 210.0
-position =  1.5, -1.1, -0.45
+position =  0.6, -1.0, -0.45
 
 [ particle-03 ]
 mass = 210.0
-position = -1.5, -1.1, -0.45
+position = -0.6, -1.0, -0.45
 
 [ particle-04 ]  # front
 mass = 210.0
-position =  1.5,  1.1, -0.45
+position =  0.6,  1.0, -0.45
 
 [ particle-05 ]
 mass = 210.0
-position = -1.5,  1.1, -0.45
+position = -0.6,  1.0, -0.45

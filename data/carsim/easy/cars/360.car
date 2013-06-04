@@ -227,16 +227,16 @@ hinge = 1.00 , -0.0, -0.0
 #---------------------------
 [ particle-00 ]	# Chassis Front
 mass = 230
-position =  1.1, 1.7, -0.55
+position =  0.8, 1.1, -0.55
 
 [ particle-01 ]	#	Cooler front
 mass = 230
-position = -1.1, 1.7, -0.55
+position = -0.8, 1.1, -0.55
 
 [ particle-02 ]	#	Chassis left
 mass = 250
-position =  1.2, -1.7, -0.55
+position =  0.8, -1.1, -0.55
 
 [ particle-03 ]	#	Chassis right
 mass = 250
-position = -1.2, -1.7, -0.55
+position = -0.8, -1.1, -0.55
