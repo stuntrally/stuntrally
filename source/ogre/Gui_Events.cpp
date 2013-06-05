@@ -46,6 +46,10 @@ void App::tabTireSet(MyGUI::TabPtr wp, size_t id)
 	slSSSEff->setValue(v);  valSSSEffect->setCaption(fToStr(v,2,4));
 	v = pSet->sss_velfactor[iTireSet];
 	slSSSVel->setValue(v/2.f);  valSSSVelFactor->setCaption(fToStr(v,2,4));
+	v = pSet->steer_range[iTireSet];
+	slSteerRngSurf->setValue(v-0.3f);  valSteerRangeSurf->setCaption(fToStr(v,2,4));
+	v = pSet->gui.sim_mode == "easy" ? pSet->steer_sim_easy : pSet->steer_sim_normal;
+	slSteerRngSim->setValue(v-0.3f);  valSteerRangeSim->setCaption(fToStr(v,2,4));
 }
 void App::slSSSEffect(SL)
 {
@@ -56,6 +60,16 @@ void App::slSSSVelFactor(SL)
 {
 	Real v = 2.f * val;  if (bGI)  pSet->sss_velfactor[iTireSet] = v;
 	if (valSSSVelFactor){	valSSSVelFactor->setCaption(fToStr(v,2,4));  }
+}
+void App::slSteerRangeSurf(SL)
+{
+	Real v = val +0.3f;  if (bGI)  pSet->steer_range[iTireSet] = v;
+	if (valSteerRangeSurf){		valSteerRangeSurf->setCaption(fToStr(v,2,4));  }
+}
+void App::slSteerRangeSim(SL)
+{
+	Real v = val +0.3f;  if (bGI)  pSet->steer_range[iTireSet] = v;
+	if (valSteerRangeSim){		valSteerRangeSim->setCaption(fToStr(v,2,4));  }
 }
 
 void App::chkGear(WP wp){		ChkEv(autoshift);	if (pGame)  pGame->ProcessNewSettings();	}
@@ -432,8 +446,10 @@ void App::chkGauges(WP wp){			ChkEv(show_gauges);	ShowHUD();	}
 void App::radKmh(WP wp){	bRkmh->setStateSelected(true);  bRmph->setStateSelected(false);  pSet->show_mph = false;  ShowHUD();  }
 void App::radMph(WP wp){	bRkmh->setStateSelected(false);  bRmph->setStateSelected(true);  pSet->show_mph = true;   ShowHUD();  }
 
-void App::radSimEasy(WP){	bRsimEasy->setStateSelected(true);  bRsimNorm->setStateSelected(false);  pSet->gui.sim_mode = "easy";  	bReloadSim = true;  }
-void App::radSimNorm(WP){	bRsimEasy->setStateSelected(false);  bRsimNorm->setStateSelected(true);  pSet->gui.sim_mode = "normal"; bReloadSim = true;  }
+void App::radSimEasy(WP){	bRsimEasy->setStateSelected(true);  bRsimNorm->setStateSelected(false);
+	pSet->gui.sim_mode = "easy";	bReloadSim = true;  tabTireSet(0,iTireSet);  }
+void App::radSimNorm(WP){	bRsimEasy->setStateSelected(false);  bRsimNorm->setStateSelected(true);
+	pSet->gui.sim_mode = "normal";	bReloadSim = true;  tabTireSet(0,iTireSet);  }
 
 void App::chkArrow(WP wp){			ChkEv(check_arrow); if (arrowRotNode) arrowRotNode->setVisible(pSet->check_arrow);  }
 void App::chkMinimap(WP wp){		ChkEv(trackmap);

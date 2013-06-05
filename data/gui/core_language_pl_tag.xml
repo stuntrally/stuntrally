@@ -8,7 +8,6 @@
 	<Tag name="TipDustSize">Wielkość cząstek kurzu.</Tag>
 	<Tag name="TipGrassSwayDistr">Dystrybucja efektu chwiania trawy (jak losowo).</Tag>
 	<Tag name="InpSet_AxisFull">Oś, pełna</Tag>
-	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
 	<Tag name="InputHeaderTxt4">Edytuj</Tag>
 	<Tag name="TerrainDouble">Podwojenie</Tag>
 	<Tag name="InputStartMeet">auto napotka (następne+ / poprzednie-) numery punktów</Tag>
@@ -361,6 +360,7 @@
 	<Tag name="Road">Droga</Tag>
 	<Tag name="FluidCont">Ciecze ciągle</Tag>
 	<Tag name="TrackAutoLoad">Autom. wczytywanie trasy</Tag>
+	<Tag name="BoostFOV">Adaptive FOV</Tag>
 	<Tag name="DustSize">rozmiar kurzu</Tag>
 	<Tag name="Shortcuts">Skróty</Tag>
 	<Tag name="TerrainMove">Przesuń</Tag>
@@ -843,7 +843,10 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="BoostFOV">Adaptive FOV</Tag>
+	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
+	<Tag name="SteerRange">Steering range multipliers</Tag>
+	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
+	<Tag name="TipSteerSurf">Steering range multiplier, for surface (Gravel,Asphalt).</Tag>
 	<Tag name="GameVersion">2.0</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

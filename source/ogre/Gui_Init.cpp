@@ -212,6 +212,8 @@ void App::InitGui()
 	if (tTires)  tTires->eventTabChangeSelect += newDelegate(this, &App::tabTireSet);
 	Slv(SSSEffect,	pSet->sss_effect[0]);  slSSSEff = sl;
 	Slv(SSSVelFactor, pSet->sss_velfactor[0]/2.f);  slSSSVel = sl;
+	Slv(SteerRangeSurf, pSet->steer_range[0]-0.3f);  slSteerRngSurf = sl;
+	Slv(SteerRangeSim, (pSet->gui.sim_mode == "easy" ? pSet->steer_sim_easy : pSet->steer_sim_normal)-0.3f);  slSteerRngSim = sl;
 
 	//  game
 	Chk("VegetCollis", chkVegetCollis, pSet->gui.collis_veget);
@@ -531,8 +533,8 @@ void App::InitGui()
 			if (boost::filesystem::exists(PATHMANAGER::Cars() + "/" + *i + "/about.txt"))  {
 				String s = *i, clr = GetCarClr(*i);
 				carList->addItem(clr+ s);  int l = carList->getItemCount()-1;
-				carList->setSubItemNameAt(1,l, clr+ toStr(vel[s]));
-				carList->setSubItemNameAt(2,l, clr+ toStr(yr[s]));
+				carList->setSubItemNameAt(1,l, clr+ toStr(vel[s]));  int y = yr[s]%100;
+				carList->setSubItemNameAt(2,l, clr+ "\'"+toStr(y/10)+toStr(y%10));
 
 				if (*i == pSet->gui.car[0]) {  carList->setIndexSelected(ii);  bFound = true;  }
 				ii++;  }

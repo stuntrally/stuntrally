@@ -8,7 +8,6 @@
 	<Tag name="TipDustSize">Mărimea particulelor de praf.</Tag>
 	<Tag name="TipGrassSwayDistr">Efect de distribuție iarbă (cum variază).</Tag>
 	<Tag name="InpSet_AxisFull">Axis Full</Tag>
-	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
 	<Tag name="InputHeaderTxt4">Edit</Tag>
 	<Tag name="TerrainDouble">Double</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
@@ -361,6 +360,7 @@
 	<Tag name="Road">Drum</Tag>
 	<Tag name="FluidCont">Fluid Cont.</Tag>
 	<Tag name="TrackAutoLoad">Încarcă automat traseul</Tag>
+	<Tag name="BoostFOV">Adaptive FOV</Tag>
 	<Tag name="DustSize">Mărime praf</Tag>
 	<Tag name="Shortcuts">Shortcuts</Tag>
 	<Tag name="TerrainMove">Move</Tag>
@@ -563,7 +563,7 @@
 	<Tag name="RoadPoint">Road Point</Tag>
 	<Tag name="CarStartPos">Car Start Pos</Tag>
 	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
-	<Tag name="AlignWidthMul">Width multipy</Tag>
+	<Tag name="AlignWidthMul">Width multiply</Tag>
 	<Tag name="NetMasterIp">Master Server IP</Tag>
 	<Tag name="LoadingDesc">Loading, please wait...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
@@ -843,7 +843,10 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="BoostFOV">Adaptive FOV</Tag>
+	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
+	<Tag name="SteerRange">Steering range multipliers</Tag>
+	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
+	<Tag name="TipSteerSurf">Steering range multiplier, for surface (Gravel,Asphalt).</Tag>
 	<Tag name="GameVersion">2.0</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

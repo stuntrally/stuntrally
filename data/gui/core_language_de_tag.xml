@@ -8,7 +8,6 @@
 	<Tag name="TipDustSize">Staubpartikelgröße.</Tag>
 	<Tag name="TipGrassSwayDistr">Grasschwingungsverteilung (wie zufällig)</Tag>
 	<Tag name="InpSet_AxisFull">Achse ganz</Tag>
-	<Tag name="InpSet_AxisFullInv">Achse ganz invertiert</Tag>
 	<Tag name="InputHeaderTxt4">Ändern</Tag>
 	<Tag name="TerrainDouble">Doppelt</Tag>
 	<Tag name="InputStartMeet">Auto wird (nächste + / vorherige -) Strecke Punkte treffen</Tag>
@@ -361,6 +360,7 @@
 	<Tag name="Road">Straße</Tag>
 	<Tag name="FluidCont">Gewässertyp</Tag>
 	<Tag name="TrackAutoLoad">Spiel autom. Laden</Tag>
+	<Tag name="BoostFOV">Adaptive FOV</Tag>
 	<Tag name="DustSize">Staubgröße</Tag>
 	<Tag name="Shortcuts">Tastenkürzel</Tag>
 	<Tag name="TerrainMove">Bewegen</Tag>
@@ -843,7 +843,10 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="BoostFOV">Adaptive FOV</Tag>
+	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
+	<Tag name="SteerRange">Steering range multipliers</Tag>
+	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
+	<Tag name="TipSteerSurf">Steering range multiplier, for surface (Gravel,Asphalt).</Tag>
 	<Tag name="GameVersion">2.0</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

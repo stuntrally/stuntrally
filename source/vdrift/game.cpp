@@ -449,7 +449,8 @@ void GAME::UpdateCarInputs(CAR & car)
 
 	int i = pOgreGame->sc->asphalt ? 1 : 0;
 	float sss_eff = settings->sss_effect[i], sss_velf = settings->sss_velfactor[i];
-	float carspeed = car.GetSpeed();
+	float carspeed = car.GetSpeedDir();  //car.GetSpeed();
+	//LogO(fToStr(car.GetSpeed(),2,6)+" "+fToStr(car.GetSpeedDir(),2,6));
 
 	carinputs = carcontrols_local.second.ProcessInput(car.id, carspeed, sss_eff, sss_velf,
 		forceBrake, pOgreGame->bPerfTest, pOgreGame->iPerfTestStage);
@@ -914,4 +915,13 @@ void GAME::UpdateTimer()
 	if (pOgreGame->iLoad1stFrames == -2)  // ended loading
 		timer.Tick(TickPeriod());
 	//timer.DebugPrint(info_output);
+}
+
+
+///  Car Steering range multiplier
+float GAME::GetSteerRange() const
+{
+	float range = (settings->gui.sim_mode == "easy") ? settings->steer_sim_easy : settings->steer_sim_normal;
+	range *= settings->steer_range[track.asphalt];
+	return range;
 }

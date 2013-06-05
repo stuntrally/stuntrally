@@ -223,16 +223,16 @@ hinge = 3.70, -1.0, -0.43
 #---------------------------
 [ particle-00 ]  # rear
 mass = 330.0
-position =  1.05,-1.7, -0.2
+position =  1.0,-1.3, -0.2
 
 [ particle-01 ]
 mass = 330.0
-position = -1.05,-1.7, -0.2
+position = -1.0,-1.3, -0.2
 
 [ particle-02 ]  # front
 mass = 330.0
-position =  1.05, 1.7, -0.2
+position =  1.0, 1.3, -0.2
 
 [ particle-03 ]
 mass = 330.0
-position = -1.05, 1.7, -0.2
+position = -1.0, 1.3, -0.2

@@ -4,7 +4,7 @@
 #include "configfile.h"
 
 
-#define SET_VER  2000  // 2.0
+#define SET_VER  2010  // 2.1
 
 
 enum eGraphType  {
@@ -59,10 +59,14 @@ public:
 
 	std::string shader_mode;
 
-	//  car  [2] = 0 gravel 1 asphalt
-	bool abs[2], tcs[2], autoshift, autorear, rear_inv, show_mph;
+	//---------------  car setup
+	bool abs[2], tcs[2],  // [2] = 0 gravel 1 asphalt
+		autoshift, autorear, rear_inv, show_mph;
 	float sss_effect[2], sss_velfactor[2];
-	int cam_view[4];//
+	//  steering range multipliers
+	float steer_range[2],  // gravel/asphalt
+		steer_sim_easy,steer_sim_normal;  // simulation modes
+	int cam_view[4];
 
 	//---------------  game config
 	class GameSet

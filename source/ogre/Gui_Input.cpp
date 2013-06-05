@@ -256,9 +256,10 @@ void App::InitInputGui()
 	y = 32;
 	tabitem = inputTab->addItem(TR("#{Shortcuts}"));
 	CreateText(xa,y, 600,24, "txtshc0", TR("#C0E0FF#{ShortcutsInfo}"));  y+=3*yb;
-	CreateText(xa,y, 200,24, "txtshc1", "#A8D0FF"+TR("Q,T  #{Track}"));  y+=2*yb;
+	CreateText(xa,y, 200,24, "txtshc1", "#A8D0FF"+TR("Q  #{Track}"));  y+=2*yb;
 	CreateText(xa,y, 200,24, "txtshc2", "#A8D0FF"+TR("C  #{Car}"));  y+=3*yb;
-	CreateText(xa,y, 200,24, "txtshc3", "#A8D0FF"+TR("W  #{Setup}"));  y+=2*yb;
+	CreateText(xa,y, 200,24, "txtshc3", "#A8D0FF"+TR("W  #{Game}"));  y+=2*yb;
+	CreateText(xa,y, 200,24, "txtshc3", "#A8D0FF"+TR("T  #{Setup}"));  y+=3*yb;
 	CreateText(xa,y, 200,24, "txtshc4", "#A8D0FF"+TR("U  #{Multiplayer}"));  y+=2*yb;
 	CreateText(xa,y, 200,24, "txtshc5", "#A8D0FF"+TR("H  #{Championship}"));  y+=3*yb;
 	CreateText(xa,y, 200,24, "txtshc6", "#A8D0FF"+TR("R  #{Replay}"));  y+=3*yb;

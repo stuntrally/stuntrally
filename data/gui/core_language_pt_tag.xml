@@ -8,7 +8,6 @@
 	<Tag name="TipDustSize">Tamanho das partículas de poeira.</Tag>
 	<Tag name="TipGrassSwayDistr">Distribuição do efeito de ondulação da grama (quanto aleatório).</Tag>
 	<Tag name="InpSet_AxisFull">Eixo completo</Tag>
-	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
 	<Tag name="InputHeaderTxt4">Editar</Tag>
 	<Tag name="TerrainDouble">Duplo</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
@@ -346,7 +345,7 @@
 	<Tag name="InputTerHeight">E - Height set  (RMB change height value)</Tag>
 	<Tag name="InputStartPos">Q - edit car start pos</Tag>
 	<Tag name="InputPaintColor">C - Paint Color</Tag>
-	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each models own value).</Tag>
+	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each model's own value).</Tag>
 	<Tag name="TireTrails">Tire Trails</Tag>
 	<Tag name="TipFogClrRGBA">R G B A components 0 to 1 (eg. 0.7 0.8 0.9 1). Last can be used to lower maximum density (1 is full).</Tag>
 	<Tag name="InputBrushParams">Brush parameters</Tag>
@@ -361,6 +360,7 @@
 	<Tag name="Road">Road</Tag>
 	<Tag name="FluidCont">Fluid Cont.</Tag>
 	<Tag name="TrackAutoLoad">Auto Load track</Tag>
+	<Tag name="BoostFOV">Adaptive FOV</Tag>
 	<Tag name="DustSize">dust size</Tag>
 	<Tag name="Shortcuts">Shortcuts</Tag>
 	<Tag name="TerrainMove">Move</Tag>
@@ -563,7 +563,7 @@
 	<Tag name="RoadPoint">Road Point</Tag>
 	<Tag name="CarStartPos">Car Start Pos</Tag>
 	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
-	<Tag name="AlignWidthMul">Width multipy</Tag>
+	<Tag name="AlignWidthMul">Width multiply</Tag>
 	<Tag name="NetMasterIp">Master Server IP</Tag>
 	<Tag name="LoadingDesc">Loading, please wait...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
@@ -843,7 +843,10 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="BoostFOV">Adaptive FOV</Tag>
+	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
+	<Tag name="SteerRange">Steering range multipliers</Tag>
+	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
+	<Tag name="TipSteerSurf">Steering range multiplier, for surface (Gravel,Asphalt).</Tag>
 	<Tag name="GameVersion">2.0</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

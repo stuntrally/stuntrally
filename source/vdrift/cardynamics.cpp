@@ -44,6 +44,15 @@ Dbl CARDYNAMICS::GetSpeed() const
 	//return chassis->getLinearVelocity().length();
 }
 
+Dbl CARDYNAMICS::GetSpeedDir() const
+{
+	MATHVECTOR<Dbl,3> v(1, 0, 0);
+	Orientation().RotateVector(v);
+	
+	Dbl vel = body.GetVelocity().dot(v);  // car body vel in local car direction
+	return sqrt(vel*vel);
+}
+
 MATHVECTOR<Dbl,3> CARDYNAMICS::GetVelocity() const
 {
 	return body.GetVelocity();

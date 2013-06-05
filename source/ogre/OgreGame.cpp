@@ -45,11 +45,21 @@ App::App(SETTINGS *settings, GAME *game)
 	,valCountdownTime(0), valDbgTxtClr(0),valDbgTxtCnt(0)
 	,cmbGraphs(0), valGraphsType(0) //,slGraphT(0)  // view
 	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0),chDbgS(0), chBlt(0),chBltTxt(0)
-	,bRsimEasy(0), bRsimNorm(0), bReloadSim(true)
 	,chFps(0), chWire(0), chProfTxt(0), chGraphs(0)
 	,chTimes(0),chMinimp(0),chOpponents(0)
 	,valVolMaster(0),valVolEngine(0),valVolTires(0),valVolSusp(0),valVolEnv(0)  // sounds
 	,valVolFlSplash(0),valVolFlCont(0),valVolCarCrash(0),valVolCarScrap(0)
+	,valBloomInt(0), valBloomOrig(0), valBlurIntens(0)  // video
+	,valDepthOfFieldFocus(0), valDepthOfFieldFar(0)  // dof
+	,valHDRParam1(0), valHDRParam2(0), valHDRParam3(0)  // hdr
+	,valHDRBloomInt(0), valHDRBloomOrig(0), valHDRAdaptationScale(0)
+	,valHDRVignettingRadius(0), valHDRVignettingDarkness(0)
+	// car
+	,bRsimEasy(0), bRsimNorm(0), bReloadSim(true)
+	,valCarClrH(0), valCarClrS(0), valCarClrV(0), valCarClrGloss(0)
+	,valNumLaps(0), valRplNumViewports(0) // setup
+	,valSSSEffect(0), valSSSVelFactor(0), valSteerRangeSurf(0), valSteerRangeSim(0)
+	// rpl
 	,imgCar(0),carDesc(0), imgTrkIco1(0),imgTrkIco2(0), bnQuit(0)
 	,valLocPlayers(0), edFind(0)
 	,txCarStatsTxt(0), txCarStatsVals(0)
@@ -76,7 +86,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,edInputMin(0), edInputMax(0), edInputMul(0), edInputReturn(0), edInputIncrease(0), actDetail(0), cmbInpDetSet(0)
 	,liChamps(0),liStages(0), edChampStage(0),edChampEnd(0), imgChampStage(0), liNetEnd(0), valStageNum(0), btChampStage(0)
 	,iEdTire(0), iTireLoad(0), iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
-	,iTireSet(0), bchAbs(0),bchTcs(0), slSSSEff(0),slSSSVel(0)
+	,iTireSet(0), bchAbs(0),bchTcs(0), slSSSEff(0),slSSSVel(0), slSteerRngSurf(0),slSteerRngSim(0)
 	,mStaticGeom(0), fLastFrameDT(0.001f)
 	,edTweak(0),edPerfTest(0),edTweakCol(0),tabTweak(0)
 	,txtTweakPath(0),cmbTweakCarSet(0), cmbTweakTireSet(0),txtTweakTire(0), txtTweakPathCol(0)
