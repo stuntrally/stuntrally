@@ -1,1 +1,2 @@
+clarabox (blendswap)
 Very slow and heavy car. Can handle bumps well. Is stable and easy to drive. But isn't suited for faster tracks.

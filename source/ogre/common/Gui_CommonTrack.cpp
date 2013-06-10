@@ -164,7 +164,7 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 const int wi = 26;
 const int App::TcolW[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
 #ifndef ROAD_EDITOR
-const int App::TcolC[5] = {33, 17, 40, 20};
+const int App::TcolC[6] = {34, 17, 35, 40, 20};
 const int App::ChColW[8] = {30, 180, 100, 60, 80, 60, 40};
 const int App::StColW[8] = {30, 180, 100, 90, 80, 70};
 #endif
@@ -350,13 +350,13 @@ void App::updTrkListDim()
 
 	for (c=0; c < cnt; ++c)
 	{
-		int w = (c==cnt-1) ? 18 : (float(TcolC[c]) / sum * 0.18/*width*/ * wi.width * 0.97/*frame*/);
+		int w = (c==cnt-1) ? 18 : (float(TcolC[c]) / sum * 0.21/*width*/ * wi.width * 0.97/*frame*/);
 		carList->setColumnWidthAt(c, w);
 		sw += w;
 	}
 
 	xt = 0.018*wi.width;  yt = 0.024*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
-	carList->setCoord(xt, yt, sw + 8/*frame*/, 0.39/*height*/*wi.height);
+	carList->setCoord(xt, yt, sw + 8/*frame*/, 0.41/*height*/*wi.height);
 	#endif
 	
 	#ifndef ROAD_EDITOR
@@ -524,6 +524,9 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTr
 		if (infTrk[ch][8])  infTrk[ch][8]->setCaption(ti.diff==0   ? "" : (clrsDiff[ti.diff] + toStr(ti.diff)));
 		if (infTrk[ch][9])  infTrk[ch][9]->setCaption(ti.rating==0 ? "" : (clrsRating[ti.rating] + toStr(ti.rating)));
 		if (infTrk[ch][10]) infTrk[ch][10]->setCaption(str0(ti.objects));
+		#ifndef ROAD_EDITOR
+		if (txTrackAuthor)  txTrackAuthor->setCaption(ti.author=="CH" ? "CryHam" : ti.author);
+		#endif
 	}
 
 #ifndef ROAD_EDITOR  // game

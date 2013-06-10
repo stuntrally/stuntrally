@@ -63,6 +63,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,imgCar(0),carDesc(0), imgTrkIco1(0),imgTrkIco2(0), bnQuit(0)
 	,valLocPlayers(0), edFind(0)
 	,txCarStatsTxt(0), txCarStatsVals(0)
+	,txCarSpeed(0),txCarType(0), txCarAuthor(0),txTrackAuthor(0)
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
 	,valRplName(0),valRplInfo(0),valRplName2(0),valRplInfo2(0), edRplName(0), edRplDesc(0)
 	,rbRplCur(0), rbRplAll(0), rbRplGhosts(0), bRplBack(0),bRplFwd(0), newGameRpl(0)
@@ -269,21 +270,6 @@ String App::GetTimeString(float time) const
 		return ss;
 	}else
 		return "-:--.---";
-}
-
-String App::GetCarClr(String car) const
-{
-	//  asphalt, both, rally, slow
-	//const static String clrA = "#FFA0A0", clrB = "#F0F0B0", clrR = "#80FFFF";
-	const static String clrA = "#FF9090", clrB = "#E0E000", clrR = "#80F8FF", clrS = "#B0B080";
-	String s = "#C0D0E0";  // default clr
-
-	     if (car=="360") s=clrA;   else if (car=="3S")  s=clrB;   else if (car=="CT")  s=clrA;
-	else if (car=="ES")  s=clrR;   else if (car=="FM")  s=clrR;   else if (car=="M3")  s=clrS;
-	else if (car=="N1")  s=clrB;   else if (car=="NS")  s=clrB;   else if (car=="S1")  s=clrR;
-	else if (car=="S8")  s=clrR;   else if (car=="TC6") s=clrR;   else if (car=="XM")  s=clrA;
-	else if (car=="XZ")  s=clrA;   else if (car=="LK4") s=clrS;
-	return s;
 }
 
 

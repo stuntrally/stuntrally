@@ -4,6 +4,7 @@
 #include "tinyxml.h"
 
 using namespace Ogre;
+using namespace std;
 
 
 TrackInfo::TrackInfo()
@@ -19,7 +20,7 @@ Date s2dt(const char* a)
 	TIXML_SSCANF(a,"%2d-%2d-%2d",&d.day,&d.month,&d.year);
 	return d;
 }
-std::string dt2s(const Date& dt)
+string dt2s(const Date& dt)
 {
 	return fToStr(dt.day,0,2)+"-"+fToStr(dt.month,0,2)+"-"+fToStr(dt.year,0,2);
 }
@@ -37,7 +38,6 @@ bool TracksXml::LoadXml(Ogre::String file)
 	if (!root)  return false;
 
 	//  clear
-	//Default();
 	trks.clear();  trkmap.clear();
 
 	///  tracks
@@ -47,12 +47,12 @@ bool TracksXml::LoadXml(Ogre::String file)
 	{
 		TrackInfo t;
 		a = eTrk->Attribute("n");			if (a)  t.n = s2i(a);
-		a = eTrk->Attribute("name");		if (a)  t.name = std::string(a);
+		a = eTrk->Attribute("name");		if (a)  t.name = string(a);
 		a = eTrk->Attribute("created");		if (a)  t.created = s2dt(a);
 		a = eTrk->Attribute("crtver");		if (a)  t.crtver = s2r(a);
 		a = eTrk->Attribute("modified");	if (a)  t.modified = s2dt(a);
-		a = eTrk->Attribute("scenery");		if (a)  t.scenery = std::string(a);
-		a = eTrk->Attribute("author");		if (a)  t.author = std::string(a);
+		a = eTrk->Attribute("scenery");		if (a)  t.scenery = string(a);
+		a = eTrk->Attribute("author");		if (a)  t.author = string(a);
 
 		a = eTrk->Attribute("fluids");		if (a)  t.fluids = s2i(a);
 		a = eTrk->Attribute("bumps");		if (a)  t.bumps = s2i(a);	a = eTrk->Attribute("jumps");		if (a)  t.jumps = s2i(a);
@@ -67,7 +67,6 @@ bool TracksXml::LoadXml(Ogre::String file)
 		a = eTrk->Attribute("drivenlaps");	if (a)  t.drivenlaps = s2i(a);
 
 		trks.push_back(t);
-		//trkmap[t.name] = &trks.back();
 		trkmap[t.name] = i++;
 		eTrk = eTrk->NextSiblingElement("track");
 	}
@@ -114,3 +113,59 @@ bool TracksXml::SaveXml(Ogre::String file)
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+CarInfo::CarInfo()
+	:id("AA"), name("AA"), type("other")
+	,n(-1), speed(5), year(2005), rating(5)
+{	}
+
+///  Load  cars.xml
+//--------------------------------------------------------------------------------------------------------------------------------------
+
+bool CarsXml::LoadXml(Ogre::String file)
+{
+	TiXmlDocument doc;
+	if (!doc.LoadFile(file.c_str()))  return false;
+		
+	TiXmlElement* root = doc.RootElement();
+	if (!root)  return false;
+
+	//  clear
+	cars.clear();  carmap.clear();  colormap.clear();
+
+	///  cars
+	const char* a;  int i=1;  //0 = none
+	TiXmlElement* eCar = root->FirstChildElement("car");
+	while (eCar)
+	{
+		CarInfo c;
+		a = eCar->Attribute("id");		if (a)  c.id = string(a);
+		a = eCar->Attribute("name");	if (a)  c.name = string(a);
+		a = eCar->Attribute("type");	if (a)  c.type = string(a);
+
+		a = eCar->Attribute("n");		if (a)  c.n = s2i(a);
+		a = eCar->Attribute("speed");	if (a)  c.speed = s2i(a);
+		a = eCar->Attribute("year");	if (a)  c.year = s2i(a);
+		a = eCar->Attribute("rating");	if (a)  c.rating = s2i(a);
+
+		cars.push_back(c);
+		carmap[c.id] = i++;
+		eCar = eCar->NextSiblingElement("car");
+	}
+
+	//  type colors
+	TiXmlElement* eColor = root->FirstChildElement("color");
+	while (eColor)
+	{
+		string type, clr;
+		a = eColor->Attribute("type");	if (a)  type = string(a);
+		a = eColor->Attribute("color");	if (a)  clr = string(a);
+
+		if (!type.empty() && !clr.empty())
+			colormap[type] = clr;
+		eColor = eColor->NextSiblingElement("color");
+	}
+	return true;
+}
