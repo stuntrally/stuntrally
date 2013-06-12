@@ -553,14 +553,15 @@ int CARDYNAMICS::NextGear() const
 {
 	int gear = transmission.GetGear();
 
-	Dbl avg_slide = 0.f;
+	Dbl avg_slide = 0.;  float avg_whH = 0.f;
 	for (int i=0; i < 4; ++i)
 	{
 		Dbl sl = fabs(wheel[i].slips.slide);
 		avg_slide += sl;
+		avg_whH += whH[i];
 	}
 	bool allow = true;
-	avg_slide *= 0.25;
+	avg_slide *= 0.25;  avg_whH *= 0.25f;
 	if (avg_slide > 1.0)  //par?
 		allow = false;
 
@@ -575,13 +576,13 @@ int CARDYNAMICS::NextGear() const
             return gear + 1;
 
         // shift down when driveshaft speed below shift_down_point
-        if (driveshaft_rpm < DownshiftRPM(gear) && gear > 1)
+        if (driveshaft_rpm < DownshiftRPM(gear, avg_whH) && gear > 1)
             return gear - 1;
     }
 	return gear;
 }
 
-Dbl CARDYNAMICS::DownshiftRPM(int gear) const
+Dbl CARDYNAMICS::DownshiftRPM(int gear, float avg_whH) const
 {
 	Dbl shift_down_point = 0.0;
 	if (gear > 1)
@@ -589,8 +590,14 @@ Dbl CARDYNAMICS::DownshiftRPM(int gear) const
         Dbl current_gear_ratio = transmission.GetGearRatio(gear);
         Dbl lower_gear_ratio = transmission.GetGearRatio(gear - 1);
 		Dbl peak_engine_speed = engine.GetRpmMax();
-		shift_down_point = 0.9 * peak_engine_speed / lower_gear_ratio * current_gear_ratio;
-	}					// 0.9 par-
+		Dbl thr = engine.GetThrottle();
+		shift_down_point = peak_engine_speed / lower_gear_ratio * current_gear_ratio
+			//* (thr > 0.5 ? 0.6 : 0.9);  // par
+			* (thr > 0.5 ? (avg_whH > 0.5f ?
+						  0.4 :  // in mud, shift down only at very low rpm
+						  0.7)   // throttle spin wheels, dont shift down much
+						: 0.9);  // without throttle, shift down easily
+	}
 	return shift_down_point;
 }
 

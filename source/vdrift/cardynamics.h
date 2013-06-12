@@ -248,7 +248,7 @@ public:
 	Dbl ShiftAutoClutchThrottle(Dbl throttle, Dbl dt);
 	
 	int NextGear() const;	// calculate next gear based on engine rpm
-	Dbl DownshiftRPM(int gear) const;	// calculate downshift point based on gear, engine rpm
+	Dbl DownshiftRPM(int gear, float avg_whH=0.f) const;	// calculate downshift point based on gear, engine rpm
 
 // traction control
 	void DoTCS(int i, Dbl normal_force);	// do traction control system calculations and modify the throttle position if necessary
