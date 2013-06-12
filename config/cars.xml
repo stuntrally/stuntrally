@@ -21,10 +21,11 @@
 	<car id="XM"  name="XM"  speed="8" year="1995" type="Asphalt" />
 	<car id="XZ"  name="XZ"  speed="9" year="2007" type="Asphalt" />
 
-	<car id="LK4" name="LK4" speed="2" year="2008" type="Terrain" />
+	<car id="LK4" name="LK4" speed="3" year="2008" type="Terrain" />
+	<car id="UV"  name="UV"  speed="4" year="2008" type="Terrain" />
+	<car id="HR"  name="HR"  speed="2" year="1996" type="Terrain" />
+
 	<car id="FR4" name="FR4" speed="2" year="1986" type="Terrain" />
-	<car id="HR"  name="HR"  speed="4" year="2003" type="Terrain" />
 	<car id="SZ"  name="SZ"  speed="9" year="2006" type="Asphalt" />
 	<car id="OT"  name="OT"  speed="0" year="1965" type="Slow" />
-	<car id="UV"  name="UV"  speed="4" year="2008" type="Terrain" />
 </cars>
