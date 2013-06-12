@@ -44,6 +44,7 @@ void App::createScene()
 
 	//  tracks.xml
 	tracksXml.LoadXml(PATHMANAGER::GameConfigDir() + "/tracks.xml");
+	carsXml.LoadXml(PATHMANAGER::GameConfigDir() + "/cars.xml");
 
 	//  championships.xml, progress.xml
 	ChampsXmlLoad();

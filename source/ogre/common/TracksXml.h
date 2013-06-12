@@ -57,4 +57,36 @@ struct TrkL
 	int test;  //Test*
 };
 
+
+//----------------------------------
+
+//  Car's additional info
+//  shown on gui [Car] tab, in detailed view
+//  for sorting by speed, type, etc.
+
+class CarInfo
+{
+public:
+	std::string id, name, type;  //, author in .car
+
+	int n, speed, year, rating;
+	int rateuser, drivenlaps;  // todo: user info ...
+
+	CarInfo();
+};
+
+
+//  all tracks infos
+class CarsXml
+{
+public:
+	std::vector<CarInfo> cars;
+	std::map<std::string, int> carmap;  // 0 if not found
+	std::map<std::string, std::string> colormap;  // car type to list color
+	
+	//  methods
+	bool LoadXml(Ogre::String file); //, SaveXml(Ogre::String file);
+};
+
+
 #endif

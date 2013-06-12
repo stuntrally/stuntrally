@@ -109,14 +109,24 @@
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipTrackImg}"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="528 288 240 240" name="TrkTerImg">
+				<Widget type="ImageBox" skin="ImageBox" position="528 280 240 240" name="TrkTerImg">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipTrkTerImg}"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="527 288 240 238" name="TrackMap">
+				<Widget type="ImageBox" skin="ImageBox" position="527 280 240 240" name="TrackMap">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipTrackMap}"/>
 				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="528 528 88 20">
+					<Property key="Caption" value="#{Author}"/>
+					<Property key="TextColour" value="0.4 0.5 0.6"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="616 528 148 20" name="TrackAuthor">
+					<Property key="TextColour" value="0.4 0.5 0.6"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+
 				<Widget type="TextBox" skin="TextBox" position="532 70 100 18" name="i1">
 					<Property key="Caption" value="#{TrackLength}"/>
 					<Property key="TextColour" value="0.4 0.8 1.0"/>
@@ -198,6 +208,7 @@
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipTrackDesc}"/>
 				</Widget>
+
 				<Widget type="ImageBox" skin="ImageBox" position="528 120 32 40" name="trkst1">
 					<Property key="ImageCoord" value="0 32 32 40"/>
 					<Property key="ImageTexture" value="track_icons.png"/>
@@ -324,31 +335,39 @@
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipNewGameCar}"/>
 				</Widget>
-				<Widget type="Widget" skin="PanelSkin" position="14 248 420 154" name="PanCarStats">
+				<Widget type="Widget" skin="PanelSkin" position="190 200 244 52" name="PanCarS">
+					<Property key="Colour" value="0.7 0.8 0.6"/>
+					<Property key="Alpha" value="0.6"/>
+					<Property key="InheritsAlpha" value="false"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipCarDesc}"/>
+				</Widget>
+				<Widget type="Widget" skin="PanelSkin" position="14 266 420 146" name="PanCarStats">
 					<Property key="Colour" value="0.1 0.4 0.7"/>
 					<Property key="Alpha" value="0.15"/>
 					<Property key="InheritsAlpha" value="false"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipCarDesc}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="16 254 200 150" name="CarStatsTxt">
-					<Property key="TextAlign" value="Right Top"/>
-					<Property key="TextColour" value="0.63 0.85 1.0"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="240 254 180 150" name="CarStatsVals">
-					<Property key="TextAlign" value="Left Top"/>
-					<Property key="TextColour" value="0.74 0.88 1.0"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-				</Widget>
-				<Widget type="Widget" skin="PanelSkin" position="14 408 420 84" name="PanCarDesc">
+				<Widget type="Widget" skin="PanelSkin" position="14 416 420 76" name="PanCarDesc">
 					<Property key="Colour" value="0.8 0.9 1.0"/>
 					<Property key="Alpha" value="0.6"/>
 					<Property key="InheritsAlpha" value="false"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipCarDesc}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="18 412 416 76" name="CarDesc">
+
+				<Widget type="TextBox" skin="TextBox" position="16 272 200 144" name="CarStatsTxt">
+					<Property key="TextAlign" value="Right Top"/>
+					<Property key="TextColour" value="0.63 0.85 1.0"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="240 272 180 144" name="CarStatsVals">
+					<Property key="TextAlign" value="Left Top"/>
+					<Property key="TextColour" value="0.74 0.88 1.0"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="EditBox" skin="EditBoxEmpty" position="18 420 416 68" name="CarDesc">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
@@ -360,216 +379,265 @@
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipCarDesc}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="320 200 114 26" name="CarClrRandom">
-					<Property key="Caption" value="#{CarClrRandom}"/>
-					<Property key="Colour" value="0.6 0.7 0.8"/>
-					<Property key="TextColour" value="0.6 0.7 0.8"/>
+				<Widget type="ImageBox" skin="ImageBox" position="468 220 300 300" name="CarImg">
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="448 208 320 320" name="CarImg">
-					<UserString key="RelativeTo" value="GameWnd"/>
-				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="336 48 511 10">
+				<Widget type="ImageBox" skin="ImageBox" position="350 48 492 10">
 					<Property key="ImageTexture" value="hue_bar.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="472 528 80 24">
+					<Property key="Caption" value="#{Author}"/>
+					<Property key="TextColour" value="0.4 0.5 0.6"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="552 528 224 24" name="CarAuthor">
+					<Property key="Caption" value="#{Author}"/>
+					<Property key="TextColour" value="0.4 0.5 0.6"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
 
-				<Widget type="TextBox" skin="TextBox" position="176 60 88 24">
+				<Widget type="TextBox" skin="TextBox" position="200 208 80 24">
+					<Property key="Caption" value="#{CarSpeed}"/>
+					<Property key="TextColour" value="0.76 0.73 0.7"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipCarSpeed}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="280 208 88 24" name="CarSpeed">
+					<Property key="TextColour" value="0.76 0.73 0.7"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipCarSpeed}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="200 228 80 24">
+					<Property key="Caption" value="#{CarType}"/>
+					<Property key="TextColour" value="0.8 0.84 0.86"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipCarType}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="280 228 124 24" name="CarType">
+					<Property key="TextColour" value="0.8 0.84 0.86"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipCarType}"/>
+				</Widget>
+
+				<Widget type="TextBox" skin="TextBox" position="200 60 88 22">
 					<Property key="Caption" value="#{ColHue}"/>
 					<Property key="TextColour" value="0.5 0.75 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeHue}"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="320 60 448 18" name="CarClrH">
+				<Widget type="Slider" skin="Slider" position="332 60 436 16" name="CarClrH">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeHue}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="270 60 42 24" name="CarClrHVal">
+				<Widget type="TextBox" skin="TextBox" position="288 60 42 22" name="CarClrHVal">
 					<Property key="TextColour" value="0.7 0.85 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeHue}"/>
 				</Widget>
 
-				<Widget type="TextBox" skin="TextBox" position="176 88 88 24">
+				<Widget type="TextBox" skin="TextBox" position="200 84 88 22">
 					<Property key="TextColour" value="0.6 0.7 0.8"/>
 					<Property key="Caption" value="#{ColSat}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeSat}"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="320 88 448 18" name="CarClrS">
+				<Widget type="Slider" skin="Slider" position="332 84 224 16" name="CarClrS">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeSat}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="270 88 42 24" name="CarClrSVal">
+				<Widget type="TextBox" skin="TextBox" position="288 84 42 22" name="CarClrSVal">
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeSat}"/>
 				</Widget>
 
-				<Widget type="TextBox" skin="TextBox" position="176 112 88 24">
+				<Widget type="TextBox" skin="TextBox" position="200 108 88 22">
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
 					<Property key="Caption" value="#{ColBright}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeBright}"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="320 112 448 18" name="CarClrV">
+				<Widget type="Slider" skin="Slider" position="332 108 224 16" name="CarClrV">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeBright}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="270 112 42 24" name="CarClrVVal">
+				<Widget type="TextBox" skin="TextBox" position="288 108 42 22" name="CarClrVVal">
 					<Property key="TextColour" value="0.65 0.8 0.95"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeBright}"/>
 				</Widget>
 
-				<Widget type="TextBox" skin="TextBox" position="176 140 88 24">
+				<Widget type="TextBox" skin="TextBox" position="200 136 88 22">
 					<Property key="TextColour" value="0.7 0.85 1.0"/>
 					<Property key="Caption" value="#{ColGloss}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeGloss}"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="320 140 448 18" name="CarClrGloss">
+				<Widget type="Slider" skin="Slider" position="332 136 224 16" name="CarClrGloss">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeGloss}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="270 140 42 24" name="CarClrGlossVal">
+				<Widget type="TextBox" skin="TextBox" position="288 136 42 22" name="CarClrGlossVal">
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeGloss}"/>
 				</Widget>
 
-				<Widget type="ImageBox" skin="ImageBox" position="180 168 18 18" name="carClr0">
+				<Widget type="TextBox" skin="TextBox" position="200 160 88 22">
+					<Property key="TextColour" value="0.6 0.7 0.9"/>
+					<Property key="Caption" value="#{ColReflect}"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipChangeReflect}"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="332 160 224 16" name="CarClrReflect">
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipChangeReflect}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="288 160 42 22" name="CarClrReflectVal">
+					<Property key="TextColour" value="0.65 0.75 1.0"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<UserString key="tip" value="#{TipChangeReflect}"/>
+				</Widget>
+
+				<Widget type="Button" skin="Button" position="596 156 114 26" name="CarClrRandom">
+					<Property key="Caption" value="#{CarClrRandom}"/>
+					<Property key="Colour" value="0.6 0.7 0.8"/>
+					<Property key="TextColour" value="0.6 0.7 0.8"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="564 88 18 18" name="carClr0">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="200 168 18 18" name="carClr1">
+				<Widget type="ImageBox" skin="ImageBox" position="584 88 18 18" name="carClr1">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="220 168 18 18" name="carClr2">
+				<Widget type="ImageBox" skin="ImageBox" position="604 88 18 18" name="carClr2">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="240 168 18 18" name="carClr3">
+				<Widget type="ImageBox" skin="ImageBox" position="624 88 18 18" name="carClr3">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="260 168 18 18" name="carClr4">
+				<Widget type="ImageBox" skin="ImageBox" position="644 88 18 18" name="carClr4">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="280 168 18 18" name="carClr5">
+				<Widget type="ImageBox" skin="ImageBox" position="664 88 18 18" name="carClr5">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="300 168 18 18" name="carClr6">
+				<Widget type="ImageBox" skin="ImageBox" position="684 88 18 18" name="carClr6">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="320 168 18 18" name="carClr7">
+				<Widget type="ImageBox" skin="ImageBox" position="704 88 18 18" name="carClr7">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="340 168 18 18" name="carClr8">
+				<Widget type="ImageBox" skin="ImageBox" position="724 88 18 18" name="carClr8">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="360 168 18 18" name="carClr9">
+				<Widget type="ImageBox" skin="ImageBox" position="744 88 18 18" name="carClr9">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="380 168 18 18" name="carClr10">
+				<Widget type="ImageBox" skin="ImageBox" position="564 108 18 18" name="carClr10">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="400 168 18 18" name="carClr11">
+				<Widget type="ImageBox" skin="ImageBox" position="584 108 18 18" name="carClr11">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="420 168 18 18" name="carClr12">
+				<Widget type="ImageBox" skin="ImageBox" position="604 108 18 18" name="carClr12">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="440 168 18 18" name="carClr13">
+				<Widget type="ImageBox" skin="ImageBox" position="624 108 18 18" name="carClr13">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="460 168 18 18" name="carClr14">
+				<Widget type="ImageBox" skin="ImageBox" position="644 108 18 18" name="carClr14">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="480 168 18 18" name="carClr15">
+				<Widget type="ImageBox" skin="ImageBox" position="664 108 18 18" name="carClr15">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="500 168 18 18" name="carClr16">
+				<Widget type="ImageBox" skin="ImageBox" position="684 108 18 18" name="carClr16">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="520 168 18 18" name="carClr17">
+				<Widget type="ImageBox" skin="ImageBox" position="704 108 18 18" name="carClr17">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="540 168 18 18" name="carClr18">
+				<Widget type="ImageBox" skin="ImageBox" position="724 108 18 18" name="carClr18">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="560 168 18 18" name="carClr19">
+				<Widget type="ImageBox" skin="ImageBox" position="744 108 18 18" name="carClr19">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="580 168 18 18" name="carClr20">
+				<Widget type="ImageBox" skin="ImageBox" position="564 128 18 18" name="carClr20">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="600 168 18 18" name="carClr21">
+				<Widget type="ImageBox" skin="ImageBox" position="584 128 18 18" name="carClr21">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="620 168 18 18" name="carClr22">
+				<Widget type="ImageBox" skin="ImageBox" position="604 128 18 18" name="carClr22">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="640 168 18 18" name="carClr23">
+				<Widget type="ImageBox" skin="ImageBox" position="624 128 18 18" name="carClr23">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="660 168 18 18" name="carClr24">
+				<Widget type="ImageBox" skin="ImageBox" position="644 128 18 18" name="carClr24">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="680 168 18 18" name="carClr25">
+				<Widget type="ImageBox" skin="ImageBox" position="664 128 18 18" name="carClr25">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="700 168 18 18" name="carClr26">
+				<Widget type="ImageBox" skin="ImageBox" position="684 128 18 18" name="carClr26">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="720 168 18 18" name="carClr27">
+				<Widget type="ImageBox" skin="ImageBox" position="704 128 18 18" name="carClr27">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="740 168 18 18" name="carClr28">
+				<Widget type="ImageBox" skin="ImageBox" position="724 128 18 18" name="carClr28">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TabControl" skin="TabControl" position="176 16 568 20" name="tabPlayer">
+				<Widget type="TabControl" skin="TabControl" position="200 16 540 20" name="tabPlayer">
 					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
-					<Widget type="TabItem" skin="" position="2 24 562 -8">
+					<Widget type="TabItem" skin="" position="2 24 534 -8">
 						<Property key="Caption" value="#{Player} 1"/>
 						<UserString key="RelativeTo" value="GameWnd"/>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 562 -8">
+					<Widget type="TabItem" skin="" position="2 24 534 -8">
 						<Property key="Caption" value="#{Player} 2"/>
 						<UserString key="RelativeTo" value="GameWnd"/>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 562 -8">
+					<Widget type="TabItem" skin="" position="2 24 534 -8">
 						<Property key="Caption" value="#{Player} 3"/>
 						<UserString key="RelativeTo" value="GameWnd"/>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 562 -8">
+					<Widget type="TabItem" skin="" position="2 24 534 -8">
 						<Property key="Caption" value="#{Player} 4"/>
 						<UserString key="RelativeTo" value="GameWnd"/>
 					</Widget>

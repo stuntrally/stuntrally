@@ -383,6 +383,12 @@ void App::InitGui()
 
 	txCarStatsTxt = mGUI->findWidget<StaticText>("CarStatsTxt");
 	txCarStatsVals = mGUI->findWidget<StaticText>("CarStatsVals");
+
+    txCarSpeed = mGUI->findWidget<StaticText>("CarSpeed");
+    txCarType = mGUI->findWidget<StaticText>("CarType");
+
+    txCarAuthor = mGUI->findWidget<StaticText>("CarAuthor");
+    txTrackAuthor = mGUI->findWidget<StaticText>("TrackAuthor");
 	
 	TabPtr tPlr = mGUI->findWidget<Tab>("tabPlayer");
 	if (tPlr)  tPlr->eventTabChangeSelect += newDelegate(this, &App::tabPlayer);
@@ -513,16 +519,11 @@ void App::InitGui()
 	carList = cartab->createWidget<MultiList2>("MultiListBox",16,48,200,110, Align::Left | Align::VStretch);
 	carList->setColour(Colour(0.7,0.85,1.0));
 	carList->removeAllColumns();  int n=0;
-	carList->addColumn("#C8E0F0"+TR("#{Car}"), TcolC[n++]);
-	carList->addColumn("#C0F0FF""v", TcolC[n++]);
-	carList->addColumn("#C0C8D0""Year", TcolC[n++]);
+	carList->addColumn("#C8E8FF"+TR("#{Car}"), TcolC[n++]);
+	carList->addColumn("#C0F0FF"+TR("#{CarSpeed}"), TcolC[n++]);
+	carList->addColumn("#C0C8D0"+TR("#{CarYear}"), TcolC[n++]);
+	carList->addColumn("#C0C8D0"+TR("#{CarType}"), TcolC[n++]);
 	carList->addColumn(" ", TcolC[n++]);
-	std::map<std::string,int> vel, yr;
-	vel["360"]= 8;  yr["360"]= 1999;  vel["3S"] = 3;  yr["3S"] = 2003;  vel["CT"] = 7;  yr["CT"] = 1998;
-	vel["ES"] = 5;  yr["ES"] = 2006;  vel["FM"] = 5;  yr["FM"] = 2000;  vel["M3"] = 1;  yr["M3"] = 1985;
-	vel["N1"] = 5;  yr["N1"] = 1999;  vel["NS"] = 4;  yr["NS"] = 1989;  vel["S1"] = 5;  yr["S1"] = 2005;
-	vel["S8"] = 5;  yr["S8"] = 2008;  vel["TC6"]= 4;  yr["TC6"]= 1994;  vel["XM"] = 8;  yr["XM"] = 1995;
-	vel["XZ"] = 9;  yr["XZ"] = 2007;  vel["LK4"]= 2;  yr["LK4"]= 2008;
 
     //if (carList)
     {	carList->removeAllItems();  int ii = 0;  bool bFound = false;
@@ -530,15 +531,20 @@ void App::InitGui()
 		PATHMANAGER::GetFolderIndex(PATHMANAGER::Cars(), li);
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
-			if (boost::filesystem::exists(PATHMANAGER::Cars() + "/" + *i + "/about.txt"))  {
-				String s = *i, clr = GetCarClr(*i);
-				carList->addItem(clr+ s);  int l = carList->getItemCount()-1;
-				carList->setSubItemNameAt(1,l, clr+ toStr(vel[s]));  int y = yr[s]%100;
+			if (boost::filesystem::exists(PATHMANAGER::Cars() + "/" + *i + "/about.txt"))
+			{	String s = *i;
+				CarInfo ci;  int id = carsXml.carmap[s];
+				if (id > 0)  ci = carsXml.cars[id-1];
+				String clr = carsXml.colormap[ci.type];  if (clr.length() != 7)  clr = "#C0D0E0";
+				
+				carList->addItem(clr+ s);  int l = carList->getItemCount()-1, y = ci.year%100;
+				carList->setSubItemNameAt(1,l, clrsDiff[std::min(7, (int)(ci.speed*0.9f))]+ toStr(ci.speed));
 				carList->setSubItemNameAt(2,l, clr+ "\'"+toStr(y/10)+toStr(y%10));
+				carList->setSubItemNameAt(3,l, clr+ TR("#{CarType_"+ci.type+"}"));
 
 				if (*i == pSet->gui.car[0]) {  carList->setIndexSelected(ii);  bFound = true;  }
-				ii++;  }
-		}
+				ii++;
+		}	}
 		if (!bFound)
 			pSet->gui.car[0] = *li.begin();
 		carList->eventListChangePosition += newDelegate(this, &App::listCarChng);

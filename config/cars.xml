@@ -1,0 +1,31 @@
+<cars>
+	<color type="Asphalt" color="#FF9090" />
+	<color type="Racing"  color="#E0E000" />
+	<color type="Gravel"  color="#80F8FF" />
+	<color type="Slow"    color="#B0B080" />
+	<color type="Terrain" color="#A0F0A0" />
+	<color type="Other"   color="#C0D0E0" />
+
+	<car id="360" name="360" speed="8" year="1999" type="Asphalt" />
+	<car id="3S"  name="3S"  speed="3" year="2003" type="Racing" />
+	<car id="CT"  name="CT"  speed="7" year="1998" type="Asphalt" />
+	<car id="ES"  name="ES"  speed="5" year="2006" type="Gravel" />
+	<car id="FM"  name="FM"  speed="5" year="2000" type="Gravel" />
+	<car id="FN"  name="FN"  speed="5" year="2000" type="Gravel" />
+	<car id="M3"  name="M3"  speed="1" year="1985" type="Slow" />
+	<car id="N1"  name="N1"  speed="5" year="1999" type="Racing" />
+	<car id="NS"  name="NS"  speed="4" year="1989" type="Racing" />
+	<car id="S1"  name="S1"  speed="5" year="2005" type="Gravel" />
+	<car id="S8"  name="S8"  speed="5" year="2008" type="Gravel" />
+	<car id="TC6" name="TC6" speed="4" year="1994" type="Gravel" />
+	<car id="XM"  name="XM"  speed="8" year="1995" type="Asphalt" />
+	<car id="XZ"  name="XZ"  speed="9" year="2007" type="Asphalt" />
+
+	<car id="LK4" name="LK4" speed="3" year="2008" type="Terrain" />
+	<car id="UV"  name="UV"  speed="4" year="2008" type="Terrain" />
+	<car id="HR"  name="HR"  speed="2" year="1996" type="Terrain" />
+
+	<car id="FR4" name="FR4" speed="2" year="1986" type="Terrain" />
+	<car id="SZ"  name="SZ"  speed="9" year="2006" type="Asphalt" />
+	<car id="OT"  name="OT"  speed="0" year="1965" type="Slow" />
+</cars>

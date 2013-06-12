@@ -1052,6 +1052,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\config\cars.xml"
+				>
+			</File>
+			<File
 				RelativePath=".\config\championships.xml"
 				>
 			</File>

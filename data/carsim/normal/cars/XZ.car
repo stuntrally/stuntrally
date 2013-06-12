@@ -155,7 +155,7 @@ handbrake = 3.1
 
 
 [ driver ]
-position = -0.4, -0.15, -0.5
+position = -0.1, -0.15, -0.5
 mass = 80.0
 view-position = -0.02, -0.40, 0.30
 hood-mounted-view-position = -0.4, 0, 0.50
@@ -181,7 +181,7 @@ position = 0.0, -1.4, 0.30
 frontal-area = 0.0
 drag-coefficient = 0.0
 surface-area = 0.6
-lift-coefficient = -3.0
+lift-coefficient = -2.9
 efficiency = 0.90
 
 

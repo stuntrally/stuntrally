@@ -147,7 +147,7 @@ protected:
 		*hudAbs,*hudTcs, *hudWarnChk,*hudWonPlace, *hudOpp[5][3],*hudOppB;
 	Ogre::Overlay *ovCountdown,*ovNetMsg, *ovCam, *ovWarnWin, *ovOpp, *ovAbsTcs, *ovCarDbg,*ovCarDbgTxt,*ovCarDbgExt;
 
-	Ogre::String GetTimeString(float time) const, GetCarClr(Ogre::String car) const;
+	Ogre::String GetTimeString(float time) const;
 	void CreateHUD(bool destroy), ShowHUD(bool hideAll=false), UpdMiniTer(), UpdDbgTxtClr();
 	Ogre::Vector3 projectPoint(const Ogre::Camera* cam, const Ogre::Vector3& pos);  // 2d xy, z - out info
 	MyGUI::TextBox* CreateNickText(int carId, Ogre::String text);
@@ -283,9 +283,10 @@ protected:
 	MyGUI::StaticTextPtr valTrkNet, stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
-	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
+	TracksXml tracksXml;  CarsXml carsXml;
+	void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
 	void updTrkListDim(), updChampListDim();
-	const static int TcolW[32],TcolC[5],ChColW[8],StColW[8];
+	const static int TcolW[32],TcolC[6],ChColW[8],StColW[8];
 	const static Ogre::String clrsDiff[9],clrsRating[5],clrsLong[10];
 
 	void edTrkFind(MyGUI::EditPtr),edRplFind(MyGUI::EditPtr);
@@ -412,9 +413,12 @@ protected:
 	void msgRplDelete(MyGUI::Message*, MyGUI::MessageBoxStyle);
 	
 	void btnNumPlayers(WP);  void chkSplitVert(WP);
-	MyGUI::StaticTextPtr valLocPlayers,
-		txCarStatsTxt, txCarStatsVals;  void UpdCarStatsTxt();  // car stats
+	MyGUI::StaticTextPtr valLocPlayers;
 	
+	MyGUI::StaticTextPtr txCarStatsTxt,txCarStatsVals,
+		txCarSpeed,txCarType, txCarAuthor,txTrackAuthor;
+	void UpdCarStatsTxt();  // car stats
+
 
 public:
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game

@@ -125,7 +125,7 @@ void App::updateGameInfoGUI()
 {
 	//  update track info
 	if (valNetTrack)
-		valNetTrack->setCaption("Track: " + sListTrack);
+		valNetTrack->setCaption(TR("#{Track}") + ": " + sListTrack);
 
 	//imgNetTrack->setImageTexture(sListTrack+".jpg");
 	if (imgNetTrack)

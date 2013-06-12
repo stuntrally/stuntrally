@@ -116,9 +116,9 @@ void App::tabPlayer(TabPtr wp, size_t id)
 {
 	iCurCar = id;
 	//  update gui for this car (color h,s,v, name, img)
-	string c = pSet->gui.car[iCurCar], s = GetCarClr(c)+c;
+	string c = pSet->gui.car[iCurCar];
 	for (size_t i=0; i < carList->getItemCount(); ++i)
-	if (carList->getItemNameAt(i) == s)
+	if (carList->getItemNameAt(i).substr(7) == c)
 	{	carList->setIndexSelected(i);
 		listCarChng(carList, i);
 	}
@@ -333,13 +333,27 @@ void App::listCarChng(MultiList2* li, size_t pos)
 	{
 		string path = PATHMANAGER::Cars()+"/"+sListCar+"/description.txt";
 		ifstream fi(path.c_str());
-		string sdesc = "", s;
+
+		string sdesc = "", s;  bool f1 = true;
 		while (getline(fi, s))
-			sdesc += s + "\n";
+		{
+			if (f1) {  f1 = false;
+				if (txCarAuthor)  txCarAuthor->setCaption(s);  }
+			else
+				sdesc += s + "\n";
+		}
 		fi.close();
 
 		carDesc->setCaption(sdesc);
-	}	
+	}
+	//  car info
+	int id = carsXml.carmap[sl];
+	if (id > 0 && txCarSpeed && txCarType)
+	{	const CarInfo& ci = carsXml.cars[id-1];
+		txCarSpeed->setCaption(clrsDiff[std::min(7, (int)(ci.speed*0.9f))]+ toStr(ci.speed));
+		txCarType->setCaption(carsXml.colormap[ci.type]+ TR("#{CarType_"+ci.type+"}"));
+	}
+	
 	changeCar();
 	UpdCarStatsTxt();
 }	
