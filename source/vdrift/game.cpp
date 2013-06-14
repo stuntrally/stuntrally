@@ -365,6 +365,9 @@ void GAME::Tick(double deltat)
 	if (deltat > maxtime)
 		deltat = maxtime;
 
+	if (pOgreGame->bPerfTest)  // speed up perf test
+		deltat *= settings->perf_speed;
+	
 	target_time += deltat;
 	double tickperriod = TickPeriod();
 

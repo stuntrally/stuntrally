@@ -108,7 +108,8 @@ public:
 	bool opplist_sort;
 	
 	//  sim freq (1/interval timestep)
-	float game_fq, blt_fq;  int blt_iter, dyn_iter, multi_thr, thread_sleep;
+	float game_fq, blt_fq,  perf_speed;
+	int blt_iter, dyn_iter,  multi_thr, thread_sleep;
 	
 	//  compositor
 	bool bloom, hdr, motionblur, camblur, all_effects;

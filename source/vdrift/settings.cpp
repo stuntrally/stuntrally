@@ -124,6 +124,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "sim.game_freq", game_fq);			Param(c,w, "sim.multi_thr", multi_thr);
 	Param(c,w, "sim.bullet_freq", blt_fq);			Param(c,w, "sim.bullet_iter", blt_iter);
 	Param(c,w, "sim.dynamics_iter", dyn_iter);		Param(c,w, "sim.thread_sleep", thread_sleep);
+	Param(c,w, "sim.perf_speed", perf_speed);
 	
 	Param(c,w, "sound.volume", vol_master);			Param(c,w, "sound.vol_engine", vol_engine);
 	Param(c,w, "sound.vol_tires", vol_tires);		Param(c,w, "sound.vol_env", vol_env);
@@ -201,7 +202,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	rpl_alpha(0), rpl_ghostpar(0), rpl_ghostrewind(1), rpl_listview(0), rpl_numViews(4),
 	//  sim
 	game_fq(82.f), blt_fq(160.f), blt_iter(24), dyn_iter(30),
-	multi_thr(0), thread_sleep(5),
+	multi_thr(0), thread_sleep(5), perf_speed(100000),
 	//  sound
 	vol_master(1.f), vol_engine(0.6f), vol_tires(1.f), vol_env(1.f), vol_susp(1.f),
 	vol_fl_splash(1.f),vol_fl_cont(1.f), vol_car_crash(1.f),vol_car_scrap(1.f),
