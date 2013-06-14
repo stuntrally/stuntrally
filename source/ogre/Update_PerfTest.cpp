@@ -134,6 +134,7 @@ void App::newPerfTest(float time)
 					"Max torque [Nm]:  " +fToStr(maxTrq*m,1,5)+" ("+fToStr(maxTrq,1,5)+") at "+fToStr(rpmMaxTq ,0,4)+" rpm\n"+
 					"Max power  [bhp]:  "+fToStr(maxPwr*m,1,5)+" ("+fToStr(maxPwr,1,5)+") at "+fToStr(rpmMaxPwr,0,4)+" rpm\n"+
 					"Ratio [bhp/tonne]:  "+fToStr(maxPwr / (pCar->GetMass() * 0.001) ,1,5)+"\n"+
+					"Top speed: "+fToStr(maxVel,1,5)+" kmh  at time:  "+fToStr(tiMaxVel,1,4)+" s\n"+
 					"------\n"+
 					"Time [s] 0.. 60 kmh:  "+fToStr(t0to60 ,2,5)+"  down "+fToStr(down60 ,0,4)+"  drag "+fToStr(drag60 ,0,4)+"\n"+
 					"Time [s] 0..100 kmh:  "+fToStr(t0to100,2,5)+"  down "+fToStr(down100,0,4)+"  drag "+fToStr(drag100,0,4)+"\n"+
@@ -141,7 +142,6 @@ void App::newPerfTest(float time)
 					"Time [s] 0..160 kmh:  "+fToStr(t0to160,2,5)+"  down "+fToStr(down160,0,4)+"  drag "+fToStr(drag160,0,4)+"\n")+
 					(maxVel < 200.f ? "" :
 					"Time [s] 0..200 kmh:  "+fToStr(t0to200,2,5)+"  down "+fToStr(down200,0,4)+"  drag "+fToStr(drag200,0,4)+"\n")+
-					"Max velocity: "+fToStr(maxVel,1,5)+" kmh  at time:  "+fToStr(tiMaxVel,1,4)+" s\n"+
 					"---\n"+
 					"1/4 mile (402m) time:  "+fToStr(timeQM,2,5)+" at "+fToStr(velAtQM,2,5)+" kmh\n"+
 					"Stop time 160..0 kmh:  "+fToStr(tMaxTo0-tMaxTo160,2,5)+"\n"+
@@ -167,12 +167,12 @@ void App::newPerfTest(float time)
 					fo << "Mass\n" << fToStr(pCar->GetMass(),0,4) << " kg\n";
 					fo << "Max Torque\n" << fToStr(maxTrq*m,0,3) << " Nm at " << fToStr(rpmMaxTq ,0,4) << " rpm\n";
 					fo << "Max Power\n"  << fToStr(maxPwr*m,0,3) << " bhp at " << fToStr(rpmMaxPwr,0,4) << " rpm\n";
+					fo << "Top Speed\n" << fToStr(maxVel,0,3) << " kmh at " << fToStr(tiMaxVel,1,4) << " s\n";
 					fo << "Time 0 to 100 kmh\n" << fToStr(t0to100,1,4) << " s\n";
 					if (maxVel > 160.f)
 					fo << "Time 0 to 160 kmh\n" << fToStr(t0to160,1,4) << " s\n";
 					if (maxVel > 200.f)
 					fo << "Time 0 to 200 kmh\n" << fToStr(t0to200,1,4) << " s\n";
-					fo << "Max Velocity\n" << fToStr(maxVel,0,3) << " kmh at " << fToStr(tiMaxVel,1,4) << " s\n";
 					fo << "Stop time 100 to 0 kmh\n" << fToStr(tMaxTo0-tMaxTo100,1,4) << " s\n";
 				}
 			}
