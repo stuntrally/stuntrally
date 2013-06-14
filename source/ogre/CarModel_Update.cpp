@@ -130,6 +130,19 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 {	
 	pReflect->camPosition = pMainNode->getPosition();
 
+	//  stop/resume par sys
+	float fa = pGame->pause ? 0.f : 1.f;
+	for (int w=0; w < 4; ++w)
+	{
+		for (int p=0; p < PAR_ALL; ++p)
+			if (par[p][w])  par[p][w]->setSpeedFactor(fa);
+		if (w < 2 && pb[w])  pb[w]->setSpeedFactor(fa);
+		if (ph)  ph->setSpeedFactor(fa);
+		//if (whTrl[w])
+		//	whTrl[w]->setFade 0
+	}
+
+
 	if (!posInfo.bNew)  return;  // new only ?
 	posInfo.bNew = false;
 	/// dont get anything from pCar or car.dynamics here
@@ -256,27 +269,10 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 			//LogO(toStr(w)+" wht "+fToStr(wht[w],3,5));
 
 		///  emit rates +
-		Real emitS = 0.f, emitM = 0.f, emitD = 0.f;  //paused
-
-		if (!pGame->pause)
-		{
-			Real sq = squeal* std::min(1.f, wht[w]), l = pSet->particles_len * onGr;
-			emitS = sq * (whVel * 30) * l * 0.45f;  ///*
-			emitM = slide < 1.4f ? 0.f :  (8.f * sq * std::min(5.f, slide) * l);
-			emitD = (std::min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
-
-			for (int p=0; p < PAR_ALL; ++p)  //  resume par sys
-				if (par[p][w])  par[p][w]->setSpeedFactor(1.f);
-			if (w < 2 && pb[w])  pb[w]->setSpeedFactor(1.f);
-			if (ph)  ph->setSpeedFactor(1.f);
-		}else{
-			for (int p=0; p < PAR_ALL; ++p)  //  stop par sys
-				if (par[p][w])  par[p][w]->setSpeedFactor(0.f);
-			if (w < 2 && pb[w])  pb[w]->setSpeedFactor(0.f);
-			if (ph)  ph->setSpeedFactor(0.f);
-			//if (whTrl[w])
-			//	whTrl[w]->setFade 0
-		}
+		Real sq = squeal* std::min(1.f, wht[w]), l = pSet->particles_len * onGr;
+		Real emitS = sq * (whVel * 30) * l * 0.45f;  ///*
+		Real emitM = slide < 1.4f ? 0.f :  (8.f * sq * std::min(5.f, slide) * l);
+		Real emitD = (std::min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
 		Real sizeD = (0.3f + 1.1f * std::min(140.f, whVel) / 140.f) * (w < 2 ? 0.5f : 1.f);
 
 		//  ter mtr factors
