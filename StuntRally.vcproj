@@ -1291,6 +1291,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\Gui_Util.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\data\hud\Hud.overlay"
 					>
 				</File>

@@ -3,8 +3,10 @@
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/settings.h"
 #include "OgreGame.h"
+#include "common/Gui_Def.h"
 #include "common/TracksXml.h"
 #include "common/MultiList2.h"
+#include "common/Slider.h"
 //#include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 #include <boost/filesystem.hpp>
@@ -328,4 +330,71 @@ void App::btnNetEndClose(WP)
 	mWndNetEnd->setVisible(false);
 	isFocGui = true;  // show back gui
 	toggleGui(false);
+}
+
+
+//  utility
+//---------------------------------------------------------------------------------------------------------------------
+
+void App::UpdCarClrSld(bool upd)
+{
+	Slider* sl;
+	Slv(CarClrH, pSet->gui.car_hue[iCurCar]);
+	Slv(CarClrS, pSet->gui.car_sat[iCurCar]);
+	Slv(CarClrV, pSet->gui.car_val[iCurCar]);
+	Slv(CarClrGloss, powf(pSet->gui.car_gloss[iCurCar], 1.f/ 1.6f));
+	pSet->game.car_hue[iCurCar] = pSet->gui.car_hue[iCurCar];  // copy to apply
+	pSet->game.car_sat[iCurCar] = pSet->gui.car_sat[iCurCar];
+	pSet->game.car_val[iCurCar] = pSet->gui.car_val[iCurCar];
+	pSet->game.car_gloss[iCurCar] = pSet->gui.car_gloss[iCurCar];
+	bUpdCarClr = true;
+}
+
+
+//  next/prev in list by key
+int App::LNext(MyGUI::MultiList2* lp, int rel, int ofs)
+{
+	size_t cnt = lp->getItemCount();
+	if (cnt==0)  return 0;
+	int i = std::max(0, std::min((int)cnt-1, (int)lp->getIndexSelected()+rel ));
+	lp->setIndexSelected(i);
+	lp->beginToItemAt(std::max(0, i-ofs));  // center
+	return i;
+}
+int App::LNext(MyGUI::MultiList* lp, int rel)
+{
+	size_t cnt = lp->getItemCount();
+	if (cnt==0)  return 0;
+	int i = std::max(0, std::min((int)cnt-1, (int)lp->getIndexSelected()+rel ));
+	lp->setIndexSelected(i);
+	return i;
+}
+int App::LNext(MyGUI::ListPtr lp, int rel, int ofs)
+{
+	size_t cnt = lp->getItemCount();
+	if (cnt==0)  return 0;
+	int i = std::max(0, std::min((int)cnt-1, (int)lp->getIndexSelected()+rel ));
+	lp->setIndexSelected(i);
+	lp->beginToItemAt(std::max(0, i-ofs));  // center
+	return i;
+}
+
+void App::LNext(int rel)
+{
+	//if (!isFocGui || pSet->isMain)  return;
+	MyGUI::InputManager::getInstance().resetKeyFocusWidget();
+	switch (pSet->inMenu)
+	{
+	case WND_Game: case WND_Champ:
+		switch (mWndTabsGame->getIndexSelected())
+		{	case 1:  listTrackChng(trkList,  LNext(trkList, rel, 11));  return;
+			case 2:	 listCarChng(carList,    LNext(carList, rel, 5));  return;
+			case 6:  listChampChng(liChamps, LNext(liChamps, rel, 8));  return;
+			case 7:	 listStageChng(liStages, LNext(liStages, rel, 8));  return;
+			case 8:	 if (rel > 0)  btnStageNext(0);  else  btnStagePrev(0);  return;
+		}	break;
+	case WND_Replays:
+		listRplChng(rplList,  LNext(rplList, rel, 11));
+		break;
+	}
 }

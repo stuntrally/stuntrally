@@ -262,7 +262,6 @@ bool App::frameStart(Real time)
 		static float dirU = 0.f,dirD = 0.f;
 		if (isFocGui && !pSet->isMain && !isTweak())
 		{
-			MyGUI::InputManager::getInstance().resetKeyFocusWidget();
 			if (isKey(KC_UP)  ||isKey(KC_NUMPAD8))	dirD += time;  else
 			if (isKey(KC_DOWN)||isKey(KC_NUMPAD2))	dirU += time;  else
 			{	dirU = 0.f;  dirD = 0.f;  }
