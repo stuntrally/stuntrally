@@ -230,7 +230,7 @@ void App::GuiInitTrack()
 
 	FillTrackLists();  //once
 
-	trkList->mSortColumnIndex = pSet->tracks_sort;  // from set
+	trkList->mSortColumnIndex = pSet->tracks_sort;
 	trkList->mSortUp = pSet->tracks_sortup;
 
     TrackListUpd(true);  //upd

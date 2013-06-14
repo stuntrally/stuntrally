@@ -294,6 +294,10 @@ protected:
 	strlist liTracks,liTracksUser;  void FillTrackLists();
 	std::list<TrkL> liTrk;
 
+	void CarListUpd(bool resetNotFound);
+	void AddCarL(std::string name, const class CarInfo* ci);
+	std::list<CarL> liCar;  void FillCarList();
+
 	//  screen
 	MyGUI::ListPtr resList;
 	void InitGuiScreenRes(), btnResChng(WP), ResizeOptWnd();

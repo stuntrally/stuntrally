@@ -216,6 +216,18 @@ bool App::frameStart(Real time)
 		TrackListUpd(false);
 	}
 
+	///  sort car list
+	if (carList && carList->mSortColumnIndex != carList->mSortColumnIndexOld
+		|| carList->mSortUp != carList->mSortUpOld)
+	{
+		carList->mSortColumnIndexOld = carList->mSortColumnIndex;
+		carList->mSortUpOld = carList->mSortUp;
+
+		pSet->cars_sort = carList->mSortColumnIndex;  // to set
+		pSet->cars_sortup = carList->mSortUp;
+		CarListUpd(false);
+	}
+
 	if (bLoading)
 	{
 		NewGameDoLoad();

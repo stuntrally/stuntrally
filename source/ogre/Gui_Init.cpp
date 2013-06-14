@@ -525,30 +525,12 @@ void App::InitGui()
 	carList->addColumn("#C0C8D0"+TR("#{CarType}"), TcolC[n++]);
 	carList->addColumn(" ", TcolC[n++]);
 
-    //if (carList)
-    {	carList->removeAllItems();  int ii = 0;  bool bFound = false;
-		strlist li;
-		PATHMANAGER::GetFolderIndex(PATHMANAGER::Cars(), li);
-		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
-		{
-			if (boost::filesystem::exists(PATHMANAGER::Cars() + "/" + *i + "/about.txt"))
-			{	String s = *i;
-				CarInfo ci;  int id = carsXml.carmap[s];
-				if (id > 0)  ci = carsXml.cars[id-1];
-				String clr = carsXml.colormap[ci.type];  if (clr.length() != 7)  clr = "#C0D0E0";
-				
-				carList->addItem(clr+ s);  int l = carList->getItemCount()-1, y = ci.year%100;
-				carList->setSubItemNameAt(1,l, clrsDiff[std::min(7, (int)(ci.speed*0.9f))]+ toStr(ci.speed));
-				carList->setSubItemNameAt(2,l, clr+ "\'"+toStr(y/10)+toStr(y%10));
-				carList->setSubItemNameAt(3,l, clr+ TR("#{CarType_"+ci.type+"}"));
+	FillCarList();  //once
 
-				if (*i == pSet->gui.car[0]) {  carList->setIndexSelected(ii);  bFound = true;  }
-				ii++;
-		}	}
-		if (!bFound)
-			pSet->gui.car[0] = *li.begin();
-		carList->eventListChangePosition += newDelegate(this, &App::listCarChng);
-    }
+	carList->mSortColumnIndex = pSet->cars_sort;
+	carList->mSortUp = pSet->cars_sortup;
+
+   	CarListUpd(false);  //upd
 
     sListCar = pSet->gui.car[0];
     imgCar = mGUI->findWidget<StaticImage>("CarImg");

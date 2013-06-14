@@ -58,7 +58,7 @@ struct TrkL
 };
 
 
-//----------------------------------
+//--------------------------------------------------------------------
 
 //  Car's additional info
 //  shown on gui [Car] tab, in detailed view
@@ -86,6 +86,15 @@ public:
 	
 	//  methods
 	bool LoadXml(Ogre::String file); //, SaveXml(Ogre::String file);
+};
+
+
+//  cars list item - with info for sorting
+struct CarL
+{
+	std::string name;
+	const CarInfo* ci;
+	const class App* pA;
 };
 
 
