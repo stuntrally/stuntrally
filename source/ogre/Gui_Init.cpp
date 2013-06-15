@@ -529,6 +529,7 @@ void App::InitGui()
 
 	carList->mSortColumnIndex = pSet->cars_sort;
 	carList->mSortUp = pSet->cars_sortup;
+   	carList->eventListChangePosition += newDelegate(this, &App::listCarChng);
 
    	CarListUpd(false);  //upd
 
