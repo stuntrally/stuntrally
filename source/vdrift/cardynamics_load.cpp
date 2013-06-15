@@ -512,7 +512,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 
 	//load the max steering angle
 	{
-		float maxangle = 30.f;
+		float maxangle = 26.f;
 		if (!c.GetParam("steering.max-angle", maxangle, error_output))  return false;
 		SetMaxSteeringAngle( maxangle );
 	}

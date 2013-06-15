@@ -266,10 +266,20 @@ void CarModel::Create(int car)
 		String siw = "Wheel" + strI + "_" + toStr(w);
 		ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
-		if (FileExists(sCar + "_wheel.mesh"))
+		String sMesh = "_wheel.mesh";  // custom
+		if (w <  2  && FileExists(sCar + "_wheel_front.mesh"))  sMesh = "_wheel_front.mesh"; else  // 2|
+		if (w >= 2  && FileExists(sCar + "_wheel_rear.mesh") )  sMesh = "_wheel_rear.mesh";  else
+		if (w%2 == 0 && FileExists(sCar + "_wheel_left.mesh") )  sMesh = "_wheel_left.mesh";  else  // 2-
+		if (w%2 == 1 && FileExists(sCar + "_wheel_right.mesh"))  sMesh = "_wheel_right.mesh"; /*else
+		if (w == 0  && FileExists(sCar + "_wheel_fl.mesh"))  sMesh = "_wheel_fl.mesh"; else  // all 4
+		if (w == 1  && FileExists(sCar + "_wheel_fr.mesh"))  sMesh = "_wheel_fr.mesh"; else
+		if (w == 2  && FileExists(sCar + "_wheel_rl.mesh"))  sMesh = "_wheel_rl.mesh"; else
+		if (w == 3  && FileExists(sCar + "_wheel_rr.mesh"))  sMesh = "_wheel_rr.mesh"; /**/
+		
+		if (FileExists(sCar + sMesh))
 		{
-			String name = sDirname + "_wheel.mesh";
-			Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_wheel.mesh", sCarI);
+			String name = sDirname + sMesh;
+			Entity* eWh = mSceneMgr->createEntity(siw, sDirname + sMesh, sCarI);
 			if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 			if (bLogInfo && w==0)  LogMeshInfo(eWh, name, 4);

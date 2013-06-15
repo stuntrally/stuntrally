@@ -119,6 +119,9 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		if (action("RestartGame") && !mClient)
 		{
 			bPerfTest = ctrl;  // ctrl-F5 start perf test
+			if (bPerfTest)
+			{	pSet->gui.track = "Test10-FlatPerf";
+				pSet->gui.track_user = false;  }
 			iPerfTestStage = PT_StartWait;
 			NewGame();  return false;
 		}

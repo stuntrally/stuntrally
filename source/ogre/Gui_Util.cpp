@@ -382,7 +382,6 @@ int App::LNext(MyGUI::ListPtr lp, int rel, int ofs)
 void App::LNext(int rel)
 {
 	//if (!isFocGui || pSet->isMain)  return;
-	MyGUI::InputManager::getInstance().resetKeyFocusWidget();
 	switch (pSet->inMenu)
 	{
 	case WND_Game: case WND_Champ:
