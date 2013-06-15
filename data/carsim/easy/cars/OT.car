@@ -1,0 +1,234 @@
+drive = AWD
+version = 2
+# all positions have x,y,z dir going + to: right, front, up
+
+[ steering ]
+max-angle = 26
+angular-damping = 0.0
+
+[ rot_drag ]
+roll  = 200.0
+pitch = 400.0
+yaw   = 500.0
+yaw2  = 2.0
+
+[ model_ofs ]
+rot_fix = on
+boost-y = -0.6
+exhaust-x = 2.2
+exhaust-y = 0.45
+exhaust-z = 0.56
+exhaust-mirror-second = 0
+
+#  collision shape params
+#---------------------------
+[ collision ]
+radius = 0.304
+width = 0.70
+height = 1.0
+posLrear = -3.4
+posLfront = 1.9
+offsetL = -0.22
+offsetW = 0.0
+offsetH = 0.7
+start-offsetY = 0.85
+fluidTrigH = 0.0
+friction = 0.4
+
+
+#  engine
+#---------------------------
+[ engine ]
+position = 0.0, 1.1, 0.9
+mass = 180.0
+rpm-limit = 2700
+inertia = 0.30
+start-rpm = 500
+stall-rpm = 200
+fuel-consumption = 1e-9
+friction = 230
+torque-val-mul = 0.8
+torque-curve-00 = 500, 280
+torque-curve-01 = 800, 420
+torque-curve-02 = 1000, 480
+torque-curve-03 = 1500, 530
+torque-curve-04 = 2000, 550
+torque-curve-05 = 2500, 530
+torque-curve-06 = 3000, 510
+torque-curve-07 = 3500, 470
+real-pow-tq-mul = 1.2
+
+[ clutch ]
+max-torque-mul = 1.1
+
+#  gearbox
+#---------------------------
+[ transmission ]
+gears = 6
+gear-ratio-r = -4.55
+gear-ratio-1 = 5.02
+gear-ratio-2 = 2.65
+gear-ratio-3 = 1.52
+gear-ratio-4 = 1.00
+gear-ratio-5 = 0.60
+gear-ratio-6 = 0.36
+shift-delay = 0.2
+
+[ differential ]
+final-drive = 5.5
+anti-slip = 900.0
+
+[ fuel-tank ]
+position = 0.0, 0.26, 0.56
+capacity = 60.0
+volume = 60.0
+fuel-density = 1.0
+
+
+#  suspension
+#---------------------------
+[ suspension-front ]
+spring-constant = 52000
+bounce = 6500
+rebound = 5000
+travel = 0.62
+camber = -1.33
+caster = 6.12
+toe = 0.0
+anti-roll = 4000
+factors-file = first
+
+[ suspension-rear ]
+spring-constant = 48000
+bounce = 6000
+rebound = 4000
+travel = 0.62
+camber = -0.45
+caster = 0.28
+toe = 0.0
+anti-roll = 3000
+factors-file = first
+
+
+#  tires (more in .tire)
+#---------------------------
+[ tire-both ]
+radius = 0.51
+rolling-resistance = 1.3e-2, 6.5e-6
+rotational-inertia = 4
+tread = 0.0
+
+
+#  brakes
+#---------------------------
+[ brakes-front ]
+friction = 0.93
+max-pressure = 3.2e6
+bias = 0.60
+radius = 0.18
+area = 0.014
+
+[ brakes-rear ]
+friction = 0.93
+max-pressure = 3.2e6
+bias = 0.40
+radius = 0.18
+area = 0.014
+handbrake = 4.1
+
+
+[ driver ]
+position = 0.35, 0.6, 0.05
+mass = 50.0
+view-position = 0.15, -0.42, 0.57
+hood-mounted-view-position = -0.77, 0, 0.56
+
+
+#  aerodynamics
+#---------------------------
+[ drag ]
+position = 0.0, 0.0, 0.2
+frontal-area = 3
+drag-coefficient = 0.3
+
+[ wing-front ]
+position = 0.0, 1.9, 0.20
+frontal-area = 0.1
+drag-coefficient = 0.3
+surface-area = 0.7
+lift-coefficient = -4.0
+efficiency = 0.9
+
+[ wing-rear ]
+position = 0.0, -1.7, 0.30
+frontal-area = 0.05
+drag-coefficient = 0.0
+surface-area = 0.5
+lift-coefficient = -4.0
+efficiency = 0.9
+
+
+# wheels front (position and suspension mount)
+#---------------------------
+[ wheel-FR ]
+position = 0.85, 1.26, -0.4
+roll-height = 0.95
+mass = 30
+restitution = 0.1
+
+[ suspension-FR ]
+position = 0.75, 1.26, 0.0
+hinge = -3.70, 1.1, -0.43
+
+[ wheel-FL ]
+position = -0.85, 1.26, -0.4
+roll-height = 0.95
+mass = 30
+restitution = 0.1
+
+[ suspension-FL ]
+position = -0.75, 1.26, 0.0
+hinge = 3.70, 1.1, -0.43
+
+
+# wheels rear (position and suspension mount)
+#---------------------------
+[ wheel-RR ]
+position = 0.85, -2.56, -0.3
+roll-height = 0.95
+mass = 60
+restitution = 0.1
+
+[ suspension-RR ]
+position = 0.75, -2.56, 0.1
+hinge = -3.70, -1.0, -0.43
+
+[ wheel-RL ]
+position = -0.85, -2.56, -0.3
+roll-height = 0.95
+mass = 60
+restitution = 0.1
+
+[ suspension-RL ]
+position = -0.75, -2.56, 0.1
+hinge = 3.70, -1.0, -0.43
+
+
+# used to calculate the weight distribution and balance
+# (for car total mass and inertia) also use engine mass and position
+#---------------------------
+[ particle-00 ]  # rear
+mass = 500.0
+position =  0.9,-1.3, 0.3
+
+[ particle-01 ]
+mass = 500.0
+position = -0.9,-1.3, 0.3
+
+[ particle-02 ]  # front
+mass = 800.0
+position =  0.95, 1.3, 0.3
+
+[ particle-03 ]
+mass = 800.0
+position = -0.95, 1.3, 0.3

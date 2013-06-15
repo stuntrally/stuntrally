@@ -942,7 +942,6 @@ material LK4_glass
 
 //---------------------------------------------------------------
 //  UV
-
 material UV_Tire
 {
 	parent car_base
@@ -966,9 +965,7 @@ material UV_interior
 	specular 0.4 0.4 0.4 12
 }
 
-//---------------------------------------------------------------
 //  HR
-
 material HR_glass
 {
 	parent car_glass2
@@ -993,10 +990,34 @@ material HR_wheel
 	fresnelScaleBiasPower 0.7 0.15 4
 }
 
+//  OT
+material OT_glass
+{
+	parent car_glass2
+	diffuseMap OT_glass.png
+}
+material OT_interior
+{
+	parent car_interior
+	diffuseMap OT_interior.png
+	specular 0.2 0.2 0.2 8
+}
+material OT_wheel
+{
+	parent car_wheel
+	diffuseMap OT_wheel.png
+	//specMap UV_wheel_spec.png
+	reflMap OT_wheel_refl.png
+	//ambient 0.8 0.8 0.8
+	diffuse 0.8 0.8 0.8
+	//specular 1 1 1 4
+	env_map true
+	fresnel true
+	fresnelScaleBiasPower 0.7 0.15 4
+}
 
-//---------------------------------------------------------------
-//  FN
 
+//  FN  ...
 material FN_glass
 {
 	parent car_glass2
@@ -1013,9 +1034,7 @@ material FN_wheel
 	diffuseMap FN_wheel.png
 }
 
-//---------------------------------------------------------------
 //  FR4
-
 material FR4_glass
 {
 	parent car_glass2
