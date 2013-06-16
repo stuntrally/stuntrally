@@ -122,6 +122,7 @@ radius = 0.41
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 0.9
 tread = 0.0
+width-trail = 0.4
 
 
 #  brakes

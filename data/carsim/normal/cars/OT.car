@@ -112,11 +112,19 @@ factors-file = first
 
 #  tires (more in .tire)
 #---------------------------
-[ tire-both ]
+[ tire-front ]
 radius = 0.51
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 4
 tread = 0.0
+width-trail = 0.2
+
+[ tire-rear ]
+radius = 0.51
+rolling-resistance = 1.3e-2, 6.5e-6
+rotational-inertia = 7
+tread = 0.0
+width-trail = 0.4
 
 
 #  brakes

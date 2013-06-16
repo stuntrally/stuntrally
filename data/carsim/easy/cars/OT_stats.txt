@@ -5,8 +5,8 @@ Max Torque
 Max Power
 190 bhp at 2690 rpm
 Top Speed
-123 kmh at 38.1 s
+122 kmh at 38.8 s
 Time 0 to 100 kmh
-18.3 s
+19.5 s
 Stop time 100 to 0 kmh
- 5.6 s
+ 5.9 s

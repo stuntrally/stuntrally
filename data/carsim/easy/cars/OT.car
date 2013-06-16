@@ -30,8 +30,8 @@ posLrear = -3.4
 posLfront = 1.9
 offsetL = -0.22
 offsetW = 0.0
-offsetH = 0.7
-start-offsetY = 0.85
+offsetH = 0.9
+start-offsetY = 0.67
 fluidTrigH = 0.0
 friction = 0.4
 
@@ -39,7 +39,7 @@ friction = 0.4
 #  engine
 #---------------------------
 [ engine ]
-position = 0.0, 1.1, 0.9
+position = 0.0, 0.6, 0.9
 mass = 180.0
 rpm-limit = 2700
 inertia = 0.30
@@ -112,11 +112,19 @@ factors-file = first
 
 #  tires (more in .tire)
 #---------------------------
-[ tire-both ]
+[ tire-front ]
 radius = 0.51
 rolling-resistance = 1.3e-2, 6.5e-6
-rotational-inertia = 4
+rotational-inertia = 10
 tread = 0.0
+width-trail = 0.2
+
+[ tire-rear ]
+radius = 0.51
+rolling-resistance = 1.3e-2, 6.5e-6
+rotational-inertia = 12
+tread = 0.0
+width-trail = 0.4
 
 
 #  brakes
@@ -219,16 +227,16 @@ hinge = 3.70, -1.0, -0.43
 #---------------------------
 [ particle-00 ]  # rear
 mass = 500.0
-position =  0.9,-1.3, 0.3
+position =  0.9,-1.3, 0.1
 
 [ particle-01 ]
 mass = 500.0
-position = -0.9,-1.3, 0.3
+position = -0.9,-1.3, 0.1
 
 [ particle-02 ]  # front
 mass = 800.0
-position =  0.95, 1.3, 0.3
+position =  0.95, 1.3, 0.1
 
 [ particle-03 ]
 mass = 800.0
-position = -0.95, 1.3, 0.3
+position = -0.95, 1.3, 0.1

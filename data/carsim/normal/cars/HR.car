@@ -32,7 +32,7 @@ posLfront = 1.95
 offsetL = -0.22
 offsetW = 0.03
 offsetH = 0.22
-start-offsetY = 0.92
+start-offsetY = 0.79
 fluidTrigH = -0.1
 friction = 0.4
 
@@ -123,6 +123,7 @@ radius = 0.41
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 2.1
 tread = 0.0
+width-trail = 0.3
 
 
 #  brakes
