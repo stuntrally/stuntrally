@@ -456,6 +456,7 @@ void App::FillTrackLists()
 }
 
 ///  Tool write sceneryID
+#ifdef ROAD_EDITOR
 void App::ToolListSceneryID()
 {
 	LogO("ALL tracks ---------");
@@ -481,6 +482,7 @@ void App::ToolListSceneryID()
 	}
 	LogO("ALL tracks ---------");
 }
+#endif
 
 
 ///  . .  util tracks stats  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
