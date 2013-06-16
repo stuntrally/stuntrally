@@ -56,7 +56,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 
 		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
 		ndBrake[w] = 0;
-		wht[w] = 0.f;
+		wht[w] = 0.f;  tireWidth[w] = 0.2f;
 	}
 	for (int i=0; i < 2; i++)
 		pb[i] = 0;
@@ -391,6 +391,10 @@ void CarModel::Create(int car)
 			whTrl[w]->setInitialWidth(0, 0.f);
 		}
 	}
+
+	// copy from .car
+	for (int w=0; w < 4; ++w)
+		tireWidth[w] = pCar->dynamics.whWidth[w];
 
 
 	UpdParsTrails();

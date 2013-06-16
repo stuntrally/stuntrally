@@ -117,7 +117,7 @@ bool TracksXml::SaveXml(Ogre::String file)
 
 
 CarInfo::CarInfo()
-	:id("AA"), name("AA"), type("other")
+	:id("AA"), name("AA"), type("Other")
 	,n(-1), speed(5), year(2005), rating(5)
 {	}
 

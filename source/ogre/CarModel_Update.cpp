@@ -370,7 +370,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 			{	whTrl[w]->setInitialColour(0,
 				lay.tclr.r,lay.tclr.g,lay.tclr.b, lay.tclr.a * al/**/);
 				if (iFirst > 10)  //par
-					whTrl[w]->setInitialWidth(0, 0.2f);  //par, from car.. tire width
+					whTrl[w]->setInitialWidth(0, tireWidth[w]);  //par, from car.. tire width
 			}
 		}
 	}

@@ -127,8 +127,8 @@ public:
 		
 	Ogre::Terrain* terrain;
 	
-	//  VDrift car (can be null)
-	CAR* pCar;
+	//  VDrift car
+	CAR* pCar;  // all need this set (even ghost, has it from 1st car)
 	
 	float angCarY;  // car yaw angle for minimap
 	float distFirst, distLast, distTotal;  // checks const distances set at start
@@ -163,6 +163,7 @@ private:
 	Ogre::ParticleSystem* pb[2], *ph;  // boost-car rear, sparks-world hit
 public:
 	Ogre::RibbonTrail* whTrl[4];  // tire trail
+	float tireWidth[4];
 private:
 	Ogre::Real wht[4];  // spin time (approx tire temp.)
 	

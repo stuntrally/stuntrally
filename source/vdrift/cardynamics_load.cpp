@@ -443,7 +443,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 		bool both = c.GetParam("tire-both.radius", value);
 		string posstr = both ? "both" : "front";
 
-		for (int p = 0; p < 2; p++)
+		for (int p = 0; p < 2; ++p)
 		{
 			if (p == 1)
 			{
@@ -453,8 +453,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 			}
 
 			float rolling_resistance[3];
-			if (!c.GetParam("tire-"+posstr+".rolling-resistance", rolling_resistance, error_output))
-				return false;
+			if (!c.GetParam("tire-"+posstr+".rolling-resistance", rolling_resistance, error_output))  return false;
 			wheel[leftside].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
 			wheel[rightside].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
 
@@ -462,6 +461,11 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 			if (!c.GetParam("tire-"+posstr+".radius", radius, error_output))  return false;
 			wheel[leftside].SetRadius(radius);
 			wheel[rightside].SetRadius(radius);
+			
+			float width = 0.2f;
+			c.GetParam("tire-"+posstr+".width-trail", width, error_output);
+			whWidth[leftside] = width;
+			whWidth[rightside] = width;
 
 			//float tread;
 			//if (!c.GetParam("tire-"+posstr+".tread", tread, error_output))  return false;
