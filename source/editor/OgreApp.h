@@ -290,7 +290,7 @@ protected:
 	const static Ogre::String clrsDiff[9],clrsRating[5],clrsLong[10];
 
 	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;  MyGUI::EditPtr edFind;
-	strlist liTracks,liTracksUser;  void FillTrackLists();
+	strlist liTracks,liTracksUser;  void FillTrackLists(),ToolListSceneryID();
 	std::list<TrkL> liTrk;
 
 	//  screen

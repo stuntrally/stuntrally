@@ -127,7 +127,7 @@ void App::createScene()  // once, init
 	LogO("ALL tracks ---------");
 	exit(0);
 	#endif
-
+	
 
 	postInit();  // material factory
 
@@ -137,6 +137,14 @@ void App::createScene()  // once, init
 		
 	bGuiFocus = false/*true*/;  bMoveCam = true;  //*--
 	InitGui();
+	
+
+	///  Tool write sceneryID
+	#if 0
+	ToolListSceneryID();
+	exit(0);
+	#endif
+	
 
 	TerCircleInit();
 	createBrushPrv();
