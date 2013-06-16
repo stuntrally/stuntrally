@@ -184,6 +184,7 @@
 	<track n="115" name="0W12-Peaks"	crtver="2.1" created="30-05-13" modified="01-06-13" scenery="Winter"   author="Wuzzy" objects="0" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="3" frenzy="2" long="1" diff="2" rating="2" /> <!--0W12-Peaks-->
 	<track n="116" name="V4-Spikeland"	crtver="2.1" created="31-05-13" modified="31-05-13" scenery="Volcanic" author="Wuzzy" objects="0" fluids="0" bumps="3" jumps="0" loops="0" pipes="0" banked="1" frenzy="1" long="1" diff="2" rating="3" /> <!--V4-Spikeland-->
 	<track n="117" name="V5-Sad"		crtver="2.1" created="01-06-13" modified="01-06-13" scenery="Volcanic" author="Wuzzy" objects="0" fluids="2" bumps="2" jumps="0" loops="0" pipes="1" banked="0" frenzy="1" long="4" diff="2" rating="3" /> <!--V5-Sad-->
-	<track n="118" name="0W13-MtFog"	crtver="2.1" created="15-06-13" modified="15-06-13" scenery="Winter"   author="Wuzzy" objects="0" fluids="0" bumps="2" jumps="0" loops="0" pipes="0" banked="1" frenzy="3" long="2" diff="4" rating="3" /> <!--0W13-MtFog-->
+	<track n="118" name="T6-Sunset"		crtver="2.1" created="15-06-13" modified="15-06-13" scenery="Autumn"   author="Wuzzy" objects="0" fluids="0" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="2" long="2" diff="1" rating="2" /> <!--T6-Sunset-->
+	<track n="119" name="0W13-MtFog"	crtver="2.1" created="15-06-13" modified="15-06-13" scenery="Winter"   author="Wuzzy" objects="0" fluids="0" bumps="2" jumps="0" loops="0" pipes="0" banked="1" frenzy="3" long="2" diff="4" rating="3" /> <!--0W13-MtFog-->
 
 </tracks>
