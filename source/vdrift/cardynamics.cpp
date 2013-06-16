@@ -297,6 +297,7 @@ void CARDYNAMICS::SetDrive(const std::string & newdrive)
 
 void CARDYNAMICS::AddMassParticle( Dbl newmass, MATHVECTOR<Dbl,3> newpos )
 {
+	newpos[2] += com_ofs_H;  //|
 	mass_only_particles.push_back( std::pair <Dbl, MATHVECTOR<Dbl,3> > (newmass, newpos) );
 	//std::cout << "adding mass particle " << newmass << " at " << newpos << std::endl;
 }

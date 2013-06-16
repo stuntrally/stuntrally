@@ -15,6 +15,7 @@ yaw2  = 2.5
 #  collision shape params
 #---------------------------
 [ collision ]
+com_ofs_H = 0.0
 radius = 0.32
 width = 0.67
 height = 0.39

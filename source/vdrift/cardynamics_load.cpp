@@ -114,7 +114,6 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 		if (!c.GetParam("engine.mass", mass, error_output))  return false;
 		if (!c.GetParam("engine.position", temp_vec3, error_output))  return false;
 		if (version == 2)  ConvertV2to1(temp_vec3[0],temp_vec3[1],temp_vec3[2]);
-
 		position.Set(temp_vec3[0],temp_vec3[1],temp_vec3[2]);
 		engine.SetMass(mass);
 		engine.SetPosition(position);
@@ -477,8 +476,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 	//load the mass-only particles
 	{
 		MATHVECTOR<double,3> position;
-		float pos[3];
-		float mass;
+		float pos[3], mass;
 
 		if (c.GetParam("contact-points.mass", mass))
 		{

@@ -131,6 +131,9 @@ bool CAR::Load(class App* pApp1,
 	dynamics.coll_posLfront = 1.9f;  dynamics.coll_posLback = -1.9f;
 	dynamics.coll_friction = 0.4f;   dynamics.coll_flTrig_H = 0.f;
 
+	dynamics.com_ofs_H = 0.f;  //|
+	cf.GetParam("collision.com_ofs_H", dynamics.com_ofs_H);
+	
 	cf.GetParam("collision.radius", dynamics.coll_R);
 	cf.GetParam("collision.width",  dynamics.coll_W);
 	cf.GetParam("collision.height", dynamics.coll_H);
@@ -138,11 +141,13 @@ bool CAR::Load(class App* pApp1,
 	cf.GetParam("collision.offsetL", dynamics.coll_Lofs);
 	cf.GetParam("collision.offsetW", dynamics.coll_Wofs);
 	cf.GetParam("collision.offsetH", dynamics.coll_Hofs);
+	dynamics.coll_Hofs -= dynamics.com_ofs_H;  //|
 
 	cf.GetParam("collision.posLrear",  dynamics.coll_posLback);
 	cf.GetParam("collision.posLfront", dynamics.coll_posLfront);
 	cf.GetParam("collision.friction",  dynamics.coll_friction);
 	cf.GetParam("collision.fluidTrigH",dynamics.coll_flTrig_H);
+	dynamics.coll_flTrig_H -= dynamics.com_ofs_H;  //|
 	
 
 	// load cardynamics
@@ -155,7 +160,7 @@ bool CAR::Load(class App* pApp1,
 		orientation = init_rot;
 		float stOfsY = 0.f;
 		cf.GetParam("collision.start-offsetY", stOfsY);
-			position[2] += stOfsY -0.4;  //!
+			position[2] += stOfsY -0.4/**/ + dynamics.com_ofs_H;  //|
 		posAtStart = posLastCheck[0] = posLastCheck[1] = position;
 		rotAtStart = rotLastCheck[0] = rotLastCheck[1] = orientation;
 		

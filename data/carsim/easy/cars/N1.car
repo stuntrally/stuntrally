@@ -23,16 +23,17 @@ exhaust-mirror-second = 0
 #  collision shape params
 #---------------------------
 [ collision ]
+com_ofs_H = -0.4
 radius = 0.35
 width = 0.60
 height = 0.46
 posLrear = -2.16
 posLfront = 2.0
 offsetL = -0.12
-offsetW = 0.0
-offsetH = 0.64
-start-offsetY = 0.23
-fluidTrigH = 0.4
+offsetW = -0.05
+offsetH = 0.27
+start-offsetY = 0.59
+fluidTrigH = 0.0
 friction = 0.4
 
 
@@ -224,20 +225,20 @@ hinge = 0.0, -0.6, 0.0
 #---------------------------
 [ particle-00 ] 
 mass = 61.0 
-position = 0.0, 1.0, -0.25 
+position = 0.0, 1.0, 0.25 
 
 [ particle-01 ]  # rear
 mass = 230
-position =  0.75,-1.12, -0.45
+position =  0.75,-1.12, 0.05
 
 [ particle-02 ] 
 mass = 230
-position = -0.75,-1.12, -0.45
+position = -0.75,-1.12, 0.05
 
 [ particle-03 ]  # front
 mass = 235
-position =  0.7, 1.12, -0.45
+position =  0.7, 1.12, 0.05
 
 [ particle-04 ] 
 mass = 235
-position = -0.7, 1.12, -0.45
+position = -0.7, 1.12, 0.05

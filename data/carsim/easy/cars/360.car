@@ -15,6 +15,7 @@ yaw2  = 2.5
 #  collision shape params
 #---------------------------
 [ collision ]
+com_ofs_H = -0.4
 radius = 0.32
 width = 0.67
 height = 0.39
@@ -22,9 +23,9 @@ posLrear = -2.07
 posLfront = 1.98
 offsetL = 0.24
 offsetW = -0.01
-offsetH = 0.70
-start-offsetY = 0.09
-fluidTrigH = 0.4
+offsetH = 0.29
+start-offsetY = 0.43
+fluidTrigH = 0.07
 friction = 0.4
 
 
@@ -227,16 +228,16 @@ hinge = 1.00 , -0.0, -0.0
 #---------------------------
 [ particle-00 ]	# Chassis Front
 mass = 230
-position =  0.8, 1.1, -0.55
+position =  0.8, 1.1, -0.05
 
 [ particle-01 ]	#	Cooler front
 mass = 230
-position = -0.8, 1.1, -0.55
+position = -0.8, 1.1, -0.05
 
 [ particle-02 ]	#	Chassis left
 mass = 250
-position =  0.8, -1.1, -0.55
+position =  0.8, -1.1, -0.05
 
 [ particle-03 ]	#	Chassis right
 mass = 250
-position = -0.8, -1.1, -0.55
+position = -0.8, -1.1, -0.05 

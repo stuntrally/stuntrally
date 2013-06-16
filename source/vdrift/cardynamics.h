@@ -79,7 +79,7 @@ public:
 	MATHVECTOR<Dbl,3> GetEnginePosition() const;
 
 /// custom collision params
-	float coll_R, coll_W, coll_H, coll_Hofs, coll_Wofs, coll_Lofs, coll_flTrig_H;
+	float coll_R, coll_W, coll_H, coll_Hofs, coll_Wofs, coll_Lofs, coll_flTrig_H, com_ofs_H;
 	float coll_posLfront, coll_posLback, coll_friction;
 
 // driveline
