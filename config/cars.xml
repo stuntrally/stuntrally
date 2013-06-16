@@ -28,4 +28,7 @@
 	<car id="FR4" name="FR4" speed="2" year="1986" type="Terrain" />
 	<car id="SZ"  name="SZ"  speed="9" year="2006" type="Asphalt" />
 	<car id="OT"  name="OT"  speed="0" year="1965" type="Slow" />
+
+	<car id="TU"  name="TU"  speed="0" year="2010" type="Terrain" />
+	<car id="TW"  name="TW"  speed="0" year="2011" type="Terrain" />
 </cars>

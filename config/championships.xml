@@ -223,6 +223,7 @@
 		<track name="0W10-Whirl"	laps="1" factor="0.15" />
 		<track name="V1-Dark"		laps="1" factor="0.15" />
 		<track name="0W4-ice-blur"	laps="1" factor="0.2" />
+		<track name="0W13-MtFog"	laps="1" factor="0.2" />
 	</championship>
 
 	<championship name="Asphalt circuits" ver="1" difficulty="3" tutorial="0" 
@@ -586,6 +587,7 @@
 		<track name="0W12-Peaks"	time="38.0"/>
 		<track name="V4-Spikeland"	time="78.0"/>
 		<track name="V5-Sad"		time="168.0"/>
+		<track name="0W13-MtFog"	time="108.0"/>
 
 	</times>
 </championships>
