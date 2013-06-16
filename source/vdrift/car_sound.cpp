@@ -275,9 +275,9 @@ void CAR::UpdateSounds(float dt)
 		if (total_gain == 0.0)
 			i->first->SetGain(0.0);
 		else if (enginesounds.size() == 1 && enginesounds.back().first.power == ENGINESOUNDINFO::BOTH)
-			i->first->SetGain(i->second * pSet->vol_engine);
+			i->first->SetGain(i->second            * dynamics.engine_vol_mul * pSet->vol_engine);
 		else
-			i->first->SetGain(i->second/total_gain * pSet->vol_engine);
+			i->first->SetGain(i->second/total_gain * dynamics.engine_vol_mul * pSet->vol_engine);
 
 		//if (i->second == loudest) std::cout << i->first->GetSoundBuffer().GetName() << ": " << i->second << std::endl;
 	}

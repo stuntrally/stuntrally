@@ -170,7 +170,7 @@ public:
 	std::vector <CARWHEEL> wheel;
 	
 	enum { FWD = 3, RWD = 12, AWD = 15 } drive;
-	Dbl driveshaft_rpm, tacho_rpm;
+	Dbl driveshaft_rpm, tacho_rpm;  float engine_vol_mul;
 
 	bool autoclutch, autoshift, autorear, shifted;
 	int shift_gear;

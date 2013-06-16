@@ -13,7 +13,7 @@ using namespace std;
 
 CARDYNAMICS::CARDYNAMICS() :
 	world(NULL), chassis(NULL), whTrigs(0),
-	drive(RWD), tacho_rpm(0),
+	drive(RWD), tacho_rpm(0), engine_vol_mul(1),
 	autoclutch(true), autoshift(true), autorear(true),
 	shifted(true), shift_gear(0),
 	last_auto_clutch(1.0), remaining_shift_time(0.0),
@@ -156,6 +156,10 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 		mul = 1.f;
 		if (c.GetParam("engine.real-pow-tq-mul", mul))
 			engine.real_pow_tq_mul = mul;
+		
+		mul = 1.f;
+		if (c.GetParam("engine.sound-vol-mul", mul))
+			engine_vol_mul = mul;
 	}
 
 	//load the transmission
