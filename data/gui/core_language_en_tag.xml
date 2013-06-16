@@ -176,6 +176,7 @@
 	<Tag name="CarType_Gravel">Gravel</Tag>
 	<Tag name="CarType_Slow">Slow</Tag>
 	<Tag name="CarType_Terrain">Terrain</Tag>
+	<Tag name="CarType_Extreme">Extreme</Tag>
 	<Tag name="CarType_Other">Other</Tag>
 
 
