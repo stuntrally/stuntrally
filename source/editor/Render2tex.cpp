@@ -442,9 +442,6 @@ void App::AlignTerToRoad()
 			if (body && body->getMotionState())
 				delete body->getMotionState();
 
-			ShapeData* sd = static_cast<ShapeData*>(obj->getUserPointer());
-			delete sd;
-
 			world->removeCollisionObject(obj);
 			delete obj;
 		}
