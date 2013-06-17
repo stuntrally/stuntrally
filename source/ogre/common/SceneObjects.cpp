@@ -319,9 +319,11 @@ void App::ToggleObjSim()
 			if (body && body->getMotionState())
 				delete body->getMotionState();
 
-			ShapeData* sd = static_cast<ShapeData*>(obj->getUserPointer());
-			delete sd;
-
+			if (obj->getUserPointer() != (void*)111)
+			{
+				ShapeData* sd = static_cast<ShapeData*>(obj->getUserPointer());
+				delete sd;
+			}
 			world->removeCollisionObject(obj);
 			delete obj;
 		}
