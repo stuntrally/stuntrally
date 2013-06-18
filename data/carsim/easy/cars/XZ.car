@@ -181,7 +181,7 @@ position = 0.0, -1.4, 0.30
 frontal-area = 0.0
 drag-coefficient = 0.0
 surface-area = 0.6
-lift-coefficient = -2.9
+lift-coefficient = -2.5
 efficiency = 0.90
 
 

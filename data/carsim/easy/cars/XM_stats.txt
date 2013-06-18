@@ -4,9 +4,13 @@ Max Torque
 456 Nm at 5450 rpm
 Max Power
 376 bhp at 7890 rpm
+Top Speed
+220 kmh at 34.8 s
 Time 0 to 100 kmh
- 5.1 s
+ 5.3 s
 Time 0 to 160 kmh
-11.6 s
+11.8 s
+Time 0 to 200 kmh
+21.6 s
 Stop time 100 to 0 kmh
- 2.9 s
+ 2.8 s
