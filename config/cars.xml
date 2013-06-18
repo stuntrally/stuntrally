@@ -31,12 +31,17 @@
 	<car id="HR"  name="HR"  crtver="2.1" speed="2" year="1996" type="Terrain" />
 	<car id="OT"  name="OT"  crtver="2.1" speed="0" year="1965" type="Slow" />
 
+	<car id="FR4" name="FR4" crtver="2.1" speed="3" year="1986" type="Terrain" />
 	<!--..-->
 	<car id="FN"  name="FN"  crtver="2.1" speed="5" year="2000" type="Gravel" />
 	<car id="SZ"  name="SZ"  crtver="2.1" speed="9" year="2006" type="Asphalt" />
-	<car id="FR4" name="FR4" crtver="2.1" speed="2" year="1986" type="Terrain" />
 
 	<car id="TU"  name="TU"  crtver="2.1" speed="8" year="2010" type="Extreme" />
 	<car id="TW"  name="TW"  crtver="2.1" speed="7" year="2011" type="Extreme" />
+	
+	<!--...-->
+	<car id="JR"  name="JR"  crtver="2.1" speed="4" year="2003" type="Terrain" />
+	<car id="BS"  name="BS"  crtver="2.1" speed="6" year="2010" type="Extreme" />
+	<car id="OR"  name="OR"  crtver="2.1" speed="4" year="2004" type="Terrain" />
 
 </cars>

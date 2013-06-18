@@ -1006,9 +1006,7 @@ material OT_wheel
 {
 	parent car_wheel
 	diffuseMap OT_wheel.png
-	//specMap UV_wheel_spec.png
 	reflMap OT_wheel_refl.png
-	//ambient 0.8 0.8 0.8
 	diffuse 0.8 0.8 0.8
 	//specular 1 1 1 4
 	env_map true
@@ -1016,6 +1014,33 @@ material OT_wheel
 	fresnelScaleBiasPower 0.7 0.15 4
 }
 
+//  FR4
+material FR4_glass
+{
+	parent car_glass2
+	diffuseMap FR4_glass.png
+}
+material FR4_interior
+{
+	parent car_interior
+	diffuseMap FR4_interior.png
+	reflMap FR4_interior_refl.png
+	specular 0.3 0.3 0.3 4
+	env_map true
+    refl_amount 0.3
+	fresnel false
+	fresnelScaleBiasPower 0.7 0.15 4
+}
+material FR4_wheel
+{
+	parent car_wheel
+	diffuseMap FR4_wheel.png
+	specMap FR4_wheel_spec.png
+	reflMap FR4_wheel_refl.png
+	env_map true
+	fresnel true
+	fresnelScaleBiasPower 0.7 0.15 3
+}
 
 //  FN  ...
 material FN_glass
@@ -1032,21 +1057,4 @@ material FN_wheel
 {
 	parent car_wheel
 	diffuseMap FN_wheel.png
-}
-
-//  FR4
-material FR4_glass
-{
-	parent car_glass2
-	diffuseMap FR4_glass.png
-}
-material FR4_interior
-{
-	parent car_interior
-	diffuseMap FR4_interior.png
-}
-material FR4_wheel
-{
-	parent car_wheel
-	diffuseMap FR4_wheel.png
 }
