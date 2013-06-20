@@ -89,7 +89,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,iEdTire(0), iTireLoad(0), iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
 	,iTireSet(0), bchAbs(0),bchTcs(0), slSSSEff(0),slSSSVel(0), slSteerRngSurf(0),slSteerRngSim(0)
 	,mStaticGeom(0), fLastFrameDT(0.001f)
-	,edTweak(0),edPerfTest(0),edTweakCol(0),tabTweak(0)
+	,edPerfTest(0),edTweakCol(0),tabTweak(0),tabEdCar(0)
 	,txtTweakPath(0),cmbTweakCarSet(0), cmbTweakTireSet(0),txtTweakTire(0), txtTweakPathCol(0)
 	,bPerfTest(0),iPerfTestStage(PT_StartWait), loadReadme(1)
 {
@@ -110,6 +110,9 @@ App::App(SETTINGS *settings, GAME *game)
 	pathTrk[1] = PATHMANAGER::TracksUser() + "/";
 	resCar = "";  resTrk = "";  resDrv = "";
 	sListCar = "";  sListTrack = "";
+	
+	for (int i=0; i < ciEdCar; ++i)
+		edCar[i] = 0;
 
 	for (int o=0; o < 5; ++o)  for (c=0; c < 3; ++c)
 		hudOpp[o][c] = 0;

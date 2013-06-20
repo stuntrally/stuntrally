@@ -323,6 +323,7 @@ protected:
 	void btnChampStart(WP), btnChampStageBack(WP), btnChampStageStart(WP), btnChampEndClose(WP), btnNetEndClose(WP);
 	void btnStageNext(WP), btnStagePrev(WP);  MyGUI::StaticText* valStageNum;  MyGUI::ButtonPtr btChampStage;
 	MyGUI::EditBox* edChampStage, *edChampEnd;  MyGUI::ImageBox* imgChampStage;
+	void tabChampType(MyGUI::TabPtr wp, size_t id);
 	
 
 	///  input tab  -----------------------------------------
@@ -343,13 +344,15 @@ protected:
 	MyGUI::ComboBoxPtr cmbInpDetSet;  void comboInputPreset(CMB), comboInputKeyAllPreset(CMB);
 
 	///  tweak
-	MyGUI::EditPtr edTweak,edPerfTest, edTweakCol;  MyGUI::TabPtr tabTweak;
+	const static int ciEdCar = 12;
+	MyGUI::EditPtr edCar[ciEdCar],edPerfTest, edTweakCol;  MyGUI::TabPtr tabTweak, tabEdCar;
 	MyGUI::StaticTextPtr txtTweakPath, txtTweakTire, txtTweakPathCol;
 	MyGUI::ComboBoxPtr cmbTweakCarSet, cmbTweakTireSet;
 	void CmbTweakCarSet(CMB), CmbTweakTireSet(CMB), CmbEdTweakCarSet(MyGUI::EditPtr), CmbEdTweakTireSet(MyGUI::EditPtr);
 	void TweakToggle(), TweakCarSave(),TweakCarLoad(), TweakTireSave();
 	void TweakColUpd(bool user), TweakColLoad(),TweakColSave();
 	void btnTweakCarSave(WP),btnTweakCarLoad(WP), btnTweakTireSave(WP), btnTweakColSave(WP);
+	void tabCarEdChng(MyGUI::TabPtr, size_t);
 	//  graphs
 	MyGUI::ComboBox* cmbGraphs;  void comboGraphs(CMB);  MyGUI::StaticTextPtr valGraphsType;
 

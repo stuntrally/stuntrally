@@ -7,10 +7,10 @@ Max Power
 Top Speed
 264 kmh at 30.1 s
 Time 0 to 100 kmh
- 3.7 s
+ 3.6 s
 Time 0 to 160 kmh
- 8.5 s
+ 8.4 s
 Time 0 to 200 kmh
 13.5 s
 Stop time 100 to 0 kmh
- 2.8 s
+ 2.4 s

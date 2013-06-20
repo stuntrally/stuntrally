@@ -40,9 +40,11 @@ public:
 		show_cam, show_times, show_digits, show_opponents, cam_tilt,
 		car_dbgbars, car_dbgtxt, car_dbgsurf, ogre_dialog, show_graphs;
 	float size_gauges, size_minimap, size_arrow, zoom_minimap;
-	int tracks_view, tracks_sort, cars_sort;  bool tracks_sortup, cars_sortup;
 	int gauges_type;  eGraphType graphs_type;
 	int car_dbgtxtclr, car_dbgtxtcnt;
+	//  gui
+	bool tracks_sortup, cars_sortup;
+	int tracks_view, tracks_sort, cars_sort, champ_type, car_ed_tab;
 
 	//  graphics
 	int anisotropy, tex_size, ter_mtr, ter_tripl;  bool bFog;

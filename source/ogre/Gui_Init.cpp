@@ -490,15 +490,22 @@ void App::InitGui()
 	//  user dir
     MyGUI::EditPtr edUserDir = mGUI->findWidget<Edit>("EdUserDir");
 	edUserDir->setCaption(PATHMANAGER::UserConfigDir());
+
 	
 	///  tweak
-	edTweak = mGUI->findWidget<Edit>("TweakEdit");
+	for (int i=0; i < ciEdCar; ++i)
+		edCar[i] = mGUI->findWidget<Edit>("EdCar"+toStr(i),false);
 	edTweakCol = mGUI->findWidget<Edit>("TweakEditCol");
 	edPerfTest = mGUI->findWidget<Edit>("TweakPerfTest");
+	tabEdCar = mGUI->findWidget<Tab>("TabEdCar");
+	tabEdCar->setIndexSelected(pSet->car_ed_tab);
+	tabEdCar->eventTabChangeSelect += newDelegate(this, &App::tabCarEdChng);
+
 	tabTweak = mGUI->findWidget<Tab>("TabTweak");
 	txtTweakPath = mGUI->findWidget<StaticText>("TweakPath");
 	txtTweakPathCol = mGUI->findWidget<StaticText>("TweakPathCol");
 	txtTweakTire = mGUI->findWidget<StaticText>("TweakTireSaved");
+
 	Btn("TweakCarSave", btnTweakCarSave);  //Btn("TweakCarLoad", btnTweakCarLoad);
 	Btn("TweakTireSave", btnTweakTireSave);  //Btn("TweakTireLoad", btnTweakCarLoad);
 	Btn("TweakColSave", btnTweakColSave);
@@ -583,6 +590,13 @@ void App::InitGui()
 	for (int i=0; i < InfTrk; ++i)
 		infTrk[1][i] = mGUI->findWidget<StaticText>("2ti"+toStr(i+1), false);
 
+
+	//  tabs
+	TabPtr tChamp = mGUI->findWidget<Tab>("ChampType");
+	if (tChamp)
+	{	tChamp->setIndexSelected(pSet->champ_type);
+		tChamp->eventTabChangeSelect += newDelegate(this, &App::tabChampType);
+	}
 
 	//  champs list
 	MyGUI::MultiList2* li;

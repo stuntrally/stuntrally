@@ -15,8 +15,11 @@ using namespace MyGUI;
 
 void App::TweakCarSave()
 {
-	String text = edTweak->getCaption();
+	String text = "";
+	for (int i=0; i < ciEdCar; ++i)  // sum all edits
+		text += edCar[i]->getCaption();
 	if (text == "")  return;
+	
 	text = StringUtil::replaceAll(text, "##", "#");
 	text = StringUtil::replaceAll(text, "#E5F4FF", "");  //!
 
@@ -38,21 +41,73 @@ void App::TweakCarLoad()
 
 	if (!PATHMANAGER::FileExists(path))
 	{
-		edTweak->setCaption("");
+		for (int i=0; i < ciEdCar; ++i)
+			edCar[i]->setCaption("");
 		txtTweakPath->setCaption("Not Found ! " + path);
 		txtTweakPath->setColour(Colour(1,0,0));
 	}else
 	{
 		std::ifstream fi(path.c_str());
-		String text = "", s;
+		const int iSecNum = 11;
+		const static String sSecNames[iSecNum] = {
+			"collision", "engine", "transmission", "suspension",
+			"tire", "brakes", " drag", "wheel-F", "wheel-R", "particle-0", "aaa"};
+
+		String s;  std::vector<String> lines;
+		int secLn[ciEdCar];
+		for (int i=0; i < ciEdCar; ++i)  secLn[i]=0;
+
+		int l=0, sec=0, sec0=0, lastEmp = 0;
 		while (getline(fi,s))
-			text += s + "\n";
+		{
+			s += "\n";
+			s = StringUtil::replaceAll(s, "#", "##");
+			s = StringUtil::replaceAll(s, "#E5F4FF", "");  //clr!-
+
+			//  split to car edit sections
+			bool emp = s == "\n";
+			if (emp)  {  lastEmp = l;  secLn[sec] = l;  }
+
+			//  check section name
+			bool found = false;  int sn=sec0;
+			if (!emp && s[0] == '[')
+			while (!found && sn < iSecNum)
+			{
+				if (s.find(sSecNames[sn]) != std::string::npos)
+				{	found = true;  ++sec;  ++sec0;  }
+				++sn;
+			}
+			if (s.find("torque-val-mul") != std::string::npos)
+			{	
+				lastEmp = l;  secLn[sec] = l;  ++sec;
+			}
+			
+			lines.push_back(s);  ++l;
+		}
 		fi.close();
 
-		text = StringUtil::replaceAll(text, "#", "##");
-		text = StringUtil::replaceAll(text, "#E5F4FF", "");  //!
-		edTweak->setCaption(UString(text));
-		//edTweak->setVScrollPosition(0);
+		for (int i=0; i < ciEdCar; ++i)
+			edCar[i]->setCaption("");
+
+		sec = 0;  s = "";
+		for (l=0; l < lines.size(); ++l)
+		{
+			//s += lines[l];
+			//  next sec or last line
+			if (l==lines.size()-1 || l >= secLn[sec])
+			{
+				//edCar[sec]->setCaption(edCar[sec]->getCaption() + UString(s));
+				//s="";
+				if (sec < ciEdCar-1)  ++sec;
+			}
+			edCar[sec]->setCaption(edCar[sec]->getCaption() + UString(lines[l]));
+		}
+		
+		//edTweak->setCaption(UString(text));
+		//edCar[sec]->getVScrollPosition(0);
+		//void setTextCursor(size_t _index);
+		/** Get text cursor position */
+		//size_t getTextCursor() const;
 
 		size_t p = path.find("carsim");
 		if (p != string::npos)
@@ -60,8 +115,8 @@ void App::TweakCarLoad()
 		txtTweakPath->setCaption((user ? "User: " : "Original: ") + path);
 		txtTweakPath->setTextColour(user ? Colour(1,1,0.5) : Colour(0.5,1,1));
 		
-		MyGUI::InputManager::getInstance().resetKeyFocusWidget();
-		MyGUI::InputManager::getInstance().setKeyFocusWidget(edTweak);
+		//MyGUI::InputManager::getInstance().resetKeyFocusWidget();
+		//MyGUI::InputManager::getInstance().setKeyFocusWidget(edTweak);
 	}
 }
 
@@ -249,6 +304,11 @@ void App::TweakToggle()
 		TweakCarSave();
 	else
 		TweakColSave();
+}
+
+void App::tabCarEdChng(MyGUI::TabPtr, size_t id)
+{
+	pSet->car_ed_tab = id;
 }
 
 

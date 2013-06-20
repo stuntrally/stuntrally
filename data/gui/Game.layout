@@ -84,7 +84,7 @@
 			<Property key="SmoothShow" value="false"/>
 			<UserString key="RelativeTo" value="GameWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="&lt;#{BackMenu}"/>
+				<Property key="Caption" value="#FFE0C0&lt;#{BackMenu}"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
 			</Widget>
@@ -774,7 +774,7 @@
 				</Widget>
 				<Widget type="Button" skin="RadioButton" position="64 126 226 28" name="SimModeNorm">
 					<Property key="Caption" value="#{SimModeNormal}"/>
-					<Property key="TextColour" value="1.0 0.7 0.5"/>
+					<Property key="TextColour" value="1.0 1.0 0.5"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 172 152 24">
@@ -1053,17 +1053,44 @@
 					<Property key="TextColour" value="0.9 0.9 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="476 48 280 88" name="ChampDescr">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="40 348 684 40" name="ChampDescr">
 					<Property key="TextColour" value="0.6 0.9 1.0"/>
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Widget" skin="PanelSkin" position="465 37 310 115">
+				<Widget type="Widget" skin="PanelSkin" position="32 340 700 55">
 					<Property key="Colour" value="0.66 0.8 0.96"/>
 					<Property key="Alpha" value="0.6"/>
 					<Property key="InheritsAlpha" value="false"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="TabControl" skin="TabControl" position="32 20 520 20" name="ChampType">
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<Widget type="TabItem" skin="" position="2 24 514 -8">
+						<Property key="Caption" value="#FFFFA0#{Tutorial}"/>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 -8">
+						<Property key="Caption" value="#E0E000#{Tutorial}2"/>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 -8">
+						<Property key="Caption" value="#A0F0FF#{Diff3}"/>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 -8">
+						<Property key="Caption" value="#60C0FF#{Diff4}"/>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 -8">
+						<Property key="Caption" value="#8080D0#{Diff5}"/>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 -8">
+						<Property key="Caption" value="#80FF80#{Scenery}"/>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 -8">
+						<Property key="Caption" value="#FFA0A0Test"/>
+					</Widget>
+				</Widget>
+				<Widget type="Button" skin="Button" position="28 460 48 40">
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 			</Widget>
@@ -1409,7 +1436,7 @@
 			<Property key="SmoothShow" value="false"/>
 			<UserString key="RelativeTo" value="ReplaysWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="&lt;#{BackMenu}"/>
+				<Property key="Caption" value="#FFE0C0&lt;#{BackMenu}"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
 				<UserString key="RelativeTo" value="ReplaysWnd"/>
 			</Widget>
@@ -1513,11 +1540,6 @@
 					<Property key="Caption" value="#{RplBestOnly}"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
-				<!--<Widget type="Button" skin="CheckBox" position="32 100 380 24" name="RplChkAlpha">
-					<Property key="TextColour" value="0.76 0.9 1"/>
-					<Property key="Caption" value="#{RplAlpha}*"/>
-					<UserString key="RelativeTo" value="ReplaysWnd"/>
-				</Widget>-->
 				<Widget type="Button" skin="CheckBox" position="32 100 380 24" name="RplChkRewind">
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="Caption" value="#{RplRewindGhost}"/>
@@ -1555,7 +1577,7 @@
 			<Property key="SmoothShow" value="false"/>
 			<UserString key="RelativeTo" value="HelpWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="&lt;#{BackMenu}"/>
+				<Property key="Caption" value="#FFE0C0&lt;#{BackMenu}"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
 				<UserString key="RelativeTo" value="HelpWnd"/>
 			</Widget>
@@ -1689,7 +1711,7 @@
 			<Property key="SmoothShow" value="false"/>
 			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="&lt;#{BackMenu}"/>
+				<Property key="Caption" value="#FFE0C0&lt;#{BackMenu}"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 			</Widget>
@@ -1746,11 +1768,6 @@
 							<Property key="Colour" value="0.6 1 1"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<!--<Widget type="Button" skin="CheckBox" position="380 216 316 24" name="SMAA">
-							<Property key="Caption" value="#{PostfilterAA}"/>
-							<Property key="TextColour" value="0.6 0.9 1"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>-->
 						<Widget type="TextBox" skin="TextBox" position="188 350 240 24">
 							<Property key="TextColour" value="0.7 0.9 0.9"/>
 							<Property key="Caption" value="#{RenderSystem} **"/>
@@ -2269,12 +2286,6 @@
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<!--<Widget type="TextBox" skin="TextBox" position="32 170 144 24">
-							<Property key="Caption" value="#{ShadowFilter}*"/>
-							<Property key="Colour" value="0 0 0"/>
-							<Property key="TextColour" value="0.7 0.8 0.9"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>-->
 						<Widget type="Slider" skin="Slider" position="248 50 320 18" name="ShadowType">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
@@ -2287,9 +2298,6 @@
 						<Widget type="Slider" skin="Slider" position="248 140 320 18" name="ShadowDist">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<!--<Widget type="Slider" skin="Slider" position="248 170 320 18" name="ShadowFilter">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>-->
 						<Widget type="TextBox" skin="TextBox" position="180 50 60 24" name="ShadowTypeVal">
 							<Property key="TextColour" value="0.5 0.8 1"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -2306,10 +2314,6 @@
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<!--<Widget type="TextBox" skin="TextBox" position="180 170 60 24" name="ShadowFilterVal">
-							<Property key="TextColour" value="0.7 0.8 0.9"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>-->
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 372">
 						<Property key="Caption" value="#{Reflections}"/>
@@ -2970,7 +2974,7 @@
 			</Widget>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowCS" position="0 40 536 840" align="Default" layer="Popup" name="WndTweak">
+	<Widget type="Window" skin="WindowCS" position="0 40 536 760" align="Default" layer="Popup" name="WndTweak">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="MaxSize" value="2560 1600"/>
 		<Property key="Caption" value="#{Tweak}"/>
@@ -2985,19 +2989,7 @@
 				<Property key="Caption" value="#{Car}"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
 				<UserString key="RelativeTo" value="WndTweak"/>
-				<Widget type="EditBox" skin="EditBoxStretch" position="10 64 770 480" name="TweakEdit">
-					<Property key="InheritsAlpha" value="false"/>
-					<Property key="ReadOnly" value="false"/>
-					<Property key="MultiLine" value="true"/>
-					<Property key="WordWrap" value="false"/>
-					<Property key="VisibleHScroll" value="false"/>
-					<Property key="VisibleVScroll" value="true"/>
-					<Property key="MaxTextLength" value="16000"/>
-					<Property key="TextColour" value="0.9 0.96 1.0"/>
-					<Property key="Colour" value="0.45 0.6 0.75"/>
-					<UserString key="RelativeTo" value="WndTweak"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="12 4 800 24" name="TweakPath">
+				<Widget type="TextBox" skin="TextBox" position="16 4 800 24" name="TweakPath">
 					<Property key="InheritsAlpha" value="false"/>
 					<Property key="TextColour" value="0.7 1.0 1.0"/>
 					<UserString key="RelativeTo" value="WndTweak"/>
@@ -3008,13 +3000,212 @@
 					<Property key="TextColour" value="0.95 1.0 1.0"/>
 					<UserString key="RelativeTo" value="WndTweak"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="560 24 120 32" name="TweakCarSave">
+				<Widget type="Button" skin="Button" position="600 4 140 24" name="TweakCarSave">
 					<Property key="InheritsAlpha" value="false"/>
 					<Property key="Caption" value="#{RplSave}"/>
-					<Property key="TextColour" value="1.0 0.6 0.3"/>
-					<Property key="Colour" value="1.0 0.6 0.0"/>
+					<Property key="TextColour" value="0.6 0.6 1.0"/>
+					<Property key="Colour" value="0.6 0.6 1.0"/>
 					<UserString key="RelativeTo" value="WndTweak"/>
 					<UserString key="tip" value="#{TweakEdit2}"/>
+				</Widget>
+				<Widget type="TabControl" skin="TabControl" position="0 36 780 508" name="TabEdCar">
+					<Property key="ButtonAutoWidth" value="false"/>
+					<Property key="ButtonWidth" value="41"/>
+					<Property key="SmoothShow" value="false"/>
+					<UserString key="RelativeTo" value="WndTweak"/>
+					<Property key="Colour" value="0.9 0.9 1.0"/>
+					<Widget type="TabItem" skin="" position="2 24 758 480">
+						<Property key="Caption" value="#D0E0F0st"/>
+						<UserString key="RelativeTo" value="WndTweak"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="8 0 764 480" name="EdCar0">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="TextColour" value="0.88 0.94 1.0"/>
+							<Property key="Colour" value="0.48 0.55 0.62"/>
+							<UserString key="RelativeTo" value="WndTweak"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 758 480">
+						<Property key="Caption" value="#D0FFD0c"/>
+						<UserString key="RelativeTo" value="WndTweak"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="8 0 764 480" name="EdCar1">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="TextColour" value="0.93 1.0 0.93"/>
+							<Property key="Colour" value="0.5 0.6 0.5"/>
+							<UserString key="RelativeTo" value="WndTweak"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 758 480">
+						<Property key="Caption" value="#FFA0A0e,"/>
+						<UserString key="RelativeTo" value="WndTweak"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="8 0 764 480" name="EdCar2">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="TextColour" value="1.0 0.92 0.92"/>
+							<Property key="Colour" value="0.65 0.5 0.5"/>
+							<UserString key="RelativeTo" value="WndTweak"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 758 480">
+						<Property key="Caption" value="#FFC8A0t,"/>
+						<UserString key="RelativeTo" value="WndTweak"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="8 0 764 480" name="EdCar3">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="TextColour" value="1.0 0.96 0.9"/>
+							<Property key="Colour" value="0.7 0.55 0.4"/>
+							<UserString key="RelativeTo" value="WndTweak"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 758 480">
+						<Property key="Caption" value="#FFFFC0g"/>
+						<UserString key="RelativeTo" value="WndTweak"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="8 0 764 480" name="EdCar4">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="TextColour" value="1.0 1.0 0.85"/>
+							<Property key="Colour" value="0.6 0.6 0.4"/>
+							<UserString key="RelativeTo" value="WndTweak"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 758 480">
+						<Property key="Caption" value="#80FFFFss"/>
+						<UserString key="RelativeTo" value="WndTweak"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="8 0 764 480" name="EdCar5">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="TextColour" value="0.9 1.0 1.0"/>
+							<Property key="Colour" value="0.4 0.6 0.6"/>
+							<UserString key="RelativeTo" value="WndTweak"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 758 480">
+						<Property key="Caption" value="#C0C0C0ti"/>
+						<UserString key="RelativeTo" value="WndTweak"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="8 0 764 480" name="EdCar6">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="TextColour" value="0.9 0.9 0.9"/>
+							<Property key="Colour" value="0.5 0.5 0.5"/>
+							<UserString key="RelativeTo" value="WndTweak"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 758 480">
+						<Property key="Caption" value="#D0B0FFbr"/>
+						<UserString key="RelativeTo" value="WndTweak"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="8 0 764 480" name="EdCar7">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="TextColour" value="0.97 0.95 1.0"/>
+							<Property key="Colour" value="0.6 0.55 0.65"/>
+							<UserString key="RelativeTo" value="WndTweak"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 758 480">
+						<Property key="Caption" value="#C8FFA0a"/>
+						<UserString key="RelativeTo" value="WndTweak"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="8 0 764 480" name="EdCar8">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="TextColour" value="0.95 1.0 0.9"/>
+							<Property key="Colour" value="0.6 0.7 0.5"/>
+							<UserString key="RelativeTo" value="WndTweak"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 758 480">
+						<Property key="Caption" value="#90C0F0.f"/>
+						<UserString key="RelativeTo" value="WndTweak"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="8 0 764 480" name="EdCar9">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="TextColour" value="0.87 0.93 0.97"/>
+							<Property key="Colour" value="0.4 0.55 0.7"/>
+							<UserString key="RelativeTo" value="WndTweak"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 758 480">
+						<Property key="Caption" value="#A0D0FF.r"/>
+						<UserString key="RelativeTo" value="WndTweak"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="8 0 764 480" name="EdCar10">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="TextColour" value="0.88 0.94 1.0"/>
+							<Property key="Colour" value="0.45 0.6 0.75"/>
+							<UserString key="RelativeTo" value="WndTweak"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 758 480">
+						<Property key="Caption" value="#D0D0FFm"/>
+						<UserString key="RelativeTo" value="WndTweak"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="8 0 764 480" name="EdCar11">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="TextColour" value="0.95 0.95 1.0"/>
+							<Property key="Colour" value="0.45 0.45 0.6"/>
+							<UserString key="RelativeTo" value="WndTweak"/>
+						</Widget>
+					</Widget>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 784 732">
@@ -3044,7 +3235,7 @@
 					<Property key="TextColour" value="0.8 0.8 1.0"/>
 					<UserString key="RelativeTo" value="WndTweak"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="560 24 120 32" name="TweakTireSave">
+				<Widget type="Button" skin="Button" position="600 4 140 24" name="TweakTireSave">
 					<Property key="InheritsAlpha" value="false"/>
 					<Property key="Caption" value="#{RplSave}"/>
 					<Property key="TextColour" value="1.0 0.3 0.2"/>
@@ -3096,11 +3287,11 @@
 					<Property key="TextColour" value="0.95 1.0 1.0"/>
 					<UserString key="RelativeTo" value="WndTweak"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="560 4 120 32" name="TweakColSave">
+				<Widget type="Button" skin="Button" position="600 4 140 24" name="TweakColSave">
 					<Property key="InheritsAlpha" value="false"/>
 					<Property key="Caption" value="#{RplSave}"/>
-					<Property key="TextColour" value="0.6 0.6 1.0"/>
-					<Property key="Colour" value="0.6 0.6 1.0"/>
+					<Property key="TextColour" value="1.0 1.0 0.6"/>
+					<Property key="Colour" value="1.0 1.0 0.6"/>
 					<UserString key="RelativeTo" value="WndTweak"/>
 					<UserString key="tip" value="#{TweakEdit2}"/>
 				</Widget>

@@ -11,7 +11,7 @@ ChampTrack::ChampTrack() :
 {	}
 
 Champ::Champ() :
-	ver(1), diff(1), length(100.f), tutorial(0)
+	ver(1), diff(1), length(100.f), type(0)
 {	}
 
 
@@ -39,7 +39,7 @@ bool ChampsXml::LoadXml(std::string file)
 		a = eCh->Attribute("ver");			if (a)  c.ver = s2i(a);
 		a = eCh->Attribute("difficulty");	if (a)  c.diff = s2i(a);
 		a = eCh->Attribute("length");		if (a)  c.length = s2r(a);
-		a = eCh->Attribute("tutorial");		if (a)  c.tutorial = s2i(a);
+		a = eCh->Attribute("type");			if (a)  c.type = s2i(a);
 		
 		//  tracks
 		TiXmlElement* eTr = eCh->FirstChildElement("track");

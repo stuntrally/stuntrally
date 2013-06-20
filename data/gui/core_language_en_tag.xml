@@ -55,6 +55,9 @@
 	<!--  Main  -->
 	<Tag name="SingleRace">Single Race</Tag>
 	<Tag name="Championship">Championship</Tag>
+	<Tag name="Tutorial">Tutorial</Tag>
+	<Tag name="Challenge">Challenge</Tag>
+
 	<Tag name="ReplaysMenu">Replays</Tag>
 	<Tag name="Options">Options</Tag>
 	<Tag name="Quit">Quit</Tag>

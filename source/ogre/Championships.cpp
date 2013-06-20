@@ -120,44 +120,54 @@ void App::ChampNewGame()
 	}
 }
 
+void App::tabChampType(MyGUI::TabPtr wp, size_t id)
+{
+	pSet->champ_type = id;
+	ChampsListUpdate();
+}
+
 ///  Championships list  fill
 //---------------------------------------------------------------------
 void App::ChampsListUpdate()
 {
-	//  1 tutorial  5 tut hard
-	//  0 normal  4 master  6 hard
-	//  2 test  3 scenery
-	const char clrCh[7][8] = {"#A0F0FF", "#FFFFA0", "#FFA0A0", "#80FF80",
-							  "#8080D0", "#E0E000", "#60C0FF"};
+	const char clrCh[7][8] = {
+	// 0 tutorial  1 tutorial hard  // 2 normal  3 hard  4 very hard  // 5 scenery  6 test
+		"#FFFFA0", "#E0E000",   "#A0F0FF", "#60C0FF", "#8080D0",   "#80FF80", "#FFA0A0"  };
 
-	liChamps->removeAllItems();  int n=1;
+	liChamps->removeAllItems();  int n=1;  size_t sel = ITEM_NONE;
 	for (int i=0; i < champs.champs.size(); ++i,++n)
 	{
 		const Champ& ch = champs.champs[i];
-		const ProgressChamp& pc = progress.champs[i];
-		int ntrks = pc.trks.size();
-		const String& clr = clrCh[ch.tutorial];
-		liChamps->addItem(toStr(n/10)+toStr(n%10), 0);  int l = liChamps->getItemCount()-1;
-		liChamps->setSubItemNameAt(1,l, clr+ ch.name.c_str());
-		liChamps->setSubItemNameAt(2,l, clrsDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
-		liChamps->setSubItemNameAt(3,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ toStr(ntrks));
-		liChamps->setSubItemNameAt(4,l, clr+ fToStr(100.f * pc.curTrack / ntrks,0,3)+" %");
-		liChamps->setSubItemNameAt(5,l, clr+ fToStr(pc.score,1,5));
-		//length,time;
-	}
-	liChamps->setIndexSelected(pSet->gui.champ_num);  //range..
+		if (ch.type == pSet->champ_type)
+		{
+			const ProgressChamp& pc = progress.champs[i];
+			int ntrks = pc.trks.size();
+			const String& clr = clrCh[ch.type];
+			liChamps->addItem(toStr(n/10)+toStr(n%10), 0);  int l = liChamps->getItemCount()-1;
+			liChamps->setSubItemNameAt(1,l, clr+ ch.name.c_str());
+			liChamps->setSubItemNameAt(2,l, clrsDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
+			liChamps->setSubItemNameAt(3,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ toStr(ntrks));
+			liChamps->setSubItemNameAt(4,l, clr+ fToStr(100.f * pc.curTrack / ntrks,0,3)+" %");
+			liChamps->setSubItemNameAt(5,l, clr+ fToStr(pc.score,1,5));
+			//length,time;
+			if (n == pSet->gui.champ_num)  sel = l+1;
+	}	}
+	liChamps->setIndexSelected(sel);
 }
 
 ///  Championships list  sel changed,  fill Stages list
 //---------------------------------------------------------------------
-void App::listChampChng(MyGUI::MultiList2* chlist, size_t pos)
+void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 {
-	if (pos==ITEM_NONE)  return;
-	if (pos >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
+	if (id==ITEM_NONE)  return;
 	
 	//  update champ stages
 	liStages->removeAllItems();
 	float allTime = 0.f;  int n=1;
+
+	int pos = s2i(liChamps->getItemNameAt(id))-1;
+	if (pos < 0 || pos >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
+
 	const Champ& ch = champs.champs[pos];
 	for (int i=0; i < ch.trks.size(); ++i,++n)
 	{
@@ -206,11 +216,12 @@ void App::listStageChng(MyGUI::MultiList2* li, size_t pos)
 {
 	if (valStageNum)  valStageNum->setVisible(pos!=ITEM_NONE);
 	if (pos==ITEM_NONE)  return;
-	int nch = liChamps->getIndexSelected();
+	
+	int nch = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()))-1;
 	if (nch >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
 
 	const Champ& ch = champs.champs[nch];
-	if (pos >= ch.trks.size())  {  LogO("Error stagh sel > tracks.");  return;  }
+	if (pos >= ch.trks.size())  {  LogO("Error stage sel > tracks.");  return;  }
 	const string& trkName = ch.trks[pos].name;
 	bool reversed = ch.trks[pos].reversed;
 
@@ -225,7 +236,8 @@ void App::listStageChng(MyGUI::MultiList2* li, size_t pos)
 ///  champ start
 void App::btnChampStart(WP)
 {
-	pSet->gui.champ_num = liChamps->getIndexSelected();
+	if (liChamps->getIndexSelected()==ITEM_NONE)  return;
+	pSet->gui.champ_num = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()))-1;
 	LogO("|| Starting champ: "+toStr(pSet->gui.champ_num));
 
 	//  if already finished, restart - will loose progress and scores ..
@@ -234,8 +246,7 @@ void App::btnChampStart(WP)
 	if (pc.curTrack == pc.trks.size())
 	{
 		LogO("|| Was at 100%, restarting progress.");
-		pc.curTrack = 0;
-		//pc.score = 0.f;
+		pc.curTrack = 0;  //pc.score = 0.f;
 	}
 	// change btn caption to start/continue/restart ?..
 

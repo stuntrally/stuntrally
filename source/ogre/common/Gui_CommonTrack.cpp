@@ -368,7 +368,7 @@ void App::updTrkListDim()
 }
 
 #ifndef ROAD_EDITOR
-///  champ lists
+///  champ list  ----------
 void App::updChampListDim()
 {
 	if (!liChamps)  return;
@@ -383,8 +383,8 @@ void App::updChampListDim()
 		sw += w;
 	}
 
-	int xt = 0.032*wi.width, yt = 0.036*wi.height;  // pos
-	liChamps->setCoord(xt, yt, sw + 8/*frame*/, 0.60/*height*/*wi.height);
+	int xt = 0.038*wi.width, yt = 0.10*wi.height;  // pos
+	liChamps->setCoord(xt, yt, sw + 8/*frame*/, 0.40/*height*/*wi.height);
 	liChamps->setVisible(true);
 
 	//  Stages
@@ -399,7 +399,7 @@ void App::updChampListDim()
 		sw += w;
 	}
 
-	liStages->setCoord(xt, yt, sw + 8/*frame*/, 0.60/*height*/*wi.height);
+	liStages->setCoord(xt, yt, sw + 8/*frame*/, 0.50/*height*/*wi.height);
 	liStages->setVisible(true);
 }
 #endif

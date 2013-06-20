@@ -46,12 +46,22 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		//  change tweak tabs
 		//----------------------------------------------------------------------------------------
 		if (mWndTweak->getVisible())
-		{	if (action("PrevTab")) {  // prev gui subtab
-				int num = tabTweak->getItemCount();
-				tabTweak->setIndexSelected( (tabTweak->getIndexSelected() - 1 + num) % num );  }
+		{
+			TabPtr tab = tabTweak;
+			if (!shift && tabTweak->getIndexSelected() == 0)
+				tab = tabEdCar;  // car edit sections
+
+			if (action("PrevTab")) {  // prev gui subtab
+				int num = tab->getItemCount();
+				tab->setIndexSelected( (tab->getIndexSelected() - 1 + num) % num );  }
 			else if (action("NextTab")) {  // next gui subtab
-				int num = tabTweak->getItemCount();
-				tabTweak->setIndexSelected( (tabTweak->getIndexSelected() + 1) % num );  }
+				int num = tab->getItemCount();
+				tab->setIndexSelected( (tab->getIndexSelected() + 1) % num );  }
+				
+			if (tab == tabEdCar)  // focus ed
+			{	pSet->car_ed_tab = tab->getIndexSelected();
+				MyGUI::InputManager::getInstance().resetKeyFocusWidget();
+				MyGUI::InputManager::getInstance().setKeyFocusWidget(edCar[tab->getIndexSelected()]);  }
 		}else
 		//  change gui tabs
 		if (isFocGui && !pSet->isMain)
