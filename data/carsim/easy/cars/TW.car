@@ -9,7 +9,7 @@ angular-damping = 0.0
 [ rot_drag ]
 roll  = 200.0
 pitch = 400.0
-yaw   = 500.0
+yaw   = 700.0
 yaw2  = 2.0
 
 [ model_ofs ]
@@ -43,7 +43,7 @@ friction = 0.2
 position = 0.0, 0.0, 0.2
 mass = 180.0
 rpm-limit = 7300
-inertia = 0.50
+inertia = 0.40
 start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
@@ -71,7 +71,7 @@ max-torque-mul = 1.1
 #---------------------------
 [ transmission ]
 gears = 6
-gear-ratio-r = -3.245
+gear-ratio-r = -3.145
 gear-ratio-1 = 3.384
 gear-ratio-2 = 1.913
 gear-ratio-3 = 1.258
@@ -82,13 +82,13 @@ shift-delay = 0.04
 
 [ differential ]
 final-drive = 10.0
-anti-slip = 300.0
+anti-slip = 600.0
 
 [ fuel-tank ]
-position = 0.0, -0.1, -0.56 
-capacity = 60.0
-volume = 60.0
-fuel-density = 1.0
+position = -0.12, -0.66, -0.56
+capacity = 0.0492
+volume = 0.0492
+fuel-density = 730.0
 
 
 #  suspension
@@ -152,34 +152,34 @@ handbrake = 3.1
 
 
 [ driver ]
-position = 0.0, 0.0, 0.05
-mass = 50.0
-view-position = 0.15, -0.42, 0.57
-hood-mounted-view-position = -0.77, 0, 0.56
+position = -0.1, -0.15, -0.5
+mass = 80.0
+view-position = -0.02, -0.40, 0.30
+hood-mounted-view-position = -0.4, 0, 0.50
 
 
 #  aerodynamics
 #---------------------------
 [ drag ]
-position = 0.0, 0.0, 0.2
-frontal-area = 2
-drag-coefficient = 0.2
+position = 0.0, 0.0, -0.1
+frontal-area = 2.0
+drag-coefficient = 0.25
 
 [ wing-front ]
-position = 0.0, 1.6, 0.20
-frontal-area = 0.1
+position = 0.0, 1.1, 0.10
+frontal-area = 0.2
 drag-coefficient = 0.0
-surface-area = 0.7
-lift-coefficient = -4.0
-efficiency = 0.96
+surface-area = 1.8
+lift-coefficient = -1.0
+efficiency = 0.95
 
 [ wing-rear ]
-position = 0.0, -1.8, 0.30
+position = 0.0, -1.7, 0.30
 frontal-area = 0.05
 drag-coefficient = 0.0
-surface-area = 0.7
-lift-coefficient = -5.0
-efficiency = 0.97
+surface-area = 1.9
+lift-coefficient = -1.5
+efficiency = 0.96
 
 
 # wheels front (position and suspension mount)
@@ -232,17 +232,17 @@ hinge = 3.70, -1.0, -0.43
 # (for car total mass and inertia) also use engine mass and position
 #---------------------------
 [ particle-00 ]  # rear
-mass = 450.0
+mass = 420.0
 position =  0.85,-1.3, 0.15
 
 [ particle-01 ]
-mass = 450.0
+mass = 420.0
 position = -0.85,-1.3, 0.15
 
 [ particle-02 ]  # front
-mass = 450.0
-position =  0.8, 1.4, 0.15
+mass = 420.0
+position =  0.8, 1.3, 0.15
 
 [ particle-03 ]
-mass = 450.0
-position = -0.8, 1.4, 0.15
+mass = 420.0
+position = -0.8, 1.3, 0.15
