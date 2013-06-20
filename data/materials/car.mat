@@ -1042,6 +1042,43 @@ material FR4_wheel
 	fresnelScaleBiasPower 0.7 0.15 3
 }
 
+
+//  TW  --------------------------
+material TW_glass
+{
+	parent car_interior
+	diffuseMap white.png
+	ambient 0.0 0.0 0.0
+	diffuse 0.0 0.0 0.0
+	specular 0.3 0.3 0.3 4
+	env_map true
+    refl_amount 0.3
+	fresnel false
+	fresnelScaleBiasPower 0.7 0.15 4
+}
+material TW_interior
+{
+	parent car_interior
+	diffuseMap TW_interior.png
+}
+material TW_wheel_front
+{
+	parent car_wheel
+	diffuseMap TW_wheel_front.png
+	reflMap TW_wheel_front_refl.png
+	env_map true
+    refl_amount 0.3
+}
+material TW_wheel_rear
+{
+	parent car_wheel
+	diffuseMap TW_wheel_rear.png
+	reflMap TW_wheel_rear_refl.png
+	env_map true
+    refl_amount 0.15
+}
+
+
 //  FN  ...
 material FN_glass
 {
