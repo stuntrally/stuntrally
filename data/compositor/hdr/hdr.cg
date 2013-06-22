@@ -164,7 +164,7 @@ float4 downscale3x3brightpass(
 //	accum = toneMap(accum, lum.r, toneMapSettings);
 
 	// Reduce bright and clamp
-	accum = max(float4(0.0f), accum -  bloomSettings.x);//
+	accum = max(float4(0.f,0.f,0.f,0.f), accum -  bloomSettings.x);//
 //	accum /= (bloomSettings.x + accum);
 //	accum /= (1.0 + accum);
 

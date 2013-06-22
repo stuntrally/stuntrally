@@ -22,7 +22,7 @@ fragment_program DoF_DepthOfFieldFP_hlsl hlsl
 {
   source dof.cg
   entry_point DepthOfField_ps
-  target ps_2_0
+  target ps_3_0
 
 }
 
