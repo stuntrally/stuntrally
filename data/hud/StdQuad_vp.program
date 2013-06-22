@@ -1,8 +1,8 @@
-vertex_program Ogre/Compositor/StdQuad_Cg_vp cg
+vertex_program Ogre/Compositor/StdQuad_Cg_vp hlsl
 {
 	source StdQuad_vp.cg
 	entry_point StdQuad_vp
-	profiles vs_4_0 vs_1_1 arbvp1
+	target vs_3_0 vs_2_0
 
 	default_params
 	{

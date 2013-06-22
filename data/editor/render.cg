@@ -17,21 +17,6 @@ struct PIn
 	float4 c : COLOR;
 };
 
-void ambient_vs(VIn IN,
-	uniform float4x4 wvpMat,
-	out float4 oPos : POSITION, out float2 oUV : TEXCOORD0)
-{
-	oPos = mul(wvpMat, IN.p);  oUV = IN.uv.xy;
-}
-
-float4 ambient_ps(in float2 uv : TEXCOORD0,
-	uniform float3 ambient,  uniform float4 matDif,
-	uniform sampler2D diffuseMap): COLOR0
-{
-	float4 diffuseTex = tex2D(diffuseMap, uv);
-	return float4(ambient * matDif.rgb * diffuseTex.rgb, diffuseTex.a);
-}
-
 ///-----------------------------------------------------------------------------------------------------------------
 ///-------------------------------------------------  ppx  vs  render
 ///-----------------------------------------------------------------------------------------------------------------

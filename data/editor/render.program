@@ -1,9 +1,9 @@
 //  render
 //--------------------------------------------------------------------------------------------------
-vertex_program render_vs cg
+vertex_program render_vs_hlsl hlsl
 {
 	source render.cg
-	profiles vs_1_1 arbvp1
+	target vs_3_0 vs_2_0
 	entry_point render_vs
  
 	default_params
@@ -13,10 +13,10 @@ vertex_program render_vs cg
 	}
 }
  
-fragment_program render_ps cg
+fragment_program render_ps_hlsl hlsl
 {
 	source render.cg
-	profiles ps_2_x arbfp1
+	target ps_3_0 ps_2_0
 	entry_point render_ps
  
 	default_params
@@ -26,9 +26,57 @@ fragment_program render_ps cg
 	}
 }
 
-fragment_program render_gr_ps cg
+fragment_program render_gr_ps_hlsl hlsl
 {
 	source render.cg
-	profiles ps_2_x arbfp1
+	target ps_3_0 ps_2_0
 	entry_point render_gr_ps
 }
+
+
+
+vertex_program render_vs_glsl glsl
+{
+	source render_vertex.glsl
+	default_params
+	{
+		param_named_auto wMat world_matrix
+		param_named_auto wvpMat worldviewproj_matrix
+	}
+}
+ 
+fragment_program render_ps_glsl glsl
+{
+	source render_fragment.glsl
+	default_params
+	{
+		param_named_auto ambient  surface_ambient_colour
+		param_named_auto matDif  surface_diffuse_colour
+	}
+}
+
+fragment_program render_gr_ps_glsl glsl
+{
+	source render_gr_fragment.glsl
+}
+
+
+
+vertex_program render_vs unified
+{
+	delegate render_vs_glsl
+	delegate render_vs_hlsl
+}
+ 
+fragment_program render_ps unified
+{
+	delegate render_ps_glsl
+	delegate render_ps_hlsl
+}
+
+fragment_program render_gr_ps unified
+{
+	delegate render_gr_ps_glsl
+	delegate render_gr_ps_hlsl
+}
+
