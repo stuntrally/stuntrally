@@ -1,4 +1,4 @@
-fragment_program Ogre/Compositor/Combine_fp cg
+fragment_program Ogre/Compositor/Combine_fp_hlsl cg
 {
 	source Combine_fp.cg
 	profiles ps_4_0 ps_2_0 arbfp1
@@ -8,6 +8,23 @@ fragment_program Ogre/Compositor/Combine_fp cg
 	{
 		param_named blur float 0.5
 	}
+}
+
+fragment_program Ogre/Compositor/Combine_fp_glsl glsl
+{
+	source Combine_fp.glsl
+	default_params
+	{
+		param_named blur float 0.5
+		param_named RT int 0
+		param_named Sum int 1
+	}
+}
+
+fragment_program Ogre/Compositor/Combine_fp unified
+{
+	delegate Ogre/Compositor/Combine_fp_glsl
+	delegate Ogre/Compositor/Combine_fp_hlsl
 }
 
 material Ogre/Compositor/Combine
@@ -22,7 +39,7 @@ material Ogre/Compositor/Combine
 			{
 			}
 
-			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			vertex_program_ref Ogre/Compositor/StdQuad_vp
 			{
 			}
 
@@ -52,7 +69,7 @@ material Ogre/Compositor/Copyback
 			lighting off
 			depth_check off
 			
-			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			vertex_program_ref Ogre/Compositor/StdQuad_vp
 			{
 			}
 
@@ -80,7 +97,7 @@ material Ogre/Compositor/MotionBlur
 			lighting off
 			depth_check off
 
-			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			vertex_program_ref Ogre/Compositor/StdQuad_vp
 			{
 			}
 			

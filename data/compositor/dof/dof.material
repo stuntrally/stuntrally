@@ -1,5 +1,5 @@
 
-vertex_program dof_vs cg
+vertex_program dof_vs_hlsl cg
 {
     source dof.cg
     profiles vs_4_0 vs_1_1 arbvp1
@@ -10,23 +10,69 @@ vertex_program dof_vs cg
     }
 }
 
-fragment_program DoF_Gaussian3x3FP cg
+fragment_program DoF_Gaussian3x3FP_hlsl cg
 {
   source dof.cg
   entry_point Gaussian3x3_ps
 	profiles ps_4_0 ps_2_x arbfp1
+
 }
 
-fragment_program DoF_DepthOfFieldFP cg
+fragment_program DoF_DepthOfFieldFP_hlsl cg
 {
   source dof.cg
   entry_point DepthOfField_ps
   profiles ps_4_0 ps_3_0 arbfp1
+
+}
+
+
+vertex_program dof_vs_glsl glsl
+{
+    source dof_vertex.glsl
+    default_params
+    {
+        param_named_auto wvp worldviewproj_matrix
+    }
+}
+
+fragment_program DoF_Gaussian3x3FP_glsl glsl
+{
+  source dof_gaussian3x3.glsl
+}
+
+fragment_program DoF_DepthOfFieldFP_glsl glsl
+{
+  source dof_depthoffield.glsl
+    default_params
+  {
+	param_named sceneTex int 0
+	param_named depthTex int 1
+	param_named blurTex int 2
+  }
+}
+
+vertex_program dof_vs unified
+{
+	delegate dof_vs_glsl
+	delegate dof_vs_hlsl
+}
+
+fragment_program DoF_Gaussian3x3FP unified
+{
+	delegate DoF_Gaussian3x3FP_glsl
+	delegate DoF_Gaussian3x3FP_hlsl
+}
+
+fragment_program DoF_DepthOfFieldFP unified
+{
+	delegate DoF_DepthOfFieldFP_glsl
+	delegate DoF_DepthOfFieldFP_hlsl
 }
 
 material DoF_Gaussian3x3
 {
-  technique HLSL
+  technique
   {
     pass
     {

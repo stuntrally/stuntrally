@@ -132,33 +132,28 @@ fragment_program BrightBloom2_ps20_cg cg
 vertex_program Blur_vs unified
 {
 	delegate Blur_vs11_hlsl
-	//delegate Blur_vs_glsl
-	delegate Blur_vs11_cg
+	delegate Blur_vs_glsl
 }
 
 fragment_program Bloom2_ps unified
 {
 	delegate Bloom2_ps20_hlsl
-	//delegate Bloom2_ps20_glsl
-	delegate Bloom2_ps20_cg
+	delegate Bloom2_ps20_glsl
 }
 fragment_program BlurV_ps unified
 {
 	delegate BlurV_ps20_hlsl
-	//delegate BlurV_ps20_glsl
-	delegate BlurV_ps20_cg
+	delegate BlurV_ps20_glsl
 }
 fragment_program BlurH_ps unified
 {
 	delegate BlurH_ps20_hlsl
-	//delegate BlurH_ps20_glsl
-	delegate BlurH_ps20_cg
+	delegate BlurH_ps20_glsl
 }
 fragment_program BrightBloom2_ps unified
 {
 	delegate BrightBloom2_ps20_hlsl
-	//delegate BrightBloom2_ps20_glsl
-	delegate BrightBloom2_ps20_cg
+	delegate BrightBloom2_ps20_glsl
 }
 
 
@@ -227,7 +222,7 @@ material Ogre/Compositor/BloomBlend2
 			cull_software none
 			depth_check off
 
-			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			vertex_program_ref Ogre/Compositor/StdQuad_vp
 			{
 
 			}
@@ -264,7 +259,7 @@ material Ogre/Compositor/BrightPass2
 			cull_software none
 			depth_check off
 
-			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			vertex_program_ref Ogre/Compositor/StdQuad_vp
 			{
 
 			}
