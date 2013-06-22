@@ -2,18 +2,18 @@
 struct VIn
 {
 	float4 p : POSITION;	float3 n : NORMAL;
-	float3 t : TANGENT;		float3 uv: TEXCOORD0;
+	float3 uv: TEXCOORD0;
 	float4 c : COLOR;
 };
 struct VOut
 {
 	float4 p : POSITION;	float3 uv : TEXCOORD0;	float4 wp : TEXCOORD1;
-	float3 n : TEXCOORD2;	float3 t  : TEXCOORD3;	float3 b  : TEXCOORD4;
+	float3 n : TEXCOORD2;
 	float4 c : COLOR;
 };
 struct PIn
 {							float3 uv : TEXCOORD0;	float4 wp : TEXCOORD1;
-	float3 n : TEXCOORD2;	float3 t  : TEXCOORD3;	float3 b  : TEXCOORD4;
+	float3 n : TEXCOORD2;
 	float4 c : COLOR;
 };
 

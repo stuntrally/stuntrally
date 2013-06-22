@@ -15,8 +15,7 @@ varying vec4 n;
 varying vec4 c;
 
 
-VOut render_vs(VIn IN,
-	uniform float4x4 wMat,  uniform float4x4 wvpMat)
+void main(void)
 {
 	uv = uv0;
 	wp = (wMat * vertex);
