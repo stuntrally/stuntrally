@@ -31,7 +31,7 @@
 	<car id="HR"  name="HR"  crtver="2.1" speed="2" year="1996" type="Terrain" />
 	<car id="OT"  name="OT"  crtver="2.1" speed="0" year="1965" type="Slow" />
 
-	<car id="FR4" name="FR4" crtver="2.1" speed="3" year="1986" type="Terrain" />
+	<car id="FR4" name="FR4" crtver="2.1" speed="2" year="1986" type="Terrain" />
 	<!--..-->
 	<car id="FN"  name="FN"  crtver="2.1" speed="5" year="2000" type="Gravel" />
 	<car id="SZ"  name="SZ"  crtver="2.1" speed="9" year="2006" type="Asphalt" />
