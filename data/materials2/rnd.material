@@ -1,4 +1,4 @@
-vertex_program rnd_vs cg
+vertex_program rnd_vs_hlsl cg
 {
 	source rnd.cg
 	profiles vs_4_0 vs_1_1 arbvp1
@@ -9,37 +9,80 @@ vertex_program rnd_vs cg
 		param_named_auto wvpMat worldviewproj_matrix
 	}
 }
-fragment_program rnd_ps cg
+fragment_program rnd_ps_hlsl cg
 {
 	source rnd.cg
 	profiles ps_4_0 ps_2_0 arbfp1
 	entry_point rnd_ps
 }
-fragment_program rnd_inv_ps cg
+fragment_program rnd_inv_ps_hlsl cg
 {
 	source rnd.cg
 	profiles ps_4_0 ps_2_0 arbfp1
 	entry_point rnd_inv_ps
 }
-fragment_program rnd_add_ps cg
+fragment_program rnd_add_ps_hlsl cg
 {
 	source rnd.cg
 	profiles ps_4_0 ps_2_0 arbfp1
 	entry_point rnd_add_ps
 }
 
-//  sel
-fragment_program sel_ps cg
+
+
+
+vertex_program rnd_vs_glsl glsl
 {
-	source rnd.cg
-	profiles ps_4_0 ps_2_0 arbfp1
-	entry_point sel_ps
- 
+	source rnd_vertex.glsl
 	default_params
 	{
-		param_named_auto fTime time 
+		param_named_auto wvpMat worldviewproj_matrix
 	}
 }
+fragment_program rnd_ps_glsl glsl
+{
+	source rnd_fragment.glsl
+}
+fragment_program rnd_inv_ps_glsl glsl
+{
+	source rnd_inv_fragment.glsl
+}
+fragment_program rnd_add_ps_glsl glsl
+{
+	source rnd_add_fragment.glsl
+	default_params
+	{
+		param_named diffuseAdd int 0
+		param_named diffuseMap int 1
+	}
+}
+
+
+
+
+vertex_program rnd_vs unified
+{
+	source rnd_vertex.glsl
+	default_params
+	{
+		param_named_auto wvpMat worldviewproj_matrix
+	}
+}
+fragment_program rnd_ps unified
+{
+	source rnd_fragment.glsl
+}
+fragment_program rnd_inv_ps unified
+{
+	source rnd_inv_fragment.glsl
+}
+fragment_program rnd_add_ps unified
+{
+	source rnd_add_fragment.glsl
+}
+
+
+
 
 //  game minimap   -------------
 material road_minimap_inv
@@ -67,7 +110,7 @@ material road_minimap_inv
 
 //  game minimap circle  -------------
 //
-vertex_program circle_vs cg
+vertex_program circle_vs_hlsl cg
 {
 	source rnd.cg
 	profiles vs_4_0 vs_1_1 arbvp1
@@ -78,7 +121,7 @@ vertex_program circle_vs cg
 		param_named_auto wvpMat worldviewproj_matrix
 	}
 }
-fragment_program circle_ps cg
+fragment_program circle_ps_hlsl cg
 {
 	source rnd.cg
 	profiles ps_4_0 ps_2_0 arbfp1 
@@ -89,6 +132,40 @@ fragment_program circle_ps cg
 		param_named showTerrain float 0.0
 	}
 }
+
+vertex_program circle_vs_glsl glsl
+{
+	source circle_vertex.glsl
+	default_params
+	{
+		param_named_auto wvpMat worldviewproj_matrix
+	}
+}
+fragment_program circle_ps_glsl glsl
+{
+	source circle_fragment.glsl
+	default_params
+	{
+		param_named showTerrain float 0.0
+		param_named roadMap int 0
+		param_named circleMap int 1
+		param_named terMap int 2
+	}
+}
+
+
+
+vertex_program circle_vs unified
+{
+	delegate circle_vs_glsl
+	delegate circle_vs_hlsl
+}
+fragment_program circle_ps unified
+{
+	delegate circle_ps_glsl
+	delegate circle_ps_hlsl
+}
+
 
 material circle_minimap
 {

@@ -21,38 +21,6 @@ void shadow_caster_vs(
 	oUv = uv;
 }
 
-void shadow_caster_wind_vs(
-	float4 position : POSITION,
-	float2 uv : TEXCOORD0,
-	float4 windParams 	: TEXCOORD1,
-	float4 originPos 	: TEXCOORD2,
-	uniform float time,
-	out float4 oPosition : POSITION,
-	out float2 oDepth : TEXCOORD0,
-	out float2 oUv : TEXCOORD1,
-	
-	uniform float4x4 wvpMat)
-{
-	float radiusCoeff = 1;//windParams.x;
-	float heightCoeff = normalize(position.z) ;//windParams.y;
-	float factorX = 1;//windParams.z;
-	float factorY = 1;//windParams.w;
-	float sinval = sin(time + originPos.z );
-//	position.y += sinval * radiusCoeff * radiusCoeff * factorY;
-//	position.x += sinval * heightCoeff * heightCoeff * factorX ;
-	
-	// this is the view space position
-	oPosition = mul(wvpMat, position);
-
-	// depth info for the fragment.
-	oDepth.x = oPosition.z;
-	oDepth.y = oPosition.w;
-
-	// clamp z to zero. seem to do the trick. :-/
-	//oPosition.z = max(oPosition.z, 0);
-	
-	oUv = uv;
-}
 void shadow_caster_ps(
 	float4 position : POSITION,
 	float2 depth : TEXCOORD0,

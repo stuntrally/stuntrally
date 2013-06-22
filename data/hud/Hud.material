@@ -1,16 +1,3 @@
-vertex_program Ogre/Needle_vp cg
-{
-	source Needle_vp.cg
-	entry_point Needle_vp
-	profiles vs_4_0 vs_1_1 arbvp1
-
-	default_params
-	{
-		param_named_auto worldViewProj worldviewproj_matrix
-	}
-}
-
-
 material hud/CarPos
 {
 	technique
@@ -65,7 +52,7 @@ material hud/needleB
 			depth_write off
 			scene_blend alpha_blend
 			cull_hardware none
-			vertex_program_ref Ogre/Needle_vp {  }
+			vertex_program_ref Ogre/Compositor/StdQuad_vp {  }
 			fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
 		}
 	}
@@ -214,7 +201,7 @@ material hud/Times
 			scene_blend alpha_blend
 			cull_hardware none
 			
-			vertex_program_ref Ogre/Needle_vp
+			vertex_program_ref Ogre/Compositor/StdQuad_vp
 			{
 			}
 			fragment_program_ref Ogre/Compositor/StdQuad_fp
@@ -240,7 +227,7 @@ material hud/Opponents
 			scene_blend alpha_blend
 			cull_hardware none
 			
-			vertex_program_ref Ogre/Needle_vp
+			vertex_program_ref Ogre/Compositor/StdQuad_vp
 			{
 			}
 			fragment_program_ref Ogre/Compositor/StdQuad_fp
@@ -265,7 +252,7 @@ material hud/info
 			depth_check off
 			scene_blend alpha_blend
 			cull_hardware none
-			vertex_program_ref Ogre/Needle_vp
+			vertex_program_ref Ogre/Compositor/StdQuad_vp
 			{
 			}
 			fragment_program_ref Ogre/Compositor/StdQuad_fp

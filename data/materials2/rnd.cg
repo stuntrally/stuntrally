@@ -47,15 +47,6 @@ float4 rnd_add_ps(in float4 p	: POSITION,in float2 uv : TEXCOORD0,
 }
 
 
-//  select overlay
-float4 sel_ps(uniform float fTime): COLOR0
-{
-	// float3(0.09, 0.17, 0.26)
-	float3 clr = float3(0.14, 0.22, 0.36) * (0.5f + 0.1f * cos(3.f * fTime));
-	return float4(clr, 1);
-}
-
-
 //  zoomed minimap circle  ----------------------
 
 struct CIn

@@ -1,5 +1,5 @@
 
-vertex_program PSSM/shadow_caster_vs cg
+vertex_program PSSM/shadow_caster_vs_hlsl cg
 {
 	source pssm.cg
 	profiles vs_4_0 vs_2_0 arbvp1
@@ -8,29 +8,10 @@ vertex_program PSSM/shadow_caster_vs cg
 	default_params
 	{
 		param_named_auto wvpMat worldviewproj_matrix
-		// this is the scene's depth range
-		//param_named_auto depthRange			scene_depth_range
-		//param_named_auto optimalAdustFactor	custom 0
-	}
-}
-vertex_program PSSM/shadow_caster_wind_vs cg
-{
-	source pssm.cg
-	profiles vs_4_0 vs_2_0 arbvp1
-	entry_point shadow_caster_wind_vs
-
-	default_params
-	{
-		param_named_auto wvpMat worldviewproj_matrix
-		// this is the scene's depth range
-		//param_named_auto depthRange			scene_depth_range
-		//param_named_auto optimalAdustFactor	custom 0
-		//param_named enableWind float 1.0
-		//param_named_auto time time
 	}
 }
 
-fragment_program PSSM/shadow_caster_ps cg
+fragment_program PSSM/shadow_caster_ps_hlsl cg
 {
 	source pssm.cg
 	profiles ps_4_0 ps_2_0 arbfp1
@@ -40,7 +21,7 @@ fragment_program PSSM/shadow_caster_ps cg
 	{
 	}
 }
-fragment_program PSSM/shadow_caster_alpha_ps cg
+fragment_program PSSM/shadow_caster_alpha_ps_hlsl cg
 {
 	source pssm.cg
 	profiles ps_4_0 ps_2_0 arbfp1
@@ -50,6 +31,47 @@ fragment_program PSSM/shadow_caster_alpha_ps cg
 	{
 	}
 }
+
+
+vertex_program PSSM/shadow_caster_vs_glsl glsl
+{
+	source pssm_vertex.glsl
+	default_params
+	{
+		param_named_auto wvpMat worldviewproj_matrix
+	}
+}
+
+fragment_program PSSM/shadow_caster_ps_glsl glsl
+{
+	source pssm_fragment.glsl
+}
+fragment_program PSSM/shadow_caster_alpha_ps_glsl glsl
+{
+	source pssm_alpha_fragment.glsl
+}
+
+
+
+
+vertex_program PSSM/shadow_caster_vs unified
+{
+	delegate PSSM/shadow_caster_vs_glsl
+	delegate PSSM/shadow_caster_vs_hlsl
+}
+
+fragment_program PSSM/shadow_caster_ps unified
+{
+	delegate PSSM/shadow_caster_ps_glsl
+	delegate PSSM/shadow_caster_ps_hlsl
+}
+fragment_program PSSM/shadow_caster_alpha_ps unified
+{
+	delegate PSSM/shadow_caster_alpha_ps_glsl
+	delegate PSSM/shadow_caster_alpha_ps_hlsl
+}
+
+
 
 material PSSM/shadow_caster
 {
@@ -97,25 +119,6 @@ material PSSM/shadow_caster_nocull
 			fog_override true
 			cull_hardware none
 			vertex_program_ref PSSM/shadow_caster_vs
-			{
-			}
-
-			fragment_program_ref PSSM/shadow_caster_ps
-			{
-			}
-		}
-	}
-}
-
-material PSSM/shadow_caster_wind
-{
-	technique
-	{
-		pass
-		{
-			fog_override true
-			cull_hardware none
-			vertex_program_ref PSSM/shadow_caster_wind_vs
 			{
 			}
 

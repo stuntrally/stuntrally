@@ -296,7 +296,6 @@ bool BaseApp::setup()
 	}
 
 	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
-	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Plugin_CgProgramManager" + D_SUFFIX);
 
 	setupResources();
 

@@ -295,7 +295,6 @@ material modulate
     {
         pass
         {
-        //    lighting off
 			vertex_program_ref ssaoMultiply_vs
             {
             }
