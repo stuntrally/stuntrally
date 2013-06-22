@@ -1,11 +1,11 @@
-vertex_program FilmGrain_VS cg
+vertex_program FilmGrain_VS_hlsl cg
 {
 	source FilmGrain.cg
 	profiles vs_4_0 vs_1_1 arbvp1
 	entry_point FilmGrain_VS
 }
 
-fragment_program FilmGrain_FP cg
+fragment_program FilmGrain_FP_hlsl cg
 {
 	source FilmGrain.cg
 	profiles ps_4_0 ps_3_0 arbfp1
@@ -16,6 +16,41 @@ fragment_program FilmGrain_FP cg
 		param_named_auto time time 1
 	}
 }
+
+
+vertex_program FilmGrain_VS_glsl glsl
+{
+	source FilmGrain_vp.glsl
+	default_params
+	{
+		param_named_auto wvp worldviewproj_matrix
+	}
+}
+
+fragment_program FilmGrain_FP_glsl glsl
+{
+	source FilmGrain_fp.glsl
+	default_params
+	{
+		param_named_auto time time 1
+		param_named frame int 0
+		param_named noiseTex int 1
+	}
+}
+
+
+vertex_program FilmGrain_VS unified
+{
+	delegate FilmGrain_VS_glsl
+	delegate FilmGrain_VS_hlsl
+}
+
+fragment_program FilmGrain_FP unified
+{
+	delegate FilmGrain_FP_glsl
+	delegate FilmGrain_FP_hlsl
+}
+
 
 material Compositor/FilmGrain
 {

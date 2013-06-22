@@ -1,5 +1,5 @@
 // Downsample a 2x2 area & turn into luminence (unclamped)
-fragment_program Ogre/Compositor/HDR/downscale2x2LuminencePS cg
+fragment_program Ogre/Compositor/HDR/downscale2x2LuminencePS_hlsl cg
 {
 	source hdr.cg
 	entry_point downscale2x2Luminence
@@ -12,7 +12,7 @@ fragment_program Ogre/Compositor/HDR/downscale2x2LuminencePS cg
 }
 
 // Downsample a 3x3 area
-fragment_program Ogre/Compositor/HDR/downscale3x3PS cg
+fragment_program Ogre/Compositor/HDR/downscale3x3PS_hlsl cg
 {
 	source hdr.cg
 	entry_point downscale3x3
@@ -25,7 +25,7 @@ fragment_program Ogre/Compositor/HDR/downscale3x3PS cg
 }
 
 // Downsample a 3x3 area with adeptation
-fragment_program Ogre/Compositor/HDR/downscale3x3AdeptPS cg
+fragment_program Ogre/Compositor/HDR/downscale3x3AdeptPS_hlsl cg
 {
 	source hdr.cg
 	entry_point downscale3x3Adept
@@ -39,7 +39,7 @@ fragment_program Ogre/Compositor/HDR/downscale3x3AdeptPS cg
 	}
 }
 // Copy sample
-fragment_program Ogre/Compositor/HDR/copySample cg
+fragment_program Ogre/Compositor/HDR/copySample_hlsl cg
 {
 	source hdr.cg
 	entry_point copySample
@@ -47,7 +47,7 @@ fragment_program Ogre/Compositor/HDR/copySample cg
 }
 
 // Downsample a 3x3 area and perform a brightness filter pass
-fragment_program Ogre/Compositor/HDR/downscale3x3brightpassPS cg
+fragment_program Ogre/Compositor/HDR/downscale3x3brightpassPS_hlsl cg
 {
 	source hdr.cg
 	entry_point downscale3x3brightpass
@@ -60,7 +60,7 @@ fragment_program Ogre/Compositor/HDR/downscale3x3brightpassPS cg
 }
 
 // Bloom an area using gaussian distribution
-fragment_program Ogre/Compositor/HDR/bloomPS cg
+fragment_program Ogre/Compositor/HDR/bloomPS_hlsl cg
 {
 	source hdr.cg
 	entry_point bloom
@@ -68,12 +68,142 @@ fragment_program Ogre/Compositor/HDR/bloomPS cg
 }
 
 // Perform final tone mapping
-fragment_program Ogre/Compositor/HDR/finaltonemappingPS cg
+fragment_program Ogre/Compositor/HDR/finaltonemappingPS_hlsl cg
 {
 	source hdr.cg
 	entry_point finalToneMapping
 	profiles ps_4_0 ps_3_0 fp40
 }
+
+
+
+
+
+
+// Downsample a 2x2 area & turn into luminence (unclamped)
+fragment_program Ogre/Compositor/HDR/downscale2x2LuminencePS_glsl glsl
+{
+	source hdr_downscale2x2luminence.glsl
+	default_params
+	{
+	    param_named_auto texelSize inverse_texture_size 0
+	}
+}
+
+// Downsample a 3x3 area
+fragment_program Ogre/Compositor/HDR/downscale3x3PS_glsl glsl
+{
+	source hdr_downscale3x3.glsl
+	default_params
+	{
+		param_named_auto texelSize inverse_texture_size 0
+	}
+}
+
+// Downsample a 3x3 area with adeptation
+fragment_program Ogre/Compositor/HDR/downscale3x3AdeptPS_glsl glsl
+{
+	source hdr_downscale3x3adept.glsl
+
+	default_params
+	{
+		param_named_auto texelSize inverse_texture_size 0
+		param_named_auto dTime frame_time
+		param_named inRTT int 0
+		param_named oldRTT int 1
+		//param_named adaptationScale float 10
+	}
+}
+// Copy sample
+fragment_program Ogre/Compositor/HDR/copySample_glsl glsl
+{
+	source hdr_copysample.glsl
+}
+
+// Downsample a 3x3 area and perform a brightness filter pass
+fragment_program Ogre/Compositor/HDR/downscale3x3brightpassPS_glsl glsl
+{
+	source hdr_downscale3x3brightpass.glsl
+
+	default_params
+	{
+		param_named inRTT int 0
+		param_named inLum int 1
+		param_named_auto texelSize inverse_texture_size 0
+	}
+}
+
+// Bloom an area using gaussian distribution
+fragment_program Ogre/Compositor/HDR/bloomPS_glsl glsl
+{
+	source hdr_bloom.glsl
+}
+
+// Perform final tone mapping
+fragment_program Ogre/Compositor/HDR/finaltonemappingPS_glsl glsl
+{
+	source hdr_tonemapping.glsl
+	default_params
+	{
+		param_named inRTT int 0
+		param_named inBloom int 1
+		param_named inLum int 2
+	}
+}
+
+
+
+
+
+// Downsample a 2x2 area & turn into luminence (unclamped)
+fragment_program Ogre/Compositor/HDR/downscale2x2LuminencePS unified
+{
+	delegate Ogre/Compositor/HDR/downscale2x2LuminencePS_glsl
+	delegate Ogre/Compositor/HDR/downscale2x2LuminencePS_hlsl
+}
+
+// Downsample a 3x3 area
+fragment_program Ogre/Compositor/HDR/downscale3x3PS unified
+{
+	delegate Ogre/Compositor/HDR/downscale3x3PS_glsl
+	delegate Ogre/Compositor/HDR/downscale3x3PS_hlsl
+}
+
+// Downsample a 3x3 area with adeptation
+fragment_program Ogre/Compositor/HDR/downscale3x3AdeptPS unified
+{
+	delegate Ogre/Compositor/HDR/downscale3x3AdeptPS_glsl
+	delegate Ogre/Compositor/HDR/downscale3x3AdeptPS_hlsl
+}
+
+// Copy sample
+fragment_program Ogre/Compositor/HDR/copySample unified
+{
+	delegate Ogre/Compositor/HDR/copySample_glsl
+	delegate Ogre/Compositor/HDR/copySample_hlsl
+}
+
+// Downsample a 3x3 area and perform a brightness filter pass
+fragment_program Ogre/Compositor/HDR/downscale3x3brightpassPS unified
+{
+	delegate Ogre/Compositor/HDR/downscale3x3brightpassPS_glsl
+	delegate Ogre/Compositor/HDR/downscale3x3brightpassPS_hlsl
+}
+
+// Bloom an area using gaussian distribution
+fragment_program Ogre/Compositor/HDR/bloomPS unified
+{
+	delegate Ogre/Compositor/HDR/bloomPS_glsl
+	delegate Ogre/Compositor/HDR/bloomPS_hlsl
+}
+
+// Perform final tone mapping
+fragment_program Ogre/Compositor/HDR/finaltonemappingPS unified
+{
+	delegate Ogre/Compositor/HDR/finaltonemappingPS_glsl
+	delegate Ogre/Compositor/HDR/finaltonemappingPS_hlsl
+}
+
 
 material Ogre/Compositor/HDR/Downsample2x2Luminence
 {

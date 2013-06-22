@@ -10,6 +10,7 @@
 //-------------------------------
 
 uniform sampler2D RT;
+varying vec2 uv;
 
 void main()
 {
@@ -17,9 +18,7 @@ void main()
     vec4 bright4;
     float bright;
     
-    vec2 texCoord = vec2( gl_TexCoord[0] );
-
-    tex = texture2D( RT, texCoord);
+    tex = texture2D( RT, uv);
     tex -= 1.00000;
     bright4 = -6.00000 * tex * tex + 2.00000;
     bright = dot( bright4, vec4( 0.333333, 0.333333, 0.333333, 0.000000) );

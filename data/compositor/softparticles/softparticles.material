@@ -1,4 +1,4 @@
-vertex_program SoftParticlesBlend_vs cg
+vertex_program SoftParticlesBlend_vs_hlsl cg
 {
     source softparticles.cg
     profiles vs_4_0 vs_1_1 arbvp1
@@ -8,7 +8,7 @@ vertex_program SoftParticlesBlend_vs cg
         param_named_auto wvp worldviewproj_matrix
     }
 }
-fragment_program SoftParticlesBlend_ps cg
+fragment_program SoftParticlesBlend_ps_hlsl cg
 {
     source softparticles.cg
     entry_point SoftParticlesBlend_ps
@@ -17,7 +17,7 @@ fragment_program SoftParticlesBlend_ps cg
     {
     }
 }
-fragment_program ShowDepth_ps cg
+fragment_program ShowDepth_ps_hlsl cg
 {
     source softparticles.cg
     entry_point ShowDepth_ps
@@ -26,6 +26,47 @@ fragment_program ShowDepth_ps cg
     {
     }
 }
+
+
+
+vertex_program SoftParticlesBlend_vs_glsl glsl
+{
+    source softparticles_vertex.glsl
+    default_params
+    {
+        param_named_auto wvp worldviewproj_matrix
+    }
+}
+fragment_program SoftParticlesBlend_ps_glsl glsl
+{
+    source softparticles_blend.glsl
+    default_params
+    {
+    }
+}
+fragment_program ShowDepth_ps_glsl glsl
+{
+    source softparticles_showdepth.glsl
+}
+
+
+vertex_program SoftParticlesBlend_vs unified
+{
+	delegate SoftParticlesBlend_vs_glsl
+	delegate SoftParticlesBlend_vs_hlsl
+}
+fragment_program SoftParticlesBlend_ps unified
+{
+	delegate SoftParticlesBlend_ps_glsl
+	delegate SoftParticlesBlend_ps_hlsl
+}
+fragment_program ShowDepth_ps unified
+{
+    delegate ShowDepth_ps_glsl
+    delegate ShowDepth_ps_hlsl
+}
+
+
 material RenderScene
 {
 	technique

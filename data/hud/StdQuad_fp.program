@@ -1,4 +1,4 @@
-fragment_program Ogre/Compositor/StdQuad_Cg_fp cg
+fragment_program Ogre/Compositor/StdQuad_fp_hlsl cg
 {
 	source StdQuad_fp.cg
 	entry_point StdQuad_fp
@@ -10,8 +10,15 @@ fragment_program Ogre/Compositor/StdQuad_Cg_fp cg
 }
 
 
+fragment_program Ogre/Compositor/StdQuad_fp_glsl glsl
+{
+	source StdQuad_fp.glsl
+}
+
+
 
 fragment_program Ogre/Compositor/StdQuad_fp unified
 {
-	delegate Ogre/Compositor/StdQuad_Cg_fp
+	delegate Ogre/Compositor/StdQuad_fp_glsl
+	delegate Ogre/Compositor/StdQuad_fp_hlsl
 }

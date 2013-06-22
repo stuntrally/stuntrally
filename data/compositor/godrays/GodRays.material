@@ -1,4 +1,4 @@
-vertex_program GodRays_VS cg
+vertex_program GodRays_VS_hlsl cg
 {
 	source GodRays.cg
 	profiles vs_4_0 vs_1_1 arbvp1
@@ -10,18 +10,57 @@ vertex_program GodRays_VS cg
 		param_named_auto wvp worldviewproj_matrix
     }
 }
-fragment_program GodRaysOcclude_FP cg
+fragment_program GodRaysOcclude_FP_hlsl cg
 {
 	source GodRays.cg
 	profiles ps_4_0 ps_3_0 arbfp1
 	entry_point GodRaysOcclude_FP
 }
-fragment_program GodRays_FP cg
+fragment_program GodRays_FP_hlsl cg
 {
 	source GodRays.cg
 	profiles ps_4_0 ps_3_0 arbfp1
 	entry_point GodRays_FP
 }
+
+
+vertex_program GodRays_VS_glsl glsl
+{
+	source godrays_vertex.glsl
+	
+	default_params
+    {
+		param_named lightPosition float4 512 512 512 0
+		param_named_auto wvp worldviewproj_matrix
+    }
+}
+fragment_program GodRaysOcclude_FP_glsl glsl
+{
+	source godrays_occlude.glsl
+}
+fragment_program GodRays_FP_glsl glsl
+{
+	source godrays.glsl
+}
+
+
+vertex_program GodRays_VS unified
+{
+	delegate GodRays_VS_glsl
+	delegate GodRays_VS_hlsl
+}
+fragment_program GodRaysOcclude_FP unified
+{
+	delegate GodRaysOcclude_FP_glsl
+	delegate GodRaysOcclude_FP_hlsl
+}
+fragment_program GodRays_FP unified
+{
+	delegate GodRays_FP_glsl
+	delegate GodRays_FP_hlsl
+}
+
+
 
 material Compositor/GodRaysFinal
 {

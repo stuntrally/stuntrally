@@ -1,4 +1,4 @@
-vertex_program RenderGBuffer_vp cg
+vertex_program RenderGBuffer_vp_hlsl cg
 {
     source renderscene.cg
     profiles vs_4_0 vs_1_1 arbvp1
@@ -8,7 +8,7 @@ vertex_program RenderGBuffer_vp cg
         param_named_auto wvp worldviewproj_matrix
     }
 }
-fragment_program RenderGBuffer_ps cg
+fragment_program RenderGBuffer_ps_hlsl cg
 {
     source renderscene.cg
     entry_point RenderScene_ps
@@ -16,7 +16,36 @@ fragment_program RenderGBuffer_ps cg
     default_params
     {
     }
+    
 }
+
+vertex_program RenderGBuffer_vp_glsl glsl
+{
+    source renderscene_vp.glsl
+    default_params
+    {
+        param_named_auto wvp worldviewproj_matrix
+    }
+}
+fragment_program RenderGBuffer_ps_glsl glsl
+{
+	source renderscene_fp.glsl
+    default_params
+    {
+    }
+}
+
+vertex_program RenderGBuffer_vp unified
+{
+	delegate RenderGBuffer_vp_glsl
+	delegate RenderGBuffer_vp_hlsl
+}
+fragment_program RenderGBuffer_ps unified
+{
+	delegate RenderGBuffer_ps_glsl
+	delegate RenderGBuffer_ps_hlsl
+}
+
 material RenderScene
 {
 	technique
