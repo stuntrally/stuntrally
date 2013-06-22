@@ -1,7 +1,7 @@
 fragment_program Ogre/Compositor/Combine_fp_hlsl hlsl
 {
 	source Combine_fp.cg
-	target ps_3_0 ps_2_0
+	target ps_2_0
 	entry_point Combine_fp
 
 	default_params

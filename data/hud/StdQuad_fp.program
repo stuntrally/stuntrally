@@ -2,7 +2,7 @@ fragment_program Ogre/Compositor/StdQuad_fp_hlsl hlsl
 {
 	source StdQuad_fp.cg
 	entry_point StdQuad_fp
-	target ps_3_0 ps_2_0
+	target ps_2_0
 
 	default_params
 	{

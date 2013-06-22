@@ -3,7 +3,7 @@ fragment_program Ogre/Compositor/HDR/downscale2x2LuminencePS_hlsl hlsl
 {
 	source hdr.cg
 	entry_point downscale2x2Luminence
-	target ps_3_0 ps_2_0
+	target ps_2_0
 
 	default_params
 	{
@@ -16,7 +16,7 @@ fragment_program Ogre/Compositor/HDR/downscale3x3PS_hlsl hlsl
 {
 	source hdr.cg
 	entry_point downscale3x3
-	target ps_3_0 ps_2_0
+	target ps_2_0
 
 	default_params
 	{
@@ -29,7 +29,7 @@ fragment_program Ogre/Compositor/HDR/downscale3x3AdeptPS_hlsl hlsl
 {
 	source hdr.cg
 	entry_point downscale3x3Adept
-	target ps_3_0 ps_2_0
+	target ps_2_0
 
 	default_params
 	{
@@ -43,7 +43,7 @@ fragment_program Ogre/Compositor/HDR/copySample_hlsl hlsl
 {
 	source hdr.cg
 	entry_point copySample
-	target ps_3_0 ps_2_0
+	target ps_2_0
 }
 
 // Downsample a 3x3 area and perform a brightness filter pass
@@ -51,7 +51,7 @@ fragment_program Ogre/Compositor/HDR/downscale3x3brightpassPS_hlsl hlsl
 {
 	source hdr.cg
 	entry_point downscale3x3brightpass
-	target ps_3_0 ps_2_0
+	target ps_2_0
 
 	default_params
 	{
@@ -64,7 +64,7 @@ fragment_program Ogre/Compositor/HDR/bloomPS_hlsl hlsl
 {
 	source hdr.cg
 	entry_point bloom
-	target ps_3_0 ps_2_0
+	target ps_2_0
 }
 
 // Perform final tone mapping
@@ -72,7 +72,7 @@ fragment_program Ogre/Compositor/HDR/finaltonemappingPS_hlsl hlsl
 {
 	source hdr.cg
 	entry_point finalToneMapping
-	target ps_3_0 ps_2_0
+	target ps_2_0
 }
 
 

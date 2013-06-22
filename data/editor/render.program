@@ -3,7 +3,7 @@
 vertex_program render_vs_hlsl hlsl
 {
 	source render.cg
-	target vs_3_0 vs_2_0
+	target vs_2_0
 	entry_point render_vs
  
 	default_params
@@ -16,7 +16,7 @@ vertex_program render_vs_hlsl hlsl
 fragment_program render_ps_hlsl hlsl
 {
 	source render.cg
-	target ps_3_0 ps_2_0
+	target ps_2_0
 	entry_point render_ps
  
 	default_params
@@ -29,7 +29,7 @@ fragment_program render_ps_hlsl hlsl
 fragment_program render_gr_ps_hlsl hlsl
 {
 	source render.cg
-	target ps_3_0 ps_2_0
+	target ps_2_0
 	entry_point render_gr_ps
 }
 

@@ -1,7 +1,7 @@
 vertex_program GodRays_VS_hlsl hlsl
 {
 	source GodRays.cg
-	target vs_3_0 vs_2_0
+	target vs_2_0
 	entry_point GodRays_VS
 	
 	default_params
@@ -13,13 +13,13 @@ vertex_program GodRays_VS_hlsl hlsl
 fragment_program GodRaysOcclude_FP_hlsl hlsl
 {
 	source GodRays.cg
-	target ps_3_0 ps_2_0
+	target ps_2_0
 	entry_point GodRaysOcclude_FP
 }
 fragment_program GodRays_FP_hlsl hlsl
 {
 	source GodRays.cg
-	target ps_3_0 ps_2_0
+	target ps_2_0
 	entry_point GodRays_FP
 }
 

@@ -2,7 +2,7 @@
 vertex_program dof_vs_hlsl hlsl
 {
     source dof.cg
-    target vs_3_0 vs_2_0
+    target vs_2_0
     entry_point dof_vs
     default_params
     {
@@ -14,7 +14,7 @@ fragment_program DoF_Gaussian3x3FP_hlsl hlsl
 {
   source dof.cg
   entry_point Gaussian3x3_ps
-	target ps_3_0 ps_2_0
+	target ps_2_0
 
 }
 
@@ -22,7 +22,7 @@ fragment_program DoF_DepthOfFieldFP_hlsl hlsl
 {
   source dof.cg
   entry_point DepthOfField_ps
-  target ps_3_0 ps_2_0
+  target ps_2_0
 
 }
 

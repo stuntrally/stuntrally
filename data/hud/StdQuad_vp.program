@@ -2,7 +2,7 @@ vertex_program Ogre/Compositor/StdQuad_Cg_vp hlsl
 {
 	source StdQuad_vp.cg
 	entry_point StdQuad_vp
-	target vs_3_0 vs_2_0
+	target vs_2_0
 
 	default_params
 	{
