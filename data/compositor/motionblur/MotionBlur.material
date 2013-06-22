@@ -1,7 +1,7 @@
-fragment_program Ogre/Compositor/Combine_fp_hlsl cg
+fragment_program Ogre/Compositor/Combine_fp_hlsl hlsl
 {
 	source Combine_fp.cg
-	profiles ps_4_0 ps_2_0 arbfp1
+	target ps_3_0 ps_2_0
 	entry_point Combine_fp
 
 	default_params

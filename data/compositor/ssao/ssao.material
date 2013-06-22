@@ -1,10 +1,10 @@
 
 // full screen quad with camera-to-pixel ray calculations
 
-vertex_program ssao_vs_hlsl cg
+vertex_program ssao_vs_hlsl hlsl
 {
     source ssao.cg
-    profiles vs_4_0 vs_1_1 arbvp1
+    target vs_3_0 vs_2_0
     entry_point ssao_vs
     default_params
     {
@@ -12,12 +12,12 @@ vertex_program ssao_vs_hlsl cg
     }
 }
 
-fragment_program ssao_ps_hlsl cg
+fragment_program ssao_ps_hlsl hlsl
 {
     source ssao.cg
     entry_point ssao_ps
     // will run on anything with pixel shader 2.b and up
-    profiles ps_4_0 ps_2_x arbfp1
+    target ps_3_0 ps_2_0
     default_params
     {
 		param_named_auto fogParams fog_params
@@ -25,53 +25,53 @@ fragment_program ssao_ps_hlsl cg
     }
 }
 
-vertex_program ssaoBlur_vs_hlsl cg
+vertex_program ssaoBlur_vs_hlsl hlsl
 {
     source ssao.cg
-    profiles vs_4_0 vs_1_1 arbvp1
+    target vs_3_0 vs_2_0
     entry_point ssaoBlur_vs
     default_params
     {
         param_named_auto wvp worldviewproj_matrix
     }
 }
-fragment_program ssaoBlurX_ps_hlsl cg
+fragment_program ssaoBlurX_ps_hlsl hlsl
 {
     source ssao.cg
     entry_point ssaoBlurX_ps
-    profiles ps_4_0 ps_2_x arbfp1
+    target ps_3_0 ps_2_0
     default_params
     {
         param_named_auto invTexSize inverse_texture_size 0
     }
 }
 
-fragment_program ssaoBlurY_ps_hlsl cg
+fragment_program ssaoBlurY_ps_hlsl hlsl
 {
     source ssao.cg
     entry_point ssaoBlurY_ps
-    profiles ps_4_0 ps_2_x arbfp1
+    target ps_3_0 ps_2_0
     default_params
     {
         param_named_auto invTexSize inverse_texture_size 0
     }
 }
 
-vertex_program ssaoMultiply_vs_hlsl cg
+vertex_program ssaoMultiply_vs_hlsl hlsl
 {
     source ssao.cg
-    profiles vs_4_0 vs_1_1 arbvp1
+    target vs_3_0 vs_2_0
     entry_point ssaoMultiply_vs
     default_params
     {
         param_named_auto wvp worldviewproj_matrix
     }
 }
-fragment_program ssaoMultiply_ps_hlsl cg
+fragment_program ssaoMultiply_ps_hlsl hlsl
 {
     source ssao.cg
     entry_point ssaoMultiply_ps
-    profiles ps_4_0 ps_2_x arbfp1
+    target ps_3_0 ps_2_0
     default_params
     {
     }

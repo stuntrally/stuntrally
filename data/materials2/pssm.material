@@ -1,8 +1,8 @@
 
-vertex_program PSSM/shadow_caster_vs_hlsl cg
+vertex_program PSSM/shadow_caster_vs_hlsl hlsl
 {
 	source pssm.cg
-	profiles vs_4_0 vs_2_0 arbvp1
+	target vs_3_0 vs_2_0
 	entry_point shadow_caster_vs
 
 	default_params
@@ -11,20 +11,20 @@ vertex_program PSSM/shadow_caster_vs_hlsl cg
 	}
 }
 
-fragment_program PSSM/shadow_caster_ps_hlsl cg
+fragment_program PSSM/shadow_caster_ps_hlsl hlsl
 {
 	source pssm.cg
-	profiles ps_4_0 ps_2_0 arbfp1
+	target ps_3_0 ps_2_0
 	entry_point shadow_caster_ps
 
 	default_params
 	{
 	}
 }
-fragment_program PSSM/shadow_caster_alpha_ps_hlsl cg
+fragment_program PSSM/shadow_caster_alpha_ps_hlsl hlsl
 {
 	source pssm.cg
-	profiles ps_4_0 ps_2_0 arbfp1
+	target ps_3_0 ps_2_0
 	entry_point shadow_caster_alpha_ps
 
 	default_params

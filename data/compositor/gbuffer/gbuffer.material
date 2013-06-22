@@ -1,18 +1,18 @@
-vertex_program RenderGBuffer_vp_hlsl cg
+vertex_program RenderGBuffer_vp_hlsl hlsl
 {
     source renderscene.cg
-    profiles vs_4_0 vs_1_1 arbvp1
+    target vs_3_0 vs_2_0
     entry_point RenderScene_vs
     default_params
     {
         param_named_auto wvp worldviewproj_matrix
     }
 }
-fragment_program RenderGBuffer_ps_hlsl cg
+fragment_program RenderGBuffer_ps_hlsl hlsl
 {
     source renderscene.cg
     entry_point RenderScene_ps
-    profiles ps_4_0 ps_2_x arbfp1
+    target ps_3_0 ps_2_0
     default_params
     {
     }

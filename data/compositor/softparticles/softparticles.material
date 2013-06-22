@@ -1,27 +1,27 @@
-vertex_program SoftParticlesBlend_vs_hlsl cg
+vertex_program SoftParticlesBlend_vs_hlsl hlsl
 {
     source softparticles.cg
-    profiles vs_4_0 vs_1_1 arbvp1
+    target vs_3_0 vs_2_0
     entry_point SoftParticlesBlend_vs
     default_params
     {
         param_named_auto wvp worldviewproj_matrix
     }
 }
-fragment_program SoftParticlesBlend_ps_hlsl cg
+fragment_program SoftParticlesBlend_ps_hlsl hlsl
 {
     source softparticles.cg
     entry_point SoftParticlesBlend_ps
-    profiles ps_4_0 ps_2_x arbfp1
+    target ps_3_0 ps_2_0
     default_params
     {
     }
 }
-fragment_program ShowDepth_ps_hlsl cg
+fragment_program ShowDepth_ps_hlsl hlsl
 {
     source softparticles.cg
     entry_point ShowDepth_ps
-    profiles ps_4_0 ps_2_x arbfp1
+    target ps_3_0 ps_2_0
     default_params
     {
     }

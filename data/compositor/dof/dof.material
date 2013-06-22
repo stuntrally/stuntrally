@@ -1,8 +1,8 @@
 
-vertex_program dof_vs_hlsl cg
+vertex_program dof_vs_hlsl hlsl
 {
     source dof.cg
-    profiles vs_4_0 vs_1_1 arbvp1
+    target vs_3_0 vs_2_0
     entry_point dof_vs
     default_params
     {
@@ -10,19 +10,19 @@ vertex_program dof_vs_hlsl cg
     }
 }
 
-fragment_program DoF_Gaussian3x3FP_hlsl cg
+fragment_program DoF_Gaussian3x3FP_hlsl hlsl
 {
   source dof.cg
   entry_point Gaussian3x3_ps
-	profiles ps_4_0 ps_2_x arbfp1
+	target ps_3_0 ps_2_0
 
 }
 
-fragment_program DoF_DepthOfFieldFP_hlsl cg
+fragment_program DoF_DepthOfFieldFP_hlsl hlsl
 {
   source dof.cg
   entry_point DepthOfField_ps
-  profiles ps_4_0 ps_3_0 arbfp1
+  target ps_3_0 ps_2_0
 
 }
 

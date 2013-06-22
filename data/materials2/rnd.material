@@ -1,7 +1,7 @@
-vertex_program rnd_vs_hlsl cg
+vertex_program rnd_vs_hlsl hlsl
 {
 	source rnd.cg
-	profiles vs_4_0 vs_1_1 arbvp1
+	target vs_3_0 vs_2_0
 	entry_point rnd_vs
  
 	default_params
@@ -9,22 +9,22 @@ vertex_program rnd_vs_hlsl cg
 		param_named_auto wvpMat worldviewproj_matrix
 	}
 }
-fragment_program rnd_ps_hlsl cg
+fragment_program rnd_ps_hlsl hlsl
 {
 	source rnd.cg
-	profiles ps_4_0 ps_2_0 arbfp1
+	target ps_3_0 ps_2_0
 	entry_point rnd_ps
 }
-fragment_program rnd_inv_ps_hlsl cg
+fragment_program rnd_inv_ps_hlsl hlsl
 {
 	source rnd.cg
-	profiles ps_4_0 ps_2_0 arbfp1
+	target ps_3_0 ps_2_0
 	entry_point rnd_inv_ps
 }
-fragment_program rnd_add_ps_hlsl cg
+fragment_program rnd_add_ps_hlsl hlsl
 {
 	source rnd.cg
-	profiles ps_4_0 ps_2_0 arbfp1
+	target ps_3_0 ps_2_0
 	entry_point rnd_add_ps
 }
 
@@ -110,10 +110,10 @@ material road_minimap_inv
 
 //  game minimap circle  -------------
 //
-vertex_program circle_vs_hlsl cg
+vertex_program circle_vs_hlsl hlsl
 {
 	source rnd.cg
-	profiles vs_4_0 vs_1_1 arbvp1
+	target vs_3_0 vs_2_0
 	entry_point circle_vs
  
 	default_params
@@ -121,10 +121,10 @@ vertex_program circle_vs_hlsl cg
 		param_named_auto wvpMat worldviewproj_matrix
 	}
 }
-fragment_program circle_ps_hlsl cg
+fragment_program circle_ps_hlsl hlsl
 {
 	source rnd.cg
-	profiles ps_4_0 ps_2_0 arbfp1 
+	target ps_3_0 ps_2_0 
 	entry_point circle_ps
 
 	default_params

@@ -1,8 +1,8 @@
-fragment_program Ogre/Compositor/StdQuad_fp_hlsl cg
+fragment_program Ogre/Compositor/StdQuad_fp_hlsl hlsl
 {
 	source StdQuad_fp.cg
 	entry_point StdQuad_fp
-	profiles ps_4_0 ps_2_0 arbfp1
+	target ps_3_0 ps_2_0
 
 	default_params
 	{

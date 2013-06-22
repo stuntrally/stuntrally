@@ -1,9 +1,9 @@
 // Downsample a 2x2 area & turn into luminence (unclamped)
-fragment_program Ogre/Compositor/HDR/downscale2x2LuminencePS_hlsl cg
+fragment_program Ogre/Compositor/HDR/downscale2x2LuminencePS_hlsl hlsl
 {
 	source hdr.cg
 	entry_point downscale2x2Luminence
-	profiles ps_4_0 ps_3_0 fp40
+	target ps_3_0 ps_2_0
 
 	default_params
 	{
@@ -12,11 +12,11 @@ fragment_program Ogre/Compositor/HDR/downscale2x2LuminencePS_hlsl cg
 }
 
 // Downsample a 3x3 area
-fragment_program Ogre/Compositor/HDR/downscale3x3PS_hlsl cg
+fragment_program Ogre/Compositor/HDR/downscale3x3PS_hlsl hlsl
 {
 	source hdr.cg
 	entry_point downscale3x3
-	profiles ps_4_0 ps_3_0 fp40
+	target ps_3_0 ps_2_0
 
 	default_params
 	{
@@ -25,11 +25,11 @@ fragment_program Ogre/Compositor/HDR/downscale3x3PS_hlsl cg
 }
 
 // Downsample a 3x3 area with adeptation
-fragment_program Ogre/Compositor/HDR/downscale3x3AdeptPS_hlsl cg
+fragment_program Ogre/Compositor/HDR/downscale3x3AdeptPS_hlsl hlsl
 {
 	source hdr.cg
 	entry_point downscale3x3Adept
-	profiles ps_4_0 ps_3_0 fp40
+	target ps_3_0 ps_2_0
 
 	default_params
 	{
@@ -39,19 +39,19 @@ fragment_program Ogre/Compositor/HDR/downscale3x3AdeptPS_hlsl cg
 	}
 }
 // Copy sample
-fragment_program Ogre/Compositor/HDR/copySample_hlsl cg
+fragment_program Ogre/Compositor/HDR/copySample_hlsl hlsl
 {
 	source hdr.cg
 	entry_point copySample
-	profiles ps_4_0 ps_3_0 fp40
+	target ps_3_0 ps_2_0
 }
 
 // Downsample a 3x3 area and perform a brightness filter pass
-fragment_program Ogre/Compositor/HDR/downscale3x3brightpassPS_hlsl cg
+fragment_program Ogre/Compositor/HDR/downscale3x3brightpassPS_hlsl hlsl
 {
 	source hdr.cg
 	entry_point downscale3x3brightpass
-	profiles ps_4_0 ps_3_0 fp40
+	target ps_3_0 ps_2_0
 
 	default_params
 	{
@@ -60,19 +60,19 @@ fragment_program Ogre/Compositor/HDR/downscale3x3brightpassPS_hlsl cg
 }
 
 // Bloom an area using gaussian distribution
-fragment_program Ogre/Compositor/HDR/bloomPS_hlsl cg
+fragment_program Ogre/Compositor/HDR/bloomPS_hlsl hlsl
 {
 	source hdr.cg
 	entry_point bloom
-	profiles ps_4_0 ps_3_0 fp40
+	target ps_3_0 ps_2_0
 }
 
 // Perform final tone mapping
-fragment_program Ogre/Compositor/HDR/finaltonemappingPS_hlsl cg
+fragment_program Ogre/Compositor/HDR/finaltonemappingPS_hlsl hlsl
 {
 	source hdr.cg
 	entry_point finalToneMapping
-	profiles ps_4_0 ps_3_0 fp40
+	target ps_3_0 ps_2_0
 }
 
 
