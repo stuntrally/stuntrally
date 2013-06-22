@@ -131,14 +131,14 @@ tread = 0.0
 [ brakes-front ]
 friction = 0.9
 max-pressure = 3.0e6
-bias = 0.6
+bias = 0.55
 radius = 0.13
 area = 0.015
 
 [ brakes-rear ]
 friction = 0.9
 max-pressure = 3.0e6
-bias = 0.4
+bias = 0.45
 radius = 0.13
 area = 0.015
 handbrake = 4.8

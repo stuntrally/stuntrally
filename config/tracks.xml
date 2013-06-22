@@ -189,6 +189,6 @@
 	<track n="119" name="0W13-MtFog"	crtver="2.1" created="15-06-13" modified="15-06-13" scenery="Winter"   author="Wuzzy" objects="0" fluids="0" bumps="2" jumps="0" loops="0" pipes="0" banked="1" frenzy="3" long="2" diff="4" rating="3" /> <!--0W13-MtFog-->
 	<track n="120" name="O3-Air"		crtver="2.1" created="02-06-13" modified="18-06-13" scenery="Moss"     author="Wuzzy" objects="1" fluids="1" bumps="0" jumps="1" loops="0" pipes="0" banked="2" frenzy="0" long="1" diff="1" rating="2" /> <!--O3-Air-->
 
-<track n="121" name="I11-StuntIslands"	crtver="2.1" created="22-06-13" modified="22-06-13" scenery="Island"     author="CH" objects="0" fluids="1" bumps="0" jumps="2" loops="2" pipes="1" banked="1" frenzy="0" long="4" diff="2" rating="3" /> <!--I11-StuntIslands-->
+<track n="121" name="I11-StuntIslands"	crtver="2.1" created="22-06-13" modified="22-06-13" scenery="Island"     author="CH" objects="0" fluids="1" bumps="0" jumps="2" loops="2" pipes="1" banked="1" frenzy="0" long="7" diff="3" rating="3" /> <!--I11-StuntIslands-->
 
 </tracks>
