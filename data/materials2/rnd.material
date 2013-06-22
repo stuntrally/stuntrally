@@ -62,23 +62,23 @@ fragment_program rnd_add_ps_glsl glsl
 
 vertex_program rnd_vs unified
 {
-	source rnd_vertex.glsl
-	default_params
-	{
-		param_named_auto wvpMat worldviewproj_matrix
-	}
+	delegate rnd_vs_glsl
+	delegate rnd_vs_hlsl
 }
 fragment_program rnd_ps unified
 {
-	source rnd_fragment.glsl
+	delegate rnd_ps_glsl
+	delegate rnd_ps_hlsl
 }
 fragment_program rnd_inv_ps unified
 {
-	source rnd_inv_fragment.glsl
+	delegate rnd_inv_ps_glsl
+	delegate rnd_inv_ps_hlsl
 }
 fragment_program rnd_add_ps unified
 {
-	source rnd_add_fragment.glsl
+	delegate rnd_add_ps_glsl
+	delegate rnd_add_ps_hlsl
 }
 
 
