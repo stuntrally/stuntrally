@@ -11,8 +11,8 @@ struct PS_IN
 
 float4 PS(PS_IN i,uniform float AdaptationScale, uniform float dTime) : COLOR
 {
-    float Lum = tex2D(s0,float2(0.5f, 0.5f));
-    float oldLum = tex2D(s1,float2(0.5f, 0.5f));
+    float Lum = tex2D(s0,float2(0.5f, 0.5f)).r;
+    float oldLum = tex2D(s1,float2(0.5f, 0.5f)).r;
 
     //determin if rods or cones are active
     //Perceptual Effects in Real-time Tone Mapping: Equ(7)    
@@ -25,5 +25,6 @@ float4 PS(PS_IN i,uniform float AdaptationScale, uniform float dTime) : COLOR
     //calculate adaption
     //Perceptual Effects in Real-time Tone Mapping: Equ(5)
 
-    return oldLum + (Lum - oldLum) * (1 - exp(-(dTime)/Tau));
+	float result = oldLum + (Lum - oldLum) * (1 - exp(-(dTime)/Tau));
+    return float4(result,result,result,result);
 }

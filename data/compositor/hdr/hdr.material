@@ -390,17 +390,35 @@ material Ogre/Compositor/HDR/ToneMapping
 	}
 }
 
-fragment_program Ogre/Compositor/HDR/AdaptLuminance cg
+fragment_program Ogre/Compositor/HDR/AdaptLuminance_hlsl hlsl
 {
 	source AdaptLuminance.cg
 	entry_point PS
-	profiles ps_4_0 ps_3_0 fp40
+	target ps_3_0
 
 	default_params
 	{
 		param_named_auto dTime frame_time
 	//	param_named AdaptationScale float .3
 	}
+}
+
+fragment_program Ogre/Compositor/HDR/AdaptLuminance_glsl glsl
+{
+	source AdaptLuminance.glsl
+	default_params
+	{
+		param_named_auto dTime frame_time
+		param_named lum int 0
+		param_named oldlum int 1
+	//	param_named AdaptationScale float .3
+	}
+}
+
+fragment_program Ogre/Compositor/HDR/AdaptLuminance unified
+{
+	delegate Ogre/Compositor/HDR/AdaptLuminance_glsl
+	delegate Ogre/Compositor/HDR/AdaptLuminance_hlsl
 }
 
 material Ogre/Compositor/HDR/AdaptLuminance
