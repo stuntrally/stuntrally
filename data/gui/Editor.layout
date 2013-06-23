@@ -587,7 +587,7 @@
 				<UserString key="RelativeTo" value="EditorWnd"/>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabTrack">
-				<Property key="Caption" value="#{Track}"/>
+				<Property key="Caption" value="#D0E8FF#{Track}"/>
 				<UserString key="RelativeTo" value="EditorWnd"/>
 				<Widget type="TextBox" skin="TextBox" position="176 468 56 24" name="TrackText">
 					<Property key="InheritsAlpha" value="true"/>
@@ -804,7 +804,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Sun}"/>
+				<Property key="Caption" value="#FFFF80#{Sun}"/>
 				<UserString key="RelativeTo" value="EditorWnd"/>
 				<Widget type="TextBox" skin="TextBox" position="80 28 72 24">
 					<Property key="Caption" value="#{Sky}"/>
@@ -1153,7 +1153,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Terrain}"/>
+				<Property key="Caption" value="#A0D8A0#{Terrain}"/>
 				<UserString key="RelativeTo" value="EditorWnd"/>
 				<Widget type="TextBox" skin="TextBox" position="32 39 120 24">
 					<Property key="Caption" value="#{HeightmapSize}"/>
@@ -1595,7 +1595,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Layers}"/>
+				<Property key="Caption" value="#80FF00#{Layers}"/>
 				<UserString key="RelativeTo" value="EditorWnd"/>
 				<Widget type="TextBox" skin="TextBox" position="600 63 128 24" name="TerLayersAll">
 					<Property key="Caption" value="#{Used}: "/>
@@ -2052,7 +2052,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Vegetation}"/>
+				<Property key="Caption" value="#80F0F0#{Vegetation}"/>
 				<UserString key="RelativeTo" value="EditorWnd"/>
 				<Widget type="TabControl" skin="TabControl" position="16 15 752 497" name="SubTab">
 					<Property key="Colour" value="0.73 0.88 1"/>
@@ -2725,7 +2725,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Road}"/>
+				<Property key="Caption" value="#FFB020#{Road}"/>
 				<UserString key="RelativeTo" value="EditorWnd"/>
 				<Widget type="TabControl" skin="TabControl" position="16 15 752 497" name="SubTab">
 					<Property key="ButtonAutoWidth" value="true"/>
@@ -3058,7 +3058,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Objects}"/>
+				<Property key="Caption" value="#D0D0D0#{Objects}"/>
 				<UserString key="RelativeTo" value="EditorWnd"/>
 				<Widget type="TextBox" skin="TextBox" position="32 16 128 24">
 					<Property key="Caption" value="#{ObjDynamic}"/>
@@ -3086,7 +3086,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Tools}"/>
+				<Property key="Caption" value="#B0A0FF#{Tools}"/>
 				<UserString key="RelativeTo" value="EditorWnd"/>
 				<Widget type="Widget" skin="PanelSkin" position="24 52 554 132">
 					<Property key="Colour" value="0.8 0.8 1"/>
