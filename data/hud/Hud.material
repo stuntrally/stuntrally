@@ -1,3 +1,4 @@
+
 material hud/CarPos
 {
 	technique
@@ -52,8 +53,8 @@ material hud/needleB
 			depth_write off
 			scene_blend alpha_blend
 			cull_hardware none
-			vertex_program_ref Ogre/Compositor/StdQuad_vp {  }
-			fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
+			//vertex_program_ref Ogre/Needle_vp {  }
+			//fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
 		}
 	}
 }
@@ -71,8 +72,8 @@ material hud/rpmB
 			depth_write off
 			scene_blend alpha_blend
 			cull_hardware none
-			vertex_program_ref   Ogre/Compositor/StdQuad_vp {  }
-			fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
+			//vertex_program_ref   Ogre/Compositor/StdQuad_vp {  }
+			//fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
 		}
 	}
 }
@@ -91,8 +92,8 @@ material hud/kmhB
 			depth_write off
 			scene_blend alpha_blend
 			cull_hardware none
-			vertex_program_ref   Ogre/Compositor/StdQuad_vp {  }
-			fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
+			//vertex_program_ref   Ogre/Compositor/StdQuad_vp {  }
+			//fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
 		}
 	}
 }
@@ -110,8 +111,8 @@ material hud/mphB
 			depth_write off
 			scene_blend alpha_blend
 			cull_hardware none
-			vertex_program_ref   Ogre/Compositor/StdQuad_vp {  }
-			fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
+			//vertex_program_ref   Ogre/Compositor/StdQuad_vp {  }
+			//fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
 		}
 	}
 }
@@ -175,12 +176,8 @@ material hud/CarPos
 			diffuse vertexcolour
 			cull_hardware none
 			
-			vertex_program_ref Ogre/Compositor/StdQuad_vp
-			{
-			}
-			fragment_program_ref Ogre/Compositor/StdQuad_fp
-			{
-			} 
+			//vertex_program_ref Ogre/Compositor/StdQuad_vp  {  }
+			//fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
 			texture_unit
 			{
 				texture carpos0.png
@@ -201,12 +198,8 @@ material hud/Times
 			scene_blend alpha_blend
 			cull_hardware none
 			
-			vertex_program_ref Ogre/Compositor/StdQuad_vp
-			{
-			}
-			fragment_program_ref Ogre/Compositor/StdQuad_fp
-			{
-			} 
+			//vertex_program_ref Ogre/Needle_vp	{  }
+			//fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
 			texture_unit tex1
 			{
 				texture border_rect.png
@@ -227,12 +220,8 @@ material hud/Opponents
 			scene_blend alpha_blend
 			cull_hardware none
 			
-			vertex_program_ref Ogre/Compositor/StdQuad_vp
-			{
-			}
-			fragment_program_ref Ogre/Compositor/StdQuad_fp
-			{
-			} 
+			//vertex_program_ref Ogre/Needle_vp	{  }
+			//fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
 			texture_unit tex1
 			{
 				texture opp_rect.png
@@ -252,12 +241,9 @@ material hud/info
 			depth_check off
 			scene_blend alpha_blend
 			cull_hardware none
-			vertex_program_ref Ogre/Compositor/StdQuad_vp
-			{
-			}
-			fragment_program_ref Ogre/Compositor/StdQuad_fp
-			{
-			} 
+
+			//vertex_program_ref Ogre/Needle_vp	{  }
+			//fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
 			texture_unit
 			{
 				texture border_rect.png
