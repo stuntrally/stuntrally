@@ -155,12 +155,12 @@ hood-mounted-view-position = -0.55, 0, 0.46
 #  aerodynamics
 #---------------------------
 [ drag ]
-position = 0.0, 0.0, -0.60
+position = 0.0, 0.0, 0.10
 frontal-area = 2.0
 drag-coefficient = 0.20
 
 [ wing-front ]
-position = 0, 2.34, -0.6
+position = 0, 1.8, 0.2
 frontal-area = 0.2
 drag-coefficient = 0
 surface-area = 0.55
@@ -168,11 +168,11 @@ lift-coefficient = -4.0
 efficiency = 0.95
 
 [ wing-rear ]
-position = 0, -2.14, 0.37
+position = 0, -1.8, 0.3
 frontal-area = 0.2
 drag-coefficient = 0
 surface-area = 0.5
-lift-coefficient = -4.5
+lift-coefficient = -3.4
 efficiency = 0.95
 
 
@@ -227,16 +227,16 @@ hinge = 0.25, -1.94, 0.0
 #---------------------------
 [ particle-00 ]  # rear
 mass = 242
-position =  0.64, -0.92, -0.06
+position =  0.64, -0.98, -0.06
 
 [ particle-01 ]
 mass = 242
-position = -0.64, -0.92, -0.06
+position = -0.64, -0.98, -0.06
 
 [ particle-02 ]  # front
 mass = 242
-position =  0.65,  0.92, -0.06
+position =  0.65,  0.98, -0.06
 
 [ particle-03 ]
 mass = 242
-position = -0.65,  0.92, -0.06
+position = -0.65,  0.98, -0.06
