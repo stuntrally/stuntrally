@@ -49,7 +49,7 @@ public:
 		return position;
 	}
 
-	MATHVECTOR<Dbl,3> GetForce(const MATHVECTOR<Dbl,3> & bodyspace_wind_vector) const;
+	MATHVECTOR<Dbl,3> GetForce(const MATHVECTOR<Dbl,3> & bodyspace_wind_vector, bool updStats=true) const;
 	
 	Dbl GetAerodynamicDownforceCoefficient() const
 	{

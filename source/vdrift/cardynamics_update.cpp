@@ -168,8 +168,17 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 			//out << "---Body---" << endl;  // L| front+back-  W_ left-right+  H/ up+down-
 			out << "com: W right+ " << -center_of_mass[1] << " L front+ " << center_of_mass[0] << " H up+ " << center_of_mass[2] << endl;
 			out.precision(0);
-			out << "mass: " << body.GetMass() << endl;
+			out << "mass: " << body.GetMass();
+			
+			//  wheel pos, com ratio
+			Dbl whf = wheel[0].GetExtendedPosition()[0], whr = wheel[2].GetExtendedPosition()[0];
+			out.precision(2);
+			out << "  wh fr " << whf << "  rr " << whr;
+			out.precision(1);
+			out << "  fr% " << (center_of_mass[0]+whf)/(whf-whr)*100 << endl;
+			out.precision(0);
 			MATRIX3 <Dbl> inertia = body.GetInertiaConst();
+			
 			out << "inertia: roll " << inertia[0] << " pitch " << inertia[4] << " yaw " << inertia[8] << endl;
 			
 			//out << "inertia: " << inertia[0] <<" "<< inertia[4] <<" "<< inertia[8] <<" < "<< inertia[1] <<" "<< inertia[2] <<" "<< inertia[3] <<" "<< inertia[5] <<" "<< inertia[6] <<" "<< inertia[7] << endl;
@@ -252,13 +261,31 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 			Dbl drag = GetAeordynamicDragCoefficient();
 			out << "down: " << fToStr(down,2,5) << "  drag: " << fToStr(drag,2,4) << endl;
 
+			if (cnt > 2)
+			{
 			MATHVECTOR<Dbl,3> aero = GetTotalAero();
 			out << "total: " << endl;
 			out << fToStr(aero[0],0,5) << " " << fToStr(aero[1],0,4) << " " << fToStr(aero[2],0,6) << endl;
 
-		if (cnt > 2)
 			for (vector <CARAERO>::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
 				i->DebugPrint(out);
+			}
+
+			//if (cnt > 1)
+			{
+			// get force and torque at 160kmh  from ApplyAerodynamicsToBody
+			out << "--at 160 kmh--" << endl;
+			MATHVECTOR<Dbl,3> wind_force(0), wind_torque(0), air_velocity(0);
+			air_velocity[0] = -160/3.6;
+
+			for(std::vector <CARAERO>::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
+			{
+				MATHVECTOR<Dbl,3> force = i->GetForce(air_velocity, false);
+				wind_force = wind_force + force;
+				wind_torque = wind_torque + (i->GetPosition() - center_of_mass).cross(force);
+			}
+			out << "F: " << wind_force << endl << "Tq: " << wind_torque << endl;
+			}
 		}
 }
 ///..........................................................................................................
