@@ -85,7 +85,7 @@ final-drive = 4.64
 anti-slip = 400.0 
 
 [ fuel-tank ] 
-position = -0.17, -0.26, -0.56 
+position = -0.05, -0.26, -0.56 
 capacity = 60 
 volume = 60 
 fuel-density = 1.0 
@@ -170,7 +170,7 @@ position = 0.0, -1.5, 0.30
 frontal-area = 0.05
 drag-coefficient = 0.0
 surface-area = 0.5
-lift-coefficient = -4.8
+lift-coefficient = -4.1
 efficiency = 0.94
 
 
