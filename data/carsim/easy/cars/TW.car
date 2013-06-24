@@ -40,7 +40,7 @@ friction = 0.2
 #  engine
 #---------------------------
 [ engine ]
-position = 0.0, 0.0, 0.2
+position = 0.0, 2.0, 0.2
 mass = 180.0
 rpm-limit = 7300
 inertia = 0.40
@@ -85,7 +85,7 @@ final-drive = 10.0
 anti-slip = 600.0
 
 [ fuel-tank ]
-position = -0.12, -0.66, -0.56
+position = -0.12, -0.16, -0.56
 capacity = 0.0492
 volume = 0.0492
 fuel-density = 730.0
@@ -152,7 +152,7 @@ handbrake = 3.1
 
 
 [ driver ]
-position = -0.1, -0.15, -0.5
+position = 0.0, 0.5, -0.5
 mass = 80.0
 view-position = -0.02, -0.40, 0.30
 hood-mounted-view-position = -0.4, 0, 0.50
@@ -166,19 +166,19 @@ frontal-area = 2.0
 drag-coefficient = 0.25
 
 [ wing-front ]
-position = 0.0, 1.1, 0.10
+position = 0.0, 1.6, 0.10
 frontal-area = 0.2
 drag-coefficient = 0.0
-surface-area = 1.8
-lift-coefficient = -1.0
+surface-area = 1.9
+lift-coefficient = -1.2
 efficiency = 0.95
 
 [ wing-rear ]
-position = 0.0, -1.7, 0.30
+position = 0.0, -1.6, 0.20
 frontal-area = 0.05
 drag-coefficient = 0.0
 surface-area = 1.9
-lift-coefficient = -1.5
+lift-coefficient = -1.2
 efficiency = 0.96
 
 
@@ -232,17 +232,17 @@ hinge = 3.70, -1.0, -0.43
 # (for car total mass and inertia) also use engine mass and position
 #---------------------------
 [ particle-00 ]  # rear
-mass = 420.0
-position =  0.85,-1.3, 0.15
+mass = 400.0
+position =  0.75,-1.2, 0.15
 
 [ particle-01 ]
-mass = 420.0
-position = -0.85,-1.3, 0.15
+mass = 400.0
+position = -0.75,-1.2, 0.15
 
 [ particle-02 ]  # front
-mass = 420.0
-position =  0.8, 1.3, 0.15
+mass = 440.0
+position =  0.7, 1.2, 0.15
 
 [ particle-03 ]
-mass = 420.0
-position = -0.8, 1.3, 0.15
+mass = 440.0
+position = -0.7, 1.2, 0.15
