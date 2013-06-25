@@ -607,5 +607,8 @@
 		<track name="I12-Beach"		time="51.0"/>
 		<track name="C4-Sway"		time="161.0"/>
 
+		<track name="X4-Pipeline"	time="250.0"/>
+	<!--<track name="S15-Scorpio"	time="161.0"/>-->
+
 	</times>
 </championships>
