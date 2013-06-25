@@ -5,7 +5,7 @@
 	<Tag name="Density">Tiheys</Tag>
 	<Tag name="InputMapScreenshot">Kuvakaappaus</Tag>
 	<Tag name="Brush_Filter">Suodin</Tag>
-	<Tag name="TipDustSize">Pölyhiukkasten koko.</Tag>
+	<Tag name="Time">Aika</Tag>
 	<Tag name="TipGrassSwayDistr">Ruohikon huojunnan jakauma (satunnaisuus)</Tag>
 	<Tag name="GraphicsAll_VeryHigh">Erittäin korkea</Tag>
 	<Tag name="InpSet_AxisFull">Täysi akseli</Tag>
@@ -115,7 +115,7 @@
 	<Tag name="InputRoadNew">ctrl-Space - set new point's values from picked</Tag>
 	<Tag name="Road_New">New</Tag>
 	<Tag name="Top">Ylös</Tag>
-	<Tag name="TerUpdSkip">Terrain update skip</Tag>
+	<Tag name="CarType_Racing">Racing</Tag>
 	<Tag name="Input">Syöttö</Tag>
 	<Tag name="AlignWidthAdd">Width add</Tag>
 	<Tag name="NetReady">Valmis</Tag>
@@ -128,6 +128,7 @@
 	<Tag name="CopySource">Aseta kopiointilähteeksi</Tag>
 	<Tag name="CarCrash">Car Crash</Tag>
 	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
+	<Tag name="Tracks">Radat</Tag>
 	<Tag name="LS_OBJS">Loading Objects</Tag>
 	<Tag name="TreeRoadDist">Trees to road dist.</Tag>
 	<Tag name="GraphicsAll_Medium">Keskitaso</Tag>
@@ -145,7 +146,7 @@
 	<Tag name="CameraInfo">Kamera info</Tag>
 	<Tag name="frenzy">frenzy (curly road)</Tag>
 	<Tag name="InputRoadChkRadius">K,L  - checkpoint radius  (ChkR 0 - none)</Tag>
-	<Tag name="Time">Aika</Tag>
+	<Tag name="TipCarSpeed">Car speed rating, more means faster car. Warning, on gravel too fast cars won't be faster because they don't have enough grip.</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - at start   alt-ctrl - at end</Tag>
 	<Tag name="RearThrottleInverse">Rear throttle inverse</Tag>
 	<Tag name="MessageBox_Yes">Kyllä</Tag>
@@ -171,6 +172,7 @@
 	<Tag name="InpSet_Slow">Hidas</Tag>
 	<Tag name="InputAssignKey">&lt;Paina näppäintä&gt;</Tag>
 	<Tag name="Wireframe">Rautalankamalli</Tag>
+	<Tag name="TerUpdSkip">Terrain update skip</Tag>
 	<Tag name="Brush_Force">Force</Tag>
 	<Tag name="Score">Pisteet</Tag>
 	<Tag name="SpeedSensitiveSteering">Speed Sensitive Steering</Tag>
@@ -179,6 +181,7 @@
 	<Tag name="NetServer">Palvelin</Tag>
 	<Tag name="InputRoadWidth">- vaihda tien leveyttä</Tag>
 	<Tag name="Wall">Wall</Tag>
+	<Tag name="TipChangeReflect">Change car color reflectiveness (matte-mirror).</Tag>
 	<Tag name="filmgrain">Filmirakeisuus</Tag>
 	<Tag name="Replay">Uusinta</Tag>
 	<Tag name="AutoRear">Automaattinen peruutusvaihde</Tag>
@@ -219,8 +222,10 @@
 	<Tag name="TipTerrainHalf">Resize current terrain heightmap by half (use only for reducing file size).</Tag>
 	<Tag name="wind">tuuli</Tag>
 	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
+	<Tag name="TipDustSize">Pölyhiukkasten koko.</Tag>
 	<Tag name="ChampEndCongrats">Onneksi olkoon!</Tag>
 	<Tag name="LS_CAR">Latadaan autoa</Tag>
+	<Tag name="Author">Author(s)</Tag>
 	<Tag name="MaxScale">maksimi skaalaus</Tag>
 	<Tag name="Fluids">Nesteet</Tag>
 	<Tag name="NetNickname">Kutsumanimi</Tag>
@@ -272,11 +277,11 @@
 	<Tag name="TipABS">Estää jarrujen lukkiutumisen (oletus: pois)</Tag>
 	<Tag name="TipGrassPatchHeightMin">Minimal grass patch height.</Tag>
 	<Tag name="InputRoadMat">-,=  - road/pipe material  (-1 hidden)</Tag>
-	<Tag name="InputDetailPreset">Set from preset</Tag>
+	<Tag name="CarType_Terrain">Terrain</Tag>
 	<Tag name="InputObjectsRotReset">shift-2 - reset rotation</Tag>
 	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
 	<Tag name="TipFogClr2">Fog end color when looking away from sun.</Tag>
-	<Tag name="Road_Snap">Snap</Tag>
+	<Tag name="Readme">Readme</Tag>
 	<Tag name="TipSunDirPitch">Sun direction - pitch angle.</Tag>
 	<Tag name="Passed">Läpäisty</Tag>
 	<Tag name="InputMapHandBrake">Käsijarru</Tag>
@@ -326,13 +331,14 @@
 	<Tag name="Reflections">Heijastukset</Tag>
 	<Tag name="PipeMaterials">Putkimateriaalit</Tag>
 	<Tag name="InputFluidsPrevNext">PgUp,PgDn (or Wheel) - previous/next fluid</Tag>
+	<Tag name="CarType_Asphalt">Asphalt</Tag>
 	<Tag name="Yaw">kallistus</Tag>
 	<Tag name="Detail">Yksityiskohdat</Tag>
 	<Tag name="AllEffects">Tehosteet aktivoitu</Tag>
 	<Tag name="SplitVertically">Jaa pystysuunnassa</Tag>
 	<Tag name="Start">alku</Tag>
 	<Tag name="TipGrTerMinHeight">Terrain height below which there won't be any grass (starts fading out, for smooth distance).</Tag>
-	<Tag name="Readme">Readme</Tag>
+	<Tag name="Road_Snap">Snap</Tag>
 	<Tag name="InputRoadShiftReverse">shift-Ins - paste   shift-ctrl-Ins - reversed</Tag>
 	<Tag name="MinScale">minimi skaalaus</Tag>
 	<Tag name="MergeLength">Yhdistä pituus</Tag>
@@ -354,6 +360,7 @@
 	<Tag name="InputMapShowOptions">Näytä valinnat</Tag>
 	<Tag name="InputCameraMode">Kameramoodi</Tag>
 	<Tag name="Enabled">Käytössä</Tag>
+	<Tag name="TipCarType">Car type, primary destination. But some cars can be used on gravel even if not meant for it.</Tag>
 	<Tag name="TipReverse">Reverse track direction.</Tag>
 	<Tag name="DidntPass">Didn't pass</Tag>
 	<Tag name="Road_Cur">Cur</Tag>
@@ -384,6 +391,7 @@
 	<Tag name="SceneryId">Scenery Id</Tag>
 	<Tag name="TipTerTriSize">Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8).</Tag>
 	<Tag name="HDRIntensity">Bloom Intensity</Tag>
+	<Tag name="ColReflect">Reflection</Tag>
 	<Tag name="Development">Kehitys</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
 	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
@@ -436,7 +444,7 @@
 	<Tag name="GraphicsAllSettings">Vaihda kaikki grafiikka-asetukset esiasetukseen:</Tag>
 	<Tag name="InputTerPaint">A - Paint Textures (layers)</Tag>
 	<Tag name="NetPort">Portti</Tag>
-	<Tag name="Tracks">Radat</Tag>
+	<Tag name="CarType_Gravel">Gravel</Tag>
 	<Tag name="Brush_CurrentH">Curr.H</Tag>
 	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - size   alt-RMB - depth</Tag>
@@ -540,6 +548,7 @@
 	<Tag name="RplCurrent">Nykyinen</Tag>
 	<Tag name="InputBrushFreq">O,P  -  noise Frequency (scale)</Tag>
 	<Tag name="InputCamControl2">LMB - rotate  RMB - move  MMB - zoom</Tag>
+	<Tag name="CarType_Slow">Slow</Tag>
 	<Tag name="Diff5">Erittäin vaikea</Tag>
 	<Tag name="LS_CLEANUP">Siistitään</Tag>
 	<Tag name="Difficulty">Vaikeusaste</Tag>
@@ -656,6 +665,7 @@
 	<Tag name="Far">Far</Tag>
 	<Tag name="Startup">Käynnistys</Tag>
 	<Tag name="RplGhosts">Haamut</Tag>
+	<Tag name="CarType">Type</Tag>
 	<Tag name="InputReturnDelay">Return speed</Tag>
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 	<Tag name="InputFluidsMode">W - muokkaa nesteitä</Tag>
@@ -774,6 +784,7 @@
 	<Tag name="TBTime">Aika</Tag>
 	<Tag name="ColGloss">Glossiness</Tag>
 	<Tag name="TipTerrainGenerate">Generates new terrain from noise functions using all parameters below.</Tag>
+	<Tag name="InputDetailPreset">Set from preset</Tag>
 	<Tag name="TipRainSnowInt">Vesi/lumisateen voimakkuus (esim. 1000)</Tag>
 	<Tag name="TrackLength">Pituus</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - reset rotation</Tag>
@@ -788,6 +799,7 @@
 	<Tag name="GrassSize">Size</Tag>
 	<Tag name="Left">Vasen</Tag>
 	<Tag name="InputBrushOctaves">, .   -  noise Octaves (detail)</Tag>
+	<Tag name="CarSpeed">Speed</Tag>
 	<Tag name="InputStartHeight">[,]  -  adjust start box height (bigger for pipes)</Tag>
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="GrMaterial">Material</Tag>
@@ -807,6 +819,7 @@
 	<Tag name="ObjBuildings">Buildings</Tag>
 	<Tag name="TipTrkScreenEditor">Kuvankaappaus pelitilanteesta valitulla radalla.</Tag>
 	<Tag name="InputObjectsRot">2 - Rotate local (alt- global)  LMB: Z  RMB: Y  MMB: X</Tag>
+	<Tag name="CarType_Other">Other</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="InputRoadHeight">- muuta korkeutta</Tag>
 	<Tag name="TipSunSpecular">Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)</Tag>
@@ -838,6 +851,7 @@
 	<Tag name="InputStart">Aloita</Tag>
 	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
 	<Tag name="InputBrushOffset">9,0  -  noise generate Offset (position)</Tag>
+	<Tag name="CarYear">Year</Tag>
 	<Tag name="TipFogEndDist">Fog end distance [meters].</Tag>
 	<Tag name="Color">väri</Tag>
 	<Tag name="CarScrap">Car Scrap</Tag>
@@ -847,20 +861,9 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="CarType_Racing">Racing</Tag>
-	<Tag name="CarType_Gravel">Gravel</Tag>
-	<Tag name="TipCarSpeed">Car speed rating, more means faster car. Warning, on gravel too fast cars won't be faster because they don't have enough grip.</Tag>
-	<Tag name="TipChangeReflect">Change car color reflectiveness (matte-mirror).</Tag>
-	<Tag name="Author">Author(s)</Tag>
-	<Tag name="CarType_Terrain">Terrain</Tag>
-	<Tag name="CarType_Asphalt">Asphalt</Tag>
-	<Tag name="TipCarType">Car type, primary destination. But some cars can be used on gravel even if not meant for it.</Tag>
-	<Tag name="ColReflect">Reflection</Tag>
-	<Tag name="CarType_Slow">Slow</Tag>
-	<Tag name="CarType">Type</Tag>
-	<Tag name="CarSpeed">Speed</Tag>
-	<Tag name="CarType_Other">Other</Tag>
-	<Tag name="CarYear">Year</Tag>
+	<Tag name="Challenge">Challenge</Tag>
+	<Tag name="Tutorial">Tutorial</Tag>
+	<Tag name="CarType_Extreme">Extreme</Tag>
 	<Tag name="GameVersion">2.0</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

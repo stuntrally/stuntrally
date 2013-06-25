@@ -5,7 +5,7 @@
 	<Tag name="Density">Densité</Tag>
 	<Tag name="InputMapScreenshot">Capture d'écran</Tag>
 	<Tag name="Brush_Filter">Filtre</Tag>
-	<Tag name="TipDustSize">Taille des particules de sable.</Tag>
+	<Tag name="Time">Temps</Tag>
 	<Tag name="TipGrassSwayDistr">Distribution de l'effet de \</Tag>
 	<Tag name="GraphicsAll_VeryHigh">Très élevé</Tag>
 	<Tag name="InpSet_AxisFull">Axe complet</Tag>
@@ -55,7 +55,7 @@
 	<Tag name="MessageBox_No">Non</Tag>
 	<Tag name="InputUpdBlendmap">F9 - mettre à jour la Blendmap du terrain (manuellement)</Tag>
 	<Tag name="Version">version</Tag>
-	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
+	<Tag name="InputRoadOnTer">Orig. - activer l'alignement sur le Terrain</Tag>
 	<Tag name="TipSunDiffuse">Sun light diffuse (normal) color. R G B components 0 to 1 (eg. 0.9 0.9 0.9)</Tag>
 	<Tag name="Progress">Progrès</Tag>
 	<Tag name="Brush_ShapeSinus">Sinus</Tag>
@@ -115,7 +115,7 @@
 	<Tag name="InputRoadNew">Ctrl-Espace - définir les valeurs du nouveau point depuis la sél.</Tag>
 	<Tag name="Road_New">Nouveau</Tag>
 	<Tag name="Top">Haut</Tag>
-	<Tag name="TerUpdSkip">Fréq. de MAJ du terrain</Tag>
+	<Tag name="CarType_Racing">Racing</Tag>
 	<Tag name="Input">Contrôles</Tag>
 	<Tag name="AlignWidthAdd">Largeur ajoutée</Tag>
 	<Tag name="NetReady">Prêt</Tag>
@@ -128,6 +128,7 @@
 	<Tag name="CopySource">Définir comme source pour la copie</Tag>
 	<Tag name="CarCrash">Crash de la Voiture</Tag>
 	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
+	<Tag name="Tracks">Circuits</Tag>
 	<Tag name="LS_OBJS">Chargement des objets</Tag>
 	<Tag name="TreeRoadDist">Distance arbres-route</Tag>
 	<Tag name="GraphicsAll_Medium">Moyen</Tag>
@@ -145,7 +146,7 @@
 	<Tag name="CameraInfo">Informations de la caméra</Tag>
 	<Tag name="frenzy">routes sinueuses</Tag>
 	<Tag name="InputRoadChkRadius">K,L - taille des points de contrôle (ChkR 0 - aucun)</Tag>
-	<Tag name="Time">Temps</Tag>
+	<Tag name="TipCarSpeed">Car speed rating, more means faster car. Warning, on gravel too fast cars won't be faster because they don't have enough grip.</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - au début alt-ctrl - à la fin</Tag>
 	<Tag name="RearThrottleInverse">Inverser commandes marche arrière</Tag>
 	<Tag name="MessageBox_Yes">Oui</Tag>
@@ -171,6 +172,7 @@
 	<Tag name="InpSet_Slow">Lent</Tag>
 	<Tag name="InputAssignKey">&lt;Appuyer sur une touche&gt;</Tag>
 	<Tag name="Wireframe">Fil de fer</Tag>
+	<Tag name="TerUpdSkip">Fréq. de MAJ du terrain</Tag>
 	<Tag name="Brush_Force">Force</Tag>
 	<Tag name="Score">Score</Tag>
 	<Tag name="SpeedSensitiveSteering">Direction sensible à la vitesse</Tag>
@@ -179,6 +181,7 @@
 	<Tag name="NetServer">Serveur</Tag>
 	<Tag name="InputRoadWidth">- changer la largeur de la route</Tag>
 	<Tag name="Wall">Mur</Tag>
+	<Tag name="TipChangeReflect">Change car color reflectiveness (matte-mirror).</Tag>
 	<Tag name="filmgrain">Grain de film</Tag>
 	<Tag name="Replay">Rejouer</Tag>
 	<Tag name="AutoRear">Marche aarière automatique</Tag>
@@ -219,8 +222,10 @@
 	<Tag name="TipTerrainHalf">Réduire la taille de la carte d'altitude de moitié (utilisez ceci uniquement pour réduire la taille du fichier).</Tag>
 	<Tag name="wind">vent</Tag>
 	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
+	<Tag name="TipDustSize">Taille des particules de sable.</Tag>
 	<Tag name="ChampEndCongrats">Félicitations !</Tag>
 	<Tag name="LS_CAR">Chargement de la voiture</Tag>
+	<Tag name="Author">Author(s)</Tag>
 	<Tag name="MaxScale">échelle max.</Tag>
 	<Tag name="Fluids">Fluides</Tag>
 	<Tag name="NetNickname">Surnom</Tag>
@@ -272,11 +277,11 @@
 	<Tag name="TipABS">Évite le blocage des roues au freinage (par défaut : désactivé).</Tag>
 	<Tag name="TipGrassPatchHeightMin">Hauteur minimale de l'herbe.</Tag>
 	<Tag name="InputRoadMat">-,= - matériau de la route/tube (-1 caché)</Tag>
-	<Tag name="InputDetailPreset">Définir depuis un pré-réglage</Tag>
+	<Tag name="CarType_Terrain">Terrain</Tag>
 	<Tag name="InputObjectsRotReset">Maj.-2 - réinit. la rotation</Tag>
 	<Tag name="EdInputBar">Barre d'entrée Ctrl-I</Tag>
 	<Tag name="TipFogClr2">Couleur de la fin de la brume quand la caméra ne regarde pas le soleil.</Tag>
-	<Tag name="Road_Snap">Aimanter</Tag>
+	<Tag name="Readme">Lisez-moi</Tag>
 	<Tag name="TipSunDirPitch">Direction du soleil - verticale.</Tag>
 	<Tag name="Passed">Réussi</Tag>
 	<Tag name="InputMapHandBrake">Frein à main</Tag>
@@ -326,13 +331,14 @@
 	<Tag name="Reflections">Réflexions</Tag>
 	<Tag name="PipeMaterials">Matériaux des tubes</Tag>
 	<Tag name="InputFluidsPrevNext">Pg.préc,Pg.suiv. (ou molette) - liquide précédent/suivant</Tag>
+	<Tag name="CarType_Asphalt">Asphalt</Tag>
 	<Tag name="Yaw">direction horizontale</Tag>
 	<Tag name="Detail">Detail</Tag>
 	<Tag name="AllEffects">Effets activés</Tag>
 	<Tag name="SplitVertically">Scinder verticalement</Tag>
 	<Tag name="Start">démarrer</Tag>
 	<Tag name="TipGrTerMinHeight">En-dessous de cette altitude, il n'y aura pas (ou moins) d'herbe.</Tag>
-	<Tag name="Readme">Lisez-moi</Tag>
+	<Tag name="Road_Snap">Aimanter</Tag>
 	<Tag name="InputRoadShiftReverse">Maj.-Insér. - coller Maj.-Ctrl-Insér. - inversé</Tag>
 	<Tag name="MinScale">échelle min.</Tag>
 	<Tag name="MergeLength">Merge length</Tag>
@@ -354,6 +360,7 @@
 	<Tag name="InputMapShowOptions">Afficher les options</Tag>
 	<Tag name="InputCameraMode">Mode de la caméra</Tag>
 	<Tag name="Enabled">Activé</Tag>
+	<Tag name="TipCarType">Car type, primary destination. But some cars can be used on gravel even if not meant for it.</Tag>
 	<Tag name="TipReverse">Inverse la direction du circuit.</Tag>
 	<Tag name="DidntPass">Échec</Tag>
 	<Tag name="Road_Cur">Cur</Tag>
@@ -384,6 +391,7 @@
 	<Tag name="SceneryId">ID du paysage</Tag>
 	<Tag name="TipTerTriSize">Taille des triangles du terrain en [mètres] (1 à 2 sont recommandés, utilisez une valeur plus élevée pour un grand circuit). Changé après une Mise à jour (F8).</Tag>
 	<Tag name="HDRIntensity">Intensité d'éblouissement</Tag>
+	<Tag name="ColReflect">Reflection</Tag>
 	<Tag name="Development">Développement</Tag>
 	<Tag name="InputRoadIns">Insér. - insérer nouveau (après sélection, Alt : avant sélection)</Tag>
 	<Tag name="TweakEdit1">Alt-Z - afficher la fenêtre d'édition de voiture</Tag>
@@ -436,7 +444,7 @@
 	<Tag name="GraphicsAllSettings">Changer tous les paramètres graphiques :</Tag>
 	<Tag name="InputTerPaint">A - peindre des textures (calques)</Tag>
 	<Tag name="NetPort">Port</Tag>
-	<Tag name="Tracks">Circuits</Tag>
+	<Tag name="CarType_Gravel">Gravel</Tag>
 	<Tag name="Brush_CurrentH">H. actuelle</Tag>
 	<Tag name="LTrFlDepth">profondeur maximale dans le liquide</Tag>
 	<Tag name="InputFluidsSize">Alt-Clic gauche - taille Alt-Clic droit - profondeur</Tag>
@@ -540,6 +548,7 @@
 	<Tag name="RplCurrent">Courrante</Tag>
 	<Tag name="InputBrushFreq">O,P - fréquence du bruit (échelle)</Tag>
 	<Tag name="InputCamControl2">Clic gauche - tourner Clic droit - zoomer</Tag>
+	<Tag name="CarType_Slow">Slow</Tag>
 	<Tag name="Diff5">Très difficile</Tag>
 	<Tag name="LS_CLEANUP">Nettoyage</Tag>
 	<Tag name="Difficulty">Difficulté</Tag>
@@ -656,6 +665,7 @@
 	<Tag name="Far">Éloigné</Tag>
 	<Tag name="Startup">Démarrage</Tag>
 	<Tag name="RplGhosts">Fantômes</Tag>
+	<Tag name="CarType">Type</Tag>
 	<Tag name="InputReturnDelay">Vitesse du retour</Tag>
 	<Tag name="RplBestOnly">Enregistrer le fantôme pour le meilleur temps seulement</Tag>
 	<Tag name="InputFluidsMode">W - éditer les liquides</Tag>
@@ -774,6 +784,7 @@
 	<Tag name="TBTime">Temps</Tag>
 	<Tag name="ColGloss">Brillance</Tag>
 	<Tag name="TipTerrainGenerate">Génère du nouveau terrain avec des fonctions de bruit en utilisant les paramètres ci-dessous.</Tag>
+	<Tag name="InputDetailPreset">Définir depuis un pré-réglage</Tag>
 	<Tag name="TipRainSnowInt">Intensité de la pluie/neige (par exemple 1000)</Tag>
 	<Tag name="TrackLength">Longueur</Tag>
 	<Tag name="InputStartAltMMB">Alt-Clic du milieu - réinit. la rotation</Tag>
@@ -788,6 +799,7 @@
 	<Tag name="GrassSize">Taille</Tag>
 	<Tag name="Left">Gauche</Tag>
 	<Tag name="InputBrushOctaves">, . - Octaves de bruit (détail)</Tag>
+	<Tag name="CarSpeed">Speed</Tag>
 	<Tag name="InputStartHeight">[,]  -  adjust start box height (bigger for pipes)</Tag>
 	<Tag name="InputStartDir">Espace - changer la direction de la route (+ ou -)</Tag>
 	<Tag name="GrMaterial">Matériel</Tag>
@@ -807,6 +819,7 @@
 	<Tag name="ObjBuildings">Bâtiments</Tag>
 	<Tag name="TipTrkScreenEditor">Capture d'écran du jeu pour la piste sélectionnée.</Tag>
 	<Tag name="InputObjectsRot">2 - tourner localement (Alt - globalement) Clic gauche : Z Clic droit : Y Clic du milieu : X</Tag>
+	<Tag name="CarType_Other">Other</Tag>
 	<Tag name="BulletDebug">Débogage Bullet</Tag>
 	<Tag name="InputRoadHeight">- changer la hauteur</Tag>
 	<Tag name="TipSunSpecular">Couleur des reflets du soleil. Composants R V B de 0 à 1 (exemple : 0.6 0.6 0.6)</Tag>
@@ -838,6 +851,7 @@
 	<Tag name="InputStart">Démarrer</Tag>
 	<Tag name="TipLTrMaxTerAng">Au-delà de cet angle du terrain, le modèle n'apparaîtra pas.</Tag>
 	<Tag name="InputBrushOffset">9,0  -  noise generate Offset (position)</Tag>
+	<Tag name="CarYear">Year</Tag>
 	<Tag name="TipFogEndDist">Distance de la fin de la brume [mètres].</Tag>
 	<Tag name="Color">couleur</Tag>
 	<Tag name="CarScrap">Ferraille de voiture</Tag>
@@ -847,20 +861,9 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet d'Options précédent/suivant (Maj. sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="CarType_Racing">Racing</Tag>
-	<Tag name="CarType_Gravel">Gravel</Tag>
-	<Tag name="TipCarSpeed">Car speed rating, more means faster car. Warning, on gravel too fast cars won't be faster because they don't have enough grip.</Tag>
-	<Tag name="TipChangeReflect">Change car color reflectiveness (matte-mirror).</Tag>
-	<Tag name="Author">Author(s)</Tag>
-	<Tag name="CarType_Terrain">Terrain</Tag>
-	<Tag name="CarType_Asphalt">Asphalt</Tag>
-	<Tag name="TipCarType">Car type, primary destination. But some cars can be used on gravel even if not meant for it.</Tag>
-	<Tag name="ColReflect">Reflection</Tag>
-	<Tag name="CarType_Slow">Slow</Tag>
-	<Tag name="CarType">Type</Tag>
-	<Tag name="CarSpeed">Speed</Tag>
-	<Tag name="CarType_Other">Other</Tag>
-	<Tag name="CarYear">Year</Tag>
+	<Tag name="Challenge">Challenge</Tag>
+	<Tag name="Tutorial">Tutorial</Tag>
+	<Tag name="CarType_Extreme">Extreme</Tag>
 	<Tag name="GameVersion">2.0</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

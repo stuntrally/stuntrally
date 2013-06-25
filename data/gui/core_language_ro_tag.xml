@@ -5,7 +5,7 @@
 	<Tag name="Density">Densitatea</Tag>
 	<Tag name="InputMapScreenshot">Screenshot</Tag>
 	<Tag name="Brush_Filter">Filter</Tag>
-	<Tag name="TipDustSize">Mărimea particulelor de praf.</Tag>
+	<Tag name="Time">Time</Tag>
 	<Tag name="TipGrassSwayDistr">Efect de distribuție iarbă (cum variază).</Tag>
 	<Tag name="GraphicsAll_VeryHigh">Very High</Tag>
 	<Tag name="InpSet_AxisFull">Axis Full</Tag>
@@ -115,7 +115,7 @@
 	<Tag name="InputRoadNew">ctrl-Space - set new point's values from picked</Tag>
 	<Tag name="Road_New">New</Tag>
 	<Tag name="Top">Deasupra</Tag>
-	<Tag name="TerUpdSkip">Ignoră actualizarea terenului</Tag>
+	<Tag name="CarType_Racing">Racing</Tag>
 	<Tag name="Input">Intrare</Tag>
 	<Tag name="AlignWidthAdd">Width add</Tag>
 	<Tag name="NetReady">Ready</Tag>
@@ -128,6 +128,7 @@
 	<Tag name="CopySource">Setează ca sursă copiată</Tag>
 	<Tag name="CarCrash">Car Crash</Tag>
 	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
+	<Tag name="Tracks">Tracks</Tag>
 	<Tag name="LS_OBJS">Loading Objects</Tag>
 	<Tag name="TreeRoadDist">Trees to road dist.</Tag>
 	<Tag name="GraphicsAll_Medium">Medium</Tag>
@@ -145,7 +146,7 @@
 	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="frenzy">frenzy (curly road)</Tag>
 	<Tag name="InputRoadChkRadius">K,L  - checkpoint radius  (ChkR 0 - none)</Tag>
-	<Tag name="Time">Time</Tag>
+	<Tag name="TipCarSpeed">Car speed rating, more means faster car. Warning, on gravel too fast cars won't be faster because they don't have enough grip.</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - at start   alt-ctrl - at end</Tag>
 	<Tag name="RearThrottleInverse">Rear throttle inverse</Tag>
 	<Tag name="MessageBox_Yes">Yes</Tag>
@@ -171,6 +172,7 @@
 	<Tag name="InpSet_Slow">Slow</Tag>
 	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
 	<Tag name="Wireframe">Cadru</Tag>
+	<Tag name="TerUpdSkip">Ignoră actualizarea terenului</Tag>
 	<Tag name="Brush_Force">Force</Tag>
 	<Tag name="Score">Score</Tag>
 	<Tag name="SpeedSensitiveSteering">Speed Sensitive Steering</Tag>
@@ -179,6 +181,7 @@
 	<Tag name="NetServer">Server</Tag>
 	<Tag name="InputRoadWidth">- schimbă lățimea drumului</Tag>
 	<Tag name="Wall">Wall</Tag>
+	<Tag name="TipChangeReflect">Change car color reflectiveness (matte-mirror).</Tag>
 	<Tag name="filmgrain">Film Grain</Tag>
 	<Tag name="Replay">Replay</Tag>
 	<Tag name="AutoRear">Dat cu spatele automat</Tag>
@@ -219,8 +222,10 @@
 	<Tag name="TipTerrainHalf">Resize current terrain heightmap by half (use only for reducing file size).</Tag>
 	<Tag name="wind">Vânt</Tag>
 	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
+	<Tag name="TipDustSize">Mărimea particulelor de praf.</Tag>
 	<Tag name="ChampEndCongrats">Congratulations !</Tag>
 	<Tag name="LS_CAR">Se încarcă mașina</Tag>
+	<Tag name="Author">Author(s)</Tag>
 	<Tag name="MaxScale">scala maximă</Tag>
 	<Tag name="Fluids">Fluids</Tag>
 	<Tag name="NetNickname">Nickname</Tag>
@@ -272,11 +277,11 @@
 	<Tag name="TipABS">Previne blocarea roții la frânare (implicit: oprit)</Tag>
 	<Tag name="TipGrassPatchHeightMin">Înălțime minimă patch iarbă</Tag>
 	<Tag name="InputRoadMat">-,=  - road/pipe material  (-1 hidden)</Tag>
-	<Tag name="InputDetailPreset">Set from preset</Tag>
+	<Tag name="CarType_Terrain">Terrain</Tag>
 	<Tag name="InputObjectsRotReset">shift-2 - reset rotation</Tag>
 	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
 	<Tag name="TipFogClr2">Fog end color when looking away from sun.</Tag>
-	<Tag name="Road_Snap">Snap</Tag>
+	<Tag name="Readme">Readme</Tag>
 	<Tag name="TipSunDirPitch">Direcția soarelui - unghiul de tangaj</Tag>
 	<Tag name="Passed">Passed</Tag>
 	<Tag name="InputMapHandBrake">Frână de mână</Tag>
@@ -326,13 +331,14 @@
 	<Tag name="Reflections">Reflections</Tag>
 	<Tag name="PipeMaterials">Materiale tub</Tag>
 	<Tag name="InputFluidsPrevNext">PgUp,PgDn (or Wheel) - previous/next fluid</Tag>
+	<Tag name="CarType_Asphalt">Asphalt</Tag>
 	<Tag name="Yaw">rotire</Tag>
 	<Tag name="Detail">Detalii</Tag>
 	<Tag name="AllEffects">Effects Enabled</Tag>
 	<Tag name="SplitVertically">Split Vertically</Tag>
 	<Tag name="Start">start</Tag>
 	<Tag name="TipGrTerMinHeight">Terrain height below which there won't be any grass (starts fading out, for smooth distance).</Tag>
-	<Tag name="Readme">Readme</Tag>
+	<Tag name="Road_Snap">Snap</Tag>
 	<Tag name="InputRoadShiftReverse">shift-Ins - paste   shift-ctrl-Ins - reversed</Tag>
 	<Tag name="MinScale">scala minimă</Tag>
 	<Tag name="MergeLength">Îmbină lungimea</Tag>
@@ -354,6 +360,7 @@
 	<Tag name="InputMapShowOptions">Arată opțiunile</Tag>
 	<Tag name="InputCameraMode">Modul cameră</Tag>
 	<Tag name="Enabled">Activat</Tag>
+	<Tag name="TipCarType">Car type, primary destination. But some cars can be used on gravel even if not meant for it.</Tag>
 	<Tag name="TipReverse">Direcția traseului inversă</Tag>
 	<Tag name="DidntPass">Didn't pass</Tag>
 	<Tag name="Road_Cur">Cur</Tag>
@@ -384,6 +391,7 @@
 	<Tag name="SceneryId">Scenery Id</Tag>
 	<Tag name="TipTerTriSize">Mărime triunghiuri teren în [metri](recomandat: 1 - 2,  folosește mai multe pentru zone ale terenului mai mari).Se schimbă după Actualizare(F8).</Tag>
 	<Tag name="HDRIntensity">Bloom Intensity</Tag>
+	<Tag name="ColReflect">Reflection</Tag>
 	<Tag name="Development">Dezvoltare</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
 	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
@@ -436,7 +444,7 @@
 	<Tag name="GraphicsAllSettings">Change all graphics settings to preset:</Tag>
 	<Tag name="InputTerPaint">A - Colorează texturile (straturi)</Tag>
 	<Tag name="NetPort">Port</Tag>
-	<Tag name="Tracks">Tracks</Tag>
+	<Tag name="CarType_Gravel">Gravel</Tag>
 	<Tag name="Brush_CurrentH">Curr.H</Tag>
 	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - size   alt-RMB - depth</Tag>
@@ -540,6 +548,7 @@
 	<Tag name="RplCurrent">Current</Tag>
 	<Tag name="InputBrushFreq">O,P  -  noise Frequency (scale)</Tag>
 	<Tag name="InputCamControl2">LMB - rotate  RMB - move  MMB - zoom</Tag>
+	<Tag name="CarType_Slow">Slow</Tag>
 	<Tag name="Diff5">Very Hard</Tag>
 	<Tag name="LS_CLEANUP">Curățare</Tag>
 	<Tag name="Difficulty">Difficulty</Tag>
@@ -656,6 +665,7 @@
 	<Tag name="Far">Far</Tag>
 	<Tag name="Startup">Startup</Tag>
 	<Tag name="RplGhosts">Ghosts</Tag>
+	<Tag name="CarType">Type</Tag>
 	<Tag name="InputReturnDelay">Return speed</Tag>
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 	<Tag name="InputFluidsMode">W - edit fluids</Tag>
@@ -774,6 +784,7 @@
 	<Tag name="TBTime">Time</Tag>
 	<Tag name="ColGloss">Glossiness</Tag>
 	<Tag name="TipTerrainGenerate">Generates new terrain from noise functions using all parameters below.</Tag>
+	<Tag name="InputDetailPreset">Set from preset</Tag>
 	<Tag name="TipRainSnowInt">Rain/Snow intensity (eg. 1000)</Tag>
 	<Tag name="TrackLength">Length</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - resetează rotația</Tag>
@@ -788,6 +799,7 @@
 	<Tag name="GrassSize">Size</Tag>
 	<Tag name="Left">Left</Tag>
 	<Tag name="InputBrushOctaves">, .   -  noise Octaves (detail)</Tag>
+	<Tag name="CarSpeed">Speed</Tag>
 	<Tag name="InputStartHeight">[,] - ajustează înălțimea casetei de start (mai mare pentru conducte)</Tag>
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="GrMaterial">Material</Tag>
@@ -807,6 +819,7 @@
 	<Tag name="ObjBuildings">Buildings</Tag>
 	<Tag name="TipTrkScreenEditor">Captură de ecran pentru traseul selectat</Tag>
 	<Tag name="InputObjectsRot">2 - Rotate local (alt- global)  LMB: Z  RMB: Y  MMB: X</Tag>
+	<Tag name="CarType_Other">Other</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="InputRoadHeight">- change height</Tag>
 	<Tag name="TipSunSpecular">Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)</Tag>
@@ -838,6 +851,7 @@
 	<Tag name="InputStart">Start</Tag>
 	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
 	<Tag name="InputBrushOffset">9,0  -  noise generate Offset (position)</Tag>
+	<Tag name="CarYear">Year</Tag>
 	<Tag name="TipFogEndDist">Fog end distance [meters].</Tag>
 	<Tag name="Color">culoare</Tag>
 	<Tag name="CarScrap">Car Scrap</Tag>
@@ -847,20 +861,9 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="CarType_Racing">Racing</Tag>
-	<Tag name="CarType_Gravel">Gravel</Tag>
-	<Tag name="TipCarSpeed">Car speed rating, more means faster car. Warning, on gravel too fast cars won't be faster because they don't have enough grip.</Tag>
-	<Tag name="TipChangeReflect">Change car color reflectiveness (matte-mirror).</Tag>
-	<Tag name="Author">Author(s)</Tag>
-	<Tag name="CarType_Terrain">Terrain</Tag>
-	<Tag name="CarType_Asphalt">Asphalt</Tag>
-	<Tag name="TipCarType">Car type, primary destination. But some cars can be used on gravel even if not meant for it.</Tag>
-	<Tag name="ColReflect">Reflection</Tag>
-	<Tag name="CarType_Slow">Slow</Tag>
-	<Tag name="CarType">Type</Tag>
-	<Tag name="CarSpeed">Speed</Tag>
-	<Tag name="CarType_Other">Other</Tag>
-	<Tag name="CarYear">Year</Tag>
+	<Tag name="Challenge">Challenge</Tag>
+	<Tag name="Tutorial">Tutorial</Tag>
+	<Tag name="CarType_Extreme">Extreme</Tag>
 	<Tag name="GameVersion">2.0</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
