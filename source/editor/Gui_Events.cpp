@@ -523,7 +523,8 @@ void App::SaveCam()
 {
 	if (!mCamera)  return;
 	Vector3 p = mCamera->getPosition(), d = mCamera->getDirection();
-	pSet->cam_x = p.x;   pSet->cam_y = p.y;   pSet->cam_z = p.z;
+	if (bTopView)  {  p = oldPos;  d = oldRot;  }
+	pSet->cam_x  = p.x;  pSet->cam_y  = p.y;  pSet->cam_z  = p.z;
 	pSet->cam_dx = d.x;  pSet->cam_dy = d.y;  pSet->cam_dz = d.z;
 }
 
@@ -547,4 +548,27 @@ void App::btnSetCam(WP wp)
 	else if (s=="CamRight")	{	mCameraT->setPosition(0,y0,-xz);  mCameraT->setDirection(0,0, 1);  }
 	else if (s=="CamFront")	{	mCameraT->setPosition( xz,y0,0);  mCameraT->setDirection(-1,0,0);  }
 	else if (s=="CamBack")	{	mCameraT->setPosition(-xz,y0,0);  mCameraT->setDirection( 1,0,0);  }
+}
+
+//  toggle top view camera
+void App::toggleTopView()
+{
+	bTopView = !bTopView;
+	if (bTopView)
+	{	// store old
+		oldPos = mCameraT->getPosition();
+		oldRot = mCameraT->getDirection();
+		
+		Real xz = sc->td.fTerWorldSize*0.5f, r = 45.f * 0.5f*PI_d/180.f, yt = xz / Math::Tan(r);
+		mCameraT->setPosition(0,yt,0);  mCameraT->setDirection(-0.0001,-1,0);
+
+		oldFog = pSet->bFog;
+		pSet->bFog = true;  chkFog->setStateSelected(pSet->bFog);  UpdFog();
+	}else
+	{	// restore
+		mCameraT->setPosition(oldPos);
+		mCameraT->setDirection(oldRot);
+
+		pSet->bFog = oldFog;  chkFog->setStateSelected(pSet->bFog);  UpdFog();
+	}
 }

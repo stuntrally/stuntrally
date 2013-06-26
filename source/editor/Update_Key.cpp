@@ -443,6 +443,10 @@ bool App::KeyPress(const CmdKey &arg)
    		case KC_I:
    			if (ctrl)  {  chkInputBar(chInputBar);  return true;  }
 			break;
+			
+		case KC_Z:
+			if (alt)  {  toggleTopView();  return true;  }
+			break;
 	}
 
 	//  GUI  keys in edits  ---------------------

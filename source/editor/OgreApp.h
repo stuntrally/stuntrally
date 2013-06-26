@@ -336,7 +336,9 @@ protected:
 	void chkAutoBlendmap(WP);  MyGUI::ButtonPtr chAutoBlendmap, chInputBar;
 	void chkCamPos(WP), chkInputBar(WP);
 
-	
+	void toggleTopView();  bool bTopView, oldFog;
+	Ogre::Vector3 oldPos,oldRot;
+
 
 	//  [Sky]  ----
 	MyGUI::ComboBoxPtr cmbSky, cmbRain1,cmbRain2;
@@ -371,7 +373,7 @@ protected:
 		float Filter,HSet;
 		Ogre::String name;
 	};
-	const static int brSetsNum = 20;
+	const static int brSetsNum = 30;
 	const static BrushSet brSets[brSetsNum];
 	void btnBrushPreset(WP), SetBrushPreset(int id);
 

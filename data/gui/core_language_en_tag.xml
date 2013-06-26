@@ -854,6 +854,7 @@
 	<Tag name="InputCamControl2">LMB - rotate  RMB - move  MMB - zoom</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
 	<Tag name="InputSlowFast">shift - slow   ctrl - fast</Tag>
+	<Tag name="InputTopView">Alt-Z - toggle top view</Tag>
 
 
 	<!--  Terrain  -->

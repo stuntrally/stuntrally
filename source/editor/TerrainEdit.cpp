@@ -38,6 +38,20 @@ const App::BrushSet App::brSets[App::brSetsNum] = {
 	{ED_Deform,0,  96.f, 20.f,   7.f,  0.37f,0.9f,7,  BRS_Noise, -1.f,-0.01f, "Noise peaks"},
 	{ED_Deform,0,  60.f, 40.f,   3.3f, 0.4f, 1.1f,5,  BRS_Noise, -1.f,-0.01f, "Rocky scratch"},
 	{ED_Deform,0,  60.f, 20.f,   2.3f, 0.13f,0.f, 5,  BRS_Noise, -1.f,-0.01f, "High Noise, bumps"},
+//------------
+	{ED_Deform,0,  32.f, 10.f,   0.5f, 1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Bold"},
+	{ED_Deform,0,  60.f, 30.f,   0.05f,1.f,  0.f, 5,BRS_Triangle,-1.f,-0.01f, "Drop"},
+													
+	{ED_Deform,0,  48.f, 20.f,   2.f,  1.f,  2.5f,5,  BRS_Noise, -1.f,-0.01f, "Noise normal"},
+	{ED_Deform,0,  24.f, 20.f,   4.f,  0.93f,2.7f,5,  BRS_Noise, -1.f,-0.01f, "Noise random"},
+													
+	{ED_Deform,0,  64.f, 20.f,   1.2f, 0.5f, 1.9f,5,  BRS_Noise, -1.f,-0.01f, "Cracks down"},
+	{ED_Deform,0,  60.f, 40.f,   0.7f, 0.4f, 0.f, 5,  BRS_Noise, -1.f,-0.01f, "Cracks"},
+	{ED_Deform,0,  96.f, 20.f,   0.7f, 0.25f,1.9f,5,  BRS_Noise, -1.f,-0.01f, "Cracks big, detail"},
+													
+	{ED_Deform,0,  96.f, 20.f,   7.f,  0.37f,0.9f,7,  BRS_Noise, -1.f,-0.01f, "Noise peaks"},
+	{ED_Deform,0,  60.f, 40.f,   3.3f, 0.4f, 1.1f,5,  BRS_Noise, -1.f,-0.01f, "Rocky scratch"},
+	{ED_Deform,0,  60.f, 20.f,   2.3f, 0.13f,0.f, 5,  BRS_Noise, -1.f,-0.01f, "High Noise, bumps"},
 };
 void App::btnBrushPreset(WP img)
 {
