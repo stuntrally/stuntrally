@@ -24,10 +24,13 @@ const App::BrushSet App::brSets[App::brSetsNum] = {
 	{ED_Filter,3,  16.f, 40.f,   4.f,  1.f,  0.f, 5,  BRS_Sinus,  2.f,-0.01f, "Filter small"},
 	{ED_Filter,3,  32.f, 20.f,   3.f,  1.f,  0.f, 5,  BRS_Sinus,  4.f,-0.01f, "Filter big"},
 	{ED_Filter,3, 128.f, 20.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus,  2.f,-0.01f, "Filter huge"},
-//------------
+
+	{ED_Smooth,0,  48.f, 50.f,   4.f,  1.f,  5.8f,5,BRS_Triangle,-1.f,-0.01f, "Smooth light peak"},
+	{ED_Smooth,0,  18.f, 20.f,   0.4f, 1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Smooth hard circle"},
 	{ED_Deform,0,  32.f, 10.f,   0.5f, 1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Bold"},
-	{ED_Deform,0,  60.f, 30.f,   0.05f,1.f,  0.f, 5,BRS_Triangle,-1.f,-0.01f, "Drop"},
-													
+	{ED_Deform,0,  48.f, 30.f,   0.05f,1.f,  0.f, 5,BRS_Triangle,-1.f,-0.01f, "Drop"},
+//------------
+	{ED_Deform,0,  30.f, 20.f,   1.f,  0.72f,1.5f,3,  BRS_Noise, -1.f,-0.01f, "Noise low"},
 	{ED_Deform,0,  48.f, 20.f,   2.f,  1.f,  2.5f,5,  BRS_Noise, -1.f,-0.01f, "Noise normal"},
 	{ED_Deform,0,  24.f, 20.f,   4.f,  0.93f,2.7f,5,  BRS_Noise, -1.f,-0.01f, "Noise random"},
 													
@@ -38,20 +41,23 @@ const App::BrushSet App::brSets[App::brSetsNum] = {
 	{ED_Deform,0,  96.f, 20.f,   7.f,  0.37f,0.9f,7,  BRS_Noise, -1.f,-0.01f, "Noise peaks"},
 	{ED_Deform,0,  60.f, 40.f,   3.3f, 0.4f, 1.1f,5,  BRS_Noise, -1.f,-0.01f, "Rocky scratch"},
 	{ED_Deform,0,  60.f, 20.f,   2.3f, 0.13f,0.f, 5,  BRS_Noise, -1.f,-0.01f, "High Noise, bumps"},
+
+	{ED_Smooth,0,  49.f, 57.f,   4.0f, 0.8f, 5.8f,5,  BRS_Noise, -1.f,-0.01f, "Smooth noise row"},
 //------------
-	{ED_Deform,0,  32.f, 10.f,   0.5f, 1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Bold"},
-	{ED_Deform,0,  60.f, 30.f,   0.05f,1.f,  0.f, 5,BRS_Triangle,-1.f,-0.01f, "Drop"},
+	{ED_Deform,0,  25.f, 20.f,   2.f,  0.4f, 0.f, 5,  BRS_Noise, -1.f,-0.01f, "Cracks row"},
+	{ED_Deform,0,  30.f, 20.f,   1.3f, 0.34f,0.5f,5,  BRS_Noise, -1.f,-0.01f, "Cracks noise"},
 													
-	{ED_Deform,0,  48.f, 20.f,   2.f,  1.f,  2.5f,5,  BRS_Noise, -1.f,-0.01f, "Noise normal"},
-	{ED_Deform,0,  24.f, 20.f,   4.f,  0.93f,2.7f,5,  BRS_Noise, -1.f,-0.01f, "Noise random"},
-													
-	{ED_Deform,0,  64.f, 20.f,   1.2f, 0.5f, 1.9f,5,  BRS_Noise, -1.f,-0.01f, "Cracks down"},
-	{ED_Deform,0,  60.f, 40.f,   0.7f, 0.4f, 0.f, 5,  BRS_Noise, -1.f,-0.01f, "Cracks"},
-	{ED_Deform,0,  96.f, 20.f,   0.7f, 0.25f,1.9f,5,  BRS_Noise, -1.f,-0.01f, "Cracks big, detail"},
-													
-	{ED_Deform,0,  96.f, 20.f,   7.f,  0.37f,0.9f,7,  BRS_Noise, -1.f,-0.01f, "Noise peaks"},
-	{ED_Deform,0,  60.f, 40.f,   3.3f, 0.4f, 1.1f,5,  BRS_Noise, -1.f,-0.01f, "Rocky scratch"},
-	{ED_Deform,0,  60.f, 20.f,   2.3f, 0.13f,0.f, 5,  BRS_Noise, -1.f,-0.01f, "High Noise, bumps"},
+	{ED_Deform,0,  60.f, 40.f,   0.9f, 0.34f,1.5f,4,  BRS_Noise, -1.f,-0.01f, "Rocky scratch"},
+	{ED_Deform,0,  60.f, 20.f,   1.4f, 0.30f,0.f, 4,  BRS_Noise, -1.f,-0.01f, "High Noise, bumps"},
+
+	{ED_Deform,0,  30.f, 33.f,   1.4f, 0.34f,6.3f,4,  BRS_Noise, -1.f,-0.01f, "noise asymetric"},
+	{ED_Deform,0,  30.f, 33.f,   1.4f, 0.34f,4.1f,4,  BRS_Noise, -1.f,-0.01f, "noise cracked 3"},
+
+	{ED_Deform,0,  32.f, 40.f,   7.9f, 1.f, 15.4f,7,  BRS_Noise, -1.f,-0.01f, "deform row noised"},
+	{ED_Height,0,  83.f,120.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f, 20.0f, "noise overdriven height"},
+
+	{ED_Filter,0,  42.f, 20.f,   2.f,  0.93f,2.7f,5,  BRS_Noise,  4.f,-0.01f, "filter strong"},
+	{ED_Filter,0,  70.f, 30.f,   1.9f, 0.2f, 0.2f,5,  BRS_Noise,  6.f,-0.01f, "filter noise"},
 };
 void App::btnBrushPreset(WP img)
 {
@@ -234,7 +240,7 @@ void App::updBrush()
 			for (int x = 0; x < size; ++x,++a)
 			{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 				float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
-				
+
 				float c = d * pow( fabs(Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*0.5f);
 
 				mBrushData[a] = std::max(-1.f, std::min(1.f, c ));

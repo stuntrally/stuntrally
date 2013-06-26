@@ -1252,274 +1252,311 @@
 						<Property key="Caption" value="#40E040#{Brushes}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 
-						<Widget type="ImageBox" skin="ImageBox" position="20 10 64 64" name="brI0">
+						<Widget type="ImageBox" skin="ImageBox" position="00 10 48 48" name="brI0">
 							<Property key="ImageTexture" value="brush0.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="45 75 40 24" name="brT0">
-							<Property key="Caption" value="16"/>
+						<Widget type="TextBox" skin="TextBox" position="20 60 40 24" name="brT0">
+							<Property key="Caption" value="7"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="90 10 64 64" name="brI1">
+						<Widget type="ImageBox" skin="ImageBox" position="50 10 48 48" name="brI1">
 							<Property key="ImageTexture" value="brush1.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="115 75 40 24" name="brT1">
+						<Widget type="TextBox" skin="TextBox" position="70 60 40 24" name="brT1">
 							<Property key="Caption" value="24"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="160 10 64 64" name="brI2">
+						<Widget type="ImageBox" skin="ImageBox" position="100 10 48 48" name="brI2">
 							<Property key="ImageTexture" value="brush2.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="185 75 40 24" name="brT2">
+						<Widget type="TextBox" skin="TextBox" position="120 60 40 24" name="brT2">
 							<Property key="Caption" value="16"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="230 10 64 64" name="brI3">
+						<Widget type="ImageBox" skin="ImageBox" position="150 10 48 48" name="brI3">
 							<Property key="ImageTexture" value="brush3.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="255 75 40 24" name="brT3">
+						<Widget type="TextBox" skin="TextBox" position="170 60 40 24" name="brT3">
 							<Property key="Caption" value="24"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="300 10 64 64" name="brI4">
+						<Widget type="ImageBox" skin="ImageBox" position="200 10 48 48" name="brI4">
 							<Property key="ImageTexture" value="brush4.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="325 75 40 24" name="brT4">
+						<Widget type="TextBox" skin="TextBox" position="220 60 40 24" name="brT4">
 							<Property key="Caption" value="16"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="370 10 64 64" name="brI5">
+						<Widget type="ImageBox" skin="ImageBox" position="250 10 48 48" name="brI5">
 							<Property key="ImageTexture" value="brush5.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="395 75 40 24" name="brT5">
+						<Widget type="TextBox" skin="TextBox" position="270 60 40 24" name="brT5">
 							<Property key="Caption" value="24"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="440 10 64 64" name="brI6">
+						<Widget type="ImageBox" skin="ImageBox" position="300 10 48 48" name="brI6">
 							<Property key="ImageTexture" value="brush6.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="465 75 40 24" name="brT6">
+						<Widget type="TextBox" skin="TextBox" position="320 60 40 24" name="brT6">
 							<Property key="Caption" value="16"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="510 10 64 64" name="brI7">
+						<Widget type="ImageBox" skin="ImageBox" position="350 10 48 48" name="brI7">
 							<Property key="ImageTexture" value="brush7.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="535 75 40 24" name="brT7">
+						<Widget type="TextBox" skin="TextBox" position="370 60 40 24" name="brT7">
 							<Property key="Caption" value="24"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="580 10 64 64" name="brI8">
+						<Widget type="ImageBox" skin="ImageBox" position="400 10 48 48" name="brI8">
 							<Property key="ImageTexture" value="brush8.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="605 75 40 24" name="brT8">
+						<Widget type="TextBox" skin="TextBox" position="420 60 40 24" name="brT8">
 							<Property key="Caption" value="16"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="650 10 64 64" name="brI9">
+						<Widget type="ImageBox" skin="ImageBox" position="450 10 48 48" name="brI9">
 							<Property key="ImageTexture" value="brush9.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="675 75 40 24" name="brT9">
+						<Widget type="TextBox" skin="TextBox" position="470 60 40 24" name="brT9">
+							<Property key="Caption" value="24"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="500 10 48 48" name="brI10">
+							<Property key="ImageTexture" value="brush10.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="520 60 40 24" name="brT10">
+							<Property key="Caption" value="16"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="550 10 48 48" name="brI11">
+							<Property key="ImageTexture" value="brush11.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="570 60 40 24" name="brT11">
+							<Property key="Caption" value="24"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="600 10 48 48" name="brI12">
+							<Property key="ImageTexture" value="brush12.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="620 60 40 24" name="brT12">
+							<Property key="Caption" value="16"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="650 10 48 48" name="brI13">
+							<Property key="ImageTexture" value="brush13.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="670 60 40 24" name="brT13">
 							<Property key="Caption" value="24"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
 
-						<Widget type="ImageBox" skin="ImageBox" position="20 100 64 64" name="brI10">
-							<Property key="ImageTexture" value="brush10.png"/>
-							<UserString key="RelativeTo" value="EditorWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="45 155 40 24" name="brT10">
-							<Property key="Caption" value="16"/>
-							<Property key="TextColour" value="0.6 0.8 1.0"/>
-							<UserString key="RelativeTo" value="EditorWnd"/>
-						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="90 100 64 64" name="brI11">
-							<Property key="ImageTexture" value="brush11.png"/>
-							<UserString key="RelativeTo" value="EditorWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="115 155 40 24" name="brT11">
-							<Property key="Caption" value="24"/>
-							<Property key="TextColour" value="0.6 0.8 1.0"/>
-							<UserString key="RelativeTo" value="EditorWnd"/>
-						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="160 100 64 64" name="brI12">
-							<Property key="ImageTexture" value="brush12.png"/>
-							<UserString key="RelativeTo" value="EditorWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="185 155 40 24" name="brT12">
-							<Property key="Caption" value="16"/>
-							<Property key="TextColour" value="0.6 0.8 1.0"/>
-							<UserString key="RelativeTo" value="EditorWnd"/>
-						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="230 100 64 64" name="brI13">
-							<Property key="ImageTexture" value="brush13.png"/>
-							<UserString key="RelativeTo" value="EditorWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="255 155 40 24" name="brT13">
-							<Property key="Caption" value="24"/>
-							<Property key="TextColour" value="0.6 0.8 1.0"/>
-							<UserString key="RelativeTo" value="EditorWnd"/>
-						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="300 100 64 64" name="brI14">
+
+						<Widget type="ImageBox" skin="ImageBox" position="20 100 64 64" name="brI14">
 							<Property key="ImageTexture" value="brush14.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="325 155 40 24" name="brT14">
+						<Widget type="TextBox" skin="TextBox" position="45 155 40 24" name="brT14">
 							<Property key="Caption" value="16"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="370 100 64 64" name="brI15">
+						<Widget type="ImageBox" skin="ImageBox" position="90 100 64 64" name="brI15">
 							<Property key="ImageTexture" value="brush15.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="395 155 40 24" name="brT15">
+						<Widget type="TextBox" skin="TextBox" position="115 155 40 24" name="brT15">
 							<Property key="Caption" value="24"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="440 100 64 64" name="brI16">
+						<Widget type="ImageBox" skin="ImageBox" position="160 100 64 64" name="brI16">
 							<Property key="ImageTexture" value="brush16.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="465 155 40 24" name="brT16">
+						<Widget type="TextBox" skin="TextBox" position="185 155 40 24" name="brT16">
 							<Property key="Caption" value="16"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="510 100 64 64" name="brI17">
+						<Widget type="ImageBox" skin="ImageBox" position="230 100 64 64" name="brI17">
 							<Property key="ImageTexture" value="brush17.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="535 155 40 24" name="brT17">
+						<Widget type="TextBox" skin="TextBox" position="255 155 40 24" name="brT17">
 							<Property key="Caption" value="24"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="580 100 64 64" name="brI18">
+						<Widget type="ImageBox" skin="ImageBox" position="300 100 64 64" name="brI18">
 							<Property key="ImageTexture" value="brush18.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="605 155 40 24" name="brT18">
+						<Widget type="TextBox" skin="TextBox" position="325 155 40 24" name="brT18">
 							<Property key="Caption" value="16"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="650 100 64 64" name="brI19">
+						<Widget type="ImageBox" skin="ImageBox" position="370 100 64 64" name="brI19">
 							<Property key="ImageTexture" value="brush19.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="675 155 40 24" name="brT19">
+						<Widget type="TextBox" skin="TextBox" position="395 155 40 24" name="brT19">
+							<Property key="Caption" value="24"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="440 100 64 64" name="brI20">
+							<Property key="ImageTexture" value="brush20.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="465 155 40 24" name="brT20">
+							<Property key="Caption" value="16"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="510 100 64 64" name="brI21">
+							<Property key="ImageTexture" value="brush21.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="535 155 40 24" name="brT21">
+							<Property key="Caption" value="24"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="580 100 64 64" name="brI22">
+							<Property key="ImageTexture" value="brush22.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="605 155 40 24" name="brT22">
+							<Property key="Caption" value="16"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="650 100 64 64" name="brI23">
+							<Property key="ImageTexture" value="brush23.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="675 155 40 24" name="brT23">
 							<Property key="Caption" value="24"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
 
-						<Widget type="ImageBox" skin="ImageBox" position="20 190 64 64" name="brI20">
-							<Property key="ImageTexture" value="brush10.png"/>
+						<Widget type="ImageBox" skin="ImageBox" position="20 190 64 64" name="brI24">
+							<Property key="ImageTexture" value="brush24.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="45 245 40 24" name="brT20">
+						<Widget type="TextBox" skin="TextBox" position="45 245 40 24" name="brT24">
 							<Property key="Caption" value="16"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="90 190 64 64" name="brI21">
-							<Property key="ImageTexture" value="brush11.png"/>
+						<Widget type="ImageBox" skin="ImageBox" position="90 190 64 64" name="brI25">
+							<Property key="ImageTexture" value="brush25.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="115 245 40 24" name="brT21">
+						<Widget type="TextBox" skin="TextBox" position="115 245 40 24" name="brT25">
 							<Property key="Caption" value="24"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="160 190 64 64" name="brI22">
-							<Property key="ImageTexture" value="brush12.png"/>
+						<Widget type="ImageBox" skin="ImageBox" position="160 190 64 64" name="brI26">
+							<Property key="ImageTexture" value="brush26.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="185 245 40 24" name="brT22">
+						<Widget type="TextBox" skin="TextBox" position="185 245 40 24" name="brT26">
 							<Property key="Caption" value="16"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="230 190 64 64" name="brI23">
-							<Property key="ImageTexture" value="brush13.png"/>
+						<Widget type="ImageBox" skin="ImageBox" position="230 190 64 64" name="brI27">
+							<Property key="ImageTexture" value="brush27.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="255 245 40 24" name="brT23">
+						<Widget type="TextBox" skin="TextBox" position="255 245 40 24" name="brT27">
 							<Property key="Caption" value="24"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="300 190 64 64" name="brI24">
-							<Property key="ImageTexture" value="brush14.png"/>
+						<Widget type="ImageBox" skin="ImageBox" position="300 190 64 64" name="brI28">
+							<Property key="ImageTexture" value="brush28.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="325 245 40 24" name="brT24">
+						<Widget type="TextBox" skin="TextBox" position="325 245 40 24" name="brT28">
 							<Property key="Caption" value="16"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="370 190 64 64" name="brI25">
-							<Property key="ImageTexture" value="brush15.png"/>
+						<Widget type="ImageBox" skin="ImageBox" position="370 190 64 64" name="brI29">
+							<Property key="ImageTexture" value="brush29.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="395 245 40 24" name="brT25">
+						<Widget type="TextBox" skin="TextBox" position="395 245 40 24" name="brT29">
 							<Property key="Caption" value="24"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="440 190 64 64" name="brI26">
-							<Property key="ImageTexture" value="brush16.png"/>
+						<Widget type="ImageBox" skin="ImageBox" position="440 190 64 64" name="brI30">
+							<Property key="ImageTexture" value="brush30.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="465 245 40 24" name="brT26">
+						<Widget type="TextBox" skin="TextBox" position="465 245 40 24" name="brT30">
 							<Property key="Caption" value="16"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="510 190 64 64" name="brI27">
-							<Property key="ImageTexture" value="brush17.png"/>
+						<Widget type="ImageBox" skin="ImageBox" position="510 190 64 64" name="brI31">
+							<Property key="ImageTexture" value="brush31.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="535 245 40 24" name="brT27">
+						<Widget type="TextBox" skin="TextBox" position="535 245 40 24" name="brT31">
 							<Property key="Caption" value="24"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="580 190 64 64" name="brI28">
-							<Property key="ImageTexture" value="brush18.png"/>
+						<Widget type="ImageBox" skin="ImageBox" position="580 190 64 64" name="brI32">
+							<Property key="ImageTexture" value="brush32.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="605 245 40 24" name="brT28">
+						<Widget type="TextBox" skin="TextBox" position="605 245 40 24" name="brT32">
 							<Property key="Caption" value="16"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="650 190 64 64" name="brI29">
-							<Property key="ImageTexture" value="brush19.png"/>
+						<Widget type="ImageBox" skin="ImageBox" position="650 190 64 64" name="brI33">
+							<Property key="ImageTexture" value="brush33.png"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="675 245 40 24" name="brT29">
+						<Widget type="TextBox" skin="TextBox" position="675 245 40 24" name="brT33">
 							<Property key="Caption" value="24"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>

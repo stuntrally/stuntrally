@@ -373,7 +373,7 @@ protected:
 		float Filter,HSet;
 		Ogre::String name;
 	};
-	const static int brSetsNum = 30;
+	const static int brSetsNum = 34;
 	const static BrushSet brSets[brSetsNum];
 	void btnBrushPreset(WP), SetBrushPreset(int id);
 
