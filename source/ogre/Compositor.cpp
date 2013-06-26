@@ -14,17 +14,19 @@
 #include "../vdrift/settings.h"
 //#include "HDRCompositor.h"
 #include "../vdrift/game.h"
+using namespace Ogre;
 
-class MotionBlurListener : public Ogre::CompositorInstance::Listener
+
+class MotionBlurListener : public CompositorInstance::Listener
 {
 public:
 	MotionBlurListener(BaseApp* app);
 	virtual ~MotionBlurListener();
-	
+
 	BaseApp* pApp;
 
-	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
-	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	virtual void notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat);
+	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
 };
 
 MotionBlurLogic::MotionBlurLogic(BaseApp* app)
@@ -32,7 +34,7 @@ MotionBlurLogic::MotionBlurLogic(BaseApp* app)
 	pApp = app;
 }
 
-Ogre::CompositorInstance::Listener* MotionBlurLogic::createListener(Ogre::CompositorInstance*  instance)
+CompositorInstance::Listener* MotionBlurLogic::createListener(CompositorInstance*  instance)
 {
 	MotionBlurListener* listener = new MotionBlurListener(pApp);
 	return listener;
@@ -47,27 +49,28 @@ MotionBlurListener::~MotionBlurListener()
 {
 }
 
-void MotionBlurListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+void MotionBlurListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 {
 }
 
-void MotionBlurListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+void MotionBlurListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 {
 	if (pass_id != 120)  return;
-	//Ogre::LogManager::getSingleton().logMessage("notifyMaterialRender");
+	//LogO("notifyMaterialRender");
 	try
 	{	mat->load();
-		Ogre::GpuProgramParametersSharedPtr fparams =
+		GpuProgramParametersSharedPtr fparams =
 			mat->getBestTechnique()->getPass(0)->getFragmentProgramParameters();
 		fparams->setNamedConstant("blur", pApp->motionBlurIntensity);
-	}catch(Ogre::Exception& e)
+	}
+	catch (Exception& e)
 	{
-		Ogre::LogManager::getSingleton().logMessage("Error setting motion blur");
+		LogO("Error setting motion blur");
 	}
 }
 
 
-class HDRListener: public Ogre::CompositorInstance::Listener
+class HDRListener: public CompositorInstance::Listener
 {
 protected:
 	int mVpWidth, mVpHeight;
@@ -81,25 +84,25 @@ public:
 	HDRListener(BaseApp * app);
 	virtual ~HDRListener();
 	void notifyViewportSize(int width, int height);
-	void notifyCompositor(Ogre::CompositorInstance* instance);
-	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
-	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	void notifyCompositor(CompositorInstance* instance);
+	virtual void notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat);
+	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
 	BaseApp * mApp;
 	int mViewportWidth,mViewportHeight;
 
 };
 
-Ogre::CompositorInstance::Listener* HDRLogic::createListener(Ogre::CompositorInstance* instance)
+CompositorInstance::Listener* HDRLogic::createListener(CompositorInstance* instance)
 {
 	HDRListener* listener = new HDRListener(mApp);
-	Ogre::Viewport* vp = instance->getChain()->getViewport();
+	Viewport* vp = instance->getChain()->getViewport();
 	listener->notifyViewportSize(vp->getActualWidth(), vp->getActualHeight());
 	listener->mViewportWidth = vp->getActualWidth();
 	listener->mViewportHeight = vp->getActualHeight();
 	listener->notifyCompositor(instance);
 	return listener;
 
-/*	HDRCompositor* listener = new HDRCompositor(mApp);
+	/*	HDRCompositor* listener = new HDRCompositor(mApp);
 	listener->SetToneMapper(compositor->GetToneMapper());
 	listener->SetGlareType(compositor->GetGlareType());
 	listener->SetStarType(compositor->GetStarType());
@@ -111,8 +114,8 @@ Ogre::CompositorInstance::Listener* HDRLogic::createListener(Ogre::CompositorIns
 	listener->SetGlarePasses(compositor->GetGlarePasses());
 	listener->SetGlareStrength(compositor->GetGlareStrength());
 	listener->SetStarStrength(compositor->GetStarStrength());
-		
-	Ogre::Viewport* vp = instance->getChain()->getViewport();
+
+	Viewport* vp = instance->getChain()->getViewport();
 	listener->notifyViewportSize(vp->getActualWidth(), vp->getActualHeight());
 	return listener;
 	*/
@@ -122,8 +125,7 @@ void HDRLogic::setApp(BaseApp* app)
 	mApp = app;
 }
 
-HDRListener::HDRListener(BaseApp* app)
-	:mApp(app)
+HDRListener::HDRListener(BaseApp* app) : mApp(app)
 {
 }
 HDRListener::~HDRListener()
@@ -136,16 +138,16 @@ void HDRListener::notifyViewportSize(int width, int height)
 	mVpHeight = height;
 }
 
-void HDRListener::notifyCompositor(Ogre::CompositorInstance* instance)
+void HDRListener::notifyCompositor(CompositorInstance* instance)
 {
 	// Get some RTT dimensions for later calculations
-	Ogre::CompositionTechnique::TextureDefinitionIterator defIter =
+	CompositionTechnique::TextureDefinitionIterator defIter =
 		instance->getTechnique()->getTextureDefinitionIterator();
 	while (defIter.hasMoreElements())
 	{
-		Ogre::CompositionTechnique::TextureDefinition* def =
+		CompositionTechnique::TextureDefinition* def =
 			defIter.getNext();
-		if(def->name == "rt_bloom0")
+		if (def->name == "rt_bloom0")
 		{
 			mBloomSize = (int)def->width; // should be square
 			// Calculate gaussian texture offsets & weights
@@ -158,14 +160,14 @@ void HDRListener::notifyCompositor(Ogre::CompositorInstance* instance)
 			mBloomTexOffsetsVert[0][0] = 0.0f;
 			mBloomTexOffsetsVert[0][1] = 0.0f;
 			mBloomTexWeights[0][0] = mBloomTexWeights[0][1] =
-				mBloomTexWeights[0][2] = Ogre::Math::gaussianDistribution(0, 0, deviation);
+				mBloomTexWeights[0][2] = Math::gaussianDistribution(0, 0, deviation);
 			mBloomTexWeights[0][3] = 1.0f;
 
 			// 'pre' samples
 			for(int i = 1; i < 8; ++i)
 			{
 				mBloomTexWeights[i][0] = mBloomTexWeights[i][1] =
-					mBloomTexWeights[i][2] = 1.25f * Ogre::Math::gaussianDistribution(i, 0, deviation);
+					mBloomTexWeights[i][2] = 1.25f * Math::gaussianDistribution(i, 0, deviation);
 				mBloomTexWeights[i][3] = 1.0f;
 				mBloomTexOffsetsHorz[i][0] = i * texelSize;
 				mBloomTexOffsetsHorz[i][1] = 0.0f;
@@ -184,17 +186,16 @@ void HDRListener::notifyCompositor(Ogre::CompositorInstance* instance)
 				mBloomTexOffsetsVert[i][0] = 0.0f;
 				mBloomTexOffsetsVert[i][1] = -mBloomTexOffsetsVert[i - 7][1];
 			}
-
 		}
 	}
 }
 
-void HDRListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+void HDRListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 {
-//  Prepare the fragment params offsets
+	//  Prepare the fragment params offsets
 	switch (pass_id)
 	{
-	//case 994: // rt_lum4
+		//case 994: // rt_lum4
 	case 993: // rt_lum3
 	case 992: // rt_lum2
 	case 991: // rt_lum1
@@ -205,63 +206,65 @@ void HDRListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &m
 	case 701: // rt_bloom1
 		{
 			// horizontal bloom
-		try
-		{	mat->load();
-			Ogre::GpuProgramParametersSharedPtr fparams =
-				mat->getBestTechnique()->getPass(0)->getFragmentProgramParameters();
-			fparams->setNamedConstant("sampleOffsets", mBloomTexOffsetsHorz[0], 15);
-			fparams->setNamedConstant("sampleWeights", mBloomTexWeights[0], 15);
-		}catch(...)
-		{	}
+			try
+			{	mat->load();
+				GpuProgramParametersSharedPtr fparams =
+					mat->getBestTechnique()->getPass(0)->getFragmentProgramParameters();
+				fparams->setNamedConstant("sampleOffsets", mBloomTexOffsetsHorz[0], 15);
+				fparams->setNamedConstant("sampleWeights", mBloomTexWeights[0], 15);
+			}
+			catch(...)
+			{	}
 
 			break;
 		}
 	case 700: // rt_bloom0
 		{
 			// vertical bloom
-		try
-		{	mat->load();
-			Ogre::GpuProgramParametersSharedPtr fparams =
-				mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-			fparams->setNamedConstant("sampleOffsets", mBloomTexOffsetsVert[0], 15);
-			fparams->setNamedConstant("sampleWeights", mBloomTexWeights[0], 15);
-		}catch(...)
-		{	}
+			try
+			{	mat->load();
+				GpuProgramParametersSharedPtr fparams =
+					mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+				fparams->setNamedConstant("sampleOffsets", mBloomTexOffsetsVert[0], 15);
+				fparams->setNamedConstant("sampleWeights", mBloomTexWeights[0], 15);
+			}
+			catch(...)
+			{	}
 
 			break;
 		}
 	}
 }
 
-void HDRListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+void HDRListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 {
-	
-	if(pass_id == 600 || pass_id == 800)
+
+	if (pass_id == 600 || pass_id == 800)
 	{
-		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
-		Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
-    
+		Pass *pass = mat->getBestTechnique()->getPass(0);
+		GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+
 		if (params->_findNamedConstantDefinition("toneMapSettings"))
 		{
-			Ogre::Vector4 toneMapSettings(1-mApp->pSet->hdrParam1, mApp->pSet->hdrParam2, mApp->pSet->hdrParam3, 1.0);
+			Vector4 toneMapSettings(1-mApp->pSet->hdrParam1, mApp->pSet->hdrParam2, mApp->pSet->hdrParam3, 1.0);
 			params->setNamedConstant("toneMapSettings", toneMapSettings);
 		}
 		if (params->_findNamedConstantDefinition("bloomSettings"))
 		{
-			Ogre::Vector4 bloomSettings(mApp->pSet->hdrbloomorig*2, mApp->pSet->hdrbloomint, 1.0, 1.0);
+			Vector4 bloomSettings(mApp->pSet->hdrbloomorig*2, mApp->pSet->hdrbloomint, 1.0, 1.0);
 			params->setNamedConstant("bloomSettings", bloomSettings);
 		}
 		if (params->_findNamedConstantDefinition("vignettingSettings"))
 		{
-			Ogre::Vector4 vignettingSettings(mApp->pSet->vignettingRadius, mApp->pSet->vignettingDarkness, 1.0, 1.0);
+			Vector4 vignettingSettings(mApp->pSet->vignettingRadius, mApp->pSet->vignettingDarkness, 1.0, 1.0);
 			params->setNamedConstant("vignettingSettings", vignettingSettings);
 		}
-	
+
 	}
 	else if(pass_id == 989)
 	{
-		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
-		Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+		Pass *pass = mat->getBestTechnique()->getPass(0);
+		GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
 		if (params->_findNamedConstantDefinition("AdaptationScale"))
 		{
 			params->setNamedConstant("AdaptationScale", mApp->pSet->hdrAdaptationScale);
@@ -271,21 +274,21 @@ void HDRListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &
 
 
 
-class SSAOListener: public Ogre::CompositorInstance::Listener
+class SSAOListener: public CompositorInstance::Listener
 {
 protected:
 public:
 	SSAOListener(BaseApp * app);
 	virtual ~SSAOListener();
 	BaseApp * mApp;
-	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
-	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	virtual void notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat);
+	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
 };
 
-Ogre::CompositorInstance::Listener* SSAOLogic::createListener(Ogre::CompositorInstance* instance)
+CompositorInstance::Listener* SSAOLogic::createListener(CompositorInstance* instance)
 {
 	SSAOListener* listener = new SSAOListener(mApp);
-	Ogre::Viewport* vp = instance->getChain()->getViewport();
+	Viewport* vp = instance->getChain()->getViewport();
 	return listener;
 }
 
@@ -295,74 +298,72 @@ void SSAOLogic::setApp(BaseApp* app)
 }
 
 
-SSAOListener::SSAOListener(BaseApp* app)
-	:mApp(app)
+SSAOListener::SSAOListener(BaseApp* app) : mApp(app)
 {
 }
 SSAOListener::~SSAOListener()
 {
 }
 
-void SSAOListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+void SSAOListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 {
 }
-void SSAOListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+void SSAOListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 {
-	  if (pass_id != 42) // not SSAO, return
-            return;
+	if (pass_id != 42) // not SSAO, return
+		return;
 
-        // this is the camera you're using
-        #ifndef ROAD_EDITOR
-		Ogre::Camera *cam = mApp->mSplitMgr->mCameras.front();
-		#else
-		Ogre::Camera *cam = mApp->mCamera;
-		#endif
-        // calculate the far-top-right corner in view-space
-        Ogre::Vector3 farCorner = cam->getViewMatrix(true) * cam->getWorldSpaceCorners()[4];
+	// this is the camera you're using
+	#ifndef ROAD_EDITOR
+	Camera *cam = mApp->mSplitMgr->mCameras.front();
+	#else
+	Camera *cam = mApp->mCamera;
+	#endif
 
-		// get the pass
-        Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
+	// calculate the far-top-right corner in view-space
+	Vector3 farCorner = cam->getViewMatrix(true) * cam->getWorldSpaceCorners()[4];
 
-        // get the vertex shader parameters
-        Ogre::GpuProgramParametersSharedPtr params = pass->getVertexProgramParameters();
-        // set the camera's far-top-right corner
-        if (params->_findNamedConstantDefinition("farCorner"))
-            params->setNamedConstant("farCorner", farCorner);
+	// get the pass
+	Pass *pass = mat->getBestTechnique()->getPass(0);
 
-        // get the fragment shader parameters
-        params = pass->getFragmentProgramParameters();
-		// set the projection matrix we need
-		static const Ogre::Matrix4 CLIP_SPACE_TO_IMAGE_SPACE(
-			0.5,    0,    0,  0.5,
-			0,   -0.5,    0,  0.5,
-			0,      0,    1,    0,
-			0,      0,    0,    1);
-		if (params->_findNamedConstantDefinition("ptMat"))
-			params->setNamedConstant("ptMat", CLIP_SPACE_TO_IMAGE_SPACE * cam->getProjectionMatrixWithRSDepth());
-        if (params->_findNamedConstantDefinition("far"))
-            params->setNamedConstant("far", cam->getFarClipDistance());
+	// get the vertex shader parameters
+	GpuProgramParametersSharedPtr params = pass->getVertexProgramParameters();
+	// set the camera's far-top-right corner
+	if (params->_findNamedConstantDefinition("farCorner"))
+		params->setNamedConstant("farCorner", farCorner);
+
+	// get the fragment shader parameters
+	params = pass->getFragmentProgramParameters();
+	// set the projection matrix we need
+	static const Matrix4 CLIP_SPACE_TO_IMAGE_SPACE(
+		0.5,    0,    0,  0.5,
+		0,   -0.5,    0,  0.5,
+		0,      0,    1,    0,
+		0,      0,    0,    1);
+	if (params->_findNamedConstantDefinition("ptMat"))
+		params->setNamedConstant("ptMat", CLIP_SPACE_TO_IMAGE_SPACE * cam->getProjectionMatrixWithRSDepth());
+	if (params->_findNamedConstantDefinition("far"))
+		params->setNamedConstant("far", cam->getFarClipDistance());
 }
 
 
 
-class GodRaysListener: public Ogre::CompositorInstance::Listener
+class GodRaysListener: public CompositorInstance::Listener
 {
-protected:
 public:
 	GodRaysListener(BaseApp * app);
 	virtual ~GodRaysListener();
 	BaseApp * mApp;
-	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
-	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	virtual void notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat);
+	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
 
-	Ogre::Vector4 SunScreenSpacePosition;
-
+	Vector4 SunScreenSpacePosition;
 };
 
-Ogre::CompositorInstance::Listener* GodRaysLogic::createListener(Ogre::CompositorInstance* instance)
+CompositorInstance::Listener* GodRaysLogic::createListener(CompositorInstance* instance)
 {
 	GodRaysListener* listener = new GodRaysListener(mApp);
-	Ogre::Viewport* vp = instance->getChain()->getViewport();
+	Viewport* vp = instance->getChain()->getViewport();
 	return listener;
 }
 
@@ -372,90 +373,84 @@ void GodRaysLogic::setApp(BaseApp* app)
 }
 
 
-GodRaysListener::GodRaysListener(BaseApp* app)
-	:mApp(app)
+GodRaysListener::GodRaysListener(BaseApp* app) : mApp(app)
 {
-	SunScreenSpacePosition = Ogre::Vector4(0,0,0,1);
+	SunScreenSpacePosition = Vector4(0,0,0,1);
 }
 GodRaysListener::~GodRaysListener()
 {
 }
 
-void GodRaysListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+void GodRaysListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 {
-/*	if (pass_id == 1)
-		params1 = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+	/*	if (pass_id == 1)
+	params1 = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
 	else if (pass_id == 2)
-		params2 = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+	params2 = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
 	if (pass_id == 3)
-		params3 = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
-*/
+	params3 = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+	*/
 }
-void clamp(Ogre::Vector2 &v)  {
+void clamp(Vector2 &v)  {
 	v.x = v.x < -1 ? -1 : (v.x > 1 ? 1 : v.x);
 	v.y = v.y < -1 ? -1 : (v.y > 1 ? 1 : v.y);
 }
-void clamp(Ogre::Vector3 &v)  {
+void clamp(Vector3 &v)  {
 	v.x = v.x < -1 ? -1 : (v.x > 1 ? 1 : v.x);
 	v.y = v.y < -1 ? -1 : (v.y > 1 ? 1 : v.y);
 }
 
-void GodRaysListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+void GodRaysListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 {
-	if(pass_id !=1 
-		&& pass_id !=2
-		&& pass_id !=3
-		)
+	if (pass_id !=1 && pass_id !=2 && pass_id !=3)
 	{
-		return ;
+		return;
 	}
-	 // this is the camera you're using
-    #ifndef ROAD_EDITOR
-	Ogre::Camera *cam = mApp->mSplitMgr->mCameras.front();
+	// this is the camera you're using
+	#ifndef ROAD_EDITOR
+	Camera *cam = mApp->mSplitMgr->mCameras.front();
 	#else
-	Ogre::Camera *cam = mApp->mCamera;
+	Camera *cam = mApp->mCamera;
 	#endif
 
 	//update the sun position
-	Ogre::Light* sun =((App*)mApp)->sun;
-	Ogre::GpuProgramParametersSharedPtr params= mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
-	Ogre::GpuProgramParametersSharedPtr fparams= mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+	Light* sun = ((App*)mApp)->sun;  //todo:!?
+	GpuProgramParametersSharedPtr params= mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+	GpuProgramParametersSharedPtr fparams= mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
 	//disable god rays when the sun is not facing us
 	float enable=0.0f;
-	if(sun != NULL)
+	if (sun != NULL)
 	{
-		Ogre::Vector3 sunPosition = sun->getDirection() *100;
-		Ogre::Vector3 worldViewPosition = cam->getViewMatrix() * sunPosition;
-		Ogre::Vector3 hcsPosition = cam->getProjectionMatrix() * worldViewPosition;
+		Vector3 sunPosition = sun->getDirection() *100;
+		Vector3 worldViewPosition = cam->getViewMatrix() * sunPosition;
+		Vector3 hcsPosition = cam->getProjectionMatrix() * worldViewPosition;
 		float unclampedLuminance = abs(hcsPosition.x)+abs(hcsPosition.y);
-		clamp(hcsPosition);		
-		Ogre::Vector2 sunScreenSpacePosition = Ogre::Vector2(0.5f + (0.5f * hcsPosition.x), 0.5f + (0.5f * -hcsPosition.y));
-		SunScreenSpacePosition = Ogre::Vector4 ( sunScreenSpacePosition.x, sunScreenSpacePosition.y, 0, 1 );
+		clamp(hcsPosition);
+		Vector2 sunScreenSpacePosition = Vector2(0.5f + (0.5f * hcsPosition.x), 0.5f + (0.5f * -hcsPosition.y));
+		SunScreenSpacePosition = Vector4(sunScreenSpacePosition.x, sunScreenSpacePosition.y, 0, 1);
 		enable = (1.0f / ((unclampedLuminance > 1.0f) ? unclampedLuminance : 1.0f)) * (hcsPosition.z < 1 ? 0.0f : 1.0f);
 	}
-	
 	params->setNamedConstant("lightPosition", SunScreenSpacePosition);
 	fparams->setNamedConstant("enableEffect", enable);
-	
 }
 
-class GBufferListener: public Ogre::CompositorInstance::Listener
+
+//  GBuffer
+//----------------------------------------------------------------------------------------------------------------------------
+
+class GBufferListener: public CompositorInstance::Listener
 {
-protected:
 public:
 	GBufferListener(BaseApp * app);
 	virtual ~GBufferListener();
-	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
-	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
-
-private:
-
+	virtual void notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat);
+	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
 };
 
-Ogre::CompositorInstance::Listener* GBufferLogic::createListener(Ogre::CompositorInstance* instance)
+CompositorInstance::Listener* GBufferLogic::createListener(CompositorInstance* instance)
 {
 	GBufferListener* listener = new GBufferListener(mApp);
-	Ogre::Viewport* vp = instance->getChain()->getViewport();
+	Viewport* vp = instance->getChain()->getViewport();
 	return listener;
 }
 
@@ -472,44 +467,40 @@ void GBufferLogic::setApp(BaseApp* app)
 }
 
 
-void GBufferListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+void GBufferListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
+{
+
+}
+
+void GBufferListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 {
 
 }
 
 
-void GBufferListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
-{
-	 
-}
+//  Soft Particles
+//----------------------------------------------------------------------------------------------------------------------------
 
-
-class SoftParticlesListener: public Ogre::CompositorInstance::Listener
+class SoftParticlesListener: public CompositorInstance::Listener
 {
-protected:
 public:
 	SoftParticlesListener(BaseApp * app);
 	virtual ~SoftParticlesListener();
-	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
-	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	virtual void notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat);
+	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
 	BaseApp * mApp;
-	
-private:
-
 };
 
-Ogre::CompositorInstance::Listener* SoftParticlesLogic::createListener(Ogre::CompositorInstance* instance)
+CompositorInstance::Listener* SoftParticlesLogic::createListener(CompositorInstance* instance)
 {
 	SoftParticlesListener* listener = new SoftParticlesListener(mApp);
-	Ogre::Viewport* vp = instance->getChain()->getViewport();
+	Viewport* vp = instance->getChain()->getViewport();
 
 	return listener;
 }
 
-SoftParticlesListener::SoftParticlesListener(BaseApp* app)
+SoftParticlesListener::SoftParticlesListener(BaseApp* app) : mApp(app)
 {
-	mApp = app;
-	
 }
 SoftParticlesListener::~SoftParticlesListener()
 {
@@ -521,45 +512,42 @@ void SoftParticlesLogic::setApp(BaseApp* app)
 }
 
 
-void SoftParticlesListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+void SoftParticlesListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
+{
+
+}
+
+void SoftParticlesListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 {
 
 }
 
 
-void SoftParticlesListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+//  Depth Of Field
+//----------------------------------------------------------------------------------------------------------------------------
+
+class DepthOfFieldListener: public CompositorInstance::Listener
 {
-
-}
-
-
-class DepthOfFieldListener: public Ogre::CompositorInstance::Listener
-{
-protected:
 public:
 	DepthOfFieldListener(BaseApp * app);
 	virtual ~DepthOfFieldListener();
-	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
-	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	virtual void notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat);
+	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
 	BaseApp * mApp;
 	int mViewportWidth,mViewportHeight;
-private:
-
 };
 
-Ogre::CompositorInstance::Listener* DepthOfFieldLogic::createListener(Ogre::CompositorInstance* instance)
+CompositorInstance::Listener* DepthOfFieldLogic::createListener(CompositorInstance* instance)
 {
 	DepthOfFieldListener* listener = new DepthOfFieldListener(mApp);
-	Ogre::Viewport* vp = instance->getChain()->getViewport();
+	Viewport* vp = instance->getChain()->getViewport();
 	listener->mViewportWidth = vp->getActualWidth();
 	listener->mViewportHeight = vp->getActualHeight();
 	return listener;
 }
 
-DepthOfFieldListener::DepthOfFieldListener(BaseApp* app)
+DepthOfFieldListener::DepthOfFieldListener(BaseApp* app) : mApp(app)
 {
-	mApp = app;
-	
 }
 DepthOfFieldListener::~DepthOfFieldListener()
 {
@@ -571,100 +559,100 @@ void DepthOfFieldLogic::setApp(BaseApp* app)
 }
 
 
-void DepthOfFieldListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+void DepthOfFieldListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 {
-	if(pass_id == 1)
+	if (pass_id == 1)
 	{
 		float blurScale =.5f;
 
-		Ogre::Vector4 pixelSize(1.0f / (mViewportWidth * blurScale), 1.0f / (mViewportHeight * blurScale), 0.0f, 0.0f);
-		
+		Vector4 pixelSize(1.0f / (mViewportWidth * blurScale), 1.0f / (mViewportHeight * blurScale), 0.0f, 0.0f);
+
 		mat->load();
-		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
-        Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
-    
-	   if (params->_findNamedConstantDefinition("pixelSize"))
+		Pass *pass = mat->getBestTechnique()->getPass(0);
+		GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+
+		if (params->_findNamedConstantDefinition("pixelSize"))
 			params->setNamedConstant("pixelSize", pixelSize);
-     
+
 	}
-	else if(pass_id == 2)
+	else if (pass_id == 2)
 	{
 		float blurScale =.5f;
-		Ogre::Vector4  pixelSize(1.0f / mViewportWidth, 1.0f / mViewportHeight,1.0f / (mViewportWidth * blurScale), 1.0f / (mViewportHeight * blurScale) );
+		Vector4  pixelSize(1.0f / mViewportWidth, 1.0f / mViewportHeight,1.0f / (mViewportWidth * blurScale), 1.0f / (mViewportHeight * blurScale) );
 
-		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
-        Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
-    
-	   	if (params->_findNamedConstantDefinition("pixelSize"))
+		Pass *pass = mat->getBestTechnique()->getPass(0);
+		GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+
+		if (params->_findNamedConstantDefinition("pixelSize"))
 			params->setNamedConstant("pixelSize", pixelSize);
 
-	      // this is the camera you're using
-        #ifndef ROAD_EDITOR
-		Ogre::Camera *cam = mApp->mSplitMgr->mCameras.front();
+		// this is the camera you're using
+		#ifndef ROAD_EDITOR
+		Camera *cam = mApp->mSplitMgr->mCameras.front();
 		#else
-		Ogre::Camera *cam = mApp->mCamera;
+		Camera *cam = mApp->mCamera;
 		#endif
-       
+
 		if (params->_findNamedConstantDefinition("far"))
-            params->setNamedConstant("far", cam->getFarClipDistance());
-		
+			params->setNamedConstant("far", cam->getFarClipDistance());
+
 		if (params->_findNamedConstantDefinition("dofparams"))
 		{
-			Ogre::Vector4 dofParams(0.0f,mApp->pSet->depthOfFieldFocus,mApp->pSet->depthOfFieldFar,1.0);
+			Vector4 dofParams(0.0f,mApp->pSet->depthOfFieldFocus,mApp->pSet->depthOfFieldFar,1.0);
 			params->setNamedConstant("dofparams", dofParams);
 		}
-     }
+	}
 }
 
 
-void DepthOfFieldListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+void DepthOfFieldListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 {
-    if(pass_id == 2)
+	if(pass_id == 2)
 	{
 		float blurScale =.5f;
-		Ogre::Vector4  pixelSize(1.0f / mViewportWidth, 1.0f / mViewportHeight,1.0f / (mViewportWidth * blurScale), 1.0f / (mViewportHeight * blurScale) );
+		Vector4  pixelSize(1.0f / mViewportWidth, 1.0f / mViewportHeight,1.0f / (mViewportWidth * blurScale), 1.0f / (mViewportHeight * blurScale) );
 
-		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
-        Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
-    
-	   	if (params->_findNamedConstantDefinition("pixelSize"))
+		Pass *pass = mat->getBestTechnique()->getPass(0);
+		GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+
+		if (params->_findNamedConstantDefinition("pixelSize"))
 			params->setNamedConstant("pixelSize", pixelSize);
 
-	    // this is the camera you're using
-        #ifndef ROAD_EDITOR
-		Ogre::Camera *cam = mApp->mSplitMgr->mCameras.front();
+		// this is the camera you're using
+		#ifndef ROAD_EDITOR
+		Camera *cam = mApp->mSplitMgr->mCameras.front();
 		#else
-		Ogre::Camera *cam = mApp->mCamera;
+		Camera *cam = mApp->mCamera;
 		#endif
-       		
+
 		if (params->_findNamedConstantDefinition("dofparams"))
 		{
-			Ogre::Vector4 dofParams(0.0f,mApp->pSet->depthOfFieldFocus,mApp->pSet->depthOfFieldFar,1.0);
+			Vector4 dofParams(0.0f,mApp->pSet->depthOfFieldFocus,mApp->pSet->depthOfFieldFar,1.0);
 			params->setNamedConstant("dofparams", dofParams);
 		}
-     }
+	}
 }
 
 
+//  Film Grain
+//----------------------------------------------------------------------------------------------------------------------------
 
-
-class FilmGrainListener: public Ogre::CompositorInstance::Listener
+class FilmGrainListener: public CompositorInstance::Listener
 {
-protected:
 public:
 	FilmGrainListener(BaseApp * app);
 	virtual ~FilmGrainListener();
 	BaseApp * mApp;
-	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
-	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	virtual void notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat);
+	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
 	int mViewportWidth,mViewportHeight;
 
 };
 
-Ogre::CompositorInstance::Listener* FilmGrainLogic::createListener(Ogre::CompositorInstance* instance)
+CompositorInstance::Listener* FilmGrainLogic::createListener(CompositorInstance* instance)
 {
 	FilmGrainListener* listener = new FilmGrainListener(mApp);
-	Ogre::Viewport* vp = instance->getChain()->getViewport();
+	Viewport* vp = instance->getChain()->getViewport();
 	listener->mViewportWidth = vp->getActualWidth();
 	listener->mViewportHeight = vp->getActualHeight();
 	return listener;
@@ -676,52 +664,54 @@ void FilmGrainLogic::setApp(BaseApp* app)
 }
 
 
-FilmGrainListener::FilmGrainListener(BaseApp* app)
-	:mApp(app)
+FilmGrainListener::FilmGrainListener(BaseApp* app) : mApp(app)
 {
 }
 FilmGrainListener::~FilmGrainListener()
 {
 }
 
-void FilmGrainListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+void FilmGrainListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 {
-	
+
 }
 
 
-void FilmGrainListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+void FilmGrainListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 {
 	if(pass_id == 1)
 	{
 		float noiseIntensity = 0.1f;
 		float exposure = 1-mApp->pSet->hdrParam3;
-		Ogre::Vector4  grainparams(1.0f / mViewportWidth, 1.0f / mViewportHeight, noiseIntensity, exposure);
+		Vector4  grainparams(1.0f / mViewportWidth, 1.0f / mViewportHeight, noiseIntensity, exposure);
 
-		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
-        Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
-    
-	   	if (params->_findNamedConstantDefinition("grainparams"))
+		Pass *pass = mat->getBestTechnique()->getPass(0);
+		GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+
+		if (params->_findNamedConstantDefinition("grainparams"))
 			params->setNamedConstant("grainparams", grainparams);
-	 }
+	}
 }
 
 
-class CameraBlurListener : public Ogre::CompositorInstance::Listener
+//  Camera Blur (pixel, not used)
+//----------------------------------------------------------------------------------------------------------------------------
+
+class CameraBlurListener : public CompositorInstance::Listener
 {
 public:
 	CameraBlurListener(BaseApp* app);
 	virtual ~CameraBlurListener();
-	
+
 	App * mApp;
-	Ogre::Quaternion m_pPreviousOrientation;
-	Ogre::Vector3 m_pPreviousPosition;
-	
-	Ogre::Matrix4 prevviewproj;
+	Quaternion m_pPreviousOrientation;
+	Vector3 m_pPreviousPosition;
+
+	Matrix4 prevviewproj;
 	bool mRequiresTextureFlipping;
-	Ogre::CompositorInstance*  compositorinstance;
-	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
-	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	CompositorInstance*  compositorinstance;
+	virtual void notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat);
+	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
 };
 
 CameraBlurLogic::CameraBlurLogic(BaseApp* app)
@@ -729,12 +719,12 @@ CameraBlurLogic::CameraBlurLogic(BaseApp* app)
 	pApp = app;
 }
 
-Ogre::CompositorInstance::Listener* CameraBlurLogic::createListener(Ogre::CompositorInstance*  instance)
+CompositorInstance::Listener* CameraBlurLogic::createListener(CompositorInstance*  instance)
 {
 	CameraBlurListener* listener = new CameraBlurListener(pApp);
-	Ogre::Viewport* vp = instance->getChain()->getViewport();
-listener->compositorinstance=instance;
-//	listener->mRequiresTextureFlipping  = instance->getTechnique()->getOutputTargetPass()->get("scene",0)->requiresTextureFlipping();
+	Viewport* vp = instance->getChain()->getViewport();
+	listener->compositorinstance=instance;
+	//	listener->mRequiresTextureFlipping  = instance->getTechnique()->getOutputTargetPass()->get("scene",0)->requiresTextureFlipping();
 	return listener;
 }
 
@@ -747,15 +737,15 @@ CameraBlurListener::~CameraBlurListener()
 {
 }
 
-void CameraBlurListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+void CameraBlurListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 {
 }
 
-void CameraBlurListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+void CameraBlurListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 {
 	if (pass_id == 999) 
 	{
-		if(mApp->pGame->pause == false)
+		if (mApp->pGame->pause == false)
 		{
 			//acquire the texture flipping attribute in the first frame
 			if(compositorinstance)
@@ -765,42 +755,43 @@ void CameraBlurListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::Materi
 			}
 			// this is the camera you're using
 			#ifndef ROAD_EDITOR
-			Ogre::Camera *cam = mApp->mSplitMgr->mCameras.front();
+			Camera *cam = mApp->mSplitMgr->mCameras.front();
 			#else
-			Ogre::Camera *cam = mApp->mCamera;
+			Camera *cam = mApp->mCamera;
 			#endif
+
 			// get the pass
-			Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
-			Ogre::GpuProgramParametersSharedPtr  params = pass->getFragmentProgramParameters();
-       
-			const Ogre::RenderTarget::FrameStats& stats =  mApp->getWindow()->getStatistics();
+			Pass *pass = mat->getBestTechnique()->getPass(0);
+			GpuProgramParametersSharedPtr  params = pass->getFragmentProgramParameters();
+
+			const RenderTarget::FrameStats& stats =  mApp->getWindow()->getStatistics();
 			float m_lastFPS =stats.lastFPS;
-	
-			Ogre::Matrix4 projectionMatrix   = cam->getProjectionMatrix();
+
+			Matrix4 projectionMatrix   = cam->getProjectionMatrix();
 			if (mRequiresTextureFlipping)
-            {
-                // Because we're not using setProjectionMatrix, this needs to be done here
-                // Invert transformed y
-                projectionMatrix[1][0] = -projectionMatrix[1][0];
-                projectionMatrix[1][1] = -projectionMatrix[1][1];
-                projectionMatrix[1][2] = -projectionMatrix[1][2];
-                projectionMatrix[1][3] = -projectionMatrix[1][3];
-            }
-			Ogre::Matrix4 iVP = (projectionMatrix * cam->getViewMatrix()).inverse();
+			{
+				// Because we're not using setProjectionMatrix, this needs to be done here
+				// Invert transformed y
+				projectionMatrix[1][0] = -projectionMatrix[1][0];
+				projectionMatrix[1][1] = -projectionMatrix[1][1];
+				projectionMatrix[1][2] = -projectionMatrix[1][2];
+				projectionMatrix[1][3] = -projectionMatrix[1][3];
+			}
+			Matrix4 iVP = (projectionMatrix * cam->getViewMatrix()).inverse();
 
 			if (params->_findNamedConstantDefinition("EPF_ViewProjectionInverseMatrix"))
-				 params->setNamedConstant("EPF_ViewProjectionInverseMatrix", iVP);
+				params->setNamedConstant("EPF_ViewProjectionInverseMatrix", iVP);
 			if (params->_findNamedConstantDefinition("EPF_PreviousViewProjectionMatrix"))
 				params->setNamedConstant("EPF_PreviousViewProjectionMatrix", prevviewproj);
 			if (params->_findNamedConstantDefinition("intensity"))
 				params->setNamedConstant("intensity", mApp->pSet->motionblurintensity);
-	
+
 			float interpolationFactor = m_lastFPS * 0.03f ; //* m_timeScale m_timeScale is a multiplier to control motion blur interactively
-			Ogre::Quaternion current_orientation = cam->getDerivedOrientation();
-			Ogre::Vector3 current_position = cam->getDerivedPosition();
-			Ogre::Quaternion estimatedOrientation = Ogre::Quaternion::Slerp(interpolationFactor, current_orientation, (m_pPreviousOrientation));
-			Ogre::Vector3 estimatedPosition    = (1-interpolationFactor) * current_position + interpolationFactor * (m_pPreviousPosition);
-			Ogre::Matrix4 prev_viewMatrix = Ogre::Math::makeViewMatrix(estimatedPosition, estimatedOrientation);//.inverse().transpose();
+			Quaternion current_orientation = cam->getDerivedOrientation();
+			Vector3 current_position = cam->getDerivedPosition();
+			Quaternion estimatedOrientation = Quaternion::Slerp(interpolationFactor, current_orientation, (m_pPreviousOrientation));
+			Vector3 estimatedPosition    = (1-interpolationFactor) * current_position + interpolationFactor * (m_pPreviousPosition);
+			Matrix4 prev_viewMatrix = Math::makeViewMatrix(estimatedPosition, estimatedOrientation);//.inverse().transpose();
 			// compute final matrix
 			prevviewproj = projectionMatrix * prev_viewMatrix;
 
@@ -808,6 +799,5 @@ void CameraBlurListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::Materi
 			m_pPreviousOrientation = current_orientation;
 			m_pPreviousPosition = current_position;			
 		}
-
 	}
 }
