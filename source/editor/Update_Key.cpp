@@ -351,8 +351,22 @@ bool App::KeyPress(const CmdKey &arg)
 			}	return true;
 
 		case KC_F1:
-		case KC_GRAVE:	//  Gui mode Options
-			toggleGui(true);  return true;
+		case KC_GRAVE:
+			if (ctrl)  // context help (show for cur mode)
+			{
+				if (bMoveCam)		 GuiShortcut(WND_Help, 1, 0);
+				else switch (edMode)
+				{	case ED_Smooth: case ED_Height: case ED_Filter:
+					case ED_Deform:  GuiShortcut(WND_Help, 1, 1);  break;
+					case ED_Road:    GuiShortcut(WND_Help, 1, 2);  break;
+					case ED_Start:   GuiShortcut(WND_Help, 1, 4);  break;
+					case ED_Fluids:  GuiShortcut(WND_Help, 1, 5);  break;
+					case ED_Objects: GuiShortcut(WND_Help, 1, 6);  break;
+					default:		 GuiShortcut(WND_Help, 1, 0);  break;
+			}	}
+			else	//  Gui mode, Options
+				toggleGui(true);
+			return true;
 
 		case KC_SYSRQ:  //  screenshot
 			mWindow->writeContentsToTimestampedFile(PATHMANAGER::Screenshots() + "/", ".jpg");
@@ -769,9 +783,10 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_E:	if (bEdit()){  SetEdMode(ED_Height);  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
 		case KC_F:  if (bEdit()){  SetEdMode(ED_Filter);  curBr = 3;  updBrush();  UpdEditWnds();  }
 			else  //  focus on find edit
-			if (ctrl && edFind && bGuiFocus &&
-				!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 1)
+			if (ctrl /*&& edFind && bGuiFocus &&
+				!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 1*/)
 			{
+				GuiShortcut(WND_Edit, 1);  // Track tab
 				MyGUI::InputManager::getInstance().resetKeyFocusWidget();
 				MyGUI::InputManager::getInstance().setKeyFocusWidget(edFind);
 				return true;

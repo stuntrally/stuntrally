@@ -6,39 +6,39 @@
 		<Property key="Caption" value="SR Track Editor"/>
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
-		<Widget type="Widget" skin="PanelSkin" position="110 90 556 76" name="PanMenu0">
+		<Widget type="Widget" skin="PanelSkin" position="110 110 556 86" name="PanMenu0">
 			<Property key="Colour" value="1.0 0.9 0.6"/>
 			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="138 103 500 50" name="BtnMenu0">
+		<Widget type="Button" skin="Button" position="138 123 500 60" name="BtnMenu0">
 			<Property key="Caption" value="#{Editor}"/>
 			<Property key="Colour" value="1.0 0.9 0.6"/>
 			<Property key="TextColour" value="1.0 0.9 0.6"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="110 165 556 76" name="PanMenu1">
+		<Widget type="Widget" skin="PanelSkin" position="110 200 556 86" name="PanMenu1">
 			<Property key="Colour" value="0.8 0.8 1"/>
 			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="138 178 500 50" name="BtnMenu1">
+		<Widget type="Button" skin="Button" position="138 213 500 60" name="BtnMenu1">
 			<Property key="Caption" value="#{Help}"/>
 			<Property key="Colour" value="0.8 0.8 1"/>
 			<Property key="TextColour" value="0.8 0.9 1"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="110 240 556 76" name="PanMenu2">
+		<Widget type="Widget" skin="PanelSkin" position="110 290 556 86" name="PanMenu2">
 			<Property key="Colour" value="0.4 0.7 1"/>
 			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="138 253 500 50" name="BtnMenu2">
+		<Widget type="Button" skin="Button" position="138 303 500 60" name="BtnMenu2">
 			<Property key="Caption" value="#{Options}"/>
 			<Property key="Colour" value="0.4 0.7 1"/>
 			<Property key="TextColour" value="0.75 0.9 1"/>
@@ -927,7 +927,7 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipTerLayers}"/>
 					<Widget type="TabItem" skin="" position="2 24 646 180">
-						<Property key="Caption" value="#{FogNormal}"/>
+						<Property key="Caption" value="#C0E0FF#{FogNormal}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="44 12 64 24">
 							<Property key="Caption" value="#{Color}1"/>
@@ -996,7 +996,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 646 180">
-						<Property key="Caption" value="#{FogHeight}"/>
+						<Property key="Caption" value="#A0E0E0#{FogHeight}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="44 12 64 24">
 							<Property key="Caption" value="#{Color}"/>
@@ -1249,7 +1249,7 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipTerLayers}"/>
 					<Widget type="TabItem" skin="" position="2 24 730 322">
-						<Property key="Caption" value="#{Brushes}"/>
+						<Property key="Caption" value="#40E040#{Brushes}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 
 						<Widget type="ImageBox" skin="ImageBox" position="20 30 64 64" name="brI0">
@@ -1436,7 +1436,7 @@
 
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 730 322">
-						<Property key="Caption" value="#{Generator}"/>
+						<Property key="Caption" value="#A0F0B8#{Generator}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 						<Widget type="Widget" skin="PanelSkin" position="0 -16 740 380">
 							<Property key="Colour" value="0.141069 0.321637 0.146006"/>
@@ -1543,7 +1543,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 730 322">
-						<Property key="Caption" value="#{Tools}"/>
+						<Property key="Caption" value="#408040#{Tools}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 						<Widget type="Button" skin="Button" position="32 40 128 24" name="TerrainHalf">
 							<Property key="Colour" value="0.2 0.7 0.1"/>
@@ -1648,7 +1648,7 @@
 						<UserString key="RelativeTo" value="EditorWnd"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 554 -4">
-						<Property key="Caption" value="#{Road}"/>
+						<Property key="Caption" value="#FFB020#{Road}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 					</Widget>
 				</Widget>
@@ -1719,7 +1719,7 @@
 					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 730 264">
-						<Property key="Caption" value="#{BlendMap}"/>
+						<Property key="Caption" value="#B0F060#{BlendMap}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="10 25 86 24">
 							<Property key="Caption" value="#{AngleMin}"/>
@@ -1842,7 +1842,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 730 264">
-						<Property key="Caption" value="#{Particles}"/>
+						<Property key="Caption" value="#A0A060#{Particles}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 						<Widget type="Widget" skin="PanelSkin" position="0 -8 750 300">
 							<Property key="Alpha" value="0.2"/>
@@ -1964,7 +1964,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 730 264">
-						<Property key="Caption" value="#{Surface}"/>
+						<Property key="Caption" value="#C890FF#{Surface}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 						<Widget type="Widget" skin="PanelSkin" position="0 70 750 300">
 							<Property key="Alpha" value="0.3"/>
@@ -2059,7 +2059,7 @@
 					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 746 469">
-						<Property key="Caption" value="#{Properties}"/>
+						<Property key="Caption" value="#B0C000#{Properties}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="32 32 112 24">
 							<Property key="Caption" value="#{GrassDens}"/>
@@ -2284,7 +2284,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 746 469">
-						<Property key="Caption" value="#{Grasses}"/>
+						<Property key="Caption" value="#B0E0A0#{Grasses}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 						<Widget type="TabControl" skin="TabControl" position="16 16 528 24" name="LGrLayTab">
 							<Property key="Colour" value="0.6 0.8 0.8"/>
@@ -2468,7 +2468,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 746 469">
-						<Property key="Caption" value="#{Models}"/>
+						<Property key="Caption" value="#80F0F0#{Models}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 						<Widget type="TabControl" skin="TabControl" position="16 16 528 24" name="LTrNumTab">
 							<Property key="Colour" value="0.6 0.8 0.8"/>
@@ -2733,7 +2733,7 @@
 					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 746 469">
-						<Property key="Caption" value="#{Road}"/>
+						<Property key="Caption" value="#D0F0F0#{Road}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="60 32 124 24">
 							<Property key="Caption" value="#{RoadMaterials}"/>
@@ -2844,7 +2844,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 746 469">
-						<Property key="Caption" value="#{Pipe}"/>
+						<Property key="Caption" value="#F0F0C0#{Pipe}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="60 32 136 24">
 							<Property key="Caption" value="#{PipeMaterials}"/>
@@ -2956,7 +2956,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 746 469">
-						<Property key="Caption" value="#{Other}"/>
+						<Property key="Caption" value="#B0B0C8#{Other}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="36 32 156 24">
 							<Property key="Caption" value="#{Column}"/>
@@ -3273,7 +3273,7 @@
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Screen}"/>
+				<Property key="Caption" value="#C0E0FF#{Screen}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Widget type="TabControl" skin="TabControl" position="16 15 744 460">
 					<Property key="Colour" value="0.73 0.88 1"/>
@@ -3346,7 +3346,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572" layer="Back">
-				<Property key="Caption" value="#{Graphics}"/>
+				<Property key="Caption" value="#B0B0FF#{Graphics}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Widget type="TextBox" skin="TextBox" position="32 488 236 24">
 					<Property key="Caption" value="#{NeedReload}:"/>
@@ -3383,7 +3383,7 @@
 					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 738 372">
-						<Property key="Caption" value="#{Materials}"/>
+						<Property key="Caption" value="#D0FF60#{Materials}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="ComboBox" skin="ComboBox" position="180 47 136 24" name="TexFiltering">
 							<Property key="Caption" value="Anisotropic"/>
@@ -3475,7 +3475,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 372">
-						<Property key="Caption" value="#{Detail}"/>
+						<Property key="Caption" value="#80FFD0#{Detail}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="32 50 144 24">
 							<Property key="Caption" value="#{TerrainError}"/>
@@ -3531,7 +3531,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 372">
-						<Property key="Caption" value="#{Vegetation}"/>
+						<Property key="Caption" value="#90FF30#{Vegetation}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="Button" position="584 50 136 26" name="TrGrReset">
 							<Property key="Caption" value="#{Reset}"/>
@@ -3603,7 +3603,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 372">
-						<Property key="Caption" value="#{Shadows}"/>
+						<Property key="Caption" value="#B0B0B0#{Shadows}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="Button" position="32 180 200 26" layer="Back" name="Apply">
 							<Property key="Caption" value="#{ApplyShadows}"/>
@@ -3677,7 +3677,7 @@
 						</Widget>-->
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 372">
-						<Property key="Caption" value="#{Water}"/>
+						<Property key="Caption" value="#60B0FF#{Water}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="CheckBox" position="32 48 200 24" name="WaterReflection">
 							<Property key="Caption" value="#{WaterReflection}"/>
@@ -3711,7 +3711,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Settings}"/>
+				<Property key="Caption" value="#60A0FF#{Settings}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Widget type="TextBox" skin="TextBox" position="32 504 304 20">
 					<Property key="Caption" value="#{SREditorVersion} #{GameVersion}"/>
@@ -3921,7 +3921,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Tweak}"/>
+				<Property key="Caption" value="#6868B0#{Tweak}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Widget type="TextBox" skin="TextBox" position="32 13 375 24">
 					<Property key="Caption" value="#{MaterialProperties}"/>
@@ -3983,7 +3983,7 @@
 					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="HelpWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 714 444">
-						<Property key="Caption" value="#{InputMain}"/>
+						<Property key="Caption" value="#D0E8FF#{InputMain}"/>
 						<UserString key="RelativeTo" value="HelpWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="32 44 288 20">
 							<Property key="TextColour" value="0.9 0.96 1.0"/>
@@ -3996,31 +3996,36 @@
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="48 98 288 20">
-							<Property key="TextColour" value="0.6 0.6 0.1"/>
-							<Property key="Caption" value="#{InputNextOptTab}"/>
+							<Property key="TextColour" value="0.7 0.7 0.6"/>
+							<Property key="Caption" value="#{InputContextHelp}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="48 118 288 20">
-							<Property key="TextColour" value="0.5 0.5 0.2"/>
+							<Property key="TextColour" value="0.6 0.6 0.35"/>
+							<Property key="Caption" value="#{InputNextOptTab}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="48 138 288 20">
+							<Property key="TextColour" value="0.55 0.55 0.3"/>
 							<Property key="Caption" value="#{InputNextLayTab}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 152 136 20">
+						<Widget type="TextBox" skin="TextBox" position="32 172 136 20">
 							<Property key="Caption" value="#{InputSaveTrack}"/>
 							<Property key="TextColour" value="1.0 0.6 0.1"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 174 136 20">
+						<Widget type="TextBox" skin="TextBox" position="32 194 136 20">
 							<Property key="Caption" value="#{InputReloadTrack}"/>
 							<Property key="TextColour" value="0.4 0.7 1.0"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 196 136 20">
+						<Widget type="TextBox" skin="TextBox" position="32 216 136 20">
 							<Property key="Caption" value="#{InputUpdate}"/>
 							<Property key="TextColour" value="0.2 0.9 0.5"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 236 368 20">
+						<Widget type="TextBox" skin="TextBox" position="32 256 368 20">
 							<Property key="Caption" value="#{InputTogglePreview}"/>
 							<Property key="TextColour" value="0.7 0.86 1"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
@@ -4031,26 +4036,27 @@
 							<Property key="TextColour" value="0.8 0.8 1.0"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="172 152 188 20">
+						<Widget type="TextBox" skin="TextBox" position="172 172 188 20">
 							<Property key="Caption" value="#{InputReadyToPlay}"/>
 							<Property key="TextColour" value="0.8 0.4 0.0"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="172 174 188 20">
+						<Widget type="TextBox" skin="TextBox" position="172 194 188 20">
 							<Property key="Caption" value="#{InputUndo}"/>
 							<Property key="TextColour" value="0.3 0.55 0.8"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="172 196 266 20">
+						<Widget type="TextBox" skin="TextBox" position="172 216 266 20">
 							<Property key="Caption" value="#{InputAfterChanges}"/>
 							<Property key="TextColour" value="0.1 0.75 0.35"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="172 258 236 20">
+						<Widget type="TextBox" skin="TextBox" position="172 278 236 20">
 							<Property key="Caption" value="#{InputTrackScrn}"/>
 							<Property key="TextColour" value="0.6 0.76 0.9"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
+
 						<Widget type="TextBox" skin="TextBox" position="440 14 184 20">
 							<Property key="Caption" value="#{InputCameraMode}"/>
 							<Property key="TextColour" value="0.4 0.7 1.0"/>
@@ -4078,7 +4084,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 714 444">
-						<Property key="Caption" value="#{Terrain}"/>
+						<Property key="Caption" value="#80E080#{Terrain}"/>
 						<UserString key="RelativeTo" value="HelpWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="96 14 248 20">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
@@ -4170,7 +4176,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 714 444">
-						<Property key="Caption" value="#{Road} 1"/>
+						<Property key="Caption" value="#FFA010#{Road} 1"/>
 						<UserString key="RelativeTo" value="HelpWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="32 116 320 20">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
@@ -4269,7 +4275,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 714 444">
-						<Property key="Caption" value="#{Road} 2"/>
+						<Property key="Caption" value="#FFC060#{Road} 2"/>
 						<UserString key="RelativeTo" value="HelpWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="32 38 136 20">
 							<Property key="TextColour" value="0.5 1.0 0.3"/>
@@ -4385,7 +4391,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 714 444">
-						<Property key="Caption" value="#{InputStart}"/>
+						<Property key="Caption" value="#B0B0FF#{InputStart}"/>
 						<UserString key="RelativeTo" value="HelpWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="96 14 256 20">
 							<Property key="TextColour" value="0.7 0.7 1.0"/>
@@ -4429,7 +4435,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 714 444">
-						<Property key="Caption" value="#{Fluids}"/>
+						<Property key="Caption" value="#50B0FF#{Fluids}"/>
 						<UserString key="RelativeTo" value="HelpWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="96 14 212 20">
 							<Property key="TextColour" value="0.3 0.65 1.0"/>
@@ -4483,7 +4489,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 714 444">
-						<Property key="Caption" value="#{Objects}"/>
+						<Property key="Caption" value="#D0D0D0#{Objects}"/>
 						<UserString key="RelativeTo" value="HelpWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="96 14 212 20">
 							<Property key="TextColour" value="0.9 0.9 0.9"/>
@@ -4557,7 +4563,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 714 444">
-						<Property key="Caption" value="#{Shortcuts}"/>
+						<Property key="Caption" value="#B0A0FF#{Shortcuts}"/>
 						<UserString key="RelativeTo" value="HelpWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="32 20 740 20">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
