@@ -228,6 +228,24 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				case KC_P:	GuiShortcut(WND_Options, 5);	return true;  // P Sound
 			}
 
+		
+		//>--  dev shortcuts, alt-shift numbers, start test track
+		if (alt && shift && !mClient)
+		{
+			string t = "Test1-Flat";
+			switch (arg.key)
+			{
+				case KC_2: t = "Test11-Jumps";  break;
+				case KC_3: t = "TestC4-ow";  break;
+				case KC_4: t = "Test7-FluidsSmall";  break;
+				case KC_5: t = "Test10-FlatPerf";  break;
+			}
+			pSet->gui.track = t;  bPerfTest = false;
+			pSet->gui.track_user = false;
+			NewGame();  return true;
+		}
+			
+
 		///* tire edit */
 		if (pSet->graphs_type == Gh_TireEdit && !tweak)
 		{
