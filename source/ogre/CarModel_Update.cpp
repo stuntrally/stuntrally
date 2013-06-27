@@ -588,7 +588,7 @@ void CarModel::UpdWhTerMtr()
 void CarModel::ChangeClr(int car)
 {
 	float c_h = pSet->gui.car_hue[car], c_s = pSet->gui.car_sat[car],
-	      c_v = pSet->gui.car_val[car], gloss = pSet->gui.car_gloss[car];
+	      c_v = pSet->gui.car_val[car], gloss = pSet->gui.car_gloss[car], refl = pSet->gui.car_refl[car];
 	color.setHSB(1-c_h, c_s, c_v);  //set, mini pos clr
 
 	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
@@ -604,6 +604,7 @@ void CarModel::ChangeClr(int car)
 					GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
 					params->setNamedConstant("carColour", color);
 					params->setNamedConstant("glossiness", 1 - gloss);
+					params->setNamedConstant("reflectiveness", refl);
 	}	}	}	}
 
 	if (pNickTxt)

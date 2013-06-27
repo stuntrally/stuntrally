@@ -244,6 +244,8 @@
 		shUniform(float3, carColour)
 
 		shUniform(float, glossiness)
+		shUniform(float, reflectiveness)
+
 	    shUniform(float3, fresnelScaleBiasPower2)  @shUniformProperty3f(fresnelScaleBiasPower2, fresnelScaleBiasPower2)
 		shUniform(float4, specular2)  @shUniformProperty4f(specular2, specular2)
 #endif
@@ -490,6 +492,7 @@
 			float facing = 1.0 - max(abs(dot(-eyeDir, normal)), 0);
 			#if CAR_PAINT_MAP
 				float3 fSBP = shLerp(fresnelScaleBiasPower, fresnelScaleBiasPower2, glossiness);
+				reflectionFactor *= reflectiveness;
 			#else
 				float3 fSBP = fresnelScaleBiasPower;
 			#endif

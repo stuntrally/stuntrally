@@ -366,7 +366,7 @@ protected:
 	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolSusp);  SLV(VolEnv);  // sounds
 	SLV(VolFlSplash);  SLV(VolFlCont);  SLV(VolCarCrash);  SLV(VolCarScrap);
 	
-	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  SLV(CarClrGloss);  // car clr
+	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  SLV(CarClrGloss);  SLV(CarClrRefl);  // car clr
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
 	SLV(DepthOfFieldFocus);  SLV(DepthOfFieldFar);  // dof
 	SLV(HDRParam1);  SLV(HDRParam2);  SLV(HDRParam3);  // hdr

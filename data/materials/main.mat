@@ -39,6 +39,7 @@ material base
 	shadowBias 0
 	//  car body only
 	glossiness 0.5
+	reflectiveness 1.0
     fresnelScaleBiasPower2 0.79 0.07 4
 	specular2 0 0 0  32
 	//  glass only
@@ -98,6 +99,7 @@ material base
 		    fresnelScaleBiasPower $fresnelScaleBiasPower
 
 			glossiness $glossiness
+			reflectiveness $reflectiveness
 		    fresnelScaleBiasPower2 $fresnelScaleBiasPower2
 			specular2 $specular2
 			env_alpha $env_alpha

@@ -490,11 +490,11 @@
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeReflect}"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="332 160 224 16" name="CarClrReflect">
+				<Widget type="Slider" skin="Slider" position="332 160 224 16" name="CarClrRefl">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeReflect}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="288 160 42 22" name="CarClrReflectVal">
+				<Widget type="TextBox" skin="TextBox" position="288 160 42 22" name="CarClrReflVal">
 					<Property key="TextColour" value="0.65 0.75 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeReflect}"/>
@@ -619,6 +619,10 @@
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="724 128 18 18" name="carClr28">
+					<Property key="ImageTexture" value="white.png"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="744 128 18 18" name="carClr29">
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>

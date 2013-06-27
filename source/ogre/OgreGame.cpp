@@ -56,7 +56,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,valHDRVignettingRadius(0), valHDRVignettingDarkness(0)
 	// car
 	,bRsimEasy(0), bRsimNorm(0), bReloadSim(true)
-	,valCarClrH(0), valCarClrS(0), valCarClrV(0), valCarClrGloss(0)
+	,valCarClrH(0), valCarClrS(0), valCarClrV(0), valCarClrGloss(0), valCarClrRefl(0)
 	,valNumLaps(0), valRplNumViewports(0) // setup
 	,valSSSEffect(0), valSSSVelFactor(0), valSteerRangeSurf(0), valSteerRangeSim(0)
 	// rpl

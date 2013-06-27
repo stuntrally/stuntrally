@@ -76,7 +76,7 @@ public:
 	public:
 		std::string track;  bool track_user, trackreverse;
 		std::string car[4];
-		float car_hue[4], car_sat[4], car_val[4], car_gloss[4];
+		float car_hue[4], car_sat[4], car_val[4], car_gloss[4], car_refl[4];
 
 		int local_players, num_laps;  // split
 		//  game setup

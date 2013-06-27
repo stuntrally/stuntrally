@@ -25,7 +25,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 		char ss[64];  sprintf(ss, "car%d.", i+1);   std::string s = ss;
 		Param(c,w, s+"car", gui.car[i]);				Param(c,w, s+"clr_hue", gui.car_hue[i]);
 		Param(c,w, s+"clr_sat", gui.car_sat[i]);		Param(c,w, s+"clr_val", gui.car_val[i]);
-		Param(c,w, s+"clr_gloss", gui.car_gloss[i]);
+		Param(c,w, s+"clr_gloss", gui.car_gloss[i]);	Param(c,w, s+"clr_refl", gui.car_refl[i]);
 		Param(c,w, s+"camera", cam_view[i]);
 	}
 	//todo: this for all 4 cars..
@@ -238,7 +238,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 
 	//  cars
 	for (int i=0; i < 4; ++i)
-	{	gui.car[i] = "ES";  cam_view[0] = 9;  gui.car_gloss[i] = 0.5f;
+	{	gui.car[i] = "ES";  cam_view[i] = 9;  gui.car_gloss[i] = 0.5f;  gui.car_refl[i] = 1.f;
 		gui.car_hue[i] = 0.4f+0.2f*i;  gui.car_sat[i] = 1.f;  gui.car_val[i] = 1.f;  }
 
 	//  game
