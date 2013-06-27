@@ -376,7 +376,7 @@ protected:
 	SLV(SSSEffect);  SLV(SSSVelFactor);  SLV(SteerRangeSurf);  SLV(SteerRangeSim);
 	
 	//  checks
-	void chkGauges(WP),	chkArrow(WP), chkDigits(WP),
+	void chkGauges(WP),	chkArrow(WP),chkBeam(WP), chkDigits(WP),
 		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP), chkMiniTer(WP), chkMiniBorder(WP),  // view
 		chkFps(WP), chkWireframe(WP), 
 		chkCamInfo(WP), chkTimes(WP), chkOpponents(WP), chkOpponentsSort(WP), chkCamTilt(WP),

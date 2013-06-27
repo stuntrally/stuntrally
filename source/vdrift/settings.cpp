@@ -67,7 +67,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_show.car_dbgtxt", car_dbgtxt);		Param(c,w, "hud_show.show_cardbg", car_dbgbars);
 	Param(c,w, "hud_show.car_dbgsurf", car_dbgsurf);
 	Param(c,w, "hud_show.car_dbgtxtclr", car_dbgtxtclr); Param(c,w, "hud_show.car_dbgtxtcnt", car_dbgtxtcnt);
-	Param(c,w, "hud_show.check_arrow", check_arrow);
+	Param(c,w, "hud_show.check_arrow", check_arrow);	Param(c,w, "hud_show.check_beam", check_beam);
 	Param(c,w, "hud_show.opponents", show_opponents);	Param(c,w, "hud_show.opplist_sort", opplist_sort);
 	Param(c,w, "hud_show.graphs", show_graphs);			Param(c,w, "hud_show.graphs_type", (int&)graphs_type);
 
@@ -174,7 +174,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,car_dbgtxtclr(0), car_dbgtxtcnt(0)
 	,size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0)
 	,mini_zoomed(0), mini_rotated(1), mini_terrain(0), mini_border(1)
-	,check_arrow(0), size_arrow(0.2), gauges_type(1),graphs_type(Gh_Fps)
+	,check_arrow(0),size_arrow(0.2), check_beam(1),  gauges_type(1),graphs_type(Gh_Fps)
 	,tracks_view(0), tracks_sort(0), tracks_sortup(1), cars_sort(1), cars_sortup(1)
 	,champ_type(0), car_ed_tab(0)
 	//  graphics

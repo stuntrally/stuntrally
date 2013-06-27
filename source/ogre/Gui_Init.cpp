@@ -174,6 +174,7 @@ void App::InitGui()
 	Chk("Digits", chkDigits, pSet->show_digits);
 	Chk("Gauges", chkGauges, pSet->show_gauges);  ShowHUD();//
 	Chk("Arrow", chkArrow, pSet->check_arrow);
+	Chk("ChkBeam", chkBeam, pSet->check_beam);
 	
 	Chk("Minimap", chkMinimap, pSet->trackmap);	chMinimp = bchk;
 	Chk("MiniZoom", chkMiniZoom, pSet->mini_zoomed);  Chk("MiniRot", chkMiniRot, pSet->mini_rotated);

@@ -387,6 +387,7 @@ void App::newPoses(float time)  // time only for camera update
 								carM->iCurChk = i;  carM->iNumChks++;
 								int ii = (pSet->game.trackreverse ? -1 : 1) * road->iDir;
 								carM->iNextChk = (carM->iCurChk + ii + ncs) % ncs;
+								carM->UpdNextCheck();
 								//  save car pos and rot
 								carM->pCar->SavePosAtCheck();
 							}

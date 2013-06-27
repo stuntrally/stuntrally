@@ -41,6 +41,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 	hideTime(1.f), mbVisible(true),
 	iCamNextOld(0), bLastChkOld(0), bWrongChk(0),  iFirst(0),
 	angCarY(0), vStartPos(0,0,0), pNickTxt(0),
+	ndNextChk(0), entNextChk(0),
 	all_subs(0), all_tris(0)  //stats
 {
 	iIndex = index;  sDirname = name;  mSceneMgr = sceneMgr;
@@ -227,6 +228,17 @@ void CarModel::Create(int car)
 	}
 			
 	CreateReflection();
+	
+
+	//  next checkpoint marker
+	if (!ghost)
+	{
+		entNextChk = mSceneMgr->createEntity("Chk"+strI, "check.mesh");
+		entNextChk->setRenderQueueGroup(RQG_Weather);  entNextChk->setCastShadows(false);
+		ndNextChk = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		ndNextChk->attachObject(entNextChk);  entNextChk->setVisibilityFlags(RV_Hud);
+		ndNextChk->setVisible(false);
+	}
 
 
 	///()  grass sphere test

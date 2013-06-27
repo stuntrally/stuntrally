@@ -40,6 +40,29 @@ void CarModel::setVisible(bool vis)
 	UpdParsTrails(vis);
 }
 
+void CarModel::UpdNextCheck()
+{
+	if (eType != CarModel::CT_LOCAL)  return;
+	if (!ndNextChk || !pApp || !pApp->road)  return;
+	if (pApp->road->mChks.empty())  return;
+
+	Vector3 p;
+	if (iNumChks == pApp->road->mChks.size() && iCurChk != -1)
+		p = vStartPos;  // finish
+	else
+		p = pApp->road->mChks[iNextChk].pos;
+		
+	p.y -= 2.f;  //lower
+	ndNextChk->setPosition(p);
+	ndNextChk->setScale(5,24,5);  //par
+	ndNextChk->setVisible(pSet->check_beam);
+}
+void CarModel::ShowNextChk(bool visible)
+{
+	if (ndNextChk)  ndNextChk->setVisible(visible);
+}
+
+
 void CarModel::ResetChecks(bool bDist)  // needs to be done after road load!
 {
 	iCurChk = -1;  iNumChks = 0;  // reset lap, chk vars
@@ -48,6 +71,7 @@ void CarModel::ResetChecks(bool bDist)  // needs to be done after road load!
 	
 	const SplineRoad* road = pApp->road;
 	iNextChk = pSet->game.trackreverse ? road->iChkId1Rev : road->iChkId1;
+	UpdNextCheck();
 
 	//  percent const  ------
 	if (bDist && !road->mChks.empty())
@@ -370,7 +394,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 			{	whTrl[w]->setInitialColour(0,
 				lay.tclr.r,lay.tclr.g,lay.tclr.b, lay.tclr.a * al/**/);
 				if (iFirst > 10)  //par
-					whTrl[w]->setInitialWidth(0, tireWidth[w]);  //par, from car.. tire width
+					whTrl[w]->setInitialWidth(0, tireWidth[w]);
 			}
 		}
 	}

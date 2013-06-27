@@ -2530,7 +2530,7 @@
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="CheckBox" position="32 56 184 24" name="Minimap">
 							<Property key="Caption" value="#{Minimap} F8"/>
-							<Property key="TextColour" value="0.9 0.96 1.0"/>
+							<Property key="TextColour" value="0.4 1.0 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="344 60 320 18" name="SizeMinimap">
@@ -2570,9 +2570,15 @@
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 256 184 24" name="ChkBeam">
+							<Property key="Caption" value="#{CheckBeam}"/>
+							<Property key="TextColour" value="0.6 0.9 0.6"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						
 						<Widget type="Button" skin="CheckBox" position="32 296 184 24" name="Arrow">
 							<Property key="Caption" value="#{CheckArrow}"/>
-							<Property key="TextColour" value="0.7 0.8 0.9"/>
+							<Property key="TextColour" value="0.5 1.0 0.4"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="232 296 64 24">

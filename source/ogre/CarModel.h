@@ -140,7 +140,7 @@ public:
 		iWonPlace, iWonPlaceOld;  float iWonMsgTime;
 	bool bInSt, bWrongChk;  float fChkTime;  int iChkWrong;
 	//bool Checkpoint(const PosInfo& posInfo, class SplineRoad* road);  // update
-	Ogre::Vector3 vStartPos;  void ResetChecks(bool bDist=false);
+	Ogre::Vector3 vStartPos;  void ResetChecks(bool bDist=false), UpdNextCheck(), ShowNextChk(bool visible);
 	
 	//  access to vdrift stuff
 	GAME* pGame;
@@ -168,7 +168,8 @@ private:
 	Ogre::Real wht[4];  // spin time (approx tire temp.)
 	
 	//  Nodes
-	Ogre::SceneNode *ndWh[4], *ndWhE[4], *ndBrake[4];
+	Ogre::SceneNode *ndWh[4], *ndWhE[4], *ndBrake[4], *ndNextChk;
+	Ogre::Entity* entNextChk;
 	
 	//  Dir name of car (e.g. ES)
 public:

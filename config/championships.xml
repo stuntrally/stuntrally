@@ -181,8 +181,6 @@
 		<track name="D2-Mntn"		laps="1" factor="0.1" />
 		<track name="V4-Spikeland"	laps="1" factor="0.1" />
 		<track name="I10-Treasure"	laps="1" factor="0.1" />
-		<!--<track name="J15-Swamp"	laps="1" factor="0.1" />-->
-		<!--<track name="F10-MntnTrail"	laps="1" factor="0.1" />-->
 	</championship>
 
 	<championship name="Frenzy fellow" ver="4" difficulty="4" type="3" 
@@ -399,6 +397,7 @@
 		<track name="X1-Magic"		laps="1" factor="0.1" />
 		<track name="X2-Swirl"		laps="1" factor="0.1" />
 		<track name="X3-Cloud"		laps="1" factor="0.1" />
+		<track name="X4-Pipeline"	laps="1" factor="0.15" />
 	</championship>
 
 <!--  Test  -->
@@ -599,7 +598,7 @@
 		<!--116-->
 		<track name="0W12-Peaks"	time="38.0"/>
 		<track name="V4-Spikeland"	time="78.0"/>
-		<track name="V5-Sad"		time="168.0"/>
+		<track name="V5-Sad"		time="168.0"/><!--vv..-->
 		<track name="T6-Sunset"		time="90.0"/>
 		<track name="0W13-MtFog"	time="108.0"/>
 
@@ -607,8 +606,7 @@
 		<track name="I12-Beach"		time="51.0"/>
 		<track name="C4-Sway"		time="161.0"/>
 
-		<track name="X4-Pipeline"	time="250.0"/>
-	<!--<track name="S15-Scorpio"	time="161.0"/>-->
+		<track name="X4-Pipeline"	time="250.0"/><!---->
 
 	</times>
 </championships>

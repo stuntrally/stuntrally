@@ -337,11 +337,19 @@ void App::radKmh(WP wp){	bRkmh->setStateSelected(true);  bRmph->setStateSelected
 void App::radMph(WP wp){	bRkmh->setStateSelected(false);  bRmph->setStateSelected(true);  pSet->show_mph = true;   ShowHUD();  }
 
 void App::radSimEasy(WP){	bRsimEasy->setStateSelected(true);  bRsimNorm->setStateSelected(false);
-	pSet->gui.sim_mode = "easy";	bReloadSim = true;  tabTireSet(0,iTireSet);  }
+	pSet->gui.sim_mode = "easy";	bReloadSim = true;  tabTireSet(0,iTireSet);
+}
 void App::radSimNorm(WP){	bRsimEasy->setStateSelected(false);  bRsimNorm->setStateSelected(true);
-	pSet->gui.sim_mode = "normal";	bReloadSim = true;  tabTireSet(0,iTireSet);  }
+	pSet->gui.sim_mode = "normal";	bReloadSim = true;  tabTireSet(0,iTireSet);
+}
 
-void App::chkArrow(WP wp){			ChkEv(check_arrow); if (arrowRotNode) arrowRotNode->setVisible(pSet->check_arrow);  }
+void App::chkArrow(WP wp){			ChkEv(check_arrow);
+	if (arrowRotNode) arrowRotNode->setVisible(pSet->check_arrow);
+}
+void App::chkBeam(WP wp){			ChkEv(check_beam);
+	for (int i=0; i < carModels.size(); ++i)  carModels[i]->ShowNextChk(pSet->check_beam);
+}
+
 void App::chkMinimap(WP wp){		ChkEv(trackmap);
 	for (int c=0; c < 4; ++c)
 		if (ndMap[c])  ndMap[c]->setVisible(pSet->trackmap);

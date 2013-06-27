@@ -35,7 +35,7 @@ public:
 	int version;  // file version
 
 	//  show
-	bool show_fps, show_gauges, check_arrow, trackmap,
+	bool show_fps, show_gauges, check_beam, check_arrow, trackmap,
 		mini_zoomed, mini_rotated, mini_terrain, mini_border,
 		show_cam, show_times, show_digits, show_opponents, cam_tilt,
 		car_dbgbars, car_dbgtxt, car_dbgsurf, ogre_dialog, show_graphs;
