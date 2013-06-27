@@ -89,7 +89,7 @@
 				<UserString key="RelativeTo" value="GameWnd"/>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabTrack">
-				<Property key="Caption" value="#{Track}"/>
+				<Property key="Caption" value="#60FF60#{Track}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
 				<Widget type="Button" skin="CheckBox" position="380 504 120 24" name="ReverseOn">
 					<Property key="Caption" value="#{Reverse}"/>
@@ -326,7 +326,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabCar">
-				<Property key="Caption" value="#{Car}"/>
+				<Property key="Caption" value="#FF6050#{Car}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
 				<Widget type="Button" skin="Button" position="176 496 136 32" name="NewGame2">
 					<Property key="Caption" value="#{NewGame}"/>
@@ -422,7 +422,7 @@
 
 				<Widget type="TextBox" skin="TextBox" position="200 60 88 22">
 					<Property key="Caption" value="#{ColHue}"/>
-					<Property key="TextColour" value="0.5 0.75 1.0"/>
+					<Property key="TextColour" value="0.4 0.7 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeHue}"/>
 				</Widget>
@@ -431,7 +431,7 @@
 					<UserString key="tip" value="#{TipChangeHue}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="288 60 42 22" name="CarClrHVal">
-					<Property key="TextColour" value="0.7 0.85 1.0"/>
+					<Property key="TextColour" value="0.6 0.8 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeHue}"/>
 				</Widget>
@@ -469,7 +469,7 @@
 				</Widget>
 
 				<Widget type="TextBox" skin="TextBox" position="200 136 88 22">
-					<Property key="TextColour" value="0.7 0.85 1.0"/>
+					<Property key="TextColour" value="0.7 0.7 0.7"/>
 					<Property key="Caption" value="#{ColGloss}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeGloss}"/>
@@ -479,13 +479,13 @@
 					<UserString key="tip" value="#{TipChangeGloss}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="288 136 42 22" name="CarClrGlossVal">
-					<Property key="TextColour" value="0.8 0.9 1.0"/>
+					<Property key="TextColour" value="0.8 0.8 0.8"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeGloss}"/>
 				</Widget>
 
 				<Widget type="TextBox" skin="TextBox" position="200 160 88 22">
-					<Property key="TextColour" value="0.6 0.7 0.9"/>
+					<Property key="TextColour" value="0.6 0.6 0.9"/>
 					<Property key="Caption" value="#{ColReflect}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeReflect}"/>
@@ -495,7 +495,7 @@
 					<UserString key="tip" value="#{TipChangeReflect}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="288 160 42 22" name="CarClrReflVal">
-					<Property key="TextColour" value="0.65 0.75 1.0"/>
+					<Property key="TextColour" value="0.7 0.7 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeReflect}"/>
 				</Widget>
@@ -648,7 +648,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Setup}"/>
+				<Property key="Caption" value="#90A0A0#{Setup}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
 				<Widget type="Button" skin="CheckBox" position="32 70 320 24" name="CarGear">
 					<Property key="Caption" value="#{AutoGearbox}"/>
@@ -759,7 +759,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Game}"/>
+				<Property key="Caption" value="#C0C080#{Game}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
 				<Widget type="Widget" skin="PanelSkin" position="360 62 420 232">
 					<Property key="Alpha" value="0.3"/>
@@ -872,7 +872,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Multiplayer}"/>
+				<Property key="Caption" value="#A0A0FF#{Multiplayer}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
 				<Widget type="TabControl" skin="TabControl" position="16 15 744 497" name="tabsNet">
 					<Property key="Colour" value="0.73 0.88 1"/>
@@ -1049,7 +1049,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabChamps">
-				<Property key="Caption" value="#{Championship}"/>
+				<Property key="Caption" value="#80C0FF#{Championship}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
 				<Widget type="Button" skin="Button" position="320 460 144 40" name="btnChampStart">
 					<Property key="Caption" value="#{ChampStart}"/>
@@ -1099,7 +1099,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabStages">
-				<Property key="Caption" value="#{Stages}"/>
+				<Property key="Caption" value="#80E0C0#{Stages}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
 				<Widget type="TextBox" skin="TextBox" position="496 48 119 24">
 					<Property key="Caption" value="#{Difficulty}"/>
@@ -1163,7 +1163,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabTrack">
-				<Property key="Caption" value="#{Track}"/>
+				<Property key="Caption" value="#60E060#{Track}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
 				<Widget type="TextBox" skin="TextBox" position="176 456 200 24" name="TrackText">
 					<Property key="InheritsAlpha" value="true"/>
@@ -1720,14 +1720,14 @@
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Screen}"/>
+				<Property key="Caption" value="#C0E0FF#{Screen}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Widget type="TabControl" skin="TabControl" position="16 15 744 460" name="SubTab">
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
-						<Property key="Caption" value="#{Video}"/>
+						<Property key="Caption" value="#B0F0FF#{Video}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="32 18 112 24">
 							<Property key="Caption" value="#{Resolution}"/>
@@ -1786,7 +1786,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
-						<Property key="Caption" value="#{Effects}"/>
+						<Property key="Caption" value="#E0C080#{Effects}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="CheckBox" position="28 20 252 24" name="AllEffects">
 							<Property key="Caption" value="#{AllEffects}"/>
@@ -1890,7 +1890,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
-						<Property key="Caption" value="#{HDRTab}"/>
+						<Property key="Caption" value="#604050#{HDRTab}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="CheckBox" position="28 20 152 24" name="HDR">
 							<Property key="Caption" value="#{HDR}"/>
@@ -2002,7 +2002,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572" layer="Back">
-				<Property key="Caption" value="#{Graphics}"/>
+				<Property key="Caption" value="#B0B0FF#{Graphics}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Widget type="TextBox" skin="TextBox" position="32 488 236 24">
 					<Property key="Caption" value="#{NeedNewGame}"/>
@@ -2039,7 +2039,7 @@
 					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 738 372">
-						<Property key="Caption" value="#{Materials}"/>
+						<Property key="Caption" value="#D0FF60#{Materials}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="ComboBox" skin="ComboBox" position="180 47 136 24" name="TexFiltering">
 							<Property key="Caption" value="Anisotropic"/>
@@ -2131,7 +2131,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 372">
-						<Property key="Caption" value="#{Detail}"/>
+						<Property key="Caption" value="#80FFD0#{Detail}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="32 50 144 24">
 							<Property key="Caption" value="#{TerrainError}"/>
@@ -2187,7 +2187,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 372">
-						<Property key="Caption" value="#{Vegetation}"/>
+						<Property key="Caption" value="#90FF30#{Vegetation}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="Button" position="584 50 136 26" name="TrGrReset">
 							<Property key="Caption" value="#{Reset}"/>
@@ -2259,7 +2259,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 372">
-						<Property key="Caption" value="#{Shadows}"/>
+						<Property key="Caption" value="#B0B0B0#{Shadows}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="Button" position="32 180 200 26" layer="Back" name="Apply">
 							<Property key="Caption" value="#{ApplyShadows}"/>
@@ -2320,7 +2320,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 372">
-						<Property key="Caption" value="#{Reflections}"/>
+						<Property key="Caption" value="#FFD8B0#{Reflections}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="32 50 144 24">
 							<Property key="Caption" value="#{FrameSkip}"/>
@@ -2389,7 +2389,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 372">
-						<Property key="Caption" value="#{Water}"/>
+						<Property key="Caption" value="#60B0FF#{Water}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="CheckBox" position="32 48 200 24" name="WaterReflection">
 							<Property key="Caption" value="#{WaterReflection}"/>
@@ -2421,7 +2421,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 372">
-						<Property key="Caption" value="#{Particles}"/>
+						<Property key="Caption" value="#A0A060#{Particles}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Slider" skin="Slider" position="248 50 320 18" name="Particles">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -2451,14 +2451,14 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{View}"/>
+				<Property key="Caption" value="#D0FFFF#{View}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Widget type="TabControl" skin="TabControl" position="16 15 744 460" name="SubTab">
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
-						<Property key="Caption" value="#{HUD}"/>
+						<Property key="Caption" value="#D0FFFF#{HUD}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="CheckBox" position="32 56 184 24" name="Digits">
 							<Property key="Caption" value="#{Digits}"/>
@@ -2530,7 +2530,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
-						<Property key="Caption" value="#{Minimap}"/>
+						<Property key="Caption" value="#60F8F8#{Minimap}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="CheckBox" position="32 56 184 24" name="Minimap">
 							<Property key="Caption" value="#{Minimap} F8"/>
@@ -2608,7 +2608,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
-						<Property key="Caption" value="#{Startup}"/>
+						<Property key="Caption" value="#8870A0#{Startup}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="CheckBox" position="32 62 256 24" name="MouseCapture">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
@@ -2652,7 +2652,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
-						<Property key="Caption" value="#{Other}"/>
+						<Property key="Caption" value="#C0A0E0#{Other}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="CheckBox" position="32 62 320 24" name="Fps">
 							<Property key="Caption" value="#{FPS}  F11"/>
@@ -2733,7 +2733,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="InputTabAll">
-				<Property key="Caption" value="#{Input}"/>
+				<Property key="Caption" value="#FFFF60#{Input}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Widget type="Widget" skin="PanelSkin" position="532 88 236 204" name="PanKey1">
 					<Property key="Colour" value="0.6 0.8 1"/>
@@ -2866,7 +2866,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Sound}"/>
+				<Property key="Caption" value="#B090E0#{Sound}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Widget type="TextBox" skin="TextBox" position="32 20 144 30">
 					<Property key="Caption" value="#{Volume}"/>

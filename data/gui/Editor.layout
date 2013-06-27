@@ -3408,7 +3408,7 @@
 					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
-						<Property key="Caption" value="#{Video}"/>
+						<Property key="Caption" value="#B0F0FF#{Video}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="32 18 112 24">
 							<Property key="Caption" value="#{Resolution}"/>

@@ -232,7 +232,7 @@ void App::updReplaysList()
 			for (int i=0; i < l; ++i)
 				if (s[i] >= 'A' && s[i] <= 'Z') {  ch = s[i];  break;  }
 
-			rplList->addItem(GetSceneryColor(ch) + s);
+			rplList->addItem(GetSceneryColor(s) + s);
 		}
 	}
 }
