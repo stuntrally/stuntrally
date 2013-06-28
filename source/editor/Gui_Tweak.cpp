@@ -27,13 +27,6 @@ void App::CreateGUITweakMtr()
 	MyGUI::EnumeratorWidgetPtr widgets = view->getEnumerator ();
 	mGUI->destroyWidgets(widgets);
 
-	#define setOrigPos(widget) \
-		widget->setUserString("origPosX", toStr(widget->getPosition().left)); \
-		widget->setUserString("origPosY", toStr(widget->getPosition().top)); \
-		widget->setUserString("origSizeX", toStr(widget->getSize().width)); \
-		widget->setUserString("origSizeY", toStr(widget->getSize().height)); \
-		widget->setUserString("RelativeTo", "OptionsWnd");
-
 	if (pSet->tweak_mtr == "")  return;
 	sh::MaterialInstance* mat = mFactory->getMaterialInstance(pSet->tweak_mtr);
 	//if (!mat)  return;
@@ -75,20 +68,20 @@ void App::CreateGUITweakMtr()
 				//  name text
 				int x = 0, xs = 150;
 				TextBox* txt = view->createWidget<TextBox>("TextBox", x,y, xs,20, Align::Default, nameSi + ".txt");
-				setOrigPos(txt);  txt->setTextColour(clr);
+				setOrigPos(txt, "OptionsWnd");  txt->setTextColour(clr);
 				txt->setCaption(size == 1 ? name : name + "." + ch[t]);
 
 				//  val edit
 				x += xs;  xs = 60;
 				EditBox* edit = view->createWidget<EditBox>("EditBox", x,y, xs,20, Align::Default, nameSi + "E");
-				setOrigPos(edit);  edit->setTextColour(clr);  edit->setColour(clr);
+				setOrigPos(edit, "OptionsWnd");  edit->setTextColour(clr);  edit->setColour(clr);
 				edit->setCaption(fToStr(val,3,6));
 				if (edit->eventEditTextChange.empty())  edit->eventEditTextChange += newDelegate(this, &App::edTweak);
 				
 				//  slider
 				x += xs + 10;  xs = 400;
 				Slider* sl = view->createWidget<Slider>("Slider", x,y-1, xs,19, Align::Default, nameSi);
-				setOrigPos(sl);  sl->setColour(clr);
+				setOrigPos(sl, "OptionsWnd");  sl->setColour(clr);
 				sl->setValue(val);  //powf(val * 1.f/2.f, 1.f/2.f));  //v
 				if (sl->eventValueChanged.empty())  sl->eventValueChanged += newDelegate(this, &App::slTweak);
 

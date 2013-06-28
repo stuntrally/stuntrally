@@ -2636,12 +2636,12 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="332 62 256 24" name="BltLines">
-							<Property key="TextColour" value="0.7 0.8 0.9"/>
+							<Property key="TextColour" value="0.9 0.85 0.5"/>
 							<Property key="Caption" value="#{BulletLines}*"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="332 94 256 24" name="OgreDialog">
-							<Property key="TextColour" value="0.5 0.6 0.7"/>
+							<Property key="TextColour" value="0.4 0.5 0.6"/>
 							<Property key="Caption" value="#{OgreDialog}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
@@ -2656,62 +2656,62 @@
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="CheckBox" position="32 62 320 24" name="Fps">
 							<Property key="Caption" value="#{FPS}  F11"/>
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="TextColour" value="0.7 0.7 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="64 94 256 24" name="ProfilerTxt">
 							<Property key="Caption" value="#{ProfilerTxt}  shift-F11"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="TextColour" value="0.56 0.56 0.75"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 140 256 24" name="Wireframe">
 							<Property key="Caption" value="#{Wireframe}  F10"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="TextColour" value="0.8 0.8 0.8"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 184 256 24" name="BulletDebug">
 							<Property key="Caption" value="#{BulletDebug}  ctrl-F10"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="TextColour" value="0.9 0.85 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="64 216 256 24" name="BulletProfilerTxt">
 							<Property key="Caption" value="#{BulletProfilerTxt}  shift-F10"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="TextColour" value="0.7 0.65 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="388 62 320 24" name="CarDbgBars">
 							<Property key="Caption" value="#{CarDebug}  ctrl-F8"/>
-							<Property key="TextColour" value="0.7 0.9 1.0"/>
+							<Property key="TextColour" value="0.7 0.9 0.7"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="388 260 256 24" name="CarDbgTxt">
 							<Property key="Caption" value="#{CarDebugText}  shift-F9"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="TextColour" value="1.0 0.55 0.4"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="388 96 320 24" name="CarDbgSurf">
 							<Property key="Caption" value="#{CarDebugSurfaces}  ctrl-F9"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="TextColour" value="0.5 0.6 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="388 164 256 24" name="Graphs">
 							<Property key="Caption" value="#{Graphs}  F9"/>
-							<Property key="TextColour" value="0.75 0.78 1.0"/>
+							<Property key="TextColour" value="0.78 0.75 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="392 198 32 24" name="GraphsTypeVal">
-							<Property key="TextColour" value="0.75 0.78 1.0"/>
+							<Property key="TextColour" value="0.78 0.75 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="ComboBox" skin="ComboBox" position="426 193 250 24" name="CmbGraphsType">
 							<Property key="Static" value="true"/>
 							<Property key="ReadOnly" value="true"/>
-							<Property key="Colour" value="0.7 0.75 0.9"/>
-							<Property key="TextColour" value="0.8 0.87 1"/>
+							<Property key="Colour" value="0.75 0.7 0.9"/>
+							<Property key="TextColour" value="0.87 0.8 1"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="392 292 32 22" name="DbgTxtCntVal">
-							<Property key="TextColour" value="0.6 0.75 0.9"/>
+							<Property key="TextColour" value="1.0 0.56 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="416 292 260 16" name="DbgTxtCnt">
@@ -2719,11 +2719,11 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="388 332 148 22">
 							<Property key="Caption" value="#{TextColor}"/>
-							<Property key="TextColour" value="0.5 0.7 0.9"/>
+							<Property key="TextColour" value="0.7 0.56 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="392 356 32 22" name="DbgTxtClrVal">
-							<Property key="TextColour" value="0.5 0.7 0.9"/>
+							<Property key="TextColour" value="0.65 0.45 0.4"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="416 356 160 16" name="DbgTxtClr">

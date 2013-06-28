@@ -691,6 +691,8 @@
 	<Tag name="Brush_ShapeTriangle">Triang</Tag>
 	<Tag name="Brush_ShapeSinus">Sinus</Tag>
 	<Tag name="Brush_ShapeNoise">Noise</Tag>
+	<Tag name="Brush_ShapeNoise2">Noise2</Tag>
+	<Tag name="Brush_ShapeN-gon">N-gon</Tag>
 
 	<Tag name="Brush_Freq">Freq</Tag>
 	<Tag name="Brush_Octaves">Octaves</Tag>

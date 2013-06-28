@@ -255,6 +255,7 @@ protected:
 	void comboTexFilter(CMB), btnShadows(WP), btnShaders(WP), btnTrGrReset(WP),
 		chkWaterReflect(WP), chkWaterRefract(WP),
 		chkUseImposters(WP), chkImpostorsOnly(WP);
+	void setOrigPos(WP wp, const char* relToWnd);
 
 	//  tooltip
 	WP mToolTip;  MyGUI::EditPtr mToolTipTxt;

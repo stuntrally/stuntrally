@@ -85,7 +85,7 @@ void App::editTerTriSize(EditPtr ed)
 	float v = std::min(1.f, powf((r -0.1f)/5.9f, 0.5f) );
 	if (sl)  sl->setValue(v);
 	// result val text
-	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str);
+	int size = getHMapSizeTab();
 	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 }
 // |
@@ -95,13 +95,18 @@ void App::slTerTriSize(SL)
 	sc->td.fTriangleSize = v;  sc->td.UpdVals();
 	if (edTerTriSize)  edTerTriSize->setCaption(toStr(v));  // set edit
 	// result val text
-	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str);
+	int size = getHMapSizeTab();
 	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 }
 
+int App::getHMapSizeTab()
+{
+	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8().substr(7).c_str();
+	return atoi(str);
+}
 void App::tabHmap(TabPtr wp, size_t id)
 {
-	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str);
+	int size = getHMapSizeTab();
 	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 }
 
@@ -122,7 +127,7 @@ const char* App::getHMapNew()
 //----------------------------------------------------------------------------------------------------------
 void App::btnTerrainNew(WP)
 {
-	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str);
+	int size = getHMapSizeTab();
 	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 
 	sc->td.iVertsX = size+1;  sc->td.UpdVals();  // new hf
@@ -177,7 +182,7 @@ void App::btnTerGenerate(WP)
 //  Terrain  half  --------------------------------
 void App::btnTerrainHalf(WP)
 {
-	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str) / 2;
+	int size = getHMapSizeTab() / 2;
 	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 
 	int halfSize = (sc->td.iVertsX-1) / 2 +1;
@@ -206,7 +211,7 @@ void App::btnTerrainHalf(WP)
 #if 1
 void App::btnTerrainDouble(WP)
 {
-	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str) / 2;
+	int size = getHMapSizeTab() / 2;
 	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 
 	int dblSize = (sc->td.iVertsX-1) * 2 +1;
@@ -233,7 +238,7 @@ void App::btnTerrainDouble(WP)
 //  Terrain  resize  --------------------------------
 void App::btnTerrainDouble(WP)
 {
-	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str) / 2;
+	int size = getHMapSizeTab() / 2;
 	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 
 	int oldSize = sc->td.iVertsX, osi = oldSize*oldSize,

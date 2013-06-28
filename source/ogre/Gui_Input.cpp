@@ -85,19 +85,9 @@ void App::InitInputGui()
 	}
 
 
-	// use for widgets that should have relative size
-	#define setOrigPos(widget) \
-		widget->setUserString("origPosX", toStr(widget->getPosition().left)); \
-		widget->setUserString("origPosY", toStr(widget->getPosition().top)); \
-		widget->setUserString("origSizeX", toStr(widget->getSize().width)); \
-		widget->setUserString("origSizeY", toStr(widget->getSize().height)); \
-		widget->setUserString("RelativeTo", "OptionsWnd");
-
 	#define CreateText(x,y, w,h, name, text)  {  StaticTextPtr txt =  \
 		tabitem->createWidget<TextBox>("TextBox", x,y, w,h, ALIGN, name);  \
-		txt->setUserString("origPosX", toStr(x)); txt->setUserString("origPosY", toStr(y)); \
-		txt->setUserString("origSizeX", toStr(w)); txt->setUserString("origSizeY", toStr(h)); \
-		txt->setUserString("RelativeTo", "OptionsWnd"); \
+		setOrigPos(txt, "OptionsWnd");  \
 		if (txt)  txt->setCaption(text);  }
 	
 	//  button size and columns positon
@@ -161,7 +151,7 @@ void App::InitInputGui()
 			StaticTextPtr desc = tabitem->createWidget<TextBox>("TextBox",
 				x0, y+5, s0, sy,  ALIGN,
 				"staticText_" + sAct );
-			setOrigPos(desc);
+			setOrigPos(desc, "OptionsWnd");
 			desc->setCaption( TR("#{InputMap" + name + "}") );
 		
 			//  Keyboard binds  --------------------------------
@@ -200,7 +190,7 @@ void App::InitInputGui()
 			ButtonPtr btn1 = tabitem->createWidget<Button>("Button",
 				x1, button2 ? (y + ya*2) : y, sx, sy,  ALIGN,
 				"inputbutton_" + sAct + "_" + sPlr + "_1");
-			setOrigPos(btn1);
+			setOrigPos(btn1, "OptionsWnd");
 			btn1->setCaption( skey1 );
 			btn1->eventMouseButtonClick += newDelegate(this, &App::inputBindBtnClicked);
 			
@@ -209,7 +199,7 @@ void App::InitInputGui()
 					x1, y, sx, sy,  ALIGN,
 					"inputbutton_" + sAct + "_" + sPlr + "_2");
 				btn2->setCaption( skey2 );
-				setOrigPos(btn2);
+				setOrigPos(btn2, "OptionsWnd");
 				btn2->eventMouseButtonClick += MyGUI::newDelegate(this, &App::inputBindBtnClicked);
 			}
 			
@@ -219,7 +209,7 @@ void App::InitInputGui()
 				StaticImagePtr bar = tabitem->createWidget<ImageBox>("ImageBox",
 					x2 + (button2 ? 0 : 64), y+4, button2 ? 128 : 64, 16, ALIGN,
 					"bar_" + sAct + "_" + sPlr);
-				setOrigPos(bar);
+				setOrigPos(bar, "OptionsWnd");
 				bar->setImageTexture(String("input_bar.png"));  bar->setImageCoord(IntCoord(0,0,128,16));
 			}
 
@@ -228,7 +218,7 @@ void App::InitInputGui()
 			{	btn1 = tabitem->createWidget<Button>("Button",
 					x3, y, 32, sy,  ALIGN,
 					"inputdetail_" + sAct + "_" + sPlr + "_1");
-				setOrigPos(btn1);
+				setOrigPos(btn1, "OptionsWnd");
 				btn1->setCaption(">");
 				btn1->setColour(Colour(0.6f,0.8f,1.0f));
 				btn1->eventMouseButtonClick += newDelegate(this, &App::inputDetailBtn);

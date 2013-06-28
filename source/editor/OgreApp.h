@@ -256,6 +256,7 @@ protected:
 	void comboTexFilter(CMB), btnShadows(WP), btnShaders(WP), btnTrGrReset(WP),
 		chkWaterReflect(WP), chkWaterRefract(WP),
 		chkUseImposters(WP), chkImpostorsOnly(WP);
+	void setOrigPos(WP wp, const char* relToWnd);
 
 	//  tooltip
 	WP mToolTip;  MyGUI::EditPtr mToolTipTxt;
@@ -360,7 +361,7 @@ protected:
 
 	MyGUI::ButtonPtr chkTerLay,chkTerLNoiseOnly,chkTerLayTripl;
 	void chkTerLayOn(WP),chkTerLNoiseOnlyOn(WP),chkTerLayTriplOn(WP);  // on
-	MyGUI::TabPtr tabsHmap;	  void tabHmap(TAB);  // tabs
+	MyGUI::TabPtr tabsHmap;	  void tabHmap(TAB);  int getHMapSizeTab();  // tabs
 	MyGUI::TabPtr tabsTerLayers; void tabTerLayer(TAB);
 	int idTerLay;  bool bTerLay;  // help vars
 	MyGUI::ButtonPtr chkTexNormAuto;  void chkTexNormAutoOn(WP);  bool bTexNormAuto;  // auto
