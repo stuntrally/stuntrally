@@ -103,11 +103,7 @@ int App::getHMapSizeTab()
 {
 	//string str = tabsHmap->getItemSelected()->getCaption().asUTF8().substr(7).c_str();
 	switch (tabsHmap->getIndexSelected())
-	{	case 0: return 128;
-		case 1: return 256;
-		case 2: return 512;
-		case 3: return 1024;
-		case 4: return 2048;  }
+	{	case 0: return 128;  case 1: return 256;  case 2: return 512;  case 3: return 1024;  case 4: return 2048;  }
 	return 512;
 }
 void App::tabHmap(TabPtr wp, size_t id)

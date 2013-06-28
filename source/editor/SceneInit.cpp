@@ -136,6 +136,7 @@ void App::createScene()  // once, init
 		pSet->isMain = true;
 		
 	bGuiFocus = false/*true*/;  bMoveCam = true;  //*--
+	curBr = 0;
 	InitGui();
 	
 

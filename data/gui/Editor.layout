@@ -1253,7 +1253,7 @@
 						<UserString key="RelativeTo" value="EditorWnd"/>
 
 						<Widget type="ScrollView" skin="ScrollViewEmpty" position="0 5 750 330" name="svBrushes">
-							<Property key="CanvasSize" value="1020 900"/>
+							<Property key="CanvasSize" value="1020 1800"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
 					</Widget>
@@ -3963,12 +3963,17 @@
 							<Property key="TextColour" value="0.5 0.7 0.0"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 280 312 20">
+							<Property key="Caption" value="#{TipBrushPick}"/>
+							<Property key="TextColour" value="0.4 0.5 0.4"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+
 						<Widget type="TextBox" skin="TextBox" position="440 14 256 20">
 							<Property key="Caption" value="#{InputBrushParams}"/>
 							<Property key="TextColour" value="0.5 1.0 0.3"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-
 						<Widget type="TextBox" skin="TextBox" position="376 44 320 20">
 							<Property key="Caption" value="#{InputBrushSize}"/>
 							<Property key="TextColour" value="0.7 0.86 1.0"/>

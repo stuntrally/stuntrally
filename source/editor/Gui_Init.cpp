@@ -199,8 +199,8 @@ void App::InitGui()
 	Ed(FogClr, editFogClr);  Ed(FogClr2, editFogClr2);  Ed(FogClrH, editFogClrH);
 	clrAmb = mGUI->findWidget<ImageBox>("ClrAmb");		clrDiff = mGUI->findWidget<ImageBox>("ClrDiff");
 	clrSpec = mGUI->findWidget<ImageBox>("ClrSpec");	clrTrail = mGUI->findWidget<ImageBox>("ClrTrail");
-	clrFog = mGUI->findWidget<ImageBox>("ClrFog");	clrFog2 = mGUI->findWidget<ImageBox>("ClrFog2");
-	clrFogH = mGUI->findWidget<ImageBox>("ClrFogH");	//Todo: on click event - open color r,g,b dialog
+	clrFog = mGUI->findWidget<ImageBox>("ClrFog");		clrFog2 = mGUI->findWidget<ImageBox>("ClrFog2");
+	clrFogH = mGUI->findWidget<ImageBox>("ClrFogH");	//Todo: on click event - open color dialog
 	Slv(Rain1Rate,0);  Slv(Rain2Rate,0);
 
 
@@ -219,24 +219,26 @@ void App::InitGui()
 	Btn("TerrainGenAdd", btnTerGenerate);  Btn("TerrainGenSub", btnTerGenerate);   Btn("TerrainGenMul", btnTerGenerate);
 	Btn("TerrainHalf", btnTerrainHalf);  Btn("TerrainDouble", btnTerrainDouble);  Btn("TerrainMove", btnTerrainMove);
 
-	//  brush presets   o o o o o o o o 
-	for (i=0; i < brSetsNum; ++i)
+	ScrollView* sv = mGUI->findWidget<ScrollView>("svBrushes");
+	///  brush presets   o o o o o o o o 
+	int j=0,n=0;  // for next lines
+	for (i=0; i < brSetsNum; ++i,++n)
 	{
 		const BrushSet& st = brSets[i];  const String s = toStr(i);
-		int x,y, xt,yt, sx;
-		if (i < 14)	{  x = 10+      i*50;  y =  10;  xt= x + 20;  yt= y + 50;  sx = 48;  } else
-		if (i < 24)	{  x = 20+ (i-14)*70;  y = 100;  xt= x + 25;  yt= y + 55;  sx = 64;  } else
-		if (i < 34)	{  x = 20+ (i-24)*70;  y = 190;  xt= x + 25;  yt= y + 55;  sx = 64;  } else
-		if (i < 44)	{  x = 20+ (i-34)*70;  y = 280;  xt= x + 25;  yt= y + 55;  sx = 64;  } 
-		else		{  x = 20+ (i-44)*70;  y = 370;  xt= x + 25;  yt= y + 55;  sx = 64;  }
-
-		ScrollView* sv = mGUI->findWidget<ScrollView>("svBrushes");
-
+		int x,y, xt,yt, sx, d = i-14;
+		if (d < 0)  // top row
+		{	x = 10+ i*50;  y = 10;   xt= x + 20;  yt= y + 50;  sx = 48;  }
+		else
+		{	if (st.newLine==1 && n > 0 || n > 9) {  n=0;  ++j;  }
+			x = 20+ n*70;  y = 10+ j*70;  xt= x + 25;  yt= y + 55;  sx = 64;
+			//x = 20+ (d%10)*70;  y = 100+(d/10)*90;
+			if (st.newLine < 0)  n -= st.newLine;
+		}
 		StaticImage* img = sv->createWidget<StaticImage>("ImageBox", x,y, sx,sx, Align::Default, "brI"+s);
 		img->eventMouseButtonClick += newDelegate(this, &App::btnBrushPreset);
 		img->setUserString("tip", st.name);  img->setNeedToolTip(true);
 		img->setImageTexture("brush"+s+".png");
-		img->eventToolTip += newDelegate(this, &App::notifyToolTip);
+		if (!st.name.empty())  img->eventToolTip += newDelegate(this, &App::notifyToolTip);
 		setOrigPos(img, "EditorWnd");
 		
 		StaticText* txt = sv->createWidget<StaticText>("TextBox", xt,yt, 40,22, Align::Default, "brT"+s);
@@ -248,6 +250,8 @@ void App::InitGui()
 		txt->setTextColour(Colour(mul(fB,m), mul(fG,m), mul(fR,m)) );
 		setOrigPos(txt, "EditorWnd");
 	}
+	//sv->setCanvasSize(1020,j*90+300);
+		
 
 	Slv(TerGenScale,powf(pSet->gen_scale /160.f, 1.f/2.f));  // generate
 	Slv(TerGenOfsX, (pSet->gen_ofsx+2.f) /4.f);

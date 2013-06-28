@@ -170,9 +170,8 @@ protected:
 
 
 	///<>  terrain edit, brush
-	void updBrush();
+	void updBrush();  int curBr;
 	bool bTerUpd,bTerUpdBlend;  char sBrushTest[512];
-	int curBr, brImgSave;
 	float* pBrFmask, *mBrushData;
 
 	float terSetH, mBrFilt,mBrFiltOld;
@@ -378,9 +377,9 @@ protected:
 		float Size,Intens,Pow,Fq,NOf;
 		int Oct;  EBrShape shape;
 		float Filter,HSet;
-		Ogre::String name;
+		char newLine;  Ogre::String name;
 	};
-	const static int brSetsNum = 54;
+	const static int brSetsNum = 84;
 	const static BrushSet brSets[brSetsNum];
 	const static float brClr[4][3];
 	void btnBrushPreset(WP), SetBrushPreset(int id);
