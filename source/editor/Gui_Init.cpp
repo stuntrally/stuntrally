@@ -223,14 +223,25 @@ void App::InitGui()
 
 	for (i=0; i < brSetsNum; ++i)  // brush preset
 	{
-		const String s = toStr(i);  const BrushSet& st = brSets[i];
-		StaticImage* img = mGUI->findWidget<StaticImage>("brI"+s,false);
+		const BrushSet& st = brSets[i];  const String s = toStr(i);
+		int x,y, xt,yt, sx;
+		if (i < 14)	{  x = 10+      i*50;  y =  10;  xt= x + 20;  yt= y + 50;  sx = 48;  } else
+		if (i < 24)	{  x = 20+ (i-14)*70;  y = 100;  xt= x + 25;  yt= y + 55;  sx = 64;  }
+		else		{  x = 20+ (i-24)*70;  y = 190;  xt= x + 25;  yt= y + 55;  sx = 64;  }
+
+		ScrollView* sv = mGUI->findWidget<ScrollView>("svBrushes");
+
+		StaticImage* img = sv->createWidget<StaticImage>("ImageBox", x,y, sx,sx, Align::Default, "brI"+s);
 		img->eventMouseButtonClick += newDelegate(this, &App::btnBrushPreset);
 		img->setUserString("tip", st.name);  img->setNeedToolTip(true);
+		img->setImageTexture("brush"+s+".png");
 		img->eventToolTip += newDelegate(this, &App::notifyToolTip);
+		setOrigPos(img, "EditorWnd");
 		
-		StaticText* txt = mGUI->findWidget<StaticText>("brT"+s,false);
+		StaticText* txt = sv->createWidget<StaticText>("TextBox", xt,yt, 40,22, Align::Default, "brT"+s);
 		txt->setCaption(fToStr(st.Size,0,2));
+		txt->setTextColour(Colour(0.6,0.8,1.0));
+		setOrigPos(txt, "EditorWnd");
 	}
 
 	Slv(TerGenScale,powf(pSet->gen_scale /160.f, 1.f/2.f));  // generate

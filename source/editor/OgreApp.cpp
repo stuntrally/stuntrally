@@ -94,7 +94,8 @@ App::App()  //  gui wigdets--
 	mBrFq[0] = 1.f;		mBrFq[1] = 1.f;		mBrFq[2] = 1.f;		mBrFq[3] = 1.f;
 	mBrNOf[0] = 0.f;	mBrNOf[1] = 0.f;	mBrNOf[2] = 0.f;	mBrNOf[3] = 0.f;
 	mBrOct[0] = 5;		mBrOct[1] = 5;		mBrOct[2] = 5;		mBrOct[3] = 5;
-	mBrShape[0] = BRS_Sinus;  mBrShape[1] = BRS_Sinus;	mBrShape[2] = BRS_Sinus;  mBrShape[3] = BRS_Sinus;
+	mBrShape[0] = BRS_Sinus;  mBrShape[1] = BRS_Sinus;
+	mBrShape[2] = BRS_Sinus;  mBrShape[3] = BRS_Sinus;
 	terSetH = 10.f;     mBrFilt = 2.f;  mBrFiltOld = 1.f;  pBrFmask = 0;
 	mBrushData = new float[BrushMaxSize*BrushMaxSize];
 	sBrushTest[0]=0;   updBrush();
@@ -135,6 +136,9 @@ App::App()  //  gui wigdets--
 	sc = new Scene();
 }
 
+const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise", "Noise2", "N-gon" };  // static
+
+
 ///  material factory setup
 //---------------------------------------------------------------------------------------------------------------------------
 void App::postInit()
@@ -145,8 +149,6 @@ void App::postInit()
 	mFactory = new sh::Factory(platform);
 	SetFactoryDefaults();
 }
-
-const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise" };  // static
 
 
 App::~App()

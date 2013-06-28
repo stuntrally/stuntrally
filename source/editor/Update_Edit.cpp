@@ -255,7 +255,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		brVal[2]->setCaption(fToStr(mBrPow[curBr],2,4));
 		brVal[3]->setCaption(TR("#{Brush_Shape"+csBrShape[mBrShape[curBr]]+"}"));
 
-		bool brN = mBrShape[curBr] == BRS_Noise;  int i;
+		bool brN = mBrShape[curBr] >= BRS_Noise;  int i;
 		for (i=4; i<=6; ++i)
 		{	brTxt[i]->setVisible(brN);  brVal[i]->setVisible(brN);  brKey[i]->setVisible(brN);	}
 

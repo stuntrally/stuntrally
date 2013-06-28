@@ -174,7 +174,7 @@ protected:
 	float mBrSize[ED_ALL],mBrIntens[ED_ALL], *mBrushData, terSetH,
 		mBrPow[ED_ALL],mBrFq[ED_ALL],mBrNOf[ED_ALL];  int mBrOct[ED_ALL];
 	float* pBrFmask, mBrFilt,mBrFiltOld;
-	enum EBrShape {   BRS_Triangle=0, BRS_Sinus, BRS_Noise, BRS_ALL  } mBrShape[ED_ALL];
+	enum EBrShape {   BRS_Triangle=0, BRS_Sinus, BRS_Noise, BRS_Noise2, BRS_Ngon, BRS_ALL  } mBrShape[ED_ALL];
 	const static Ogre::String csBrShape[BRS_ALL];
 
 	bool getEditRect(Ogre::Vector3& pos, Ogre::Rect& brushrect, Ogre::Rect& maprect, int size, int& cx, int& cy);

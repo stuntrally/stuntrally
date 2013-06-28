@@ -161,7 +161,7 @@ void App::updateBrushPrv(bool first)
 
 	float s = BrPrvSize * 0.5f, s1 = 1.f/s,
 		fP = mBrPow[curBr], fQ = mBrFq[curBr]*5.f, nof = mBrNOf[curBr];
-	int oct = mBrOct[curBr];
+	int oct = mBrOct[curBr];	const float PiN = PI_d/oct;
 
 	const static float cf[4][3] = {  // color factors
 		{0.3, 0.8, 0.1}, {0.2, 0.8, 0.6}, {0.6, 0.9, 0.6}, {0.4, 0.7, 1.0} };
@@ -169,6 +169,19 @@ void App::updateBrushPrv(bool first)
 
 	switch (mBrShape[curBr])
 	{
+	case BRS_Noise2:
+		for (size_t y = 0; y < BrPrvSize; ++y)
+		for (size_t x = 0; x < BrPrvSize; ++x)
+		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
+
+			float c = d * (1.0-pow( fabs(Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*d)) * (1.6f-fP*0.1);
+			c = std::max(0.f, c);
+			
+			uint8 bR = c * fR, bG = c * fG, bB = c * fB;
+			*p++ = bR;  *p++ = bG;  *p++ = bB;  *p++ = bG > 32 ? 255 : 0;
+		}	break;
+
 	case BRS_Noise:
 		for (size_t y = 0; y < BrPrvSize; ++y)
 		for (size_t x = 0; x < BrPrvSize; ++x)
@@ -181,18 +194,6 @@ void App::updateBrushPrv(bool first)
 			*p++ = bR;  *p++ = bG;  *p++ = bB;  *p++ = bG > 32 ? 255 : 0;
 		}	break;
 
-	case BRS_Triangle:
-		for (size_t y = 0; y < BrPrvSize; ++y)
-		for (size_t x = 0; x < BrPrvSize; ++x)
-		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
-			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
-
-			float c = powf( abs(d), fP);
-			
-			uint8 bR = c * fR, bG = c * fG, bB = c * fB;
-			*p++ = bR;  *p++ = bG;  *p++ = bB;  *p++ = bG > 32 ? 255 : 0;
-		}	break;
-
 	case BRS_Sinus:
 		for (size_t y = 0; y < BrPrvSize; ++y)
 		for (size_t x = 0; x < BrPrvSize; ++x)
@@ -200,6 +201,32 @@ void App::updateBrushPrv(bool first)
 			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
 
 			float c = powf( sinf(d * PI_d*0.5f), fP);
+			
+			uint8 bR = c * fR, bG = c * fG, bB = c * fB;
+			*p++ = bR;  *p++ = bG;  *p++ = bB;  *p++ = bG > 32 ? 255 : 0;
+		}	break;
+
+	case BRS_Ngon:
+		for (size_t y = 0; y < BrPrvSize; ++y)
+		for (size_t x = 0; x < BrPrvSize; ++x)
+		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
+			float k = GetAngle(fx,fy);  // 0..2Pi
+
+    		float c = std::max(0.f, std::min(1.f,
+    			fQ * powf(fabs(d / (-1.f+nof + cosf(PiN) / cosf( fmodf(k, 2*PiN) - PiN ) )),fP) ));
+			
+			uint8 bR = c * fR, bG = c * fG, bB = c * fB;
+			*p++ = bR;  *p++ = bG;  *p++ = bB;  *p++ = bG > 32 ? 255 : 0;
+		}	break;
+
+	case BRS_Triangle:
+		for (size_t y = 0; y < BrPrvSize; ++y)
+		for (size_t x = 0; x < BrPrvSize; ++x)
+		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
+
+			float c = powf( abs(d), fP);
 			
 			uint8 bR = c * fR, bG = c * fG, bB = c * fB;
 			*p++ = bR;  *p++ = bG;  *p++ = bB;  *p++ = bG > 32 ? 255 : 0;
@@ -230,10 +257,24 @@ void App::updBrush()
 	int size = (int)mBrSize[curBr], a = 0;
 	float s = size * 0.5f, s1 = 1.f/s,
 		fP = mBrPow[curBr], fQ = mBrFq[curBr]*5.f, nof = mBrNOf[curBr];
-	int oct = mBrOct[curBr];
+	int oct = mBrOct[curBr];	const float PiN = PI_d/oct;
 
 	switch (mBrShape[curBr])
 	{
+	case BRS_Noise2:
+		for (int y = 0; y < size; ++y)
+		{	a = y * BrushMaxSize;
+			for (int x = 0; x < size; ++x,++a)
+			{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+				float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
+
+				float c = d * (1.0-pow( fabs(Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*d)) * (1.6f-fP*0.1);
+				c = std::max(0.f, c);
+				
+				mBrushData[a] = std::max(-1.f, std::min(1.f, c ));
+		}	}	break;
+
+
 	case BRS_Noise:
 		for (int y = 0; y < size; ++y)
 		{	a = y * BrushMaxSize;
@@ -246,17 +287,6 @@ void App::updBrush()
 				mBrushData[a] = std::max(-1.f, std::min(1.f, c ));
 		}	}	break;
 
-	case BRS_Triangle:
-		for (int y = 0; y < size; ++y)
-		{	a = y * BrushMaxSize;
-			for (int x = 0; x < size; ++x,++a)
-			{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
-				float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
-				
-				float c = powf( abs(d), fP);
-				mBrushData[a] = c;
-		}	}	break;
-
 	case BRS_Sinus:
 		for (int y = 0; y < size; ++y)
 		{	a = y * BrushMaxSize;
@@ -265,6 +295,30 @@ void App::updBrush()
 				float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
 				
 				float c = powf( sinf(d * PI_d*0.5f), fP);
+				mBrushData[a] = c;
+		}	}	break;
+
+	case BRS_Ngon:
+		for (int y = 0; y < size; ++y)
+		{	a = y * BrushMaxSize;
+			for (int x = 0; x < size; ++x,++a)
+			{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+				float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
+				float k = GetAngle(fx,fy);  // 0..2Pi
+
+    			float c = std::max(0.f, std::min(1.f,
+    				fQ * powf(fabs(d / (-1.f+nof + cosf(PiN) / cosf( fmodf(k, 2*PiN) - PiN ) )),fP) ));
+				mBrushData[a] = c;
+		}	}	break;
+
+	case BRS_Triangle:
+		for (int y = 0; y < size; ++y)
+		{	a = y * BrushMaxSize;
+			for (int x = 0; x < size; ++x,++a)
+			{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+				float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
+				
+				float c = powf( abs(d), fP);
 				mBrushData[a] = c;
 		}	}	break;
 	}
