@@ -101,8 +101,14 @@ void App::slTerTriSize(SL)
 
 int App::getHMapSizeTab()
 {
-	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8().substr(7).c_str();
-	return atoi(str);
+	//string str = tabsHmap->getItemSelected()->getCaption().asUTF8().substr(7).c_str();
+	switch (tabsHmap->getIndexSelected())
+	{	case 0: return 128;
+		case 1: return 256;
+		case 2: return 512;
+		case 3: return 1024;
+		case 4: return 2048;  }
+	return 512;
 }
 void App::tabHmap(TabPtr wp, size_t id)
 {
@@ -152,30 +158,59 @@ void App::btnTerrainNew(WP)
 }
 
 //  Terrain  generate  --------------------------------
-void App::btnTerGenerate(WP)
+void App::btnTerGenerate(WP wp)
 {
-	float* hfData = new float[sc->td.iVertsX * sc->td.iVertsY];
+	int mode = 0;  const std::string& n = wp->getName();
+	if (n == "TerrainGenAdd")  mode = 0;  else
+	if (n == "TerrainGenSub")  mode = 1;  else
+	if (n == "TerrainGenMul")  mode = 2;
+
+	//float* hfData = new float[sc->td.iVertsX * sc->td.iVertsY];  if (!hfData)  return;
+	//hfData = sc->td.hfHeight
+	float* hfData = sc->td.hfHeight;
 	int siz = sc->td.iVertsX * sc->td.iVertsY * sizeof(float);
 	float s = sc->td.fTriangleSize*0.001f,
 		ox = pSet->gen_ofsx *s*sc->td.iVertsX, oy = pSet->gen_ofsy *s*sc->td.iVertsY;
 
 	//  generate noise terrain hmap
-	for (int j=0; j < sc->td.iVertsY; ++j)
-	{	int a = j * sc->td.iVertsX;
+	switch (mode)
+	{
+	case 0:  // + add
+		for (int j=0; j < sc->td.iVertsY; ++j)
+		{     int a = j * sc->td.iVertsX;
 		for (int i=0; i < sc->td.iVertsX; ++i,++a)
 		{
 			float y = Noise(i*s-oy, j*s+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist);
 			y = y >= 0.f ? powf(y, pSet->gen_pow) : -powf(-y, pSet->gen_pow);
-			hfData[a] = y * pSet->gen_scale;
-		}
-	}
+			hfData[a] += y * pSet->gen_scale;
+		}	}  break;
 
+	case 1:  // - sub
+		for (int j=0; j < sc->td.iVertsY; ++j)
+		{     int a = j * sc->td.iVertsX;
+		for (int i=0; i < sc->td.iVertsX; ++i,++a)
+		{
+			float y = Noise(i*s-oy, j*s+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist);
+			y = y >= 0.f ? powf(y, pSet->gen_pow) : -powf(-y, pSet->gen_pow);
+			hfData[a] -= y * pSet->gen_scale;
+		}	}  break;
+
+	case 2:  // * mul
+		for (int j=0; j < sc->td.iVertsY; ++j)
+		{     int a = j * sc->td.iVertsX;
+		for (int i=0; i < sc->td.iVertsX; ++i,++a)
+		{
+			float y = Noise(i*s-oy, j*s+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist);
+			y = y >= 0.f ? powf(y, pSet->gen_pow) : -powf(-y, pSet->gen_pow);
+			hfData[a] *= y * pSet->gen_scale;
+		}	}  break;
+	}
 	std::ofstream of;
 	of.open(getHMapNew(), std::ios_base::binary);
 	of.write((const char*)&hfData[0], siz);
 	of.close();
 
-	delete[] hfData;
+	//delete[] hfData;
 	bNewHmap = true;	UpdateTrack();
 }
 

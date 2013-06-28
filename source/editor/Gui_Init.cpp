@@ -216,18 +216,19 @@ void App::InitGui()
 	Slv(TerTriSize,	powf((sc->td.fTriangleSize -0.1f)/5.9f, 0.5f));
 	Slv(TerLScale, 0);  sldTerLScale = sl;
 	Btn("TerrainNew", btnTerrainNew);
-	Btn("TerrainGenerate", btnTerGenerate);
-	Btn("TerrainHalf", btnTerrainHalf);
-	Btn("TerrainDouble", btnTerrainDouble);
-	Btn("TerrainMove", btnTerrainMove);
+	Btn("TerrainGenAdd", btnTerGenerate);  Btn("TerrainGenSub", btnTerGenerate);   Btn("TerrainGenMul", btnTerGenerate);
+	Btn("TerrainHalf", btnTerrainHalf);  Btn("TerrainDouble", btnTerrainDouble);  Btn("TerrainMove", btnTerrainMove);
 
-	for (i=0; i < brSetsNum; ++i)  // brush preset
+	//  brush presets   o o o o o o o o 
+	for (i=0; i < brSetsNum; ++i)
 	{
 		const BrushSet& st = brSets[i];  const String s = toStr(i);
 		int x,y, xt,yt, sx;
 		if (i < 14)	{  x = 10+      i*50;  y =  10;  xt= x + 20;  yt= y + 50;  sx = 48;  } else
-		if (i < 24)	{  x = 20+ (i-14)*70;  y = 100;  xt= x + 25;  yt= y + 55;  sx = 64;  }
-		else		{  x = 20+ (i-24)*70;  y = 190;  xt= x + 25;  yt= y + 55;  sx = 64;  }
+		if (i < 24)	{  x = 20+ (i-14)*70;  y = 100;  xt= x + 25;  yt= y + 55;  sx = 64;  } else
+		if (i < 34)	{  x = 20+ (i-24)*70;  y = 190;  xt= x + 25;  yt= y + 55;  sx = 64;  } else
+		if (i < 44)	{  x = 20+ (i-34)*70;  y = 280;  xt= x + 25;  yt= y + 55;  sx = 64;  } 
+		else		{  x = 20+ (i-44)*70;  y = 370;  xt= x + 25;  yt= y + 55;  sx = 64;  }
 
 		ScrollView* sv = mGUI->findWidget<ScrollView>("svBrushes");
 
@@ -240,7 +241,11 @@ void App::InitGui()
 		
 		StaticText* txt = sv->createWidget<StaticText>("TextBox", xt,yt, 40,22, Align::Default, "brT"+s);
 		txt->setCaption(fToStr(st.Size,0,2));
-		txt->setTextColour(Colour(0.6,0.8,1.0));
+			int edMode = st.edMode;
+			float fB = brClr[edMode][0], fG = brClr[edMode][1], fR = brClr[edMode][2];
+			float m = st.Size / 160.f + 0.4f;
+			#define mul(v,m)  std::min(1.f, std::max(0.f, v * m))
+		txt->setTextColour(Colour(mul(fB,m), mul(fG,m), mul(fR,m)) );
 		setOrigPos(txt, "EditorWnd");
 	}
 

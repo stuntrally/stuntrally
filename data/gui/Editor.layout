@@ -1265,106 +1265,123 @@
 							<Property key="Alpha" value="0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="288 9 200 32" name="TerrainGenerate">
-							<Property key="Colour" value="0.7 1.0 0.8"/>
-							<Property key="Caption" value="#{NewTerrainGenerate}"/>
-							<Property key="TextColour" value="0.7 1.0 0.8"/>
+						<Widget type="TextBox" skin="TextBox" position="200 10 140 24" >
+							<Property key="Caption" value="#{NewTerrainGenerate}:"/>
+							<Property key="TextColour" value="0.6 0.9 0.7"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerrainGenerate}"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="340 4 80 30" name="TerrainGenAdd">
+							<Property key="Colour" value="0.9 0.5 0.5"/>
+							<Property key="Caption" value="#{Add}"/>
+							<Property key="TextColour" value="0.9 0.5 0.5"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="440 4 80 30" name="TerrainGenSub">
+							<Property key="Colour" value="0.3 0.6 0.9"/>
+							<Property key="Caption" value="#{Substract}"/>
+							<Property key="TextColour" value="0.3 0.6 0.9"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="540 4 80 30" name="TerrainGenMul">
+							<Property key="Colour" value="0.7 0.6 0.8"/>
+							<Property key="Caption" value="#{Multiply}"/>
+							<Property key="TextColour" value="0.7 0.6 0.8"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
 
 						<Widget type="ScrollView" skin="ScrollViewEmpty" position="0 50 750 300" name="svGenerator">
 							<Property key="CanvasSize" value="1020 900"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 
-							<Widget type="TextBox" skin="TextBox" position="16 55 108 24">
+							<Widget type="TextBox" skin="TextBox" position="16 5 108 24">
 								<Property key="Caption" value="#{TerGenScale}"/>
 								<Property key="TextColour" value="0.6 0.9 0.5"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="TextBox" skin="TextBox" position="132 55 56 24" name="TerGenScaleVal">
+							<Widget type="TextBox" skin="TextBox" position="132 5 56 24" name="TerGenScaleVal">
 								<Property key="TextColour" value="0.6 1.0 0.8"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="Slider" skin="Slider" position="192 55 400 16" name="TerGenScale">
+							<Widget type="Slider" skin="Slider" position="192 5 400 16" name="TerGenScale">
 								<Property key="Colour" value="0.6 0.9 0.5"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="TextBox" skin="TextBox" position="16 80 108 24">
+							<Widget type="TextBox" skin="TextBox" position="16 30 108 24">
 								<Property key="Caption" value="#{TerGenFreq}"/>
 								<Property key="TextColour" value="0.6 0.9 0.5"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="TextBox" skin="TextBox" position="132 80 56 24" name="TerGenFreqVal">
+							<Widget type="TextBox" skin="TextBox" position="132 30 56 24" name="TerGenFreqVal">
 								<Property key="TextColour" value="0.6 1.0 0.8"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="Slider" skin="Slider" position="192 80 400 16" name="TerGenFreq">
+							<Widget type="Slider" skin="Slider" position="192 30 400 16" name="TerGenFreq">
 								<Property key="Colour" value="0.6 0.9 0.5"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="TextBox" skin="TextBox" position="16 121 108 24">
+							<Widget type="TextBox" skin="TextBox" position="16 71 108 24">
 								<Property key="Caption" value="#{TerGenOct}"/>
 								<Property key="TextColour" value="0.6 0.9 0.7"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="TextBox" skin="TextBox" position="132 121 56 24" name="TerGenOctVal">
+							<Widget type="TextBox" skin="TextBox" position="132 71 56 24" name="TerGenOctVal">
 								<Property key="TextColour" value="0.6 1.0 0.9"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="Slider" skin="Slider" position="192 121 400 16" name="TerGenOct">
+							<Widget type="Slider" skin="Slider" position="192 71 400 16" name="TerGenOct">
 								<Property key="Colour" value="0.6 0.9 0.7"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="TextBox" skin="TextBox" position="16 146 108 24">
+							<Widget type="TextBox" skin="TextBox" position="16 96 108 24">
 								<Property key="Caption" value="#{TerGenPers}"/>
 								<Property key="TextColour" value="0.6 0.9 0.7"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="TextBox" skin="TextBox" position="132 146 56 24" name="TerGenPersVal">
+							<Widget type="TextBox" skin="TextBox" position="132 96 56 24" name="TerGenPersVal">
 								<Property key="TextColour" value="0.6 1.0 0.9"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="Slider" skin="Slider" position="192 146 400 16" name="TerGenPers">
+							<Widget type="Slider" skin="Slider" position="192 96 400 16" name="TerGenPers">
 								<Property key="Colour" value="0.6 0.9 0.7"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="TextBox" skin="TextBox" position="16 171 108 24">
+							<Widget type="TextBox" skin="TextBox" position="16 121 108 24">
 								<Property key="Caption" value="#{TerGenPow}"/>
 								<Property key="TextColour" value="0.6 0.9 0.7"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="TextBox" skin="TextBox" position="132 171 56 24" name="TerGenPowVal">
+							<Widget type="TextBox" skin="TextBox" position="132 121 56 24" name="TerGenPowVal">
 								<Property key="TextColour" value="0.6 1.0 0.9"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="Slider" skin="Slider" position="192 171 400 16" name="TerGenPow">
+							<Widget type="Slider" skin="Slider" position="192 121 400 16" name="TerGenPow">
 								<Property key="Colour" value="0.6 0.9 0.7"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="TextBox" skin="TextBox" position="16 212 108 24">
+							<Widget type="TextBox" skin="TextBox" position="16 152 108 24">
 								<Property key="Caption" value="#{TerGenOfsX}"/>
 								<Property key="TextColour" value="0.6 0.9 0.5"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="TextBox" skin="TextBox" position="132 212 56 24" name="TerGenOfsXVal">
+							<Widget type="TextBox" skin="TextBox" position="132 152 56 24" name="TerGenOfsXVal">
 								<Property key="TextColour" value="0.6 1.0 0.8"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="Slider" skin="Slider" position="192 212 400 16" name="TerGenOfsX">
+							<Widget type="Slider" skin="Slider" position="192 152 400 16" name="TerGenOfsX">
 								<Property key="Colour" value="0.6 0.9 0.5"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="TextBox" skin="TextBox" position="16 237 108 24">
+							<Widget type="TextBox" skin="TextBox" position="16 187 108 24">
 								<Property key="Caption" value="#{TerGenOfsY}"/>
 								<Property key="TextColour" value="0.6 0.9 0.5"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="TextBox" skin="TextBox" position="132 237 56 24" name="TerGenOfsYVal">
+							<Widget type="TextBox" skin="TextBox" position="132 187 56 24" name="TerGenOfsYVal">
 								<Property key="TextColour" value="0.6 1.0 0.8"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
-							<Widget type="Slider" skin="Slider" position="192 237 400 16" name="TerGenOfsY">
+							<Widget type="Slider" skin="Slider" position="192 187 400 16" name="TerGenOfsY">
 								<Property key="Colour" value="0.6 0.9 0.5"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>

@@ -11,6 +11,7 @@ using namespace Ogre;
 //---------------------------------------------------------------------------------------------------------------
 const App::BrushSet App::brSets[App::brSetsNum] = {
 //ED_MODE,curBr,  Size, Intens,  Pow, Freq, Ofs, Oct, EBrShape, Filter, HSet,  Name
+//------------  sinus
 	{ED_Deform,0,  16.f, 10.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Small"},
 	{ED_Deform,0,  32.f, 20.f,   2.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Medium"},
 	{ED_Deform,0,  40.f, 20.f,   4.f,  1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Spike"},
@@ -29,7 +30,7 @@ const App::BrushSet App::brSets[App::brSetsNum] = {
 	{ED_Smooth,0,  18.f, 20.f,   0.4f, 1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Smooth hard circle"},
 	{ED_Deform,0,  32.f, 10.f,   0.5f, 1.f,  0.f, 5,  BRS_Sinus, -1.f,-0.01f, "Bold"},
 	{ED_Deform,0,  48.f, 30.f,   0.05f,1.f,  0.f, 5,BRS_Triangle,-1.f,-0.01f, "Drop"},
-//------------
+//------------  noise
 	{ED_Deform,0,  30.f, 20.f,   1.f,  0.72f,1.5f,3,  BRS_Noise, -1.f,-0.01f, "Noise low"},
 	{ED_Deform,0,  48.f, 20.f,   2.f,  1.f,  2.5f,5,  BRS_Noise, -1.f,-0.01f, "Noise normal"},
 	{ED_Deform,0,  24.f, 20.f,   4.f,  0.93f,2.7f,5,  BRS_Noise, -1.f,-0.01f, "Noise random"},
@@ -43,7 +44,7 @@ const App::BrushSet App::brSets[App::brSetsNum] = {
 	{ED_Deform,0,  60.f, 20.f,   2.3f, 0.13f,0.f, 5,  BRS_Noise, -1.f,-0.01f, "High Noise, bumps"},
 
 	{ED_Smooth,0,  49.f, 57.f,   4.0f, 0.8f, 5.8f,5,  BRS_Noise, -1.f,-0.01f, "Smooth noise row"},
-//------------
+//------------  noise fancy
 	{ED_Deform,0,  25.f, 20.f,   2.f,  0.4f, 0.f, 5,  BRS_Noise, -1.f,-0.01f, "Cracks row"},
 	{ED_Deform,0,  30.f, 20.f,   1.3f, 0.34f,0.5f,5,  BRS_Noise, -1.f,-0.01f, "Cracks noise"},
 													
@@ -58,7 +59,44 @@ const App::BrushSet App::brSets[App::brSetsNum] = {
 
 	{ED_Filter,0,  42.f, 20.f,   2.f,  0.93f,2.7f,5,  BRS_Noise,  4.f,-0.01f, "filter strong"},
 	{ED_Filter,0,  70.f, 30.f,   1.9f, 0.2f, 0.2f,5,  BRS_Noise,  6.f,-0.01f, "filter noise"},
+
+//------------  noise 2 new
+	{ED_Deform,0,  25.f, 20.f,   2.f,  0.4f, 0.f, 5,  BRS_Noise2, -1.f,-0.01f, ""},
+	{ED_Deform,0,  30.f, 20.f,   1.3f, 0.34f,0.5f,5,  BRS_Noise2, -1.f,-0.01f, ""},
+																			   
+	{ED_Deform,0,  60.f, 40.f,   0.9f, 0.34f,1.5f,4,  BRS_Noise2, -1.f,-0.01f, ""},
+	{ED_Deform,0,  60.f, 20.f,   1.4f, 0.30f,0.f, 4,  BRS_Noise2, -1.f,-0.01f, ""},
+																			   
+	{ED_Deform,0,  30.f, 33.f,   1.4f, 0.34f,6.3f,4,  BRS_Noise2, -1.f,-0.01f, ""},
+	{ED_Deform,0,  30.f, 33.f,   1.4f, 0.34f,4.1f,4,  BRS_Noise2, -1.f,-0.01f, ""},
+																			   
+	{ED_Deform,0,  32.f, 40.f,   7.9f, 1.f, 15.4f,7,  BRS_Noise2, -1.f,-0.01f, ""},
+	{ED_Deform,0,  83.f,120.f,   2.f,  1.f,  0.f, 5,  BRS_Noise2, -1.f, 20.0f, ""},
+																			   
+	{ED_Deform,0,  42.f, 20.f,   2.f,  0.93f,2.7f,5,  BRS_Noise2,  4.f,-0.01f, ""},
+	{ED_Deform,0,  70.f, 30.f,   1.9f, 0.2f, 0.2f,5,  BRS_Noise2,  6.f,-0.01f, ""},
+//------------  n-gon
+	{ED_Deform,0,  25.f, 20.f,   2.f,  0.4f, 0.f, 5,  BRS_Ngon, -1.f,-0.01f, ""},
+	{ED_Deform,0,  30.f, 20.f,   1.3f, 0.34f,0.5f,5,  BRS_Ngon, -1.f,-0.01f, ""},
+													
+	{ED_Deform,0,  60.f, 40.f,   0.9f, 0.34f,1.5f,4,  BRS_Ngon, -1.f,-0.01f, ""},
+	{ED_Deform,0,  60.f, 20.f,   1.4f, 0.30f,0.f, 4,  BRS_Ngon, -1.f,-0.01f, ""},
+
+	{ED_Deform,0,  30.f, 33.f,   1.4f, 0.34f,6.3f,4,  BRS_Ngon, -1.f,-0.01f, ""},
+	{ED_Deform,0,  30.f, 33.f,   1.4f, 0.34f,4.1f,4,  BRS_Ngon, -1.f,-0.01f, ""},
+
+	{ED_Deform,0,  32.f, 40.f,   7.9f, 1.f, 15.4f,7,  BRS_Ngon, -1.f,-0.01f, ""},
+	{ED_Deform,0,  83.f,120.f,   2.f,  1.f,  0.f, 5,  BRS_Ngon, -1.f, 20.0f, ""},
+
+	{ED_Deform,0,  42.f, 20.f,   2.f,  0.93f,2.7f,5,  BRS_Ngon,  4.f,-0.01f, ""},
+	{ED_Deform,0,  70.f, 30.f,   1.9f, 0.2f, 0.2f,5,  BRS_Ngon,  6.f,-0.01f, ""},
 };
+
+//  color factors for edit mode D,S,E,F
+const float App::brClr[4][3] = {
+	{0.3, 0.8, 0.1}, {0.2, 0.8, 0.6}, {0.6, 0.9, 0.6}, {0.4, 0.7, 1.0} };
+
+
 void App::btnBrushPreset(WP img)
 {
 	int id = 0;
@@ -163,9 +201,7 @@ void App::updateBrushPrv(bool first)
 		fP = mBrPow[curBr], fQ = mBrFq[curBr]*5.f, nof = mBrNOf[curBr];
 	int oct = mBrOct[curBr];	const float PiN = PI_d/oct;
 
-	const static float cf[4][3] = {  // color factors
-		{0.3, 0.8, 0.1}, {0.2, 0.8, 0.6}, {0.6, 0.9, 0.6}, {0.4, 0.7, 1.0} };
-	float fB = cf[edMode][0]*255.f, fG = cf[edMode][1]*255.f, fR = cf[edMode][2]*255.f;
+	float fB = brClr[edMode][0]*255.f, fG = brClr[edMode][1]*255.f, fR = brClr[edMode][2]*255.f;
 
 	switch (mBrShape[curBr])
 	{

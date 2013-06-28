@@ -629,6 +629,10 @@
 	
 	<Tag name="NewTerrainFlat">New flat</Tag>
 	<Tag name="NewTerrainGenerate">Generate new</Tag>
+	<Tag name="Add">Add</Tag>
+	<Tag name="Substract">Substract</Tag>
+	<Tag name="Multiply">Multiply</Tag>
+	
 	<Tag name="TerrainHalf">Half</Tag>
 	<Tag name="TerrainDouble">Double</Tag>
 	<Tag name="TerrainMove">Move</Tag>
