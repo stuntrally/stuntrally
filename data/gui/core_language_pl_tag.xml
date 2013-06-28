@@ -37,10 +37,10 @@
 	<Tag name="TerNormal">Normalny</Tag>
 	<Tag name="NeedNewGame">* potrzebuje Nowej Gry</Tag>
 	<Tag name="InputRoadAngZero">shift-6 - zeruj kąty</Tag>
+	<Tag name="LS_SCENE">Wcztuję scenę</Tag>
 	<Tag name="TipTrackImg">Zrzut z gry dla wybranej trasy.</Tag>
 	<Tag name="TerLNoiseOnly">Tylko szum</Tag>
 	<Tag name="InputValueChange">Każdy ruch myszą lub zmiana wartości z </Tag>
-	<Tag name="SteerRange">Mnożniki zakresu skręcania</Tag>
 	<Tag name="Terrain">Teren</Tag>
 	<Tag name="TipChangeGloss">Zmień połysk auta (matowy-błyszczący).</Tag>
 	<Tag name="Surface">Nawierzchnia</Tag>
@@ -60,6 +60,7 @@
 	<Tag name="Progress">Postęp</Tag>
 	<Tag name="Brush_ShapeSinus">Sinus</Tag>
 	<Tag name="ScoreNeeded">Wymagane punkty</Tag>
+	<Tag name="CarType_Extreme">Ekstremalny</Tag>
 	<Tag name="Game name">Nazwa gry</Tag>
 	<Tag name="HUD">HUD</Tag>
 	<Tag name="InputCamControl">W,S A,D Q,E - poruszaj się  Strzałki - obracaj</Tag>
@@ -146,7 +147,7 @@
 	<Tag name="CameraInfo">Info kamery</Tag>
 	<Tag name="frenzy">krętość (drogi)</Tag>
 	<Tag name="InputRoadChkRadius">K,L - promień sfery kontrolnej (ChkR 0 - brak)</Tag>
-	<Tag name="TipCarSpeed">Car speed rating, more means faster car. Warning, on gravel too fast cars won't be faster because they don't have enough grip.</Tag>
+	<Tag name="TipCarSpeed">Ocena szybkości auta, więcej oznacza szybsze. Uwaga, na szutrze szybkie auta nie będą szybsze gdyż nie mają przyczepności.</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - na pocz. alt-ctrl - na końcu</Tag>
 	<Tag name="RearThrottleInverse">Odwrotnie gaz na R</Tag>
 	<Tag name="MessageBox_Yes">Tak</Tag>
@@ -181,7 +182,7 @@
 	<Tag name="NetServer">Serwer</Tag>
 	<Tag name="InputRoadWidth">- zmień szerokość drogi</Tag>
 	<Tag name="Wall">Ściana</Tag>
-	<Tag name="TipChangeReflect">Change car color reflectiveness (matte-mirror).</Tag>
+	<Tag name="TipChangeReflect">Zmień refleksyjność coloru auta (matowy-lustro).</Tag>
 	<Tag name="filmgrain">Ziarno kliszy</Tag>
 	<Tag name="Replay">Powtórka</Tag>
 	<Tag name="AutoRear">Automatyczny wsteczny</Tag>
@@ -217,7 +218,7 @@
 	<Tag name="Player">Gracz</Tag>
 	<Tag name="InputRoadSel">Backspace - dodaj lub usuń z selekcji</Tag>
 	<Tag name="Weather">Pogoda</Tag>
-	<Tag name="RplAlpha">Przeźroczysty duch</Tag>
+	<Tag name="MinimapBorder">Ramka</Tag>
 	<Tag name="InpSet_Medium">Średnio</Tag>
 	<Tag name="TipTerrainHalf">Zmniejsz mapę wysokości o połowę (tylko do zmniejszania rozmiaru pliku).</Tag>
 	<Tag name="wind">wiatr</Tag>
@@ -245,6 +246,7 @@
 	<Tag name="InputFluidsIns">Ins - wstaw nową ciecz gdzie kursor</Tag>
 	<Tag name="TipVegetGroups">Grupy modeli wegetacji (zalecane użycie 4-6), więcej zmniejsza wydajność.</Tag>
 	<Tag name="Car">Auto</Tag>
+	<Tag name="Challenge">Wyzwanie</Tag>
 	<Tag name="FuelLap">Paliwo co okrążenie</Tag>
 	<Tag name="TipSkyMats">Nazwa materiału nieba (z SkyDome.material).</Tag>
 	<Tag name="Simulation">Symulacja</Tag>
@@ -360,7 +362,7 @@
 	<Tag name="InputMapShowOptions">Pokaż opcje</Tag>
 	<Tag name="InputCameraMode">Tryb kamery</Tag>
 	<Tag name="Enabled">Włączony</Tag>
-	<Tag name="TipCarType">Car type, primary destination. But some cars can be used on gravel even if not meant for it.</Tag>
+	<Tag name="TipCarType">Typ auta, głowne przeznaczenie. Niektóre auta mogą być użyte na szutrze nawet jeśli nie są do tego przeznaczone.</Tag>
 	<Tag name="TipReverse">Odwrotny kierunek trasy.</Tag>
 	<Tag name="DidntPass">Nie zaliczono</Tag>
 	<Tag name="Road_Cur">Wybr</Tag>
@@ -405,7 +407,7 @@
 	<Tag name="ReflMode_static">Statyczne</Tag>
 	<Tag name="CarClrRandom">Losowy</Tag>
 	<Tag name="HDRVignettingRadius">Winietowanie promień</Tag>
-	<Tag name="LS_SCENE">Wcztuję scenę</Tag>
+	<Tag name="SpeedUnit">Jednostka</Tag>
 	<Tag name="InputRoadLooped">O - przełącz zamknięcie</Tag>
 	<Tag name="Name">Nazwa</Tag>
 	<Tag name="RplSize">rozmiar</Tag>
@@ -449,7 +451,7 @@
 	<Tag name="LTrFlDepth">max Głębokość w cieczy</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - rozmiar alt-RMB - głębokość</Tag>
 	<Tag name="TexCoordMul">Mnożnik tekstury</Tag>
-	<Tag name="Shadows">Cienie</Tag>
+	<Tag name="SteerRange">Mnożniki zakresu skręcania</Tag>
 	<Tag name="ShowPictures">Pokazuj obrazy podczas wczytywania</Tag>
 	<Tag name="distance">odległość</Tag>
 	<Tag name="SSS_Effect">Efekt</Tag>
@@ -471,6 +473,7 @@
 	<Tag name="TexSize">Rozmiar tekstur</Tag>
 	<Tag name="TipSunAmbient">Kolor słońca stały, rozproszony.. R G B składowe 0 do 1 (np. 0.4 0.4 0.4)</Tag>
 	<Tag name="ChngTrkTab">zmiana w zakładce [Trasa]</Tag>
+	<Tag name="Shadows">Cienie</Tag>
 	<Tag name="InputRplCtrl2">P - pauza/wznów powtórkę</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - przewiń do tyłu/do przodu (shift - wolno, ctrl,alt - szybko)</Tag>
 	<Tag name="Laps">Okrążenia</Tag>
@@ -533,6 +536,7 @@
 	<Tag name="Yes">Tak</Tag>
 	<Tag name="TipNewDup">Stwórz nową trasę przez zduplikowanie wybranej, używając nowej nazwy (wprować nazwę najpierw).</Tag>
 	<Tag name="TerGenPers">Szum</Tag>
+	<Tag name="RoadStats">Stat. drogi</Tag>
 	<Tag name="SunDir">Kierunek słońca</Tag>
 	<Tag name="InputRoadPick">Space - wybierz/żaden</Tag>
 	<Tag name="TipTrkViewShort">Krótki widok listy.</Tag>
@@ -638,7 +642,7 @@
 	<Tag name="TipDiffuseTex">Tekstura koloru (specular w alpha)</Tag>
 	<Tag name="TiresEdit4">End - przełącz parametry momentu wyrównania</Tag>
 	<Tag name="AntiAliasing">Wygładzanie krawędzi</Tag>
-	<Tag name="RoadStats">Stat. drogi</Tag>
+	<Tag name="Tutorial">Samouczek</Tag>
 	<Tag name="FinishedCommaPlace">ukończył, miejsce</Tag>
 	<Tag name="InputObjectsDel">Del - usuń bieżący</Tag>
 	<Tag name="Tools">Narzędzia</Tag>
@@ -686,7 +690,6 @@
 	<Tag name="TipGrassLayerDens">Gęstość trawy dla warstwy (jak często występuje).</Tag>
 	<Tag name="InputRoadModify">Zmień</Tag>
 	<Tag name="TextColor">Kolor tekstu</Tag>
-	<Tag name="CarDebugText">text debug auta </Tag>
 	<Tag name="ColBright">Jasność</Tag>
 	<Tag name="TipFogStartDist">Odl. startu mgły [metr].</Tag>
 	<Tag name="InputTerDeform">D - Deformuj (LMB góra, RMB dół)</Tag>
@@ -708,7 +711,7 @@
 	<Tag name="CheckArrow">Strzałka do checkpoint</Tag>
 	<Tag name="Sun">Słońce</Tag>
 	<Tag name="InputMapShiftUp">Następny bieg</Tag>
-	<Tag name="SpeedUnit">Jednostka</Tag>
+	<Tag name="CarDebugText">text debug auta </Tag>
 	<Tag name="OgreDialog">Pokazuj dialog Ogre</Tag>
 	<Tag name="MultiThread">Wiele wątków</Tag>
 	<Tag name="Editor">Edytor</Tag>
@@ -756,7 +759,7 @@
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 	<Tag name="ApplyShaders">Zastosuj cieniowanie.</Tag>
 	<Tag name="TipGrassDens">Jak gęsto/rzadko będzie trawa na terenie.</Tag>
-	<Tag name="MinimapBorder">Ramka</Tag>
+	<Tag name="RplAlpha">Przeźroczysty duch</Tag>
 	<Tag name="InputTerFilter">F - Filtruj (redukuj wyboje)</Tag>
 	<Tag name="TipSteerSurf">Mnożnik zakresu sterowania, dla nawierzchni (Szuter,Asfalt).</Tag>
 	<Tag name="InputRoadRebuild">B - przebuduj drogę (po zmianie terenu, itp.)</Tag>
@@ -861,10 +864,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="Challenge">Challenge</Tag>
-	<Tag name="Tutorial">Tutorial</Tag>
-	<Tag name="CarType_Extreme">Extreme</Tag>
-	<Tag name="GameVersion">2.0</Tag>
+	<Tag name="Multiply">Multiply</Tag>
+	<Tag name="Brush_ShapeN-gon">N-gon</Tag>
+	<Tag name="InputTopView">Alt-Z - toggle top view</Tag>
+	<Tag name="Substract">Substract</Tag>
+	<Tag name="CheckBeam">Next checkpoint beam</Tag>
+	<Tag name="Brush_ShapeNoise2">Noise2</Tag>
+	<Tag name="InputContextHelp">Ctrl-F1 - context help page</Tag>
+	<Tag name="Add">Add</Tag>
+	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>

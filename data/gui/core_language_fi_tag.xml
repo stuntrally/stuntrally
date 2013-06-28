@@ -37,10 +37,10 @@
 	<Tag name="TerNormal">Normaali</Tag>
 	<Tag name="NeedNewGame">* peli tarvitsee aloittaa alusta</Tag>
 	<Tag name="InputRoadAngZero">shift-6  - zero angles</Tag>
+	<Tag name="LS_SCENE">Ladataan tapahtumapaikkaa</Tag>
 	<Tag name="TipTrackImg">Kuvankaappaus pelitilanteesta valitulla radalla.</Tag>
 	<Tag name="TerLNoiseOnly">Vain kohina</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
-	<Tag name="SteerRange">Steering range multipliers</Tag>
 	<Tag name="Terrain">Maasto</Tag>
 	<Tag name="TipChangeGloss">Change car color glossiness (matte-shiny).</Tag>
 	<Tag name="Surface">Pinta-ala</Tag>
@@ -60,6 +60,7 @@
 	<Tag name="Progress">Edistyminen</Tag>
 	<Tag name="Brush_ShapeSinus">Sini</Tag>
 	<Tag name="ScoreNeeded">Tarvittavat pisteet</Tag>
+	<Tag name="CarType_Extreme">Extreme</Tag>
 	<Tag name="Game name">Pelin nimi</Tag>
 	<Tag name="HUD">HUD</Tag>
 	<Tag name="InputCamControl">W,S A,D Q,E - liiku Nuolet - käännä</Tag>
@@ -217,7 +218,7 @@
 	<Tag name="Player">Pelaaja</Tag>
 	<Tag name="InputRoadSel">Askelpalautin - lisää tai poista valinnasta</Tag>
 	<Tag name="Weather">Sää</Tag>
-	<Tag name="RplAlpha">Läpinäkyvä haamu</Tag>
+	<Tag name="MinimapBorder">Border</Tag>
 	<Tag name="InpSet_Medium">Keskitaso</Tag>
 	<Tag name="TipTerrainHalf">Resize current terrain heightmap by half (use only for reducing file size).</Tag>
 	<Tag name="wind">tuuli</Tag>
@@ -245,6 +246,7 @@
 	<Tag name="InputFluidsIns">Ins - insert new, default fluid at cursor</Tag>
 	<Tag name="TipVegetGroups">Vegetation model groups (recommended use 4-6), affects performance.</Tag>
 	<Tag name="Car">Auto</Tag>
+	<Tag name="Challenge">Challenge</Tag>
 	<Tag name="FuelLap">Polttoainetta jokaisella kierroksella</Tag>
 	<Tag name="TipSkyMats">Sky material names (from SkyDome.material).</Tag>
 	<Tag name="Simulation">Simulation</Tag>
@@ -405,7 +407,7 @@
 	<Tag name="ReflMode_static">Staattinen</Tag>
 	<Tag name="CarClrRandom">Satunnainen</Tag>
 	<Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
-	<Tag name="LS_SCENE">Ladataan tapahtumapaikkaa</Tag>
+	<Tag name="SpeedUnit">Nopeusyksikkö</Tag>
 	<Tag name="InputRoadLooped">O - toggle looped</Tag>
 	<Tag name="Name">Nimi</Tag>
 	<Tag name="RplSize">koko</Tag>
@@ -449,7 +451,7 @@
 	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - size   alt-RMB - depth</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
-	<Tag name="Shadows">Varjot</Tag>
+	<Tag name="SteerRange">Steering range multipliers</Tag>
 	<Tag name="ShowPictures">Näytä kuvia ladatessa</Tag>
 	<Tag name="distance">etäisyys</Tag>
 	<Tag name="SSS_Effect">Effect</Tag>
@@ -471,6 +473,7 @@
 	<Tag name="TexSize">Tekstuurien koko</Tag>
 	<Tag name="TipSunAmbient">Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)</Tag>
 	<Tag name="ChngTrkTab">changed in [Track] tab</Tag>
+	<Tag name="Shadows">Varjot</Tag>
 	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
 	<Tag name="Laps">Kierrokset</Tag>
@@ -533,6 +536,7 @@
 	<Tag name="Yes">Kyllä</Tag>
 	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
 	<Tag name="TerGenPers">Persistance noise</Tag>
+	<Tag name="RoadStats">Tien tilastot</Tag>
 	<Tag name="SunDir">Auringon suunta</Tag>
 	<Tag name="InputRoadPick">Space - pick one/none</Tag>
 	<Tag name="TipTrkViewShort">Short list view.</Tag>
@@ -638,7 +642,7 @@
 	<Tag name="TipDiffuseTex">Diffuse texture (Specular in alpha).</Tag>
 	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
 	<Tag name="AntiAliasing">Antialiasointi</Tag>
-	<Tag name="RoadStats">Tien tilastot</Tag>
+	<Tag name="Tutorial">Tutorial</Tag>
 	<Tag name="FinishedCommaPlace">finished, place</Tag>
 	<Tag name="InputObjectsDel">Del - delete current</Tag>
 	<Tag name="Tools">Työkalut</Tag>
@@ -686,7 +690,6 @@
 	<Tag name="TipGrassLayerDens">Grass density for layer (how often it will appear).</Tag>
 	<Tag name="InputRoadModify">Muokkaa</Tag>
 	<Tag name="TextColor">Text color</Tag>
-	<Tag name="CarDebugText">Car debug text </Tag>
 	<Tag name="ColBright">Kirkkaus</Tag>
 	<Tag name="TipFogStartDist">Fog start distance [meters].</Tag>
 	<Tag name="InputTerDeform">D - Deform  (LMB up, RMB down)</Tag>
@@ -708,7 +711,7 @@
 	<Tag name="CheckArrow">Tarkistuspistenuoli</Tag>
 	<Tag name="Sun">Aurinko</Tag>
 	<Tag name="InputMapShiftUp">Shift up</Tag>
-	<Tag name="SpeedUnit">Nopeusyksikkö</Tag>
+	<Tag name="CarDebugText">Car debug text </Tag>
 	<Tag name="OgreDialog">Näytä Ogre dialogi</Tag>
 	<Tag name="MultiThread">Multi Threaded</Tag>
 	<Tag name="Editor">Editori</Tag>
@@ -756,7 +759,7 @@
 	<Tag name="GraphicsAll_Ultra">Huippu</Tag>
 	<Tag name="ApplyShaders">Käytä varjostimia</Tag>
 	<Tag name="TipGrassDens">How dense/rare will the grass be on terrain.</Tag>
-	<Tag name="MinimapBorder">Border</Tag>
+	<Tag name="RplAlpha">Läpinäkyvä haamu</Tag>
 	<Tag name="InputTerFilter">F - Filter  (remove noise)</Tag>
 	<Tag name="TipSteerSurf">Steering range multiplier, for surface (Gravel,Asphalt).</Tag>
 	<Tag name="InputRoadRebuild">B - rebuild road (after terrain change, etc.)</Tag>
@@ -861,10 +864,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="Challenge">Challenge</Tag>
-	<Tag name="Tutorial">Tutorial</Tag>
-	<Tag name="CarType_Extreme">Extreme</Tag>
-	<Tag name="GameVersion">2.0</Tag>
+	<Tag name="Multiply">Multiply</Tag>
+	<Tag name="Brush_ShapeN-gon">N-gon</Tag>
+	<Tag name="InputTopView">Alt-Z - toggle top view</Tag>
+	<Tag name="Substract">Substract</Tag>
+	<Tag name="CheckBeam">Next checkpoint beam</Tag>
+	<Tag name="Brush_ShapeNoise2">Noise2</Tag>
+	<Tag name="InputContextHelp">Ctrl-F1 - context help page</Tag>
+	<Tag name="Add">Add</Tag>
+	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>

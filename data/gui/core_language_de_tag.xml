@@ -37,10 +37,10 @@
 	<Tag name="TerNormal">Normal</Tag>
 	<Tag name="NeedNewGame">* neues Spiel erforderlich</Tag>
 	<Tag name="InputRoadAngZero">shift-6 - Winkel leeren</Tag>
+	<Tag name="LS_SCENE">Lade Szene</Tag>
 	<Tag name="TipTrackImg">Bildschirmfoto der ausgewählten Strecke.</Tag>
 	<Tag name="TerLNoiseOnly">Nur Rauschen</Tag>
 	<Tag name="InputValueChange">Jede Bewegung/Werteveränderung mit </Tag>
-	<Tag name="SteerRange">Steering range multipliers</Tag>
 	<Tag name="Terrain">Terrain</Tag>
 	<Tag name="TipChangeGloss">Auto Farbe Glossinen ändern (matte-glänzend).</Tag>
 	<Tag name="Surface">Oberfläche</Tag>
@@ -60,6 +60,7 @@
 	<Tag name="Progress">Fortschritt</Tag>
 	<Tag name="Brush_ShapeSinus">Sinus</Tag>
 	<Tag name="ScoreNeeded">Punkte benötigt</Tag>
+	<Tag name="CarType_Extreme">Extrem</Tag>
 	<Tag name="Game name">Spielname</Tag>
 	<Tag name="HUD">HUD</Tag>
 	<Tag name="InputCamControl">W,S A,D Q,E - Pfeiltasten - drehen</Tag>
@@ -127,7 +128,7 @@
 	<Tag name="TerLHSm">Höhenglättung</Tag>
 	<Tag name="CopySource">Als Kopierquelle setzen</Tag>
 	<Tag name="CarCrash">Auto-crash</Tag>
-	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
+	<Tag name="TipSteerSim">Lenkung Bereich Multiplizierer, für Simulation Modus (Einfach, Normal).</Tag>
 	<Tag name="Tracks">Strecken</Tag>
 	<Tag name="LS_OBJS">Lade Objekte</Tag>
 	<Tag name="TreeRoadDist">Abstand Bäume - Straße</Tag>
@@ -217,7 +218,7 @@
 	<Tag name="Player">Spieler</Tag>
 	<Tag name="InputRoadSel">Backspace - zu Auswahl hinzufügen/entfernen</Tag>
 	<Tag name="Weather">Wetter</Tag>
-	<Tag name="RplAlpha">durchsichtiger Geist</Tag>
+	<Tag name="MinimapBorder">Rand</Tag>
 	<Tag name="InpSet_Medium">Mittel</Tag>
 	<Tag name="TipTerrainHalf">Auflösung der Terrain-Heightmap halbieren (vermindert die Dateigröße)</Tag>
 	<Tag name="wind">Wind</Tag>
@@ -225,7 +226,7 @@
 	<Tag name="TipDustSize">Staubpartikelgröße.</Tag>
 	<Tag name="ChampEndCongrats">Glückwunsch!</Tag>
 	<Tag name="LS_CAR">Lade Auto</Tag>
-	<Tag name="Author">Author(s)</Tag>
+	<Tag name="Author">Autor(en)</Tag>
 	<Tag name="MaxScale">max. Skal.</Tag>
 	<Tag name="Fluids">Gewässer</Tag>
 	<Tag name="NetNickname">Benutzername</Tag>
@@ -233,7 +234,7 @@
 	<Tag name="UseImposters">Nutze Betrüger</Tag>
 	<Tag name="NetSettings">Einstellungen</Tag>
 	<Tag name="TipModelMaxScale">Maximale Skalierung des Modells.</Tag>
-	<Tag name="TerrainError">Terrain Error</Tag>
+	<Tag name="TerrainError">Terrain Fehler</Tag>
 	<Tag name="InputGraphsType">change graphs type in game</Tag>
 	<Tag name="NetMasterProtocolError">Inkompatibles protokoll - Spiel aktualisieren oder Server-Administrator kontaktieren.</Tag>
 	<Tag name="No">Nein</Tag>
@@ -245,6 +246,7 @@
 	<Tag name="InputFluidsIns">Einfg - neues Gewässer</Tag>
 	<Tag name="TipVegetGroups">Vegetationsgruppen (empfohlen: 4-6), Einfluss auf Performance.</Tag>
 	<Tag name="Car">Auto</Tag>
+	<Tag name="Challenge">Herausforderung</Tag>
 	<Tag name="FuelLap">Auffüllen nach einer Runde</Tag>
 	<Tag name="TipSkyMats">Namen der Sky-Materialien (aus SkyDome.material)</Tag>
 	<Tag name="Simulation">Simulation</Tag>
@@ -277,7 +279,7 @@
 	<Tag name="TipABS">Verhindert das Blockieren der Reifen beim Bremsen (Standard: aus)</Tag>
 	<Tag name="TipGrassPatchHeightMin">Minimale Höhe des Grasflecks.</Tag>
 	<Tag name="InputRoadMat">-,= - Weg/Rohre material (-1 versteckt)</Tag>
-	<Tag name="CarType_Terrain">Terrain</Tag>
+	<Tag name="CarType_Terrain">Gelände</Tag>
 	<Tag name="InputObjectsRotReset">shift-2 - reset rotation</Tag>
 	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
 	<Tag name="TipFogClr2">Fog end color when looking away from sun.</Tag>
@@ -360,7 +362,7 @@
 	<Tag name="InputMapShowOptions">Optionen zeigen</Tag>
 	<Tag name="InputCameraMode">Kameramodus</Tag>
 	<Tag name="Enabled">Aktiviert</Tag>
-	<Tag name="TipCarType">Car type, primary destination. But some cars can be used on gravel even if not meant for it.</Tag>
+	<Tag name="TipCarType">Auto Typ, elementares Ziel. Manche Autos können auf Schotter fahren auch wenn nicht geeignet.</Tag>
 	<Tag name="TipReverse">Streckenrichtung umkehren.</Tag>
 	<Tag name="DidntPass">Durchgefallen</Tag>
 	<Tag name="Road_Cur">Akt</Tag>
@@ -391,7 +393,7 @@
 	<Tag name="SceneryId">Landschafts-ID</Tag>
 	<Tag name="TipTerTriSize">Triangle-Größe des Terrains (in Metern) - empfohlen: 1-2, größerer Wert für größere Fläche). Anwenden durch Aktualisierung (F8).</Tag>
 	<Tag name="HDRIntensity">Bloom Intensität</Tag>
-	<Tag name="ColReflect">Reflection</Tag>
+	<Tag name="ColReflect">Spiegelung</Tag>
 	<Tag name="Development">Entwicklung</Tag>
 	<Tag name="InputRoadIns">Einfg - Punkt danach einfügen, mit Alt - davor</Tag>
 	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
@@ -405,7 +407,7 @@
 	<Tag name="ReflMode_static">Statisch</Tag>
 	<Tag name="CarClrRandom">Zufällig</Tag>
 	<Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
-	<Tag name="LS_SCENE">Lade Szene</Tag>
+	<Tag name="SpeedUnit">Einheit</Tag>
 	<Tag name="InputRoadLooped">O - toggle looped</Tag>
 	<Tag name="Name">Name</Tag>
 	<Tag name="RplSize">Größe</Tag>
@@ -444,12 +446,12 @@
 	<Tag name="GraphicsAllSettings">Grafik-Voreinstellungen:</Tag>
 	<Tag name="InputTerPaint">A - Anstrichtextur (Layer)</Tag>
 	<Tag name="NetPort">Port</Tag>
-	<Tag name="CarType_Gravel">Gravel</Tag>
+	<Tag name="CarType_Gravel">Schotter</Tag>
 	<Tag name="Brush_CurrentH">Akt.H</Tag>
 	<Tag name="LTrFlDepth">max. Wassertiefe</Tag>
 	<Tag name="InputFluidsSize">alt-LMB Größe, alt-RMB Tiefe</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
-	<Tag name="Shadows">Schatten</Tag>
+	<Tag name="SteerRange">Lenkung Bereich Multiplizierer</Tag>
 	<Tag name="ShowPictures">Bilder beim Laden anzeigen</Tag>
 	<Tag name="distance">Distanz</Tag>
 	<Tag name="SSS_Effect">Effekt</Tag>
@@ -471,6 +473,7 @@
 	<Tag name="TexSize">Texturgröße</Tag>
 	<Tag name="TipSunAmbient">Sonnenlicht Umgebungsfarbe (konstant). R G B Komponenten von 0 bis 1 (z.B. 0.4 0.4 0.4)</Tag>
 	<Tag name="ChngTrkTab">ausw. im Tab [Strecke]</Tag>
+	<Tag name="Shadows">Schatten</Tag>
 	<Tag name="InputRplCtrl2">P - Replay pausieren/fortsetzen</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - vor/zurückspulen (shift - langsam, ctrl,alt - schnell)</Tag>
 	<Tag name="Laps">Runden</Tag>
@@ -517,10 +520,10 @@
 	<Tag name="TerGenOfsX">Versatz X</Tag>
 	<Tag name="TipTexTiling">Kachellänge der Textur (kleinerer Wert bedeutet mehr Wiederholungen)</Tag>
 	<Tag name="InputBrushShape">K,L - Gestalt</Tag>
-	<Tag name="TipTerrainMove">Move terrain.</Tag>
+	<Tag name="TipTerrainMove">Terrain verschieben.</Tag>
 	<Tag name="TerHQDist">Terrain HQ Dist.</Tag>
 	<Tag name="InputRoadRoll">- rotate roll / scale sel.</Tag>
-	<Tag name="CarDebugSurfaces">Car tire surfaces</Tag>
+	<Tag name="CarDebugSurfaces">Autoreifen Fläche</Tag>
 	<Tag name="TrackArea">Fläche</Tag>
 	<Tag name="FacesOnce">Seiten auf einmal</Tag>
 	<Tag name="TipTrackDescEditor">Streckenbeschreibung (Klicken zum Editieren).</Tag>
@@ -533,6 +536,7 @@
 	<Tag name="Yes">Ja</Tag>
 	<Tag name="TipNewDup">Erstellen einer neuen Strecke durch Duplizieren der ausgewählten Strecke unter neuem Namen (erst Namen ändern)</Tag>
 	<Tag name="TerGenPers">Rauschen</Tag>
+	<Tag name="RoadStats">Straßen Statist.</Tag>
 	<Tag name="SunDir">Sonnenrichtung</Tag>
 	<Tag name="InputRoadPick">Space - Auswahl</Tag>
 	<Tag name="TipTrkViewShort">Kurzansicht.</Tag>
@@ -548,7 +552,7 @@
 	<Tag name="RplCurrent">Aktuell</Tag>
 	<Tag name="InputBrushFreq">O,P  -  noise Frequency (scale)</Tag>
 	<Tag name="InputCamControl2">LMB - drehen RMB - bewegen MMB - zoom</Tag>
-	<Tag name="CarType_Slow">Slow</Tag>
+	<Tag name="CarType_Slow">Langsam</Tag>
 	<Tag name="Diff5">Sehr schwierig</Tag>
 	<Tag name="LS_CLEANUP">Aufräumen</Tag>
 	<Tag name="Difficulty">Schwierigkeitsgrad</Tag>
@@ -566,14 +570,14 @@
 	<Tag name="TreeMult">Baumanzahl</Tag>
 	<Tag name="InputUpdate">F8 - Aktualisieren</Tag>
 	<Tag name="InputToggleGUIMode">F1 - Optionsfenster anzeigen</Tag>
-	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
+	<Tag name="InpSet_AxisFullInv">Achse voll umgekehrt</Tag>
 	<Tag name="TipGrassMaterial">Grass material (type) for this layer, chosen to match track's scenery.</Tag>
 	<Tag name="TipRearThrottleInverse">Taste für \</Tag>
 	<Tag name="LS_ROAD">Lade Straßen</Tag>
 	<Tag name="RoadPoint">Straßenpunkt</Tag>
 	<Tag name="CarStartPos">Auto Startpos.</Tag>
 	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
-	<Tag name="AlignWidthMul">Width multiply</Tag>
+	<Tag name="AlignWidthMul">Breite multiplizieren</Tag>
 	<Tag name="NetMasterIp">Master-Server IP</Tag>
 	<Tag name="LoadingDesc">Laden, bitte warten...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximale Höhe des Grasflecks.</Tag>
@@ -638,7 +642,7 @@
 	<Tag name="TipDiffuseTex">Diffusetextur (Specular in Alphakanal).</Tag>
 	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
 	<Tag name="AntiAliasing">Antialiasing</Tag>
-	<Tag name="RoadStats">Straßen Statist.</Tag>
+	<Tag name="Tutorial">Einführung</Tag>
 	<Tag name="FinishedCommaPlace">Beendet, Platz</Tag>
 	<Tag name="InputObjectsDel">Entf - löschen</Tag>
 	<Tag name="Tools">Werkzeuge</Tag>
@@ -665,7 +669,7 @@
 	<Tag name="Far">Weit</Tag>
 	<Tag name="Startup">Start</Tag>
 	<Tag name="RplGhosts">Geister</Tag>
-	<Tag name="CarType">Type</Tag>
+	<Tag name="CarType">Typ</Tag>
 	<Tag name="InputReturnDelay">Zurückkehren</Tag>
 	<Tag name="RplBestOnly">Geist nur für beste Zeit speichern</Tag>
 	<Tag name="InputFluidsMode">W - Gewässer bearbeiten</Tag>
@@ -677,7 +681,7 @@
 	<Tag name="TipDeleteTrk">Ausgewählte Strecke permanent löschen.</Tag>
 	<Tag name="Setup">Setup</Tag>
 	<Tag name="ReflMode_full">Voll</Tag>
-	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
+	<Tag name="TipDisableWeather">Wetter Partikeln deaktivieren</Tag>
 	<Tag name="TipTerErrorNorm">Default terrain error in percent. Less for flat, more for high terrains.</Tag>
 	<Tag name="TrackPipes">Röhren</Tag>
 	<Tag name="Specular">Specular</Tag>
@@ -686,7 +690,6 @@
 	<Tag name="TipGrassLayerDens">Grass density for layer (how often it will appear).</Tag>
 	<Tag name="InputRoadModify">Bearbeiten</Tag>
 	<Tag name="TextColor">Textfarbe</Tag>
-	<Tag name="CarDebugText">Auto Debug text </Tag>
 	<Tag name="ColBright">Helligkeit</Tag>
 	<Tag name="TipFogStartDist">Nebelanfangsdistanz (Meter)</Tag>
 	<Tag name="InputTerDeform">D - verformen (LMB hoch, RMB runter)</Tag>
@@ -698,7 +701,7 @@
 	<Tag name="NetHost">Host</Tag>
 	<Tag name="Road_AngleAuto">Auto</Tag>
 	<Tag name="ImpostorDist">impostor dist.</Tag>
-	<Tag name="AlignSmooth">Smooth size</Tag>
+	<Tag name="AlignSmooth">Glättung Größe</Tag>
 	<Tag name="page">Page</Tag>
 	<Tag name="Layers">Schichten</Tag>
 	<Tag name="Quit">Beenden</Tag>
@@ -708,7 +711,7 @@
 	<Tag name="CheckArrow">Wegpunkt-Pfeil</Tag>
 	<Tag name="Sun">Sonne</Tag>
 	<Tag name="InputMapShiftUp">Hochschalten</Tag>
-	<Tag name="SpeedUnit">Einheit</Tag>
+	<Tag name="CarDebugText">Auto Debug text </Tag>
 	<Tag name="OgreDialog">Ogre-Dialog anzeigen</Tag>
 	<Tag name="MultiThread">Multi Threaded</Tag>
 	<Tag name="Editor">Editor</Tag>
@@ -721,7 +724,7 @@
 	<Tag name="scale">Skalieren</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="HeightMin">Höhe Min</Tag>
-	<Tag name="InputObjectsType">-,=  - change object type</Tag>
+	<Tag name="InputObjectsType">-,= - Objekttyp wechseln</Tag>
 	<Tag name="ColHue">Farbton</Tag>
 	<Tag name="fluids">Gewässer</Tag>
 	<Tag name="TipLoadTrkEditor">Andere Strecke laden oder aktuelle Strecke neu Laden.</Tag>
@@ -756,9 +759,9 @@
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 	<Tag name="ApplyShaders">Shader anwenden</Tag>
 	<Tag name="TipGrassDens">How dense/rare will the grass be on terrain.</Tag>
-	<Tag name="MinimapBorder">Rand</Tag>
+	<Tag name="RplAlpha">durchsichtiger Geist</Tag>
 	<Tag name="InputTerFilter">F - Filter (Rauschen entfernen)</Tag>
-	<Tag name="TipSteerSurf">Steering range multiplier, for surface (Gravel,Asphalt).</Tag>
+	<Tag name="TipSteerSurf">Lenkung Bereich Multiplizierer, für Fläche (Schotter, Asphalt)</Tag>
 	<Tag name="InputRoadRebuild">B - Straße anpassen (nach Terrainänderung)</Tag>
 	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="Generator">Generator</Tag>
@@ -799,13 +802,13 @@
 	<Tag name="GrassSize">Größe</Tag>
 	<Tag name="Left">Links</Tag>
 	<Tag name="InputBrushOctaves">, .   -  noise Octaves (detail)</Tag>
-	<Tag name="CarSpeed">Speed</Tag>
+	<Tag name="CarSpeed">Geschwindigkeit</Tag>
 	<Tag name="InputStartHeight">[,] - Starthöhe verändern (größer für Röhren)</Tag>
 	<Tag name="InputStartDir">Space - Straßenrichtung (+ oder -)</Tag>
 	<Tag name="GrMaterial">Material</Tag>
 	<Tag name="smooth">glatt</Tag>
 	<Tag name="Properties">Eigenschaften</Tag>
-	<Tag name="Brush_ShapeTriangle">Triang</Tag>
+	<Tag name="Brush_ShapeTriangle">Dreieck</Tag>
 	<Tag name="distribution">Verteilung</Tag>
 	<Tag name="AngleMin">Angle Min</Tag>
 	<Tag name="Diff2">Einfach</Tag>
@@ -819,7 +822,7 @@
 	<Tag name="ObjBuildings">Gebäude</Tag>
 	<Tag name="TipTrkScreenEditor">Bildschirmfoto der ausgewählten Strecke.</Tag>
 	<Tag name="InputObjectsRot">2 - Rotate local (alt- global)  LMB: Z  RMB: Y  MMB: X</Tag>
-	<Tag name="CarType_Other">Other</Tag>
+	<Tag name="CarType_Other">Andere</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="InputRoadHeight">- Größe ändern</Tag>
 	<Tag name="TipSunSpecular">Sonnenlicht specular (Glanz) Farbe. R G B Komponenten von 0 bis 1 (z.B. 0.6 0.6 0.6)</Tag>
@@ -851,7 +854,7 @@
 	<Tag name="InputStart">Start</Tag>
 	<Tag name="TipLTrMaxTerAng">max. Terrain-Winkel, bei dem Modelle gerade noch platziert werden.</Tag>
 	<Tag name="InputBrushOffset">9,0  -  noise generate Offset (position)</Tag>
-	<Tag name="CarYear">Year</Tag>
+	<Tag name="CarYear">Jahr</Tag>
 	<Tag name="TipFogEndDist">Ausklangdistanz des Nebels (Meter)</Tag>
 	<Tag name="Color">Farbe</Tag>
 	<Tag name="CarScrap">Auto-Verschrottung</Tag>
@@ -861,10 +864,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="Challenge">Challenge</Tag>
-	<Tag name="Tutorial">Tutorial</Tag>
-	<Tag name="CarType_Extreme">Extreme</Tag>
-	<Tag name="GameVersion">2.0</Tag>
+	<Tag name="Multiply">Multiply</Tag>
+	<Tag name="Brush_ShapeN-gon">N-gon</Tag>
+	<Tag name="InputTopView">Alt-Z - toggle top view</Tag>
+	<Tag name="Substract">Substract</Tag>
+	<Tag name="CheckBeam">Next checkpoint beam</Tag>
+	<Tag name="Brush_ShapeNoise2">Noise2</Tag>
+	<Tag name="InputContextHelp">Ctrl-F1 - context help page</Tag>
+	<Tag name="Add">Add</Tag>
+	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>
