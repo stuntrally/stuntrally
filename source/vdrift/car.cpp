@@ -28,6 +28,7 @@ CAR::CAR() :
 	//dynamics.pCar = this;
 	interiorOffset[0]=0;  interiorOffset[1]=0;  interiorOffset[2]=0;
 	boostOffset[0]=0;  boostOffset[1]=0;  boostOffset[2]=0;
+	boostSizeZ = 1.f;  sBoostParName = "Boost";
 	bRotFix = false;
 	
 	for (int i = 0; i < 4; i++)
@@ -108,9 +109,13 @@ bool CAR::Load(class App* pApp1,
 	cf.GetParam("model_ofs.interior-x", interiorOffset[0]);
 	cf.GetParam("model_ofs.interior-y", interiorOffset[1]);
 	cf.GetParam("model_ofs.interior-z", interiorOffset[2]);
+
 	cf.GetParam("model_ofs.boost-x", boostOffset[0]);
 	cf.GetParam("model_ofs.boost-y", boostOffset[1]);
 	cf.GetParam("model_ofs.boost-z", boostOffset[2]);
+	cf.GetParam("model_ofs.boost-size-z", boostSizeZ);
+	cf.GetParam("model_ofs.boost-name", sBoostParName);
+
 	cf.GetParam("model_ofs.rot_fix", bRotFix);
 	cf.GetParam("model_ofs.brake_mtr", sBrakeMtr);
 	

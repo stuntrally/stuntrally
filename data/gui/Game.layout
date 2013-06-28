@@ -2579,7 +2579,7 @@
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						
+
 						<Widget type="Button" skin="CheckBox" position="32 296 184 24" name="Arrow">
 							<Property key="Caption" value="#{CheckArrow}"/>
 							<Property key="TextColour" value="0.5 1.0 0.4"/>

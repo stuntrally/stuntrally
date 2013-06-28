@@ -340,9 +340,9 @@ public:
 	void GraphsNewVals(double dt);
 	
 	///-- models offset
-	float interiorOffset[3], boostOffset[3];
+	float interiorOffset[3], boostOffset[3], boostSizeZ;
 	bool bRotFix;
-	std::string sBrakeMtr;
+	std::string sBrakeMtr, sBoostParName;
 
 	// exhaust position for boost particles
 	bool manualExhaustPos; // if true, use values below, if false, guess from bounding box

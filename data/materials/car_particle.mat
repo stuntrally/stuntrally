@@ -17,6 +17,15 @@ material Boost
     diffuseMap boost.png
 }
 
+material Boost_Red
+{
+    parent Base_particle
+    scene_blend add
+    diffuseMap boost_red.png
+}
+
+
+
 material Particles/Spark
 {
     parent Base_particle
