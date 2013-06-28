@@ -191,7 +191,7 @@ public:
 
 	std::list <std::pair <Dbl, MATHVECTOR<Dbl,3> > > mass_only_particles;
 	
-	Dbl feedback, maxangle;
+	Dbl feedback, maxangle, flip_mul;
 	Dbl ang_damp;  Dbl rot_coef[4];  /// new
 	
 	MATHVECTOR<Dbl,3> lastbodyforce;  //< held so external classes can extract it for things such as applying physics to camera mounts

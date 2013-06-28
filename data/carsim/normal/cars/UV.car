@@ -5,6 +5,7 @@ version = 2
 [ steering ]
 max-angle = 26
 angular-damping = 0.0
+flip-pow-mul = 2
 
 [ rot_drag ]
 roll  = 200.0
@@ -14,7 +15,9 @@ yaw2  = 2.0
 
 [ model_ofs ]
 rot_fix = on
+boost-x = -0.1
 boost-y = -0.2
+boost-size-z = 0.6
 exhaust-x = 2.2
 exhaust-y = 0.45
 exhaust-z = 0.56

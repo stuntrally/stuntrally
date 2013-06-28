@@ -5,6 +5,7 @@ version = 2
 [ steering ]
 max-angle = 25
 angular-damping = 0.0
+flip-pow-mul = 2
 
 [ rot_drag ]
 roll  = 200.0

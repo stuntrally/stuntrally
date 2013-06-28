@@ -323,7 +323,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 		Dbl angvel = fabs(av[0]);
 		if (angvel < 2.0)  // max rot vel allowed
 		{
-		float t = 20000.f * doFlip;  // strength
+		float t = 20000.f * doFlip * flip_mul;  // strength
 
 		if (pSet->game.flip_type == 1)  // fuel dec
 		{

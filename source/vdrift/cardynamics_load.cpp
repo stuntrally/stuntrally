@@ -521,6 +521,9 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 		float maxangle = 26.f;
 		if (!c.GetParam("steering.max-angle", maxangle, error_output))  return false;
 		SetMaxSteeringAngle( maxangle );
+
+		float a = 1.f;
+		c.GetParam("steering.flip-pow-mul", a);	 flip_mul = a;
 	}
 	///car angular damping -new
 	{
