@@ -62,6 +62,7 @@ const App::BrushSet App::brSets[App::brSetsNum] = {
 	{ED_Deform,0,  30.f, 33.f,   1.4f, 0.34f, 6.3f, 4,  BRS_Noise,  -1.f,-0.01f, 0, "noise asymetric"},
 	{ED_Deform,0,  30.f, 33.f,   1.4f, 0.34f, 4.1f, 4,  BRS_Noise,  -1.f,-0.01f, 0, "noise cracked 3"},
 	{ED_Deform,0,  80.f, 30.f,   0.58f,0.48f,12.1f, 7,  BRS_Noise2, -1.f,-0.01f, 0, "noise big, cracked"},
+	{ED_Deform,0,  66.f, 20.f,   8.26f,0.22f,-7.8f, 5,  BRS_Noise2, -1.f,-0.01f, 0, "bold holes 3"},
 
 //------  noise cloud, twin
 	{ED_Deform,0,  32.f, 20.f,   2.f,  0.93f, 2.7f, 5,  BRS_Noise2, -1.f,-0.01f, 1, "Noise Cloud"},
@@ -90,6 +91,8 @@ const App::BrushSet App::brSets[App::brSetsNum] = {
 
 	{ED_Deform,0,  72.f, 20.f,   0.41f,0.32f, 0.2f, 7,  BRS_Noise2, -1.f,-0.01f, 0, "Chaos crack twin1"},
 	{ED_Deform,0,  82.f, 33.f,   0.55f,0.26f,-5.2f, 4,  BRS_Noise2, -1.f,-0.01f, 0, "Chaos crack twin2"},
+	{ED_Deform,0,  66.f, 20.f,   0.70f,0.25f, 1.9f, 5,  BRS_Noise2, -1.f,-0.01f, 0, "Chaos crack h"},
+	{ED_Deform,0,  66.f, 20.f,   0.83f,0.22f,-8.1f, 4,  BRS_Noise2, -1.f,-0.01f, 0, "Chaos crack star"},
 
 //------  row | or -
 	{ED_Deform,0,  32.f, 40.f,   7.9f, 1.f,  15.4f, 7,  BRS_Noise,  -1.f,-0.01f, 1, "Row| noised"},
@@ -134,7 +137,7 @@ const App::BrushSet App::brSets[App::brSetsNum] = {
 																				 
 	{ED_Deform,0,  55.f, 20.f,  124.f, 0.4f, -0.6f, 7,  BRS_Ngon,   -1.f,-0.01f, 0, "sharp star 7"},
 	{ED_Deform,0,  55.f, 20.f,  124.f, 0.4f,  0.8f, 8,  BRS_Ngon,   -1.f,-0.01f, 0, "sharp flower 8"},
-	{ED_Deform,0,  25.f, 20.f,  204.f, 0.4f, -0.7f, 5,  BRS_Ngon,   -1.f,-0.01f, 0, "inside sharp star 5"},
+	{ED_Deform,0, 125.f, 20.f,  204.f, 0.4f, -0.7f, 5,  BRS_Ngon,   -1.f,-0.01f, 0, "inside sharp star 5"},
 																				 
 	{ED_Smooth,0,  30.f, 20.f,  2.97f, 0.4f, -0.9f, 3,  BRS_Ngon,   -1.f,-0.01f, 0, "Smooth sharp star 3"},
 };
@@ -385,7 +388,7 @@ void App::btnTerGenerate(WP wp)
 
 	//)  road test
 	bool bRoad = pSet->gen_roadsm > 0.1f;
-	float rdPow = 6.f - pSet->gen_roadsm;  //-
+	float rdPow = pSet->gen_roadsm;  //-
 	int r = 0;
 	Image imgRoad;
 	if (bRoad)
@@ -410,6 +413,7 @@ void App::btnTerGenerate(WP wp)
 			c = c >= 0.f ? powf(c, pSet->gen_pow) : -powf(-c, pSet->gen_pow);
 
 			//)  check if on road - uses roadDensity.png
+			//  todo: smooth depends on -smooth grass dens par, own val?
 			int mx = ( fx+1.f)*0.5f*r,
 				my = (-fy+1.f)*0.5f*r;
 					
