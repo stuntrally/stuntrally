@@ -404,10 +404,10 @@ void App::AlignTerToRoad()
 		{		
 			v = 0;  m = 0;  b = 0;
 			for (j = -f; j <= f; ++j) {  d = a -f + j*w;
-				for (i = -f; i <= f; ++i, ++d, ++m)
-				{	k = mask[m];  //maskB ?
-					v += rd[d] * k;
-					if (rh[d] && k > 0.1f)  ++b;
+			for (i = -f; i <= f; ++i, ++d, ++m)
+			{	k = mask[m];  //maskB ?
+				v += rd[d] * k;
+				if (rh[d] && k > 0.1f)  ++b;
 			}	}
 			if (b > 0 && b < fs*0.8f)  //par?
 				rd[a] = v * ff;

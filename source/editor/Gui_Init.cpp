@@ -257,11 +257,13 @@ void App::InitGui()
 	Slv(TerGenOfsY, (pSet->gen_ofsy+8.f) /16.f);
 
 	Slv(TerGenFreq, powf((pSet->gen_freq-0.03f) /1.47f, 1.f/2.f));
-	Slv(TerGenOct,  Real(pSet->gen_oct)	/9.f);
-	Slv(TerGenPers, pSet->gen_persist /0.7f);
-	Slv(TerGenPow,  powf(pSet->gen_pow /6.f,  1.f/2.f));
+	Slv(TerGenOct,  Real(pSet->gen_oct)	/9.f);  sl->mfDefault = 4.f /9.f;
+	Slv(TerGenPers, pSet->gen_persist /0.7f);  sl->mfDefault = 0.4f /0.7f;
+	Slv(TerGenPow,  powf(pSet->gen_pow /6.f,  1.f/2.f));  sl->mfDefault = powf(1.f /6.f,  1.f/2.f);
 	
-	//Slv(TerGenMul,  powf(pSet->gen_mul /6.f,  1.f/2.f));
+	Slv(TerGenMul,  powf(pSet->gen_mul /6.f,  1.f/2.f));  sl->mfDefault = powf(1.f /6.f,  1.f/2.f);
+	Slv(TerGenOfsH, powf(pSet->gen_ofsh /60.f, 1.f/2.f));  sl->mfDefault = 0.f;
+	Slv(TerGenRoadSm, pSet->gen_roadsm /6.f);  sl->mfDefault = 0.f;
 
 
 	///  [Layers]  ------------------------------------

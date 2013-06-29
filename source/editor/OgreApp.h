@@ -385,9 +385,10 @@ protected:
 	const static float brClr[4][3];
 	void btnBrushPreset(WP), SetBrushPreset(int id);
 
-	//  ter generate
+	//  ter generator
 	SLV(TerGenScale);  SLV(TerGenOfsX);  SLV(TerGenOfsY);
 	SLV(TerGenFreq);  SLV(TerGenOct);  SLV(TerGenPers);  SLV(TerGenPow);
+	SLV(TerGenMul);  SLV(TerGenOfsH);  SLV(TerGenRoadSm);
 	
 	//  ter size
 	SLV(TerTriSize);  SLV(TerLScale);

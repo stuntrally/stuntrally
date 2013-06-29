@@ -383,11 +383,47 @@ void App::btnTerGenerate(WP wp)
 	const float s = sx * 0.5f, s1 = 1.f/s;
 	const float ox = pSet->gen_ofsx, oy = pSet->gen_ofsy;
 
+	//)  road test
+	bool bRoad = pSet->gen_roadsm > 0.1f;
+	float rdPow = 10.f - pSet->gen_roadsm;  //-
+	int r = 0;
+	Image imgRoad;
+	if (bRoad)
+	{
+		try {	imgRoad.load(String("roadDensity.png"),"General");  }
+		catch(...)
+			{	imgRoad.load(String("grassDensity.png"),"General");  }
+		r = imgRoad.getWidth();
+	}
+
 	//  generate noise terrain hmap
 	register int a,x,y;
 	switch (mode)
 	{
-	case 0:  // + add
+	case 0:  // + add - road
+	if (bRoad)
+	{	for (y=0; y < sx; ++y)  {  a = y * sx;
+		for (x=0; x < sx; ++x,++a)
+		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+
+			float c = Noise(y*s1-oy, x*s1+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist) * 0.8f;
+			c = c >= 0.f ? powf(c, pSet->gen_pow) : -powf(-c, pSet->gen_pow);
+
+			//)  check if on road - uses roadDensity.png
+			int mx = ( fx+1.f)*0.5f*r,
+				my = (-fy+1.f)*0.5f*r;
+					
+			float cr = imgRoad.getColourAt(
+				std::max(0,std::min(r-1, mx)),
+				std::max(0,std::min(r-1, my)), 0).r;
+
+			c *= pow(cr, rdPow);
+
+			c *= pSet->gen_scale;
+			hfData[a] += c + pSet->gen_ofsh;
+		}	}  break;
+	}else
+	{		// + add
 		for (y=0; y < sx; ++y)  {  a = y * sx;
 		for (x=0; x < sx; ++x,++a)
 		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
@@ -396,8 +432,9 @@ void App::btnTerGenerate(WP wp)
 			c = c >= 0.f ? powf(c, pSet->gen_pow) : -powf(-c, pSet->gen_pow);
 
 			c *= pSet->gen_scale;
-			hfData[a] += c;
-		}	}  break;
+			hfData[a] += c + pSet->gen_ofsh;
+		}	}
+	}  break;
 
 	case 1:  // - sub
 		for (y=0; y < sx; ++y)  {  a = y * sx;
@@ -408,7 +445,7 @@ void App::btnTerGenerate(WP wp)
 			c = c >= 0.f ? powf(c, pSet->gen_pow) : -powf(-c, pSet->gen_pow);
 
 			c *= pSet->gen_scale;
-			hfData[a] -= c;
+			hfData[a] -= c + pSet->gen_ofsh;
 		}	}  break;
 
 	case 2:  // * mul
@@ -419,7 +456,7 @@ void App::btnTerGenerate(WP wp)
 			float c = Noise(y*s1-oy, x*s1+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist) * 0.8f;
 			c = c >= 0.f ? powf(c, pSet->gen_pow) : -powf(-c, pSet->gen_pow);
 
-			c *= pSet->gen_scale;  //gen_mul..
+			c *= pSet->gen_mul;
 			hfData[a] *= c;
 		}	}  break;
 	}
@@ -439,7 +476,6 @@ void App::updateTerPrv(bool first)
 	if (!first && !ovTerPrv)  return;
 	if (terPrvTex.isNull())  return;
 
-	//  Lock texture and fill pixel data
 	HardwarePixelBufferSharedPtr pbuf = terPrvTex->getBuffer();
 	pbuf->lock(HardwareBuffer::HBL_DISCARD);
 	const PixelBox& pb = pbuf->getCurrentLock();  using Ogre::uint8;

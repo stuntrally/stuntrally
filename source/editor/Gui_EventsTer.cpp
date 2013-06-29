@@ -315,40 +315,55 @@ void App::btnScaleTerH(WP)
 void App::slTerGenScale(SL)
 {
 	float v = 160.f * powf(val, 2.f);	if (bGI)  pSet->gen_scale = v;
-	if (valTerGenScale){	valTerGenScale->setCaption(fToStr(v,2,4));  }
+	if (valTerGenScale)  valTerGenScale->setCaption(fToStr(v,2,4));
 }
 void App::slTerGenOfsX(SL)
 {
 	float v = -8.f + 16.f * val;	if (bGI)  pSet->gen_ofsx = v;
-	if (valTerGenOfsX){	valTerGenOfsX->setCaption(fToStr(v,3,5));  }  bUpdTerPrv = true;
+	if (valTerGenOfsX)  valTerGenOfsX->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
 }
 void App::slTerGenOfsY(SL)
 {
 	float v = -8.f + 16.f * val;	if (bGI)  pSet->gen_ofsy = v;
-	if (valTerGenOfsY){	valTerGenOfsY->setCaption(fToStr(v,3,5));  }  bUpdTerPrv = true;
+	if (valTerGenOfsY)  valTerGenOfsY->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
 }
 
 void App::slTerGenFreq(SL)
 {
 	float v = 0.03f + 1.47f * powf(val,2.f);	if (bGI)  pSet->gen_freq = v;
-	if (valTerGenFreq){	valTerGenFreq->setCaption(fToStr(v,3,5));  }  bUpdTerPrv = true;
+	if (valTerGenFreq)  valTerGenFreq->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
 }
 void App::slTerGenOct(SL)
 {
-	int v = val * 9.f +slHalf;	if (bGI)  pSet->gen_oct = v;
-	if (valTerGenOct){	valTerGenOct->setCaption(toStr(v));  }  bUpdTerPrv = true;
+	int v = val * 9.f +slHalf;			if (bGI)  pSet->gen_oct = v;
+	if (valTerGenOct)  valTerGenOct->setCaption(toStr(v));  bUpdTerPrv = true;
 }
 void App::slTerGenPers(SL)
 {
-	float v = 0.7f * val;	if (bGI)  pSet->gen_persist = v;
-	if (valTerGenPers){	valTerGenPers->setCaption(fToStr(v,3,5));  }  bUpdTerPrv = true;
+	float v = 0.7f * val;				if (bGI)  pSet->gen_persist = v;
+	if (valTerGenPers)  valTerGenPers->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
 }
 void App::slTerGenPow(SL)
 {
 	float v = 6.f * powf(val, 2.f);		if (bGI)  pSet->gen_pow = v;
-	if (valTerGenPow){	valTerGenPow->setCaption(fToStr(v,3,5));  }  bUpdTerPrv = true;
+	if (valTerGenPow)  valTerGenPow->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
 }
 
+void App::slTerGenMul(SL)
+{
+	float v = 6.f * powf(val, 2.f);		if (bGI)  pSet->gen_mul = v;
+	if (valTerGenMul)  valTerGenMul->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
+}
+void App::slTerGenOfsH(SL)
+{
+	float v = 60.f * powf(val, 2.f);	if (bGI)  pSet->gen_ofsh = v;
+	if (valTerGenOfsH)  valTerGenOfsH->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
+}
+void App::slTerGenRoadSm(SL)
+{
+	float v = 6.f * val;				if (bGI)  pSet->gen_roadsm = v;
+	if (valTerGenRoadSm)  valTerGenRoadSm->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
+}
 
 
 ///  Terrain layers  -----------------------------

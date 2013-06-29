@@ -1053,6 +1053,7 @@
 	<Tag name="TipNewTerrainFlat">Create new, flat terrain.</Tag>
 	<Tag name="TipTerrainGenerate">Generates new terrain from noise functions using all parameters below.</Tag>
 	<Tag name="TipBrushPick">shift-LMB - on Brushes, pick only shape (don't change mode).</Tag>
+	<Tag name="TipSliderReset">RMB on slider - reset to default value.</Tag>
 	<Tag name="TipTerrainHalf">Resize current terrain heightmap by half (use only for reducing file size).</Tag>
 	<Tag name="TipTerrainDouble">Make terrain size double, leaving current heightmap part in center.</Tag>
 	<Tag name="TipTerrainMove">Move terrain.</Tag>

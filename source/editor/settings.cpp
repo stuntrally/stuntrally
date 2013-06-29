@@ -69,7 +69,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "ter_gen.ofsx", gen_ofsx);			Param(c,w, "ter_gen.ofsy", gen_ofsy);
 	Param(c,w, "ter_gen.freq", gen_freq);			Param(c,w, "ter_gen.persist", gen_persist);
 	Param(c,w, "ter_gen.pow", gen_pow);				Param(c,w, "ter_gen.oct", gen_oct);
-	Param(c,w, "ter_gen.mul", gen_mul);
+	Param(c,w, "ter_gen.mul", gen_mul);				Param(c,w, "ter_gen.ofsh", gen_ofsh);
+	Param(c,w, "ter_gen.roadsm", gen_roadsm);
 
 	Param(c,w, "teralign.w_mul", al_w_mul);			Param(c,w, "teralign.smooth", al_smooth);
 	Param(c,w, "teralign.w_add", al_w_add);
@@ -103,7 +104,7 @@ SETTINGS::SETTINGS()  ///  Defaults
 	//  ter gen
 	,gen_scale(20.f), gen_freq(0.73f), gen_oct(4), gen_persist(0.4f)
 	,gen_pow(1.0f), gen_ofsx(0.f), gen_ofsy(0.f)
-	,gen_mul(1.f)
+	,gen_mul(1.f), gen_ofsh(0.f), gen_roadsm(0.f)
 	//  align ter
 	,al_w_mul(1.f), al_w_add(8.f), al_smooth(2.f)
 	,tweak_mtr("")

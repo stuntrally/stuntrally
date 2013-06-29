@@ -63,6 +63,9 @@ App::App()  //  gui wigdets--
 	,edRdColN(0),edRdColR(0), edRdPwsM(0),edRdPlsM(0)
 	,edScaleAllMul(0),edScaleTerHMul(0)  // tools
 	,valAlignWidthAdd(0), valAlignWidthMul(0), valAlignSmooth(0)
+	,valTerGenScale(0),valTerGenOfsX(0),valTerGenOfsY(0)  // gen
+	,valTerGenFreq(0),valTerGenOct(0),valTerGenPers(0),valTerGenPow(0)
+	,valTerGenMul(0),valTerGenOfsH(0),valTerGenRoadSm(0)
 	,imgTrkIco1(0),imgTrkIco2(0), edFind(0)
 	,trkList(0),trkName(0),bListTrackU(0)  // track
 
