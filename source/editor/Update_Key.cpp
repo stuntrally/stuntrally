@@ -787,7 +787,7 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_E:	if (bEdit()){  SetEdMode(ED_Height);  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
 		case KC_F:  if (bEdit()){  SetEdMode(ED_Filter);  curBr = 3;  updBrush();  UpdEditWnds();  }
 			else  //  focus on find edit
-			if (ctrl /*&& edFind && bGuiFocus &&
+			if (ctrl && edFind /*&& bGuiFocus &&
 				!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 1*/)
 			{
 				GuiShortcut(WND_Edit, 1);  // Track tab

@@ -165,8 +165,9 @@ protected:
 	Ogre::ManualObject* moTerC;  Ogre::SceneNode* ndTerC;
 	void TerCircleInit(), TerCircleUpd();
 
-	void createBrushPrv(),updateBrushPrv(bool first=false);  Ogre::TexturePtr brushPrvTex;
-	const static int BrPrvSize = 128;  //64-
+	void createBrushPrv(),updateBrushPrv(bool first=false),updateTerPrv(bool first=false);
+	Ogre::TexturePtr brushPrvTex, terPrvTex;  bool bUpdTerPrv;
+	const static int BrPrvSize = 128, TerPrvSize = 256;
 
 
 	///<>  terrain edit, brush

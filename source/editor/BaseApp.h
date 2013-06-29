@@ -121,8 +121,8 @@ protected:
 
 
 	///  ovelay
-	Ogre::Overlay* mDebugOverlay, *ovBrushPrv;
-	Ogre::OverlayElement* ovFps, *ovTri, *ovBat, *ovMem,  *ovSt, *ovBrushMtr,
+	Ogre::Overlay* mDebugOverlay, *ovBrushPrv, *ovTerPrv;
+	Ogre::OverlayElement* ovFps, *ovTri, *ovBat, *ovMem,  *ovSt, *ovBrushMtr, *ovTerMtr,
 		*ovPos, *ovDbg, *ovInfo, *ovStat, *ovFocus, *ovFocBck;  Ogre::Real fStFade;
 
 	bool alt, ctrl, shift;  // key modifiers

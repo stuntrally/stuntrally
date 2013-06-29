@@ -81,6 +81,13 @@ void App::processMouse()  //! from Thread, cam vars only
 //---------------------------------------------------------------------------------------------------------------
 bool App::frameEnded(const FrameEvent& evt)
 {
+	//  show when in gui on generator subtab
+	if (ovTerPrv)
+	if (bGuiFocus &&
+		mWndEdit && mWndEdit->getVisible() && mWndTabsEdit->getIndexSelected()==3 &&
+		vSubTabsEdit.size() > 3 && vSubTabsEdit[3]->getIndexSelected() == 1)
+		ovTerPrv->show();  else  ovTerPrv->hide();
+
 	//  track events
 	if (eTrkEvent != TE_None)
 	{	switch (eTrkEvent)  {
@@ -329,6 +336,13 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		mFactory->setSharedParameter("posSph0", sh::makeProperty <sh::Vector4>(new sh::Vector4(p.x,p.y,p.z,r)));
 		mFactory->setSharedParameter("posSph1", sh::makeProperty <sh::Vector4>(new sh::Vector4(p.x,p.y,p.z,r)));
 	}/**/
+	
+	
+	//  upd ter gen prv tex
+	if (bUpdTerPrv)
+	{	bUpdTerPrv = false;
+		updateTerPrv();
+	}
 
 	
 	///  simulate

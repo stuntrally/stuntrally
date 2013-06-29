@@ -221,7 +221,7 @@ void App::InitGui()
 
 	ScrollView* sv = mGUI->findWidget<ScrollView>("svBrushes");
 	///  brush presets   o o o o o o o o 
-	int j=0,n=0;  // for next lines
+	int j=0, n=0;  // y,x for next lines
 	for (i=0; i < brSetsNum; ++i,++n)
 	{
 		const BrushSet& st = brSets[i];  const String s = toStr(i);
@@ -229,10 +229,9 @@ void App::InitGui()
 		if (d < 0)  // top row
 		{	x = 10+ i*50;  y = 10;   xt= x + 20;  yt= y + 50;  sx = 48;  }
 		else
-		{	if (st.newLine==1 && n > 0 || n > 9) {  n=0;  ++j;  }
+		{	if (st.newLine==1 && n > 0 || n > 9) {  n=0;  ++j;  }  // 1 new line
 			x = 20+ n*70;  y = 10+ j*70;  xt= x + 25;  yt= y + 55;  sx = 64;
-			//x = 20+ (d%10)*70;  y = 100+(d/10)*90;
-			if (st.newLine < 0)  n -= st.newLine;
+			if (st.newLine < 0)  n -= st.newLine;  // -1 empty x
 		}
 		StaticImage* img = sv->createWidget<StaticImage>("ImageBox", x,y, sx,sx, Align::Default, "brI"+s);
 		img->eventMouseButtonClick += newDelegate(this, &App::btnBrushPreset);
@@ -251,15 +250,18 @@ void App::InitGui()
 		setOrigPos(txt, "EditorWnd");
 	}
 	//sv->setCanvasSize(1020,j*90+300);
-		
 
-	Slv(TerGenScale,powf(pSet->gen_scale /160.f, 1.f/2.f));  // generate
-	Slv(TerGenOfsX, (pSet->gen_ofsx+2.f) /4.f);
-	Slv(TerGenOfsY, (pSet->gen_ofsy+2.f) /4.f);
+	///  generator  . . . . . . .
+	Slv(TerGenScale,powf(pSet->gen_scale /160.f, 1.f/2.f));
+	Slv(TerGenOfsX, (pSet->gen_ofsx+8.f) /16.f);
+	Slv(TerGenOfsY, (pSet->gen_ofsy+8.f) /16.f);
+
+	Slv(TerGenFreq, powf((pSet->gen_freq-0.03f) /1.47f, 1.f/2.f));
 	Slv(TerGenOct,  Real(pSet->gen_oct)	/9.f);
-	Slv(TerGenFreq, pSet->gen_freq    /0.7f);
 	Slv(TerGenPers, pSet->gen_persist /0.7f);
 	Slv(TerGenPow,  powf(pSet->gen_pow /6.f,  1.f/2.f));
+	
+	//Slv(TerGenMul,  powf(pSet->gen_mul /6.f,  1.f/2.f));
 
 
 	///  [Layers]  ------------------------------------

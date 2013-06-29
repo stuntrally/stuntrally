@@ -125,7 +125,7 @@ material nx.cube
 }
 
 
-//  brush preview tex
+//  brush preview tex  (in code)
 //material BrushPrvMtr
 //{
 //	receive_shadows off

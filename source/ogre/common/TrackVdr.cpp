@@ -197,7 +197,6 @@ void App::CreateMinimap()
 		{
 			for (int iy=0; iy<4; ++iy)
 			for (int ix=0; ix<4; ++ix)
-			
 			{
 				const MATHVECTOR<float,3>& vec = (*i).GetPatch().GetPoint(ix,iy);
 

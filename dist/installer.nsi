@@ -3,7 +3,7 @@
 ; CHANGE to yours when starting script
 !define BINARY_DIR "c:\SR1\"
 ; also change Release Version
-!define PRODUCT_VERSION "2.0"
+!define PRODUCT_VERSION "2.1"
 
 ; redist path should contain both vcredist_x86.exe and
 ; DirectX files: DSETUP.dll, dsetup32.dll, DXSETUP.exe, dxupdate.cab

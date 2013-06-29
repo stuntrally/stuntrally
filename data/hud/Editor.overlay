@@ -279,9 +279,24 @@ Editor/BrushPrvOverlay
 		metrics_mode pixels
 		vert_align bottom
 		left  0
-		width 128
 		top	 -153
+		width   128
 		height	128
 		//material BrushPrvMtr
+	}
+}
+
+Editor/TerPrvOverlay
+{
+	zorder 500
+	container BorderPanel(Editor/TerPrvPanel)
+	{
+		metrics_mode pixels
+		vert_align bottom
+		left  0
+		top	 -283
+		width   256
+		height	256
+		//material TerPrvMtr
 	}
 }

@@ -153,62 +153,6 @@ void App::btnTerrainNew(WP)
 	bNewHmap = true;	UpdateTrack();
 }
 
-//  Terrain  generate  --------------------------------
-void App::btnTerGenerate(WP wp)
-{
-	int mode = 0;  const std::string& n = wp->getName();
-	if (n == "TerrainGenAdd")  mode = 0;  else
-	if (n == "TerrainGenSub")  mode = 1;  else
-	if (n == "TerrainGenMul")  mode = 2;
-
-	//float* hfData = new float[sc->td.iVertsX * sc->td.iVertsY];  if (!hfData)  return;
-	//hfData = sc->td.hfHeight
-	float* hfData = sc->td.hfHeight;
-	int siz = sc->td.iVertsX * sc->td.iVertsY * sizeof(float);
-	float s = sc->td.fTriangleSize*0.001f,
-		ox = pSet->gen_ofsx *s*sc->td.iVertsX, oy = pSet->gen_ofsy *s*sc->td.iVertsY;
-
-	//  generate noise terrain hmap
-	switch (mode)
-	{
-	case 0:  // + add
-		for (int j=0; j < sc->td.iVertsY; ++j)
-		{     int a = j * sc->td.iVertsX;
-		for (int i=0; i < sc->td.iVertsX; ++i,++a)
-		{
-			float y = Noise(i*s-oy, j*s+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist);
-			y = y >= 0.f ? powf(y, pSet->gen_pow) : -powf(-y, pSet->gen_pow);
-			hfData[a] += y * pSet->gen_scale;
-		}	}  break;
-
-	case 1:  // - sub
-		for (int j=0; j < sc->td.iVertsY; ++j)
-		{     int a = j * sc->td.iVertsX;
-		for (int i=0; i < sc->td.iVertsX; ++i,++a)
-		{
-			float y = Noise(i*s-oy, j*s+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist);
-			y = y >= 0.f ? powf(y, pSet->gen_pow) : -powf(-y, pSet->gen_pow);
-			hfData[a] -= y * pSet->gen_scale;
-		}	}  break;
-
-	case 2:  // * mul
-		for (int j=0; j < sc->td.iVertsY; ++j)
-		{     int a = j * sc->td.iVertsX;
-		for (int i=0; i < sc->td.iVertsX; ++i,++a)
-		{
-			float y = Noise(i*s-oy, j*s+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist);
-			y = y >= 0.f ? powf(y, pSet->gen_pow) : -powf(-y, pSet->gen_pow);
-			hfData[a] *= y * pSet->gen_scale;
-		}	}  break;
-	}
-	std::ofstream of;
-	of.open(getHMapNew(), std::ios_base::binary);
-	of.write((const char*)&hfData[0], siz);
-	of.close();
-
-	//delete[] hfData;
-	bNewHmap = true;	UpdateTrack();
-}
 
 //  Terrain  half  --------------------------------
 void App::btnTerrainHalf(WP)
@@ -266,7 +210,7 @@ void App::btnTerrainDouble(WP)
 	bNewHmap = true;	UpdateTrack();
 }
 #else
-//  Terrain  resize  --------------------------------
+//  Terrain  resize ..  --------------------------------
 void App::btnTerrainDouble(WP)
 {
 	int size = getHMapSizeTab() / 2;
@@ -367,6 +311,7 @@ void App::btnScaleTerH(WP)
 //----------------------------------------------------------------------------------------------------------
 
 
+///  generator  . . . . . . .
 void App::slTerGenScale(SL)
 {
 	float v = 160.f * powf(val, 2.f);	if (bGI)  pSet->gen_scale = v;
@@ -374,35 +319,34 @@ void App::slTerGenScale(SL)
 }
 void App::slTerGenOfsX(SL)
 {
-	float v = -2.f + 4.f * val;		if (bGI)  pSet->gen_ofsx = v;
-	if (valTerGenOfsX){	valTerGenOfsX->setCaption(fToStr(v,3,5));  }
+	float v = -8.f + 16.f * val;	if (bGI)  pSet->gen_ofsx = v;
+	if (valTerGenOfsX){	valTerGenOfsX->setCaption(fToStr(v,3,5));  }  bUpdTerPrv = true;
 }
 void App::slTerGenOfsY(SL)
 {
-	float v = -2.f + 4.f * val;		if (bGI)  pSet->gen_ofsy = v;
-	if (valTerGenOfsY){	valTerGenOfsY->setCaption(fToStr(v,3,5));  }
+	float v = -8.f + 16.f * val;	if (bGI)  pSet->gen_ofsy = v;
+	if (valTerGenOfsY){	valTerGenOfsY->setCaption(fToStr(v,3,5));  }  bUpdTerPrv = true;
 }
 
 void App::slTerGenFreq(SL)
 {
-	float v = 0.7f * val;	if (bGI)  pSet->gen_freq = v;
-	if (valTerGenFreq){	valTerGenFreq->setCaption(fToStr(v,3,5));  }
+	float v = 0.03f + 1.47f * powf(val,2.f);	if (bGI)  pSet->gen_freq = v;
+	if (valTerGenFreq){	valTerGenFreq->setCaption(fToStr(v,3,5));  }  bUpdTerPrv = true;
 }
 void App::slTerGenOct(SL)
 {
-	int v = val * 9.f +slHalf;
-	if (bGI)  pSet->gen_oct = v;
-	if (valTerGenOct){	valTerGenOct->setCaption(toStr(v));  }
+	int v = val * 9.f +slHalf;	if (bGI)  pSet->gen_oct = v;
+	if (valTerGenOct){	valTerGenOct->setCaption(toStr(v));  }  bUpdTerPrv = true;
 }
 void App::slTerGenPers(SL)
 {
 	float v = 0.7f * val;	if (bGI)  pSet->gen_persist = v;
-	if (valTerGenPers){	valTerGenPers->setCaption(fToStr(v,3,5));  }
+	if (valTerGenPers){	valTerGenPers->setCaption(fToStr(v,3,5));  }  bUpdTerPrv = true;
 }
 void App::slTerGenPow(SL)
 {
 	float v = 6.f * powf(val, 2.f);		if (bGI)  pSet->gen_pow = v;
-	if (valTerGenPow){	valTerGenPow->setCaption(fToStr(v,3,5));  }
+	if (valTerGenPow){	valTerGenPow->setCaption(fToStr(v,3,5));  }  bUpdTerPrv = true;
 }
 
 

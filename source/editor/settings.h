@@ -4,7 +4,7 @@
 #include "../vdrift/configfile.h"
 
 
-#define SET_VER  2000  // 2.0
+#define SET_VER  2100  // 2.1
 
 enum eShadowType  {  Sh_None=0, Sh_Simple, Sh_Depth, Sh_Soft  };
 
@@ -56,7 +56,9 @@ public:
 	std::string buffer, rendersystem;
 	
 	//  ter generate
-	float gen_freq, gen_persist, gen_pow, gen_scale, gen_ofsx, gen_ofsy;  int gen_oct;
+	float gen_scale, gen_ofsx,gen_ofsy, gen_freq, gen_persist, gen_pow;  int gen_oct;
+	float gen_mul;
+
 	//  align ter
 	float al_w_mul, al_w_add, al_smooth;
 	//  tweak
