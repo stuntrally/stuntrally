@@ -319,18 +319,18 @@ void App::slTerGenScale(SL)
 }
 void App::slTerGenOfsX(SL)
 {
-	float v = -8.f + 16.f * val;	if (bGI)  pSet->gen_ofsx = v;
+	float v = -12.f + 24.f * val;	if (bGI)  pSet->gen_ofsx = v;
 	if (valTerGenOfsX)  valTerGenOfsX->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
 }
 void App::slTerGenOfsY(SL)
 {
-	float v = -8.f + 16.f * val;	if (bGI)  pSet->gen_ofsy = v;
+	float v = -12.f + 24.f * val;	if (bGI)  pSet->gen_ofsy = v;
 	if (valTerGenOfsY)  valTerGenOfsY->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
 }
 
 void App::slTerGenFreq(SL)
 {
-	float v = 0.03f + 1.47f * powf(val,2.f);	if (bGI)  pSet->gen_freq = v;
+	float v = 0.06f + 2.94f * powf(val,2.f);	if (bGI)  pSet->gen_freq = v;
 	if (valTerGenFreq)  valTerGenFreq->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
 }
 void App::slTerGenOct(SL)

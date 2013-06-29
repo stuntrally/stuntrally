@@ -385,7 +385,7 @@ void App::btnTerGenerate(WP wp)
 
 	//)  road test
 	bool bRoad = pSet->gen_roadsm > 0.1f;
-	float rdPow = 10.f - pSet->gen_roadsm;  //-
+	float rdPow = 6.f - pSet->gen_roadsm;  //-
 	int r = 0;
 	Image imgRoad;
 	if (bRoad)
