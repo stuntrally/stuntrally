@@ -235,7 +235,7 @@ void App::CreateTrees()
 				vo.y = ofs.x * syr + ofs.y * cyr;
 				pos.x += vo.x * scl;  pos.z += vo.y * scl;
 				
-				//  check if on road - uses grassDensity
+				//  check if on road - uses roadDensity.png
 				if (r > 0)  //  ----------------
 				{
 				int mx = (pos.x + 0.5*tws)/tws*r,

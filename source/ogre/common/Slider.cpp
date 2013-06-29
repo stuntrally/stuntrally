@@ -13,7 +13,7 @@ namespace MyGUI
 		mWidgetStart(nullptr),
 		mWidgetEnd(nullptr),
 		mWidgetTrack(nullptr),
-		mfValue(0.f)
+		mfValue(0.f), mfDefault(0.5f)  //par
 	{
 	}
 
@@ -97,11 +97,10 @@ namespace MyGUI
 			eventValueChanged(this, mfValue);
 			updateTrack();
 		}
-		else  //TODO rmb relative change
+		else  /// RMB reset to default value
 		if (_id == MouseButton::Right)
 		{
-			// last mouse pos..?
-			//mfValue += _left - _leftOld;
+			mfValue = mfDefault;
 			eventValueChanged(this, mfValue);
 			updateTrack();
 		}

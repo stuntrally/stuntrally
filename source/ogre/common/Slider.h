@@ -22,6 +22,9 @@ namespace MyGUI
 		void setValue(float val);
 		float getValue() const;
 
+		//  default value
+		float mfDefault;
+
 		/*events:*/
 		/** Event : Slider position changed.\n
 			signature : void method(MyGUI::Slider* sender, float value)\n
