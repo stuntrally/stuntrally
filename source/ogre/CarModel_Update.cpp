@@ -52,9 +52,9 @@ void CarModel::UpdNextCheck()
 	else
 		p = pApp->road->mChks[iNextChk].pos;
 		
-	p.y -= 2.f;  //lower
+	p.y -= 44.f;  //par lower
 	ndNextChk->setPosition(p);
-	ndNextChk->setScale(5,24,5);  //par
+	ndNextChk->setScale(5,44,5);  //par
 	ndNextChk->setVisible(pSet->check_beam);
 }
 void CarModel::ShowNextChk(bool visible)
@@ -207,7 +207,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	}
 	
 	//  terrain lightmap enable/disable (depending on distance to terrain)
-	#define MAX_TERRAIN_DIST 2.0 // meters
+	#define MAX_TERRAIN_DIST 2.0  // meters
 	bool changed = false;
 	if (terrain)
 	{
@@ -217,20 +217,14 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		if (diff > MAX_TERRAIN_DIST)
 		{
 			if (bLightMapEnabled)
-			{
-				changed = true;  bLightMapEnabled = false;
-			}
+			{	changed = true;  bLightMapEnabled = false;	}
 		}
 		else if (!bLightMapEnabled)
-		{
-			changed = true;  bLightMapEnabled = true;
-		}
+		{	changed = true;  bLightMapEnabled = true;	}
 	}
 	//  if no terrain, disable
 	else if (bLightMapEnabled)
-	{
-		changed = true;  bLightMapEnabled = false;
-	}
+	{	changed = true;  bLightMapEnabled = false;	}
 	
 	if (changed)
 		UpdateLightMap();
@@ -587,8 +581,9 @@ void CarModel::UpdWhTerMtr()
 
 void CarModel::ChangeClr(int car)
 {
-	float c_h = pSet->gui.car_hue[car], c_s = pSet->gui.car_sat[car],
-	      c_v = pSet->gui.car_val[car], gloss = pSet->gui.car_gloss[car], refl = pSet->gui.car_refl[car];
+	int i = std::min(3,car);
+	float c_h = pSet->gui.car_hue[i], c_s = pSet->gui.car_sat[i],
+	      c_v = pSet->gui.car_val[i], gloss = pSet->gui.car_gloss[i], refl = pSet->gui.car_refl[i];
 	color.setHSB(1-c_h, c_s, c_v);  //set, mini pos clr
 
 	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);

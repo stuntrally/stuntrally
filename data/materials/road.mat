@@ -5,14 +5,14 @@ material checkpoint
 	diffuseMap checkpoint.png
 	ambient 0.1 0.1 0.1
 	diffuse 0.1 0.1 0.1
-	specular 0.2 0.4 0.1  64 //x4
+	specular 0.2 0.4 0.2  32 //x4
 	emissive 0.1 11.0 0.1
 
 	depth_write off
 	scene_blend alpha_blend
     receives_shadows false
 
-	specular_alpha true
+	//specular_alpha true
 	cull_hardware none
 	twoside_diffuse true
 }
