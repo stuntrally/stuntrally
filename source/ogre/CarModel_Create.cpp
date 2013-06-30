@@ -31,109 +31,184 @@
 using namespace Ogre;
 
 
-//  Init  ---------------------------------------------------
-CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
-	SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s,
-	Camera* cam, App* app, int startpos_index) :
-	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), ndSph(0),
-	mCamera(0), pReflect(0), pApp(app), color(1,1,0),
-	bLightMapEnabled(true), bBraking(false),
-	hideTime(1.f), mbVisible(true),
-	iCamNextOld(0), bLastChkOld(0), bWrongChk(0),  iFirst(0),
-	angCarY(0), vStartPos(0,0,0), pNickTxt(0),
-	ndNextChk(0), entNextChk(0),
-	all_subs(0), all_tris(0)  //stats
+//  ctor
+//------------------------------------------------------------------------------------------------------
+CarModel::CarModel(int index, eCarType type, const std::string& name,
+	SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Camera* cam, App* app)
+	:mSceneMgr(sceneMgr), pSet(set), pGame(game), sc(s), mCamera(cam), pApp(app)
+	,iIndex(index), sDirname(name), eType(type)
+	,fCam(0), pMainNode(0), pCar(0), terrain(0), ndSph(0)
+	,pReflect(0), color(1,1,0)
+	,hideTime(1.f), mbVisible(true), bLightMapEnabled(true), bBraking(false)
+	,iCamNextOld(0), bLastChkOld(0), bWrongChk(0),  iFirst(0)
+	,angCarY(0), vStartPos(0,0,0), pNickTxt(0)
+	,ndNextChk(0), entNextChk(0)
+	,all_subs(0), all_tris(0)  //stats
+	,bGetStPos(true), fChkTime(0.f), iChkWrong(-1), iWonPlace(0), iWonPlaceOld(0)
+	,iCurChk(-1), iNumChks(0), iNextChk(0)  //ResetChecks();  // road isnt yet
+	,distFirst(1.f), distLast(1.f), distTotal(10.f), trackPercent(0.f)
 {
-	iIndex = index;  sDirname = name;  mSceneMgr = sceneMgr;
-	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
-	bGetStPos = true;  fChkTime = 0.f;  iChkWrong = -1;  iWonPlace = 0;  iWonPlaceOld = 0;
-	iCurChk = -1;  iNumChks = 0;  iNextChk = 0;  //ResetChecks();  // road isnt yet
-	distFirst = 1.f;  distLast = 1.f;  distTotal = 10.f;  trackPercent = 0.f;
-
 	for (int w = 0; w < 4; ++w)
 	{
 		for (int p=0; p < PAR_ALL; ++p)
 			par[p][w] = 0;
 
-		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
-		ndBrake[w] = 0;
-		wht[w] = 0.f;  tireWidth[w] = 0.2f;
+		ndWh[w] = 0;  ndWhE[w] = 0;  whTrail[w] = 0;  ndBrake[w] = 0;
+		whTemp[w] = 0.f;  whWidth[w] = 0.2f;
 	}
 	for (int i=0; i < 2; i++)
-		pb[i] = 0;
-	ph = 0;
+		parBoost[i] = 0;
+	parHit = 0;
 
+	Defaults();
+}
+
+void CarModel::Defaults()
+{
+	for (int i=0; i<3; ++i)
+	{
+		driver_view[i] = 0.f;  hood_view[i] = 0.f;
+		interiorOffset[i] = 0.f;  boostOffset[i] = 0.f;  exhaustPos[i] = 0.f;
+	}
+	bRotFix = false;
+	sBoostParName = "Boost";  boostSizeZ = 1.f;
+	//sBrakeMtr="";
+	for (int w=0; w<4; ++w)
+	{
+		whRadius[w] = 0.3f;  whWidth[w] = 0.2f;
+	}
+	manualExhaustPos = false;  has2exhausts = false;
+}
+
+//  Load CAR
+//------------------------------------------------------------------------------------------------------
+void CarModel::Load(int startId)
+{
 	//  names for local play
-	if (type == CT_GHOST)		sDispName = "Ghost";
-	else if (type == CT_LOCAL)	sDispName = "Player"+toStr(iIndex+1);
+	if (isGhost())  sDispName = "Ghost";
+	else if (eType == CT_LOCAL)
+		sDispName = TR("#{Player}") + toStr(iIndex+1);
 	
 
-	//  get car start pos from track  ------
-	/***/if (type != CT_GHOST)  // ghost has pCar, dont create
+	///  load config .car
+	std::string pathCar;
+	pApp->GetCarPath(&pathCar, 0, 0, sDirname, pApp->mClient);  // force orig for newtorked games
+	LoadConfig(pathCar);
+	
+	
+	///  Create CAR (dynamic)
+	if (!isGhost())  // ghost has pCar, dont create
 	{
-		if (startpos_index == -1) startpos_index = iIndex;
-		int i = set->game.collis_cars ? startpos_index : 0;  // offset when cars collide
-		MATHVECTOR<float,3> pos(0,10,0);
-		QUATERNION<float> rot;
-		pos = pGame->track.GetStart(i).first;
-		rot = pGame->track.GetStart(i).second;
-		vStartPos = Vector3(pos[0], pos[2], -pos[1]);  // save in ogre coords
+		if (startId == -1)  startId = iIndex;
+		int i = pSet->game.collis_cars ? startId : 0;  // offset when cars collide
 
-		//  load car
-		std::string pathCar;
-		pApp->GetCarPath(&pathCar, 0, 0, sDirname, pApp->mClient);  // force orig for newtorked games
-		
-		pCar = pGame->LoadCar(pathCar, sDirname, pos, rot, true, false, type == CT_REMOTE, index);
+		MATHVECTOR<float,3> pos(0,10,0);  pos = pGame->track.GetStart(i).first;
+		QUATERNION<float> rot;  rot = pGame->track.GetStart(i).second;
+		vStartPos = Vector3(pos[0], pos[2], -pos[1]);
 
-		///  vdr car perf test  not working gears...
-		#if 0
-		QTimer ti;  ti.update();  /// time
-
-		PERFORMANCE_TESTING perf;
-		perf.Test(pathCar, pApp, pGame->info_output, pGame->error_output);
-
-		ti.update();	/// time
-		float dt = ti.dt * 1000.f;
-		LogO(String("::: Time car perf test: ") + toStr(dt) + " ms");
-		//exit(0);/*+*/
-		#endif
+		pCar = pGame->LoadCar(pathCar, sDirname, pos, rot, true, false, eType == CT_REMOTE, iIndex);
 
 		if (!pCar)  LogO("Error creating car " + sDirname + "  path: " + pathCar);
 		else  pCar->pCarM = this;
 	}
 }
 
-//  Destroy  ---------------------------------------------------
+//  Destroy
+//------------------------------------------------------------------------------------------------------
 CarModel::~CarModel()
 {
 	delete pReflect;  pReflect = 0;
 	
 	delete fCam;  fCam = 0;
-	mSceneMgr->destroyCamera("CarCamera" + toStr(iIndex));
 	
 	//  hide trails
-	for (int w=0; w<4; ++w)  if (whTrl[w])  {	wht[w] = 0.f;
-		whTrl[w]->setVisible(false);	whTrl[w]->setInitialColour(0, 0.5,0.5,0.5, 0);	}
+	for (int w=0; w<4; ++w)  if (whTrail[w]) {  whTemp[w] = 0.f;
+		whTrail[w]->setVisible(false);	whTrail[w]->setInitialColour(0, 0.5,0.5,0.5, 0);	}
 
 	//  destroy cloned materials
-	for (int i=0; i<NumMaterials; i++)
+	for (int i=0; i<NumMaterials; ++i)
 		MaterialManager::getSingleton().remove(sMtr[i]);
 	
 	//  destroy par sys
 	for (int w=0; w < 4; ++w)
 	{	for (int p=0; p < PAR_ALL; ++p)
-			if (par[p][w]) {  mSceneMgr->destroyParticleSystem(par[p][w]);   par[p][w]=0;  }
-		if (ndBrake[w]) mSceneMgr->destroySceneNode(ndBrake[w]);
+			if (par[p][w]) {  mSceneMgr->destroyParticleSystem(par[p][w]);  par[p][w]=0;  }
+		if (ndBrake[w])  mSceneMgr->destroySceneNode(ndBrake[w]);
 	}
 	for (int i=0; i < 2; i++)
-		if (pb[i]) {  mSceneMgr->destroyParticleSystem(pb[i]);   pb[i]=0;  }
-	if (ph)  {  mSceneMgr->destroyParticleSystem(ph);   ph=0;  }
+		if (parBoost[i]) {  mSceneMgr->destroyParticleSystem(parBoost[i]);  parBoost[i]=0;  }
+	if (parHit) {  mSceneMgr->destroyParticleSystem(parHit);  parHit=0;  }
 						
-	if (pMainNode) mSceneMgr->destroySceneNode(pMainNode);
+	if (pMainNode)  mSceneMgr->destroySceneNode(pMainNode);
 	
 	//  destroy resource group, will also destroy all resources in it
-	if (ResourceGroupManager::getSingleton().resourceGroupExists("Car" + toStr(iIndex)))
-		ResourceGroupManager::getSingleton().destroyResourceGroup("Car" + toStr(iIndex));
+	if (ResourceGroupManager::getSingleton().resourceGroupExists(resGrpId))
+		ResourceGroupManager::getSingleton().destroyResourceGroup(resGrpId);
+}
+
+
+///   Load .car
+//------------------------------------------------------------------------------------------------------
+void CarModel::LoadConfig(const std::string & pathCar)
+{
+	Defaults();
+
+	///  load  -----
+	CONFIGFILE cf;
+	if (!cf.Load(pathCar))
+	{  LogO("!! CarModel: Can't load .car "+pathCar);  return;  }
+
+	//-  custom interior model offset
+	cf.GetParam("model_ofs.interior-x", interiorOffset[0]);
+	cf.GetParam("model_ofs.interior-y", interiorOffset[1]);
+	cf.GetParam("model_ofs.interior-z", interiorOffset[2]);
+
+	//~  boost offset
+	cf.GetParam("model_ofs.boost-x", boostOffset[0]);
+	cf.GetParam("model_ofs.boost-y", boostOffset[1]);
+	cf.GetParam("model_ofs.boost-z", boostOffset[2]);
+	cf.GetParam("model_ofs.boost-size-z", boostSizeZ);
+	cf.GetParam("model_ofs.boost-name", sBoostParName);
+
+	cf.GetParam("model_ofs.rot_fix", bRotFix);
+	cf.GetParam("model_ofs.brake_mtr", sBrakeMtr);//-
+	
+	//-  custom exhaust pos for boost particles
+	if (cf.GetParam("model_ofs.exhaust-x", exhaustPos[0]))
+	{
+		manualExhaustPos = true;
+		cf.GetParam("model_ofs.exhaust-y", exhaustPos[1]);
+		cf.GetParam("model_ofs.exhaust-z", exhaustPos[2]);
+	}else
+		manualExhaustPos = false;
+	if (!cf.GetParam("model_ofs.exhaust-mirror-second", has2exhausts))
+		has2exhausts = false;
+
+
+	//  tire params
+	WHEEL_POSITION leftside = FRONT_LEFT, rightside = FRONT_RIGHT;
+	float value;
+	bool both = cf.GetParam("tire-both.radius", value);
+	std::string posstr = both ? "both" : "front";
+
+	for (int p = 0; p < 2; ++p)
+	{
+		if (p == 1)
+		{
+			leftside = REAR_LEFT;
+			rightside = REAR_RIGHT;
+			if (!both)  posstr = "rear";
+		}
+		float radius;
+		cf.GetParam("tire-"+posstr+".radius", radius, pGame->error_output);
+		whRadius[leftside] = radius;
+		whRadius[rightside] = radius;
+		
+		float width = 0.2f;
+		cf.GetParam("tire-"+posstr+".width-trail", width, pGame->error_output);
+		whWidth[leftside] = width;
+		whWidth[rightside] = width;
+	}
 }
 
 	
@@ -153,6 +228,7 @@ void CarModel::LogMeshInfo(const Entity* ent, const String& name, int mul)
 	LogO("MESH info:  "+name+"\t sub: "+toStr(subs)+"  tri: "+fToStr(tris/1000.f,1,4)+"k");
 }
 
+//  CreatePart mesh
 //---------------------------------------------------
 void CarModel::CreatePart(SceneNode* ndCar, Vector3 vPofs,
 	String sCar2, String sCarI, String sMesh, String sEnt,
@@ -191,20 +267,24 @@ void CarModel::Create(int car)
 {
 	if (!pCar)  return;
 
-	String strI = toStr(iIndex), sCarI = "Car" + strI;
+	String strI = toStr(iIndex)+ (eType == CT_GHOST2 ? "V" :"");
+	mtrId = strI;
+	String sCarI = "Car" + strI;
+	resGrpId = sCarI;
+
 	String sCars = PATHMANAGER::Cars() + "/" + sDirname;
 	resCar = sCars + "/textures";
 	String rCar = resCar + "/" + sDirname;
 	String sCar = sCars + "/" + sDirname;
 	
-	bool ghost = eType == CT_GHOST && pSet->rpl_alpha;  //1 || for ghost test
-	bool bLogInfo = eType != CT_GHOST;  // log mesh info
+	bool ghost = isGhost() && pSet->rpl_alpha;  //1 || for ghost test
+	bool bLogInfo = !isGhost();  // log mesh info
 	
 	//  Resource locations -----------------------------------------
 	/// Add a resource group for this car
-	ResourceGroupManager::getSingleton().createResourceGroup(sCarI);
-	Ogre::Root::getSingletonPtr()->addResourceLocation(sCars, "FileSystem", sCarI);
-	Ogre::Root::getSingletonPtr()->addResourceLocation(sCars + "/textures", "FileSystem", sCarI);
+	ResourceGroupManager::getSingleton().createResourceGroup(resGrpId);
+	Ogre::Root::getSingletonPtr()->addResourceLocation(sCars, "FileSystem", resGrpId);
+	Ogre::Root::getSingletonPtr()->addResourceLocation(sCars + "/textures", "FileSystem", resGrpId);
 		
 	pMainNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	SceneNode* ndCar = pMainNode->createChildSceneNode();
@@ -221,9 +301,9 @@ void CarModel::Create(int car)
 			it!=fCam->mCameraAngles.end(); ++it)
 		{
 			if ((*it)->mName == "Car driver")
-				(*it)->mOffset = Vector3(pCar->driver_view_position[0], pCar->driver_view_position[2], -pCar->driver_view_position[1]);
+				(*it)->mOffset = Vector3(driver_view[0], driver_view[2], -driver_view[1]);
 			else if ((*it)->mName == "Car bonnet")
-				(*it)->mOffset = Vector3(pCar->hood_view_position[0], pCar->hood_view_position[2], -pCar->hood_view_position[1]);
+				(*it)->mOffset = Vector3(hood_view[0], hood_view[2], -hood_view[1]);
 		}
 	}
 			
@@ -258,13 +338,13 @@ void CarModel::Create(int car)
 	AxisAlignedBox bodyBox;  uint8 g = RQG_CarGhost;
 	all_subs=0;  all_tris=0;  //stats
 	
-	if (pCar->bRotFix)
+	if (bRotFix)
 		ndCar->setOrientation(Quaternion(Degree(90),Vector3::UNIT_Y)*Quaternion(Degree(180),Vector3::UNIT_X));
 
 
 	CreatePart(ndCar, vPofs, sCar, sCarI, "_body.mesh",     "",  ghost, RV_Car,  &bodyBox,  sMtr[Mtr_CarBody], &pCar->bodymodel.mesh,     bLogInfo);
 
-	vPofs = Vector3(pCar->interiorOffset[0],pCar->interiorOffset[1],pCar->interiorOffset[2]);  //x+ back y+ down z+ right
+	vPofs = Vector3(interiorOffset[0],interiorOffset[1],interiorOffset[2]);  //x+ back y+ down z+ right
 	if (!ghost)
 	CreatePart(ndCar, vPofs, sCar, sCarI, "_interior.mesh", "i", ghost, RV_Car,      0, sMtr[Mtr_CarBody]+"i", &pCar->interiormodel.mesh, bLogInfo);
 
@@ -319,47 +399,47 @@ void CarModel::Create(int car)
 	//  Particles
 	//-------------------------------------------------
 	///  world hit sparks
-	if (!ph)  {
-		ph = mSceneMgr->createParticleSystem("Hit" + strI, "Sparks");
-		ph->setVisibilityFlags(RV_Particles);
-		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ph);
-		ph->getEmitter(0)->setEmissionRate(0);  }
+	if (!parHit)  {
+		parHit = mSceneMgr->createParticleSystem("Hit" + strI, "Sparks");
+		parHit->setVisibilityFlags(RV_Particles);
+		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(parHit);
+		parHit->getEmitter(0)->setEmissionRate(0);  }
 
 	///  boost emitters  ------------------------
 	for (int i=0; i < 2; i++)
 	{
 		String si = strI + "_" +toStr(i);
-		if (!pb[i])  {
-			pb[i] = mSceneMgr->createParticleSystem("Boost"+si, /*"Boost"*/pCar->sBoostParName);
-			pb[i]->setVisibilityFlags(RV_Particles);
-			if (!pSet->boostFromExhaust || !pCar->manualExhaustPos)
+		if (!parBoost[i])  {
+			parBoost[i] = mSceneMgr->createParticleSystem("Boost"+si, sBoostParName);
+			parBoost[i]->setVisibilityFlags(RV_Particles);
+			if (!pSet->boostFromExhaust || !manualExhaustPos)
 			{
 				// no exhaust pos in car file, guess from bounding box
 				Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
 					bcenter = bodyBox.getMaximum() + bodyBox.getMinimum();
 				//LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
-				Vector3 vp = pCar->bRotFix ?
+				Vector3 vp = bRotFix ?
 					Vector3(bsize.z * 0.97, bsize.y * 0.65, bsize.x * 0.65 * (i==0 ? 1 : -1)) :
 					Vector3(bsize.x * 0.97, bsize.y * 0.65, bsize.z * 0.65 * (i==0 ? 1 : -1));
 					//Vector3(1.9 /*back*/, 0.1 /*up*/, 0.6 * (i==0 ? 1 : -1)/*sides*/
-				vp.z *= pCar->boostSizeZ;
-				vp += Vector3(pCar->boostOffset[0],pCar->boostOffset[1],pCar->boostOffset[2]);
+				vp.z *= boostSizeZ;
+				vp += Vector3(boostOffset[0],boostOffset[1],boostOffset[2]);
 				SceneNode* nb = pMainNode->createChildSceneNode(bcenter+vp);
-				nb->attachObject(pb[i]);
+				nb->attachObject(parBoost[i]);
 			}else{
 				// use exhaust pos values from car file
 				Vector3 pos;
 				if (i==0)
-					pos = Vector3(pCar->exhaustPosition[0], pCar->exhaustPosition[1], pCar->exhaustPosition[2]);
-				else if (!pCar->has2exhausts)
+					pos = Vector3(exhaustPos[0], exhaustPos[1], exhaustPos[2]);
+				else if (!has2exhausts)
 					continue;
 				else
-					pos = Vector3(pCar->exhaustPosition[0], pCar->exhaustPosition[1], -pCar->exhaustPosition[2]);
+					pos = Vector3(exhaustPos[0], exhaustPos[1], -exhaustPos[2]);
 
 				SceneNode* nb = pMainNode->createChildSceneNode(pos);
-				nb->attachObject(pb[i]); 
+				nb->attachObject(parBoost[i]); 
 			}
-			pb[i]->getEmitter(0)->setEmissionRate(0);
+			parBoost[i]->getEmitter(0)->setEmissionRate(0);
 		}
 	}
 
@@ -385,30 +465,25 @@ void CarModel::Create(int car)
 			if (!ndWhE[w])
 				ndWhE[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
-			if (!whTrl[w])
+			if (!whTrail[w])
 			{	NameValuePairList params;
 				params["numberOfChains"] = "1";
 				params["maxElements"] = toStr(320 * pSet->trails_len);
 
-				whTrl[w] = (RibbonTrail*)mSceneMgr->createMovableObject("RibbonTrail", &params);
-				whTrl[w]->setInitialColour(0, 0.1,0.1,0.1, 0);
-				whTrl[w]->setFaceCamera(false,Vector3::UNIT_Y);
-				mSceneMgr->getRootSceneNode()->attachObject(whTrl[w]);
-				whTrl[w]->setMaterialName("TireTrail");
-				whTrl[w]->setCastShadows(false);
-				whTrl[w]->addNode(ndWhE[w]);
+				whTrail[w] = (RibbonTrail*)mSceneMgr->createMovableObject("RibbonTrail", &params);
+				whTrail[w]->setInitialColour(0, 0.1,0.1,0.1, 0);
+				whTrail[w]->setFaceCamera(false,Vector3::UNIT_Y);
+				mSceneMgr->getRootSceneNode()->attachObject(whTrail[w]);
+				whTrail[w]->setMaterialName("TireTrail");
+				whTrail[w]->setCastShadows(false);
+				whTrail[w]->addNode(ndWhE[w]);
 			}
-			whTrl[w]->setTrailLength(90 * pSet->trails_len);  //30
-			whTrl[w]->setInitialColour(0, 0.1f,0.1f,0.1f, 0);
-			whTrl[w]->setColourChange(0, 0.0,0.0,0.0, /*fade*/0.08f * 1.f / pSet->trails_len);
-			whTrl[w]->setInitialWidth(0, 0.f);
+			whTrail[w]->setTrailLength(90 * pSet->trails_len);  //30
+			whTrail[w]->setInitialColour(0, 0.1f,0.1f,0.1f, 0);
+			whTrail[w]->setColourChange(0, 0.0,0.0,0.0, /*fade*/0.08f * 1.f / pSet->trails_len);
+			whTrail[w]->setInitialWidth(0, 0.f);
 		}
 	}
-
-	// copy from .car
-	for (int w=0; w < 4; ++w)
-		tireWidth[w] = pCar->dynamics.whWidth[w];
-
 
 	UpdParsTrails();
 
@@ -419,12 +494,12 @@ void CarModel::Create(int car)
 	//  this snippet makes sure the brake texture is pre-loaded.
 	//  since it is not used until you actually brake, we have to explicitely declare it
 	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
-	if (FileExists(rCar + "_body00_brake.png")) resMgr.declareResource(sDirname + "_body00_brake.png", "Texture", sCarI);
-	if (FileExists(rCar + "_body00_add.png"))   resMgr.declareResource(sDirname + "_body00_add.png", "Texture", sCarI);
+	if (FileExists(rCar + "_body00_brake.png")) resMgr.declareResource(sDirname + "_body00_brake.png", "Texture", resGrpId);
+	if (FileExists(rCar + "_body00_add.png"))   resMgr.declareResource(sDirname + "_body00_add.png", "Texture", resGrpId);
 	
 	//  now just preload the whole resource group
-	resMgr.initialiseResourceGroup(sCarI);
-	resMgr.loadResourceGroup(sCarI);
+	resMgr.initialiseResourceGroup(resGrpId);
+	resMgr.loadResourceGroup(resGrpId);
 }
 
 
@@ -433,9 +508,8 @@ void CarModel::Create(int car)
 //-------------------------------------------------------------------------------------------------------
 void CarModel::RecreateMaterials()
 {
-	String strI = toStr(iIndex);
 	String sCar = resCar + "/" + sDirname;
-	bool ghost = eType == CT_GHOST && pSet->rpl_alpha;  //1 || for ghost test
+	bool ghost = isGhost() && pSet->rpl_alpha;  //1 || for ghost test
 	
 	// --------- Materials  -------------------
 	
@@ -455,8 +529,8 @@ void CarModel::RecreateMaterials()
 	MaterialPtr mat;
 	for (int i=0; i < 1/*NumMaterials*/; ++i)
 	{
-		sh::Factory::getInstance().destroyMaterialInstance(sMtr[i] + strI);
-		sh::MaterialInstance* m = sh::Factory::getInstance().createMaterialInstance(sMtr[i] + strI, sMtr[i]);
+		sh::Factory::getInstance().destroyMaterialInstance(sMtr[i] + mtrId);
+		sh::MaterialInstance* m = sh::Factory::getInstance().createMaterialInstance(sMtr[i] + mtrId, sMtr[i]);
 
 		m->setListener(this);
 
@@ -476,7 +550,7 @@ void CarModel::RecreateMaterials()
 			std::string v = sh::retrieveValue<sh::StringValue>(m->getProperty("reflMap"), 0).get();
 			m->setProperty("reflMap", sh::makeProperty<sh::StringValue>(new sh::StringValue(sDirname + "_" + v)));
 		}
-		sMtr[i] = sMtr[i] + strI;
+		sMtr[i] = sMtr[i] + mtrId;
 	}
 
 	//ChangeClr(iIndex);
@@ -495,22 +569,17 @@ void CarModel::setMtrName(const String& entName, const String& mtrName)
 
 void CarModel::setMtrNames()
 {
-	String strI = toStr(iIndex);
-
 	//if (FileExists(resCar + "/" + sDirname + "_body00_add.png") ||
 	//	FileExists(resCar + "/" + sDirname + "_body00_red.png"))
-	setMtrName("Car"+strI, sMtr[Mtr_CarBody]);
-
-	if (pCar && pCar->bRotFix)
-		return;
+	setMtrName("Car"+mtrId, sMtr[Mtr_CarBody]);
 
 	#if 0
-	setMtrName("Car.interior"+strI, sMtr[Mtr_CarInterior]);
-	setMtrName("Car.glass"+strI, sMtr[Mtr_CarGlass]);
+	setMtrName("Car.interior"+mtrI, sMtr[Mtr_CarInterior]);
+	setMtrName("Car.glass"+mtrI, sMtr[Mtr_CarGlass]);
 
 	for (int w=0; w < 4; ++w)
 	{
-		String sw = "Wheel"+strI+"_"+toStr(w), sm = w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear];
+		String sw = "Wheel"+mtrI+"_"+toStr(w), sm = w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear];
 		setMtrName(sw,          sm);
 		setMtrName(sw+"_brake", sm);
 	}

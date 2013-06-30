@@ -464,16 +464,6 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 			if (!c.GetParam("tire-"+posstr+".radius", radius, error_output))  return false;
 			wheel[leftside].SetRadius(radius);
 			wheel[rightside].SetRadius(radius);
-			
-			float width = 0.2f;
-			c.GetParam("tire-"+posstr+".width-trail", width, error_output);
-			whWidth[leftside] = width;
-			whWidth[rightside] = width;
-
-			//float tread;
-			//if (!c.GetParam("tire-"+posstr+".tread", tread, error_output))  return false;
-			//tire[leftside].SetTread(tread);
-			//tire[rightside].SetTread(tread);
 		}
 	}
 

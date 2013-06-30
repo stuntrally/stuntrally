@@ -93,7 +93,7 @@ void CarModel::UpdTrackPercent()
 	const SplineRoad* road = pApp->road;
 	
 	float perc = 0.f;
-	if (road && !road->mChks.empty() && eType != CarModel::CT_GHOST)
+	if (road && !road->mChks.empty() && !isGhost())
 	{
 		const Vector3& car = pMainNode->getPosition(), next = road->mChks[iNextChk].pos,
 			start = vStartPos, curr = road->mChks[std::max(0,iCurChk)].pos;
@@ -160,10 +160,8 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	{
 		for (int p=0; p < PAR_ALL; ++p)
 			if (par[p][w])  par[p][w]->setSpeedFactor(fa);
-		if (w < 2 && pb[w])  pb[w]->setSpeedFactor(fa);
-		if (ph)  ph->setSpeedFactor(fa);
-		//if (whTrl[w])
-		//	whTrl[w]->setFade 0
+		if (w < 2 && parBoost[w])  parBoost[w]->setSpeedFactor(fa);
+		if (parHit)  parHit->setSpeedFactor(fa);
 	}
 
 
@@ -177,7 +175,6 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	//  set car pos and rot
 	pMainNode->setPosition(posInfo.pos);
 	pMainNode->setOrientation(posInfo.rot);
-
 	
 	///()  grass sphere pos
 	Vector3 vx(1,0,0);  // car x dir
@@ -234,16 +231,16 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	//  boost
 	if (pSet->particles)
 	for (int i=0; i < 2; i++)
-	if (pb[i])
+	if (parBoost[i])
 	{
 		float emitB = posInfo.fboost * 40.f;  // par
-		ParticleEmitter* pe = pb[i]->getEmitter(0);
+		ParticleEmitter* pe = parBoost[i]->getEmitter(0);
 		pe->setEmissionRate(emitB);
 	}
 
 	//  world hit
-	if (ph)
-	{	ParticleEmitter* pe = ph->getEmitter(0);
+	if (parHit)
+	{	ParticleEmitter* pe = parHit->getEmitter(0);
 		if (posInfo.fHitTime > 0.f && pSet->particles)
 		{
 			pe->setPosition(posInfo.vHitPos);
@@ -281,13 +278,13 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		float onGr = slide < 0.f ? 0.f : 1.f;
 
 		//  wheel temp
-		wht[w] += std::min(12.f, std::max(0.f, squeal*8 - slide*2 + squeal*slide*2)*time);
-		wht[w] = std::min(1.5f, wht[w]);  ///*
-		wht[w] -= time*7.f;  if (wht[w] < 0.f)  wht[w] = 0.f;
+		whTemp[w] += std::min(12.f, std::max(0.f, squeal*8 - slide*2 + squeal*slide*2)*time);
+		whTemp[w] = std::min(1.5f, whTemp[w]);  ///*
+		whTemp[w] -= time*7.f;  if (whTemp[w] < 0.f)  whTemp[w] = 0.f;
 			//LogO(toStr(w)+" wht "+fToStr(wht[w],3,5));
 
 		///  emit rates +
-		Real sq = squeal* std::min(1.f, wht[w]), l = pSet->particles_len * onGr;
+		Real sq = squeal* std::min(1.f, whTemp[w]), l = pSet->particles_len * onGr;
 		Real emitS = sq * (whVel * 30) * l * 0.45f;  ///*
 		Real emitM = slide < 1.4f ? 0.f :  (8.f * sq * std::min(5.f, slide) * l);
 		Real emitD = (std::min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
@@ -301,7 +298,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		if (pipe)  emitD = 0;  // no dust in pipes
 		if (posInfo.whH[w] > 0.1f)  emitD = 0;  // no dust in fluids
 
-		bool ghost = eType == CT_GHOST;  // opt dis for ghost
+		bool ghost = isGhost();  // opt dis for ghost
 		bool ghPar = !(ghost && !pSet->rpl_ghostpar);
 		if (!ghPar)
 		{	emitD = 0.f;  emitM = 0.f;  emitS = 0.f;  }
@@ -383,12 +380,12 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 				ndWhE[w]->setOrientation(posInfo.rot);
 			}
 			//float al = 1.f; // test  //squeal-
-			float al = ((pipe ? 0.f : trlC) + 0.6f * std::min(1.f, 0.7f * wht[w]) ) * onGr;  // par+
-			if (whTrl[w])
-			{	whTrl[w]->setInitialColour(0,
+			float al = ((pipe ? 0.f : trlC) + 0.6f * std::min(1.f, 0.7f * whTemp[w]) ) * onGr;  // par+
+			if (whTrail[w])
+			{	whTrail[w]->setInitialColour(0,
 				lay.tclr.r,lay.tclr.g,lay.tclr.b, lay.tclr.a * al/**/);
 				if (iFirst > 10)  //par
-					whTrl[w]->setInitialWidth(0, tireWidth[w]);
+					whTrail[w]->setInitialWidth(0, whWidth[w]);
 			}
 		}
 	}
@@ -427,8 +424,8 @@ void CarModel::First()
 	iFirst = 0;
 
 	for (int w=0; w < 4; ++w)  // hide trails
-	if (whTrl[w])
-		whTrl[w]->setInitialWidth(0, 0.f);
+	if (whTrail[w])
+		whTrail[w]->setInitialWidth(0, 0.f);
 }
 
 void CarModel::UpdateKeys()
@@ -521,12 +518,12 @@ void CarModel::UpdParsTrails(bool visible)
 	{
 		Ogre::uint8 grp = RQG_CarTrails;  //9=road  after glass
 		if (w < 2 &&
-			pb[w])	{	pb[w]->setVisible(vis);  pb[w]->setRenderQueueGroup(grp);  }
-		if (whTrl[w]){  whTrl[w]->setVisible(visible && pSet->trails);  whTrl[w]->setRenderQueueGroup(grp);  }
+			parBoost[w])	{	parBoost[w]->setVisible(vis);  parBoost[w]->setRenderQueueGroup(grp);  }
+		if (whTrail[w]){  whTrail[w]->setVisible(visible && pSet->trails);  whTrail[w]->setRenderQueueGroup(grp);  }
 		grp = RQG_CarParticles;
 		for (int p=0; p < PAR_ALL; ++p)
 			if (par[p][w]){  par[p][w]->setVisible(vis);  par[p][w]->setRenderQueueGroup(grp);  }
-		if (ph && w==0)	{	ph->setVisible(vis);     ph->setRenderQueueGroup(grp);  }
+		if (parHit && w==0)	{	parHit->setVisible(vis);     parHit->setRenderQueueGroup(grp);  }
 	}
 }
 

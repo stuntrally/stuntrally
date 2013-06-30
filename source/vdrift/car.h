@@ -292,8 +292,6 @@ public:
 
 	MODEL_JOE03 bodymodel, interiormodel, glassmodel, drivermodel;
 	
-	MATHVECTOR<float,3> driver_view_position, hood_view_position;
-	
 	SUSPENSIONBUMPDETECTION suspbump[4];
 	CRASHDETECTION crashdetection,crashdetection2;
 
@@ -339,16 +337,6 @@ public:
 	//-------------------------------------------------------------------------------
 	void GraphsNewVals(double dt);
 	
-	///-- models offset
-	float interiorOffset[3], boostOffset[3], boostSizeZ;
-	bool bRotFix;
-	std::string sBrakeMtr, sBoostParName;
-
-	// exhaust position for boost particles
-	bool manualExhaustPos; // if true, use values below, if false, guess from bounding box
-	float exhaustPosition[3]; // position of first exhaust
-	bool has2exhausts; // car has 2nd exhaust ; if true, mirror exhaust 1 for position
-
 	
 	//  for new game reset  and goto last checkp.
 	MATHVECTOR<Dbl,3> posAtStart, posLastCheck[2];

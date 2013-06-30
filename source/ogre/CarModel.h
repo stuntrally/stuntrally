@@ -1,7 +1,6 @@
 /*
  * CarModel is the "Ogre" part of the car.
- * It is mainly used to put the different meshes together,
- * but also for e.g. particle emitters and color change. 
+ * It is used to put meshes together, particle emitters, etc.
  */
  
 #ifndef _CarModel_H_
@@ -64,27 +63,44 @@ public:
 	// CT_REPLAY:   Replay file     no                      yes
 	// CT_GHOST:	Replay file		no						no
 	// CT_REMOTE:   Network	        yes	                    no
-	enum eCarType {  CT_LOCAL=0, CT_REPLAY, CT_GHOST, CT_REMOTE };
+
+	enum eCarType {  CT_LOCAL=0, CT_REPLAY, CT_GHOST, CT_GHOST2, CT_REMOTE };
 	eCarType eType;
+	bool isGhost() const {  return eType == CT_GHOST || eType == CT_GHOST2;  }
 
 
-	CarModel( unsigned int index, eCarType type, const std::string& name,
+	//  ctor
+	CarModel(int index, eCarType type, const std::string& name,
 		Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc,
-		Ogre::Camera* cam, App* app, int startpos_index = -1);
-	
+		Ogre::Camera* cam, App* app);
 	~CarModel();
 	
 	Ogre::String sDispName;  // diplay name in opponents list (nick for CT_REMOTE)
 	MyGUI::TextBox* pNickTxt;  // multiplayer nick above car
 	
 	
-	//  Create car (also calls CreateReflection)
-	void Create(int car);
-	void CreateReflection();
+	///----  model params  from .car
+	float driver_view[3], hood_view[3];
+	float interiorOffset[3], boostOffset[3], boostSizeZ;
+	bool bRotFix;
+	std::string sBrakeMtr, sBoostParName;
+	float whRadius[4], whWidth[4];  // for tire trails
+
+	//  exhaust position for boost particles
+	bool manualExhaustPos;  // if true, use values below, if false, guess from bounding box
+	bool has2exhausts;  // car has 2nd exhaust, if true, mirror exhaust 1 for position
+	float exhaustPos[3];  // position of first exhaust
+	
+	void LoadConfig(const std::string & pathCar), Defaults();
+
+
+	///--------  Create
+	void Load(int startId=-1), Create(int car), CreateReflection();
 	void CreatePart(Ogre::SceneNode* ndCar, Ogre::Vector3 vPofs,
 		Ogre::String sCar2, Ogre::String sCarI, Ogre::String sMesh, Ogre::String sEnt,
 		bool ghost, Ogre::uint32 visFlags,
 		Ogre::AxisAlignedBox* bbox=0, Ogre::String stMtr="", class VERTEXARRAY* var=0, bool bLogInfo=true);
+
 	void LogMeshInfo(const Ogre::Entity* ent, const Ogre::String& name, int mul=1);
 	int all_subs, all_tris;  //stats
 	
@@ -92,15 +108,17 @@ public:
 	void setMtrNames(); // assign materials to entity / manualobject
 	void setMtrName(const Ogre::String& entName, const Ogre::String& mtrName);
 	
-	//  Call this every vdrift substep with new position info
+	
+	//--------  Update
 	void Update(PosInfo& posInfo, PosInfo& posInfoCam, float time);
 	void UpdateKeys();  // for camera X,C, last chk F12
+
 
 	//  reset camera after pos change etc	
 	void First();
 	int iFirst;
 	
-	//  Car color, After these values are changed, ChangeClr() should be called
+	//  color
 	Ogre::ColourValue color;  // for minimap pos tri color  //float hue, sat, val;
 	void ChangeClr(int car);  //  Apply new color
 		
@@ -108,33 +126,32 @@ public:
 	void UpdWhTerMtr();
 	Ogre::String txtDbgSurf;
 	
-	//  Update trails
 	void UpdParsTrails(bool visible=true);
 	
-	//  Follow camera for this car.
-	//  This can be null (for remote [network] cars)
+	
+	///----  Camera, can be null
 	FollowCamera* fCam;
 	
-	//  Main node. later, we will add sub-nodes for body, interior, glass and wheels.
+	//  Main node
 	Ogre::SceneNode* pMainNode, *ndSph;
 	Ogre::Vector3 posSph[2];
 	
 	void setVisible(bool visible);  // hide/show
 	bool mbVisible;  float hideTime;
 		
-	//  Handles our cube map.
 	CarReflection* pReflect;
 		
-	Ogre::Terrain* terrain;
-	
 	//  VDrift car
 	CAR* pCar;  // all need this set (even ghost, has it from 1st car)
 	
+	
+	///----  Logic vars
 	float angCarY;  // car yaw angle for minimap
 	float distFirst, distLast, distTotal;  // checks const distances set at start
-	float trackPercent;  void UpdTrackPercent();  // % of track driven
+	float trackPercent;  // % of track driven
+	void UpdTrackPercent();
 
-	//  start pos, lap  checkpoint vars
+	///  Checkpoint vars,  start pos, lap
 	bool bGetStPos;  Ogre::Matrix4 matStPos;  Ogre::Vector4 vStDist;
 	int iInChk, iCurChk, iNextChk, iNumChks,  // cur checkpoint -1 at start
 		iWonPlace, iWonPlaceOld;  float iWonMsgTime;
@@ -142,67 +159,51 @@ public:
 	//bool Checkpoint(const PosInfo& posInfo, class SplineRoad* road);  // update
 	Ogre::Vector3 vStartPos;  void ResetChecks(bool bDist=false), UpdNextCheck(), ShowNextChk(bool visible);
 	
-	//  access to vdrift stuff
+	
+	///--------  common
 	GAME* pGame;
 	Ogre::Camera* mCamera;
-private:
-	
-	//  Scene, needed to get particle settings
 	Scene* sc;
-
-	//  SceneManager to use
 	Ogre::SceneManager* mSceneMgr;
+	SETTINGS* pSet;
+	App* pApp;
+	
+	int iIndex;
+	std::string sDirname;  // dir name of car (e.g. ES)
+	Ogre::String resGrpId, mtrId;  // resource group name, material suffix
+	std::string resCar;  // path to car textures
 
-	//  Material names, will be initialized in Create()
+
+	//  Material names
 	enum eMaterials {  Mtr_CarBody, Mtr_CarBrake,  NumMaterials  };
 	std::string sMtr[NumMaterials];
 			
-	//  Particle systems
+	//--------  Particle systems
 	enum EParTypes {  PAR_Smoke=0, PAR_Mud, PAR_Dust, PAR_Water, PAR_MudHard, PAR_MudSoft, PAR_ALL };
-	Ogre::ParticleSystem* par[PAR_ALL][4];
-	Ogre::ParticleSystem* pb[2], *ph;  // boost-car rear, sparks-world hit
-public:
-	Ogre::RibbonTrail* whTrl[4];  // tire trail
-	float tireWidth[4];
-private:
-	Ogre::Real wht[4];  // spin time (approx tire temp.)
+	Ogre::ParticleSystem* par[PAR_ALL][4], *parBoost[2], *parHit;  // par-wheels, boost-car rear, sparks-world hit
+	Ogre::RibbonTrail* whTrail[4];  // tire trail
+	Ogre::Real whTemp[4];  // spin time, approx tire temp.
 	
-	//  Nodes
+	//  Wheels, Nodes
 	Ogre::SceneNode *ndWh[4], *ndWhE[4], *ndBrake[4], *ndNextChk;
 	Ogre::Entity* entNextChk;
 	
-	//  Dir name of car (e.g. ES)
-public:
-	std::string sDirname;
-
-	//  index for the car (e.g. when we have 2 cars, they have indices 0 and 1)
-	//  needed for cloned materials & textures
-	int iIndex;
-private:
-	
-	//  Path to car textures, e.g. /usr/share/stuntrally/data/cars/CT/textures
-	std::string resCar;
 		
 	//  brake state
 	bool bBraking;
 	void UpdateBraking();
 	
-	//  lightmap enable/disable depending on dist. to terrain
+	//  lightmap toggle depending on distance to terrain
+	Ogre::Terrain* terrain;
 	bool bLightMapEnabled;
 	void UpdateLightMap();
 	
 	//  cam,chk old states
 	int iCamNextOld;
 	bool bLastChkOld;
-	
-	//  Our settings.
-	SETTINGS* pSet;
-	App* pApp;
 
-public:
     virtual void requestedConfiguration (sh::MaterialInstance* m, const std::string& configuration);
     virtual void createdConfiguration (sh::MaterialInstance* m, const std::string& configuration);
-
 };
 
 #endif

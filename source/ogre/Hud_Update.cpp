@@ -50,7 +50,7 @@ void App::GetHUDVals(int id, float* vel, float* rpm, float* clutch, int* gear)
 	const CarModel* pCarM = carModels[id];
 	const CAR* pCar = pCarM ? pCarM->pCar : 0;
 
-	if (pCar && !bRplPlay && pCarM->eType != CarModel::CT_GHOST)
+	if (pCar && !bRplPlay && !pCarM->isGhost())
 	{	*vel = pCar->GetSpeedometer() * (pSet->show_mph ? 2.23693629f : 3.6f);
 		*rpm = pCar->GetEngineRPM();  *gear = pCar->GetGear();
 		//*clutch = pCar->GetClutch();  // todo: problems in multi thr1
@@ -76,8 +76,10 @@ void App::UpdateHUD(int carId, float time)
 	
 	//  update HUD elements for all cars that have a viewport (local or replay)
 	//-----------------------------------------------------------------------------------
+	int cnt = carModels.size() -(isGhost2nd?1:0);
+	
 	if (carId == -1)  // gui vp - done once for all
-	for (int c = 0; c < carModels.size(); ++c)
+	for (int c = 0; c < cnt; ++c)
 	if (carModels[c]->eType == CarModel::CT_LOCAL)
 	{
 		//  hud rpm,vel
@@ -85,11 +87,11 @@ void App::UpdateHUD(int carId, float time)
 		GetHUDVals(c,&vel,&rpm,&clutch,&gear);
 		
 		//  update pos tri on minimap  (all)
-		for (int i=0; i < carModels.size(); ++i)
+		for (int i=0; i < cnt; ++i)
 			UpdHUDRot(c, i, vel, rpm);
 	}
 
-	if (carId == -1 || carModels.size()==0)
+	if (carId == -1 || carModels.empty())
 	{
 		PROFILER.endBlock("g.hud");
 		return;
@@ -110,7 +112,7 @@ void App::UpdateHUD(int carId, float time)
 	{
 		//  sort winners
 		std::list<CarModel*> cms;
-		for (int o=0; o < carModels.size(); ++o)
+		for (int o=0; o < cnt; ++o)
 			cms.push_back(carModels[o]);
 
 		cms.sort(SortWin);
@@ -184,9 +186,9 @@ void App::UpdateHUD(int carId, float time)
 	if (ovOpp->isVisible() && pCarM && pCarM->pMainNode)
 	{
 		std::list<CarModel*> cms;  // sorted list
-		for (int o=0; o < carModels.size(); ++o)
+		for (int o=0; o < cnt; ++o)
 		{	// cars only
-			if (carModels[o]->eType != CarModel::CT_GHOST)
+			if (!carModels[o]->isGhost())
 			{	if (bRplPlay)
 					carModels[o]->trackPercent = carPoses[iCurPoses[o]][o].percent;
 				cms.push_back(carModels[o]);	}
@@ -194,8 +196,8 @@ void App::UpdateHUD(int carId, float time)
 		if (pSet->opplist_sort)
 			cms.sort(SortPerc);
 		
-		for (int o=0; o < carModels.size(); ++o)
-		{	// add ghost last
+		for (int o=0; o < cnt; ++o)
+		{	// add ghost1 last (dont add 2nd)
 			if (carModels[o]->eType == CarModel::CT_GHOST)
 			{	carModels[o]->trackPercent = carPoses[iCurPoses[o]][o].percent;  // ghost,rpl
 				cms.push_back(carModels[o]);	}
@@ -210,7 +212,7 @@ void App::UpdateHUD(int carId, float time)
 			CarModel* cm = *it;
 			if (cm->pMainNode)
 			{
-				bool bGhost = cm->eType == CarModel::CT_GHOST;
+				bool bGhost = cm->isGhost();
 				bool bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
 				bool bGhEmpty = bGhost && !bGhostVis;
 
@@ -699,7 +701,7 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 		yp = std::min(1.f, std::max(-1.f, yp ));
 	}
 	
-	bool bGhost = carModels[c]->eType == CarModel::CT_GHOST,
+	bool bGhost = carModels[c]->isGhost(),
 		bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
 
 	if (vNdPos[b][c])

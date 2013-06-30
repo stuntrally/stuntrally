@@ -91,7 +91,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,mStaticGeom(0), fLastFrameDT(0.001f)
 	,edPerfTest(0),edTweakCol(0),tabTweak(0),tabEdCar(0)
 	,txtTweakPath(0),cmbTweakCarSet(0), cmbTweakTireSet(0),txtTweakTire(0), txtTweakPathCol(0)
-	,bPerfTest(0),iPerfTestStage(PT_StartWait), loadReadme(1)
+	,bPerfTest(0),iPerfTestStage(PT_StartWait), loadReadme(1), isGhost2nd(0)
 {
 	pSet = settings;
 	pGame->collision.pApp = this;
@@ -197,9 +197,9 @@ void App::setTranslations()
 	loadingStates.insert(std::make_pair(LS_SCENE, String(TR("#{LS_SCENE}"))));
 	loadingStates.insert(std::make_pair(LS_CAR, String(TR("#{LS_CAR}"))));
 
-	loadingStates.insert(std::make_pair(LS_TER, String(TR("#{LS_TER}"))));
+	loadingStates.insert(std::make_pair(LS_TERRAIN, String(TR("#{LS_TER}"))));
 	loadingStates.insert(std::make_pair(LS_ROAD, String(TR("#{LS_ROAD}"))));
-	loadingStates.insert(std::make_pair(LS_OBJS, String(TR("#{LS_OBJS}"))));
+	loadingStates.insert(std::make_pair(LS_OBJECTS, String(TR("#{LS_OBJS}"))));
 	loadingStates.insert(std::make_pair(LS_TREES, String(TR("#{LS_TREES}"))));
 
 	loadingStates.insert(std::make_pair(LS_MISC, String(TR("#{LS_MISC}"))));

@@ -26,10 +26,6 @@ CAR::CAR() :
 	bResetPos(0)
 {
 	//dynamics.pCar = this;
-	interiorOffset[0]=0;  interiorOffset[1]=0;  interiorOffset[2]=0;
-	boostOffset[0]=0;  boostOffset[1]=0;  boostOffset[2]=0;
-	boostSizeZ = 1.f;  sBoostParName = "Boost";
-	bRotFix = false;
 	
 	for (int i = 0; i < 4; i++)
 	{
@@ -65,71 +61,29 @@ bool CAR::Load(class App* pApp1,
 	std::stringstream nullout;
 	std::string carpath = PATHMANAGER::Cars()+"/"+carname+"/";  // orig dir for .joe
 
-	//load car body graphics
-	if (!LoadInto( carpath+"body.joe", bodymodel, error_output))
-		/*info_output << "No car body model, continuing without one" << std::endl*/;
+	#if 0  // .joe meshes
+	if (!LoadInto( carpath+"body.joe", bodymodel, error_output)) ;
+	if (!LoadInto( carpath+"interior.joe", interiormodel, nullout )) ;
+	if (!LoadInto( carpath+"glass.joe", glassmodel, nullout )) ;
+	std::stringstream nullout;
 
-	//load car interior graphics
-	if (!LoadInto( carpath+"interior.joe", interiormodel, nullout ))
-		/*info_output << "No car interior model exists, continuing without one" << std::endl*/;
-
-	//load car glass graphics
-	if (!LoadInto( carpath+"glass.joe", glassmodel, nullout ))
-		/*info_output << "No car glass model exists, continuing without one" << std::endl*/;
-
-	//load wheel graphics
-	for (int i = 0; i < 2; i++)  // front pair
+	for (int i = 0; i < 2; i++)
 	{
-		if (!LoadInto( carpath+"wheel_front.joe", wheelmodelfront, error_output))
-			/*info_output << "No car wheel_front model, continuing without one" << std::endl*/;
-
-		//load floating elements
-		std::stringstream nullout;
+		if (!LoadInto( carpath+"wheel_front.joe", wheelmodelfront, error_output)) ;
 		LoadInto( carpath+"floating_front.joe", floatingmodelfront, nullout);
 	}
-	for (int i = 2; i < 4; i++)  // rear pair
+	for (int i = 2; i < 4; i++)
 	{
-		if (!LoadInto( carpath+"wheel_rear.joe", wheelmodelrear, error_output))
-			/*info_output << "No car wheel_rear model, continuing without one" << std::endl*/;
-
-		//load floating elements
-		std::stringstream nullout;
+		if (!LoadInto( carpath+"wheel_rear.joe", wheelmodelrear, error_output)) ;
 		LoadInto( carpath+"floating_rear.joe", floatingmodelrear, nullout);
 	}
+	#endif
 
 	// get coordinate system version
 	int version = 1;
 	cf.GetParam("version", version);
 	
 	
-	///-  custom interior model offset--
-	interiorOffset[0] = 0.f;  interiorOffset[1] = 0.f;  interiorOffset[2] = 0.f;
-	boostOffset[0] = 0.f;  boostOffset[1] = 0.f;  boostOffset[2] = 0.f;
-	bRotFix = false;
-	cf.GetParam("model_ofs.interior-x", interiorOffset[0]);
-	cf.GetParam("model_ofs.interior-y", interiorOffset[1]);
-	cf.GetParam("model_ofs.interior-z", interiorOffset[2]);
-
-	cf.GetParam("model_ofs.boost-x", boostOffset[0]);
-	cf.GetParam("model_ofs.boost-y", boostOffset[1]);
-	cf.GetParam("model_ofs.boost-z", boostOffset[2]);
-	cf.GetParam("model_ofs.boost-size-z", boostSizeZ);
-	cf.GetParam("model_ofs.boost-name", sBoostParName);
-
-	cf.GetParam("model_ofs.rot_fix", bRotFix);
-	cf.GetParam("model_ofs.brake_mtr", sBrakeMtr);
-	
-	///-  custom exhaust pos for boost particles
-	if (cf.GetParam("model_ofs.exhaust-x", exhaustPosition[0]))
-	{
-		manualExhaustPos = true;
-		cf.GetParam("model_ofs.exhaust-y", exhaustPosition[1]);
-		cf.GetParam("model_ofs.exhaust-z", exhaustPosition[2]);
-	}else
-		manualExhaustPos = false;
-	if (!cf.GetParam("model_ofs.exhaust-mirror-second", has2exhausts))
-		has2exhausts = false;
-
 	///-  custom car collision params  (dimensions and sphere placement)
 	dynamics.coll_R = 0.3f;  dynamics.coll_H = 0.45f;  dynamics.coll_W = 0.5f;
 	dynamics.coll_Lofs = 0.f;  dynamics.coll_Wofs = 0.f;  dynamics.coll_Hofs = 0.f;
@@ -176,17 +130,7 @@ bool CAR::Load(class App* pApp1,
 		dynamics.SetTCS(defaulttcs);
 	}
 
-	// load driver
-	{
-		float pos[3];
-		if (!cf.GetParam("driver.view-position", pos, error_output))  return false;
-		driver_view_position.Set(pos[1], -pos[0], pos[2]);
-		
-		if (!cf.GetParam("driver.hood-mounted-view-position", pos, error_output))  return false;
-		hood_view_position.Set(pos[1], -pos[0], pos[2]);
-	}
-
-	//load sounds
+	// load sounds
 	if (soundenabled)
 	{
 		if (!LoadSounds(carpath, sound_device_info, soundbufferlibrary, info_output, error_output))

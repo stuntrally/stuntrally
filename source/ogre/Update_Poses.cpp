@@ -21,7 +21,7 @@ using namespace Ogre;
 //---------------------------------------------------------------------------------------------------------------
 void App::newPoses(float time)  // time only for camera update
 {
-	if (!pGame || bLoading || pGame->cars.size() == 0 /*|| carPoses.empty() || iCurPoses.empty()*/)
+	if (!pGame || bLoading || pGame->cars.empty() /*|| carPoses.empty() || iCurPoses.empty()*/)
 		return;
 	PROFILER.beginBlock(".newPos ");
 
@@ -36,14 +36,14 @@ void App::newPoses(float time)  // time only for camera update
 		CarModel* carM = carModels[c];
 		CAR* pCar = carM->pCar;
 		PosInfo pi;  // new, to fill data
-		bool bGhost = carM->eType == CarModel::CT_GHOST;
+		bool bGhost = carM->isGhost();
 		
 		//  local data  car,wheels
 		MATHVECTOR<float,3> pos, whPos[4];
 		QUATERNION<float> rot, whRot[4];
 
 
-		///  car perf test  logic ...
+		///  car perf test  logic
 		//-----------------------------------------------------------------------
 		if (bPerfTest && c==0)
 			newPerfTest(time);
@@ -353,6 +353,7 @@ void App::newPoses(float time)  // time only for camera update
 						{
 							ghost.SaveFile(GetGhostFile());  //,boost_type?
 							ghplay.CopyFrom(ghost);
+							isGhost2nd = false;  // hide 2nd ghost
 						}
 						ghost.Clear();
 						
@@ -419,29 +420,30 @@ void App::newPoses(float time)  // time only for camera update
 //---------------------------------------------------------------------------------------------------------------
 void App::updatePoses(float time)
 {
-	if (carModels.size() == 0)  return;
+	if (carModels.empty())  return;
 	PROFILER.beginBlock(".updPos ");
 	
 	//  Update all carmodels from their carPos
 	const CarModel* playerCar = carModels.front();
 
 	for (int c = 0; c < carModels.size(); ++c)
-	{
+	{		
 		CarModel* carM = carModels[c];
 		if (!carM)  {
 			PROFILER.endBlock(".updPos ");
 			return;  }
 		
 		//  hide ghost when empty
-		bool bGhost = carM->eType == CarModel::CT_GHOST,
+		bool bGhostCar = carM->eType == (isGhost2nd ? CarModel::CT_GHOST2 : CarModel::CT_GHOST),  // show only actual
 			bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
-		if (bGhost)
+		if (carM->isGhost())  // for both
 		{
+			bool loading = iLoad1stFrames >= 0;  // show during load ?..
 			bool curVisible = carM->mbVisible;
-			bool newVisible = bGhostVis;
+			bool newVisible = bGhostVis && (bGhostCar || loading);
 			
 			//  hide ghost car when close to player car (only when not transparent)
-			if (!pSet->rpl_alpha)
+			if (!pSet->rpl_alpha && !loading)
 			{
 				float distance = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
 				if (distance < 16.f)

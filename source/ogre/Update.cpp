@@ -252,7 +252,7 @@ bool App::frameStart(Real time)
 			--iLoad1stFrames;  // -2 end
 		
 		
-		bool bFirstFrame = (carModels.size()>0 && carModels.front()->bGetStPos) ? true : false;
+		bool bFirstFrame = !carModels.empty() && carModels.front()->bGetStPos;
 		
 		if (isFocGui && mWndTabsOpts->getIndexSelected() == 4 && pSet->inMenu == WND_Options && !pSet->isMain)
 			UpdateInputBars();
@@ -372,7 +372,7 @@ bool App::frameStart(Real time)
 		//  update all cube maps
 		PROFILER.beginBlock("g.refl");
 		for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		if ((*it)->eType != CarModel::CT_GHOST && (*it)->pReflect)
+		if (!(*it)->isGhost() && (*it)->pReflect)
 			(*it)->pReflect->Update(iLoad1stFrames == -1);
 		PROFILER.endBlock("g.refl");
 
@@ -427,7 +427,7 @@ bool App::frameStart(Real time)
 
 
 		///()  grass sphere pos
-		if (carModels.size() > 0)
+		if (!carModels.empty())
 		{			//par
 			Real r = 1.7;  r *= r;
 			const Vector3* p = &carModels[0]->posSph[0];

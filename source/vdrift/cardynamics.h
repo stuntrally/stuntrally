@@ -144,7 +144,6 @@ public:
 	struct Polyhedron* poly;
 	float body_mass;  btVector3 body_inertia;
 	//float sumWhTest;  //test dbg out
-	float whWidth[4];
 
 	// interpolated chassis state
 	MATHVECTOR<Dbl,3> chassisPosition, chassisCenterOfMass;

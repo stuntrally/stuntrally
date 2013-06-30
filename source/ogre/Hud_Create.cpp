@@ -170,6 +170,7 @@ void App::CreateHUD(bool destroy)
 	}
 
 	//if (terrain)
+	int cnt = carModels.size() -(isGhost2nd?1:0);
 	for (int c=0; c < plr; ++c)  // for each car
 	{
 		if (sc->ter)
@@ -203,7 +204,7 @@ void App::CreateHUD(bool destroy)
 			ndMap[c]->attachObject(m);
 		}
 		//  car pos tri - for all carModels (ghost and remote too)
-		for (int i=0; i < carModels.size(); ++i)
+		for (int i=0; i < cnt; ++i)
 		{
 			vMoPos[c][i] = Create2D("hud/CarPos", scm, 0.4f, true, true);
 			vMoPos[c][i]->setVisibilityFlags(RV_Hud);  vMoPos[c][i]->setRenderQueueGroup(RQG_Hud3);
@@ -310,7 +311,7 @@ void App::CreateHUD(bool destroy)
 	{
 		hudOpp[o][c] = ovr.getOverlayElement("Hud/OppText"+toStr(o)+"_"+toStr(c));  hudOpp[o][c]->setCaption("");
 	}
-	for (int o=0; o < carModels.size(); ++o)  // fill car names, not changed during play
+	for (int o=0; o < cnt; ++o)  // fill car names, not changed during play
 	{
 		const CarModel* cm = carModels[o];
 		if (cm->eType != CarModel::CT_REPLAY)

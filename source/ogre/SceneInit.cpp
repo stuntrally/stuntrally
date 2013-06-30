@@ -259,27 +259,28 @@ void App::LoadGame()  // 2
 	{
 		// TODO: This only handles one local player
 		CarModel::eCarType et = CarModel::CT_LOCAL;
-		int startpos_index = i;
+		int startId = i;
 		std::string carName = pSet->game.car[i], nick = "";
 		if (mClient)
 		{
 			// FIXME: Various places assume carModels[0] is local
 			// so we swap 0 and local's id but preserve starting position
-			if (i == 0)  startpos_index = mClient->getId();
+			if (i == 0)  startId = mClient->getId();
 			else  et = CarModel::CT_REMOTE;
 
-			if (i == mClient->getId())  startpos_index = 0;
-			if (i != 0)  carName = mClient->getPeer(startpos_index).car;
+			if (i == mClient->getId())  startId = 0;
+			if (i != 0)  carName = mClient->getPeer(startId).car;
 
 			//  get nick name
 			if (i == 0)  nick = pSet->nickname;
-			else  nick = mClient->getPeer(startpos_index).name;
+			else  nick = mClient->getPeer(startId).name;
 		}
 		Camera* cam = 0;
 		if (et == CarModel::CT_LOCAL && camIt != mSplitMgr->mCameras.end())
 		{	cam = *camIt;  ++camIt;  }
 		
-		CarModel* car = new CarModel(i, et, carName, mSceneMgr, pSet, pGame, sc, cam, this, startpos_index);
+		CarModel* car = new CarModel(i, et, carName, mSceneMgr, pSet, pGame, sc, cam, this);
+		car->Load(startId);
 		carModels.push_back(car);
 		
 		if (nick != "")  // set remote nickname
@@ -294,14 +295,24 @@ void App::LoadGame()  // 2
 	if (!bRplPlay/*|| pSet->rpl_show_ghost)*/ && pSet->rpl_ghost && !mClient)
 	{
 		std::string ghCar = pSet->game.car[0], orgCar = ghCar;
-		ghplay.LoadFile(GetGhostFile(/***&ghCar*/));  // loads ghost play if exists
-		bool other = ghCar != orgCar;
+		ghplay.LoadFile(GetGhostFile(&ghCar));  // loads ghost play if exists
+		isGhost2nd = ghCar != orgCar;
 		
 		//  always because ghplay can appear during play after best lap
-		CarModel* c = new CarModel(i, CarModel::CT_GHOST, ghCar/*orgCar*/, mSceneMgr, pSet, pGame, sc, 0, this);
-		/***/c->pCar = (*carModels.begin())->pCar;  // based on 1st car  !!..ghCar
+		// 1st ghost = orgCar
+		CarModel* c = new CarModel(i, CarModel::CT_GHOST, orgCar, mSceneMgr, pSet, pGame, sc, 0, this);
+		c->Load();
+		c->pCar = (*carModels.begin())->pCar;  // based on 1st car
 		carModels.push_back(c);
-		///c->pNickTxt = CreateNickText(i, c->sDispName);  //for ghost too ?
+
+		//  2st ghost - other car
+		if (isGhost2nd)
+		{
+			CarModel* c = new CarModel(i, CarModel::CT_GHOST2, ghCar, mSceneMgr, pSet, pGame, sc, 0, this);
+			c->Load();
+			c->pCar = (*carModels.begin())->pCar;
+			carModels.push_back(c);
+		}
 	}
 	
 	float pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
@@ -451,11 +462,12 @@ void App::LoadTerrain()  // 5
 	if (sc->ter)
 		CreateBltTerrain();
 	
-	// assign stuff to cars
+
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		(*it)->terrain = terrain;
 	
 	sh::Factory::getInstance().setTextureAlias("CubeReflection", "ReflectionCube");
+
 
 	if (sc->vdr)  // vdrift track
 	{
@@ -496,7 +508,7 @@ void App::LoadMisc()  // 9 last
 	ShowHUD(true);
 	
 	if (hudOppB)  // resize opp list
-		hudOppB->setHeight(carModels.size() * 20 + 10);
+		hudOppB->setHeight((carModels.size() -(isGhost2nd?1:0) ) * 20 + 10);
 	
 	// Camera settings
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); ++it)
@@ -562,7 +574,7 @@ void App::LoadMisc()  // 9 last
 	#endif
 }
 
-/* Actual loading procedure that gets called every frame during load. Performs a single loading step. */
+//  Performs a single loading step.  Actual loading procedure that gets called every frame during load.
 //---------------------------------------------------------------------------------------------------------------
 void App::NewGameDoLoad()
 {
@@ -594,9 +606,9 @@ void App::NewGameDoLoad()
 		case LS_SCENE:		LoadScene();	perc = 20;	break;
 		case LS_CAR:		LoadCar();		perc = 30;	break;
 
-		case LS_TER:		LoadTerrain();	perc = 40;	break;
+		case LS_TERRAIN:	LoadTerrain();	perc = 40;	break;
 		case LS_ROAD:		LoadRoad();		perc = 50;	break;
-		case LS_OBJS:		LoadObjects();	perc = 60;	break;
+		case LS_OBJECTS:	LoadObjects();	perc = 60;	break;
 		case LS_TREES:		LoadTrees();	perc = 70;	break;
 
 		case LS_MISC:		LoadMisc();		perc = 80;	break;
@@ -638,55 +650,3 @@ void App::CreateRoad()
 	road->bRoadWFullCol = pSet->gui.collis_roadw;
 	road->RebuildRoadInt();
 }
-
-
-/*void App::ReloadCar()
-{
-	// Delete all cars
-	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		delete (*it);
-
-	carModels.clear();
-	newPosInfos.clear();
-
-	/// init car models
-	// will create vdrift cars, actual car loading will be done later in LoadCar()
-	// this is just here because vdrift car has to be created first
-	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
-	int i;
-	for (i=0; i < mSplitMgr->mNumViewports; i++,camIt++)
-		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car[i], mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
-
-	//  Create all cars
-	for (int i=0; i < carModels.size(); ++i)
-	{
-		CarModel* c = carModels[i];
-		c->Create(i);
-
-		//  restore which cam view
-		if (c->fCam && carsCamNum[i] != 0)
-			c->fCam->setCamera(carsCamNum[i] -1);
-
-		//  Reserve an entry in newPosInfos
-		PosInfo carPosInfo;  carPosInfo.bNew = false;  //-
-		newPosInfos.push_back(carPosInfo);
-	}
-
-	// Assign stuff to cars
-	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
-		(*it)->terrain = terrain;
-		(*it)->blendMtr = blendMtr;
-		(*it)->blendMapSize = blendMapSize;
-	}
-
-	// Camera settings
-	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		if ((*it)->fCam)
-		{	(*it)->fCam->First();
-			(*it)->fCam->mTerrain = mTerrainGroup;
-			#if 0
-			(*it)->fCam->mWorld = &(pGame->collision);
-			#endif
-		}
-}*/

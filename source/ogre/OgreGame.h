@@ -76,6 +76,7 @@ public:
 	Replay replay, ghost, ghplay;  ReplayFrame frm[4];
 	Rewind rewind;  // to take car back in time (after crash etc.)
 	const Ogre::String& GetGhostFile(std::string* ghCar=NULL);  std::string GetRplListDir();
+	bool isGhost2nd;  // if present (ghost but from other car)
 
 	Scene* sc;  /// scene.xml
 	FluidsXml fluidsXml;  /// fluid params xml
@@ -175,13 +176,13 @@ protected:
 	
 	// Loading
 	void LoadCleanUp(), LoadGame(), LoadScene(), LoadCar(), LoadTerrain(), LoadRoad(), LoadObjects(), LoadTrees(), LoadMisc();
-	enum ELoadState { LS_CLEANUP=0, LS_GAME, LS_SCENE, LS_CAR, LS_TER, LS_ROAD, LS_OBJS, LS_TREES, LS_MISC, LS_ALL };
+	enum ELoadState { LS_CLEANUP=0, LS_GAME, LS_SCENE, LS_CAR, LS_TERRAIN, LS_ROAD, LS_OBJECTS, LS_TREES, LS_MISC, LS_ALL };
 	
 	// id, display name, initialised in App()
 	// e.g.: 0, Cleaning up or 3, Loading scene
-	std::map<unsigned int, std::string> loadingStates;
+	std::map<int, std::string> loadingStates;
 	// 1 behind map ( map.end() ): loading finished
-	std::map<unsigned int, std::string>::iterator curLoadState;
+	std::map<int, std::string>::iterator curLoadState;
 
 	float mTimer;
 

@@ -314,7 +314,6 @@ void App::chkParticles(WP wp)
 {		
 	ChkEv(particles);
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	//? if ((*it)->eType != CarModel::CT_GHOST)
 		(*it)->UpdParsTrails();
 }
 void App::chkTrails(WP wp)
