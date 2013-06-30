@@ -303,7 +303,7 @@ protected:
 	//  screen
 	MyGUI::ListPtr resList;
 	void InitGuiScreenRes(), btnResChng(WP), ResizeOptWnd();
-	void chkVidFullscr(WP), chkVidVSync(WP), chkVidSSAA(WP);
+	void chkVidFullscr(WP), chkVidVSync(WP);
 
 	void comboGraphicsAll(CMB), comboRenderSystem(CMB);
 		

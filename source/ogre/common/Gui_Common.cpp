@@ -277,18 +277,19 @@ void App::GuiInitGraphics()
 
 	// screen
 	// find max. fsaa
-	int fsaa = 0; int newfsaa;
+	int fsaa = 0, newfsaa;
 	Ogre::ConfigOptionMap& configOptions = Ogre::Root::getSingleton().getRenderSystem()->getConfigOptions();
 	Ogre::ConfigOptionMap::iterator result = configOptions.find("FSAA");
-	if ( result != configOptions.end() )
+	if (result != configOptions.end())
 	{
 		Ogre::ConfigOption& FSAAOption = result->second;
-		for( Ogre::StringVector::iterator i( FSAAOption.possibleValues.begin() ), iEnd( FSAAOption.possibleValues.end() ); i != iEnd; ++i )
+		for (Ogre::StringVector::iterator i( FSAAOption.possibleValues.begin() ), iEnd( FSAAOption.possibleValues.end() ); i != iEnd; ++i)
 		{
-			newfsaa = strtol( (*i).c_str(), 0, 10  );
-			if (newfsaa > fsaa) fsaa = newfsaa;
+			newfsaa = strtol( (*i).c_str(), 0, 10 );
+			if (newfsaa > fsaa)  fsaa = newfsaa;
 		}
 	}
+	if (fsaa == 0)  fsaa = 0.5;  //div by 0
 	Slv(AntiAliasing, float(pSet->fsaa)/float(fsaa));
 
 	//  shadows

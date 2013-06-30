@@ -72,12 +72,12 @@ void BaseApp::createViewports()
 bool BaseApp::AnyEffectEnabled()
 {
 	//any new effect need to be added here to have UI Rendered on it
-	return pSet->all_effects && (pSet->softparticles || pSet->bloom || pSet->hdr || pSet->motionblur || pSet->camblur || pSet->ssaa || pSet->ssao || pSet->godrays || pSet->dof || pSet->filmgrain);
+	return pSet->all_effects && (pSet->softparticles || /*?*/pSet->bloom || pSet->hdr || pSet->motionblur || pSet->ssao || pSet->godrays || pSet->dof || pSet->filmgrain);
 }
 
 bool BaseApp::NeedMRTBuffer()
 {
-	return pSet->all_effects && (pSet->ssao || pSet->softparticles || pSet->dof || pSet->godrays || pSet->camblur);
+	return pSet->all_effects && (pSet->ssao || pSet->softparticles || pSet->dof || pSet->godrays);
 }
 
 
@@ -89,19 +89,14 @@ void BaseApp::refreshCompositor(bool disableAll)
 
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); ++it)
 	{
-		//if(MaterialGenerator::MRTSupported())
-        if (1)
-		{
-			cmp.setCompositorEnabled((*it), "gbuffer", false);
-		}
+		cmp.setCompositorEnabled((*it), "gbuffer", false);
 
 		cmp.setCompositorEnabled((*it), "gbufferNoMRT", false);
 		cmp.setCompositorEnabled((*it), "Bloom", false);
 		cmp.setCompositorEnabled((*it), "HDR", false);
 		cmp.setCompositorEnabled((*it), "HDRNoMRT", false);
 			
-		//if(MaterialGenerator::MRTSupported())
-        if (1)
+		//if (MaterialGenerator::MRTSupported())
 		{
 			cmp.setCompositorEnabled((*it), "ssao", false);
 			cmp.setCompositorEnabled((*it), "SoftParticles", false);
@@ -109,12 +104,10 @@ void BaseApp::refreshCompositor(bool disableAll)
 			cmp.setCompositorEnabled((*it), "GodRays", false);
 			cmp.setCompositorEnabled((*it), "gbufferFinalizer", false);
 			//cmp.setCompositorEnabled((*it), "CamBlur", false);
-		}else
-        {
-			cmp.setCompositorEnabled((*it), "ssaoNoMRT", false);
-		}
+		}/*else
+        	cmp.setCompositorEnabled((*it), "ssaoNoMRT", false);*/
+
 		cmp.setCompositorEnabled((*it), "Motion Blur", false);
-		//cmp.setCompositorEnabled((*it), "FXAA", false);
 		cmp.setCompositorEnabled((*it), "FilmGrain", false);
 		cmp.setCompositorEnabled((*it), "gbufferUIRender", false);
 	}
@@ -166,7 +159,6 @@ void BaseApp::refreshCompositor(bool disableAll)
 		cmp.setCompositorEnabled((*it), "HDRNoMRT", pSet->hdr && !NeedMRTBuffer());
 		cmp.setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
 		//cmp.setCompositorEnabled((*it), "CamBlur", pSet->camblur);
-		//cmp.setCompositorEnabled((*it), "FXAA", pSet->ssaa);
 		cmp.setCompositorEnabled((*it), "FilmGrain", pSet->hdr);
 
 		//if(MaterialGenerator::MRTSupported())
@@ -208,8 +200,6 @@ void BaseApp::recreateCompositor()
 		mRoot->addResourceLocation(sPath + "/hdr", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/motionblur", "FileSystem", "Effects");
 		//mRoot->addResourceLocation(sPath + "/camblur", "FileSystem", "Effects");
-		//mRoot->addResourceLocation(sPath + "/ssaa", "FileSystem", "Effects");
-		//mRoot->addResourceLocation(sPath + "/fxaa", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/ssao", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/softparticles", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/dof", "FileSystem", "Effects");
@@ -224,20 +214,6 @@ void BaseApp::recreateCompositor()
 		mHDRLogic = new HDRLogic;
 
 		cmp.registerCompositorLogic("HDR", mHDRLogic);
-		/*	mHDRLogic->compositor = new HDRCompositor(this);
-		mHDRLogic->compositor->SetToneMapper(HDRCompositor::TONEMAPPER::TM_ADAPTLOG);
-		mHDRLogic->compositor->SetGlareType(HDRCompositor::GLARETYPE::GT_BLUR);
-		mHDRLogic->compositor->SetStarType(HDRCompositor::STARTYPE::ST_PLUS);
-		mHDRLogic->compositor->SetAutoKeying(false);
-		mHDRLogic->compositor->SetKey(0.5);
-		mHDRLogic->compositor->SetLumAdapdation(true);
-		mHDRLogic->compositor->SetAdaptationScale(3);
-		mHDRLogic->compositor->SetStarPasses(4);
-		mHDRLogic->compositor->SetGlarePasses(2);
-		mHDRLogic->compositor->SetGlareStrength(0.1f);
-		mHDRLogic->compositor->SetStarStrength(0.1f);
-		mHDRLogic->compositor->Create();
-		*/
 		mHDRLogic->setApp(this);	
 	}
 

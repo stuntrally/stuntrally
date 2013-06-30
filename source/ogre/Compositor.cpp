@@ -101,24 +101,6 @@ CompositorInstance::Listener* HDRLogic::createListener(CompositorInstance* insta
 	listener->mViewportHeight = vp->getActualHeight();
 	listener->notifyCompositor(instance);
 	return listener;
-
-	/*	HDRCompositor* listener = new HDRCompositor(mApp);
-	listener->SetToneMapper(compositor->GetToneMapper());
-	listener->SetGlareType(compositor->GetGlareType());
-	listener->SetStarType(compositor->GetStarType());
-	listener->SetAutoKeying(compositor->GetAutoKeying());
-	listener->SetKey(compositor->GetKey());
-	listener->SetLumAdapdation(compositor->GetLumAdaption());
-	listener->SetAdaptationScale(compositor->GetAdaptationScale());
-	listener->SetStarPasses(compositor->GetStarPasses());
-	listener->SetGlarePasses(compositor->GetGlarePasses());
-	listener->SetGlareStrength(compositor->GetGlareStrength());
-	listener->SetStarStrength(compositor->GetStarStrength());
-
-	Viewport* vp = instance->getChain()->getViewport();
-	listener->notifyViewportSize(vp->getActualWidth(), vp->getActualHeight());
-	return listener;
-	*/
 }
 void HDRLogic::setApp(BaseApp* app)
 {

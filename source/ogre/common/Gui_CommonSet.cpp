@@ -97,7 +97,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	
 	s.all_effects = val >= 4;  // only bloom on Higher
 	s.bloom = val >= 3;
-	s.motionblur = val >= 5;  s.camblur = false;
+	s.motionblur = val >= 5;
 	s.softparticles = val >= 5;
 	s.ssao = val >= 6;
 	s.dof = val >= 7;

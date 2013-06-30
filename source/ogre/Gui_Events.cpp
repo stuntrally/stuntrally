@@ -484,32 +484,28 @@ void App::slHDRVignettingDarkness(SL)
 
 void App::chkVidBlur(WP wp)
 {		
-	ChkEv(motionblur);  refreshCompositor();
-	changeShadows();
-}
-void App::chkVidSSAA(WP wp)
-{
-	ChkEv(ssaa);  refreshCompositor();
+	ChkEv(motionblur);
+	refreshCompositor();  changeShadows();
 }
 void App::chkVidSSAO(WP wp)
 {		
-	ChkEv(ssao);  refreshCompositor();
-	changeShadows();
+	ChkEv(ssao);
+	refreshCompositor();  changeShadows();
 }
 void App::chkVidSoftParticles(WP wp)
 {		
-	ChkEv(softparticles);  refreshCompositor();
-	changeShadows();
+	ChkEv(softparticles);
+	refreshCompositor();  changeShadows();
 }
 void App::chkVidDepthOfField(WP wp)
 {		
-	ChkEv(dof);  refreshCompositor();
-	changeShadows();
+	ChkEv(dof);
+	refreshCompositor();  changeShadows();
 }
 void App::chkVidGodRays(WP wp)
 {		
-	ChkEv(godrays);  refreshCompositor();
-	changeShadows();
+	ChkEv(godrays);
+	refreshCompositor();  changeShadows();
 }
 void App::chkVidBoostFOV(WP wp)
 {		
@@ -531,17 +527,14 @@ void App::slBlurIntens(SL)
 {
 	Real v = val;  if (bGI)  pSet->motionblurintensity = v;
 	if (valBlurIntens){	valBlurIntens->setCaption(fToStr(v,2,4));  }
-	// if (bGI)  refreshCompositor();   // intensity is set every frame in UpdateHUD
 }
 void App::slDepthOfFieldFocus(SL)
 {
 	Real v = 2000.f * powf(val, 2.f);  if (bGI)  pSet->depthOfFieldFocus = v;
 	if (valDepthOfFieldFocus)	valDepthOfFieldFocus->setCaption(fToStr(v,0,4));
-	// if (bGI)  refreshCompositor();   // intensity is set every frame in UpdateHUD
 }
 void App::slDepthOfFieldFar(SL)
 {
 	Real v = 2000.f * powf(val, 2.f);  if (bGI)  pSet->depthOfFieldFar = v;
 	if (valDepthOfFieldFar)		valDepthOfFieldFar->setCaption(fToStr(v,0,4));
-	// if (bGI)  refreshCompositor();   // intensity is set every frame in UpdateHUD
 }
