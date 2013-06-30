@@ -1862,7 +1862,23 @@
 					RelativePath=".\source\shiny\Main\Factory.cpp"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1882,7 +1898,23 @@
 					RelativePath=".\source\shiny\Main\MaterialInstance.cpp"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1898,7 +1930,23 @@
 					RelativePath=".\source\shiny\Main\MaterialInstancePass.cpp"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1914,7 +1962,23 @@
 					RelativePath=".\source\shiny\Main\MaterialInstanceTextureUnit.cpp"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1930,7 +1994,23 @@
 					RelativePath=".\source\shiny\Platforms\Ogre\OgreGpuProgram.cpp"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1946,7 +2026,23 @@
 					RelativePath=".\source\shiny\Platforms\Ogre\OgreMaterial.cpp"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1962,7 +2058,23 @@
 					RelativePath=".\source\shiny\Platforms\Ogre\OgreMaterialSerializer.cpp"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1978,7 +2090,23 @@
 					RelativePath=".\source\shiny\Platforms\Ogre\OgrePass.cpp"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1994,7 +2122,23 @@
 					RelativePath=".\source\shiny\Platforms\Ogre\OgrePlatform.cpp"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -2010,7 +2154,23 @@
 					RelativePath=".\source\shiny\Platforms\Ogre\OgreTextureUnitState.cpp"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -2026,7 +2186,23 @@
 					RelativePath=".\source\shiny\Main\Platform.cpp"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -2042,7 +2218,23 @@
 					RelativePath=".\source\shiny\Main\Preprocessor.cpp"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -2058,7 +2250,23 @@
 					RelativePath=".\source\shiny\Main\PropertyBase.cpp"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -2074,7 +2282,23 @@
 					RelativePath=".\source\shiny\Main\ScriptLoader.cpp"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -2090,7 +2314,23 @@
 					RelativePath=".\source\shiny\Main\ShaderInstance.cpp"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -2106,7 +2346,23 @@
 					RelativePath=".\source\shiny\Main\ShaderSet.cpp"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
