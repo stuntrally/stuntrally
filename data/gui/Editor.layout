@@ -4011,12 +4011,12 @@
 							<Property key="TextColour" value="0.5 0.7 0.0"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 280 312 20">
+						<Widget type="TextBox" skin="TextBox" position="32 300 512 20">
 							<Property key="Caption" value="#{TipBrushPick}"/>
 							<Property key="TextColour" value="0.45 0.55 0.45"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 320 312 20">
+						<Widget type="TextBox" skin="TextBox" position="32 332 512 20">
 							<Property key="Caption" value="#{TipSliderReset}"/>
 							<Property key="TextColour" value="0.45 0.55 0.65"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>

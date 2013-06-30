@@ -71,7 +71,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_show.opponents", show_opponents);	Param(c,w, "hud_show.opplist_sort", opplist_sort);
 	Param(c,w, "hud_show.graphs", show_graphs);			Param(c,w, "hud_show.graphs_type", (int&)graphs_type);
 
-	Param(c,w, "gui.tracks_view", tracks_view);		Param(c,w, "gui.check_arrow", check_arrow);
+	Param(c,w, "gui.tracks_view", tracks_view);
 	Param(c,w, "gui.tracks_sort", tracks_sort);		Param(c,w, "gui.tracks_sortup", tracks_sortup);
 	Param(c,w, "gui.cars_sort", cars_sort);
 	Param(c,w, "gui.champ_tab", champ_type);		Param(c,w, "gui.car_ed_tab", car_ed_tab);
