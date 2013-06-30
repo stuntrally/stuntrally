@@ -384,7 +384,7 @@ void App::updChampListDim()
 	}
 
 	int xt = 0.038*wi.width, yt = 0.10*wi.height;  // pos
-	liChamps->setCoord(xt, yt, sw + 8/*frame*/, 0.40/*height*/*wi.height);
+	liChamps->setCoord(xt, yt, sw + 8/*frame*/, 0.32/*height*/*wi.height);
 	liChamps->setVisible(true);
 
 	//  Stages

@@ -1051,25 +1051,6 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabChamps">
 				<Property key="Caption" value="#80C0FF#{Championship}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
-				<Widget type="Button" skin="Button" position="320 460 144 40" name="btnChampStart">
-					<Property key="Caption" value="#{ChampStart}"/>
-					<Property key="Colour" value="0.6 0.6 1"/>
-					<Property key="TextColour" value="0.9 0.9 1"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="40 348 684 40" name="ChampDescr">
-					<Property key="TextColour" value="0.6 0.9 1.0"/>
-					<Property key="ReadOnly" value="true"/>
-					<Property key="MultiLine" value="true"/>
-					<Property key="WordWrap" value="true"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-				</Widget>
-				<Widget type="Widget" skin="PanelSkin" position="32 340 700 55">
-					<Property key="Colour" value="0.66 0.8 0.96"/>
-					<Property key="Alpha" value="0.6"/>
-					<Property key="InheritsAlpha" value="false"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="32 20 520 20" name="ChampType">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 514 -8">
@@ -1090,11 +1071,41 @@
 					<Widget type="TabItem" skin="" position="2 24 514 -8">
 						<Property key="Caption" value="#80FF80#{Scenery}"/>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 514 -8">
+					<Widget type="TabItem" skin="aaa" position="2 24 514 -8">
 						<Property key="Caption" value="#FFA0A0Test"/>
 					</Widget>
 				</Widget>
+				<Widget type="EditBox" skin="EditBoxEmpty" position="40 268 684 50" name="ChampDescr">
+					<Property key="TextColour" value="0.6 0.9 1.0"/>
+					<Property key="ReadOnly" value="true"/>
+					<Property key="MultiLine" value="true"/>
+					<Property key="WordWrap" value="true"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="Widget" skin="PanelSkin" position="32 260 700 66">
+					<Property key="Colour" value="0.66 0.8 0.96"/>
+					<Property key="Alpha" value="0.6"/>
+					<Property key="InheritsAlpha" value="false"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="320 340 144 40" name="btnChampStart">
+					<Property key="Caption" value="#{ChampStart}"/>
+					<Property key="Colour" value="0.6 0.6 1"/>
+					<Property key="TextColour" value="0.9 0.9 1"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
 				<Widget type="Button" skin="Button" position="28 460 48 40">
+					<Property key="Colour" value="0.6 0.8 1.0"/>
+					<Property key="TextColour" value="0.6 0.8 1.0"/>
+					<Property key="Caption" value="?"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="EditBox" skin="EditBoxEmpty" position="100 448 624 80">
+					<Property key="Caption" value="#{ChampInfo}"/>
+					<Property key="TextColour" value="0.7 0.8 0.9"/>
+					<Property key="ReadOnly" value="true"/>
+					<Property key="MultiLine" value="true"/>
+					<Property key="WordWrap" value="true"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 			</Widget>
