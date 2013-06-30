@@ -295,7 +295,7 @@ void App::LoadGame()  // 2
 	if (!bRplPlay/*|| pSet->rpl_show_ghost)*/ && pSet->rpl_ghost && !mClient)
 	{
 		std::string ghCar = pSet->game.car[0], orgCar = ghCar;
-		ghplay.LoadFile(GetGhostFile(&ghCar));  // loads ghost play if exists
+		ghplay.LoadFile(GetGhostFile(pSet->rpl_ghostother ? &ghCar : 0));
 		isGhost2nd = ghCar != orgCar;
 		
 		//  always because ghplay can appear during play after best lap

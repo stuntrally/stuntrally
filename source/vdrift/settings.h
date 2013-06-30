@@ -128,7 +128,7 @@ public:
 	std::string buffer, rendersystem;
 	
 	//  replay
-	bool rpl_rec, rpl_ghost, rpl_bestonly;
+	bool rpl_rec, rpl_ghost, rpl_bestonly, rpl_ghostother;
 	bool rpl_alpha, rpl_ghostpar, rpl_ghostrewind;  int rpl_listview, rpl_numViews;
 	
 	// network

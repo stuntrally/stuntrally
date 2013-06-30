@@ -124,6 +124,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "replay.bestonly", rpl_bestonly);	Param(c,w, "replay.listview", rpl_listview);
 	Param(c,w, "replay.alpha", rpl_alpha);			Param(c,w, "replay.ghostpar", rpl_ghostpar);
 	Param(c,w, "replay.num_views", rpl_numViews);	Param(c,w, "replay.ghostrewind", rpl_ghostrewind);
+	Param(c,w, "replay.ghostother", rpl_ghostother);
 	
 	Param(c,w, "sim.game_freq", game_fq);			Param(c,w, "sim.multi_thr", multi_thr);
 	Param(c,w, "sim.bullet_freq", blt_fq);			Param(c,w, "sim.bullet_iter", blt_iter);
@@ -205,7 +206,8 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,local_port(protocol::DEFAULT_PORT)
 	//  replay
 	,rpl_ghost(1), rpl_bestonly(1)
-	,rpl_alpha(0), rpl_ghostpar(0), rpl_ghostrewind(1), rpl_listview(0), rpl_numViews(4)
+	,rpl_alpha(0), rpl_ghostpar(0), rpl_ghostrewind(1), rpl_ghostother(1)
+	,rpl_listview(0), rpl_numViews(4)
 	//  sim
 	,game_fq(82.f), blt_fq(160.f), blt_iter(24), dyn_iter(30)
 	,multi_thr(0), thread_sleep(5), perf_speed(100000)

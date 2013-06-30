@@ -296,6 +296,7 @@
 	<Tag name="RplParticles">Particles (for not transparent ghost)</Tag>
 	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
 	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
+	<Tag name="RplGhostOther">Other car ghost (when current unavailable)</Tag>
 
 	<Tag name="RplAll">All</Tag>
 	<Tag name="RplCurrent">Current</Tag>

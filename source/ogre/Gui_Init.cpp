@@ -318,6 +318,7 @@ void App::InitGui()
 	//Chk("RplChkAlpha", chkRplChkAlpha, pSet->rpl_alpha);
 	Chk("RplChkParticles", chkRplChkPar, pSet->rpl_ghostpar);
 	Chk("RplChkRewind", chkRplChkRewind, pSet->rpl_ghostrewind);
+	Chk("RplChkGhostOther", chkRplChkGhostOther, pSet->rpl_ghostother);
 	Slv(RplNumViewports, (pSet->rpl_numViews-1) / 3.f);
 	//  radios
 	Btn("RplBtnAll", btnRplAll);  rbRplAll = btn;
