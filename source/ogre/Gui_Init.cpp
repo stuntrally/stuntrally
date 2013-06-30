@@ -85,8 +85,8 @@ void App::InitGui()
 	//  get sub tabs
 	vSubTabsGame.clear();
 	for (size_t i=0; i < mWndTabsGame->getItemCount(); ++i)
-	{
-		MyGUI::TabPtr sub = (TabPtr)mWndTabsGame->getItemAt(i)->findWidget(i==5 ? "tabsNet" : "tabPlayer!");//car tab wrong-
+	{	// todo: startsWith("SubTab")..
+		MyGUI::TabPtr sub = (TabPtr)mWndTabsGame->getItemAt(i)->findWidget(/*.. i==6 ? "ChampType" :*/ (i==5 ? "tabsNet" : "tabPlayer!") );//car tab wrong-
 		vSubTabsGame.push_back(sub);  // 0 for not found
 	}
 	vSubTabsOpts.clear();
