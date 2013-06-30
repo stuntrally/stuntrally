@@ -100,7 +100,7 @@ void App::InitInputGui()
 	{
 		const OISB::String& sPlr = (*it).first;
 		bool playerTab = Ogre::StringUtil::startsWith( sPlr, "player");
-		TabItemPtr tabitem = inputTab->addItem(!playerTab ? TR("#{InputMapGeneral}") : ((i>1 ? "" : TR("#{Player} ")) + toStr(i)));
+		TabItemPtr tabitem = inputTab->addItem(!playerTab ? TR("#80C0FF#{InputMapGeneral}") : ((i>1 ? "#FFF020" : TR("#FFF850#{Player} ")) + toStr(i)));
 
 		///  Headers  action, binding, value
 		CreateText(x0,yh, sx,sy, "hdrTxt1_"+sPlr, TR("#90B0F0#{InputHeaderTxt1}"));
@@ -226,7 +226,7 @@ void App::InitInputGui()
 		}
 	}
 	
-	TabItemPtr tabitem = inputTab->addItem(TR("#{Other}"));
+	TabItemPtr tabitem = inputTab->addItem(TR("#C0C0FF#{Other}"));
 	int y = 32, ya = 26 / 2, yb = 20 / 2,  xa = 20, xa1=xa+16, xb = 250, xb1=xb+16;
 	CreateText(xa,y, 500,24, "txtoth1", TR("#A0D0FF#{InputOther1}"));  y+=2*ya;
 	CreateText(xa,y, 500,24, "txtoth2", TR("#A0D0FF#{InputOther2}"));  y+=2*ya;
@@ -244,7 +244,7 @@ void App::InitInputGui()
 
 
 	y = 32;
-	tabitem = inputTab->addItem(TR("#{Shortcuts}"));
+	tabitem = inputTab->addItem(TR("#B0A0E0#{Shortcuts}"));
 	CreateText(xa,y, 600,24, "txtshc0", TR("#C0E0FF#{ShortcutsInfo}"));  y+=3*yb;
 	CreateText(xa,y, 200,24, "txtshc1", "#A8D0FF"+TR("Q  #{Track}"));  y+=2*yb;
 	CreateText(xa,y, 200,24, "txtshc2", "#A8D0FF"+TR("C  #{Car}"));  y+=3*yb;
