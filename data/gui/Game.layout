@@ -1051,7 +1051,7 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabChamps">
 				<Property key="Caption" value="#80C0FF#{Championship}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
-				<Widget type="TabControl" skin="TabControl" position="32 20 520 20" name="ChampType">
+				<Widget type="TabControl" skin="TabControl" position="32 20 700 20" name="ChampType">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 514 -8">
 						<Property key="Caption" value="#FFFFA0#{Tutorial}"/>
