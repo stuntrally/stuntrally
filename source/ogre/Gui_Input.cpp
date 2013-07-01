@@ -530,18 +530,10 @@ bool App::axisMoved( const OIS::JoyStickEvent &e, int axis )
 	{	int iv = e.state.mAxes[axis].abs;
 		float val = iv >= 0 ? iv / 32767.f : iv / 32768.f;
 		txtJAxis->setCaption("Moved axis: "+toStr(axis)+"     val: "+fToStr(val,4,7));
-	}	
-	if (lastAxis != axis)
-	{	lastAxis = axis;
-		axisCnt = 0;
-	}else
-	{
-		if (axisCnt++ > 10)
-		{	axisCnt = 0;
-			//  bind when same axis moved few times, omit axes input noise-
-			InputBind(-1, -1, axis);
-		}
 	}
+	if (abs(e.state.mAxes[axis].abs) > OIS::JoyStick::MAX_AXIS / 2)
+		InputBind(-1, -1, axis);
+
 	return true;
 }
 
