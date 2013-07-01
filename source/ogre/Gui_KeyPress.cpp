@@ -230,7 +230,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 
 		
 		//>--  dev shortcuts, alt-shift numbers, start test track
-		if (alt && shift && !mClient)
+		if (pSet->dev_keys && alt && shift && !mClient)
 		{
 			string t = "Test1-Flat";
 			switch (arg.key)
@@ -238,7 +238,8 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				case KC_2: t = "Test11-Jumps";  break;
 				case KC_3: t = "TestC4-ow";  break;
 				case KC_4: t = "Test7-FluidsSmall";  break;
-				case KC_5: t = "Test10-FlatPerf";  break;
+				case KC_5: t = "TestC6-temp";  break;
+				case KC_6: t = "Test10-FlatPerf";  break;
 			}
 			pSet->gui.track = t;  bPerfTest = false;
 			pSet->gui.track_user = false;
@@ -307,9 +308,11 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 					break;
 					
 				case KC_F:		// focus on find edit
-					if (ctrl && edFind && isFocGui &&
-						!pSet->isMain && pSet->inMenu == WND_Game && mWndTabsGame->getIndexSelected() == 1)
+					if (ctrl && edFind && (pSet->dev_keys || isFocGui &&
+						!pSet->isMain && pSet->inMenu == WND_Game && mWndTabsGame->getIndexSelected() == 1))
 					{
+						if (pSet->dev_keys)
+							GuiShortcut(WND_Game, 1);	// Track tab
 						MyGUI::InputManager::getInstance().resetKeyFocusWidget();
 						MyGUI::InputManager::getInstance().setKeyFocusWidget(edFind);
 						return true;
