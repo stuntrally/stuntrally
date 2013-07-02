@@ -924,7 +924,7 @@
 							<Property key="TextColour" value="0.6 0.9 1"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="164 22 268 24" name="edNetGameName">
+						<Widget type="EditBox" skin="EditBox" position="164 18 268 24" name="edNetGameName">
 							<Property key="Colour" value="0.6 0.8 1"/>
 							<Property key="TextColour" value="0.6 0.8 1"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
@@ -989,7 +989,7 @@
 							<Property key="TextColour" value="0.6 1.0 0.8"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
 						</Widget>
-						<Widget type="Widget" skin="PanelSkin" position="0 0 800 500" layer="Popup" name="panelNetGame">
+						<Widget type="Widget" skin="PanelSkin" position="0 48 800 500" layer="Popup" name="panelNetGame">
 							<Property key="Colour" value="0.8 0.96 1"/>
 							<Property key="Alpha" value="0.8"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
