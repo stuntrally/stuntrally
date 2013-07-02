@@ -445,7 +445,7 @@ void FollowCamera::updInfo(Real time)
 		,ca->mType, CAM_Str[ca->mType], ca->mYaw.valueDegrees(), ca->mPitch.valueDegrees(), ca->mDist
 		,ca->mOffset.x, ca->mOffset.y, ca->mOffset.z, ca->mSpeed);	break;
 	case CAM_Car:    sprintf(ss, sFmt_Car.c_str()
-		,ca->mType, CAM_Str[ca->mType], ca->mOffset.y, ca->mOffset.x, ca->mOffset.z);	break;
+		,ca->mType, CAM_Str[ca->mType], ca->mOffset.z, ca->mOffset.x, ca->mOffset.y);	break;
 	}
 	ovInfo->setCaption(ss);
 }
@@ -645,6 +645,6 @@ void FollowCamera::updFmtTxt()
 		sLEFT+": "+sRotate+"  "+sshift+": "+sPitch+" | "+sRIGHT+": "+smove+"  "+sshift+": "+sHeight+"\n"+
 		sMiddle+": "+smove+","+sH+" | "+sWheel+": "+sPitch;
 	sFmt_Car =
-		sType+": %d %s  "+sHeight+": %4.2f  "+sOffset+": %4.2f %4.2f\n"+
+		sType+": %d %s  "+sOffset+": %4.2f %4.2f  "+sHeight+": %4.2f\n"+
 		sLEFT+": "+sHeight+" | "+sRIGHT+": "+sOffset+" | "+sMiddle+": "+sreset+" "+sOffset+"X";
 }

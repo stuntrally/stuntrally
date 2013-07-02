@@ -158,10 +158,12 @@ void CarModel::LoadConfig(const std::string & pathCar)
 	if (!cf.Load(pathCar))
 	{  LogO("!! CarModel: Can't load .car "+pathCar);  return;  }
 
+
 	//-  custom interior model offset
 	cf.GetParam("model_ofs.interior-x", interiorOffset[0]);
 	cf.GetParam("model_ofs.interior-y", interiorOffset[1]);
 	cf.GetParam("model_ofs.interior-z", interiorOffset[2]);
+
 
 	//~  boost offset
 	cf.GetParam("model_ofs.boost-x", boostOffset[0]);
@@ -172,6 +174,7 @@ void CarModel::LoadConfig(const std::string & pathCar)
 
 	cf.GetParam("model_ofs.rot_fix", bRotFix);
 	cf.GetParam("model_ofs.brake_mtr", sBrakeMtr);//-
+
 	
 	//-  custom exhaust pos for boost particles
 	if (cf.GetParam("model_ofs.exhaust-x", exhaustPos[0]))
@@ -183,6 +186,15 @@ void CarModel::LoadConfig(const std::string & pathCar)
 		manualExhaustPos = false;
 	if (!cf.GetParam("model_ofs.exhaust-mirror-second", has2exhausts))
 		has2exhausts = false;
+
+
+	//- load cameras pos
+	float pos[3];
+	cf.GetParam("driver.view-position", pos, pGame->error_output);
+	driver_view[0]=pos[1]; driver_view[1]=-pos[0]; driver_view[2]=pos[2];
+	
+	cf.GetParam("driver.hood-mounted-view-position", pos, pGame->error_output);
+	hood_view[0]=pos[1]; hood_view[1]=-pos[0]; hood_view[2]=pos[2];
 
 
 	//  tire params
