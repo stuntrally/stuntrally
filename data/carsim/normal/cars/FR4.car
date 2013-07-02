@@ -27,13 +27,13 @@ exhaust-mirror-second = 0
 [ collision ]
 com_ofs_H = 0.0
 radius = 0.304
-width = 0.62
+width = 0.72
 height = 0.68
 posLrear = -2.18
 posLfront = 1.65
 offsetL = 0.06
 offsetW = 0.0
-offsetH = 0.42
+offsetH = 0.22
 start-offsetY = 0.98
 fluidTrigH = -0.2
 friction = 0.4
