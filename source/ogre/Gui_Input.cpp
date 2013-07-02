@@ -322,9 +322,17 @@ void App::InputBind(int key, int button, int axis)
 	{
 		bool full = action->getName() == "Steering" || action->getName() == "Flip";  //-1..1
 		OISB::AnalogAxisAction* act = (OISB::AnalogAxisAction*)action;
-		act->setProperty("AnalogEmulator", isAxis ? "" : "Linear");  act->setUseAbsoluteValues(/*isAxis*/false);
-		act->setProperty("MinValue", full ? -1 : 0);  act->setProperty("MaxValue", 1);
-		act->setProperty("InverseMul", 1);
+		act->setProperty("AnalogEmulator", isAxis ? "" : "Linear");
+		act->setUseAbsoluteValues(/*isAxis*/false);
+		if (!full && isAxis)  // half axis inversed
+		{	act->setProperty("MinValue", -2);  // -2 0 -0.5 for half axis..
+			act->setProperty("MaxValue", 0);
+			act->setProperty("InverseMul", -0.5);
+		}else{
+			act->setProperty("MinValue", full ? -1 : 0);  // -2 0 -0.5 for half axis..
+			act->setProperty("MaxValue", 1);
+			act->setProperty("InverseMul", 1);
+		}
 		act->setProperty("Sensitivity", 1);		// restore defaults
 		OISB::AnalogEmulator* emu = act->getAnalogEmulator();  if (emu)  {
 			emu->setProperty("DecSpeed", 5);		emu->setProperty("IncSpeed", 5);
@@ -406,8 +414,8 @@ void App::editInput(MyGUI::EditPtr ed)
 	actDetail->setProperty("InverseMul",vMul);
 	Real vRet = s2r(edInputReturn->getCaption());  // keyboard only
 	Real vInc = s2r(edInputIncrease->getCaption());
-	if (actDetail->getActionType() != OISB::AT_ANALOG_AXIS) {
-		// AnalogAxisAction doesn't have these properties
+	if (actDetail->getActionType() != OISB::AT_ANALOG_AXIS)
+	{	// AnalogAxisAction doesn't have these properties
 		actDetail->setProperty("ReturnDecSpeed",vRet);	actDetail->setProperty("DecSpeed",vInc);
 		actDetail->setProperty("ReturnIncSpeed",vRet);	actDetail->setProperty("IncSpeed",vInc);
 	}
