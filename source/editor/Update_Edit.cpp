@@ -116,10 +116,11 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 
 
 	//  keys up/dn - trklist
+	WP wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();
 	static float dirU = 0.f,dirD = 0.f;
-	if (bGuiFocus)
-	{	if (isKey(UP)  ||isKey(NUMPAD8))	dirD += evt.timeSinceLastFrame;  else
-		if (isKey(DOWN)||isKey(NUMPAD2))	dirU += evt.timeSinceLastFrame;  else
+	if (bGuiFocus && wf != trkDesc[0])
+	{	if (isKey(UP)  ||isKey(NUMPAD8))  dirD += evt.timeSinceLastFrame;  else
+		if (isKey(DOWN)||isKey(NUMPAD2))  dirU += evt.timeSinceLastFrame;  else
 		{	dirU = 0.f;  dirD = 0.f;  }
 		int d = ctrl ? 4 : 1;
 		if (dirU > 0.0f) {  trkListNext( d);  dirU = -0.2f;  }
