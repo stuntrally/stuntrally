@@ -193,7 +193,7 @@ void CarModel::LoadConfig(const std::string & pathCar)
 	cf.GetParam("driver.view-position", pos, pGame->error_output);
 	driver_view[0]=pos[1]; driver_view[1]=-pos[0]; driver_view[2]=pos[2];
 	
-	cf.GetParam("driver.hood-mounted-view-position", pos, pGame->error_output);
+	cf.GetParam("driver.hood-position", pos, pGame->error_output);
 	hood_view[0]=pos[1]; hood_view[1]=-pos[0]; hood_view[2]=pos[2];
 
 
