@@ -345,10 +345,12 @@ void App::radKmh(WP wp){	bRkmh->setStateSelected(true);  bRmph->setStateSelected
 void App::radMph(WP wp){	bRkmh->setStateSelected(false);  bRmph->setStateSelected(true);  pSet->show_mph = true;   ShowHUD();  }
 
 void App::radSimEasy(WP){	bRsimEasy->setStateSelected(true);  bRsimNorm->setStateSelected(false);
-	pSet->gui.sim_mode = "easy";	bReloadSim = true;  tabTireSet(0,iTireSet);
+	pSet->gui.sim_mode = "easy";	bReloadSim = true;
+	tabTireSet(0,iTireSet);  listCarChng(carList,0);
 }
 void App::radSimNorm(WP){	bRsimEasy->setStateSelected(false);  bRsimNorm->setStateSelected(true);
-	pSet->gui.sim_mode = "normal";	bReloadSim = true;  tabTireSet(0,iTireSet);
+	pSet->gui.sim_mode = "normal";	bReloadSim = true;
+	tabTireSet(0,iTireSet);  listCarChng(carList,0);
 }
 
 void App::chkArrow(WP wp){			ChkEv(check_arrow);
