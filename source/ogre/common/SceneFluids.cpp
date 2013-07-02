@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "../common/RenderConst.h"
 
-#ifdef ROAD_EDITOR
+#ifdef SR_EDITOR
 	#include "../common/Defines.h"
 	#include "../../editor/OgreApp.h"
 	#include "../../editor/settings.h"
@@ -32,7 +32,7 @@ using namespace Ogre;
 void App::CreateFluids()
 {
 	vFlNd.clear();  vFlEnt.clear();  vFlSMesh.clear();
-	#ifdef ROAD_EDITOR
+	#ifdef SR_EDITOR
 	UpdFluidBox();
 	#endif
 	if (!mWaterRTT.mNdFluidsRoot)
@@ -65,7 +65,7 @@ void App::CreateFluids()
 
 		vFlSMesh.push_back(smesh);  vFlEnt.push_back(efl);  vFlNd.push_back(nfl);
 
-		#ifndef ROAD_EDITOR  // game
+		#ifndef SR_EDITOR  // game
 		CreateBltFluids();
 		#endif
 	}		
@@ -94,7 +94,7 @@ void App::CreateBltFluids()
 			/*btCollisionObject::CF_STATIC_OBJECT |*/ btCollisionObject::CF_NO_CONTACT_RESPONSE/**/);
 		
 		bco->setUserPointer(new ShapeData(ST_Fluid, 0, &fb));  ///~~
-		#ifndef ROAD_EDITOR
+		#ifndef SR_EDITOR
 			pGame->collision.world->addCollisionObject(bco);
 			pGame->collision.shapes.push_back(bshp);
 			fb.cobj = bco;
@@ -102,7 +102,7 @@ void App::CreateBltFluids()
 			world->addCollisionObject(bco);
 		#endif
 	}
-	#ifdef ROAD_EDITOR
+	#ifdef SR_EDITOR
 	UpdObjPick();
 	#endif
 }
@@ -119,7 +119,7 @@ void App::DestroyFluids()
 	vFlNd.clear();  vFlEnt.clear();  vFlSMesh.clear();
 }
 
-#ifdef ROAD_EDITOR
+#ifdef SR_EDITOR
 void App::UpdFluidBox()
 {
 	int fls = sc->fluids.size();

@@ -2,7 +2,7 @@
 #include "../common/Defines.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
-#ifndef ROAD_EDITOR
+#ifndef SR_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../OgreGame.h"
 	#include "../SplitScreen.h"
@@ -89,7 +89,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 		s.shadow_type = Sh_Depth;  s.shadow_size = 3;  s.shadow_count = 3;  s.shadow_dist = 3000;  s.shadow_filter = 4;
 		s.gui.trees = 2.f;  s.grass = 2.f;  s.trees_dist = 2.f;  s.grass_dist = 3.f;	break;
 	}
-#ifndef ROAD_EDITOR  /// game only
+#ifndef SR_EDITOR  /// game only
 	s.particles = val >= 1;  s.trails = val >= 1;
 	
 	s.rpl_rec   = val >= 1;
@@ -140,7 +140,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	}
 #endif
 
-#ifdef ROAD_EDITOR  /// editor only
+#ifdef SR_EDITOR  /// editor only
 	switch (val)
 	{
 	case 0:  // Lowest  -------------
@@ -175,7 +175,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	GuiInitGraphics();  // += newDelegate..?
 
 	ButtonPtr bchk;  Slider* sl;
-#ifndef ROAD_EDITOR  /// game only
+#ifndef SR_EDITOR  /// game only
 	// duplicated code..
 	Chk("ParticlesOn", chkParticles, pSet->particles);
 	Chk("TrailsOn", chkTrails, pSet->trails);
@@ -202,7 +202,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	//Chk("RplChkAlpha", chkRplChkAlpha, pSet->rpl_alpha);
 #endif
 
-#ifdef ROAD_EDITOR  /// editor only
+#ifdef SR_EDITOR  /// editor only
 	Chk("Minimap", chkMinimap, pSet->trackmap);
 	Slv(TerUpd, pSet->ter_skip /20.f);
 	Slv(MiniUpd, pSet->mini_skip /20.f);

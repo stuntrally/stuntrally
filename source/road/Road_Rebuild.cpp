@@ -2,7 +2,7 @@
 #include "../ogre/common/Defines.h"
 #include "../ogre/common/RenderConst.h"
 #include "Road.h"
-#ifndef ROAD_EDITOR
+#ifndef SR_EDITOR
 #include "../vdrift/game.h"
 #else
 #include "../editor/OgreApp.h"
@@ -12,7 +12,7 @@
 #include "../bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #endif
 
-#ifdef ROAD_EDITOR
+#ifdef SR_EDITOR
 #define LogR(a)  //LogO(String("~ Road  ") + a);
 #else
 #define LogR(a)
@@ -336,7 +336,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 			//  bullet create
 			bool blt = true;  // game always
-			#ifdef ROAD_EDITOR  // editor only sel segs for align ter tool, or full for objects sim
+			#ifdef SR_EDITOR  // editor only sel segs for align ter tool, or full for objects sim
 				blt = bulletFull || editorAlign && (vSel.find(seg) != vSel.end());
 			#endif
 			
@@ -860,7 +860,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					bco->setRestitution(0.f);
 					bco->setCollisionFlags(bco->getCollisionFlags() |
 						btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
-					#ifdef ROAD_EDITOR
+					#ifdef SR_EDITOR
 						pApp->world->addCollisionObject(bco);
 						bco->setUserPointer((void*)111);  // mark road
 					#else
@@ -869,7 +869,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					#endif
 					
 					//  Wall  ]
-					#ifndef ROAD_EDITOR  // in Game
+					#ifndef SR_EDITOR  // in Game
 					if (wall)
 					{	trimesh = new btTriangleMesh();  vbtTriMesh.push_back(trimesh);
 						

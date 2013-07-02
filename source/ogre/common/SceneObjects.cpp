@@ -5,7 +5,7 @@
 #include "../../btOgre/BtOgreGP.h"
 #include "../../road/Road.h"
 
-#ifdef ROAD_EDITOR
+#ifdef SR_EDITOR
 	#include "../../editor/OgreApp.h"
 #else
 	#include "../OgreGame.h"
@@ -67,7 +67,7 @@ public:
 		//body->setFriction(0.5f);
 		rb = body;
 
-		#ifdef ROAD_EDITOR
+		#ifdef SR_EDITOR
 		//body->setActivationState(DISABLE_DEACTIVATION);
 		#else
 		body->setActivationState(WANTS_DEACTIVATION);  // game creates deactivated (sleeping)
@@ -111,7 +111,7 @@ void App::CreateObjects()
 		(*it).second = boost::filesystem::exists(PATHMANAGER::Data()+"/objects/"+ (*it).first + ".bullet");
 
 	//  loader
-	#ifndef ROAD_EDITOR
+	#ifndef SR_EDITOR
 	btDiscreteDynamicsWorld* world = pGame->collision.world;
 	#endif
 	BulletWorldOffset* fileLoader = new BulletWorldOffset(world);
@@ -122,7 +122,7 @@ void App::CreateObjects()
 		Object& o = sc->objects[i];
 		String s = toStr(i);  // counter for names
 		o.dyn = objHasBlt[o.name];
-		#ifndef ROAD_EDITOR
+		#ifndef SR_EDITOR
 		if (o.dyn && !pSet->game.dyn_objects)  continue;
 		#endif
 
@@ -159,7 +159,7 @@ void App::CreateObjects()
 			bco->setCollisionFlags(bco->getCollisionFlags() |
 				btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 			world->addCollisionObject(bco);
-			#ifndef ROAD_EDITOR
+			#ifndef SR_EDITOR
 			o.co = bco;  o.ms = 0;  o.rb = 0;
 			pGame->collision.shapes.push_back(shape);
 			#endif
@@ -188,7 +188,7 @@ void App::CreateObjects()
 	}
 	delete fileLoader;
 
-	#ifdef ROAD_EDITOR
+	#ifdef SR_EDITOR
 	iObjLast = sc->objects.size();
 	#endif
 }
@@ -201,7 +201,7 @@ void App::DestroyObjects(bool clear)
 		Object& o = sc->objects[i];
 		// ogre
 		if (o.nd)  mSceneMgr->destroySceneNode(o.nd);  o.nd = 0;
-		#ifdef ROAD_EDITOR  // game has destroyAll
+		#ifdef SR_EDITOR  // game has destroyAll
 		if (o.ent)  mSceneMgr->destroyEntity(o.ent);  o.ent = 0;
 
 		// bullet
@@ -226,7 +226,7 @@ void App::DestroyObjects(bool clear)
 //  Pick
 //-------------------------------------------------------------------------------------------------------
 
-#ifdef ROAD_EDITOR
+#ifdef SR_EDITOR
 void App::UpdObjPick()
 {
 	if (ndStBox)

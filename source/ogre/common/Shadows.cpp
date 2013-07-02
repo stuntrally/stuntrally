@@ -2,7 +2,7 @@
 #include "../common/Defines.h"
 #include "../common/RenderConst.h"
 
-#ifdef ROAD_EDITOR
+#ifdef SR_EDITOR
 	#include "../../editor/OgreApp.h"
 	#include "../../editor/settings.h"
 	#include "../../road/Road.h"
@@ -83,7 +83,7 @@ void App::changeShadows()
 		{	if (mPSSMSetup.isNull())  // pssm
 			{
 				PSSMShadowCameraSetup* pssmSetup = new PSSMShadowCameraSetup();
-				#ifndef ROAD_EDITOR
+				#ifndef SR_EDITOR
 				pssmSetup->setSplitPadding(mSplitMgr->mCameras.front()->getNearClipDistance());
 				pssmSetup->calculateSplitPoints(num, mSplitMgr->mCameras.front()->getNearClipDistance(), mSceneMgr->getShadowFarDistance());
 				#else
@@ -140,7 +140,7 @@ void App::changeShadows()
 	mFactory->setGlobalSetting("water_refract", b2s(pSet->water_refract));
 
 
-#if !ROAD_EDITOR
+#if !SR_EDITOR
 	mFactory->setGlobalSetting("soft_particles", b2s(pSet->all_effects && pSet->softparticles));
 	mFactory->setGlobalSetting("mrt_output", b2s(NeedMRTBuffer()));
 #endif

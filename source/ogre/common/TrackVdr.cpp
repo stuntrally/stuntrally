@@ -16,7 +16,7 @@
 //#include <OgreTexture.h>
 
 #include "../../vdrift/track.h"
-#ifndef ROAD_EDITOR
+#ifndef SR_EDITOR
 	#include "../OgreGame.h"
 	#include "../../vdrift/game.h"
 	#include "../SplitScreen.h"  //-
@@ -135,7 +135,7 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 }
 
 
-#ifndef ROAD_EDITOR
+#ifndef SR_EDITOR
 ///---------------------------------------------------------------------------------------------------------------
 //	 track racing line
 ///---------------------------------------------------------------------------------------------------------------
@@ -303,7 +303,7 @@ void App::CreateRoadBezier()
 	m->begin("roadAsphalt", RenderOperation::OT_TRIANGLE_LIST);
 	int ii=0;
 
-	#ifdef ROAD_EDITOR
+	#ifdef SR_EDITOR
 	const std::list <ROADSTRIP>& roads = track->GetRoadList();
 	#else
 	const std::list <ROADSTRIP>& roads = pGame->track.GetRoadList();
@@ -439,7 +439,7 @@ bool App::IsVdrTrack()
 }
 
 
-#ifdef ROAD_EDITOR
+#ifdef SR_EDITOR
 btIndexedMesh GetIndexedMesh(const MODEL & model)
 {
 	const float * vertices;  int vcount;

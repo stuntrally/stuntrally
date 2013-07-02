@@ -134,7 +134,7 @@ void SplineRoad::DestroySeg(int id)
 		if (rs.wall[l].ent)  // ] wall
 		{
 			rs.wall[l].node->detachAllObjects();
-			#ifdef ROAD_EDITOR
+			#ifdef SR_EDITOR
 			mSceneMgr->destroyEntity(rs.wall[l].ent);
 			#endif
 			//rs.wall[l].node->getParentSceneNode()->detachObject(0);
@@ -144,7 +144,7 @@ void SplineRoad::DestroySeg(int id)
 		if (rs.blend[l].ent)  // > blend
 		{
 			rs.blend[l].node->detachAllObjects();
-			#ifdef ROAD_EDITOR
+			#ifdef SR_EDITOR
 			mSceneMgr->destroyEntity(rs.blend[l].ent);
 			#endif
 			mSceneMgr->destroySceneNode(rs.blend[l].node);
@@ -153,7 +153,7 @@ void SplineRoad::DestroySeg(int id)
 	}
 	if (rs.col.ent)  // | column
 	{
-		#ifdef ROAD_EDITOR
+		#ifdef SR_EDITOR
 		rs.col.node->detachAllObjects();
 		mSceneMgr->destroyEntity(rs.col.ent);
 		#endif
@@ -163,7 +163,7 @@ void SplineRoad::DestroySeg(int id)
 	for (int l=0; l < LODs; ++l)
 	{
 		rs.road[l].node->detachAllObjects();
-		#ifdef ROAD_EDITOR  //_crash in game (destroy all ents is before)
+		#ifdef SR_EDITOR  //_crash in game (destroy all ents is before)
 		mSceneMgr->destroyEntity(rs.road[l].ent);
 		#endif
 		mSceneMgr->destroySceneNode(rs.road[l].node);
@@ -181,7 +181,7 @@ void SplineRoad::DestroySeg(int id)
 
 void SplineRoad::DestroyRoad()
 {
-#ifndef ROAD_EDITOR
+#ifndef SR_EDITOR
 	for (int i=0; i < vbtTriMesh.size(); ++i)
 		delete vbtTriMesh[i];
 	vbtTriMesh.clear();

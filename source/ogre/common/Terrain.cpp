@@ -6,7 +6,7 @@
 
 #include "TerrainMaterial.h"
 
-#ifdef ROAD_EDITOR
+#ifdef SR_EDITOR
 	#include "../../editor/OgreApp.h"
 	#include "../../editor/settings.h"
 	#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
@@ -45,7 +45,7 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 	const float f = 0.8f / t * 2 * sc->td.fTerWorldSize / t * 3.14f;  //par-
 
 	//  mtr map
-	#ifndef ROAD_EDITOR
+	#ifndef SR_EDITOR
 	delete[] blendMtr;  blendMtr = 0;
 	blendMtr = new char[t*t];
 	#endif
@@ -110,7 +110,7 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 		for (i=0; i < b; ++i)
 		{	*(pB[i]+bb) = val[i];  if (val[i] > 0.5f)  mtr = i+2;  }
 
-		#ifndef ROAD_EDITOR
+		#ifndef SR_EDITOR
 		blendMtr[aa] = mtr;
 		#endif
 	}	}
@@ -143,7 +143,7 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 		terrain->getGlobalColourMap()->loadImage(colourMap);
 	}*/
 	
-	#ifndef ROAD_EDITOR  // game
+	#ifndef SR_EDITOR  // game
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time Blendmap: ") + toStr(dt) + " ms");
@@ -365,14 +365,14 @@ void App::CreateBltTerrain()
 	col->setRestitution(0.0);
 	col->setCollisionFlags(col->getCollisionFlags() |
 		btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
-	#ifndef ROAD_EDITOR  // game
+	#ifndef SR_EDITOR  // game
 		pGame->collision.world->addCollisionObject(col);
 		pGame->collision.shapes.push_back(hfShape);
 	#else
 		world->addCollisionObject(col);
 	#endif
 	
-	#ifndef ROAD_EDITOR
+	#ifndef SR_EDITOR
 	///  border planes []
 	const float px[4] = {-1, 1, 0, 0};
 	const float py[4] = { 0, 0,-1, 1};
@@ -442,7 +442,7 @@ void App::CreateSkyDome(String sMater, Vector3 sc)
 	m->setBoundingBox(aabInf);  // always visible
 	m->setRenderQueueGroup(RQG_Sky);
 	m->setCastShadows(false);
-	#ifdef ROAD_EDITOR
+	#ifdef SR_EDITOR
 	m->setVisibilityFlags(RV_Sky);  // hide on minimap
 	#endif
 
@@ -502,7 +502,7 @@ void App::SetFactoryDefaults()
 	fct.setGlobalSetting("lighting", "true");
 	fct.setGlobalSetting("terrain_composite_map", "false");
 	fct.setGlobalSetting("soft_particles", "false");
-	#ifdef ROAD_EDITOR
+	#ifdef SR_EDITOR
 	fct.setGlobalSetting("editor", "true");
 	#else
 	fct.setGlobalSetting("editor", "false");

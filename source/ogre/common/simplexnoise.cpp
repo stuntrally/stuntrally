@@ -3,7 +3,7 @@
 #include <math.h>
 //#include <algorithm>
 
-#ifdef ROAD_EDITOR
+#ifdef SR_EDITOR
 	#include "../../editor/OgreApp.h"
 #else
 	#include "../OgreGame.h"

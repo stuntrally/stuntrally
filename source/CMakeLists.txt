@@ -73,7 +73,7 @@ if(BUILD_EDITOR)
 	)
 
 	add_executable(${EDITOR_EXE} ${EDITOR_SOURCES})
-	set_target_properties(${EDITOR_EXE} PROPERTIES COMPILE_FLAGS "-DROAD_EDITOR")
+	set_target_properties(${EDITOR_EXE} PROPERTIES COMPILE_FLAGS "-DSR_EDITOR")
 	target_link_libraries(${EDITOR_EXE} ${OURLIBS} ${LIBS})
 	install(TARGETS ${EDITOR_EXE} DESTINATION bin)
 endif()

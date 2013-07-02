@@ -17,7 +17,7 @@
 
 namespace Ogre {  class SceneManager;  class SceneNode;  class Entity;  class Terrain;  class Camera;  }
 
-#if defined(_WIN32) && defined(ROAD_EDITOR)
+#if defined(_WIN32) && defined(SR_EDITOR)
 	// win doesnt need bullet somehow
 #else
 	#include "btBulletCollisionCommon.h"
@@ -54,7 +54,7 @@ enum eIns{  INS_Begin, INS_Cur, INS_CurPre, INS_End  };
 class SplineRoad : public SplineBase
 {
 public:
-	#ifdef ROAD_EDITOR
+	#ifdef SR_EDITOR
 		class App* pApp;  ///*
 		SplineRoad(App* papp);
 	#else
@@ -115,7 +115,7 @@ private:
 		Ogre::Entity** pEnt, Ogre::SceneNode** pNode, Ogre::String sEnd);
 
 	std::vector<Ogre::uint16> idx, idxB;	// mesh indices
-//#ifndef ROAD_EDITOR
+//#ifndef SR_EDITOR
 	std::vector<Ogre::Vector3> posBt;  // for bullet trimesh
 	std::vector<class btTriangleMesh*> vbtTriMesh;  // for delete
 //#endif

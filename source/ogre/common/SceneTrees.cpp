@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "../common/Defines.h"
 #include "RenderConst.h"
-#ifdef ROAD_EDITOR
+#ifdef SR_EDITOR
 	#include "../../editor/OgreApp.h"
 #else
 	#include "../OgreGame.h"
@@ -70,7 +70,7 @@ void App::CreateTrees()
 	bool bWind = 1;	 /// WIND
 
 	Real fGrass = pSet->grass * sc->densGrass * 3.0f;  // std::min(pSet->grass, 
-	#ifdef ROAD_EDITOR
+	#ifdef SR_EDITOR
 	Real fTrees = pSet->gui.trees * sc->densTrees;
 	#else
 	Real fTrees = pSet->game.trees * sc->densTrees;
@@ -78,7 +78,7 @@ void App::CreateTrees()
 	
 	if (fGrass > 0.f)
 	{
-		#ifndef ROAD_EDITOR
+		#ifndef SR_EDITOR
 		grass = new PagedGeometry(mSplitMgr->mCameras.front(), sc->grPage);  //30
 		#else
 		grass = new PagedGeometry(mCamera, sc->grPage);  //30
@@ -128,7 +128,7 @@ void App::CreateTrees()
 	if (fTrees > 0.f)
 	{
 		// fast: 100_ 80 j1T!,  400 400 good sav2f  200 220 both`-
-		#ifndef ROAD_EDITOR
+		#ifndef SR_EDITOR
 		trees = new PagedGeometry(mSplitMgr->mCameras.front(), sc->trPage);
 		#else
 		trees = new PagedGeometry(mCamera, sc->trPage);
@@ -312,7 +312,7 @@ void App::CreateTrees()
 					
 				
 				///  add to bullet world
-				#ifndef ROAD_EDITOR  //  in Game
+				#ifndef SR_EDITOR  //  in Game
 				if (pSet->game.collis_veget && col)
 				for (int c=0; c < col->shapes.size(); ++c)  // all shapes
 				{

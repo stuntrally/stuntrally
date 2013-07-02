@@ -2,7 +2,7 @@
 #include "../common/Defines.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
-#ifndef ROAD_EDITOR
+#ifndef SR_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../OgreGame.h"
 	#include "../SplitScreen.h"
@@ -94,7 +94,7 @@ void App::TrackListUpd(bool resetNotFound)
 		//  not found last track, set 1st  .. only 
 		if (resetNotFound && !bFound && !liTracks.empty())
 		{	pSet->gui.track = *liTracks.begin();  pSet->gui.track_user = 0;
-			#ifdef ROAD_EDITOR
+			#ifdef SR_EDITOR
 			UpdWndTitle();
 			#endif
 		}
@@ -163,7 +163,7 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 //  column widths on tabs: tracks, champs, stages
 const int wi = 26;
 const int App::TcolW[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
-#ifndef ROAD_EDITOR
+#ifndef SR_EDITOR
 const int App::TcolC[6] = {34, 17, 35, 40, 20};
 const int App::ChColW[9] = {30, 180, 120, 50, 80, 80, 60, 40};
 const int App::StColW[8] = {30, 180, 100, 90, 80, 70};
@@ -173,7 +173,7 @@ const int App::StColW[8] = {30, 180, 100, 90, 80, 70};
 //-----------------------------------------------------------------------------------------------------------
 void App::GuiInitTrack()
 {
-	#ifdef ROAD_EDITOR
+	#ifdef SR_EDITOR
 	TabItem* trktab = (TabItem*)mWndEdit->findWidget("TabTrack");
 	#else
 	TabItem* trktab = (TabItem*)mWndGame->findWidget("TabTrack");
@@ -199,7 +199,7 @@ void App::GuiInitTrack()
 		infTrk[0][i] = mGUI->findWidget<StaticText>("ti"+toStr(i+1), false);
 		
 	Edt(edFind, "TrackFind", edTrkFind);
-	#ifndef ROAD_EDITOR
+	#ifndef SR_EDITOR
 	EditPtr ed;
 	Edt(ed, "RplFind", edRplFind);
 	#endif
@@ -255,7 +255,7 @@ void App::listTrackChng(MultiList2* li, size_t pos)
 	if (s[0] == '#')  s = s.substr(7);
 	sListTrack = s;
 
-#ifndef ROAD_EDITOR
+#ifndef SR_EDITOR
 	changeTrack();
 #endif
 	ReadTrkStats();
@@ -274,7 +274,7 @@ void App::edTrkFind(EditPtr ed)
 	TrackListUpd(false);
 }
 
-#ifndef ROAD_EDITOR
+#ifndef SR_EDITOR
 void App::edRplFind(EditPtr ed)
 {
 	String s = ed->getCaption();
@@ -344,7 +344,7 @@ void App::updTrkListDim()
 	trkList->setVisible(true);
 
 	//  car list  ----------
-	#ifndef ROAD_EDITOR
+	#ifndef SR_EDITOR
 	sum = 0;  sw = 0;  cnt = carList->getColumnCount();
 	for (c=0; c < cnt; ++c)  sum += TcolC[c];
 
@@ -359,7 +359,7 @@ void App::updTrkListDim()
 	carList->setCoord(xt, yt, sw + 8/*frame*/, 0.41/*height*/*wi.height);
 	#endif
 	
-	#ifndef ROAD_EDITOR
+	#ifndef SR_EDITOR
 	if (panelNetTrack)  {
 		TabItem* trkTab = mGUI->findWidget<TabItem>("TabTrack");
 		const IntCoord& tc = trkTab->getCoord();
@@ -367,7 +367,7 @@ void App::updTrkListDim()
 	#endif
 }
 
-#ifndef ROAD_EDITOR
+#ifndef SR_EDITOR
 ///  champ list  ----------
 void App::updChampListDim()
 {
@@ -410,7 +410,7 @@ void App::updChampListDim()
 void App::FillTrackLists()
 {
 	liTracks.clear();  liTracksUser.clear();
-	#ifdef ROAD_EDITOR
+	#ifdef SR_EDITOR
 	std::string chkfile = "/scene.xml";
 	#else
 	std::string chkfile = "/track.txt";
@@ -456,7 +456,7 @@ void App::FillTrackLists()
 }
 
 ///  Tool write sceneryID
-#ifdef ROAD_EDITOR
+#ifdef SR_EDITOR
 void App::ToolListSceneryID()
 {
 	LogO("ALL tracks ---------");
@@ -494,7 +494,7 @@ void App::ReadTrkStats()
 	String sSc = PathListTrk() + "/scene.xml";
 
 	Scene* sc = new Scene();  sc->LoadXml(sSc);  // fails to defaults
-#ifndef ROAD_EDITOR  // game
+#ifndef SR_EDITOR  // game
 	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
 
 	TIMER tim;  tim.Load(PATHMANAGER::Records()+"/"+ pSet->gui.sim_mode+"/"+ sListTrack+".txt", 0.f, pGame->error_output);
@@ -508,7 +508,7 @@ void App::ReadTrkStats()
 	delete sc;
 }
 
-#ifndef ROAD_EDITOR  // game
+#ifndef SR_EDITOR  // game
 void App::ReadTrkStatsChamp(String track, bool reverse)
 {
 	String sRd = pathTrk[0] + track + "/road.xml";
@@ -553,12 +553,12 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTr
 		if (infTrk[ch][8])  infTrk[ch][8]->setCaption(ti.diff==0   ? "" : (clrsDiff[ti.diff] + toStr(ti.diff)));
 		if (infTrk[ch][9])  infTrk[ch][9]->setCaption(ti.rating==0 ? "" : (clrsRating[ti.rating] + toStr(ti.rating)));
 		if (infTrk[ch][10]) infTrk[ch][10]->setCaption(str0(ti.objects));
-		#ifndef ROAD_EDITOR
+		#ifndef SR_EDITOR
 		if (txTrackAuthor)  txTrackAuthor->setCaption(ti.author=="CH" ? "CryHam" : ti.author);
 		#endif
 	}
 
-#ifndef ROAD_EDITOR  // game
+#ifndef SR_EDITOR  // game
 	//  best time, avg vel,
 	std::string unit = pSet->show_mph ? "mph" : "km/h";
 	if (time < 0.1f)

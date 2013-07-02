@@ -3,7 +3,7 @@
 #include "Gui_Def.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
-#ifndef ROAD_EDITOR
+#ifndef SR_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../OgreGame.h"
 	#include "../SplitScreen.h"
@@ -60,7 +60,7 @@ void App::slViewDist(SL)
 	if (valViewDist){	valViewDist->setCaption(fToStr(v*0.001f, 1,4)+" km");  }
 
 	// Set new far clip distance for all cams
-	#ifndef ROAD_EDITOR
+	#ifndef SR_EDITOR
 	/*?if (bGI)*/  mSplitMgr->UpdateCamDist();
 	#else
 	mCamera->setFarClipDistance(pSet->view_distance*1.1f);
@@ -377,7 +377,7 @@ void App::UnfocusLists()
 		//LogO(wg->getTypeName() +" "+ wg->getName());
 		w = w->getParent();
 
-		#ifdef ROAD_EDITOR
+		#ifdef SR_EDITOR
 		if (w == (Widget*)trkList)
 		#else
 		if (w == (Widget*)trkList  || w == (Widget*)carList  ||
@@ -394,7 +394,7 @@ void App::UnfocusLists()
 
 void App::SizeGUI()
 {
-	#ifndef ROAD_EDITOR
+	#ifndef SR_EDITOR
 	//ImgBackSize();
 	if (imgBack)
 	{
@@ -499,7 +499,7 @@ void App::notifyToolTip(Widget *sender, const ToolTipInfo &info)
 {
 	if (!mToolTip)  return;
 
-	#ifndef ROAD_EDITOR
+	#ifndef SR_EDITOR
 	if (!isFocGui)
 	{	mToolTip->setVisible(false);
 		return;  }
@@ -581,7 +581,7 @@ void App::comboLanguage(MyGUI::ComboBox* wp, size_t val)
 	//  reinit gui
 	bGuiReinit = true;
 	
-	#ifndef ROAD_EDITOR
+	#ifndef SR_EDITOR
 	setTranslations();
 	#endif
 }
@@ -730,7 +730,7 @@ void App::ResizeOptWnd()
 	Real yo = (1.f - ym)*wy, xo = 4.f/3.f * yo;  // opt wnd size in pix
 	ym = (wy - yo)*0.5f;  xm = (wx - xo)*0.5f;
 
-	#ifndef ROAD_EDITOR  // game
+	#ifndef SR_EDITOR  // game
 	mWndGame->setCoord(xm, ym, xo, yo);
 	mWndReplays->setCoord(xm, ym, xo, yo);
 	//mWndTweak->setCoord(0, 6, xo/3, yo-ym);
@@ -744,7 +744,7 @@ void App::ResizeOptWnd()
 		bnQuit->setCoord(wx - 0.09*wx, 0, 0.09*wx, 0.03*wy);
 
 	updTrkListDim();
-	#ifndef ROAD_EDITOR
+	#ifndef SR_EDITOR
 	updChampListDim();  // resize lists
 	#endif
 }

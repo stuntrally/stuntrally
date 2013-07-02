@@ -296,7 +296,7 @@ void SSAOListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 		return;
 
 	// this is the camera you're using
-	#ifndef ROAD_EDITOR
+	#ifndef SR_EDITOR
 	Camera *cam = mApp->mSplitMgr->mCameras.front();
 	#else
 	Camera *cam = mApp->mCamera;
@@ -389,7 +389,7 @@ void GodRaysListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 		return;
 	}
 	// this is the camera you're using
-	#ifndef ROAD_EDITOR
+	#ifndef SR_EDITOR
 	Camera *cam = mApp->mSplitMgr->mCameras.front();
 	#else
 	Camera *cam = mApp->mCamera;
@@ -569,7 +569,7 @@ void DepthOfFieldListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 			params->setNamedConstant("pixelSize", pixelSize);
 
 		// this is the camera you're using
-		#ifndef ROAD_EDITOR
+		#ifndef SR_EDITOR
 		Camera *cam = mApp->mSplitMgr->mCameras.front();
 		#else
 		Camera *cam = mApp->mCamera;
@@ -601,7 +601,7 @@ void DepthOfFieldListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat
 			params->setNamedConstant("pixelSize", pixelSize);
 
 		// this is the camera you're using
-		#ifndef ROAD_EDITOR
+		#ifndef SR_EDITOR
 		Camera *cam = mApp->mSplitMgr->mCameras.front();
 		#else
 		Camera *cam = mApp->mCamera;
@@ -736,7 +736,7 @@ void CameraBlurListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 				compositorinstance=NULL;
 			}
 			// this is the camera you're using
-			#ifndef ROAD_EDITOR
+			#ifndef SR_EDITOR
 			Camera *cam = mApp->mSplitMgr->mCameras.front();
 			#else
 			Camera *cam = mApp->mCamera;

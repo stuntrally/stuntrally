@@ -12,7 +12,7 @@ using namespace Ogre;
 
 //  ctor
 //---------------------------------------------------------------------------------------------------------------
-#ifdef ROAD_EDITOR
+#ifdef SR_EDITOR
 SplineRoad::SplineRoad(App* papp) : pApp(papp),
 #else
 SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame),
@@ -133,7 +133,7 @@ void SplineRoad::UpdLodVis(/*Camera* pCam,*/ float fBias, bool bFull)
 	const Plane& pl = mCamera->getFrustumPlane(FRUSTUM_PLANE_NEAR);
 	for (size_t seg = 0; seg < vSegs.size(); ++seg)
 	{
-		#ifdef ROAD_EDITOR
+		#ifdef SR_EDITOR
 		bool bSel = !bFull && ((vSel.size() == 0 && seg == iChosen || vSel.find(seg) != vSel.end()));
 		#endif
 		
@@ -154,7 +154,7 @@ void SplineRoad::UpdLodVis(/*Camera* pCam,*/ float fBias, bool bFull)
 			/*if (bMerge)  vis = rs.mrgLod == i;  // vis mrg test-
 			else  vis = i == 3;  /**/// check lod 0
 			
-			#ifdef ROAD_EDITOR
+			#ifdef SR_EDITOR
 			if (vis)
 			{	rs.road[i].ent->getSubEntity(0)->setCustomParameter(1, Vector4(bSel ? 1 : 0, 0,0,0));
 				if (rs.blend[i].ent)
@@ -319,7 +319,7 @@ bool SplineRoad::LoadFile(String fname, bool build)
 		Insert(INS_End, pos, 7.f, ri*360.f, 10.f +ri*5.f, 0);
 	}*/
 	
-	#ifdef ROAD_EDITOR
+	#ifdef SR_EDITOR
 	bMerge = false;  // editor off merge
 	#endif
 	newP.SetDefault();
