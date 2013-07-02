@@ -594,6 +594,10 @@ void App::InitGui()
 	for (int i=0; i < InfTrk; ++i)
 		infTrk[1][i] = mGUI->findWidget<StaticText>("2ti"+toStr(i+1), false);
 
+	edChampInfo = mGUI->findWidget<EditBox>("ChampInfo");
+	if (edChampInfo)  edChampInfo->setVisible(pSet->champ_info);
+	Btn("btnChampInfo",btnChampInfo);
+
 
 	//  tabs
 	TabPtr tChamp = mGUI->findWidget<Tab>("ChampType");

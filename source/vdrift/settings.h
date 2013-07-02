@@ -43,7 +43,7 @@ public:
 	int gauges_type;  eGraphType graphs_type;
 	int car_dbgtxtclr, car_dbgtxtcnt;
 	//  gui
-	bool tracks_sortup, cars_sortup;
+	bool tracks_sortup, cars_sortup, champ_info;
 	int tracks_view, tracks_sort, cars_sort, champ_type, car_ed_tab;
 
 	//  graphics

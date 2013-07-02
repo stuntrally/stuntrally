@@ -73,8 +73,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "gui.tracks_view", tracks_view);
 	Param(c,w, "gui.tracks_sort", tracks_sort);		Param(c,w, "gui.tracks_sortup", tracks_sortup);
-	Param(c,w, "gui.cars_sort", cars_sort);
-	Param(c,w, "gui.champ_tab", champ_type);		Param(c,w, "gui.car_ed_tab", car_ed_tab);
+	Param(c,w, "gui.cars_sort", cars_sort);			Param(c,w, "gui.car_ed_tab", car_ed_tab);
+	Param(c,w, "gui.champ_tab", champ_type);		Param(c,w, "gui.champ_info", champ_info);
 
 	Param(c,w, "hud_size.gauges", size_gauges);			Param(c,w, "hud_size.minimap", size_minimap);
 	Param(c,w, "hud_size.mini_zoom", zoom_minimap);		Param(c,w, "hud_size.mini_zoomed", mini_zoomed);
@@ -177,7 +177,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,mini_zoomed(0), mini_rotated(1), mini_terrain(0), mini_border(1)
 	,check_arrow(0),size_arrow(0.2), check_beam(1),  gauges_type(1),graphs_type(Gh_Fps)
 	,tracks_view(0), tracks_sort(0), tracks_sortup(1), cars_sort(1), cars_sortup(1)
-	,champ_type(0), car_ed_tab(0)
+	,champ_type(0), car_ed_tab(0), champ_info(1)
 	//  graphics
 	,anisotropy(4),	view_distance(2000), bFog(0)
 	,terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2), ter_tripl(0), shaders(0.5)

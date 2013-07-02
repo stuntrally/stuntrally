@@ -1094,13 +1094,13 @@
 					<Property key="TextColour" value="0.9 0.9 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="28 460 48 40">
+				<Widget type="Button" skin="Button" position="28 460 48 40" name="btnChampInfo">
 					<Property key="Colour" value="0.6 0.8 1.0"/>
 					<Property key="TextColour" value="0.6 0.8 1.0"/>
 					<Property key="Caption" value="?"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="100 448 624 80">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="100 448 624 80" name="ChampInfo">
 					<Property key="Caption" value="#{ChampInfo}"/>
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
 					<Property key="ReadOnly" value="true"/>

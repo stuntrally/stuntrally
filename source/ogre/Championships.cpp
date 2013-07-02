@@ -120,6 +120,12 @@ void App::ChampNewGame()
 	}
 }
 
+void App::btnChampInfo(WP)
+{
+	pSet->champ_info = !pSet->champ_info;
+	if (edChampInfo)  edChampInfo->setVisible(pSet->champ_info);
+}
+
 void App::tabChampType(MyGUI::TabPtr wp, size_t id)
 {
 	pSet->champ_type = id;

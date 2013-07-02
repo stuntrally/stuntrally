@@ -324,12 +324,13 @@ void App::InputBind(int key, int button, int axis)
 		OISB::AnalogAxisAction* act = (OISB::AnalogAxisAction*)action;
 		act->setProperty("AnalogEmulator", isAxis ? "" : "Linear");
 		act->setUseAbsoluteValues(/*isAxis*/false);
-		if (!full && isAxis)  // half axis inversed
-		{	act->setProperty("MinValue", -2);  // -2 0 -0.5 for half axis..
+		if (!full && isAxis)
+		{	// half axis inversed
+			act->setProperty("MinValue", -2);
 			act->setProperty("MaxValue", 0);
 			act->setProperty("InverseMul", -0.5);
 		}else{
-			act->setProperty("MinValue", full ? -1 : 0);  // -2 0 -0.5 for half axis..
+			act->setProperty("MinValue", full ? -1 : 0);
 			act->setProperty("MaxValue", 1);
 			act->setProperty("InverseMul", 1);
 		}
