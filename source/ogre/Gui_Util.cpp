@@ -390,6 +390,7 @@ void App::LNext(int rel)
 		switch (mWndTabsGame->getIndexSelected())
 		{	case 1:  listTrackChng(trkList,  LNext(trkList, rel, 11));  return;
 			case 2:	 listCarChng(carList,    LNext(carList, rel, 5));  return;
+			case 4:	 if (rel > 0)  radSimNorm(0);  else  radSimEasy(0);  return;
 			case 6:  listChampChng(liChamps, LNext(liChamps, rel, 8));  return;
 			case 7:	 listStageChng(liStages, LNext(liStages, rel, 8));  return;
 			case 8:	 if (rel > 0)  btnStageNext(0);  else  btnStagePrev(0);  return;
