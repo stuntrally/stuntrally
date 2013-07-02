@@ -247,6 +247,8 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 {
 	BaseApp::frameStarted(evt);
 	
+	UnfocusLists();
+	
 	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;
 		mGUI->destroyWidgets(vwGui);  bnQuit=0;mWndOpts=0;trkList=0; //todo: rest too..

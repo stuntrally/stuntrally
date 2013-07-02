@@ -273,7 +273,7 @@ protected:
 	//  language
 	void comboLanguage(CMB);
 	std::map<std::string, MyGUI::UString> languages; // <short name, display name>
-	bool bGuiReinit;
+	bool bGuiReinit;  void UnfocusLists();
 	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
 
 	//  init

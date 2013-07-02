@@ -172,6 +172,8 @@ bool App::frameStart(Real time)
 	}
 	//...................................................................
 
+	UnfocusLists();
+
 
 	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;

@@ -368,6 +368,26 @@ void App::btnQuit(WP)
 	mShutDown = true;
 }
 
+//  unfocus lists (would have double up/dn key input)
+void App::UnfocusLists()
+{
+	Widget* w = MyGUI::InputManager::getInstance().getKeyFocusWidget();
+	while (w)
+	{
+		//LogO(wg->getTypeName() +" "+ wg->getName());
+		w = w->getParent();
+
+		#ifdef ROAD_EDITOR
+		if (w == (Widget*)trkList)
+		#else
+		if (w == (Widget*)trkList  || w == (Widget*)carList  ||
+			w == (Widget*)liChamps || w == (Widget*)liStages || w == (Widget*)rplList)
+		#endif
+		{
+			MyGUI::InputManager::getInstance().resetKeyFocusWidget();
+			return;
+	}	}
+}
 
 //  Resize MyGUI
 //-----------------------------------------------------------------------------------

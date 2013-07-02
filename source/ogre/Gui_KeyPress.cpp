@@ -241,6 +241,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				case KC_5: t = "TestC6-temp";  break;
 				case KC_6: t = "Test10-FlatPerf";  break;
 			}
+			pSet->gui.champ_num = -1;
 			pSet->gui.track = t;  bPerfTest = false;
 			pSet->gui.track_user = false;
 			NewGame();  return true;
