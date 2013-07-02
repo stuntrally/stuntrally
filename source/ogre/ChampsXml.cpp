@@ -11,13 +11,13 @@ ChampTrack::ChampTrack() :
 {	}
 
 Champ::Champ() :
-	ver(1), diff(1), length(100.f), type(0)
+	ver(1), diff(1), length(100.f), type(0), time(0.f)
 {	}
 
 
-//  Load
+//  Load champs
 //--------------------------------------------------------------------------------------------------------------------------------------
-bool ChampsXml::LoadXml(std::string file)
+bool ChampsXml::LoadXml(std::string file, TimesXml& times)
 {
 	TiXmlDocument doc;
 	if (!doc.LoadFile(file.c_str()))  return false;
@@ -26,7 +26,7 @@ bool ChampsXml::LoadXml(std::string file)
 	if (!root)  return false;
 
 	//  clear
-	champs.clear();  trkTimes.clear();
+	champs.clear();
 
 	///  champs
 	const char* a;
@@ -59,22 +59,48 @@ bool ChampsXml::LoadXml(std::string file)
 		champs.push_back(c);
 		eCh = eCh->NextSiblingElement("championship");
 	}
+	
+	///  get champs total time (sum tracks times)
+	for (int c=0; c < champs.size(); ++c)
+	{
+		Champ& ch = champs[c];
+		float allTime = 0.f;
+		for (int i=0; i < ch.trks.size(); ++i)
+		{
+			const ChampTrack& trk = ch.trks[i];
+
+			float time = (times.trks[trk.name] * trk.laps + 2) * (1.f - trk.factor);
+			allTime += time;  // sum trk time, total champ time
+		}
+		ch.time = allTime;
+	}
+	return true;
+}
+
+//  Load times
+//--------------------------------------------------------------------------------------------------------------------------------------
+bool TimesXml::LoadXml(std::string file)
+{
+	TiXmlDocument doc;
+	if (!doc.LoadFile(file.c_str()))  return false;
+		
+	TiXmlElement* root = doc.RootElement();
+	if (!root)  return false;
+
+	//  clear
+	trks.clear();
 
 	///  tracks best time
-	TiXmlElement* eTim = root->FirstChildElement("times");
-	if (eTim)
+	const char* a;
+	TiXmlElement* eTr = root->FirstChildElement("track");
+	while (eTr)
 	{
-		//  tracks
-		TiXmlElement* eTr = eTim->FirstChildElement("track");
-		while (eTr)
-		{
-			std::string trk;  float time = 60.f;	//name="TestC4-ow" time="12.1"
-			a = eTr->Attribute("name");		if (a)  trk = std::string(a);
-			a = eTr->Attribute("time");		if (a)  time = s2r(a);
+		std::string trk;  float time = 60.f;	//name="TestC4-ow" time="12.1"
+		a = eTr->Attribute("name");		if (a)  trk = std::string(a);
+		a = eTr->Attribute("time");		if (a)  time = s2r(a);
 
-			trkTimes[trk] = time;
-			eTr = eTr->NextSiblingElement("track");
-		}
+		trks[trk] = time;
+		eTr = eTr->NextSiblingElement("track");
 	}
 	return true;
 }

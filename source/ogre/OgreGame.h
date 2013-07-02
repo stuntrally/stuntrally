@@ -148,7 +148,7 @@ protected:
 		*hudAbs,*hudTcs, *hudWarnChk,*hudWonPlace, *hudOpp[5][3],*hudOppB;
 	Ogre::Overlay *ovCountdown,*ovNetMsg, *ovCam, *ovWarnWin, *ovOpp, *ovAbsTcs, *ovCarDbg,*ovCarDbgTxt,*ovCarDbgExt;
 
-	Ogre::String GetTimeString(float time) const;
+	Ogre::String GetTimeString(float time) const, GetTimeShort(float time) const;
 	void CreateHUD(bool destroy), ShowHUD(bool hideAll=false), UpdMiniTer(), UpdDbgTxtClr();
 	Ogre::Vector3 projectPoint(const Ogre::Camera* cam, const Ogre::Vector3& pos);  // 2d xy, z - out info
 	MyGUI::TextBox* CreateNickText(int carId, Ogre::String text);
@@ -288,7 +288,7 @@ protected:
 	TracksXml tracksXml;  CarsXml carsXml;
 	void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
 	void updTrkListDim(), updChampListDim();
-	const static int TcolW[32],TcolC[6],ChColW[8],StColW[8];
+	const static int TcolW[32],TcolC[6],ChColW[9],StColW[8];
 	const static Ogre::String clrsDiff[9],clrsRating[5],clrsLong[10];
 
 	void edTrkFind(MyGUI::EditPtr),edRplFind(MyGUI::EditPtr);
@@ -315,7 +315,7 @@ protected:
 	void MainMenuBtn(MyGUI::WidgetPtr), MenuTabChg(MyGUI::TabPtr, size_t);  bool loadReadme;
 
 	///  championships
-	ChampsXml champs;  ProgressXml progress;
+	ChampsXml champs;  TimesXml times;  ProgressXml progress;
 	void ChampsXmlLoad(), ProgressSave(bool upgGui=true);
 	void ChampNewGame(), ChampLoadEnd(), ChampsListUpdate(),
 		ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);

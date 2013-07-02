@@ -267,13 +267,26 @@ String App::GetTimeString(float time) const
 	int min = (int) time / 60;
 	float secs = time - min*60;
 
-	if (time != 0.0)
+	if (time != 0.f)
 	{
 		String ss;
 		ss = toStr(min)+":"+fToStr(secs,2,5,'0');
 		return ss;
 	}else
 		return "-:--.---";
+}
+String App::GetTimeShort(float time) const
+{
+	int min = (int) time / 60;
+	float secs = time - min*60;
+
+	if (time != 0.0)
+	{
+		String ss;
+		ss = toStr(min)+":"+fToStr(secs,0,2,'0');
+		return ss;
+	}else
+		return "-:--";
 }
 
 

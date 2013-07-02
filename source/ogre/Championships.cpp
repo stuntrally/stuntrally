@@ -15,13 +15,14 @@ using namespace MyGUI;
 //---------------------------------------------------------------------
 void App::ChampsXmlLoad()
 {
-	champs.LoadXml(PATHMANAGER::GameConfigDir() + "/championships.xml");
+	times.LoadXml(PATHMANAGER::GameConfigDir() + "/times.xml");
+	champs.LoadXml(PATHMANAGER::GameConfigDir() + "/championships.xml", times);
 	LogO(String("**** Loaded Championships: ") + toStr(champs.champs.size()));
 
 	/* stats */
 	float time = 0.f;  int trks = 0;
-	for (std::map<std::string, float>::const_iterator it = champs.trkTimes.begin();
-		it != champs.trkTimes.end(); ++it)
+	for (std::map<std::string, float>::const_iterator it = times.trks.begin();
+		it != times.trks.end(); ++it)
 	{
 		const string& trk = (*it).first;
 		if (trk.substr(0,4) != "Test")
@@ -30,7 +31,7 @@ void App::ChampsXmlLoad()
 				time += (*it).second;
 			++trks;
 	}	}
-	LogO("Total tracks: "+ toStr(trks) + ", total time: "+ GetTimeString(time/60.f)+" h:m");
+	LogO("Total tracks: "+ toStr(trks) + ", total time: "+ GetTimeShort(time/60.f)+" h:m");
 	/**/
 	
 	ProgressXml oldprog;
@@ -138,7 +139,7 @@ void App::ChampsListUpdate()
 {
 	const char clrCh[7][8] = {
 	// 0 tutorial  1 tutorial hard  // 2 normal  3 hard  4 very hard  // 5 scenery  6 test
-		"#FFFFA0", "#E0E000",   "#A0F0FF", "#60C0FF", "#8080D0",   "#80FF80", "#FFA0A0"  };
+		"#FFFFA0", "#E0E000",   "#A0F0FF", "#60C0FF", "#A0A0E0",   "#80FF80", "#909090"  };
 
 	liChamps->removeAllItems();  int n=1;  size_t sel = ITEM_NONE;
 	for (int i=0; i < champs.champs.size(); ++i,++n)
@@ -153,9 +154,9 @@ void App::ChampsListUpdate()
 			liChamps->setSubItemNameAt(1,l, clr+ ch.name.c_str());
 			liChamps->setSubItemNameAt(2,l, clrsDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
 			liChamps->setSubItemNameAt(3,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ toStr(ntrks));
-			liChamps->setSubItemNameAt(4,l, clr+ fToStr(100.f * pc.curTrack / ntrks,0,3)+" %");
-			liChamps->setSubItemNameAt(5,l, clr+ fToStr(pc.score,1,5));
-			//length,time;
+			liChamps->setSubItemNameAt(4,l, clrsDiff[std::min(8,int(ch.time/3.f/60.f))]+ GetTimeShort(ch.time));
+			liChamps->setSubItemNameAt(5,l, clr+ fToStr(100.f * pc.curTrack / ntrks,0,3)+" %");
+			liChamps->setSubItemNameAt(6,l, clr+ fToStr(pc.score,1,5));
 			if (n == pSet->gui.champ_num)  sel = l+1;
 	}	}
 	liChamps->setIndexSelected(sel);
@@ -169,11 +170,11 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 	
 	//  update champ stages
 	liStages->removeAllItems();
-	float allTime = 0.f;  int n=1;
 
 	int pos = s2i(liChamps->getItemNameAt(id))-1;
 	if (pos < 0 || pos >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
 
+	int n = 1;
 	const Champ& ch = champs.champs[pos];
 	for (int i=0; i < ch.trks.size(); ++i,++n)
 	{
@@ -185,13 +186,12 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 		int id = tracksXml.trkmap[trk.name];  // if (id > 0)
 		const TrackInfo& ti = tracksXml.trks[id-1];
 
-		float time = (champs.trkTimes[trk.name] * trk.laps + 2) * (1.f - trk.factor);
-		allTime += time;  // sum trk time, total champ time
+		float time = (times.trks[trk.name] * trk.laps + 2) * (1.f - trk.factor);
 
 		liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
 		liStages->setSubItemNameAt(3,l, clrsDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
 
-		liStages->setSubItemNameAt(4,l, "#80C0F0"+GetTimeString(time));  //toStr(trk.laps)
+		liStages->setSubItemNameAt(4,l, "#80C0F0"+GetTimeShort(time));  //toStr(trk.laps)
 		liStages->setSubItemNameAt(5,l, "#E0F0FF"+fToStr(progress.champs[pos].trks[i].score,1,5));
 	}
 	//  descr
@@ -208,7 +208,7 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 	txt = (TextBox*)mWndGame->findWidget("valChDist");
 	if (txt)  txt->setCaption(/*toStr(ch.length)*/"-");  // sum from find tracks..
 	txt = (TextBox*)mWndGame->findWidget("valChTime");
-	if (txt)  txt->setCaption(GetTimeString(allTime));
+	if (txt)  txt->setCaption(GetTimeString(ch.time));
 
 	txt = (TextBox*)mWndGame->findWidget("valChProgress");
 	if (txt)  txt->setCaption(fToStr(100.f * progress.champs[pos].curTrack / champs.champs[pos].trks.size(),1,5));
@@ -359,7 +359,7 @@ void App::ChampionshipAdvance(float timeCur)
 	LogO("|| --- Champ end: " + ch.name);
 
 	///  compute track :score:  --------------
-	float timeBest = champs.trkTimes[trk.name];
+	float timeBest = times.trks[trk.name];
 	if (timeBest < 1.f)
 	{	LogO("|| Error: Track has no best time !");  timeBest = 10.f;	}
 	timeBest *= trk.laps;

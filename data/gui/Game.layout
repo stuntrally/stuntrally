@@ -1066,13 +1066,13 @@
 						<Property key="Caption" value="#60C0FF#{Diff4}"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 514 -8">
-						<Property key="Caption" value="#8080D0#{Diff5}"/>
+						<Property key="Caption" value="#A0A0E0#{Diff5}"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 514 -8">
 						<Property key="Caption" value="#80FF80#{Scenery}"/>
 					</Widget>
 					<Widget type="TabItem" skin="aaa" position="2 24 514 -8">
-						<Property key="Caption" value="#FFA0A0Test"/>
+						<Property key="Caption" value="#909090Test"/>
 					</Widget>
 				</Widget>
 				<Widget type="EditBox" skin="EditBoxEmpty" position="40 268 684 50" name="ChampDescr">

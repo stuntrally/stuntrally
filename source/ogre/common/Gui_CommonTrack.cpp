@@ -165,7 +165,7 @@ const int wi = 26;
 const int App::TcolW[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
 #ifndef ROAD_EDITOR
 const int App::TcolC[6] = {34, 17, 35, 40, 20};
-const int App::ChColW[8] = {30, 180, 100, 60, 80, 60, 40};
+const int App::ChColW[9] = {30, 180, 120, 50, 80, 80, 60, 40};
 const int App::StColW[8] = {30, 180, 100, 90, 80, 70};
 #endif
 
@@ -378,7 +378,7 @@ void App::updChampListDim()
 	for (int c=0; c < cnt; ++c)  sum += ChColW[c];
 	for (int c=0; c < cnt; ++c)
 	{
-		int w = c==cnt-1 ? 18 : float(ChColW[c]) / sum * 0.57/*width*/ * wi.width * 0.97/*frame*/;
+		int w = c==cnt-1 ? 18 : float(ChColW[c]) / sum * 0.72/*width*/ * wi.width * 0.97/*frame*/;
 		liChamps->setColumnWidthAt(c, w);
 		sw += w;
 	}

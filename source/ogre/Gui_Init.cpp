@@ -618,6 +618,7 @@ void App::InitGui()
 	li->addColumn(TR("#{Name}"), ChColW[c++]);
 	li->addColumn(TR("#{Difficulty}"), ChColW[c++]);
 	li->addColumn(TR("#{Stages}"), ChColW[c++]);
+	li->addColumn(TR("#{Time} m:s"), ChColW[c++]);
 	li->addColumn(TR("#{Progress}"), ChColW[c++]);
 	li->addColumn(TR("#{Score}"), ChColW[c++]);
 	li->addColumn(" ", ChColW[c++]);
@@ -634,7 +635,7 @@ void App::InitGui()
 	li->addColumn(TR("#{Track}"), StColW[c++]);
 	li->addColumn(TR("#{Scenery}"), StColW[c++]);
 	li->addColumn(TR("#{Difficulty}"), StColW[c++]);
-	li->addColumn(TR("#{Time}"), StColW[c++]);
+	li->addColumn(TR("#{Time} m:s"), StColW[c++]);
 	li->addColumn(TR("#{Score}"), StColW[c++]);
 	li->addColumn(" ", StColW[c++]);
 	liStages = li;

@@ -26,22 +26,31 @@ public:
 	int ver;  // ver, if changed reset progress..
 	float length;  // stats to display
 	int type;  // tutorial, champ easy, normal etc
+	float time;  // total computed (sum all tracks from times.xml)
 
 	std::vector<ChampTrack> trks;
 	Champ();
 };
 
 
-///  all championships and tutorials
+//-----  track times (1 lap, best time)
+class TimesXml
+{
+public:
+	std::map<std::string, float> trks;
+	
+	bool LoadXml(std::string file);
+};
+
+
+///-----  all championships and tutorials
 //
 class ChampsXml
 {
 public:
 	std::vector<Champ> champs;
-	std::map<std::string, float> trkTimes;  // track times (1 lap, best time)
 	
-	//  methods
-	bool LoadXml(std::string file);
+	bool LoadXml(std::string file, TimesXml& times);
 };
 
 
@@ -68,7 +77,8 @@ public:
 	ProgressChamp();
 };
 
-///  progress on champs,tuts and their tracks
+
+///-----  progress on champs,tuts and their tracks
 //
 class ProgressXml
 {
