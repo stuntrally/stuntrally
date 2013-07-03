@@ -43,7 +43,7 @@
 
 <!--  Tutorials Hard  -->
 
-	<championship name="Tutorial Curly" ver="1" difficulty="3" type="0" 
+	<championship name="Tutorial Curly" ver="1" difficulty="3" type="1" 
 			descr="Tutorial with very tiny but curly tracks. Requires a lot of steering.">
 		<track name="I12-Beach"		laps="1" factor="0.1" />
 		<track name="G4-River"		laps="1" factor="0.1" />
@@ -118,6 +118,14 @@
 		<track name="T2-RedOakPark"	laps="1" factor="0.1" />
 	</championship>
 
+	<championship name="Bumpy shorts" ver="1" difficulty="4" type="2" 
+			descr="Few short, but very bumpy tracks.">
+		<track name="M2-Bumps"		laps="1" factor="0.1" />
+		<track name="D2-Mntn"		laps="1" factor="0.1" />
+		<track name="V4-Spikeland"	laps="1" factor="0.1" />
+		<track name="I10-Treasure"	laps="1" factor="0.1" />
+	</championship>
+
 	<championship name="Long trip" ver="1" difficulty="3" type="2" 
 			descr="The longest rally tracks, for those who want to drive a lot, in nice sceneries.">
 		<track name="F15-ForestTrip" laps="1" factor="0.2" />
@@ -130,6 +138,15 @@
 		<track name="A6-Cannon"		laps="1" factor="0.2" />
 		<track name="0W6-88"		laps="1" factor="0.2" />
 		<track name="G1-Long"		laps="1" factor="0.2" />
+	</championship>
+
+	<championship name="Curly shorts" ver="1" difficulty="3" type="2" 
+			descr="Short, curly and tricky tracks with sharp turns.">
+		<track name="F3-Snail"		laps="1" factor="0.1" />
+		<track name="O2-Mouse"		laps="1" factor="0.1" />
+		<track name="I12-Beach"		laps="1" factor="0.1" />
+		<track name="D11-PersianCity" laps="1" factor="0.1" />
+		<track name="J18-Tiny"		laps="1" factor="0.15" />
 	</championship>
 
 	<championship name="Fancy circles" ver="3" difficulty="3" type="2" 
@@ -195,14 +212,6 @@
 		<track name="F10-MntnTrail"	laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Bumpy shorts" ver="1" difficulty="4" type="3" 
-			descr="Few short, but very bumpy tracks.">
-		<track name="M2-Bumps"		laps="1" factor="0.1" />
-		<track name="D2-Mntn"		laps="1" factor="0.1" />
-		<track name="V4-Spikeland"	laps="1" factor="0.1" />
-		<track name="I10-Treasure"	laps="1" factor="0.1" />
-	</championship>
-
 	<championship name="Frenzy fellow" ver="4" difficulty="4" type="3" 
 			descr="Curly tracks, sometimes banked, frequently changing directions. Require lots of steering.">
 		<track name="S2-Frenzy"		laps="1" factor="0.1" />
@@ -211,15 +220,6 @@
 		<track name="S8-Frenzy2slow" laps="1" factor="0.1" />
 		<track name="F9-MadMntn"	laps="1" factor="0.1" />
 		<track name="C1-Hairpins"	laps="1" factor="0.1" />
-	</championship>
-
-	<championship name="Curly shorts" ver="1" difficulty="3" type="3" 
-			descr="Short, curly and tricky tracks with sharp turns.">
-		<track name="F3-Snail"		laps="1" factor="0.1" />
-		<track name="O2-Mouse"		laps="1" factor="0.1" />
-		<track name="I12-Beach"		laps="1" factor="0.1" />
-		<track name="D11-PersianCity" laps="1" factor="0.1" />
-		<track name="J18-Tiny"		laps="1" factor="0.15" />
 	</championship>
 
 	<championship name="Extreme weather" ver="2" difficulty="4" type="3" 
