@@ -276,6 +276,7 @@ void App::btnChampStageStart(WP)
 	ProgressChamp& pc = progress.champs[chId];
 	const Champ& ch = champs.champs[chId];
 	bool last = pc.curTrack == ch.trks.size();
+
 	LogO("|| This was stage " + toStr(pc.curTrack) + "/" + toStr(ch.trks.size()) + " btn");
 	if (last)
 	{	//  show end window, todo: start particles..

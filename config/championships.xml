@@ -21,7 +21,7 @@
 	</championship>
 
 	<championship name="Tutorial Bridges" ver="1" difficulty="2" type="0" 
-			descr="Easy tutorial tracks with bridges.">
+			descr="Tutorial tracks with bridges. Medium length.">
 		<track name="D4-SBridge"	laps="1" factor="0.1" />
 		<track name="S4-Hills"		laps="1" factor="0.1" />
 	</championship>
@@ -30,9 +30,7 @@
 			descr="Tutorial with short tracks having hilly or bumpy terrain.">
 		<track name="F11-Dawn"		laps="1" factor="0.1" />
 		<track name="J1-T"			laps="1" factor="0.1" />
-		<!--<track name="M1-Hills"		laps="1" factor="0.1" />-->
 		<track name="D1-simple"		laps="1" factor="0.1" />
-		<!--G3-Butterfly-->
 	</championship>
 
 	<championship name="Tutorial Asphalt" ver="1" difficulty="2" type="0" 
