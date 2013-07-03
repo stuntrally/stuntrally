@@ -49,6 +49,22 @@ void App::createScene()
 	//  championships.xml, progress.xml
 	ChampsXmlLoad();
 
+	//  user.xml
+	#if 0
+	userXml.LoadXml(PATHMANAGER::UserConfigDir() + "/user.xml");
+	for (int i=0; i < tracksXml.trks.size(); ++i)
+	{
+		const TrackInfo& ti = tracksXml.trks[i];
+		if (userXml.trkmap[ti.name]==0)
+		{	// not found, add
+			UserTrkInfo tu;  tu.name = ti.name;
+
+			userXml.trks.push_back(tu);
+			userXml.trkmap[ti.name] = userXml.trks.size();
+	}	}
+	userXml.SaveXml(PATHMANAGER::UserConfigDir() + "/user.xml");
+	#endif
+
 	//  fluids.xml
 	fluidsXml.LoadXml(PATHMANAGER::Data() + "/materials2/fluids.xml");
 	sc->pFluidsXml = &fluidsXml;

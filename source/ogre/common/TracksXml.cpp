@@ -7,13 +7,6 @@ using namespace Ogre;
 using namespace std;
 
 
-TrackInfo::TrackInfo()
-	:n(-1),crtver(0.0),name("none"),scenery("none"),author("none")
-	,fluids(0),bumps(0),jumps(0),loops(0),pipes(0),banked(0),frenzy(0),longn(0),objects(0)
-	,diff(0),rating(0), rateuser(0),drivenlaps(0)
-{	}
-
-
 Date s2dt(const char* a)
 {
 	Date d;  d.day=0; d.month=0; d.year=0;
@@ -23,6 +16,79 @@ Date s2dt(const char* a)
 string dt2s(const Date& dt)
 {
 	return fToStr(dt.day,0,2)+"-"+fToStr(dt.month,0,2)+"-"+fToStr(dt.year,0,2);
+}
+
+
+//-------------------------------------------------------------------------------------
+TrackInfo::TrackInfo()
+	:n(-1),crtver(0.0),name("none"),scenery("none"),author("none")
+	,fluids(0),bumps(0),jumps(0),loops(0),pipes(0),banked(0),frenzy(0),longn(0),objects(0)
+	,diff(0),rating(0)
+{	}
+
+UserTrkInfo::UserTrkInfo()
+	:name("") //last()
+	,rating(0), laps(0), time(0)
+{	}
+
+
+///  User Load
+///------------------------------------------------------------------------------------
+
+bool UserXml::LoadXml(Ogre::String file)
+{
+	TiXmlDocument doc;
+	if (!doc.LoadFile(file.c_str()))  return false;
+		
+	TiXmlElement* root = doc.RootElement();
+	if (!root)  return false;
+
+	//  clear
+	trks.clear();  trkmap.clear();
+
+	//  tracks
+	const char* a;  //int i=1;  //0 = none
+	TiXmlElement* eTrk = root->FirstChildElement("track");
+	while (eTrk)
+	{
+		UserTrkInfo t;
+		a = eTrk->Attribute("n");		if (a)  t.name = string(a);
+
+		a = eTrk->Attribute("date");	if (a)  t.last = s2dt(a);
+		a = eTrk->Attribute("rate");	if (a)  t.rating = s2i(a);
+		a = eTrk->Attribute("laps");	if (a)  t.laps = s2i(a);
+		a = eTrk->Attribute("time");	if (a)  t.time = s2r(a);
+
+		trks.push_back(t);
+		trkmap[t.name] = trks.size();  //i++;
+		eTrk = eTrk->NextSiblingElement("track");
+	}
+	return true;
+}
+
+
+///  User Save
+///------------------------------------------------------------------------------------
+
+bool UserXml::SaveXml(Ogre::String file)
+{
+	TiXmlDocument xml;	TiXmlElement root("tracks");
+
+	for (int i=0; i < trks.size(); ++i)
+	{
+		const UserTrkInfo& t = trks[i];
+		TiXmlElement trk("t");
+		trk.SetAttribute("n",		t.name.c_str());
+
+		trk.SetAttribute("date",	dt2s(t.last).c_str());
+		trk.SetAttribute("rate",	toStrC( t.rating ));
+		trk.SetAttribute("laps",	toStrC( t.laps ));
+		trk.SetAttribute("time",	toStrC( t.time ));
+		
+		root.InsertEndChild(trk);
+	}
+	xml.InsertEndChild(root);
+	return xml.SaveFile(file.c_str());
 }
 
 
@@ -63,53 +129,12 @@ bool TracksXml::LoadXml(Ogre::String file)
 
 		a = eTrk->Attribute("diff");		if (a)  t.diff = s2i(a);
 		a = eTrk->Attribute("rating");		if (a)  t.rating = s2i(a);
-		a = eTrk->Attribute("rateuser");	if (a)  t.rateuser = s2i(a);
-		a = eTrk->Attribute("drivenlaps");	if (a)  t.drivenlaps = s2i(a);
 
 		trks.push_back(t);
 		trkmap[t.name] = i++;
 		eTrk = eTrk->NextSiblingElement("track");
 	}
 	return true;
-}
-
-
-//  Save  (not used yet)
-//--------------------------------------------------------------------------------------------------------------------------------------
-
-bool TracksXml::SaveXml(Ogre::String file)
-{
-	TiXmlDocument xml;	TiXmlElement root("tracks");
-
-	for (int i=0; i < trks.size(); ++i)
-	{
-		const TrackInfo& t = trks[i];
-		TiXmlElement trk("track");
-
-		trk.SetAttribute("n",			toStrC( t.n ));
-		trk.SetAttribute("name",		t.name.c_str());
-		trk.SetAttribute("created",		dt2s(t.created).c_str());
-		trk.SetAttribute("crtver",		toStrC( t.crtver ));
-		trk.SetAttribute("modified",	dt2s(t.modified).c_str());
-		trk.SetAttribute("scenery",		t.scenery.c_str());
-		trk.SetAttribute("author",		t.author.c_str());
-		
-		trk.SetAttribute("fluids",		toStrC( t.fluids ));
-		trk.SetAttribute("bumps",		toStrC( t.bumps ));		trk.SetAttribute("jumps",		toStrC( t.jumps ));
-		trk.SetAttribute("loops",		toStrC( t.loops ));		trk.SetAttribute("pipes",		toStrC( t.pipes ));
-		trk.SetAttribute("banked",		toStrC( t.banked ));	trk.SetAttribute("frenzy",		toStrC( t.frenzy ));
-		trk.SetAttribute("long",		toStrC( t.longn ));
-		trk.SetAttribute("objects",		toStrC( t.objects ));
-
-		trk.SetAttribute("diff",		toStrC( t.diff ));
-		trk.SetAttribute("rating",		toStrC( t.rating ));
-		trk.SetAttribute("rateuser",	toStrC( t.rateuser ));
-		trk.SetAttribute("drivenlaps",	toStrC( t.drivenlaps ));
-		root.InsertEndChild(trk);
-	}
-
-	xml.InsertEndChild(root);
-	return xml.SaveFile(file.c_str());
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------
@@ -122,7 +147,7 @@ CarInfo::CarInfo()
 {	}
 
 ///  Load  cars.xml
-//--------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 
 bool CarsXml::LoadXml(Ogre::String file)
 {

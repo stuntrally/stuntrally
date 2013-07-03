@@ -285,7 +285,7 @@ protected:
 	MyGUI::StaticTextPtr valTrkNet, stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
-	TracksXml tracksXml;  CarsXml carsXml;
+	TracksXml tracksXml;  CarsXml carsXml;  UserXml userXml;  //xml
 	void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
 	void updTrkListDim(), updChampListDim();
 	const static int TcolW[32],TcolC[6],ChColW[9],StColW[8];
@@ -315,7 +315,7 @@ protected:
 	void MainMenuBtn(MyGUI::WidgetPtr), MenuTabChg(MyGUI::TabPtr, size_t);  bool loadReadme;
 
 	///  championships
-	ChampsXml champs;  TimesXml times;  ProgressXml progress;
+	ChampsXml champs;  TimesXml times;  ProgressXml progress;  //xml
 	void ChampsXmlLoad(), ProgressSave(bool upgGui=true);
 	void ChampNewGame(), ChampLoadEnd(), ChampsListUpdate(),
 		ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);

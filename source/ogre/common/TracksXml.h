@@ -29,7 +29,6 @@ public:
 	// track characteristics  (char)
 	int fluids,bumps,jumps,loops,pipes,banked,frenzy,longn,objects;
 	int diff, rating;
-	int rateuser, drivenlaps;  // todo: user info ...
 
 	TrackInfo();
 };
@@ -40,6 +39,36 @@ class TracksXml
 {
 public:
 	std::vector<TrackInfo> trks;
+	std::map<std::string, int> trkmap;  // 0 if not found
+	
+	//  methods
+	//TracksXml();  void Default();
+	bool LoadXml(Ogre::String file);
+};
+
+
+//--------------------------------------------------------------------
+
+//  user Track's info
+//  rating, stats ...
+
+class UserTrkInfo
+{
+public:
+	std::string name;
+	int rating;
+	Date last;  // driven
+	int laps;  float time;
+
+	UserTrkInfo();
+};
+
+
+//  user xml (tracks)
+class UserXml
+{
+public:
+	std::vector<UserTrkInfo> trks;
 	std::map<std::string, int> trkmap;  // 0 if not found
 	
 	//  methods
