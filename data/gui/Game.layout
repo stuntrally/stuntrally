@@ -1435,7 +1435,8 @@
 			<Property key="TextColour" value="0.555556 1 0.994792"/>
 			<Property key="Caption" value="#{ChampEndCongrats}"/>
 		</Widget>
-		<Widget type="ImageBox" skin="ImageBox" position="208 112 128 128">
+        <Widget type="ImageBox" skin="ImageBox" position="200 56 128 256" name="ChampEndImg">
+			<Property key="ImageCoord" value="0 0 128 256"/>
 			<Property key="ImageTexture" value="ico_champ.png"/>
 		</Widget>
 	</Widget>

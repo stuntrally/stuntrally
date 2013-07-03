@@ -157,7 +157,7 @@ void App::ChampsListUpdate()
 			liChamps->setSubItemNameAt(4,l, clrsDiff[std::min(8,int(ch.time/3.f/60.f))]+ GetTimeShort(ch.time));
 			liChamps->setSubItemNameAt(5,l, clr+ fToStr(100.f * pc.curTrack / ntrks,0,3)+" %");
 			liChamps->setSubItemNameAt(6,l, clr+ fToStr(pc.score,1,5));
-			if (n == pSet->gui.champ_num)  sel = l+1;
+			if (n-1 == pSet->gui.champ_num)  sel = l;
 	}	}
 	liChamps->setIndexSelected(sel);
 }
@@ -278,8 +278,12 @@ void App::btnChampStageStart(WP)
 	bool last = pc.curTrack == ch.trks.size();
 	LogO("|| This was stage " + toStr(pc.curTrack) + "/" + toStr(ch.trks.size()) + " btn");
 	if (last)
-	{	//  show end window
+	{	//  show end window, todo: start particles..
 		mWndChampStage->setVisible(false);
+		// tutorial, tutorial hard, normal, hard, very hard, scenery, test
+		const int ui[8] = {0,1,2,3,4,5,0,0};
+		if (imgChampEnd)
+			imgChampEnd->setImageCoord(IntCoord(ui[std::min(7, std::max(0, ch.type))]*128,0,128,256));
 		mWndChampEnd->setVisible(true);
 		return;
 	}

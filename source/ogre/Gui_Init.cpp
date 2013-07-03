@@ -657,6 +657,7 @@ void App::InitGui()
 	edChampStage = (EditBox*)mWndChampStage->findWidget("ChampStageText");
 	edChampEnd = (EditBox*)mWndChampEnd->findWidget("ChampEndText");
 	imgChampStage = (ImageBox*)mWndChampStage->findWidget("ChampStageImg");
+	imgChampEnd = (ImageBox*)mWndChampEnd->findWidget("ChampEndImg");
 
 
 	//  netw end list

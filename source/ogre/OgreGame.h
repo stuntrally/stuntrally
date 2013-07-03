@@ -324,7 +324,7 @@ protected:
 	void listChampChng(MyGUI::MultiList2* li, size_t pos), listStageChng(MyGUI::MultiList2* li, size_t pos);
 	void btnChampStart(WP), btnChampStageBack(WP), btnChampStageStart(WP), btnChampEndClose(WP), btnNetEndClose(WP);
 	void btnStageNext(WP), btnStagePrev(WP);  MyGUI::StaticText* valStageNum;  MyGUI::ButtonPtr btChampStage;
-	MyGUI::EditBox* edChampStage, *edChampEnd,*edChampInfo;  MyGUI::ImageBox* imgChampStage;
+	MyGUI::EditBox* edChampStage, *edChampEnd,*edChampInfo;  MyGUI::ImageBox* imgChampStage,*imgChampEnd;
 	void tabChampType(MyGUI::TabPtr wp, size_t id), btnChampInfo(WP);
 	
 
