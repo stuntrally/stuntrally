@@ -22,6 +22,12 @@ material sky/dust
     texture sky_dust.jpg
 }
 
+material sky/duskred
+{
+    parent base_sky
+    texture duskred.jpg
+}
+
 material sky/white
 {
     parent base_sky

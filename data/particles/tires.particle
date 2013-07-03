@@ -390,3 +390,112 @@ particle_system Smoke
    	    rate 0.10
     }
 }
+
+
+//  Mars  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+particle_system MarsDust
+{
+	material			MarsDust
+	quota				1000
+	particle_width		2.6
+	particle_height		2.6
+	cull_each			true
+	//false
+	billboard_type		point
+	//renderer			billboard
+    sorted				true
+
+	emitter Box
+	{
+		angle	30
+		position	0 0.2 0
+		direction	0 1 0
+		width	0.25
+		height	0.35
+		depth	0.45  //h
+
+		colour				0.7 0.2 0.1  0.5
+		colour_range_start	0.6 0.2 0.1  0.7
+		colour_range_end	0.8 0.3 0.2  0.3
+
+		//emission_rate	20
+		velocity_min	0.0
+		velocity_max	0.4
+		time_to_live_min	4
+		time_to_live_max	6
+	}
+
+	affector Scaler
+	{
+		rate	0.1
+	}
+
+	affector ColourFader
+	{
+		red		-0.018
+		green	-0.021
+		blue	-0.027
+		alpha	-0.160
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 360
+		rotation_speed_range_start -70
+		rotation_speed_range_end 70
+	}
+
+	//affector LinearForce
+	//{
+	//	force_vector	0 -1.4 0
+	//	force_application	add
+	//}
+}
+
+//  Mars mud
+particle_system MarsMud
+{
+	material			FluidMudSoft
+	quota				1000
+	particle_width		0.4
+	particle_height		0.4
+	cull_each			false
+	billboard_type		point
+	//renderer			billboard
+    //sorted			true
+
+	emitter Box
+	{
+		angle	10
+		position	0 0.2 0
+		direction	0 1 0
+		width	0.4
+		height	0.4
+		depth	0.3  //h
+
+		colour				0.9 0.3 0.4 0.8
+		colour_range_start	0.9 0.3 0.4 0.7
+		colour_range_end	1.0 0.4 0.5 0.9
+
+		//emission_rate	20
+		velocity_min	1.1
+		velocity_max	2.8
+		time_to_live_min	0.5
+		time_to_live_max	1
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 360
+		rotation_speed_range_start -50
+		rotation_speed_range_end 50
+	}
+	affector LinearForce
+	{
+		force_vector	0 -9.0 0
+		force_application	add
+	}
+}

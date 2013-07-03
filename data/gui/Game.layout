@@ -929,14 +929,14 @@
 							<Property key="TextColour" value="0.6 0.8 1"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="480 387 124 24" name="valNetPassword">
+						<Widget type="TextBox" skin="TextBox" position="480 386 124 24" name="valNetPassword">
 							<Property key="Caption" value="#{NetPassword}:"/>
-							<Property key="TextColour" value="0.6 0.9 1"/>
+							<Property key="TextColour" value="0.8 0.8 0.6"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="596 385 124 24" name="edNetPassword">
-							<Property key="Colour" value="0.6 0.8 1"/>
-							<Property key="TextColour" value="0.5 0.1 0.1"/>
+						<Widget type="EditBox" skin="EditBox" position="596 383 124 24" name="edNetPassword">
+							<Property key="Colour" value="0.8 0.8 0.6"/>
+							<Property key="TextColour" value="1 1 0.6"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
 						</Widget>
 						<Widget type="Button" skin="Button" position="596 426 124 32" name="btnNetReady">

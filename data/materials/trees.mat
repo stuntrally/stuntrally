@@ -407,3 +407,73 @@ material rock_w5v  //w
 	diffuse 1.0 1.02 1.02
 	specular 0.9 0.9 0.9 24
 }
+
+
+//  Mars Rocks
+//------------------------------------------------------------------
+
+material rock_R2
+{
+    parent base
+	diffuseMap rock_R2.jpg
+	normalMap rock_n2_norm.png
+	terrain_light_map true
+	ambient 1.3 1.0 1.0
+	diffuse 1.0 0.8 0.7
+	//specular 1.5 0.5 0.5 32
+}
+
+material rock_R3
+{
+    parent base
+	diffuseMap rock_R3.jpg
+	normalMap rock_n3_norm.png
+	terrain_light_map true
+	ambient 1.3 1.0 1.0
+	diffuse 1.0 0.8 0.7
+	//specular 1.5 0.5 0.5 32
+}
+
+material rock_R4
+{
+    parent base
+	diffuseMap rock_R4.jpg
+	normalMap rock_n4_norm.png
+	terrain_light_map true
+	ambient 1.3 1.0 1.0
+	diffuse 1.0 0.8 0.7
+	//specular 1.5 0.5 0.5 32
+}
+
+material rock_r4
+{
+    parent base
+	diffuseMap rock_R4.jpg
+	normalMap rock_n4_norm.png
+	terrain_light_map true
+	ambient 1.3 1.0 1.0
+	diffuse 1.0 0.8 0.7
+	//specular 1.5 0.5 0.5 32
+}
+
+material rock_R5
+{
+    parent base
+	diffuseMap rock_R5.jpg
+	normalMap rock_n5_norm.png
+	terrain_light_map true
+	ambient 1.3 1.0 1.0
+	diffuse 1.0 0.8 0.7
+	//specular 1.5 0.5 0.5 32
+}
+
+material rock_R5f
+{
+    parent base
+	diffuseMap rock_R5.jpg
+	normalMap rock_n5_norm.png
+	terrain_light_map true
+	ambient 1.3 1.1 1.0
+	diffuse 1.0 0.8 0.7
+	//specular 0.9 0.9 0.9 24
+}

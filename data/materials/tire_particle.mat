@@ -42,3 +42,13 @@ material Smoke
 	soft_particles true
     diffuse_address_mode clamp
 }
+
+material MarsDust
+{
+	parent Base_particle
+	diffuseMap dust.png
+	scene_blend alpha_blend
+	soft_particles true
+    diffuse_address_mode clamp
+}
+
