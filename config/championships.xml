@@ -8,41 +8,64 @@
 <!--========================================================================================================================-->
 
 	<championship name="Tutorial Basic" ver="1" difficulty="1" type="0" 
-			descr="Basic tutorial on simplest tracks. One lap on each track. To learn different road surfaces.">
+			descr="Basic tutorial on simplest tracks. One lap on each track. To learn different road surfaces: gravel, wet gravel, snow.">
 		<track name="J3-Rocky"		laps="1" factor="0.1" />
 		<track name="F1-Slippery"	laps="1" factor="0.1" />
 		<track name="0W1-cross"		laps="1" factor="0.1" />
 	</championship>
 
+	<championship name="Tutorial Banked" ver="1" difficulty="1" type="0" 
+			descr="Easy tutorial with short tracks having banked turns.">
+		<track name="F7-blur3"		laps="1" factor="0.1" />
+		<track name="F6-DC3"		laps="1" factor="0.1" />
+	</championship>
+
 	<championship name="Tutorial Bridges" ver="1" difficulty="2" type="0" 
-			descr="Easy, medium length tutorial on tracks with bridges and bumpy terrain.">
+			descr="Easy tutorial tracks with bridges.">
 		<track name="D4-SBridge"	laps="1" factor="0.1" />
 		<track name="S4-Hills"		laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Tutorial Jumps" ver="2" difficulty="3" type="0" 
-			descr="Tutorial on jumps in tracks, for training jumping. Car velocity before jump is most important. In easy mode, you need little boost to reach it.">
-		<track name="D5-jump8-low"	laps="1" factor="0.1" />
-		<track name="D6-jump0-high"	laps="1" factor="0.1" />
-		<track name="D8-Technical"	laps="1" factor="0.1" />
+	<championship name="Tutorial Terrain" ver="1" difficulty="2" type="0" 
+			descr="Tutorial with short tracks having hilly or bumpy terrain.">
+		<track name="F11-Dawn"		laps="1" factor="0.1" />
+		<track name="J1-T"			laps="1" factor="0.1" />
+		<!--<track name="M1-Hills"		laps="1" factor="0.1" />-->
+		<track name="D1-simple"		laps="1" factor="0.1" />
+		<!--G3-Butterfly-->
 	</championship>
 
 	<championship name="Tutorial Asphalt" ver="1" difficulty="2" type="0" 
-			descr="Tutorial on asphalt tracks. On 2 circuits.">
+			descr="Tutorial on asphalt tracks, on 2 circuits.">
 		<track name="brands"		laps="1" factor="0.2" />
 		<track name="zandvoort"		laps="1" factor="0.2" />
 	</championship>
 
 <!--  Tutorials Hard  -->
 
+	<championship name="Tutorial Curly" ver="1" difficulty="3" type="0" 
+			descr="Tutorial with very tiny but curly tracks. Requires a lot of steering.">
+		<track name="I12-Beach"		laps="1" factor="0.1" />
+		<track name="G4-River"		laps="1" factor="0.1" />
+		<track name="I6-Flooded"	laps="1" factor="0.1" />
+		<track name="J18-Tiny"		laps="1" factor="0.1" />
+	</championship>
+
+	<championship name="Tutorial Jumps" ver="2" difficulty="3" type="1" 
+			descr="Tutorial for training jumps. Car velocity before jump is most important. In easy mode, you need to use boost to reach it.">
+		<track name="D5-jump8-low"	laps="1" factor="0.1" />
+		<track name="D6-jump0-high"	laps="1" factor="0.1" />
+		<track name="D8-Technical"	laps="1" factor="0.1" />
+	</championship>
+
 	<championship name="Tutorial Loops" ver="1" difficulty="4" type="1" 
-			descr="Tutorial on tracks with loops. Loops and side loops will appear as well as simple pipe turns and some twists.">
-		<track name="S5-LoopBasic" laps="1" factor="0.1" />
+			descr="Tutorial for driving in loops. Loops and side loops will appear as well as simple pipe turns and some twists.">
+		<track name="S5-LoopBasic"	laps="1" factor="0.1" />
 		<track name="S3-Loops"		laps="1" factor="0.1" />
 	</championship>
 
 	<championship name="Tutorial Pipes" ver="1" difficulty="4" type="1" 
-			descr="Tutorial on tracks with pipes. Some are twisted.">
+			descr="Tutorial for road pipes. Mostly driving inside glass pipes. Some tracks are twisted.">
 		<track name="J5-Pipes"		laps="1" factor="0.1" />
 		<track name="S10-Pipe88"	laps="1" factor="0.2" />
 		<track name="S6-PipeCrazy"	laps="1" factor="0.2" />
@@ -217,6 +240,7 @@
 		<track name="X1-Magic"		laps="2" factor="0.1" />
 		<track name="T4-Scary"		laps="1" factor="0.15" />
 		<track name="V5-Sad"		laps="1" factor="0.15" />
+		<track name="R1-Mars"		laps="1" factor="0.15" />
 	</championship>
 
 <!--  Hard  -->
@@ -248,6 +272,15 @@
 		<track name="F14-Maze"		laps="1" factor="0.1" />
 		<track name="A4-Snake"		laps="1" factor="0.1" />
 		<track name="F16-Clew"		laps="1" factor="0.1" />
+	</championship>
+
+	<championship name="Jump mania" ver="1" difficulty="4" type="4" 
+			descr="Tracks with lots of jumps. Fast cars are needed (or boosting to reach jump speeds).">
+		<track name="D6-jump0-high"	laps="1" factor="0.1" />
+		<track name="D7-CrossJumps"	laps="1" factor="0.1" />
+		<track name="C4-Sway"		laps="1" factor="0.1" />
+		<track name="A5-TopTwist"	laps="1" factor="0.1" />
+		<track name="R1-Mars"		laps="1" factor="0.1" />
 	</championship>
 
 	<championship name="Insane stunts" ver="1" difficulty="6" type="4" 
