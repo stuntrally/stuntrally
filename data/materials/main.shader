@@ -1,7 +1,7 @@
 #include "core.h"
 
 
-#define FOG  @shGlobalSettingBool(fog)
+#define FOG  @shGlobalSettingBool(fog) &&  @shPropertyBool(fog)
 
 #define SHADOWS  @shGlobalSettingBool(shadows_pssm) &&  @shPropertyBool(receives_shadows)
 #define SHADOWS_DEPTH  @shGlobalSettingBool(shadows_depth)

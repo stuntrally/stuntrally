@@ -4,6 +4,7 @@ material Base_particle
     vertex_colour true
     depth_write off
     receives_shadows false
+	alpha_rejection greater 2
     ambient 0 0 0
     diffuse 0 0 0 1
     emissive 1 1 1
@@ -14,6 +15,7 @@ material Boost
 {
     parent Base_particle
     scene_blend add
+    fog false
     diffuseMap boost.png
 }
 
@@ -21,14 +23,30 @@ material Boost_Red
 {
     parent Base_particle
     scene_blend add
+    fog false
     diffuseMap boost_red.png
 }
-
 
 
 material Particles/Spark
 {
     parent Base_particle
     scene_blend add
+    fog false
     diffuseMap spark.png
+}
+
+material flare1
+{
+    parent Base_particle
+    scene_blend add
+    fog false
+    diffuseMap flare1.png
+}
+
+material flare2
+{
+    parent Base_particle
+    scene_blend alpha_blend
+    diffuseMap flare2.png
 }
