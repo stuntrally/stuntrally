@@ -13,6 +13,10 @@ yaw   = 700.0
 yaw2  = 2.0
 
 [ model_ofs ]
+brake-pos0 = 0.58,-2.31, 0.03
+brake-pos1 =-0.58,-2.31, 0.03
+brake-size = 0.46
+brake-color = 1, 0, 0
 interior-x = 0.05
 interior-y = 0.083
 interior-z = 0
@@ -20,6 +24,7 @@ exhaust-x = 2.4
 exhaust-y = 0.52
 exhaust-z = 0.45
 exhaust-mirror-second = 1
+
 
 #  collision shape params
 #---------------------------
@@ -139,14 +144,14 @@ tread = 0.0
 [ brakes-front ]
 friction = 1.03
 max-pressure = 2.5e6
-bias = 0.55
+bias = 0.5
 radius = 0.17
 area = 0.019
 
 [ brakes-rear ]
 friction = 1.03
 max-pressure = 2.5e6
-bias = 0.45
+bias = 0.5
 radius = 0.14
 area = 0.019
 handbrake = 3.1

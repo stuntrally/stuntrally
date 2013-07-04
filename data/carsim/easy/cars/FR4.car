@@ -13,6 +13,10 @@ yaw   = 500.0
 yaw2  = 2.0
 
 [ model_ofs ]
+brake-pos0 = 0.80,-2.12, 0.3
+brake-pos1 =-0.80,-2.12, 0.3
+brake-size = 0.46
+brake-color = 1, 0, 0
 rot_fix = on
 boost-x = 0.1
 boost-z = 0.12
@@ -21,6 +25,7 @@ exhaust-x = 2.2
 exhaust-y = 0.45
 exhaust-z = 0.56
 exhaust-mirror-second = 0
+
 
 #  collision shape params
 #---------------------------

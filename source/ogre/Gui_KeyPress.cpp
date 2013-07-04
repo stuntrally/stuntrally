@@ -235,7 +235,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			string t;
 			switch (arg.key)
 			{
-				case KC_1: t = "Test1-Flat";
+				case KC_1: t = "Test1-Flat";  break;
 				case KC_2: t = "Test11-Jumps";  break;
 				case KC_3: t = "TestC4-ow";  break;
 				case KC_4: t = "Test7-FluidsSmall";  break;

@@ -37,7 +37,7 @@ CarModel::CarModel(int index, eCarType type, const std::string& name,
 	SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Camera* cam, App* app)
 	:mSceneMgr(sceneMgr), pSet(set), pGame(game), sc(s), mCamera(cam), pApp(app)
 	,iIndex(index), sDirname(name), eType(type)
-	,fCam(0), pMainNode(0), pCar(0), terrain(0), ndSph(0)
+	,fCam(0), pMainNode(0), pCar(0), terrain(0), ndSph(0), brakes(0)
 	,pReflect(0), color(1,1,0)
 	,hideTime(1.f), mbVisible(true), bLightMapEnabled(true), bBraking(false)
 	,iCamNextOld(0), bLastChkOld(0), bWrongChk(0),  iFirst(0)
@@ -70,9 +70,13 @@ void CarModel::Defaults()
 		driver_view[i] = 0.f;  hood_view[i] = 0.f;
 		interiorOffset[i] = 0.f;  boostOffset[i] = 0.f;  exhaustPos[i] = 0.f;
 	}
+	brakePos.clear();
+	brakeClr = ColourValue(1,0,0);
+	brakeSize = 0.f;
+
 	bRotFix = false;
 	sBoostParName = "Boost";  boostSizeZ = 1.f;
-	//sBrakeMtr="";
+
 	for (int w=0; w<4; ++w)
 	{
 		whRadius[w] = 0.3f;  whWidth[w] = 0.2f;
@@ -139,6 +143,7 @@ CarModel::~CarModel()
 		if (parBoost[i]) {  mSceneMgr->destroyParticleSystem(parBoost[i]);  parBoost[i]=0;  }
 	if (parHit) {  mSceneMgr->destroyParticleSystem(parHit);  parHit=0;  }
 						
+	if (brakes)  mSceneMgr->destroyBillboardSet(brakes);
 	if (pMainNode)  mSceneMgr->destroySceneNode(pMainNode);
 	
 	//  destroy resource group, will also destroy all resources in it
@@ -163,7 +168,7 @@ void CarModel::LoadConfig(const std::string & pathCar)
 	cf.GetParam("model_ofs.interior-x", interiorOffset[0]);
 	cf.GetParam("model_ofs.interior-y", interiorOffset[1]);
 	cf.GetParam("model_ofs.interior-z", interiorOffset[2]);
-
+	cf.GetParam("model_ofs.rot_fix", bRotFix);
 
 	//~  boost offset
 	cf.GetParam("model_ofs.boost-x", boostOffset[0]);
@@ -172,9 +177,16 @@ void CarModel::LoadConfig(const std::string & pathCar)
 	cf.GetParam("model_ofs.boost-size-z", boostSizeZ);
 	cf.GetParam("model_ofs.boost-name", sBoostParName);
 
-	cf.GetParam("model_ofs.rot_fix", bRotFix);
-	cf.GetParam("model_ofs.brake_mtr", sBrakeMtr);//-
-
+	//~  brake flares
+	float pos[3];  bool ok=true;  int i=0;
+	while (ok)
+	{	ok = cf.GetParam("model_ofs.brake-pos"+toStr(i), pos);  ++i;
+		if (ok)  brakePos.push_back(bRotFix ? Vector3(-pos[0],pos[2],pos[1]) : Vector3(-pos[1],-pos[2],pos[0]));
+	}
+	cf.GetParam("model_ofs.brake-color", pos);
+	brakeClr = ColourValue(pos[0],pos[1],pos[2]);
+	cf.GetParam("model_ofs.brake-size", brakeSize);
+	
 	
 	//-  custom exhaust pos for boost particles
 	if (cf.GetParam("model_ofs.exhaust-x", exhaustPos[0]))
@@ -189,7 +201,6 @@ void CarModel::LoadConfig(const std::string & pathCar)
 
 
 	//- load cameras pos
-	float pos[3];
 	cf.GetParam("driver.view-position", pos, pGame->error_output);
 	driver_view[0]=pos[1]; driver_view[1]=-pos[0]; driver_view[2]=pos[2];
 	
@@ -406,7 +417,24 @@ void CarModel::Create(int car)
 	}
 	if (bLogInfo)  // all
 		LogO("MESH info:  "+sDirname+"\t ALL sub: "+toStr(all_subs)+"  tri: "+fToStr(all_tris/1000.f,1,4)+"k");
+	
+	
+	///  brake flares  ++ ++
+	if (!brakePos.empty() && !isGhost())  // todo: in ghost broken..
+	{
+		SceneNode* snode = ndCar->createChildSceneNode();
+		brakes = mSceneMgr->createBillboardSet("Flr"+strI,2);
+		brakes->setDefaultDimensions(brakeSize, brakeSize);
+		brakes->setRenderQueueGroup(RQG_CarTrails);  //brakes->setVisibilityFlags();
 
+		for (int i=0; i < brakePos.size(); ++i)
+			brakes->createBillboard(brakePos[i], brakeClr);
+
+		brakes->setVisible(false);
+		brakes->setMaterialName("flare1");
+		snode->attachObject(brakes);
+	}
+	
 
 	//  Particles
 	//-------------------------------------------------

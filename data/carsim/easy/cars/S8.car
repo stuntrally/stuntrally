@@ -3,7 +3,7 @@ version = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
-max-angle = 28
+max-angle = 27
 angular-damping = 0.0
 
 [ rot_drag ]
@@ -13,10 +13,15 @@ yaw   = 500.0
 yaw2  = 2.0
 
 [ model_ofs ]
+brake-pos0 = 0.67,-2.02, 0.08
+brake-pos1 =-0.66,-2.02, 0.08
+brake-size = 0.46
+brake-color = 1, 0, 0
 exhaust-x = 2.2
 exhaust-y = 0.39
 exhaust-z = -0.5
 exhaust-mirror-second = 0
+
 
 #  collision shape params
 #---------------------------

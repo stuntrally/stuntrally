@@ -196,7 +196,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 
 	
 	//  brake state
-	bool braking = posInfo.braking;
+	bool braking = posInfo.braking > 0;
 	if (bBraking != braking)
 	{
 		bBraking = braking;
@@ -491,6 +491,9 @@ void CarModel::UpdateLightMap()
 
 void CarModel::UpdateBraking()
 {
+	if (brakes)
+		brakes->setVisible(bBraking);
+
 	std::string texName = sDirname + (bBraking ? "_body00_brake.png" : "_body00_add.png");
 
 	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);

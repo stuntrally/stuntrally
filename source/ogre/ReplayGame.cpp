@@ -59,7 +59,7 @@ ReplayFrame::ReplayFrame() :
 	//float suspVel[4], suspDisp[4];
 	,fboost(0)
 	,percent(0.f)
-	,braking(false)
+	,braking(0)
 	,fHitTime(0.f), fParIntens(0.f),fParVel(0.f)
 	//Vector3 vHitPos,vHitNorm;
 	,whMudSpin(0.f), fHitForce(0.f), fCarScrap(0.f), fCarScreech(0.f)

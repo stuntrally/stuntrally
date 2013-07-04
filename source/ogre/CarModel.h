@@ -37,7 +37,7 @@ struct PosInfo
 	float whVel[4], whSlide[4], whSqueal[4];
 	int whTerMtr[4],whRoadMtr[4];
 
-	float fboost,steer, percent;  bool braking;
+	float fboost,steer, percent;  char braking;
 
 	//  fluids
 	float whH[4],whAngVel[4], speed, whSteerAng[4];  int whP[4];
@@ -50,7 +50,7 @@ struct PosInfo
 	Ogre::Vector3 camPos;  Ogre::Quaternion camRot;
 
 	PosInfo() : bNew(false),  // not inited
-		pos(0,-200,0), percent(0.f), braking(false)
+		pos(0,-200,0), percent(0.f), braking(0)
 	{}
 };
 
@@ -81,9 +81,11 @@ public:
 	
 	///----  model params  from .car
 	float driver_view[3], hood_view[3];
-	float interiorOffset[3], boostOffset[3], boostSizeZ;
+	float interiorOffset[3], boostOffset[3],boostSizeZ;
+	std::vector<Ogre::Vector3> brakePos;  // flares
+	float brakeSize;  Ogre::ColourValue brakeClr;
 	bool bRotFix;
-	std::string sBrakeMtr, sBoostParName;
+	std::string sBoostParName;
 	float whRadius[4], whWidth[4];  // for tire trails
 
 	//  exhaust position for boost particles
@@ -135,6 +137,7 @@ public:
 	//  Main node
 	Ogre::SceneNode* pMainNode, *ndSph;
 	Ogre::Vector3 posSph[2];
+	Ogre::BillboardSet* brakes;
 	
 	void setVisible(bool visible);  // hide/show
 	bool mbVisible;  float hideTime;
