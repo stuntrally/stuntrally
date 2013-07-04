@@ -1,7 +1,8 @@
 #include "core.h"
 
 
-#define FOG  @shGlobalSettingBool(fog) &&  @shPropertyBool(fog)
+#define FOG_G  @shGlobalSettingBool(fog)
+#define FOG  FOG_G &&  @shPropertyBool(fog_en)
 
 #define SHADOWS  @shGlobalSettingBool(shadows_pssm) &&  @shPropertyBool(receives_shadows)
 #define SHADOWS_DEPTH  @shGlobalSettingBool(shadows_depth)
@@ -12,7 +13,7 @@
 #include "shadows.h"
 #endif
 
-#if FOG || (SHADOWS) || MRT
+#if FOG_G || (SHADOWS) || MRT
 #define NEED_DEPTH
 #endif
 
@@ -31,7 +32,7 @@
 #define SELECTED_GLOW  @shGlobalSettingBool(editor)
 #define SPECULAR_ALPHA  @shPropertyBool(specular_alpha)
 
-#if (TERRAIN_LIGHT_MAP) || (ENV_MAP) || (SOFT_PARTICLES) || (FOG)
+#if (TERRAIN_LIGHT_MAP) || (ENV_MAP) || (SOFT_PARTICLES) || (FOG_G)
 #define NEED_WORLD_MATRIX
 #endif
 

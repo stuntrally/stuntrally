@@ -15,7 +15,7 @@ material Boost
 {
     parent Base_particle
     scene_blend add
-    fog false
+    fog_en false
     diffuseMap boost.png
 }
 
@@ -23,7 +23,7 @@ material Boost_Red
 {
     parent Base_particle
     scene_blend add
-    fog false
+    fog_en false
     diffuseMap boost_red.png
 }
 
@@ -32,7 +32,7 @@ material Particles/Spark
 {
     parent Base_particle
     scene_blend add
-    fog false
+    fog_en false
     diffuseMap spark.png
 }
 
@@ -40,7 +40,7 @@ material flare1
 {
     parent Base_particle
     scene_blend add
-    fog false
+    fog_en false
     diffuseMap flare1.png
 }
 

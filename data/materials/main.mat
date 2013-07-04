@@ -32,7 +32,7 @@ material base
     transparent false  // for shadowcaster
     mrt_output true
     diffuse_address_mode wrap
-    fog true
+    fog_en true
 
 	//  extras2
     twoside_diffuse false
@@ -77,7 +77,6 @@ material base
 			alphaMap $alphaMap
 			carPaintMap $carPaintMap
 			specMap $specMap
-			fog $fog
 		
 		    env_map $env_map
 		    terrain_light_map $terrain_light_map
@@ -87,6 +86,7 @@ material base
 		    lighting $lighting
 		    mrt_output $mrt_output
 		    soft_particles $soft_particles
+			fog_en $fog_en
 		    
             tree_wind $tree_wind
             grass_wind $grass_wind

@@ -27,6 +27,7 @@ material pipe_glass
 	grass_wind false
 	vertex_colour false
 	specular_alpha true
+	fog_en true
 	
 	receives_shadows true
 		
@@ -78,6 +79,7 @@ material pipe_glass
 			lighting $lighting
 			mrt_output $mrt_output
 			soft_particles $soft_particles
+			fog_en $fog_en
 			
 			tree_wind $tree_wind
 			grass_wind $grass_wind
@@ -195,6 +197,7 @@ material pipe_glass
 			lighting $lighting
 			mrt_output $mrt_output
 			soft_particles $soft_particles
+			fog_en $fog_en
 			
 			tree_wind $tree_wind
 			grass_wind $grass_wind
