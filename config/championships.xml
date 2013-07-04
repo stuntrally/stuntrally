@@ -21,7 +21,7 @@
 	</championship>
 
 	<championship name="Tutorial Bridges" ver="1" difficulty="2" type="0" 
-			descr="Tutorial tracks with bridges. Medium length.">
+			descr="Tutorial on medium length tracks with bridges.">
 		<track name="D4-SBridge"	laps="1" factor="0.1" />
 		<track name="S4-Hills"		laps="1" factor="0.1" />
 	</championship>

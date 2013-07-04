@@ -232,19 +232,23 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		//>--  dev shortcuts, alt-shift numbers, start test track
 		if (pSet->dev_keys && alt && shift && !mClient)
 		{
-			string t = "Test1-Flat";
+			string t;
 			switch (arg.key)
 			{
+				case KC_1: t = "Test1-Flat";
 				case KC_2: t = "Test11-Jumps";  break;
 				case KC_3: t = "TestC4-ow";  break;
 				case KC_4: t = "Test7-FluidsSmall";  break;
 				case KC_5: t = "TestC6-temp";  break;
 				case KC_6: t = "Test10-FlatPerf";  break;
 			}
-			pSet->gui.champ_num = -1;
-			pSet->gui.track = t;  bPerfTest = false;
-			pSet->gui.track_user = false;
-			NewGame();  return true;
+			if (!t.empty())
+			{
+				pSet->gui.champ_num = -1;
+				pSet->gui.track = t;  bPerfTest = false;
+				pSet->gui.track_user = false;
+				NewGame();  return true;
+			}
 		}
 			
 
