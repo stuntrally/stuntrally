@@ -605,6 +605,8 @@ void App::InitGui()
 	{	tChamp->setIndexSelected(pSet->champ_type);
 		tChamp->eventTabChangeSelect += newDelegate(this, &App::tabChampType);
 	}
+	Chk("ChampRev", chkGhampRev, pSet->gui.champ_rev);
+
 
 	//  champs list
 	MyGUI::MultiList2* li;

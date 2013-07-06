@@ -62,8 +62,8 @@ public:
 	void PerfLogVel(class CAR* pCar, float time);
 	
 	// This list holds new positions info for every CarModel
-	PosInfo carPoses[CarPosCnt][8];  // [carsNum8]
-	/*std::vector<int>*/ int iCurPoses[8];  // current index for carPoses queue
+	PosInfo carPoses[CarPosCnt][8];  // max 8 cars
+	int iCurPoses[8];  // current index for carPoses queue
 	std::map<int,int> carsCamNum;  // picked camera number for cars
 	
 	// Utility
@@ -315,7 +315,7 @@ protected:
 	void MainMenuBtn(MyGUI::WidgetPtr), MenuTabChg(MyGUI::TabPtr, size_t);  bool loadReadme;
 
 	///  championships
-	ChampsXml champs;  TimesXml times;  ProgressXml progress;  //xml
+	ChampsXml champs;  TimesXml times;  ProgressXml progress[2];  //xml  progres[1]=reversed
 	void ChampsXmlLoad(), ProgressSave(bool upgGui=true);
 	void ChampNewGame(), ChampLoadEnd(), ChampsListUpdate(),
 		ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
@@ -325,7 +325,7 @@ protected:
 	void btnChampStart(WP), btnChampStageBack(WP), btnChampStageStart(WP), btnChampEndClose(WP), btnNetEndClose(WP);
 	void btnStageNext(WP), btnStagePrev(WP);  MyGUI::StaticText* valStageNum;  MyGUI::ButtonPtr btChampStage;
 	MyGUI::EditBox* edChampStage, *edChampEnd,*edChampInfo;  MyGUI::ImageBox* imgChampStage,*imgChampEnd;
-	void tabChampType(MyGUI::TabPtr wp, size_t id), btnChampInfo(WP);
+	void tabChampType(MyGUI::TabPtr wp, size_t id), btnChampInfo(WP), chkGhampRev(WP);
 	
 
 	///  input tab  -----------------------------------------

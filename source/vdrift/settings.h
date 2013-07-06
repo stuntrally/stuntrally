@@ -88,6 +88,7 @@ public:
 		bool rpl_rec;
 		//  champ
 		int champ_num;  // -1 none
+		bool champ_rev;
 		float pre_time;
 	}  game,  // current game, changed only on new game start
 		gui;  // gui only config
