@@ -387,9 +387,10 @@ void TRACK::Reverse()
 	for (vector <pair <MATHVECTOR<float,3>, QUATERNION<float> > >::iterator i = start_positions.begin();
 		i != start_positions.end(); ++i)
 	{
-		//i->second.Rotate(PI_d, 0,0,1);
+		i->second.Rotate(PI_d, 0,0,1);
 		i->second[0] = -i->second[0];
-		i->second[2] = -i->second[2];
+		i->second[1] = -i->second[1];
+		//i->second[2] = -i->second[2];
 		//i->second[3] = -i->second[3];
 	}
 
