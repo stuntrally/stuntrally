@@ -11,19 +11,19 @@ trks = get_dirs(tdir)
 stats = open('roadstats.xml','w')  # out file
 stats.write('<roadstats>\n');
 
-# champs
-champs = open('../config/championships.xml','r')  # path
-chdata = champs.read()
-champs.close()
+# times
+times = open('../config/times.xml','r')  # path
+tidata = times.read()
+times.close()
 
-chdom = parseString(chdata)
-chTags = chdom.getElementsByTagName('times')[0]
-chTrks = chTags.getElementsByTagName('track')
-#print chTrks
+tidom = parseString(tidata)
+tiTags = tidom.getElementsByTagName('times')[0]
+tiTrks = tiTags.getElementsByTagName('track')
+#print tiTrks
 
 # track time map
 map = {'': 0}
-for t in chTrks:
+for t in tiTrks:
 	map[t.getAttributeNode('name').nodeValue] = t.getAttributeNode('time').nodeValue
 	#print t.toxml()
 #print map['J1-T']  # check track time

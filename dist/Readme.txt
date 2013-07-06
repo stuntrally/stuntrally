@@ -11,7 +11,9 @@ Below is a short description of them:
 * *.desktop                 - menu launchers for Linux (freedesktop.org-compliant) systems
 * stuntrally.png            - application icon
 * CMakeLists.txt            - CMake install targets for the files here
+
 * make_roadstats_xml.py     - utility script that generates roadstats.xml used in online track browser
+	to update, run it, copy generated roadstats.xml to website tracks/ dir, and also tracks.xml form config/ here.
 
 
 Clean sources
