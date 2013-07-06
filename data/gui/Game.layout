@@ -1457,7 +1457,7 @@
 				<UserString key="RelativeTo" value="ReplaysWnd"/>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Replay}"/>
+				<Property key="Caption" value="#FFC080#{Replay}"/>
 				<UserString key="RelativeTo" value="ReplaysWnd"/>
 				<Widget type="ListBox" skin="ListBox" position="14 16 186 440" name="RplList">
 					<UserString key="RelativeTo" value="ReplaysWnd"/>

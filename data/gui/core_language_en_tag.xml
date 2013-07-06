@@ -542,6 +542,7 @@
 	
 	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - save file and reload game</Tag>
+	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
 
 
 

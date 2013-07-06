@@ -223,6 +223,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 void App::setOrigPos(WP wp, const char* relToWnd)
 {
+	if (!wp)  return;
 	wp->setUserString("origPosX", toStr(wp->getPosition().left));
 	wp->setUserString("origPosY", toStr(wp->getPosition().top));
 	wp->setUserString("origSizeX", toStr(wp->getSize().width));

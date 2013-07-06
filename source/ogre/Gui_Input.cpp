@@ -239,33 +239,38 @@ void App::InitInputGui()
 	CreateText(xa1,y, 500,24, "txttir4", TR("#A0B0C0#{TiresEdit4}"));  y+=3*ya;
 	CreateText(xa,y, 500,24, "txttir5", TR("#90B0D0#{InputMapPrevTab}/#{InputMapNextTab} - #{InputGraphsType}"));  y+=3*ya;
 
-	CreateText(xa,y, 500,24, "txttir6", TR("#A0B8D0#{TweakEdit1}"));  y+=2*ya;
-	CreateText(xa,y, 500,24, "txttir7", TR("#A0B8D0#{TweakEdit2}"));  y+=2*ya;
+	CreateText(xa,y, 500,24, "txttwk1", TR("#A0B8D0#{TweakEdit1}"));  y+=2*ya;
+	CreateText(xa,y, 500,24, "txttwk2", TR("#A0B8D0#{TweakEdit2}"));  y+=3*ya;
+	CreateText(xa,y, 500,24, "txttwk3", TR("#90B0C8#{TweakEdit3}"));  y+=2*ya;
 
 
 	y = 32;
 	tabitem = inputTab->addItem(TR("#B0A0E0#{Shortcuts}"));
-	CreateText(xa,y, 600,24, "txtshc0", TR("#C0E0FF#{ShortcutsInfo}"));  y+=3*yb;
-	CreateText(xa,y, 200,24, "txtshc1", "#A8D0FF"+TR("Q  #{Track}"));  y+=2*yb;
-	CreateText(xa,y, 200,24, "txtshc2", "#A8D0FF"+TR("C  #{Car}"));  y+=3*yb;
-	CreateText(xa,y, 200,24, "txtshc3", "#A8D0FF"+TR("W  #{Game}"));  y+=2*yb;
-	CreateText(xa,y, 200,24, "txtshc3", "#A8D0FF"+TR("T  #{Setup}"));  y+=3*yb;
-	CreateText(xa,y, 200,24, "txtshc4", "#A8D0FF"+TR("U  #{Multiplayer}"));  y+=2*yb;
-	CreateText(xa,y, 200,24, "txtshc5", "#A8D0FF"+TR("H  #{Championship}"));  y+=3*yb;
-	CreateText(xa,y, 200,24, "txtshc6", "#A8D0FF"+TR("R  #{Replay}"));  y+=3*yb;
-	CreateText(xa,y, 200,24, "txtshc7", "#A8D0FF"+TR("#{InputFocusFind}"));  y+=2*yb;
+	EditBox* ed = tabitem->createWidget<EditBox>("EditBoxEmpty", xa,y, 360,36, ALIGN, "txtshc0");
+	ed->setCaption("#A0C0E0"+TR("#{ShortcutsInfo}"));  setOrigPos(ed, "OptionsWnd");  y+=5*yb;
+	ed->setEditReadOnly(1);  ed->setEditMultiLine(1);  ed->setEditWordWrap(1);
 
-	y = 32 + 3*yb;
-	CreateText(xb,y, 200,24, "txtshd1", "#A8D0FF"+TR("S  #{Screen}"));  y+=2*yb;
-	CreateText(xb1,y, 200,24, "txtshd2", "#A8D0FF"+TR("E  #{Effects}"));  y+=2*yb;
-	CreateText(xb,y, 200,24, "txtshd3", "#A8D0FF"+TR("G  #{Graphics}"));  y+=2*yb;
-	CreateText(xb1,y, 200,24, "txtshd4", "#A8D0FF"+TR("N  #{Vegetation}"));  y+=3*yb;
+	CreateText(xa,y, 200,24, "txtshc1", "#60FF60"+TR("Q  #{Track}"));  y+=2*yb;
+	CreateText(xa,y, 200,24, "txtshc2", "#FF6050"+TR("C  #{Car}"));  y+=3*yb;
+	CreateText(xa,y,  200,24, "txtshc3", "#90A0A0"+TR("T  #{Setup}"));  y+=3*yb;
+	CreateText(xa,y,  200,24, "txtshc3", "#C0C080"+TR("W  #{Game}"));  y+=2*yb;
+	CreateText(xa,y, 200,24, "txtshc4", "#A0A0FF"+TR("U  #{Multiplayer}"));  y+=2*yb;
+	CreateText(xa,y, 200,24, "txtshc5", "#80C0FF"+TR("H  #{Championship}"));  y+=3*yb;
+
+	CreateText(xa,y, 200,24, "txtshc6", "#FFA050"+TR("R  #{Replay}"));  y+=4*yb;
+	CreateText(xa,y, 200,24, "txtshc7", "#60D060"+TR("#{InputFocusFind}"));  y+=2*yb;
+
+	y = 32 + 5*yb;
+	CreateText(xb,y, 200,24, "txtshd1", "#C0E0FF"+TR("S  #{Screen}"));  y+=2*yb;
+	CreateText(xb1,y, 200,24, "txtshd2", "#E0C080"+TR("E  #{Effects}"));  y+=2*yb;
+	CreateText(xb,y, 200,24, "txtshd3", "#B0B0FF"+TR("G  #{Graphics}"));  y+=2*yb;
+	CreateText(xb1,y, 200,24, "txtshd4", "#90FF30"+TR("N  #{Vegetation}"));  y+=3*yb;
 	
-	CreateText(xb,y, 200,24, "txtshd5", "#A8D0FF"+TR("V  #{View}"));  y+=2*yb;
-	CreateText(xb1,y, 200,24, "txtshd6", "#A8D0FF"+TR("M  #{Minimap}"));  y+=2*yb;
-	CreateText(xb1,y, 200,24, "txtshd7", "#A8D0FF"+TR("O  #{Other}"));  y+=3*yb;
-	CreateText(xb,y, 200,24, "txtshd8", "#A8D0FF"+TR("I  #{Input}"));  y+=3*yb;
-	CreateText(xb,y, 200,24, "txtshd8", "#A8D0FF"+TR("P  #{Sound}"));  y+=3*yb;
+	CreateText(xb,y, 200,24, "txtshd5", "#D0FFFF"+TR("V  #{View}"));  y+=2*yb;
+	CreateText(xb1,y, 200,24, "txtshd6", "#60F8F8"+TR("M  #{Minimap}"));  y+=2*yb;
+	CreateText(xb1,y, 200,24, "txtshd7", "#C0A0E0"+TR("O  #{Other}"));  y+=3*yb;
+	CreateText(xb,y, 200,24, "txtshd8", "#FFFF60"+TR("I  #{Input}"));  y+=3*yb;
+	CreateText(xb,y, 200,24, "txtshd8", "#B090E0"+TR("P  #{Sound}"));  y+=3*yb;
 
 	/**  //dbg start on input  ///remove
 	mWndTabsOpts->setIndexSelected(7);
