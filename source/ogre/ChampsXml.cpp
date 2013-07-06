@@ -7,7 +7,7 @@ using namespace Ogre;
 
 
 ChampTrack::ChampTrack() :
-	laps(0), factor(1.f), reversed(0), passScore(80.f)  // default
+	laps(0), factor(1.f), reversed(0), passScore(100.f)  // default
 {	}
 
 Champ::Champ() :

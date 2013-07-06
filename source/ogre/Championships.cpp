@@ -398,7 +398,7 @@ void App::ChampionshipAdvance(float timeCur)
 		LogO("|| var, add time: "+toStr(i*3)+" sec, score: "+toStr(score));
 	}/**/
 	float score = (1.f + (timeBest-timeCur)/timeBest * decFactor) * 100.f;
-	float pass = trk.passScore * (pSet->game.sim_mode == "normal" ? 1.f : 0.75);  // 80 normal, 60 easy
+	float pass = trk.passScore * (pSet->game.sim_mode == "normal" ? 1.f : 0.75);  // 100 normal, 75 easy
 	bool passed = score >= pass;  // didnt qualify, repeat current stage
 	LogO("|| Score: " + toStr(score) + "  Passed: " + (passed ? "yes":"no"));
 	pc.trks[pc.curTrack].score = score;
@@ -478,7 +478,7 @@ void App::ChampFillStageInfo(bool finished)
 	if (finished)
 	{
 		float score = pc.trks[pc.curTrack].score;
-		float pass = trk.passScore * (pSet->game.sim_mode == "normal" ? 1.f : 0.75);  // 80 normal, 60 easy
+		float pass = trk.passScore * (pSet->game.sim_mode == "normal" ? 1.f : 0.75);  // 100 normal, 75 easy
 		s += "#80C0FF"+TR("#{Finished}") + ".\n" +
 			"#FFFF60"+TR("#{Score}") + ": " + fToStr(score,1,5) + "\n";
 		s += "#80C0FF"+TR("#{ScoreNeeded}") + ": " + fToStr(pass,1,5) + "\n\n";
