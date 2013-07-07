@@ -1427,7 +1427,104 @@
 								<UserString key="RelativeTo" value="EditorWnd"/>
 							</Widget>
 
-							<Widget type="TextBox" skin="TextBox" position="32 320 312 20">
+							<Widget type="TextBox" skin="TextBox" position="10 325 86 24">
+								<Property key="Caption" value="#{AngleMin}"/>
+								<Property key="TextColour" value="0.6 0.9 0.2"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLAngMin}"/>
+							</Widget>
+							<Widget type="TextBox" skin="TextBox" position="110 325 56 24" name="TerGenAngMinVal">
+								<Property key="TextColour" value="0.6 0.9 0.2"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLAngMin}"/>
+							</Widget>
+							<Widget type="Slider" skin="Slider" position="162 325 360 16" name="TerGenAngMin">
+								<Property key="Colour" value="0.6 0.9 0.2"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLAngMin}"/>
+							</Widget>
+							<Widget type="TextBox" skin="TextBox" position="10 350 86 24">
+								<Property key="Caption" value="#{AngleMax}"/>
+								<Property key="TextColour" value="0.6 0.9 0.2"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLAngMax}"/>
+							</Widget>
+							<Widget type="TextBox" skin="TextBox" position="110 350 56 24" name="TerGenAngMaxVal">
+								<Property key="TextColour" value="0.6 0.9 0.2"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLAngMax}"/>
+							</Widget>
+							<Widget type="Slider" skin="Slider" position="162 350 360 16" name="TerGenAngMax">
+								<Property key="Colour" value="0.6 0.9 0.2"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLAngMax}"/>
+							</Widget>
+							<Widget type="TextBox" skin="TextBox" position="10 375 86 24">
+								<Property key="Caption" value="#{TerLAngSm}"/>
+								<Property key="TextColour" value="0.6 0.8 0.2"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLAngSm}"/>
+							</Widget>
+							<Widget type="TextBox" skin="TextBox" position="110 375 56 24" name="TerGenAngSmVal">
+								<Property key="TextColour" value="0.6 0.8 0.2"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLAngSm}"/>
+							</Widget>
+							<Widget type="Slider" skin="Slider" position="162 375 360 16" name="TerGenAngSm">
+								<Property key="Colour" value="0.6 0.8 0.2"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLAngSm}"/>
+							</Widget>
+							<Widget type="TextBox" skin="TextBox" position="10 410 86 24">
+								<Property key="Caption" value="#{HeightMin}"/>
+								<Property key="TextColour" value="0.6 0.9 0.6"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLHMin}"/>
+							</Widget>
+							<Widget type="TextBox" skin="TextBox" position="110 410 56 24" name="TerGenHMinVal">
+								<Property key="TextColour" value="0.6 0.9 0.6"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLHMin}"/>
+							</Widget>
+							<Widget type="Slider" skin="Slider" position="162 410 560 16" name="TerGenHMin">
+								<Property key="Colour" value="0.6 0.9 0.6"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLHMin}"/>
+							</Widget>
+							<Widget type="TextBox" skin="TextBox" position="10 435 86 24">
+								<Property key="Caption" value="#{HeightMax}"/>
+								<Property key="TextColour" value="0.6 0.9 0.6"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLHMax}"/>
+							</Widget>
+							<Widget type="TextBox" skin="TextBox" position="110 435 56 24" name="TerGenHMaxVal">
+								<Property key="TextColour" value="0.6 0.9 0.6"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLHMax}"/>
+							</Widget>
+							<Widget type="Slider" skin="Slider" position="162 435 560 16" name="TerGenHMax">
+								<Property key="Colour" value="0.6 0.9 0.6"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLHMax}"/>
+							</Widget>
+							<Widget type="TextBox" skin="TextBox" position="10 460 86 24">
+								<Property key="Caption" value="#{TerLHSm}"/>
+								<Property key="TextColour" value="0.6 0.75 0.6"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLHSm}"/>
+							</Widget>
+							<Widget type="TextBox" skin="TextBox" position="110 460 56 24" name="TerGenHSmVal">
+								<Property key="TextColour" value="0.6 0.75 0.6"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLHSm}"/>
+							</Widget>
+							<Widget type="Slider" skin="Slider" position="162 460 360 16" name="TerGenHSm">
+								<Property key="Colour" value="0.6 0.75 0.6"/>
+								<UserString key="RelativeTo" value="EditorWnd"/>
+								<UserString key="tip" value="#{TipTerLHSm}"/>
+							</Widget>
+
+							<Widget type="TextBox" skin="TextBox" position="32 490 312 20">
 								<Property key="Caption" value="#{TipSliderReset}"/>
 								<Property key="TextColour" value="0.45 0.55 0.65"/>
 								<UserString key="RelativeTo" value="EditorWnd"/>
@@ -1619,7 +1716,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngMin}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="98 25 56 24" name="TerLAngMinVal">
+						<Widget type="TextBox" skin="TextBox" position="110 25 56 24" name="TerLAngMinVal">
 							<Property key="TextColour" value="0.6 0.9 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngMin}"/>
@@ -1635,7 +1732,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngMax}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="98 50 56 24" name="TerLAngMaxVal">
+						<Widget type="TextBox" skin="TextBox" position="110 50 56 24" name="TerLAngMaxVal">
 							<Property key="TextColour" value="0.6 0.9 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngMax}"/>
@@ -1651,7 +1748,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngSm}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="98 75 56 24" name="TerLAngSmVal">
+						<Widget type="TextBox" skin="TextBox" position="110 75 56 24" name="TerLAngSmVal">
 							<Property key="TextColour" value="0.6 0.8 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngSm}"/>
@@ -1667,7 +1764,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLHMin}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="98 110 56 24" name="TerLHMinVal">
+						<Widget type="TextBox" skin="TextBox" position="110 110 56 24" name="TerLHMinVal">
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLHMin}"/>
@@ -1683,7 +1780,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLHMax}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="98 135 56 24" name="TerLHMaxVal">
+						<Widget type="TextBox" skin="TextBox" position="110 135 56 24" name="TerLHMaxVal">
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLHMax}"/>
@@ -1699,7 +1796,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLHSm}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="98 160 56 24" name="TerLHSmVal">
+						<Widget type="TextBox" skin="TextBox" position="110 160 56 24" name="TerLHSmVal">
 							<Property key="TextColour" value="0.6 0.75 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLHSm}"/>
@@ -1715,7 +1812,7 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLNoise}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="98 195 56 24" name="TerLNoiseVal">
+						<Widget type="TextBox" skin="TextBox" position="110 195 56 24" name="TerLNoiseVal">
 							<Property key="TextColour" value="0.6 0.9 0.7"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLNoise}"/>

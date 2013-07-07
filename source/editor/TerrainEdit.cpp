@@ -425,11 +425,8 @@ void App::btnTerGenerate(WP wp)
 			c *= pow(cr, rdPow);
 		}
 		
-		//c *= linRange(hfAng[a],  0.f,10.f, 5.f);
-		//c *= linRange(hfData[a], 0.f,20.f, 10.f);  //todo: gui sld..
-
-		//c *= pSet->gen_scale * std::min(1.f, std::max(0.f, (2.f - hfData[a]*0.5f) ));
-		//c *= pSet->gen_scale * std::min(1.f, std::max(0.f, (hfData[a]*0.5f - 2.f) ));
+		c *= linRange(hfAng[a],  pSet->gen_terMinA,pSet->gen_terMaxA, pSet->gen_terSmA);
+		c *= linRange(hfData[a], pSet->gen_terMinH,pSet->gen_terMaxH, pSet->gen_terSmH);
 
 		hfData[a] = add ? (hfData[a] + c * pSet->gen_scale + pSet->gen_ofsh) : (
 					sub ? (hfData[a] - c * pSet->gen_scale - pSet->gen_ofsh) :
@@ -438,7 +435,7 @@ void App::btnTerGenerate(WP wp)
 
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time Ter Gen: ") + toStr(dt) + " ms");
+	LogO(String("::: Time Ter Gen: ") + fToStr(dt,0,3) + " ms");
 
 	std::ofstream of;
 	of.open(getHMapNew(), std::ios_base::binary);
@@ -448,7 +445,7 @@ void App::btnTerGenerate(WP wp)
 
 	ti.update();  /// time
 	dt = ti.dt * 1000.f;
-	LogO(String("::: Time Ter Gen save: ") + toStr(dt) + " ms");
+	LogO(String("::: Time Ter Gen save: ") + fToStr(dt,0,3) + " ms");
 
 	bNewHmap = true;	UpdateTrack();
 }

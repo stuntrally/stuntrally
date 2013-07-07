@@ -66,6 +66,8 @@ App::App()  //  gui wigdets--
 	,valTerGenScale(0),valTerGenOfsX(0),valTerGenOfsY(0)  // gen
 	,valTerGenFreq(0),valTerGenOct(0),valTerGenPers(0),valTerGenPow(0)
 	,valTerGenMul(0),valTerGenOfsH(0),valTerGenRoadSm(0)
+	,valTerGenAngMin(0), valTerGenAngMax(0), valTerGenAngSm(0)
+	,valTerGenHMin(0), valTerGenHMax(0), valTerGenHSm(0)
 	,imgTrkIco1(0),imgTrkIco2(0), edFind(0)
 	,trkList(0),trkName(0),bListTrackU(0)  // track
 

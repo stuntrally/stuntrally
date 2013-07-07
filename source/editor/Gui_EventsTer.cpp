@@ -365,6 +365,38 @@ void App::slTerGenRoadSm(SL)
 	if (valTerGenRoadSm)  valTerGenRoadSm->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
 }
 
+//  ter gen h,a
+void App::slTerGenAngMin(SL)
+{
+	float v = 90.f * val;	pSet->gen_terMinA = v;
+	if (valTerGenAngMin){	valTerGenAngMin->setCaption(fToStr(v,0,4));  }
+}
+void App::slTerGenAngMax(SL)
+{
+	float v = 90.f * val;	pSet->gen_terMaxA = v;
+	if (valTerGenAngMax){	valTerGenAngMax->setCaption(fToStr(v,0,4));  }
+}
+void App::slTerGenAngSm(SL)
+{
+	float v = 90.f * val;	pSet->gen_terSmA = v;
+	if (valTerGenAngSm){	valTerGenAngSm->setCaption(fToStr(v,0,4));  }
+}
+void App::slTerGenHMin(SL)
+{
+	float v = -300.f + 600.f * val;  pSet->gen_terMinH = v;
+	if (valTerGenHMin){		valTerGenHMin->setCaption(fToStr(v,0,4));  }
+}
+void App::slTerGenHMax(SL)
+{
+	float v = -300.f + 600.f * val;  pSet->gen_terMaxH = v;
+	if (valTerGenHMax){		valTerGenHMax->setCaption(fToStr(v,0,4));  }
+}
+void App::slTerGenHSm(SL)
+{
+	float v = 200.f * val;  pSet->gen_terSmH = v;
+	if (valTerGenHSm){		valTerGenHSm->setCaption(fToStr(v,0,4));  }
+}
+
 
 ///  Terrain layers  -----------------------------
 //

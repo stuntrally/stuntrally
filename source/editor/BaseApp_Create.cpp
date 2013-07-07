@@ -343,7 +343,7 @@ bool BaseApp::setup()
 	createFrameListener();
 
 	ti.update();  float dt = ti.dt * 1000.f;  /// time
-	LogO(String("::: Time Ogre Start: ") + toStr(dt) + " ms");
+	LogO(String("::: Time Ogre Start: ") + fToStr(dt,0,3) + " ms");
 
 	createScene();
 

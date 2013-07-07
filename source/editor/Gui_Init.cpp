@@ -265,6 +265,13 @@ void App::InitGui()
 	Slv(TerGenOfsH, powf(pSet->gen_ofsh /60.f, 1.f/2.f));  sl->mfDefault = 0.f;
 	Slv(TerGenRoadSm, pSet->gen_roadsm /6.f);  sl->mfDefault = 0.f;
 
+	Slv(TerGenAngMin, pSet->gen_terMinA /90.f);  sl->mfDefault = 0.f;
+	Slv(TerGenAngMax, pSet->gen_terMaxA /90.f);  sl->mfDefault = 1.f;
+	Slv(TerGenAngSm, pSet->gen_terSmA /90.f);  sl->mfDefault = 0.1f;
+	Slv(TerGenHMin, (pSet->gen_terMinH +300.f)/600.f);  sl->mfDefault = 0.f;
+	Slv(TerGenHMax, (pSet->gen_terMaxH +300.f)/600.f);  sl->mfDefault = 1.f;
+	Slv(TerGenHSm, pSet->gen_terSmH /200.f);  sl->mfDefault = 0.1f;
+
 
 	///  [Layers]  ------------------------------------
 	Chk("TerLayOn", chkTerLayOn, 1);  chkTerLay = bchk;
@@ -549,7 +556,7 @@ void App::InitGui()
 
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time Init Gui: ") + toStr(dt) + " ms");
+	LogO(String("::: Time Init Gui: ") + fToStr(dt,0,3) + " ms");
 }
 
 

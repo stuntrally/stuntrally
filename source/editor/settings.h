@@ -58,6 +58,7 @@ public:
 	//  ter generate
 	float gen_scale, gen_ofsx,gen_ofsy, gen_freq, gen_persist, gen_pow;  int gen_oct;
 	float gen_mul, gen_ofsh, gen_roadsm;
+	float gen_terMinA,gen_terMaxA,gen_terSmA, gen_terMinH,gen_terMaxH,gen_terSmH;
 
 	//  align ter
 	float al_w_mul, al_w_add, al_smooth;

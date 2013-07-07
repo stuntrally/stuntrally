@@ -389,6 +389,9 @@ protected:
 	SLV(TerGenScale);  SLV(TerGenOfsX);  SLV(TerGenOfsY);
 	SLV(TerGenFreq);  SLV(TerGenOct);  SLV(TerGenPers);  SLV(TerGenPow);
 	SLV(TerGenMul);  SLV(TerGenOfsH);  SLV(TerGenRoadSm);
+	SLV(TerGenAngMin);  SLV(TerGenAngMax);  SLV(TerGenAngSm);
+	SLV(TerGenHMin);  SLV(TerGenHMax);  SLV(TerGenHSm);
+	
 	
 	//  ter size
 	SLV(TerTriSize);  SLV(TerLScale);
