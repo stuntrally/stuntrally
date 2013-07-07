@@ -455,7 +455,7 @@ void App::FillTrackLists()
 	}
 }
 
-///  Tool write sceneryID
+///  _Tool_ write sceneryID
 #ifdef SR_EDITOR
 void App::ToolListSceneryID()
 {

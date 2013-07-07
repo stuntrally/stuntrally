@@ -39,7 +39,7 @@ void App::createScene()  // once, init
 	QTimer ti;  ti.update();  /// time
 
 
-	///  Tool tex ..........................
+	///  _Tool_ tex ..........................
 	//  (remove alpha channel for ter tex prv img)
 	#if 0
 	Ogre::Image im;
@@ -79,7 +79,7 @@ void App::createScene()  // once, init
 	LogO(String("::: Time load xmls: ") + toStr(dt) + " ms");
 
 
-	///  Tool tracks ...........................
+	///  _Tool_ tracks ...........................
 	#if 0
 	ti.update();  /// time
 	LogO("ALL tracks ---------");
@@ -140,7 +140,7 @@ void App::createScene()  // once, init
 	InitGui();
 	
 
-	///  Tool write sceneryID
+	///  _Tool_ write sceneryID
 	#if 0
 	ToolListSceneryID();
 	exit(0);
