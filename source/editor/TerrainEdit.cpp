@@ -376,12 +376,13 @@ void App::updBrush()
 ///--------------------------------------------------------------------------------------------------------------------------
 void App::btnTerGenerate(WP wp)
 {
-	int mode = 0;  const std::string& n = wp->getName();
-	if (n == "TerrainGenAdd")  mode = 0;  else
-	if (n == "TerrainGenSub")  mode = 1;  else
-	if (n == "TerrainGenMul")  mode = 2;
+	const std::string& n = wp->getName();
+	bool add = false, sub = false;
+	if (n == "TerrainGenAdd")  add = true;  else
+	if (n == "TerrainGenSub")  sub = true;/*else
+	if (n == "TerrainGenMul")  mul = true;*/
 
-	float* hfData = sc->td.hfHeight;
+	float* hfData = sc->td.hfHeight, *hfAng = sc->td.hfAngle;
 	const int sx = sc->td.iVertsX;  // sx=sy
 	const float s = sx * 0.5f, s1 = 1.f/s;
 	const float ox = pSet->gen_ofsx, oy = pSet->gen_ofsy;
@@ -399,76 +400,55 @@ void App::btnTerGenerate(WP wp)
 		r = imgRoad.getWidth();
 	}
 
+	QTimer ti;  ti.update();  /// time
+
 	//  generate noise terrain hmap
-	register int a,x,y;
-	switch (mode)
-	{
-	case 0:  // + add - road
-	if (bRoad)
-	{	for (y=0; y < sx; ++y)  {  a = y * sx;
-		for (x=0; x < sx; ++x,++a)
-		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+	register int a,x,y;  register float c;
 
-			float c = Noise(y*s1-oy, x*s1+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist) * 0.8f;
-			c = c >= 0.f ? powf(c, pSet->gen_pow) : -powf(-c, pSet->gen_pow);
+	for (y=0; y < sx; ++y)  {  a = y * sx;
+	for (x=0; x < sx; ++x,++a)
+	{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 
-			//)  check if on road - uses roadDensity.png
-			//  todo: smooth depends on -smooth grass dens par, own val?
-			int mx = ( fx+1.f)*0.5f*r,
-				my = (-fy+1.f)*0.5f*r;
+		c = Noise(y*s1-oy, x*s1+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist) * 0.8f;
+		c = c >= 0.f ? powf(c, pSet->gen_pow) : -powf(-c, pSet->gen_pow);
+
+		//)  check if on road - uses roadDensity.png
+		//  todo: smooth depends on -smooth grass dens par, own val?
+		if (bRoad)
+		{
+			int mx = ( fx+1.f)*0.5f*r, my = (-fy+1.f)*0.5f*r;
 					
 			float cr = imgRoad.getColourAt(
-				std::max(0,std::min(r-1, mx)),
-				std::max(0,std::min(r-1, my)), 0).r;
+				std::max(0,std::min(r-1, mx)), std::max(0,std::min(r-1, my)), 0).r;
 
+			//c = c + std::max(0.f, std::min(1.f, 2*c-cr)) * pow(cr, rdPow);
 			c *= pow(cr, rdPow);
+		}
+		
+		c *= linRange(hfAng[a],  0.f,10.f, 5.f);
+		//c *= linRange(hfData[a], 0.f,20.f, 10.f);  //todo: gui sld..
 
-			c *= pSet->gen_scale;
-			hfData[a] += c + pSet->gen_ofsh;
-		}	}  break;
-	}else
-	{		// + add
-		for (y=0; y < sx; ++y)  {  a = y * sx;
-		for (x=0; x < sx; ++x,++a)
-		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+		//c *= pSet->gen_scale * std::min(1.f, std::max(0.f, (2.f - hfData[a]*0.5f) ));
+		//c *= pSet->gen_scale * std::min(1.f, std::max(0.f, (hfData[a]*0.5f - 2.f) ));
 
-			float c = Noise(y*s1-oy, x*s1+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist) * 0.8f;
-			c = c >= 0.f ? powf(c, pSet->gen_pow) : -powf(-c, pSet->gen_pow);
+		hfData[a] = add ? (hfData[a] + c * pSet->gen_scale + pSet->gen_ofsh) : (
+					sub ? (hfData[a] - c * pSet->gen_scale - pSet->gen_ofsh) :
+						  (hfData[a] * c * pSet->gen_mul) );
+	}	}
 
-			c *= pSet->gen_scale;
-			hfData[a] += c + pSet->gen_ofsh;
-		}	}
-	}  break;
+	ti.update();  /// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time Ter Gen: ") + toStr(dt) + " ms");
 
-	case 1:  // - sub
-		for (y=0; y < sx; ++y)  {  a = y * sx;
-		for (x=0; x < sx; ++x,++a)
-		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
-
-			float c = Noise(y*s1-oy, x*s1+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist) * 0.8f;
-			c = c >= 0.f ? powf(c, pSet->gen_pow) : -powf(-c, pSet->gen_pow);
-
-			c *= pSet->gen_scale;
-			hfData[a] -= c + pSet->gen_ofsh;
-		}	}  break;
-
-	case 2:  // * mul
-		for (y=0; y < sx; ++y)  {  a = y * sx;
-		for (x=0; x < sx; ++x,++a)
-		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
-
-			float c = Noise(y*s1-oy, x*s1+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist) * 0.8f;
-			c = c >= 0.f ? powf(c, pSet->gen_pow) : -powf(-c, pSet->gen_pow);
-
-			c *= pSet->gen_mul;
-			hfData[a] *= c;
-		}	}  break;
-	}
 	std::ofstream of;
 	of.open(getHMapNew(), std::ios_base::binary);
 	int siz = sx * sx * sizeof(float);
 	of.write((const char*)&hfData[0], siz);
 	of.close();
+
+	ti.update();  /// time
+	dt = ti.dt * 1000.f;
+	LogO(String("::: Time Ter Gen save: ") + toStr(dt) + " ms");
 
 	bNewHmap = true;	UpdateTrack();
 }
@@ -798,7 +778,7 @@ void App::createBrushPrv()
 
 
 ///==============================================================================================
-	///  Tool update all brushes png
+	///  _Tool_ update all brushes png
 	#if 0  // 0 in release !!
 	Image im;
 	for (int i=0; i < brSetsNum; ++i)
