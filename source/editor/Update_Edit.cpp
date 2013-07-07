@@ -4,8 +4,6 @@
 #include "../road/Road.h"
 #include "../ogre/common/Gui_Def.h"
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
-//#include "LinearMath/btDefaultMotionState.h"
-//#include "BulletDynamics/Dynamics/btRigidBody.h"
 using namespace Ogre;
 
 
@@ -147,9 +145,9 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			rdTxt[3]->setCaption(TR("#{Road_Roll}"));		rdKey[3]->setCaption("3 4");
 															rdKey[4]->setCaption("5 6");
 			rdTxt[5]->setCaption(TR("#{Road_Snap}"));		rdKey[5]->setCaption("7 8");
-			rdTxt[6]->setCaption(TR("#{Road_Pipe}"));		rdKey[6]->setCaption("[ ]");
+			rdTxt[6]->setCaption(TR("#{Road_Pipe}"));		rdKey[6]->setCaption("O P");//[ ]
 			rdTxt[7]->setCaption(TR("#{Road_Column}"));		rdKey[7]->setCaption("End");
-															rdKey[8]->setCaption("- =");
+															rdKey[8]->setCaption("9 0");//- =
 			rdTxt[9]->setCaption(TR("#{Road_ChkR}"));		rdKey[9]->setCaption("K L");
 		}
 
@@ -167,7 +165,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		rdVal[7]->setCaption(sp.onTer ? "" : toStr(sp.cols));
 		
 		rdTxt[8]->setCaption(toStr(sp.idMtr)+" "+road->getMtrStr(ic));
-		rdVal[9]->setCaption( sp.chkR == 0.f ? "" : fToStr(sp.chkR,1,3)+"  "+ (road->iP1 == ic ? "#8080FF(1)":"") );
+		rdVal[9]->setCaption( sp.chkR == 0.f ? "" : fToStr(sp.chkR,1,3)+"  "+ (road->iP1 == ic ? "#D0D0FF(1)":"") );
 
 		if (road->vSel.size() > 0)  s = TR("#{Road_sel}")+": "+toStr(road->vSel.size());
 		else  s = fToStr(road->iChosen+1,0,2)+"/"+toStr(road->vSegs.size());
@@ -227,8 +225,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		{	if (isKey(1))		road->AddYaw(-q*3,0,alt);	if (isKey(3))		road->AddRoll(-q*3,0,alt);
 			if (isKey(2))		road->AddYaw( q*3,0,alt);	if (isKey(4))		road->AddRoll( q*3,0,alt);
 		}
-		if (isKey(LBRACKET))	road->AddPipe(-q*0.2);	if (isKey(K ))	road->AddChkR(-q*0.2);  // chk
-		if (isKey(RBRACKET))	road->AddPipe( q*0.2);	if (isKey(L))	road->AddChkR( q*0.2);
+		if (isKey(LBRACKET)||isKey(O))	road->AddPipe(-q*0.2);	if (isKey(K))	road->AddChkR(-q*0.2);  // chk
+		if (isKey(RBRACKET)||isKey(P))	road->AddPipe( q*0.2);	if (isKey(L))	road->AddChkR( q*0.2);
 
 		if (mz > 0)			road->NextPoint();
 		else if (mz < 0)	road->PrevPoint();
@@ -244,11 +242,11 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 
 			brTxt[0]->setCaption(TR("#{Brush_Size}"));		brKey[0]->setCaption("- =");
 			brTxt[1]->setCaption(TR("#{Brush_Force}"));		brKey[1]->setCaption("[ ]");
-			brTxt[2]->setCaption(TR("#{Brush_Power}"));		brKey[2]->setCaption("; \'");
-			brTxt[3]->setCaption(TR("#{Brush_Shape}"));		brKey[3]->setCaption("K L");
+			brTxt[2]->setCaption(TR("#{Brush_Power}"));		brKey[2]->setCaption("K L");//; \'
+			brTxt[3]->setCaption(TR("#{Brush_Shape}"));		brKey[3]->setCaption("ctrl");//-K L
 
 			brTxt[4]->setCaption(TR("#{Brush_Freq}"));		brKey[4]->setCaption("O P");
-			brTxt[5]->setCaption(TR("#{Brush_Octaves}"));	brKey[5]->setCaption(", .");
+			brTxt[5]->setCaption(TR("#{Brush_Octaves}"));	brKey[5]->setCaption("N M");//, .
 			brTxt[6]->setCaption(TR("#{Brush_Offset}"));	brKey[6]->setCaption("9 0");
 		}
 		brVal[0]->setCaption(fToStr(mBrSize[curBr],1,4));
@@ -295,12 +293,14 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			else if (!shift){	mBrSize[curBr]  *= 1.f - 0.4f*q*mz;  updBrush();  }
 			else				mBrIntens[curBr]*= 1.f - 0.4f*q*mz/0.05;
 
-		if (isKey(MINUS)){		mBrSize[curBr]  *= 1.f - 0.04f*q;  updBrush();  }
-		if (isKey(EQUALS)){		mBrSize[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
-		if (isKey(LBRACKET))	mBrIntens[curBr]*= 1.f - 0.04f*q;
-		if (isKey(RBRACKET))	mBrIntens[curBr]*= 1.f + 0.04f*q;
-		if (isKey(SEMICOLON )){ mBrPow[curBr]   *= 1.f - 0.04f*q;  updBrush();  }
-		if (isKey(APOSTROPHE)){ mBrPow[curBr]   *= 1.f + 0.04f*q;  updBrush();  }
+		if (isKey(MINUS)   ){	mBrSize[curBr]  *= 1.f - 0.04f*q;  updBrush();  }
+		if (isKey(EQUALS)  ){	mBrSize[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
+		if (isKey(LBRACKET)  )	mBrIntens[curBr]*= 1.f - 0.04f*q;
+		if (isKey(RBRACKET)  )	mBrIntens[curBr]*= 1.f + 0.04f*q;
+		if (isKey(SEMICOLON ) || (!ctrl && isKey(K)))
+							{	mBrPow[curBr]   *= 1.f - 0.04f*q;  updBrush();  }
+		if (isKey(APOSTROPHE) || (!ctrl && isKey(L)))
+							{	mBrPow[curBr]   *= 1.f + 0.04f*q;  updBrush();  }
 
 		if (isKey(O)){			mBrFq[curBr]    *= 1.f - 0.04f*q;  updBrush();  }
 		if (isKey(P)){			mBrFq[curBr]    *= 1.f + 0.04f*q;  updBrush();  }
@@ -324,10 +324,10 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		stTxt[3]->setCaption("road dir "+ (road->iDir == 1 ? String("+1") : String("-1")) );
 
 		//  edit
-		if (isKey(LBRACKET))	{  road->AddBoxH(-q*0.2);  UpdStartPos();  }
-		if (isKey(SEMICOLON))	{  road->AddBoxW(-q*0.2);  UpdStartPos();  }
-		if (isKey(RBRACKET))	{  road->AddBoxH( q*0.2);  UpdStartPos();  }
-		if (isKey(APOSTROPHE))	{  road->AddBoxW( q*0.2);  UpdStartPos();  }
+		if (isKey(LBRACKET)  ||isKey(O))	{  road->AddBoxH(-q*0.2);  UpdStartPos();  }
+		if (isKey(RBRACKET)  ||isKey(P))	{  road->AddBoxH( q*0.2);  UpdStartPos();  }
+		if (isKey(SEMICOLON) ||isKey(K))	{  road->AddBoxW(-q*0.2);  UpdStartPos();  }
+		if (isKey(APOSTROPHE)||isKey(L))	{  road->AddBoxW( q*0.2);  UpdStartPos();  }
 		//if (mz > 0 && bEdit())	// snap rot by 15 deg ..
 	}
 	///  Fluids
@@ -349,10 +349,10 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			flTxt[4]->setCaption("Tile:  "+fToStr(fb.tile.x,3,5)+" "+fToStr(fb.tile.y,3,5));
 
 			//  edit
-			if (isKey(LBRACKET)){	fb.tile   *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
-			if (isKey(RBRACKET)){	fb.tile   *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
-			if (isKey(SEMICOLON )){	fb.tile.y *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
-			if (isKey(APOSTROPHE)){	fb.tile.y *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
+			if (isKey(LBRACKET)  ||isKey(O)){	fb.tile   *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
+			if (isKey(RBRACKET)  ||isKey(P)){	fb.tile   *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
+			if (isKey(SEMICOLON )||isKey(K)){	fb.tile.y *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
+			if (isKey(APOSTROPHE)||isKey(L)){	fb.tile.y *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
 
 			if (mz != 0 && bEdit())  // wheel prev/next
 			{	int fls = sc->fluids.size();
@@ -422,12 +422,12 @@ void App::editMouse()
 	///  mouse edit Road  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 	if (road && edMode == ED_Road)
 	{
-		const Real fMove(5.0f), fRot(40.f);  //par speed
+		const Real fMove(5.0f), fRot(10.f);  //par speed
 
 		if (!alt)
 		{
 			if (mbLeft)    // move on xz
-			{	Vector3 vx = mCameraT->getRight();	   vx.y = 0;  vx.normalise();
+			{	Vector3 vx = mCameraT->getRight();      vx.y = 0;  vx.normalise();
 				Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
 				road->Move((vNew.x * vx - vNew.y * vz) * fMove * moveMul);
 			}else
@@ -435,7 +435,7 @@ void App::editMouse()
 				road->Move(-vNew.y * Vector3::UNIT_Y * fMove * moveMul);
 			else
 			if (mbMiddle)  // width
-				road->AddWidth(vNew.x * fMove * moveMul);
+				road->AddWidth(vNew.x * fMove * 0.2f * moveMul);
 		}else
 		{	//  alt
 			if (mbLeft)    // rot pitch
@@ -470,11 +470,10 @@ void App::editMouse()
 						Vector3 v = road->posHit;
 						vStartPos[n][0] = v.x;  vStartPos[n][1] =-v.z;
 						vStartPos[n][2] = v.y+0.6f;  //car h above
-					}
-				}
+				}	}
 				else  // move
 				{
-					Vector3 vx = mCameraT->getRight();	   vx.y = 0;  vx.normalise();
+					Vector3 vx = mCameraT->getRight();      vx.y = 0;  vx.normalise();
 					Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
 					Vector3 vm = (-vNew.y * vx - vNew.x * vz) * fMove * moveMul;
 					vStartPos[n][0] += vm.z;
@@ -520,7 +519,7 @@ void App::editMouse()
 		{
 			if (mbLeft)	// move on xz
 			{
-				Vector3 vx = mCameraT->getRight();	   vx.y = 0;  vx.normalise();
+				Vector3 vx = mCameraT->getRight();      vx.y = 0;  vx.normalise();
 				Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
 				Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
 				fb.pos += vm;

@@ -951,7 +951,7 @@
 	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="InputRoadStats">T - road stats window</Tag>
 	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
-	<Tag name="InputRoadLooped">O - toggle looped</Tag>
+	<Tag name="InputRoadLooped">N - toggle looped</Tag>
 
 
 	<!--  Start pos  -->

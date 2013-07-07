@@ -425,7 +425,7 @@ void App::btnTerGenerate(WP wp)
 			c *= pow(cr, rdPow);
 		}
 		
-		c *= linRange(hfAng[a],  0.f,10.f, 5.f);
+		//c *= linRange(hfAng[a],  0.f,10.f, 5.f);
 		//c *= linRange(hfData[a], 0.f,20.f, 10.f);  //todo: gui sld..
 
 		//c *= pSet->gen_scale * std::min(1.f, std::max(0.f, (2.f - hfData[a]*0.5f) ));

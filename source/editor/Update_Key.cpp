@@ -532,8 +532,10 @@ bool App::KeyPress(const CmdKey &arg)
 					road->Insert(shift ? INS_Begin : ctrl ? INS_End : alt ? INS_CurPre : INS_Cur);
 				}	break;					  
 
-			case KC_MINUS:   road->ChgMtrId(-1);	break;
+			case KC_0:  if (ctrl)  {  road->Set1stChk();  break;  }
 			case KC_EQUALS:  road->ChgMtrId(1);		break;
+			case KC_9:
+			case KC_MINUS:   road->ChgMtrId(-1);	break;
 
 			case KC_5:	road->ChgAngType(-1);	break;
 			case KC_6:	if (shift)  road->AngZero();  else
@@ -542,12 +544,10 @@ bool App::KeyPress(const CmdKey &arg)
 			case KC_7:  iSnap = (iSnap-1+ciAngSnapsNum)%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];  break;
 			case KC_8:  iSnap = (iSnap+1)%ciAngSnapsNum;                angSnap = crAngSnaps[iSnap];  break;
 			
-			case KC_0:  road->Set1stChk();  break;
-
 			case KC_U:  AlignTerToRoad();  break;
 			
-			//  looped
-			case KC_O:  road->isLooped = !road->isLooped;
+			//  looped  todo: finish set..
+			case KC_N:  road->isLooped = !road->isLooped;
 				road->recalcTangents();  road->RebuildRoad(true);  break;
 		}
 	}
@@ -556,10 +556,10 @@ bool App::KeyPress(const CmdKey &arg)
 	if (edMode < ED_Road && !alt)
 	switch (arg.key)
 	{
-		case KC_K:	mBrShape[curBr] = (EBrShape)((mBrShape[curBr]-1 + BRS_ALL) % BRS_ALL);  updBrush();  break;
-		case KC_L:	mBrShape[curBr] = (EBrShape)((mBrShape[curBr]+1) % BRS_ALL);            updBrush();  break;
-		case KC_COMMA:	mBrOct[curBr] = std::max(1, mBrOct[curBr]-1);  updBrush();  break;
-		case KC_PERIOD:	mBrOct[curBr] = std::min(7, mBrOct[curBr]+1);  updBrush();  break;
+		case KC_K:	if (ctrl)  {  mBrShape[curBr] = (EBrShape)((mBrShape[curBr]-1 + BRS_ALL) % BRS_ALL);  updBrush();  }  break;
+		case KC_L:	if (ctrl)  {  mBrShape[curBr] = (EBrShape)((mBrShape[curBr]+1) % BRS_ALL);            updBrush();  }  break;
+		case KC_N: case KC_COMMA:	mBrOct[curBr] = std::max(1, mBrOct[curBr]-1);  updBrush();  break;
+		case KC_M: case KC_PERIOD:	mBrOct[curBr] = std::min(7, mBrOct[curBr]+1);  updBrush();  break;
 	}
 
 	//  ter brush presets  ----
@@ -614,12 +614,12 @@ bool App::KeyPress(const CmdKey &arg)
 				break;
 
 			//  prev,next type
-			case KC_MINUS:
+			case KC_9:  case KC_MINUS:
 			{	FluidBox& fb = sc->fluids[iFlCur];
 				fb.id = (fb.id-1 + fluidsXml.fls.size()) % fluidsXml.fls.size();
 				fb.name = fluidsXml.fls[fb.id].name;
 				bRecreateFluids = true;  }	break;
-			case KC_EQUALS:
+			case KC_0:  case KC_EQUALS:
 			{	FluidBox& fb = sc->fluids[iFlCur];
 				fb.id = (fb.id+1) % fluidsXml.fls.size();
 				fb.name = fluidsXml.fls[fb.id].name;
@@ -636,8 +636,8 @@ bool App::KeyPress(const CmdKey &arg)
 				iObjCur = -1;  PickObject();  UpdObjPick();  break;
 				
 			//  prev,next type
-			case KC_MINUS:	SetObjNewType((iObjTNew-1 + objAll) % objAll);  break;
-			case KC_EQUALS:	SetObjNewType((iObjTNew+1) % objAll);  break;
+			case KC_9:  case KC_MINUS:   SetObjNewType((iObjTNew-1 + objAll) % objAll);  break;
+			case KC_0:  case KC_EQUALS:  SetObjNewType((iObjTNew+1) % objAll);  break;
 				
 			//  ins
 			case KC_INSERT:	case KC_NUMPAD0:
@@ -727,7 +727,7 @@ bool App::KeyPress(const CmdKey &arg)
 	//  Rivers  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	if (edMode == ED_Rivers)
 	{
-		
+		// todo
 	}
 
 	///  Common Keys  ************************************************************************************************************
@@ -737,7 +737,7 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_Q:	GuiShortcut(WND_Edit, 1);  return true;  // Q Track
 		case KC_S:	GuiShortcut(WND_Edit, 2);  return true;  // S Sun
 
-		case KC_H:	GuiShortcut(WND_Edit, 3);  return true;  // H Terrain (Heightmap)
+		case KC_H:	GuiShortcut(WND_Edit, 3);  return true;  // H Heightmap
 		 case KC_D:	GuiShortcut(WND_Edit, 3,0);  return true;  //  D -Brushes
 
 		case KC_T:	GuiShortcut(WND_Edit, 4);  return true;  // T Layers (Terrain)
@@ -786,7 +786,7 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_S:	if (bEdit()){  SetEdMode(ED_Smooth);  curBr = 1;  updBrush();  UpdEditWnds();  }	break;
 		case KC_E:	if (bEdit()){  SetEdMode(ED_Height);  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
 		case KC_F:  if (bEdit()){  SetEdMode(ED_Filter);  curBr = 3;  updBrush();  UpdEditWnds();  }
-			else  //  focus on find edit
+			else  //  focus on find edit  (global)
 			if (ctrl && edFind /*&& bGuiFocus &&
 				!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 1*/)
 			{
@@ -800,7 +800,7 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_R:	if (bEdit()){  SetEdMode(ED_Road);	UpdEditWnds();  }	break;
 		case KC_B:  if (road)  road->RebuildRoad(true);  break;
 		case KC_T:	if (mWndRoadStats)  mWndRoadStats->setVisible(!mWndRoadStats->getVisible());  break;
-		case KC_M:  if (road)  road->ToggleMerge();  break;
+		case KC_M:  if (edMode == ED_Road && road)  road->ToggleMerge();  break;
 
 		//  start pos
 		case KC_Q:	if (bEdit()){  SetEdMode(ED_Start);  UpdEditWnds();  }   break;
