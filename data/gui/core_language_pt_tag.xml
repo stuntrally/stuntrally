@@ -63,6 +63,7 @@
 	<Tag name="ScoreNeeded">Placar necessário</Tag>
 	<Tag name="CarType_Extreme">Extreme</Tag>
 	<Tag name="Game name">Nome do jogo</Tag>
+	<Tag name="TipSliderReset">RMB on slider - reset to default value.</Tag>
 	<Tag name="HUD">HUD</Tag>
 	<Tag name="InputCamControl">W,S A,D Q,E - mover Setas - girar</Tag>
 	<Tag name="TipTrackMap">Minimapa da pista selecionada, vista do topo.</Tag>
@@ -163,6 +164,7 @@
 	<Tag name="TipRoadDist2">Distância adicional da pista.</Tag>
 	<Tag name="InputBrushFilter">1,2  -  Filter frequency (kernel size)</Tag>
 	<Tag name="Video">Vídeo</Tag>
+	<Tag name="TipBrushPick">shift-LMB - on Brushes, pick only shape (don't change mode).</Tag>
 	<Tag name="ViewStart">View Start</Tag>
 	<Tag name="TipToggleGrass">Enable or disable this grass layer.</Tag>
 	<Tag name="SSS_SpeedFactor">Fator de Velocidade</Tag>
@@ -410,7 +412,7 @@
 	<Tag name="CarClrRandom">Random</Tag>
 	<Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
 	<Tag name="SpeedUnit">Speed unit</Tag>
-	<Tag name="InputRoadLooped">O - toggle looped</Tag>
+	<Tag name="InputRoadLooped">N - toggle looped</Tag>
 	<Tag name="Name">Name</Tag>
 	<Tag name="RplSize">size</Tag>
 	<Tag name="TipGrassPrev">Preview image of this grass layer (changed with material).</Tag>
@@ -504,6 +506,7 @@
 	<Tag name="Water">Water</Tag>
 	<Tag name="mud">mud</Tag>
 	<Tag name="Brush_ShapeN-gon">N-gon</Tag>
+	<Tag name="ChampInfo">In tutorial/championship mode you drive a series of tracks. Minimum score (depending on your time) is needed to pass to next stage. Car changing is possible.</Tag>
 	<Tag name="AutoUpdateBlendmap">Auto update blendmap (slow for big size brushes)</Tag>
 	<Tag name="InputMapThrottle">Throttle</Tag>
 	<Tag name="TBLap">Lap</Tag>
@@ -631,6 +634,7 @@
 	<Tag name="InputFluidsType">-,=  - change fluid type (water,mud,etc.)</Tag>
 	<Tag name="TrackWidthAvg">Width avg.</Tag>
 	<Tag name="Road_Length">Length</Tag>
+	<Tag name="RplGhostOther">Other car ghost (when current unavailable)</Tag>
 	<Tag name="NetAddress">Address</Tag>
 	<Tag name="Road_sel">sel</Tag>
 	<Tag name="AutoLoad">Auto Load track</Tag>
@@ -872,10 +876,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="TipSliderReset">RMB on slider - reset to default value.</Tag>
-	<Tag name="TipBrushPick">shift-LMB - on Brushes, pick only shape (don't change mode).</Tag>
-	<Tag name="ChampInfo">In tutorial/championship mode you drive a series of tracks. Minimum score (depending on your time) is needed to pass to next stage. Car changing is possible.</Tag>
-	<Tag name="RplGhostOther">Other car ghost (when current unavailable)</Tag>
+	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

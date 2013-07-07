@@ -63,6 +63,7 @@
 	<Tag name="ScoreNeeded">Punkte benötigt</Tag>
 	<Tag name="CarType_Extreme">Extrem</Tag>
 	<Tag name="Game name">Spielname</Tag>
+	<Tag name="TipSliderReset">Schieberegler rechtsklicken - auf Standardwert zurücksetzen</Tag>
 	<Tag name="HUD">HUD</Tag>
 	<Tag name="InputCamControl">W,S A,D Q,E - Pfeiltasten - drehen</Tag>
 	<Tag name="TipTrackMap">Minikarte der ausgewählten Strecke, Sicht von oben.</Tag>
@@ -149,7 +150,7 @@
 	<Tag name="CameraInfo">Kamerainfo</Tag>
 	<Tag name="frenzy">viele Kurven</Tag>
 	<Tag name="InputRoadChkRadius">K,L - Wegpunkt-Radius</Tag>
-	<Tag name="TipCarSpeed">Car speed rating, more means faster car. Warning, on gravel too fast cars won't be faster because they don't have enough grip.</Tag>
+	<Tag name="TipCarSpeed">Geschwindigkeit des Autos - je höher sie ist, desto schneller ist das Fahrzeug. Achtung, zu schnelle Autos werden auf Kies nicht schneller sein, da sie nicht über genügend Halt verfügen.</Tag>
 	<Tag name="InputRoadInsAlt">Alt-Shift - am Anfang Alt-Strg - am Ende</Tag>
 	<Tag name="RearThrottleInverse">Bremsen, um rückwärts zu fahren</Tag>
 	<Tag name="MessageBox_Yes">Ja</Tag>
@@ -163,6 +164,7 @@
 	<Tag name="TipRoadDist2">Zusätzlicher Abstand zur Strecke.</Tag>
 	<Tag name="InputBrushFilter">1,2 - Filter Frequenz (Kern Umfang)</Tag>
 	<Tag name="Video">Bildschirm</Tag>
+	<Tag name="TipBrushPick">shift-LMB - on Brushes, pick only shape (don't change mode).</Tag>
 	<Tag name="ViewStart">Ans. Start</Tag>
 	<Tag name="TipToggleGrass">Gras Schicht aktivieren oder deaktivieren.</Tag>
 	<Tag name="SSS_SpeedFactor">Schnelligkeitsfaktor</Tag>
@@ -237,7 +239,7 @@
 	<Tag name="NetSettings">Einstellungen</Tag>
 	<Tag name="TipModelMaxScale">Maximale Skalierung des Modells.</Tag>
 	<Tag name="TerrainError">Terrain Fehler</Tag>
-	<Tag name="InputGraphsType">change graphs type in game</Tag>
+	<Tag name="InputGraphsType">Graphentyp ändern</Tag>
 	<Tag name="NetMasterProtocolError">Inkompatibles protokoll - Spiel aktualisieren oder Server-Administrator kontaktieren.</Tag>
 	<Tag name="No">Nein</Tag>
 	<Tag name="Effects">Effekte</Tag>
@@ -329,7 +331,7 @@
 	<Tag name="Brush_Shape">Form</Tag>
 	<Tag name="length">Länge</Tag>
 	<Tag name="DynamicObjects">Dynamische Objekte</Tag>
-	<Tag name="TipFogClrH">Fog color for height fog.</Tag>
+	<Tag name="TipFogClrH">Nebel Farbe für Höhe-Nebel.</Tag>
 	<Tag name="ColumnNSides">Säulen N sides</Tag>
 	<Tag name="RplAutoRec">Automatisch aufnehmen</Tag>
 	<Tag name="TipTrkTerImg">Minikarte der ausgewählten Strecke, Sicht von oben.</Tag>
@@ -343,7 +345,7 @@
 	<Tag name="SplitVertically">Senkrecht teilen</Tag>
 	<Tag name="Start">Start</Tag>
 	<Tag name="TipGrTerMinHeight">Terrain height below which there won't be any grass (starts fading out, for smooth distance).</Tag>
-	<Tag name="Road_Snap">Schnappen</Tag>
+	<Tag name="Road_Snap">Einrasten</Tag>
 	<Tag name="InputRoadShiftReverse">Shift-Einfg - Einfügen Shift-Strg-Einfg - umgekehrt</Tag>
 	<Tag name="MinScale">min. Skal.</Tag>
 	<Tag name="MergeLength">Zusammenf. L.</Tag>
@@ -359,7 +361,7 @@
 	<Tag name="InputStartPos">Q - Startposition ändern</Tag>
 	<Tag name="InputPaintColor">C - Anstrichfarbe</Tag>
 	<Tag name="TireTrails">Reifenspuren</Tag>
-	<Tag name="TipFogClrRGBA">R G B A components 0 to 1 (eg. 0.7 0.8 0.9 1). Last can be used to lower maximum density (1 is full).</Tag>
+	<Tag name="TipFogClrRGBA">R G B A Komponenten 0 bis 1 (z.B. 0.7 0.8 0.9 1). Letztes ist Nebel Dichte (1 ist voll).</Tag>
 	<Tag name="InputBrushParams">Pinseleigenschaften</Tag>
 	<Tag name="InputMapShowOptions">Optionen zeigen</Tag>
 	<Tag name="InputCameraMode">Kameramodus</Tag>
@@ -373,7 +375,7 @@
 	<Tag name="Road">Straße</Tag>
 	<Tag name="FluidCont">Gewässertyp</Tag>
 	<Tag name="TrackAutoLoad">Spiel autom. Laden</Tag>
-	<Tag name="BoostFOV">Adaptive FOV</Tag>
+	<Tag name="BoostFOV">Adaptives Sichtfeld</Tag>
 	<Tag name="DustSize">Staubgröße</Tag>
 	<Tag name="Shortcuts">Tastenkürzel</Tag>
 	<Tag name="TerrainMove">Bewegen</Tag>
@@ -410,7 +412,7 @@
 	<Tag name="CarClrRandom">Zufällig</Tag>
 	<Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
 	<Tag name="SpeedUnit">Einheit</Tag>
-	<Tag name="InputRoadLooped">O - toggle looped</Tag>
+	<Tag name="InputRoadLooped">N - toggle looped</Tag>
 	<Tag name="Name">Name</Tag>
 	<Tag name="RplSize">Größe</Tag>
 	<Tag name="TipGrassPrev">Preview image of this grass layer (changed with material).</Tag>
@@ -489,7 +491,7 @@
 	<Tag name="BulletProfilerTxt">Bullet Profileranzeige</Tag>
 	<Tag name="InputMapNextTab">Nächster Tab</Tag>
 	<Tag name="FrameSkip">FrameSkip</Tag>
-	<Tag name="TweakEdit2">Alt-Shift-Z - save file and reload game</Tag>
+	<Tag name="TweakEdit2">Alt-Shift-Z - Datei speichern und Spiel laden.</Tag>
 	<Tag name="InputTrackScrn">(für Bildschirmfoto)</Tag>
 	<Tag name="trailColor">Spurenfarbe</Tag>
 	<Tag name="Boost">Boost</Tag>
@@ -503,7 +505,8 @@
 	<Tag name="NeedRestart">* Neustart erforderl.</Tag>
 	<Tag name="Water">Wasser</Tag>
 	<Tag name="mud">Schlamm</Tag>
-	<Tag name="Brush_ShapeN-gon">N-gon</Tag>
+	<Tag name="Brush_ShapeN-gon">N-eck</Tag>
+	<Tag name="ChampInfo">Im Tutorial-/Meisterschaftsmodus, eine Serie von Strecken wird gefahren. Eine Mindestpunktzahl (von der gefahrenen Zeit abhängig) ist erforderlich, um die nächste Etappe starten zu können. Es ist möglich, das Auto zu wechseln.</Tag>
 	<Tag name="AutoUpdateBlendmap">Auto update blendmap (slow for big size brushes)</Tag>
 	<Tag name="InputMapThrottle">Gas</Tag>
 	<Tag name="TBLap">Runde</Tag>
@@ -571,7 +574,7 @@
 	<Tag name="LS_GAME">Lade Spiel</Tag>
 	<Tag name="TipSceneryId">Name id of track, that has similar lighting (or this track's if has unique). Used for impostors generation.</Tag>
 	<Tag name="TreeMult">Baumanzahl</Tag>
-	<Tag name="InputTopView">Alt-Z - toggle top view</Tag>
+	<Tag name="InputTopView">Alt-Z - Draufsicht umschalten</Tag>
 	<Tag name="InputUpdate">F8 - Aktualisieren</Tag>
 	<Tag name="InputToggleGUIMode">F1 - Optionsfenster anzeigen</Tag>
 	<Tag name="InpSet_AxisFullInv">Achse voll umgekehrt</Tag>
@@ -631,6 +634,7 @@
 	<Tag name="InputFluidsType">-,= - Gewässertyp ändern</Tag>
 	<Tag name="TrackWidthAvg">Breite avg.</Tag>
 	<Tag name="Road_Length">Länge</Tag>
+	<Tag name="RplGhostOther">Anderes Auto Geist (wenn aktuelles nicht verfügbar)</Tag>
 	<Tag name="NetAddress">Adresse</Tag>
 	<Tag name="Road_sel">sel</Tag>
 	<Tag name="AutoLoad">Strecke autom. Laden</Tag>
@@ -771,7 +775,7 @@
 	<Tag name="InputRoadRebuild">B - Straße anpassen (nach Terrainänderung)</Tag>
 	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="Generator">Generator</Tag>
-	<Tag name="InputContextHelp">Ctrl-F1 - context help page</Tag>
+	<Tag name="InputContextHelp">Strg-F1 - kontextspezifische Hilfeseite</Tag>
 	<Tag name="ObjDynamic">Dynamisch</Tag>
 	<Tag name="InputRoadAlignTerrain">U - Gelände zum Weg ausrichten (für ausgewählte Segmente)</Tag>
 	<Tag name="Add">Hinzufügen</Tag>
@@ -872,10 +876,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="TipSliderReset">RMB on slider - reset to default value.</Tag>
-	<Tag name="TipBrushPick">shift-LMB - on Brushes, pick only shape (don't change mode).</Tag>
-	<Tag name="ChampInfo">In tutorial/championship mode you drive a series of tracks. Minimum score (depending on your time) is needed to pass to next stage. Car changing is possible.</Tag>
-	<Tag name="RplGhostOther">Other car ghost (when current unavailable)</Tag>
+	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -63,6 +63,7 @@
 	<Tag name="ScoreNeeded">Wymagane punkty</Tag>
 	<Tag name="CarType_Extreme">Ekstremalny</Tag>
 	<Tag name="Game name">Nazwa gry</Tag>
+	<Tag name="TipSliderReset">RMB na suwaku - ustaw domyślną wartość.</Tag>
 	<Tag name="HUD">HUD</Tag>
 	<Tag name="InputCamControl">W,S A,D Q,E - poruszaj się  Strzałki - obracaj</Tag>
 	<Tag name="TipTrackMap">Minimapa wybranej trasy (widok z góry).</Tag>
@@ -163,6 +164,7 @@
 	<Tag name="TipRoadDist2">Dodatkowa odległość od drogi.</Tag>
 	<Tag name="InputBrushFilter">1,2 - częstotliwość Filtra (rozmiar kernel)</Tag>
 	<Tag name="Video">Wideo</Tag>
+	<Tag name="TipBrushPick">shift-LMB - na Pędzlach, wybierz tylko kształt (nie zmieniaj trybu).</Tag>
 	<Tag name="ViewStart">Widok startu</Tag>
 	<Tag name="TipToggleGrass">Włącz lub wyłącz tą warstwę trawy.</Tag>
 	<Tag name="SSS_SpeedFactor">Współcz. prędkości</Tag>
@@ -504,6 +506,7 @@
 	<Tag name="Water">Woda</Tag>
 	<Tag name="mud">błoto</Tag>
 	<Tag name="Brush_ShapeN-gon">N-kąt</Tag>
+	<Tag name="ChampInfo">W samouczkach / mistrzostwach jedzie się serię tras. Minimalne punkty (zależne od czasu) są potrzebne by przejść do następnego odcinka. Zmiana auta jest możliwa.</Tag>
 	<Tag name="AutoUpdateBlendmap">Autom. odświeżanie przejść terenu (wolne dla dużych pędzli)</Tag>
 	<Tag name="InputMapThrottle">Gaz</Tag>
 	<Tag name="TBLap">Okrążenie</Tag>
@@ -631,6 +634,7 @@
 	<Tag name="InputFluidsType">-,= - zmień typ cieczy (woda, błoto, itp.)</Tag>
 	<Tag name="TrackWidthAvg">Śred. szer.</Tag>
 	<Tag name="Road_Length">Długość</Tag>
+	<Tag name="RplGhostOther">Duch innego auta (kiedy obecny nie istnieje).</Tag>
 	<Tag name="NetAddress">Adres</Tag>
 	<Tag name="Road_sel">zazn</Tag>
 	<Tag name="AutoLoad">Autom. wczytywanie trasy</Tag>
@@ -872,10 +876,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="TipSliderReset">RMB on slider - reset to default value.</Tag>
-	<Tag name="TipBrushPick">shift-LMB - on Brushes, pick only shape (don't change mode).</Tag>
-	<Tag name="ChampInfo">In tutorial/championship mode you drive a series of tracks. Minimum score (depending on your time) is needed to pass to next stage. Car changing is possible.</Tag>
-	<Tag name="RplGhostOther">Other car ghost (when current unavailable)</Tag>
+	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
