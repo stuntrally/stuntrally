@@ -180,7 +180,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 
 	ti.update();	/// time
 	float dt = ti.dt * 1000.f;
-	LogO(Ogre::String("::: Time ReplayLoad: ") + toStr(dt) + " ms");
+	LogO(Ogre::String("::: Time ReplayLoad: ") + fToStr(dt,0,3) + " ms");
 
     return true;
 }

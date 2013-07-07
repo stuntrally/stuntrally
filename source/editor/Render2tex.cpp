@@ -298,7 +298,7 @@ void App::SaveWaterDepth()
 
 	ti.update();	///T  /// time
 	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time WaterDepth: ") + toStr(dt) + " ms");
+	LogO(String("::: Time WaterDepth: ") + fToStr(dt,0,3) + " ms");
 }
 
 
@@ -467,5 +467,5 @@ void App::AlignTerToRoad()
 
 	ti.update();	///T  /// time
 	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time Ter Align: ") + toStr(dt) + " ms");
+	LogO(String("::: Time Ter Align: ") + fToStr(dt,0,3) + " ms");
 }

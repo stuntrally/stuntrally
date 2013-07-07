@@ -680,5 +680,5 @@ void App::InitGui()
 	
 	ti.update();	/// time
 	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time Init Gui: ") + toStr(dt) + " ms");
+	LogO(String("::: Time Init Gui: ") + fToStr(dt,0,3) + " ms");
 }

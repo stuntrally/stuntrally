@@ -121,7 +121,7 @@ void App::CreateTrees()
 	}
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time Grass: ") + toStr(dt) + " ms");
+	LogO(String("::: Time Grass: ") + fToStr(dt,0,3) + " ms");
 	
 
 	//---------------------------------------------- Trees ----------------------------------------------
@@ -368,5 +368,5 @@ void App::CreateTrees()
 	//imgRoadSize = 0;
 	ti.update();  /// time
 	dt = ti.dt * 1000.f;
-	LogO(String("::: Time Trees: ") + toStr(dt) + " ms");
+	LogO(String("::: Time Trees: ") + fToStr(dt,0,3) + " ms");
 }

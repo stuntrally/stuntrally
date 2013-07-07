@@ -60,7 +60,6 @@ void App::createScene()  // once, init
 
 	//  tracks.xml
 	tracksXml.LoadXml(PATHMANAGER::GameConfigDir() + "/tracks.xml");
-	//tracksXml.SaveXml(PATHMANAGER::GameConfigDir() + "/tracks2.xml");
 
 	//  fluids.xml
 	fluidsXml.LoadXml(PATHMANAGER::Data() + "/materials2/fluids.xml");
@@ -76,7 +75,7 @@ void App::createScene()  // once, init
 
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time load xmls: ") + toStr(dt) + " ms");
+	LogO(String("::: Time load xmls: ") + fToStr(dt,0,3) + " ms");
 
 
 	///  _Tool_ tracks ...........................
@@ -117,13 +116,13 @@ void App::createScene()  // once, init
 				}
 				//if (lay.maxScale > 4.f)   LogO("All: " + trk + "  scale > 4  model  "   + s + "  val " + fToStr(lay.maxScale,2,4));
 		}	}
-		sc.SaveXml(path +"scene.xml");  /// resave
+		//sc.SaveXml(path +"scene1.xml");  /// resave
 		//SplineRoad rd(this);  rd.LoadFile(path+"road.xml");
 		//rd.SaveFile(path+"road1.xml");  // resave
 	}
 	
 	ti.update();  dt = ti.dt * 1000.f;  /// time
-	LogO(String("::: Time upd all tracks: ") + toStr(dt) + " ms");
+	LogO(String("::: Time upd all tracks: ") + fToStr(dt,0,3) + " ms");
 	LogO("ALL tracks ---------");
 	exit(0);
 	#endif
@@ -299,7 +298,7 @@ void App::LoadTrackEv()
 
 	ti.update();	/// time
 	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time Load Track: ") + toStr(dt) + " ms");
+	LogO(String("::: Time Load Track: ") + fToStr(dt,0,3) + " ms");
 }
 
 

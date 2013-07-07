@@ -574,7 +574,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 
 	ti.update(); /// time
 	float dt = ti.dt * 1000.f;
-	LogO(Ogre::String(":::: Time car dynamics load: ") + toStr(dt) + " ms");
+	LogO(Ogre::String(":::: Time car dynamics load: ") + fToStr(dt,0,3) + " ms");
 	return true;
 }
 

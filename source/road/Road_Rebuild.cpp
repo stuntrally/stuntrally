@@ -925,7 +925,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 	{
 		ti.update();	/// time
 		float dt = ti.dt * 1000.f;
-		LogO(String("::: Time Road Rebuild: ") + toStr(dt) + " ms");
+		LogO(String("::: Time Road Rebuild: ") + fToStr(dt,0,3) + " ms");
 	}
 }
 

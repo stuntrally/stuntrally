@@ -146,7 +146,7 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 	#ifndef SR_EDITOR  // game
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time Blendmap: ") + toStr(dt) + " ms");
+	LogO(String("::: Time Blendmap: ") + fToStr(dt,0,3) + " ms");
 	#endif
 }
 
@@ -295,7 +295,7 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 		
 		ti.update();  /// time
 		float dt = ti.dt * 1000.f;
-		LogO(String("::: Time Hmap: ") + toStr(dt) + " ms");
+		LogO(String("::: Time Hmap: ") + fToStr(dt,0,3) + " ms");
 	}
 	///
 
@@ -338,7 +338,7 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 
 		tm.update();	/// time
 		float dt = tm.dt * 1000.f;
-		LogO(String("::: Time Terrain: ") + toStr(dt) + " ms");
+		LogO(String("::: Time Terrain: ") + fToStr(dt,0,3) + " ms");
 	}
 	
 	changeShadows();

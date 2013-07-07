@@ -79,7 +79,15 @@ void App::createScene()
 
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time load xmls: ") + toStr(dt) + " ms");
+	LogO(String("::: Time load xmls: ") + fToStr(dt,0,3) + " ms");
+
+
+	///  _Tool_ ghosts times ...........................
+	#if 0
+	ToolGhosts();
+	//mShutDown = true;  return;
+	exit(0);
+	#endif
 
 
 	//  gui  * * *
@@ -665,4 +673,38 @@ void App::CreateRoad()
 	road->bCastShadow = pSet->shadow_type >= Sh_Depth;
 	road->bRoadWFullCol = pSet->gui.collis_roadw;
 	road->RebuildRoadInt();
+}
+
+
+///  _Tool_ ghosts times .................................................................................
+void App::ToolGhosts()
+{
+	LogO("ALL ghosts ---------");
+	using namespace std;
+	const std::string sim = "normal";  String msg="\n";
+	TIMER tim;
+	std::vector<string> cars;
+	cars.push_back("ES");
+	cars.push_back("S1");
+
+	for (int i=0; i < tracksXml.trks.size(); ++i)
+	{	//  foreach track
+		string trk = tracksXml.trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
+
+		//Scene sc;  sc.LoadXml(path +"scene.xml");
+		//  records
+		tim.Load(PATHMANAGER::Records()+"/"+ sim+"/"+ trk+".txt", 0.f, pGame->error_output);
+		for (int c=0; c < cars.size(); ++c)
+			tim.AddCar(cars[c]);
+
+		ostringstream s;
+		s << std::fixed << std::left << std::setw(18) << trk;
+		s << "  " << GetTimeShort( tim.GetBestLap(0, false/*reverse*/) );
+		s << "  " << GetTimeShort( tim.GetBestLap(1, false/*reverse*/) );
+		msg += s.str()+"\n";
+	}
+	LogO(msg);
+	LogO("ALL ghosts ---------");
+	//mShutDown = true;  return;
+	exit(0);
 }

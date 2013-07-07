@@ -207,7 +207,7 @@ void App::changeShadows()
 
 	ti.update();	/// time
 	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time Shadows: ") + toStr(dt) + " ms");
+	LogO(String("::: Time Shadows: ") + fToStr(dt,0,3) + " ms");
 }
 
 

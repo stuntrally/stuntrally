@@ -467,7 +467,7 @@ void App::ToolListSceneryID()
 	//  foreach track
 	for (std::list<TrkL>::iterator it = liTrk2.begin(); it != liTrk2.end(); ++it)
 	{
-		std::string trk = /*tracksXml.trks[i].name*/(*it).name, path = pathTrk[0] +"/"+ trk +"/";
+		std::string trk = (*it).name, path = pathTrk[0] +"/"+ trk +"/";
 		Scene sc;  sc.LoadXml(path +"scene.xml");
 
 		std::ostringstream s;

@@ -326,6 +326,7 @@ protected:
 	void btnStageNext(WP), btnStagePrev(WP);  MyGUI::StaticText* valStageNum;  MyGUI::ButtonPtr btChampStage;
 	MyGUI::EditBox* edChampStage, *edChampEnd,*edChampInfo;  MyGUI::ImageBox* imgChampStage,*imgChampEnd;
 	void tabChampType(MyGUI::TabPtr wp, size_t id), btnChampInfo(WP), chkGhampRev(WP);
+	void ToolGhosts();
 	
 
 	///  input tab  -----------------------------------------

@@ -350,7 +350,7 @@ bool BaseApp::setup()
 
 		ti.update();	/// time
 		float dt = ti.dt * 1000.f;
-		LogO(String(":::: Time setup vp: ") + toStr(dt) + " ms");
+		LogO(String(":::: Time setup vp: ") + fToStr(dt,0,3) + " ms");
 
 
 	//  Gui
@@ -396,25 +396,25 @@ bool BaseApp::setup()
 	CreateRTfixed();
 
 		ti.update();  dt = ti.dt * 1000.f;  /// time
-		LogO(String(":::: Time setup gui: ") + toStr(dt) + " ms");
+		LogO(String(":::: Time setup gui: ") + fToStr(dt,0,3) + " ms");
 
 	createResourceListener();
 	loadResources();
 
 		ti.update();  dt = ti.dt * 1000.f;  /// time
-		LogO(String(":::: Time resources: ") + toStr(dt) + " ms");
+		LogO(String(":::: Time resources: ") + fToStr(dt,0,3) + " ms");
 
 	LogO("*** createFrameListener ***");
 	createFrameListener();
 
 		ti.update();  dt = ti.dt * 1000.f;  /// time
-		LogO(String(":::: Time createFrameListener: ") + toStr(dt) + " ms");
+		LogO(String(":::: Time createFrameListener: ") + fToStr(dt,0,3) + " ms");
 
 	LogO("*** createScene ***");
 	createScene();
 
 		ti.update();  dt = ti.dt * 1000.f;  /// time
-		LogO(String(":::: Time createScene: ") + toStr(dt) + " ms");
+		LogO(String(":::: Time createScene: ") + fToStr(dt,0,3) + " ms");
 
 	LogO("*** recreateCompositor ***");
 	recreateCompositor();
@@ -431,10 +431,10 @@ bool BaseApp::setup()
 	postInit();
 
 		ti.update();  dt = ti.dt * 1000.f;  /// time
-		LogO(String(":::: Time post, mat factory: ") + toStr(dt) + " ms");
+		LogO(String(":::: Time post, mat factory: ") + fToStr(dt,0,3) + " ms");
 
 	ti2.update();  dt = ti2.dt * 1000.f;  /// time2
-	LogO(String(":::: Time setup total: ") + toStr(dt) + " ms");
+	LogO(String(":::: Time setup total: ") + fToStr(dt,0,3) + " ms");
 	
 	return true;
 };

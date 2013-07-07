@@ -294,7 +294,7 @@ bool GAME::InitializeSound()
 
 	ti.update();	/// time
 	float dt = ti.dt * 1000.f;
-	info_output << "::: Time Sounds: " << dt << " ms" << endl;
+	info_output << "::: Time Sounds: " << fToStr(dt,0,3) << " ms" << endl;
 	return true;
 }
 
