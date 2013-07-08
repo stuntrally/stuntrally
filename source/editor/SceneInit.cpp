@@ -149,7 +149,7 @@ void App::createScene()  // once, init
 
 	///  _Tool_	...........................
 	///  check all tracks for warnings
-	///  Warning: takes about 20 sec
+	///  Warning: takes about 16 sec
 	#if 0
 	ti.update();  /// time
 	LogO("ALL tracks warnings ---------\n");
@@ -159,7 +159,7 @@ void App::createScene()  // once, init
 	{	//  foreach track
 		std::string trk = tracksXml.trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
 		/**/if (!(trk[0] >= 'A' && trk[0] <= 'Z'))  continue;
-		/**/if (trk.length() > 5 && trk.substr(4)=="Test")  continue;
+		/**/if (StringUtil::startsWith(trk,"test"))  continue;
 
 		Scene sc;  sc.LoadXml(path +"scene.xml");
 		SplineRoad rd(this);  rd.LoadFile(path +"road.xml");

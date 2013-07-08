@@ -177,16 +177,24 @@ void App::WarningsCheck(const Scene* sc, const SplineRoad* road)
 			Quaternion qr;  qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();
 		Quaternion q1;  q1.FromAngleAxis(-rad, vrot);  q1 = q1 * qr;
 		Vector3 vx,vy,vz;  q1.ToAxes(vx,vy,vz);  Vector3 stDir = -vx;
-		Plane p(stDir, stPos);
+		Plane stPla(stDir, stPos);
 
 		if (road->iP1 >= 0 && road->iP1 < cnt  && road->mP[road->iP1].chkR >= 1.f)
 		{
-			Vector3 ch0 = road->mP[road->iP1].pos;
-			float d = p.getDistance(ch0);
-			Warn(TXT,"Car start to 1st check distance: "+fToStr(d,2,4));
-			if (d < 0.f)
-				Warn(WARN,"Car start isn't facing first checkpoint\n (wrong direction or first checkpoint), distance: "+fToStr(d,2,4));
-			//Warn(NOTE,"check0 pos "+fToStr(ch0.x,2,5)+" "+fToStr(ch0.y,2,5)+" "+fToStr(ch0.z,2,5));
+			Vector3 ch1 = road->mP[road->iP1].pos;
+			float d1 = stPla.getDistance(ch1);
+			Warn(TXT,"Car start to 1st check distance: "+fToStr(d1,2,4));
+			if (d1 < 0.f)
+				Warn(WARN,"Car start isn't facing first checkpoint\n (wrong direction or first checkpoint), distance: "+fToStr(d1,2,4));
+			//Warn(NOTE,"Check1 pos "+fToStr(ch0.x,2,5)+" "+fToStr(ch0.y,2,5)+" "+fToStr(ch0.z,2,5));
+
+			//-  road dir  ----
+			Vector3 pPrev = road->mP[(road->iP1 - road->iDir + cnt) % cnt].pos;
+			float dPrev = stPla.getDistance(pPrev), diff = d1-dPrev;
+
+			Warn(TXT,"Distance between 1st check and its prev point: "+fToStr(diff,2,4));
+			if (diff < 0.f)
+				Warn(WARN,"Road dir check wrong, road dir is likely opposite");
 		}
 		//Warn(TXT,"Start pos "+fToStr(stPos.x,2,5)+" "+fToStr(stPos.y,2,5)+" "+fToStr(stPos.z,2,5));
 		//Warn(TXT,"Start dir "+fToStr(vx.x,3,5)+" "+fToStr(vx.y,3,5)+" "+fToStr(vx.z,3,5));
@@ -214,7 +222,7 @@ void App::WarningsCheck(const Scene* sc, const SplineRoad* road)
 			String si = toStr(i);
 							Warn(TXT, "Car "+si+" start to ter dist "+fToStr(yd,1,4));
 			if (yd < 0.f)   Warn(WARN,"Car "+si+" start below terrain !");
-			if (yd > 0.3f)  Warn(INFO,"Car "+si+" start far above terrain\n (skips bridge/pipe), distance: "+fToStr(yd,1,4));
+			if (yd > 0.3f)  Warn(INFO,"Car "+si+" start far above terrain");//\n (skips bridge/pipe), distance: "+fToStr(yd,1,4));
 		}
 		
 		
@@ -268,10 +276,11 @@ void App::WarningsCheck(const Scene* sc, const SplineRoad* road)
 		float rdW = 100.f;  if (iClosest >= 0)  rdW = road->mP[iClosest].width;
 		Warn(TXT,"Closest road point width: "+fToStr(rdW,1,4)+",  distance "+fToStr(stPos.distance(road->mP[iClosest].pos),0,3));
 		
-		if (width < 8.f || width < rdW * 1.4f)
+		if (width < 8.f || width < rdW * 1.4f)  //par, on bridge ok, pipe more..
 			Warn(WARN,"Car start width small "+fToStr(width,0,2));
 		if (height < 4.5f)
 			Warn(WARN,"Car start height small "+fToStr(height,0,2));
+
 
 		//-  rd, chk cnt  ----
 		float ratio = float(numChks)/cnt;
@@ -281,9 +290,22 @@ void App::WarningsCheck(const Scene* sc, const SplineRoad* road)
 		else if (ratio < 1.f/5.f)  //par  1 chk for 5 points
 			Warn(WARN,"Very few checkpoints ratio, add more");
 		
-		//..  road points too far?
-		//..  big road, merge len
-		//..  road->iDir == 1
+		//  road points too far
+		float len = road->st.Length;
+		float ptLen = len/float(cnt);
+		Warn(TXT,"Road length: "+fToStr(len,0,4)+ " points to length ratio: "+fToStr(ptLen,2,4));
+		if (ptLen > 85.f)
+			Warn(WARN,"Road points (on average) are very far\n (corners could behave sharp and straights become not straight).");
+		else if (ptLen > 60.f)
+			Warn(INFO,"Road points are far.");
+
+		//  big road, merge len
+		if (cnt > 200 && road->setMrgLen < 600.f)
+			Warn(INFO,"Road has over 200 points, use recommended merge length 600 or more.");
+		else if (cnt > 120 && road->setMrgLen < 300.f)
+			Warn(INFO,"Road has over 120 points, use recommended merge length 300 or more.");
+		else if (cnt > 50 && road->setMrgLen < 80.f)
+			Warn(INFO,"Road has over 50 points, use recommended merge length 80 or more.");
 	}
 	
 	///-  heightmap  -------------
