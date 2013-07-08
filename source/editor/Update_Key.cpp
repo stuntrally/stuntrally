@@ -95,6 +95,8 @@ void App::UpdVisGui()
 
 	for (int i=0; i < WND_ALL; ++i)
 		mWndMainPanels[i]->setVisible(pSet->inMenu == i);
+		
+	if (txWarn)  txWarn->setVisible(false);
 }
 
 void App::toggleGui(bool toggle)
@@ -759,6 +761,7 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_K:	GuiShortcut(WND_Options, 4);  return true;  // K Tweak
 
 		case KC_I:	GuiShortcut(WND_Help, 1);  return true;  // I Input/help
+		case KC_J:	GuiShortcut(WND_Edit, 9);  return true;  // J Warnings
 	}
 	else
 	switch (arg.key)

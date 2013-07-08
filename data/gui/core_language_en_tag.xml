@@ -802,6 +802,11 @@
 	<Tag name="AlignWidthMul">Width multiply</Tag>
 	<Tag name="AlignSmooth">Smooth size</Tag>
 
+	<Tag name="Warnings">Warnings</Tag>
+	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
+	<Tag name="CheckOnLoad">Check on load</Tag>
+	<Tag name="CheckOnSave">Check on save</Tag>
+
 
 	<!--  Settings  -->
 	<Tag name="Settings">Settings</Tag>

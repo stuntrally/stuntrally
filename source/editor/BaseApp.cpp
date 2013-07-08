@@ -29,9 +29,9 @@ void BaseApp::updateStats()
 	if (pSet->camPos)
 	{
 		const Vector3& pos = /*road ? road->posHit :*/ mCamera->getDerivedPosition();
-		//const Quaternion& rot = mCamera->getDerivedOrientation();
-		String s = "Pos: "+fToStr(pos.x,1)+" " + fToStr(pos.y,1) + " " + fToStr(pos.z,1);
-					//+", // | Rot: " +fToStr(rot.x,3) + " "+fToStr(rot.y,3)+" "+fToStr(rot.z,3)+" "+fToStr(rot.w,3);
+		Vector3 dir = mCamera->getDirection();  //const Quaternion& rot = mCamera->getDerivedOrientation();
+		String s = " Pos: "+fToStr(pos.x,1)+" " + fToStr(pos.y,1) + " " + fToStr(pos.z,1)
+				+", | Dir: "+fToStr(dir.x,2) + " "+fToStr(dir.y,2)+" "+fToStr(dir.z,2);
 		ovPos->setCaption(s);
 	}
 

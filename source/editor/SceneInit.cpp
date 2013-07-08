@@ -78,10 +78,11 @@ void App::createScene()  // once, init
 	LogO(String("::: Time load xmls: ") + fToStr(dt,0,3) + " ms");
 
 
-	///  _Tool_ tracks ...........................
+	///  _Tool_ ...........................
+	///  check/resave all tracks scene.xml 
 	#if 0
 	ti.update();  /// time
-	LogO("ALL tracks ---------");
+	LogO("ALL tracks scene ---------");
 	std::map<std::string, int> noCol,minSc;
 
 	for (int i=0; i < tracksXml.trks.size(); ++i)
@@ -122,10 +123,11 @@ void App::createScene()  // once, init
 	}
 	
 	ti.update();  dt = ti.dt * 1000.f;  /// time
-	LogO(String("::: Time upd all tracks: ") + fToStr(dt,0,3) + " ms");
-	LogO("ALL tracks ---------");
+	LogO(String("::: Time ALL tracks: ") + fToStr(dt,0,3) + " ms");
+	LogO("ALL tracks scene ---------");
 	exit(0);
 	#endif
+	///....................................
 	
 
 	postInit();  // material factory
@@ -139,11 +141,39 @@ void App::createScene()  // once, init
 	InitGui();
 	
 
-	///  _Tool_ write sceneryID
+	///  _Tool_ write all trks sceneryID .......
 	#if 0
 	ToolListSceneryID();
 	exit(0);
 	#endif
+
+	///  _Tool_	...........................
+	///  check all tracks for warnings
+	///  Warning: takes about 20 sec
+	#if 0
+	ti.update();  /// time
+	LogO("ALL tracks warnings ---------\n");
+	logWarn = true;
+
+	for (int i=0; i < tracksXml.trks.size(); ++i)
+	{	//  foreach track
+		std::string trk = tracksXml.trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
+		/**/if (!(trk[0] >= 'A' && trk[0] <= 'Z'))  continue;
+		/**/if (trk.length() > 5 && trk.substr(4)=="Test")  continue;
+
+		Scene sc;  sc.LoadXml(path +"scene.xml");
+		SplineRoad rd(this);  rd.LoadFile(path +"road.xml");
+		LoadStartPos(path, true);  // uses App vars-
+		
+		LogO("Track: "+trk);
+		WarningsCheck(&sc,&rd);
+	}
+	ti.update();  dt = ti.dt * 1000.f;  /// time
+	LogO(String("::: Time ALL tracks: ") + fToStr(dt,0,3) + " ms");
+	LogO("ALL tracks warnings ---------");
+	exit(0);
+	#endif
+	///....................................
 	
 
 	TerCircleInit();
@@ -286,7 +316,7 @@ void App::LoadTrackEv()
 	
 	Rnd2TexSetup();
 	UpdVisGui();
-	LoadStartPos();
+	LoadStartPos(TrkDir());
 
 	try {
 	TexturePtr tex = TextureManager::getSingleton().getByName("waterDepth.png");
@@ -295,6 +325,9 @@ void App::LoadTrackEv()
 	} catch(...) {  }
 
 	Status("Loaded", 0.5,0.7,1.0);
+	
+	if (pSet->check_load)
+		WarningsCheck(sc,road);
 
 	ti.update();	/// time
 	float dt = ti.dt * 1000.f;
@@ -371,9 +404,12 @@ void App::SaveTrack()
 	}
 	eTrkEvent = TE_Save;
 	Status("Saving...", 1,0.4,0.1);
+
+	if (pSet->check_save)
+		WarningsCheck(sc,road);
 }
 void App::SaveTrackEv()
-{	
+{
 	//  track dir in user
 	CreateDir(TrkDir());
 	CreateDir(TrkDir() + "/objects");

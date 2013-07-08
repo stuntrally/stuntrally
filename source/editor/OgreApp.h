@@ -226,7 +226,7 @@ protected:
 	int iSnap;  Ogre::Real angSnap;
 
 	//  car start
-	bool LoadStartPos(),SaveStartPos(std::string path);  void UpdStartPos();
+	bool LoadStartPos(std::string path, bool tool=false), SaveStartPos(std::string path);  void UpdStartPos();
 	std::vector <MATHVECTOR <float, 3> > vStartPos;
 	std::vector <QUATERNION <float> >    vStartRot;
 	Ogre::SceneNode* ndCar,*ndStBox,*ndFluidBox,*ndObjBox;
@@ -477,6 +477,13 @@ protected:
 	MyGUI::EditPtr edScaleTerHMul;  void editScaleTerHMul(MyGUI::EditPtr);
 	SLV(AlignWidthAdd);  SLV(AlignWidthMul);  SLV(AlignSmooth);
 
+	//  warnings
+	MyGUI::EditPtr edWarn;  MyGUI::StaticTextPtr txWarn;
+	void WarningsCheck(const class Scene* sc, const SplineRoad* road);
+	int cntWarn;  bool logWarn;  // only log warnings (tool)
+	enum eWarn {  ERR=0, WARN, INFO, NOTE, TXT  };
+	void App::Warn(eWarn type, Ogre::String text);
+	void chkCheckSave(WP),chkCheckLoad(WP);
 
 	//  tweak page
 	void CreateGUITweakMtr(), slTweak(SL),edTweak(MyGUI::EditPtr);

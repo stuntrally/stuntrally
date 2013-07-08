@@ -664,7 +664,7 @@
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
 					<Property key="VisibleHScroll" value="false"/>
-					<Property key="VisibleHScroll" value="true"/>
+					<Property key="VisibleVScroll" value="true"/>
 					<Property key="TextColour" value="0.6 1.0 0.8"/>
 					<Property key="Colour" value="0.4 1 0.7"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
@@ -1247,7 +1247,7 @@
 					<Property key="SmoothShow" value="false"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipTerLayers}"/>
-					<Widget type="TabItem" skin="TabBrushes" position="2 24 730 292">
+					<Widget type="TabItem" skin="" position="2 24 730 292">
 						<Property key="Caption" value="#40E040#{Brushes}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
 
@@ -3242,6 +3242,37 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="#E0A0A0#{Warnings}"/>
+				<UserString key="RelativeTo" value="EditorWnd"/>
+				<Widget type="EditBox" skin="EditBoxStretch" position="32 33 600 400" name="Warnings">
+					<Property key="ReadOnly" value="true"/>
+					<Property key="MultiLine" value="true"/>
+					<Property key="WordWrap" value="true"/>
+					<Property key="VisibleHScroll" value="false"/>
+					<Property key="VisibleVScroll" value="true"/>
+					<Property key="MaxTextLength" value="4000"/>
+					<Property key="TextColour" value="1.0 0.8 0.8"/>
+					<Property key="Colour" value="0.6 0.7 0.8"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+					<UserString key="tip" value="#{TipTrackDescEditor}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 460 500 24">
+					<Property key="Caption" value="#{WarningsInfo}"/>
+					<Property key="TextColour" value="0.8 0.7 0.7"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="520 460 200 24" name="CheckSave">
+					<Property key="Caption" value="#{CheckOnSave}"/>
+					<Property key="TextColour" value="0.6 0.9 1"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="520 490 200 24" name="CheckLoad">
+					<Property key="Caption" value="#{CheckOnLoad}"/>
+					<Property key="TextColour" value="0.6 0.7 0.8"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+			</Widget>
 		</Widget>
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="20 932 800 600" align="Center" layer="Overlapped" name="OptionsWnd">
@@ -4638,6 +4669,10 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="232 170 240 20">
 							<Property key="Caption" value="#6868B0 K  #{Tweak}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="232 190 240 20">
+							<Property key="Caption" value="#E0A0A0 J  #{Warnings}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 					</Widget>

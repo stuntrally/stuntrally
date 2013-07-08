@@ -681,30 +681,58 @@ void App::ToolGhosts()
 {
 	LogO("ALL ghosts ---------");
 	using namespace std;
-	const std::string sim = "normal";  String msg="\n";
+	const string sim = "normal";  String msg="\n";
+	const float tMax = 10000.f;
 	TIMER tim;
+	
+	//  all cars
 	std::vector<string> cars;
-	cars.push_back("ES");
-	cars.push_back("S1");
+	for (int c=0; c < carsXml.cars.size(); ++c)
+		cars.push_back(carsXml.cars[c].name);
 
+	//  foreach track
 	for (int i=0; i < tracksXml.trks.size(); ++i)
-	{	//  foreach track
-		string trk = tracksXml.trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
+	{	string trk = tracksXml.trks[i].name;
+		if (trk.substr(0,4) == "Test" && trk.substr(0,5) != "TestC")  continue;
 
-		//Scene sc;  sc.LoadXml(path +"scene.xml");
 		//  records
 		tim.Load(PATHMANAGER::Records()+"/"+ sim+"/"+ trk+".txt", 0.f, pGame->error_output);
+		float timeES=tMax, timeBest=tMax;
 		for (int c=0; c < cars.size(); ++c)
+		{
 			tim.AddCar(cars[c]);
+			float t = tim.GetBestLap(c, false);  //not reverse
+			if (t == 0.f)  continue;
 
+			if (t < timeBest)  timeBest = t;
+			if (cars[c] == "ES" || cars[c] == "S1")
+				if (t < timeES)  timeES = t;
+		}
+		if (timeES==tMax)  timeES=0.f;
+		if (timeBest==tMax)  timeBest=0.f;
+		//  times.xml
+		float timeTrk = times.trks[trk];// + 2;
+
+		float timeB = timeTrk * 1.1f;  // champs factor mostly 0.1
+		const float decFactor = 1.5f;
+		float score = std::max(0.f, (1.f + (timeB-timeES)/timeB * decFactor) * 100.f);
+
+		//  write
 		ostringstream s;
-		s << std::fixed << std::left << std::setw(18) << trk;
-		s << "  " << GetTimeShort( tim.GetBestLap(0, false/*reverse*/) );
-		s << "  " << GetTimeShort( tim.GetBestLap(1, false/*reverse*/) );
+		s << fixed << left << setw(18) << trk;
+		s << "E " << GetTimeShort(timeES);  // Expected car ES or S1
+		s << "  T " << GetTimeShort(timeTrk);  // trk time from .xml
+		s << "  b " << GetTimeShort(timeES == timeBest ? 0.f : timeBest);
+		s << "  E-b " << (timeES > 0.f && timeES != timeBest ?
+						fToStr(timeES - timeBest ,0,2) : "  ");
+		s << "  T-E " << (timeES > 0.f ?
+						fToStr(timeTrk - timeES  ,0,2) : "  ");
+		s << "  scET " << (timeES > 0.f ? fToStr(score,0,3) : "   ");
+		s << (score > 135.f ? " ! " : "   ");
 		msg += s.str()+"\n";
 	}
 	LogO(msg);
-	LogO("ALL ghosts ---------");
+	//LogO("ALL ghosts ---------");
 	//mShutDown = true;  return;
 	exit(0);
 }

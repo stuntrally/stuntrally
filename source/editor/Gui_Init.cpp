@@ -353,6 +353,15 @@ void App::InitGui()
 	Slv(AlignWidthMul, (pSet->al_w_mul-1.f) /4.f);
 	Slv(AlignSmooth, pSet->al_smooth /6.f);
 	
+	//  warnings
+	edWarn = mGUI->findWidget<EditBox>("Warnings",false);
+	txWarn = mGUI->createWidget<TextBox>("TextBox", 300,20, 360,32, Align::Left, "Back");
+	txWarn->setTextShadow(true);  txWarn->setTextShadowColour(Colour::Black);
+	txWarn->setTextColour(Colour(1.0,0.4,0.2));  txWarn->setFontHeight(24);
+	txWarn->setVisible(false);
+	Chk("CheckSave", chkCheckSave, pSet->check_save);
+	Chk("CheckLoad", chkCheckLoad, pSet->check_load);
+	
 
 	///  Fill Combo boxes  . . . . . . .
 	//------------------------------------------------------------------------------------------------------------

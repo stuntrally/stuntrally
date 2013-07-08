@@ -463,6 +463,9 @@ void App::chkCamPos(WP wp){			ChkEv(camPos);
 void App::chkInputBar(WP wp){		ChkEv(inputBar);
 	if (pSet->inputBar)  mDebugOverlay->show();  else  mDebugOverlay->hide();  }
 
+void App::chkCheckSave(WP wp)	{	ChkEv(check_save);  }
+void App::chkCheckLoad(WP wp)	{	ChkEv(check_load);  }
+
 
 void App::slMiniUpd(SL)
 {
