@@ -258,7 +258,9 @@ void App::listTrackChng(MultiList2* li, size_t pos)
 #ifndef SR_EDITOR
 	changeTrack();
 #endif
+#ifdef SR_EDITOR
 	if (iLoadNext==0)
+#endif
 		ReadTrkStats();
 }
 
