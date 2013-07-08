@@ -273,9 +273,10 @@ void App::WarningsCheck(const Scene* sc, const SplineRoad* road)
 		//-  start width, height  ----
 		float width = road->vStBoxDim.z, height = road->vStBoxDim.y;
 
-		float rdW = 100.f;  if (iClosest >= 0)  rdW = road->mP[iClosest].width;
-		Warn(TXT,"Closest road point width: "+fToStr(rdW,1,4)+",  distance "+fToStr(stPos.distance(road->mP[iClosest].pos),0,3));
-		
+		float rdW = 100.f;
+		if (iClosest >= 0)  {  rdW = road->mP[iClosest].width;
+			Warn(TXT,"Closest road point width: "+fToStr(rdW,1,4)+",  distance "+fToStr(stPos.distance(road->mP[iClosest].pos),0,3));
+		}
 		if (width < 8.f || width < rdW * 1.4f)  //par, on bridge ok, pipe more..
 			Warn(WARN,"Car start width small "+fToStr(width,0,2));
 		if (height < 4.5f)
