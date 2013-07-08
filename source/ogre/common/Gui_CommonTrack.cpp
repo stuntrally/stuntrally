@@ -258,7 +258,8 @@ void App::listTrackChng(MultiList2* li, size_t pos)
 #ifndef SR_EDITOR
 	changeTrack();
 #endif
-	ReadTrkStats();
+	if (iLoadNext==0)
+		ReadTrkStats();
 }
 
 //  find edit changed text

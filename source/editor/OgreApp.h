@@ -483,7 +483,7 @@ protected:
 	int cntWarn;  bool logWarn;  // only log warnings (tool)
 	enum eWarn {  ERR=0, WARN, INFO, NOTE, TXT  };
 	void App::Warn(eWarn type, Ogre::String text);
-	void chkCheckSave(WP),chkCheckLoad(WP);
+	void chkCheckSave(WP),chkCheckLoad(WP);  int iLoadNext;
 
 	//  tweak page
 	void CreateGUITweakMtr(), slTweak(SL),edTweak(MyGUI::EditPtr);

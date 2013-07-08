@@ -806,6 +806,7 @@
 	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
 	<Tag name="CheckOnLoad">Check on load</Tag>
 	<Tag name="CheckOnSave">Check on save</Tag>
+	<Tag name="InputLoadNextTrack">F12 - load next track (shift - previous)</Tag>
 
 
 	<!--  Settings  -->

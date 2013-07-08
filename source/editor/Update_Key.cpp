@@ -449,6 +449,12 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_Z:
 			if (alt)  {  toggleTopView();  return true;  }
 			break;
+
+		//  load next track  F12
+		case KC_F12:
+			if (pSet->check_load)
+			{	iLoadNext = shift ? -1 : 1;  return true;  }
+			break;
 	}
 
 	//  GUI  keys in edits  ---------------------

@@ -249,6 +249,17 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	
 	UnfocusLists();
 	
+	if (iLoadNext)  // load next/prev track
+	{	size_t cnt = trkList->getItemCount();
+		if (cnt > 0)  
+		{	int i = std::max(0, std::min((int)cnt-1, (int)trkList->getIndexSelected() + iLoadNext ));
+			iLoadNext = 0;
+			trkList->setIndexSelected(i);
+			trkList->beginToItemAt(std::max(0, i-11));  // center
+			listTrackChng(trkList,i);
+			btnNewGame(0);
+	}	}
+	
 	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;
 		mGUI->destroyWidgets(vwGui);  bnQuit=0;mWndOpts=0;trkList=0; //todo: rest too..
@@ -266,7 +277,6 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		SizeGUI();
 		updTrkListDim();
 		viewCanvas->setCoord(GetViewSize());
-		
 		//LoadTrack();  // shouldnt be needed ...
 	}
 	

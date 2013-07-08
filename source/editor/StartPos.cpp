@@ -311,13 +311,13 @@ void App::WarningsCheck(const Scene* sc, const SplineRoad* road)
 	///-  heightmap  -------------
 	int sz = sc->td.iVertsX * sc->td.iVertsX * sizeof(float) / 1024/1024;
 	if (sc->td.iVertsX > 2000)
-		Warn(ERR,"Using too big heightmap "+toStr(sc->td.iVertsX)+", file size is "+toStr(sz)+" MB");
+		Warn(ERR,"Using too big heightmap "+toStr(sc->td.iVertsX-1)+", file size is "+toStr(sz)+" MB");
 	else
 	if (sc->td.iVertsX > 1000)
-		Warn(INFO,"Using big heightmap "+toStr(sc->td.iVertsX)+", file size is "+toStr(sz)+" MB");
+		Warn(INFO,"Using big heightmap "+toStr(sc->td.iVertsX-1)+", file size is "+toStr(sz)+" MB");
 
 	if (sc->td.iVertsX < 200)
-		Warn(INFO,"Using too small heightmap "+toStr(sc->td.iVertsX));
+		Warn(INFO,"Using too small heightmap "+toStr(sc->td.iVertsX-1));
 
 	//-  tri size  ----
 	if (sc->td.fTriangleSize < 0.9f)
