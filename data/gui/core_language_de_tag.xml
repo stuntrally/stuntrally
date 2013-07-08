@@ -393,6 +393,7 @@
 	<Tag name="Other">Sonstige</Tag>
 	<Tag name="TipTerLAngSm">Winkelglättung (Übergang)</Tag>
 	<Tag name="godrays">Sonnenlichteffekt</Tag>
+	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
 	<Tag name="InputRoadNext">BildAuf, BildAb (oder Mausrad) - Punkt vor/zurück</Tag>
 	<Tag name="SceneryId">Landschafts-ID</Tag>
 	<Tag name="TipTerTriSize">Triangle-Größe des Terrains (in Metern) - empfohlen: 1-2, größerer Wert für größere Fläche). Anwenden durch Aktualisierung (F8).</Tag>
@@ -876,7 +877,10 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
+	<Tag name="Warnings">Warnings</Tag>
+	<Tag name="CheckOnLoad">Check on load</Tag>
+	<Tag name="CheckOnSave">Check on save</Tag>
+	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

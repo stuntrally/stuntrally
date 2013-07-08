@@ -393,6 +393,7 @@
 	<Tag name="Other">Other</Tag>
 	<Tag name="TipTerLAngSm">Angle smooth range (transition).</Tag>
 	<Tag name="godrays">God Rays</Tag>
+	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
 	<Tag name="InputRoadNext">PgUp,PgDn (or Wheel) - previous/next point</Tag>
 	<Tag name="SceneryId">Scenery Id</Tag>
 	<Tag name="TipTerTriSize">Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8).</Tag>
@@ -876,7 +877,10 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
+	<Tag name="Warnings">Warnings</Tag>
+	<Tag name="CheckOnLoad">Check on load</Tag>
+	<Tag name="CheckOnSave">Check on save</Tag>
+	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

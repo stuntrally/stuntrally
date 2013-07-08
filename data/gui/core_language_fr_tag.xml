@@ -393,6 +393,7 @@
 	<Tag name="Other">Autres</Tag>
 	<Tag name="TipTerLAngSm">Angle smooth range (transition).</Tag>
 	<Tag name="godrays">Rayons du soleil</Tag>
+	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
 	<Tag name="InputRoadNext">Pg.Préc.,Pg.Suiv (ou molette) - point précédent/suivant</Tag>
 	<Tag name="SceneryId">ID du paysage</Tag>
 	<Tag name="TipTerTriSize">Taille des triangles du terrain en [mètres] (1 à 2 sont recommandés, utilisez une valeur plus élevée pour un grand circuit). Changé après une Mise à jour (F8).</Tag>
@@ -412,7 +413,7 @@
 	<Tag name="CarClrRandom">Aléatoire</Tag>
 	<Tag name="HDRVignettingRadius">Taille de l'effet Vignette</Tag>
 	<Tag name="SpeedUnit">Unité de vitesse</Tag>
-	<Tag name="InputRoadLooped">O - activer/désactiver boucle</Tag>
+	<Tag name="InputRoadLooped">N - toggle looped</Tag>
 	<Tag name="Name">Nom</Tag>
 	<Tag name="RplSize">taille</Tag>
 	<Tag name="TipGrassPrev">Image d'aperçu de ce calque d'herbe (changé avec le matériau).</Tag>
@@ -876,7 +877,10 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet d'Options précédent/suivant (Maj. sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
+	<Tag name="Warnings">Warnings</Tag>
+	<Tag name="CheckOnLoad">Check on load</Tag>
+	<Tag name="CheckOnSave">Check on save</Tag>
+	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

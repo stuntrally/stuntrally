@@ -393,6 +393,7 @@
 	<Tag name="Other">Inne</Tag>
 	<Tag name="TipTerLAngSm">Kąt zakres przejściowy</Tag>
 	<Tag name="godrays">Promienie od słońca</Tag>
+	<Tag name="TweakEdit3">Ctrl-F5 - zacznij test wydajności auta</Tag>
 	<Tag name="InputRoadNext">PgUp,PgDn (lub kółko) - poprz./nast. punkt</Tag>
 	<Tag name="SceneryId">Id. sceny</Tag>
 	<Tag name="TipTerTriSize">Rozmiar trójkąta terenu w [metrach] (zalecany: 1 - 2, większy dla dużych tras). Zmieniany po Odśwież (F8).</Tag>
@@ -412,7 +413,7 @@
 	<Tag name="CarClrRandom">Losowy</Tag>
 	<Tag name="HDRVignettingRadius">Winietowanie promień</Tag>
 	<Tag name="SpeedUnit">Jednostka</Tag>
-	<Tag name="InputRoadLooped">O - przełącz zamknięcie</Tag>
+	<Tag name="InputRoadLooped">N - wyłącz zapętlenie</Tag>
 	<Tag name="Name">Nazwa</Tag>
 	<Tag name="RplSize">rozmiar</Tag>
 	<Tag name="TipGrassPrev">Obraz podglądu tej warstwy trawy (zmiana materiałem).</Tag>
@@ -876,7 +877,10 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
+	<Tag name="Warnings">Warnings</Tag>
+	<Tag name="CheckOnLoad">Check on load</Tag>
+	<Tag name="CheckOnSave">Check on save</Tag>
+	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
