@@ -129,7 +129,7 @@ protected:
 	///  HUD, 2D  ------------
 	float asp, scX,scY, minX,maxX, minY,maxY;  // minimap visible range
 	//  gear, vel
-	MyGUI::TextBox *txGear[4],*txVel[4],*txBFuel[4];
+	MyGUI::TextBox *txGear[4],*txVel[4],*txBFuel[4],*txDamage[4];
 	//  times bar
 	MyGUI::TextBox *txTimTxt[4],*txTimes[4];  MyGUI::ImageBox *bckTimes[4];
 	//  gauges
@@ -452,7 +452,7 @@ protected:
 	Ogre::String PathListTrk(int user=-1), PathListTrkPrv(int user/*=-1*/, Ogre::String track);
 
 	MyGUI::StaticImagePtr imgCar;  MyGUI::EditPtr carDesc;
-	void comboBoost(CMB), comboFlip(CMB);
+	void comboBoost(CMB), comboFlip(CMB), comboDamage(CMB);
 
 	GuiPopup popup;
 

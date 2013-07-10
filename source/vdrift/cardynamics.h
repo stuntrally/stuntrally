@@ -81,6 +81,10 @@ public:
 /// custom collision params
 	float coll_R, coll_W, coll_H, coll_Hofs, coll_Wofs, coll_Lofs, coll_flTrig_H, com_ofs_H;
 	float coll_posLfront, coll_posLback, coll_friction;
+	
+// damage
+	// changed in CAR::UpdateSounds from bullet hit info
+	float fDamage;  // 0-100 %
 
 // driveline
 	// driveline input
@@ -154,6 +158,7 @@ public:
 
 	std::list<FluidBox*> inFluids,inFluidsWh[4];  /// list of fluids this car is in (if any)
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
+	Ogre::Vector3 vHitCarN,vHitDmgN;  float fHitDmgA;  // damage factors
 	float fHitTime, fParIntens,fParVel, fHitForce,fHitForce2,fHitForce3,fCarScrap,fCarScreech;
 	btVector3 velPrev;
 	Dbl time;  // for wind only

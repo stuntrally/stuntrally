@@ -35,19 +35,20 @@ void IntTickCallback(btDynamicsWorld *world, btScalar timeStep)
 			ShapeData* sdA = (ShapeData*)pA, *sdB = (ShapeData*)pB, *sdCar=0, *sdFluid=0, *sdWheel=0;
 			if (sdA) {  if (sdA->type == ST_Car)  sdCar = sdA;  else if (sdA->type == ST_Fluid)  sdFluid = sdA;  else if (sdA->type == ST_Wheel)  sdWheel = sdA;  }
 			if (sdB) {  if (sdB->type == ST_Car)  sdCar = sdB;  else if (sdB->type == ST_Fluid)  sdFluid = sdB;  else if (sdB->type == ST_Wheel)  sdWheel = sdB;  }
-
+	
 			if (sdCar &&/**/ !sdFluid && !sdWheel)
 			{
-				int numContacts = contactManifold->getNumContacts();
-				for (int j=0; j < numContacts; ++j)
+				bool dyn = (sdCar == sdA && !bB->isStaticObject()) || (sdCar == sdB && !bA->isStaticObject());
+				int num = contactManifold->getNumContacts();
+				for (int j=0; j < num; ++j)
 				{
 					btManifoldPoint& pt = contactManifold->getContactPoint(j);
 					btScalar f = pt.getAppliedImpulse() * timeStep;
 					if (f > 0.f)
 					{
-						//LogO(fToStr(bA->getInterpolationLinearVelocity().length(),3,5)+" "+fToStr(bB->getInterpolationLinearVelocity().length(),3,5));
 						//LogO(toStr(i)+" "+toStr(j)+" "+fToStr(f,2,4));
 						DynamicsWorld::Hit hit;
+						hit.dyn = dyn ? 1 : 0;  /// todo: custom sound for obj type..
 						hit.pos = pt.getPositionWorldOnA();  hit.norm = pt.m_normalWorldOnB;
 						hit.force = f;  hit.sdCar = sdCar;
 						//hit.force = std::max(0, 60 - pt.getLifeTime());
@@ -133,10 +134,30 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 		cd->vHitNorm = norm + vel * 0.1f;
 		cd->fParVel = 3.0f + 0.4f * vlen;
 		cd->fParIntens = 10.f + 30.f * vlen;
+		
+		///----  damage normal
+		MATHVECTOR<float,3> pos(hit.pos.getX(), hit.pos.getY(), hit.pos.getZ());
+		MATHVECTOR<float,3> cN = pos - cd->GetPosition();
+		(-cd->GetOrientation()).RotateVector(cN);
+		cd->vHitCarN = Ogre::Vector3(cN[0],cN[1],cN[2]);  cd->vHitCarN.normalise();
+		//----  factors
+		float sx = cd->vHitCarN.x, sy = cd->vHitCarN.y, sz = cd->vHitCarN.z;
+		float nx = fabs(sx), ny = fabs(sy), nz = fabs(sz);
+		cd->vHitDmgN.x = nx * (1.f-ny) * (1.f-nz) * (sx > 0 ? 1.0f : 0.3f);  // front x+
+		cd->vHitDmgN.y = (1.f-nx) * ny * (1.f-nz) * 0.3f;  // side y
+		cd->vHitDmgN.z = (1.f-nx) * (1.f-ny) * nz * (sz > 0 ? 1.0f : 0.1f);  // top z+
+		cd->fHitDmgA = cd->vHitDmgN.x + cd->vHitDmgN.y + cd->vHitDmgN.z;
+		//--------
 
 		//  hit force for sound
 		cd->fHitForce = normvel*0.02f /*+ 0.02f*vlen*/;  //+
 		cd->fHitForce2 = force*0.1f;
+
+		//  dyn obj hit  ***
+		if (hit.dyn)
+		{	cd->fHitForce *= 0.3f;  //par
+			cd->fHitDmgA *= 0.4f;
+		}
 		
 		//float a = (vlen*0.1f*powf(force, 0.2f) - 0*cd->fHitForce4);
 		float a = std::min(1.f, std::min(vlen, 2.2f)*0.1f*powf(force, 0.4f) );

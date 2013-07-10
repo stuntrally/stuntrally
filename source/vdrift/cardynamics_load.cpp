@@ -23,10 +23,10 @@ CARDYNAMICS::CARDYNAMICS() :
 	/*bTerrain(false),*/ pSet(0), pScene(0), poly(NULL),
 	doBoost(0), doFlip(0), boostFuel(0), boostVal(0), fBoostFov(0),
 	fHitTime(0), fHitForce(0), fParIntens(0), fParVel(0), //hit
-	vHitPos(0,0,0), vHitNorm(0,0,0),
+	vHitPos(0,0,0), vHitNorm(0,0,0), vHitCarN(0,0,0), vHitDmgN(0,0,0), fHitDmgA(0),
 	steerValue(0.f), velPrev(0,0,0),
 	fCarScrap(0.f), fCarScreech(0.f),
-	time(0.0)
+	time(0.0), fDamage(0)
 	//coll_R, coll_W, coll_H, coll_Hofs, coll_Wofs, coll_Lofs
 	//coll_posLfront, coll_posLback
 {

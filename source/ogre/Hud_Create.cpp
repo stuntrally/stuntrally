@@ -83,6 +83,7 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 			if (txGear[c])  txGear[c]->setPosition(gx,gy);
 			if (txVel[c])  txVel[c]->setPosition(vx,vy);
 			if (txBFuel[c])  txBFuel[c]->setPosition(bx,by);
+			if (txDamage[c])  txDamage[c]->setPosition(gx+140,gy+10);
 			
 			bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
 			int itx = (dim.left+1.f)*0.5f*wx,
@@ -121,7 +122,7 @@ void App::CreateHUD(bool destroy)
 				if (vMoPos[c][i]) {  scm->destroyManualObject(vMoPos[c][i]);  vMoPos[c][i]=0;  }
 				if (vNdPos[c][i]) {  scm->destroySceneNode(vNdPos[c][i]);  vNdPos[c][i]=0;  }
 			}
-			if (moRpmBk[c])  {  scm->destroyManualObject(moRpmBk[c]);  moRpmBk[c]=0;  }
+			if (moRpmBk[c]) {  scm->destroyManualObject(moRpmBk[c]);  moRpmBk[c]=0;  }
 			if (ndRpmBk[c]) {  scm->destroySceneNode(ndRpmBk[c]);  ndRpmBk[c]=0;  }
 
 			if (moVelBk[c]) {  scm->destroyManualObject(moVelBk[c]);  moVelBk[c]=0;  }
@@ -140,11 +141,12 @@ void App::CreateHUD(bool destroy)
 	for (int c=0; c<4; ++c)
 	{	if (txGear[c]) {  mGUI->destroyWidget(txGear[c]);  txGear[c] = 0;  }
 		if (txVel[c])  {  mGUI->destroyWidget(txVel[c]);  txVel[c] = 0;  }
-		if (txBFuel[c])  {  mGUI->destroyWidget(txBFuel[c]);  txBFuel[c] = 0;  }
+		if (txBFuel[c]){  mGUI->destroyWidget(txBFuel[c]);  txBFuel[c] = 0;  }
+		if (txDamage[c]){  mGUI->destroyWidget(txDamage[c]);  txDamage[c] = 0;  }
 
-		if (txTimTxt[c])  {  mGUI->destroyWidget(txTimTxt[c]);  txTimTxt[c] = 0;  }
+		if (txTimTxt[c]) {  mGUI->destroyWidget(txTimTxt[c]);  txTimTxt[c] = 0;  }
 		if (txTimes[c])  {  mGUI->destroyWidget(txTimes[c]);  txTimes[c] = 0;  }
-		if (bckTimes[c])  {  mGUI->destroyWidget(bckTimes[c]);  bckTimes[c] = 0;  }
+		if (bckTimes[c]) {  mGUI->destroyWidget(bckTimes[c]);  bckTimes[c] = 0;  }
 	}
 	
 	//  minimap from road img
@@ -257,11 +259,19 @@ void App::CreateHUD(bool destroy)
 		txVel[c]->setVisible(false);
 		txVel[c]->setFontName("DigGear");  //txVel[c]->setFontHeight(64);
 		
+		//  boost
 		txBFuel[c] = mGUI->createWidget<TextBox>("TextBox",
 			0,1200, 240,80, Align::Right, "Back", "BFuel"+toStr(c));
 		txBFuel[c]->setVisible(false);
 		txBFuel[c]->setFontName("DigGear");  txBFuel[c]->setFontHeight(64);
 		txBFuel[c]->setTextColour(Colour(0.6,0.8,1.0));
+
+		txDamage[c] = mGUI->createWidget<TextBox>("TextBox",
+			0,1200, 240,80, Align::Right, "Back", "Dmg"+toStr(c));
+		txDamage[c]->setVisible(false);
+		txDamage[c]->setFontName("font_Vera.20");  //txDamage[c]->setFontHeight(64);
+		txDamage[c]->setTextShadow(true);
+		txDamage[c]->setTextColour(Colour(0.7,0.7,0.7));
 		
 
 		//  times text    -----------
@@ -360,6 +370,7 @@ void App::ShowHUD(bool hideAll)
 			if (txGear[c])  txGear[c]->setVisible(false);
 			if (txVel[c])   txVel[c]->setVisible(false);
 			if (txBFuel[c])  txBFuel[c]->setVisible(false);
+			if (txDamage[c])  txDamage[c]->setVisible(false);
 
 			if (ndRpmBk[c])  ndRpmBk[c]->setVisible(false);
 			if (ndVelBk[c])  ndVelBk[c]->setVisible(false);
@@ -380,6 +391,7 @@ void App::ShowHUD(bool hideAll)
 	{	//this goes each frame..
 		bool show = pSet->show_gauges, times = pSet->show_times;
 		bool bfuel = pSet->game.boost_type == 1 || pSet->game.boost_type == 2;
+		bool bdmg = pSet->game.damage_type > 0;
 		
 		if (ovCountdown)  if (show)  ovCountdown->show();  else  ovCountdown->hide();
 		if (ovNetMsg)	if (show)  ovNetMsg->show();  else  ovNetMsg->hide();
@@ -403,6 +415,7 @@ void App::ShowHUD(bool hideAll)
 			if (txGear[c])  txGear[c]->setVisible(pSet->show_digits);
 			if (txVel[c])   txVel[c]->setVisible(pSet->show_digits);
 			if (txBFuel[c])  txBFuel[c]->setVisible(show && bfuel);
+			if (txDamage[c])  txDamage[c]->setVisible(show && bdmg);
 
 			if (ndRpmBk[c])  ndRpmBk[c]->setVisible(show);
 			if (ndVelBk[c])  ndVelBk[c]->setVisible(show && !pSet->show_mph);

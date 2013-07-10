@@ -283,7 +283,7 @@ public:
 	///  new
 	int id;  // index of car (same as for carModels)
 	bool bResetPos;
-	void ResetPos(bool fromStart=true,int chkId=0);
+	void ResetPos(bool fromStart=true);
 	void SavePosAtCheck();
 	void SetPosRewind(const MATHVECTOR<float,3>& pos, const QUATERNION<float>& rot, const MATHVECTOR<float,3>& vel, const MATHVECTOR<float,3>& angvel);
 
@@ -339,8 +339,9 @@ public:
 	
 	
 	//  for new game reset  and goto last checkp.
-	MATHVECTOR<Dbl,3> posAtStart, posLastCheck[2];
-	QUATERNION<Dbl> rotAtStart, rotLastCheck[2];
+	MATHVECTOR<Dbl,3> posAtStart, posLastCheck;
+	QUATERNION<Dbl> rotAtStart, rotLastCheck;
+	float dmgLastCheck;
 
 	//  car inputs (new)
 	int iCamNext;

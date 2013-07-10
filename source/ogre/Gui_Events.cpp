@@ -74,6 +74,10 @@ void App::comboFlip(CMB)
 {
 	pSet->gui.flip_type = val;
 }
+void App::comboDamage(CMB)
+{
+	pSet->gui.damage_type = val;
+}
 	
 void App::btnNumPlayers(WP wp)
 {

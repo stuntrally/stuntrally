@@ -88,10 +88,10 @@ void App::CreateGraphs()
 		}	break;
 
 	case Gh_BulletHit:  /// bullet hit
-		for (int i=0; i < 5; ++i)
+		for (int i=0; i < 6; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
-			int c = i%5;  /*clr*/
+			int c = i%6;  /*clr*/
 			gv->Create(256/*len*/, "graph"+toStr(c+1), i==0||i==2 ? 0.52f : 0.f/*alpha*/);
 			switch(i)
 			{
@@ -100,8 +100,10 @@ void App::CreateGraphs()
 				case 2:  gv->CreateTitle("N snd",		c, 0.0f, -2, 24);  break;
 				case 3:  gv->CreateTitle("scrap",		c, 0.1f, -2, 24);  break;
 				case 4:  gv->CreateTitle("screech",		c, 0.2f, -2, 24);  break;
+				case 5:  gv->CreateTitle("damage factor",c, 0.35f, -2, 24);  break;
 			}
-			if (i < 2)	gv->SetSize(0.f, 0.5f,  0.4f, 0.15f);
+			if (i < 2 || i==5)
+						gv->SetSize(0.f, 0.5f,  0.4f, 0.15f);
 			else		gv->SetSize(0.f, 0.35f, 0.4f, 0.15f);
 
 			gv->SetVisible(pSet->show_graphs);
@@ -297,19 +299,6 @@ void App::GraphsNewVals()				// Game
 	size_t gsi = graphs.size();
 	switch (pSet->graphs_type)
 	{
-	case Gh_BulletHit:  /// bullet hit  force,normvel, sndnum,scrap,screech
-		if (gsi >= 5)
-		if (carModels.size() > 0)
-		{
-			const CARDYNAMICS& cd = carModels[0]->pCar->dynamics;
-			graphs[0]->AddVal(std::min(1.f, cd.fHitForce * 2.f));
-			graphs[1]->AddVal(std::min(1.f, cd.fHitForce2));
-			graphs[2]->AddVal(std::min(1.f, cd.fHitForce3));
-			graphs[3]->AddVal(std::min(1.f, cd.fCarScrap));
-			graphs[4]->AddVal(std::min(1.f, cd.fCarScreech));
-		}
-		break;
-
 	case Gh_Sound:  /// sound  vol,pan, wave L,R
 	if (gsi >= 4)
 	{	float minL=1.f,maxL=-1.f,minR=1.f,maxR=-1.f;
@@ -354,6 +343,19 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 	if (pApp->pSet->graphs_type != Gh_TireEdit)
 	switch (pApp->pSet->graphs_type)
 	{
+	case Gh_BulletHit:  /// bullet hit  force,normvel, sndnum,scrap,screech
+		if (gsi >= 6)
+		{
+			const CARDYNAMICS& cd = dynamics;
+			pApp->graphs[0]->AddVal(std::min(1.f, cd.fHitForce * 2.f));
+			pApp->graphs[1]->AddVal(std::min(1.f, cd.fHitForce2));
+			pApp->graphs[2]->AddVal(std::min(1.f, cd.fHitForce3));
+			pApp->graphs[3]->AddVal(std::min(1.f, cd.fCarScrap));
+			pApp->graphs[4]->AddVal(std::min(1.f, cd.fCarScreech));
+			pApp->graphs[5]->AddVal(cd.fHitDmgA);
+		}
+		break;
+
 	case Gh_CarAccelG:  /// car accel x,y,z
 		if (gsi >= 3)
 		{

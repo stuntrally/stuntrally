@@ -240,6 +240,14 @@ void App::InitGui()
 		combo->addItem(TR("#{Always}"));
 		combo->setIndexSelected(pSet->gui.flip_type);
 	}
+	Cmb(combo, "CmbDamage", comboDamage);
+	if (combo)
+	{	combo->removeAllItems();
+		combo->addItem(TR("#{None}"));
+		combo->addItem(TR("#{Reduced}"));
+		combo->addItem(TR("#{Normal}"));
+		combo->setIndexSelected(pSet->gui.damage_type);
+	}
 
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
 	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);

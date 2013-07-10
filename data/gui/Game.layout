@@ -781,46 +781,57 @@
 					<Property key="TextColour" value="1.0 1.0 0.5"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 172 152 24">
+                <Widget type="TextBox" skin="TextBox" position="32 196 100 24">
 					<Property key="TextColour" value="0.55 0.75 1"/>
 					<Property key="Caption" value="#{Boost}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 204 152 24">
+                <Widget type="ComboBox" skin="ComboBox" position="136 192 160 24" name="CmbBoost">
+					<Property key="Colour" value="0.55 0.75 1"/>
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="ReadOnly" value="true"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="32 228 100 24">
 					<Property key="Caption" value="#{Flip}"/>
-					<Property key="TextColour" value="0.55 0.75 1"/>
+					<Property key="TextColour" value="0.60 0.70 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ComboBox" skin="ComboBox" position="130 169 160 24" name="CmbBoost">
-					<Property key="Colour" value="0.55 0.75 1"/>
-					<Property key="TextColour" value="0.6 0.8 1"/>
+                <Widget type="ComboBox" skin="ComboBox" position="136 224 160 24" name="CmbFlip">
+					<Property key="Colour" value="0.60 0.70 1"/>
+					<Property key="TextColour" value="0.65 0.75 1"/>
 					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="ComboBox" skin="ComboBox" position="130 201 160 24" name="CmbFlip">
-					<Property key="Colour" value="0.55 0.75 1"/>
-					<Property key="TextColour" value="0.6 0.8 1"/>
+                <Widget type="TextBox" skin="TextBox" position="32 260 100 24">
+					<Property key="Caption" value="#{Damage}"/>
+					<Property key="TextColour" value="0.7 0.6 1"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+                <Widget type="ComboBox" skin="ComboBox" position="136 256 160 24" name="CmbDamage">
+					<Property key="Colour" value="0.7 0.6 1"/>
+					<Property key="TextColour" value="0.8 0.7 1"/>
 					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 248 300 24" name="CarCollis">
+                <Widget type="Button" skin="CheckBox" position="32 336 300 24" name="CarCollis">
 					<Property key="Caption" value="#{CarCollis}"/>
 					<Property key="TextColour" value="0.75 0.87 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 288 300 24" name="VegetCollis">
+                <Widget type="Button" skin="CheckBox" position="32 400 300 24" name="VegetCollis">
 					<Property key="Caption" value="#{VegetCol}"/>
 					<Property key="TextColour" value="0.6 0.8 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 328 300 24" name="DynamicObjects">
+				<Widget type="Button" skin="CheckBox" position="32 368 300 24" name="DynamicObjects">
 					<Property key="Caption" value="#{DynamicObjects}"/>
 					<Property key="TextColour" value="0.6 0.8 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 368 300 24" name="RoadWCollis">
+                <Widget type="Button" skin="CheckBox" position="32 432 300 24" name="RoadWCollis">
 					<Property key="Caption" value="#{RoadWallFullCollis}"/>
-					<Property key="TextColour" value="0.5 0.7 0.9"/>
+					<Property key="TextColour" value="0.5 0.6 0.7"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 

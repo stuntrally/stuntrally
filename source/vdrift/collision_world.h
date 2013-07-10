@@ -30,7 +30,7 @@ public:
 	struct Hit
 	{
 		btVector3 pos, norm, vel;  btScalar force;
-		class ShapeData* sdCar;
+		class ShapeData* sdCar;  int dyn;
 	};
 	btAlignedObjectArray<Hit> vHits;
 };

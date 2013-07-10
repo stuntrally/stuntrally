@@ -114,6 +114,10 @@ void CAR::UpdateSounds(float dt)
 	float squeal[4],whVel[4], suspVel[4],suspDisp[4];
 	float whH_all = 0.f;  bool mud = false;
 	float fHitForce = 0.f, boostVal = 0.f, fCarScrap = 0.f, fCarScreech = 0.f;
+
+	/// <><> Damage factors <><>
+	const static float dmgFromHit = 0.5f, dmgFromScrap = 1.0f;  // par
+	
 	
 	///  replay play  ------------------------------------------
 	if (pApp->bRplPlay)
@@ -197,6 +201,13 @@ void CAR::UpdateSounds(float dt)
 		}
 		fCarScrap = gain;
 
+		/// <><> Damage <><>
+		if (pSet->game.damage_type > 0)
+			if (pSet->game.damage_type==1)  // reduced
+				dynamics.fDamage += fCarScrap * dt * dynamics.fHitDmgA * dmgFromScrap;
+			else  // normal
+				dynamics.fDamage += fCarScrap * dt * dynamics.fHitDmgA * dmgFromScrap * 1.f;
+
 		gain = std::min(1.f, dynamics.fCarScreech);
 		if (dynamics.fCarScreech > 0.f)
 		{	dynamics.fCarScreech -= 3.f * dt;
@@ -204,6 +215,9 @@ void CAR::UpdateSounds(float dt)
 		}
 		fCarScreech = gain;
 	}
+	
+	//dynamics.vHitCarN.x
+	// z+ up,  
 	
 	///  listener  ------------------------------------------
 	if (!bRemoteCar)
@@ -302,7 +316,7 @@ void CAR::UpdateSounds(float dt)
 		case TRACKSURFACE::SAND:		snd = grasssound;	maxgain = 0.5;  pitchvar = 0.25;  break;
 		case TRACKSURFACE::NONE:
 						default:		snd = tiresqueal;	maxgain = 0.0;	break;
-		}	/// more,sounds.. sand,snow,grass-new,mud..
+		}	/// todo: more,sounds.. sand,snow,grass-new,mud..
 
 		float pitch = std::min(1.f, std::max(0.f, (whVel[i]-5.0f)*0.1f ));
 		pitch = 1.0 - pitch;
@@ -426,8 +440,17 @@ void CAR::UpdateSounds(float dt)
 				crashsound[i].SetPosition(hitPos);
 				crashsound[i].StopPlay();
 				crashsoundtime[i] = 0.f;
+
+				/// <><> Damage <><> 
+				if (pSet->game.damage_type > 0)
+					if (pSet->game.damage_type==1)  // reduced
+						dynamics.fDamage += crashdecel2 * dynamics.fHitDmgA * dmgFromHit;
+					else  // normal
+					{	float f = std::min(1.f, crashdecel2 / 30.f);  f = powf(f,1.4f) * 3.f;
+						dynamics.fDamage += crashdecel2 * dynamics.fHitDmgA * dmgFromHit * f;
+					}
 			}
-			//LogO("Car Snd: " + toStr(crashdecel));// + " force " + toStr(hit.force) + " vel " + toStr(vlen) + " Nvel " + toStr(normvel));
+			//LogO("Car Snd: " + toStr(crashdecel));// + " force " + toStr(hit.force)
 		}
 	}
 	//  time played
@@ -445,4 +468,7 @@ void CAR::UpdateSounds(float dt)
 		crashscreech.SetPosition(hitPos);
 	}
 
+	/// <><> Damage <><> 
+	if (pSet->game.damage_type > 0)
+		if (dynamics.fDamage > 100.f)  dynamics.fDamage = 100.f;
 }

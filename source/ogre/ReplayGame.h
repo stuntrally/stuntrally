@@ -101,6 +101,7 @@ struct RewindFrame
 	//  car
 	MATHVECTOR<float,3> pos, vel, angvel;
 	QUATERNION<float> rot;
+	float fDamage;
 	//engine rpm?..
 };
 

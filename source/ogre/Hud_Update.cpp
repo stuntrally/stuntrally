@@ -317,10 +317,19 @@ void App::UpdateHUD(int carId, float time)
 		txVel[carId]->setTextColour(Colour(m01(k*2), m01(0.5+k*1.5-k*k*2.5), m01(1+k*0.8-k*k*3.5)));
 	}
 
-	//  boost fuel (time)  -----------------------------
+	//  boost fuel (time)  ------
 	if (txBFuel[carId] && pCar && txBFuel[carId]->getVisible())
 	{
 		txBFuel[carId]->setCaption(fToStr(pCar->dynamics.boostFuel,1,3));
+	}
+
+	//  damage %  ------
+	if (txDamage[carId] && pCar && txDamage[carId]->getVisible())
+	{
+		float d = std::min(100.f, pCar->dynamics.fDamage);
+		txDamage[carId]->setCaption(TR("#{Damage}\n     ")+fToStr(d,0,3)+" %");  d*=0.01f;
+		float e = std::min(1.f, 0.8f + d*2.f);
+		txDamage[carId]->setTextColour(Colour(e-d*d*0.4f, std::max(0.f, e-d), std::max(0.f, e-d*2.f) ));
 	}
 
 	//  race countdown  -----------------------------

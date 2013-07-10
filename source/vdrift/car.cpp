@@ -120,8 +120,9 @@ bool CAR::Load(class App* pApp1,
 		float stOfsY = 0.f;
 		cf.GetParam("collision.start-offsetY", stOfsY);
 			position[2] += stOfsY -0.4/**/ + dynamics.com_ofs_H;  //|
-		posAtStart = posLastCheck[0] = posLastCheck[1] = position;
-		rotAtStart = rotLastCheck[0] = rotLastCheck[1] = orientation;
+		posAtStart = posLastCheck = position;
+		rotAtStart = rotLastCheck = orientation;
+		dmgLastCheck = 0.f;
 		
 		dynamics.Init(pSet, pApp->sc, &pApp->fluidsXml,
 			world, bodymodel, wheelmodelfront, wheelmodelrear, position, orientation);
@@ -365,10 +366,10 @@ void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 
 ///  reset car, pos and state
 ///------------------------------------------------------------------------------------------------------------------------------
-void CAR::ResetPos(bool fromStart, int chkId)
+void CAR::ResetPos(bool fromStart)
 {
-	MATHVECTOR<Dbl,3> pos = fromStart ? posAtStart : posLastCheck[chkId];
-	QUATERNION<Dbl> rot =    fromStart ? rotAtStart : rotLastCheck[chkId];
+	MATHVECTOR<Dbl,3> pos = fromStart ? posAtStart : posLastCheck;
+	QUATERNION<Dbl> rot =   fromStart ? rotAtStart : rotLastCheck;
 	SetPosition(pos);
 
 	btTransform transform;
@@ -380,8 +381,12 @@ void CAR::ResetPos(bool fromStart, int chkId)
 	dynamics.chassis->setAngularVelocity(btVector3(0,0,0));
 
 	dynamics.SynchronizeBody();  // set body from chassis
-	if (fromStart)  // restore boost fuel
-		dynamics.boostFuel = gfBoostFuelStart;
+	if (fromStart)
+	{
+		dynamics.boostFuel = gfBoostFuelStart;  // restore boost fuel
+		dynamics.fDamage = 0.f;  // clear damage
+	}else
+		dynamics.fDamage = dmgLastCheck;
 
 	//  engine, wheels
 	dynamics.engine.SetInitialConditions();
@@ -400,10 +405,9 @@ void CAR::ResetPos(bool fromStart, int chkId)
 ///  save car pos and rot
 void CAR::SavePosAtCheck()
 {
-	posLastCheck[1] = posLastCheck[0];  // 2nd last check
-	rotLastCheck[1] = rotLastCheck[0];
-	posLastCheck[0] = dynamics.body.GetPosition();
-	rotLastCheck[0] = dynamics.body.GetOrientation();
+	posLastCheck = dynamics.body.GetPosition();
+	rotLastCheck = dynamics.body.GetOrientation();
+	dmgLastCheck = dynamics.fDamage;
 }
 
 ///  set pos, for rewind

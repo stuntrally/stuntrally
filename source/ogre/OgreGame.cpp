@@ -129,7 +129,7 @@ App::App(SETTINGS *settings, GAME *game)
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixWh = qr;
 
 	for (i=0; i < 4; ++i)
-	{	txGear[i]=0;  txVel[i]=0;  txBFuel[i]=0;
+	{	txGear[i]=0;  txVel[i]=0;  txBFuel[i]=0;  txDamage[i]=0;
 		txTimTxt[i]=0;  txTimes[i]=0;  bckTimes[i]=0;  }
 
 	if (pSet->multi_thr)

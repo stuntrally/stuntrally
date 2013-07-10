@@ -165,6 +165,7 @@ void App::newPoses(float time)  // time only for camera update
 			bool ok = rewind.GetFrame(gtime, &rf, c);
 
 			pCar->SetPosRewind(rf.pos, rf.rot, rf.vel, rf.angvel);
+			pCar->dynamics.fDamage = rf.fDamage;  // take damage back
 			carModels[c]->First();
 		}
 		else  // save data
@@ -177,6 +178,7 @@ void App::newPoses(float time)  // time only for camera update
 			fr.rot = cd.body.GetOrientation();
 			fr.vel = cd.GetVelocity();
 			fr.angvel = cd.GetAngularVelocity();
+			fr.fDamage = cd.fDamage;
 
 			rewind.AddFrame(fr, c);  // rec rewind
 		}

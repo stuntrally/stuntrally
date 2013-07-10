@@ -262,6 +262,11 @@
 	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
 	<Tag name="DynamicObjects">Dynamic Objects</Tag>
 
+	<Tag name="Damage">Damage</Tag>
+	<Tag name="None">None</Tag>
+	<Tag name="Reduced">Reduced</Tag>
+	<Tag name="Normal">Normal</Tag>
+
 	<Tag name="Boost">Boost</Tag>
 	<Tag name="Flip">Flip</Tag>
 

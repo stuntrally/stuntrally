@@ -162,6 +162,16 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 			out << "N Vel : " << fNormVel << endl;
 			out << "v Vel : " << GetSpeed() << endl;
 		#endif
+		#if 0
+			out << "Damage : " << fToStr(fDamage,0,3) << "  "
+				//<< vHitCarN.x << ", " << vHitCarN.y << ", " << vHitCarN.z
+				//<< "  x " << fToStr(vHitDmgN.x ,2,4)
+				//<< "  y " << fToStr(vHitDmgN.y ,2,4)
+				//<< "  z " << fToStr(vHitDmgN.z ,2,4)
+				<< "  a " << fToStr(fHitDmgA ,2,4)
+				<< endl;
+			return;
+		#endif
 
 		//  body
 		{
