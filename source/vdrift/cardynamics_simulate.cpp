@@ -5,8 +5,12 @@
 
 
 //  set the steering angle to "value", where 1.0 is maximum right lock and -1.0 is maximum left lock.
-void CARDYNAMICS::SetSteering(const Dbl value, const float range_mul)
+void CARDYNAMICS::SetSteering(const Dbl value1, const float range_mul)
 {
+	/// <><> damage reduce
+	float dmg = fDamage >= 100.f ? 0.f : 1.f - 0.1f * fDamage*0.01f;
+	Dbl value = value1 * dmg;
+	
 	steerValue = value;
 	Dbl steerangle = value * maxangle * range_mul;  //steering angle in degrees
 
@@ -398,18 +402,25 @@ void CARDYNAMICS::UpdateTransmission(Dbl dt)
 
 	if (autoshift)
 	{
-		int gear = NextGear();
-		
-		///  auto Rear gear
-		if (autorear && shifted && remaining_shift_time <= 0)
+		bool dmg = fDamage >= 100.f;
+		int gear = dmg ? 0 : NextGear();  /// <><> damage shift to N
+		if (!dmg)
 		{
-			Dbl gas = engine.GetThrottle()*0.8;
-			gas -= brake[0].GetBrakeFactor();
-			Dbl g = gas;
-			if (transmission.GetGear() == -1)  gas *= -1;
-			const Dbl spdmarg = 2.0;
-			if (g <-0.5 && GetSpeed() < spdmarg && gear == 1)  gear =-1;  else
-			if (g <-0.5 && GetSpeed() < spdmarg && gear ==-1)  gear = 1;
+			Dbl spm = GetSpeedMPS();  // opposite and N gear fix
+			if (gear <= 0 && spm > 3)  gear = 1;  else
+			if (gear >= 0 && spm <-3)  gear =-1;
+			else		
+			///  auto Rear gear
+			if (autorear && shifted && fDamage < 100.f && remaining_shift_time <= 0)
+			{
+				Dbl gas = engine.GetThrottle()*0.8;
+				gas -= brake[0].GetBrakeFactor();
+				Dbl g = gas;
+				if (transmission.GetGear() == -1)  gas *= -1;
+				const Dbl spdmarg = 2.0, spd = GetSpeed();
+				if (g <-0.5 && spd < spdmarg && gear == 1)  gear =-1;  else
+				if (g <-0.5 && spd < spdmarg && gear ==-1)  gear = 1;
+			}
 		}
 		ShiftGear(gear);
 	}

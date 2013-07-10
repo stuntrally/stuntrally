@@ -76,24 +76,35 @@ void CARDYNAMICS::StartEngine()
 {
 	engine.StartEngine();
 }
-void CARDYNAMICS::SetThrottle(float value)
-{
-	engine.SetThrottle(value);
-}
 void CARDYNAMICS::SetClutch(float value)
 {
 	clutch.SetClutch(value);
 }
 
+void CARDYNAMICS::SetThrottle(float value)
+{
+	/// <><> damage reduce  from 50 %
+	float dmg = fDamage >= 100.f ? 0.f : (1.f - 0.6f * std::max(0.f, fDamage-50.f)/50.f);
+
+	engine.SetThrottle(value * dmg);
+}
+
 void CARDYNAMICS::SetBrake(float value)
 {
+	/// <><> damage reduce  from 50 %
+	float dmg = 1.f - std::max(0.f, fDamage-50.f)/50.f * 0.6f;
+
 	for (size_t i = 0; i < brake.size(); ++i)
-		brake[i].SetBrakeFactor(value);
+		brake[i].SetBrakeFactor(fDamage >= 100.f ? 0.1f : value * dmg);
 }
+
 void CARDYNAMICS::SetHandBrake(float value)
 {
+	/// <><> damage reduce  from 50 %
+	float dmg = fDamage >= 100.f ? 0.f : (1.f - std::max(0.f, fDamage-50.f)/50.f * 0.6f);
+
 	for (size_t i = 0; i < brake.size(); ++i)
-		brake[i].SetHandbrakeFactor(value);
+		brake[i].SetHandbrakeFactor(value * dmg);
 }
 
 void CARDYNAMICS::SetAutoClutch(bool value)	{	autoclutch = value;	}
@@ -314,6 +325,7 @@ void CARDYNAMICS::AddAerodynamicDevice( const MATHVECTOR<Dbl,3> & newpos,
 char CARDYNAMICS::IsBraking() const
 {
 	//  true when any wheel is braking
+	if (fDamage < 100.f)
 	for (int w=0; w<4; ++w)
 	{
 		WHEEL_POSITION wp = (WHEEL_POSITION)w;

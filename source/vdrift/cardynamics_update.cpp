@@ -327,7 +327,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 
 	///***  manual car flip over  ----------------------------
 	if ((doFlip > 0.01f || doFlip < -0.01f) &&
-		pSet->game.flip_type > 0)
+		pSet->game.flip_type > 0 && fDamage < 100.f)
 	{
 		MATHVECTOR<Dbl,3> av = GetAngularVelocity();  Orientation().RotateVector(av);
 		Dbl angvel = fabs(av[0]);
@@ -350,7 +350,9 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	///***  boost  -------------------------------------------
 	if (doBoost > 0.01f	&& pSet->game.boost_type > 0)
 	{
-		boostVal = doBoost;
+		/// <><> damage reduce
+		float dmg = fDamage >= 80.f ? 0.f : (130.f - fDamage)*0.01f;
+		boostVal = doBoost * dmg;
 		if (pSet->game.boost_type == 1 || pSet->game.boost_type == 2)  // fuel dec
 		{
 			boostFuel -= doBoost * dt;

@@ -233,7 +233,9 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	for (int i=0; i < 2; i++)
 	if (parBoost[i])
 	{
-		float emitB = posInfo.fboost * 40.f;  // par
+		/// <><> damage reduce
+		float dmg = pCar->dynamics.fDamage >= 80.f ? 0.f : std::max(0.f, 1.4f - pCar->dynamics.fDamage*0.01f);
+		float emitB = posInfo.fboost * 40.f * dmg;  // par
 		ParticleEmitter* pe = parBoost[i]->getEmitter(0);
 		pe->setEmissionRate(emitB);
 	}
