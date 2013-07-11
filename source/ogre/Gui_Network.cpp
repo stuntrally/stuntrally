@@ -358,9 +358,9 @@ void App::evBtnNetJoinLockedClose()
 	if (popup.btnResult != 0 || !listServers || !pSet)  return;
 	size_t i = listServers->getIndexSelected();  if (i == ITEM_NONE)  return;
 
-	string host = listServers->getSubItemNameAt(iColHost, i);
-	string port = listServers->getSubItemNameAt(iColPort, i);
-	
+	string host = listServers->getSubItemNameAt(iColHost, i).substr(7);
+	string port = listServers->getSubItemNameAt(iColPort, i).substr(7);
+
 	join(host, port, popup.edit0);  // host, port, password
 }
 
