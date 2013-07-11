@@ -338,7 +338,7 @@ void App::WarningsCheck(const Scene* sc, const SplineRoad* road)
 
 	
 	///-  vegetation  -------------
-	int veg = sc->pgLayers.size();
+	int veg = sc->densTrees > 0.f ? sc->pgLayers.size() : 0;
 	Warn(NOTE,"Vegetation models used: "+toStr(veg));
 	hqVeget = veg >= 5;
 	if (hqVeget)   Warn(INFO,"HQ Vegetation");
