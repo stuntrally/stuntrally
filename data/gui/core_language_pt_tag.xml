@@ -20,6 +20,7 @@
 	<Tag name="Championship">Campeonato</Tag>
 	<Tag name="ColumnRadius">Raio da coluna</Tag>
 	<Tag name="InputKeyUnassigned">-- Nenhum --</Tag>
+	<Tag name="Warnings">Warnings</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Escolher (um)</Tag>
 	<Tag name="Road_AngleManual">Manual</Tag>
@@ -242,6 +243,7 @@
 	<Tag name="InputGraphsType">change graphs type in game</Tag>
 	<Tag name="NetMasterProtocolError">Versão de protocolo incompatível - atualize o Stunt Rally ou contate o administrador do servidor.</Tag>
 	<Tag name="No">No</Tag>
+	<Tag name="CheckOnLoad">Check on load</Tag>
 	<Tag name="Effects">Efeitos</Tag>
 	<Tag name="WidthSteps">Width Steps</Tag>
 	<Tag name="Multiply">Multiply</Tag>
@@ -448,6 +450,7 @@
 	<Tag name="MinimapUpdSkip">Pular atualização do minimapa</Tag>
 	<Tag name="InputReloadTrack">F5 - reload track</Tag>
 	<Tag name="InputIncreaseSensitivity">Sensitivity</Tag>
+	<Tag name="CheckOnSave">Check on save</Tag>
 	<Tag name="GraphicsAllSettings">Change all graphics settings to preset:</Tag>
 	<Tag name="InputTerPaint">A - Paint Textures (layers)</Tag>
 	<Tag name="NetPort">Port</Tag>
@@ -466,6 +469,7 @@
 	<Tag name="InputFluidsDel">Del - delete current</Tag>
 	<Tag name="Leave">Leave (exit)</Tag>
 	<Tag name="InputRoadMove">- move point</Tag>
+	<Tag name="InputTerSmooth">S - Smooth  (flatten)</Tag>
 	<Tag name="GrassSway">Sway</Tag>
 	<Tag name="Right">Right</Tag>
 	<Tag name="Help">Help</Tag>
@@ -791,7 +795,7 @@
 	<Tag name="TipDisableFog">Disable fog when editing road from distance.</Tag>
 	<Tag name="long">long</Tag>
 	<Tag name="PipeWStepsMul">Pipe W steps mul.</Tag>
-	<Tag name="InputTerSmooth">S - Smooth  (flatten)</Tag>
+	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
 	<Tag name="RplLoad">Load</Tag>
 	<Tag name="InpSet_AxisHalfInv">Axis Half Inversed</Tag>
 	<Tag name="ScaleTerHeight">Terrain Height</Tag>
@@ -877,10 +881,11 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="Warnings">Warnings</Tag>
-	<Tag name="CheckOnLoad">Check on load</Tag>
-	<Tag name="CheckOnSave">Check on save</Tag>
-	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
+	<Tag name="Damage">Damage</Tag>
+	<Tag name="None">None</Tag>
+	<Tag name="Reduced">Reduced</Tag>
+	<Tag name="InputLoadNextTrack">F12 - load next track (shift - previous)</Tag>
+	<Tag name="Normal">Normal</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

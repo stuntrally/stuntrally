@@ -20,6 +20,7 @@
 	<Tag name="Championship">Mestaruus</Tag>
 	<Tag name="ColumnRadius">Pylvään säde</Tag>
 	<Tag name="InputKeyUnassigned">-- Ei mitään --</Tag>
+	<Tag name="Warnings">Warnings</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Valitse (yksi)</Tag>
 	<Tag name="Road_AngleManual">Manuaalinen</Tag>
@@ -242,6 +243,7 @@
 	<Tag name="InputGraphsType">change graphs type in game</Tag>
 	<Tag name="NetMasterProtocolError">Incompatible protocol version - update Stunt Rally or contact server administrator.</Tag>
 	<Tag name="No">Ei</Tag>
+	<Tag name="CheckOnLoad">Check on load</Tag>
 	<Tag name="Effects">Tehosteet</Tag>
 	<Tag name="WidthSteps">Width Steps</Tag>
 	<Tag name="Multiply">Multiply</Tag>
@@ -448,6 +450,7 @@
 	<Tag name="MinimapUpdSkip">Minimap update skip</Tag>
 	<Tag name="InputReloadTrack">F5 - lataa rata uudelleen</Tag>
 	<Tag name="InputIncreaseSensitivity">Herkkyys</Tag>
+	<Tag name="CheckOnSave">Check on save</Tag>
 	<Tag name="GraphicsAllSettings">Vaihda kaikki grafiikka-asetukset esiasetukseen:</Tag>
 	<Tag name="InputTerPaint">A - Paint Textures (layers)</Tag>
 	<Tag name="NetPort">Portti</Tag>
@@ -466,6 +469,7 @@
 	<Tag name="InputFluidsDel">Del - poista nykyinen</Tag>
 	<Tag name="Leave">Poistu</Tag>
 	<Tag name="InputRoadMove">- liikuta pistettä</Tag>
+	<Tag name="InputTerSmooth">S - Smooth  (flatten)</Tag>
 	<Tag name="GrassSway">Sway</Tag>
 	<Tag name="Right">Oikea</Tag>
 	<Tag name="Help">Apua</Tag>
@@ -791,7 +795,7 @@
 	<Tag name="TipDisableFog">Disable fog when editing road from distance.</Tag>
 	<Tag name="long">pitkä</Tag>
 	<Tag name="PipeWStepsMul">Pipe W steps mul.</Tag>
-	<Tag name="InputTerSmooth">S - Smooth  (flatten)</Tag>
+	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
 	<Tag name="RplLoad">Lataa</Tag>
 	<Tag name="InpSet_AxisHalfInv">Axis Half Inversed</Tag>
 	<Tag name="ScaleTerHeight">Maaston korkeus</Tag>
@@ -877,10 +881,11 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="Warnings">Warnings</Tag>
-	<Tag name="CheckOnLoad">Check on load</Tag>
-	<Tag name="CheckOnSave">Check on save</Tag>
-	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
+	<Tag name="Damage">Damage</Tag>
+	<Tag name="None">None</Tag>
+	<Tag name="Reduced">Reduced</Tag>
+	<Tag name="InputLoadNextTrack">F12 - load next track (shift - previous)</Tag>
+	<Tag name="Normal">Normal</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

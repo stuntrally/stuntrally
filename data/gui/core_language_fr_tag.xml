@@ -20,6 +20,7 @@
 	<Tag name="Championship">Championnat</Tag>
 	<Tag name="ColumnRadius">Rayon de la colonne</Tag>
 	<Tag name="InputKeyUnassigned">-- Aucun --</Tag>
+	<Tag name="Warnings">Warnings</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Sélectionner (une route)</Tag>
 	<Tag name="Road_AngleManual">Manuel</Tag>
@@ -242,6 +243,7 @@
 	<Tag name="InputGraphsType">changer le type de graphiques dans le jeu</Tag>
 	<Tag name="NetMasterProtocolError">Version du protocole incompatible - mettez à jour Stunt Rally ou contactez l'administrateur du serveur.</Tag>
 	<Tag name="No">Non</Tag>
+	<Tag name="CheckOnLoad">Check on load</Tag>
 	<Tag name="Effects">Effets</Tag>
 	<Tag name="WidthSteps">Width Steps</Tag>
 	<Tag name="Multiply">Multiplier</Tag>
@@ -448,6 +450,7 @@
 	<Tag name="MinimapUpdSkip">Fréq. de MAJ de la minicarte</Tag>
 	<Tag name="InputReloadTrack">F5 - rechargement du circuit</Tag>
 	<Tag name="InputIncreaseSensitivity">Sensibilité</Tag>
+	<Tag name="CheckOnSave">Check on save</Tag>
 	<Tag name="GraphicsAllSettings">Changer tous les paramètres graphiques :</Tag>
 	<Tag name="InputTerPaint">A - peindre des textures (calques)</Tag>
 	<Tag name="NetPort">Port</Tag>
@@ -466,6 +469,7 @@
 	<Tag name="InputFluidsDel">Supr. - supprimer la sélection</Tag>
 	<Tag name="Leave">Quitter</Tag>
 	<Tag name="InputRoadMove">- déplacer le point</Tag>
+	<Tag name="InputTerSmooth">S - adoucir (aplatir)</Tag>
 	<Tag name="GrassSway">Vent</Tag>
 	<Tag name="Right">Droite</Tag>
 	<Tag name="Help">Aide</Tag>
@@ -791,7 +795,7 @@
 	<Tag name="TipDisableFog">Désactiver la brume quand la route est éditée.</Tag>
 	<Tag name="long">long</Tag>
 	<Tag name="PipeWStepsMul">Pipe W steps mul.</Tag>
-	<Tag name="InputTerSmooth">S - adoucir (aplatir)</Tag>
+	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
 	<Tag name="RplLoad">Chargement</Tag>
 	<Tag name="InpSet_AxisHalfInv">Axe partiel inversé</Tag>
 	<Tag name="ScaleTerHeight">Hauteur du Terrain</Tag>
@@ -877,10 +881,11 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet d'Options précédent/suivant (Maj. sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="Warnings">Warnings</Tag>
-	<Tag name="CheckOnLoad">Check on load</Tag>
-	<Tag name="CheckOnSave">Check on save</Tag>
-	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
+	<Tag name="Damage">Damage</Tag>
+	<Tag name="None">None</Tag>
+	<Tag name="Reduced">Reduced</Tag>
+	<Tag name="InputLoadNextTrack">F12 - load next track (shift - previous)</Tag>
+	<Tag name="Normal">Normal</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

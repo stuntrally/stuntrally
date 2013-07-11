@@ -20,6 +20,7 @@
 	<Tag name="Championship">Mistrzostwo</Tag>
 	<Tag name="ColumnRadius">Promień kolumn</Tag>
 	<Tag name="InputKeyUnassigned">-- Brak --</Tag>
+	<Tag name="Warnings">Ostrzeżenia</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Wybierz (jeden)</Tag>
 	<Tag name="Road_AngleManual">Ręcznie</Tag>
@@ -242,6 +243,7 @@
 	<Tag name="InputGraphsType">zmień typ grafów w grze</Tag>
 	<Tag name="NetMasterProtocolError">Niekompatybilne wersje protokołu - pobierz nowsze Stunt Rally lub skontaktuj się z administratorem serwera.</Tag>
 	<Tag name="No">Nie</Tag>
+	<Tag name="CheckOnLoad">Sprawdź przy ładowaniu</Tag>
 	<Tag name="Effects">Efekty</Tag>
 	<Tag name="WidthSteps">Kroków szerokości</Tag>
 	<Tag name="Multiply">Pomnóż</Tag>
@@ -448,6 +450,7 @@
 	<Tag name="MinimapUpdSkip">Pominięć odśw. minimapy</Tag>
 	<Tag name="InputReloadTrack">F5 - przeładuj trasę</Tag>
 	<Tag name="InputIncreaseSensitivity">Czułość</Tag>
+	<Tag name="CheckOnSave">Sprawdź przy zapisywaniu</Tag>
 	<Tag name="GraphicsAllSettings">Zmień wszystkie ustawienia na zestaw:</Tag>
 	<Tag name="InputTerPaint">A - maluj tekstury (warstwy)</Tag>
 	<Tag name="NetPort">Port</Tag>
@@ -466,6 +469,7 @@
 	<Tag name="InputFluidsDel">Del - zmaż wybraną</Tag>
 	<Tag name="Leave">Opuść (wyjdź)</Tag>
 	<Tag name="InputRoadMove">- przesuń punkt</Tag>
+	<Tag name="InputTerSmooth">S - Wyrównaj (na płasko)</Tag>
 	<Tag name="GrassSway">Kołysanie</Tag>
 	<Tag name="Right">Prawo</Tag>
 	<Tag name="Help">Pomoc</Tag>
@@ -791,7 +795,7 @@
 	<Tag name="TipDisableFog">Wyłącz mgłę gdy edycja z dystansu.</Tag>
 	<Tag name="long">długość</Tag>
 	<Tag name="PipeWStepsMul">Kroków szer. rury</Tag>
-	<Tag name="InputTerSmooth">S - Wyrównaj (na płasko)</Tag>
+	<Tag name="WarningsInfo">Konsola dla błędów trasy, ostrzerzeń i porad.</Tag>
 	<Tag name="RplLoad">Wczytaj</Tag>
 	<Tag name="InpSet_AxisHalfInv">Oś, połowa, przeciwnie</Tag>
 	<Tag name="ScaleTerHeight">Wysokość terenu</Tag>
@@ -877,10 +881,11 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="Warnings">Warnings</Tag>
-	<Tag name="CheckOnLoad">Check on load</Tag>
-	<Tag name="CheckOnSave">Check on save</Tag>
-	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
+	<Tag name="Damage">Damage</Tag>
+	<Tag name="None">None</Tag>
+	<Tag name="Reduced">Reduced</Tag>
+	<Tag name="InputLoadNextTrack">F12 - load next track (shift - previous)</Tag>
+	<Tag name="Normal">Normal</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

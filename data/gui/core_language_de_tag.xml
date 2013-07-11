@@ -20,6 +20,7 @@
 	<Tag name="Championship">Meisterschaft</Tag>
 	<Tag name="ColumnRadius">Säulenradius</Tag>
 	<Tag name="InputKeyUnassigned">-- Kein --</Tag>
+	<Tag name="Warnings">Warnungen</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Auswählen (eins)</Tag>
 	<Tag name="Road_AngleManual">Manuell</Tag>
@@ -242,6 +243,7 @@
 	<Tag name="InputGraphsType">Graphentyp ändern</Tag>
 	<Tag name="NetMasterProtocolError">Inkompatibles protokoll - Spiel aktualisieren oder Server-Administrator kontaktieren.</Tag>
 	<Tag name="No">Nein</Tag>
+	<Tag name="CheckOnLoad">Check on load</Tag>
 	<Tag name="Effects">Effekte</Tag>
 	<Tag name="WidthSteps">Breiten-Steps</Tag>
 	<Tag name="Multiply">Multiplizieren</Tag>
@@ -448,6 +450,7 @@
 	<Tag name="MinimapUpdSkip">Minikarten-Update überspr.</Tag>
 	<Tag name="InputReloadTrack">F5 - Neu laden</Tag>
 	<Tag name="InputIncreaseSensitivity">Empfindlichkeit</Tag>
+	<Tag name="CheckOnSave">Check on save</Tag>
 	<Tag name="GraphicsAllSettings">Grafik-Voreinstellungen:</Tag>
 	<Tag name="InputTerPaint">A - Anstrichtextur (Layer)</Tag>
 	<Tag name="NetPort">Port</Tag>
@@ -466,6 +469,7 @@
 	<Tag name="InputFluidsDel">Entf - löschen</Tag>
 	<Tag name="Leave">Verlassen</Tag>
 	<Tag name="InputRoadMove">- Punkt bewegen</Tag>
+	<Tag name="InputTerSmooth">S - Glätten (abflachen)</Tag>
 	<Tag name="GrassSway">Schaukeln</Tag>
 	<Tag name="Right">Rechts</Tag>
 	<Tag name="Help">Hilfe</Tag>
@@ -791,7 +795,7 @@
 	<Tag name="TipDisableFog">Nebel zum Bearbeiten aus der Entfernung deaktivieren.</Tag>
 	<Tag name="long">weit</Tag>
 	<Tag name="PipeWStepsMul">Röhren W-Steps Mult.</Tag>
-	<Tag name="InputTerSmooth">S - Glätten (abflachen)</Tag>
+	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
 	<Tag name="RplLoad">Laden</Tag>
 	<Tag name="InpSet_AxisHalfInv">Achse halb invertiert</Tag>
 	<Tag name="ScaleTerHeight">Terrain-Höhe</Tag>
@@ -877,10 +881,11 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="Warnings">Warnings</Tag>
-	<Tag name="CheckOnLoad">Check on load</Tag>
-	<Tag name="CheckOnSave">Check on save</Tag>
-	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
+	<Tag name="Damage">Damage</Tag>
+	<Tag name="None">None</Tag>
+	<Tag name="Reduced">Reduced</Tag>
+	<Tag name="InputLoadNextTrack">F12 - load next track (shift - previous)</Tag>
+	<Tag name="Normal">Normal</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
