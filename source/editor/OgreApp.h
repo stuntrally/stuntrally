@@ -482,7 +482,7 @@ protected:
 	void WarningsCheck(const class Scene* sc, const SplineRoad* road);
 	int cntWarn;  bool logWarn;  // only log warnings (tool)
 	enum eWarn {  ERR=0, WARN, INFO, NOTE, TXT  };
-	void App::Warn(eWarn type, Ogre::String text);
+	void Warn(eWarn type, Ogre::String text);
 	void chkCheckSave(WP),chkCheckLoad(WP);  int iLoadNext;
 
 	//  tweak page
