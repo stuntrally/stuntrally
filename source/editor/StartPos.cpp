@@ -4,6 +4,7 @@
 #include "../road/Road.h"
 #include "../ogre/common/RenderConst.h"
 #include "../ogre/common/SceneXml.h"
+#include <OgreTerrain.h>
 using namespace Ogre;
 
 
