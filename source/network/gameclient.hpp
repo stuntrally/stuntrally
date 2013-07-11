@@ -61,6 +61,10 @@ public:
 	/// Signal a lap with time
 	void lap(uint8_t num, double time);
 
+	/// After race, go back to lobby for another race
+	/// All peers should call this when everyone is finished
+	void returnToLobby();
+
 	/// Thread that periodically broadcasts peer and game state info, don't call directly
 	void senderThread();
 

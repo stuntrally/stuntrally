@@ -157,6 +157,20 @@ void P2PGameClient::lap(uint8_t num, double time)
 	LogO("== Netw Lap " +toStr(num) +" finished by U time:"+ toStr(float(time)));
 }
 
+void P2PGameClient::returnToLobby()
+{
+	if (m_state != GAME)
+	{
+		LogO("== Netw returnToLobby  WRONG? we should be in-game");
+		return;
+	}
+	boost::mutex::scoped_lock lock(m_mutex);
+	m_state = LOBBY;
+	m_playerInfo.loaded = false;
+	m_playerInfo.ready = false;
+	// TODO: Should we reset peers' ready and loading states also?
+}
+
 void P2PGameClient::senderThread()
 {
 	do {
