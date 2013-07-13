@@ -164,6 +164,14 @@ private:
 			{
 				time += dt;  time_rpl += dt;  time_rewind += dt;  time_rewGh += dt;
 			}
+			
+			void Back(float dt)  //-
+			{
+				time += dt;  time_rpl += dt;
+				if (time < 0.0)  time = 0.0;
+				if (time_rpl < 0.0)  time_rpl = 0.0;
+			}
+			
 
 			void Lap(bool countit)
 			{
@@ -312,6 +320,8 @@ public:
 	void RestartReplay(const int carId)   {		assert(carId<car.size());	car[carId].RestartReplay();  }
 	double& GetRewindTime(const int carId) {	assert(carId<car.size());	return car[carId].time_rewind;  }  // rewind
 	double& GetRewindTimeGh(const int carId) {	assert(carId<car.size());	return car[carId].time_rewGh;  }  // rewind
+
+	void Back(const int carId,double time) {	assert(carId<car.size());	car[carId].Back(time);  }  // back
 
 	void Reset(int id = -1)
 	{
