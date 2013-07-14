@@ -11,27 +11,7 @@ using namespace Ogre;
 using namespace MyGUI;
 
 
-///  get race position  (champs stage result)
-float App::GetRacePosCh(const string& trk, const string& car, int carId, const string& sim_mode)
-{
-	if (pSet->game.track_user)
-		return 1.f;  // user tracks arent in xml
-	
-	//  last car lap time,  or best if no lap yet
-	TIMER& tim = pGame->timer;
-	float last = tim.GetLastLap(carId), best = tim.GetBestLap(carId, pSet->game.trackreverse);
-	float timeCur = last < 0.1f ? best : last;
-
-	//  track time, score
-	float timeTrk = times.trks[pSet->game.track] /** laps*/;
-	if (timeTrk < 0.1f)
-		return 1.f;  // track not in xml!
-
-	float carMul = GetCarTimeMul(car, sim_mode);
-	
-	return GetRacePos(timeCur, timeTrk, carMul, true/**/);
-}
-
+///  car time mul
 float App::GetCarTimeMul(const string& car, const string& sim_mode)
 {
 	//  car factor (time mul, for less power)
@@ -47,7 +27,7 @@ float App::GetCarTimeMul(const string& car, const string& sim_mode)
 }
 
 ///  compute race position,  basing on car and track time
-float App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldStart)
+int App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldStart, float* pPoints)
 {
 	//  magic factor: seconds needed for 1 second of track time for 1 race place difference
 	//  eg. if track time is 3min = 180 sec, then 180*magic = 2.16 sec
@@ -58,9 +38,13 @@ float App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldS
 	float time = timeC * carTimeMul;
 
 	float place = (time - timeTrk)/timeTrk / magic;
-	place = std::max(1.f, place + 1.f);
+	// time = (place * magic * timeTrk + timeTrk) / carTimeMul;  //todo: show this in lists and hud..
+	if (pPoints)
+		*pPoints = std::max(0.f, (20.f - place) * 0.5f);
+	//place = std::max(1.f, place + 1.f);
 	//float t1pl = magic * timeTrk;
-	return place;
+	int plc = place < 1.f ? 1 : std::min(30, (int)( floor(place +1.f) ));
+	return plc;
 }
 
 
@@ -121,17 +105,17 @@ void App::ChampsXmlLoad()
 			ProgressChamp pc;
 			pc.name = ch.name;  pc.ver = ch.ver;
 
-			if (found)  //  found progress, score
+			if (found)  //  found progress, points
 			{	pc.curTrack = opc->curTrack;
-				pc.score = opc->score;
+				pc.points = opc->points;
 			}
 
 			//  fill tracks
 			for (int t=0; t < ch.trks.size(); ++t)
 			{
 				ProgressTrack pt;
-				if (found)  // found track score
-					pt.score = opc->trks[t].score;
+				if (found)  // found track points
+					pt.points = opc->trks[t].points;
 				pc.trks.push_back(pt);
 			}
 
@@ -228,7 +212,7 @@ void App::ChampsListUpdate()
 			liChamps->setSubItemNameAt(3,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ toStr(ntrks));
 			liChamps->setSubItemNameAt(4,l, clrsDiff[std::min(8,int(ch.time/3.f/60.f))]+ GetTimeShort(ch.time));
 			liChamps->setSubItemNameAt(5,l, clr+ fToStr(100.f * pc.curTrack / ntrks,0,3)+" %");
-			liChamps->setSubItemNameAt(6,l, clr+ fToStr(pc.score,1,5));
+			liChamps->setSubItemNameAt(6,l, clr+ fToStr(pc.points,1,5));
 			if (n-1 == pSet->gui.champ_num)  sel = l;
 	}	}
 	liChamps->setIndexSelected(sel);
@@ -264,7 +248,7 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 		liStages->setSubItemNameAt(3,l, clrsDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
 
 		liStages->setSubItemNameAt(4,l, "#80C0F0"+GetTimeShort(time));  //toStr(trk.laps)
-		liStages->setSubItemNameAt(5,l, "#E0F0FF"+fToStr(progress[p].champs[pos].trks[i].score,1,5));
+		liStages->setSubItemNameAt(5,l, "#E0F0FF"+fToStr(progress[p].champs[pos].trks[i].points,1,3));
 	}
 	//  descr
 	EditBox* ed = mGUI->findWidget<EditBox>("ChampDescr");
@@ -285,7 +269,7 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 	txt = (TextBox*)mWndGame->findWidget("valChProgress");
 	if (txt)  txt->setCaption(fToStr(100.f * progress[p].champs[pos].curTrack / champs.champs[pos].trks.size(),1,5));
 	txt = (TextBox*)mWndGame->findWidget("valChScore");
-	if (txt)  txt->setCaption(fToStr(progress[p].champs[pos].score,1,5));
+	if (txt)  txt->setCaption(fToStr(progress[p].champs[pos].points,1,5));
 }
 
 ///  Stages list  sel changed,  update Track info
@@ -436,31 +420,33 @@ void App::ChampionshipAdvance(float timeCur)
 	const ChampTrack& trk = ch.trks[pc.curTrack];
 	LogO("|| --- Champ end: " + ch.name);
 
-	///  compute track :score:  --------------
-	float timeBest = times.trks[trk.name];
-	if (timeBest < 1.f)
-	{	LogO("|| Error: Track has no best time !");  timeBest = 10.f;	}
-	timeBest *= trk.laps;
-	timeBest += 2;  // first lap longer, time at start spent to gain car valocity
-	float factor = ch.trks[pc.curTrack].factor;  // how close to best you need to be
-	timeBest *= 1.0f + factor;
+	///  compute track  poins  --------------
+	float timeTrk = times.trks[trk.name];
+	if (timeTrk < 1.f)
+	{	LogO("|| Error: Track has no best time !");  timeTrk = 10.f;	}
+	timeTrk *= trk.laps;
 
 	LogO("|| Track: " + trk.name);
 	LogO("|| Your time: " + toStr(timeCur));
-	LogO("|| Best time: " + toStr(timeBest));
+	LogO("|| Best time: " + toStr(timeTrk));
 
-	const float decFactor = 1.5f;  // more means score will drop faster for longer times
-	/**/  // test score +-10 sec diff
-	for (int i=-3; i <= 3; ++i)
+	float carMul = GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
+	float points = 0.f;  int pos;
+
+	#if 1  // test score +- sec diff
+	for (int i=-2; i <= 4; ++i)
 	{
-		float score = (1.f + (timeBest-timeCur-i*3)/timeBest * decFactor) * 100.f;
-		LogO("|| var, add time: "+toStr(i*3)+" sec, score: "+toStr(score));
-	}/**/
-	float score = (1.f + (timeBest-timeCur)/timeBest * decFactor) * 100.f;
-	float pass = trk.passScore * (pSet->game.sim_mode == "normal" ? 1.f : 0.75);  // 100 normal, 75 easy
-	bool passed = score >= pass;  // didnt qualify, repeat current stage
-	LogO("|| Score: " + toStr(score) + "  Passed: " + (passed ? "yes":"no"));
-	pc.trks[pc.curTrack].score = score;
+		pos = GetRacePos(timeCur + i*2.f, timeTrk, carMul, true, &points);
+		LogO("|| var, add time: "+toStr(i*2)+" sec, points: "+fToStr(points,2));
+	}
+	#endif
+	pos = GetRacePos(timeCur, timeTrk, carMul, true, &points);
+
+	float pass = (pSet->game.sim_mode == "normal") ? 5.f : 2.f;  ///..
+	bool passed = points >= pass;  // didnt qualify, repeat current stage
+	
+	LogO("|| Points: " + fToStr(points,1) + " pos: " + toStr(pos) + "  Passed: " + (passed ? "yes":"no"));
+	pc.trks[pc.curTrack].points = points;
 
 	//  --------------  advance  --------------
 	bool last = pc.curTrack+1 == ch.trks.size();
@@ -489,20 +475,20 @@ void App::ChampionshipAdvance(float timeCur)
 		///  compute champ :score:  --------------
 		int ntrk = pc.trks.size();  float sum = 0.f;
 		for (int t=0; t < ntrk; ++t)
-			sum += pc.trks[t].score;
+			sum += pc.trks[t].points;
 
 		pc.curTrack++;  // end = 100 %
 		//float old = pc.score;  // .. save only higher ?
-		pc.score = sum / ntrk;  // average from all tracks
+		pc.points = sum / ntrk;  // average from all tracks
 		ProgressSave();
 
 		LogO("|| Champ finished");
-		LogO("|| Total score: " + toStr(score));
+		LogO("|| Total points: " + toStr(points));
 		
 		//  upd champ end [window]
 		String s = 
 			TR("#{Championship}") + ": " + ch.name + "\n" +
-			TR("#{TotalScore}") + ": " + fToStr(pc.score,1,5);
+			TR("#{TotalScore}") + ": " + fToStr(pc.points,1,5);
 		edChampEnd->setCaption(s);
 		//mWndChampEnd->setVisible(true);  // show after stage end
 	}
@@ -536,13 +522,13 @@ void App::ChampFillStageInfo(bool finished)
 
 	if (finished)
 	{
-		float score = pc.trks[pc.curTrack].score;
-		float pass = trk.passScore * (pSet->game.sim_mode == "normal" ? 1.f : 0.75);  // 100 normal, 75 easy
+		float points = pc.trks[pc.curTrack].points;
+		float pass = (pSet->game.sim_mode == "normal") ? 5.f : 2.f;  ///..
 		s += "#80C0FF"+TR("#{Finished}") + ".\n" +
-			"#FFFF60"+TR("#{Score}") + ": " + fToStr(score,1,5) + "\n";
+			"#FFFF60"+TR("#{Score}") + ": " + fToStr(points,1,5) + "\n";
 		s += "#80C0FF"+TR("#{ScoreNeeded}") + ": " + fToStr(pass,1,5) + "\n\n";
 		
-		bool passed = score >= pass;
+		bool passed = points >= pass;
 		if (passed)
 			s += "#00FF00"+TR("#{Passed}")+".\n"+TR("#{NextStage}.");
 		else

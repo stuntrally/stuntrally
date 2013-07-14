@@ -320,8 +320,7 @@ protected:
 	void ChampNewGame(), ChampLoadEnd(), ChampsListUpdate(),
 		ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
 	//  race pos
-	float GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldStart);
-	float GetRacePosCh(const std::string& trk, const std::string& car, int carId, const std::string& sim_mode);
+	int GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldStart, float* pPoints=0);
 	float GetCarTimeMul(const std::string& car, const std::string& sim_mode);
 		
 

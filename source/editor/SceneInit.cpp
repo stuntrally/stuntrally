@@ -78,7 +78,7 @@ void App::createScene()  // once, init
 	LogO(String("::: Time load xmls: ") + fToStr(dt,0,3) + " ms");
 
 
-	///  _Tool_ ...........................
+	///  _Tool_ scene ...........................
 	///  check/resave all tracks scene.xml 
 	#if 0
 	ti.update();  /// time
@@ -147,7 +147,7 @@ void App::createScene()  // once, init
 	exit(0);
 	#endif
 
-	///  _Tool_	...........................
+	///  _Tool_	Warnings ...........................
 	///  check all tracks for warnings
 	///  Warning: takes about 16 sec
 	#if 0

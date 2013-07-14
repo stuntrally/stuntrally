@@ -775,7 +775,7 @@ void App::createBrushPrv()
 
 
 ///==============================================================================================
-	///  _Tool_ update all brushes png
+	///  _Tool_ update all Brushes png
 	#if 0  // 0 in release !!
 	Image im;
 	for (int i=0; i < brSetsNum; ++i)

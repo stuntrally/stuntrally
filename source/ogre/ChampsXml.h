@@ -58,7 +58,7 @@ public:
 class ProgressTrack
 {
 public:
-	float score;  //int laps;
+	float points;
 	ProgressTrack();
 };
 
@@ -67,7 +67,7 @@ class ProgressChamp
 {
 public:
 	int curTrack;  // index to current track, in trks
-	float score;
+	float points;
 	
 	//  for ver changed checking..
 	std::string name;

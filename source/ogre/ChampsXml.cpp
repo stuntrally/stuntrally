@@ -108,11 +108,11 @@ bool TimesXml::LoadXml(std::string file)
 
 //  progress on champs,tuts and their tracks
 ProgressTrack::ProgressTrack() :
-	score(0.f)//, laps(0)
+	points(0.f)
 {	}
 
 ProgressChamp::ProgressChamp() :
-	curTrack(0), score(0.f), ver(0)
+	curTrack(0), points(0.f), ver(0)
 {	}
 
 
@@ -134,20 +134,20 @@ bool ProgressXml::LoadXml(std::string file)
 	while (eCh)
 	{
 		ProgressChamp pc;
-		a = eCh->Attribute("curTrack");		if (a)  pc.curTrack = s2i(a);
-		a = eCh->Attribute("score");		if (a)  pc.score = s2r(a);
-		a = eCh->Attribute("name");			if (a)  pc.name = std::string(a);
-		a = eCh->Attribute("ver");			if (a)  pc.ver = s2i(a);
+		a = eCh->Attribute("name");		if (a)  pc.name = std::string(a);
+		a = eCh->Attribute("ver");		if (a)  pc.ver = s2i(a);
+		a = eCh->Attribute("cur");	if (a)  pc.curTrack = s2i(a);
+		a = eCh->Attribute("p");	if (a)  pc.points = s2r(a);
 		
 		//  tracks
-		TiXmlElement* eTr = eCh->FirstChildElement("track");
+		TiXmlElement* eTr = eCh->FirstChildElement("t");
 		while (eTr)
 		{
 			ProgressTrack pt;
-			a = eTr->Attribute("score");	if (a)  pt.score = s2r(a);
+			a = eTr->Attribute("p");	if (a)  pt.points = s2r(a);
 			
 			pc.trks.push_back(pt);
-			eTr = eTr->NextSiblingElement("track");
+			eTr = eTr->NextSiblingElement("t");
 		}
 
 		champs.push_back(pc);
@@ -165,16 +165,16 @@ bool ProgressXml::SaveXml(std::string file)
 	{
 		const ProgressChamp& pc = champs[i];
 		TiXmlElement eCh("champ");
-			eCh.SetAttribute("curTrack",	toStrC( pc.curTrack ));
-			eCh.SetAttribute("score",		toStrC( pc.score ));
-			eCh.SetAttribute("name",		pc.name.c_str() );
-			eCh.SetAttribute("ver",			toStrC( pc.ver ));
+			eCh.SetAttribute("name",	pc.name.c_str() );
+			eCh.SetAttribute("ver",		toStrC( pc.ver ));
+			eCh.SetAttribute("cur",	toStrC( pc.curTrack ));
+			eCh.SetAttribute("p",	toStrC( pc.points ));
 
 			for (int i=0; i < pc.trks.size(); ++i)
 			{
 				const ProgressTrack& pt = pc.trks[i];
-				TiXmlElement eTr("track");
-				eTr.SetAttribute("score",	toStrC( pt.score ));
+				TiXmlElement eTr("t");
+				eTr.SetAttribute("p",	fToStr( pt.points, 1).c_str());
 				eCh.InsertEndChild(eTr);
 			}
 		root.InsertEndChild(eCh);
