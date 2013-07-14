@@ -175,7 +175,7 @@ protected:
 	MyGUI::OgrePlatform* mPlatform;
 	#endif
 	
-	//  main menu  // pSet->inMenu
+	///  main menu  // pSet->inMenu
 	enum MNU_Btns {  MNU_Single=0, MNU_Tutorial, MNU_Champ, MNU_Challenge, MNU_Replays, MNU_Help, MNU_Options, ciMainBtns  };
 	MyGUI::WidgetPtr mWndMainPanels[ciMainBtns];  MyGUI::ButtonPtr mWndMainBtns[ciMainBtns];
 

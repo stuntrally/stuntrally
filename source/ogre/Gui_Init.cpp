@@ -59,6 +59,7 @@ void App::InitGui()
 	mWndChampEnd = mGUI->findWidget<Window>("WndChampEnd",false);  mWndChampEnd->setVisible(false);
 	mWndNetEnd = mGUI->findWidget<Window>("WndNetEnd",false);  mWndNetEnd->setVisible(false);
 	mWndTweak = mGUI->findWidget<Window>("WndTweak",false);  mWndTweak->setVisible(false);
+	mWndTweak->setPosition(0,40);
 	
 	//  main menu
 	for (int i=0; i < ciMainBtns; ++i)

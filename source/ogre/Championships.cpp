@@ -54,7 +54,7 @@ float App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldS
 	//  and this is the difference between car race positions (1 and 2, 2 and 3 etc)
 	const float magic = 0.008f;  // 0.006 .. 0.0012
 										//par
-	float timeC = timeCur + (coldStart ? -2 : 0);  // if already not driving at start add 2 sec (for gaining speed)
+	float timeC = timeCur + (coldStart ? -2 : 0);  // if not already driving at start, sub 2 sec (for gaining speed)
 	float time = timeC * carTimeMul;
 
 	float place = (time - timeTrk)/timeTrk / magic;
@@ -238,7 +238,7 @@ void App::ChampsListUpdate()
 //---------------------------------------------------------------------
 void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 {
-	if (id==ITEM_NONE)  return;
+	if (id==ITEM_NONE || liChamps->getItemCount() == 0)  return;
 	
 	//  update champ stages
 	liStages->removeAllItems();

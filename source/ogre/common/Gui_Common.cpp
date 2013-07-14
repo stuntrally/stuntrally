@@ -474,6 +474,32 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
 		WidgetPtr wp = widgets.current();
 		wp->setAlign(Align::Default);
 		
+		///
+		/*if (wp->getTypeName() == "TabControl") //&& wp->getSkinWidgetsByNameskin="TabControlIcon
+		{
+			ISubWidgetRect* r = wp->getSubWidgetMain();
+			if (r)
+			r->setCoord(IntCoord(100,100,200,200));
+			if (r)
+			LogO("r: "+r->getTypeName()+" "+r->getClassTypeName());
+
+			//mGUI->mSubWidgetManager
+			//wp->getSubWidgetMain
+			LogO(wp->getName());
+			size_t ch = wp->getChildCount();
+			for (size_t c=0; c < ch; ++c)
+			{
+				Widget* w = wp->getChildAt(c);
+				LogO("  "+w->getName()+" "+w->getTypeName());
+
+				size_t ch1 = w->getChildCount();
+				for (size_t c1=0; c1 < ch1; ++c1)
+				{
+					Widget* w1 = w->getChildAt(c1);
+					LogO("    "+w1->getName()+" "+w1->getTypeName());
+		}	}	}
+		/**/
+		
 		IntPoint origPos = wp->getPosition();
 		IntSize origSize = wp->getSize();
 		
