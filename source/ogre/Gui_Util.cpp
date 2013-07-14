@@ -191,7 +191,7 @@ void App::changeTrack()
 //  new game
 void App::btnNewGame(WP)
 {
-	if (mWndGame->getVisible() && mWndTabsGame->getIndexSelected() < 6  || mClient)
+	if (mWndGame->getVisible() && mWndTabsGame->getIndexSelected() < TAB_Champs  || mClient)
 		pSet->gui.champ_num = -1;  /// champ, back to single race
 	
 	NewGame();  isFocGui = false;  // off gui
@@ -220,11 +220,11 @@ void App::toggleGui(bool toggle)
 
 	bool notMain = isFocGui && !pSet->isMain;
 	if (mWndMain)	mWndMain->setVisible(isFocGui && pSet->isMain);
-	if (mWndReplays) mWndReplays->setVisible(notMain && pSet->inMenu == WND_Replays);
-	if (mWndHelp)	mWndHelp->setVisible(notMain && pSet->inMenu == WND_Help);
-	if (mWndOpts)	mWndOpts->setVisible(notMain && pSet->inMenu == WND_Options);
+	if (mWndReplays) mWndReplays->setVisible(notMain && pSet->inMenu == MNU_Replays);
+	if (mWndHelp)	mWndHelp->setVisible(notMain && pSet->inMenu == MNU_Help);
+	if (mWndOpts)	mWndOpts->setVisible(notMain && pSet->inMenu == MNU_Options);
 	
-	//  fill Readme editbox from file
+	//  load Readme editbox from file
 	if (mWndHelp && mWndHelp->getVisible() && loadReadme)
 	{
 		loadReadme = false;
@@ -243,33 +243,61 @@ void App::toggleGui(bool toggle)
 	}	}	}
 
 	///  update track tab, for champs wnd
-	bool game = pSet->inMenu == WND_Game, champ = pSet->inMenu == WND_Champ, gc = game || champ;
+	bool game = pSet->inMenu == MNU_Single, champ = pSet->inMenu == MNU_Champ,
+		tutor = pSet->inMenu == MNU_Tutorial, chall = pSet->inMenu == MNU_Challenge,
+		chAny = champ || tutor || chall, gc = game || chAny;
+	UString sCh = chall ? TR("#80FFC0#{Challenge}") : (tutor ? TR("#FFC020#{Tutorial}") : TR("#80C0FF#{Championship}"));
+
+	UpdChampTabVis();
+	
 	if (mWndGame)
-	{	mWndGame->setVisible(notMain  && gc);
-		if (mWndGame->getVisible())
-			mWndGame->setCaption(champ ? TR("#{Championship}") : TR("#{SingleRace}"));
+	{	bool vis = notMain  && gc;
+		mWndGame->setVisible(vis);
+		if (vis)
+		{
+			mWndGame->setCaption(chAny ? sCh : TR("#{SingleRace}"));
+			TabItem* t = mWndTabsGame->getItemAt(TAB_Champs);
+			t->setCaption(sCh);
+		}
 	}
 	if (notMain && gc)  // show hide champs,stages
 	{
 		size_t id = mWndTabsGame->getIndexSelected();
-		mWndTabsGame->setButtonWidthAt(1,champ ? 1 :-1);  if (id == 1 && champ)  mWndTabsGame->setIndexSelected(6);
-		mWndTabsGame->setButtonWidthAt(5,champ ? 1 :-1);  if (id == 5 && champ)  mWndTabsGame->setIndexSelected(6);
-		mWndTabsGame->setButtonWidthAt(6,champ ?-1 : 1);  if (id == 6 && !champ)  mWndTabsGame->setIndexSelected(1);
-		mWndTabsGame->setButtonWidthAt(7,champ ?-1 : 1);  if (id == 7 && !champ)  mWndTabsGame->setIndexSelected(1);
-		mWndTabsGame->setButtonWidthAt(8,champ ?-1 : 1);  if (id == 8 && !champ)  mWndTabsGame->setIndexSelected(1);
+		mWndTabsGame->setButtonWidthAt(TAB_Track, chAny ? 1 :-1);  if (id == TAB_Track && chAny)  mWndTabsGame->setIndexSelected(TAB_Champs);
+		mWndTabsGame->setButtonWidthAt(TAB_Multi, chAny ? 1 :-1);  if (id == TAB_Multi && chAny)  mWndTabsGame->setIndexSelected(TAB_Champs);
+		mWndTabsGame->setButtonWidthAt(TAB_Champs,chAny ?-1 : 1);  if (id == TAB_Champs && !chAny)  mWndTabsGame->setIndexSelected(TAB_Track);
+		mWndTabsGame->setButtonWidthAt(TAB_Stages,chAny ?-1 : 1);  if (id == TAB_Stages && !chAny)  mWndTabsGame->setIndexSelected(TAB_Track);
+		mWndTabsGame->setButtonWidthAt(TAB_Stage, chAny ?-1 : 1);  if (id == TAB_Stage  && !chAny)  mWndTabsGame->setIndexSelected(TAB_Track);
 	}
 
 	if (bnQuit)  bnQuit->setVisible(isFocGui);
 	updMouse();
 	if (!isFocGui)  mToolTip->setVisible(false);
 
-	for (int i=0; i < WND_ALL; ++i)
+	for (int i=0; i < ciMainBtns; ++i)
 		mWndMainPanels[i]->setVisible(pSet->inMenu == i);
+}
+
+void App::UpdChampTabVis()
+{
+	static int oldMenu = pSet->inMenu;
+	bool tutor = pSet->inMenu == MNU_Tutorial, champ = pSet->inMenu == MNU_Champ, chall = pSet->inMenu == MNU_Challenge;
+
+	if (tabTut)  tabTut->setVisible(tutor);		if (tabChamp)  tabChamp->setVisible(champ);
+	if (imgTut)  imgTut->setVisible(tutor);		if (imgChamp)  imgChamp->setVisible(champ);
+	if (imgChall)  imgChall->setVisible(chall);
+	if (liChamps)  liChamps->setColour(
+		chall ? Colour(0.75,0.85,0.8) : (tutor ? Colour(0.85,0.8,0.75) : Colour(0.7,0.78,0.85)));
+
+	if (oldMenu != pSet->inMenu && (tutor || champ || chall))
+	{	oldMenu = pSet->inMenu;
+		ChampsListUpdate();
+	}
 }
 
 void App::MainMenuBtn(MyGUI::WidgetPtr wp)
 {
-	for (int i=0; i < WND_ALL; ++i)
+	for (int i=0; i < ciMainBtns; ++i)
 		if (wp == mWndMainBtns[i])
 		{
 			pSet->isMain = false;
@@ -287,22 +315,21 @@ void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
 	toggleGui(false);  // back to main
 }
 
-void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
+void App::GuiShortcut(MNU_Btns mnu, int tab, int subtab)
 {
-	if (subtab == -1 && (!isFocGui || pSet->inMenu != wnd))  subtab = -2;  // cancel subtab cycling
+	if (subtab == -1 && (!isFocGui || pSet->inMenu != mnu))  subtab = -2;  // cancel subtab cycling
 
 	isFocGui = true;
-	pSet->isMain = false;  pSet->inMenu = wnd;
+	pSet->isMain = false;  pSet->inMenu = mnu;
 	
 	MyGUI::TabPtr mWndTabs = 0;
 	std::vector<MyGUI::TabControl*>* subt = 0;
 	
-	switch (wnd)
-	{	case WND_Champ:
-		case WND_Game:		mWndTabs = mWndTabsGame;  subt = &vSubTabsGame;  break;
-		case WND_Replays:	mWndTabs = mWndTabsRpl;  break;
-		case WND_Help:		mWndTabs = mWndTabsHelp;  break;
-		case WND_Options:	mWndTabs = mWndTabsOpts;  subt = &vSubTabsOpts;  break;
+	switch (mnu)
+	{	case MNU_Replays:	mWndTabs = mWndTabsRpl;  break;
+		case MNU_Help:		mWndTabs = mWndTabsHelp;  break;
+		case MNU_Options:	mWndTabs = mWndTabsOpts;  subt = &vSubTabsOpts;  break;
+		default:			mWndTabs = mWndTabsGame;  subt = &vSubTabsGame;  break;
 	}
 	toggleGui(false);
 
@@ -384,19 +411,15 @@ int App::LNext(MyGUI::ListPtr lp, int rel, int ofs)
 void App::LNext(int rel)
 {
 	//if (!isFocGui || pSet->isMain)  return;
-	switch (pSet->inMenu)
-	{
-	case WND_Game: case WND_Champ:
-		switch (mWndTabsGame->getIndexSelected())
-		{	case 1:  listTrackChng(trkList,  LNext(trkList, rel, 11));  return;
-			case 2:	 listCarChng(carList,    LNext(carList, rel, 5));  return;
-			case 4:	 if (rel > 0)  radSimNorm(0);  else  radSimEasy(0);  return;
-			case 6:  listChampChng(liChamps, LNext(liChamps, rel, 8));  return;
-			case 7:	 listStageChng(liStages, LNext(liStages, rel, 8));  return;
-			case 8:	 if (rel > 0)  btnStageNext(0);  else  btnStagePrev(0);  return;
-		}	break;
-	case WND_Replays:
+	if (pSet->inMenu == MNU_Replays)
 		listRplChng(rplList,  LNext(rplList, rel, 11));
-		break;
-	}
+	else
+		switch (mWndTabsGame->getIndexSelected())
+		{	case TAB_Track:  listTrackChng(trkList,  LNext(trkList, rel, 11));  return;
+			case TAB_Car:	 listCarChng(carList,    LNext(carList, rel, 5));  return;
+			case TAB_Game:	 if (rel > 0)  radSimNorm(0);  else  radSimEasy(0);  return;
+			case TAB_Champs: listChampChng(liChamps, LNext(liChamps, rel, 8));  return;
+			case TAB_Stages: listStageChng(liStages, LNext(liStages, rel, 8));  return;
+			case TAB_Stage:	 if (rel > 0)  btnStageNext(0);  else  btnStagePrev(0);  return;
+		}
 }

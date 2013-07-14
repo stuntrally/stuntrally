@@ -175,12 +175,15 @@ protected:
 	MyGUI::OgrePlatform* mPlatform;
 	#endif
 	
-	//  main menu
-	enum WND_Types {  WND_Game=0, WND_Champ, WND_Replays, WND_Help, WND_Options, WND_ALL  };  // pSet->inMenu
+	//  main menu  // pSet->inMenu
+	enum MNU_Btns {  MNU_Single=0, MNU_Tutorial, MNU_Champ, MNU_Challenge, MNU_Replays, MNU_Help, MNU_Options, ciMainBtns  };
+	MyGUI::WidgetPtr mWndMainPanels[ciMainBtns];  MyGUI::ButtonPtr mWndMainBtns[ciMainBtns];
+
 	MyGUI::WindowPtr mWndMain,mWndGame,mWndReplays,mWndHelp,mWndOpts,  // menu, windows
 		mWndRpl, mWndChampStage,mWndChampEnd, mWndNetEnd, mWndTweak;  // rpl controls, champ wnds, tools
 	MyGUI::TabPtr mWndTabsGame,mWndTabsOpts,mWndTabsHelp,mWndTabsRpl;  // main tabs on windows
-	MyGUI::WidgetPtr mWndMainPanels[WND_ALL];  MyGUI::ButtonPtr mWndMainBtns[WND_ALL];
+	enum TAB_Game {  TAB_Back=0, TAB_Track,TAB_Car, TAB_Setup,TAB_Game, TAB_Multi, TAB_Champs,TAB_Stages,TAB_Stage  };
+	
 	MyGUI::VectorWidgetPtr vwGui;  // all widgets to destroy
 
 	///  networking

@@ -445,6 +445,42 @@
             <Widget type="ScrollBar" skin="ScrollBarH" position="0 32 32 15" align="HStretch Bottom" name="HScroll"/>
         </Widget>
     </Resource>
+
+    <Resource type="ResourceLayout" name="TabHeaderButtonIcon" version="3.2.0">
+        <Widget type="Widget" skin="TabHeaderButtonSkin2" position="20 25 52 33" name="Root">
+            <Property key="FontName" value="Default"/>
+            <Property key="TextAlign" value="Center"/>
+            <UserString key="LE_TargetWidgetType" value="Button"/>
+			<Property key="FontName" value="font.19"/>
+		<!--<Widget type="ImageBox" skin="ImageBox" position="4 4 26 26" name="TabImage">-->
+			<!--<Widget type="ImageBox" skin="ImageBox" position="2 2 28 28" name="TabImage">
+				--><!--<Property key="ImageResource" value="MultiListButtonImage"/>
+				<Property key="ImageGroup" value="Icons"/>
+				<Property key="ImageName" value="Down"/>--><!--
+				<Property key="ImageCoord" value="0 128 128 128"/>
+				<Property key="Alpha" value="1.0"/>
+				<Property key="ImageTexture" value="gui_icons.png"/>
+				<Property key="NeedMouse" value="false"/>
+			</Widget>-->
+        </Widget>
+    </Resource>
+    <Resource type="ResourceLayout" name="TabControlIcon" version="3.2.0">
+        <Widget type="Widget" skin="PanelEmpty" position="5 5 89 80" name="Root">
+            <UserString key="LE_TargetWidgetType" value="TabControl"/>
+            <UserString key="ButtonSkin" value="TabHeaderButtonIcon"/>
+            <Widget type="Widget" skin="TabPanelSkin" position="0 21 89 49" align="Stretch">
+                <Widget type="Widget" skin="PanelEmpty" position="2 3 83 42" align="Stretch" name="TabItem"/>
+            </Widget>
+            <Widget type="Widget" skin="PanelEmpty" position="7 0 78 33" align="HStretch Top" name="HeaderPlace">
+                <Widget type="Widget" skin="TabHeaderEmptySkin" position="52 0 26 33" name="Controls">
+                    <Widget type="Button" skin="ButtonRightSkin" position="14 4 12 24" name="Right"/>
+                    <Widget type="Button" skin="ButtonLeftSkin" position="1 4 12 24" name="Left"/>
+                </Widget>
+                <Widget type="Widget" skin="TabHeaderEmptySkin" position="0 0 52 33" name="Empty"/>
+            </Widget>
+        </Widget>
+    </Resource>
+
     <Resource type="ResourceLayout" name="TabHeaderButton" version="3.2.0">
         <Widget type="Widget" skin="TabHeaderButtonSkin" position="20 25 52 23" name="Root">
             <Property key="FontName" value="Default"/>
@@ -468,6 +504,7 @@
             </Widget>
         </Widget>
     </Resource>
+
     <Resource type="ResourceLayout" name="MultiListBox" version="3.2.0">
         <Widget type="Widget" skin="PanelSkin" position="5 5 55 55" name="Root">
             <UserString key="LE_TargetWidgetType" value="MultiListBox"/>

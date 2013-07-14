@@ -269,7 +269,7 @@ void App::CreateHUD(bool destroy)
 		txDamage[c] = mGUI->createWidget<TextBox>("TextBox",
 			0,1200, 240,80, Align::Right, "Back", "Dmg"+toStr(c));
 		txDamage[c]->setVisible(false);
-		txDamage[c]->setFontName("font_Vera.20");  //txDamage[c]->setFontHeight(64);
+		txDamage[c]->setFontName("font.20");  //txDamage[c]->setFontHeight(64);
 		txDamage[c]->setTextShadow(true);
 		txDamage[c]->setTextColour(Colour(0.7,0.7,0.7));
 		
@@ -284,7 +284,7 @@ void App::CreateHUD(bool destroy)
 		txTimTxt[c] = mGUI->createWidget<TextBox>("TextBox",
 			0,1200, 90,160, Align::Left, "Back", "TimT"+toStr(c));
 		txTimTxt[c]->setVisible(false);
-		txTimTxt[c]->setFontName("font_Vera.20");
+		txTimTxt[c]->setFontName("font.20");
 		txTimTxt[c]->setTextShadow(true);
 		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
 		txTimTxt[c]->setCaption(
@@ -293,12 +293,12 @@ void App::CreateHUD(bool destroy)
 			"\n#80C0F0"+TR("#{TBLast}") + 
 			"\n#80E0E0"+TR("#{TBBest}") +
 			"\n#70D070"+TR("#{Track}") +
-			"\n#C0C030"+TR("#{TBScore}") );
+			"\n#C0C030"+TR("#{TBPosition}") );
 
 		txTimes[c] = mGUI->createWidget<TextBox>("TextBox",
-			0,1200, 80,160, Align::Left, "Back", "Tim"+toStr(c));
+			0,1200, /*80*/100,/*160*/200, Align::Left, "Back", "Tim"+toStr(c));
 		txTimes[c]->setVisible(false);
-		txTimes[c]->setFontName("font_Vera.20");
+		txTimes[c]->setFontName("font.20");
 		txTimes[c]->setTextShadow(true);
 	}
 	///  tex

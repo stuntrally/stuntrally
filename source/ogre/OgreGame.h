@@ -310,7 +310,7 @@ protected:
 	///-----------------------------------------
 
 	//  main menu
-	void toggleGui(bool toggle=true), GuiShortcut(WND_Types wnd, int tab, int subtab=-1);
+	void toggleGui(bool toggle=true), GuiShortcut(MNU_Btns mnu, int tab, int subtab=-1);
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 	void MainMenuBtn(MyGUI::WidgetPtr), MenuTabChg(MyGUI::TabPtr, size_t);  bool loadReadme;
 
@@ -319,13 +319,21 @@ protected:
 	void ChampsXmlLoad(), ProgressSave(bool upgGui=true);
 	void ChampNewGame(), ChampLoadEnd(), ChampsListUpdate(),
 		ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
+	//  race pos
+	float GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldStart);
+	float GetRacePosCh(const std::string& trk, const std::string& car, int carId, const std::string& sim_mode);
+	float GetCarTimeMul(const std::string& car, const std::string& sim_mode);
+		
 
 	MyGUI::MultiList2* liChamps, *liStages, *liNetEnd;
 	void listChampChng(MyGUI::MultiList2* li, size_t pos), listStageChng(MyGUI::MultiList2* li, size_t pos);
 	void btnChampStart(WP), btnChampStageBack(WP), btnChampStageStart(WP), btnChampEndClose(WP), btnNetEndClose(WP);
 	void btnStageNext(WP), btnStagePrev(WP);  MyGUI::StaticText* valStageNum;  MyGUI::ButtonPtr btChampStage;
 	MyGUI::EditBox* edChampStage, *edChampEnd,*edChampInfo;  MyGUI::ImageBox* imgChampStage,*imgChampEnd;
-	void tabChampType(MyGUI::TabPtr wp, size_t id), btnChampInfo(WP), chkGhampRev(WP);
+
+	MyGUI::TabPtr tabTut, tabChamp;  MyGUI::StaticImagePtr imgTut, imgChamp, imgChall;
+	void tabTutType(MyGUI::TabPtr wp, size_t id), tabChampType(MyGUI::TabPtr wp, size_t id);
+	void btnChampInfo(WP), chkGhampRev(WP), UpdChampTabVis();
 	void ToolGhosts();
 	
 

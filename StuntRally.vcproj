@@ -1239,7 +1239,19 @@
 				Name="Gui"
 				>
 				<File
+					RelativePath=".\data\gui\core_blackblueskins.xml"
+					>
+				</File>
+				<File
+					RelativePath=".\data\gui\core_blackbluetemplates.xml"
+					>
+				</File>
+				<File
 					RelativePath=".\data\gui\core_font.xml"
+					>
+				</File>
+				<File
+					RelativePath=".\data\gui\core_images.xml"
 					>
 				</File>
 				<File

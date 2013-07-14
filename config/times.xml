@@ -1,186 +1,141 @@
 <times>
 <!--  Tracks best times  -->
-<!--========================================================================================================================-->
-	<track name="zandvoort"		time="114.0"/>
+
+	<track name="zandvoort"		time="112.0"/>
 	<track name="weekend"		time="113.5"/>
 	<track name="virginia"		time="126.0"/>
 	<track name="ruudskogen"	time="74.0"/>
-	<track name="mosport"		time="100.0"/>
-	<track name="dirt3"			time="65.0"/>
+	<track name="mosport"		time="96.0"/>
+	<track name="dirt3"			time="58.0"/>
 	<track name="detroit"		time="112.0"/>
 	<track name="brands"		time="95.0"/>
-<!--0-->
-	<track name="J1-T"			time="53.4"/>
-	<track name="D1-simple"		time="77.0"/>
-	<track name="S2-Frenzy"		time="208.0"/>
-	<track name="S3-Loops"		time="74.1"/>
-	<!--5-->
-	<track name="D2-Mntn"		time="74.5"/>
-	<track name="D3-P"			time="61.0"/>
-	<track name="J3-Rocky"		time="53.2"/>
-	<track name="S4-Hills"		time="192.8"/>
-	<!--10-->
-	<track name="TestC1-circle"		time="17.3"/>
-	<track name="TestC2-pipe-half"	time="13.0"/>
-	<track name="TestC3-pipe-big"	time="21.5"/>
-	<track name="TestC4-ow"		time="11.0"/>
 
-	<track name="D4-SBridge"	time="68.1"/>
-	<track name="J5-Pipes"		time="33.4"/>
-	<track name="J4-Pipe8"		time="17.5"/>
-	<!--13-->
-	<track name="0W1-cross"		time="70.0"/>
-	<track name="0W2-Wet"		time="78.5"/>
-	<track name="0W3-mouth"		time="41.5"/>
-	<track name="F1-Slippery"	time="55.5"/>
-	<track name="F3-Snail"		time="41.5"/>
-	<!--18-->
-	<track name="D5-jump8-low"	time="39.5"/>
-	<track name="D6-jump0-high"	time="35.6"/>
-	<track name="S5-LoopBasic"	time="67.4"/>
+	<track name="TestC1-circle"     time="11.7" />
+	<track name="TestC2-pipe-half"  time="9.6" />
+	<track name="TestC3-pipe-big"   time="17.9" />
+	<track name="TestC4-ow"         time="10.0" />
+	<track name="TestC5-egg"        time="8.0" />
+	<track name="TestC6-temp"       time="6.6" />
+	<track name="TestC7-oc"         time="11.7" />
+	<track name="TestC8-align"      time="15.2" />
 
-	<track name="F4-OSquare"	time="85.3"/>
-	<track name="F6-DC3"		time="49.5"/>
-	<track name="D7-CrossJumps"	time="97.0"/>
-
-	<track name="D8-Technical"	time="134.3"/>
-	<track name="S6-PipeCrazy"	time="37.3"/>
-	<track name="S7-HighMadness" time="98.0"/>
-	<track name="S8-Frenzy2slow" time="126.6"/>
-
-	<track name="0W4-ice-blur"	time="32.6"/>
-	<track name="0W5-Circles"	time="99.7"/>
-	<!--32-->
-	<track name="J6-80fun"		time="119.7"/>
-	<track name="I1-star3"		time="58.0"/>
-	<track name="S9-demo"		time="42.3"/>
-	<!--36-->
-	<track name="J7-Hilly"		time="59.0"/>
-	<track name="0W6-88"		time="140.5"/>
-
-	<track name="F7-blur3"		time="37.4"/>
-	<track name="F8-blurX3"		time="39.5"/>
-
-	<track name="J8-Round"		time="75.6"/>
-	<track name="J9-Sharp"		time="48.7"/>
-
-	<track name="0W7-LJs-Mntn"	time="55.8"/>
-	<track name="J10-Spiral"	time="62.0"/>
-	<track name="I2-S8"			time="43.1"/>
-	<track name="0W8-pipe8x8"	time="64.1"/>
-
-	<track name="S10-Pipe88"	time="67.3"/>
-	<track name="S12-Infinity"	time="103.0"/>
-	<!--49-->
-	<track name="M1-Hills"		time="40.0"/>
-	<track name="M2-Bumps"		time="66.5"/>
-
-	<track name="F9-MadMntn"	time="148.1"/>
-	<track name="A1-StuntPark"	time="205.0"/>
-
-	<track name="G1-Long"		time="315.3"/>
-	<track name="F10-MntnTrail"	time="166.3"/>
-	<!--55-->
-	<track name="A2-PipeCoil"	time="53.5"/>
-	<track name="I3-Islands"	time="118.5"/>
-	<!--57-->
-	<track name="J11-Temple"	time="49.0"/>
-	<track name="G2-Coast"		time="95.0"/>
-	<track name="A3-Canyon"		time="179.0"/>
-
-	<track name="J12-Fog"		time="59.5"/>
-	<track name="J13-Tropic"	time="255.2"/>
-
-	<track name="F11-Dawn"		time="38.6"/>
-	<track name="I4-Sunset"		time="60.1"/>
-
-	<track name="V1-Dark"		time="33.5"/>
-	<track name="I5-Shore"		time="84.1"/>
-	<track name="X1-Magic"		time="47.8"/>
-
-	<track name="D9-Mud"		time="51.6"/>
-	<track name="J14-Muddy"		time="50.0"/>
-
-	<track name="S13-Hole"		time="93.7"/>
-	<track name="0W9-IceFrenzy"	time="126.0"/>
-
-	<track name="TestC5-egg"	time="9.2"/>
-	<track name="TestC6-temp"	time="6.6"/>
-	<track name="TestC7-oc"		time="16.0"/>
-	<!--71-->
-	<track name="J15-Swamp"		time="127.6"/>
-	<track name="A4-Snake"		time="113.3"/>
-	<track name="X2-Swirl"		time="109.5"/>
-
-	<track name="F12-HighPeaks"	time="310.1"/>
-	<track name="D10-MudBath"	time="141.0"/>
-	<!--76-->
-	<track name="G3-Butterfly"	time="47.5"/>
-	<track name="I6-Flooded"	time="49.5"/>
-	<track name="J16-MudMad"	time="73.0"/>
-
-	<track name="C1-Hairpins"	time="74.0"/>
-	<track name="0W10-Whirl"	time="80.5"/>
-	<track name="F13-Castle"	time="114.0"/>
-	
-	<track name="I7-Moses"		time="64.0"/>
-	<track name="J17-JungleCanyons"	time="213.0"/>
-	<track name="I8-Pharaoh"	time="77.4"/>
-	<!--79-->
-	<track name="C2-CanyonRun"	time="76.4"/>
-	<track name="V2-Volcanic"	time="219.0"/>
-
-	<track name="J18-Tiny"		time="35.5"/>
-	<track name="G4-River"		time="37.0"/>
-	<track name="V3-Crater"		time="56.8"/>
-
-	<track name="F14-Maze"		time="232.0"/>
-	<track name="C3-Vast"		time="288.0"/>
-
-	<track name="F15-ForestTrip" time="145.0"/>
-	<track name="TestC8-align"	 time="20.5" />
-	<track name="J19-demo2"		 time="68.0"/>
-	<track name="D11-PersianCity" time="64.0"/>
-	<track name="I9-Web"		time="350.0"/>
-	<track name="S14-Refinery"	time="220.0"/>
-	<!--91 99-->
-	<track name="A5-TopTwist"	time="182.0"/>
-	<track name="X3-Cloud"		time="130.0"/>
-
-	<track name="F16-Clew"		time="99.0"/>
-	<track name="G5-Climb"		time="245.0"/>
-	<track name="I10-Treasure"	time="94.0"/>
-	<!--96 104-->
-	<track name="D12-Sandstorm"	time="58.0"/>
-	<track name="T1-Autumn"		time="76.0"/>
-	<track name="T2-RedOakPark"	time="53.0"/>
-	<track name="T3-Orange"		time="61.0"/>
-
-	<track name="O1-Moss"		time="44.0"/>
-	<track name="O2-Mouse"		time="61.0"/>
-	<track name="T4-Scary"		time="115.0"/>
-	<!--111-->
-	<track name="T5-Twister"	time="63.0"/>
-	<track name="A6-Cannon"		time="450.0"/>
-
-	<track name="0W11-Glacier"	time="150.0"/>
-	<track name="J20-JungleMaze" time="290.0"/>
-
-	<track name="E1-Lakes"		time="120.0"/>
-	<!--116-->
-	<track name="0W12-Peaks"	time="38.0"/>
-	<track name="V4-Spikeland"	time="78.0"/>
-	<track name="V5-Sad"		time="168.0"/>
-
-	<track name="T6-Sunset"		time="90.0"/>
-	<track name="0W13-MtFog"	time="108.0"/>
-	<track name="O3-Air"		time="35.0" />
-
-	<track name="I11-StuntIslands" time="310.0"/>
-	<track name="I12-Beach"		time="51.0"/>
-	<track name="C4-Sway"		time="161.0"/>
-
-	<track name="X4-Pipeline"	time="250.0"/>
-	<track name="R1-Mars"		time="136.0"/>
-
+	<track name="J1-T"              time="47.5" />
+	<track name="D1-simple"         time="68.0" />
+	<track name="S2-Frenzy"         time="193.1" />
+	<track name="S3-Loops"          time="68.9" />
+	<track name="D2-Mntn"           time="67.5" />
+	<track name="D3-P"              time="53.4" />
+	<track name="J3-Rocky"          time="49.2" />
+	<track name="S4-Hills"          time="168.2" />
+	<track name="D4-SBridge"        time="61.4" />
+	<track name="J5-Pipes"          time="31.0" />
+	<track name="J4-Pipe8"          time="18.4" />
+	<track name="0W1-cross"         time="60.0" />
+	<track name="0W2-Wet"           time="73.6" />
+	<track name="0W3-mouth"         time="36.0" />
+	<track name="F1-Slippery"       time="45.8" />
+	<track name="F3-Snail"          time="37.1" />
+	<track name="D5-jump8-low"      time="34.0" />
+	<track name="D6-jump0-high"     time="30.0" />
+	<track name="S5-LoopBasic"      time="55.9" />
+	<track name="F4-OSquare"        time="77.2" />
+	<track name="F6-DC3"            time="44.7" />
+	<track name="D7-CrossJumps"     time="85.8" />
+	<track name="D8-Technical"      time="120.1" />
+	<track name="S6-PipeCrazy"      time="30.8" />
+	<track name="S7-HighMadness"    time="85.2" />
+	<track name="S8-Frenzy2slow"    time="114.5" />
+	<track name="0W4-ice-blur"      time="29.0" />
+	<track name="0W5-Circles"       time="90.8" />
+	<track name="J6-80fun"          time="109.8" />
+	<track name="I1-star3"          time="46.0" />
+	<track name="S9-demo"           time="34.3" />
+	<track name="J7-Hilly"          time="51.8" />
+	<track name="0W6-88"            time="129.8" />
+	<track name="F7-blur3"          time="35.1" />
+	<track name="F8-blurX3"         time="36.0" />
+	<track name="J8-Round"          time="67.1" />
+	<track name="J9-Sharp"          time="45.5" />
+	<track name="0W7-LJs-Mntn"      time="46.0" />
+	<track name="J10-Spiral"        time="57.4" />
+	<track name="I2-S8"             time="40.0" />
+	<track name="0W8-pipe8x8"       time="55.7" />
+	<track name="S10-Pipe88"        time="61.5" />
+	<track name="S12-Infinity"      time="90.3" />
+	<track name="M1-Hills"          time="32.2" />
+	<track name="M2-Bumps"          time="62.9" />
+	<track name="F9-MadMntn"        time="141.3" />
+	<track name="A1-StuntPark"      time="182.6" />
+	<track name="G1-Long"           time="300.3" />
+	<track name="F10-MntnTrail"     time="154.8" />
+	<track name="A2-PipeCoil"       time="44.8" />
+	<track name="I3-Islands"        time="104.2" />
+	<track name="J11-Temple"        time="43.4" />
+	<track name="G2-Coast"          time="94.0" />
+	<track name="A3-Canyon"         time="161.5" />
+	<track name="J12-Fog"           time="60.2" />
+	<track name="J13-Tropic"        time="264.3" />
+	<track name="F11-Dawn"          time="32.5" />
+	<track name="I4-Sunset"         time="52.6" />
+	<track name="V1-Dark"           time="31.5" />
+	<track name="I5-Shore"          time="79.8" />
+	<track name="X1-Magic"          time="45.3" />
+	<track name="D9-Mud"            time="44.0" />
+	<track name="J14-Muddy"         time="51.0" />
+	<track name="S13-Hole"          time="91.1" />
+	<track name="0W9-IceFrenzy"     time="110.4" />
+	<track name="J15-Swamp"         time="124.6" />
+	<track name="A4-Snake"          time="102.3" />
+	<track name="X2-Swirl"          time="103.2" />
+	<track name="F12-HighPeaks"     time="285.7" />
+	<track name="D10-MudBath"       time="132.4" />
+	<track name="G3-Butterfly"      time="44.2" />
+	<track name="I6-Flooded"        time="46.6" />
+	<track name="J16-MudMad"        time="69.5" />
+	<track name="C1-Hairpins"       time="64.4" />
+	<track name="0W10-Whirl"        time="67.4" />
+	<track name="F13-Castle"        time="106.2" />
+	<track name="I7-Moses"          time="63.2" />
+	<track name="J17-JungleCanyons" time="212.0" />
+	<track name="I8-Pharaoh"        time="73.3" />
+	<track name="C2-CanyonRun"      time="64.9" />
+	<track name="V2-Volcanic"       time="206.0" />
+	<track name="J18-Tiny"          time="34.3" />
+	<track name="G4-River"          time="34.4" />
+	<track name="V3-Crater"         time="53.3" />
+	<track name="F14-Maze"          time="235.3" />
+	<track name="C3-Vast"           time="268.7" />
+	<track name="F15-ForestTrip"    time="134.4" />
+	<track name="J19-demo2"         time="57.7" />
+	<track name="D11-PersianCity"   time="52.9" />
+	<track name="I9-Web"            time="323.9" />
+	<track name="S14-Refinery"      time="226.0" />
+	<track name="A5-TopTwist"       time="167.5" />
+	<track name="X3-Cloud"          time="121.8" />
+	<track name="F16-Clew"          time="91.4" />
+	<track name="G5-Climb"          time="241.7" />
+	<track name="I10-Treasure"      time="83.5" />
+	<track name="D12-Sandstorm"     time="47.5" />
+	<track name="T1-Autumn"         time="66.5" />
+	<track name="T2-RedOakPark"     time="44.1" />
+	<track name="T3-Orange"         time="52.9" />
+	<track name="O1-Moss"           time="41.8" />
+	<track name="O2-Mouse"          time="53.7" />
+	<track name="T4-Scary"          time="99.6" />
+	<track name="T5-Twister"        time="56.8" />
+	<track name="A6-Cannon"         time="400.7" />
+	<track name="0W11-Glacier"      time="141.7" />
+	<track name="J20-JungleMaze"    time="272.2" />
+	<track name="E1-Lakes"          time="105.8" />
+	<track name="0W12-Peaks"        time="34.3" />
+	<track name="V4-Spikeland"      time="69.9" />
+	<track name="V5-Sad"            time="157.0" />
+	<track name="T6-Sunset"         time="85.6" />
+	<track name="0W13-MtFog"        time="91.6" />
+	<track name="O3-Air"            time="31.9" />
+	<track name="I11-StuntIslands"  time="286.5" />
+	<track name="I12-Beach"         time="44.5" />
+	<track name="C4-Sway"           time="137.2" />
+	<track name="X4-Pipeline"       time="214.4" />
+	<track name="R1-Mars"           time="121.1" />
 </times>

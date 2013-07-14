@@ -159,7 +159,7 @@ BaseApp::BaseApp()
 {
 	mLoadingBar = new LoadingBar();
 
-	for (int i=0; i < WND_ALL; ++i)
+	for (int i=0; i < ciMainBtns; ++i)
 	{	mWndMainPanels[i] = 0;  mWndMainBtns[i] = 0;  }
 }
 

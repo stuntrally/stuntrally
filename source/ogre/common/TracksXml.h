@@ -100,6 +100,8 @@ public:
 
 	int n, speed, year, rating;
 	int rateuser, drivenlaps;  // todo: user info ...
+	
+	float easy, norm;  // time mul factors, for race postion, in sim modes
 
 	CarInfo();
 };

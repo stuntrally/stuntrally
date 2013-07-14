@@ -110,6 +110,11 @@ void CarModel::Load(int startId)
 		QUATERNION<float> rot;  rot = pGame->track.GetStart(i).second;
 		vStartPos = Vector3(pos[0], pos[2], -pos[1]);
 
+		//todo: move after terrain created..
+		//float yt = terrain->getHeightAtWorldPosition(vStartPos);
+		//float yd = pos[2] - yt - 0.5f;
+		//if (yd < 0)  pos[2] += -yd;  // move from terrin if below
+		
 		pCar = pGame->LoadCar(pathCar, sDirname, pos, rot, true, false, eType == CT_REMOTE, iIndex);
 
 		if (!pCar)  LogO("Error creating car " + sDirname + "  path: " + pathCar);

@@ -11,6 +11,59 @@ using namespace Ogre;
 using namespace MyGUI;
 
 
+///  get race position  (champs stage result)
+float App::GetRacePosCh(const string& trk, const string& car, int carId, const string& sim_mode)
+{
+	if (pSet->game.track_user)
+		return 1.f;  // user tracks arent in xml
+	
+	//  last car lap time,  or best if no lap yet
+	TIMER& tim = pGame->timer;
+	float last = tim.GetLastLap(carId), best = tim.GetBestLap(carId, pSet->game.trackreverse);
+	float timeCur = last < 0.1f ? best : last;
+
+	//  track time, score
+	float timeTrk = times.trks[pSet->game.track] /** laps*/;
+	if (timeTrk < 0.1f)
+		return 1.f;  // track not in xml!
+
+	float carMul = GetCarTimeMul(car, sim_mode);
+	
+	return GetRacePos(timeCur, timeTrk, carMul, true/**/);
+}
+
+float App::GetCarTimeMul(const string& car, const string& sim_mode)
+{
+	//  car factor (time mul, for less power)
+	//  times.xml has ES or S1 best lap time from normal sim
+	float carMul = 1.f;
+	int id = carsXml.carmap[car];
+	if (id > 0)
+	{	const CarInfo& ci = carsXml.cars[id-1];
+		bool easy = sim_mode == "easy";
+		carMul = easy ? ci.easy : ci.norm;
+	}
+	return carMul;
+}
+
+///  compute race position,  basing on car and track time
+float App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldStart)
+{
+	//  magic factor: seconds needed for 1 second of track time for 1 race place difference
+	//  eg. if track time is 3min = 180 sec, then 180*magic = 2.16 sec
+	//  and this is the difference between car race positions (1 and 2, 2 and 3 etc)
+	const float magic = 0.008f;  // 0.006 .. 0.0012
+										//par
+	float timeC = timeCur + (coldStart ? -2 : 0);  // if already not driving at start add 2 sec (for gaining speed)
+	float time = timeC * carTimeMul;
+
+	float place = (time - timeTrk)/timeTrk / magic;
+	place = std::max(1.f, place + 1.f);
+	//float t1pl = magic * timeTrk;
+	return place;
+}
+
+
 ///  Load  championships.xml, progress.xml (once)
 //---------------------------------------------------------------------
 void App::ChampsXmlLoad()
@@ -139,6 +192,11 @@ void App::chkGhampRev(WP wp)
 	ChampsListUpdate();
 }
 
+void App::tabTutType(MyGUI::TabPtr wp, size_t id)
+{
+	pSet->tut_type = id;
+	ChampsListUpdate();
+}
 void App::tabChampType(MyGUI::TabPtr wp, size_t id)
 {
 	pSet->champ_type = id;
@@ -158,12 +216,13 @@ void App::ChampsListUpdate()
 	for (int i=0; i < champs.champs.size(); ++i,++n)
 	{
 		const Champ& ch = champs.champs[i];
-		if (ch.type == pSet->champ_type)
+		if (pSet->inMenu == MNU_Tutorial && ch.type == pSet->tut_type ||
+			pSet->inMenu == MNU_Champ && ch.type - 2 == pSet->champ_type)
 		{
 			const ProgressChamp& pc = progress[p].champs[i];
 			int ntrks = pc.trks.size();
 			const String& clr = clrCh[ch.type];
-			liChamps->addItem(toStr(n/10)+toStr(n%10), 0);  int l = liChamps->getItemCount()-1;
+			liChamps->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liChamps->getItemCount()-1;
 			liChamps->setSubItemNameAt(1,l, clr+ ch.name.c_str());
 			liChamps->setSubItemNameAt(2,l, clrsDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
 			liChamps->setSubItemNameAt(3,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ toStr(ntrks));
@@ -184,7 +243,7 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 	//  update champ stages
 	liStages->removeAllItems();
 
-	int pos = s2i(liChamps->getItemNameAt(id))-1;
+	int pos = s2i(liChamps->getItemNameAt(id).substr(7))-1;
 	if (pos < 0 || pos >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
 
 	int n = 1, p = pSet->gui.champ_rev ? 1 : 0;
@@ -236,7 +295,7 @@ void App::listStageChng(MyGUI::MultiList2* li, size_t pos)
 	if (valStageNum)  valStageNum->setVisible(pos!=ITEM_NONE);
 	if (pos==ITEM_NONE)  return;
 	
-	int nch = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()))-1;
+	int nch = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()).substr(7))-1;
 	if (nch >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
 
 	const Champ& ch = champs.champs[nch];
@@ -256,7 +315,7 @@ void App::listStageChng(MyGUI::MultiList2* li, size_t pos)
 void App::btnChampStart(WP)
 {
 	if (liChamps->getIndexSelected()==ITEM_NONE)  return;
-	pSet->gui.champ_num = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()))-1;
+	pSet->gui.champ_num = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()).substr(7))-1;
 
 	//  if already finished, restart - will loose progress and scores ..
 	int chId = pSet->gui.champ_num, p = pSet->game.champ_rev ? 1 : 0;

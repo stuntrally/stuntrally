@@ -61,7 +61,7 @@ void App::InitGui()
 	mWndTweak = mGUI->findWidget<Window>("WndTweak",false);  mWndTweak->setVisible(false);
 	
 	//  main menu
-	for (int i=0; i < WND_ALL; ++i)
+	for (int i=0; i < ciMainBtns; ++i)
 	{
 		const String s = toStr(i);
 		mWndMainPanels[i] = mWndMain->findWidget("PanMenu"+s);
@@ -80,13 +80,15 @@ void App::InitGui()
 	tab = mGUI->findWidget<Tab>("TabWndReplays"); tab->setIndexSelected(1);	tab->setSmoothShow(false);	mWndTabsRpl = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	tab = mGUI->findWidget<Tab>("TabWndHelp");    tab->setIndexSelected(1);	tab->setSmoothShow(false);	mWndTabsHelp = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	tab = mGUI->findWidget<Tab>("TabWndOptions"); tab->setIndexSelected(1); tab->setSmoothShow(false);	mWndTabsOpts = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
-	if (pSet->inMenu == WND_Champ)  mWndTabsGame->setIndexSelected(6);
+
+	if (pSet->inMenu > MNU_Single && pSet->inMenu <= MNU_Challenge)  mWndTabsGame->setIndexSelected(TAB_Champs);
 
 	//  get sub tabs
 	vSubTabsGame.clear();
 	for (size_t i=0; i < mWndTabsGame->getItemCount(); ++i)
 	{	// todo: startsWith("SubTab")..
-		MyGUI::TabPtr sub = (TabPtr)mWndTabsGame->getItemAt(i)->findWidget(/*.. i==6 ? "ChampType" :*/ (i==5 ? "tabsNet" : "tabPlayer!") );//car tab wrong-
+		MyGUI::TabPtr sub = (TabPtr)mWndTabsGame->getItemAt(i)->findWidget(
+			/*.. i==TAB_Champs ? "ChampType" :*/ (i==TAB_Multi ? "tabsNet" : "tabPlayer!") );  //car tab wrong-
 		vSubTabsGame.push_back(sub);  // 0 for not found
 	}
 	vSubTabsOpts.clear();
@@ -111,7 +113,7 @@ void App::InitGui()
 	GuiCenterMouse();
 
 	toggleGui(false);
-
+	
 
 	//  assign controls
 
@@ -187,6 +189,7 @@ void App::InitGui()
 	Chk("Opponents", chkOpponents, pSet->show_opponents);  chOpponents = bchk;
 	Chk("OpponentsSort", chkOpponentsSort, pSet->opplist_sort);
 
+
 	//  other
 	Chk("Fps", chkFps, pSet->show_fps);  chFps = bchk;
 	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
@@ -203,6 +206,7 @@ void App::InitGui()
 	Slv(DbgTxtClr, pSet->car_dbgtxtclr /1.f);
 	Slv(DbgTxtCnt, pSet->car_dbgtxtcnt /8.f);
 
+
 	//  car setup  todo: for each player ..
 	Chk("CarABS",  chkAbs, pSet->abs[0]);  bchAbs = bchk;
 	Chk("CarTCS", chkTcs, pSet->tcs[0]);  bchTcs = bchk;
@@ -216,13 +220,13 @@ void App::InitGui()
 	Slv(SteerRangeSurf, pSet->steer_range[0]-0.3f);  slSteerRngSurf = sl;
 	Slv(SteerRangeSim, (pSet->gui.sim_mode == "easy" ? pSet->steer_sim_easy : pSet->steer_sim_normal)-0.3f);  slSteerRngSim = sl;
 
-	//  game
+
+	//  game  ------------------------------------------------------------
 	Chk("VegetCollis", chkVegetCollis, pSet->gui.collis_veget);
 	Chk("CarCollis", chkCarCollis, pSet->gui.collis_cars);
 	Chk("RoadWCollis", chkRoadWCollis, pSet->gui.collis_roadw);
 	Chk("DynamicObjects", chkDynObjects, pSet->gui.dyn_objects);
 
-	//  boost, flip combos
 	Cmb(combo, "CmbBoost", comboBoost);
 	if (combo)
 	{	combo->removeAllItems();
@@ -249,11 +253,13 @@ void App::InitGui()
 		combo->setIndexSelected(pSet->gui.damage_type);
 	}
 
+	//  split
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
 	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
 	Chk("chkSplitVertically", chkSplitVert, pSet->split_vertically);
 	valLocPlayers = mGUI->findWidget<StaticText>("valLocPlayers");
 	if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->gui.local_players));
+
 
 	//  sim mode radio
 	bRsimEasy = mGUI->findWidget<Button>("SimModeEasy");
@@ -323,7 +329,6 @@ void App::InitGui()
 	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
 	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);
 	Chk("RplChkBestOnly", chkRplChkBestOnly, pSet->rpl_bestonly);
-	//Chk("RplChkAlpha", chkRplChkAlpha, pSet->rpl_alpha);
 	Chk("RplChkParticles", chkRplChkPar, pSet->rpl_ghostpar);
 	Chk("RplChkRewind", chkRplChkRewind, pSet->rpl_ghostrewind);
 	Chk("RplChkGhostOther", chkRplChkGhostOther, pSet->rpl_ghostother);
@@ -518,10 +523,8 @@ void App::InitGui()
 	txtTweakPathCol = mGUI->findWidget<StaticText>("TweakPathCol");
 	txtTweakTire = mGUI->findWidget<StaticText>("TweakTireSaved");
 
-	Btn("TweakCarSave", btnTweakCarSave);  //Btn("TweakCarLoad", btnTweakCarLoad);
-	Btn("TweakTireSave", btnTweakTireSave);  //Btn("TweakTireLoad", btnTweakCarLoad);
+	Btn("TweakCarSave", btnTweakCarSave);  Btn("TweakTireSave", btnTweakTireSave);
 	Btn("TweakColSave", btnTweakColSave);
-	//Cmb(cmbTweakCarSet, "TweakCarSet", CmbTweakCarSet);   cmbTweakCarSet->eventEditTextChange += newDelegate(this, &App::CmbEdTweakCarSet);
 	Cmb(cmbTweakTireSet,"TweakTireSet",CmbTweakTireSet);  cmbTweakTireSet->eventEditTextChange+= newDelegate(this, &App::CmbEdTweakTireSet);
 
 
@@ -607,15 +610,6 @@ void App::InitGui()
 	Btn("btnChampInfo",btnChampInfo);
 
 
-	//  tabs
-	TabPtr tChamp = mGUI->findWidget<Tab>("ChampType");
-	if (tChamp)
-	{	tChamp->setIndexSelected(pSet->champ_type);
-		tChamp->eventTabChangeSelect += newDelegate(this, &App::tabChampType);
-	}
-	Chk("ChampRev", chkGhampRev, pSet->gui.champ_rev);
-
-
 	//  champs list
 	MyGUI::MultiList2* li;
 	TabItem* trktab = (TabItem*)mWndGame->findWidget("TabChamps");
@@ -653,6 +647,25 @@ void App::InitGui()
 	updChampListDim();
 	ChampsListUpdate();
 	listChampChng(liChamps, liChamps->getIndexSelected());
+
+
+	//  tabs
+	tabTut = mGUI->findWidget<Tab>("TutType",false);
+	if (tabTut)
+	{	tabTut->setIndexSelected(pSet->tut_type);
+		tabTut->eventTabChangeSelect += newDelegate(this, &App::tabTutType);
+	}
+	tabChamp = mGUI->findWidget<Tab>("ChampType",false);
+	if (tabChamp)
+	{	tabChamp->setIndexSelected(pSet->champ_type);
+		tabChamp->eventTabChangeSelect += newDelegate(this, &App::tabChampType);
+	}
+	imgTut = mGUI->findWidget<StaticImage>("imgTut",false);
+	imgChamp = mGUI->findWidget<StaticImage>("imgChamp",false);
+	imgChall = mGUI->findWidget<StaticImage>("imgChall",false);
+	UpdChampTabVis();
+	
+	Chk("ChampRev", chkGhampRev, pSet->gui.champ_rev);
 
 
 	Btn("btnChampStart", btnChampStart);

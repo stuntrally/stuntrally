@@ -1,75 +1,132 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-	<Widget type="Window" skin="WindowC" position="1768 156 400 500" align="Center" layer="Overlapped" name="MainMenuWnd">
+	<Widget type="Window" skin="WindowC" position="1768 156 500 600" align="Center" layer="Overlapped" name="MainMenuWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="MaxSize" value="2560 1600"/>
 		<Property key="Caption" value="Stunt Rally"/>
-		<Property key="Alpha" value="0.6"/>
+		<Property key="Alpha" value="0.7"/>
 		<Property key="Snap" value="true"/>
-		<Widget type="Widget" skin="PanelSkin" position="110 90 556 76" name="PanMenu0">
+		<Widget type="ImageBox" skin="ImageBox" position="32 20 56 56">
+			<Property key="ImageCoord" value="0 0 128 128"/>
+			<Property key="Alpha" value="1.0"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+		</Widget>
+		<Widget type="ImageBox" skin="ImageBox" position="32 92 56 56">
+			<Property key="ImageCoord" value="0 128 128 128"/>
+			<Property key="Alpha" value="1.0"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+		</Widget>
+		<Widget type="ImageBox" skin="ImageBox" position="32 164 56 56">
+			<Property key="ImageCoord" value="0 256 128 128"/>
+			<Property key="Alpha" value="1.0"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+		</Widget>
+		<Widget type="ImageBox" skin="ImageBox" position="32 236 56 56">
+			<Property key="ImageCoord" value="0 384 128 128"/>
+			<Property key="Alpha" value="1.0"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+		</Widget>
+		
+		<Widget type="ImageBox" skin="ImageBox" position="32 340 56 56">
+			<Property key="ImageCoord" value="0 512 128 128"/>
+			<Property key="Alpha" value="1.0"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+		</Widget>
+		<Widget type="ImageBox" skin="ImageBox" position="32 412 56 56">
+			<Property key="ImageCoord" value="0 640 128 128"/>
+			<Property key="Alpha" value="1.0"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+		</Widget>
+		<Widget type="ImageBox" skin="ImageBox" position="32 484 56 56">
+			<Property key="ImageCoord" value="0 768 128 128"/>
+			<Property key="Alpha" value="1.0"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+		</Widget>
+
+		<Widget type="Widget" skin="PanelSkin" position="92 12 336 72" name="PanMenu0">
 			<Property key="Colour" value="1.0 0.9 0.6"/>
 			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="138 103 500 50" name="BtnMenu0">
+		<Widget type="Button" skin="Button" position="108 24 304 50" align="Left" name="BtnMenu0">
 			<Property key="Caption" value="#{SingleRace}"/>
 			<Property key="Colour" value="1.0 0.9 0.6"/>
 			<Property key="TextColour" value="1.0 0.9 0.6"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<UserString key="RelativeTo" value="MainMenuWnd"/>
+			<Property key="FontName" value="font.19"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="110 165 556 76" name="PanMenu1">
+		<Widget type="Widget" skin="PanelSkin" position="92 84 336 72" name="PanMenu1">
+			<Property key="Colour" value="1.0 0.7 0.3"/>
+			<Property key="Alpha" value="0.7"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="108 96 304 50" align="Left" name="BtnMenu1">
+			<Property key="Caption" value="#{Tutorial}"/>
+			<Property key="Colour" value="1.0 0.7 0.3"/>
+			<Property key="TextColour" value="1.0 0.7 0.4"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.19"/>
+		</Widget>
+		<Widget type="Widget" skin="PanelSkin" position="92 156 336 72" name="PanMenu2">
 			<Property key="Colour" value="0.6 1 0.6"/>
 			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="138 178 500 50" name="BtnMenu1">
+		<Widget type="Button" skin="Button" position="108 168 304 50" align="Left" name="BtnMenu2">
 			<Property key="Caption" value="#{Championship}"/>
 			<Property key="Colour" value="0.6 1 0.6"/>
 			<Property key="TextColour" value="0.6 1 0.6"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<UserString key="RelativeTo" value="MainMenuWnd"/>
+			<Property key="FontName" value="font.19"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="110 240 556 76" name="PanMenu2">
-			<Property key="Colour" value="0.7 0.7 1"/>
+		<Widget type="Widget" skin="PanelSkin" position="92 228 336 72" name="PanMenu3">
+			<Property key="Colour" value="0.4 1 0.8"/>
 			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="138 253 500 50" name="BtnMenu2">
+		<Widget type="Button" skin="Button" position="108 240 304 50" align="Left" name="BtnMenu3">
+			<Property key="Caption" value="#{Challenge}"/>
+			<Property key="Colour" value="0.4 1 0.8"/>
+			<Property key="TextColour" value="0.4 1 0.8"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.19"/>
+		</Widget>
+
+		<Widget type="Widget" skin="PanelSkin" position="92 336 336 72" name="PanMenu4">
+			<Property key="Colour" value="0.6 0.7 0.8"/>
+			<Property key="Alpha" value="0.7"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="108 348 304 50" align="Left" name="BtnMenu4">
 			<Property key="Caption" value="#{ReplaysMenu}"/>
-			<Property key="Colour" value="0.7 0.7 1"/>
-			<Property key="TextColour" value="0.8 0.8 1"/>
+			<Property key="Colour" value="0.6 0.7 0.8"/>
+			<Property key="TextColour" value="0.7 0.8 0.9"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<UserString key="RelativeTo" value="MainMenuWnd"/>
+			<Property key="FontName" value="font.19"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="110 315 556 76" name="PanMenu3">
-			<Property key="Colour" value="0.6 0.8 1"/>
-			<Property key="Alpha" value="0.7"/>
-			<Property key="InheritsAlpha" value="false"/>
-			<UserString key="RelativeTo" value="MainMenuWnd"/>
-		</Widget>
-		<Widget type="Button" skin="Button" position="138 328 500 50" name="BtnMenu3">
-			<Property key="Caption" value="#{Help}"/>
-			<Property key="Colour" value="0.6 0.8 1"/>
-			<Property key="TextColour" value="0.8 0.9 1"/>
-			<Property key="InheritsAlpha" value="false"/>
-			<UserString key="RelativeTo" value="MainMenuWnd"/>
-		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="110 390 556 76" name="PanMenu4">
+		<Widget type="Widget" skin="PanelSkin" position="92 408 336 72" name="PanMenu5">
 			<Property key="Colour" value="0.4 0.7 1"/>
 			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="138 403 500 50" name="BtnMenu4">
-			<Property key="Caption" value="#{Options}"/>
+		<Widget type="Button" skin="Button" position="108 420 304 47" name="BtnMenu5">
+			<Property key="Caption" value="#{Help}"/>
 			<Property key="Colour" value="0.4 0.7 1"/>
 			<Property key="TextColour" value="0.75 0.9 1"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<UserString key="RelativeTo" value="MainMenuWnd"/>
+			<Property key="FontName" value="font.19"/>
+		</Widget>
+		<Widget type="Widget" skin="PanelSkin" position="92 480 336 72" name="PanMenu6">
+			<Property key="Colour" value="0.7 0.7 1"/>
+			<Property key="Alpha" value="0.7"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="108 492 304 50" name="BtnMenu6">
+			<Property key="Caption" value="#{Options}"/>
+			<Property key="Colour" value="0.7 0.7 1"/>
+			<Property key="TextColour" value="0.8 0.8 1"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.19"/>
 		</Widget>
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="16 88 800 600" align="Center" layer="Overlapped" name="GameWnd">
@@ -78,7 +135,7 @@
 		<Property key="Caption" value="#{SingleRace}"/>
 		<Property key="Alpha" value="0.3"/>
 		<Property key="Snap" value="true"/>
-		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWndGame">
+		<Widget type="TabControl" skin="TabControlIcon" position="0 0 800 600" align="Default" layer="Back" name="TabWndGame">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.7 0.85 1"/>
 			<Property key="SmoothShow" value="false"/>
@@ -781,45 +838,45 @@
 					<Property key="TextColour" value="1.0 1.0 0.5"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="32 196 100 24">
+				<Widget type="TextBox" skin="TextBox" position="32 196 100 24">
 					<Property key="TextColour" value="0.55 0.75 1"/>
 					<Property key="Caption" value="#{Boost}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-                <Widget type="ComboBox" skin="ComboBox" position="136 192 160 24" name="CmbBoost">
+				<Widget type="ComboBox" skin="ComboBox" position="136 192 160 24" name="CmbBoost">
 					<Property key="Colour" value="0.55 0.75 1"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="32 228 100 24">
+				<Widget type="TextBox" skin="TextBox" position="32 228 100 24">
 					<Property key="Caption" value="#{Flip}"/>
 					<Property key="TextColour" value="0.60 0.70 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-                <Widget type="ComboBox" skin="ComboBox" position="136 224 160 24" name="CmbFlip">
+				<Widget type="ComboBox" skin="ComboBox" position="136 224 160 24" name="CmbFlip">
 					<Property key="Colour" value="0.60 0.70 1"/>
 					<Property key="TextColour" value="0.65 0.75 1"/>
 					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="32 260 100 24">
+				<Widget type="TextBox" skin="TextBox" position="32 260 100 24">
 					<Property key="Caption" value="#{Damage}"/>
 					<Property key="TextColour" value="0.7 0.6 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-                <Widget type="ComboBox" skin="ComboBox" position="136 256 160 24" name="CmbDamage">
+				<Widget type="ComboBox" skin="ComboBox" position="136 256 160 24" name="CmbDamage">
 					<Property key="Colour" value="0.7 0.6 1"/>
 					<Property key="TextColour" value="0.8 0.7 1"/>
 					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-                <Widget type="Button" skin="CheckBox" position="32 336 300 24" name="CarCollis">
+				<Widget type="Button" skin="CheckBox" position="32 336 300 24" name="CarCollis">
 					<Property key="Caption" value="#{CarCollis}"/>
 					<Property key="TextColour" value="0.75 0.87 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-                <Widget type="Button" skin="CheckBox" position="32 400 300 24" name="VegetCollis">
+				<Widget type="Button" skin="CheckBox" position="32 400 300 24" name="VegetCollis">
 					<Property key="Caption" value="#{VegetCol}"/>
 					<Property key="TextColour" value="0.6 0.8 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
@@ -829,7 +886,7 @@
 					<Property key="TextColour" value="0.6 0.8 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-                <Widget type="Button" skin="CheckBox" position="32 432 300 24" name="RoadWCollis">
+				<Widget type="Button" skin="CheckBox" position="32 432 300 24" name="RoadWCollis">
 					<Property key="Caption" value="#{RoadWallFullCollis}"/>
 					<Property key="TextColour" value="0.5 0.6 0.7"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
@@ -865,8 +922,9 @@
 					<Property key="TextColour" value="0.7 0.9 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="564 74 64 24" name="valLocPlayers">
+				<Widget type="TextBox" skin="TextBox" position="564 72 64 24" name="valLocPlayers">
 					<Property key="TextColour" value="0.8 0.92 1"/>
+					<Property key="FontName" value="font.19"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="384 224 176 24">
@@ -874,8 +932,9 @@
 					<Property key="TextColour" value="0.7 0.9 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="564 224 64 24" name="NumLapsVal">
+				<Widget type="TextBox" skin="TextBox" position="564 222 64 24" name="NumLapsVal">
 					<Property key="TextColour" value="0.8 0.95 1"/>
+					<Property key="FontName" value="font.19"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Slider" skin="Slider" position="384 250 384 18" name="NumLaps">
@@ -1062,14 +1121,19 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabChamps">
 				<Property key="Caption" value="#80C0FF#{Championship}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
-				<Widget type="TabControl" skin="TabControl" position="32 20 700 20" name="ChampType">
+				<Widget type="TabControl" skin="TabControl" position="32 26 538 36" name="TutType">
+					<Property key="Colour" value="1.0 0.9 0.8"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 514 -8">
-						<Property key="Caption" value="#FFFFA0#{Tutorial}"/>
+						<Property key="Caption" value="#FFFFA0#{Diff2}"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 514 -8">
-						<Property key="Caption" value="#E0E000#{Tutorial}2"/>
+						<Property key="Caption" value="#E0E000#{Diff3}"/>
 					</Widget>
+				</Widget>
+				<Widget type="TabControl" skin="TabControl" position="32 26 538 36" name="ChampType">
+					<Property key="Colour" value="0.8 0.9 1.0"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 514 -8">
 						<Property key="Caption" value="#A0F0FF#{Diff3}"/>
 					</Widget>
@@ -1086,7 +1150,26 @@
 						<Property key="Caption" value="#909090Test"/>
 					</Widget>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="620 64 120 24" name="ChampRev">
+				<Widget type="ImageBox" skin="ImageBox" position="602 108 128 128" name="imgTut">
+					<Property key="ImageCoord" value="0 128 128 128"/>
+					<Property key="Alpha" value="1.0"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="602 108 128 128" name="imgChamp">
+					<Property key="ImageCoord" value="0 256 128 128"/>
+					<Property key="Alpha" value="1.0"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="602 108 128 128" name="imgChall">
+					<Property key="ImageCoord" value="0 384 128 128"/>
+					<Property key="Alpha" value="1.0"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+
+				<Widget type="Button" skin="CheckBox" position="620 44 120 24" name="ChampRev">
 					<Property key="Caption" value="#{Reverse}"/>
 					<Property key="Colour" value="0.8 1 0.6"/>
 					<Property key="TextColour" value="0.8 1 0.5"/>
@@ -1109,7 +1192,7 @@
 				<Widget type="Button" skin="Button" position="320 340 144 40" name="btnChampStart">
 					<Property key="Caption" value="#{ChampStart}"/>
 					<Property key="Colour" value="0.6 0.6 1"/>
-					<Property key="TextColour" value="0.9 0.9 1"/>
+					<Property key="TextColour" value="0.85 0.85 0.95"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="28 460 48 40" name="btnChampInfo">
@@ -1430,13 +1513,13 @@
 		<Property key="Caption" value="#{Championship}"/>
 		<Property key="Alpha" value="0.8"/>
 		<Property key="Colour" value="0.4 1 1"/>
-        <Widget type="Button" skin="Button" position="192 360 144 40" name="btnChampEndClose">
+		<Widget type="Button" skin="Button" position="192 360 144 40" name="btnChampEndClose">
 			<Property key="Caption" value="Close"/>
 			<Property key="Colour" value="0.6 0.6 1"/>
 			<Property key="TextColour" value="0.9 0.9 1"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-        <Widget type="EditBox" skin="EditBoxEmpty" position="24 272 480 80" name="ChampEndText">
+		<Widget type="EditBox" skin="EditBoxEmpty" position="24 272 480 80" name="ChampEndText">
 			<Property key="TextColour" value="0.6 0.9 1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ReadOnly" value="true"/>
@@ -1453,7 +1536,7 @@
 			<Property key="TextColour" value="0.555556 1 0.994792"/>
 			<Property key="Caption" value="#{ChampEndCongrats}"/>
 		</Widget>
-        <Widget type="ImageBox" skin="ImageBox" position="200 56 128 256" name="ChampEndImg">
+		<Widget type="ImageBox" skin="ImageBox" position="200 56 128 256" name="ChampEndImg">
 			<Property key="ImageCoord" value="0 0 128 256"/>
 			<Property key="ImageTexture" value="ico_champ.png"/>
 		</Widget>
@@ -1464,7 +1547,7 @@
 		<Property key="Caption" value="#{ReplaysMenu}"/>
 		<Property key="Alpha" value="0.3"/>
 		<Property key="Snap" value="true"/>
-		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWndReplays">
+		<Widget type="TabControl" skin="TabControlIcon" position="0 0 800 600" align="Default" layer="Back" name="TabWndReplays">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.7 0.85 1"/>
 			<Property key="SmoothShow" value="false"/>
@@ -1477,6 +1560,12 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#FFC080#{Replay}"/>
 				<UserString key="RelativeTo" value="ReplaysWnd"/>
+				<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
+					<Property key="ImageCoord" value="0 512 128 128"/>
+					<Property key="Alpha" value="0.6"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+					<UserString key="RelativeTo" value="HelpWnd"/>
+				</Widget>
 				<Widget type="ListBox" skin="ListBox" position="14 16 186 440" name="RplList">
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
@@ -1610,7 +1699,7 @@
 		<Property key="Caption" value="#{Help}"/>
 		<Property key="Alpha" value="0.3"/>
 		<Property key="Snap" value="true"/>
-		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWndHelp">
+		<Widget type="TabControl" skin="TabControlIcon" position="0 0 800 600" align="Default" layer="Back" name="TabWndHelp">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.7 0.85 1"/>
 			<Property key="SmoothShow" value="false"/>
@@ -1623,6 +1712,12 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Help}"/>
 				<UserString key="RelativeTo" value="HelpWnd"/>
+				<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
+					<Property key="ImageCoord" value="0 640 128 128"/>
+					<Property key="Alpha" value="0.6"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+					<UserString key="RelativeTo" value="HelpWnd"/>
+				</Widget>
 				<Widget type="EditBox" skin="EditBoxStretch" position="32 16 600 360" name="QuickHelpText">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
@@ -1744,7 +1839,7 @@
 		<Property key="Caption" value="#{Options}"/>
 		<Property key="Alpha" value="0.3"/>
 		<Property key="Snap" value="true"/>
-		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWndOptions">
+		<Widget type="TabControl" skin="TabControlIcon" position="0 0 800 600" align="Default" layer="Back" name="TabWndOptions">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.7 0.85 1"/>
 			<Property key="SmoothShow" value="false"/>
@@ -3411,7 +3506,7 @@
 				<Property key="Alpha" value="1"/>
 				<Property key="TextColour" value="0.9 0.92 1.0"/>
 				<Property key="TextAlign" value="Right"/>
-				<Property key="FontName" value="font_Vera.24"/>
+				<Property key="FontName" value="font.24"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 			</Widget>
 		</Widget>
@@ -3425,7 +3520,7 @@
 				<Property key="Alpha" value="1"/>
 				<Property key="TextColour" value="0.9 0.96 1.0"/>
 				<Property key="TextAlign" value="Center"/>
-				<Property key="FontName" value="font_Vera.24"/>
+				<Property key="FontName" value="font.24"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 			</Widget>
 		</Widget>
@@ -3439,7 +3534,7 @@
 				<Property key="Alpha" value="1"/>
 				<Property key="TextColour" value="0.8 0.9 1"/>
 				<Property key="TextAlign" value="Center"/>
-				<Property key="FontName" value="font_Vera.24"/>
+				<Property key="FontName" value="font.24"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 			</Widget>
 		</Widget>

@@ -256,7 +256,7 @@ bool App::frameStart(Real time)
 		
 		bool bFirstFrame = !carModels.empty() && carModels.front()->bGetStPos;
 		
-		if (isFocGui && mWndTabsOpts->getIndexSelected() == 4 && pSet->inMenu == WND_Options && !pSet->isMain)
+		if (isFocGui && mWndTabsOpts->getIndexSelected() == 4 && pSet->inMenu == MNU_Options && !pSet->isMain)
 			UpdateInputBars();
 		
 		//  keys up/dn, for lists

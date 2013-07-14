@@ -68,11 +68,10 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		{
 			MyGUI::TabPtr tab = 0;  MyGUI::TabControl* sub = 0;
 			switch (pSet->inMenu)
-			{	case WND_Game:
-				case WND_Champ:    tab = mWndTabsGame;  sub = vSubTabsGame[tab->getIndexSelected()];  break;
-				case WND_Replays:  tab = mWndTabsRpl;  break;
-				case WND_Help:     tab = mWndTabsHelp;  break;
-				case WND_Options:  tab = mWndTabsOpts;  sub = vSubTabsOpts[tab->getIndexSelected()];  break;
+			{	case MNU_Replays:  tab = mWndTabsRpl;  break;
+				case MNU_Help:     tab = mWndTabsHelp;  break;
+				case MNU_Options:  tab = mWndTabsOpts;  sub = vSubTabsOpts[tab->getIndexSelected()];  break;
+				default:           tab = mWndTabsGame;  sub = vSubTabsGame[tab->getIndexSelected()];  break;
 			}
 			if (tab)
 			if (shift)
@@ -171,11 +170,11 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			switch (arg.key)
 			{
 			case KC_UP:  case KC_NUMPAD8:
-				pSet->inMenu = (pSet->inMenu-1+WND_ALL)%WND_ALL;
+				pSet->inMenu = (pSet->inMenu-1 + ciMainBtns) % ciMainBtns;
 				toggleGui(false);  return true;
 
 			case KC_DOWN:  case KC_NUMPAD2:
-				pSet->inMenu = (pSet->inMenu+1)%WND_ALL;
+				pSet->inMenu = (pSet->inMenu+1) % ciMainBtns;
 				toggleGui(false);  return true;
 
 			case KC_RETURN:
@@ -205,27 +204,28 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				case KC_Z:  // alt-Z Tweak (alt-shift-Z save&reload)
 					TweakToggle();	return true;
 					
-				case KC_Q:	GuiShortcut(WND_Game, 1);	return true;  // Q Track
-				case KC_C:	GuiShortcut(WND_Game, 2);	return true;  // C Car
+				case KC_Q:	GuiShortcut(MNU_Single, TAB_Track);	return true;  // Q Track
+				case KC_C:	GuiShortcut(MNU_Single, TAB_Car);	return true;  // C Car
 
-				case KC_T:	GuiShortcut(WND_Game, 3);	return true;  // T Car Setup
-				case KC_W:	GuiShortcut(WND_Game, 4);	return true;  // W Game Setup
+				case KC_T:	GuiShortcut(MNU_Single, TAB_Setup);	return true;  // T Car Setup
+				case KC_W:	GuiShortcut(MNU_Single, TAB_Game);	return true;  // W Game Setup
 
-				case KC_U:	GuiShortcut(WND_Game, 5);	return true;  // U Multiplayer
-				case KC_H:	GuiShortcut(WND_Champ,6);	return true;  // H Champs
+				case KC_U:	GuiShortcut(MNU_Single, TAB_Multi);	return true;  // U Multiplayer
+				case KC_H:	GuiShortcut(MNU_Champ, TAB_Champs);	return true;  // H Champs
+				//case KC_L:	GuiShortcut(MNU_Champ, TAB_Challs);	return true;  // L Challenges
 
-				case KC_R:	GuiShortcut(WND_Replays, 1);	return true;  // R Replays
+				case KC_R:	GuiShortcut(MNU_Replays, 1);	return true;  // R Replays
 
-				case KC_S:	GuiShortcut(WND_Options, 1);	return true;  // S Screen
-				 case KC_E:	GuiShortcut(WND_Options, 1,1);	return true;  // E -Effects
-				case KC_G:	GuiShortcut(WND_Options, 2);	return true;  // G Graphics
-				 case KC_N:	GuiShortcut(WND_Options, 2,2);	return true;  // N -Vegetation
+				case KC_S:	GuiShortcut(MNU_Options, 1);	return true;  // S Screen
+				 case KC_E:	GuiShortcut(MNU_Options, 1,1);	return true;  // E -Effects
+				case KC_G:	GuiShortcut(MNU_Options, 2);	return true;  // G Graphics
+				 case KC_N:	GuiShortcut(MNU_Options, 2,2);	return true;  // N -Vegetation
 
-				case KC_V:	GuiShortcut(WND_Options, 3);	return true;  // V View
-				 case KC_M:	GuiShortcut(WND_Options, 3,1);	return true;  // M -Minimap
-				 case KC_O:	GuiShortcut(WND_Options, 3,3);	return true;  // O -Other
-				case KC_I:	GuiShortcut(WND_Options, 4);	return true;  // I Input
-				case KC_P:	GuiShortcut(WND_Options, 5);	return true;  // P Sound
+				case KC_V:	GuiShortcut(MNU_Options, 3);	return true;  // V View
+				 case KC_M:	GuiShortcut(MNU_Options, 3,1);	return true;  // M -Minimap
+				 case KC_O:	GuiShortcut(MNU_Options, 3,3);	return true;  // O -Other
+				case KC_I:	GuiShortcut(MNU_Options, 4);	return true;  // I Input
+				case KC_P:	GuiShortcut(MNU_Options, 5);	return true;  // P Sound
 			}
 
 		
@@ -314,10 +314,10 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 					
 				case KC_F:		// focus on find edit
 					if (ctrl && edFind && (pSet->dev_keys || isFocGui &&
-						!pSet->isMain && pSet->inMenu == WND_Game && mWndTabsGame->getIndexSelected() == 1))
+						!pSet->isMain && pSet->inMenu == MNU_Single && mWndTabsGame->getIndexSelected() == TAB_Track))
 					{
 						if (pSet->dev_keys)
-							GuiShortcut(WND_Game, 1);	// Track tab
+							GuiShortcut(MNU_Single, 1);	// Track tab
 						MyGUI::InputManager::getInstance().resetKeyFocusWidget();
 						MyGUI::InputManager::getInstance().setKeyFocusWidget(edFind);
 						return true;
@@ -381,14 +381,14 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 					if (isFocGui && !pSet->isMain)
 						switch (pSet->inMenu)
 						{
-						case WND_Replays:	btnRplLoad(0);  break;
-						case WND_Game:  case WND_Champ:
+						case MNU_Replays:	btnRplLoad(0);  break;
+						default:
 						{	switch (mWndTabsGame->getIndexSelected())
 							{
-							case 1:	changeTrack();	btnNewGame(0);  break;
-							case 2:	changeCar();	btnNewGame(0);  break;
-							case 5:	chatSendMsg();  break;
-							case 6:	btnChampStart(0);  break;
+							case TAB_Track:	 changeTrack();	btnNewGame(0);  break;
+							case TAB_Car:	 changeCar();	btnNewGame(0);  break;
+							case TAB_Multi:	 chatSendMsg();  break;
+							case TAB_Champs: btnChampStart(0);  break;
 						}	break;
 					}	}
 					else

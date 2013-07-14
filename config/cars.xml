@@ -7,41 +7,28 @@
 	<color type="Extreme" color="#C898E8" />
 	<color type="Other"   color="#C0D0E0" />
 
-	<car id="3S"  name="3S"  crtver="0.1" speed="3" year="2003" type="Racing" />
-	<car id="360" name="360" crtver="0.2" speed="8" year="1999" type="Asphalt" />
-	<car id="CT"  name="CT"  crtver="0.2" speed="7" year="1998" type="Asphalt" />
-
-	<car id="XM"  name="XM"  crtver="1.0" speed="8" year="1995" type="Asphalt" />
-	<car id="M3"  name="M3"  crtver="1.0" speed="1" year="1985" type="Slow" />
-
-	<car id="ES"  name="ES"  crtver="1.2" speed="6" year="2006" type="Gravel" />
-	<car id="FM"  name="FM"  crtver="1.2" speed="5" year="2000" type="Gravel" />
-
-	<car id="TC6" name="TC6" crtver="1.4" speed="4" year="1994" type="Gravel" />
-	<car id="NS"  name="NS"  crtver="1.4" speed="4" year="1989" type="Racing" />
-
-	<car id="S1"  name="S1"  crtver="1.8" speed="6" year="2005" type="Gravel" />
-	<car id="N1"  name="N1"  crtver="2.0" speed="5" year="1999" type="Racing" />
-
-	<car id="S8"  name="S8"  crtver="2.0" speed="5" year="2008" type="Gravel" />
-	<car id="XZ"  name="XZ"  crtver="2.0" speed="9" year="2007" type="Asphalt" />
-	<car id="LK4" name="LK4" crtver="2.0" speed="3" year="2008" type="Terrain" />
-
-	<car id="UV"  name="UV"  crtver="2.1" speed="4" year="2008" type="Extreme" />
-	<car id="HR"  name="HR"  crtver="2.1" speed="2" year="1996" type="Terrain" />
-	<car id="OT"  name="OT"  crtver="2.1" speed="0" year="1965" type="Slow" />
-
-	<car id="FR4" name="FR4" crtver="2.1" speed="2" year="1986" type="Terrain" />
-	<!--..-->
-	<car id="FN"  name="FN"  crtver="2.1" speed="5" year="2000" type="Gravel" />
-	<car id="SZ"  name="SZ"  crtver="2.1" speed="9" year="2006" type="Asphalt" />
-
-	<car id="TU"  name="TU"  crtver="2.1" speed="8" year="2010" type="Extreme" />
-	<car id="TW"  name="TW"  crtver="2.1" speed="7" year="2011" type="Extreme" />
-	
-	<!--...-->
-	<car id="JR"  name="JR"  crtver="2.1" speed="4" year="2003" type="Terrain" />
-	<car id="BS"  name="BS"  crtver="2.1" speed="6" year="2010" type="Extreme" />
-	<car id="OR"  name="OR"  crtver="2.1" speed="4" year="2004" type="Terrain" />
-
+	<car id="OT"  name="OT"  crtver="2.1" speed="0" year="1965" type="Slow"     easy="0.68" norm="0.68" />
+	<car id="M3"  name="M3"  crtver="1.0" speed="1" year="1985" type="Slow"     easy="0.85" norm="0.87" />
+	<car id="HR"  name="HR"  crtver="2.1" speed="2" year="1996" type="Terrain"  easy="0.90" norm="0.90" />
+	<car id="FR4" name="FR4" crtver="2.1" speed="2" year="1986" type="Terrain"  easy="0.89" norm="0.89" />
+																										
+	<car id="LK4" name="LK4" crtver="2.0" speed="3" year="2008" type="Terrain"  easy="0.95" norm="0.95" />
+	<car id="3S"  name="3S"  crtver="0.1" speed="3" year="2003" type="Racing"   easy="0.92" norm="0.94" />
+																										
+	<car id="UV"  name="UV"  crtver="2.1" speed="4" year="2008" type="Extreme"  easy="0.90" norm="0.96" />
+	<car id="TC6" name="TC6" crtver="1.4" speed="4" year="1994" type="Gravel"   easy="0.91" norm="0.96" />
+	<car id="NS"  name="NS"  crtver="1.4" speed="4" year="1989" type="Racing"   easy="0.91" norm="0.96" />
+																										
+	<car id="FM"  name="FM"  crtver="1.2" speed="5" year="2000" type="Gravel"   easy="0.97" norm="1.00" />
+	<car id="S8"  name="S8"  crtver="2.0" speed="5" year="2008" type="Gravel"   easy="0.97" norm="1.00" />
+	<car id="N1"  name="N1"  crtver="2.0" speed="5" year="1999" type="Racing"   easy="0.96" norm="0.99" />
+																										
+	<car id="ES"  name="ES"  crtver="1.2" speed="6" year="2006" type="Gravel"   easy="0.97" norm="1.00" />
+	<car id="S1"  name="S1"  crtver="1.8" speed="6" year="2005" type="Gravel"   easy="0.97" norm="1.00" />
+																										
+	<car id="TW"  name="TW"  crtver="2.1" speed="7" year="2011" type="Extreme"  easy="0.95" norm="0.97" />
+	<car id="CT"  name="CT"  crtver="0.2" speed="7" year="1998" type="Asphalt"  easy="1.00" norm="1.00" />
+	<car id="360" name="360" crtver="0.2" speed="8" year="1999" type="Asphalt"  easy="1.00" norm="1.00" />
+	<car id="XM"  name="XM"  crtver="1.0" speed="8" year="1995" type="Asphalt"  easy="1.00" norm="1.00" />
+	<car id="XZ"  name="XZ"  crtver="2.0" speed="9" year="2007" type="Asphalt"  easy="1.00" norm="1.00" />
 </cars>

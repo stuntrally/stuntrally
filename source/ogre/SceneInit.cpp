@@ -676,19 +676,23 @@ void App::CreateRoad()
 }
 
 
-///  _Tool_ ghosts times .................................................................................
+///............................................................................................................................
+///  _Tool_ ghosts times
+///............................................................................................................................
 void App::ToolGhosts()
 {
 	LogO("ALL ghosts ---------");
 	using namespace std;
-	const string sim = "normal";  String msg="\n";
-	const float tMax = 10000.f;
+	const string sim = 1 /**/ ? "normal" : "easy";
+	String msg="\n";  const float tMax = 10000.f;
 	TIMER tim;
 	
 	//  all cars
 	std::vector<string> cars;
+	std::vector<float> plc;
 	for (int c=0; c < carsXml.cars.size(); ++c)
-		cars.push_back(carsXml.cars[c].name);
+	{	cars.push_back(carsXml.cars[c].name);
+		plc.push_back(0.f);  }
 
 	//  foreach track
 	for (int i=0; i < tracksXml.trks.size(); ++i)
@@ -702,6 +706,7 @@ void App::ToolGhosts()
 		{
 			tim.AddCar(cars[c]);
 			float t = tim.GetBestLap(c, false);  //not reverse
+			plc[c] = t;
 			if (t == 0.f)  continue;
 
 			if (t < timeBest)  timeBest = t;
@@ -713,23 +718,47 @@ void App::ToolGhosts()
 		//  times.xml
 		float timeTrk = times.trks[trk];// + 2;
 
-		float timeB = timeTrk * 1.1f;  // champs factor mostly 0.1
-		const float decFactor = 1.5f;
-		float score = std::max(0.f, (1.f + (timeB-timeES)/timeB * decFactor) * 100.f);
+		//float timeB = timeTrk * 1.1f;  // champs factor mostly 0.1
+		//const float decFactor = 1.5f;
+		//float score = std::max(0.f, (1.f + (timeB-timeES)/timeB * decFactor) * 100.f);
+		float place = GetRacePos(timeES,timeTrk,1.f,false);
 
-		//  write
+		///  write
+	#if 0
+		//  format directly like times.xml
 		ostringstream s;
-		s << fixed << left << setw(18) << trk;
-		s << "E " << GetTimeShort(timeES);  // Expected car ES or S1
+		s << "\t<track name=\""+trk+"\"";
+		for (int i=0; i < 18-trk.length(); ++i)
+			s << " ";  //align
+		s << "time=\""+fToStr(timeES,1)+"\" />";
+		msg += s.str()+"\n";
+	#else
+		//  stats ..
+		ostringstream s;
+		s << fixed << left << setw(18) << trk;  //align
+		#if 0
+		s << "  E " << GetTimeShort(timeES);  // Expected car ES or S1
 		s << "  T " << GetTimeShort(timeTrk);  // trk time from .xml
 		s << "  b " << GetTimeShort(timeES == timeBest ? 0.f : timeBest);
 		s << "  E-b " << (timeES > 0.f && timeES != timeBest ?
 						fToStr(timeES - timeBest ,0,2) : "  ");
 		s << "  T-E " << (timeES > 0.f ?
 						fToStr(timeTrk - timeES  ,0,2) : "  ");
-		s << "  scET " << (timeES > 0.f ? fToStr(score,0,3) : "   ");
-		s << (score > 135.f ? " ! " : "   ");
+		s << "  pET " << (timeES > 0.f ? fToStr(place,1,3) : "   ");
+		#endif
+		
+		//  race pos for all cars from cur ghosts
+		for (int c=0; c < cars.size(); ++c)
+		{
+			float t = plc[c];
+			float cmul = GetCarTimeMul(cars[c], sim);
+			float pl = GetRacePos(t,timeTrk, cmul,false);
+			s << cars[c] << " " << (t > 0.f ? (pl > 20 ? " ." : fToStr(pl,0,2)) : "  ") << " ";
+		}										  //90
+		
+		//s << (score > 135.f ? " ! " : "   ");
 		msg += s.str()+"\n";
+	#endif
 	}
 	LogO(msg);
 	//LogO("ALL ghosts ---------");

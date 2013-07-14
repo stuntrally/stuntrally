@@ -180,6 +180,7 @@ void App::GuiInitTrack()
 	TabItem* trktab = (TabItem*)mWndGame->findWidget("TabTrack");
 	#endif
 	MultiList2* li = trktab->createWidget<MultiList2>("MultiListBox",0,0,500,300, Align::Left | Align::VStretch);
+	li->setColour(Colour(0.8,0.9,0.8));
 	//li->setUserString("RelativeTo", "OptionsWnd");
 	//*li->setAlpha(0.8);*/  li->setInheritsAlpha(false);
 	

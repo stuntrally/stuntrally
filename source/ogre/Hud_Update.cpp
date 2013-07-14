@@ -362,7 +362,7 @@ void App::UpdateHUD(int carId, float time)
 		}
 	}
 	
-	///  times, score  -----------------------------
+	///  times, race pos  -----------------------------
 	if (pSet->show_times && pCar)
 	{
 		TIMER& tim = pGame->timer;
@@ -387,7 +387,8 @@ void App::UpdateHUD(int carId, float time)
 		//  times
 		float last = tim.GetLastLap(carId), best = tim.GetBestLap(carId, pSet->game.trackreverse);
 		float timeCur = last < 0.1f ? best : last;
-		//  track time, score
+
+		#if 0  // old
 		float timeBest = /*pSet->game.track_user ? 0.f :*/ times.trks[pSet->game.track];
 		float score = 0.f;  bool b = false;
 		if (timeBest > 0.f && timeCur > 0.f)
@@ -397,6 +398,19 @@ void App::UpdateHUD(int carId, float time)
 			score = std::max(0.f, (1.f + (timeBest-timeCur)/timeBest * decFactor) * 100.f);
 			b = true;
 		}
+		#endif
+
+		//  track time, score
+		float timeTrk = times.trks[pSet->game.track];
+		
+		bool b = timeTrk > 0.f && timeCur > 0.f;
+
+		const float magic = 0.008f;  //
+		float t1pl = magic * timeTrk;
+
+		bool coldStart = tim.GetCurrentLap(carId) == 1;  // was 0
+		float carMul = GetCarTimeMul(pSet->game.car[carId], pSet->game.sim_mode);
+		float place = GetRacePos(timeCur, timeTrk, carMul, coldStart);
 		
 		if (txTimes[carId])
 			txTimes[carId]->setCaption(
@@ -404,8 +418,10 @@ void App::UpdateHUD(int carId, float time)
 				"\n#C0E0F0" + GetTimeString(tim.GetPlayerTime(carId))+
 				"\n#80C8FF" + GetTimeString(last)+
 				"\n#80E0E0" + GetTimeString(best)+
-				"\n#80E080" + GetTimeString(timeBest)+
-				"\n#D0D040" + (b ? fToStr(score,1,4) : "--") );  //,2,5
+				"\n#80E080" + GetTimeString(timeTrk)+
+				"\n#D0D040" + (b ? fToStr(place ,1,3) : "--") + "\n" + fToStr(t1pl,2,5));
+				//"\n#D0D040" + (b ? toStr(ceil(place)) : "--") + "\n" + fToStr(t1pl,2,5));
+				//"\n#D0D040" + (b ? fToStr(score,1,4) : "--") );  //,2,5
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------
