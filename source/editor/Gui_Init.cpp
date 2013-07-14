@@ -359,6 +359,8 @@ void App::InitGui()
 	txWarn->setTextShadow(true);  txWarn->setTextShadowColour(Colour::Black);
 	txWarn->setTextColour(Colour(1.0,0.4,0.2));  txWarn->setFontHeight(24);
 	txWarn->setVisible(false);
+	imgWarn = mGUI->findWidget<StaticImage>("ImgWarn", false);  imgWarn->setVisible(false);
+	imgInfo = mGUI->findWidget<StaticImage>("ImgInfo", false);
 	Chk("CheckSave", chkCheckSave, pSet->check_save);
 	Chk("CheckLoad", chkCheckLoad, pSet->check_load);
 	

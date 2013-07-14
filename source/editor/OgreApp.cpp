@@ -69,7 +69,7 @@ App::App()  //  gui wigdets--
 	,valTerGenAngMin(0), valTerGenAngMax(0), valTerGenAngSm(0)
 	,valTerGenHMin(0), valTerGenHMax(0), valTerGenHSm(0)
 	,imgTrkIco1(0),imgTrkIco2(0), edFind(0)
-	,edWarn(0),cntWarn(0),txWarn(0), logWarn(0), iLoadNext(0)
+	,edWarn(0),cntWarn(0),txWarn(0), logWarn(0), iLoadNext(0), imgWarn(0),imgInfo(0)
 	,trkList(0),trkName(0),bListTrackU(0)  // track
 
 	,mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)

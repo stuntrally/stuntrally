@@ -389,13 +389,12 @@ void App::WarningsCheck(const Scene* sc, const SplineRoad* road)
 		LogO("Warnings: "+toStr(cntWarn)+"\n");
 		return;
 	}
-	if (cntWarn == 0)
-	{
+	bool warn = cntWarn > 0;
+	if (!warn)
 		Warn(NOTE,"#A0C0FF""No warnings.");
-		txWarn->setVisible(false);
-	}else
-	{	//  show warn overlay
-		txWarn->setVisible(true);
+	else  //  show warn overlay
 		txWarn->setCaption(TR("#{Warnings}: ")+toStr(cntWarn)+"  (alt-J)");
-	}
+
+	txWarn->setVisible(warn);
+	imgInfo->setVisible(!warn);  imgWarn->setVisible(warn);
 }

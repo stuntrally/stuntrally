@@ -479,6 +479,7 @@ protected:
 
 	//  warnings
 	MyGUI::EditPtr edWarn;  MyGUI::StaticTextPtr txWarn;
+	MyGUI::StaticImagePtr imgWarn,imgInfo;
 	void WarningsCheck(const class Scene* sc, const SplineRoad* road);
 	int cntWarn;  bool logWarn;  // only log warnings (tool)
 	enum eWarn {  ERR=0, WARN, INFO, NOTE, TXT  };

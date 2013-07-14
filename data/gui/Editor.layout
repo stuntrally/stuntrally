@@ -773,6 +773,13 @@
 					<Property key="TextColour" value="0.8 0.8 1.0"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipCopySource}"/>
+					<Widget type="ImageBox" skin="ImageBox" position="0 0 24 24">
+						<Property key="ImageCoord" value="384 768 128 128"/>
+						<Property key="Alpha" value="0.5"/>
+						<Property key="ImageTexture" value="gui_icons.png"/>
+						<Property key="NeedMouse" value="false"/>
+						<UserString key="RelativeTo" value="EditorWnd"/>
+					</Widget>
 				</Widget>
 				<Widget type="Button" skin="Button" position="528 505 150 25" name="TrackNew">
 					<Property key="Caption" value="#{NewDup}"/>
@@ -780,6 +787,13 @@
 					<Property key="TextColour" value="0.8 1 0.5"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipNewDup}"/>
+					<Widget type="ImageBox" skin="ImageBox" position="0 0 24 24">
+						<Property key="ImageCoord" value="256 256 128 128"/>
+						<Property key="Alpha" value="0.7"/>
+						<Property key="ImageTexture" value="gui_icons.png"/>
+						<Property key="NeedMouse" value="false"/>
+						<UserString key="RelativeTo" value="EditorWnd"/>
+					</Widget>
 				</Widget>
 				<Widget type="Button" skin="Button" position="369 467 140 24" name="TrackRename">
 					<Property key="Caption" value="#{Rename}"/>
@@ -801,6 +815,13 @@
 					<Property key="Colour" value="1 0.6 0.3"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipDeleteTrk}"/>
+					<Widget type="ImageBox" skin="ImageBox" position="0 0 24 24">
+						<Property key="ImageCoord" value="256 384 128 128"/>
+						<Property key="Alpha" value="0.5"/>
+						<Property key="ImageTexture" value="gui_icons.png"/>
+						<Property key="NeedMouse" value="false"/>
+						<UserString key="RelativeTo" value="EditorWnd"/>
+					</Widget>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="16 474 24 24">
 					<Property key="ImageCoord" value="256 128 128 128"/>
@@ -824,15 +845,15 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#FFFF80#{Sun}"/>
 				<UserString key="RelativeTo" value="EditorWnd"/>
-				<Widget type="ImageBox" skin="ImageBox" position="34 16 36 36">
+				<Widget type="ImageBox" skin="ImageBox" position="34 22 36 26">
 					<Property key="ImageCoord" value="384 384 128 128"/>
-					<Property key="Alpha" value="0.65"/>
+					<Property key="Alpha" value="0.5"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="24 76 56 56">
 					<Property key="ImageCoord" value="384 0 128 128"/>
-					<Property key="Alpha" value="0.7"/>
+					<Property key="Alpha" value="0.6"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
@@ -1875,6 +1896,12 @@
 							<Property key="Colour" value="1 0.9 0.5"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="636 0 80 80">
+							<Property key="ImageCoord" value="384 512 128 128"/>
+							<Property key="Alpha" value="1.0"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
 						<Widget type="EditBox" skin="EditBox" position="64 22 56 24" name="LDust">
 							<Property key="Colour" value="0.8 0.8 0.2"/>
 							<Property key="TextColour" value="0.8 0.8 0.2"/>
@@ -1997,6 +2024,12 @@
 							<Property key="Colour" value="1 0.7 0.9"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="646 0 80 80">
+							<Property key="ImageCoord" value="384 640 128 128"/>
+							<Property key="Alpha" value="0.8"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="16 24 96 24">
 							<Property key="Caption" value="#{Surface}"/>
 							<Property key="TextColour" value="0.75 0.7 1"/>
@@ -2087,7 +2120,7 @@
 					<Widget type="TabItem" skin="" position="2 24 746 469">
 						<Property key="Caption" value="#B0C000#{Properties}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
-						<Widget type="ImageBox" skin="ImageBox" position="600 24 96 96">
+						<Widget type="ImageBox" skin="ImageBox" position="620 24 96 96">
 							<Property key="ImageCoord" value="384 256 128 128"/>
 							<Property key="Alpha" value="1.0"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
@@ -3120,9 +3153,9 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#B0A0FF#{Tools}"/>
 				<UserString key="RelativeTo" value="EditorWnd"/>
-				<Widget type="ImageBox" skin="ImageBox" position="24 460 56 56">
-					<Property key="ImageCoord" value="384 128 128 128"/>
-					<Property key="Alpha" value="1.0"/>
+				<Widget type="ImageBox" skin="ImageBox" position="660 32 64 64">
+					<Property key="ImageCoord" value="0 896 128 128"/>
+					<Property key="Alpha" value="0.6"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
@@ -3150,7 +3183,13 @@
 					<Property key="TextColour" value="0.5 0.5 0.8"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="36 56 172 24">
+				<Widget type="ImageBox" skin="ImageBox" position="36 54 24 24">
+					<Property key="ImageCoord" value="384 768 128 128"/>
+					<Property key="Alpha" value="0.8"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="68 57 172 24">
 					<Property key="Caption" value="#{Copy}:"/>
 					<Property key="TextColour" value="0.8 0.8 1.0"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
@@ -3196,19 +3235,25 @@
 					<Property key="TextColour" value="0.7 1 0.8"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="252 210 108 24" name="ScaleAll">
+				<Widget type="Button" skin="Button" position="242 210 108 24" name="ScaleAll">
 					<Property key="TextColour" value="0.7 1 0.8"/>
 					<Property key="Colour" value="0.7 1 0.8"/>
 					<Property key="Caption" value="#{ScaleAll}"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="156 210 80 24" name="ScaleAllMul">
+				<Widget type="EditBox" skin="EditBox" position="156 210 50 24" name="ScaleAllMul">
 					<Property key="Colour" value="0.7 1 0.8"/>
 					<Property key="TextColour" value="0.7 1 0.8"/>
 					<Property key="Caption" value="1.0"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="640 180 108 24">
+				<Widget type="ImageBox" skin="ImageBox" position="640 175 24 24">
+					<Property key="ImageCoord" value="256 384 128 128"/>
+					<Property key="Alpha" value="0.7"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="674 180 108 24">
 					<Property key="Caption" value="#{Delete}"/>
 					<Property key="TextColour" value="1.0 0.4 0.4"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
@@ -3236,13 +3281,13 @@
 					<Property key="TextColour" value="0.3 1 0.3"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="156 248 80 24" name="ScaleTerHMul">
+				<Widget type="EditBox" skin="EditBox" position="156 248 50 24" name="ScaleTerHMul">
 					<Property key="Colour" value="0.3 1 0.3"/>
 					<Property key="TextColour" value="0.3 1 0.3"/>
 					<Property key="Caption" value="1.0"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="252 248 108 24" name="ScaleTerH">
+				<Widget type="Button" skin="Button" position="242 248 108 24" name="ScaleTerH">
 					<Property key="TextColour" value="0.3 1 0.3"/>
 					<Property key="Colour" value="0.3 1 0.3"/>
 					<Property key="Caption" value="#{ScaleTerHeight}"/>
@@ -3294,9 +3339,15 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#E0A0A0#{Warnings}"/>
 				<UserString key="RelativeTo" value="EditorWnd"/>
-				<Widget type="ImageBox" skin="ImageBox" position="600 32 56 56">
-					<Property key="ImageCoord" value="384 128 128 128"/>
-					<Property key="Alpha" value="1.0"/>
+				<Widget type="ImageBox" skin="ImageBox" position="660 32 64 64" name="ImgInfo">
+					<Property key="ImageCoord" value="128 768 128 128"/>
+					<Property key="Alpha" value="0.6"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+					<UserString key="RelativeTo" value="EditorWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="660 32 64 64" name="ImgWarn">
+					<Property key="ImageCoord" value="384 896 128 128"/>
+					<Property key="Alpha" value="0.6"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
