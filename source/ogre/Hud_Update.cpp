@@ -400,14 +400,14 @@ void App::UpdateHUD(int carId, float time)
 			int place = GetRacePos(timeCur, timeTrk, carMul, coldStart, &points);
 
 			const float magic = 0.008f;  //
-			float t1pl = magic * timeTrk;
+			//float t1pl = magic * timeTrk;
 			float time = (/*place*/0 * magic * timeTrk + timeTrk) / carMul;
 
 			sTimes[carId] =
 				"\n#80C8FF" + GetTimeString(last)+
 				"\n#80E0E0" + GetTimeString(best)+
 				"\n#80E080" + GetTimeString(time)+
-				"\n#D0D040" + (b ? toStr(place) : "--")+ " /" + fToStr(t1pl,2,5)+
+				"\n#D0D040" + (b ? toStr(place) : "--")+ //" /" + fToStr(t1pl,2,5)+
 				"\n#F0A040" + (b ? fToStr(points,1,3) : "--");
 
 			#if 0  // log info

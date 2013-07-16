@@ -25,7 +25,7 @@
 	<track name="J1-T"              time="47.5" />
 	<track name="D1-simple"         time="68.0" />
 	<track name="S2-Frenzy"         time="193.1" />
-	<track name="S3-Loops"          time="72.1" /><!--dmg!-->
+	<track name="S3-Loops"          time="72.1" />
 	<track name="D2-Mntn"           time="66.5" />
 	<track name="D3-P"              time="53.4" />
 	<track name="J3-Rocky"          time="49.8" />
@@ -68,7 +68,7 @@
 	<track name="M1-Hills"          time="32.2" />
 	<track name="M2-Bumps"          time="57.6" />
 	<track name="F9-MadMntn"        time="142.8" />
-	<track name="A1-StuntPark"      time="182.6" />
+	<track name="A1-StuntPark"      time="187.6" /><!--182-->
 	<track name="G1-Long"           time="296.3" />
 	<track name="F10-MntnTrail"     time="151.8" />
 	<track name="A2-PipeCoil"       time="45.8" />
@@ -112,7 +112,7 @@
 	<track name="J19-demo2"         time="58.2" />
 	<track name="D11-PersianCity"   time="53.8" />
 	<track name="I9-Web"            time="314.4" />
-	<track name="S14-Refinery"      time="216.0" /><!--206 dmg!-->
+	<track name="S14-Refinery"      time="216.0" /><!--206-->
 	<track name="A5-TopTwist"       time="157.5" /><!--167-->
 	<track name="X3-Cloud"          time="121.8" />
 	<track name="F16-Clew"          time="91.4" />
