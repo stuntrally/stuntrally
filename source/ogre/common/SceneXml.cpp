@@ -22,7 +22,7 @@ void Scene::Default()
 	skyMtr = "World/NoonSky";
 	rainEmit = 0;  rainName = "";
 	rain2Emit = 0;  rain2Name = "";
-	windAmt = 0.f;
+	windAmt = 0.f;  damageMul = 1.f;
 
 	fogStart = 600;  fogEnd = 1600;
 	fogClr = fogClr2 = fogClrH = Vector4(0.73f, 0.86f, 1.0f, 1.f);
@@ -177,7 +177,8 @@ bool Scene::LoadXml(String file, bool bTer)
  	eCar = root->FirstChildElement("car");
 	if (eCar)
 	{
-		a = eCar->Attribute("tires");	if (a)  asphalt = s2i(a) > 0;
+		a = eCar->Attribute("tires");		if (a)  asphalt = s2i(a) > 0;
+		a = eCar->Attribute("damage");		if (a)  damageMul = s2r(a);
 	}
 
 	///  sky
@@ -443,6 +444,8 @@ bool Scene::SaveXml(String file)
 
 	TiXmlElement car("car");
 		car.SetAttribute("tires",	asphalt ? "1":"0");
+		if (damageMul != 1.f)
+			car.SetAttribute("damage",	toStrC( damageMul ));
 	root.InsertEndChild(car);
 
 

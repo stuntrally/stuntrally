@@ -120,6 +120,7 @@ void CAR::UpdateSounds(float dt)
 	  dmgPow2 = 1.4f, dmgFromHit2 = 1.5f, dmgFromScrap2 = 11.5f;  // normal //par
 	bool dmg = pSet->game.damage_type > 0, reduced = pSet->game.damage_type==1;
 	bool terminal = dynamics.fDamage >= 100.f;
+	float fDmg = pApp->sc->damageMul;
 	
 	///  replay play  ------------------------------------------
 	if (pApp->bRplPlay)
@@ -206,9 +207,9 @@ void CAR::UpdateSounds(float dt)
 		/// <><> Damage <><>
 		if (dmg && !terminal)
 			if (reduced)
-				dynamics.fDamage += fCarScrap * dt * dynamics.fHitDmgA * dmgFromScrap;
+				dynamics.fDamage += fDmg * fCarScrap * dt * dynamics.fHitDmgA * dmgFromScrap;
 			else  // normal
-				dynamics.fDamage += fCarScrap * dt * dynamics.fHitDmgA * dmgFromScrap2;
+				dynamics.fDamage += fDmg * fCarScrap * dt * dynamics.fHitDmgA * dmgFromScrap2;
 
 		gain = std::min(1.f, dynamics.fCarScreech);
 		if (dynamics.fCarScreech > 0.f)
@@ -443,11 +444,11 @@ void CAR::UpdateSounds(float dt)
 				/// <><> Damage <><> 
 				if (dmg && !terminal)
 					if (reduced)
-						dynamics.fDamage += crashdecel2 * dynamics.fHitDmgA * dmgFromHit;
+						dynamics.fDamage += fDmg * crashdecel2 * dynamics.fHitDmgA * dmgFromHit ;
 					else  // normal
 					{	float f = std::min(1.f, crashdecel2 / 30.f);
 						f = powf(f,dmgPow2);
-						dynamics.fDamage += crashdecel2 * dynamics.fHitDmgA * dmgFromHit2 * f;
+						dynamics.fDamage += fDmg * crashdecel2 * dynamics.fHitDmgA * dmgFromHit2 * f;
 					}
 			}
 			//LogO("Car Snd: " + toStr(crashdecel));// + " force " + toStr(hit.force)

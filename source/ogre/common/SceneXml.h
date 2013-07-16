@@ -138,6 +138,7 @@ public:
 
 	//  wind
 	float windAmt;  //, windDirYaw, windTurbulFreq,windTurbulAmp;
+	float damageMul;  // reduce car damage in loops
 
 
 	//  particle types
