@@ -236,8 +236,8 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 		//out << "Default cfg:  " << GetGameConfigDir() << std::endl;
 		//out << "Home:         " << home_dir << std::endl;
 		out << "User cfg,log: " << UserConfigDir() << std::endl;
-		//out << "User data:    " << GetUserDataDir() << std::endl;
-		//out << "Cache:        " << GetCacheDir() << std::endl;
+		out << "User data:    " << user_data << std::endl;
+		out << "Cache:        " << CacheDir() << std::endl;
 		info_output << out.str();
 	}
 }
