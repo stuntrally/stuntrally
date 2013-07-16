@@ -1,5 +1,8 @@
 <times>
-<!--  Tracks best times  -->
+<!--  Track time  -->
+<!--  This is the 1st lap time (not best lap), driven with ES in normal simulation mode.  -->
+<!--  With no mistakes, used rewind with "_Tool_ go back time", and no boost at all or only 0.5s at start.  -->
+<!--  Most difficult tracks have few (2-4) sec more, to leave some room for user rewinds.  -->
 
 	<track name="zandvoort"		time="112.0"/>
 	<track name="weekend"		time="113.5"/>
@@ -22,7 +25,7 @@
 	<track name="J1-T"              time="47.5" />
 	<track name="D1-simple"         time="68.0" />
 	<track name="S2-Frenzy"         time="193.1" />
-	<track name="S3-Loops"          time="71.1" />
+	<track name="S3-Loops"          time="72.1" /><!--dmg!-->
 	<track name="D2-Mntn"           time="66.5" />
 	<track name="D3-P"              time="53.4" />
 	<track name="J3-Rocky"          time="49.8" />
@@ -103,39 +106,39 @@
 	<track name="J18-Tiny"          time="34.3" />
 	<track name="G4-River"          time="34.4" />
 	<track name="V3-Crater"         time="51.3" />
-	<track name="F14-Maze"          time="235.3" />
-	<track name="C3-Vast"           time="268.7" />
-	<track name="F15-ForestTrip"    time="134.4" />
+	<track name="F14-Maze"          time="210.3" />
+	<track name="C3-Vast"           time="260.7" />
+	<track name="F15-ForestTrip"    time="128.4" />
 	<track name="J19-demo2"         time="58.2" />
-	<track name="D11-PersianCity"   time="52.9" />
-	<track name="I9-Web"            time="323.9" />
-	<track name="S14-Refinery"      time="226.0" />
-	<track name="A5-TopTwist"       time="167.5" />
+	<track name="D11-PersianCity"   time="53.8" />
+	<track name="I9-Web"            time="314.4" />
+	<track name="S14-Refinery"      time="216.0" /><!--206 dmg!-->
+	<track name="A5-TopTwist"       time="157.5" /><!--167-->
 	<track name="X3-Cloud"          time="121.8" />
 	<track name="F16-Clew"          time="91.4" />
-	<track name="G5-Climb"          time="241.7" />
-	<track name="I10-Treasure"      time="83.5" />
-	<track name="D12-Sandstorm"     time="47.5" />
-	<track name="T1-Autumn"         time="66.5" />
-	<track name="T2-RedOakPark"     time="44.1" />
-	<track name="T3-Orange"         time="52.9" />
-	<track name="O1-Moss"           time="41.8" />
-	<track name="O2-Mouse"          time="53.7" />
-	<track name="T4-Scary"          time="99.6" />
-	<track name="T5-Twister"        time="56.8" />
-	<track name="A6-Cannon"         time="400.7" />
-	<track name="0W11-Glacier"      time="141.7" />
-	<track name="J20-JungleMaze"    time="272.2" />
-	<track name="E1-Lakes"          time="105.8" />
-	<track name="0W12-Peaks"        time="34.3" />
-	<track name="V4-Spikeland"      time="69.9" />
-	<track name="V5-Sad"            time="157.0" />
+	<track name="G5-Climb"          time="221.7" />
+	<track name="I10-Treasure"      time="85.5" />
+	<track name="D12-Sandstorm"     time="48.5" />
+	<track name="T1-Autumn"         time="69.0" />
+	<track name="T2-RedOakPark"     time="47.5" />
+	<track name="T3-Orange"         time="56.9" />
+	<track name="O1-Moss"           time="42.3" />
+	<track name="O2-Mouse"          time="57.9" />
+	<track name="T4-Scary"          time="98.6" />
+	<track name="T5-Twister"        time="54.0" />
+	<track name="A6-Cannon"         time="385.5" />
+	<track name="0W11-Glacier"      time="139.7" />
+	<track name="J20-JungleMaze"    time="252.2" />
+	<track name="E1-Lakes"          time="107.8" />
+	<track name="0W12-Peaks"        time="35.6" />
+	<track name="V4-Spikeland"      time="74.2" />
+	<track name="V5-Sad"            time="150.0" />
 	<track name="T6-Sunset"         time="85.6" />
-	<track name="0W13-MtFog"        time="91.6" />
-	<track name="O3-Air"            time="31.9" />
-	<track name="I11-StuntIslands"  time="286.5" />
-	<track name="I12-Beach"         time="44.5" />
+	<track name="0W13-MtFog"        time="90.6" />
+	<track name="O3-Air"            time="35.4" />
+	<track name="I11-StuntIslands"  time="287.5" />
+	<track name="I12-Beach"         time="45.5" />
 	<track name="C4-Sway"           time="137.2" />
-	<track name="X4-Pipeline"       time="214.4" />
-	<track name="R1-Mars"           time="121.1" />
+	<track name="X4-Pipeline"       time="208.4" />
+	<track name="R1-Mars"           time="124.5" />
 </times>
