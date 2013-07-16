@@ -230,7 +230,7 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 	if (log_paths)
 	{
 		std::stringstream out;
-		out << "--- Directories: ---" << ogre_plugin << std::endl;
+		out << "--- Directories: ---" << std::endl;
 		out << "Ogre plugin:  " << ogre_plugin << std::endl;
 		out << "Data:         " << Data() << std::endl;
 		//out << "Default cfg:  " << GetGameConfigDir() << std::endl;
