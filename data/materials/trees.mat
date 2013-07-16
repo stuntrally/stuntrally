@@ -44,9 +44,10 @@ material Palm
 {
     parent base
 	diffuseMap palm.png
+	normalMap palm_norm.png
 	alpha_rejection greater 79
-	ambient 1.0 1.0 1.0
-	diffuse 0.6 0.6 0.6
+	ambient 1.2 1.2 1.2
+	diffuse 0.4 0.4 0.4
 	specular 0.3 0.3 0.3 21
 	tree_wind true
 	transparent true
