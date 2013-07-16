@@ -42,6 +42,7 @@ void CarModel::setVisible(bool vis)
 
 void CarModel::UpdNextCheck()
 {
+	updTimes = true;
 	if (eType != CarModel::CT_LOCAL)  return;
 	if (!ndNextChk || !pApp || !pApp->road)  return;
 	if (pApp->road->mChks.empty())  return;
@@ -65,6 +66,7 @@ void CarModel::ShowNextChk(bool visible)
 
 void CarModel::ResetChecks(bool bDist)  // needs to be done after road load!
 {
+	updTimes = true;
 	iCurChk = -1;  iNumChks = 0;  // reset lap, chk vars
 	trackPercent = 0.f;
 	if (!pApp || !pApp->road)  return;

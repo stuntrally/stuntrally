@@ -132,6 +132,7 @@ protected:
 	MyGUI::TextBox *txGear[4],*txVel[4],*txBFuel[4],*txDamage[4];
 	//  times bar
 	MyGUI::TextBox *txTimTxt[4],*txTimes[4];  MyGUI::ImageBox *bckTimes[4];
+	Ogre::String sTimes[4];
 	//  gauges
 	Ogre::SceneNode *ndRpm[4], *ndVel[4], *ndRpmBk[4], *ndVelBk[4],*ndVelBm[4];
 	Ogre::ManualObject* moRpm[4], *moVel[4], *moRpmBk[4], *moVelBk[4],*moVelBm[4];

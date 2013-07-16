@@ -384,34 +384,47 @@ void App::UpdateHUD(int carId, float time)
 			}
 		}
 
-		//  times
-		float last = tim.GetLastLap(carId), best = tim.GetBestLap(carId, pSet->game.trackreverse);
-		float timeCur = last < 0.1f ? best : last;
+		//  times  ------------
+		if (pCarM->updTimes)
+		{	pCarM->updTimes = false;
 
-		//  track time, score
-		float timeTrk = times.trks[pSet->game.track];
-		
-		bool b = timeTrk > 0.f && timeCur > 0.f;
+			//  track time, points
+			float last = tim.GetLastLap(carId), best = tim.GetBestLap(carId, pSet->game.trackreverse);
+			float timeCur = last < 0.1f ? best : last;
+			float timeTrk = times.trks[pSet->game.track];
+			bool b = timeTrk > 0.f && timeCur > 0.f;
 
-		const float magic = 0.008f;  //
-		//float t1pl = magic * timeTrk;
+			bool coldStart = tim.GetCurrentLap(carId) == 1;  // was 0
+			float carMul = GetCarTimeMul(pSet->game.car[carId], pSet->game.sim_mode);
+			float points = 0.f;
+			int place = GetRacePos(timeCur, timeTrk, carMul, coldStart, &points);
 
-		//  todo: save string not every frame..
-		bool coldStart = tim.GetCurrentLap(carId) == 1;  // was 0
-		float carMul = GetCarTimeMul(pSet->game.car[carId], pSet->game.sim_mode);
-		float points = 0.f;
-		int place = GetRacePos(timeCur, timeTrk, carMul, coldStart, &points);
-		float time = (/*place*/1 * magic * timeTrk + timeTrk) / carMul;
-		
+			const float magic = 0.008f;  //
+			float t1pl = magic * timeTrk;
+			float time = (/*place*/0 * magic * timeTrk + timeTrk) / carMul;
+
+			sTimes[carId] =
+				"\n#80C8FF" + GetTimeString(last)+
+				"\n#80E0E0" + GetTimeString(best)+
+				"\n#80E080" + GetTimeString(time)+
+				"\n#D0D040" + (b ? toStr(place) : "--")+ " /" + fToStr(t1pl,2,5)+
+				"\n#F0A040" + (b ? fToStr(points,1,3) : "--");
+
+			#if 0  // log info
+			LogO("     Track: " + GetTimeString(time)+"  place: "+toStr(place)+"  points: "+fToStr(points,1,3)+ "  dt " + fToStr(t1pl,2,5));
+			for (int i=-8; i<=8; ++i)
+			{
+				float t = timeCur + i*0.5f *t1pl+1.5f;
+				int place = GetRacePos(t, timeTrk, carMul, coldStart, &points);
+				LogO(" var, time: "+GetTimeString(t)+"  place: "+toStr(place)+"  points: "+fToStr(points,1,3));
+			}
+			#endif
+		}
 		if (txTimes[carId])
 			txTimes[carId]->setCaption(
 				(hasLaps ? "#D0E8FF"+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps) : "") +
 				"\n#C0E0F0" + GetTimeString(tim.GetPlayerTime(carId))+
-				"\n#80C8FF" + GetTimeString(last)+
-				"\n#80E0E0" + GetTimeString(best)+
-				"\n#80E080" + GetTimeString(time)+
-				"\n#D0D040" + (b ? toStr(place) : "--")+ // "\n" + fToStr(t1pl,2,5)+
-				"\n#F0A040" + (b ? fToStr(points,1,3) : "--") );
+				sTimes[carId]);
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------

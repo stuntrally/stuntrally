@@ -69,7 +69,7 @@ bool ChampsXml::LoadXml(std::string file, TimesXml& times)
 		{
 			const ChampTrack& trk = ch.trks[i];
 
-			float time = (times.trks[trk.name] * trk.laps + 2) * (1.f - trk.factor);
+			float time = times.trks[trk.name] * trk.laps;
 			allTime += time;  // sum trk time, total champ time
 		}
 		ch.time = allTime;

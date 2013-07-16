@@ -34,7 +34,7 @@ int App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldSta
 	//  and this is the difference between car race positions (1 and 2, 2 and 3 etc)
 	const float magic = 0.008f;  // 0.006 .. 0.0012
 										//par
-	float timeC = timeCur + (coldStart ? -2 : 0);  // if not already driving at start, sub 2 sec (for gaining speed)
+	float timeC = timeCur; //+ (coldStart ? -2 : 0);  // if not already driving at start, sub 2 sec (for gaining speed)
 	float time = timeC * carTimeMul;
 
 	float place = (time - timeTrk)/timeTrk / magic;
@@ -242,7 +242,8 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 		int id = tracksXml.trkmap[trk.name];  // if (id > 0)
 		const TrackInfo& ti = tracksXml.trks[id-1];
 
-		float time = (times.trks[trk.name] * trk.laps + 2) * (1.f - trk.factor);
+		float carMul = GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
+		float time = (times.trks[trk.name] * trk.laps /*+ 2*/) / carMul;
 
 		liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
 		liStages->setSubItemNameAt(3,l, clrsDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
@@ -445,7 +446,7 @@ void App::ChampionshipAdvance(float timeCur)
 	float pass = (pSet->game.sim_mode == "normal") ? 5.f : 2.f;  ///..
 	bool passed = points >= pass;  // didnt qualify, repeat current stage
 	
-	LogO("|| Points: " + fToStr(points,1) + " pos: " + toStr(pos) + "  Passed: " + (passed ? "yes":"no"));
+	LogO("|| Points: " + fToStr(points,1) + "  pos: " + toStr(pos) + "  Passed: " + (passed ? "yes":"no"));
 	pc.trks[pc.curTrack].points = points;
 
 	//  --------------  advance  --------------

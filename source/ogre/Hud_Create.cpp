@@ -147,6 +147,7 @@ void App::CreateHUD(bool destroy)
 		if (txTimTxt[c]) {  mGUI->destroyWidget(txTimTxt[c]);  txTimTxt[c] = 0;  }
 		if (txTimes[c])  {  mGUI->destroyWidget(txTimes[c]);  txTimes[c] = 0;  }
 		if (bckTimes[c]) {  mGUI->destroyWidget(bckTimes[c]);  bckTimes[c] = 0;  }
+		sTimes[c] = "";
 	}
 	
 	//  minimap from road img
