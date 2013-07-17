@@ -309,17 +309,18 @@ const String& App::GetGhostFile(std::string* ghCar)
 		return file;
 	
 	//  if doesnt exist look for other cars, then other sim modes
-	size_t i=0,n=0;  bool srch = true;
+	int i=0, si=carList->getItemCount(), n=0;
+	bool srch = true;
 	if (ghCar)
 	while (srch)
 	{
-		string car = carList->getItemNameAt(i).substr(7);
+		string car = carList->getItemNameAt(si-1-i).substr(7);
 		file = ghostFile(pSet, sim_mode, car);
 
 		if (PATHMANAGER::FileExists(file))
 		{	srch = false;  *ghCar = car;  }
 		++i;
-		if (i >= carList->getItemCount())
+		if (i >= si)
 		{	i = 0;
 			if (sim_mode == "easy")  sim_mode = "normal";
 			else  sim_mode = "easy";

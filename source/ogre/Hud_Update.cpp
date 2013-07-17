@@ -399,7 +399,7 @@ void App::UpdateHUD(int carId, float time)
 			float points = 0.f;
 			int place = GetRacePos(timeCur, timeTrk, carMul, coldStart, &points);
 
-			const float magic = 0.008f;  //
+			const float magic = 0.010f;  //
 			//float t1pl = magic * timeTrk;
 			float time = (/*place*/0 * magic * timeTrk + timeTrk) / carMul;
 

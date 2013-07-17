@@ -116,7 +116,7 @@ public:
 	std::map<std::string, std::string> colormap;  // car type to list color
 	
 	//  methods
-	bool LoadXml(Ogre::String file); //, SaveXml(Ogre::String file);
+	bool LoadXml(Ogre::String file);
 };
 
 

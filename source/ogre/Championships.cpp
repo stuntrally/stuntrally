@@ -32,7 +32,7 @@ int App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldSta
 	//  magic factor: seconds needed for 1 second of track time for 1 race place difference
 	//  eg. if track time is 3min = 180 sec, then 180*magic = 2.16 sec
 	//  and this is the difference between car race positions (1 and 2, 2 and 3 etc)
-	const float magic = 0.008f;  // 0.006 .. 0.0012
+	const float magic = 0.010f;  // 0.006 .. 0.0012
 										//par
 	float timeC = timeCur; //+ (coldStart ? -2 : 0);  // if not already driving at start, sub 2 sec (for gaining speed)
 	float time = timeC * carTimeMul;

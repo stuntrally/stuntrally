@@ -422,11 +422,11 @@ void SplineRoad::AddChkR(Real relR)    ///  ChkR
 }
 void SplineRoad::AddBoxW(Real rel)
 {
-	vStBoxDim.z = std::max(0.1f, vStBoxDim.z + rel);
+	vStBoxDim.z = std::max(6.f, vStBoxDim.z + rel);
 }
 void SplineRoad::AddBoxH(Real rel)
 {
-	vStBoxDim.y = std::max(0.1f, vStBoxDim.y + rel);
+	vStBoxDim.y = std::max(5.f, vStBoxDim.y + rel);
 }
 
 void SplineRoad::AddWidth(Real relW)     ///  Width

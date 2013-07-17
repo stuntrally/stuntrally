@@ -47,7 +47,7 @@ void SplineRoad::Defaults()
 	skirtLen = 1.f;  skirtH = 0.12f;  fHeight = 0.1f;
 	setMrgLen = 180.f;  bMerge = false;  lposLen = 10.f;
 	colN = 4; colR = 2.f;
-	iDir = -1;  vStBoxDim = Vector3(1,5,12);  // /long |height -width
+	iDir = -1;  vStBoxDim = Vector3(1.5f, 5,12);  // /long |height -width
 	iP1 = 0;  iChkId1 = 0;  iChkId1Rev = 0;
 }
 

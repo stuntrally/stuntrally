@@ -144,7 +144,7 @@ bool TracksXml::LoadXml(Ogre::String file)
 CarInfo::CarInfo()
 	:id("AA"), name("AA"), type("Other")
 	,n(-1), speed(5), year(2005), rating(5)
-	,easy(1.2f), norm(1.f)
+	,easy(0.96f), norm(1.f)
 {	}
 
 ///  Load  cars.xml
@@ -161,8 +161,20 @@ bool CarsXml::LoadXml(Ogre::String file)
 	//  clear
 	cars.clear();  carmap.clear();  colormap.clear();
 
+	
+	//  global time mul factors
+	float fEasy = 1.f, fNorm = 1.f;
+
+	const char* a;
+	TiXmlElement* eGlobal = root->FirstChildElement("global");
+	if (eGlobal)
+	{
+		a = eGlobal->Attribute("easy");	if (a)  fEasy = s2r(a);
+		a = eGlobal->Attribute("norm");	if (a)  fNorm = s2r(a);
+	}
+
 	///  cars
-	const char* a;  int i=1;  //0 = none
+	int i=1;  //0 = none
 	TiXmlElement* eCar = root->FirstChildElement("car");
 	while (eCar)
 	{
@@ -176,8 +188,8 @@ bool CarsXml::LoadXml(Ogre::String file)
 		a = eCar->Attribute("year");	if (a)  c.year = s2i(a);
 		a = eCar->Attribute("rating");	if (a)  c.rating = s2i(a);
 
-		a = eCar->Attribute("easy");	if (a)  c.easy = s2r(a);
-		a = eCar->Attribute("norm");	if (a)  c.norm = s2r(a);
+		a = eCar->Attribute("easy");	if (a)  c.easy = fEasy * s2r(a);
+		a = eCar->Attribute("norm");	if (a)  c.norm = fNorm * s2r(a);
 
 		cars.push_back(c);
 		carmap[c.id] = i++;
