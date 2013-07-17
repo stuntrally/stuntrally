@@ -37,7 +37,7 @@
 	
 	<!--easy and norm are the car time multipliers for simultation modes-->
 	<!--less means bigger track time (more points, easier to qualify)-->
-	<!--track time is divided by those factor for a car,
-		this way each car can be 1st on a track despite different power-->
+	<!--track time is divided by this factor for a car,
+		this way each car can be 1st on a track despite different engine power-->
 	<!--made on F4-OSquare: drive a car perfectly (no boost, no going off road) then adjust it to have 1st place-->
 </cars>
