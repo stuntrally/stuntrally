@@ -65,7 +65,7 @@
 	<track name="0W8-pipe8x8"       time="55.7" />
 	<track name="S10-Pipe88"        time="61.5" />
 	<track name="S12-Infinity"      time="90.3" />
-	<track name="M1-Hills"          time="32.2" />
+	<track name="M1-Hills"          time="34.2" />
 	<track name="M2-Bumps"          time="57.6" />
 	<track name="F9-MadMntn"        time="142.8" />
 	<track name="A1-StuntPark"      time="187.6" /><!--182-->
@@ -113,7 +113,7 @@
 	<track name="D11-PersianCity"   time="53.8" />
 	<track name="I9-Web"            time="314.4" />
 	<track name="S14-Refinery"      time="216.0" /><!--206-->
-	<track name="A5-TopTwist"       time="157.5" /><!--167-->
+	<track name="A5-TopTwist"       time="165.5" /><!--167-->
 	<track name="X3-Cloud"          time="121.8" />
 	<track name="F16-Clew"          time="91.4" />
 	<track name="G5-Climb"          time="221.7" />
@@ -132,7 +132,7 @@
 	<track name="E1-Lakes"          time="107.8" />
 	<track name="0W12-Peaks"        time="35.6" />
 	<track name="V4-Spikeland"      time="74.2" />
-	<track name="V5-Sad"            time="150.0" />
+	<track name="V5-Sad"            time="155.0" />
 	<track name="T6-Sunset"         time="85.6" />
 	<track name="0W13-MtFog"        time="90.6" />
 	<track name="O3-Air"            time="35.4" />
