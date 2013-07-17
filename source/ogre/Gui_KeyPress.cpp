@@ -10,6 +10,8 @@
 #include "FollowCamera.h"
 #include <boost/algorithm/string.hpp>
 
+#include "../sdl4ogre/sdlinputwrapper.hpp"
+
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;
@@ -32,14 +34,10 @@ bool App::actionIsActive(std::string name, std::string pressed)
 
 
 bool App::keyPressed( const SDL_KeyboardEvent &arg )
-{
-	// update all keystates  (needed for all action("..") from oisb)
-	/*
-	if (mOISBsys)
-		mOISBsys->process(0.000);
-	
+{	
 	// action key == pressed key
-	#define action(s)  actionIsActive(s, mKeyboard->getAsString(arg.key))
+	//#define action(s)  actionIsActive(s, mKeyboard->getAsString(arg.key))
+#define action(s) false
 
 	bool tweak = isTweak();
 
@@ -158,35 +156,35 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 
 		//  Screen shot
 		//if (action("Screenshot"))  //isnt working
+		/*
 		const OISB::Action* act = OISB::System::getSingleton().lookupAction("General/Screenshot",false);
 		if (act && act->isActive())
 		{	mWindow->writeContentsToTimestampedFile(PATHMANAGER::Screenshots() + "/", ".jpg");
 			return false;	}
+			*/
 		
-		using namespace OIS;
-
 
 		//  main menu keys
 		if (pSet->isMain && isFocGui)
 		{
-			switch (arg.key)
+			switch (arg.keysym.sym)
 			{
-			case KC_UP:  case KC_NUMPAD8:
+			case SDLK_UP:  case SDLK_KP_8:
 				pSet->inMenu = (pSet->inMenu-1 + ciMainBtns) % ciMainBtns;
 				toggleGui(false);  return true;
 
-			case KC_DOWN:  case KC_NUMPAD2:
+			case SDLK_DOWN:  case SDLK_KP_2:
 				pSet->inMenu = (pSet->inMenu+1) % ciMainBtns;
 				toggleGui(false);  return true;
 
-			case KC_RETURN:
+			case SDLK_RETURN:
 				pSet->isMain = false;
 				toggleGui(false);  return true;
 			}
 		}
 
 		//  esc
-		if (arg.key == KC_ESCAPE)
+		if (arg.keysym.sym == SDLK_ESCAPE)
 		{
 			if (pSet->escquit)
 				mShutDown = true;	// quit
@@ -201,34 +199,34 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 		
 		//  shortcut keys for gui access (alt-Q,C,S,G,V,.. )
 		if (alt)
-			switch (arg.key)
+			switch (arg.keysym.sym)
 			{
-				case KC_Z:  // alt-Z Tweak (alt-shift-Z save&reload)
+				case SDLK_z:  // alt-Z Tweak (alt-shift-Z save&reload)
 					TweakToggle();	return true;
 					
-				case KC_Q:	GuiShortcut(MNU_Single, TAB_Track);	return true;  // Q Track
-				case KC_C:	GuiShortcut(MNU_Single, TAB_Car);	return true;  // C Car
+				case SDLK_q:	GuiShortcut(MNU_Single, TAB_Track);	return true;  // Q Track
+				case SDLK_c:	GuiShortcut(MNU_Single, TAB_Car);	return true;  // C Car
 
-				case KC_T:	GuiShortcut(MNU_Single, TAB_Setup);	return true;  // T Car Setup
-				case KC_W:	GuiShortcut(MNU_Single, TAB_Game);	return true;  // W Game Setup
+				case SDLK_t:	GuiShortcut(MNU_Single, TAB_Setup);	return true;  // T Car Setup
+				case SDLK_w:	GuiShortcut(MNU_Single, TAB_Game);	return true;  // W Game Setup
 
-				case KC_J:	GuiShortcut(MNU_Tutorial, TAB_Champs);	return true;  // J Tutorials
-				case KC_H:	GuiShortcut(MNU_Champ,    TAB_Champs);	return true;  // H Champs
-				case KC_L:	GuiShortcut(MNU_Challenge,TAB_Champs);	return true;  // L Challenges
+				case SDLK_j:	GuiShortcut(MNU_Tutorial, TAB_Champs);	return true;  // J Tutorials
+				case SDLK_h:	GuiShortcut(MNU_Champ,    TAB_Champs);	return true;  // H Champs
+				case SDLK_l:	GuiShortcut(MNU_Challenge,TAB_Champs);	return true;  // L Challenges
 
-				case KC_U:	GuiShortcut(MNU_Single, TAB_Multi);	return true;	// U Multiplayer
-				case KC_R:	GuiShortcut(MNU_Replays, 1);	return true;		// R Replays
+				case SDLK_u:	GuiShortcut(MNU_Single, TAB_Multi);	return true;	// U Multiplayer
+				case SDLK_r:	GuiShortcut(MNU_Replays, 1);	return true;		// R Replays
 
-				case KC_S:	GuiShortcut(MNU_Options, 1);	return true;  // S Screen
-				 case KC_E:	GuiShortcut(MNU_Options, 1,1);	return true;  // E -Effects
-				case KC_G:	GuiShortcut(MNU_Options, 2);	return true;  // G Graphics
-				 case KC_N:	GuiShortcut(MNU_Options, 2,2);	return true;  // N -Vegetation
+				case SDLK_s:	GuiShortcut(MNU_Options, 1);	return true;  // S Screen
+				 case SDLK_e:	GuiShortcut(MNU_Options, 1,1);	return true;  // E -Effects
+				case SDLK_g:	GuiShortcut(MNU_Options, 2);	return true;  // G Graphics
+				 case SDLK_n:	GuiShortcut(MNU_Options, 2,2);	return true;  // N -Vegetation
 
-				case KC_V:	GuiShortcut(MNU_Options, 3);	return true;  // V View
-				 case KC_M:	GuiShortcut(MNU_Options, 3,1);	return true;  // M -Minimap
-				 case KC_O:	GuiShortcut(MNU_Options, 3,3);	return true;  // O -Other
-				case KC_I:	GuiShortcut(MNU_Options, 4);	return true;  // I Input
-				case KC_P:	GuiShortcut(MNU_Options, 5);	return true;  // P Sound
+				case SDLK_v:	GuiShortcut(MNU_Options, 3);	return true;  // V View
+				 case SDLK_m:	GuiShortcut(MNU_Options, 3,1);	return true;  // M -Minimap
+				 case SDLK_o:	GuiShortcut(MNU_Options, 3,3);	return true;  // O -Other
+				case SDLK_i:	GuiShortcut(MNU_Options, 4);	return true;  // I Input
+				case SDLK_p:	GuiShortcut(MNU_Options, 5);	return true;  // P Sound
 			}
 
 		
@@ -236,14 +234,14 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 		if (pSet->dev_keys && alt && shift && !mClient)
 		{
 			string t;
-			switch (arg.key)
+			switch (arg.keysym.sym)
 			{
-				case KC_1: t = "Test1-Flat";  break;
-				case KC_2: t = "Test11-Jumps";  break;
-				case KC_3: t = "TestC4-ow";  break;
-				case KC_4: t = "Test7-FluidsSmall";  break;
-				case KC_5: t = "TestC6-temp";  break;
-				case KC_6: t = "Test10-FlatPerf";  break;
+				case SDLK_1: t = "Test1-Flat";  break;
+				case SDLK_2: t = "Test11-Jumps";  break;
+				case SDLK_3: t = "TestC4-ow";  break;
+				case SDLK_4: t = "Test7-FluidsSmall";  break;
+				case SDLK_5: t = "TestC6-temp";  break;
+				case SDLK_6: t = "Test10-FlatPerf";  break;
 			}
 			if (!t.empty())
 			{
@@ -260,21 +258,21 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 		{
 			int& iCL = iEdTire==1 ? iCurLong : (iEdTire==0 ? iCurLat : iCurAlign);
 			int iCnt = iEdTire==1 ? 11 : (iEdTire==0 ? 15 : 18);
-			switch (arg.key)
+			switch (arg.keysym.sym)
 			{
-				case KC_HOME: case KC_NUMPAD7:  // mode long/lat
+				case SDLK_HOME: case SDLK_KP_7:  // mode long/lat
 				if (ctrl)
 					iTireLoad = 1-iTireLoad;
 				else
 					iEdTire = iEdTire==1 ? 0 : 1;  iUpdTireGr=1;  return true;
 
-				case KC_END: case KC_NUMPAD1:	// mode align
+				case SDLK_END: case SDLK_KP_1:	// mode align
 					iEdTire = iEdTire==2 ? 0 : 2;  iUpdTireGr=1;  return true;
 
-				case KC_PGUP: case KC_NUMPAD9:    // prev val
+				case SDLK_PAGEUP: case SDLK_KP_9:    // prev val
 					iCL = (iCL-1 +iCnt)%iCnt;  iUpdTireGr=1;  return true;
 
-				case KC_PGDOWN: case KC_NUMPAD3:  // next val
+				case SDLK_PAGEDOWN: case SDLK_KP_3:  // next val
 					iCL = (iCL+1)%iCnt;  iUpdTireGr=1;  return true;
 			}
 		}
@@ -287,9 +285,9 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 			Widget* wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();
 			bool edFoc = wf && wf->getTypeName() == "EditBox";
 			//if (wf)  LogO(wf->getTypeName()+" " +toStr(edFoc));
-			switch (arg.key)
+			switch (arg.keysym.sym)
 			{
-				case KC_BACK:
+				case SDLK_BACKSPACE:
 					if (mWndChampStage->getVisible())	// back from champs stage wnd
 					{	btnChampStageBack(0);  return true;  }
 
@@ -301,20 +299,20 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 						if (mWndRpl && !isFocGui)	bRplWnd = !bRplWnd;  // replay controls
 					return true;
 
-				case KC_P:		// replay play/pause
+				case SDLK_p:		// replay play/pause
 					if (bRplPlay && !isFocGui)
 					{	bRplPause = !bRplPause;  UpdRplPlayBtn();
 						return true;  }
 					break;
 					
-				case KC_K:		// replay car ofs
+				case SDLK_k:		// replay car ofs
 					if (bRplPlay && !isFocGui)	{	--iRplCarOfs;  return true;  }
 					break;
-				case KC_L:		// replay car ofs
+				case SDLK_l:		// replay car ofs
 					if (bRplPlay && !isFocGui)	{	++iRplCarOfs;  return true;  }
 					break;
 					
-				case KC_F:		// focus on find edit
+				case SDLK_f:		// focus on find edit
 					if (ctrl && edFind && (pSet->dev_keys || isFocGui &&
 						!pSet->isMain && pSet->inMenu == MNU_Single && mWndTabsGame->getIndexSelected() == TAB_Track))
 					{
@@ -326,14 +324,14 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 					}	break;
 					
 
-				case KC_F7:		// Times
+				case SDLK_F7:		// Times
 					if (shift)
 					{	WP wp = chOpponents;  ChkEv(show_opponents);  ShowHUD();  }
 					else if (!ctrl)
 					{	WP wp = chTimes;  ChkEv(show_times);  ShowHUD();  }
 					return false;
 					
-				case KC_F8:		// car debug bars
+				case SDLK_F8:		// car debug bars
 					if (ctrl)
 					{	WP wp = chDbgB;  ChkEv(car_dbgbars);   ShowHUD();  }
 					else		// Minimap
@@ -343,7 +341,7 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 							if (ndMap[c])  ndMap[c]->setVisible(pSet->trackmap);
 					}	return false;
 
-				case KC_F9:
+				case SDLK_F9:
 					if (ctrl)	// car debug surfaces
 					{	WP wp = chDbgS;  ChkEv(car_dbgsurf);  ShowHUD();  }
 					else
@@ -356,7 +354,7 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 					}
 					return true;
 
-				case KC_F11:
+				case SDLK_F11:
 					if (shift)	// profiler times
 					{	WP wp = chProfTxt;  ChkEv(profilerTxt);  ShowHUD();  }
 					else
@@ -366,7 +364,7 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 						return false;
 					}	break;
 
-				case KC_F10:	//  blt debug, txt
+				case SDLK_F10:	//  blt debug, txt
 					if (shift)
 					{	WP wp = chBltTxt;  ChkEv(bltProfilerTxt);  return false;  }
 					else if (ctrl)
@@ -376,7 +374,7 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 					return false;
 
 				
-				case KC_RETURN:		///  close champ wnds
+				case SDLK_RETURN:		///  close champ wnds
 					if (mWndChampStage->getVisible())
 						btnChampStageStart(0);
 					else			//  chng trk/car + new game  after up/dn
@@ -400,16 +398,16 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 			}
 		}
 	}
-	InputBind(arg.key);
+	//InputBind(arg.key);
 	
 
 	//  gui input
 	if (mGUI && (isFocGui || tweak))
 	{
-		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(arg.key), arg.text);
-		return false;
+		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(
+															  mInputWrapper->sdl2OISKeyCode(arg.keysym.sym)), 0);
 	}
-*/
+
 	return true;
 }
 
