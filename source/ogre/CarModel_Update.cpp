@@ -292,7 +292,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		Real emitS = sq * (whVel * 30) * l * 0.45f;  ///*
 		Real emitM = slide < 1.4f ? 0.f :  (8.f * sq * std::min(5.f, slide) * l);
 		Real emitD = (std::min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
-		Real sizeD = (0.3f + 1.1f * std::min(140.f, whVel) / 140.f) * (w < 2 ? 0.5f : 1.f);
+		Real sizeD = (0.8f + 0.6f * std::min(140.f, whVel) / 140.f) * (w < 2 ? 0.7f : 1.1f);
 
 		//  ter mtr factors
 		int mtr = std::max(0, std::min(whMtr-1, (int)(sc->td.layers.size()-1)));
@@ -331,7 +331,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 			if (ps)	//  dust
 			{	ps->setDefaultDimensions(sizeD,sizeD);
 				ParticleEmitter* pe = ps->getEmitter(0);
-				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
+				pe->setPosition(vpos + posInfo.carY * wR*0.31f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitD);
 			}
 

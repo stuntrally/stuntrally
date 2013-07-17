@@ -47,10 +47,9 @@ particle_system Dust
 {
 	material			Dust
 	quota				1000
-	particle_width		2.4
-	particle_height		2.4
+	particle_width		1.4
+	particle_height		1.4
 	cull_each			true
-	//false
 	billboard_type		point
 	//renderer			billboard
     sorted				true
@@ -60,7 +59,7 @@ particle_system Dust
 		angle	30
 		position	0 0.2 0
 		direction	0 1 0
-		width	0.25
+		width	0.45
 		height	0.35
 		depth	0.45  //h
 
@@ -77,7 +76,7 @@ particle_system Dust
 
 	affector Scaler
 	{
-		rate	0.7
+		rate	0.5
 	}
 
 	affector ColourFader
@@ -89,6 +88,51 @@ particle_system Dust
 	}
 }
 
+//  dust2
+particle_system DustSmall
+{
+	material			Dust
+	quota				1000
+	particle_width		1.4
+	particle_height		1.4
+	cull_each			true
+	billboard_type		point
+	//renderer			billboard
+    sorted				true
+
+	emitter Box
+	{
+		angle	30
+		position	0 0.2 0
+		direction	0 1 0
+		width	0.45
+		height	0.35
+		depth	0.45  //h
+
+		colour				1 0.95 0.75  0.5
+		colour_range_start	1 0.95 0.75  0.4
+		colour_range_end	1 0.9  0.55  0.6
+
+		//emission_rate	20
+		velocity_min	0.0
+		velocity_max	0.4
+		time_to_live_min	4
+		time_to_live_max	7
+	}
+
+	affector Scaler
+	{
+		rate	0.5
+	}
+
+	affector ColourFader
+	{
+		red		-0.018
+		green	-0.021
+		blue	-0.027
+		alpha	-0.130
+	}
+}
 
 //  Mud  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
