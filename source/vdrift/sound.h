@@ -10,7 +10,7 @@
 #include "quaternion.h"
 #include "mathvector.h"
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 
 class SOUNDINFO

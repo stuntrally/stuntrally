@@ -8,8 +8,6 @@
 #include "common/GraphView.h"
 #include "common/Slider.h"
 #include "FollowCamera.h"
-#include <OIS/OIS.h>
-#include "../oisb/OISB.h"
 #include <boost/algorithm/string.hpp>
 
 using namespace std;
@@ -22,6 +20,7 @@ using namespace MyGUI;
 //-----------------------------------------------------------------------------------------------------------
 
 // util
+/*
 bool App::actionIsActive(std::string name, std::string pressed)
 {
 	std::string actionKey = GetInputName(mOISBsys->lookupAction("General/" + name)->mBindings[0]->mBindables[0].second->getBindableName());
@@ -29,12 +28,15 @@ bool App::actionIsActive(std::string name, std::string pressed)
 	boost::to_lower(pressed);
 	return actionKey == pressed;
 }
+*/
 
-bool App::keyPressed( const OIS::KeyEvent &arg )
+
+bool App::keyPressed( const SDL_KeyboardEvent &arg )
 {
 	// update all keystates  (needed for all action("..") from oisb)
+	/*
 	if (mOISBsys)
-		mOISBsys->process(0.000/*?0*/);
+		mOISBsys->process(0.000);
 	
 	// action key == pressed key
 	#define action(s)  actionIsActive(s, mKeyboard->getAsString(arg.key))
@@ -253,7 +255,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		}
 			
 
-		///* tire edit */
+		/// tire edit
 		if (pSet->graphs_type == Gh_TireEdit && !tweak)
 		{
 			int& iCL = iEdTire==1 ? iCurLong : (iEdTire==0 ? iCurLat : iCurAlign);
@@ -269,10 +271,10 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				case KC_END: case KC_NUMPAD1:	// mode align
 					iEdTire = iEdTire==2 ? 0 : 2;  iUpdTireGr=1;  return true;
 
-				/*case KC_1:*/ case KC_PGUP: case KC_NUMPAD9:    // prev val
+				case KC_PGUP: case KC_NUMPAD9:    // prev val
 					iCL = (iCL-1 +iCnt)%iCnt;  iUpdTireGr=1;  return true;
 
-				/*case KC_2:*/ case KC_PGDOWN: case KC_NUMPAD3:  // next val
+				case KC_PGDOWN: case KC_NUMPAD3:  // next val
 					iCL = (iCL+1)%iCnt;  iUpdTireGr=1;  return true;
 			}
 		}
@@ -280,7 +282,6 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		
 		//  not main menus
 		//--------------------------------------------------------------------------------------------------------------
-		//if (/*&& !pSet->isMain*/)
 		if (!tweak)
 		{
 			Widget* wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();
@@ -408,6 +409,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(arg.key), arg.text);
 		return false;
 	}
-
+*/
 	return true;
 }
+

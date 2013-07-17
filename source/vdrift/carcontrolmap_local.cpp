@@ -2,13 +2,9 @@
 #include "../ogre/common/Defines.h"
 #include "carcontrolmap_local.h"
 #include "../ogre/OgreGame.h"
-#include "../oisb/OISBSystem.h"
-#include "../oisb/OISBAction.h"
-#include "../oisb/OISBBinding.h"
-#include "../oisb/OISBAnalogAxisAction.h"
-#include "../oisb/OISBAnalogAxisState.h"
 
 
+/*
 OISB::Real analogAction(std::string name, bool full=false)
 {
 	OISB::AnalogAxisAction* act = static_cast<OISB::AnalogAxisAction*>(
@@ -24,7 +20,7 @@ bool action(const std::string& name)
 {
 	const OISB::Action* act = OISB::System::getSingleton().lookupAction(name);
 	return act ? act->isActive() : false;
-}
+}*/
 
 
 ///  Process Input
@@ -35,6 +31,7 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player,
 	assert(inputs.size() == CARINPUT::ALL);
 
 	lastinputs = inputs;
+	/*
 	
 	if (OISB::System::getSingletonPtr() == NULL)  return inputs;
 	const std::string sPlr = "Player" + toStr(player+1) + "/";
@@ -125,6 +122,6 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player,
 	//  last chk
 	inputs[CARINPUT::LAST_CHK]	= forceBrake ? false : action(sPlr+"LastChk");
 	inputs[CARINPUT::REWIND]	= forceBrake ? false : action(sPlr+"Rewind");
-
+*/
 	return inputs;
 }

@@ -8,7 +8,6 @@
 #include <math.h>
 
 #include "numprocessors.h"
-#include "parallel_task.h"
 #include "performance_testing.h"
 #include "quickprof.h"
 #include "tracksurface.h"
@@ -17,7 +16,6 @@
 #include "../ogre/common/QTimer.h"
 #include "../ogre/OgreGame.h"
 #include "../ogre/FollowCamera.h"
-#include "../oisb/OISBSystem.h"
 
 #define M_PI  3.14159265358979323846
 using namespace std;
@@ -417,9 +415,6 @@ void GAME::AdvanceGameLogic(double dt)
 			PROFILER.endBlock("-physics");
 
 			PROFILER.beginBlock("-car-sim");
-			///if (settings->multi_thr == 0)
-			///	OISB::System::getSingleton().process(dt);  // input update  single thread
-
 			int i = 0;
 			for (list <CAR>::iterator it = cars.begin(); it != cars.end(); ++it, ++i)
 				UpdateCar(*it, TickPeriod());

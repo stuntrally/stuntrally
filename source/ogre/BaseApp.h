@@ -5,10 +5,6 @@
 #include <OgreFrameListener.h>
 #include <OgreWindowEventUtilities.h>
 
-#include <OISKeyboard.h>
-#include <OISMouse.h>
-#include <OISJoyStick.h>
-
 #include <MyGUI_Prerequest.h>
 #include <MyGUI_Widget.h>
 #include <MyGUI_OgrePlatform.h>
@@ -19,13 +15,19 @@
 namespace MyGUI{  class OgreD3D11Platform; }
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
 	namespace RTShader {  class ShaderGenerator;  }  }
-namespace OIS  {  class InputManager;  class Mouse;  class Keyboard;  }
-namespace OISB {  class System;  }
 class MasterClient;  class P2PGameClient;
 
 namespace sh
 {
 	class Factory;
+}
+
+#include "../sdl4ogre/events.h"
+
+namespace SFO
+{
+	class InputWrapper;
+	class SDLCursorManager;
 }
 
 class MaterialMgrListener : public Ogre::MaterialManager::Listener
@@ -47,7 +49,7 @@ protected:
 
 class BaseApp :
 		public Ogre::FrameListener, public Ogre::WindowEventListener,
-		public OIS::KeyListener, public OIS::MouseListener, public OIS::JoyStickListener
+		public SFO::KeyListener, public SFO::MouseListener//, public SFO::JoyListener
 {
 	friend class CarModel;
 public:
@@ -93,17 +95,14 @@ public:
 	float roadUpdTm;
 	class LoadingBar* mLoadingBar;
 	Ogre::SceneNode* ndSky;  //-
-
-	Ogre::String StrFromKey(const Ogre::String& skey);  // util for input
-	std::map<OIS::KeyCode, Ogre::String> kcMap;  // key names in english
-	void InitKeyNamesMap();
 	
 protected:
 	bool mShowDialog, mShutDown;
 	bool setup(), configure();  void updateStats();
-	
-	class HWMouse* mHWMouse;
 
+	int mMouseX;
+	int mMouseY;
+	
 	///  create
 	virtual void createScene() = 0;
 	virtual void destroyScene();
@@ -119,30 +118,27 @@ protected:
 	virtual bool frameEnd(Ogre::Real time) = 0;
 	
 	///  input events
-	bool keyReleased(const OIS::KeyEvent &arg);
-	bool mouseMoved(const OIS::MouseEvent &arg);
-	bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
-	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
-	void windowResized(Ogre::RenderWindow* rw), windowClosed(Ogre::RenderWindow* rw);
-	//  joystick
-	virtual bool axisMoved( const OIS::JoyStickEvent &e, int axis ) = 0;
-    virtual bool buttonPressed( const OIS::JoyStickEvent &e, int button ) = 0;
-    virtual bool buttonReleased( const OIS::JoyStickEvent &e, int button ) = 0;
-
+	virtual bool mouseMoved( const SFO::MouseMotionEvent &arg );
+	virtual bool mousePressed( const SDL_MouseButtonEvent &arg, Uint8 id );
+	virtual bool mouseReleased( const SDL_MouseButtonEvent &arg, Uint8 id );
+	virtual void textInput (const SDL_TextInputEvent& arg);
+	virtual bool keyPressed(const SDL_KeyboardEvent &arg) = 0;
+	virtual bool keyReleased(const SDL_KeyboardEvent &arg);
+	/// \todo joystick
+	void onCursorChange (const std::string& name);
 
 	///  Ogre
 	Ogre::Root* mRoot;  Ogre::SceneManager* mSceneMgr;
 	Ogre::RenderWindow* mWindow;
+	SDL_Window* mSDLWindow;
 	Ogre::RTShader::ShaderGenerator* mShaderGenerator;
 	MaterialMgrListener* mMaterialMgrListener;  // Shader generator material manager listener.	
 
 
 	///  input
-	OISB::System* mOISBsys;
-	OIS::InputManager* mInputManager;
 public:
-	OIS::Mouse* mMouse;  OIS::Keyboard* mKeyboard;
-	bool isKey(OIS::KeyCode k)  {  return mKeyboard->isKeyDown(k);  }
+	SFO::InputWrapper* mInputWrapper;
+	SFO::SDLCursorManager* mCursorManager;
 	
 	// this is set to true when the user is asked to assign a new key
 	bool bAssignKey;

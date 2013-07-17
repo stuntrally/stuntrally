@@ -48,6 +48,8 @@ public:
 	class GAME* pGame;  ///*
 	void updatePoses(float time), newPoses(float time), newPerfTest(float time);
 	void UpdThr();
+
+	virtual bool keyPressed (const SDL_KeyboardEvent &arg);
 	
 	// stuff to be executed after BaseApp init
 	void postInit(), SetFactoryDefaults();
@@ -112,7 +114,6 @@ protected:
 
 	virtual bool frameStart(Ogre::Real time);  void DoNetworking();
 	virtual bool frameEnd(Ogre::Real time);
-	virtual bool keyPressed( const OIS::KeyEvent &arg );
 	float fLastFrameDT;
 		
 	BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
@@ -346,9 +347,6 @@ protected:
 
 	Ogre::String GetInputName(const Ogre::String& sName);
 	//  joy events
-	virtual bool axisMoved( const OIS::JoyStickEvent &e, int axis );
-    virtual bool buttonPressed( const OIS::JoyStickEvent &e, int button );
-    virtual bool buttonReleased( const OIS::JoyStickEvent &e, int button );
 	MyGUI::StaticTextPtr txtJAxis, txtJBtn, txtInpDetail;  MyGUI::WidgetPtr panInputDetail;
 	int lastAxis, axisCnt;  std::string joyName;  class OISB::AnalogAxisAction* actDetail;
 	MyGUI::EditPtr edInputMin, edInputMax, edInputMul, edInputReturn, edInputIncrease;  void editInput(MyGUI::EditPtr);

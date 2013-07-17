@@ -2,8 +2,6 @@
 #include "common/Defines.h"
 #include "../vdrift/game.h"
 #include "OgreGame.h"
-#include <OIS/OIS.h>
-#include "../oisb/OISB.h"
 #include "common/Gui_Def.h"
 
 #include <OgreRoot.h>
@@ -15,6 +13,7 @@ using namespace Ogre;
 
 ///  Gui Init - input tab
 //----------------------------------------------------------------------------------------------------------------------------------
+/*
 String App::GetInputName(const String& sName)
 {
 	Ogre::vector<String>::type vs = StringUtil::split(sName, "/");
@@ -26,9 +25,11 @@ String App::GetInputName(const String& sName)
 	else
 		return vs[1];
 }
+*/
 
 void App::InitInputGui()
 {
+	/*
 	//  Log all devices to log.txt
 	OISB::System& sys = OISB::System::getSingleton();
 	pGame->info_output << "--------------------------------------  Input devices  BEGIN" << std::endl;
@@ -273,7 +274,7 @@ void App::InitInputGui()
 	CreateText(xb1,y, 200,24, "txtshd7", "#C0A0E0"+TR("O  #{Other}"));  y+=3*yb;
 	CreateText(xb,y, 200,24, "txtshd8", "#FFFF60"+TR("I  #{Input}"));  y+=3*yb;
 	CreateText(xb,y, 200,24, "txtshd8", "#B090E0"+TR("P  #{Sound}"));  y+=3*yb;
-
+*/
 	/**  //dbg start on input  ///remove
 	mWndTabsOpts->setIndexSelected(7);
 	inputTab->setIndexSelected(1);  /**/
@@ -295,6 +296,7 @@ void App::inputBindBtnClicked(WP sender)
 
 void App::InputBind(int key, int button, int axis)
 {
+	/*
 	if (!bAssignKey)  return;
 	bAssignKey = false;
 	showMouse();
@@ -330,7 +332,7 @@ void App::InputBind(int key, int button, int axis)
 		bool full = action->getName() == "Steering" || action->getName() == "Flip";  //-1..1
 		OISB::AnalogAxisAction* act = (OISB::AnalogAxisAction*)action;
 		act->setProperty("AnalogEmulator", isAxis ? "" : "Linear");
-		act->setUseAbsoluteValues(/*isAxis*/false);
+		act->setUseAbsoluteValues(false);
 		if (!full && isAxis)
 		{	// half axis inversed
 			act->setProperty("MinValue", -2);
@@ -386,6 +388,7 @@ void App::InputBind(int key, int button, int axis)
 	}
 	else  // axis
 		binding->bind(skey,"");
+		*/
 }
 
 
@@ -393,6 +396,7 @@ void App::InputBind(int key, int button, int axis)
 //-------------------------------------------------------------------------------
 void App::inputDetailBtn(WP sender)
 {
+	/*
 	Ogre::vector<String>::type ss = StringUtil::split(sender->getName(), "_");
 	std::string actionName = ss[1], schemaName = ss[2], index = ss[3];
 	if (txtInpDetail)  txtInpDetail->setCaption(TR("#{InputDetailsFor}")+":  "+schemaName+"  "+actionName);
@@ -409,10 +413,12 @@ void App::inputDetailBtn(WP sender)
 	if (edInputReturn)    edInputReturn->setCaption(toStr(act->getProperty<OISB::Real>("ReturnIncSpeed")));        // =ReturnDecSpeed
 	if (edInputIncrease)  edInputIncrease->setCaption(toStr(act->getProperty<OISB::Real>("IncSpeed")));  // =DecSpeed
 	if (cmbInpDetSet)  cmbInpDetSet->setIndexSelected(0);
+	*/
 }
 
 void App::editInput(MyGUI::EditPtr ed)
 {
+	/*
 	if (!actDetail)  return;
 	Real vMin = s2r(edInputMin->getCaption());
 	Real vMax = s2r(edInputMax->getCaption());
@@ -428,10 +434,12 @@ void App::editInput(MyGUI::EditPtr ed)
 		actDetail->setProperty("ReturnIncSpeed",vRet);	actDetail->setProperty("IncSpeed",vInc);
 	}
 	if (cmbInpDetSet)  cmbInpDetSet->setIndexSelected(0);
+	*/
 }
 
 void App::comboInputPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 {
+	/*
 	if (!actDetail || val==0)  return;
 	//key half, key full, axis half, axis half inversed, axis full, axis full inversed
 	const Real aMin[6] = {0,-1, 0,  -2,  -1, -1};
@@ -444,10 +452,12 @@ void App::comboInputPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 	actDetail->setProperty("MinValue",vMin);
 	actDetail->setProperty("MaxValue",vMax);
 	actDetail->setProperty("InverseMul",vMul);
+	*/
 }
 
 void App::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 {
+	/*
 	if (val == 0)  return;  cmb->setIndexSelected(0);
 	TabPtr tPlr = mGUI->findWidget<Tab>("InputTab",false);  if (!tPlr)  return;
 	int id = tPlr->getIndexSelected();  if (id == 0)  return;
@@ -471,6 +481,7 @@ void App::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 	if (!actDetail)  return;  // update edit vals
 	if (edInputReturn)      edInputReturn->setCaption(toStr(actDetail->getProperty<OISB::Real>("IncSpeed")));
 	if (edInputIncrease)  edInputIncrease->setCaption(toStr(actDetail->getProperty<OISB::Real>("ReturnIncSpeed")));
+	*/
 }
 
 
@@ -478,6 +489,7 @@ void App::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 //-------------------------------------------------------------------------------
 void App::UpdateInputBars()
 {
+	/*
 	MyGUI::TabPtr inputTab = mGUI->findWidget<Tab>("InputTab");
 	if (!inputTab)  return;
 
@@ -535,11 +547,13 @@ void App::UpdateInputBars()
 			}
 		}
 	}
+	*/
 }
 
 
 ///  joysticks events
 //
+/*
 bool App::axisMoved( const OIS::JoyStickEvent &e, int axis )
 {
 	if (txtJAxis)
@@ -565,6 +579,7 @@ bool App::buttonReleased( const OIS::JoyStickEvent &e, int button )
 {
 	return true;
 }
+*/
 
 void App::cmbJoystick(CMB)
 {

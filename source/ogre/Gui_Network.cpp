@@ -6,13 +6,10 @@
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 
-#include <OIS/OIS.h>
-#include "../oisb/OISB.h"
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
 
 using namespace std;
-//using namespace Ogre;
 using namespace MyGUI;
 
 

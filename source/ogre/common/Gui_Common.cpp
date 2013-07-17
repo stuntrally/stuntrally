@@ -23,6 +23,8 @@ using namespace std;
 
 #include "../shiny/Main/Factory.hpp"
 
+#include "../sdl4ogre/sdlinputwrapper.hpp"
+
 
 
 ///  Gui Init  [Graphics]
@@ -351,16 +353,11 @@ void App::GuiInitGraphics()
 //  util
 //----------------------------------------------------------------------------------------------------------------
 void App::GuiCenterMouse()
-{
-	// mouse center causes problems on x11 with mouse capture=off
-	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-	if (!pSet->capture_mouse)  return;
-	#endif
-	
+{	
 	int xm = mWindow->getWidth()/2, ym = mWindow->getHeight()/2;
+
+	mInputWrapper->warpMouse(xm, ym);
 	MyGUI::InputManager::getInstance().injectMouseMove(xm, ym, 0);
-	OIS::MouseState &ms = const_cast<OIS::MouseState&>(mMouse->getMouseState());
-	ms.X.abs = xm;  ms.Y.abs = ym;
 }
 
 void App::btnQuit(WP)

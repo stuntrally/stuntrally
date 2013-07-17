@@ -82,6 +82,11 @@ if(BUILD_GAME OR BUILD_EDITOR)
 	#include_directories(${BULLET_INCLUDE_DIRS})
 	#list(APPEND LIBS ${BULLET_LIBRARIES})
 
+        find_package(SDL2 REQUIRED)
+        include_directories(${SDL2_INCLUDE_DIR})
+        link_directories(${SDL2_LIBRARY_DIRS})
+        list(APPEND LIBS ${SDL2_LIBRARY})
+
 	find_package(MyGUI REQUIRED QUIET)
 	include_directories(${MYGUI_INCLUDE_DIRS})
 	include_directories(${MYGUI_PLATFORM_INCLUDE_DIRS})
@@ -92,7 +97,7 @@ if(BUILD_GAME OR BUILD_EDITOR)
 		list(APPEND LIBS ${MYGUI_LIBRARIES} MyGUI.OgrePlatform) #TODO: MyGUI.OgrePlatform is not added by the find script
 	ENDIF(MSVC)
 
-	foreach(lib  OIS SDL OGG VorbisFile)    # Simple libraries added in a loop
+        foreach(lib  OGG VorbisFile)    # Simple libraries added in a loop
 		find_package(${lib} REQUIRED QUIET)
 		include_directories(${${lib}_INCLUDE_DIRS})
 		list(APPEND LIBS ${${lib}_LIBRARIES})

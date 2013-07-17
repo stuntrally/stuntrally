@@ -16,7 +16,7 @@ include_directories(btOgre ogre ogre/common paged-geom road tinyxml vdrift bulle
 
 # Compile our libraries
 if (BUILD_GAME OR BUILD_EDITOR)
-	foreach(ourlib   tinyxml oisb paged-geom bullet btOgre)
+        foreach(ourlib   tinyxml paged-geom bullet btOgre)
 		add_subdirectory(${ourlib})
 		list(APPEND OURLIBS ${ourlib})
 	endforeach()
@@ -24,6 +24,9 @@ if (BUILD_GAME OR BUILD_EDITOR)
 	add_subdirectory(shiny)
 	list(APPEND OURLIBS "shiny")
 	list(APPEND OURLIBS "shiny.OgrePlatform")
+
+        add_subdirectory(sdl4ogre)
+        list(APPEND OURLIBS "sdl4ogre")
 endif()
 
 # Game executable
@@ -93,7 +96,6 @@ if (MSVC)
 		editor/*.cpp
 		ogre/*.cpp
 		ogre/common/*.cpp
-		oisb/*.cpp
 		paged-geom/*.cpp
 		road/*.cpp
 		vdrift/*.cpp
