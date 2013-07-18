@@ -114,6 +114,7 @@ public:
 	std::vector<CarInfo> cars;
 	std::map<std::string, int> carmap;  // 0 if not found
 	std::map<std::string, std::string> colormap;  // car type to list color
+	float magic;
 	
 	//  methods
 	bool LoadXml(Ogre::String file);
