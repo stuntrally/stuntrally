@@ -81,7 +81,7 @@
 	<track name="F11-Dawn"          time="34.3" />
 	<track name="I4-Sunset"         time="56.6" />
 	<track name="V1-Dark"           time="35.5" />
-	<track name="I5-Shore"          time="75.4" />
+	<track name="I5-Shore"          time="80.4" /><!--75-->
 	<track name="X1-Magic"          time="47.3" />
 	<track name="D9-Mud"            time="47.0" />
 	<track name="J14-Muddy"         time="51.0" />
@@ -103,7 +103,7 @@
 	<track name="I8-Pharaoh"        time="73.3" />
 	<track name="C2-CanyonRun"      time="67.9" />
 	<track name="V2-Volcanic"       time="193.0" />
-	<track name="J18-Tiny"          time="34.3" />
+	<track name="J18-Tiny"          time="36.3" />
 	<track name="G4-River"          time="34.4" />
 	<track name="V3-Crater"         time="51.3" />
 	<track name="F14-Maze"          time="210.3" />
