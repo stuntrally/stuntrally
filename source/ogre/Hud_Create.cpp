@@ -325,12 +325,13 @@ void App::CreateHUD(bool destroy)
 	}
 	for (int o=0; o < cnt; ++o)  // fill car names, not changed during play
 	{
-		const CarModel* cm = carModels[o];
+		CarModel* cm = carModels[o];
 		if (cm->eType != CarModel::CT_REPLAY)
 		{
 			hudOpp[o][2]->setCaption(cm->sDispName);
 			hudOpp[o][2]->setColour(cm->color);
 		}
+		cm->updTimes = true;
 	}
 
 	ovWarnWin = ovr.getByName("Hud/WarnAndWin");
