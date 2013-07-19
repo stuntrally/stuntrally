@@ -274,7 +274,7 @@ String App::GetTimeString(float time) const
 		ss = toStr(min)+":"+fToStr(secs,2,5,'0');
 		return ss;
 	}else
-		return "-:--.---";
+		return "-:--.--";
 }
 String App::GetTimeShort(float time) const
 {

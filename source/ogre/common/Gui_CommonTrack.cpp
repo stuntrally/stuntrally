@@ -528,20 +528,29 @@ void App::ReadTrkStatsChamp(String track, bool reverse)
 }
 #endif
 
-void App::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTrack, float time, bool champ)
+void App::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTrack, float timeCur, bool champ)
 {
+#ifndef SR_EDITOR  // game
+	bool mph = pSet->show_mph;
+#else
+	bool mph = false;
+#endif
+	float m = mph ? 0.621371f : 1.f;
+	string km = mph ? " mi" : " km";
+	int ch = champ ? 1 : 0;
+	
 	//  road stats
 	//---------------------------------------------------------------------------
-	int ch = champ ? 1 : 0;
-	if (stTrk[ch][1])  stTrk[ch][1]->setCaption(fToStr(sc->td.fTerWorldSize/1000.f,3,5)+" km");
+	if (stTrk[ch][1])  stTrk[ch][1]->setCaption(fToStr(sc->td.fTerWorldSize*0.001f*m ,3,5)+km);
 	if (!rd)  return;
-	if (stTrk[ch][0])  stTrk[ch][0]->setCaption(fToStr(rd->st.Length/1000.f,3,5)+" km");
+	float len = rd->st.Length;
+	if (stTrk[ch][0])  stTrk[ch][0]->setCaption(fToStr(len*0.001f*m ,3,5)+km);
 
-	if (stTrk[ch][2])  stTrk[ch][2]->setCaption(fToStr(rd->st.WidthAvg,2,4)+" m");
-	if (stTrk[ch][3])  stTrk[ch][3]->setCaption(fToStr(rd->st.HeightDiff,1,3)+" m");
+	if (stTrk[ch][2])  stTrk[ch][2]->setCaption(fToStr(rd->st.WidthAvg ,1,3)+" m");
+	if (stTrk[ch][3])  stTrk[ch][3]->setCaption(fToStr(rd->st.HeightDiff ,0,2)+" m");
 
-	if (stTrk[ch][4])  stTrk[ch][4]->setCaption(fToStr(rd->st.OnTer,1,3)+"%");
-	if (stTrk[ch][5])  stTrk[ch][5]->setCaption(fToStr(rd->st.Pipes,1,3)+"%");
+	if (stTrk[ch][4])  stTrk[ch][4]->setCaption(fToStr(rd->st.OnTer ,0,2)+"%");
+	if (stTrk[ch][5])  stTrk[ch][5]->setCaption(fToStr(rd->st.Pipes ,0,2)+"%");
 					
 	int id = tracksXml.trkmap[sTrack];
 	for (int i=0; i < InfTrk; ++i)
@@ -563,19 +572,32 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTr
 	}
 
 #ifndef SR_EDITOR  // game
-	//  best time, avg vel,
-	std::string unit = pSet->show_mph ? "mph" : "km/h";
-	if (time < 0.1f)
+	//  best time, avg vel
+	std::string unit = mph ? " mph" : " kmh";
+	m = pSet->show_mph ? 2.23693629f : 3.6f;
+
+	//  track time
+	float carMul = GetCarTimeMul(pSet->gui.car[0], pSet->gui.sim_mode);
+	float timeTrk = times.trks[sTrack];
+	std::string speedTrk = fToStr(len / timeTrk * m, 0,3) + unit;
+	float timeT = (/*place*/1 * carsXml.magic * timeTrk + timeTrk) / carMul;
+	if (stTrk[ch][6])  stTrk[ch][6]->setCaption(GetTimeString(timeT));
+	if (stTrk[ch][7])  stTrk[ch][7]->setCaption(speedTrk);
+
+	if (timeCur < 0.1f)
 	{
-		if (stTrk[ch][6])  stTrk[ch][6]->setCaption(GetTimeString(0.f));
-		if (stTrk[ch][7])  stTrk[ch][7]->setCaption("0 "+unit);
+		if (stTrk[ch][8])  stTrk[ch][8]->setCaption(GetTimeString(0.f));
+		if (stTrk[ch][9])  stTrk[ch][9]->setCaption("--");
+		if (stTrk[ch][10])  stTrk[ch][10]->setCaption("--");
 	}else
-	{	
-		if (stTrk[ch][6])  stTrk[ch][6]->setCaption(GetTimeString(time));
-		std::string speed = pSet->show_mph ? fToStr(rd->st.Length / time * 2.23693629f, 1, 4)+" mph"
-										   : fToStr(rd->st.Length / time * 3.6f, 1, 4)+" km/h";
-		if (stTrk[ch][7])  stTrk[ch][7]->setCaption(speed);
-		if (stTrk[ch][8])  stTrk[ch][8]->setCaption(fToStr(rd->st.Pitch,2,4)+"%");
+	{	//  car record
+		std::string speed = fToStr(len / timeCur * m, 0,3) + unit;
+		if (stTrk[ch][8])  stTrk[ch][8]->setCaption(GetTimeString(timeCur));
+		if (stTrk[ch][9])  stTrk[ch][9]->setCaption(speed);
+		//  points
+		float points = 0.f;
+		GetRacePos(timeCur, timeTrk, carMul, false, &points);
+		if (stTrk[ch][10])  stTrk[ch][10]->setCaption(fToStr(points ,1,3));
 	}
 #else
 	if (trkName)  //
