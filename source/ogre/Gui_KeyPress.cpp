@@ -37,7 +37,7 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 {	
 	// action key == pressed key
 	//#define action(s)  actionIsActive(s, mKeyboard->getAsString(arg.key))
-#define action(s) false
+	#define action(s) false
 
 	bool tweak = isTweak();
 
@@ -113,7 +113,8 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 
 
 		//  gui on/off  or close wnds
-		if (action("ShowOptions") && !alt)
+		if (arg.keysym.sym == SDLK_F1
+		/*if (action("ShowOptions")*/ && !alt)
 		{
 			if (mWndNetEnd && mWndNetEnd->getVisible())  {  mWndNetEnd->setVisible(false);  // hide netw end
 				return false;	}
@@ -125,7 +126,8 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 		}
 
 		//  new game - reload   not in multiplayer
-		if (action("RestartGame") && !mClient)
+		if (arg.keysym.sym == SDLK_F5
+		/*if (action("RestartGame")*/ && !mClient)
 		{
 			bPerfTest = ctrl;  // ctrl-F5 start perf test
 			if (bPerfTest)
@@ -136,7 +138,8 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 		}
 
 		//  new game - fast (same track & cars)
-		if (action("ResetGame") && !mClient)
+		if (arg.keysym.sym == SDLK_F4
+		/*if (action("ResetGame")*/ && !mClient)
 		{	
 			for (int c=0; c < carModels.size(); ++c)
 			{
