@@ -164,13 +164,15 @@ bool CarsXml::LoadXml(Ogre::String file)
 	
 	//  global time mul factors
 	float fEasy = 1.f, fNorm = 1.f;
+	magic = 0.010f;
 
 	const char* a;
 	TiXmlElement* eGlobal = root->FirstChildElement("global");
 	if (eGlobal)
 	{
-		a = eGlobal->Attribute("easy");	if (a)  fEasy = s2r(a);
-		a = eGlobal->Attribute("norm");	if (a)  fNorm = s2r(a);
+		a = eGlobal->Attribute("easy");  if (a)  fEasy = s2r(a);
+		a = eGlobal->Attribute("norm");  if (a)  fNorm = s2r(a);
+		a = eGlobal->Attribute("magic"); if (a)  magic = s2r(a);
 	}
 
 	///  cars

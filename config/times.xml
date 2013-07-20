@@ -13,14 +13,14 @@
 	<track name="detroit"		time="112.0"/>
 	<track name="brands"		time="95.0"/>
 
-	<track name="TestC1-circle"     time="11.7" />
-	<track name="TestC2-pipe-half"  time="9.6" />
-	<track name="TestC3-pipe-big"   time="17.9" />
-	<track name="TestC4-ow"         time="10.0" />
-	<track name="TestC5-egg"        time="8.0" />
-	<track name="TestC6-temp"       time="6.6" />
-	<track name="TestC7-oc"         time="11.7" />
-	<track name="TestC8-align"      time="15.2" />
+	<track name="TestC1-circle"     time="14.7" />
+	<track name="TestC2-pipe-half"  time="12.6" />
+	<track name="TestC3-pipe-big"   time="19.9" />
+	<track name="TestC4-ow"         time="11.0" />
+	<track name="TestC5-egg"        time="10.0" />
+	<track name="TestC6-temp"       time="7.6" />
+	<track name="TestC7-oc"         time="12.7" />
+	<track name="TestC8-align"      time="17.2" />
 
 	<track name="J1-T"              time="47.5" />
 	<track name="D1-simple"         time="68.0" />
@@ -81,14 +81,14 @@
 	<track name="F11-Dawn"          time="34.3" />
 	<track name="I4-Sunset"         time="56.6" />
 	<track name="V1-Dark"           time="35.5" />
-	<track name="I5-Shore"          time="75.4" />
+	<track name="I5-Shore"          time="80.4" /><!--75-->
 	<track name="X1-Magic"          time="47.3" />
 	<track name="D9-Mud"            time="47.0" />
 	<track name="J14-Muddy"         time="51.0" />
 	<track name="S13-Hole"          time="92.1" />
 	<track name="0W9-IceFrenzy"     time="109.4" />
 	<track name="J15-Swamp"         time="128.6" />
-	<track name="A4-Snake"          time="95.6" />
+	<track name="A4-Snake"          time="97.0" /><!--95.6-->
 	<track name="X2-Swirl"          time="99.0" />
 	<track name="F12-HighPeaks"     time="273.7" /><!--285-->
 	<track name="D10-MudBath"       time="138.5" />
@@ -103,7 +103,7 @@
 	<track name="I8-Pharaoh"        time="73.3" />
 	<track name="C2-CanyonRun"      time="67.9" />
 	<track name="V2-Volcanic"       time="193.0" />
-	<track name="J18-Tiny"          time="34.3" />
+	<track name="J18-Tiny"          time="36.3" />
 	<track name="G4-River"          time="34.4" />
 	<track name="V3-Crater"         time="51.3" />
 	<track name="F14-Maze"          time="210.3" />

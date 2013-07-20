@@ -551,15 +551,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\data\materials\rnd.cg"
-				>
-			</File>
-			<File
 				RelativePath=".\data\materials2\rnd.material"
-				>
-			</File>
-			<File
-				RelativePath=".\data\materials\rnd.material"
 				>
 			</File>
 			<File
@@ -648,6 +640,14 @@
 			</File>
 			<File
 				RelativePath=".\data\trees\collisions.xml"
+				>
+			</File>
+			<File
+				RelativePath=".\data\gui\core_blackblueskins.xml"
+				>
+			</File>
+			<File
+				RelativePath=".\data\gui\core_blackbluetemplates.xml"
 				>
 			</File>
 			<File

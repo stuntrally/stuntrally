@@ -122,7 +122,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "network.game_name", netGameName);
 
 	Param(c,w, "replay.rec", rpl_rec);				Param(c,w, "replay.ghost", rpl_ghost);
-	Param(c,w, "replay.bestonly", rpl_bestonly);	Param(c,w, "replay.listview", rpl_listview);
+	Param(c,w, "replay.bestonly", rpl_bestonly);
+	Param(c,w, "replay.listview", rpl_listview);	Param(c,w, "replay.listghosts", rpl_listghosts);
 	Param(c,w, "replay.alpha", rpl_alpha);			Param(c,w, "replay.ghostpar", rpl_ghostpar);
 	Param(c,w, "replay.num_views", rpl_numViews);	Param(c,w, "replay.ghostrewind", rpl_ghostrewind);
 	Param(c,w, "replay.ghostother", rpl_ghostother);
@@ -208,7 +209,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	//  replay
 	,rpl_ghost(1), rpl_bestonly(1)
 	,rpl_alpha(0), rpl_ghostpar(0), rpl_ghostrewind(1), rpl_ghostother(1)
-	,rpl_listview(0), rpl_numViews(4)
+	,rpl_listview(0), rpl_listghosts(0), rpl_numViews(4)
 	//  sim
 	,game_fq(82.f), blt_fq(160.f), blt_iter(24), dyn_iter(30)
 	,multi_thr(0), thread_sleep(5), perf_speed(100000)

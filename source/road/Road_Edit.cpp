@@ -93,16 +93,36 @@ void SplineRoad::Move(Vector3 relPos)
 		RebuildRoad();	}
 }
 
-//  Scale
-void SplineRoad::Scale1(int id, Real posMul)
+//  Scale1 (for tools)
+void SplineRoad::Scale1(int id, Real posMul, Real hMul)
 {
-	Vector3 pos = getPos(id) * (1.f + posMul);
+	Vector3 pos = getPos(id);
+	if (posMul != 0.f)
+	{	pos.x *= posMul;  pos.z *= posMul;  }
+	if (hMul != 0.f)
+		pos.y *= hMul;
+	
 	if (mP[id].onTer)
 		pos.y = (mTerrain ? mTerrain->getHeightAtWorldPosition(pos.x, 0, pos.z) : 0.f) + fHeight;
 	setPos(id, pos);
 	vMarkNodes[id]->setPosition(pos);  // upd marker
 }
 
+//  Update Points onTer
+void SplineRoad::UpdPointsH()
+{
+	for (int id=0; id < getNumPoints(); ++id)
+	{	
+		Vector3 pos = getPos(id);
+		if (mP[id].onTer)
+		{	pos.y = (mTerrain ? mTerrain->getHeightAtWorldPosition(pos.x, 0, pos.z) : 0.f) + fHeight;
+			setPos(id, pos);
+		}
+		vMarkNodes[id]->setPosition(pos);  // upd marker
+	}
+}
+
+//  Scale selected
 void SplineRoad::ScaleSel(Real posMul)
 {
 	Vector3 pos0(0,0,0);  // = getPos0() ?

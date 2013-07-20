@@ -472,9 +472,9 @@
                 <Widget type="Widget" skin="PanelEmpty" position="2 3 83 42" align="Stretch" name="TabItem"/>
             </Widget>
             <Widget type="Widget" skin="PanelEmpty" position="7 0 78 33" align="HStretch Top" name="HeaderPlace">
-                <Widget type="Widget" skin="TabHeaderEmptySkin" position="52 0 26 33" name="Controls">
-                    <Widget type="Button" skin="ButtonRightSkin" position="14 4 12 24" name="Right"/>
-                    <Widget type="Button" skin="ButtonLeftSkin" position="1 4 12 24" name="Left"/>
+                <Widget type="Widget" skin="TabHeaderEmptySkin" position="2 0 56 33" name="Controls">
+                    <Widget type="Button" skin="ButtonRightSkin" position="24 4 24 24" name="Right"/>
+                    <Widget type="Button" skin="ButtonLeftSkin" position="1 4 24 24" name="Left"/>
                 </Widget>
                 <Widget type="Widget" skin="TabHeaderEmptySkin" position="0 0 52 33" name="Empty"/>
             </Widget>

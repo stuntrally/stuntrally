@@ -284,6 +284,7 @@ void App::btnDeleteObjects(WP)
 	iObjCur = -1;
 }
 
+//  Scale track  --------------------------------
 void App::btnScaleAll(WP)
 {
 	if (!edScaleAllMul || !road)  return;
@@ -292,7 +293,7 @@ void App::btnScaleAll(WP)
 	//  road
 	for (int i=0; i < road->getNumPoints(); ++i)
 	{
-		road->Scale1(i, sf - 1.f);
+		road->Scale1(i, sf, 0.f);
 		road->mP[i].width *= sf;
 	}
 	road->bSelChng = true;
@@ -304,20 +305,27 @@ void App::btnScaleAll(WP)
 		fb.pos.x *= sf;  fb.pos.z *= sf;
 		fb.size.x *= sf;  fb.size.z *= sf;
 	}
+	
+	//  objs
+	for (int i=0; i < sc->objects.size(); ++i)
+	{
+		Object& o = sc->objects[i];
+		o.pos[0] *= sf;  o.pos[1] *= sf;
+		o.SetFromBlt();
+	}
 
-	//  ter
+	//  ter  ---
 	sc->td.fTriangleSize *= sf;  sc->td.UpdVals();
 	
 	SetGuiFromXmls();	UpdateTrack();
 	
-	//  road upd mrk--
-	//for (int i=0; i < road->getNumPoints(); ++i)
-		//road->Move1(i, Vector3::ZERO);
-	//road->RebuildRoad(true);
+	//  road upd
+	if (0) //road)  // doesnt work here..
+	{	road->UpdPointsH();
+		road->RebuildRoad(true);
+	}
 
-	//road->UpdAllMarkers();  //!?
-
-	//start Pos
+	//  start pos
 	const int n = 0;  // 1st entry - all same / edit 4..
 	vStartPos[n][0] *= sf;
 	vStartPos[n][1] *= sf;  UpdStartPos();

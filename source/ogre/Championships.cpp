@@ -32,17 +32,18 @@ int App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldSta
 	//  magic factor: seconds needed for 1 second of track time for 1 race place difference
 	//  eg. if track time is 3min = 180 sec, then 180*magic = 2.16 sec
 	//  and this is the difference between car race positions (1 and 2, 2 and 3 etc)
-	const float magic = 0.010f;  // 0.006 .. 0.0012
-										//par
-	float timeC = timeCur; //+ (coldStart ? -2 : 0);  // if not already driving at start, sub 2 sec (for gaining speed)
+	//  0.006 .. 0.0012				// par
+	//float time1pl = magic * timeTrk;
+
+	//float timeC = timeCur; //+ (coldStart ? -2 : 0);  // if not already driving at start, sub 2 sec (for gaining speed)
+	float timeC = timeCur + (coldStart ? 0 : 1);  // if already driving at start, add 1 sec (times are for 1st lap)
 	float time = timeC * carTimeMul;
 
-	float place = (time - timeTrk)/timeTrk / magic;
+	float place = (time - timeTrk)/timeTrk / carsXml.magic;
 	// time = (place * magic * timeTrk + timeTrk) / carTimeMul;  //todo: show this in lists and hud..
 	if (pPoints)
 		*pPoints = std::max(0.f, (20.f - place) * 0.5f);
-	//place = std::max(1.f, place + 1.f);
-	//float t1pl = magic * timeTrk;
+
 	int plc = place < 1.f ? 1 : std::min(30, (int)( floor(place +1.f) ));
 	return plc;
 }
@@ -278,7 +279,7 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 void App::listStageChng(MyGUI::MultiList2* li, size_t pos)
 {
 	if (valStageNum)  valStageNum->setVisible(pos!=ITEM_NONE);
-	if (pos==ITEM_NONE)  return;
+	if (pos==ITEM_NONE || liChamps->getIndexSelected()==ITEM_NONE)  return;
 	
 	int nch = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()).substr(7))-1;
 	if (nch >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
@@ -382,7 +383,8 @@ void App::btnStageNext(WP)
 	size_t id = liStages->getIndexSelected(), all = liStages->getItemCount();
 	if (all == 0)  return;
 	if (id == ITEM_NONE)  id = 0;
-	id = (id +1) % all;
+	else
+		id = (id +1) % all;
 	liStages->setIndexSelected(id);
 	listStageChng(liStages, id);
 }

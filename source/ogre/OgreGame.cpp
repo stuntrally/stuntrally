@@ -66,7 +66,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,txCarSpeed(0),txCarType(0), txCarAuthor(0),txTrackAuthor(0)
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
 	,valRplName(0),valRplInfo(0),valRplName2(0),valRplInfo2(0), edRplName(0), edRplDesc(0)
-	,rbRplCur(0), rbRplAll(0), rbRplGhosts(0), bRplBack(0),bRplFwd(0), newGameRpl(0)
+	,rbRplCur(0), rbRplAll(0), bRplBack(0),bRplFwd(0), newGameRpl(0)
 	,bRplPlay(0), bRplPause(0), bRplRec(0), bRplWnd(1), bGuiReinit(0)
 	// gui multiplayer
 	,netGuiMutex(), sChatBuffer(), netGameInfo(), bUpdChat(false), iChatMove(0)
@@ -274,7 +274,7 @@ String App::GetTimeString(float time) const
 		ss = toStr(min)+":"+fToStr(secs,2,5,'0');
 		return ss;
 	}else
-		return "-:--.---";
+		return "-:--.--";
 }
 String App::GetTimeShort(float time) const
 {
@@ -288,53 +288,6 @@ String App::GetTimeShort(float time) const
 		return ss;
 	}else
 		return "-:--";
-}
-
-
-//  ghost filename
-//
-using std::string;
-string ghostFile(SETTINGS* pSet, string sim_mode, string car)
-{
-	return PATHMANAGER::Ghosts()+"/" +sim_mode+"/"
-		+ pSet->game.track + (pSet->game.track_user ? "_u" : "") + (pSet->game.trackreverse ? "_r" : "")
-		+ "_" + car + ".rpl";
-}
-const String& App::GetGhostFile(std::string* ghCar)
-{
-	static String file;
-	string sim_mode = pSet->game.sim_mode, car = pSet->game.car[0];
-	file = ghostFile(pSet, sim_mode, car);
-	if (PATHMANAGER::FileExists(file))
-		return file;
-	
-	//  if doesnt exist look for other cars, then other sim modes
-	int i=0, si=carList->getItemCount(), n=0;
-	bool srch = true;
-	if (ghCar)
-	while (srch)
-	{
-		string car = carList->getItemNameAt(si-1-i).substr(7);
-		file = ghostFile(pSet, sim_mode, car);
-
-		if (PATHMANAGER::FileExists(file))
-		{	srch = false;  *ghCar = car;  }
-		++i;
-		if (i >= si)
-		{	i = 0;
-			if (sim_mode == "easy")  sim_mode = "normal";
-			else  sim_mode = "easy";
-			++n;  if (n==2)  srch = false;  // only those 2
-		}
-	}
-	return file;
-}
-
-std::string App::GetRplListDir()
-{
-	return (pSet->rpl_listview == 2
-		? (PATHMANAGER::Ghosts() + "/" + pSet->gui.sim_mode)
-		: PATHMANAGER::Replays() );
 }
 
 

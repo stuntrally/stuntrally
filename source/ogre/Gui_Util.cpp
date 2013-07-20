@@ -104,6 +104,94 @@ void App::FillCarList()
 //-----------------------------------------------------------------------------------------------------------
 
 
+//  ghost filename
+//
+using std::string;
+string ghostFile(SETTINGS* pSet, string sim_mode, string car)
+{
+	return PATHMANAGER::Ghosts()+"/" +sim_mode+"/"
+		+ pSet->game.track + (pSet->game.track_user ? "_u" : "") + (pSet->game.trackreverse ? "_r" : "")
+		+ "_" + car + ".rpl";
+}
+
+const String& App::GetGhostFile(std::string* ghCar)
+{
+	static String file;
+	string sim_mode = pSet->game.sim_mode, car = pSet->game.car[0];
+	file = ghostFile(pSet, sim_mode, car);
+	if (PATHMANAGER::FileExists(file))
+		return file;
+	
+	if (!ghCar)
+		return file;
+
+	///--  if doesnt exist look for other cars, then other sim modes
+
+	//  cars list sorted by car speed
+	std::list<CarL> liCar2 = liCar;
+	liCar2.sort(CarSort[1]);
+
+	std::vector<string> cars;
+	for (std::list<CarL>::iterator i = liCar2.begin(); i != liCar2.end(); ++i)
+	{
+		String name = (*i).name;
+		cars.push_back(name);
+		//LogO(name);
+	}
+
+	//  find current
+	int i = 0, si = cars.size(), ci = 0;
+	while (i < si)
+	{	if (cars[i] == car)
+		{	ci = i;  break;  }
+		++i;
+	}
+	//LogO(toStr(ci)+" ci "+cars[ci]+" all "+toStr(si));
+
+	std::vector<string> cars2;
+	int a = ci, b = ci;  i = 0;
+	cars2.push_back(cars[ci]);  // 1st cur
+	while (cars2.size() < si)  // same size
+	{	// +1, -1, +2, -2 ..
+		if (i % 2 == 0)
+		{	++a;  // next faster car
+			if (a < si)  cars2.push_back(cars[a]);
+		}else
+		{	--b;  // next slower car
+			if (b >= 0)  cars2.push_back(cars[b]);
+		}	++i;
+	}
+	//for (i=0; i < cars2.size(); ++i)
+	//	LogO(toStr(i)+"> "+cars2[i]);
+	
+	bool srch = true;
+	i = 0;  a = 0;
+	while (srch)
+	{
+		const string& car = cars2[i];
+		file = ghostFile(pSet, sim_mode, car);
+
+		if (PATHMANAGER::FileExists(file))
+		{	srch = false;  *ghCar = car;  }
+		++i;
+		if (i >= si)
+		{	i = 0;
+			if (sim_mode == "easy")  sim_mode = "normal";
+			else  sim_mode = "easy";
+			++a;  if (a==2)  srch = false;  // only those 2
+		}
+	}
+	return file;
+}
+
+std::string App::GetRplListDir()
+{
+	return (pSet->rpl_listghosts
+		? (PATHMANAGER::Ghosts() + "/" + pSet->gui.sim_mode)
+		: PATHMANAGER::Replays() );
+}
+
+
 //  [Game] 	. . . . . . . . . . . . . . . . . . . .    --- lists ----    . . . . . . . . . . . . . . . . . . 
 
 //  car

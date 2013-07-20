@@ -7,8 +7,8 @@
 	<color type="Extreme" color="#C898E8" />
 	<color type="Other"   color="#C0D0E0" />
 
-	<!--global multipliers for car factors-->
-	<global easy="0.92" norm="0.95" />
+	<!--global multipliers for car factors, magic - see App::GetRacePos-->
+	<global easy="0.94" norm="0.95" magic="0.010"/>
 
 	<car id="OT"  name="OT"  crtver="2.1" speed="0" year="1965" type="Slow"     easy="0.66" norm="0.67" />
 	<car id="FR4" name="FR4" crtver="2.1" speed="2" year="1986" type="Terrain"  easy="0.86" norm="0.90" />

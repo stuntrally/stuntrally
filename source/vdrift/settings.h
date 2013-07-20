@@ -130,7 +130,8 @@ public:
 	
 	//  replay
 	bool rpl_rec, rpl_ghost, rpl_bestonly, rpl_ghostother;
-	bool rpl_alpha, rpl_ghostpar, rpl_ghostrewind;  int rpl_listview, rpl_numViews;
+	bool rpl_alpha, rpl_ghostpar, rpl_ghostrewind, rpl_listghosts;
+	int rpl_listview, rpl_numViews;
 	
 	// network
 	std::string nickname, netGameName;
