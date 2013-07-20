@@ -24,6 +24,10 @@ namespace sh
 
 #include "../sdl4ogre/events.h"
 
+#include "../oics/ICSChannelListener.h"
+#include "../oics/ICSInputControlSystem.h"
+
+
 namespace SFO
 {
 	class InputWrapper;
@@ -49,7 +53,8 @@ protected:
 
 class BaseApp :
 		public Ogre::FrameListener, public Ogre::WindowEventListener,
-		public SFO::KeyListener, public SFO::MouseListener//, public SFO::JoyListener
+		public SFO::KeyListener, public SFO::MouseListener,
+		public ICS::ChannelListener, public ICS::DetectingBindingListener
 {
 	friend class CarModel;
 public:
@@ -125,6 +130,26 @@ protected:
 	virtual bool keyPressed(const SDL_KeyboardEvent &arg) = 0;
 	virtual bool keyReleased(const SDL_KeyboardEvent &arg);
 	/// \todo joystick
+
+	///  input control
+	virtual void channelChanged(ICS::Channel* channel, float currentValue, float previousValue) = 0;
+	virtual void mouseAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
+		, ICS::InputControlSystem::NamedAxis axis, ICS::Control::ControlChangingDirection direction);
+	virtual void keyBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
+		, SDL_Keycode key, ICS::Control::ControlChangingDirection direction);
+	virtual void mouseButtonBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
+		, unsigned int button, ICS::Control::ControlChangingDirection direction);
+	virtual void joystickAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
+		, int deviceId, int axis, ICS::Control::ControlChangingDirection direction);
+	virtual void joystickButtonBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
+		, int deviceId, unsigned int button, ICS::Control::ControlChangingDirection direction);
+	virtual void joystickPOVBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
+		, int deviceId, int pov,ICS:: InputControlSystem::POVAxis axis, ICS::Control::ControlChangingDirection direction);
+	virtual void joystickSliderBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
+		, int deviceId, int slider, ICS::Control::ControlChangingDirection direction);
+	void clearAllBindings (ICS::InputControlSystem* ICS, ICS::Control* control);
+	virtual void notifyInputActionBound() = 0;
+
 	void onCursorChange (const std::string& name);
 
 	///  Ogre
@@ -139,6 +164,9 @@ protected:
 public:
 	SFO::InputWrapper* mInputWrapper;
 	SFO::SDLCursorManager* mCursorManager;
+	ICS::InputControlSystem* mInputCtrl;
+	ICS::InputControlSystem* mInputCtrlPlayer[4];
+	std::vector<SDL_Joystick*> mJoysticks;
 	
 	// this is set to true when the user is asked to assign a new key
 	bool bAssignKey;

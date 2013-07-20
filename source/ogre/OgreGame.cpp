@@ -314,3 +314,12 @@ void App::materialCreated (sh::MaterialInstance* m, const std::string& configura
 		t->setShadowCasterMaterial("PSSM/shadow_caster_noalpha");
 	}
 }
+
+void App::channelChanged(ICS::Channel *channel, float currentValue, float previousValue)
+{
+
+}
+
+void App::notifyInputActionBound()
+{
+}

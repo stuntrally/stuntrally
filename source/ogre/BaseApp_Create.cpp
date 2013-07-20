@@ -131,6 +131,22 @@ void BaseApp::createFrameListener()
 	mCursorManager->setEnabled(true);
 	onCursorChange(MyGUI::PointerManager::getInstance().getDefaultPointer());
 
+	mInputCtrl = new ICS::InputControlSystem("", true, this, NULL, 100);
+	for (int i=0; i<4; ++i)
+	{
+		mInputCtrlPlayer[i] = new ICS::InputControlSystem("", true, this, NULL, 100);
+	}
+
+	ICS::Control* ctrl = new ICS::Control("0", false, true, 0.5, 0.1, 20.0, true);
+	ctrl->attachChannel(mInputCtrl->getChannel(0), ICS::Channel::DIRECT, 1.0);
+	mInputCtrl->addControl(ctrl);
+	mInputCtrl->addKeyBinding(ctrl, SDLK_UP, ICS::Control::INCREASE);
+	mInputCtrl->addKeyBinding(ctrl, SDLK_DOWN, ICS::Control::DECREASE);
+
+	bSizeHUD = true;
+	bWindowResized = true;
+	mSplitMgr->Align();
+
 	mRoot->addFrameListener(this);
 }
 
@@ -196,6 +212,13 @@ BaseApp::~BaseApp()
 	if (mPlatform)  {
 		mPlatform->shutdown();  delete mPlatform;  mPlatform = 0;  }
 
+	mInputCtrl->save("input.xml");
+	delete mInputCtrl;
+	for (int i=0; i<4; ++i)
+	{
+		delete mInputCtrlPlayer[i];
+	}
+
 	delete mInputWrapper;
 	delete mCursorManager;
 
@@ -241,7 +264,7 @@ bool BaseApp::configure()
 
 	mRoot->initialise(false);
 
-	Uint32 flags = SDL_INIT_VIDEO|SDL_INIT_NOPARACHUTE;
+	Uint32 flags = SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_HAPTIC|SDL_INIT_NOPARACHUTE;
 	if(SDL_WasInit(flags) == 0)
 	{
 		SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
@@ -249,6 +272,15 @@ bool BaseApp::configure()
 		{
 			throw std::runtime_error("Could not initialize SDL! " + std::string(SDL_GetError()));
 		}
+	}
+	// Enable joystick events
+	SDL_JoystickEventState(SDL_ENABLE);
+	// Open all available joysticks. TODO: open them when they are required
+	for (int i=0; i<SDL_NumJoysticks(); ++i)
+	{
+		SDL_Joystick* js = SDL_JoystickOpen(i);
+		if (js)
+			mJoysticks.push_back(js);
 	}
 
 	Ogre::NameValuePairList params;
@@ -623,6 +655,9 @@ void BaseApp::LoadingOff()
 
 bool BaseApp::keyReleased(const SDL_KeyboardEvent& arg)
 {
+	mInputCtrl->keyReleased(arg);
+	for (int i=0; i<4; ++i) mInputCtrlPlayer[i]->keyReleased(arg);
+
 	if (bAssignKey) return true;
 
 	if (mGUI && (isFocGui || isTweak()))  {
@@ -641,6 +676,9 @@ bool BaseApp::keyReleased(const SDL_KeyboardEvent& arg)
 
 bool BaseApp::mouseMoved(const SFO::MouseMotionEvent &arg)
 {
+	mInputCtrl->mouseMoved(arg);
+	for (int i=0; i<4; ++i) mInputCtrlPlayer[i]->mouseMoved(arg);
+
 	if (bAssignKey)  return true;
 
 	mMouseX = arg.x;
@@ -663,6 +701,9 @@ bool BaseApp::mouseMoved(const SFO::MouseMotionEvent &arg)
 
 bool BaseApp::mousePressed( const SDL_MouseButtonEvent& arg, Uint8 id )
 {
+	mInputCtrl->mousePressed(arg, id);
+	for (int i=0; i<4; ++i) mInputCtrlPlayer[i]->mousePressed(arg, id);
+
 	if (bAssignKey)  return true;
 	if (IsFocGui() && mGUI)  {
 		MyGUI::InputManager::getInstance().injectMousePress(arg.x, arg.y, sdlButtonToMyGUI(id));
@@ -676,6 +717,9 @@ bool BaseApp::mousePressed( const SDL_MouseButtonEvent& arg, Uint8 id )
 
 bool BaseApp::mouseReleased( const SDL_MouseButtonEvent& arg, Uint8 id )
 {
+	mInputCtrl->mouseReleased(arg, id);
+	for (int i=0; i<4; ++i) mInputCtrlPlayer[i]->mouseReleased(arg, id);
+
 	if (bAssignKey)  return true;
 	if (IsFocGui() && mGUI)  {
 		MyGUI::InputManager::getInstance().injectMouseRelease(arg.x, arg.y, sdlButtonToMyGUI(id));
@@ -749,3 +793,73 @@ void BaseApp::onCursorChange(const std::string &name)
 	}
 
 }
+
+
+//  input control
+//-------------------------------------------------------
+void BaseApp::mouseAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
+	, ICS::InputControlSystem::NamedAxis axis, ICS::Control::ControlChangingDirection direction)
+{
+	// we don't want mouse movement bindings
+	return;
+}
+
+void BaseApp::keyBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
+	, SDL_Keycode key, ICS::Control::ControlChangingDirection direction)
+{
+	clearAllBindings(ICS, control);
+	ICS::DetectingBindingListener::keyBindingDetected (ICS, control, key, direction);
+	notifyInputActionBound();
+}
+
+void BaseApp::mouseButtonBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
+	, unsigned int button, ICS::Control::ControlChangingDirection direction)
+{
+	clearAllBindings(ICS, control);
+	ICS::DetectingBindingListener::mouseButtonBindingDetected (ICS, control, button, direction);
+	notifyInputActionBound();
+}
+
+void BaseApp::joystickAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
+	, int deviceId, int axis, ICS::Control::ControlChangingDirection direction)
+{
+	clearAllBindings(ICS, control);
+	ICS::DetectingBindingListener::joystickAxisBindingDetected (ICS, control, deviceId, axis, direction);
+	notifyInputActionBound();
+}
+
+void BaseApp::joystickButtonBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
+	, int deviceId, unsigned int button, ICS::Control::ControlChangingDirection direction)
+{
+	clearAllBindings(ICS, control);
+	ICS::DetectingBindingListener::joystickButtonBindingDetected (ICS, control, deviceId, button, direction);
+	notifyInputActionBound();
+}
+
+void BaseApp::joystickPOVBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
+	, int deviceId, int pov,ICS:: InputControlSystem::POVAxis axis, ICS::Control::ControlChangingDirection direction)
+{
+	clearAllBindings(ICS, control);
+	ICS::DetectingBindingListener::joystickPOVBindingDetected (ICS, control, deviceId, pov, axis, direction);
+	notifyInputActionBound();
+}
+
+void BaseApp::joystickSliderBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
+	, int deviceId, int slider, ICS::Control::ControlChangingDirection direction)
+{
+	clearAllBindings(ICS, control);
+	ICS::DetectingBindingListener::joystickSliderBindingDetected (ICS, control, deviceId, slider, direction);
+	notifyInputActionBound();
+}
+
+void BaseApp::clearAllBindings (ICS::InputControlSystem* ICS, ICS::Control* control)
+{
+	// right now we don't really need multiple bindings for the same action, so remove all others first
+	if (ICS->getKeyBinding (control, ICS::Control::INCREASE) != SDLK_UNKNOWN)
+		ICS->removeKeyBinding (ICS->getKeyBinding (control, ICS::Control::INCREASE));
+	if (ICS->getMouseButtonBinding (control, ICS::Control::INCREASE) != ICS_MAX_DEVICE_BUTTONS)
+		ICS->removeMouseButtonBinding (ICS->getMouseButtonBinding (control, ICS::Control::INCREASE));
+
+	/// \todo add joysticks here once they are added
+}
+

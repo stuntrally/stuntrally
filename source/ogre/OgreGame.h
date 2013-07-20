@@ -342,6 +342,9 @@ protected:
 	void InitInputGui(), inputBindBtnClicked(WP);
 	void InputBind(int key, int button=-1, int axis=-1);
 
+	virtual void channelChanged(ICS::Channel* channel, float currentValue, float previousValue);
+	virtual void notifyInputActionBound();
+
 	bool actionIsActive(std::string, std::string);
 	void cmbJoystick(CMB), UpdateInputBars(), inputDetailBtn(WP);
 

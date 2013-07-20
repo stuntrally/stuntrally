@@ -29,31 +29,19 @@ String App::GetInputName(const String& sName)
 
 void App::InitInputGui()
 {
-	/*
-	//  Log all devices to log.txt
-	OISB::System& sys = OISB::System::getSingleton();
-	pGame->info_output << "--------------------------------------  Input devices  BEGIN" << std::endl;
-	//sys.dumpActionSchemas(pGame->info_output);
-	sys.dumpDevices(pGame->info_output);
-	pGame->info_output << "--------------------------------------  Input devices  END" << std::endl;
-
 	TabItemPtr inpTabAll = mGUI->findWidget<TabItem>("InputTabAll");  if (!inpTabAll)  return;
 	TabPtr inputTab = mGUI->findWidget<Tab>("InputTab");  if (!inputTab)  return;
-
 
 	///  controller selection combo (for bind name, when more)
 	ComboBoxPtr cmbJoy = mGUI->findWidget<ComboBox>("CmbInputController");
 	if (cmbJoy)
 	{
-		//joysticks->addItem(TR("#{InputNoJS}"));//-
-		//joysticks->setIndexSelected(0);
-		int jnum = sys.mJoysticks.size();
-		for (int i=0; i < jnum; ++i)
-			cmbJoy->addItem( sys.mJoysticks[i]->getName() );
+		for (int i=0; i < mJoysticks.size(); ++i)
+			cmbJoy->addItem( SDL_JoystickName(mJoysticks[i]) );
 
 		cmbJoy->eventComboChangePosition += newDelegate(this, &App::cmbJoystick);
-		if (jnum > 0)  {  cmbJoy->setIndexSelected(0);  cmbJoystick(cmbJoy, 0);  }
-	}
+		if (mJoysticks.size() > 0)  {  cmbJoy->setIndexSelected(0);  cmbJoystick(cmbJoy, 0);  }
+	}/*
 
 	//  labels that print the last pressed joystick button / last moved axis
 	txtJAxis = mGUI->findWidget<StaticText>("axisOutput");
@@ -275,9 +263,6 @@ void App::InitInputGui()
 	CreateText(xb,y, 200,24, "txtshd8", "#FFFF60"+TR("I  #{Input}"));  y+=3*yb;
 	CreateText(xb,y, 200,24, "txtshd8", "#B090E0"+TR("P  #{Sound}"));  y+=3*yb;
 */
-	/**  //dbg start on input  ///remove
-	mWndTabsOpts->setIndexSelected(7);
-	inputTab->setIndexSelected(1);  /**/
 }
 
 

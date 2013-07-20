@@ -28,6 +28,10 @@ bool BaseApp::frameRenderingQueued(const Ogre::FrameEvent& evt)
 	//  update each device
 	mInputWrapper->capture();
 
+	mInputCtrl->update(evt.timeSinceLastFrame);
+	for (int i=0; i<4; ++i)
+		mInputCtrlPlayer[i]->update(evt.timeSinceLastFrame);
+
 	   // key modifiers
 	alt = mInputWrapper->isModifierHeld(KMOD_ALT);
 	ctrl = mInputWrapper->isModifierHeld(KMOD_CTRL);

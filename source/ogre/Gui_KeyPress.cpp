@@ -35,6 +35,9 @@ bool App::actionIsActive(std::string name, std::string pressed)
 
 bool App::keyPressed( const SDL_KeyboardEvent &arg )
 {	
+	mInputCtrl->keyPressed(arg);
+	for (int i=0; i<4; ++i) mInputCtrlPlayer[i]->keyPressed(arg);
+
 	// action key == pressed key
 	//#define action(s)  actionIsActive(s, mKeyboard->getAsString(arg.key))
 #define action(s) false
