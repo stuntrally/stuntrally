@@ -66,7 +66,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,txCarSpeed(0),txCarType(0), txCarAuthor(0),txTrackAuthor(0)
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
 	,valRplName(0),valRplInfo(0),valRplName2(0),valRplInfo2(0), edRplName(0), edRplDesc(0)
-	,rbRplCur(0), rbRplAll(0), rbRplGhosts(0), bRplBack(0),bRplFwd(0), newGameRpl(0)
+	,rbRplCur(0), rbRplAll(0), bRplBack(0),bRplFwd(0), newGameRpl(0)
 	,bRplPlay(0), bRplPause(0), bRplRec(0), bRplWnd(1), bGuiReinit(0)
 	// gui multiplayer
 	,netGuiMutex(), sChatBuffer(), netGameInfo(), bUpdChat(false), iChatMove(0)

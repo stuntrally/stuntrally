@@ -1680,7 +1680,7 @@
 					<Property key="Caption" value="#{RplCurrent}"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
-				<Widget type="Button" skin="RadioButton" position="224 480 160 24" name="RplBtnGhosts">
+				<Widget type="Button" skin="CheckBox" position="224 480 160 24" name="RplBtnGhosts">
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="Caption" value="#{RplGhosts}"/>

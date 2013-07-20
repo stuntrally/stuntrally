@@ -337,9 +337,8 @@ void App::InitGui()
 	//  radios
 	Btn("RplBtnAll", btnRplAll);  rbRplAll = btn;
 	Btn("RplBtnCur", btnRplCur);  rbRplCur = btn;
-	Btn("RplBtnGhosts", btnRplGhosts);  rbRplGhosts = btn;  btn = 0;
-	switch (pSet->rpl_listview)  // load from set
-	{	case 0: btn = rbRplAll;  break;  case 1: btn = rbRplCur;  break;  case 2: btn = rbRplGhosts;  break;  }
+	Chk("RplBtnGhosts",chkRplGhosts, pSet->rpl_listghosts);
+	btn = pSet->rpl_listview == 0 ? rbRplAll : rbRplCur;
 	if (btn)  btn->setStateSelected(true);
 	
     if (mWndRpl)

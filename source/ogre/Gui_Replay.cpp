@@ -165,20 +165,19 @@ void App::slRplNumViewports(SL)
 
 void App::btnRplAll(WP)
 {
-	rbRplCur->setStateSelected(false);  rbRplAll->setStateSelected(true);  rbRplGhosts->setStateSelected(false);
+	rbRplCur->setStateSelected(false);  rbRplAll->setStateSelected(true);
 	pSet->rpl_listview = 0;  updReplaysList();
 }
 
 void App::btnRplCur(WP)
 {
-	rbRplCur->setStateSelected(true);  rbRplAll->setStateSelected(false);  rbRplGhosts->setStateSelected(false);
+	rbRplCur->setStateSelected(true);  rbRplAll->setStateSelected(false);
 	pSet->rpl_listview = 1;  updReplaysList();
 }
 
-void App::btnRplGhosts(WP)
+void App::chkRplGhosts(WP wp)
 {
-	rbRplCur->setStateSelected(false);  rbRplAll->setStateSelected(false);  rbRplGhosts->setStateSelected(true);
-	pSet->rpl_listview = 2;  updReplaysList();
+	ChkEv(rpl_listghosts);  updReplaysList();
 }
 
 
@@ -265,7 +264,7 @@ void App::msgRplDelete(Message* sender, MessageBoxStyle result)
 //  Rename
 void App::btnRplRename(WP)
 {
-	if (pSet->rpl_listview == 2)  return;  // cant rename ghosts
+	if (pSet->rpl_listghosts)  return;  // cant rename ghosts
 	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
 	string name = rplList->getItemNameAt(i).substr(7);
 	string edit = edRplName->getCaption();

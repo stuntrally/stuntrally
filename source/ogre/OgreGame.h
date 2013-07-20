@@ -422,8 +422,8 @@ protected:
 		chkRplChkAlpha(WP),chkRplChkPar(WP),
 		chkRplChkRewind(WP), chkRplChkGhostOther(WP),  // replay
 		btnRplToStart(WP),btnRplToEnd(WP), btnRplPlay(WP),  // controls
-		btnRplCur(WP),btnRplAll(WP),btnRplGhosts(WP);  // radio
-	MyGUI::ButtonPtr rbRplCur, rbRplAll, rbRplGhosts;
+		btnRplCur(WP),btnRplAll(WP),chkRplGhosts(WP);  // radio
+	MyGUI::ButtonPtr rbRplCur, rbRplAll;
 
 	void btnRplBackDn(WP,int,int,MyGUI::MouseButton),btnRplBackUp(WP,int,int,MyGUI::MouseButton);
 	void btnRplFwdDn(WP,int,int,MyGUI::MouseButton),btnRplFwdUp(WP,int,int,MyGUI::MouseButton);
