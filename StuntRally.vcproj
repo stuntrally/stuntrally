@@ -76,11 +76,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib libvorbisfile.lib OgreMain_d.lib ois_d.lib OgreTerrain_d.lib OgrePaging_d.lib OgreRTShaderSystem_d.lib MyGUIEngine_d.lib MyGUI.OgrePlatform_d.lib enet_d.lib BulletCollision_debug.lib BulletDynamics_debug.lib LinearMath_debug.lib BulletFileLoader_debug.lib BulletWorldImporter_debug.lib"
+				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain_d.lib ois_d.lib OgreTerrain_d.lib OgrePaging_d.lib OgreRTShaderSystem_d.lib MyGUIEngine_d.lib MyGUI.OgrePlatform_d.lib enet_d.lib BulletCollision_debug.lib BulletDynamics_debug.lib LinearMath_debug.lib BulletFileLoader_debug.lib BulletWorldImporter_debug.lib"
 				OutputFile="StuntRally_d.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Debug;c:\v\ogre\Dependencies\lib\Debug;c:\v\mygui\bin\lib\Debug;&quot;c:\v\enet-1.3.4\Debug&quot;;&quot;c:\v\bullet\bullet-2.79\bin\lib\Debug&quot;;&quot;c:\v\SDL-1.2.15\lib\Debug&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Debug&quot;;&quot;c:\v\libogg-1.3.0\lib\Debug&quot;"
+				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Debug;c:\v\ogre\Dependencies\lib\Debug;c:\v\mygui\bin\lib\Debug;&quot;c:\v\enet-1.3.4\Debug&quot;;&quot;c:\v\bullet\bullet-2.79\bin\lib\Debug&quot;;&quot;c:\v\SDL2-2.0.0\lib\Debug&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Debug&quot;;&quot;c:\v\libogg-1.3.0\lib\Debug&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="StuntRally_d.pdb"
@@ -175,11 +175,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib libvorbisfile.lib OgreMain.lib OIS.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib enet.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib"
+				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain.lib OIS.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib enet.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib"
 				OutputFile="StuntRally.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Release;c:\v\ogre\Dependencies\lib\Release;c:\v\mygui\bin\lib\Release;&quot;c:\v\enet-1.3.4\Release&quot;;&quot;c:\v\bullet\bullet-2.79\bin\lib\Release&quot;;&quot;c:\v\SDL-1.2.15\lib\Release&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Release&quot;;&quot;c:\v\libogg-1.3.0\lib\Release&quot;"
+				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Release;c:\v\ogre\Dependencies\lib\Release;c:\v\mygui\bin\lib\Release;&quot;c:\v\enet-1.3.4\Release&quot;;&quot;c:\v\bullet\bullet-2.79\bin\lib\Release&quot;;&quot;c:\v\SDL2-2.0.0\lib\Release&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Release&quot;;&quot;c:\v\libogg-1.3.0\lib\Release&quot;"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
 				TargetMachine="1"
@@ -269,11 +269,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib libvorbisfile.lib OgreMain.lib OIS.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib enet.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib"
+				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain.lib OIS.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib enet.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib"
 				OutputFile="StuntRally_rd.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\RelWithDebInfo;c:\v\ogre\Dependencies\lib\Release;c:\v\mygui\bin\lib\Release;&quot;c:\v\enet-1.3.4\Release&quot;;&quot;c:\v\bullet\bullet-2.79\bin\lib\Release&quot;;&quot;c:\v\SDL-1.2.15\lib\Release&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Release&quot;;&quot;c:\v\libogg-1.3.0\lib\Release&quot;"
+				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\RelWithDebInfo;c:\v\ogre\Dependencies\lib\Release;c:\v\mygui\bin\lib\Release;&quot;c:\v\enet-1.3.4\Release&quot;;&quot;c:\v\bullet\bullet-2.79\bin\lib\Release&quot;;&quot;c:\v\SDL2-2.0.0\lib\Release&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Release&quot;;&quot;c:\v\libogg-1.3.0\lib\Release&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="StuntRally_rd.pdb"
@@ -874,14 +874,6 @@
 						>
 					</File>
 					<File
-						RelativePath=".\Source\vdrift\parallel_task.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Source\vdrift\parallel_task.h"
-						>
-					</File>
-					<File
 						RelativePath=".\Source\vdrift\quaternion.cpp"
 						>
 					</File>
@@ -1312,14 +1304,6 @@
 				</File>
 				<File
 					RelativePath=".\data\hud\Hud.overlay"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\HWMouse.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\HWMouse.h"
 					>
 				</File>
 			</Filter>
@@ -2584,568 +2568,84 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="oisb"
+				Name="sdl4ogre"
 				>
 				<File
-					RelativePath=".\source\oisb\OISB.h"
+					RelativePath=".\source\sdl4ogre\cursormanager.hpp"
 					>
 				</File>
 				<File
-					RelativePath=".\source\oisb\OISBAction.h"
+					RelativePath=".\source\sdl4ogre\events.h"
 					>
 				</File>
 				<File
-					RelativePath=".\source\oisb\OISBActionSchema.h"
+					RelativePath=".\source\sdl4ogre\OISCompat.h"
 					>
 				</File>
 				<File
-					RelativePath=".\source\oisb\OISBAnalogAxisAction.h"
+					RelativePath=".\source\sdl4ogre\sdlcursormanager.cpp"
 					>
-				</File>
-				<File
-					RelativePath=".\source\oisb\OISBAnalogAxisState.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\oisb\OISBAnalogEmulation.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\oisb\OISBBindable.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\oisb\OISBBinding.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\oisb\OISBDevice.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\oisb\OISBDigitalState.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\oisb\OISBGlobal.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\oisb\OISBJoyStick.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\oisb\OISBKeyboard.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\oisb\OISBMouse.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\oisb\OISBPropertySet.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\oisb\OISBSequenceAction.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\oisb\OISBState.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\oisb\OISBString.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\oisb\OISBSystem.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\oisb\OISBTriggerAction.h"
-					>
-				</File>
-				<Filter
-					Name="cpp"
-					>
-					<File
-						RelativePath=".\source\oisb\OISBAction.cpp"
+					<FileConfiguration
+						Name="Debug|Win32"
 						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\source\oisb\OISBActionSchema.cpp"
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
 						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\source\oisb\OISBAnalogAxisAction.cpp"
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\source\oisb\OISBAnalogAxisState.cpp"
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\source\sdl4ogre\sdlcursormanager.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\sdl4ogre\sdlinputwrapper.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
 						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\source\oisb\OISBAnalogEmulation.cpp"
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
 						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\source\oisb\OISBBindable.cpp"
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
 						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\source\oisb\OISBBinding.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\source\oisb\OISBDevice.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\source\oisb\OISBDigitalState.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\source\oisb\OISBJoyStick.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\source\oisb\OISBKeyboard.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\source\oisb\OISBMouse.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\source\oisb\OISBPropertySet.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\source\oisb\OISBSequenceAction.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\source\oisb\OISBState.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\source\oisb\OISBSystem.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\source\oisb\OISBTriggerAction.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="ReleaseDbg|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-				</Filter>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\source\sdl4ogre\sdlinputwrapper.hpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="tinyxml"
