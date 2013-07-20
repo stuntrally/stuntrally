@@ -807,7 +807,7 @@ bool App::KeyPress(const CmdKey &arg)
 
 		//  road
 		case KC_R:	if (bEdit()){  SetEdMode(ED_Road);	UpdEditWnds();  }	break;
-		case KC_B:  if (road)  road->RebuildRoad(true);  break;
+		case KC_B:  if (road)  {  road->UpdPointsH();  road->RebuildRoad(true);  }  break;
 		case KC_T:	if (mWndRoadStats)  mWndRoadStats->setVisible(!mWndRoadStats->getVisible());  break;
 		case KC_M:  if (edMode == ED_Road && road)  road->ToggleMerge();  break;
 

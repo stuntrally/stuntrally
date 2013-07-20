@@ -289,6 +289,27 @@ void App::btnScaleTerH(WP)
 	if (!edScaleTerHMul || !road)  return;
 	Real sf = std::max(0.1f, s2r(edScaleTerHMul->getCaption()) );  // scale mul
 
+	//  road
+	for (int i=0; i < road->getNumPoints(); ++i)
+		road->Scale1(i, 0.f, sf);
+	road->bSelChng = true;
+	
+	//  fluids
+	for (int i=0; i < sc->fluids.size(); ++i)
+	{
+		FluidBox& fb = sc->fluids[i];
+		fb.pos.y *= sf;  fb.size.y *= sf;
+	}
+	
+	//  objs h
+	for (int i=0; i < sc->objects.size(); ++i)
+	{
+		Object& o = sc->objects[i];
+		o.pos[2] *= sf;
+		o.SetFromBlt();
+	}
+
+	//  ter  ---
 	float* hfData = new float[sc->td.iVertsX * sc->td.iVertsY];
 	int siz = sc->td.iVertsX * sc->td.iVertsY * sizeof(float);
 	
@@ -306,7 +327,16 @@ void App::btnScaleTerH(WP)
 
 	delete[] hfData;
 	bNewHmap = true;	UpdateTrack();
-	// !onTer road points..
+
+	//  road upd
+	if (0) //road)  // doesnt work here..
+	{	road->UpdPointsH();
+		road->RebuildRoad(true);
+	}
+
+	//  start pos
+	const int n = 0;  // 1st..
+	vStartPos[n][2] *= sf;  UpdStartPos();
 }
 //----------------------------------------------------------------------------------------------------------
 

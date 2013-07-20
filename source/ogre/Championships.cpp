@@ -383,7 +383,8 @@ void App::btnStageNext(WP)
 	size_t id = liStages->getIndexSelected(), all = liStages->getItemCount();
 	if (all == 0)  return;
 	if (id == ITEM_NONE)  id = 0;
-	id = (id +1) % all;
+	else
+		id = (id +1) % all;
 	liStages->setIndexSelected(id);
 	listStageChng(liStages, id);
 }

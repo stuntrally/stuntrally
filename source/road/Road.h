@@ -83,7 +83,8 @@ public:
 
 	///  change point
 	void Move1(int id, Ogre::Vector3 relPos), Move(Ogre::Vector3 relPos);  Ogre::Vector3 getPos0();
-	void RotateSel(Ogre::Real relA, Ogre::Vector3 axis, int addYawRoll), Scale1(int id, Ogre::Real posMul), ScaleSel(Ogre::Real posMul);
+	void RotateSel(Ogre::Real relA, Ogre::Vector3 axis, int addYawRoll);
+	void Scale1(int id, Ogre::Real posMul, Ogre::Real hMul), ScaleSel(Ogre::Real posMul);
 
 	//  modify point
 	void ToggleOnTerrain(), ToggleColums();  // on chosen point
@@ -100,7 +101,7 @@ public:
 	//  util
 	Ogre::Real GetSegLen(int seg);  Ogre::Vector3 GetLenDir(int seg, Ogre::Real l, Ogre::Real la);
 	static Ogre::Vector3 GetRot(Ogre::Real ayaw, Ogre::Real ang);
-	void SetTerHitVis(bool visible), UpdRot();
+	void SetTerHitVis(bool visible), UpdRot(), UpdPointsH();
 	
 	bool bCastShadow;  // true for depth shadows
 	bool bRoadWFullCol;  // road wall full collision (all triangles, or just side)
