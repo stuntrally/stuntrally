@@ -1306,6 +1306,38 @@
 					RelativePath=".\data\hud\Hud.overlay"
 					>
 				</File>
+				<File
+					RelativePath=".\source\ogre\ResourceImageSetPointerFix.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\source\ogre\ResourceImageSetPointerFix.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="materials"
