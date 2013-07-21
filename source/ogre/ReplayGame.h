@@ -92,6 +92,24 @@ struct ReplayFrame
 };
 
 
+//  reduced data, for track's ghost
+//--------------------------------------------
+struct TrackFrame
+{
+	//  time  since game start
+	float time;
+	//  car, no wheels
+	MATHVECTOR<float,3> pos;
+	short rot[4];  //QUATERNION<float> rot;
+
+	//  hud,info
+	//short vel;  char gear,steer,braking;
+	//float whSteerAng[2];
+	
+	TrackFrame();
+};
+
+
 //  only data for car sim, to rewind back
 //--------------------------------------------
 struct RewindFrame
@@ -126,6 +144,7 @@ public:
 	void InitHeader(const char* track, bool trk_user, const char* car, bool bClear);
 	void Clear();
 	void CopyFrom(const Replay& rpl);
+	void DeleteFrames(int carNum, double fromTime);
 
 	ReplayHeader header;
 private:
@@ -150,6 +169,24 @@ public:
 private:
 	std::vector<RewindFrame> frames[4];  // 4 players max
 	int idLast[4];  // last index from GetFrame (optym)
+};
+
+///  Track's ghost
+//--------------------------------------------
+class TrackGhost
+{
+public:
+	TrackGhost();
+
+	void AddFrame(const TrackFrame& frame);
+	bool GetFrame(float time, TrackFrame* fr);
+
+	const float GetTimeLength() const;
+
+	void Clear();
+private:
+	std::vector<RewindFrame> frames;
+	int idLast;  // last index from GetFrame
 };
 
 #endif

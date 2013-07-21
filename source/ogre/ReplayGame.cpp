@@ -295,6 +295,15 @@ bool Replay::GetFrame(double time, ReplayFrame* pFr, int carNum)
 	return time <= end;
 }
 
+//  delete frames after current time (when time did go back)
+void Replay::DeleteFrames(int c, double fromTime)
+{
+	if (frames[c].empty())  return;
+	while (!frames[c].empty() && frames[c][ frames[c].size()-1].time >= fromTime)
+		frames[c].pop_back();
+}
+
+
 ///  Rewind
 //-------------------------------------------------------------------------------------------------------------------------
 Rewind::Rewind()
@@ -354,4 +363,59 @@ bool Rewind::GetFrame(double time, RewindFrame* pFr, int carNum)
 	
 	//  check if ended
 	return time <= end;
+}
+
+
+///  Track's ghost
+//-------------------------------------------------------------------------------------------------------------------------
+TrackFrame::TrackFrame()
+	: time(0.f)
+{	}
+
+TrackGhost::TrackGhost()
+	: idLast(0)
+{
+}
+
+void TrackGhost::AddFrame(const TrackFrame& frame)
+{
+	if (frame.time > GetTimeLength())  // dont add before last
+		frames.push_back(frame);
+}
+
+bool TrackGhost::GetFrame(float time, TrackFrame* fr)
+{
+	int& ic = idLast;  // last index
+
+	int s = frames.size();
+	if (ic > s-1)  ic = s-1;  // new size
+	if (s < 2)  return false;  // empty
+
+	//  find which frame for given time
+	while (ic+1 < s-1 && frames[ic+1].time <= time)  ++ic;
+	while (ic > 0     && frames[ic].time > time)  --ic;
+
+	if (ic < 0 || ic >= s)
+		return false;  //-
+	
+	//  simple, no interpolation
+	*pFr = frames[ic];
+
+	//  last time
+	double end = frames[s-1].time;
+	
+	//  check if ended
+	return time <= end;
+}
+
+const float TrackGhost::GetTimeLength() const
+{
+	int s = frames.size();
+	return s > 0 ? frames[s-1].time : 0.f;
+}
+
+void TrackGhost::Clear()
+{
+	frames.clear();
+	idLast = 0;
 }

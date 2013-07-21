@@ -162,6 +162,7 @@ void App::newPoses(float time)  // time only for camera update
 			ghtim = std::max(0.0, ghtim - time * 5.f);  //rewind ghost time too
 			#if 0  /// _Tool_ go back time (for making best ghosts)
 			pGame->timer.Back(c, - time * 5.f);
+			ghost.DeleteFrames(0, ghtim);
 			#endif
 
 			RewindFrame rf;
