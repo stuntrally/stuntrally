@@ -76,11 +76,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib libvorbisfile.lib OgreMain_d.lib ois_d.lib OgreTerrain_d.lib OgrePaging_d.lib OgreRTShaderSystem_d.lib MyGUIEngine_d.lib MyGUI.OgrePlatform_d.lib enet_d.lib BulletCollision_debug.lib BulletDynamics_debug.lib LinearMath_debug.lib BulletFileLoader_debug.lib BulletWorldImporter_debug.lib"
+				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain_d.lib ois_d.lib OgreTerrain_d.lib OgrePaging_d.lib OgreRTShaderSystem_d.lib MyGUIEngine_d.lib MyGUI.OgrePlatform_d.lib enet_d.lib BulletCollision_debug.lib BulletDynamics_debug.lib LinearMath_debug.lib BulletFileLoader_debug.lib BulletWorldImporter_debug.lib"
 				OutputFile="StuntRally_d.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Debug;c:\v\ogre\Dependencies\lib\Debug;c:\v\mygui\bin\lib\Debug;&quot;c:\v\enet-1.3.4\Debug&quot;;&quot;c:\v\bullet\bullet-2.79\bin\lib\Debug&quot;;&quot;c:\v\SDL-1.2.15\lib\Debug&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Debug&quot;;&quot;c:\v\libogg-1.3.0\lib\Debug&quot;"
+				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Debug;c:\v\ogre\Dependencies\lib\Debug;c:\v\mygui\bin\lib\Debug;&quot;c:\v\enet-1.3.4\Debug&quot;;&quot;c:\v\bullet\bullet-2.79\bin\lib\Debug&quot;;&quot;c:\v\SDL2-2.0.0\lib\Debug&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Debug&quot;;&quot;c:\v\libogg-1.3.0\lib\Debug&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="StuntRally_d.pdb"
@@ -175,11 +175,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib libvorbisfile.lib OgreMain.lib OIS.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib enet.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib"
+				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain.lib OIS.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib enet.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib"
 				OutputFile="StuntRally.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Release;c:\v\ogre\Dependencies\lib\Release;c:\v\mygui\bin\lib\Release;&quot;c:\v\enet-1.3.4\Release&quot;;&quot;c:\v\bullet\bullet-2.79\bin\lib\Release&quot;;&quot;c:\v\SDL-1.2.15\lib\Release&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Release&quot;;&quot;c:\v\libogg-1.3.0\lib\Release&quot;"
+				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Release;c:\v\ogre\Dependencies\lib\Release;c:\v\mygui\bin\lib\Release;&quot;c:\v\enet-1.3.4\Release&quot;;&quot;c:\v\bullet\bullet-2.79\bin\lib\Release&quot;;&quot;c:\v\SDL2-2.0.0\lib\Release&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Release&quot;;&quot;c:\v\libogg-1.3.0\lib\Release&quot;"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
 				TargetMachine="1"

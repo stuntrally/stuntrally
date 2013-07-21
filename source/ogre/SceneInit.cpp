@@ -260,8 +260,8 @@ void App::LoadGame()  // 2
 	{	bReloadSim = false;
 		pGame->ReloadSimData();
 	}
-	// load scene.xml - default if not found
-	//   need to know sc->asphalt before vdrift car load
+	//  load scene.xml - default if not found
+	//  need to know sc->asphalt before vdrift car load
 	bool vdr = IsVdrTrack();
 	sc->pGame = pGame;
 	sc->LoadXml(TrkDir()+"scene.xml", !vdr/*for asphalt*/);
@@ -278,9 +278,9 @@ void App::LoadGame()  // 2
 	if (pGame)  pGame->ProcessNewSettings();
 
 		
-	/// init car models
-	// will create vdrift cars, actual car loading will be done later in LoadCar()
-	// this is just here because vdrift car has to be created first
+	///  init car models
+	//  will create vdrift cars, actual car loading will be done later in LoadCar()
+	//  this is just here because vdrift car has to be created first
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
 	
 	int numCars = mClient ? mClient->getPeerCount()+1 : pSet->game.local_players;  // networked or splitscreen
@@ -320,7 +320,7 @@ void App::LoadGame()  // 2
 		}
 	}
 
-	/// ghost car - last in carModels
+	///  ghost car - last in carModels
 	ghplay.Clear();
 	if (!bRplPlay/*|| pSet->rpl_show_ghost)*/ && pSet->rpl_ghost && !mClient)
 	{
@@ -344,6 +344,19 @@ void App::LoadGame()  // 2
 			carModels.push_back(c);
 		}
 	}
+	///  track's ghost  . . .
+	ghtrk.Clear();
+	if (!bRplPlay /*&& pSet->rpl_trackghost?*/ && !mClient && !pSet->game.track_user)
+	if (!pSet->game.trackreverse)  // only not rev, todo..
+	{
+		std::string file = PATHMANAGER::TrkGhosts()+"/"+pSet->game.track+".gho";
+		if (ghtrk.LoadFile(file))
+		{
+			CarModel* c = new CarModel(i, CarModel::CT_TRACK, "ES", mSceneMgr, pSet, pGame, sc, 0, this);
+			c->Load();
+			c->pCar = (*carModels.begin())->pCar;  // based on 1st car
+			carModels.push_back(c);
+	}	}
 	
 	float pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
 	if (bRplPlay)  pretime = 0.f;

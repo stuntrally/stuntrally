@@ -1757,19 +1757,24 @@
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="432 100 380 24" name="RplChkBestOnly">
+				<Widget type="Button" skin="CheckBox" position="432 90 380 24" name="RplChkBestOnly">
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
 					<Property key="Caption" value="#{RplBestOnly}"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 100 380 24" name="RplChkRewind">
+				<Widget type="Button" skin="CheckBox" position="32 90 380 24" name="RplChkRewind">
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="Caption" value="#{RplRewindGhost}"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 140 380 24" name="RplChkGhostOther">
+				<Widget type="Button" skin="CheckBox" position="32 120 380 24" name="RplChkGhostOther">
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="Caption" value="#{RplGhostOther}"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 150 380 24" name="RplChkTrackGhost">
+					<Property key="TextColour" value="0.6 1 0.4"/>
+					<Property key="Caption" value="#{TracksGhost}"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="32 180 380 24" name="RplChkParticles">
@@ -1777,16 +1782,16 @@
 					<Property key="Caption" value="#{Particles}"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 236 466 20">
+				<Widget type="TextBox" skin="TextBox" position="32 266 466 20">
 					<Property key="TextColour" value="0.6 0.75 0.9"/>
 					<Property key="Caption" value="#{RplMaxNumViewports}*"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 260 48 20" name="RplNumViewportsVal">
+				<Widget type="TextBox" skin="TextBox" position="32 290 48 20" name="RplNumViewportsVal">
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="80 260 256 22" name="RplNumViewports">
+				<Widget type="Slider" skin="Slider" position="80 290 256 22" name="RplNumViewports">
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 			</Widget>

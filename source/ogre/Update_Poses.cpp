@@ -53,29 +53,54 @@ void App::newPoses(float time)  // time only for camera update
 		//  play  get data from replay / ghost
 		///-----------------------------------------------------------------------
 		if (bGhost)
-		{
-			ReplayFrame rf;
-			bool ok = ghplay.GetFrame(rewTime, &rf, 0);
-			//  car
-			pos = rf.pos;  rot = rf.rot;  pi.speed = rf.speed;
-			pi.fboost = rf.fboost;  pi.steer = rf.steer;
-			pi.percent = rf.percent;  pi.braking = rf.braking;
-			pi.fHitTime = rf.fHitTime;	pi.fParIntens = rf.fParIntens;	pi.fParVel = rf.fParVel;
-			pi.vHitPos = rf.vHitPos;	pi.vHitNorm = rf.vHitNorm;
-			//  wheels
-			for (int w=0; w < 4; ++w)
+		{	// track's ghost
+			if (carM->isGhostTrk())
 			{
-				whPos[w] = rf.whPos[w];  whRot[w] = rf.whRot[w];
-				pi.whVel[w] = rf.whVel[w];
-				pi.whSlide[w] = rf.slide[w];  pi.whSqueal[w] = rf.squeal[w];
-				pi.whR[w] = replay.header.whR[c][w];//
-				pi.whTerMtr[w] = rf.whTerMtr[w];  pi.whRoadMtr[w] = rf.whRoadMtr[w];
-				pi.whH[w] = rf.whH[w];  pi.whP[w] = rf.whP[w];
-				pi.whAngVel[w] = rf.whAngVel[w];
-				if (w < 2)  pi.whSteerAng[w] = rf.whSteerAng[w];
+				TrackFrame tf;       // par sec after, 1st lap
+				float lap1 = pGame->timer.GetCurrentLap(0) > 0 ? 2.f : 0.f;
+				bool ok = ghtrk.GetFrame(rewTime + lap1, &tf);
+				//  car
+				pos = tf.pos;  rot = tf.rot;
+				pi.speed = 0.f;
+				pi.fboost = 0.f;  pi.steer = 0.f; //
+				pi.percent = 0.f;  pi.braking = 0.f; //
+				pi.fHitTime = 0.f;  pi.fParIntens = 0.f;  pi.fParVel = 0.f;
+				pi.vHitPos = Vector3::ZERO;  pi.vHitNorm = Vector3::UNIT_Y;
+				//  wheels
+				for (int w=0; w < 4; ++w)
+				{
+					MATHVECTOR<float,3> whP = carM->whPos[w];
+					whP[2] += 0.05f;  // up
+					tf.rot.RotateVector(whP);
+					whPos[w] = tf.pos + whP;
+					whRot[w] = tf.rot * carM->qFixWh[w%2];
+				}
+			}else  // ghost
+			{
+				ReplayFrame rf;
+				bool ok = ghplay.GetFrame(rewTime, &rf, 0);
+				//  car
+				pos = rf.pos;  rot = rf.rot;  pi.speed = rf.speed;
+				pi.fboost = rf.fboost;  pi.steer = rf.steer;
+				pi.percent = rf.percent;  pi.braking = rf.braking;
+				pi.fHitTime = rf.fHitTime;	pi.fParIntens = rf.fParIntens;	pi.fParVel = rf.fParVel;
+				pi.vHitPos = rf.vHitPos;	pi.vHitNorm = rf.vHitNorm;
+				//  wheels
+				for (int w=0; w < 4; ++w)
+				{
+					whPos[w] = rf.whPos[w];  whRot[w] = rf.whRot[w];
+					pi.whVel[w] = rf.whVel[w];
+					pi.whSlide[w] = rf.slide[w];  pi.whSqueal[w] = rf.squeal[w];
+					pi.whR[w] = replay.header.whR[c][w];//
+					pi.whTerMtr[w] = rf.whTerMtr[w];  pi.whRoadMtr[w] = rf.whRoadMtr[w];
+					pi.whH[w] = rf.whH[w];  pi.whP[w] = rf.whP[w];
+					pi.whAngVel[w] = rf.whAngVel[w];
+					if (w < 2)  pi.whSteerAng[w] = rf.whSteerAng[w];
+				}
 			}
 		}
-		else if (bRplPlay)  // class member frm - used for sounds in car.cpp
+		else  // replay
+		if (bRplPlay)  // class member frm - used for sounds in car.cpp
 		{
 			//  time  from start
 			ReplayFrame& fr = frm[c];
@@ -101,7 +126,7 @@ void App::newPoses(float time)  // time only for camera update
 				if (w < 2)  pi.whSteerAng[w] = fr.whSteerAng[w];
 			}
 		}
-		else
+		else  // sim, game
 		//  get data from vdrift
 		//-----------------------------------------------------------------------
 		if (pCar)
@@ -432,6 +457,7 @@ void App::updatePoses(float time)
 	//  Update all carmodels from their carPos
 	const CarModel* playerCar = carModels.front();
 
+	int cgh = -1;
 	for (int c = 0; c < carModels.size(); ++c)
 	{		
 		CarModel* carM = carModels[c];
@@ -439,20 +465,35 @@ void App::updatePoses(float time)
 			PROFILER.endBlock(".updPos ");
 			return;  }
 		
-		//  hide ghost when empty
+		///  ghosts visibility  . . .
+		//  hide when empty or near car
 		bool bGhostCar = carM->eType == (isGhost2nd ? CarModel::CT_GHOST2 : CarModel::CT_GHOST),  // show only actual
-			bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
-		if (carM->isGhost())  // for both
+			bGhTrkVis = carM->isGhostTrk() && ghtrk.GetTimeLength()>0 && pSet->rpl_trackghost,
+			bGhostVis = ghplay.GetNumFrames()>0 && pSet->rpl_ghost;
+		if (bGhostCar)  cgh = c;
+
+		if (carM->isGhost())  // for all
 		{
 			bool loading = iLoad1stFrames >= 0;  // show during load ?..
 			bool curVisible = carM->mbVisible;
-			bool newVisible = bGhostVis && (bGhostCar || loading);
+			bool newVisible = bGhostVis && bGhostCar || bGhTrkVis;
 			
-			//  hide ghost car when close to player car (only when not transparent)
-			if (!pSet->rpl_alpha && !loading)
+			if (loading)
+				carM->setVisible(true);
+			else
 			{
-				float distance = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
-				if (distance < 16.f)
+			
+			//  hide ghost when close to player
+			if (!loading)
+			{
+				float d = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
+				if (d < 16.f)
+					newVisible = false;
+			}
+			if (carM->isGhostTrk() && cgh >= 0)  // hide track's ghost when near ghost
+			{
+				float d = carM->pMainNode->getPosition().squaredDistance(carModels[cgh]->pMainNode->getPosition());
+				if (d < 25.f)
 					newVisible = false;
 			}
 			if (curVisible == newVisible)
@@ -462,7 +503,8 @@ void App::updatePoses(float time)
 				if (carM->hideTime > 0.2f)  // par sec
 					carM->setVisible(newVisible);
 			}
-		}
+		}	}
+
 		
 		int q = iCurPoses[c];
 		int cc = (c + iRplCarOfs) % carModels.size();  // offset, use camera from other car

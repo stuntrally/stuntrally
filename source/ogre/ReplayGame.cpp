@@ -160,19 +160,20 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 			ReplayFrame fr;
 			fi.read((char*)&fr, header.frameSize/**/);
 
-		    #ifdef LOG_RPL
-				if (i > 0 && fr.time < frames[p][i-1].time)
+			if (i > 0 && fr.time < frames[p][i-1].time)
+			{
+			    #ifdef LOG_RPL
 					LogO(">- Load replay  BAD frame time  id:"+toStr(i)+"  plr:"+toStr(p)
 						+"  t-1:"+fToStr(frames[p][i-1].time,5,7)+" > t:"+fToStr(fr.time,5,7));
-			#endif
-			frames[p].push_back(fr);
+				#endif
+			}else
+				frames[p].push_back(fr);
 		}
 		++i;
 		//LogO(toStr((float)fr.time) /*+ "  p " + toStr(fr.pos)*/);
 	}
     fi.close();
  
-
     #ifdef LOG_RPL
 		LogO(">- Load replay  first: "+fToStr(frames[0][0].time,5,7)
 			+"  time: "+fToStr(GetTimeLength(0),2,5)+"  frames: "+toStr(frames[0].size()));
@@ -181,8 +182,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	ti.update();	/// time
 	float dt = ti.dt * 1000.f;
 	LogO(Ogre::String("::: Time ReplayLoad: ") + fToStr(dt,0,3) + " ms");
-
-    return true;
+	return true;
 }
 
 ///  Save
@@ -396,13 +396,15 @@ void TrackGhost::AddFrame(const TrackFrame& frame)
 		frames.push_back(frame);
 }
 
-bool TrackGhost::GetFrame(float time, TrackFrame* pFr)
+bool TrackGhost::GetFrame(float time1, TrackFrame* pFr)
 {
 	int& ic = idLast;  // last index
 
 	int s = frames.size();
 	if (ic > s-1)  ic = s-1;  // new size
 	if (s < 2)  return false;  // empty
+
+	float time = std::min(time1, GetTimeLength());
 
 	//  find which frame for given time
 	while (ic+1 < s-1 && frames[ic+1].time <= time)  ++ic;
@@ -411,8 +413,18 @@ bool TrackGhost::GetFrame(float time, TrackFrame* pFr)
 	if (ic < 0 || ic >= s)
 		return false;  //-
 	
-	//  simple, no interpolation
-	*pFr = frames[ic];
+	if (ic == 0 || ic == s-1)
+		*pFr = frames[ic];
+	else
+	{	//  linear interpolation
+		const TrackFrame& t1 = frames[ic];  //cur
+		const TrackFrame& t0 = frames[std::max(0, ic-1)];  //prev
+		//*pFr = frames[ic];
+		float f = (time - t0.time) / (t1.time - t0.time);
+		(*pFr).pos = t0.pos + (t1.pos - t0.pos) * f;
+		(*pFr).rot = t0.rot.QuatSlerp(t1.rot, f);
+		//(*pFr).rot = t1.rot;
+	}
 
 	//  last time
 	double end = frames[s-1].time;
@@ -446,6 +458,8 @@ bool TrackGhost::LoadFile(std::string file)
 	fi.read(buf, ciTrkHdrSize);
 	memcpy(&header, buf, sizeof(TrackHeader));
 	
+	LogO(">- Load trk ghost --  file: "+file);
+
 	Clear();
 	
 	//  frames
@@ -456,12 +470,14 @@ bool TrackGhost::LoadFile(std::string file)
 		TrackFrame fr;
 		fi.read((char*)&fr, header.frameSize/**/);
 
-	    #ifdef LOG_RPL
-			if (i > 0 && fr.time < frames[i-1].time)
+		if (i > 0 && fr.time < frames[i-1].time)
+		{
+			#ifdef LOG_RPL
 				LogO(">- Load trk ghost  BAD frame time  id:"+toStr(i)
 					+"  t-1:"+fToStr(frames[i-1].time,5,7)+" > t:"+fToStr(fr.time,5,7));
-		#endif
-		frames.push_back(fr);
+			#endif
+		}else
+			frames.push_back(fr);
 		++i;
 		//LogO(toStr((float)fr.time) /*+ "  p " + toStr(fr.pos)*/);
 	}

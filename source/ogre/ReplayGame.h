@@ -95,7 +95,21 @@ struct ReplayFrame
 
 //  reduced data, for track's ghost
 //--------------------------------------------
-struct TrackFrame
+/*struct TrackFramePacked  // in file
+{
+	//  time  since game start
+	float time;
+	//  car, no wheels
+	MATHVECTOR<float,3> pos;
+	short rot[4];
+
+	//  hud,info
+	//short vel;  char gear,steer,braking;
+	//float whSteerAng[2];
+	
+	TrackFramePacked();
+};/**/
+struct TrackFrame  // for game
 {
 	//  time  since game start
 	float time;

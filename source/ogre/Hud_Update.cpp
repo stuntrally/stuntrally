@@ -198,7 +198,7 @@ void App::UpdateHUD(int carId, float time)
 		
 		for (int o=0; o < cnt; ++o)
 		{	// add ghost1 last (dont add 2nd)
-			if (carModels[o]->eType == CarModel::CT_GHOST)
+			if (carModels[o]->eType == CarModel::CT_GHOST /*|| carModels[o]->eType == CarModel::CT_TRACK*/)
 			{	carModels[o]->trackPercent = carPoses[iCurPoses[o]][o].percent;  // ghost,rpl
 				cms.push_back(carModels[o]);	}
 		}

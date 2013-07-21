@@ -72,9 +72,11 @@ public:
 	//  replay - full, user saves
 	//  ghost - saved when best lap
 	//  ghplay - ghost ride replay, loaded if was on disk
+	//  ghtrk - track's ghost
 	//  frm - used when playing replay for hud and sounds
 	Replay replay, ghost, ghplay;  ReplayFrame frm[4];
 	Rewind rewind;  // to take car back in time (after crash etc.)
+	TrackGhost ghtrk;
 	const Ogre::String& GetGhostFile(std::string* ghCar=NULL);  std::string GetRplListDir();
 	bool isGhost2nd;  // if present (ghost but from other car)
 
@@ -418,9 +420,8 @@ protected:
 	MyGUI::Slider* slRplPos;  void slRplPosEv(SL);
 	MyGUI::EditPtr edRplName, edRplDesc;
 	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP), btnRplRename(WP),  // btn
-		chkRplAutoRec(WP),chkRplChkGhost(WP),chkRplChkBestOnly(WP),
-		chkRplChkAlpha(WP),chkRplChkPar(WP),
-		chkRplChkRewind(WP), chkRplChkGhostOther(WP),  // replay
+		chkRplAutoRec(WP), chkRplChkGhost(WP), chkRplChkBestOnly(WP), chkRplChkPar(WP),
+		chkRplChkRewind(WP), chkRplChkGhostOther(WP), chkRplChkTrackGhost(WP),  // replay
 		btnRplToStart(WP),btnRplToEnd(WP), btnRplPlay(WP),  // controls
 		btnRplCur(WP),btnRplAll(WP),chkRplGhosts(WP);  // radio
 	MyGUI::ButtonPtr rbRplCur, rbRplAll;

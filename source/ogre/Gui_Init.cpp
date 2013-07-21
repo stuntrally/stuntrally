@@ -328,12 +328,15 @@ void App::InitGui()
 	Btn("RplDelete", btnRplDelete);  Btn("RplRename", btnRplRename);
 	//  settings
 	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
-	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);
 	Chk("RplChkBestOnly", chkRplChkBestOnly, pSet->rpl_bestonly);
+	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);
 	Chk("RplChkParticles", chkRplChkPar, pSet->rpl_ghostpar);
+
 	Chk("RplChkRewind", chkRplChkRewind, pSet->rpl_ghostrewind);
 	Chk("RplChkGhostOther", chkRplChkGhostOther, pSet->rpl_ghostother);
+	Chk("RplChkTrackGhost", chkRplChkTrackGhost, pSet->rpl_trackghost);
 	Slv(RplNumViewports, (pSet->rpl_numViews-1) / 3.f);
+
 	//  radios
 	Btn("RplBtnAll", btnRplAll);  rbRplAll = btn;
 	Btn("RplBtnCur", btnRplCur);  rbRplCur = btn;

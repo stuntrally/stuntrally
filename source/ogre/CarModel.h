@@ -12,6 +12,8 @@
 #include <OgreVector4.h>
 #include <OgreMatrix4.h>
 #include <OgreColourValue.h>
+#include "../vdrift/mathvector.h"
+#include "../vdrift/quaternion.h"
 
 #include "../shiny/Main/MaterialInstance.hpp"
 
@@ -60,14 +62,17 @@ public:
 	/// -------------------- Car Types ---------------------------
 	//              Source          Physics (VDrift car)    Camera
 	// CT_LOCAL:    Local player    yes	                    yes
-	// CT_REPLAY:   Replay file     no                      yes
-	// CT_GHOST:	Replay file		no						no
 	// CT_REMOTE:   Network	        yes	                    no
+	// CT_REPLAY:   Replay file     no                      yes
+	// CT_GHOST:	Ghost file		no						no
+	// CT_GHOST2:	other car's ghost file
+	// CT_TRACK:	track's ghost file
 
-	enum eCarType {  CT_LOCAL=0, CT_REPLAY, CT_GHOST, CT_GHOST2, CT_REMOTE };
+	enum eCarType {  CT_LOCAL=0, CT_REMOTE, CT_REPLAY,  CT_GHOST, CT_GHOST2, CT_TRACK };
 	eCarType eType;
-	bool isGhost() const {  return eType == CT_GHOST || eType == CT_GHOST2;  }
-
+	bool isGhost() const {  return eType >= CT_GHOST;/* || eType == CT_GHOST2 || eType == CT_TRACK;*/  }
+	bool isGhostTrk() const {  return eType == CT_TRACK;  }
+	
 
 	//  ctor
 	CarModel(int index, eCarType type, const std::string& name,
@@ -88,6 +93,8 @@ public:
 	bool bRotFix;
 	std::string sBoostParName;
 	float whRadius[4], whWidth[4];  // for tire trails
+	MATHVECTOR<float,3> whPos[4];
+	QUATERNION<float> qFixWh[2];
 
 	//  exhaust position for boost particles
 	bool manualExhaustPos;  // if true, use values below, if false, guess from bounding box

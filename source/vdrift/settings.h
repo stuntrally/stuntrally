@@ -77,6 +77,7 @@ public:
 		std::string track;  bool track_user, trackreverse;
 		std::string car[4];
 		float car_hue[4], car_sat[4], car_val[4], car_gloss[4], car_refl[4];
+		//todo: std::vector<float> car_hue, car_sat, car_val, car_gloss, car_refl;
 
 		int local_players, num_laps;  // split
 		//  game setup
@@ -129,8 +130,9 @@ public:
 	std::string buffer, rendersystem;
 	
 	//  replay
-	bool rpl_rec, rpl_ghost, rpl_bestonly, rpl_ghostother;
-	bool rpl_alpha, rpl_ghostpar, rpl_ghostrewind, rpl_listghosts;
+	bool rpl_rec, rpl_ghost, rpl_bestonly;
+	bool rpl_ghostother, rpl_trackghost;
+	bool rpl_ghostpar, rpl_ghostrewind, rpl_listghosts;
 	int rpl_listview, rpl_numViews;
 	
 	// network

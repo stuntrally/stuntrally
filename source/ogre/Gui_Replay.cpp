@@ -149,10 +149,10 @@ void App::chkRplAutoRec(WP wp)
 
 void App::chkRplChkGhost(WP wp){		ChkEv(rpl_ghost);		}
 void App::chkRplChkBestOnly(WP wp){		ChkEv(rpl_bestonly);	}
-void App::chkRplChkAlpha(WP wp){		ChkEv(rpl_alpha);		}
 void App::chkRplChkPar(WP wp){			ChkEv(rpl_ghostpar);	}
 void App::chkRplChkRewind(WP wp){		ChkEv(rpl_ghostrewind);	}
 void App::chkRplChkGhostOther(WP wp){	ChkEv(rpl_ghostother);	}
+void App::chkRplChkTrackGhost(WP wp){	ChkEv(rpl_trackghost);	}
 
 void App::slRplNumViewports(SL)
 {

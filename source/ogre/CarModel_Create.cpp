@@ -27,7 +27,6 @@
 #include <OgreParticleEmitter.h>
 #include <OgreParticleAffector.h>
 #include <OgreRibbonTrail.h>
-
 using namespace Ogre;
 
 
@@ -38,7 +37,7 @@ CarModel::CarModel(int index, eCarType type, const std::string& name,
 	:mSceneMgr(sceneMgr), pSet(set), pGame(game), sc(s), mCamera(cam), pApp(app)
 	,iIndex(index), sDirname(name), eType(type)
 	,fCam(0), pMainNode(0), pCar(0), terrain(0), ndSph(0), brakes(0)
-	,pReflect(0), color(1,1,0)
+	,pReflect(0), color(0,1,0)
 	,hideTime(1.f), mbVisible(true), bLightMapEnabled(true), bBraking(false)
 	,iCamNextOld(0), bLastChkOld(0), bWrongChk(0),  iFirst(0)
 	,angCarY(0), vStartPos(0,0,0), pNickTxt(0)
@@ -59,6 +58,9 @@ CarModel::CarModel(int index, eCarType type, const std::string& name,
 	for (int i=0; i < 2; i++)
 		parBoost[i] = 0;
 	parHit = 0;
+
+	qFixWh[0].Rotate(2*PI_d,0,0,1);
+	qFixWh[1].Rotate(  PI_d,0,0,1);
 
 	Defaults();
 }
@@ -89,7 +91,8 @@ void CarModel::Defaults()
 void CarModel::Load(int startId)
 {
 	//  names for local play
-	if (isGhost())  sDispName = "Ghost";
+	if (isGhostTrk())    sDispName = TR("#{Track}");
+	else if (isGhost())  sDispName = TR("#{Ghost}");
 	else if (eType == CT_LOCAL)
 		sDispName = TR("#{Player}") + toStr(iIndex+1);
 	
@@ -159,6 +162,11 @@ CarModel::~CarModel()
 
 ///   Load .car
 //------------------------------------------------------------------------------------------------------
+static void ConvertV2to1(float & x, float & y, float & z)
+{
+	float tx = x, ty = y, tz = z;
+	x = ty;  y = -tx;  z = tz;
+}
 void CarModel::LoadConfig(const std::string & pathCar)
 {
 	Defaults();
@@ -237,6 +245,27 @@ void CarModel::LoadConfig(const std::string & pathCar)
 		whWidth[leftside] = width;
 		whWidth[rightside] = width;
 	}
+	
+	//  wheel pos
+	//  for track's ghost or garage view
+	int version(1);
+	cf.GetParam("version", version);
+	for (int i = 0; i < 4; ++i)
+	{
+		std::string sPos;
+		if (i == 0)			sPos = "FL";
+		else if (i == 1)	sPos = "FR";
+		else if (i == 2)	sPos = "RL";
+		else				sPos = "RR";
+
+		float pos[3];
+		MATHVECTOR<float,3> vec;
+
+		cf.GetParam("wheel-"+sPos+".position", pos, pGame->error_output);
+		if (version == 2)  ConvertV2to1(pos[0],pos[1],pos[2]);
+		vec.Set(pos[0],pos[1], pos[2]);
+		whPos[i] = vec;
+	}
 }
 
 	
@@ -295,7 +324,7 @@ void CarModel::Create(int car)
 {
 	if (!pCar)  return;
 
-	String strI = toStr(iIndex)+ (eType == CT_GHOST2 ? "V" :"");
+	String strI = toStr(iIndex)+ (eType == CT_TRACK ? "Z" : (eType == CT_GHOST2 ? "V" :""));
 	mtrId = strI;
 	String sCarI = "Car" + strI;
 	resGrpId = sCarI;
@@ -305,8 +334,9 @@ void CarModel::Create(int car)
 	String rCar = resCar + "/" + sDirname;
 	String sCar = sCars + "/" + sDirname;
 	
-	bool ghost = isGhost() && pSet->rpl_alpha;  //1 || for ghost test
+	bool ghost = false;  //isGhost();  //1 || for ghost test
 	bool bLogInfo = !isGhost();  // log mesh info
+	bool ghostTrk = isGhostTrk();
 	
 	//  Resource locations -----------------------------------------
 	/// Add a resource group for this car
@@ -339,7 +369,7 @@ void CarModel::Create(int car)
 	
 
 	//  next checkpoint marker
-	if (!ghost)
+	if (eType == CT_LOCAL)  //!isGhost())
 	{
 		entNextChk = mSceneMgr->createEntity("Chk"+strI, "check.mesh");
 		entNextChk->setRenderQueueGroup(RQG_Weather);  entNextChk->setCastShadows(false);
@@ -410,7 +440,7 @@ void CarModel::Create(int car)
 			ndWh[w]->attachObject(mWh);  mWh->setVisibilityFlags(RV_Car);  }
 		}
 		
-		if (FileExists(sCar + "_brake.mesh"))
+		if (FileExists(sCar + "_brake.mesh") && !ghostTrk)
 		{
 			String name = sDirname + "_brake.mesh";
 			Entity* eBrake = mSceneMgr->createEntity(siw + "_brake", name, sCarI);
@@ -440,97 +470,98 @@ void CarModel::Create(int car)
 		snode->attachObject(brakes);
 	}
 	
-
-	//  Particles
-	//-------------------------------------------------
-	///  world hit sparks
-	if (!parHit)  {
-		parHit = mSceneMgr->createParticleSystem("Hit" + strI, "Sparks");
-		parHit->setVisibilityFlags(RV_Particles);
-		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(parHit);
-		parHit->getEmitter(0)->setEmissionRate(0);  }
-
-	///  boost emitters  ------------------------
-	for (int i=0; i < 2; i++)
+	if (!ghostTrk)
 	{
-		String si = strI + "_" +toStr(i);
-		if (!parBoost[i])  {
-			parBoost[i] = mSceneMgr->createParticleSystem("Boost"+si, sBoostParName);
-			parBoost[i]->setVisibilityFlags(RV_Particles);
-			if (!pSet->boostFromExhaust || !manualExhaustPos)
-			{
-				// no exhaust pos in car file, guess from bounding box
-				Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
-					bcenter = bodyBox.getMaximum() + bodyBox.getMinimum();
-				//LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
-				Vector3 vp = bRotFix ?
-					Vector3(bsize.z * 0.97, bsize.y * 0.65, bsize.x * 0.65 * (i==0 ? 1 : -1)) :
-					Vector3(bsize.x * 0.97, bsize.y * 0.65, bsize.z * 0.65 * (i==0 ? 1 : -1));
-					//Vector3(1.9 /*back*/, 0.1 /*up*/, 0.6 * (i==0 ? 1 : -1)/*sides*/
-				vp.z *= boostSizeZ;
-				vp += Vector3(boostOffset[0],boostOffset[1],boostOffset[2]);
-				SceneNode* nb = pMainNode->createChildSceneNode(bcenter+vp);
-				nb->attachObject(parBoost[i]);
-			}else{
-				// use exhaust pos values from car file
-				Vector3 pos;
-				if (i==0)
-					pos = Vector3(exhaustPos[0], exhaustPos[1], exhaustPos[2]);
-				else if (!has2exhausts)
-					continue;
-				else
-					pos = Vector3(exhaustPos[0], exhaustPos[1], -exhaustPos[2]);
+		//  Particles
+		//-------------------------------------------------
+		///  world hit sparks
+		if (!parHit)  {
+			parHit = mSceneMgr->createParticleSystem("Hit" + strI, "Sparks");
+			parHit->setVisibilityFlags(RV_Particles);
+			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(parHit);
+			parHit->getEmitter(0)->setEmissionRate(0);  }
 
-				SceneNode* nb = pMainNode->createChildSceneNode(pos);
-				nb->attachObject(parBoost[i]); 
-			}
-			parBoost[i]->getEmitter(0)->setEmissionRate(0);
-		}
-	}
-
-	///  wheel emitters  ------------------------
-	if (!ghost)
-	{
-		const static String sPar[PAR_ALL] = {"Smoke","Mud","Dust","FlWater","FlMud","FlMudS"};  // for ogre name
-		//  particle type names
-		const String sName[PAR_ALL] = {sc->sParSmoke, sc->sParMud, sc->sParDust, "FluidWater", "FluidMud", "FluidMudSoft"};
-		for (int w=0; w < 4; ++w)
+		///  boost emitters  ------------------------
+		for (int i=0; i < 2; i++)
 		{
-			String siw = strI + "_" +toStr(w);
-			//  particles
-			for (int p=0; p < PAR_ALL; ++p)
-			if (!par[p][w])
-			{
-				par[p][w] = mSceneMgr->createParticleSystem(sPar[p]+siw, sName[p]);
-				par[p][w]->setVisibilityFlags(RV_Particles);
-				mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(par[p][w]);
-				par[p][w]->getEmitter(0)->setEmissionRate(0.f);
-			}
-			//  trails
-			if (!ndWhE[w])
-				ndWhE[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+			String si = strI + "_" +toStr(i);
+			if (!parBoost[i])  {
+				parBoost[i] = mSceneMgr->createParticleSystem("Boost"+si, sBoostParName);
+				parBoost[i]->setVisibilityFlags(RV_Particles);
+				if (!pSet->boostFromExhaust || !manualExhaustPos)
+				{
+					// no exhaust pos in car file, guess from bounding box
+					Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
+						bcenter = bodyBox.getMaximum() + bodyBox.getMinimum();
+					//LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
+					Vector3 vp = bRotFix ?
+						Vector3(bsize.z * 0.97, bsize.y * 0.65, bsize.x * 0.65 * (i==0 ? 1 : -1)) :
+						Vector3(bsize.x * 0.97, bsize.y * 0.65, bsize.z * 0.65 * (i==0 ? 1 : -1));
+						//Vector3(1.9 /*back*/, 0.1 /*up*/, 0.6 * (i==0 ? 1 : -1)/*sides*/
+					vp.z *= boostSizeZ;
+					vp += Vector3(boostOffset[0],boostOffset[1],boostOffset[2]);
+					SceneNode* nb = pMainNode->createChildSceneNode(bcenter+vp);
+					nb->attachObject(parBoost[i]);
+				}else{
+					// use exhaust pos values from car file
+					Vector3 pos;
+					if (i==0)
+						pos = Vector3(exhaustPos[0], exhaustPos[1], exhaustPos[2]);
+					else if (!has2exhausts)
+						continue;
+					else
+						pos = Vector3(exhaustPos[0], exhaustPos[1], -exhaustPos[2]);
 
-			if (!whTrail[w])
-			{	NameValuePairList params;
-				params["numberOfChains"] = "1";
-				params["maxElements"] = toStr(320 * pSet->trails_len);
-
-				whTrail[w] = (RibbonTrail*)mSceneMgr->createMovableObject("RibbonTrail", &params);
-				whTrail[w]->setInitialColour(0, 0.1,0.1,0.1, 0);
-				whTrail[w]->setFaceCamera(false,Vector3::UNIT_Y);
-				mSceneMgr->getRootSceneNode()->attachObject(whTrail[w]);
-				whTrail[w]->setMaterialName("TireTrail");
-				whTrail[w]->setCastShadows(false);
-				whTrail[w]->addNode(ndWhE[w]);
+					SceneNode* nb = pMainNode->createChildSceneNode(pos);
+					nb->attachObject(parBoost[i]); 
+				}
+				parBoost[i]->getEmitter(0)->setEmissionRate(0);
 			}
-			whTrail[w]->setTrailLength(90 * pSet->trails_len);  //30
-			whTrail[w]->setInitialColour(0, 0.1f,0.1f,0.1f, 0);
-			whTrail[w]->setColourChange(0, 0.0,0.0,0.0, /*fade*/0.08f * 1.f / pSet->trails_len);
-			whTrail[w]->setInitialWidth(0, 0.f);
 		}
-	}
 
-	UpdParsTrails();
+		///  wheel emitters  ------------------------
+		if (!ghost)
+		{
+			const static String sPar[PAR_ALL] = {"Smoke","Mud","Dust","FlWater","FlMud","FlMudS"};  // for ogre name
+			//  particle type names
+			const String sName[PAR_ALL] = {sc->sParSmoke, sc->sParMud, sc->sParDust, "FluidWater", "FluidMud", "FluidMudSoft"};
+			for (int w=0; w < 4; ++w)
+			{
+				String siw = strI + "_" +toStr(w);
+				//  particles
+				for (int p=0; p < PAR_ALL; ++p)
+				if (!par[p][w])
+				{
+					par[p][w] = mSceneMgr->createParticleSystem(sPar[p]+siw, sName[p]);
+					par[p][w]->setVisibilityFlags(RV_Particles);
+					mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(par[p][w]);
+					par[p][w]->getEmitter(0)->setEmissionRate(0.f);
+				}
+				//  trails
+				if (!ndWhE[w])
+					ndWhE[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+
+				if (!whTrail[w])
+				{	NameValuePairList params;
+					params["numberOfChains"] = "1";
+					params["maxElements"] = toStr(320 * pSet->trails_len);
+
+					whTrail[w] = (RibbonTrail*)mSceneMgr->createMovableObject("RibbonTrail", &params);
+					whTrail[w]->setInitialColour(0, 0.1,0.1,0.1, 0);
+					whTrail[w]->setFaceCamera(false,Vector3::UNIT_Y);
+					mSceneMgr->getRootSceneNode()->attachObject(whTrail[w]);
+					whTrail[w]->setMaterialName("TireTrail");
+					whTrail[w]->setCastShadows(false);
+					whTrail[w]->addNode(ndWhE[w]);
+				}
+				whTrail[w]->setTrailLength(90 * pSet->trails_len);  //30
+				whTrail[w]->setInitialColour(0, 0.1f,0.1f,0.1f, 0);
+				whTrail[w]->setColourChange(0, 0.0,0.0,0.0, /*fade*/0.08f * 1.f / pSet->trails_len);
+				whTrail[w]->setInitialWidth(0, 0.f);
+			}
+		}
+		UpdParsTrails();
+	}
 
 	RecreateMaterials();
 		
@@ -554,7 +585,7 @@ void CarModel::Create(int car)
 void CarModel::RecreateMaterials()
 {
 	String sCar = resCar + "/" + sDirname;
-	bool ghost = isGhost() && pSet->rpl_alpha;  //1 || for ghost test
+	bool ghost = false;  //isGhost();  //1 || for ghost test
 	
 	// --------- Materials  -------------------
 	
