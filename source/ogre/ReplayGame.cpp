@@ -175,7 +175,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 
     #ifdef LOG_RPL
 		LogO(">- Load replay  first: "+fToStr(frames[0][0].time,5,7)
-			+"  time: "+fToStr(GetTimeLength(0),5,7)+"  frames: "+toStr(frames[0].size()));
+			+"  time: "+fToStr(GetTimeLength(0),2,5)+"  frames: "+toStr(frames[0].size()));
 	#endif
 
 	ti.update();	/// time
@@ -191,6 +191,7 @@ bool Replay::SaveFile(std::string file)
 {
 	std::ofstream of(file.c_str(), std::ios::binary | std::ios::out);
 	if (!of)  return false;
+
 	//  header
 	char buf[ciRplHdrSize];  memset(buf,0,ciRplHdrSize);
 	memcpy(buf, &header, sizeof(ReplayHeader));
@@ -368,14 +369,26 @@ bool Rewind::GetFrame(double time, RewindFrame* pFr, int carNum)
 
 ///  Track's ghost
 //-------------------------------------------------------------------------------------------------------------------------
+TrackHeader::TrackHeader()
+{
+	Default();
+}
+
+void TrackHeader::Default()
+{
+	ver = 0;
+	frameSize = sizeof(TrackFrame);
+}
+
+
 TrackFrame::TrackFrame()
 	: time(0.f)
 {	}
 
 TrackGhost::TrackGhost()
 	: idLast(0)
-{
-}
+{	}
+
 
 void TrackGhost::AddFrame(const TrackFrame& frame)
 {
@@ -383,7 +396,7 @@ void TrackGhost::AddFrame(const TrackFrame& frame)
 		frames.push_back(frame);
 }
 
-bool TrackGhost::GetFrame(float time, TrackFrame* fr)
+bool TrackGhost::GetFrame(float time, TrackFrame* pFr)
 {
 	int& ic = idLast;  // last index
 
@@ -418,4 +431,70 @@ void TrackGhost::Clear()
 {
 	frames.clear();
 	idLast = 0;
+}
+
+///  Load
+//-------------------------------------------------------------------------------------------------------------------------
+bool TrackGhost::LoadFile(std::string file)
+{
+	std::ifstream fi(file.c_str(), std::ios::binary | std::ios::in);
+	if (!fi)  return false;
+	QTimer ti;  ti.update();  /// time
+	
+	//  header
+	char buf[ciTrkHdrSize];  memset(buf,0,ciTrkHdrSize);
+	fi.read(buf, ciTrkHdrSize);
+	memcpy(&header, buf, sizeof(TrackHeader));
+	
+	Clear();
+	
+	//  frames
+	int i=0;
+	frames.reserve(cDefSize);  //?
+	while (!fi.eof())
+	{
+		TrackFrame fr;
+		fi.read((char*)&fr, header.frameSize/**/);
+
+	    #ifdef LOG_RPL
+			if (i > 0 && fr.time < frames[i-1].time)
+				LogO(">- Load trk ghost  BAD frame time  id:"+toStr(i)
+					+"  t-1:"+fToStr(frames[i-1].time,5,7)+" > t:"+fToStr(fr.time,5,7));
+		#endif
+		frames.push_back(fr);
+		++i;
+		//LogO(toStr((float)fr.time) /*+ "  p " + toStr(fr.pos)*/);
+	}
+    fi.close();
+ 
+    #ifdef LOG_RPL
+		LogO(">- Load trk ghost   first: "+fToStr(frames[0].time,5,7)
+			+"  time: "+fToStr(GetTimeLength(),2,5)+"  frames: "+toStr(frames.size()));
+	#endif
+
+	ti.update();	/// time
+	float dt = ti.dt * 1000.f;
+	LogO(Ogre::String("::: Time Load trk ghost: ") + fToStr(dt,0,3) + " ms");
+    return true;
+}
+
+///  Save
+//-------------------------------------------------------------------------------------------------------------------------
+bool TrackGhost::SaveFile(std::string file)
+{
+	std::ofstream of(file.c_str(), std::ios::binary | std::ios::out);
+	if (!of)  return false;
+
+	//  header
+	char buf[ciTrkHdrSize];  memset(buf,0,ciTrkHdrSize);
+	memcpy(buf, &header, sizeof(TrackHeader));
+	of.write(buf, ciTrkHdrSize);
+
+	//  frames
+	int s = frames.size();
+	for (int i=0; i < s; ++i)
+		of.write((char*)&frames[i], sizeof(TrackFrame));
+
+    of.close();
+    return true;
 }

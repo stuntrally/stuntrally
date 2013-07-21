@@ -8,6 +8,7 @@
 
 const static int ciRplHdrSize = 1024;
 const static int cDefSize = 8*1024;
+const static int ciTrkHdrSize = 32;
 
 
 // note: add new vars always at end of
@@ -100,7 +101,8 @@ struct TrackFrame
 	float time;
 	//  car, no wheels
 	MATHVECTOR<float,3> pos;
-	short rot[4];  //QUATERNION<float> rot;
+	//short rot[4];
+	QUATERNION<float> rot;
 
 	//  hud,info
 	//short vel;  char gear,steer,braking;
@@ -136,6 +138,7 @@ public:
 
 	void AddFrame(const ReplayFrame& frame, int carNum);    // record
 	bool GetFrame(double time, ReplayFrame* fr, int carNum);  // play
+	const ReplayFrame& GetFrame0(int id){  return frames[0][id];  }
 
 	const double GetTimeLength(int carNum=0) const;  // total time in seconds
 	const int GetNumFrames() const {  return frames[0].size();  }
@@ -171,6 +174,18 @@ private:
 	int idLast[4];  // last index from GetFrame (optym)
 };
 
+
+//  Track's ghost header
+//--------------------------------------------
+struct TrackHeader
+{
+	int ver;
+	int frameSize;
+
+	TrackHeader();
+	void Default();
+};
+
 ///  Track's ghost
 //--------------------------------------------
 class TrackGhost
@@ -178,14 +193,18 @@ class TrackGhost
 public:
 	TrackGhost();
 
+	bool LoadFile(std::string file);
+	bool SaveFile(std::string file);
+
 	void AddFrame(const TrackFrame& frame);
 	bool GetFrame(float time, TrackFrame* fr);
 
 	const float GetTimeLength() const;
-
 	void Clear();
+
+	TrackHeader header;
 private:
-	std::vector<RewindFrame> frames;
+	std::vector<TrackFrame> frames;
 	int idLast;  // last index from GetFrame
 };
 
