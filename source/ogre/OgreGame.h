@@ -290,7 +290,7 @@ protected:
 	void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
 	void updTrkListDim(), updChampListDim();
 	const static int TcolW[32],TcolC[6],ChColW[9],StColW[8];
-	const static Ogre::String clrsDiff[9],clrsRating[5],clrsLong[10];
+	const static Ogre::String clrsDiff[9],clrsRating[6],clrsLong[10];
 
 	void edTrkFind(MyGUI::EditPtr),edRplFind(MyGUI::EditPtr);
 	Ogre::String sTrkFind,sRplFind;  MyGUI::EditPtr edFind;
