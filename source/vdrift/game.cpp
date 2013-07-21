@@ -8,7 +8,6 @@
 #include <math.h>
 
 #include "numprocessors.h"
-#include "parallel_task.h"
 #include "performance_testing.h"
 #include "quickprof.h"
 #include "tracksurface.h"

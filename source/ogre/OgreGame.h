@@ -334,7 +334,7 @@ protected:
 	MyGUI::TabPtr tabTut, tabChamp;  MyGUI::StaticImagePtr imgTut, imgChamp, imgChall;
 	void tabTutType(MyGUI::TabPtr wp, size_t id), tabChampType(MyGUI::TabPtr wp, size_t id);
 	void btnChampInfo(WP), chkGhampRev(WP), UpdChampTabVis();
-	void ToolGhosts();
+	void ToolGhosts(),ToolGhostsConv();  //  _Tools_
 	
 
 	///  input tab  -----------------------------------------

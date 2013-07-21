@@ -297,7 +297,7 @@ protected:
 	const static Ogre::String clrsDiff[9],clrsRating[5],clrsLong[10];
 
 	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;  MyGUI::EditPtr edFind;
-	strlist liTracks,liTracksUser;  void FillTrackLists(),ToolListSceneryID();
+	strlist liTracks,liTracksUser;  void FillTrackLists();
 	std::list<TrkL> liTrk;
 
 	//  screen
@@ -315,6 +315,9 @@ protected:
 
 	const static MyGUI::Colour sUsedClr[8];
 	void SetUsedStr(MyGUI::StaticTextPtr valUsed, int cnt, int yellowAt);
+	
+	//  _Tools_
+	void ToolTexAlpha(),ToolSceneXml(),ToolListSceneryID(),ToolTracksWarnings(),ToolBrushesPrv();	
 
 
 	//  tool windows texts

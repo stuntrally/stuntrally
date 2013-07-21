@@ -459,35 +459,6 @@ void App::FillTrackLists()
 	}
 }
 
-///  _Tool_ write sceneryID
-#ifdef SR_EDITOR
-void App::ToolListSceneryID()
-{
-	LogO("ALL tracks ---------");
-
-	std::list<TrkL> liTrk2 = liTrk;
-	liTrk2.sort(Sort0);  liTrk2.reverse();
-
-	//  foreach track
-	for (std::list<TrkL>::iterator it = liTrk2.begin(); it != liTrk2.end(); ++it)
-	{
-		std::string trk = (*it).name, path = pathTrk[0] +"/"+ trk +"/";
-		Scene sc;  sc.LoadXml(path +"scene.xml");
-
-		std::ostringstream s;
-		s << std::fixed << std::left << std::setw(18) << trk;
-		s << " scID: " << std::setw(3) << sc.sceneryId;
-		s << "  pitch " << fToStr(sc.ldPitch,0,2);
-		s << "  yaw" << fToStr(sc.ldYaw,0,4);
-		s << "  amb "<<fToStr(sc.lAmb.x, 2,4)<<" "<<fToStr(sc.lAmb.y, 2,4)<<" "<<fToStr(sc.lAmb.z, 2,4);
-		s << "  diff "<<fToStr(sc.lDiff.x,2,4)<<" "<<fToStr(sc.lDiff.y,2,4)<<" "<<fToStr(sc.lDiff.z,2,4);
-		s << "  spec "<<fToStr(sc.lSpec.x,2,4)<<" "<<fToStr(sc.lSpec.y,2,4)<<" "<<fToStr(sc.lSpec.z,2,4);
-		LogO(s.str());
-	}
-	LogO("ALL tracks ---------");
-}
-#endif
-
 
 ///  . .  util tracks stats  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 //----------------------------------------------------------------------------------------------------------------

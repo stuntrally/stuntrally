@@ -855,6 +855,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\ogre\common\Tools.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\ogre\common\TrackVdr.cpp"
 				>
 			</File>

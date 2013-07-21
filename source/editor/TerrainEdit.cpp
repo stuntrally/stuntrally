@@ -772,19 +772,4 @@ void App::createBrushPrv()
 		ovTerMtr->setMaterialName("TerPrvMtr");
 
 	updateTerPrv(true);
-
-
-///==============================================================================================
-	///  _Tool_ update all Brushes png
-	#if 0  // 0 in release !!
-	Image im;
-	for (int i=0; i < brSetsNum; ++i)
-	{
-		SetBrushPreset(i);
-		brushPrvTex->convertToImage(im);
-		im.save("data/editor/brush"+toStr(i)+".png");
-		// todo: 1 big 2k texture with all brush.png on it (less batches)..
-		// todo: brush presets in xml..
-	}
-	#endif
 }
