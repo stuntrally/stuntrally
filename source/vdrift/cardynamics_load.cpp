@@ -397,29 +397,29 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			string posstr;
-			WHEEL_POSITION pos;
-			if (i == 0)		{	posstr = "FL";	pos = FRONT_LEFT;	}
-			else if (i == 1){	posstr = "FR";	pos = FRONT_RIGHT;	}
-			else if (i == 2){	posstr = "RL";	pos = REAR_LEFT;	}
-			else			{	posstr = "RR";	pos = REAR_RIGHT;	}
+			string sPos;
+			WHEEL_POSITION wp;
+			if (i == 0)		{	sPos = "FL";	wp = FRONT_LEFT;	}
+			else if (i == 1){	sPos = "FR";	wp = FRONT_RIGHT;	}
+			else if (i == 2){	sPos = "RL";	wp = REAR_LEFT;	}
+			else			{	sPos = "RR";	wp = REAR_RIGHT;	}
 
-			float roll_height, mass;
-			float position[3];
-			MATHVECTOR<double,3> tempvec;
+			float roll_h, mass;
+			float pos[3];
+			MATHVECTOR<double,3> vec;
 
-			if (!c.GetParam("wheel-"+posstr+".mass", mass, error_output))  return false;
-			wheel[pos].SetMass(mass);
+			if (!c.GetParam("wheel-"+sPos+".mass", mass, error_output))  return false;
+			wheel[wp].SetMass(mass);
 
-			if (!c.GetParam("wheel-"+posstr+".roll-height", roll_height, error_output))  return false;
-			wheel[pos].SetRollHeight(roll_height);
+			if (!c.GetParam("wheel-"+sPos+".roll-height", roll_h, error_output))  return false;
+			wheel[wp].SetRollHeight(roll_h);
 
-			if (!c.GetParam("wheel-"+posstr+".position", position, error_output))  return false;
-			if (version == 2)  ConvertV2to1(position[0],position[1],position[2]);
-			tempvec.Set(position[0],position[1], position[2]);
-			wheel[pos].SetExtendedPosition(tempvec);
+			if (!c.GetParam("wheel-"+sPos+".position", pos, error_output))  return false;
+			if (version == 2)  ConvertV2to1(pos[0],pos[1],pos[2]);
+			vec.Set(pos[0],pos[1], pos[2]);
+			wheel[wp].SetExtendedPosition(vec);
 
-			AddMassParticle(mass, tempvec);
+			AddMassParticle(mass, vec);
 		}
 
 		//load the rotational inertia parameter from the tire section

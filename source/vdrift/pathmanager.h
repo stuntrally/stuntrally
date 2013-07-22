@@ -38,10 +38,12 @@ public:
 	static std::string CarSim() {          return game_data + "/carsim"; }
 	static std::string Cars() {            return game_data + "/cars"; }
 
-	static std::string Sounds() {          return game_data + "/sounds"; }
 	static std::string Replays() {         return user_data + "/replays"; }
 	static std::string Ghosts() {          return user_data + "/ghosts"; }
+	static std::string TrkGhosts() {       return game_data + "/ghosts"; }
+
 	static std::string Records() {         return user_data + "/records";  }
+	static std::string Sounds() {          return game_data + "/sounds"; }
 	static std::string Screenshots() {     return user_data + "/screenshots";  }
 
 	//  list files

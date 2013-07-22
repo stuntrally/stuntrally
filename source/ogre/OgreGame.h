@@ -74,9 +74,11 @@ public:
 	//  replay - full, user saves
 	//  ghost - saved when best lap
 	//  ghplay - ghost ride replay, loaded if was on disk
+	//  ghtrk - track's ghost
 	//  frm - used when playing replay for hud and sounds
 	Replay replay, ghost, ghplay;  ReplayFrame frm[4];
 	Rewind rewind;  // to take car back in time (after crash etc.)
+	TrackGhost ghtrk;
 	const Ogre::String& GetGhostFile(std::string* ghCar=NULL);  std::string GetRplListDir();
 	bool isGhost2nd;  // if present (ghost but from other car)
 
@@ -291,7 +293,7 @@ protected:
 	void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
 	void updTrkListDim(), updChampListDim();
 	const static int TcolW[32],TcolC[6],ChColW[9],StColW[8];
-	const static Ogre::String clrsDiff[9],clrsRating[5],clrsLong[10];
+	const static Ogre::String clrsDiff[9],clrsRating[6],clrsLong[10];
 
 	void edTrkFind(MyGUI::EditPtr),edRplFind(MyGUI::EditPtr);
 	Ogre::String sTrkFind,sRplFind;  MyGUI::EditPtr edFind;
@@ -313,8 +315,9 @@ protected:
 
 	//  main menu
 	void toggleGui(bool toggle=true), GuiShortcut(MNU_Btns mnu, int tab, int subtab=-1);
-	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 	void MainMenuBtn(MyGUI::WidgetPtr), MenuTabChg(MyGUI::TabPtr, size_t);  bool loadReadme;
+
+	void UpdCarClrSld(bool upd=true), UpdCarMClr();  bool bUpdCarClr;
 
 	///  championships
 	ChampsXml champs;  TimesXml times;  ProgressXml progress[2];  //xml  progres[1]=reversed
@@ -335,7 +338,7 @@ protected:
 	MyGUI::TabPtr tabTut, tabChamp;  MyGUI::StaticImagePtr imgTut, imgChamp, imgChall;
 	void tabTutType(MyGUI::TabPtr wp, size_t id), tabChampType(MyGUI::TabPtr wp, size_t id);
 	void btnChampInfo(WP), chkGhampRev(WP), UpdChampTabVis();
-	void ToolGhosts();
+	void ToolGhosts(),ToolGhostsConv();  //  _Tools_
 	
 
 	///  input tab  -----------------------------------------
@@ -450,9 +453,8 @@ protected:
 	MyGUI::Slider* slRplPos;  void slRplPosEv(SL);
 	MyGUI::EditPtr edRplName, edRplDesc;
 	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP), btnRplRename(WP),  // btn
-		chkRplAutoRec(WP),chkRplChkGhost(WP),chkRplChkBestOnly(WP),
-		chkRplChkAlpha(WP),chkRplChkPar(WP),
-		chkRplChkRewind(WP), chkRplChkGhostOther(WP),  // replay
+		chkRplAutoRec(WP), chkRplChkGhost(WP), chkRplChkBestOnly(WP), chkRplChkPar(WP),
+		chkRplChkRewind(WP), chkRplChkGhostOther(WP), chkRplChkTrackGhost(WP),  // replay
 		btnRplToStart(WP),btnRplToEnd(WP), btnRplPlay(WP),  // controls
 		btnRplCur(WP),btnRplAll(WP),chkRplGhosts(WP);  // radio
 	MyGUI::ButtonPtr rbRplCur, rbRplAll;

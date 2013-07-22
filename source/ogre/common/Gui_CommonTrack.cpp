@@ -125,8 +125,8 @@ String App::GetSceneryColor(String name)
 // track difficulties colors from value
 const String App::clrsDiff[9] =  // difficulty
 	{"#60C0FF", "#00FF00", "#60FF00", "#C0FF00", "#FFFF00", "#FFC000", "#FF6000", "#FF4040", "#B060B0"};
-const String App::clrsRating[5] =  // rating
-	{"#808080", "#606060", "#7090A0", "#60C8D8", "#E0F0FF"};
+const String App::clrsRating[6] =  // rating
+	{"#808080", "#606060", "#7090A0", "#60C8D8", "#A0D0F0", "#E0F0FF"};
 const String App::clrsLong[10] =  // long
 	{"#E0D0D0", "#E8C0C0", "#F0B0B0", "#F8A0A0", "#FF9090", "#FF8080", "#F07070", "#F06060", "#E04040", "#D02020"};
 
@@ -458,35 +458,6 @@ void App::FillTrackLists()
 		liTrk.push_back(trl);
 	}
 }
-
-///  _Tool_ write sceneryID
-#ifdef SR_EDITOR
-void App::ToolListSceneryID()
-{
-	LogO("ALL tracks ---------");
-
-	std::list<TrkL> liTrk2 = liTrk;
-	liTrk2.sort(Sort0);  liTrk2.reverse();
-
-	//  foreach track
-	for (std::list<TrkL>::iterator it = liTrk2.begin(); it != liTrk2.end(); ++it)
-	{
-		std::string trk = (*it).name, path = pathTrk[0] +"/"+ trk +"/";
-		Scene sc;  sc.LoadXml(path +"scene.xml");
-
-		std::ostringstream s;
-		s << std::fixed << std::left << std::setw(18) << trk;
-		s << " scID: " << std::setw(3) << sc.sceneryId;
-		s << "  pitch " << fToStr(sc.ldPitch,0,2);
-		s << "  yaw" << fToStr(sc.ldYaw,0,4);
-		s << "  amb "<<fToStr(sc.lAmb.x, 2,4)<<" "<<fToStr(sc.lAmb.y, 2,4)<<" "<<fToStr(sc.lAmb.z, 2,4);
-		s << "  diff "<<fToStr(sc.lDiff.x,2,4)<<" "<<fToStr(sc.lDiff.y,2,4)<<" "<<fToStr(sc.lDiff.z,2,4);
-		s << "  spec "<<fToStr(sc.lSpec.x,2,4)<<" "<<fToStr(sc.lSpec.y,2,4)<<" "<<fToStr(sc.lSpec.z,2,4);
-		LogO(s.str());
-	}
-	LogO("ALL tracks ---------");
-}
-#endif
 
 
 ///  . .  util tracks stats  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 

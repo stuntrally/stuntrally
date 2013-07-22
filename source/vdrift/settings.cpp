@@ -20,13 +20,15 @@ void SETTINGS::Save(std::string sfile)
 void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 {
 	c.bFltFull = false;
-	for (int i=0; i < 4; ++i)
+	for (int i=0; i < 6; ++i)
 	{
 		char ss[64];  sprintf(ss, "car%d.", i+1);   std::string s = ss;
-		Param(c,w, s+"car", gui.car[i]);				Param(c,w, s+"clr_hue", gui.car_hue[i]);
+		if (i < 4)
+		{	Param(c,w, s+"car", gui.car[i]);			Param(c,w, s+"camera", cam_view[i]);
+		}
+		Param(c,w, s+"clr_hue", gui.car_hue[i]);
 		Param(c,w, s+"clr_sat", gui.car_sat[i]);		Param(c,w, s+"clr_val", gui.car_val[i]);
 		Param(c,w, s+"clr_gloss", gui.car_gloss[i]);	Param(c,w, s+"clr_refl", gui.car_refl[i]);
-		Param(c,w, s+"camera", cam_view[i]);
 	}
 	//todo: this for all 4 cars..
 	Param(c,w, "car1.autotrans", autoshift);
@@ -122,11 +124,10 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "network.game_name", netGameName);
 
 	Param(c,w, "replay.rec", rpl_rec);				Param(c,w, "replay.ghost", rpl_ghost);
-	Param(c,w, "replay.bestonly", rpl_bestonly);
+	Param(c,w, "replay.bestonly", rpl_bestonly);	Param(c,w, "replay.trackghost", rpl_trackghost);
 	Param(c,w, "replay.listview", rpl_listview);	Param(c,w, "replay.listghosts", rpl_listghosts);
-	Param(c,w, "replay.alpha", rpl_alpha);			Param(c,w, "replay.ghostpar", rpl_ghostpar);
+	Param(c,w, "replay.ghostpar", rpl_ghostpar);	Param(c,w, "replay.ghostother", rpl_ghostother);
 	Param(c,w, "replay.num_views", rpl_numViews);	Param(c,w, "replay.ghostrewind", rpl_ghostrewind);
-	Param(c,w, "replay.ghostother", rpl_ghostother);
 	
 	Param(c,w, "sim.game_freq", game_fq);			Param(c,w, "sim.multi_thr", multi_thr);
 	Param(c,w, "sim.bullet_freq", blt_fq);			Param(c,w, "sim.bullet_iter", blt_iter);
@@ -207,8 +208,8 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,master_server_port(protocol::DEFAULT_PORT)
 	,local_port(protocol::DEFAULT_PORT)
 	//  replay
-	,rpl_ghost(1), rpl_bestonly(1)
-	,rpl_alpha(0), rpl_ghostpar(0), rpl_ghostrewind(1), rpl_ghostother(1)
+	,rpl_ghost(1), rpl_bestonly(1), rpl_trackghost(1)
+	,rpl_ghostpar(0), rpl_ghostrewind(1), rpl_ghostother(1)
 	,rpl_listview(0), rpl_listghosts(0), rpl_numViews(4)
 	//  sim
 	,game_fq(82.f), blt_fq(160.f), blt_iter(24), dyn_iter(30)
@@ -240,10 +241,12 @@ SETTINGS::SETTINGS()   ///  Defaults
 	gui.track = "J1-T";  gui.track_user = false;  gui.trackreverse = false;
 	gui.sim_mode = "easy";
 
+	cam_view.resize(4);
 	//  cars
-	for (int i=0; i < 4; ++i)
-	{	gui.car[i] = "ES";  cam_view[i] = 9;  gui.car_gloss[i] = 0.5f;  gui.car_refl[i] = 1.f;
-		gui.car_hue[i] = 0.4f+0.2f*i;  gui.car_sat[i] = 1.f;  gui.car_val[i] = 1.f;  }
+	for (int i=0; i < 6; ++i)
+	{	if (i < 4)  {  gui.car[i] = "ES";  cam_view[i] = 9;  }
+		gui.car_hue[i] = 0.4f+0.2f*i;  gui.car_sat[i] = 1.f;  gui.car_val[i] = 1.f;
+		gui.car_gloss[i] = 0.5f;  gui.car_refl[i] = 1.f;  }
 
 	//  game
 	gui.local_players = 1;  gui.num_laps = 2;
@@ -264,4 +267,11 @@ SETTINGS::SETTINGS()   ///  Defaults
 	sss_velfactor[0] = 1.f;  sss_velfactor[1] = 1.f;
 	steer_range[0] = 1.0;  steer_range[1] = 0.7;
 	steer_sim_easy = 0.51;  steer_sim_normal = 0.81;
+}
+
+SETTINGS::GameSet::GameSet()
+{
+	car_hue.resize(6);  car_sat.resize(6);  car_val.resize(6);
+	car_gloss.resize(6);  car_refl.resize(6);
+	car.resize(4);
 }

@@ -12,6 +12,8 @@
 #include <OgreVector4.h>
 #include <OgreMatrix4.h>
 #include <OgreColourValue.h>
+#include "../vdrift/mathvector.h"
+#include "../vdrift/quaternion.h"
 
 #include "../shiny/Main/MaterialInstance.hpp"
 
@@ -60,17 +62,20 @@ public:
 	/// -------------------- Car Types ---------------------------
 	//              Source          Physics (VDrift car)    Camera
 	// CT_LOCAL:    Local player    yes	                    yes
-	// CT_REPLAY:   Replay file     no                      yes
-	// CT_GHOST:	Replay file		no						no
 	// CT_REMOTE:   Network	        yes	                    no
+	// CT_REPLAY:   Replay file     no                      yes
+	// CT_GHOST:	Ghost file		no						no
+	// CT_GHOST2:	other car's ghost file
+	// CT_TRACK:	track's ghost file
 
-	enum eCarType {  CT_LOCAL=0, CT_REPLAY, CT_GHOST, CT_GHOST2, CT_REMOTE };
+	enum eCarType {  CT_LOCAL=0, CT_REMOTE, CT_REPLAY,  CT_GHOST, CT_GHOST2, CT_TRACK };
 	eCarType eType;
-	bool isGhost() const {  return eType == CT_GHOST || eType == CT_GHOST2;  }
-
+	bool isGhost() const {  return eType >= CT_GHOST;/* || eType == CT_GHOST2 || eType == CT_TRACK;*/  }
+	bool isGhostTrk() const {  return eType == CT_TRACK;  }
+	
 
 	//  ctor
-	CarModel(int index, eCarType type, const std::string& name,
+	CarModel(int index, int colorId, eCarType type, const std::string& name,
 		Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc,
 		Ogre::Camera* cam, App* app);
 	~CarModel();
@@ -87,7 +92,11 @@ public:
 	float brakeSize;  Ogre::ColourValue brakeClr;
 	bool bRotFix;
 	std::string sBoostParName;
+
 	float whRadius[4], whWidth[4];  // for tire trails
+	MATHVECTOR<float,3> whPos[4];
+	QUATERNION<float> qFixWh[2];
+	float maxangle;  //steer
 
 	//  exhaust position for boost particles
 	bool manualExhaustPos;  // if true, use values below, if false, guess from bounding box
@@ -123,7 +132,7 @@ public:
 	
 	//  color
 	Ogre::ColourValue color;  // for minimap pos tri color  //float hue, sat, val;
-	void ChangeClr(int car);  //  Apply new color
+	void ChangeClr();  //  Apply new color
 		
 	//  track surface for wheels
 	void UpdWhTerMtr();
@@ -172,7 +181,7 @@ public:
 	SETTINGS* pSet;
 	App* pApp;
 	
-	int iIndex;
+	int iIndex, iColor;  // car id, color id
 	std::string sDirname;  // dir name of car (e.g. ES)
 	Ogre::String resGrpId, mtrId;  // resource group name, material suffix
 	std::string resCar;  // path to car textures

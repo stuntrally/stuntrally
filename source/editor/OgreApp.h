@@ -294,10 +294,10 @@ protected:
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
 	void updTrkListDim();
 	const static int TcolW[32];
-	const static Ogre::String clrsDiff[9],clrsRating[5],clrsLong[10];
+	const static Ogre::String clrsDiff[9],clrsRating[6],clrsLong[10];
 
 	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;  MyGUI::EditPtr edFind;
-	strlist liTracks,liTracksUser;  void FillTrackLists(),ToolListSceneryID();
+	strlist liTracks,liTracksUser;  void FillTrackLists();
 	std::list<TrkL> liTrk;
 
 	//  screen
@@ -315,6 +315,9 @@ protected:
 
 	const static MyGUI::Colour sUsedClr[8];
 	void SetUsedStr(MyGUI::StaticTextPtr valUsed, int cnt, int yellowAt);
+	
+	//  _Tools_
+	void ToolTexAlpha(),ToolSceneXml(),ToolListSceneryID(),ToolTracksWarnings(),ToolBrushesPrv();	
 
 
 	//  tool windows texts

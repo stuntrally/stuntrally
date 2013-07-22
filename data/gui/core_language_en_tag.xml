@@ -304,6 +304,8 @@
 	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
 	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
 	<Tag name="RplGhostOther">Other car ghost (when current unavailable)</Tag>
+	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
+	<Tag name="Ghost">Ghost</Tag>
 
 	<Tag name="RplAll">All</Tag>
 	<Tag name="RplCurrent">Current</Tag>

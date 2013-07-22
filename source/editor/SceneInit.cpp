@@ -42,19 +42,8 @@ void App::createScene()  // once, init
 	///  _Tool_ tex ..........................
 	//  (remove alpha channel for ter tex prv img)
 	#if 0
-	Ogre::Image im;
-	im.load("jungle_5d.png", "General");
-
-	PixelBox pb = im.getPixelBox();
-	int w = pb.getWidth(), h = pb.getHeight();
-	for(int j=0; j < h; ++j)
-	for(int i=0; i < w; ++i)
-	{
-		ColourValue c = pb.getColourAt(i,j,0);
-		c.a = 1.f;
-		pb.setColourAt(c,i,j,0);
-	}
-	im.save(PATHMANAGER::Data()+"/prv.png");
+	ToolTexAlpha();
+	exit(0);
 	#endif
 
 
@@ -79,55 +68,11 @@ void App::createScene()  // once, init
 
 
 	///  _Tool_ scene ...........................
-	///  check/resave all tracks scene.xml 
+	//  check/resave all tracks scene.xml 
 	#if 0
-	ti.update();  /// time
-	LogO("ALL tracks scene ---------");
-	std::map<std::string, int> noCol,minSc;
-
-	for (int i=0; i < tracksXml.trks.size(); ++i)
-	{	//  foreach track
-		std::string trk = tracksXml.trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
-		Scene sc;  sc.LoadXml(path +"scene.xml");
-		for (int l=0; l < Scene::ciNumPgLay; ++l)
-		{
-			PagedLayer& lay = sc.pgLayersAll[l];
-			const String& s = lay.name;  //.mesh
-				
-			//  checks
-			if (!s.empty())
-			{
-				//  rescale for pagedgeom
-				/**if (s.substr(0,3)=="fir")
-				{
-					lay.minScale *= 10.f;  lay.maxScale *= 10.f;
-					lay.windFx *= 0.1f;  lay.windFy *= 0.1f;
-				}/**/
-
-				if (lay.on && !objs.Find(s) && noCol[s]==0)
-				{	noCol[s] = 1;
-					LogO("All: " + trk + "  no collision.xml for  " + s);
-				}
-				if (lay.on && !ResourceGroupManager::getSingleton().resourceExistsInAnyGroup(s))
-					LogO("All: " + trk + "  Not Found !!!  " + s);
-
-				if (lay.minScale < 0.3f && minSc[s]==0)
-				{	minSc[s] = 1;
-					LogO("All: " + trk + "  scale < 0.3  model  " + s + "  val " + fToStr(lay.minScale,2,4) +" "+ fToStr(lay.maxScale,2,4));
-				}
-				//if (lay.maxScale > 4.f)   LogO("All: " + trk + "  scale > 4  model  "   + s + "  val " + fToStr(lay.maxScale,2,4));
-		}	}
-		//sc.SaveXml(path +"scene1.xml");  /// resave
-		//SplineRoad rd(this);  rd.LoadFile(path+"road.xml");
-		//rd.SaveFile(path+"road1.xml");  // resave
-	}
-	
-	ti.update();  dt = ti.dt * 1000.f;  /// time
-	LogO(String("::: Time ALL tracks: ") + fToStr(dt,0,3) + " ms");
-	LogO("ALL tracks scene ---------");
+	ToolSceneXml();
 	exit(0);
 	#endif
-	///....................................
 	
 
 	postInit();  // material factory
@@ -148,36 +93,23 @@ void App::createScene()  // once, init
 	#endif
 
 	///  _Tool_	Warnings ...........................
-	///  check all tracks for warnings
-	///  Warning: takes about 16 sec
+	//  check all tracks for warnings
+	//  Warning: takes about 16 sec
 	#if 0
-	ti.update();  /// time
-	LogO("ALL tracks warnings ---------\n");
-	logWarn = true;
-
-	for (int i=0; i < tracksXml.trks.size(); ++i)
-	{	//  foreach track
-		std::string trk = tracksXml.trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
-		/**/if (!(trk[0] >= 'A' && trk[0] <= 'Z'))  continue;
-		/**/if (StringUtil::startsWith(trk,"test"))  continue;
-
-		Scene sc;  sc.LoadXml(path +"scene.xml");
-		SplineRoad rd(this);  rd.LoadFile(path +"road.xml");
-		LoadStartPos(path, true);  // uses App vars-
-		
-		LogO("Track: "+trk);
-		WarningsCheck(&sc,&rd);
-	}
-	ti.update();  dt = ti.dt * 1000.f;  /// time
-	LogO(String("::: Time ALL tracks: ") + fToStr(dt,0,3) + " ms");
-	LogO("ALL tracks warnings ---------");
+	ToolTracksWarnings();
 	exit(0);
 	#endif
-	///....................................
 	
 
 	TerCircleInit();
 	createBrushPrv();
+	
+	///  _Tool_ brushes prv ...........................
+	//  update all Brushes png
+	#if 0  // 0 in release !!
+	ToolBrushesPrv();
+	#endif
+	
 
 	if (pSet->inputBar)  mDebugOverlay->show();
 	if (!pSet->camPos)  ovPos->hide();

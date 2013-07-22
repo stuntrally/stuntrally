@@ -89,6 +89,12 @@ void App::createScene()
 	exit(0);
 	#endif
 
+	///  _Tool_ convert to track's ghosts ..............
+	#if 0
+	ToolGhostsConv();
+	exit(0);
+	#endif
+
 
 	//  gui  * * *
 	if (pSet->startInMain)
@@ -145,7 +151,7 @@ void App::NewGame()
 	mWndNetEnd->setVisible(false);
  
 	bLoading = true;  iLoad1stFrames = 0;
-	carIdWin = 1;
+	carIdWin = 1;  iRplCarOfs = 0;
 
 	bRplPlay = 0;
 	pSet->rpl_rec = bRplRec;  // changed only at new game
@@ -254,8 +260,8 @@ void App::LoadGame()  // 2
 	{	bReloadSim = false;
 		pGame->ReloadSimData();
 	}
-	// load scene.xml - default if not found
-	//   need to know sc->asphalt before vdrift car load
+	//  load scene.xml - default if not found
+	//  need to know sc->asphalt before vdrift car load
 	bool vdr = IsVdrTrack();
 	sc->pGame = pGame;
 	sc->LoadXml(TrkDir()+"scene.xml", !vdr/*for asphalt*/);
@@ -272,9 +278,9 @@ void App::LoadGame()  // 2
 	if (pGame)  pGame->ProcessNewSettings();
 
 		
-	/// init car models
-	// will create vdrift cars, actual car loading will be done later in LoadCar()
-	// this is just here because vdrift car has to be created first
+	///  init car models
+	//  will create vdrift cars, actual car loading will be done later in LoadCar()
+	//  this is just here because vdrift car has to be created first
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
 	
 	int numCars = mClient ? mClient->getPeerCount()+1 : pSet->game.local_players;  // networked or splitscreen
@@ -303,7 +309,7 @@ void App::LoadGame()  // 2
 		if (et == CarModel::CT_LOCAL && camIt != mSplitMgr->mCameras.end())
 		{	cam = *camIt;  ++camIt;  }
 		
-		CarModel* car = new CarModel(i, et, carName, mSceneMgr, pSet, pGame, sc, cam, this);
+		CarModel* car = new CarModel(i, i, et, carName, mSceneMgr, pSet, pGame, sc, cam, this);
 		car->Load(startId);
 		carModels.push_back(car);
 		
@@ -314,7 +320,7 @@ void App::LoadGame()  // 2
 		}
 	}
 
-	/// ghost car - last in carModels
+	///  ghost car - last in carModels
 	ghplay.Clear();
 	if (!bRplPlay/*|| pSet->rpl_show_ghost)*/ && pSet->rpl_ghost && !mClient)
 	{
@@ -324,7 +330,7 @@ void App::LoadGame()  // 2
 		
 		//  always because ghplay can appear during play after best lap
 		// 1st ghost = orgCar
-		CarModel* c = new CarModel(i, CarModel::CT_GHOST, orgCar, mSceneMgr, pSet, pGame, sc, 0, this);
+		CarModel* c = new CarModel(i, 4, CarModel::CT_GHOST, orgCar, mSceneMgr, pSet, pGame, sc, 0, this);
 		c->Load();
 		c->pCar = (*carModels.begin())->pCar;  // based on 1st car
 		carModels.push_back(c);
@@ -332,12 +338,25 @@ void App::LoadGame()  // 2
 		//  2st ghost - other car
 		if (isGhost2nd)
 		{
-			CarModel* c = new CarModel(i, CarModel::CT_GHOST2, ghCar, mSceneMgr, pSet, pGame, sc, 0, this);
+			CarModel* c = new CarModel(i, 4, CarModel::CT_GHOST2, ghCar, mSceneMgr, pSet, pGame, sc, 0, this);
 			c->Load();
 			c->pCar = (*carModels.begin())->pCar;
 			carModels.push_back(c);
 		}
 	}
+	///  track's ghost  . . .
+	ghtrk.Clear();
+	if (!bRplPlay /*&& pSet->rpl_trackghost?*/ && !mClient && !pSet->game.track_user)
+	if (!pSet->game.trackreverse)  // only not rev, todo..
+	{
+		std::string file = PATHMANAGER::TrkGhosts()+"/"+pSet->game.track+".gho";
+		if (ghtrk.LoadFile(file))
+		{
+			CarModel* c = new CarModel(i, 5, CarModel::CT_TRACK, "ES", mSceneMgr, pSet, pGame, sc, 0, this);
+			c->Load();
+			c->pCar = (*carModels.begin())->pCar;  // based on 1st car
+			carModels.push_back(c);
+	}	}
 	
 	float pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
 	if (bRplPlay)  pretime = 0.f;
@@ -673,95 +692,4 @@ void App::CreateRoad()
 	road->bCastShadow = pSet->shadow_type >= Sh_Depth;
 	road->bRoadWFullCol = pSet->gui.collis_roadw;
 	road->RebuildRoadInt();
-}
-
-
-///............................................................................................................................
-///  _Tool_ ghosts times
-///............................................................................................................................
-void App::ToolGhosts()
-{
-	LogO("ALL ghosts ---------");
-	using namespace std;
-	const string sim = 1 /**/ ? "normal" : "easy";
-	String msg="\n";  const float tMax = 10000.f;
-	TIMER tim;
-	
-	//  all cars
-	std::vector<string> cars;
-	std::vector<float> plc;
-	for (int c=0; c < carsXml.cars.size(); ++c)
-	{	cars.push_back(carsXml.cars[c].name);
-		plc.push_back(0.f);  }
-
-	//  foreach track
-	for (int i=0; i < tracksXml.trks.size(); ++i)
-	{	string trk = tracksXml.trks[i].name;
-		if (trk.substr(0,4) == "Test" && trk.substr(0,5) != "TestC")  continue;
-
-		//  records
-		tim.Load(PATHMANAGER::Records()+"/"+ sim+"/"+ trk+".txt", 0.f, pGame->error_output);
-		float timeES=tMax, timeBest=tMax;
-		for (int c=0; c < cars.size(); ++c)
-		{
-			tim.AddCar(cars[c]);
-			float t = tim.GetBestLap(c, false);  //not reverse
-			plc[c] = t;
-			if (t == 0.f)  continue;
-
-			if (t < timeBest)  timeBest = t;
-			if (cars[c] == "ES" || cars[c] == "S1")
-				if (t < timeES)  timeES = t;
-		}
-		if (timeES==tMax)  timeES=0.f;
-		if (timeBest==tMax)  timeBest=0.f;
-		//  times.xml
-		float timeTrk = times.trks[trk];// + 2;
-
-		//float timeB = timeTrk * 1.1f;  // champs factor mostly 0.1
-		//const float decFactor = 1.5f;
-		//float score = std::max(0.f, (1.f + (timeB-timeES)/timeB * decFactor) * 100.f);
-		float place = GetRacePos(timeES,timeTrk,1.f,false);
-
-		///  write
-	#if 0
-		//  format directly like times.xml
-		ostringstream s;
-		s << "\t<track name=\""+trk+"\"";
-		for (int i=0; i < 18-trk.length(); ++i)
-			s << " ";  //align
-		s << "time=\""+fToStr(timeES,1)+"\" />";
-		msg += s.str()+"\n";
-	#else
-		//  stats ..
-		ostringstream s;
-		s << fixed << left << setw(18) << trk;  //align
-		#if 0
-		s << "  E " << GetTimeShort(timeES);  // Expected car ES or S1
-		s << "  T " << GetTimeShort(timeTrk);  // trk time from .xml
-		s << "  b " << GetTimeShort(timeES == timeBest ? 0.f : timeBest);
-		s << "  E-b " << (timeES > 0.f && timeES != timeBest ?
-						fToStr(timeES - timeBest ,0,2) : "  ");
-		s << "  T-E " << (timeES > 0.f ?
-						fToStr(timeTrk - timeES  ,0,2) : "  ");
-		s << "  pET " << (timeES > 0.f ? fToStr(place,1,3) : "   ");
-		#endif
-		
-		//  race pos for all cars from cur ghosts
-		for (int c=0; c < cars.size(); ++c)
-		{
-			float t = plc[c];
-			float cmul = GetCarTimeMul(cars[c], sim);
-			float pl = GetRacePos(t,timeTrk, cmul,false);
-			s << cars[c] << " " << (t > 0.f ? (pl > 20 ? " ." : fToStr(pl,0,2)) : "  ") << " ";
-		}										  //90
-		
-		//s << (score > 135.f ? " ! " : "   ");
-		msg += s.str()+"\n";
-	#endif
-	}
-	LogO(msg);
-	//LogO("ALL ghosts ---------");
-	//mShutDown = true;  return;
-	exit(0);
 }

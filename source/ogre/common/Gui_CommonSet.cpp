@@ -93,7 +93,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	s.particles = val >= 1;  s.trails = val >= 1;
 	
 	s.rpl_rec   = val >= 1;
-	s.rpl_ghost = val >= 1;  s.rpl_alpha = false; //val <= 1;
+	s.rpl_ghost = val >= 1;
 	
 	s.all_effects = val >= 4;  // only bloom on Higher
 	s.bloom = val >= 3;
@@ -199,7 +199,6 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	
 	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
 	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);
-	//Chk("RplChkAlpha", chkRplChkAlpha, pSet->rpl_alpha);
 #endif
 
 #ifdef SR_EDITOR  /// editor only
