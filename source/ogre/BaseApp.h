@@ -53,7 +53,7 @@ protected:
 
 class BaseApp :
 		public Ogre::FrameListener, public Ogre::WindowEventListener,
-		public SFO::KeyListener, public SFO::MouseListener,
+		public SFO::KeyListener, public SFO::MouseListener, public SFO::JoyListener,
 		public ICS::ChannelListener, public ICS::DetectingBindingListener
 {
 	friend class CarModel;
@@ -129,7 +129,9 @@ protected:
 	virtual void textInput (const SDL_TextInputEvent& arg);
 	virtual bool keyPressed(const SDL_KeyboardEvent &arg) = 0;
 	virtual bool keyReleased(const SDL_KeyboardEvent &arg);
-	/// \todo joystick
+	virtual bool buttonPressed( const SDL_JoyButtonEvent &evt, int button );
+	virtual bool buttonReleased( const SDL_JoyButtonEvent &evt, int button );
+	virtual bool axisMoved( const SDL_JoyAxisEvent &arg, int axis );
 
 	///  input control
 	virtual void channelChanged(ICS::Channel* channel, float currentValue, float previousValue) = 0;

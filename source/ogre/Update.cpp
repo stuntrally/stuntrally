@@ -104,9 +104,6 @@ void App::DoNetworking()
 
 bool App::frameStart(Real time)
 {
-	std::cout << "Channel 0: " << 	mInputCtrl->getChannel(0)->getValue()<< std::endl;
-
-
 	PROFILER.beginBlock(" frameSt");
 	fLastFrameDT = time;
 

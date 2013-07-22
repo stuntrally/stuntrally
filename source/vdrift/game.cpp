@@ -31,7 +31,8 @@ GAME::GAME(ostream & info_out, ostream & err_out, SETTINGS* pSettings) :
 	pause(false), debugmode(false), profilingmode(false),
 	particle_timer(0), race_laps(0),
 	track(info_out, err_out), /*tracknode(NULL),*/
-	framerate(1.0 / pSettings->game_fq)
+	framerate(1.0 / pSettings->game_fq),
+	pOgreGame(NULL)
 {
 	track.pGame = this;
 	carcontrols_local.first = NULL;
@@ -363,7 +364,7 @@ void GAME::Tick(double deltat)
 	if (deltat > maxtime)
 		deltat = maxtime;
 
-	if (pOgreGame->bPerfTest)  // speed up perf test
+	if (pOgreGame && pOgreGame->bPerfTest)  // speed up perf test
 		deltat *= settings->perf_speed;
 	
 	target_time += deltat;

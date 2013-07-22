@@ -13,58 +13,248 @@ using namespace Ogre;
 
 ///  Gui Init - input tab
 //----------------------------------------------------------------------------------------------------------------------------------
-/*
-String App::GetInputName(const String& sName)
-{
-	Ogre::vector<String>::type vs = StringUtil::split(sName, "/");
-	if (vs.size() != 2)
-		return sName;
 
-	if (vs[0] == "Keyboard")
-		return StrFromKey(sName);
-	else
-		return vs[1];
+void App::LoadInputDefaults()
+{
+	mInputActions.clear();
+	mInputActions.push_back(InputAction("ShowOptions", SDLK_TAB, InputAction::Trigger));
+	mInputActions.push_back(InputAction("PrevTab", SDLK_F2, InputAction::Trigger));
+	mInputActions.push_back(InputAction("NextTab", SDLK_F3, InputAction::Trigger));
+	mInputActions.push_back(InputAction("RestartGame", SDLK_F5, InputAction::Trigger));
+	mInputActions.push_back(InputAction("ResetGame", SDLK_F4, InputAction::Trigger));
+	mInputActions.push_back(InputAction("Screenshot", SDLK_F11, InputAction::Trigger));
+
+	LoadInputDefaults(mInputActions, mInputCtrl);
+
+	mInputActionsPlayer[0].clear();
+	mInputActionsPlayer[0].push_back(InputAction("Throttle", SDLK_UP, InputAction::Axis));
+	mInputActionsPlayer[0].push_back(InputAction("Brake", SDLK_DOWN, InputAction::Axis));
+	mInputActionsPlayer[0].push_back(InputAction("Steering", SDLK_LEFT, SDLK_RIGHT));
+	mInputActionsPlayer[0].push_back(InputAction("HandBrake", SDLK_SPACE, InputAction::Axis));
+	mInputActionsPlayer[0].push_back(InputAction("Boost", SDLK_LCTRL, InputAction::Axis));
+	mInputActionsPlayer[0].push_back(InputAction("Flip", SDLK_q, SDLK_w));
+	mInputActionsPlayer[0].push_back(InputAction("ShiftUp", SDLK_a, InputAction::Trigger));
+	mInputActionsPlayer[0].push_back(InputAction("ShiftDown", SDLK_z, InputAction::Trigger));
+	mInputActionsPlayer[0].push_back(InputAction("PrevCamera", SDLK_x, InputAction::Trigger));
+	mInputActionsPlayer[0].push_back(InputAction("NextCamera", SDLK_c, InputAction::Trigger));
+	mInputActionsPlayer[0].push_back(InputAction("LastChk", SDLK_F12, InputAction::Trigger));
+	mInputActionsPlayer[0].push_back(InputAction("Rewind", SDLK_BACKSPACE, InputAction::Trigger));
+
+	mInputActionsPlayer[1].clear();
+	mInputActionsPlayer[1].push_back(InputAction("Throttle", SDLK_u, InputAction::Axis));
+	mInputActionsPlayer[1].push_back(InputAction("Brake", SDLK_m, InputAction::Axis));
+	mInputActionsPlayer[1].push_back(InputAction("Steering", SDLK_h, SDLK_k));
+	mInputActionsPlayer[1].push_back(InputAction("HandBrake", SDLK_n, InputAction::Axis));
+	mInputActionsPlayer[1].push_back(InputAction("Boost", SDLK_j, InputAction::Axis));
+	mInputActionsPlayer[1].push_back(InputAction("Flip", SDLK_y, SDLK_i));
+	mInputActionsPlayer[1].push_back(InputAction("ShiftUp", SDLK_UNKNOWN, InputAction::Trigger));
+	mInputActionsPlayer[1].push_back(InputAction("ShiftDown", SDLK_UNKNOWN, InputAction::Trigger));
+	mInputActionsPlayer[1].push_back(InputAction("PrevCamera", SDLK_UNKNOWN, InputAction::Trigger));
+	mInputActionsPlayer[1].push_back(InputAction("NextCamera", SDLK_UNKNOWN, InputAction::Trigger));
+	mInputActionsPlayer[1].push_back(InputAction("LastChk", SDLK_UNKNOWN, InputAction::Trigger));
+	mInputActionsPlayer[1].push_back(InputAction("Rewind", SDLK_UNKNOWN, InputAction::Trigger));
+
+	mInputActionsPlayer[2].clear();
+	mInputActionsPlayer[2].push_back(InputAction("Throttle", SDLK_r, InputAction::Axis));
+	mInputActionsPlayer[2].push_back(InputAction("Brake", SDLK_v, InputAction::Axis));
+	mInputActionsPlayer[2].push_back(InputAction("Steering", SDLK_d, SDLK_g));
+	mInputActionsPlayer[2].push_back(InputAction("HandBrake", SDLK_b, InputAction::Axis));
+	mInputActionsPlayer[2].push_back(InputAction("Boost", SDLK_f, InputAction::Axis));
+	mInputActionsPlayer[2].push_back(InputAction("Flip", SDLK_e, SDLK_t));
+	mInputActionsPlayer[2].push_back(InputAction("ShiftUp", SDLK_UNKNOWN, InputAction::Trigger));
+	mInputActionsPlayer[2].push_back(InputAction("ShiftDown", SDLK_UNKNOWN, InputAction::Trigger));
+	mInputActionsPlayer[2].push_back(InputAction("PrevCamera", SDLK_UNKNOWN, InputAction::Trigger));
+	mInputActionsPlayer[2].push_back(InputAction("NextCamera", SDLK_UNKNOWN, InputAction::Trigger));
+	mInputActionsPlayer[2].push_back(InputAction("LastChk", SDLK_UNKNOWN, InputAction::Trigger));
+	mInputActionsPlayer[2].push_back(InputAction("Rewind", SDLK_UNKNOWN, InputAction::Trigger));
+
+	mInputActionsPlayer[3].clear();
+	mInputActionsPlayer[3].push_back(InputAction("Throttle", SDLK_p, InputAction::Axis));
+	mInputActionsPlayer[3].push_back(InputAction("Brake", SDLK_SLASH, InputAction::Axis));
+	mInputActionsPlayer[3].push_back(InputAction("Steering", SDLK_l, SDLK_COMMA));
+	mInputActionsPlayer[3].push_back(InputAction("HandBrake", SDLK_PERIOD, InputAction::Axis));
+	mInputActionsPlayer[3].push_back(InputAction("Boost", SDLK_SEMICOLON, InputAction::Axis));
+	mInputActionsPlayer[3].push_back(InputAction("Flip", SDLK_o, SDLK_LEFTBRACKET));
+	mInputActionsPlayer[3].push_back(InputAction("ShiftUp", SDLK_UNKNOWN, InputAction::Trigger));
+	mInputActionsPlayer[3].push_back(InputAction("ShiftDown", SDLK_UNKNOWN, InputAction::Trigger));
+	mInputActionsPlayer[3].push_back(InputAction("PrevCamera", SDLK_UNKNOWN, InputAction::Trigger));
+	mInputActionsPlayer[3].push_back(InputAction("NextCamera", SDLK_UNKNOWN, InputAction::Trigger));
+	mInputActionsPlayer[3].push_back(InputAction("LastChk", SDLK_UNKNOWN, InputAction::Trigger));
+	mInputActionsPlayer[3].push_back(InputAction("Rewind", SDLK_UNKNOWN, InputAction::Trigger));
+
+	for (int i=0; i<4; ++i)
+		LoadInputDefaults(mInputActionsPlayer[i], mInputCtrlPlayer[i]);
 }
+
+void App::LoadInputDefaults(std::vector<InputAction> &actions, ICS::InputControlSystem *ICS)
+{
+	int i=0;
+	for (std::vector<InputAction>::iterator it = actions.begin(); it != actions.end(); ++it)
+	{
+		ICS::Control* control;
+		bool controlExists = ICS->getChannel(i)->getControlsCount() != 0;
+		if (!controlExists)
+		{
+			if (it->mType == InputAction::Trigger)
+				control = new ICS::Control(boost::lexical_cast<std::string>(i), false, true, 0, ICS::ICS_MAX, ICS::ICS_MAX);
+			else if (it->mType == InputAction::Axis)
+			{
+				if (it->mDefaultDecrease != SDLK_UNKNOWN)
+					control = new ICS::Control(boost::lexical_cast<std::string>(i), false, true, 0.5, 0.1, 2.0);
+				else
+					control = new ICS::Control(boost::lexical_cast<std::string>(i), false, true, 0.0, 0.1, 2.0);
+			}
+
+			ICS->addControl(control);
+			control->attachChannel(ICS->getChannel(i), ICS::Channel::DIRECT);
+		}
+		else
+		{
+			control = ICS->getChannel(i)->getAttachedControls ().front().control;
+		}
+
+		if (it->mDefaultIncrease != SDLK_UNKNOWN)
+			ICS->addKeyBinding(control, it->mDefaultIncrease, ICS::Control::INCREASE);
+		if (it->mDefaultDecrease != SDLK_UNKNOWN)
+			ICS->addKeyBinding(control, it->mDefaultDecrease, ICS::Control::DECREASE);
+
+		it->mICS = ICS;
+		it->mControl = control;
+		++i;
+	}
+}
+
+void App::UpdateInputButton(MyGUI::Button* button, const InputAction& action)
+{
+	std::string buttonLabel;
+	SDL_Keycode increaseKey = action.mICS->getKeyBinding(action.mControl, ICS::Control::INCREASE);
+	if (increaseKey != SDLK_UNKNOWN)
+		buttonLabel += SDL_GetKeyName(increaseKey);
+	SDL_Keycode decreaseKey = action.mICS->getKeyBinding(action.mControl, ICS::Control::DECREASE);
+	if (decreaseKey != SDLK_UNKNOWN)
+		buttonLabel += ", " + std::string(SDL_GetKeyName(decreaseKey));
+
+	for (int j=0; j<SDL_NumJoysticks(); ++j)
+	{
+		int axis = action.mICS->getJoystickAxisBinding(action.mControl, j, ICS::Control::INCREASE);
+		if (axis != ICS::InputControlSystem::UNASSIGNED)
+		{
+			if (buttonLabel != "") buttonLabel += " / ";
+			buttonLabel += "Axis " + toStr(axis);
+		}
+	}
+
+	button->setCaption(buttonLabel);
+}
+
+void App::CreateInputTab(const std::string& title, bool playerTab, const std::vector<InputAction>& actions, ICS::InputControlSystem* ICS)
+{
+	TabPtr inputTab = mGUI->findWidget<Tab>("InputTab");  if (!inputTab)  return;
+
+	TabItemPtr tabitem = inputTab->addItem(TR(title));
+
+	std::string sPlr = title;
+
+	//  button size and columns positon
+	const int sx = 130, sy = 24,  x0 = 20, x1 = 140, x2 = 285, x3 = 430,  yh = 20,  s0 = x1-x0-5;
+
+#define CreateText(x,y, w,h, name, text)  {  StaticTextPtr txt =  \
+	tabitem->createWidget<TextBox>("TextBox", x,y, w,h, ALIGN, name);  \
+	setOrigPos(txt, "OptionsWnd");  \
+	txt->setCaption(text);  }
+
+
+	///  Headers  action, binding, value
+	CreateText(x0,yh, sx,sy, "hdrTxt1_"+sPlr, TR("#90B0F0#{InputHeaderTxt1}"));
+	CreateText(x1,yh, sx,sy, "hdrTxt2_"+sPlr, TR("#A0C0FF#{InputHeaderTxt2}"));
+	if (playerTab)  {
+		CreateText(x2,yh, sx,sy, "hdrTxt3_"+sPlr, TR("#90B0F0#{InputHeaderTxt3}"));
+		CreateText(x3,yh, sx,sy, "hdrTxt4_"+sPlr, TR("#80A0E0#{InputHeaderTxt4}"));  }
+
+	///  ------ custom action sorting ----------------
+	int i = 0, y = 0;
+
+	///  Actions  ------------------------------------------------
+	for (std::vector<InputAction>::const_iterator it = actions.begin(); it != actions.end(); ++it)
+	{
+		std::string name = it->mName;
+
+		//  description label
+		StaticTextPtr desc = tabitem->createWidget<TextBox>("TextBox",
+			x0, y+5, s0, sy,  ALIGN);
+		setOrigPos(desc, "OptionsWnd");
+		desc->setCaption( TR("#{InputMap" + name + "}") );
+
+		//  Keyboard binds  --------------------------------
+		//  get information about binds from OISB and set variables how the rebind buttons should be created
+		std::string skey1 = TR("#{InputKeyUnassigned}");
+		std::string skey2 = TR("#{InputKeyUnassigned}");
+
+		//  bound key(s)
+		bool analog = (it->mType == InputAction::Axis);
+		bool axis = (it->mDefaultDecrease != SDLK_UNKNOWN);
+
+		//  binding button  ----------------
+		ButtonPtr btn1 = tabitem->createWidget<Button>("Button",
+			x1, y, sx, sy,  ALIGN);
+		setOrigPos(btn1, "OptionsWnd");
+		UpdateInputButton(btn1, *it);
+		btn1->eventMouseButtonClick += newDelegate(this, &App::inputBindBtnClicked);
+
+
+		//  value bar  --------------
+		if (playerTab)
+		{
+			StaticImagePtr bar = tabitem->createWidget<ImageBox>("ImageBox",
+				x2 + (axis ? 0 : 64), y+4, axis ? 128 : 64, 16, ALIGN,
+					"bar_" + toStr(i) + "_" + sPlr);
+			setOrigPos(bar, "OptionsWnd");
+			bar->setImageTexture(String("input_bar.png"));  bar->setImageCoord(IntCoord(0,0,128,16));
+		}
+
+		//  detail btn  ----------------
+		if (analog)
+		{	btn1 = tabitem->createWidget<Button>("Button",
+				x3, y, 32, sy,  ALIGN,
+					"inputdetail_" + toStr(i) + "_" + sPlr + "_1");
+			setOrigPos(btn1, "OptionsWnd");
+			btn1->setCaption(">");
+			btn1->setColour(Colour(0.6f,0.8f,1.0f));
+			btn1->eventMouseButtonClick += newDelegate(this, &App::inputDetailBtn);
+		}
+		++i;
+		y += yh;
+	}
+	/*
+	if (!playerTab)
+	{	y = yc+2*ya;  //  camera infos
+		CreateText(20,y, 280,24, "txtcam1", TR("#A0D0F0#{InputMapNextCamera} / #{InputMapPrevCamera}"));  y+=2*ya;
+		CreateText(40,y, 280,24, "txtcam2", TR("#A0D0F0#{InputCameraTxt1}"));  y+=3*ya;
+		//  replay controls info text
+		CreateText(20,y, 500,24, "txtrpl1", TR("#A0D0F0#{Replay}:"));  y+=2*ya;
+		CreateText(40,y, 500,24, "txtrpl2", TR("#80B0F0#{InputRplCtrl1}"));  y+=2*ya;
+		CreateText(40,y, 500,24, "txtrpl3", TR("#80B0F0#{InputRplCtrl2}"));  y+=2*ya;
+		CreateText(40,y, 500,24, "txtrpl4", TR("#80B0F0#{InputRplCtrl3}"));  y+=2*ya;
+		CreateText(40,y, 500,24, "txtrpl5", TR("#60A0D0#{InputRplCtrl4}"));  y+=2*ya;
+	}
 */
+}
 
 void App::InitInputGui()
 {
+	LoadInputDefaults();
+
 	TabItemPtr inpTabAll = mGUI->findWidget<TabItem>("InputTabAll");  if (!inpTabAll)  return;
 	TabPtr inputTab = mGUI->findWidget<Tab>("InputTab");  if (!inputTab)  return;
 
-	///  controller selection combo (for bind name, when more)
-	ComboBoxPtr cmbJoy = mGUI->findWidget<ComboBox>("CmbInputController");
-	if (cmbJoy)
-	{
-		for (int i=0; i < mJoysticks.size(); ++i)
-			cmbJoy->addItem( SDL_JoystickName(mJoysticks[i]) );
-
-		cmbJoy->eventComboChangePosition += newDelegate(this, &App::cmbJoystick);
-		if (mJoysticks.size() > 0)  {  cmbJoy->setIndexSelected(0);  cmbJoystick(cmbJoy, 0);  }
-	}/*
-
-	//  labels that print the last pressed joystick button / last moved axis
-	txtJAxis = mGUI->findWidget<StaticText>("axisOutput");
-	txtJBtn = mGUI->findWidget<StaticText>("buttonOutput");
 	txtInpDetail = mGUI->findWidget<StaticText>("InputDetail");
 
 	//  details edits
 	Ed(InputMin, editInput);  Ed(InputMax, editInput);  Ed(InputMul, editInput);
 	Ed(InputReturn, editInput);  Ed(InputIncrease, editInput);
 
-	//  analog presets combo
-	ComboBoxPtr combo;
-	Cmb(combo, "CmbInputDetPreset", comboInputPreset);  cmbInpDetSet = combo;
-	if (combo)
-	{	combo->removeAllItems();  combo->addItem("");
-		combo->addItem(TR("#{InpSet_KeyHalf}"));
-		combo->addItem(TR("#{InpSet_KeyFull}"));
-		combo->addItem(TR("#{InpSet_AxisHalf}"));
-		combo->addItem(TR("#{InpSet_AxisHalfInv}"));
-		combo->addItem(TR("#{InpSet_AxisFull}"));
-		combo->addItem(TR("#{InpSet_AxisFullInv}"));
-    }
 	//  key emul presets combo
+	ComboBoxPtr combo;
 	Cmb(combo, "CmbInputKeysAllPreset", comboInputKeyAllPreset);
 	if (combo)
 	{	combo->removeAllItems();  combo->addItem("");
@@ -72,18 +262,17 @@ void App::InitInputGui()
 		combo->addItem(TR("#{InpSet_Medium}"));
 		combo->addItem(TR("#{InpSet_Fast}"));
 	}
-
-
-	#define CreateText(x,y, w,h, name, text)  {  StaticTextPtr txt =  \
-		tabitem->createWidget<TextBox>("TextBox", x,y, w,h, ALIGN, name);  \
-		setOrigPos(txt, "OptionsWnd");  \
-		if (txt)  txt->setCaption(text);  }
 	
 	//  button size and columns positon
 	const int sx = 130, sy = 24,  x0 = 20, x1 = 140, x2 = 285, x3 = 430,  yh = 20,  s0 = x1-x0-5;
 
 
 	///  insert a tab item for every schema (4players,global)
+	CreateInputTab("#80C0FF#{InputMapGeneral}", false, mInputActions, mInputCtrl);
+	for (int i=0; i<4; ++i)
+		CreateInputTab("#FFF850#{Player} "+toStr(i), true, mInputActionsPlayer[i], mInputCtrlPlayer[i]);
+
+ /*
 	std::map<OISB::String, OISB::ActionSchema*> schemas = sys.mActionSchemas;  int i=0;
 	for (std::map<OISB::String, OISB::ActionSchema*>::const_iterator it = schemas.begin(); it != schemas.end(); ++it,++i)
 	{
@@ -419,24 +608,6 @@ void App::editInput(MyGUI::EditPtr ed)
 		actDetail->setProperty("ReturnIncSpeed",vRet);	actDetail->setProperty("IncSpeed",vInc);
 	}
 	if (cmbInpDetSet)  cmbInpDetSet->setIndexSelected(0);
-	*/
-}
-
-void App::comboInputPreset(MyGUI::ComboBoxPtr cmb, size_t val)
-{
-	/*
-	if (!actDetail || val==0)  return;
-	//key half, key full, axis half, axis half inversed, axis full, axis full inversed
-	const Real aMin[6] = {0,-1, 0,  -2,  -1, -1};
-	const Real aMax[6] = {1, 1, 2,   0,   1,  1};
-	const Real aMul[6] = {1, 1, 0.5,-0.5, 1, -1};
-	val = std::min((size_t)5, val-1);
-	Real vMin = aMin[val];  if (edInputMin)  edInputMin->setCaption(toStr(vMin));
-	Real vMax = aMax[val];  if (edInputMax)  edInputMax->setCaption(toStr(vMax));
-	Real vMul = aMul[val];  if (edInputMul)  edInputMul->setCaption(toStr(vMul));
-	actDetail->setProperty("MinValue",vMin);
-	actDetail->setProperty("MaxValue",vMax);
-	actDetail->setProperty("InverseMul",vMul);
 	*/
 }
 

@@ -76,6 +76,22 @@ namespace SFO
                 case SDL_TEXTINPUT:
                     mKeyboardListener->textInput(evt.text);
                     break;
+				case SDL_JOYAXISMOTION:
+					mJoyListener->axisMoved(evt.jaxis, evt.jaxis.axis);
+					break;
+				case SDL_JOYBUTTONDOWN:
+					mJoyListener->buttonPressed(evt.jbutton, evt.jbutton.button);
+					break;
+				case SDL_JOYBUTTONUP:
+					mJoyListener->buttonReleased(evt.jbutton, evt.jbutton.button);
+					break;
+				case SDL_JOYDEVICEADDED:
+					//SDL_JoystickOpen(evt.jdevice.which);
+					//std::cout << "Detected a new joystick: " << SDL_JoystickNameForIndex(evt.jdevice.which) << std::endl;
+					break;
+				case SDL_JOYDEVICEREMOVED:
+					//std::cout << "A joystick has been removed" << std::endl;
+					break;
                 case SDL_WINDOWEVENT:
                     handleWindowEvent(evt);
                     break;

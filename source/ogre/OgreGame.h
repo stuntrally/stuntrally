@@ -339,8 +339,40 @@ protected:
 	
 
 	///  input tab  -----------------------------------------
+	struct InputAction
+	{
+		std::string mName;
+		SDL_Keycode mDefaultIncrease;
+		SDL_Keycode mDefaultDecrease;
+
+		enum Type
+		{
+			Trigger,
+			Axis
+		} mType;
+
+		ICS::InputControlSystem* mICS;
+		ICS::Control* mControl;
+
+		InputAction(const std::string& name, SDL_Keycode defaultKey, Type type)
+			: mName(name), mDefaultIncrease(defaultKey), mDefaultDecrease(SDLK_UNKNOWN), mType(type)
+		{}
+		InputAction(const std::string &name, SDL_Keycode defaultIncrease, SDL_Keycode defaultDecrease)
+			: mName(name), mDefaultIncrease(defaultIncrease), mDefaultDecrease(defaultDecrease)
+			, mType(Axis)
+		{}
+	};
+
+	void CreateInputTab(const std::string& title, bool playerTab, const std::vector<InputAction>& actions,
+						ICS::InputControlSystem* ICS);
 	void InitInputGui(), inputBindBtnClicked(WP);
+	void UpdateInputButton(MyGUI::Button* button, const InputAction& action);
+	void LoadInputDefaults();
+	void LoadInputDefaults(std::vector<InputAction>& actions, ICS::InputControlSystem* ICS);
 	void InputBind(int key, int button=-1, int axis=-1);
+
+	std::vector<InputAction> mInputActions;
+	std::vector<InputAction> mInputActionsPlayer[4];
 
 	virtual void channelChanged(ICS::Channel* channel, float currentValue, float previousValue);
 	virtual void notifyInputActionBound();
@@ -348,12 +380,11 @@ protected:
 	bool actionIsActive(std::string, std::string);
 	void cmbJoystick(CMB), UpdateInputBars(), inputDetailBtn(WP);
 
-	Ogre::String GetInputName(const Ogre::String& sName);
 	//  joy events
-	MyGUI::StaticTextPtr txtJAxis, txtJBtn, txtInpDetail;  MyGUI::WidgetPtr panInputDetail;
+	MyGUI::StaticTextPtr txtInpDetail;  MyGUI::WidgetPtr panInputDetail;
 	int lastAxis, axisCnt;  std::string joyName;  class OISB::AnalogAxisAction* actDetail;
 	MyGUI::EditPtr edInputMin, edInputMax, edInputMul, edInputReturn, edInputIncrease;  void editInput(MyGUI::EditPtr);
-	MyGUI::ComboBoxPtr cmbInpDetSet;  void comboInputPreset(CMB), comboInputKeyAllPreset(CMB);
+	void comboInputPreset(CMB), comboInputKeyAllPreset(CMB);
 
 	///  tweak
 	const static int ciEdCar = 12;

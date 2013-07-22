@@ -127,21 +127,21 @@ void BaseApp::createFrameListener()
 	mInputWrapper = new SFO::InputWrapper(mSDLWindow, mWindow);
 	mInputWrapper->setMouseEventCallback(this);
 	mInputWrapper->setKeyboardEventCallback(this);
+	mInputWrapper->setJoyEventCallback(this);
 	mCursorManager = new SFO::SDLCursorManager();
 	mCursorManager->setEnabled(true);
 	onCursorChange(MyGUI::PointerManager::getInstance().getDefaultPointer());
 
-	mInputCtrl = new ICS::InputControlSystem("", true, this, NULL, 100);
+	mInputCtrl = new ICS::InputControlSystem(PATHMANAGER::UserConfigDir()+"input.xml", true, this, NULL, 100);
+	for (int j=0; j<SDL_NumJoysticks(); ++j)
+		mInputCtrl->addJoystick(j);
 	for (int i=0; i<4; ++i)
 	{
-		mInputCtrlPlayer[i] = new ICS::InputControlSystem("", true, this, NULL, 100);
+		std::string file = PATHMANAGER::UserConfigDir()+"input_p" + toStr(i) + ".xml";
+		mInputCtrlPlayer[i] = new ICS::InputControlSystem(file, true, this, NULL, 100);
+		for (int j=0; j<SDL_NumJoysticks(); ++j)
+			mInputCtrlPlayer[i]->addJoystick(j);
 	}
-
-	ICS::Control* ctrl = new ICS::Control("0", false, true, 0.5, 0.1, 20.0, true);
-	ctrl->attachChannel(mInputCtrl->getChannel(0), ICS::Channel::DIRECT, 1.0);
-	mInputCtrl->addControl(ctrl);
-	mInputCtrl->addKeyBinding(ctrl, SDLK_UP, ICS::Control::INCREASE);
-	mInputCtrl->addKeyBinding(ctrl, SDLK_DOWN, ICS::Control::DECREASE);
 
 	bSizeHUD = true;
 	bWindowResized = true;
@@ -212,10 +212,11 @@ BaseApp::~BaseApp()
 	if (mPlatform)  {
 		mPlatform->shutdown();  delete mPlatform;  mPlatform = 0;  }
 
-	mInputCtrl->save("input.xml");
+	mInputCtrl->save(PATHMANAGER::UserConfigDir() + "/input.xml");
 	delete mInputCtrl;
 	for (int i=0; i<4; ++i)
 	{
+		mInputCtrlPlayer[i]->save(PATHMANAGER::UserConfigDir() + "/input_p" + toStr(i) + ".xml");
 		delete mInputCtrlPlayer[i];
 	}
 
@@ -740,6 +741,27 @@ void BaseApp::textInput(const SDL_TextInputEvent &arg)
 		// ^ Should be MyGUI::KeyCode::None, but X11 defines a 'None' macro :(
 		// TODO: Refactor the code so that SDL_syswm.h (which includes X11) is not needed here,
 		// so that it can be changed back to MyGUI::KeyCode::None
+}
+
+bool BaseApp::axisMoved(const SDL_JoyAxisEvent &arg, int axis)
+{
+	mInputCtrl->axisMoved(arg, axis);
+	for (int i=0; i<4; ++i) mInputCtrlPlayer[i]->axisMoved(arg, axis);
+	return true;
+}
+
+bool BaseApp::buttonPressed(const SDL_JoyButtonEvent &evt, int button)
+{
+	mInputCtrl->buttonPressed(evt, button);
+	for (int i=0; i<4; ++i) mInputCtrlPlayer[i]->buttonPressed(evt, button);
+	return true;
+}
+
+bool BaseApp::buttonReleased(const SDL_JoyButtonEvent &evt, int button)
+{
+	mInputCtrl->buttonReleased(evt, button);
+	for (int i=0; i<4; ++i) mInputCtrlPlayer[i]->buttonReleased(evt, button);
+	return true;
 }
 
 //  mouse cursor
