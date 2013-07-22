@@ -416,7 +416,7 @@ bool TrackGhost::GetFrame(float time1, TrackFrame* pFr)
 	if (ic == 0 || ic == s-1)
 		*pFr = frames[ic];
 	else
-	{	//  linear interpolation
+	{	///  linear interpolation
 		const TrackFrame& t1 = frames[ic];  //cur
 		const TrackFrame& t0 = frames[std::max(0, ic-1)];  //prev
 		//*pFr = frames[ic];

@@ -1,17 +1,17 @@
 <times>
 <!--  Track time  -->
 <!--  This is the 1st lap time (not best lap), driven with ES in normal simulation mode.  -->
-<!--  With no mistakes, used rewind with "_Tool_ go back time", and no boost at all or only 0.5s at start.  -->
+<!--  With no mistakes, used rewind with "_Tool_ go back time", and no boost at all.  -->
 <!--  Most difficult tracks have few (2-4) sec more, to leave some room for user rewinds.  -->
 
-	<track name="zandvoort"		time="112.0"/>
-	<track name="weekend"		time="113.5"/>
-	<track name="virginia"		time="126.0"/>
-	<track name="ruudskogen"	time="74.0"/>
+	<track name="zandvoort"		time="109.0"/>
+	<track name="weekend"		time="102.5"/>
+	<track name="virginia"		time="118.0"/>
+	<track name="ruudskogen"	time="73.0"/>
 	<track name="mosport"		time="96.0"/>
-	<track name="dirt3"			time="58.0"/>
-	<track name="detroit"		time="112.0"/>
-	<track name="brands"		time="95.0"/>
+	<track name="dirt3"			time="62.0"/>
+	<track name="detroit"		time="110.0"/>
+	<track name="brands"		time="92.0"/>
 
 	<track name="TestC1-circle"     time="14.7" />
 	<track name="TestC2-pipe-half"  time="12.6" />
