@@ -75,7 +75,7 @@ public:
 	
 
 	//  ctor
-	CarModel(int index, eCarType type, const std::string& name,
+	CarModel(int index, int colorId, eCarType type, const std::string& name,
 		Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc,
 		Ogre::Camera* cam, App* app);
 	~CarModel();
@@ -130,7 +130,7 @@ public:
 	
 	//  color
 	Ogre::ColourValue color;  // for minimap pos tri color  //float hue, sat, val;
-	void ChangeClr(int car);  //  Apply new color
+	void ChangeClr();  //  Apply new color
 		
 	//  track surface for wheels
 	void UpdWhTerMtr();
@@ -179,7 +179,7 @@ public:
 	SETTINGS* pSet;
 	App* pApp;
 	
-	int iIndex;
+	int iIndex, iColor;  // car id, color id
 	std::string sDirname;  // dir name of car (e.g. ES)
 	Ogre::String resGrpId, mtrId;  // resource group name, material suffix
 	std::string resCar;  // path to car textures

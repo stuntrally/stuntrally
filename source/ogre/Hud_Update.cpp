@@ -198,7 +198,7 @@ void App::UpdateHUD(int carId, float time)
 		
 		for (int o=0; o < cnt; ++o)
 		{	// add ghost1 last (dont add 2nd)
-			if (carModels[o]->eType == CarModel::CT_GHOST /*|| carModels[o]->eType == CarModel::CT_TRACK*/)
+			if (carModels[o]->eType == CarModel::CT_GHOST || carModels[o]->eType == CarModel::CT_TRACK)
 			{	carModels[o]->trackPercent = carPoses[iCurPoses[o]][o].percent;  // ghost,rpl
 				cms.push_back(carModels[o]);	}
 		}
@@ -230,7 +230,7 @@ void App::UpdateHUD(int carId, float time)
 					clr.setHSB(0.5f - h * 0.4f, 1,1);		hudOpp[o][1]->setColour(clr);
 				}
 					
-				if (bGhEmpty)
+				if (bGhEmpty || cm->isGhostTrk())
 					hudOpp[o][0]->setCaption("");
 				else
 				{	//  percent % val

@@ -148,7 +148,7 @@ Hud/Opponents
 		{
 			metrics_mode pixels
 			font_name Vera
-			char_height 22
+			char_height 25
 			left 5
 			top  5
 		}
@@ -156,7 +156,7 @@ Hud/Opponents
 		{
 			metrics_mode pixels
 			font_name Vera
-			char_height 22
+			char_height 25
 			left 5
 			top  25
 		}
@@ -164,7 +164,7 @@ Hud/Opponents
 		{
 			metrics_mode pixels
 			font_name Vera
-			char_height 22
+			char_height 25
 			left 5
 			top  45
 		}
@@ -172,7 +172,7 @@ Hud/Opponents
 		{
 			metrics_mode pixels
 			font_name Vera
-			char_height 22
+			char_height 25
 			left 5
 			top  65
 		}
@@ -180,7 +180,7 @@ Hud/Opponents
 		{
 			metrics_mode pixels
 			font_name Vera
-			char_height 22
+			char_height 25
 			left 5
 			top  85
 		}
@@ -232,7 +232,7 @@ Hud/Opponents
 		{
 			metrics_mode pixels
 			font_name Vera
-			char_height 22
+			char_height 24
 			left 130
 			top  5
 		}
@@ -240,7 +240,7 @@ Hud/Opponents
 		{
 			metrics_mode pixels
 			font_name Vera
-			char_height 22
+			char_height 24
 			left 130
 			top  25
 		}
@@ -248,7 +248,7 @@ Hud/Opponents
 		{
 			metrics_mode pixels
 			font_name Vera
-			char_height 22
+			char_height 24
 			left 130
 			top  45
 		}
@@ -256,7 +256,7 @@ Hud/Opponents
 		{
 			metrics_mode pixels
 			font_name Vera
-			char_height 22
+			char_height 24
 			left 130
 			top  65
 		}
@@ -264,7 +264,7 @@ Hud/Opponents
 		{
 			metrics_mode pixels
 			font_name Vera
-			char_height 22
+			char_height 24
 			left 130
 			top  85
 		}

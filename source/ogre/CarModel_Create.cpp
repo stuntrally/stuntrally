@@ -32,10 +32,10 @@ using namespace Ogre;
 
 //  ctor
 //------------------------------------------------------------------------------------------------------
-CarModel::CarModel(int index, eCarType type, const std::string& name,
+CarModel::CarModel(int index, int colorId, eCarType type, const std::string& name,
 	SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Camera* cam, App* app)
 	:mSceneMgr(sceneMgr), pSet(set), pGame(game), sc(s), mCamera(cam), pApp(app)
-	,iIndex(index), sDirname(name), eType(type)
+	,iIndex(index), iColor(colorId), sDirname(name), eType(type)
 	,fCam(0), pMainNode(0), pCar(0), terrain(0), ndSph(0), brakes(0)
 	,pReflect(0), color(0,1,0)
 	,hideTime(1.f), mbVisible(true), bLightMapEnabled(true), bBraking(false)
@@ -629,7 +629,7 @@ void CarModel::RecreateMaterials()
 		sMtr[i] = sMtr[i] + mtrId;
 	}
 
-	//ChangeClr(iIndex);
+	//ChangeClr();
 
 	UpdateLightMap();
 }
@@ -679,5 +679,5 @@ void CarModel::requestedConfiguration(sh::MaterialInstance* m, const std::string
 void CarModel::createdConfiguration(sh::MaterialInstance* m, const std::string& configuration)
 {
 	UpdateLightMap();
-	ChangeClr(iIndex);
+	ChangeClr();
 }

@@ -102,50 +102,67 @@ void App::tabPlayer(TabPtr wp, size_t id)
 {
 	iCurCar = id;
 	//  update gui for this car (color h,s,v, name, img)
-	string c = pSet->gui.car[iCurCar];
-	for (size_t i=0; i < carList->getItemCount(); ++i)
-	if (carList->getItemNameAt(i).substr(7) == c)
-	{	carList->setIndexSelected(i);
-		listCarChng(carList, i);
-	}
+	bool plr = iCurCar < 4;
+	if (plr)
+	{
+		string c = pSet->gui.car[iCurCar];
+		for (size_t i=0; i < carList->getItemCount(); ++i)
+		if (carList->getItemNameAt(i).substr(7) == c)
+		{	carList->setIndexSelected(i);
+			listCarChng(carList, i);
+	}	}
+	carList->setVisible(plr);
 	UpdCarClrSld(false);  // no car color change
 }
 
 //  car color
+void App::UpdCarMClr()
+{
+	if (!bUpdCarClr || !bGI)  return;
+	
+	int s = carModels.size();
+	if (iCurCar == 4)  // ghost
+	{
+		for (int i=0; i < s; ++i)
+			if (carModels[i]->isGhost() && !carModels[i]->isGhostTrk())  carModels[i]->ChangeClr();
+	}
+	else if (iCurCar == 5)  // track's ghost
+	{
+		for (int i=0; i < s; ++i)
+			if (carModels[i]->isGhostTrk())  carModels[i]->ChangeClr();
+	}else
+		if (iCurCar < s)  // player
+			carModels[iCurCar]->ChangeClr();
+}
 void App::slCarClrH(SL)
 {
 	Real v = val;  if (bGI)  pSet->gui.car_hue[iCurCar] = v;
 	if (valCarClrH){	valCarClrH->setCaption(fToStr(v,2,4));  }
-	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
-		carModels[iCurCar]->ChangeClr(iCurCar);
+	UpdCarMClr();
 }
 void App::slCarClrS(SL)
 {
 	Real v = val;  if (bGI)  pSet->gui.car_sat[iCurCar] = v;
 	if (valCarClrS){	valCarClrS->setCaption(fToStr(v,2,4));  }
-	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
-		carModels[iCurCar]->ChangeClr(iCurCar);
+	UpdCarMClr();
 }
 void App::slCarClrV(SL)
 {
 	Real v = val;  if (bGI)  pSet->gui.car_val[iCurCar] = v;
 	if (valCarClrV){	valCarClrV->setCaption(fToStr(v,2,4));  }
-	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
-		carModels[iCurCar]->ChangeClr(iCurCar);
+	UpdCarMClr();
 }
 void App::slCarClrGloss(SL)
 {
 	Real v = powf(val, 1.6f);  if (bGI)  pSet->gui.car_gloss[iCurCar] = v;
 	if (valCarClrGloss){	valCarClrGloss->setCaption(fToStr(v,2,4));  }
-	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
-		carModels[iCurCar]->ChangeClr(iCurCar);
+	UpdCarMClr();
 }
 void App::slCarClrRefl(SL)
 {
 	Real v = 1.4f * val;  if (bGI)  pSet->gui.car_refl[iCurCar] = v;
 	if (valCarClrRefl){		valCarClrRefl->setCaption(fToStr(v,2,4));  }
-	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
-		carModels[iCurCar]->ChangeClr(iCurCar);
+	UpdCarMClr();
 }
 
 void App::imgBtnCarClr(WP img)

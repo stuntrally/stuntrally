@@ -68,16 +68,15 @@ public:
 	//  steering range multipliers
 	float steer_range[2],  // gravel/asphalt
 		steer_sim_easy,steer_sim_normal;  // simulation modes
-	int cam_view[4];
+	std::vector<int> cam_view;  //[4]
 
 	//---------------  game config
 	class GameSet
 	{
 	public:
 		std::string track;  bool track_user, trackreverse;
-		std::string car[4];
-		float car_hue[4], car_sat[4], car_val[4], car_gloss[4], car_refl[4];
-		//todo: std::vector<float> car_hue, car_sat, car_val, car_gloss, car_refl;
+		std::vector<std::string> car;  //[4]
+		std::vector<float> car_hue, car_sat, car_val, car_gloss, car_refl;  //[6] also for ghosts
 
 		int local_players, num_laps;  // split
 		//  game setup
@@ -91,6 +90,8 @@ public:
 		int champ_num;  // -1 none
 		bool champ_rev;
 		float pre_time;
+
+		GameSet();
 	}  game,  // current game, changed only on new game start
 		gui;  // gui only config
 	//---------------

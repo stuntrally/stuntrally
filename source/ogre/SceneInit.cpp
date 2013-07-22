@@ -151,7 +151,7 @@ void App::NewGame()
 	mWndNetEnd->setVisible(false);
  
 	bLoading = true;  iLoad1stFrames = 0;
-	carIdWin = 1;
+	carIdWin = 1;  iRplCarOfs = 0;
 
 	bRplPlay = 0;
 	pSet->rpl_rec = bRplRec;  // changed only at new game
@@ -309,7 +309,7 @@ void App::LoadGame()  // 2
 		if (et == CarModel::CT_LOCAL && camIt != mSplitMgr->mCameras.end())
 		{	cam = *camIt;  ++camIt;  }
 		
-		CarModel* car = new CarModel(i, et, carName, mSceneMgr, pSet, pGame, sc, cam, this);
+		CarModel* car = new CarModel(i, i, et, carName, mSceneMgr, pSet, pGame, sc, cam, this);
 		car->Load(startId);
 		carModels.push_back(car);
 		
@@ -330,7 +330,7 @@ void App::LoadGame()  // 2
 		
 		//  always because ghplay can appear during play after best lap
 		// 1st ghost = orgCar
-		CarModel* c = new CarModel(i, CarModel::CT_GHOST, orgCar, mSceneMgr, pSet, pGame, sc, 0, this);
+		CarModel* c = new CarModel(i, 4, CarModel::CT_GHOST, orgCar, mSceneMgr, pSet, pGame, sc, 0, this);
 		c->Load();
 		c->pCar = (*carModels.begin())->pCar;  // based on 1st car
 		carModels.push_back(c);
@@ -338,7 +338,7 @@ void App::LoadGame()  // 2
 		//  2st ghost - other car
 		if (isGhost2nd)
 		{
-			CarModel* c = new CarModel(i, CarModel::CT_GHOST2, ghCar, mSceneMgr, pSet, pGame, sc, 0, this);
+			CarModel* c = new CarModel(i, 4, CarModel::CT_GHOST2, ghCar, mSceneMgr, pSet, pGame, sc, 0, this);
 			c->Load();
 			c->pCar = (*carModels.begin())->pCar;
 			carModels.push_back(c);
@@ -352,7 +352,7 @@ void App::LoadGame()  // 2
 		std::string file = PATHMANAGER::TrkGhosts()+"/"+pSet->game.track+".gho";
 		if (ghtrk.LoadFile(file))
 		{
-			CarModel* c = new CarModel(i, CarModel::CT_TRACK, "ES", mSceneMgr, pSet, pGame, sc, 0, this);
+			CarModel* c = new CarModel(i, 5, CarModel::CT_TRACK, "ES", mSceneMgr, pSet, pGame, sc, 0, this);
 			c->Load();
 			c->pCar = (*carModels.begin())->pCar;  // based on 1st car
 			carModels.push_back(c);

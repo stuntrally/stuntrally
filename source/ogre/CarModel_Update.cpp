@@ -587,9 +587,9 @@ void CarModel::UpdWhTerMtr()
 //  utils
 //-------------------------------------------------------------------------------------------------------
 
-void CarModel::ChangeClr(int car)
+void CarModel::ChangeClr()
 {
-	int i = isGhostTrk() ? 2 : std::min(3,car);
+	int i = iColor;
 	float c_h = pSet->gui.car_hue[i], c_s = pSet->gui.car_sat[i],
 	      c_v = pSet->gui.car_val[i], gloss = pSet->gui.car_gloss[i], refl = pSet->gui.car_refl[i];
 	color.setHSB(1-c_h, c_s, c_v);  //set, mini pos clr
@@ -612,4 +612,6 @@ void CarModel::ChangeClr(int car)
 
 	if (pNickTxt)
 		pNickTxt->setTextColour(MyGUI::Colour(color.r,color.g,color.b));
+	
+	// opp list clr auto in hud update
 }

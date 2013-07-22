@@ -228,13 +228,14 @@ void App::listCarChng(MultiList2* li, size_t pos)
 		txCarSpeed->setCaption(clrsDiff[std::min(7, (int)(ci.speed*0.9f))]+ toStr(ci.speed));
 		txCarType->setCaption(carsXml.colormap[ci.type]+ TR("#{CarType_"+ci.type+"}"));
 	}
-	
+
 	changeCar();
 	UpdCarStatsTxt();
 }	
 void App::changeCar()
 {
-	pSet->gui.car[iCurCar] = sListCar;
+	if (iCurCar < 4)
+		pSet->gui.car[iCurCar] = sListCar;
 }
 
 ///  car stats txt

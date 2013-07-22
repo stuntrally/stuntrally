@@ -314,8 +314,9 @@ protected:
 
 	//  main menu
 	void toggleGui(bool toggle=true), GuiShortcut(MNU_Btns mnu, int tab, int subtab=-1);
-	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 	void MainMenuBtn(MyGUI::WidgetPtr), MenuTabChg(MyGUI::TabPtr, size_t);  bool loadReadme;
+
+	void UpdCarClrSld(bool upd=true), UpdCarMClr();  bool bUpdCarClr;
 
 	///  championships
 	ChampsXml champs;  TimesXml times;  ProgressXml progress[2];  //xml  progres[1]=reversed
