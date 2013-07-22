@@ -266,6 +266,10 @@ void CarModel::LoadConfig(const std::string & pathCar)
 		vec.Set(pos[0],pos[1], pos[2]);
 		whPos[i] = vec;
 	}
+	//  steer angle
+	maxangle = 26.f;
+	cf.GetParam("steering.max-angle", maxangle, pGame->error_output);
+	maxangle *= pGame->GetSteerRange();
 }
 
 	
@@ -455,9 +459,9 @@ void CarModel::Create(int car)
 	
 	
 	///  brake flares  ++ ++
-	if (!brakePos.empty() && !isGhost())  // todo: in ghost broken..
+	if (!brakePos.empty())
 	{
-		SceneNode* snode = ndCar->createChildSceneNode();
+		SceneNode* nd = ndCar->createChildSceneNode();
 		brakes = mSceneMgr->createBillboardSet("Flr"+strI,2);
 		brakes->setDefaultDimensions(brakeSize, brakeSize);
 		brakes->setRenderQueueGroup(RQG_CarTrails);  //brakes->setVisibilityFlags();
@@ -467,7 +471,7 @@ void CarModel::Create(int car)
 
 		brakes->setVisible(false);
 		brakes->setMaterialName("flare1");
-		snode->attachObject(brakes);
+		nd->attachObject(brakes);
 	}
 	
 	if (!ghostTrk)

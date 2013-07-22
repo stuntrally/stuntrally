@@ -32,11 +32,14 @@ using namespace Ogre;
 void CarModel::setVisible(bool vis)
 {
 	mbVisible = vis;
-	//if (pMainNode->getVisible() == vis)  return;  //opt..
 	hideTime = 0.f;
+
 	pMainNode->setVisible(vis);
+	if (brakes)
+		brakes->setVisible(bBraking && vis);
 	for (int w=0; w < 4; ++w)
 		ndWh[w]->setVisible(vis);
+
 	UpdParsTrails(vis);
 }
 
@@ -500,7 +503,7 @@ void CarModel::UpdateLightMap()
 void CarModel::UpdateBraking()
 {
 	if (brakes)
-		brakes->setVisible(bBraking);
+		brakes->setVisible(bBraking && mbVisible);
 
 	std::string texName = sDirname + (bBraking ? "_body00_brake.png" : "_body00_add.png");
 
@@ -613,5 +616,5 @@ void CarModel::ChangeClr()
 	if (pNickTxt)
 		pNickTxt->setTextColour(MyGUI::Colour(color.r,color.g,color.b));
 	
-	// opp list clr auto in hud update
+	// opp list text and mini pos colors - auto in hud update
 }

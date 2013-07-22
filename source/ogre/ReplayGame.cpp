@@ -424,6 +424,8 @@ bool TrackGhost::GetFrame(float time1, TrackFrame* pFr)
 		(*pFr).pos = t0.pos + (t1.pos - t0.pos) * f;
 		(*pFr).rot = t0.rot.QuatSlerp(t1.rot, f);
 		//(*pFr).rot = t1.rot;
+		(*pFr).brake = t1.brake;
+		(*pFr).steer = t1.steer;
 	}
 
 	//  last time
@@ -464,7 +466,7 @@ bool TrackGhost::LoadFile(std::string file)
 	
 	//  frames
 	int i=0;
-	frames.reserve(cDefSize);  //?
+	frames.reserve(cDefSize/2);  //?
 	while (!fi.eof())
 	{
 		TrackFrame fr;

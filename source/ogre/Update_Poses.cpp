@@ -61,19 +61,26 @@ void App::newPoses(float time)  // time only for camera update
 				bool ok = ghtrk.GetFrame(rewTime + lap1, &tf);
 				//  car
 				pos = tf.pos;  rot = tf.rot;
-				pi.speed = 0.f;
-				pi.fboost = 0.f;  pi.steer = 0.f; //
-				pi.percent = 0.f;  pi.braking = 0.f; //
-				pi.fHitTime = 0.f;  pi.fParIntens = 0.f;  pi.fParVel = 0.f;
-				pi.vHitPos = Vector3::ZERO;  pi.vHitNorm = Vector3::UNIT_Y;
+				pi.braking = tf.brake;
+				pi.steer = tf.steer / 127.f;
+				//pi.fboost = 0.f;  pi.speed = 0.f;  pi.percent = 0.f;
+				//pi.fHitTime = 0.f;  pi.fParIntens = 0.f;  pi.fParVel = 0.f;
+				//pi.vHitPos = Vector3::ZERO;  pi.vHitNorm = Vector3::UNIT_Y;
 				//  wheels
+				//dynamics.SetSteering(state.steer, pGame->GetSteerRange());  //peers can have other game settins..
+				
 				for (int w=0; w < 4; ++w)
 				{
 					MATHVECTOR<float,3> whP = carM->whPos[w];
 					whP[2] += 0.05f;  // up
 					tf.rot.RotateVector(whP);
 					whPos[w] = tf.pos + whP;
-					whRot[w] = tf.rot * carM->qFixWh[w%2];
+					if (w < 2)  // front steer
+					{	float a = (pi.steer * carM->maxangle) * -PI_d/180.f;
+						QUATERNION<float> q;  q.Rotate(a, 0,0,1);
+						whRot[w] = tf.rot * carM->qFixWh[w%2] * q;
+					}else
+						whRot[w] = tf.rot * carM->qFixWh[w%2];
 				}
 			}else  // ghost
 			{
@@ -481,28 +488,26 @@ void App::updatePoses(float time)
 			if (loading)
 				carM->setVisible(true);
 			else
-			{
-			
-			//  hide ghost when close to player
-			if (!loading)
-			{
-				float d = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
-				if (d < 16.f)
-					newVisible = false;
-			}
-			if (carM->isGhostTrk() && cgh >= 0)  // hide track's ghost when near ghost
-			{
-				float d = carM->pMainNode->getPosition().squaredDistance(carModels[cgh]->pMainNode->getPosition());
-				if (d < 25.f)
-					newVisible = false;
-			}
-			if (curVisible == newVisible)
-				carM->hideTime = 0.f;
-			else
-			{	carM->hideTime += time;  // change vis after delay
-				if (carM->hideTime > 0.2f)  // par sec
-					carM->setVisible(newVisible);
-			}
+			{	//  hide ghost when close to player
+				if (!loading)
+				{
+					float d = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
+					if (d < 16.f)
+						newVisible = false;
+				}
+				if (carM->isGhostTrk() && cgh >= 0)  // hide track's ghost when near ghost
+				{
+					float d = carM->pMainNode->getPosition().squaredDistance(carModels[cgh]->pMainNode->getPosition());
+					if (d < 25.f)
+						newVisible = false;
+				}
+				if (curVisible == newVisible)
+					carM->hideTime = 0.f;
+				else
+				{	carM->hideTime += time;  // change vis after delay
+					if (carM->hideTime > 0.2f)  // par sec
+						carM->setVisible(newVisible);
+				}
 		}	}
 
 		

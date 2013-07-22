@@ -97,30 +97,19 @@ struct ReplayFrame
 //--------------------------------------------
 /*struct TrackFramePacked  // in file
 {
-	//  time  since game start
-	float time;
-	//  car, no wheels
-	MATHVECTOR<float,3> pos;
 	short rot[4];
-
-	//  hud,info
-	//short vel;  char gear,steer,braking;
-	//float whSteerAng[2];
-	
-	TrackFramePacked();
 };/**/
 struct TrackFrame  // for game
 {
 	//  time  since game start
 	float time;
-	//  car, no wheels
+	//  car,  no wheels
 	MATHVECTOR<float,3> pos;
-	//short rot[4];
 	QUATERNION<float> rot;
 
-	//  hud,info
-	//short vel;  char gear,steer,braking;
-	//float whSteerAng[2];
+	//  info
+	char brake, steer;
+	//short vel;  char gear;
 	
 	TrackFrame();
 };

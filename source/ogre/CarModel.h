@@ -92,9 +92,11 @@ public:
 	float brakeSize;  Ogre::ColourValue brakeClr;
 	bool bRotFix;
 	std::string sBoostParName;
+
 	float whRadius[4], whWidth[4];  // for tire trails
 	MATHVECTOR<float,3> whPos[4];
 	QUATERNION<float> qFixWh[2];
+	float maxangle;  //steer
 
 	//  exhaust position for boost particles
 	bool manualExhaustPos;  // if true, use values below, if false, guess from bounding box
