@@ -6,6 +6,7 @@
 	<Tag name="InputMapScreenshot">Capture d'écran</Tag>
 	<Tag name="Brush_Filter">Filtre</Tag>
 	<Tag name="Time">Temps</Tag>
+	<Tag name="Damage">Dégâts</Tag>
 	<Tag name="TipGrassSwayDistr">Distribution de l'effet de \</Tag>
 	<Tag name="GraphicsAll_VeryHigh">Très élevé</Tag>
 	<Tag name="InpSet_AxisFull">Axe complet</Tag>
@@ -20,7 +21,7 @@
 	<Tag name="Championship">Championnat</Tag>
 	<Tag name="ColumnRadius">Rayon de la colonne</Tag>
 	<Tag name="InputKeyUnassigned">-- Aucun --</Tag>
-	<Tag name="Warnings">Warnings</Tag>
+	<Tag name="Warnings">Avertissements</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Sélectionner (une route)</Tag>
 	<Tag name="Road_AngleManual">Manuel</Tag>
@@ -42,7 +43,6 @@
 	<Tag name="TipTrackImg">Capture d'écran du jeu pour la piste sélectionnée.</Tag>
 	<Tag name="TerLNoiseOnly">Bruit seulement</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
-	<Tag name="SteerRange">Steering range multipliers</Tag>
 	<Tag name="Terrain">Terrain</Tag>
 	<Tag name="TipChangeGloss">Changer la brillance de la peinture (mat/brillant).</Tag>
 	<Tag name="Surface">Surface</Tag>
@@ -58,7 +58,7 @@
 	<Tag name="InputUpdBlendmap">F9 - mettre à jour la Blendmap du terrain (manuellement)</Tag>
 	<Tag name="Version">version</Tag>
 	<Tag name="InputRoadOnTer">Orig. - activer l'alignement sur le Terrain</Tag>
-	<Tag name="TipSunDiffuse">Sun light diffuse (normal) color. R G B components 0 to 1 (eg. 0.9 0.9 0.9)</Tag>
+	<Tag name="TipSunDiffuse">Couleur de la lumière du soleil. Composants R V B de 0 à 1 (exemple : 0.9 0.9 0.9)</Tag>
 	<Tag name="Progress">Progrès</Tag>
 	<Tag name="Brush_ShapeSinus">Sinus</Tag>
 	<Tag name="ScoreNeeded">Score nécessaire</Tag>
@@ -91,7 +91,6 @@
 	<Tag name="RoadPointSize">Taille des points de la route</Tag>
 	<Tag name="Flip">Retourner</Tag>
 	<Tag name="DistToRoad">dist. de la route</Tag>
-	<Tag name="TBPlace">Place</Tag>
 	<Tag name="AngleMax">Angle Maximum</Tag>
 	<Tag name="MessageBox_Retry">Recommencer</Tag>
 	<Tag name="TipToggleTriplanar">Quand l'option triplane est utilisée, seul ce calque utilisera des textures triplanes.</Tag>
@@ -151,7 +150,7 @@
 	<Tag name="CameraInfo">Informations de la caméra</Tag>
 	<Tag name="frenzy">routes sinueuses</Tag>
 	<Tag name="InputRoadChkRadius">K,L - taille des points de contrôle (ChkR 0 - aucun)</Tag>
-	<Tag name="TipCarSpeed">Car speed rating, more means faster car. Warning, on gravel too fast cars won't be faster because they don't have enough grip.</Tag>
+	<Tag name="TipCarSpeed">Vitesse de la voiture, une valeur plus élevée = voiture plus rapide. Attention, sur du gravier la vitesse est limité car les voitures très rapides n'ont pas assez d'adhérence.</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - au début alt-ctrl - à la fin</Tag>
 	<Tag name="RearThrottleInverse">Inverser commandes marche arrière</Tag>
 	<Tag name="MessageBox_Yes">Oui</Tag>
@@ -187,7 +186,7 @@
 	<Tag name="NetServer">Serveur</Tag>
 	<Tag name="InputRoadWidth">- changer la largeur de la route</Tag>
 	<Tag name="Wall">Mur</Tag>
-	<Tag name="TipChangeReflect">Change car color reflectiveness (matte-mirror).</Tag>
+	<Tag name="TipChangeReflect">Réflexions de la voiture (mat-miroir).</Tag>
 	<Tag name="filmgrain">Grain de film</Tag>
 	<Tag name="Replay">Rejouer</Tag>
 	<Tag name="AutoRear">Marche aarière automatique</Tag>
@@ -299,7 +298,7 @@
 	<Tag name="Brush_Octaves">Octaves</Tag>
 	<Tag name="Type">Type</Tag>
 	<Tag name="NetWaiting">Attente...</Tag>
-	<Tag name="NetStart">Démarrer</Tag>
+	<Tag name="MergeLength">Merge length</Tag>
 	<Tag name="InputMinVal">Valeur Minimum</Tag>
 	<Tag name="RplMaxNumViewports">Nombre de vues maximum</Tag>
 	<Tag name="SingleRace">Simple course</Tag>
@@ -310,6 +309,7 @@
 	<Tag name="max">max</Tag>
 	<Tag name="Stage">Étape</Tag>
 	<Tag name="NetRefreshList">Rafraîchir la liste</Tag>
+	<Tag name="None">Aucun</Tag>
 	<Tag name="MessageBox_Abort">Annuler</Tag>
 	<Tag name="Brush_ShapeNoise">Bruit</Tag>
 	<Tag name="Grasses">Herbes</Tag>
@@ -350,7 +350,7 @@
 	<Tag name="Road_Snap">Aimanter</Tag>
 	<Tag name="InputRoadShiftReverse">Maj.-Insér. - coller Maj.-Ctrl-Insér. - inversé</Tag>
 	<Tag name="MinScale">échelle min.</Tag>
-	<Tag name="MergeLength">Merge length</Tag>
+	<Tag name="NetStart">Démarrer</Tag>
 	<Tag name="QuickHelpText">---- Aide rapide ----@@Utilisez la souris ou Haut, Bas, Entrée, Retour pour naviguer dans les menus.@@Pour ajuster la résolution allez dans les Options,@utilisez les pré-réglages graphiques pour gagner en fluidité si nécessaire.@@Pour voir les touches utilisées par le jeu et les configurer, allez dans les Options, onglet Entrée.@Si vous avez une manette ou un volant, veuillez lire ceci : http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers (en anglais).@@L'hébergement d'une partie multijoueur nécessite l'ouverture de ports sur votre routeur/box.@Se connecter à d'autres partie ne nécessite pas d'ouverture de ports.@@Si vous avez des problèmes ou des suggestions, utilisez notre forum : @http://forum.freegamedev.net/viewforum.php?f=77 (en anglais)@@Pour plus d'information, lisez le Readme et les pages Wiki du projet.@</Tag>
 	<Tag name="InputObjectsMove">1 - se déplacer Clic gauche - plane XZ Clic droit - hauteur Y</Tag>
 	<Tag name="TimesBar">Barre des temps</Tag>
@@ -460,7 +460,7 @@
 	<Tag name="LTrFlDepth">profondeur maximale dans le liquide</Tag>
 	<Tag name="InputFluidsSize">Alt-Clic gauche - taille Alt-Clic droit - profondeur</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
-	<Tag name="Shadows">Ombres</Tag>
+	<Tag name="SteerRange">Steering range multipliers</Tag>
 	<Tag name="ShowPictures">Montrer des images pendant le chargement</Tag>
 	<Tag name="distance">distance</Tag>
 	<Tag name="SSS_Effect">Effet</Tag>
@@ -484,6 +484,7 @@
 	<Tag name="TexSize">Taille des textures</Tag>
 	<Tag name="TipSunAmbient">Ambience de la lumière du soleil (couleur constante). Composants R V B de 0 à 1 (exemple : 0.4 0.4 0.4)</Tag>
 	<Tag name="ChngTrkTab">changé dans l'onglet [Circuit]</Tag>
+	<Tag name="Shadows">Ombres</Tag>
 	<Tag name="InputRplCtrl2">P - mettre en pause/reprendre le replay</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - aller en avant/arrière (Maj. - lent, Ctrl,Alt - rapide)</Tag>
 	<Tag name="Laps">Tours</Tag>
@@ -529,7 +530,7 @@
 	<Tag name="InputStartAltLMB">Alt-Clic gauche - tourner Alt-Clic droit - tourner verticalement</Tag>
 	<Tag name="InputRoadAngSnap">7,8   - angles snap</Tag>
 	<Tag name="TerGenOfsX">Décalage X</Tag>
-	<Tag name="TipTexTiling">Texture tiling length (less means more repeats).</Tag>
+	<Tag name="TipTexTiling">Répétitions de la texture (moins = plus de répétitions).</Tag>
 	<Tag name="InputBrushShape">K,L - forme</Tag>
 	<Tag name="TipTerrainMove">Déplace du terrain.</Tag>
 	<Tag name="TerHQDist">Détail du terrain</Tag>
@@ -577,9 +578,9 @@
 	<Tag name="InputRoadDel">Suppr. - supprimer la sélection</Tag>
 	<Tag name="InputFluidsTileY">; &apos; - changer la répétition de la texture, une coordonnée seulement</Tag>
 	<Tag name="LS_GAME">Chargement du jeu</Tag>
-	<Tag name="TipSceneryId">Name id of track, that has similar lighting (or this track's if has unique). Used for impostors generation.</Tag>
+	<Tag name="TipSceneryId">ID d'un circuit qui a un éclairage similaire (ou celui de ce circuit s'il est unique). Utilisé pour la génération de sprites.</Tag>
 	<Tag name="TreeMult">Multi. d'arbres</Tag>
-	<Tag name="InputTopView">Alt-Z - toggle top view</Tag>
+	<Tag name="InputTopView">Alt-Z - activer la vue du dessus</Tag>
 	<Tag name="InputUpdate">F8 - mettre à jour la piste</Tag>
 	<Tag name="InputToggleGUIMode">F1 ou ` - mode graphique (Options)</Tag>
 	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
@@ -627,7 +628,7 @@
 	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="Brush_Height">Hauteur</Tag>
 	<Tag name="Objects">Objets</Tag>
-	<Tag name="CheckBeam">Next checkpoint beam</Tag>
+	<Tag name="CheckBeam">Rayon du prochain point de contrôle</Tag>
 	<Tag name="set1">set1</Tag>
 	<Tag name="set2">set2</Tag>
 	<Tag name="auto">Automatique</Tag>
@@ -704,6 +705,7 @@
 	<Tag name="TipGrassLayerDens">Densité de l'herbe pour ce calque.</Tag>
 	<Tag name="InputRoadModify">Modifier</Tag>
 	<Tag name="TextColor">Couleur du texte</Tag>
+	<Tag name="Reduced">Réduit</Tag>
 	<Tag name="ColBright">Luminosité</Tag>
 	<Tag name="TipFogStartDist">Distance du début de la brume [mètres].</Tag>
 	<Tag name="InputTerDeform">D - Déformer (bouton gauche : vers le haut, bouton droit : vers le bas)</Tag>
@@ -740,7 +742,7 @@
 	<Tag name="HeightMin">Hauteur Min</Tag>
 	<Tag name="InputObjectsType">-,= - changer le type d'objet</Tag>
 	<Tag name="ColHue">Coleur - teinte</Tag>
-	<Tag name="Brush_ShapeNoise2">Noise2</Tag>
+	<Tag name="Brush_ShapeNoise2">Bruit2</Tag>
 	<Tag name="fluids">Liquides (eau ou boue)</Tag>
 	<Tag name="TipLoadTrkEditor">Charger le circuit (après modifications) ou recharger le circuit actuel.</Tag>
 	<Tag name="AlignTerrainToRoad">Aligner le terrain à la route</Tag>
@@ -749,6 +751,7 @@
 	<Tag name="TerLayers">Calques du terrain</Tag>
 	<Tag name="TipLTrMaxTerH">Au-delà de cette altitude, le modèle n'apparaîtra pas.</Tag>
 	<Tag name="TotalScore">Score total</Tag>
+	<Tag name="InputLoadNextTrack">F12 - load next track (shift - previous)</Tag>
 	<Tag name="TrackDifficulties">Différentes difficultés</Tag>
 	<Tag name="TipModelPrev">Image d'aperçu du modèle.</Tag>
 	<Tag name="InputRoadEdit">R - mode édition de route</Tag>
@@ -789,13 +792,14 @@
 	<Tag name="TerGenPow">Force (forme)</Tag>
 	<Tag name="Used">Utilisé</Tag>
 	<Tag name="TipImpDist">Distance à laquelle les sprites disparaissent.</Tag>
+	<Tag name="Normal">Normal</Tag>
 	<Tag name="InputMapGeneral">Général</Tag>
 	<Tag name="InputControllers">Contrôleurs</Tag>
 	<Tag name="Brushes">Pinceaux</Tag>
 	<Tag name="TipDisableFog">Désactiver la brume quand la route est éditée.</Tag>
 	<Tag name="long">long</Tag>
 	<Tag name="PipeWStepsMul">Pipe W steps mul.</Tag>
-	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
+	<Tag name="WarningsInfo">Console pour les erreurs de circuit, avertissements et traces.</Tag>
 	<Tag name="RplLoad">Chargement</Tag>
 	<Tag name="InpSet_AxisHalfInv">Axe partiel inversé</Tag>
 	<Tag name="ScaleTerHeight">Hauteur du Terrain</Tag>
@@ -842,7 +846,7 @@
 	<Tag name="CarType_Other">Autre</Tag>
 	<Tag name="BulletDebug">Débogage Bullet</Tag>
 	<Tag name="InputRoadHeight">- changer la hauteur</Tag>
-	<Tag name="TipSunSpecular">Couleur des reflets du soleil. Composants R V B de 0 à 1 (exemple : 0.6 0.6 0.6)</Tag>
+	<Tag name="TipSunSpecular">Couleur des reflets de la lumière du soleil. Composants R V B de 0 à 1 (exemple : 0.6 0.6 0.6)</Tag>
 	<Tag name="LS_TER">Chargement du terrain</Tag>
 	<Tag name="Collis.">Collision</Tag>
 	<Tag name="Scenery">Scène</Tag>
@@ -881,11 +885,10 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet d'Options précédent/suivant (Maj. sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="Damage">Damage</Tag>
-	<Tag name="None">None</Tag>
-	<Tag name="Reduced">Reduced</Tag>
-	<Tag name="InputLoadNextTrack">F12 - load next track (shift - previous)</Tag>
-	<Tag name="Normal">Normal</Tag>
+	<Tag name="TBPosition">Position</Tag>
+	<Tag name="Ghost">Ghost</Tag>
+	<Tag name="TBPoints">Points</Tag>
+	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
