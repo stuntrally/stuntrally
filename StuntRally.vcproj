@@ -1048,6 +1048,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\config\challenges.xml"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\ChallengesXml.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\ChallengesXml.h"
+				>
+			</File>
+			<File
 				RelativePath=".\config\championships.xml"
 				>
 			</File>

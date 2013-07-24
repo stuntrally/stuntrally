@@ -46,7 +46,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	//  game
 	Param(c,w, "game.start_in_main", startInMain);
 	Param(c,w, "game.in_menu", inMenu);				Param(c,w, "game.in_main", isMain);
-	Param(c,w, "game.pre_time", gui.pre_time);
+	Param(c,w, "game.pre_time", gui.pre_time);			Param(c,w, "game.chall_num", gui.chall_num);  //rem-
 	Param(c,w, "game.champ_num", gui.champ_num);		Param(c,w, "game.champ_rev", gui.champ_rev);
 	Param(c,w, "game.boost_type", gui.boost_type);		Param(c,w, "game.flip_type", gui.flip_type);
 	Param(c,w, "game.boost_power", gui.boost_power);	Param(c,w, "game.damage_type", gui.damage_type);
@@ -257,7 +257,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	gui.trees = 1.f;
 	//
 	gui.rpl_rec = 1;  gui.champ_rev = false;
-	gui.champ_num = -1;  gui.pre_time = 2.f;
+	gui.champ_num = -1;  gui.pre_time = 2.f;  gui.chall_num = -1;
 	game = gui;
 
 	//  car setup  (update in game-default.cfg)

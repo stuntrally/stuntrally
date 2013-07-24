@@ -9,6 +9,7 @@
 #include "common/FluidsXml.h"
 #include "common/WaterRTT.h"
 #include "ChampsXml.h"
+#include "ChallengesXml.h"
 
 #include "ReplayGame.h"
 #include "../vdrift/cardefs.h"
@@ -350,6 +351,9 @@ protected:
 	void tabTutType(MyGUI::TabPtr wp, size_t id), tabChampType(MyGUI::TabPtr wp, size_t id);
 	void btnChampInfo(WP), chkGhampRev(WP), UpdChampTabVis();
 	void ToolGhosts(),ToolGhostsConv();  //  _Tools_
+
+	///  challenges
+	ChallXml chall;  ProgressXml progressL[2];  //xml  progres[1]=reversed
 	
 
 	///  input tab  -----------------------------------------

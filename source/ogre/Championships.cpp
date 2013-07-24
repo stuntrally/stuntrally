@@ -54,8 +54,10 @@ int App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldSta
 void App::ChampsXmlLoad()
 {
 	times.LoadXml(PATHMANAGER::GameConfigDir() + "/times.xml");
-	champs.LoadXml(PATHMANAGER::GameConfigDir() + "/championships.xml", times);
+	champs.LoadXml(PATHMANAGER::GameConfigDir() + "/championships.xml", &times);
 	LogO(String("**** Loaded Championships: ") + toStr(champs.champs.size()));
+	chall.LoadXml(PATHMANAGER::GameConfigDir() + "/challenges.xml", &times);
+	LogO(String("**** Loaded Challenges: ") + toStr(chall.ch.size()));
 
 	/* stats */
 	float time = 0.f;  int trks = 0;

@@ -1,0 +1,49 @@
+<challenges>
+<!--  type=
+	6 test  0 tutorial  1 tutorial hard
+	2 normal  3 hard  4 very hard  -->
+
+<!--  Test  -->
+<!--========================================================================================================================-->
+
+	<challenge name="Test-1" ver="1" difficulty="0" type="6" 
+			descr="Fastest 1 track, to test logic.">
+		<sim mode="normal" damage="2" boost="1" flip="1" rewind="1" />
+		<cartype names="Gravel" />
+		<car names="ES|S1" />
+		<hud minimap="1" chkArrow="1" chkBeam="1" trkGhost="1" />
+		<!--<setup abs="0" tcs="0" autogbox="-1" />-->
+		<pass total_time="123" avg_pos="6" />
+		<tracks>
+			<t name="TestC6-temp" laps="1" passTime="-1" passPoints="7.0" />
+		</tracks>
+	</challenge>
+
+	<!--<challenge name="Test-3" ver="1" difficulty="0" type="6" 
+			descr="Fastest 3 tracks, to test logic.">
+		<track name="TestC6-temp" reversed="0" laps="1" factor="0.1" />
+		<track name="TestC4-ow" laps="1" factor="0.1" />
+		<track name="TestC1-circle" laps="1" factor="0.1" />
+	</challenge>-->
+
+
+<!--  Easy  -->
+<!--========================================================================================================================-->
+
+	<!--<challenge name="Tutorial Terrain" ver="1" difficulty="2" type="0" 
+			descr="Tutorial with short tracks having hilly or bumpy terrain.">
+		<track name="F11-Dawn"		laps="1" factor="0.1" />
+		<track name="J1-T"			laps="1" factor="0.1" />
+		<track name="D1-simple"		laps="1" factor="0.1" />
+	</challenge>
+
+	<challenge name="Tutorial Curly" ver="1" difficulty="3" type="1" 
+			descr="Tutorial with very tiny but curly tracks. Requires a lot of steering.">
+		<track name="I12-Beach"		laps="1" factor="0.1" />
+		<track name="G4-River"		laps="1" factor="0.1" />
+		<track name="I6-Flooded"	laps="1" factor="0.1" />
+		<track name="J18-Tiny"		laps="1" factor="0.1" />
+	</challenge>-->
+
+
+</challenges>

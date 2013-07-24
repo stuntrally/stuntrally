@@ -17,7 +17,7 @@ Champ::Champ() :
 
 //  Load champs
 //--------------------------------------------------------------------------------------------------------------------------------------
-bool ChampsXml::LoadXml(std::string file, TimesXml& times)
+bool ChampsXml::LoadXml(std::string file, TimesXml* times)
 {
 	TiXmlDocument doc;
 	if (!doc.LoadFile(file.c_str()))  return false;
@@ -61,6 +61,7 @@ bool ChampsXml::LoadXml(std::string file, TimesXml& times)
 	}
 	
 	///  get champs total time (sum tracks times)
+	if (times)
 	for (int c=0; c < champs.size(); ++c)
 	{
 		Champ& ch = champs[c];
@@ -69,7 +70,7 @@ bool ChampsXml::LoadXml(std::string file, TimesXml& times)
 		{
 			const ChampTrack& trk = ch.trks[i];
 
-			float time = times.trks[trk.name] * trk.laps;
+			float time = times->trks[trk.name] * trk.laps;
 			allTime += time;  // sum trk time, total champ time
 		}
 		ch.time = allTime;
