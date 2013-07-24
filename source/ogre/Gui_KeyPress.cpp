@@ -338,8 +338,8 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 					else		// Minimap
 					if (!shift)
 					{	WP wp = chMinimp;  ChkEv(trackmap);
-						for (int c=0; c < 4; ++c)
-							if (ndMap[c])  ndMap[c]->setVisible(pSet->trackmap);
+						for (int c=0; c < hud.size(); ++c)
+							if (hud[c].ndMap)  hud[c].ndMap->setVisible(pSet->trackmap);
 					}	return false;
 
 				case KC_F9:

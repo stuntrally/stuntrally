@@ -34,7 +34,7 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 		const SplitScreenManager::VPDims& dim = mSplitMgr->mDims[c];
 		//  gauges
 		Real xcRpm,ycRpm, xcVel,ycVel, yMax, xBFuel;  // -1..1
-		if (ndRpmBk[c] && ndVelBk[c] && ndVelBm[c] && ndRpm[c] && ndVel[c])
+		if (hud[c].ndRpmBk && hud[c].ndVelBk && hud[c].ndVelBm && hud[c].ndRpm && hud[c].ndVel)
 		{
 			Real fHudScale = pSet->size_gauges * dim.avgsize;
 			Real spx = fHudScale *1.1f, spy = spx*asp;
@@ -43,26 +43,26 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 			yMax = ycVel - fHudScale;  xBFuel = xcVel - fHudScale;
 
 			Vector3 sca(fHudScale,fHudScale*asp,1), sc(fHudScale,fHudScale,1);
-			ndRpmBk[c]->setScale(sca);	ndVelBk[c]->setScale(sca);  ndVelBm[c]->setScale(sca);
-			ndRpm[c]->setScale(sc); 	ndVel[c]->setScale(sc);
+			hud[c].ndRpmBk->setScale(sca);	hud[c].ndVelBk->setScale(sca);  hud[c].ndVelBm->setScale(sca);
+			hud[c].ndRpm->setScale(sc); 	hud[c].ndVel->setScale(sc);
 
 			Vector3 vr(xcRpm,ycRpm,0.f), vv(xcVel,ycVel,0.f);
-			ndRpmBk[c]->setPosition(vr); ndVelBk[c]->setPosition(vv);  ndVelBm[c]->setPosition(vv);
-			ndRpm[c]->setPosition(vr);	ndVel[c]->setPosition(vv);
+			hud[c].ndRpmBk->setPosition(vr); hud[c].ndVelBk->setPosition(vv);  hud[c].ndVelBm->setPosition(vv);
+			hud[c].ndRpm->setPosition(vr);	 hud[c].ndVel->setPosition(vv);
 			//LogO("-- Size  r "+toStr(vr)+"  v "+toStr(vv)+"  s "+toStr(sca));
 		}
 		//  minimap
-		if (ndMap[c])
+		if (hud[c].ndMap)
 		{
 			Real fHudSize = pSet->size_minimap * dim.avgsize;
-			ndMap[c]->setScale((vdrSpl ? 2 : 1)*fHudSize,fHudSize*asp,1);
+			hud[c].ndMap->setScale((vdrSpl ? 2 : 1)*fHudSize,fHudSize*asp,1);
 
 			const Real marg = 1.f + 0.05f;  // from border
 			//Real fMiniX = dim.right - fHudSize * marg;
 			Real fMiniX = vdrSpl ? (1.f - 2.f*fHudSize * marg) : (dim.right - fHudSize * marg);
 			Real fMiniY =-dim.top - fHudSize*asp * marg;
 
-			ndMap[c]->setPosition(Vector3(fMiniX,fMiniY,0.f));
+			hud[c].ndMap->setPosition(Vector3(fMiniX,fMiniY,0.f));
 			//LogO("-- Size car:"+toStr(c)+"  x:"+fToStr(fMiniX,2,4)+" y:"+fToStr(fMiniY,2,4)+"  s:"+fToStr(fHudSize,2,4));
 		}
 
@@ -80,19 +80,19 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 			int bx =(xBFuel+1.f)*0.5f*wx - 10, by = std::min(iwy -36, my + 5);
 				vx = std::min(vx, iwx -100);
 				bx = std::min(bx, iwx -180);  // not too near to vel
-			if (txGear[c])  txGear[c]->setPosition(gx,gy);
-			if (txVel[c])  txVel[c]->setPosition(vx,vy);
-			if (txBFuel[c])  txBFuel[c]->setPosition(bx,by);
-			if (txDamage[c])  txDamage[c]->setPosition(gx+140,gy+10);
+			if (hud[c].txGear)  hud[c].txGear->setPosition(gx,gy);
+			if (hud[c].txVel)  hud[c].txVel->setPosition(vx,vy);
+			if (hud[c].txBFuel)  hud[c].txBFuel->setPosition(bx,by);
+			if (hud[c].txDamage)  hud[c].txDamage->setPosition(gx+140,gy+10);
 			
 			bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
 			int itx = (dim.left+1.f)*0.5f*wx,
 				ity = (dim.top +1.f)*0.5f*wy;
 			int tx = itx + 0, ty = ity + 32;
-			if (bckTimes[c])  bckTimes[c]->setPosition(tx,ty);
+			if (hud[c].bckTimes)  hud[c].bckTimes->setPosition(tx,ty);
 			tx += 16;  ty += (hasLaps ? 16 : 4);
-			if (txTimTxt[c])  txTimTxt[c]->setPosition(tx,ty);
-			if (txTimes[c])   txTimes[c]->setPosition(tx+96,ty);
+			if (hud[c].txTimTxt)  hud[c].txTimTxt->setPosition(tx,ty);
+			if (hud[c].txTimes)   hud[c].txTimes->setPosition(tx+96,ty);
 		}
 	}
 }
@@ -112,42 +112,42 @@ void App::CreateHUD(bool destroy)
 	
 	if (destroy)
 	{
-		for (int c=0; c < 4; ++c)
+		for (int c=0; c < hud.size(); ++c)
 		{
-			if (moMap[c]) {  scm->destroyManualObject(moMap[c]);  moMap[c]=0;  }
-			if (ndMap[c]) {  scm->destroySceneNode(ndMap[c]);  ndMap[c]=0;  }
+			if (hud[c].moMap) {  scm->destroyManualObject(hud[c].moMap);  hud[c].moMap=0;  }
+			if (hud[c].ndMap) {  scm->destroySceneNode(hud[c].ndMap);  hud[c].ndMap=0;  }
 
-			for (int i=0; i < 4; ++i)
+			for (int i=0; i < 6; ++i)
 			{
-				if (vMoPos[c][i]) {  scm->destroyManualObject(vMoPos[c][i]);  vMoPos[c][i]=0;  }
-				if (vNdPos[c][i]) {  scm->destroySceneNode(vNdPos[c][i]);  vNdPos[c][i]=0;  }
+				if (hud[c].vMoPos[i]) {  scm->destroyManualObject(hud[c].vMoPos[i]);  hud[c].vMoPos[i]=0;  }
+				if (hud[c].vNdPos[i]) {  scm->destroySceneNode(hud[c].vNdPos[i]);  hud[c].vNdPos[i]=0;  }
 			}
-			if (moRpmBk[c]) {  scm->destroyManualObject(moRpmBk[c]);  moRpmBk[c]=0;  }
-			if (ndRpmBk[c]) {  scm->destroySceneNode(ndRpmBk[c]);  ndRpmBk[c]=0;  }
+			if (hud[c].moRpmBk) {  scm->destroyManualObject(hud[c].moRpmBk);  hud[c].moRpmBk=0;  }
+			if (hud[c].ndRpmBk) {  scm->destroySceneNode(hud[c].ndRpmBk);  hud[c].ndRpmBk=0;  }
 
-			if (moVelBk[c]) {  scm->destroyManualObject(moVelBk[c]);  moVelBk[c]=0;  }
-			if (ndVelBk[c]) {  scm->destroySceneNode(ndVelBk[c]);  ndVelBk[c]=0;  }
+			if (hud[c].moVelBk) {  scm->destroyManualObject(hud[c].moVelBk);  hud[c].moVelBk=0;  }
+			if (hud[c].ndVelBk) {  scm->destroySceneNode(hud[c].ndVelBk);  hud[c].ndVelBk=0;  }
 				
-			if (moVelBm[c]) {  scm->destroyManualObject(moVelBm[c]);  moVelBm[c]=0;  }
-			if (ndVelBm[c]) {  scm->destroySceneNode(ndVelBm[c]);  ndVelBm[c]=0;  }
+			if (hud[c].moVelBm) {  scm->destroyManualObject(hud[c].moVelBm);  hud[c].moVelBm=0;  }
+			if (hud[c].ndVelBm) {  scm->destroySceneNode(hud[c].ndVelBm);  hud[c].ndVelBm=0;  }
 				
-			if (moRpm[c]) {  scm->destroyManualObject(moRpm[c]);  moRpm[c]=0;  }
-			if (ndRpm[c]) {  scm->destroySceneNode(ndRpm[c]);  ndRpm[c]=0;  }
+			if (hud[c].moRpm) {  scm->destroyManualObject(hud[c].moRpm);  hud[c].moRpm=0;  }
+			if (hud[c].ndRpm) {  scm->destroySceneNode(hud[c].ndRpm);  hud[c].ndRpm=0;  }
 			
-			if (moVel[c]) {  scm->destroyManualObject(moVel[c]);  moVel[c]=0;  }
-			if (ndVel[c]) {  scm->destroySceneNode(ndVel[c]);  ndVel[c]=0;  }
+			if (hud[c].moVel) {  scm->destroyManualObject(hud[c].moVel);  hud[c].moVel=0;  }
+			if (hud[c].ndVel) {  scm->destroySceneNode(hud[c].ndVel);  hud[c].ndVel=0;  }
 		}
 	}
-	for (int c=0; c<4; ++c)
-	{	if (txGear[c]) {  mGUI->destroyWidget(txGear[c]);  txGear[c] = 0;  }
-		if (txVel[c])  {  mGUI->destroyWidget(txVel[c]);  txVel[c] = 0;  }
-		if (txBFuel[c]){  mGUI->destroyWidget(txBFuel[c]);  txBFuel[c] = 0;  }
-		if (txDamage[c]){  mGUI->destroyWidget(txDamage[c]);  txDamage[c] = 0;  }
+	for (int c=0; c < hud.size(); ++c)
+	{	if (hud[c].txGear) {  mGUI->destroyWidget(hud[c].txGear);  hud[c].txGear = 0;  }
+		if (hud[c].txVel)  {  mGUI->destroyWidget(hud[c].txVel);   hud[c].txVel = 0;  }
+		if (hud[c].txBFuel){  mGUI->destroyWidget(hud[c].txBFuel);  hud[c].txBFuel = 0;  }
+		if (hud[c].txDamage){  mGUI->destroyWidget(hud[c].txDamage);  hud[c].txDamage = 0;  }
 
-		if (txTimTxt[c]) {  mGUI->destroyWidget(txTimTxt[c]);  txTimTxt[c] = 0;  }
-		if (txTimes[c])  {  mGUI->destroyWidget(txTimes[c]);  txTimes[c] = 0;  }
-		if (bckTimes[c]) {  mGUI->destroyWidget(bckTimes[c]);  bckTimes[c] = 0;  }
-		sTimes[c] = "";
+		if (hud[c].txTimTxt) {  mGUI->destroyWidget(hud[c].txTimTxt);  hud[c].txTimTxt = 0;  }
+		if (hud[c].txTimes)  {  mGUI->destroyWidget(hud[c].txTimes);   hud[c].txTimes = 0;  }
+		if (hud[c].bckTimes) {  mGUI->destroyWidget(hud[c].bckTimes);  hud[c].bckTimes = 0;  }
+		hud[c].sTimes = "";
 	}
 	
 	//  minimap from road img
@@ -173,7 +173,7 @@ void App::CreateHUD(bool destroy)
 	}
 
 	//if (terrain)
-	int cnt = carModels.size() -(isGhost2nd?1:0);
+	int cnt = std::min(5/*?*/, (int)carModels.size() -(isGhost2nd?1:0) );
 	for (int c=0; c < plr; ++c)  // for each car
 	{
 		if (sc->ter)
@@ -186,7 +186,7 @@ void App::CreateHUD(bool destroy)
 
 		String sMat = "circle_minimap";
 		asp = 1.f;  //_temp
-		ManualObject* m = Create2D(sMat,scm,1,true,true);  moMap[c] = m;
+		ManualObject* m = Create2D(sMat,scm,1,true,true);  hud[c].moMap = m;
 		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		m->setVisibilityFlags(RV_Hud);  m->setRenderQueueGroup(RQG_Hud1);
 		
@@ -203,92 +203,80 @@ void App::CreateHUD(bool destroy)
 		float fHudSize = pSet->size_minimap * mSplitMgr->mDims[c].avgsize;
 		SceneNode* rt = scm->getRootSceneNode();
 		if (!sc->vdr)
-		{	ndMap[c] = rt->createChildSceneNode(Vector3(0,0,0));
-			ndMap[c]->attachObject(m);
+		{	hud[c].ndMap = rt->createChildSceneNode(Vector3(0,0,0));
+			hud[c].ndMap->attachObject(m);
 		}
 		//  car pos tri - for all carModels (ghost and remote too)
 		for (int i=0; i < cnt; ++i)
 		{
-			vMoPos[c][i] = Create2D("hud/CarPos", scm, 0.4f, true, true);
-			vMoPos[c][i]->setVisibilityFlags(RV_Hud);  vMoPos[c][i]->setRenderQueueGroup(RQG_Hud3);
+			hud[c].vMoPos[i] = Create2D("hud/CarPos", scm, 0.4f, true, true);
+			hud[c].vMoPos[i]->setVisibilityFlags(RV_Hud);  hud[c].vMoPos[i]->setRenderQueueGroup(RQG_Hud3);
 				  
-			vNdPos[c][i] = ndMap[c] ? ndMap[c]->createChildSceneNode() : ndMap[0]->createChildSceneNode();
-			vNdPos[c][i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
-			vNdPos[c][i]->attachObject(vMoPos[c][i]);  //vNdPos[i]->setVisible(false);
+			hud[c].vNdPos[i] = hud[c].ndMap ? hud[c].ndMap->createChildSceneNode() : hud[0].ndMap->createChildSceneNode();
+			hud[c].vNdPos[i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
+			hud[c].vNdPos[i]->attachObject(hud[c].vMoPos[i]);
 		}
-		if (ndMap[c])
-			ndMap[c]->setVisible(false/*pSet->trackmap*/);
+		if (hud[c].ndMap)
+			hud[c].ndMap->setVisible(false/*pSet->trackmap*/);
 
 	
 		//  gauges  backgr  -----------
 		String st = toStr(pSet->gauges_type);
-		moRpmBk[c] = Create2D("hud/rpm"+st,scm,1);  moRpmBk[c]->setVisibilityFlags(RV_Hud);
-		moRpmBk[c]->setRenderQueueGroup(RQG_Hud1);
-		ndRpmBk[c] = rt->createChildSceneNode();
-		ndRpmBk[c]->attachObject(moRpmBk[c]);	ndRpmBk[c]->setScale(0,0,0);  ndRpmBk[c]->setVisible(false);
+		hud[c].moRpmBk = Create2D("hud/rpm"+st,scm,1);	hud[c].moRpmBk->setVisibilityFlags(RV_Hud);
+		hud[c].moRpmBk->setRenderQueueGroup(RQG_Hud1);	hud[c].ndRpmBk = rt->createChildSceneNode();
+		hud[c].ndRpmBk->attachObject(hud[c].moRpmBk);	hud[c].ndRpmBk->setScale(0,0,0);  hud[c].ndRpmBk->setVisible(false);
 
-		moVelBk[c] = Create2D("hud/kmh"+st,scm,1);  moVelBk[c]->setVisibilityFlags(RV_Hud);
-		moVelBk[c]->setRenderQueueGroup(RQG_Hud1);
-		ndVelBk[c] = rt->createChildSceneNode();
-		ndVelBk[c]->attachObject(moVelBk[c]);	ndVelBk[c]->setScale(0,0,0);  moVelBk[c]->setVisible(false);
+		hud[c].moVelBk = Create2D("hud/kmh"+st,scm,1);	hud[c].moVelBk->setVisibilityFlags(RV_Hud);
+		hud[c].moVelBk->setRenderQueueGroup(RQG_Hud1);	hud[c].ndVelBk = rt->createChildSceneNode();
+		hud[c].ndVelBk->attachObject(hud[c].moVelBk);	hud[c].ndVelBk->setScale(0,0,0);  hud[c].moVelBk->setVisible(false);
 			
-		moVelBm[c] = Create2D("hud/mph"+st,scm,1);  moVelBm[c]->setVisibilityFlags(RV_Hud);
-		moVelBm[c]->setRenderQueueGroup(RQG_Hud1);
-		ndVelBm[c] = rt->createChildSceneNode();
-		ndVelBm[c]->attachObject(moVelBm[c]);	ndVelBm[c]->setScale(0,0,0);  moVelBm[c]->setVisible(false);
+		hud[c].moVelBm = Create2D("hud/mph"+st,scm,1);	hud[c].moVelBm->setVisibilityFlags(RV_Hud);
+		hud[c].moVelBm->setRenderQueueGroup(RQG_Hud1);	hud[c].ndVelBm = rt->createChildSceneNode();
+		hud[c].ndVelBm->attachObject(hud[c].moVelBm);	hud[c].ndVelBm->setScale(0,0,0);  hud[c].moVelBm->setVisible(false);
 			
 		//  gauges  needles
-		moRpm[c] = Create2D("hud/needle"+st,scm,1,true);  moRpm[c]->setVisibilityFlags(RV_Hud);
-		moRpm[c]->setRenderQueueGroup(RQG_Hud3);
-		ndRpm[c] = rt->createChildSceneNode();
-		ndRpm[c]->attachObject(moRpm[c]);	ndRpm[c]->setScale(0,0,0);	ndRpm[c]->setVisible(false);
+		hud[c].moRpm = Create2D("hud/needle"+st,scm,1,true);  hud[c].moRpm->setVisibilityFlags(RV_Hud);
+		hud[c].moRpm->setRenderQueueGroup(RQG_Hud3);	hud[c].ndRpm = rt->createChildSceneNode();
+		hud[c].ndRpm->attachObject(hud[c].moRpm);		hud[c].ndRpm->setScale(0,0,0);	hud[c].ndRpm->setVisible(false);
 		
-		moVel[c] = Create2D("hud/needle"+st,scm,1,true);  moVel[c]->setVisibilityFlags(RV_Hud);
-		moVel[c]->setRenderQueueGroup(RQG_Hud3);
-		ndVel[c] = rt->createChildSceneNode();
-		ndVel[c]->attachObject(moVel[c]);	ndVel[c]->setScale(0,0,0);	ndVel[c]->setVisible(false);
+		hud[c].moVel = Create2D("hud/needle"+st,scm,1,true);  hud[c].moVel->setVisibilityFlags(RV_Hud);
+		hud[c].moVel->setRenderQueueGroup(RQG_Hud3);	hud[c].ndVel = rt->createChildSceneNode();
+		hud[c].ndVel->attachObject(hud[c].moVel);		hud[c].ndVel->setScale(0,0,0);	hud[c].ndVel->setVisible(false);
 
 
 		//  gear, vel text  -----------
-		txGear[c] = mGUI->createWidget<TextBox>("TextBox",
-			0,1200, 160,116, Align::Left, "Back", "Gear"+toStr(c));
-		txGear[c]->setVisible(false);
-		txGear[c]->setFontName("DigGear");  txGear[c]->setFontHeight(126);
+		hud[c].txGear = mGUI->createWidget<TextBox>("TextBox",
+			0,1200, 160,116, Align::Left, "Back", "Gear"+toStr(c));  hud[c].txGear->setVisible(false);
+		hud[c].txGear->setFontName("DigGear");  hud[c].txGear->setFontHeight(126);
 
-		txVel[c] = mGUI->createWidget<TextBox>("TextBox",
-			0,1200, 360,96, Align::Right, "Back", "Vel"+toStr(c));
-		txVel[c]->setVisible(false);
-		txVel[c]->setFontName("DigGear");  //txVel[c]->setFontHeight(64);
+		hud[c].txVel = mGUI->createWidget<TextBox>("TextBox",
+			0,1200, 360,96, Align::Right, "Back", "Vel"+toStr(c));  hud[c].txVel->setVisible(false);
+		hud[c].txVel->setFontName("DigGear");  //hud[c].txVel->setFontHeight(64);
 		
 		//  boost
-		txBFuel[c] = mGUI->createWidget<TextBox>("TextBox",
-			0,1200, 240,80, Align::Right, "Back", "BFuel"+toStr(c));
-		txBFuel[c]->setVisible(false);
-		txBFuel[c]->setFontName("DigGear");  txBFuel[c]->setFontHeight(64);
-		txBFuel[c]->setTextColour(Colour(0.6,0.8,1.0));
+		hud[c].txBFuel = mGUI->createWidget<TextBox>("TextBox",
+			0,1200, 240,80, Align::Right, "Back", "BFuel"+toStr(c));  hud[c].txBFuel->setVisible(false);
+		hud[c].txBFuel->setFontName("DigGear");  hud[c].txBFuel->setFontHeight(64);
+		hud[c].txBFuel->setTextColour(Colour(0.6,0.8,1.0));
 
-		txDamage[c] = mGUI->createWidget<TextBox>("TextBox",
-			0,1200, 240,80, Align::Right, "Back", "Dmg"+toStr(c));
-		txDamage[c]->setVisible(false);
-		txDamage[c]->setFontName("font.20");  //txDamage[c]->setFontHeight(64);
-		txDamage[c]->setTextShadow(true);
-		txDamage[c]->setTextColour(Colour(0.7,0.7,0.7));
+		hud[c].txDamage = mGUI->createWidget<TextBox>("TextBox",
+			0,1200, 240,80, Align::Right, "Back", "Dmg"+toStr(c));  hud[c].txDamage->setVisible(false);
+		hud[c].txDamage->setFontName("font.20");  //hud[c].txDamage->setFontHeight(64);
+		hud[c].txDamage->setTextColour(Colour(0.7,0.7,0.7));	hud[c].txDamage->setTextShadow(true);
 		
 
 		//  times text    -----------
-		bckTimes[c] = mGUI->createWidget<ImageBox>("ImageBox",
-			0,1200, 208,200, Align::Left, "Back", "TimP"+toStr(c));
-		//bckTimes[c]->setAlpha(0.9f);
-		bckTimes[c]->setVisible(false);
-		bckTimes[c]->setImageTexture("back_times.png");
+		hud[c].bckTimes = mGUI->createWidget<ImageBox>("ImageBox",
+			0,1200, 208,200, Align::Left, "Back", "TimP"+toStr(c));  hud[c].bckTimes->setVisible(false);
+		//bckTimes[c]->setAlpha(0.9f);		
+		hud[c].bckTimes->setImageTexture("back_times.png");
 
-		txTimTxt[c] = mGUI->createWidget<TextBox>("TextBox",
-			0,1200, 90,180, Align::Left, "Back", "TimT"+toStr(c));
-		txTimTxt[c]->setVisible(false);
-		txTimTxt[c]->setFontName("font.20");
-		txTimTxt[c]->setTextShadow(true);
+		hud[c].txTimTxt = mGUI->createWidget<TextBox>("TextBox",
+			0,1200, 90,180, Align::Left, "Back", "TimT"+toStr(c));  hud[c].txTimTxt->setVisible(false);
+		hud[c].txTimTxt->setFontName("font.20");
+		hud[c].txTimTxt->setTextShadow(true);
 		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
-		txTimTxt[c]->setCaption(
+		hud[c].txTimTxt->setCaption(
 			(hasLaps ? String("#D0E8F0")+TR("#{TBLap}") : "")+
 			"\n#C0E0F0"+TR("#{TBTime}") + 
 			"\n#80C0F0"+TR("#{TBLast}") + 
@@ -297,11 +285,10 @@ void App::CreateHUD(bool destroy)
 			"\n#C0C030"+TR("#{TBPosition}") +
 			"\n#F0C050"+TR("#{TBPoints}") );
 
-		txTimes[c] = mGUI->createWidget<TextBox>("TextBox",
+		hud[c].txTimes = mGUI->createWidget<TextBox>("TextBox",
 			0,1200, /*80*/100,/*160*/200, Align::Left, "Back", "Tim"+toStr(c));
-		txTimes[c]->setVisible(false);
-		txTimes[c]->setFontName("font.20");
-		txTimes[c]->setTextShadow(true);
+		hud[c].txTimes->setVisible(false);
+		hud[c].txTimes->setFontName("font.20");  hud[c].txTimes->setTextShadow(true);
 	}
 	///  tex
 	resMgr.removeResourceLocation(path, sGrp);
@@ -343,12 +330,12 @@ void App::CreateHUD(bool destroy)
 	ovCarDbgTxt = ovr.getByName("Car/StatsTxt");
 	ovCarDbgExt = ovr.getByName("Car/StatsExt");
 	
-	for (int i=0; i < 5; ++i)
-	{	ovL[i] = ovr.getOverlayElement("L_"+toStr(i+1));
-		ovR[i] = ovr.getOverlayElement("R_"+toStr(i+1));
-		ovS[i] = ovr.getOverlayElement("S_"+toStr(i+1));
-		ovU[i] = ovr.getOverlayElement("U_"+toStr(i+1));
-		ovX[i] = ovr.getOverlayElement("X_"+toStr(i+1));
+	for (int i=0; i < ov.size(); ++i)
+	{	ov[i].oL = ovr.getOverlayElement("L_"+toStr(i+1));
+		ov[i].oR = ovr.getOverlayElement("R_"+toStr(i+1));
+		ov[i].oS = ovr.getOverlayElement("S_"+toStr(i+1));
+		ov[i].oU = ovr.getOverlayElement("U_"+toStr(i+1));
+		ov[i].oX = ovr.getOverlayElement("X_"+toStr(i+1));
 	}
 	ShowHUD();  //_
 	bSizeHUD = true;
@@ -368,24 +355,24 @@ void App::ShowHUD(bool hideAll)
 		if (ovWarnWin)  ovWarnWin->hide();	if (ovOpp)  ovOpp->hide();
 		if (mFpsOverlay)  mFpsOverlay->hide();
 
-		for (int c=0; c < 4; ++c)
+		for (int c=0; c < hud.size(); ++c)
 		{
-			if (txGear[c])  txGear[c]->setVisible(false);
-			if (txVel[c])   txVel[c]->setVisible(false);
-			if (txBFuel[c])  txBFuel[c]->setVisible(false);
-			if (txDamage[c])  txDamage[c]->setVisible(false);
+			if (hud[c].txGear)  hud[c].txGear->setVisible(false);
+			if (hud[c].txVel)   hud[c].txVel->setVisible(false);
+			if (hud[c].txBFuel)   hud[c].txBFuel->setVisible(false);
+			if (hud[c].txDamage)  hud[c].txDamage->setVisible(false);
 
-			if (ndRpmBk[c])  ndRpmBk[c]->setVisible(false);
-			if (ndVelBk[c])  ndVelBk[c]->setVisible(false);
-			if (ndVelBm[c])  ndVelBm[c]->setVisible(false);
+			if (hud[c].ndRpmBk)  hud[c].ndRpmBk->setVisible(false);
+			if (hud[c].ndVelBk)  hud[c].ndVelBk->setVisible(false);
+			if (hud[c].ndVelBm)  hud[c].ndVelBm->setVisible(false);
 
-			if (ndRpm[c])  ndRpm[c]->setVisible(false);
-			if (ndVel[c])  ndVel[c]->setVisible(false);
-			if (ndMap[c])  ndMap[c]->setVisible(false);
+			if (hud[c].ndRpm)  hud[c].ndRpm->setVisible(false);
+			if (hud[c].ndVel)  hud[c].ndVel->setVisible(false);
+			if (hud[c].ndMap)  hud[c].ndMap->setVisible(false);
 
-			if (bckTimes[c])  bckTimes[c]->setVisible(false);
-			if (txTimTxt[c])  txTimTxt[c]->setVisible(false);
-			if (txTimes[c])   txTimes[c]->setVisible(false);
+			if (hud[c].bckTimes)  hud[c].bckTimes->setVisible(false);
+			if (hud[c].txTimTxt)  hud[c].txTimTxt->setVisible(false);
+			if (hud[c].txTimes)   hud[c].txTimes->setVisible(false);
 		}
 		hideMouse();
 		if (mWndRpl)  mWndRpl->setVisible(false);
@@ -413,24 +400,24 @@ void App::ShowHUD(bool hideAll)
 		if (mFpsOverlay){  if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();  }
 
 		show = pSet->show_gauges;
-		for (int c=0; c < 4; ++c)
+		for (int c=0; c < hud.size(); ++c)
 		{
-			if (txGear[c])  txGear[c]->setVisible(pSet->show_digits);
-			if (txVel[c])   txVel[c]->setVisible(pSet->show_digits);
-			if (txBFuel[c])  txBFuel[c]->setVisible(show && bfuel);
-			if (txDamage[c])  txDamage[c]->setVisible(show && bdmg);
+			if (hud[c].txGear)  hud[c].txGear->setVisible(pSet->show_digits);
+			if (hud[c].txVel)   hud[c].txVel->setVisible(pSet->show_digits);
+			if (hud[c].txBFuel)   hud[c].txBFuel->setVisible(show && bfuel);
+			if (hud[c].txDamage)  hud[c].txDamage->setVisible(show && bdmg);
 
-			if (ndRpmBk[c])  ndRpmBk[c]->setVisible(show);
-			if (ndVelBk[c])  ndVelBk[c]->setVisible(show && !pSet->show_mph);
-			if (ndVelBm[c])  ndVelBm[c]->setVisible(show && pSet->show_mph);
+			if (hud[c].ndRpmBk)  hud[c].ndRpmBk->setVisible(show);
+			if (hud[c].ndVelBk)  hud[c].ndVelBk->setVisible(show && !pSet->show_mph);
+			if (hud[c].ndVelBm)  hud[c].ndVelBm->setVisible(show && pSet->show_mph);
 
-			if (ndRpm[c])  ndRpm[c]->setVisible(show);
-			if (ndVel[c])  ndVel[c]->setVisible(show);
-			if (ndMap[c])  ndMap[c]->setVisible(pSet->trackmap);
+			if (hud[c].ndRpm)  hud[c].ndRpm->setVisible(show);
+			if (hud[c].ndVel)  hud[c].ndVel->setVisible(show);
+			if (hud[c].ndMap)  hud[c].ndMap->setVisible(pSet->trackmap);
 			
-			if (bckTimes[c])  bckTimes[c]->setVisible(times);
-			if (txTimTxt[c])  txTimTxt[c]->setVisible(times);
-			if (txTimes[c])   txTimes[c]->setVisible(times);
+			if (hud[c].bckTimes)  hud[c].bckTimes->setVisible(times);
+			if (hud[c].txTimTxt)  hud[c].txTimTxt->setVisible(times);
+			if (hud[c].txTimes)   hud[c].txTimes->setVisible(times);
 		}
 		updMouse();
 		if (mWndRpl && !bLoading)  mWndRpl->setVisible(bRplPlay && bRplWnd);  //

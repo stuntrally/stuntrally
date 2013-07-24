@@ -20,7 +20,7 @@ using namespace Ogre;
 
 //  ctors  -----------------------------------------------
 App::App(SETTINGS *settings, GAME *game)
-	:pGame(game), sc(0), ndLine(0), bGI(0), mThread(), mTimer(0)
+	:pGame(game), sc(0), bGI(0), mThread(), mTimer(0)
 	// ovr
 	,hudCountdown(0),hudNetMsg(0), hudAbs(0),hudTcs(0)
 	,hudWarnChk(0),hudWonPlace(0), hudOppB(0)
@@ -90,7 +90,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,imgChampStage(0),imgChampEnd(0), liNetEnd(0), valStageNum(0), btChampStage(0)
 	,iEdTire(0), iTireLoad(0), iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
 	,iTireSet(0), bchAbs(0),bchTcs(0), slSSSEff(0),slSSSVel(0), slSteerRngSurf(0),slSteerRngSim(0)
-	,mStaticGeom(0), fLastFrameDT(0.001f)
+	,mStaticGeom(0), fLastFrameDT(0.001f), ndLine(0)
 	,edPerfTest(0),edTweakCol(0),tabTweak(0),tabEdCar(0)
 	,txtTweakPath(0),cmbTweakCarSet(0), cmbTweakTireSet(0),txtTweakTire(0), txtTweakPathCol(0)
 	,bPerfTest(0),iPerfTestStage(PT_StartWait), loadReadme(1), isGhost2nd(0)
@@ -99,6 +99,7 @@ App::App(SETTINGS *settings, GAME *game)
 	pGame->collision.pApp = this;
 	
 	sc = new Scene();
+	hud.resize(4);  frm.resize(4);  ov.resize(5);
 	NullHUD();
 
 	int i,c;
@@ -116,12 +117,9 @@ App::App(SETTINGS *settings, GAME *game)
 	for (int i=0; i < ciEdCar; ++i)
 		edCar[i] = 0;
 
-	for (int o=0; o < 5; ++o)  for (c=0; c < 3; ++c)
+	for (int o=0; o < 6; ++o)  for (c=0; c < 3; ++c)
 		hudOpp[o][c] = 0;
 		
-	for (i=0; i < 5; ++i)
-	{	ovL[i]=0;  ovR[i]=0;  ovS[i]=0;  ovU[i]=0;  ovX[i]=0;  }
-	
 	//  util for update rot
 	Quaternion qr;  {
 	QUATERNION<double> fix;  fix.Rotate(PI_d, 0, 1, 0);
@@ -129,26 +127,32 @@ App::App(SETTINGS *settings, GAME *game)
 	QUATERNION<double> fix;  fix.Rotate(PI_d/2, 0, 1, 0);
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixWh = qr;
 
-	for (i=0; i < 4; ++i)
-	{	txGear[i]=0;  txVel[i]=0;  txBFuel[i]=0;  txDamage[i]=0;
-		txTimTxt[i]=0;  txTimes[i]=0;  bckTimes[i]=0;  }
-
 	if (pSet->multi_thr)
 		mThread = boost::thread(boost::bind(&App::UpdThr, boost::ref(*this)));
 }
 
+App::OvrDbg::OvrDbg() :
+	oL(0),oR(0),oS(0), oU(0),oX(0)
+{	}
+
+App::Hud::Hud()
+{
+	Null();
+}
+void App::Hud::Null()
+{
+	txGear=0; txVel=0; txBFuel=0; txDamage=0;
+	txTimTxt=0; txTimes=0; bckTimes = 0;  sTimes="";
+	ndRpm=0; ndVel=0; ndRpmBk=0; ndVelBk=0; ndVelBm=0;
+	moRpm=0; moVel=0; moRpmBk=0; moVelBk=0; moVelBm=0;
+	moMap = 0;  ndMap=0;
+	vNdPos.resize(6,0); vMoPos.resize(6,0);
+}
+
 void App::NullHUD()
 {
-	int i,c;
-	for (i=0; i < 4; ++i)
-	{	ndMap[i]=0;  moMap[i]=0;
-		moRpm[i]=0;  moVel[i]=0;
-		ndRpm[i]=0;  ndVel[i]=0;
-		moRpmBk[i]=0;  moVelBk[i]=0;  moVelBm[i]=0;
-		ndRpmBk[i]=0;  ndVelBk[i]=0;  ndVelBm[i]=0;
-		for (c=0; c < 5; ++c)
-		{	vNdPos[i][c]=0;  vMoPos[i][c]=0;  }
-	}
+	for (int i=0; i < hud.size(); ++i)
+		hud[i].Null();
 }
 
 

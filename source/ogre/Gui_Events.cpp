@@ -382,8 +382,8 @@ void App::chkBeam(WP wp){			ChkEv(check_beam);
 }
 
 void App::chkMinimap(WP wp){		ChkEv(trackmap);
-	for (int c=0; c < 4; ++c)
-		if (ndMap[c])  ndMap[c]->setVisible(pSet->trackmap);
+	for (int c=0; c < hud.size(); ++c)
+		if (hud[c].ndMap)  hud[c].ndMap->setVisible(pSet->trackmap);
 }
 void App::chkMiniZoom(WP wp){		ChkEv(mini_zoomed);		UpdMiniTer();  }
 void App::chkMiniRot(WP wp){		ChkEv(mini_rotated);	}

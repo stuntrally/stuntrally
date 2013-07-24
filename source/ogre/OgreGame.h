@@ -61,22 +61,19 @@ public:
 	bool bPerfTest;  EPerfTest iPerfTestStage;
 	void PerfLogVel(class CAR* pCar, float time);
 	
-	// This list holds new positions info for every CarModel
+	//  new positions info for every CarModel
 	PosInfo carPoses[CarPosCnt][8];  // max 8 cars
 	int iCurPoses[8];  // current index for carPoses queue
 	std::map<int,int> carsCamNum;  // picked camera number for cars
-	
-	// Utility
-	Ogre::Quaternion qFixCar,qFixWh;
+	Ogre::Quaternion qFixCar,qFixWh;  // utility
 
 	//  replay - full, user saves
 	//  ghost - saved when best lap
 	//  ghplay - ghost ride replay, loaded if was on disk
-	//  ghtrk - track's ghost
-	//  frm - used when playing replay for hud and sounds
-	Replay replay, ghost, ghplay;  ReplayFrame frm[4];
+	Replay replay, ghost, ghplay;
 	Rewind rewind;  // to take car back in time (after crash etc.)
-	TrackGhost ghtrk;
+	TrackGhost ghtrk;  //  ghtrk - track's ghost
+	std::vector<ReplayFrame> frm;  //size:4  //  frm - used when playing replay for hud and sounds
 	const Ogre::String& GetGhostFile(std::string* ghCar=NULL);  std::string GetRplListDir();
 	bool isGhost2nd;  // if present (ghost but from other car)
 
@@ -129,26 +126,41 @@ protected:
 	Ogre::String sMtr[NumMaterials];
 
 	///  HUD, 2D  ------------
+	class Hud  // for 1 viewport
+	{
+	public:
+		//  gear, vel
+		MyGUI::TextBox *txGear,*txVel,*txBFuel,*txDamage;
+		//  times bar
+		MyGUI::TextBox *txTimTxt,*txTimes;  MyGUI::ImageBox *bckTimes;
+		Ogre::String sTimes;
+		//  gauges
+		Ogre::SceneNode *ndRpm, *ndVel, *ndRpmBk, *ndVelBk,*ndVelBm;
+		Ogre::ManualObject* moRpm, *moVel, *moRpmBk, *moVelBk,*moVelBm;
+		//  miniap
+		Ogre::ManualObject* moMap;
+		Ogre::SceneNode *ndMap;
+		std::vector<Ogre::SceneNode*> vNdPos;  // car pos tris on minimap +2ghosts
+		std::vector<Ogre::ManualObject*> vMoPos;  //size: 6
+		
+		Hud();
+		void Null();
+	};
+	std::vector<Hud> hud;  // size: max viewports 4
 	float asp, scX,scY, minX,maxX, minY,maxY;  // minimap visible range
-	//  gear, vel
-	MyGUI::TextBox *txGear[4],*txVel[4],*txBFuel[4],*txDamage[4];
-	//  times bar
-	MyGUI::TextBox *txTimTxt[4],*txTimes[4];  MyGUI::ImageBox *bckTimes[4];
-	Ogre::String sTimes[4];
-	//  gauges
-	Ogre::SceneNode *ndRpm[4], *ndVel[4], *ndRpmBk[4], *ndVelBk[4],*ndVelBm[4];
-	Ogre::ManualObject* moRpm[4], *moVel[4], *moRpmBk[4], *moVelBk[4],*moVelBm[4];
-	//  miniap
-	Ogre::ManualObject* moMap[4];
-	Ogre::SceneNode *ndMap[4], *ndLine;
-	Ogre::SceneNode* vNdPos[4][5];  // car pos tris on minimap +1ghost
-	Ogre::ManualObject* vMoPos[4][5];
+	Ogre::SceneNode *ndLine;
 
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr,
 		Ogre::Real size, bool dyn = false, bool clr = false);
 
-	Ogre::OverlayElement *hudCountdown,*hudNetMsg, *ovL[5],*ovR[5],*ovS[5], *ovU[5],*ovX[5],
-		*hudAbs,*hudTcs, *hudWarnChk,*hudWonPlace, *hudOpp[5][3],*hudOppB;
+	struct OvrDbg
+	{
+		Ogre::OverlayElement* oL,*oR,*oS, *oU,*oX;
+		OvrDbg();
+	};
+	std::vector<OvrDbg> ov;
+	Ogre::OverlayElement *hudCountdown,*hudNetMsg,
+		*hudAbs,*hudTcs, *hudWarnChk,*hudWonPlace, *hudOpp[6][3],*hudOppB;
 	Ogre::Overlay *ovCountdown,*ovNetMsg, *ovCam, *ovWarnWin, *ovOpp, *ovAbsTcs, *ovCarDbg,*ovCarDbgTxt,*ovCarDbgExt;
 
 	Ogre::String GetTimeString(float time) const, GetTimeShort(float time) const;
