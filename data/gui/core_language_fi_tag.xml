@@ -6,6 +6,7 @@
 	<Tag name="InputMapScreenshot">Kuvakaappaus</Tag>
 	<Tag name="Brush_Filter">Suodin</Tag>
 	<Tag name="Time">Aika</Tag>
+	<Tag name="Damage">Damage</Tag>
 	<Tag name="TipGrassSwayDistr">Ruohikon huojunnan jakauma (satunnaisuus)</Tag>
 	<Tag name="GraphicsAll_VeryHigh">Erittäin korkea</Tag>
 	<Tag name="InpSet_AxisFull">Täysi akseli</Tag>
@@ -42,7 +43,6 @@
 	<Tag name="TipTrackImg">Kuvankaappaus pelitilanteesta valitulla radalla.</Tag>
 	<Tag name="TerLNoiseOnly">Vain kohina</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
-	<Tag name="SteerRange">Steering range multipliers</Tag>
 	<Tag name="Terrain">Maasto</Tag>
 	<Tag name="TipChangeGloss">Change car color glossiness (matte-shiny).</Tag>
 	<Tag name="Surface">Pinta-ala</Tag>
@@ -91,7 +91,6 @@
 	<Tag name="RoadPointSize">Tien pisteiden koko</Tag>
 	<Tag name="Flip">Pyöräytä</Tag>
 	<Tag name="DistToRoad">etäisyys tiehen</Tag>
-	<Tag name="TBPlace">Place</Tag>
 	<Tag name="AngleMax">Angle Max</Tag>
 	<Tag name="MessageBox_Retry">Yritä uudelleen</Tag>
 	<Tag name="TipToggleTriplanar">When using graphics option triplanar one, this layer (one only) will have triplanar mapping.</Tag>
@@ -299,7 +298,7 @@
 	<Tag name="Brush_Octaves">Octaves</Tag>
 	<Tag name="Type">Tyyppi</Tag>
 	<Tag name="NetWaiting">Odotetaan...</Tag>
-	<Tag name="NetStart">Aloita</Tag>
+	<Tag name="MergeLength">Yhdistä pituus</Tag>
 	<Tag name="InputMinVal">Minimiarvo</Tag>
 	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
 	<Tag name="SingleRace">Yksittäinen kilpailu</Tag>
@@ -310,6 +309,7 @@
 	<Tag name="max">maksimi</Tag>
 	<Tag name="Stage">Vaihe</Tag>
 	<Tag name="NetRefreshList">Hae tuore lista</Tag>
+	<Tag name="None">None</Tag>
 	<Tag name="MessageBox_Abort">Keskeytä</Tag>
 	<Tag name="Brush_ShapeNoise">Noise</Tag>
 	<Tag name="Grasses">Grasses</Tag>
@@ -350,7 +350,7 @@
 	<Tag name="Road_Snap">Snap</Tag>
 	<Tag name="InputRoadShiftReverse">shift-Ins - paste   shift-ctrl-Ins - reversed</Tag>
 	<Tag name="MinScale">minimi skaalaus</Tag>
-	<Tag name="MergeLength">Yhdistä pituus</Tag>
+	<Tag name="NetStart">Aloita</Tag>
 	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions use our Forum:@http://forum.freegamedev.net/viewforum.php?f=77@@For more info see Readme and our project's Wiki pages.@</Tag>
 	<Tag name="InputObjectsMove">1 - Move   LMB - plane XZ  RMB - Y height</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
@@ -460,7 +460,7 @@
 	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - size   alt-RMB - depth</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
-	<Tag name="Shadows">Varjot</Tag>
+	<Tag name="SteerRange">Steering range multipliers</Tag>
 	<Tag name="ShowPictures">Näytä kuvia ladatessa</Tag>
 	<Tag name="distance">etäisyys</Tag>
 	<Tag name="SSS_Effect">Effect</Tag>
@@ -484,6 +484,7 @@
 	<Tag name="TexSize">Tekstuurien koko</Tag>
 	<Tag name="TipSunAmbient">Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)</Tag>
 	<Tag name="ChngTrkTab">changed in [Track] tab</Tag>
+	<Tag name="Shadows">Varjot</Tag>
 	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
 	<Tag name="Laps">Kierrokset</Tag>
@@ -704,6 +705,7 @@
 	<Tag name="TipGrassLayerDens">Grass density for layer (how often it will appear).</Tag>
 	<Tag name="InputRoadModify">Muokkaa</Tag>
 	<Tag name="TextColor">Text color</Tag>
+	<Tag name="Reduced">Reduced</Tag>
 	<Tag name="ColBright">Kirkkaus</Tag>
 	<Tag name="TipFogStartDist">Fog start distance [meters].</Tag>
 	<Tag name="InputTerDeform">D - Deform  (LMB up, RMB down)</Tag>
@@ -749,6 +751,7 @@
 	<Tag name="TerLayers">Maaston kerrokset</Tag>
 	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
 	<Tag name="TotalScore">Kokonaispistemäärä</Tag>
+	<Tag name="InputLoadNextTrack">F12 - load next track (shift - previous)</Tag>
 	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
 	<Tag name="InputRoadEdit">R - edit road mode</Tag>
@@ -789,6 +792,7 @@
 	<Tag name="TerGenPow">Power (shape)</Tag>
 	<Tag name="Used">Used</Tag>
 	<Tag name="TipImpDist">Far distance at which the 2d impostors dissapear.</Tag>
+	<Tag name="Normal">Normal</Tag>
 	<Tag name="InputMapGeneral">General</Tag>
 	<Tag name="InputControllers">Controllers</Tag>
 	<Tag name="Brushes">Brushes</Tag>
@@ -881,11 +885,10 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="Damage">Damage</Tag>
-	<Tag name="None">None</Tag>
-	<Tag name="Reduced">Reduced</Tag>
-	<Tag name="InputLoadNextTrack">F12 - load next track (shift - previous)</Tag>
-	<Tag name="Normal">Normal</Tag>
+	<Tag name="TBPosition">Position</Tag>
+	<Tag name="Ghost">Ghost</Tag>
+	<Tag name="TBPoints">Points</Tag>
+	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
