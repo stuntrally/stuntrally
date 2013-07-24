@@ -298,7 +298,7 @@ void App::newPoses(float time)  // time only for camera update
 		///-----------------------------------------------------------------------
 		
 
-		//  chekpoints, lap start
+		//  checkpoints, lap start
 		//-----------------------------------------------------------------------
 		if (bRplPlay || bGhost)   // dont check for replay or ghost
 			carM->bWrongChk = false;
@@ -489,12 +489,10 @@ void App::updatePoses(float time)
 				carM->setVisible(true);
 			else
 			{	//  hide ghost when close to player
-				if (!loading)
-				{
-					float d = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
-					if (d < 16.f)
-						newVisible = false;
-				}
+				float d = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
+				if (d < 16.f)
+					newVisible = false;
+
 				if (carM->isGhostTrk() && cgh >= 0)  // hide track's ghost when near ghost
 				{
 					float d = carM->pMainNode->getPosition().squaredDistance(carModels[cgh]->pMainNode->getPosition());
@@ -511,8 +509,9 @@ void App::updatePoses(float time)
 		}	}
 
 		
+		//  update car pos
 		int q = iCurPoses[c];
-		int cc = (c + iRplCarOfs) % carModels.size();  // offset, use camera from other car
+		int cc = (c + iRplCarOfs) % carModels.size();  // replay offset, camera from other car
 		int qq = iCurPoses[cc];
 		carM->Update(carPoses[q][c], carPoses[qq][cc], time);
 		
