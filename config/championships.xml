@@ -9,28 +9,28 @@
 
 	<championship name="Tutorial Basic" ver="1" difficulty="1" type="0" 
 			descr="Basic tutorial on simplest tracks. One lap on each track. To learn different road surfaces: gravel, wet gravel, snow.">
-		<track name="J3-Rocky"		laps="1" factor="0.1" />
-		<track name="F1-Slippery"	laps="1" factor="0.1" />
-		<track name="0W1-cross"		laps="1" factor="0.1" />
+		<track name="J3-Rocky"		laps="1" />
+		<track name="F1-Slippery"	laps="1" />
+		<track name="0W1-cross"		laps="1" />
 	</championship>
 
 	<championship name="Tutorial Banked" ver="1" difficulty="1" type="0" 
 			descr="Easy tutorial with short tracks having banked turns.">
-		<track name="F7-blur3"		laps="1" factor="0.1" />
-		<track name="F6-DC3"		laps="1" factor="0.1" />
+		<track name="F7-blur3"		laps="1" />
+		<track name="F6-DC3"		laps="1" />
 	</championship>
 
 	<championship name="Tutorial Bridges" ver="1" difficulty="2" type="0" 
 			descr="Tutorial on medium length tracks with bridges.">
-		<track name="D4-SBridge"	laps="1" factor="0.1" />
-		<track name="S4-Hills"		laps="1" factor="0.1" />
+		<track name="D4-SBridge"	laps="1" />
+		<track name="S4-Hills"		laps="1" />
 	</championship>
 
 	<championship name="Tutorial Terrain" ver="1" difficulty="2" type="0" 
 			descr="Tutorial with short tracks having hilly or bumpy terrain.">
-		<track name="F11-Dawn"		laps="1" factor="0.1" />
-		<track name="J1-T"			laps="1" factor="0.1" />
-		<track name="D1-simple"		laps="1" factor="0.1" />
+		<track name="F11-Dawn"		laps="1" />
+		<track name="J1-T"			laps="1" />
+		<track name="D1-simple"		laps="1" />
 	</championship>
 
 	<championship name="Tutorial Asphalt" ver="1" difficulty="2" type="0" 
@@ -43,28 +43,28 @@
 
 	<championship name="Tutorial Curly" ver="1" difficulty="3" type="1" 
 			descr="Tutorial with very tiny but curly tracks. Requires a lot of steering.">
-		<track name="I12-Beach"		laps="1" factor="0.1" />
-		<track name="G4-River"		laps="1" factor="0.1" />
-		<track name="I6-Flooded"	laps="1" factor="0.1" />
-		<track name="J18-Tiny"		laps="1" factor="0.1" />
+		<track name="I12-Beach"		laps="1" />
+		<track name="G4-River"		laps="1" />
+		<track name="I6-Flooded"	laps="1" />
+		<track name="J18-Tiny"		laps="1" />
 	</championship>
 
 	<championship name="Tutorial Jumps" ver="2" difficulty="3" type="1" 
 			descr="Tutorial for training jumps. Car velocity before jump is most important. In easy mode, you need to use boost to reach it.">
-		<track name="D5-jump8-low"	laps="1" factor="0.1" />
-		<track name="D6-jump0-high"	laps="1" factor="0.1" />
-		<track name="D8-Technical"	laps="1" factor="0.1" />
+		<track name="D5-jump8-low"	laps="1" />
+		<track name="D6-jump0-high"	laps="1" />
+		<track name="D8-Technical"	laps="1" />
 	</championship>
 
 	<championship name="Tutorial Loops" ver="1" difficulty="4" type="1" 
 			descr="Tutorial for driving in loops. Loops and side loops will appear as well as simple pipe turns and some twists.">
-		<track name="S5-LoopBasic"	laps="1" factor="0.1" />
-		<track name="S3-Loops"		laps="1" factor="0.1" />
+		<track name="S5-LoopBasic"	laps="1" />
+		<track name="S3-Loops"		laps="1" />
 	</championship>
 
 	<championship name="Tutorial Pipes" ver="1" difficulty="4" type="1" 
 			descr="Tutorial for road pipes. Mostly driving inside glass pipes. Some tracks are twisted.">
-		<track name="J5-Pipes"		laps="1" factor="0.1" />
+		<track name="J5-Pipes"		laps="1" />
 		<track name="S10-Pipe88"	laps="1" factor="0.2" />
 		<track name="S6-PipeCrazy"	laps="1" factor="0.2" />
 	</championship>
@@ -78,50 +78,50 @@
 
 	<championship name="Short Rally" ver="2" difficulty="2" type="2" 
 			descr="Best short tracks in game, for rally fans, in interesting sceneries.">
-		<track name="I4-Sunset"		laps="1" factor="0.1" />
-		<track name="F11-Dawn"		laps="1" factor="0.1" />
-		<track name="F8-blurX3"		laps="1" factor="0.1" />
-		<track name="0W7-LJs-Mntn"	laps="1" factor="0.1" />
-		<track name="I1-star3"		laps="1" factor="0.1" />
-		<track name="J12-Fog"		laps="1" factor="0.1" />
-		<track name="M1-Hills"		laps="1" factor="0.1" />
+		<track name="I4-Sunset"		laps="1" />
+		<track name="F11-Dawn"		laps="1" />
+		<track name="F8-blurX3"		laps="1" />
+		<track name="0W7-LJs-Mntn"	laps="1" />
+		<track name="I1-star3"		laps="1" />
+		<track name="J12-Fog"		laps="1" />
+		<track name="M1-Hills"		laps="1" />
 	</championship>
 
 	<championship name="Yet more rally" ver="2" difficulty="3" type="2" 
 			descr="Other short tracks in game. Some quite circullar.">
-		<track name="T1-Autumn"		laps="1" factor="0.1" />
-		<track name="I10-Treasure"	laps="1" factor="0.1" />
-		<track name="G3-Butterfly"	laps="1" factor="0.1" />
-		<track name="J9-Sharp"		laps="1" factor="0.1" />
-		<track name="D3-P"			laps="1" factor="0.1" />
-		<track name="G4-River"		laps="1" factor="0.1" />
-		<track name="F4-OSquare"	laps="1" factor="0.1" />
-		<track name="I7-Moses"		laps="1" factor="0.1" />
-		<track name="0W2-Wet"		laps="1" factor="0.1" />
-		<track name="I2-S8"			laps="1" factor="0.1" />
-		<track name="T6-Sunset"		laps="1" factor="0.1" />
+		<track name="T1-Autumn"		laps="1" />
+		<track name="I10-Treasure"	laps="1" />
+		<track name="G3-Butterfly"	laps="1" />
+		<track name="J9-Sharp"		laps="1" />
+		<track name="D3-P"			laps="1" />
+		<track name="G4-River"		laps="1" />
+		<track name="F4-OSquare"	laps="1" />
+		<track name="I7-Moses"		laps="1" />
+		<track name="0W2-Wet"		laps="1" />
+		<track name="I2-S8"			laps="1" />
+		<track name="T6-Sunset"		laps="1" />
 	</championship>
 
 	<championship name="Fast fun" ver="1" difficulty="3" type="2" 
 			descr="Fast, short tracks in game. Some quite curly and banked. Driven flat-out.">
-		<track name="D1-simple"		laps="1" factor="0.1" />
-		<track name="F7-blur3"		laps="1" factor="0.1" />
-		<track name="T3-Orange"		laps="1" factor="0.1" />
-		<track name="J1-T"			laps="1" factor="0.1" />
-		<track name="O1-Moss"		laps="1" factor="0.1" />
-		<track name="F6-DC3"		laps="1" factor="0.1" />
-		<track name="J8-Round"		laps="1" factor="0.1" />
-		<track name="0W3-mouth"		laps="1" factor="0.1" />
-		<track name="C2-CanyonRun"	laps="1" factor="0.1" />
-		<track name="T2-RedOakPark"	laps="1" factor="0.1" />
+		<track name="D1-simple"		laps="1" />
+		<track name="F7-blur3"		laps="1" />
+		<track name="T3-Orange"		laps="1" />
+		<track name="J1-T"			laps="1" />
+		<track name="O1-Moss"		laps="1" />
+		<track name="F6-DC3"		laps="1" />
+		<track name="J8-Round"		laps="1" />
+		<track name="0W3-mouth"		laps="1" />
+		<track name="C2-CanyonRun"	laps="1" />
+		<track name="T2-RedOakPark"	laps="1" />
 	</championship>
 
 	<championship name="Bumpy shorts" ver="1" difficulty="4" type="2" 
 			descr="Few short, but very bumpy tracks.">
-		<track name="M2-Bumps"		laps="1" factor="0.1" />
-		<track name="D2-Mntn"		laps="1" factor="0.1" />
-		<track name="V4-Spikeland"	laps="1" factor="0.1" />
-		<track name="I10-Treasure"	laps="1" factor="0.1" />
+		<track name="M2-Bumps"		laps="1" />
+		<track name="D2-Mntn"		laps="1" />
+		<track name="V4-Spikeland"	laps="1" />
+		<track name="I10-Treasure"	laps="1" />
 	</championship>
 
 	<championship name="Long trip" ver="1" difficulty="3" type="2" 
@@ -140,37 +140,37 @@
 
 	<championship name="Curly shorts" ver="1" difficulty="3" type="2" 
 			descr="Short, curly and tricky tracks with sharp turns.">
-		<track name="F3-Snail"		laps="1" factor="0.1" />
-		<track name="O2-Mouse"		laps="1" factor="0.1" />
-		<track name="I12-Beach"		laps="1" factor="0.1" />
-		<track name="D11-PersianCity" laps="1" factor="0.1" />
+		<track name="F3-Snail"		laps="1" />
+		<track name="O2-Mouse"		laps="1" />
+		<track name="I12-Beach"		laps="1" />
+		<track name="D11-PersianCity" laps="1" />
 		<track name="J18-Tiny"		laps="1" factor="0.15" />
 	</championship>
 
 	<championship name="Fancy circles" ver="3" difficulty="3" type="2" 
 			descr="The most circullar tracks. Usualy banked, sometimes with easy pipe turns. Require much steering but mostly in same direction.">
-		<track name="J10-Spiral"	laps="1" factor="0.1" />
-		<track name="S9-demo"		laps="1" factor="0.1" />
-		<track name="J19-demo2"		laps="1" factor="0.1" />
-		<track name="0W8-pipe8x8"	laps="1" factor="0.1" />
-		<track name="I6-Flooded"	laps="1" factor="0.1" />
-		<track name="C2-CanyonRun"	laps="1" factor="0.1" />
-		<track name="0W5-Circles"	laps="1" factor="0.1" />
-		<track name="X1-Magic"		laps="1" factor="0.1" />
-		<track name="V3-Crater"		laps="1" factor="0.1" />
-		<track name="0W12-Peaks"	laps="1" factor="0.1" />
-		<track name="I8-Pharaoh"	laps="1" factor="0.1" />
+		<track name="J10-Spiral"	laps="1" />
+		<track name="S9-demo"		laps="1" />
+		<track name="J19-demo2"		laps="1" />
+		<track name="0W8-pipe8x8"	laps="1" />
+		<track name="I6-Flooded"	laps="1" />
+		<track name="C2-CanyonRun"	laps="1" />
+		<track name="0W5-Circles"	laps="1" />
+		<track name="X1-Magic"		laps="1" />
+		<track name="V3-Crater"		laps="1" />
+		<track name="0W12-Peaks"	laps="1" />
+		<track name="I8-Pharaoh"	laps="1" />
 	</championship>
 
 	<championship name="Asphalt circuits" ver="1" difficulty="3" type="2" 
 			descr="Curly tracks, driven mad. Require lots of steering, determination and experience.">
-		<track name="zandvoort"		laps="1" factor="0.1" />
-		<track name="detroit"		laps="1" factor="0.1" />
-		<track name="weekend"		laps="1" factor="0.1" />
-		<track name="virginia"		laps="1" factor="0.1" />
-		<track name="ruudskogen"	laps="1" factor="0.1" />
-		<track name="mosport"		laps="1" factor="0.1" />
-		<track name="brands"		laps="1" factor="0.1" />
+		<track name="zandvoort"		laps="1" />
+		<track name="detroit"		laps="1" />
+		<track name="weekend"		laps="1" />
+		<track name="virginia"		laps="1" />
+		<track name="ruudskogen"	laps="1" />
+		<track name="mosport"		laps="1" />
+		<track name="brands"		laps="1" />
 	</championship>
 
 
@@ -179,45 +179,45 @@
 
 	<championship name="Master of Rally" ver="2" difficulty="4" type="3" 
 			descr="Best medium long tracks in game, for rally fans, with great views.">
-		<track name="E1-Lakes"		laps="1" factor="0.1" />
-		<track name="G2-Coast"		laps="1" factor="0.1" />
-		<track name="J13-Tropic"	laps="1" factor="0.1" />
-		<track name="A3-Canyon"		laps="1" factor="0.1" />
-		<track name="I5-Shore"		laps="1" factor="0.1" />
+		<track name="E1-Lakes"		laps="1" />
+		<track name="G2-Coast"		laps="1" />
+		<track name="J13-Tropic"	laps="1" />
+		<track name="A3-Canyon"		laps="1" />
+		<track name="I5-Shore"		laps="1" />
 	</championship>
 
 	<championship name="Mud and water fan" ver="2" difficulty="4" type="3" 
 			descr="A collection of tracks that have either water or mud drive through areas. Mostly in jungle, some are slippery and tricky.">
-		<track name="I3-Islands"	laps="1" factor="0.1" />
-		<track name="D9-Mud"		laps="1" factor="0.1" />
-		<track name="J11-Temple"	laps="1" factor="0.1" />
-		<track name="J12-Fog"		laps="1" factor="0.1" />
-		<track name="J14-Muddy"		laps="1" factor="0.1" />
+		<track name="I3-Islands"	laps="1" />
+		<track name="D9-Mud"		laps="1" />
+		<track name="J11-Temple"	laps="1" />
+		<track name="J12-Fog"		laps="1" />
+		<track name="J14-Muddy"		laps="1" />
 		<track name="J15-Swamp"		laps="1" factor="0.15" />
 		<track name="D10-MudBath"	laps="1" factor="0.15" />
-		<track name="I6-Flooded"	laps="1" factor="0.1" />
+		<track name="I6-Flooded"	laps="1" />
 		<track name="J16-MudMad"	laps="1" factor="0.15" />
 		<track name="J18-Tiny"		laps="1" factor="0.15" />
 	</championship>
 
 	<championship name="Mountain adventure" ver="5" difficulty="4" type="3" 
 			descr="Tracks placed in mountains and with highest height differences, also with good views.">
-		<track name="G5-Climb"		laps="1" factor="0.1" />
-		<track name="F12-HighPeaks"	laps="1" factor="0.1" />
-		<track name="J20-JungleMaze" laps="1" factor="0.1" />
-		<track name="F13-Castle"	laps="1" factor="0.1" />
-		<track name="0W7-LJs-Mntn"	laps="1" factor="0.1" />
-		<track name="F10-MntnTrail"	laps="1" factor="0.1" />
+		<track name="G5-Climb"		laps="1" />
+		<track name="F12-HighPeaks"	laps="1" />
+		<track name="J20-JungleMaze" laps="1" />
+		<track name="F13-Castle"	laps="1" />
+		<track name="0W7-LJs-Mntn"	laps="1" />
+		<track name="F10-MntnTrail"	laps="1" />
 	</championship>
 
 	<championship name="Frenzy fellow" ver="4" difficulty="4" type="3" 
 			descr="Curly tracks, sometimes banked, frequently changing directions. Require lots of steering.">
-		<track name="S2-Frenzy"		laps="1" factor="0.1" />
-		<track name="0W9-IceFrenzy"	laps="1" factor="0.1" />
-		<track name="C4-Sway"		laps="1" factor="0.1" />
-		<track name="S8-Frenzy2slow" laps="1" factor="0.1" />
-		<track name="F9-MadMntn"	laps="1" factor="0.1" />
-		<track name="C1-Hairpins"	laps="1" factor="0.1" />
+		<track name="S2-Frenzy"		laps="1" />
+		<track name="0W9-IceFrenzy"	laps="1" />
+		<track name="C4-Sway"		laps="1" />
+		<track name="S8-Frenzy2slow" laps="1" />
+		<track name="F9-MadMntn"	laps="1" />
+		<track name="C1-Hairpins"	laps="1" />
 	</championship>
 
 	<championship name="Extreme weather" ver="2" difficulty="4" type="3" 
@@ -234,8 +234,8 @@
 
 	<championship name="Dark chase" ver="1" difficulty="3" type="3" 
 			descr="The darkest tracks. Short ones with 2 laps.">
-		<track name="V1-Dark"		laps="2" factor="0.1" />
-		<track name="X1-Magic"		laps="2" factor="0.1" />
+		<track name="V1-Dark"		laps="2" />
+		<track name="X1-Magic"		laps="2" />
 		<track name="T4-Scary"		laps="1" factor="0.15" />
 		<track name="V5-Sad"		laps="1" factor="0.15" />
 		<track name="R1-Mars"		laps="1" factor="0.15" />
@@ -246,46 +246,46 @@
 
 	<championship name="Master of Stunts" ver="2" difficulty="5" type="4" 
 			descr="Best stunt tracks in game, very twisted and difficult. With plenty of loops, jumps and twisted bridges. Lets you master your stunt driving.">
-		<track name="S3-Loops"		laps="1" factor="0.1" />
-		<track name="J6-80fun"		laps="1" factor="0.1" />
-		<track name="S7-HighMadness" laps="1" factor="0.1" />
-		<track name="A1-StuntPark"	laps="1" factor="0.1" />
-		<track name="D7-CrossJumps"	laps="1" factor="0.1" />
+		<track name="S3-Loops"		laps="1" />
+		<track name="J6-80fun"		laps="1" />
+		<track name="S7-HighMadness" laps="1" />
+		<track name="A1-StuntPark"	laps="1" />
+		<track name="D7-CrossJumps"	laps="1" />
 		<track name="A5-TopTwist"	laps="1" factor="0.15" />
 		<track name="I11-StuntIslands"	laps="1" factor="0.15" />
 	</championship>
 
 	<championship name="Pipes mastery" ver="3" difficulty="5" type="4" 
 			descr="Only pipe tracks with high difficulty, extremely curly. Lets you master your pipe driving.">
-		<track name="S6-PipeCrazy"	laps="1" factor="0.1" />
-		<track name="A2-PipeCoil"	laps="1" factor="0.1" />
-		<track name="X2-Swirl"		laps="1" factor="0.1" />
-		<track name="S12-Infinity"	laps="1" factor="0.1" />
-		<track name="X4-Pipeline"	laps="1" factor="0.1" />
+		<track name="S6-PipeCrazy"	laps="1" />
+		<track name="A2-PipeCoil"	laps="1" />
+		<track name="X2-Swirl"		laps="1" />
+		<track name="S12-Infinity"	laps="1" />
+		<track name="X4-Pipeline"	laps="1" />
 	</championship>
 
 	<championship name="Curly master" ver="1" difficulty="5" type="4" 
 			descr="Curly tracks, driven mad. Require lots of steering, determination and experience.">
-		<track name="S13-Hole"		laps="1" factor="0.1" />
-		<track name="F14-Maze"		laps="1" factor="0.1" />
-		<track name="A4-Snake"		laps="1" factor="0.1" />
-		<track name="F16-Clew"		laps="1" factor="0.1" />
+		<track name="S13-Hole"		laps="1" />
+		<track name="F14-Maze"		laps="1" />
+		<track name="A4-Snake"		laps="1" />
+		<track name="F16-Clew"		laps="1" />
 	</championship>
 
 	<championship name="Jump mania" ver="1" difficulty="4" type="4" 
 			descr="Tracks with lots of jumps. Fast cars are needed (or boosting to reach jump speeds).">
-		<track name="D6-jump0-high"	laps="1" factor="0.1" />
-		<track name="D7-CrossJumps"	laps="1" factor="0.1" />
-		<track name="C4-Sway"		laps="1" factor="0.1" />
-		<track name="A5-TopTwist"	laps="1" factor="0.1" />
-		<track name="R1-Mars"		laps="1" factor="0.1" />
+		<track name="D6-jump0-high"	laps="1" />
+		<track name="D7-CrossJumps"	laps="1" />
+		<track name="C4-Sway"		laps="1" />
+		<track name="A5-TopTwist"	laps="1" />
+		<track name="R1-Mars"		laps="1" />
 	</championship>
 
 	<championship name="Insane stunts" ver="1" difficulty="6" type="4" 
 			descr="The most difficult, insanely twisted tracks. Require the most skills and determination. Recommended to do both Stunts and Pipes mastery before.">
-		<track name="A1-StuntPark"	laps="1" factor="0.1" />
-		<track name="S12-Infinity"	laps="1" factor="0.1" />
-		<track name="A4-Snake"		laps="1" factor="0.1" />
+		<track name="A1-StuntPark"	laps="1" />
+		<track name="S12-Infinity"	laps="1" />
+		<track name="A4-Snake"		laps="1" />
 		<track name="S14-Refinery"	laps="1" factor="0.2" />
 		<track name="I9-Web"		laps="1" factor="0.2" />
 	</championship>
@@ -297,154 +297,154 @@
 
 	<championship name="Desert scenery" ver="1" difficulty="2" type="5" 
 			descr="Desert championship. All tracks for this scenery in their appearance order.">
-		<track name="D1-simple"		laps="1" factor="0.1" />
-		<track name="D2-Mntn"		laps="1" factor="0.1" />
-		<track name="D3-P"			laps="1" factor="0.1" />
-		<track name="D4-SBridge"	laps="1" factor="0.1" />
-		<track name="D5-jump8-low"	laps="1" factor="0.1" />
-		<track name="D6-jump0-high"	laps="1" factor="0.1" />
-		<track name="D7-CrossJumps"	laps="1" factor="0.1" />
-		<track name="D8-Technical"	laps="1" factor="0.1" />
-		<track name="D9-Mud"		laps="1" factor="0.1" />
+		<track name="D1-simple"		laps="1" />
+		<track name="D2-Mntn"		laps="1" />
+		<track name="D3-P"			laps="1" />
+		<track name="D4-SBridge"	laps="1" />
+		<track name="D5-jump8-low"	laps="1" />
+		<track name="D6-jump0-high"	laps="1" />
+		<track name="D7-CrossJumps"	laps="1" />
+		<track name="D8-Technical"	laps="1" />
+		<track name="D9-Mud"		laps="1" />
 		<track name="D10-MudBath"	laps="1" factor="0.15" />
-		<track name="D11-PersianCity" laps="1" factor="0.1" />
+		<track name="D11-PersianCity" laps="1" />
 		<track name="D12-Sandstorm"	laps="1" factor="0.15" />
 	</championship>
 	<championship name="Jungle scenery" ver="2" difficulty="3" type="5" 
 			descr="Jungle championship. All tracks for this scenery in their appearance order. Part 1 of 2.">
-		<track name="J1-T"			laps="1" factor="0.1" />
-		<track name="J3-Rocky"		laps="1" factor="0.1" />
-		<track name="J4-Pipe8"		laps="1" factor="0.1" /><!---->
-		<track name="J5-Pipes"		laps="1" factor="0.1" />
-		<track name="J6-80fun"		laps="1" factor="0.1" />
-		<track name="J7-Hilly"		laps="1" factor="0.1" />
-		<track name="J8-Round"		laps="1" factor="0.1" />
-		<track name="J9-Sharp"		laps="1" factor="0.1" />
-		<track name="J10-Spiral"	laps="1" factor="0.1" />
+		<track name="J1-T"			laps="1" />
+		<track name="J3-Rocky"		laps="1" />
+		<track name="J4-Pipe8"		laps="1" /><!---->
+		<track name="J5-Pipes"		laps="1" />
+		<track name="J6-80fun"		laps="1" />
+		<track name="J7-Hilly"		laps="1" />
+		<track name="J8-Round"		laps="1" />
+		<track name="J9-Sharp"		laps="1" />
+		<track name="J10-Spiral"	laps="1" />
 	</championship>
 	<championship name="Jungle 2nd scenery" ver="2" difficulty="4" type="5" 
 			descr="Jungle championship. All tracks for this scenery in their appearance order. Part 2 of 2.">
-		<track name="J11-Temple"	laps="1" factor="0.1" />
-		<track name="J12-Fog"		laps="1" factor="0.1" />
-		<track name="J13-Tropic"	laps="1" factor="0.1" />
-		<track name="J14-Muddy"		laps="1" factor="0.1" />
-		<track name="J15-Swamp"		laps="1" factor="0.1" />
-		<track name="J16-MudMad"	laps="1" factor="0.1" />
-		<track name="J17-JungleCanyons"	laps="1" factor="0.1" />
-		<track name="J18-Tiny"		laps="1" factor="0.1" />
-		<track name="J19-demo2"		laps="1" factor="0.1" />
-		<track name="J20-JungleMaze" laps="1" factor="0.1" />
+		<track name="J11-Temple"	laps="1" />
+		<track name="J12-Fog"		laps="1" />
+		<track name="J13-Tropic"	laps="1" />
+		<track name="J14-Muddy"		laps="1" />
+		<track name="J15-Swamp"		laps="1" />
+		<track name="J16-MudMad"	laps="1" />
+		<track name="J17-JungleCanyons"	laps="1" />
+		<track name="J18-Tiny"		laps="1" />
+		<track name="J19-demo2"		laps="1" />
+		<track name="J20-JungleMaze" laps="1" />
 	</championship>
 	<championship name="Savanna scenery" ver="1" difficulty="5" type="5" 
 			descr="Savanna championship. All tracks for this scenery in their appearance order.">
-		<track name="S2-Frenzy"		laps="1" factor="0.1" />
-		<track name="S3-Loops"		laps="1" factor="0.1" />
-		<track name="S4-Hills"		laps="1" factor="0.1" />
-		<track name="S5-LoopBasic"	laps="1" factor="0.1" />
-		<track name="S6-PipeCrazy"	laps="1" factor="0.1" />
+		<track name="S2-Frenzy"		laps="1" />
+		<track name="S3-Loops"		laps="1" />
+		<track name="S4-Hills"		laps="1" />
+		<track name="S5-LoopBasic"	laps="1" />
+		<track name="S6-PipeCrazy"	laps="1" />
 		<track name="S7-HighMadness" laps="1" factor="0.1"/>
 		<track name="S8-Frenzy2slow" laps="1" factor="0.1"/>
-		<track name="S9-demo"		laps="1" factor="0.1" />
-		<track name="S10-Pipe88"	laps="1" factor="0.1" />
-		<track name="S12-Infinity"	laps="1" factor="0.1" />
-		<track name="S13-Hole"		laps="1" factor="0.1" />
+		<track name="S9-demo"		laps="1" />
+		<track name="S10-Pipe88"	laps="1" />
+		<track name="S12-Infinity"	laps="1" />
+		<track name="S13-Hole"		laps="1" />
 		<track name="S14-Refinery"	laps="1" factor="0.2" />
 	</championship>
 	<championship name="Winter scenery" ver="1" difficulty="3" type="5" 
 			descr="Winter championship. All tracks for this scenery in their appearance order.">
-		<track name="0W1-cross"		laps="1" factor="0.1" />
-		<track name="0W2-Wet"		laps="1" factor="0.1" />
-		<track name="0W3-mouth"		laps="1" factor="0.1" />
-		<track name="0W4-ice-blur"	laps="1" factor="0.1" />
-		<track name="0W5-Circles"	laps="1" factor="0.1" />
-		<track name="0W6-88"		laps="1" factor="0.1" />
-		<track name="0W7-LJs-Mntn"	laps="1" factor="0.1" />
-		<track name="0W8-pipe8x8"	laps="1" factor="0.1" />
-		<track name="0W9-IceFrenzy"	laps="1" factor="0.1" />
-		<track name="0W10-Whirl"	laps="1" factor="0.1" />
-		<track name="0W11-Glacier"	laps="1" factor="0.1" />
-		<track name="0W12-Peaks"	laps="1" factor="0.1" />
-		<track name="0W13-MtFog"	laps="1" factor="0.1" />
+		<track name="0W1-cross"		laps="1" />
+		<track name="0W2-Wet"		laps="1" />
+		<track name="0W3-mouth"		laps="1" />
+		<track name="0W4-ice-blur"	laps="1" />
+		<track name="0W5-Circles"	laps="1" />
+		<track name="0W6-88"		laps="1" />
+		<track name="0W7-LJs-Mntn"	laps="1" />
+		<track name="0W8-pipe8x8"	laps="1" />
+		<track name="0W9-IceFrenzy"	laps="1" />
+		<track name="0W10-Whirl"	laps="1" />
+		<track name="0W11-Glacier"	laps="1" />
+		<track name="0W12-Peaks"	laps="1" />
+		<track name="0W13-MtFog"	laps="1" />
 	</championship>
 	<championship name="Forest scenery" ver="1" difficulty="4" type="5" 
 			descr="Forest championship. All tracks for this scenery in their appearance order.">
-		<track name="F1-Slippery"	laps="1" factor="0.1" />
-		<track name="F3-Snail"		laps="1" factor="0.1" />
-		<track name="F4-OSquare"	laps="1" factor="0.1" />
-		<track name="F6-DC3"		laps="1" factor="0.1" />
-		<track name="F7-blur3"		laps="1" factor="0.1" />
-		<track name="F8-blurX3"		laps="1" factor="0.1" />
-		<track name="F9-MadMntn"	laps="1" factor="0.1" />
-		<track name="F10-MntnTrail"	laps="1" factor="0.1" />
-		<track name="F11-Dawn"		laps="1" factor="0.1" />
-		<track name="F12-HighPeaks"	laps="1" factor="0.1" />
-		<track name="F13-Castle"	laps="1" factor="0.1" />
+		<track name="F1-Slippery"	laps="1" />
+		<track name="F3-Snail"		laps="1" />
+		<track name="F4-OSquare"	laps="1" />
+		<track name="F6-DC3"		laps="1" />
+		<track name="F7-blur3"		laps="1" />
+		<track name="F8-blurX3"		laps="1" />
+		<track name="F9-MadMntn"	laps="1" />
+		<track name="F10-MntnTrail"	laps="1" />
+		<track name="F11-Dawn"		laps="1" />
+		<track name="F12-HighPeaks"	laps="1" />
+		<track name="F13-Castle"	laps="1" />
 		<track name="F14-Maze"		laps="1" factor="0.2" />
-		<track name="F15-ForestTrip" laps="1" factor="0.1" />
+		<track name="F15-ForestTrip" laps="1" />
 		<track name="F16-Clew"		laps="1" factor="0.2" />
 	</championship>
 	<championship name="Island scenery" ver="1" difficulty="2" type="5" 
 			descr="Island championship. All tracks for this scenery in their appearance order.">
-		<track name="I1-star3"		laps="1" factor="0.1" />
-		<track name="I2-S8"			laps="1" factor="0.1" />
-		<track name="I3-Islands"	laps="1" factor="0.1" />
-		<track name="I4-Sunset"		laps="1" factor="0.1" />
-		<track name="I5-Shore"		laps="1" factor="0.1" />
-		<track name="I6-Flooded"	laps="1" factor="0.1" />
-		<track name="I7-Moses"		laps="1" factor="0.1" />
-		<track name="I8-Pharaoh"	laps="1" factor="0.1" />
+		<track name="I1-star3"		laps="1" />
+		<track name="I2-S8"			laps="1" />
+		<track name="I3-Islands"	laps="1" />
+		<track name="I4-Sunset"		laps="1" />
+		<track name="I5-Shore"		laps="1" />
+		<track name="I6-Flooded"	laps="1" />
+		<track name="I7-Moses"		laps="1" />
+		<track name="I8-Pharaoh"	laps="1" />
 		<track name="I9-Web"		laps="1" factor="0.2" />
-		<track name="I10-Treasure"	laps="1" factor="0.1" />
+		<track name="I10-Treasure"	laps="1" />
 		<track name="I11-StuntIslands" laps="1" factor="0.2" />
-		<track name="I12-Beach"		laps="1" factor="0.1" />
+		<track name="I12-Beach"		laps="1" />
 	</championship>
 	<championship name="Mud and Canyon scenery" ver="1" difficulty="2" type="5" 
 			descr="Mud and Canyon championship. All tracks for those sceneries in their appearance order.">
-		<track name="M1-Hills"		laps="1" factor="0.1" />
-		<track name="M2-Bumps"		laps="1" factor="0.1" />
-		<track name="C1-Hairpins"	laps="1" factor="0.1" />
-		<track name="C2-CanyonRun"	laps="1" factor="0.1" />
-		<track name="C3-Vast"		laps="1" factor="0.1" />
-		<track name="C4-Sway"		laps="1" factor="0.1" />
+		<track name="M1-Hills"		laps="1" />
+		<track name="M2-Bumps"		laps="1" />
+		<track name="C1-Hairpins"	laps="1" />
+		<track name="C2-CanyonRun"	laps="1" />
+		<track name="C3-Vast"		laps="1" />
+		<track name="C4-Sway"		laps="1" />
 	</championship>
 	<championship name="Australia scenery" ver="1" difficulty="4" type="5" 
 			descr="Australia championship. All tracks for this scenery in their appearance order.">
-		<track name="A1-StuntPark"	laps="1" factor="0.1" />
-		<track name="A2-PipeCoil"	laps="1" factor="0.1" />
-		<track name="A3-Canyon"		laps="1" factor="0.1" />
-		<track name="A4-Snake"		laps="1" factor="0.1" />
+		<track name="A1-StuntPark"	laps="1" />
+		<track name="A2-PipeCoil"	laps="1" />
+		<track name="A3-Canyon"		laps="1" />
+		<track name="A4-Snake"		laps="1" />
 		<track name="A5-TopTwist"	laps="1" factor="0.15" />
 		<track name="A6-Cannon"		laps="1" factor="0.15" />
 	</championship>
 	<championship name="Greece scenery" ver="1" difficulty="3" type="5" 
 			descr="Greece championship. All tracks for this scenery in their appearance order.">
-		<track name="G1-Long"		laps="1" factor="0.1" />
-		<track name="G2-Coast"		laps="1" factor="0.1" />
-		<track name="G3-Butterfly"	laps="1" factor="0.1" />
-		<track name="G4-River"		laps="1" factor="0.1" />
-		<track name="G5-Climb"		laps="1" factor="0.1" />
+		<track name="G1-Long"		laps="1" />
+		<track name="G2-Coast"		laps="1" />
+		<track name="G3-Butterfly"	laps="1" />
+		<track name="G4-River"		laps="1" />
+		<track name="G5-Climb"		laps="1" />
 	</championship>
 	<championship name="Autumn and Moss scenery" ver="1" difficulty="2" type="5" 
 			descr="Autumn and Moss championship. All tracks for those sceneries in their appearance order.">
-		<track name="T1-Autumn"		laps="1" factor="0.1" />
-		<track name="T2-RedOakPark"	laps="1" factor="0.1" />
-		<track name="T3-Orange"		laps="1" factor="0.1" />
+		<track name="T1-Autumn"		laps="1" />
+		<track name="T2-RedOakPark"	laps="1" />
+		<track name="T3-Orange"		laps="1" />
 		<track name="T4-Scary"		laps="1" factor="0.15" />
 		<track name="T5-Twister"	laps="1" factor="0.15" />
-		<track name="T6-Sunset"		laps="1" factor="0.1" />
-		<track name="O1-Moss"		laps="1" factor="0.1" />
-		<track name="O2-Mouse"		laps="1" factor="0.1" />
+		<track name="T6-Sunset"		laps="1" />
+		<track name="O1-Moss"		laps="1" />
+		<track name="O2-Mouse"		laps="1" />
 	</championship>
 	<championship name="Other sceneries" ver="1" difficulty="4" type="5" 
 			descr="Other sceneries championship: Volcanic and Unidentified.">
-		<track name="V1-Dark"		laps="1" factor="0.1" />
-		<track name="V2-Volcanic"	laps="1" factor="0.1" />
-		<track name="V3-Crater"		laps="1" factor="0.1" />
-		<track name="V4-Spikeland"	laps="1" factor="0.1" />
-		<track name="V5-Sad"		laps="1" factor="0.1" />
-		<track name="X1-Magic"		laps="1" factor="0.1" />
-		<track name="X2-Swirl"		laps="1" factor="0.1" />
-		<track name="X3-Cloud"		laps="1" factor="0.1" />
+		<track name="V1-Dark"		laps="1" />
+		<track name="V2-Volcanic"	laps="1" />
+		<track name="V3-Crater"		laps="1" />
+		<track name="V4-Spikeland"	laps="1" />
+		<track name="V5-Sad"		laps="1" />
+		<track name="X1-Magic"		laps="1" />
+		<track name="X2-Swirl"		laps="1" />
+		<track name="X3-Cloud"		laps="1" />
 		<track name="X4-Pipeline"	laps="1" factor="0.15" />
 	</championship>
 
@@ -453,24 +453,24 @@
 
 	<championship name="Test-1" ver="1" difficulty="0" type="6" 
 			descr="Fastest 1 track, to test logic.">
-		<track name="TestC6-temp" laps="1" factor="0.1" />
+		<track name="TestC6-temp" laps="1" />
 	</championship>
 	<championship name="Test-3" ver="1" difficulty="0" type="6" 
 			descr="Fastest 3 tracks, to test logic.">
-		<track name="TestC6-temp" reversed="0" laps="1" factor="0.1" />
-		<track name="TestC4-ow" laps="1" factor="0.1" />
-		<track name="TestC1-circle" laps="1" factor="0.1" />
+		<track name="TestC6-temp" reversed="0" laps="1" />
+		<track name="TestC4-ow" laps="1" />
+		<track name="TestC1-circle" laps="1" />
 	</championship>
 	<championship name="Test tracks" ver="1" difficulty="1" type="6" 
 			descr="Really short and circular tracks. 2 Laps on each.">
-		<track name="TestC1-circle"		laps="2" factor="0.1" />
-		<track name="TestC2-pipe-half"	laps="2" factor="0.1" />
-		<track name="TestC3-pipe-big"	laps="2" factor="0.1" />
-		<track name="TestC4-ow"			laps="2" factor="0.1" />
-		<track name="TestC5-egg"		laps="2" factor="0.1" />
-		<track name="TestC6-temp"		laps="2" factor="0.1" />
-		<track name="TestC7-oc"			laps="2" factor="0.1" />
-		<track name="TestC8-align"		laps="2" factor="0.1" />
+		<track name="TestC1-circle"		laps="2" />
+		<track name="TestC2-pipe-half"	laps="2" />
+		<track name="TestC3-pipe-big"	laps="2" />
+		<track name="TestC4-ow"			laps="2" />
+		<track name="TestC5-egg"		laps="2" />
+		<track name="TestC6-temp"		laps="2" />
+		<track name="TestC7-oc"			laps="2" />
+		<track name="TestC8-align"		laps="2" />
 	</championship>
 
 </championships>
