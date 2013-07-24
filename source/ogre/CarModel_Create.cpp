@@ -193,12 +193,12 @@ void CarModel::LoadConfig(const std::string & pathCar)
 	//~  brake flares
 	float pos[3];  bool ok=true;  int i=0;
 	while (ok)
-	{	ok = cf.GetParam("model_ofs.brake-pos"+toStr(i), pos);  ++i;
+	{	ok = cf.GetParam("flares.brake-pos"+toStr(i), pos);  ++i;
 		if (ok)  brakePos.push_back(bRotFix ? Vector3(-pos[0],pos[2],pos[1]) : Vector3(-pos[1],-pos[2],pos[0]));
 	}
-	cf.GetParam("model_ofs.brake-color", pos);
+	cf.GetParam("flares.brake-color", pos);
 	brakeClr = ColourValue(pos[0],pos[1],pos[2]);
-	cf.GetParam("model_ofs.brake-size", brakeSize);
+	cf.GetParam("flares.brake-size", brakeSize);
 	
 	
 	//-  custom exhaust pos for boost particles
