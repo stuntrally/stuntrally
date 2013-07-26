@@ -196,7 +196,7 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 	std::string sPlr = title;
 
 	//  button size and columns positon
-	const int sx = 130, sy = 24,  x0 = 20, x1 = 140, x2 = 285, x3 = 430,  yh = 20,  s0 = x1-x0-5;
+	const int sx = 130, sy = 24,  x0 = 20, x1 = 140, x2 = 285, x3 = 430,  yh = 20, ya = 14,  s0 = x1-x0-5;
 
 #define CreateText(x,y, w,h, name, text)  {  StaticTextPtr txt =  \
 	tabitem->createWidget<TextBox>("TextBox", x,y, w,h, ALIGN, name);  \
@@ -212,7 +212,7 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 		CreateText(x3,yh, sx,sy, "hdrTxt4_"+sPlr, TR("#80A0E0#{InputHeaderTxt4}"));  }
 
 	///  ------ custom action sorting ----------------
-	int i = 0, y = yh*3;
+	int i = 0, y = yh + 2*ya;
 
 	///  Actions  ------------------------------------------------
 	for (std::vector<InputAction>::const_iterator it = actions.begin(); it != actions.end(); ++it)
@@ -266,11 +266,11 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 			btn1->eventMouseButtonClick += newDelegate(this, &App::inputDetailBtn);
 		}
 		++i;
-		y += yh*1.5;
+		y += 2*ya;
 	}
-	/*
+
 	if (!playerTab)
-	{	y = yc+2*ya;  //  camera infos
+	{	y += 1*ya;  //  camera infos
 		CreateText(20,y, 280,24, "txtcam1", TR("#A0D0F0#{InputMapNextCamera} / #{InputMapPrevCamera}"));  y+=2*ya;
 		CreateText(40,y, 280,24, "txtcam2", TR("#A0D0F0#{InputCameraTxt1}"));  y+=3*ya;
 		//  replay controls info text
@@ -280,7 +280,6 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 		CreateText(40,y, 500,24, "txtrpl4", TR("#80B0F0#{InputRplCtrl3}"));  y+=2*ya;
 		CreateText(40,y, 500,24, "txtrpl5", TR("#60A0D0#{InputRplCtrl4}"));  y+=2*ya;
 	}
-*/
 }
 
 void App::InitInputGui()
@@ -313,9 +312,9 @@ void App::InitInputGui()
 	///  insert a tab item for every schema (4players,global)
 	CreateInputTab("#80C0FF#{InputMapGeneral}", false, mInputActions, mInputCtrl);
 	for (int i=0; i<4; ++i)
-		CreateInputTab("#FFF850#{Player} "+toStr(i), true, mInputActionsPlayer[i], mInputCtrlPlayer[i]);
+		CreateInputTab(String("#FFF850") + (i==0 ? "#{Player} ":" ") +toStr(i), true, mInputActionsPlayer[i], mInputCtrlPlayer[i]);
 
-	/*
+
 	TabItemPtr tabitem = inputTab->addItem(TR("#C0C0FF#{Other}"));
 	int y = 32, ya = 26 / 2, yb = 20 / 2,  xa = 20, xa1=xa+16, xb = 250, xb1=xb+16;
 	CreateText(xa,y, 500,24, "txtoth1", TR("#A0D0FF#{InputOther1}"));  y+=2*ya;
@@ -363,7 +362,6 @@ void App::InitInputGui()
 	CreateText(xb1,y, 200,24, "txtshd7", "#C0A0E0"+TR("O  #{Other}"));  y+=3*yb;
 	CreateText(xb,y, 200,24, "txtshd8", "#FFFF60"+TR("I  #{Input}"));  y+=3*yb;
 	CreateText(xb,y, 200,24, "txtshd8", "#B090E0"+TR("P  #{Sound}"));  y+=3*yb;
-*/
 }
 
 
