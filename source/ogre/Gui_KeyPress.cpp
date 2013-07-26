@@ -56,7 +56,7 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 	//  esc
 	if (arg.keysym.sym == SDLK_ESCAPE)
 	{
-		if (pSet->escquit)
+		if (pSet->escquit && !bAssignKey)
 			mShutDown = true;	// quit
 		else
 			if (mWndChampStage->getVisible())  ///  close champ wnds

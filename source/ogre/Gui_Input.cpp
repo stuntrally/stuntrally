@@ -133,9 +133,10 @@ void App::LoadInputDefaults(std::vector<InputAction> &actions, ICS::InputControl
 	}
 }
 
+///  Input caption  ---------------------
 void App::UpdateInputButton(MyGUI::Button* button, const InputAction& action, int bind)
 {
-	std::string buttonLabel;
+	std::string s, sAssign = TR("#FFA030#{InputAssignKey}");  // caption
 
 	SDL_Keycode decreaseKey = action.mICS->getKeyBinding(action.mControl, ICS::Control::DECREASE);
 	SDL_Keycode increaseKey = action.mICS->getKeyBinding(action.mControl, ICS::Control::INCREASE);
@@ -143,20 +144,20 @@ void App::UpdateInputButton(MyGUI::Button* button, const InputAction& action, in
 	if (action.mType == InputAction::Axis)
 	{
 		if (bind == 1)
-			buttonLabel = TR("#FFA030#{InputAssignKey}");
+			s = sAssign;
 		else
-		{	buttonLabel += GetKeyName(decreaseKey,true);
-			if  (buttonLabel != "")  buttonLabel += ", ";
+		{	s += GetKeyName(decreaseKey,true);
+			if (!s.empty())  s += " , ";
 			if (bind == 2)
-				buttonLabel += TR("#FFA030#{InputAssignKey}");
+				s += sAssign;
 			else
-				buttonLabel += GetKeyName(increaseKey,true);
+				s += GetKeyName(increaseKey,true);
 		}
 	}else
 	{	if (bind == 1)
-			buttonLabel = TR("#FFA030#{InputAssignKey}");
+			s = sAssign;
 		else
-			buttonLabel += GetKeyName(increaseKey, action.mType & InputAction::Axis);
+			s += GetKeyName(increaseKey, action.mType & InputAction::Axis);
 	}
 
 	if (bind == 0)
@@ -166,18 +167,19 @@ void App::UpdateInputButton(MyGUI::Button* button, const InputAction& action, in
 			int axis = action.mICS->getJoystickAxisBinding(action.mControl, j, ICS::Control::INCREASE);
 			if (axis != ICS::InputControlSystem::UNASSIGNED)
 			{
-				if (buttonLabel != "")  buttonLabel += " / ";
-				buttonLabel += "J"+toStr(j) + ".Axis " + toStr(axis);
+				if (!s.empty())  s += " / ";
+				s += "J"+toStr(j) + ".Axis " + toStr(axis);
 			}
 			int increaseButton = action.mICS->getJoystickButtonBinding(action.mControl, j, ICS::Control::INCREASE);
 			if (increaseButton != ICS::InputControlSystem::UNASSIGNED)
 			{
-				if (buttonLabel != "")  buttonLabel += " / ";
-				buttonLabel += "J"+toStr(j) + ".Button " + toStr(increaseButton);
+				if (!s.empty())  s += " / ";
+				s += "J"+toStr(j) + ".Button " + toStr(increaseButton);
 			}
 		}
 	}
-	button->setCaption(buttonLabel);
+	if (s.empty())  s = TR("#{InputKeyUnassigned}");
+	button->setCaption(s);
 }
 
 
@@ -232,7 +234,7 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 
 		//  description label  ----------------
 		StaticTextPtr desc = tabitem->createWidget<TextBox>("TextBox",
-			x0, y, s0, sy,  ALIGN);
+			x0, y+3, s0, sy,  ALIGN);
 		setOrigPos(desc, "OptionsWnd");
 		desc->setCaption( TR("#{InputMap" + name + "}") );
 		desc->setTextColour(Colour(0.86f,0.94f,1.f));
@@ -247,6 +249,7 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 		setOrigPos(btn1, "OptionsWnd");
 		UpdateInputButton(btn1, *it);
 		btn1->eventMouseButtonClick += newDelegate(this, &App::inputBindBtnClicked);
+		btn1->eventMouseButtonPressed += newDelegate(this, &App::inputBindBtn2);
 		btn1->setUserData(*it);
 		Colour clr = !playerTab ? Colour(0.7f,0.85f,1.f) :
 			(analog ? (twosided ? Colour(0.8f,0.8f,1.0f) : Colour(0.7f,0.8f,1.0f)) : Colour(0.7f,0.9f,0.9f));
@@ -271,6 +274,7 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 				"inputdetail_" + toStr(i) + "_" + sPlr + "_1");
 			setOrigPos(btn1, "OptionsWnd");
 			btn1->setCaption(">");
+			btn1->setTextColour(Colour(0.6f,0.7f,0.8f));
 			btn1->setColour(Colour(0.6f,0.8f,1.0f));
 			btn1->setUserData(*it);
 			btn1->eventMouseButtonClick += newDelegate(this, &App::inputDetailBtn);
@@ -281,7 +285,7 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 
 	///  General tab  --------
 	if (!playerTab)
-	{	y += 1*ya;  //  camera infos
+	{	y += 2*ya;  //  camera infos
 		CreateText(20,y, 280,24, "txtcam1", TR("#A0D0F0#{InputMapNextCamera} / #{InputMapPrevCamera}"));  y+=2*ya;
 		CreateText(40,y, 280,24, "txtcam2", TR("#A0D0F0#{InputCameraTxt1}"));  y+=3*ya;
 		//  replay controls info text
@@ -380,6 +384,12 @@ void App::InitInputGui()
 ///  Bind Input
 //----------------------------------------------------------------------------------------------------------------------------------
 
+void App::inputBindBtn2(WP sender, int, int, MouseButton mb)
+{
+	if (mb == MouseButton::Right)
+		inputUnbind(sender);
+}
+
 void App::inputBindBtnClicked(WP sender)
 {
 	sender->castType<MyGUI::Button>()->setCaption( TR("#FFA030#{InputAssignKey}"));
@@ -402,11 +412,10 @@ void App::inputBindBtnClicked(WP sender)
 }
 
 void App::notifyInputActionBound(bool complete)
-{
+{	
 	UpdateInputButton(mBindingSender, *mBindingAction, complete ? 0 : 2);
 	if (complete)
-	{
-		bAssignKey = false;
+	{	bAssignKey = false;
 
 		// If a key was assigned that used to belong to another control, it will now be unassigned,
 		// so we need to force-update button labels
@@ -418,11 +427,34 @@ void App::notifyInputActionBound(bool complete)
 			if (!button || button->getCaption() == ">") // HACK: we don't want the detail buttons
 				continue;
 			if (button->getUserData<InputAction>() != mBindingAction)
-			{
 				UpdateInputButton(button, *button->getUserData<InputAction>());
-			}
 		}
 	}
+}
+
+void App::inputUnbind(WP sender)
+{
+	InputAction* action = sender->getUserData<InputAction>();
+	mBindingAction = action;
+	mBindingSender = sender->castType<MyGUI::Button>();
+
+	SDL_Keycode key = action->mICS->getKeyBinding(action->mControl, ICS::Control::INCREASE);
+	action->mICS->removeKeyBinding(key);
+
+	key = action->mICS->getKeyBinding(action->mControl, ICS::Control::DECREASE);
+	action->mICS->removeKeyBinding(key);
+
+	for (int j=0; j < SDL_NumJoysticks(); ++j)
+	{
+		int axis = action->mICS->getJoystickAxisBinding(action->mControl, j, ICS::Control::INCREASE);
+		if (axis != ICS::InputControlSystem::UNASSIGNED)
+			action->mICS->removeJoystickAxisBinding(j, axis);
+		
+		int btn = action->mICS->getJoystickButtonBinding(action->mControl, j, ICS::Control::INCREASE);
+		if (btn != ICS::InputControlSystem::UNASSIGNED)
+			action->mICS->removeJoystickButtonBinding(j, btn);
+	}
+	UpdateInputButton(mBindingSender, *action);
 }
 
 
@@ -514,7 +546,7 @@ void App::keyBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* contro
 	SDL_Keycode key, ICS::Control::ControlChangingDirection direction)
 {
 	ICS::DetectingBindingListener::keyBindingDetected(pICS, control, key, direction);
-
+	
 	if (direction == ICS::Control::DECREASE)
 	{
 		pICS->enableDetectingBindingState(control, ICS::Control::INCREASE);

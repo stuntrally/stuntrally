@@ -365,8 +365,8 @@ protected:
 
 		enum Type
 		{	Trigger = 0x00,
-			Axis = 0x01, // 2-sided axis, centered in the middle, keyboard emulation with left & right keys
-			HalfAxis = 0x11 // 1-sided axis, keyboard emulation with 1 key
+			Axis = 0x01,     // 2-sided axis, centered in the middle, keyboard emulation with left & right keys
+			HalfAxis = 0x11  // 1-sided axis, keyboard emulation with 1 key
 		} mType;
 
 		ICS::InputControlSystem* mICS;
@@ -395,7 +395,7 @@ public:
 	boost::mutex mPlayerInputStateMutex;
 protected:
 	void CreateInputTab(const std::string& title, bool playerTab, const std::vector<InputAction>& actions, ICS::InputControlSystem* ICS);
-	void InitInputGui(), inputBindBtnClicked(WP);
+	void InitInputGui(), inputBindBtnClicked(WP), inputUnbind(WP), inputBindBtn2(WP, int, int, MyGUI::MouseButton mb);
 	// bind=1: "<Assign>"
 	// bind=2: "Key1, <Assign>"
 	// bind=0: "Key1, Key2"
