@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "ResourceImageSetPointerFix.h"
 
 #include <MyGUI_PointerManager.h>

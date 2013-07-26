@@ -1319,11 +1319,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\source\ogre\common\HWMouse.cpp"
+					RelativePath=".\source\ogre\ResourceImageSetPointerFix.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\source\ogre\common\HWMouse.h"
+					RelativePath=".\source\ogre\ResourceImageSetPointerFix.h"
 					>
 				</File>
 			</Filter>
