@@ -98,6 +98,12 @@ App::App(SETTINGS *settings, GAME *game)
 {
 	pSet = settings;
 	pGame->collision.pApp = this;
+
+	for (int p=0;p<4;++p)
+	{
+		for (int a=0;a<NumPlayerActions;++a)
+			mPlayerInputState[p][a] = 0;
+	}
 	
 	sc = new Scene();
 	hud.resize(4);  frm.resize(4);  ov.resize(5);

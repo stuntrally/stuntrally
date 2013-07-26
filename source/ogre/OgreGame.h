@@ -378,7 +378,7 @@ protected:
 		InputAction(int id, const std::string& name, SDL_Keycode defaultKey, Type type)
 			: mId(id), mName(name), mDefaultIncrease(defaultKey), mDefaultDecrease(SDLK_UNKNOWN), mType(type)
 		{}
-		InputAction(int id, const std::string &name, SDL_Keycode defaultDecrease, SDL_Keycode defaultIncrease)
+		InputAction(int id, const std::string &name, SDL_Keycode defaultDecrease, SDL_Keycode defaultIncrease, Type type)
 			: mId(id), mName(name), mDefaultIncrease(defaultIncrease), mDefaultDecrease(defaultDecrease)
 			, mType(Axis)
 		{}

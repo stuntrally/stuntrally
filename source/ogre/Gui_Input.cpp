@@ -40,10 +40,10 @@ void App::LoadInputDefaults()
 	mInputActionsPlayer[0].clear();
 	mInputActionsPlayer[0].push_back(InputAction(A_Throttle, "Throttle", SDLK_UP, InputAction::HalfAxis));
 	mInputActionsPlayer[0].push_back(InputAction(A_Brake, "Brake", SDLK_DOWN, InputAction::HalfAxis));
-	mInputActionsPlayer[0].push_back(InputAction(A_Steering, "Steering", SDLK_LEFT, SDLK_RIGHT));
+	mInputActionsPlayer[0].push_back(InputAction(A_Steering, "Steering", SDLK_LEFT, SDLK_RIGHT, InputAction::Axis));
 	mInputActionsPlayer[0].push_back(InputAction(A_HandBrake, "HandBrake", SDLK_SPACE, InputAction::HalfAxis));
 	mInputActionsPlayer[0].push_back(InputAction(A_Boost, "Boost", SDLK_LCTRL, InputAction::HalfAxis));
-	mInputActionsPlayer[0].push_back(InputAction(A_Flip, "Flip", SDLK_q, SDLK_w));
+	mInputActionsPlayer[0].push_back(InputAction(A_Flip, "Flip", SDLK_q, SDLK_w, InputAction::Axis));
 	mInputActionsPlayer[0].push_back(InputAction(A_ShiftUp, "ShiftUp", SDLK_a, InputAction::Trigger));
 	mInputActionsPlayer[0].push_back(InputAction(A_ShiftDown, "ShiftDown", SDLK_z, InputAction::Trigger));
 	mInputActionsPlayer[0].push_back(InputAction(A_PrevCamera, "PrevCamera", SDLK_x, InputAction::Trigger));
@@ -54,10 +54,10 @@ void App::LoadInputDefaults()
 	mInputActionsPlayer[1].clear();
 	mInputActionsPlayer[1].push_back(InputAction(A_Throttle, "Throttle", SDLK_u, InputAction::HalfAxis));
 	mInputActionsPlayer[1].push_back(InputAction(A_Brake, "Brake", SDLK_m, InputAction::HalfAxis));
-	mInputActionsPlayer[1].push_back(InputAction(A_Steering, "Steering", SDLK_h, SDLK_k));
+	mInputActionsPlayer[1].push_back(InputAction(A_Steering, "Steering", SDLK_h, SDLK_k, InputAction::Axis));
 	mInputActionsPlayer[1].push_back(InputAction(A_HandBrake, "HandBrake", SDLK_n, InputAction::HalfAxis));
 	mInputActionsPlayer[1].push_back(InputAction(A_Boost, "Boost", SDLK_j, InputAction::HalfAxis));
-	mInputActionsPlayer[1].push_back(InputAction(A_Flip, "Flip", SDLK_y, SDLK_i));
+	mInputActionsPlayer[1].push_back(InputAction(A_Flip, "Flip", SDLK_y, SDLK_i, InputAction::Axis));
 	mInputActionsPlayer[1].push_back(InputAction(A_ShiftUp, "ShiftUp", SDLK_UNKNOWN, InputAction::Trigger));
 	mInputActionsPlayer[1].push_back(InputAction(A_ShiftDown, "ShiftDown", SDLK_UNKNOWN, InputAction::Trigger));
 	mInputActionsPlayer[1].push_back(InputAction(A_PrevCamera, "PrevCamera", SDLK_UNKNOWN, InputAction::Trigger));
@@ -68,10 +68,10 @@ void App::LoadInputDefaults()
 	mInputActionsPlayer[2].clear();
 	mInputActionsPlayer[2].push_back(InputAction(A_Throttle, "Throttle", SDLK_r, InputAction::HalfAxis));
 	mInputActionsPlayer[2].push_back(InputAction(A_Brake, "Brake", SDLK_v, InputAction::HalfAxis));
-	mInputActionsPlayer[2].push_back(InputAction(A_Steering, "Steering", SDLK_d, SDLK_g));
+	mInputActionsPlayer[2].push_back(InputAction(A_Steering, "Steering", SDLK_d, SDLK_g, InputAction::Axis));
 	mInputActionsPlayer[2].push_back(InputAction(A_HandBrake, "HandBrake", SDLK_b, InputAction::HalfAxis));
 	mInputActionsPlayer[2].push_back(InputAction(A_Boost, "Boost", SDLK_f, InputAction::HalfAxis));
-	mInputActionsPlayer[2].push_back(InputAction(A_Flip, "Flip", SDLK_e, SDLK_t));
+	mInputActionsPlayer[2].push_back(InputAction(A_Flip, "Flip", SDLK_e, SDLK_t, InputAction::Axis));
 	mInputActionsPlayer[2].push_back(InputAction(A_ShiftUp, "ShiftUp", SDLK_UNKNOWN, InputAction::Trigger));
 	mInputActionsPlayer[2].push_back(InputAction(A_ShiftDown, "ShiftDown", SDLK_UNKNOWN, InputAction::Trigger));
 	mInputActionsPlayer[2].push_back(InputAction(A_PrevCamera, "PrevCamera", SDLK_UNKNOWN, InputAction::Trigger));
@@ -82,10 +82,10 @@ void App::LoadInputDefaults()
 	mInputActionsPlayer[3].clear();
 	mInputActionsPlayer[3].push_back(InputAction(A_Throttle, "Throttle", SDLK_p, InputAction::HalfAxis));
 	mInputActionsPlayer[3].push_back(InputAction(A_Brake, "Brake", SDLK_SLASH, InputAction::HalfAxis));
-	mInputActionsPlayer[3].push_back(InputAction(A_Steering, "Steering", SDLK_l, SDLK_COMMA));
+	mInputActionsPlayer[3].push_back(InputAction(A_Steering, "Steering", SDLK_l, SDLK_COMMA, InputAction::Axis));
 	mInputActionsPlayer[3].push_back(InputAction(A_HandBrake, "HandBrake", SDLK_PERIOD, InputAction::HalfAxis));
 	mInputActionsPlayer[3].push_back(InputAction(A_Boost, "Boost", SDLK_SEMICOLON, InputAction::HalfAxis));
-	mInputActionsPlayer[3].push_back(InputAction(A_Flip, "Flip", SDLK_o, SDLK_LEFTBRACKET));
+	mInputActionsPlayer[3].push_back(InputAction(A_Flip, "Flip", SDLK_o, SDLK_LEFTBRACKET, InputAction::Axis));
 	mInputActionsPlayer[3].push_back(InputAction(A_ShiftUp, "ShiftUp", SDLK_UNKNOWN, InputAction::Trigger));
 	mInputActionsPlayer[3].push_back(InputAction(A_ShiftDown, "ShiftDown", SDLK_UNKNOWN, InputAction::Trigger));
 	mInputActionsPlayer[3].push_back(InputAction(A_PrevCamera, "PrevCamera", SDLK_UNKNOWN, InputAction::Trigger));
@@ -107,21 +107,20 @@ void App::LoadInputDefaults(std::vector<InputAction> &actions, ICS::InputControl
 		{
 			if (it->mType == InputAction::Trigger)
 				control = new ICS::Control(boost::lexical_cast<std::string>(it->mId), false, true, 0, ICS::ICS_MAX, ICS::ICS_MAX, false);
-			else if (it->mType & InputAction::Axis)
-			{
-				if (it->mType == InputAction::Axis)
-					control = new ICS::Control(boost::lexical_cast<std::string>(it->mId), false, true, 0.5, 0.1, 10.0);
-				else
-					control = new ICS::Control(boost::lexical_cast<std::string>(it->mId), false, true, 0.0, 0.1, 20.0);
-			}
+			else if (it->mType == InputAction::Axis)
+				control = new ICS::Control(boost::lexical_cast<std::string>(it->mId), false, true, 0.5, 0.1, 40.0);
+			else if (it->mType == InputAction::HalfAxis)
+					control = new ICS::Control(boost::lexical_cast<std::string>(it->mId), false, true, 0.0, 0.1, 40.0);
 
 			ICS->addControl(control);
-			control->attachChannel(ICS->getChannel(it->mId), ICS::Channel::DIRECT);
 
 			if (it->mDefaultIncrease != SDLK_UNKNOWN)
 				ICS->addKeyBinding(control, it->mDefaultIncrease, ICS::Control::INCREASE);
 			if (it->mDefaultDecrease != SDLK_UNKNOWN)
 				ICS->addKeyBinding(control, it->mDefaultDecrease, ICS::Control::DECREASE);
+
+			control->attachChannel(ICS->getChannel(it->mId), ICS::Channel::DIRECT);
+			ICS->getChannel(it->mId)->update();
 		}
 		else
 		{
