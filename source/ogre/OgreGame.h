@@ -360,14 +360,11 @@ protected:
 	///  input tab  -----------------------------------------
 	struct InputAction
 	{
-		std::string mName;
-		int mId;
-		SDL_Keycode mDefaultIncrease;
-		SDL_Keycode mDefaultDecrease;
+		std::string mName;  int mId;
+		SDL_Keycode mDefaultIncrease, mDefaultDecrease;
 
 		enum Type
-		{
-			Trigger = 0x00,
+		{	Trigger = 0x00,
 			Axis = 0x01, // 2-sided axis, centered in the middle, keyboard emulation with left & right keys
 			HalfAxis = 0x11 // 1-sided axis, keyboard emulation with 1 key
 		} mType;
@@ -377,49 +374,27 @@ protected:
 
 		InputAction(int id, const std::string& name, SDL_Keycode defaultKey, Type type)
 			: mId(id), mName(name), mDefaultIncrease(defaultKey), mDefaultDecrease(SDLK_UNKNOWN), mType(type)
-		{}
+		{	}
 		InputAction(int id, const std::string &name, SDL_Keycode defaultDecrease, SDL_Keycode defaultIncrease, Type type)
-			: mId(id), mName(name), mDefaultIncrease(defaultIncrease), mDefaultDecrease(defaultDecrease)
-			, mType(Axis)
-		{}
+			: mId(id), mName(name), mDefaultIncrease(defaultIncrease), mDefaultDecrease(defaultDecrease), mType(Axis)
+		{	}
 	};
-
 public:
 	// These IDs are referenced in the user config files.
 	// To keep them valid, make sure to:
 	// - Add new actions at the end of the enum
 	// - Instead of deleting an action, replace it with a dummy one eg A_Unused
 	enum Actions
-	{
-		A_ShowOptions,
-		A_PrevTab,
-		A_NextTab,
-		A_RestartGame,
-		A_ResetGame,
-		A_Screenshot,
-		NumActions
-	};
+	{	A_ShowOptions, A_PrevTab, A_NextTab, A_RestartGame, A_ResetGame, A_Screenshot, NumActions	};
 	enum PlayerActions
-	{
-		A_Throttle,
-		A_Brake,
-		A_Steering,
-		A_HandBrake,
-		A_Boost,
-		A_Flip,
-		A_ShiftUp, // TODO: Shift up/down could be a single "shift" action
-		A_ShiftDown,
-		A_PrevCamera,
-		A_NextCamera,
-		A_LastChk,
-		A_Rewind,
-		NumPlayerActions
+	{	A_Throttle, A_Brake, A_Steering, A_HandBrake, A_Boost, A_Flip,
+		A_ShiftUp, A_ShiftDown, // TODO: Shift up/down could be a single "shift" action
+		A_PrevCamera, A_NextCamera, A_LastChk, A_Rewind, NumPlayerActions
 	};
 	float mPlayerInputState[4][NumPlayerActions];
 	boost::mutex mPlayerInputStateMutex;
 protected:
-	void CreateInputTab(const std::string& title, bool playerTab, const std::vector<InputAction>& actions,
-						ICS::InputControlSystem* ICS);
+	void CreateInputTab(const std::string& title, bool playerTab, const std::vector<InputAction>& actions, ICS::InputControlSystem* ICS);
 	void InitInputGui(), inputBindBtnClicked(WP);
 	// bind=1: "<Assign>"
 	// bind=2: "Key1, <Assign>"
@@ -427,20 +402,21 @@ protected:
 	void UpdateInputButton(MyGUI::Button* button, const InputAction& action, int bind=0);
 	void LoadInputDefaults();
 	void LoadInputDefaults(std::vector<InputAction>& actions, ICS::InputControlSystem* ICS);
+
 	InputAction* mBindingAction;
 	MyGUI::Button* mBindingSender;
-	virtual void mouseAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-		, ICS::InputControlSystem::NamedAxis axis, ICS::Control::ControlChangingDirection direction);
-	virtual void keyBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-		, SDL_Keycode key, ICS::Control::ControlChangingDirection direction);
-	virtual void mouseButtonBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-		, unsigned int button, ICS::Control::ControlChangingDirection direction);
-	virtual void joystickAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-		, int deviceId, int axis, ICS::Control::ControlChangingDirection direction);
-	virtual void joystickButtonBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-		, int deviceId, unsigned int button, ICS::Control::ControlChangingDirection direction);
-	virtual void joystickPOVBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-		, int deviceId, int pov,ICS:: InputControlSystem::POVAxis axis, ICS::Control::ControlChangingDirection direction);
+	virtual void mouseAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
+		ICS::InputControlSystem::NamedAxis axis, ICS::Control::ControlChangingDirection direction);
+	virtual void keyBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
+		SDL_Keycode key, ICS::Control::ControlChangingDirection direction);
+	virtual void mouseButtonBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
+		unsigned int button, ICS::Control::ControlChangingDirection direction);
+	virtual void joystickAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
+		int deviceId, int axis, ICS::Control::ControlChangingDirection direction);
+	virtual void joystickButtonBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
+		int deviceId, unsigned int button, ICS::Control::ControlChangingDirection direction);
+	virtual void joystickPOVBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
+		int deviceId, int pov, ICS::InputControlSystem::POVAxis axis, ICS::Control::ControlChangingDirection direction);
 
 	std::vector<InputAction> mInputActions;
 	std::vector<InputAction> mInputActionsPlayer[4];
@@ -456,7 +432,8 @@ protected:
 	MyGUI::EditPtr edInputMin, edInputMax, edInputMul, edInputReturn, edInputIncrease;  void editInput(MyGUI::EditPtr);
 	void comboInputPreset(CMB), comboInputKeyAllPreset(CMB);
 
-	///  tweak
+
+	///  tweak  -----------------------------------------
 	const static int ciEdCar = 12;
 	MyGUI::EditPtr edCar[ciEdCar],edPerfTest, edTweakCol;  MyGUI::TabPtr tabTweak, tabEdCar;
 	MyGUI::StaticTextPtr txtTweakPath, txtTweakTire, txtTweakPathCol;

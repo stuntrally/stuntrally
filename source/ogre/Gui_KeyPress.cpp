@@ -268,8 +268,8 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 		}
 	}
 
-	MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(
-														  mInputWrapper->sdl2OISKeyCode(arg.keysym.sym)), NULL);
+	MyGUI::InputManager::getInstance().injectKeyPress(
+			MyGUI::KeyCode::Enum( mInputWrapper->sdl2OISKeyCode(arg.keysym.sym)), NULL);
 	return true;
 }
 
@@ -279,7 +279,7 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 	if (currentValue != 1.f)
 		return;
 
-#define action(a) (channel->getNumber() == a)
+	#define action(a) (channel->getNumber() == a)
 
 	//  change tweak tabs
 	//----------------------------------------------------------------------------------------
@@ -350,7 +350,7 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 	//----------------------------------------------------------------------------------------
 
 
-	//  gui on/off  or close wnds
+	//  Gui on/off  or close wnds
 	if (action(A_ShowOptions) && !alt)
 	{
 		if (mWndNetEnd && mWndNetEnd->getVisible())  {  mWndNetEnd->setVisible(false);  // hide netw end
@@ -362,7 +362,7 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 		}
 	}
 
-	//  new game - reload   not in multiplayer
+	//  new game - Reload   not in multiplayer
 	if (action(A_RestartGame) && !mClient)
 	{
 		bPerfTest = ctrl;  // ctrl-F5 start perf test
@@ -390,7 +390,9 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 		carIdWin = 1;  //
 		ghost.Clear(); //
 	}
+	
+	//  Screen shot
+	if (action(A_Screenshot))
+		mWindow->writeContentsToTimestampedFile(PATHMANAGER::Screenshots() + "/", ".jpg");
+	
 }
-
-
-

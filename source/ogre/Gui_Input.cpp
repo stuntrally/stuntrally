@@ -16,15 +16,14 @@ namespace
 std::string GetKeyName(SDL_Keycode key)
 {
 	if (key == SDLK_UNKNOWN)
-		return "Unassigned";
+		return TR("#{InputKeyUnassigned}");
 	else
 		return std::string(SDL_GetKeyName(key));
 }
 }
 
-///  Gui Init - input tab
+///  input events
 //----------------------------------------------------------------------------------------------------------------------------------
-
 void App::LoadInputDefaults()
 {
 	mInputActions.clear();
@@ -98,12 +97,12 @@ void App::LoadInputDefaults()
 		LoadInputDefaults(ap[i], mInputCtrlPlayer[i]);
 }
 
-void App::LoadInputDefaults(std::vector<InputAction> &actions, ICS::InputControlSystem *ICS)
+void App::LoadInputDefaults(std::vector<InputAction> &actions, ICS::InputControlSystem *pICS)
 {
 	for (std::vector<InputAction>::iterator it = actions.begin(); it != actions.end(); ++it)
 	{
 		ICS::Control* control;
-		bool controlExists = (ICS->getChannel(it->mId)->getControlsCount() != 0);
+		bool controlExists = (pICS->getChannel(it->mId)->getControlsCount() != 0);
 		if (!controlExists)
 		{
 			if (it->mType == InputAction::Trigger)
@@ -113,26 +112,24 @@ void App::LoadInputDefaults(std::vector<InputAction> &actions, ICS::InputControl
 			else if (it->mType == InputAction::HalfAxis)
 					control = new ICS::Control(boost::lexical_cast<std::string>(it->mId), false, true, 0.0, 0.1, 40.0);
 
-			ICS->addControl(control);
+			pICS->addControl(control);
 
 			if (it->mDefaultIncrease != SDLK_UNKNOWN)
-				ICS->addKeyBinding(control, it->mDefaultIncrease, ICS::Control::INCREASE);
+				pICS->addKeyBinding(control, it->mDefaultIncrease, ICS::Control::INCREASE);
 			if (it->mDefaultDecrease != SDLK_UNKNOWN)
-				ICS->addKeyBinding(control, it->mDefaultDecrease, ICS::Control::DECREASE);
+				pICS->addKeyBinding(control, it->mDefaultDecrease, ICS::Control::DECREASE);
 
-			control->attachChannel(ICS->getChannel(it->mId), ICS::Channel::DIRECT);
-			ICS->getChannel(it->mId)->update();
+			control->attachChannel(pICS->getChannel(it->mId), ICS::Channel::DIRECT);
+			pICS->getChannel(it->mId)->update();
 		}
 		else
-		{
-			control = ICS->getChannel(it->mId)->getAttachedControls ().front().control;
-		}
+			control = pICS->getChannel(it->mId)->getAttachedControls().front().control;
 
-		it->mICS = ICS;
+		it->mICS = pICS;
 		it->mControl = control;
 
-		if (ICS == mInputCtrl)
-			ICS->getChannel(it->mId)->addListener(this);
+		if (pICS == mInputCtrl)
+			pICS->getChannel(it->mId)->addListener(this);
 	}
 }
 
@@ -146,12 +143,12 @@ void App::UpdateInputButton(MyGUI::Button* button, const InputAction& action, in
 	if (action.mType == InputAction::Axis)
 	{
 		if (bind == 1)
-			buttonLabel = "<Assign>";
+			buttonLabel = TR("#{InputAssignKey}");
 		else
 		{
 			buttonLabel += GetKeyName(decreaseKey) + ", ";
 			if (bind == 2)
-				buttonLabel += "<Assign>";
+				buttonLabel += TR("#{InputAssignKey}");
 			else
 				buttonLabel += GetKeyName(increaseKey);
 		}
@@ -159,26 +156,26 @@ void App::UpdateInputButton(MyGUI::Button* button, const InputAction& action, in
 	else
 	{
 		if (bind == 1)
-			buttonLabel = "<Assign>";
+			buttonLabel = TR("#{InputAssignKey}");
 		else
 			buttonLabel += GetKeyName(increaseKey);
 	}
 
 	if (bind == 0)
 	{
-		for (int j=0; j<SDL_NumJoysticks(); ++j)
+		for (int j=0; j < SDL_NumJoysticks(); ++j)
 		{
 			int axis = action.mICS->getJoystickAxisBinding(action.mControl, j, ICS::Control::INCREASE);
 			if (axis != ICS::InputControlSystem::UNASSIGNED)
 			{
-				if (buttonLabel != "") buttonLabel += " / ";
+				if (buttonLabel != "")  buttonLabel += " / ";
 				buttonLabel += "Axis " + toStr(axis);
 			}
 
 			int increaseButton = action.mICS->getJoystickButtonBinding(action.mControl, j, ICS::Control::INCREASE);
 			if (increaseButton != ICS::InputControlSystem::UNASSIGNED)
 			{
-				if (buttonLabel != "") buttonLabel += " / ";
+				if (buttonLabel != "")  buttonLabel += " / ";
 				buttonLabel += "Button " + toStr(increaseButton);
 			}
 		}
@@ -187,6 +184,9 @@ void App::UpdateInputButton(MyGUI::Button* button, const InputAction& action, in
 	button->setCaption(buttonLabel);
 }
 
+
+///  Gui Init - Input tabs
+//----------------------------------------------------------------------------------------------------------------------------------
 void App::CreateInputTab(const std::string& title, bool playerTab, const std::vector<InputAction>& actions, ICS::InputControlSystem* ICS)
 {
 	TabPtr inputTab = mGUI->findWidget<Tab>("InputTab");  if (!inputTab)  return;
@@ -195,11 +195,13 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 
 	std::string sPlr = title;
 
-	//  button size and columns positon
-	const int sx = 130, sy = 24,  x0 = 20, x1 = 140, x2 = 285, x3 = 430,  yh = 20, ya = 14,  s0 = x1-x0-5;
+	//  button size and columns positons
+	const int sx = 150, sy = 24,
+		x0 = 16, x1 = 140, x2 = 310, x3 = 454,
+		yh = 20, ya = 14,  s0 = x1-x0-5;
 
 #define CreateText(x,y, w,h, name, text)  {  StaticTextPtr txt =  \
-	tabitem->createWidget<TextBox>("TextBox", x,y, w,h, ALIGN, name);  \
+	tabitem->createWidget<TextBox>("TextBox", x,y+2, w,h, ALIGN, name);  \
 	setOrigPos(txt, "OptionsWnd");  \
 	txt->setCaption(text);  }
 
@@ -211,28 +213,37 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 		CreateText(x2,yh, sx,sy, "hdrTxt3_"+sPlr, TR("#90B0F0#{InputHeaderTxt3}"));
 		CreateText(x3,yh, sx,sy, "hdrTxt4_"+sPlr, TR("#80A0E0#{InputHeaderTxt4}"));  }
 
-	///  ------ custom action sorting ----------------
-	int i = 0, y = yh + 2*ya;
+	//  spacing for add y
+	std::map <std::string, int> yRow;
+	//  player
+	yRow["Throttle"] = 2;	yRow["Brake"] = 2;	yRow["Steering"] = 2 +1;
+	yRow["HandBrake"] = 2;	yRow["Boost"] = 2;	yRow["Flip"] = 2 +2;
+	yRow["ShiftUp"] = 2;	yRow["ShiftDown"] = 2 +1;
+	yRow["PrevCamera"] = 2;	yRow["NextCamera"] = 2+1;
+	yRow["LastChk"] = 2;   yRow["Rewind"] = 2;
+	//  general
+	yRow["ShowOptions"] = 2+1;
+	yRow["PrevTab"] = 2;		yRow["NextTab"] = 2+1;
+	yRow["RestartGame"] = 2;	yRow["ResetGame"] = 2+1;
+	yRow["Screenshot"] = 2;
+
 
 	///  Actions  ------------------------------------------------
+	int i = 0, y = yh + 2*ya;
 	for (std::vector<InputAction>::const_iterator it = actions.begin(); it != actions.end(); ++it)
 	{
 		std::string name = it->mName;
 
-		//  description label
+		//  description label  ----------------
 		StaticTextPtr desc = tabitem->createWidget<TextBox>("TextBox",
 			x0, y, s0, sy,  ALIGN);
 		setOrigPos(desc, "OptionsWnd");
 		desc->setCaption( TR("#{InputMap" + name + "}") );
+		desc->setTextColour(Colour(0.86f,0.94f,1.f));
 
-		//  Keyboard binds  --------------------------------
-		//  get information about binds from OISB and set variables how the rebind buttons should be created
-		std::string skey1 = TR("#{InputKeyUnassigned}");
-		std::string skey2 = TR("#{InputKeyUnassigned}");
-
-		//  bound key(s)
-		bool analog = (it->mType & InputAction::Axis);
-		bool twosided = (it->mType == InputAction::Axis);
+		//  bind info
+		bool analog = it->mType & InputAction::Axis;
+		bool twosided = it->mType == InputAction::Axis;
 
 		//  binding button  ----------------
 		ButtonPtr btn1 = tabitem->createWidget<Button>("Button",
@@ -241,14 +252,16 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 		UpdateInputButton(btn1, *it);
 		btn1->eventMouseButtonClick += newDelegate(this, &App::inputBindBtnClicked);
 		btn1->setUserData(*it);
-
+		btn1->setColour(Colour(0.8f,0.92f,1.0f));
+		btn1->setTextColour(!playerTab ? Colour(0.8f,0.9f,1.f) :
+						(analog ? Colour(0.8f,1.0f,0.8f) : Colour(0.7f,1.f,1.f)) );
 
 		//  value bar  --------------
 		if (playerTab)
 		{
 			StaticImagePtr bar = tabitem->createWidget<ImageBox>("ImageBox",
 				x2 + (twosided ? 0 : 64), y+4, twosided ? 128 : 64, 16, ALIGN,
-					"bar_" + toStr(i) + "_" + sPlr);
+				"bar_" + toStr(i) + "_" + sPlr);
 			setOrigPos(bar, "OptionsWnd");
 			bar->setUserData(*it);
 			bar->setImageTexture(String("input_bar.png"));  bar->setImageCoord(IntCoord(0,0,128,16));
@@ -258,7 +271,7 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 		if (analog)
 		{	btn1 = tabitem->createWidget<Button>("Button",
 				x3, y, 32, sy,  ALIGN,
-					"inputdetail_" + toStr(i) + "_" + sPlr + "_1");
+				"inputdetail_" + toStr(i) + "_" + sPlr + "_1");
 			setOrigPos(btn1, "OptionsWnd");
 			btn1->setCaption(">");
 			btn1->setColour(Colour(0.6f,0.8f,1.0f));
@@ -266,9 +279,10 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 			btn1->eventMouseButtonClick += newDelegate(this, &App::inputDetailBtn);
 		}
 		++i;
-		y += 2*ya;
+		y += yRow[name] * ya;
 	}
 
+	///  General tab  --------
 	if (!playerTab)
 	{	y += 1*ya;  //  camera infos
 		CreateText(20,y, 280,24, "txtcam1", TR("#A0D0F0#{InputMapNextCamera} / #{InputMapPrevCamera}"));  y+=2*ya;
@@ -309,10 +323,10 @@ void App::InitInputGui()
 	const int sx = 130, sy = 24,  x0 = 20, x1 = 140, x2 = 285, x3 = 430,  yh = 20,  s0 = x1-x0-5;
 
 
-	///  insert a tab item for every schema (4players,global)
+	///  insert a tab item for every schema (global, 4players)
 	CreateInputTab("#80C0FF#{InputMapGeneral}", false, mInputActions, mInputCtrl);
-	for (int i=0; i<4; ++i)
-		CreateInputTab(String("#FFF850") + (i==0 ? "#{Player} ":" ") +toStr(i), true, mInputActionsPlayer[i], mInputCtrlPlayer[i]);
+	for (int i=0; i < 4; ++i)
+		CreateInputTab(String("#FFF850") + (i==0 ? "#{Player} ":" ") +toStr(i+1), true, mInputActionsPlayer[i], mInputCtrlPlayer[i]);
 
 
 	TabItemPtr tabitem = inputTab->addItem(TR("#C0C0FF#{Other}"));
@@ -377,11 +391,9 @@ void App::inputBindBtnClicked(WP sender)
 	mBindingSender = sender->castType<MyGUI::Button>();
 
 	if (mBindingAction->mType == InputAction::Axis)
-	{
-		// bind decrease (ie left) first
+	{	// bind decrease (ie left) first
 		action->mICS->enableDetectingBindingState(action->mControl, ICS::Control::DECREASE);
-	}
-	else
+	}else
 		action->mICS->enableDetectingBindingState(action->mControl, ICS::Control::INCREASE);
 
 	UpdateInputButton(mBindingSender, *action, 1);
@@ -402,7 +414,7 @@ void App::notifyInputActionBound(bool complete)
 		// so we need to force-update button labels
 		TabControl* inputTab = mGUI->findWidget<TabControl>("InputTab");  if (!inputTab)  return;
 		TabItem* current = inputTab->getItemSelected();
-		for (int i=0; i<current->getChildCount(); ++i)
+		for (int i=0; i < current->getChildCount(); ++i)
 		{
 			MyGUI::Button* button = current->getChildAt(i)->castType<MyGUI::Button>(false);
 			if (!button || button->getCaption() == ">") // HACK: we don't want the detail buttons
@@ -485,15 +497,15 @@ void App::UpdateInputBars()
 }
 
 
-void App::mouseAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-	, ICS::InputControlSystem::NamedAxis axis, ICS::Control::ControlChangingDirection direction)
+void App::mouseAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
+	ICS::InputControlSystem::NamedAxis axis, ICS::Control::ControlChangingDirection direction)
 {
 	// we don't want mouse movement bindings
 	return;
 }
 
-void App::keyBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-	, SDL_Keycode key, ICS::Control::ControlChangingDirection direction)
+void App::keyBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
+	SDL_Keycode key, ICS::Control::ControlChangingDirection direction)
 {
 	ICS::DetectingBindingListener::keyBindingDetected (ICS, control, key, direction);
 

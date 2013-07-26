@@ -470,7 +470,7 @@
 	<Tag name="Input">Input</Tag>
 	<Tag name="InputNoJS">No joystick</Tag>
 	<Tag name="InputKeyUnassigned">-- None --</Tag>
-	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
+	<Tag name="InputAssignKey">&lt;Assign&gt;</Tag>
 
 	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
 	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
