@@ -13,10 +13,10 @@ using namespace Ogre;
 
 namespace
 {
-std::string GetKeyName(SDL_Keycode key)
+std::string GetKeyName(SDL_Keycode key, bool omit = false)
 {
 	if (key == SDLK_UNKNOWN)
-		return TR("#{InputKeyUnassigned}");
+		return omit ? "" : TR("#{InputKeyUnassigned}");
 	else
 		return std::string(SDL_GetKeyName(key));
 }
@@ -143,22 +143,20 @@ void App::UpdateInputButton(MyGUI::Button* button, const InputAction& action, in
 	if (action.mType == InputAction::Axis)
 	{
 		if (bind == 1)
-			buttonLabel = TR("#{InputAssignKey}");
+			buttonLabel = TR("#FFA030#{InputAssignKey}");
 		else
-		{
-			buttonLabel += GetKeyName(decreaseKey) + ", ";
+		{	buttonLabel += GetKeyName(decreaseKey,true);
+			if  (buttonLabel != "")  buttonLabel += ", ";
 			if (bind == 2)
-				buttonLabel += TR("#{InputAssignKey}");
+				buttonLabel += TR("#FFA030#{InputAssignKey}");
 			else
-				buttonLabel += GetKeyName(increaseKey);
+				buttonLabel += GetKeyName(increaseKey,true);
 		}
-	}
-	else
-	{
-		if (bind == 1)
-			buttonLabel = TR("#{InputAssignKey}");
+	}else
+	{	if (bind == 1)
+			buttonLabel = TR("#FFA030#{InputAssignKey}");
 		else
-			buttonLabel += GetKeyName(increaseKey);
+			buttonLabel += GetKeyName(increaseKey, action.mType & InputAction::Axis);
 	}
 
 	if (bind == 0)
@@ -169,18 +167,16 @@ void App::UpdateInputButton(MyGUI::Button* button, const InputAction& action, in
 			if (axis != ICS::InputControlSystem::UNASSIGNED)
 			{
 				if (buttonLabel != "")  buttonLabel += " / ";
-				buttonLabel += "Axis " + toStr(axis);
+				buttonLabel += "J"+toStr(j) + ".Axis " + toStr(axis);
 			}
-
 			int increaseButton = action.mICS->getJoystickButtonBinding(action.mControl, j, ICS::Control::INCREASE);
 			if (increaseButton != ICS::InputControlSystem::UNASSIGNED)
 			{
 				if (buttonLabel != "")  buttonLabel += " / ";
-				buttonLabel += "Button " + toStr(increaseButton);
+				buttonLabel += "J"+toStr(j) + ".Button " + toStr(increaseButton);
 			}
 		}
 	}
-
 	button->setCaption(buttonLabel);
 }
 
@@ -252,9 +248,10 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 		UpdateInputButton(btn1, *it);
 		btn1->eventMouseButtonClick += newDelegate(this, &App::inputBindBtnClicked);
 		btn1->setUserData(*it);
-		btn1->setColour(Colour(0.8f,0.92f,1.0f));
-		btn1->setTextColour(!playerTab ? Colour(0.8f,0.9f,1.f) :
-						(analog ? Colour(0.8f,1.0f,0.8f) : Colour(0.7f,1.f,1.f)) );
+		Colour clr = !playerTab ? Colour(0.7f,0.85f,1.f) :
+			(analog ? (twosided ? Colour(0.8f,0.8f,1.0f) : Colour(0.7f,0.8f,1.0f)) : Colour(0.7f,0.9f,0.9f));
+		btn1->setColour(clr);
+		btn1->setTextColour(clr);
 
 		//  value bar  --------------
 		if (playerTab)
@@ -306,8 +303,9 @@ void App::InitInputGui()
 	txtInpDetail = mGUI->findWidget<StaticText>("InputDetail");
 
 	//  details edits
-	Ed(InputMin, editInput);  Ed(InputMax, editInput);  Ed(InputMul, editInput);
-	Ed(InputReturn, editInput);  Ed(InputIncrease, editInput);
+	ButtonPtr btn;
+	Btn("InputInv", btnInputInv);  //Ed(InputMul, editInput);
+	Ed(InputIncrease, editInput);  //Ed(InputReturn, editInput);
 
 	//  key emul presets combo
 	ComboBoxPtr combo;
@@ -384,7 +382,7 @@ void App::InitInputGui()
 
 void App::inputBindBtnClicked(WP sender)
 {
-	sender->castType<MyGUI::Button>()->setCaption( TR("#{InputAssignKey}"));
+	sender->castType<MyGUI::Button>()->setCaption( TR("#FFA030#{InputAssignKey}"));
 
 	InputAction* action = sender->getUserData<InputAction>();
 	mBindingAction = action;
@@ -449,6 +447,14 @@ void App::editInput(MyGUI::EditPtr ed)
 	mBindingAction->mControl->setStepsPerSeconds(vInc*10);
 }
 
+void App::btnInputInv(WP wp)
+{
+	ButtonPtr chk = wp->castType<MyGUI::Button>();
+	//TODO: inverse axis only..
+    //chk->setStateSelected();
+	//mBindingAction->mControl->setChangingDirection(
+}
+
 void App::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 {
 	if (val == 0)  return;  cmb->setIndexSelected(0);
@@ -458,7 +464,7 @@ void App::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 
 	const int numActs = 6;  // these actions have key emul params (analog)
 	int keyActs[numActs] = {A_Boost, A_Brake, A_Flip, A_HandBrake, A_Steering, A_Throttle};
-	const Real speeds[3] = {3,4,5};
+	const Real speeds[3] = {2,3,4};
 	Real vInc = speeds[val-1];
 
 	for (int i=0; i < numActs; ++i)
@@ -489,7 +495,7 @@ void App::UpdateInputBars()
 
 		const int wf = 128, w = 256;  int v = -val * 128, vf = -(val*2-1) * 64, s=512, s0=s/2;
 
-		bool full = (action.mType == InputAction::Axis);
+		bool full = action.mType == InputAction::Axis;
 
 		if (full)	image->setImageCoord(IntCoord(std::max(0, std::min(s-wf, vf + s0 -wf/2)), 0, wf, 16));
 		else		image->setImageCoord(IntCoord(std::max(0, std::min(s-w, v + s0)), 0, w, 16));
@@ -497,55 +503,52 @@ void App::UpdateInputBars()
 }
 
 
-void App::mouseAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
+void App::mouseAxisBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
 	ICS::InputControlSystem::NamedAxis axis, ICS::Control::ControlChangingDirection direction)
 {
 	// we don't want mouse movement bindings
 	return;
 }
 
-void App::keyBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
+void App::keyBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
 	SDL_Keycode key, ICS::Control::ControlChangingDirection direction)
 {
-	ICS::DetectingBindingListener::keyBindingDetected (ICS, control, key, direction);
+	ICS::DetectingBindingListener::keyBindingDetected(pICS, control, key, direction);
 
 	if (direction == ICS::Control::DECREASE)
 	{
-		ICS->enableDetectingBindingState(control, ICS::Control::INCREASE);
+		pICS->enableDetectingBindingState(control, ICS::Control::INCREASE);
 		notifyInputActionBound(false); // second key still needs binding
-	}
-	else
-	{
+	}else
 		notifyInputActionBound(true); // done
-	}
 }
 
-void App::mouseButtonBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-	, unsigned int button, ICS::Control::ControlChangingDirection direction)
+void App::mouseButtonBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
+	unsigned int button, ICS::Control::ControlChangingDirection direction)
 {
 	return;
 }
 
-void App::joystickAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-	, int deviceId, int axis, ICS::Control::ControlChangingDirection direction)
+void App::joystickAxisBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
+	int deviceId, int axis, ICS::Control::ControlChangingDirection direction)
 {
-	ICS::DetectingBindingListener::joystickAxisBindingDetected (ICS, control, deviceId, axis, ICS::Control::INCREASE);
+	ICS::DetectingBindingListener::joystickAxisBindingDetected(pICS, control, deviceId, axis, ICS::Control::INCREASE);
 	notifyInputActionBound(true);
 }
 
-void App::joystickButtonBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-	, int deviceId, unsigned int button, ICS::Control::ControlChangingDirection direction)
+void App::joystickButtonBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
+	int deviceId, unsigned int button, ICS::Control::ControlChangingDirection direction)
 {
 	// 2-sided axis can't be bound with a JS button
 	if (mBindingAction->mType == InputAction::Axis)
 		return;
 
-	ICS::DetectingBindingListener::joystickButtonBindingDetected (ICS, control, deviceId, button, ICS::Control::INCREASE);
+	ICS::DetectingBindingListener::joystickButtonBindingDetected(pICS, control, deviceId, button, ICS::Control::INCREASE);
 	notifyInputActionBound(true);
 }
 
-void App::joystickPOVBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-	, int deviceId, int pov,ICS:: InputControlSystem::POVAxis axis, ICS::Control::ControlChangingDirection direction)
+void App::joystickPOVBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
+	int deviceId, int pov,ICS:: InputControlSystem::POVAxis axis, ICS::Control::ControlChangingDirection direction)
 {
 	return;
 }

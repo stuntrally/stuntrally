@@ -488,6 +488,7 @@
 	<Tag name="InputMinVal">Min. Value</Tag>
 	<Tag name="InputMaxVal">Max. Value</Tag>
 	<Tag name="InputMultiplier">Multiplier</Tag>
+	<Tag name="InputInverse">Inverse</Tag>
 
 	<Tag name="InpSet_KeyHalf">Key Half</Tag>
 	<Tag name="InpSet_KeyFull">Key Full</Tag>

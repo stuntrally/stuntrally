@@ -429,8 +429,8 @@ protected:
 
 	//  joy events
 	MyGUI::StaticTextPtr txtInpDetail;  MyGUI::WidgetPtr panInputDetail;
-	MyGUI::EditPtr edInputMin, edInputMax, edInputMul, edInputReturn, edInputIncrease;  void editInput(MyGUI::EditPtr);
-	void comboInputPreset(CMB), comboInputKeyAllPreset(CMB);
+	MyGUI::EditPtr edInputIncrease;  void editInput(MyGUI::EditPtr), btnInputInv(WP);
+	void comboInputKeyAllPreset(CMB);
 
 
 	///  tweak  -----------------------------------------
