@@ -136,21 +136,18 @@ protected:
 	///  input control
 	virtual void channelChanged(ICS::Channel* channel, float currentValue, float previousValue) = 0;
 	virtual void mouseAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-		, ICS::InputControlSystem::NamedAxis axis, ICS::Control::ControlChangingDirection direction);
+		, ICS::InputControlSystem::NamedAxis axis, ICS::Control::ControlChangingDirection direction) = 0;
 	virtual void keyBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-		, SDL_Keycode key, ICS::Control::ControlChangingDirection direction);
+		, SDL_Keycode key, ICS::Control::ControlChangingDirection direction) = 0;
 	virtual void mouseButtonBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-		, unsigned int button, ICS::Control::ControlChangingDirection direction);
+		, unsigned int button, ICS::Control::ControlChangingDirection direction) = 0;
 	virtual void joystickAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-		, int deviceId, int axis, ICS::Control::ControlChangingDirection direction);
+		, int deviceId, int axis, ICS::Control::ControlChangingDirection direction) = 0;
 	virtual void joystickButtonBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-		, int deviceId, unsigned int button, ICS::Control::ControlChangingDirection direction);
+		, int deviceId, unsigned int button, ICS::Control::ControlChangingDirection direction) = 0;
 	virtual void joystickPOVBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-		, int deviceId, int pov,ICS:: InputControlSystem::POVAxis axis, ICS::Control::ControlChangingDirection direction);
-	virtual void joystickSliderBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-		, int deviceId, int slider, ICS::Control::ControlChangingDirection direction);
-	void clearAllBindings (ICS::InputControlSystem* ICS, ICS::Control* control);
-	virtual void notifyInputActionBound() = 0;
+		, int deviceId, int pov,ICS:: InputControlSystem::POVAxis axis, ICS::Control::ControlChangingDirection direction) = 0;
+	virtual void notifyInputActionBound(bool complete) = 0;
 
 	void onCursorChange (const std::string& name);
 

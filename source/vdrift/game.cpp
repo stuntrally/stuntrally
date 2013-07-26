@@ -451,7 +451,8 @@ void GAME::UpdateCarInputs(CAR & car)
 	float carspeed = car.GetSpeedDir();  //car.GetSpeed();
 	//LogO(fToStr(car.GetSpeed(),2,6)+" "+fToStr(car.GetSpeedDir(),2,6));
 
-	carinputs = carcontrols_local.second.ProcessInput(car.id, carspeed, sss_eff, sss_velf,
+	boost::lock_guard<boost::mutex> lock(pOgreGame->mPlayerInputStateMutex);
+	carinputs = carcontrols_local.second.ProcessInput(pOgreGame->mPlayerInputState[car.id], car.id, carspeed, sss_eff, sss_velf,
 		forceBrake, pOgreGame->bPerfTest, pOgreGame->iPerfTestStage);
 
 	car.HandleInputs(carinputs, TickPeriod());

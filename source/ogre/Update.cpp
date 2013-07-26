@@ -107,6 +107,15 @@ bool App::frameStart(Real time)
 	PROFILER.beginBlock(" frameSt");
 	fLastFrameDT = time;
 
+	for (int i=0; i<4; ++i)
+	{
+		boost::lock_guard<boost::mutex> lock(mPlayerInputStateMutex);
+		for (int a = 0; a<NumPlayerActions; ++a)
+		{
+			mPlayerInputState[i][a] = mInputCtrlPlayer[i]->getChannel(a)->getValue();
+		}
+	}
+
 	if (imgBack && pGame)  // show/hide background image
 	{
 		bool backImgVis = !bLoading && pGame->cars.empty();

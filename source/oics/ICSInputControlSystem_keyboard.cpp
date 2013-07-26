@@ -43,7 +43,7 @@ namespace ICS
 				dir = Control::DECREASE;
 			}
 
-			addKeyBinding(mControls.back(), mKeys[xmlKeyBinder->Attribute("key")], dir);
+			addKeyBinding(mControls.back(), stringToKeyCode(xmlKeyBinder->Attribute("key")), dir);
 
 			xmlKeyBinder = xmlKeyBinder->NextSiblingElement("KeyBinder");
 		}
@@ -116,6 +116,7 @@ namespace ICS
 			{
 				mDetectingBindingListener->keyBindingDetected(this,
 					mDetectingBindingControl, evt.keysym.sym, mDetectingBindingDirection);
+				return false;
 			}
 		}
 	    
@@ -129,7 +130,7 @@ namespace ICS
 			ControlsKeyBinderMapType::const_iterator it = mControlsKeyBinderMap.find(evt.keysym.sym);
 			if(it != mControlsKeyBinderMap.end())
 			{
-				it->second.control->setChangingDirection(Control::STOP);
+				it->second.control->removeChangingDirection(it->second.direction);
 			}
 		}
 

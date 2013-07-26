@@ -132,12 +132,13 @@ void BaseApp::createFrameListener()
 	mCursorManager->setEnabled(true);
 	onCursorChange(MyGUI::PointerManager::getInstance().getDefaultPointer());
 
-	mInputCtrl = new ICS::InputControlSystem(PATHMANAGER::UserConfigDir()+"input.xml", true, this, NULL, 100);
+	mInputCtrl = new ICS::InputControlSystem(PATHMANAGER::UserConfigDir()+"/input.xml", true, this, NULL, 100);
+
 	for (int j=0; j<SDL_NumJoysticks(); ++j)
 		mInputCtrl->addJoystick(j);
 	for (int i=0; i<4; ++i)
 	{
-		std::string file = PATHMANAGER::UserConfigDir()+"input_p" + toStr(i) + ".xml";
+		std::string file = PATHMANAGER::UserConfigDir()+"/input_p" + toStr(i) + ".xml";
 		mInputCtrlPlayer[i] = new ICS::InputControlSystem(file, true, this, NULL, 100);
 		for (int j=0; j<SDL_NumJoysticks(); ++j)
 			mInputCtrlPlayer[i]->addJoystick(j);
@@ -283,6 +284,7 @@ bool BaseApp::configure()
 		if (js)
 			mJoysticks.push_back(js);
 	}
+	SDL_StartTextInput();
 
 	Ogre::NameValuePairList params;
 	params.insert(std::make_pair("title", "Stunt Rally"));
@@ -814,74 +816,5 @@ void BaseApp::onCursorChange(const std::string &name)
 		}
 	}
 
-}
-
-
-//  input control
-//-------------------------------------------------------
-void BaseApp::mouseAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-	, ICS::InputControlSystem::NamedAxis axis, ICS::Control::ControlChangingDirection direction)
-{
-	// we don't want mouse movement bindings
-	return;
-}
-
-void BaseApp::keyBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-	, SDL_Keycode key, ICS::Control::ControlChangingDirection direction)
-{
-	clearAllBindings(ICS, control);
-	ICS::DetectingBindingListener::keyBindingDetected (ICS, control, key, direction);
-	notifyInputActionBound();
-}
-
-void BaseApp::mouseButtonBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-	, unsigned int button, ICS::Control::ControlChangingDirection direction)
-{
-	clearAllBindings(ICS, control);
-	ICS::DetectingBindingListener::mouseButtonBindingDetected (ICS, control, button, direction);
-	notifyInputActionBound();
-}
-
-void BaseApp::joystickAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-	, int deviceId, int axis, ICS::Control::ControlChangingDirection direction)
-{
-	clearAllBindings(ICS, control);
-	ICS::DetectingBindingListener::joystickAxisBindingDetected (ICS, control, deviceId, axis, direction);
-	notifyInputActionBound();
-}
-
-void BaseApp::joystickButtonBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-	, int deviceId, unsigned int button, ICS::Control::ControlChangingDirection direction)
-{
-	clearAllBindings(ICS, control);
-	ICS::DetectingBindingListener::joystickButtonBindingDetected (ICS, control, deviceId, button, direction);
-	notifyInputActionBound();
-}
-
-void BaseApp::joystickPOVBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-	, int deviceId, int pov,ICS:: InputControlSystem::POVAxis axis, ICS::Control::ControlChangingDirection direction)
-{
-	clearAllBindings(ICS, control);
-	ICS::DetectingBindingListener::joystickPOVBindingDetected (ICS, control, deviceId, pov, axis, direction);
-	notifyInputActionBound();
-}
-
-void BaseApp::joystickSliderBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control
-	, int deviceId, int slider, ICS::Control::ControlChangingDirection direction)
-{
-	clearAllBindings(ICS, control);
-	ICS::DetectingBindingListener::joystickSliderBindingDetected (ICS, control, deviceId, slider, direction);
-	notifyInputActionBound();
-}
-
-void BaseApp::clearAllBindings (ICS::InputControlSystem* ICS, ICS::Control* control)
-{
-	// right now we don't really need multiple bindings for the same action, so remove all others first
-	if (ICS->getKeyBinding (control, ICS::Control::INCREASE) != SDLK_UNKNOWN)
-		ICS->removeKeyBinding (ICS->getKeyBinding (control, ICS::Control::INCREASE));
-	if (ICS->getMouseButtonBinding (control, ICS::Control::INCREASE) != ICS_MAX_DEVICE_BUTTONS)
-		ICS->removeMouseButtonBinding (ICS->getMouseButtonBinding (control, ICS::Control::INCREASE));
-
-	/// \todo add joysticks here once they are added
 }
 

@@ -124,14 +124,12 @@ namespace ICS
 		void addJoystickAxisBinding(Control* control, int deviceId, int axis, Control::ControlChangingDirection direction);
 		void addJoystickButtonBinding(Control* control, int deviceId, unsigned int button, Control::ControlChangingDirection direction);
 		void addJoystickPOVBinding(Control* control, int deviceId, int index, POVAxis axis, Control::ControlChangingDirection direction);
-		void addJoystickSliderBinding(Control* control, int deviceId, int index, Control::ControlChangingDirection direction);
 		void removeKeyBinding(SDL_Keycode key);
 		void removeMouseAxisBinding(NamedAxis axis);
 		void removeMouseButtonBinding(unsigned int button);
 		void removeJoystickAxisBinding(int deviceId, int axis);
 		void removeJoystickButtonBinding(int deviceId, unsigned int button);
 		void removeJoystickPOVBinding(int deviceId, int index, POVAxis axis);
-		void removeJoystickSliderBinding(int deviceId, int index);
 
 		SDL_Keycode getKeyBinding(Control* control, ICS::Control::ControlChangingDirection direction);
 		NamedAxis getMouseAxisBinding(Control* control, ICS::Control::ControlChangingDirection direction);
@@ -139,7 +137,6 @@ namespace ICS
 		int getJoystickAxisBinding(Control* control, int deviceId, ICS::Control::ControlChangingDirection direction);
 		unsigned int getJoystickButtonBinding(Control* control, int deviceId, ICS::Control::ControlChangingDirection direction);
 		POVBindingPair getJoystickPOVBinding(Control* control, int deviceId, ICS::Control::ControlChangingDirection direction);
-		int getJoystickSliderBinding(Control* control, int deviceId, ICS::Control::ControlChangingDirection direction);
 
 		std::string keyCodeToString(SDL_Keycode key);
 		SDL_Keycode stringToKeyCode(std::string key);
@@ -159,7 +156,6 @@ namespace ICS
 		void loadJoystickAxisBinders(TiXmlElement* xmlControlNode);
 		void loadJoystickButtonBinders(TiXmlElement* xmlControlNode);
 		void loadJoystickPOVBinders(TiXmlElement* xmlControlNode);
-		void loadJoystickSliderBinders(TiXmlElement* xmlControlNode);
 
 		void addMouseAxisBinding_(Control* control, int axis, Control::ControlChangingDirection direction);
 		void removeMouseAxisBinding_(int axis);
@@ -194,21 +190,17 @@ namespace ICS
 		typedef std::map<int, ControlsAxisBinderMapType> JoystickAxisBinderMapType;					// <joystick_id, <axis, [direction, control]> >
 		typedef std::map<int, ControlsButtonBinderMapType> JoystickButtonBinderMapType;				// <joystick_id, <button, [direction, control]> > 
         typedef std::map<int, std::map<int, ControlsPOVBinderMapType> > JoystickPOVBinderMapType;	// <joystick_id, <index, <axis, [direction, control]> > >
-		typedef std::map<int, ControlsSliderBinderMapType> JoystickSliderBinderMapType;				// <joystick_id, <index, [direction, control]> > 
 
 		ControlsAxisBinderMapType mControlsMouseAxisBinderMap;			// <axis, [direction, control]>
 		ControlsButtonBinderMapType mControlsMouseButtonBinderMap;		// <int, [direction, control]>
 		JoystickAxisBinderMapType mControlsJoystickAxisBinderMap;		// <joystick_id, <axis, [direction, control]> >
 		JoystickButtonBinderMapType mControlsJoystickButtonBinderMap;	// <joystick_id, <button, [direction, control]> > 
 		JoystickPOVBinderMapType mControlsJoystickPOVBinderMap;			// <joystick_id, <index, <axis, [direction, control]> > > 
-		JoystickSliderBinderMapType mControlsJoystickSliderBinderMap;	// <joystick_id, <index, [direction, control]> > 
 
 		std::vector<Control *> mControls;
 		std::vector<Channel *> mChannels;
 
 		ControlsKeyBinderMapType mControlsKeyBinderMap;
-		std::map<std::string, SDL_Keycode> mKeys;
-		std::map<SDL_Keycode, std::string> mKeyCodes;
 
 		bool mActive;
 		InputControlSystemLog* mLog;
@@ -225,9 +217,6 @@ namespace ICS
 		int mMouseAxisBindingInitialValues[3];
 
 	private:
-
-		void fillSDLKeysMap();
-
 		Uint16 mClientWidth;
 		Uint16 mClientHeight;
 	};
@@ -252,9 +241,6 @@ namespace ICS
 
 		virtual void joystickPOVBindingDetected(InputControlSystem* ICS, Control* control
 			, int deviceId, int pov, InputControlSystem::POVAxis axis, Control::ControlChangingDirection direction);
-
-		virtual void joystickSliderBindingDetected(InputControlSystem* ICS, Control* control
-			, int deviceId, int slider, Control::ControlChangingDirection direction);
 	};
 
 	static const float ICS_MAX = std::numeric_limits<float>::max();

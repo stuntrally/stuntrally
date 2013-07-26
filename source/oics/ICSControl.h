@@ -41,14 +41,16 @@ namespace ICS
 
 		enum ControlChangingDirection
 		{
-			DECREASE = -1, STOP = 0, INCREASE = 1
+			// If both increase and decrease keys are active at the same time, direction needs to be INCREASE&DECREASE,
+			// resulting in no action
+			DECREASE = 0x01, STOP = 0, INCREASE = 0x04
 		};
 
 		Control(const std::string name, bool autoChangeDirectionOnLimitsAfterStop = false, bool autoReverseToInitialValue = false, float initialValue = 0.5, float stepSize = 0.1, float stepsPerSeconds = 2.0, bool axisBindable = true); 
 		~Control();
 
 		void setChangingDirection(ControlChangingDirection direction);
-		inline ControlChangingDirection getChangingDirection(){ return currentChangingDirection; };
+		inline ControlChangingDirection removeChangingDirection(ControlChangingDirection direction){ currentChangingDirection &= ~direction; };
 
 		void setValue(float value);
 		inline float getValue(){ return mValue; };
@@ -59,6 +61,9 @@ namespace ICS
 
 		inline float getStepSize(){ return mStepSize; };
 		inline float getStepsPerSeconds(){ return mStepsPerSeconds; };
+
+		void setStepSize(float size){ mStepSize = size; };
+		void setStepsPerSeconds(float steps){ mStepsPerSeconds = steps; };
 
 		inline void setIgnoreAutoReverse(bool value){ mIgnoreAutoReverse = value; }; // mouse disable autoreverse
 		inline bool isAutoReverseIgnored(){ return mIgnoreAutoReverse; };
@@ -87,7 +92,7 @@ namespace ICS
 		bool mAutoChangeDirectionOnLimitsAfterStop;
 		bool mAxisBindable;
 
-		Control::ControlChangingDirection currentChangingDirection;
+		int currentChangingDirection;
 		std::list<Channel*> mAttachedChannels;
 
 		std::list<ControlListener*> mListeners;

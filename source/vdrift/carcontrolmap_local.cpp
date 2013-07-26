@@ -24,17 +24,11 @@ bool action(const std::string& name)
 
 
 ///  Process Input
-const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player,
+const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(const float* channels, int player,
 	float carspeed, float sss_effect, float sss_velfactor,
 	bool forceBrake, bool bPerfTest, EPerfTest iPerfTestStage)
 {
 	assert(inputs.size() == CARINPUT::ALL);
-
-	lastinputs = inputs;
-	/*
-	
-	if (OISB::System::getSingletonPtr() == NULL)  return inputs;
-	const std::string sPlr = "Player" + toStr(player+1) + "/";
 
 	//-----------------------------------------------------------------
 	if (bPerfTest)  // Perf test, automatic car input
@@ -53,8 +47,8 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player,
 		inputs[CARINPUT::BOOST]     = 0.f;
 		inputs[CARINPUT::FLIP]      = 0.f;
 		
-		inputs[CARINPUT::PREV_CAM]	= action(sPlr+"PrevCamera");
-		inputs[CARINPUT::NEXT_CAM]	= action(sPlr+"NextCamera");
+		inputs[CARINPUT::PREV_CAM]	= channels[App::A_PrevCamera];
+		inputs[CARINPUT::NEXT_CAM]	= channels[App::A_NextCamera];
 
 		inputs[CARINPUT::LAST_CHK]	= 0.f;
 		inputs[CARINPUT::REWIND]	= 0.f;
@@ -64,28 +58,13 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player,
 	//-----------------------------------------------------------------
 	
 	//  throttle, brake
-	bool oneAxis = false;  // when brake not bound
-	OISB::AnalogAxisAction* act = static_cast<OISB::AnalogAxisAction*>(
-		OISB::System::getSingleton().lookupAction(sPlr+"Brake"));
-	if (act)  {
-		OISB::Binding* binding = act->mBindings.front();
-		if (binding)
-			oneAxis = binding->getNumBindables() == 0;  }
-
-	if (oneAxis)
-	{
-		const float val = forceBrake ? 0.f : analogAction(sPlr+"Throttle", true);
-		inputs[CARINPUT::THROTTLE] = val > 0.f ?  val : 0.f;
-		inputs[CARINPUT::BRAKE]    = val < 0.f ? -val : 0.f;
-	}else{
-		inputs[CARINPUT::THROTTLE] = forceBrake ? 0.f : analogAction(sPlr+"Throttle");
-		const float val = forceBrake ? 0.f : analogAction(sPlr+"Brake");
-		const float deadzone = 0.0001f;  // sensible deadzone for braking
-		inputs[CARINPUT::BRAKE]    = (val < deadzone) ? 0.f : val;  
-	}
+	inputs[CARINPUT::THROTTLE] = forceBrake ? 0.f : channels[App::A_Throttle];
+	const float val_ = forceBrake ? 0.f : channels[App::A_Brake];
+	const float deadzone = 0.0001f;  // sensible deadzone for braking
+	inputs[CARINPUT::BRAKE]    = (val_ < deadzone) ? 0.f : val_;
 
 	//  steering
-	float val = forceBrake ? 0.f : analogAction(sPlr+"Steering", true);
+	float val = forceBrake ? 0.f : (channels[App::A_Steering]*2-1);
 
 	//*  speed sensitive steering sss (decrease steer angle range with higher speed)
 	if (sss_effect > 0.02f)
@@ -106,22 +85,22 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player,
 	inputs[CARINPUT::STEER_LEFT]  = val < 0.f ? -val : 0.f;
 	
 	//  shift
-	bool grUp = action(sPlr+"ShiftUp"), grDn = action(sPlr+"ShiftDown");
+	bool grUp = channels[App::A_ShiftUp], grDn = channels[App::A_ShiftDown];
 	inputs[CARINPUT::SHIFT_UP]   = grUp && !grUpOld[player];
 	inputs[CARINPUT::SHIFT_DOWN] = grDn && !grDnOld[player];
 	grUpOld[player] = grUp;  grDnOld[player] = grDn;
 	
 	//  other
-	inputs[CARINPUT::HANDBRAKE] = forceBrake ? 1.f : analogAction(sPlr+"HandBrake");
-	inputs[CARINPUT::BOOST]     = forceBrake ? 0.f : analogAction(sPlr+"Boost");
-	inputs[CARINPUT::FLIP]      = forceBrake ? 0.f : analogAction(sPlr+"Flip", true);
+	inputs[CARINPUT::HANDBRAKE] = forceBrake ? 1.f : channels[App::A_HandBrake];
+	inputs[CARINPUT::BOOST]     = forceBrake ? 0.f : channels[App::A_Boost];
+	inputs[CARINPUT::FLIP]      = forceBrake ? 0.f : channels[App::A_Flip]*2-1;
 	
 	//  cam
-	inputs[CARINPUT::PREV_CAM]	= action(sPlr+"PrevCamera");
-	inputs[CARINPUT::NEXT_CAM]	= action(sPlr+"NextCamera");
+	inputs[CARINPUT::PREV_CAM]	= channels[App::A_PrevCamera];
+	inputs[CARINPUT::NEXT_CAM]	= channels[App::A_NextCamera];
 	//  last chk
-	inputs[CARINPUT::LAST_CHK]	= forceBrake ? false : action(sPlr+"LastChk");
-	inputs[CARINPUT::REWIND]	= forceBrake ? false : action(sPlr+"Rewind");
-*/
+	inputs[CARINPUT::LAST_CHK]	= forceBrake ? false : channels[App::A_LastChk];
+	inputs[CARINPUT::REWIND]	= forceBrake ? false : channels[App::A_Rewind];
+
 	return inputs;
 }

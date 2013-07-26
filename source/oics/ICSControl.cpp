@@ -93,7 +93,7 @@ namespace ICS
 
 	void Control::setChangingDirection(ControlChangingDirection direction)
 	{ 
-		currentChangingDirection = direction;
+		currentChangingDirection |= direction;
 		mPendingActions.push_back(direction);
 	}
 
@@ -102,9 +102,9 @@ namespace ICS
 		if(mPendingActions.size() > 0)
 		{
 			size_t timedActionsCount = 0;
-			
+
 			std::list<Control::ControlChangingDirection>::iterator cached_end = mPendingActions.end();
-			for(std::list<Control::ControlChangingDirection>::iterator it = mPendingActions.begin() ; 
+			for(std::list<Control::ControlChangingDirection>::iterator it = mPendingActions.begin() ;
 				it != cached_end ; it++)
 			{
 				if( (*it) != Control::STOP )
@@ -112,15 +112,20 @@ namespace ICS
 					timedActionsCount++;
 				}
 			}
-			
+
 			float timeSinceLastFramePart = timeSinceLastFrame / std::max<size_t>(1, timedActionsCount);
-			for(std::list<Control::ControlChangingDirection>::iterator it = mPendingActions.begin() ; 
+			for(std::list<Control::ControlChangingDirection>::iterator it = mPendingActions.begin() ;
 				it != cached_end ; it++)
 			{
 				if( (*it) != Control::STOP )
 				{
-					this->setValue(mValue + 
-						(((int)(*it)) * mStepSize * mStepsPerSeconds * (timeSinceLastFramePart)));
+					int mult=0;
+					if (*it == INCREASE)
+						mult = 1;
+					else if (*it == DECREASE)
+						mult = -1;
+					this->setValue(mValue +
+						(mult * mStepSize * mStepsPerSeconds * (timeSinceLastFramePart)));
 				}
 				else if(mAutoReverseToInitialValue && !mIgnoreAutoReverse && mValue != mInitialValue )
 				{
@@ -141,8 +146,13 @@ namespace ICS
 		}
 		else if( currentChangingDirection != Control::STOP )
 		{
+			int mult = 0;
+			if (currentChangingDirection == INCREASE)
+				mult = 1;
+			else if (currentChangingDirection == DECREASE)
+				mult = -1;
 			this->setValue(mValue + 
-				(((int)currentChangingDirection) * mStepSize * mStepsPerSeconds * (timeSinceLastFrame)));
+				(mult * mStepSize * mStepsPerSeconds * (timeSinceLastFrame)));
 		}
 		else if(mAutoReverseToInitialValue && !mIgnoreAutoReverse && mValue != mInitialValue )
 		{
