@@ -108,9 +108,9 @@ void App::LoadInputDefaults(std::vector<InputAction> &actions, ICS::InputControl
 			if (it->mType == InputAction::Trigger)
 				control = new ICS::Control(boost::lexical_cast<std::string>(it->mId), false, true, 0, ICS::ICS_MAX, ICS::ICS_MAX, false);
 			else if (it->mType == InputAction::Axis)
-				control = new ICS::Control(boost::lexical_cast<std::string>(it->mId), false, true, 0.5, 0.1, 40.0);
+				control = new ICS::Control(boost::lexical_cast<std::string>(it->mId), false, true, 0.5, 0.1, 30.0);
 			else if (it->mType == InputAction::HalfAxis)
-					control = new ICS::Control(boost::lexical_cast<std::string>(it->mId), false, true, 0.0, 0.1, 40.0);
+					control = new ICS::Control(boost::lexical_cast<std::string>(it->mId), false, true, 0.0, 0.1, 30.0);
 
 			pICS->addControl(control);
 
@@ -138,26 +138,26 @@ void App::UpdateInputButton(MyGUI::Button* button, const InputAction& action, in
 {
 	std::string s, sAssign = TR("#FFA030#{InputAssignKey}");  // caption
 
-	SDL_Keycode decreaseKey = action.mICS->getKeyBinding(action.mControl, ICS::Control::DECREASE);
-	SDL_Keycode increaseKey = action.mICS->getKeyBinding(action.mControl, ICS::Control::INCREASE);
+	SDL_Keycode decKey = action.mICS->getKeyBinding(action.mControl, ICS::Control::DECREASE);
+	SDL_Keycode incKey = action.mICS->getKeyBinding(action.mControl, ICS::Control::INCREASE);
 
 	if (action.mType == InputAction::Axis)
 	{
 		if (bind == 1)
 			s = sAssign;
 		else
-		{	s += GetKeyName(decreaseKey,true);
+		{	s += GetKeyName(decKey,true);
 			if (!s.empty())  s += " , ";
 			if (bind == 2)
 				s += sAssign;
 			else
-				s += GetKeyName(increaseKey,true);
+				s += GetKeyName(incKey,true);
 		}
 	}else
 	{	if (bind == 1)
 			s = sAssign;
 		else
-			s += GetKeyName(increaseKey, action.mType & InputAction::Axis);
+			s += GetKeyName(incKey, action.mType & InputAction::Axis);
 	}
 
 	if (bind == 0)
@@ -170,11 +170,11 @@ void App::UpdateInputButton(MyGUI::Button* button, const InputAction& action, in
 				if (!s.empty())  s += " / ";
 				s += "J"+toStr(j) + ".Axis " + toStr(axis);
 			}
-			int increaseButton = action.mICS->getJoystickButtonBinding(action.mControl, j, ICS::Control::INCREASE);
-			if (increaseButton != ICS::InputControlSystem::UNASSIGNED)
+			int btn = action.mICS->getJoystickButtonBinding(action.mControl, j, ICS::Control::INCREASE);
+			if (btn != ICS::InputControlSystem::UNASSIGNED)
 			{
 				if (!s.empty())  s += " / ";
-				s += "J"+toStr(j) + ".Button " + toStr(increaseButton);
+				s += "J"+toStr(j) + ".Button " + toStr(btn);
 			}
 		}
 	}
