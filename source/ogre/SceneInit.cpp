@@ -540,6 +540,7 @@ void App::LoadTrees()  // 8
 		CreateTrees();
 		
 	//  check for cars inside terrain ___
+	if (terrain)
 	for (int i=0; i < carModels.size(); ++i)
 	{
 		CAR* car = carModels[i]->pCar;

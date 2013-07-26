@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <OgreStringVector.h>
 
 
 //  single track on challenge
@@ -30,7 +31,7 @@ public:
 	float time;  // total computed (sum all tracks)
 	
 	//  allowed types or cars 1 or more
-	std::vector<std::string> carTypes, cars;
+	Ogre::StringVector carTypes, cars;
 
 	std::vector<ChallTrack> trks;
 

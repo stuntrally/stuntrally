@@ -3,6 +3,8 @@
 #include "ChallengesXml.h"
 #include "ChampsXml.h"  //timesXml
 #include "tinyxml.h"
+//#include <OgreString.h>
+using namespace Ogre;
 
 
 ChallTrack::ChallTrack()
@@ -62,21 +64,20 @@ bool ChallXml::LoadXml(std::string file, TimesXml* times)
 		{
 			a = eCarT->Attribute("names");
 			if (a)
-			{	std::string s = a;  // split string..
-				
+			{	String s = a;
+				c.carTypes = StringUtil::split(s, "|");
 			}
 		}
+		//<car names="ES|S1" />
 		TiXmlElement* eCar = eCh->FirstChildElement("car");
 		if (eCar)
 		{
 			a = eCar->Attribute("names");
 			if (a)
-			{	//..
-				
+			{	String s = a;
+				c.cars = StringUtil::split(s, "|");
 			}
 		}
-		//<cartype names="Gravel" />
-		//<car names="ES|S1" />
 		
 		TiXmlElement* eHud = eCh->FirstChildElement("hud");
 		if (eSim)
