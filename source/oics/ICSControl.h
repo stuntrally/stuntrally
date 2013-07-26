@@ -50,7 +50,7 @@ namespace ICS
 		~Control();
 
 		void setChangingDirection(ControlChangingDirection direction);
-		inline ControlChangingDirection removeChangingDirection(ControlChangingDirection direction){ currentChangingDirection &= ~direction; };
+		inline void removeChangingDirection(ControlChangingDirection direction){ currentChangingDirection &= ~direction; };
 
 		void setValue(float value);
 		inline float getValue(){ return mValue; };
