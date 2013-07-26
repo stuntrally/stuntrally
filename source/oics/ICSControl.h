@@ -46,7 +46,7 @@ namespace ICS
 			DECREASE = 0x01, STOP = 0, INCREASE = 0x04
 		};
 
-		Control(const std::string name, bool autoChangeDirectionOnLimitsAfterStop = false, bool autoReverseToInitialValue = false, float initialValue = 0.5, float stepSize = 0.1, float stepsPerSeconds = 2.0, bool axisBindable = true); 
+		Control(const std::string name, bool autoChangeDirectionOnLimitsAfterStop = false, bool autoReverseToInitialValue = false, float initialValue = 0.5, float stepSize = 0.1, float stepsPerSeconds = 2.0, bool axisBindable = true, bool inverted = false);
 		~Control();
 
 		void setChangingDirection(ControlChangingDirection direction);
@@ -55,6 +55,9 @@ namespace ICS
 		void setValue(float value);
 		inline float getValue(){ return mValue; };
 		inline float getInitialValue(){ return mInitialValue; };
+
+		void setInverted(bool inverted) { mInverted = inverted; }
+		bool getInverted() { return mInverted; }
 
 		void attachChannel(Channel* channel, Channel::ChannelDirection direction, float percentage = 1.0);	
 		std::list<Channel*> getAttachedChannels(){ return mAttachedChannels; };
@@ -82,6 +85,7 @@ namespace ICS
 		void update(float timeSinceLastFrame);
 
 	protected:
+		bool mInverted;
 		float mValue;
 		float mInitialValue;
 		std::string mName;

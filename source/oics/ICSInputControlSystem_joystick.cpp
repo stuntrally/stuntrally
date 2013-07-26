@@ -327,11 +327,11 @@ namespace ICS
 						float axisRange = SDL_JOY_AXIS_MAX - SDL_JOY_AXIS_MIN;
 						float valDisplaced = (float)(evt.value - SDL_JOY_AXIS_MIN);
 
-						if(joystickBinderItem.direction == Control::INCREASE)
+						if(!ctrl->getInverted())
 						{
 							ctrl->setValue( valDisplaced / axisRange );
 						}
-						else if(joystickBinderItem.direction == Control::DECREASE)
+						else
 						{
 							ctrl->setValue( 1 - ( valDisplaced / axisRange ) );
 						}
