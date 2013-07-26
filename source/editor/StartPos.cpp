@@ -222,9 +222,9 @@ void App::WarningsCheck(const Scene* sc, const SplineRoad* road)
 			float yt = terrain->getHeightAtWorldPosition(p), yd = p.y - yt - 0.5f;
 			String si = toStr(i);
 							Warn(TXT, "Car "+si+" start to ter dist "+fToStr(yd,1,4));
-			if (yd < 0.f)   Warn(WARN,"Car "+si+" start below terrain !");
+			//if (yd < 0.f)   Warn(WARN,"Car "+si+" start below terrain !");  // moved above in game
 			if (yd > 0.3f)  Warn(INFO,"Car "+si+" start far above terrain");//\n (skips bridge/pipe), distance: "+fToStr(yd,1,4));
-		}
+		}/**/
 		
 		
 		//-  first chk  ----

@@ -38,7 +38,9 @@ public:
 		std::ostream & info_output, std::ostream & error_output);
 	
 	// will align car relative to track surface, returns false if the car isn't near ground
-	void SetPosition(const MATHVECTOR<float,3> & position);
+	void SetPosition(const MATHVECTOR<float,3> & pos, const QUATERNION<float> & rot);
+	void SetPosition(const MATHVECTOR<Dbl,3> & pos, const QUATERNION<Dbl> & rot);
+	void SetPosition1(const MATHVECTOR<float,3> & pos);
 	
 	void Update(double dt);
 

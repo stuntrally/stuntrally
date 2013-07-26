@@ -50,7 +50,7 @@ class ChampsXml
 public:
 	std::vector<Champ> champs;
 	
-	bool LoadXml(std::string file, TimesXml& times);
+	bool LoadXml(std::string file, class TimesXml* times);
 };
 
 

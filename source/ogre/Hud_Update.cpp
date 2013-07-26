@@ -76,7 +76,7 @@ void App::UpdateHUD(int carId, float time)
 	
 	//  update HUD elements for all cars that have a viewport (local or replay)
 	//-----------------------------------------------------------------------------------
-	int cnt = carModels.size() -(isGhost2nd?1:0);
+	int cnt = std::min(5/*?*/, (int)carModels.size() -(isGhost2nd?1:0) );
 	
 	if (carId == -1)  // gui vp - done once for all
 	for (int c = 0; c < cnt; ++c)
@@ -300,36 +300,36 @@ void App::UpdateHUD(int carId, float time)
 
 
 	///  gear, vel texts  -----------------------------
-	if (txVel[carId] && txGear[carId] && pCar)
+	if (hud[carId].txVel && hud[carId].txGear && pCar)
 	{
 		float cl = clutch*0.8f + 0.2f;
 		if (gear == -1)
-		{	txGear[carId]->setCaption("R");  txGear[carId]->setTextColour(Colour(0.3,1,1,cl));	}
+		{	hud[carId].txGear->setCaption("R");  hud[carId].txGear->setTextColour(Colour(0.3,1,1,cl));  }
 		else if (gear == 0)
-		{	txGear[carId]->setCaption("N");  txGear[carId]->setTextColour(Colour(0.3,1,0.3,cl));	}
+		{	hud[carId].txGear->setCaption("N");  hud[carId].txGear->setTextColour(Colour(0.3,1,0.3,cl));  }
 		else if (gear > 0 && gear < 8)
-		{	txGear[carId]->setCaption(toStr(gear));  txGear[carId]->setTextColour(Colour(1,1-gear*0.1,0.2,cl));	}
+		{	hud[carId].txGear->setCaption(toStr(gear));  hud[carId].txGear->setTextColour(Colour(1,1-gear*0.1,0.2,cl));  }
 
-		txVel[carId]->setCaption(fToStr(std::abs(vel),0,3));
+		hud[carId].txVel->setCaption(fToStr(std::abs(vel),0,3));
 
 		float k = pCar->GetSpeedometer() * 3.6f * 0.0025f;	// vel clr
 		#define m01(x)  std::min(1.0f, std::max(0.0f, (float) (x) ))
-		txVel[carId]->setTextColour(Colour(m01(k*2), m01(0.5+k*1.5-k*k*2.5), m01(1+k*0.8-k*k*3.5)));
+		hud[carId].txVel->setTextColour(Colour(m01(k*2), m01(0.5+k*1.5-k*k*2.5), m01(1+k*0.8-k*k*3.5)));
 	}
 
 	//  boost fuel (time)  ------
-	if (txBFuel[carId] && pCar && txBFuel[carId]->getVisible())
+	if (hud[carId].txBFuel && pCar && hud[carId].txBFuel->getVisible())
 	{
-		txBFuel[carId]->setCaption(fToStr(pCar->dynamics.boostFuel,1,3));
+		hud[carId].txBFuel->setCaption(fToStr(pCar->dynamics.boostFuel,1,3));
 	}
 
 	//  damage %  ------
-	if (txDamage[carId] && pCar && txDamage[carId]->getVisible())
+	if (hud[carId].txDamage && pCar && hud[carId].txDamage->getVisible())
 	{
 		float d = std::min(100.f, pCar->dynamics.fDamage);
-		txDamage[carId]->setCaption(TR("#{Damage}\n     ")+fToStr(d,0,3)+" %");  d*=0.01f;
+		hud[carId].txDamage->setCaption(TR("#{Damage}\n     ")+fToStr(d,0,3)+" %");  d*=0.01f;
 		float e = std::min(1.f, 0.8f + d*2.f);
-		txDamage[carId]->setTextColour(Colour(e-d*d*0.4f, std::max(0.f, e-d), std::max(0.f, e-d*2.f) ));
+		hud[carId].txDamage->setTextColour(Colour(e-d*d*0.4f, std::max(0.f, e-d), std::max(0.f, e-d*2.f) ));
 	}
 
 	//  race countdown  -----------------------------
@@ -402,7 +402,7 @@ void App::UpdateHUD(int carId, float time)
 			//float t1pl = carsXml.magic * timeTrk;
 			float time = (/*place*/1 * carsXml.magic * timeTrk + timeTrk) / carMul;
 
-			sTimes[carId] =
+			hud[carId].sTimes =
 				"\n#80C8FF" + GetTimeString(last)+
 				"\n#80E0E0" + GetTimeString(best)+
 				"\n#80E080" + GetTimeString(time)+
@@ -419,11 +419,11 @@ void App::UpdateHUD(int carId, float time)
 			}
 			#endif
 		}
-		if (txTimes[carId])
-			txTimes[carId]->setCaption(
+		if (hud[carId].txTimes)
+			hud[carId].txTimes->setCaption(
 				(hasLaps ? "#D0E8FF"+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps) : "") +
 				"\n#C0E0F0" + GetTimeString(tim.GetPlayerTime(carId))+
-				sTimes[carId]);
+				hud[carId].sTimes);
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------
@@ -438,23 +438,23 @@ void App::UpdateHUD(int carId, float time)
 
 	//  car debug text  --------
 	static bool oldCarTxt = false;
-	if (pCar && ovU[0])
+	if (pCar && ov[0].oU)
 	{
 		if (pSet->car_dbgtxt)
 		{	std::stringstream s1,s2,s3,s4;
-			pCar->DebugPrint(s1, true, false, false, false);  ovU[0]->setCaption(s1.str());
-			pCar->DebugPrint(s2, false, true, false, false);  ovU[1]->setCaption(s2.str());
-			pCar->DebugPrint(s3, false, false, true, false);  ovU[2]->setCaption(s3.str());
-			pCar->DebugPrint(s4, false, false, false, true);  ovU[3]->setCaption(s4.str());
+			pCar->DebugPrint(s1, true, false, false, false);  ov[0].oU->setCaption(s1.str());
+			pCar->DebugPrint(s2, false, true, false, false);  ov[1].oU->setCaption(s2.str());
+			pCar->DebugPrint(s3, false, false, true, false);  ov[2].oU->setCaption(s3.str());
+			pCar->DebugPrint(s4, false, false, false, true);  ov[3].oU->setCaption(s4.str());
 		}else
 		if (pSet->car_dbgtxt != oldCarTxt)
-		{	ovU[0]->setCaption(""); /*ovU[1]->setCaption(""); ovU[2]->setCaption(""); ovU[3]->setCaption("");*/	}
+		{	ov[0].oU->setCaption(""); /*ovU[1]->setCaption(""); ovU[2]->setCaption(""); ovU[3]->setCaption("");*/	}
 	}
 	oldCarTxt = pSet->car_dbgtxt;
 	
 
 	//  profiling times --------
-	if (pSet->profilerTxt && ovU[1])
+	if (pSet->profilerTxt && ov[1].oU)
 	{
 		PROFILER.endCycle();
 		static int frame=0;  ++frame;
@@ -463,16 +463,16 @@ void App::UpdateHUD(int carId, float time)
 		{	frame = 0;
 			std::string sProf = PROFILER.getAvgSummary(quickprof::MILLISECONDS);
 			//sProf = "PROF "+fToStr(1000.f/PROFILER.getAvgDuration(" frameSt",quickprof::MILLISECONDS), 2,4);
-			ovU[1]->setCaption(sProf);
+			ov[1].oU->setCaption(sProf);
 		}
 		//if (newPosInfos.size() > 0)
-		//ovU[3]->setCaption("carm: " + toStr(carModels.size()) + " newp: " + toStr((*newPosInfos.begin()).pos));
+		//ov[3].oU->setCaption("carm: " + toStr(carModels.size()) + " newp: " + toStr((*newPosInfos.begin()).pos));
 	}
 
 
 	//  bullet profiling text  --------
 	static bool oldBltTxt = false;
-	if (ovU[1])
+	if (ov[1].oU)
 	{
 		if (pSet->bltProfilerTxt)
 		{
@@ -481,12 +481,12 @@ void App::UpdateHUD(int carId, float time)
 			{	cc = 0;
 				std::stringstream os;
 				bltDumpAll(os);
-				ovU[1]->setCaption(os.str());
+				ov[1].oU->setCaption(os.str());
 			}
 		}
 		else
 		if (pSet->bltProfilerTxt != oldBltTxt)
-			ovU[1]->setCaption("");
+			ov[1].oU->setCaption("");
 	}
 	oldBltTxt = pSet->bltProfilerTxt;
 
@@ -497,7 +497,7 @@ void App::UpdateHUD(int carId, float time)
 		const Real xp = 80, yp = -530, ln = 20, y4 = 104;
 		//const static char swh[4][6] = {"F^L<","F^R>","RvL<","RvR>"};
 		for (int w=0; w < 4; ++w)
-		if (ovL[3-w] && ovR[3-w] && ovS[3-w])
+		if (ov[3-w].oL && ov[3-w].oR && ov[3-w].oS)
 		{	
 			float slide = /*-1.f*/0.f, sLong = 0.f, sLat = 0.f;
 			float squeal = pCar->GetTireSquealAmount((WHEEL_POSITION)w, &slide, &sLong, &sLat);
@@ -519,14 +519,14 @@ void App::UpdateHUD(int carId, float time)
 			float susp = pCar->dynamics.GetSuspension(WHEEL_POSITION(w)).GetDisplacementPercent();
 			float slng = sLong/abs(sLong)*powf(abs(sLong),0.3f);  // slide*20.f
 
-			ovR[3-w]->setPosition(slng * 14.f +xp, yp + w*ln);
-			ovL[3-w]->setPosition(sLat * 14.f +xp, yp + w*ln +y4);
-			ovS[3-w]->setPosition(susp * 70.f +xp, yp + w*ln -y4);
+			ov[3-w].oR->setPosition(slng * 14.f +xp, yp + w*ln);
+			ov[3-w].oL->setPosition(sLat * 14.f +xp, yp + w*ln +y4);
+			ov[3-w].oS->setPosition(susp * 70.f +xp, yp + w*ln -y4);
 		}
-		if (ovL[4])  ovL[4]->setPosition(xp, yp + -20 +y4+3);
-		if (ovS[4])  ovS[4]->setPosition(xp + 70, yp + -20 -104-3);
+		if (ov[4].oL)  ov[4].oL->setPosition(xp, yp + -20 +y4+3);
+		if (ov[4].oS)  ov[4].oS->setPosition(xp + 70, yp + -20 -104-3);
 
-		//ovR[3-w]->setCaption("|");  ovR[3-w]->setColour(ColourValue(0.6,1.0,0.7));
+		//ov[3-w].oR->setCaption("|");  ov[3-w].oR->setColour(ColourValue(0.6,1.0,0.7));
 	}
 
 
@@ -534,10 +534,10 @@ void App::UpdateHUD(int carId, float time)
 	if (road && hudWarnChk && pCarM)
 	{
 		/* checks debug *
-		if (ovU[0])  {
+		if (ov[0].oU)  {
 			//"ghost:  "  + GetTimeString(ghost.GetTimeLength()) + "  "  + toStr(ghost.GetNumFrames()) + "\n" +
 			//"ghplay: " + GetTimeString(ghplay.GetTimeLength()) + "  " + toStr(ghplay.GetNumFrames()) + "\n" +
-			ovU[0]->setCaption(String("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n") +
+			ov[0].oU->setCaption(String("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n") +
 				"         st " + toStr(pCarM->bInSt ? 1:0) + " in" + toStr(pCarM->iInChk) +
 				"  |  cur" + toStr(pCarM->iCurChk) + " > next " + toStr(pCarM->iNextChk) +
 				"  |  Num " + toStr(pCarM->iNumChks) + " / All " + toStr(road->mChks.size()));
@@ -558,13 +558,13 @@ void App::UpdateHUD(int carId, float time)
 	//  input values
 	/*if (pCar && pGame && pGame->profilingmode)
 	{	const std::vector<float>& inp = pCar->dynamics.inputsCopy;
-	if (ovU[2] && inp.size() == CARINPUT::ALL)
+	if (ov[2].oU && inp.size() == CARINPUT::ALL)
 	{	sprintf(s, 
 		" Throttle %5.2f\n Brake %5.2f\n Steer %5.2f\n"
 		" Handbrake %5.2f\n Boost %5.2f\n Flip %5.2f\n"
 		,inp[CARINPUT::THROTTLE], inp[CARINPUT::BRAKE], -inp[CARINPUT::STEER_LEFT]+inp[CARINPUT::STEER_RIGHT]
 		,inp[CARINPUT::HANDBRAKE],inp[CARINPUT::BOOST], inp[CARINPUT::FLIP] );
-		ovU[2]->setCaption(String(s));
+		ov[2].oU->setCaption(String(s));
 	}	}/**/
 
 
@@ -580,8 +580,8 @@ void App::UpdateHUD(int carId, float time)
 			ss += String(pGame->track.tracksurfaces[i].name.c_str()) + "\n";/**/
 
 		//ovCarDbg->show();
-		if (ovX[4])  {  //ovL[4]->setTop(400);
-			ovX[4]->setCaption(ss);  }
+		if (ov[4].oX)  {  //ov[4].oL->setTop(400);
+			ov[4].oX->setCaption(ss);  }
 	}
 
 	PROFILER.endBlock("g.hud");
@@ -590,10 +590,10 @@ void App::UpdateHUD(int carId, float time)
 void App::UpdDbgTxtClr()
 {
 	ColourValue c = pSet->car_dbgtxtclr ? ColourValue::Black : ColourValue::White;
-	for (int i=0; i<5; ++i)
+	for (int i=0; i < ov.size(); ++i)
 	{
-		if (ovU[i])  ovU[i]->setColour(c);
-		if (ovX[i])  ovX[i]->setColour(c);
+		if (ov[i].oU)  ov[i].oU->setColour(c);
+		if (ov[i].oX)  ov[i].oX->setColour(c);
 	}
 }
 
@@ -656,42 +656,42 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
     //  rpm,vel needles
 	if (main)
 	{
-		if (moRpm[b])  {	moRpm[b]->beginUpdate(0);
-			for (int p=0;p<4;++p)  {  moRpm[b]->position(rx[p],ry[p], 0);
-				moRpm[b]->textureCoord(tc[p][0], tc[p][1]);  }	moRpm[b]->end();  }
-		if (moVel[b])  {	moVel[b]->beginUpdate(0);
-			for (int p=0;p<4;++p)  {  moVel[b]->position(vx[p],vy[p], 0);
-				moVel[b]->textureCoord(tc[p][0], tc[p][1]);  }	moVel[b]->end();  }
+		if (hud[b].moRpm)  {	hud[b].moRpm->beginUpdate(0);
+			for (int p=0;p<4;++p)  {  hud[b].moRpm->position(rx[p],ry[p], 0);
+				hud[b].moRpm->textureCoord(tc[p][0], tc[p][1]);  }	hud[b].moRpm->end();  }
+		if (hud[b].moVel)  {	hud[b].moVel->beginUpdate(0);
+			for (int p=0;p<4;++p)  {  hud[b].moVel->position(vx[p],vy[p], 0);
+				hud[b].moVel->textureCoord(tc[p][0], tc[p][1]);  }	hud[b].moVel->end();  }
 	}
 		
 	///  minimap car pos-es rot
-	if (vMoPos[b][c])
-	{	vMoPos[b][c]->beginUpdate(0);
+	if (hud[b].vMoPos[c])
+	{	hud[b].vMoPos[c]->beginUpdate(0);
 		for (int p=0;p<4;++p)  {
-			vMoPos[b][c]->position(px[p],py[p], 0);
-			vMoPos[b][c]->textureCoord(tc[p][0], tc[p][1]);
-			vMoPos[b][c]->colour(carModels[c]->color);  }
-		vMoPos[b][c]->end();
+			hud[b].vMoPos[c]->position(px[p],py[p], 0);
+			hud[b].vMoPos[c]->textureCoord(tc[p][0], tc[p][1]);
+			hud[b].vMoPos[c]->colour(carModels[c]->color);  }
+		hud[b].vMoPos[c]->end();
 	}
 	
 	//  minimap circle/rect rot
 	int qb = iCurPoses[b], qc = iCurPoses[c];
-	if (moMap[b] && pSet->trackmap && main)
+	if (hud[b].moMap && pSet->trackmap && main)
 	{
-		moMap[b]->beginUpdate(0);
+		hud[b].moMap->beginUpdate(0);
 		if (!bZoom)
-			for (int p=0;p<4;++p)  {  moMap[b]->position(tp[p][0],tp[p][1], 0);
-				moMap[b]->textureCoord(tc[p][0], tc[p][1]);  moMap[b]->colour(tc[p][0],tc[p][1], 0);  }
+			for (int p=0;p<4;++p)  {  hud[b].moMap->position(tp[p][0],tp[p][1], 0);
+				hud[b].moMap->textureCoord(tc[p][0], tc[p][1]);  hud[b].moMap->colour(tc[p][0],tc[p][1], 0);  }
 		else
 		{	
 			Vector2 mp(-carPoses[qb][b].pos[2],carPoses[qb][b].pos[0]);
 			float xc =  (mp.x - minX)*scX,
 				  yc = -(mp.y - minY)*scY+1.f;
 
-			for (int p=0;p<4;++p)  {  moMap[b]->position(tp[p][0],tp[p][1], 0);
-				moMap[b]->textureCoord(cx[p]+xc, -cy[p]-yc);  moMap[b]->colour(tc[p][0],tc[p][1], 1);  }
+			for (int p=0;p<4;++p)  {  hud[b].moMap->position(tp[p][0],tp[p][1], 0);
+				hud[b].moMap->textureCoord(cx[p]+xc, -cy[p]-yc);  hud[b].moMap->colour(tc[p][0],tc[p][1], 1);  }
 		}
-		moMap[b]->end();
+		hud[b].moMap->end();
 	}
 
 	///  minimap car pos  x,y = -1..1
@@ -731,9 +731,10 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 	bool bGhost = carModels[c]->isGhost(),
 		bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
 
-	if (vNdPos[b][c])
-		if (bGhost && !bGhostVis)  vNdPos[b][c]->setPosition(-100,0,0);  //hide
+	if (hud[b].vNdPos[c])
+		if (bGhost && !bGhostVis)
+			 hud[b].vNdPos[c]->setPosition(-100,0,0);  //hide
 		else if (bZoom && main)
-			 vNdPos[b][c]->setPosition(0,0,0);
-		else vNdPos[b][c]->setPosition(xp,yp,0);
+			 hud[b].vNdPos[c]->setPosition(0,0,0);
+		else hud[b].vNdPos[c]->setPosition(xp,yp,0);
 }

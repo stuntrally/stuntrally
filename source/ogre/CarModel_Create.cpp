@@ -113,11 +113,6 @@ void CarModel::Load(int startId)
 		QUATERNION<float> rot;  rot = pGame->track.GetStart(i).second;
 		vStartPos = Vector3(pos[0], pos[2], -pos[1]);
 
-		//todo: move after terrain created..
-		//float yt = terrain->getHeightAtWorldPosition(vStartPos);
-		//float yd = pos[2] - yt - 0.5f;
-		//if (yd < 0)  pos[2] += -yd;  // move from terrin if below
-		
 		pCar = pGame->LoadCar(pathCar, sDirname, pos, rot, true, false, eType == CT_REMOTE, iIndex);
 
 		if (!pCar)  LogO("Error creating car " + sDirname + "  path: " + pathCar);
@@ -193,12 +188,12 @@ void CarModel::LoadConfig(const std::string & pathCar)
 	//~  brake flares
 	float pos[3];  bool ok=true;  int i=0;
 	while (ok)
-	{	ok = cf.GetParam("model_ofs.brake-pos"+toStr(i), pos);  ++i;
+	{	ok = cf.GetParam("flares.brake-pos"+toStr(i), pos);  ++i;
 		if (ok)  brakePos.push_back(bRotFix ? Vector3(-pos[0],pos[2],pos[1]) : Vector3(-pos[1],-pos[2],pos[0]));
 	}
-	cf.GetParam("model_ofs.brake-color", pos);
+	cf.GetParam("flares.brake-color", pos);
 	brakeClr = ColourValue(pos[0],pos[1],pos[2]);
-	cf.GetParam("model_ofs.brake-size", brakeSize);
+	cf.GetParam("flares.brake-size", brakeSize);
 	
 	
 	//-  custom exhaust pos for boost particles

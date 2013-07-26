@@ -538,6 +538,22 @@ void App::LoadTrees()  // 8
 {
 	if (sc->ter)
 		CreateTrees();
+		
+	//  check for cars inside terrain ___
+	for (int i=0; i < carModels.size(); ++i)
+	{
+		CAR* car = carModels[i]->pCar;
+		if (car)
+		{
+			MATHVECTOR<float,3> pos = car->posAtStart;
+			Vector3 stPos(pos[0],pos[2],-pos[1]);
+			float yt = terrain->getHeightAtWorldPosition(stPos), yd = stPos.y - yt - 0.5f;
+			//todo: either sweep test car body, or world->CastRay x4 at wheels -for bridges, pipes
+			//pGame->collision.world->;  //car->dynamics.chassis
+			if (yd < 0.f)
+				pos[2] += -yd + 0.9f;
+			car->SetPosition1(pos);
+	}	}
 }
 
 

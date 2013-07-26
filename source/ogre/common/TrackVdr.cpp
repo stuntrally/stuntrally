@@ -272,11 +272,11 @@ void App::CreateMinimap()
 	int plr = 1;  //todo?: mSplitMgr->mNumViewports;
 	for (int i=0; i < plr; ++i)
 	{
-		ndMap[i] = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
-		ndMap[i]->scale(fHudSize, fHudSize*asp, 1);
-		ndMap[i]->attachObject(m);
+		hud[i].ndMap = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
+		hud[i].ndMap->scale(fHudSize, fHudSize*asp, 1);
+		hud[i].ndMap->attachObject(m);
 	}
-	moMap[0] = m;
+	hud[0].moMap = m;
 	
 	//  car pos tri
 	/*int plr = mSplitMgr->mNumViewports;

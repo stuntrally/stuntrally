@@ -12,7 +12,7 @@ pitch = 400.0
 yaw   = 900.0
 yaw2  = 2.5
 
-[ model_ofs ]
+[ flares ]
 brake-pos0 = 0.55,-2.34, 0.13
 brake-pos1 =-0.55,-2.34, 0.13
 brake-size = 0.46

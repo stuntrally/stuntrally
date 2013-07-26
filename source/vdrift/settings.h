@@ -87,7 +87,7 @@ public:
 		
 		bool rpl_rec;
 		//  champ
-		int champ_num;  // -1 none
+		int champ_num, chall_num;  // -1 none
 		bool champ_rev;
 		float pre_time;
 

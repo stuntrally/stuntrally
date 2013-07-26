@@ -6,6 +6,7 @@
 	<Tag name="InputMapScreenshot">Zrzut ekranu</Tag>
 	<Tag name="Brush_Filter">Filtruj</Tag>
 	<Tag name="Time">Czas</Tag>
+	<Tag name="Damage">Uszkodzenia</Tag>
 	<Tag name="TipGrassSwayDistr">Dystrybucja efektu chwiania trawy (jak losowo).</Tag>
 	<Tag name="GraphicsAll_VeryHigh">Bardzo wysokie</Tag>
 	<Tag name="InpSet_AxisFull">Oś, pełna</Tag>
@@ -42,7 +43,6 @@
 	<Tag name="TipTrackImg">Zrzut z gry dla wybranej trasy.</Tag>
 	<Tag name="TerLNoiseOnly">Tylko szum</Tag>
 	<Tag name="InputValueChange">Każdy ruch myszą lub zmiana wartości z </Tag>
-	<Tag name="SteerRange">Mnożniki zakresu skręcania</Tag>
 	<Tag name="Terrain">Teren</Tag>
 	<Tag name="TipChangeGloss">Zmień połysk auta (matowy-błyszczący).</Tag>
 	<Tag name="Surface">Nawierzchnia</Tag>
@@ -91,7 +91,6 @@
 	<Tag name="RoadPointSize">Wielkość punktów drogi</Tag>
 	<Tag name="Flip">Odwracanie</Tag>
 	<Tag name="DistToRoad">odl. do drogi</Tag>
-	<Tag name="TBPlace">Miejsce</Tag>
 	<Tag name="AngleMax">Kąt Max</Tag>
 	<Tag name="MessageBox_Retry">Ponów</Tag>
 	<Tag name="TipToggleTriplanar">Gdy używana jest opcja grafiki terenu trójpłaszcz. one, ta warstwa (tylko jedna) będzie miała mapowanie trójpłaszczyznowe.</Tag>
@@ -299,7 +298,7 @@
 	<Tag name="Brush_Octaves">Oktawy</Tag>
 	<Tag name="Type">Typ</Tag>
 	<Tag name="NetWaiting">Oczekiwanie...</Tag>
-	<Tag name="NetStart">Start</Tag>
+	<Tag name="MergeLength">odległość złączania</Tag>
 	<Tag name="InputMinVal">Min. Wartość</Tag>
 	<Tag name="RplMaxNumViewports">Maks. liczba widoków (dla powtórek kilkugraczowych)</Tag>
 	<Tag name="SingleRace">Pojedynczy wyścig</Tag>
@@ -310,6 +309,7 @@
 	<Tag name="max">maks</Tag>
 	<Tag name="Stage">Etap</Tag>
 	<Tag name="NetRefreshList">Odśwież listę</Tag>
+	<Tag name="None">Brak</Tag>
 	<Tag name="MessageBox_Abort">Przerwij</Tag>
 	<Tag name="Brush_ShapeNoise">Szum</Tag>
 	<Tag name="Grasses">Trawy</Tag>
@@ -350,7 +350,7 @@
 	<Tag name="Road_Snap">Przyciąganie</Tag>
 	<Tag name="InputRoadShiftReverse">shift-Ins - wstaw shift-ctrl-Ins - odwrotnie</Tag>
 	<Tag name="MinScale">min. skala</Tag>
-	<Tag name="MergeLength">odległość złączania</Tag>
+	<Tag name="NetStart">Start</Tag>
 	<Tag name="QuickHelpText">---- Szybka pomoc ----@@Użyj myszy lub Góra,Lewo,Enter,Backspace do nawigacji po menu.@@Aby dostosować rozdzielczość wejdź do Opcji na zakładkę Ekran,@użyj zestawów Ustawień grafiki by szybko dostosować grafikę do swojego sprzętu.@@Wszystkie klawisze używane w grze można zmienić w Opcjach, na zakładce Wejście.@Jeśli posiadasz kontroler gry zobacz:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Stworzenie gry muliplayer wymaga przekierowanych portów.@Dołączenie do istniejącej gry, nie wymaga, pod warunkiem że inni mają.@@Jeśli posiadasz problemy lub sugestie, use our Forum (in English):@http://forum.freegamedev.net/viewforum.php?f=77@@Więcej informacji w Czytaj, i na stronach Wiki projektu.@</Tag>
 	<Tag name="InputObjectsMove">1 - Przesuń  LMB płasz. XZ  RMB - Y wysok.</Tag>
 	<Tag name="TimesBar">Czasy</Tag>
@@ -460,7 +460,7 @@
 	<Tag name="LTrFlDepth">max Głębokość w cieczy</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - rozmiar alt-RMB - głębokość</Tag>
 	<Tag name="TexCoordMul">Mnożnik tekstury</Tag>
-	<Tag name="Shadows">Cienie</Tag>
+	<Tag name="SteerRange">Mnożniki zakresu skręcania</Tag>
 	<Tag name="ShowPictures">Pokazuj obrazy podczas wczytywania</Tag>
 	<Tag name="distance">odległość</Tag>
 	<Tag name="SSS_Effect">Efekt</Tag>
@@ -484,6 +484,7 @@
 	<Tag name="TexSize">Rozmiar tekstur</Tag>
 	<Tag name="TipSunAmbient">Kolor słońca stały, rozproszony.. R G B składowe 0 do 1 (np. 0.4 0.4 0.4)</Tag>
 	<Tag name="ChngTrkTab">zmiana w zakładce [Trasa]</Tag>
+	<Tag name="Shadows">Cienie</Tag>
 	<Tag name="InputRplCtrl2">P - pauza/wznów powtórkę</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - przewiń do tyłu/do przodu (shift - wolno, ctrl,alt - szybko)</Tag>
 	<Tag name="Laps">Okrążenia</Tag>
@@ -704,6 +705,7 @@
 	<Tag name="TipGrassLayerDens">Gęstość trawy dla warstwy (jak często występuje).</Tag>
 	<Tag name="InputRoadModify">Zmień</Tag>
 	<Tag name="TextColor">Kolor tekstu</Tag>
+	<Tag name="Reduced">Zredukowane</Tag>
 	<Tag name="ColBright">Jasność</Tag>
 	<Tag name="TipFogStartDist">Odl. startu mgły [metr].</Tag>
 	<Tag name="InputTerDeform">D - Deformuj (LMB góra, RMB dół)</Tag>
@@ -749,6 +751,7 @@
 	<Tag name="TerLayers">Warstwy terenu</Tag>
 	<Tag name="TipLTrMaxTerH">Wysokość terenu ponad którą model nie wystąpi.</Tag>
 	<Tag name="TotalScore">Końcowe punkty</Tag>
+	<Tag name="InputLoadNextTrack">F12 - wczytaj następną trasę (shift - poprzednią)</Tag>
 	<Tag name="TrackDifficulties">Różne trudności trasy</Tag>
 	<Tag name="TipModelPrev">Obraz podglądu modelu.</Tag>
 	<Tag name="InputRoadEdit">R - tryb edycji drogi</Tag>
@@ -789,6 +792,7 @@
 	<Tag name="TerGenPow">Potęga (kształt)</Tag>
 	<Tag name="Used">Używane</Tag>
 	<Tag name="TipImpDist">Daleka odległość od której atrapy 2d znikają.</Tag>
+	<Tag name="Normal">Normalne</Tag>
 	<Tag name="InputMapGeneral">Ogólne</Tag>
 	<Tag name="InputControllers">Kontrolery</Tag>
 	<Tag name="Brushes">Pędzle</Tag>
@@ -881,11 +885,10 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="Damage">Damage</Tag>
-	<Tag name="None">None</Tag>
-	<Tag name="Reduced">Reduced</Tag>
-	<Tag name="InputLoadNextTrack">F12 - load next track (shift - previous)</Tag>
-	<Tag name="Normal">Normal</Tag>
+	<Tag name="TBPosition">Position</Tag>
+	<Tag name="Ghost">Ghost</Tag>
+	<Tag name="TBPoints">Points</Tag>
+	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

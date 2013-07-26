@@ -162,17 +162,6 @@ bool CAR::LoadInto(const std::string & joefile, MODEL_JOE03 & output_model,	std:
 	return true;
 }
 
-void CAR::SetPosition(const MATHVECTOR<float,3> & new_position)
-{
-	MATHVECTOR<double,3> newpos;
-	newpos = new_position;
-	dynamics.SetPosition(newpos);
-	dynamics.AlignWithGround();//--
-
-	//QUATERNION<float> rot;
-	//rot = dynamics.GetOrientation();
-}
-
 
 void CAR::Update(double dt)
 {
@@ -342,12 +331,7 @@ void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 		newpos = state.pos;
 		newrot = state.rot;  }
 
-	SetPosition(newpos);
-
-	btTransform transform;
-	transform.setOrigin(ToBulletVector(newpos));
-	transform.setRotation(ToBulletQuaternion(newrot));
-	dynamics.chassis->setWorldTransform(transform);
+	SetPosition(newpos, newrot);
 
 	// No interpolation in velocities
 	dynamics.chassis->setLinearVelocity(ToBulletVector(state.linearVel));
@@ -364,18 +348,43 @@ void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 	trackPercentCopy = state.trackPercent / 255.f * 100.f;
 }
 
+//------------------------------------------------------------------------------------------------------------------------------
+void CAR::SetPosition1(const MATHVECTOR<float,3> & pos)
+{
+	MATHVECTOR<double,3> dpos = pos;
+	dynamics.SetPosition(dpos);
+	dynamics.AlignWithGround();
+	posAtStart = posLastCheck = pos;
+}
+void CAR::SetPosition(const MATHVECTOR<float,3> & pos, const QUATERNION<float> & rot)
+{
+	MATHVECTOR<double,3> dpos = pos;
+	dynamics.SetPosition(dpos);
+	dynamics.AlignWithGround();
+
+	btTransform tr;
+	tr.setOrigin(ToBulletVector(pos));
+	tr.setRotation(ToBulletQuaternion(rot));
+	dynamics.chassis->setWorldTransform(tr);
+}
+void CAR::SetPosition(const MATHVECTOR<Dbl,3> & pos, const QUATERNION<Dbl> & rot)
+{
+	dynamics.SetPosition(pos);
+	dynamics.AlignWithGround();
+
+	btTransform tr;
+	tr.setOrigin(ToBulletVector(pos));
+	tr.setRotation(ToBulletQuaternion(rot));
+	dynamics.chassis->setWorldTransform(tr);
+}
+
 ///  reset car, pos and state
 ///------------------------------------------------------------------------------------------------------------------------------
 void CAR::ResetPos(bool fromStart)
 {
-	MATHVECTOR<Dbl,3> pos = fromStart ? posAtStart : posLastCheck;
-	QUATERNION<Dbl> rot =   fromStart ? rotAtStart : rotLastCheck;
-	SetPosition(pos);
-
-	btTransform transform;
-	transform.setOrigin(ToBulletVector(pos));
-	transform.setRotation(ToBulletQuaternion(rot));
-	dynamics.chassis->setWorldTransform(transform);
+	const MATHVECTOR<Dbl,3>& pos = fromStart ? posAtStart : posLastCheck;
+	const QUATERNION<Dbl>&   rot = fromStart ? rotAtStart : rotLastCheck;
+	SetPosition(pos, rot);
 
 	dynamics.chassis->setLinearVelocity(btVector3(0,0,0));
 	dynamics.chassis->setAngularVelocity(btVector3(0,0,0));
@@ -413,12 +422,7 @@ void CAR::SavePosAtCheck()
 ///  set pos, for rewind
 void CAR::SetPosRewind(const MATHVECTOR<float,3>& pos, const QUATERNION<float>& rot, const MATHVECTOR<float,3>& vel, const MATHVECTOR<float,3>& angvel)
 {
-	SetPosition(pos);
-
-	btTransform transform;
-	transform.setOrigin(ToBulletVector(pos));
-	transform.setRotation(ToBulletQuaternion(rot));
-	dynamics.chassis->setWorldTransform(transform);
+	SetPosition(pos, rot);
 
 	// velocities
 	dynamics.chassis->setLinearVelocity(ToBulletVector(vel));
