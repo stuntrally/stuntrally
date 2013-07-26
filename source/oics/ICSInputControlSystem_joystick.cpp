@@ -303,7 +303,7 @@ namespace ICS
 				ControlsButtonBinderMapType::const_iterator it = mControlsJoystickButtonBinderMap[evt.which].find(button);
 				if(it != mControlsJoystickButtonBinderMap[evt.which].end())
 				{
-					it->second.control->setChangingDirection(Control::STOP);
+					it->second.control->removeChangingDirection(it->second.direction);
 				}
 			}
 		}
