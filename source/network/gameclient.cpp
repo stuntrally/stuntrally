@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "gameclient.hpp"
 #include "xtime.hpp"
 #include "../ogre/common/Defines.h"
