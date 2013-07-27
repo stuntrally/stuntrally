@@ -15,19 +15,23 @@
 #include <OgreWindowEventUtilities.h>*/
 #include <Ogre.h>
 
-#include <OISKeyboard.h>
-#include <OISMouse.h>
-
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
 
 namespace boost { class thread; }
 namespace MyGUI { class OgreD3D11Platform; }
 
+#include "../sdl4ogre/events.h"
+
+namespace SFO
+{
+    class InputWrapper;
+    class SDLCursorManager;
+}
 
 class BaseApp :
 		public Ogre::FrameListener, public Ogre::WindowEventListener,
-		public OIS::KeyListener, public OIS::MouseListener
+		public SFO::KeyListener, public SFO::MouseListener
 		//public Ogre::RenderTargetListener
 {
 public:
@@ -44,19 +48,8 @@ public:
 	// stuff to be executed in App after BaseApp init
 	virtual void postInit() = 0;
 
-	//AppThr appThr;
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	HANDLE hpr;
-#endif
-	QTimer timer;
-	void OnTimer(double dTime);
 	bool mShutDown;
-	bool inputThreadRunning;
-protected:
-	boost::thread* mThread;
-	
-	//class HWMouse* mHWMouse;
-
+protected:	
 	bool mShowDialog;//, mShutDown;
 	bool setup(), configure();  void updateStats();
 	
@@ -73,52 +66,30 @@ protected:
 	virtual bool frameStarted(const Ogre::FrameEvent& evt);
 	virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 	virtual bool frameEnded(const Ogre::FrameEvent& evt);
-	virtual void processMouse() { }
 	
 	///  input events
 	/*virtual*/
-	virtual bool keyPressed(const OIS::KeyEvent &arg);
-	virtual bool keyReleased(const OIS::KeyEvent &arg);
+    bool keyPressed(const SDL_KeyboardEvent &arg) = 0;
+    bool keyReleased(const SDL_KeyboardEvent &arg);
+    bool mouseMoved( const SFO::MouseMotionEvent &arg );
+    bool mousePressed( const SDL_MouseButtonEvent &arg, Uint8 id );
+    bool mouseReleased( const SDL_MouseButtonEvent &arg, Uint8 id );
+	void textInput(const SDL_TextInputEvent &arg);
 
-	bool mouseMoved(const OIS::MouseEvent &arg);
-	bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
-	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
-	void windowResized(Ogre::RenderWindow* rw), windowClosed(Ogre::RenderWindow* rw);
-
-	///  input event queues  for gui  ------------------------------------
-	struct CmdKey {  public:
-		OIS::KeyCode key;
-		unsigned int text;  bool gui;
-		CmdKey() : key(OIS::KC_UNASSIGNED), text(0), gui(true) {  }
-		CmdKey(const OIS::KeyEvent& k) : key(k.key), text(k.text), gui(true) {  }
-	};
-	struct CmdMouseMove {  public:
-		OIS::MouseState ms;
-		CmdMouseMove() {  }
-		CmdMouseMove(const OIS::MouseEvent& m) : ms(m.state) {  }
-	};
-	struct CmdMouseBtn  {  public:
-		OIS::MouseState ms;  OIS::MouseButtonID btn;
-		CmdMouseBtn() {  }
-		CmdMouseBtn(const OIS::MouseEvent& m, OIS::MouseButtonID b) : ms(m.state),btn(b) {  }
-	};
-	#define cmd_Max 1024
-	//std::deque<CmdKey> cmdKeyPress, cmdKeyRel;
-	CmdKey* cmdKeyPress, *cmdKeyRel;  int i_cmdKeyPress, i_cmdKeyRel;
-	CmdMouseMove* cmdMouseMove;  int i_cmdMouseMove;
-	CmdMouseBtn* cmdMousePress, *cmdMouseRel;  int i_cmdMousePress, i_cmdMouseRel;
+	void onCursorChange(const std::string& name);
 
 
 	///  Ogre
 	Ogre::Root *mRoot;  Ogre::SceneManager* mSceneMgr;
-	Ogre::Viewport* mViewport;  Ogre::RenderWindow* mWindow;
-	Ogre::Camera* mCamera, *mCameraT;
+    Ogre::Viewport* mViewport;
+    Ogre::RenderWindow* mWindow;
+    SDL_Window* mSDLWindow;
+	Ogre::Camera* mCamera;
 	Ogre::Vector3 mCamPosOld,mCamDirOld;
 	
 	///  input
-	OIS::InputManager* mInputManager;
-	OIS::Mouse* mMouse;  OIS::Keyboard* mKeyboard;
-
+    SFO::InputWrapper* mInputWrapper;
+    SFO::SDLCursorManager* mCursorManager;
 
 	///  ovelay
 	Ogre::Overlay* mDebugOverlay, *ovBrushPrv, *ovTerPrv;

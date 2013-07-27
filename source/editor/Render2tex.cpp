@@ -205,8 +205,8 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 	
 	if (num == 3)  // full
 	{
-		rt[3].rndCam->setPosition(mCameraT->getPosition());
-		rt[3].rndCam->setDirection(mCameraT->getDirection());
+		rt[3].rndCam->setPosition(mCamera->getPosition());
+		rt[3].rndCam->setDirection(mCamera->getDirection());
 	}
 	else if (road)
 		road->SetForRnd(num == 0 ? "render_clr" : "render_grass");

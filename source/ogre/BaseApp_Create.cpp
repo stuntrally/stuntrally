@@ -37,7 +37,7 @@
 
 #include <SDL_syswm.h>
 
-#include "ResourceImageSetPointerFix.h"
+#include "common/ResourceImageSetPointerFix.h"
 
 
 namespace

@@ -115,8 +115,6 @@ namespace ICS
 		bool buttonReleased(const SDL_JoyButtonEvent &evt, int button);
 		bool axisMoved(const SDL_JoyAxisEvent &evt, int axis);
 		bool povMoved(const SDL_JoyHatEvent &evt, int index);
-		//TODO: does this have an SDL equivalent?
-        //bool sliderMoved(const OIS::JoyStickEvent &evt, int index);
 
 		void addKeyBinding(Control* control, SDL_Keycode key, Control::ControlChangingDirection direction);
 		void addMouseAxisBinding(Control* control, NamedAxis axis, Control::ControlChangingDirection direction);

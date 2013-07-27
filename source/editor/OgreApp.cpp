@@ -120,24 +120,6 @@ App::App()  //  gui wigdets--
 	for (i=0; i < StTrk; ++i)  stTrk[0][i] = 0;
 	for (i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }
 
-	using namespace OIS;
-	mKC[KC_1] = '1';  mKC[KC_A] = 'a';  mKC[KC_MINUS    ] = '-';
-	mKC[KC_2] = '2';  mKC[KC_S] = 's';  mKC[KC_EQUALS   ] = '=';
-	mKC[KC_3] = '3';  mKC[KC_D] = 'd';  mKC[KC_LBRACKET ] = '[';
-	mKC[KC_4] = '4';  mKC[KC_F] = 'f';  mKC[KC_RBRACKET ] = ']';
-	mKC[KC_5] = '5';  mKC[KC_G] = 'g';  mKC[KC_SEMICOLON] = ';';
-	mKC[KC_6] = '6';  mKC[KC_H] = 'h';  mKC[KC_APOSTROPHE] = '\'';
-	mKC[KC_7] = '7';  mKC[KC_J] = 'j';  mKC[KC_GRAVE    ] = '`';
-	mKC[KC_8] = '8';  mKC[KC_K] = 'k';  mKC[KC_BACKSLASH] = '/';
-	mKC[KC_9] = '9';  mKC[KC_L] = 'l';  mKC[KC_COMMA    ] = ',';
-	mKC[KC_0] = '0';  mKC[KC_Z] = 'z';  mKC[KC_PERIOD   ] = '.';
-	mKC[KC_Q] = 'q';  mKC[KC_X] = 'x';  mKC[KC_SLASH    ] = '\\';
-	mKC[KC_W] = 'w';  mKC[KC_C] = 'c';  mKC[KC_SPACE    ] = ' ';
-	mKC[KC_E] = 'e';  mKC[KC_V] = 'v';  mKC[KC_U] = 'u';
-	mKC[KC_R] = 'r';  mKC[KC_B] = 'b';	mKC[KC_I] = 'i';
-	mKC[KC_T] = 't';  mKC[KC_N] = 'n';	mKC[KC_O] = 'o';
-	mKC[KC_Y] = 'y';  mKC[KC_M] = 'm';	mKC[KC_P] = 'p';
-
 	track = new TRACK(std::cout, std::cerr);  //!
 	sc = new Scene();
 }

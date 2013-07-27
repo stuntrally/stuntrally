@@ -537,20 +537,20 @@ void App::btnSetCam(WP wp)
 	String s = wp->getName();
 	Real y0 = 20, xz = sc->td.fTerWorldSize*0.5f, r = 45.f * 0.5f*PI_d/180.f, yt = xz / Math::Tan(r);
 
-		 if (s=="CamView1")	{	mCameraT->setPosition(xz*0.8,60,0);  mCameraT->setDirection(-1,-0.3,0);  }
-	else if (s=="CamView2")	{	mCameraT->setPosition(xz*0.6,80,xz*0.6);  mCameraT->setDirection(-1,-0.5,-1);  }
-	else if (s=="CamView3")	{	mCameraT->setPosition(-xz*0.7,80,-xz*0.5);  mCameraT->setDirection(0.8,-0.5,0.5);  }
+		 if (s=="CamView1")	{	mCamera->setPosition(xz*0.8,60,0);  mCamera->setDirection(-1,-0.3,0);  }
+	else if (s=="CamView2")	{	mCamera->setPosition(xz*0.6,80,xz*0.6);  mCamera->setDirection(-1,-0.5,-1);  }
+	else if (s=="CamView3")	{	mCamera->setPosition(-xz*0.7,80,-xz*0.5);  mCamera->setDirection(0.8,-0.5,0.5);  }
 	else if (s=="CamView4")	{
 		Vector3 cp = ndCar->getPosition();  float cy = ndCar->getOrientation().getYaw().valueRadians();
 		Vector3 cd = Vector3(cosf(cy),0,-sinf(cy));
-		mCameraT->setPosition(cp - cd * 15 + Vector3(0,7,0));  cd.y = -0.3f;
-		mCameraT->setDirection(cd);  }
+		mCamera->setPosition(cp - cd * 15 + Vector3(0,7,0));  cd.y = -0.3f;
+		mCamera->setDirection(cd);  }
 
-	else if (s=="CamTop")	{	mCameraT->setPosition(0,yt,0);  mCameraT->setDirection(-0.0001,-1,0);  }
-	else if (s=="CamLeft")	{	mCameraT->setPosition(0,y0, xz);  mCameraT->setDirection(0,0,-1);  }
-	else if (s=="CamRight")	{	mCameraT->setPosition(0,y0,-xz);  mCameraT->setDirection(0,0, 1);  }
-	else if (s=="CamFront")	{	mCameraT->setPosition( xz,y0,0);  mCameraT->setDirection(-1,0,0);  }
-	else if (s=="CamBack")	{	mCameraT->setPosition(-xz,y0,0);  mCameraT->setDirection( 1,0,0);  }
+	else if (s=="CamTop")	{	mCamera->setPosition(0,yt,0);  mCamera->setDirection(-0.0001,-1,0);  }
+	else if (s=="CamLeft")	{	mCamera->setPosition(0,y0, xz);  mCamera->setDirection(0,0,-1);  }
+	else if (s=="CamRight")	{	mCamera->setPosition(0,y0,-xz);  mCamera->setDirection(0,0, 1);  }
+	else if (s=="CamFront")	{	mCamera->setPosition( xz,y0,0);  mCamera->setDirection(-1,0,0);  }
+	else if (s=="CamBack")	{	mCamera->setPosition(-xz,y0,0);  mCamera->setDirection( 1,0,0);  }
 }
 
 //  toggle top view camera
@@ -559,18 +559,18 @@ void App::toggleTopView()
 	bTopView = !bTopView;
 	if (bTopView)
 	{	// store old
-		oldPos = mCameraT->getPosition();
-		oldRot = mCameraT->getDirection();
+		oldPos = mCamera->getPosition();
+		oldRot = mCamera->getDirection();
 		
 		Real xz = sc->td.fTerWorldSize*0.5f, r = 45.f * 0.5f*PI_d/180.f, yt = xz / Math::Tan(r);
-		mCameraT->setPosition(0,yt,0);  mCameraT->setDirection(-0.0001,-1,0);
+		mCamera->setPosition(0,yt,0);  mCamera->setDirection(-0.0001,-1,0);
 
 		oldFog = pSet->bFog;
 		pSet->bFog = true;  chkFog->setStateSelected(pSet->bFog);  UpdFog();
 	}else
 	{	// restore
-		mCameraT->setPosition(oldPos);
-		mCameraT->setDirection(oldRot);
+		mCamera->setPosition(oldPos);
+		mCamera->setDirection(oldRot);
 
 		pSet->bFog = oldFog;  chkFog->setStateSelected(pSet->bFog);  UpdFog();
 	}

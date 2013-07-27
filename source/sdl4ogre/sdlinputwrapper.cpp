@@ -28,7 +28,10 @@ namespace SFO
         mMouseZ(0),
         mMouseY(0),
         mMouseX(0),
-        mMouseInWindow(true)
+		mMouseInWindow(true),
+		mJoyListener(NULL),
+		mKeyboardListener(NULL),
+		mMouseListener(NULL)
     {
         _setupOISKeys();
     }
@@ -78,13 +81,16 @@ namespace SFO
                     mKeyboardListener->textInput(evt.text);
                     break;
 				case SDL_JOYAXISMOTION:
-					mJoyListener->axisMoved(evt.jaxis, evt.jaxis.axis);
+					if (mJoyListener)
+						mJoyListener->axisMoved(evt.jaxis, evt.jaxis.axis);
 					break;
 				case SDL_JOYBUTTONDOWN:
-					mJoyListener->buttonPressed(evt.jbutton, evt.jbutton.button);
+					if (mJoyListener)
+						mJoyListener->buttonPressed(evt.jbutton, evt.jbutton.button);
 					break;
 				case SDL_JOYBUTTONUP:
-					mJoyListener->buttonReleased(evt.jbutton, evt.jbutton.button);
+					if (mJoyListener)
+						mJoyListener->buttonReleased(evt.jbutton, evt.jbutton.button);
 					break;
 				case SDL_JOYDEVICEADDED:
 					//SDL_JoystickOpen(evt.jdevice.which);
@@ -131,12 +137,12 @@ namespace SFO
         }
     }
 
-    bool InputWrapper::isModifierHeld(int mod)
+	bool InputWrapper::isModifierHeld(SDL_Keymod mod)
     {
         return SDL_GetModState() & mod;
     }
 
-	bool InputWrapper::isKeyDown(int key)
+	bool InputWrapper::isKeyDown(SDL_Scancode key)
 	{
 		return SDL_GetKeyboardState(NULL)[key];
 	}

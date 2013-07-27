@@ -25,8 +25,8 @@ namespace SFO
 		void setJoyEventCallback(JoyListener* listen) { mJoyListener = listen; }
 
         void capture();
-        bool isModifierHeld(int mod);
-        bool isKeyDown(int key);
+		bool isModifierHeld(SDL_Keymod mod);
+		bool isKeyDown(SDL_Scancode key);
 
         void setMouseRelative(bool relative);
         bool getMouseRelative() { return mMouseRelative; }

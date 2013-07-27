@@ -9,28 +9,89 @@
 
 #include "../vdrift/pathmanager.h"
 #include "../ogre/Localization.h"
-#include "../ogre/common/HWMouse.h"
 
 #include <OgreConfigFile.h>
-#include <OISInputManager.h>
-using namespace Ogre;
 
 #include "../ogre/common/MyGUI_D3D11.h"
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-#include "resource.h"
-#endif
+#include "../sdl4ogre/sdlinputwrapper.hpp"
+#include "../sdl4ogre/sdlcursormanager.hpp"
 
+#include <SDL_syswm.h>
 
-void TimThread(BaseApp* pA)
+#include "../ogre/common/ResourceImageSetPointerFix.h"
+
+namespace
 {
-	while (pA->inputThreadRunning)
+	std::vector<unsigned long> utf8ToUnicode(const std::string& utf8)
 	{
-		if (pA->timer.update())
-			pA->OnTimer(pA->timer.dt);
-		boost::this_thread::sleep(boost::posix_time::milliseconds(pA->timer.iv*1000));
+		std::vector<unsigned long> unicode;
+		size_t i = 0;
+		while (i < utf8.size())
+		{
+			unsigned long uni;
+			size_t todo;
+			unsigned char ch = utf8[i++];
+			if (ch <= 0x7F)
+			{
+				uni = ch;
+				todo = 0;
+			}
+			else if (ch <= 0xBF)
+			{
+				throw std::logic_error("not a UTF-8 string");
+			}
+			else if (ch <= 0xDF)
+			{
+				uni = ch&0x1F;
+				todo = 1;
+			}
+			else if (ch <= 0xEF)
+			{
+				uni = ch&0x0F;
+				todo = 2;
+			}
+			else if (ch <= 0xF7)
+			{
+				uni = ch&0x07;
+				todo = 3;
+			}
+			else
+			{
+				throw std::logic_error("not a UTF-8 string");
+			}
+			for (size_t j = 0; j < todo; ++j)
+			{
+				if (i == utf8.size())
+					throw std::logic_error("not a UTF-8 string");
+				unsigned char ch = utf8[i++];
+				if (ch < 0x80 || ch > 0xBF)
+					throw std::logic_error("not a UTF-8 string");
+				uni <<= 6;
+				uni += ch & 0x3F;
+			}
+			if (uni >= 0xD800 && uni <= 0xDFFF)
+				throw std::logic_error("not a UTF-8 string");
+			if (uni > 0x10FFFF)
+				throw std::logic_error("not a UTF-8 string");
+			unicode.push_back(uni);
+		}
+		return unicode;
+	}
+
+	MyGUI::MouseButton sdlButtonToMyGUI(Uint8 button)
+	{
+		//The right button is the second button, according to MyGUI
+		if(button == SDL_BUTTON_RIGHT)
+			button = SDL_BUTTON_MIDDLE;
+		else if(button == SDL_BUTTON_MIDDLE)
+			button = SDL_BUTTON_RIGHT;
+
+		//MyGUI's buttons are 0 indexed
+		return MyGUI::MouseButton::Enum(button - 1);
 	}
 }
+
 
 
 //  Camera
@@ -38,18 +99,14 @@ void TimThread(BaseApp* pA)
 void BaseApp::createCamera()
 {
 	mCamera = mSceneMgr->createCamera("Cam");
-	mCamera->setPosition(Vector3(0,00,100));
-	mCamera->lookAt(Vector3(0,0,0));
+	mCamera->setPosition(Ogre::Vector3(0,00,100));
+	mCamera->lookAt(Ogre::Vector3(0,0,0));
 	mCamera->setNearClipDistance(0.5f);
 
-	mCameraT = mSceneMgr->createCamera("CamThr");
-	mCameraT->setPosition(Vector3(0,00,100));
-	mCameraT->lookAt(Vector3(0,0,0));
-
 	mViewport = mWindow->addViewport(mCamera);
-	//mViewport->setBackgroundColour(ColourValue(0.5,0.65,0.8));  //`
-	mViewport->setBackgroundColour(ColourValue(0.2,0.3,0.4));  //`
-	Real asp = Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight());
+	//mViewport->setBackgroundColour(Ogre::ColourValue(0.5,0.65,0.8));  //`
+	mViewport->setBackgroundColour(Ogre::ColourValue(0.2,0.3,0.4));  //`
+	Ogre::Real asp = Ogre::Real(mViewport->getActualWidth()) / Ogre::Real(mViewport->getActualHeight());
 	mCamera->setAspectRatio(asp);
 }
 
@@ -62,7 +119,7 @@ void BaseApp::createFrameListener()
 {
 	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
 
-	OverlayManager& ovr = OverlayManager::getSingleton();  Overlay* o;
+	Ogre::OverlayManager& ovr = Ogre::OverlayManager::getSingleton();  Ogre::Overlay* o;
 	o = ovr.getByName("Editor/FpsOverlay");  if (o) o->show();
 	o = ovr.getByName("Editor/FocusOverlay");  if (o) o->show();
 	o = ovr.getByName("Editor/StatusOverlay");  if (o) o->show();
@@ -81,54 +138,16 @@ void BaseApp::createFrameListener()
 	ovTerPrv = ovr.getByName("Editor/TerPrvOverlay");  ovTerPrv->hide();
 	ovTerMtr = ovr.getOverlayElement("Editor/TerPrvPanel");
 
-	OIS::ParamList pl;	size_t windowHnd = 0;
-	std::ostringstream windowHndStr;
 
-	mWindow->getCustomAttribute("WINDOW", &windowHnd);
-	windowHndStr << windowHnd;
-	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
-	
-	#if defined OIS_WIN32_PLATFORM
-    if (!pSet->capture_mouse)
-    {
-		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE" )));
-		pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_BACKGROUND")));  //DISCL_FOREGROUND
-		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_BACKGROUND")));
-		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
-	}
-    #elif defined OIS_LINUX_PLATFORM
-    if (!pSet->capture_mouse)
-    {
-		pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
-		pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("true")));
-		pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
-	}
-    pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
-    #endif
+	mInputWrapper = new SFO::InputWrapper(mSDLWindow, mWindow);
+	mInputWrapper->setMouseEventCallback(this);
+	mInputWrapper->setKeyboardEventCallback(this);
+	mCursorManager = new SFO::SDLCursorManager();
+	mCursorManager->setEnabled(true);
+	onCursorChange(MyGUI::PointerManager::getInstance().getDefaultPointer());
 
-	mInputManager = OIS::InputManager::createInputSystem( pl );
 
-	mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, true ));
-	mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject( OIS::OISMouse, true ));
-	//mKeyboard->setTextTranslation(OIS::Keyboard::Unicode);
-	//mKeyboard->setTextTranslation(OIS::Keyboard::Ascii);
-
-	mMouse->setEventCallback(this);
-	mKeyboard->setEventCallback(this);
-	
-	mMouse->capture();
-	mKeyboard->capture();
-	//mHWMouse = new HWMouse(windowHnd, 8, 8, "pointer.png");
-
-	windowResized(mWindow);
-	WindowEventUtilities::addWindowEventListener(mWindow, this);
-
-	mRoot->addFrameListener(this);
-
-	///  timer thread - input, camera
-	/**/timer.iv = 0.005;  ///par 
-	mThread = new boost::thread(TimThread, this);
-}
+	mRoot->addFrameListener(this);}
 
 void BaseApp::destroyScene()
 {
@@ -138,12 +157,6 @@ void BaseApp::destroyScene()
 //-------------------------------------------------------------------------------------
 void BaseApp::Run( bool showDialog )
 {
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	if (!pSet->ogre_dialog)
-	{	ShowCursor(0);
-		SetCursor(0);	}
-#endif
-
 	mShowDialog = showDialog;
 	if (!setup())
 		return;
@@ -156,10 +169,9 @@ void BaseApp::Run( bool showDialog )
 //  ctor
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp()
-	:mRoot(0), mCamera(0),mCameraT(0), mViewport(0)
+	:mRoot(0), mCamera(0), mViewport(0)
 	,mSceneMgr(0), mWindow(0)
 	,mShowDialog(1), mShutDown(false), bWindowResized(0), bFirstRenderFrame(true)
-	,mInputManager(0), mMouse(0), mKeyboard(0)
 	,alt(0), ctrl(0), shift(0)
 	,mbLeft(0), mbRight(0), mbMiddle(0)
 	,ndSky(0), road(0)
@@ -175,83 +187,123 @@ BaseApp::BaseApp()
 	,mWndBrush(0), mWndCam(0), mWndStart(0)
 	,mWndRoadCur(0), mWndRoadStats(0)
 	,mWndFluids(0), mWndObjects(0), mWndRivers(0)
-
-	,i_cmdKeyPress(0), cmdKeyPress(0)
-	,i_cmdKeyRel(0), cmdKeyRel(0)
-	,i_cmdMouseMove(0), cmdMouseMove(0)
-	,i_cmdMousePress(0), cmdMousePress(0)
-	,i_cmdMouseRel(0), cmdMouseRel(0)
 	
 	,pSet(0), bMoveCam(0), mDTime(0), edMode(ED_Deform), edModeOld(ED_Deform), bGuiFocus(0)
-	,mThread(0)
+	,mInputWrapper(NULL), mSDLWindow(NULL)
 {
-	inputThreadRunning = true;
-	cmdKeyPress = new CmdKey[cmd_Max];
-	cmdKeyRel = new CmdKey[cmd_Max];
-	cmdMouseMove = new CmdMouseMove[cmd_Max];
-	cmdMousePress = new CmdMouseBtn[cmd_Max];
-	cmdMouseRel = new CmdMouseBtn[cmd_Max];
 }
 
 BaseApp::~BaseApp()
-{
-	//delete mHWMouse;
-	
+{	
 	if (mGUI)  {
 		mGUI->shutdown();	delete mGUI;	mGUI = 0;  }
 	if (mPlatform)  {
 		mPlatform->shutdown();	delete mPlatform;	mPlatform = 0;  }
 
-	WindowEventUtilities::removeWindowEventListener(mWindow, this);
-	windowClosed(mWindow);
-	OGRE_DELETE mRoot;
-	
-	delete[] cmdKeyPress;
-	delete[] cmdKeyRel;
-	delete[] cmdMouseMove;
-	delete[] cmdMousePress;
-	delete[] cmdMouseRel;
+	delete mRoot;
 }
 
 //  config
 //-------------------------------------------------------------------------------------
 bool BaseApp::configure()
 {
-	if (pSet->ogre_dialog)
+	Ogre::RenderSystem* rs;
+	if (rs = mRoot->getRenderSystemByName(pSet->rendersystem))
 	{
-		if (!mRoot->showConfigDialog()) return false;
-		mWindow = mRoot->initialise(true, "SR Editor");
+		mRoot->setRenderSystem(rs);
 	}else{
-		RenderSystem* rs;
-		if (rs = mRoot->getRenderSystemByName(pSet->rendersystem))
-		{
-			mRoot->setRenderSystem(rs);
-		}else{
-			LogO("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
-			return false;
-		}
-		if (pSet->rendersystem == "OpenGL Rendering Subsystem")  // not on dx
-			mRoot->getRenderSystem()->setConfigOption("RTT Preferred Mode", pSet->buffer);
-
-		mRoot->initialise(false);
-
-		NameValuePairList settings;
-		settings.insert(std::make_pair("title", "SR Editor"));
-		settings.insert(std::make_pair("FSAA", toStr(pSet->fsaa)));
-		settings.insert(std::make_pair("vsync", pSet->vsync ? "true" : "false"));
-
-		mWindow = mRoot->createRenderWindow("SR Editor", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
+		LogO("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
+		return false;
 	}
-	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-		HWND hwnd;
-		mWindow->getCustomAttribute("WINDOW", (void*)&hwnd);
-		HINSTANCE hInst = (HINSTANCE)GetModuleHandle(NULL);
-		LONG iconID = (LONG)LoadIcon(hInst, MAKEINTRESOURCE(IDI_ICON1));
-		SetClassLong(hwnd, GCL_HICON, iconID);
-		//SetClassLong(hwnd, GCL_HCURSOR, (LONG)LoadCursor(hInst, MAKEINTRESOURCE(IDC_CROSS)));
-		ShowCursor(0);
-		SetCursor(0);
-	#endif
+	if (pSet->rendersystem == "OpenGL Rendering Subsystem")  // not on dx
+		mRoot->getRenderSystem()->setConfigOption("RTT Preferred Mode", pSet->buffer);
+
+	mRoot->initialise(false);
+
+	Uint32 flags = SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_HAPTIC|SDL_INIT_NOPARACHUTE;
+	if(SDL_WasInit(flags) == 0)
+	{
+		SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
+		if(SDL_Init(flags) != 0)
+		{
+			throw std::runtime_error("Could not initialize SDL! " + std::string(SDL_GetError()));
+		}
+	}
+	SDL_StartTextInput();
+
+
+	Ogre::NameValuePairList params;
+	params.insert(std::make_pair("title", "SR Editor"));
+	params.insert(std::make_pair("FSAA", toStr(pSet->fsaa)));
+	params.insert(std::make_pair("vsync", pSet->vsync ? "true" : "false"));
+
+	int pos_x = SDL_WINDOWPOS_UNDEFINED,
+		pos_y = SDL_WINDOWPOS_UNDEFINED;
+
+	/// \todo For multiple monitors, WINDOWPOS_UNDEFINED is not the best idea. Needs a setting which screen to launch on,
+	/// then place the window on that screen (derive x&y pos from SDL_GetDisplayBounds)+
+	/*
+	if(pSet->fullscreen)
+	{
+		SDL_Rect display_bounds;
+		if(SDL_GetDisplayBounds(settings.screen, &display_bounds) != 0)
+			throw std::runtime_error("Couldn't get display bounds!");
+		pos_x = display_bounds.x;
+		pos_y = display_bounds.y;
+	}
+	*/
+
+	// Create an application window with the following settings:
+	mSDLWindow = SDL_CreateWindow(
+	  "SR Editor",                  //    window title
+	  pos_x,                     //    initial x position
+	  pos_y,                     //    initial y position
+	  pSet->windowx,                               //    width, in pixels
+	  pSet->windowy,                               //    height, in pixels
+	  SDL_WINDOW_SHOWN
+		| (pSet->fullscreen ? SDL_WINDOW_FULLSCREEN : 0)
+	);
+
+	//get the native whnd
+	struct SDL_SysWMinfo wmInfo;
+	SDL_VERSION(&wmInfo.version);
+
+	if(-1 == SDL_GetWindowWMInfo(mSDLWindow, &wmInfo))
+		throw std::runtime_error("Couldn't get WM Info!");
+
+	Ogre::String winHandle;
+
+	switch(wmInfo.subsystem)
+	{
+#ifdef WIN32
+	case SDL_SYSWM_WINDOWS:
+		// Windows code
+		winHandle = Ogre::StringConverter::toString((unsigned long)wmInfo.info.win.window);
+		break;
+#elif __MACOSX__
+	case SDL_SYSWM_COCOA:
+		//required to make OGRE play nice with our window
+		params.insert(std::make_pair("macAPI", "cocoa"));
+		params.insert(std::make_pair("macAPICocoaUseNSView", "true"));
+
+		winHandle  = Ogre::StringConverter::toString(WindowContentViewHandle(wmInfo));
+		break;
+#else
+	case SDL_SYSWM_X11:
+		winHandle = Ogre::StringConverter::toString((unsigned long)wmInfo.info.x11.window);
+		break;
+#endif
+	default:
+		throw std::runtime_error("Unexpected WM!");
+		break;
+	}
+
+	/// \todo externalWindowHandle is deprecated according to the source code. Figure out a way to get parentWindowHandle
+	/// to work properly. On Linux/X11 it causes an occasional GLXBadDrawable error.
+	params.insert(std::make_pair("externalWindowHandle",  winHandle));
+
+	mWindow = mRoot->createRenderWindow("SR Editor", pSet->windowx, pSet->windowy, pSet->fullscreen, &params);
+
 	return true;
 }
 
@@ -270,7 +322,7 @@ bool BaseApp::setup()
 	}
 	
 	// Dynamic plugin loading
-	mRoot = OGRE_NEW Root("", PATHMANAGER::UserConfigDir() + "/ogreset_ed.cfg", PATHMANAGER::UserConfigDir() + "/ogre_ed.log");
+	mRoot = OGRE_NEW Ogre::Root("", PATHMANAGER::UserConfigDir() + "/ogreset_ed.cfg", PATHMANAGER::UserConfigDir() + "/ogre_ed.log");
 	//LogManager::getSingleton().setLogDetail(LL_BOREME);  //-
 
 	#ifdef _DEBUG
@@ -305,11 +357,11 @@ bool BaseApp::setup()
 	if (!configure())
 		return false;
 
-	mSceneMgr = mRoot->createSceneManager(/*ST_GENERIC/**/ST_EXTERIOR_FAR/**/);
+	mSceneMgr = mRoot->createSceneManager(/*ST_GENERIC/**/Ogre::ST_EXTERIOR_FAR/**/);
 	createCamera();
 
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-	mSceneMgr->setFog(FOG_NONE);
+	mSceneMgr->setFog(Ogre::FOG_NONE);
 
 	createResourceListener();
 	loadResources();
@@ -323,10 +375,16 @@ bool BaseApp::setup()
 
 	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::UserConfigDir() + "/MyGUI.log");
 	mGUI = new MyGUI::Gui();
-	mGUI->initialise("core.xml");
-	
+
+	mGUI->initialise("");
+
+	MyGUI::FactoryManager::getInstance().registerFactory<ResourceImageSetPointerFix>("Resource", "ResourceImageSetPointer");
+	MyGUI::ResourceManager::getInstance().load("core.xml");
 	MyGUI::ResourceManager::getInstance().load("MessageBoxResources.xml");
-	
+
+	MyGUI::PointerManager::getInstance().eventChangeMousePointer +=
+			MyGUI::newDelegate(this, &BaseApp::onCursorChange);
+	MyGUI::PointerManager::getInstance().setVisible(false);
 	
 	// ------------------------- lang ------------------------
 	if (pSet->language == "") // autodetect
@@ -343,37 +401,37 @@ bool BaseApp::setup()
 	createFrameListener();
 
 	ti.update();  float dt = ti.dt * 1000.f;  /// time
-	LogO(String("::: Time Ogre Start: ") + fToStr(dt,0,3) + " ms");
+	LogO(Ogre::String("::: Time Ogre Start: ") + fToStr(dt,0,3) + " ms");
 
 	createScene();
 
 	return true;
-};
+}
 
 //  Resources
 //-------------------------------------------------------------------------------------
 void BaseApp::setupResources()
 {
 	// Load resource paths from config file
-	ConfigFile cf;
+	Ogre::ConfigFile cf;
 	std::string s = PATHMANAGER::GameConfigDir() +
 		(pSet->tex_size > 0 ? "/resources_ed.cfg" : "/resources_s_ed.cfg");
 	cf.load(s);
 
 	// Go through all sections & settings in the file
-	ConfigFile::SectionIterator seci = cf.getSectionIterator();
+	Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
 
-	String secName, typeName, archName;
+	Ogre::String secName, typeName, archName;
 	while (seci.hasMoreElements())
 	{
 		secName = seci.peekNextKey();
-		ConfigFile::SettingsMultiMap *settings = seci.getNext();
-		ConfigFile::SettingsMultiMap::iterator i;
+		Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
+		Ogre::ConfigFile::SettingsMultiMap::iterator i;
 		for (i = settings->begin(); i != settings->end(); ++i)
 		{
 			typeName = i->first;
 			archName = i->second;
-			ResourceGroupManager::getSingleton().addResourceLocation(
+			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
 				PATHMANAGER::Data() + "/" + archName, typeName, secName);
 		}
 	}
@@ -384,94 +442,92 @@ void BaseApp::createResourceListener()
 }
 void BaseApp::loadResources()
 {
-	ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }
 
 
 //  key, mouse, window
 //-------------------------------------------------------------------------------------
-bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
+
+bool BaseApp::keyReleased( const SDL_KeyboardEvent &arg )
 {
-	cmdKeyPress[i_cmdKeyPress++] = CmdKey(arg);
+	MyGUI::InputManager::getInstance().injectKeyRelease(MyGUI::KeyCode::Enum(mInputWrapper->sdl2OISKeyCode(arg.keysym.sym)));
 	return true;
 }
 
-bool BaseApp::keyReleased( const OIS::KeyEvent &arg )
+void BaseApp::textInput(const SDL_TextInputEvent &arg)
 {
-	//if (bGuiFocus && mGUI)
-		cmdKeyRel[i_cmdKeyRel++] = CmdKey(arg);
-	//mGUI->injectKeyRelease(MyGUI::KeyCode::Enum(arg.key));
-	return true;
+	const char* text = &arg.text[0];
+	std::vector<unsigned long> unicode = utf8ToUnicode(std::string(text));
+	for (std::vector<unsigned long>::iterator it = unicode.begin(); it != unicode.end(); ++it)
+		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(0x00), *it);
+		// ^ Should be MyGUI::KeyCode::None, but X11 defines a 'None' macro :(
+		// TODO: Refactor the code so that SDL_syswm.h (which includes X11) is not needed here,
+		// so that it can be changed back to MyGUI::KeyCode::None
 }
+
 
 //  Mouse
 //-------------------------------------------------------------------------------------
-bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
+bool BaseApp::mouseMoved( const SFO::MouseMotionEvent &arg )
 {
-	#if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
-	#define WHEEL_DELTA 120
-	#endif
-	mx += arg.state.X.rel;  my += arg.state.Y.rel;  mz += arg.state.Z.rel/WHEEL_DELTA;
-	if ((bGuiFocus || !bMoveCam) && mGUI && i_cmdMouseMove < cmd_Max)
-		cmdMouseMove[i_cmdMouseMove++] = CmdMouseMove(arg);
+	mx += arg.xrel;  my += arg.yrel;  mz += arg.zrel;
+	MyGUI::InputManager::getInstance().injectMouseMove(arg.x, arg.y, arg.z);
 	return true;
 }
 
-bool BaseApp::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
+bool BaseApp::mousePressed( const SDL_MouseButtonEvent &arg, Uint8 id )
 {
-	if (bGuiFocus && mGUI)
-		cmdMousePress[i_cmdMousePress++] = CmdMouseBtn(arg,id);
+	MyGUI::InputManager::getInstance().injectMousePress(arg.x, arg.y, sdlButtonToMyGUI(id));
+	if (id == SDL_BUTTON_LEFT)
+		mbLeft = true;
+	else if (id == SDL_BUTTON_RIGHT)
+		mbRight = true;
+	else if (id == SDL_BUTTON_MIDDLE)
+		mbMiddle = true;
+	return true;
 
-	if		(id == MB_Left)		mbLeft = true;
-	else if (id == MB_Right)	mbRight = true;
-	else if (id == MB_Middle)	mbMiddle = true;
+}
+
+bool BaseApp::mouseReleased( const SDL_MouseButtonEvent &arg, Uint8 id )
+{
+	MyGUI::InputManager::getInstance().injectMouseRelease(arg.x, arg.y, sdlButtonToMyGUI(id));
+	if (id == SDL_BUTTON_LEFT)
+		mbLeft = false;
+	else if (id == SDL_BUTTON_RIGHT)
+		mbRight = false;
+	else if (id == SDL_BUTTON_MIDDLE)
+		mbMiddle = false;
 	return true;
 }
-bool BaseApp::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
+
+
+void BaseApp::onCursorChange(const std::string &name)
 {
-	if (bGuiFocus && mGUI)
-		cmdMouseRel[i_cmdMouseRel++] = CmdMouseBtn(arg,id);
-
-	if		(id == MB_Left)		mbLeft = false;
-	else if (id == MB_Right)	mbRight = false;
-	else if (id == MB_Middle)	mbMiddle = false;
-	return true;
-}
-
-//  adjust mouse clipping area
-void BaseApp::windowResized(RenderWindow* rw)
-{
-	unsigned int width, height, depth;  int left, top;
-	rw->getMetrics(width, height, depth, left, top);
-
-	const OIS::MouseState &ms = mMouse->getMouseState();
-	ms.width = width;  ms.height = height;
-	
-	bWindowResized = true;
-
-	// adjust camera asp. ratio
-	if (mCamera && mViewport)
-		mCamera->setAspectRatio( float(mWindow->getWidth()) / float(mWindow->getHeight()));
-	
-	// write new window size to settings
-	// crashed on windows when setting fullscreen on
-	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-	pSet->windowx = mWindow->getWidth();
-	pSet->windowy = mWindow->getHeight();
-	#endif
-}
-
-void BaseApp::windowClosed(RenderWindow* rw)
-{
-	inputThreadRunning = false;
-	mThread->join();
-	
-	if (rw == mWindow)
-	if (mInputManager)
+	if(!mCursorManager->cursorChanged(name))
+		return; //the cursor manager doesn't want any more info about this cursor
+	//See if we can get the information we need out of the cursor resource
+	ResourceImageSetPointerFix* imgSetPtr = dynamic_cast<ResourceImageSetPointerFix*>(MyGUI::PointerManager::getInstance().getByName(name));
+	if(imgSetPtr != NULL)
 	{
-		mInputManager->destroyInputObject( mMouse );  mMouse = 0;
-		mInputManager->destroyInputObject( mKeyboard );  mKeyboard = 0;
+		MyGUI::ResourceImageSet* imgSet = imgSetPtr->getImageSet();
 
-		OIS::InputManager::destroyInputSystem(mInputManager);  mInputManager = 0;
+		std::string tex_name = imgSet->getIndexInfo(0,0).texture;
+
+		Ogre::TexturePtr tex = Ogre::TextureManager::getSingleton().getByName(tex_name);
+
+		//everything looks good, send it to the cursor manager
+		if(!tex.isNull())
+		{
+			Uint8 size_x = imgSetPtr->getSize().width;
+			Uint8 size_y = imgSetPtr->getSize().height;
+			Uint8 left = imgSetPtr->getTexturePosition().left;
+			Uint8 top = imgSetPtr->getTexturePosition().top;
+			Uint8 hotspot_x = imgSetPtr->getHotSpot().left;
+			Uint8 hotspot_y = imgSetPtr->getHotSpot().top;
+
+			mCursorManager->receiveCursorInfo(name, tex, left, top, size_x, size_y, hotspot_x, hotspot_y);
+		}
 	}
+
 }

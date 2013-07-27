@@ -4,29 +4,10 @@
 #include "../ogre/OgreGame.h"
 
 
-/*
-OISB::Real analogAction(std::string name, bool full=false)
-{
-	OISB::AnalogAxisAction* act = static_cast<OISB::AnalogAxisAction*>(
-		OISB::System::getSingleton().lookupAction(name));
-	if (!act)  return 0.f;
-
-	//  clamp full -1..1 or half 0..1
-	OISB::Real val = act->getAbsoluteValue();
-	return full ? std::max(-1.f, std::min(1.f, val)) : std::max(0.f, std::min(1.f, val));
-}
-
-bool action(const std::string& name)
-{
-	const OISB::Action* act = OISB::System::getSingleton().lookupAction(name);
-	return act ? act->isActive() : false;
-}*/
-
-
 ///  Process Input
 const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(const float* channels, int player,
-	float carspeed, float sss_effect, float sss_velfactor,
-	bool forceBrake, bool bPerfTest, EPerfTest iPerfTestStage)
+float carspeed, float sss_effect, float sss_velfactor,
+bool forceBrake, bool bPerfTest, EPerfTest iPerfTestStage)
 {
 	assert(inputs.size() == CARINPUT::ALL);
 

@@ -33,9 +33,9 @@ bool BaseApp::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		mInputCtrlPlayer[i]->update(evt.timeSinceLastFrame);
 
 	   // key modifiers
-	alt = mInputWrapper->isModifierHeld(KMOD_ALT);
-	ctrl = mInputWrapper->isModifierHeld(KMOD_CTRL);
-	shift = mInputWrapper->isModifierHeld(KMOD_SHIFT);
+	alt = mInputWrapper->isModifierHeld(SDL_Keymod(KMOD_ALT));
+	ctrl = mInputWrapper->isModifierHeld(SDL_Keymod(KMOD_CTRL));
+	shift = mInputWrapper->isModifierHeld(SDL_Keymod(KMOD_SHIFT));
 
 	updateStats();
 	

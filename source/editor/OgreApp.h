@@ -64,6 +64,8 @@ public:
 	void SetEdMode(ED_MODE newMode);
 
 protected:
+	bool keyPressed(const SDL_KeyboardEvent &arg);
+
 	void LoadTrackEv(), SaveTrackEv(), UpdateTrackEv();
 	enum TrkEvent {  TE_None=0, TE_Load, TE_Save, TE_Update  } eTrkEvent;
 
@@ -74,8 +76,8 @@ protected:
 	virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 	virtual bool frameEnded(const Ogre::FrameEvent& evt);
 
-	virtual void processMouse();
-	bool KeyPress(const CmdKey &arg);  void trkListNext(int rel);
+	void processMouse(double dt);
+	void trkListNext(int rel);
 	Ogre::Vector3 vNew;	void editMouse();
 	
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
@@ -237,7 +239,6 @@ protected:
 	///-----------------------------------------------------------------------------------------------------------------
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------	
-	std::map<OIS::KeyCode, MyGUI::Char> mKC;
 	//  size
 	void SizeGUI(); void doSizeGUI(MyGUI::EnumeratorWidgetPtr);
 	std::vector<MyGUI::TabControl*> vSubTabsEdit,vSubTabsHelp,vSubTabsOpts;

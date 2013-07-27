@@ -11,6 +11,8 @@
 using namespace MyGUI;
 using namespace Ogre;
 
+#include "../sdl4ogre/sdlcursormanager.hpp"
+
 
 ///  Gui Init
 //----------------------------------------------------------------------------------------------------------------------
@@ -138,7 +140,7 @@ void App::InitGui()
 	}
 
 	//  center mouse pos
-	PointerManager::getInstance().setVisible(bGuiFocus || !bMoveCam);
+	mCursorManager->cursorVisibilityChange(bGuiFocus || !bMoveCam);
 	GuiCenterMouse();
 	
 	//  hide  ---
