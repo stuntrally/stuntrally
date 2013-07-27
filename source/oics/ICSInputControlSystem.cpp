@@ -206,13 +206,21 @@ namespace ICS
 					ICS_LOG("Warning: no stepSize value found. Default value is 0.");
 				}
 
+				bool inverted = false;
+				if(xmlControl->Attribute("inverted"))
+				{
+					std::string val(xmlControl->Attribute("inverted"));
+					inverted = (val == "true") ? true : false;
+				}
+
 				addControl( new Control(xmlControl->Attribute("name")
 					, std::string( xmlControl->Attribute("autoChangeDirectionOnLimitsAfterStop") ) == "true"
 					, std::string( xmlControl->Attribute("autoReverseToInitialValue") ) == "true"
 					, FromString<float>(xmlControl->Attribute("initialValue"))
 					, _stepSize
 					, _stepsPerSeconds
-					, axisBindable) );
+					, axisBindable
+					, inverted) );
 
 				loadKeyBinders(xmlControl);
 
@@ -422,6 +430,8 @@ namespace ICS
 			{
 				control.SetAttribute( "axisBindable", "false" );
 			}
+			if ((*o)->getInverted())
+				control.SetAttribute( "inverted", "true" );
 
 			if(getKeyBinding(*o, Control/*::ControlChangingDirection*/::INCREASE) != SDLK_UNKNOWN)
 			{

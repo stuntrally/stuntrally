@@ -468,7 +468,8 @@ void App::inputDetailBtn(WP sender)
 	mBindingAction = sender->getUserData<InputAction>();
 	if (panInputDetail)  panInputDetail->setVisible(false);
 
-	//TODO: inverse
+	Button* btnInputInv = mGUI->findWidget<Button>("InputInv");
+	if (btnInputInv) btnInputInv->setStateSelected(mBindingAction->mControl->getInverted());
 	if (edInputIncrease)  edInputIncrease->setCaption(toStr(action.mControl->getStepSize() * action.mControl->getStepsPerSeconds()));
 }
 
@@ -482,9 +483,8 @@ void App::editInput(MyGUI::EditPtr ed)
 void App::btnInputInv(WP wp)
 {
 	ButtonPtr chk = wp->castType<MyGUI::Button>();
-	//TODO: inverse axis only..
-    //chk->setStateSelected();
-	//mBindingAction->mControl->setChangingDirection(
+	chk->setStateSelected(!chk->getStateSelected());
+	mBindingAction->mControl->setInverted(chk->getStateSelected());
 }
 
 void App::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
