@@ -36,8 +36,7 @@
 #include "../sdl4ogre/sdlcursormanager.hpp"
 
 #include <SDL_syswm.h>
-
-#include "common/ResourceImageSetPointerFix.h"
+#include "common/PointerFix.h"
 
 
 namespace

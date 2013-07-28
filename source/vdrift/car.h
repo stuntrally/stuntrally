@@ -7,7 +7,7 @@
 
 #include "cardefs.h"
 #include "sound.h"
-#include "suspensionbumpdetection.h"
+#include "suspensionbump.h"
 #include "crashdetection.h"
 #include "enginesoundinfo.h"
 
