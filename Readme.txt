@@ -66,8 +66,8 @@ The minimum hardware is:
 a CPU with 2 cores, and GPU: GeForce 9600 GT or Radeon HD 3870,
 with Shader Model 3.0 supported and 256 MB GPU RAM.
 
-It is possible to run on older,
-but integrated GPUs (or laptops) can't handle the game well (or at all).
+It is possible to run on older, but
+integrated GPUs (or laptops) can't handle the game well (or at all).
 
 ----------------------------------------------------------------------------------
 
@@ -94,7 +94,7 @@ If it doesn't help, report on IRC or make an issue on Forum [SR Bugs & Help]
 Editor
 
 In editor, F1 key shows/hides Options,
-switch to tab [Input/Help] to read what can be edited and how.
+press Ctrl-F1 to read what can be edited and how.
 Tab key switches between Camera/Edit mode.
 There isn't (and won't be) an undo function -
 hit F5 to reload last track state, and F4 to save it.
@@ -118,18 +118,18 @@ Trees/grass by PagedGeometry, Gui by MyGUI, materials managed by shiny.
 
 -- Currently these are used (and need to build before game):
 -- newer versions can be used
-OGRE 1.8 with plugins and OIS 1.2
+OGRE 1.8 with plugins
 MyGUI 3.2
 Boost 1.49
 
-SDL-1.2.15
+SDL2-2.0.0
 libvorbis-1.3.3, libogg-1.3.0
 ENet 1.3.4
 
 -- These are included in Source (and compiled with project):
 Bullet 2.79 (need this version)
 BtOgre *
-OISB *
+OICS *
 PagedGeometry 1.1.1 *
 shiny
 TinyXML
