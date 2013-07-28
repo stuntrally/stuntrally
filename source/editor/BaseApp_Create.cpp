@@ -9,17 +9,14 @@
 
 #include "../vdrift/pathmanager.h"
 #include "../ogre/Localization.h"
-
 #include <OgreConfigFile.h>
 
 #include "../ogre/common/MyGUI_D3D11.h"
-
 #include "../sdl4ogre/sdlinputwrapper.hpp"
 #include "../sdl4ogre/sdlcursormanager.hpp"
-
 #include <SDL_syswm.h>
-
 #include "../ogre/common/ResourceImageSetPointerFix.h"
+
 
 namespace
 {
@@ -82,9 +79,9 @@ namespace
 	MyGUI::MouseButton sdlButtonToMyGUI(Uint8 button)
 	{
 		//The right button is the second button, according to MyGUI
-		if(button == SDL_BUTTON_RIGHT)
+		if (button == SDL_BUTTON_RIGHT)
 			button = SDL_BUTTON_MIDDLE;
-		else if(button == SDL_BUTTON_MIDDLE)
+		else if (button == SDL_BUTTON_MIDDLE)
 			button = SDL_BUTTON_RIGHT;
 
 		//MyGUI's buttons are 0 indexed
@@ -203,6 +200,7 @@ BaseApp::~BaseApp()
 	delete mRoot;
 }
 
+
 //  config
 //-------------------------------------------------------------------------------------
 bool BaseApp::configure()
@@ -221,13 +219,11 @@ bool BaseApp::configure()
 	mRoot->initialise(false);
 
 	Uint32 flags = SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_HAPTIC|SDL_INIT_NOPARACHUTE;
-	if(SDL_WasInit(flags) == 0)
+	if (SDL_WasInit(flags) == 0)
 	{
 		SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
-		if(SDL_Init(flags) != 0)
-		{
+		if (SDL_Init(flags) != 0)
 			throw std::runtime_error("Could not initialize SDL! " + std::string(SDL_GetError()));
-		}
 	}
 	SDL_StartTextInput();
 
@@ -246,43 +242,35 @@ bool BaseApp::configure()
 	if(pSet->fullscreen)
 	{
 		SDL_Rect display_bounds;
-		if(SDL_GetDisplayBounds(settings.screen, &display_bounds) != 0)
+		if (SDL_GetDisplayBounds(settings.screen, &display_bounds) != 0)
 			throw std::runtime_error("Couldn't get display bounds!");
 		pos_x = display_bounds.x;
 		pos_y = display_bounds.y;
 	}
 	*/
 
-	// Create an application window with the following settings:
+	//  Create window
 	mSDLWindow = SDL_CreateWindow(
-	  "SR Editor",                  //    window title
-	  pos_x,                     //    initial x position
-	  pos_y,                     //    initial y position
-	  pSet->windowx,                               //    width, in pixels
-	  pSet->windowy,                               //    height, in pixels
-	  SDL_WINDOW_SHOWN
-		| (pSet->fullscreen ? SDL_WINDOW_FULLSCREEN : 0)
-	);
+		"SR Editor", pos_x, pos_y, pSet->windowx, pSet->windowy,
+		SDL_WINDOW_SHOWN | (pSet->fullscreen ? SDL_WINDOW_FULLSCREEN : 0) );
 
-	//get the native whnd
+	//  Get the native whnd
 	struct SDL_SysWMinfo wmInfo;
 	SDL_VERSION(&wmInfo.version);
 
-	if(-1 == SDL_GetWindowWMInfo(mSDLWindow, &wmInfo))
+	if (SDL_GetWindowWMInfo(mSDLWindow, &wmInfo) == -1)
 		throw std::runtime_error("Couldn't get WM Info!");
 
 	Ogre::String winHandle;
 
-	switch(wmInfo.subsystem)
+	switch (wmInfo.subsystem)
 	{
 #ifdef WIN32
 	case SDL_SYSWM_WINDOWS:
-		// Windows code
 		winHandle = Ogre::StringConverter::toString((unsigned long)wmInfo.info.win.window);
 		break;
 #elif __MACOSX__
 	case SDL_SYSWM_COCOA:
-		//required to make OGRE play nice with our window
 		params.insert(std::make_pair("macAPI", "cocoa"));
 		params.insert(std::make_pair("macAPICocoaUseNSView", "true"));
 
@@ -307,6 +295,7 @@ bool BaseApp::configure()
 	return true;
 }
 
+
 //  Setup
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()
@@ -321,7 +310,7 @@ bool BaseApp::setup()
 		#endif
 	}
 	
-	// Dynamic plugin loading
+	//  Dynamic plugin loading
 	mRoot = OGRE_NEW Ogre::Root("", PATHMANAGER::UserConfigDir() + "/ogreset_ed.cfg", PATHMANAGER::UserConfigDir() + "/ogre_ed.log");
 	//LogManager::getSingleton().setLogDetail(LL_BOREME);  //-
 
@@ -331,7 +320,7 @@ bool BaseApp::setup()
 		#define D_SUFFIX ""
 	#endif
 
-	// when show ogre dialog is on, load both rendersystems so user can select
+	//  when show ogre dialog is on, load both rendersystems so user can select
 	if (pSet->ogre_dialog)
 	{
 		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
@@ -339,9 +328,7 @@ bool BaseApp::setup()
 		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
 		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
 		#endif
-	}
-	else
-	{
+	}else{
 		if (pSet->rendersystem == "OpenGL Rendering Subsystem")
 			mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		else if (pSet->rendersystem == "Direct3D9 Rendering Subsystem")
@@ -412,13 +399,13 @@ bool BaseApp::setup()
 //-------------------------------------------------------------------------------------
 void BaseApp::setupResources()
 {
-	// Load resource paths from config file
+	//  Load resource paths from config file
 	Ogre::ConfigFile cf;
 	std::string s = PATHMANAGER::GameConfigDir() +
 		(pSet->tex_size > 0 ? "/resources_ed.cfg" : "/resources_s_ed.cfg");
 	cf.load(s);
 
-	// Go through all sections & settings in the file
+	//  Go through all sections & settings in the file
 	Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
 
 	Ogre::String secName, typeName, archName;
@@ -471,7 +458,7 @@ void BaseApp::textInput(const SDL_TextInputEvent &arg)
 //-------------------------------------------------------------------------------------
 bool BaseApp::mouseMoved( const SFO::MouseMotionEvent &arg )
 {
-	mx += arg.xrel;  my += arg.yrel;  mz += arg.zrel;
+	mx += arg.xrel;  my += arg.yrel;  mz += arg.zrel / 30;
 	MyGUI::InputManager::getInstance().injectMouseMove(arg.x, arg.y, arg.z);
 	return true;
 }
@@ -479,12 +466,9 @@ bool BaseApp::mouseMoved( const SFO::MouseMotionEvent &arg )
 bool BaseApp::mousePressed( const SDL_MouseButtonEvent &arg, Uint8 id )
 {
 	MyGUI::InputManager::getInstance().injectMousePress(arg.x, arg.y, sdlButtonToMyGUI(id));
-	if (id == SDL_BUTTON_LEFT)
-		mbLeft = true;
-	else if (id == SDL_BUTTON_RIGHT)
-		mbRight = true;
-	else if (id == SDL_BUTTON_MIDDLE)
-		mbMiddle = true;
+	if (id == SDL_BUTTON_LEFT)			mbLeft = true;
+	else if (id == SDL_BUTTON_RIGHT)	mbRight = true;
+	else if (id == SDL_BUTTON_MIDDLE)	mbMiddle = true;
 	return true;
 
 }
@@ -492,32 +476,27 @@ bool BaseApp::mousePressed( const SDL_MouseButtonEvent &arg, Uint8 id )
 bool BaseApp::mouseReleased( const SDL_MouseButtonEvent &arg, Uint8 id )
 {
 	MyGUI::InputManager::getInstance().injectMouseRelease(arg.x, arg.y, sdlButtonToMyGUI(id));
-	if (id == SDL_BUTTON_LEFT)
-		mbLeft = false;
-	else if (id == SDL_BUTTON_RIGHT)
-		mbRight = false;
-	else if (id == SDL_BUTTON_MIDDLE)
-		mbMiddle = false;
+	if (id == SDL_BUTTON_LEFT)			mbLeft = false;
+	else if (id == SDL_BUTTON_RIGHT)	mbRight = false;
+	else if (id == SDL_BUTTON_MIDDLE)	mbMiddle = false;
 	return true;
 }
 
 
 void BaseApp::onCursorChange(const std::string &name)
 {
-	if(!mCursorManager->cursorChanged(name))
-		return; //the cursor manager doesn't want any more info about this cursor
-	//See if we can get the information we need out of the cursor resource
+	if (!mCursorManager->cursorChanged(name))
+		return;  // the cursor manager doesn't want any more info about this cursor
+	//  See if we can get the information we need out of the cursor resource
 	ResourceImageSetPointerFix* imgSetPtr = dynamic_cast<ResourceImageSetPointerFix*>(MyGUI::PointerManager::getInstance().getByName(name));
-	if(imgSetPtr != NULL)
+	if (imgSetPtr != NULL)
 	{
 		MyGUI::ResourceImageSet* imgSet = imgSetPtr->getImageSet();
-
 		std::string tex_name = imgSet->getIndexInfo(0,0).texture;
-
 		Ogre::TexturePtr tex = Ogre::TextureManager::getSingleton().getByName(tex_name);
 
-		//everything looks good, send it to the cursor manager
-		if(!tex.isNull())
+		//  everything looks good, send it to the cursor manager
+		if (!tex.isNull())
 		{
 			Uint8 size_x = imgSetPtr->getSize().width;
 			Uint8 size_y = imgSetPtr->getSize().height;
@@ -529,5 +508,4 @@ void BaseApp::onCursorChange(const std::string &name)
 			mCursorManager->receiveCursorInfo(name, tex, left, top, size_x, size_y, hotspot_x, hotspot_y);
 		}
 	}
-
 }
