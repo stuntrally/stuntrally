@@ -52,11 +52,6 @@
 #include <OgreConfigFile.h>
 #include <OgreWindowEventUtilities.h>
 
-#include <OIS/OISEvents.h>
-#include <OIS/OISInputManager.h>
-#include <OIS/OISKeyboard.h>
-#include <OIS/OISMouse.h>
-
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
 #include <OgreTerrainQuadTreeNode.h>

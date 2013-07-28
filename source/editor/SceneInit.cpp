@@ -28,8 +28,8 @@ void App::createScene()  // once, init
 	mCamera->setNearClipDistance(0.1f);
 
 	//  cam pos from last set
-	mCameraT->setPosition(Vector3(pSet->cam_x,pSet->cam_y,pSet->cam_z));
-	mCameraT->setDirection(Vector3(pSet->cam_dx,pSet->cam_dy,pSet->cam_dz).normalisedCopy());
+	mCamera->setPosition(Vector3(pSet->cam_x,pSet->cam_y,pSet->cam_z));
+	mCamera->setDirection(Vector3(pSet->cam_dx,pSet->cam_dy,pSet->cam_dz).normalisedCopy());
 	mViewport->setVisibilityMask(RV_MaskAll);  // hide prv cam rect
 
 	//  tex fil
@@ -299,15 +299,10 @@ void App::UpdateTrackEv()
 
 void App::UpdWndTitle()
 {
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	HWND hwnd = 0;  // update wnd title
-	mWindow->getCustomAttribute("WINDOW", (void*)&hwnd); 
 	String s = String("SR Editor  track: ") + pSet->gui.track;
 	if (pSet->gui.track_user)  s += "  *user*";
-	SetWindowText(hwnd, s.c_str());
-#endif
-	// TODO: Window title for linux
-	// overlay ?  not visible in fullscreen...
+
+	SDL_SetWindowTitle(mSDLWindow, s.c_str());
 }
 
 String App::TrkDir() {

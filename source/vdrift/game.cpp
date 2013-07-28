@@ -16,7 +16,6 @@
 #include "../ogre/common/QTimer.h"
 #include "../ogre/OgreGame.h"
 #include "../ogre/FollowCamera.h"
-#include "../oisb/OISBSystem.h"
 
 #define M_PI  3.14159265358979323846
 using namespace std;
@@ -32,7 +31,8 @@ GAME::GAME(ostream & info_out, ostream & err_out, SETTINGS* pSettings) :
 	pause(false), debugmode(false), profilingmode(false),
 	particle_timer(0), race_laps(0),
 	track(info_out, err_out), /*tracknode(NULL),*/
-	framerate(1.0 / pSettings->game_fq)
+	framerate(1.0 / pSettings->game_fq),
+	pOgreGame(NULL)
 {
 	track.pGame = this;
 	carcontrols_local.first = NULL;
@@ -364,7 +364,7 @@ void GAME::Tick(double deltat)
 	if (deltat > maxtime)
 		deltat = maxtime;
 
-	if (pOgreGame->bPerfTest)  // speed up perf test
+	if (pOgreGame && pOgreGame->bPerfTest)  // speed up perf test
 		deltat *= settings->perf_speed;
 	
 	target_time += deltat;
@@ -416,9 +416,6 @@ void GAME::AdvanceGameLogic(double dt)
 			PROFILER.endBlock("-physics");
 
 			PROFILER.beginBlock("-car-sim");
-			///if (settings->multi_thr == 0)
-			///	OISB::System::getSingleton().process(dt);  // input update  single thread
-
 			int i = 0;
 			for (list <CAR>::iterator it = cars.begin(); it != cars.end(); ++it, ++i)
 				UpdateCar(*it, TickPeriod());
@@ -454,7 +451,8 @@ void GAME::UpdateCarInputs(CAR & car)
 	float carspeed = car.GetSpeedDir();  //car.GetSpeed();
 	//LogO(fToStr(car.GetSpeed(),2,6)+" "+fToStr(car.GetSpeedDir(),2,6));
 
-	carinputs = carcontrols_local.second.ProcessInput(car.id, carspeed, sss_eff, sss_velf,
+	boost::lock_guard<boost::mutex> lock(pOgreGame->mPlayerInputStateMutex);
+	carinputs = carcontrols_local.second.ProcessInput(pOgreGame->mPlayerInputState[car.id], car.id, carspeed, sss_eff, sss_velf,
 		forceBrake, pOgreGame->bPerfTest, pOgreGame->iPerfTestStage);
 
 	car.HandleInputs(carinputs, TickPeriod());

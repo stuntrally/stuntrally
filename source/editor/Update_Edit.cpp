@@ -6,6 +6,8 @@
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 using namespace Ogre;
 
+#include "../sdl4ogre/sdlinputwrapper.hpp"
+
 
 //  Update  input, info
 //---------------------------------------------------------------------------------------------------------------
@@ -48,15 +50,15 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		{	ovSt->hide();	ovSt->setMaterialName("");  }
 	}
 
-	#define isKey(a)  mKeyboard->isKeyDown(OIS::KC_##a)
+	#define isKey(a)  mInputWrapper->isKeyDown(SDL_GetScancodeFromKey(a))
 	const Real q = (shift ? 0.05 : ctrl ? 4.0 :1.0) * 20 * evt.timeSinceLastFrame;
 
 
 	// key,mb info  ==================
 	if (pSet->inputBar)
 	{
-		using namespace OIS;
-		const int Kmax = KC_DELETE;  // last key
+		// TODO: This is definitely not bullet-proof.
+		const int Kmax = SDL_SCANCODE_SLEEP;  // last key
 		static float tkey[Kmax+1] = {0.f,};  // key delay time
 		int i;
 		static bool first=true;
@@ -67,13 +69,20 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		String ss = "";
 		//  pressed
 		for (i=Kmax; i > 0; --i)
-			if (mKeyboard->isKeyDown( (KeyCode)i ))
+			if  (mInputWrapper->isKeyDown(SDL_Scancode(i)))
+			{
 				tkey[i] = 0.2f;  // min time to display
+			}
 
 		//  modif
-		if (tkey[KC_LCONTROL] > 0.f || tkey[KC_RCONTROL] > 0.f)	ss += "Ctrl ";
-		if (tkey[KC_LMENU] > 0.f || tkey[KC_RMENU] > 0.f)		ss += "Alt ";
-		if (tkey[KC_LSHIFT] > 0.f || tkey[KC_RSHIFT] > 0.f)		ss += "Shift ";
+		const static int
+			lc = SDL_GetScancodeFromKey(SDLK_LCTRL),  rc = SDL_GetScancodeFromKey(SDLK_RCTRL),
+			la = SDL_GetScancodeFromKey(SDLK_LALT),   ra = SDL_GetScancodeFromKey(SDLK_RALT),
+			ls = SDL_GetScancodeFromKey(SDLK_LSHIFT), rs = SDL_GetScancodeFromKey(SDLK_RSHIFT);
+
+		if (tkey[lc] > 0.f || tkey[rc] > 0.f)	ss += "Ctrl ";
+		if (tkey[la] > 0.f || tkey[ra] > 0.f)	ss += "Alt ";
+		if (tkey[ls] > 0.f || tkey[rs] > 0.f)	ss += "Shift ";
 
 		//  mouse buttons
 		if (mbLeft)  ss += "LMB ";
@@ -85,22 +94,12 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		{
 			if (tkey[i] > 0.f)
 			{	tkey[i] -= evt.timeSinceLastFrame;  //dec time
-				KeyCode k = (KeyCode)i;
-	
-				 if (k == KC_LSHIFT || k == KC_RSHIFT ||
-					 k == KC_LCONTROL || k == KC_RCONTROL ||
-					 k == KC_LMENU || k == KC_RMENU)		{	}
-			else if (k == KC_DIVIDE)	ss += "Num / ";		else if (k == KC_MULTIPLY)	ss += "Num * ";
-			else if (k == KC_ADD)		ss += "Num + ";		else if (k == KC_SUBTRACT)	ss += "Num - ";
-			else
-			{		 if (k == KC_NUMPAD0)  k = KC_INSERT;	else if (k == KC_DECIMAL)  k = KC_DELETE;
-				else if (k == KC_NUMPAD1)  k = KC_END;		else if (k == KC_NUMPAD2)  k = KC_DOWN;
-				else if (k == KC_NUMPAD3)  k = KC_PGDOWN;	else if (k == KC_NUMPAD4)  k = KC_LEFT;
-				else if (k == KC_NUMPAD5)  k = KC_DELETE;	else if (k == KC_NUMPAD6)  k = KC_RIGHT;
-				else if (k == KC_NUMPAD7)  k = KC_HOME;		else if (k == KC_NUMPAD8)  k = KC_UP;
-				else if (k == KC_NUMPAD9)  k = KC_PGUP;
-					ss += mKeyboard->getAsString(k) + " ";
-		}	}	}
+				if (i!=lc && i!=la && i!=ls && i!=rc && i!=ra && i!=rs)
+				{
+					String s = String(SDL_GetKeyName(SDL_GetKeyFromScancode(static_cast<SDL_Scancode>(i))));
+					ss += s + " ";
+				}
+		}	}
 		
 		//  mouse wheel
 		static int mzd = 0;
@@ -112,13 +111,13 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		ovDbg->setCaption(ss);
 	}
 
-
 	//  keys up/dn - trklist
+
 	WP wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();
 	static float dirU = 0.f,dirD = 0.f;
 	if (bGuiFocus && wf != trkDesc[0])
-	{	if (isKey(UP)  ||isKey(NUMPAD8))  dirD += evt.timeSinceLastFrame;  else
-		if (isKey(DOWN)||isKey(NUMPAD2))  dirU += evt.timeSinceLastFrame;  else
+	{	if (isKey(SDLK_UP)  ||isKey(SDLK_KP_8))  dirD += evt.timeSinceLastFrame;  else
+		if (isKey(SDLK_DOWN)||isKey(SDLK_KP_2))  dirU += evt.timeSinceLastFrame;  else
 		{	dirU = 0.f;  dirD = 0.f;  }
 		int d = ctrl ? 4 : 1;
 		if (dirU > 0.0f) {  trkListNext( d);  dirU = -0.2f;  }
@@ -215,18 +214,20 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
 		Vector3 vy = Vector3::UNIT_Y;
 
-		if (isKey(LEFT)||isKey(NUMPAD4))  road->Move(-vx*q);	if (isKey(RIGHT)||isKey(NUMPAD6))	road->Move( vx*q);
-		if (isKey(UP)||isKey(NUMPAD8))	  road->Move( vz*q);	if (isKey(DOWN)||isKey(NUMPAD2))	road->Move(-vz*q);
+		if (isKey(SDLK_LEFT) ||isKey(SDLK_KP_4))  road->Move(-vx*q);
+		if (isKey(SDLK_RIGHT)||isKey(SDLK_KP_6))  road->Move( vx*q);
+		if (isKey(SDLK_DOWN) ||isKey(SDLK_KP_2))  road->Move(-vz*q);
+		if (isKey(SDLK_UP)   ||isKey(SDLK_KP_8))  road->Move( vz*q);
 
-		if (isKey(SUBTRACT))	road->Move(-vy*q);			if (isKey(ADD))		road->Move( vy*q);
-		if (isKey(MULTIPLY))	road->AddWidth( q*0.4f);	if (isKey(DIVIDE))	road->AddWidth(-q*0.4f);
+		if (isKey(SDLK_KP_MINUS)) road->Move(-vy*q);	if (isKey(SDLK_KP_MULTIPLY)) road->AddWidth( q*0.4f);
+		if (isKey(SDLK_PLUS))	  road->Move( vy*q);	if (isKey(SDLK_KP_DIVIDE))	 road->AddWidth(-q*0.4f);
 
 		if (iSnap == 0)
-		{	if (isKey(1))		road->AddYaw(-q*3,0,alt);	if (isKey(3))		road->AddRoll(-q*3,0,alt);
-			if (isKey(2))		road->AddYaw( q*3,0,alt);	if (isKey(4))		road->AddRoll( q*3,0,alt);
+		{	if (isKey(SDLK_1))	road->AddYaw(-q*3,0,alt);	if (isKey(SDLK_3))	road->AddRoll(-q*3,0,alt);
+			if (isKey(SDLK_2))	road->AddYaw( q*3,0,alt);	if (isKey(SDLK_4))	road->AddRoll( q*3,0,alt);
 		}
-		if (isKey(LBRACKET)||isKey(O))	road->AddPipe(-q*0.2);	if (isKey(K))	road->AddChkR(-q*0.2);  // chk
-		if (isKey(RBRACKET)||isKey(P))	road->AddPipe( q*0.2);	if (isKey(L))	road->AddChkR( q*0.2);
+		if (isKey(SDLK_LEFTBRACKET) ||isKey(SDLK_o))  road->AddPipe(-q*0.2);	if (isKey(SDLK_k))  road->AddChkR(-q*0.2);  // chk
+		if (isKey(SDLK_RIGHTBRACKET)||isKey(SDLK_p))  road->AddPipe( q*0.2);	if (isKey(SDLK_l))  road->AddChkR( q*0.2);
 
 		if (mz > 0)			road->NextPoint();
 		else if (mz < 0)	road->PrevPoint();
@@ -234,7 +235,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 
 	///  Terrain  Brush
 	//--------------------------------------------------------------------------------------------------------------------------------
-	else if (edMode < ED_Road /*&& bEdit()*/)
+	else if (edMode < ED_Road)
 	{
 		static bool first = true;
 		if (first)  // once, static text
@@ -293,22 +294,22 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			else if (!shift){	mBrSize[curBr]  *= 1.f - 0.4f*q*mz;  updBrush();  }
 			else				mBrIntens[curBr]*= 1.f - 0.4f*q*mz/0.05;
 
-		if (isKey(MINUS)   ){	mBrSize[curBr]  *= 1.f - 0.04f*q;  updBrush();  }
-		if (isKey(EQUALS)  ){	mBrSize[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
-		if (isKey(LBRACKET)  )	mBrIntens[curBr]*= 1.f - 0.04f*q;
-		if (isKey(RBRACKET)  )	mBrIntens[curBr]*= 1.f + 0.04f*q;
-		if (isKey(SEMICOLON ) || (!ctrl && isKey(K)))
+		if (isKey(SDLK_MINUS)){   mBrSize[curBr]  *= 1.f - 0.04f*q;  updBrush();  }
+		if (isKey(SDLK_EQUALS)){  mBrSize[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
+		if (isKey(SDLK_LEFTBRACKET))	mBrIntens[curBr]*= 1.f - 0.04f*q;
+		if (isKey(SDLK_RIGHTBRACKET))	mBrIntens[curBr]*= 1.f + 0.04f*q;
+		if (isKey(SDLK_SEMICOLON) || (!ctrl && isKey(SDLK_k)))
 							{	mBrPow[curBr]   *= 1.f - 0.04f*q;  updBrush();  }
-		if (isKey(APOSTROPHE) || (!ctrl && isKey(L)))
+		if (isKey(SDLK_QUOTE)     || (!ctrl && isKey(SDLK_l)))
 							{	mBrPow[curBr]   *= 1.f + 0.04f*q;  updBrush();  }
 
-		if (isKey(O)){			mBrFq[curBr]    *= 1.f - 0.04f*q;  updBrush();  }
-		if (isKey(P)){			mBrFq[curBr]    *= 1.f + 0.04f*q;  updBrush();  }
-		if (isKey(9)){			mBrNOf[curBr]   -= 0.3f*q;		   updBrush();  }
-		if (isKey(0)){			mBrNOf[curBr]   += 0.3f*q;		   updBrush();  }
+		if (isKey(SDLK_o)){		mBrFq[curBr]    *= 1.f - 0.04f*q;  updBrush();  }
+		if (isKey(SDLK_p)){		mBrFq[curBr]    *= 1.f + 0.04f*q;  updBrush();  }
+		if (isKey(SDLK_9)){		mBrNOf[curBr]   -= 0.3f*q;		   updBrush();  }
+		if (isKey(SDLK_0)){		mBrNOf[curBr]   += 0.3f*q;		   updBrush();  }
 
-		if (isKey(1)){			mBrFilt         *= 1.f - 0.04f*q;  updBrush();  }
-		if (isKey(2)){			mBrFilt         *= 1.f + 0.04f*q;  updBrush();  }
+		if (isKey(SDLK_1)){		mBrFilt         *= 1.f - 0.04f*q;  updBrush();  }
+		if (isKey(SDLK_2)){		mBrFilt         *= 1.f + 0.04f*q;  updBrush();  }
 		
 		if (mBrIntens[curBr] < 0.1f)  mBrIntens[curBr] = 0.1;  // rest in updBrush
 	}
@@ -324,10 +325,10 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		stTxt[3]->setCaption("road dir "+ (road->iDir == 1 ? String("+1") : String("-1")) );
 
 		//  edit
-		if (isKey(LBRACKET)  ||isKey(O))	{  road->AddBoxH(-q*0.2);  UpdStartPos();  }
-		if (isKey(RBRACKET)  ||isKey(P))	{  road->AddBoxH( q*0.2);  UpdStartPos();  }
-		if (isKey(SEMICOLON) ||isKey(K))	{  road->AddBoxW(-q*0.2);  UpdStartPos();  }
-		if (isKey(APOSTROPHE)||isKey(L))	{  road->AddBoxW( q*0.2);  UpdStartPos();  }
+		if (isKey(SDLK_LEFTBRACKET) ||isKey(SDLK_o)){  road->AddBoxH(-q*0.2);  UpdStartPos();  }
+		if (isKey(SDLK_RIGHTBRACKET)||isKey(SDLK_p)){  road->AddBoxH( q*0.2);  UpdStartPos();  }
+		if (isKey(SDLK_SEMICOLON)   ||isKey(SDLK_k)){  road->AddBoxW(-q*0.2);  UpdStartPos();  }
+		if (isKey(SDLK_QUOTE)       ||isKey(SDLK_l)){  road->AddBoxW( q*0.2);  UpdStartPos();  }
 		//if (mz > 0 && bEdit())	// snap rot by 15 deg ..
 	}
 	///  Fluids
@@ -344,15 +345,16 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			flTxt[0]->setCaption("Cur/All:  "+toStr(iFlCur+1)+" / "+toStr(sc->fluids.size()));
 			flTxt[1]->setCaption(fb.name);
 			flTxt[2]->setCaption("Pos:  "+fToStr(fb.pos.x,1,4)+" "+fToStr(fb.pos.y,1,4)+" "+fToStr(fb.pos.z,1,4));
-			flTxt[3]->setCaption(""/*"Rot:  "+fToStr(fb.rot.x,1,4)*/);
+			flTxt[3]->setCaption("");
+	//flTxt[3]->setCaption("Rot:  "+fToStr(fb.rot.x,1,4));
 			flTxt[3]->setCaption("Size:  "+fToStr(fb.size.x,1,4)+" "+fToStr(fb.size.y,1,4)+" "+fToStr(fb.size.z,1,4));
 			flTxt[4]->setCaption("Tile:  "+fToStr(fb.tile.x,3,5)+" "+fToStr(fb.tile.y,3,5));
 
 			//  edit
-			if (isKey(LBRACKET)  ||isKey(O)){	fb.tile   *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
-			if (isKey(RBRACKET)  ||isKey(P)){	fb.tile   *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
-			if (isKey(SEMICOLON )||isKey(K)){	fb.tile.y *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
-			if (isKey(APOSTROPHE)||isKey(L)){	fb.tile.y *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
+			if (isKey(SDLK_LEFTBRACKET) ||isKey(SDLK_o)){  fb.tile   *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
+			if (isKey(SDLK_RIGHTBRACKET)||isKey(SDLK_p)){  fb.tile   *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
+			if (isKey(SDLK_SEMICOLON)   ||isKey(SDLK_k)){  fb.tile.y *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
+			if (isKey(SDLK_QUOTE)       ||isKey(SDLK_l)){  fb.tile.y *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
 
 			if (mz != 0 && bEdit())  // wheel prev/next
 			{	int fls = sc->fluids.size();
@@ -407,7 +409,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	if (road && ti >= dti)
 	{	ti = 0;
 		road->UpdLodVis(pSet->road_dist, edMode == ED_PrvCam);
-	}/**/
+	}
+
 	return true;
 }
 
@@ -427,8 +430,8 @@ void App::editMouse()
 		if (!alt)
 		{
 			if (mbLeft)    // move on xz
-			{	Vector3 vx = mCameraT->getRight();      vx.y = 0;  vx.normalise();
-				Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
+			{	Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();
+				Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
 				road->Move((vNew.x * vx - vNew.y * vz) * fMove * moveMul);
 			}else
 			if (mbRight)   // height
@@ -473,8 +476,8 @@ void App::editMouse()
 				}	}
 				else  // move
 				{
-					Vector3 vx = mCameraT->getRight();      vx.y = 0;  vx.normalise();
-					Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
+					Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();
+					Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
 					Vector3 vm = (-vNew.y * vx - vNew.x * vz) * fMove * moveMul;
 					vStartPos[n][0] += vm.z;
 					vStartPos[n][1] += vm.x;
@@ -519,8 +522,8 @@ void App::editMouse()
 		{
 			if (mbLeft)	// move on xz
 			{
-				Vector3 vx = mCameraT->getRight();      vx.y = 0;  vx.normalise();
-				Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
+				Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();
+				Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
 				Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
 				fb.pos += vm;
 				vFlNd[iFlCur]->setPosition(fb.pos);  UpdFluidBox();
@@ -543,8 +546,8 @@ void App::editMouse()
 		{
 			if (mbLeft)  // size xz
 			{
-				Vector3 vx = mCameraT->getRight();      vx.y = 0;  vx.normalise();  vx.x = abs(vx.x);  vx.z = abs(vx.z);
-				Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();  vz.x = abs(vz.x);  vz.z = abs(vz.z);
+				Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();  vx.x = abs(vx.x);  vx.z = abs(vx.z);
+				Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();  vz.x = abs(vz.x);  vz.z = abs(vz.z);
 				Vector3 vm = (vNew.y * vz + vNew.x * vx) * fMove * moveMul;
 				fb.size += vm;
 				if (fb.size.x < 0.2f)  fb.size.x = 0.2f;
@@ -581,8 +584,8 @@ void App::editMouse()
 				{
 					if (mbLeft && i != -1)  // move on xz
 					{
-						Vector3 vx = mCameraT->getRight();      vx.y = 0;  vx.normalise();
-						Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
+						Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();
+						Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
 						Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
 						o.pos[0] += vm.x;  o.pos[1] -= vm.z;  // todo: for selection ..
 						o.SetFromBlt();	 upd1 = true;

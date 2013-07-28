@@ -3,10 +3,13 @@ cmake_minimum_required(VERSION 2.8)
 
 # Allow disabling game building
 option(BUILD_GAME             "Build the game binary."    ON)
+
 # Allow disabling editor building
 option(BUILD_EDITOR           "Build the track editor."   ON)
+
 # Allow disabling master server building
 option(BUILD_MASTER_SERVER    "Build the master server."  OFF)
+
 
 # Avoid source tree pollution
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
@@ -20,6 +23,7 @@ if(NOT CMAKE_BUILD_TYPE)
 	CACHE STRING "Type of build, options are: None Debug Release RelWithDebInfo MinSizeRel." FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
+
 # Set default compile flags for GCC
 if(CMAKE_COMPILER_IS_GNUCXX)
 	message(STATUS "GCC detected, adding compile flags")
@@ -31,11 +35,21 @@ if(UNIX)
 	list(APPEND LIBS "X11" "Xcursor")
 endif(UNIX)
 
+
+# Set default compile flags for VS
+if(MSVC)
+	message(STATUS "VS detected, adding /MP flag (multiprocessor compile)")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+endif()
+
+
+
 # Include path for additional CMake library finding scripts
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 # We want the binaries to be easily accessible
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+
 
 # Data installation path
 if(WIN32)
@@ -54,9 +68,9 @@ add_definitions(-DSHARED_DATA_DIR="${SHARE_INSTALL}")
 
 
 if (DEFINED CMAKE_BUILD_TYPE)
-    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-        add_definitions(-D_DEBUG="")
-    endif()
+	if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+		add_definitions(-D_DEBUG="")
+	endif()
 endif()
 
 
@@ -66,10 +80,12 @@ endif(WIN32)
 
 set(BOOST_COMPONENTS system thread filesystem wave)
 
+
 find_package(Boost COMPONENTS ${BOOST_COMPONENTS} REQUIRED QUIET)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 list(APPEND LIBS ${Boost_LIBRARIES})
+
 
 # We can significantly reduce deps if only building master server
 if(BUILD_GAME OR BUILD_EDITOR)
@@ -82,24 +98,30 @@ if(BUILD_GAME OR BUILD_EDITOR)
 	#include_directories(${BULLET_INCLUDE_DIRS})
 	#list(APPEND LIBS ${BULLET_LIBRARIES})
 
+	find_package(SDL2 REQUIRED)
+	include_directories(${SDL2_INCLUDE_DIR})
+	link_directories(${SDL2_LIBRARY_DIRS})
+	list(APPEND LIBS ${SDL2_LIBRARY})
+
 	find_package(MyGUI REQUIRED QUIET)
 	include_directories(${MYGUI_INCLUDE_DIRS})
 	include_directories(${MYGUI_PLATFORM_INCLUDE_DIRS})
 	link_directories(${MYGUI_LIB_DIR})
+
 	IF(MSVC)
 		list(APPEND LIBS ${MYGUI_LIBRARIES} ${MYGUI_PLATFORM_LIBRARIES})
 	ELSE(MSVC)
 		list(APPEND LIBS ${MYGUI_LIBRARIES} MyGUI.OgrePlatform) #TODO: MyGUI.OgrePlatform is not added by the find script
 	ENDIF(MSVC)
 
-	foreach(lib  OIS SDL OGG VorbisFile)    # Simple libraries added in a loop
+	foreach(lib  OGG VorbisFile)    # Simple libraries added in a loop
 		find_package(${lib} REQUIRED QUIET)
 		include_directories(${${lib}_INCLUDE_DIRS})
 		list(APPEND LIBS ${${lib}_LIBRARIES})
 	endforeach()
 
 	if(UNIX)
-		list(APPEND LIBS "rt") # For clock_gettime()
+		list(APPEND LIBS "rt")   # For clock_gettime()
 	endif()
 endif()
 

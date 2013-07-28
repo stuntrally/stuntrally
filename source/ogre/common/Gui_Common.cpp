@@ -23,6 +23,8 @@ using namespace std;
 
 #include "../shiny/Main/Factory.hpp"
 
+#include "../sdl4ogre/sdlinputwrapper.hpp"
+
 
 
 ///  Gui Init  [Graphics]
@@ -351,16 +353,11 @@ void App::GuiInitGraphics()
 //  util
 //----------------------------------------------------------------------------------------------------------------
 void App::GuiCenterMouse()
-{
-	// mouse center causes problems on x11 with mouse capture=off
-	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-	if (!pSet->capture_mouse)  return;
-	#endif
-	
+{	
 	int xm = mWindow->getWidth()/2, ym = mWindow->getHeight()/2;
+
+	mInputWrapper->warpMouse(xm, ym);
 	MyGUI::InputManager::getInstance().injectMouseMove(xm, ym, 0);
-	OIS::MouseState &ms = const_cast<OIS::MouseState&>(mMouse->getMouseState());
-	ms.X.abs = xm;  ms.Y.abs = ym;
 }
 
 void App::btnQuit(WP)
@@ -664,22 +661,23 @@ void App::btnResChng(WP)
 
 	pSet->windowx = StringConverter::parseInt(StringUtil::split(mode, "x")[0]);
 	pSet->windowy = StringConverter::parseInt(StringUtil::split(mode, "x")[1]);
-	
-	mWindow->resize(pSet->windowx, pSet->windowy);
-	
+
+	Uint32 flags = SDL_GetWindowFlags(mSDLWindow);
+	if (flags & SDL_WINDOW_MAXIMIZED) // Can't change size of a maximized window
+		SDL_RestoreWindow(mSDLWindow);
+
 	if (pSet->fullscreen)
-		mWindow->setFullscreen(true, pSet->windowx, pSet->windowy);
-	else
 	{
-	#ifdef _WIN32
-		int sx = GetSystemMetrics(SM_CXSCREEN), sy = GetSystemMetrics(SM_CYSCREEN);
-		int cx = max(0,(sx - pSet->windowx) / 2), cy = max(0,(sy - pSet->windowy) / 2);
-		mWindow->reposition(cx,cy);
-	#else
-		//mWindow->reposition(0,0);  //TODO: linux window size,center ?..
-	#endif
+		SDL_DisplayMode mode;
+		SDL_GetWindowDisplayMode(mSDLWindow, &mode);
+		mode.w = pSet->windowx;
+		mode.h = pSet->windowy;
+		SDL_SetWindowDisplayMode(mSDLWindow, &mode);
+		SDL_SetWindowFullscreen(mSDLWindow, 0);
+		SDL_SetWindowFullscreen(mSDLWindow, SDL_WINDOW_FULLSCREEN);
 	}
-	bWindowResized = true;
+	else
+		SDL_SetWindowSize(mSDLWindow, pSet->windowx, pSet->windowy);
 }
 
 
@@ -778,8 +776,7 @@ void App::ResizeOptWnd()
 void App::chkVidFullscr(WP wp)
 {
 	ChkEv(fullscreen);
-	mWindow->setFullscreen(pSet->fullscreen, pSet->windowx, pSet->windowy);
-	mWindow->resize(pSet->windowx, pSet->windowy);
+	SDL_SetWindowFullscreen(mSDLWindow,  wp->castType<MyGUI::Button>()->getStateSelected()? SDL_WINDOW_FULLSCREEN : 0);
 }
 
 void App::chkVidVSync(WP wp)

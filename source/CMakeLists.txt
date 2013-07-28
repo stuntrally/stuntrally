@@ -14,9 +14,11 @@ endif()
 # Search include files from all source sub directories
 include_directories(btOgre ogre ogre/common paged-geom road tinyxml vdrift bullet)
 
-# Compile our libraries
+
+# Compile our libraries  ------
 if (BUILD_GAME OR BUILD_EDITOR)
-	foreach(ourlib   tinyxml oisb paged-geom bullet btOgre)
+
+	foreach(ourlib  oics tinyxml paged-geom bullet btOgre)
 		add_subdirectory(${ourlib})
 		list(APPEND OURLIBS ${ourlib})
 	endforeach()
@@ -24,19 +26,43 @@ if (BUILD_GAME OR BUILD_EDITOR)
 	add_subdirectory(shiny)
 	list(APPEND OURLIBS "shiny")
 	list(APPEND OURLIBS "shiny.OgrePlatform")
+
+	add_subdirectory(sdl4ogre)
+	list(APPEND OURLIBS "sdl4ogre")
 endif()
 
-# Game executable
-if(BUILD_GAME)
+
+# Game executable  ------
+if (BUILD_GAME)
+
 	# Glob .cpp files needed for the game
 	file(GLOB GAME_SOURCES
-		vdrift/*.cpp
+		vdrift/*
+		ogre/*.h
 		ogre/*.cpp
-		ogre/*/*.cpp
-		road/*.cpp
+		ogre/common/*.cpp
+		ogre/common/*.h
+		road/*
+		network/*.hpp
 		network/*.cpp
-		network/*.hpp # For some IDE project files
+		../config/*
+		../data/gui/Game.layout
+		../data/materials/*.*
 	)
+
+	source_group(road road/*)
+	source_group(ogre ogre/*)
+	source_group(common ogre/common/*)
+	source_group(network network*)
+	source_group(ogre_gui ogre/gui*)
+	source_group(ogre_hud ogre/hud*)
+	source_group(vdrift\\rest vdrift/*)
+	#source_group(vdrift\\game Buoy|coll|game|sound|settings)
+	source_group(vdrift_car vdrift/car*)
+	source_group(xml ../config/*)
+	source_group(xml_gui ../data/*/core*.xml)
+	source_group(mat ../data/materials/*.*)
+
 	if (MSVC)
 		add_executable(${GAME_EXE} WIN32 ${GAME_SOURCES})
 	else (MSVC)
@@ -46,31 +72,38 @@ if(BUILD_GAME)
 	install(TARGETS ${GAME_EXE} DESTINATION bin)
 endif()
 
+
 # Editor
-if(BUILD_EDITOR)
+if (BUILD_EDITOR)
 	# Glob .cpp files needed for the editor
 	file(GLOB EDITOR_SOURCES
 		editor/*.cpp
-		vdrift/configfile.cpp
-		vdrift/pathmanager.cpp
-		vdrift/track.cpp
-		vdrift/k1999.cpp
-		vdrift/model.cpp
-		vdrift/vertexarray.cpp
-		vdrift/roadstrip.cpp
-		vdrift/bezier.cpp
-		vdrift/objectloader.cpp
-		vdrift/joepack.cpp
-		vdrift/track_object.cpp
-		vdrift/model_joe03.cpp
-		vdrift/roadpatch.cpp
-		vdrift/cartire.cpp
-		ogre/QTimer.cpp
+		editor/*.h
+		vdrift/configfile.*
+		vdrift/pathmanager.*
+		vdrift/track.*
+		vdrift/k1999.*
+		vdrift/model.*
+		vdrift/vertexarray.*
+		vdrift/roadstrip.*
+		vdrift/bezier.*
+		vdrift/objectloader.*
+		vdrift/joepack.*
+		vdrift/track_object.*
+		vdrift/model_joe03.*
+		vdrift/roadpatch.*
+		vdrift/cartire.*
 		ogre/common/*.cpp
-		ogre/common/MaterialGen/*.cpp
-		ogre/common/MaterialGen/Platforms/Ogre/*.cpp
-		road/*.cpp
+		ogre/common/*.h
+		road/*
+		../data/gui/Editor.layout
 	)
+
+	source_group(road road/*)
+	source_group(editor editor/*)
+	source_group(common ogre/common/*)
+	source_group(editor_gui editor/gui*)
+	source_group(vdrift vdrift/*)
 
 	add_executable(${EDITOR_EXE} ${EDITOR_SOURCES})
 	set_target_properties(${EDITOR_EXE} PROPERTIES COMPILE_FLAGS "-DSR_EDITOR")
@@ -78,8 +111,9 @@ if(BUILD_EDITOR)
 	install(TARGETS ${EDITOR_EXE} DESTINATION bin)
 endif()
 
+
 # Master server
-if(BUILD_MASTER_SERVER)
+if (BUILD_MASTER_SERVER)
 	file(GLOB SERVER_SOURCES network/master-server/main.cpp) # Glob .cpp files needed for the server
 	add_executable(${SERVER_EXE} ${SERVER_SOURCES})
 	target_link_libraries(${SERVER_EXE} ${SERVER_LIBS})
@@ -93,7 +127,6 @@ if (MSVC)
 		editor/*.cpp
 		ogre/*.cpp
 		ogre/common/*.cpp
-		oisb/*.cpp
 		paged-geom/*.cpp
 		road/*.cpp
 		vdrift/*.cpp

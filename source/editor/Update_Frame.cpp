@@ -13,66 +13,45 @@
 #include "../shiny/Main/Factory.hpp"
 using namespace Ogre;
 
+#include "../sdl4ogre/sdlinputwrapper.hpp"
+
 
 ///  Mouse
 //---------------------------------------------------------------------------------------------------------------
-void App::processMouse()  //! from Thread, cam vars only
+void App::processMouse(double fDT)
 {
-	//double m_interval = timer.iv;
-	//static double m_sumTime = 0.0;
-	//m_sumTime += mDTime;  int num = 0;
-	//while (m_sumTime > m_interval)
-	//if (!alt)
-	{
-		//num++;
-		//m_sumTime -= m_interval;
-		Real fDT = timer.iv;  //mDTime;
-		
-		//  static vars are smoothed
-		Vector3 vInpC(0,0,0),vInp;  //static Vector3 vNew(0,0,0);
-		Real fSmooth = (powf(1.0f - pSet->cam_inert, 2.2f) * 40.f + 0.1f) * fDT;
-		
-		const Real sens = 0.13;
-		if (bCam())
-			vInpC = Vector3(mx, my, 0)*sens;
-		vInp = Vector3(mx, my, 0)*sens;  mx = 0;  my = 0;
-		vNew += (vInp-vNew) * fSmooth;
-		//vNew = vInp;
-		
-		if (mbMiddle){	mTrans.z += vInpC.y * 1.6f;  }  //zoom
-		if (mbRight){	mTrans.x += vInpC.x;  mTrans.y -= vInpC.y;  }  //pan
-		if (mbLeft){	mRotX -= vInpC.x;  mRotY -= vInpC.y;  }  //rot
-		//mTrans.z -= vInp.z;	//scroll
+	//  static vars are smoothed
+	Vector3 vInpC(0,0,0),vInp;
+	Real fSmooth = (powf(1.0f - pSet->cam_inert, 2.2f) * 40.f + 0.1f) * fDT;
 
-		//  move camera	//if (bCam())
-		{
-			Real cs = pSet->cam_speed;  Degree cr(pSet->cam_speed);
-			Real fMove = 100*cs;  //par speed
-			Degree fRot = 500*cr, fkRot = 160*cr;
-		
-			static Radian sYaw(0), sPth(0);
-			static Vector3 sMove(0,0,0);
+	const Real sens = 0.13;
+	if (bCam())
+		vInpC = Vector3(mx, my, 0)*sens;
+	vInp = Vector3(mx, my, 0)*sens;  mx = 0;  my = 0;
+	vNew += (vInp-vNew) * fSmooth;
 
-			Radian inYaw = rotMul * fDT * (fRot* mRotX + fkRot* mRotKX);
-			Radian inPth = rotMul * fDT * (fRot* mRotY + fkRot* mRotKY);
-			Vector3 inMove = moveMul * fDT * (fMove * mTrans);
+	if (mbMiddle){	mTrans.z += vInpC.y * 1.6f;  }  //zoom
+	if (mbRight){	mTrans.x += vInpC.x;  mTrans.y -= vInpC.y;  }  //pan
+	if (mbLeft){	mRotX -= vInpC.x;  mRotY -= vInpC.y;  }  //rot
 
-			sYaw += (inYaw - sYaw) * fSmooth;
-			//sYaw = inYaw;
-			sPth += (inPth - sPth) * fSmooth;
-			//sPth = inPth;
-			sMove += (inMove - sMove) * fSmooth;
-			//sMove = inMove;
+	Real cs = pSet->cam_speed;  Degree cr(pSet->cam_speed);
+	Real fMove = 100*cs;  //par speed
+	Degree fRot = 500*cr, fkRot = 160*cr;
 
-			//if (abs(sYaw.valueRadians()) > 0.000001f)
-				mCameraT->yaw( sYaw );
-			//if (abs(sYaw.valueRadians()) > 0.000001f)
-				mCameraT->pitch( sPth );
-			//if (sMove.squaredLength() > 0.000001f)
-				mCameraT->moveRelative( sMove );
-		}
-	}
-	//LogO("dt: " + toStr((float)mDTime) + "  n.iv's: " + toStr(num));
+	static Radian sYaw(0), sPth(0);
+	static Vector3 sMove(0,0,0);
+
+	Radian inYaw = rotMul * fDT * (fRot* mRotX + fkRot* mRotKX);
+	Radian inPth = rotMul * fDT * (fRot* mRotY + fkRot* mRotKY);
+	Vector3 inMove = moveMul * fDT * (fMove * mTrans);
+
+	sYaw += (inYaw - sYaw) * fSmooth;
+	sPth += (inPth - sPth) * fSmooth;
+	sMove += (inMove - sMove) * fSmooth;
+
+	mCamera->yaw( sYaw );
+	mCamera->pitch( sPth );
+	mCamera->moveRelative( sMove );
 }
 
 
@@ -97,38 +76,8 @@ bool App::frameEnded(const FrameEvent& evt)
 		eTrkEvent = TE_None;
 	}
 	
-	///  input event queues  ------------------------------------
-
-	for (int i=0; i < i_cmdKeyPress; ++i)
-	{	const CmdKey& k = cmdKeyPress[i];
-		KeyPress(k);  }
-	i_cmdKeyPress = 0;
-
-	for (int i=0; i < i_cmdKeyRel; ++i)
-	{	const CmdKey& k = cmdKeyRel[i];
-		MyGUI::InputManager::getInstance().injectKeyRelease(MyGUI::KeyCode::Enum(k.key));  }
-	i_cmdKeyRel = 0;
-
-	for (int i=0; i < i_cmdMouseMove; ++i)
-	{	const CmdMouseMove& c = cmdMouseMove[i];
-		MyGUI::InputManager::getInstance().injectMouseMove(c.ms.X.abs, c.ms.Y.abs, c.ms.Z.abs);  }
-	i_cmdMouseMove = 0;
-
-	for (int i=0; i < i_cmdMousePress; ++i)
-	{	const CmdMouseBtn& b = cmdMousePress[i];
-		MyGUI::InputManager::getInstance().injectMousePress(b.ms.X.abs, b.ms.Y.abs, MyGUI::MouseButton::Enum(b.btn));
-		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-		SetCursor(0);  //?- cursor after alt-tab
-		ShowCursor(0); 
-		#endif
-	}
-	i_cmdMousePress = 0;
-
-	for (int i=0; i < i_cmdMouseRel; ++i)
-	{	const CmdMouseBtn& b = cmdMouseRel[i];
-		MyGUI::InputManager::getInstance().injectMouseRelease(b.ms.X.abs, b.ms.Y.abs, MyGUI::MouseButton::Enum(b.btn));  }
-	i_cmdMouseRel = 0;
-	
+	///  input
+	mInputWrapper->capture();
 
 	//  road pick
 	if (road)
@@ -223,8 +172,8 @@ bool App::frameEnded(const FrameEvent& evt)
 	///**  Render Targets update
 	if (edMode == ED_PrvCam)
 	{
-		sc->camPos = mCameraT->getPosition();
-		sc->camDir = mCameraT->getDirection();
+		sc->camPos = mCamera->getPosition();
+		sc->camDir = mCamera->getDirection();
 		if (rt[RTs-1].rndTex)
 			rt[RTs-1].rndTex->update();
 	}else{
@@ -246,6 +195,41 @@ bool App::frameEnded(const FrameEvent& evt)
 bool App::frameStarted(const Ogre::FrameEvent& evt)
 {
 	BaseApp::frameStarted(evt);
+
+	mDTime = evt.timeSinceLastFrame;
+	if (mDTime > 0.1f)  mDTime = 0.1f;  //min 5fps
+
+	//  update input
+	mRotX = 0; mRotY = 0;  mRotKX = 0; mRotKY = 0;  mTrans = Vector3::ZERO;
+	#define  key(a)  (mInputWrapper->isKeyDown(SDL_GetScancodeFromKey(a)))
+
+	//  Move,Rot camera
+	if (bCam())
+	{
+		if(key(SDLK_a))	mTrans.x -= 1;	if(key(SDLK_d))	mTrans.x += 1;
+		if(key(SDLK_w))	mTrans.z -= 1;	if(key(SDLK_s))	mTrans.z += 1;
+		if(key(SDLK_q))	mTrans.y -= 1;	if(key(SDLK_e))	mTrans.y += 1;
+
+		if(key(SDLK_DOWN)||key(SDLK_KP_2))   mRotKY -= 1;
+		if(key(SDLK_UP)  ||key(SDLK_KP_8))   mRotKY += 1;
+		if(key(SDLK_RIGHT)||key(SDLK_KP_6))  mRotKX -= 1;
+		if(key(SDLK_LEFT) ||key(SDLK_KP_4))  mRotKX += 1;
+	}
+
+	   // key modifiers
+	  alt = mInputWrapper->isModifierHeld(SDL_Keymod(KMOD_ALT));
+	 ctrl = mInputWrapper->isModifierHeld(SDL_Keymod(KMOD_CTRL));
+	shift = mInputWrapper->isModifierHeld(SDL_Keymod(KMOD_SHIFT));
+
+	 // speed multiplers
+	moveMul = 1;  rotMul = 1;
+	if(shift){	moveMul *= 0.2;	 rotMul *= 0.4;	}  // 16 8, 4 3, 0.5 0.5
+	if(ctrl){	moveMul *= 4;	 rotMul *= 2.0;	}
+	//if(alt)  {	moveMul *= 0.5;	 rotMul *= 0.5;	}
+	//const Real s = (shift ? 0.05 : ctrl ? 4.0 :1.0)
+
+	processMouse(mDTime);
+
 	
 	UnfocusLists();
 	

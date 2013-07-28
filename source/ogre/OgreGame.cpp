@@ -83,8 +83,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,blendMtr(0), iBlendMaps(0), dbgdraw(0), noBlendUpd(0), blendMapSize(513), bListTrackU(0)
 	,grass(0), trees(0), road(0)
 	,pr(0),pr2(0), sun(0), carIdWin(-1), iCurCar(0), bUpdCarClr(1), iRplCarOfs(0)
-	,lastAxis(-1), axisCnt(0), txtJAxis(0), txtJBtn(0), txtInpDetail(0), panInputDetail(0)
-	,edInputMin(0), edInputMax(0), edInputMul(0), edInputReturn(0), edInputIncrease(0), actDetail(0), cmbInpDetSet(0)
+	,txtInpDetail(0), panInputDetail(0), edInputIncrease(0)
 	,liChamps(0),liStages(0), edChampStage(0),edChampEnd(0), edChampInfo(0)
 	,tabTut(0),tabChamp(0), imgTut(0),imgChamp(0),imgChall(0)
 	,imgChampStage(0),imgChampEnd(0), liNetEnd(0), valStageNum(0), btChampStage(0)
@@ -94,9 +93,16 @@ App::App(SETTINGS *settings, GAME *game)
 	,edPerfTest(0),edTweakCol(0),tabTweak(0),tabEdCar(0)
 	,txtTweakPath(0),cmbTweakCarSet(0), cmbTweakTireSet(0),txtTweakTire(0), txtTweakPathCol(0)
 	,bPerfTest(0),iPerfTestStage(PT_StartWait), loadReadme(1), isGhost2nd(0)
+	,mBindingAction(NULL), mBindingSender(NULL)
 {
 	pSet = settings;
 	pGame->collision.pApp = this;
+
+	for (int p=0;p<4;++p)
+	{
+		for (int a=0;a<NumPlayerActions;++a)
+			mPlayerInputState[p][a] = 0;
+	}
 	
 	sc = new Scene();
 	hud.resize(4);  frm.resize(4);  ov.resize(5);

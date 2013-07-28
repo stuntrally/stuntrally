@@ -6,7 +6,6 @@
 #include "../vdrift/game.h"
 #include "../vdrift/quickprof.h"
 #include "../paged-geom/PagedGeometry.h"
-#include "../oisb/OISBSystem.h"
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 #include "LinearMath/btDefaultMotionState.h"
@@ -24,6 +23,11 @@ using namespace MyGUI;
 
 #include "../shiny/Main/Factory.hpp"
 
+#include "../sdl4ogre/sdlinputwrapper.hpp"
+
+
+#define isKey(a)  mInputWrapper->isKeyDown(a)
+
 
 //  simulation (2nd) thread
 //---------------------------------------------------------------------------------------------------------------
@@ -37,9 +41,6 @@ void App::UpdThr()
 		//  separate thread
 		pGame->qtim.update();
 		double dt = pGame->qtim.dt;
-
-		///if (mOISBsys)  // input update  multi thread
-		///	mOISBsys->process(dt);
 		
 		if (pSet->multi_thr == 1 && !bLoading)
 		{
@@ -106,6 +107,15 @@ bool App::frameStart(Real time)
 	PROFILER.beginBlock(" frameSt");
 	fLastFrameDT = time;
 
+	for (int i=0; i<4; ++i)
+	{
+		boost::lock_guard<boost::mutex> lock(mPlayerInputStateMutex);
+		for (int a = 0; a<NumPlayerActions; ++a)
+		{
+			mPlayerInputState[i][a] = mInputCtrlPlayer[i]->getChannel(a)->getValue();
+		}
+	}
+
 	if (imgBack && pGame)  // show/hide background image
 	{
 		bool backImgVis = !bLoading && pGame->cars.empty();
@@ -130,8 +140,8 @@ bool App::frameStart(Real time)
 	///* tire edit */
 	if (pSet->graphs_type == Gh_TireEdit && carModels.size() > 0)
 	{
-		int k = (isKey(OIS::KC_1) || isKey(OIS::KC_DIVIDE)  ? -1 : 0)
-			  + (isKey(OIS::KC_2) || isKey(OIS::KC_MULTIPLY) ? 1 : 0);
+		int k = (isKey(SDL_SCANCODE_1) || isKey(SDL_SCANCODE_KP_DIVIDE)  ? -1 : 0)
+			  + (isKey(SDL_SCANCODE_2) || isKey(SDL_SCANCODE_KP_MULTIPLY) ? 1 : 0);
 		if (k)
 		{
 			double mul = shift ? 0.2 : (ctrl ? 4.0 : 1.0);
@@ -260,12 +270,11 @@ bool App::frameStart(Real time)
 			UpdateInputBars();
 		
 		//  keys up/dn, for lists
-		#define isKey(a)  mKeyboard->isKeyDown(OIS::a)
 		static float dirU = 0.f,dirD = 0.f;
 		if (isFocGui && !pSet->isMain && !isTweak())
 		{
-			if (isKey(KC_UP)  ||isKey(KC_NUMPAD8))	dirD += time;  else
-			if (isKey(KC_DOWN)||isKey(KC_NUMPAD2))	dirU += time;  else
+			if (isKey(SDL_SCANCODE_UP)  ||isKey(SDL_SCANCODE_KP_8))	dirD += time;  else
+			if (isKey(SDL_SCANCODE_DOWN)||isKey(SDL_SCANCODE_KP_2))	dirU += time;  else
 			{	dirU = 0.f;  dirD = 0.f;  }
 			int d = ctrl ? 4 : 1;
 			if (dirU > 0.0f) {  LNext( d);  dirU = -0.2f;  }
@@ -300,7 +309,7 @@ bool App::frameStart(Real time)
 		if (bRplPlay)
 		{
 			isFocRpl = ctrl;
-			bool le = isKey(KC_LBRACKET), ri = isKey(KC_RBRACKET), ctrlN = ctrl && (le || ri);
+			bool le = isKey(SDL_SCANCODE_LEFTBRACKET), ri = isKey(SDL_SCANCODE_RIGHTBRACKET), ctrlN = ctrl && (le || ri);
 			int ta = ((le || bRplBack) ? -2 : 0) + ((ri || bRplFwd) ? 2 : 0);
 			if (ta)
 			{	double tadd = ta;
@@ -320,12 +329,6 @@ bool App::frameStart(Real time)
 			return false;
 		}
 
-		// input
-		//PROFILER.beginBlock("input");  // below 0.0 ms
-		//if (pSet->multi_thr == 0)  /// move to sim thread...
-		if (mOISBsys)  // input update (old ver, in render)
-			mOISBsys->process(time);
-		//PROFILER.endBlock("input");
 
 
 		if (pSet->multi_thr == 0)

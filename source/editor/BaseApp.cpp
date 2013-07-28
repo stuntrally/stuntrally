@@ -50,9 +50,7 @@ void BaseApp::updateStats()
 //  rendering
 //-------------------------------------------------------------------------------------
 bool BaseApp::frameStarted(const FrameEvent& evt)
-{
-	//OnTimer(evt.timeSinceLastFrame);
-	
+{	
 	updateStats();
 
 	if (ndSky)  ///o-
@@ -61,56 +59,8 @@ bool BaseApp::frameStarted(const FrameEvent& evt)
 	return true;
 }
 
-///  timer thread  - update input and camera
-void BaseApp::OnTimer(double dtime)
-{
-	mDTime = dtime;
-	if (mDTime > 0.1f)  mDTime = 0.1f;  //min 5fps
-
-	//  update input
-	if (!mKeyboard || !mMouse)  return;
-	mKeyboard->capture();  mMouse->capture();
-
-	mRotX = 0; mRotY = 0;  mRotKX = 0; mRotKY = 0;  mTrans = Vector3::ZERO;
-	#define  key(a)  (mKeyboard->isKeyDown(OIS::KC_##a))
-	
-	//  Move,Rot camera
-	if (bCam())
-	{
-		if(key(A))	mTrans.x -= 1;	if(key(D))	mTrans.x += 1;
-		if(key(W))	mTrans.z -= 1;	if(key(S))	mTrans.z += 1;
-		if(key(Q))	mTrans.y -= 1;	if(key(E))	mTrans.y += 1;
-			
-		if(key(DOWN)||key(NUMPAD2))   mRotKY -= 1;
-		if(key(UP)  ||key(NUMPAD8))   mRotKY += 1;
-		if(key(RIGHT)||key(NUMPAD6))  mRotKX -= 1;
-		if(key(LEFT) ||key(NUMPAD4))  mRotKX += 1;
-	}
- 	//using namespace OIS;
-
-	   // key modifiers
-	  alt = mKeyboard->isModifierDown(OIS::Keyboard::Alt),
-	 ctrl = mKeyboard->isModifierDown(OIS::Keyboard::Ctrl),
-	shift = mKeyboard->isModifierDown(OIS::Keyboard::Shift);
-	
-	 // speed multiplers
-	moveMul = 1;  rotMul = 1;
-	if(shift){	moveMul *= 0.2;	 rotMul *= 0.4;	}  // 16 8, 4 3, 0.5 0.5
-	if(ctrl){	moveMul *= 4;	 rotMul *= 2.0;	}
-	//if(alt)  {	moveMul *= 0.5;	 rotMul *= 0.5;	}
-	//const Real s = (shift ? 0.05 : ctrl ? 4.0 :1.0) 
-
-	processMouse();
-}
-
 bool BaseApp::frameRenderingQueued(const FrameEvent& evt)
 {
-	//mDTime = evt.timeSinceLastFrame;
-	//if (mDTime > 0.1f)  mDTime = 0.1f;  //min 5fps
-
-	mCamera->setPosition(mCameraT->getPosition());  // copy from thread
-	mCamera->setDirection(mCameraT->getDirection());
-
 	if (mWindow->isClosed())
 		return false;
 
