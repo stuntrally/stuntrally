@@ -21,8 +21,7 @@ using namespace MyGUI;
 //  Key pressed
 //-----------------------------------------------------------------------------------------------------------
 
-
-bool App::keyPressed( const SDL_KeyboardEvent &arg )
+bool App::keyPressed(const SDL_KeyboardEvent &arg)
 {	
 	if (!mInputCtrl->keyPressed(arg))
 		return true;
@@ -32,12 +31,13 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 			return true;
 	}
 
+	SDL_Keycode key = arg.keysym.sym;
 	bool tweak = isTweak();
 
 	//  main menu keys
 	if (pSet->isMain && isFocGui)
 	{
-		switch (arg.keysym.sym)
+		switch (key)
 		{
 		case SDLK_UP:  case SDLK_KP_8:
 			pSet->inMenu = (pSet->inMenu-1 + ciMainBtns) % ciMainBtns;
@@ -54,7 +54,7 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 	}
 
 	//  esc
-	if (arg.keysym.sym == SDLK_ESCAPE)
+	if (key == SDLK_ESCAPE)
 	{
 		if (pSet->escquit && !bAssignKey)
 			mShutDown = true;	// quit
@@ -69,7 +69,7 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 
 	//  shortcut keys for gui access (alt-Q,C,S,G,V,.. )
 	if (alt)
-		switch (arg.keysym.sym)
+		switch (key)
 		{
 			case SDLK_z:  // alt-Z Tweak (alt-shift-Z save&reload)
 				TweakToggle();	return true;
@@ -104,7 +104,7 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 	if (pSet->dev_keys && alt && shift && !mClient)
 	{
 		string t;
-		switch (arg.keysym.sym)
+		switch (key)
 		{
 			case SDLK_1: t = "Test1-Flat";  break;
 			case SDLK_2: t = "Test11-Jumps";  break;
@@ -128,7 +128,7 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 	{
 		int& iCL = iEdTire==1 ? iCurLong : (iEdTire==0 ? iCurLat : iCurAlign);
 		int iCnt = iEdTire==1 ? 11 : (iEdTire==0 ? 15 : 18);
-		switch (arg.keysym.sym)
+		switch (key)
 		{
 			case SDLK_HOME: case SDLK_KP_7:  // mode long/lat
 			if (ctrl)
@@ -155,7 +155,7 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 		Widget* wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();
 		bool edFoc = wf && wf->getTypeName() == "EditBox";
 		//if (wf)  LogO(wf->getTypeName()+" " +toStr(edFoc));
-		switch (arg.keysym.sym)
+		switch (key)
 		{
 			case SDLK_BACKSPACE:
 				if (mWndChampStage->getVisible())	// back from champs stage wnd
@@ -269,7 +269,7 @@ bool App::keyPressed( const SDL_KeyboardEvent &arg )
 	}
 
 	MyGUI::InputManager::getInstance().injectKeyPress(
-			MyGUI::KeyCode::Enum( mInputWrapper->sdl2OISKeyCode(arg.keysym.sym)), 0);
+			MyGUI::KeyCode::Enum( mInputWrapper->sdl2OISKeyCode(key)), 0);
 	return true;
 }
 

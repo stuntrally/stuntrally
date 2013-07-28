@@ -75,9 +75,14 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			}
 
 		//  modif
-		if (tkey[SDL_GetScancodeFromKey(SDLK_LCTRL)] > 0.f || tkey[SDL_GetScancodeFromKey(SDLK_RCTRL)] > 0.f)	ss += "Ctrl ";
-		if (tkey[SDL_GetScancodeFromKey(SDLK_LALT)] > 0.f || tkey[SDL_GetScancodeFromKey(SDLK_RALT)] > 0.f)		ss += "Alt ";
-		if (tkey[SDL_GetScancodeFromKey(SDLK_LSHIFT)] > 0.f || tkey[SDL_GetScancodeFromKey(SDLK_RSHIFT)] > 0.f)		ss += "Shift ";
+		const static int
+			lc = SDL_GetScancodeFromKey(SDLK_LCTRL),  rc = SDL_GetScancodeFromKey(SDLK_RCTRL),
+			la = SDL_GetScancodeFromKey(SDLK_LALT),   ra = SDL_GetScancodeFromKey(SDLK_RALT),
+			ls = SDL_GetScancodeFromKey(SDLK_LSHIFT), rs = SDL_GetScancodeFromKey(SDLK_RSHIFT);
+
+		if (tkey[lc] > 0.f || tkey[rc] > 0.f)	ss += "Ctrl ";
+		if (tkey[la] > 0.f || tkey[ra] > 0.f)	ss += "Alt ";
+		if (tkey[ls] > 0.f || tkey[rs] > 0.f)	ss += "Shift ";
 
 		//  mouse buttons
 		if (mbLeft)  ss += "LMB ";
@@ -89,7 +94,11 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		{
 			if (tkey[i] > 0.f)
 			{	tkey[i] -= evt.timeSinceLastFrame;  //dec time
-				ss += std::string(SDL_GetKeyName(SDL_GetKeyFromScancode(static_cast<SDL_Scancode>(i)))) + " ";
+				if (i!=lc && i!=la && i!=ls && i!=rc && i!=ra && i!=rs)
+				{
+					String s = String(SDL_GetKeyName(SDL_GetKeyFromScancode(static_cast<SDL_Scancode>(i))));
+					ss += s + " ";
+				}
 		}	}
 		
 		//  mouse wheel
@@ -217,8 +226,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		{	if (isKey(SDLK_1))	road->AddYaw(-q*3,0,alt);	if (isKey(SDLK_3))	road->AddRoll(-q*3,0,alt);
 			if (isKey(SDLK_2))	road->AddYaw( q*3,0,alt);	if (isKey(SDLK_4))	road->AddRoll( q*3,0,alt);
 		}
-		if (isKey(SDLK_LEFTBRACKET)||isKey(SDLK_o))	road->AddPipe(-q*0.2);	if (isKey(SDLK_k))	road->AddChkR(-q*0.2);  // chk
-		if (isKey(SDLK_RIGHTBRACKET)||isKey(SDLK_p))	road->AddPipe( q*0.2);	if (isKey(SDLK_l))	road->AddChkR( q*0.2);
+		if (isKey(SDLK_LEFTBRACKET) ||isKey(SDLK_o))  road->AddPipe(-q*0.2);	if (isKey(SDLK_k))  road->AddChkR(-q*0.2);  // chk
+		if (isKey(SDLK_RIGHTBRACKET)||isKey(SDLK_p))  road->AddPipe( q*0.2);	if (isKey(SDLK_l))  road->AddChkR( q*0.2);
 
 		if (mz > 0)			road->NextPoint();
 		else if (mz < 0)	road->PrevPoint();
