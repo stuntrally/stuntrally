@@ -362,7 +362,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			}	return true;
 
 		case SDLK_F1:
-		case SDLK_CARET:
+		case SDLK_BACKQUOTE:
 			if (ctrl)  // context help (show for cur mode)
 			{
 				if (bMoveCam)		 GuiShortcut(WND_Help, 1, 0);
