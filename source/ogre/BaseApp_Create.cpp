@@ -34,8 +34,8 @@
 
 #include "../sdl4ogre/sdlinputwrapper.hpp"
 #include "../sdl4ogre/sdlcursormanager.hpp"
+#include "../sdl4ogre/sdlwindowhelper.hpp"
 
-#include <SDL_syswm.h>
 #include "common/PointerFix.h"
 
 
@@ -317,47 +317,9 @@ bool BaseApp::configure()
 		| (pSet->fullscreen ? SDL_WINDOW_FULLSCREEN : 0)
 	);
 
-	//get the native whnd
-	struct SDL_SysWMinfo wmInfo;
-	SDL_VERSION(&wmInfo.version);
-
-	if(-1 == SDL_GetWindowWMInfo(mSDLWindow, &wmInfo))
-		throw std::runtime_error("Couldn't get WM Info!");
-
-	Ogre::String winHandle;
-
-	switch(wmInfo.subsystem)
-	{
-#ifdef WIN32
-	case SDL_SYSWM_WINDOWS:
-		// Windows code
-		winHandle = Ogre::StringConverter::toString((unsigned long)wmInfo.info.win.window);
-		break;
-#elif __MACOSX__
-	case SDL_SYSWM_COCOA:
-		//required to make OGRE play nice with our window
-		params.insert(std::make_pair("macAPI", "cocoa"));
-		params.insert(std::make_pair("macAPICocoaUseNSView", "true"));
-
-		winHandle  = Ogre::StringConverter::toString(WindowContentViewHandle(wmInfo));
-		break;
-#else
-	case SDL_SYSWM_X11:
-		winHandle = Ogre::StringConverter::toString((unsigned long)wmInfo.info.x11.window);
-		break;
-#endif
-	default:
-		throw std::runtime_error("Unexpected WM!");
-		break;
-	}
-
-	/// \todo externalWindowHandle is deprecated according to the source code. Figure out a way to get parentWindowHandle
-	/// to work properly. On Linux/X11 it causes an occasional GLXBadDrawable error.
-	params.insert(std::make_pair("externalWindowHandle",  winHandle));
-
-	mWindow = mRoot->createRenderWindow("Stunt Rally", pSet->windowx, pSet->windowy, pSet->fullscreen, &params);
-
-
+	SFO::SDLWindowHelper helper(mSDLWindow, pSet->windowx, pSet->windowy, "Stunt Rally", pSet->fullscreen, params);
+	helper.setWindowIcon("stuntrally.png");
+	mWindow = helper.getWindow();
 
 
 	//  use this in local networking tests to render when window inactive
@@ -738,10 +700,7 @@ void BaseApp::textInput(const SDL_TextInputEvent &arg)
 	const char* text = &arg.text[0];
 	std::vector<unsigned long> unicode = utf8ToUnicode(std::string(text));
 	for (std::vector<unsigned long>::iterator it = unicode.begin(); it != unicode.end(); ++it)
-		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(0x00), *it);
-		// ^ Should be MyGUI::KeyCode::None, but X11 defines a 'None' macro :(
-		// TODO: Refactor the code so that SDL_syswm.h (which includes X11) is not needed here,
-		// so that it can be changed back to MyGUI::KeyCode::None
+		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::None, *it);
 }
 
 bool BaseApp::axisMoved(const SDL_JoyAxisEvent &arg, int axis)
