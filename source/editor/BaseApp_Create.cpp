@@ -406,7 +406,8 @@ void BaseApp::loadResources()
 
 bool BaseApp::keyReleased( const SDL_KeyboardEvent &arg )
 {
-	MyGUI::InputManager::getInstance().injectKeyRelease(MyGUI::KeyCode::Enum(mInputWrapper->sdl2OISKeyCode(arg.keysym.sym)));
+	//if (bGuiFocus)
+		MyGUI::InputManager::getInstance().injectKeyRelease(MyGUI::KeyCode::Enum(mInputWrapper->sdl2OISKeyCode(arg.keysym.sym)));
 	return true;
 }
 
@@ -425,13 +426,15 @@ void BaseApp::textInput(const SDL_TextInputEvent &arg)
 bool BaseApp::mouseMoved( const SFO::MouseMotionEvent &arg )
 {
 	mx += arg.xrel;  my += arg.yrel;  mz += arg.zrel / 50;
-	MyGUI::InputManager::getInstance().injectMouseMove(arg.x, arg.y, arg.z);
+	//if (bGuiFocus)
+		MyGUI::InputManager::getInstance().injectMouseMove(arg.x, arg.y, arg.z);
 	return true;
 }
 
 bool BaseApp::mousePressed( const SDL_MouseButtonEvent &arg, Uint8 id )
 {
-	MyGUI::InputManager::getInstance().injectMousePress(arg.x, arg.y, sdlButtonToMyGUI(id));
+	if (bGuiFocus)
+		MyGUI::InputManager::getInstance().injectMousePress(arg.x, arg.y, sdlButtonToMyGUI(id));
 	if (id == SDL_BUTTON_LEFT)			mbLeft = true;
 	else if (id == SDL_BUTTON_RIGHT)	mbRight = true;
 	else if (id == SDL_BUTTON_MIDDLE)	mbMiddle = true;
@@ -441,7 +444,8 @@ bool BaseApp::mousePressed( const SDL_MouseButtonEvent &arg, Uint8 id )
 
 bool BaseApp::mouseReleased( const SDL_MouseButtonEvent &arg, Uint8 id )
 {
-	MyGUI::InputManager::getInstance().injectMouseRelease(arg.x, arg.y, sdlButtonToMyGUI(id));
+	//if (bGuiFocus)
+		MyGUI::InputManager::getInstance().injectMouseRelease(arg.x, arg.y, sdlButtonToMyGUI(id));
 	if (id == SDL_BUTTON_LEFT)			mbLeft = false;
 	else if (id == SDL_BUTTON_RIGHT)	mbRight = false;
 	else if (id == SDL_BUTTON_MIDDLE)	mbMiddle = false;
