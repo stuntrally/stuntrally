@@ -127,6 +127,7 @@ void BaseApp::createFrameListener()
 	mInputWrapper->setMouseEventCallback(this);
 	mInputWrapper->setKeyboardEventCallback(this);
 	mInputWrapper->setJoyEventCallback(this);
+	mInputWrapper->setWindowEventCallback(this);
 	mCursorManager = new SFO::SDLCursorManager();
 	mCursorManager->setEnabled(true);
 	onCursorChange(MyGUI::PointerManager::getInstance().getDefaultPointer());
@@ -314,7 +315,7 @@ bool BaseApp::configure()
 	  pSet->windowx,                               //    width, in pixels
 	  pSet->windowy,                               //    height, in pixels
 	  SDL_WINDOW_SHOWN
-		| (pSet->fullscreen ? SDL_WINDOW_FULLSCREEN : 0)
+		| (pSet->fullscreen ? SDL_WINDOW_FULLSCREEN : 0) | SDL_WINDOW_RESIZABLE
 	);
 
 	SFO::SDLWindowHelper helper(mSDLWindow, pSet->windowx, pSet->windowy, "Stunt Rally", pSet->fullscreen, params);
@@ -774,5 +775,13 @@ void BaseApp::onCursorChange(const std::string &name)
 		}
 	}
 
+}
+
+void BaseApp::windowResized(int x, int y)
+{
+	bWindowResized = true;
+	// Adjust viewports
+	mSplitMgr->Align();
+	std::cout << "resized " << std::endl;
 }
 

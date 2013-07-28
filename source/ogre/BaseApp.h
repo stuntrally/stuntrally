@@ -53,7 +53,7 @@ protected:
 
 class BaseApp :
 		public Ogre::FrameListener, public Ogre::WindowEventListener,
-		public SFO::KeyListener, public SFO::MouseListener, public SFO::JoyListener,
+		public SFO::KeyListener, public SFO::MouseListener, public SFO::JoyListener, public SFO::WindowListener,
 		public ICS::ChannelListener, public ICS::DetectingBindingListener
 {
 	friend class CarModel;
@@ -157,6 +157,8 @@ protected:
 	SDL_Window* mSDLWindow;
 	Ogre::RTShader::ShaderGenerator* mShaderGenerator;
 	MaterialMgrListener* mMaterialMgrListener;  // Shader generator material manager listener.	
+
+	virtual void windowResized (int x, int y);
 
 
 	///  input

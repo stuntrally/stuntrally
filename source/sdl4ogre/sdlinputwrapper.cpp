@@ -124,15 +124,30 @@ namespace SFO
                 SDL_SetRelativeMouseMode(SDL_FALSE);
                 break;
             case SDL_WINDOWEVENT_RESIZED:
+				//mOgreWindow->resize(evt.window.data1, evt.window.data2);
+				mOgreWindow->windowMovedOrResized();
+				if (mWindowListener)
+					mWindowListener->windowResized(evt.window.data1, evt.window.data2);
+				break;
             case SDL_WINDOWEVENT_FOCUS_GAINED:
+				if (mWindowListener)
+					mWindowListener->windowFocusChange(true);
+				break;
             case SDL_WINDOWEVENT_FOCUS_LOST:
+				if (mWindowListener)
+					mWindowListener->windowFocusChange(false);
+				break;
             case SDL_WINDOWEVENT_CLOSE:
                 break;
             case SDL_WINDOWEVENT_SHOWN:
                 mOgreWindow->setVisible(true);
+				if (mWindowListener)
+					mWindowListener->windowVisibilityChange(true);
                 break;
             case SDL_WINDOWEVENT_HIDDEN:
                 mOgreWindow->setVisible(false);
+				if (mWindowListener)
+					mWindowListener->windowVisibilityChange(false);
                 break;
         }
     }
