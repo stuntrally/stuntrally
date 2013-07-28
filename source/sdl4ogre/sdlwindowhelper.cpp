@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "sdlwindowhelper.hpp"
 
 #include <OgreStringConverter.h>
@@ -17,12 +18,12 @@ SDLWindowHelper::SDLWindowHelper (SDL_Window* window, int w, int h,
 	struct SDL_SysWMinfo wmInfo;
 	SDL_VERSION(&wmInfo.version);
 
-	if(-1 == SDL_GetWindowWMInfo(mSDLWindow, &wmInfo))
+	if (SDL_GetWindowWMInfo(mSDLWindow, &wmInfo) == -1)
 		throw std::runtime_error("Couldn't get WM Info!");
 
 	Ogre::String winHandle;
 
-	switch(wmInfo.subsystem)
+	switch (wmInfo.subsystem)
 	{
 #ifdef WIN32
 	case SDL_SYSWM_WINDOWS:
