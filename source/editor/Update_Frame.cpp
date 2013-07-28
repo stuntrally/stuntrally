@@ -21,37 +21,44 @@ using namespace Ogre;
 void App::processMouse(double fDT)
 {
 	//  static vars are smoothed
-	Vector3 vInpC(0,0,0),vInp;
-	Real fSmooth = (powf(1.0f - pSet->cam_inert, 2.2f) * 40.f + 0.1f) * fDT;
-
-	const Real sens = 0.13;
-	if (bCam())
-		vInpC = Vector3(mx, my, 0)*sens;
-	vInp = Vector3(mx, my, 0)*sens;  mx = 0;  my = 0;
-	vNew += (vInp-vNew) * fSmooth;
-
-	if (mbMiddle){	mTrans.z += vInpC.y * 1.6f;  }  //zoom
-	if (mbRight){	mTrans.x += vInpC.x;  mTrans.y -= vInpC.y;  }  //pan
-	if (mbLeft){	mRotX -= vInpC.x;  mRotY -= vInpC.y;  }  //rot
-
-	Real cs = pSet->cam_speed;  Degree cr(pSet->cam_speed);
-	Real fMove = 100*cs;  //par speed
-	Degree fRot = 500*cr, fkRot = 160*cr;
-
 	static Radian sYaw(0), sPth(0);
 	static Vector3 sMove(0,0,0);
+	static double time = 0.0;
+	time += fDT;
+	
+	const double ivDT = 0.004;  // const interval
+	while (time > ivDT)
+	{	time -= ivDT;
+	
+		Vector3 vInpC(0,0,0),vInp;
+		Real fSmooth = (powf(1.0f - pSet->cam_inert, 2.2f) * 40.f + 0.1f) * ivDT;
 
-	Radian inYaw = rotMul * fDT * (fRot* mRotX + fkRot* mRotKX);
-	Radian inPth = rotMul * fDT * (fRot* mRotY + fkRot* mRotKY);
-	Vector3 inMove = moveMul * fDT * (fMove * mTrans);
+		const Real sens = 0.13;
+		if (bCam())
+			vInpC = Vector3(mx, my, 0)*sens;
+		vInp = Vector3(mx, my, 0)*sens;  mx = 0;  my = 0;
+		vNew += (vInp-vNew) * fSmooth;
 
-	sYaw += (inYaw - sYaw) * fSmooth;
-	sPth += (inPth - sPth) * fSmooth;
-	sMove += (inMove - sMove) * fSmooth;
+		if (mbMiddle){	mTrans.z += vInpC.y * 1.6f;  }  //zoom
+		if (mbRight){	mTrans.x += vInpC.x;  mTrans.y -= vInpC.y;  }  //pan
+		if (mbLeft){	mRotX -= vInpC.x;  mRotY -= vInpC.y;  }  //rot
 
-	mCamera->yaw( sYaw );
-	mCamera->pitch( sPth );
-	mCamera->moveRelative( sMove );
+		Real cs = pSet->cam_speed;  Degree cr(pSet->cam_speed);
+		Real fMove = 100*cs;  //par speed
+		Degree fRot = 300*cr, fkRot = 160*cr;
+
+		Radian inYaw = rotMul * ivDT * (fRot* mRotX + fkRot* mRotKX);
+		Radian inPth = rotMul * ivDT * (fRot* mRotY + fkRot* mRotKY);
+		Vector3 inMove = moveMul * ivDT * (fMove * mTrans);
+
+		sYaw += (inYaw - sYaw) * fSmooth;
+		sPth += (inPth - sPth) * fSmooth;
+		sMove += (inMove - sMove) * fSmooth;
+
+		mCamera->yaw( sYaw );
+		mCamera->pitch( sPth );
+		mCamera->moveRelative( sMove );
+	}
 }
 
 
@@ -206,14 +213,14 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	//  Move,Rot camera
 	if (bCam())
 	{
-		if(key(SDLK_a))	mTrans.x -= 1;	if(key(SDLK_d))	mTrans.x += 1;
-		if(key(SDLK_w))	mTrans.z -= 1;	if(key(SDLK_s))	mTrans.z += 1;
-		if(key(SDLK_q))	mTrans.y -= 1;	if(key(SDLK_e))	mTrans.y += 1;
-
-		if(key(SDLK_DOWN)||key(SDLK_KP_2))   mRotKY -= 1;
-		if(key(SDLK_UP)  ||key(SDLK_KP_8))   mRotKY += 1;
-		if(key(SDLK_RIGHT)||key(SDLK_KP_6))  mRotKX -= 1;
-		if(key(SDLK_LEFT) ||key(SDLK_KP_4))  mRotKX += 1;
+		if (key(SDLK_a))  mTrans.x -= 1;	if (key(SDLK_d))  mTrans.x += 1;
+		if (key(SDLK_w))  mTrans.z -= 1;	if (key(SDLK_s))  mTrans.z += 1;
+		if (key(SDLK_q))  mTrans.y -= 1;	if (key(SDLK_e))  mTrans.y += 1;
+		
+		if (key(SDLK_DOWN) ||key(SDLK_KP_2))  mRotKY -= 1;
+		if (key(SDLK_UP)   ||key(SDLK_KP_8))  mRotKY += 1;
+		if (key(SDLK_RIGHT)||key(SDLK_KP_6))  mRotKX -= 1;
+		if (key(SDLK_LEFT) ||key(SDLK_KP_4))  mRotKX += 1;
 	}
 
 	   // key modifiers
