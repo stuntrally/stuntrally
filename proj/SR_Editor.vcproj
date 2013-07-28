@@ -807,11 +807,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\ogre\common\ResourceImageSetPointerFix.cpp"
+				RelativePath="..\source\ogre\common\PointerFix.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\source\ogre\common\ResourceImageSetPointerFix.h"
+				RelativePath="..\source\ogre\common\PointerFix.h"
 				>
 			</File>
 			<File

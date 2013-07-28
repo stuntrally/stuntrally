@@ -731,11 +731,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\vdrift\suspensionbumpdetection.cpp"
+					RelativePath="..\source\vdrift\suspensionbump.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\vdrift\suspensionbumpdetection.h"
+					RelativePath="..\source\vdrift\suspensionbump.h"
 					>
 				</File>
 				<Filter
@@ -1607,11 +1607,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\common\ResourceImageSetPointerFix.cpp"
+					RelativePath="..\source\ogre\common\PointerFix.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\common\ResourceImageSetPointerFix.h"
+					RelativePath="..\source\ogre\common\PointerFix.h"
 					>
 				</File>
 				<File
