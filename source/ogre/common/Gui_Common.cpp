@@ -662,7 +662,22 @@ void App::btnResChng(WP)
 	pSet->windowx = StringConverter::parseInt(StringUtil::split(mode, "x")[0]);
 	pSet->windowy = StringConverter::parseInt(StringUtil::split(mode, "x")[1]);
 
-	SDL_SetWindowSize(mSDLWindow, pSet->windowx, pSet->windowy);
+	Uint32 flags = SDL_GetWindowFlags(mSDLWindow);
+	if (flags & SDL_WINDOW_MAXIMIZED) // Can't change size of a maximized window
+		SDL_RestoreWindow(mSDLWindow);
+
+	if (pSet->fullscreen)
+	{
+		SDL_DisplayMode mode;
+		SDL_GetWindowDisplayMode(mSDLWindow, &mode);
+		mode.w = pSet->windowx;
+		mode.h = pSet->windowy;
+		SDL_SetWindowDisplayMode(mSDLWindow, &mode);
+		SDL_SetWindowFullscreen(mSDLWindow, 0);
+		SDL_SetWindowFullscreen(mSDLWindow, SDL_WINDOW_FULLSCREEN);
+	}
+	else
+		SDL_SetWindowSize(mSDLWindow, pSet->windowx, pSet->windowy);
 }
 
 
@@ -761,7 +776,7 @@ void App::ResizeOptWnd()
 void App::chkVidFullscr(WP wp)
 {
 	ChkEv(fullscreen);
-	SDL_SetWindowFullscreen(mSDLWindow, SDL_WINDOW_FULLSCREEN);
+	SDL_SetWindowFullscreen(mSDLWindow,  wp->castType<MyGUI::Button>()->getStateSelected()? SDL_WINDOW_FULLSCREEN : 0);
 }
 
 void App::chkVidVSync(WP wp)

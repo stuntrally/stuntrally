@@ -137,7 +137,14 @@ namespace SFO
 					mWindowListener->windowResized(evt.window.data1, evt.window.data2);
 
 			case SDL_WINDOWEVENT_RESIZED:
-			// SDL_WINDOWEVENT_SIZE_CHANGED is always sent, so we don't need to care about this one.
+				// TODO: Fix Ogre to handle this more consistently
+				#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+				mOgreWindow->windowMovedOrResized();
+				#else
+				mOgreWindow->resize(evt.window.data1, evt.window.data2);
+				#endif
+				if (mWindowListener)
+					mWindowListener->windowResized(evt.window.data1, evt.window.data2);
 				break;
 
             case SDL_WINDOWEVENT_FOCUS_GAINED:
