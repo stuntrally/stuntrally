@@ -2082,6 +2082,14 @@
 					RelativePath="..\source\sdl4ogre\sdlinputwrapper.hpp"
 					>
 				</File>
+				<File
+					RelativePath="..\source\sdl4ogre\sdlwindowhelper.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\sdl4ogre\sdlwindowhelper.hpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="tinyxml"
