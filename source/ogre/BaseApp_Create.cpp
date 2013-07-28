@@ -257,8 +257,8 @@ bool BaseApp::configure()
 	if (rs = mRoot->getRenderSystemByName(pSet->rendersystem))
 	{
 		mRoot->setRenderSystem(rs);
-	}else{
-		LogO("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
+	}else
+	{	LogO("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
 		return false;
 	}
 	if (pSet->rendersystem == "OpenGL Rendering Subsystem")  // not on dx
@@ -267,22 +267,28 @@ bool BaseApp::configure()
 	mRoot->initialise(false);
 
 	Uint32 flags = SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_HAPTIC|SDL_INIT_NOPARACHUTE;
-	if(SDL_WasInit(flags) == 0)
+	if (SDL_WasInit(flags) == 0)
 	{
 		SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
-		if(SDL_Init(flags) != 0)
-		{
+		if (SDL_Init(flags) != 0)
 			throw std::runtime_error("Could not initialize SDL! " + std::string(SDL_GetError()));
-		}
 	}
-	// Enable joystick events
+
+	//  Enable joystick events
 	SDL_JoystickEventState(SDL_ENABLE);
-	// Open all available joysticks. TODO: open them when they are required
+	//  Open all available joysticks.  TODO: open them when they are required
 	for (int i=0; i<SDL_NumJoysticks(); ++i)
 	{
 		SDL_Joystick* js = SDL_JoystickOpen(i);
 		if (js)
+		{
 			mJoysticks.push_back(js);
+			const char* s = SDL_JoystickName(js);
+			int axes = SDL_JoystickNumAxes(js);
+			int btns = SDL_JoystickNumButtons(js);
+			//SDL_JoystickNumBalls SDL_JoystickNumHats
+			LogO(Ogre::String("<Joystick> name: ")+s+"  axes: "+toStr(axes)+"  buttons: "+toStr(btns));
+		}
 	}
 	SDL_StartTextInput();
 
@@ -307,16 +313,10 @@ bool BaseApp::configure()
 	}
 	*/
 
-	// Create an application window with the following settings:
+	//  Create an application window with the following settings:
 	mSDLWindow = SDL_CreateWindow(
-	  "Stunt Rally",                  //    window title
-	  pos_x,                     //    initial x position
-	  pos_y,                     //    initial y position
-	  pSet->windowx,                               //    width, in pixels
-	  pSet->windowy,                               //    height, in pixels
-	  SDL_WINDOW_SHOWN
-		| (pSet->fullscreen ? SDL_WINDOW_FULLSCREEN : 0) | SDL_WINDOW_RESIZABLE
-	);
+		"Stunt Rally", pos_x, pos_y, pSet->windowx, pSet->windowy,
+		SDL_WINDOW_SHOWN | (pSet->fullscreen ? SDL_WINDOW_FULLSCREEN : 0) | SDL_WINDOW_RESIZABLE);
 
 	SFO::SDLWindowHelper helper(mSDLWindow, pSet->windowx, pSet->windowy, "Stunt Rally", pSet->fullscreen, params);
 	helper.setWindowIcon("stuntrally.png");
@@ -447,8 +447,7 @@ bool BaseApp::setup()
 	MyGUI::ResourceManager::getInstance().load("core.xml");
 	MyGUI::ResourceManager::getInstance().load("MessageBoxResources.xml");
 
-	MyGUI::PointerManager::getInstance().eventChangeMousePointer +=
-			MyGUI::newDelegate(this, &BaseApp::onCursorChange);
+	MyGUI::PointerManager::getInstance().eventChangeMousePointer +=	MyGUI::newDelegate(this, &BaseApp::onCursorChange);
 	MyGUI::PointerManager::getInstance().setVisible(false);
 
 		
@@ -621,7 +620,7 @@ void BaseApp::LoadingOff()
 bool BaseApp::keyReleased(const SDL_KeyboardEvent& arg)
 {
 	mInputCtrl->keyReleased(arg);
-	for (int i=0; i<4; ++i) mInputCtrlPlayer[i]->keyReleased(arg);
+	for (int i=0; i<4; ++i)  mInputCtrlPlayer[i]->keyReleased(arg);
 
 	if (bAssignKey) return true;
 
@@ -642,7 +641,7 @@ bool BaseApp::keyReleased(const SDL_KeyboardEvent& arg)
 bool BaseApp::mouseMoved(const SFO::MouseMotionEvent &arg)
 {
 	mInputCtrl->mouseMoved(arg);
-	for (int i=0; i<4; ++i) mInputCtrlPlayer[i]->mouseMoved(arg);
+	for (int i=0; i<4; ++i)  mInputCtrlPlayer[i]->mouseMoved(arg);
 
 	if (bAssignKey)  return true;
 
@@ -667,7 +666,7 @@ bool BaseApp::mouseMoved(const SFO::MouseMotionEvent &arg)
 bool BaseApp::mousePressed( const SDL_MouseButtonEvent& arg, Uint8 id )
 {
 	mInputCtrl->mousePressed(arg, id);
-	for (int i=0; i<4; ++i) mInputCtrlPlayer[i]->mousePressed(arg, id);
+	for (int i=0; i<4; ++i)  mInputCtrlPlayer[i]->mousePressed(arg, id);
 
 	if (bAssignKey)  return true;
 	if (IsFocGui() && mGUI)  {
@@ -683,7 +682,7 @@ bool BaseApp::mousePressed( const SDL_MouseButtonEvent& arg, Uint8 id )
 bool BaseApp::mouseReleased( const SDL_MouseButtonEvent& arg, Uint8 id )
 {
 	mInputCtrl->mouseReleased(arg, id);
-	for (int i=0; i<4; ++i) mInputCtrlPlayer[i]->mouseReleased(arg, id);
+	for (int i=0; i<4; ++i)  mInputCtrlPlayer[i]->mouseReleased(arg, id);
 
 	if (bAssignKey)  return true;
 	if (IsFocGui() && mGUI)  {
@@ -700,6 +699,8 @@ void BaseApp::textInput(const SDL_TextInputEvent &arg)
 {
 	const char* text = &arg.text[0];
 	std::vector<unsigned long> unicode = utf8ToUnicode(std::string(text));
+
+	if (isFocGui || isTweak())
 	for (std::vector<unsigned long>::iterator it = unicode.begin(); it != unicode.end(); ++it)
 		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::None, *it);
 }
@@ -707,21 +708,21 @@ void BaseApp::textInput(const SDL_TextInputEvent &arg)
 bool BaseApp::axisMoved(const SDL_JoyAxisEvent &arg, int axis)
 {
 	mInputCtrl->axisMoved(arg, axis);
-	for (int i=0; i<4; ++i) mInputCtrlPlayer[i]->axisMoved(arg, axis);
+	for (int i=0; i<4; ++i)  mInputCtrlPlayer[i]->axisMoved(arg, axis);
 	return true;
 }
 
 bool BaseApp::buttonPressed(const SDL_JoyButtonEvent &evt, int button)
 {
 	mInputCtrl->buttonPressed(evt, button);
-	for (int i=0; i<4; ++i) mInputCtrlPlayer[i]->buttonPressed(evt, button);
+	for (int i=0; i<4; ++i)  mInputCtrlPlayer[i]->buttonPressed(evt, button);
 	return true;
 }
 
 bool BaseApp::buttonReleased(const SDL_JoyButtonEvent &evt, int button)
 {
 	mInputCtrl->buttonReleased(evt, button);
-	for (int i=0; i<4; ++i) mInputCtrlPlayer[i]->buttonReleased(evt, button);
+	for (int i=0; i<4; ++i)  mInputCtrlPlayer[i]->buttonReleased(evt, button);
 	return true;
 }
 

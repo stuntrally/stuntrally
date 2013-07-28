@@ -143,7 +143,7 @@ bool BaseApp::IsFocGui()
 	(mWndTweak && mWndTweak->getVisible());
 }
 
-bool BaseApp::isTweak() 
+bool BaseApp::isTweak()
 {
 	return mWndTweak && mWndTweak->getVisible();
 }

@@ -39,7 +39,7 @@ namespace SFO
 
     InputWrapper::~InputWrapper()
     {
-        if(mSDLWindow != NULL && mOwnWindow)
+        if (mSDLWindow != NULL && mOwnWindow)
             SDL_DestroyWindow(mSDLWindow);
         mSDLWindow = NULL;
     }
@@ -53,7 +53,7 @@ namespace SFO
             {
                 case SDL_MOUSEMOTION:
                     //ignore this if it happened due to a warp
-                    if(!_handleWarpMotion(evt.motion))
+                    if (!_handleWarpMotion(evt.motion))
                     {
                         mMouseListener->mouseMoved(_packageMouseMotion(evt));
 
@@ -128,20 +128,20 @@ namespace SFO
 				int w,h;
 				SDL_GetWindowSize(mSDLWindow, &w, &h);
 				// TODO: Fix Ogre to handle this more consistently
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-				mOgreWindow->windowMovedOrResized();
-#else
-				mOgreWindow->resize(w, h);
-#endif
+				#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+					mOgreWindow->windowMovedOrResized();
+				#else
+					mOgreWindow->resize(w, h);
+				#endif
 				if (mWindowListener)
 					mWindowListener->windowResized(evt.window.data1, evt.window.data2);
 
 			case SDL_WINDOWEVENT_RESIZED:
 				// TODO: Fix Ogre to handle this more consistently
 				#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-				mOgreWindow->windowMovedOrResized();
+					mOgreWindow->windowMovedOrResized();
 				#else
-				mOgreWindow->resize(evt.window.data1, evt.window.data2);
+					mOgreWindow->resize(evt.window.data1, evt.window.data2);
 				#endif
 				if (mWindowListener)
 					mWindowListener->windowResized(evt.window.data1, evt.window.data2);
@@ -200,7 +200,7 @@ namespace SFO
     ///        and disables mouse acceleration.
     void InputWrapper::setMouseRelative(bool relative)
     {
-        if(mMouseRelative == relative && mMouseInWindow)
+        if (mMouseRelative == relative && mMouseInWindow)
             return;
 
         mMouseRelative = relative && mMouseInWindow;
@@ -210,7 +210,7 @@ namespace SFO
         //eep, wrap the pointer manually if the input driver doesn't support
         //relative positioning natively
         int success = SDL_SetRelativeMouseMode(relative && mMouseInWindow ? SDL_TRUE : SDL_FALSE);
-        if(relative && mMouseInWindow && success != 0)
+        if (relative && mMouseInWindow && success != 0)
             mWrapPointer = true;
 
         //now remove all mouse events using the old setting from the queue
@@ -222,11 +222,11 @@ namespace SFO
     ///        of warpMouse()
     bool InputWrapper::_handleWarpMotion(const SDL_MouseMotionEvent& evt)
     {
-        if(!mWarpCompensate)
+        if (!mWarpCompensate)
             return false;
 
         //this was a warp event, signal the caller to eat it.
-        if(evt.x == mWarpX && evt.y == mWarpY)
+        if (evt.x == mWarpX && evt.y == mWarpY)
         {
             mWarpCompensate = false;
             return true;
@@ -240,7 +240,7 @@ namespace SFO
     {
         //don't wrap if we don't want relative movements, support relative
         //movements natively, or aren't grabbing anyways
-        if(!mMouseRelative || !mWrapPointer || !mGrabPointer)
+        if (!mMouseRelative || !mWrapPointer || !mGrabPointer)
             return;
 
         int width = 0;
@@ -252,7 +252,7 @@ namespace SFO
         const int FUDGE_FACTOR_Y = height;
 
         //warp the mouse if it's about to go outside the window
-        if(evt.x - FUDGE_FACTOR_X < 0  || evt.x + FUDGE_FACTOR_X > width
+        if (evt.x - FUDGE_FACTOR_X < 0  || evt.x + FUDGE_FACTOR_X > width
                 || evt.y - FUDGE_FACTOR_Y < 0 || evt.y + FUDGE_FACTOR_Y > height)
         {
             warpMouse(width / 2, height / 2);
@@ -270,14 +270,14 @@ namespace SFO
         pack_evt.z = mMouseZ;
         pack_evt.zrel = 0;
 
-        if(evt.type == SDL_MOUSEMOTION)
+        if (evt.type == SDL_MOUSEMOTION)
         {
             pack_evt.x = mMouseX = evt.motion.x;
             pack_evt.y = mMouseY = evt.motion.y;
             pack_evt.xrel = evt.motion.xrel;
             pack_evt.yrel = evt.motion.yrel;
         }
-        else if(evt.type == SDL_MOUSEWHEEL)
+        else if (evt.type == SDL_MOUSEWHEEL)
         {
             mMouseZ += pack_evt.zrel = (evt.wheel.y * 120);
             pack_evt.z = mMouseZ;
@@ -296,7 +296,7 @@ namespace SFO
 
         KeyMap::const_iterator ois_equiv = mKeyMap.find(code);
 
-        if(ois_equiv != mKeyMap.end())
+        if (ois_equiv != mKeyMap.end())
             kc = ois_equiv->second;
 
         return kc;
