@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "ResourceImageSetPointerFix.h"
+#include "PointerFix.h"
 
 #include <MyGUI_PointerManager.h>
 #include <MyGUI_InputManager.h>

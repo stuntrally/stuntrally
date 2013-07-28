@@ -340,70 +340,6 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="network"
-				>
-				<File
-					RelativePath="..\source\network\DesignDoc.txt"
-					>
-				</File>
-				<File
-					RelativePath="..\source\network\enet-wrapper.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\network\gameclient.cpp"
-					>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="ReleaseDbg|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\source\network\gameclient.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\network\masterclient.cpp"
-					>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="ReleaseDbg|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\source\network\masterclient.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\network\protocol.hpp"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="Models"
 				>
 				<File
@@ -1904,6 +1840,54 @@
 				</File>
 				<File
 					RelativePath="..\source\ogre\common\TracksXml.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="network"
+				>
+				<File
+					RelativePath="..\source\network\DesignDoc.txt"
+					>
+				</File>
+				<File
+					RelativePath="..\source\network\enet-wrapper.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\network\gameclient.cpp"
+					>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\network\gameclient.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\network\masterclient.cpp"
+					>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\network\masterclient.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\network\protocol.hpp"
 					>
 				</File>
 			</Filter>

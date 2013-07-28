@@ -15,7 +15,7 @@
 #include "../sdl4ogre/sdlinputwrapper.hpp"
 #include "../sdl4ogre/sdlcursormanager.hpp"
 #include <SDL_syswm.h>
-#include "../ogre/common/ResourceImageSetPointerFix.h"
+#include "../ogre/common/PointerFix.h"
 
 
 namespace
@@ -458,7 +458,7 @@ void BaseApp::textInput(const SDL_TextInputEvent &arg)
 //-------------------------------------------------------------------------------------
 bool BaseApp::mouseMoved( const SFO::MouseMotionEvent &arg )
 {
-	mx += arg.xrel;  my += arg.yrel;  mz += arg.zrel / 30;
+	mx += arg.xrel;  my += arg.yrel;  mz += arg.zrel / 50;
 	MyGUI::InputManager::getInstance().injectMouseMove(arg.x, arg.y, arg.z);
 	return true;
 }

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "suspensionbumpdetection.h"
+#include "suspensionbump.h"
 
 SUSPENSIONBUMPDETECTION::SUSPENSIONBUMPDETECTION()
 : state(SETTLED),
