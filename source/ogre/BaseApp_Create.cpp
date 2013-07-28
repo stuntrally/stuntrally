@@ -782,6 +782,6 @@ void BaseApp::windowResized(int x, int y)
 	bWindowResized = true;
 	// Adjust viewports
 	mSplitMgr->Align();
-	std::cout << "resized " << std::endl;
+	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 }
 

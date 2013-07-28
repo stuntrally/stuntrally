@@ -663,10 +663,6 @@ void App::btnResChng(WP)
 	pSet->windowy = StringConverter::parseInt(StringUtil::split(mode, "x")[1]);
 
 	SDL_SetWindowSize(mSDLWindow, pSet->windowx, pSet->windowy);
-	//mWindow->resize(pSet->windowx, pSet->windowy);
-	mWindow->windowMovedOrResized();
-
-	bWindowResized = true;
 }
 
 
@@ -765,8 +761,7 @@ void App::ResizeOptWnd()
 void App::chkVidFullscr(WP wp)
 {
 	ChkEv(fullscreen);
-	mWindow->setFullscreen(pSet->fullscreen, pSet->windowx, pSet->windowy);
-	mWindow->resize(pSet->windowx, pSet->windowy);
+	SDL_SetWindowFullscreen(mSDLWindow, SDL_WINDOW_FULLSCREEN);
 }
 
 void App::chkVidVSync(WP wp)

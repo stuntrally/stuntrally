@@ -31,7 +31,8 @@ namespace SFO
 		mMouseInWindow(true),
 		mJoyListener(NULL),
 		mKeyboardListener(NULL),
-		mMouseListener(NULL)
+		mMouseListener(NULL),
+		mWindowListener(NULL)
     {
         _setupOISKeys();
     }
@@ -123,12 +124,22 @@ namespace SFO
                 SDL_SetWindowGrab(mSDLWindow, SDL_FALSE);
                 SDL_SetRelativeMouseMode(SDL_FALSE);
                 break;
-            case SDL_WINDOWEVENT_RESIZED:
-				//mOgreWindow->resize(evt.window.data1, evt.window.data2);
+			case SDL_WINDOWEVENT_SIZE_CHANGED:
+				int w,h;
+				SDL_GetWindowSize(mSDLWindow, &w, &h);
+				// TODO: Fix Ogre to handle this more consistently
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 				mOgreWindow->windowMovedOrResized();
+#else
+				mOgreWindow->resize(w, h);
+#endif
 				if (mWindowListener)
 					mWindowListener->windowResized(evt.window.data1, evt.window.data2);
+
+			case SDL_WINDOWEVENT_RESIZED:
+			// SDL_WINDOWEVENT_SIZE_CHANGED is always sent, so we don't need to care about this one.
 				break;
+
             case SDL_WINDOWEVENT_FOCUS_GAINED:
 				if (mWindowListener)
 					mWindowListener->windowFocusChange(true);

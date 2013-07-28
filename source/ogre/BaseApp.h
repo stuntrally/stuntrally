@@ -52,7 +52,7 @@ protected:
 
 
 class BaseApp :
-		public Ogre::FrameListener, public Ogre::WindowEventListener,
+		public Ogre::FrameListener,
 		public SFO::KeyListener, public SFO::MouseListener, public SFO::JoyListener, public SFO::WindowListener,
 		public ICS::ChannelListener, public ICS::DetectingBindingListener
 {

@@ -140,6 +140,7 @@ void BaseApp::createFrameListener()
 	mInputWrapper = new SFO::InputWrapper(mSDLWindow, mWindow);
 	mInputWrapper->setMouseEventCallback(this);
 	mInputWrapper->setKeyboardEventCallback(this);
+	mInputWrapper->setWindowEventCallback(this);
 	mCursorManager = new SFO::SDLCursorManager();
 	mCursorManager->setEnabled(true);
 	onCursorChange(MyGUI::PointerManager::getInstance().getDefaultPointer());
@@ -253,7 +254,7 @@ bool BaseApp::configure()
 	//  Create window
 	mSDLWindow = SDL_CreateWindow(
 		"SR Editor", pos_x, pos_y, pSet->windowx, pSet->windowy,
-		SDL_WINDOW_SHOWN | (pSet->fullscreen ? SDL_WINDOW_FULLSCREEN : 0) );
+		SDL_WINDOW_SHOWN | (pSet->fullscreen ? SDL_WINDOW_FULLSCREEN : 0) | SDL_WINDOW_RESIZABLE);
 
 	SFO::SDLWindowHelper helper(mSDLWindow, pSet->windowx, pSet->windowy, "SR Editor", pSet->fullscreen, params);
 	helper.setWindowIcon("sr-editor.png");
@@ -472,4 +473,14 @@ void BaseApp::onCursorChange(const std::string &name)
 			mCursorManager->receiveCursorInfo(name, tex, left, top, size_x, size_y, hotspot_x, hotspot_y);
 		}
 	}
+}
+
+void BaseApp::windowResized(int x, int y)
+{
+	bWindowResized = true;
+
+	// adjust camera asp. ratio
+	if (mCamera && mViewport)
+		mCamera->setAspectRatio( float(x) / float(y));
+	mPlatform->getRenderManagerPtr()->setActiveViewport(0);
 }

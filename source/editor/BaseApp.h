@@ -30,8 +30,8 @@ namespace SFO
 }
 
 class BaseApp :
-		public Ogre::FrameListener, public Ogre::WindowEventListener,
-		public SFO::KeyListener, public SFO::MouseListener
+		public Ogre::FrameListener,
+		public SFO::KeyListener, public SFO::MouseListener, public SFO::WindowListener
 		//public Ogre::RenderTargetListener
 {
 public:
@@ -77,6 +77,8 @@ protected:
 	void textInput(const SDL_TextInputEvent &arg);
 
 	void onCursorChange(const std::string& name);
+
+	virtual void windowResized(int x, int y);
 
 
 	///  Ogre
