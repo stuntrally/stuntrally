@@ -169,7 +169,7 @@ void BaseApp::Run( bool showDialog )
 BaseApp::BaseApp()
 	:mRoot(0), mCamera(0), mViewport(0)
 	,mSceneMgr(0), mWindow(0)
-	,mShowDialog(1), mShutDown(false), bWindowResized(0), bFirstRenderFrame(true)
+	,mShowDialog(1), mShutDown(false), bWindowResized(true), bFirstRenderFrame(true)
 	,alt(0), ctrl(0), shift(0)
 	,mbLeft(0), mbRight(0), mbMiddle(0)
 	,ndSky(0), road(0)
@@ -219,7 +219,7 @@ bool BaseApp::configure()
 
 	mRoot->initialise(false);
 
-	Uint32 flags = SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_HAPTIC|SDL_INIT_NOPARACHUTE;
+	Uint32 flags = SDL_INIT_VIDEO|SDL_INIT_NOPARACHUTE;
 	if (SDL_WasInit(flags) == 0)
 	{
 		SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
