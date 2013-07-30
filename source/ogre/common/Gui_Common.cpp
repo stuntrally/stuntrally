@@ -277,7 +277,7 @@ void App::GuiInitGraphics()
 	Chk("UseImposters", chkUseImposters, pSet->use_imposters);
 	Chk("ImpostorsOnly", chkImpostorsOnly, pSet->imposters_only);
 
-	// screen
+	//  screen
 	Slv(AntiAliasing, pSet->fsaa/16.f);
 
 	//  shadows
