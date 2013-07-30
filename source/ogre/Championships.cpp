@@ -191,7 +191,7 @@ void App::tabChampType(MyGUI::TabPtr wp, size_t id)
 }
 
 ///  Championships list  fill
-//---------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
 void App::ChampsListUpdate()
 {
 	const char clrCh[7][8] = {
@@ -222,7 +222,7 @@ void App::ChampsListUpdate()
 }
 
 ///  Championships list  sel changed,  fill Stages list
-//---------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
 void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 {
 	if (id==ITEM_NONE || liChamps->getItemCount() == 0)  return;
@@ -328,7 +328,7 @@ void App::btnChampStageBack(WP)
 }
 
 ///  stage start / end
-//---------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
 void App::btnChampStageStart(WP)
 {
 	//  check if champ ended
@@ -416,7 +416,7 @@ void App::ProgressSave(bool upgGui)
 
 ///  championship advance logic
 //  caution: called from GAME, 2nd thread, no Ogre stuff here
-//---------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
 void App::ChampionshipAdvance(float timeCur)
 {
 	int chId = pSet->game.champ_num, p = pSet->game.champ_rev ? 1 : 0;

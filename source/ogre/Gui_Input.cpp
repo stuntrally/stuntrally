@@ -198,10 +198,10 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 		x0 = 16, x1 = 140, x2 = 310, x3 = 454,
 		yh = 20, ya = 14,  s0 = x1-x0-5;
 
-#define CreateText(x,y, w,h, name, text)  {  StaticTextPtr txt =  \
-	tabitem->createWidget<TextBox>("TextBox", x,y+2, w,h, ALIGN, name);  \
-	setOrigPos(txt, "OptionsWnd");  \
-	txt->setCaption(text);  }
+	#define CreateText(x,y, w,h, name, text)  {  StaticTextPtr txt =  \
+		tabitem->createWidget<TextBox>("TextBox", x,y+2, w,h, ALIGN, name);  \
+		setOrigPos(txt, "OptionsWnd");  \
+		txt->setCaption(text);  }
 
 
 	///  Headers  action, binding, value
@@ -281,6 +281,11 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 		}
 		++i;
 		y += yRow[name] * ya;
+	}
+
+	if (playerTab)
+	{	y+=ya;
+		CreateText(x1,y, 500,24, "txtunb" + sPlr, TR("#80B0F0#{InputUnbind}"));  y+=ya;
 	}
 
 	///  General tab  --------

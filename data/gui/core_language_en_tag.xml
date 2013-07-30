@@ -468,6 +468,7 @@
 	
 	<!--  Input  -->
 	<Tag name="Input">Input</Tag>
+	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
 	<Tag name="InputNoJS">No joystick</Tag>
 	<Tag name="InputKeyUnassigned">-- None --</Tag>
 	<Tag name="InputAssignKey">&lt;Assign&gt;</Tag>
