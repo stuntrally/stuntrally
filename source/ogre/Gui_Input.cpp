@@ -570,6 +570,11 @@ void App::joystickAxisBindingDetected(ICS::InputControlSystem* pICS, ICS::Contro
 	int deviceId, int axis, ICS::Control::ControlChangingDirection direction)
 {
 	ICS::DetectingBindingListener::joystickAxisBindingDetected(pICS, control, deviceId, axis, ICS::Control::INCREASE);
+	std::string s = control->getName();
+	//LogO("Control "+s);
+	//  inverted throttle and brake by default
+	bool inv = s != "2" && s != "5";  // only steering and flip normal
+	control->setInverted(inv);
 	notifyInputActionBound(true);
 }
 
