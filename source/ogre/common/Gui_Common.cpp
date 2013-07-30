@@ -278,21 +278,7 @@ void App::GuiInitGraphics()
 	Chk("ImpostorsOnly", chkImpostorsOnly, pSet->imposters_only);
 
 	// screen
-	// find max. fsaa
-	int fsaa = 0, newfsaa;
-	Ogre::ConfigOptionMap& configOptions = Ogre::Root::getSingleton().getRenderSystem()->getConfigOptions();
-	Ogre::ConfigOptionMap::iterator result = configOptions.find("FSAA");
-	if (result != configOptions.end())
-	{
-		Ogre::ConfigOption& FSAAOption = result->second;
-		for (Ogre::StringVector::iterator i( FSAAOption.possibleValues.begin() ), iEnd( FSAAOption.possibleValues.end() ); i != iEnd; ++i)
-		{
-			newfsaa = strtol( (*i).c_str(), 0, 10 );
-			if (newfsaa > fsaa)  fsaa = newfsaa;
-		}
-	}
-	if (fsaa == 0)  fsaa = 0.5;  //div by 0
-	Slv(AntiAliasing, float(pSet->fsaa)/float(fsaa));
+	Slv(AntiAliasing, pSet->fsaa/16.f);
 
 	//  shadows
 	Slv(ShadowType,	pSet->shadow_type /2.f);
@@ -614,41 +600,10 @@ void App::comboLanguage(MyGUI::ComboBox* wp, size_t val)
 
 void App::slAntiAliasing(SL)
 {
-	// get allowed values for FSAA
-	std::vector<int> fsaaValues;
-	try
-	{
-		int fsaa = 0;
-		Ogre::ConfigOptionMap& configOptions = Ogre::Root::getSingleton().getRenderSystem()->getConfigOptions();
-		Ogre::ConfigOptionMap::iterator result = configOptions.find("FSAA");
-		if ( result != configOptions.end() )
-		{
-			Ogre::ConfigOption& FSAAOption = result->second;
-			for( Ogre::StringVector::iterator i( FSAAOption.possibleValues.begin() ), iEnd( FSAAOption.possibleValues.end() ); i != iEnd; ++i )
-			{
-				fsaa = strtol( (*i).c_str(), 0, 10 );
-				fsaaValues.push_back(fsaa);
-			}
-		}
-	}
-	catch (Ogre::Exception&) {  return;  }
-	
-	float v = fsaaValues.back() * val;
-	
-	if (fsaaValues.size() < 1)  return;
-	
-	for (int i=1; i < (int)fsaaValues.size(); i++)
-	{
-		if (v >= fsaaValues[i])  continue;
-		int smaller = fsaaValues[i] - v;
-		int bigger = v - fsaaValues[i-1];
-		if (bigger > smaller)  v = fsaaValues[i];
-		else  v = fsaaValues[i-1];
-		break;
-	}
+	float v = val * 16.f;
 	if (bGI)  pSet->fsaa = v;
 	
-	if (valAntiAliasing){  valAntiAliasing->setCaption(fToStr(v,0,4));  }
+	if (valAntiAliasing){  valAntiAliasing->setCaption(fToStr(v,0,2));  }
 }
 
 ///  resolutions
