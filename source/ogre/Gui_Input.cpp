@@ -32,7 +32,7 @@ void App::LoadInputDefaults()
 	mInputActions.push_back(InputAction(A_NextTab, "NextTab", SDLK_F3, InputAction::Trigger));
 	mInputActions.push_back(InputAction(A_RestartGame, "RestartGame", SDLK_F5, InputAction::Trigger));
 	mInputActions.push_back(InputAction(A_ResetGame, "ResetGame", SDLK_F4, InputAction::Trigger));
-	mInputActions.push_back(InputAction(A_Screenshot, "Screenshot", SDLK_PRINTSCREEN, InputAction::Trigger));
+	mInputActions.push_back(InputAction(A_Screenshot, "Screenshot", SDLK_F12, InputAction::Trigger));
 
 	LoadInputDefaults(mInputActions, mInputCtrl);
 
@@ -48,7 +48,7 @@ void App::LoadInputDefaults()
 	ap[0].push_back(InputAction(A_ShiftDown, "ShiftDown", SDLK_z, InputAction::Trigger));
 	ap[0].push_back(InputAction(A_PrevCamera, "PrevCamera", SDLK_x, InputAction::Trigger));
 	ap[0].push_back(InputAction(A_NextCamera, "NextCamera", SDLK_c, InputAction::Trigger));
-	ap[0].push_back(InputAction(A_LastChk, "LastChk", SDLK_F12, InputAction::Trigger));
+	ap[0].push_back(InputAction(A_LastChk, "LastChk", SDLK_0, InputAction::Trigger));
 	ap[0].push_back(InputAction(A_Rewind, "Rewind", SDLK_BACKSPACE, InputAction::Trigger));
 
 	ap[1].clear();
@@ -82,7 +82,7 @@ void App::LoadInputDefaults()
 	ap[3].clear();
 	ap[3].push_back(InputAction(A_Throttle, "Throttle", SDLK_p, InputAction::HalfAxis));
 	ap[3].push_back(InputAction(A_Brake, "Brake", SDLK_SLASH, InputAction::HalfAxis));
-	ap[3].push_back(InputAction(A_Steering, "Steering", SDLK_l, SDLK_COMMA, InputAction::Axis));
+	ap[3].push_back(InputAction(A_Steering, "Steering", SDLK_l, SDLK_QUOTE, InputAction::Axis));
 	ap[3].push_back(InputAction(A_HandBrake, "HandBrake", SDLK_PERIOD, InputAction::HalfAxis));
 	ap[3].push_back(InputAction(A_Boost, "Boost", SDLK_SEMICOLON, InputAction::HalfAxis));
 	ap[3].push_back(InputAction(A_Flip, "Flip", SDLK_o, SDLK_LEFTBRACKET, InputAction::Axis));
