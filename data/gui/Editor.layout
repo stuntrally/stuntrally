@@ -3379,7 +3379,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
                 <Widget type="TextBox" skin="TextBox" position="232 490 288 24">
-					<Property key="Caption" value="#{InputLoadNextTrack}"/>
+					<Property key="Caption" value="F6 - #{InputLoadNextTrack}"/>
 					<Property key="TextColour" value="0.6 0.7 0.8"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
