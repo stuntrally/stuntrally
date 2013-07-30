@@ -34,8 +34,10 @@
 	<Tag name="TipLTrFlDepth">Profundidade máxima permitida em fluidos (defina 0 para excluir dos fluidos)</Tag>
 	<Tag name="TipLTrMinTerH">Altura do terreno abaixo da qual o modelo não irá aparecer.</Tag>
 	<Tag name="Sky">Céu</Tag>
+	<Tag name="TBPosition">Position</Tag>
 	<Tag name="Pipe">Pipe</Tag>
 	<Tag name="Graphs">Gráficos</Tag>
+	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
 	<Tag name="TerNormal">Normal</Tag>
 	<Tag name="NeedNewGame">* necessita Novo Jogo</Tag>
 	<Tag name="InputRoadAngZero">Shift-6 - Zerar ângulos</Tag>
@@ -43,6 +45,7 @@
 	<Tag name="TipTrackImg">Screenshot do jogo para a pista selecionada.</Tag>
 	<Tag name="TerLNoiseOnly">Somente Ruído</Tag>
 	<Tag name="InputValueChange">Cada movimento (mouse/teclado) ou mudança de valores com </Tag>
+	<Tag name="SteerRange">Steering range multipliers</Tag>
 	<Tag name="Terrain">Terreno</Tag>
 	<Tag name="TipChangeGloss">Change car color glossiness (matte-shiny).</Tag>
 	<Tag name="Surface">Superficie</Tag>
@@ -192,7 +195,7 @@
 	<Tag name="AutoRear">Auto Rear gear</Tag>
 	<Tag name="TerGenFreq">Freq. zoom</Tag>
 	<Tag name="Road_OnTerrain">No terreno</Tag>
-	<Tag name="ObjStatic">Static</Tag>
+	<Tag name="Ghost">Ghost</Tag>
 	<Tag name="FogNormal">Normal</Tag>
 	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
@@ -442,7 +445,7 @@
 	<Tag name="Fullscreen">Tela cheia</Tag>
 	<Tag name="BulletLines">Bullet debug lines</Tag>
 	<Tag name="InputRoadLMB">LMB (or Arrows)</Tag>
-	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
+	<Tag name="TBPoints">Points</Tag>
 	<Tag name="SimModeEasy">Easy (beginner)</Tag>
 	<Tag name="TreeDens">Densidade das árvores</Tag>
 	<Tag name="WrongChk">Wrong Checkpoint</Tag>
@@ -460,7 +463,7 @@
 	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - tamanho alt-RMB - profundidade</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
-	<Tag name="SteerRange">Steering range multipliers</Tag>
+	<Tag name="Shadows">Shadows</Tag>
 	<Tag name="ShowPictures">Show pictures while loading</Tag>
 	<Tag name="distance">distance</Tag>
 	<Tag name="SSS_Effect">Effect</Tag>
@@ -484,7 +487,6 @@
 	<Tag name="TexSize">Texture size</Tag>
 	<Tag name="TipSunAmbient">Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)</Tag>
 	<Tag name="ChngTrkTab">changed in [Track] tab</Tag>
-	<Tag name="Shadows">Shadows</Tag>
 	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
 	<Tag name="Laps">Laps</Tag>
@@ -520,6 +522,7 @@
 	<Tag name="Advanced">Advanced</Tag>
 	<Tag name="InputObjectsMode">X - edit Objects</Tag>
 	<Tag name="TipGrassVisDist">Visibility distance for grass pages.</Tag>
+	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
 	<Tag name="TipModelVisDist">Visibility distance for 3d models, after this they turn into 2d impostors.</Tag>
 	<Tag name="TerGenScale">Scale Height</Tag>
 	<Tag name="Settings">Settings</Tag>
@@ -555,6 +558,7 @@
 	<Tag name="TipSmokeInt">Smoke particles intensity.</Tag>
 	<Tag name="MessageBox_Ignore">Ignore</Tag>
 	<Tag name="GraphicsAll_Impossible">Impossible</Tag>
+	<Tag name="ObjStatic">Static</Tag>
 	<Tag name="TerrainBrush">Terrain brush</Tag>
 	<Tag name="TipTexNormAuto">When checked, Normal texture is automatically set from Diffuse texture (+ _nh in filename).</Tag>
 	<Tag name="TrackBestTime">Best time</Tag>
@@ -751,7 +755,7 @@
 	<Tag name="TerLayers">Terrain Layers</Tag>
 	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
 	<Tag name="TotalScore">Total score</Tag>
-	<Tag name="InputLoadNextTrack">F12 - load next track (shift - previous)</Tag>
+	<Tag name="InputLoadNextTrack">Load next track (shift - previous)</Tag>
 	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
 	<Tag name="InputRoadEdit">R - edit road mode</Tag>
@@ -885,10 +889,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="TBPosition">Position</Tag>
-	<Tag name="Ghost">Ghost</Tag>
-	<Tag name="TBPoints">Points</Tag>
-	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
+	<Tag name="InputInverse">Inverse</Tag>
+	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
