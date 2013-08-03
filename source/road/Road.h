@@ -85,6 +85,7 @@ public:
 	void Move1(int id, Ogre::Vector3 relPos), Move(Ogre::Vector3 relPos);  Ogre::Vector3 getPos0();
 	void RotateSel(Ogre::Real relA, Ogre::Vector3 axis, int addYawRoll);
 	void Scale1(int id, Ogre::Real posMul, Ogre::Real hMul), ScaleSel(Ogre::Real posMul);
+	void MirrorSel(bool alt);
 
 	//  modify point
 	void ToggleOnTerrain(), ToggleColums();  // on chosen point

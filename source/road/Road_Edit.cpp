@@ -186,6 +186,30 @@ void SplineRoad::RotateSel(Real relA, Vector3 axis, int addYawRoll)
 	bSelChng = true;
 }
 
+//  Mirror selected
+void SplineRoad::MirrorSel(bool alt)
+{
+	if (vSel.empty())  return;
+
+	std::vector<SplinePoint> mRev;
+	for (std::set<int>::const_reverse_iterator it = vSel.rbegin(); it != vSel.rend(); ++it)
+		mRev.push_back(mP[*it]);
+	
+	int i = 0;
+	for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it, ++i)
+	{
+		SplinePoint& p = mP[*it];
+		p = mRev[i];
+		p.mRoll = -p.mRoll;
+		if (p.aType == AT_Manual)
+		{	p.mYaw = p.mYaw+180.f;
+			if (p.mYaw > 360.f)  p.mYaw -= 360.f;
+		}
+	}
+	recalcTangents();
+	RebuildRoad(true);
+}
+
 
 ///  Add point
 ///-------------------------------------------------------------------------------------
@@ -301,7 +325,7 @@ void SplineRoad::SetTerHitVis(bool visible)
 }
 
 
-///  choose, selection
+///  selection copy, paste, delete
 //--------------------------------------------------------------------------------------
 
 std::deque<SplinePoint> SplineRoad::mPc;  // copy points
@@ -379,7 +403,7 @@ void SplineRoad::CopyNewPoint()
 	newP = mP[iChosen];
 }
 
-//  add/rem  multi sel
+//  add/rem  select
 void SplineRoad::SelAddPoint()
 {
 	int id = -1;

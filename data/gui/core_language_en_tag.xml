@@ -943,6 +943,8 @@
 	<Tag name="InputRoadAngZero">shift-6  - zero angles</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first  (1)</Tag>
 
+	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
+
 
 	<!-- Road  pick (one)  -->
 	<Tag name="InputRoadPickOne">Pick (one)</Tag>

@@ -502,7 +502,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				
 			//  ter on  first,last
 			case key(HOME):  case key(KP_7):
-				//if (alt)	road->MirrorSel(shift);  else
+				if (alt)	road->MirrorSel(shift);  else
 				if (ctrl)	road->FirstPoint();
 				else		road->ToggleOnTerrain();  break;
 				

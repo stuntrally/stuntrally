@@ -4329,36 +4329,42 @@
 					<Widget type="TabItem" skin="" position="2 24 714 444">
 						<Property key="Caption" value="#FFA010#{Road} 1"/>
 						<UserString key="RelativeTo" value="HelpWnd"/>
+						<Widget type="TextBox" skin="TextBox" position="96 14 240 20">
+							<Property key="TextColour" value="0.65 0.65 1"/>
+							<Property key="Caption" value="#{InputRoadPickOne}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 38 320 20">
+							<Property key="Caption" value="#{InputRoadPick}"/>
+							<Property key="TextColour" value="0.8 0.8 1.0"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 60 320 20">
+							<Property key="TextColour" value="0.8 0.8 0.9"/>
+							<Property key="Caption" value="#{InputRoadNext}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 94 320 20">
+							<Property key="Caption" value="#{InputRoadDel}"/>
+							<Property key="TextColour" value="1.0 0.6 0.6"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 116 320 20">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="TextColour" value="0.5 1.0 0.5"/>
 							<Property key="Caption" value="#{InputRoadIns}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="64 138 288 20">
 							<Property key="Caption" value="#{InputRoadInsAlt}"/>
-							<Property key="TextColour" value="0.5 0.6 0.7"/>
+							<Property key="TextColour" value="0.4 0.55 0.4"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 60 320 20">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Caption" value="#{InputRoadNext}"/>
+						<Widget type="TextBox" skin="TextBox" position="32 168 320 20">
+							<Property key="TextColour" value="0.7 0.7 1.0"/>
+							<Property key="Caption" value="#{InputRoadNew}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 38 320 20">
-							<Property key="Caption" value="#{InputRoadPick}"/>
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="376 38 324 20">
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
-							<Property key="Caption" value="#{InputRoadSel}"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="408 60 288 20">
-							<Property key="TextColour" value="0.5 0.65 0.8"/>
-							<Property key="Caption" value="#{InputRoadSelAlt}"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
+						
 						<Widget type="TextBox" skin="TextBox" position="32 236 320 20">
 							<Property key="Caption" value="#{InputRoadEdit}"/>
 							<Property key="TextColour" value="1.0 0.7 0.0"/>
@@ -4389,19 +4395,15 @@
 							<Property key="Caption" value="#{InputRoadLooped}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 94 320 20">
-							<Property key="Caption" value="#{InputRoadDel}"/>
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
+
+						<Widget type="TextBox" skin="TextBox" position="376 38 324 20">
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="Caption" value="#{InputRoadSel}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 168 320 20">
-							<Property key="TextColour" value="0.6 0.7 0.8"/>
-							<Property key="Caption" value="#{InputRoadNew}"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="96 14 240 20">
-							<Property key="TextColour" value="0.65 0.65 1"/>
-							<Property key="Caption" value="#{InputRoadPickOne}"/>
+						<Widget type="TextBox" skin="TextBox" position="408 60 288 20">
+							<Property key="TextColour" value="0.5 0.65 0.8"/>
+							<Property key="Caption" value="#{InputRoadSelAlt}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="440 14 152 20">
@@ -4410,18 +4412,23 @@
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="376 94 340 20">
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="TextColour" value="0.5 0.75 1.0"/>
 							<Property key="Caption" value="#{InputRoadCopySel}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="376 116 320 20">
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="TextColour" value="0.4 0.8 0.9"/>
 							<Property key="Caption" value="#{InputRoadShiftReverse}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="442 138 254 20">
-							<Property key="TextColour" value="0.5 0.6 0.7"/>
+							<Property key="TextColour" value="0.4 0.6 0.7"/>
 							<Property key="Caption" value="#{InputRoadAfterPick}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 168 320 20">
+							<Property key="TextColour" value="0.7 0.8 0.2"/>
+							<Property key="Caption" value="#{InputRoadMirror}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 					</Widget>
