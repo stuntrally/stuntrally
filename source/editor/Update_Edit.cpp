@@ -220,7 +220,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(SDLK_UP)   ||isKey(SDLK_KP_8))  road->Move( vz*q);
 
 		if (isKey(SDLK_KP_MINUS)) road->Move(-vy*q);	if (isKey(SDLK_KP_MULTIPLY)) road->AddWidth( q*0.4f);
-		if (isKey(SDLK_PLUS))	  road->Move( vy*q);	if (isKey(SDLK_KP_DIVIDE))	 road->AddWidth(-q*0.4f);
+		if (isKey(SDLK_KP_PLUS))  road->Move( vy*q);	if (isKey(SDLK_KP_DIVIDE))	 road->AddWidth(-q*0.4f);
 
 		if (iSnap == 0)
 		{	if (isKey(SDLK_1))	road->AddYaw(-q*3,0,alt);	if (isKey(SDLK_3))	road->AddRoll(-q*3,0,alt);

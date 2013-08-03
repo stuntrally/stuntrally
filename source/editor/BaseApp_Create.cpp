@@ -414,6 +414,7 @@ bool BaseApp::keyReleased( const SDL_KeyboardEvent &arg )
 void BaseApp::textInput(const SDL_TextInputEvent &arg)
 {
 	const char* text = &arg.text[0];
+	if (*text == '`')  return;
 	std::vector<unsigned long> unicode = utf8ToUnicode(std::string(text));
 	if (bGuiFocus)
 	for (std::vector<unsigned long>::iterator it = unicode.begin(); it != unicode.end(); ++it)
