@@ -208,19 +208,19 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 
 	//  update input
 	mRotX = 0; mRotY = 0;  mRotKX = 0; mRotKY = 0;  mTrans = Vector3::ZERO;
-	#define  key(a)  (mInputWrapper->isKeyDown(SDL_GetScancodeFromKey(a)))
+	#define  isKey(a)  mInputWrapper->isKeyDown(SDL_SCANCODE_##a)
 
 	//  Move,Rot camera
 	if (bCam())
 	{
-		if (key(SDLK_a))  mTrans.x -= 1;	if (key(SDLK_d))  mTrans.x += 1;
-		if (key(SDLK_w))  mTrans.z -= 1;	if (key(SDLK_s))  mTrans.z += 1;
-		if (key(SDLK_q))  mTrans.y -= 1;	if (key(SDLK_e))  mTrans.y += 1;
+		if (isKey(A))  mTrans.x -= 1;	if (isKey(D))  mTrans.x += 1;
+		if (isKey(W))  mTrans.z -= 1;	if (isKey(S))  mTrans.z += 1;
+		if (isKey(Q))  mTrans.y -= 1;	if (isKey(E))  mTrans.y += 1;
 		
-		if (key(SDLK_DOWN) ||key(SDLK_KP_2))  mRotKY -= 1;
-		if (key(SDLK_UP)   ||key(SDLK_KP_8))  mRotKY += 1;
-		if (key(SDLK_RIGHT)||key(SDLK_KP_6))  mRotKX -= 1;
-		if (key(SDLK_LEFT) ||key(SDLK_KP_4))  mRotKX += 1;
+		if (isKey(DOWN) ||isKey(KP_2))  mRotKY -= 1;
+		if (isKey(UP)   ||isKey(KP_8))  mRotKY += 1;
+		if (isKey(RIGHT)||isKey(KP_6))  mRotKX -= 1;
+		if (isKey(LEFT) ||isKey(KP_4))  mRotKX += 1;
 	}
 
 	   // key modifiers

@@ -283,24 +283,25 @@ void App::NumTabNext(int rel)
 
 bool App::keyPressed(const SDL_KeyboardEvent &arg)
 {
-	SDL_Keycode key = arg.keysym.sym;
+	SDL_Scancode skey = arg.keysym.scancode;
+	#define key(a)  SDL_SCANCODE_##a
 	
 	///  Preview camera  ---------------------
 	if (edMode == ED_PrvCam)
 	{
-		switch (key)
+		switch (skey)
 		{
-			case SDLK_ESCAPE:  // exit
-			case SDLK_F7:  togPrvCam();  break;
+			case key(ESCAPE):  // exit
+			case key(F7):  togPrvCam();  break;
 
-			case SDLK_RETURN:  // save screen
+			case key(RETURN):  // save screen
 			{	int u = pSet->allow_save ? pSet->gui.track_user : 1;
 				rt[RTs-1].rndTex->writeContentsToFile(pathTrk[u] + pSet->gui.track + "/preview/view.jpg");
 				listTrackChng(trkList,0);  // upd gui img
 				Status("Preview saved", 1,1,0);
 			}	break;
 
-			case SDLK_F12:  // screenshot
+			case key(F12):  // screenshot
 				mWindow->writeContentsToTimestampedFile(PATHMANAGER::Screenshots() + "/", ".jpg");
 				return true;
 		}
@@ -313,26 +314,26 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 	if (pSet->isMain && bGuiFocus)
 	{
-		switch (key)
+		switch (skey)
 		{
-		case SDLK_UP:  case SDLK_KP_8:
+		case key(UP):  case key(KP_8):
 			pSet->inMenu = (pSet->inMenu-1+WND_ALL)%WND_ALL;
 			toggleGui(false);  return true;
 
-		case SDLK_DOWN:  case SDLK_KP_2:
+		case key(DOWN):  case key(KP_2):
 			pSet->inMenu = (pSet->inMenu+1)%WND_ALL;
 			toggleGui(false);  return true;
 
-		case SDLK_RETURN:
+		case key(RETURN):
 			pSet->isMain = false;
 			toggleGui(false);  return true;
 		}
 	}
 	if (!pSet->isMain && bGuiFocus)
 	{
-		switch (key)
+		switch (skey)
 		{
-		case SDLK_BACKSPACE:
+		case key(BACKSPACE):
 			if (pSet->isMain)  break;
 			if (bGuiFocus)
 			{	if (edFoc)  break;
@@ -353,16 +354,16 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 	//  global keys
 	//------------------------------------------------------------------------------------------------------------------------------
-	switch (key)
+	switch (skey)
 	{
-		case SDLK_ESCAPE: //  quit
+		case key(ESCAPE): //  quit
 			if (pSet->escquit)
 			{
 				mShutDown = true;
 			}	return true;
 
-		case SDLK_F1:
-		case SDLK_BACKQUOTE:
+		case key(F1):
+		case key(GRAVE):
 			if (ctrl)  // context help (show for cur mode)
 			{
 				if (bMoveCam)		 GuiShortcut(WND_Help, 1, 0);
@@ -379,30 +380,30 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				toggleGui(true);
 			return true;
 
-		case SDLK_F12: //  screenshot
+		case key(F12): //  screenshot
 			mWindow->writeContentsToTimestampedFile(PATHMANAGER::Screenshots() + "/", ".jpg");
 			return true;
 
 		//  save, reload, update
-		case SDLK_F4:  SaveTrack();	return true;
-		case SDLK_F5:  LoadTrack();	return true;
-		case SDLK_F8:  UpdateTrack();  return true;
+		case key(F4):  SaveTrack();	return true;
+		case key(F5):  LoadTrack();	return true;
+		case key(F8):  UpdateTrack();  return true;
 
-		case SDLK_F9:  // blendmap
+		case key(F9):  // blendmap
 			if (alt)
 			{	WP wp = chAutoBlendmap;  ChkEv(autoBlendmap);  }
 			else	bTerUpdBlend = true;  return true;
 
 		//  prev num tab (layers,grasses,models)
-		case SDLK_1:
+		case key(1):
    			if (alt)  {  NumTabNext(-1);  return true;  }
 			break;
 		//  next num tab
-		case SDLK_2:
+		case key(2):
    			if (alt)  {  NumTabNext(1);  return true;  }
 			break;
 
-		case SDLK_F2:  // +-rt num
+		case key(F2):  // +-rt num
    			if (alt)
    			{	pSet->num_mini = (pSet->num_mini - 1 + RTs+2) % (RTs+2);  UpdMiniVis();  }
    			else
@@ -419,7 +420,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	   			}
    			break;
 
-		case SDLK_F3:  // tabs,sub
+		case key(F3):  // tabs,sub
    			if (alt)
    			{	pSet->num_mini = (pSet->num_mini + 1) % (RTs+2);  UpdMiniVis();  }
    			else
@@ -436,31 +437,32 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				}
    			break;
    			
-		case SDLK_RETURN:  // load track
+		case key(RETURN):  // load track
 			if (bGuiFocus)
 			if (mWndTabsEdit->getIndexSelected() == 1 && !pSet->isMain && pSet->inMenu == WND_Edit)
 				btnNewGame(0);
    			break;
 
 		//  Wire Frame  F11
-		case SDLK_F11:
+		case key(F11):
 		{	mbWireFrame = !mbWireFrame;
 			mCamera->setPolygonMode(mbWireFrame ? PM_WIREFRAME : PM_SOLID);
 			if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
 			return true;
 		}	break;
 
-		//  Show Stats  I
-		case SDLK_i:
+		//  Show Stats  ctrl-I
+		case key(I):
    			if (ctrl)  {  chkInputBar(chInputBar);  return true;  }
 			break;
-			
-		case SDLK_z:
+
+		//  Top view  alt-Z
+		case key(Z):
 			if (alt)  {  toggleTopView();  return true;  }
 			break;
 
 		//  load next track  F6
-		case SDLK_F6:
+		case key(F6):
 			if (pSet->check_load)
 			{	iLoadNext = shift ? -1 : 1;  return true;  }
 			break;
@@ -469,7 +471,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	//  GUI  keys in edits  ---------------------
 	if (bGuiFocus && mGUI && !alt && !ctrl)
 	{
-		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(mInputWrapper->sdl2OISKeyCode(key)), 0);
+		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(mInputWrapper->sdl2OISKeyCode(skey)), 0);
 		return true;
 	}
 
@@ -478,50 +480,51 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	if (edMode == ED_Road && road && bEdit())
 	{
 		if (iSnap > 0)
-		switch (key)
+		switch (skey)
 		{
-			case SDLK_1:  road->AddYaw(-1,angSnap,alt);  break;
-			case SDLK_2:  road->AddYaw( 1,angSnap,alt);  break;
-			case SDLK_3:  road->AddRoll(-1,angSnap,alt);  break;
-			case SDLK_4:  road->AddRoll( 1,angSnap,alt);  break;
+			case key(1):  road->AddYaw(-1,angSnap,alt);  break;
+			case key(2):  road->AddYaw( 1,angSnap,alt);  break;
+			case key(3):  road->AddRoll(-1,angSnap,alt);  break;
+			case key(4):  road->AddRoll( 1,angSnap,alt);  break;
 		}
-		switch (key)
+		switch (skey)
 		{
 			//  choose 1
-			case SDLK_SPACE:
+			case key(SPACE):
 				if (ctrl)	road->CopyNewPoint();
 				else		road->ChoosePoint();  break;
 				
 			//  multi sel
-			case SDLK_BACKSPACE:
+			case key(BACKSPACE):
 				if (alt)		road->SelAll();
 				else if (ctrl)	road->SelClear();
 				else			road->SelAddPoint();  break;
 				
 			//  ter on  first,last
-			case SDLK_HOME:  case SDLK_KP_7:
+			case key(HOME):  case key(KP_7):
+				//if (alt)	road->MirrorSel(shift);  else
 				if (ctrl)	road->FirstPoint();
 				else		road->ToggleOnTerrain();  break;
 				
 			//  cols
-			case SDLK_END:  case SDLK_KP_1:
+			case key(END):  case key(KP_1):
 				if (ctrl)	road->LastPoint();
 				else		road->ToggleColums();  break;
 
 			//  prev,next
-			case SDLK_PAGEUP:  case SDLK_KP_9:
+			case key(PAGEUP):  case key(KP_9):
 				road->PrevPoint();  break;
-			case SDLK_PAGEDOWN:	case SDLK_KP_3:
+			case key(PAGEDOWN):	case key(KP_3):
 				road->NextPoint();  break;
 
 			//  del
-			case SDLK_DELETE:  case SDLK_KP_PERIOD:
-			case SDLK_KP_5:
+			case key(DELETE):  case key(KP_PERIOD):
+			case key(KP_5):
 				if (ctrl)	road->DelSel();
 				else		road->Delete();  break;
 
 			//  ins
-			case SDLK_INSERT:  case SDLK_KP_0:
+			case key(INSERT):  case key(KP_0):
 				if (ctrl && !shift && !alt)	{	if (road->CopySel())  Status("Copy",0.6,0.8,1.0);  }
 				else if (!ctrl && shift && !alt)	road->Paste();
 				else if ( ctrl && shift && !alt)	road->Paste(true);
@@ -534,42 +537,42 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 					road->Insert(shift ? INS_Begin : ctrl ? INS_End : alt ? INS_CurPre : INS_Cur);
 				}	break;					  
 
-			case SDLK_0:
+			case key(0):
 				if (ctrl)  {   road->Set1stChk();  break;  }
-			case SDLK_EQUALS:  road->ChgMtrId(1);  break;
-			case SDLK_9:
-			case SDLK_MINUS:   road->ChgMtrId(-1);  break;
+			case key(EQUALS):  road->ChgMtrId(1);  break;
+			case key(9):
+			case key(MINUS):   road->ChgMtrId(-1);  break;
 
-			case SDLK_5:  road->ChgAngType(-1);  break;
-			case SDLK_6:  if (shift)  road->AngZero();  else
+			case key(5):  road->ChgAngType(-1);  break;
+			case key(6):  if (shift)  road->AngZero();  else
 						road->ChgAngType(1);  break;
 
-			case SDLK_7:  iSnap = (iSnap-1+ciAngSnapsNum)%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];  break;
-			case SDLK_8:  iSnap = (iSnap+1)%ciAngSnapsNum;                angSnap = crAngSnaps[iSnap];  break;
+			case key(7):  iSnap = (iSnap-1+ciAngSnapsNum)%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];  break;
+			case key(8):  iSnap = (iSnap+1)%ciAngSnapsNum;                angSnap = crAngSnaps[iSnap];  break;
 			
-			case SDLK_u:  AlignTerToRoad();  break;
+			case key(U):  AlignTerToRoad();  break;
 			
 			//  looped  todo: finish set..
-			case SDLK_n:  road->isLooped = !road->isLooped;
+			case key(N):  road->isLooped = !road->isLooped;
 				road->recalcTangents();  road->RebuildRoad(true);  break;
 		}
 	}
 
 	//  ter brush shape
 	if (edMode < ED_Road && !alt)
-	switch (key)
+	switch (skey)
 	{
-		case SDLK_k:	if (ctrl)  {  mBrShape[curBr] = (EBrShape)((mBrShape[curBr]-1 + BRS_ALL) % BRS_ALL);  updBrush();  }  break;
-		case SDLK_l:	if (ctrl)  {  mBrShape[curBr] = (EBrShape)((mBrShape[curBr]+1) % BRS_ALL);            updBrush();  }  break;
-		case SDLK_n: case SDLK_COMMA:	mBrOct[curBr] = std::max(1, mBrOct[curBr]-1);  updBrush();  break;
-		case SDLK_m: case SDLK_PERIOD:	mBrOct[curBr] = std::min(7, mBrOct[curBr]+1);  updBrush();  break;
+		case key(K):	if (ctrl)  {  mBrShape[curBr] = (EBrShape)((mBrShape[curBr]-1 + BRS_ALL) % BRS_ALL);  updBrush();  }  break;
+		case key(L):	if (ctrl)  {  mBrShape[curBr] = (EBrShape)((mBrShape[curBr]+1) % BRS_ALL);            updBrush();  }  break;
+		case key(N): case key(COMMA):	mBrOct[curBr] = std::max(1, mBrOct[curBr]-1);  updBrush();  break;
+		case key(M): case key(PERIOD):	mBrOct[curBr] = std::min(7, mBrOct[curBr]+1);  updBrush();  break;
 	}
 
 	//  ter brush presets  ----
-	if (edMode < ED_Road && alt && key >= SDLK_1 && key <= SDLK_0 && !bMoveCam)
+	if (edMode < ED_Road && alt && skey >= key(1) && skey <= key(0) && !bMoveCam)
 	{
 		// TODO
-		int id = key - SDLK_1;
+		int id = skey - key(1);
 		if (shift)  id += 10;
 		SetBrushPreset(id);
 	}
@@ -578,10 +581,10 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	//  Fluids  ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 	if (edMode == ED_Fluids)
 	{	int fls = sc->fluids.size();
-		switch (key)
+		switch (skey)
 		{
 			//  ins
-			case SDLK_INSERT:  case SDLK_KP_0:
+			case key(INSERT):  case key(KP_0):
 			if (road && road->bHitTer)
 			{
 				FluidBox fb;	fb.name = "water blue";
@@ -594,23 +597,23 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			}	break;
 		}
 		if (fls > 0)
-		switch (key)
+		switch (skey)
 		{
 			//  first, last
-			case SDLK_HOME:  case SDLK_KP_7:
+			case key(HOME):  case key(KP_7):
 				iFlCur = 0;  UpdFluidBox();  break;
-			case SDLK_END:  case SDLK_KP_1:
+			case key(END):  case key(KP_1):
 				if (fls > 0)  iFlCur = fls-1;  UpdFluidBox();  break;
 
 			//  prev,next
-			case SDLK_PAGEUP:  case SDLK_KP_9:
+			case key(PAGEUP):  case key(KP_9):
 				if (fls > 0) {  iFlCur = (iFlCur-1+fls)%fls;  }  UpdFluidBox();  break;
-			case SDLK_PAGEDOWN:	case SDLK_KP_3:
+			case key(PAGEDOWN):	case key(KP_3):
 				if (fls > 0) {  iFlCur = (iFlCur+1)%fls;	  }  UpdFluidBox();  break;
 
 			//  del
-			case SDLK_DELETE:  case SDLK_KP_PERIOD:
-			case SDLK_KP_5:
+			case key(DELETE):  case key(KP_PERIOD):
+			case key(KP_5):
 				if (fls == 1)	sc->fluids.clear();
 				else			sc->fluids.erase(sc->fluids.begin() + iFlCur);
 				iFlCur = std::max(0, std::min(iFlCur, (int)sc->fluids.size()-1));
@@ -618,12 +621,12 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				break;
 
 			//  prev,next type
-			case SDLK_9:  case SDLK_MINUS:
+			case key(9):  case key(MINUS):
 			{	FluidBox& fb = sc->fluids[iFlCur];
 				fb.id = (fb.id-1 + fluidsXml.fls.size()) % fluidsXml.fls.size();
 				fb.name = fluidsXml.fls[fb.id].name;
 				bRecreateFluids = true;  }	break;
-			case SDLK_0:  case SDLK_EQUALS:
+			case key(0):  case key(EQUALS):
 			{	FluidBox& fb = sc->fluids[iFlCur];
 				fb.id = (fb.id+1) % fluidsXml.fls.size();
 				fb.name = fluidsXml.fls[fb.id].name;
@@ -634,17 +637,17 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	//  Objects  | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |
 	if (edMode == ED_Objects)
 	{	int objs = sc->objects.size(), objAll = vObjNames.size();
-		switch (key)
+		switch (skey)
 		{
-			case SDLK_SPACE:
+			case key(SPACE):
 				iObjCur = -1;  PickObject();  UpdObjPick();  break;
 				
 			//  prev,next type
-			case SDLK_9:  case SDLK_MINUS:   SetObjNewType((iObjTNew-1 + objAll) % objAll);  break;
-			case SDLK_0:  case SDLK_EQUALS:  SetObjNewType((iObjTNew+1) % objAll);  break;
+			case key(9):  case key(MINUS):   SetObjNewType((iObjTNew-1 + objAll) % objAll);  break;
+			case key(0):  case key(EQUALS):  SetObjNewType((iObjTNew+1) % objAll);  break;
 				
 			//  ins
-			case SDLK_INSERT:	case SDLK_KP_0:
+			case key(INSERT):	case key(KP_0):
 			if (road && road->bHitTer)
 			{
 				AddNewObj();
@@ -653,7 +656,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			}	break;
 			
 			//  sel
-			case SDLK_BACKSPACE:
+			case key(BACKSPACE):
 				if (ctrl)  vObjSel.clear();  // unsel all
 				else
 				if (iObjCur > -1)
@@ -665,23 +668,23 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		}
 		::Object* o = iObjCur == -1 ? &objNew :
 					((iObjCur >= 0 && objs > 0 && iObjCur < objs) ? &sc->objects[iObjCur] : 0);
-		switch (key)
+		switch (skey)
 		{
 			//  first, last
-			case SDLK_HOME:  case SDLK_KP_7:
+			case key(HOME):  case key(KP_7):
 				iObjCur = 0;  UpdObjPick();  break;
-			case SDLK_END:  case SDLK_KP_1:
+			case key(END):  case key(KP_1):
 				if (objs > 0)  iObjCur = objs-1;  UpdObjPick();  break;
 
 			//  prev,next
-			case SDLK_PAGEUP:  case SDLK_KP_9:
+			case key(PAGEUP):  case key(KP_9):
 				if (objs > 0) {  iObjCur = (iObjCur-1+objs)%objs;  }  UpdObjPick();  break;
-			case SDLK_PAGEDOWN:	case SDLK_KP_3:
+			case key(PAGEDOWN):	case key(KP_3):
 				if (objs > 0) {  iObjCur = (iObjCur+1)%objs;	  }  UpdObjPick();  break;
 
 			//  del
-			case SDLK_DELETE:  case SDLK_KP_PERIOD:
-			case SDLK_KP_5:
+			case key(DELETE):  case key(KP_PERIOD):
+			case key(KP_5):
 				if (iObjCur >= 0 && objs > 0)
 				{	::Object& o = sc->objects[iObjCur];
 					mSceneMgr->destroyEntity(o.ent);
@@ -694,7 +697,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				}	break;
 
 			//  move,rot,scale
-			case SDLK_1:
+			case key(1):
 				if (!shift)  objEd = EO_Move;
 				else if (o)
 				{
@@ -710,7 +713,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 					}
 				}	break;
 
-			case SDLK_2:
+			case key(2):
 				if (!shift)  objEd = EO_Rotate;
 				else if (o)  // reset rot
 				{
@@ -718,7 +721,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 					o->SetFromBlt();  UpdObjPick();
 				}	break;
 
-			case SDLK_3:
+			case key(3):
 				if (!shift)  objEd = EO_Scale;
 				else if (o)  // reset scale
 				{
@@ -736,57 +739,57 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 	///  Common Keys  ************************************************************************************************************
 	if (alt)
-	switch (key)
+	switch (skey)
 	{
-		case SDLK_q:  GuiShortcut(WND_Edit, 1);  return true;  // Q Track
-		case SDLK_s:  GuiShortcut(WND_Edit, 2);  return true;  // S Sun
+		case key(Q):  GuiShortcut(WND_Edit, 1);  return true;  // Q Track
+		case key(S):  GuiShortcut(WND_Edit, 2);  return true;  // S Sun
 
-		case SDLK_h:  GuiShortcut(WND_Edit, 3);  return true;  // H Heightmap
-		 case SDLK_d: GuiShortcut(WND_Edit, 3,0);  return true;  //  D -Brushes
+		case key(H):  GuiShortcut(WND_Edit, 3);  return true;  // H Heightmap
+		 case key(D): GuiShortcut(WND_Edit, 3,0);  return true;  //  D -Brushes
 
-		case SDLK_t:  GuiShortcut(WND_Edit, 4);  return true;  // T Layers (Terrain)
-		 case SDLK_b: GuiShortcut(WND_Edit, 4,0);  return true;  //  B -Blendmap
-		 case SDLK_p: GuiShortcut(WND_Edit, 4,1);  return true;  //  P -Particles
-		 case SDLK_u: GuiShortcut(WND_Edit, 4,2);  return true;  //  U -Surfaces
+		case key(T):  GuiShortcut(WND_Edit, 4);  return true;  // T Layers (Terrain)
+		 case key(B): GuiShortcut(WND_Edit, 4,0);  return true;  //  B -Blendmap
+		 case key(P): GuiShortcut(WND_Edit, 4,1);  return true;  //  P -Particles
+		 case key(U): GuiShortcut(WND_Edit, 4,2);  return true;  //  U -Surfaces
 
-		case SDLK_v:  GuiShortcut(WND_Edit, 5);  return true;  // V Vegetation
-		 case SDLK_m: GuiShortcut(WND_Edit, 5,2);  return true;  //  M -Models
+		case key(V):  GuiShortcut(WND_Edit, 5);  return true;  // V Vegetation
+		 case key(M): GuiShortcut(WND_Edit, 5,2);  return true;  //  M -Models
 
-		case SDLK_r:  GuiShortcut(WND_Edit, 6);  return true;  // R Road
-		case SDLK_x:  GuiShortcut(WND_Edit, 7);  return true;  // X Objects
-		case SDLK_o:  GuiShortcut(WND_Edit, 8);  return true;  // O Tools
+		case key(R):  GuiShortcut(WND_Edit, 6);  return true;  // R Road
+		case key(X):  GuiShortcut(WND_Edit, 7);  return true;  // X Objects
+		case key(O):  GuiShortcut(WND_Edit, 8);  return true;  // O Tools
 
-		case SDLK_c:  GuiShortcut(WND_Options, 1);  return true;  // C Screen
-		case SDLK_g:  GuiShortcut(WND_Options, 2);  return true;  // G Graphics
-		 case SDLK_n: GuiShortcut(WND_Options, 2,2);  return true;  // N -Vegetation
-		case SDLK_e:  GuiShortcut(WND_Options, 3);  return true;  // E Settings
-		case SDLK_k:  GuiShortcut(WND_Options, 4);  return true;  // K Tweak
+		case key(C):  GuiShortcut(WND_Options, 1);  return true;  // C Screen
+		case key(G):  GuiShortcut(WND_Options, 2);  return true;  // G Graphics
+		 case key(N): GuiShortcut(WND_Options, 2,2);  return true;  // N -Vegetation
+		case key(E):  GuiShortcut(WND_Options, 3);  return true;  // E Settings
+		case key(K):  GuiShortcut(WND_Options, 4);  return true;  // K Tweak
 
-		case SDLK_i:  GuiShortcut(WND_Help, 1);  return true;  // I Input/help
-		case SDLK_j:  GuiShortcut(WND_Edit, 9);  return true;  // J Warnings
+		case key(I):  GuiShortcut(WND_Help, 1);  return true;  // I Input/help
+		case key(J):  GuiShortcut(WND_Edit, 9);  return true;  // J Warnings
 	}
 	else
-	switch (key)
+	switch (skey)
 	{
-		case SDLK_TAB:	//  Camera / Edit mode
+		case key(TAB):	//  Camera / Edit mode
 		if (!bGuiFocus && !alt)  {
 			bMoveCam = !bMoveCam;  UpdVisGui();  UpdFluidBox();  UpdObjPick();
 		}	break;
 
 		//  fog
-		case SDLK_g:  {
+		case key(G):  {
 			pSet->bFog = !pSet->bFog;  chkFog->setStateSelected(pSet->bFog);  UpdFog();  }  break;
 		//  trees
-		case SDLK_v:  bTrGrUpd = true;  break;
+		case key(V):  bTrGrUpd = true;  break;
 		//  weather
-		case SDLK_i:  {
+		case key(I):  {
 			pSet->bWeather = !pSet->bWeather;  chkWeather->setStateSelected(pSet->bWeather);  }  break;
 
 		//  terrain
-		case SDLK_d:  if (bEdit()){  SetEdMode(ED_Deform);  curBr = 0;  updBrush();  UpdEditWnds();  }	break;
-		case SDLK_s:  if (bEdit()){  SetEdMode(ED_Smooth);  curBr = 1;  updBrush();  UpdEditWnds();  }	break;
-		case SDLK_e:  if (bEdit()){  SetEdMode(ED_Height);  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
-		case SDLK_f:  if (bEdit()){  SetEdMode(ED_Filter);  curBr = 3;  updBrush();  UpdEditWnds();  }
+		case key(D):  if (bEdit()){  SetEdMode(ED_Deform);  curBr = 0;  updBrush();  UpdEditWnds();  }	break;
+		case key(S):  if (bEdit()){  SetEdMode(ED_Smooth);  curBr = 1;  updBrush();  UpdEditWnds();  }	break;
+		case key(E):  if (bEdit()){  SetEdMode(ED_Height);  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
+		case key(F):  if (bEdit()){  SetEdMode(ED_Filter);  curBr = 3;  updBrush();  UpdEditWnds();  }
 			else  //  focus on find edit  (global)
 			if (ctrl && edFind //&& bGuiFocus &&
 						  //!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 1
@@ -799,28 +802,28 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			}	break;
 
 		//  road
-		case SDLK_r:  if (bEdit()){  SetEdMode(ED_Road);	UpdEditWnds();  }	break;
-		case SDLK_b:  if (road)  {  road->UpdPointsH();  road->RebuildRoad(true);  }  break;
-		case SDLK_t:  if (mWndRoadStats)  mWndRoadStats->setVisible(!mWndRoadStats->getVisible());  break;
-		case SDLK_m:  if (edMode == ED_Road && road)  road->ToggleMerge();  break;
+		case key(R):  if (bEdit()){  SetEdMode(ED_Road);	UpdEditWnds();  }	break;
+		case key(B):  if (road)  {  road->UpdPointsH();  road->RebuildRoad(true);  }  break;
+		case key(T):  if (mWndRoadStats)  mWndRoadStats->setVisible(!mWndRoadStats->getVisible());  break;
+		case key(M):  if (edMode == ED_Road && road)  road->ToggleMerge();  break;
 
 		//  start pos
-		case SDLK_q:  if (bEdit()){  SetEdMode(ED_Start);  UpdEditWnds();  }   break;
-		case SDLK_SPACE:
+		case key(Q):  if (bEdit()){  SetEdMode(ED_Start);  UpdEditWnds();  }   break;
+		case key(SPACE):
 			if (edMode == ED_Start && road)  road->iDir *= -1;  break;
 		//  prv cam
-		case SDLK_F7:  togPrvCam();  break;
+		case key(F7):  togPrvCam();  break;
 
 		//  fluids
-		case SDLK_w:  if (bEdit()){  SetEdMode(ED_Fluids);  UpdEditWnds();  }   break;
-		case SDLK_F10:  SaveWaterDepth();   break;
+		case key(W):  if (bEdit()){  SetEdMode(ED_Fluids);  UpdEditWnds();  }   break;
+		case key(F10):  SaveWaterDepth();   break;
 
 		//  objects
-		case SDLK_c:  if (edMode == ED_Objects)  {  objSim = !objSim;  ToggleObjSim();  }  break;
-		case SDLK_x:  if (bEdit()){  SetEdMode(ED_Objects);  UpdEditWnds();  }   break;
+		case key(C):  if (edMode == ED_Objects)  {  objSim = !objSim;  ToggleObjSim();  }  break;
+		case key(X):  if (bEdit()){  SetEdMode(ED_Objects);  UpdEditWnds();  }   break;
 		
 		//  rivers
-		///case SDLK_a:	if (bEdit()){  SetEdMode(ED_Rivers);  UpdEditWnds();  }	break;
+		///case key(A):	if (bEdit()){  SetEdMode(ED_Rivers);  UpdEditWnds();  }	break;
 	}
 
 	return true;
