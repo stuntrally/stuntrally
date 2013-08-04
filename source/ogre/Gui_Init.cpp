@@ -111,8 +111,6 @@ void App::InitGui()
 
 	GuiInitTooltip();
 
-	GuiCenterMouse();
-
 	toggleGui(false);
 	
 

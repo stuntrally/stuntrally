@@ -365,6 +365,13 @@ void App::toggleGui(bool toggle)
 
 	for (int i=0; i < ciMainBtns; ++i)
 		mWndMainPanels[i]->setVisible(pSet->inMenu == i);
+		
+	//  1st center mouse
+	static bool first = true;
+	if (isFocGui && first)
+	{	first = false;
+		GuiCenterMouse();
+	}
 }
 
 void App::UpdChampTabVis()

@@ -89,10 +89,10 @@ void App::UpdVisGui()
 
 	if (bnQuit)  bnQuit->setVisible(bGuiFocus);
 
-	bool cursorVisible = bGuiFocus || !bMoveCam;
-	mCursorManager->cursorVisibilityChange(cursorVisible);
-	mInputWrapper->setMouseRelative(!cursorVisible);
-	mInputWrapper->setGrabPointer(!cursorVisible);
+	bool vis = bGuiFocus || !bMoveCam;
+	mCursorManager->cursorVisibilityChange(vis);
+	mInputWrapper->setMouseRelative(!vis);
+	mInputWrapper->setGrabPointer(!vis);
 
 	if (road)  road->SetTerHitVis(bEdit());
 	if (!bGuiFocus && mToolTip)  mToolTip->setVisible(false);
@@ -105,6 +105,13 @@ void App::UpdVisGui()
 		mWndMainPanels[i]->setVisible(pSet->inMenu == i);
 		
 	if (txWarn)  txWarn->setVisible(false);
+
+	//  1st center mouse
+	static bool first = true;
+	if (bGuiFocus && first)
+	{	first = false;
+		GuiCenterMouse();
+	}
 }
 
 void App::toggleGui(bool toggle)
