@@ -478,7 +478,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	//  GUI  keys in edits  ---------------------
 	if (bGuiFocus && mGUI && !alt && !ctrl)
 	{
-		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(mInputWrapper->sdl2OISKeyCode(skey)), 0);
+		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(mInputWrapper->sdl2OISKeyCode(arg.keysym.sym)), 0);
 		return true;
 	}
 
