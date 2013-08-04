@@ -44,6 +44,7 @@
 	<Tag name="TBBest">Best</Tag>
 	<Tag name="TBScore">Score</Tag>
 	<Tag name="TBLap">Lap</Tag>
+	<Tag name="TBPlace">Place</Tag>
 	<Tag name="TBPosition">Position</Tag>
 	<Tag name="TBPoints">Points</Tag>
 	<Tag name="WrongChk">Wrong Checkpoint</Tag>
