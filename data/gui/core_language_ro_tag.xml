@@ -412,6 +412,7 @@
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle  (no pipe when 0)</Tag>
 	<Tag name="Finished">Finished</Tag>
 	<Tag name="InputNextLayTab">alt-1,2 - prev,next Layer tab</Tag>
+	<Tag name="InputInverse">Inverse</Tag>
 	<Tag name="InputMapRestartGame">New game</Tag>
 	<Tag name="Graphics">Grafică</Tag>
 	<Tag name="ReflMode_static">Static</Tag>
@@ -653,6 +654,7 @@
 	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
 	<Tag name="Shaders">Shadere</Tag>
 	<Tag name="dust">dust</Tag>
+	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
 	<Tag name="TipRainSnow1">Set 1 Rain/Snow type</Tag>
 	<Tag name="TipRainSnow2">Set 2 Rain/Snow type</Tag>
 	<Tag name="TipTerLNoise">Factor of additional noise.</Tag>
@@ -889,8 +891,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="InputInverse">Inverse</Tag>
-	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
+	<Tag name="TBPlace">Place</Tag>
+	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

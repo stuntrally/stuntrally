@@ -178,7 +178,7 @@
 	<Tag name="InputMapRewind">Retour (dans le temps)</Tag>
 	<Tag name="InputKeyAllPreset">Définir depuis un pré-réglage</Tag>
 	<Tag name="InpSet_Slow">Lent</Tag>
-	<Tag name="InputAssignKey">&lt;Appuyer sur une touche&gt;</Tag>
+	<Tag name="InputAssignKey">&lt;Assign&gt;</Tag>
 	<Tag name="Wireframe">Fil de fer</Tag>
 	<Tag name="TerUpdSkip">Fréq. de MAJ du terrain</Tag>
 	<Tag name="Brush_Force">Force</Tag>
@@ -412,6 +412,7 @@
 	<Tag name="InputRoadPipeAngle">[,] - angle du tuyau (pas de tuyau quand égal à 0)</Tag>
 	<Tag name="Finished">Terminé</Tag>
 	<Tag name="InputNextLayTab">Alt-1,2 - onglet de Calque préc.,suiv.</Tag>
+	<Tag name="InputInverse">Inverse</Tag>
 	<Tag name="InputMapRestartGame">Nouvelle partie</Tag>
 	<Tag name="Graphics">Graphiques</Tag>
 	<Tag name="ReflMode_static">Statique</Tag>
@@ -653,6 +654,7 @@
 	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
 	<Tag name="Shaders">Shaders</Tag>
 	<Tag name="dust">poussière</Tag>
+	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
 	<Tag name="TipRainSnow1">Définir le type de pluie/neige 2</Tag>
 	<Tag name="TipRainSnow2">Définir le type de pluie/neige 1</Tag>
 	<Tag name="TipTerLNoise">Facteur de bruit additionel.</Tag>
@@ -889,8 +891,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet d'Options précédent/suivant (Maj. sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="InputInverse">Inverse</Tag>
-	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
+	<Tag name="TBPlace">Place</Tag>
+	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

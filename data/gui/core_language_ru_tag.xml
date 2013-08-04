@@ -178,7 +178,7 @@
 	<Tag name="InputMapRewind">Перемотка</Tag>
 	<Tag name="InputKeyAllPreset">По умолчанию</Tag>
 	<Tag name="InpSet_Slow">Медленно</Tag>
-	<Tag name="InputAssignKey">&lt;Жми клавишу&gt;</Tag>
+	<Tag name="InputAssignKey">&lt;Assign&gt;</Tag>
 	<Tag name="Wireframe">Каркас</Tag>
 	<Tag name="TerUpdSkip">Пропустить обновление ландшафта</Tag>
 	<Tag name="Brush_Force">Сила</Tag>
@@ -412,6 +412,7 @@
 	<Tag name="InputRoadPipeAngle">[,]   - угол трубы (0 нет трубы)</Tag>
 	<Tag name="Finished">Завершено</Tag>
 	<Tag name="InputNextLayTab">alt-1,2 - пред.,след. слой вкладка</Tag>
+	<Tag name="InputInverse">Inverse</Tag>
 	<Tag name="InputMapRestartGame">Новая игра</Tag>
 	<Tag name="Graphics">Графика</Tag>
 	<Tag name="ReflMode_static">Статич.</Tag>
@@ -653,6 +654,7 @@
 	<Tag name="TipGrassPageLength">Длина страница памяти для травы (ниже будут частые перезагрузки, выше будут визуальные переключения).</Tag>
 	<Tag name="Shaders">Шейдеры</Tag>
 	<Tag name="dust">пыль</Tag>
+	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
 	<Tag name="TipRainSnow1">Тип 1 Дождь/Снег</Tag>
 	<Tag name="TipRainSnow2">Тип 2 Дождь/Снег</Tag>
 	<Tag name="TipTerLNoise">Коэффициент дополнительного шума.</Tag>
@@ -755,7 +757,7 @@
 	<Tag name="TerLayers">Слои ландш.</Tag>
 	<Tag name="TipLTrMaxTerH">Высота ландшафта, выше которого модель не появиться.</Tag>
 	<Tag name="TotalScore">Итого очков</Tag>
-	<Tag name="InputLoadNextTrack">F12 - загр. след. трек (shift - пред.)</Tag>
+	<Tag name="InputLoadNextTrack">Load next track (shift - previous)</Tag>
 	<Tag name="TrackDifficulties">Разные сложности трека</Tag>
 	<Tag name="TipModelPrev">Предварительный просмотр изображения модели.</Tag>
 	<Tag name="InputRoadEdit">R - ред. дорогу</Tag>
@@ -889,8 +891,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред,след Опции вкладка (shift - подменю)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="InputInverse">Inverse</Tag>
-	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
+	<Tag name="TBPlace">Place</Tag>
+	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

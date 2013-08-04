@@ -178,7 +178,7 @@
 	<Tag name="InputMapRewind">Powrót (czasu)</Tag>
 	<Tag name="InputKeyAllPreset">Wszystkie z ustawień</Tag>
 	<Tag name="InpSet_Slow">Wolne</Tag>
-	<Tag name="InputAssignKey">&lt;Naciśnij klawisz&gt;</Tag>
+	<Tag name="InputAssignKey">&lt;Przypisz&gt;</Tag>
 	<Tag name="Wireframe">Szkielet</Tag>
 	<Tag name="TerUpdSkip">Pominięć odśw. terenu</Tag>
 	<Tag name="Brush_Force">Siła</Tag>
@@ -412,6 +412,7 @@
 	<Tag name="InputRoadPipeAngle">[,] - kąt rury (brak rury gdy 0)</Tag>
 	<Tag name="Finished">Ukończone</Tag>
 	<Tag name="InputNextLayTab">alt-1,2 - poprz.,następna zakładka Warstwy</Tag>
+	<Tag name="InputInverse">Odwróć</Tag>
 	<Tag name="InputMapRestartGame">Nowa gra</Tag>
 	<Tag name="Graphics">Grafika</Tag>
 	<Tag name="ReflMode_static">Statyczne</Tag>
@@ -653,6 +654,7 @@
 	<Tag name="TipGrassPageLength">Rozmiar strony trawy (niski będzie ładował często, wysoki spowoduje widoczne przeskoki).</Tag>
 	<Tag name="Shaders">Cieniowanie</Tag>
 	<Tag name="dust">kurz</Tag>
+	<Tag name="InputUnbind">Naciśnij RMB (PKM) na przycisku by usunąć.</Tag>
 	<Tag name="TipRainSnow1">Ust.1 typ deszcz/śnieg</Tag>
 	<Tag name="TipRainSnow2">Ust.2 typ deszcz/śnieg</Tag>
 	<Tag name="TipTerLNoise">Współ. dodatkowego szumu.</Tag>
@@ -755,7 +757,7 @@
 	<Tag name="TerLayers">Warstwy terenu</Tag>
 	<Tag name="TipLTrMaxTerH">Wysokość terenu ponad którą model nie wystąpi.</Tag>
 	<Tag name="TotalScore">Końcowe punkty</Tag>
-	<Tag name="InputLoadNextTrack">F12 - wczytaj następną trasę (shift - poprzednią)</Tag>
+	<Tag name="InputLoadNextTrack">Wczytaj nast. trasę (shift - poprz.)</Tag>
 	<Tag name="TrackDifficulties">Różne trudności trasy</Tag>
 	<Tag name="TipModelPrev">Obraz podglądu modelu.</Tag>
 	<Tag name="InputRoadEdit">R - tryb edycji drogi</Tag>
@@ -889,8 +891,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="InputInverse">Inverse</Tag>
-	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
+	<Tag name="TBPlace">Place</Tag>
+	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
