@@ -3440,12 +3440,11 @@
 							<Property key="TextColour" value="0.6 0.9 1"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="375 184 30 24" name="AntiAliasingVal">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="420 184 252 18" name="AntiAliasing">
+						<Widget type="ComboBox" skin="ComboBox" position="375 184 50 24" name="CmbAntiAliasing">
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
 							<Property key="Colour" value="0.6 0.8 1.0"/>
+							<Property key="Static" value="true"/>
+							<Property key="ReadOnly" value="true"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="582 488 136 24">

@@ -27,7 +27,7 @@ using namespace Ogre;
 App::App()  //  gui wigdets--
 	:mToolTip(0), mToolTipTxt(0)
 	,valAnisotropy(0), valViewDist(0), valTerDetail(0), valTerDist(0), valRoadDist(0)  //detail graphics
-	,valTexSize(0), valTerMtr(0), valTerTripl(0), valAntiAliasing(0)  // detail
+	,valTexSize(0), valTerMtr(0), valTerTripl(0)  // detail
 	,valTrees(0), valGrass(0), valTreesDist(0), valGrassDist(0), valWaterSize(0)  //paged
 	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0)//, valShadowFilter(0)  // shadow
 	,brImg(0), wndTabs(0), bnQuit(0)  // brush

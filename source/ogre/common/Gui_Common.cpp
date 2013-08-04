@@ -278,7 +278,19 @@ void App::GuiInitGraphics()
 	Chk("ImpostorsOnly", chkImpostorsOnly, pSet->imposters_only);
 
 	//  screen
-	Slv(AntiAliasing, pSet->fsaa/16.f);
+	Cmb(combo, "CmbAntiAliasing", cmbAntiAliasing);
+	int si=0;
+	if (combo)
+	{	combo->removeAllItems();
+		int a[6] = {0,1,2,4,8,16};
+		for (int i=0; i < 6; ++i)
+		{	int v = a[i];
+			combo->addItem(toStr(v));
+			if (pSet->fsaa >= v)
+				si = i;
+		}
+		combo->setIndexSelected(si);
+	}
 
 	//  shadows
 	Slv(ShadowType,	pSet->shadow_type /2.f);
@@ -297,8 +309,8 @@ void App::GuiInitGraphics()
 	Slv(WaterSize, pSet->water_rttsize /2.f);
 	
 	Cmb(combo, "CmbGraphicsAll", comboGraphicsAll);
-	if (combo)  {
-		combo->removeAllItems();
+	if (combo)
+	{	combo->removeAllItems();
 		combo->addItem(TR("#{GraphicsAll_Lowest}"));
 		combo->addItem(TR("#{GraphicsAll_Low}"));
 		combo->addItem(TR("#{GraphicsAll_Medium}"));
@@ -311,8 +323,8 @@ void App::GuiInitGraphics()
 	
 	//  render systems
 	Cmb(combo, "CmbRendSys", comboRenderSystem);
-	if (combo)  {
-		combo->removeAllItems();
+	if (combo)
+	{	combo->removeAllItems();
 
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		const int nRS = 3;  //4
@@ -576,8 +588,7 @@ void App::GuiInitLang()
 void App::comboLanguage(MyGUI::ComboBox* wp, size_t val)
 {
 	if (val == MyGUI::ITEM_NONE)  return;
-	MyGUI::ComboBoxPtr cmb = static_cast<MyGUI::ComboBoxPtr>(wp);
-	MyGUI::UString sel = cmb->getItemNameAt(val);
+	MyGUI::UString sel = wp->getItemNameAt(val);
 	
 	for (std::map<std::string, MyGUI::UString>::const_iterator it = languages.begin();
 		it != languages.end(); ++it)
@@ -598,12 +609,10 @@ void App::comboLanguage(MyGUI::ComboBox* wp, size_t val)
 //  [Screen] 
 //-----------------------------------------------------------------------------------------------------------
 
-void App::slAntiAliasing(SL)
+void App::cmbAntiAliasing(MyGUI::ComboBox* wp, size_t val)
 {
-	float v = val * 16.f;
+	int v = s2i(wp->getItemNameAt(val));
 	if (bGI)  pSet->fsaa = v;
-	
-	if (valAntiAliasing){  valAntiAliasing->setCaption(fToStr(v,0,2));  }
 }
 
 ///  resolutions

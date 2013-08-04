@@ -303,10 +303,10 @@ bool BaseApp::configure()
 	/// \todo For multiple monitors, WINDOWPOS_UNDEFINED is not the best idea. Needs a setting which screen to launch on,
 	/// then place the window on that screen (derive x&y pos from SDL_GetDisplayBounds)+
 	/*
-	if(pSet->fullscreen)
+	if (pSet->fullscreen)
 	{
 		SDL_Rect display_bounds;
-		if(SDL_GetDisplayBounds(settings.screen, &display_bounds) != 0)
+		if (SDL_GetDisplayBounds(settings.screen, &display_bounds) != 0)
 			throw std::runtime_error("Couldn't get display bounds!");
 		pos_x = display_bounds.x;
 		pos_y = display_bounds.y;

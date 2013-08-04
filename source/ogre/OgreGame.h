@@ -269,10 +269,10 @@ protected:
 	SLV(TexSize);  SLV(TerMtr);  SLV(TerTripl);  // detail
 	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
 	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  //SLV(ShadowFilter); // shadow
-	SLV(WaterSize);  SLV(AntiAliasing); // screen
+	SLV(WaterSize);  // screen
 	void comboTexFilter(CMB), btnShadows(WP), btnShaders(WP), btnTrGrReset(WP),
 		chkWaterReflect(WP), chkWaterRefract(WP),
-		chkUseImposters(WP), chkImpostorsOnly(WP);
+		chkUseImposters(WP), chkImpostorsOnly(WP), cmbAntiAliasing(CMB);
 	void setOrigPos(WP wp, const char* relToWnd);
 
 	//  tooltip
