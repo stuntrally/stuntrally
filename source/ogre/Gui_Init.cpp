@@ -82,7 +82,7 @@ void App::InitGui()
 	tab = mGUI->findWidget<Tab>("TabWndHelp");    tab->setIndexSelected(1);	tab->setSmoothShow(false);	mWndTabsHelp = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	tab = mGUI->findWidget<Tab>("TabWndOptions"); tab->setIndexSelected(1); tab->setSmoothShow(false);	mWndTabsOpts = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 
-	if (pSet->inMenu > MNU_Single && pSet->inMenu <= MNU_Challenge)  mWndTabsGame->setIndexSelected(TAB_Champs);
+	if (pSet->inMenu > MNU_Single && pSet->inMenu <= MNU_Champ/*allenge*/)  mWndTabsGame->setIndexSelected(TAB_Champs);
 
 	//  get sub tabs
 	vSubTabsGame.clear();

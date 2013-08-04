@@ -333,9 +333,9 @@ void App::toggleGui(bool toggle)
 
 	///  update track tab, for champs wnd
 	bool game = pSet->inMenu == MNU_Single, champ = pSet->inMenu == MNU_Champ,
-		tutor = pSet->inMenu == MNU_Tutorial, chall = pSet->inMenu == MNU_Challenge,
-		chAny = champ || tutor || chall, gc = game || chAny;
-	UString sCh = chall ? TR("#80FFC0#{Challenge}") : (tutor ? TR("#FFC020#{Tutorial}") : TR("#80C0FF#{Championship}"));
+		tutor = pSet->inMenu == MNU_Tutorial, //chall = pSet->inMenu == MNU_Challenge,
+		chAny = champ || tutor /*|| chall*/, gc = game || chAny;
+	UString sCh = /*chall ? TR("#80FFC0#{Challenge}") :*/ (tutor ? TR("#FFC020#{Tutorial}") : TR("#80C0FF#{Championship}"));
 
 	UpdChampTabVis();
 	
@@ -370,15 +370,15 @@ void App::toggleGui(bool toggle)
 void App::UpdChampTabVis()
 {
 	static int oldMenu = pSet->inMenu;
-	bool tutor = pSet->inMenu == MNU_Tutorial, champ = pSet->inMenu == MNU_Champ, chall = pSet->inMenu == MNU_Challenge;
+	bool tutor = pSet->inMenu == MNU_Tutorial, champ = pSet->inMenu == MNU_Champ;//, chall = pSet->inMenu == MNU_Challenge;
 
 	if (tabTut)  tabTut->setVisible(tutor);		if (tabChamp)  tabChamp->setVisible(champ);
 	if (imgTut)  imgTut->setVisible(tutor);		if (imgChamp)  imgChamp->setVisible(champ);
-	if (imgChall)  imgChall->setVisible(chall);
+	//if (imgChall)  imgChall->setVisible(chall);
 	if (liChamps)  liChamps->setColour(
-		chall ? Colour(0.75,0.85,0.8) : (tutor ? Colour(0.85,0.8,0.75) : Colour(0.7,0.78,0.85)));
+		/*chall ? Colour(0.75,0.85,0.8) :*/ (tutor ? Colour(0.85,0.8,0.75) : Colour(0.7,0.78,0.85)));
 
-	if (oldMenu != pSet->inMenu && (tutor || champ || chall))
+	if (oldMenu != pSet->inMenu && (tutor || champ /*|| chall*/))
 	{	oldMenu = pSet->inMenu;
 		ChampsListUpdate();
 	}
