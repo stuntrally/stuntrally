@@ -35,6 +35,7 @@ cd ../..
 rm -rf MyGUI_3.2.0
 
 # SR sources
+sudo ldconfig
 cd ~
 git clone --depth=0 git://github.com/stuntrally/stuntrally
 # Tracks are disabled due to installing them runs out of disk space
