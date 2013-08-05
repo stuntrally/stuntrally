@@ -94,6 +94,7 @@
 	<Tag name="RoadPointSize">Размер точек дороги</Tag>
 	<Tag name="Flip">Сальто</Tag>
 	<Tag name="DistToRoad">раст. до дороги</Tag>
+	<Tag name="TBPlace">Place</Tag>
 	<Tag name="AngleMax">Макс. угол</Tag>
 	<Tag name="MessageBox_Retry">Повтор</Tag>
 	<Tag name="TipToggleTriplanar">Когда используешь трех плоскостную графическую опцию, этот слой (только он) будет отображаться в трех плоскостях.</Tag>
@@ -136,6 +137,7 @@
 	<Tag name="TipSteerSim">Множитель диапазона управляемости, для режима симуляции (Легко, Нормально).</Tag>
 	<Tag name="Tracks">Треки</Tag>
 	<Tag name="LS_OBJS">Загрузка объектов</Tag>
+	<Tag name="MessageBox_Cancel">Отмена</Tag>
 	<Tag name="TreeRoadDist">Расстояние деревьев от дороги.</Tag>
 	<Tag name="GraphicsAll_Medium">Средняя</Tag>
 	<Tag name="NeedReload">* нужна перезагрузка</Tag>
@@ -150,7 +152,7 @@
 	<Tag name="BasedOn">на основе</Tag>
 	<Tag name="ProfilerTxt">Сроки профайлера </Tag>
 	<Tag name="NetLeaveGame">Покинуть игру</Tag>
-	<Tag name="CameraInfo">Камеры инфо</Tag>
+	<Tag name="banked">накренился</Tag>
 	<Tag name="frenzy">безумие (фигурные дороги)</Tag>
 	<Tag name="InputRoadChkRadius">K,L - пределы контр. точки (0 - нет)</Tag>
 	<Tag name="TipCarSpeed">Оценка скорости автомобиля. Чем больше, тем быстрее автомобиль. Предупреждаем, на гравии слишком быстрые автомобили не будут быстрее, потому что у них не достаточно сцепления с дорогой.</Tag>
@@ -613,7 +615,7 @@
 	<Tag name="Reset">Сброс</Tag>
 	<Tag name="ReplaysMenu">Повторы</Tag>
 	<Tag name="InputSlowFast">shift - медлено   ctrl - быстро</Tag>
-	<Tag name="MessageBox_Cancel">Отмена</Tag>
+	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GrassMult">Коэф. травы</Tag>
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="Back">Назад</Tag>
@@ -772,7 +774,7 @@
 	<Tag name="AllEffects">Вкл. эффекты</Tag>
 	<Tag name="CarCollis">Столк. авто</Tag>
 	<Tag name="TipTerrainDouble">Делает двойной размер ландшафта, оставляя часть текущей высоты карты в центре.</Tag>
-	<Tag name="banked">накренился</Tag>
+	<Tag name="CameraInfo">Камеры инфо</Tag>
 	<Tag name="NetRouterTip">Необходима конфигуpация порта маршрутизатора, чтобы позволить ровням соединиться с локальным портом.</Tag>
 	<Tag name="NewGame">Новая игра</Tag>
 	<Tag name="StartInMain">Запускать гл. меню</Tag>
@@ -891,8 +893,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред,след Опции вкладка (shift - подменю)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="TBPlace">Place</Tag>
-	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

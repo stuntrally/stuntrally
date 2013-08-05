@@ -94,6 +94,7 @@
 	<Tag name="RoadPointSize">Mărime puncte drum</Tag>
 	<Tag name="Flip">Flip</Tag>
 	<Tag name="DistToRoad">Distanța față de drum</Tag>
+	<Tag name="TBPlace">Place</Tag>
 	<Tag name="AngleMax">Angle Max</Tag>
 	<Tag name="MessageBox_Retry">Retry</Tag>
 	<Tag name="TipToggleTriplanar">When using graphics option triplanar one, this layer (one only) will have triplanar mapping.</Tag>
@@ -136,6 +137,7 @@
 	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
 	<Tag name="Tracks">Tracks</Tag>
 	<Tag name="LS_OBJS">Loading Objects</Tag>
+	<Tag name="MessageBox_Cancel">Cancel</Tag>
 	<Tag name="TreeRoadDist">Trees to road dist.</Tag>
 	<Tag name="GraphicsAll_Medium">Medium</Tag>
 	<Tag name="NeedReload">* trebuie reîncărcat</Tag>
@@ -150,7 +152,7 @@
 	<Tag name="BasedOn">bazat pe</Tag>
 	<Tag name="ProfilerTxt">Profiler times text </Tag>
 	<Tag name="NetLeaveGame">Leave game</Tag>
-	<Tag name="CameraInfo">Camera info</Tag>
+	<Tag name="banked">banked</Tag>
 	<Tag name="frenzy">frenzy (curly road)</Tag>
 	<Tag name="InputRoadChkRadius">K,L  - checkpoint radius  (ChkR 0 - none)</Tag>
 	<Tag name="TipCarSpeed">Car speed rating, more means faster car. Warning, on gravel too fast cars won't be faster because they don't have enough grip.</Tag>
@@ -613,7 +615,7 @@
 	<Tag name="Reset">Reset</Tag>
 	<Tag name="ReplaysMenu">Replays</Tag>
 	<Tag name="InputSlowFast">shift - slow   ctrl - fast</Tag>
-	<Tag name="MessageBox_Cancel">Cancel</Tag>
+	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="Back">Înapoi</Tag>
@@ -772,7 +774,7 @@
 	<Tag name="AllEffects">Effects Enabled</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
 	<Tag name="TipTerrainDouble">Make terrain size double, leaving current heightmap part in center.</Tag>
-	<Tag name="banked">banked</Tag>
+	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
 	<Tag name="NewGame">New Game</Tag>
 	<Tag name="StartInMain">Start in main menu</Tag>
@@ -891,8 +893,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="TBPlace">Place</Tag>
-	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

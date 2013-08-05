@@ -94,6 +94,7 @@
 	<Tag name="RoadPointSize">Wielkość punktów drogi</Tag>
 	<Tag name="Flip">Odwracanie</Tag>
 	<Tag name="DistToRoad">odl. do drogi</Tag>
+	<Tag name="TBPlace">Miejsce</Tag>
 	<Tag name="AngleMax">Kąt Max</Tag>
 	<Tag name="MessageBox_Retry">Ponów</Tag>
 	<Tag name="TipToggleTriplanar">Gdy używana jest opcja grafiki terenu trójpłaszcz. one, ta warstwa (tylko jedna) będzie miała mapowanie trójpłaszczyznowe.</Tag>
@@ -136,6 +137,7 @@
 	<Tag name="TipSteerSim">Mnożnik zakresu sterowania, dla typu symulacji (Łatwy, Normalny).</Tag>
 	<Tag name="Tracks">Trasy</Tag>
 	<Tag name="LS_OBJS">Ładowanie obiektów</Tag>
+	<Tag name="MessageBox_Cancel">Anuluj</Tag>
 	<Tag name="TreeRoadDist">Odl. od drogi.</Tag>
 	<Tag name="GraphicsAll_Medium">Średnie</Tag>
 	<Tag name="NeedReload">* potrzeba przeładowania</Tag>
@@ -150,7 +152,7 @@
 	<Tag name="BasedOn">na podstawie</Tag>
 	<Tag name="ProfilerTxt">Czasy profilera </Tag>
 	<Tag name="NetLeaveGame">Opuść grę</Tag>
-	<Tag name="CameraInfo">Info kamery</Tag>
+	<Tag name="banked">pochyłe</Tag>
 	<Tag name="frenzy">krętość (drogi)</Tag>
 	<Tag name="InputRoadChkRadius">K,L - promień sfery kontrolnej (ChkR 0 - brak)</Tag>
 	<Tag name="TipCarSpeed">Ocena szybkości auta, więcej oznacza szybsze. Uwaga, na szutrze szybkie auta nie będą szybsze gdyż nie mają przyczepności.</Tag>
@@ -613,7 +615,7 @@
 	<Tag name="Reset">Przywróć</Tag>
 	<Tag name="ReplaysMenu">Powtórki</Tag>
 	<Tag name="InputSlowFast">shift - wolno  ctrl - szybko</Tag>
-	<Tag name="MessageBox_Cancel">Anuluj</Tag>
+	<Tag name="InputRoadMirror">alt-Home - Lustrzane odbicie zaznaczenia</Tag>
 	<Tag name="GrassMult">Mnożnik trawy</Tag>
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="Back">Tył</Tag>
@@ -772,7 +774,7 @@
 	<Tag name="AllEffects">Efekty włączone</Tag>
 	<Tag name="CarCollis">Kolizja aut</Tag>
 	<Tag name="TipTerrainDouble">Rozszerz terren, zostawiając obecny w środku.</Tag>
-	<Tag name="banked">pochyłe</Tag>
+	<Tag name="CameraInfo">Info kamery</Tag>
 	<Tag name="NetRouterTip">Przekierowanie portów routera może być wymagane aby inni mogli się połaczyć do lokalnego portu.</Tag>
 	<Tag name="NewGame">Nowa Gra</Tag>
 	<Tag name="StartInMain">Startuj w menu głównym</Tag>
@@ -891,8 +893,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="TBPlace">Place</Tag>
-	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

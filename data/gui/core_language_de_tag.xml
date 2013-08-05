@@ -94,6 +94,7 @@
 	<Tag name="RoadPointSize">Größe Straßenpunkte</Tag>
 	<Tag name="Flip">Umdrehen</Tag>
 	<Tag name="DistToRoad">Abstand zur Straße</Tag>
+	<Tag name="TBPlace">Platz</Tag>
 	<Tag name="AngleMax">Max. Winkel</Tag>
 	<Tag name="MessageBox_Retry">Nochmal versuchen</Tag>
 	<Tag name="TipToggleTriplanar">When using graphics option triplanar one, this layer (one only) will have triplanar mapping.</Tag>
@@ -136,6 +137,7 @@
 	<Tag name="TipSteerSim">Lenkung Bereich Multiplizierer, für Simulation Modus (Einfach, Normal).</Tag>
 	<Tag name="Tracks">Strecken</Tag>
 	<Tag name="LS_OBJS">Lade Objekte</Tag>
+	<Tag name="MessageBox_Cancel">Abbrechen</Tag>
 	<Tag name="TreeRoadDist">Abstand Bäume - Straße</Tag>
 	<Tag name="GraphicsAll_Medium">Mittel</Tag>
 	<Tag name="NeedReload">* neu Laden erforderlich</Tag>
@@ -150,7 +152,7 @@
 	<Tag name="BasedOn">basiert auf</Tag>
 	<Tag name="ProfilerTxt">Profiler-Text </Tag>
 	<Tag name="NetLeaveGame">Spiel verlassen</Tag>
-	<Tag name="CameraInfo">Kamerainfo</Tag>
+	<Tag name="banked">überhöht</Tag>
 	<Tag name="frenzy">viele Kurven</Tag>
 	<Tag name="InputRoadChkRadius">K,L - Wegpunkt-Radius</Tag>
 	<Tag name="TipCarSpeed">Geschwindigkeit des Autos - je höher sie ist, desto schneller ist das Fahrzeug. Achtung, zu schnelle Autos werden auf Kies nicht schneller sein, da sie nicht über genügend Halt verfügen.</Tag>
@@ -390,7 +392,7 @@
 	<Tag name="SkirtLength">Skirt-Länge</Tag>
 	<Tag name="InputRoadNotOnTer">wenn nicht auf Terrain</Tag>
 	<Tag name="ApplyShadows">Schatten anwenden</Tag>
-	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
+	<Tag name="TiresEdit2">1,2 oder Num /,* - Wert ändern</Tag>
 	<Tag name="TipGrassColorMap">Gras Colormap, legt die Grasfarbe entlang der Karte fest.</Tag>
 	<Tag name="Multiplayer">Mehrspieler</Tag>
 	<Tag name="InputToggleVeget">V - Vegetation an/aus</Tag>
@@ -613,7 +615,7 @@
 	<Tag name="Reset">Zurücksetzen</Tag>
 	<Tag name="ReplaysMenu">Replays</Tag>
 	<Tag name="InputSlowFast">Shift - langs. Strg - schnell</Tag>
-	<Tag name="MessageBox_Cancel">Abbrechen</Tag>
+	<Tag name="InputRoadMirror">alt-Pos1 - Auswahl spiegeln</Tag>
 	<Tag name="GrassMult">Grasmult.</Tag>
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="Back">Hinten</Tag>
@@ -622,7 +624,7 @@
 	<Tag name="InputFocusFind">Ctrl-F Suche fokussieren</Tag>
 	<Tag name="InputOther1">Oben,Unten - navigieren in Listen  Enter - starten</Tag>
 	<Tag name="TipModelDens">Wie oft das Modell auf der Strecke erscheint.</Tag>
-	<Tag name="InputOther2">Enter - show/hide players window in multiplayer</Tag>
+	<Tag name="InputOther2">Enter - Spielernfenster zeigen in Multiplayer</Tag>
 	<Tag name="InpSet_Fast">Schnell</Tag>
 	<Tag name="InputMain">Allgemein</Tag>
 	<Tag name="NewTerrainFlat">Neu (leer)</Tag>
@@ -658,7 +660,7 @@
 	<Tag name="TipRainSnow1">Typ Rain/Snow 1 setzen</Tag>
 	<Tag name="TipRainSnow2">Typ Rain/Snow 2 setzen</Tag>
 	<Tag name="TipTerLNoise">Faktor für zusätzliches Rauschen.</Tag>
-	<Tag name="TiresEdit1">PgUp/PgDn - previous, next value</Tag>
+	<Tag name="TiresEdit1">Bild auf/ab - vorheriger, nächster Wert</Tag>
 	<Tag name="TiresEdit3">Home - toggle longitudinal / lateral parameters</Tag>
 	<Tag name="TipDiffuseTex">Diffusetextur (Specular in Alphakanal).</Tag>
 	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
@@ -772,7 +774,7 @@
 	<Tag name="AllEffects">Effekte aktivieren</Tag>
 	<Tag name="CarCollis">Autokollision</Tag>
 	<Tag name="TipTerrainDouble">Make terrain size double, leaving current heightmap part in center.</Tag>
-	<Tag name="banked">überhöht</Tag>
+	<Tag name="CameraInfo">Kamerainfo</Tag>
 	<Tag name="NetRouterTip">Port Forwarding des Routers ist eventuell erforderlich, damit andere Spieler sich einklinken können.</Tag>
 	<Tag name="NewGame">Neues Spiel</Tag>
 	<Tag name="StartInMain">Im Haupt-Menü starten</Tag>
@@ -837,7 +839,7 @@
 	<Tag name="Properties">Eigenschaften</Tag>
 	<Tag name="Brush_ShapeTriangle">Dreieck</Tag>
 	<Tag name="distribution">Verteilung</Tag>
-	<Tag name="AngleMin">Angle Min</Tag>
+	<Tag name="AngleMin">Min. Winkel</Tag>
 	<Tag name="Diff2">Einfach</Tag>
 	<Tag name="Diff3">Mittel</Tag>
 	<Tag name="Diff0">Test (einfach)</Tag>
@@ -891,8 +893,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="TBPlace">Place</Tag>
-	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

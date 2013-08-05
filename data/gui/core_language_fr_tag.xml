@@ -94,6 +94,7 @@
 	<Tag name="RoadPointSize">Taille des points de la route</Tag>
 	<Tag name="Flip">Retourner</Tag>
 	<Tag name="DistToRoad">dist. de la route</Tag>
+	<Tag name="TBPlace">Lieu</Tag>
 	<Tag name="AngleMax">Angle Maximum</Tag>
 	<Tag name="MessageBox_Retry">Recommencer</Tag>
 	<Tag name="TipToggleTriplanar">Quand l'option triplane est utilisée, seul ce calque utilisera des textures triplanes.</Tag>
@@ -136,6 +137,7 @@
 	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
 	<Tag name="Tracks">Circuits</Tag>
 	<Tag name="LS_OBJS">Chargement des objets</Tag>
+	<Tag name="MessageBox_Cancel">Annuler</Tag>
 	<Tag name="TreeRoadDist">Distance arbres-route</Tag>
 	<Tag name="GraphicsAll_Medium">Moyen</Tag>
 	<Tag name="NeedReload">* besoin de recharger</Tag>
@@ -150,7 +152,7 @@
 	<Tag name="BasedOn">basé sur</Tag>
 	<Tag name="ProfilerTxt">Temps du profileur </Tag>
 	<Tag name="NetLeaveGame">Quitter le jeu</Tag>
-	<Tag name="CameraInfo">Informations de la caméra</Tag>
+	<Tag name="banked">incliné</Tag>
 	<Tag name="frenzy">routes sinueuses</Tag>
 	<Tag name="InputRoadChkRadius">K,L - taille des points de contrôle (ChkR 0 - aucun)</Tag>
 	<Tag name="TipCarSpeed">Vitesse de la voiture, une valeur plus élevée = voiture plus rapide. Attention, sur du gravier la vitesse est limité car les voitures très rapides n'ont pas assez d'adhérence.</Tag>
@@ -178,7 +180,7 @@
 	<Tag name="InputMapRewind">Retour (dans le temps)</Tag>
 	<Tag name="InputKeyAllPreset">Définir depuis un pré-réglage</Tag>
 	<Tag name="InpSet_Slow">Lent</Tag>
-	<Tag name="InputAssignKey">&lt;Assign&gt;</Tag>
+	<Tag name="InputAssignKey">&lt;Attacher&gt;</Tag>
 	<Tag name="Wireframe">Fil de fer</Tag>
 	<Tag name="TerUpdSkip">Fréq. de MAJ du terrain</Tag>
 	<Tag name="Brush_Force">Force</Tag>
@@ -195,7 +197,7 @@
 	<Tag name="AutoRear">Marche aarière automatique</Tag>
 	<Tag name="TerGenFreq">Fréquence, Zoom</Tag>
 	<Tag name="Road_OnTerrain">Sur le terrain</Tag>
-	<Tag name="Ghost">Ghost</Tag>
+	<Tag name="Ghost">Fantôme</Tag>
 	<Tag name="FogNormal">Normale</Tag>
 	<Tag name="SetCamTo">Caméra définie :</Tag>
 	<Tag name="RoadWallFullCollis">Collision avec la route</Tag>
@@ -613,7 +615,7 @@
 	<Tag name="Reset">Réinitialiser</Tag>
 	<Tag name="ReplaysMenu">Replays</Tag>
 	<Tag name="InputSlowFast">Maj. - lent Ctrl - rapide</Tag>
-	<Tag name="MessageBox_Cancel">Annuler</Tag>
+	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GrassMult">Multi. d'herbe</Tag>
 	<Tag name="UnitMB">Mo</Tag>
 	<Tag name="Back">Retour</Tag>
@@ -772,7 +774,7 @@
 	<Tag name="AllEffects">Effets activés</Tag>
 	<Tag name="CarCollis">Collision des voitures</Tag>
 	<Tag name="TipTerrainDouble">Doubler la taille du terrain tout en gardant l'Heightmap au centre.</Tag>
-	<Tag name="banked">incliné</Tag>
+	<Tag name="CameraInfo">Informations de la caméra</Tag>
 	<Tag name="NetRouterTip">L'ouverture de ports sur le routeur peut être nécessaire pour autoriser d'autres joueurs à se connecter au port local.</Tag>
 	<Tag name="NewGame">Nouvelle partie</Tag>
 	<Tag name="StartInMain">Démarrer dans le menu principal</Tag>
@@ -891,8 +893,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet d'Options précédent/suivant (Maj. sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="TBPlace">Place</Tag>
-	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

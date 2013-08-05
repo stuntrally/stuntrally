@@ -94,6 +94,7 @@
 	<Tag name="RoadPointSize">Tien pisteiden koko</Tag>
 	<Tag name="Flip">Pyöräytä</Tag>
 	<Tag name="DistToRoad">etäisyys tiehen</Tag>
+	<Tag name="TBPlace">Place</Tag>
 	<Tag name="AngleMax">Angle Max</Tag>
 	<Tag name="MessageBox_Retry">Yritä uudelleen</Tag>
 	<Tag name="TipToggleTriplanar">When using graphics option triplanar one, this layer (one only) will have triplanar mapping.</Tag>
@@ -136,6 +137,7 @@
 	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
 	<Tag name="Tracks">Radat</Tag>
 	<Tag name="LS_OBJS">Loading Objects</Tag>
+	<Tag name="MessageBox_Cancel">Peruuta</Tag>
 	<Tag name="TreeRoadDist">Trees to road dist.</Tag>
 	<Tag name="GraphicsAll_Medium">Keskitaso</Tag>
 	<Tag name="NeedReload">* vaatii uudelleen latauksen</Tag>
@@ -150,7 +152,7 @@
 	<Tag name="BasedOn">pohjautuen</Tag>
 	<Tag name="ProfilerTxt">Profiler times text </Tag>
 	<Tag name="NetLeaveGame">Poistu pelistä</Tag>
-	<Tag name="CameraInfo">Kamera info</Tag>
+	<Tag name="banked">kallistettu</Tag>
 	<Tag name="frenzy">frenzy (curly road)</Tag>
 	<Tag name="InputRoadChkRadius">K,L  - checkpoint radius  (ChkR 0 - none)</Tag>
 	<Tag name="TipCarSpeed">Car speed rating, more means faster car. Warning, on gravel too fast cars won't be faster because they don't have enough grip.</Tag>
@@ -613,7 +615,7 @@
 	<Tag name="Reset">Nollaa</Tag>
 	<Tag name="ReplaysMenu">Uusinnat</Tag>
 	<Tag name="InputSlowFast">shift - slow   ctrl - fast</Tag>
-	<Tag name="MessageBox_Cancel">Peruuta</Tag>
+	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
 	<Tag name="UnitMB">Mt</Tag>
 	<Tag name="Back">Takaisin</Tag>
@@ -772,7 +774,7 @@
 	<Tag name="AllEffects">Tehosteet aktivoitu</Tag>
 	<Tag name="CarCollis">Autojen törmäystunnistus</Tag>
 	<Tag name="TipTerrainDouble">Make terrain size double, leaving current heightmap part in center.</Tag>
-	<Tag name="banked">kallistettu</Tag>
+	<Tag name="CameraInfo">Kamera info</Tag>
 	<Tag name="NetRouterTip">Reitittimen porttien edelleenohjaus asetusten säätäminen saattaa olla tarpeellista, jotta muut pelaajat voivat yhdistää paikalliseen porttiin.</Tag>
 	<Tag name="NewGame">Uusi peli</Tag>
 	<Tag name="StartInMain">Start in main menu</Tag>
@@ -891,8 +893,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="TBPlace">Place</Tag>
-	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
