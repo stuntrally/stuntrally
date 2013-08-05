@@ -10,6 +10,7 @@ sudo apt-get install --assume-yes git cmake g++ libogre-1.8-dev libboost-wave-de
 sudo updatedb # For `locate` command required by make-archive.sh
 
 # SDL
+sudo apt-get install --assume-yes libasound2-dev libpulse-dev libaudio-dev libesd0-dev
 cd /tmp
 wget http://www.libsdl.org/tmp/release/SDL2-2.0.0.tar.gz
 tar xvf SDL2-2.0.0.tar.gz
