@@ -1857,14 +1857,6 @@
 				<File
 					RelativePath="..\source\network\gameclient.cpp"
 					>
-					<FileConfiguration
-						Name="ReleaseDbg|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\network\gameclient.hpp"
@@ -1873,14 +1865,6 @@
 				<File
 					RelativePath="..\source\network\masterclient.cpp"
 					>
-					<FileConfiguration
-						Name="ReleaseDbg|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\network\masterclient.hpp"
@@ -2058,7 +2042,7 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
+							UsePrecompiledHeader="2"
 						/>
 					</FileConfiguration>
 				</File>
@@ -2074,7 +2058,7 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
+							UsePrecompiledHeader="2"
 						/>
 					</FileConfiguration>
 				</File>
@@ -2085,6 +2069,14 @@
 				<File
 					RelativePath="..\source\sdl4ogre\sdlwindowhelper.cpp"
 					>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\sdl4ogre\sdlwindowhelper.hpp"
@@ -2777,14 +2769,6 @@
 				<File
 					RelativePath="..\source\oics\ICSChannel.cpp"
 					>
-					<FileConfiguration
-						Name="ReleaseDbg|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\oics\ICSChannel.h"
@@ -2797,14 +2781,6 @@
 				<File
 					RelativePath="..\source\oics\ICSControl.cpp"
 					>
-					<FileConfiguration
-						Name="ReleaseDbg|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\oics\ICSControl.h"
@@ -2817,14 +2793,6 @@
 				<File
 					RelativePath="..\source\oics\ICSInputControlSystem.cpp"
 					>
-					<FileConfiguration
-						Name="ReleaseDbg|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\oics\ICSInputControlSystem.h"
@@ -2833,50 +2801,18 @@
 				<File
 					RelativePath="..\source\oics\ICSInputControlSystem_joystick.cpp"
 					>
-					<FileConfiguration
-						Name="ReleaseDbg|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\oics\ICSInputControlSystem_keyboard.cpp"
 					>
-					<FileConfiguration
-						Name="ReleaseDbg|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\oics\ICSInputControlSystem_mouse.cpp"
 					>
-					<FileConfiguration
-						Name="ReleaseDbg|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\oics\ICSPrerequisites.cpp"
 					>
-					<FileConfiguration
-						Name="ReleaseDbg|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\oics\ICSPrerequisites.h"
