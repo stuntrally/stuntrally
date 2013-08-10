@@ -315,14 +315,6 @@
 				Name="Game2"
 				>
 				<File
-					RelativePath="..\source\vdrift\ai.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\vdrift\ai.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\vdrift\forcefeedback.cpp"
 					>
 				</File>

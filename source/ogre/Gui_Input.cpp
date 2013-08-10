@@ -474,7 +474,7 @@ void App::inputDetailBtn(WP sender)
 	if (panInputDetail)  panInputDetail->setVisible(false);
 
 	Button* btnInputInv = mGUI->findWidget<Button>("InputInv");
-	if (btnInputInv) btnInputInv->setStateSelected(mBindingAction->mControl->getInverted());
+	if (btnInputInv)  btnInputInv->setStateSelected(mBindingAction->mControl->getInverted());
 	if (edInputIncrease)  edInputIncrease->setCaption(toStr(action.mControl->getStepSize() * action.mControl->getStepsPerSeconds()));
 }
 

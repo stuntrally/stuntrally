@@ -20,7 +20,6 @@
 
 #include "timer.h"
 #include "forcefeedback.h"
-#include "ai.h"
 
 #include "../ogre/common/QTimer.h"
 #include <boost/thread.hpp>

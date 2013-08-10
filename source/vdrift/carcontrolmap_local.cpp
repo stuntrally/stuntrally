@@ -6,8 +6,8 @@
 
 ///  Process Input
 const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(const float* channels, int player,
-float carspeed, float sss_effect, float sss_velfactor,
-bool forceBrake, bool bPerfTest, EPerfTest iPerfTestStage)
+	float carspeed, float sss_effect, float sss_velfactor,
+	bool forceBrake, bool bPerfTest, EPerfTest iPerfTestStage)
 {
 	assert(inputs.size() == CARINPUT::ALL);
 
