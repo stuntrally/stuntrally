@@ -269,7 +269,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		}
 	}
 
-	MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum( mInputWrapper->sdl2OISKeyCode(arg.keysym.sym)), 0);
+	if (skey != key(RCTRL) && skey != key(LCTRL))
+		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum( mInputWrapper->sdl2OISKeyCode(arg.keysym.sym)), 0);
 	return true;
 }
 
