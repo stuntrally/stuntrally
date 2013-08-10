@@ -169,7 +169,7 @@ void BaseApp::Run( bool showDialog )
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp()
 	:mRoot(0), mCamera(0), mViewport(0)
-	,mSceneMgr(0), mWindow(0)
+	,mSceneMgr(0), mWindow(0), imgCur(0)
 	,mShowDialog(1), mShutDown(false), bWindowResized(true), bFirstRenderFrame(true)
 	,alt(0), ctrl(0), shift(0)
 	,mbLeft(0), mbRight(0), mbMiddle(0)

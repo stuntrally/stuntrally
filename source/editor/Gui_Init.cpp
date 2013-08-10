@@ -253,6 +253,13 @@ void App::InitGui()
 	}
 	//sv->setCanvasSize(1020,j*90+300);
 
+	#if 0  ///0 _tool_ fix video capture cursor
+	imgCur = mGUI->createWidget<ImageBox>("ImageBox", 100,100, 32,32, Align::Default, "Pointer");
+	imgCur->setImageTexture("pointer.png");
+	imgCur->setVisible(true);
+	#endif
+	
+
 	///  generator  . . . . . . .
 	Slv(TerGenScale,powf(pSet->gen_scale /160.f, 1.f/2.f));
 	Slv(TerGenOfsX, (pSet->gen_ofsx+12.f) /24.f);

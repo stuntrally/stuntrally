@@ -127,6 +127,7 @@ protected:
 		mWndRoadCur, mWndRoadStats,
 		mWndFluids, mWndObjects, mWndRivers;
 	MyGUI::VectorWidgetPtr vwGui;  // all widgets to destroy
+	MyGUI::ImageBox* imgCur;
 
 	//  main menu
 	enum WND_Types {  WND_Edit=0, WND_Help, WND_Options, WND_ALL  };  // pSet->inMenu

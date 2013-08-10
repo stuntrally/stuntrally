@@ -235,6 +235,13 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	//if(alt)  {	moveMul *= 0.5;	 rotMul *= 0.5;	}
 	//const Real s = (shift ? 0.05 : ctrl ? 4.0 :1.0)
 
+	if (imgCur)  //-
+	{
+		const MyGUI::IntPoint& mp = MyGUI::InputManager::getInstance().getMousePosition();
+		imgCur->setPosition(mp);
+		imgCur->setVisible(bGuiFocus || !bMoveCam);
+	}
+
 	processMouse(mDTime);
 
 	
