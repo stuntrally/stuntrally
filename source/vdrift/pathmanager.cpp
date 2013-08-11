@@ -85,7 +85,7 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 		}
 	}
 
-	fs::path shortDir = "stuntrally";
+	fs::path stuntrally = "stuntrally";
 	// Figure out the user's home directory
 	{
 		home_dir = "";
@@ -114,8 +114,8 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 	#ifndef _WIN32 // POSIX
 	{
 		char const* conf = getenv("XDG_CONFIG_HOME");
-		if (conf) user_config = (fs::path(conf) / "stuntrally").string();
-		else user_config = (fs::path(home_dir) / ".config" / "stuntrally").string();
+		if (conf) user_config = (fs::path(conf) / stuntrally).string();
+		else user_config = (fs::path(home_dir) / ".config" / stuntrally).string();
 	}
 	#else // Windows
 	{
@@ -132,7 +132,7 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 				if (AppDir[i] == '\\') str += '/';
 				else str += AppDir[i];
 			}
-			user_config = (fs::path(str) / "stuntrally").string();
+			user_config = (fs::path(str) / stuntrally).string();
 		}
 	}
 	#endif
@@ -146,7 +146,8 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 	{
 		fs::path shareDir = SHARED_DATA_DIR;
 		char const* xdg_data_home = getenv("XDG_DATA_HOME");
-		user_data = (xdg_data_home ? xdg_data_home / shortDir : fs::path(home_dir) / ".local" / shareDir).string();
+		user_data = (xdg_data_home ? xdg_data_home / stuntrally
+					: fs::path(home_dir) / ".local" / stuntrally / shareDir).string();
 	}
 	#endif
 
@@ -187,20 +188,21 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 		{
 			char const* xdg_data_dirs = getenv("XDG_DATA_DIRS");
 			std::istringstream iss(xdg_data_dirs ? xdg_data_dirs : "/usr/local/share/:/usr/share/");
-			for (std::string p; std::getline(iss, p, ':'); dirs.push_back(p / shortDir)) {}
+			for (std::string p; std::getline(iss, p, ':'); dirs.push_back(p / stuntrally)) {}
 		}
 		#endif
 		// TODO: Adding path from config file
 
-		// Loop through the paths and pick the first one that contain some data
+		//  Loop through the paths and pick the first one that contain some data
 		for (Paths::const_iterator p = dirs.begin(); p != dirs.end(); ++p)
-		{	// Data dir
-			if (fs::exists(*p / "hud")) game_data = p->string();
-			// Config dir
+		{	//  Data dir
+			if (fs::exists(*p / "hud"))
+				game_data = p->string();
+			//  Config dir
 			if (fs::exists(*p / "config"))
 				game_config = (*p / "config").string();
-			// Check if both are found
-			if (!game_data.empty() && !game_config.empty()) break;
+			//  Check if both are found
+			if (!game_data.empty() && !game_config.empty())  break;
 		}
 	}
 
@@ -220,7 +222,8 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 	cache_dir = user_config + "/cache";  // APPDATA/stuntrally/cache
 	#else
 	char const* xdg_cache_home = getenv("XDG_CACHE_HOME");
-	cache_dir = (xdg_cache_home ? xdg_cache_home / shortDir : fs::path(home_dir) / ".cache" / shortDir).string();
+	cache_dir = (xdg_cache_home ? xdg_cache_home / stuntrally
+				: fs::path(home_dir) / ".cache" / stuntrally).string();
 	#endif
 	// Create cache dir
 	CreateDir(CacheDir(), error_output);
@@ -245,9 +248,6 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 bool PATHMANAGER::FileExists(const std::string & filename)
 {
 	return fs::exists(filename);
-	//std::ifstream test(filename.c_str());
-	//if (test)  return true;
-	//else  return false;
 }
 
 bool PATHMANAGER::CreateDir(const std::string& path, std::ostream & error_output)
