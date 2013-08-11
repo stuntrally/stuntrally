@@ -62,7 +62,7 @@ public:
 	virtual ~BaseApp();
 	virtual void Run( bool showDialog );
 	
-	bool bLoading,bLoadingEnd;  int iLoad1stFrames;
+	bool bLoading,bLoadingEnd,bSimulating;  int iLoad1stFrames;
 	
 	//  has to be in baseApp for camera mouse move
 	typedef std::vector<class CarModel*> CarModels;

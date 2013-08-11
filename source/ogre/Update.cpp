@@ -44,11 +44,13 @@ void App::UpdThr()
 		
 		if (pSet->multi_thr == 1 && !bLoading)
 		{
+			bSimulating = true;
 			bool ret = pGame->OneLoop(dt);
 			if (!ret)
 				mShutDown = true;
 
 			DoNetworking();
+			bSimulating = false;
 		}
 		boost::this_thread::sleep(boost::posix_time::milliseconds(pSet->thread_sleep));
 	}
