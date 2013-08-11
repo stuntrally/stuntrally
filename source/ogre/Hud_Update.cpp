@@ -47,6 +47,11 @@ bool SortWin(const CarModel* cm2, const CarModel* cm1)
 
 void App::GetHUDVals(int id, float* vel, float* rpm, float* clutch, int* gear)
 {
+	#ifdef DEBUG
+	assert(id >= 0);
+	assert(id < carModels.size());
+	assert(id < frm.size());
+	#endif
 	const CarModel* pCarM = carModels[id];
 	const CAR* pCar = pCarM ? pCarM->pCar : 0;
 
@@ -76,10 +81,11 @@ void App::UpdateHUD(int carId, float time)
 	
 	//  update HUD elements for all cars that have a viewport (local or replay)
 	//-----------------------------------------------------------------------------------
-	int cnt = std::min(5/*?*/, (int)carModels.size() -(isGhost2nd?1:0) );
+	int cntG = (int)carModels.size() -(isGhost2nd?1:0);  // all
+	int cntC = std::min(4/*?*/, cntG);  // cars only 
 	
 	if (carId == -1)  // gui vp - done once for all
-	for (int c = 0; c < cnt; ++c)
+	for (int c = 0; c < cntC; ++c)
 	if (carModels[c]->eType == CarModel::CT_LOCAL)
 	{
 		//  hud rpm,vel
@@ -87,7 +93,7 @@ void App::UpdateHUD(int carId, float time)
 		GetHUDVals(c,&vel,&rpm,&clutch,&gear);
 		
 		//  update pos tri on minimap  (all)
-		for (int i=0; i < cnt; ++i)
+		for (int i=0; i < cntG; ++i)
 			UpdHUDRot(c, i, vel, rpm);
 	}
 
@@ -97,6 +103,11 @@ void App::UpdateHUD(int carId, float time)
 		return;
 	}
 
+	#ifdef DEBUG
+	assert(carId >= 0);
+	assert(carId < carModels.size());
+	#endif
+	
 	CarModel* pCarM = carModels[carId];
 	CAR* pCar = pCarM ? pCarM->pCar : 0;
 
@@ -112,7 +123,7 @@ void App::UpdateHUD(int carId, float time)
 	{
 		//  sort winners
 		std::list<CarModel*> cms;
-		for (int o=0; o < cnt; ++o)
+		for (int o=0; o < cntG; ++o)
 			cms.push_back(carModels[o]);
 
 		cms.sort(SortWin);
@@ -186,7 +197,7 @@ void App::UpdateHUD(int carId, float time)
 	if (ovOpp->isVisible() && pCarM && pCarM->pMainNode)
 	{
 		std::list<CarModel*> cms;  // sorted list
-		for (int o=0; o < cnt; ++o)
+		for (int o=0; o < cntG; ++o)
 		{	// cars only
 			if (!carModels[o]->isGhost())
 			{	if (bRplPlay)
@@ -196,7 +207,7 @@ void App::UpdateHUD(int carId, float time)
 		if (pSet->opplist_sort)
 			cms.sort(SortPerc);
 		
-		for (int o=0; o < cnt; ++o)
+		for (int o=0; o < cntG; ++o)
 		{	// add ghost1 last (dont add 2nd)
 			if (carModels[o]->eType == CarModel::CT_GHOST || carModels[o]->eType == CarModel::CT_TRACK)
 			{	carModels[o]->trackPercent = carPoses[iCurPoses[o]][o].percent;  // ghost,rpl
@@ -264,12 +275,11 @@ void App::UpdateHUD(int carId, float time)
 		}
 	}
 
-	//Commenting this code out for now as it is not needed for pixel motion blur
-	//   Set motion blur intensity for this viewport, depending on car's linear velocity
-	// -----------------------------------------------------------------------------------
+	//  Set motion blur intensity for this viewport, depending on car's linear velocity
+	//-----------------------------------------------------------------------------------
 	if (pSet->motionblur)
 	{
-		// use velocity squared to achieve an exponential motion blur - and its faster too - wow :)
+		// use velocity squared to achieve an exponential motion blur
 		float speed = pCar->GetVelocity().MagnitudeSquared();
 		
 		// peak at 250 kmh (=69 m/s), 69² = 4761
@@ -292,9 +302,7 @@ void App::UpdateHUD(int carId, float time)
 		// set n=4  motionBlurAmount_new = sqrt(sqrt((motionBlurAmount^4 * fpsReal/desiredFps))
 		motionBlurAmount = sqrt(sqrt( pow(motionBlurAmount, 4) * ((1.0f/time) / 120.0f) ));
 			
-		// clamp to 0.9f
-		motionBlurAmount = std::min(motionBlurAmount, 0.9f);
-		
+		motionBlurAmount = std::min(motionBlurAmount, 0.9f);  // clamp to 0.9f
 		motionBlurIntensity = motionBlurAmount;
 	}
 
@@ -606,6 +614,15 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 	//if (carId == -1)  return;
 	int b = baseCarId, c = carId;
 	bool main = b == c;
+	#ifdef DEBUG
+	assert(c >= 0);
+	assert(b >= 0);
+	assert(b < hud.size());  // only b
+	assert(c < carModels.size());
+	assert(b < carModels.size());
+	assert(c < hud[b].vMoPos.size());
+	assert(c < hud[b].vNdPos.size());
+	#endif
 	float angBase = carModels[b]->angCarY;
 	
 	bool bZoom = pSet->mini_zoomed && sc->ter, bRot = pSet->mini_rotated && sc->ter;

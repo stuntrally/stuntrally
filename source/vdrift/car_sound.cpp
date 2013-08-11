@@ -125,6 +125,9 @@ void CAR::UpdateSounds(float dt)
 	///  replay play  ------------------------------------------
 	if (pApp->bRplPlay)
 	{
+		#ifdef DEBUG
+		assert(id < pApp->frm.size());
+		#endif
 		const ReplayFrame& fr = pApp->frm[id];
 		pos = fr.pos;  rot = fr.rot;
 		rpm = fr.rpm;

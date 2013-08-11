@@ -23,13 +23,17 @@ using namespace MyGUI;
 
 ///  HUD resize
 //---------------------------------------------------------------------------------------------------------------
-void App::SizeHUD(bool full, Viewport* vp, int carId)
+void App::SizeHUD(bool full, Viewport* vp)
 {
 	float wx = mWindow->getWidth(), wy = mWindow->getHeight();
 	asp = wx/wy;
 	bool vdrSpl = sc->vdr && pSet->game.local_players > 1;
+	int cnt = pSet->game.local_players;
+	#ifdef DEBUG
+	assert(cnt <= hud.size());
+	#endif
 	//  for each car
-	for (int c=0; c < pSet->game.local_players; ++c)
+	for (int c=0; c < cnt; ++c)
 	{
 		const SplitScreenManager::VPDims& dim = mSplitMgr->mDims[c];
 		//  gauges
@@ -173,7 +177,11 @@ void App::CreateHUD(bool destroy)
 	}
 
 	//if (terrain)
-	int cnt = std::min(5/*?*/, (int)carModels.size() -(isGhost2nd?1:0) );
+	int cnt = std::min(6/**/, (int)carModels.size() -(isGhost2nd?1:0) );  // others
+	#ifdef DEBUG
+	assert(plr <= hud.size());
+	assert(cnt <= hud[0].vMoPos.size());
+	#endif
 	for (int c=0; c < plr; ++c)  // for each car
 	{
 		if (sc->ter)
@@ -306,7 +314,7 @@ void App::CreateHUD(bool destroy)
 
 	ovOpp = ovr.getByName("Hud/Opponents");		hudOppB = ovr.getOverlayElement("Hud/OpponentsPanel");
 
-	for (int o=0; o < 5; ++o)  for (int c=0; c < 3; ++c)
+	for (int o=0; o < 6; ++o)  for (int c=0; c < 3; ++c)
 	{
 		hudOpp[o][c] = ovr.getOverlayElement("Hud/OppText"+toStr(o)+"_"+toStr(c));  hudOpp[o][c]->setCaption("");
 	}

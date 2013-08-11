@@ -99,7 +99,7 @@ public:
 	Ogre::Quaternion arrowAnimStart, arrowAnimEnd, arrowAnimCur; // smooth animation
 		
 	void UpdateHUD(int carId, float time), ShowHUDvp(bool vp),
-		SizeHUD(bool full, Ogre::Viewport* vp=NULL, int carId=-1);
+		SizeHUD(bool full, Ogre::Viewport* vp=NULL);
 	void UpdHUDRot(int baseCarId, int carId, float vel, float rpm);
 	void GetHUDVals(int id, float* vel, float* rpm, float* clutch, int* gear);
 	

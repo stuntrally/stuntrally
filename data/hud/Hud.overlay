@@ -184,6 +184,14 @@ Hud/Opponents
 			left 5
 			top  85
 		}
+		element TextArea(Hud/OppText5_0)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 25
+			left 5
+			top  105
+		}
 
 		//  col 1  ---------
 		element TextArea(Hud/OppText0_1)
@@ -226,6 +234,14 @@ Hud/Opponents
 			left 65
 			top  85
 		}
+		element TextArea(Hud/OppText5_1)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 22
+			left 65
+			top  105
+		}
 
 		//  col 2  ---------
 		element TextArea(Hud/OppText0_2)
@@ -267,6 +283,14 @@ Hud/Opponents
 			char_height 24
 			left 130
 			top  85
+		}
+		element TextArea(Hud/OppText5_2)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 24
+			left 130
+			top  105
 		}
 		//  ----------------
 	}

@@ -110,6 +110,9 @@ void App::newPoses(float time)  // time only for camera update
 		if (bRplPlay)  // class member frm - used for sounds in car.cpp
 		{
 			//  time  from start
+			#ifdef DEBUG
+			assert(c < frm.size());
+			#endif
 			ReplayFrame& fr = frm[c];
 			bool ok = replay.GetFrame(rplTime, &fr, c);
 				if (!ok)	pGame->timer.RestartReplay(0);  //at end
