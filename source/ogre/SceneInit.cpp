@@ -453,7 +453,7 @@ void App::LoadCar()  // 4
 	if (!bRplPlay)
 	{
 	replay.InitHeader(pSet->game.track.c_str(), pSet->game.track_user, pSet->game.car[0].c_str(), !bRplPlay);
-	replay.header.numPlayers = mClient ? mClient->getPeerCount()+1 : pSet->game.local_players;  // networked or splitscreen
+	replay.header.numPlayers = mClient ? std::min(4, (int)mClient->getPeerCount()+1) : pSet->game.local_players;  // networked or splitscreen
 	replay.header.hue[0] = pSet->game.car_hue[0];  replay.header.sat[0] = pSet->game.car_sat[0];  replay.header.val[0] = pSet->game.car_val[0];
 	strcpy(replay.header.nicks[0], carModels[0]->sDispName.c_str());  // player's nick
 	replay.header.trees = pSet->game.trees;

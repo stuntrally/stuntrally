@@ -207,7 +207,7 @@ void App::newPoses(float time)  // time only for camera update
 			pCar->dynamics.fDamage = rf.fDamage;  // take damage back
 			carModels[c]->First();
 		}
-		else  // save data
+		else if (c < 4)  // save data
 		{
 			const CARDYNAMICS& cd = pCar->dynamics;
 			RewindFrame fr;
@@ -225,7 +225,7 @@ void App::newPoses(float time)  // time only for camera update
 		///-----------------------------------------------------------------------
 		//  record  save data
 		///-----------------------------------------------------------------------
-		if (pSet->rpl_rec && !pGame->pause && !bGhost && pCar)
+		if (pSet->rpl_rec && !pGame->pause && !bGhost && pCar && c < 4)
 		{
 			//static int ii = 0;
 			//if (ii++ >= 0)	// 1 half game framerate
