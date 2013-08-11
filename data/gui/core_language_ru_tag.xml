@@ -45,7 +45,6 @@
 	<Tag name="TipTrackImg">Снимок трека для игры</Tag>
 	<Tag name="TerLNoiseOnly">Только шум</Tag>
 	<Tag name="InputValueChange">Жми или двинь (мышь/кнопка) </Tag>
-	<Tag name="SteerRange">Коэф. диапазона управления</Tag>
 	<Tag name="Terrain">Ландш.</Tag>
 	<Tag name="TipChangeGloss">Изменяет блеск окраски автомобиля (матовый-блестящий).</Tag>
 	<Tag name="Surface">Поверхность</Tag>
@@ -94,7 +93,7 @@
 	<Tag name="RoadPointSize">Размер точек дороги</Tag>
 	<Tag name="Flip">Сальто</Tag>
 	<Tag name="DistToRoad">раст. до дороги</Tag>
-	<Tag name="TBPlace">Place</Tag>
+	<Tag name="TBPlace">Место</Tag>
 	<Tag name="AngleMax">Макс. угол</Tag>
 	<Tag name="MessageBox_Retry">Повтор</Tag>
 	<Tag name="TipToggleTriplanar">Когда используешь трех плоскостную графическую опцию, этот слой (только он) будет отображаться в трех плоскостях.</Tag>
@@ -180,7 +179,7 @@
 	<Tag name="InputMapRewind">Перемотка</Tag>
 	<Tag name="InputKeyAllPreset">По умолчанию</Tag>
 	<Tag name="InpSet_Slow">Медленно</Tag>
-	<Tag name="InputAssignKey">&lt;Assign&gt;</Tag>
+	<Tag name="InputAssignKey">&lt;Назнач&gt;</Tag>
 	<Tag name="Wireframe">Каркас</Tag>
 	<Tag name="TerUpdSkip">Пропустить обновление ландшафта</Tag>
 	<Tag name="Brush_Force">Сила</Tag>
@@ -414,7 +413,7 @@
 	<Tag name="InputRoadPipeAngle">[,]   - угол трубы (0 нет трубы)</Tag>
 	<Tag name="Finished">Завершено</Tag>
 	<Tag name="InputNextLayTab">alt-1,2 - пред.,след. слой вкладка</Tag>
-	<Tag name="InputInverse">Inverse</Tag>
+	<Tag name="InputInverse">Инвер.</Tag>
 	<Tag name="InputMapRestartGame">Новая игра</Tag>
 	<Tag name="Graphics">Графика</Tag>
 	<Tag name="ReflMode_static">Статич.</Tag>
@@ -466,7 +465,7 @@
 	<Tag name="LTrFlDepth">макс. глубина</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - размер alt-RMB - глубина</Tag>
 	<Tag name="TexCoordMul">Тех. коор.</Tag>
-	<Tag name="Shadows">Тени</Tag>
+	<Tag name="SteerRange">Коэф. диапазона управления</Tag>
 	<Tag name="ShowPictures">Показать картинку при загр.</Tag>
 	<Tag name="distance">дистанция</Tag>
 	<Tag name="SSS_Effect">Эффект</Tag>
@@ -490,6 +489,7 @@
 	<Tag name="TexSize">Разм. текстуры</Tag>
 	<Tag name="TipSunAmbient">Цвет окружающей среды солнечного света (константа). R G B значения от 0 до 1 (напр. 0.4 0.4 0.4)</Tag>
 	<Tag name="ChngTrkTab">изм. в [Трек] вкладке</Tag>
+	<Tag name="Shadows">Тени</Tag>
 	<Tag name="InputRplCtrl2">P - пауза/играть повтор</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - ветер сзади/спереди (shift - слабый, ctrl,alt - сильный)</Tag>
 	<Tag name="Laps">Круги</Tag>
@@ -615,7 +615,7 @@
 	<Tag name="Reset">Сброс</Tag>
 	<Tag name="ReplaysMenu">Повторы</Tag>
 	<Tag name="InputSlowFast">shift - медлено   ctrl - быстро</Tag>
-	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
+	<Tag name="InputRoadMirror">alt-Home - выбор отображ.</Tag>
 	<Tag name="GrassMult">Коэф. травы</Tag>
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="Back">Назад</Tag>
@@ -656,7 +656,7 @@
 	<Tag name="TipGrassPageLength">Длина страница памяти для травы (ниже будут частые перезагрузки, выше будут визуальные переключения).</Tag>
 	<Tag name="Shaders">Шейдеры</Tag>
 	<Tag name="dust">пыль</Tag>
-	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
+	<Tag name="InputUnbind">Жми RMB на кнопке - развяз.</Tag>
 	<Tag name="TipRainSnow1">Тип 1 Дождь/Снег</Tag>
 	<Tag name="TipRainSnow2">Тип 2 Дождь/Снег</Tag>
 	<Tag name="TipTerLNoise">Коэффициент дополнительного шума.</Tag>
@@ -759,7 +759,7 @@
 	<Tag name="TerLayers">Слои ландш.</Tag>
 	<Tag name="TipLTrMaxTerH">Высота ландшафта, выше которого модель не появиться.</Tag>
 	<Tag name="TotalScore">Итого очков</Tag>
-	<Tag name="InputLoadNextTrack">Load next track (shift - previous)</Tag>
+	<Tag name="InputLoadNextTrack">Загр. след. трек (shift - пред.)</Tag>
 	<Tag name="TrackDifficulties">Разные сложности трека</Tag>
 	<Tag name="TipModelPrev">Предварительный просмотр изображения модели.</Tag>
 	<Tag name="InputRoadEdit">R - ред. дорогу</Tag>
@@ -893,6 +893,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред,след Опции вкладка (shift - подменю)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
+	<Tag name="TipOneAxisThrottleBrake">If your controller has throttle and brake in one axis, check this. Bind axis to throttle, unbind brake. Use Inverse from throttle if needed.</Tag>
+	<Tag name="OneAxisThrottleBrake">One axis for throttle and brake</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
