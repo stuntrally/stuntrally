@@ -81,7 +81,7 @@ void App::UpdateHUD(int carId, float time)
 	
 	//  update HUD elements for all cars that have a viewport (local or replay)
 	//-----------------------------------------------------------------------------------
-	int cntG = (int)carModels.size() -(isGhost2nd?1:0);  // all
+	int cntG = std::min(6/**/, (int)carModels.size() -(isGhost2nd?1:0));  // all
 	int cntC = std::min(4/*?*/, cntG);  // cars only 
 	
 	if (carId == -1)  // gui vp - done once for all
@@ -669,46 +669,51 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 			{  cx[i] = tp[i][0]*z;  cy[i] = tp[i][1]*z-1.f;  }
 		else{  cx[i] =       cp*z;  cy[i] =      -sp*z-1.f;  }
 	}
+	
+	Hud& h = hud[b];
     
     //  rpm,vel needles
 	if (main)
 	{
-		if (hud[b].moRpm)  {	hud[b].moRpm->beginUpdate(0);
-			for (int p=0;p<4;++p)  {  hud[b].moRpm->position(rx[p],ry[p], 0);
-				hud[b].moRpm->textureCoord(tc[p][0], tc[p][1]);  }	hud[b].moRpm->end();  }
-		if (hud[b].moVel)  {	hud[b].moVel->beginUpdate(0);
-			for (int p=0;p<4;++p)  {  hud[b].moVel->position(vx[p],vy[p], 0);
-				hud[b].moVel->textureCoord(tc[p][0], tc[p][1]);  }	hud[b].moVel->end();  }
+		if (h.moRpm)
+		{	h.moRpm->beginUpdate(0);
+			for (int p=0; p<4; ++p)  {
+				h.moRpm->position(rx[p],ry[p], 0);  h.moRpm->textureCoord(tc[p][0], tc[p][1]);  }
+			h.moRpm->end();  }
+		if (h.moVel)
+		{	h.moVel->beginUpdate(0);
+			for (int p=0; p<4; ++p)  {
+				h.moVel->position(vx[p],vy[p], 0);  h.moVel->textureCoord(tc[p][0], tc[p][1]);  }
+			h.moVel->end();  }
 	}
 		
 	///  minimap car pos-es rot
-	if (hud[b].vMoPos[c])
-	{	hud[b].vMoPos[c]->beginUpdate(0);
-		for (int p=0;p<4;++p)  {
-			hud[b].vMoPos[c]->position(px[p],py[p], 0);
-			hud[b].vMoPos[c]->textureCoord(tc[p][0], tc[p][1]);
-			hud[b].vMoPos[c]->colour(carModels[c]->color);  }
-		hud[b].vMoPos[c]->end();
+	if (h.vMoPos[c])
+	{	h.vMoPos[c]->beginUpdate(0);
+		for (int p=0; p<4; ++p)  {
+			h.vMoPos[c]->position(px[p],py[p], 0);  h.vMoPos[c]->textureCoord(tc[p][0], tc[p][1]);
+			h.vMoPos[c]->colour(carModels[c]->color);  }
+		h.vMoPos[c]->end();
 	}
 	
 	//  minimap circle/rect rot
 	int qb = iCurPoses[b], qc = iCurPoses[c];
-	if (hud[b].moMap && pSet->trackmap && main)
+	if (h.moMap && pSet->trackmap && main)
 	{
-		hud[b].moMap->beginUpdate(0);
+		h.moMap->beginUpdate(0);
 		if (!bZoom)
-			for (int p=0;p<4;++p)  {  hud[b].moMap->position(tp[p][0],tp[p][1], 0);
-				hud[b].moMap->textureCoord(tc[p][0], tc[p][1]);  hud[b].moMap->colour(tc[p][0],tc[p][1], 0);  }
+			for (int p=0; p<4; ++p)  {
+				h.moMap->position(tp[p][0],tp[p][1], 0);  h.moMap->textureCoord(tc[p][0], tc[p][1]);
+				h.moMap->colour(tc[p][0],tc[p][1], 0);  }
 		else
-		{	
-			Vector2 mp(-carPoses[qb][b].pos[2],carPoses[qb][b].pos[0]);
+		{	Vector2 mp(-carPoses[qb][b].pos[2],carPoses[qb][b].pos[0]);
 			float xc =  (mp.x - minX)*scX,
 				  yc = -(mp.y - minY)*scY+1.f;
-
-			for (int p=0;p<4;++p)  {  hud[b].moMap->position(tp[p][0],tp[p][1], 0);
-				hud[b].moMap->textureCoord(cx[p]+xc, -cy[p]-yc);  hud[b].moMap->colour(tc[p][0],tc[p][1], 1);  }
+			for (int p=0; p<4; ++p)  {
+				h.moMap->position(tp[p][0],tp[p][1], 0);  h.moMap->textureCoord(cx[p]+xc, -cy[p]-yc);
+				h.moMap->colour(tc[p][0],tc[p][1], 1);  }
 		}
-		hud[b].moMap->end();
+		h.moMap->end();
 	}
 
 	///  minimap car pos  x,y = -1..1
@@ -741,17 +746,17 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 		}
 	}else
 	{	// clamp to square
-		xp = std::min(1.f, std::max(-1.f, xp ));
-		yp = std::min(1.f, std::max(-1.f, yp ));
+		xp = std::min(1.f, std::max(-1.f, xp));
+		yp = std::min(1.f, std::max(-1.f, yp));
 	}
 	
 	bool bGhost = carModels[c]->isGhost(),
 		bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
 
-	if (hud[b].vNdPos[c])
+	if (h.vNdPos[c])
 		if (bGhost && !bGhostVis)
-			 hud[b].vNdPos[c]->setPosition(-100,0,0);  //hide
+			 h.vNdPos[c]->setPosition(-100,0,0);  //hide
 		else if (bZoom && main)
-			 hud[b].vNdPos[c]->setPosition(0,0,0);
-		else hud[b].vNdPos[c]->setPosition(xp,yp,0);
+			 h.vNdPos[c]->setPosition(0,0,0);
+		else h.vNdPos[c]->setPosition(xp,yp,0);
 }

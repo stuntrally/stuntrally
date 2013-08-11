@@ -35,10 +35,11 @@ void App::SizeHUD(bool full, Viewport* vp)
 	//  for each car
 	for (int c=0; c < cnt; ++c)
 	{
+		Hud& h = hud[c];
 		const SplitScreenManager::VPDims& dim = mSplitMgr->mDims[c];
 		//  gauges
 		Real xcRpm,ycRpm, xcVel,ycVel, yMax, xBFuel;  // -1..1
-		if (hud[c].ndRpmBk && hud[c].ndVelBk && hud[c].ndVelBm && hud[c].ndRpm && hud[c].ndVel)
+		if (h.ndRpmBk && h.ndVelBk && h.ndVelBm && h.ndRpm && h.ndVel)
 		{
 			Real fHudScale = pSet->size_gauges * dim.avgsize;
 			Real spx = fHudScale *1.1f, spy = spx*asp;
@@ -47,26 +48,26 @@ void App::SizeHUD(bool full, Viewport* vp)
 			yMax = ycVel - fHudScale;  xBFuel = xcVel - fHudScale;
 
 			Vector3 sca(fHudScale,fHudScale*asp,1), sc(fHudScale,fHudScale,1);
-			hud[c].ndRpmBk->setScale(sca);	hud[c].ndVelBk->setScale(sca);  hud[c].ndVelBm->setScale(sca);
-			hud[c].ndRpm->setScale(sc); 	hud[c].ndVel->setScale(sc);
+			h.ndRpmBk->setScale(sca);  h.ndVelBk->setScale(sca);  h.ndVelBm->setScale(sca);
+			h.ndRpm->setScale(sc); 	h.ndVel->setScale(sc);
 
 			Vector3 vr(xcRpm,ycRpm,0.f), vv(xcVel,ycVel,0.f);
-			hud[c].ndRpmBk->setPosition(vr); hud[c].ndVelBk->setPosition(vv);  hud[c].ndVelBm->setPosition(vv);
-			hud[c].ndRpm->setPosition(vr);	 hud[c].ndVel->setPosition(vv);
+			h.ndRpmBk->setPosition(vr);  h.ndVelBk->setPosition(vv);  h.ndVelBm->setPosition(vv);
+			h.ndRpm->setPosition(vr);  h.ndVel->setPosition(vv);
 			//LogO("-- Size  r "+toStr(vr)+"  v "+toStr(vv)+"  s "+toStr(sca));
 		}
 		//  minimap
-		if (hud[c].ndMap)
+		if (h.ndMap)
 		{
 			Real fHudSize = pSet->size_minimap * dim.avgsize;
-			hud[c].ndMap->setScale((vdrSpl ? 2 : 1)*fHudSize,fHudSize*asp,1);
+			h.ndMap->setScale((vdrSpl ? 2 : 1)*fHudSize,fHudSize*asp,1);
 
 			const Real marg = 1.f + 0.05f;  // from border
 			//Real fMiniX = dim.right - fHudSize * marg;
 			Real fMiniX = vdrSpl ? (1.f - 2.f*fHudSize * marg) : (dim.right - fHudSize * marg);
 			Real fMiniY =-dim.top - fHudSize*asp * marg;
 
-			hud[c].ndMap->setPosition(Vector3(fMiniX,fMiniY,0.f));
+			h.ndMap->setPosition(Vector3(fMiniX,fMiniY,0.f));
 			//LogO("-- Size car:"+toStr(c)+"  x:"+fToStr(fMiniX,2,4)+" y:"+fToStr(fMiniY,2,4)+"  s:"+fToStr(fHudSize,2,4));
 		}
 
@@ -84,19 +85,19 @@ void App::SizeHUD(bool full, Viewport* vp)
 			int bx =(xBFuel+1.f)*0.5f*wx - 10, by = std::min(iwy -36, my + 5);
 				vx = std::min(vx, iwx -100);
 				bx = std::min(bx, iwx -180);  // not too near to vel
-			if (hud[c].txGear)  hud[c].txGear->setPosition(gx,gy);
-			if (hud[c].txVel)  hud[c].txVel->setPosition(vx,vy);
-			if (hud[c].txBFuel)  hud[c].txBFuel->setPosition(bx,by);
-			if (hud[c].txDamage)  hud[c].txDamage->setPosition(gx+140,gy+10);
+			if (h.txGear)  h.txGear->setPosition(gx,gy);
+			if (h.txVel)  h.txVel->setPosition(vx,vy);
+			if (h.txBFuel)  h.txBFuel->setPosition(bx,by);
+			if (h.txDamage)  h.txDamage->setPosition(gx+140,gy+10);
 			
 			bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
 			int itx = (dim.left+1.f)*0.5f*wx,
 				ity = (dim.top +1.f)*0.5f*wy;
 			int tx = itx + 0, ty = ity + 32;
-			if (hud[c].bckTimes)  hud[c].bckTimes->setPosition(tx,ty);
+			if (h.bckTimes)  h.bckTimes->setPosition(tx,ty);
 			tx += 16;  ty += (hasLaps ? 16 : 4);
-			if (hud[c].txTimTxt)  hud[c].txTimTxt->setPosition(tx,ty);
-			if (hud[c].txTimes)   hud[c].txTimes->setPosition(tx+96,ty);
+			if (h.txTimTxt)  h.txTimTxt->setPosition(tx,ty);
+			if (h.txTimes)   h.txTimes->setPosition(tx+96,ty);
 		}
 	}
 }
@@ -117,41 +118,42 @@ void App::CreateHUD(bool destroy)
 	if (destroy)
 	{
 		for (int c=0; c < hud.size(); ++c)
-		{
-			if (hud[c].moMap) {  scm->destroyManualObject(hud[c].moMap);  hud[c].moMap=0;  }
-			if (hud[c].ndMap) {  scm->destroySceneNode(hud[c].ndMap);  hud[c].ndMap=0;  }
+		{	Hud& h = hud[c];
+			if (h.moMap) {  scm->destroyManualObject(h.moMap);  h.moMap=0;  }
+			if (h.ndMap) {  scm->destroySceneNode(h.ndMap);  h.ndMap=0;  }
 
 			for (int i=0; i < 6; ++i)
 			{
-				if (hud[c].vMoPos[i]) {  scm->destroyManualObject(hud[c].vMoPos[i]);  hud[c].vMoPos[i]=0;  }
-				if (hud[c].vNdPos[i]) {  scm->destroySceneNode(hud[c].vNdPos[i]);  hud[c].vNdPos[i]=0;  }
+				if (h.vMoPos[i]) {  scm->destroyManualObject(h.vMoPos[i]);  h.vMoPos[i]=0;  }
+				if (h.vNdPos[i]) {  scm->destroySceneNode(h.vNdPos[i]);  h.vNdPos[i]=0;  }
 			}
-			if (hud[c].moRpmBk) {  scm->destroyManualObject(hud[c].moRpmBk);  hud[c].moRpmBk=0;  }
-			if (hud[c].ndRpmBk) {  scm->destroySceneNode(hud[c].ndRpmBk);  hud[c].ndRpmBk=0;  }
+			if (h.moRpmBk) {  scm->destroyManualObject(h.moRpmBk);  h.moRpmBk=0;  }
+			if (h.ndRpmBk) {  scm->destroySceneNode(h.ndRpmBk);  h.ndRpmBk=0;  }
 
-			if (hud[c].moVelBk) {  scm->destroyManualObject(hud[c].moVelBk);  hud[c].moVelBk=0;  }
-			if (hud[c].ndVelBk) {  scm->destroySceneNode(hud[c].ndVelBk);  hud[c].ndVelBk=0;  }
+			if (h.moVelBk) {  scm->destroyManualObject(h.moVelBk);  h.moVelBk=0;  }
+			if (h.ndVelBk) {  scm->destroySceneNode(h.ndVelBk);  h.ndVelBk=0;  }
 				
-			if (hud[c].moVelBm) {  scm->destroyManualObject(hud[c].moVelBm);  hud[c].moVelBm=0;  }
-			if (hud[c].ndVelBm) {  scm->destroySceneNode(hud[c].ndVelBm);  hud[c].ndVelBm=0;  }
+			if (h.moVelBm) {  scm->destroyManualObject(h.moVelBm);  h.moVelBm=0;  }
+			if (h.ndVelBm) {  scm->destroySceneNode(h.ndVelBm);  h.ndVelBm=0;  }
 				
-			if (hud[c].moRpm) {  scm->destroyManualObject(hud[c].moRpm);  hud[c].moRpm=0;  }
-			if (hud[c].ndRpm) {  scm->destroySceneNode(hud[c].ndRpm);  hud[c].ndRpm=0;  }
+			if (h.moRpm) {  scm->destroyManualObject(h.moRpm);  h.moRpm=0;  }
+			if (h.ndRpm) {  scm->destroySceneNode(h.ndRpm);  h.ndRpm=0;  }
 			
-			if (hud[c].moVel) {  scm->destroyManualObject(hud[c].moVel);  hud[c].moVel=0;  }
-			if (hud[c].ndVel) {  scm->destroySceneNode(hud[c].ndVel);  hud[c].ndVel=0;  }
+			if (h.moVel) {  scm->destroyManualObject(h.moVel);  h.moVel=0;  }
+			if (h.ndVel) {  scm->destroySceneNode(h.ndVel);  h.ndVel=0;  }
 		}
 	}
 	for (int c=0; c < hud.size(); ++c)
-	{	if (hud[c].txGear) {  mGUI->destroyWidget(hud[c].txGear);  hud[c].txGear = 0;  }
-		if (hud[c].txVel)  {  mGUI->destroyWidget(hud[c].txVel);   hud[c].txVel = 0;  }
-		if (hud[c].txBFuel){  mGUI->destroyWidget(hud[c].txBFuel);  hud[c].txBFuel = 0;  }
-		if (hud[c].txDamage){  mGUI->destroyWidget(hud[c].txDamage);  hud[c].txDamage = 0;  }
+	{	Hud& h = hud[c];
+		if (h.txGear) {  mGUI->destroyWidget(h.txGear);  h.txGear = 0;  }
+		if (h.txVel)  {  mGUI->destroyWidget(h.txVel);   h.txVel = 0;  }
+		if (h.txBFuel){  mGUI->destroyWidget(h.txBFuel);  h.txBFuel = 0;  }
+		if (h.txDamage){  mGUI->destroyWidget(h.txDamage);  h.txDamage = 0;  }
 
-		if (hud[c].txTimTxt) {  mGUI->destroyWidget(hud[c].txTimTxt);  hud[c].txTimTxt = 0;  }
-		if (hud[c].txTimes)  {  mGUI->destroyWidget(hud[c].txTimes);   hud[c].txTimes = 0;  }
-		if (hud[c].bckTimes) {  mGUI->destroyWidget(hud[c].bckTimes);  hud[c].bckTimes = 0;  }
-		hud[c].sTimes = "";
+		if (h.txTimTxt) {  mGUI->destroyWidget(h.txTimTxt);  h.txTimTxt = 0;  }
+		if (h.txTimes)  {  mGUI->destroyWidget(h.txTimes);   h.txTimes = 0;  }
+		if (h.bckTimes) {  mGUI->destroyWidget(h.bckTimes);  h.bckTimes = 0;  }
+		h.sTimes = "";
 	}
 	
 	//  minimap from road img
@@ -184,6 +186,7 @@ void App::CreateHUD(bool destroy)
 	#endif
 	for (int c=0; c < plr; ++c)  // for each car
 	{
+		Hud& h = hud[c];
 		if (sc->ter)
 		{	float t = sc->td.fTerWorldSize*0.5;
 			minX = -t;  minY = -t;  maxX = t;  maxY = t;  }
@@ -194,7 +197,7 @@ void App::CreateHUD(bool destroy)
 
 		String sMat = "circle_minimap";
 		asp = 1.f;  //_temp
-		ManualObject* m = Create2D(sMat,scm,1,true,true);  hud[c].moMap = m;
+		ManualObject* m = Create2D(sMat,scm,1,true,true);  h.moMap = m;
 		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		m->setVisibilityFlags(RV_Hud);  m->setRenderQueueGroup(RQG_Hud1);
 		
@@ -207,84 +210,83 @@ void App::CreateHUD(bool destroy)
 		if (tus)  tus->setTextureName(sc->ter ? sTer : "alpha.png");
 		UpdMiniTer();
 		
-
 		float fHudSize = pSet->size_minimap * mSplitMgr->mDims[c].avgsize;
 		SceneNode* rt = scm->getRootSceneNode();
 		if (!sc->vdr)
-		{	hud[c].ndMap = rt->createChildSceneNode(Vector3(0,0,0));
-			hud[c].ndMap->attachObject(m);
+		{	h.ndMap = rt->createChildSceneNode(Vector3(0,0,0));
+			h.ndMap->attachObject(m);
 		}
 		//  car pos tri - for all carModels (ghost and remote too)
 		for (int i=0; i < cnt; ++i)
 		{
-			hud[c].vMoPos[i] = Create2D("hud/CarPos", scm, 0.4f, true, true);
-			hud[c].vMoPos[i]->setVisibilityFlags(RV_Hud);  hud[c].vMoPos[i]->setRenderQueueGroup(RQG_Hud3);
+			h.vMoPos[i] = Create2D("hud/CarPos", scm, 0.4f, true, true);
+			h.vMoPos[i]->setVisibilityFlags(RV_Hud);  h.vMoPos[i]->setRenderQueueGroup(RQG_Hud3);
 				  
-			hud[c].vNdPos[i] = hud[c].ndMap ? hud[c].ndMap->createChildSceneNode() : hud[0].ndMap->createChildSceneNode();
-			hud[c].vNdPos[i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
-			hud[c].vNdPos[i]->attachObject(hud[c].vMoPos[i]);
+			h.vNdPos[i] = h.ndMap ? h.ndMap->createChildSceneNode() : hud[0].ndMap->createChildSceneNode();
+			h.vNdPos[i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
+			h.vNdPos[i]->attachObject(h.vMoPos[i]);
 		}
-		if (hud[c].ndMap)
-			hud[c].ndMap->setVisible(false/*pSet->trackmap*/);
+		if (h.ndMap)
+			h.ndMap->setVisible(false/*pSet->trackmap*/);
 
 	
 		//  gauges  backgr  -----------
 		String st = toStr(pSet->gauges_type);
-		hud[c].moRpmBk = Create2D("hud/rpm"+st,scm,1);	hud[c].moRpmBk->setVisibilityFlags(RV_Hud);
-		hud[c].moRpmBk->setRenderQueueGroup(RQG_Hud1);	hud[c].ndRpmBk = rt->createChildSceneNode();
-		hud[c].ndRpmBk->attachObject(hud[c].moRpmBk);	hud[c].ndRpmBk->setScale(0,0,0);  hud[c].ndRpmBk->setVisible(false);
+		h.moRpmBk = Create2D("hud/rpm"+st,scm,1);  h.moRpmBk->setVisibilityFlags(RV_Hud);
+		h.moRpmBk->setRenderQueueGroup(RQG_Hud1);  h.ndRpmBk = rt->createChildSceneNode();
+		h.ndRpmBk->attachObject(h.moRpmBk);  h.ndRpmBk->setScale(0,0,0);  h.ndRpmBk->setVisible(false);
 
-		hud[c].moVelBk = Create2D("hud/kmh"+st,scm,1);	hud[c].moVelBk->setVisibilityFlags(RV_Hud);
-		hud[c].moVelBk->setRenderQueueGroup(RQG_Hud1);	hud[c].ndVelBk = rt->createChildSceneNode();
-		hud[c].ndVelBk->attachObject(hud[c].moVelBk);	hud[c].ndVelBk->setScale(0,0,0);  hud[c].moVelBk->setVisible(false);
+		h.moVelBk = Create2D("hud/kmh"+st,scm,1);  h.moVelBk->setVisibilityFlags(RV_Hud);
+		h.moVelBk->setRenderQueueGroup(RQG_Hud1);  h.ndVelBk = rt->createChildSceneNode();
+		h.ndVelBk->attachObject(h.moVelBk);  h.ndVelBk->setScale(0,0,0);  h.moVelBk->setVisible(false);
 			
-		hud[c].moVelBm = Create2D("hud/mph"+st,scm,1);	hud[c].moVelBm->setVisibilityFlags(RV_Hud);
-		hud[c].moVelBm->setRenderQueueGroup(RQG_Hud1);	hud[c].ndVelBm = rt->createChildSceneNode();
-		hud[c].ndVelBm->attachObject(hud[c].moVelBm);	hud[c].ndVelBm->setScale(0,0,0);  hud[c].moVelBm->setVisible(false);
+		h.moVelBm = Create2D("hud/mph"+st,scm,1);  h.moVelBm->setVisibilityFlags(RV_Hud);
+		h.moVelBm->setRenderQueueGroup(RQG_Hud1);  h.ndVelBm = rt->createChildSceneNode();
+		h.ndVelBm->attachObject(h.moVelBm);  h.ndVelBm->setScale(0,0,0);  h.moVelBm->setVisible(false);
 			
 		//  gauges  needles
-		hud[c].moRpm = Create2D("hud/needle"+st,scm,1,true);  hud[c].moRpm->setVisibilityFlags(RV_Hud);
-		hud[c].moRpm->setRenderQueueGroup(RQG_Hud3);	hud[c].ndRpm = rt->createChildSceneNode();
-		hud[c].ndRpm->attachObject(hud[c].moRpm);		hud[c].ndRpm->setScale(0,0,0);	hud[c].ndRpm->setVisible(false);
+		h.moRpm = Create2D("hud/needle"+st,scm,1,true);  h.moRpm->setVisibilityFlags(RV_Hud);
+		h.moRpm->setRenderQueueGroup(RQG_Hud3);  h.ndRpm = rt->createChildSceneNode();
+		h.ndRpm->attachObject(h.moRpm);  h.ndRpm->setScale(0,0,0);  h.ndRpm->setVisible(false);
 		
-		hud[c].moVel = Create2D("hud/needle"+st,scm,1,true);  hud[c].moVel->setVisibilityFlags(RV_Hud);
-		hud[c].moVel->setRenderQueueGroup(RQG_Hud3);	hud[c].ndVel = rt->createChildSceneNode();
-		hud[c].ndVel->attachObject(hud[c].moVel);		hud[c].ndVel->setScale(0,0,0);	hud[c].ndVel->setVisible(false);
+		h.moVel = Create2D("hud/needle"+st,scm,1,true);  h.moVel->setVisibilityFlags(RV_Hud);
+		h.moVel->setRenderQueueGroup(RQG_Hud3);  h.ndVel = rt->createChildSceneNode();
+		h.ndVel->attachObject(h.moVel);  h.ndVel->setScale(0,0,0);  h.ndVel->setVisible(false);
 
 
 		//  gear, vel text  -----------
-		hud[c].txGear = mGUI->createWidget<TextBox>("TextBox",
-			0,1200, 160,116, Align::Left, "Back", "Gear"+toStr(c));  hud[c].txGear->setVisible(false);
-		hud[c].txGear->setFontName("DigGear");  hud[c].txGear->setFontHeight(126);
+		h.txGear = mGUI->createWidget<TextBox>("TextBox",
+			0,1200, 160,116, Align::Left, "Back", "Gear"+toStr(c));  h.txGear->setVisible(false);
+		h.txGear->setFontName("DigGear");  h.txGear->setFontHeight(126);
 
-		hud[c].txVel = mGUI->createWidget<TextBox>("TextBox",
-			0,1200, 360,96, Align::Right, "Back", "Vel"+toStr(c));  hud[c].txVel->setVisible(false);
-		hud[c].txVel->setFontName("DigGear");  //hud[c].txVel->setFontHeight(64);
+		h.txVel = mGUI->createWidget<TextBox>("TextBox",
+			0,1200, 360,96, Align::Right, "Back", "Vel"+toStr(c));  h.txVel->setVisible(false);
+		h.txVel->setFontName("DigGear");  //h.txVel->setFontHeight(64);
 		
 		//  boost
-		hud[c].txBFuel = mGUI->createWidget<TextBox>("TextBox",
-			0,1200, 240,80, Align::Right, "Back", "BFuel"+toStr(c));  hud[c].txBFuel->setVisible(false);
-		hud[c].txBFuel->setFontName("DigGear");  hud[c].txBFuel->setFontHeight(64);
-		hud[c].txBFuel->setTextColour(Colour(0.6,0.8,1.0));
+		h.txBFuel = mGUI->createWidget<TextBox>("TextBox",
+			0,1200, 240,80, Align::Right, "Back", "BFuel"+toStr(c));  h.txBFuel->setVisible(false);
+		h.txBFuel->setFontName("DigGear");  h.txBFuel->setFontHeight(64);
+		h.txBFuel->setTextColour(Colour(0.6,0.8,1.0));
 
-		hud[c].txDamage = mGUI->createWidget<TextBox>("TextBox",
-			0,1200, 240,80, Align::Right, "Back", "Dmg"+toStr(c));  hud[c].txDamage->setVisible(false);
-		hud[c].txDamage->setFontName("font.20");  //hud[c].txDamage->setFontHeight(64);
-		hud[c].txDamage->setTextColour(Colour(0.7,0.7,0.7));	hud[c].txDamage->setTextShadow(true);
+		h.txDamage = mGUI->createWidget<TextBox>("TextBox",
+			0,1200, 240,80, Align::Right, "Back", "Dmg"+toStr(c));  h.txDamage->setVisible(false);
+		h.txDamage->setFontName("font.20");  //h.txDamage->setFontHeight(64);
+		h.txDamage->setTextColour(Colour(0.7,0.7,0.7));  h.txDamage->setTextShadow(true);
 		
 
 		//  times text    -----------
-		hud[c].bckTimes = mGUI->createWidget<ImageBox>("ImageBox",
-			0,1200, 208,200, Align::Left, "Back", "TimP"+toStr(c));  hud[c].bckTimes->setVisible(false);
+		h.bckTimes = mGUI->createWidget<ImageBox>("ImageBox",
+			0,1200, 208,200, Align::Left, "Back", "TimP"+toStr(c));  h.bckTimes->setVisible(false);
 		//bckTimes[c]->setAlpha(0.9f);		
-		hud[c].bckTimes->setImageTexture("back_times.png");
+		h.bckTimes->setImageTexture("back_times.png");
 
-		hud[c].txTimTxt = mGUI->createWidget<TextBox>("TextBox",
-			0,1200, 90,180, Align::Left, "Back", "TimT"+toStr(c));  hud[c].txTimTxt->setVisible(false);
-		hud[c].txTimTxt->setFontName("font.20");
-		hud[c].txTimTxt->setTextShadow(true);
+		h.txTimTxt = mGUI->createWidget<TextBox>("TextBox",
+			0,1200, 90,180, Align::Left, "Back", "TimT"+toStr(c));  h.txTimTxt->setVisible(false);
+		h.txTimTxt->setFontName("font.20");
+		h.txTimTxt->setTextShadow(true);
 		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
-		hud[c].txTimTxt->setCaption(
+		h.txTimTxt->setCaption(
 			(hasLaps ? String("#D0E8F0")+TR("#{TBLap}") : "")+
 			"\n#C0E0F0"+TR("#{TBTime}") + 
 			"\n#80C0F0"+TR("#{TBLast}") + 
@@ -293,10 +295,10 @@ void App::CreateHUD(bool destroy)
 			"\n#C0C030"+TR("#{TBPosition}") +
 			"\n#F0C050"+TR("#{TBPoints}") );
 
-		hud[c].txTimes = mGUI->createWidget<TextBox>("TextBox",
+		h.txTimes = mGUI->createWidget<TextBox>("TextBox",
 			0,1200, /*80*/100,/*160*/200, Align::Left, "Back", "Tim"+toStr(c));
-		hud[c].txTimes->setVisible(false);
-		hud[c].txTimes->setFontName("font.20");  hud[c].txTimes->setTextShadow(true);
+		h.txTimes->setVisible(false);
+		h.txTimes->setFontName("font.20");  h.txTimes->setTextShadow(true);
 	}
 	///  tex
 	resMgr.removeResourceLocation(path, sGrp);
@@ -364,23 +366,23 @@ void App::ShowHUD(bool hideAll)
 		if (mFpsOverlay)  mFpsOverlay->hide();
 
 		for (int c=0; c < hud.size(); ++c)
-		{
-			if (hud[c].txGear)  hud[c].txGear->setVisible(false);
-			if (hud[c].txVel)   hud[c].txVel->setVisible(false);
-			if (hud[c].txBFuel)   hud[c].txBFuel->setVisible(false);
-			if (hud[c].txDamage)  hud[c].txDamage->setVisible(false);
+		{	Hud& h = hud[c];
+			if (h.txGear)  h.txGear->setVisible(false);
+			if (h.txVel)   h.txVel->setVisible(false);
+			if (h.txBFuel)   h.txBFuel->setVisible(false);
+			if (h.txDamage)  h.txDamage->setVisible(false);
 
-			if (hud[c].ndRpmBk)  hud[c].ndRpmBk->setVisible(false);
-			if (hud[c].ndVelBk)  hud[c].ndVelBk->setVisible(false);
-			if (hud[c].ndVelBm)  hud[c].ndVelBm->setVisible(false);
+			if (h.ndRpmBk)  h.ndRpmBk->setVisible(false);
+			if (h.ndVelBk)  h.ndVelBk->setVisible(false);
+			if (h.ndVelBm)  h.ndVelBm->setVisible(false);
 
-			if (hud[c].ndRpm)  hud[c].ndRpm->setVisible(false);
-			if (hud[c].ndVel)  hud[c].ndVel->setVisible(false);
-			if (hud[c].ndMap)  hud[c].ndMap->setVisible(false);
+			if (h.ndRpm)  h.ndRpm->setVisible(false);
+			if (h.ndVel)  h.ndVel->setVisible(false);
+			if (h.ndMap)  h.ndMap->setVisible(false);
 
-			if (hud[c].bckTimes)  hud[c].bckTimes->setVisible(false);
-			if (hud[c].txTimTxt)  hud[c].txTimTxt->setVisible(false);
-			if (hud[c].txTimes)   hud[c].txTimes->setVisible(false);
+			if (h.bckTimes)  h.bckTimes->setVisible(false);
+			if (h.txTimTxt)  h.txTimTxt->setVisible(false);
+			if (h.txTimes)   h.txTimes->setVisible(false);
 		}
 		hideMouse();
 		if (mWndRpl)  mWndRpl->setVisible(false);
@@ -409,23 +411,23 @@ void App::ShowHUD(bool hideAll)
 
 		show = pSet->show_gauges;
 		for (int c=0; c < hud.size(); ++c)
-		{
-			if (hud[c].txGear)  hud[c].txGear->setVisible(pSet->show_digits);
-			if (hud[c].txVel)   hud[c].txVel->setVisible(pSet->show_digits);
-			if (hud[c].txBFuel)   hud[c].txBFuel->setVisible(show && bfuel);
-			if (hud[c].txDamage)  hud[c].txDamage->setVisible(show && bdmg);
+		{	Hud& h = hud[c];
+			if (h.txGear)  h.txGear->setVisible(pSet->show_digits);
+			if (h.txVel)   h.txVel->setVisible(pSet->show_digits);
+			if (h.txBFuel)   h.txBFuel->setVisible(show && bfuel);
+			if (h.txDamage)  h.txDamage->setVisible(show && bdmg);
 
-			if (hud[c].ndRpmBk)  hud[c].ndRpmBk->setVisible(show);
-			if (hud[c].ndVelBk)  hud[c].ndVelBk->setVisible(show && !pSet->show_mph);
-			if (hud[c].ndVelBm)  hud[c].ndVelBm->setVisible(show && pSet->show_mph);
+			if (h.ndRpmBk)  h.ndRpmBk->setVisible(show);
+			if (h.ndVelBk)  h.ndVelBk->setVisible(show && !pSet->show_mph);
+			if (h.ndVelBm)  h.ndVelBm->setVisible(show && pSet->show_mph);
 
-			if (hud[c].ndRpm)  hud[c].ndRpm->setVisible(show);
-			if (hud[c].ndVel)  hud[c].ndVel->setVisible(show);
-			if (hud[c].ndMap)  hud[c].ndMap->setVisible(pSet->trackmap);
+			if (h.ndRpm)  h.ndRpm->setVisible(show);
+			if (h.ndVel)  h.ndVel->setVisible(show);
+			if (h.ndMap)  h.ndMap->setVisible(pSet->trackmap);
 			
-			if (hud[c].bckTimes)  hud[c].bckTimes->setVisible(times);
-			if (hud[c].txTimTxt)  hud[c].txTimTxt->setVisible(times);
-			if (hud[c].txTimes)   hud[c].txTimes->setVisible(times);
+			if (h.bckTimes)  h.bckTimes->setVisible(times);
+			if (h.txTimTxt)  h.txTimTxt->setVisible(times);
+			if (h.txTimes)   h.txTimes->setVisible(times);
 		}
 		updMouse();
 		if (mWndRpl && !bLoading)  mWndRpl->setVisible(bRplPlay && bRplWnd);  //
