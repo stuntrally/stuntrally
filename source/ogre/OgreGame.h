@@ -428,9 +428,10 @@ protected:
 	void UpdateInputBars(), inputDetailBtn(WP);
 
 	//  joy events
-	MyGUI::StaticTextPtr txtInpDetail;  MyGUI::WidgetPtr panInputDetail;
-	MyGUI::EditPtr edInputIncrease;  void editInput(MyGUI::EditPtr), btnInputInv(WP);
-	void comboInputKeyAllPreset(CMB);
+	MyGUI::TabPtr tabInput;  void tabInputChg(MyGUI::TabPtr, size_t);
+	MyGUI::StaticTextPtr txtInpDetail;  MyGUI::WidgetPtr panInputDetail;  MyGUI::ButtonPtr chOneAxis;
+	MyGUI::EditPtr edInputIncrease;  void editInput(MyGUI::EditPtr), btnInputInv(WP), chkOneAxis(WP);
+	void comboInputKeyAllPreset(CMB);  bool App::TabInputId(int* pId);
 
 
 	///  tweak  -----------------------------------------

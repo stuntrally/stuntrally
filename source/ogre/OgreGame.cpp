@@ -83,7 +83,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,blendMtr(0), iBlendMaps(0), dbgdraw(0), noBlendUpd(0), blendMapSize(513), bListTrackU(0)
 	,grass(0), trees(0), road(0)
 	,pr(0),pr2(0), sun(0), carIdWin(-1), iCurCar(0), bUpdCarClr(1), iRplCarOfs(0)
-	,txtInpDetail(0), panInputDetail(0), edInputIncrease(0)
+	,txtInpDetail(0), panInputDetail(0), edInputIncrease(0), chOneAxis(0)
 	,liChamps(0),liStages(0), edChampStage(0),edChampEnd(0), edChampInfo(0)
 	,tabTut(0),tabChamp(0), imgTut(0),imgChamp(0),imgChall(0)
 	,imgChampStage(0),imgChampEnd(0), liNetEnd(0), valStageNum(0), btChampStage(0)
@@ -93,7 +93,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,edPerfTest(0),edTweakCol(0),tabTweak(0),tabEdCar(0)
 	,txtTweakPath(0),cmbTweakCarSet(0), cmbTweakTireSet(0),txtTweakTire(0), txtTweakPathCol(0)
 	,bPerfTest(0),iPerfTestStage(PT_StartWait), loadReadme(1), isGhost2nd(0)
-	,mBindingAction(NULL), mBindingSender(NULL)
+	,mBindingAction(NULL), mBindingSender(NULL), tabInput(0)
 {
 	pSet = settings;
 	pGame->collision.pApp = this;

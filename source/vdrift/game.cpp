@@ -437,7 +437,7 @@ void GAME::UpdateCar(CAR & car, double dt)
 {
 	car.Update(dt);
 	UpdateCarInputs(car);
-	UpdateDriftScore(car, dt);
+	//UpdateDriftScore(car, dt);
 }
 
 void GAME::UpdateCarInputs(CAR & car)
@@ -453,7 +453,8 @@ void GAME::UpdateCarInputs(CAR & car)
 
 	boost::lock_guard<boost::mutex> lock(pOgreGame->mPlayerInputStateMutex);
 	carinputs = carcontrols_local.second.ProcessInput(
-		pOgreGame->mPlayerInputState[car.id], car.id, carspeed, sss_eff, sss_velf,
+		pOgreGame->mPlayerInputState[car.id], car.id,
+		carspeed, sss_eff, sss_velf,  pOgreGame->mInputCtrlPlayer[car.id]->mbOneAxisThrottleBrake,
 		forceBrake, pOgreGame->bPerfTest, pOgreGame->iPerfTestStage);
 
 	car.HandleInputs(carinputs, TickPeriod());

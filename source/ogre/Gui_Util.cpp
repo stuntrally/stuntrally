@@ -391,7 +391,7 @@ void App::UpdChampTabVis()
 	}
 }
 
-void App::MainMenuBtn(MyGUI::WidgetPtr wp)
+void App::MainMenuBtn(WidgetPtr wp)
 {
 	for (int i=0; i < ciMainBtns; ++i)
 		if (wp == mWndMainBtns[i])
@@ -403,7 +403,7 @@ void App::MainMenuBtn(MyGUI::WidgetPtr wp)
 		}
 }
 
-void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
+void App::MenuTabChg(TabPtr tab, size_t id)
 {
 	if (id != 0)  return;
 	tab->setIndexSelected(1);  // dont switch to 0
@@ -418,8 +418,8 @@ void App::GuiShortcut(MNU_Btns mnu, int tab, int subtab)
 	isFocGui = true;
 	pSet->isMain = false;  pSet->inMenu = mnu;
 	
-	MyGUI::TabPtr mWndTabs = 0;
-	std::vector<MyGUI::TabControl*>* subt = 0;
+	TabPtr mWndTabs = 0;
+	std::vector<TabControl*>* subt = 0;
 	
 	switch (mnu)
 	{	case MNU_Replays:	mWndTabs = mWndTabsRpl;  break;
@@ -434,7 +434,7 @@ void App::GuiShortcut(MNU_Btns mnu, int tab, int subtab)
 	mWndTabs->setIndexSelected(tab);
 
 	if (!subt)  return;
-	MyGUI::TabControl* tc = (*subt)[tab];  if (!tc)  return;
+	TabControl* tc = (*subt)[tab];  if (!tc)  return;
 	int  cnt = tc->getItemCount();
 
 	if (t == tab && subtab == -1)  // cycle subpages if same tab
@@ -445,6 +445,9 @@ void App::GuiShortcut(MNU_Btns mnu, int tab, int subtab)
 	}
 	if (subtab > -1)
 		tc->setIndexSelected( std::min(cnt-1, subtab) );
+	
+	if (!tc->eventTabChangeSelect.empty())
+		tc->eventTabChangeSelect(tc, tc->getIndexSelected());
 }
 
 //  close netw end
@@ -477,7 +480,7 @@ void App::UpdCarClrSld(bool upd)
 
 
 //  next/prev in list by key
-int App::LNext(MyGUI::MultiList2* lp, int rel, int ofs)
+int App::LNext(MultiList2* lp, int rel, int ofs)
 {
 	size_t cnt = lp->getItemCount();
 	if (cnt==0)  return 0;
@@ -486,7 +489,7 @@ int App::LNext(MyGUI::MultiList2* lp, int rel, int ofs)
 	lp->beginToItemAt(std::max(0, i-ofs));  // center
 	return i;
 }
-int App::LNext(MyGUI::MultiList* lp, int rel)
+int App::LNext(MultiList* lp, int rel)
 {
 	size_t cnt = lp->getItemCount();
 	if (cnt==0)  return 0;
@@ -494,7 +497,7 @@ int App::LNext(MyGUI::MultiList* lp, int rel)
 	lp->setIndexSelected(i);
 	return i;
 }
-int App::LNext(MyGUI::ListPtr lp, int rel, int ofs)
+int App::LNext(ListPtr lp, int rel, int ofs)
 {
 	size_t cnt = lp->getItemCount();
 	if (cnt==0)  return 0;

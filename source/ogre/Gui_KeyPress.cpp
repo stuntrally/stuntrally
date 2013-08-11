@@ -314,26 +314,33 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 		}
 		if (tab)
 		if (shift)
-		{	if (action(A_PrevTab)) {  // prev gui subtab
-				if (sub)  {  int num = sub->getItemCount();
-					sub->setIndexSelected( (sub->getIndexSelected() - 1 + num) % num );  }	}
-			else if (action(A_NextTab)) {  // next gui subtab
-				if (sub)  {  int num = sub->getItemCount();
-					sub->setIndexSelected( (sub->getIndexSelected() + 1) % num );  }  }
-		}else
-		{	int num = tab->getItemCount()-1, i = 0, n = 0;
+		{	if (sub)  // prev, next subtab
+			{	bool chng = false;
+				if (action(A_PrevTab))
+				{	int num = sub->getItemCount();  chng = true;
+					sub->setIndexSelected( (sub->getIndexSelected() - 1 + num) % num );
+				}else if (action(A_NextTab))
+				{	int num = sub->getItemCount();  chng = true;
+						sub->setIndexSelected( (sub->getIndexSelected() + 1) % num );
+				}
+				if (chng && !sub->eventTabChangeSelect.empty())
+					sub->eventTabChangeSelect(sub, sub->getIndexSelected());
+		}	}
+		else  // prev, next tab
+		{	int num = tab->getItemCount()-1, i = tab->getIndexSelected(), n = 0;
+			bool chng = false;
 			if (action(A_PrevTab))
-			{	i = tab->getIndexSelected();
-				do{  if (i==1)  i = num;  else  --i;  ++n;  }
+			{	do{  if (i==1)  i = num;  else  --i;  ++n;  }
 				while (n < num && tab->getButtonWidthAt(i) == 1);
-				tab->setIndexSelected(i);  MenuTabChg(tab,i);  return;
-			} else
+				chng = true;
+			}else
 			if (action(A_NextTab))
-			{	i = tab->getIndexSelected();
-				do{  if (i==num)  i = 1;  else  ++i;  ++n;  }
+			{	do{  if (i==num)  i = 1;  else  ++i;  ++n;  }
 				while (n < num && tab->getButtonWidthAt(i) == 1);
-				tab->setIndexSelected(i);  MenuTabChg(tab,i);  return;
+				chng = true;
 			}
+			if (chng)
+			{	tab->setIndexSelected(i);  MenuTabChg(tab,i);  return;  }
 		}
 	}
 	else if (!isFocGui && pSet->show_graphs)  // change graphs type

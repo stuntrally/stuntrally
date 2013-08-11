@@ -474,6 +474,8 @@
 	<Tag name="InputKeyUnassigned">-- None --</Tag>
 	<Tag name="InputAssignKey">&lt;Assign&gt;</Tag>
 
+	<Tag name="OneAxisThrottleBrake">One axis for throttle and brake</Tag>
+	<Tag name="TipOneAxisThrottleBrake">If your controller has throttle and brake in one axis, check this. Bind axis to throttle, unbind brake. Use Inverse from throttle if needed.</Tag>
 	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
 	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
 

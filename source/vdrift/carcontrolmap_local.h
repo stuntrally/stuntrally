@@ -11,14 +11,14 @@ private:
 	std::vector <float> inputs;  // indexed by CARINPUT values
 	
 	// shift
-	bool grUpOld[4], grDnOld[4];
+	bool grUpOld[6], grDnOld[6];
 
 public:
 	CARCONTROLMAP_LOCAL()
 	{
-		for (int i=0; i<4; i++)
+		for (int i=0; i < 6; ++i)
 		{	grUpOld[i] = false;  grDnOld[i] = false;  }
-		//Reset();
+		Reset();
 	}
 	
 	void Reset()
@@ -27,7 +27,7 @@ public:
 	}
 	
 	const std::vector <float> & ProcessInput(const float* channels, int player,
-		float carspeed, float sss_effect, float sss_velfactor,
+		float carspeed, float sss_effect, float sss_velfactor, bool oneAxisThrBrk=false,
 		bool forceBrake=false,  // for race countdown
 		bool bPerfTest=false, EPerfTest iPerfTestStage=PT_StartWait);  // perf test
 };

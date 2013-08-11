@@ -89,7 +89,7 @@ void App::InitGui()
 	for (size_t i=0; i < mWndTabsGame->getItemCount(); ++i)
 	{	// todo: startsWith("SubTab")..
 		MyGUI::TabPtr sub = (TabPtr)mWndTabsGame->getItemAt(i)->findWidget(
-			/*.. i==TAB_Champs ? "ChampType" :*/ (i==TAB_Multi ? "tabsNet" : "tabPlayer!") );  //car tab wrong-
+			i==TAB_Champs ? "ChampType" : (i==TAB_Multi ? "tabsNet" : "tabPlayer") );
 		vSubTabsGame.push_back(sub);  // 0 for not found
 	}
 	vSubTabsOpts.clear();
@@ -531,7 +531,6 @@ void App::InitGui()
 
 	///  input tab  -------
 	InitInputGui();
-	panInputDetail = mGUI->findWidget<Widget>("PanInputDetail");
 	
 	InitGuiScreenRes();
 	

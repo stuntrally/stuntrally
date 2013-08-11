@@ -37,6 +37,7 @@ namespace ICS
 		, mDetectingBindingControl(NULL)
 		, mLog(log)
 		, mXmouseAxisBinded(false), mYmouseAxisBinded(false)
+		, mbOneAxisThrottleBrake(false)
 	{
 		ICS_LOG(" - Creating InputControlSystem - ");
 
@@ -75,6 +76,16 @@ namespace ICS
 				ICS_LOG("Error: Invalid Controller file. Missing <Controller> element.");
 				delete xmlDoc;
 				return;
+			}
+			
+			///  custom
+			mbOneAxisThrottleBrake = false;
+			TiXmlElement* xmlGlobal = xmlRoot->FirstChildElement("Global");
+			if (xmlGlobal)
+			{
+				const char* a = xmlGlobal->Attribute("oneAxisThrottleBrake");
+				if (a)
+					mbOneAxisThrottleBrake = std::string(a) == "true";
 			}
 
 			TiXmlElement* xmlControl = xmlRoot->FirstChildElement("Control");
@@ -383,6 +394,15 @@ namespace ICS
 
 				Controller.InsertEndChild(ChannelFilter);
 			}
+		}
+
+		///  custom
+		{
+			TiXmlElement Global("Global");
+
+			Global.SetAttribute("oneAxisThrottleBrake", mbOneAxisThrottleBrake ? "true" : "false");
+
+			Controller.InsertEndChild(Global);
 		}
 
 		for(std::vector<Control*>::const_iterator o = mControls.begin() ; o != mControls.end(); o++)

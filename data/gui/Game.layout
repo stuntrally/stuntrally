@@ -3020,6 +3020,13 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="InputTabAll">
 				<Property key="Caption" value="#FFFF60#{Input}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
+				<Widget type="Button" skin="CheckBox" position="548 112 300 24" name="OneAxisThrBrk">
+					<Property key="Caption" value="#{OneAxisThrottleBrake}"/>
+					<Property key="Colour" value="0.6 0.95 1"/>
+					<Property key="TextColour" value="0.6 0.95 1"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="tip" value="#{TipOneAxisThrottleBrake}"/>
+				</Widget>
                 <Widget type="Widget" skin="PanelSkin" position="532 176 236 116" name="PanKey1">
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<Property key="Alpha" value="0.55"/>

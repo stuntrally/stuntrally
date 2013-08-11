@@ -187,9 +187,8 @@ void App::UpdateInputButton(MyGUI::Button* button, const InputAction& action, in
 //----------------------------------------------------------------------------------------------------------------------------------
 void App::CreateInputTab(const std::string& title, bool playerTab, const std::vector<InputAction>& actions, ICS::InputControlSystem* ICS)
 {
-	TabPtr inputTab = mGUI->findWidget<Tab>("InputTab");  if (!inputTab)  return;
-
-	TabItemPtr tabitem = inputTab->addItem(TR(title));
+	if (!tabInput)  return;
+	TabItemPtr tabitem = tabInput->addItem(TR(title));
 
 	std::string sPlr = title;
 
@@ -306,15 +305,18 @@ void App::InitInputGui()
 {
 	LoadInputDefaults();
 
-	TabItemPtr inpTabAll = mGUI->findWidget<TabItem>("InputTabAll");  if (!inpTabAll)  return;
-	TabPtr inputTab = mGUI->findWidget<Tab>("InputTab");  if (!inputTab)  return;
-
 	txtInpDetail = mGUI->findWidget<StaticText>("InputDetail");
+	panInputDetail = mGUI->findWidget<Widget>("PanInputDetail");
+
+	TabItemPtr inpTabAll = mGUI->findWidget<TabItem>("InputTabAll");  if (!inpTabAll)  return;
+	Tab(tabInput, "InputTab", tabInputChg);
+	if (!tabInput)  return;
 
 	//  details edits
-	ButtonPtr btn;
+	ButtonPtr btn, bchk;
 	Btn("InputInv", btnInputInv);  //Ed(InputMul, editInput);
 	Ed(InputIncrease, editInput);  //Ed(InputReturn, editInput);
+	Chk("OneAxisThrBrk", chkOneAxis, false);  chOneAxis = bchk;
 
 	//  key emul presets combo
 	ComboBoxPtr combo;
@@ -336,7 +338,7 @@ void App::InitInputGui()
 		CreateInputTab(String("#FFF850") + (i==0 ? "#{Player} ":" ") +toStr(i+1), true, mInputActionsPlayer[i], mInputCtrlPlayer[i]);
 
 
-	TabItemPtr tabitem = inputTab->addItem(TR("#C0C0FF#{Other}"));
+	TabItemPtr tabitem = tabInput->addItem(TR("#C0C0FF#{Other}"));
 	int y = 32, ya = 26 / 2, yb = 20 / 2,  xa = 20, xa1=xa+16, xb = 250, xb1=xb+16;
 	CreateText(xa,y, 500,24, "txtoth1", TR("#A0D0FF#{InputOther1}"));  y+=2*ya;
 	CreateText(xa,y, 500,24, "txtoth2", TR("#A0D0FF#{InputOther2}"));  y+=2*ya;
@@ -355,7 +357,7 @@ void App::InitInputGui()
 
 
 	y = 32;
-	tabitem = inputTab->addItem(TR("#B0A0E0#{Shortcuts}"));
+	tabitem = tabInput->addItem(TR("#B0A0E0#{Shortcuts}"));
 	EditBox* ed = tabitem->createWidget<EditBox>("EditBoxEmpty", xa,y, 360,36, ALIGN, "txtshc0");
 	ed->setCaption("#A0C0E0"+TR("#{ShortcutsInfo}"));  setOrigPos(ed, "OptionsWnd");  y+=5*yb;
 	ed->setEditReadOnly(1);  ed->setEditMultiLine(1);  ed->setEditWordWrap(1);
@@ -492,12 +494,41 @@ void App::btnInputInv(WP wp)
 	mBindingAction->mControl->setInverted(chk->getStateSelected());
 }
 
+void App::chkOneAxis(WP wp)
+{
+	int id=0;  if (!TabInputId(&id))  return;
+	ButtonPtr chk = wp->castType<MyGUI::Button>();
+	bool b = !mInputCtrlPlayer[id]->mbOneAxisThrottleBrake;
+	mInputCtrlPlayer[id]->mbOneAxisThrottleBrake = b;
+    chk->setStateSelected(b);
+}
+
+void App::tabInputChg(MyGUI::TabPtr tab, size_t val)
+{
+	int id=0;  bool vis = TabInputId(&id);
+	chOneAxis->setVisible(vis);
+	//txtInpDetail;  panInputDetail;
+	//edInputIncrease;
+	if (vis)
+	{
+		bool b = mInputCtrlPlayer[id]->mbOneAxisThrottleBrake;
+		chOneAxis->setStateSelected(b);
+	}
+}
+
+//  returns player id 0..3, false if not player tab
+bool App::TabInputId(int* pId)
+{
+	if (!tabInput)  return false;
+	int id = tabInput->getIndexSelected();  if (id == 0)  return false;
+	id -= 1;  if (id > 3)  return false;
+	*pId = id;  return true;
+}
+
 void App::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 {
 	if (val == 0)  return;  cmb->setIndexSelected(0);
-	TabPtr tPlr = mGUI->findWidget<Tab>("InputTab",false);  if (!tPlr)  return;
-	int id = tPlr->getIndexSelected();  if (id == 0)  return;
-	id -= 1;
+	int id=0;  if (!TabInputId(&id))  return;
 
 	const int numActs = 6;  // these actions have key emul params (analog)
 	int keyActs[numActs] = {A_Boost, A_Brake, A_Flip, A_HandBrake, A_Steering, A_Throttle};

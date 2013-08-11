@@ -6,7 +6,7 @@
 
 ///  Process Input
 const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(const float* channels, int player,
-	float carspeed, float sss_effect, float sss_velfactor,
+	float carspeed, float sss_effect, float sss_velfactor, bool oneAxisThrBrk,
 	bool forceBrake, bool bPerfTest, EPerfTest iPerfTestStage)
 {
 	assert(inputs.size() == CARINPUT::ALL);
@@ -39,24 +39,36 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(const float* chann
 	//-----------------------------------------------------------------
 	
 	//  throttle, brake
-	inputs[CARINPUT::THROTTLE] = forceBrake ? 0.f : channels[App::A_Throttle];
-	const float val_ = forceBrake ? 0.f : channels[App::A_Brake];
-	const float deadzone = 0.0001f;  // sensible deadzone for braking
-	inputs[CARINPUT::BRAKE]    = (val_ < deadzone) ? 0.f : val_;
+	if (forceBrake)
+	{
+		inputs[CARINPUT::THROTTLE] = 0.f;
+		inputs[CARINPUT::BRAKE]    = 0.f;
+	}else
+	{
+		float thr = channels[App::A_Throttle], brk = channels[App::A_Brake];
+		if (oneAxisThrBrk)  // 1 axis for both
+		{	float val = thr * 2.f;
+			thr = val > 1.f ? (val - 1.f) : 0.f;
+			brk = val < 1.f ? (1.f - val) : 0.f;
+		}
+		inputs[CARINPUT::THROTTLE] = thr;
+		const float deadzone = 0.0001f;  // sensible deadzone for braking
+		inputs[CARINPUT::BRAKE]    = brk < deadzone ? 0.f : brk;
+	}
 
 	//  steering
-	float val = forceBrake ? 0.f : (channels[App::A_Steering]*2-1);
+	float val = forceBrake ? 0.f : (channels[App::A_Steering] * 2.f - 1.f);
 
 	//*  speed sensitive steering sss (decrease steer angle range with higher speed)
 	if (sss_effect > 0.02f)
 	{
-		float coeff = 1.0f, carmph = abs(carspeed) * 2.23693629f;
-		if (carmph > 1.0f)
+		float coeff = 1.f, carmph = abs(carspeed) * 2.23693629f;
+		if (carmph > 1.f)
 		{
 			//float ssco = sss_effect;  //*(1.0f-pow(val,2.0f));  //?-
 			coeff = (3.f-sss_velfactor) * 450.0f * (1.0f - atan(carmph*20.0f*sss_effect) * 0.6366198f);
 		}
-		if (coeff > 1.0f)  coeff = 1.0f;
+		if (coeff > 1.f)  coeff = 1.f;
 
 		//LogO("speed coeff: "+fToStr(coeff,2,4));
 		//val = val >= 0.f ? powf(val,1.5f) : -powf(-val,1.5f);

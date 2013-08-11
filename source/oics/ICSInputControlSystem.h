@@ -56,6 +56,7 @@ namespace ICS
 	{
 
 	public:
+		bool mbOneAxisThrottleBrake;  /// custom
 
 		enum NamedAxis { X = -1, Y = -2, Z = -3, UNASSIGNED = -4 };
 		enum POVAxis { NorthSouth = 0, EastWest = 1 };
