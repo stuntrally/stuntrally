@@ -76,12 +76,12 @@ public:
 		if (m_dynamicsWorld)
 			m_dynamicsWorld->addRigidBody(body);
 		
-		if (bodyName)
+		/*if (bodyName)
 		{
 			char* newname = duplicateName(bodyName);
 			m_objectNameMap.insert(body,newname);
 			m_nameBodyMap.insert(newname,body);
-		}
+		}*/
 		m_allocatedRigidBodies.push_back(body);
 		return body;
 	}
@@ -203,20 +203,28 @@ void App::DestroyObjects(bool clear)
 		if (o.nd)  mSceneMgr->destroySceneNode(o.nd);  o.nd = 0;
 		#ifdef SR_EDITOR  // game has destroyAll
 		if (o.ent)  mSceneMgr->destroyEntity(o.ent);  o.ent = 0;
+		#endif
 
 		// bullet
 		if (o.co)
 		{	delete o.co->getCollisionShape();
+			#ifdef SR_EDITOR
 			world->removeCollisionObject(o.co);
+			#else
+			pGame->collision.world->removeCollisionObject(o.co);
+			#endif
 			delete o.co;  o.co = 0;
 		}
 		if (o.rb)
 		{	delete o.rb->getCollisionShape();
 			delete o.ms;  o.ms = 0;
+			#ifdef SR_EDITOR
 			world->removeRigidBody(o.rb);
+			#else
+			pGame->collision.world->removeCollisionObject(o.rb);
+			#endif
 			delete o.rb;  o.rb = 0;
 		}
-		#endif
 	}
 	if (clear)
 		sc->objects.clear();

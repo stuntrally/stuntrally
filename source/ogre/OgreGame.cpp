@@ -219,6 +219,8 @@ void App::setTranslations()
 
 void App::destroyScene()
 {
+	DestroyObjects(true);
+	
 	for (int i=0; i < graphs.size(); ++i)
 		delete graphs[i];
 
