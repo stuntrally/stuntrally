@@ -144,10 +144,9 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 	user_data = user_config;  // APPDATA/stuntrally
 	#else
 	{
-		fs::path shareDir = SHARED_DATA_DIR;
 		char const* xdg_data_home = getenv("XDG_DATA_HOME");
 		user_data = (xdg_data_home ? xdg_data_home / stuntrally
-					: fs::path(home_dir) / ".local" / stuntrally / shareDir).string();
+					: fs::path(home_dir) / ".local/share/games" / stuntrally).string();
 	}
 	#endif
 
@@ -176,13 +175,13 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 		// TODO: Disabled for now until this is handled properly
 		//dirs.push_back(user_data_dir);
 
-		// Adding relative path from installed executable
-		dirs.push_back(execname().parent_path().parent_path() / shareDir);
 		// Adding relative path for running from sources
 		dirs.push_back(execname().parent_path().parent_path() / "data");
 		dirs.push_back(execname().parent_path().parent_path());
 		dirs.push_back(execname().parent_path() / "data");
 		dirs.push_back(execname().parent_path());
+		// Adding relative path from installed executable
+		dirs.push_back(execname().parent_path().parent_path() / shareDir);
 		#ifndef _WIN32
 		// Adding XDG_DATA_DIRS
 		{
