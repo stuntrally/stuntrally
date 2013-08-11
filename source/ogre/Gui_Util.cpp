@@ -513,6 +513,7 @@ void App::LNext(int rel)
 	if (pSet->inMenu == MNU_Replays)
 		listRplChng(rplList,  LNext(rplList, rel, 11));
 	else
+		if (mWndGame->getVisible())
 		switch (mWndTabsGame->getIndexSelected())
 		{	case TAB_Track:  listTrackChng(trkList,  LNext(trkList, rel, 11));  return;
 			case TAB_Car:	 listCarChng(carList,    LNext(carList, rel, 5));  return;
