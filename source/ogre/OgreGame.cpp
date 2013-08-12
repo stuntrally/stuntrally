@@ -120,7 +120,7 @@ App::App(SETTINGS *settings, GAME *game)
 	resCar = "";  resTrk = "";  resDrv = "";
 	sListCar = "";  sListTrack = "";
 	
-	for (int i=0; i < ciEdCar; ++i)
+	for (i=0; i < ciEdCar; ++i)
 		edCar[i] = 0;
 
 	for (int o=0; o < 6; ++o)  for (c=0; c < 3; ++c)
