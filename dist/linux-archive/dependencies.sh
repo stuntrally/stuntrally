@@ -12,7 +12,7 @@ sudo updatedb # For `locate` command required by make-archive.sh
 # SDL
 sudo apt-get install --assume-yes libasound2-dev libpulse-dev libaudio-dev libesd0-dev
 cd /tmp
-wget http://www.libsdl.org/tmp/release/SDL2-2.0.0.tar.gz
+wget http://www.libsdl.org/release/SDL2-2.0.0.tar.gz
 tar xvf SDL2-2.0.0.tar.gz
 cd SDL2-2.0.0
 ./configure
