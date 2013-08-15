@@ -643,6 +643,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\config\times.xml"
+				>
+			</File>
+			<File
 				RelativePath="..\config\tracks.xml"
 				>
 			</File>
