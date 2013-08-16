@@ -11,6 +11,7 @@
 
 	<fluid name="water white"	material="Water_white" density="200" angDamp="0.7" linDamp="0.2" heightDamp="0" />
 	<fluid name="water sunset"	material="Water_sunset" density="200" angDamp="0.7" linDamp="0.2" heightDamp="0" />
+	<fluid name="water sunset cyan"	material="Water_sunset_cyan" density="200" angDamp="0.7" linDamp="0.2" heightDamp="0" />
 	<fluid name="water shore"	material="Water_shore" density="200" angDamp="0.7" linDamp="0.2" heightDamp="0" />
 	<fluid name="water dark"	material="Water_dark" density="200" angDamp="0.7" linDamp="0.2" heightDamp="0" />
 
