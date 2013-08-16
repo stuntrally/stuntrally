@@ -205,6 +205,7 @@ void App::DestroyObjects(bool clear)
 		if (o.ent)  mSceneMgr->destroyEntity(o.ent);  o.ent = 0;
 		#endif
 
+		#ifdef SR_EDITOR
 		// bullet
 		if (o.co)
 		{	delete o.co->getCollisionShape();
@@ -225,6 +226,7 @@ void App::DestroyObjects(bool clear)
 			#endif
 			delete o.rb;  o.rb = 0;
 		}
+		#endif
 	}
 	if (clear)
 		sc->objects.clear();
