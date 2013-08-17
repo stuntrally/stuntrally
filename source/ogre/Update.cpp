@@ -300,7 +300,6 @@ bool App::frameStart(Real time)
 			if (bUpdChat)  {  edNetChat->setCaption(sChatBuffer);  bUpdChat = false;  }
 			if (bStartGame)
 			{
-				//mMasterClient.reset();
 				mClient->startGame();
 				btnNewGameStart(NULL);
 				bStartGame = false;

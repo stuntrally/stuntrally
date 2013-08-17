@@ -89,7 +89,9 @@ public:
 		//  champ
 		int champ_num, chall_num;  // -1 none
 		bool champ_rev;
-		float pre_time;
+		
+		float pre_time;  int start_order;
+		//int rewind_type;
 
 		GameSet();
 	}  game,  // current game, changed only on new game start

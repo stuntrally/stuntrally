@@ -155,9 +155,7 @@ void App::NewGame()
 
 	//  wait until sim finishes
 	while (bSimulating)
-	{
 		boost::this_thread::sleep(boost::posix_time::milliseconds(pSet->thread_sleep));
-	}
 
 	bRplPlay = 0;
 	pSet->rpl_rec = bRplRec;  // changed only at new game
@@ -170,10 +168,7 @@ void App::NewGame()
 		if (mClient && mLobbyState != HOSTING)  // all but host
 			updateGameSet();  // override gameset params for networked game (from host gameset)
 		if (mClient)  // for all, including host
-		{	pSet->game.collis_veget = true;
-			pSet->game.trees = 1.f;  // force same val,  send and use host's value ?
 			pSet->game.local_players = 1;
-		}
 	}
 	newGameRpl = false;
 	

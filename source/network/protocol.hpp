@@ -94,16 +94,18 @@ struct GameInfo {
 	uint8_t laps;
 	uint8_t locked;    // game
 	uint8_t reversed;  // track
+
 	uint8_t flip_type;
 	uint8_t boost_type;  float boost_power;
 	char name[32];
 	char track[32];
 	char sim_mode[32];
-	//TODO:
-	//uint8_t start_reverse;  // start pos order
-	//uint8_t tree_collis;  float tree_mult;   // trees setup from host
-	//uint8_t damage_type;  float damage_lap_reduce;
-	//* ?rewind type, ?boost fuel each lap value, add over time value
+
+	uint8_t start_order;  //TODO: start pos order (reverse)
+	uint8_t tree_collis;  float tree_mult;   // trees setup from host
+	uint8_t damage_type;
+	uint8_t rewind_type;  //todo
+	//float damage_lap_dec, boost_lap_inc;  //todo
 
 	GameInfo(): packet_type(GAME_STATUS), id() {
 		name[0] = '\0';  track[0] = '\0';  sim_mode[0] = '\0';  }

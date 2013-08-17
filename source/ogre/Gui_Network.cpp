@@ -107,17 +107,6 @@ void App::updateGameInfo()
 	updateGameInfoGUI();
 }
 
-void App::updateGameSet()
-{
-	pSet->game.collis_cars = netGameInfo.collisions;
-	pSet->game.num_laps = netGameInfo.laps;		LogO("== Netw laps num: " + toStr(pSet->game.num_laps));
-	pSet->game.flip_type = netGameInfo.flip_type;
-	pSet->game.boost_type = netGameInfo.boost_type;
-	pSet->game.boost_power = netGameInfo.boost_power;
-	pSet->game.trackreverse = netGameInfo.reversed;
-	pSet->game.sim_mode = netGameInfo.sim_mode;  LogO("== Netw sim mode: " + pSet->game.sim_mode);
-}
-
 void App::updateGameInfoGUI()
 {
 	//  update track info
@@ -149,36 +138,70 @@ void App::updateGameInfoGUI()
 	// todo: probably should also update on gui collis,boost,reverse,... (but not in pSet.gui)
 }
 
+
+///  Receive  set game from host
+//---------------------------------------------------------------------
+void App::updateGameSet()
+{
+	pSet->game.sim_mode = netGameInfo.sim_mode;  LogO("== Netw sim mode: " + pSet->game.sim_mode);
+
+	pSet->game.collis_cars = netGameInfo.collisions;
+	pSet->game.num_laps = netGameInfo.laps;		LogO("== Netw laps num: " + toStr(pSet->game.num_laps));
+	pSet->game.trackreverse = netGameInfo.reversed;
+
+	pSet->game.start_order = netGameInfo.start_order;
+	pSet->game.collis_veget = netGameInfo.tree_collis;
+	pSet->game.trees = netGameInfo.tree_mult;
+
+	pSet->game.boost_type = netGameInfo.boost_type;
+	pSet->game.boost_power = netGameInfo.boost_power;
+	pSet->game.flip_type = netGameInfo.flip_type;
+	pSet->game.damage_type = netGameInfo.damage_type;
+	//pSet->game.rewind_type = netGameInfo.rewind_type;  //todo
+	//damage_lap_dec, boost_lap_inc;  //todo
+}
+
+///  Send  upload to peers
+//---------------------------------------------------------------------
 void App::uploadGameInfo()
 {
 	if (!mMasterClient || !mClient || !edNetGameName || !pSet)
 		return;
 	protocol::GameInfo game;
-	string gamename = edNetGameName->getCaption();
-	string trackname = sListTrack;
-	string simmode = pSet->gui.sim_mode;
+	string sGame = edNetGameName->getCaption();
+	string sTrack = sListTrack, sSim = pSet->gui.sim_mode;
 	
 	memset(game.name, 0, sizeof(game.name));
 	memset(game.track, 0, sizeof(game.track));
 	memset(game.sim_mode, 0, sizeof(game.sim_mode));
-	strcpy(game.name, gamename.c_str());
-	strcpy(game.track, trackname.c_str());
-	strcpy(game.sim_mode, simmode.c_str());
+	strcpy(game.name, sGame.c_str());
+	strcpy(game.track, sTrack.c_str());
+	strcpy(game.sim_mode, sSim.c_str());
 	game.players = mClient->getPeerCount()+1;
 
-	game.collisions = pSet->gui.collis_cars;  // game set
+	game.collisions = pSet->gui.collis_cars;
 	game.laps = pSet->gui.num_laps;				LogO("== Netw laps num: " + toStr(pSet->gui.num_laps));
-	game.flip_type = pSet->gui.flip_type;
+	game.reversed = pSet->gui.trackreverse;
+
+	game.start_order = pSet->gui.start_order;
+	game.tree_collis = pSet->gui.collis_veget;
+	game.tree_mult = pSet->gui.trees;
+
 	game.boost_type = pSet->gui.boost_type;
 	game.boost_power = pSet->gui.boost_power;
-	game.reversed = pSet->gui.trackreverse;
+	game.flip_type = pSet->gui.flip_type;
+	game.damage_type = pSet->gui.damage_type;
+	game.rewind_type = 0;  //todo
+	//damage_lap_dec, boost_lap_inc;  //todo
 	
 	game.port = pSet->local_port;
 	game.locked = !edNetPassword->getCaption().empty();
 	mMasterClient->updateGame(game); // Upload to master server
-	if (mClient) // Send to peers
+	if (mClient)  // Send to peers
 		mClient->broadcastGameInfo(game);
 }
+//---------------------------------------------------------------------
+
 
 void App::setNetGuiHosting(bool enabled)
 {
