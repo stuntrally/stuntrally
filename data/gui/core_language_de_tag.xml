@@ -45,7 +45,7 @@
 	<Tag name="TipTrackImg">Bildschirmfoto der ausgewählten Strecke.</Tag>
 	<Tag name="TerLNoiseOnly">Nur Rauschen</Tag>
 	<Tag name="InputValueChange">Jede Bewegung/Werteveränderung mit </Tag>
-	<Tag name="Terrain">Terrain</Tag>
+	<Tag name="TipOneAxisThrottleBrake">If your controller has throttle and brake in one axis, check this. Bind axis to throttle, unbind brake. Use Inverse from throttle if needed.</Tag>
 	<Tag name="TipChangeGloss">Auto Farbe Glossinen ändern (matte-glänzend).</Tag>
 	<Tag name="Surface">Oberfläche</Tag>
 	<Tag name="Road_Yaw">Yaw</Tag>
@@ -141,6 +141,7 @@
 	<Tag name="GraphicsAll_Medium">Mittel</Tag>
 	<Tag name="NeedReload">* neu Laden erforderlich</Tag>
 	<Tag name="MinimapZoom">Vergrößerung</Tag>
+	<Tag name="OneAxisThrottleBrake">Eine Achse für Gas und Bremse</Tag>
 	<Tag name="ViewRight">Ans. Rechts</Tag>
 	<Tag name="Count">Anzahl</Tag>
 	<Tag name="InputBrushPower">; &apos; (oder alt-Mausrad) - Exponent (Gestalt)</Tag>
@@ -287,7 +288,7 @@
 	<Tag name="HDR">HDR+Bloom</Tag>
 	<Tag name="TipABS">Verhindert das Blockieren der Reifen beim Bremsen (Standard: aus)</Tag>
 	<Tag name="TipGrassPatchHeightMin">Minimale Höhe des Grasflecks.</Tag>
-	<Tag name="InputRoadMat">-,= - Weg/Rohre material (-1 versteckt)</Tag>
+	<Tag name="Terrain">Terrain</Tag>
 	<Tag name="CarType_Terrain">Gelände</Tag>
 	<Tag name="InputObjectsRotReset">shift-2 - Umdrehung zurücksetzen</Tag>
 	<Tag name="EdInputBar">Eingabe Feld Strg-I</Tag>
@@ -302,6 +303,7 @@
 	<Tag name="Brush_Octaves">Oktaven</Tag>
 	<Tag name="Type">Typ</Tag>
 	<Tag name="NetWaiting">Wartend...</Tag>
+	<Tag name="LoadTrack">Strecke laden</Tag>
 	<Tag name="MergeLength">Zusammenf. L.</Tag>
 	<Tag name="InputMinVal">Min. Wert</Tag>
 	<Tag name="RplMaxNumViewports">Max. Anzahl von Ansichten nebeneinander</Tag>
@@ -604,7 +606,7 @@
 	<Tag name="Road_Pipe">Rohre</Tag>
 	<Tag name="Diffuse">Diffuse</Tag>
 	<Tag name="Tires">Reifen</Tag>
-	<Tag name="LoadTrack">Strecke laden</Tag>
+	<Tag name="InputRoadMat">-,= - Weg/Rohre material (-1 versteckt)</Tag>
 	<Tag name="TipTrkNameEditor">Name der ausgewählten Strecke, wird auch zum Umbenennen und als neuer Streckenname benutzt.</Tag>
 	<Tag name="InputRoadStats">T - Straßenstatistiken</Tag>
 	<Tag name="VSync">VSync</Tag>
@@ -893,8 +895,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="TipOneAxisThrottleBrake">If your controller has throttle and brake in one axis, check this. Bind axis to throttle, unbind brake. Use Inverse from throttle if needed.</Tag>
-	<Tag name="OneAxisThrottleBrake">One axis for throttle and brake</Tag>
+	<Tag name="NetNew">New game</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

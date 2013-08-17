@@ -45,7 +45,7 @@
 	<Tag name="TipTrackImg">Capture d'écran du jeu pour la piste sélectionnée.</Tag>
 	<Tag name="TerLNoiseOnly">Bruit seulement</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
-	<Tag name="Terrain">Terrain</Tag>
+	<Tag name="TipOneAxisThrottleBrake">If your controller has throttle and brake in one axis, check this. Bind axis to throttle, unbind brake. Use Inverse from throttle if needed.</Tag>
 	<Tag name="TipChangeGloss">Changer la brillance de la peinture (mat/brillant).</Tag>
 	<Tag name="Surface">Surface</Tag>
 	<Tag name="Road_Yaw">Angle horizontal</Tag>
@@ -66,7 +66,7 @@
 	<Tag name="ScoreNeeded">Score nécessaire</Tag>
 	<Tag name="CarType_Extreme">Extrême</Tag>
 	<Tag name="Game name">Nom de la partie</Tag>
-	<Tag name="TipSliderReset">RMB on slider - reset to default value.</Tag>
+	<Tag name="TipSliderReset">Clic droit sur un glisseur - réinitialiser à la valeur par défaut.</Tag>
 	<Tag name="HUD">HUD</Tag>
 	<Tag name="InputCamControl">W,S A,D Q,E - se déplacer Flèches - tourner</Tag>
 	<Tag name="TipTrackMap">Mini-carte de la piste sélectionnée, vue de dessus.</Tag>
@@ -141,6 +141,7 @@
 	<Tag name="GraphicsAll_Medium">Moyen</Tag>
 	<Tag name="NeedReload">* besoin de recharger</Tag>
 	<Tag name="MinimapZoom">Zoom</Tag>
+	<Tag name="OneAxisThrottleBrake">One axis for throttle and brake</Tag>
 	<Tag name="ViewRight">Vue de droite</Tag>
 	<Tag name="Count">Nombre</Tag>
 	<Tag name="InputBrushPower">; &apos;  (or alt-Wheel)  -  Power exponent</Tag>
@@ -287,7 +288,7 @@
 	<Tag name="HDR">HDR + ébouissement</Tag>
 	<Tag name="TipABS">Évite le blocage des roues au freinage (par défaut : désactivé).</Tag>
 	<Tag name="TipGrassPatchHeightMin">Hauteur minimale de l'herbe.</Tag>
-	<Tag name="InputRoadMat">-,= - matériau de la route/tube (-1 caché)</Tag>
+	<Tag name="Terrain">Terrain</Tag>
 	<Tag name="CarType_Terrain">Terrain</Tag>
 	<Tag name="InputObjectsRotReset">Maj.-2 - réinit. la rotation</Tag>
 	<Tag name="EdInputBar">Barre d'entrée Ctrl-I</Tag>
@@ -302,6 +303,7 @@
 	<Tag name="Brush_Octaves">Octaves</Tag>
 	<Tag name="Type">Type</Tag>
 	<Tag name="NetWaiting">Attente...</Tag>
+	<Tag name="LoadTrack">Chargement du circuit</Tag>
 	<Tag name="MergeLength">Merge length</Tag>
 	<Tag name="InputMinVal">Valeur Minimum</Tag>
 	<Tag name="RplMaxNumViewports">Nombre de vues maximum</Tag>
@@ -372,7 +374,7 @@
 	<Tag name="InputMapShowOptions">Afficher les options</Tag>
 	<Tag name="InputCameraMode">Mode de la caméra</Tag>
 	<Tag name="Enabled">Activé</Tag>
-	<Tag name="TipCarType">Car type, primary destination. But some cars can be used on gravel even if not meant for it.</Tag>
+	<Tag name="TipCarType">Type de voiture (terrain de prédilection), mais certaines voitures sont adaptées à tous types de terrain.</Tag>
 	<Tag name="TipReverse">Inverse la direction du circuit.</Tag>
 	<Tag name="DidntPass">Échec</Tag>
 	<Tag name="Road_Cur">Cur</Tag>
@@ -399,12 +401,12 @@
 	<Tag name="Other">Autres</Tag>
 	<Tag name="TipTerLAngSm">Angle smooth range (transition).</Tag>
 	<Tag name="godrays">Rayons du soleil</Tag>
-	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
+	<Tag name="TweakEdit3">Ctrl-F5 - démarrer un test de performance voiture</Tag>
 	<Tag name="InputRoadNext">Pg.Préc.,Pg.Suiv (ou molette) - point précédent/suivant</Tag>
 	<Tag name="SceneryId">ID du paysage</Tag>
 	<Tag name="TipTerTriSize">Taille des triangles du terrain en [mètres] (1 à 2 sont recommandés, utilisez une valeur plus élevée pour un grand circuit). Changé après une Mise à jour (F8).</Tag>
 	<Tag name="HDRIntensity">Intensité d'éblouissement</Tag>
-	<Tag name="ColReflect">Réflection</Tag>
+	<Tag name="ColReflect">Réflexion</Tag>
 	<Tag name="Development">Développement</Tag>
 	<Tag name="InputRoadIns">Insér. - insérer nouveau (après sélection, Alt : avant sélection)</Tag>
 	<Tag name="TweakEdit1">Alt-Z - afficher la fenêtre d'édition de voiture</Tag>
@@ -496,7 +498,7 @@
 	<Tag name="InputRplCtrl1">Retour arrière - montrer/cacher les contrôles (CTRL enfoncée pour utiliser la souris)</Tag>
 	<Tag name="InputRplCtrl4">K, L - changer la vue de la caméra vers un autre joueur.</Tag>
 	<Tag name="TipGrassSwayLen">Intensité du \</Tag>
-	<Tag name="WaterReflection">Réflection</Tag>
+	<Tag name="WaterReflection">Réflexion</Tag>
 	<Tag name="intensity">intensité</Tag>
 	<Tag name="Fog">Brouillard</Tag>
 	<Tag name="BulletProfilerTxt">Temps du profileur Bullet</Tag>
@@ -516,8 +518,8 @@
 	<Tag name="NeedRestart">* redémarrage requis</Tag>
 	<Tag name="Water">Eau</Tag>
 	<Tag name="mud">boue</Tag>
-	<Tag name="Brush_ShapeN-gon">N-gon</Tag>
-	<Tag name="ChampInfo">In tutorial/championship mode you drive a series of tracks. Minimum score (depending on your time) is needed to pass to next stage. Car changing is possible.</Tag>
+	<Tag name="Brush_ShapeN-gon">N-gone</Tag>
+	<Tag name="ChampInfo">En mode tutoriel/championnat, vous conduisez sur une série de circuits. Un score minimum (en fonction de votre temps) est nécessaire pour passer au stage suivant. Il est possible d'utiliser n'importe quelle voiture.</Tag>
 	<Tag name="AutoUpdateBlendmap">Mettre à jour la blendmap automatiquement</Tag>
 	<Tag name="InputMapThrottle">Accélérer</Tag>
 	<Tag name="TBLap">Tour</Tag>
@@ -525,7 +527,7 @@
 	<Tag name="Advanced">Avancé</Tag>
 	<Tag name="InputObjectsMode">X - éditer les objets</Tag>
 	<Tag name="TipGrassVisDist">Distance de vue de l'herbe.</Tag>
-	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
+	<Tag name="TracksGhost">Fantôme du circuit (voiture ES)</Tag>
 	<Tag name="TipModelVisDist">Distance de vue pour les modèles 3D, après cette distance ils se transforment en sprites 2D.</Tag>
 	<Tag name="TerGenScale">Hauteur</Tag>
 	<Tag name="Settings">Paramètres</Tag>
@@ -604,7 +606,7 @@
 	<Tag name="Road_Pipe">Tube</Tag>
 	<Tag name="Diffuse">Diffuser</Tag>
 	<Tag name="Tires">Pneus</Tag>
-	<Tag name="LoadTrack">Chargement du circuit</Tag>
+	<Tag name="InputRoadMat">-,= - matériau de la route/tube (-1 caché)</Tag>
 	<Tag name="TipTrkNameEditor">Nom du circuit sélectionné, également utilisé pour renommer les circuits et comme nouveau nom de circuit.</Tag>
 	<Tag name="InputRoadStats">T - fenêtre des stats. de la route</Tag>
 	<Tag name="VSync">Synchronisation verticale</Tag>
@@ -615,7 +617,7 @@
 	<Tag name="Reset">Réinitialiser</Tag>
 	<Tag name="ReplaysMenu">Replays</Tag>
 	<Tag name="InputSlowFast">Maj. - lent Ctrl - rapide</Tag>
-	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
+	<Tag name="InputRoadMirror">Alt-Orig. - Mirroir de la sélection</Tag>
 	<Tag name="GrassMult">Multi. d'herbe</Tag>
 	<Tag name="UnitMB">Mo</Tag>
 	<Tag name="Back">Retour</Tag>
@@ -647,7 +649,7 @@
 	<Tag name="InputFluidsType">-,= - changer le type de liquide (eau, boue, etc.)</Tag>
 	<Tag name="TrackWidthAvg">Largeur moyenne</Tag>
 	<Tag name="Road_Length">Longueur</Tag>
-	<Tag name="RplGhostOther">Other car ghost (when current unavailable)</Tag>
+	<Tag name="RplGhostOther">Fantômes d'autres voitures (si l'actuel est indisponible)</Tag>
 	<Tag name="NetAddress">Adresse</Tag>
 	<Tag name="Road_sel">sél</Tag>
 	<Tag name="AutoLoad">Chargement automatique du circuit</Tag>
@@ -656,7 +658,7 @@
 	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
 	<Tag name="Shaders">Shaders</Tag>
 	<Tag name="dust">poussière</Tag>
-	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
+	<Tag name="InputUnbind">Clic droit sur un bouton pour ne plus assigner.</Tag>
 	<Tag name="TipRainSnow1">Définir le type de pluie/neige 2</Tag>
 	<Tag name="TipRainSnow2">Définir le type de pluie/neige 1</Tag>
 	<Tag name="TipTerLNoise">Facteur de bruit additionel.</Tag>
@@ -893,8 +895,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet d'Options précédent/suivant (Maj. sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="TipOneAxisThrottleBrake">If your controller has throttle and brake in one axis, check this. Bind axis to throttle, unbind brake. Use Inverse from throttle if needed.</Tag>
-	<Tag name="OneAxisThrottleBrake">One axis for throttle and brake</Tag>
+	<Tag name="NetNew">New game</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

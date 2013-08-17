@@ -45,7 +45,7 @@
 	<Tag name="TipTrackImg">Снимок трека для игры</Tag>
 	<Tag name="TerLNoiseOnly">Только шум</Tag>
 	<Tag name="InputValueChange">Жми или двинь (мышь/кнопка) </Tag>
-	<Tag name="Terrain">Ландш.</Tag>
+	<Tag name="TipOneAxisThrottleBrake">If your controller has throttle and brake in one axis, check this. Bind axis to throttle, unbind brake. Use Inverse from throttle if needed.</Tag>
 	<Tag name="TipChangeGloss">Изменяет блеск окраски автомобиля (матовый-блестящий).</Tag>
 	<Tag name="Surface">Поверхность</Tag>
 	<Tag name="Road_Yaw">Откл.</Tag>
@@ -141,6 +141,7 @@
 	<Tag name="GraphicsAll_Medium">Средняя</Tag>
 	<Tag name="NeedReload">* нужна перезагрузка</Tag>
 	<Tag name="MinimapZoom">Масштаб</Tag>
+	<Tag name="OneAxisThrottleBrake">One axis for throttle and brake</Tag>
 	<Tag name="ViewRight">Вид справа</Tag>
 	<Tag name="Count">Количество</Tag>
 	<Tag name="InputBrushPower">; &apos;  (или alt-Wheel)  -  экспонента силы</Tag>
@@ -287,7 +288,7 @@
 	<Tag name="HDR">HDR+разм.</Tag>
 	<Tag name="TipABS">Предотвращает блокировку колес при торможении (по умолчанию выключено).</Tag>
 	<Tag name="TipGrassPatchHeightMin">Минимальная высота травы</Tag>
-	<Tag name="InputRoadMat">-,=  - дорога/труба материал  (-1 скрыт)</Tag>
+	<Tag name="Terrain">Ландш.</Tag>
 	<Tag name="CarType_Terrain">Земной</Tag>
 	<Tag name="InputObjectsRotReset">shift-2 - сброс вращ.</Tag>
 	<Tag name="EdInputBar">Панель ввода Ctrl-I</Tag>
@@ -302,6 +303,7 @@
 	<Tag name="Brush_Octaves">Наборы</Tag>
 	<Tag name="Type">Тип</Tag>
 	<Tag name="NetWaiting">Ожидание...</Tag>
+	<Tag name="LoadTrack">Загр. трек</Tag>
 	<Tag name="MergeLength">Соед. длину</Tag>
 	<Tag name="InputMinVal">Мин. значение</Tag>
 	<Tag name="RplMaxNumViewports">Макимальное количество окон экрана</Tag>
@@ -604,7 +606,7 @@
 	<Tag name="Road_Pipe">Труба</Tag>
 	<Tag name="Diffuse">Распространение</Tag>
 	<Tag name="Tires">Шины</Tag>
-	<Tag name="LoadTrack">Загр. трек</Tag>
+	<Tag name="InputRoadMat">-,=  - дорога/труба материал  (-1 скрыт)</Tag>
 	<Tag name="TipTrkNameEditor">Выбранное имя трека, используется также для переименования трека и как новое имя трека.</Tag>
 	<Tag name="InputRoadStats">T - окно стат. дороги</Tag>
 	<Tag name="VSync">Верт. синхр.</Tag>
@@ -893,8 +895,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред,след Опции вкладка (shift - подменю)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="TipOneAxisThrottleBrake">If your controller has throttle and brake in one axis, check this. Bind axis to throttle, unbind brake. Use Inverse from throttle if needed.</Tag>
-	<Tag name="OneAxisThrottleBrake">One axis for throttle and brake</Tag>
+	<Tag name="NetNew">New game</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

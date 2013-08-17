@@ -45,7 +45,7 @@
 	<Tag name="TipTrackImg">Zrzut z gry dla wybranej trasy.</Tag>
 	<Tag name="TerLNoiseOnly">Tylko szum</Tag>
 	<Tag name="InputValueChange">Każdy ruch myszą lub zmiana wartości z </Tag>
-	<Tag name="Terrain">Teren</Tag>
+	<Tag name="TipOneAxisThrottleBrake">Jeśli Twój kontroler ma gaz i hamulec na jednej osi, zaznacz to. Przypisz tą oś do gazu, usuń z hamulca. Użyj Odwrócenia gazu jeśli potrzeba.</Tag>
 	<Tag name="TipChangeGloss">Zmień połysk auta (matowy-błyszczący).</Tag>
 	<Tag name="Surface">Nawierzchnia</Tag>
 	<Tag name="Road_Yaw">Obr</Tag>
@@ -141,6 +141,7 @@
 	<Tag name="GraphicsAll_Medium">Średnie</Tag>
 	<Tag name="NeedReload">* potrzeba przeładowania</Tag>
 	<Tag name="MinimapZoom">Powiększenie</Tag>
+	<Tag name="OneAxisThrottleBrake">Jedna oś na gaz i hamulec</Tag>
 	<Tag name="ViewRight">Widok prawy</Tag>
 	<Tag name="Count">Liczba</Tag>
 	<Tag name="InputBrushPower">; &apos; (lub alt-Kółko) - wykładnik Potęgi</Tag>
@@ -287,7 +288,7 @@
 	<Tag name="HDR">HDR+Blask</Tag>
 	<Tag name="TipABS">Zapobiega blokadzie kół przy hamowaniu (domyślnie: wył.)</Tag>
 	<Tag name="TipGrassPatchHeightMin">Minimalna wysokość trawy.</Tag>
-	<Tag name="InputRoadMat">-,=   -  materiał drogi/rury (-1 ukryty)</Tag>
+	<Tag name="Terrain">Teren</Tag>
 	<Tag name="CarType_Terrain">Terenowy</Tag>
 	<Tag name="InputObjectsRotReset">shift-2 - resetuj obrót</Tag>
 	<Tag name="EdInputBar">Pasek wejścia Ctrl-I</Tag>
@@ -302,6 +303,7 @@
 	<Tag name="Brush_Octaves">Oktawy</Tag>
 	<Tag name="Type">Typ</Tag>
 	<Tag name="NetWaiting">Oczekiwanie...</Tag>
+	<Tag name="LoadTrack">Wczytaj trasę</Tag>
 	<Tag name="MergeLength">odległość złączania</Tag>
 	<Tag name="InputMinVal">Min. Wartość</Tag>
 	<Tag name="RplMaxNumViewports">Maks. liczba widoków (dla powtórek kilkugraczowych)</Tag>
@@ -604,7 +606,7 @@
 	<Tag name="Road_Pipe">Rura</Tag>
 	<Tag name="Diffuse">Dyfuzyjny</Tag>
 	<Tag name="Tires">Opony</Tag>
-	<Tag name="LoadTrack">Wczytaj trasę</Tag>
+	<Tag name="InputRoadMat">-,=   -  materiał drogi/rury (-1 ukryty)</Tag>
 	<Tag name="TipTrkNameEditor">Nazwa wybranej trasy, używana również przy zmianie nazwy i jako nazwa nowej trasy.</Tag>
 	<Tag name="InputRoadStats">T - okno statystyki drogi</Tag>
 	<Tag name="VSync">Synchr. pionowa</Tag>
@@ -893,8 +895,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="TipOneAxisThrottleBrake">If your controller has throttle and brake in one axis, check this. Bind axis to throttle, unbind brake. Use Inverse from throttle if needed.</Tag>
-	<Tag name="OneAxisThrottleBrake">One axis for throttle and brake</Tag>
+	<Tag name="NetNew">New game</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

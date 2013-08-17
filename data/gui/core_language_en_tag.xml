@@ -219,6 +219,7 @@
 	<Tag name="NetStart">Start</Tag>
 	<Tag name="NetReady">Ready</Tag>
 	<Tag name="NetWaiting">Waiting...</Tag>
+	<Tag name="NetNew">New game</Tag>
 	<Tag name="NetLeaveGame">Leave game</Tag>
 	<Tag name="NetChat">Chat</Tag>
 	<Tag name="FinishedCommaPlace">finished, place</Tag>
