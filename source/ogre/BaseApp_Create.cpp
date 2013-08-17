@@ -300,18 +300,21 @@ bool BaseApp::configure()
 	int pos_x = SDL_WINDOWPOS_UNDEFINED,
 		pos_y = SDL_WINDOWPOS_UNDEFINED;
 
-	/// \todo For multiple monitors, WINDOWPOS_UNDEFINED is not the best idea. Needs a setting which screen to launch on,
-	/// then place the window on that screen (derive x&y pos from SDL_GetDisplayBounds)+
-	/*
-	if (pSet->fullscreen)
-	{
-		SDL_Rect display_bounds;
-		if (SDL_GetDisplayBounds(settings.screen, &display_bounds) != 0)
-			throw std::runtime_error("Couldn't get display bounds!");
-		pos_x = display_bounds.x;
-		pos_y = display_bounds.y;
+	#if 0  /// _tool_ rearrange window pos for local netw testing
+	SDL_Rect screen;
+	if (SDL_GetDisplayBounds(/*pSet.screen_id*/0, &screen) != 0)
+		LogO("SDL_GetDisplayBounds errror");
+		
+	if (pSet->net_local_plr <= 0)
+	{	pos_x = 0;  pos_y = 0;
+	}else
+	{	pos_x = screen.w - pSet->windowx;
+		pos_y = screen.h - pSet->windowy;
 	}
-	*/
+	#endif
+	/// \todo For multiple monitors, WINDOWPOS_UNDEFINED is not the best idea. Needs a setting which screen to launch on,
+	/// then place the window on that screen (derive x&y pos from SDL_GetDisplayBounds)
+
 
 	//  Create an application window with the following settings:
 	mSDLWindow = SDL_CreateWindow(
