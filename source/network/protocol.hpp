@@ -19,7 +19,7 @@
 namespace protocol {
 
 // Check the comments in the packet structs to find out which one of these they affect.
-const uint32_t GAME_PROTOCOL_VERSION = 3;
+const uint32_t GAME_PROTOCOL_VERSION = 4;
 const uint32_t MASTER_PROTOCOL_VERSION = 4;
 
 const unsigned DEFAULT_PORT = 4243;
@@ -43,7 +43,8 @@ enum PacketType {
 	GAME_STATUS,        // An available game (either client updates, or server reports)
 	START_GAME,         // Signal to start loading the game
 	START_COUNTDOWN,    // Signal that loading has finished, start race
-	TIME_INFO           // Lap / race time info
+	TIME_INFO,          // Lap / race time info
+	RETURN_LOBBY        // Signal to go back to lobby
 };
 
 
