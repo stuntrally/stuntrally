@@ -271,8 +271,8 @@ void App::changeTrack()
 {
 	pSet->gui.track = sListTrack;
 	pSet->gui.track_user = bListTrackU;
-
-	if (mMasterClient)
+							//_ only for host..
+	if (mMasterClient && valNetPassword->getVisible())
 	{	uploadGameInfo();
 		updateGameInfoGUI();  }
 }
