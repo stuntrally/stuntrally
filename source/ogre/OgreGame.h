@@ -566,7 +566,7 @@ protected:
 	protocol::GameInfo netGameInfo;
 
 	bool bRebuildPlayerList, bRebuildGameList;
-	bool bUpdateGameInfo, bStartGame, bUpdChat;
+	bool bUpdateGameInfo, bStartGame, bStartedGame, bUpdChat;
 
 	///  multiplayer gui  --------------------
 	MyGUI::TabPtr tabsNet;  //void tabNet(TabPtr tab, size_t id);

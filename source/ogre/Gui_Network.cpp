@@ -258,7 +258,10 @@ void App::peerState(PeerInfo peer, uint8_t state)
 	(void)peer;
 	boost::mutex::scoped_lock lock(netGuiMutex);
 	if (state == protocol::START_GAME)
+	{
 		bStartGame = true;
+		bStartedGame = true;
+	}
 }
 
 void App::gameInfo(protocol::GameInfo game)
@@ -435,11 +438,12 @@ void App::evBtnNetReady(WP)
 	if (mLobbyState == HOSTING)
 	{
 		LogO("Ready, hosting...");
-		if (!bStartGame)
+		if (!bStartedGame)
 		{
 			if (mMasterClient) mMasterClient->signalStart();
 			boost::mutex::scoped_lock lock(netGuiMutex);
 			bStartGame = true;
+			bStartedGame = true;
 			btnNetReady->setCaption( TR("#{NetNew}") );
 		}
 		else
@@ -447,6 +451,7 @@ void App::evBtnNetReady(WP)
 			mClient->returnToLobby();
 			boost::mutex::scoped_lock lock(netGuiMutex);
 			bStartGame = false;
+			bStartedGame = false;
 			btnNetReady->setCaption( TR("#{NetStart}") );
 		}
 	}

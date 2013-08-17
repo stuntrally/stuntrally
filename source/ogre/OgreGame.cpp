@@ -70,7 +70,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,bRplPlay(0), bRplPause(0), bRplRec(0), bRplWnd(1), bGuiReinit(0)
 	// gui multiplayer
 	,netGuiMutex(), sChatBuffer(), netGameInfo(), bUpdChat(false), iChatMove(0)
-	,bRebuildPlayerList(), bRebuildGameList(), bUpdateGameInfo(), bStartGame()
+	,bRebuildPlayerList(), bRebuildGameList(), bUpdateGameInfo(), bStartGame(), bStartedGame(0)
 	,tabsNet(0), panelNetServer(0), panelNetGame(0), panelNetTrack(0)
 	,listServers(0), listPlayers(0), edNetChat(0), imgNetTrack(0)
     ,btnNetRefresh(0), btnNetJoin(0), btnNetCreate(0), btnNetDirect(0)
