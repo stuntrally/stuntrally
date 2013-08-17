@@ -432,17 +432,30 @@ void App::evBtnNetReady(WP)
 	if (!mClient)  return;
 
 	mClient->toggleReady();
-	if (mClient->isReady())
+	if (mLobbyState == HOSTING)
 	{
-		if (mLobbyState == HOSTING)
+		LogO("Ready, hosting...");
+		if (!bStartGame)
 		{
 			if (mMasterClient) mMasterClient->signalStart();
 			boost::mutex::scoped_lock lock(netGuiMutex);
 			bStartGame = true;
-		}else
+			btnNetReady->setCaption( TR("#{NetNew}") );
+		}
+		else
+		{
+			mClient->returnToLobby();
+			boost::mutex::scoped_lock lock(netGuiMutex);
+			bStartGame = false;
+			btnNetReady->setCaption( TR("#{NetStart}") );
+		}
+	}
+	else
+	{
+		if (mClient->isReady())
 			btnNetReady->setCaption( TR("#{NetWaiting}") );
-	}else
-		btnNetReady->setCaption( TR("#{NetReady}") );
+		else btnNetReady->setCaption( TR("#{NetReady}") );
+	}
 
 	rebuildPlayerList();
 }
