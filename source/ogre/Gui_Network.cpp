@@ -271,6 +271,13 @@ void App::gameInfo(protocol::GameInfo game)
 	bUpdateGameInfo = true;
 }
 
+void App::returnToLobby()
+{
+	btnNetReady->setCaption(TR("#{NetReady}"));
+	isFocGui = true;  // show back gui
+	toggleGui(false);
+}
+
 void App::startRace()
 {
 	LogO("== Netw startRace +");
@@ -343,13 +350,12 @@ void App::evBtnNetJoin(WP)
 		string port = listServers->getSubItemNameAt(iColPort, i).substr(7);
 		
 		join(host, port, "");
-	}else{
+	}else
 		popup.Show(newDelegate(this, &App::evBtnNetJoinLockedClose),
 			TR("#{NetJoinLocked}"), true,
 			TR("#{NetPassword}"), "", "", "",
 			"", "", "","",
 			TR("#{MessageBox_Ok}"), TR("#{MessageBox_Cancel}"), "", "");
-	}
 }
 
 void App::evBtnNetJoinLockedClose()
@@ -437,7 +443,7 @@ void App::evBtnNetReady(WP)
 	mClient->toggleReady();
 	if (mLobbyState == HOSTING)
 	{
-		LogO("Ready, hosting...");
+		LogO("== Netw Ready, hosting...");
 		if (!bStartedGame)
 		{
 			if (mMasterClient) mMasterClient->signalStart();

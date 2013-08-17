@@ -60,6 +60,9 @@ struct GameClientCallback {
 
 	/// Called when timing info has arrived
 	virtual void timeInfo(ClientID id, uint8_t lap, double time) {}
+	
+	/// Called when host closed game (continue on new track)
+	virtual void returnToLobby() {}
 
 	/// Called when an error occured
 	/// @param what the error description

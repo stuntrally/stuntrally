@@ -1839,6 +1839,10 @@
 				Name="network"
 				>
 				<File
+					RelativePath="..\source\network\address.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\network\DesignDoc.txt"
 					>
 				</File>
@@ -1863,7 +1867,23 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\network\networkcallbacks.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\network\peerinfo.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\network\protocol.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\network\types.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\network\xtime.hpp"
 					>
 				</File>
 			</Filter>

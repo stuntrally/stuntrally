@@ -7,7 +7,7 @@
  *
  * Implementation notes:
  *   - First member must be uint8_t packet_type
- *   - Serialization is basically a naïve memcpy, so use only primitive types
+ *   - Serialization is basically a naive memcpy, so use only primitive types
  */
 
 #include <boost/lexical_cast.hpp>
@@ -92,14 +92,18 @@ struct GameInfo {
 	uint8_t players;    // Set by client, all below
 	uint8_t collisions;
 	uint8_t laps;
-	uint8_t locked;
-	uint8_t reversed;
+	uint8_t locked;    // game
+	uint8_t reversed;  // track
 	uint8_t flip_type;
-	uint8_t boost_type;
-	float boost_power;
+	uint8_t boost_type;  float boost_power;
 	char name[32];
 	char track[32];
 	char sim_mode[32];
+	//TODO:
+	//uint8_t start_reverse;  // start pos order
+	//uint8_t tree_collis;  float tree_mult;   // trees setup from host
+	//uint8_t damage_type;  float damage_lap_reduce;
+	//* ?rewind type, ?boost fuel each lap value, add over time value
 
 	GameInfo(): packet_type(GAME_STATUS), id() {
 		name[0] = '\0';  track[0] = '\0';  sim_mode[0] = '\0';  }
@@ -141,6 +145,8 @@ struct PlayerInfoPacket {
 	char password[16];
 	uint8_t peers;
 	uint8_t ready;
+	//TODO:  car colors (also change nick colors in game tab)
+	//float car_hue, car_sat, car_val, car_gloss, car_refl;  // car color
 
 	PlayerInfoPacket(): packet_type(PLAYER_INFO), random_id(-1), ready(), peers() {
 		memset(name, 0, sizeof(name));

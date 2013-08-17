@@ -174,7 +174,6 @@ void P2PGameClient::returnToLobby(bool broadcast)
 		it->second.loaded = false;
 	if (broadcast)
 		m_client.broadcast(char(protocol::RETURN_LOBBY) + std::string(" "), net::PACKET_RELIABLE);
-	//isFocGui = true;  //..
 }
 
 void P2PGameClient::senderThread()
@@ -530,8 +529,11 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			break;
 		}
 		case protocol::RETURN_LOBBY:
+		{
 			returnToLobby(false);
+			m_callback->returnToLobby();
 			break;
+		}
 		default:
 		{
 			LogO("== Netw  Received unknown packet type: "+toStr((int)e.packet_data[0]));
