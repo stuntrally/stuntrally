@@ -962,6 +962,11 @@
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
+				<Widget type="Button" skin="CheckBox" position="384 190 256 25" name="chkStartOrderRev">
+					<Property key="Caption" value="#{ReverseStartOrder}"/>
+					<Property key="TextColour" value="0.7 0.8 1.0"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
 				<Widget type="Button" skin="Button" position="384 100 80 33" name="btnPlayers1">
 					<Property key="Caption" value="1"/>
 					<Property key="Colour" value="0.4 0.8 1"/>

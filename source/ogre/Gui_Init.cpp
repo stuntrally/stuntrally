@@ -256,6 +256,7 @@ void App::InitGui()
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
 	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
 	Chk("chkSplitVertically", chkSplitVert, pSet->split_vertically);
+	Chk("chkStartOrderRev", chkStartOrd, pSet->gui.start_order);
 	valLocPlayers = mGUI->findWidget<StaticText>("valLocPlayers");
 	if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->gui.local_players));
 

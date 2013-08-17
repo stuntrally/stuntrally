@@ -92,6 +92,13 @@ void App::chkSplitVert(WP wp)
 	ChkEv(split_vertically); 
 }
 
+void App::chkStartOrd(WP wp)
+{
+	pSet->gui.start_order = pSet->gui.start_order==0 ? 1 : 0;
+	ButtonPtr chk = wp->castType<MyGUI::Button>();
+    chk->setStateSelected(pSet->gui.start_order > 0);
+}
+
 void App::slNumLaps(SL)
 {
 	int v = 20.f * val + 1 +slHalf;  if (bGI)  pSet->gui.num_laps = v;

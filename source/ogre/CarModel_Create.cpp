@@ -14,6 +14,7 @@
 #include "../road/Road.h"
 #include "common/RenderConst.h"
 #include "../shiny/Main/Factory.hpp"
+#include "../network/gameclient.hpp"
 
 #include "boost/filesystem.hpp"
 #define  FileExists(s)  boost::filesystem::exists(s)
@@ -107,6 +108,11 @@ void CarModel::Load(int startId)
 	if (!isGhost())  // ghost has pCar, dont create
 	{
 		if (startId == -1)  startId = iIndex;
+		if (pSet->game.start_order == 1)
+		{	//  reverse start order
+			int numCars = pApp->mClient ? pApp->mClient->getPeerCount()+1 : pSet->game.local_players;  // networked or splitscreen
+			startId = numCars-1 - startId;
+		}
 		int i = pSet->game.collis_cars ? startId : 0;  // offset when cars collide
 
 		MATHVECTOR<float,3> pos(0,10,0);  pos = pGame->track.GetStart(i).first;

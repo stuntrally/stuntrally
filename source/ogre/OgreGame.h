@@ -510,7 +510,7 @@ protected:
 		
 	void msgRplDelete(MyGUI::Message*, MyGUI::MessageBoxStyle);
 	
-	void btnNumPlayers(WP);  void chkSplitVert(WP);
+	void btnNumPlayers(WP);  void chkSplitVert(WP), chkStartOrd(WP);
 	MyGUI::StaticTextPtr valLocPlayers;
 	
 	MyGUI::StaticTextPtr txCarStatsTxt,txCarStatsVals,

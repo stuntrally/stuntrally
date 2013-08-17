@@ -282,6 +282,7 @@
 
 	<Tag name="NumLocalPlayers">Number of local players</Tag>
 	<Tag name="SplitVertically">Split Vertically</Tag>
+	<Tag name="ReverseStartOrder">Reverse starting order</Tag>
 	<Tag name="NumLaps">Number of laps</Tag>
 
 	<Tag name="Simulation">Simulation</Tag>
