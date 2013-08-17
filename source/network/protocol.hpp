@@ -105,7 +105,7 @@ struct GameInfo {
 	uint8_t tree_collis;  float tree_mult;   // trees setup from host
 	uint8_t damage_type;
 	uint8_t rewind_type;  //todo
-	//float damage_lap_dec, boost_lap_inc;  //todo
+	float damage_lap_dec, boost_lap_inc, rewind_lap_inc;  //todo
 
 	GameInfo(): packet_type(GAME_STATUS), id() {
 		name[0] = '\0';  track[0] = '\0';  sim_mode[0] = '\0';  }
