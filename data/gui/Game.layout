@@ -1111,9 +1111,9 @@
 							<Property key="Colour" value="0.6 0.8 1"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="452 54 256 256" name="imgNetTrack">
+						<!--<Widget type="ImageBox" skin="ImageBox" position="452 54 256 256" name="imgNetTrack">
 							<UserString key="RelativeTo" value="GameWnd"/>
-						</Widget>
+						</Widget>-->
 						<Widget type="TextBox" skin="TextBox" position="452 22 260 24" name="valNetTrack">
 							<Property key="Caption" value="#{Track}:"/>
 							<Property key="TextColour" value="0.4 1.0 0.5"/>

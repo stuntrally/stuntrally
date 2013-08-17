@@ -481,7 +481,7 @@ void App::InitGui()
     edNetChatMsg = mGUI->findWidget<Edit>("edNetChatMsg");  // user text
     
     //  track
-    imgNetTrack = mGUI->findWidget<StaticImage>("imgNetTrack");
+    imgNetTrack = mGUI->findWidget<StaticImage>("imgNetTrack",false);
     valNetTrack = mGUI->findWidget<StaticText>("valNetTrack");
     edNetTrackInfo = mGUI->findWidget<Edit>("edNetTrackInfo");
 

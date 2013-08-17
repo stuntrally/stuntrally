@@ -129,8 +129,8 @@ void App::updateGameInfoGUI()
 	{
 		Ogre::ResourceGroupManager& resMgr = Ogre::ResourceGroupManager::getSingleton();
 		Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
-
-		Ogre::String path = PathListTrkPrv(-1, sListTrack), s, sGrp = "TrkPrv";
+		
+		Ogre::String path = PathListTrkPrv(-1, sListTrack), s, sGrp = "TrkPrvNet";
 		resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
 		resMgr.unloadResourceGroup(sGrp);
 		resMgr.initialiseResourceGroup(sGrp);
