@@ -62,8 +62,9 @@ public:
 	void lap(uint8_t num, double time);
 
 	/// After race, go back to lobby for another race
-	/// All peers should call this when everyone is finished
-	void returnToLobby();
+	/// Host should call this externally, others will call it through a network message
+	/// @param broadcast set to true if the state change should be broadcasted to peers
+	void returnToLobby(bool broadcast = true);
 
 	/// Thread that periodically broadcasts peer and game state info, don't call directly
 	void senderThread();

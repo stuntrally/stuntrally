@@ -158,18 +158,22 @@ void P2PGameClient::lap(uint8_t num, double time)
 	LogO("== Netw Lap " +toStr(num) +" finished by U time:"+ toStr(float(time)));
 }
 
-void P2PGameClient::returnToLobby()
+void P2PGameClient::returnToLobby(bool broadcast)
 {
 	if (m_state != GAME)
 	{
-		LogO("== Netw returnToLobby  WRONG? we should be in-game");
+		LogO("== Netw returnToLobby  WRONG we should be in-game");
 		return;
 	}
+	LogO("== Netw returnToLobby");
 	boost::mutex::scoped_lock lock(m_mutex);
 	m_state = LOBBY;
 	m_playerInfo.loaded = false;
 	m_playerInfo.ready = false;
-	// TODO: Should we reset peers' ready and loading states also?
+	for (PeerMap::iterator it = m_peers.begin(); it != m_peers.end(); ++it)
+		it->second.loaded = false;
+	if (broadcast)
+		m_client.broadcast(char(protocol::RETURN_LOBBY) + std::string(" "), net::PACKET_RELIABLE);
 }
 
 void P2PGameClient::senderThread()
@@ -524,6 +528,9 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			m_callback->timeInfo(id, time.lap, time.time);
 			break;
 		}
+		case protocol::RETURN_LOBBY:
+			returnToLobby();
+			break;
 		default:
 		{
 			LogO("== Netw  Received unknown packet type: "+toStr((int)e.packet_data[0]));
