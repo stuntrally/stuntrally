@@ -20,7 +20,7 @@ namespace protocol {
 
 // Check the comments in the packet structs to find out which one of these they affect.
 const uint32_t GAME_PROTOCOL_VERSION = 4;
-const uint32_t MASTER_PROTOCOL_VERSION = 4;
+const uint32_t MASTER_PROTOCOL_VERSION = 5;
 
 const unsigned DEFAULT_PORT = 4243;
 
