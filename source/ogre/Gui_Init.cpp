@@ -251,6 +251,15 @@ void App::InitGui()
 		combo->addItem(TR("#{Normal}"));
 		combo->setIndexSelected(pSet->gui.damage_type);
 	}
+	Cmb(combo, "CmbRewind", comboRewind);
+	if (combo)
+	{	combo->removeAllItems();
+		combo->addItem(TR("#{None}"));
+		combo->addItem(TR("#{Always}"));
+		combo->addItem(TR("#{FuelLap}"));
+		combo->addItem(TR("#{FuelTime}"));
+		combo->setIndexSelected(pSet->gui.rewind_type);
+	}
 
 	//  split
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);

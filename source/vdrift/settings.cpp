@@ -50,6 +50,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.champ_num", gui.champ_num);		Param(c,w, "game.champ_rev", gui.champ_rev);
 	Param(c,w, "game.boost_type", gui.boost_type);		Param(c,w, "game.flip_type", gui.flip_type);
 	Param(c,w, "game.boost_power", gui.boost_power);	Param(c,w, "game.damage_type", gui.damage_type);
+	Param(c,w, "game.rewind_type", gui.rewind_type);
 	Param(c,w, "game.collis_cars", gui.collis_cars);	Param(c,w, "game.collis_veget", gui.collis_veget);
 	Param(c,w, "game.collis_roadw", gui.collis_roadw);	Param(c,w, "game.dyn_objects", gui.dyn_objects);
 	Param(c,w, "game.track", gui.track);				Param(c,w, "game.track_user", gui.track_user);
@@ -253,7 +254,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	gui.collis_veget = true;  gui.collis_cars = false;
 	gui.collis_roadw = false;  gui.dyn_objects = true;
 	gui.boost_type = 2;  gui.flip_type = 1;
-	gui.boost_power = 1.f;  gui.damage_type = 1;
+	gui.boost_power = 1.f;  gui.damage_type = 1;  gui.rewind_type = 1;
 	gui.trees = 1.f;
 	//
 	gui.rpl_rec = 1;  gui.champ_rev = false;  gui.start_order = 0;

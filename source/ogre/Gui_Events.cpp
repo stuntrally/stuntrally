@@ -78,6 +78,10 @@ void App::comboDamage(CMB)
 {
 	pSet->gui.damage_type = val;
 }
+void App::comboRewind(CMB)
+{
+	pSet->gui.rewind_type = val;
+}
 	
 void App::btnNumPlayers(WP wp)
 {

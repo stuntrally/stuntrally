@@ -539,7 +539,7 @@ protected:
 	Ogre::String PathListTrk(int user=-1), PathListTrkPrv(int user/*=-1*/, Ogre::String track);
 
 	MyGUI::StaticImagePtr imgCar;  MyGUI::EditPtr carDesc;
-	void comboBoost(CMB), comboFlip(CMB), comboDamage(CMB);
+	void comboBoost(CMB), comboFlip(CMB), comboDamage(CMB), comboRewind(CMB);
 
 	GuiPopup popup;
 

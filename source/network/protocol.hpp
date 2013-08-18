@@ -97,14 +97,11 @@ struct GameInfo {
 
 	uint8_t flip_type;
 	uint8_t boost_type;  float boost_power;
-	char name[32];
-	char track[32];
-	char sim_mode[32];
+	char name[32], track[32], sim_mode[32];
 
-	uint8_t start_order;  //TODO: start pos order (reverse)
+	uint8_t start_order;
 	uint8_t tree_collis;  float tree_mult;   // trees setup from host
-	uint8_t damage_type;
-	uint8_t rewind_type;  //todo
+	uint8_t damage_type, rewind_type;
 	float damage_lap_dec, boost_lap_inc, rewind_lap_inc;  //todo
 
 	GameInfo(): packet_type(GAME_STATUS), id() {

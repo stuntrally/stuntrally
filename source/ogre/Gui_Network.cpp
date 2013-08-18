@@ -157,8 +157,8 @@ void App::updateGameSet()
 	pSet->game.boost_power = netGameInfo.boost_power;
 	pSet->game.flip_type = netGameInfo.flip_type;
 	pSet->game.damage_type = netGameInfo.damage_type;
-	//pSet->game.rewind_type = netGameInfo.rewind_type;  //todo
-	//damage_lap_dec, boost_lap_inc;  //todo
+	pSet->game.rewind_type = netGameInfo.rewind_type;
+	//damage_lap_dec, boost_lap_inc, rewind_lap_inc;  //todo
 }
 
 ///  Send  upload to peers
@@ -191,8 +191,8 @@ void App::uploadGameInfo()
 	game.boost_power = pSet->gui.boost_power;
 	game.flip_type = pSet->gui.flip_type;
 	game.damage_type = pSet->gui.damage_type;
-	game.rewind_type = 0;  //todo
-	//damage_lap_dec, boost_lap_inc;  //todo
+	game.rewind_type = pSet->gui.rewind_type;
+	//damage_lap_dec, boost_lap_inc, rewind_lap_inc;  //todo
 	
 	game.port = pSet->local_port;
 	game.locked = !edNetPassword->getCaption().empty();
