@@ -35,14 +35,15 @@ void BaseApp::updateStats()
 		ovPos->setCaption(s);
 	}
 
-	//  Fps, Tri, Bat
+	//  Fps
 	{	const RenderTarget::FrameStats& stats = mWindow->getStatistics();
 		size_t mem = TextureManager::getSingleton().getMemoryUsage() + MeshManager::getSingleton().getMemoryUsage();
 
-		ovFps->setCaption(fToStr(stats.lastFPS,1,5) );
-		ovTri->setCaption(iToStr(int(stats.triangleCount/1000.f),4)+"k");
-		ovBat->setCaption(iToStr(stats.batchCount,3) );
-		ovMem->setCaption(iToStr(mem/1024/1024,3)+"M" );
+		txFps->setCaption(
+			"#E0F0FF"+(stats.lastFPS >= 200.f ? fToStr(stats.lastFPS,0,4)+"." : fToStr(stats.lastFPS,1,5))+
+			"#B0C0D0"+iToStr(int(stats.triangleCount/1000.f),4)+"k"+
+			" #C8E0FF"+iToStr(stats.batchCount,3)+
+			" #A0B0C8"+iToStr(mem/1024/1024,3)+"M" );
 	}
 }
 

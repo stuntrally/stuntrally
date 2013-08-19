@@ -95,7 +95,7 @@ protected:
 
 	///  ovelay
 	Ogre::Overlay* mDebugOverlay, *ovBrushPrv, *ovTerPrv;
-	Ogre::OverlayElement* ovFps, *ovTri, *ovBat, *ovMem,  *ovSt, *ovBrushMtr, *ovTerMtr,
+	Ogre::OverlayElement *ovSt, *ovBrushMtr, *ovTerMtr,
 		*ovPos, *ovDbg, *ovInfo, *ovStat, *ovFocus, *ovFocBck;  Ogre::Real fStFade;
 
 	bool alt, ctrl, shift;  // key modifiers
@@ -116,7 +116,7 @@ protected:
 
 	///  Gui
 	bool bGuiFocus;  // gui shown
-	MyGUI::Gui* mGUI;
+	MyGUI::Gui* mGUI;  void baseInitGui();
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	MyGUI::OgreD3D11Platform* mPlatform;
 	#else
@@ -127,7 +127,8 @@ protected:
 		mWndRoadCur, mWndRoadStats,
 		mWndFluids, mWndObjects, mWndRivers;
 	MyGUI::VectorWidgetPtr vwGui;  // all widgets to destroy
-	MyGUI::ImageBox* imgCur;
+	MyGUI::ImageBox* imgCur, *bckFps;
+	MyGUI::TextBox*	txFps;
 
 	//  main menu
 	enum WND_Types {  WND_Edit=0, WND_Help, WND_Options, WND_ALL  };  // pSet->inMenu

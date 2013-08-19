@@ -126,64 +126,8 @@ Editor/FpsOverlay
 		top   0
 		width 210
 		height 25
-		material Core/StatsBlockCenter
+		//material Core/StatsBlockCenter
 		//material Menu/FocusOvr
-
-		element TextArea(Editor/CurrFps)
-		{
-			metrics_mode pixels
-			left 10
-			top 6
-			width 90
-			height 20
-			font_name Console
-			char_height 18
-			caption Fps
-			colour_top    0.63 0.86 1
-			colour_bottom 0.96 0.98 1
-		}
-
-		element TextArea(Editor/NumTris)
-		{
-			metrics_mode pixels
-			left 65
-			top 7
-			width 90
-			height 20
-			font_name Console
-			char_height 17
-			caption Tri
-			colour_top    0.55 0.6 0.8
-			colour_bottom 0.76 0.86 0.96
-		}
-
-		element TextArea(Editor/NumBatches)
-		{
-			metrics_mode pixels
-			left 120
-			top 7
-			width 90
-			height 20
-			font_name Console
-			char_height 17
-			caption Bat
-			colour_top    0.61 0.72 0.93
-			colour_bottom 0.87 0.93 0.98
-		}
-
-		element TextArea(Editor/Memory)
-		{
-			metrics_mode pixels
-			left 160
-			top 7
-			width 90
-			height 20
-			font_name Console
-			char_height 17
-			caption Mem
-			colour_top    0.43 0.52 0.61
-			colour_bottom 0.87 0.93 0.96
-		}
 
 		element TextArea(Editor/Pos)
 		{

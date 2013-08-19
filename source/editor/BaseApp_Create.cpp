@@ -124,9 +124,7 @@ void BaseApp::createFrameListener()
 	ovSt = ovr.getOverlayElement("Editor/StatusPanel");  if (ovSt)  ovSt->hide();
 	ovStat= ovr.getOverlayElement("Editor/StatusText");
 	ovFocus = ovr.getOverlayElement("Editor/FocusText"); ovFocBck = ovr.getOverlayElement("Editor/FocusPanel");
-		ovFps= ovr.getOverlayElement("Editor/CurrFps");		ovTri= ovr.getOverlayElement("Editor/NumTris");
-		ovBat= ovr.getOverlayElement("Editor/NumBatches");	ovPos= ovr.getOverlayElement("Editor/Pos");
-		ovMem= ovr.getOverlayElement("Editor/Memory");
+		ovPos= ovr.getOverlayElement("Editor/Pos");
 	mDebugOverlay= ovr.getByName("Editor/DebugOverlay");  //mDebugOverlay->show();
 	ovDbg = ovr.getOverlayElement("Editor/DebugText");
 	ovInfo= ovr.getOverlayElement("Editor/Info");
@@ -170,12 +168,13 @@ void BaseApp::Run( bool showDialog )
 BaseApp::BaseApp()
 	:mRoot(0), mCamera(0), mViewport(0)
 	,mSceneMgr(0), mWindow(0), imgCur(0)
+	,bckFps(0), txFps(0)
 	,mShowDialog(1), mShutDown(false), bWindowResized(true), bFirstRenderFrame(true)
 	,alt(0), ctrl(0), shift(0)
 	,mbLeft(0), mbRight(0), mbMiddle(0)
 	,ndSky(0), road(0)
 
-	,mDebugOverlay(0), ovSt(0), ovFps(0), ovTri(0), ovBat(0), ovMem(0)
+	,mDebugOverlay(0), ovSt(0)
 	,ovPos(0), ovDbg(0), ovInfo(0), ovStat(0)
 	,ovFocus(0),ovFocBck(0), ovBrushPrv(0),ovBrushMtr(0), ovTerPrv(0),ovTerMtr(0)
 
@@ -321,37 +320,7 @@ bool BaseApp::setup()
 	createResourceListener();
 	loadResources();
 
-	//  Gui
-	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	mPlatform = new MyGUI::OgreD3D11Platform();
-	#else
-	mPlatform = new MyGUI::OgrePlatform();
-	#endif
-
-	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::UserConfigDir() + "/MyGUI.log");
-	mGUI = new MyGUI::Gui();
-
-	mGUI->initialise("");
-
-	MyGUI::FactoryManager::getInstance().registerFactory<ResourceImageSetPointerFix>("Resource", "ResourceImageSetPointer");
-	MyGUI::ResourceManager::getInstance().load("core.xml");
-	MyGUI::ResourceManager::getInstance().load("MessageBoxResources.xml");
-
-	MyGUI::PointerManager::getInstance().eventChangeMousePointer +=
-			MyGUI::newDelegate(this, &BaseApp::onCursorChange);
-	MyGUI::PointerManager::getInstance().setVisible(false);
-	
-	// ------------------------- lang ------------------------
-	if (pSet->language == "") // autodetect
-	{	pSet->language = getSystemLanguage();
-		setlocale(LC_NUMERIC, "C");  }  //needed?		
-	
-	// valid?
-	if (!boost::filesystem::exists(PATHMANAGER::Data() + "/gui/core_language_" + pSet->language + "_tag.xml"))
-		pSet->language = "en";
-		
-	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
-	// -------------------------------------------------------
+	baseInitGui();
 
 	createFrameListener();
 
@@ -489,4 +458,54 @@ void BaseApp::windowResized(int x, int y)
 	if (mCamera && mViewport)
 		mCamera->setAspectRatio( float(x) / float(y));
 	mPlatform->getRenderManagerPtr()->setActiveViewport(0);
+}
+
+
+
+///  base Init Gui
+//--------------------------------------------------------------------------------------------------------------
+void BaseApp::baseInitGui()
+{
+	using namespace MyGUI;
+	//  Gui
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	mPlatform = new MyGUI::OgreD3D11Platform();
+	#else
+	mPlatform = new MyGUI::OgrePlatform();
+	#endif
+
+	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::UserConfigDir() + "/MyGUI.log");
+	mGUI = new MyGUI::Gui();
+
+	mGUI->initialise("");
+
+	MyGUI::FactoryManager::getInstance().registerFactory<ResourceImageSetPointerFix>("Resource", "ResourceImageSetPointer");
+	MyGUI::ResourceManager::getInstance().load("core.xml");
+	MyGUI::ResourceManager::getInstance().load("MessageBoxResources.xml");
+
+	MyGUI::PointerManager::getInstance().eventChangeMousePointer +=
+			MyGUI::newDelegate(this, &BaseApp::onCursorChange);
+	MyGUI::PointerManager::getInstance().setVisible(false);
+	
+	//------------------------ lang
+	if (pSet->language == "")  // autodetect
+	{	pSet->language = getSystemLanguage();
+		setlocale(LC_NUMERIC, "C");  }
+	
+	if (!boost::filesystem::exists(PATHMANAGER::Data() + "/gui/core_language_" + pSet->language + "_tag.xml"))
+		pSet->language = "en";  // use en if not found
+		
+	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
+	//------------------------
+
+	///  create widgets (Fps, loading)
+	//------------------------------------------------
+	bckFps = mGUI->createWidget<ImageBox>("ImageBox",
+		0,0, 212,25, Align::Default, "Pointer", "FpsB");
+	bckFps->setImageTexture("Border_Center.png");
+
+	txFps = mGUI->createWidget<TextBox>("TextBox",
+		1,1, 212,25, Align::Default, "Pointer", "FpsT");
+	txFps->setFontName("fps.17");
+
 }

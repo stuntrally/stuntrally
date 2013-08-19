@@ -367,10 +367,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\data\hud\FpsDbg.overlay"
-				>
-			</File>
-			<File
 				RelativePath="..\data\materials\grass.mat"
 				>
 			</File>
