@@ -646,7 +646,7 @@ void App::NewGameDoLoad()
 		#ifdef DEBUG  //todo: doesnt hide later, why?
 		LoadingOff();
 		#endif
-		mLoadingBar->mLoadingBarElement->setWidth( mLoadingBar->mProgressBarMaxSize );  // 100 %
+		mLoadingBar->SetWidth(100.f);
 				
 		ShowHUD();
 		//if (pSet->show_fps)
@@ -675,10 +675,9 @@ void App::NewGameDoLoad()
 		case LS_MISC:		LoadMisc();		perc = 80;	break;
 	}
 
-	//  Update label
-	mLoadingBar->mLoadingCommentElement->setCaption( (*curLoadState).second );
-	//  Set %
-	mLoadingBar->mLoadingBarElement->setWidth( mLoadingBar->mProgressBarMaxSize * (perc/100.0) );
+	//  Update bar,txt
+	txLoad->setCaption( (*curLoadState).second );
+	mLoadingBar->SetWidth(perc);
 
 	//  next loading step
 	++curLoadState;

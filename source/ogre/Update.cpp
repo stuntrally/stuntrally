@@ -263,7 +263,13 @@ bool App::frameStart(Real time)
 				iLoad1stFrames = -1;  // for refl
 			}
 		}else if (iLoad1stFrames >= -1)
+		{
 			--iLoad1stFrames;  // -2 end
+
+			imgLoad->setVisible(false);  // hide back imgs
+			//if (imgBack)
+			//imgBack->setVisible(false);
+		}
 		
 		
 		bool bFirstFrame = !carModels.empty() && carModels.front()->bGetStPos;

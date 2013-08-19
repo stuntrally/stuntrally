@@ -160,7 +160,8 @@ void BaseApp::Run( bool showDialog )
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp()
 	:mRoot(0), mSceneMgr(0), mWindow(0)
-	,imgBack(0), bckFps(0), txFps(0)
+	,bckFps(0),txFps(0), imgBack(0),imgLoad(0)
+	,bckLoad(0),bckLoadBar(0),barLoad(0), txLoadBig(0),txLoad(0)
 	,mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0), mCameraBlurLogic(0)
 	,mGodRaysLogic(0), mSoftParticlesLogic(0), mGBufferLogic(0)
 	,mDepthOfFieldLogic(0), mFilmGrainLogic(0)
@@ -178,7 +179,7 @@ BaseApp::BaseApp()
 	,iCurCam(0), mSplitMgr(0), motionBlurIntensity(0.9), pressedKeySender(0)
 	,mMouseX(0), mMouseY(0), mCursorManager(NULL), mInputWrapper(NULL)
 {
-	mLoadingBar = new LoadingBar();
+	mLoadingBar = new LoadingBar(this);
 
 	for (int i=0; i < ciMainBtns; ++i)
 	{	mWndMainPanels[i] = 0;  mWndMainBtns[i] = 0;  }
@@ -322,7 +323,6 @@ bool BaseApp::configure()
 	//if (pSet->renderNotActive)
 		//mWindow->setDeactivateOnFocusChange(false);
 
-	mLoadingBar->bBackgroundImage = pSet->loadingbackground;
 	return true;
 }
 
@@ -475,7 +475,6 @@ bool BaseApp::setup()
 void BaseApp::destroyScene()
 {
 	bool bCache = false;
-
 	if (bCache)
 	{
 		Ogre::String file = PATHMANAGER::ShaderDir() + "/shadercache.txt";
@@ -511,9 +510,7 @@ void BaseApp::setupResources()
 			archName = i->second;
 			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
 				PATHMANAGER::Data() + "/" + archName, typeName, secName);
-		}
-	}
-
+	}	}
 }
 
 void BaseApp::createResourceListener()
@@ -521,10 +518,8 @@ void BaseApp::createResourceListener()
 }
 void BaseApp::loadResources()
 {
-	const bool bar = true;
-	if (bar)  LoadingOn();
-	
-	bool bCache=false;
+	LoadingOn();
+	bool bCache = false;
 	Ogre::GpuProgramManager::getSingletonPtr()->setSaveMicrocodesToCache(bCache);
 	if (bCache)
 	{
@@ -537,9 +532,8 @@ void BaseApp::loadResources()
 			Ogre::GpuProgramManager::getSingleton().loadMicrocodeCache(shaderCache);
 		}
 	}
-
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-	if (bar)  LoadingOff();
+	LoadingOff();
 }
 
 
@@ -586,7 +580,6 @@ bool BaseApp::keyReleased(const SDL_KeyboardEvent& arg)
 		MyGUI::InputManager::getInstance().injectKeyRelease(MyGUI::KeyCode::Enum(kc));
 		return true;
 	}
-
 	return true;
 }
 
@@ -694,10 +687,8 @@ void BaseApp::hideMouse()
 
 void BaseApp::updMouse()
 {
-	if (IsFocGui())
-		showMouse();
-	else
-		hideMouse();
+	if (IsFocGui())	showMouse();
+	else			hideMouse();
 
 	mInputWrapper->setMouseRelative(!IsFocGui());
 	mInputWrapper->setGrabPointer(!IsFocGui());
@@ -712,9 +703,7 @@ void BaseApp::onCursorChange(const std::string &name)
 	if(imgSetPtr != NULL)
 	{
 		MyGUI::ResourceImageSet* imgSet = imgSetPtr->getImageSet();
-
 		std::string tex_name = imgSet->getIndexInfo(0,0).texture;
-
 		Ogre::TexturePtr tex = Ogre::TextureManager::getSingleton().getByName(tex_name);
 
 		//everything looks good, send it to the cursor manager
@@ -728,9 +717,7 @@ void BaseApp::onCursorChange(const std::string &name)
 			Uint8 hotspot_y = imgSetPtr->getHotSpot().top;
 
 			mCursorManager->receiveCursorInfo(name, tex, left, top, size_x, size_y, hotspot_x, hotspot_y);
-		}
-	}
-
+	}	}
 }
 
 void BaseApp::windowResized(int x, int y)
@@ -755,7 +742,6 @@ void BaseApp::baseInitGui()
 	
 	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::UserConfigDir() + "/MyGUI.log");
 	mGUI = new MyGUI::Gui();
-	
 
 	mGUI->initialise("");
 
@@ -767,7 +753,7 @@ void BaseApp::baseInitGui()
 	MyGUI::PointerManager::getInstance().setVisible(false);
 
 		
-	//------------------------- lang
+	//------------------------ lang
 	if (pSet->language == "")  // autodetect
 	{	pSet->language = getSystemLanguage();
 		setlocale(LC_NUMERIC, "C");  }
@@ -786,16 +772,91 @@ void BaseApp::baseInitGui()
 	setTranslations();
 
 
-	///  create widgets (Fps, loading)
+	///  create widgets
 	//------------------------------------------------
+	//  Fps
 	bckFps = mGUI->createWidget<ImageBox>("ImageBox",
 		0,0, 212,25, Align::Default, "Pointer", "FpsB");
-	bckFps->setAlpha(0.9f);
 	bckFps->setImageTexture("Border_Center.png");
 
-	txFps = mGUI->createWidget<TextBox>("TextBox",
-		1,1, 212,25, Align::Default, "Pointer", "FpsT");
+	txFps = bckFps->createWidget<TextBox>("TextBox",
+		1,1, 212,25, Align::Default, "FpsT");
 	txFps->setFontName("fps.17");
 
-	txFps->setVisible(false);  bckFps->setVisible(false);
+	bckFps->setVisible(false);
+
+
+	//  loading
+	bckLoad = mGUI->createWidget<ImageBox>("ImageBox",
+		100,100, 500,110, Align::Default, "Pointer", "LoadBck");
+	bckLoad->setImageTexture("Border_Center.png");
+
+	barSizeX = 480;
+	bckLoadBar = bckLoad->createWidget<ImageBox>("ImageBox",
+		10,43, 480,26, Align::Default, "LoadBckBar");
+	bckLoadBar->setImageTexture("Border_Center.png");
+
+	barSizeY = 22;
+	barLoad = bckLoadBar->createWidget<ImageBox>("ImageBox",
+		0,2, 30,22, Align::Default, "LoadBar");
+	barLoad->setImageTexture("white.png");
+
+
+	txLoadBig = bckLoad->createWidget<TextBox>("TextBox",
+		10,8, 400,30, Align::Default, "LoadTbig");
+	txLoadBig->setFontName("font.20");  txLoadBig->setTextColour(Colour(0.7,0.83,1));
+	txLoadBig->setCaption("Loading, please wait...");
+
+	txLoad = bckLoad->createWidget<TextBox>("TextBox",
+		10,77, 400,24, Align::Default, "LoadT");
+	txLoad->setFontName("font.17");  txLoad->setTextColour(Colour(0.65,0.78,1));
+	txLoad->setCaption("Initializing...");
+
+
+	///  menu background image
+	//  dont show for autoload and no loadingbackground
+	if (!(!pSet->loadingbackground && pSet->autostart))
+	{
+		imgBack = mGUI->createWidget<ImageBox>("ImageBox",
+			0,0, 800,600, Align::Default, "Back","ImgBack");
+		imgBack->setImageTexture("background.jpg");
+	}
+
+	///  loading background img
+	imgLoad = mGUI->createWidget<ImageBox>("ImageBox",
+		0,0, 800,600, Align::Default, "Back", "ImgLoad");
+	//imgLoad->setImageTexture("background.png");
+	//imgLoad->setVisible(true);
+
+	baseSizeGui();
+}
+
+
+///  size gui (on resolution change)
+//-------------------------------------------------------------------
+void BaseApp::baseSizeGui()
+{
+	int sx = mWindow->getWidth(), sy = mWindow->getHeight();
+	bckLoad->setPosition(sx/2 - 250/*200*/, sy - 140);
+
+	//imgBack->setCoord(0,0, sx, sy);
+	//return;
+
+	//  fit image to window, preserve aspect
+	int ix = 1912, iy = 1080;  // get org img size ...
+	int six, siy;  // sized to window
+	int oix=0, oiy=0;  // offset pos
+	float sa = float(sx)/sy, si = float(ix)/iy;  // aspects
+	
+	if (si >= sa)  // wider than screen
+	{
+		siy = sy;  six = si * siy;  // six/siy = si
+		oix = (six - sx) / 2;
+	}else
+	{	six = sx;  siy = six / si;
+		oiy = (siy - sy) / 2;
+	}
+	imgLoad->setCoord(-oix, -oiy, six, siy);
+	if (imgBack)
+	imgBack->setCoord(-oix, -oiy, six, siy);
 }

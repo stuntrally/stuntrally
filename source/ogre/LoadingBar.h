@@ -4,9 +4,9 @@
 #include <OgreString.h>
 #include <OgreResource.h>
 #include <OgreResourceGroupManager.h>
-//#include <OgreOverlayElement.h>
 
 namespace Ogre {  class Overlay;  class OverlayElement;  class RenderWindow;  }
+class BaseApp;
 
 
 class LoadingBar : public Ogre::ResourceGroupListener
@@ -14,27 +14,29 @@ class LoadingBar : public Ogre::ResourceGroupListener
 protected:
 	
 	Ogre::RenderWindow* mWindow;
-	Ogre::Overlay* mLoadOverlay;
+
 	Ogre::Real mInitProportion;
 
 	unsigned short mNumGroupsInit;
 	unsigned short mNumGroupsLoad;
 
-	Ogre::Real mProgressBarScriptSize;
-	Ogre::Real mProgressBarInc;
+	Ogre::Real mBarInc;
 
 public:
 
-	LoadingBar() {}
-	virtual ~LoadingBar() {}
+	LoadingBar(BaseApp* app) : pApp(app)
+	{  }
+	virtual ~LoadingBar()
+	{  }
+	BaseApp* pApp;
 
-	Ogre::OverlayElement* mLoadingBarElement;
-	Ogre::OverlayElement* mLoadingDescriptionElement;
-	Ogre::OverlayElement* mLoadingCommentElement;
+
+	void SetWidth(Ogre::Real pecent);
 	
 	bool bBackgroundImage;
 
-	Ogre::Real mProgressBarMaxSize;
+	Ogre::Real mBarMaxSizeX,mBarSizeY;
+
 
 	/** Show the loading bar and start listening.
 	*/
@@ -46,6 +48,7 @@ public:
 	/** Hide the loading bar and stop listening. 
 	*/
 	void finish();
+
 
 	// ResourceGroupListener callbacks
 	void resourceGroupScriptingStarted(const Ogre::String& groupName, size_t scriptCount);

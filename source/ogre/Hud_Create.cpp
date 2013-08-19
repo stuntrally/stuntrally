@@ -363,7 +363,7 @@ void App::ShowHUD(bool hideAll)
 		if (ovNetMsg)  ovNetMsg->hide();	if (ovCountdown)  ovCountdown->hide();
 		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
 		if (ovWarnWin)  ovWarnWin->hide();	if (ovOpp)  ovOpp->hide();
-		txFps->setVisible(false);  bckFps->setVisible(false);
+		bckFps->setVisible(false);
 
 		for (int c=0; c < hud.size(); ++c)
 		{	Hud& h = hud[c];
@@ -407,7 +407,7 @@ void App::ShowHUD(bool hideAll)
 		if (ovCam)	{  if (pSet->show_cam && !isFocGui)  ovCam->show();  else  ovCam->hide();  }
 		if (ovOpp)  {  if (pSet->show_opponents && (!sc->ter || road && road->getNumPoints() > 0))  ovOpp->show();  else  ovOpp->hide();  }
 		if (ovWarnWin){  if (pSet->show_times)  ovWarnWin->show();  else  ovWarnWin->hide();  }
-		txFps->setVisible(pSet->show_fps);  bckFps->setVisible(pSet->show_fps);
+		bckFps->setVisible(pSet->show_fps);
 
 		show = pSet->show_gauges;
 		for (int c=0; c < hud.size(); ++c)
@@ -450,7 +450,7 @@ void App::ShowHUDvp(bool vp)	// todo: use vis mask ..
 	}else{
 		/// for render viewport ---------
 		if (ovCam)  ovCam->hide();
-		//txFps->setVisible(false);  bckFps->setVisible(false);
+		//bckFps->setVisible(false);
 	}
 }
 

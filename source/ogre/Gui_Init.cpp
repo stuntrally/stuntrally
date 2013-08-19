@@ -29,17 +29,6 @@ void App::InitGui()
 	loadReadme = true;
 
 
-	///  background image
-	int wx = mWindow->getWidth(), wy = mWindow->getHeight();
-	if (!(!pSet->loadingbackground && pSet->autostart))  // dont show for autoload and no loadingbackground
-	{
-		if (imgBack)  mGUI->destroyWidget(imgBack);
-		imgBack = mGUI->createWidget<ImageBox>("ImageBox",0,0,wx,wy,Align::VStretch,"Back","ImgBack");
-		if (!imgBack)  LogO("Error: Didnt create imgBack !");
-		imgBack->setImageTexture("background.jpg");
-	}
-
-
 	//  new widgets
 	MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
 	MyGUI::FactoryManager::getInstance().registerFactory<Slider>("Widget");
@@ -74,6 +63,7 @@ void App::InitGui()
 	
 	//  center
 	IntSize w = mWndMain->getSize();
+	int wx = mWindow->getWidth(), wy = mWindow->getHeight();
 	mWndMain->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f);
 
 	TabPtr tab;
@@ -191,7 +181,7 @@ void App::InitGui()
 
 	//  other
 	Chk("Fps", chkFps, pSet->show_fps);  chFps = bchk;
-	txFps->setVisible(pSet->show_fps);  bckFps->setVisible(pSet->show_fps);
+	bckFps->setVisible(pSet->show_fps);
 	Chk("Wireframe", chkWireframe, mbWireFrame);  chWire = bchk;
 
 	Chk("ProfilerTxt", chkProfilerTxt, pSet->profilerTxt);	chProfTxt = bchk;

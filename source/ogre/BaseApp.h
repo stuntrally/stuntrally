@@ -187,9 +187,15 @@ protected:
 	///  Gui
 	bool isFocGui,isFocRpl;  // gui shown
 	bool isTweak();
-	MyGUI::Gui* mGUI;  void baseInitGui();
-	MyGUI::ImageBox* imgBack, *bckFps;
+	MyGUI::Gui* mGUI;  void baseInitGui(), baseSizeGui();
+	MyGUI::ImageBox* bckFps, *imgBack;
 	MyGUI::TextBox*	txFps;
+public:
+	//  loading
+	MyGUI::ImageBox *bckLoad,*bckLoadBar,*barLoad, *imgLoad;
+	MyGUI::TextBox *txLoadBig,*txLoad;
+	int barSizeX, barSizeY;
+protected:
 	
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	MyGUI::OgreD3D11Platform* mPlatform;

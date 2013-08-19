@@ -4,103 +4,77 @@
 #include <time.h>  // for random
 
 #include <OgreRenderWindow.h>
-#include <OgreOverlayElement.h>
-#include <OgreOverlayManager.h>
 #include <OgreTechnique.h>
-#include <OgreMaterialManager.h>
 #include <MyGUI.h>
 using namespace Ogre;
+using namespace MyGUI;
 #include "OgreGame.h"
+#include "../vdrift/settings.h"
+
 
 void LoadingBar::start( RenderWindow* window,
 	unsigned short numGroupsInit, unsigned short numGroupsLoad, Real initProportion )
 {
 	mWindow = window;
-	mNumGroupsInit = numGroupsInit;
-	mNumGroupsLoad = numGroupsLoad;
+	mNumGroupsInit = numGroupsInit;  mNumGroupsLoad = numGroupsLoad;
 	mInitProportion = initProportion;
 
-	ResourceGroupManager::getSingleton().initialiseResourceGroup("Loading");
+	//  show loading
+	pApp->bckLoad->setVisible(true);
+	mBarMaxSizeX = pApp->barSizeX;  mBarSizeY = pApp->barSizeY;
+	pApp->barLoad->setSize(0, mBarSizeY);
 
-	OverlayManager& omgr = OverlayManager::getSingleton();
-	mLoadOverlay = (Overlay*)omgr.getByName("Core/LoadOverlay");
-	if (!mLoadOverlay)
-	{
-		OGRE_EXCEPT(Ogre::Exception::ERR_ITEM_NOT_FOUND, 
-			"Cannot find loading overlay", "ExampleLoadingBar::start");
-	}
-	mLoadOverlay->show();
-
-	// Save links to the bar and to the loading text, for updates as we go
-	mLoadingBarElement = omgr.getOverlayElement("Core/LoadPanel/Bar/Progress");
-	mLoadingCommentElement = omgr.getOverlayElement("Core/LoadPanel/Comment");
-	mLoadingDescriptionElement = omgr.getOverlayElement("Core/LoadPanel/Description");
-
-	OverlayElement* barContainer = omgr.getOverlayElement("Core/LoadPanel/Bar");
-	mProgressBarMaxSize = barContainer->getWidth();
-	mLoadingBarElement->setWidth(0);
-
-	// self is listener
+	//  self is listener
 	ResourceGroupManager::getSingleton().addResourceGroupListener(this);
 	
-	// translation
-	mLoadingDescriptionElement->setCaption(String(TR("#{LoadingDesc}")));
+	//  title
+	pApp->txLoadBig->setCaption(String(TR("#{LoadingDesc}")));
 		
-	if (bBackgroundImage)
+	if (!pApp->pSet->loadingbackground)
 	{
-		// add texture unit state, if not already exists
-		MaterialPtr mat = MaterialManager::getSingleton().getByName("Core/BackgroundMat", "Loading");
-		if (mat->getTechnique(0)->getPass(0)->getNumTextureUnitStates() == 0)
-		{
-			mat->getTechnique(0)->getPass(0)->createTextureUnitState();
-		}
-		// figure out how many background images we have.
-		unsigned int i=1;
-		while (1)
-		{
-			if (ResourceGroupManager::getSingleton().resourceExists("Loading", "loading" + toStr(i) + ".jpg"))
-				i++;
-			else
-				break;
-		}
-		if (i == 1)
-		{
-			// no load screens found
-			// remove image
-			OverlayContainer* cnt = mLoadOverlay->getChild("Core/LoadPanel/Background");
-			if (cnt)
-				mLoadOverlay->remove2D(cnt);
-			return;
-		}
-		// init random seed
-		srand(time(NULL));
-		unsigned int imgNumber;
-		imgNumber = rand() % (i-1);
-		// set the loading image
-		mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName("loading" + toStr(imgNumber+1) + ".jpg");
+		pApp->imgLoad->setVisible(false);
+		return;
 	}
-	else
-	{			
-		OverlayContainer* cnt = mLoadOverlay->getChild("Core/LoadPanel/Background");
-		if (cnt)
-			mLoadOverlay->remove2D(cnt);
+
+	int i = 1;  // count background images
+	while (1)
+	{
+		if (ResourceGroupManager::getSingleton().resourceExists("General", "loading" + toStr(i) + ".jpg"))  ++i;
+		else  break;
 	}
+	if (i == 1)  // none
+	{
+		pApp->imgLoad->setVisible(false);
+		return;
+	}
+	//  init random seed
+	srand(time(NULL));
+	unsigned int imgNumber;
+	imgNumber = rand() % (i-1);
+
+	//  set the loading image
+	//pApp->imgLoad->setImageTexture("Border_Center.png");
+	pApp->imgLoad->setImageTexture("loading" + toStr(imgNumber+1) + ".jpg");
+	pApp->imgLoad->setVisible(true);
 }
+
 
 void LoadingBar::finish()
 {
-	// hide loading screen
-	mLoadOverlay->hide();
+	//  hide loading
+	pApp->bckLoad->setVisible(false);
+	//pApp->imgLoad->setVisible(false); //not here, later..
 
-	// Unregister listener
+	//  Unregister listener
 	ResourceGroupManager::getSingleton().removeResourceGroupListener(this);
 }
+
 
 void LoadingBar::resourceGroupScriptingStarted(const String& groupName, size_t scriptCount)
 {
 	assert( mNumGroupsInit > 0 && "You were not going to init ");
-	mProgressBarInc = mProgressBarMaxSize * mInitProportion / (Real)scriptCount;
-	mProgressBarInc /= mNumGroupsInit;
+	mBarInc = mBarMaxSizeX * mInitProportion / (Real)scriptCount;
+	mBarInc /= mNumGroupsInit;
 	mWindow->update();
 }
 
@@ -110,14 +84,15 @@ void LoadingBar::resourceGroupScriptingEnded(const String& groupName)
 
 void LoadingBar::scriptParseStarted(const String& scriptName, bool& skipThisScript)
 {
-	//mLoadingCommentElement->setCaption(scriptName);
-	mLoadingDescriptionElement->setCaption(String(TR("#{LoadingDesc}")));
+	//mComment->setCaption(scriptName);
+	pApp->txLoadBig->setCaption(String(TR("#{LoadingDesc}")));
 	//mWindow->update();
 }
 
 void LoadingBar::scriptParseEnded(const String& scriptName, bool skipped)
 {
-	mLoadingBarElement->setWidth(mLoadingBarElement->getWidth() + mProgressBarInc);
+	IntSize s = pApp->barLoad->getSize();
+	pApp->barLoad->setSize(s.width + mBarInc, mBarSizeY);
 	mWindow->update();
 }
 
@@ -125,8 +100,8 @@ void LoadingBar::scriptParseEnded(const String& scriptName, bool skipped)
 void LoadingBar::resourceGroupLoadStarted(const String& groupName, size_t resourceCount)
 {
 	assert( mNumGroupsLoad > 0 && "You were not going to load ");
-	mProgressBarInc = mProgressBarMaxSize * (1-mInitProportion) / (Real)resourceCount;
-	mProgressBarInc /= mNumGroupsLoad;
+	mBarInc = mBarMaxSizeX * (1-mInitProportion) / (Real)resourceCount;
+	mBarInc /= mNumGroupsLoad;
 	mWindow->update();
 }
 
@@ -137,7 +112,7 @@ void LoadingBar::resourceGroupLoadEnded(const String& groupName)
 //  resourceLoad
 void LoadingBar::resourceLoadStarted(const ResourcePtr& resource)
 {
-	//mLoadingCommentElement->setCaption(resource->getName());
+	//mComment->setCaption(resource->getName());
 	mWindow->update();
 }
 
@@ -148,12 +123,19 @@ void LoadingBar::resourceLoadEnded()
 //  worldGeometry
 void LoadingBar::worldGeometryStageStarted(const String& description)
 {
-	mLoadingCommentElement->setCaption(description);
+	pApp->txLoad->setCaption(description);
 	mWindow->update();
 }
 
 void LoadingBar::worldGeometryStageEnded()
 {
-	mLoadingBarElement->setWidth(mLoadingBarElement->getWidth() + mProgressBarInc);
+	IntSize s = pApp->barLoad->getSize();
+	pApp->barLoad->setSize(s.width + mBarInc, mBarSizeY);
 	mWindow->update();
+}
+
+
+void LoadingBar::SetWidth(Ogre::Real pecent)
+{
+	pApp->barLoad->setSize( pecent * 0.01f * mBarMaxSizeX, mBarSizeY );
 }

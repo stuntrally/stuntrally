@@ -498,8 +498,10 @@ void BaseApp::baseInitGui()
 	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
 	//------------------------
 
-	///  create widgets (Fps, loading)
+
+	///  create widgets
 	//------------------------------------------------
+	//  Fps
 	bckFps = mGUI->createWidget<ImageBox>("ImageBox",
 		0,0, 212,25, Align::Default, "Pointer", "FpsB");
 	bckFps->setImageTexture("Border_Center.png");
