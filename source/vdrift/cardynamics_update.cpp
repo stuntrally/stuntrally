@@ -195,7 +195,6 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 			//MATHVECTOR<Dbl,3> av = GetAngularVelocity();  Orientation().RotateVector(av);
 			//out << "ang vel: " << fToStr(av[0],2,5) <<" "<< fToStr(av[1],2,5) <<" "<< fToStr(av[2],2,5) << endl;
 			//out << "pos: " << chassisPosition << endl;
-			//out << "sumWhTest: " << sumWhTest << endl;
 			out.precision(2);
 			//MATHVECTOR<Dbl,3> up(0,0,1);  Orientation().RotateVector(up);
 			//out << "up: " << up << endl;
@@ -380,9 +379,9 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	//LogO(toStr(boostFuel));
 	///***  --------------------------------------------------
 	
-
+	int i;
 	Dbl normal_force[WHEEL_POSITION_SIZE];
-	for(int i = 0; i < WHEEL_POSITION_SIZE; i++)
+	for (i = 0; i < WHEEL_POSITION_SIZE; ++i)
 	{
 		MATHVECTOR<Dbl,3> suspension_force = UpdateSuspension(i, dt);
 		normal_force[i] = suspension_force.dot(wheel_contact[i].GetNormal());
@@ -392,30 +391,20 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 		ApplyWheelTorque(dt, drive_torque[i], i, tire_friction, wheel_orientation[i]);
 	}
 
-	///  test steer wheels ang vel to body yaw torque ..?  L = I*w
-	//Dbl sum = 0.0;
-	//for(int i = 0; i < WHEEL_POSITION_SIZE; i++)
-	//{
-	//	sum += (i < 2 ? -1 : 1) *//wheel[i].GetAngularVelocity() *
-	//		(1.0 - sin(wheel[i].GetSteerAngle()*PI_d/180.0) ) * /*(wheel[i].GetSteerAngle() > 0 ? 1 : -1) **/ 10;
-	//	MATHVECTOR<Dbl,3> torque(0, 0, sum);
-	//	//wheel_space.RotateVector(world_wheel_torque);
-	//	//ApplyTorque(torque);
-	//}
 	//sumWhTest = sum;
 
 	body.Integrate2(dt);
 	//chassis->integrateVelocities(dt);
 
 	// update wheel state
-	for(int i = 0; i < WHEEL_POSITION_SIZE; i++)
+	for (i = 0; i < WHEEL_POSITION_SIZE; ++i)
 	{
 		wheel_position[i] = GetWheelPositionAtDisplacement(WHEEL_POSITION(i), suspension[i].GetDisplacementPercent());
 		wheel_orientation[i] = Orientation() * GetWheelSteeringAndSuspensionOrientation(WHEEL_POSITION(i));
 	}
 	InterpolateWheelContacts(dt);
 
-	for(int i = 0; i < WHEEL_POSITION_SIZE; i++)
+	for (i = 0; i < WHEEL_POSITION_SIZE; ++i)
 	{
 		if (abs)  DoABS(i, normal_force[i]);
 		if (tcs)  DoTCS(i, normal_force[i]);

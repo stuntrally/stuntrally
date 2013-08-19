@@ -147,7 +147,6 @@ public:
 	int whP[4];  // fluid particles id
 	struct Polyhedron* poly;
 	float body_mass;  btVector3 body_inertia;
-	//float sumWhTest;  //test dbg out
 
 	// interpolated chassis state
 	MATHVECTOR<Dbl,3> chassisPosition, chassisCenterOfMass;
