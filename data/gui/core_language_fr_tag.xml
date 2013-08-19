@@ -45,7 +45,7 @@
 	<Tag name="TipTrackImg">Capture d'écran du jeu pour la piste sélectionnée.</Tag>
 	<Tag name="TerLNoiseOnly">Bruit seulement</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
-	<Tag name="TipOneAxisThrottleBrake">If your controller has throttle and brake in one axis, check this. Bind axis to throttle, unbind brake. Use Inverse from throttle if needed.</Tag>
+	<Tag name="TipOneAxisThrottleBrake">Si votre manette ou volant a l'accélération et le freinage sur le même axe, cochez cette case. Liez l'axe à \un axe inversé si nécessaire.</Tag>
 	<Tag name="TipChangeGloss">Changer la brillance de la peinture (mat/brillant).</Tag>
 	<Tag name="Surface">Surface</Tag>
 	<Tag name="Road_Yaw">Angle horizontal</Tag>
@@ -141,7 +141,7 @@
 	<Tag name="GraphicsAll_Medium">Moyen</Tag>
 	<Tag name="NeedReload">* besoin de recharger</Tag>
 	<Tag name="MinimapZoom">Zoom</Tag>
-	<Tag name="OneAxisThrottleBrake">One axis for throttle and brake</Tag>
+	<Tag name="OneAxisThrottleBrake">Un axe pour accélérer et freiner</Tag>
 	<Tag name="ViewRight">Vue de droite</Tag>
 	<Tag name="Count">Nombre</Tag>
 	<Tag name="InputBrushPower">; &apos;  (or alt-Wheel)  -  Power exponent</Tag>
@@ -247,7 +247,7 @@
 	<Tag name="InputGraphsType">changer le type de graphiques dans le jeu</Tag>
 	<Tag name="NetMasterProtocolError">Version du protocole incompatible - mettez à jour Stunt Rally ou contactez l'administrateur du serveur.</Tag>
 	<Tag name="No">Non</Tag>
-	<Tag name="CheckOnLoad">Check on load</Tag>
+	<Tag name="CheckOnLoad">Vérifier en chargeant</Tag>
 	<Tag name="Effects">Effets</Tag>
 	<Tag name="WidthSteps">Width Steps</Tag>
 	<Tag name="Multiply">Multiplier</Tag>
@@ -457,7 +457,7 @@
 	<Tag name="MinimapUpdSkip">Fréq. de MAJ de la minicarte</Tag>
 	<Tag name="InputReloadTrack">F5 - rechargement du circuit</Tag>
 	<Tag name="InputIncreaseSensitivity">Sensibilité</Tag>
-	<Tag name="CheckOnSave">Check on save</Tag>
+	<Tag name="CheckOnSave">Vérifier en sauvegardant</Tag>
 	<Tag name="GraphicsAllSettings">Changer tous les paramètres graphiques :</Tag>
 	<Tag name="InputTerPaint">A - peindre des textures (calques)</Tag>
 	<Tag name="NetPort">Port</Tag>
@@ -592,14 +592,14 @@
 	<Tag name="InputTopView">Alt-Z - activer la vue du dessus</Tag>
 	<Tag name="InputUpdate">F8 - mettre à jour la piste</Tag>
 	<Tag name="InputToggleGUIMode">F1 ou ` - mode graphique (Options)</Tag>
-	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
+	<Tag name="InpSet_AxisFullInv">Axe complet inversé</Tag>
 	<Tag name="TipGrassMaterial">Grass material (type) for this layer, chosen to match track's scenery.</Tag>
 	<Tag name="TipRearThrottleInverse">Inverser les contrôles Accélérer et Freiner en marche arrière.</Tag>
 	<Tag name="LS_ROAD">Chargement de la route</Tag>
 	<Tag name="RoadPoint">Point de la route</Tag>
 	<Tag name="CarStartPos">Position de départ de la voiture</Tag>
 	<Tag name="ShortcutsInfo">Cliquez avec Alt pour accéder rapidement à un onglet (ou sous-onglet). Cliquez encore pour naviguer entre les sous-onglets (s'il y en a).</Tag>
-	<Tag name="AlignWidthMul">Width multiply</Tag>
+	<Tag name="AlignWidthMul">Multiplicateur de largeur</Tag>
 	<Tag name="NetMasterIp">IP du serveur maître</Tag>
 	<Tag name="LoadingDesc">Chargement, veuillez patienter...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Hauteur maximale de l'herbe.</Tag>
@@ -793,7 +793,7 @@
 	<Tag name="InputRoadRebuild">B - reconstruire la route (après changements de terrain, etc.)</Tag>
 	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="Generator">Générateur</Tag>
-	<Tag name="InputContextHelp">Ctrl-F1 - context help page</Tag>
+	<Tag name="InputContextHelp">Ctrl-F1 - page d'aide contextuelle</Tag>
 	<Tag name="ObjDynamic">Dynamique</Tag>
 	<Tag name="InputRoadAlignTerrain">U - aligner le terrain à la route (pour les segments sélectionnés)</Tag>
 	<Tag name="Add">Ajouter</Tag>
@@ -895,6 +895,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet d'Options précédent/suivant (Maj. sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
+	<Tag name="ReverseStartOrder">Reverse starting order</Tag>
 	<Tag name="NetNew">New game</Tag>
 	<Tag name="GameVersion">2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
