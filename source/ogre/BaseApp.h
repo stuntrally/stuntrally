@@ -179,12 +179,11 @@ public:
 protected:
 
 	///  overlay
-	Ogre::Overlay* mDebugOverlay, *mFpsOverlay;  // fps stats
-	Ogre::OverlayElement* mOvrFps, *mOvrTris, *mOvrBat, *mOvrMem, *mOvrDbg;
+	Ogre::Overlay* mFpsOverlay;  // fps stats
+	Ogre::OverlayElement* mOvrFps, *mOvrTris, *mOvrBat, *mOvrMem;
 
 	bool alt, ctrl, shift;  // key modifiers
 	bool mbLeft, mbRight, mbMiddle;  // mouse buttons
-	Ogre::String  mDebugText, mFilText;	// info texts
 	bool mbWireFrame, mbShowCamPos;  // on/off
 	int iCurCam;
 

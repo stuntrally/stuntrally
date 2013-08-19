@@ -65,19 +65,8 @@ bool BaseApp::frameEnded(const Ogre::FrameEvent& evt)
 // ------------------------------------------------------------------------
 void BaseApp::updateStats()
 {
-	// Print camera pos, rot
-
-	// Only for 1 local player
-	/*if (mSplitMgr && mSplitMgr->mNumViewports == 1 && mbShowCamPos)
-	{
-		const Vector3& pos = (*mSplitMgr->mCameras.begin())->getDerivedPosition();
-		const Quaternion& rot = (*mSplitMgr->mCameras.begin())->getDerivedOrientation();
-		mDebugText = "Pos: "+fToStr(pos.x,1,5)+" "+fToStr(pos.y,1,5)+" "+fToStr(pos.z,1,5);
-		mDebugText += "  Rot: "+fToStr(rot.x,3,6)+" "+fToStr(rot.y,3,6)+" "+fToStr(rot.z,3,6)+" "+fToStr(rot.w,3,6);
-	}/**/
-
-	try {
-		const RenderTarget::FrameStats& stats = mWindow->getStatistics();
+	try
+	{	const RenderTarget::FrameStats& stats = mWindow->getStatistics();
 		size_t mem = TextureManager::getSingleton().getMemoryUsage() + MeshManager::getSingleton().getMemoryUsage();
 
 		int triCount = 0, batchCount = 0;
@@ -105,30 +94,12 @@ void BaseApp::updateStats()
 			triCount = stats.triangleCount;
 			batchCount = stats.batchCount;
 		}
-		/*int t = triCount, b = batchCount;
-
-		//  add rtts
-		RenderSystem::RenderTargetIterator iter = mRoot->getRenderSystem()->getRenderTargetIterator();
-		while (iter.hasMoreElements())
-		{
-			RenderTarget* rt = iter.getNext();
-			//*LogO(rt->getName());
-			//if (rt->isAutoUpdated())
-			{
-				batchCount += rt->getBatchCount();
-				triCount += rt->getTriangleCount();
-			}
-		}*/
 
 		//  update
 		mOvrFps->setCaption(fToStr(stats.lastFPS,1,5) );
 		mOvrTris->setCaption(iToStr(int(triCount/1000.f),4)+"k");
 		mOvrBat->setCaption(iToStr(batchCount,3));
-		//mOvrTris->setCaption(iToStr(int(triCount/1000.f),4)+"k"+"\n"+iToStr(int(t/1000.f),4));
-		//mOvrBat->setCaption(iToStr(batchCount,3)+"\n"+iToStr(batchCount,3) );
 		mOvrMem->setCaption(iToStr(mem/1024/1024,3)+"M" );
-
-		mOvrDbg->setCaption( mFilText + "  " + mDebugText );
 	}
 	catch(...) {  /*ignore*/  }
 }
