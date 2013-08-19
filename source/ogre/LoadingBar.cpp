@@ -12,9 +12,8 @@
 using namespace Ogre;
 #include "OgreGame.h"
 
-void LoadingBar::start( RenderWindow* window, 		unsigned short numGroupsInit, 
-	unsigned short numGroupsLoad, 
-	Real initProportion )
+void LoadingBar::start( RenderWindow* window,
+	unsigned short numGroupsInit, unsigned short numGroupsLoad, Real initProportion )
 {
 	mWindow = window;
 	mNumGroupsInit = numGroupsInit;
@@ -100,10 +99,8 @@ void LoadingBar::finish()
 void LoadingBar::resourceGroupScriptingStarted(const String& groupName, size_t scriptCount)
 {
 	assert( mNumGroupsInit > 0 && "You were not going to init ");
-	// Lets assume script loading is 70%
 	mProgressBarInc = mProgressBarMaxSize * mInitProportion / (Real)scriptCount;
 	mProgressBarInc /= mNumGroupsInit;
-	//-mLoadingDescriptionElement->setCaption("Parsing scripts...");
 	mWindow->update();
 }
 

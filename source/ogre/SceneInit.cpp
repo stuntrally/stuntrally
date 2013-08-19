@@ -176,7 +176,7 @@ void App::NewGame()
 
 	LoadingOn();
 	ShowHUD(true);  // hide HUD
-	mFpsOverlay->hide();  // hide FPS
+	//mFpsOverlay->hide();  // hide FPS
 	hideMouse();
 
 	curLoadState = loadingStates.begin();
@@ -649,8 +649,8 @@ void App::NewGameDoLoad()
 		mLoadingBar->mLoadingBarElement->setWidth( mLoadingBar->mProgressBarMaxSize );  // 100 %
 				
 		ShowHUD();
-		if (pSet->show_fps)
-			mFpsOverlay->show();
+		//if (pSet->show_fps)
+		//	mFpsOverlay->show();
 		//.mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
 
 		//.ChampLoadEnd();

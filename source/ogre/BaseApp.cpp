@@ -69,7 +69,7 @@ void BaseApp::updateStats()
 	{	const RenderTarget::FrameStats& stats = mWindow->getStatistics();
 		size_t mem = TextureManager::getSingleton().getMemoryUsage() + MeshManager::getSingleton().getMemoryUsage();
 
-		int triCount = 0, batchCount = 0;
+		int tris = 0, batch = 0;
 		if (AnyEffectEnabled())
 		{
 			CompositorInstance* c = NULL;
@@ -85,21 +85,21 @@ void BaseApp::updateStats()
 				{
 					std::string textureName = c->getTechnique()->getTargetPass(j)->getOutputName();
 					rt = c->getRenderTarget(textureName);
-					triCount += rt->getTriangleCount();
-					batchCount += rt->getBatchCount();
-				}
-			}
+					tris += rt->getTriangleCount();
+					batch += rt->getBatchCount();
+			}	}
 		}else
 		{
-			triCount = stats.triangleCount;
-			batchCount = stats.batchCount;
+			tris = stats.triangleCount;
+			batch = stats.batchCount;
 		}
 
 		//  update
-		mOvrFps->setCaption(fToStr(stats.lastFPS,1,5) );
-		mOvrTris->setCaption(iToStr(int(triCount/1000.f),4)+"k");
-		mOvrBat->setCaption(iToStr(batchCount,3));
-		mOvrMem->setCaption(iToStr(mem/1024/1024,3)+"M" );
+		txFps->setCaption(
+			"#E0F0FF"+(stats.lastFPS >= 200.f ? fToStr(stats.lastFPS,0,4)+"." : fToStr(stats.lastFPS,1,5))+
+			"#B0C0D0"+iToStr(int(tris/1000.f),4)+"k"+
+			" #C8E0FF"+iToStr(batch,3)+
+			" #A0B0C8"+iToStr(mem/1024/1024,3)+"M" );
 	}
 	catch(...) {  /*ignore*/  }
 }

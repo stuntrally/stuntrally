@@ -231,7 +231,6 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				else
 				if (!ctrl)  // Fps
 				{	WP wp = chFps;  ChkEv(show_fps);
-					if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
 					return false;
 				}	break;
 

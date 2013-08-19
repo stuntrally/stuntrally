@@ -191,7 +191,7 @@ void App::InitGui()
 
 	//  other
 	Chk("Fps", chkFps, pSet->show_fps);  chFps = bchk;
-	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
+	txFps->setVisible(pSet->show_fps);  bckFps->setVisible(pSet->show_fps);
 	Chk("Wireframe", chkWireframe, mbWireFrame);  chWire = bchk;
 
 	Chk("ProfilerTxt", chkProfilerTxt, pSet->profilerTxt);	chProfTxt = bchk;

@@ -18,7 +18,6 @@
 
 #include <OgreFontManager.h>
 #include <OgreLogManager.h>
-#include <OgreOverlayManager.h>
 
 #include "boost/filesystem.hpp"
 
@@ -115,12 +114,6 @@ namespace
 //-------------------------------------------------------------------------------------
 void BaseApp::createFrameListener()
 {
-	Ogre::OverlayManager& ovr = Ogre::OverlayManager::getSingleton();
-	mFpsOverlay = ovr.getByName("Core/FpsOverlay");  //mFpsOverlay->show();//
-	mOvrFps = ovr.getOverlayElement("Core/CurrFps");	mOvrTris= ovr.getOverlayElement("Core/NumTris");
-	mOvrBat = ovr.getOverlayElement("Core/NumBatches"); mOvrMem = ovr.getOverlayElement("Core/Memory");
-
-
 	mInputWrapper = new SFO::InputWrapper(mSDLWindow, mWindow);
 	mInputWrapper->setMouseEventCallback(this);
 	mInputWrapper->setKeyboardEventCallback(this);
@@ -166,7 +159,8 @@ void BaseApp::Run( bool showDialog )
 //  ctor
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp()
-	:mRoot(0), mSceneMgr(0), mWindow(0), imgBack(0)
+	:mRoot(0), mSceneMgr(0), mWindow(0)
+	,imgBack(0), bckFps(0), txFps(0)
 	,mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0), mCameraBlurLogic(0)
 	,mGodRaysLogic(0), mSoftParticlesLogic(0), mGBufferLogic(0)
 	,mDepthOfFieldLogic(0), mFilmGrainLogic(0)
@@ -180,7 +174,6 @@ BaseApp::BaseApp()
 	,mWndRpl(0), mWndChampStage(0),mWndChampEnd(0), mWndNetEnd(0), mWndTweak(0)
 	,bSizeHUD(true), bLoading(false), iLoad1stFrames(0), bAssignKey(false), bLoadingEnd(0), bSimulating(0)
 	,mMasterClient(), mClient(), mLobbyState(DISCONNECTED)
-	,mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrMem(0)
 	,mbShowCamPos(0), ndSky(0),	mbWireFrame(0)
 	,iCurCam(0), mSplitMgr(0), motionBlurIntensity(0.9), pressedKeySender(0)
 	,mMouseX(0), mMouseY(0), mCursorManager(NULL), mInputWrapper(NULL)
@@ -431,47 +424,8 @@ bool BaseApp::setup()
 
 
 	//  Gui
-	//-------------------------------------------------------
-	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	mPlatform = new MyGUI::OgreD3D11Platform();
-	#else
-	mPlatform = new MyGUI::OgrePlatform();
-	#endif
-	
-	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::UserConfigDir() + "/MyGUI.log");
-	mGUI = new MyGUI::Gui();
-	
+	baseInitGui();
 
-	mGUI->initialise("");
-
-	MyGUI::FactoryManager::getInstance().registerFactory<ResourceImageSetPointerFix>("Resource", "ResourceImageSetPointer");
-	MyGUI::ResourceManager::getInstance().load("core.xml");
-	MyGUI::ResourceManager::getInstance().load("MessageBoxResources.xml");
-
-	MyGUI::PointerManager::getInstance().eventChangeMousePointer +=	MyGUI::newDelegate(this, &BaseApp::onCursorChange);
-	MyGUI::PointerManager::getInstance().setVisible(false);
-
-		
-	//------------------------- lang ------------------------
-	if (pSet->language == "")  // autodetect
-	{	pSet->language = getSystemLanguage();
-		setlocale(LC_NUMERIC, "C");  }
-	
-	// valid?
-	if (!boost::filesystem::exists(PATHMANAGER::Data() + "/gui/core_language_" + pSet->language + "_tag.xml"))
-		pSet->language = "en";
-		
-	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
-	//-------------------------------------------------------
-
-		
-	mPlatform->getRenderManagerPtr()->setSceneManager(mSplitMgr->mGuiSceneMgr);
-	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
-	
-	// After having initialised mygui, we can set translated strings
-	setTranslations();
-
-	//--------
 	CreateRTfixed();
 
 		ti.update();  dt = ti.dt * 1000.f;  /// time
@@ -787,3 +741,61 @@ void BaseApp::windowResized(int x, int y)
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 }
 
+
+///  base Init Gui
+//--------------------------------------------------------------------------------------------------------------
+void BaseApp::baseInitGui()
+{
+	using namespace MyGUI;
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	mPlatform = new MyGUI::OgreD3D11Platform();
+	#else
+	mPlatform = new MyGUI::OgrePlatform();
+	#endif
+	
+	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::UserConfigDir() + "/MyGUI.log");
+	mGUI = new MyGUI::Gui();
+	
+
+	mGUI->initialise("");
+
+	MyGUI::FactoryManager::getInstance().registerFactory<ResourceImageSetPointerFix>("Resource", "ResourceImageSetPointer");
+	MyGUI::ResourceManager::getInstance().load("core.xml");
+	MyGUI::ResourceManager::getInstance().load("MessageBoxResources.xml");
+
+	MyGUI::PointerManager::getInstance().eventChangeMousePointer +=	MyGUI::newDelegate(this, &BaseApp::onCursorChange);
+	MyGUI::PointerManager::getInstance().setVisible(false);
+
+		
+	//------------------------- lang
+	if (pSet->language == "")  // autodetect
+	{	pSet->language = getSystemLanguage();
+		setlocale(LC_NUMERIC, "C");  }
+	
+	if (!boost::filesystem::exists(PATHMANAGER::Data() + "/gui/core_language_" + pSet->language + "_tag.xml"))
+		pSet->language = "en";  // use en if not found
+		
+	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
+	//------------------------
+
+		
+	mPlatform->getRenderManagerPtr()->setSceneManager(mSplitMgr->mGuiSceneMgr);
+	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
+	
+	// After having initialised mygui, we can set translated strings
+	setTranslations();
+
+
+	///  create widgets (Fps, loading)
+	//------------------------------------------------
+	bckFps = mGUI->createWidget<ImageBox>("ImageBox",
+		0,0, 212,25, Align::Default, "Pointer", "FpsB");
+	bckFps->setAlpha(0.9f);
+	bckFps->setImageTexture("Border_Center.png");
+
+	txFps = mGUI->createWidget<TextBox>("TextBox",
+		1,1, 212,25, Align::Default, "Pointer", "FpsT");
+	txFps->setFontName("fps.17");
+
+	txFps->setVisible(false);  bckFps->setVisible(false);
+}

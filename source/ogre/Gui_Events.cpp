@@ -412,7 +412,7 @@ void App::chkCamInfo(WP wp){		ChkEv(show_cam);	ShowHUD();	}
 void App::chkCamTilt(WP wp){		ChkEv(cam_tilt);	}
 
 //  other
-void App::chkFps(WP wp){			ChkEv(show_fps);	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();	}
+void App::chkFps(WP wp){			ChkEv(show_fps);	}
 void App::chkWireframe(WP wp){		toggleWireframe();  }
 
 void App::chkProfilerTxt(WP wp){	ChkEv(profilerTxt);	}

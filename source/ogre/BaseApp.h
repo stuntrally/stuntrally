@@ -178,10 +178,7 @@ public:
 	Ogre::RenderWindow* getWindow()  {  return mWindow;  }
 protected:
 
-	///  overlay
-	Ogre::Overlay* mFpsOverlay;  // fps stats
-	Ogre::OverlayElement* mOvrFps, *mOvrTris, *mOvrBat, *mOvrMem;
-
+	///  input
 	bool alt, ctrl, shift;  // key modifiers
 	bool mbLeft, mbRight, mbMiddle;  // mouse buttons
 	bool mbWireFrame, mbShowCamPos;  // on/off
@@ -190,8 +187,9 @@ protected:
 	///  Gui
 	bool isFocGui,isFocRpl;  // gui shown
 	bool isTweak();
-	MyGUI::Gui* mGUI;
-	MyGUI::ImageBox* imgBack;
+	MyGUI::Gui* mGUI;  void baseInitGui();
+	MyGUI::ImageBox* imgBack, *bckFps;
+	MyGUI::TextBox*	txFps;
 	
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	MyGUI::OgreD3D11Platform* mPlatform;

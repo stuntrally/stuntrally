@@ -2,15 +2,30 @@
 
 <MyGUI type="Resource" version="1.1">
 
+	<!-- Fps Font -->
+	<Resource type="ResourceTrueTypeFont" name="fps.17">
+		<Property key="Source" value="DejaVuLGCSans.ttf"/>
+		<Property key="Size" value="24"/>
+		<Property key="Resolution" value="50"/>
+		<Property key="Antialias" value="false"/>
+		<Property key="SpaceWidth" value="11"/><!--same as digit width-->
+		<Property key="TabWidth" value="8"/>
+		<Property key="Distance" value="4"/>
+		<Property key="OffsetHeight" value="0"/>
+		<Codes>
+			<Code range="33 127"/>
+		</Codes>
+	</Resource>
+
+
 	<!-- Main Gui Font -->
 	<Resource type="ResourceTrueTypeFont" name="font.17">
 		<Property key="Source" value="DejaVuLGCSans.ttf"/>
 		<Property key="Size" value="24"/>
 		<Property key="Resolution" value="50"/>
 		<Property key="Antialias" value="false"/>
-		<Property key="SpaceWidth" value="4"/>
+		<!--<Property key="SpaceWidth" value="4"/>-->
 		<Property key="TabWidth" value="8"/>
-		<Property key="CursorWidth" value="2"/>
 		<Property key="Distance" value="4"/>
 		<Property key="OffsetHeight" value="0"/>
 		<Codes>
@@ -40,9 +55,8 @@
 		<Property key="Size" value="27"/>
 		<Property key="Resolution" value="50"/>
 		<Property key="Antialias" value="false"/>
-		<Property key="SpaceWidth" value="4"/>
+		<!--<Property key="SpaceWidth" value="4"/>-->
 		<Property key="TabWidth" value="8"/>
-		<Property key="CursorWidth" value="2"/>
 		<Property key="Distance" value="4"/>
 		<Property key="OffsetHeight" value="0"/>
 		<Codes>
@@ -66,15 +80,15 @@
 		</Codes>
 	</Resource>
 
+
 	<!-- Hud Text Font -->
 	<Resource type="ResourceTrueTypeFont" name="font.20">
 		<Property key="Source" value="DejaVuLGCSans.ttf"/>
 		<Property key="Size" value="30"/>
 		<Property key="Resolution" value="50"/>
 		<Property key="Antialias" value="false"/>
-		<Property key="SpaceWidth" value="4"/>
+		<!--<Property key="SpaceWidth" value="4"/>-->
 		<Property key="TabWidth" value="8"/>
-		<Property key="CursorWidth" value="2"/>
 		<Property key="Distance" value="4"/>
 		<Property key="OffsetHeight" value="0"/>
 		<Codes>
@@ -106,7 +120,6 @@
 		<Property key="Antialias" value="false"/>
 		<Property key="SpaceWidth" value="4"/>
 		<Property key="TabWidth" value="8"/>
-		<Property key="CursorWidth" value="2"/>
 		<Property key="Distance" value="4"/>
 		<Property key="OffsetHeight" value="-1"/>
 		<Codes>
@@ -169,7 +182,6 @@
 		<Property key="Antialias" value="false"/>
 		<Property key="SpaceWidth" value="4"/>
 		<Property key="TabWidth" value="8"/>
-		<Property key="CursorWidth" value="2"/>
 		<Property key="Distance" value="4"/>
 		<Property key="OffsetHeight" value="-1"/>
 		<Codes>
