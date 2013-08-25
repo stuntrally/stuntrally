@@ -1,30 +1,111 @@
 <challenges>
-<!--  type=
+<!--  type..
 	6 test  0 tutorial  1 tutorial hard
-	2 normal  3 hard  4 very hard  5 extreme  -->
+	2 normal  3 hard  4 very hard  5 extreme  
 
+Full example with Help:
+
+			//  ***  Main ***
+			//  here you put display name, description text
+			//  increase ver if you changed challenge (no need if track count changed)
+			//  type is for putting it into gui diffuculty tabs
+			//  difficulty is for text displayed in list  "1" easy .. "3" medium .. "6" extreme
+
+	<challenge name="Test Challenge 1" ver="1" difficulty="0" type="2" 
+			descr="Challenge 1, to test logic.">
+						
+			//  *** Game setup ***
+			//  Simulation mode: "easy" or "normal"
+			//  Damage type : "0" None  "1" Reduced  "2" Normal
+			//  Boost type : "0" Never  "1" FuelLap  "2" FuelTime  "3" Always
+			//  Flip type : "0" Never  "1" FuelBoost  "2" Always
+			//  Rewind type: todo.. "0" None  "1" Always  "2" FuelLap  "3" FuelTime
+
+		<sim mode="normal" damage="2" boost="1" flip="1" rewind="1" />
+		
+			//  *** Cars ***
+			//  you can put either cartype or car  ?or both
+			//  if many separate with |
+			//  see in cars.xml for all types and cars
+			//  only those types or cars you put here will be available
+
+		<cartype names="Gravel" />
+		<car names="ES|S1" />
+		
+			//  *** Hud ***  todo..
+			//  not allowed when ="0", if "1" means user can choose
+			//  minimap,  checkpoint arrow and checkpoint beam,  track's ghost
+
+		<hud minimap="1" chkArrow="1" chkBeam="1" trkGhost="1" />
+		
+			///  not yet..  <setup abs="0" tcs="0" autogbox="-1" />
+			
+			//  *** Pass (win) conditions ***
+			//  use many if desired  (one is good)
+			//  use none, if using those for track
+			//  got from all challenge stages
+			//  - total challenge time seconds  .need to sum tracks
+			//  - average position  1.0 .. 6.0 and less
+			//  - average points  5.0 .. 10.0 and more
+
+		<pass totalTime="123" avgPos="6" avgPoints="7" />
+		
+		<tracks>
+				//  reversed direction when reversed="1", dont put for normal
+				//  laps count
+				//  same pass conditions like above, but for this stage
+				//  one is recommended, can use many
+				//  if none used, will be only from whole challenge
+
+			<t name="TestC6-temp" reversed="1" laps="1" passTime="-1" passPoints="7.0" passPos="3"/>
+			<t ..more.. />
+				/// todo: bronze, silver, gold ...?
+		</tracks>
+	</challenge>
+-->
 <!--  Test  -->
 <!--========================================================================================================================-->
 
-	<challenge name="Test Challenge 1" ver="1" difficulty="0" type="6" 
+	<challenge name="Test Challenge 1" ver="1" difficulty="0" type="2" 
 			descr="Challenge 1, to test logic.">
 		<sim mode="normal" damage="2" boost="1" flip="1" rewind="1" />
-		<cartype names="Gravel" />
+		<!--<cartype names="Gravel" />-->
 		<car names="ES|S1" />
 		<hud minimap="1" chkArrow="1" chkBeam="1" trkGhost="1" />
 		<!--<setup abs="0" tcs="0" autogbox="-1" />-->
 		<pass totalTime="123" avgPos="6" avgPoints="7" />
 		<tracks>
-			<t name="TestC6-temp" laps="1" passTime="-1" passPoints="7.0" passPos="3"/>
+			<t name="TestC6-temp" reversed="1" laps="1" passTime="-1" passPoints="7.0" passPos="3"/>
 		</tracks>
 	</challenge>
 
-	<challenge name="Test Challenge 2" ver="1" difficulty="0" type="6" 
+	<challenge name="Test Challenge 2" ver="1" difficulty="0" type="3" 
 			descr="Challenge 2, to test logic.">
+		<cartype names="Gravel" />
+		<pass avgPoints="7" />
 		<tracks>
-			<t name="TestC6-temp" laps="1" passPoints="7.0" />
 			<t name="TestC4-ow" laps="1" passPoints="7.0" />
+			<t name="TestC6-temp" laps="1" passPoints="7.0" />
 			<t name="TestC1-circle" laps="1" passPoints="7.0" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Test Chall 3" ver="1" difficulty="0" type="4" 
+			descr="Challenge 2, to test logic.">
+		<car names="N1|S8|TC6|3S" />
+		<pass avgPoints="7" />
+		<tracks>
+			<t name="TestC4-ow" laps="1" passTime="12.0" />
+			<t name="TestC1-circle" laps="1" passPos="4" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Test Chall 4" ver="1" difficulty="0" type="4" 
+			descr="Challenge 2, to test logic.">
+		<cartype names="Extreme|Slow" />
+		<pass avgPos="6" />
+		<tracks>
+			<t name="TestC4-ow" laps="1" passTime="12.0" />
 		</tracks>
 	</challenge>
 
@@ -32,20 +113,6 @@
 <!--  Easy  -->
 <!--========================================================================================================================-->
 
-	<!--<challenge name="Tutorial Terrain" ver="1" difficulty="2" type="0" 
-			descr="Tutorial with short tracks having hilly or bumpy terrain.">
-		<track name="F11-Dawn"		laps="1" factor="0.1" />
-		<track name="J1-T"			laps="1" factor="0.1" />
-		<track name="D1-simple"		laps="1" factor="0.1" />
-	</challenge>
-
-	<challenge name="Tutorial Curly" ver="1" difficulty="3" type="1" 
-			descr="Tutorial with very tiny but curly tracks. Requires a lot of steering.">
-		<track name="I12-Beach"		laps="1" factor="0.1" />
-		<track name="G4-River"		laps="1" factor="0.1" />
-		<track name="I6-Flooded"	laps="1" factor="0.1" />
-		<track name="J18-Tiny"		laps="1" factor="0.1" />
-	</challenge>-->
 
 
 </challenges>
