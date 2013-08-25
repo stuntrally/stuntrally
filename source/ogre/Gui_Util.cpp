@@ -501,7 +501,11 @@ void App::LNext(int rel)
 		{	case TAB_Track:  listTrackChng(trkList,  LNext(trkList, rel, 11));  return;
 			case TAB_Car:	 listCarChng(carList,    LNext(carList, rel, 5));  return;
 			case TAB_Game:	 if (rel > 0)  radSimNorm(0);  else  radSimEasy(0);  return;
-			case TAB_Champs: listChampChng(liChamps, LNext(liChamps, rel, 8));  return;
+			case TAB_Champs:
+				if (imgChall && imgChall->getVisible())
+				      listChallChng(liChalls, LNext(liChalls, rel, 8));
+				else  listChampChng(liChamps, LNext(liChamps, rel, 8));
+				return;
 			case TAB_Stages: listStageChng(liStages, LNext(liStages, rel, 8));  return;
 			case TAB_Stage:	 if (rel > 0)  btnStageNext(0);  else  btnStagePrev(0);  return;
 		}

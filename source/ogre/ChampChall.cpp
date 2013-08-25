@@ -273,22 +273,23 @@ void App::ChampsXmlLoad()
 
 void App::UpdChampTabVis()
 {
+	if (!liChamps || !tabChamp || !btStChamp)  return;
 	static int oldMenu = pSet->inMenu;
 	bool tutor = pSet->inMenu == MNU_Tutorial, champ = pSet->inMenu == MNU_Champ, chall = pSet->inMenu == MNU_Challenge;
 
-	if (tabTut)   tabTut->setVisible(tutor);    if (imgTut)   imgTut->setVisible(tutor);    if (btStTut)   btStTut->setVisible(tutor);
-	if (tabChamp) tabChamp->setVisible(champ);  if (imgChamp) imgChamp->setVisible(champ);  if (btStChamp) btStChamp->setVisible(champ);
-	if (tabChall) tabChall->setVisible(chall);  if (imgChall) imgChall->setVisible(chall);  if (btStChall) btStChall->setVisible(chall);
+	tabTut->setVisible(tutor);    imgTut->setVisible(tutor);    btStTut->setVisible(tutor);
+	tabChamp->setVisible(champ);  imgChamp->setVisible(champ);  btStChamp->setVisible(champ);
+	tabChall->setVisible(chall);  imgChall->setVisible(chall);  btStChall->setVisible(chall);
 
-	if (liChamps)  liChamps->setColour(
-		chall ? Colour(0.75,0.85,0.8) : (tutor ? Colour(0.85,0.8,0.75) : Colour(0.7,0.78,0.85)));
+	liChamps->setVisible(!chall);  liChamps->setColour(tutor ? Colour(0.85,0.8,0.75) : Colour(0.7,0.78,0.85));
+	liChalls->setVisible( chall);  liChalls->setColour(Colour(0.75,0.85,0.8));
 
 	if (oldMenu != pSet->inMenu && (tutor || champ || chall))
 	{	oldMenu = pSet->inMenu;
 		if (chall)  ChallsListUpdate();
 		else  ChampsListUpdate();
 	}
-	if (edChampInfo && edChampInfo->getVisible())
+	if (edChampInfo->getVisible())
 		edChampInfo->setCaption(chall ? TR("#{ChallInfo}") : TR("#{ChampInfo}"));
 }
 

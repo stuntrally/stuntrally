@@ -23,8 +23,8 @@
 			descr="Challenge 2, to test logic.">
 		<tracks>
 			<t name="TestC6-temp" laps="1" passPoints="7.0" />
-			<t name="TestC4-ow" laps="1" factor="0.1" />
-			<t name="TestC1-circle" laps="1" factor="0.1" />
+			<t name="TestC4-ow" laps="1" passPoints="7.0" />
+			<t name="TestC1-circle" laps="1" passPoints="7.0" />
 		</tracks>
 	</challenge>
 

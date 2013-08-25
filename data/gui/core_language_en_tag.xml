@@ -155,6 +155,7 @@
 
 	<!--  Car  -->
 	<Tag name="Car">Car</Tag>
+	<Tag name="Cars">Cars</Tag>
 	<Tag name="TipCarsList">Cars list. Press Enter or [New Game] to drive with it.</Tag>
 	<Tag name="TipCarDesc">Car description text.</Tag>
 	<Tag name="TipNewGameCar">Restart game.</Tag>

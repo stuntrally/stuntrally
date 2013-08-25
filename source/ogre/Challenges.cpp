@@ -25,34 +25,36 @@ void App::ChallsListUpdate()
 	// 0 tutorial  1 tutorial hard  // 2 normal  3 hard  4 very hard  // 5 scenery  6 test
 		"#FFFFA0", "#E0E000",   "#A0F0FF", "#60C0FF", "#A0A0E0",   "#80FF80", "#909090"  };
 
-	liChamps->removeAllItems();  int n=1;  size_t sel = ITEM_NONE;
+	liChalls->removeAllItems();  int n=1;  size_t sel = ITEM_NONE;
 	int p = 0; //pSet->gui.champ_rev ? 1 : 0;
 	for (int i=0; i < chall.all.size(); ++i,++n)
 	{
 		const Chall& chl = chall.all[i];
-		//if (pSet->inMenu == MNU_Tutorial && chl.type == pSet->tut_type ||
-		//	pSet->inMenu == MNU_Champ && chl.type - 2 == pSet->champ_type)
-		{
-			const ProgressChall& pc = progressL[p].chs[i];
-			int ntrks = pc.trks.size();
-			const String& clr = clrCh[chl.type];
-			liChamps->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liChamps->getItemCount()-1;
-			liChamps->setSubItemNameAt(1,l, clr+ chl.name.c_str());
-			liChamps->setSubItemNameAt(2,l, clrsDiff[chl.diff]+ TR("#{Diff"+toStr(chl.diff)+"}"));
-			liChamps->setSubItemNameAt(3,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ toStr(ntrks));
-			liChamps->setSubItemNameAt(4,l, clrsDiff[std::min(8,int(chl.time/3.f/60.f))]+ GetTimeShort(chl.time));
-			liChamps->setSubItemNameAt(5,l, clr+ fToStr(100.f * pc.curTrack / ntrks,0,3)+" %");
-			liChamps->setSubItemNameAt(6,l, clr+ fToStr(pc.points,1,5));
-			if (n-1 == pSet->gui.chall_num)  sel = l;
-	}	}
-	liChamps->setIndexSelected(sel);
+
+		const ProgressChall& pc = progressL[p].chs[i];
+		int ntrks = pc.trks.size();
+		const String& clr = clrCh[chl.type];
+		//String cars = carsXml.colormap[chl.ci->type];  if (cars.length() != 7)  clr = "#C0D0E0";
+		
+		liChalls->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liChalls->getItemCount()-1;
+		liChalls->setSubItemNameAt(1,l, clr+ chl.name.c_str());
+		liChalls->setSubItemNameAt(2,l, clrsDiff[chl.diff]+ TR("#{Diff"+toStr(chl.diff)+"}"));
+		liChalls->setSubItemNameAt(3,l, toStr(chl.carTypes.size()) +","+ toStr(chl.cars.size()) );
+		
+		liChalls->setSubItemNameAt(4,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ toStr(ntrks));
+		liChalls->setSubItemNameAt(5,l, clrsDiff[std::min(8,int(chl.time/3.f/60.f))]+ GetTimeShort(chl.time));
+		liChalls->setSubItemNameAt(6,l, clr+ fToStr(100.f * pc.curTrack / ntrks,0,3)+" %");
+		liChalls->setSubItemNameAt(7,l, clr+ fToStr(pc.points,1,5));
+		if (n-1 == pSet->gui.chall_num)  sel = l;
+	}
+	liChalls->setIndexSelected(sel);
 }
 
 ///  Challenges list  sel changed,  fill Stages list
 //----------------------------------------------------------------------------------------------------------------------
 void App::listChallChng(MyGUI::MultiList2* chlist, size_t id)
 {
-	if (id==ITEM_NONE || liChamps->getItemCount() == 0)  return;
+	if (id==ITEM_NONE || liChalls->getItemCount() == 0)  return;
 	#if 0
 	//  update champ stages
 	liStages->removeAllItems();
@@ -108,8 +110,8 @@ void App::listChallChng(MyGUI::MultiList2* chlist, size_t id)
 ///  champ start
 void App::btnChallStart(WP)
 {
-	if (liChamps->getIndexSelected()==ITEM_NONE)  return;
-	pSet->gui.chall_num = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()).substr(7))-1;
+	if (liChalls->getIndexSelected()==ITEM_NONE)  return;
+	pSet->gui.chall_num = s2i(liChalls->getItemNameAt(liChalls->getIndexSelected()).substr(7))-1;
 
 	//  if already finished, restart - will loose progress and scores ..
 	int chId = pSet->gui.chall_num, p = 0; //pSet->game.champ_rev ? 1 : 0;
@@ -134,6 +136,6 @@ void App::ProgressLSave(bool upgGui)
 	if (!upgGui)
 		return;
 	ChallsListUpdate();
-	listChallChng(liChamps, liChamps->getIndexSelected());
+	listChallChng(liChalls, liChalls->getIndexSelected());
 }
 

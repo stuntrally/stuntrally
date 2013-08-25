@@ -305,7 +305,7 @@ protected:
 	TracksXml tracksXml;  CarsXml carsXml;  UserXml userXml;  //xml
 	void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
 	void updTrkListDim(), updChampListDim();
-	const static int TcolW[32],TcolC[6],ChColW[9],StColW[8];
+	const static int TcolW[32],TcolC[6],ChColW[9],ChLColW[10],StColW[8];
 	const static Ogre::String clrsDiff[9],clrsRating[6],clrsLong[10];
 
 	void edTrkFind(MyGUI::EditPtr),edRplFind(MyGUI::EditPtr);
@@ -365,6 +365,7 @@ protected:
 	void ChallsListUpdate();
 	void /*ChallsXmlLoad(),*/ ProgressLSave(bool upgGui=true);
 
+	MyGUI::MultiList2* liChalls;
 	void listChallChng(MyGUI::MultiList2* li, size_t pos); //, listStageChng(MyGUI::MultiList2* li, size_t pos);
 	void btnChallStart(WP);
 	void tabChallType(MyGUI::TabPtr wp, size_t id);

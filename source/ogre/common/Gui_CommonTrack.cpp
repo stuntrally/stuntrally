@@ -161,13 +161,14 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 
 
 //  Gui Init  [Track]  . . . . . . . . . . . . . . . . . . . 
-//  column widths on tabs: tracks, champs, stages
-const int wi = 26;
+//  column widths in MultiList2
+const int wi = 26;  // track detailed
 const int App::TcolW[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
 #ifndef SR_EDITOR
-const int App::TcolC[6] = {34, 17, 35, 40, 20};
-const int App::ChColW[9] = {30, 180, 120, 50, 80, 80, 60, 40};
-const int App::StColW[8] = {30, 180, 100, 90, 80, 70};
+const int App::TcolC[6] = {34, 17, 35, 40, 20};  // car
+const int App::ChColW[9] = {30, 180, 120, 50, 80, 80, 60, 40};  // champs
+const int App::ChLColW[10]= {30, 180, 120, 90, 50, 80, 60, 60, 40};  // challs
+const int App::StColW[8] = {30, 180, 100, 90, 80, 70};  // stages
 #endif
 
 //  done once with init gui
@@ -372,11 +373,13 @@ void App::updTrkListDim()
 }
 
 #ifndef SR_EDITOR
-///  champ/chall list  ----------
+///  champ,chall,stages lists  ----------
 void App::updChampListDim()
 {
-	if (!liChamps)  return;
 	const IntCoord& wi = mWndGame->getCoord();
+
+	//  Champs
+	if (!liChamps)  return;
 
 	int sum = 0, cnt = liChamps->getColumnCount(), sw = 0;
 	for (int c=0; c < cnt; ++c)  sum += ChColW[c];
@@ -386,7 +389,6 @@ void App::updChampListDim()
 		liChamps->setColumnWidthAt(c, w);
 		sw += w;
 	}
-
 	int xt = 0.038*wi.width, yt = 0.10*wi.height;  // pos
 	liChamps->setCoord(xt, yt, sw + 8/*frame*/, 0.32/*height*/*wi.height);
 	liChamps->setVisible(true);
@@ -402,9 +404,23 @@ void App::updChampListDim()
 		liStages->setColumnWidthAt(c, w);
 		sw += w;
 	}
-
 	liStages->setCoord(xt, yt, sw + 8/*frame*/, 0.50/*height*/*wi.height);
 	liStages->setVisible(true);
+
+	//  Challs
+	if (!liChalls)  return;
+
+	sum = 0;  cnt = liChalls->getColumnCount();  sw = 0;
+	for (int c=0; c < cnt; ++c)  sum += ChLColW[c];
+	for (int c=0; c < cnt; ++c)
+	{
+		int w = c==cnt-1 ? 18 : float(ChLColW[c]) / sum * 0.72/*width*/ * wi.width * 0.97/*frame*/;
+		liChalls->setColumnWidthAt(c, w);
+		sw += w;
+	}
+	xt = 0.038*wi.width, yt = 0.10*wi.height;  // pos
+	liChalls->setCoord(xt, yt, sw + 8/*frame*/, 0.32/*height*/*wi.height);
+	liChalls->setVisible(true);
 }
 #endif
 

@@ -375,7 +375,7 @@ void App::UnfocusLists()
 		#ifdef SR_EDITOR
 		if (w == (Widget*)trkList)
 		#else
-		if (w == (Widget*)trkList  || w == (Widget*)carList  ||
+		if (w == (Widget*)trkList  || w == (Widget*)carList  || w == (Widget*)liChalls ||
 			w == (Widget*)liChamps || w == (Widget*)liStages || w == (Widget*)rplList)
 		#endif
 		{

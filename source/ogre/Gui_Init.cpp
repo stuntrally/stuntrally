@@ -610,7 +610,7 @@ void App::InitGui()
 	Btn("btnChampInfo",btnChampInfo);
 
 
-	//  champs list
+	//  Champs list  -------------
 	MyGUI::MultiList2* li;
 	TabItem* trktab = (TabItem*)mWndGame->findWidget("TabChamps");
 	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
@@ -619,16 +619,27 @@ void App::InitGui()
 	
 	li->removeAllColumns();  c=0;
 	li->addColumn("N", ChColW[c++]);
-	li->addColumn(TR("#{Name}"), ChColW[c++]);
-	li->addColumn(TR("#{Difficulty}"), ChColW[c++]);
-	li->addColumn(TR("#{Stages}"), ChColW[c++]);
-	li->addColumn(TR("#{Time} m:s"), ChColW[c++]);
-	li->addColumn(TR("#{Progress}"), ChColW[c++]);
-	li->addColumn(TR("#{Score}"), ChColW[c++]);
+	li->addColumn(TR("#{Name}"), ChColW[c++]);		li->addColumn(TR("#{Difficulty}"), ChColW[c++]);
+	li->addColumn(TR("#{Stages}"), ChColW[c++]);	li->addColumn(TR("#{Time} m:s"), ChColW[c++]);
+	li->addColumn(TR("#{Progress}"), ChColW[c++]);	li->addColumn(TR("#{Score}"), ChColW[c++]);
 	li->addColumn(" ", ChColW[c++]);
-	liChamps = li;  liChamps = li; //!-
+	liChamps = li;
 
-	//  stages list
+	//  Challs list  -------------
+	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
+	li->eventListChangePosition += newDelegate(this, &App::listChallChng);
+   	li->setVisible(false);
+	
+	li->removeAllColumns();  c=0;
+	li->addColumn("N", ChColW[c++]);
+	li->addColumn(TR("#{Name}"), ChLColW[c++]);		li->addColumn(TR("#{Difficulty}"), ChLColW[c++]);
+	li->addColumn(TR("#{Cars}"), ChLColW[c++]);
+	li->addColumn(TR("#{Stages}"), ChLColW[c++]);	li->addColumn(TR("#{Time} m:s"), ChLColW[c++]);
+	li->addColumn(TR("#{Progress}"), ChLColW[c++]);	li->addColumn(TR("#{Score}"), ChLColW[c++]);
+	li->addColumn(" ", ChColW[c++]);
+	liChalls = li;
+
+	//  Stages list  -------------
 	trktab = (TabItem*)mWndGame->findWidget("TabStages");
 	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
 	li->eventListChangePosition += newDelegate(this, &App::listStageChng);
@@ -636,19 +647,15 @@ void App::InitGui()
 	
 	li->removeAllColumns();  c=0;
 	li->addColumn("N", StColW[c++]);
-	li->addColumn(TR("#{Track}"), StColW[c++]);
-	li->addColumn(TR("#{Scenery}"), StColW[c++]);
+	li->addColumn(TR("#{Track}"), StColW[c++]);		li->addColumn(TR("#{Scenery}"), StColW[c++]);
 	li->addColumn(TR("#{Difficulty}"), StColW[c++]);
-	li->addColumn(TR("#{Time} m:s"), StColW[c++]);
-	li->addColumn(TR("#{Score}"), StColW[c++]);
+	li->addColumn(TR("#{Time} m:s"), StColW[c++]);	li->addColumn(TR("#{Score}"), StColW[c++]);
 	li->addColumn(" ", StColW[c++]);
 	liStages = li;
 
 	updChampListDim();
-	ChampsListUpdate();
-	ChallsListUpdate();
-	listChampChng(liChamps, liChamps->getIndexSelected());
-	listChallChng(liChamps, liChamps->getIndexSelected());
+	ChampsListUpdate();  listChampChng(liChamps, liChamps->getIndexSelected());
+	ChallsListUpdate();  listChallChng(liChalls, liChalls->getIndexSelected());
 
 
 	//  tabs
@@ -670,14 +677,12 @@ void App::InitGui()
 	imgChamp = mGUI->findWidget<StaticImage>("imgChamp",false);
 	imgChall = mGUI->findWidget<StaticImage>("imgChall",false);
 
-	UpdChampTabVis();
-
-	
-	Chk("ChampRev", chkChampRev, pSet->gui.champ_rev);
-
 	Btn("btnTutStart", btnChampStart);    btStTut = btn;
 	Btn("btnChampStart", btnChampStart);  btStChamp = btn;
 	Btn("btnChallStart", btnChallStart);  btStChall = btn;
+
+
+	Chk("ChampRev", chkChampRev, pSet->gui.champ_rev);
 	
 	Btn("btnChampStageBack", btnChampStageBack);
 	Btn("btnChampStageStart", btnChampStageStart);  btChampStage = btn;
@@ -692,8 +697,10 @@ void App::InitGui()
 	imgChampStage = (ImageBox*)mWndChampStage->findWidget("ChampStageImg");
 	imgChampEnd = (ImageBox*)mWndChampEnd->findWidget("ChampEndImg");
 
+	UpdChampTabVis();
 
-	//  netw end list
+
+	//  netw end list  ------
 	Btn("btnNetEndClose", btnNetEndClose);
 	li = mWndNetEnd->createWidget<MultiList2>("MultiListBox",4,42,632,360, Align::Left | Align::VStretch);
 	li->setInheritsAlpha(false);  li->setColour(Colour(0.8,0.9,1,1));
