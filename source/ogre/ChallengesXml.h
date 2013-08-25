@@ -7,18 +7,21 @@
 #include <OgreStringVector.h>
 
 
-//  single track on challenge
+//  single Track in challenge
 class ChallTrack
 {
 public:
 	std::string name;  bool reversed;  // track
 	int laps;  // number of laps
-	float passPoints, timeNeeded;  // if n/a then -1
+
+	//  pass  -1 means not needed, you can use one or more conditions
+	float passPoints, timeNeeded;  int passPos;
+
 	//todo: bronze, silver, gold ?percent or val
 	ChallTrack();
 };
 
-//  one challegne data
+///  one Challenge setup
 class Chall
 {
 public:
@@ -27,7 +30,7 @@ public:
 	int ver;  // version, if changed resets progress
 
 	float length;  // stats for display
-	int type;  // tutorial, easy, normal etc
+	int type;  // easy, normal etc, for gui tab
 	float time;  // total computed (sum all tracks)
 	
 	//  allowed types or cars 1 or more
@@ -35,12 +38,16 @@ public:
 
 	std::vector<ChallTrack> trks;
 
+	//  game setup
 	//  if empty or -1 then allows any
 	std::string sim_mode;
 	int damage_type, boost_type, flip_type, rewind_type;
 
-	bool minimap, chk_arr, chk_beam, trk_ghost;  // deny using it if true
-	float total_time, avg_pos;  // total none if -1
+	//  hud
+	bool minimap, chk_arr, chk_beam, trk_ghost;  // deny using it if false
+	
+	//  pass  -1 means not needed, you can use one or more conditions
+	float totalTime, avgPoints, avgPos;
 
 	// abs, tcs, autoshift, autorear
 	// max dmg%, off road time-
@@ -54,7 +61,7 @@ public:
 class ChallXml
 {
 public:
-	std::vector<Chall> ch;
+	std::vector<Chall> all;
 	
 	bool LoadXml(std::string file, class TimesXml* times);
 };
@@ -64,7 +71,7 @@ public:
 class ProgressTrackL
 {
 public:
-	float points;
+	float points, time;  int pos;
 	ProgressTrackL();
 };
 
@@ -73,7 +80,8 @@ class ProgressChall
 {
 public:
 	int curTrack;  // index to trks
-	float points;
+	float points, time;  int pos;
+	int fin;  // final prize -1 none, 0 bronze, 1 silver, 2 gold
 	
 	std::string name;
 	int ver;
@@ -88,7 +96,7 @@ public:
 class ProgressLXml
 {
 public:
-	std::vector<ProgressChall> ch;
+	std::vector<ProgressChall> chs;
 	bool LoadXml(std::string file), SaveXml(std::string file);
 };
 

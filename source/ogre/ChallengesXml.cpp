@@ -7,9 +7,10 @@
 using namespace Ogre;
 
 
+//  defaults
 ChallTrack::ChallTrack()
 	:name("J1-T"), laps(0), reversed(0)
-	,passPoints(7.f), timeNeeded(-1.f)  // defaults
+	,passPoints(-1.f), timeNeeded(-1.f), passPos(-1.f)  // pass
 {	}
 
 Chall::Chall()  // defaults..
@@ -18,9 +19,9 @@ Chall::Chall()  // defaults..
 	,sim_mode("normal")
 	,damage_type(2), boost_type(1), flip_type(2), rewind_type(1)
 	,minimap(1), chk_arr(0), chk_beam(0), trk_ghost(1)
-	,total_time(-1.f), avg_pos(7)
 	// abs, tcs, autoshift, autorear
 	// max dmg%, off road time-
+	,avgPoints(-1.f), totalTime(-1.f), avgPos(-1.f)  // pass
 {	}
 
 
@@ -35,7 +36,7 @@ bool ChallXml::LoadXml(std::string file, TimesXml* times)
 	if (!root)  return false;
 
 	//  clear
-	ch.clear();
+	all.clear();
 
 	///  challs
 	const char* a;
@@ -90,8 +91,9 @@ bool ChallXml::LoadXml(std::string file, TimesXml* times)
 		TiXmlElement* ePass = eCh->FirstChildElement("pass");
 		if (ePass)
 		{
-			a = ePass->Attribute("total_time");	if (a)  c.flip_type = s2r(a);
-			a = ePass->Attribute("avg_pos");	if (a)  c.rewind_type = s2r(a);
+			a = ePass->Attribute("totalTime");	if (a)  c.totalTime = s2r(a);
+			a = ePass->Attribute("avgPoints");	if (a)  c.avgPoints = s2r(a);
+			a = ePass->Attribute("avgPos");		if (a)  c.avgPos = s2r(a);
 		}
 
 		//  tracks
@@ -108,21 +110,22 @@ bool ChallXml::LoadXml(std::string file, TimesXml* times)
 				
 				a = eTr->Attribute("passTime");   if (a)  t.timeNeeded = s2r(a);
 				a = eTr->Attribute("passPoints"); if (a)  t.passPoints = s2r(a);
+				a = eTr->Attribute("passPos");    if (a)  t.passPos = s2i(a);
 
 				c.trks.push_back(t);
 				eTr = eTr->NextSiblingElement("t");
 			}
 		}
 
-		ch.push_back(c);
+		all.push_back(c);
 		eCh = eCh->NextSiblingElement("challenge");
 	}
 	
 	///  get champs total time (sum tracks times)
 	if (times)
-	for (int c=0; c < ch.size(); ++c)
+	for (int c=0; c < all.size(); ++c)
 	{
-		Chall& l = ch[c];
+		Chall& l = all[c];
 		float allTime = 0.f;
 		for (int i=0; i < l.trks.size(); ++i)
 		{
@@ -140,11 +143,12 @@ bool ChallXml::LoadXml(std::string file, TimesXml* times)
 //--------------------------------------------------------------------------------------------------------------------------------------
 
 ProgressTrackL::ProgressTrackL() :
-	points(0.f)
+	points(0.f), time(0.f), pos(0)
 {	}
 
 ProgressChall::ProgressChall() :
-	curTrack(0), points(0.f), ver(0)
+	curTrack(0), ver(0),
+	points(0.f), time(0.f), pos(0), fin(-1)
 {	}
 
 
@@ -159,7 +163,7 @@ bool ProgressLXml::LoadXml(std::string file)
 	if (!root)  return false;
 
 	//  clear
-	ch.clear();
+	chs.clear();
 
 	const char* a;
 	TiXmlElement* eCh = root->FirstChildElement("chall");
@@ -169,7 +173,11 @@ bool ProgressLXml::LoadXml(std::string file)
 		a = eCh->Attribute("name");		if (a)  pc.name = std::string(a);
 		a = eCh->Attribute("ver");		if (a)  pc.ver = s2i(a);
 		a = eCh->Attribute("cur");	if (a)  pc.curTrack = s2i(a);
+
 		a = eCh->Attribute("p");	if (a)  pc.points = s2r(a);
+		a = eCh->Attribute("t");	if (a)  pc.time = s2r(a);
+		a = eCh->Attribute("n");	if (a)  pc.pos = s2i(a);
+		a = eCh->Attribute("z");	if (a)  pc.fin = s2i(a);
 		
 		//  tracks
 		TiXmlElement* eTr = eCh->FirstChildElement("t");
@@ -177,12 +185,14 @@ bool ProgressLXml::LoadXml(std::string file)
 		{
 			ProgressTrackL pt;
 			a = eTr->Attribute("p");	if (a)  pt.points = s2r(a);
+			a = eTr->Attribute("t");	if (a)  pt.time = s2r(a);
+			a = eTr->Attribute("n");	if (a)  pt.pos = s2i(a);
 			
 			pc.trks.push_back(pt);
 			eTr = eTr->NextSiblingElement("t");
 		}
 
-		ch.push_back(pc);
+		chs.push_back(pc);
 		eCh = eCh->NextSiblingElement("chall");
 	}
 	return true;
@@ -193,20 +203,27 @@ bool ProgressLXml::SaveXml(std::string file)
 {
 	TiXmlDocument xml;	TiXmlElement root("progress");
 
-	for (int i=0; i < ch.size(); ++i)
+	for (int i=0; i < chs.size(); ++i)
 	{
-		const ProgressChall& pc = ch[i];
+		const ProgressChall& pc = chs[i];
 		TiXmlElement eCh("chall");
 			eCh.SetAttribute("name",	pc.name.c_str() );
 			eCh.SetAttribute("ver",		toStrC( pc.ver ));
 			eCh.SetAttribute("cur",	toStrC( pc.curTrack ));
-			eCh.SetAttribute("p",	toStrC( pc.points ));
+
+			eCh.SetAttribute("p",	fToStr( pc.points, 2).c_str());
+			eCh.SetAttribute("t",	fToStr( pc.time, 1).c_str());
+			eCh.SetAttribute("n",	iToStr( pc.pos ).c_str());
+			eCh.SetAttribute("z",	iToStr( pc.fin ).c_str());
 
 			for (int i=0; i < pc.trks.size(); ++i)
 			{
 				const ProgressTrackL& pt = pc.trks[i];
 				TiXmlElement eTr("t");
+
 				eTr.SetAttribute("p",	fToStr( pt.points, 1).c_str());
+				eTr.SetAttribute("t",	fToStr( pt.time, 1).c_str());
+				eTr.SetAttribute("n",	iToStr( pt.pos ).c_str());
 				eCh.InsertEndChild(eTr);
 			}
 		root.InsertEndChild(eCh);

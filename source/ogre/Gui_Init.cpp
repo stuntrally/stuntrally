@@ -626,7 +626,7 @@ void App::InitGui()
 	li->addColumn(TR("#{Progress}"), ChColW[c++]);
 	li->addColumn(TR("#{Score}"), ChColW[c++]);
 	li->addColumn(" ", ChColW[c++]);
-	liChamps = li;
+	liChamps = li;  liChamps = li; //!-
 
 	//  stages list
 	trktab = (TabItem*)mWndGame->findWidget("TabStages");
@@ -646,7 +646,9 @@ void App::InitGui()
 
 	updChampListDim();
 	ChampsListUpdate();
+	ChallsListUpdate();
 	listChampChng(liChamps, liChamps->getIndexSelected());
+	listChallChng(liChamps, liChamps->getIndexSelected());
 
 
 	//  tabs
@@ -660,15 +662,23 @@ void App::InitGui()
 	{	tabChamp->setIndexSelected(pSet->champ_type);
 		tabChamp->eventTabChangeSelect += newDelegate(this, &App::tabChampType);
 	}
+	tabChall = mGUI->findWidget<Tab>("ChallType",false);
+	if (tabChall)
+		tabChall->eventTabChangeSelect += newDelegate(this, &App::tabChallType);
+
 	imgTut = mGUI->findWidget<StaticImage>("imgTut",false);
 	imgChamp = mGUI->findWidget<StaticImage>("imgChamp",false);
 	imgChall = mGUI->findWidget<StaticImage>("imgChall",false);
+
 	UpdChampTabVis();
+
 	
-	Chk("ChampRev", chkGhampRev, pSet->gui.champ_rev);
+	Chk("ChampRev", chkChampRev, pSet->gui.champ_rev);
 
-
-	Btn("btnChampStart", btnChampStart);
+	Btn("btnTutStart", btnChampStart);    btStTut = btn;
+	Btn("btnChampStart", btnChampStart);  btStChamp = btn;
+	Btn("btnChallStart", btnChallStart);  btStChall = btn;
+	
 	Btn("btnChampStageBack", btnChampStageBack);
 	Btn("btnChampStageStart", btnChampStageStart);  btChampStage = btn;
 	Btn("btnChampEndClose", btnChampEndClose);

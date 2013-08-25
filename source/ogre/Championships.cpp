@@ -11,167 +11,8 @@ using namespace Ogre;
 using namespace MyGUI;
 
 
-///  car time mul
-float App::GetCarTimeMul(const string& car, const string& sim_mode)
-{
-	//  car factor (time mul, for less power)
-	//  times.xml has ES or S1 best lap time from normal sim
-	float carMul = 1.f;
-	int id = carsXml.carmap[car];
-	if (id > 0)
-	{	const CarInfo& ci = carsXml.cars[id-1];
-		bool easy = sim_mode == "easy";
-		carMul = easy ? ci.easy : ci.norm;
-	}
-	return carMul;
-}
 
-///  compute race position,  basing on car and track time
-int App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldStart, float* pPoints)
-{
-	//  magic factor: seconds needed for 1 second of track time for 1 race place difference
-	//  eg. if track time is 3min = 180 sec, then 180*magic = 2.16 sec
-	//  and this is the difference between car race positions (1 and 2, 2 and 3 etc)
-	//  0.006 .. 0.0012				// par
-	//float time1pl = magic * timeTrk;
-
-	//float timeC = timeCur; //+ (coldStart ? -2 : 0);  // if not already driving at start, sub 2 sec (for gaining speed)
-	float timeC = timeCur + (coldStart ? 0 : 1);  // if already driving at start, add 1 sec (times are for 1st lap)
-	float time = timeC * carTimeMul;
-
-	float place = (time - timeTrk)/timeTrk / carsXml.magic;
-	// time = (place * magic * timeTrk + timeTrk) / carTimeMul;  //todo: show this in lists and hud..
-	if (pPoints)
-		*pPoints = std::max(0.f, (20.f - place) * 0.5f);
-
-	int plc = place < 1.f ? 1 : std::min(30, (int)( floor(place +1.f) ));
-	return plc;
-}
-
-
-///  Load  championships.xml, progress.xml (once)
-//---------------------------------------------------------------------
-void App::ChampsXmlLoad()
-{
-	times.LoadXml(PATHMANAGER::GameConfigDir() + "/times.xml");
-	champs.LoadXml(PATHMANAGER::GameConfigDir() + "/championships.xml", &times);
-	LogO(String("**** Loaded Championships: ") + toStr(champs.champs.size()));
-	chall.LoadXml(PATHMANAGER::GameConfigDir() + "/challenges.xml", &times);
-	LogO(String("**** Loaded Challenges: ") + toStr(chall.ch.size()));
-
-	/* stats */
-	float time = 0.f;  int trks = 0;
-	for (std::map<std::string, float>::const_iterator it = times.trks.begin();
-		it != times.trks.end(); ++it)
-	{
-		const string& trk = (*it).first;
-		if (trk.substr(0,4) != "Test")
-		{
-			//if (!(trk[0] >= 'a' && trk[0] <= 'z'))  // sr only
-				time += (*it).second;
-			++trks;
-	}	}
-	LogO("Total tracks: "+ toStr(trks) + ", total time: "+ GetTimeShort(time/60.f)+" h:m");
-	/**/
-	
-	ProgressXml oldprog[2];
-	oldprog[0].LoadXml(PATHMANAGER::UserConfigDir() + "/progress.xml");
-	oldprog[1].LoadXml(PATHMANAGER::UserConfigDir() + "/progress_rev.xml");
-
-	int chs = champs.champs.size();
-	
-	///  this is for old progress ver loading, from game with newer champs
-	///  it resets progress only for champs which ver has changed (or track count)
-	//  fill progress
-	for (int pr=0; pr < 2; ++pr)
-	{
-		progress[pr].champs.clear();
-		for (int c=0; c < chs; ++c)
-		{
-			const Champ& ch = champs.champs[c];
-			
-			//  find this champ in loaded progress
-			bool found = false;  int p = 0;
-			ProgressChamp* opc = 0;
-			while (!found && p < oldprog[pr].champs.size())
-			{
-				opc = &oldprog[pr].champs[p];
-				//  same name, ver and trks count
-				if (opc->name == ch.name && opc->ver == ch.ver &&
-					opc->trks.size() == ch.trks.size())
-					found = true;
-				++p;
-			}
-			if (!found)
-				LogO("|| reset progress for champ: " + ch.name);
-			
-			ProgressChamp pc;
-			pc.name = ch.name;  pc.ver = ch.ver;
-
-			if (found)  //  found progress, points
-			{	pc.curTrack = opc->curTrack;
-				pc.points = opc->points;
-			}
-
-			//  fill tracks
-			for (int t=0; t < ch.trks.size(); ++t)
-			{
-				ProgressTrack pt;
-				if (found)  // found track points
-					pt.points = opc->trks[t].points;
-				pc.trks.push_back(pt);
-			}
-
-			progress[pr].champs.push_back(pc);
-	}	}
-	ProgressSave(false);  //will be later in guiInit
-	
-	if (progress[0].champs.size() != champs.champs.size() ||
-		progress[1].champs.size() != champs.champs.size())
-		LogO("|| ERROR: champs and progress sizes differ !");
-}
-
-///  load championship track
-//---------------------------------------------------------------------
-void App::ChampNewGame()
-{
-	if (pSet->game.champ_num >= champs.champs.size())
-		pSet->game.champ_num = -1;  //0 range
-
-	int chId = pSet->game.champ_num, p = pSet->game.champ_rev ? 1 : 0;
-	if (chId >= 0)
-	{
-		//  champ stage, current track
-		ProgressChamp& pc = progress[p].champs[chId];
-		const Champ& ch = champs.champs[chId];
-		if (pc.curTrack >= ch.trks.size())  pc.curTrack = 0;  // restart
-		const ChampTrack& trk = ch.trks[pc.curTrack];
-		pSet->game.track = trk.name;
-		pSet->game.track_user = 0;
-		pSet->game.trackreverse = pSet->game.champ_rev ? !trk.reversed : trk.reversed;
-		pSet->game.num_laps = trk.laps;
-
-		pSet->game.boost_type = 1;  // from trk.?
-		pSet->game.flip_type = 2;
-		pSet->game.boost_power = 1.f;
-		//pSet->game.trees = 1.f;  // >=1 ?
-		//pSet->game.collis_veget = true;
-
-		pGame->pause = true;  // wait for stage wnd close
-		pGame->timer.waiting = true;
-	}else
-	{	pGame->pause = false;  // single race
-		pGame->timer.waiting = false;
-	}
-}
-
-void App::btnChampInfo(WP)
-{
-	pSet->champ_info = !pSet->champ_info;
-	if (edChampInfo)  edChampInfo->setVisible(pSet->champ_info);
-}
-
-void App::chkGhampRev(WP wp)
+void App::chkChampRev(WP wp)
 {
 	pSet->gui.champ_rev = !pSet->gui.champ_rev;
 	ButtonPtr chk = wp->castType<MyGUI::Button>();
@@ -200,13 +41,13 @@ void App::ChampsListUpdate()
 
 	liChamps->removeAllItems();  int n=1;  size_t sel = ITEM_NONE;
 	int p = pSet->gui.champ_rev ? 1 : 0;
-	for (int i=0; i < champs.champs.size(); ++i,++n)
+	for (int i=0; i < champs.all.size(); ++i,++n)
 	{
-		const Champ& ch = champs.champs[i];
+		const Champ& ch = champs.all[i];
 		if (pSet->inMenu == MNU_Tutorial && ch.type == pSet->tut_type ||
 			pSet->inMenu == MNU_Champ && ch.type - 2 == pSet->champ_type)
 		{
-			const ProgressChamp& pc = progress[p].champs[i];
+			const ProgressChamp& pc = progress[p].chs[i];
 			int ntrks = pc.trks.size();
 			const String& clr = clrCh[ch.type];
 			liChamps->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liChamps->getItemCount()-1;
@@ -231,10 +72,10 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 	liStages->removeAllItems();
 
 	int pos = s2i(liChamps->getItemNameAt(id).substr(7))-1;
-	if (pos < 0 || pos >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
+	if (pos < 0 || pos >= champs.all.size())  {  LogO("Error champ sel > size.");  return;  }
 
 	int n = 1, p = pSet->gui.champ_rev ? 1 : 0;
-	const Champ& ch = champs.champs[pos];
+	const Champ& ch = champs.all[pos];
 	for (int i=0; i < ch.trks.size(); ++i,++n)
 	{
 		const ChampTrack& trk = ch.trks[i];
@@ -252,7 +93,7 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 		liStages->setSubItemNameAt(3,l, clrsDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
 
 		liStages->setSubItemNameAt(4,l, "#80C0F0"+GetTimeShort(time));  //toStr(trk.laps)
-		liStages->setSubItemNameAt(5,l, "#E0F0FF"+fToStr(progress[p].champs[pos].trks[i].points,1,3));
+		liStages->setSubItemNameAt(5,l, "#E0F0FF"+fToStr(progress[p].chs[pos].trks[i].points,1,3));
 	}
 	//  descr
 	EditBox* ed = mGUI->findWidget<EditBox>("ChampDescr");
@@ -271,9 +112,9 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 	if (txt)  txt->setCaption(GetTimeString(ch.time));
 
 	txt = (TextBox*)mWndGame->findWidget("valChProgress");
-	if (txt)  txt->setCaption(fToStr(100.f * progress[p].champs[pos].curTrack / champs.champs[pos].trks.size(),1,5));
+	if (txt)  txt->setCaption(fToStr(100.f * progress[p].chs[pos].curTrack / champs.all[pos].trks.size(),1,5));
 	txt = (TextBox*)mWndGame->findWidget("valChScore");
-	if (txt)  txt->setCaption(fToStr(progress[p].champs[pos].points,1,5));
+	if (txt)  txt->setCaption(fToStr(progress[p].chs[pos].points,1,5));
 }
 
 ///  Stages list  sel changed,  update Track info
@@ -284,9 +125,9 @@ void App::listStageChng(MyGUI::MultiList2* li, size_t pos)
 	if (pos==ITEM_NONE || liChamps->getIndexSelected()==ITEM_NONE)  return;
 	
 	int nch = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()).substr(7))-1;
-	if (nch >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
+	if (nch >= champs.all.size())  {  LogO("Error champ sel > size.");  return;  }
 
-	const Champ& ch = champs.champs[nch];
+	const Champ& ch = champs.all[nch];
 	if (pos >= ch.trks.size())  {  LogO("Error stage sel > tracks.");  return;  }
 	const string& trkName = ch.trks[pos].name;
 	bool reversed = ch.trks[pos].reversed;
@@ -308,7 +149,7 @@ void App::btnChampStart(WP)
 	//  if already finished, restart - will loose progress and scores ..
 	int chId = pSet->gui.champ_num, p = pSet->game.champ_rev ? 1 : 0;
 	LogO("|| Starting champ: "+toStr(chId)+(p?" rev":""));
-	ProgressChamp& pc = progress[p].champs[chId];
+	ProgressChamp& pc = progress[p].chs[chId];
 	if (pc.curTrack == pc.trks.size())
 	{
 		LogO("|| Was at 100%, restarting progress.");
@@ -333,8 +174,8 @@ void App::btnChampStageStart(WP)
 {
 	//  check if champ ended
 	int chId = pSet->game.champ_num, p = pSet->game.champ_rev ? 1 : 0;
-	ProgressChamp& pc = progress[p].champs[chId];
-	const Champ& ch = champs.champs[chId];
+	ProgressChamp& pc = progress[p].chs[chId];
+	const Champ& ch = champs.all[chId];
 	bool last = pc.curTrack == ch.trks.size();
 
 	LogO("|| This was stage " + toStr(pc.curTrack) + "/" + toStr(ch.trks.size()) + " btn");
@@ -420,8 +261,8 @@ void App::ProgressSave(bool upgGui)
 void App::ChampionshipAdvance(float timeCur)
 {
 	int chId = pSet->game.champ_num, p = pSet->game.champ_rev ? 1 : 0;
-	ProgressChamp& pc = progress[p].champs[chId];
-	const Champ& ch = champs.champs[chId];
+	ProgressChamp& pc = progress[p].chs[chId];
+	const Champ& ch = champs.all[chId];
 	const ChampTrack& trk = ch.trks[pc.curTrack];
 	LogO("|| --- Champ end: " + ch.name);
 
@@ -502,8 +343,8 @@ void App::ChampionshipAdvance(float timeCur)
 void App::ChampFillStageInfo(bool finished)
 {
 	int chId = pSet->game.champ_num, p = pSet->game.champ_rev ? 1 : 0;
-	ProgressChamp& pc = progress[p].champs[chId];
-	const Champ& ch = champs.champs[chId];
+	ProgressChamp& pc = progress[p].chs[chId];
+	const Champ& ch = champs.all[chId];
 	const ChampTrack& trk = ch.trks[pc.curTrack];
 
 	String s;

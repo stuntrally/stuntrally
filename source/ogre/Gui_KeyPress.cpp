@@ -116,7 +116,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		}
 		if (!t.empty())
 		{
-			pSet->gui.champ_num = -1;
+			pSet->gui.champ_num = -1;  pSet->gui.chall_num = -1;
 			pSet->gui.track = t;  bPerfTest = false;
 			pSet->gui.track_user = false;
 			NewGame();  return true;

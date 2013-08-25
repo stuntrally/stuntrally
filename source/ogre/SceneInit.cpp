@@ -101,6 +101,8 @@ void App::createScene()
 		pSet->isMain = true;
 
 	if (!pSet->autostart)  isFocGui = true;
+	pSet->gui.chall_num = -1;  //dont auto start old challenge
+
 	InitGui();
 
     //  bullet Debug drawing
@@ -163,7 +165,7 @@ void App::NewGame()
 	if (!newGameRpl)  // if from replay, dont
 	{
 		pSet->game = pSet->gui;  // copy game config from gui
-		ChampNewGame();
+		Ch_NewGame();
 
 		if (mClient && mLobbyState != HOSTING)  // all but host
 			updateGameSet();  // override gameset params for networked game (from host gameset)

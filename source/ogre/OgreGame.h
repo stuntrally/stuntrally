@@ -332,15 +332,22 @@ protected:
 
 	void UpdCarClrSld(bool upd=true), UpdCarMClr();  bool bUpdCarClr;
 
-	///  championships
-	ChampsXml champs;  TimesXml times;  ProgressXml progress[2];  //xml  progres[1]=reversed
-	void ChampsXmlLoad(), ProgressSave(bool upgGui=true);
-	void ChampNewGame(), ChampLoadEnd(), ChampsListUpdate(),
-		ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
+	///  champ & chall common
+	void Ch_NewGame(), ChampsXmlLoad();
+	MyGUI::ButtonPtr btStTut, btStChamp, btStChall;
+	MyGUI::TabPtr tabTut, tabChamp, tabChall;
+	MyGUI::StaticImagePtr imgTut, imgChamp, imgChall;
+	
 	//  race pos
 	int GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldStart, float* pPoints=0);
 	float GetCarTimeMul(const std::string& car, const std::string& sim_mode);
-		
+
+
+	///  championships
+	ChampsXml champs;  TimesXml times;  ProgressXml progress[2];  //xml  [1]=reversed
+	void ProgressSave(bool upgGui=true);
+	void ChampLoadEnd(), ChampsListUpdate(),
+		ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
 
 	MyGUI::MultiList2* liChamps, *liStages, *liNetEnd;
 	void listChampChng(MyGUI::MultiList2* li, size_t pos), listStageChng(MyGUI::MultiList2* li, size_t pos);
@@ -348,13 +355,19 @@ protected:
 	void btnStageNext(WP), btnStagePrev(WP);  MyGUI::StaticText* valStageNum;  MyGUI::ButtonPtr btChampStage;
 	MyGUI::EditBox* edChampStage, *edChampEnd,*edChampInfo;  MyGUI::ImageBox* imgChampStage,*imgChampEnd;
 
-	MyGUI::TabPtr tabTut, tabChamp;  MyGUI::StaticImagePtr imgTut, imgChamp, imgChall;
 	void tabTutType(MyGUI::TabPtr wp, size_t id), tabChampType(MyGUI::TabPtr wp, size_t id);
-	void btnChampInfo(WP), chkGhampRev(WP), UpdChampTabVis();
+	void btnChampInfo(WP), chkChampRev(WP), UpdChampTabVis();
 	void ToolGhosts(),ToolGhostsConv();  //  _Tools_
 
+
 	///  challenges
-	ChallXml chall;  ProgressXml progressL[2];  //xml  progres[1]=reversed
+	ChallXml chall;  ProgressLXml progressL[2];  //xml  [1]=reversed
+	void ChallsListUpdate();
+	void /*ChallsXmlLoad(),*/ ProgressLSave(bool upgGui=true);
+
+	void listChallChng(MyGUI::MultiList2* li, size_t pos); //, listStageChng(MyGUI::MultiList2* li, size_t pos);
+	void btnChallStart(WP);
+	void tabChallType(MyGUI::TabPtr wp, size_t id);
 	
 
 	///  input tab  -----------------------------------------

@@ -281,7 +281,7 @@ void App::changeTrack()
 void App::btnNewGame(WP)
 {
 	if (mWndGame->getVisible() && mWndTabsGame->getIndexSelected() < TAB_Champs  || mClient)
-		pSet->gui.champ_num = -1;  /// champ, back to single race
+	{	pSet->gui.champ_num = -1;  pSet->gui.champ_num = -1;  }  /// champ, back to single race
 	
 	NewGame();  isFocGui = false;  // off gui
 	if (mWndOpts)  mWndOpts->setVisible(isFocGui);
@@ -371,23 +371,6 @@ void App::toggleGui(bool toggle)
 	if (isFocGui && first)
 	{	first = false;
 		GuiCenterMouse();
-	}
-}
-
-void App::UpdChampTabVis()
-{
-	static int oldMenu = pSet->inMenu;
-	bool tutor = pSet->inMenu == MNU_Tutorial, champ = pSet->inMenu == MNU_Champ, chall = pSet->inMenu == MNU_Challenge;
-
-	if (tabTut)  tabTut->setVisible(tutor);		if (tabChamp)  tabChamp->setVisible(champ);
-	if (imgTut)  imgTut->setVisible(tutor);		if (imgChamp)  imgChamp->setVisible(champ);
-	if (imgChall)  imgChall->setVisible(chall);
-	if (liChamps)  liChamps->setColour(
-		chall ? Colour(0.75,0.85,0.8) : (tutor ? Colour(0.85,0.8,0.75) : Colour(0.7,0.78,0.85)));
-
-	if (oldMenu != pSet->inMenu && (tutor || champ || chall))
-	{	oldMenu = pSet->inMenu;
-		ChampsListUpdate();
 	}
 }
 

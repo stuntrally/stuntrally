@@ -26,7 +26,7 @@ bool ChampsXml::LoadXml(std::string file, TimesXml* times)
 	if (!root)  return false;
 
 	//  clear
-	champs.clear();
+	all.clear();
 
 	///  champs
 	const char* a;
@@ -56,15 +56,15 @@ bool ChampsXml::LoadXml(std::string file, TimesXml* times)
 			eTr = eTr->NextSiblingElement("track");
 		}
 
-		champs.push_back(c);
+		all.push_back(c);
 		eCh = eCh->NextSiblingElement("championship");
 	}
 	
 	///  get champs total time (sum tracks times)
 	if (times)
-	for (int c=0; c < champs.size(); ++c)
+	for (int c=0; c < all.size(); ++c)
 	{
-		Champ& ch = champs[c];
+		Champ& ch = all[c];
 		float allTime = 0.f;
 		for (int i=0; i < ch.trks.size(); ++i)
 		{
@@ -128,7 +128,7 @@ bool ProgressXml::LoadXml(std::string file)
 	if (!root)  return false;
 
 	//  clear
-	champs.clear();
+	chs.clear();
 
 	const char* a;
 	TiXmlElement* eCh = root->FirstChildElement("champ");
@@ -151,7 +151,7 @@ bool ProgressXml::LoadXml(std::string file)
 			eTr = eTr->NextSiblingElement("t");
 		}
 
-		champs.push_back(pc);
+		chs.push_back(pc);
 		eCh = eCh->NextSiblingElement("champ");
 	}
 	return true;
@@ -162,9 +162,9 @@ bool ProgressXml::SaveXml(std::string file)
 {
 	TiXmlDocument xml;	TiXmlElement root("progress");
 
-	for (int i=0; i < champs.size(); ++i)
+	for (int i=0; i < chs.size(); ++i)
 	{
-		const ProgressChamp& pc = champs[i];
+		const ProgressChamp& pc = chs[i];
 		TiXmlElement eCh("champ");
 			eCh.SetAttribute("name",	pc.name.c_str() );
 			eCh.SetAttribute("ver",		toStrC( pc.ver ));

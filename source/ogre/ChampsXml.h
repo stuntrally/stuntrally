@@ -48,7 +48,7 @@ public:
 class ChampsXml
 {
 public:
-	std::vector<Champ> champs;
+	std::vector<Champ> all;
 	
 	bool LoadXml(std::string file, class TimesXml* times);
 };
@@ -83,7 +83,7 @@ public:
 class ProgressXml
 {
 public:
-	std::vector<ProgressChamp> champs;
+	std::vector<ProgressChamp> chs;
 	bool LoadXml(std::string file), SaveXml(std::string file);
 };
 

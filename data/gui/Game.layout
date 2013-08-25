@@ -62,7 +62,7 @@
 		</Widget>
 		<Widget type="Button" skin="Button" position="108 96 304 50" align="Left" name="BtnMenu1">
 			<Property key="Caption" value="#{Tutorial}"/>
-			<Property key="Colour" value="1.0 0.7 0.3"/>
+			<Property key="Colour" value="1.0 0.7 0.4"/>
 			<Property key="TextColour" value="1.0 0.7 0.4"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="FontName" value="font.19"/>
@@ -1256,6 +1256,22 @@
 						<Property key="Caption" value="#909090Test"/>
 					</Widget>
 				</Widget>
+				<Widget type="TabControl" skin="TabControl" position="32 26 538 36" name="ChallType">
+					<Property key="Colour" value="0.8 1.0 0.9"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+                    <Widget type="TabItem" skin="" position="2 24 532 8">
+						<Property key="Caption" value="#A0F0FF#{Diff3}"/>
+					</Widget>
+                    <Widget type="TabItem" skin="" position="2 24 532 8">
+						<Property key="Caption" value="#60C0FF#{Diff4}"/>
+					</Widget>
+                    <Widget type="TabItem" skin="" position="2 24 532 8">
+						<Property key="Caption" value="#A0A0E0#{Diff6}"/>
+					</Widget>
+                    <Widget type="TabItem" skin="" position="2 24 532 8">
+						<Property key="Caption" value="#909090Test"/>
+					</Widget>
+				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="602 108 128 128" name="imgTut">
 					<Property key="ImageCoord" value="0 128 128 128"/>
 					<Property key="Alpha" value="1.0"/>
@@ -1295,10 +1311,37 @@
 					<Property key="InheritsAlpha" value="false"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
+
+				<Widget type="Button" skin="Button" position="320 340 144 40" name="btnTutStart">
+					<Property key="Caption" value="#{ChampStart}"/>
+					<Property key="Colour" value="1.0 0.8 0.4"/>
+					<Property key="TextColour" value="1.0 0.8 0.4"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<Widget type="ImageBox" skin="ImageBox" position="2 4 32 32">
+						<Property key="ImageCoord" value="256 0 128 128"/>
+						<Property key="Alpha" value="0.7"/>
+						<Property key="ImageTexture" value="gui_icons.png"/>
+						<Property key="NeedMouse" value="false"/>
+						<UserString key="RelativeTo" value="GameWnd"/>
+					</Widget>
+				</Widget>
 				<Widget type="Button" skin="Button" position="320 340 144 40" name="btnChampStart">
 					<Property key="Caption" value="#{ChampStart}"/>
-					<Property key="Colour" value="0.8 0.8 1"/>
-					<Property key="TextColour" value="0.85 0.85 0.95"/>
+					<Property key="Colour" value="0.6 1 0.6"/>
+					<Property key="TextColour" value="0.6 1 0.6"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<Widget type="ImageBox" skin="ImageBox" position="2 4 32 32">
+						<Property key="ImageCoord" value="256 0 128 128"/>
+						<Property key="Alpha" value="0.7"/>
+						<Property key="ImageTexture" value="gui_icons.png"/>
+						<Property key="NeedMouse" value="false"/>
+						<UserString key="RelativeTo" value="GameWnd"/>
+					</Widget>
+				</Widget>
+				<Widget type="Button" skin="Button" position="320 380 144 40" name="btnChallStart">
+					<Property key="Caption" value="#{ChampStart}"/>
+					<Property key="Colour" value="0.4 1 0.8"/>
+					<Property key="TextColour" value="0.4 1 0.8"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<Widget type="ImageBox" skin="ImageBox" position="2 4 32 32">
 						<Property key="ImageCoord" value="256 0 128 128"/>

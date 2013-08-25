@@ -1723,6 +1723,14 @@
 				Name="Game"
 				>
 				<File
+					RelativePath="..\source\ogre\Challenges.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\ChampChall.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\ogre\Championships.cpp"
 					>
 				</File>

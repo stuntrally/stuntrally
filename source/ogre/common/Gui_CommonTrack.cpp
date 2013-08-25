@@ -372,7 +372,7 @@ void App::updTrkListDim()
 }
 
 #ifndef SR_EDITOR
-///  champ list  ----------
+///  champ/chall list  ----------
 void App::updChampListDim()
 {
 	if (!liChamps)  return;

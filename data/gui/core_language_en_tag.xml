@@ -72,6 +72,7 @@
 	<Tag name="ChampEndCongrats">Congratulations !</Tag>
 	<Tag name="ChampEndFinished">You have finished this championship.</Tag>
 	<Tag name="ChampInfo">In tutorial/championship mode you drive a series of tracks. Minimum score (depending on your time) is needed to pass to next stage. Car changing is possible.</Tag>
+	<Tag name="ChallInfo">In challenge mode the game has setup, most settings can't be changed. Time or position is needed. If you pass you receive bronze, silver or gold prize.</Tag>
 	<Tag name="ChampStart">Start</Tag>
 
 	<Tag name="Diff0">Test Easy</Tag>
