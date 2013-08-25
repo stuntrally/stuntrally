@@ -21,11 +21,11 @@
 			<Property key="Alpha" value="1.0"/>
 			<Property key="ImageTexture" value="gui_icons.png"/>
 		</Widget>
-		<!--<Widget type="ImageBox" skin="ImageBox" position="32 236 56 56">
+		<Widget type="ImageBox" skin="ImageBox" position="32 236 56 56">
 			<Property key="ImageCoord" value="0 384 128 128"/>
 			<Property key="Alpha" value="1.0"/>
 			<Property key="ImageTexture" value="gui_icons.png"/>
-		</Widget>-->
+		</Widget>
 		
 		<Widget type="ImageBox" skin="ImageBox" position="32 340 56 56">
 			<Property key="ImageCoord" value="0 512 128 128"/>
@@ -79,7 +79,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="FontName" value="font.19"/>
 		</Widget>
-		<!--<Widget type="Widget" skin="PanelSkin" position="92 228 336 72" name="PanMenu3">
+		<Widget type="Widget" skin="PanelSkin" position="92 228 336 72" name="PanMenu3">
 			<Property key="Colour" value="0.4 1 0.8"/>
 			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
@@ -90,38 +90,38 @@
 			<Property key="TextColour" value="0.4 1 0.8"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="FontName" value="font.19"/>
-		</Widget>-->
+		</Widget>
 
-		<Widget type="Widget" skin="PanelSkin" position="92 336 336 72" name="PanMenu3">
+		<Widget type="Widget" skin="PanelSkin" position="92 336 336 72" name="PanMenu4">
 			<Property key="Colour" value="0.6 0.7 0.8"/>
 			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="108 348 304 50" align="Left" name="BtnMenu3">
+		<Widget type="Button" skin="Button" position="108 348 304 50" align="Left" name="BtnMenu4">
 			<Property key="Caption" value="#{ReplaysMenu}"/>
 			<Property key="Colour" value="0.6 0.7 0.8"/>
 			<Property key="TextColour" value="0.7 0.8 0.9"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="FontName" value="font.19"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="92 408 336 72" name="PanMenu4">
+		<Widget type="Widget" skin="PanelSkin" position="92 408 336 72" name="PanMenu5">
 			<Property key="Colour" value="0.4 0.7 1"/>
 			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="108 420 304 47" name="BtnMenu4">
+		<Widget type="Button" skin="Button" position="108 420 304 47" name="BtnMenu5">
 			<Property key="Caption" value="#{Help}"/>
 			<Property key="Colour" value="0.4 0.7 1"/>
 			<Property key="TextColour" value="0.75 0.9 1"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="FontName" value="font.19"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="92 480 336 72" name="PanMenu5">
+		<Widget type="Widget" skin="PanelSkin" position="92 480 336 72" name="PanMenu6">
 			<Property key="Colour" value="0.7 0.7 1"/>
 			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="108 492 304 50" name="BtnMenu5">
+		<Widget type="Button" skin="Button" position="108 492 304 50" name="BtnMenu6">
 			<Property key="Caption" value="#{Options}"/>
 			<Property key="Colour" value="0.7 0.7 1"/>
 			<Property key="TextColour" value="0.8 0.8 1"/>
@@ -1268,12 +1268,12 @@
 					<Property key="ImageTexture" value="gui_icons.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<!--<Widget type="ImageBox" skin="ImageBox" position="602 108 128 128" name="imgChall">
+				<Widget type="ImageBox" skin="ImageBox" position="602 108 128 128" name="imgChall">
 					<Property key="ImageCoord" value="0 384 128 128"/>
 					<Property key="Alpha" value="1.0"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
-				</Widget>-->
+				</Widget>
 
 				<Widget type="Button" skin="CheckBox" position="620 44 120 24" name="ChampRev">
 					<Property key="Caption" value="#{Reverse}"/>

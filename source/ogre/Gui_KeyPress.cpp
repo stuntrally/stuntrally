@@ -83,7 +83,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 			case key(J):	GuiShortcut(MNU_Tutorial, TAB_Champs);	return true;  // J Tutorials
 			case key(H):	GuiShortcut(MNU_Champ,    TAB_Champs);	return true;  // H Champs
-			//case key(L):	GuiShortcut(MNU_Challenge,TAB_Champs);	return true;  // L Challenges
+			case key(L):	GuiShortcut(MNU_Challenge,TAB_Champs);	return true;  // L Challenges
 
 			case key(U):	GuiShortcut(MNU_Single, TAB_Multi);	return true;	// U Multiplayer
 			case key(R):	GuiShortcut(MNU_Replays, 1);	return true;		// R Replays
