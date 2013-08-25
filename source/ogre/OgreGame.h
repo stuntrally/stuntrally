@@ -305,7 +305,8 @@ protected:
 	TracksXml tracksXml;  CarsXml carsXml;  UserXml userXml;  //xml
 	void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
 	void updTrkListDim(), updChampListDim();
-	const static int TcolW[32],TcolC[6],ChColW[9],ChLColW[10],StColW[8];
+	//  const
+	const static int TcolW[32],TcolC[16],ChColW[16],ChLColW[16],StColW[16];
 	const static Ogre::String clrsDiff[9],clrsRating[6],clrsLong[10];
 
 	void edTrkFind(MyGUI::EditPtr),edRplFind(MyGUI::EditPtr);
@@ -313,7 +314,7 @@ protected:
 	strlist liTracks,liTracksUser;  void FillTrackLists();
 	std::list<TrkL> liTrk;
 
-	void CarListUpd(bool resetNotFound);
+	void CarListUpd(bool resetNotFound=false);
 	void AddCarL(std::string name, const class CarInfo* ci);
 	std::list<CarL> liCar;  void FillCarList();
 
@@ -326,6 +327,7 @@ protected:
 		
 	///-----------------------------------------
 
+
 	//  main menu
 	void toggleGui(bool toggle=true), GuiShortcut(MNU_Btns mnu, int tab, int subtab=-1);
 	void MainMenuBtn(MyGUI::WidgetPtr), MenuTabChg(MyGUI::TabPtr, size_t);  bool loadReadme;
@@ -333,10 +335,13 @@ protected:
 	void UpdCarClrSld(bool upd=true), UpdCarMClr();  bool bUpdCarClr;
 
 	///  champ & chall common
-	void Ch_NewGame(), ChampsXmlLoad();
 	MyGUI::ButtonPtr btStTut, btStChamp, btStChall;
 	MyGUI::TabPtr tabTut, tabChamp, tabChall;
 	MyGUI::StaticImagePtr imgTut, imgChamp, imgChall;
+	MyGUI::TextBox* txtCh,*valCh;
+
+	void Ch_NewGame(), Ch_XmlLoad();
+	void StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress);
 	
 	//  race pos
 	int GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldStart, float* pPoints=0);
@@ -362,8 +367,12 @@ protected:
 
 	///  challenges
 	ChallXml chall;  ProgressLXml progressL[2];  //xml  [1]=reversed
+	void ProgressLSave(bool upgGui=true);
 	void ChallsListUpdate();
-	void /*ChallsXmlLoad(),*/ ProgressLSave(bool upgGui=true);
+	
+	Ogre::String StrChallCars(const Chall& ch);
+	bool IsChallCar(Ogre::String name);  // util
+	void BackFromChs();  bool isChallGui();
 
 	MyGUI::MultiList2* liChalls;
 	void listChallChng(MyGUI::MultiList2* li, size_t pos); //, listStageChng(MyGUI::MultiList2* li, size_t pos);
@@ -371,7 +380,9 @@ protected:
 	void tabChallType(MyGUI::TabPtr wp, size_t id);
 	
 
-	///  input tab  -----------------------------------------
+
+	///  input tab
+	///-----------------------------------------------------------------------------------------------------------------
 	struct InputAction
 	{
 		std::string mName;  int mId;
@@ -553,6 +564,7 @@ protected:
 	Ogre::String PathListTrk(int user=-1), PathListTrkPrv(int user/*=-1*/, Ogre::String track);
 
 	MyGUI::StaticImagePtr imgCar;  MyGUI::EditPtr carDesc;
+	MyGUI::ComboBoxPtr cmbBoost, cmbFlip, cmbDamage, cmbRewind;
 	void comboBoost(CMB), comboFlip(CMB), comboDamage(CMB), comboRewind(CMB);
 
 	GuiPopup popup;

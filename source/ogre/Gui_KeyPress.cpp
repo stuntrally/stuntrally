@@ -116,7 +116,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		}
 		if (!t.empty())
 		{
-			pSet->gui.champ_num = -1;  pSet->gui.chall_num = -1;
+			BackFromChs();
 			pSet->gui.track = t;  bPerfTest = false;
 			pSet->gui.track_user = false;
 			NewGame();  return true;
@@ -258,7 +258,10 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 						case TAB_Track:	 changeTrack();	btnNewGame(0);  break;
 						case TAB_Car:	 changeCar();	btnNewGame(0);  break;
 						case TAB_Multi:	 chatSendMsg();  break;
-						case TAB_Champs: btnChampStart(0);  break;
+						case TAB_Champs:
+							if (isChallGui())
+								  btnChallStart(0);
+							else  btnChampStart(0);  break;
 					}	break;
 				}	}
 				else

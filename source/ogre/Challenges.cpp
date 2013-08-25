@@ -11,11 +11,26 @@ using namespace Ogre;
 using namespace MyGUI;
 
 
+///
+void App::BackFromChs()
+{
+	pSet->game.champ_num = -1;
+	pSet->game.chall_num = -1;
+	CarListUpd();  // off filtering
+}
+
+bool App::isChallGui()
+{
+	return imgChall && imgChall->getVisible();
+}
+
+
 void App::tabChallType(MyGUI::TabPtr wp, size_t id)
 {
 	//pSet->chall_type = id;
 	ChallsListUpdate();
 }
+
 
 ///  Challenges list  fill
 //----------------------------------------------------------------------------------------------------------------------
@@ -39,7 +54,7 @@ void App::ChallsListUpdate()
 		liChalls->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liChalls->getItemCount()-1;
 		liChalls->setSubItemNameAt(1,l, clr+ chl.name.c_str());
 		liChalls->setSubItemNameAt(2,l, clrsDiff[chl.diff]+ TR("#{Diff"+toStr(chl.diff)+"}"));
-		liChalls->setSubItemNameAt(3,l, toStr(chl.carTypes.size()) +","+ toStr(chl.cars.size()) );
+		liChalls->setSubItemNameAt(3,l, StrChallCars(chl));
 		
 		liChalls->setSubItemNameAt(4,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ toStr(ntrks));
 		liChalls->setSubItemNameAt(5,l, clrsDiff[std::min(8,int(chl.time/3.f/60.f))]+ GetTimeShort(chl.time));
@@ -50,60 +65,131 @@ void App::ChallsListUpdate()
 	liChalls->setIndexSelected(sel);
 }
 
+
 ///  Challenges list  sel changed,  fill Stages list
 //----------------------------------------------------------------------------------------------------------------------
 void App::listChallChng(MyGUI::MultiList2* chlist, size_t id)
 {
 	if (id==ITEM_NONE || liChalls->getItemCount() == 0)  return;
-	#if 0
-	//  update champ stages
+
+	int pos = s2i(liChalls->getItemNameAt(id).substr(7))-1;
+	if (pos < 0 || pos >= chall.all.size())  {  LogO("Error chall sel > size.");  return;  }
+
+	CarListUpd();  // filter car list
+
+	//  fill stages
 	liStages->removeAllItems();
 
-	int pos = s2i(liChamps->getItemNameAt(id).substr(7))-1;
-	if (pos < 0 || pos >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
-
-	int n = 1, p = pSet->gui.champ_rev ? 1 : 0;
-	const Champ& ch = champs.all[pos];
-	for (int i=0; i < ch.trks.size(); ++i,++n)
+	int n = 1, p = 0; //pSet->gui.champ_rev ? 1 : 0;
+	const Chall& ch = chall.all[pos];
+	int ntrks = ch.trks.size();
+	for (int i=0; i < ntrks; ++i,++n)
 	{
-		const ChampTrack& trk = ch.trks[i];
-		String clr = GetSceneryColor(trk.name);
-		liStages->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liStages->getItemCount()-1;
-		liStages->setSubItemNameAt(1,l, clr+ trk.name.c_str());
-
-		int id = tracksXml.trkmap[trk.name];  // if (id > 0)
-		const TrackInfo& ti = tracksXml.trks[id-1];
-
-		float carMul = GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
-		float time = (times.trks[trk.name] * trk.laps /*+ 2*/) / carMul;
-
-		liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
-		liStages->setSubItemNameAt(3,l, clrsDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
-
-		liStages->setSubItemNameAt(4,l, "#80C0F0"+GetTimeShort(time));  //toStr(trk.laps)
-		liStages->setSubItemNameAt(5,l, "#E0F0FF"+fToStr(progress[p].chs[pos].trks[i].points,1,3));
+		const ChallTrack& trk = ch.trks[i];
+		StageListAdd(n, trk.name, trk.laps,
+			"#E0F0FF"+fToStr(progressL[p].chs[pos].trks[i].points,1,3));
 	}
 	//  descr
 	EditBox* ed = mGUI->findWidget<EditBox>("ChampDescr");
 	if (ed)  ed->setCaption(ch.descr);
 
-	//  update champ details (on stages tab)
-	TextBox* txt;
-	txt = (TextBox*)mWndGame->findWidget("valChDiff");
-	if (txt)  txt->setCaption(TR("#{Diff"+toStr(ch.diff)+"}"));
-	txt = (TextBox*)mWndGame->findWidget("valChTracks");
-	if (txt)  txt->setCaption(toStr(ch.trks.size()));
 
-	txt = (TextBox*)mWndGame->findWidget("valChDist");
-	if (txt)  txt->setCaption(/*toStr(ch.length)*/"-");  // sum from find tracks..
-	txt = (TextBox*)mWndGame->findWidget("valChTime");
-	if (txt)  txt->setCaption(GetTimeString(ch.time));
+	//  chall details  -----------------------------------
+	String s1,s2,clr;
+	s1 += "\n";  s2 += "\n";
 
-	txt = (TextBox*)mWndGame->findWidget("valChProgress");
-	if (txt)  txt->setCaption(fToStr(100.f * progress[p].chs[pos].curTrack / champs.champs[pos].trks.size(),1,5));
-	txt = (TextBox*)mWndGame->findWidget("valChScore");
-	if (txt)  txt->setCaption(fToStr(progress[p].chs[pos].points,1,5));
-	#endif
+	clr = clrsDiff[ch.diff];  // track
+	s1 += clr+ TR("#{Difficulty}\n");    s2 += clr+ TR("#{Diff"+toStr(ch.diff)+"}")+"\n";
+
+	clr = clrsDiff[std::min(8,ntrks*2/3+1)];
+	s1 += clr+ TR("#{Tracks}\n");        s2 += clr+ toStr(ntrks)+"\n";
+
+	s1 += "\n";  s2 += "\n";
+	clr = clrsDiff[std::min(8,int(ch.time/3.f/60.f))];
+	s1 += TR("#80F0E0#{Time} [m:s.]\n"); s2 += "#C0FFE0"+clr+ GetTimeShort(ch.time)+"\n";
+
+	s1 += "\n";  s2 += "\n";  // cars
+	s1 += TR("#F08080#{Cars}\n");      s2 += TR("#FFA0A0") + StrChallCars(ch)+"\n";
+	
+	s1 += "\n\n";  s2 += "\n\n";  // game
+	#define cmbs(cmb, i)  (i>=0 ? cmb->getItemNameAt(i) : TR("#{Any}"))
+	s1 += TR("#A0B0C0#{Simulation}\n");  s2 += "#B0C0D0"+ ch.sim_mode +"\n";
+	s1 += TR("#A090E0#{Damage}\n");      s2 += "#B090FF"+ cmbs(cmbDamage, ch.damage_type) +"\n";
+	s1 += "\n";  s2 += "\n";
+	s1 += TR("#80C0F8#{Boost}\n");       s2 += "#A0D0FF"+ cmbs(cmbBoost, ch.boost_type) +"\n";
+	s1 += TR("#80C0C0#{Flip}\n");        s2 += "#90D0D0"+ cmbs(cmbFlip, ch.flip_type) +"\n";
+														//cmbs(cmbRewind, ch.rewind_type)
+	//  hud
+	//bool minimap, chk_arr, chk_beam, trk_ghost;  // deny using it if false
+	//  pass ..
+	//float totalTime, avgPoints, avgPos;
+	
+	s1 += "\n\n";  s2 += "\n\n";  // prog
+	s1 += TR("#B0C0E0#{Progress}\n");    s2 += "#C0E0FF"+fToStr(100.f * progressL[p].chs[pos].curTrack / chall.all[pos].trks.size(),1,5)+" %\n";
+	s1 += TR("#D8C0FF#{Score}\n");       s2 += "#F0D8FF"+fToStr(progressL[p].chs[pos].points,1,5)+"\n";
+
+	txtCh->setCaption(s1);  valCh->setCaption(s2);
+}
+
+
+//  list allowed cars types and cars
+String App::StrChallCars(const Chall& ch)
+{
+	String str;
+	int i,s;
+
+	s = ch.carTypes.size();
+	for (i=0; i < s; ++i)
+	{
+		const String& ct = ch.carTypes[i];
+			str += carsXml.colormap[ct];  // car type color
+		str += ct;
+		if (i+1 < s)  str += ",";
+	}
+	//int id = carsXml.carmap[*i];
+	//carsXml.cars[id-1];
+	if (!str.empty())
+		str += " ";
+	
+	s = ch.cars.size();
+	for (i=0; i < s; ++i)
+	{
+		const String& c = ch.cars[i];
+			int id = carsXml.carmap[c]-1;  // get car color from type
+			if (id >= 0)  str += carsXml.colormap[ carsXml.cars[id].type ];
+		str += c;
+		if (i+1 < s)  str += ",";
+	}
+	return str;
+}
+
+//  test if car is in challenge allowed cars or types
+bool App::IsChallCar(String name)
+{
+	if (!liChalls || liChalls->getIndexSelected()==ITEM_NONE)  return true;
+
+	int chId = s2i(liChalls->getItemNameAt(liChalls->getIndexSelected()).substr(7))-1;
+	const Chall& ch = chall.all[chId];
+
+	int i,s;
+	if (!ch.carTypes.empty())
+	{	s = ch.carTypes.size();
+
+		int id = carsXml.carmap[name]-1;
+		if (id >= 0)
+		{
+			String type = carsXml.cars[id].type;
+
+			for (i=0; i < s; ++i)
+				if (type == ch.carTypes[i])  return true;
+	}	}
+	if (!ch.cars.empty())
+	{	s = ch.cars.size();
+
+		for (i=0; i < s; ++i)
+			if (name == ch.cars[i])  return true;
+	}
+	return false;
 }
 
 
@@ -135,7 +221,6 @@ void App::ProgressLSave(bool upgGui)
 	progressL[1].SaveXml(PATHMANAGER::UserConfigDir() + "/progressL_rev.xml");
 	if (!upgGui)
 		return;
-	ChallsListUpdate();
-	listChallChng(liChalls, liChalls->getIndexSelected());
+	//..ChallsListUpdate();
+	//..listChallChng(liChalls, liChalls->getIndexSelected());
 }
-

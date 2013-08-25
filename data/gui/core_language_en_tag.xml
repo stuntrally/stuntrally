@@ -277,6 +277,7 @@
 
 	<Tag name="Never">Never</Tag>
 	<Tag name="Always">Always</Tag>
+	<Tag name="Any">Any</Tag>
 
 	<Tag name="FuelLap">Fuel each lap</Tag>
 	<Tag name="FuelTime">Fuel over time</Tag>

@@ -31,6 +31,7 @@ void App::tabChampType(MyGUI::TabPtr wp, size_t id)
 	ChampsListUpdate();
 }
 
+
 ///  Championships list  fill
 //----------------------------------------------------------------------------------------------------------------------
 void App::ChampsListUpdate()
@@ -62,13 +63,14 @@ void App::ChampsListUpdate()
 	liChamps->setIndexSelected(sel);
 }
 
+
 ///  Championships list  sel changed,  fill Stages list
 //----------------------------------------------------------------------------------------------------------------------
 void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 {
 	if (id==ITEM_NONE || liChamps->getItemCount() == 0)  return;
 	
-	//  update champ stages
+	//  fill stages
 	liStages->removeAllItems();
 
 	int pos = s2i(liChamps->getItemNameAt(id).substr(7))-1;
@@ -76,46 +78,39 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 
 	int n = 1, p = pSet->gui.champ_rev ? 1 : 0;
 	const Champ& ch = champs.all[pos];
-	for (int i=0; i < ch.trks.size(); ++i,++n)
+	int ntrks = ch.trks.size();
+	for (int i=0; i < ntrks; ++i,++n)
 	{
 		const ChampTrack& trk = ch.trks[i];
-		String clr = GetSceneryColor(trk.name);
-		liStages->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liStages->getItemCount()-1;
-		liStages->setSubItemNameAt(1,l, clr+ trk.name.c_str());
-
-		int id = tracksXml.trkmap[trk.name];  // if (id > 0)
-		const TrackInfo& ti = tracksXml.trks[id-1];
-
-		float carMul = GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
-		float time = (times.trks[trk.name] * trk.laps /*+ 2*/) / carMul;
-
-		liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
-		liStages->setSubItemNameAt(3,l, clrsDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
-
-		liStages->setSubItemNameAt(4,l, "#80C0F0"+GetTimeShort(time));  //toStr(trk.laps)
-		liStages->setSubItemNameAt(5,l, "#E0F0FF"+fToStr(progress[p].chs[pos].trks[i].points,1,3));
+		StageListAdd(n, trk.name, trk.laps,
+			"#E0F0FF"+fToStr(progress[p].chs[pos].trks[i].points,1,3));
 	}
 	//  descr
 	EditBox* ed = mGUI->findWidget<EditBox>("ChampDescr");
 	if (ed)  ed->setCaption(ch.descr);
 
-	//  update champ details (on stages tab)
-	TextBox* txt;
-	txt = (TextBox*)mWndGame->findWidget("valChDiff");
-	if (txt)  txt->setCaption(TR("#{Diff"+toStr(ch.diff)+"}"));
-	txt = (TextBox*)mWndGame->findWidget("valChTracks");
-	if (txt)  txt->setCaption(toStr(ch.trks.size()));
 
-	txt = (TextBox*)mWndGame->findWidget("valChDist");
-	if (txt)  txt->setCaption(/*toStr(ch.length)*/"-");  // sum from find tracks..
-	txt = (TextBox*)mWndGame->findWidget("valChTime");
-	if (txt)  txt->setCaption(GetTimeString(ch.time));
+	//  champ details  -----------------------------------
+	String s1,s2,clr;
+	s1 += "\n";  s2 += "\n";
 
-	txt = (TextBox*)mWndGame->findWidget("valChProgress");
-	if (txt)  txt->setCaption(fToStr(100.f * progress[p].chs[pos].curTrack / champs.all[pos].trks.size(),1,5));
-	txt = (TextBox*)mWndGame->findWidget("valChScore");
-	if (txt)  txt->setCaption(fToStr(progress[p].chs[pos].points,1,5));
+	clr = clrsDiff[ch.diff];
+	s1 += clr+ TR("#{Difficulty}\n");    s2 += clr+ TR("#{Diff"+toStr(ch.diff)+"}")+"\n";
+
+	clr = clrsDiff[std::min(8,ntrks*2/3+1)];
+	s1 += clr+ TR("#{Tracks}\n");        s2 += clr+ toStr(ntrks)+"\n";
+
+	s1 += "\n";  s2 += "\n";
+	clr = clrsDiff[std::min(8,int(ch.time/3.f/60.f))];
+	s1 += TR("#80F0E0#{Time} [m:s.]\n"); s2 += "#C0FFE0"+clr+ GetTimeShort(ch.time)+"\n";
+
+	s1 += "\n";  s2 += "\n";
+	s1 += TR("#B0C0E0#{Progress}\n");    s2 += "#C0E0FF"+fToStr(100.f * progress[p].chs[pos].curTrack / champs.all[pos].trks.size(),1,5)+" %\n";
+	s1 += TR("#D8C0FF#{Score}\n");       s2 += "#F0D8FF"+fToStr(progress[p].chs[pos].points,1,5)+"\n";
+
+	txtCh->setCaption(s1);  valCh->setCaption(s2);
 }
+
 
 ///  Stages list  sel changed,  update Track info
 //---------------------------------------------------------------------
@@ -137,10 +132,10 @@ void App::listStageChng(MyGUI::MultiList2* li, size_t pos)
 	
 	if (valStageNum)  valStageNum->setCaption(toStr(pos+1) +" / "+ toStr(ch.trks.size()));
 }
-//---------------------------------------------------------------------
 
 
 ///  champ start
+//---------------------------------------------------------------------
 void App::btnChampStart(WP)
 {
 	if (liChamps->getIndexSelected()==ITEM_NONE)  return;
@@ -159,6 +154,7 @@ void App::btnChampStart(WP)
 
 	btnNewGame(0);
 }
+
 
 //  stage back
 void App::btnChampStageBack(WP)
@@ -340,6 +336,9 @@ void App::ChampionshipAdvance(float timeCur)
 	}
 }
 
+
+//  stage wnd text
+//----------------------------------------------------------------------------------------------------------------------
 void App::ChampFillStageInfo(bool finished)
 {
 	int chId = pSet->game.champ_num, p = pSet->game.champ_rev ? 1 : 0;

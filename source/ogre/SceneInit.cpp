@@ -47,7 +47,7 @@ void App::createScene()
 	carsXml.LoadXml(PATHMANAGER::GameConfigDir() + "/cars.xml");
 
 	//  championships.xml, progress.xml
-	ChampsXmlLoad();
+	Ch_XmlLoad();
 
 	//  user.xml
 	#if 0

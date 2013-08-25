@@ -165,10 +165,10 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 const int wi = 26;  // track detailed
 const int App::TcolW[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
 #ifndef SR_EDITOR
-const int App::TcolC[6] = {34, 17, 35, 40, 20};  // car
-const int App::ChColW[9] = {30, 180, 120, 50, 80, 80, 60, 40};  // champs
-const int App::ChLColW[10]= {30, 180, 120, 90, 50, 80, 60, 60, 40};  // challs
-const int App::StColW[8] = {30, 180, 100, 90, 80, 70};  // stages
+const int App::TcolC[16]  = {34, 17, 35, 40, 20};  // car
+const int App::ChColW[16] = {30, 180, 120, 50, 80, 80, 60, 40};  // champs
+const int App::ChLColW[16]= {30, 180, 90, 120, 40, 60, 60, 60, 50};  // challs
+const int App::StColW[16] = {30, 180, 100, 90, 80, 70};  // stages
 #endif
 
 //  done once with init gui

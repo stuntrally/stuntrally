@@ -62,7 +62,7 @@ void App::btnRplLoad(WP)  // Load
 
 		pSet->game.trees = h.ver < 6 ? 1.f : h.trees;  // older didnt have trees saved, so use default 1
 		pSet->game.local_players = h.numPlayers;
-		pSet->game.champ_num = -1;  pSet->gui.champ_num = -1;
+		BackFromChs();
 		LogO("RPL btn Load  players: "+toStr(h.numPlayers)+" netw: "+ toStr(h.networked));
 
 		for (int p=1; p < h.numPlayers; ++p)

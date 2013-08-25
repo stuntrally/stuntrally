@@ -216,38 +216,28 @@ void App::InitGui()
 	Chk("RoadWCollis", chkRoadWCollis, pSet->gui.collis_roadw);
 	Chk("DynamicObjects", chkDynObjects, pSet->gui.dyn_objects);
 
-	Cmb(combo, "CmbBoost", comboBoost);
-	if (combo)
+	Cmb(combo, "CmbBoost", comboBoost);		cmbBoost = combo;	if (combo)
 	{	combo->removeAllItems();
-		combo->addItem(TR("#{Never}"));
-		combo->addItem(TR("#{FuelLap}"));
-		combo->addItem(TR("#{FuelTime}"));
-		combo->addItem(TR("#{Always}"));
+		combo->addItem(TR("#{Never}"));		combo->addItem(TR("#{FuelLap}"));
+		combo->addItem(TR("#{FuelTime}"));	combo->addItem(TR("#{Always}"));
 		combo->setIndexSelected(pSet->gui.boost_type);
 	}
-	Cmb(combo, "CmbFlip", comboFlip);
-	if (combo)
+	Cmb(combo, "CmbFlip", comboFlip);		cmbFlip = combo;	if (combo)
 	{	combo->removeAllItems();
-		combo->addItem(TR("#{Never}"));
-		combo->addItem(TR("#{FuelBoost}"));
+		combo->addItem(TR("#{Never}"));		combo->addItem(TR("#{FuelBoost}"));
 		combo->addItem(TR("#{Always}"));
 		combo->setIndexSelected(pSet->gui.flip_type);
 	}
-	Cmb(combo, "CmbDamage", comboDamage);
-	if (combo)
+	Cmb(combo, "CmbDamage", comboDamage);	cmbDamage = combo;	if (combo)
 	{	combo->removeAllItems();
-		combo->addItem(TR("#{None}"));
-		combo->addItem(TR("#{Reduced}"));
+		combo->addItem(TR("#{None}"));		combo->addItem(TR("#{Reduced}"));
 		combo->addItem(TR("#{Normal}"));
 		combo->setIndexSelected(pSet->gui.damage_type);
 	}
-	Cmb(combo, "CmbRewind", comboRewind);
-	if (combo)
+	Cmb(combo, "CmbRewind", comboRewind);	cmbRewind = combo;	if (combo)
 	{	combo->removeAllItems();
-		combo->addItem(TR("#{None}"));
-		combo->addItem(TR("#{Always}"));
-		combo->addItem(TR("#{FuelLap}"));
-		combo->addItem(TR("#{FuelTime}"));
+		combo->addItem(TR("#{None}"));		combo->addItem(TR("#{Always}"));
+		combo->addItem(TR("#{FuelLap}"));	combo->addItem(TR("#{FuelTime}"));
 		combo->setIndexSelected(pSet->gui.rewind_type);
 	}
 
@@ -631,12 +621,12 @@ void App::InitGui()
    	li->setVisible(false);
 	
 	li->removeAllColumns();  c=0;
-	li->addColumn("N", ChColW[c++]);
+	li->addColumn("N", ChLColW[c++]);
 	li->addColumn(TR("#{Name}"), ChLColW[c++]);		li->addColumn(TR("#{Difficulty}"), ChLColW[c++]);
-	li->addColumn(TR("#{Cars}"), ChLColW[c++]);
-	li->addColumn(TR("#{Stages}"), ChLColW[c++]);	li->addColumn(TR("#{Time} m:s"), ChLColW[c++]);
+	li->addColumn(TR("#{Cars}"), ChLColW[c++]);	
+	li->addColumn(TR("#{Stages}"), ChLColW[c++]);	li->addColumn(TR("#{Time} m"), ChLColW[c++]);
 	li->addColumn(TR("#{Progress}"), ChLColW[c++]);	li->addColumn(TR("#{Score}"), ChLColW[c++]);
-	li->addColumn(" ", ChColW[c++]);
+	li->addColumn(" ", ChLColW[c++]);
 	liChalls = li;
 
 	//  Stages list  -------------
@@ -682,6 +672,7 @@ void App::InitGui()
 	Btn("btnChallStart", btnChallStart);  btStChall = btn;
 
 
+	//  ch other
 	Chk("ChampRev", chkChampRev, pSet->gui.champ_rev);
 	
 	Btn("btnChampStageBack", btnChampStageBack);
@@ -696,6 +687,9 @@ void App::InitGui()
 	edChampEnd = (EditBox*)mWndChampEnd->findWidget("ChampEndText");
 	imgChampStage = (ImageBox*)mWndChampStage->findWidget("ChampStageImg");
 	imgChampEnd = (ImageBox*)mWndChampEnd->findWidget("ChampEndImg");
+
+	txtCh = (TextBox*)mWndGame->findWidget("txtChDetail");
+	valCh = (TextBox*)mWndGame->findWidget("valChDetail");
 
 	UpdChampTabVis();
 

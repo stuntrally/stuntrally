@@ -11,18 +11,15 @@ using namespace Ogre;
 using namespace MyGUI;
 
 
-///  common  ----
 ///______________________________________________________________________________________________
 ///
 ///  load championship or challenge track
 ///______________________________________________________________________________________________
 void App::Ch_NewGame()
 {
-	if (pSet->game.champ_num >= champs.all.size())
-		pSet->game.champ_num = -1;  // range
-
-	if (pSet->game.chall_num >= chall.all.size())
-		pSet->game.chall_num = -1;
+	if (pSet->game.champ_num >= champs.all.size() ||
+		pSet->game.chall_num >= chall.all.size())  // range
+		BackFromChs();
 
 	int iChamp = pSet->game.champ_num;
 	int iChall = pSet->game.chall_num;
@@ -34,33 +31,33 @@ void App::Ch_NewGame()
 		const Chall& chl = chall.all[iChall];
 		if (pc.curTrack >= chl.trks.size())  pc.curTrack = 0;  // restart
 		const ChallTrack& trk = chl.trks[pc.curTrack];
+		
 		pSet->game.track = trk.name;  pSet->game.track_user = 0;
 		pSet->game.trackreverse = /*pSet->game.champ_rev ? !trk.reversed :*/ trk.reversed;
 		pSet->game.num_laps = trk.laps;
 
 		pSet->game.sim_mode = chl.sim_mode;
+		pSet->game.damage_type = chl.damage_type;
+		
 		pSet->game.boost_type = chl.boost_type;
 		pSet->game.flip_type = chl.flip_type;
 		pSet->game.boost_power = 1.f;
-		pSet->game.damage_type = chl.damage_type;
 		//rewind_type
 
-		std::string track;  bool track_user, trackreverse;
-		std::vector<std::string> car;  //[4]
-		std::vector<float> car_hue, car_sat, car_val, car_gloss, car_refl;  //[6] also for ghosts
+		//  car not set, and not allowed in chall
+		if (!IsChallCar(pSet->game.car[0]))  // pick last
+			pSet->game.car[0] = carList->getItemNameAt(carList->getItemCount()-1).substr(7);
 
-		bool collis_veget, collis_cars, collis_roadw, dyn_objects;
-		//int boost_type, flip_type, damage_type, rewind_type;  float boost_power;
-		
-		//bool minimap, chk_arr, chk_beam, trk_ghost;  // deny using it if true
+		//? minimap, chk_arr, chk_beam, trk_ghost;  // deny using it if false
+		//?challenge icons near chkboxes
 		// abs, tcs, autoshift, autorear
 		
 		pSet->game.trees = 1.5f;  //-
 		pSet->game.collis_veget = true;
 		pSet->game.dyn_objects = true;  //-
 
-		pGame->pause = true;  // wait for stage wnd close
-		pGame->timer.waiting = true;
+		pGame->pause = false;  //true.. wait for stage wnd close
+		pGame->timer.waiting = false;
 	}
 	else if (iChamp >= 0)
 	{
@@ -90,6 +87,7 @@ void App::Ch_NewGame()
 
 
 ///  car time mul
+//-----------------------------------------------------------------------------------------------
 float App::GetCarTimeMul(const string& car, const string& sim_mode)
 {
 	//  car factor (time mul, for less power)
@@ -105,6 +103,8 @@ float App::GetCarTimeMul(const string& car, const string& sim_mode)
 }
 
 ///  compute race position,  basing on car and track time
+//-----------------------------------------------------------------------------------------------
+
 int App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldStart, float* pPoints)
 {
 	//  magic factor: seconds needed for 1 second of track time for 1 race place difference
@@ -130,7 +130,7 @@ int App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldSta
 ///______________________________________________________________________________________________
 ///  Load  championships.xml, progress.xml (once)
 //-----------------------------------------------------------------------------------------------
-void App::ChampsXmlLoad()
+void App::Ch_XmlLoad()
 {
 	times.LoadXml(PATHMANAGER::GameConfigDir() + "/times.xml");
 	champs.LoadXml(PATHMANAGER::GameConfigDir() + "/championships.xml", &times);
@@ -249,7 +249,8 @@ void App::ChampsXmlLoad()
 
 			if (found)  //  found progress, points
 			{	pc.curTrack = opc->curTrack;
-				pc.points = opc->points;
+				pc.points = opc->points;  pc.time = opc->time;
+				pc.pos = opc->pos;  pc.fin = opc->fin;
 			}
 
 			//  fill tracks
@@ -257,7 +258,9 @@ void App::ChampsXmlLoad()
 			{
 				ProgressTrackL pt;
 				if (found)  // found track points
-					pt.points = opc->trks[t].points;
+				{	const ProgressTrackL& opt = opc->trks[t];
+					pt.points = opt.points;  pt.time = opt.time;  pt.pos = opt.pos;
+				}
 				pc.trks.push_back(pt);
 			}
 
@@ -271,6 +274,8 @@ void App::ChampsXmlLoad()
 }
 
 
+///  upd tutor,champ,chall gui vis
+//-----------------------------------------------------------------------------------------------
 void App::UpdChampTabVis()
 {
 	if (!liChamps || !tabChamp || !btStChamp)  return;
@@ -298,4 +303,26 @@ void App::btnChampInfo(WP)
 {
 	pSet->champ_info = !pSet->champ_info;
 	if (edChampInfo)  edChampInfo->setVisible(pSet->champ_info);
+}
+
+
+///  add item in stages list
+//-----------------------------------------------------------------------------------------------
+void App::StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress)
+{
+	String clr = GetSceneryColor(name);
+	liStages->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liStages->getItemCount()-1;
+	liStages->setSubItemNameAt(1,l, clr+ name.c_str());
+
+	int id = tracksXml.trkmap[name];  // if (id > 0)
+	const TrackInfo& ti = tracksXml.trks[id-1];
+
+	float carMul = GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
+	float time = (times.trks[name] * laps /*+ 2*/) / carMul;
+
+	liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
+	liStages->setSubItemNameAt(3,l, clrsDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
+
+	liStages->setSubItemNameAt(4,l, "#80C0F0"+GetTimeShort(time));  //toStr(laps)
+	liStages->setSubItemNameAt(5,l, progress);
 }

@@ -37,10 +37,12 @@ bool (*CarSort[allSortFunc])(const CarL& c1, const CarL& c2) = {
 
 
 //  done every list sort column change or find edit text change
-//  fills gui track list
+//  fills gui cars list
 //-----------------------------------------------------------------------------------------------------------
 void App::CarListUpd(bool resetNotFound)
 {
+	bool filter = isChallGui();
+	
 	if (carList)
 	{	carList->removeAllItems();
 		int ii = 0, si = -1;  bool bFound = false;
@@ -54,8 +56,11 @@ void App::CarListUpd(bool resetNotFound)
 		//  original
 		for (std::list<CarL>::iterator i = liCar2.begin(); i != liCar2.end(); ++i)
 		{
-			String name = (*i).name, nlow = name;  StringUtil::toLowerCase(nlow);
+			String name = (*i).name;  //, nlow = name;  StringUtil::toLowerCase(nlow);
 			//if (sTrkFind == "" || strstr(nlow.c_str(), sTrkFind.c_str()) != 0)
+
+			///  filter for challenge
+			if (!filter || IsChallCar(name))
 			{
 				AddCarL(name, (*i).ci);
 				if (name == pSet->gui.car[0])  {  si = ii;
@@ -64,10 +69,10 @@ void App::CarListUpd(bool resetNotFound)
 				ii++;
 		}	}
 
-		//  not found last track, set 1st  .. only 
-		if (resetNotFound && !bFound && !liTracks.empty())
-		{	pSet->gui.track = *liTracks.begin();  pSet->gui.track_user = 0;
-		}
+		//  not found last car, set last
+		if (resetNotFound && !bFound)
+			pSet->gui.car[0] = carList->getItemNameAt(carList->getItemCount()-1).substr(7);
+
 		if (si > -1)  // center
 			carList->beginToItemAt(max(0, si-5));
 	}
@@ -281,7 +286,7 @@ void App::changeTrack()
 void App::btnNewGame(WP)
 {
 	if (mWndGame->getVisible() && mWndTabsGame->getIndexSelected() < TAB_Champs  || mClient)
-	{	pSet->gui.champ_num = -1;  pSet->gui.champ_num = -1;  }  /// champ, back to single race
+		BackFromChs();  /// champ, back to single race
 	
 	NewGame();  isFocGui = false;  // off gui
 	if (mWndOpts)  mWndOpts->setVisible(isFocGui);
@@ -502,7 +507,7 @@ void App::LNext(int rel)
 			case TAB_Car:	 listCarChng(carList,    LNext(carList, rel, 5));  return;
 			case TAB_Game:	 if (rel > 0)  radSimNorm(0);  else  radSimEasy(0);  return;
 			case TAB_Champs:
-				if (imgChall && imgChall->getVisible())
+				if (isChallGui())
 				      listChallChng(liChalls, LNext(liChalls, rel, 8));
 				else  listChampChng(liChamps, LNext(liChamps, rel, 8));
 				return;
