@@ -53,7 +53,6 @@ void LoadingBar::start( RenderWindow* window,
 	imgNumber = rand() % (i-1);
 
 	//  set the loading image
-	//pApp->imgLoad->setImageTexture("Border_Center.png");
 	pApp->imgLoad->setImageTexture("loading" + toStr(imgNumber+1) + ".jpg");
 	pApp->imgLoad->setVisible(true);
 }

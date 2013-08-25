@@ -5,7 +5,7 @@
 #include <OgreResource.h>
 #include <OgreResourceGroupManager.h>
 
-namespace Ogre {  class Overlay;  class OverlayElement;  class RenderWindow;  }
+namespace Ogre {  class RenderWindow;  }
 class BaseApp;
 
 
