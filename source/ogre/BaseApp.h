@@ -208,7 +208,8 @@ protected:
 	MyGUI::WidgetPtr mWndMainPanels[ciMainBtns];  MyGUI::ButtonPtr mWndMainBtns[ciMainBtns];
 
 	MyGUI::WindowPtr mWndMain,mWndGame,mWndReplays,mWndHelp,mWndOpts,  // menu, windows
-		mWndRpl, mWndChampStage,mWndChampEnd, mWndNetEnd, mWndTweak;  // rpl controls, champ wnds, tools
+		mWndRpl, mWndNetEnd, mWndTweak,  // rpl controls, netw, tools
+		mWndChampStage,mWndChampEnd, mWndChallStage,mWndChallEnd;
 	MyGUI::TabPtr mWndTabsGame,mWndTabsOpts,mWndTabsHelp,mWndTabsRpl;  // main tabs on windows
 	enum TAB_Game {  TAB_Back=0, TAB_Track,TAB_Car, TAB_Setup,TAB_Game, TAB_Multi, TAB_Champs,TAB_Stages,TAB_Stage  };
 	

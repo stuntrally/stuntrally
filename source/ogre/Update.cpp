@@ -258,7 +258,7 @@ bool App::frameStart(Real time)
 			{
 				LoadingOff();  // hide loading overlay
 				mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
-				ChampLoadEnd();
+				Ch_LoadEnd();
 				bLoadingEnd = true;
 				iLoad1stFrames = -1;  // for refl
 			}

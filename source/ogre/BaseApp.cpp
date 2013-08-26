@@ -108,10 +108,9 @@ void BaseApp::updateStats()
 bool BaseApp::IsFocGui()
 {
 	return isFocGui || isFocRpl ||
-		(mWndChampStage && mWndChampStage->getVisible()) ||
-		(mWndChampEnd && mWndChampEnd->getVisible()) ||
-		(mWndNetEnd && mWndNetEnd->getVisible()) ||
-	(mWndTweak && mWndTweak->getVisible());
+		(mWndChampStage && mWndChampStage->getVisible()) || (mWndChampEnd && mWndChampEnd->getVisible()) ||
+		(mWndChallStage && mWndChallStage->getVisible()) || (mWndChallEnd && mWndChallEnd->getVisible()) ||
+		(mWndNetEnd && mWndNetEnd->getVisible()) || (mWndTweak && mWndTweak->getVisible());
 }
 
 bool BaseApp::isTweak()

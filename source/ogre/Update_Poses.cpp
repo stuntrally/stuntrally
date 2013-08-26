@@ -403,16 +403,20 @@ void App::newPoses(float time)  // time only for camera update
 						if (pSet->game.boost_type == 1 && carM->pCar)
 							carM->pCar->dynamics.boostFuel = gfBoostFuelStart;
 
-						///  winner places  for local players > 1
+						///  all laps
 						finished = pGame->timer.GetCurrentLap(c) >= pSet->game.num_laps;
 						if (finished && !mClient)
 						{
-							if (pSet->game.champ_num < 0)
+							bool champ = pSet->game.champ_num >= 0, chall = pSet->game.chall_num >= 0;
+							if (!champ && !chall)
 							{
-								if (carM->iWonPlace == 0)	//  split screen winners
+								if (carM->iWonPlace == 0)	//  split screen winner places
 									carM->iWonPlace = carIdWin++;
-							}else
+							}
+							else if (champ)
 								ChampionshipAdvance(timeCur);
+							else
+								ChallengeAdvance(timeCur);
 						}
 					}
 					//  checkpoints  --------------------------------------

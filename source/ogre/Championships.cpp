@@ -85,9 +85,7 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 		StageListAdd(n, trk.name, trk.laps,
 			"#E0F0FF"+fToStr(progress[p].chs[pos].trks[i].points,1,3));
 	}
-	//  descr
-	EditBox* ed = mGUI->findWidget<EditBox>("ChampDescr");
-	if (ed)  ed->setCaption(ch.descr);
+	if (edChDesc)  edChDesc->setCaption(ch.descr);
 
 
 	//  champ details  -----------------------------------
@@ -112,28 +110,6 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 }
 
 
-///  Stages list  sel changed,  update Track info
-//---------------------------------------------------------------------
-void App::listStageChng(MyGUI::MultiList2* li, size_t pos)
-{
-	if (valStageNum)  valStageNum->setVisible(pos!=ITEM_NONE);
-	if (pos==ITEM_NONE || liChamps->getIndexSelected()==ITEM_NONE)  return;
-	
-	int nch = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()).substr(7))-1;
-	if (nch >= champs.all.size())  {  LogO("Error champ sel > size.");  return;  }
-
-	const Champ& ch = champs.all[nch];
-	if (pos >= ch.trks.size())  {  LogO("Error stage sel > tracks.");  return;  }
-	const string& trkName = ch.trks[pos].name;
-	bool reversed = ch.trks[pos].reversed;
-
-	if (valTrkNet)  valTrkNet->setCaption(TR("#{Track}: ") + trkName);
-	ReadTrkStatsChamp(trkName, reversed);
-	
-	if (valStageNum)  valStageNum->setCaption(toStr(pos+1) +" / "+ toStr(ch.trks.size()));
-}
-
-
 ///  champ start
 //---------------------------------------------------------------------
 void App::btnChampStart(WP)
@@ -153,15 +129,6 @@ void App::btnChampStart(WP)
 	// change btn caption to start/continue/restart ?..
 
 	btnNewGame(0);
-}
-
-
-//  stage back
-void App::btnChampStageBack(WP)
-{
-	mWndChampStage->setVisible(false);
-	isFocGui = true;  // show back gui
-	toggleGui(false);
 }
 
 ///  stage start / end
@@ -201,41 +168,18 @@ void App::btnChampStageStart(WP)
 	}
 }
 
+//  stage back
+void App::btnChampStageBack(WP)
+{
+	mWndChampStage->setVisible(false);
+	isFocGui = true;  // show back gui
+	toggleGui(false);
+}
+
 //  champ end
 void App::btnChampEndClose(WP)
 {
 	mWndChampEnd->setVisible(false);
-}
-
-//  stage loaded
-void App::ChampLoadEnd()
-{
-	if (pSet->game.champ_num >= 0)
-	{
-		ChampFillStageInfo(false);
-		mWndChampStage->setVisible(true);
-	}
-}
-
-void App::btnStageNext(WP)
-{
-	size_t id = liStages->getIndexSelected(), all = liStages->getItemCount();
-	if (all == 0)  return;
-	if (id == ITEM_NONE)  id = 0;
-	else
-		id = (id +1) % all;
-	liStages->setIndexSelected(id);
-	listStageChng(liStages, id);
-}
-
-void App::btnStagePrev(WP)
-{
-	size_t id = liStages->getIndexSelected(), all = liStages->getItemCount();
-	if (all == 0)  return;
-	if (id == ITEM_NONE)  id = 0;
-	id = (id + all -1) % all;
-	liStages->setIndexSelected(id);
-	listStageChng(liStages, id);
 }
 
 

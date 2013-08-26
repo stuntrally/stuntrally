@@ -101,7 +101,8 @@ void App::createScene()
 		pSet->isMain = true;
 
 	if (!pSet->autostart)  isFocGui = true;
-	pSet->gui.chall_num = -1;  //dont auto start old challenge
+	pSet->gui.champ_num = -1;  //dont auto start old chs
+	pSet->gui.chall_num = -1;
 
 	InitGui();
 

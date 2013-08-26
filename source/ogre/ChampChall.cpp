@@ -17,8 +17,8 @@ using namespace MyGUI;
 ///______________________________________________________________________________________________
 void App::Ch_NewGame()
 {
-	if (pSet->game.champ_num >= champs.all.size() ||
-		pSet->game.chall_num >= chall.all.size())  // range
+	if (pSet->game.champ_num >= (int)champs.all.size() ||
+		pSet->game.chall_num >= (int)chall.all.size())  // range
 		BackFromChs();
 
 	int iChamp = pSet->game.champ_num;
@@ -48,16 +48,16 @@ void App::Ch_NewGame()
 		if (!IsChallCar(pSet->game.car[0]))  // pick last
 			pSet->game.car[0] = carList->getItemNameAt(carList->getItemCount()-1).substr(7);
 
-		//? minimap, chk_arr, chk_beam, trk_ghost;  // deny using it if false
 		//?challenge icons near chkboxes
-		// abs, tcs, autoshift, autorear
+		//? minimap, chk_arr, chk_beam, trk_ghost;  // deny using it if false
+		//! abs, tcs, autoshift, autorear
 		
 		pSet->game.trees = 1.5f;  //-
 		pSet->game.collis_veget = true;
 		pSet->game.dyn_objects = true;  //-
 
-		pGame->pause = false;  //true.. wait for stage wnd close
-		pGame->timer.waiting = false;
+		pGame->pause = true;  // wait for stage wnd close
+		pGame->timer.waiting = true;
 	}
 	else if (iChamp >= 0)
 	{
@@ -286,23 +286,25 @@ void App::UpdChampTabVis()
 	tabChamp->setVisible(champ);  imgChamp->setVisible(champ);  btStChamp->setVisible(champ);
 	tabChall->setVisible(chall);  imgChall->setVisible(chall);  btStChall->setVisible(chall);
 
-	liChamps->setVisible(!chall);  liChamps->setColour(tutor ? Colour(0.85,0.8,0.75) : Colour(0.7,0.78,0.85));
-	liChalls->setVisible( chall);  liChalls->setColour(Colour(0.75,0.85,0.8));
+	liChamps->setVisible(!chall);  liChamps->setColour(tutor ? Colour(0.85,0.8,0.75) : Colour(0.75,0.8,0.85));
+	liChalls->setVisible( chall);  liChalls->setColour(Colour(0.74,0.7,0.82));
 
 	if (oldMenu != pSet->inMenu && (tutor || champ || chall))
 	{	oldMenu = pSet->inMenu;
 		if (chall)  ChallsListUpdate();
-		else  ChampsListUpdate();
+		else        ChampsListUpdate();
 	}
-	if (edChampInfo->getVisible())
-		edChampInfo->setCaption(chall ? TR("#{ChallInfo}") : TR("#{ChampInfo}"));
+	if (pSet->inMenu == MNU_Single)
+		BackFromChs();
+	
+	if (edChInfo->getVisible())
+		edChInfo->setCaption(chall ? TR("#{ChallInfo}") : TR("#{ChampInfo}"));
 }
-
 
 void App::btnChampInfo(WP)
 {
 	pSet->champ_info = !pSet->champ_info;
-	if (edChampInfo)  edChampInfo->setVisible(pSet->champ_info);
+	if (edChInfo)  edChInfo->setVisible(pSet->champ_info);
 }
 
 
@@ -325,4 +327,72 @@ void App::StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress
 
 	liStages->setSubItemNameAt(4,l, "#80C0F0"+GetTimeShort(time));  //toStr(laps)
 	liStages->setSubItemNameAt(5,l, progress);
+}
+
+///  Stages list  sel changed,  update Track info
+//-----------------------------------------------------------------------------------------------
+void App::listStageChng(MyGUI::MultiList2* li, size_t pos)
+{
+	if (valStageNum)  valStageNum->setVisible(pos!=ITEM_NONE);
+	if (pos==ITEM_NONE)  return;
+	
+	string trk;  bool rev=false;  int all=1;
+	if (isChallGui())
+	{	if (liChalls->getIndexSelected()==ITEM_NONE)  return;
+		int nch = s2i(liChalls->getItemNameAt(liChalls->getIndexSelected()).substr(7))-1;
+		if (nch >= chall.all.size())  {  LogO("Error chall sel > size.");  return;  }
+
+		const Chall& ch = chall.all[nch];
+		if (pos >= ch.trks.size())  {  LogO("Error stage sel > tracks.");  return;  }
+		trk = ch.trks[pos].name;  rev = ch.trks[pos].reversed;  all = ch.trks.size();
+	}else
+	{	if (liChamps->getIndexSelected()==ITEM_NONE)  return;
+		int nch = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()).substr(7))-1;
+		if (nch >= champs.all.size())  {  LogO("Error champ sel > size.");  return;  }
+
+		const Champ& ch = champs.all[nch];
+		if (pos >= ch.trks.size())  {  LogO("Error stage sel > tracks.");  return;  }
+		trk = ch.trks[pos].name;  rev = ch.trks[pos].reversed;  all = ch.trks.size();
+	}
+	if (valTrkNet)  valTrkNet->setCaption(TR("#{Track}: ") + trk);
+	ReadTrkStatsChamp(trk, rev);
+	if (valStageNum)  valStageNum->setCaption(toStr(pos+1) +" / "+ toStr(all));
+}
+
+
+//  stage loaded
+void App::Ch_LoadEnd()
+{
+	if (pSet->game.champ_num >= 0)
+	{
+		ChampFillStageInfo(false);
+		mWndChampStage->setVisible(true);
+	}
+	if (pSet->game.chall_num >= 0)
+	{
+		ChallFillStageInfo(false);
+		mWndChallStage->setVisible(true);
+	}
+}
+
+//  Stages gui tab
+void App::btnStageNext(WP)
+{
+	size_t id = liStages->getIndexSelected(), all = liStages->getItemCount();
+	if (all == 0)  return;
+	if (id == ITEM_NONE)  id = 0;
+	else
+		id = (id +1) % all;
+	liStages->setIndexSelected(id);
+	listStageChng(liStages, id);
+}
+
+void App::btnStagePrev(WP)
+{
+	size_t id = liStages->getIndexSelected(), all = liStages->getItemCount();
+	if (all == 0)  return;
+	if (id == ITEM_NONE)  id = 0;
+	id = (id + all -1) % all;
+	liStages->setIndexSelected(id);
+	listStageChng(liStages, id);
 }

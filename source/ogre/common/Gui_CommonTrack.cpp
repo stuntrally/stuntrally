@@ -569,7 +569,7 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTr
 	std::string speedTrk = fToStr(len / timeTrk * m, 0,3) + unit;
 	float timeT = (/*place*/1 * carsXml.magic * timeTrk + timeTrk) / carMul;
 	if (stTrk[ch][6])  stTrk[ch][6]->setCaption(GetTimeString(timeT));
-	if (stTrk[ch][7])  stTrk[ch][7]->setCaption(speedTrk);
+	if (stTrk[ch][7])  stTrk[ch][7]->setCaption(timeT < 0.1f ? "--" : speedTrk);
 
 	if (timeCur < 0.1f)
 	{

@@ -16,14 +16,14 @@ void App::BackFromChs()
 {
 	pSet->game.champ_num = -1;
 	pSet->game.chall_num = -1;
-	CarListUpd();  // off filtering
+	//CarListUpd();  // off filtering
 }
 
 bool App::isChallGui()
 {
-	return imgChall && imgChall->getVisible();
+	//return imgChall && imgChall->getVisible();
+	return pSet->inMenu == MNU_Challenge;
 }
-
 
 void App::tabChallType(MyGUI::TabPtr wp, size_t id)
 {
@@ -36,12 +36,12 @@ void App::tabChallType(MyGUI::TabPtr wp, size_t id)
 //----------------------------------------------------------------------------------------------------------------------
 void App::ChallsListUpdate()
 {
-	const char clrCh[7][8] = {
-	// 0 tutorial  1 tutorial hard  // 2 normal  3 hard  4 very hard  // 5 scenery  6 test
-		"#FFFFA0", "#E0E000",   "#A0F0FF", "#60C0FF", "#A0A0E0",   "#80FF80", "#909090"  };
+	const char clrCh[4][8] = {
+	// 0 medium  1 hard  2 extreme  3 test
+		"#FFA040", "#FF8080", "#C080E0", "#909090" };
 
 	liChalls->removeAllItems();  int n=1;  size_t sel = ITEM_NONE;
-	int p = 0; //pSet->gui.champ_rev ? 1 : 0;
+	int p = 0; //pSet->gui.chall_rev ? 1 : 0;
 	for (int i=0; i < chall.all.size(); ++i,++n)
 	{
 		const Chall& chl = chall.all[i];
@@ -80,7 +80,7 @@ void App::listChallChng(MyGUI::MultiList2* chlist, size_t id)
 	//  fill stages
 	liStages->removeAllItems();
 
-	int n = 1, p = 0; //pSet->gui.champ_rev ? 1 : 0;
+	int n = 1, p = 0; //pSet->gui.chall_rev ? 1 : 0;
 	const Chall& ch = chall.all[pos];
 	int ntrks = ch.trks.size();
 	for (int i=0; i < ntrks; ++i,++n)
@@ -89,9 +89,7 @@ void App::listChallChng(MyGUI::MultiList2* chlist, size_t id)
 		StageListAdd(n, trk.name, trk.laps,
 			"#E0F0FF"+fToStr(progressL[p].chs[pos].trks[i].points,1,3));
 	}
-	//  descr
-	EditBox* ed = mGUI->findWidget<EditBox>("ChampDescr");
-	if (ed)  ed->setCaption(ch.descr);
+	if (edChDesc)  edChDesc->setCaption(ch.descr);
 
 
 	//  chall details  -----------------------------------
@@ -193,7 +191,8 @@ bool App::IsChallCar(String name)
 }
 
 
-///  champ start
+///  chall start
+//---------------------------------------------------------------------
 void App::btnChallStart(WP)
 {
 	if (liChalls->getIndexSelected()==ITEM_NONE)  return;
@@ -201,16 +200,67 @@ void App::btnChallStart(WP)
 
 	//  if already finished, restart - will loose progress and scores ..
 	int chId = pSet->gui.chall_num, p = 0; //pSet->game.champ_rev ? 1 : 0;
-	LogO("|| Starting chall: "+toStr(chId)+(p?" rev":""));
+	LogO("|] Starting chall: "+toStr(chId)+(p?" rev":""));
 	ProgressChall& pc = progressL[p].chs[chId];
 	if (pc.curTrack == pc.trks.size())
 	{
-		LogO("|| Was at 100%, restarting progress.");
+		LogO("|] Was at 100%, restarting progress.");
 		pc.curTrack = 0;  //pc.score = 0.f;
 	}
 	// change btn caption to start/continue/restart ?..
 
 	btnNewGame(0);
+}
+
+///  stage start / end
+//----------------------------------------------------------------------------------------------------------------------
+void App::btnChallStageStart(WP)
+{
+	//  check if champ ended
+	int chId = pSet->game.chall_num, p = 0; //pSet->game.champ_rev ? 1 : 0;
+	ProgressChall& pc = progressL[p].chs[chId];
+	const Chall& ch = chall.all[chId];
+	bool last = pc.curTrack == ch.trks.size();
+
+	LogO("|] This was stage " + toStr(pc.curTrack) + "/" + toStr(ch.trks.size()) + " btn");
+	if (last)
+	{	//  show end window, todo: start particles..
+		mWndChallStage->setVisible(false);
+		// tutorial, tutorial hard, normal, hard, very hard, scenery, test
+		const int ui[8] = {0,1,2,3,4,5,0,0};
+		//if (imgChallEnd)
+		//	imgChallEnd->setImageCoord(IntCoord(ui[std::min(7, std::max(0, ch.type))]*128,0,128,256));
+		mWndChallEnd->setVisible(true);
+		return;
+	}
+
+	bool finished = pGame->timer.GetLastLap(0) > 0.f;  //?-
+	if (finished)
+	{
+		LogO("|] Loading next stage.");
+		mWndChallStage->setVisible(false);
+		btnNewGame(0);
+	}else
+	{
+		LogO("|] Starting stage.");
+		mWndChallStage->setVisible(false);
+		pGame->pause = false;
+		pGame->timer.waiting = false;
+	}
+}
+
+//  stage back
+void App::btnChallStageBack(WP)
+{
+	mWndChallStage->setVisible(false);
+	isFocGui = true;  // show back gui
+	toggleGui(false);
+}
+
+//  champ end
+void App::btnChallEndClose(WP)
+{
+	mWndChallEnd->setVisible(false);
 }
 
 
@@ -223,4 +273,160 @@ void App::ProgressLSave(bool upgGui)
 		return;
 	//..ChallsListUpdate();
 	//..listChallChng(liChalls, liChalls->getIndexSelected());
+}
+
+
+///  challenge advance logic
+//  caution: called from GAME, 2nd thread, no Ogre stuff here
+//----------------------------------------------------------------------------------------------------------------------
+void App::ChallengeAdvance(float timeCur)
+{
+	int chId = pSet->game.chall_num, p = 0; //pSet->game.champ_rev ? 1 : 0;
+	ProgressChall& pc = progressL[p].chs[chId];
+	const Chall& ch = chall.all[chId];
+	const ChallTrack& trk = ch.trks[pc.curTrack];
+	LogO("|] --- Chall end: " + ch.name);
+
+	///  compute track  poins  --------------
+	float timeTrk = times.trks[trk.name];
+	if (timeTrk < 1.f)
+	{	LogO("|] Error: Track has no best time !");  timeTrk = 10.f;	}
+	timeTrk *= trk.laps;
+
+	LogO("|] Track: " + trk.name);
+	LogO("|] Your time: " + toStr(timeCur));
+	LogO("|] Best time: " + toStr(timeTrk));
+
+	float carMul = GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
+	float points = 0.f;  int pos;
+
+	#if 1  // test score +- sec diff
+	for (int i=-2; i <= 4; ++i)
+	{
+		pos = GetRacePos(timeCur + i*2.f, timeTrk, carMul, true, &points);
+		LogO("|] var, add time: "+toStr(i*2)+" sec, points: "+fToStr(points,2));
+	}
+	#endif
+	pos = GetRacePos(timeCur, timeTrk, carMul, true, &points);
+
+	//TODO..
+	float pass = (pSet->game.sim_mode == "normal") ? 5.f : 2.f;  ///..
+	bool passed = points >= pass;  // didnt qualify, repeat current stage
+	
+	LogO("|] Points: " + fToStr(points,1) + "  pos: " + toStr(pos) + "  Passed: " + (passed ? "yes":"no"));
+	pc.trks[pc.curTrack].points = points;
+
+	//  --------------  advance  --------------
+	bool last = pc.curTrack+1 == ch.trks.size();
+	LogO("|] This was stage " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()));
+	if (!last || (last && !passed))
+	{
+		//  show stage end [window]
+		pGame->pause = true;
+		pGame->timer.waiting = true;
+
+		ChampFillStageInfo(true);  // cur track
+		mWndChampStage->setVisible(true);
+		
+		if (passed)
+			pc.curTrack++;  // next stage
+		ProgressSave();
+	}else
+	{
+		//  champ ended
+		pGame->pause = true;
+		pGame->timer.waiting = true;
+
+		ChampFillStageInfo(true);  // cur track
+		mWndChampStage->setVisible(true);
+
+		///  compute champ :score:  --------------
+		int ntrk = pc.trks.size();  float sum = 0.f;
+		for (int t=0; t < ntrk; ++t)
+			sum += pc.trks[t].points;
+
+		pc.curTrack++;  // end = 100 %
+		//float old = pc.score;  // .. save only higher ?
+		pc.points = sum / ntrk;  // average from all tracks
+		ProgressSave();
+
+		LogO("|] Chall finished");
+		LogO("|] Total points: " + toStr(points));
+		
+		//  upd champ end [window]
+		String s = 
+			TR("#{Challenge}") + ": " + ch.name + "\n" +
+			TR("#{TotalScore}") + ": " + fToStr(pc.points,1,5);
+		edChampEnd->setCaption(s);
+		//mWndChampEnd->setVisible(true);  // show after stage end
+	}
+}
+
+
+//  stage wnd text
+//----------------------------------------------------------------------------------------------------------------------
+void App::ChallFillStageInfo(bool finished)
+{
+	int chId = pSet->game.chall_num, p = 0; //pSet->game.chall_rev ? 1 : 0;
+	ProgressChall& pc = progressL[p].chs[chId];
+	const Chall& ch = chall.all[chId];
+	const ChallTrack& trk = ch.trks[pc.curTrack];
+
+	String s;
+	s = "#80FFE0"+ ch.name + "\n\n" +
+		"#80FFC0"+ TR("#{Stage}") + ":  " + toStr(pc.curTrack+1) + " / " + toStr(ch.trks.size()) + "\n" +
+		"#80FF80"+ TR("#{Track}") + ":  " + trk.name + "\n\n";
+
+	if (!finished)  // track info at start
+	{
+		int id = tracksXml.trkmap[trk.name];
+		if (id > 0)
+		{
+			const TrackInfo* ti = &tracksXml.trks[id-1];
+			s += "#A0D0FF"+ TR("#{Difficulty}:  ") + clrsDiff[ti->diff] + TR("#{Diff"+toStr(ti->diff)+"}") + "\n";
+			if (road)
+			{	Real len = road->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);
+				s += "#A0D0FF"+ TR("#{Distance}:  ") + "#B0E0FF" + fToStr(len, 1,4) + (pSet->show_mph ? " mi" : " km") + "\n\n";
+				s += "#A8B8C8"+ road->sTxtDesc;
+		}	}
+	}
+
+	if (finished)
+	{
+		float points = pc.trks[pc.curTrack].points;
+		float pass = (pSet->game.sim_mode == "normal") ? 5.f : 2.f;  ///..
+		s += "#80C0FF"+TR("#{Finished}") + ".\n" +
+			"#FFFF60"+TR("#{Score}") + ": " + fToStr(points,1,5) + "\n";
+		s += "#80C0FF"+TR("#{ScoreNeeded}") + ": " + fToStr(pass,1,5) + "\n\n";
+		
+		bool passed = points >= pass;
+		if (passed)
+			s += "#00FF00"+TR("#{Passed}")+".\n"+TR("#{NextStage}.");
+		else
+			s += "#FF8000"+TR("#{DidntPass}")+".\n"+TR("#{RepeatStage}.");
+	}
+	edChallStage->setCaption(s);
+	//btChallStage->setCaption(finished ? TR("#{MessageBox_Continue}") : TR("#{ChampStart}"));
+	
+	//  preview image
+	if (!finished)  // only at chall start
+	{
+		ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
+		Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
+
+		String path = PathListTrkPrv(0, trk.name), sGrp = "TrkPrvCh";
+		resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
+		resMgr.unloadResourceGroup(sGrp);
+		resMgr.initialiseResourceGroup(sGrp);
+
+		if (imgChallStage)
+		{	try
+			{	s = "view.jpg";
+				texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  // need to load it first
+				imgChallStage->setImageTexture(s);  // just for dim, doesnt set texture
+				imgChallStage->_setTextureName(path+s);
+			} catch(...) {  }
+		}
+		resMgr.removeResourceLocation(path, sGrp);
+	}
 }

@@ -63,6 +63,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			if (mWndChampStage->getVisible())  ///  close champ wnds
 				btnChampStageStart(0);
 			else
+			if (mWndChallStage->getVisible())  ///  chall
+				btnChallStageStart(0);
+			else
 				toggleGui(true);	// gui on/off
 		return true;
 	}
@@ -161,6 +164,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(BACKSPACE):
 				if (mWndChampStage->getVisible())	// back from champs stage wnd
 				{	btnChampStageBack(0);  return true;  }
+				else
+				if (mWndChallStage->getVisible())	// chall
+				{	btnChallStageBack(0);  return true;  }
 
 				if (pSet->isMain)  break;
 				if (isFocGui)
@@ -247,7 +253,10 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(RETURN):		///  close champ wnds
 				if (mWndChampStage->getVisible())
 					btnChampStageStart(0);
-				else			//  chng trk/car + new game  after up/dn
+				else				///  chall
+				if (mWndChallStage->getVisible())
+					btnChallStageStart(0);
+				else				//  new game  after up/dn
 				if (isFocGui && !pSet->isMain)
 					switch (pSet->inMenu)
 					{
@@ -368,6 +377,7 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 		else
 		{
 			if (mWndChampEnd && mWndChampEnd->getVisible())  mWndChampEnd->setVisible(false);  // hide champs end
+			if (mWndChallEnd && mWndChallEnd->getVisible())  mWndChallEnd->setVisible(false);  // chall
 			toggleGui(true);  return;
 		}
 	}

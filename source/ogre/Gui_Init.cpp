@@ -39,15 +39,19 @@ void App::InitGui()
 	//mLayout = vwGui.at(0);
 
 	//  window
-	mWndMain = mGUI->findWidget<Window>("MainMenuWnd",false);
-	mWndGame = mGUI->findWidget<Window>("GameWnd",false);
-	mWndReplays = mGUI->findWidget<Window>("ReplaysWnd",false);
-	mWndHelp = mGUI->findWidget<Window>("HelpWnd",false);
-	mWndOpts = mGUI->findWidget<Window>("OptionsWnd",false);
-	mWndChampStage = mGUI->findWidget<Window>("WndChampStage",false);  mWndChampStage->setVisible(false);
-	mWndChampEnd = mGUI->findWidget<Window>("WndChampEnd",false);  mWndChampEnd->setVisible(false);
-	mWndNetEnd = mGUI->findWidget<Window>("WndNetEnd",false);  mWndNetEnd->setVisible(false);
-	mWndTweak = mGUI->findWidget<Window>("WndTweak",false);  mWndTweak->setVisible(false);
+	mWndMain = mGUI->findWidget<Window>("MainMenuWnd");
+	mWndGame = mGUI->findWidget<Window>("GameWnd");
+	mWndReplays = mGUI->findWidget<Window>("ReplaysWnd");
+	mWndHelp = mGUI->findWidget<Window>("HelpWnd");
+	mWndOpts = mGUI->findWidget<Window>("OptionsWnd");
+
+	mWndChampStage = mGUI->findWidget<Window>("WndChampStage");  mWndChampStage->setVisible(false);
+	mWndChampEnd   = mGUI->findWidget<Window>("WndChampEnd");    mWndChampEnd->setVisible(false);
+	mWndChallStage = mGUI->findWidget<Window>("WndChallStage");  mWndChallStage->setVisible(false);
+	mWndChallEnd   = mGUI->findWidget<Window>("WndChallEnd");    mWndChallEnd->setVisible(false);
+
+	mWndNetEnd = mGUI->findWidget<Window>("WndNetEnd");  mWndNetEnd->setVisible(false);
+	mWndTweak = mGUI->findWidget<Window>("WndTweak");  mWndTweak->setVisible(false);
 	mWndTweak->setPosition(0,40);
 	
 	//  main menu
@@ -589,16 +593,19 @@ void App::InitGui()
 	imgPrv[1] = mGUI->findWidget<StaticImage>("TrackImg2");
 	imgTer[1] = mGUI->findWidget<StaticImage>("TrkTerImg2");
 	imgMini[1] = mGUI->findWidget<StaticImage>("TrackMap2");
-	//  stats text
+	//  track stats text
 	for (int i=0; i < StTrk; ++i)
 		stTrk[1][i] = mGUI->findWidget<StaticText>("2iv"+toStr(i+1), false);
 	for (int i=0; i < InfTrk; ++i)
 		infTrk[1][i] = mGUI->findWidget<StaticText>("2ti"+toStr(i+1), false);
 
-	edChampInfo = mGUI->findWidget<EditBox>("ChampInfo");
-	if (edChampInfo)  edChampInfo->setVisible(pSet->champ_info);
+	edChInfo = mGUI->findWidget<EditBox>("ChampInfo");
+	if (edChInfo)  edChInfo->setVisible(pSet->champ_info);
 	Btn("btnChampInfo",btnChampInfo);
 
+	txtCh = (TextBox*)mWndGame->findWidget("txtChDetail");
+	valCh = (TextBox*)mWndGame->findWidget("valChDetail");
+	edChDesc = mGUI->findWidget<EditBox>("ChampDescr");
 
 	//  Champs list  -------------
 	MyGUI::MultiList2* li;
@@ -679,17 +686,21 @@ void App::InitGui()
 	Btn("btnChampStageStart", btnChampStageStart);  btChampStage = btn;
 	Btn("btnChampEndClose", btnChampEndClose);
 
+	Btn("btnChallStageBack", btnChallStageBack);
+	Btn("btnChallStageStart", btnChallStageStart);  btChallStage = btn;
+	Btn("btnChallEndClose", btnChallEndClose);
+
 	Btn("btnStageNext", btnStageNext);
 	Btn("btnStagePrev", btnStagePrev);
     valStageNum = mGUI->findWidget<StaticText>("StageNum");
 
 	edChampStage = (EditBox*)mWndChampStage->findWidget("ChampStageText");
-	edChampEnd = (EditBox*)mWndChampEnd->findWidget("ChampEndText");
+	edChallStage = (EditBox*)mWndChallStage->findWidget("ChallStageText");
+	edChampEnd   = (EditBox*)mWndChampEnd->findWidget("ChampEndText");
+	edChallEnd   = (EditBox*)mWndChallEnd->findWidget("ChallEndText");
 	imgChampStage = (ImageBox*)mWndChampStage->findWidget("ChampStageImg");
-	imgChampEnd = (ImageBox*)mWndChampEnd->findWidget("ChampEndImg");
-
-	txtCh = (TextBox*)mWndGame->findWidget("txtChDetail");
-	valCh = (TextBox*)mWndGame->findWidget("valChDetail");
+	imgChallStage = (ImageBox*)mWndChallStage->findWidget("ChallStageImg");
+	imgChampEnd   = (ImageBox*)mWndChampEnd->findWidget("ChampEndImg");
 
 	UpdChampTabVis();
 

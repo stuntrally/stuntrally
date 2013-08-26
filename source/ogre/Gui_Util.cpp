@@ -42,7 +42,7 @@ bool (*CarSort[allSortFunc])(const CarL& c1, const CarL& c2) = {
 void App::CarListUpd(bool resetNotFound)
 {
 	bool filter = isChallGui();
-	
+		
 	if (carList)
 	{	carList->removeAllItems();
 		int ii = 0, si = -1;  bool bFound = false;
@@ -393,11 +393,15 @@ void App::MainMenuBtn(WidgetPtr wp)
 
 void App::MenuTabChg(TabPtr tab, size_t id)
 {
-	if (id != 0)  return;
+	if (tab == mWndTabsGame && id == TAB_Car)
+		CarListUpd();  // off filtering
+
+	if (id != 0)  return;  // <back
 	tab->setIndexSelected(1);  // dont switch to 0
 	pSet->isMain = true;
 	toggleGui(false);  // back to main
 }
+
 
 void App::GuiShortcut(MNU_Btns mnu, int tab, int subtab)
 {

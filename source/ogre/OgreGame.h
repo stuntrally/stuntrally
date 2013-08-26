@@ -205,15 +205,13 @@ protected:
 
 
 	///  terrain
-public:
-	Ogre::Terrain* terrain; 
-protected:
 	Ogre::TerrainGlobalOptions* mTerrainGlobals;
 	Ogre::TerrainGroup* mTerrainGroup;  bool mPaging;
 	Ogre::TerrainPaging* mTerrainPaging;  Ogre::PageManager* mPageManager;
 	//Vector3 getNormalAtWorldPosition(Terrain* terrain, Real x, Real z, Real s);
 
 public:
+	Ogre::Terrain* terrain; 
 	int iBlendMaps, blendMapSize;	bool noBlendUpd;  //  mtr from ter  . . . 
 	char* blendMtr;  // mtr [blendMapSize x blendMapSize]
 protected:
@@ -235,6 +233,9 @@ protected:
 	}
 
 public:
+	//  road
+	class SplineRoad* road;
+
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
 	Ogre::Vector4 splitPoints;
 
@@ -242,10 +243,6 @@ protected:
 	Ogre::ShadowCameraSetupPtr mPSSMSetup;
 	void recreateReflections();  // call after refl_mode changed
 
-	//  road
-public:	
-	class SplineRoad* road;
-protected:
 
 	///-----------------------------------------------------------------------------------------------------------------
 	///  Gui
@@ -293,7 +290,7 @@ protected:
 	Ogre::String GetSceneryColor(Ogre::String name);
 	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
 
-	//  track
+	///  track
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const Ogre::String& sTrack, float timeCur, bool champ=false),
 		ReadTrkStats(), ReadTrkStatsChamp(Ogre::String track,bool reverse);
 	MyGUI::MultiList2* trkList;  MyGUI::EditPtr trkDesc[2];
@@ -333,52 +330,52 @@ protected:
 	void MainMenuBtn(MyGUI::WidgetPtr), MenuTabChg(MyGUI::TabPtr, size_t);  bool loadReadme;
 
 	void UpdCarClrSld(bool upd=true), UpdCarMClr();  bool bUpdCarClr;
+	void btnNetEndClose(WP);
 
-	///  champ & chall common
-	MyGUI::ButtonPtr btStTut, btStChamp, btStChall;
-	MyGUI::TabPtr tabTut, tabChamp, tabChall;
-	MyGUI::StaticImagePtr imgTut, imgChamp, imgChall;
-	MyGUI::TextBox* txtCh,*valCh;
-
-	void Ch_NewGame(), Ch_XmlLoad();
-	void StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress);
-	
 	//  race pos
 	int GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldStart, float* pPoints=0);
 	float GetCarTimeMul(const std::string& car, const std::string& sim_mode);
 
 
-	///  championships
-	ChampsXml champs;  TimesXml times;  ProgressXml progress[2];  //xml  [1]=reversed
-	void ProgressSave(bool upgGui=true);
-	void ChampLoadEnd(), ChampsListUpdate(),
-		ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
-
-	MyGUI::MultiList2* liChamps, *liStages, *liNetEnd;
-	void listChampChng(MyGUI::MultiList2* li, size_t pos), listStageChng(MyGUI::MultiList2* li, size_t pos);
-	void btnChampStart(WP), btnChampStageBack(WP), btnChampStageStart(WP), btnChampEndClose(WP), btnNetEndClose(WP);
-	void btnStageNext(WP), btnStagePrev(WP);  MyGUI::StaticText* valStageNum;  MyGUI::ButtonPtr btChampStage;
-	MyGUI::EditBox* edChampStage, *edChampEnd,*edChampInfo;  MyGUI::ImageBox* imgChampStage,*imgChampEnd;
-
+	///  championships & challenges
+	MyGUI::ButtonPtr btStTut, btStChamp, btStChall;
+	MyGUI::StaticImagePtr imgTut, imgChamp, imgChall;
+	//  tabs
+	MyGUI::TabPtr tabTut, tabChamp, tabChall;
 	void tabTutType(MyGUI::TabPtr wp, size_t id), tabChampType(MyGUI::TabPtr wp, size_t id);
+	void tabChallType(MyGUI::TabPtr wp, size_t id);
+
+	MyGUI::EditBox* edChInfo,*edChDesc;
+	MyGUI::TextBox* txtCh,*valCh;  // stages info
+	void btnStageNext(WP), btnStagePrev(WP);  MyGUI::StaticText* valStageNum;
+	void StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress);
+	
+	//  xml  [1]= reversed  L= challenge
+	ChampsXml champs;  TimesXml times;  ProgressXml progress[2];
+	ChallXml chall;  ProgressLXml progressL[2];
+	void ProgressSave(bool upgGui=true), ProgressLSave(bool upgGui=true);
+
+	void Ch_NewGame(), Ch_XmlLoad(), Ch_LoadEnd();
+	MyGUI::MultiList2* liStages, *liNetEnd;  void listStageChng(MyGUI::MultiList2* li, size_t pos);
+	MyGUI::MultiList2* liChamps;  void listChampChng(MyGUI::MultiList2* li, size_t pos);
+	MyGUI::MultiList2* liChalls;  void listChallChng(MyGUI::MultiList2* li, size_t pos);
+
+	void ChampsListUpdate(), ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
+	void ChallsListUpdate(), ChallFillStageInfo(bool finished), ChallengeAdvance(float timeCur);
+	void btnChampStart(WP), btnChampEndClose(WP), btnChampStageBack(WP), btnChampStageStart(WP);
+	void btnChallStart(WP), btnChallEndClose(WP), btnChallStageBack(WP), btnChallStageStart(WP);
+
+	MyGUI::ButtonPtr btChampStage, btChallStage;
+	MyGUI::EditBox* edChampStage,*edChampEnd;  MyGUI::ImageBox* imgChampStage,*imgChampEnd;
+	MyGUI::EditBox* edChallStage,*edChallEnd;  MyGUI::ImageBox* imgChallStage;//,*imgChallEnd;
+
 	void btnChampInfo(WP), chkChampRev(WP), UpdChampTabVis();
 	void ToolGhosts(),ToolGhostsConv();  //  _Tools_
 
-
-	///  challenges
-	ChallXml chall;  ProgressLXml progressL[2];  //xml  [1]=reversed
-	void ProgressLSave(bool upgGui=true);
-	void ChallsListUpdate();
-	
+	//  chall util
 	Ogre::String StrChallCars(const Chall& ch);
-	bool IsChallCar(Ogre::String name);  // util
-	void BackFromChs();  bool isChallGui();
-
-	MyGUI::MultiList2* liChalls;
-	void listChallChng(MyGUI::MultiList2* li, size_t pos); //, listStageChng(MyGUI::MultiList2* li, size_t pos);
-	void btnChallStart(WP);
-	void tabChallType(MyGUI::TabPtr wp, size_t id);
-	
+	bool IsChallCar(Ogre::String name);
+	bool isChallGui();  void BackFromChs();
 
 
 	///  input tab
