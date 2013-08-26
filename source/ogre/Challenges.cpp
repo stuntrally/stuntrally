@@ -199,7 +199,7 @@ void App::btnChallStart(WP)
 	pSet->gui.chall_num = s2i(liChalls->getItemNameAt(liChalls->getIndexSelected()).substr(7))-1;
 
 	//  if already finished, restart - will loose progress and scores ..
-	int chId = pSet->gui.chall_num, p = 0; //pSet->game.champ_rev ? 1 : 0;
+	int chId = pSet->gui.chall_num, p = 0; //pSet->game.chall_rev ? 1 : 0;
 	LogO("|] Starting chall: "+toStr(chId)+(p?" rev":""));
 	ProgressChall& pc = progressL[p].chs[chId];
 	if (pc.curTrack == pc.trks.size())
@@ -216,8 +216,8 @@ void App::btnChallStart(WP)
 //----------------------------------------------------------------------------------------------------------------------
 void App::btnChallStageStart(WP)
 {
-	//  check if champ ended
-	int chId = pSet->game.chall_num, p = 0; //pSet->game.champ_rev ? 1 : 0;
+	//  check if chall ended
+	int chId = pSet->game.chall_num, p = 0; //pSet->game.chall_rev ? 1 : 0;
 	ProgressChall& pc = progressL[p].chs[chId];
 	const Chall& ch = chall.all[chId];
 	bool last = pc.curTrack == ch.trks.size();
@@ -257,7 +257,7 @@ void App::btnChallStageBack(WP)
 	toggleGui(false);
 }
 
-//  champ end
+//  chall end
 void App::btnChallEndClose(WP)
 {
 	mWndChallEnd->setVisible(false);
@@ -281,7 +281,7 @@ void App::ProgressLSave(bool upgGui)
 //----------------------------------------------------------------------------------------------------------------------
 void App::ChallengeAdvance(float timeCur)
 {
-	int chId = pSet->game.chall_num, p = 0; //pSet->game.champ_rev ? 1 : 0;
+	int chId = pSet->game.chall_num, p = 0; //pSet->game.chall_rev ? 1 : 0;
 	ProgressChall& pc = progressL[p].chs[chId];
 	const Chall& ch = chall.all[chId];
 	const ChallTrack& trk = ch.trks[pc.curTrack];
@@ -325,22 +325,22 @@ void App::ChallengeAdvance(float timeCur)
 		pGame->pause = true;
 		pGame->timer.waiting = true;
 
-		ChampFillStageInfo(true);  // cur track
-		mWndChampStage->setVisible(true);
+		ChallFillStageInfo(true);  // cur track
+		mWndChallStage->setVisible(true);
 		
 		if (passed)
 			pc.curTrack++;  // next stage
 		ProgressSave();
 	}else
 	{
-		//  champ ended
+		//  chall ended
 		pGame->pause = true;
 		pGame->timer.waiting = true;
 
-		ChampFillStageInfo(true);  // cur track
-		mWndChampStage->setVisible(true);
+		ChallFillStageInfo(true);  // cur track
+		mWndChallStage->setVisible(true);
 
-		///  compute champ :score:  --------------
+		///  compute chall :score:  --------------
 		int ntrk = pc.trks.size();  float sum = 0.f;
 		for (int t=0; t < ntrk; ++t)
 			sum += pc.trks[t].points;
@@ -353,12 +353,12 @@ void App::ChallengeAdvance(float timeCur)
 		LogO("|] Chall finished");
 		LogO("|] Total points: " + toStr(points));
 		
-		//  upd champ end [window]
+		//  upd chall end [window]
 		String s = 
 			TR("#{Challenge}") + ": " + ch.name + "\n" +
 			TR("#{TotalScore}") + ": " + fToStr(pc.points,1,5);
-		edChampEnd->setCaption(s);
-		//mWndChampEnd->setVisible(true);  // show after stage end
+		edChallEnd->setCaption(s);
+		//mWndChallEnd->setVisible(true);  // show after stage end
 	}
 }
 
