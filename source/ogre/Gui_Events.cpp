@@ -15,8 +15,10 @@ using namespace MyGUI;
 ///  Gui Events
 
 //    [Car]
-void App::chkAbs(WP wp){		ChkEv(abs[iTireSet]);	if (pGame)  pGame->ProcessNewSettings();	}
-void App::chkTcs(WP wp){		ChkEv(tcs[iTireSet]);	if (pGame)  pGame->ProcessNewSettings();	}
+void App::chkAbs(WP wp){	if (pChall /*&& !pChall->abs*/)  return;
+	ChkEv(abs[iTireSet]);	if (pGame)  pGame->ProcessNewSettings();	}
+void App::chkTcs(WP wp){	if (pChall /*&& !pChall->tcs*/)  return;
+	ChkEv(tcs[iTireSet]);	if (pGame)  pGame->ProcessNewSettings();	}
 
 void App::tabTireSet(MyGUI::TabPtr wp, size_t id)
 {

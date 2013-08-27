@@ -162,6 +162,7 @@ void App::NewGame()
 
 	bRplPlay = 0;
 	pSet->rpl_rec = bRplRec;  // changed only at new game
+	pChall = 0;
 	
 	if (!newGameRpl)  // if from replay, dont
 	{
@@ -438,6 +439,13 @@ void App::LoadCar()  // 4
 	{
 		CarModel* c = carModels[i];
 		c->Create(i);
+
+		///  challenge off abs,tcs
+		if (pChall && c->pCar)
+		{	//if (!pChall->abs)
+			c->pCar->dynamics.SetABS(false);
+			c->pCar->dynamics.SetTCS(false);
+		}
 
 		//  restore which cam view
 		if (c->fCam && carsCamNum[i] != 0)
