@@ -311,6 +311,8 @@ void App::UpdChampTabVis()
 	
 	if (edChInfo->getVisible())
 		edChInfo->setCaption(chall ? TR("#{ChallInfo}") : TR("#{ChampInfo}"));
+	
+	btChRestart->setVisible(false);
 }
 
 void App::btnChampInfo(WP)
@@ -409,4 +411,25 @@ void App::btnStagePrev(WP)
 	id = (id + all -1) % all;
 	liStages->setIndexSelected(id);
 	listStageChng(liStages, id);
+}
+
+
+//  restart progress curtrack
+void App::btnChRestart(WP)
+{
+	int p = pSet->game.champ_rev ? 1 : 0;
+	if (pSet->inMenu == MNU_Tutorial || pSet->inMenu == MNU_Champ)
+	{
+		if (liChamps->getIndexSelected()==ITEM_NONE)  return;
+		int chId = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()).substr(7))-1;
+		ProgressChamp& pc = progress[p].chs[chId];
+		pc.curTrack = 0;  ChampsListUpdate();
+	}
+	else if (pSet->inMenu == MNU_Challenge)
+	{
+		if (liChalls->getIndexSelected()==ITEM_NONE)  return;
+		int chId = s2i(liChalls->getItemNameAt(liChalls->getIndexSelected()).substr(7))-1;
+		ProgressChall& pc = progressL[p].chs[chId];
+		pc.curTrack = 0;  ChallsListUpdate();
+	}
 }

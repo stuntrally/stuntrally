@@ -285,7 +285,7 @@ void App::CreateHUD(bool destroy)
 			0,1200, 90,180, Align::Left, "Back", "TimT"+toStr(c));  h.txTimTxt->setVisible(false);
 		h.txTimTxt->setFontName("font.20");
 		h.txTimTxt->setTextShadow(true);
-		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
+		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || pSet->game.chall_num >= 0 || mClient;
 		h.txTimTxt->setCaption(
 			(hasLaps ? String("#D0E8F0")+TR("#{TBLap}") : "")+
 			"\n#C0E0F0"+TR("#{TBTime}") + 

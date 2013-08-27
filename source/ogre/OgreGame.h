@@ -366,6 +366,7 @@ protected:
 	void ChallsListUpdate(), ChallFillStageInfo(bool finished), ChallengeAdvance(float timeCur);
 	void btnChampStart(WP), btnChampEndClose(WP), btnChampStageBack(WP), btnChampStageStart(WP);
 	void btnChallStart(WP), btnChallEndClose(WP), btnChallStageBack(WP), btnChallStageStart(WP);
+	void btnChRestart(WP);  MyGUI::ButtonPtr btChRestart;
 
 	MyGUI::ButtonPtr btChampStage, btChallStage;
 	MyGUI::EditBox* edChampStage,*edChampEnd;  MyGUI::ImageBox* imgChampStage,*imgChampEndCup;

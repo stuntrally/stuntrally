@@ -580,4 +580,5 @@ void App::UpdChallDetail(int id)
 	//  btn start
 	s1 = cur == all ? TR("#{Restart}") : (cur == 0 ? TR("#{Start}") : TR("#{Continue}"));
 	btStChall->setCaption(s1);
+	btChRestart->setVisible(cur > 0);
 }

@@ -116,6 +116,7 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 	if (pSet->inMenu == MNU_Tutorial)
 		btStTut->setCaption(s1);
 	else  btStChamp->setCaption(s1);
+	btChRestart->setVisible(cur > 0);
 }
 
 
@@ -282,7 +283,7 @@ void App::ChampionshipAdvance(float timeCur)
 		
 		//  upd champ end [window]
 		String s = 
-			TR("#{Championship}") + ": " + ch.name + "\n" +
+			TR("#{Championship}") + ":  " + ch.name + "\n" +
 			TR("#{TotalScore}") + ": " + fToStr(pc.points,1,5);
 		edChampEnd->setCaption(s);
 		//mWndChampEnd->setVisible(true);  // show after stage end
