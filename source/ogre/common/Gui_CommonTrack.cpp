@@ -346,7 +346,9 @@ void App::updTrkListDim()
 	trkList->setCoord(xt, yt, sw + 8/*frame*/, 0.70/*height*/*wi.height);
 	imgTrkIco1->setCoord(xt + xico1+2, yico, 3*wico, wico);
 	imgTrkIco2->setCoord(xt + xico2+2, yico, 8*wico, wico);
-	trkList->setVisible(true);
+	bool hid = panelNetTrack && panelNetTrack->getVisible();
+	if (!hid)
+		trkList->setVisible(true);
 
 	//  car list  ----------
 	#ifndef SR_EDITOR
@@ -368,7 +370,7 @@ void App::updTrkListDim()
 	if (panelNetTrack)  {
 		TabItem* trkTab = mGUI->findWidget<TabItem>("TabTrack");
 		const IntCoord& tc = trkTab->getCoord();
-		panelNetTrack->setCoord(0,0, tc.width*0.66f, tc.height);  }
+		panelNetTrack->setCoord(0, 0.82f*tc.height, tc.width*0.64f, 0.162f*tc.height);  }
 	#endif
 }
 

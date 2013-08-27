@@ -5,6 +5,7 @@
 #include "../vdrift/game.h"
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
+#include "common/MultiList2.h"
 
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
@@ -345,11 +346,10 @@ void App::join(string host, string port, string password)
 	updateGameInfoGUI();
 	rebuildPlayerList();
 	setNetGuiHosting(false);
-	tabsNet->setIndexSelected(1);
-	panelNetServer->setVisible(true);
-	panelNetGame->setVisible(false);
-	panelNetTrack->setVisible(true);
 
+	tabsNet->setIndexSelected(1);
+	panelNetServer->setVisible(true);  panelNetGame->setVisible(false);
+	panelNetTrack->setVisible(true);   trkList->setVisible(false);
 }
 
 void App::evBtnNetRefresh(WP)
@@ -419,9 +419,8 @@ void App::evBtnNetCreate(WP)
 		setNetGuiHosting(true);
 
 		tabsNet->setIndexSelected(1);
-		panelNetServer->setVisible(true);
-		panelNetGame->setVisible(false);
-		panelNetTrack->setVisible(false);
+		panelNetServer->setVisible(true);  panelNetGame->setVisible(false);
+		panelNetTrack->setVisible(false);  trkList->setVisible(true);
 
 		boost::mutex::scoped_lock lock(netGuiMutex);
 		AddChatMsg("#00FFC0", TR("Listening on port ")  + toStr(pSet->local_port) + "...", false);  //clears chat
@@ -437,9 +436,8 @@ void App::evBtnNetLeave(WP)
 	setNetGuiHosting(false);
 
 	tabsNet->setIndexSelected(0);
-	panelNetServer->setVisible(false);
-	panelNetGame->setVisible(true);
-	panelNetTrack->setVisible(false);
+	panelNetServer->setVisible(false);  panelNetGame->setVisible(true);
+	panelNetTrack->setVisible(false);   trkList->setVisible(true);
 }
 
 void App::evBtnNetDirect(WP)
