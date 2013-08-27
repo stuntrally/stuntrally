@@ -397,7 +397,7 @@ void App::ChallengeAdvance(float timeCur/*total*/)
 String App::StrPrize(int i)
 {
 	const static String prAr[4] = {"#C0D0E0--","#D0B060#{Silver}","#E0E0E0#{Silver}","#F0F0D0#{Gold}"};
-	return prAr[pc.fin+1];
+	return prAr[i];
 }
 
 
@@ -522,7 +522,7 @@ void App::UpdChallDetail(int id)
 	s1 += "\n";  s2 += "\n";  // cars
 	s1 += TR("#F08080#{Cars}\n");        s2 += "#FFA0A0" + StrChallCars(ch)+"\n";
 	if (ch.carChng)
-	{	s1 += TR("#C0B0B0#{CarChange}\n");  s2 += TR("#A8B8A8#{Allowed}")+"\n";  }
+	{	s1 += TR("#C0B0B0#{CarChange}\n");  s2 += TR("#A0B8A0#{Allowed}")+"\n";  }
 	
 	s1 += "\n";  s2 += "\n";  // game
 	s1 += TR("#D090E0#{Game}")+"\n";     s2 += "\n";
