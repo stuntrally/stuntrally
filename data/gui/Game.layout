@@ -1152,9 +1152,6 @@
 							<Property key="Colour" value="0.6 0.8 1"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
 						</Widget>
-						<!--<Widget type="ImageBox" skin="ImageBox" position="452 54 256 256" name="imgNetTrack">
-							<UserString key="RelativeTo" value="GameWnd"/>
-						</Widget>-->
 						<Widget type="TextBox" skin="TextBox" position="452 22 260 24" name="valNetTrack">
 							<Property key="Caption" value="#{Track}:"/>
 							<Property key="TextColour" value="0.4 1.0 0.5"/>
@@ -1369,10 +1366,10 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabStages">
 				<Property key="Caption" value="#80E0C0#{Stages}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
-				<Widget type="TextBox" skin="TextBox" position="496 48 119 424" name="txtChDetail">
+				<Widget type="TextBox" skin="TextBox" position="496 8 119 560" name="txtChDetail">
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="616 48 280 424" name="valChDetail">
+				<Widget type="TextBox" skin="TextBox" position="616 8 280 560" name="valChDetail">
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 			</Widget>

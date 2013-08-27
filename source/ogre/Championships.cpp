@@ -91,7 +91,8 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 
 	//  champ details  -----------------------------------
 	String s1,s2,clr;
-	s1 += "\n";  s2 += "\n";
+	for (int i=0; i<4; ++i)  {
+		s1 += "\n";  s2 += "\n";  }
 
 	clr = clrsDiff[ch.diff];
 	s1 += clr+ TR("#{Difficulty}\n");    s2 += clr+ TR("#{Diff"+toStr(ch.diff)+"}")+"\n";
@@ -297,6 +298,7 @@ void App::ChampFillStageInfo(bool finished)
 	ProgressChamp& pc = progress[p].chs[chId];
 	const Champ& ch = champs.all[chId];
 	const ChampTrack& trk = ch.trks[pc.curTrack];
+	bool last = pc.curTrack+1 == ch.trks.size();
 
 	String s;
 	s = "#80FFE0"+ ch.name + "\n\n" +
@@ -327,7 +329,7 @@ void App::ChampFillStageInfo(bool finished)
 		
 		bool passed = points >= pass;
 		if (passed)
-			s += "#00FF00"+TR("#{Passed}")+".\n"+TR("#{NextStage}.");
+			s += "#00FF00"+TR("#{Passed}")+".\n"+TR(last ? "#{Continue}" : "#{NextStage}.");
 		else
 			s += "#FF8000"+TR("#{DidntPass}")+".\n"+TR("#{RepeatStage}.");
 	}

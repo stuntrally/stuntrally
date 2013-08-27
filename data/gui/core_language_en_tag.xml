@@ -78,6 +78,11 @@
 	<Tag name="Continue">Continue</Tag>
 	<Tag name="Restart">Restart</Tag>
 
+	<Tag name="Prize">Prize</Tag>
+	<Tag name="Bronze">Bronze</Tag>
+	<Tag name="Silver">Silver</Tag>
+	<Tag name="Gold">Gold</Tag>
+
 	<Tag name="Diff0">Test Easy</Tag>
 	<Tag name="Diff1">Very Easy</Tag>
 	<Tag name="Diff2">Easy</Tag>
@@ -106,6 +111,9 @@
 	<Tag name="DidntPass">Didn't pass</Tag>
 	<Tag name="NextStage">Continuing to next stage</Tag>
 	<Tag name="RepeatStage">Repeating stage</Tag>
+
+	<Tag name="CarChange">Car change</Tag>
+	<Tag name="Allowed">Allowed</Tag>
 
 
 	<!--  Track  -->

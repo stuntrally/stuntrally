@@ -22,6 +22,7 @@ Chall::Chall()  // defaults..
 	// abs, tcs, autoshift, autorear
 	// max dmg%, off road time-
 	,avgPoints(-1.f), totalTime(-1.f), avgPos(-1.f)  // pass
+	,carChng(0)
 {	}
 
 
@@ -58,6 +59,7 @@ bool ChallXml::LoadXml(std::string file, TimesXml* times)
 			a = eSim->Attribute("boost");		if (a)  c.boost_type = s2i(a);
 			a = eSim->Attribute("flip");		if (a)  c.flip_type = s2i(a);
 			a = eSim->Attribute("rewind");		if (a)  c.rewind_type = s2i(a);
+			a = eSim->Attribute("carChng");		if (a)  c.carChng = s2i(a) > 0;
 		}
 		//  cars
 		TiXmlElement* eCarT = eCh->FirstChildElement("cartype");
@@ -170,9 +172,10 @@ bool ProgressLXml::LoadXml(std::string file)
 	while (eCh)
 	{
 		ProgressChall pc;
-		a = eCh->Attribute("name");		if (a)  pc.name = std::string(a);
-		a = eCh->Attribute("ver");		if (a)  pc.ver = s2i(a);
+		a = eCh->Attribute("name");	if (a)  pc.name = std::string(a);
+		a = eCh->Attribute("ver");	if (a)  pc.ver = s2i(a);
 		a = eCh->Attribute("cur");	if (a)  pc.curTrack = s2i(a);
+		a = eCh->Attribute("car");	if (a)  pc.car = std::string(a);
 
 		a = eCh->Attribute("p");	if (a)  pc.avgPoints = s2r(a);
 		a = eCh->Attribute("t");	if (a)  pc.totalTime = s2r(a);
@@ -209,7 +212,8 @@ bool ProgressLXml::SaveXml(std::string file)
 		TiXmlElement eCh("chall");
 			eCh.SetAttribute("name",	pc.name.c_str() );
 			eCh.SetAttribute("ver",		toStrC( pc.ver ));
-			eCh.SetAttribute("cur",	toStrC( pc.curTrack ));
+			eCh.SetAttribute("cur",		toStrC( pc.curTrack ));
+			eCh.SetAttribute("car",		pc.car.c_str() );
 
 			eCh.SetAttribute("p",	fToStr( pc.avgPoints, 2).c_str());
 			eCh.SetAttribute("t",	fToStr( pc.totalTime, 1).c_str());

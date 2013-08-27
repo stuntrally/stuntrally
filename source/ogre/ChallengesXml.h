@@ -48,6 +48,7 @@ public:
 	
 	//  pass  -1 means not needed, you can use one or more conditions
 	float totalTime, avgPoints, avgPos;
+	bool carChng;  // allow car change
 
 	// abs, tcs, autoshift, autorear
 	// max dmg%, off road time-
@@ -79,7 +80,7 @@ public:
 class ProgressChall
 {
 public:
-	std::string car;  //todo: picked car ..
+	std::string car;  // picked car at start
 	int curTrack;  // index to trks
 	float avgPoints, totalTime, avgPos;  // computed from all stages
 	int fin;  // final prize -1 none, 0 bronze, 1 silver, 2 gold

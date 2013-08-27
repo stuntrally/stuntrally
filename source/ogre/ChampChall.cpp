@@ -28,9 +28,10 @@ void App::Ch_NewGame()
 		///  challenge stage
 		int p = pSet->game.champ_rev ? 1 : 0;
 		ProgressChall& pc = progressL[p].chs[iChall];
-		const Chall& chl = chall.all[iChall];
+		Chall& chl = chall.all[iChall];
 		if (pc.curTrack >= chl.trks.size())  pc.curTrack = 0;  // restart
 		const ChallTrack& trk = chl.trks[pc.curTrack];
+		pChall = &chl;  // set
 		
 		pSet->game.track = trk.name;  pSet->game.track_user = 0;
 		pSet->game.trackreverse = pSet->game.champ_rev ? !trk.reversed : trk.reversed;
@@ -52,7 +53,11 @@ void App::Ch_NewGame()
 			else
 			{	LogO("Error: Challenge cars empty!");  return;  }
 		}
-		//?challenge icons near denied combos,chkboxes
+		//  set picked car when continuing
+		if (pc.curTrack > 0 && !pc.car.empty() && !chl.carChng)
+			pSet->game.car[0] = pc.car;
+
+		//TODO: ?challenge icons near denied combos,chkboxes
 		//? minimap, chk_arr, chk_beam, trk_ghost;  // deny using it if false
 		//! abs, tcs, autoshift, autorear
 		
@@ -351,6 +356,8 @@ void App::listStageChng(MyGUI::MultiList2* li, size_t pos)
 		const Chall& ch = chall.all[nch];
 		if (pos >= ch.trks.size())  {  LogO("Error stage sel > tracks.");  return;  }
 		trk = ch.trks[pos].name;  rev = ch.trks[pos].reversed;  all = ch.trks.size();
+
+		UpdChallDetail(nch);  // stage pass upd txt
 	}else
 	{	if (liChamps->getIndexSelected()==ITEM_NONE)  return;
 		int nch = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()).substr(7))-1;
