@@ -148,7 +148,7 @@ void App::createScene()
 //---------------------------------------------------------------------------------------------------------------
 void App::NewGame()
 {
-	// actual loading isn't done here
+	//  actual loading isn't done here
 	isFocGui = false;
 	toggleGui(false);  // hide gui
 	mWndNetEnd->setVisible(false);
@@ -174,7 +174,19 @@ void App::NewGame()
 			pSet->game.local_players = 1;
 	}
 	newGameRpl = false;
-	
+
+	///  check if track exist ..
+	if (!PATHMANAGER::FileExists(TrkDir()+"scene.xml"))
+	{
+		bLoading = false;  //iLoad1stFrames = -2;
+		BackFromChs();
+		//toggleGui(true);  // show gui
+		Message::createMessageBox("Message", TR("#{Track}"),
+			TR("#{TrackNotFound}")+"\n"+pSet->game.track+(pSet->game.track_user?" *user*":"")+"\nPath: "+TrkDir(),
+			MessageBoxStyle::IconError | MessageBoxStyle::Ok);
+		//todo: gui is stuck..
+		return;
+	}	
 	if (mWndRpl)  mWndRpl->setVisible(false);  // hide rpl ctrl
 
 	LoadingOn();
