@@ -104,10 +104,17 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 	s1 += TR("#80F0E0#{Time} [m:s.]\n"); s2 += "#C0FFE0"+clr+ GetTimeShort(ch.time)+"\n";
 
 	s1 += "\n";  s2 += "\n";
-	s1 += TR("#B0C0E0#{Progress}\n");    s2 += "#C0E0FF"+fToStr(100.f * progress[p].chs[pos].curTrack / champs.all[pos].trks.size(),1,5)+" %\n";
+	int cur = progress[p].chs[pos].curTrack, all = champs.all[pos].trks.size();
+	s1 += TR("#B0C0E0#{Progress}\n");    s2 += "#C0E0FF"+fToStr(100.f * cur / all,1,5)+" %\n";
 	s1 += TR("#D8C0FF#{Score}\n");       s2 += "#F0D8FF"+fToStr(progress[p].chs[pos].points,1,5)+"\n";
 
 	txtCh->setCaption(s1);  valCh->setCaption(s2);
+	
+	//  btn start
+	s1 = cur == all ? TR("#{Restart}") : (cur == 0 ? TR("#{Start}") : TR("#{Continue}"));
+	if (pSet->inMenu == MNU_Tutorial)
+		btStTut->setCaption(s1);
+	else  btStChamp->setCaption(s1);
 }
 
 
@@ -148,8 +155,8 @@ void App::btnChampStageStart(WP)
 		mWndChampStage->setVisible(false);
 		// tutorial, tutorial hard, normal, hard, very hard, scenery, test
 		const int ui[8] = {0,1,2,3,4,5,0,0};
-		if (imgChampEnd)
-			imgChampEnd->setImageCoord(IntCoord(ui[std::min(7, std::max(0, ch.type))]*128,0,128,256));
+		if (imgChampEndCup)
+			imgChampEndCup->setImageCoord(IntCoord(ui[std::min(7, std::max(0, ch.type))]*128,0,128,256));
 		mWndChampEnd->setVisible(true);
 		return;
 	}
@@ -315,8 +322,8 @@ void App::ChampFillStageInfo(bool finished)
 		float points = pc.trks[pc.curTrack].points;
 		float pass = (pSet->game.sim_mode == "normal") ? 5.f : 2.f;  ///..
 		s += "#80C0FF"+TR("#{Finished}") + ".\n" +
-			"#FFFF60"+TR("#{Score}") + ": " + fToStr(points,1,5) + "\n";
-		s += "#80C0FF"+TR("#{ScoreNeeded}") + ": " + fToStr(pass,1,5) + "\n\n";
+			"#FFFF60"+TR("#{TBPoints}") + ": " + fToStr(points,1,5) + "\n";
+		s += "#80C0FF"+TR("#{Needed}") + ": " + fToStr(pass,1,5) + "\n\n";
 		
 		bool passed = points >= pass;
 		if (passed)
@@ -325,7 +332,7 @@ void App::ChampFillStageInfo(bool finished)
 			s += "#FF8000"+TR("#{DidntPass}")+".\n"+TR("#{RepeatStage}.");
 	}
 	edChampStage->setCaption(s);
-	btChampStage->setCaption(finished ? TR("#{MessageBox_Continue}") : TR("#{ChampStart}"));
+	btChampStage->setCaption(finished ? TR("#{Continue}") : TR("#{Start}"));
 	
 	//  preview image
 	if (!finished)  // only at champ start

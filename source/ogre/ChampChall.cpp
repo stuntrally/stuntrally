@@ -46,9 +46,13 @@ void App::Ch_NewGame()
 
 		//  car not set, and not allowed in chall
 		if (!IsChallCar(pSet->game.car[0]))  // pick last
-			pSet->game.car[0] = carList->getItemNameAt(carList->getItemCount()-1).substr(7);
-
-		//?challenge icons near chkboxes
+		{	int cnt = carList->getItemCount();
+			if (cnt > 0)
+				pSet->game.car[0] = carList->getItemNameAt(std::min(0,cnt-1)).substr(7);
+			else
+			{	LogO("Error: Challenge cars empty!");  return;  }
+		}
+		//?challenge icons near denied combos,chkboxes
 		//? minimap, chk_arr, chk_beam, trk_ghost;  // deny using it if false
 		//! abs, tcs, autoshift, autorear
 		
@@ -247,18 +251,20 @@ void App::Ch_XmlLoad()
 			ProgressChall pc;
 			pc.name = ch.name;  pc.ver = ch.ver;
 
-			if (found)  //  found progress, points
-			{	pc.curTrack = opc->curTrack;
-				pc.points = opc->points;  pc.time = opc->time;
-				pc.pos = opc->pos;  pc.fin = opc->fin;
+			if (found)
+			{	//  found progress, copy
+				pc.curTrack = opc->curTrack;  pc.car = opc->car;
+				pc.avgPoints = opc->avgPoints;  pc.totalTime = opc->totalTime;
+				pc.avgPos = opc->avgPos;  pc.fin = opc->fin;
 			}
 
 			//  fill tracks
 			for (int t=0; t < ch.trks.size(); ++t)
 			{
 				ProgressTrackL pt;
-				if (found)  // found track points
-				{	const ProgressTrackL& opt = opc->trks[t];
+				if (found)  
+				{	//  found track points
+					const ProgressTrackL& opt = opc->trks[t];  //pt = opt;
 					pt.points = opt.points;  pt.time = opt.time;  pt.pos = opt.pos;
 				}
 				pc.trks.push_back(pt);
@@ -270,7 +276,7 @@ void App::Ch_XmlLoad()
 	
 	if (progressL[0].chs.size() != chall.all.size() ||
 		progressL[1].chs.size() != chall.all.size())
-		LogO("|| ERROR: challs and progressL sizes differ !");
+		LogO("|] ERROR: challs and progressL sizes differ !");
 }
 
 
@@ -316,8 +322,8 @@ void App::StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress
 	liStages->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liStages->getItemCount()-1;
 	liStages->setSubItemNameAt(1,l, clr+ name.c_str());
 
-	int id = tracksXml.trkmap[name];  // if (id > 0)
-	const TrackInfo& ti = tracksXml.trks[id-1];
+	int id = tracksXml.trkmap[name]-1;  if (id < 0)  return;
+	const TrackInfo& ti = tracksXml.trks[id];
 
 	float carMul = GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
 	float time = (times.trks[name] * laps /*+ 2*/) / carMul;

@@ -9,7 +9,7 @@ using namespace Ogre;
 
 //  defaults
 ChallTrack::ChallTrack()
-	:name("J1-T"), laps(0), reversed(0)
+	:name("J1-T"), laps(1), reversed(0)
 	,passPoints(-1.f), timeNeeded(-1.f), passPos(-1.f)  // pass
 {	}
 
@@ -26,7 +26,7 @@ Chall::Chall()  // defaults..
 
 
 //  Load challenges
-//--------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------
 bool ChallXml::LoadXml(std::string file, TimesXml* times)
 {
 	TiXmlDocument doc;
@@ -81,7 +81,7 @@ bool ChallXml::LoadXml(std::string file, TimesXml* times)
 		}
 		
 		TiXmlElement* eHud = eCh->FirstChildElement("hud");
-		if (eSim)
+		if (eHud)
 		{
 			a = eHud->Attribute("minimap");		if (a)  c.minimap = s2i(a) > 0;
 			a = eHud->Attribute("chkArrow");	if (a)  c.chk_arr = s2i(a) > 0;
@@ -140,7 +140,7 @@ bool ChallXml::LoadXml(std::string file, TimesXml* times)
 }
 
 //  progress
-//--------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------
 
 ProgressTrackL::ProgressTrackL() :
 	points(0.f), time(0.f), pos(0)
@@ -148,12 +148,12 @@ ProgressTrackL::ProgressTrackL() :
 
 ProgressChall::ProgressChall() :
 	curTrack(0), ver(0),
-	points(0.f), time(0.f), pos(0), fin(-1)
+	avgPoints(0.f), totalTime(0.f), avgPos(0), fin(-1)
 {	}
 
 
 //  Load progress
-//--------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------
 bool ProgressLXml::LoadXml(std::string file)
 {
 	TiXmlDocument doc;
@@ -174,9 +174,9 @@ bool ProgressLXml::LoadXml(std::string file)
 		a = eCh->Attribute("ver");		if (a)  pc.ver = s2i(a);
 		a = eCh->Attribute("cur");	if (a)  pc.curTrack = s2i(a);
 
-		a = eCh->Attribute("p");	if (a)  pc.points = s2r(a);
-		a = eCh->Attribute("t");	if (a)  pc.time = s2r(a);
-		a = eCh->Attribute("n");	if (a)  pc.pos = s2i(a);
+		a = eCh->Attribute("p");	if (a)  pc.avgPoints = s2r(a);
+		a = eCh->Attribute("t");	if (a)  pc.totalTime = s2r(a);
+		a = eCh->Attribute("n");	if (a)  pc.avgPos = s2r(a);
 		a = eCh->Attribute("z");	if (a)  pc.fin = s2i(a);
 		
 		//  tracks
@@ -211,9 +211,9 @@ bool ProgressLXml::SaveXml(std::string file)
 			eCh.SetAttribute("ver",		toStrC( pc.ver ));
 			eCh.SetAttribute("cur",	toStrC( pc.curTrack ));
 
-			eCh.SetAttribute("p",	fToStr( pc.points, 2).c_str());
-			eCh.SetAttribute("t",	fToStr( pc.time, 1).c_str());
-			eCh.SetAttribute("n",	iToStr( pc.pos ).c_str());
+			eCh.SetAttribute("p",	fToStr( pc.avgPoints, 2).c_str());
+			eCh.SetAttribute("t",	fToStr( pc.totalTime, 1).c_str());
+			eCh.SetAttribute("n",	fToStr( pc.avgPos, 2).c_str());
 			eCh.SetAttribute("z",	iToStr( pc.fin ).c_str());
 
 			for (int i=0; i < pc.trks.size(); ++i)

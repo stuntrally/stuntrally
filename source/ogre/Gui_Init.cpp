@@ -700,7 +700,12 @@ void App::InitGui()
 	edChallEnd   = (EditBox*)mWndChallEnd->findWidget("ChallEndText");
 	imgChampStage = (ImageBox*)mWndChampStage->findWidget("ChampStageImg");
 	imgChallStage = (ImageBox*)mWndChallStage->findWidget("ChallStageImg");
-	imgChampEnd   = (ImageBox*)mWndChampEnd->findWidget("ChampEndImg");
+
+	imgChampEndCup  = (ImageBox*)mWndChampEnd->findWidget("ChampEndImgCup");
+	imgChallFail = (ImageBox*)mWndChallEnd->findWidget("ChallEndImgFail");
+	imgChallCup  = (ImageBox*)mWndChallEnd->findWidget("ChallEndImgCup");
+	txChallEndC = (TextBox*)mWndChallEnd->findWidget("ChallEndCongrats");
+	txChallEndF = (TextBox*)mWndChallEnd->findWidget("ChallEndFinished");
 
 	UpdChampTabVis();
 

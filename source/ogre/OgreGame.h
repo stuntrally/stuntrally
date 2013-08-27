@@ -366,8 +366,9 @@ protected:
 	void btnChallStart(WP), btnChallEndClose(WP), btnChallStageBack(WP), btnChallStageStart(WP);
 
 	MyGUI::ButtonPtr btChampStage, btChallStage;
-	MyGUI::EditBox* edChampStage,*edChampEnd;  MyGUI::ImageBox* imgChampStage,*imgChampEnd;
-	MyGUI::EditBox* edChallStage,*edChallEnd;  MyGUI::ImageBox* imgChallStage;//,*imgChallEnd;
+	MyGUI::EditBox* edChampStage,*edChampEnd;  MyGUI::ImageBox* imgChampStage,*imgChampEndCup;
+	MyGUI::EditBox* edChallStage,*edChallEnd;  MyGUI::ImageBox* imgChallStage;
+	MyGUI::ImageBox* imgChallFail,*imgChallCup;  MyGUI::TextBox* txChallEndC,*txChallEndF;
 
 	void btnChampInfo(WP), chkChampRev(WP), UpdChampTabVis();
 	void ToolGhosts(),ToolGhostsConv();  //  _Tools_

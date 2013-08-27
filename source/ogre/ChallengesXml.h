@@ -71,7 +71,7 @@ public:
 class ProgressTrackL
 {
 public:
-	float points, time;  int pos;
+	float points, time;  int pos;  // got after stage
 	ProgressTrackL();
 };
 
@@ -79,8 +79,9 @@ public:
 class ProgressChall
 {
 public:
+	std::string car;  //todo: picked car ..
 	int curTrack;  // index to trks
-	float points, time;  int pos;
+	float avgPoints, totalTime, avgPos;  // computed from all stages
 	int fin;  // final prize -1 none, 0 bronze, 1 silver, 2 gold
 	
 	std::string name;
