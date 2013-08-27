@@ -1095,14 +1095,14 @@
 					<Widget type="TabItem" skin="" position="2 24 738 469">
 						<Property key="Caption" value="#{NetGame}"/>
 						<UserString key="RelativeTo" value="GameWnd"/>
-						<Widget type="TextBox" skin="TextBox" position="20 22 136 24" name="valNetGameName">
+						<Widget type="TextBox" skin="TextBox" position="21 20 136 24" name="valNetGameName">
 							<Property key="Caption" value="#{NetGameName}:"/>
 							<Property key="TextColour" value="0.6 0.9 1"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
 						</Widget>
 						<Widget type="EditBox" skin="EditBox" position="164 18 268 24" name="edNetGameName">
-							<Property key="Colour" value="0.6 0.8 1"/>
-							<Property key="TextColour" value="0.6 0.8 1"/>
+							<Property key="Colour" value="0.65 0.8 1"/>
+							<Property key="TextColour" value="0.65 0.8 1"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="480 386 124 24" name="valNetPassword">
@@ -1152,14 +1152,9 @@
 							<Property key="Colour" value="0.6 0.8 1"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="452 22 260 24" name="valNetTrack">
+						<Widget type="TextBox" skin="TextBox" position="452 22 260 330" name="valNetGameInfo">
 							<Property key="Caption" value="#{Track}:"/>
 							<Property key="TextColour" value="0.4 1.0 0.5"/>
-							<UserString key="RelativeTo" value="GameWnd"/>
-						</Widget>
-						<Widget type="EditBox" skin="WordWrapEmpty" position="452 318 256 66" name="edNetTrackInfo">
-							<Property key="Caption" value="Track info text"/>
-							<Property key="TextColour" value="0.6 1.0 0.8"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
 						</Widget>
 						<Widget type="Widget" skin="PanelSkin" position="0 48 800 500" layer="Popup" name="panelNetGame">
@@ -1339,6 +1334,19 @@
 					<Property key="Caption" value="#{Start}"/>
 					<Property key="Colour" value="0.4 1 0.8"/>
 					<Property key="TextColour" value="0.4 1 0.8"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<Widget type="ImageBox" skin="ImageBox" position="2 4 32 32">
+						<Property key="ImageCoord" value="256 0 128 128"/>
+						<Property key="Alpha" value="0.7"/>
+						<Property key="ImageTexture" value="gui_icons.png"/>
+						<Property key="NeedMouse" value="false"/>
+						<UserString key="RelativeTo" value="GameWnd"/>
+					</Widget>
+				</Widget>
+				<Widget type="Button" skin="Button" position="120 345 144 30" name="btnChallRestart">
+					<Property key="Caption" value="#{Restart}"/>
+					<Property key="Colour" value="0.8 0.4 0.6"/>
+					<Property key="TextColour" value="0.8 0.4 0.6"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<Widget type="ImageBox" skin="ImageBox" position="2 4 32 32">
 						<Property key="ImageCoord" value="256 0 128 128"/>

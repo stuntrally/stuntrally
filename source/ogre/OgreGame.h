@@ -356,7 +356,7 @@ protected:
 	void ProgressSave(bool upgGui=true), ProgressLSave(bool upgGui=true);
 	Chall* pChall;  // current challenge or 0 if not
 
-	void Ch_NewGame(), Ch_XmlLoad(), Ch_LoadEnd()
+	void Ch_NewGame(), Ch_XmlLoad(), Ch_LoadEnd();
 	void UpdChallDetail(int id);  Ogre::String StrPrize(int i);
 	MyGUI::MultiList2* liStages, *liNetEnd;  void listStageChng(MyGUI::MultiList2* li, size_t pos);
 	MyGUI::MultiList2* liChamps;  void listChampChng(MyGUI::MultiList2* li, size_t pos);
@@ -609,9 +609,9 @@ protected:
 	void evBtnNetDirect(WP),evBtnNetDirectClose();
 	void evBtnNetReady(WP),evBtnNetLeave(WP);
 
-	MyGUI::StaticTextPtr valNetGames, valNetGameName, valNetChat, valNetTrack, valNetPassword;
+	MyGUI::StaticTextPtr valNetGames, valNetGameName, valNetChat, valNetGameInfo, valNetPassword;
 	MyGUI::ButtonPtr btnNetSendMsg;  void chatSendMsg();
-	MyGUI::EditPtr edNetGameName, edNetChatMsg, edNetTrackInfo, edNetPassword,
+	MyGUI::EditPtr edNetGameName, edNetChatMsg, edNetPassword,
 		edNetNick, edNetServerIP, edNetServerPort, edNetLocalPort;
 	void evEdNetGameName(MyGUI::EditPtr), evEdNetPassword(MyGUI::EditPtr),
 		evEdNetNick(MyGUI::EditPtr), evEdNetServerIP(MyGUI::EditPtr),

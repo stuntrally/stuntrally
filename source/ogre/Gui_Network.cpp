@@ -110,33 +110,33 @@ void App::updateGameInfo()
 
 void App::updateGameInfoGUI()
 {
-	//  update track info
-	if (valNetTrack)
-		valNetTrack->setCaption(TR("#{Track}") + ": " + sListTrack);
+	//  update track,game info
+	if (!valNetGameInfo)  return;
+	using Ogre::String;
 
-	//imgNetTrack->setImageTexture(sListTrack+".jpg");
-	if (imgNetTrack)
-	{
-		Ogre::ResourceGroupManager& resMgr = Ogre::ResourceGroupManager::getSingleton();
-		Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
-		
-		Ogre::String path = PathListTrkPrv(-1, sListTrack), s, sGrp = "TrkPrvNet";
-		resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
-		resMgr.unloadResourceGroup(sGrp);
-		resMgr.initialiseResourceGroup(sGrp);
-		try
-		{	s = "view.jpg";
-			texMgr.load(path+s, sGrp, Ogre::TEX_TYPE_2D, Ogre::MIP_UNLIMITED);
-			imgNetTrack->setImageTexture(s);
-			imgNetTrack->_setTextureName(path+s);  imgNetTrack->setVisible(true);
-		} catch(...) {  imgNetTrack->setVisible(false);  }
-		
-		resMgr.removeResourceLocation(path, sGrp);
-	}
+	String s;  const protocol::GameInfo& g = netGameInfo;
+	s += TR("#40FF40#{Track}: ") + sListTrack +"\n";
+	s += TR("#60A060#{Reverse}: ") + yesno(g.reversed) +"\n";
+	s += "\n";
+	s += TR("#80F0F0#{Laps}: ") + toStr(g.laps) +"\n";
+	s += TR("#409090#{ReverseStartOrder}: ") + yesno(g.start_order) +"\n";
+	s += TR("#F0F040#{Players}: ") + toStr(g.players) +"\n";
+	s += "\n";
+	s += TR("#D090E0#{Game}") +"\n";
+	s += TR("#90B0E0  #{Simulation}: ") + String(g.sim_mode) +"\n";
+	s += TR("#A0D0D0  #{CarCollis}: ") + yesno(g.collisions) +"\n";
+	s += "\n";
+	#define cmbs(cmb, i)  (i>=0 && i < cmb->getItemCount() ? cmb->getItemNameAt(i) : TR("#{Any}"))
+	s += TR("#80C0FF  #{Boost}: ") + "#90D0FF"+ cmbs(cmbBoost, g.boost_type) +"\n";
+	s += TR("#6098A0  #{Flip}: ") + "#7098A0"+ cmbs(cmbFlip, g.flip_type) +"\n";
+	s += "\n";
+	s += TR("#A090E0  #{Damage}: ") + "#B090FF"+ cmbs(cmbDamage, g.damage_type) +"\n";
+	s += TR("#B080C0  #{InputMapRewind}: ") + "#C090D0"+ cmbs(cmbRewind, g.rewind_type) +"\n";
+	//float boost_power;
+	//float damage_lap_dec, boost_lap_inc, rewind_lap_inc;  //todo
+	//uint8_t tree_collis;  float tree_mult;
 
-	if (edNetTrackInfo && trkDesc)
-		edNetTrackInfo->setCaption(trkDesc[0]->getCaption());
-	// todo: probably should also update on gui collis,boost,reverse,... (but not in pSet.gui)
+	valNetGameInfo->setCaption(s);
 }
 
 
@@ -146,12 +146,12 @@ void App::updateGameSet()
 {
 	pSet->game.sim_mode = netGameInfo.sim_mode;  LogO("== Netw sim mode: " + pSet->game.sim_mode);
 
-	pSet->game.collis_cars = netGameInfo.collisions;
+	pSet->game.collis_cars = netGameInfo.collisions>0;
 	pSet->game.num_laps = netGameInfo.laps;		LogO("== Netw laps num: " + toStr(pSet->game.num_laps));
-	pSet->game.trackreverse = netGameInfo.reversed;
+	pSet->game.trackreverse = netGameInfo.reversed>0;
 
 	pSet->game.start_order = netGameInfo.start_order;
-	pSet->game.collis_veget = netGameInfo.tree_collis;
+	pSet->game.collis_veget = netGameInfo.tree_collis>0;
 	pSet->game.trees = netGameInfo.tree_mult;
 
 	pSet->game.boost_type = netGameInfo.boost_type;
@@ -180,12 +180,12 @@ void App::uploadGameInfo()
 	strcpy(game.sim_mode, sSim.c_str());
 	game.players = mClient->getPeerCount()+1;
 
-	game.collisions = pSet->gui.collis_cars;
+	game.collisions = pSet->gui.collis_cars?1:0;
 	game.laps = pSet->gui.num_laps;				LogO("== Netw laps num: " + toStr(pSet->gui.num_laps));
-	game.reversed = pSet->gui.trackreverse;
+	game.reversed = pSet->gui.trackreverse?1:0;
 
 	game.start_order = pSet->gui.start_order;
-	game.tree_collis = pSet->gui.collis_veget;
+	game.tree_collis = pSet->gui.collis_veget?1:0;
 	game.tree_mult = pSet->gui.trees;
 
 	game.boost_type = pSet->gui.boost_type;
@@ -197,6 +197,10 @@ void App::uploadGameInfo()
 	
 	game.port = pSet->local_port;
 	game.locked = !edNetPassword->getCaption().empty();
+	{
+		boost::mutex::scoped_lock lock(netGuiMutex);
+		netGameInfo = game;  // for host gui info
+	}
 	mMasterClient->updateGame(game); // Upload to master server
 	if (mClient)  // Send to peers
 		mClient->broadcastGameInfo(game);

@@ -473,11 +473,8 @@ void App::InitGui()
     valNetChat = mGUI->findWidget<StaticText>("valNetChat");
     edNetChat = mGUI->findWidget<Edit>("edNetChat");  // chat area
     edNetChatMsg = mGUI->findWidget<Edit>("edNetChatMsg");  // user text
-    
-    //  track
-    imgNetTrack = mGUI->findWidget<StaticImage>("imgNetTrack",false);
-    valNetTrack = mGUI->findWidget<StaticText>("valNetTrack");
-    edNetTrackInfo = mGUI->findWidget<Edit>("edNetTrackInfo");
+    //  track,game text
+    valNetGameInfo = mGUI->findWidget<StaticText>("valNetGameInfo");
 
 	//  settings
 	edNetNick = mGUI->findWidget<Edit>("edNetNick");
