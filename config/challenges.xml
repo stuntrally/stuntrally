@@ -71,7 +71,7 @@
 <!--  Test  -->
 <!--========================================================================================================================-->
 
-	<challenge name="Test 1 time-" ver="1" difficulty="0" type="0" 
+	<challenge name="Test 1 time-" ver="1" difficulty="0" type="3" 
 			descr="Test Challenge 1, time pass.">
 		<sim mode="normal" damage="0" boost="2" flip="2" rewind="1" carChng="1"/>
 		<car names="ES|S1" />
@@ -82,7 +82,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Test 1 points" ver="1" difficulty="0" type="0" 
+	<challenge name="Test 1 points" ver="1" difficulty="0" type="3" 
 			descr="Test Challenge 1, points pass.">
 		<sim mode="normal" damage="1" boost="1" flip="1" rewind="1" />
 		<car names="ES|S1" />
@@ -93,7 +93,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Test 1 pos" ver="1" difficulty="0" type="0" 
+	<challenge name="Test 1 pos" ver="1" difficulty="0" type="3" 
 			descr="Test Challenge 1, position pass.">
 		<sim mode="normal" damage="2" boost="0" flip="2" rewind="1" />
 		<car names="ES|N1" />
@@ -104,7 +104,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Test 1 all" ver="1" difficulty="1" type="1" 
+	<challenge name="Test 1 all" ver="1" difficulty="1" type="3" 
 			descr="Test Challenge 1, all pass conditions.">
 		<sim mode="normal" damage="1" boost="1" flip="1" rewind="1" />
 		<car names="ES|S1" />
@@ -116,7 +116,7 @@
 	</challenge>
 
 
-	<challenge name="Test 2 laps" ver="1" difficulty="2" type="1" 
+	<challenge name="Test 2 laps" ver="1" difficulty="2" type="3" 
 			descr="Test Challenge 2, 2 laps.">
 		<cartype names="Gravel" />
 		<pass avgPoints="7" />
@@ -126,7 +126,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Test 3 cars" ver="1" difficulty="2" type="2" 
+	<challenge name="Test 3 cars" ver="1" difficulty="2" type="3" 
 			descr="Test Challenge 3.">
 		<car names="N1|S8|TC6|3S" />
 		<pass avgPoints="7" />

@@ -1343,10 +1343,11 @@
 						<UserString key="RelativeTo" value="GameWnd"/>
 					</Widget>
 				</Widget>
-				<Widget type="Button" skin="Button" position="120 345 144 30" name="btnChallRestart">
+				<Widget type="Button" skin="Button" position="120 345 144 30" name="btnChRestart">
 					<Property key="Caption" value="#{Restart}"/>
-					<Property key="Colour" value="0.8 0.4 0.6"/>
-					<Property key="TextColour" value="0.8 0.4 0.6"/>
+					<Property key="Colour" value="0.6 0.5 0.5"/>
+					<Property key="TextColour" value="0.6 0.5 0.5"/>
+					<Property key="Alpha" value="0.8"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<Widget type="ImageBox" skin="ImageBox" position="2 4 32 32">
 						<Property key="ImageCoord" value="256 0 128 128"/>

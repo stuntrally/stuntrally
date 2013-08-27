@@ -665,8 +665,9 @@ void App::InitGui()
 	}
 	tabChall = mGUI->findWidget<Tab>("ChallType",false);
 	if (tabChall)
+	{	tabChall->setIndexSelected(pSet->chall_type);
 		tabChall->eventTabChangeSelect += newDelegate(this, &App::tabChallType);
-
+	}
 	imgTut = mGUI->findWidget<StaticImage>("imgTut",false);
 	imgChamp = mGUI->findWidget<StaticImage>("imgChamp",false);
 	imgChall = mGUI->findWidget<StaticImage>("imgChall",false);

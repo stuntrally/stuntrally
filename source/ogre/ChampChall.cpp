@@ -19,7 +19,8 @@ void App::Ch_NewGame()
 {
 	if (pSet->game.champ_num >= (int)champs.all.size() ||
 		pSet->game.chall_num >= (int)chall.all.size())  // range
-		BackFromChs();
+	{	pSet->game.champ_num = -1;
+		pSet->game.chall_num = -1;  }
 
 	int iChamp = pSet->game.champ_num;
 	int iChall = pSet->game.chall_num;

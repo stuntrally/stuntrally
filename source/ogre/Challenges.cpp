@@ -14,9 +14,9 @@ using namespace MyGUI;
 ///
 void App::BackFromChs()
 {
-	pSet->game.champ_num = -1;
-	pSet->game.chall_num = -1;
-	pChall = 0;
+	pSet->gui.champ_num = -1;
+	pSet->gui.chall_num = -1;
+	//pChall = 0;
 	//CarListUpd();  // off filtering
 }
 
@@ -28,7 +28,7 @@ bool App::isChallGui()
 
 void App::tabChallType(MyGUI::TabPtr wp, size_t id)
 {
-	//pSet->chall_type = id;
+	pSet->chall_type = id;
 	ChallsListUpdate();
 }
 
@@ -39,30 +39,31 @@ void App::ChallsListUpdate()
 {
 	const char clrCh[4][8] = {
 	// 0 medium  1 hard  2 extreme  3 test
-		"#FFA040", "#FF8080", "#C080E0", "#909090" };
+		"#FFA040", "#FF8080", "#C080E0", "#A0A0B0" };
 
 	liChalls->removeAllItems();  int n=1;  size_t sel = ITEM_NONE;
 	int p = pSet->gui.champ_rev ? 1 : 0;
 	for (int i=0; i < chall.all.size(); ++i,++n)
 	{
 		const Chall& chl = chall.all[i];
-
-		const ProgressChall& pc = progressL[p].chs[i];
-		int ntrks = pc.trks.size();
-		const String& clr = clrCh[chl.type];
-		//String cars = carsXml.colormap[chl.ci->type];  if (cars.length() != 7)  clr = "#C0D0E0";
-		
-		liChalls->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liChalls->getItemCount()-1;
-		liChalls->setSubItemNameAt(1,l, clr+ chl.name.c_str());
-		liChalls->setSubItemNameAt(2,l, clrsDiff[chl.diff]+ TR("#{Diff"+toStr(chl.diff)+"}"));
-		liChalls->setSubItemNameAt(3,l, StrChallCars(chl));
-		
-		liChalls->setSubItemNameAt(4,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ toStr(ntrks));
-		liChalls->setSubItemNameAt(5,l, clrsDiff[std::min(8,int(chl.time/3.f/60.f))]+ GetTimeShort(chl.time));
-		liChalls->setSubItemNameAt(6,l, clr+ fToStr(100.f * pc.curTrack / ntrks,0,3)+" %");
-		liChalls->setSubItemNameAt(7,l, clr+ fToStr(pc.avgPoints,1,5));  // pc.fin ..
-		if (n-1 == pSet->gui.chall_num)  sel = l;
-	}
+		if (chl.type == pSet->chall_type)
+		{
+			const ProgressChall& pc = progressL[p].chs[i];
+			int ntrks = pc.trks.size();
+			const String& clr = clrCh[chl.type];
+			//String cars = carsXml.colormap[chl.ci->type];  if (cars.length() != 7)  clr = "#C0D0E0";
+			
+			liChalls->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liChalls->getItemCount()-1;
+			liChalls->setSubItemNameAt(1,l, clr+ chl.name.c_str());
+			liChalls->setSubItemNameAt(2,l, clrsDiff[chl.diff]+ TR("#{Diff"+toStr(chl.diff)+"}"));
+			liChalls->setSubItemNameAt(3,l, StrChallCars(chl));
+			
+			liChalls->setSubItemNameAt(4,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ toStr(ntrks));
+			liChalls->setSubItemNameAt(5,l, clrsDiff[std::min(8,int(chl.time/3.f/60.f))]+ GetTimeShort(chl.time));
+			liChalls->setSubItemNameAt(6,l, clr+ fToStr(100.f * pc.curTrack / ntrks,0,3)+" %");
+			liChalls->setSubItemNameAt(7,l, clr+ fToStr(pc.avgPoints,1,5));  // pc.fin ..
+			if (n-1 == pSet->gui.chall_num)  sel = l;
+	}	}
 	liChalls->setIndexSelected(sel);
 }
 
@@ -568,7 +569,7 @@ void App::UpdChallDetail(int id)
 	if (cur > 0)
 	{
 		s1 += TR("#B0FFFF#{Progress}\n");    s2 += "#D0FFFF"+fToStr(100.f * cur / all,1,5)+" %\n";
-		s1 += TR("#B0FFFF#{Prize}\n");    s2 += "#D0FFFF"+fToStr(100.f * cur / all,1,5)+" %\n";
+		s1 += TR("#B0FFFF#{Prize}\n");       s2 += StrPrize(pc.fin)+"\n";
 		s1 += "\n";  s2 += "\n";
 		s1 += TR("#D8E0FF  #{TBTime}\n");      s2 += "#F0F8FF"+GetTimeString(pc.totalTime)+"\n";
 		s1 += TR("#D8E0FF  #{TBPoints}\n");    s2 += "#F0F8FF"+fToStr(pc.avgPoints,2,5)+"\n";

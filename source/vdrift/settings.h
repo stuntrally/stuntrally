@@ -44,7 +44,8 @@ public:
 	int car_dbgtxtclr, car_dbgtxtcnt;
 	//  gui
 	bool tracks_sortup, cars_sortup, champ_info;
-	int tracks_view, tracks_sort, cars_sort, tut_type,champ_type, car_ed_tab;
+	int tracks_view, tracks_sort, cars_sort,
+		tut_type,champ_type,chall_type, car_ed_tab;
 
 	//  graphics
 	int anisotropy, tex_size, ter_mtr, ter_tripl;  bool bFog;
