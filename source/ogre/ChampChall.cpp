@@ -26,14 +26,14 @@ void App::Ch_NewGame()
 	if (iChall >= 0)
 	{
 		///  challenge stage
-		int p = 0; //pSet->game.chall_rev ? 1 : 0;
+		int p = pSet->game.champ_rev ? 1 : 0;
 		ProgressChall& pc = progressL[p].chs[iChall];
 		const Chall& chl = chall.all[iChall];
 		if (pc.curTrack >= chl.trks.size())  pc.curTrack = 0;  // restart
 		const ChallTrack& trk = chl.trks[pc.curTrack];
 		
 		pSet->game.track = trk.name;  pSet->game.track_user = 0;
-		pSet->game.trackreverse = /*pSet->game.champ_rev ? !trk.reversed :*/ trk.reversed;
+		pSet->game.trackreverse = pSet->game.champ_rev ? !trk.reversed : trk.reversed;
 		pSet->game.num_laps = trk.laps;
 
 		pSet->game.sim_mode = chl.sim_mode;

@@ -41,7 +41,7 @@ void App::ChallsListUpdate()
 		"#FFA040", "#FF8080", "#C080E0", "#909090" };
 
 	liChalls->removeAllItems();  int n=1;  size_t sel = ITEM_NONE;
-	int p = 0; //pSet->gui.chall_rev ? 1 : 0;
+	int p = pSet->gui.champ_rev ? 1 : 0;
 	for (int i=0; i < chall.all.size(); ++i,++n)
 	{
 		const Chall& chl = chall.all[i];
@@ -80,7 +80,7 @@ void App::listChallChng(MyGUI::MultiList2* chlist, size_t id)
 	//  fill stages
 	liStages->removeAllItems();
 
-	int n = 1, p = 0; //pSet->gui.chall_rev ? 1 : 0;
+	int n = 1, p = pSet->gui.champ_rev ? 1 : 0;
 	const Chall& ch = chall.all[pos];
 	int ntrks = ch.trks.size();
 	for (int i=0; i < ntrks; ++i,++n)
@@ -199,7 +199,7 @@ void App::btnChallStart(WP)
 	pSet->gui.chall_num = s2i(liChalls->getItemNameAt(liChalls->getIndexSelected()).substr(7))-1;
 
 	//  if already finished, restart - will loose progress and scores ..
-	int chId = pSet->gui.chall_num, p = 0; //pSet->game.chall_rev ? 1 : 0;
+	int chId = pSet->gui.chall_num, p = pSet->game.champ_rev ? 1 : 0;
 	LogO("|] Starting chall: "+toStr(chId)+(p?" rev":""));
 	ProgressChall& pc = progressL[p].chs[chId];
 	if (pc.curTrack == pc.trks.size())
@@ -217,7 +217,7 @@ void App::btnChallStart(WP)
 void App::btnChallStageStart(WP)
 {
 	//  check if chall ended
-	int chId = pSet->game.chall_num, p = 0; //pSet->game.chall_rev ? 1 : 0;
+	int chId = pSet->game.chall_num, p = pSet->game.champ_rev ? 1 : 0;
 	ProgressChall& pc = progressL[p].chs[chId];
 	const Chall& ch = chall.all[chId];
 	bool last = pc.curTrack == ch.trks.size();
@@ -271,8 +271,8 @@ void App::ProgressLSave(bool upgGui)
 	progressL[1].SaveXml(PATHMANAGER::UserConfigDir() + "/progressL_rev.xml");
 	if (!upgGui)
 		return;
-	//..ChallsListUpdate();
-	//..listChallChng(liChalls, liChalls->getIndexSelected());
+	ChallsListUpdate();
+	listChallChng(liChalls, liChalls->getIndexSelected());
 }
 
 
@@ -281,7 +281,7 @@ void App::ProgressLSave(bool upgGui)
 //----------------------------------------------------------------------------------------------------------------------
 void App::ChallengeAdvance(float timeCur)
 {
-	int chId = pSet->game.chall_num, p = 0; //pSet->game.chall_rev ? 1 : 0;
+	int chId = pSet->game.chall_num, p = pSet->game.champ_rev ? 1 : 0;
 	ProgressChall& pc = progressL[p].chs[chId];
 	const Chall& ch = chall.all[chId];
 	const ChallTrack& trk = ch.trks[pc.curTrack];
@@ -330,7 +330,7 @@ void App::ChallengeAdvance(float timeCur)
 		
 		if (passed)
 			pc.curTrack++;  // next stage
-		ProgressSave();
+		ProgressLSave();
 	}else
 	{
 		//  chall ended
@@ -348,7 +348,7 @@ void App::ChallengeAdvance(float timeCur)
 		pc.curTrack++;  // end = 100 %
 		//float old = pc.score;  // .. save only higher ?
 		pc.points = sum / ntrk;  // average from all tracks
-		ProgressSave();
+		ProgressLSave();
 
 		LogO("|] Chall finished");
 		LogO("|] Total points: " + toStr(points));
@@ -357,6 +357,7 @@ void App::ChallengeAdvance(float timeCur)
 		String s = 
 			TR("#{Challenge}") + ": " + ch.name + "\n" +
 			TR("#{TotalScore}") + ": " + fToStr(pc.points,1,5);
+			//todo: Prize: bronze, silver, gold ..
 		edChallEnd->setCaption(s);
 		//mWndChallEnd->setVisible(true);  // show after stage end
 	}
@@ -367,7 +368,7 @@ void App::ChallengeAdvance(float timeCur)
 //----------------------------------------------------------------------------------------------------------------------
 void App::ChallFillStageInfo(bool finished)
 {
-	int chId = pSet->game.chall_num, p = 0; //pSet->game.chall_rev ? 1 : 0;
+	int chId = pSet->game.chall_num, p = pSet->game.champ_rev ? 1 : 0;
 	ProgressChall& pc = progressL[p].chs[chId];
 	const Chall& ch = chall.all[chId];
 	const ChallTrack& trk = ch.trks[pc.curTrack];
@@ -406,7 +407,7 @@ void App::ChallFillStageInfo(bool finished)
 			s += "#FF8000"+TR("#{DidntPass}")+".\n"+TR("#{RepeatStage}.");
 	}
 	edChallStage->setCaption(s);
-	//btChallStage->setCaption(finished ? TR("#{MessageBox_Continue}") : TR("#{ChampStart}"));
+	btChallStage->setCaption(finished ? TR("#{MessageBox_Continue}") : TR("#{ChampStart}"));
 	
 	//  preview image
 	if (!finished)  // only at chall start

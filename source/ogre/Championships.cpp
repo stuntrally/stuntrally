@@ -18,6 +18,7 @@ void App::chkChampRev(WP wp)
 	ButtonPtr chk = wp->castType<MyGUI::Button>();
     chk->setStateSelected(pSet->gui.champ_rev);
 	ChampsListUpdate();
+	ChallsListUpdate();
 }
 
 void App::tabTutType(MyGUI::TabPtr wp, size_t id)
