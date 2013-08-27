@@ -74,7 +74,9 @@
 	<Tag name="ChallEndFinished">You have passed this challenge.</Tag>
 	<Tag name="ChampInfo">In tutorial/championship mode you drive a series of tracks. Minimum score (depending on your time) is needed to pass to next stage. Car changing is possible.</Tag>
 	<Tag name="ChallInfo">In challenge mode the game has setup, most settings can't be changed. Time or position is needed. If you pass you receive bronze, silver or gold prize.</Tag>
-	<Tag name="ChampStart">Start</Tag>
+	<Tag name="Start">Start</Tag>
+	<Tag name="Continue">Continue</Tag>
+	<Tag name="Restart">Restart</Tag>
 
 	<Tag name="Diff0">Test Easy</Tag>
 	<Tag name="Diff1">Very Easy</Tag>
@@ -97,7 +99,7 @@
 	<Tag name="Progress">Progress</Tag>
 	<Tag name="Score">Score</Tag>
 	<Tag name="TotalScore">Total score</Tag>
-	<Tag name="ScoreNeeded">Score needed</Tag>
+	<Tag name="Needed">Needed</Tag>
 	<Tag name="Finished">Finished</Tag>
 
 	<Tag name="Passed">Passed</Tag>
@@ -109,6 +111,7 @@
 	<!--  Track  -->
 	<Tag name="Track">Track</Tag>
 	<Tag name="TipTrackList">Tracks list, click to select and see info. Press Enter or [New Game] to drive on it.</Tag>
+	<Tag name="TrackNotFound">Track not found !</Tag>
 
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="TipReverse">Reverse track direction.</Tag>
@@ -629,10 +632,9 @@
 	<Tag name="Fog">Fog</Tag>
 	<Tag name="FogNormal">Normal</Tag>
 	<Tag name="FogHeight">Height</Tag>
-	<Tag name="FogHeight">Height</Tag>
 	<Tag name="Color">color</Tag>
-	<Tag name="Start">start</Tag>
-	<Tag name="End">end</Tag>
+	<Tag name="FogStart">start</Tag>
+	<Tag name="FogEnd">end</Tag>
 
 	<Tag name="DisableEdit">Disable for edit</Tag>
 	<Tag name="Weather">Weather</Tag>

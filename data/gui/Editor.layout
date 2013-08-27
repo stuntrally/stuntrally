@@ -1020,7 +1020,7 @@
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="44 104 64 24">
-							<Property key="Caption" value="#{Start}"/>
+							<Property key="Caption" value="#{FogStart}"/>
 							<Property key="TextColour" value="0.7 0.85 1"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipFogStartDist}"/>
@@ -1036,7 +1036,7 @@
 							<UserString key="tip" value="#{TipFogStartDist}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="44 128 64 24">
-							<Property key="Caption" value="#{End}"/>
+							<Property key="Caption" value="#{FogEnd}"/>
 							<Property key="TextColour" value="0.7 0.9 1"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipFogEndDist}"/>
@@ -1106,7 +1106,7 @@
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="44 104 64 24">
-							<Property key="Caption" value="#{Start}"/>
+							<Property key="Caption" value="#{FogStart}"/>
 							<Property key="TextColour" value="0.7 0.85 1"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipFogStartDist}"/>
@@ -1122,7 +1122,7 @@
 							<UserString key="tip" value="#{TipFogStartDist}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="44 128 64 24">
-							<Property key="Caption" value="#{End}"/>
+							<Property key="Caption" value="#{FogEnd}"/>
 							<Property key="TextColour" value="0.7 0.9 1"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipFogEndDist}"/>
