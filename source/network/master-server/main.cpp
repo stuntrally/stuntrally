@@ -176,7 +176,8 @@ private:
 
 /// Program entry point
 int main(int argc, char** argv) {
-	std::cout << "Stunt Rally Master Server - version " << VERSIONSTRING << std::endl;
+	std::cout << "Stunt Rally Master Server - version " << VERSIONSTRING
+		<< " (protocol v" << masterserver::PROTOCOL_VERSION << ")" << std::endl;
 	int port = masterserver::DEFAULT_PORT;
 	bool daemonize = false;
 
