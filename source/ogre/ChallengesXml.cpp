@@ -7,13 +7,12 @@
 using namespace Ogre;
 
 
-//  defaults
-ChallTrack::ChallTrack()
+ChallTrack::ChallTrack()  //  defaults
 	:name("J1-T"), laps(1), reversed(0)
 	,passPoints(-1.f), timeNeeded(-1.f), passPos(-1.f)  // pass
 {	}
 
-Chall::Chall()  // defaults..
+Chall::Chall()  //  defaults
 	:ver(1), diff(1), length(0.f), type(0), time(0.f)
 	,name("none"), descr("none")
 	,sim_mode("normal")

@@ -83,6 +83,12 @@
 	<Tag name="Silver">Silver</Tag>
 	<Tag name="Gold">Gold</Tag>
 
+	<Tag name="Chall_Rally">Rally</Tag>
+	<Tag name="Chall_Endurance">Endurance</Tag>
+	<Tag name="Chall_Chase">Chase</Tag>
+	<Tag name="Chall_Stunts">Stunts</Tag>
+	<Tag name="Chall_Extreme">Extreme</Tag>
+
 	<Tag name="Diff0">Test Easy</Tag>
 	<Tag name="Diff1">Very Easy</Tag>
 	<Tag name="Diff2">Easy</Tag>

@@ -37,9 +37,9 @@ void App::tabChallType(MyGUI::TabPtr wp, size_t id)
 //----------------------------------------------------------------------------------------------------------------------
 void App::ChallsListUpdate()
 {
-	const char clrCh[4][8] = {
-	// 0 medium  1 hard  2 extreme  3 test
-		"#FFA040", "#FF8080", "#C080E0", "#A0A0B0" };
+	const char clrCh[6][8] = {
+	// 0 Rally  1 Endurance  2 Chase  3 Stunts  4 Extreme  5 Test
+		"#80C0FF","#60FFA0","#FFA040","#FF8080","#D0C0FF","#909090" };
 
 	liChalls->removeAllItems();  int n=1;  size_t sel = ITEM_NONE;
 	int p = pSet->gui.champ_rev ? 1 : 0;
