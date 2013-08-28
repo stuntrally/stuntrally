@@ -1,4 +1,4 @@
-// Copyright Tapio Vierros 2011-2012
+// Copyright Tapio Vierros 2011-2013
 // Licensed under GPLv3 or later.
 // See License.txt for more info on licensing.
 
@@ -7,12 +7,12 @@
 #include <map>
 #include <ctime>
 #include "../enet-wrapper.hpp"
-#include "../protocol.hpp"
+#include "masterserver.hpp"
 #ifdef __linux
 #include <unistd.h> // for daemon()
 #endif
 
-#define VERSIONSTRING "0.6"
+#define VERSIONSTRING "0.7"
 
 #define DEFAULT_ZOMBIE_TIMEOUT 5
 unsigned g_zombietimeout = DEFAULT_ZOMBIE_TIMEOUT;  // How many seconds without update until a game becomes zombie
@@ -56,7 +56,7 @@ public:
 
 	/// Update or announce a game.
 	/// @param game the game's information
-	void updateGame(protocol::GameInfo& game) {
+	void updateGame(masterserver::GameInfo& game) {
 		if (game.id == 0) {
 			// Assign ID
 			game.id = m_next_id;
@@ -71,7 +71,7 @@ public:
 
 	/// Gets the games.
 	/// @return a packet containing the games in a serialized form
-	const protocol::GameList getGames() const {
+	const masterserver::GameList getGames() const {
 		return m_games;
 	}
 
@@ -80,12 +80,12 @@ public:
 		int removecount = 0;
 		{
 			boost::mutex::scoped_lock lock(m_mutex);
-			protocol::GameList::iterator it = m_games.begin();
+			masterserver::GameList::iterator it = m_games.begin();
 			// Loop through the games
 			while (it != m_games.end()) {
 				// Check condition
 				if ((uint32_t)std::time(NULL) > it->second.timestamp + g_zombietimeout) {
-					out(VERBOSE) << "Zombie game: \"" << it->second.name << "\"" << std::endl;
+					out(VERBOSE) << "Zombie game id " << it->second.id << " from " << net::IPv4(it->second.address) << std::endl;
 					m_games.erase(it++);
 					++removecount;
 				} else ++it;
@@ -97,7 +97,7 @@ public:
 
 private:
 	mutable boost::mutex m_mutex;
-	protocol::GameList m_games;
+	masterserver::GameList m_games;
 	unsigned m_next_id;
 };
 
@@ -105,7 +105,7 @@ private:
 /// Network listener for handling the traffic
 class Server: public net::NetworkListener {
 public:
-	Server(GameListManager& glm, int port = protocol::DEFAULT_PORT)
+	Server(GameListManager& glm, int port = masterserver::DEFAULT_PORT)
 		: m_client(*this, port, NULL, 100), m_glm(glm)
 	{
 		out(NORMAL) << "Listening on port " << port << "..." << std::endl;
@@ -114,15 +114,13 @@ public:
 	void connectionEvent(net::NetworkTraffic const& e)
 	{
 		out(VERBOSE) << "Connection id=" << e.peer_id << " " << e.peer_address << std::endl;
-		if (e.event_data != protocol::MASTER_PROTOCOL_VERSION) {
+		if (e.event_data != masterserver::PROTOCOL_VERSION) {
 			out(VERBOSE) << "Incompatible protocol versions "
-				<< "(my: " << protocol::MASTER_PROTOCOL_VERSION
+				<< "(my: " << masterserver::PROTOCOL_VERSION
 				<< " hers: " << e.event_data << ")!" << std::endl;
-			m_client.disconnect(e.peer_id, false, protocol::INCOMPATIBLE_MASTER_PROTOCOL);
+			m_client.disconnect(e.peer_id, false, masterserver::INCOMPATIBLE_PROTOCOL_VERSION);
 			return;
 		}
-		protocol::HandshakePackage handshake = protocol::HandshakePackage();
-		m_client.send(e.peer_id, net::convert(handshake), net::PACKET_RELIABLE);
 	}
 
 	void disconnectEvent(net::NetworkTraffic const& e)
@@ -134,21 +132,21 @@ public:
 	{
 		if (e.packet_length <= 0 || !e.packet_data) return;
 		switch (e.packet_data[0]) {
-			case protocol::GAME_LIST: {
+			case masterserver::LIST: {
 				out(VERBOSE) << "Game list request received from " << e.peer_address << std::endl;
-				protocol::GameList games = m_glm.getGames();
+				masterserver::GameList games = m_glm.getGames();
 				// Send an info packet for each game
-				for (protocol::GameList::iterator it = games.begin(); it != games.end(); ++it) {
+				for (masterserver::GameList::iterator it = games.begin(); it != games.end(); ++it) {
 					m_client.send(e.peer_id, net::convert(it->second), net::PACKET_RELIABLE);
 				}
 				break;
 			}
-			case protocol::GAME_STATUS: {
+			case masterserver::UPDATE: {
 				// Get peer struct
 				ENetPeer* peer = m_client.getPeerPtr(e.peer_id);
 				if (!peer) return;
 				// Unserialize
-				protocol::GameInfo game = *reinterpret_cast<const protocol::GameInfo*>(e.packet_data);
+				masterserver::GameInfo game = *reinterpret_cast<const masterserver::GameInfo*>(e.packet_data);
 				if (game.id == 0)
 					out(VERBOSE) << "A game received from " << e.peer_address << std::endl;
 				// Fill in peer address
@@ -156,11 +154,11 @@ public:
 				// Update game status
 				m_glm.updateGame(game);
 				// Send confirmation (and id in case of new game)
-				game.packet_type = protocol::GAME_ACCEPTED;
+				game.packet_type = masterserver::SUCCESS;
 				m_client.send(e.peer_id, net::convert(game), net::PACKET_RELIABLE);
 				break;
 			}
-			case protocol::START_GAME: {
+			case masterserver::START: {
 				out(VERBOSE) << "A game started" << std::endl;
 				break;
 			}
@@ -179,7 +177,7 @@ private:
 /// Program entry point
 int main(int argc, char** argv) {
 	std::cout << "Stunt Rally Master Server - version " << VERSIONSTRING << std::endl;
-	int port = protocol::DEFAULT_PORT;
+	int port = masterserver::DEFAULT_PORT;
 	bool daemonize = false;
 
 	// Command line handling
@@ -201,7 +199,7 @@ int main(int argc, char** argv) {
 				<< "  -t, --timeout <seconds>     seconds without update and the game becomes zombie" << std::endl
 				<< "                              default: " << DEFAULT_ZOMBIE_TIMEOUT << std::endl
 				<< "  -p, --port <portnumber>     listen given port for connections" << std::endl
-				<< "                              default: " << protocol::DEFAULT_PORT << std::endl
+				<< "                              default: " << masterserver::DEFAULT_PORT << std::endl
 				;
 			return 0;
 		} else if (arg == "--verbose" || arg == "-V") {

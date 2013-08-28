@@ -22,7 +22,7 @@ const unsigned DEFAULT_PORT = 4242;
 enum PacketType {
 	LIST,          // Client requests master server to list games
 	UPDATE,        // An available game (either client updates, or server reports)
-	REMOVE,        // Client removes a game
+	START,         // Client signals a game is started
 	SUCCESS,       // Ack
 	ERROR          // Error response
 };
@@ -54,6 +54,6 @@ struct GameInfo {
 	GameInfo(): version(PROTOCOL_VERSION) {}
 };
 
-typedef std::map<uint32_t, protocol::GameInfo> GameList;
+typedef std::map<uint32_t, GameInfo> GameList;
 
 } // namespace masterserver
