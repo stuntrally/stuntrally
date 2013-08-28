@@ -1264,19 +1264,19 @@
 					<Property key="Colour" value="0.8 1.0 0.9"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
                     <Widget type="TabItem" skin="" position="2 24 532 8">
-						<Property key="Caption" value="#80C0FF#{Chall_Rally}"/>
+						<Property key="Caption" value="#A0D0FF#{Chall_Rally}"/>
 					</Widget>
                     <Widget type="TabItem" skin="" position="2 24 532 8">
-						<Property key="Caption" value="#60FFA0#{Chall_Endurance}"/>
+						<Property key="Caption" value="#80FF80#{Chall_Endurance}"/>
 					</Widget>
                     <Widget type="TabItem" skin="" position="2 24 532 8">
-						<Property key="Caption" value="#FFA040#{Chall_Chase}"/>
+						<Property key="Caption" value="#FFC060#{Chall_Chase}"/>
 					</Widget>
                     <Widget type="TabItem" skin="" position="2 24 532 8">
 						<Property key="Caption" value="#FF8080#{Chall_Stunts}"/>
 					</Widget>
                     <Widget type="TabItem" skin="" position="2 24 532 8">
-						<Property key="Caption" value="#D0C0FF#{Chall_Extreme}"/>
+						<Property key="Caption" value="#D0C0F0#{Chall_Extreme}"/>
 					</Widget>
                     <Widget type="TabItem" skin="" position="2 24 532 8">
 						<Property key="Caption" value="#909090Test"/>

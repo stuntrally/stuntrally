@@ -340,7 +340,7 @@ void App::toggleGui(bool toggle)
 	bool game = pSet->inMenu == MNU_Single, champ = pSet->inMenu == MNU_Champ,
 		tutor = pSet->inMenu == MNU_Tutorial, chall = pSet->inMenu == MNU_Challenge,
 		chAny = champ || tutor || chall, gc = game || chAny;
-	UString sCh = chall ? TR("#80FFC0#{Challenge}") : (tutor ? TR("#FFC020#{Tutorial}") : TR("#80C0FF#{Championship}"));
+	UString sCh = chall ? TR("#90FFD0#{Challenge}") : (tutor ? TR("#FFC020#{Tutorial}") : TR("#80C0FF#{Championship}"));
 
 	UpdChampTabVis();
 	
