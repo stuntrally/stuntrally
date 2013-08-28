@@ -114,7 +114,7 @@ endif()
 
 # Master server
 if (BUILD_MASTER_SERVER)
-	file(GLOB SERVER_SOURCES network/master-server/main.cpp) # Glob .cpp files needed for the server
+	file(GLOB SERVER_SOURCES network/master-server/*.cpp network/master-server/*.hpp)
 	add_executable(${SERVER_EXE} ${SERVER_SOURCES})
 	target_link_libraries(${SERVER_EXE} ${SERVER_LIBS})
 	install(TARGETS ${SERVER_EXE} DESTINATION bin)
