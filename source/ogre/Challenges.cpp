@@ -377,7 +377,7 @@ void App::ChallengeAdvance(float timeCur/*total*/)
 		
 		pc.fin = passed ? 2 : -1;
 		if (passed)  //todo: 0 bronze, 1 silver, 2 gold ..
-			s += TR("\n#E0F0F8#{Prize}: "+StrPrize(pc.fin+1)+"\n");
+			s += TR("\n#E0F0F8#{Prize}: ")+StrPrize(pc.fin)+"\n";
 		
 		ProgressLSave();
 
@@ -395,10 +395,10 @@ void App::ChallengeAdvance(float timeCur/*total*/)
 	}
 }
 
-String App::StrPrize(int i)
+String App::StrPrize(int i)  //-1..2
 {
-	const static String prAr[4] = {"#C0D0E0--","#D0B060#{Silver}","#E0E0E0#{Silver}","#F0F0D0#{Gold}"};
-	return TR(prAr[i]);
+	const static String prAr[4] = {"#C0D0E0--","#D0B060#{Bronze}","#E0E0E0#{Silver}","#F0F0D0#{Gold}"};
+	return TR(prAr[i+1]);
 }
 
 
@@ -569,7 +569,7 @@ void App::UpdChallDetail(int id)
 	if (cur > 0)
 	{
 		s1 += TR("#B0FFFF#{Progress}\n");    s2 += "#D0FFFF"+fToStr(100.f * cur / all,1,5)+" %\n";
-		s1 += TR("#B0FFFF#{Prize}\n");       s2 += StrPrize(pc.fin)+"\n";
+		s1 += TR("#E0F0FF#{Prize}\n");       s2 += StrPrize(pc.fin)+"\n";
 		s1 += "\n";  s2 += "\n";
 		s1 += TR("#D8E0FF  #{TBTime}\n");      s2 += "#F0F8FF"+GetTimeString(pc.totalTime)+"\n";
 		s1 += TR("#D8E0FF  #{TBPoints}\n");    s2 += "#F0F8FF"+fToStr(pc.avgPoints,2,5)+"\n";

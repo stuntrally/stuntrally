@@ -334,6 +334,7 @@
 		<track name="J18-Tiny"		laps="1" />
 		<track name="J19-demo2"		laps="1" />
 		<track name="J20-JungleMaze" laps="1" />
+		<track name="J21-Paradise"	laps="1" />
 	</championship>
 	<championship name="Savanna scenery" ver="1" difficulty="5" type="5" 
 			descr="Savanna championship. All tracks for this scenery in their appearance order.">
@@ -349,6 +350,7 @@
 		<track name="S12-Infinity"	laps="1" />
 		<track name="S13-Hole"		laps="1" />
 		<track name="S14-Refinery"	laps="1" factor="0.2" />
+		<track name="S15-Scorpio"	laps="1" factor="0.2" />
 	</championship>
 	<championship name="Winter scenery" ver="1" difficulty="3" type="5" 
 			descr="Winter championship. All tracks for this scenery in their appearance order.">
@@ -397,11 +399,15 @@
 		<track name="I10-Treasure"	laps="1" />
 		<track name="I11-StuntIslands" laps="1" factor="0.2" />
 		<track name="I12-Beach"		laps="1" />
+		<track name="I13-Beauty"	laps="1" factor="0.15" />
 	</championship>
-	<championship name="Mud and Canyon scenery" ver="1" difficulty="2" type="5" 
-			descr="Mud and Canyon championship. All tracks for those sceneries in their appearance order.">
+	<championship name="Mud scenery" ver="1" difficulty="2" type="5" 
+			descr="Mud championship. All tracks for this scenery in their appearance order.">
 		<track name="M1-Hills"		laps="1" />
 		<track name="M2-Bumps"		laps="1" />
+	</championship>
+	<championship name="Canyon scenery" ver="1" difficulty="2" type="5" 
+			descr="Canyon championship. All tracks for this scenery in their appearance order.">
 		<track name="C1-Hairpins"	laps="1" />
 		<track name="C2-CanyonRun"	laps="1" />
 		<track name="C3-Vast"		laps="1" />
@@ -424,28 +430,35 @@
 		<track name="G4-River"		laps="1" />
 		<track name="G5-Climb"		laps="1" />
 	</championship>
-	<championship name="Autumn and Moss scenery" ver="1" difficulty="2" type="5" 
-			descr="Autumn and Moss championship. All tracks for those sceneries in their appearance order.">
+	<championship name="Autumn scenery" ver="1" difficulty="2" type="5" 
+			descr="Autumn championship. All tracks for this scenery in their appearance order.">
 		<track name="T1-Autumn"		laps="1" />
 		<track name="T2-RedOakPark"	laps="1" />
 		<track name="T3-Orange"		laps="1" />
 		<track name="T4-Scary"		laps="1" factor="0.15" />
 		<track name="T5-Twister"	laps="1" factor="0.15" />
 		<track name="T6-Sunset"		laps="1" />
+	</championship>
+	<championship name="Moss scenery" ver="1" difficulty="2" type="5" 
+			descr="Moss championship. All tracks for this scenery in their appearance order.">
 		<track name="O1-Moss"		laps="1" />
 		<track name="O2-Mouse"		laps="1" />
 	</championship>
-	<championship name="Other sceneries" ver="1" difficulty="4" type="5" 
-			descr="Other sceneries championship: Volcanic and Unidentified.">
+	<championship name="Volcanic scenery" ver="1" difficulty="4" type="5" 
+			descr="Volcanic sceneries championship: Volcanic and Unidentified.">
 		<track name="V1-Dark"		laps="1" />
 		<track name="V2-Volcanic"	laps="1" />
 		<track name="V3-Crater"		laps="1" />
 		<track name="V4-Spikeland"	laps="1" />
 		<track name="V5-Sad"		laps="1" />
+	</championship>
+	<championship name="Unidentified scenery" ver="1" difficulty="4" type="5" 
+			descr="Volcanic sceneries championship: Volcanic and Unidentified.">
 		<track name="X1-Magic"		laps="1" />
 		<track name="X2-Swirl"		laps="1" />
 		<track name="X3-Cloud"		laps="1" />
 		<track name="X4-Pipeline"	laps="1" factor="0.15" />
+		<track name="R1-Mars"		laps="1" factor="0.15" />
 	</championship>
 
 <!--  Test  -->
