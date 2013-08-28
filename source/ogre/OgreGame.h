@@ -610,7 +610,7 @@ protected:
 	void evBtnNetDirect(WP),evBtnNetDirectClose();
 	void evBtnNetReady(WP),evBtnNetLeave(WP);
 
-	MyGUI::StaticTextPtr valNetGames, valNetGameName, valNetChat, valNetGameInfo, valNetPassword;
+	MyGUI::StaticTextPtr valNetGameName, valNetChat, valNetGameInfo, valNetPassword;
 	MyGUI::ButtonPtr btnNetSendMsg;  void chatSendMsg();
 	MyGUI::EditPtr edNetGameName, edNetChatMsg, edNetPassword,
 		edNetNick, edNetServerIP, edNetServerPort, edNetLocalPort;

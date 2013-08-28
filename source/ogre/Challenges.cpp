@@ -398,7 +398,7 @@ void App::ChallengeAdvance(float timeCur/*total*/)
 String App::StrPrize(int i)
 {
 	const static String prAr[4] = {"#C0D0E0--","#D0B060#{Silver}","#E0E0E0#{Silver}","#F0F0D0#{Gold}"};
-	return prAr[i];
+	return TR(prAr[i]);
 }
 
 

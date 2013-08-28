@@ -379,7 +379,7 @@ void App::UpdateHUD(int carId, float time)
 			ovWarnWin->show();  else  ovWarnWin->hide();  //ov
 			
 		//  lap num (for many or champ)
-		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
+		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || pSet->game.chall_num >= 0 || mClient;
 		if (hasLaps)
 		{
 			if (pCarM->iWonPlace > 0 && hudWonPlace)

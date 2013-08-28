@@ -44,15 +44,15 @@ void App::rebuildGameList()
 	for (protocol::GameList::const_iterator it = list.begin(); it != list.end(); ++it)
 	{
 		listServers->addItem("#C0FFC0"+UString(it->second.name));  int l = listServers->getItemCount()-1;
-		listServers->setSubItemNameAt(1, l, "#50FF50"+string(it->second.track));
-		listServers->setSubItemNameAt(2, l, "#80FFC0"+toStr((int)it->second.laps));
-		listServers->setSubItemNameAt(3, l, "#FFFF00"+toStr((int)it->second.players));
-		listServers->setSubItemNameAt(4, l, "#80FFFF"+yesno((bool)it->second.collisions));
-		listServers->setSubItemNameAt(5, l, "#D0D0FF"+string(it->second.sim_mode));
-		listServers->setSubItemNameAt(6, l, "#A0D0FF"+TR(sBoost[it->second.boost_type]));
-		listServers->setSubItemNameAt(iColLock, l, "#FF6060"+yesno((bool)it->second.locked));
-		listServers->setSubItemNameAt(iColHost, l, "#FF9000"+net::IPv4(it->second.address));
-		listServers->setSubItemNameAt(iColPort, l, "#FFB000"+toStr((int)it->second.port));
+		listServers->setSubItemNameAt(1,l, "#50FF50"+ string(it->second.track));
+		listServers->setSubItemNameAt(2,l, "#80FFC0"+ toStr((int)it->second.laps));
+		listServers->setSubItemNameAt(3,l, "#FFFF00"+ toStr((int)it->second.players));
+		listServers->setSubItemNameAt(4,l, "#80FFFF"+ yesno((bool)it->second.collisions));
+		listServers->setSubItemNameAt(5,l, "#D0D0FF"+ string(it->second.sim_mode));
+		listServers->setSubItemNameAt(6,l, "#A0D0FF"+ TR(sBoost[it->second.boost_type]));
+		listServers->setSubItemNameAt(iColLock,l, "#FF6060"+ yesno((bool)it->second.locked));
+		listServers->setSubItemNameAt(iColHost,l, "#FF9000"+ net::IPv4(it->second.address));
+		listServers->setSubItemNameAt(iColPort,l, "#FFB000"+ toStr((int)it->second.port));
 	}
 }
 
@@ -62,12 +62,12 @@ void App::rebuildPlayerList()
 	listPlayers->removeAllItems();
 
 	//  Add self
-	unsigned peerCount = mClient->getPeerCount();
-	listPlayers->addItem("#C0E0FF"+pSet->nickname);
-	listPlayers->setSubItemNameAt(1, 0, "#80FFFF"+sListCar); // Car
-	listPlayers->setSubItemNameAt(2, 0, "#C0C0FF"+toStr(peerCount)); // Peers
-	listPlayers->setSubItemNameAt(3, 0, "#C0FFFF""0");  bool rd = mClient->isReady(); // Ping
-	listPlayers->setSubItemNameAt(4, 0, (rd?"#80FF80":"#FF8080")+yesno(rd)); // Ready state
+	int peerCount = mClient->getPeerCount();
+	listPlayers->addItem("#C0E0FF"+ pSet->nickname);
+	listPlayers->setSubItemNameAt(1,0, "#80FFFF"+ sListCar);
+	listPlayers->setSubItemNameAt(2,0, "#F0F060"+ toStr(peerCount));
+	listPlayers->setSubItemNameAt(3,0, "#C0F0F0" "0");  bool rd = mClient->isReady();
+	listPlayers->setSubItemNameAt(4,0, (rd?"#60FF60":"#FF8080")+ yesno(rd));
 
 	//  Add others
 	bool allReady = true;
@@ -81,11 +81,11 @@ void App::rebuildPlayerList()
 			allReady = false;
 
 		// Add list item
-		listPlayers->addItem("#C0E0FF"+it->second.name);  int l = listPlayers->getItemCount()-1;
-		listPlayers->setSubItemNameAt(1, l, "#80FFFF"+it->second.car);
-		listPlayers->setSubItemNameAt(2, l, "#C0C0FF"+toStr(it->second.peers));
-		listPlayers->setSubItemNameAt(3, l, "#C0FFFF"+toStr(it->second.ping));  bool rd = it->second.ready;
-		listPlayers->setSubItemNameAt(4, l, (rd?"#80FF80":"#FF8080")+yesno(rd));
+		listPlayers->addItem("#C0E0FF"+ it->second.name);  int l = listPlayers->getItemCount()-1;
+		listPlayers->setSubItemNameAt(1,l, "#80FFFF"+ it->second.car);
+		listPlayers->setSubItemNameAt(2,l, "#F0F060"+ toStr(it->second.peers));
+		listPlayers->setSubItemNameAt(3,l, "#C0F0F0"+ toStr(it->second.ping));  bool rd = it->second.ready;
+		listPlayers->setSubItemNameAt(4,l, (rd?"#60FF60":"#FF8080")+ yesno(rd));
 	}
 	//  Allow host to start the game
 	if (mLobbyState == HOSTING)
@@ -476,17 +476,14 @@ void App::evBtnNetReady(WP)
 			bStartGame = true;
 			bStartedGame = true;
 			btnNetReady->setCaption( TR("#{NetNew}") );
-		}
-		else
-		{
+		}else{
 			mClient->returnToLobby();
 			boost::mutex::scoped_lock lock(netGuiMutex);
 			bStartGame = false;
 			bStartedGame = false;
 			btnNetReady->setCaption( TR("#{NetStart}") );
 		}
-	}
-	else
+	}else
 	{
 		if (mClient->isReady())
 			btnNetReady->setCaption( TR("#{NetWaiting}") );

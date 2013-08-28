@@ -346,8 +346,10 @@ void App::updTrkListDim()
 	trkList->setCoord(xt, yt, sw + 8/*frame*/, 0.70/*height*/*wi.height);
 	imgTrkIco1->setCoord(xt + xico1+2, yico, 3*wico, wico);
 	imgTrkIco2->setCoord(xt + xico2+2, yico, 8*wico, wico);
+	#ifndef SR_EDITOR
 	bool hid = panelNetTrack && panelNetTrack->getVisible();
 	if (!hid)
+	#endif
 		trkList->setVisible(true);
 
 	//  car list  ----------

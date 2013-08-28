@@ -419,7 +419,6 @@ void App::InitGui()
 	//tabsNet->setIndexSelected( (tabsNet->getIndexSelected() - 1 + num) % num );
 	
 	//  server, games
-	valNetGames = mGUI->findWidget<StaticText>("valNetGames");
 	listServers = mGUI->findWidget<MultiList>("MListServers");  int c=0;
 	if (listServers)
 	{	listServers->addColumn("#C0FFC0"+TR("#{Game name}"), 160);  ++c;
@@ -453,11 +452,11 @@ void App::InitGui()
 
 	listPlayers = mGUI->findWidget<MultiList>("MListPlayers");
 	if (listPlayers)
-	{	listPlayers->addColumn("#C0E0FF"+TR("#{Player}"), 140);
-		listPlayers->addColumn("#80FFFF"+TR("#{Car}"), 60);
-		listPlayers->addColumn("#C0C0FF"+TR("#{Peers}"), 60);
-		listPlayers->addColumn("#C0FFFF"+TR("#{Ping}"), 60);
-		listPlayers->addColumn("#C0FF80"+TR("#{NetReady}"), 60);
+	{	listPlayers->addColumn("#80C0FF"+TR("#{Player}"), 140);
+		listPlayers->addColumn("#F08080"+TR("#{Car}"), 60);
+		listPlayers->addColumn("#C0C060"+TR("#{Peers}"), 60);
+		listPlayers->addColumn("#60F0F0"+TR("#{Ping}"), 60);
+		listPlayers->addColumn("#40F040"+TR("#{NetReady}"), 60);
 	}
 	Btn("btnNetReady", evBtnNetReady);  btnNetReady = btn;
 	Btn("btnNetLeave", evBtnNetLeave);	btnNetLeave = btn;
@@ -625,11 +624,11 @@ void App::InitGui()
    	li->setVisible(false);
 	
 	li->removeAllColumns();  c=0;
-	li->addColumn("N", ChLColW[c++]);
+	li->addColumn("#809080N", ChLColW[c++]);
 	li->addColumn(TR("#{Name}"), ChLColW[c++]);		li->addColumn(TR("#{Difficulty}"), ChLColW[c++]);
-	li->addColumn(TR("#{Cars}"), ChLColW[c++]);	
+	li->addColumn(TR("#F0C0C0#{Cars}"), ChLColW[c++]);	
 	li->addColumn(TR("#{Stages}"), ChLColW[c++]);	li->addColumn(TR("#{Time} m"), ChLColW[c++]);
-	li->addColumn(TR("#{Progress}"), ChLColW[c++]);	li->addColumn(TR("#{Score}"), ChLColW[c++]);
+	li->addColumn(TR("#{Progress}"), ChLColW[c++]);	li->addColumn(TR("#{Prize}"), ChLColW[c++]);
 	li->addColumn(" ", ChLColW[c++]);
 	liChalls = li;
 

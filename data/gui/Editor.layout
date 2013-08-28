@@ -3527,6 +3527,55 @@
 					<Widget type="TabItem" skin="" position="2 24 738 352">
 						<Property key="Caption" value="#D0FF60#{Materials}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
+						<Widget type="TextBox" skin="TextBox" position="32 50 144 24">
+							<Property key="Caption" value="#{Terrain}"/>
+							<Property key="Colour" value="0 0 0"/>
+							<Property key="TextColour" value="0.6 1.0 0.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="248 50 320 18" name="TerMtr">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="180 50 60 24" name="TerMtrVal">
+							<Property key="TextColour" value="0.6 1.0 0.1"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 80 144 24">
+							<Property key="Caption" value="#{Triplanar}"/>
+							<Property key="Colour" value="0 0 0"/>
+							<Property key="TextColour" value="0.6 0.9 0.6"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="248 80 320 18" name="TerTripl">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="180 80 60 24" name="TerTriplVal">
+							<Property key="TextColour" value="0.6 0.9 0.6"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 110 144 24">
+							<Property key="Colour" value="0 0 0"/>
+							<Property key="Caption" value="#{Shaders}"/>
+							<Property key="TextColour" value="1.0 1.0 0.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="248 110 320 18" name="Shaders">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="180 110 60 24" name="ShadersVal">
+							<Property key="TextColour" value="1.0 1.0 0.1"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="32 150 200 26" layer="Back" name="ApplyShaders">
+							<Property key="Caption" value="#{ApplyShaders}"/>
+							<Property key="Colour" value="0.8 1.0 0.7"/>
+							<Property key="TextColour" value="0.8 1.0 0.7"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 738 352">
+						<Property key="Caption" value="#60FF60#{Textures}"/>
+						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="ComboBox" skin="ComboBox" position="180 47 136 24" name="TexFiltering">
 							<Property key="Caption" value="Anisotropic"/>
 							<Property key="AddItem" value="Bilinear"/>
@@ -3559,60 +3608,14 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 110 144 24">
 							<Property key="Caption" value="#{TexSize}**"/>
-							<Property key="Colour" value="0 0 0"/>
-							<Property key="TextColour" value="0.5 0.7 0.5"/>
+							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="248 110 320 18" name="TexSize">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="180 110 60 24" name="TexSizeVal">
-							<Property key="TextColour" value="0.5 0.7 0.5"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-
-						<Widget type="TextBox" skin="TextBox" position="32 160 144 24">
-							<Property key="Caption" value="#{Terrain}"/>
-							<Property key="Colour" value="0 0 0"/>
-							<Property key="TextColour" value="0.6 1.0 0.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="248 160 320 18" name="TerMtr">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="180 160 60 24" name="TerMtrVal">
-							<Property key="TextColour" value="0.6 1.0 0.1"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 190 144 24">
-							<Property key="Caption" value="#{Triplanar}"/>
-							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="248 190 320 18" name="TerTripl">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="180 190 60 24" name="TerTriplVal">
-							<Property key="TextColour" value="0.6 0.9 0.6"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 220 144 24">
-							<Property key="Colour" value="0 0 0"/>
-							<Property key="Caption" value="#{Shaders}"/>
-							<Property key="TextColour" value="1.0 1.0 0.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="248 220 320 18" name="Shaders">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="180 220 60 24" name="ShadersVal">
-							<Property key="TextColour" value="1.0 1.0 0.1"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="Button" position="32 256 200 26" layer="Back" name="ApplyShaders">
-							<Property key="Caption" value="#{ApplyShaders}"/>
-							<Property key="Colour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 					</Widget>
@@ -3749,7 +3752,8 @@
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="Button" position="32 180 200 26" layer="Back" name="Apply">
 							<Property key="Caption" value="#{ApplyShadows}"/>
-							<Property key="Colour" value="0.7 0.85 1.0"/>
+							<Property key="Colour" value="0.9 0.97 1.0"/>
+							<Property key="TextColour" value="0.9 0.97 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 50 144 24">
@@ -3833,7 +3837,8 @@
 						</Widget>
 						<Widget type="Button" skin="Button" position="32 150 200 26" layer="Back" name="ApplyShadersWater">
 							<Property key="Caption" value="#{ApplyShaders}"/>
-							<Property key="Colour" value="0.7 0.85 1.0"/>
+							<Property key="Colour" value="0.5 0.75 1.0"/>
+							<Property key="TextColour" value="0.5 0.75 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 					</Widget>
