@@ -1267,7 +1267,10 @@
 						<Property key="Caption" value="#A0D0FF#{Chall_Rally}"/>
 					</Widget>
                     <Widget type="TabItem" skin="" position="2 24 532 8">
-						<Property key="Caption" value="#80FF80#{Chall_Endurance}"/>
+						<Property key="Caption" value="#80FF80#{Scenery}"/>
+					</Widget>
+                    <Widget type="TabItem" skin="" position="2 24 532 8">
+						<Property key="Caption" value="#C0FF80#{Chall_Endurance}"/>
 					</Widget>
                     <Widget type="TabItem" skin="" position="2 24 532 8">
 						<Property key="Caption" value="#FFC060#{Chall_Chase}"/>

@@ -5,12 +5,12 @@
 			//  increase ver if you changed challenge (no need if track count changed)
 
 			//  type is for putting it into gui diffuculty tabs
-			//    0 Rally  1 Endurance  2 Chase  3 Stunts  4 Extreme  5 Test
+			//    0 Rally  1 Scenery  2 Endurance  3 Chase  4 Stunts  5 Extreme  6 Test
 
 			//  difficulty is for text displayed in list
 			//    "1" easy .. "3" medium .. "6" extreme
 
-	<challenge name="Test Challenge 1" ver="1" difficulty="0" type="2" 
+	<challenge name="Test Challenge 1" ver="1" difficulty="0" type="3" 
 			descr="Challenge 1, to test logic.">
 						
 			//  *** Game setup ***
@@ -82,11 +82,11 @@
 
 		<!--<t name="F3-Snail"          time="40.1" />-->
 		<!--<t name="S9-demo"           time="36.1" />-->
-			<t name="J9-Sharp"          time="47.2" />
 
 		<!--<t name="I1-star3"          time="48.0" />-->
-		<!--<t name="0W6-88"            time="127.8" />-->
 		<!--<t name="I2-S8"             time="40.0" />-->
+
+		<!--<t name="0W6-88"            time="127.8" />-->
 		<!--<t name="G1-Long"           time="296.3" />-->
 
 		<!--<t name="D9-Mud"            time="47.0" />-->
@@ -100,28 +100,12 @@
 		<!--<t name="J19-demo2"         time="58.2" />-->
 		<!--<t name="D3-P"              time="53.4" />-->
 
-			<t name="J1-T"              time="47.5" />
-			<t name="J3-Rocky"          time="49.8" />
+		<!--<t name="J1-T"              time="47.5" />-->
+		<!--<t name="J3-Rocky"          time="49.8" />-->
+		<!--<t name="J9-Sharp"          time="47.2" />-->
 
-			<t name="J5-Pipes"          time="30.0" />
-			<t name="J4-Pipe8"          time="21.0" />
-
-			<!--slippery-->
-			<t name="0W1-cross"         time="65.0" />
-			<t name="0W3-mouth"         time="40.0" />
-			<t name="0W10-Whirl"        passPoints="9" />
-
-			<!--bump rocky-->
-			<t name="M1-Hills"          time="34.2" />
-			<t name="M2-Bumps"          time="57.6" />
-			<t name="D2-Mntn"           time="66.5" />
-
-			<!--hilly-->
-			<t name="I7-Moses"          time="63.2" />
-			<t name="F10-MntnTrail"     time="151.8" />
-
-			<t name="I3-Islands"        time="105.2" />
-			<t name="0W7-LJs-Mntn"      time="48.0" />
+		<!--<t name="J5-Pipes"          time="30.0" />-->
+		<!--<t name="J4-Pipe8"          time="21.0" />-->
 
 
 	<challenge name="Slippery Shorts" ver="1" difficulty="2" type="0" 
@@ -162,7 +146,7 @@
 	</challenge>
 
 	<challenge name="Small banked" ver="1" difficulty="2" type="0" 
-			descr="S">
+			descr="Short banked tracks.">
 		<cartype names="Gravel|Terrain" />
 		<pass avgPoints="11" />
 		<tracks>
@@ -175,7 +159,7 @@
 	</challenge>
 
 
-	<challenge name="Island Beauty" ver="1" difficulty="2" type="0" 
+	<challenge name="Island Beauty" ver="1" difficulty="2" type="1" 
 			descr="A trip on various beautiful island tracks.">
 		<cartype names="Gravel|Terrain" />
 		<pass avgPoints="11" />
@@ -183,11 +167,12 @@
 			<t name="I10-Treasure" passPoints="9" />
 			<t name="I12-Beach"    passPoints="9" />
 			<t name="I5-Shore"     passPoints="9" />
+			<t name="I3-Islands"   passPoints="9" />
 			<t name="I13-Beauty"   passPoints="9" />
 		</tracks>
 	</challenge>
 
-	<challenge name="Autumn Forests" ver="1" difficulty="2" type="0" 
+	<challenge name="Autumn Forests" ver="1" difficulty="2" type="1" 
 			descr="Forest tracks, mostly in nice autumn colors.">
 		<cartype names="Gravel|Terrain" />
 		<pass avgPoints="11" />
@@ -200,8 +185,8 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Jungle Trip" ver="1" difficulty="3" type="0" 
-			descr="A trip inside jungle.">
+	<challenge name="Jungle Trip" ver="1" difficulty="3" type="1" 
+			descr="A trip inside jungle. 2 long tracks.">
 		<cartype names="Gravel" />
 		<pass avgPoints="11" />
 		<tracks>
@@ -210,7 +195,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Savanna Frenzy" ver="1" difficulty="3" type="0" 
+	<challenge name="Savanna Frenzy" ver="1" difficulty="3" type="1" 
 			descr="A trip to savanna, and it's frenzy roads.">
 		<car names="TC6|LK4" />
 		<pass avgPoints="11" />
@@ -220,7 +205,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Desert Visit" ver="1" difficulty="3" type="0" 
+	<challenge name="Desert Visit" ver="1" difficulty="3" type="1" 
 			descr="Visit to desert.">
 		<car names="UV|HR|LK4" />
 		<pass avgPoints="11" />
@@ -231,11 +216,24 @@
 			<t name="D11-PersianCity" passPoints="9" />
 		</tracks>
 	</challenge>
+	
+	<challenge name="Winter sleep" ver="1" difficulty="3" type="1" 
+			descr="Visit to desert.">
+		<cartype names="Gravel" />
+		<pass avgPoints="10" />
+		<tracks>
+			<t name="0W1-cross"      passPoints="9" />
+			<t name="0W3-mouth"      passPoints="9" />
+			<t name="0W7-LJs-Mntn"   passPoints="9" />
+			<t name="0W10-Whirl"     passPoints="9" />
+		</tracks>
+	</challenge>
+	
 
 <!--  Endurance  (long)  -->
 <!--========================================================================================================================-->
 
-	<challenge name="The Long Beauty" ver="1" difficulty="2" type="1" 
+	<challenge name="The Long Beauty" ver="1" difficulty="2" type="2" 
 			descr="Very long and beautiful terrain tracks.">
 		<cartype names="Gravel|Terrain" />
 		<pass avgPoints="10" />
@@ -247,7 +245,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Bumpy Rally" ver="1" difficulty="2" type="1" 
+	<challenge name="Bumpy Rally" ver="1" difficulty="2" type="2" 
 			descr="Short, fast tracks, positively banked.">
 		<cartype names="Gravel|Terrain" />
 		<pass avgPoints="10" />
@@ -258,7 +256,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Long endurance" ver="1" difficulty="2" type="1" 
+	<challenge name="Long endurance" ver="1" difficulty="2" type="2" 
 			descr="Very long tracks, needing strong endurance skills. Clean driving with no mistakes.">
 		<cartype names="Gravel|Terrain" />
 		<pass avgPoints="10" />
@@ -271,7 +269,28 @@
 	</challenge>
 
 
-	<challenge name="Swamps" ver="1" difficulty="3" type="1" 
+	<challenge name="Bumpy rocks" ver="1" difficulty="2" type="2" 
+			descr="Short tracks on wet, very slippery road.">
+		<cartype names="Gravel|Terrain" />
+		<pass avgPoints="10" />
+		<tracks>
+			<t name="M1-Hills"   passPoints="9" />
+			<t name="M2-Bumps"   passPoints="9" />
+			<t name="D2-Mntn"    passPoints="9" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Mad Hills" ver="1" difficulty="3" type="2" 
+			descr="Medium tracks on quite noisy, random hills.">
+		<cartype names="Gravel|Terrain" />
+		<pass avgPoints="10" />
+		<tracks>
+			<t name="I7-Moses"       passPoints="9" />
+			<t name="F10-MntnTrail"  passPoints="9" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Swamps" ver="1" difficulty="3" type="2" 
 			descr="The original Swamp and MudBath tracks. Quite bumpy and a bit tricky. Need to know the route to drive them fast.">
 		<cartype names="Gravel|Terrain" />
 		<pass avgPoints="11" />
@@ -281,14 +300,14 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Tricky Heights" ver="1" difficulty="4" type="1" 
+	<challenge name="Tricky Heights" ver="1" difficulty="4" type="2" 
 			descr="Medium tracks placed very high in mountains. Also curly and tricky.">
 		<cartype names="Terrain" />
-		<pass avgPos="2" />
+		<pass avgPos="1" />
 		<tracks>
-			<t name="0W12-Peaks"  passPos="2" />
-			<t name="F13-Castle"  passPos="2" />
-			<t name="F16-Clew"    passPos="4" />
+			<t name="0W12-Peaks"  passPos="1" />
+			<t name="F13-Castle"  passPos="1" />
+			<t name="F16-Clew"    passPos="2" />
 		</tracks>
 	</challenge>
 
@@ -296,7 +315,7 @@
 <!--  Chase  (fast)  -->
 <!--========================================================================================================================-->
 
-	<challenge name="Tricky Jungle" ver="1" difficulty="3" type="2" 
+	<challenge name="Tricky Jungle" ver="1" difficulty="3" type="3" 
 			descr="Very fast drive through short, narrow, twisted jungle tracks. Don't go too fast, it's better to be slower than to hit a tree.">
 		<cartype names="Gravel" />
 		<pass avgPoints="11" />
@@ -307,7 +326,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Mud Attack" ver="1" difficulty="3" type="2" 
+	<challenge name="Mud Attack" ver="1" difficulty="3" type="3" 
 			descr="Very fast drive through the most mud filled tracks, short and curly. Use boost in mud to be faster.">
 		<cartype names="Gravel" />
 		<pass avgPoints="11" />
@@ -318,7 +337,7 @@
 	</challenge>
 
 
-	<challenge name="Max Banked" ver="1" difficulty="3" type="2" 
+	<challenge name="Max Banked" ver="1" difficulty="3" type="3" 
 			descr="Maximum banked terrain tracks. Very fast and with side turns.">
 		<car names="ES|S1|XZ" />
 		<pass avgPoints="10" />
@@ -330,7 +349,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Twisted Bridges" ver="1" difficulty="3" type="2" 
+	<challenge name="Twisted Bridges" ver="1" difficulty="3" type="3" 
 			descr="Banked and twisted bridged roads. You get fast cars, but the key is to drive not too fast.">
 		<!--<cartype names="Asphalt" />-->
 		<car names="XZ" />
@@ -345,7 +364,7 @@
 <!--  Stunts  -->
 <!--========================================================================================================================-->
 
-	<challenge name="Perfect Jumps" ver="1" difficulty="3" type="3" 
+	<challenge name="Perfect Jumps" ver="1" difficulty="3" type="4" 
 			descr="Simple round tracks with jumps. But need to drive perfect. No time for mistakes.">
 		<car names="ES|S1|N1" />
 		<pass avgPoints="10" />
@@ -355,7 +374,7 @@
 		</tracks>
 	</challenge>
 
-	<!--<challenge name="Pipe Easy" ver="1" difficulty="3" type="3" 
+	<!--<challenge name="Pipe Easy" ver="1" difficulty="3" type="4" 
 			descr=".">
 		<cartype names="Gravel" />
 		<pass avgPoints="10" />
@@ -370,7 +389,7 @@
 	<!--<t name="S10-Pipe88"        time="61.5" />-->
 	<!--<t name="0W8-pipe8x8"       time="55.7" />-->
 
-	<challenge name="Stunt Fun" ver="1" difficulty="3" type="3" 
+	<challenge name="Stunt Fun" ver="1" difficulty="3" type="4" 
 			descr="Fun tracks with just a few stunts.">
 		<cartype names="Gravel|Racing|Terrain" />
 		<pass avgPoints="10" />
@@ -380,7 +399,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Stunt Long" ver="1" difficulty="4" type="3" 
+	<challenge name="Stunt Long" ver="1" difficulty="4" type="4" 
 			descr="Long stunt filled tracks.">
 		<cartype names="Racing" />
 		<pass avgPoints="10" />
@@ -390,7 +409,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Stunt Sway" ver="1" difficulty="4" type="3" 
+	<challenge name="Stunt Sway" ver="1" difficulty="4" type="4" 
 			descr="Smooth highly banked terrain and half pipes.">
 		<cartype names="Racing" />
 		<pass avgPoints="10" />
@@ -402,7 +421,7 @@
 	</challenge>
 
 
-	<challenge name="Jump Mania" ver="1" difficulty="5" type="3" 
+	<challenge name="Jump Mania" ver="1" difficulty="5" type="4" 
 			descr="Very jump filled tracks. Mostly fast, but you need to know jumps well, and know where to land. ">
 		<cartype names="Gravel" />
 		<pass avgPoints="10" />
@@ -413,7 +432,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Loop Mania" ver="1" difficulty="6" type="3" 
+	<challenge name="Loop Mania" ver="1" difficulty="6" type="4" 
 			descr="The most looped tracks, few loops in each, difficult. Pay attention to car damage. Don't drive too fast in loops.">
 		<cartype names="Gravel" />
 		<pass avgPoints="10" />
@@ -425,7 +444,7 @@
 	</challenge>
 
 
-	<challenge name="Stunt Master" ver="1" difficulty="7" type="3" 
+	<challenge name="Stunt Master" ver="1" difficulty="7" type="4" 
 			descr="The most difficult and long stunt tracks. Pay attention to car damage. Avoid hitting walls.">
 		<cartype names="Gravel|Racing" />
 		<pass avgPoints="10" />
@@ -435,7 +454,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Pipe Master" ver="1" difficulty="7" type="3" 
+	<challenge name="Pipe Master" ver="1" difficulty="7" type="4" 
 			descr="Most difficult all-pipe tracks.">
 		<cartype names="Gravel" />
 		<car names="UV" />
@@ -450,19 +469,19 @@
 <!--  Extreme  conditions, not difficulty  -->
 <!--========================================================================================================================-->
 
-	<challenge name="Horrible Weather" ver="1" difficulty="3" type="4" 
+	<challenge name="Horrible Weather" ver="1" difficulty="5" type="5" 
 			descr="Ice, sandstorm and heavy rain, this is definitely a challenge. Remember, on ice, push throttle only occasionally.">
-		<cartype names="Racing|Terrain" />
+		<car names="3S|TC6|M3" />
 		<pass avgPoints="10" />
 		<tracks>
-			<t name="0W4-ice-blur"  passPoints="9" />
+			<t name="0W4-ice-blur"  passPoints="11" />
 			<t name="D12-Sandstorm" passPoints="11" />
-			<t name="T5-Twister"    passPoints="9" />
-			<t name="0W13-MtFog"    passPoints="6" />
+			<t name="T5-Twister"    passPoints="7" />
+			<t name="0W13-MtFog"    passPoints="8" />
 		</tracks>
 	</challenge>
 
-	<challenge name="Dark Chase" ver="1" difficulty="3" type="4" 
+	<challenge name="Dark Chase" ver="1" difficulty="3" type="5" 
 			descr="The darkest tracks.">
 		<cartype names="Gravel|Racing" />
 		<pass avgPoints="10" />
@@ -474,7 +493,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Expedition Stunts" ver="1" difficulty="5" type="4" 
+	<challenge name="Expedition Stunts" ver="1" difficulty="5" type="5" 
 			descr="An expedition into other planets, originally driven with electic powered vehicle.">
 		<car names="UV|ES|S1|XZ" />
 		<pass avgPoints="8" />
@@ -490,7 +509,7 @@
 <!--  Test  -->
 <!--========================================================================================================================-->
 
-	<challenge name="Test 1 time-" ver="1" difficulty="0" type="5" 
+	<challenge name="Test 1 time-" ver="1" difficulty="0" type="6" 
 			descr="Test Challenge 1, time pass.">
 		<sim mode="normal" damage="0" boost="2" flip="2" rewind="1" carChng="1"/>
 		<car names="ES|S1" />
@@ -501,7 +520,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Test 1 points" ver="1" difficulty="0" type="5" 
+	<challenge name="Test 1 points" ver="1" difficulty="0" type="6" 
 			descr="Test Challenge 1, points pass.">
 		<sim mode="normal" damage="1" boost="1" flip="1" rewind="1" />
 		<car names="ES|S1" />
@@ -512,7 +531,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Test 1 pos" ver="1" difficulty="0" type="5" 
+	<challenge name="Test 1 pos" ver="1" difficulty="0" type="6" 
 			descr="Test Challenge 1, position pass.">
 		<sim mode="normal" damage="2" boost="0" flip="2" rewind="1" />
 		<car names="ES|N1" />
@@ -523,7 +542,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Test 1 all" ver="1" difficulty="1" type="5" 
+	<challenge name="Test 1 all" ver="1" difficulty="1" type="6" 
 			descr="Test Challenge 1, all pass conditions.">
 		<sim mode="normal" damage="1" boost="1" flip="1" rewind="1" />
 		<car names="ES|S1" />
@@ -535,7 +554,7 @@
 	</challenge>
 
 
-	<challenge name="Test 2 laps" ver="1" difficulty="2" type="5" 
+	<challenge name="Test 2 laps" ver="1" difficulty="2" type="6" 
 			descr="Test Challenge 2, 2 laps.">
 		<cartype names="Gravel" />
 		<pass avgPoints="7" />
@@ -545,7 +564,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Test 3 cars" ver="1" difficulty="2" type="5" 
+	<challenge name="Test 3 cars" ver="1" difficulty="2" type="6" 
 			descr="Test Challenge 3.">
 		<car names="N1|S8|TC6|3S" />
 		<pass avgPoints="7" />
@@ -555,7 +574,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Test 4 cartype" ver="1" difficulty="2" type="5" 
+	<challenge name="Test 4 cartype" ver="1" difficulty="2" type="6" 
 			descr="Test Challenge 4.">
 		<cartype names="Extreme" />
 		<pass avgPos="6" />
@@ -564,7 +583,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Test 4 uv" ver="1" difficulty="2" type="5" 
+	<challenge name="Test 4 uv" ver="1" difficulty="2" type="6" 
 			descr="Test Challenge 4, always pass.">
 		<car names="UV" />
 		<tracks>

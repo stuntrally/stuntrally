@@ -611,7 +611,7 @@ void App::InitGui()
    	li->setVisible(false);
 	
 	li->removeAllColumns();  c=0;
-	li->addColumn("N", ChColW[c++]);
+	li->addColumn("#80A080N", ChColW[c++]);
 	li->addColumn(TR("#{Name}"), ChColW[c++]);		li->addColumn(TR("#{Difficulty}"), ChColW[c++]);
 	li->addColumn(TR("#{Stages}"), ChColW[c++]);	li->addColumn(TR("#{Time} m:s"), ChColW[c++]);
 	li->addColumn(TR("#{Progress}"), ChColW[c++]);	li->addColumn(TR("#{Score}"), ChColW[c++]);
@@ -624,7 +624,7 @@ void App::InitGui()
    	li->setVisible(false);
 	
 	li->removeAllColumns();  c=0;
-	li->addColumn("#809080N", ChLColW[c++]);
+	li->addColumn("#80A080N", ChLColW[c++]);
 	li->addColumn(TR("#{Name}"), ChLColW[c++]);		li->addColumn(TR("#{Difficulty}"), ChLColW[c++]);
 	li->addColumn(TR("#F0C0C0#{Cars}"), ChLColW[c++]);	
 	li->addColumn(TR("#{Stages}"), ChLColW[c++]);	li->addColumn(TR("#{Time} m"), ChLColW[c++]);
@@ -639,7 +639,7 @@ void App::InitGui()
    	li->setVisible(false);
 	
 	li->removeAllColumns();  c=0;
-	li->addColumn("N", StColW[c++]);
+	li->addColumn("#80A080N", StColW[c++]);
 	li->addColumn(TR("#{Track}"), StColW[c++]);		li->addColumn(TR("#{Scenery}"), StColW[c++]);
 	li->addColumn(TR("#{Difficulty}"), StColW[c++]);
 	li->addColumn(TR("#{Time} m:s"), StColW[c++]);	li->addColumn(TR("#{Score}"), StColW[c++]);
