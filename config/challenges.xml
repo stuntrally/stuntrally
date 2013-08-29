@@ -367,10 +367,10 @@
 	<challenge name="Perfect Jumps" ver="1" difficulty="3" type="4" 
 			descr="Simple round tracks with jumps. But need to drive perfect. No time for mistakes.">
 		<car names="ES|S1|N1" />
-		<pass avgPoints="10" />
+		<pass avgPoints="11" />
 		<tracks>
-			<t name="D5-jump8-low"  laps="2" passPoints="10" />
-			<t name="D6-jump0-high" laps="2" passPoints="10" />
+			<t name="D5-jump8-low"  laps="2" passPoints="11" />
+			<t name="D6-jump0-high" laps="2" passPoints="11" />
 		</tracks>
 	</challenge>
 

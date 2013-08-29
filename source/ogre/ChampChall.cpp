@@ -334,13 +334,13 @@ void App::StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress
 	const TrackInfo& ti = tracksXml.trks[id];
 
 	float carMul = GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
-	float time = (times.trks[name] * laps /*+ 2*/) / carMul;
+	float time = (times.trks[name] * laps /*laps > 1 -1*/) / carMul;
 
 	liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
 	liStages->setSubItemNameAt(3,l, clrsDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
-
-	liStages->setSubItemNameAt(4,l, "#80C0F0"+GetTimeShort(time));  //toStr(laps)
-	liStages->setSubItemNameAt(5,l, progress);
+	liStages->setSubItemNameAt(4,l, "#60C0A0  "+toStr(laps));
+	liStages->setSubItemNameAt(5,l, "#80C0F0 "+GetTimeShort(time));
+	liStages->setSubItemNameAt(6,l, progress);
 }
 
 ///  Stages list  sel changed,  update Track info

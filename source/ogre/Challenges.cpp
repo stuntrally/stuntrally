@@ -38,7 +38,7 @@ void App::tabChallType(MyGUI::TabPtr wp, size_t id)
 void App::ChallsListUpdate()
 {
 	const char clrCh[7][8] = {
-	// 0 Rally  1 Scenery  2 Endurance  3 Chase  4 Stunts  5 Extreme  6 Test
+	//  0 Rally  1 Scenery  2 Endurance  3 Chase  4 Stunts  5 Extreme  6 Test
 		"#A0D0FF","#80FF80","#C0FF60","#FFC060","#FF8080","#C0A0E0","#909090" };
 
 	liChalls->removeAllItems();  int n=1;  size_t sel = ITEM_NONE;
@@ -49,7 +49,7 @@ void App::ChallsListUpdate()
 		if (chl.type == pSet->chall_type)
 		{
 			const ProgressChall& pc = progressL[p].chs[i];
-			int ntrks = pc.trks.size();
+			int ntrks = pc.trks.size(), ct = pc.curTrack;
 			const String& clr = clrCh[chl.type];
 			//String cars = carsXml.colormap[chl.ci->type];  if (cars.length() != 7)  clr = "#C0D0E0";
 			
@@ -58,10 +58,13 @@ void App::ChallsListUpdate()
 			liChalls->setSubItemNameAt(2,l, clrsDiff[chl.diff]+ TR("#{Diff"+toStr(chl.diff)+"}"));
 			liChalls->setSubItemNameAt(3,l, StrChallCars(chl));
 			
-			liChalls->setSubItemNameAt(4,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ toStr(ntrks));
+			liChalls->setSubItemNameAt(4,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ iToStr(ntrks,3));
 			liChalls->setSubItemNameAt(5,l, clrsDiff[std::min(8,int(chl.time/3.f/60.f))]+ GetTimeShort(chl.time));
-			liChalls->setSubItemNameAt(6,l, clr+ fToStr(100.f * pc.curTrack / ntrks,0,3)+" %");
-			liChalls->setSubItemNameAt(7,l, clr+ fToStr(pc.avgPoints,1,5));  // pc.fin ..
+			liChalls->setSubItemNameAt(6,l, ct == 0 || ct == ntrks ? "" :
+				clr+ fToStr(100.f * ct / ntrks,0,3)+" %");
+
+			liChalls->setSubItemNameAt(7,l, " "+ StrPrize(pc.fin));
+			liChalls->setSubItemNameAt(8,l, clr+ (pc.fin >= 0 ? fToStr(pc.avgPoints,1,5) : ""));
 			if (n-1 == pSet->gui.chall_num)  sel = l;
 	}	}
 	liChalls->setIndexSelected(sel);
@@ -349,35 +352,37 @@ void App::ChallengeAdvance(float timeCur/*total*/)
 		#define sPass(pa)  (pa ? TR("  #00FF00#{Passed}") : TR("  #FF8000#{DidntPass}"))
 
 		///  Pass Challenge  --------------
+		String ss;
 		bool passed = true, pa;
 		if (ch.totalTime > 0.f)
 		{
 			pa = pc.totalTime <= ch.totalTime;
 			LogO("]] TotalTime: " + GetTimeString(pc.totalTime) + "  Needed: " + GetTimeString(ch.totalTime) + "  Passed: " + (pa ? "yes":"no"));
-			s += TR("#D8C0FF#{TBTime}")     + ": " + GetTimeString(pc.totalTime)+ "  / " + GetTimeString(ch.totalTime) + sPass(pa) +"\n";
+			ss += TR("#D8C0FF#{TBTime}")     + ": " + GetTimeString(pc.totalTime)+ "  / " + GetTimeString(ch.totalTime) + sPass(pa) +"\n";
 			passed &= pa;
 		}
 		if (ch.avgPoints > 0.f)
 		{
 			pa = pc.avgPoints >= ch.avgPoints;
 			LogO("]] AvgPoints: " + fToStr(pc.avgPoints,1) + "  Needed: " + fToStr(ch.avgPoints,1) + "  Passed: " + (pa ? "yes":"no"));
-			s += TR("#D8C0FF#{TBPoints}")   + ": " + fToStr(pc.avgPoints,2,5) +   "  / " + fToStr(ch.avgPoints,2,5) + sPass(pa) +"\n";
+			ss += TR("#D8C0FF#{TBPoints}")   + ": " + fToStr(pc.avgPoints,2,5) +   "  / " + fToStr(ch.avgPoints,2,5) + sPass(pa) +"\n";
 			passed &= pa;
 		}else  //if (passed)  // write points always on end
-			s += TR("#C0E0FF#{TBPoints}")   + ": " + fToStr(pc.avgPoints,2,5) /*+ sPass(pa)*/ +"\n";
+			ss += TR("#C0E0FF#{TBPoints}")   + ": " + fToStr(pc.avgPoints,2,5) /*+ sPass(pa)*/ +"\n";
 
 		if (ch.avgPos > 0.f)
 		{
 			pa = pc.avgPos <= ch.avgPos;
 			LogO("]] AvgPos: " + fToStr(pc.avgPos,1) + "  Needed: " + fToStr(ch.avgPos,1) + "  Passed: " + (pa ? "yes":"no"));
-			s += TR("#D8C0FF#{TBPosition}") + ": " + fToStr(pc.avgPos,2,5) +      "  / " + fToStr(ch.avgPos,2,5) + sPass(pa) +"\n";
+			ss += TR("#D8C0FF#{TBPosition}") + ": " + fToStr(pc.avgPos,2,5) +      "  / " + fToStr(ch.avgPos,2,5) + sPass(pa) +"\n";
 			passed &= pa;
 		}
 		LogO(String("]] Passed total: ") + (passed ? "yes":"no"));
 		
 		pc.fin = passed ? 2 : -1;
 		if (passed)  //todo: 0 bronze, 1 silver, 2 gold ..
-			s += TR("\n#E0F0F8#{Prize}: ")+StrPrize(pc.fin)+"\n";
+			s += TR("\n#E0F0F8#{Prize}: ")+StrPrize(pc.fin)+"\n\n";
+		s += ss;
 		
 		ProgressLSave();
 
@@ -397,7 +402,7 @@ void App::ChallengeAdvance(float timeCur/*total*/)
 
 String App::StrPrize(int i)  //-1..2
 {
-	const static String prAr[4] = {"#C0D0E0--","#D0B060#{Bronze}","#E0E0E0#{Silver}","#F0F0D0#{Gold}"};
+	const static String prAr[4] = {/*"#C0D0E0--"*/"","#D0B050#{Bronze}","#D8D8D8#{Silver}","#E8E050#{Gold}"};
 	return TR(prAr[i+1]);
 }
 

@@ -531,11 +531,11 @@ void App::InitGui()
 	carList = cartab->createWidget<MultiList2>("MultiListBox",16,48,200,110, Align::Left | Align::VStretch);
 	carList->setColour(Colour(0.7,0.85,1.0));
 	carList->removeAllColumns();  int n=0;
-	carList->addColumn("#C8E8FF"+TR("#{Car}"), TcolC[n++]);
-	carList->addColumn("#C0F0FF"+TR("#{CarSpeed}"), TcolC[n++]);
-	carList->addColumn("#C0C8D0"+TR("#{CarYear}"), TcolC[n++]);
-	carList->addColumn("#C0C8D0"+TR("#{CarType}"), TcolC[n++]);
-	carList->addColumn(" ", TcolC[n++]);
+	carList->addColumn("#FF8888"+TR("#{Car}"), colCar[n++]);
+	carList->addColumn("#FFC080"+TR("#{CarSpeed}"), colCar[n++]);
+	carList->addColumn("#B0B8C0"+TR("#{CarYear}"), colCar[n++]);
+	carList->addColumn("#C0C0E0"+TR("#{CarType}"), colCar[n++]);
+	carList->addColumn(" ", colCar[n++]);
 
 	FillCarList();  //once
 
@@ -611,11 +611,11 @@ void App::InitGui()
    	li->setVisible(false);
 	
 	li->removeAllColumns();  c=0;
-	li->addColumn("#80A080N", ChColW[c++]);
-	li->addColumn(TR("#{Name}"), ChColW[c++]);		li->addColumn(TR("#{Difficulty}"), ChColW[c++]);
-	li->addColumn(TR("#{Stages}"), ChColW[c++]);	li->addColumn(TR("#{Time} m:s"), ChColW[c++]);
-	li->addColumn(TR("#{Progress}"), ChColW[c++]);	li->addColumn(TR("#{Score}"), ChColW[c++]);
-	li->addColumn(" ", ChColW[c++]);
+	li->addColumn("#80A080N", colCh[c++]);
+	li->addColumn(TR("#40F040#{Name}"), colCh[c++]);		li->addColumn(TR("#F0F040#{Difficulty}"), colCh[c++]);
+	li->addColumn(TR("#80F0C0#{Stages}"), colCh[c++]);		li->addColumn(TR("#80E0FF#{Time} m:s"), colCh[c++]);
+	li->addColumn(TR("#D0C0FF#{Progress}"), colCh[c++]);	li->addColumn(TR("#F0E0F0#{Score}"), colCh[c++]);
+	li->addColumn(" ", colCh[c++]);
 	liChamps = li;
 
 	//  Challs list  -------------
@@ -624,12 +624,13 @@ void App::InitGui()
    	li->setVisible(false);
 	
 	li->removeAllColumns();  c=0;
-	li->addColumn("#80A080N", ChLColW[c++]);
-	li->addColumn(TR("#{Name}"), ChLColW[c++]);		li->addColumn(TR("#{Difficulty}"), ChLColW[c++]);
-	li->addColumn(TR("#F0C0C0#{Cars}"), ChLColW[c++]);	
-	li->addColumn(TR("#{Stages}"), ChLColW[c++]);	li->addColumn(TR("#{Time} m"), ChLColW[c++]);
-	li->addColumn(TR("#{Progress}"), ChLColW[c++]);	li->addColumn(TR("#{Prize}"), ChLColW[c++]);
-	li->addColumn(" ", ChLColW[c++]);
+	li->addColumn("#80A080N", colChL[c++]);
+	li->addColumn(TR("#60F060#{Name}"), colChL[c++]);		li->addColumn(TR("#F0D040#{Difficulty}"), colChL[c++]);
+	li->addColumn(TR("#F09090#{Cars}"), colChL[c++]);
+	li->addColumn(TR("#80F0C0#{Stages}"), colChL[c++]);		li->addColumn(TR("#80E0FF#{Time} m"), colChL[c++]);
+	li->addColumn(TR("#D0C0FF#{Progress}"), colChL[c++]);
+	li->addColumn(TR("#F0F8FF#{Prize}"), colChL[c++]);		li->addColumn(TR("#F0D0F0#{Score}"), colChL[c++]);
+	li->addColumn(" ", colChL[c++]);
 	liChalls = li;
 
 	//  Stages list  -------------
@@ -639,11 +640,11 @@ void App::InitGui()
    	li->setVisible(false);
 	
 	li->removeAllColumns();  c=0;
-	li->addColumn("#80A080N", StColW[c++]);
-	li->addColumn(TR("#{Track}"), StColW[c++]);		li->addColumn(TR("#{Scenery}"), StColW[c++]);
-	li->addColumn(TR("#{Difficulty}"), StColW[c++]);
-	li->addColumn(TR("#{Time} m:s"), StColW[c++]);	li->addColumn(TR("#{Score}"), StColW[c++]);
-	li->addColumn(" ", StColW[c++]);
+	li->addColumn("#80A080N", colSt[c++]);
+	li->addColumn(TR("#50F050#{Track}"), colSt[c++]);		li->addColumn(TR("#80FF80#{Scenery}"), colSt[c++]);
+	li->addColumn(TR("#F0F040#{Difficulty}"), colSt[c++]);	li->addColumn(TR("#60E0A0#{Laps}"), colSt[c++]);
+	li->addColumn(TR("#80E0FF#{Time} m:s"), colSt[c++]);	li->addColumn(TR("#F0E0F0#{Score}"), colSt[c++]);
+	li->addColumn(" ", colSt[c++]);
 	liStages = li;
 
 	updChampListDim();

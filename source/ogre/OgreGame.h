@@ -302,8 +302,8 @@ protected:
 	TracksXml tracksXml;  CarsXml carsXml;  UserXml userXml;  //xml
 	void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
 	void updTrkListDim(), updChampListDim();
-	//  const
-	const static int TcolW[32],TcolC[16],ChColW[16],ChLColW[16],StColW[16];
+	//  const list column widths
+	const static int colTrk[32],colCar[16],colCh[16],colChL[16],colSt[16];
 	const static Ogre::String clrsDiff[9],clrsRating[6],clrsLong[10];
 
 	void edTrkFind(MyGUI::EditPtr),edRplFind(MyGUI::EditPtr);

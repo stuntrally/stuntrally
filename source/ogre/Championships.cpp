@@ -38,7 +38,7 @@ void App::tabChampType(MyGUI::TabPtr wp, size_t id)
 void App::ChampsListUpdate()
 {
 	const char clrCh[7][8] = {
-	// 0 tutorial  1 tutorial hard  // 2 normal  3 hard  4 very hard  // 5 scenery  6 test
+	//  0 tutorial  1 tutorial hard  // 2 normal  3 hard  4 very hard  // 5 scenery  6 test
 		"#FFFFA0", "#E0E000",   "#A0F0FF", "#60C0FF", "#A0A0E0",   "#80FF80", "#909090"  };
 
 	liChamps->removeAllItems();  int n=1;  size_t sel = ITEM_NONE;
@@ -50,15 +50,19 @@ void App::ChampsListUpdate()
 			pSet->inMenu == MNU_Champ && ch.type - 2 == pSet->champ_type)
 		{
 			const ProgressChamp& pc = progress[p].chs[i];
-			int ntrks = pc.trks.size();
+			int ntrks = pc.trks.size(), ct = pc.curTrack;
 			const String& clr = clrCh[ch.type];
+
 			liChamps->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liChamps->getItemCount()-1;
 			liChamps->setSubItemNameAt(1,l, clr+ ch.name.c_str());
 			liChamps->setSubItemNameAt(2,l, clrsDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
-			liChamps->setSubItemNameAt(3,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ toStr(ntrks));
-			liChamps->setSubItemNameAt(4,l, clrsDiff[std::min(8,int(ch.time/3.f/60.f))]+ GetTimeShort(ch.time));
-			liChamps->setSubItemNameAt(5,l, clr+ fToStr(100.f * pc.curTrack / ntrks,0,3)+" %");
-			liChamps->setSubItemNameAt(6,l, clr+ fToStr(pc.points,1,5));
+
+			liChamps->setSubItemNameAt(3,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ iToStr(ntrks,3));
+			liChamps->setSubItemNameAt(4,l, clrsDiff[std::min(8,int(ch.time/3.f/60.f))]+" "+ GetTimeShort(ch.time));
+			liChamps->setSubItemNameAt(5,l, ct == 0 || ct == ntrks ? "" :
+				clr+ fToStr(100.f * ct / ntrks,0,3)+" %");
+
+			liChamps->setSubItemNameAt(6,l, pc.points > 0.f ? clr+ fToStr(pc.points,1,5) : "");
 			if (n-1 == pSet->gui.champ_num)  sel = l;
 	}	}
 	liChamps->setIndexSelected(sel);

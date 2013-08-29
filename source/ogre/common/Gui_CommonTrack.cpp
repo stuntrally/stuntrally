@@ -21,6 +21,7 @@ using namespace MyGUI;
 using namespace Ogre;
 using namespace std;
 
+
 //  sort	 . . . . . . . . . . . . . . . . . . . . . . 
 //-----------------------------------------------------------------------------------------------------------
 /*  common sort code,  no info only by name  */
@@ -103,6 +104,7 @@ void App::TrackListUpd(bool resetNotFound)
 	}
 }
 
+///  * * * *  CONST  * * * *
 //  add track item to gui list
 //-----------------------------------------------------------------------------------------------------------
 String App::GetSceneryColor(String name)
@@ -159,19 +161,19 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	li->setSubItemNameAt(14,l,toS(clrsLong[ti->longn], ti->longn));
 }
 
-
-//  Gui Init  [Track]  . . . . . . . . . . . . . . . . . . . 
+//  * * * *  CONST  * * * *
 //  column widths in MultiList2
 const int wi = 26;  // track detailed
-const int App::TcolW[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
+const int App::colTrk[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
 #ifndef SR_EDITOR
-const int App::TcolC[16]  = {34, 17, 35, 40, 20};  // car
-const int App::ChColW[16] = {30, 180, 120, 50, 80, 80, 60, 40};  // champs
-const int App::ChLColW[16]= {30, 180, 90, 120, 40, 60, 60, 60, 50};  // challs
-const int App::StColW[16] = {30, 180, 100, 90, 80, 70};  // stages
+const int App::colCar[16] = {34, 17, 35, 40, 20};  // car
+const int App::colCh [16] = {30, 180, 120, 50, 80, 80, 60, 40};  // champs
+const int App::colChL[16] = {36, 180, 90, 100, 50, 60, 60, 60, 50};  // challs
+const int App::colSt [16] = {30, 170, 100, 90, 50, 80, 70};  // stages
 #endif
 
-//  done once with init gui
+
+//  Gui Init [Track] once
 //-----------------------------------------------------------------------------------------------------------
 void App::GuiInitTrack()
 {
@@ -212,23 +214,23 @@ void App::GuiInitTrack()
 	imgTrkIco2 = mGUI->findWidget<StaticImage>("TrkView2icons2");
 	
 	li->removeAllColumns();  int c=0;
-	li->addColumn("#E0FFE0"+TR("#{Name}"), TcolW[c++]);
-	li->addColumn("#80FF80""N", TcolW[c++]);
-	li->addColumn("#80FF80"+TR("#{Scenery}"), TcolW[c++]);
-	li->addColumn("#80FF80""ver", TcolW[c++]);  // created  modified  author-
+	li->addColumn("#E0FFE0"+TR("#{Name}"), colTrk[c++]);
+	li->addColumn("#80FF80""N", colTrk[c++]);
+	li->addColumn("#80FF80"+TR("#{Scenery}"), colTrk[c++]);
+	li->addColumn("#80FF80""ver", colTrk[c++]);  // created  modified  author-
 
-	li->addColumn("#C0D0FF""diff", TcolW[c++]);
-	li->addColumn("#C0E0FF""*", TcolW[c++]);  // rateuser  drivenlaps ..
-	li->addColumn("#FF80C0""o", TcolW[c++]);
-	li->addColumn("#80C0FF""f", TcolW[c++]);
-	li->addColumn("#40FF00""B", TcolW[c++]);
-	li->addColumn("#FFA030""J", TcolW[c++]);
-	li->addColumn("#00FFFF""L", TcolW[c++]);
-	li->addColumn("#FFFF00""P", TcolW[c++]);
-	li->addColumn("#C0C0C0""b", TcolW[c++]);
-	li->addColumn("#C080FF""f", TcolW[c++]);
-	li->addColumn("#FFA0A0""l", TcolW[c++]);
-	li->addColumn(" ", TcolW[c++]);
+	li->addColumn("#C0D0FF""diff", colTrk[c++]);  // rateuser  drivenlaps ..
+	li->addColumn("#C0E0FF""*", colTrk[c++]);   // rating
+	li->addColumn("#FF80C0""o", colTrk[c++]);   // objects
+	li->addColumn("#80C0FF""f", colTrk[c++]);   // fluids
+	li->addColumn("#40FF00""B", colTrk[c++]);   // Bumps
+	li->addColumn("#FFA030""J", colTrk[c++]);   // Jumps
+	li->addColumn("#00FFFF""L", colTrk[c++]);   // Loops
+	li->addColumn("#FFFF00""P", colTrk[c++]);   // Pipes
+	li->addColumn("#C0C0C0""b", colTrk[c++]);   // banked
+	li->addColumn("#C080FF""f", colTrk[c++]);   // frenzy
+	li->addColumn("#FFA0A0""l", colTrk[c++]);	// longn
+	li->addColumn(" ", colTrk[c++]);
 
 	FillTrackLists();  //once
 
@@ -326,7 +328,7 @@ void App::updTrkListDim()
 	bool full = pSet->tracks_view;
 
 	int c, sum = 0, cnt = trkList->getColumnCount();
-	for (c=0; c < cnt; ++c)  sum += TcolW[c];
+	for (c=0; c < cnt; ++c)  sum += colTrk[c];
 
 	const IntCoord& wi = mWndOpts->getCoord();
 	int sw = 0, xico1 = 0, xico2 = 0, wico = 0;
@@ -334,7 +336,7 @@ void App::updTrkListDim()
 	for (c=0; c < cnt; ++c)
 	{
 		int w = c==cnt-1 ? 18 : (full || c==0 || c==cnt-1 ?
-			float(TcolW[c]) / sum * 0.63/*width*/ * wi.width * 0.97/*frame*/ : 0);
+			float(colTrk[c]) / sum * 0.63/*width*/ * wi.width * 0.97/*frame*/ : 0);
 		trkList->setColumnWidthAt(c, w);
 		sw += w;
 		if (c == 4)  wico = w;
@@ -355,11 +357,11 @@ void App::updTrkListDim()
 	//  car list  ----------
 	#ifndef SR_EDITOR
 	sum = 0;  sw = 0;  cnt = carList->getColumnCount();
-	for (c=0; c < cnt; ++c)  sum += TcolC[c];
+	for (c=0; c < cnt; ++c)  sum += colCar[c];
 
 	for (c=0; c < cnt; ++c)
 	{
-		int w = (c==cnt-1) ? 18 : (float(TcolC[c]) / sum * 0.21/*width*/ * wi.width * 0.97/*frame*/);
+		int w = (c==cnt-1) ? 18 : (float(colCar[c]) / sum * 0.21/*width*/ * wi.width * 0.97/*frame*/);
 		carList->setColumnWidthAt(c, w);
 		sw += w;
 	}
@@ -382,49 +384,46 @@ void App::updChampListDim()
 {
 	const IntCoord& wi = mWndGame->getCoord();
 
-	//  Champs
+	//  Champs  -----
 	if (!liChamps)  return;
 
 	int sum = 0, cnt = liChamps->getColumnCount(), sw = 0;
-	for (int c=0; c < cnt; ++c)  sum += ChColW[c];
+	for (int c=0; c < cnt; ++c)  sum += colCh[c];
 	for (int c=0; c < cnt; ++c)
 	{
-		int w = c==cnt-1 ? 18 : float(ChColW[c]) / sum * 0.72/*width*/ * wi.width * 0.97/*frame*/;
-		liChamps->setColumnWidthAt(c, w);
-		sw += w;
+		int w = c==cnt-1 ? 18 : float(colCh[c]) / sum * 0.72/*width*/ * wi.width * 0.97/*frame*/;
+		liChamps->setColumnWidthAt(c, w);  sw += w;
 	}
 	int xt = 0.038*wi.width, yt = 0.10*wi.height;  // pos
 	liChamps->setCoord(xt, yt, sw + 8/*frame*/, 0.32/*height*/*wi.height);
-	liChamps->setVisible(true);
+	liChamps->setVisible(!isChallGui());
 
-	//  Stages
+	//  Stages  -----
 	if (!liStages)  return;
 
 	sum = 0;  cnt = liStages->getColumnCount();  sw = 0;
-	for (int c=0; c < cnt; ++c)  sum += StColW[c];  sum += 43;//-
+	for (int c=0; c < cnt; ++c)  sum += colSt[c];  sum += 43;//-
 	for (int c=0; c < cnt; ++c)
 	{
-		int w = c==cnt-1 ? 18 : float(StColW[c]) / sum * 0.57/*width*/ * wi.width * 0.97/*frame*/;
-		liStages->setColumnWidthAt(c, w);
-		sw += w;
+		int w = c==cnt-1 ? 18 : float(colSt[c]) / sum * 0.58/*width*/ * wi.width * 0.97/**/;
+		liStages->setColumnWidthAt(c, w);  sw += w;
 	}
-	liStages->setCoord(xt, yt, sw + 8/*frame*/, 0.50/*height*/*wi.height);
+	liStages->setCoord(xt, yt, sw + 8/**/, 0.50/*height*/*wi.height);
 	liStages->setVisible(true);
 
-	//  Challs
+	//  Challs  -----
 	if (!liChalls)  return;
 
 	sum = 0;  cnt = liChalls->getColumnCount();  sw = 0;
-	for (int c=0; c < cnt; ++c)  sum += ChLColW[c];
+	for (int c=0; c < cnt; ++c)  sum += colChL[c];
 	for (int c=0; c < cnt; ++c)
 	{
-		int w = c==cnt-1 ? 18 : float(ChLColW[c]) / sum * 0.72/*width*/ * wi.width * 0.97/*frame*/;
-		liChalls->setColumnWidthAt(c, w);
-		sw += w;
+		int w = c==cnt-1 ? 18 : float(colChL[c]) / sum * 0.71/*width*/ * wi.width * 0.97/**/;
+		liChalls->setColumnWidthAt(c, w);  sw += w;
 	}
 	xt = 0.038*wi.width, yt = 0.10*wi.height;  // pos
-	liChalls->setCoord(xt, yt, sw + 8/*frame*/, 0.32/*height*/*wi.height);
-	liChalls->setVisible(true);
+	liChalls->setCoord(xt, yt, sw + 8/**/, 0.32/*height*/*wi.height);
+	liChalls->setVisible(isChallGui());
 }
 #endif
 
