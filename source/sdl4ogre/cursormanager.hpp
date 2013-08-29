@@ -4,7 +4,7 @@
 #include <SDL_types.h>
 #include <string>
 
-#include <OgreTexturePtr.h>
+#include <OgreTexture.h>
 
 namespace SFO
 {
