@@ -2187,6 +2187,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\tinyxml\tinyxml2.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\tinyxml\tinyxml2.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\tinyxml\tinyxmlerror.cpp"
 					>
 					<FileConfiguration
