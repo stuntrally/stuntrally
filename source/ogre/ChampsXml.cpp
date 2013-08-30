@@ -3,8 +3,8 @@
 #include "ChampsXml.h"
 #include "common/TracksXml.h"
 #include "tinyxml.h"
-
-using namespace Ogre;
+#include "tinyxml2.h"
+using namespace tinyxml2;
 
 
 ChampTrack::ChampTrack() :
@@ -20,10 +20,11 @@ Champ::Champ() :
 //--------------------------------------------------------------------------------------------------------------------------------------
 bool ChampsXml::LoadXml(std::string file, TracksXml* trks)
 {
-	TiXmlDocument doc;
-	if (!doc.LoadFile(file.c_str()))  return false;
+	XMLDocument doc;
+	XMLError e = doc.LoadFile(file.c_str());
+	if (e != XML_SUCCESS)  return false;
 		
-	TiXmlElement* root = doc.RootElement();
+	XMLElement* root = doc.RootElement();
 	if (!root)  return false;
 
 	//  clear
@@ -31,7 +32,7 @@ bool ChampsXml::LoadXml(std::string file, TracksXml* trks)
 
 	///  champs
 	const char* a;
-	TiXmlElement* eCh = root->FirstChildElement("championship");
+	XMLElement* eCh = root->FirstChildElement("championship");
 	while (eCh)
 	{
 		Champ c;	//name="Bridges" ver="1" difficulty="1" length="3" time="134" tutorial="1" descr=""
@@ -43,7 +44,7 @@ bool ChampsXml::LoadXml(std::string file, TracksXml* trks)
 		a = eCh->Attribute("type");			if (a)  c.type = s2i(a);
 		
 		//  tracks
-		TiXmlElement* eTr = eCh->FirstChildElement("track");
+		XMLElement* eTr = eCh->FirstChildElement("track");
 		while (eTr)
 		{
 			ChampTrack t;	//name="S4-Hills" laps="1" factor="0.1"
@@ -94,17 +95,18 @@ ProgressChamp::ProgressChamp() :
 //--------------------------------------------------------------------------------------------------------------------------------------
 bool ProgressXml::LoadXml(std::string file)
 {
-	TiXmlDocument doc;
-	if (!doc.LoadFile(file.c_str()))  return false;
-		
-	TiXmlElement* root = doc.RootElement();
+	XMLDocument doc;
+	XMLError e = doc.LoadFile(file.c_str());
+	if (e != XML_SUCCESS)  return false;
+
+	XMLElement* root = doc.RootElement();
 	if (!root)  return false;
 
 	//  clear
 	chs.clear();
 
 	const char* a;
-	TiXmlElement* eCh = root->FirstChildElement("champ");
+	XMLElement* eCh = root->FirstChildElement("champ");
 	while (eCh)
 	{
 		ProgressChamp pc;
@@ -114,7 +116,7 @@ bool ProgressXml::LoadXml(std::string file)
 		a = eCh->Attribute("p");	if (a)  pc.points = s2r(a);
 		
 		//  tracks
-		TiXmlElement* eTr = eCh->FirstChildElement("t");
+		XMLElement* eTr = eCh->FirstChildElement("t");
 		while (eTr)
 		{
 			ProgressTrack pt;
