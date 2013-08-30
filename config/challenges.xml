@@ -411,7 +411,7 @@
 
 	<challenge name="Stunt Sway" ver="1" difficulty="4" type="4" 
 			descr="Smooth highly banked terrain and half pipes.">
-		<cartype names="Racing" />
+		<car names="S8|TC6" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="0W9-IceFrenzy"  passPoints="9" />
@@ -423,7 +423,7 @@
 
 	<challenge name="Jump Mania" ver="1" difficulty="5" type="4" 
 			descr="Very jump filled tracks. Mostly fast, but you need to know jumps well, and know where to land. ">
-		<cartype names="Gravel" />
+		<car names="ES|S1|S8|N1" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="D7-CrossJumps"  passPoints="9" />
@@ -434,7 +434,7 @@
 
 	<challenge name="Loop Mania" ver="1" difficulty="6" type="4" 
 			descr="The most looped tracks, few loops in each, difficult. Pay attention to car damage. Don't drive too fast in loops.">
-		<cartype names="Gravel" />
+		<car names="ES|S1|N1" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="S5-LoopBasic"   passPoints="9" />
@@ -446,7 +446,7 @@
 
 	<challenge name="Stunt Master" ver="1" difficulty="7" type="4" 
 			descr="The most difficult and long stunt tracks. Pay attention to car damage. Avoid hitting walls.">
-		<cartype names="Gravel|Racing" />
+		<car names="ES|S1|S8" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="S14-Refinery"   passPoints="9" />
@@ -456,8 +456,7 @@
 
 	<challenge name="Pipe Master" ver="1" difficulty="7" type="4" 
 			descr="Most difficult all-pipe tracks.">
-		<cartype names="Gravel" />
-		<car names="UV" />
+		<car names="ES|S8|UV" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="S12-Infinity"   passPoints="9" />
