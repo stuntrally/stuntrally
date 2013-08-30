@@ -2,8 +2,8 @@
 #include "Defines.h"
 #include "BltObjects.h"
 #include "../../vdrift/pathmanager.h"
-#include "tinyxml.h"
-//using namespace Ogre;
+#include "tinyxml2.h"
+using namespace tinyxml2;
 
 
 BltShape::BltShape()
@@ -35,14 +35,16 @@ bool BltObjects::LoadXml()
 		file = PATHMANAGER::DataUser() + name;
 	if (!PATHMANAGER::FileExists(file))  // original
 		file = PATHMANAGER::Data() + name;
-	TiXmlDocument doc;
-	if (!doc.LoadFile(file.c_str()))  return false;
+
+	XMLDocument doc;
+	XMLError e = doc.LoadFile(file.c_str());
+	if (e != XML_SUCCESS)  return false;
 		
-	TiXmlElement* root = doc.RootElement();
+	XMLElement* root = doc.RootElement();
 	if (!root)  return false;
 	
 	//  collisions
-	TiXmlElement *n, *m;  const char* a;
+	XMLElement *n, *m;  const char* a;
 	m = root->FirstChildElement("object");
 	while (m)
 	{

@@ -11,8 +11,6 @@
 
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
-
-
 using namespace Ogre;
 
 
@@ -48,7 +46,7 @@ void App::createScene()  // once, init
 
 
 	//  tracks.xml
-	tracksXml.LoadXml(PATHMANAGER::GameConfigDir() + "/tracks.xml");
+	tracksXml.LoadIni(PATHMANAGER::GameConfigDir() + "/tracks.ini");
 
 	//  fluids.xml
 	fluidsXml.LoadXml(PATHMANAGER::Data() + "/materials2/fluids.xml");

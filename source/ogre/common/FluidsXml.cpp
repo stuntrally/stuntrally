@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "Defines.h"
 #include "FluidsXml.h"
-#include "tinyxml.h"
+#include "tinyxml2.h"
+using namespace tinyxml2;
 
 
 FluidParams::FluidParams()
@@ -19,10 +20,11 @@ FluidParams::FluidParams()
 
 bool FluidsXml::LoadXml(std::string file)
 {
-	TiXmlDocument doc;
-	if (!doc.LoadFile(file.c_str()))  return false;
-	
-	TiXmlElement* root = doc.RootElement();
+	XMLDocument doc;
+	XMLError e = doc.LoadFile(file.c_str());
+	if (e != XML_SUCCESS)  return false;
+		
+	XMLElement* root = doc.RootElement();
 	if (!root)  return false;
 
 	//  clear
@@ -31,7 +33,7 @@ bool FluidsXml::LoadXml(std::string file)
 
 	///  fluids
 	const char* a;  int i=1;  //0 = none
-	TiXmlElement* eFl = root->FirstChildElement("fluid");
+	XMLElement* eFl = root->FirstChildElement("fluid");
 	while (eFl)
 	{
 		FluidParams fp;

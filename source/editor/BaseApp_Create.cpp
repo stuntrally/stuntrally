@@ -111,11 +111,9 @@ void BaseApp::createCamera()
 
 //  Frame
 //-------------------------------------------------------------------------------------
-using namespace OIS;
-
 void BaseApp::createFrameListener()
 {
-	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
+	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing ***");
 
 	Ogre::OverlayManager& ovr = Ogre::OverlayManager::getSingleton();  Ogre::Overlay* o;
 	o = ovr.getByName("Editor/FpsOverlay");  if (o) o->show();

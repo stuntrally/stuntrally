@@ -2,9 +2,11 @@
 #include "Defines.h"
 #include "TracksXml.h"
 #include "tinyxml.h"
+#include "tinyxml2.h"
 
 using namespace Ogre;
 using namespace std;
+using namespace tinyxml2;
 
 
 Date s2dt(const char* a)
@@ -40,10 +42,11 @@ UserTrkInfo::UserTrkInfo()
 
 bool UserXml::LoadXml(std::string file)
 {
-	TiXmlDocument doc;
-	if (!doc.LoadFile(file.c_str()))  return false;
+	XMLDocument doc;
+	XMLError e = doc.LoadFile(file.c_str());
+	if (e != XML_SUCCESS)  return false;
 		
-	TiXmlElement* root = doc.RootElement();
+	XMLElement* root = doc.RootElement();
 	if (!root)  return false;
 
 	//  clear
@@ -51,7 +54,7 @@ bool UserXml::LoadXml(std::string file)
 
 	//  tracks
 	const char* a;  //int i=1;  //0 = none
-	TiXmlElement* eTrk = root->FirstChildElement("track");
+	XMLElement* eTrk = root->FirstChildElement("track");
 	while (eTrk)
 	{
 		UserTrkInfo t;
@@ -156,10 +159,11 @@ CarInfo::CarInfo()
 
 bool CarsXml::LoadXml(std::string file)
 {
-	TiXmlDocument doc;
-	if (!doc.LoadFile(file.c_str()))  return false;
-		
-	TiXmlElement* root = doc.RootElement();
+	XMLDocument doc;
+	XMLError e = doc.LoadFile(file.c_str());
+	if (e != XML_SUCCESS)  return false;
+
+	XMLElement* root = doc.RootElement();
 	if (!root)  return false;
 
 	//  clear
@@ -171,7 +175,7 @@ bool CarsXml::LoadXml(std::string file)
 	magic = 0.010f;
 
 	const char* a;
-	TiXmlElement* eGlobal = root->FirstChildElement("global");
+	XMLElement* eGlobal = root->FirstChildElement("global");
 	if (eGlobal)
 	{
 		a = eGlobal->Attribute("easy");  if (a)  fEasy = s2r(a);
@@ -181,7 +185,7 @@ bool CarsXml::LoadXml(std::string file)
 
 	///  cars
 	int i=1;  //0 = none
-	TiXmlElement* eCar = root->FirstChildElement("car");
+	XMLElement* eCar = root->FirstChildElement("car");
 	while (eCar)
 	{
 		CarInfo c;
@@ -203,7 +207,7 @@ bool CarsXml::LoadXml(std::string file)
 	}
 
 	//  type colors
-	TiXmlElement* eColor = root->FirstChildElement("color");
+	XMLElement* eColor = root->FirstChildElement("color");
 	while (eColor)
 	{
 		string type, clr;

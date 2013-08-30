@@ -3,7 +3,9 @@
 #include "ChallengesXml.h"
 #include "common/TracksXml.h"
 #include "tinyxml.h"
+#include "tinyxml2.h"
 using namespace Ogre;
+using namespace tinyxml2;
 
 
 ChallTrack::ChallTrack()  //  defaults
@@ -28,10 +30,11 @@ Chall::Chall()  //  defaults
 //-------------------------------------------------------------------------------------------------------------
 bool ChallXml::LoadXml(std::string file, TracksXml* trks)
 {
-	TiXmlDocument doc;
-	if (!doc.LoadFile(file.c_str()))  return false;
+	XMLDocument doc;
+	XMLError e = doc.LoadFile(file.c_str());
+	if (e != XML_SUCCESS)  return false;
 		
-	TiXmlElement* root = doc.RootElement();
+	XMLElement* root = doc.RootElement();
 	if (!root)  return false;
 
 	//  clear
@@ -39,7 +42,7 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks)
 
 	///  challs
 	const char* a;
-	TiXmlElement* eCh = root->FirstChildElement("challenge");
+	XMLElement* eCh = root->FirstChildElement("challenge");
 	while (eCh)
 	{
 		Chall c;  // defaults in ctor
@@ -49,7 +52,7 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks)
 		a = eCh->Attribute("difficulty");	if (a)  c.diff = s2i(a);
 		a = eCh->Attribute("type");			if (a)  c.type = s2i(a);
 		
-		TiXmlElement* eSim = eCh->FirstChildElement("sim");
+		XMLElement* eSim = eCh->FirstChildElement("sim");
 		if (eSim)
 		{
 			a = eSim->Attribute("mode");		if (a)  c.sim_mode = std::string(a);
@@ -60,7 +63,7 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks)
 			a = eSim->Attribute("carChng");		if (a)  c.carChng = s2i(a) > 0;
 		}
 		//  cars
-		TiXmlElement* eCarT = eCh->FirstChildElement("cartype");
+		XMLElement* eCarT = eCh->FirstChildElement("cartype");
 		if (eCarT)
 		{
 			a = eCarT->Attribute("names");
@@ -70,7 +73,7 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks)
 			}
 		}
 		//<car names="ES|S1" />
-		TiXmlElement* eCar = eCh->FirstChildElement("car");
+		XMLElement* eCar = eCh->FirstChildElement("car");
 		if (eCar)
 		{
 			a = eCar->Attribute("names");
@@ -80,7 +83,7 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks)
 			}
 		}
 		
-		TiXmlElement* eHud = eCh->FirstChildElement("hud");
+		XMLElement* eHud = eCh->FirstChildElement("hud");
 		if (eHud)
 		{
 			a = eHud->Attribute("minimap");		if (a)  c.minimap = s2i(a) > 0;
@@ -88,7 +91,7 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks)
 			a = eHud->Attribute("chkBeam");		if (a)  c.chk_beam = s2i(a) > 0;
 			a = eHud->Attribute("trkGhost");	if (a)  c.trk_ghost = s2i(a) > 0;
 		}
-		TiXmlElement* ePass = eCh->FirstChildElement("pass");
+		XMLElement* ePass = eCh->FirstChildElement("pass");
 		if (ePass)
 		{
 			a = ePass->Attribute("totalTime");	if (a)  c.totalTime = s2r(a);
@@ -97,10 +100,10 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks)
 		}
 
 		//  tracks
-		TiXmlElement* eTrks = eCh->FirstChildElement("tracks");
+		XMLElement* eTrks = eCh->FirstChildElement("tracks");
 		if (eTrks)
 		{
-			TiXmlElement* eTr = eTrks->FirstChildElement("t");
+			XMLElement* eTr = eTrks->FirstChildElement("t");
 			while (eTr)
 			{
 				ChallTrack t;
@@ -156,17 +159,18 @@ ProgressChall::ProgressChall() :
 //-------------------------------------------------------------------------------------------------------------
 bool ProgressLXml::LoadXml(std::string file)
 {
-	TiXmlDocument doc;
-	if (!doc.LoadFile(file.c_str()))  return false;
-		
-	TiXmlElement* root = doc.RootElement();
+	XMLDocument doc;
+	XMLError e = doc.LoadFile(file.c_str());
+	if (e != XML_SUCCESS)  return false;
+
+	XMLElement* root = doc.RootElement();
 	if (!root)  return false;
 
 	//  clear
 	chs.clear();
 
 	const char* a;
-	TiXmlElement* eCh = root->FirstChildElement("chall");
+	XMLElement* eCh = root->FirstChildElement("chall");
 	while (eCh)
 	{
 		ProgressChall pc;
@@ -181,7 +185,7 @@ bool ProgressLXml::LoadXml(std::string file)
 		a = eCh->Attribute("z");	if (a)  pc.fin = s2i(a);
 		
 		//  tracks
-		TiXmlElement* eTr = eCh->FirstChildElement("t");
+		XMLElement* eTr = eCh->FirstChildElement("t");
 		while (eTr)
 		{
 			ProgressTrackL pt;

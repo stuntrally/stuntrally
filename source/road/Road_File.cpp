@@ -2,12 +2,14 @@
 #include "../ogre/common/Defines.h"
 #include "Road.h"
 #include "tinyxml.h"
+#include "tinyxml2.h"
 
 #include <OgreCamera.h>
 #include <OgreMaterialManager.h>
 #include <OgreEntity.h>
 #include <OgreSubEntity.h>
 using namespace Ogre;
+using namespace tinyxml2;
 
 
 //  ctor
@@ -225,8 +227,11 @@ bool SplineRoad::LoadFile(String fname, bool build)
 	if (build)
 		clear();
 	
-	TiXmlDocument xml;  xml.LoadFile(fname.c_str());
-	TiXmlElement* root = xml.RootElement(), *n = NULL;
+	XMLDocument doc;
+	XMLError e = doc.LoadFile(fname.c_str());
+	if (e != XML_SUCCESS)  return false;
+		
+	XMLElement* root = doc.RootElement(), *n = NULL;
 	if (!root)  return false;
 	const char* a = NULL;
 	
