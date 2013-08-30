@@ -1004,15 +1004,7 @@
 				>
 			</File>
 			<File
-				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\keys.xml"
-				>
-			</File>
-			<File
 				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\log.txt"
-				>
-			</File>
-			<File
-				RelativePath="..\source\vdrift\logging.h"
 				>
 			</File>
 			<File
@@ -1036,6 +1028,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\Users\cryham\AppData\Roaming\stuntrally\progressL.xml"
+				>
+			</File>
+			<File
 				RelativePath="..\source\ogre\common\QTimer.cpp"
 				>
 			</File>
@@ -1056,15 +1052,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\data\cars\surfaces.cfg"
-				>
-			</File>
-			<File
-				RelativePath="..\config\times.xml"
-				>
-			</File>
-			<File
-				RelativePath="..\config\tracks.xml"
+				RelativePath="..\config\tracks.ini"
 				>
 			</File>
 		</Filter>
