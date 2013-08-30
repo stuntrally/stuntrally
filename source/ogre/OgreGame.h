@@ -351,7 +351,7 @@ protected:
 	void StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress);
 	
 	//  xml  [1]= reversed  L= challenge
-	ChampsXml champs;  TimesXml times;  ProgressXml progress[2];
+	ChampsXml champs;  ProgressXml progress[2];
 	ChallXml chall;  ProgressLXml progressL[2];
 	void ProgressSave(bool upgGui=true), ProgressLSave(bool upgGui=true);
 	Chall* pChall;  // current challenge or 0 if not

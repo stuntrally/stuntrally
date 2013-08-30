@@ -1,9 +1,8 @@
 #include "pch.h"
 #include "common/Defines.h"
 #include "ChallengesXml.h"
-#include "ChampsXml.h"  //timesXml
+#include "common/TracksXml.h"
 #include "tinyxml.h"
-//#include <OgreString.h>
 using namespace Ogre;
 
 
@@ -27,7 +26,7 @@ Chall::Chall()  //  defaults
 
 //  Load challenges
 //-------------------------------------------------------------------------------------------------------------
-bool ChallXml::LoadXml(std::string file, TimesXml* times)
+bool ChallXml::LoadXml(std::string file, TracksXml* trks)
 {
 	TiXmlDocument doc;
 	if (!doc.LoadFile(file.c_str()))  return false;
@@ -123,7 +122,7 @@ bool ChallXml::LoadXml(std::string file, TimesXml* times)
 	}
 	
 	///  get champs total time (sum tracks times)
-	if (times)
+	if (trks)
 	for (int c=0; c < all.size(); ++c)
 	{
 		Chall& l = all[c];
@@ -132,7 +131,7 @@ bool ChallXml::LoadXml(std::string file, TimesXml* times)
 		{
 			const ChallTrack& trk = l.trks[i];
 
-			float time = times->trks[trk.name] * trk.laps;
+			float time = trks->times[trk.name] * trk.laps;
 			allTime += time;  // sum trk time, total champ time
 		}
 		l.time = allTime;

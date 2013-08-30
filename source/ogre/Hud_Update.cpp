@@ -399,7 +399,7 @@ void App::UpdateHUD(int carId, float time)
 			//  track time, points
 			float last = tim.GetLastLap(carId), best = tim.GetBestLap(carId, pSet->game.trackreverse);
 			float timeCur = last < 0.1f ? best : last;
-			float timeTrk = times.trks[pSet->game.track];
+			float timeTrk = tracksXml.times[pSet->game.track];
 			bool b = timeTrk > 0.f && timeCur > 0.f;
 
 			bool coldStart = tim.GetCurrentLap(carId) == 1;  // was 0

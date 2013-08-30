@@ -221,7 +221,7 @@ void App::ChampionshipAdvance(float timeCur)
 	LogO("|| --- Champ end: " + ch.name);
 
 	///  compute track  poins  --------------
-	float timeTrk = times.trks[trk.name];
+	float timeTrk = tracksXml.times[trk.name];
 	if (timeTrk < 1.f)
 	{	LogO("|| Error: Track has no best time !");  timeTrk = 10.f;	}
 	timeTrk *= trk.laps;

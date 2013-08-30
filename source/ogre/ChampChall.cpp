@@ -142,16 +142,15 @@ int App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldSta
 //-----------------------------------------------------------------------------------------------
 void App::Ch_XmlLoad()
 {
-	times.LoadXml(PATHMANAGER::GameConfigDir() + "/times.xml");
-	champs.LoadXml(PATHMANAGER::GameConfigDir() + "/championships.xml", &times);
+	champs.LoadXml(PATHMANAGER::GameConfigDir() + "/championships.xml", &tracksXml);
 	LogO(String("**** Loaded Championships: ") + toStr(champs.all.size()));
-	chall.LoadXml(PATHMANAGER::GameConfigDir() + "/challenges.xml", &times);
+	chall.LoadXml(PATHMANAGER::GameConfigDir() + "/challenges.xml", &tracksXml);
 	LogO(String("**** Loaded Challenges: ") + toStr(chall.all.size()));
 
 	/* stats */
 	float time = 0.f;  int trks = 0;
-	for (std::map<std::string, float>::const_iterator it = times.trks.begin();
-		it != times.trks.end(); ++it)
+	for (std::map<std::string, float>::const_iterator it = tracksXml.times.begin();
+		it != tracksXml.times.end(); ++it)
 	{
 		const string& trk = (*it).first;
 		if (trk.substr(0,4) != "Test")
@@ -334,7 +333,7 @@ void App::StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress
 	const TrackInfo& ti = tracksXml.trks[id];
 
 	float carMul = GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
-	float time = (times.trks[name] * laps /*laps > 1 -1*/) / carMul;
+	float time = (tracksXml.times[name] * laps /*laps > 1 -1*/) / carMul;
 
 	liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
 	liStages->setSubItemNameAt(3,l, clrsDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));

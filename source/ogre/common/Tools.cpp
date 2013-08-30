@@ -208,7 +208,7 @@ void App::ToolGhosts()
 		if (timeES==tMax)  timeES=0.f;
 		if (timeBest==tMax)  timeBest=0.f;
 		//  times.xml
-		float timeTrk = times.trks[trk];// + 2;
+		float timeTrk = tracksXml.times[trk];// + 2;
 
 		//float timeB = timeTrk * 1.1f;  // champs factor mostly 0.1
 		//const float decFactor = 1.5f;

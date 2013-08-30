@@ -43,7 +43,7 @@ void App::createScene()
 	QTimer ti;  ti.update();  /// time
 
 	//  tracks.xml
-	tracksXml.LoadXml(PATHMANAGER::GameConfigDir() + "/tracks.xml");
+	tracksXml.LoadIni(PATHMANAGER::GameConfigDir() + "/tracks.ini");
 	carsXml.LoadXml(PATHMANAGER::GameConfigDir() + "/cars.xml");
 
 	//  championships.xml, progress.xml

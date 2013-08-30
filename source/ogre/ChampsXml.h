@@ -33,16 +33,6 @@ public:
 };
 
 
-//-----  track times (1 lap, best time)
-class TimesXml
-{
-public:
-	std::map<std::string, float> trks;
-	
-	bool LoadXml(std::string file);
-};
-
-
 ///-----  all championships and tutorials
 //
 class ChampsXml
@@ -50,7 +40,7 @@ class ChampsXml
 public:
 	std::vector<Champ> all;
 	
-	bool LoadXml(std::string file, class TimesXml* times);
+	bool LoadXml(std::string file, class TracksXml* times);
 };
 
 

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "common/Defines.h"
 #include "ChampsXml.h"
+#include "common/TracksXml.h"
 #include "tinyxml.h"
 
 using namespace Ogre;
@@ -17,7 +18,7 @@ Champ::Champ() :
 
 //  Load champs
 //--------------------------------------------------------------------------------------------------------------------------------------
-bool ChampsXml::LoadXml(std::string file, TimesXml* times)
+bool ChampsXml::LoadXml(std::string file, TracksXml* trks)
 {
 	TiXmlDocument doc;
 	if (!doc.LoadFile(file.c_str()))  return false;
@@ -61,7 +62,7 @@ bool ChampsXml::LoadXml(std::string file, TimesXml* times)
 	}
 	
 	///  get champs total time (sum tracks times)
-	if (times)
+	if (trks)
 	for (int c=0; c < all.size(); ++c)
 	{
 		Champ& ch = all[c];
@@ -70,38 +71,10 @@ bool ChampsXml::LoadXml(std::string file, TimesXml* times)
 		{
 			const ChampTrack& trk = ch.trks[i];
 
-			float time = times->trks[trk.name] * trk.laps;
+			float time = trks->times[trk.name] * trk.laps;
 			allTime += time;  // sum trk time, total champ time
 		}
 		ch.time = allTime;
-	}
-	return true;
-}
-
-//  Load times
-//--------------------------------------------------------------------------------------------------------------------------------------
-bool TimesXml::LoadXml(std::string file)
-{
-	TiXmlDocument doc;
-	if (!doc.LoadFile(file.c_str()))  return false;
-		
-	TiXmlElement* root = doc.RootElement();
-	if (!root)  return false;
-
-	//  clear
-	trks.clear();
-
-	///  tracks best time
-	const char* a;
-	TiXmlElement* eTr = root->FirstChildElement("track");
-	while (eTr)
-	{
-		std::string trk;  float time = 60.f;	//name="TestC4-ow" time="12.1"
-		a = eTr->Attribute("name");		if (a)  trk = std::string(a);
-		a = eTr->Attribute("time");		if (a)  time = s2r(a);
-
-		trks[trk] = time;
-		eTr = eTr->NextSiblingElement("track");
 	}
 	return true;
 }

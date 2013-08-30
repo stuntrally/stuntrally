@@ -1,8 +1,6 @@
 #ifndef _TracksXml_h_
 #define _TracksXml_h_
 
-#include <OgreCommon.h>
-
 
 struct Date
 {
@@ -35,15 +33,15 @@ public:
 
 
 //  all tracks infos
+//.................................
 class TracksXml
 {
 public:
 	std::vector<TrackInfo> trks;
 	std::map<std::string, int> trkmap;  // 0 if not found
+	std::map<std::string, float> times;  // track times
 	
-	//  methods
-	//TracksXml();  void Default();
-	bool LoadXml(Ogre::String file);
+	bool LoadIni(std::string file);
 };
 
 
@@ -72,8 +70,7 @@ public:
 	std::map<std::string, int> trkmap;  // 0 if not found
 	
 	//  methods
-	//TracksXml();  void Default();
-	bool LoadXml(Ogre::String file), SaveXml(Ogre::String file);
+	bool LoadXml(std::string file), SaveXml(std::string file);
 };
 
 
@@ -117,7 +114,7 @@ public:
 	float magic;
 	
 	//  methods
-	bool LoadXml(Ogre::String file);
+	bool LoadXml(std::string file);
 };
 
 

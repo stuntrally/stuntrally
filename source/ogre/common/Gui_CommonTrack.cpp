@@ -568,7 +568,7 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTr
 
 	//  track time
 	float carMul = GetCarTimeMul(pSet->gui.car[0], pSet->gui.sim_mode);
-	float timeTrk = times.trks[sTrack];
+	float timeTrk = tracksXml.times[sTrack];
 	std::string speedTrk = fToStr(len / timeTrk * m, 0,3) + unit;
 	float timeT = (/*place*/1 * carsXml.magic * timeTrk + timeTrk) / carMul;
 	if (stTrk[ch][6])  stTrk[ch][6]->setCaption(GetTimeString(timeT));

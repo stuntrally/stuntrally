@@ -21,8 +21,11 @@ string dt2s(const Date& dt)
 
 //-------------------------------------------------------------------------------------
 TrackInfo::TrackInfo()
-	:n(-1),crtver(0.0),name("none"),scenery("none"),author("none")
-	,fluids(0),bumps(0),jumps(0),loops(0),pipes(0),banked(0),frenzy(0),longn(0),objects(0)
+	:n(-1),crtver(0.0),name("none")
+	,scenery("none"),author("none")
+	,objects(0),fluids(0),bumps(0)
+	,jumps(0),loops(0),pipes(0)
+	,banked(0),frenzy(0),longn(0)
 	,diff(0),rating(0)
 {	}
 
@@ -35,7 +38,7 @@ UserTrkInfo::UserTrkInfo()
 ///  User Load
 ///------------------------------------------------------------------------------------
 
-bool UserXml::LoadXml(Ogre::String file)
+bool UserXml::LoadXml(std::string file)
 {
 	TiXmlDocument doc;
 	if (!doc.LoadFile(file.c_str()))  return false;
@@ -70,7 +73,7 @@ bool UserXml::LoadXml(Ogre::String file)
 ///  User Save
 ///------------------------------------------------------------------------------------
 
-bool UserXml::SaveXml(Ogre::String file)
+bool UserXml::SaveXml(std::string file)
 {
 	TiXmlDocument xml;	TiXmlElement root("tracks");
 
@@ -94,45 +97,46 @@ bool UserXml::SaveXml(Ogre::String file)
 
 //  Load
 //--------------------------------------------------------------------------------------------------------------------------------------
-
-bool TracksXml::LoadXml(Ogre::String file)
+//  Load Ini
+//--------------------------------------------------------------------------------------------------------------------------------------
+bool TracksXml::LoadIni(std::string file)
 {
-	TiXmlDocument doc;
-	if (!doc.LoadFile(file.c_str()))  return false;
-		
-	TiXmlElement* root = doc.RootElement();
-	if (!root)  return false;
-
 	//  clear
-	trks.clear();  trkmap.clear();
+	trks.clear();  trkmap.clear();  times.clear();
 
-	///  tracks
-	const char* a;  int i=1;  //0 = none
-	TiXmlElement* eTrk = root->FirstChildElement("track");
-	while (eTrk)
+	int i=1;  // 0 = not found
+	char s[256], name[32],scenery[24],author[24];
+	float time=0.f;
+	TrackInfo t;
+
+	std::ifstream fs(file.c_str());
+	if (fs.fail())  return false;
+	while (fs.good())
 	{
-		TrackInfo t;
-		a = eTrk->Attribute("n");			if (a)  t.n = s2i(a);
-		a = eTrk->Attribute("name");		if (a)  t.name = string(a);
-		a = eTrk->Attribute("created");		if (a)  t.created = s2dt(a);
-		a = eTrk->Attribute("crtver");		if (a)  t.crtver = s2r(a);
-		a = eTrk->Attribute("modified");	if (a)  t.modified = s2dt(a);
-		a = eTrk->Attribute("scenery");		if (a)  t.scenery = string(a);
-		a = eTrk->Attribute("author");		if (a)  t.author = string(a);
+		fs.getline(s,254);
 
-		a = eTrk->Attribute("fluids");		if (a)  t.fluids = s2i(a);
-		a = eTrk->Attribute("bumps");		if (a)  t.bumps = s2i(a);	a = eTrk->Attribute("jumps");		if (a)  t.jumps = s2i(a);
-		a = eTrk->Attribute("loops");		if (a)  t.loops = s2i(a);	a = eTrk->Attribute("pipes");		if (a)  t.pipes = s2i(a);
-		a = eTrk->Attribute("banked");		if (a)  t.banked = s2i(a);	a = eTrk->Attribute("frenzy");		if (a)  t.frenzy = s2i(a);
-		a = eTrk->Attribute("long");		if (a)  t.longn = s2i(a);
-		a = eTrk->Attribute("objects");		if (a)  t.objects = s2i(a);
+		//  starting with digit
+		if (strlen(s) > 0 && s[0] >= '0' && s[0] <= '9')
+		{
+		//114,E1-Lakes  v=2.0 06/04/13 07/04/13 :Finland  a:CH |o=0 w=1 ~=1 J=2 L=0 P=0 /=1 s=1 l=2 !=2 *=4  T=107.8
+			sscanf(s,
+			"%d,%s v=%f %d/%d/%d %u/%u/%u :%s a:%s |o=%d w=%d ~=%d J=%d L=%d P=%d /=%d s=%d l=%d !=%d *=%d  T=%f"
+				,&t.n, name, &t.crtver
+					,&t.created.day, &t.created.month, &t.created.year
+					,&t.modified.day, &t.modified.month, &t.modified.year
+				,scenery, author
+				,&t.objects, &t.fluids, &t.bumps, &t.jumps, &t.loops, &t.pipes
+				,&t.banked, &t.frenzy, &t.longn, &t.diff, &t.rating
+				,&time);
 
-		a = eTrk->Attribute("diff");		if (a)  t.diff = s2i(a);
-		a = eTrk->Attribute("rating");		if (a)  t.rating = s2i(a);
+			t.name = name;
+			t.scenery = scenery;
+			t.author = author;
 
-		trks.push_back(t);
-		trkmap[t.name] = i++;
-		eTrk = eTrk->NextSiblingElement("track");
+			trks.push_back(t);
+			trkmap[name] = i++;
+			times[name] = time;
+		}
 	}
 	return true;
 }
@@ -150,7 +154,7 @@ CarInfo::CarInfo()
 ///  Load  cars.xml
 //-------------------------------------------------------------------------------------
 
-bool CarsXml::LoadXml(Ogre::String file)
+bool CarsXml::LoadXml(std::string file)
 {
 	TiXmlDocument doc;
 	if (!doc.LoadFile(file.c_str()))  return false;
