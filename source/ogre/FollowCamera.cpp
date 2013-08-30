@@ -3,7 +3,7 @@
 #include "FollowCamera.h"
 #include "../vdrift/settings.h"
 
-#include "../tinyxml/tinyxml.h"
+#include "../tinyxml/tinyxml2.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/mathvector.h"
 // ray cast
@@ -21,6 +21,7 @@
 
 #include <MyGUI.h>
 using namespace Ogre;
+using namespace tinyxml2;
 
 
 static float GetAngle(float x, float y)
@@ -562,12 +563,13 @@ bool FollowCamera::loadCameras()
 	miCount = 0;  miCurrent = 0;
 	Destroy();
 
-	TiXmlDocument file;
-	if (file.LoadFile((PATHMANAGER::Cars() + "/cameras.xml").c_str()))
+	XMLDocument doc;
+	XMLError e = doc.LoadFile((PATHMANAGER::Cars() + "/cameras.xml").c_str());
+	if (e == XML_SUCCESS)
 	{
-		TiXmlElement* root = file.RootElement();
+		XMLElement* root = doc.RootElement();
 		if (!root) {  /*mErrorDialog->show(String("Error loading Cameras !!"), false );  return false;*/  }
-		TiXmlElement* cam = root->FirstChildElement("Camera");
+		XMLElement* cam = root->FirstChildElement("Camera");
 		if (!cam) {  /*mErrorDialog->show(String("Error loading Camera !!"), false );  return false;*/  }
 		
 		while (cam)
