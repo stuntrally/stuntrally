@@ -3,10 +3,11 @@
 #include "SceneXml.h"
 #include "FluidsXml.h"
 #include "tinyxml.h"
+#include "tinyxml2.h"
 #include <OgreSceneNode.h>
 #include "../vdrift/game.h"  // for surfaces map
-
 using namespace Ogre;
+using namespace tinyxml2;
 
 
 Scene::Scene()
@@ -152,10 +153,12 @@ void Scene::UpdateSurfId()
 
 bool Scene::LoadXml(String file, bool bTer)
 {
-	TiXmlDocument doc;
-	if (!doc.LoadFile(file.c_str()))  return false;
+	XMLDocument doc;
+	XMLError e = doc.LoadFile(file.c_str());
+	if (e != XML_SUCCESS)
+	{	LogO("!Can't load scene.xml: "+file);  return false;  }
 		
-	TiXmlElement* root = doc.RootElement();
+	XMLElement* root = doc.RootElement();
 	if (!root)  return false;
 
 	// clear  --
@@ -169,7 +172,7 @@ bool Scene::LoadXml(String file, bool bTer)
 	//pgLayers.clear();
 
 	// read
-	TiXmlElement* eSky,*eFog,*eFogH,*eLi,*eTer,*ePgd,*eCam,*eFls,*eObjs,*eCar;
+	XMLElement* eSky,*eFog,*eFogH,*eLi,*eTer,*ePgd,*eCam,*eFls,*eObjs,*eCar;
 	const char* a;
 
 
@@ -231,7 +234,7 @@ bool Scene::LoadXml(String file, bool bTer)
 	eFls = root->FirstChildElement("fluids");
 	if (eFls)
 	{
-		TiXmlElement* eFl = eFls->FirstChildElement("fluid");
+		XMLElement* eFl = eFls->FirstChildElement("fluid");
 		while (eFl)
 		{
 			FluidBox fb;
@@ -262,7 +265,7 @@ bool Scene::LoadXml(String file, bool bTer)
 		td.UpdVals();
 
 		int il = 0;
-		TiXmlElement* eTex = eTer->FirstChildElement("texture");
+		XMLElement* eTex = eTer->FirstChildElement("texture");
 		while (eTex)
 		{
 			bool road = false;
@@ -299,7 +302,7 @@ bool Scene::LoadXml(String file, bool bTer)
 		}
 		td.UpdLayers();
 
-		TiXmlElement* ePar = eTer->FirstChildElement("par");
+		XMLElement* ePar = eTer->FirstChildElement("par");
 		if (ePar)
 		{
 			a = ePar->Attribute("dust");	if (a)  sParDust = String(a);
@@ -345,7 +348,7 @@ bool Scene::LoadXml(String file, bool bTer)
 		a = ePgd->Attribute("trRdDist");	if (a)  trRdDist = s2i(a);
 
 		int grl = 0;
-		TiXmlElement* eGrL = ePgd->FirstChildElement("grass");
+		XMLElement* eGrL = ePgd->FirstChildElement("grass");
 		while (eGrL)
 		{
 			SGrassLayer g;
@@ -375,7 +378,7 @@ bool Scene::LoadXml(String file, bool bTer)
 		}
 
 		int pgl = 0;
-		TiXmlElement* ePgL = ePgd->FirstChildElement("layer");
+		XMLElement* ePgL = ePgd->FirstChildElement("layer");
 		while (ePgL)
 		{
 			PagedLayer l;
@@ -412,7 +415,7 @@ bool Scene::LoadXml(String file, bool bTer)
 	eObjs = root->FirstChildElement("objects");
 	if (eObjs)
 	{
-		TiXmlElement* eObj = eObjs->FirstChildElement("o");
+		XMLElement* eObj = eObjs->FirstChildElement("o");
 		while (eObj)
 		{
 			Object o;
