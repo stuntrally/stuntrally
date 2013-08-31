@@ -51,9 +51,14 @@
 			//  - average points  5.0 .. 10.0 and more
 			//  prizes  0 only gold  1 gold,silver  2 gold,silver,bronze (default)
 			//    pass conditions are for gold prize
-			//    silver is 1.0 points less or 2 pos more, bronze 2.0 points or 4 pos
+			//    silver is 1.0 points less or 2 positions more
+			//    bronze 2.0 points or 4 pos
+			//  factor is a multiplier for those values (silver,bronze)
+			//    1 is default does like above
+			//    eg. using 2 will need 2.0 points less for silver etc.
+			//    and will make it easier to pass challenge, but harder to win gold
 
-		<pass totalTime="123" avgPos="6" avgPoints="7" prizes="2" />
+		<pass totalTime="123" avgPos="6" avgPoints="7" prizes="2" factor="1.5" />
 
 			For a track time 1:40 (100 sec)
 				Time Pos  Points
@@ -454,7 +459,7 @@
 		<car names="ES|S1|N1" />
 		<pass avgPoints="12" />
 		<tracks>
-			<t name="S5-LoopBasic"   passPoints="9" />
+			<t name="S5-LoopBasic"   passPoints="10" />
 			<t name="S3-Loops"       passPoints="9" />
 			<t name="S15-Scorpio"    passPoints="9" />
 		</tracks>
@@ -488,11 +493,11 @@
 	<challenge name="Horrible Weather" ver="1" difficulty="5" type="5" 
 			descr="Ice, sandstorm and heavy rain, this is definitely a challenge. Remember, on ice, push throttle only occasionally.">
 		<car names="3S|TC6|M3" />
-		<pass avgPoints="12" />
+		<pass avgPoints="14" factor="2" />
 		<tracks>
 			<t name="0W4-ice-blur"  passPoints="11" />
 			<t name="D12-Sandstorm" passPoints="11" />
-			<t name="T5-Twister"    passPoints="7" />
+			<t name="T5-Twister"    passPoints="5" />
 			<t name="0W13-MtFog"    passPoints="8" />
 		</tracks>
 	</challenge>
@@ -502,10 +507,10 @@
 		<cartype names="Gravel|Racing" />
 		<pass avgPoints="12" />
 		<tracks>
-			<t name="V1-Dark"     laps="2" passPoints="9" />
-			<t name="X1-Magic"    laps="2" passPoints="9" />
-			<t name="T4-Scary"    passPoints="9" />
-			<t name="V5-Sad"      passPoints="9" />
+			<t name="V1-Dark"     laps="2" passPoints="9.5" />
+			<t name="X1-Magic"    laps="2" passPoints="9.5" />
+			<t name="T4-Scary"    passPoints="9.5" />
+			<t name="V5-Sad"      passPoints="9.5" />
 		</tracks>
 	</challenge>
 
@@ -521,12 +526,12 @@
 	</challenge>
 
 	<challenge name="Outer Stunts" ver="1" difficulty="5" type="5" 
-			descr="Great, very fast stunts on other planets. Use the rechargable boost to be faster.">
+			descr="Great, very fast stunts on other planets. Need to use the rechargable boost to be faster.">
 		<sim boost="2" />
 		<car names="ES|S1|XZ" />
 		<pass avgPoints="14" />
 		<tracks>
-			<t name="R1-Mars"       passPoints="11.5" />
+			<t name="R1-Mars"       passPoints="12.0" />
 			<t name="X4-Pipeline"   passPoints="14.0" />
 		</tracks>
 	</challenge>
@@ -559,10 +564,10 @@
 			descr="Test Challenge 2, points pass.">
 		<sim mode="normal" damage="1" boost="1" flip="1" rewind="1" />
 		<car names="ES|S1" />
-		<pass avgPoints="7" />
+		<pass avgPoints="8" factor="3" />
 		<tracks>
-			<t name="TestC6-temp" passPoints="5"/>
-			<t name="TestC6-temp" reversed="1" passPoints="5"/>
+			<t name="TestC6-temp" passPoints="1"/>
+			<t name="TestC6-temp" reversed="1" passPoints="1"/>
 		</tracks>
 	</challenge>
 	

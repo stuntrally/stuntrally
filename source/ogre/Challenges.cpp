@@ -377,7 +377,7 @@ void App::ChallengeAdvance(float timeCur/*total*/)
 		String sp;  bool pa0;
 		for (p=0; p <= pp; ++p)
 		{
-			float pass = ch.avgPos + ciAddPos[p];
+			float pass = ch.avgPos + ciAddPos[p] * ch.factor;
 			pa = pc.avgPos <= pass;
 			if (pa && p > prize)  prize = p;
 			
@@ -396,7 +396,7 @@ void App::ChallengeAdvance(float timeCur/*total*/)
 		String sp;  bool pa0;
 		for (p=0; p <= pp; ++p)
 		{
-			float pass = ch.avgPoints - cfSubPoints[p];
+			float pass = ch.avgPoints - cfSubPoints[p] * ch.factor;
 			pa = pc.avgPoints >= pass;
 			if (pa && p > prize)  prize = p;
 
@@ -600,12 +600,12 @@ void App::UpdChallDetail(int id)
 		s1 += "#D8C0FF";  s2 += "#F0D8FF";
 		if (ch.totalTime > 0.f){	s1 += TR("  #{TBTime}\n");      s2 += GetTimeString(ch.totalTime)+"\n";  }
 		if (ch.avgPoints > 0.f){	s1 += TR("  #{TBPoints}\n");
-									for (p=0; p <= pp; ++p)
-										s2 += clrPrize[2-pp+ p+1]+ fToStr(ch.avgPoints - cfSubPoints[p],1,3)+"  ";
+									for (p=0; p <= pp; ++p)  s2 += clrPrize[2-pp+ p+1]+
+											fToStr(ch.avgPoints - cfSubPoints[p] * ch.factor ,1,3)+"  ";
 									s2 += "\n";  }
 		if (ch.avgPos > 0.f)  {		s1 += TR("  #{TBPosition}\n");
-									for (p=0; p <= pp; ++p)
-										s2 += clrPrize[2-pp+ p+1]+ fToStr(ch.avgPos + ciAddPos[p],1,3)+"  ";
+									for (p=0; p <= pp; ++p)  s2 += clrPrize[2-pp+ p+1]+
+											fToStr(ch.avgPos + ciAddPos[p] * ch.factor ,1,3)+"  ";
 									s2 += "\n";  }
 	}
 	txtChP[1]->setCaption(s1);  valChP[1]->setCaption(s2);
