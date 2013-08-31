@@ -29,19 +29,18 @@
 			//  see in cars.xml for all types and cars
 			//  only those types or cars you put here will be available
 			
-		// TODO: deny car change, track retries/resets limit
-		// gui btn restart chall
+			// TODO: track retries/resets limit
 
 		<cartype names="Gravel" />
 		<car names="ES|S1" />
 		
-		// todo: *** Hud ***
+			// todo: *** Hud ***
 			//  not allowed when ="0", if "1" means user can choose
 			//  minimap,  checkpoint arrow and checkpoint beam,  track's ghost
 
 		<hud minimap="1" chkArrow="1" chkBeam="1" trkGhost="1" />
 		
-		/// todo: deny abs,tcs..  <setup abs="0" tcs="0" autogbox="-1" />
+			/// todo: deny abs,tcs..  <setup abs="0" tcs="0" autogbox="-1" />
 			
 			//  *** Pass (win) conditions, for whole challenge ***
 			//  use many if desired  (one is good)
@@ -50,12 +49,13 @@
 			//  - total time in seconds  .need to sum tracks
 			//  - average position  1.0 .. 5.0 and more
 			//  - average points  5.0 .. 10.0 and more
+			//  prizes 0 only gold  1 gold,silver  2 gold,silver,bronze	(default)
+			//  pass conditions are for gold prize
+			//  silver is 1.5 points less or 1 pos more, bronze also
 
-		<pass totalTime="123" avgPos="6" avgPoints="7" />
+		<pass totalTime="123" avgPos="6" avgPoints="7" prizes="2" />
 
-		/// todo: bronze, silver, gold ...?
-
-		For a track time 1:40.00 (100 sec)
+		For a track time 1:40 (100 sec)
 			Time Pos  Points
 			1:36   1  12
 			1:38   1  11

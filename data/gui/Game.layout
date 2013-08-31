@@ -1396,10 +1396,36 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabStages">
 				<Property key="Caption" value="#80E0C0#{Stages}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
-				<Widget type="TextBox" skin="TextBox" position="516 8 119 560" name="txtChDetail">
+                <Widget type="Widget" skin="PanelSkin" position="506 52 266 316" name="panCh">
+					<Property key="Colour" value="0.6 0.8 1"/>
+					<Property key="Alpha" value="0.55"/>
+					<Property key="InheritsAlpha" value="false"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="516 62 119 560" name="txtChDetail">
+					<Property key="TextShadow" value="true"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="636 8 280 560" name="valChDetail">
+				<Widget type="TextBox" skin="TextBox" position="636 62 280 560" name="valChDetail">
+					<Property key="TextShadow" value="true"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="36 412 220 560" name="txtChP0">
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="126 412 110 560" name="valChP0">
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="256 412 220 560" name="txtChP1">
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="346 412 110 560" name="valChP1">
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="516 394 119 560" name="txtChP2">
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="606 394 280 560" name="valChP2">
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 			</Widget>

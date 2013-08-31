@@ -32,6 +32,7 @@ public:
 	float length;  // stats for display
 	int type;  // easy, normal etc, for gui tab
 	float time;  // total computed (sum all tracks)
+	int prizes;  // 0 only gold  1 gold,silver  2 gold,silver,bronze
 	
 	//  allowed types or cars 1 or more
 	Ogre::StringVector carTypes, cars;

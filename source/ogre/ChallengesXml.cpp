@@ -22,7 +22,7 @@ Chall::Chall()  //  defaults
 	// abs, tcs, autoshift, autorear
 	// max dmg%, off road time-
 	,avgPoints(-1.f), totalTime(-1.f), avgPos(-1.f)  // pass
-	,carChng(0)
+	,carChng(0), prizes(2)
 {	}
 
 
@@ -97,6 +97,7 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks)
 			a = ePass->Attribute("totalTime");	if (a)  c.totalTime = s2r(a);
 			a = ePass->Attribute("avgPoints");	if (a)  c.avgPoints = s2r(a);
 			a = ePass->Attribute("avgPos");		if (a)  c.avgPos = s2r(a);
+			a = ePass->Attribute("prizes");		if (a)  c.prizes = s2i(a);
 		}
 
 		//  tracks

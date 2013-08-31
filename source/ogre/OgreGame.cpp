@@ -86,7 +86,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,pr(0),pr2(0), sun(0), carIdWin(-1), iCurCar(0), bUpdCarClr(1), iRplCarOfs(0)
 	,txtInpDetail(0), panInputDetail(0), edInputIncrease(0), chOneAxis(0)
 	// chs
-	,liChamps(0),liStages(0), liChalls(0), txtCh(0),valCh(0)
+	,liChamps(0),liStages(0), liChalls(0), txtCh(0),valCh(0), panCh(0)
 	,edChampStage(0),edChampEnd(0), edChallStage(0),edChallEnd(0)
 	,edChInfo(0), edChDesc(0), pChall(0)
 	,btStTut(0),  tabTut(0),  imgTut(0)
@@ -112,12 +112,14 @@ App::App(SETTINGS *settings, GAME *game)
 		for (int a=0;a<NumPlayerActions;++a)
 			mPlayerInputState[p][a] = 0;
 	}
+	int i,c;
+	for (i=0; i<3; ++i)
+	{	txtChP[i]=0;  valChP[i]=0;  }
 	
 	sc = new Scene();
 	hud.resize(4);  frm.resize(4);  ov.resize(5);
 	NullHUD();
 
-	int i,c;
 	for (c=0; c < 2; ++c)
 	{
 		trkDesc[c]=0;  imgPrv[c]=0; imgMini[c]=0; imgTer[c]=0;

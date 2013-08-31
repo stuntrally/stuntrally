@@ -94,8 +94,8 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 
 
 	//  champ details  -----------------------------------
-	String s1,s2,clr;
-	for (int i=0; i<4; ++i)  {
+	String s1,s2,clr;  int i;
+	for (i=0; i<1; ++i)  {
 		s1 += "\n";  s2 += "\n";  }
 
 	clr = clrsDiff[ch.diff];
@@ -108,12 +108,14 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 	clr = clrsDiff[std::min(8,int(ch.time/3.f/60.f))];
 	s1 += TR("#80F0E0#{Time} [m:s.]\n"); s2 += "#C0FFE0"+clr+ GetTimeShort(ch.time)+"\n";
 
-	s1 += "\n";  s2 += "\n";
+	s1 += "\n\n";  s2 += "\n\n";
 	int cur = progress[p].chs[pos].curTrack, all = champs.all[pos].trks.size();
-	s1 += TR("#B0C0E0#{Progress}\n");    s2 += "#C0E0FF"+fToStr(100.f * cur / all,1,5)+" %\n";
+	s1 += TR("#B0C0E0#{Progress}\n");    s2 += "#B0D0F0"+(cur == all ? TR("#{Finished}") : fToStr(100.f * cur / all,0,3)+" %")+"\n";
 	s1 += TR("#D8C0FF#{Score}\n");       s2 += "#F0D8FF"+fToStr(progress[p].chs[pos].points,1,5)+"\n";
 
 	txtCh->setCaption(s1);  valCh->setCaption(s2);
+	for (i=0; i<3; ++i)  {
+		txtChP[i]->setCaption("");  valChP[i]->setCaption("");  }
 	
 	//  btn start
 	s1 = cur == all ? TR("#{Restart}") : (cur == 0 ? TR("#{Start}") : TR("#{Continue}"));

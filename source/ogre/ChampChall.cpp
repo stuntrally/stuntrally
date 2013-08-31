@@ -309,6 +309,7 @@ void App::UpdChampTabVis()
 
 	liChamps->setVisible(!chall);  liChamps->setColour(tutor ? Colour(0.85,0.8,0.75) : Colour(0.75,0.8,0.85));
 	liChalls->setVisible( chall);  liChalls->setColour(Colour(0.74,0.7,0.82));
+	panCh->setColour(tutor ? Colour(0.9,0.8,0.7) : champ ? Colour(0.7,0.9,0.8) : Colour(0.77,0.75,0.92));
 
 	if (oldMenu != pSet->inMenu && (tutor || champ || chall))
 	{	oldMenu = pSet->inMenu;

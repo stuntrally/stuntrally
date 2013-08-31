@@ -599,8 +599,12 @@ void App::InitGui()
 	if (edChInfo)  edChInfo->setVisible(pSet->champ_info);
 	Btn("btnChampInfo",btnChampInfo);
 
+	panCh = mWndGame->findWidget("panCh");
 	txtCh = (TextBox*)mWndGame->findWidget("txtChDetail");
 	valCh = (TextBox*)mWndGame->findWidget("valChDetail");
+	for (int i=0; i<3; ++i) {  String s = toStr(i);
+		txtChP[i] = (TextBox*)mWndGame->findWidget("txtChP"+s);
+		valChP[i] = (TextBox*)mWndGame->findWidget("valChP"+s);  }
 	edChDesc = mGUI->findWidget<EditBox>("ChampDescr");
 
 	//  Champs list  -------------
@@ -636,6 +640,7 @@ void App::InitGui()
 	//  Stages list  -------------
 	trktab = (TabItem*)mWndGame->findWidget("TabStages");
 	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
+	li->setColour(Colour(0.7,0.73,0.76));
 	li->eventListChangePosition += newDelegate(this, &App::listStageChng);
    	li->setVisible(false);
 	
@@ -715,10 +720,8 @@ void App::InitGui()
 	li->setInheritsAlpha(false);  li->setColour(Colour(0.8,0.9,1,1));
 	li->removeAllColumns();
 	li->addColumn("", 40);  //N
-	li->addColumn(TR("#{TBPlace}"), 60);
-	li->addColumn(TR("#{NetNickname}"), 180);
-	li->addColumn(TR("#{TBTime}"), 120);
-	li->addColumn(TR("#{TBBest}"), 120);
+	li->addColumn(TR("#{TBPlace}"), 60);	li->addColumn(TR("#{NetNickname}"), 180);
+	li->addColumn(TR("#{TBTime}"), 120);	li->addColumn(TR("#{TBBest}"), 120);
 	li->addColumn(TR("#{TBLap}"), 60);
 	liNetEnd = li;
 	
