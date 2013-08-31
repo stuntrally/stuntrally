@@ -342,12 +342,12 @@
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="J11-Temple" laps="2" passPoints="9" />
-			<t name="J12-Fog"    laps="2" passPoints="13" />
+			<t name="J12-Fog"    laps="2" passPoints="11" />
 			<t name="J18-Tiny"   laps="2" passPoints="10" />
 		</tracks>
 	</challenge>
 
-	<challenge name="Mud Attack" ver="1" difficulty="3" type="3" 
+	<challenge name="Mud Attack" ver="1" difficulty="4" type="3" 
 			descr="Very fast drive through the most mud filled tracks, short and curly. Use boost in mud to be faster.">
 		<cartype names="Gravel" />
 		<pass avgPoints="11" />
@@ -370,7 +370,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Twisted Bridges" ver="1" difficulty="3" type="3" 
+	<challenge name="Twisted Bridges" ver="1" difficulty="4" type="3" 
 			descr="Banked and twisted bridged roads. You get fast cars, but the key is to drive not too fast.">
 		<!--<cartype names="Asphalt" />-->
 		<car names="XZ" />
@@ -469,20 +469,21 @@
 	<challenge name="Stunt Master" ver="1" difficulty="7" type="4" 
 			descr="The most difficult and long stunt tracks. Pay attention to car damage. Avoid hitting walls.">
 		<car names="ES|S1|S8" />
-		<pass avgPoints="12" />
+		<pass avgPoints="11" />
 		<tracks>
 			<t name="S14-Refinery"   passPoints="9" />
-			<t name="I9-Web"         passPoints="9" />
+			<t name="I9-Web"         passPoints="8.5" />
 		</tracks>
 	</challenge>
 
 	<challenge name="Pipe Master" ver="1" difficulty="7" type="4" 
 			descr="Most difficult all-pipe tracks. Long and winding.">
+		<sim boost="2" />
 		<car names="ES|S8|UV" />
-		<pass avgPoints="12" />
+		<pass avgPoints="11" />
 		<tracks>
 			<t name="S12-Infinity"   passPoints="9" />
-			<t name="X4-Pipeline"    passPoints="9" />
+			<t name="X4-Pipeline"    passPoints="8.5" />
 		</tracks>
 	</challenge>
 
@@ -525,7 +526,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Outer Stunts" ver="1" difficulty="5" type="5" 
+	<challenge name="Outer Stunts" ver="1" difficulty="6" type="5" 
 			descr="Great, very fast stunts on other planets. Need to use the rechargable boost to be faster.">
 		<sim boost="2" />
 		<car names="ES|S1|XZ" />
