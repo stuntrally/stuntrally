@@ -54,6 +54,20 @@
 		<pass totalTime="123" avgPos="6" avgPoints="7" />
 
 		/// todo: bronze, silver, gold ...?
+
+		For a track time 1:40.00 (100 sec)
+			Time Pos  Points
+			1:36   1  12
+			1:38   1  11
+			1:40   1  10
+			1:41   2   9.5
+			1:42   3   9
+			1:44   5   8
+			1:47   8   6.5
+			1:49  10   5.5
+			2:00  21   0
+		One position is 0.5 points. Points go above 10 if you are better than track time (Pos stays at 1).
+
 		
 		<tracks>
 				//  reversed direction when reversed="1", don't put for normal
@@ -401,7 +415,8 @@
 
 	<challenge name="Stunt Long" ver="1" difficulty="4" type="4" 
 			descr="Long stunt filled tracks.">
-		<cartype names="Racing" />
+		<!--<cartype names="Gravel" />-->
+		<car names="XZ" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="A1-StuntPark"      passPoints="9" />
@@ -411,7 +426,7 @@
 
 	<challenge name="Stunt Sway" ver="1" difficulty="4" type="4" 
 			descr="Smooth highly banked terrain and half pipes.">
-		<car names="S8|TC6" />
+		<car names="S8|TC6|FM" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="0W9-IceFrenzy"  passPoints="9" />
@@ -455,7 +470,7 @@
 	</challenge>
 
 	<challenge name="Pipe Master" ver="1" difficulty="7" type="4" 
-			descr="Most difficult all-pipe tracks.">
+			descr="Most difficult all-pipe tracks. Long and winding.">
 		<car names="ES|S8|UV" />
 		<pass avgPoints="10" />
 		<tracks>

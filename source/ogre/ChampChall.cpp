@@ -147,7 +147,7 @@ void App::Ch_XmlLoad()
 	chall.LoadXml(PATHMANAGER::GameConfigDir() + "/challenges.xml", &tracksXml);
 	LogO(String("**** Loaded Challenges: ") + toStr(chall.all.size()));
 
-	/* stats */
+	#if 1  /* stats */
 	float time = 0.f;  int trks = 0;
 	for (std::map<std::string, float>::const_iterator it = tracksXml.times.begin();
 		it != tracksXml.times.end(); ++it)
@@ -155,12 +155,22 @@ void App::Ch_XmlLoad()
 		const string& trk = (*it).first;
 		if (trk.substr(0,4) != "Test")
 		{
-			//if (!(trk[0] >= 'a' && trk[0] <= 'z'))  // sr only
-				time += (*it).second;
+			time += (*it).second;
 			++trks;
 	}	}
 	LogO("Total tracks: "+ toStr(trks) + ", total time: "+ GetTimeShort(time/60.f)+" h:m");
-	/**/
+	#endif
+	
+	#if 0  /* test race pos,points */
+	float trk = 100.f;
+	LogO("Test Time "+GetTimeString(trk)+"   Pos   Points");
+	for (int i=-5; i <= 20; ++i)
+	{
+		float points = 0.f, t = trk + i*1.f;
+		int pos = GetRacePos(t, trk, 1.0f, true, &points);
+		LogO("  "+GetTimeString(t)+"  "+iToStr(pos,2)+"  "+fToStr(points,2,5));
+	}
+	#endif
 	
 
 ///  Champs  ---------------------------
