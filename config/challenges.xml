@@ -49,24 +49,24 @@
 			//  - total time in seconds  .need to sum tracks
 			//  - average position  1.0 .. 5.0 and more
 			//  - average points  5.0 .. 10.0 and more
-			//  prizes 0 only gold  1 gold,silver  2 gold,silver,bronze	(default)
-			//  pass conditions are for gold prize
-			//  silver is 1.5 points less or 1 pos more, bronze also
+			//  prizes  0 only gold  1 gold,silver  2 gold,silver,bronze (default)
+			//    pass conditions are for gold prize
+			//    silver is 1.0 points less or 2 pos more, bronze 2.0 points or 4 pos
 
 		<pass totalTime="123" avgPos="6" avgPoints="7" prizes="2" />
 
-		For a track time 1:40 (100 sec)
-			Time Pos  Points
-			1:36   1  12
-			1:38   1  11
-			1:40   1  10
-			1:41   2   9.5
-			1:42   3   9
-			1:44   5   8
-			1:47   8   6.5
-			1:49  10   5.5
-			2:00  21   0
-		One position is 0.5 points. Points go above 10 if you are better than track time (Pos stays at 1).
+			For a track time 1:40 (100 sec)
+				Time Pos  Points
+				1:36   1  12
+				1:38   1  11
+				1:40   1  10
+				1:41   2   9.5
+				1:42   3   9
+				1:44   5   8
+				1:47   8   6.5
+				1:49  10   5.5
+				2:00  21   0
+			One position is 0.5 points. Points go above 10 if you are better than track time (Pos stays at 1).
 
 		
 		<tracks>
@@ -79,8 +79,10 @@
 				//  one is recommended, can use many
 				//  *if none used, will be only from whole challenge
 
-			<t name="TestC6-temp" reversed="1" laps="1" passTime="-1" passPoints="7.0" passPos="3"/>
+			<t name="TestC6-temp" reversed="1" laps="2" passTime="-1" passPoints="7.0" passPos="3"/>
+			<t name="TestC4-ow" passPoints="7.0" />
 			<t ..more.. />
+
 		</tracks>
 	</challenge>
 	
@@ -381,7 +383,7 @@
 	<challenge name="Perfect Jumps" ver="1" difficulty="3" type="4" 
 			descr="Simple round tracks with jumps. But need to drive perfect. No time for mistakes.">
 		<car names="ES|S1|N1" />
-		<pass avgPoints="11" />
+		<pass avgPoints="13" />
 		<tracks>
 			<t name="D5-jump8-low"  laps="2" passPoints="11" />
 			<t name="D6-jump0-high" laps="2" passPoints="11" />
@@ -406,7 +408,7 @@
 	<challenge name="Stunt Fun" ver="1" difficulty="3" type="4" 
 			descr="Fun tracks with just a few stunts.">
 		<cartype names="Gravel|Racing|Terrain" />
-		<pass avgPoints="10" />
+		<pass avgPoints="12" />
 		<tracks>
 			<t name="S7-HighMadness"  passPoints="9" />
 			<t name="J6-80fun"        passPoints="9" />
@@ -417,7 +419,7 @@
 			descr="Long stunt filled tracks.">
 		<!--<cartype names="Gravel" />-->
 		<car names="XZ" />
-		<pass avgPoints="10" />
+		<pass avgPoints="12" />
 		<tracks>
 			<t name="A1-StuntPark"      passPoints="9" />
 			<t name="I11-StuntIslands"  passPoints="9" />
@@ -427,7 +429,7 @@
 	<challenge name="Stunt Sway" ver="1" difficulty="4" type="4" 
 			descr="Smooth highly banked terrain and half pipes.">
 		<car names="S8|TC6|FM" />
-		<pass avgPoints="10" />
+		<pass avgPoints="12" />
 		<tracks>
 			<t name="0W9-IceFrenzy"  passPoints="9" />
 			<t name="A4-Snake"       passPoints="9" />
@@ -439,7 +441,7 @@
 	<challenge name="Jump Mania" ver="1" difficulty="5" type="4" 
 			descr="Very jump filled tracks. Mostly fast, but you need to know jumps well, and know where to land. ">
 		<car names="ES|S1|S8|N1" />
-		<pass avgPoints="10" />
+		<pass avgPoints="12" />
 		<tracks>
 			<t name="D7-CrossJumps"  passPoints="9" />
 			<t name="A5-TopTwist"    passPoints="9" />
@@ -450,7 +452,7 @@
 	<challenge name="Loop Mania" ver="1" difficulty="6" type="4" 
 			descr="The most looped tracks, few loops in each, difficult. Pay attention to car damage. Don't drive too fast in loops.">
 		<car names="ES|S1|N1" />
-		<pass avgPoints="10" />
+		<pass avgPoints="12" />
 		<tracks>
 			<t name="S5-LoopBasic"   passPoints="9" />
 			<t name="S3-Loops"       passPoints="9" />
@@ -462,7 +464,7 @@
 	<challenge name="Stunt Master" ver="1" difficulty="7" type="4" 
 			descr="The most difficult and long stunt tracks. Pay attention to car damage. Avoid hitting walls.">
 		<car names="ES|S1|S8" />
-		<pass avgPoints="10" />
+		<pass avgPoints="12" />
 		<tracks>
 			<t name="S14-Refinery"   passPoints="9" />
 			<t name="I9-Web"         passPoints="9" />
@@ -472,7 +474,7 @@
 	<challenge name="Pipe Master" ver="1" difficulty="7" type="4" 
 			descr="Most difficult all-pipe tracks. Long and winding.">
 		<car names="ES|S8|UV" />
-		<pass avgPoints="10" />
+		<pass avgPoints="12" />
 		<tracks>
 			<t name="S12-Infinity"   passPoints="9" />
 			<t name="X4-Pipeline"    passPoints="9" />
@@ -486,7 +488,7 @@
 	<challenge name="Horrible Weather" ver="1" difficulty="5" type="5" 
 			descr="Ice, sandstorm and heavy rain, this is definitely a challenge. Remember, on ice, push throttle only occasionally.">
 		<car names="3S|TC6|M3" />
-		<pass avgPoints="10" />
+		<pass avgPoints="12" />
 		<tracks>
 			<t name="0W4-ice-blur"  passPoints="11" />
 			<t name="D12-Sandstorm" passPoints="11" />
@@ -498,7 +500,7 @@
 	<challenge name="Dark Chase" ver="1" difficulty="3" type="5" 
 			descr="The darkest tracks.">
 		<cartype names="Gravel|Racing" />
-		<pass avgPoints="10" />
+		<pass avgPoints="12" />
 		<tracks>
 			<t name="V1-Dark"     laps="2" passPoints="9" />
 			<t name="X1-Magic"    laps="2" passPoints="9" />
@@ -507,14 +509,25 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Expedition Stunts" ver="1" difficulty="5" type="5" 
+	<challenge name="Expedition" ver="1" difficulty="3" type="5" 
 			descr="An expedition into other planets, originally driven with electic powered vehicle.">
-		<car names="UV|ES|S1|XZ" />
-		<pass avgPoints="8" />
+		<car names="UV" />
+		<pass avgPoints="10" />
 		<tracks>
-			<t name="V4-Spikeland"  passPoints="8" />
-			<t name="R1-Mars"       passPoints="8" />
-			<t name="X4-Pipeline"   passPoints="8" />
+			<t name="V4-Spikeland"  passPoints="10" />
+			<t name="X3-Cloud"      passPoints="8" />
+			<t name="R1-Mars"       passPoints="6" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Outer Stunts" ver="1" difficulty="5" type="5" 
+			descr="Great, very fast stunts on other planets. Use the rechargable boost to be faster.">
+		<sim boost="2" />
+		<car names="ES|S1|XZ" />
+		<pass avgPoints="14" />
+		<tracks>
+			<t name="R1-Mars"       passPoints="11.5" />
+			<t name="X4-Pipeline"   passPoints="14.0" />
 		</tracks>
 	</challenge>
 	
@@ -523,87 +536,55 @@
 <!--  Test  -->
 <!--========================================================================================================================-->
 
-	<challenge name="Test 1 time-" ver="1" difficulty="0" type="6" 
-			descr="Test Challenge 1, time pass.">
-		<sim mode="normal" damage="0" boost="2" flip="2" rewind="1" carChng="1"/>
-		<car names="ES|S1" />
-		<pass totalTime="16" />
+	<challenge name="Test 1 prize" ver="1" difficulty="0" type="6" 
+			descr="Test Challenge 1, prize points">
+		<car names="N1|TC6|3S" />
+		<pass avgPoints="10" />
 		<tracks>
-			<t name="TestC6-temp" passTime="9"/>
-			<t name="TestC6-temp" reversed="1" passTime="9"/>
-		</tracks>
-	</challenge>
-
-	<challenge name="Test 1 points" ver="1" difficulty="0" type="6" 
-			descr="Test Challenge 1, points pass.">
-		<sim mode="normal" damage="1" boost="1" flip="1" rewind="1" />
-		<car names="ES|S1" />
-		<pass avgPoints="4" />
-		<tracks>
-			<t name="TestC6-temp" passPoints="5"/>
-			<t name="TestC6-temp" reversed="1" passPoints="5"/>
+			<t name="TestC4-ow"   passPoints="7" />
 		</tracks>
 	</challenge>
 
 	<challenge name="Test 1 pos" ver="1" difficulty="0" type="6" 
 			descr="Test Challenge 1, position pass.">
-		<sim mode="normal" damage="2" boost="0" flip="2" rewind="1" />
-		<car names="ES|N1" />
-		<pass avgPos="5" />
+		<sim damage="0" boost="2" flip="2" rewind="1" />
+		<car names="N1" />
+		<pass avgPos="2" />
 		<tracks>
-			<t name="TestC6-temp" reversed="1" passPos="6"/>
-			<t name="TestC6-temp" passPos="6"/>
+			<t name="TestC4-ow"   passPos="5" />
 		</tracks>
 	</challenge>
 
-	<challenge name="Test 1 all" ver="1" difficulty="1" type="6" 
-			descr="Test Challenge 1, all pass conditions.">
+	<challenge name="Test 2 points" ver="1" difficulty="1" type="6" 
+			descr="Test Challenge 2, points pass.">
 		<sim mode="normal" damage="1" boost="1" flip="1" rewind="1" />
 		<car names="ES|S1" />
-		<pass totalTime="25" avgPoints="6" avgPos="5" />
+		<pass avgPoints="7" />
 		<tracks>
-			<t name="TestC6-temp" reversed="1" passTime="8" passPoints="6" passPos="6"/>
-			<t name="TestC4-ow"  reversed="1" passTime="13" passPoints="6" passPos="6"/>
+			<t name="TestC6-temp" passPoints="5"/>
+			<t name="TestC6-temp" reversed="1" passPoints="5"/>
 		</tracks>
 	</challenge>
-
-
-	<challenge name="Test 2 laps" ver="1" difficulty="2" type="6" 
-			descr="Test Challenge 2, 2 laps.">
+	
+	<challenge name="Test 3 all" ver="1" difficulty="1" type="6" 
+			descr="Test Challenge 3, all pass conditions.">
+		<sim mode="normal" damage="2" boost="0" flip="2" rewind="1" />
 		<cartype names="Gravel" />
-		<pass avgPoints="7" />
+		<pass totalTime="25" avgPoints="10" avgPos="4" />
 		<tracks>
-			<t name="TestC4-ow"   laps="2" passPoints="7.0" />
-			<t name="TestC6-temp" laps="2" passPoints="7.0" />
+			<t name="TestC6-temp" reversed="1" passTime="8" passPoints="6" passPos="10"/>
+			<t name="TestC4-ow"  reversed="1" passTime="13" passPoints="6" passPos="10"/>
 		</tracks>
+
 	</challenge>
 
-	<challenge name="Test 3 cars" ver="1" difficulty="2" type="6" 
-			descr="Test Challenge 3.">
-		<car names="N1|S8|TC6|3S" />
-		<pass avgPoints="7" />
-		<tracks>
-			<t name="TestC4-ow"     laps="1" passTime="12.0" />
-			<t name="TestC1-circle" laps="1" passPoints="7.0" />
-		</tracks>
-	</challenge>
-
-	<challenge name="Test 4 cartype" ver="1" difficulty="2" type="6" 
-			descr="Test Challenge 4.">
+	<challenge name="Test 4 laps" ver="1" difficulty="2" type="6" 
+			descr="Test Challenge 4, 2 laps.">
 		<cartype names="Extreme" />
-		<pass avgPos="6" />
+		<pass avgPos="5" />
 		<tracks>
-			<t name="TestC4-ow"  laps="1" passTime="12.0" />
+			<t name="TestC4-ow"  laps="2" passPoints="5.0" />
 		</tracks>
 	</challenge>
-
-	<challenge name="Test 4 uv" ver="1" difficulty="2" type="6" 
-			descr="Test Challenge 4, always pass.">
-		<car names="UV" />
-		<tracks>
-			<t name="TestC4-ow" />
-		</tracks>
-	</challenge>
-
 
 </challenges>

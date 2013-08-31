@@ -323,86 +323,115 @@ void App::ChallengeAdvance(float timeCur/*total*/)
 		if (passed)
 			pc.curTrack++;  // next stage
 		ProgressLSave();
-	}else
-	{
-		//  chall ended
-		pGame->pause = true;
-		pGame->timer.waiting = true;
-
-		ChallFillStageInfo(true);  // cur track
-		mWndChallStage->setVisible(true);
-
-		//  compute avg
-		float avgPos = 0.f, avgPoints = 0.f, totalTime = 0.f;
-		int ntrks = pc.trks.size();
-		for (int t=0; t < ntrks; ++t)
-		{
-			const ProgressTrackL& pt = pc.trks[t];
-			totalTime += pt.time;  avgPoints += pt.points;  avgPos += pt.pos;
-		}
-		avgPoints /= ntrks;  avgPos /= ntrks;
-
-		//  save
-		pc.curTrack++;
-		pc.totalTime = totalTime;  pc.avgPoints = avgPoints;  pc.avgPos = avgPos;
-		LogO("|] Chall finished");
-		String s = 
-			TR("#E0E0FF#{Challenge}") + ": " + ch.name +"\n";
-			//TR("\n#A0D0F0#{TotalScore}") +"\n";
-		#define sPass(pa)  (pa ? TR("  #00FF00#{Passed}") : TR("  #FF8000#{DidntPass}"))
-
-		///  Pass Challenge  --------------
-		String ss;
-		bool passed = true, pa;
-		//int prize = -1,p;
-		if (ch.totalTime > 0.f)
-		{
-			//
-			pa = pc.totalTime <= ch.totalTime;
-			LogO("]] TotalTime: " + GetTimeString(pc.totalTime) + "  Needed: " + GetTimeString(ch.totalTime) + "  Passed: " + (pa ? "yes":"no"));
-			ss += TR("#D8C0FF#{TBTime}")     + ": " + GetTimeString(pc.totalTime)+ "  / " + GetTimeString(ch.totalTime) + sPass(pa) +"\n";
-			passed &= pa;
-		}
-		if (ch.avgPoints > 0.f)
-		{
-			//for (p=0; p < ch.prizes; ++p)
-			{
-			pa = pc.avgPoints >= ch.avgPoints;
-			LogO("]] AvgPoints: " + fToStr(pc.avgPoints,1) + "  Needed: " + fToStr(ch.avgPoints,1) + "  Passed: " + (pa ? "yes":"no"));
-			ss += TR("#D8C0FF#{TBPoints}")   + ": " + fToStr(pc.avgPoints,2,5) +   "  / " + fToStr(ch.avgPoints,2,5) + sPass(pa) +"\n";
-			passed &= pa;
-			}
-		}else  //if (passed)  // write points always on end
-			ss += TR("#C0E0FF#{TBPoints}")   + ": " + fToStr(pc.avgPoints,2,5) /*+ sPass(pa)*/ +"\n";
-
-		if (ch.avgPos > 0.f)
-		{
-			pa = pc.avgPos <= ch.avgPos;
-			LogO("]] AvgPos: " + fToStr(pc.avgPos,1) + "  Needed: " + fToStr(ch.avgPos,1) + "  Passed: " + (pa ? "yes":"no"));
-			ss += TR("#D8C0FF#{TBPosition}") + ": " + fToStr(pc.avgPos,2,5) +      "  / " + fToStr(ch.avgPos,2,5) + sPass(pa) +"\n";
-			passed &= pa;
-		}
-		LogO(String("]] Passed total: ") + (passed ? "yes":"no"));
-		
-		pc.fin = passed ? 2 : -1;
-		if (passed)  //todo: 0 bronze, 1 silver, 2 gold ..
-			s += TR("\n#E0F0F8#{Prize}: ")+StrPrize(pc.fin+1)+"\n\n";
-		s += ss;
-		
-		ProgressLSave();
-
-		//  upd chall end [window]
-		imgChallFail->setVisible(!passed);
-		imgChallCup->setVisible( passed);  const int ui[8] = {2,3,4};
-		imgChallCup->setImageCoord(IntCoord(ui[std::min(2, std::max(0, pc.fin))]*128,0,128,256));
-
-		txChallEndC->setCaption(passed ? TR("#{ChampEndCongrats}") : "");
-		txChallEndF->setCaption(passed ? TR("#{ChallEndFinished}") : TR("#{Finished}"));
-
-		edChallEnd->setCaption(s);
-		//mWndChallEnd->setVisible(true);  // show after stage end
-		LogO("|]");
+		return;
 	}
+
+	//  challenge end
+	//-----------------------------------------------------------------------------------------------
+	pGame->pause = true;
+	pGame->timer.waiting = true;
+
+	ChallFillStageInfo(true);  // cur track
+	mWndChallStage->setVisible(true);
+
+	//  compute avg
+	float avgPos = 0.f, avgPoints = 0.f, totalTime = 0.f;
+	int ntrks = pc.trks.size();
+	for (int t=0; t < ntrks; ++t)
+	{
+		const ProgressTrackL& pt = pc.trks[t];
+		totalTime += pt.time;  avgPoints += pt.points;  avgPos += pt.pos;
+	}
+	avgPoints /= ntrks;  avgPos /= ntrks;
+
+	//  save
+	pc.curTrack++;
+	pc.totalTime = totalTime;  pc.avgPoints = avgPoints;  pc.avgPos = avgPos;
+
+	LogO("|] Chall finished");
+	String s = "\n\n"+
+		TR("#C0D0F0#{Challenge}") + ": #C0D0FF" + ch.name +"\n";
+	#define sPass(pa)  (pa ? TR("  #00FF00#{Passed}") : TR("  #FF8000#{DidntPass}"))
+
+
+	///  Pass Challenge  --------------
+	String ss;
+	passed = true;
+	int prize = -1, pp = ch.prizes;
+
+	//  time  1:00  ---------------
+	if (ch.totalTime > 0.f)
+	{
+		pa = pc.totalTime <= ch.totalTime;
+		// for p <= pp ..
+
+		LogO("]] TotalTime: "+GetTimeString(pc.totalTime)+"  Needed: "+GetTimeString(ch.totalTime)+"  Passed: "+(pa ? "yes":"no"));
+		ss += TR("#D8C0FF#{TBTime}")+": "+GetTimeString(pc.totalTime)+"   /  "+GetTimeString(ch.totalTime) + sPass(pa) +"\n";
+		passed &= pa;
+	}
+
+	//  position  1st  ---------------
+	if (ch.avgPos > 0.f)
+	{
+		ss += TR("#D8C0FF#{TBPosition}")+": "+fToStr(pc.avgPos,2,5)+"   /";
+		String sp;  bool pa0;
+		for (p=0; p <= pp; ++p)
+		{
+			float pass = ch.avgPos + ciAddPos[p];
+			pa = pc.avgPos <= pass;
+			if (pa && p > prize)  prize = p;
+			
+			LogO("]] AvgPos: "+fToStr(pc.avgPos,1)+"  Needed: "+fToStr(pass,1)+"  Prize: "+toStr(p)+"  Passed: "+(pa ? "yes":"no"));
+			sp += "  "+clrPrize[2-pp+ p+1]+ fToStr(pass,1,3);
+			if (p == 0)
+			{	passed &= pa;  pa0 = pa;  }
+		}
+		ss += sp +" "+ sPass(pa0) +"\n";
+	}
+
+	//  points  10.0  ---------------
+	if (ch.avgPoints > 0.f)
+	{
+		ss += TR("#D8C0FF#{TBPoints}")+": "+fToStr(pc.avgPoints,2,5)+"   /";
+		String sp;  bool pa0;
+		for (p=0; p <= pp; ++p)
+		{
+			float pass = ch.avgPoints - cfSubPoints[p];
+			pa = pc.avgPoints >= pass;
+			if (pa && p > prize)  prize = p;
+
+			LogO("]] AvgPoints: "+fToStr(pc.avgPoints,1)+"  Needed: "+fToStr(pass,1)+"  Prize: "+toStr(p)+"  Passed: "+(pa ? "yes":"no"));
+			sp = "  "+clrPrize[2-pp+ p+1]+ fToStr(pass,1,3) + sp;
+			if (p == 0)
+			{	passed &= pa;  pa0 = pa;  }  // lost if didn't pass worst prize
+		}
+		ss += sp +" "+ sPass(pa0) +"\n";
+	}else  //if (passed)  // write points always on end
+		ss += TR("#C0E0FF#{TBPoints}")+": "+fToStr(pc.avgPoints,2,5) /*+ sPass(pa)*/ +"\n";
+
+	LogO(String("]] Passed total: ") + (passed ? "yes":"no") +"  Prize: "+toStr(prize));
+	
+	
+	//  end
+	pc.fin = passed ? prize : -1;
+	if (passed)
+		s += TR("\n#E0F0F8#{Prize}: ") + StrPrize(pc.fin+1)+"\n";
+	s += "\n"+ss;
+	
+	ProgressLSave();
+
+
+	//  upd chall end [window]
+	imgChallFail->setVisible(!passed);
+	imgChallCup->setVisible( passed);  const int ui[8] = {2,3,4};
+	imgChallCup->setImageCoord(IntCoord(ui[std::min(2, std::max(0, pc.fin))]*128,0,128,256));
+
+	txChallEndC->setCaption(passed ? TR("#{ChampEndCongrats}") : "");
+	txChallEndF->setCaption(passed ? TR("#{ChallEndFinished}") : TR("#{Finished}"));
+
+	edChallEnd->setCaption(s);
+	//mWndChallEnd->setVisible(true);  // show after stage end
+	LogO("|]");
 }
 
 
@@ -410,6 +439,10 @@ void App::ChallengeAdvance(float timeCur/*total*/)
 const String
 	App::clrPrize[4] = {"","#D0B050","#D8D8D8","#E8E050"},
 	App::strPrize[4] = {"","#{Bronze}","#{Silver}","#{Gold}"};
+
+//  lowering pass req
+const int   App::ciAddPos[3]    = {4,2,0};
+const float App::cfSubPoints[3] = {2.f,1.f,0.f};
 
 const String App::StrPrize(int i)  //0..3
 {
@@ -428,8 +461,8 @@ void App::ChallFillStageInfo(bool finished)
 	const ChallTrack& trk = ch.trks[pc.curTrack];
 	bool last = pc.curTrack+1 == ch.trks.size();
 
-	String s;
-	s = "#80FFE0"+ ch.name + "\n\n" +
+	String s =
+		"#80FFE0"+ TR("#{Challenge}") + ":  " + ch.name + "\n\n" +
 		"#80FFC0"+ TR("#{Stage}") + ":  " + toStr(pc.curTrack+1) + " / " + toStr(ch.trks.size()) + "\n" +
 		"#80FF80"+ TR("#{Track}") + ":  " + trk.name + "\n\n";
 
@@ -477,12 +510,9 @@ void App::ChallFillStageInfo(bool finished)
 	else
 	{	///  Pass needed  --------------
 		s += "#F0F060"+TR("#{Needed}") +"\n";
-		if (trk.timeNeeded > 0.f)
-			s += TR("  #D8C0FF#{TBTime}: ") + GetTimeString(trk.timeNeeded) +"\n";
-		if (trk.passPoints > 0.f)
-			s += TR("  #D8C0FF#{TBPoints}: ") + fToStr(trk.passPoints,1) +"\n";
-		if (trk.passPos > 0)
-			s += TR("  #D8C0FF#{TBPosition}: ") + toStr(trk.passPos) +"\n";
+		if (trk.timeNeeded > 0.f)	s += TR("  #D8C0FF#{TBTime}: ") + GetTimeString(trk.timeNeeded) +"\n";
+		if (trk.passPoints > 0.f)	s += TR("  #D8C0FF#{TBPoints}: ") + fToStr(trk.passPoints,1) +"\n";
+		if (trk.passPos > 0)		s += TR("  #D8C0FF#{TBPosition}: ") + toStr(trk.passPos) +"\n";
 		if (road)
 			s += "\n#A8B8C8"+ road->sTxtDesc;
 	}
@@ -525,7 +555,8 @@ void App::UpdChallDetail(int id)
 	String s1,s2,clr;
 	//s1 += "\n";  s2 += "\n";
 
-	clr = clrsDiff[ch.diff];  // track
+	//  track  --------
+	clr = clrsDiff[ch.diff];
 	s1 += clr+ TR("#{Difficulty}\n");    s2 += clr+ TR("#{Diff"+toStr(ch.diff)+"}")+"\n";
 
 	clr = clrsDiff[std::min(8,ntrks*2/3+1)];
@@ -535,12 +566,15 @@ void App::UpdChallDetail(int id)
 	clr = clrsDiff[std::min(8,int(ch.time/3.f/60.f))];
 	s1 += TR("#80F0E0#{Time} [m:s.]\n"); s2 += "#C0FFE0"+clr+ GetTimeShort(ch.time)+"\n";
 
-	s1 += "\n";  s2 += "\n";  // cars
+	//  cars  --------
+	s1 += "\n";  s2 += "\n";
 	s1 += TR("#F08080#{Cars}\n");        s2 += "#FFA0A0" + StrChallCars(ch)+"\n";
 	if (ch.carChng)
 	{	s1 += TR("#C0B0B0#{CarChange}\n");  s2 += TR("#A0B8A0#{Allowed}")+"\n";  }
+
 	
-	s1 += "\n";  s2 += "\n";  // game
+	//  game  --------
+	s1 += "\n";  s2 += "\n";
 	s1 += TR("#D090E0#{Game}")+"\n";     s2 += "\n";
 	#define cmbs(cmb, i)  (i>=0 ? cmb->getItemNameAt(i) : TR("#{Any}"))
 	s1 += TR("#A0B0C0  #{Simulation}\n");  s2 += "#B0C0D0"+ ch.sim_mode +"\n";
@@ -550,54 +584,65 @@ void App::UpdChallDetail(int id)
 	s1 += TR("#80C0FF  #{Boost}\n");       s2 += "#90D0FF"+ cmbs(cmbBoost, ch.boost_type) +"\n";
 	s1 += TR("#6098A0  #{Flip}\n");        s2 += "#7098A0"+ cmbs(cmbFlip, ch.flip_type) +"\n";
 
-	//s1 += "\n";  s2 += "\n";  //  hud
+	//  hud  --------
+	//s1 += "\n";  s2 += "\n";
 	//bool minimap, chk_arr, chk_beam, trk_ghost;  // deny using it if false
 
 	txtCh->setCaption(s1);  valCh->setCaption(s2);
 
-	s1 = "";  s2 = "";  // pass challenge
+
+	//  pass challenge  --------
+	s1 = "";  s2 = "";
 	if (ch.totalTime > 0.f || ch.avgPoints > 0.f || ch.avgPos > 0.f)
 	{
-		s1 += "\n";  s2 += "\n";
+		s1 += "\n";  s2 += "\n";  int p, pp = ch.prizes;
 		s1 += TR("#F0F060#{Needed} - #{Challenge}")+"\n";   s2 += "\n";
-		if (ch.totalTime > 0.f)  {
-			s1 += TR("#D8C0FF  #{TBTime}\n");      s2 += "#F0D8FF"+GetTimeString(ch.totalTime)+"\n";  }
-		if (ch.avgPoints > 0.f)  {
-			s1 += TR("#D8C0FF  #{TBPoints}\n");    s2 += "#F0D8FF"+fToStr(ch.avgPoints,2,5)+"\n";  }
-		if (ch.avgPos > 0.f)  {
-			s1 += TR("#D8C0FF  #{TBPosition}\n");  s2 += "#F0D8FF"+fToStr(ch.avgPos,2,5)+"\n";  }
+		s1 += "#D8C0FF";  s2 += "#F0D8FF";
+		if (ch.totalTime > 0.f){	s1 += TR("  #{TBTime}\n");      s2 += GetTimeString(ch.totalTime)+"\n";  }
+		if (ch.avgPoints > 0.f){	s1 += TR("  #{TBPoints}\n");
+									for (p=0; p <= pp; ++p)
+										s2 += clrPrize[2-pp+ p+1]+ fToStr(ch.avgPoints - cfSubPoints[p],1,3)+"  ";
+									s2 += "\n";  }
+		if (ch.avgPos > 0.f)  {		s1 += TR("  #{TBPosition}\n");
+									for (p=0; p <= pp; ++p)
+										s2 += clrPrize[2-pp+ p+1]+ fToStr(ch.avgPos + ciAddPos[p],1,3)+"  ";
+									s2 += "\n";  }
 	}
 	txtChP[1]->setCaption(s1);  valChP[1]->setCaption(s2);
 	
-	s1 = "";  s2 = "";  // pass challenge
+	//  pass stage  --------
+	s1 = "";  s2 = "";
 	size_t t = liStages->getIndexSelected();
-	if (t != ITEM_NONE)  // pass stage 
-	{	const ChallTrack& trk = ch.trks[t];
+	if (t != ITEM_NONE)
+	{
+		const ChallTrack& trk = ch.trks[t];
 		if (trk.timeNeeded > 0.f || trk.passPoints > 0.f || trk.passPos > 0)
-		{	s1 += "\n";  s2 += "\n";
+		{
+			s1 += "\n";  s2 += "\n";
 			s1 += TR("#FFC060#{Needed} - #{Stage}")+"\n";   s2 += "\n";
-			if (trk.timeNeeded > 0.f)  {
-				s1 += TR("#D8C0FF  #{TBTime}\n");      s2 += "#F0D8FF"+GetTimeString(trk.timeNeeded)+"\n";  }
-			if (trk.passPoints > 0.f)  {
-				s1 += TR("#D8C0FF  #{TBPoints}\n");    s2 += "#F0D8FF"+fToStr(trk.passPoints,2,5)+"\n";  }
-			if (trk.passPos > 0.f)  {
-				s1 += TR("#D8C0FF  #{TBPosition}\n");  s2 += "#F0D8FF"+fToStr(trk.passPos,2,5)+"\n";  }
+			s1 += "#D8C0FF";   s2 += "#F0D8FF";
+			if (trk.timeNeeded > 0.f){	s1 += TR("  #{TBTime}\n");      s2 += GetTimeString(trk.timeNeeded)+"\n";  }
+			if (trk.passPoints > 0.f){	s1 += TR("  #{TBPoints}\n");    s2 += fToStr(trk.passPoints,2,5)+"\n";  }
+			if (trk.passPos > 0.f)  {	s1 += TR("  #{TBPosition}\n");  s2 += fToStr(trk.passPos,2,5)+"\n";  }
 	}	}
 	txtChP[0]->setCaption(s1);  valChP[0]->setCaption(s2);
 
-	s1 = "";  s2 = "";  // prog
+
+	//  progress  --------
+	s1 = "";  s2 = "";
 	const ProgressChall& pc = progressL[p].chs[id];
 	int cur = pc.curTrack, all = chall.all[id].trks.size();
 	if (cur > 0)
 	{
 		s1 += TR("#B0FFFF#{Progress}\n");    s2 += "#D0FFFF"+(cur == all ? TR("#{Finished}") : fToStr(100.f * cur / all,0,3)+" %")+"\n";
 		s1 += TR("#F8FCFF#{Prize}\n");       s2 += StrPrize(pc.fin+1)+"\n";
-		s1 += "\n";  s2 += "\n";
-		s1 += TR("#C8D0F0  #{TBTime}\n");      s2 += "#E0F0FF"+GetTimeString(pc.totalTime)+"\n";
-		s1 += TR("#C8D0F0  #{TBPoints}\n");    s2 += "#E0F0FF"+fToStr(pc.avgPoints,2,5)+"\n";
-		s1 += TR("#C8D0F0  #{TBPosition}\n");  s2 += "#E0F0FF"+fToStr(pc.avgPos,2,5)+"\n";
+		s1 += "\n#C8D0F0";  s2 += "\n#E0F0FF";
+		s1 += TR("  #{TBTime}\n");      s2 += GetTimeString(pc.totalTime)+"\n";
+		s1 += TR("  #{TBPoints}\n");    s2 += fToStr(pc.avgPoints,2,5)+"\n";
+		s1 += TR("  #{TBPosition}\n");  s2 += fToStr(pc.avgPos,2,5)+"\n";
 	}
 	txtChP[2]->setCaption(s1);  valChP[2]->setCaption(s2);
+
 
 	//  btn start
 	s1 = cur == all ? TR("#{Restart}") : (cur == 0 ? TR("#{Start}") : TR("#{Continue}"));

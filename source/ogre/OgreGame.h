@@ -345,6 +345,7 @@ protected:
 	void tabTutType(MyGUI::TabPtr wp, size_t id), tabChampType(MyGUI::TabPtr wp, size_t id);
 	void tabChallType(MyGUI::TabPtr wp, size_t id);
 
+	//  stages
 	MyGUI::EditBox* edChInfo,*edChDesc;  MyGUI::Widget* panCh;
 	MyGUI::TextBox* txtCh,*valCh,*txtChP[3],*valChP[3];  // stages info, pass/progress
 	void btnStageNext(WP), btnStagePrev(WP);  MyGUI::StaticText* valStageNum;
@@ -356,15 +357,18 @@ protected:
 	void ProgressSave(bool upgGui=true), ProgressLSave(bool upgGui=true);
 	Chall* pChall;  // current challenge or 0 if not
 
+	//  load
 	void Ch_NewGame(), Ch_XmlLoad(), Ch_LoadEnd();
 	void UpdChallDetail(int id);
+	//  const
 	const static Ogre::String StrPrize(int i/*0 none..3 gold*/), strPrize[4],clrPrize[4];
+	const static int ciAddPos[3];  const static float cfSubPoints[3];
+	
+	//  common
 	MyGUI::MultiList2* liStages, *liNetEnd;  void listStageChng(MyGUI::MultiList2* li, size_t pos);
 	MyGUI::MultiList2* liChamps;  void listChampChng(MyGUI::MultiList2* li, size_t pos);
 	MyGUI::MultiList2* liChalls;  void listChallChng(MyGUI::MultiList2* li, size_t pos);
 
-	void ChampsListUpdate(), ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
-	void ChallsListUpdate(), ChallFillStageInfo(bool finished), ChallengeAdvance(float timeCur);
 	void btnChampStart(WP), btnChampEndClose(WP), btnChampStageBack(WP), btnChampStageStart(WP);
 	void btnChallStart(WP), btnChallEndClose(WP), btnChallStageBack(WP), btnChallStageStart(WP);
 	void btnChRestart(WP);  MyGUI::ButtonPtr btChRestart;
@@ -374,6 +378,9 @@ protected:
 	MyGUI::EditBox* edChallStage,*edChallEnd;  MyGUI::ImageBox* imgChallStage;
 	MyGUI::ImageBox* imgChallFail,*imgChallCup;  MyGUI::TextBox* txChallEndC,*txChallEndF;
 
+	//  main
+	void ChampsListUpdate(), ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
+	void ChallsListUpdate(), ChallFillStageInfo(bool finished), ChallengeAdvance(float timeCur);
 	void btnChampInfo(WP), chkChampRev(WP), UpdChampTabVis();
 	void ToolGhosts(),ToolGhostsConv();  //  _Tools_
 
