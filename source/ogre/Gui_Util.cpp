@@ -205,7 +205,7 @@ void App::listCarChng(MultiList2* li, size_t pos)
 	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
 	const UString& sl = li->getItemNameAt(i).substr(7);  sListCar = sl;
 
-	if (imgCar)  imgCar->setImageTexture(sListCar+".jpg");
+	if (imgCar && !pSet->dev_no_prvs)  imgCar->setImageTexture(sListCar+".jpg");
 	if (mClient) mClient->updatePlayerInfo(pSet->nickname, sListCar);
 	
 	//  car desc load

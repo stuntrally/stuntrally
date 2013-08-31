@@ -112,12 +112,12 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "graph_veget.use_imposters", use_imposters); Param(c,w, "graph_veget.imposters_only", imposters_only);
 
 	//  misc
-	Param(c,w, "misc.autostartgame", autostart);
+	Param(c,w, "misc.version", version);			Param(c,w, "misc.autostartgame", autostart);
 	Param(c,w, "misc.ogredialog", ogre_dialog);		Param(c,w, "misc.escquit", escquit);
 	Param(c,w, "misc.bulletDebug", bltDebug);		Param(c,w, "misc.bulletLines", bltLines);
 	Param(c,w, "misc.profilerTxt", profilerTxt);	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);
 	Param(c,w, "misc.language", language);			Param(c,w, "misc.loadingback", loadingbackground);
-	Param(c,w, "misc.version", version);			Param(c,w, "misc.dev_keys", dev_keys);
+	Param(c,w, "misc.dev_keys", dev_keys);			Param(c,w, "misc.dev_no_prvs", dev_no_prvs);
 	Param(c,w, "misc.x11_hwmouse", x11_hwmouse);	Param(c,w, "misc.capture_mouse", capture_mouse);
 
 	Param(c,w, "network.nickname", nickname);		Param(c,w, "network.master_server_address", master_server_address);
@@ -194,7 +194,8 @@ SETTINGS::SETTINGS()   ///  Defaults
 	//  car
 	,autoshift(1), autorear(1), rear_inv(1), show_mph(0)
 	//  misc
-	,isMain(1), startInMain(1), inMenu(0), rpl_rec(0), dev_keys(0)
+	,isMain(1), startInMain(1), inMenu(0), rpl_rec(0)
+	,dev_keys(0), dev_no_prvs(0)
 	,split_vertically(true), language("") // "" = autodetect lang
 	//  joystick
 	,ff_device("/dev/input/event0"), ff_gain(1.0), ff_invert(false)
