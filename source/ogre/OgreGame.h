@@ -355,6 +355,7 @@ protected:
 	ChampsXml champs;  ProgressXml progress[2];
 	ChallXml chall;  ProgressLXml progressL[2];
 	void ProgressSave(bool upgGui=true), ProgressLSave(bool upgGui=true);
+	friend class CarModel;
 	Chall* pChall;  // current challenge or 0 if not
 
 	//  load

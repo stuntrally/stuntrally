@@ -363,7 +363,8 @@ void App::LoadGame()  // 2
 	}
 	///  track's ghost  . . .
 	ghtrk.Clear();
-	if (!bRplPlay /*&& pSet->rpl_trackghost?*/ && !mClient && !pSet->game.track_user)
+	bool deny = pChall && !pChall->trk_ghost;
+	if (!bRplPlay /*&& pSet->rpl_trackghost?*/ && !mClient && !pSet->game.track_user && !deny)
 	if (!pSet->game.trackreverse)  // only not rev, todo..
 	{
 		std::string file = PATHMANAGER::TrkGhosts()+"/"+pSet->game.track+".gho";
@@ -419,8 +420,10 @@ void App::LoadScene()  // 3
 	}
 		
 	//  checkpoint arrow
-	if (!bRplPlay)
-	{	if (!arrowNode)  arrowNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	bool deny = pChall && !pChall->chk_arr;
+	if (!bRplPlay && !deny)
+	{
+		if (!arrowNode)  arrowNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		Ogre::Entity* arrowEnt = mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
 		arrowEnt->setRenderQueueGroup(RQG_Hud3);
 		arrowEnt->setCastShadows(false);
@@ -442,9 +445,9 @@ void App::LoadCar()  // 4
 
 		///  challenge off abs,tcs
 		if (pChall && c->pCar)
-		{	//if (!pChall->abs)
-			c->pCar->dynamics.SetABS(false);
-			c->pCar->dynamics.SetTCS(false);
+		{
+			if (!pChall->abs)  c->pCar->dynamics.SetABS(false);
+			if (!pChall->tcs)  c->pCar->dynamics.SetTCS(false);
 		}
 
 		//  restore which cam view

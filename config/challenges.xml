@@ -20,6 +20,7 @@
 			//  flip:    "0" Never  "1" FuelBoost         "2" Always (default)
 			//  rewind:  "0" None   "1" Always (default)  "2" FuelLap   "3" FuelTime  todo..
 			//  car change:  "1" allow  "0" deny (default) picked once at start
+			//  abs,tcs:  "1" allow  "0" deny (default)
 
 		<sim mode="normal" damage="2" boost="1" flip="2" rewind="1" carChng="0" />
 		
@@ -34,9 +35,10 @@
 		<cartype names="Gravel" />
 		<car names="ES|S1" />
 		
-			// todo: *** Hud ***
-			//  not allowed when ="0", if "1" means user can choose
-			//  minimap,  checkpoint arrow and checkpoint beam,  track's ghost
+			//  *** Hud ***
+			//  not allowed when "0", "1" means user can choose
+			//  checkpoint arrow, checkpoint beam  (default: 0 deny)
+			//  minimap,  track's ghost  (default: 1 allow)
 
 		<hud minimap="1" chkArrow="1" chkBeam="1" trkGhost="1" />
 		
@@ -111,10 +113,6 @@
 			<t name="S9-demo"      time="36.1" />
 			<t name="J19-demo2"    time="58.2" />
 			<t name="D3-P"         time="53.4" />
-
-			<t name="0W6-88"       time="127.8" />
-			<t name="G1-Long"      time="296.3" />
-			<t name="C3-Vast"      time="260.7" />
 			<t name="F14-Maze"     time="210.3" />
 
 			<t name="J4-Pipe8"     time="21.0" />
@@ -302,15 +300,27 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Long endurance" ver="1" difficulty="3" type="2" 
-			descr="Very long tracks, needing strong endurance skills. Clean driving with no mistakes.">
+	<challenge name="Medium endurance" ver="1" difficulty="3" type="2" 
+			descr="Long tracks. Need some endurance skills, clean driving with no mistakes.">
 		<cartype names="Gravel|Asphalt|Extreme" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="C4-Sway"       passPoints="9" />
 			<t name="0W11-Glacier"  passPoints="9" />
 			<t name="G5-Climb"      passPoints="9" />
-			<t name="A6-Cannon"     passPoints="9" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Long endurance" ver="1" difficulty="3" type="2" 
+			descr="Very long tracks, need strong endurance skills and no mistakes while driving fast.">
+		<car names="ES|S1|XZ" />
+		<pass avgPoints="10" />
+		<tracks>
+			<t name="G1-Long"      passPoints="8" />
+			<t name="C3-Vast"      passPoints="8" />
+			<t name="A6-Cannon"    passPoints="8" />
+			<t name="G5-Climb"     passPoints="8" />
+			<t name="0W6-88"       passPoints="8" />
 		</tracks>
 	</challenge>
 
@@ -419,7 +429,7 @@
 	<challenge name="Fast Jungle" ver="1" difficulty="3" type="3" 
 			descr="Very fast drive through short, narrow, twisted jungle tracks. Don't go too fast, it's better to be slower than to hit a tree.">
 		<cartype names="Gravel" />
-		<pass avgPoints="14" factor="2" />
+		<pass avgPoints="12" factor="1" />
 		<tracks>
 			<t name="J1-T"      laps="2" passPoints="10" />
 			<t name="J3-Rocky"  laps="2" passPoints="10" />
@@ -430,7 +440,7 @@
 	<challenge name="Mud Attack" ver="1" difficulty="4" type="3" 
 			descr="Very fast drive through the most mud filled tracks, short and curly. Use boost in mud to be faster.">
 		<cartype names="Gravel" />
-		<pass avgPoints="12" />
+		<pass avgPoints="14" factor="2" />
 		<tracks>
 			<t name="J14-Muddy"  laps="2" passPoints="10" />
 			<t name="J16-MudMad" laps="2" passPoints="10" />
@@ -461,6 +471,7 @@
 		</tracks>
 	</challenge>
 
+
 <!--  Stunts  -->
 <!--========================================================================================================================-->
 
@@ -487,11 +498,11 @@
 	<challenge name="Pipe Easy" ver="1" difficulty="3" type="4" 
 			descr="Medium difficulty pipe tracks.">
 		<cartype names="Gravel" />
-		<pass avgPoints="10" />
+		<pass avgPoints="13" />
 		<tracks>
-			<t name="S6-PipeCrazy"  laps="2" passPoints="9" />
-			<t name="J5-Pipes"      passPoints="9" />
-			<t name="X2-Swirl"      passPoints="9" />
+			<t name="S6-PipeCrazy"  laps="2" passPoints="11" />
+			<t name="J5-Pipes"      laps="2" passPoints="11" />
+			<t name="X2-Swirl"      passPoints="11" />
 		</tracks>
 	</challenge>
 
@@ -499,7 +510,7 @@
 			descr="Long stunt filled tracks.">
 		<!--<cartype names="Gravel" />-->
 		<car names="XZ" />
-		<pass avgPoints="12" />
+		<pass avgPoints="11" />
 		<tracks>
 			<t name="A1-StuntPark"      passPoints="9" />
 			<t name="I11-StuntIslands"  passPoints="9" />
@@ -509,7 +520,7 @@
 	<challenge name="Stunt Sway" ver="1" difficulty="4" type="4" 
 			descr="Smooth highly banked terrain and half pipes.">
 		<car names="S8|TC6|FM" />
-		<pass avgPoints="12" />
+		<pass avgPoints="11" />
 		<tracks>
 			<t name="0W9-IceFrenzy"  passPoints="9" />
 			<t name="A4-Snake"       passPoints="9" />
@@ -659,9 +670,12 @@
 
 	</challenge>
 
-	<challenge name="Test 4 laps" ver="1" difficulty="2" type="6" 
-			descr="Test Challenge 4, 2 laps.">
+	<challenge name="Test 4 laps, hud" ver="1" difficulty="2" type="6" 
+			descr="Test Challenge 4, 2 laps.
+			Allow checkpoint arrow,beam and abs,tcs. Deny track's ghost.">
 		<cartype names="Extreme" />
+			<sim abs="1" tcs="1" />
+			<hud chkArrow="1" chkBeam="1" trkGhost="0" />
 		<pass avgPos="5" />
 		<tracks>
 			<t name="TestC4-ow"  laps="2" passPoints="5.0" />

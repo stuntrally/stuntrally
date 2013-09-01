@@ -19,8 +19,7 @@ Chall::Chall()  //  defaults
 	,sim_mode("normal")
 	,damage_type(2), boost_type(1), flip_type(2), rewind_type(1)
 	,minimap(1), chk_arr(0), chk_beam(0), trk_ghost(1)
-	// abs, tcs, autoshift, autorear
-	// max dmg%, off road time-
+	,abs(0),tcs(0)
 	,avgPoints(-1.f), totalTime(-1.f), avgPos(-1.f)  // pass
 	,carChng(0), prizes(2), factor(1.f)
 {	}
@@ -55,12 +54,16 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks)
 		XMLElement* eSim = eCh->FirstChildElement("sim");
 		if (eSim)
 		{
-			a = eSim->Attribute("mode");		if (a)  c.sim_mode = std::string(a);
-			a = eSim->Attribute("damage");		if (a)  c.damage_type = s2i(a);  // range chk..
-			a = eSim->Attribute("boost");		if (a)  c.boost_type = s2i(a);
-			a = eSim->Attribute("flip");		if (a)  c.flip_type = s2i(a);
-			a = eSim->Attribute("rewind");		if (a)  c.rewind_type = s2i(a);
-			a = eSim->Attribute("carChng");		if (a)  c.carChng = s2i(a) > 0;
+			a = eSim->Attribute("mode");	if (a)  c.sim_mode = std::string(a);
+			a = eSim->Attribute("abs");		if (a)  c.abs = s2i(a) > 0;
+			a = eSim->Attribute("tcs");		if (a)  c.tcs = s2i(a) > 0;
+
+			a = eSim->Attribute("damage");	if (a)  c.damage_type = s2i(a);  // range chk..
+			a = eSim->Attribute("boost");	if (a)  c.boost_type = s2i(a);
+			a = eSim->Attribute("flip");	if (a)  c.flip_type = s2i(a);
+			a = eSim->Attribute("rewind");	if (a)  c.rewind_type = s2i(a);
+
+			a = eSim->Attribute("carChng");	if (a)  c.carChng = s2i(a) > 0;
 		}
 		//  cars
 		XMLElement* eCarT = eCh->FirstChildElement("cartype");

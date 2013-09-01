@@ -47,13 +47,15 @@ public:
 
 	//  hud
 	bool minimap, chk_arr, chk_beam, trk_ghost;  // deny using it if false
+	bool abs,tcs;  // deny if false
 	
 	//  pass  -1 means not needed, you can use one or more conditions
 	float totalTime, avgPoints, avgPos;
 	bool carChng;  // allow car change
 
-	// abs, tcs, autoshift, autorear
+	// autoshift, autorear
 	// max dmg%, off road time-
+	//..int retries;  // max track restart/reset
 
 	Chall();
 };

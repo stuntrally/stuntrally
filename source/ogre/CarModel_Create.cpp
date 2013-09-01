@@ -374,7 +374,8 @@ void CarModel::Create(int car)
 	
 
 	//  next checkpoint marker
-	if (eType == CT_LOCAL)  //!isGhost())
+	bool deny = pApp->pChall && !pApp->pChall->chk_beam;
+	if (eType == CT_LOCAL && !deny)
 	{
 		entNextChk = mSceneMgr->createEntity("Chk"+strI, "check.mesh");
 		entNextChk->setRenderQueueGroup(RQG_Weather);  entNextChk->setCastShadows(false);
