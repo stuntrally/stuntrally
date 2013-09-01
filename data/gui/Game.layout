@@ -3036,11 +3036,6 @@
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#8870A0#{Startup}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
-						<Widget type="Button" skin="CheckBox" position="32 62 256 24" name="MouseCapture">
-							<Property key="TextColour" value="0.7 0.8 0.9"/>
-							<Property key="Caption" value="#{MouseCapture}"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 94 256 24" name="StartInMain">
 							<Property key="TextColour" value="0.6 0.7 0.8"/>
 							<Property key="Caption" value="#{StartInMain}"/>

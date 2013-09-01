@@ -3916,11 +3916,6 @@
 					<Property key="Caption" value="#{Startup}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="616 354 160 24" name="MouseCapture">
-					<Property key="TextColour" value="0.7 0.8 0.9"/>
-					<Property key="Caption" value="#{MouseCapture}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
 				<Widget type="Button" skin="CheckBox" position="616 386 160 24" name="StartInMain">
 					<Property key="TextColour" value="0.6 0.7 0.8"/>
 					<Property key="Caption" value="#{StartInMain}"/>

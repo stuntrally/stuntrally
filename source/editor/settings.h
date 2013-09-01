@@ -40,7 +40,7 @@ public:
 	
 	//  startup
 	bool autostart, escquit, ogre_dialog, allow_save;
-	bool capture_mouse, inputBar,camPos;
+	bool inputBar,camPos;
 	//  misc
 	std::string language;
 	bool isMain, startInMain;  int inMenu;  // last menu id

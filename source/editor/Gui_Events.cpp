@@ -450,9 +450,7 @@ void App::slAlignSmooth(SL)
 //  [Settings]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 //  Startup
-void App::chkMouseCapture(WP wp){	ChkEv(capture_mouse);  }
 void App::chkStartInMain(WP wp)	{	ChkEv(startInMain);    }
-
 void App::chkAutoStart(WP wp)	{	ChkEv(autostart);	}
 void App::chkEscQuits(WP wp)	{	ChkEv(escquit);		}
 void App::chkOgreDialog(WP wp)	{	ChkEv(ogre_dialog);	}

@@ -180,9 +180,7 @@ void App::InitGui()
 	Btn("CamFront", btnSetCam);  Btn("CamBack", btnSetCam);
 
 	//  startup
-	Chk("MouseCapture", chkMouseCapture, pSet->capture_mouse);
 	Chk("StartInMain", chkStartInMain, pSet->startInMain);
-
 	Chk("AutoStart", chkAutoStart, pSet->autostart);
 	Chk("EscQuits", chkEscQuits, pSet->escquit);
 	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);

@@ -49,7 +49,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.allow_save", allow_save);		Param(c,w, "misc.inputBar", inputBar);		Param(c,w, "misc.camPos", camPos);
 	Param(c,w, "misc.version", version);			Param(c,w, "misc.autostart", autostart);
 	Param(c,w, "misc.ogredialog", ogre_dialog);		Param(c,w, "misc.escquit", escquit);
-	Param(c,w, "misc.language", language);			Param(c,w, "misc.capture_mouse", capture_mouse);
+	Param(c,w, "misc.language", language);
 	Param(c,w, "misc.check_load", check_load);		Param(c,w, "misc.check_save", check_save);
 	
 	Param(c,w, "set_cam.px",cam_x);  Param(c,w, "set_cam.py",cam_y);  Param(c,w, "set_cam.pz",cam_z);
@@ -105,7 +105,7 @@ SETTINGS::SETTINGS()  ///  Defaults
 	,cam_speed(1.f), cam_inert(1.f)
 	,ter_skip(4), road_sphr(1.f), mini_skip(4)
 	,windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false)
-	,buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"), capture_mouse(false)
+	,buffer("FBO"), rendersystem("OpenGL Rendering Subsystem")
 	//  ter gen
 	,gen_scale(20.f), gen_freq(0.73f), gen_oct(4), gen_persist(0.4f)
 	,gen_pow(1.0f), gen_ofsx(0.f), gen_ofsy(0.f)

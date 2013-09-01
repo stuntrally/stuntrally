@@ -599,7 +599,9 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTr
 	
 	//  preview images
 	//---------------------------------------------------------------------------
+#ifndef SR_EDITOR
 	if (pSet->dev_no_prvs)  return;
+#endif
 	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
 	Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
 
