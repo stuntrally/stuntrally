@@ -111,9 +111,7 @@ public:
 		vol_fl_splash,vol_fl_cont, vol_car_crash,vol_car_scrap;
 	bool autostart, escquit;
 	bool bltDebug, bltLines, bltProfilerTxt, profilerTxt;
-	bool loadingbackground;
-	bool capture_mouse, x11_hwmouse;
-	bool opplist_sort;
+	bool loadingbackground, opplist_sort;
 	
 	//  sim freq (1/interval timestep)
 	float game_fq, blt_fq,  perf_speed;

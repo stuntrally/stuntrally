@@ -78,7 +78,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "gui.tracks_sort", tracks_sort);		Param(c,w, "gui.tracks_sortup", tracks_sortup);
 	Param(c,w, "gui.cars_sort", cars_sort);			Param(c,w, "gui.car_ed_tab", car_ed_tab);
 	Param(c,w, "gui.champ_tab", champ_type);		Param(c,w, "gui.tut_tab", tut_type);
-	Param(c,w, "gui.chall_type", chall_type);		Param(c,w, "gui.champ_info", champ_info);
+	Param(c,w, "gui.chall_tab", chall_type);		Param(c,w, "gui.champ_info", champ_info);
 
 	Param(c,w, "hud_size.gauges", size_gauges);			Param(c,w, "hud_size.minimap", size_minimap);
 	Param(c,w, "hud_size.mini_zoom", zoom_minimap);		Param(c,w, "hud_size.mini_zoomed", mini_zoomed);
@@ -118,7 +118,6 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.profilerTxt", profilerTxt);	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);
 	Param(c,w, "misc.language", language);			Param(c,w, "misc.loadingback", loadingbackground);
 	Param(c,w, "misc.dev_keys", dev_keys);			Param(c,w, "misc.dev_no_prvs", dev_no_prvs);
-	Param(c,w, "misc.x11_hwmouse", x11_hwmouse);	Param(c,w, "misc.capture_mouse", capture_mouse);
 
 	Param(c,w, "network.nickname", nickname);		Param(c,w, "network.master_server_address", master_server_address);
 	Param(c,w, "network.local_port", local_port);	Param(c,w, "network.master_server_port", master_server_port);
@@ -203,7 +202,6 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,autostart(0), ogre_dialog(0), escquit(0)
 	,bltDebug(0), bltLines(1),  bltProfilerTxt(0), profilerTxt(0)
 	,loadingbackground(true)
-	,capture_mouse(false), x11_hwmouse(false)
 	//  network
 	,nickname("Player"), netGameName("Default Game")
 	,master_server_address("localhost")
