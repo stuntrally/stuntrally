@@ -87,8 +87,8 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 	for (int i=0; i < ntrks; ++i,++n)
 	{
 		const ChampTrack& trk = ch.trks[i];
-		StageListAdd(n, trk.name, trk.laps,
-			"#E0F0FF"+fToStr(progress[p].chs[pos].trks[i].points,1,3));
+		float po = progress[p].chs[pos].trks[i].points;
+		StageListAdd(n, trk.name, trk.laps, po > 0.f ? "#E0F0FF"+fToStr(po,1,3) : "");
 	}
 	if (edChDesc)  edChDesc->setCaption(ch.descr);
 

@@ -316,8 +316,8 @@ void App::UpdChampTabVis()
 		if (chall)  ChallsListUpdate();
 		else        ChampsListUpdate();
 	}
-	if (pSet->inMenu == MNU_Single)
-		BackFromChs();
+	//if (pSet->inMenu == MNU_Single)
+	//	BackFromChs();
 	
 	if (edChInfo->getVisible())
 		edChInfo->setCaption(chall ? TR("#{ChallInfo}") : TR("#{ChampInfo}"));

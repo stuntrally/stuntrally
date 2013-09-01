@@ -262,7 +262,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 					{
 					case MNU_Replays:	btnRplLoad(0);  break;
 					default:
-					{	switch (mWndTabsGame->getIndexSelected())
+					{	if (mWndGame->getVisible())
+						switch (mWndTabsGame->getIndexSelected())
 						{
 						case TAB_Track:	 changeTrack();	btnNewGame(0);  break;
 						case TAB_Car:	 changeCar();	btnNewGame(0);  break;

@@ -59,6 +59,7 @@ torque-curve-05 = 2500, 530
 torque-curve-06 = 3000, 510
 torque-curve-07 = 3500, 470
 real-pow-tq-mul = 1.2
+sound-vol-mul = 2.0
 
 [ clutch ]
 max-torque-mul = 1.1

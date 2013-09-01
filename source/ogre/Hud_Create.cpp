@@ -341,11 +341,10 @@ void App::CreateHUD(bool destroy)
 	ovCarDbgExt = ovr.getByName("Car/StatsExt");
 	
 	for (int i=0; i < ov.size(); ++i)
-	{	ov[i].oL = ovr.getOverlayElement("L_"+toStr(i+1));
-		ov[i].oR = ovr.getOverlayElement("R_"+toStr(i+1));
-		ov[i].oS = ovr.getOverlayElement("S_"+toStr(i+1));
-		ov[i].oU = ovr.getOverlayElement("U_"+toStr(i+1));
-		ov[i].oX = ovr.getOverlayElement("X_"+toStr(i+1));
+	{	String s = toStr(i+1);
+		ov[i].oL = ovr.getOverlayElement("L_"+s);	ov[i].oR = ovr.getOverlayElement("R_"+s);
+		ov[i].oS = ovr.getOverlayElement("S_"+s);	ov[i].oU = ovr.getOverlayElement("U_"+s);
+		ov[i].oX = ovr.getOverlayElement("X_"+s);
 	}
 	ShowHUD();  //_
 	bSizeHUD = true;

@@ -91,8 +91,8 @@ void App::listChallChng(MyGUI::MultiList2* chlist, size_t id)
 	for (int i=0; i < ntrks; ++i,++n)
 	{
 		const ChallTrack& trk = ch.trks[i];
-		StageListAdd(n, trk.name, trk.laps,
-			"#E0F0FF"+fToStr(progressL[p].chs[nch].trks[i].points,1,3));
+		float po = progressL[p].chs[nch].trks[i].points;
+		StageListAdd(n, trk.name, trk.laps, po > 0.f ? "#E0F0FF"+fToStr(po,1,3) : "");
 	}
 	if (edChDesc)  edChDesc->setCaption(ch.descr);
 
@@ -598,7 +598,6 @@ void App::UpdChallDetail(int id)
 		s1 += "\n";  s2 += "\n";  int p, pp = ch.prizes;
 		s1 += TR("#F0F060#{Needed} - #{Challenge}")+"\n";   s2 += "\n";
 		s1 += "#D8C0FF";  s2 += "#F0D8FF";
-		if (ch.totalTime > 0.f){	s1 += TR("  #{TBTime}\n");      s2 += GetTimeString(ch.totalTime)+"\n";  }
 		if (ch.avgPoints > 0.f){	s1 += TR("  #{TBPoints}\n");
 									for (p=0; p <= pp; ++p)  s2 += clrPrize[2-pp+ p+1]+
 											fToStr(ch.avgPoints - cfSubPoints[p] * ch.factor ,1,3)+"  ";
@@ -607,6 +606,8 @@ void App::UpdChallDetail(int id)
 									for (p=0; p <= pp; ++p)  s2 += clrPrize[2-pp+ p+1]+
 											fToStr(ch.avgPos + ciAddPos[p] * ch.factor ,1,3)+"  ";
 									s2 += "\n";  }
+		if (ch.totalTime > 0.f){	s1 += TR("  #{TBTime}\n");
+									s2 += GetTimeString(ch.totalTime)+"\n";  }
 	}
 	txtChP[1]->setCaption(s1);  valChP[1]->setCaption(s2);
 	
@@ -621,9 +622,9 @@ void App::UpdChallDetail(int id)
 			s1 += "\n";  s2 += "\n";
 			s1 += TR("#FFC060#{Needed} - #{Stage}")+"\n";   s2 += "\n";
 			s1 += "#D8C0FF";   s2 += "#F0D8FF";
-			if (trk.timeNeeded > 0.f){	s1 += TR("  #{TBTime}\n");      s2 += GetTimeString(trk.timeNeeded)+"\n";  }
 			if (trk.passPoints > 0.f){	s1 += TR("  #{TBPoints}\n");    s2 += fToStr(trk.passPoints,2,5)+"\n";  }
 			if (trk.passPos > 0.f)  {	s1 += TR("  #{TBPosition}\n");  s2 += fToStr(trk.passPos,2,5)+"\n";  }
+			if (trk.timeNeeded > 0.f){	s1 += TR("  #{TBTime}\n");      s2 += GetTimeString(trk.timeNeeded)+"\n";  }
 	}	}
 	txtChP[0]->setCaption(s1);  valChP[0]->setCaption(s2);
 
@@ -636,10 +637,11 @@ void App::UpdChallDetail(int id)
 	{
 		s1 += TR("#B0FFFF#{Progress}\n");    s2 += "#D0FFFF"+(cur == all ? TR("#{Finished}") : fToStr(100.f * cur / all,0,3)+" %")+"\n";
 		s1 += TR("#F8FCFF#{Prize}\n");       s2 += StrPrize(pc.fin+1)+"\n";
-		s1 += "\n#C8D0F0";  s2 += "\n#E0F0FF";
+		#define clrP(b)  if (b)  {  s1 += "#C8D0F0";  s2 += "#E0F0FF";  }else{  s1 += "#80A0C0";  s2 += "#90B0D0";  }
+		s1 += "\n";  s2 += "\n";  clrP(ch.avgPoints > 0.f);
+		s1 += TR("  #{TBPoints}\n");    s2 += fToStr(pc.avgPoints,2,5)+"\n";  clrP(ch.avgPos > 0.f);
+		s1 += TR("  #{TBPosition}\n");  s2 += fToStr(pc.avgPos,2,5)+"\n";  clrP(ch.totalTime > 0.f);
 		s1 += TR("  #{TBTime}\n");      s2 += GetTimeString(pc.totalTime)+"\n";
-		s1 += TR("  #{TBPoints}\n");    s2 += fToStr(pc.avgPoints,2,5)+"\n";
-		s1 += TR("  #{TBPosition}\n");  s2 += fToStr(pc.avgPos,2,5)+"\n";
 	}
 	txtChP[2]->setCaption(s1);  valChP[2]->setCaption(s2);
 
