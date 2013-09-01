@@ -370,18 +370,20 @@
 
 	<challenge name="Turtle Slow" ver="1" difficulty="2" type="2" 
 			descr="Challenge This is the slowest truck.">
+		<sim boost="0" />
 		<car names="OT" />
-		<pass avgPoints="15" />
+		<pass avgPoints="16" factor="2" />
 		<tracks>
-			<t name="F11-Dawn"     passPoints="12" />
-			<t name="0W4-ice-blur" passPoints="20" />
-			<t name="G4-River"     passPoints="14" />
-			<t name="C1-Hairpins"  passPoints="10" />
+			<t name="F11-Dawn"     passPoints="13" />
+			<t name="0W4-ice-blur" passPoints="22" />
+			<t name="G4-River"     passPoints="13" />
+			<t name="C1-Hairpins"  passPoints="9" />
 		</tracks>
 	</challenge>
 
 	<challenge name="Castle Delivery" ver="1" difficulty="2" type="2" 
-			descr="Take the truck up the castle. Remember to use lower gears when going up hill. Also slow down before circle turns and turn early and wide.">
+			descr="Take the truck up the castle. Remember to use lower gears when going up hill. Also slow down before circle turns and turn early and wide, use handbrake.">
+		<sim boost="0" />
 		<car names="OT" />
 		<pass avgPoints="12" />
 		<tracks>
