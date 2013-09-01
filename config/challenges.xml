@@ -20,17 +20,16 @@
 			//  flip:    "0" Never  "1" FuelBoost         "2" Always (default)
 			//  rewind:  "0" None   "1" Always (default)  "2" FuelLap   "3" FuelTime  todo..
 			//  car change:  "1" allow  "0" deny (default) picked once at start
-			//  abs,tcs:  "1" allow  "0" deny (default)
+			//  abs,tcs:  "1" allow  "0" deny (default)  todo: autogbox
 
-		<sim mode="normal" damage="2" boost="1" flip="2" rewind="1" carChng="0" />
+		<sim mode="normal" damage="2" boost="1" flip="2" rewind="1" carChng="0" abs="0" tcs="0" />
 		
 			//  *** Cars ***
 			//  you can put either cartype or car  ?or both
 			//  if more than 1, separate with |
 			//  see in cars.xml for all types and cars
 			//  only those types or cars you put here will be available
-			
-			// TODO: track retries/resets limit
+			//Todo: track retries/resets limit
 
 		<cartype names="Gravel" />
 		<car names="ES|S1" />
@@ -42,15 +41,13 @@
 
 		<hud minimap="1" chkArrow="1" chkBeam="1" trkGhost="1" />
 		
-			/// todo: deny abs,tcs..  <setup abs="0" tcs="0" autogbox="-1" />
-			
 			//  *** Pass (win) conditions, for whole challenge ***
 			//  use many if desired  (one is good)
 			//  *use none, if using only those for track
 			//  got from all challenge stages
-			//  - total time in seconds  .need to sum tracks
+			//  - average points  5.0 .. 10.0 and more  (recommended)
 			//  - average position  1.0 .. 5.0 and more
-			//  - average points  5.0 .. 10.0 and more
+			//  - total time in seconds  .need to sum tracks, not recommended
 			//  prizes  0 only gold  1 gold,silver  2 gold,silver,bronze (default)
 			//    pass conditions are for gold prize
 			//    silver is 1.0 points less or 2 positions more
@@ -74,15 +71,16 @@
 				1:49  10   5.5
 				2:00  21   0
 			One position is 0.5 points. Points go above 10 if you are better than track time (Pos stays at 1).
+			Points conditions are best to use, also allow scores higher than track's time.
 
 		
 		<tracks>
 				//  reversed direction when reversed="1", don't put for normal
 				//  laps count (default 1)
 				//  pass conditions, for this stage
-				//  - time in seconds
-				//  - position  1 .. 5 and more
-				//  - points  5.0 .. 10.0 and more
+				//  - points  5.0 .. 10.0 and more  (recommended)
+				//  - position  1 .. 5 and more  (1 is best, can be better)
+				//  - time in seconds  (only for 1 car)
 				//  one is recommended, can use many
 				//  *if none used, will be only from whole challenge
 

@@ -1888,7 +1888,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{View}"/>
+				<Property key="Caption" value="#FFF060#{View}"/>
 				<UserString key="RelativeTo" value="ReplaysWnd"/>
 				<Widget type="Button" skin="CheckBox" position="32 60 380 24" name="RplChkGhost">
 					<Property key="TextColour" value="0.86 0.95 1"/>
