@@ -274,7 +274,7 @@ void App::slSizeGaug(SL)
 }
 void App::slTypeGaug(SL)
 {
-	int v = val * 5.f +slHalf;		if (bGI)  {  pSet->gauges_type = v;  CreateHUD(true);  }
+	int v = val * 5.f +slHalf;		if (bGI)  {  pSet->gauges_type = v;  DestroyHUD();  CreateHUD();  }
 	if (valTypeGaug)	valTypeGaug->setCaption(toStr(v));
 }
 void App::slSizeArrow(SL)

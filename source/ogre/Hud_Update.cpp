@@ -113,6 +113,7 @@ void App::UpdateHUD(int carId, float time)
 
 	float vel=0.f, rpm=0.f, clutch=1.f;  int gear=1;
 	GetHUDVals(carId,&vel,&rpm,&clutch,&gear);
+	Hud& h = hud[carId];
 
 
 	///  multiplayer
@@ -176,9 +177,7 @@ void App::UpdateHUD(int carId, float time)
 			for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it)
 			{
 				CarModel* cm = *it;
-				char hex[16];
-				sprintf(hex, "%02x%02x%02x", int(cm->color.r * 255), int(cm->color.g * 255), int(cm->color.b * 255));
-				String clr = String("#") + hex;
+				String clr = StrClr(cm->color);
 
 				liNetEnd->addItem(""/*clr+ toStr(c+1)*/, 0);  int l = liNetEnd->getItemCount()-1;
 				liNetEnd->setSubItemNameAt(1,l, clr+ (cm->iWonPlace == 0 ? "--" : toStr(cm->iWonPlace)));
@@ -194,7 +193,7 @@ void App::UpdateHUD(int carId, float time)
 
 	///  opponents list
 	// -----------------------------------------------------------------------------------
-	if (ovOpp->isVisible() && pCarM && pCarM->pMainNode)
+	if (/*ovOpp->isVisible() &&*/ pCarM && pCarM->pMainNode)
 	{
 		std::list<CarModel*> cms;  // sorted list
 		for (int o=0; o < cntG; ++o)
@@ -214,65 +213,67 @@ void App::UpdateHUD(int carId, float time)
 				cms.push_back(carModels[o]);	}
 		}
 
-		ColourValue clr;
-		//if (carModels.size() == carPoses.size())  //-
-		int o = 0;
-		for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it,++o)
-		if (hudOpp[o][0])
-		{
-			CarModel* cm = *it;
-			if (cm->pMainNode)
+		if (h.txOpp[0])
+		{	String s0,s1,s2;  // %,dist,nick
+			ColourValue clr;
+			for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it)
 			{
-				bool bGhost = cm->isGhost();
-				bool bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
-				bool bGhEmpty = bGhost && !bGhostVis;
-
-				if (!bGhost && cm->eType != CarModel::CT_REMOTE)
-					cm->UpdTrackPercent();
-
-				if (cm == pCarM || bGhEmpty)  // no dist to self or to empty ghost
-					hudOpp[o][1]->setCaption("");
-				else
-				{	Vector3 v = cm->pMainNode->getPosition() - pCarM->pMainNode->getPosition();
-					float dist = v.length();  // meters, mph:feet?
-					//  dist m
-					hudOpp[o][1]->setCaption(fToStr(dist,0,3)+"m");
-					Real h = std::min(60.f, dist) / 60.f;
-					clr.setHSB(0.5f - h * 0.4f, 1,1);		hudOpp[o][1]->setColour(clr);
-				}
-					
-				if (bGhEmpty || cm->isGhostTrk())
-					hudOpp[o][0]->setCaption("");
-				else
-				{	//  percent % val
-					float perc = cm->trackPercent;
-					if (bGhost && pGame->timer.GetPlayerTime(0) > ghplay.GetTimeLength())
-						perc = 100.f;  // force 100 at ghost end
-					hudOpp[o][0]->setCaption(fToStr(perc,0,3)+"%");
-					clr.setHSB(perc*0.01f*0.4f, 0.7f,1);	hudOpp[o][0]->setColour(clr);
-				}
-				
-				///  Lap Time  pos (1)
-				//if (mClient)
+				CarModel* cm = *it;
+				if (cm->pMainNode)
 				{
-					float t = 0.f;  int lap = -1;
-					if (!bGhost)
-					{
-						TIMER& tim = pGame->timer;
-						t = pGame->timer.GetLastLap(cm->iIndex);  // GetPlayerTimeTot
-						lap = pGame->timer.GetPlayerCurrentLap(cm->iIndex);  // not o, sorted index
+					bool bGhost = cm->isGhost();
+					bool bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
+					bool bGhEmpty = bGhost && !bGhostVis;
+
+					if (!bGhost && cm->eType != CarModel::CT_REMOTE)
+						cm->UpdTrackPercent();
+
+					//  dist  -----------
+					if (cm == pCarM || bGhEmpty)  // no dist to self or to empty ghost
+						s1 += "\n";
+					else
+					{	Vector3 v = cm->pMainNode->getPosition() - pCarM->pMainNode->getPosition();
+						float dist = v.length();  // meters, mph:feet?
+						Real h = std::min(60.f, dist) / 60.f;
+						clr.setHSB(0.5f - h * 0.4f, 1,1);
+						//  dist m
+						s1 += StrClr(clr)+ fToStr(dist,0,3)+"m\n";
 					}
-					bool end = pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps
-							&& (mClient || pSet->game.local_players > 1);  // multiplay or split
-					hudOpp[o][2]->setCaption(
-						//+ "   " + toStr(lap) + " " + GetTimeString(t)
-						+ end ? cm->sDispName + "  (" + toStr(cm->iWonPlace) + ")" : cm->sDispName);
+						
+					//  percent %  -----------
+					if (bGhEmpty || cm->isGhostTrk())
+						s0 += "\n";
+					else
+					{	float perc = cm->trackPercent;
+						if (bGhost && pGame->timer.GetPlayerTime(0) > ghplay.GetTimeLength())
+							perc = 100.f;  // force 100 at ghost end
+						clr.setHSB(perc*0.01f*0.4f, 0.7f,1);
+						s0 += StrClr(clr)+ fToStr(perc,0,3)+"%\n";
+					}
+					
+					//  nick name  -----------
+					if (cm->eType != CarModel::CT_REPLAY)
+					{
+						s2 += StrClr(cm->color)+ cm->sDispName;
+
+						//  place (1)
+						/*float t = 0.f;  int lap = -1;
+						if (!bGhost)
+						{
+							TIMER& tim = pGame->timer;
+							t = pGame->timer.GetLastLap(cm->iIndex);  // GetPlayerTimeTot
+							lap = pGame->timer.GetPlayerCurrentLap(cm->iIndex);  // not o, sorted index
+							s2 += "   " + toStr(lap) + " " + GetTimeString(t);
+						}*/
+						bool end = pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps
+								&& (mClient || pSet->game.local_players > 1);  // multiplay or split
+						if (end)
+							s2 += "  (" + toStr(cm->iWonPlace) + ")";
+						s2 += "\n";
+					}
 				}
-				//else
-				//	hudOpp[o][2]->setCaption(cm->sDispName);
-				hudOpp[o][2]->setColour(cm->color);
-			}
-		}
+				h.txOpp[0]->setCaption(s0);  h.txOpp[1]->setCaption(s1);  h.txOpp[2]->setCaption(s2);
+		}	}
 	}
 
 	//  Set motion blur intensity for this viewport, depending on car's linear velocity
@@ -308,36 +309,36 @@ void App::UpdateHUD(int carId, float time)
 
 
 	///  gear, vel texts  -----------------------------
-	if (hud[carId].txVel && hud[carId].txGear && pCar)
+	if (h.txVel && h.txGear && pCar)
 	{
 		float cl = clutch*0.8f + 0.2f;
 		if (gear == -1)
-		{	hud[carId].txGear->setCaption("R");  hud[carId].txGear->setTextColour(Colour(0.3,1,1,cl));  }
+		{	h.txGear->setCaption("R");  h.txGear->setTextColour(Colour(0.3,1,1,cl));  }
 		else if (gear == 0)
-		{	hud[carId].txGear->setCaption("N");  hud[carId].txGear->setTextColour(Colour(0.3,1,0.3,cl));  }
+		{	h.txGear->setCaption("N");  h.txGear->setTextColour(Colour(0.3,1,0.3,cl));  }
 		else if (gear > 0 && gear < 8)
-		{	hud[carId].txGear->setCaption(toStr(gear));  hud[carId].txGear->setTextColour(Colour(1,1-gear*0.1,0.2,cl));  }
+		{	h.txGear->setCaption(toStr(gear));  h.txGear->setTextColour(Colour(1,1-gear*0.1,0.2,cl));  }
 
-		hud[carId].txVel->setCaption(fToStr(std::abs(vel),0,3));
+		h.txVel->setCaption(fToStr(std::abs(vel),0,3));
 
 		float k = pCar->GetSpeedometer() * 3.6f * 0.0025f;	// vel clr
 		#define m01(x)  std::min(1.0f, std::max(0.0f, (float) (x) ))
-		hud[carId].txVel->setTextColour(Colour(m01(k*2), m01(0.5+k*1.5-k*k*2.5), m01(1+k*0.8-k*k*3.5)));
+		h.txVel->setTextColour(Colour(m01(k*2), m01(0.5+k*1.5-k*k*2.5), m01(1+k*0.8-k*k*3.5)));
 	}
 
 	//  boost fuel (time)  ------
-	if (hud[carId].txBFuel && pCar && hud[carId].txBFuel->getVisible())
+	if (h.txBFuel && pCar && h.txBFuel->getVisible())
 	{
-		hud[carId].txBFuel->setCaption(fToStr(pCar->dynamics.boostFuel,1,3));
+		h.txBFuel->setCaption(fToStr(pCar->dynamics.boostFuel,1,3));
 	}
 
 	//  damage %  ------
-	if (hud[carId].txDamage && pCar && hud[carId].txDamage->getVisible())
+	if (h.txDamage && pCar && h.txDamage->getVisible())
 	{
 		float d = std::min(100.f, pCar->dynamics.fDamage);
-		hud[carId].txDamage->setCaption(TR("#{Damage}\n     ")+fToStr(d,0,3)+" %");  d*=0.01f;
+		h.txDamage->setCaption(TR("#{Damage}\n     ")+fToStr(d,0,3)+" %");  d*=0.01f;
 		float e = std::min(1.f, 0.8f + d*2.f);
-		hud[carId].txDamage->setTextColour(Colour(e-d*d*0.4f, std::max(0.f, e-d), std::max(0.f, e-d*2.f) ));
+		h.txDamage->setTextColour(Colour(e-d*d*0.4f, std::max(0.f, e-d), std::max(0.f, e-d*2.f) ));
 	}
 
 	//  race countdown  -----------------------------
@@ -410,7 +411,7 @@ void App::UpdateHUD(int carId, float time)
 			//float t1pl = carsXml.magic * timeTrk;
 			float time = (/*place*/1 * carsXml.magic * timeTrk + timeTrk) / carMul;
 
-			hud[carId].sTimes =
+			h.sTimes =
 				"\n#80C8FF" + GetTimeString(last)+
 				"\n#80E0E0" + GetTimeString(best)+
 				"\n#80E080" + GetTimeString(time)+
@@ -427,11 +428,11 @@ void App::UpdateHUD(int carId, float time)
 			}
 			#endif
 		}
-		if (hud[carId].txTimes)
-			hud[carId].txTimes->setCaption(
+		if (h.txTimes)
+			h.txTimes->setCaption(
 				(hasLaps ? "#D0E8FF"+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps) : "") +
 				"\n#C0E0F0" + GetTimeString(tim.GetPlayerTime(carId))+
-				hud[carId].sTimes);
+				h.sTimes);
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------

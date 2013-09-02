@@ -23,8 +23,8 @@ App::App(SETTINGS *settings, GAME *game)
 	:pGame(game), sc(0), bGI(0), mThread(), mTimer(0)
 	// ovr
 	,hudCountdown(0),hudNetMsg(0), hudAbs(0),hudTcs(0)
-	,hudWarnChk(0),hudWonPlace(0), hudOppB(0)
-	,ovCam(0), ovWarnWin(0), ovOpp(0)
+	,hudWarnChk(0),hudWonPlace(0)
+	,ovCam(0), ovWarnWin(0)
 	,ovCountdown(0),ovNetMsg(0), ovAbsTcs(0)
 	,ovCarDbg(0),ovCarDbgTxt(0),ovCarDbgExt(0)
 	// hud
@@ -118,7 +118,6 @@ App::App(SETTINGS *settings, GAME *game)
 	
 	sc = new Scene();
 	hud.resize(4);  frm.resize(4);  ov.resize(5);
-	NullHUD();
 
 	for (c=0; c < 2; ++c)
 	{
@@ -134,9 +133,6 @@ App::App(SETTINGS *settings, GAME *game)
 	for (i=0; i < ciEdCar; ++i)
 		edCar[i] = 0;
 
-	for (int o=0; o < 6; ++o)  for (c=0; c < 3; ++c)
-		hudOpp[o][c] = 0;
-		
 	//  util for update rot
 	Quaternion qr;  {
 	QUATERNION<double> fix;  fix.Rotate(PI_d, 0, 1, 0);
@@ -154,22 +150,13 @@ App::OvrDbg::OvrDbg() :
 
 App::Hud::Hud()
 {
-	Null();
-}
-void App::Hud::Null()
-{
 	txGear=0; txVel=0; txBFuel=0; txDamage=0;
 	txTimTxt=0; txTimes=0; bckTimes = 0;  sTimes="";
 	ndRpm=0; ndVel=0; ndRpmBk=0; ndVelBk=0; ndVelBm=0;
 	moRpm=0; moVel=0; moRpmBk=0; moVelBk=0; moVelBm=0;
 	moMap = 0;  ndMap=0;
+	bckOpp=0;  for (int i=0; i<3; ++i)  txOpp[i]=0;
 	vNdPos.resize(6,0); vMoPos.resize(6,0);
-}
-
-void App::NullHUD()
-{
-	for (int i=0; i < hud.size(); ++i)
-		hud[i].Null();
 }
 
 

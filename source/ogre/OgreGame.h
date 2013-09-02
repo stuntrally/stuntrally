@@ -44,7 +44,6 @@ class App : public BaseApp, public GameClientCallback, public MasterClientCallba
 public:
 	App(SETTINGS* settings, GAME* game);
 	virtual ~App();
-	void NullHUD();
 	
 	class GAME* pGame;  ///*
 	void updatePoses(float time), newPoses(float time), newPerfTest(float time);
@@ -131,22 +130,25 @@ protected:
 	class Hud  // for 1 viewport
 	{
 	public:
-		//  gear, vel
-		MyGUI::TextBox *txGear,*txVel,*txBFuel,*txDamage;
 		//  times bar
 		MyGUI::TextBox *txTimTxt,*txTimes;  MyGUI::ImageBox *bckTimes;
 		Ogre::String sTimes;
+		//  opp list  columns: trk %, dist m, nick
+		MyGUI::TextBox *txOpp[3];  MyGUI::ImageBox *bckOpp;
+
 		//  gauges
 		Ogre::SceneNode *ndRpm, *ndVel, *ndRpmBk, *ndVelBk,*ndVelBm;
 		Ogre::ManualObject* moRpm, *moVel, *moRpmBk, *moVelBk,*moVelBm;
+		//  gear, vel
+		MyGUI::TextBox *txGear,*txVel,*txBFuel,*txDamage;
+
 		//  miniap
 		Ogre::ManualObject* moMap;
 		Ogre::SceneNode *ndMap;
 		std::vector<Ogre::SceneNode*> vNdPos;  // car pos tris on minimap +2ghosts
-		std::vector<Ogre::ManualObject*> vMoPos;  //size: 6
+		std::vector<Ogre::ManualObject*> vMoPos;  //const size: 6
 		
 		Hud();
-		void Null();
 	};
 	std::vector<Hud> hud;  // size: max viewports 4
 	float asp, scX,scY, minX,maxX, minY,maxY;  // minimap visible range
@@ -162,13 +164,14 @@ protected:
 	};
 	std::vector<OvrDbg> ov;
 	Ogre::OverlayElement *hudCountdown,*hudNetMsg,
-		*hudAbs,*hudTcs, *hudWarnChk,*hudWonPlace, *hudOpp[6][3],*hudOppB;
-	Ogre::Overlay *ovCountdown,*ovNetMsg, *ovCam, *ovWarnWin, *ovOpp, *ovAbsTcs, *ovCarDbg,*ovCarDbgTxt,*ovCarDbgExt;
+		*hudAbs,*hudTcs, *hudWarnChk,*hudWonPlace;
+	Ogre::Overlay *ovCountdown,*ovNetMsg, *ovCam, *ovWarnWin, *ovAbsTcs, *ovCarDbg,*ovCarDbgTxt,*ovCarDbgExt;
 
 	Ogre::String GetTimeString(float time) const, GetTimeShort(float time) const;
-	void CreateHUD(bool destroy), ShowHUD(bool hideAll=false), UpdMiniTer(), UpdDbgTxtClr();
+	void CreateHUD(),DestroyHUD(), ShowHUD(bool hideAll=false), UpdMiniTer(), UpdDbgTxtClr();
 	Ogre::Vector3 projectPoint(const Ogre::Camera* cam, const Ogre::Vector3& pos);  // 2d xy, z - out info
 	MyGUI::TextBox* CreateNickText(int carId, Ogre::String text);
+	Ogre::String StrClr(Ogre::ColourValue c);
 
 
 	///  create  . . . . . . . . . . . . . . . . . . . . . . . . 

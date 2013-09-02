@@ -205,11 +205,9 @@ void App::LoadCleanUp()  // 1 first
 {
 	updMouse();
 	
-	DestroyFluids();
-
-	DestroyObjects(true);
+	DestroyFluids();  DestroyObjects(true);
 	
-	DestroyGraphs();
+	DestroyGraphs();  DestroyHUD();
 	
 
 	// rem old track
@@ -256,7 +254,6 @@ void App::LoadCleanUp()  // 1 first
 	//mSceneMgr->destroyAllParticleSystems();
 	mSceneMgr->destroyAllRibbonTrails();
 	mSplitMgr->mGuiSceneMgr->destroyAllManualObjects(); // !?..
-	NullHUD();
 
 	// remove junk from previous tracks
 	Ogre::MeshManager::getSingleton().unloadUnreferencedResources();
@@ -590,12 +587,9 @@ void App::LoadMisc()  // 9 last
 	if (pGame && pGame->cars.size() > 0)  //todo: move this into gui track tab chg evt, for cur game type
 		UpdGuiRdStats(road, sc, sListTrack, pGame->timer.GetBestLap(0, pSet->game.trackreverse));  // current
 
-	CreateHUD(false);
+	CreateHUD();
 	// immediately hide it
 	ShowHUD(true);
-	
-	if (hudOppB)  // resize opp list
-		hudOppB->setHeight((carModels.size() -(isGhost2nd?1:0) ) * 20 + 10);
 	
 	// Camera settings
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); ++it)
