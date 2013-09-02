@@ -94,7 +94,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(S):	GuiShortcut(MNU_Options, 1);	return true;  // S Screen
 			 case key(E):	GuiShortcut(MNU_Options, 1,1);	return true;  // E -Effects
 			case key(G):	GuiShortcut(MNU_Options, 2);	return true;  // G Graphics
-			 case key(N):	GuiShortcut(MNU_Options, 2,2);	return true;  // N -Vegetation
+			 case key(N):	GuiShortcut(MNU_Options, 2,3);	return true;  // N -Vegetation
 
 			case key(V):	GuiShortcut(MNU_Options, 3);	return true;  // V View
 			 case key(M):	GuiShortcut(MNU_Options, 3,1);	return true;  // M -Minimap

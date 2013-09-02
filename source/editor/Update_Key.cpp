@@ -768,7 +768,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 		case key(C):  GuiShortcut(WND_Options, 1);  return true;  // C Screen
 		case key(G):  GuiShortcut(WND_Options, 2);  return true;  // G Graphics
-		 case key(N): GuiShortcut(WND_Options, 2,2);  return true;  // N -Vegetation
+		 case key(N): GuiShortcut(WND_Options, 2,3);  return true;  // N -Vegetation
 		case key(E):  GuiShortcut(WND_Options, 3);  return true;  // E Settings
 		case key(K):  GuiShortcut(WND_Options, 4);  return true;  // K Tweak
 

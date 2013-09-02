@@ -278,6 +278,7 @@
 	<challenge name="The Long Beauty" ver="1" difficulty="2" type="2" 
 			descr="Very long and beautiful terrain tracks.">
 		<cartype names="Gravel" />
+		<hud chkArrow="1" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="J21-Paradise"   passPoints="9" />
@@ -290,6 +291,7 @@
 	<challenge name="Bumpy Rally" ver="1" difficulty="3" type="2" 
 			descr="Short, fast tracks, positively banked.">
 		<cartype names="Gravel|Terrain" />
+		<hud chkArrow="1" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="G2-Coast"      passPoints="9" />
@@ -301,6 +303,7 @@
 	<challenge name="Medium endurance" ver="1" difficulty="3" type="2" 
 			descr="Long tracks. Need some endurance skills, clean driving with no mistakes.">
 		<cartype names="Gravel|Asphalt|Extreme" />
+		<hud chkArrow="1" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="C4-Sway"       passPoints="9" />
@@ -312,12 +315,12 @@
 	<challenge name="Long endurance" ver="1" difficulty="3" type="2" 
 			descr="Very long tracks, need strong endurance skills and no mistakes while driving fast.">
 		<car names="ES|S1|XZ" />
+		<hud chkArrow="1" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="G1-Long"      passPoints="8" />
 			<t name="C3-Vast"      passPoints="8" />
 			<t name="A6-Cannon"    passPoints="8" />
-			<t name="G5-Climb"     passPoints="8" />
 			<t name="0W6-88"       passPoints="8" />
 		</tracks>
 	</challenge>
@@ -326,7 +329,7 @@
 	<challenge name="Bumpy rocks" ver="1" difficulty="3" type="2" 
 			descr="Short but very bumpy tracks. Drive cautiously, slower to not jump on bumps.">
 		<cartype names="Gravel|Terrain|Extreme" />
-		<pass avgPoints="10" />
+		<pass avgPoints="12" factor="2" />
 		<tracks>
 			<t name="M1-Hills"   passPoints="9" />
 			<t name="M2-Bumps"   passPoints="9" />
@@ -357,11 +360,11 @@
 	<challenge name="Tricky Heights" ver="1" difficulty="4" type="2" 
 			descr="Medium tracks placed very high in mountains. Also curly and tricky.">
 		<cartype names="Terrain" />
-		<pass avgPos="1" />
+		<pass avgPoints="12" />
 		<tracks>
-			<t name="0W12-Peaks"  passPos="1" />
-			<t name="F13-Castle"  passPos="1" />
-			<t name="F16-Clew"    passPos="2" />
+			<t name="0W12-Peaks"  passPoints="9" />
+			<t name="F13-Castle"  passPoints="9" />
+			<t name="F16-Clew"    passPoints="9" />
 		</tracks>
 	</challenge>
 
