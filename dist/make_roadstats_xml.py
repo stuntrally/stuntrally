@@ -1,5 +1,6 @@
 from xml.dom.minidom import parseString
 import os
+import re
 
 def get_dirs(dir):
 	return [name for name in os.listdir(dir) if os.path.isdir(os.path.join(dir, name))]
@@ -11,22 +12,18 @@ trks = get_dirs(tdir)
 stats = open('roadstats.xml','w')  # out file
 stats.write('<roadstats>\n');
 
-# times
-times = open('../config/times.xml','r')  # path
-tidata = times.read()
+map = {'': 0}  # result map
+r = re.compile('[ ,:=\n]+')
+
+times = open('../config/tracks.ini','r')  # path
+for line in times:
+	if len(line) > 0 and line[0] >= '0' and line[0] <= '9':
+		tr = r.split(line)
+		trk = tr[1]
+		tim = tr[len(tr)-2]
+		map[trk] = tim
+		#print trk + " " + tim
 times.close()
-
-tidom = parseString(tidata)
-tiTags = tidom.getElementsByTagName('times')[0]
-tiTrks = tiTags.getElementsByTagName('track')
-#print tiTrks
-
-# track time map
-map = {'': 0}
-for t in tiTrks:
-	map[t.getAttributeNode('name').nodeValue] = t.getAttributeNode('time').nodeValue
-	#print t.toxml()
-#print map['J1-T']  # check track time
 	
 for t in trks:
 	if t != '.git':
