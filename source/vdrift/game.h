@@ -98,7 +98,7 @@ public:
 	bool profilingmode;
 
 	SOUND sound;
-	SOUNDBUFFERLIBRARY generic_sounds;
+	SOUND_LIB sound_lib;
 	SETTINGS* settings;
 	TRACK track;
 

@@ -20,7 +20,7 @@
 bool CAR::LoadSounds(
 	const std::string & carpath,
 	const SOUNDINFO & sound_device_info,
-	const SOUNDBUFFERLIBRARY & sndLib,
+	const SOUND_LIB & sndLib,
 	std::ostream & info_output,
 	std::ostream & errOut)
 {

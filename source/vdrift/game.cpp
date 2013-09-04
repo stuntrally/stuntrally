@@ -259,37 +259,37 @@ bool GAME::InitializeSound()
 
 	if (sound.Init(2048/*1024/*512*/, info_output, error_output))
 	{
-		generic_sounds.SetLibraryPath(PATHMANAGER::Sounds());
+		sound_lib.SetLibraryPath(PATHMANAGER::Sounds());
+		const SOUNDINFO & sdi = sound.GetDeviceInfo();
+		
+		if (!sound_lib.Load("tire_squeal",1,sdi, error_output))  return false;
+		if (!sound_lib.Load("grass",1,		sdi, error_output))  return false;
+		if (!sound_lib.Load("gravel",1,		sdi, error_output))  return false;
+		
+		if (!sound_lib.Load("bump_front",1,	sdi, error_output))  return false;
+		if (!sound_lib.Load("bump_rear",1,	sdi, error_output))  return false;
+		if (!sound_lib.Load("wind",1,		sdi, error_output))  return false;
 
-		if (!generic_sounds.Load("tire_squeal", sound.GetDeviceInfo(), error_output))  return false;
-		if (!generic_sounds.Load("grass", sound.GetDeviceInfo(), error_output))  return false;
-		if (!generic_sounds.Load("gravel", sound.GetDeviceInfo(), error_output))  return false;
-		if (!generic_sounds.Load("bump_front", sound.GetDeviceInfo(), error_output))  return false;
-		if (!generic_sounds.Load("bump_rear", sound.GetDeviceInfo(), error_output))  return false;
-		if (!generic_sounds.Load("wind", sound.GetDeviceInfo(), error_output))  return false;
 		for (int i = 1; i <= Ncrashsounds; ++i)
-			if (!generic_sounds.Load(toStr(i/10)+toStr(i%10), sound.GetDeviceInfo(), error_output))  return false;
-		if (!generic_sounds.Load("scrap", sound.GetDeviceInfo(), error_output))  return false;
-		if (!generic_sounds.Load("screech", sound.GetDeviceInfo(), error_output))  return false;
+			if (!sound_lib.Load(toStr(i/10)+toStr(i%10),1,	sdi, error_output))  return false;
+		if (!sound_lib.Load("scrap",1,		sdi, error_output))  return false;
+		if (!sound_lib.Load("screech",1,	sdi, error_output))  return false;
 
 		for (int i = 0; i < Nwatersounds; ++i)
-			if (!generic_sounds.Load("water"+toStr(i+1), sound.GetDeviceInfo(), error_output))  return false;
+			if (!sound_lib.Load("water"+toStr(i+1),1,	sdi, error_output))  return false;
 
-		if (!generic_sounds.Load("mud1", sound.GetDeviceInfo(), error_output))  return false;
-		if (!generic_sounds.Load("mud_cont", sound.GetDeviceInfo(), error_output))  return false;
-		if (!generic_sounds.Load("water_cont", sound.GetDeviceInfo(), error_output))  return false;
-		if (!generic_sounds.Load("boost", sound.GetDeviceInfo(), error_output))  return false;
+		if (!sound_lib.Load("mud1",1,		sdi, error_output))  return false;
+		if (!sound_lib.Load("mud_cont",1,	sdi, error_output))  return false;
+		if (!sound_lib.Load("water_cont",1,	sdi, error_output))  return false;
+		if (!sound_lib.Load("boost",1,		sdi, error_output))  return false;
 
 		sound.SetMasterVolume(settings->vol_master);
 		sound.Pause(false);
-	}
-	else
-	{
+		info_output << "Sound initialization successful" << endl;
+	}else{
 		error_output << "Sound initialization failed" << endl;
 		return false;
 	}
-
-	info_output << "Sound initialization successful" << endl;
 
 	ti.update();	/// time
 	float dt = ti.dt * 1000.f;
@@ -544,7 +544,7 @@ CAR* GAME::LoadCar(const string & pathCar, const string & carname, const MATHVEC
 		carconf, carname,
 		start_position, start_orientation,
 		collision,
-		sound.Enabled(), sound.GetDeviceInfo(), generic_sounds,
+		sound.Enabled(), sound.GetDeviceInfo(), sound_lib,
 		settings->abs || isai,
 		settings->tcs || isai,
 		isRemote, idCar,

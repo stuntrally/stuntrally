@@ -13,6 +13,7 @@
 #include <SDL.h>
 
 
+//........................................................
 class SOUNDINFO
 {
 private:
@@ -42,6 +43,7 @@ public:
 };
 
 
+//........................................................
 class SOUNDBUFFER
 {
 	friend class SOUNDSOURCE;
@@ -67,7 +69,7 @@ public:
 		if (filename.find(".ogg") != std::string::npos)
 			return LoadOGG(filename, sound_device_info, error_output);
 		else
-		{	error_output << "Unable to determine file type from filename: " << filename << std::endl;
+		{	error_output << "Only wav and ogg supported, Can't load file: " << filename << std::endl;
 			return false;	}
 	}
 	void Unload()
@@ -86,41 +88,33 @@ public:
 	
 };
 
-class SOUNDBUFFERLIBRARY
+//........................................................
+class SOUND_LIB
 {
 	private:
 		std::string librarypath;
 		std::map <std::string, SOUNDBUFFER> buffermap;
-		bool FileExists(const std::string & filename)
-		{
-			std::ifstream f(filename.c_str());
-			return f;
-		}
 		
 	public:
-		//  set the path to the sound buffers, minus the trailing
-		void SetLibraryPath(const std::string & newpath)
-		{
-			librarypath = newpath;
-		}
+		void SetLibraryPath(const std::string & newpath){	librarypath = newpath;	}
 		
-		//  buffername is the path to the sound minus the path prefix and file extension postfix
-		bool Load(const std::string & buffername, const SOUNDINFO & sound_device_info, std::ostream & error_output)
+		///  name is the path to the sound minus the path prefix and file extension
+		bool Load(const std::string & name, bool wav,
+			const SOUNDINFO & sound_device_info, std::ostream & error_output)
 		{
-			std::map <std::string, SOUNDBUFFER>::iterator existing = buffermap.find(buffername);
+			std::map <std::string, SOUNDBUFFER>::iterator existing = buffermap.find(name);
 			if (existing != buffermap.end())  // already loaded
 				return true;
 			
-			std::string /*filename = librarypath+"/"+buffername+".ogg";
-			if (!FileExists(filename))*/
-				filename = librarypath+"/"+buffername+".wav";
+			std::string ext = wav ? ".wav" : ".ogg",
+				file = librarypath + "/" + name + ext;
 			 
-			if (!buffermap[buffername].Load(filename, sound_device_info, error_output))
+			if (!buffermap[name].Load(file, sound_device_info, error_output))
 			{
-				buffermap.erase(buffername);
+				buffermap.erase(name);
+				error_output << "Can't load sound: " << file << std::endl;
 				return false;
-			}
-			else
+			}else
 				return true;
 		}
 		
@@ -142,6 +136,7 @@ class SOUNDBUFFERLIBRARY
 
 #define MAX_FILTER_ORDER 5
 
+//........................................................
 class SOUNDFILTER
 {
 private:
@@ -160,6 +155,7 @@ public:
 };
 
 
+//........................................................
 class SOUNDSOURCE
 {
 private:
@@ -193,7 +189,7 @@ public:
 		SetBuffer(newbuf);  Set3DEffects(b3D);  SetLoop(bLoop);  SetGain(gain);
 	}
 
-	bool Setup(const SOUNDBUFFERLIBRARY & sndLib, const std::string & name, std::ostream & error_output,
+	bool Setup(const SOUND_LIB & sndLib, const std::string & name, std::ostream & error_output,
 		bool b3D, bool bLoop, float gain)
 	{
 		const SOUNDBUFFER * buf = sndLib.GetBuffer(name, error_output);
@@ -257,6 +253,7 @@ public:
 };
 
 
+//........................................................
 class SOUND
 {
 private:

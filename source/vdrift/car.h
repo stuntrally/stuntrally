@@ -31,7 +31,7 @@ public:
 		const std::string & carname,
 		const MATHVECTOR<float,3> & init_pos, const QUATERNION<float> & init_rot,
 		COLLISION_WORLD & world,
-		bool soundenabled, const SOUNDINFO & sound_device_info, const SOUNDBUFFERLIBRARY & soundbufferlibrary,
+		bool soundenabled, const SOUNDINFO & sound_device_info, const SOUND_LIB & soundbufferlibrary,
 		bool defaultabs, bool defaulttcs,
 		bool isRemote, int idCar,
 		bool debugmode,
@@ -331,7 +331,7 @@ public:
 	bool LoadSounds(
 		const std::string & carpath,
 		const SOUNDINFO & sound_device_info,
-		const SOUNDBUFFERLIBRARY & soundbufferlibrary,
+		const SOUND_LIB & soundbufferlibrary,
 		std::ostream & info_output,
 		std::ostream & error_output);
 		
