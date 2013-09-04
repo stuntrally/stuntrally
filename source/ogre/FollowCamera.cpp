@@ -422,12 +422,12 @@ void FollowCamera::Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, R
 
 ///  upd Info
 //-----------------------------------------------------------------------------------------------------
-void FollowCamera::updInfo(Real time)
+bool FollowCamera::updInfo(Real time)
 {
-	if (!ovInfo || !ca)  return;
+	if (!ca)  return false;
 
 	if (fMoveTime >= 1.0)	// hide after 1sec
-	{	ovInfo->setCaption("");  return;  }
+		return false;
 	else
 		fMoveTime += time;
 	
@@ -448,7 +448,7 @@ void FollowCamera::updInfo(Real time)
 	case CAM_Car:    sprintf(ss, sFmt_Car.c_str()
 		,ca->mType, CAM_Str[ca->mType], ca->mOffset.z, ca->mOffset.x, ca->mOffset.y);	break;
 	}
-	ovInfo->setCaption(ss);
+	return true;
 }
 
 
@@ -466,9 +466,9 @@ void FollowCamera::updAngle()
     *ca = *c;  // copy
     mDistReduce = 0.f;  //reset
 
-	if (ovName)  // ovName->setCaption(ca->mName);
-		ovName->setCaption( toStr(miCurrent+1) + "/" + toStr(miCount)
-			+ ((ca->mMain > 0) ? ". " : "  ") + ca->mName);
+	sName = toStr(miCurrent+1) + "/" + toStr(miCount)
+		+ (ca->mMain > 0 ? ". " : "  ") + ca->mName;
+	updName = true;
 }
 
 void FollowCamera::saveCamera()
@@ -517,7 +517,7 @@ void FollowCamera::setCamera(int ang)
 //  ctors
 
 FollowCamera::FollowCamera(Camera* cam,	SETTINGS* pSet1) :
-	ovInfo(0),ovName(0), first(true), iFirst(0), ca(0),
+	first(true), iFirst(0), ca(0), updName(0),
     mCamera(cam), mTerrain(0), chassis(0), pSet(pSet1),
     mLook(Vector3::ZERO), mPosNodeOld(Vector3::ZERO), mVel(0),
     mAPitch(0.f),mAYaw(0.f), mATilt(0.f), mDistReduce(0.f)
@@ -556,8 +556,6 @@ CameraAngle::CameraAngle() :
 //-----------------------------------------------------------------------------------------------------
 bool FollowCamera::loadCameras()
 {
-	ovInfo = OverlayManager::getSingleton().getOverlayElement("Car/CameraInfo");
-	ovName = OverlayManager::getSingleton().getOverlayElement("Car/Camera");
 	fMoveTime = 5.f;  // hide hint on start
 
 	miCount = 0;  miCurrent = 0;

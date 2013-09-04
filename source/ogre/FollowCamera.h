@@ -65,7 +65,8 @@ public:
 
 	///  update, simulates camera
 	void update(Ogre::Real time, const PosInfo& posInPrev, PosInfo* posOut, class COLLISION_WORLD* world);
-	void updInfo(Ogre::Real time = 0);  char ss[512];
+	bool updInfo(Ogre::Real time = 0);  char ss[512];
+	Ogre::String sName;  bool updName;
 
 	//  apply, sets mCamera's pos and rot
 	void Apply(const PosInfo& posIn);
@@ -90,7 +91,6 @@ public:
 	//  info text formats
 	Ogre::String sFmt_Follow, sFmt_Free, sFmt_ExtAng, sFmt_Arena, sFmt_Car;
 	void updFmtTxt();
-	Ogre::OverlayElement *ovInfo,*ovName;
 };
 
 #endif

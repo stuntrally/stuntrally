@@ -44,7 +44,7 @@ CarModel::CarModel(int index, int colorId, eCarType type, const std::string& nam
 	,angCarY(0), vStartPos(0,0,0), pNickTxt(0)
 	,ndNextChk(0), entNextChk(0)
 	,all_subs(0), all_tris(0)  //stats
-	,bGetStPos(true), fChkTime(0.f), iChkWrong(-1), iWonPlace(0), iWonPlaceOld(0)
+	,bGetStPos(true), fChkTime(0.f), iWonPlace(0), iWonPlaceOld(0)
 	,iCurChk(-1), iNumChks(0), iNextChk(0)  //ResetChecks();  // road isnt yet
 	,distFirst(1.f), distLast(1.f), distTotal(10.f), trackPercent(0.f), updTimes(1)
 {
@@ -242,7 +242,7 @@ void CarModel::LoadConfig(const std::string & pathCar)
 		whRadius[rightside] = radius;
 		
 		float width = 0.2f;
-		cf.GetParam("tire-"+posstr+".width-trail", width, pGame->error_output);
+		cf.GetParam("tire-"+posstr+".width-trail", width);
 		whWidth[leftside] = width;
 		whWidth[rightside] = width;
 	}

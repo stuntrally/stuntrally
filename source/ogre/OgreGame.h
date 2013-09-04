@@ -105,7 +105,8 @@ public:
 	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };
 
 protected:
-	boost::thread mThread;
+	boost::thread mThread;  // 2nd thread for simulation
+
 	WaterRTT mWaterRTT;
 
 	virtual void createScene();
@@ -127,30 +128,49 @@ protected:
 	Ogre::String sMtr[NumMaterials];
 
 	///  HUD, 2D  ------------
-	class Hud  // for 1 viewport
+	class Hud  // for 1 viewport/player
 	{
 	public:
 		//  times bar
 		MyGUI::TextBox *txTimTxt,*txTimes;  MyGUI::ImageBox *bckTimes;
 		Ogre::String sTimes;
-		//  opp list  columns: trk %, dist m, nick
+		//  opponents list  columns: trk %, dist m, nick
 		MyGUI::TextBox *txOpp[3];  MyGUI::ImageBox *bckOpp;
 
+		//  wrong check warning, win place
+		MyGUI::TextBox *txWarn,*txPlace;  MyGUI::ImageBox *bckWarn,*bckPlace;
+		//  start countdown
+		MyGUI::TextBox *txCountdown;
+
 		//  gauges
-		Ogre::SceneNode *ndRpm, *ndVel, *ndRpmBk, *ndVelBk,*ndVelBm;
-		Ogre::ManualObject* moRpm, *moVel, *moRpmBk, *moVelBk,*moVelBm;
+		Ogre::SceneNode    *ndRpm, *ndVel, *ndRpmBk, *ndVelBk,*ndVelBm;
+		Ogre::ManualObject *moRpm, *moVel, *moRpmBk, *moVelBk,*moVelBm;
 		//  gear, vel
-		MyGUI::TextBox *txGear,*txVel,*txBFuel,*txDamage;
+		MyGUI::TextBox *txGear,*txVel, *txAbs,*txTcs;
+
+		//  boost fuel, damage %, rewind time
+		MyGUI::TextBox  *txBFuel, *txDamage, *txRewind;
+		MyGUI::ImageBox *icoBFuel,*icoDamage,*icoRewind;
+		
+		//  current camera name
+		MyGUI::TextBox *txCam;
 
 		//  miniap
-		Ogre::ManualObject* moMap;
-		Ogre::SceneNode *ndMap;
-		std::vector<Ogre::SceneNode*> vNdPos;  // car pos tris on minimap +2ghosts
-		std::vector<Ogre::ManualObject*> vMoPos;  //const size: 6
+		Ogre::ManualObject *moMap;  Ogre::SceneNode *ndMap;
+		//  car pos tris on minimap +2ghosts
+		std::vector<Ogre::SceneNode*> vNdPos;  //const size: 6
+		std::vector<Ogre::ManualObject*> vMoPos;
 		
+		MyGUI::Widget* parent;
 		Hud();
 	};
-	std::vector<Hud> hud;  // size: max viewports 4
+	std::vector<Hud> hud;  // const size: max viewports 4
+	///  global hud
+	//  chat messages
+	MyGUI::TextBox *txMsg;  MyGUI::ImageBox *bckMsg;
+	//  camera move info
+	MyGUI::TextBox *txCamInfo;
+
 	float asp, scX,scY, minX,maxX, minY,maxY;  // minimap visible range
 	Ogre::SceneNode *ndLine;
 
@@ -163,14 +183,12 @@ protected:
 		OvrDbg();
 	};
 	std::vector<OvrDbg> ov;
-	Ogre::OverlayElement *hudCountdown,*hudNetMsg,
-		*hudAbs,*hudTcs, *hudWarnChk,*hudWonPlace;
-	Ogre::Overlay *ovCountdown,*ovNetMsg, *ovCam, *ovWarnWin, *ovAbsTcs, *ovCarDbg,*ovCarDbgTxt,*ovCarDbgExt;
+	Ogre::Overlay *ovCarDbg,*ovCarDbgTxt,*ovCarDbgExt;
 
-	Ogre::String GetTimeString(float time) const, GetTimeShort(float time) const;
 	void CreateHUD(),DestroyHUD(), ShowHUD(bool hideAll=false), UpdMiniTer(), UpdDbgTxtClr();
 	Ogre::Vector3 projectPoint(const Ogre::Camera* cam, const Ogre::Vector3& pos);  // 2d xy, z - out info
 	MyGUI::TextBox* CreateNickText(int carId, Ogre::String text);
+	Ogre::String GetTimeString(float time) const, GetTimeShort(float time) const;
 	Ogre::String StrClr(Ogre::ColourValue c);
 
 

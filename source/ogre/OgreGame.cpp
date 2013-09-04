@@ -22,10 +22,7 @@ using namespace Ogre;
 App::App(SETTINGS *settings, GAME *game)
 	:pGame(game), sc(0), bGI(0), mThread(), mTimer(0)
 	// ovr
-	,hudCountdown(0),hudNetMsg(0), hudAbs(0),hudTcs(0)
-	,hudWarnChk(0),hudWonPlace(0)
-	,ovCam(0), ovWarnWin(0)
-	,ovCountdown(0),ovNetMsg(0), ovAbsTcs(0)
+	,bckMsg(0),txMsg(0),txCamInfo(0)
 	,ovCarDbg(0),ovCarDbgTxt(0),ovCarDbgExt(0)
 	// hud
 	,asp(1)//,  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
@@ -142,21 +139,6 @@ App::App(SETTINGS *settings, GAME *game)
 
 	if (pSet->multi_thr)
 		mThread = boost::thread(boost::bind(&App::UpdThr, boost::ref(*this)));
-}
-
-App::OvrDbg::OvrDbg() :
-	oL(0),oR(0),oS(0), oU(0),oX(0)
-{	}
-
-App::Hud::Hud()
-{
-	txGear=0; txVel=0; txBFuel=0; txDamage=0;
-	txTimTxt=0; txTimes=0; bckTimes = 0;  sTimes="";
-	ndRpm=0; ndVel=0; ndRpmBk=0; ndVelBk=0; ndVelBm=0;
-	moRpm=0; moVel=0; moRpmBk=0; moVelBk=0; moVelBm=0;
-	moMap = 0;  ndMap=0;
-	bckOpp=0;  for (int i=0; i<3; ++i)  txOpp[i]=0;
-	vNdPos.resize(6,0); vMoPos.resize(6,0);
 }
 
 

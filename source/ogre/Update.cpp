@@ -374,12 +374,16 @@ bool App::frameStart(Real time)
 			arrowRotNode->pitch(Degree(-20), SceneNode::TS_LOCAL); 
 		}
 
-		for (std::vector<CarModel*>::iterator it=carModels.begin();
-			it!=carModels.end(); ++it)
-		{
-			if ( (*it)->fCam)
-				(*it)->fCam->updInfo(time);
-		}
+		//  cam info text
+		if (pSet->show_cam && !carModels.empty() && txCamInfo)
+		{	FollowCamera* cam = carModels[0]->fCam;
+			if (cam)
+			{	bool vis = cam->updInfo(time) && !isFocGui;
+				if (vis)
+					txCamInfo->setCaption(String(cam->ss));
+				txCamInfo->setVisible(vis);
+		}	}
+		
 
 		//  update all cube maps
 		PROFILER.beginBlock("g.refl");

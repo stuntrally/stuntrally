@@ -5,6 +5,7 @@
 #include "../vdrift/quickprof.h"
 #include "../road/Road.h"
 #include "SplitScreen.h"
+#include "FollowCamera.h"
 #include "common/RenderConst.h"
 #include "common/MultiList2.h"
 #include "common/GraphView.h"
@@ -165,10 +166,9 @@ void App::UpdateHUD(int carId, float time)
 		}
 		
 		//  upd hud msgs
-		if (hudNetMsg)
-		{	
-			hudNetMsg->setCaption(msg);
-			ovNetMsg->show();
+		if (txMsg)
+		{	txMsg->setCaption(msg);
+			bckMsg->setVisible(!msg.empty());
 		}
 
 		//  upd end list
@@ -336,64 +336,41 @@ void App::UpdateHUD(int carId, float time)
 	if (h.txDamage && pCar && h.txDamage->getVisible())
 	{
 		float d = std::min(100.f, pCar->dynamics.fDamage);
-		h.txDamage->setCaption(TR("#{Damage}\n     ")+fToStr(d,0,3)+" %");  d*=0.01f;
+		//h.txDamage->setCaption(TR("#{Damage}\n     ")+fToStr(d,0,3)+" %");  d*=0.01f;
+		h.txDamage->setCaption(fToStr(d,0,3)+" %");  d*=0.01f;
 		float e = std::min(1.f, 0.8f + d*2.f);
 		h.txDamage->setTextColour(Colour(e-d*d*0.4f, std::max(0.f, e-d), std::max(0.f, e-d*2.f) ));
 	}
-
-	//  race countdown  -----------------------------
-	if (hudCountdown)
+	
+	//  abs, tcs on  ------
+	if (h.txAbs && h.txTcs && pCar)
 	{
-		if (pGame->timer.pretime > 0.f && !pGame->timer.waiting)
-		{
-			hudCountdown->setCaption(fToStr(pGame->timer.pretime,1,3));
-			hudCountdown->show();
-		}else
-			hudCountdown->hide();
+		bool vis = pCar->GetABSEnabled();  h.txAbs->setVisible(vis);
+		if (vis)  h.txAbs->setAlpha(pCar->GetABSActive() ? 1.f : 0.6f);
+		
+		vis = pCar->GetTCSEnabled();  h.txTcs->setVisible(vis);
+		if (vis)  h.txTcs->setAlpha(pCar->GetTCSActive() ? 1.f : 0.6f);
 	}
 	
-	//  abs, tcs on  -----------------------------
-	if (hudAbs && hudTcs)
-	{
-		if (pCar)
-		{
-			if (pCar->GetABSEnabled())
-			{	hudAbs->show();
-				hudAbs->setColour(ColourValue(1,0.8,0.6, pCar->GetABSActive() ? 1 : 0.4));
-			}else
-				hudAbs->hide();
-
-			if (pCar->GetTCSEnabled())
-			{	hudTcs->show();
-				hudTcs->setColour(ColourValue(0.7,0.9,1, pCar->GetTCSActive() ? 1 : 0.4));
-			}else
-				hudTcs->hide();
-		}
-	}
 	
 	///  times, race pos  -----------------------------
 	if (pSet->show_times && pCar)
 	{
 		TIMER& tim = pGame->timer;
-		
-		if (pCarM->bWrongChk || pCarM->iWonPlace > 0 && (pSet->game.local_players > 1 || mClient))
-			ovWarnWin->show();  else  ovWarnWin->hide();  //ov
-			
-		//  lap num (for many or champ)
 		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || pSet->game.chall_num >= 0 || mClient;
 		if (hasLaps)
-		{
-			if (pCarM->iWonPlace > 0 && hudWonPlace)
-			{	
-				std::string s = String(TR("---  "+toStr(pCarM->iWonPlace)+" #{TBPlace}  ---"));
-				hudWonPlace->setCaption(s);  hudWonPlace->show();
-				const static ColourValue clrPlace[4] = {
-					ColourValue(0.4,1,0.2), ColourValue(1,1,0.3), ColourValue(1,0.7,0.2), ColourValue(1,0.5,0.2) };
-				hudWonPlace->setColour(clrPlace[pCarM->iWonPlace-1]);
-			}
-		}
+		{	//  place
+			if (pCarM->iWonPlace > 0 && h.txPlace)
+			{
+				String s = TR("---  "+toStr(pCarM->iWonPlace)+" #{TBPlace}  ---");
+				h.txPlace->setCaption(s);
+				const static Colour clrPlace[4] = {
+					Colour(0.4,1,0.2), Colour(1,1,0.3), Colour(1,0.7,0.2), Colour(1,0.5,0.2) };
+				h.txPlace->setTextColour(clrPlace[pCarM->iWonPlace-1]);
+				h.bckPlace->setVisible(true);
+		}	}
 
-		//  times  ------------
+		//  times  ------------------------------
 		if (pCarM->updTimes)
 		{	pCarM->updTimes = false;
 
@@ -417,16 +394,6 @@ void App::UpdateHUD(int carId, float time)
 				"\n#80E080" + GetTimeString(time)+
 				"\n#D0D040" + (b ? toStr(place) : "--")+ //" /" + fToStr(t1pl,2,5)+
 				"\n#F0A040" + (b ? fToStr(points,1,3) : "--");
-
-			#if 0  // log info
-			LogO("     Track: " + GetTimeString(time)+"  place: "+toStr(place)+"  points: "+fToStr(points,1,3)+ "  dt " + fToStr(t1pl,2,5));
-			for (int i=-8; i<=8; ++i)
-			{
-				float t = timeCur + i*0.5f *t1pl+1.5f;
-				int place = GetRacePos(t, timeTrk, carMul, coldStart, &points);
-				LogO(" var, time: "+GetTimeString(t)+"  place: "+toStr(place)+"  points: "+fToStr(points,1,3));
-			}
-			#endif
 		}
 		if (h.txTimes)
 			h.txTimes->setCaption(
@@ -434,6 +401,46 @@ void App::UpdateHUD(int carId, float time)
 				"\n#C0E0F0" + GetTimeString(tim.GetPlayerTime(carId))+
 				h.sTimes);
 	}
+
+
+	//  checkpoint warning  --------
+	if (road && h.bckWarn && pCarM)
+	{
+		/* checks debug *
+		if (ov[0].oU)  {
+			//"ghost:  "  + GetTimeString(ghost.GetTimeLength()) + "  "  + toStr(ghost.GetNumFrames()) + "\n" +
+			//"ghplay: " + GetTimeString(ghplay.GetTimeLength()) + "  " + toStr(ghplay.GetNumFrames()) + "\n" +
+			ov[0].oU->setCaption(String("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n") +
+				"         st " + toStr(pCarM->bInSt ? 1:0) + " in" + toStr(pCarM->iInChk) +
+				"  |  cur" + toStr(pCarM->iCurChk) + " > next " + toStr(pCarM->iNextChk) +
+				"  |  Num " + toStr(pCarM->iNumChks) + " / All " + toStr(road->mChks.size()));
+		}	/**/
+
+		if (pCarM->bWrongChk)
+			pCarM->fChkTime = 2.f;  //par sec
+			
+		bool show = pCarM->fChkTime > 0.f;
+		if (show)  pCarM->fChkTime -= time;
+		h.bckWarn->setVisible(show && pSet->show_times);
+	}
+
+	//  race countdown  ------
+	if (h.txCountdown)
+	{
+		bool vis = pGame->timer.pretime > 0.f && !pGame->timer.waiting;
+		if (vis)
+			h.txCountdown->setCaption(fToStr(pGame->timer.pretime,1,3));
+		h.txCountdown->setVisible(vis);
+	}
+
+	//  camera cur  ------
+	if (h.txCam)
+	{	FollowCamera* cam = pCarM->fCam;
+		if (cam && cam->updName)
+		{	cam->updName = false;
+			h.txCam->setCaption(cam->sName);
+	}	}
+
 
 	//-------------------------------------------------------------------------------------------------------------------
 	///  debug infos
@@ -536,31 +543,6 @@ void App::UpdateHUD(int carId, float time)
 		if (ov[4].oS)  ov[4].oS->setPosition(xp + 70, yp + -20 -104-3);
 
 		//ov[3-w].oR->setCaption("|");  ov[3-w].oR->setColour(ColourValue(0.6,1.0,0.7));
-	}
-
-
-	//  checkpoint warning  --------
-	if (road && hudWarnChk && pCarM)
-	{
-		/* checks debug *
-		if (ov[0].oU)  {
-			//"ghost:  "  + GetTimeString(ghost.GetTimeLength()) + "  "  + toStr(ghost.GetNumFrames()) + "\n" +
-			//"ghplay: " + GetTimeString(ghplay.GetTimeLength()) + "  " + toStr(ghplay.GetNumFrames()) + "\n" +
-			ov[0].oU->setCaption(String("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n") +
-				"         st " + toStr(pCarM->bInSt ? 1:0) + " in" + toStr(pCarM->iInChk) +
-				"  |  cur" + toStr(pCarM->iCurChk) + " > next " + toStr(pCarM->iNextChk) +
-				"  |  Num " + toStr(pCarM->iNumChks) + " / All " + toStr(road->mChks.size()));
-		}	/**/
-
-		if (pCarM->bWrongChk)
-			pCarM->fChkTime = 2.f;  //par sec
-		int show = pCarM->fChkTime > 0.f ? 1 : 0;
-		if (show)  pCarM->fChkTime -= time;
-		//if (show != pCarM->iChkWrong)  //-
-		bool place = pSet->game.local_players > 1 || mClient, won = pCarM->iWonPlace > 0;
-			if (show)  {  hudWarnChk->show();  if (place && !won)  hudWonPlace->hide();  }
-			else  {       hudWarnChk->hide();  if (place && won)   hudWonPlace->show();  }
-		pCarM->iChkWrong = show;
 	}
 
 

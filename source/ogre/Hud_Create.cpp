@@ -40,14 +40,14 @@ void App::SizeHUD(bool full, Viewport* vp)
 		Hud& h = hud[c];
 		const SplitScreenManager::VPDims& dim = mSplitMgr->mDims[c];
 		//  gauges
-		Real xcRpm,ycRpm, xcVel,ycVel, yMax, xBFuel;  // -1..1
+		Real xcRpm,ycRpm, xcVel,ycVel, ygMax, xBFuel;  // -1..1
 		if (h.ndRpmBk && h.ndVelBk && h.ndVelBm && h.ndRpm && h.ndVel)
 		{
 			Real fHudScale = pSet->size_gauges * dim.avgsize;
 			Real spx = fHudScale *1.1f, spy = spx*asp;
 			xcRpm = dim.left + spx;   ycRpm =-dim.bottom + spy;
 			xcVel = dim.right - spx;  ycVel =-dim.bottom + spy;
-			yMax = ycVel - fHudScale;  xBFuel = xcVel - fHudScale;
+			ygMax = ycVel - fHudScale;  xBFuel = xcVel - fHudScale;
 
 			Vector3 sca(fHudScale,fHudScale*asp,1), sc(fHudScale,fHudScale,1);
 			h.ndRpmBk->setScale(sca);  h.ndVelBk->setScale(sca);  h.ndVelBm->setScale(sca);
@@ -73,83 +73,73 @@ void App::SizeHUD(bool full, Viewport* vp)
 			//LogO("-- Size car:"+toStr(c)+"  x:"+fToStr(fMiniX,2,4)+" y:"+fToStr(fMiniY,2,4)+"  s:"+fToStr(fHudSize,2,4));
 		}
 	
-		{
-			//  current viewport max x,y in pixels
-			int iwx = (dim.right +1.f)*0.5f*wx,
-				iwy = (dim.bottom+1.f)*0.5f*wy;
-			int my = (1.f-yMax)*0.5f*wy;  // gauge bottom y
+		//  current viewport max x,y in pixels
+		int xMin = (dim.left+1.f)*0.5f*wx, xMax = (dim.right +1.f)*0.5f*wx,
+			yMin = (dim.top +1.f)*0.5f*wy, yMax = (dim.bottom+1.f)*0.5f*wy;
+		int my = (1.f-ygMax)*0.5f*wy;  // gauge bottom y
 
-			//  gear, vel texts
-			//  positioning,  min iwy - dont go below viewport bottom
-			int vv = pSet->gauges_type > 0 ? -45 : 40;
-			int gx = (xcRpm+1.f)*0.5f*wx + 20, gy = std::min(iwy -48, my - 40);
-			int vx = (xcVel+1.f)*0.5f*wx + vv, vy = std::min(iwy -48, my - 15);			
-			int bx =(xBFuel+1.f)*0.5f*wx - 10, by = std::min(iwy -36, my + 5);
-				vx = std::min(vx, iwx -100);
-				bx = std::min(bx, iwx -180);  // not too near to vel
-			if (h.txGear)  h.txGear->setPosition(gx,gy);
-			if (h.txVel)  h.txVel->setPosition(vx,vy);
-			if (h.txBFuel)  h.txBFuel->setPosition(bx,by);
-			if (h.txDamage)  h.txDamage->setPosition(gx+140,gy+10);
+		//  gear, vel texts
+		//  positioning,  min yMax - dont go below viewport bottom
+		int vv = pSet->gauges_type > 0 ? -45 : 40;
+		int gx = (xcRpm+1.f)*0.5f*wx + 20, gy = std::min(yMax -48, my - 40);
+		int vx = (xcVel+1.f)*0.5f*wx + vv, vy = std::min(yMax -48, my - 15);
+		int bx =(xBFuel+1.f)*0.5f*wx - 10, by = std::min(yMax -36, my + 5);
+			vx = std::min(vx, xMax -100);
+			bx = std::min(bx, xMax -180);  // not too near to vel
+		h.txGear->setPosition(gx,gy);
+		h.txVel->setPosition(vx,vy);
+
+		#if 0
+		h.txRewind ->setPosition(bx,by);
+		h.icoRewind->setPosition(bx+50,by-5);
+		#endif
+
+		h.txDamage ->setPosition(bx-70,by-70);  //gx+140,gy-70);
+		h.icoDamage->setPosition(bx-70+50,by-70-5);
+
+		h.txBFuel ->setPosition(bx-63,by-140);
+		h.icoBFuel->setPosition(bx-63+54,by-140-5+2);
+
+		//  times
+		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
+		int tx = xMin + 0, ty = yMin + 32;
+		h.bckTimes->setPosition(tx,ty);
+		tx = 16;  ty = (hasLaps ? 16 : 4);
+		h.txTimTxt->setPosition(tx,ty);
+		h.txTimes->setPosition(tx+96,ty);
 			
-			//  times
-			bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
-			int itx = (dim.left+1.f)*0.5f*wx,
-				ity = (dim.top +1.f)*0.5f*wy;
-			int tx = itx + 0, ty = ity + 32;
-			if (h.bckTimes)  h.bckTimes->setPosition(tx,ty);
-			tx = 16;  ty = (hasLaps ? 16 : 4);
-			if (h.txTimTxt)  h.txTimTxt->setPosition(tx,ty);
-			if (h.txTimes)   h.txTimes->setPosition(tx+96,ty);
-			
-			//  opp list
-			//int ox = itx + 5, oy = (ycRpm+1.f)*0.5f*wy - 10;
-			int ox = itx + 5, oy = ty + 240;
-			if (h.bckOpp)   {  h.bckOpp->setPosition(ox,oy -2);  h.bckOpp->setSize(230, plr*25 +4);  }
-			for (int n=0; n<3; ++n)
-				if (h.txOpp[n])   h.txOpp[n]->setPosition(n*60,0);
-		}
+		//  opp list
+		//int ox = itx + 5, oy = (ycRpm+1.f)*0.5f*wy - 10;
+		int ox = xMin + 5, oy = ty + 240;
+		h.bckOpp->setPosition(ox,oy -2);  h.bckOpp->setSize(230, plr*25 +4);
+		for (int n=0; n<3; ++n)
+			h.txOpp[n]->setPosition(n*65+5,0);
+		
+		//  warn,win
+		ox = xMin + 300;  oy = yMin + 15;
+		h.bckWarn->setPosition(ox,oy);
+		h.bckPlace->setPosition(ox,oy + 40);
+		
+		h.txCountdown->setPosition((xMax-xMin)/2 -100, (yMax-yMin)/2 -60);
+		//  camera
+		h.txCam->setPosition(xMax-260,yMax-30);
+		//  abs,tcs
+		h.txAbs->setPosition(xMin+160,yMax-30);
+		h.txTcs->setPosition(xMin+220,yMax-30);
 	}
+	txCamInfo->setPosition(300,wy-100);
+	bckMsg->setPosition(400,10);
 }
-
 
 ///---------------------------------------------------------------------------------------------------------------
 ///  HUD create
 ///---------------------------------------------------------------------------------------------------------------
 
-void App::DestroyHUD()
-{
-	SceneManager* scm = mSplitMgr->mGuiSceneMgr;
-	for (int c=0; c < hud.size(); ++c)
-	{	Hud& h = hud[c];
-
-		#define Dest2(mo,nd)  {  \
-			if (mo) {  scm->destroyManualObject(mo);  mo=0;  } \
-			if (nd) {  scm->destroySceneNode(nd);  nd=0;  }  }
-
-		for (int i=0; i < 6; ++i)
-			Dest2(h.vMoPos[i],h.vNdPos[i])
-		
-		Dest2(h.moMap,h.ndMap)
-		Dest2(h.moRpmBk,h.ndRpmBk)
-		Dest2(h.moVelBk,h.ndVelBk)  Dest2(h.moRpm,h.ndRpm)
-		Dest2(h.moVelBm,h.ndVelBm)	Dest2(h.moVel,h.ndVel)
-
-		#define Dest(w)  \
-			if (w) {  mGUI->destroyWidget(w);  w = 0;  }
-		Dest(h.txGear)  Dest(h.txVel)
-		Dest(h.txBFuel)  Dest(h.txDamage)
-
-		for (int n=0; n < 3; ++n)  Dest(h.txOpp[n])
-		Dest(h.bckOpp)
-		Dest(h.txTimTxt)  Dest(h.txTimes)  Dest(h.bckTimes)
-		h.sTimes = "";
-	}
-}
-
 void App::CreateHUD()
 {
 	if (carModels.size() == 0)  return;
+
+	QTimer ti;  ti.update();  /// time
 
 	SceneManager* scm = mSplitMgr->mGuiSceneMgr;
 	if (hud[0].moMap || hud[0].txVel || hud[0].bckTimes)
@@ -185,7 +175,10 @@ void App::CreateHUD()
 	assert(plr <= hud.size());
 	assert(cnt <= hud[0].vMoPos.size());
 	#endif
-	for (int c=0; c < plr; ++c)  // for each car
+	int y=1200; //off 0
+	
+	//  for each car
+	for (int c=0; c < plr; ++c)
 	{
 		String s = toStr(c);
 		Hud& h = hud[c];
@@ -256,31 +249,62 @@ void App::CreateHUD()
 		h.ndVel->attachObject(h.moVel);  h.ndVel->setScale(0,0,0);  h.ndVel->setVisible(false);
 
 
+		///  GUI
 		//  gear, vel text  -----------
-		int y=1200; //off 0
-		h.txGear = mGUI->createWidget<TextBox>("TextBox",
-			0,y, 160,116, Align::Left, "Back", "Gear"+s);  h.txGear->setVisible(false);
+		h.parent = mGUI->createWidget<Widget>("",0,0,2560,1600,Align::Left,"Back","main"+s);
+
+		h.txGear = h.parent->createWidget<TextBox>("TextBox",
+			0,y, 160,116, Align::Left, "Gear"+s);  h.txGear->setVisible(false);
 		h.txGear->setFontName("DigGear");  h.txGear->setFontHeight(126);
 
-		h.txVel = mGUI->createWidget<TextBox>("TextBox",
-			0,y, 360,96, Align::Right, "Back", "Vel"+s);  h.txVel->setVisible(false);
+		h.txVel = h.parent->createWidget<TextBox>("TextBox",
+			0,y, 360,96, Align::Right, "Vel"+s);  h.txVel->setVisible(false);
 		h.txVel->setFontName("DigGear");  //h.txVel->setFontHeight(64);
+		//h.txVel->setTextShadow(true);
 		
 		//  boost
-		h.txBFuel = mGUI->createWidget<TextBox>("TextBox",
-			0,y, 240,80, Align::Right, "Back", "BFuel"+s);  h.txBFuel->setVisible(false);
-		h.txBFuel->setFontName("DigGear");  h.txBFuel->setFontHeight(64);
-		h.txBFuel->setTextColour(Colour(0.6,0.8,1.0));
+		h.txBFuel = h.parent->createWidget<TextBox>("TextBox",
+			0,y, 240,80, Align::Right, "Fuel"+s);  h.txBFuel->setVisible(false);
+		h.txBFuel->setFontName("DigGear");  h.txBFuel->setFontHeight(72);
+		h.txBFuel->setTextColour(Colour(0.6,0.8,1.0));  //h.txBFuel->setTextShadow(true);
 
-		h.txDamage = mGUI->createWidget<TextBox>("TextBox",
-			0,y, 240,80, Align::Right, "Back", "Dmg"+s);  h.txDamage->setVisible(false);
-		h.txDamage->setFontName("font.20");  //h.txDamage->setFontHeight(64);
-		h.txDamage->setTextColour(Colour(0.7,0.7,0.7));  h.txDamage->setTextShadow(true);
+		h.icoBFuel = h.parent->createWidget<ImageBox>("ImageBox",
+			0,y, 40,40, Align::Left, "IFuel"+s);  //h.icoBFuel->setVisible(false);
+		h.icoBFuel->setImageTexture("gui_icons.png");
+		h.icoBFuel->setImageCoord(IntCoord(512,0,128,128));
+
+		//  damage %
+		if (pSet->game.damage_type > 0)
+		{
+			h.txDamage = h.parent->createWidget<TextBox>("TextBox",
+				0,y, 240,80, Align::Right, "Dmg"+s);  //h.txDamage->setVisible(false);
+			h.txDamage->setFontName("font.24");  //h.txDamage->setFontHeight(64);
+			h.txDamage->setTextColour(Colour(0.7,0.7,0.7));  h.txDamage->setTextShadow(true);
+
+			h.icoDamage = h.parent->createWidget<ImageBox>("ImageBox",
+				0,y, 40,40, Align::Left, "IDmg"+s);  //h.icoDamage->setVisible(false);
+			h.icoDamage->setImageTexture("gui_icons.png");
+			h.icoDamage->setImageCoord(IntCoord(512,256,128,128));
+		}
 		
+		//  rewind <<
+		#if 0
+		h.txRewind = h.parent->createWidget<TextBox>("TextBox",
+			0,y, 240,80, Align::Right, "Rew"+s);  //h.txRewind->setVisible(false);
+		h.txRewind->setFontName("DigGear");  h.txRewind->setFontHeight(64);
+		h.txRewind->setTextColour(Colour(0.9,0.7,1.0));
+		h.txRewind->setCaption("3.0");
+
+		h.icoRewind = h.parent->createWidget<ImageBox>("ImageBox",
+			200,180, 40,40, Align::Left, "IRew"+s);  //h.icoRewind->setVisible(false);
+		h.icoRewind->setImageTexture("gui_icons.png");
+		h.icoRewind->setImageCoord(IntCoord(512,384,128,128));
+		#endif
+
 
 		//  times text  -----------
-		h.bckTimes = mGUI->createWidget<ImageBox>("ImageBox",
-			0,y, 208,200, Align::Left, "Back", "TimP"+s);  h.bckTimes->setVisible(false);
+		h.bckTimes = h.parent->createWidget<ImageBox>("ImageBox",
+			0,y, 208,200, Align::Left, "TimP"+s);  h.bckTimes->setVisible(false);
 		//bckTimes[c]->setAlpha(0.9f);		
 		h.bckTimes->setImageTexture("back_times.png");
 
@@ -303,40 +327,85 @@ void App::CreateHUD()
 
 
 		//  opp list  -----------
-		h.bckOpp = mGUI->createWidget<ImageBox>("ImageBox",
-			0,y, 208,200, Align::Left, "Back", "OppB"+toStr(c));
+		h.bckOpp = h.parent->createWidget<ImageBox>("ImageBox",
+			0,y, 208,200, Align::Left, "OppB"+toStr(c));
 		h.bckOpp->setAlpha(0.9f);  h.bckOpp->setVisible(false);
 		h.bckOpp->setImageTexture("opp_rect.png");
 
 		for (int n=0; n < 3; ++n)
 		{
 			h.txOpp[n] = h.bckOpp->createWidget<TextBox>("TextBox",
-				0,y, 90,180, n == 2 ? Align::Left : Align::Right, "Opp"+toStr(n)+s);
+				n*65+5,0, 90,180, n == 2 ? Align::Left : Align::Right, "Opp"+toStr(n)+s);
 			h.txOpp[n]->setFontName("font.20");
 			if (n==0)  h.txOpp[n]->setTextShadow(true);
 		}
+
+		//  wrong chk warning  -----------
+		h.bckWarn = h.parent->createWidget<ImageBox>("ImageBox",
+			0,y, 400,60, Align::Left, "WarnB"+s);  h.bckWarn->setVisible(false);
+		h.bckWarn->setImageTexture("back_times.png");
+
+		h.txWarn = h.bckWarn->createWidget<TextBox>("TextBox",
+			0,0, 400,60, Align::Left, "WarnT"+s);
+		h.txWarn->setFontName("font.20");  h.txWarn->setTextShadow(true);
+		h.txWarn->setTextColour(Colour(1,0.3,0));  h.txWarn->setTextAlign(Align::Center);
+		h.txWarn->setCaption(TR("#{WrongChk}"));
+
+		//  win place  -----------
+		h.bckPlace = h.parent->createWidget<ImageBox>("ImageBox",
+			0,y, 400,60, Align::Left, "PlcB"+s);  h.bckPlace->setVisible(false);
+		h.bckPlace->setImageTexture("back_times.png");
+
+		h.txPlace = h.bckPlace->createWidget<TextBox>("TextBox",
+			0,0, 400,60, Align::Left, "PlcT"+s);
+		h.txPlace->setFontName("font.20");  h.txPlace->setTextShadow(true);
+		h.txPlace->setTextAlign(Align::Center);
+
+		//  start countdown
+		h.txCountdown = h.parent->createWidget<TextBox>("TextBox",
+			0,y, 200,120, Align::Left, "CntT"+s);  h.txCountdown->setVisible(false);
+		h.txCountdown->setFontName("DigGear");  h.txCountdown->setTextShadow(true);
+		h.txCountdown->setTextColour(Colour(0.8,0.9,1));  h.txCountdown->setTextAlign(Align::Center);
+
+		//  abs, tcs
+		h.txAbs = h.parent->createWidget<TextBox>("TextBox",
+			0,y, 120,60, Align::Left, "AbsT"+s);
+		h.txAbs->setFontName("font.19");  h.txAbs->setTextShadow(true);
+		h.txAbs->setCaption("ABS");  h.txAbs->setTextColour(Colour(1,1,0.6));
+
+		h.txTcs = h.parent->createWidget<TextBox>("TextBox",
+			0,y, 120,60, Align::Left, "TcsT"+s);
+		h.txTcs->setFontName("font.19");  h.txTcs->setTextShadow(true);
+		h.txTcs->setCaption("TCS");  h.txTcs->setTextColour(Colour(0.6,1,1));
+
+		//  camera name
+		h.txCam = h.parent->createWidget<TextBox>("TextBox",
+			0,0, 200,30, Align::Left, "CamT"+s);
+		h.txCam->setFontName("font.20");  h.txCam->setTextShadow(true);
+		h.txCam->setTextColour(Colour(0.65,0.85,0.85));
 	}
+
+	//  camera info
+	txCamInfo = mGUI->createWidget<TextBox>("TextBox",
+		0,y, 800,100, Align::Left, "Back", "CamIT");  txCamInfo->setVisible(false);
+	txCamInfo->setFontName("font.20");  txCamInfo->setTextShadow(true);
+	txCamInfo->setTextColour(Colour(0.8,0.9,0.9));
+
+	//  chat msg  -----------
+	bckMsg = mGUI->createWidget<ImageBox>("ImageBox",
+		0,y, 400,60, Align::Left, "Back", "MsgB");  bckMsg->setVisible(false);
+	bckMsg->setImageTexture("back_times.png");
+
+	txMsg = bckMsg->createWidget<TextBox>("TextBox",
+		0,0, 400,60, Align::Left, "PlcT");
+	txMsg->setFontName("font.20");  txMsg->setTextShadow(true);
 
 	///  tex
 	resMgr.removeResourceLocation(path, sGrp);
 
 
-	//  overlays
-	OverlayManager& ovr = OverlayManager::getSingleton();
-	ovCam = ovr.getByName("Car/CameraOverlay");
-
-	ovAbsTcs = ovr.getByName("Hud/AbsTcs");
-	hudAbs = ovr.getOverlayElement("Hud/AbsText");	hudTcs = ovr.getOverlayElement("Hud/TcsText");
-
-	ovCountdown = ovr.getByName("Hud/Countdown");	hudCountdown = ovr.getOverlayElement("Hud/CountdownText");
-	ovNetMsg = ovr.getByName("Hud/NetMessages");	hudNetMsg = ovr.getOverlayElement("Hud/NetMessagesText");
-
-	ovWarnWin = ovr.getByName("Hud/WarnAndWin");
-	hudWarnChk = ovr.getOverlayElement("Hud/Warning");	hudWarnChk->setCaption(String(TR("#{WrongChk}")));
-	hudWonPlace = ovr.getOverlayElement("Hud/WonPlace");
-
-
 	//  dbg texts
+	OverlayManager& ovr = OverlayManager::getSingleton();
 	ovCarDbg = ovr.getByName("Car/Stats");
 	ovCarDbgTxt = ovr.getByName("Car/StatsTxt");
 	ovCarDbgExt = ovr.getByName("Car/StatsExt");
@@ -350,8 +419,79 @@ void App::CreateHUD()
 	ShowHUD();  //_
 	bSizeHUD = true;
 	//SizeHUD(true);
+
+	ti.update();	/// time
+	float dt = ti.dt * 1000.f;
+	LogO("::: Time Create Hud: "+fToStr(dt,0,3)+" ms");
 }
 
+
+
+//  HUD destroy
+//---------------------------------------------------------------------------------------------------------------
+App::OvrDbg::OvrDbg() :
+	oL(0),oR(0),oS(0), oU(0),oX(0)
+{	}
+
+App::Hud::Hud()
+{
+	parent=0;
+	txTimTxt=0; txTimes=0; bckTimes=0;  sTimes="";
+	bckOpp=0;  for (int i=0; i<3; ++i)  txOpp[i]=0;
+		
+	txWarn=0; txPlace=0;  bckWarn=0; bckPlace=0;
+	txCountdown=0;
+
+	txGear=0; txVel=0;
+	ndRpm=0; ndVel=0; ndRpmBk=0; ndVelBk=0; ndVelBm=0;
+	moRpm=0; moVel=0; moRpmBk=0; moVelBk=0; moVelBm=0;
+	txAbs=0; txTcs=0;  txCam=0;
+
+	txBFuel=0; txDamage=0; txRewind=0;
+	icoBFuel=0; icoDamage=0; icoRewind=0;
+
+	moMap = 0;  ndMap=0;
+	vNdPos.resize(6,0); vMoPos.resize(6,0);
+}
+
+void App::DestroyHUD()
+{
+	SceneManager* scm = mSplitMgr->mGuiSceneMgr;
+	for (int c=0; c < hud.size(); ++c)
+	{	Hud& h = hud[c];
+
+		#define Dest2(mo,nd)  {  \
+			if (mo) {  scm->destroyManualObject(mo);  mo=0;  } \
+			if (nd) {  scm->destroySceneNode(nd);  nd=0;  }  }
+
+		for (int i=0; i < 6; ++i)
+			Dest2(h.vMoPos[i],h.vNdPos[i])
+		
+		Dest2(h.moMap,h.ndMap)
+		Dest2(h.moRpmBk,h.ndRpmBk)
+		Dest2(h.moVelBk,h.ndVelBk)  Dest2(h.moRpm,h.ndRpm)
+		Dest2(h.moVelBm,h.ndVelBm)	Dest2(h.moVel,h.ndVel)
+
+		#define Dest(w)  \
+			if (w) {  mGUI->destroyWidget(w);  w = 0;  }
+		Dest(h.txGear)  Dest(h.txVel)
+		Dest(h.txAbs)  Dest(h.txTcs)  Dest(h.txCam)
+		
+		Dest(h.txBFuel)  Dest(h.txDamage)  Dest(h.txRewind)
+		Dest(h.icoBFuel)  Dest(h.icoDamage)  Dest(h.icoRewind)
+
+		for (int n=0; n < 3; ++n)  Dest(h.txOpp[n])
+		Dest(h.bckOpp)
+		Dest(h.txTimTxt)  Dest(h.txTimes)  Dest(h.bckTimes)
+		h.sTimes = "";
+		
+		Dest(h.txWarn)  Dest(h.bckWarn)
+		Dest(h.txPlace)  Dest(h.bckPlace)
+		Dest(h.txCountdown)
+	}
+	Dest(txMsg)  Dest(bckMsg)
+	Dest(txCamInfo)
+}
 
 //  HUD show/hide
 //---------------------------------------------------------------------------------------------------------------
@@ -359,94 +499,80 @@ void App::ShowHUD(bool hideAll)
 {
 	if (hideAll || iLoad1stFrames >= 0)  // still loading
 	{
-		if (ovAbsTcs) ovAbsTcs->hide();		if (ovCam)	 ovCam->hide();
-		if (ovNetMsg)  ovNetMsg->hide();	if (ovCountdown)  ovCountdown->hide();
-		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
-		if (ovWarnWin)  ovWarnWin->hide();	//if (ovOpp)  ovOpp->hide();
+		if (ovCarDbg)  ovCarDbg->hide();
+		if (ovCarDbgTxt)  ovCarDbgTxt->hide();
+
 		bckFps->setVisible(false);
+		if (bckMsg)
+		{
+			txCamInfo->setVisible(false);
+			bckMsg->setVisible(false);
 
-		for (int c=0; c < hud.size(); ++c)
-		{	Hud& h = hud[c];
-			if (h.txGear)  h.txGear->setVisible(false);
-			if (h.txVel)   h.txVel->setVisible(false);
-			if (h.txBFuel)   h.txBFuel->setVisible(false);
-			if (h.txDamage)  h.txDamage->setVisible(false);
-
-			if (h.ndRpmBk)  h.ndRpmBk->setVisible(false);
-			if (h.ndVelBk)  h.ndVelBk->setVisible(false);
-			if (h.ndVelBm)  h.ndVelBm->setVisible(false);
-
-			if (h.ndRpm)  h.ndRpm->setVisible(false);
-			if (h.ndVel)  h.ndVel->setVisible(false);
-			if (h.ndMap)  h.ndMap->setVisible(false);
-
-			if (h.bckTimes)  h.bckTimes->setVisible(false);
-		}
+			for (int c=0; c < hud.size(); ++c)
+			{	Hud& h = hud[c];
+				if (h.parent)
+					h.parent->setVisible(false);
+		}	}
 		hideMouse();
 		if (mWndRpl)  mWndRpl->setVisible(false);
+		return;
 	}
-	else
-	{	//this goes each frame..
-		bool show = pSet->show_gauges, times = pSet->show_times;
+	//  this goes each frame..
+	bool show = pSet->car_dbgbars;
+	if (ovCarDbg){  if (show)  ovCarDbg->show();  else  ovCarDbg->hide();  }
+	show = pSet->car_dbgtxt || pSet->bltProfilerTxt || pSet->profilerTxt;
+	if (ovCarDbgTxt){  if (show)  ovCarDbgTxt->show();  else  ovCarDbgTxt->hide();  }
+	show = pSet->car_dbgsurf;
+	if (ovCarDbgExt){  if (show)  ovCarDbgExt->show();  else  ovCarDbgExt->hide();  }
+
+	bckFps->setVisible(pSet->show_fps);
+	if (bckMsg)
+	{
+		bool cam = pSet->show_cam && !isFocGui, times = pSet->show_times;
+		bool opp = pSet->show_opponents && (!sc->ter || road && road->getNumPoints() > 0);
 		bool bfuel = pSet->game.boost_type == 1 || pSet->game.boost_type == 2;
 		bool bdmg = pSet->game.damage_type > 0;
-		
-		if (ovCountdown)  if (show)  ovCountdown->show();  else  ovCountdown->hide();
-		if (ovNetMsg)	if (show)  ovNetMsg->show();  else  ovNetMsg->hide();
-		if (ovAbsTcs){  if (show)  ovAbsTcs->show();  else  ovAbsTcs->hide();  }
-
-		show = pSet->car_dbgbars;
-		if (ovCarDbg){  if (show)  ovCarDbg->show();  else  ovCarDbg->hide();  }
-		show = pSet->car_dbgtxt || pSet->bltProfilerTxt || pSet->profilerTxt;
-		if (ovCarDbgTxt){  if (show)  ovCarDbgTxt->show();  else  ovCarDbgTxt->hide();  }
-		show = pSet->car_dbgsurf;
-		if (ovCarDbgExt){  if (show)  ovCarDbgExt->show();  else  ovCarDbgExt->hide();  }
-
-		if (ovCam)	{  if (pSet->show_cam && !isFocGui)  ovCam->show();  else  ovCam->hide();  }
-		bool opp = pSet->show_opponents && (!sc->ter || road && road->getNumPoints() > 0);
-		if (ovWarnWin){  if (pSet->show_times)  ovWarnWin->show();  else  ovWarnWin->hide();  }
-		bckFps->setVisible(pSet->show_fps);
+		txCamInfo->setVisible(cam);
 
 		show = pSet->show_gauges;
 		for (int c=0; c < hud.size(); ++c)
 		{	Hud& h = hud[c];
-			if (h.txGear)  h.txGear->setVisible(pSet->show_digits);
-			if (h.txVel)   h.txVel->setVisible(pSet->show_digits);
-			if (h.txBFuel)   h.txBFuel->setVisible(show && bfuel);
-			if (h.txDamage)  h.txDamage->setVisible(show && bdmg);
-
-			if (h.ndRpmBk)  h.ndRpmBk->setVisible(show);
-			if (h.ndVelBk)  h.ndVelBk->setVisible(show && !pSet->show_mph);
-			if (h.ndVelBm)  h.ndVelBm->setVisible(show && pSet->show_mph);
-
-			if (h.ndRpm)  h.ndRpm->setVisible(show);
-			if (h.ndVel)  h.ndVel->setVisible(show);
-			if (h.ndMap)  h.ndMap->setVisible(pSet->trackmap);
+			if (h.parent && h.txGear)
+			{	h.parent->setVisible(true);
 			
-			if (h.bckTimes)  h.bckTimes->setVisible(times);
-			if (h.bckOpp)  h.bckOpp->setVisible(opp);
-		}
-		updMouse();
-		if (mWndRpl && !bLoading)  mWndRpl->setVisible(bRplPlay && bRplWnd);  //
+				h.txGear->setVisible(pSet->show_digits);
+				h.txVel->setVisible(pSet->show_digits);
+				h.txBFuel->setVisible(show && bfuel);  h.icoBFuel->setVisible(show && bfuel);
+				h.txDamage->setVisible(show && bdmg);  h.icoDamage->setVisible(show && bdmg);
+				//txRewind;icoRewind;
+
+				h.ndRpmBk->setVisible(show);
+				h.ndRpm->setVisible(show);  h.ndVelBk->setVisible(show && !pSet->show_mph);
+				h.ndVel->setVisible(show);  h.ndVelBm->setVisible(show && pSet->show_mph);
+
+				h.ndMap->setVisible(pSet->trackmap);
+				h.bckTimes->setVisible(times);
+				h.bckOpp->setVisible(opp);
+				h.txCam->setVisible(cam);
+		}	}
 	}
+	updMouse();
+	if (mWndRpl && !bLoading)  mWndRpl->setVisible(bRplPlay && bRplWnd);  //
 }
 
 void App::ShowHUDvp(bool vp)	// todo: use vis mask ..
 {
 	// show/hide for render viewport / gui viewport
 	// first show everything
-	ShowHUD(false);
+	ShowHUD(false);  // todo: don't here
 	// now hide things we dont want
 	if (!vp)
 	{
 		/// for gui viewport ----------------------
-		/*if (ovOpp)  ovOpp->hide();*/		if (ovWarnWin)  ovWarnWin->hide();
 		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
-		if (ovCountdown)  ovCountdown->hide();  if (ovNetMsg)  ovNetMsg->hide();
-		if (hudAbs)  hudAbs->hide();		if (hudTcs)  hudTcs->hide();
 	}else{
 		/// for render viewport ---------
-		if (ovCam)  ovCam->hide();
+		//if (ovCam)  ovCam->hide();
 		//bckFps->setVisible(false);
 	}
 }

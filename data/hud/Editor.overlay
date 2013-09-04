@@ -159,7 +159,7 @@ Editor/DebugOverlay
 		width 500
 		top	-50
 		height 50
-		material hud/Opponents
+		//material hud/Times
 	}
 	container BorderPanel(Editor/DebugPanel)
 	{
@@ -169,7 +169,7 @@ Editor/DebugOverlay
 		width 500
 		top	-50
 		height 50
-		material hud/info
+		//material hud/info
 
 		element TextArea(Editor/DebugText)
 		{

@@ -1,47 +1,5 @@
-
-material hud/CarPos
-{
-	technique
-	{
-		pass
-		{
-			depth_write off
-			scene_blend alpha_blend
-			cull_hardware none
-
-			diffuse 0 0 0
-			ambient vertexcolour
-
-			texture_unit
-			{
-				texture carpos0.png
-			}
-		}
-	}
-}
-
-material hud/CarPosEd
-{
-	technique
-	{
-		pass
-		{
-			lighting off
-			depth_write off
-			scene_blend alpha_blend
-			cull_hardware none
-
-			texture_unit
-			{
-				texture carpos0.png
-			}
-		}
-	}
-}
-
-
-//  needle  
-material hud/needleB
+//  gauge
+material hud/g
 {
 	receive_shadows off
 	technique
@@ -53,100 +11,40 @@ material hud/needleB
 			depth_write off
 			scene_blend alpha_blend
 			cull_hardware none
-			//vertex_program_ref Ogre/Needle_vp {  }
-			//fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
 		}
 	}
 }
 
-//  rpm  
-material hud/rpmB
-{
-	receive_shadows off
-	technique
-	{
-		pass
-		{
-			lighting off
-			depth_check off
-			depth_write off
-			scene_blend alpha_blend
-			cull_hardware none
-			//vertex_program_ref   Ogre/Compositor/StdQuad_vp {  }
-			//fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
-		}
-	}
-}
+material hud/needle0 : hud/g {  technique  {  pass  {  texture_unit  {  texture g0needle.png  }  }  }  }
+material hud/needle1 : hud/g {  technique  {  pass  {  texture_unit  {  texture g1needle.png  }  }  }  }
+material hud/needle2 : hud/g {  technique  {  pass  {  texture_unit  {  texture g2needle.png  }  }  }  }
+material hud/needle3 : hud/g {  technique  {  pass  {  texture_unit  {  texture g3needle.png  }  }  }  }
+material hud/needle4 : hud/g {  technique  {  pass  {  texture_unit  {  texture g4needle.png  }  }  }  }
+material hud/needle5 : hud/g {  technique  {  pass  {  texture_unit  {  texture g5needle.png  }  }  }  }
 
-
-//  kmh   
-material hud/kmhB
-{
-	receive_shadows off
-	technique
-	{
-		pass
-		{
-			lighting off
-			depth_check off
-			depth_write off
-			scene_blend alpha_blend
-			cull_hardware none
-			//vertex_program_ref   Ogre/Compositor/StdQuad_vp {  }
-			//fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
-		}
-	}
-}
-
-//  mph  
-material hud/mphB
-{
-	receive_shadows off
-	technique
-	{
-		pass
-		{
-			lighting off
-			depth_check off
-			depth_write off
-			scene_blend alpha_blend
-			cull_hardware none
-			//vertex_program_ref   Ogre/Compositor/StdQuad_vp {  }
-			//fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
-		}
-	}
-}
-
-material hud/needle0 : hud/needleB {  technique  {  pass  {  texture_unit  {  texture g0needle.png  }  }  }  }
-material hud/needle1 : hud/needleB {  technique  {  pass  {  texture_unit  {  texture g1needle.png  }  }  }  }
-material hud/needle2 : hud/needleB {  technique  {  pass  {  texture_unit  {  texture g2needle.png  }  }  }  }
-material hud/needle3 : hud/needleB {  technique  {  pass  {  texture_unit  {  texture g3needle.png  }  }  }  }
-material hud/needle4 : hud/needleB {  technique  {  pass  {  texture_unit  {  texture g4needle.png  }  }  }  }
-material hud/needle5 : hud/needleB {  technique  {  pass  {  texture_unit  {  texture g5needle.png  }  }  }  }
-
-material hud/rpm0 : hud/rpmB {  technique  {  pass  {  texture_unit  {  texture g0rpm.png  }  }  }  }
-material hud/rpm1 : hud/rpmB {  technique  {  pass  {  texture_unit  {  texture g1rpm.png  }  }  }  }
-material hud/rpm2 : hud/rpmB {  technique  {  pass  {  texture_unit  {  texture g2rpm.png  }  }  }  }
-material hud/rpm3 : hud/rpmB {  technique  {  pass  {  texture_unit  {  texture g3rpm.png  }  }  }  }
-material hud/rpm4 : hud/rpmB {  technique  {  pass  {  texture_unit  {  texture g4rpm.png  }  }  }  }
-material hud/rpm5 : hud/rpmB {  technique  {  pass  {  texture_unit  {  texture g5rpm.png  }  }  }  }
+material hud/rpm0 : hud/g {  technique  {  pass  {  texture_unit  {  texture g0rpm.png  }  }  }  }
+material hud/rpm1 : hud/g {  technique  {  pass  {  texture_unit  {  texture g1rpm.png  }  }  }  }
+material hud/rpm2 : hud/g {  technique  {  pass  {  texture_unit  {  texture g2rpm.png  }  }  }  }
+material hud/rpm3 : hud/g {  technique  {  pass  {  texture_unit  {  texture g3rpm.png  }  }  }  }
+material hud/rpm4 : hud/g {  technique  {  pass  {  texture_unit  {  texture g4rpm.png  }  }  }  }
+material hud/rpm5 : hud/g {  technique  {  pass  {  texture_unit  {  texture g5rpm.png  }  }  }  }
 																							
-material hud/kmh0 : hud/kmhB {  technique  {  pass  {  texture_unit  {  texture g0kmh.png  }  }  }  }
-material hud/kmh1 : hud/kmhB {  technique  {  pass  {  texture_unit  {  texture g1kmh.png  }  }  }  }
-material hud/kmh2 : hud/kmhB {  technique  {  pass  {  texture_unit  {  texture g2kmh.png  }  }  }  }
-material hud/kmh3 : hud/kmhB {  technique  {  pass  {  texture_unit  {  texture g3kmh.png  }  }  }  }
-material hud/kmh4 : hud/kmhB {  technique  {  pass  {  texture_unit  {  texture g4kmh.png  }  }  }  }
-material hud/kmh5 : hud/kmhB {  technique  {  pass  {  texture_unit  {  texture g5kmh.png  }  }  }  }
+material hud/kmh0 : hud/g {  technique  {  pass  {  texture_unit  {  texture g0kmh.png  }  }  }  }
+material hud/kmh1 : hud/g {  technique  {  pass  {  texture_unit  {  texture g1kmh.png  }  }  }  }
+material hud/kmh2 : hud/g {  technique  {  pass  {  texture_unit  {  texture g2kmh.png  }  }  }  }
+material hud/kmh3 : hud/g {  technique  {  pass  {  texture_unit  {  texture g3kmh.png  }  }  }  }
+material hud/kmh4 : hud/g {  technique  {  pass  {  texture_unit  {  texture g4kmh.png  }  }  }  }
+material hud/kmh5 : hud/g {  technique  {  pass  {  texture_unit  {  texture g5kmh.png  }  }  }  }
 																							
-material hud/mph0 : hud/mphB {  technique  {  pass  {  texture_unit  {  texture g0mph.png  }  }  }  }
-material hud/mph1 : hud/mphB {  technique  {  pass  {  texture_unit  {  texture g1mph.png  }  }  }  }
-material hud/mph2 : hud/mphB {  technique  {  pass  {  texture_unit  {  texture g2mph.png  }  }  }  }
-material hud/mph3 : hud/mphB {  technique  {  pass  {  texture_unit  {  texture g3mph.png  }  }  }  }
-material hud/mph4 : hud/mphB {  technique  {  pass  {  texture_unit  {  texture g4mph.png  }  }  }  }
-material hud/mph5 : hud/mphB {  technique  {  pass  {  texture_unit  {  texture g5mph.png  }  }  }  }
+material hud/mph0 : hud/g {  technique  {  pass  {  texture_unit  {  texture g0mph.png  }  }  }  }
+material hud/mph1 : hud/g {  technique  {  pass  {  texture_unit  {  texture g1mph.png  }  }  }  }
+material hud/mph2 : hud/g {  technique  {  pass  {  texture_unit  {  texture g2mph.png  }  }  }  }
+material hud/mph3 : hud/g {  technique  {  pass  {  texture_unit  {  texture g3mph.png  }  }  }  }
+material hud/mph4 : hud/g {  technique  {  pass  {  texture_unit  {  texture g4mph.png  }  }  }  }
+material hud/mph5 : hud/g {  technique  {  pass  {  texture_unit  {  texture g5mph.png  }  }  }  }
 
 
-//  minimap  -----------------------------------------------------------------
+//  minimap
 material hud/Minimap
 {
 	receive_shadows off
@@ -176,8 +74,6 @@ material hud/CarPos
 			diffuse vertexcolour
 			cull_hardware none
 			
-			//vertex_program_ref Ogre/Compositor/StdQuad_vp  {  }
-			//fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
 			texture_unit
 			{
 				texture carpos0.png
@@ -185,6 +81,7 @@ material hud/CarPos
 		}
 	}
 }
+
 
 material hud/Times
 {
@@ -198,53 +95,7 @@ material hud/Times
 			scene_blend alpha_blend
 			cull_hardware none
 			
-			//vertex_program_ref Ogre/Needle_vp	{  }
-			//fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
 			texture_unit tex1
-			{
-				texture border_rect.png
-			}
-		}
-	}
-}
-
-material hud/Opponents
-{
-	receive_shadows off
-	technique
-	{
-		pass
-		{
-			lighting off
-			depth_check off
-			scene_blend alpha_blend
-			cull_hardware none
-			
-			//vertex_program_ref Ogre/Needle_vp	{  }
-			//fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
-			texture_unit tex1
-			{
-				texture opp_rect.png
-			}
-		}
-	}
-}
-
-material hud/info
-{
-	receive_shadows off
-	technique
-	{
-		pass
-		{
-			lighting off
-			depth_check off
-			scene_blend alpha_blend
-			cull_hardware none
-
-			//vertex_program_ref Ogre/Needle_vp	{  }
-			//fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
-			texture_unit
 			{
 				texture border_rect.png
 			}
