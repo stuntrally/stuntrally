@@ -80,55 +80,60 @@ void App::SizeHUD(bool full, Viewport* vp)
 
 		//  gear, vel texts
 		//  positioning,  min yMax - dont go below viewport bottom
-		int vv = pSet->gauges_type > 0 ? -45 : 40;
-		int gx = (xcRpm+1.f)*0.5f*wx + 20, gy = std::min(yMax -48, my - 40);
-		int vx = (xcVel+1.f)*0.5f*wx + vv, vy = std::min(yMax -48, my - 15);
-		int bx =(xBFuel+1.f)*0.5f*wx - 10, by = std::min(yMax -36, my + 5);
-			vx = std::min(vx, xMax -100);
-			bx = std::min(bx, xMax -180);  // not too near to vel
-		h.txGear->setPosition(gx,gy);
-		h.txVel->setPosition(vx,vy);
+		if (h.txGear)
+		{
+			int vv = pSet->gauges_type > 0 ? -45 : 40;
+			int gx = (xcRpm+1.f)*0.5f*wx + 20, gy = std::min(yMax -48, my - 40);
+			int vx = (xcVel+1.f)*0.5f*wx + vv, vy = std::min(yMax -48, my - 15);
+			int bx =(xBFuel+1.f)*0.5f*wx - 10, by = std::min(yMax -36, my + 5);
+				vx = std::min(vx, xMax -100);
+				bx = std::min(bx, xMax -180);  // not too near to vel
+			h.txGear->setPosition(gx,gy);
+			h.txVel->setPosition(vx,vy);
 
-		#if 0
-		h.txRewind ->setPosition(bx,by);
-		h.icoRewind->setPosition(bx+50,by-5);
-		#endif
+			#if 0
+			h.txRewind ->setPosition(bx,by);
+			h.icoRewind->setPosition(bx+50,by-5);
+			#endif
 
-		h.txDamage ->setPosition(bx-70,by-70);  //gx+140,gy-70);
-		h.icoDamage->setPosition(bx-70+50,by-70-5);
+			h.txDamage ->setPosition(bx-70,by-70);  //gx+140,gy-70);
+			h.icoDamage->setPosition(bx-70+50,by-70-5);
 
-		h.txBFuel ->setPosition(bx-63,by-140);
-		h.icoBFuel->setPosition(bx-63+54,by-140-5+2);
+			h.txBFuel ->setPosition(bx-63,by-140);
+			h.icoBFuel->setPosition(bx-63+54,by-140-5+2);
 
-		//  times
-		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
-		int tx = xMin + 0, ty = yMin + 32;
-		h.bckTimes->setPosition(tx,ty);
-		tx = 16;  ty = (hasLaps ? 16 : 4);
-		h.txTimTxt->setPosition(tx,ty);
-		h.txTimes->setPosition(tx+96,ty);
+			//  times
+			bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
+			int tx = xMin + 0, ty = yMin + 32;
+			h.bckTimes->setPosition(tx,ty);
+			tx = 16;  ty = (hasLaps ? 16 : 4);
+			h.txTimTxt->setPosition(tx,ty);
+			h.txTimes->setPosition(tx+96,ty);
+				
+			//  opp list
+			//int ox = itx + 5, oy = (ycRpm+1.f)*0.5f*wy - 10;
+			int ox = xMin + 5, oy = ty + 240;
+			h.bckOpp->setPosition(ox,oy -2);  h.bckOpp->setSize(230, plr*25 +4);
+			for (int n=0; n<3; ++n)
+				h.txOpp[n]->setPosition(n*65+5,0);
 			
-		//  opp list
-		//int ox = itx + 5, oy = (ycRpm+1.f)*0.5f*wy - 10;
-		int ox = xMin + 5, oy = ty + 240;
-		h.bckOpp->setPosition(ox,oy -2);  h.bckOpp->setSize(230, plr*25 +4);
-		for (int n=0; n<3; ++n)
-			h.txOpp[n]->setPosition(n*65+5,0);
-		
-		//  warn,win
-		ox = xMin + 300;  oy = yMin + 15;
-		h.bckWarn->setPosition(ox,oy);
-		h.bckPlace->setPosition(ox,oy + 40);
-		
-		h.txCountdown->setPosition((xMax-xMin)/2 -100, (yMax-yMin)/2 -60);
-		//  camera
-		h.txCam->setPosition(xMax-260,yMax-30);
-		//  abs,tcs
-		h.txAbs->setPosition(xMin+160,yMax-30);
-		h.txTcs->setPosition(xMin+220,yMax-30);
+			//  warn,win
+			ox = xMin + 300;  oy = yMin + 15;
+			h.bckWarn->setPosition(ox,oy);
+			h.bckPlace->setPosition(ox,oy + 40);
+			
+			h.txCountdown->setPosition((xMax-xMin)/2 -100, (yMax-yMin)/2 -60);
+			//  camera
+			h.txCam->setPosition(xMax-260,yMax-30);
+			//  abs,tcs
+			h.txAbs->setPosition(xMin+160,yMax-30);
+			h.txTcs->setPosition(xMin+220,yMax-30);
+		}
 	}
-	txCamInfo->setPosition(300,wy-100);
-	bckMsg->setPosition(400,10);
+	if (txCamInfo)
+	{	txCamInfo->setPosition(300,wy-100);
+		bckMsg->setPosition(400,10);
+	}
 }
 
 ///---------------------------------------------------------------------------------------------------------------
