@@ -110,7 +110,7 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 
 	s1 += "\n\n";  s2 += "\n\n";
 	int cur = progress[p].chs[pos].curTrack, all = champs.all[pos].trks.size();
-	s1 += TR("#B0C0E0#{Progress}\n");    s2 += "#B0D0F0"+(cur == all ? TR("#{Finished}") : fToStr(100.f * cur / all,0,3)+" %")+"\n";
+	s1 += TR("#B0C0E0#{Progress}\n");    s2 += "#B0D0F0"+(cur == all ? TR("#{Finished}").asUTF8() : fToStr(100.f * cur / all,0,3)+" %")+"\n";
 	s1 += TR("#D8C0FF#{Score}\n");       s2 += "#F0D8FF"+fToStr(progress[p].chs[pos].points,1,5)+"\n";
 
 	txtCh->setCaption(s1);  valCh->setCaption(s2);

@@ -635,7 +635,7 @@ void App::UpdChallDetail(int id)
 	int cur = pc.curTrack, all = chall.all[id].trks.size();
 	if (cur > 0)
 	{
-		s1 += TR("#B0FFFF#{Progress}\n");    s2 += "#D0FFFF"+(cur == all ? TR("#{Finished}") : fToStr(100.f * cur / all,0,3)+" %")+"\n";
+		s1 += TR("#B0FFFF#{Progress}\n");    s2 += "#D0FFFF"+(cur == all ? TR("#{Finished}").asUTF8() : fToStr(100.f * cur / all,0,3)+" %")+"\n";
 		s1 += TR("#F8FCFF#{Prize}\n");       s2 += StrPrize(pc.fin+1)+"\n";
 		#define clrP(b)  if (b)  {  s1 += "#C8D0F0";  s2 += "#E0F0FF";  }else{  s1 += "#80A0C0";  s2 += "#90B0D0";  }
 		s1 += "\n";  s2 += "\n";  clrP(ch.avgPoints > 0.f);
