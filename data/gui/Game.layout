@@ -1088,10 +1088,9 @@
 							<Property key="TextColour" value="0.5 1 1"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="198 411 164 30" name="btnNetDirect">
+						<Widget type="Button" skin="Button" position="198 406 164 40" name="btnNetDirect">
 							<Property key="Colour" value="1 0.8 0.5"/>
 							<Property key="TextColour" value="1 0.8 0.5"/>
-							<Property key="Alpha" value="0.7"/>
 							<Property key="Caption" value="#{NetDirectConnect}"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
 						</Widget>
