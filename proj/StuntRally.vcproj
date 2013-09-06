@@ -594,14 +594,6 @@
 					RelativePath="..\source\ogre\pch.h"
 					>
 				</File>
-				<File
-					RelativePath="..\source\ogre\resource.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\StuntRally.rc"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="Collis"
@@ -1214,10 +1206,6 @@
 					RelativePath="..\source\ogre\Gui_Util.cpp"
 					>
 				</File>
-				<File
-					RelativePath="..\data\hud\Hud.overlay"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="materials"
@@ -1288,6 +1276,10 @@
 				</File>
 				<File
 					RelativePath="..\data\materials\grass.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\hud\Hud.material"
 					>
 				</File>
 				<File

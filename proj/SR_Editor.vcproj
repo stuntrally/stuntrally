@@ -254,14 +254,6 @@
 				RelativePath="..\source\ogre\common\QTimer.h"
 				>
 			</File>
-			<File
-				RelativePath="..\source\editor\resource.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\editor\SR_Editor.rc"
-				>
-			</File>
 			<Filter
 				Name="vdr_set"
 				>
