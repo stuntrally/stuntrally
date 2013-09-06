@@ -198,7 +198,7 @@ void App::uploadGameInfo()
 	game.port = pSet->local_port;
 	game.locked = !edNetPassword->getCaption().empty();
 	{
-		boost::mutex::scoped_lock lock(netGuiMutex);
+		//? boost::mutex::scoped_lock lock(netGuiMutex);
 		netGameInfo = game;  // for host gui info
 	}
 	mMasterClient->updateGame(game); // Upload to master server
