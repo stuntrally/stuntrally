@@ -253,6 +253,10 @@ ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr,
 		m->position(-s, s*asp, 0);  m->textureCoord(uv[2]*mul + ofs);  if (clr)  m->colour(1,1,0);
 		m->position( s, s*asp, 0);  m->textureCoord(uv[3]*mul + ofs);  if (clr)  m->colour(1,0,0);
 	}
+	if (comb)
+	{	m->quad(0,1,3,2);
+		m->quad(4,5,7,6);
+	}
 	m->end();
  
 	AxisAlignedBox aabInf;	aabInf.setInfinite();

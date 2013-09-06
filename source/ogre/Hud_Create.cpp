@@ -41,35 +41,29 @@ void App::SizeHUD(bool full, Viewport* vp)
 		const SplitScreenManager::VPDims& dim = mSplitMgr->mDims[c];
 		//  gauges
 		Real xcRpm,ycRpm, xcVel,ycVel, ygMax, xBFuel;  // -1..1
-		if (h.ndRpmBk && h.ndVelBk && h.ndVelBm)
+		if (h.ndGauges)
 		{
-			Real fHudScale = pSet->size_gauges * dim.avgsize;
-			Real spx = fHudScale *1.1f, spy = spx*asp;
+			Real sc = pSet->size_gauges * dim.avgsize;
+			Real spx = sc * 1.1f, spy = spx*asp;
 			xcRpm = dim.left + spx;   ycRpm =-dim.bottom + spy;
 			xcVel = dim.right - spx;  ycVel =-dim.bottom + spy;
-			ygMax = ycVel - fHudScale;  xBFuel = xcVel - fHudScale;
+			ygMax = ycVel - sc;  xBFuel = xcVel - sc;
 
-			Vector3 sca(fHudScale,fHudScale*asp,1), sc(fHudScale,fHudScale,1);
-			h.ndRpmBk->setScale(sca);  h.ndVelBk->setScale(sca);  h.ndVelBm->setScale(sca);
-
-			Vector3 vr(xcRpm,ycRpm,0.f), vv(xcVel,ycVel,0.f);
-			h.vcRpm = vr;  h.vcVel = vv;  h.fScale = fHudScale;  // store for update
-			h.ndRpmBk->setPosition(vr);  h.ndVelBk->setPosition(vv);  h.ndVelBm->setPosition(vv);
-			//LogO("-- Size  r "+toStr(vr)+"  v "+toStr(vv)+"  s "+toStr(sca));
+			h.vcRpm = Vector2(xcRpm,ycRpm);  // store for updates
+			h.vcVel = Vector2(xcVel,ycVel);
+			h.fScale = sc;
+			h.updGauges = true;
 		}
 		//  minimap
 		if (h.ndMap)
 		{
-			Real fHudSize = pSet->size_minimap * dim.avgsize;
-			h.ndMap->setScale((vdrSpl ? 2 : 1)*fHudSize,fHudSize*asp,1);
+			Real sc = pSet->size_minimap * dim.avgsize;
+			const Real marg = 1.05f;  // from border
+			Real fMiniX = vdrSpl ? (1.f - 2.f*sc * marg) : (dim.right - sc * marg);
+			Real fMiniY =-dim.top - sc*asp * marg;
 
-			const Real marg = 1.f + 0.05f;  // from border
-			//Real fMiniX = dim.right - fHudSize * marg;
-			Real fMiniX = vdrSpl ? (1.f - 2.f*fHudSize * marg) : (dim.right - fHudSize * marg);
-			Real fMiniY =-dim.top - fHudSize*asp * marg;
-
+			h.ndMap->setScale((vdrSpl ? 2 : 1)*sc, sc*asp,1);
 			h.ndMap->setPosition(Vector3(fMiniX,fMiniY,0.f));
-			//LogO("-- Size car:"+toStr(c)+"  x:"+fToStr(fMiniX,2,4)+" y:"+fToStr(fMiniY,2,4)+"  s:"+fToStr(fHudSize,2,4));
 		}
 	
 		//  current viewport max x,y in pixels
@@ -91,14 +85,14 @@ void App::SizeHUD(bool full, Viewport* vp)
 			h.txVel->setPosition(vx,vy);
 
 			#if 0
-			h.txRewind ->setPosition(bx,by);
+			h.txRewind ->setPosition(bx,   by);
 			h.icoRewind->setPosition(bx+50,by-5);
 			#endif
 
-			h.txDamage ->setPosition(bx-70,by-70);  //gx+140,gy-70);
+			h.txDamage ->setPosition(bx-70,   by-70);
 			h.icoDamage->setPosition(bx-70+50,by-70-5);
 
-			h.txBFuel ->setPosition(bx-63,by-140);
+			h.txBFuel ->setPosition(bx-63,   by-140);
 			h.icoBFuel->setPosition(bx-63+54,by-140-5+2);
 
 			//  times
@@ -231,18 +225,12 @@ void App::CreateHUD()
 		//  gauges  backgr  -----------
 		String st = toStr(pSet->gauges_type);
 		const Real sc = 0.5f;
-		h.moRpmBk = Create2D("hud/"+st,scm,1, false,false, sc,Vector2(0.f,0.5f), RV_Hud,RQG_Hud1);  h.ndRpmBk = rt->createChildSceneNode();
-		h.ndRpmBk->attachObject(h.moRpmBk);  h.ndRpmBk->setScale(0,0,0);  h.ndRpmBk->setVisible(false);
+		h.moGauges = Create2D("hud/"+st,scm,1, true,false, sc,Vector2(0.f,0.5f), RV_Hud,RQG_Hud1, true);
+		h.ndGauges = rt->createChildSceneNode();  h.ndGauges->attachObject(h.moGauges);  h.ndGauges->setVisible(false);
 
-		h.moVelBk = Create2D("hud/"+st,scm,1, false,false, sc,Vector2(0.f,0.f),  RV_Hud,RQG_Hud1);  h.ndVelBk = rt->createChildSceneNode();
-		h.ndVelBk->attachObject(h.moVelBk);  h.ndVelBk->setScale(0,0,0);  h.moVelBk->setVisible(false);
-			
-		h.moVelBm = Create2D("hud/"+st,scm,1, false,false, sc,Vector2(0.5f,0.f), RV_Hud,RQG_Hud1);  h.ndVelBm = rt->createChildSceneNode();
-		h.ndVelBm->attachObject(h.moVelBm);  h.ndVelBm->setScale(0,0,0);  h.moVelBm->setVisible(false);
-			
 		//  gauges  needles
-		h.moNeedles = Create2D("hud/"+st,scm,1, true,false, sc,Vector2(0.5f,0.5f), RV_Hud,RQG_Hud3, true);  h.ndNeedles = rt->createChildSceneNode();
-		h.ndNeedles->attachObject(h.moNeedles);  h.ndNeedles->setVisible(false);
+		h.moNeedles = Create2D("hud/"+st,scm,1, true,false, sc,Vector2(0.5f,0.5f), RV_Hud,RQG_Hud3, true);
+		h.ndNeedles = rt->createChildSceneNode();  h.ndNeedles->attachObject(h.moNeedles);  h.ndNeedles->setVisible(false);
 
 
 		///  GUI
@@ -432,23 +420,23 @@ App::OvrDbg::OvrDbg() :
 {	}
 
 App::Hud::Hud()
+	:parent(0)
+	,txTimTxt(0), txTimes(0), bckTimes(0),  sTimes("")
+	,bckOpp(0)
+	,txWarn(0), txPlace(0),  bckWarn(0), bckPlace(0)
+	,txCountdown(0)
+
+	,txGear(0), txVel(0)
+	,ndNeedles(0), ndGauges(0)
+	,moNeedles(0), moGauges(0)
+	,txAbs(0), txTcs(0),  txCam(0)
+
+	,txBFuel(0), txDamage(0), txRewind(0)
+	,icoBFuel(0), icoDamage(0), icoRewind(0)
+
+	,moMap(0),  ndMap(0)
 {
-	parent=0;
-	txTimTxt=0; txTimes=0; bckTimes=0;  sTimes="";
-	bckOpp=0;  for (int i=0; i<3; ++i)  txOpp[i]=0;
-		
-	txWarn=0; txPlace=0;  bckWarn=0; bckPlace=0;
-	txCountdown=0;
-
-	txGear=0; txVel=0;
-	ndNeedles=0; ndRpmBk=0; ndVelBk=0; ndVelBm=0;
-	moNeedles=0; moRpmBk=0; moVelBk=0; moVelBm=0;
-	txAbs=0; txTcs=0;  txCam=0;
-
-	txBFuel=0; txDamage=0; txRewind=0;
-	icoBFuel=0; icoDamage=0; icoRewind=0;
-
-	moMap = 0;  ndMap=0;
+	for (int i=0; i<3; ++i)  txOpp[i]=0;
 	vNdPos.resize(6,0); vMoPos.resize(6,0);
 }
 
@@ -466,9 +454,8 @@ void App::DestroyHUD()
 			Dest2(h.vMoPos[i],h.vNdPos[i])
 		
 		Dest2(h.moMap,h.ndMap)
-		Dest2(h.moRpmBk,h.ndRpmBk)
-		Dest2(h.moVelBk,h.ndVelBk)  Dest2(h.moNeedles,h.ndNeedles)
-		Dest2(h.moVelBm,h.ndVelBm)
+		Dest2(h.moGauges,h.ndGauges)
+		Dest2(h.moNeedles,h.ndNeedles)
 
 		#define Dest(w)  \
 			if (w) {  mGUI->destroyWidget(w);  w = 0;  }
@@ -544,10 +531,8 @@ void App::ShowHUD(bool hideAll)
 				h.txDamage->setVisible(show && bdmg);  h.icoDamage->setVisible(show && bdmg);
 				//txRewind;icoRewind;
 
-				h.ndRpmBk->setVisible(show);
+				h.ndGauges->setVisible(show);
 				h.ndNeedles->setVisible(show);
-				h.ndVelBk->setVisible(show && !pSet->show_mph);
-				h.ndVelBm->setVisible(show && pSet->show_mph);
 
 				h.ndMap->setVisible(pSet->trackmap);
 				h.bckTimes->setVisible(times);

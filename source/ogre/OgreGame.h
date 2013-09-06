@@ -133,8 +133,8 @@ public:
 		MyGUI::TextBox *txCountdown;
 
 		//  gauges
-		Ogre::SceneNode    *ndNeedles, *ndRpmBk, *ndVelBk,*ndVelBm;
-		Ogre::ManualObject *moNeedles, *moRpmBk, *moVelBk,*moVelBm;
+		Ogre::SceneNode    *ndNeedles, *ndGauges;
+		Ogre::ManualObject *moNeedles, *moGauges;
 		//  gear, vel
 		MyGUI::TextBox *txGear,*txVel, *txAbs,*txTcs;
 
@@ -152,7 +152,8 @@ public:
 		std::vector<Ogre::ManualObject*> vMoPos;
 		
 		//  center position .
-		Ogre::Vector3 vcRpm, vcVel;  Ogre::Real fScale;
+		Ogre::Vector2 vcRpm, vcVel;  Ogre::Real fScale;
+		bool updGauges;
 
 		MyGUI::Widget* parent;
 		Hud();

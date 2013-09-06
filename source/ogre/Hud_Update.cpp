@@ -624,8 +624,9 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 	if (bRot && bZoom && !main)
 		angrot -= angBase-180.f;
 
-	float sx = 1.4f, sy = sx*asp;  // *par len
-	float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
+	Hud& h = hud[b];  int p;
+	float sx = 1.4f * h.fScale, sy = sx*asp;  // *par len
+	float ps = 2.1f * pSet->size_minimap;  // *par len
 
 	//  4 points, 2d pos
 	const static Real tc[4][2] = {{0,1}, {1,1}, {0,0}, {1,0}};  // defaults, no rot
@@ -647,33 +648,50 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 
 		//  mini
 		if (bRot && bZoom && main)
-			{  px[i] = psx*tp[i][0];  py[i] = psy*tp[i][1];  }
-		else{  px[i] = psx*cp*1.4f;   py[i] =-psy*sp*1.4f;   }
+			{  px[i] = ps*tp[i][0];  py[i] = ps*tp[i][1];  }
+		else{  px[i] = ps*cp*1.4f;   py[i] =-ps*sp*1.4f;   }
 
 		float z = bRot ? 0.70f/pSet->zoom_minimap : 0.5f/pSet->zoom_minimap;
 		if (!bRot)
 			{  cx[i] = tp[i][0]*z;  cy[i] = tp[i][1]*z-1.f;  }
 		else{  cx[i] =       cp*z;  cy[i] =      -sp*z-1.f;  }
 	}
-	
-	Hud& h = hud[b];  int p;
-    
+	    
     //  rpm,vel needles
 	if (main && h.moNeedles)
 	{
 		h.moNeedles->beginUpdate(0);
 		for (p=0; p<4; ++p)  {
 			h.moNeedles->position(
-				h.vcRpm.x + h.fScale * rx[p],
-				h.vcRpm.y + h.fScale * ry[p], 0);  h.moNeedles->textureCoord(tn[p][0], tn[p][1]);  }
+				h.vcRpm.x + rx[p],
+				h.vcRpm.y + ry[p], 0);  h.moNeedles->textureCoord(tn[p][0], tn[p][1]);  }
 		for (p=0; p<4; ++p)  {
 			h.moNeedles->position(
-				h.vcVel.x + h.fScale * vx[p],
-				h.vcVel.y + h.fScale * vy[p], 0);  h.moNeedles->textureCoord(tn[p][0], tn[p][1]);  }
+				h.vcVel.x + vx[p],
+				h.vcVel.y + vy[p], 0);  h.moNeedles->textureCoord(tn[p][0], tn[p][1]);  }
 		h.moNeedles->quad(0,1,3,2);
 		h.moNeedles->quad(4,5,7,6);
-		h.moNeedles->end();
+ 		h.moNeedles->end();
 	}
+	//  rpm,vel gauges backgr
+	if (main && h.updGauges && h.moGauges)
+	{	h.updGauges=false;
+		Real o = pSet->show_mph ? 0.5f : 0.f;
+	
+		h.moGauges->beginUpdate(0);
+		for (p=0; p<4; ++p)  {
+			h.moGauges->position(
+				h.vcRpm.x + tp[p][0]*h.fScale,
+				h.vcRpm.y + tp[p][1]*h.fScale*asp, 0);  h.moGauges->textureCoord(tc[p][0]*0.5f, tc[p][1]*0.5f+0.5f);  }
+		for (p=0; p<4; ++p)  {
+			h.moGauges->position(
+				h.vcVel.x + tp[p][0]*h.fScale,
+				h.vcVel.y + tp[p][1]*h.fScale*asp, 0);  h.moGauges->textureCoord(tc[p][0]*0.5f+o, tc[p][1]*0.5f);  }
+		h.moGauges->quad(0,1,3,2);
+		h.moGauges->quad(4,5,7,6);
+		h.moGauges->end();
+	}
+
 		
 	///  minimap car pos-es rot
 	if (h.vMoPos[c])

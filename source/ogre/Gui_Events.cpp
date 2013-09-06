@@ -372,11 +372,11 @@ void App::toggleWireframe()
 	if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
 }
 //  hud
-void App::chkDigits(WP wp){ 		ChkEv(show_digits); ShowHUD();   }
-void App::chkGauges(WP wp){			ChkEv(show_gauges);	ShowHUD();	}
+void App::chkDigits(WP wp){ 		ChkEv(show_digits);  ShowHUD();  }
+void App::chkGauges(WP wp){			ChkEv(show_gauges);	 ShowHUD();  }
 
-void App::radKmh(WP wp){	bRkmh->setStateSelected(true);  bRmph->setStateSelected(false);  pSet->show_mph = false;  ShowHUD();  }
-void App::radMph(WP wp){	bRkmh->setStateSelected(false);  bRmph->setStateSelected(true);  pSet->show_mph = true;   ShowHUD();  }
+void App::radKmh(WP wp){	bRkmh->setStateSelected(true);  bRmph->setStateSelected(false);  pSet->show_mph = false;  SizeHUD(true);  }
+void App::radMph(WP wp){	bRkmh->setStateSelected(false);  bRmph->setStateSelected(true);  pSet->show_mph = true;   SizeHUD(true);  }
 
 void App::radSimEasy(WP){	bRsimEasy->setStateSelected(true);  bRsimNorm->setStateSelected(false);
 	pSet->gui.sim_mode = "easy";	bReloadSim = true;
@@ -405,7 +405,7 @@ void App::chkMiniBorder(WP wp){		ChkEv(mini_border);		UpdMiniTer();  }
 
 void App::chkReverse(WP wp){		ChkEv(gui.trackreverse);	ReadTrkStats();  }
 
-void App::chkTimes(WP wp){			ChkEv(show_times);	ShowHUD();	}
+void App::chkTimes(WP wp){			ChkEv(show_times);		ShowHUD();	}
 void App::chkOpponents(WP wp){		ChkEv(show_opponents);	ShowHUD();	}
 void App::chkOpponentsSort(WP wp){	ChkEv(opplist_sort);	}
 
@@ -421,9 +421,9 @@ void App::chkProfilerTxt(WP wp){	ChkEv(profilerTxt);	}
 void App::chkBltDebug(WP wp){		ChkEv(bltDebug);	}
 void App::chkBltProfilerTxt(WP wp){	ChkEv(bltProfilerTxt);	}
 
-void App::chkCarDbgBars(WP wp){		ChkEv(car_dbgbars);	ShowHUD();	}
-void App::chkCarDbgTxt(WP wp){		ChkEv(car_dbgtxt);	ShowHUD();	}
-void App::chkCarDbgSurf(WP wp){		ChkEv(car_dbgsurf);	ShowHUD();	}
+void App::chkCarDbgBars(WP wp){		ChkEv(car_dbgbars);  ShowHUD();  }
+void App::chkCarDbgTxt(WP wp){		ChkEv(car_dbgtxt);   ShowHUD();  }
+void App::chkCarDbgSurf(WP wp){		ChkEv(car_dbgsurf);  ShowHUD();  }
 
 void App::chkGraphs(WP wp){			ChkEv(show_graphs);
 	for (int i=0; i < graphs.size(); ++i)
