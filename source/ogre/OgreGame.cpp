@@ -235,7 +235,7 @@ ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr,
 	Real s,  // scale pos
 	bool dyn, bool clr,
 	Real mul, Vector2 ofs,
-	uint32 vis, uint8 rndQue)
+	uint32 vis, uint8 rndQue, bool comb)
 {
 	ManualObject* m = sceneMgr->createManualObject();
 	m->setDynamic(dyn);
@@ -243,13 +243,16 @@ ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr,
 	m->setUseIdentityView(true);
 	m->setCastShadows(false);
 
-	m->estimateVertexCount(4);
-	m->begin(mat, RenderOperation::OT_TRIANGLE_STRIP);
+	m->estimateVertexCount(comb ? 8 : 4);
+	m->begin(mat, comb ? RenderOperation::OT_TRIANGLE_LIST : RenderOperation::OT_TRIANGLE_STRIP);
 	const static Vector2 uv[4] = { Vector2(0.f,1.f),Vector2(1.f,1.f),Vector2(0.f,0.f),Vector2(1.f,0.f) };
-	m->position(-s,-s*asp, 0);  m->textureCoord(uv[0]*mul + ofs);  if (clr)  m->colour(0,1,0);
-	m->position( s,-s*asp, 0);  m->textureCoord(uv[1]*mul + ofs);  if (clr)  m->colour(0,0,0);
-	m->position(-s, s*asp, 0);  m->textureCoord(uv[2]*mul + ofs);  if (clr)  m->colour(1,1,0);
-	m->position( s, s*asp, 0);  m->textureCoord(uv[3]*mul + ofs);  if (clr)  m->colour(1,0,0);
+	int n = comb ? 2 : 1;
+	for (int i=0; i < n; ++i)
+	{	m->position(-s,-s*asp, 0);  m->textureCoord(uv[0]*mul + ofs);  if (clr)  m->colour(0,1,0);
+		m->position( s,-s*asp, 0);  m->textureCoord(uv[1]*mul + ofs);  if (clr)  m->colour(0,0,0);
+		m->position(-s, s*asp, 0);  m->textureCoord(uv[2]*mul + ofs);  if (clr)  m->colour(1,1,0);
+		m->position( s, s*asp, 0);  m->textureCoord(uv[3]*mul + ofs);  if (clr)  m->colour(1,0,0);
+	}
 	m->end();
  
 	AxisAlignedBox aabInf;	aabInf.setInfinite();

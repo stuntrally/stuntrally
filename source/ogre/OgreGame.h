@@ -133,8 +133,8 @@ public:
 		MyGUI::TextBox *txCountdown;
 
 		//  gauges
-		Ogre::SceneNode    *ndRpm, *ndVel, *ndRpmBk, *ndVelBk,*ndVelBm;
-		Ogre::ManualObject *moRpm, *moVel, *moRpmBk, *moVelBk,*moVelBm;
+		Ogre::SceneNode    *ndNeedles, *ndRpmBk, *ndVelBk,*ndVelBm;
+		Ogre::ManualObject *moNeedles, *moRpmBk, *moVelBk,*moVelBm;
 		//  gear, vel
 		MyGUI::TextBox *txGear,*txVel, *txAbs,*txTcs;
 
@@ -151,6 +151,9 @@ public:
 		std::vector<Ogre::SceneNode*> vNdPos;  //const size: 6
 		std::vector<Ogre::ManualObject*> vMoPos;
 		
+		//  center position .
+		Ogre::Vector3 vcRpm, vcVel;  Ogre::Real fScale;
+
 		MyGUI::Widget* parent;
 		Hud();
 	};
@@ -175,7 +178,7 @@ public:
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr,
 		Ogre::Real size, bool dyn /*= false*/, bool clr /*= false*/,
 		Ogre::Real mul, Ogre::Vector2 ofs,
-		Ogre::uint32 vis, Ogre::uint8 rndQue);
+		Ogre::uint32 vis, Ogre::uint8 rndQue, bool comb = false);
 
 	struct OvrDbg
 	{

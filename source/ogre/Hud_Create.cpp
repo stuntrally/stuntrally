@@ -41,7 +41,7 @@ void App::SizeHUD(bool full, Viewport* vp)
 		const SplitScreenManager::VPDims& dim = mSplitMgr->mDims[c];
 		//  gauges
 		Real xcRpm,ycRpm, xcVel,ycVel, ygMax, xBFuel;  // -1..1
-		if (h.ndRpmBk && h.ndVelBk && h.ndVelBm && h.ndRpm && h.ndVel)
+		if (h.ndRpmBk && h.ndVelBk && h.ndVelBm)
 		{
 			Real fHudScale = pSet->size_gauges * dim.avgsize;
 			Real spx = fHudScale *1.1f, spy = spx*asp;
@@ -51,11 +51,10 @@ void App::SizeHUD(bool full, Viewport* vp)
 
 			Vector3 sca(fHudScale,fHudScale*asp,1), sc(fHudScale,fHudScale,1);
 			h.ndRpmBk->setScale(sca);  h.ndVelBk->setScale(sca);  h.ndVelBm->setScale(sca);
-			h.ndRpm->setScale(sc); 	h.ndVel->setScale(sc);
 
 			Vector3 vr(xcRpm,ycRpm,0.f), vv(xcVel,ycVel,0.f);
+			h.vcRpm = vr;  h.vcVel = vv;  h.fScale = fHudScale;  // store for update
 			h.ndRpmBk->setPosition(vr);  h.ndVelBk->setPosition(vv);  h.ndVelBm->setPosition(vv);
-			h.ndRpm->setPosition(vr);  h.ndVel->setPosition(vv);
 			//LogO("-- Size  r "+toStr(vr)+"  v "+toStr(vv)+"  s "+toStr(sca));
 		}
 		//  minimap
@@ -242,11 +241,8 @@ void App::CreateHUD()
 		h.ndVelBm->attachObject(h.moVelBm);  h.ndVelBm->setScale(0,0,0);  h.moVelBm->setVisible(false);
 			
 		//  gauges  needles
-		h.moRpm = Create2D("hud/"+st,scm,1, true,false, sc,Vector2(0.5f,0.5f), RV_Hud,RQG_Hud3);  h.ndRpm = rt->createChildSceneNode();
-		h.ndRpm->attachObject(h.moRpm);  h.ndRpm->setScale(0,0,0);  h.ndRpm->setVisible(false);
-		
-		h.moVel = Create2D("hud/"+st,scm,1, true,false, sc,Vector2(0.5f,0.5f), RV_Hud,RQG_Hud3);  h.ndVel = rt->createChildSceneNode();
-		h.ndVel->attachObject(h.moVel);  h.ndVel->setScale(0,0,0);  h.ndVel->setVisible(false);
+		h.moNeedles = Create2D("hud/"+st,scm,1, true,false, sc,Vector2(0.5f,0.5f), RV_Hud,RQG_Hud3, true);  h.ndNeedles = rt->createChildSceneNode();
+		h.ndNeedles->attachObject(h.moNeedles);  h.ndNeedles->setVisible(false);
 
 
 		///  GUI
@@ -394,11 +390,13 @@ void App::CreateHUD()
 	//  chat msg  -----------
 	bckMsg = mGUI->createWidget<ImageBox>("ImageBox",
 		0,y, 400,60, Align::Left, "Back", "MsgB");  bckMsg->setVisible(false);
+	bckMsg->setAlpha(0.8f);
 	bckMsg->setImageTexture("back_times.png");
 
 	txMsg = bckMsg->createWidget<TextBox>("TextBox",
-		0,0, 400,60, Align::Left, "PlcT");
+		10,10, 800,60, Align::Left, "PlcT");
 	txMsg->setFontName("font.20");  txMsg->setTextShadow(true);
+	txMsg->setTextColour(Colour(0.8,0.9,1.0));
 
 	///  tex
 	resMgr.removeResourceLocation(path, sGrp);
@@ -443,8 +441,8 @@ App::Hud::Hud()
 	txCountdown=0;
 
 	txGear=0; txVel=0;
-	ndRpm=0; ndVel=0; ndRpmBk=0; ndVelBk=0; ndVelBm=0;
-	moRpm=0; moVel=0; moRpmBk=0; moVelBk=0; moVelBm=0;
+	ndNeedles=0; ndRpmBk=0; ndVelBk=0; ndVelBm=0;
+	moNeedles=0; moRpmBk=0; moVelBk=0; moVelBm=0;
 	txAbs=0; txTcs=0;  txCam=0;
 
 	txBFuel=0; txDamage=0; txRewind=0;
@@ -469,8 +467,8 @@ void App::DestroyHUD()
 		
 		Dest2(h.moMap,h.ndMap)
 		Dest2(h.moRpmBk,h.ndRpmBk)
-		Dest2(h.moVelBk,h.ndVelBk)  Dest2(h.moRpm,h.ndRpm)
-		Dest2(h.moVelBm,h.ndVelBm)	Dest2(h.moVel,h.ndVel)
+		Dest2(h.moVelBk,h.ndVelBk)  Dest2(h.moNeedles,h.ndNeedles)
+		Dest2(h.moVelBm,h.ndVelBm)
 
 		#define Dest(w)  \
 			if (w) {  mGUI->destroyWidget(w);  w = 0;  }
@@ -547,8 +545,9 @@ void App::ShowHUD(bool hideAll)
 				//txRewind;icoRewind;
 
 				h.ndRpmBk->setVisible(show);
-				h.ndRpm->setVisible(show);  h.ndVelBk->setVisible(show && !pSet->show_mph);
-				h.ndVel->setVisible(show);  h.ndVelBm->setVisible(show && pSet->show_mph);
+				h.ndNeedles->setVisible(show);
+				h.ndVelBk->setVisible(show && !pSet->show_mph);
+				h.ndVelBm->setVisible(show && pSet->show_mph);
 
 				h.ndMap->setVisible(pSet->trackmap);
 				h.bckTimes->setVisible(times);

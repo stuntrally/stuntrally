@@ -629,7 +629,7 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 
 	//  4 points, 2d pos
 	const static Real tc[4][2] = {{0,1}, {1,1}, {0,0}, {1,0}};  // defaults, no rot
-	const static Real tn[4][2] = {{0.5f,1.f}, {1.f,1.f}, {0.5f,0.5f}, {1.f,0.5f}};  // tc needle
+	const static Real tn[4][2] = {{0.5f,1.f}, {1.f,1.f}, {0.5,0.5f}, {1.f,0.5f}};  // tc needle
 	const static Real tp[4][2] = {{-1,-1}, {1,-1}, {-1,1}, {1,1}};
 	const static float d2r = PI_d/180.f;
 	const static Real ang[4] = {0.f,90.f,270.f,180.f};
@@ -637,6 +637,7 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 	float rx[4],ry[4], vx[4],vy[4], px[4],py[4], cx[4],cy[4];  // rpm,vel, pos,crc
 	for (int i=0; i<4; ++i)  // 4 verts, each +90deg
 	{
+		//  needles
 		float ia = 45.f + ang[i];
 		if (main)
 		{	float r = -(angrmp + ia) * d2r;   rx[i] = sx*cosf(r);  ry[i] =-sy*sinf(r);
@@ -644,6 +645,7 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 		}
 		float p = -(angrot + ia) * d2r;	  float cp = cosf(p), sp = sinf(p);
 
+		//  mini
 		if (bRot && bZoom && main)
 			{  px[i] = psx*tp[i][0];  py[i] = psy*tp[i][1];  }
 		else{  px[i] = psx*cp*1.4f;   py[i] =-psy*sp*1.4f;   }
@@ -654,30 +656,33 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 		else{  cx[i] =       cp*z;  cy[i] =      -sp*z-1.f;  }
 	}
 	
-	Hud& h = hud[b];
+	Hud& h = hud[b];  int p;
     
     //  rpm,vel needles
-	if (main)
+	if (main && h.moNeedles)
 	{
-		if (h.moRpm)
-		{	h.moRpm->beginUpdate(0);
-			for (int p=0; p<4; ++p)  {
-				h.moRpm->position(rx[p],ry[p], 0);  h.moRpm->textureCoord(tn[p][0], tn[p][1]);  }
-			h.moRpm->end();  }
-		if (h.moVel)
-		{	h.moVel->beginUpdate(0);
-			for (int p=0; p<4; ++p)  {
-				h.moVel->position(vx[p],vy[p], 0);  h.moVel->textureCoord(tn[p][0], tn[p][1]);  }
-			h.moVel->end();  }
+		h.moNeedles->beginUpdate(0);
+		for (p=0; p<4; ++p)  {
+			h.moNeedles->position(
+				h.vcRpm.x + h.fScale * rx[p],
+				h.vcRpm.y + h.fScale * ry[p], 0);  h.moNeedles->textureCoord(tn[p][0], tn[p][1]);  }
+		for (p=0; p<4; ++p)  {
+			h.moNeedles->position(
+				h.vcVel.x + h.fScale * vx[p],
+				h.vcVel.y + h.fScale * vy[p], 0);  h.moNeedles->textureCoord(tn[p][0], tn[p][1]);  }
+		h.moNeedles->quad(0,1,3,2);
+		h.moNeedles->quad(4,5,7,6);
+		h.moNeedles->end();
 	}
 		
 	///  minimap car pos-es rot
 	if (h.vMoPos[c])
 	{	h.vMoPos[c]->beginUpdate(0);
-		for (int p=0; p<4; ++p)  {
+		for (p=0; p<4; ++p)  {
 			h.vMoPos[c]->position(px[p],py[p], 0);  h.vMoPos[c]->textureCoord(tc[p][0], tc[p][1]);
 			h.vMoPos[c]->colour(carModels[c]->color);  }
 		h.vMoPos[c]->end();
+		//todo: combine all in 1 mo ..
 	}
 	
 	//  minimap circle/rect rot
@@ -686,14 +691,14 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 	{
 		h.moMap->beginUpdate(0);
 		if (!bZoom)
-			for (int p=0; p<4; ++p)  {
+			for (p=0; p<4; ++p)  {
 				h.moMap->position(tp[p][0],tp[p][1], 0);  h.moMap->textureCoord(tc[p][0], tc[p][1]);
 				h.moMap->colour(tc[p][0],tc[p][1], 0);  }
 		else
 		{	Vector2 mp(-carPoses[qb][b].pos[2],carPoses[qb][b].pos[0]);
 			float xc =  (mp.x - minX)*scX,
 				  yc = -(mp.y - minY)*scY+1.f;
-			for (int p=0; p<4; ++p)  {
+			for (p=0; p<4; ++p)  {
 				h.moMap->position(tp[p][0],tp[p][1], 0);  h.moMap->textureCoord(cx[p]+xc, -cy[p]-yc);
 				h.moMap->colour(tc[p][0],tc[p][1], 1);  }
 		}
