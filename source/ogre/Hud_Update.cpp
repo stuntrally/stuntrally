@@ -629,6 +629,7 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 
 	//  4 points, 2d pos
 	const static Real tc[4][2] = {{0,1}, {1,1}, {0,0}, {1,0}};  // defaults, no rot
+	const static Real tn[4][2] = {{0.5f,1.f}, {1.f,1.f}, {0.5f,0.5f}, {1.f,0.5f}};  // tc needle
 	const static Real tp[4][2] = {{-1,-1}, {1,-1}, {-1,1}, {1,1}};
 	const static float d2r = PI_d/180.f;
 	const static Real ang[4] = {0.f,90.f,270.f,180.f};
@@ -661,12 +662,12 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 		if (h.moRpm)
 		{	h.moRpm->beginUpdate(0);
 			for (int p=0; p<4; ++p)  {
-				h.moRpm->position(rx[p],ry[p], 0);  h.moRpm->textureCoord(tc[p][0], tc[p][1]);  }
+				h.moRpm->position(rx[p],ry[p], 0);  h.moRpm->textureCoord(tn[p][0], tn[p][1]);  }
 			h.moRpm->end();  }
 		if (h.moVel)
 		{	h.moVel->beginUpdate(0);
 			for (int p=0; p<4; ++p)  {
-				h.moVel->position(vx[p],vy[p], 0);  h.moVel->textureCoord(tc[p][0], tc[p][1]);  }
+				h.moVel->position(vx[p],vy[p], 0);  h.moVel->textureCoord(tn[p][0], tn[p][1]);  }
 			h.moVel->end();  }
 	}
 		

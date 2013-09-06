@@ -82,7 +82,7 @@ void App::Rnd2TexSetup()
 
 	//  pos dot on minimap  . . . . . . . .
 	if (!ndPos)  {
-		mpos = Create2D("hud/CarPosEd", 0.2f, true);  // dot size
+		mpos = Create2D("hud/CarPos", 0.2f, true);  // dot size
 		mpos->setVisibilityFlags(RV_Hud);
 		mpos->setRenderQueueGroup(RQG_Hud3 /*RENDER_QUEUE_OVERLAY+1*/);
 		ndPos = mSceneMgr->getRootSceneNode()->createChildSceneNode(

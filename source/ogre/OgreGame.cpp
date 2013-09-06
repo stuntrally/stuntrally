@@ -231,7 +231,11 @@ void App::destroyScene()
 	BaseApp::destroyScene();
 }
 
-ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr, Real s, bool dyn, bool clr)
+ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr,
+	Real s,  // scale pos
+	bool dyn, bool clr,
+	Real mul, Vector2 ofs,
+	uint32 vis, uint8 rndQue)
 {
 	ManualObject* m = sceneMgr->createManualObject();
 	m->setDynamic(dyn);
@@ -241,15 +245,17 @@ ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr, Real s, b
 
 	m->estimateVertexCount(4);
 	m->begin(mat, RenderOperation::OT_TRIANGLE_STRIP);
-	m->position(-s,-s*asp, 0);  m->textureCoord(0, 1);  if (clr)  m->colour(0,1,0);
-	m->position( s,-s*asp, 0);  m->textureCoord(1, 1);  if (clr)  m->colour(0,0,0);
-	m->position(-s, s*asp, 0);  m->textureCoord(0, 0);  if (clr)  m->colour(1,1,0);
-	m->position( s, s*asp, 0);  m->textureCoord(1, 0);  if (clr)  m->colour(1,0,0);
+	const static Vector2 uv[4] = { Vector2(0.f,1.f),Vector2(1.f,1.f),Vector2(0.f,0.f),Vector2(1.f,0.f) };
+	m->position(-s,-s*asp, 0);  m->textureCoord(uv[0]*mul + ofs);  if (clr)  m->colour(0,1,0);
+	m->position( s,-s*asp, 0);  m->textureCoord(uv[1]*mul + ofs);  if (clr)  m->colour(0,0,0);
+	m->position(-s, s*asp, 0);  m->textureCoord(uv[2]*mul + ofs);  if (clr)  m->colour(1,1,0);
+	m->position( s, s*asp, 0);  m->textureCoord(uv[3]*mul + ofs);  if (clr)  m->colour(1,0,0);
 	m->end();
  
 	AxisAlignedBox aabInf;	aabInf.setInfinite();
 	m->setBoundingBox(aabInf);  // always visible
-	m->setRenderQueueGroup(RQG_Hud2);
+	m->setVisibilityFlags(vis);
+	m->setRenderQueueGroup(rndQue);  //RQG_Hud2
 	return m;
 }
 

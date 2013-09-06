@@ -197,9 +197,9 @@ void App::CreateHUD()
 
 		String sMat = "circle_minimap";
 		asp = 1.f;  //_temp
-		ManualObject* m = Create2D(sMat,scm,1,true,true);  h.moMap = m;
+
+		ManualObject* m = Create2D(sMat,scm,1, true,true, 1.f,Vector2(1,1), RV_Hud,RQG_Hud1);  h.moMap = m;
 		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
-		m->setVisibilityFlags(RV_Hud);  m->setRenderQueueGroup(RQG_Hud1);
 		
 		//  change minimap image
 		MaterialPtr mm = MaterialManager::getSingleton().getByName(sMat);
@@ -219,8 +219,7 @@ void App::CreateHUD()
 		//  car pos tri - for all carModels (ghost and remote too)
 		for (int i=0; i < cnt; ++i)
 		{
-			h.vMoPos[i] = Create2D("hud/CarPos", scm, 0.4f, true, true);
-			h.vMoPos[i]->setVisibilityFlags(RV_Hud);  h.vMoPos[i]->setRenderQueueGroup(RQG_Hud3);
+			h.vMoPos[i] = Create2D("hud/CarPos", scm, 0.4f, true,true, 1.f,Vector2(1,1), RV_Hud,RQG_Hud3);
 				  
 			h.vNdPos[i] = h.ndMap ? h.ndMap->createChildSceneNode() : hud[0].ndMap->createChildSceneNode();
 			h.vNdPos[i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
@@ -232,25 +231,21 @@ void App::CreateHUD()
 	
 		//  gauges  backgr  -----------
 		String st = toStr(pSet->gauges_type);
-		h.moRpmBk = Create2D("hud/rpm"+st,scm,1);  h.moRpmBk->setVisibilityFlags(RV_Hud);
-		h.moRpmBk->setRenderQueueGroup(RQG_Hud1);  h.ndRpmBk = rt->createChildSceneNode();
+		const Real sc = 0.5f;
+		h.moRpmBk = Create2D("hud/"+st,scm,1, false,false, sc,Vector2(0.f,0.5f), RV_Hud,RQG_Hud1);  h.ndRpmBk = rt->createChildSceneNode();
 		h.ndRpmBk->attachObject(h.moRpmBk);  h.ndRpmBk->setScale(0,0,0);  h.ndRpmBk->setVisible(false);
 
-		h.moVelBk = Create2D("hud/kmh"+st,scm,1);  h.moVelBk->setVisibilityFlags(RV_Hud);
-		h.moVelBk->setRenderQueueGroup(RQG_Hud1);  h.ndVelBk = rt->createChildSceneNode();
+		h.moVelBk = Create2D("hud/"+st,scm,1, false,false, sc,Vector2(0.f,0.f),  RV_Hud,RQG_Hud1);  h.ndVelBk = rt->createChildSceneNode();
 		h.ndVelBk->attachObject(h.moVelBk);  h.ndVelBk->setScale(0,0,0);  h.moVelBk->setVisible(false);
 			
-		h.moVelBm = Create2D("hud/mph"+st,scm,1);  h.moVelBm->setVisibilityFlags(RV_Hud);
-		h.moVelBm->setRenderQueueGroup(RQG_Hud1);  h.ndVelBm = rt->createChildSceneNode();
+		h.moVelBm = Create2D("hud/"+st,scm,1, false,false, sc,Vector2(0.5f,0.f), RV_Hud,RQG_Hud1);  h.ndVelBm = rt->createChildSceneNode();
 		h.ndVelBm->attachObject(h.moVelBm);  h.ndVelBm->setScale(0,0,0);  h.moVelBm->setVisible(false);
 			
 		//  gauges  needles
-		h.moRpm = Create2D("hud/needle"+st,scm,1,true);  h.moRpm->setVisibilityFlags(RV_Hud);
-		h.moRpm->setRenderQueueGroup(RQG_Hud3);  h.ndRpm = rt->createChildSceneNode();
+		h.moRpm = Create2D("hud/"+st,scm,1, true,false, sc,Vector2(0.5f,0.5f), RV_Hud,RQG_Hud3);  h.ndRpm = rt->createChildSceneNode();
 		h.ndRpm->attachObject(h.moRpm);  h.ndRpm->setScale(0,0,0);  h.ndRpm->setVisible(false);
 		
-		h.moVel = Create2D("hud/needle"+st,scm,1,true);  h.moVel->setVisibilityFlags(RV_Hud);
-		h.moVel->setRenderQueueGroup(RQG_Hud3);  h.ndVel = rt->createChildSceneNode();
+		h.moVel = Create2D("hud/"+st,scm,1, true,false, sc,Vector2(0.5f,0.5f), RV_Hud,RQG_Hud3);  h.ndVel = rt->createChildSceneNode();
 		h.ndVel->attachObject(h.moVel);  h.ndVel->setScale(0,0,0);  h.ndVel->setVisible(false);
 
 

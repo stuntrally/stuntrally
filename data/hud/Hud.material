@@ -15,33 +15,12 @@ material hud/g
 	}
 }
 
-material hud/needle0 : hud/g {  technique  {  pass  {  texture_unit  {  texture g0needle.png  }  }  }  }
-material hud/needle1 : hud/g {  technique  {  pass  {  texture_unit  {  texture g1needle.png  }  }  }  }
-material hud/needle2 : hud/g {  technique  {  pass  {  texture_unit  {  texture g2needle.png  }  }  }  }
-material hud/needle3 : hud/g {  technique  {  pass  {  texture_unit  {  texture g3needle.png  }  }  }  }
-material hud/needle4 : hud/g {  technique  {  pass  {  texture_unit  {  texture g4needle.png  }  }  }  }
-material hud/needle5 : hud/g {  technique  {  pass  {  texture_unit  {  texture g5needle.png  }  }  }  }
-
-material hud/rpm0 : hud/g {  technique  {  pass  {  texture_unit  {  texture g0rpm.png  }  }  }  }
-material hud/rpm1 : hud/g {  technique  {  pass  {  texture_unit  {  texture g1rpm.png  }  }  }  }
-material hud/rpm2 : hud/g {  technique  {  pass  {  texture_unit  {  texture g2rpm.png  }  }  }  }
-material hud/rpm3 : hud/g {  technique  {  pass  {  texture_unit  {  texture g3rpm.png  }  }  }  }
-material hud/rpm4 : hud/g {  technique  {  pass  {  texture_unit  {  texture g4rpm.png  }  }  }  }
-material hud/rpm5 : hud/g {  technique  {  pass  {  texture_unit  {  texture g5rpm.png  }  }  }  }
-																							
-material hud/kmh0 : hud/g {  technique  {  pass  {  texture_unit  {  texture g0kmh.png  }  }  }  }
-material hud/kmh1 : hud/g {  technique  {  pass  {  texture_unit  {  texture g1kmh.png  }  }  }  }
-material hud/kmh2 : hud/g {  technique  {  pass  {  texture_unit  {  texture g2kmh.png  }  }  }  }
-material hud/kmh3 : hud/g {  technique  {  pass  {  texture_unit  {  texture g3kmh.png  }  }  }  }
-material hud/kmh4 : hud/g {  technique  {  pass  {  texture_unit  {  texture g4kmh.png  }  }  }  }
-material hud/kmh5 : hud/g {  technique  {  pass  {  texture_unit  {  texture g5kmh.png  }  }  }  }
-																							
-material hud/mph0 : hud/g {  technique  {  pass  {  texture_unit  {  texture g0mph.png  }  }  }  }
-material hud/mph1 : hud/g {  technique  {  pass  {  texture_unit  {  texture g1mph.png  }  }  }  }
-material hud/mph2 : hud/g {  technique  {  pass  {  texture_unit  {  texture g2mph.png  }  }  }  }
-material hud/mph3 : hud/g {  technique  {  pass  {  texture_unit  {  texture g3mph.png  }  }  }  }
-material hud/mph4 : hud/g {  technique  {  pass  {  texture_unit  {  texture g4mph.png  }  }  }  }
-material hud/mph5 : hud/g {  technique  {  pass  {  texture_unit  {  texture g5mph.png  }  }  }  }
+material hud/0 : hud/g {  technique  {  pass  {  texture_unit  {  texture gauges0.png  }  }  }  }
+material hud/1 : hud/g {  technique  {  pass  {  texture_unit  {  texture gauges1.png  }  }  }  }
+material hud/2 : hud/g {  technique  {  pass  {  texture_unit  {  texture gauges2.png  }  }  }  }
+material hud/3 : hud/g {  technique  {  pass  {  texture_unit  {  texture gauges3.png  }  }  }  }
+material hud/4 : hud/g {  technique  {  pass  {  texture_unit  {  texture gauges4.png  }  }  }  }
+material hud/5 : hud/g {  technique  {  pass  {  texture_unit  {  texture gauges5.png  }  }  }  }
 
 
 //  minimap

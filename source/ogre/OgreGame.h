@@ -92,19 +92,9 @@ public:
 	
 	//  trees
 	Forests::PagedGeometry *trees, *grass;
-	
-	Ogre::SceneNode* arrowNode; // checkpoint arrow
-	Ogre::SceneNode* arrowRotNode; // seperate node for rotation
-	Ogre::Quaternion arrowAnimStart, arrowAnimEnd, arrowAnimCur; // smooth animation
 		
-	void UpdateHUD(int carId, float time), ShowHUDvp(bool vp),
-		SizeHUD(bool full, Ogre::Viewport* vp=NULL);
-	void UpdHUDRot(int baseCarId, int carId, float vel, float rpm);
-	void GetHUDVals(int id, float* vel, float* rpm, float* clutch, int* gear);
-	
 	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };
 
-protected:
 	boost::thread mThread;  // 2nd thread for simulation
 
 	WaterRTT mWaterRTT;
@@ -171,11 +161,21 @@ protected:
 	//  camera move info
 	MyGUI::TextBox *txCamInfo;
 
+	Ogre::SceneNode* arrowNode,*arrowRotNode;  // checkpoint arrow
+	Ogre::Quaternion arrowAnimStart, arrowAnimEnd, arrowAnimCur; // smooth animation
+		
+	void UpdateHUD(int carId, float time), ShowHUDvp(bool vp),
+		SizeHUD(bool full, Ogre::Viewport* vp=NULL);
+	void UpdHUDRot(int baseCarId, int carId, float vel, float rpm);
+	void GetHUDVals(int id, float* vel, float* rpm, float* clutch, int* gear);
+
 	float asp, scX,scY, minX,maxX, minY,maxY;  // minimap visible range
 	Ogre::SceneNode *ndLine;
 
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr,
-		Ogre::Real size, bool dyn = false, bool clr = false);
+		Ogre::Real size, bool dyn /*= false*/, bool clr /*= false*/,
+		Ogre::Real mul, Ogre::Vector2 ofs,
+		Ogre::uint32 vis, Ogre::uint8 rndQue);
 
 	struct OvrDbg
 	{
@@ -207,10 +207,10 @@ protected:
 	// vdrift:
 	void CreateVdrTrack(std::string strack, class TRACK* pTrack),
 		CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
-public:
+
 	static Ogre::ManualObject* CreateModel(Ogre::SceneManager* sceneMgr, const Ogre::String& mat,
 		class VERTEXARRAY* a, Ogre::Vector3 vPofs, bool flip, bool track=false, const Ogre::String& name="");
-protected:
+
 	
 	// Loading
 	void LoadCleanUp(), LoadGame(), LoadScene(), LoadCar(), LoadTerrain(), LoadRoad(), LoadObjects(), LoadTrees(), LoadMisc();
@@ -231,11 +231,10 @@ protected:
 	Ogre::TerrainPaging* mTerrainPaging;  Ogre::PageManager* mPageManager;
 	//Vector3 getNormalAtWorldPosition(Terrain* terrain, Real x, Real z, Real s);
 
-public:
 	Ogre::Terrain* terrain; 
 	int iBlendMaps, blendMapSize;	bool noBlendUpd;  //  mtr from ter  . . . 
 	char* blendMtr;  // mtr [blendMapSize x blendMapSize]
-protected:
+
 	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
 	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
 	float Noise(float x, float zoom, int octaves, float persistance);
@@ -253,14 +252,12 @@ protected:
 		return 0.f;
 	}
 
-public:
 	//  road
 	class SplineRoad* road;
 
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
 	Ogre::Vector4 splitPoints;
 
-protected:
 	Ogre::ShadowCameraSetupPtr mPSSMSetup;
 	void recreateReflections();  // call after refl_mode changed
 
@@ -435,7 +432,6 @@ protected:
 			: mId(id), mName(name), mDefaultIncrease(defaultIncrease), mDefaultDecrease(defaultDecrease), mType(Axis)
 		{	}
 	};
-public:
 	// These IDs are referenced in the user config files.
 	// To keep them valid, make sure to:
 	// - Add new actions at the end of the enum
@@ -449,7 +445,7 @@ public:
 	};
 	float mPlayerInputState[4][NumPlayerActions];
 	boost::mutex mPlayerInputStateMutex;
-protected:
+
 	void CreateInputTab(const std::string& title, bool playerTab, const std::vector<InputAction>& actions, ICS::InputControlSystem* ICS);
 	void InitInputGui(), inputBindBtnClicked(WP), inputUnbind(WP), inputBindBtn2(WP, int, int, MyGUI::MouseButton mb);
 	// bind=1: "<Assign>"
@@ -574,10 +570,9 @@ protected:
 	void UpdCarStatsTxt();  // car stats
 
 
-public:
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
 	int carIdWin, iCurCar, iRplCarOfs;
-protected:
+
 	MyGUI::ButtonPtr btRplPl;  void UpdRplPlayBtn();
 	///---------------------------------------
 
@@ -649,7 +644,6 @@ protected:
 		evEdNetServerPort(MyGUI::EditPtr), evEdNetLocalPort(MyGUI::EditPtr);
 
 
-public:
 	virtual void materialCreated(sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex);
 
 	bool GetCarPath(std::string* pathCar/*out*/,

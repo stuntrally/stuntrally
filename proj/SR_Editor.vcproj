@@ -375,10 +375,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\data\hud\Hud.overlay"
-				>
-			</File>
-			<File
 				RelativePath="..\data\materials\main.mat"
 				>
 			</File>
