@@ -219,13 +219,14 @@ void App::InitGui()
 	Btn("TerrainGenAdd", btnTerGenerate);  Btn("TerrainGenSub", btnTerGenerate);   Btn("TerrainGenMul", btnTerGenerate);
 	Btn("TerrainHalf", btnTerrainHalf);  Btn("TerrainDouble", btnTerrainDouble);  Btn("TerrainMove", btnTerrainMove);
 
-	ScrollView* sv = mGUI->findWidget<ScrollView>("svBrushes");
+
 	///  brush presets   o o o o o o o o 
-	int j=0, n=0;  // y,x for next lines
+	ScrollView* sv = mGUI->findWidget<ScrollView>("svBrushes");
+	int j=0, n=0;  const int z = 128;
 	for (i=0; i < brSetsNum; ++i,++n)
 	{
 		const BrushSet& st = brSets[i];  const String s = toStr(i);
-		int x,y, xt,yt, sx, d = i-14;
+		int x,y, xt,yt, sx, d = i-14;  // y,x for next lines
 		if (d < 0)  // top row
 		{	x = 10+ i*50;  y = 10;   xt= x + 20;  yt= y + 50;  sx = 48;  }
 		else
@@ -236,7 +237,8 @@ void App::InitGui()
 		StaticImage* img = sv->createWidget<StaticImage>("ImageBox", x,y, sx,sx, Align::Default, "brI"+s);
 		img->eventMouseButtonClick += newDelegate(this, &App::btnBrushPreset);
 		img->setUserString("tip", st.name);  img->setNeedToolTip(true);
-		img->setImageTexture("brush"+s+".png");
+		img->setImageTexture("brushes.png");
+		img->setImageCoord(IntCoord(i%16*z,i/16*z, z,z));
 		if (!st.name.empty())  img->eventToolTip += newDelegate(this, &App::notifyToolTip);
 		setOrigPos(img, "EditorWnd");
 		
@@ -250,6 +252,7 @@ void App::InitGui()
 		setOrigPos(txt, "EditorWnd");
 	}
 	//sv->setCanvasSize(1020,j*90+300);
+
 
 	#if 0  ///0 _tool_ fix video capture cursor
 	imgCur = mGUI->createWidget<ImageBox>("ImageBox", 100,100, 32,32, Align::Default, "Pointer");

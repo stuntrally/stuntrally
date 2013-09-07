@@ -160,9 +160,34 @@ void App::ToolBrushesPrv()
 		SetBrushPreset(i);
 		brushPrvTex->convertToImage(im);
 		im.save("data/editor/brush"+toStr(i)+".png");
-		// todo: 1 big 2k texture with all brush.png on it (less batches)..
-		// todo: brush presets in xml..
+		// todo: ?brush presets in xml, auto upd prvs-
 	}
+
+	#if 1
+	///---- combine all images into one ----
+	const int ii = 86;
+	Image ir;  ir.load("brushes-e.png","General");
+	for (int i=0; i <= ii; ++i)
+	{
+		String s = "brush" + toStr(i) + ".png";
+		im.load(s,"General");
+
+		PixelBox pb = im.getPixelBox();
+		int xx = pb.getWidth(), yy = pb.getHeight();
+		
+		//void * pb.data
+		int a = (i%16)*128, b = (i/16)*128;
+		register int x,y;  ColourValue c;
+		for (y = 0; y < yy; ++y)
+		for (x = 0; x < xx; ++x)
+		{
+			c = im.getColourAt(x,y,0);
+			ir.setColourAt(c,a+x,b+y,0);
+		}
+	}
+	ir.save("brushes.png");
+	//exit(0);
+	#endif
 }
 
 #else
