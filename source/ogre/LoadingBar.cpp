@@ -136,5 +136,8 @@ void LoadingBar::worldGeometryStageEnded()
 
 void LoadingBar::SetWidth(Ogre::Real pecent)
 {
-	pApp->barLoad->setSize( pecent * 0.01f * mBarMaxSizeX, mBarSizeY );
+	float p = pecent * 0.01f;
+	int s = p * mBarMaxSizeX, w = p * 512.f;
+	//pApp->barLoad->setImageCoord( IntCoord(512-w,0, w,64) );
+	pApp->barLoad->setSize( s, mBarSizeY );
 }

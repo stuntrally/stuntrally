@@ -790,17 +790,18 @@ void BaseApp::baseInitGui()
 	//  loading
 	bckLoad = mGUI->createWidget<ImageBox>("ImageBox",
 		100,100, 500,110, Align::Default, "Pointer", "LoadBck");
-	bckLoad->setImageTexture("Border_Center.png");
+	bckLoad->setImageTexture("loading_back.jpg");
 
 	barSizeX = 480;
 	bckLoadBar = bckLoad->createWidget<ImageBox>("ImageBox",
 		10,43, 480,26, Align::Default, "LoadBckBar");
-	bckLoadBar->setImageTexture("Border_Center.png");
+	bckLoadBar->setImageTexture("loading2.jpg");
+	bckLoadBar->setColour(Colour(0.5,0.5,0.5,1));
 
 	barSizeY = 22;
 	barLoad = bckLoadBar->createWidget<ImageBox>("ImageBox",
 		0,2, 30,22, Align::Default, "LoadBar");
-	barLoad->setImageTexture("white.png");
+	barLoad->setImageTexture("loading1.jpg");
 
 
 	txLoadBig = bckLoad->createWidget<TextBox>("TextBox",
