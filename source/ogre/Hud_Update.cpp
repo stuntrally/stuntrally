@@ -392,12 +392,12 @@ void App::UpdateHUD(int carId, float time)
 				"\n#80C8FF" + GetTimeString(last)+
 				"\n#80E0E0" + GetTimeString(best)+
 				"\n#80E080" + GetTimeString(time)+
-				"\n#D0D040" + (b ? toStr(place) : "--")+ //" /" + fToStr(t1pl,2,5)+
+				"\n\n#D0D040" + (b ? toStr(place) : "--")+ //" /" + fToStr(t1pl,2,5)+
 				"\n#F0A040" + (b ? fToStr(points,1,3) : "--");
 		}
 		if (h.txTimes)
 			h.txTimes->setCaption(
-				(hasLaps ? "#D0E8FF"+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps) : "") +
+				(hasLaps ? "#D0FFE8"+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps) : "") +
 				"\n#C0E0F0" + GetTimeString(tim.GetPlayerTime(carId))+
 				h.sTimes);
 	}
@@ -658,17 +658,18 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 	}
 	    
     //  rpm,vel needles
+    float r = 0.55f, v = 0.85f;
 	if (main && h.moNeedles)
 	{
 		h.moNeedles->beginUpdate(0);
 		for (p=0; p<4; ++p)  {
 			h.moNeedles->position(
-				h.vcRpm.x + rx[p],
-				h.vcRpm.y + ry[p], 0);  h.moNeedles->textureCoord(tn[p][0], tn[p][1]);  }
+				h.vcRpm.x + rx[p]*r,
+				h.vcRpm.y + ry[p]*r, 0);  h.moNeedles->textureCoord(tn[p][0], tn[p][1]);  }
 		for (p=0; p<4; ++p)  {
 			h.moNeedles->position(
-				h.vcVel.x + vx[p],
-				h.vcVel.y + vy[p], 0);  h.moNeedles->textureCoord(tn[p][0], tn[p][1]);  }
+				h.vcVel.x + vx[p]*v,
+				h.vcVel.y + vy[p]*v, 0);  h.moNeedles->textureCoord(tn[p][0], tn[p][1]);  }
 		h.moNeedles->quad(0,1,3,2);
 		h.moNeedles->quad(4,5,7,6);
  		h.moNeedles->end();
@@ -681,12 +682,12 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 		h.moGauges->beginUpdate(0);
 		for (p=0; p<4; ++p)  {
 			h.moGauges->position(
-				h.vcRpm.x + tp[p][0]*h.fScale,
-				h.vcRpm.y + tp[p][1]*h.fScale*asp, 0);  h.moGauges->textureCoord(tc[p][0]*0.5f, tc[p][1]*0.5f+0.5f);  }
+				h.vcRpm.x + tp[p][0]*h.fScale*r,
+				h.vcRpm.y + tp[p][1]*h.fScale*asp*r, 0);  h.moGauges->textureCoord(tc[p][0]*0.5f, tc[p][1]*0.5f+0.5f);  }
 		for (p=0; p<4; ++p)  {
 			h.moGauges->position(
-				h.vcVel.x + tp[p][0]*h.fScale,
-				h.vcVel.y + tp[p][1]*h.fScale*asp, 0);  h.moGauges->textureCoord(tc[p][0]*0.5f+o, tc[p][1]*0.5f);  }
+				h.vcVel.x + tp[p][0]*h.fScale*v,
+				h.vcVel.y + tp[p][1]*h.fScale*asp*v, 0);  h.moGauges->textureCoord(tc[p][0]*0.5f+o, tc[p][1]*0.5f);  }
 		h.moGauges->quad(0,1,3,2);
 		h.moGauges->quad(4,5,7,6);
 		h.moGauges->end();

@@ -137,6 +137,7 @@ public:
 		Ogre::ManualObject *moNeedles, *moGauges;
 		//  gear, vel
 		MyGUI::TextBox *txGear,*txVel, *txAbs,*txTcs;
+		MyGUI::ImageBox *bckVel;
 
 		//  boost fuel, damage %, rewind time
 		MyGUI::TextBox  *txBFuel, *txDamage, *txRewind;
@@ -164,6 +165,8 @@ public:
 	MyGUI::TextBox *txMsg;  MyGUI::ImageBox *bckMsg;
 	//  camera move info
 	MyGUI::TextBox *txCamInfo;
+	//  car debug texts
+	MyGUI::TextBox *txDbgCar,*txDbgTxt,*txDbgExt;
 
 	Ogre::SceneNode* arrowNode,*arrowRotNode;  // checkpoint arrow
 	Ogre::Quaternion arrowAnimStart, arrowAnimEnd, arrowAnimCur; // smooth animation

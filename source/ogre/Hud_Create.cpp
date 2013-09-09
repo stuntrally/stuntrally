@@ -45,8 +45,9 @@ void App::SizeHUD(bool full, Viewport* vp)
 		{
 			Real sc = pSet->size_gauges * dim.avgsize;
 			Real spx = sc * 1.1f, spy = spx*asp;
-			xcRpm = dim.left + spx;   ycRpm =-dim.bottom + spy;
-			xcVel = dim.right - spx;  ycVel =-dim.bottom + spy;
+			//xcRpm = dim.left + spx;   ycRpm =-dim.bottom + spy;
+			xcRpm = dim.right - spx*0.5f;  ycRpm =-dim.bottom + spy*2.f;
+			xcVel = dim.right - spx;       ycVel =-dim.bottom + spy*0.9f;
 			ygMax = ycVel - sc;  xBFuel = xcVel - sc;
 
 			h.vcRpm = Vector2(xcRpm,ycRpm);  // store for updates
@@ -55,13 +56,14 @@ void App::SizeHUD(bool full, Viewport* vp)
 			h.updGauges = true;
 		}
 		//  minimap
+		Real sc = pSet->size_minimap * dim.avgsize;
+		const Real marg = 1.3f; //1.05f;  // from border
+		Real fMiniX = vdrSpl ? (1.f - 2.f*sc * marg) : (dim.left + sc * marg);  //(dim.right - sc * marg);
+		Real fMiniY =-dim.bottom + sc*asp * marg;  //-dim.top - sc*asp * marg;
+		Real miniTopY = fMiniY + sc*asp * 1.5f;  //par above
+
 		if (h.ndMap)
 		{
-			Real sc = pSet->size_minimap * dim.avgsize;
-			const Real marg = 1.05f;  // from border
-			Real fMiniX = vdrSpl ? (1.f - 2.f*sc * marg) : (dim.right - sc * marg);
-			Real fMiniY =-dim.top - sc*asp * marg;
-
 			h.ndMap->setScale((vdrSpl ? 2 : 1)*sc, sc*asp,1);
 			h.ndMap->setPosition(Vector3(fMiniX,fMiniY,0.f));
 		}
@@ -71,18 +73,18 @@ void App::SizeHUD(bool full, Viewport* vp)
 			yMin = (dim.top +1.f)*0.5f*wy, yMax = (dim.bottom+1.f)*0.5f*wy;
 		int my = (1.f-ygMax)*0.5f*wy;  // gauge bottom y
 
-		//  gear, vel texts
-		//  positioning,  min yMax - dont go below viewport bottom
+		//  gear, vel
+		//  positioning, min yMax - dont go below viewport bottom
 		if (h.txGear)
 		{
 			int vv = pSet->gauges_type > 0 ? -45 : 40;
-			int gx = (xcRpm+1.f)*0.5f*wx + 20, gy = std::min(yMax -48, my - 40);
-			int vx = (xcVel+1.f)*0.5f*wx + vv, vy = std::min(yMax -48, my - 15);
+			int gx = (xcRpm+1.f)*0.5f*wx - 10, gy = (-ycRpm+1.f)*0.5f*wy +22;
+			int vx = (xcVel+1.f)*0.5f*wx + vv, vy = std::min(yMax -91, my - 15);
 			int bx =(xBFuel+1.f)*0.5f*wx - 10, by = std::min(yMax -36, my + 5);
 				vx = std::min(vx, xMax -100);
 				bx = std::min(bx, xMax -180);  // not too near to vel
 			h.txGear->setPosition(gx,gy);
-			h.txVel->setPosition(vx,vy);
+			h.txVel->setPosition(vx,vy);  //h.bckVel
 
 			#if 0
 			h.txRewind ->setPosition(bx,   by);
@@ -97,15 +99,15 @@ void App::SizeHUD(bool full, Viewport* vp)
 
 			//  times
 			bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
-			int tx = xMin + 0, ty = yMin + 32;
+			int tx = xMin + 20, ty = yMin + 40;  // above minimap
 			h.bckTimes->setPosition(tx,ty);
-			tx = 16;  ty = (hasLaps ? 16 : 4);
+			tx = 24;  ty = 4;  //(hasLaps ? 16 : 4);
 			h.txTimTxt->setPosition(tx,ty);
-			h.txTimes->setPosition(tx+96,ty);
+			h.txTimes->setPosition(tx+126,ty);
 				
 			//  opp list
 			//int ox = itx + 5, oy = (ycRpm+1.f)*0.5f*wy - 10;
-			int ox = xMin + 5, oy = ty + 240;
+			int ox = xMin + 50, oy = (-miniTopY+1.f)*0.5f*wy;  //ty + 440;
 			h.bckOpp->setPosition(ox,oy -2);  h.bckOpp->setSize(230, plr*25 +4);
 			for (int n=0; n<3; ++n)
 				h.txOpp[n]->setPosition(n*65+5,0);
@@ -240,10 +242,19 @@ void App::CreateHUD()
 		h.txGear = h.parent->createWidget<TextBox>("TextBox",
 			0,y, 160,116, Align::Left, "Gear"+s);  h.txGear->setVisible(false);
 		h.txGear->setFontName("DigGear");  h.txGear->setFontHeight(126);
+		//h.txGear->setTextShadow(true);
 
+		/*h.bckVel = h.parent->createWidget<ImageBox>("ImageBox",
+			0,y, 130,82, Align::Left, "IVel"+s);
+		h.bckVel->setImageTexture("back_vel.png");
+		h.bckVel->setAlpha(0.7f);*/
+		
+		//h.txVel = h.bckVel->createWidget<TextBox>("TextBox",
+		//	10,5, 360,96, Align::Right, "Vel"+s);  h.txVel->setVisible(false);
 		h.txVel = h.parent->createWidget<TextBox>("TextBox",
 			0,y, 360,96, Align::Right, "Vel"+s);  h.txVel->setVisible(false);
 		h.txVel->setFontName("DigGear");  //h.txVel->setFontHeight(64);
+		//h.txVel->setInheritsAlpha(false);
 		//h.txVel->setTextShadow(true);
 		
 		//  boost
@@ -288,38 +299,40 @@ void App::CreateHUD()
 
 		//  times text  -----------
 		h.bckTimes = h.parent->createWidget<ImageBox>("ImageBox",
-			0,y, 208,200, Align::Left, "TimP"+s);  h.bckTimes->setVisible(false);
-		//bckTimes[c]->setAlpha(0.9f);		
+			0,y, 256,260, Align::Left, "TimP"+s);  h.bckTimes->setVisible(false);
+		h.bckTimes->setAlpha(0.1f);
 		h.bckTimes->setImageTexture("back_times.png");
 
 		h.txTimTxt = h.bckTimes->createWidget<TextBox>("TextBox",
-			0,y, 90,180, Align::Left, "TimT"+s);
-		h.txTimTxt->setFontName("font.20");  h.txTimTxt->setTextShadow(true);
+			0,y, 120,260, Align::Left, "TimT"+s);
+		h.txTimTxt->setFontName("font.22");  h.txTimTxt->setTextShadow(true);
+		h.txTimTxt->setInheritsAlpha(false);
 		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || pSet->game.chall_num >= 0 || mClient;
 		h.txTimTxt->setCaption(
-			(hasLaps ? String("#D0E8F0")+TR("#{TBLap}") : "")+
+			(hasLaps ? String("#D0F8F0")+TR("#{TBLap}") : "")+
 			"\n#C0E0F0"+TR("#{TBTime}") + 
 			"\n#80C0F0"+TR("#{TBLast}") + 
 			"\n#80E0E0"+TR("#{TBBest}") +
 			"\n#70D070"+TR("#{Track}") +
-			"\n#C0C030"+TR("#{TBPosition}") +
+			"\n\n#C0C030"+TR("#{TBPosition}") +
 			"\n#F0C050"+TR("#{TBPoints}") );
 
 		h.txTimes = h.bckTimes->createWidget<TextBox>("TextBox",
-			0,y, 100,200, Align::Left, "Tim"+s);
-		h.txTimes->setFontName("font.20");  h.txTimes->setTextShadow(true);
+			0,y, 130,260, Align::Left, "Tim"+s);
+		h.txTimes->setInheritsAlpha(false);
+		h.txTimes->setFontName("font.22");  h.txTimes->setTextShadow(true);
 
 
 		//  opp list  -----------
 		h.bckOpp = h.parent->createWidget<ImageBox>("ImageBox",
-			0,y, 208,200, Align::Left, "OppB"+toStr(c));
+			0,y, 224,200, Align::Left, "OppB"+toStr(c));
 		h.bckOpp->setAlpha(0.9f);  h.bckOpp->setVisible(false);
 		h.bckOpp->setImageTexture("opp_rect.png");
 
 		for (int n=0; n < 3; ++n)
 		{
 			h.txOpp[n] = h.bckOpp->createWidget<TextBox>("TextBox",
-				n*65+5,0, 90,180, n == 2 ? Align::Left : Align::Right, "Opp"+toStr(n)+s);
+				n*80+10,0, 90,180, n == 2 ? Align::Left : Align::Right, "Opp"+toStr(n)+s);
 			h.txOpp[n]->setFontName("font.20");
 			if (n==0)  h.txOpp[n]->setTextShadow(true);
 		}
@@ -426,7 +439,7 @@ App::Hud::Hud()
 	,txWarn(0), txPlace(0),  bckWarn(0), bckPlace(0)
 	,txCountdown(0)
 
-	,txGear(0), txVel(0)
+	,txGear(0), txVel(0), bckVel(0)
 	,ndNeedles(0), ndGauges(0)
 	,moNeedles(0), moGauges(0)
 	,txAbs(0), txTcs(0),  txCam(0)
@@ -459,7 +472,7 @@ void App::DestroyHUD()
 
 		#define Dest(w)  \
 			if (w) {  mGUI->destroyWidget(w);  w = 0;  }
-		Dest(h.txGear)  Dest(h.txVel)
+		Dest(h.txGear)  Dest(h.txVel)  Dest(h.bckVel)
 		Dest(h.txAbs)  Dest(h.txTcs)  Dest(h.txCam)
 		
 		Dest(h.txBFuel)  Dest(h.txDamage)  Dest(h.txRewind)
