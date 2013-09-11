@@ -219,7 +219,10 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				}	return false;
 
 			case key(F9):
-				if (ctrl)	// car debug surfaces
+				if (ctrl)
+				{	WP wp = chTireVis;  ChkEv(car_tirevis);  DestroyHUD();  CreateHUD();  }
+				else
+				if (alt)	// car debug surfaces
 				{	WP wp = chDbgS;  ChkEv(car_dbgsurf);  ShowHUD();  }
 				else
 				if (shift)	// car debug text

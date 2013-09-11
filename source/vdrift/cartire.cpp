@@ -211,12 +211,16 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 			slide = 1.0;
 	}*/
 
-	if (slips)  // out
+	if (slips)  // out vis
 	{
 		slips->slide = sigma;
-		slips->slip = alpha;
+		slips->slip  = alpha;
 		slips->slideratio = s;
-		slips->slipratio = a;
+		slips->slipratio  = a;
+		slips->Fx  = Fx;
+		slips->Fxm = max_Fx;
+		slips->Fy  = Fy;
+		slips->Fym = max_Fy;
 	}
 
 	//std::cout << slide << ", " << slip << std::endl;

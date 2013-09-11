@@ -237,18 +237,18 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 		if (cnt > 4)
 		{
 			out << "---Brake---\n";
-			out << " FL [^" << endl;		brake[FRONT_LEFT].DebugPrint(out);
-			out << " FR ^]" << endl;		brake[FRONT_RIGHT].DebugPrint(out);
-			out << " RL [_" << endl;		brake[REAR_LEFT].DebugPrint(out);
-			out << " RR _]" << endl;		brake[REAR_RIGHT].DebugPrint(out);
+			out << " FL [^" << endl;	brake[FRONT_LEFT].DebugPrint(out);
+			out << " FR ^]" << endl;	brake[FRONT_RIGHT].DebugPrint(out);
+			out << " RL [_" << endl;	brake[REAR_LEFT].DebugPrint(out);
+			out << " RR _]" << endl;	brake[REAR_RIGHT].DebugPrint(out);
 		}
 		if (cnt > 7)
 		{
 			out << "\n---Suspension---\n";
-			out << " FL [^" << endl;		suspension[FRONT_LEFT].DebugPrint(out);
-			out << " FR ^]" << endl;		suspension[FRONT_RIGHT].DebugPrint(out);
-			out << " RL [_" << endl;		suspension[REAR_LEFT].DebugPrint(out);
-			out << " RR _]" << endl;		suspension[REAR_RIGHT].DebugPrint(out);
+			out << " FL [^" << endl;	suspension[FRONT_LEFT].DebugPrint(out);
+			out << " FR ^]" << endl;	suspension[FRONT_RIGHT].DebugPrint(out);
+			out << " RL [_" << endl;	suspension[REAR_LEFT].DebugPrint(out);
+			out << " RR _]" << endl;	suspension[REAR_RIGHT].DebugPrint(out);
 		}
 	}
 
@@ -256,10 +256,10 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 		if (cnt > 6)
 		{
 			out << "---Wheel---\n";
-			out << " FL [^" << endl;		wheel[FRONT_LEFT].DebugPrint(out);
-			out << " FR ^]" << endl;		wheel[FRONT_RIGHT].DebugPrint(out);
-			out << " RL [_" << endl;		wheel[REAR_LEFT].DebugPrint(out);
-			out << " RR _]" << endl;		wheel[REAR_RIGHT].DebugPrint(out);
+			out << " FL [^" << endl;	wheel[FRONT_LEFT].DebugPrint(out);
+			out << " FR ^]" << endl;	wheel[FRONT_RIGHT].DebugPrint(out);
+			out << " RL [_" << endl;	wheel[REAR_LEFT].DebugPrint(out);
+			out << " RR _]" << endl;	wheel[REAR_RIGHT].DebugPrint(out);
 		}
 
 	if (p4)
@@ -295,6 +295,14 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 			}
 			out << "F: " << wind_force << endl << "Tq: " << wind_torque << endl;
 			}
+
+			//---
+			/*out << "__Tires__" << endl;
+			for (int i=0; i < 4 ; ++i)
+			{
+				CARWHEEL::SlideSlip& sl = wheel[i].slips;
+				out << "Fx " << fToStr(sl.Fx,0,6) << "  FxM " << fToStr(sl.Fxm,0,6) << "   Fy " << fToStr(sl.Fy,0,6) << "  FyM " << fToStr(sl.Fym,0,6) << endl;
+			}*/
 		}
 }
 ///..........................................................................................................

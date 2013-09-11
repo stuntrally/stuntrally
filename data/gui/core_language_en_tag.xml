@@ -470,6 +470,7 @@
 	<Tag name="Development">Development</Tag>
 	<Tag name="FPS">Fps, Triangles, Batches</Tag>
 	<Tag name="CarDebug">Car susp, long|,lat- slips</Tag>
+	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
 	<Tag name="Wireframe">Wireframe</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="BulletProfilerTxt">Bullet Profiler Times</Tag>

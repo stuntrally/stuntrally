@@ -243,18 +243,18 @@ void GraphView::Update()
 	if (buffered && !manualUpd)  return;
 	manualUpd = false;
 	
-	size_t size = vals.size();
+	size_t size = vals.size();  //todo: mutex lock..
 	int i = iCurX % size;  // vals id
 	float fx = 0.f, fAdd = 1.f / size;  // screen x
 
 	moLine->beginUpdate(0);
 	moLine->position(fx, vals[i], 0.f);
-	for (size_t n=0; n < vals.size(); ++n)
+	for (size_t n=0; n < size; ++n)
 	{
 		moLine->position(fx, vals[i], 0.f);
 		//mo->colour(ColourValue(1,1,0));
 
-		++i;  if (i >= vals.size())  i = 0;
+		++i;  if (i >= size)  i = 0;
 		fx += fAdd;
 	}
 	moLine->end();

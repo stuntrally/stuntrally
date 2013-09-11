@@ -23,6 +23,7 @@ App::App(SETTINGS *settings, GAME *game)
 	:pGame(game), sc(0), bGI(0), mThread(), mTimer(0)
 	// ovr
 	,bckMsg(0),txMsg(0),txCamInfo(0)
+	,txDbgCar(0),txDbgTxt(0),txDbgExt(0)
 	,ovCarDbg(0),ovCarDbgTxt(0),ovCarDbgExt(0)
 	// hud
 	,asp(1)//,  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
@@ -41,7 +42,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,valSizeGaug(0),valTypeGaug(0), valSizeMinimap(0), valZoomMinimap(0)
 	,valCountdownTime(0), valDbgTxtClr(0),valDbgTxtCnt(0)
 	,cmbGraphs(0), valGraphsType(0) //,slGraphT(0)  // view
-	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0),chDbgS(0), chBlt(0),chBltTxt(0)
+	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0),chDbgS(0), chBlt(0),chBltTxt(0), chTireVis(0)
 	,chFps(0), chWire(0), chProfTxt(0), chGraphs(0)
 	,chTimes(0),chMinimp(0),chOpponents(0)
 	,valVolMaster(0),valVolEngine(0),valVolTires(0),valVolSusp(0),valVolEnv(0)  // sounds
@@ -112,6 +113,10 @@ App::App(SETTINGS *settings, GAME *game)
 	int i,c;
 	for (i=0; i<3; ++i)
 	{	txtChP[i]=0;  valChP[i]=0;  }
+
+	for (i=0; i<4; ++i)
+	{	ndTireVis[i]=0;  moTireVis[i]=0;  }
+
 	
 	sc = new Scene();
 	hud.resize(4);  frm.resize(4);  ov.resize(5);

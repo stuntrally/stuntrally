@@ -40,9 +40,11 @@ public:
 		Dbl slip;	///< the angle (in degrees) between the wheel heading and the wheel's actual velocity
 		Dbl slideratio;	///< ratio of the slide to the tire's optimim slide
 		Dbl slipratio;	///< ratio of the slip to the tire's optimim slip
+		Dbl Fx,Fxm,Fy,Fym;  // tire vis circle
 
 		SlideSlip()
 			:slide(0),slip(0),slideratio(0),slipratio(0)
+			,Fx(0),Fxm(0),Fy(0),Fym(0)
 		{	}
 	} slips;
 

@@ -165,8 +165,11 @@ public:
 	MyGUI::TextBox *txMsg;  MyGUI::ImageBox *bckMsg;
 	//  camera move info
 	MyGUI::TextBox *txCamInfo;
-	//  car debug texts
+	//  car debug texts  todo...
 	MyGUI::TextBox *txDbgCar,*txDbgTxt,*txDbgExt;
+
+	Ogre::SceneNode    *ndTireVis[4];
+	Ogre::ManualObject *moTireVis[4];
 
 	Ogre::SceneNode* arrowNode,*arrowRotNode;  // checkpoint arrow
 	Ogre::Quaternion arrowAnimStart, arrowAnimEnd, arrowAnimCur; // smooth animation
@@ -530,7 +533,7 @@ public:
 		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP), chkMiniTer(WP), chkMiniBorder(WP),  // view
 		chkFps(WP), chkWireframe(WP), 
 		chkCamInfo(WP), chkTimes(WP), chkOpponents(WP), chkOpponentsSort(WP), chkCamTilt(WP),
-		chkCarDbgBars(WP), chkCarDbgTxt(WP), chkCarDbgSurf(WP), chkGraphs(WP),
+		chkCarDbgBars(WP), chkCarDbgTxt(WP), chkCarDbgSurf(WP), chkGraphs(WP), chkCarTireVis(WP), 
 		chkBltDebug(WP), chkBltProfilerTxt(WP), chkProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkRearInv(WP),  // car
@@ -548,7 +551,8 @@ public:
 	void imgBtnCarClr(WP), btnCarClrRandom(WP), toggleWireframe();
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP);
 	MyGUI::ButtonPtr bRsimEasy, bRsimNorm;  void radSimEasy(WP), radSimNorm(WP);  bool bReloadSim;
-	MyGUI::ButtonPtr chFps,chWire, chBlt,chBltTxt, chProfTxt, chDbgT,chDbgB,chDbgS, chGraphs,
+	MyGUI::ButtonPtr chFps,chWire, chBlt,chBltTxt, chProfTxt,
+		chDbgT,chDbgB,chDbgS, chGraphs, chTireVis,
 		chTimes,chMinimp,chOpponents;
 
 	///  replay  -----------------------------

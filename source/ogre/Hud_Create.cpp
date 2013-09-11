@@ -401,6 +401,39 @@ void App::CreateHUD()
 
 	///  tex
 	resMgr.removeResourceLocation(path, sGrp);
+	
+	
+	///  tire vis circles  + + + +
+	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
+
+	if (pSet->car_tirevis)
+	{	SceneNode* rt = scm->getRootSceneNode();
+		for (int i=0; i < 4; ++i)
+		{
+			ManualObject* m = mSceneMgr->createManualObject();
+			m->setDynamic(true);
+			m->setUseIdentityProjection(true);
+			m->setUseIdentityView(true);
+			m->setCastShadows(false);
+
+			m->estimateVertexCount(32);
+			m->begin("hud/line", RenderOperation::OT_LINE_LIST);
+			m->position(-1,0, 0);  m->colour(1,1,1);
+			m->position( 1,0, 0);  m->colour(1,1,1);
+			m->end();
+		 
+			AxisAlignedBox aabInf;	aabInf.setInfinite();
+			m->setBoundingBox(aabInf);  // always visible
+			m->setVisibilityFlags(RV_Hud);
+			m->setRenderQueueGroup(RQG_Hud1);
+
+			moTireVis[i] = m;
+			ndTireVis[i] = rt->createChildSceneNode();  ndTireVis[i]->attachObject(moTireVis[i]);
+			ndTireVis[i]->setPosition((i%2 ? 1.f :-1.f) * 0.14f - 0.7f,
+									  (i/2 ?-1.f : 1.f) * 0.22f - 0.5f, 0.f);
+			const Real s = 0.06f;  // par
+			ndTireVis[i]->setScale(s, s*asp, 1.f);
+	}	}
 
 
 	//  dbg texts
@@ -456,14 +489,15 @@ App::Hud::Hud()
 void App::DestroyHUD()
 {
 	SceneManager* scm = mSplitMgr->mGuiSceneMgr;
-	for (int c=0; c < hud.size(); ++c)
+	int i,c;
+	for (c=0; c < hud.size(); ++c)
 	{	Hud& h = hud[c];
 
 		#define Dest2(mo,nd)  {  \
 			if (mo) {  scm->destroyManualObject(mo);  mo=0;  } \
 			if (nd) {  scm->destroySceneNode(nd);  nd=0;  }  }
 
-		for (int i=0; i < 6; ++i)
+		for (i=0; i < 6; ++i)
 			Dest2(h.vMoPos[i],h.vNdPos[i])
 		
 		Dest2(h.moMap,h.ndMap)
@@ -478,7 +512,7 @@ void App::DestroyHUD()
 		Dest(h.txBFuel)  Dest(h.txDamage)  Dest(h.txRewind)
 		Dest(h.icoBFuel)  Dest(h.icoDamage)  Dest(h.icoRewind)
 
-		for (int n=0; n < 3; ++n)  Dest(h.txOpp[n])
+		for (i=0; i < 3; ++i)  Dest(h.txOpp[i])
 		Dest(h.bckOpp)
 		Dest(h.txTimTxt)  Dest(h.txTimes)  Dest(h.bckTimes)
 		h.sTimes = "";
@@ -489,6 +523,9 @@ void App::DestroyHUD()
 	}
 	Dest(txMsg)  Dest(bckMsg)
 	Dest(txCamInfo)
+	
+	for (i=0; i < 4; ++i)
+		Dest2(moTireVis[i],ndTireVis[i])
 }
 
 //  HUD show/hide

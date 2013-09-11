@@ -195,6 +195,7 @@ void App::InitGui()
 	Chk("CarDbgBars", chkCarDbgBars, pSet->car_dbgbars);	chDbgB = bchk;
 	Chk("CarDbgTxt", chkCarDbgTxt, pSet->car_dbgtxt);		chDbgT = bchk;
 	Chk("CarDbgSurf", chkCarDbgSurf, pSet->car_dbgsurf);	chDbgS = bchk;
+	Chk("CarTireVis", chkCarTireVis, pSet->car_tirevis);	chTireVis = bchk;
 	Chk("Graphs", chkGraphs, pSet->show_graphs);		chGraphs = bchk;
 	Slv(DbgTxtClr, pSet->car_dbgtxtclr /1.f);
 	Slv(DbgTxtCnt, pSet->car_dbgtxtcnt /8.f);

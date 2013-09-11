@@ -574,6 +574,48 @@ void App::UpdateHUD(int carId, float time)
 		if (ov[4].oX)  {  //ov[4].oL->setTop(400);
 			ov[4].oX->setCaption(ss);  }
 	}
+	
+
+	///  tire vis circles  + + + +
+	if (pCar && moTireVis[0] && pSet->car_tirevis)
+	{
+		const Real z = 8000.f;  // scale
+		const int na = 32;  // circle quality
+		const Real ad = 2.f*PI_d/na, u = 0.02f;  // u line thickness
+		const ColourValue cb(0.8,0.8,0.8),cl(0.2,1,0.2),cc(1,1,0);
+		
+		for (int i=0; i < 4; ++i)
+		{
+			const CARWHEEL::SlideSlip& t = pCar->dynamics.wheel[i].slips;
+			ManualObject* m = moTireVis[i];
+			m->beginUpdate(0);
+			//  back +
+			m->position(-1,0,0);  m->colour(cb);
+			m->position( 1,0,0);  m->colour(cb);
+			m->position(0,-1,0);  m->colour(cb);
+			m->position(0, 1,0);  m->colour(cb);
+			
+			//  tire line /
+			for (int y=-2; y<=2; ++y)
+			for (int x=-2; x<=2; ++x)  {
+				m->position(0      +x*u, 0      +y*u, 0);  m->colour(cl);
+				m->position(t.Fy/z +x*u, t.Fx/z +y*u, 0);  m->colour(cl);  }
+
+			//  max circle o
+			Real rx = t.Fym/z, ry = t.Fxm/z, a = 0.f;
+			Vector3 p(0,0,0),po(0,0,0);
+			
+			for (int n=0; n <= na; ++n)
+			{
+				p.x = rx*cosf(a);  p.y =-ry*sinf(a);
+				if (n > 0)  {
+					m->position(po);  m->colour(cc);
+					m->position(p);   m->colour(cc);  }
+				a += ad;  po = p;
+			}
+			m->end();
+		}
+	}
 
 	PROFILER.endBlock("g.hud");
 }
