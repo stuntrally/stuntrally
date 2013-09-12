@@ -78,6 +78,7 @@ public:
 	std::vector<ReplayFrame> frm;  //size:4  //  frm - used when playing replay for hud and sounds
 	const Ogre::String& GetGhostFile(std::string* ghCar=NULL);  std::string GetRplListDir();
 	bool isGhost2nd;  // if present (ghost but from other car)
+	std::vector<float> vTimeAtChks;  // track ghost's times at road checkpoints
 
 	Scene* sc;  /// scene.xml
 	FluidsXml fluidsXml;  /// fluid params xml

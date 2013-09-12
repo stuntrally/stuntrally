@@ -431,6 +431,7 @@ void App::newPoses(float time)  // time only for camera update
 							if (i == carM->iNextChk && carM->iNumChks < ncs)
 							{
 								carM->iCurChk = i;  carM->iNumChks++;
+								carM->timeAtCurChk = pGame->timer.GetPlayerTime(c);
 								int ii = (pSet->game.trackreverse ? -1 : 1) * road->iDir;
 								carM->iNextChk = (carM->iCurChk + ii + ncs) % ncs;
 								carM->UpdNextCheck();

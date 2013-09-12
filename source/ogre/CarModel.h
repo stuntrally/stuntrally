@@ -169,6 +169,7 @@ public:
 	int iInChk, iCurChk, iNextChk, iNumChks,  // cur checkpoint -1 at start
 		iWonPlace, iWonPlaceOld;  float iWonMsgTime;
 	bool bInSt, bWrongChk;  float fChkTime;
+	float timeAtCurChk;
 	//bool Checkpoint(const PosInfo& posInfo, class SplineRoad* road);  // update
 	Ogre::Vector3 vStartPos;  void ResetChecks(bool bDist=false), UpdNextCheck(), ShowNextChk(bool visible);
 	

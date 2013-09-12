@@ -206,7 +206,7 @@ public:
 	void Clear();
 
 	TrackHeader header;
-private:
+//private:
 	std::vector<TrackFrame> frames;
 	int idLast;  // last index from GetFrame
 };

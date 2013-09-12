@@ -299,7 +299,7 @@ void App::CreateHUD()
 
 		//  times text  -----------
 		h.bckTimes = h.parent->createWidget<ImageBox>("ImageBox",
-			0,y, 256,260, Align::Left, "TimP"+s);  h.bckTimes->setVisible(false);
+			0,y, 356,260, Align::Left, "TimP"+s);  h.bckTimes->setVisible(false);
 		h.bckTimes->setAlpha(0.1f);
 		h.bckTimes->setImageTexture("back_times.png");
 
@@ -318,7 +318,7 @@ void App::CreateHUD()
 			"\n#F0C050"+TR("#{TBPoints}") );
 
 		h.txTimes = h.bckTimes->createWidget<TextBox>("TextBox",
-			0,y, 130,260, Align::Left, "Tim"+s);
+			0,y, 230,260, Align::Left, "Tim"+s);
 		h.txTimes->setInheritsAlpha(false);
 		h.txTimes->setFontName("font.22");  h.txTimes->setTextShadow(true);
 
@@ -402,6 +402,10 @@ void App::CreateHUD()
 	///  tex
 	resMgr.removeResourceLocation(path, sGrp);
 	
+	//-  cars need update
+	for (int i=0; i < carModels.size(); ++i)
+		carModels[i]->updTimes = true;
+
 	
 	///  tire vis circles  + + + +
 	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
@@ -451,7 +455,7 @@ void App::CreateHUD()
 	ShowHUD();  //_
 	bSizeHUD = true;
 	//SizeHUD(true);
-
+	
 	ti.update();	/// time
 	float dt = ti.dt * 1000.f;
 	LogO("::: Time Create Hud: "+fToStr(dt,0,3)+" ms");

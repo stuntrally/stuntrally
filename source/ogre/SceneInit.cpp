@@ -359,7 +359,7 @@ void App::LoadGame()  // 2
 		}
 	}
 	///  track's ghost  . . .
-	ghtrk.Clear();
+	ghtrk.Clear();  vTimeAtChks.clear();
 	bool deny = pChall && !pChall->trk_ghost;
 	if (!bRplPlay /*&& pSet->rpl_trackghost?*/ && !mClient && !pSet->game.track_user && !deny)
 	if (!pSet->game.trackreverse)  // only not rev, todo..
@@ -551,6 +551,33 @@ void App::LoadRoad()  // 6
 		
 	if (road && road->getNumPoints() == 0 && arrowRotNode)
 		arrowRotNode->setVisible(false);  // hide when no road
+
+	///  Run track's ghost
+	// to get times at checkpoints
+	if (!road || ghtrk.GetTimeLength() < 1.f)  return;
+	int ncs = road->mChks.size();
+	if (ncs == 0)  return;
+
+	vTimeAtChks.resize(ncs);
+	int i,c;  // clear
+	for (c=0; c < ncs; ++c)
+		vTimeAtChks[c] = 0.f;
+
+	int si = ghtrk.frames.size();
+	for (i=0; i < si; ++i)
+	{
+		const TrackFrame& tf = ghtrk.frames[i];  // car
+		for (c=0; c < ncs; ++c)  // test if in any checkpoint
+		{
+			const CheckSphere& cs = road->mChks[c];
+			Vector3 pos(tf.pos[0],tf.pos[2],-tf.pos[1]);
+			Real d2 = cs.pos.squaredDistance(pos);
+			if (d2 < cs.r2)  // inside
+			if (vTimeAtChks[c] == 0.f)
+			{	vTimeAtChks[c] = tf.time;
+				LogO("Chk "+toStr(c)+" ti "+fToStr(tf.time,1,4));
+		}	}
+	}
 }
 
 void App::LoadObjects()  // 7

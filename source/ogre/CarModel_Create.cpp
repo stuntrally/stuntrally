@@ -46,6 +46,7 @@ CarModel::CarModel(int index, int colorId, eCarType type, const std::string& nam
 	,all_subs(0), all_tris(0)  //stats
 	,bGetStPos(true), fChkTime(0.f), iWonPlace(0), iWonPlaceOld(0)
 	,iCurChk(-1), iNumChks(0), iNextChk(0)  //ResetChecks();  // road isnt yet
+	,timeAtCurChk(0.f)
 	,distFirst(1.f), distLast(1.f), distTotal(10.f), trackPercent(0.f), updTimes(1)
 {
 	for (int w = 0; w < 4; ++w)
