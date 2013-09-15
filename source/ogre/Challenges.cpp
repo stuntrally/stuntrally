@@ -4,6 +4,7 @@
 #include "../vdrift/game.h"
 #include "CGame.h"
 #include "CHud.h"
+#include "CGui.h"
 #include "../road/Road.h"
 #include "common/MultiList2.h"
 
@@ -13,7 +14,7 @@ using namespace MyGUI;
 
 
 ///
-void App::BackFromChs()
+void CGui::BackFromChs()
 {
 	pSet->gui.champ_num = -1;
 	pSet->gui.chall_num = -1;
@@ -21,13 +22,13 @@ void App::BackFromChs()
 	//CarListUpd();  // off filtering
 }
 
-bool App::isChallGui()
+bool CGui::isChallGui()
 {
 	//return imgChall && imgChall->getVisible();
 	return pSet->inMenu == MNU_Challenge;
 }
 
-void App::tabChallType(MyGUI::TabPtr wp, size_t id)
+void CGui::tabChallType(MyGUI::TabPtr wp, size_t id)
 {
 	pSet->chall_type = id;
 	ChallsListUpdate();
@@ -36,7 +37,7 @@ void App::tabChallType(MyGUI::TabPtr wp, size_t id)
 
 ///  Challenges list  fill
 //----------------------------------------------------------------------------------------------------------------------
-void App::ChallsListUpdate()
+void CGui::ChallsListUpdate()
 {
 	const char clrCh[7][8] = {
 	//  0 Rally  1 Scenery  2 Endurance  3 Chase  4 Stunts  5 Extreme  6 Test
@@ -74,7 +75,7 @@ void App::ChallsListUpdate()
 
 ///  Challenges list  sel changed,  fill Stages list
 //----------------------------------------------------------------------------------------------------------------------
-void App::listChallChng(MyGUI::MultiList2* chlist, size_t id)
+void CGui::listChallChng(MyGUI::MultiList2* chlist, size_t id)
 {
 	if (id==ITEM_NONE || liChalls->getItemCount() == 0)  return;
 
@@ -102,7 +103,7 @@ void App::listChallChng(MyGUI::MultiList2* chlist, size_t id)
 
 
 //  list allowed cars types and cars
-String App::StrChallCars(const Chall& ch)
+String CGui::StrChallCars(const Chall& ch)
 {
 	String str;
 	int i,s;
@@ -133,7 +134,7 @@ String App::StrChallCars(const Chall& ch)
 }
 
 //  test if car is in challenge allowed cars or types
-bool App::IsChallCar(String name)
+bool CGui::IsChallCar(String name)
 {
 	if (!liChalls || liChalls->getIndexSelected()==ITEM_NONE)  return true;
 
@@ -164,7 +165,7 @@ bool App::IsChallCar(String name)
 
 ///  chall start
 //---------------------------------------------------------------------
-void App::btnChallStart(WP)
+void CGui::btnChallStart(WP)
 {
 	if (liChalls->getIndexSelected()==ITEM_NONE)  return;
 	pSet->gui.chall_num = s2i(liChalls->getItemNameAt(liChalls->getIndexSelected()).substr(7))-1;
@@ -185,7 +186,7 @@ void App::btnChallStart(WP)
 
 ///  stage start / end
 //----------------------------------------------------------------------------------------------------------------------
-void App::btnChallStageStart(WP)
+void CGui::btnChallStageStart(WP)
 {
 	//  check if chall ended
 	int chId = pSet->game.chall_num, p = pSet->game.champ_rev ? 1 : 0;
@@ -196,12 +197,12 @@ void App::btnChallStageStart(WP)
 	LogO("|] This was stage " + toStr(pc.curTrack) + "/" + toStr(ch.trks.size()) + " btn");
 	if (last)
 	{	//  show end window, todo: start particles..
-		mWndChallStage->setVisible(false);
+		app->mWndChallStage->setVisible(false);
 		// tutorial, tutorial hard, normal, hard, very hard, scenery, test
 		const int ui[8] = {0,1,2,3,4,5,0,0};
 		//if (imgChallEnd)
 		//	imgChallEnd->setImageCoord(IntCoord(ui[std::min(7, std::max(0, ch.type))]*128,0,128,256));
-		mWndChallEnd->setVisible(true);
+		app->mWndChallEnd->setVisible(true);
 		return;
 	}
 
@@ -209,34 +210,34 @@ void App::btnChallStageStart(WP)
 	if (finished)
 	{
 		LogO("|] Loading next stage.");
-		mWndChallStage->setVisible(false);
+		app->mWndChallStage->setVisible(false);
 		btnNewGame(0);
 	}else
 	{
 		LogO("|] Starting stage.");
-		mWndChallStage->setVisible(false);
+		app->mWndChallStage->setVisible(false);
 		pGame->pause = false;
 		pGame->timer.waiting = false;
 	}
 }
 
 //  stage back
-void App::btnChallStageBack(WP)
+void CGui::btnChallStageBack(WP)
 {
-	mWndChallStage->setVisible(false);
-	isFocGui = true;  // show back gui
+	app->mWndChallStage->setVisible(false);
+	app->isFocGui = true;  // show back gui
 	toggleGui(false);
 }
 
 //  chall end
-void App::btnChallEndClose(WP)
+void CGui::btnChallEndClose(WP)
 {
-	mWndChallEnd->setVisible(false);
+	app->mWndChallEnd->setVisible(false);
 }
 
 
 ///  save progressL and update it on gui
-void App::ProgressLSave(bool upgGui)
+void CGui::ProgressLSave(bool upgGui)
 {
 	progressL[0].SaveXml(PATHMANAGER::UserConfigDir() + "/progressL.xml");
 	progressL[1].SaveXml(PATHMANAGER::UserConfigDir() + "/progressL_rev.xml");
@@ -250,7 +251,7 @@ void App::ProgressLSave(bool upgGui)
 ///  challenge advance logic
 //  caution: called from GAME, 2nd thread, no Ogre stuff here
 //----------------------------------------------------------------------------------------------------------------------
-void App::ChallengeAdvance(float timeCur/*total*/)
+void CGui::ChallengeAdvance(float timeCur/*total*/)
 {
 	int chId = pSet->game.chall_num, p = pSet->game.champ_rev ? 1 : 0;
 	ProgressChall& pc = progressL[p].chs[chId];
@@ -269,17 +270,17 @@ void App::ChallengeAdvance(float timeCur/*total*/)
 	LogO("|] Your time: " + toStr(timeCur));
 	LogO("|] Best time: " + toStr(timeTrk));
 
-	float carMul = GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
+	float carMul = app->GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
 	float points = 0.f;  int pos = 0;
 
 	#if 1  // test score +- sec diff
 	for (int i=-2; i <= 2; ++i)
 	{
-		pos = GetRacePos(timeCur + i*2.f, timeTrk, carMul, true, &points);
+		pos = app->GetRacePos(timeCur + i*2.f, timeTrk, carMul, true, &points);
 		LogO("|] var, add time: "+toStr(i*2)+" sec, points: "+fToStr(points,2));
 	}
 	#endif
-	pos = GetRacePos(timeCur, timeTrk, carMul, true, &points);
+	pos = app->GetRacePos(timeCur, timeTrk, carMul, true, &points);
 
 	pt.time = timeCur;  pt.points = points;  pt.pos = pos;
 
@@ -317,7 +318,7 @@ void App::ChallengeAdvance(float timeCur/*total*/)
 		pGame->timer.waiting = true;
 
 		ChallFillStageInfo(true);  // cur track
-		mWndChallStage->setVisible(true);
+		app->mWndChallStage->setVisible(true);
 		
 		if (pc.curTrack == 0)  // save picked car
 			pc.car = pSet->game.car[0];
@@ -333,7 +334,7 @@ void App::ChallengeAdvance(float timeCur/*total*/)
 	pGame->timer.waiting = true;
 
 	ChallFillStageInfo(true);  // cur track
-	mWndChallStage->setVisible(true);
+	app->mWndChallStage->setVisible(true);
 
 	//  compute avg
 	float avgPos = 0.f, avgPoints = 0.f, totalTime = 0.f;
@@ -431,21 +432,21 @@ void App::ChallengeAdvance(float timeCur/*total*/)
 	txChallEndF->setCaption(passed ? TR("#{ChallEndFinished}") : TR("#{Finished}"));
 
 	edChallEnd->setCaption(s);
-	//mWndChallEnd->setVisible(true);  // show after stage end
+	//ap->mWndChallEnd->setVisible(true);  // show after stage end
 	LogO("|]");
 }
 
 
 //  Prize const  * * *
 const String
-	App::clrPrize[4] = {"","#D0B050","#D8D8D8","#E8E050"},
-	App::strPrize[4] = {"","#{Bronze}","#{Silver}","#{Gold}"};
+	CGui::clrPrize[4] = {"","#D0B050","#D8D8D8","#E8E050"},
+	CGui::strPrize[4] = {"","#{Bronze}","#{Silver}","#{Gold}"};
 
 //  lowering pass req
-const int   App::ciAddPos[3]    = {4,2,0};
-const float App::cfSubPoints[3] = {2.f,1.f,0.f};
+const int   CGui::ciAddPos[3]    = {4,2,0};
+const float CGui::cfSubPoints[3] = {2.f,1.f,0.f};
 
-const String App::StrPrize(int i)  //0..3
+const String CGui::StrPrize(int i)  //0..3
 {
 	return clrPrize[i] + TR(strPrize[i]);
 }
@@ -453,7 +454,7 @@ const String App::StrPrize(int i)  //0..3
 
 //  stage wnd text
 //----------------------------------------------------------------------------------------------------------------------
-void App::ChallFillStageInfo(bool finished)
+void CGui::ChallFillStageInfo(bool finished)
 {
 	int chId = pSet->game.chall_num, p = pSet->game.champ_rev ? 1 : 0;
 	const ProgressChall& pc = progressL[p].chs[chId];
@@ -474,8 +475,8 @@ void App::ChallFillStageInfo(bool finished)
 		{
 			const TrackInfo* ti = &tracksXml.trks[id-1];
 			s += "#A0D0FF"+ TR("#{Difficulty}:  ") + clrsDiff[ti->diff] + TR("#{Diff"+toStr(ti->diff)+"}") + "\n";
-			if (road)
-			{	Real len = road->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);
+			if (app->road)
+			{	Real len = app->road->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);
 				s += "#A0D0FF"+ TR("#{Distance}:  ") + "#B0E0FF" + fToStr(len, 1,4) + (pSet->show_mph ? " mi" : " km") + "\n\n";
 		}	}
 	}
@@ -514,8 +515,8 @@ void App::ChallFillStageInfo(bool finished)
 		if (trk.timeNeeded > 0.f)	s += TR("  #D8C0FF#{TBTime}: ") + CHud::StrTime(trk.timeNeeded) +"\n";
 		if (trk.passPoints > 0.f)	s += TR("  #D8C0FF#{TBPoints}: ") + fToStr(trk.passPoints,1) +"\n";
 		if (trk.passPos > 0)		s += TR("  #D8C0FF#{TBPosition}: ") + toStr(trk.passPos) +"\n";
-		if (road)
-			s += "\n#A8B8C8"+ road->sTxtDesc;
+		if (app->road)
+			s += "\n#A8B8C8"+ app->road->sTxtDesc;
 	}
 
 	edChallStage->setCaption(s);
@@ -547,7 +548,7 @@ void App::ChallFillStageInfo(bool finished)
 
 //  chall details  (gui tab Stages)
 //----------------------------------------------------------------------------------------------------------------------
-void App::UpdChallDetail(int id)
+void CGui::UpdChallDetail(int id)
 {
 	const Chall& ch = chall.all[id];
 	int ntrks = ch.trks.size();

@@ -4,6 +4,7 @@
 #include "../vdrift/game.h"
 #include "CGame.h"
 #include "CHud.h"
+#include "CGui.h"
 #include "FollowCamera.h"
 #include <boost/filesystem.hpp>
 #include <time.h>
@@ -16,20 +17,20 @@ using namespace MyGUI;
 ///  [Replay]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 //------------------------------------------------------------------------------------------------------------------
 
-void App::slRplPosEv(SL)  // change play pos
+void CGui::slRplPosEv(SL)  // change play pos
 {
-	if (!bRplPlay)  return;
+	if (!app->bRplPlay)  return;
 	double oldt = pGame->timer.GetReplayTime(0);
-	double v = val;  v = std::max(0.0, std::min(1.0, v));  v *= replay.GetTimeLength();
+	double v = val;  v = std::max(0.0, std::min(1.0, v));  v *= app->replay.GetTimeLength();
 	pGame->timer.SetReplayTime(0, v);
 
-	FollowCamera* fCam = (*carModels.begin())->fCam;
+	FollowCamera* fCam = (*app->carModels.begin())->fCam;
 	fCam->First();  // instant change
 	//for (int i=0; i < 10; ++i)
 	//	fCam->update(abs(v-oldt)/10.f, 0);  //..?
 }
 
-void App::btnRplLoad(WP)  // Load
+void CGui::btnRplLoad(WP)  // Load
 {
 	//  from list
 	int i = rplList->getIndexSelected();
@@ -38,7 +39,7 @@ void App::btnRplLoad(WP)  // Load
 	String name = rplList->getItemNameAt(i).substr(7);
 	string file = GetRplListDir() + "/" + name + ".rpl";
 
-	if (!replay.LoadFile(file))
+	if (!app->replay.LoadFile(file))
 	{
 		Message::createMessageBox(  // #{.. translate
 			"Message", "Load Replay", "Error: Can't load file.",
@@ -46,7 +47,7 @@ void App::btnRplLoad(WP)  // Load
 	}
 	else  // car, track change
 	{
-		const ReplayHeader& h = replay.header;
+		const ReplayHeader& h = app->replay.header;
 		string car = h.car, trk = h.track;
 		bool usr = h.track_user == 1;
 		//todo: check if cars, trk exist..
@@ -70,13 +71,13 @@ void App::btnRplLoad(WP)  // Load
 		{	pSet->game.car[p] = h.cars[p-1];
 			pSet->game.car_hue[p] = h.hue[p];  pSet->game.car_sat[p] = h.sat[p];  pSet->game.car_val[p] = h.val[p];
 		}
-		newGameRpl = true;
+		app->newGameRpl = true;
 		btnNewGame(0);
-		bRplPlay = 1;
+		app->bRplPlay = 1;
 	}
 }
 
-void App::btnRplSave(WP)  // Save
+void CGui::btnRplSave(WP)  // Save
 {
 	String edit = edRplName->getCaption();
 	String file = PATHMANAGER::Replays() + "/" + pSet->game.track + "_" + edit + ".rpl";
@@ -88,7 +89,7 @@ void App::btnRplSave(WP)  // Save
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 		return;
 	}
-	if (!replay.SaveFile(file.c_str()))
+	if (!app->replay.SaveFile(file.c_str()))
 	{
 		Message::createMessageBox(  // #{..
 			"Message", "Save Replay", "Error: Can't save file.",
@@ -98,7 +99,7 @@ void App::btnRplSave(WP)  // Save
 }
 
 //  list change
-void App::listRplChng(List* li, size_t pos)
+void CGui::listRplChng(List* li, size_t pos)
 {
 	size_t i = li->getIndexSelected();  if (i == ITEM_NONE)  return;
 	String name = li->getItemNameAt(i).substr(7);
@@ -140,22 +141,22 @@ void App::listRplChng(List* li, size_t pos)
 
 //  replay settings
 
-void App::chkRplAutoRec(WP wp)
+void CGui::chkRplAutoRec(WP wp)
 {
-	bRplRec = !bRplRec;  // changes take effect next game start
+	app->bRplRec = !app->bRplRec;  // changes take effect next game start
 	if (!wp)  return;
 	ButtonPtr chk = wp->castType<MyGUI::Button>();
-    chk->setStateSelected(bRplRec);
+    chk->setStateSelected(app->bRplRec);
 }
 
-void App::chkRplChkGhost(WP wp){		ChkEv(rpl_ghost);		}
-void App::chkRplChkBestOnly(WP wp){		ChkEv(rpl_bestonly);	}
-void App::chkRplChkPar(WP wp){			ChkEv(rpl_ghostpar);	}
-void App::chkRplChkRewind(WP wp){		ChkEv(rpl_ghostrewind);	}
-void App::chkRplChkGhostOther(WP wp){	ChkEv(rpl_ghostother);	}
-void App::chkRplChkTrackGhost(WP wp){	ChkEv(rpl_trackghost);	}
+void CGui::chkRplChkGhost(WP wp){		ChkEv(rpl_ghost);		}
+void CGui::chkRplChkBestOnly(WP wp){	ChkEv(rpl_bestonly);	}
+void CGui::chkRplChkPar(WP wp){			ChkEv(rpl_ghostpar);	}
+void CGui::chkRplChkRewind(WP wp){		ChkEv(rpl_ghostrewind);	}
+void CGui::chkRplChkGhostOther(WP wp){	ChkEv(rpl_ghostother);	}
+void CGui::chkRplChkTrackGhost(WP wp){	ChkEv(rpl_trackghost);	}
 
-void App::slRplNumViewports(SL)
+void CGui::slRplNumViewports(SL)
 {
 	int v = 1.f + 3.f * val;	if (bGI)  pSet->rpl_numViews = v;
 	if (valRplNumViewports)  valRplNumViewports->setCaption(toStr(v));
@@ -164,19 +165,19 @@ void App::slRplNumViewports(SL)
 
 //  replays list filtering
 
-void App::btnRplAll(WP)
+void CGui::btnRplAll(WP)
 {
 	rbRplCur->setStateSelected(false);  rbRplAll->setStateSelected(true);
 	pSet->rpl_listview = 0;  updReplaysList();
 }
 
-void App::btnRplCur(WP)
+void CGui::btnRplCur(WP)
 {
 	rbRplCur->setStateSelected(true);  rbRplAll->setStateSelected(false);
 	pSet->rpl_listview = 1;  updReplaysList();
 }
 
-void App::chkRplGhosts(WP wp)
+void CGui::chkRplGhosts(WP wp)
 {
 	ChkEv(rpl_listghosts);  updReplaysList();
 }
@@ -184,35 +185,35 @@ void App::chkRplGhosts(WP wp)
 
 //  replay controls
 
-void App::btnRplToStart(WP)
+void CGui::btnRplToStart(WP)
 {
 	pGame->timer.RestartReplay(0);
 }
 
-void App::btnRplToEnd(WP)
+void CGui::btnRplToEnd(WP)
 {
 }
 
-void App::btnRplBackDn(WP, int, int, MouseButton){	bRplBack = true;  }
-void App::btnRplBackUp(WP, int, int, MouseButton){	bRplBack = false;  }
-void App::btnRplFwdDn(WP, int, int, MouseButton){	bRplFwd = true;  }
-void App::btnRplFwdUp(WP, int, int, MouseButton){	bRplFwd = false;  }
+void CGui::btnRplBackDn(WP, int, int, MouseButton){	bRplBack = true;  }
+void CGui::btnRplBackUp(WP, int, int, MouseButton){	bRplBack = false;  }
+void CGui::btnRplFwdDn(WP, int, int, MouseButton){	bRplFwd = true;  }
+void CGui::btnRplFwdUp(WP, int, int, MouseButton){	bRplFwd = false;  }
 
-void App::btnRplPlay(WP)  // play / pause
+void CGui::btnRplPlay(WP)  // play / pause
 {
-	bRplPause = !bRplPause;
+	app->bRplPause = !app->bRplPause;
 	UpdRplPlayBtn();
 }
 
-void App::UpdRplPlayBtn()
+void CGui::UpdRplPlayBtn()
 {
-	String sign = bRplPause ? "|>" : "||";
+	String sign = app->bRplPause ? "|>" : "||";
 	if (btRplPl)
 		btRplPl->setCaption(sign);
 }
 
 
-void App::updReplaysList()
+void CGui::updReplaysList()
 {
 	if (!rplList)  return;
 	rplList->removeAllItems();
@@ -240,7 +241,7 @@ void App::updReplaysList()
 
 
 //  Delete
-void App::btnRplDelete(WP)
+void CGui::btnRplDelete(WP)
 {
 	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
 	string name = rplList->getItemNameAt(i).substr(7);
@@ -248,9 +249,9 @@ void App::btnRplDelete(WP)
 	Message* message = Message::createMessageBox(
 		"Message", "Delete Replay ?", name,  // #{..
 		MessageBoxStyle::IconQuest | MessageBoxStyle::Yes | MessageBoxStyle::No);
-	message->eventMessageBoxResult += newDelegate(this, &App::msgRplDelete);
+	message->eventMessageBoxResult += newDelegate(this, &CGui::msgRplDelete);
 }
-void App::msgRplDelete(Message* sender, MessageBoxStyle result)
+void CGui::msgRplDelete(Message* sender, MessageBoxStyle result)
 {
 	if (result != MessageBoxStyle::Yes)  return;
 	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
@@ -263,7 +264,7 @@ void App::msgRplDelete(Message* sender, MessageBoxStyle result)
 }
 
 //  Rename
-void App::btnRplRename(WP)
+void CGui::btnRplRename(WP)
 {
 	if (pSet->rpl_listghosts)  return;  // cant rename ghosts
 	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;

@@ -2,6 +2,7 @@
 #include "common/Defines.h"
 #include "CGame.h"
 #include "CHud.h"
+#include "CGui.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
 #include "../vdrift/game.h"
@@ -111,10 +112,8 @@ bool App::frameStart(Real time)
 	for (int i=0; i<4; ++i)
 	{
 		boost::lock_guard<boost::mutex> lock(mPlayerInputStateMutex);
-		for (int a = 0; a<NumPlayerActions; ++a)
-		{
+		for (int a = 0; a < NumPlayerActions; ++a)
 			mPlayerInputState[i][a] = mInputCtrlPlayer[i]->getChannel(a)->getValue();
-		}
 	}
 
 	if (imgBack && pGame)  // show/hide background image
@@ -183,23 +182,16 @@ bool App::frameStart(Real time)
 	}
 	//...................................................................
 
-	UnfocusLists();
 
+	///  gui
+	gui->GuiUpdate();
 
-	if (bGuiReinit)  // after language change from combo
-	{	bGuiReinit = false;
-
-		mGUI->destroyWidgets(vwGui);  bnQuit=0;mWndOpts=0;  //todo: rest too..
-		InitGui();
-		bWindowResized = true;
-		mWndTabsOpts->setIndexSelected(3);  // switch back to view tab
-	}
 
 	if (bWindowResized)
 	{	bWindowResized = false;
-		ResizeOptWnd();
-		SizeGUI();
-		updTrkListDim();  updChampListDim();  // resize lists
+		gui->ResizeOptWnd();
+		gui->SizeGUI();
+		gui->updTrkListDim();  gui->updChampListDim();  // resize lists
 		bSizeHUD = true;
 		
 		if (mSplitMgr)  //  reassign car cameras from new viewports
@@ -216,30 +208,7 @@ bool App::frameStart(Real time)
 			if (trees)  trees->setCamera(cam1);
 		}
 	}
-		
-	///  sort trk list
-	if (trkList && trkList->mSortColumnIndex != trkList->mSortColumnIndexOld
-		|| trkList->mSortUp != trkList->mSortUpOld)
-	{
-		trkList->mSortColumnIndexOld = trkList->mSortColumnIndex;
-		trkList->mSortUpOld = trkList->mSortUp;
-
-		pSet->tracks_sort = trkList->mSortColumnIndex;  // to set
-		pSet->tracks_sortup = trkList->mSortUp;
-		TrackListUpd(false);
-	}
-
-	///  sort car list
-	if (carList && carList->mSortColumnIndex != carList->mSortColumnIndexOld
-		|| carList->mSortUp != carList->mSortUpOld)
-	{
-		carList->mSortColumnIndexOld = carList->mSortColumnIndex;
-		carList->mSortUpOld = carList->mSortUp;
-
-		pSet->cars_sort = carList->mSortColumnIndex;  // to set
-		pSet->cars_sortup = carList->mSortUp;
-		CarListUpd(false);
-	}
+	
 
 	if (bLoading)
 	{
@@ -257,7 +226,7 @@ bool App::frameStart(Real time)
 			{
 				LoadingOff();  // hide loading overlay
 				mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
-				Ch_LoadEnd();
+				gui->Ch_LoadEnd();
 				bLoadingEnd = true;
 				iLoad1stFrames = -1;  // for refl
 			}
@@ -270,11 +239,10 @@ bool App::frameStart(Real time)
 			//imgBack->setVisible(false);
 		}
 		
-		
-		bool bFirstFrame = !carModels.empty() && carModels.front()->bGetStPos;
-		
+				
 		if (isFocGui && mWndTabsOpts->getIndexSelected() == 4 && pSet->inMenu == MNU_Options && !pSet->isMain)
-			UpdateInputBars();
+			gui->UpdateInputBars();
+		
 		
 		//  keys up/dn, for lists
 		static float dirU = 0.f,dirD = 0.f;
@@ -284,39 +252,19 @@ bool App::frameStart(Real time)
 			if (isKey(SDL_SCANCODE_DOWN)||isKey(SDL_SCANCODE_KP_2))	dirU += time;  else
 			{	dirU = 0.f;  dirD = 0.f;  }
 			int d = ctrl ? 4 : 1;
-			if (dirU > 0.0f) {  LNext( d);  dirU = -0.2f;  }
-			if (dirD > 0.0f) {  LNext(-d);  dirD = -0.2f;  }
+			if (dirU > 0.0f) {  gui->LNext( d);  dirU = -0.2f;  }
+			if (dirD > 0.0f) {  gui->LNext(-d);  dirD = -0.2f;  }
 		}
 		
-		///  Gui updates from networking
-		//  We do them here so that they are handled in the main thread as MyGUI is not thread-safe
-		if (isFocGui)
-		{
-			if (mMasterClient) {
-				std::string error = mMasterClient->getError();
-				if (!error.empty())
-					Message::createMessageBox("Message", TR("#{Error}"), error,
-						MessageBoxStyle::IconError | MessageBoxStyle::Ok);
-			}
-			boost::mutex::scoped_lock lock(netGuiMutex);
-			if (bRebuildGameList) {  rebuildGameList();  bRebuildGameList = false;  }
-			if (bRebuildPlayerList) {  rebuildPlayerList();  bRebuildPlayerList = false;  }
-			if (bUpdateGameInfo) {  updateGameInfo();  bUpdateGameInfo = false;  }
-			if (bUpdChat)  {  edNetChat->setCaption(sChatBuffer);  bUpdChat = false;  }
-			if (bStartGame)
-			{
-				mClient->startGame();
-				btnNewGameStart(NULL);
-				bStartGame = false;
-			}
-		}
+		///  Gui updates from Networking
+		gui->UpdGuiNetw();
 
 		//  replay forward,backward keys
 		if (bRplPlay)
 		{
 			isFocRpl = ctrl;
 			bool le = isKey(SDL_SCANCODE_LEFTBRACKET), ri = isKey(SDL_SCANCODE_RIGHTBRACKET), ctrlN = ctrl && (le || ri);
-			int ta = ((le || bRplBack) ? -2 : 0) + ((ri || bRplFwd) ? 2 : 0);
+			int ta = ((le || gui->bRplBack) ? -2 : 0) + ((ri || gui->bRplFwd) ? 2 : 0);
 			if (ta)
 			{	double tadd = ta;
 				tadd *= (shift ? 0.2 : 1) * (ctrlN ? 4 : 1) * (alt ? 8 : 1);  // multipliers
@@ -336,7 +284,6 @@ bool App::frameStart(Real time)
 		}
 
 
-
 		if (pSet->multi_thr == 0)
 			DoNetworking();
 
@@ -352,17 +299,18 @@ bool App::frameStart(Real time)
 		
 		// align checkpoint arrow
 		// move in front of camera
-		if (pSet->check_arrow && hud->arrow.node && !bRplPlay)
+		if (pSet->check_arrow && hud->arrow.node && !bRplPlay && !carModels.empty())
 		{
-			Vector3 camPos = carModels.front()->fCam->mCamera->getPosition();
-			Vector3 dir = carModels.front()->fCam->mCamera->getDirection();
-			dir.normalise();
-			Vector3 up = carModels.front()->fCam->mCamera->getUp();
-			up.normalise();
-			Vector3 arrowPos = camPos + 10.0f * dir + 3.5f*up;
+			FollowCamera* cam = carModels[0]->fCam;
+		
+			Vector3 pos = cam->mCamera->getPosition();
+			Vector3 dir = cam->mCamera->getDirection();  dir.normalise();
+			Vector3 up = cam->mCamera->getUp();  up.normalise();
+			Vector3 arrowPos = pos + 10.0f * dir + 3.5f*up;
 			hud->arrow.node->setPosition(arrowPos);
 			
 			// animate
+			bool bFirstFrame = carModels.front()->bGetStPos;
 			if (bFirstFrame) // 1st frame: dont animate
 				hud->arrow.qCur = hud->arrow.qEnd;
 			else

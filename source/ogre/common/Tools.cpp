@@ -5,6 +5,7 @@
 #ifndef SR_EDITOR
 	#include "../CGame.h"
 	#include "../CHud.h"
+	#include "../CGui.h"
 	#include "../vdrift/timer.h"
 	#include "../vdrift/game.h"
 #else
@@ -197,7 +198,7 @@ void App::ToolBrushesPrv()
 ///............................................................................................................................
 ///  _Tool_ ghosts times
 ///............................................................................................................................
-void App::ToolGhosts()
+void CGui::ToolGhosts()
 {
 	LogO("ALL ghosts ---------");
 	using namespace std;
@@ -239,7 +240,7 @@ void App::ToolGhosts()
 		//float timeB = timeTrk * 1.1f;  // champs factor mostly 0.1
 		//const float decFactor = 1.5f;
 		//float score = max(0.f, (1.f + (timeB-timeES)/timeB * decFactor) * 100.f);
-		float place = GetRacePos(timeES,timeTrk,1.f,false);
+		float place = app->GetRacePos(timeES,timeTrk,1.f,false);
 
 		///  write
 	#if 0
@@ -269,8 +270,8 @@ void App::ToolGhosts()
 		for (int c=0; c < cars.size(); ++c)
 		{
 			float t = plc[c];
-			float cmul = GetCarTimeMul(cars[c], sim);
-			float pl = GetRacePos(t,timeTrk, cmul,false);
+			float cmul = app->GetCarTimeMul(cars[c], sim);
+			float pl = app->GetRacePos(t,timeTrk, cmul,false);
 			s << cars[c] << " " << (t > 0.f ? (pl > 20 ? " ." : fToStr(pl,0,2)) : "  ") << " ";
 		}										  //90
 		
@@ -288,7 +289,7 @@ void App::ToolGhosts()
 //  (ES, normal sim, 1st lap, no boost, use rewind with _Tool_ go back time)
 //  time should be like in tracks.ini or less (last T= )
 ///............................................................................................................................
-void App::ToolGhostsConv()
+void CGui::ToolGhostsConv()
 {
 	LogO("ALL ghosts Convert ---------");
 	Replay ghost;  TrackGhost trg;
@@ -370,7 +371,7 @@ void App::ToolGhostsConv()
 
 //  ed presets
 ///............................................................................................................................
-void App::ToolPresets()
+void CGui::ToolPresets()
 {
 	QTimer ti;  ti.update();  /// time
 	LogO("ALL tracks presets ---------\n");

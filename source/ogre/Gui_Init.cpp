@@ -5,6 +5,7 @@
 #include "../road/Road.h"
 #include "CGame.h"
 #include "CHud.h"
+#include "CGui.h"
 
 #include <boost/filesystem.hpp>
 #include <OgreRoot.h>
@@ -21,12 +22,13 @@ using namespace Ogre;
 ///  Gui Init
 //---------------------------------------------------------------------------------------------------------------------
 
-void App::InitGui()
+void CGui::InitGui()
 {
 	//  change skin
+	MyGUI::Gui* mGUI = app->mGUI;
 	if (!mGUI)  return;
 	popup.mGUI = mGUI;
-	popup.mPlatform = mPlatform;
+	popup.mPlatform = app->mPlatform;
 	QTimer ti;  ti.update();  /// time
 	loadReadme = true;
 
@@ -37,73 +39,73 @@ void App::InitGui()
 	
 
 	//  load Options layout
-	vwGui = LayoutManager::getInstance().loadLayout("Game.layout");
+	app->vwGui = LayoutManager::getInstance().loadLayout("Game.layout");
 	//mLayout = vwGui.at(0);
 
 	//  window
-	mWndMain = mGUI->findWidget<Window>("MainMenuWnd");
-	mWndGame = mGUI->findWidget<Window>("GameWnd");
-	mWndReplays = mGUI->findWidget<Window>("ReplaysWnd");
-	mWndHelp = mGUI->findWidget<Window>("HelpWnd");
-	mWndOpts = mGUI->findWidget<Window>("OptionsWnd");
+	app->mWndMain = mGUI->findWidget<Window>("MainMenuWnd");
+	app->mWndGame = mGUI->findWidget<Window>("GameWnd");
+	app->mWndReplays = mGUI->findWidget<Window>("ReplaysWnd");
+	app->mWndHelp = mGUI->findWidget<Window>("HelpWnd");
+	app->mWndOpts = mGUI->findWidget<Window>("OptionsWnd");
 
-	mWndChampStage = mGUI->findWidget<Window>("WndChampStage");  mWndChampStage->setVisible(false);
-	mWndChampEnd   = mGUI->findWidget<Window>("WndChampEnd");    mWndChampEnd->setVisible(false);
-	mWndChallStage = mGUI->findWidget<Window>("WndChallStage");  mWndChallStage->setVisible(false);
-	mWndChallEnd   = mGUI->findWidget<Window>("WndChallEnd");    mWndChallEnd->setVisible(false);
+	app->mWndChampStage = mGUI->findWidget<Window>("WndChampStage");  app->mWndChampStage->setVisible(false);
+	app->mWndChampEnd   = mGUI->findWidget<Window>("WndChampEnd");    app->mWndChampEnd->setVisible(false);
+	app->mWndChallStage = mGUI->findWidget<Window>("WndChallStage");  app->mWndChallStage->setVisible(false);
+	app->mWndChallEnd   = mGUI->findWidget<Window>("WndChallEnd");    app->mWndChallEnd->setVisible(false);
 
-	mWndNetEnd = mGUI->findWidget<Window>("WndNetEnd");  mWndNetEnd->setVisible(false);
-	mWndTweak = mGUI->findWidget<Window>("WndTweak");  mWndTweak->setVisible(false);
-	mWndTweak->setPosition(0,40);
+	app->mWndNetEnd = mGUI->findWidget<Window>("WndNetEnd");  app->mWndNetEnd->setVisible(false);
+	app->mWndTweak = mGUI->findWidget<Window>("WndTweak");  app->mWndTweak->setVisible(false);
+	app->mWndTweak->setPosition(0,40);
 	
 	//  main menu
 	for (int i=0; i < ciMainBtns; ++i)
 	{
 		const String s = toStr(i);
-		mWndMainPanels[i] = mWndMain->findWidget("PanMenu"+s);
-		mWndMainBtns[i] = (ButtonPtr)mWndMain->findWidget("BtnMenu"+s);
-		mWndMainBtns[i]->eventMouseButtonClick += newDelegate(this, &App::MainMenuBtn);
+		app->mWndMainPanels[i] = app->mWndMain->findWidget("PanMenu"+s);
+		app->mWndMainBtns[i] = (ButtonPtr)app->mWndMain->findWidget("BtnMenu"+s);
+		app->mWndMainBtns[i]->eventMouseButtonClick += newDelegate(this, &CGui::MainMenuBtn);
 	}
 		
-	updMouse();
+	app->updMouse();
 	
 	//  center
-	IntSize w = mWndMain->getSize();
-	int wx = mWindow->getWidth(), wy = mWindow->getHeight();
-	mWndMain->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f);
+	IntSize w = app->mWndMain->getSize();
+	int wx = app->mWindow->getWidth(), wy = app->mWindow->getHeight();
+	app->mWndMain->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f);
 
 	TabPtr tab;
-	tab = mGUI->findWidget<Tab>("TabWndGame");    tab->setIndexSelected(1); tab->setSmoothShow(false);	mWndTabsGame = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
-	tab = mGUI->findWidget<Tab>("TabWndReplays"); tab->setIndexSelected(1);	tab->setSmoothShow(false);	mWndTabsRpl = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
-	tab = mGUI->findWidget<Tab>("TabWndHelp");    tab->setIndexSelected(1);	tab->setSmoothShow(false);	mWndTabsHelp = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
-	tab = mGUI->findWidget<Tab>("TabWndOptions"); tab->setIndexSelected(1); tab->setSmoothShow(false);	mWndTabsOpts = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndGame");    tab->setIndexSelected(1); tab->setSmoothShow(false);	app->mWndTabsGame = tab;		tab->eventTabChangeSelect += newDelegate(this, &CGui::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndReplays"); tab->setIndexSelected(1);	tab->setSmoothShow(false);	app->mWndTabsRpl = tab;		tab->eventTabChangeSelect += newDelegate(this, &CGui::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndHelp");    tab->setIndexSelected(1);	tab->setSmoothShow(false);	app->mWndTabsHelp = tab;		tab->eventTabChangeSelect += newDelegate(this, &CGui::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndOptions"); tab->setIndexSelected(1); tab->setSmoothShow(false);	app->mWndTabsOpts = tab;		tab->eventTabChangeSelect += newDelegate(this, &CGui::MenuTabChg);
 
-	if (pSet->inMenu > MNU_Single && pSet->inMenu <= MNU_Challenge)  mWndTabsGame->setIndexSelected(TAB_Champs);
+	if (pSet->inMenu > MNU_Single && pSet->inMenu <= MNU_Challenge)  app->mWndTabsGame->setIndexSelected(TAB_Champs);
 
 	//  get sub tabs
 	vSubTabsGame.clear();
-	for (size_t i=0; i < mWndTabsGame->getItemCount(); ++i)
+	for (size_t i=0; i < app->mWndTabsGame->getItemCount(); ++i)
 	{	// todo: startsWith("SubTab")..
-		MyGUI::TabPtr sub = (TabPtr)mWndTabsGame->getItemAt(i)->findWidget(
+		MyGUI::TabPtr sub = (TabPtr)app->mWndTabsGame->getItemAt(i)->findWidget(
 			i==TAB_Champs ? "ChampType" : (i==TAB_Multi ? "tabsNet" : "tabPlayer") );
 		vSubTabsGame.push_back(sub);  // 0 for not found
 	}
 	vSubTabsOpts.clear();
-	for (size_t i=0; i < mWndTabsOpts->getItemCount(); ++i)
+	for (size_t i=0; i < app->mWndTabsOpts->getItemCount(); ++i)
 	{
-		MyGUI::TabPtr sub = (TabPtr)mWndTabsOpts->getItemAt(i)->findWidget(i==4 ? "InputTab" : "SubTab");
+		MyGUI::TabPtr sub = (TabPtr)app->mWndTabsOpts->getItemAt(i)->findWidget(i==4 ? "InputTab" : "SubTab");
 		vSubTabsOpts.push_back(sub);
 	}
 
 	//  tooltip  ------
-	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
+	for (VectorWidgetPtr::iterator it = app->vwGui.begin(); it != app->vwGui.end(); ++it)
 	{
 		setToolTips((*it)->getEnumerator());
 		//const std::string& name = (*it)->getName();
 	}
 
-	mWndRpl = mGUI->findWidget<Window>("RplWnd",false);
-	if (mWndRpl)  mWndRpl->setVisible(false);
+	app->mWndRpl = mGUI->findWidget<Window>("RplWnd",false);
+	if (app->mWndRpl)  app->mWndRpl->setVisible(false);
 
 	GuiInitTooltip();
 
@@ -164,7 +166,7 @@ void App::InitGui()
 	///  Checkboxes
     //------------------------------------------------------------------------
 	bnQuit = mGUI->findWidget<Button>("Quit");
-	if (bnQuit)  {  bnQuit->eventMouseButtonClick += newDelegate(this, &App::btnQuit);  bnQuit->setVisible(isFocGui);  }
+	if (bnQuit)  {  bnQuit->eventMouseButtonClick += newDelegate(this, &CGui::btnQuit);  bnQuit->setVisible(app->isFocGui);  }
 	//Chk("SMAA", chkVidSSAA, pSet->ssaa);
 	Chk("ReverseOn", chkReverse, pSet->gui.trackreverse);
 	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
@@ -189,8 +191,8 @@ void App::InitGui()
 
 	//  other
 	Chk("Fps", chkFps, pSet->show_fps);  chFps = bchk;
-	bckFps->setVisible(pSet->show_fps);
-	Chk("Wireframe", chkWireframe, mbWireFrame);  chWire = bchk;
+	app->bckFps->setVisible(pSet->show_fps);
+	Chk("Wireframe", chkWireframe, app->mbWireFrame);  chWire = bchk;
 
 	Chk("ProfilerTxt", chkProfilerTxt, pSet->profilerTxt);	chProfTxt = bchk;
 	Chk("BulletDebug", chkBltDebug, pSet->bltDebug);		chBlt = bchk;
@@ -212,7 +214,7 @@ void App::InitGui()
 	Chk("CarRearThrInv", chkRearInv, pSet->rear_inv);
 
 	TabPtr tTires = mGUI->findWidget<Tab>("tabCarTires");
-	if (tTires)  tTires->eventTabChangeSelect += newDelegate(this, &App::tabTireSet);
+	if (tTires)  tTires->eventTabChangeSelect += newDelegate(this, &CGui::tabTireSet);
 	Slv(SSSEffect,	pSet->sss_effect[0]);  slSSSEff = sl;
 	Slv(SSSVelFactor, pSet->sss_velfactor[0]/2.f);  slSSSVel = sl;
 	Slv(SteerRangeSurf, pSet->steer_range[0]-0.3f);  slSteerRngSurf = sl;
@@ -264,15 +266,15 @@ void App::InitGui()
 	bRsimNorm = mGUI->findWidget<Button>("SimModeNorm");
 	bool bNorm = pSet->gui.sim_mode == "normal";
 	bool bEasy = pSet->gui.sim_mode == "easy";
-	bRsimEasy->setStateSelected(bEasy);  bRsimEasy->eventMouseButtonClick += newDelegate(this, &App::radSimEasy);
-	bRsimNorm->setStateSelected(bNorm);  bRsimNorm->eventMouseButtonClick += newDelegate(this, &App::radSimNorm);
+	bRsimEasy->setStateSelected(bEasy);  bRsimEasy->eventMouseButtonClick += newDelegate(this, &CGui::radSimEasy);
+	bRsimNorm->setStateSelected(bNorm);  bRsimNorm->eventMouseButtonClick += newDelegate(this, &CGui::radSimNorm);
 
 	//  kmh/mph radio
 	bRkmh = mGUI->findWidget<Button>("kmh");
 	bRmph = mGUI->findWidget<Button>("mph");
 	if (bRkmh && bRmph)  {  bRkmh->setStateSelected(!pSet->show_mph);  bRmph->setStateSelected(pSet->show_mph);
-		bRkmh->eventMouseButtonClick += newDelegate(this, &App::radKmh);
-		bRmph->eventMouseButtonClick += newDelegate(this, &App::radMph);  }
+		bRkmh->eventMouseButtonClick += newDelegate(this, &CGui::radKmh);
+		bRmph->eventMouseButtonClick += newDelegate(this, &CGui::radMph);  }
 
 
 	//  startup
@@ -339,16 +341,16 @@ void App::InitGui()
 	btn = pSet->rpl_listview == 0 ? rbRplAll : rbRplCur;
 	if (btn)  btn->setStateSelected(true);
 	
-    if (mWndRpl)
+    if (app->mWndRpl)
 	{	//  replay controls
 		Btn("RplToStart", btnRplToStart);  Btn("RplToEnd", btnRplToEnd)
 		Btn("RplPlay", btnRplPlay);  btRplPl = btn;
-		btn = mGUI->findWidget<Button>("RplBack");	if (btn)  {		btn->eventMouseButtonPressed += newDelegate(this, &App::btnRplBackDn);  btn->eventMouseButtonReleased += newDelegate(this, &App::btnRplBackUp);  }
-		btn = mGUI->findWidget<Button>("RplForward");  if (btn)  {	btn->eventMouseButtonPressed += newDelegate(this, &App::btnRplFwdDn);  btn->eventMouseButtonReleased += newDelegate(this, &App::btnRplFwdUp);  }
+		btn = mGUI->findWidget<Button>("RplBack");	if (btn)  {		btn->eventMouseButtonPressed += newDelegate(this, &CGui::btnRplBackDn);  btn->eventMouseButtonReleased += newDelegate(this, &CGui::btnRplBackUp);  }
+		btn = mGUI->findWidget<Button>("RplForward");  if (btn)  {	btn->eventMouseButtonPressed += newDelegate(this, &CGui::btnRplFwdDn);  btn->eventMouseButtonReleased += newDelegate(this, &CGui::btnRplFwdUp);  }
 		
 		//  info
-		slRplPos = (Slider*)mWndRpl->findWidget("RplSlider");
-		if (slRplPos)  slRplPos->eventValueChanged += newDelegate(this, &App::slRplPosEv);
+		slRplPos = (Slider*)app->mWndRpl->findWidget("RplSlider");
+		if (slRplPos)  slRplPos->eventValueChanged += newDelegate(this, &CGui::slRplPosEv);
 
 		valRplPerc = mGUI->findWidget<StaticText>("RplPercent");
     	valRplCur = mGUI->findWidget<StaticText>("RplTimeCur");
@@ -361,7 +363,7 @@ void App::InitGui()
 	//edRplDesc = mGUI->findWidget<Edit>("RplDesc");
 
 	rplList = mGUI->findWidget<List>("RplList");
-	if (rplList)  rplList->eventListChangePosition += newDelegate(this, &App::listRplChng);
+	if (rplList)  rplList->eventListChangePosition += newDelegate(this, &CGui::listRplChng);
 	updReplaysList();
 
 
@@ -389,7 +391,7 @@ void App::InitGui()
 		Real h = hsv[i][0], s = hsv[i][1], v = hsv[i][2], g = hsv[i][3], r = hsv[i][4];
 		ColourValue c;  c.setHSB(1.f-h, s, v);
 		img->setColour(Colour(c.r,c.g,c.b));
-		img->eventMouseButtonClick += newDelegate(this, &App::imgBtnCarClr);
+		img->eventMouseButtonClick += newDelegate(this, &CGui::imgBtnCarClr);
 		img->setUserString("s", toStr(s));  img->setUserString("h", toStr(h));
 		img->setUserString("v", toStr(v));  img->setUserString("g", toStr(g));  img->setUserString("r", toStr(r));
 	}
@@ -406,7 +408,7 @@ void App::InitGui()
     txTrackAuthor = mGUI->findWidget<StaticText>("TrackAuthor");
 	
 	TabPtr tPlr = mGUI->findWidget<Tab>("tabPlayer");
-	if (tPlr)  tPlr->eventTabChangeSelect += newDelegate(this, &App::tabPlayer);
+	if (tPlr)  tPlr->eventTabChangeSelect += newDelegate(this, &CGui::tabPlayer);
 	
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
 	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
@@ -445,13 +447,13 @@ void App::InitGui()
 	edNetGameName = mGUI->findWidget<Edit>("edNetGameName");
 	if (edNetGameName)
 	{	edNetGameName->setCaption(pSet->netGameName);
-		edNetGameName->eventEditTextChange += newDelegate(this, &App::evEdNetGameName);
+		edNetGameName->eventEditTextChange += newDelegate(this, &CGui::evEdNetGameName);
 	}
 	//  password
 	valNetPassword = mGUI->findWidget<StaticText>("valNetPassword");
 	edNetPassword = mGUI->findWidget<Edit>("edNetPassword");
 	if (edNetPassword)
-		edNetPassword->eventEditTextChange += newDelegate(this, &App::evEdNetPassword);
+		edNetPassword->eventEditTextChange += newDelegate(this, &CGui::evEdNetPassword);
 
 	listPlayers = mGUI->findWidget<MultiList>("MListPlayers");
 	if (listPlayers)
@@ -484,13 +486,13 @@ void App::InitGui()
 	edNetServerPort = mGUI->findWidget<Edit>("edNetServerPort");
 	edNetLocalPort = mGUI->findWidget<Edit>("edNetLocalPort");
 	if (edNetNick)		{	edNetNick->setCaption(pSet->nickname);						
-		edNetNick->eventEditTextChange += newDelegate(this, &App::evEdNetNick);	}
+		edNetNick->eventEditTextChange += newDelegate(this, &CGui::evEdNetNick);	}
 	if (edNetServerIP)	{	edNetServerIP->setCaption(pSet->master_server_address);
-		edNetServerIP->eventEditTextChange += newDelegate(this, &App::evEdNetServerIP);	}
+		edNetServerIP->eventEditTextChange += newDelegate(this, &CGui::evEdNetServerIP);	}
 	if (edNetServerPort){	edNetServerPort->setCaption(toStr(pSet->master_server_port));
-		edNetServerPort->eventEditTextChange += newDelegate(this, &App::evEdNetServerPort);	}
+		edNetServerPort->eventEditTextChange += newDelegate(this, &CGui::evEdNetServerPort);	}
 	if (edNetLocalPort)	{	edNetLocalPort->setCaption(toStr(pSet->local_port));
-		edNetLocalPort->eventEditTextChange += newDelegate(this, &App::evEdNetLocalPort);	}
+		edNetLocalPort->eventEditTextChange += newDelegate(this, &CGui::evEdNetLocalPort);	}
 
 	
 	//  quick help text
@@ -510,7 +512,7 @@ void App::InitGui()
 	edPerfTest = mGUI->findWidget<Edit>("TweakPerfTest");
 	tabEdCar = mGUI->findWidget<Tab>("TabEdCar");
 	tabEdCar->setIndexSelected(pSet->car_ed_tab);
-	tabEdCar->eventTabChangeSelect += newDelegate(this, &App::tabCarEdChng);
+	tabEdCar->eventTabChangeSelect += newDelegate(this, &CGui::tabCarEdChng);
 
 	tabTweak = mGUI->findWidget<Tab>("TabTweak");
 	txtTweakPath = mGUI->findWidget<StaticText>("TweakPath");
@@ -519,7 +521,7 @@ void App::InitGui()
 
 	Btn("TweakCarSave", btnTweakCarSave);  Btn("TweakTireSave", btnTweakTireSave);
 	Btn("TweakColSave", btnTweakColSave);
-	Cmb(cmbTweakTireSet,"TweakTireSet",CmbTweakTireSet);  cmbTweakTireSet->eventEditTextChange+= newDelegate(this, &App::CmbEdTweakTireSet);
+	Cmb(cmbTweakTireSet,"TweakTireSet",CmbTweakTireSet);  cmbTweakTireSet->eventEditTextChange+= newDelegate(this, &CGui::CmbEdTweakTireSet);
 
 
 	///  input tab  -------
@@ -530,7 +532,7 @@ void App::InitGui()
 	
 	///  cars list
     //------------------------------------------------------------------------
-	TabItem* cartab = (TabItem*)mWndGame->findWidget("TabCar");
+	TabItem* cartab = (TabItem*)app->mWndGame->findWidget("TabCar");
 	carList = cartab->createWidget<MultiList2>("MultiListBox",16,48,200,110, Align::Left | Align::VStretch);
 	carList->setColour(Colour(0.7,0.85,1.0));
 	carList->removeAllColumns();  int n=0;
@@ -544,7 +546,7 @@ void App::InitGui()
 
 	carList->mSortColumnIndex = pSet->cars_sort;
 	carList->mSortUp = pSet->cars_sortup;
-   	carList->eventListChangePosition += newDelegate(this, &App::listCarChng);
+   	carList->eventListChangePosition += newDelegate(this, &CGui::listCarChng);
 
    	CarListUpd(false);  //upd
 
@@ -579,7 +581,7 @@ void App::InitGui()
     //  new game
     for (int i=1; i<=3; ++i)
     {	ButtonPtr btnNewG = mGUI->findWidget<Button>("NewGame"+toStr(i));
-		if (btnNewG)  btnNewG->eventMouseButtonClick += newDelegate(this, &App::btnNewGame);
+		if (btnNewG)  btnNewG->eventMouseButtonClick += newDelegate(this, &CGui::btnNewGame);
 	}
 	
 
@@ -602,19 +604,19 @@ void App::InitGui()
 	if (edChInfo)  edChInfo->setVisible(pSet->champ_info);
 	Btn("btnChampInfo",btnChampInfo);
 
-	panCh = mWndGame->findWidget("panCh");
-	txtCh = (TextBox*)mWndGame->findWidget("txtChDetail");
-	valCh = (TextBox*)mWndGame->findWidget("valChDetail");
+	panCh = app->mWndGame->findWidget("panCh");
+	txtCh = (TextBox*)app->mWndGame->findWidget("txtChDetail");
+	valCh = (TextBox*)app->mWndGame->findWidget("valChDetail");
 	for (int i=0; i<3; ++i) {  String s = toStr(i);
-		txtChP[i] = (TextBox*)mWndGame->findWidget("txtChP"+s);
-		valChP[i] = (TextBox*)mWndGame->findWidget("valChP"+s);  }
+		txtChP[i] = (TextBox*)app->mWndGame->findWidget("txtChP"+s);
+		valChP[i] = (TextBox*)app->mWndGame->findWidget("valChP"+s);  }
 	edChDesc = mGUI->findWidget<EditBox>("ChampDescr");
 
 	//  Champs list  -------------
 	MyGUI::MultiList2* li;
-	TabItem* trktab = (TabItem*)mWndGame->findWidget("TabChamps");
+	TabItem* trktab = (TabItem*)app->mWndGame->findWidget("TabChamps");
 	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
-	li->eventListChangePosition += newDelegate(this, &App::listChampChng);
+	li->eventListChangePosition += newDelegate(this, &CGui::listChampChng);
    	li->setVisible(false);
 	
 	li->removeAllColumns();  c=0;
@@ -627,7 +629,7 @@ void App::InitGui()
 
 	//  Challs list  -------------
 	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
-	li->eventListChangePosition += newDelegate(this, &App::listChallChng);
+	li->eventListChangePosition += newDelegate(this, &CGui::listChallChng);
    	li->setVisible(false);
 	
 	li->removeAllColumns();  c=0;
@@ -641,10 +643,10 @@ void App::InitGui()
 	liChalls = li;
 
 	//  Stages list  -------------
-	trktab = (TabItem*)mWndGame->findWidget("TabStages");
+	trktab = (TabItem*)app->mWndGame->findWidget("TabStages");
 	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
 	li->setColour(Colour(0.7,0.73,0.76));
-	li->eventListChangePosition += newDelegate(this, &App::listStageChng);
+	li->eventListChangePosition += newDelegate(this, &CGui::listStageChng);
    	li->setVisible(false);
 	
 	li->removeAllColumns();  c=0;
@@ -664,17 +666,17 @@ void App::InitGui()
 	tabTut = mGUI->findWidget<Tab>("TutType",false);
 	if (tabTut)
 	{	tabTut->setIndexSelected(pSet->tut_type);
-		tabTut->eventTabChangeSelect += newDelegate(this, &App::tabTutType);
+		tabTut->eventTabChangeSelect += newDelegate(this, &CGui::tabTutType);
 	}
 	tabChamp = mGUI->findWidget<Tab>("ChampType",false);
 	if (tabChamp)
 	{	tabChamp->setIndexSelected(pSet->champ_type);
-		tabChamp->eventTabChangeSelect += newDelegate(this, &App::tabChampType);
+		tabChamp->eventTabChangeSelect += newDelegate(this, &CGui::tabChampType);
 	}
 	tabChall = mGUI->findWidget<Tab>("ChallType",false);
 	if (tabChall)
 	{	tabChall->setIndexSelected(pSet->chall_type);
-		tabChall->eventTabChangeSelect += newDelegate(this, &App::tabChallType);
+		tabChall->eventTabChangeSelect += newDelegate(this, &CGui::tabChallType);
 	}
 	imgTut = mGUI->findWidget<StaticImage>("imgTut",false);
 	imgChamp = mGUI->findWidget<StaticImage>("imgChamp",false);
@@ -701,25 +703,25 @@ void App::InitGui()
 	Btn("btnStagePrev", btnStagePrev);
     valStageNum = mGUI->findWidget<StaticText>("StageNum");
 
-	edChampStage = (EditBox*)mWndChampStage->findWidget("ChampStageText");
-	edChallStage = (EditBox*)mWndChallStage->findWidget("ChallStageText");
-	edChampEnd   = (EditBox*)mWndChampEnd->findWidget("ChampEndText");
-	edChallEnd   = (EditBox*)mWndChallEnd->findWidget("ChallEndText");
-	imgChampStage = (ImageBox*)mWndChampStage->findWidget("ChampStageImg");
-	imgChallStage = (ImageBox*)mWndChallStage->findWidget("ChallStageImg");
+	edChampStage = (EditBox*)app->mWndChampStage->findWidget("ChampStageText");
+	edChallStage = (EditBox*)app->mWndChallStage->findWidget("ChallStageText");
+	edChampEnd   = (EditBox*)app->mWndChampEnd->findWidget("ChampEndText");
+	edChallEnd   = (EditBox*)app->mWndChallEnd->findWidget("ChallEndText");
+	imgChampStage = (ImageBox*)app->mWndChampStage->findWidget("ChampStageImg");
+	imgChallStage = (ImageBox*)app->mWndChallStage->findWidget("ChallStageImg");
 
-	imgChampEndCup  = (ImageBox*)mWndChampEnd->findWidget("ChampEndImgCup");
-	imgChallFail = (ImageBox*)mWndChallEnd->findWidget("ChallEndImgFail");
-	imgChallCup  = (ImageBox*)mWndChallEnd->findWidget("ChallEndImgCup");
-	txChallEndC = (TextBox*)mWndChallEnd->findWidget("ChallEndCongrats");
-	txChallEndF = (TextBox*)mWndChallEnd->findWidget("ChallEndFinished");
+	imgChampEndCup  = (ImageBox*)app->mWndChampEnd->findWidget("ChampEndImgCup");
+	imgChallFail = (ImageBox*)app->mWndChallEnd->findWidget("ChallEndImgFail");
+	imgChallCup  = (ImageBox*)app->mWndChallEnd->findWidget("ChallEndImgCup");
+	txChallEndC = (TextBox*)app->mWndChallEnd->findWidget("ChallEndCongrats");
+	txChallEndF = (TextBox*)app->mWndChallEnd->findWidget("ChallEndFinished");
 
 	UpdChampTabVis();
 
 
 	//  netw end list  ------
 	Btn("btnNetEndClose", btnNetEndClose);
-	li = mWndNetEnd->createWidget<MultiList2>("MultiListBox",4,42,632,360, Align::Left | Align::VStretch);
+	li = app->mWndNetEnd->createWidget<MultiList2>("MultiListBox",4,42,632,360, Align::Left | Align::VStretch);
 	li->setInheritsAlpha(false);  li->setColour(Colour(0.8,0.9,1,1));
 	li->removeAllColumns();
 	li->addColumn("", 40);  //N

@@ -2,17 +2,16 @@
 #include "common/Defines.h"
 #include "../vdrift/game.h"
 #include "CGame.h"
+#include "CGui.h"
 #include "common/Gui_Def.h"
 
 #include <OgreRoot.h>
 using namespace MyGUI;
 using namespace Ogre;
 
-#define ALIGN  Align::Default  // MyGUI 3.2 has no Align::Relative
+#define ALIGN  Align::Default
 
 
-namespace
-{
 std::string GetKeyName(SDL_Keycode key, bool omit = false)
 {
 	if (key == SDLK_UNKNOWN)
@@ -20,121 +19,10 @@ std::string GetKeyName(SDL_Keycode key, bool omit = false)
 	else
 		return std::string(SDL_GetKeyName(key));
 }
-}
 
-///  input events
-//----------------------------------------------------------------------------------------------------------------------------------
-void App::LoadInputDefaults()
-{
-	mInputActions.clear();
-	mInputActions.push_back(InputAction(A_ShowOptions, "ShowOptions", SDLK_TAB, InputAction::Trigger));
-	mInputActions.push_back(InputAction(A_PrevTab, "PrevTab", SDLK_F2, InputAction::Trigger));
-	mInputActions.push_back(InputAction(A_NextTab, "NextTab", SDLK_F3, InputAction::Trigger));
-	mInputActions.push_back(InputAction(A_RestartGame, "RestartGame", SDLK_F5, InputAction::Trigger));
-	mInputActions.push_back(InputAction(A_ResetGame, "ResetGame", SDLK_F4, InputAction::Trigger));
-	mInputActions.push_back(InputAction(A_Screenshot, "Screenshot", SDLK_F12, InputAction::Trigger));
-
-	LoadInputDefaults(mInputActions, mInputCtrl);
-
-	std::vector<InputAction>* ap = mInputActionsPlayer;
-	ap[0].clear();
-	ap[0].push_back(InputAction(A_Throttle, "Throttle", SDLK_UP, InputAction::HalfAxis));
-	ap[0].push_back(InputAction(A_Brake, "Brake", SDLK_DOWN, InputAction::HalfAxis));
-	ap[0].push_back(InputAction(A_Steering, "Steering", SDLK_LEFT, SDLK_RIGHT, InputAction::Axis));
-	ap[0].push_back(InputAction(A_HandBrake, "HandBrake", SDLK_SPACE, InputAction::HalfAxis));
-	ap[0].push_back(InputAction(A_Boost, "Boost", SDLK_LCTRL, InputAction::HalfAxis));
-	ap[0].push_back(InputAction(A_Flip, "Flip", SDLK_q, SDLK_w, InputAction::Axis));
-	ap[0].push_back(InputAction(A_ShiftUp, "ShiftUp", SDLK_a, InputAction::Trigger));
-	ap[0].push_back(InputAction(A_ShiftDown, "ShiftDown", SDLK_z, InputAction::Trigger));
-	ap[0].push_back(InputAction(A_PrevCamera, "PrevCamera", SDLK_x, InputAction::Trigger));
-	ap[0].push_back(InputAction(A_NextCamera, "NextCamera", SDLK_c, InputAction::Trigger));
-	ap[0].push_back(InputAction(A_LastChk, "LastChk", SDLK_0, InputAction::Trigger));
-	ap[0].push_back(InputAction(A_Rewind, "Rewind", SDLK_BACKSPACE, InputAction::Trigger));
-
-	ap[1].clear();
-	ap[1].push_back(InputAction(A_Throttle, "Throttle", SDLK_u, InputAction::HalfAxis));
-	ap[1].push_back(InputAction(A_Brake, "Brake", SDLK_m, InputAction::HalfAxis));
-	ap[1].push_back(InputAction(A_Steering, "Steering", SDLK_h, SDLK_k, InputAction::Axis));
-	ap[1].push_back(InputAction(A_HandBrake, "HandBrake", SDLK_n, InputAction::HalfAxis));
-	ap[1].push_back(InputAction(A_Boost, "Boost", SDLK_j, InputAction::HalfAxis));
-	ap[1].push_back(InputAction(A_Flip, "Flip", SDLK_y, SDLK_i, InputAction::Axis));
-	ap[1].push_back(InputAction(A_ShiftUp, "ShiftUp", SDLK_UNKNOWN, InputAction::Trigger));
-	ap[1].push_back(InputAction(A_ShiftDown, "ShiftDown", SDLK_UNKNOWN, InputAction::Trigger));
-	ap[1].push_back(InputAction(A_PrevCamera, "PrevCamera", SDLK_UNKNOWN, InputAction::Trigger));
-	ap[1].push_back(InputAction(A_NextCamera, "NextCamera", SDLK_UNKNOWN, InputAction::Trigger));
-	ap[1].push_back(InputAction(A_LastChk, "LastChk", SDLK_UNKNOWN, InputAction::Trigger));
-	ap[1].push_back(InputAction(A_Rewind, "Rewind", SDLK_UNKNOWN, InputAction::Trigger));
-
-	ap[2].clear();
-	ap[2].push_back(InputAction(A_Throttle, "Throttle", SDLK_r, InputAction::HalfAxis));
-	ap[2].push_back(InputAction(A_Brake, "Brake", SDLK_v, InputAction::HalfAxis));
-	ap[2].push_back(InputAction(A_Steering, "Steering", SDLK_d, SDLK_g, InputAction::Axis));
-	ap[2].push_back(InputAction(A_HandBrake, "HandBrake", SDLK_b, InputAction::HalfAxis));
-	ap[2].push_back(InputAction(A_Boost, "Boost", SDLK_f, InputAction::HalfAxis));
-	ap[2].push_back(InputAction(A_Flip, "Flip", SDLK_e, SDLK_t, InputAction::Axis));
-	ap[2].push_back(InputAction(A_ShiftUp, "ShiftUp", SDLK_UNKNOWN, InputAction::Trigger));
-	ap[2].push_back(InputAction(A_ShiftDown, "ShiftDown", SDLK_UNKNOWN, InputAction::Trigger));
-	ap[2].push_back(InputAction(A_PrevCamera, "PrevCamera", SDLK_UNKNOWN, InputAction::Trigger));
-	ap[2].push_back(InputAction(A_NextCamera, "NextCamera", SDLK_UNKNOWN, InputAction::Trigger));
-	ap[2].push_back(InputAction(A_LastChk, "LastChk", SDLK_UNKNOWN, InputAction::Trigger));
-	ap[2].push_back(InputAction(A_Rewind, "Rewind", SDLK_UNKNOWN, InputAction::Trigger));
-
-	ap[3].clear();
-	ap[3].push_back(InputAction(A_Throttle, "Throttle", SDLK_p, InputAction::HalfAxis));
-	ap[3].push_back(InputAction(A_Brake, "Brake", SDLK_SLASH, InputAction::HalfAxis));
-	ap[3].push_back(InputAction(A_Steering, "Steering", SDLK_l, SDLK_QUOTE, InputAction::Axis));
-	ap[3].push_back(InputAction(A_HandBrake, "HandBrake", SDLK_PERIOD, InputAction::HalfAxis));
-	ap[3].push_back(InputAction(A_Boost, "Boost", SDLK_SEMICOLON, InputAction::HalfAxis));
-	ap[3].push_back(InputAction(A_Flip, "Flip", SDLK_o, SDLK_LEFTBRACKET, InputAction::Axis));
-	ap[3].push_back(InputAction(A_ShiftUp, "ShiftUp", SDLK_UNKNOWN, InputAction::Trigger));
-	ap[3].push_back(InputAction(A_ShiftDown, "ShiftDown", SDLK_UNKNOWN, InputAction::Trigger));
-	ap[3].push_back(InputAction(A_PrevCamera, "PrevCamera", SDLK_UNKNOWN, InputAction::Trigger));
-	ap[3].push_back(InputAction(A_NextCamera, "NextCamera", SDLK_UNKNOWN, InputAction::Trigger));
-	ap[3].push_back(InputAction(A_LastChk, "LastChk", SDLK_UNKNOWN, InputAction::Trigger));
-	ap[3].push_back(InputAction(A_Rewind, "Rewind", SDLK_UNKNOWN, InputAction::Trigger));
-
-	for (int i=0; i<4; ++i)
-		LoadInputDefaults(ap[i], mInputCtrlPlayer[i]);
-}
-
-void App::LoadInputDefaults(std::vector<InputAction> &actions, ICS::InputControlSystem *pICS)
-{
-	for (std::vector<InputAction>::iterator it = actions.begin(); it != actions.end(); ++it)
-	{
-		ICS::Control* control;
-		bool controlExists = (pICS->getChannel(it->mId)->getControlsCount() != 0);
-		if (!controlExists)
-		{
-			if (it->mType == InputAction::Trigger)
-				control = new ICS::Control(boost::lexical_cast<std::string>(it->mId), false, true, 0, ICS::ICS_MAX, ICS::ICS_MAX, false);
-			else if (it->mType == InputAction::Axis)
-				control = new ICS::Control(boost::lexical_cast<std::string>(it->mId), false, true, 0.5, 0.1, 30.0);
-			else if (it->mType == InputAction::HalfAxis)
-					control = new ICS::Control(boost::lexical_cast<std::string>(it->mId), false, true, 0.0, 0.1, 30.0);
-
-			pICS->addControl(control);
-
-			if (it->mDefaultIncrease != SDLK_UNKNOWN)
-				pICS->addKeyBinding(control, it->mDefaultIncrease, ICS::Control::INCREASE);
-			if (it->mDefaultDecrease != SDLK_UNKNOWN)
-				pICS->addKeyBinding(control, it->mDefaultDecrease, ICS::Control::DECREASE);
-
-			control->attachChannel(pICS->getChannel(it->mId), ICS::Channel::DIRECT);
-			pICS->getChannel(it->mId)->update();
-		}
-		else
-			control = pICS->getChannel(it->mId)->getAttachedControls().front().control;
-
-		it->mICS = pICS;
-		it->mControl = control;
-
-		if (pICS == mInputCtrl)
-			pICS->getChannel(it->mId)->addListener(this);
-	}
-}
 
 ///  Input caption  ---------------------
-void App::UpdateInputButton(MyGUI::Button* button, const InputAction& action, int bind)
+void CGui::UpdateInputButton(MyGUI::Button* button, const InputAction& action, int bind)
 {
 	std::string s, sAssign = TR("#FFA030#{InputAssignKey}");  // caption
 
@@ -185,7 +73,7 @@ void App::UpdateInputButton(MyGUI::Button* button, const InputAction& action, in
 
 ///  Gui Init - Input tabs
 //----------------------------------------------------------------------------------------------------------------------------------
-void App::CreateInputTab(const std::string& title, bool playerTab, const std::vector<InputAction>& actions, ICS::InputControlSystem* ICS)
+void CGui::CreateInputTab(const std::string& title, bool playerTab, const std::vector<InputAction>& actions, ICS::InputControlSystem* ICS)
 {
 	if (!tabInput)  return;
 	TabItemPtr tabitem = tabInput->addItem(TR(title));
@@ -247,8 +135,8 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 			x1, y, sx, sy,  ALIGN);
 		setOrigPos(btn1, "OptionsWnd");
 		UpdateInputButton(btn1, *it);
-		btn1->eventMouseButtonClick += newDelegate(this, &App::inputBindBtnClicked);
-		btn1->eventMouseButtonPressed += newDelegate(this, &App::inputBindBtn2);
+		btn1->eventMouseButtonClick += newDelegate(this, &CGui::inputBindBtnClicked);
+		btn1->eventMouseButtonPressed += newDelegate(this, &CGui::inputBindBtn2);
 		btn1->setUserData(*it);
 		Colour clr = !playerTab ? Colour(0.7f,0.85f,1.f) :
 			(analog ? (twosided ? Colour(0.8f,0.8f,1.0f) : Colour(0.7f,0.8f,1.0f)) : Colour(0.7f,0.9f,0.9f));
@@ -276,7 +164,7 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 			btn1->setTextColour(Colour(0.6f,0.7f,0.8f));
 			btn1->setColour(Colour(0.6f,0.8f,1.0f));
 			btn1->setUserData(*it);
-			btn1->eventMouseButtonClick += newDelegate(this, &App::inputDetailBtn);
+			btn1->eventMouseButtonClick += newDelegate(this, &CGui::inputDetailBtn);
 		}
 		++i;
 		y += yRow[name] * ya;
@@ -301,14 +189,14 @@ void App::CreateInputTab(const std::string& title, bool playerTab, const std::ve
 	}
 }
 
-void App::InitInputGui()
+void CGui::InitInputGui()
 {
-	LoadInputDefaults();
+	app->LoadInputDefaults();
 
-	txtInpDetail = mGUI->findWidget<StaticText>("InputDetail");
-	panInputDetail = mGUI->findWidget<Widget>("PanInputDetail");
+	txtInpDetail = app->mGUI->findWidget<StaticText>("InputDetail");
+	panInputDetail = app->mGUI->findWidget<Widget>("PanInputDetail");
 
-	TabItemPtr inpTabAll = mGUI->findWidget<TabItem>("InputTabAll");  if (!inpTabAll)  return;
+	TabItemPtr inpTabAll = app->mGUI->findWidget<TabItem>("InputTabAll");  if (!inpTabAll)  return;
 	Tab(tabInput, "InputTab", tabInputChg);
 	if (!tabInput)  return;
 
@@ -333,9 +221,9 @@ void App::InitInputGui()
 
 
 	///  insert a tab item for every schema (global, 4players)
-	CreateInputTab("#80C0FF#{InputMapGeneral}", false, mInputActions, mInputCtrl);
+	CreateInputTab("#80C0FF#{InputMapGeneral}", false, app->mInputActions, app->mInputCtrl);
 	for (int i=0; i < 4; ++i)
-		CreateInputTab(String("#FFF850") + (i==0 ? "#{Player} ":" ") +toStr(i+1), true, mInputActionsPlayer[i], mInputCtrlPlayer[i]);
+		CreateInputTab(String("#FFF850") + (i==0 ? "#{Player} ":" ") +toStr(i+1), true, app->mInputActionsPlayer[i], app->mInputCtrlPlayer[i]);
 
 
 	TabItemPtr tabitem = tabInput->addItem(TR("#C0C0FF#{Other}"));
@@ -391,13 +279,13 @@ void App::InitInputGui()
 ///  Bind Input
 //----------------------------------------------------------------------------------------------------------------------------------
 
-void App::inputBindBtn2(WP sender, int, int, MouseButton mb)
+void CGui::inputBindBtn2(WP sender, int, int, MouseButton mb)
 {
 	if (mb == MouseButton::Right)
 		inputUnbind(sender);
 }
 
-void App::inputBindBtnClicked(WP sender)
+void CGui::inputBindBtnClicked(WP sender)
 {
 	sender->castType<MyGUI::Button>()->setCaption( TR("#FFA030#{InputAssignKey}"));
 
@@ -414,19 +302,19 @@ void App::inputBindBtnClicked(WP sender)
 	UpdateInputButton(mBindingSender, *action, 1);
 
 	// activate key capture mode
-	bAssignKey = true;
-	hideMouse();
+	app->bAssignKey = true;
+	app->hideMouse();
 }
 
-void App::notifyInputActionBound(bool complete)
+void CGui::notifyInputActionBound(bool complete)
 {	
 	UpdateInputButton(mBindingSender, *mBindingAction, complete ? 0 : 2);
 	if (complete)
-	{	bAssignKey = false;
+	{	app->bAssignKey = false;
 
 		// If a key was assigned that used to belong to another control, it will now be unassigned,
 		// so we need to force-update button labels
-		TabControl* inputTab = mGUI->findWidget<TabControl>("InputTab");  if (!inputTab)  return;
+		TabControl* inputTab = app->mGUI->findWidget<TabControl>("InputTab");  if (!inputTab)  return;
 		TabItem* current = inputTab->getItemSelected();
 		for (int i=0; i < current->getChildCount(); ++i)
 		{
@@ -439,7 +327,7 @@ void App::notifyInputActionBound(bool complete)
 	}
 }
 
-void App::inputUnbind(WP sender)
+void CGui::inputUnbind(WP sender)
 {
 	InputAction* action = sender->getUserData<InputAction>();
 	mBindingAction = action;
@@ -467,7 +355,7 @@ void App::inputUnbind(WP sender)
 
 ///  edit details
 //-------------------------------------------------------------------------------
-void App::inputDetailBtn(WP sender)
+void CGui::inputDetailBtn(WP sender)
 {
 	const InputAction& action = *sender->getUserData<InputAction>();
 	if (txtInpDetail)  txtInpDetail->setCaptionWithReplacing(TR("#{InputDetailsFor}")+":  #{InputMap"+action.mName+"}");
@@ -475,35 +363,35 @@ void App::inputDetailBtn(WP sender)
 	mBindingAction = sender->getUserData<InputAction>();
 	if (panInputDetail)  panInputDetail->setVisible(false);
 
-	Button* btnInputInv = mGUI->findWidget<Button>("InputInv");
+	Button* btnInputInv = app->mGUI->findWidget<Button>("InputInv");
 	if (btnInputInv)  btnInputInv->setStateSelected(mBindingAction->mControl->getInverted());
 	if (edInputIncrease)  edInputIncrease->setCaption(toStr(action.mControl->getStepSize() * action.mControl->getStepsPerSeconds()));
 }
 
-void App::editInput(MyGUI::EditPtr ed)
+void CGui::editInput(MyGUI::EditPtr ed)
 {
 	Real vInc = s2r(edInputIncrease->getCaption());
 	mBindingAction->mControl->setStepSize(0.1);
 	mBindingAction->mControl->setStepsPerSeconds(vInc*10);
 }
 
-void App::btnInputInv(WP wp)
+void CGui::btnInputInv(WP wp)
 {
 	ButtonPtr chk = wp->castType<MyGUI::Button>();
 	chk->setStateSelected(!chk->getStateSelected());
 	mBindingAction->mControl->setInverted(chk->getStateSelected());
 }
 
-void App::chkOneAxis(WP wp)
+void CGui::chkOneAxis(WP wp)
 {
 	int id=0;  if (!TabInputId(&id))  return;
 	ButtonPtr chk = wp->castType<MyGUI::Button>();
-	bool b = !mInputCtrlPlayer[id]->mbOneAxisThrottleBrake;
-	mInputCtrlPlayer[id]->mbOneAxisThrottleBrake = b;
+	bool b = !app->mInputCtrlPlayer[id]->mbOneAxisThrottleBrake;
+	app->mInputCtrlPlayer[id]->mbOneAxisThrottleBrake = b;
     chk->setStateSelected(b);
 }
 
-void App::tabInputChg(MyGUI::TabPtr tab, size_t val)
+void CGui::tabInputChg(MyGUI::TabPtr tab, size_t val)
 {
 	int id=0;  bool vis = TabInputId(&id);
 	chOneAxis->setVisible(vis);
@@ -511,13 +399,13 @@ void App::tabInputChg(MyGUI::TabPtr tab, size_t val)
 	//edInputIncrease;
 	if (vis)
 	{
-		bool b = mInputCtrlPlayer[id]->mbOneAxisThrottleBrake;
+		bool b = app->mInputCtrlPlayer[id]->mbOneAxisThrottleBrake;
 		chOneAxis->setStateSelected(b);
 	}
 }
 
 //  returns player id 0..3, false if not player tab
-bool App::TabInputId(int* pId)
+bool CGui::TabInputId(int* pId)
 {
 	if (!tabInput)  return false;
 	int id = tabInput->getIndexSelected();  if (id == 0)  return false;
@@ -525,7 +413,7 @@ bool App::TabInputId(int* pId)
 	*pId = id;  return true;
 }
 
-void App::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
+void CGui::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 {
 	if (val == 0)  return;  cmb->setIndexSelected(0);
 	int id=0;  if (!TabInputId(&id))  return;
@@ -537,7 +425,7 @@ void App::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 
 	for (int i=0; i < numActs; ++i)
 	{
-		ICS::Control* control = mInputCtrlPlayer[id]->getControl(keyActs[i]);
+		ICS::Control* control = app->mInputCtrlPlayer[id]->getControl(keyActs[i]);
 
 		control->setStepSize(0.1);
 		control->setStepsPerSeconds(vInc*10);
@@ -548,9 +436,9 @@ void App::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 
 ///  update input bars vis,dbg
 //-------------------------------------------------------------------------------
-void App::UpdateInputBars()
+void CGui::UpdateInputBars()
 {
-	TabControl* inputTab = mGUI->findWidget<TabControl>("InputTab");  if (!inputTab)  return;
+	TabControl* inputTab = app->mGUI->findWidget<TabControl>("InputTab");  if (!inputTab)  return;
 	TabItem* current = inputTab->getItemSelected();
 	for (int i=0; i<current->getChildCount(); ++i)
 	{
@@ -571,14 +459,14 @@ void App::UpdateInputBars()
 }
 
 
-void App::mouseAxisBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
+void CGui::mouseAxisBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
 	ICS::InputControlSystem::NamedAxis axis, ICS::Control::ControlChangingDirection direction)
 {
 	// we don't want mouse movement bindings
 	return;
 }
 
-void App::keyBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
+void CGui::keyBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
 	SDL_Keycode key, ICS::Control::ControlChangingDirection direction)
 {
 	ICS::DetectingBindingListener::keyBindingDetected(pICS, control, key, direction);
@@ -591,13 +479,13 @@ void App::keyBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* contro
 		notifyInputActionBound(true); // done
 }
 
-void App::mouseButtonBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
+void CGui::mouseButtonBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
 	unsigned int button, ICS::Control::ControlChangingDirection direction)
 {
 	return;
 }
 
-void App::joystickAxisBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
+void CGui::joystickAxisBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
 	int deviceId, int axis, ICS::Control::ControlChangingDirection direction)
 {
 	ICS::DetectingBindingListener::joystickAxisBindingDetected(pICS, control, deviceId, axis, ICS::Control::INCREASE);
@@ -609,7 +497,7 @@ void App::joystickAxisBindingDetected(ICS::InputControlSystem* pICS, ICS::Contro
 	notifyInputActionBound(true);
 }
 
-void App::joystickButtonBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
+void CGui::joystickButtonBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
 	int deviceId, unsigned int button, ICS::Control::ControlChangingDirection direction)
 {
 	// 2-sided axis can't be bound with a JS button
@@ -620,7 +508,7 @@ void App::joystickButtonBindingDetected(ICS::InputControlSystem* pICS, ICS::Cont
 	notifyInputActionBound(true);
 }
 
-void App::joystickPOVBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
+void CGui::joystickPOVBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
 	int deviceId, int pov,ICS:: InputControlSystem::POVAxis axis, ICS::Control::ControlChangingDirection direction)
 {
 	return;

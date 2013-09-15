@@ -3,6 +3,7 @@
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/settings.h"
 #include "CGame.h"
+#include "CGui.h"
 #include "common/Gui_Def.h"
 #include "common/TracksXml.h"
 #include "common/MultiList2.h"
@@ -39,7 +40,7 @@ bool (*CarSort[allSortFunc])(const CarL& c1, const CarL& c2) = {
 //  done every list sort column change or find edit text change
 //  fills gui cars list
 //-----------------------------------------------------------------------------------------------------------
-void App::CarListUpd(bool resetNotFound)
+void CGui::CarListUpd(bool resetNotFound)
 {
 	bool filter = isChallGui();
 		
@@ -78,7 +79,7 @@ void App::CarListUpd(bool resetNotFound)
 	}
 }
 
-void App::AddCarL(std::string name, const CarInfo* ci)
+void CGui::AddCarL(std::string name, const CarInfo* ci)
 {
 	MultiList2* li = carList;
 	CarInfo cci;
@@ -91,7 +92,7 @@ void App::AddCarL(std::string name, const CarInfo* ci)
 	li->setSubItemNameAt(3,l, clr+ TR("#{CarType_"+ci->type+"}"));
 }
 
-void App::FillCarList()
+void CGui::FillCarList()
 {
 	liCar.clear();
 	strlist li;
@@ -100,7 +101,7 @@ void App::FillCarList()
 	{
 		if (boost::filesystem::exists(PATHMANAGER::Cars() + "/" + *i + "/about.txt"))
 		{	String s = *i;
-			CarL c;  c.name = *i;  c.pA = this;
+			CarL c;  c.name = *i;  //c.pA = this;
 			int id = carsXml.carmap[*i];
 			c.ci = id==0 ? 0 : &carsXml.cars[id-1];
 			liCar.push_back(c);
@@ -119,7 +120,7 @@ string ghostFile(SETTINGS* pSet, string sim_mode, string car)
 		+ "_" + car + ".rpl";
 }
 
-const String& App::GetGhostFile(std::string* ghCar)
+const String& CGui::GetGhostFile(std::string* ghCar)
 {
 	static String file;
 	string sim_mode = pSet->game.sim_mode, car = pSet->game.car[0];
@@ -189,24 +190,33 @@ const String& App::GetGhostFile(std::string* ghCar)
 	return file;
 }
 
-std::string App::GetRplListDir()
+std::string CGui::GetRplListDir()
 {
 	return (pSet->rpl_listghosts
 		? (PATHMANAGER::Ghosts() + "/" + pSet->gui.sim_mode)
 		: PATHMANAGER::Replays() );
 }
 
+String CGui::TrkDir() {
+	int u = pSet->game.track_user ? 1 : 0;		return pathTrk[u] + pSet->game.track + "/";  }
+
+String CGui::PathListTrk(int user) {
+	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;  }
+
+String CGui::PathListTrkPrv(int user, String track){
+	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + track + "/preview/";  }
+	
 
 //  [Game] 	. . . . . . . . . . . . . . . . . . . .    --- lists ----    . . . . . . . . . . . . . . . . . . 
 
 //  car
-void App::listCarChng(MultiList2* li, size_t pos)
+void CGui::listCarChng(MultiList2* li, size_t pos)
 {
 	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
 	const UString& sl = li->getItemNameAt(i).substr(7);  sListCar = sl;
 
 	if (imgCar && !pSet->dev_no_prvs)  imgCar->setImageTexture(sListCar+".jpg");
-	if (mClient) mClient->updatePlayerInfo(pSet->nickname, sListCar);
+	if (app->mClient)  app->mClient->updatePlayerInfo(pSet->nickname, sListCar);
 	
 	//  car desc load
 	if (carDesc)
@@ -237,14 +247,14 @@ void App::listCarChng(MultiList2* li, size_t pos)
 	changeCar();
 	UpdCarStatsTxt();
 }	
-void App::changeCar()
+void CGui::changeCar()
 {
 	if (iCurCar < 4)
 		pSet->gui.car[iCurCar] = sListCar;
 }
 
 ///  car stats txt
-void App::UpdCarStatsTxt()
+void CGui::UpdCarStatsTxt()
 {
 	std::string path;
 	//GetCarPath(&path, 0, 0, sListCar, true);
@@ -272,32 +282,32 @@ void App::UpdCarStatsTxt()
 
 
 //  track
-void App::changeTrack()
+void CGui::changeTrack()
 {
 	pSet->gui.track = sListTrack;
 	pSet->gui.track_user = bListTrackU;
 							//_ only for host..
-	if (mMasterClient && valNetPassword->getVisible())
+	if (app->mMasterClient && valNetPassword->getVisible())
 	{	uploadGameInfo();
 		updateGameInfoGUI();  }
 }
 
 //  new game
-void App::btnNewGame(WP)
+void CGui::btnNewGame(WP)
 {
-	if (mWndGame->getVisible() && mWndTabsGame->getIndexSelected() < TAB_Champs  || mClient)
+	if (app->mWndGame->getVisible() && app->mWndTabsGame->getIndexSelected() < TAB_Champs  || app->mClient)
 		BackFromChs();  /// champ, back to single race
 	
-	NewGame();  isFocGui = false;  // off gui
-	if (mWndOpts)  mWndOpts->setVisible(isFocGui);
-	if (mWndRpl)  mWndRpl->setVisible(false);//
-	if (bnQuit)  bnQuit->setVisible(isFocGui);
+	app->NewGame();  app->isFocGui = false;  // off gui
+	if (app->mWndOpts)  app->mWndOpts->setVisible(app->isFocGui);
+	if (app->mWndRpl)  app->mWndRpl->setVisible(false);//
+	if (bnQuit)  bnQuit->setVisible(app->isFocGui);
 	
-	updMouse();
+	app->updMouse();
 	
 	mToolTip->setVisible(false);
 }
-void App::btnNewGameStart(WP wp)
+void CGui::btnNewGameStart(WP wp)
 {
 	changeTrack();
 	btnNewGame(wp);
@@ -307,22 +317,22 @@ void App::btnNewGameStart(WP wp)
 //  Menu
 //-----------------------------------------------------------------------------------------------------------
 
-void App::toggleGui(bool toggle)
+void CGui::toggleGui(bool toggle)
 {
 	if (toggle)
-		isFocGui = !isFocGui;
+		app->isFocGui = !app->isFocGui;
 
-	bool notMain = isFocGui && !pSet->isMain;
-	if (mWndMain)	mWndMain->setVisible(isFocGui && pSet->isMain);
-	if (mWndReplays) mWndReplays->setVisible(notMain && pSet->inMenu == MNU_Replays);
-	if (mWndHelp)	mWndHelp->setVisible(notMain && pSet->inMenu == MNU_Help);
-	if (mWndOpts)	mWndOpts->setVisible(notMain && pSet->inMenu == MNU_Options);
+	bool notMain = app->isFocGui && !pSet->isMain;
+	if (app->mWndMain)	app->mWndMain->setVisible(app->isFocGui && pSet->isMain);
+	if (app->mWndReplays) app->mWndReplays->setVisible(notMain && pSet->inMenu == MNU_Replays);
+	if (app->mWndHelp)	app->mWndHelp->setVisible(notMain && pSet->inMenu == MNU_Help);
+	if (app->mWndOpts)	app->mWndOpts->setVisible(notMain && pSet->inMenu == MNU_Options);
 	
 	//  load Readme editbox from file
-	if (mWndHelp && mWndHelp->getVisible() && loadReadme)
+	if (app->mWndHelp && app->mWndHelp->getVisible() && loadReadme)
 	{
 		loadReadme = false;
-		EditBox* edit = mGUI->findWidget<EditBox>("Readme",false);
+		EditBox* edit = app->mGUI->findWidget<EditBox>("Readme",false);
 		if (edit)
 		{	std::string path = PATHMANAGER::Data()+"/../Readme.txt";
 			std::ifstream fi(path.c_str());
@@ -344,45 +354,45 @@ void App::toggleGui(bool toggle)
 
 	UpdChampTabVis();
 	
-	if (mWndGame)
+	if (app->mWndGame)
 	{	bool vis = notMain  && gc;
-		mWndGame->setVisible(vis);
+		app->mWndGame->setVisible(vis);
 		if (vis)
 		{
-			mWndGame->setCaption(chAny ? sCh : TR("#{SingleRace}"));
-			TabItem* t = mWndTabsGame->getItemAt(TAB_Champs);
+			app->mWndGame->setCaption(chAny ? sCh : TR("#{SingleRace}"));
+			TabItem* t = app->mWndTabsGame->getItemAt(TAB_Champs);
 			t->setCaption(sCh);
 		}
 	}
 	if (notMain && gc)  // show hide champs,stages
 	{
-		size_t id = mWndTabsGame->getIndexSelected();
-		mWndTabsGame->setButtonWidthAt(TAB_Track, chAny ? 1 :-1);  if (id == TAB_Track && chAny)  mWndTabsGame->setIndexSelected(TAB_Champs);
-		mWndTabsGame->setButtonWidthAt(TAB_Multi, chAny ? 1 :-1);  if (id == TAB_Multi && chAny)  mWndTabsGame->setIndexSelected(TAB_Champs);
-		mWndTabsGame->setButtonWidthAt(TAB_Champs,chAny ?-1 : 1);  if (id == TAB_Champs && !chAny)  mWndTabsGame->setIndexSelected(TAB_Track);
-		mWndTabsGame->setButtonWidthAt(TAB_Stages,chAny ?-1 : 1);  if (id == TAB_Stages && !chAny)  mWndTabsGame->setIndexSelected(TAB_Track);
-		mWndTabsGame->setButtonWidthAt(TAB_Stage, chAny ?-1 : 1);  if (id == TAB_Stage  && !chAny)  mWndTabsGame->setIndexSelected(TAB_Track);
+		size_t id = app->mWndTabsGame->getIndexSelected();
+		app->mWndTabsGame->setButtonWidthAt(TAB_Track, chAny ? 1 :-1);  if (id == TAB_Track && chAny)  app->mWndTabsGame->setIndexSelected(TAB_Champs);
+		app->mWndTabsGame->setButtonWidthAt(TAB_Multi, chAny ? 1 :-1);  if (id == TAB_Multi && chAny)  app->mWndTabsGame->setIndexSelected(TAB_Champs);
+		app->mWndTabsGame->setButtonWidthAt(TAB_Champs,chAny ?-1 : 1);  if (id == TAB_Champs && !chAny)  app->mWndTabsGame->setIndexSelected(TAB_Track);
+		app->mWndTabsGame->setButtonWidthAt(TAB_Stages,chAny ?-1 : 1);  if (id == TAB_Stages && !chAny)  app->mWndTabsGame->setIndexSelected(TAB_Track);
+		app->mWndTabsGame->setButtonWidthAt(TAB_Stage, chAny ?-1 : 1);  if (id == TAB_Stage  && !chAny)  app->mWndTabsGame->setIndexSelected(TAB_Track);
 	}
 
-	if (bnQuit)  bnQuit->setVisible(isFocGui);
-	updMouse();
-	if (!isFocGui)  mToolTip->setVisible(false);
+	if (bnQuit)  bnQuit->setVisible(app->isFocGui);
+	app->updMouse();
+	if (!app->isFocGui)  mToolTip->setVisible(false);
 
 	for (int i=0; i < ciMainBtns; ++i)
-		mWndMainPanels[i]->setVisible(pSet->inMenu == i);
+		app->mWndMainPanels[i]->setVisible(pSet->inMenu == i);
 		
 	//  1st center mouse
 	static bool first = true;
-	if (isFocGui && first)
+	if (app->isFocGui && first)
 	{	first = false;
 		GuiCenterMouse();
 	}
 }
 
-void App::MainMenuBtn(WidgetPtr wp)
+void CGui::MainMenuBtn(WidgetPtr wp)
 {
 	for (int i=0; i < ciMainBtns; ++i)
-		if (wp == mWndMainBtns[i])
+		if (wp == app->mWndMainBtns[i])
 		{
 			pSet->isMain = false;
 			pSet->inMenu = i;
@@ -391,9 +401,9 @@ void App::MainMenuBtn(WidgetPtr wp)
 		}
 }
 
-void App::MenuTabChg(TabPtr tab, size_t id)
+void CGui::MenuTabChg(TabPtr tab, size_t id)
 {
-	if (tab == mWndTabsGame && id == TAB_Car)
+	if (tab == app->mWndTabsGame && id == TAB_Car)
 		CarListUpd();  // off filtering
 
 	if (id != 0)  return;  // <back
@@ -403,21 +413,21 @@ void App::MenuTabChg(TabPtr tab, size_t id)
 }
 
 
-void App::GuiShortcut(MNU_Btns mnu, int tab, int subtab)
+void CGui::GuiShortcut(MNU_Btns mnu, int tab, int subtab)
 {
-	if (subtab == -1 && (!isFocGui || pSet->inMenu != mnu))  subtab = -2;  // cancel subtab cycling
+	if (subtab == -1 && (!app->isFocGui || pSet->inMenu != mnu))  subtab = -2;  // cancel subtab cycling
 
-	isFocGui = true;
+	app->isFocGui = true;
 	pSet->isMain = false;  pSet->inMenu = mnu;
 	
 	TabPtr mWndTabs = 0;
 	std::vector<TabControl*>* subt = 0;
 	
 	switch (mnu)
-	{	case MNU_Replays:	mWndTabs = mWndTabsRpl;  break;
-		case MNU_Help:		mWndTabs = mWndTabsHelp;  break;
-		case MNU_Options:	mWndTabs = mWndTabsOpts;  subt = &vSubTabsOpts;  break;
-		default:			mWndTabs = mWndTabsGame;  subt = &vSubTabsGame;  break;
+	{	case MNU_Replays:	mWndTabs = app->mWndTabsRpl;  break;
+		case MNU_Help:		mWndTabs = app->mWndTabsHelp;  break;
+		case MNU_Options:	mWndTabs = app->mWndTabsOpts;  subt = &vSubTabsOpts;  break;
+		default:			mWndTabs = app->mWndTabsGame;  subt = &vSubTabsGame;  break;
 	}
 	toggleGui(false);
 
@@ -430,7 +440,7 @@ void App::GuiShortcut(MNU_Btns mnu, int tab, int subtab)
 	int  cnt = tc->getItemCount();
 
 	if (t == tab && subtab == -1)  // cycle subpages if same tab
-	{	if (shift)
+	{	if (app->shift)
 			tc->setIndexSelected( (tc->getIndexSelected()-1+cnt) % cnt );
 		else
 			tc->setIndexSelected( (tc->getIndexSelected()+1) % cnt );
@@ -443,10 +453,10 @@ void App::GuiShortcut(MNU_Btns mnu, int tab, int subtab)
 }
 
 //  close netw end
-void App::btnNetEndClose(WP)
+void CGui::btnNetEndClose(WP)
 {
-	mWndNetEnd->setVisible(false);
-	isFocGui = true;  // show back gui
+	app->mWndNetEnd->setVisible(false);
+	app->isFocGui = true;  // show back gui
 	toggleGui(false);
 }
 
@@ -454,7 +464,7 @@ void App::btnNetEndClose(WP)
 //  utility
 //---------------------------------------------------------------------------------------------------------------------
 
-void App::UpdCarClrSld(bool upd)
+void CGui::UpdCarClrSld(bool upd)
 {
 	Slider* sl;
 	Slv(CarClrH, pSet->gui.car_hue[iCurCar]);
@@ -472,7 +482,7 @@ void App::UpdCarClrSld(bool upd)
 
 
 //  next/prev in list by key
-int App::LNext(MultiList2* lp, int rel, int ofs)
+int CGui::LNext(MultiList2* lp, int rel, int ofs)
 {
 	size_t cnt = lp->getItemCount();
 	if (cnt==0)  return 0;
@@ -481,7 +491,7 @@ int App::LNext(MultiList2* lp, int rel, int ofs)
 	lp->beginToItemAt(std::max(0, i-ofs));  // center
 	return i;
 }
-int App::LNext(MultiList* lp, int rel)
+int CGui::LNext(MultiList* lp, int rel)
 {
 	size_t cnt = lp->getItemCount();
 	if (cnt==0)  return 0;
@@ -489,7 +499,7 @@ int App::LNext(MultiList* lp, int rel)
 	lp->setIndexSelected(i);
 	return i;
 }
-int App::LNext(ListPtr lp, int rel, int ofs)
+int CGui::LNext(ListPtr lp, int rel, int ofs)
 {
 	size_t cnt = lp->getItemCount();
 	if (cnt==0)  return 0;
@@ -499,14 +509,14 @@ int App::LNext(ListPtr lp, int rel, int ofs)
 	return i;
 }
 
-void App::LNext(int rel)
+void CGui::LNext(int rel)
 {
-	//if (!isFocGui || pSet->isMain)  return;
+	//if (!ap->isFocGui || pSet->isMain)  return;
 	if (pSet->inMenu == MNU_Replays)
 		listRplChng(rplList,  LNext(rplList, rel, 11));
 	else
-		if (mWndGame->getVisible())
-		switch (mWndTabsGame->getIndexSelected())
+		if (app->mWndGame->getVisible())
+		switch (app->mWndTabsGame->getIndexSelected())
 		{	case TAB_Track:  listTrackChng(trkList,  LNext(trkList, rel, 11));  return;
 			case TAB_Car:	 listCarChng(carList,    LNext(carList, rel, 5));  return;
 			case TAB_Game:	 if (rel > 0)  radSimNorm(0);  else  radSimEasy(0);  return;
@@ -518,4 +528,48 @@ void App::LNext(int rel)
 			case TAB_Stages: listStageChng(liStages, LNext(liStages, rel, 8));  return;
 			case TAB_Stage:	 if (rel > 0)  btnStageNext(0);  else  btnStagePrev(0);  return;
 		}
+}
+
+
+///   Update (frame start)
+void CGui::GuiUpdate()
+{
+	UnfocusLists();
+
+
+	if (bGuiReinit)  // after language change from combo
+	{	bGuiReinit = false;
+
+		app->mGUI->destroyWidgets(app->vwGui);
+		bnQuit=0; app->mWndOpts=0;  //todo: rest too..
+
+		InitGui();
+		app->bWindowResized = true;
+		app->mWndTabsOpts->setIndexSelected(3);  // switch back to view tab
+	}
+
+		
+	///  sort trk list
+	if (trkList && trkList->mSortColumnIndex != trkList->mSortColumnIndexOld
+		|| trkList->mSortUp != trkList->mSortUpOld)
+	{
+		trkList->mSortColumnIndexOld = trkList->mSortColumnIndex;
+		trkList->mSortUpOld = trkList->mSortUp;
+
+		pSet->tracks_sort = trkList->mSortColumnIndex;  // to set
+		pSet->tracks_sortup = trkList->mSortUp;
+		TrackListUpd(false);
+	}
+
+	///  sort car list
+	if (carList && carList->mSortColumnIndex != carList->mSortColumnIndexOld
+		|| carList->mSortUp != carList->mSortUpOld)
+	{
+		carList->mSortColumnIndexOld = carList->mSortColumnIndex;
+		carList->mSortUpOld = carList->mSortUp;
+
+		pSet->cars_sort = carList->mSortColumnIndex;  // to set
+		pSet->cars_sortup = carList->mSortUp;
+		CarListUpd(false);
+	}
 }

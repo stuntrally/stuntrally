@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "common/Defines.h"
 #include "CGame.h"
+#include "CGui.h"
 #include "../vdrift/settings.h"
 #include "../vdrift/game.h"
 #include "../network/masterclient.hpp"
@@ -33,45 +34,47 @@ namespace
 }
 
 
-void App::rebuildGameList()
+void CGui::rebuildGameList()
 {
-	if (!listServers || !mMasterClient)  return;
-	listServers->removeAllItems();
+	if (!listServers || !app->mMasterClient)  return;
+	MultiListPtr li = listServers;
+	li->removeAllItems();
 
-	protocol::GameList list = mMasterClient->getList();
+	protocol::GameList list = app->mMasterClient->getList();
 	const static char* sBoost[4] = {"#{Never}","#{FuelLap}","#{FuelTime}","#{Always}"};
 	
 	for (protocol::GameList::const_iterator it = list.begin(); it != list.end(); ++it)
 	{
-		listServers->addItem("#C0FFC0"+UString(it->second.name));  int l = listServers->getItemCount()-1;
-		listServers->setSubItemNameAt(1,l, "#50FF50"+ string(it->second.track));
-		listServers->setSubItemNameAt(2,l, "#80FFC0"+ toStr((int)it->second.laps));
-		listServers->setSubItemNameAt(3,l, "#FFFF00"+ toStr((int)it->second.players));
-		listServers->setSubItemNameAt(4,l, "#80FFFF"+ yesno((bool)it->second.collisions));
-		listServers->setSubItemNameAt(5,l, "#D0D0FF"+ string(it->second.sim_mode));
-		listServers->setSubItemNameAt(6,l, "#A0D0FF"+ TR(sBoost[it->second.boost_type]));
-		listServers->setSubItemNameAt(iColLock,l, "#FF6060"+ yesno((bool)it->second.locked));
-		listServers->setSubItemNameAt(iColHost,l, "#FF9000"+ net::IPv4(it->second.address));
-		listServers->setSubItemNameAt(iColPort,l, "#FFB000"+ toStr((int)it->second.port));
+		li->addItem("#C0FFC0"+UString(it->second.name));  int l = li->getItemCount()-1;
+		li->setSubItemNameAt(1,l, "#50FF50"+ string(it->second.track));
+		li->setSubItemNameAt(2,l, "#80FFC0"+ toStr((int)it->second.laps));
+		li->setSubItemNameAt(3,l, "#FFFF00"+ toStr((int)it->second.players));
+		li->setSubItemNameAt(4,l, "#80FFFF"+ yesno((bool)it->second.collisions));
+		li->setSubItemNameAt(5,l, "#D0D0FF"+ string(it->second.sim_mode));
+		li->setSubItemNameAt(6,l, "#A0D0FF"+ TR(sBoost[it->second.boost_type]));
+		li->setSubItemNameAt(iColLock,l, "#FF6060"+ yesno((bool)it->second.locked));
+		li->setSubItemNameAt(iColHost,l, "#FF9000"+ net::IPv4(it->second.address));
+		li->setSubItemNameAt(iColPort,l, "#FFB000"+ toStr((int)it->second.port));
 	}
 }
 
-void App::rebuildPlayerList()
+void CGui::rebuildPlayerList()
 {
-	if (!listPlayers || !mClient)  return;
-	listPlayers->removeAllItems();
+	if (!listPlayers || !app->mClient)  return;
+	MultiListPtr li = listPlayers;
+	li->removeAllItems();
 
 	//  Add self
-	int peerCount = mClient->getPeerCount();
-	listPlayers->addItem("#C0E0FF"+ pSet->nickname);
-	listPlayers->setSubItemNameAt(1,0, "#80FFFF"+ sListCar);
-	listPlayers->setSubItemNameAt(2,0, "#F0F060"+ toStr(peerCount));
-	listPlayers->setSubItemNameAt(3,0, "#C0F0F0" "0");  bool rd = mClient->isReady();
-	listPlayers->setSubItemNameAt(4,0, (rd?"#60FF60":"#FF8080")+ yesno(rd));
+	int peerCount = app->mClient->getPeerCount();
+	li->addItem("#C0E0FF"+ pSet->nickname);
+	li->setSubItemNameAt(1,0, "#80FFFF"+ sListCar);
+	li->setSubItemNameAt(2,0, "#F0F060"+ toStr(peerCount));
+	li->setSubItemNameAt(3,0, "#C0F0F0" "0");  bool rd = app->mClient->isReady();
+	li->setSubItemNameAt(4,0, (rd?"#60FF60":"#FF8080")+ yesno(rd));
 
 	//  Add others
 	bool allReady = true;
-	const PeerMap peers = mClient->getPeers();
+	const PeerMap peers = app->mClient->getPeers();
 	for (PeerMap::const_iterator it = peers.begin(); it != peers.end(); ++it)
 	{
 		if (it->second.name.empty() || it->second.connection == PeerInfo::DISCONNECTED)
@@ -81,18 +84,18 @@ void App::rebuildPlayerList()
 			allReady = false;
 
 		// Add list item
-		listPlayers->addItem("#C0E0FF"+ it->second.name);  int l = listPlayers->getItemCount()-1;
-		listPlayers->setSubItemNameAt(1,l, "#80FFFF"+ it->second.car);
-		listPlayers->setSubItemNameAt(2,l, "#F0F060"+ toStr(it->second.peers));
-		listPlayers->setSubItemNameAt(3,l, "#C0F0F0"+ toStr(it->second.ping));  bool rd = it->second.ready;
-		listPlayers->setSubItemNameAt(4,l, (rd?"#60FF60":"#FF8080")+ yesno(rd));
+		li->addItem("#C0E0FF"+ it->second.name);  int l = li->getItemCount()-1;
+		li->setSubItemNameAt(1,l, "#80FFFF"+ it->second.car);
+		li->setSubItemNameAt(2,l, "#F0F060"+ toStr(it->second.peers));
+		li->setSubItemNameAt(3,l, "#C0F0F0"+ toStr(it->second.ping));  bool rd = it->second.ready;
+		li->setSubItemNameAt(4,l, (rd?"#60FF60":"#FF8080")+ yesno(rd));
 	}
 	//  Allow host to start the game
-	if (mLobbyState == HOSTING)
+	if (app->mLobbyState == HOSTING)
 		btnNetReady->setEnabled(allReady);
 }
 
-void App::updateGameInfo()
+void CGui::updateGameInfo()
 {
 	//  set game config
 	if (netGameInfo.name && edNetGameName)
@@ -108,7 +111,7 @@ void App::updateGameInfo()
 	updateGameInfoGUI();
 }
 
-void App::updateGameInfoGUI()
+void CGui::updateGameInfoGUI()
 {
 	//  update track,game info
 	if (!valNetGameInfo)  return;
@@ -142,7 +145,7 @@ void App::updateGameInfoGUI()
 
 ///  Receive  set game from host
 //---------------------------------------------------------------------
-void App::updateGameSet()
+void CGui::updateGameSet()
 {
 	pSet->game.sim_mode = netGameInfo.sim_mode;  LogO("== Netw sim mode: " + pSet->game.sim_mode);
 
@@ -164,9 +167,9 @@ void App::updateGameSet()
 
 ///  Send  upload to peers
 //---------------------------------------------------------------------
-void App::uploadGameInfo()
+void CGui::uploadGameInfo()
 {
-	if (!mMasterClient || !mClient || !edNetGameName || !pSet)
+	if (!app->mMasterClient || !app->mClient || !edNetGameName || !pSet)
 		return;
 	protocol::GameInfo game;
 	string sGame = edNetGameName->getCaption();
@@ -178,7 +181,7 @@ void App::uploadGameInfo()
 	strcpy(game.name, sGame.c_str());
 	strcpy(game.track, sTrack.c_str());
 	strcpy(game.sim_mode, sSim.c_str());
-	game.players = mClient->getPeerCount()+1;
+	game.players = app->mClient->getPeerCount()+1;
 
 	game.collisions = pSet->gui.collis_cars?1:0;
 	game.laps = pSet->gui.num_laps;				LogO("== Netw laps num: " + toStr(pSet->gui.num_laps));
@@ -201,14 +204,14 @@ void App::uploadGameInfo()
 		//? boost::mutex::scoped_lock lock(netGuiMutex);
 		netGameInfo = game;  // for host gui info
 	}
-	mMasterClient->updateGame(game); // Upload to master server
-	if (mClient)  // Send to peers
-		mClient->broadcastGameInfo(game);
+	app->mMasterClient->updateGame(game); // Upload to master server
+	if (app->mClient)  // Send to peers
+		app->mClient->broadcastGameInfo(game);
 }
 //---------------------------------------------------------------------
 
 
-void App::setNetGuiHosting(bool enabled)
+void CGui::setNetGuiHosting(bool enabled)
 {
 	edNetGameName->setEnabled(enabled);
 	edNetPassword->setEnabled(enabled);
@@ -218,7 +221,7 @@ void App::setNetGuiHosting(bool enabled)
 	btnNetReady->setCaption(enabled ? TR("#{NetStart}") : TR("#{NetReady}"));
 }
 
-void App::gameListChanged(protocol::GameList list)
+void CGui::gameListChanged(protocol::GameList list)
 {
 	(void)list;
 	boost::mutex::scoped_lock lock(netGuiMutex);
@@ -226,9 +229,9 @@ void App::gameListChanged(protocol::GameList list)
 }
 
 //  add new msg at end
-void App::AddChatMsg(const MyGUI::UString& clr, const MyGUI::UString& msg, bool add)
+void CGui::AddChatMsg(const MyGUI::UString& clr, const MyGUI::UString& msg, bool add)
 {
-	if (!isFocGui)  // if not in gui, show on hud
+	if (!app->isFocGui)  // if not in gui, show on hud
 	{	sChatLast1 = sChatLast2;
 		sChatLast2 = msg;
 		iChatMove = 0;
@@ -237,35 +240,35 @@ void App::AddChatMsg(const MyGUI::UString& clr, const MyGUI::UString& msg, bool 
 	bUpdChat = true;
 }
 
-void App::peerConnected(PeerInfo peer)
+void CGui::peerConnected(PeerInfo peer)
 {
 	// Master server player count update
-	if (mLobbyState == HOSTING)  uploadGameInfo();
+	if (app->mLobbyState == HOSTING)  uploadGameInfo();
 	// Schedule Gui updates
 	boost::mutex::scoped_lock lock(netGuiMutex);
 	AddChatMsg("#00FF00", UString("Connected: ") + peer.name);
 	bRebuildPlayerList = true;
 }
 
-void App::peerDisconnected(PeerInfo peer)
+void CGui::peerDisconnected(PeerInfo peer)
 {
 	if (peer.name.empty())  return;
 	// Master server player count update
-	if (mLobbyState == HOSTING)  uploadGameInfo();
+	if (app->mLobbyState == HOSTING)  uploadGameInfo();
 	// Schedule Gui updates
 	boost::mutex::scoped_lock lock(netGuiMutex);
 	AddChatMsg("#FF8000", UString("Disconnected: ") + peer.name);
 	bRebuildPlayerList = true;
 }
 
-void App::peerInfo(PeerInfo peer)
+void CGui::peerInfo(PeerInfo peer)
 {
 	(void)peer;
 	boost::mutex::scoped_lock lock(netGuiMutex);
 	bRebuildPlayerList = true;
 }
 
-void App::peerMessage(PeerInfo peer, string msg)
+void CGui::peerMessage(PeerInfo peer, string msg)
 {
 	boost::mutex::scoped_lock lock(netGuiMutex);
 
@@ -281,7 +284,7 @@ void App::peerMessage(PeerInfo peer, string msg)
 	bRebuildPlayerList = true; // For ping updates in the list
 }
 
-void App::peerState(PeerInfo peer, uint8_t state)
+void CGui::peerState(PeerInfo peer, uint8_t state)
 {
 	(void)peer;
 	boost::mutex::scoped_lock lock(netGuiMutex);
@@ -292,34 +295,34 @@ void App::peerState(PeerInfo peer, uint8_t state)
 	}
 }
 
-void App::gameInfo(protocol::GameInfo game)
+void CGui::gameInfo(protocol::GameInfo game)
 {
 	boost::mutex::scoped_lock lock(netGuiMutex);
 	netGameInfo = game;
 	bUpdateGameInfo = true;
 }
 
-void App::returnToLobby()
+void CGui::returnToLobby()
 {
 	btnNetReady->setCaption(TR("#{NetReady}"));
-	isFocGui = true;  // show back gui
+	app->isFocGui = true;  // show back gui
 	toggleGui(false);
 }
 
-void App::startRace()
+void CGui::startRace()
 {
 	LogO("== Netw startRace +");
 	pGame->timer.waiting = false;
 }
 
 ///  Lap time got from network
-void App::timeInfo(ClientID id, uint8_t lap, double time)
+void CGui::timeInfo(ClientID id, uint8_t lap, double time)
 {
-	//if (!mClient)  return;
-	if (id == 0)  id = mClient->getId();
+	//if (!ap->mClient)  return;
+	if (id == 0)  id = app->mClient->getId();
 
 	LogO("== Netw Lap " +toStr(lap) +" finished by " +toStr(id)+ " time:"+ toStr(float(time)));
-	if (id >= carModels.size() || id < 0)
+	if (id >= app->carModels.size() || id < 0)
 	{	LogO("== Netw Lap id wrong !" );  return;  }
 	
 	//pGame->timer.Lap(id, 0,0, true, pSet->game.trackreverse/*<, pSet->boost_type*/);
@@ -328,18 +331,18 @@ void App::timeInfo(ClientID id, uint8_t lap, double time)
 	//carPoses[id].percent = 0.f;
 }
 
-void App::error(string what)
+void CGui::error(string what)
 {
 	boost::mutex::scoped_lock lock(netGuiMutex);
 	AddChatMsg("#FF3030", UString("ERROR! ") + what);
 }
 
-void App::join(string host, string port, string password)
+void CGui::join(string host, string port, string password)
 {
 	try
-	{	mClient.reset(new P2PGameClient(this, pSet->local_port));
-		mClient->updatePlayerInfo(pSet->nickname, sListCar);
-		mClient->connect(host, boost::lexical_cast<int>(port), password); // Lobby phase started automatically
+	{	app->mClient.reset(new P2PGameClient(this, pSet->local_port));
+		app->mClient->updatePlayerInfo(pSet->nickname, sListCar);
+		app->mClient->connect(host, boost::lexical_cast<int>(port), password); // Lobby phase started automatically
 		boost::mutex::scoped_lock lock(netGuiMutex);
 		AddChatMsg("#00FFFF", TR("Connecting to ") + host + ":" + port, false);  // clears chat
 	}catch (...)
@@ -356,14 +359,14 @@ void App::join(string host, string port, string password)
 	panelNetTrack->setVisible(true);   trkList->setVisible(false);
 }
 
-void App::evBtnNetRefresh(WP)
+void CGui::evBtnNetRefresh(WP)
 {
-	mMasterClient.reset(new MasterClient(this));
-	mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
+	app->mMasterClient.reset(new MasterClient(this));
+	app->mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
 	// The actual refresh will be requested automatically when the connection is made
 }
 
-void App::evBtnNetJoin(WP)
+void CGui::evBtnNetJoin(WP)
 {
 	//  join selected game
 	if (!listServers || !pSet)  return;
@@ -378,14 +381,14 @@ void App::evBtnNetJoin(WP)
 		
 		join(host, port, "");
 	}else
-		popup.Show(newDelegate(this, &App::evBtnNetJoinLockedClose),
+		popup.Show(newDelegate(this, &CGui::evBtnNetJoinLockedClose),
 			TR("#{NetJoinLocked}"), true,
 			TR("#{NetPassword}"), "", "", "",
 			"", "", "","",
 			TR("#{MessageBox_Ok}"), TR("#{MessageBox_Cancel}"), "", "");
 }
 
-void App::evBtnNetJoinLockedClose()
+void CGui::evBtnNetJoinLockedClose()
 {
 	popup.Hide();
 	if (popup.btnResult != 0 || !listServers || !pSet)  return;
@@ -397,25 +400,25 @@ void App::evBtnNetJoinLockedClose()
 	join(host, port, popup.edit0);  // host, port, password
 }
 
-void App::evBtnNetCreate(WP)
+void CGui::evBtnNetCreate(WP)
 {
 	//  create game ..
-	if (mLobbyState == DISCONNECTED)
+	if (app->mLobbyState == DISCONNECTED)
 	{	try
 		{
-			if (pSet) mClient.reset(new P2PGameClient(this, pSet->local_port));
-			mClient->updatePlayerInfo(pSet->nickname, sListCar);
-			mClient->startLobby();
+			app->mClient.reset(new P2PGameClient(this, pSet->local_port));
+			app->mClient->updatePlayerInfo(pSet->nickname, sListCar);
+			app->mClient->startLobby();
 		}
 		catch (...)
 		{	raiseError(TR("Failed to initialize networking.\nTry different local port and make sure your firewall is properly configured."), TR("Network Error"));
 			return;
 		}
-		mLobbyState = HOSTING;
-		if (!mMasterClient)
+		app->mLobbyState = HOSTING;
+		if (!app->mMasterClient)
 		{
-			mMasterClient.reset(new MasterClient(this));
-			mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
+			app->mMasterClient.reset(new MasterClient(this));
+			app->mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
 		}
 		uploadGameInfo();
 		updateGameInfoGUI();
@@ -431,12 +434,12 @@ void App::evBtnNetCreate(WP)
 	}
 }
 
-void App::evBtnNetLeave(WP)
+void CGui::evBtnNetLeave(WP)
 {
 	//  leave current game
-	mLobbyState = DISCONNECTED;
-	mClient.reset();
-	mMasterClient.reset();
+	app->mLobbyState = DISCONNECTED;
+	app->mClient.reset();
+	app->mMasterClient.reset();
 	setNetGuiHosting(false);
 
 	tabsNet->setIndexSelected(0);
@@ -444,16 +447,16 @@ void App::evBtnNetLeave(WP)
 	panelNetTrack->setVisible(false);   trkList->setVisible(true);
 }
 
-void App::evBtnNetDirect(WP)
+void CGui::evBtnNetDirect(WP)
 {
-	popup.Show(newDelegate(this, &App::evBtnNetDirectClose),
+	popup.Show(newDelegate(this, &CGui::evBtnNetDirectClose),
 		TR("#{NetDirectConnect}"), true,
 		TR("#{NetAddress}"), TR("#{NetPort}"), TR("#{NetPassword}"), "",
 		"localhost", toStr(protocol::DEFAULT_PORT), "","",
 		TR("#{MessageBox_Ok}"), TR("#{MessageBox_Cancel}"), "", "");
 }
 
-void App::evBtnNetDirectClose()
+void CGui::evBtnNetDirectClose()
 {
 	popup.Hide();
 	if (popup.btnResult != 0)  return;
@@ -461,23 +464,23 @@ void App::evBtnNetDirectClose()
 	join(popup.edit0, popup.edit1, popup.edit2);  // host, port, password
 }
 
-void App::evBtnNetReady(WP)
+void CGui::evBtnNetReady(WP)
 {
-	if (!mClient)  return;
+	if (!app->mClient)  return;
 
-	mClient->toggleReady();
-	if (mLobbyState == HOSTING)
+	app->mClient->toggleReady();
+	if (app->mLobbyState == HOSTING)
 	{
 		LogO("== Netw Ready, hosting...");
 		if (!bStartedGame)
 		{
-			if (mMasterClient) mMasterClient->signalStart();
+			if (app->mMasterClient)  app->mMasterClient->signalStart();
 			boost::mutex::scoped_lock lock(netGuiMutex);
 			bStartGame = true;
 			bStartedGame = true;
 			btnNetReady->setCaption( TR("#{NetNew}") );
 		}else{
-			mClient->returnToLobby();
+			app->mClient->returnToLobby();
 			boost::mutex::scoped_lock lock(netGuiMutex);
 			bStartGame = false;
 			bStartedGame = false;
@@ -485,7 +488,7 @@ void App::evBtnNetReady(WP)
 		}
 	}else
 	{
-		if (mClient->isReady())
+		if (app->mClient->isReady())
 			btnNetReady->setCaption( TR("#{NetWaiting}") );
 		else btnNetReady->setCaption( TR("#{NetReady}") );
 	}
@@ -494,51 +497,78 @@ void App::evBtnNetReady(WP)
 }
 
 
-void App::chatSendMsg()
+void CGui::chatSendMsg()
 {
-	if (!mClient || !edNetChatMsg)  return;
+	if (!app->mClient || !edNetChatMsg)  return;
 	if (edNetChatMsg->getCaption().empty())  return;
 
-	mClient->sendMessage(edNetChatMsg->getCaption());
+	app->mClient->sendMessage(edNetChatMsg->getCaption());
 	edNetChatMsg->setCaption("");
 }
 
-void App::evEdNetGameName(EditPtr ed)
+void CGui::evEdNetGameName(EditPtr ed)
 {
 	//  game name text changed
 	pSet->netGameName = ed->getCaption();
-	if (mLobbyState != HOSTING || !mMasterClient || !mClient)  return;
+	if (app->mLobbyState != HOSTING || !app->mMasterClient || !app->mClient)  return;
 	uploadGameInfo();
 }
 
-void App::evEdNetPassword(EditPtr)
+void CGui::evEdNetPassword(EditPtr)
 {
 	//  password changed
-	if (mLobbyState != HOSTING || !mMasterClient || !mClient)  return;
+	if (app->mLobbyState != HOSTING || !app->mMasterClient || !app->mClient)  return;
 
-	mClient->setPassword(edNetPassword->getCaption());
+	app->mClient->setPassword(edNetPassword->getCaption());
 	uploadGameInfo();
 }
 
 //  net settings
 
-void App::evEdNetNick(EditPtr ed)
+void CGui::evEdNetNick(EditPtr ed)
 {
 	pSet->nickname = ed->getCaption();
-	if (mClient) mClient->updatePlayerInfo(pSet->nickname, sListCar);
+	if (app->mClient)  app->mClient->updatePlayerInfo(pSet->nickname, sListCar);
 }
 
-void App::evEdNetServerIP(EditPtr ed)
+void CGui::evEdNetServerIP(EditPtr ed)
 {
 	pSet->master_server_address = ed->getCaption();
 }
 
-void App::evEdNetServerPort(EditPtr ed)
+void CGui::evEdNetServerPort(EditPtr ed)
 {
 	pSet->master_server_port = s2i(ed->getCaption());
 }
 
-void App::evEdNetLocalPort(EditPtr ed)
+void CGui::evEdNetLocalPort(EditPtr ed)
 {
 	pSet->local_port = s2i(ed->getCaption());
+}
+
+
+///  Gui updates from networking
+//  handled in ogre thread as MyGUI is not thread-safe
+void CGui::UpdGuiNetw()
+{
+	if (app->isFocGui)
+	{
+		if (app->mMasterClient) {
+			std::string error = app->mMasterClient->getError();
+			if (!error.empty())
+				Message::createMessageBox("Message", TR("#{Error}"), error,
+					MessageBoxStyle::IconError | MessageBoxStyle::Ok);
+		}
+		boost::mutex::scoped_lock lock(netGuiMutex);
+		if (bRebuildGameList)
+		{	bRebuildGameList = false;  rebuildGameList();  }
+		if (bRebuildPlayerList)
+		{	bRebuildPlayerList = false;  rebuildPlayerList();  }
+		if (bUpdateGameInfo)
+		{	bUpdateGameInfo = false;  updateGameInfo();  }
+		if (bUpdChat)
+		{	bUpdChat = false;  edNetChat->setCaption(sChatBuffer);  }
+		if (bStartGame)
+		{	bStartGame = false;  app->mClient->startGame();  btnNewGameStart(NULL);  }
+	}
 }

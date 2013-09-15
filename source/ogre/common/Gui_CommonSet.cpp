@@ -5,6 +5,7 @@
 #ifndef SR_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../CGame.h"
+	#include "../CGui.h"
 	#include "../SplitScreen.h"
 #else
 	#include "../../editor/OgreApp.h"
@@ -22,7 +23,7 @@ using namespace Ogre;
 
 ///  change all Graphics settings
 ///..............................................................................................................................
-void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
+void CGui::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 {
 	//"TexFiltering", comboTexFilter ?
 	//fsaa = 0;  vsync = false;  //?  rpl?
@@ -213,14 +214,14 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	Chk("WaterReflection", chkWaterReflect, pSet->water_reflect);
 	Chk("WaterRefraction", chkWaterRefract, pSet->water_refract);
 	Slv(WaterSize, pSet->water_rttsize / 2.f)
-	mWaterRTT.setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
-	mWaterRTT.recreate();
+	app->mWaterRTT.setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
+	app->mWaterRTT.recreate();
 
-	changeShadows(); // apply shadow, material factory generate
+	app->changeShadows();  // apply shadow, material factory generate
 }
 
 
-void App::setOrigPos(WP wp, const char* relToWnd)
+void CGui::setOrigPos(WP wp, const char* relToWnd)
 {
 	if (!wp)  return;
 	wp->setUserString("origPosX", toStr(wp->getPosition().left));

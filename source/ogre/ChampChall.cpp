@@ -4,6 +4,7 @@
 #include "../vdrift/game.h"
 #include "CGame.h"
 #include "CHud.h"
+#include "CGui.h"
 #include "../road/Road.h"
 #include "common/MultiList2.h"
 
@@ -18,8 +19,8 @@ using namespace MyGUI;
 ///______________________________________________________________________________________________
 void App::Ch_NewGame()
 {
-	if (pSet->game.champ_num >= (int)champs.all.size() ||
-		pSet->game.chall_num >= (int)chall.all.size())  // range
+	if (pSet->game.champ_num >= (int)gui->champs.all.size() ||
+		pSet->game.chall_num >= (int)gui->chall.all.size())  // range
 	{	pSet->game.champ_num = -1;
 		pSet->game.chall_num = -1;  }
 
@@ -29,11 +30,11 @@ void App::Ch_NewGame()
 	{
 		///  challenge stage
 		int p = pSet->game.champ_rev ? 1 : 0;
-		ProgressChall& pc = progressL[p].chs[iChall];
-		Chall& chl = chall.all[iChall];
+		ProgressChall& pc = gui->progressL[p].chs[iChall];
+		Chall& chl = gui->chall.all[iChall];
 		if (pc.curTrack >= chl.trks.size())  pc.curTrack = 0;  // restart
 		const ChallTrack& trk = chl.trks[pc.curTrack];
-		pChall = &chl;  // set
+		gui->pChall = &chl;  // set
 		
 		pSet->game.track = trk.name;  pSet->game.track_user = 0;
 		pSet->game.trackreverse = pSet->game.champ_rev ? !trk.reversed : trk.reversed;
@@ -48,10 +49,10 @@ void App::Ch_NewGame()
 		//rewind_type
 
 		//  car not set, and not allowed in chall
-		if (!IsChallCar(pSet->game.car[0]))  // pick last
-		{	int cnt = carList->getItemCount();
+		if (!gui->IsChallCar(pSet->game.car[0]))  // pick last
+		{	int cnt = gui->carList->getItemCount();
 			if (cnt > 0)
-				pSet->game.car[0] = carList->getItemNameAt(std::min(0,cnt-1)).substr(7);
+				pSet->game.car[0] = gui->carList->getItemNameAt(std::min(0,cnt-1)).substr(7);
 			else
 			{	LogO("Error: Challenge cars empty!");  return;  }
 		}
@@ -74,8 +75,8 @@ void App::Ch_NewGame()
 	{
 		///  championship stage
 		int p = pSet->game.champ_rev ? 1 : 0;
-		ProgressChamp& pc = progress[p].chs[iChamp];
-		const Champ& ch = champs.all[iChamp];
+		ProgressChamp& pc = gui->progress[p].chs[iChamp];
+		const Champ& ch = gui->champs.all[iChamp];
 		if (pc.curTrack >= ch.trks.size())  pc.curTrack = 0;  // restart
 		const ChampTrack& trk = ch.trks[pc.curTrack];
 		pSet->game.track = trk.name;  pSet->game.track_user = 0;
@@ -104,9 +105,9 @@ float App::GetCarTimeMul(const string& car, const string& sim_mode)
 	//  car factor (time mul, for less power)
 	//  times.xml has ES or S1 best lap time from normal sim
 	float carMul = 1.f;
-	int id = carsXml.carmap[car];
+	int id = gui->carsXml.carmap[car];
 	if (id > 0)
-	{	const CarInfo& ci = carsXml.cars[id-1];
+	{	const CarInfo& ci = gui->carsXml.cars[id-1];
 		bool easy = sim_mode == "easy";
 		carMul = easy ? ci.easy : ci.norm;
 	}
@@ -128,7 +129,7 @@ int App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldSta
 	float timeC = timeCur + (coldStart ? 0 : 1);
 	float time = timeC * carTimeMul;
 
-	float place = (time - timeTrk)/timeTrk / carsXml.magic;
+	float place = (time - timeTrk)/timeTrk / gui->carsXml.magic;
 	// time = (place * magic * timeTrk + timeTrk) / carTimeMul;  //todo: show this in lists and hud..
 	if (pPoints)
 		*pPoints = std::max(0.f, (20.f - place) * 0.5f);
@@ -141,7 +142,7 @@ int App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldSta
 ///______________________________________________________________________________________________
 ///  Load  championships.xml, progress.xml (once)
 //-----------------------------------------------------------------------------------------------
-void App::Ch_XmlLoad()
+void CGui::Ch_XmlLoad()
 {
 	champs.LoadXml(PATHMANAGER::GameConfigDir() + "/championships.xml", &tracksXml);
 	LogO(String("**** Loaded Championships: ") + toStr(champs.all.size()));
@@ -298,7 +299,7 @@ void App::Ch_XmlLoad()
 
 ///  upd tutor,champ,chall gui vis
 //-----------------------------------------------------------------------------------------------
-void App::UpdChampTabVis()
+void CGui::UpdChampTabVis()
 {
 	if (!liChamps || !tabChamp || !btStChamp)  return;
 	static int oldMenu = pSet->inMenu;
@@ -326,7 +327,7 @@ void App::UpdChampTabVis()
 	btChRestart->setVisible(false);
 }
 
-void App::btnChampInfo(WP)
+void CGui::btnChampInfo(WP)
 {
 	pSet->champ_info = !pSet->champ_info;
 	if (edChInfo)  edChInfo->setVisible(pSet->champ_info);
@@ -335,7 +336,7 @@ void App::btnChampInfo(WP)
 
 ///  add item in stages list
 //-----------------------------------------------------------------------------------------------
-void App::StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress)
+void CGui::StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress)
 {
 	String clr = GetSceneryColor(name);
 	liStages->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liStages->getItemCount()-1;
@@ -344,7 +345,7 @@ void App::StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress
 	int id = tracksXml.trkmap[name]-1;  if (id < 0)  return;
 	const TrackInfo& ti = tracksXml.trks[id];
 
-	float carMul = GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
+	float carMul = app->GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
 	float time = (tracksXml.times[name] * laps /*laps > 1 -1*/) / carMul;
 
 	liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
@@ -356,7 +357,7 @@ void App::StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress
 
 ///  Stages list  sel changed,  update Track info
 //-----------------------------------------------------------------------------------------------
-void App::listStageChng(MyGUI::MultiList2* li, size_t pos)
+void CGui::listStageChng(MyGUI::MultiList2* li, size_t pos)
 {
 	if (valStageNum)  valStageNum->setVisible(pos!=ITEM_NONE);
 	if (pos==ITEM_NONE)  return;
@@ -388,22 +389,22 @@ void App::listStageChng(MyGUI::MultiList2* li, size_t pos)
 
 
 //  stage loaded
-void App::Ch_LoadEnd()
+void CGui::Ch_LoadEnd()
 {
 	if (pSet->game.champ_num >= 0)
 	{
 		ChampFillStageInfo(false);
-		mWndChampStage->setVisible(true);
+		app->mWndChampStage->setVisible(true);
 	}
 	if (pSet->game.chall_num >= 0)
 	{
 		ChallFillStageInfo(false);
-		mWndChallStage->setVisible(true);
+		app->mWndChallStage->setVisible(true);
 	}
 }
 
 //  Stages gui tab
-void App::btnStageNext(WP)
+void CGui::btnStageNext(WP)
 {
 	size_t id = liStages->getIndexSelected(), all = liStages->getItemCount();
 	if (all == 0)  return;
@@ -414,7 +415,7 @@ void App::btnStageNext(WP)
 	listStageChng(liStages, id);
 }
 
-void App::btnStagePrev(WP)
+void CGui::btnStagePrev(WP)
 {
 	size_t id = liStages->getIndexSelected(), all = liStages->getItemCount();
 	if (all == 0)  return;
@@ -426,7 +427,7 @@ void App::btnStagePrev(WP)
 
 
 //  restart progress curtrack
-void App::btnChRestart(WP)
+void CGui::btnChRestart(WP)
 {
 	int p = pSet->game.champ_rev ? 1 : 0;
 	if (pSet->inMenu == MNU_Tutorial || pSet->inMenu == MNU_Champ)

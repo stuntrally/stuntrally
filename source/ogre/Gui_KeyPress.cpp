@@ -5,6 +5,7 @@
 #include "../road/Road.h"
 #include "CGame.h"
 #include "CHud.h"
+#include "CGui.h"
 #include "common/Gui_Def.h"
 #include "common/GraphView.h"
 #include "common/Slider.h"
@@ -43,15 +44,15 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		{
 		case key(UP):  case key(KP_8):
 			pSet->inMenu = (pSet->inMenu-1 + ciMainBtns) % ciMainBtns;
-			toggleGui(false);  return true;
+			gui->toggleGui(false);  return true;
 
 		case key(DOWN):  case key(KP_2):
 			pSet->inMenu = (pSet->inMenu+1) % ciMainBtns;
-			toggleGui(false);  return true;
+			gui->toggleGui(false);  return true;
 
 		case key(RETURN):
 			pSet->isMain = false;
-			toggleGui(false);  return true;
+			gui->toggleGui(false);  return true;
 		}
 	}
 
@@ -62,12 +63,12 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			mShutDown = true;	// quit
 		else
 			if (mWndChampStage->getVisible())  ///  close champ wnds
-				btnChampStageStart(0);
+				gui->btnChampStageStart(0);
 			else
 			if (mWndChallStage->getVisible())  ///  chall
-				btnChallStageStart(0);
+				gui->btnChallStageStart(0);
 			else
-				toggleGui(true);	// gui on/off
+				gui->toggleGui(true);	// gui on/off
 		return true;
 	}
 
@@ -77,31 +78,31 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		switch (skey)
 		{
 			case key(Z):  // alt-Z Tweak (alt-shift-Z save&reload)
-				TweakToggle();	return true;
+				gui->TweakToggle();	return true;
 
-			case key(Q):	GuiShortcut(MNU_Single, TAB_Track);	return true;  // Q Track
-			case key(C):	GuiShortcut(MNU_Single, TAB_Car);	return true;  // C Car
+			case key(Q):	gui->GuiShortcut(MNU_Single, TAB_Track);	return true;  // Q Track
+			case key(C):	gui->GuiShortcut(MNU_Single, TAB_Car);	return true;  // C Car
 
-			case key(T):	GuiShortcut(MNU_Single, TAB_Setup);	return true;  // T Car Setup
-			case key(W):	GuiShortcut(MNU_Single, TAB_Game);	return true;  // W Game Setup
+			case key(T):	gui->GuiShortcut(MNU_Single, TAB_Setup);	return true;  // T Car Setup
+			case key(W):	gui->GuiShortcut(MNU_Single, TAB_Game);	return true;  // W Game Setup
 
-			case key(J):	GuiShortcut(MNU_Tutorial, TAB_Champs);	return true;  // J Tutorials
-			case key(H):	GuiShortcut(MNU_Champ,    TAB_Champs);	return true;  // H Champs
-			case key(L):	GuiShortcut(MNU_Challenge,TAB_Champs);	return true;  // L Challenges
+			case key(J):	gui->GuiShortcut(MNU_Tutorial, TAB_Champs);	return true;  // J Tutorials
+			case key(H):	gui->GuiShortcut(MNU_Champ,    TAB_Champs);	return true;  // H Champs
+			case key(L):	gui->GuiShortcut(MNU_Challenge,TAB_Champs);	return true;  // L Challenges
 
-			case key(U):	GuiShortcut(MNU_Single, TAB_Multi);	return true;	// U Multiplayer
-			case key(R):	GuiShortcut(MNU_Replays, 1);	return true;		// R Replays
+			case key(U):	gui->GuiShortcut(MNU_Single, TAB_Multi);	return true;	// U Multiplayer
+			case key(R):	gui->GuiShortcut(MNU_Replays, 1);		return true;		// R Replays
 
-			case key(S):	GuiShortcut(MNU_Options, 1);	return true;  // S Screen
-			 case key(E):	GuiShortcut(MNU_Options, 1,1);	return true;  // E -Effects
-			case key(G):	GuiShortcut(MNU_Options, 2);	return true;  // G Graphics
-			 case key(N):	GuiShortcut(MNU_Options, 2,3);	return true;  // N -Vegetation
+			case key(S):	gui->GuiShortcut(MNU_Options, 1);		return true;  // S Screen
+			 case key(E):	gui->GuiShortcut(MNU_Options, 1,1);	return true;  // E -Effects
+			case key(G):	gui->GuiShortcut(MNU_Options, 2);		return true;  // G Graphics
+			 case key(N):	gui->GuiShortcut(MNU_Options, 2,3);	return true;  // N -Vegetation
 
-			case key(V):	GuiShortcut(MNU_Options, 3);	return true;  // V View
-			 case key(M):	GuiShortcut(MNU_Options, 3,1);	return true;  // M -Minimap
-			 case key(O):	GuiShortcut(MNU_Options, 3,3);	return true;  // O -Other
-			case key(I):	GuiShortcut(MNU_Options, 4);	return true;  // I Input
-			case key(P):	GuiShortcut(MNU_Options, 5);	return true;  // P Sound
+			case key(V):	gui->GuiShortcut(MNU_Options, 3);		return true;  // V View
+			 case key(M):	gui->GuiShortcut(MNU_Options, 3,1);	return true;  // M -Minimap
+			 case key(O):	gui->GuiShortcut(MNU_Options, 3,3);	return true;  // O -Other
+			case key(I):	gui->GuiShortcut(MNU_Options, 4);		return true;  // I Input
+			case key(P):	gui->GuiShortcut(MNU_Options, 5);		return true;  // P Sound
 		}
 
 
@@ -120,7 +121,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		}
 		if (!t.empty())
 		{
-			BackFromChs();
+			gui->BackFromChs();
 			pSet->gui.track = t;  bPerfTest = false;
 			pSet->gui.track_user = false;
 			NewGame();  return true;
@@ -164,22 +165,22 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		{
 			case key(BACKSPACE):
 				if (mWndChampStage->getVisible())	// back from champs stage wnd
-				{	btnChampStageBack(0);  return true;  }
+				{	gui->btnChampStageBack(0);  return true;  }
 				else
 				if (mWndChallStage->getVisible())	// chall
-				{	btnChallStageBack(0);  return true;  }
+				{	gui->btnChallStageBack(0);  return true;  }
 
 				if (pSet->isMain)  break;
 				if (isFocGui)
 				{	if (edFoc)  break;
-					pSet->isMain = true;  toggleGui(false);  }
+					pSet->isMain = true;  gui->toggleGui(false);  }
 				else
 					if (mWndRpl && !isFocGui)	bRplWnd = !bRplWnd;  // replay controls
 				return true;
 
 			case key(P):	// replay play/pause
 				if (bRplPlay && !isFocGui)
-				{	bRplPause = !bRplPause;  UpdRplPlayBtn();
+				{	bRplPause = !bRplPause;  gui->UpdRplPlayBtn();
 					return true;  }
 				break;
 
@@ -191,45 +192,45 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				break;
 
 			case key(F):	// focus on find edit
-				if (ctrl && edFind && (pSet->dev_keys || isFocGui &&
+				if (ctrl && gui->edFind && (pSet->dev_keys || isFocGui &&
 					!pSet->isMain && pSet->inMenu == MNU_Single && mWndTabsGame->getIndexSelected() == TAB_Track))
 				{
 					if (pSet->dev_keys)
-						GuiShortcut(MNU_Single, 1);	// Track tab
+						gui->GuiShortcut(MNU_Single, 1);	// Track tab
 					MyGUI::InputManager::getInstance().resetKeyFocusWidget();
-					MyGUI::InputManager::getInstance().setKeyFocusWidget(edFind);
+					MyGUI::InputManager::getInstance().setKeyFocusWidget(gui->edFind);
 					return true;
 				}	break;
 
 
 			case key(F7):		// Times
 				if (shift)
-				{	WP wp = chOpponents;  ChkEv(show_opponents);  hud->Show();  }
+				{	WP wp = gui->chOpponents;  ChkEv(show_opponents);  hud->Show();  }
 				else if (!ctrl)
-				{	WP wp = chTimes;  ChkEv(show_times);  hud->Show();  }
+				{	WP wp = gui->chTimes;  ChkEv(show_times);  hud->Show();  }
 				return false;
 
 			case key(F8):		// car debug bars
 				if (ctrl)
-				{	WP wp = chDbgB;  ChkEv(car_dbgbars);   hud->Show();  }
+				{	WP wp = gui->chDbgB;  ChkEv(car_dbgbars);   hud->Show();  }
 				else		// Minimap
 				if (!shift)
-				{	WP wp = chMinimp;  ChkEv(trackmap);
+				{	WP wp = gui->chMinimp;  ChkEv(trackmap);
 					for (int c=0; c < hud->hud.size(); ++c)
 						if (hud->hud[c].ndMap)  hud->hud[c].ndMap->setVisible(pSet->trackmap);
 				}	return false;
 
 			case key(F9):
 				if (ctrl)
-				{	WP wp = chTireVis;  ChkEv(car_tirevis);  hud->Destroy();  hud->Create();  }
+				{	WP wp = gui->chTireVis;  ChkEv(car_tirevis);  hud->Destroy();  hud->Create();  }
 				else
 				if (alt)	// car debug surfaces
-				{	WP wp = chDbgS;  ChkEv(car_dbgsurf);  hud->Show();  }
+				{	WP wp = gui->chDbgS;  ChkEv(car_dbgsurf);  hud->Show();  }
 				else
 				if (shift)	// car debug text
-				{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  hud->Show();  }
+				{	WP wp = gui->chDbgT;  ChkEv(car_dbgtxt);  hud->Show();  }
 				else		// graphs
-				{	WP wp = chGraphs;  ChkEv(show_graphs);
+				{	WP wp = gui->chGraphs;  ChkEv(show_graphs);
 					for (int i=0; i < graphs.size(); ++i)
 						graphs[i]->SetVisible(pSet->show_graphs);
 				}
@@ -237,45 +238,45 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 			case key(F11):
 				if (shift)	// profiler times
-				{	WP wp = chProfTxt;  ChkEv(profilerTxt);  hud->Show();  }
+				{	WP wp = gui->chProfTxt;  ChkEv(profilerTxt);  hud->Show();  }
 				else
 				if (!ctrl)  // Fps
-				{	WP wp = chFps;  ChkEv(show_fps);
+				{	WP wp = gui->chFps;  ChkEv(show_fps);
 					return false;
 				}	break;
 
 			case key(F10):	//  blt debug, txt
 				if (shift)
-				{	WP wp = chBltTxt;  ChkEv(bltProfilerTxt);  return false;  }
+				{	WP wp = gui->chBltTxt;  ChkEv(bltProfilerTxt);  return false;  }
 				else if (ctrl)
-				{	WP wp = chBlt;  ChkEv(bltDebug);  return false;  }
+				{	WP wp = gui->chBlt;  ChkEv(bltDebug);  return false;  }
 				else		// wireframe
-					toggleWireframe();
+					gui->toggleWireframe();
 				return false;
 
 
 			case key(RETURN):		///  close champ wnds
 				if (mWndChampStage->getVisible())
-					btnChampStageStart(0);
+					gui->btnChampStageStart(0);
 				else				///  chall
 				if (mWndChallStage->getVisible())
-					btnChallStageStart(0);
+					gui->btnChallStageStart(0);
 				else				//  new game  after up/dn
 				if (isFocGui && !pSet->isMain)
 					switch (pSet->inMenu)
 					{
-					case MNU_Replays:	btnRplLoad(0);  break;
+					case MNU_Replays:	gui->btnRplLoad(0);  break;
 					default:
 					{	if (mWndGame->getVisible())
 						switch (mWndTabsGame->getIndexSelected())
 						{
-						case TAB_Track:	 changeTrack();	btnNewGame(0);  break;
-						case TAB_Car:	 changeCar();	btnNewGame(0);  break;
-						case TAB_Multi:	 chatSendMsg();  break;
+						case TAB_Track:	 gui->changeTrack();	gui->btnNewGame(0);  break;
+						case TAB_Car:	 gui->changeCar();	gui->btnNewGame(0);  break;
+						case TAB_Multi:	 gui->chatSendMsg();  break;
 						case TAB_Champs:
-							if (isChallGui())
-								  btnChallStart(0);
-							else  btnChampStart(0);  break;
+							if (gui->isChallGui())
+								  gui->btnChallStart(0);
+							else  gui->btnChampStart(0);  break;
 					}	break;
 				}	}
 				else
@@ -302,9 +303,9 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 	//----------------------------------------------------------------------------------------
 	if (mWndTweak->getVisible())
 	{
-		TabPtr tab = tabTweak;
-		if (!shift && tabTweak->getIndexSelected() == 0)
-			tab = tabEdCar;  // car edit sections
+		TabPtr tab = gui->tabTweak;
+		if (!shift && tab->getIndexSelected() == 0)
+			tab = gui->tabEdCar;  // car edit sections
 
 		if (action(A_PrevTab)) {  // prev gui subtab
 			int num = tab->getItemCount();
@@ -313,10 +314,10 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 			int num = tab->getItemCount();
 			tab->setIndexSelected( (tab->getIndexSelected() + 1) % num );  }
 
-		if (tab == tabEdCar)  // focus ed
+		if (tab == gui->tabEdCar)  // focus ed
 		{	pSet->car_ed_tab = tab->getIndexSelected();
 			MyGUI::InputManager::getInstance().resetKeyFocusWidget();
-			MyGUI::InputManager::getInstance().setKeyFocusWidget(edCar[tab->getIndexSelected()]);  }
+			MyGUI::InputManager::getInstance().setKeyFocusWidget(gui->edCar[tab->getIndexSelected()]);  }
 	}else
 	//  change gui tabs
 	if (isFocGui && !pSet->isMain)
@@ -325,8 +326,8 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 		switch (pSet->inMenu)
 		{	case MNU_Replays:  tab = mWndTabsRpl;  break;
 			case MNU_Help:     tab = mWndTabsHelp;  break;
-			case MNU_Options:  tab = mWndTabsOpts;  sub = vSubTabsOpts[tab->getIndexSelected()];  break;
-			default:           tab = mWndTabsGame;  sub = vSubTabsGame[tab->getIndexSelected()];  break;
+			case MNU_Options:  tab = mWndTabsOpts;  sub = gui->vSubTabsOpts[tab->getIndexSelected()];  break;
+			default:           tab = mWndTabsGame;  sub = gui->vSubTabsGame[tab->getIndexSelected()];  break;
 		}
 		if (tab)
 		if (shift)
@@ -356,7 +357,7 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 				chng = true;
 			}
 			if (chng)
-			{	tab->setIndexSelected(i);  MenuTabChg(tab,i);  return;  }
+			{	tab->setIndexSelected(i);  gui->MenuTabChg(tab,i);  return;  }
 		}
 	}
 	else if (!isFocGui && pSet->show_graphs)  // change graphs type
@@ -366,8 +367,8 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 		if (action(A_NextTab))	v = (v+1) % Gh_ALL;
 		if (vo != v)
 		{
-			cmbGraphs->setIndexSelected(v);
-			comboGraphs(cmbGraphs, v);
+			gui->cmbGraphs->setIndexSelected(v);
+			gui->comboGraphs(gui->cmbGraphs, v);
 			if (v == 4)  iUpdTireGr = 1;  //upd now
 		}
 	}
@@ -383,7 +384,7 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 		{
 			if (mWndChampEnd && mWndChampEnd->getVisible())  mWndChampEnd->setVisible(false);  // hide champs end
 			if (mWndChallEnd && mWndChallEnd->getVisible())  mWndChallEnd->setVisible(false);  // chall
-			toggleGui(true);  return;
+			gui->toggleGui(true);  return;
 		}
 	}
 

@@ -2,6 +2,7 @@
 #include "common/Defines.h"
 #include "CGame.h"
 #include "CHud.h"
+#include "CGui.h"
 #include "../vdrift/game.h"
 #include "../vdrift/quickprof.h"
 #include "../road/Road.h"
@@ -51,21 +52,21 @@ void CHud::GetVals(int id, float* vel, float* rpm, float* clutch, int* gear)
 {
 	#ifdef DEBUG
 	assert(id >= 0);
-	assert(id < ap->carModels.size());
-	assert(id < frm.size());
+	assert(id < app->carModels.size());
+	assert(id < app->frm.size());
 	#endif
-	const CarModel* pCarM = ap->carModels[id];
+	const CarModel* pCarM = app->carModels[id];
 	const CAR* pCar = pCarM ? pCarM->pCar : 0;
 
-	if (pCar && !ap->bRplPlay && !pCarM->isGhost())
-	{	*vel = pCar->GetSpeedometer() * (ap->pSet->show_mph ? 2.23693629f : 3.6f);
+	if (pCar && !app->bRplPlay && !pCarM->isGhost())
+	{	*vel = pCar->GetSpeedometer() * (pSet->show_mph ? 2.23693629f : 3.6f);
 		*rpm = pCar->GetEngineRPM();  *gear = pCar->GetGear();
 		//*clutch = pCar->GetClutch();  // todo: problems in multi thr1
 	}
-	if (ap->bRplPlay)
+	if (app->bRplPlay)
 	{
-		*vel = ap->frm[id].vel * (pSet->show_mph ? 2.23693629f : 3.6f);
-		*rpm = ap->frm[id].rpm;  *gear = ap->frm[id].gear;
+		*vel = app->frm[id].vel * (pSet->show_mph ? 2.23693629f : 3.6f);
+		*rpm = app->frm[id].rpm;  *gear = app->frm[id].gear;
 	}
 }
 
@@ -76,19 +77,19 @@ void CHud::Update(int carId, float time)
 {
 	PROFILER.beginBlock("g.hud");
 
-	if (ap->bSizeHUD)	// update sizes once after change
-	{	ap->bSizeHUD = false;
+	if (app->bSizeHUD)	// update sizes once after change
+	{	app->bSizeHUD = false;
 		Size(true);	}
 
 	
 	//  update HUD elements for all cars that have a viewport (local or replay)
 	//-----------------------------------------------------------------------------------
-	int cntG = std::min(6/**/, (int)ap->carModels.size() -(ap->isGhost2nd?1:0));  // all
+	int cntG = std::min(6/**/, (int)app->carModels.size() -(app->isGhost2nd?1:0));  // all
 	int cntC = std::min(4/*?*/, cntG);  // cars only 
 	
 	if (carId == -1)  // gui vp - done once for all
 	for (int c = 0; c < cntC; ++c)
-	if (ap->carModels[c]->eType == CarModel::CT_LOCAL)
+	if (app->carModels[c]->eType == CarModel::CT_LOCAL)
 	{
 		//  hud rpm,vel
 		float vel=0.f, rpm=0.f, clutch=1.f;  int gear=1;
@@ -99,7 +100,7 @@ void CHud::Update(int carId, float time)
 			UpdRot(c, i, vel, rpm);
 	}
 
-	if (carId == -1 || ap->carModels.empty())
+	if (carId == -1 || app->carModels.empty())
 	{
 		PROFILER.endBlock("g.hud");
 		return;
@@ -107,10 +108,10 @@ void CHud::Update(int carId, float time)
 
 	#ifdef DEBUG
 	assert(carId >= 0);
-	assert(carId < ap->carModels.size());
+	assert(carId < app->carModels.size());
 	#endif
 	
-	CarModel* pCarM = ap->carModels[carId];
+	CarModel* pCarM = app->carModels[carId];
 	CAR* pCar = pCarM ? pCarM->pCar : 0;
 
 	float vel=0.f, rpm=0.f, clutch=1.f;  int gear=1;
@@ -121,13 +122,13 @@ void CHud::Update(int carId, float time)
 	///  multiplayer
 	// -----------------------------------------------------------------------------------
 	static float tm = 0.f;  tm += time;
-	if (tm > 0.2f /**/&& ap->mClient/**/)  // not every frame, each 0.2s
+	if (tm > 0.2f /**/&& app->mClient/**/)  // not every frame, each 0.2s
 	// if (pSet->game.isNetw) ..
 	{
 		//  sort winners
 		std::list<CarModel*> cms;
 		for (int o=0; o < cntG; ++o)
-			cms.push_back(ap->carModels[o]);
+			cms.push_back(app->carModels[o]);
 
 		cms.sort(SortWin);
 		//stable_sort(cms.begin(), cms.end(), SortWin);
@@ -136,7 +137,7 @@ void CHud::Update(int carId, float time)
 		for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it)
 		{
 			CarModel* cm = *it;
-			bool end = ap->pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps;
+			bool end = app->pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps;
 			cm->iWonPlace = end ? place++ : 0;  // when ended race
 
 			//  detect change (won),  can happen more than once, if time diff < ping delay
@@ -144,7 +145,7 @@ void CHud::Update(int carId, float time)
 			{	cm->iWonPlaceOld = cm->iWonPlace;
 				cm->iWonMsgTime = 4.f;  //par in sec
 				if (cm->iIndex == 0)  // for local player, show end wnd
-					ap->mWndNetEnd->setVisible(true);
+					app->mWndNetEnd->setVisible(true);
 			}
 			if (cm->iWonMsgTime > 0.f)
 			{	cm->iWonMsgTime -= tm;
@@ -152,18 +153,18 @@ void CHud::Update(int carId, float time)
 					msg += cm->sDispName + " " + TR("#{FinishedCommaPlace}") + ": " + toStr(cm->iWonPlace) + "\n";
 			}
 		}
-		if (ap->mClient && /*ap->pGame->timer.pretime <= 0.f &&*/ ap->pGame->timer.waiting)
+		if (app->mClient && /*ap->pGame->timer.pretime <= 0.f &&*/ app->pGame->timer.waiting)
 			msg += TR("#{NetWaitingForOthers}")+"...\n";
 			
 		//  chat 2 last lines
-		if (ap->sChatLast1 != "")	msg += ap->sChatLast1 + "\n";
-		if (ap->sChatLast2 != "")	msg += ap->sChatLast2;
+		if (gui->sChatLast1 != "")	msg += gui->sChatLast1 + "\n";
+		if (gui->sChatLast2 != "")	msg += gui->sChatLast2;
 			
-		++ap->iChatMove;
-		if (ap->iChatMove >= 10)  //par 2sec
-		{	ap->iChatMove = 0;
-			ap->sChatLast1 = ap->sChatLast2;
-			ap->sChatLast2 = "";
+		++gui->iChatMove;
+		if (gui->iChatMove >= 10)  //par 2sec
+		{	gui->iChatMove = 0;
+			gui->sChatLast1 = gui->sChatLast2;
+			gui->sChatLast2 = "";
 		}
 		
 		//  upd hud msgs
@@ -173,9 +174,9 @@ void CHud::Update(int carId, float time)
 		}
 
 		//  upd end list
-		if (ap->mWndNetEnd->getVisible())
+		if (app->mWndNetEnd->getVisible())
 		{
-			MyGUI::MultiList2* li = ap->liNetEnd;
+			MyGUI::MultiList2* li = gui->liNetEnd;
 			li->removeAllItems();
 			for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it)
 			{
@@ -185,10 +186,10 @@ void CHud::Update(int carId, float time)
 				li->addItem(""/*clr+ toStr(c+1)*/, 0);  int l = li->getItemCount()-1;
 				li->setSubItemNameAt(1,l, clr+ (cm->iWonPlace == 0 ? "--" : toStr(cm->iWonPlace)));
 				li->setSubItemNameAt(2,l, clr+ cm->sDispName);
-				li->setSubItemNameAt(3,l, clr+ StrTime( cm->iWonPlace == 0 ? 0.f : ap->pGame->timer.GetPlayerTimeTot(cm->iIndex) ));
+				li->setSubItemNameAt(3,l, clr+ StrTime( cm->iWonPlace == 0 ? 0.f : app->pGame->timer.GetPlayerTimeTot(cm->iIndex) ));
 				//li->setSubItemNameAt(4,l, clr+ fToStr(cm->iWonMsgTime,1,3));
-				li->setSubItemNameAt(4,l, clr+ StrTime( ap->pGame->timer.GetBestLapRace(cm->iIndex) ));
-				li->setSubItemNameAt(5,l, clr+ toStr( ap->pGame->timer.GetCurrentLap(cm->iIndex) ));
+				li->setSubItemNameAt(4,l, clr+ StrTime( app->pGame->timer.GetBestLapRace(cm->iIndex) ));
+				li->setSubItemNameAt(5,l, clr+ toStr( app->pGame->timer.GetCurrentLap(cm->iIndex) ));
 		}	}
 		tm = 0.f;
 	}
@@ -201,19 +202,19 @@ void CHud::Update(int carId, float time)
 		std::list<CarModel*> cms;  // sorted list
 		for (int o=0; o < cntG; ++o)
 		{	// cars only
-			if (!ap->carModels[o]->isGhost())
-			{	if (ap->bRplPlay)
-					ap->carModels[o]->trackPercent = ap->carPoses[ap->iCurPoses[o]][o].percent;
-				cms.push_back(ap->carModels[o]);	}
+			if (!app->carModels[o]->isGhost())
+			{	if (app->bRplPlay)
+					app->carModels[o]->trackPercent = app->carPoses[app->iCurPoses[o]][o].percent;
+				cms.push_back(app->carModels[o]);	}
 		}
 		if (pSet->opplist_sort)
 			cms.sort(SortPerc);
 		
 		for (int o=0; o < cntG; ++o)
 		{	// add ghost1 last (dont add 2nd)
-			if (ap->carModels[o]->eType == CarModel::CT_GHOST || ap->carModels[o]->eType == CarModel::CT_TRACK)
-			{	ap->carModels[o]->trackPercent = ap->carPoses[ap->iCurPoses[o]][o].percent;  // ghost,rpl
-				cms.push_back(ap->carModels[o]);	}
+			if (app->carModels[o]->eType == CarModel::CT_GHOST || app->carModels[o]->eType == CarModel::CT_TRACK)
+			{	app->carModels[o]->trackPercent = app->carPoses[app->iCurPoses[o]][o].percent;  // ghost,rpl
+				cms.push_back(app->carModels[o]);	}
 		}
 
 		if (h.txOpp[0])
@@ -225,7 +226,7 @@ void CHud::Update(int carId, float time)
 				if (cm->pMainNode)
 				{
 					bool bGhost = cm->isGhost();
-					bool bGhostVis = (ap->ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
+					bool bGhostVis = (app->ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
 					bool bGhEmpty = bGhost && !bGhostVis;
 
 					if (!bGhost && cm->eType != CarModel::CT_REMOTE)
@@ -248,7 +249,7 @@ void CHud::Update(int carId, float time)
 						s0 += "\n";
 					else
 					{	float perc = cm->trackPercent;
-						if (bGhost && ap->pGame->timer.GetPlayerTime(0) > ap->ghplay.GetTimeLength())
+						if (bGhost && app->pGame->timer.GetPlayerTime(0) > app->ghplay.GetTimeLength())
 							perc = 100.f;  // force 100 at ghost end
 						clr.setHSB(perc*0.01f*0.4f, 0.7f,1);
 						s0 += StrClr(clr)+ fToStr(perc,0,3)+"%\n";
@@ -268,8 +269,8 @@ void CHud::Update(int carId, float time)
 							lap = ap->pGame->timer.GetPlayerCurrentLap(cm->iIndex);  // not o, sorted index
 							s2 += "   " + toStr(lap) + " " + CHud::GetTimeString(t);
 						}*/
-						bool end = ap->pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps
-								&& (ap->mClient || pSet->game.local_players > 1);  // multiplay or split
+						bool end = app->pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps
+								&& (app->mClient || pSet->game.local_players > 1);  // multiplay or split
 						if (end)
 							s2 += "  (" + toStr(cm->iWonPlace) + ")";
 						s2 += "\n";
@@ -307,7 +308,7 @@ void CHud::Update(int carId, float time)
 		intens = sqrt(sqrt( pow(intens, 4) * ((1.0f/time) / 120.0f) ));
 			
 		intens = std::min(intens, 0.9f);  // clamp to 0.9f
-		ap->motionBlurIntensity = intens;
+		app->motionBlurIntensity = intens;
 	}
 
 
@@ -359,8 +360,8 @@ void CHud::Update(int carId, float time)
 	///  times, race pos  -----------------------------
 	if (pSet->show_times && pCar)
 	{
-		TIMER& tim = ap->pGame->timer;
-		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || pSet->game.chall_num >= 0 || ap->mClient;
+		TIMER& tim = app->pGame->timer;
+		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || pSet->game.chall_num >= 0 || app->mClient;
 		if (hasLaps)
 		{	//  place
 			if (pCarM->iWonPlace > 0 && h.txPlace)
@@ -374,10 +375,10 @@ void CHud::Update(int carId, float time)
 		}	}
 
 		//  times  ------------------------------
-		bool cur = pCarM->iCurChk >= 0 && !ap->vTimeAtChks.empty();
-		float ghTimeES = cur ? ap->vTimeAtChks[pCarM->iCurChk] : 0.f;
+		bool cur = pCarM->iCurChk >= 0 && !app->vTimeAtChks.empty();
+		float ghTimeES = cur ? app->vTimeAtChks[pCarM->iCurChk] : 0.f;
 		bool coldStart = tim.GetCurrentLap(carId) == 1;  // was 0
-		float carMul = ap->GetCarTimeMul(pSet->game.car[carId], pSet->game.sim_mode);
+		float carMul = app->GetCarTimeMul(pSet->game.car[carId], pSet->game.sim_mode);
 		//| cur
 		float ghTimeC = ghTimeES + (coldStart ? 0 : 1);
 		float ghTime = ghTimeC * carMul;
@@ -389,21 +390,21 @@ void CHud::Update(int carId, float time)
 			//  track time, points
 			float last = tim.GetLastLap(carId), best = tim.GetBestLap(carId, pSet->game.trackreverse);
 			float timeCur = last < 0.1f ? best : last;
-			float timeTrk = ap->tracksXml.times[pSet->game.track];
+			float timeTrk = gui->tracksXml.times[pSet->game.track];
 			bool b = timeTrk > 0.f && timeCur > 0.f;
 
 			//bool coldStart = tim.GetCurrentLap(carId) == 1;  // was 0
-			float time = (/*place*/1 * ap->carsXml.magic * timeTrk + timeTrk) / carMul;
-			//float t1pl = carsXml.magic * timeTrk;
+			float time = (/*place*/1 * gui->carsXml.magic * timeTrk + timeTrk) / carMul;
+			//float t1pl = g->carsXml.magic * timeTrk;
 
 			float points = 0.f, curPoints = 0.f;
-			int place = ap->GetRacePos(timeCur, timeTrk, carMul, coldStart, &points);
+			int place = app->GetRacePos(timeCur, timeTrk, carMul, coldStart, &points);
 			//| cur
 			float timCC = timeTrk + (coldStart ? 0 : 1);
 			float timCu = timCC * carMul;
 
 			float chkPoints = 0.f;  // cur, at chk, assume diff time later than track ghost
-			int chkPlace = ap->GetRacePos(timCu + diff, timeTrk, carMul, coldStart, &chkPoints);
+			int chkPlace = app->GetRacePos(timCu + diff, timeTrk, carMul, coldStart, &chkPoints);
 			bool any = cur || b;
 	
 			h.sTimes =
@@ -425,7 +426,7 @@ void CHud::Update(int carId, float time)
 
 
 	//  checkpoint warning  --------
-	if (ap->road && h.bckWarn && pCarM)
+	if (app->road && h.bckWarn && pCarM)
 	{
 		/* checks debug *
 		if (ov[0].oU)  {
@@ -448,9 +449,9 @@ void CHud::Update(int carId, float time)
 	//  race countdown  ------
 	if (h.txCountdown)
 	{
-		bool vis = ap->pGame->timer.pretime > 0.f && !ap->pGame->timer.waiting;
+		bool vis = app->pGame->timer.pretime > 0.f && !app->pGame->timer.waiting;
 		if (vis)
-			h.txCountdown->setCaption(fToStr(ap->pGame->timer.pretime,1,3));
+			h.txCountdown->setCaption(fToStr(app->pGame->timer.pretime,1,3));
 		h.txCountdown->setVisible(vis);
 	}
 
@@ -654,15 +655,15 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 	assert(c >= 0);
 	assert(b >= 0);
 	assert(b < hud.size());  // only b
-	assert(c < ap->carModels.size());
-	assert(b < ap->carModels.size());
+	assert(c < app->carModels.size());
+	assert(b < app->carModels.size());
 	assert(c < hud[b].vMoPos.size());
 	assert(c < hud[b].vNdPos.size());
 	#endif
-	float angBase = ap->carModels[b]->angCarY;
+	float angBase = app->carModels[b]->angCarY;
 	
-	bool bZoom = pSet->mini_zoomed && ap->sc->ter,
-		bRot = pSet->mini_rotated && ap->sc->ter;
+	bool bZoom = pSet->mini_zoomed && app->sc->ter,
+		bRot = pSet->mini_rotated && app->sc->ter;
 
 	const float vmin[2] = {0.f,-45.f}, rmin[2] = {0.f,-45.f},
 		vsc_mph[2] = {-180.f/100.f, -(180.f+vmin[1])/90.f},
@@ -674,7 +675,7 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 	float angrmp = rpm*sc_rpm[ig] + rmin[ig];
 	float vsc = pSet->show_mph ? vsc_mph[ig] : vsc_kmh[ig];
 	float angvel = abs(vel)*vsc + vmin[ig];
-	float angrot = ap->carModels[c]->angCarY;
+	float angrot = app->carModels[c]->angCarY;
 	if (bRot && bZoom && !main)
 		angrot -= angBase-180.f;
 
@@ -753,13 +754,13 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 	{	h.vMoPos[c]->beginUpdate(0);
 		for (p=0; p<4; ++p)  {
 			h.vMoPos[c]->position(px[p],py[p], 0);  h.vMoPos[c]->textureCoord(tc[p][0], tc[p][1]);
-			h.vMoPos[c]->colour(ap->carModels[c]->color);  }
+			h.vMoPos[c]->colour(app->carModels[c]->color);  }
 		h.vMoPos[c]->end();
 		//todo: combine all in 1 mo ..
 	}
 	
 	//  minimap circle/rect rot
-	int qb = ap->iCurPoses[b], qc = ap->iCurPoses[c];
+	int qb = app->iCurPoses[b], qc = app->iCurPoses[c];
 	if (h.moMap && pSet->trackmap && main)
 	{
 		h.moMap->beginUpdate(0);
@@ -768,7 +769,7 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 				h.moMap->position(tp[p][0],tp[p][1], 0);  h.moMap->textureCoord(tc[p][0], tc[p][1]);
 				h.moMap->colour(tc[p][0],tc[p][1], 0);  }
 		else
-		{	Vector2 mp(-ap->carPoses[qb][b].pos[2], ap->carPoses[qb][b].pos[0]);
+		{	Vector2 mp(-app->carPoses[qb][b].pos[2], app->carPoses[qb][b].pos[0]);
 			float xc =  (mp.x - minX)*scX,
 				  yc = -(mp.y - minY)*scY+1.f;
 			for (p=0; p<4; ++p)  {
@@ -779,12 +780,12 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 	}
 
 	///  minimap car pos  x,y = -1..1
-	Vector2 mp(-ap->carPoses[qc][c].pos[2], ap->carPoses[qc][c].pos[0]);
+	Vector2 mp(-app->carPoses[qc][c].pos[2], app->carPoses[qc][c].pos[0]);
 
 	//  other cars in player's car view space
 	if (!main && bZoom)
 	{
-		Vector2 plr(-ap->carPoses[qb][b].pos[2], ap->carPoses[qb][b].pos[0]);
+		Vector2 plr(-app->carPoses[qb][b].pos[2], app->carPoses[qb][b].pos[0]);
 		mp -= plr;  mp *= pSet->zoom_minimap;
 
 		if (bRot)
@@ -812,8 +813,8 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 		yp = std::min(1.f, std::max(-1.f, yp));
 	}
 	
-	bool bGhost = ap->carModels[c]->isGhost(),
-		bGhostVis = (ap->ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
+	bool bGhost = app->carModels[c]->isGhost(),
+		bGhostVis = (app->ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
 
 	if (h.vNdPos[c])
 		if (bGhost && !bGhostVis)
