@@ -21,15 +21,17 @@ namespace MyGUI  {  class MultiList2;  class Slider;  }
 class GraphView;
 class App;
 class SETTINGS;
+class CGui;
 
 
 class CHud
 {
 public:
-	App* ap;
+	App* app;
 	SETTINGS* pSet;
+	CGui* gui;
 	
-	CHud(App* ap1, SETTINGS* pSet1);
+	CHud(App* ap1);
 		
 	
 	///  HUD  ------------

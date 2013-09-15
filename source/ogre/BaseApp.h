@@ -50,11 +50,16 @@ protected:
 };
 
 
+enum MNU_Btns {  MNU_Single=0, MNU_Tutorial, MNU_Champ, MNU_Challenge, MNU_Replays, MNU_Help, MNU_Options, ciMainBtns  };
+enum TAB_Game {  TAB_Back=0, TAB_Track,TAB_Car, TAB_Setup,TAB_Game, TAB_Multi, TAB_Champs,TAB_Stages,TAB_Stage  };
+
+enum LobbyState { DISCONNECTED, HOSTING, JOINED };
+
 
 class BaseApp :
 		public Ogre::FrameListener,
-		public SFO::KeyListener, public SFO::MouseListener, public SFO::JoyListener, public SFO::WindowListener,
-		public ICS::ChannelListener, public ICS::DetectingBindingListener
+		public SFO::KeyListener, public SFO::MouseListener,
+		public SFO::JoyListener, public SFO::WindowListener
 {
 	friend class CarModel;
 	friend class CGame;
@@ -136,22 +141,6 @@ protected:
 	virtual bool buttonReleased( const SDL_JoyButtonEvent &evt, int button );
 	virtual bool axisMoved( const SDL_JoyAxisEvent &arg, int axis );
 
-	///  input control
-	virtual void channelChanged(ICS::Channel* channel, float currentValue, float previousValue) = 0;
-	virtual void mouseAxisBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
-		ICS::InputControlSystem::NamedAxis axis, ICS::Control::ControlChangingDirection direction) = 0;
-	virtual void keyBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
-		SDL_Keycode key, ICS::Control::ControlChangingDirection direction) = 0;
-	virtual void mouseButtonBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
-		unsigned int button, ICS::Control::ControlChangingDirection direction) = 0;
-	virtual void joystickAxisBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
-		int deviceId, int axis, ICS::Control::ControlChangingDirection direction) = 0;
-	virtual void joystickButtonBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
-		int deviceId, unsigned int button, ICS::Control::ControlChangingDirection direction) = 0;
-	virtual void joystickPOVBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
-		int deviceId, int pov,ICS:: InputControlSystem::POVAxis axis, ICS::Control::ControlChangingDirection direction) = 0;
-	virtual void notifyInputActionBound(bool complete) = 0;
-
 	void onCursorChange (const std::string& name);
 
 	///  Ogre
@@ -174,7 +163,7 @@ public:
 	
 	// this is set to true when the user is asked to assign a new key
 	bool bAssignKey;
-	MyGUI::Widget* pressedKeySender;
+	ICS::DetectingBindingListener* mBindListner;
 
 	bool IsFocGuiInput()  {  return isFocGui || isFocRpl;  }
 	bool IsFocGui();
@@ -207,21 +196,19 @@ protected:
 	#endif
 	
 	///  main menu  // pSet->inMenu
-	enum MNU_Btns {  MNU_Single=0, MNU_Tutorial, MNU_Champ, MNU_Challenge, MNU_Replays, MNU_Help, MNU_Options, ciMainBtns  };
 	MyGUI::WidgetPtr mWndMainPanels[ciMainBtns];  MyGUI::ButtonPtr mWndMainBtns[ciMainBtns];
 
 	MyGUI::WindowPtr mWndMain,mWndGame,mWndReplays,mWndHelp,mWndOpts,  // menu, windows
 		mWndRpl, mWndNetEnd, mWndTweak,  // rpl controls, netw, tools
 		mWndChampStage,mWndChampEnd, mWndChallStage,mWndChallEnd;
 	MyGUI::TabPtr mWndTabsGame,mWndTabsOpts,mWndTabsHelp,mWndTabsRpl;  // main tabs on windows
-	enum TAB_Game {  TAB_Back=0, TAB_Track,TAB_Car, TAB_Setup,TAB_Game, TAB_Multi, TAB_Champs,TAB_Stages,TAB_Stage  };
 	
 	MyGUI::VectorWidgetPtr vwGui;  // all widgets to destroy
 
 	///  networking
 	boost::scoped_ptr<MasterClient> mMasterClient;
 	boost::scoped_ptr<P2PGameClient> mClient;
-	enum LobbyState { DISCONNECTED, HOSTING, JOINED } mLobbyState;
+	LobbyState mLobbyState;
 };
 
 #endif

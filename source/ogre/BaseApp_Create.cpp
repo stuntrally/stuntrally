@@ -123,14 +123,15 @@ void BaseApp::createFrameListener()
 	mCursorManager->setEnabled(true);
 	onCursorChange(MyGUI::PointerManager::getInstance().getDefaultPointer());
 
-	mInputCtrl = new ICS::InputControlSystem(PATHMANAGER::UserConfigDir()+"/input.xml", true, this, NULL, 100);
+	std::string file = PATHMANAGER::UserConfigDir()+"/input.xml";
+	mInputCtrl = new ICS::InputControlSystem(file, true, mBindListner, NULL, 100);
 
 	for (int j=0; j<SDL_NumJoysticks(); ++j)
 		mInputCtrl->addJoystick(j);
 	for (int i=0; i<4; ++i)
 	{
-		std::string file = PATHMANAGER::UserConfigDir()+"/input_p" + toStr(i) + ".xml";
-		mInputCtrlPlayer[i] = new ICS::InputControlSystem(file, true, this, NULL, 100);
+		file = PATHMANAGER::UserConfigDir()+"/input_p" + toStr(i) + ".xml";
+		mInputCtrlPlayer[i] = new ICS::InputControlSystem(file, true, mBindListner, NULL, 100);
 		for (int j=0; j<SDL_NumJoysticks(); ++j)
 			mInputCtrlPlayer[i]->addJoystick(j);
 	}
@@ -177,10 +178,11 @@ BaseApp::BaseApp()
 	,bSizeHUD(true), bLoading(false), iLoad1stFrames(0), bAssignKey(false), bLoadingEnd(0), bSimulating(0)
 	,mMasterClient(), mClient(), mLobbyState(DISCONNECTED)
 	,mbShowCamPos(0), ndSky(0),	mbWireFrame(0)
-	,iCurCam(0), mSplitMgr(0), motionBlurIntensity(0.9), pressedKeySender(0)
+	,iCurCam(0), mSplitMgr(0), motionBlurIntensity(0.9)
 	,mMouseX(0), mMouseY(0), mCursorManager(NULL), mInputWrapper(NULL)
 {
 	mLoadingBar = new LoadingBar(this);
+	mBindListner = 0;
 
 	for (int i=0; i < ciMainBtns; ++i)
 	{	mWndMainPanels[i] = 0;  mWndMainBtns[i] = 0;  }

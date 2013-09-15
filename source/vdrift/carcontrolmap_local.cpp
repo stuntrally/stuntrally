@@ -2,6 +2,7 @@
 #include "../ogre/common/Defines.h"
 #include "carcontrolmap_local.h"
 #include "../ogre/CGame.h"
+#include "../ogre/CGui.h"
 
 
 ///  Process Input
@@ -28,8 +29,8 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(const float* chann
 		inputs[CARINPUT::BOOST]     = 0.f;
 		inputs[CARINPUT::FLIP]      = 0.f;
 		
-		inputs[CARINPUT::PREV_CAM]	= channels[App::A_PrevCamera];
-		inputs[CARINPUT::NEXT_CAM]	= channels[App::A_NextCamera];
+		inputs[CARINPUT::PREV_CAM]	= channels[A_PrevCamera];
+		inputs[CARINPUT::NEXT_CAM]	= channels[A_NextCamera];
 
 		inputs[CARINPUT::LAST_CHK]	= 0.f;
 		inputs[CARINPUT::REWIND]	= 0.f;
@@ -45,7 +46,7 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(const float* chann
 		inputs[CARINPUT::BRAKE]    = 0.f;
 	}else
 	{
-		float thr = channels[App::A_Throttle], brk = channels[App::A_Brake];
+		float thr = channels[A_Throttle], brk = channels[A_Brake];
 		if (oneAxisThrBrk)  // 1 axis for both
 		{	float val = thr * 2.f;
 			thr = val > 1.f ? (val - 1.f) : 0.f;
@@ -57,7 +58,7 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(const float* chann
 	}
 
 	//  steering
-	float val = forceBrake ? 0.f : (channels[App::A_Steering] * 2.f - 1.f);
+	float val = forceBrake ? 0.f : (channels[A_Steering] * 2.f - 1.f);
 
 	//*  speed sensitive steering sss (decrease steer angle range with higher speed)
 	if (sss_effect > 0.02f)
@@ -78,22 +79,22 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(const float* chann
 	inputs[CARINPUT::STEER_LEFT]  = val < 0.f ? -val : 0.f;
 	
 	//  shift
-	bool grUp = channels[App::A_ShiftUp], grDn = channels[App::A_ShiftDown];
+	bool grUp = channels[A_ShiftUp], grDn = channels[A_ShiftDown];
 	inputs[CARINPUT::SHIFT_UP]   = grUp && !grUpOld[player];
 	inputs[CARINPUT::SHIFT_DOWN] = grDn && !grDnOld[player];
 	grUpOld[player] = grUp;  grDnOld[player] = grDn;
 	
 	//  other
-	inputs[CARINPUT::HANDBRAKE] = forceBrake ? 1.f : channels[App::A_HandBrake];
-	inputs[CARINPUT::BOOST]     = forceBrake ? 0.f : channels[App::A_Boost];
-	inputs[CARINPUT::FLIP]      = forceBrake ? 0.f : channels[App::A_Flip]*2-1;
+	inputs[CARINPUT::HANDBRAKE] = forceBrake ? 1.f : channels[A_HandBrake];
+	inputs[CARINPUT::BOOST]     = forceBrake ? 0.f : channels[A_Boost];
+	inputs[CARINPUT::FLIP]      = forceBrake ? 0.f : channels[A_Flip]*2-1;
 	
 	//  cam
-	inputs[CARINPUT::PREV_CAM]	= channels[App::A_PrevCamera];
-	inputs[CARINPUT::NEXT_CAM]	= channels[App::A_NextCamera];
+	inputs[CARINPUT::PREV_CAM]	= channels[A_PrevCamera];
+	inputs[CARINPUT::NEXT_CAM]	= channels[A_NextCamera];
 	//  last chk
-	inputs[CARINPUT::LAST_CHK]	= forceBrake ? false : channels[App::A_LastChk];
-	inputs[CARINPUT::REWIND]	= forceBrake ? false : channels[App::A_Rewind];
+	inputs[CARINPUT::LAST_CHK]	= forceBrake ? false : channels[A_LastChk];
+	inputs[CARINPUT::REWIND]	= forceBrake ? false : channels[A_Rewind];
 
 	return inputs;
 }

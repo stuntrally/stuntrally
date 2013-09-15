@@ -4,6 +4,7 @@
 #include "../vdrift/game.h"
 #include "CGame.h"
 #include "CHud.h"
+#include "CGui.h"
 #include "../road/Road.h"
 #include "common/MultiList2.h"
 
@@ -13,7 +14,7 @@ using namespace MyGUI;
 
 
 
-void App::chkChampRev(WP wp)
+void CGui::chkChampRev(WP wp)
 {
 	pSet->gui.champ_rev = !pSet->gui.champ_rev;
 	ButtonPtr chk = wp->castType<MyGUI::Button>();
@@ -22,12 +23,12 @@ void App::chkChampRev(WP wp)
 	ChallsListUpdate();
 }
 
-void App::tabTutType(MyGUI::TabPtr wp, size_t id)
+void CGui::tabTutType(MyGUI::TabPtr wp, size_t id)
 {
 	pSet->tut_type = id;
 	ChampsListUpdate();
 }
-void App::tabChampType(MyGUI::TabPtr wp, size_t id)
+void CGui::tabChampType(MyGUI::TabPtr wp, size_t id)
 {
 	pSet->champ_type = id;
 	ChampsListUpdate();
@@ -36,7 +37,7 @@ void App::tabChampType(MyGUI::TabPtr wp, size_t id)
 
 ///  Championships list  fill
 //----------------------------------------------------------------------------------------------------------------------
-void App::ChampsListUpdate()
+void CGui::ChampsListUpdate()
 {
 	const char clrCh[7][8] = {
 	//  0 tutorial  1 tutorial hard  // 2 normal  3 hard  4 very hard  // 5 scenery  6 test
@@ -72,7 +73,7 @@ void App::ChampsListUpdate()
 
 ///  Championships list  sel changed,  fill Stages list
 //----------------------------------------------------------------------------------------------------------------------
-void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
+void CGui::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 {
 	if (id==ITEM_NONE || liChamps->getItemCount() == 0)  return;
 	
@@ -129,7 +130,7 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 
 ///  champ start
 //---------------------------------------------------------------------
-void App::btnChampStart(WP)
+void CGui::btnChampStart(WP)
 {
 	if (liChamps->getIndexSelected()==ITEM_NONE)  return;
 	pSet->gui.champ_num = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()).substr(7))-1;
@@ -150,7 +151,7 @@ void App::btnChampStart(WP)
 
 ///  stage start / end
 //----------------------------------------------------------------------------------------------------------------------
-void App::btnChampStageStart(WP)
+void CGui::btnChampStageStart(WP)
 {
 	//  check if champ ended
 	int chId = pSet->game.champ_num, p = pSet->game.champ_rev ? 1 : 0;
@@ -161,12 +162,12 @@ void App::btnChampStageStart(WP)
 	LogO("|| This was stage " + toStr(pc.curTrack) + "/" + toStr(ch.trks.size()) + " btn");
 	if (last)
 	{	//  show end window, todo: start particles..
-		mWndChampStage->setVisible(false);
+		app->mWndChampStage->setVisible(false);
 		// tutorial, tutorial hard, normal, hard, very hard, scenery, test
 		const int ui[8] = {0,1,2,3,4,5,0,0};
 		if (imgChampEndCup)
 			imgChampEndCup->setImageCoord(IntCoord(ui[std::min(7, std::max(0, ch.type))]*128,0,128,256));
-		mWndChampEnd->setVisible(true);
+		app->mWndChampEnd->setVisible(true);
 		return;
 	}
 
@@ -174,34 +175,34 @@ void App::btnChampStageStart(WP)
 	if (finished)
 	{
 		LogO("|| Loading next stage.");
-		mWndChampStage->setVisible(false);
+		app->mWndChampStage->setVisible(false);
 		btnNewGame(0);
 	}else
 	{
 		LogO("|| Starting stage.");
-		mWndChampStage->setVisible(false);
+		app->mWndChampStage->setVisible(false);
 		pGame->pause = false;
 		pGame->timer.waiting = false;
 	}
 }
 
 //  stage back
-void App::btnChampStageBack(WP)
+void CGui::btnChampStageBack(WP)
 {
-	mWndChampStage->setVisible(false);
-	isFocGui = true;  // show back gui
+	app->mWndChampStage->setVisible(false);
+	app->isFocGui = true;  // show back gui
 	toggleGui(false);
 }
 
 //  champ end
-void App::btnChampEndClose(WP)
+void CGui::btnChampEndClose(WP)
 {
-	mWndChampEnd->setVisible(false);
+	app->mWndChampEnd->setVisible(false);
 }
 
 
 ///  save progress and update it on gui
-void App::ProgressSave(bool upgGui)
+void CGui::ProgressSave(bool upgGui)
 {
 	progress[0].SaveXml(PATHMANAGER::UserConfigDir() + "/progress.xml");
 	progress[1].SaveXml(PATHMANAGER::UserConfigDir() + "/progress_rev.xml");
@@ -215,7 +216,7 @@ void App::ProgressSave(bool upgGui)
 ///  championship advance logic
 //  caution: called from GAME, 2nd thread, no Ogre stuff here
 //----------------------------------------------------------------------------------------------------------------------
-void App::ChampionshipAdvance(float timeCur)
+void CGui::ChampionshipAdvance(float timeCur)
 {
 	int chId = pSet->game.champ_num, p = pSet->game.champ_rev ? 1 : 0;
 	ProgressChamp& pc = progress[p].chs[chId];
@@ -233,17 +234,17 @@ void App::ChampionshipAdvance(float timeCur)
 	LogO("|| Your time: " + toStr(timeCur));
 	LogO("|| Best time: " + toStr(timeTrk));
 
-	float carMul = GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
+	float carMul = app->GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
 	float points = 0.f;  int pos;
 
 	#if 1  // test score +- sec diff
 	for (int i=-2; i <= 4; ++i)
 	{
-		pos = GetRacePos(timeCur + i*2.f, timeTrk, carMul, true, &points);
+		pos = app->GetRacePos(timeCur + i*2.f, timeTrk, carMul, true, &points);
 		LogO("|| var, add time: "+toStr(i*2)+" sec, points: "+fToStr(points,2));
 	}
 	#endif
-	pos = GetRacePos(timeCur, timeTrk, carMul, true, &points);
+	pos = app->GetRacePos(timeCur, timeTrk, carMul, true, &points);
 
 	float pass = (pSet->game.sim_mode == "normal") ? 5.f : 2.f;  ///..
 	bool passed = points >= pass;  // didnt qualify, repeat current stage
@@ -261,7 +262,7 @@ void App::ChampionshipAdvance(float timeCur)
 		pGame->timer.waiting = true;
 
 		ChampFillStageInfo(true);  // cur track
-		mWndChampStage->setVisible(true);
+		app->mWndChampStage->setVisible(true);
 		
 		if (passed)
 			pc.curTrack++;  // next stage
@@ -273,7 +274,7 @@ void App::ChampionshipAdvance(float timeCur)
 		pGame->timer.waiting = true;
 
 		ChampFillStageInfo(true);  // cur track
-		mWndChampStage->setVisible(true);
+		app->mWndChampStage->setVisible(true);
 
 		///  compute champ :score:  --------------
 		int ntrk = pc.trks.size();  float sum = 0.f;
@@ -300,7 +301,7 @@ void App::ChampionshipAdvance(float timeCur)
 
 //  stage wnd text
 //----------------------------------------------------------------------------------------------------------------------
-void App::ChampFillStageInfo(bool finished)
+void CGui::ChampFillStageInfo(bool finished)
 {
 	int chId = pSet->game.champ_num, p = pSet->game.champ_rev ? 1 : 0;
 	ProgressChamp& pc = progress[p].chs[chId];
@@ -320,10 +321,10 @@ void App::ChampFillStageInfo(bool finished)
 		{
 			const TrackInfo* ti = &tracksXml.trks[id-1];
 			s += "#A0D0FF"+ TR("#{Difficulty}:  ") + clrsDiff[ti->diff] + TR("#{Diff"+toStr(ti->diff)+"}") + "\n";
-			if (road)
-			{	Real len = road->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);
+			if (app->road)
+			{	Real len = app->road->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);
 				s += "#A0D0FF"+ TR("#{Distance}:  ") + "#B0E0FF" + fToStr(len, 1,4) + (pSet->show_mph ? " mi" : " km") + "\n\n";
-				s += "#A8B8C8"+ road->sTxtDesc;
+				s += "#A8B8C8"+ app->road->sTxtDesc;
 		}	}
 	}
 

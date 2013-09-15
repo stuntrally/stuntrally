@@ -372,7 +372,7 @@ void App::AddNewObj()
 }
 
 //  change obj to insert
-void App::listObjsChng(MyGUI::List* l, size_t t)
+void CGui::listObjsChng(MyGUI::List* l, size_t t)
 {
 	std::string s = l->getItemNameAt(t).substr(7);
 	for (int i=0; i < vObjNames.size(); ++i)

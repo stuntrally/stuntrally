@@ -2,6 +2,7 @@
 #include "common/Defines.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
+#include "CGui.h"
 #include "CGame.h"
 #include "common/Gui_Def.h"
 
@@ -13,7 +14,7 @@ using namespace MyGUI;
 ///  Tweak
 //-----------------------------------------------------------------------------------------------------------
 
-void App::TweakCarSave()
+void CGui::TweakCarSave()
 {
 	String text = "";
 	for (int i=0; i < ciEdCar; ++i)  // sum all edits
@@ -31,10 +32,10 @@ void App::TweakCarSave()
 	fo << text.c_str();
 	fo.close();
 	
-	NewGame();
+	app->NewGame();
 }
 
-void App::TweakCarLoad()
+void CGui::TweakCarLoad()
 {
 	std::string path, pathUser, pathUserDir;
 	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0]);
@@ -120,17 +121,17 @@ void App::TweakCarLoad()
 	}
 }
 
-void App::CmbTweakCarSet(CMB)
+void CGui::CmbTweakCarSet(CMB)
 {
 }
-void App::CmbTweakTireSet(CMB)
+void CGui::CmbTweakTireSet(CMB)
 {
 }
 
-void App::CmbEdTweakCarSet(EditPtr ed)
+void CGui::CmbEdTweakCarSet(EditPtr ed)
 {
 }
-void App::CmbEdTweakTireSet(EditPtr ed)
+void CGui::CmbEdTweakTireSet(EditPtr ed)
 {
 	if (txtTweakTire)
 		txtTweakTire->setCaption("");
@@ -138,14 +139,14 @@ void App::CmbEdTweakTireSet(EditPtr ed)
 
 
 //  tweak save car and reload game
-void App::TweakTireSave()
+void CGui::TweakTireSave()
 {
 	//TODO: game reload tires, user
 	// ed car setup, name, load
 	// jump to section,  help on current line
 	// ed find text? syntax clr?=
 	
-	const CARTIRE* tire = carModels[0]->pCar->dynamics.GetTire(FRONT_LEFT);  //!
+	const CARTIRE* tire = app->carModels[0]->pCar->dynamics.GetTire(FRONT_LEFT);  //!
 	const std::vector <Dbl>& a = tire->lateral, b = tire->longitudinal, c = tire->aligning;
 	//#define f2s(f)  fToStr(f, 4,6);
 	
@@ -218,15 +219,15 @@ void App::TweakTireSave()
 		txtTweakTire->setTextColour(Colour(0.2,1,0.2));  }
 }
 
-void App::btnTweakCarSave(WP){	TweakCarSave();  }
-void App::btnTweakCarLoad(WP){	TweakCarLoad();  }
-void App::btnTweakTireSave(WP){	TweakTireSave();  }
+void CGui::btnTweakCarSave(WP){	TweakCarSave();  }
+void CGui::btnTweakCarLoad(WP){	TweakCarLoad();  }
+void CGui::btnTweakTireSave(WP){	TweakTireSave();  }
 
 
 //  Tweak collisions
 //-----------------------------------------------------------------------------------------
 
-void App::TweakColSave()
+void CGui::TweakColSave()
 {
 	String text = edTweakCol->getCaption();
 	if (text == "")  return;
@@ -241,18 +242,18 @@ void App::TweakColSave()
 	fo.close();
 	TweakColUpd(true);
 	
-	objs.LoadXml();
-	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
-	NewGame();
+	app->objs.LoadXml();
+	LogO(String("**** Loaded Vegetation objects: ") + toStr(app->objs.colsMap.size()));
+	app->NewGame();
 }
 
-void App::TweakColUpd(bool user)
+void CGui::TweakColUpd(bool user)
 {
 	txtTweakPathCol->setCaption((user ? "User" : "Original"));
 	txtTweakPathCol->setTextColour(user ? Colour(1,1,0.5) : Colour(0.5,1,1));
 }
 
-void App::TweakColLoad()
+void CGui::TweakColLoad()
 {
 	bool user = true;
 	std::string name = "/trees/collisions.xml",  // user
@@ -276,44 +277,44 @@ void App::TweakColLoad()
 	MyGUI::InputManager::getInstance().setKeyFocusWidget(edTweakCol);
 }
 
-void App::btnTweakColSave(WP){	TweakColSave();  }
+void CGui::btnTweakColSave(WP){	TweakColSave();  }
 
 
 ///  Tweak read / save file
 //-----------------------------------------------------------------------------------------
-void App::TweakToggle()
+void CGui::TweakToggle()
 {
 	//  window
-	bool vis = !mWndTweak->getVisible();
-	mWndTweak->setVisible(vis);
+	bool vis = !app->mWndTweak->getVisible();
+	app->mWndTweak->setVisible(vis);
 
 	std::string path, pathUser, pathUserDir;
 	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0]);
 	
 	//  load  if car changed
 	static string lastPath = "";
-	if (lastPath != path || ctrl)  // force reload  ctrl-alt-Z
+	if (lastPath != path || app->ctrl)  // force reload  ctrl-alt-Z
 	{	lastPath = path;
 		TweakCarLoad();
 		TweakColLoad();
 	}
 	
 	//  save and reload  shift-alt-Z
-	if (!vis && shift)
+	if (!vis && app->shift)
 	if (tabTweak && tabTweak->getIndexSelected() < 2)
 		TweakCarSave();
 	else
 		TweakColSave();
 }
 
-void App::tabCarEdChng(MyGUI::TabPtr, size_t id)
+void CGui::tabCarEdChng(MyGUI::TabPtr, size_t id)
 {
 	pSet->car_ed_tab = id;
 }
 
 
 //  Get car file path
-bool App::GetCarPath(std::string* pathCar,
+bool CGui::GetCarPath(std::string* pathCar,
 	std::string* pathSave, std::string* pathSaveDir,
 	std::string carname, /*std::string tweakSetup,*/ bool forceOrig)
 {

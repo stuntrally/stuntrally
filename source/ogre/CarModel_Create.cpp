@@ -7,6 +7,7 @@
 #include "../vdrift/game.h"
 #include "../vdrift/performance_testing.h"
 #include "CGame.h"
+#include "CGui.h"
 #include "SplitScreen.h"
 #include "common/SceneXml.h"
 #include "FollowCamera.h"
@@ -101,7 +102,7 @@ void CarModel::Load(int startId)
 
 	///  load config .car
 	std::string pathCar;
-	pApp->GetCarPath(&pathCar, 0, 0, sDirname, pApp->mClient);  // force orig for newtorked games
+	pApp->gui->GetCarPath(&pathCar, 0, 0, sDirname, pApp->mClient);  // force orig for newtorked games
 	LoadConfig(pathCar);
 	
 	
@@ -375,7 +376,7 @@ void CarModel::Create(int car)
 	
 
 	//  next checkpoint marker
-	bool deny = pApp->pChall && !pApp->pChall->chk_beam;
+	bool deny = pApp->gui->pChall && !pApp->gui->pChall->chk_beam;
 	if (eType == CT_LOCAL && !deny)
 	{
 		entNextChk = mSceneMgr->createEntity("Chk"+strI, "check.mesh");

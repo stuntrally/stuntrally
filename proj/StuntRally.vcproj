@@ -1711,6 +1711,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\ogre\CGui.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\CGui.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\ogre\Challenges.cpp"
 					>
 				</File>

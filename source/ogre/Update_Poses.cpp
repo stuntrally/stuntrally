@@ -2,6 +2,7 @@
 #include "common/Defines.h"
 #include "CGame.h"
 #include "CHud.h"
+#include "CGui.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
 
@@ -289,16 +290,16 @@ void App::newPoses(float time)  // time only for camera update
 					ghost.AddFrame(fr, 0);
 				}
 				
-				if (valRplName2)  // recorded info ..not here, in update
+				if (gui->valRplName2)  // recorded info ..not here, in update
 				{
 					int size = replay.GetNumFrames() * sizeof(ReplayFrame);
 					std::string s = fToStr( float(size)/1000000.f, 2,5);
 					String ss = String( TR("#{RplRecTime}: ")) + CHud::StrTime(replay.GetTimeLength()) + TR("   #{RplSize}: ") + s + TR(" #{UnitMB}");
-					valRplName2->setCaption(ss);
+					gui->valRplName2->setCaption(ss);
 				}
 			}
 		}
-		if (bRplPlay && valRplName2)  valRplName2->setCaption("");
+		if (bRplPlay && gui->valRplName2)  gui->valRplName2->setCaption("");
 		///-----------------------------------------------------------------------
 		
 
@@ -308,43 +309,36 @@ void App::newPoses(float time)  // time only for camera update
 			carM->bWrongChk = false;
 		else
 		{
-			// checkpoint arrow  --------------------------------------
+			//  arrow update  --------------------------------------
 			if (pSet->check_arrow && carM->eType == CarModel::CT_LOCAL
 			  && !bRplPlay && hud->arrow.node && road && road->mChks.size()>0)
 			{
-				// set animation start to old orientation
+				//  set animation start to old orientation
 				hud->arrow.qStart = hud->arrow.qCur;
 				
-				// game start: no animation
+				//  game start: no animation
 				bool noAnim = carM->iNumChks == 0;
 				
-				// get vector from camera to checkpoint
+				//  get vector from camera to checkpoint
 				Vector3 chkPos = road->mChks[std::max(0, std::min((int)road->mChks.size()-1, carM->iNextChk))].pos;
-					
-				// workaround for last checkpoint
+
+				//  last checkpoint, point to start pos
 				if (carM->iNumChks == road->mChks.size())
-				{
-					// point arrow to start position
 					chkPos = carM->vStartPos;
-				}
 				
 				const Vector3& playerPos = pi.pos;
-				Vector3 dir = chkPos - playerPos;
-				dir[1] = 0; // only x and z rotation
-				Quaternion quat = Vector3::UNIT_Z.getRotationTo(-dir); // convert to quaternion
+				Vector3 dir = chkPos - playerPos;  dir[1] = 0;  // only x and z rotation
+				Quaternion quat = Vector3::UNIT_Z.getRotationTo(-dir);
 
 				const bool valid = !quat.isNaN();
 				if (valid)
 				{	if (noAnim)  hud->arrow.qStart = quat;
 					hud->arrow.qEnd = quat;
 				
-					// set arrow color (wrong direction: red arrow)
-					// calc angle towards cam
+					//  calc angle towards cam
 					Real angle = (hud->arrow.qCur.zAxis().dotProduct(carM->fCam->mCamera->getOrientation().zAxis())+1)/2.0f;
-					// set color in material
 
-					// green: 0.0 1.0 0.0     0.0 0.4 0.0
-					// red:   1.0 0.0 0.0     0.4 0.0 0.0
+					//  set color in material (red for wrong dir)
 					Vector3 col1 = angle * Vector3(0.0, 1.0, 0.0) + (1-angle) * Vector3(1.0, 0.0, 0.0);
 					Vector3 col2 = angle * Vector3(0.0, 0.4, 0.0) + (1-angle) * Vector3(0.4, 0.0, 0.0);
 
@@ -393,7 +387,7 @@ void App::newPoses(float time)  // time only for camera update
 						if (!pSet->rpl_bestonly || best)
 						if (c==0 && pSet->rpl_rec)  // for many, only 1st car
 						{
-							ghost.SaveFile(GetGhostFile());  //,boost_type?
+							ghost.SaveFile(gui->GetGhostFile());  //,boost_type?
 							ghplay.CopyFrom(ghost);
 							isGhost2nd = false;  // hide 2nd ghost
 						}
@@ -415,9 +409,9 @@ void App::newPoses(float time)  // time only for camera update
 									carM->iWonPlace = carIdWin++;
 							}
 							else if (champ)
-								ChampionshipAdvance(timeCur);
+								gui->ChampionshipAdvance(timeCur);
 							else
-								ChallengeAdvance(timeCur);
+								gui->ChallengeAdvance(timeCur);
 						}
 					}
 					//  checkpoints  --------------------------------------
@@ -543,12 +537,12 @@ void App::updatePoses(float time)
 	{
 		double pos = pGame->timer.GetPlayerTime(0);
 		float len = replay.GetTimeLength();
-		if (valRplPerc)  valRplPerc->setCaption(fToStr(pos/len*100.f, 1,4)+" %");
-		if (valRplCur)  valRplCur->setCaption(CHud::StrTime(pos));
-		if (valRplLen)  valRplLen->setCaption(CHud::StrTime(len));
+		if (gui->valRplPerc)  gui->valRplPerc->setCaption(fToStr(pos/len*100.f, 1,4)+" %");
+		if (gui->valRplCur)  gui->valRplCur->setCaption(CHud::StrTime(pos));
+		if (gui->valRplLen)  gui->valRplLen->setCaption(CHud::StrTime(len));
 
-		if (slRplPos)
-		{	float v = pos/len;  slRplPos->setValue(v);  }
+		if (gui->slRplPos)
+		{	float v = pos/len;  gui->slRplPos->setValue(v);  }
 	}	
 	
 	

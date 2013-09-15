@@ -12,6 +12,7 @@
 	#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #else
 	#include "../CGame.h"
+	#include "../CGui.h"
 	#include "../../vdrift/game.h"
 	#include "../../vdrift/settings.h"
 #endif
@@ -281,7 +282,7 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 		delete[] sc->td.hfAngle;   sc->td.hfAngle = new float[wxy];
 		int siz = wxy * sizeof(float);
 
-		String name = TrkDir() + (bNewHmap ? "heightmap-new.f32" : "heightmap.f32");
+		String name = gui->TrkDir() + (bNewHmap ? "heightmap-new.f32" : "heightmap.f32");
 
 		//  load from f32 HMap +
 		{

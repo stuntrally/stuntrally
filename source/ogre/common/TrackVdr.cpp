@@ -19,6 +19,7 @@
 #ifndef SR_EDITOR
 	#include "../CGame.h"
 	#include "../CHud.h"
+	#include "../CGui.h"
 	#include "../../vdrift/game.h"
 	#include "../SplitScreen.h"  //-
 #else
@@ -41,7 +42,7 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 	//  materials  -------------
 	std::vector<OGRE_MESH>& meshes = pTrack->ogre_meshes;
 	std::string sMatCache = strack + ".matdef", sMatOrig = "_" + sMatCache,
-		sPathCache = PATHMANAGER::ShaderDir() + "/" + sMatCache, sPathOrig = TrkDir() +"objects/"+ sMatOrig;
+		sPathCache = PATHMANAGER::ShaderDir() + "/" + sMatCache, sPathOrig = gui->TrkDir() +"objects/"+ sMatOrig;
 	bool hasMatOrig = boost::filesystem::exists(sPathOrig), hasMatCache = boost::filesystem::exists(sPathCache);
 	bool bGenerate = 0, gen = !hasMatOrig && !hasMatCache || bGenerate;  // set 1 to force generate for new vdrift tracks
 
@@ -436,7 +437,7 @@ ManualObject* App::CreateModel(SceneManager* sceneMgr, const String& mat,
 bool App::IsVdrTrack()
 {
 	//  vdrift track has roads.trk
-	String svdr = TrkDir()+"roads.trk";
+	String svdr = gui->TrkDir()+"roads.trk";
 	bool vdr = boost::filesystem::exists(svdr);
 	return vdr;
 }

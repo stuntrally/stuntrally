@@ -79,7 +79,7 @@ struct TrkL
 {
 	std::string name;
 	const TrackInfo* ti;
-	const class App* pA;
+	//const class CGui* pA;
 	int test;  //Test*
 };
 
@@ -123,7 +123,7 @@ struct CarL
 {
 	std::string name;
 	const CarInfo* ci;
-	const class App* pA;
+	//const class CGui* pA;
 };
 
 

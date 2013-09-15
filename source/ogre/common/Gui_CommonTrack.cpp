@@ -6,6 +6,7 @@
 	#include "../../vdrift/game.h"
 	#include "../CGame.h"
 	#include "../CHud.h"
+	#include "../CGui.h"
 	#include "../SplitScreen.h"
 #else
 	#include "../../editor/OgreApp.h"
@@ -55,7 +56,7 @@ bool (*TrkSort[allSortFunc])(const TrkL& t1, const TrkL& t2) = {
 //  done every list sort column change or find edit text change
 //  fills gui track list
 //-----------------------------------------------------------------------------------------------------------
-void App::TrackListUpd(bool resetNotFound)
+void CGui::TrackListUpd(bool resetNotFound)
 {
 	if (trkList)
 	{	trkList->removeAllItems();
@@ -108,7 +109,7 @@ void App::TrackListUpd(bool resetNotFound)
 ///  * * * *  CONST  * * * *
 //  add track item to gui list
 //-----------------------------------------------------------------------------------------------------------
-String App::GetSceneryColor(String name)
+String CGui::GetSceneryColor(String name)
 {
 	if (name.empty())  return "#707070";
 	if (name.c_str()[0]=='*')  name = name.substr(1);
@@ -126,14 +127,14 @@ String App::GetSceneryColor(String name)
 }
 
 // track difficulties colors from value
-const String App::clrsDiff[9] =  // difficulty
+const String CGui::clrsDiff[9] =  // difficulty
 	{"#60C0FF", "#00FF00", "#60FF00", "#C0FF00", "#FFFF00", "#FFC000", "#FF6000", "#FF4040", "#B060B0"};
-const String App::clrsRating[6] =  // rating
+const String CGui::clrsRating[6] =  // rating
 	{"#808080", "#606060", "#7090A0", "#60C8D8", "#A0D0F0", "#E0F0FF"};
-const String App::clrsLong[10] =  // long
+const String CGui::clrsLong[10] =  // long
 	{"#E0D0D0", "#E8C0C0", "#F0B0B0", "#F8A0A0", "#FF9090", "#FF8080", "#F07070", "#F06060", "#E04040", "#D02020"};
 
-void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
+void CGui::AddTrkL(std::string name, int user, const TrackInfo* ti)
 {
 	String c = GetSceneryColor(name);
 
@@ -165,23 +166,23 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 //  * * * *  CONST  * * * *
 //  column widths in MultiList2
 const int wi = 26;  // track detailed
-const int App::colTrk[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
+const int CGui::colTrk[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
 #ifndef SR_EDITOR
-const int App::colCar[16] = {34, 17, 35, 40, 20};  // car
-const int App::colCh [16] = {30, 180, 120, 50, 80, 80, 60, 40};  // champs
-const int App::colChL[16] = {36, 180, 90, 100, 50, 60, 60, 60, 50};  // challs
-const int App::colSt [16] = {30, 170, 100, 90, 50, 80, 70};  // stages
+const int CGui::colCar[16] = {34, 17, 35, 40, 20};  // car
+const int CGui::colCh [16] = {30, 180, 120, 50, 80, 80, 60, 40};  // champs
+const int CGui::colChL[16] = {36, 180, 90, 100, 50, 60, 60, 60, 50};  // challs
+const int CGui::colSt [16] = {30, 170, 100, 90, 50, 80, 70};  // stages
 #endif
 
 
 //  Gui Init [Track] once
 //-----------------------------------------------------------------------------------------------------------
-void App::GuiInitTrack()
+void CGui::GuiInitTrack()
 {
 	#ifdef SR_EDITOR
-	TabItem* trktab = (TabItem*)mWndEdit->findWidget("TabTrack");
+	TabItem* trktab = (TabItem*)app->mWndEdit->findWidget("TabTrack");
 	#else
-	TabItem* trktab = (TabItem*)mWndGame->findWidget("TabTrack");
+	TabItem* trktab = (TabItem*)app->mWndGame->findWidget("TabTrack");
 	#endif
 	MultiList2* li = trktab->createWidget<MultiList2>("MultiListBox",0,0,500,300, Align::Left | Align::VStretch);
 	li->setColour(Colour(0.8,0.9,0.8));
@@ -189,19 +190,19 @@ void App::GuiInitTrack()
 	//*li->setAlpha(0.8);*/  li->setInheritsAlpha(false);
 	
 	trkList = li;  if (!li)  LogO("Error: No MListTracks in layout !");
-   	trkList->eventListChangePosition += newDelegate(this, &App::listTrackChng);
+   	trkList->eventListChangePosition += newDelegate(this, &CGui::listTrackChng);
    	trkList->setVisible(false);
 	
 	//  preview images
-	imgPrv[0] = mGUI->findWidget<StaticImage>("TrackImg");
-	imgTer[0] = mGUI->findWidget<StaticImage>("TrkTerImg");
-	imgMini[0] = mGUI->findWidget<StaticImage>("TrackMap");
+	imgPrv[0] = app->mGUI->findWidget<StaticImage>("TrackImg");
+	imgTer[0] = app->mGUI->findWidget<StaticImage>("TrkTerImg");
+	imgMini[0] = app->mGUI->findWidget<StaticImage>("TrackMap");
 
 	//  stats text
 	for (int i=0; i < StTrk; ++i) //!
-		stTrk[0][i] = mGUI->findWidget<StaticText>("iv"+toStr(i+1), false);
+		stTrk[0][i] = app->mGUI->findWidget<StaticText>("iv"+toStr(i+1), false);
 	for (int i=0; i < InfTrk; ++i)
-		infTrk[0][i] = mGUI->findWidget<StaticText>("ti"+toStr(i+1), false);
+		infTrk[0][i] = app->mGUI->findWidget<StaticText>("ti"+toStr(i+1), false);
 		
 	Edt(edFind, "TrackFind", edTrkFind);
 	#ifndef SR_EDITOR
@@ -211,8 +212,8 @@ void App::GuiInitTrack()
 
 	ButtonPtr btn;
 	Btn("TrkView1", btnTrkView1);	Btn("TrkView2", btnTrkView2);
-	imgTrkIco1 = mGUI->findWidget<StaticImage>("TrkView2icons1");
-	imgTrkIco2 = mGUI->findWidget<StaticImage>("TrkView2icons2");
+	imgTrkIco1 = app->mGUI->findWidget<StaticImage>("TrkView2icons1");
+	imgTrkIco2 = app->mGUI->findWidget<StaticImage>("TrkView2icons2");
 	
 	li->removeAllColumns();  int c=0;
 	li->addColumn("#E0FFE0"+TR("#{Name}"), colTrk[c++]);
@@ -249,7 +250,7 @@ void App::GuiInitTrack()
 //-----------------------------------------------------------------------------------------------------------
 
 //  list changed position
-void App::listTrackChng(MultiList2* li, size_t pos)
+void CGui::listTrackChng(MultiList2* li, size_t pos)
 {
 	if (!li)  return;
 	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
@@ -270,7 +271,7 @@ void App::listTrackChng(MultiList2* li, size_t pos)
 }
 
 //  find edit changed text
-void App::edTrkFind(EditPtr ed)
+void CGui::edTrkFind(EditPtr ed)
 {
 	String s = ed->getCaption();
 	if (s == "")
@@ -283,7 +284,7 @@ void App::edTrkFind(EditPtr ed)
 }
 
 #ifndef SR_EDITOR
-void App::edRplFind(EditPtr ed)
+void CGui::edRplFind(EditPtr ed)
 {
 	String s = ed->getCaption();
 	if (s == "")
@@ -299,16 +300,16 @@ void App::edRplFind(EditPtr ed)
 
 //  view change
 //-----------------------------------------------------------------------------------------------------------
-void App::btnTrkView1(WP wp)
+void CGui::btnTrkView1(WP wp)
 {
 	pSet->tracks_view = 0;  ChangeTrackView();
 }
-void App::btnTrkView2(WP wp)
+void CGui::btnTrkView2(WP wp)
 {
 	pSet->tracks_view = 1;  ChangeTrackView();
 }
 
-void App::ChangeTrackView()
+void CGui::ChangeTrackView()
 {
 	bool full = pSet->tracks_view;
 
@@ -322,7 +323,7 @@ void App::ChangeTrackView()
 }
 
 //  adjust list size, columns
-void App::updTrkListDim()
+void CGui::updTrkListDim()
 {
 	//  tracks list  ----------
 	if (!trkList)  return;
@@ -331,7 +332,7 @@ void App::updTrkListDim()
 	int c, sum = 0, cnt = trkList->getColumnCount();
 	for (c=0; c < cnt; ++c)  sum += colTrk[c];
 
-	const IntCoord& wi = mWndOpts->getCoord();
+	const IntCoord& wi = app->mWndOpts->getCoord();
 	int sw = 0, xico1 = 0, xico2 = 0, wico = 0;
 
 	for (c=0; c < cnt; ++c)
@@ -373,7 +374,7 @@ void App::updTrkListDim()
 	
 	#ifndef SR_EDITOR
 	if (panelNetTrack)  {
-		TabItem* trkTab = mGUI->findWidget<TabItem>("TabTrack");
+		TabItem* trkTab = app->mGUI->findWidget<TabItem>("TabTrack");
 		const IntCoord& tc = trkTab->getCoord();
 		panelNetTrack->setCoord(0, 0.82f*tc.height, tc.width*0.64f, 0.162f*tc.height);  }
 	#endif
@@ -381,9 +382,9 @@ void App::updTrkListDim()
 
 #ifndef SR_EDITOR
 ///  champ,chall,stages lists  ----------
-void App::updChampListDim()
+void CGui::updChampListDim()
 {
-	const IntCoord& wi = mWndGame->getCoord();
+	const IntCoord& wi = app->mWndGame->getCoord();
 
 	//  Champs  -----
 	if (!liChamps)  return;
@@ -431,7 +432,7 @@ void App::updChampListDim()
 
 //  done once to fill tracks list from dirs
 //-----------------------------------------------------------------------------------------------------------
-void App::FillTrackLists()
+void CGui::FillTrackLists()
 {
 	liTracks.clear();  liTracksUser.clear();
 	#ifdef SR_EDITOR
@@ -469,7 +470,7 @@ void App::FillTrackLists()
 	liTrk.clear();
 	for (strlist::iterator i = liTracks.begin(); i != liTracks.end(); ++i)
 	{
-		TrkL trl;  trl.name = *i;  trl.pA = this;
+		TrkL trl;  trl.name = *i;  //trl.pA = this;
 		trl.test = StringUtil::startsWith(trl.name,"test");
 
 		int id = tracksXml.trkmap[*i];
@@ -483,7 +484,7 @@ void App::FillTrackLists()
 ///  . .  util tracks stats  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 //----------------------------------------------------------------------------------------------------------------
 
-void App::ReadTrkStats()
+void CGui::ReadTrkStats()
 {
 	String sRd = PathListTrk() + "/road.xml";
 	String sSc = PathListTrk() + "/scene.xml";
@@ -504,7 +505,7 @@ void App::ReadTrkStats()
 }
 
 #ifndef SR_EDITOR  // game
-void App::ReadTrkStatsChamp(String track, bool reverse)
+void CGui::ReadTrkStatsChamp(String track, bool reverse)
 {
 	String sRd = pathTrk[0] + track + "/road.xml";
 	String sSc = pathTrk[0] + track + "/scene.xml";
@@ -519,7 +520,7 @@ void App::ReadTrkStatsChamp(String track, bool reverse)
 }
 #endif
 
-void App::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTrack, float timeCur, bool champ)
+void CGui::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTrack, float timeCur, bool champ)
 {
 #ifndef SR_EDITOR  // game
 	bool mph = pSet->show_mph;
@@ -568,7 +569,7 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTr
 	m = pSet->show_mph ? 2.23693629f : 3.6f;
 
 	//  track time
-	float carMul = GetCarTimeMul(pSet->gui.car[0], pSet->gui.sim_mode);
+	float carMul = app->GetCarTimeMul(pSet->gui.car[0], pSet->gui.sim_mode);
 	float timeTrk = tracksXml.times[sTrack];
 	std::string speedTrk = fToStr(len / timeTrk * m, 0,3) + unit;
 	float timeT = (/*place*/1 * carsXml.magic * timeTrk + timeTrk) / carMul;
@@ -587,7 +588,7 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTr
 		if (stTrk[ch][9])  stTrk[ch][9]->setCaption(speed);
 		//  points
 		float points = 0.f;
-		GetRacePos(timeCur, timeTrk, carMul, false, &points);
+		app->GetRacePos(timeCur, timeTrk, carMul, false, &points);
 		if (stTrk[ch][10])  stTrk[ch][10]->setCaption(fToStr(points ,1,3));
 	}
 #else

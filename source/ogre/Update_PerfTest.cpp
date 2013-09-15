@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "common/Defines.h"
 #include "CGame.h"
+#include "CGui.h"
 #include "../vdrift/game.h"
 using namespace Ogre;
 
@@ -149,16 +150,16 @@ void App::newPerfTest(float time)
 					"Stop time  60..0 kmh:  "+fToStr(tMaxTo0-tMaxTo60,2,5)+"\n";
 				
 				pGame->info_output << std::string("====  CAR Perf test summary  ====\n") + sResult + "====\n";
-				edPerfTest->setCaption(sResult);
+				gui->edPerfTest->setCaption(sResult);
 				//if (!mWndTweak->getVisible())  // show
 				//	TweakToggle();
 				mWndTweak->setVisible(true);
-				tabTweak->setIndexSelected(2);
+				gui->tabTweak->setIndexSelected(2);
 				
 				//  save car stats.txt  ---------
 				{
 					std::string path, pathUser, pathUserDir;
-					bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], sc->asphalt);
+					bool user = gui->GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], sc->asphalt);
 					path = pathUserDir + pCar->pCarM->sDirname + "_stats.txt";
 					
 					PATHMANAGER::CreateDir(pathUserDir, pGame->error_output);

@@ -2,6 +2,7 @@
 #include "common/Defines.h"
 #include "CGame.h"
 #include "CHud.h"
+#include "CGui.h"
 #include "LoadingBar.h"
 #include "../vdrift/game.h"
 #include "FollowCamera.h"
@@ -11,14 +12,10 @@
 #include "common/GraphView.h"
 
 #include "../network/gameclient.hpp"
-#include "../btOgre/BtOgrePG.h"
-#include "../btOgre/BtOgreGP.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../shiny/Main/Factory.hpp"
 
 #include <boost/thread.hpp>
-#include <boost/filesystem.hpp>
-
 #include <MyGUI_OgrePlatform.h>
 #include "common/MyGUI_D3D11.h"
 #include <MyGUI_PointerManager.h>
@@ -43,11 +40,11 @@ void App::createScene()
 	QTimer ti;  ti.update();  /// time
 
 	//  tracks.xml
-	tracksXml.LoadIni(PATHMANAGER::GameConfigDir() + "/tracks.ini");
-	carsXml.LoadXml(PATHMANAGER::GameConfigDir() + "/cars.xml");
+	gui->tracksXml.LoadIni(PATHMANAGER::GameConfigDir() + "/tracks.ini");
+	gui->carsXml.LoadXml(PATHMANAGER::GameConfigDir() + "/cars.xml");
 
 	//  championships.xml, progress.xml
-	Ch_XmlLoad();
+	gui->Ch_XmlLoad();
 
 	//  user.xml
 	#if 0
@@ -110,7 +107,7 @@ void App::createScene()
 	pSet->gui.champ_num = -1;  //dont auto start old chs
 	pSet->gui.chall_num = -1;
 
-	InitGui();
+	gui->InitGui();
 
     //  bullet Debug drawing
     //------------------------------------
@@ -156,7 +153,7 @@ void App::NewGame()
 {
 	//  actual loading isn't done here
 	isFocGui = false;
-	toggleGui(false);  // hide gui
+	gui->toggleGui(false);  // hide gui
 	mWndNetEnd->setVisible(false);
  
 	bLoading = true;  iLoad1stFrames = 0;
@@ -168,7 +165,7 @@ void App::NewGame()
 
 	bRplPlay = 0;
 	pSet->rpl_rec = bRplRec;  // changed only at new game
-	pChall = 0;
+	gui->pChall = 0;
 	
 	if (!newGameRpl)  // if from replay, dont
 	{
@@ -176,20 +173,20 @@ void App::NewGame()
 		Ch_NewGame();
 
 		if (mClient && mLobbyState != HOSTING)  // all but host
-			updateGameSet();  // override gameset params for networked game (from host gameset)
+			gui->updateGameSet();  // override gameset params for networked game (from host gameset)
 		if (mClient)  // for all, including host
 			pSet->game.local_players = 1;
 	}
 	newGameRpl = false;
 
 	///  check if track exist ..
-	if (!PATHMANAGER::FileExists(TrkDir()+"scene.xml"))
+	if (!PATHMANAGER::FileExists(gui->TrkDir()+"scene.xml"))
 	{
 		bLoading = false;  //iLoad1stFrames = -2;
-		BackFromChs();
+		gui->BackFromChs();
 		//toggleGui(true);  // show gui
 		Message::createMessageBox("Message", TR("#{Track}"),
-			TR("#{TrackNotFound}")+"\n"+pSet->game.track+(pSet->game.track_user?" *user*":"")+"\nPath: "+TrkDir(),
+			TR("#{TrackNotFound}")+"\n"+pSet->game.track+(pSet->game.track_user?" *user*":"")+"\nPath: "+gui->TrkDir(),
 			MessageBoxStyle::IconError | MessageBoxStyle::Ok);
 		//todo: gui is stuck..
 		return;
@@ -218,7 +215,7 @@ void App::LoadCleanUp()  // 1 first
 
 	// rem old track
 	if (resTrk != "")  Ogre::Root::getSingletonPtr()->removeResourceLocation(resTrk);
-	resTrk = TrkDir() + "objects";
+	resTrk = gui->TrkDir() + "objects";
 	mRoot->addResourceLocation(resTrk, "FileSystem");
 	
 	//  Delete all cars
@@ -276,15 +273,15 @@ void App::LoadGame()  // 2
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 	
 	pGame->NewGameDoCleanup();
-	if (bReloadSim)
-	{	bReloadSim = false;
+	if (gui->bReloadSim)
+	{	gui->bReloadSim = false;
 		pGame->ReloadSimData();
 	}
 	//  load scene.xml - default if not found
 	//  need to know sc->asphalt before vdrift car load
 	bool vdr = IsVdrTrack();
 	sc->pGame = pGame;
-	sc->LoadXml(TrkDir()+"scene.xml", !vdr/*for asphalt*/);
+	sc->LoadXml(gui->TrkDir()+"scene.xml", !vdr/*for asphalt*/);
 	sc->vdr = vdr;
 	pGame->track.asphalt = sc->asphalt;  //*
 	pGame->track.sDefaultTire = sc->asphalt ? "asphalt" : "gravel";  //*
@@ -345,7 +342,7 @@ void App::LoadGame()  // 2
 	if (!bRplPlay/*|| pSet->rpl_show_ghost)*/ && pSet->rpl_ghost && !mClient)
 	{
 		std::string ghCar = pSet->game.car[0], orgCar = ghCar;
-		ghplay.LoadFile(GetGhostFile(pSet->rpl_ghostother ? &ghCar : 0));
+		ghplay.LoadFile(gui->GetGhostFile(pSet->rpl_ghostother ? &ghCar : 0));
 		isGhost2nd = ghCar != orgCar;
 		
 		//  always because ghplay can appear during play after best lap
@@ -366,7 +363,7 @@ void App::LoadGame()  // 2
 	}
 	///  track's ghost  . . .
 	ghtrk.Clear();  vTimeAtChks.clear();
-	bool deny = pChall && !pChall->trk_ghost;
+	bool deny = gui->pChall && !gui->pChall->trk_ghost;
 	if (!bRplPlay /*&& pSet->rpl_trackghost?*/ && !mClient && !pSet->game.track_user && !deny)
 	if (!pSet->game.trackreverse)  // only not rev, todo..
 	{
@@ -423,7 +420,7 @@ void App::LoadScene()  // 3
 	}
 		
 	//  checkpoint arrow
-	bool deny = pChall && !pChall->chk_arr;
+	bool deny = gui->pChall && !gui->pChall->chk_arr;
 	if (!bRplPlay && !deny)
 		hud->CreateArrow();
 }
@@ -437,10 +434,10 @@ void App::LoadCar()  // 4
 		c->Create(i);
 
 		///  challenge off abs,tcs
-		if (pChall && c->pCar)
+		if (gui->pChall && c->pCar)
 		{
-			if (!pChall->abs)  c->pCar->dynamics.SetABS(false);
-			if (!pChall->tcs)  c->pCar->dynamics.SetTCS(false);
+			if (!gui->pChall->abs)  c->pCar->dynamics.SetABS(false);
+			if (!gui->pChall->tcs)  c->pCar->dynamics.SetTCS(false);
 		}
 
 		//  restore which cam view
@@ -608,7 +605,7 @@ void App::LoadTrees()  // 8
 void App::LoadMisc()  // 9 last
 {
 	if (pGame && pGame->cars.size() > 0)  //todo: move this into gui track tab chg evt, for cur game type
-		UpdGuiRdStats(road, sc, sListTrack, pGame->timer.GetBestLap(0, pSet->game.trackreverse));  // current
+		gui->UpdGuiRdStats(road, sc, gui->sListTrack, pGame->timer.GetBestLap(0, pSet->game.trackreverse));  // current
 
 	hud->Create();
 	// immediately hide it
@@ -740,8 +737,8 @@ void App::CreateRoad()
 	road = new SplineRoad(pGame);  // sphere.mesh
 	road->Setup("", 0.7,  terrain, mSceneMgr, *mSplitMgr->mCameras.begin());
 	
-	String sr = TrkDir()+"road.xml";
-	road->LoadFile(TrkDir()+"road.xml");
+	String sr = gui->TrkDir()+"road.xml";
+	road->LoadFile(gui->TrkDir()+"road.xml");
 	
 	//  after road load we have iChk1 so set it for carModels
 	for (int i=0; i < carModels.size(); ++i)

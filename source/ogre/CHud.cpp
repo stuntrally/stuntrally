@@ -2,13 +2,14 @@
 #include "common/Defines.h"
 #include "CGame.h"
 #include "CHud.h"
+#include "CGui.h"
 #include <LinearMath/btQuickprof.h>
 using namespace Ogre;
 
 
-CHud::CHud(App* ap1, SETTINGS* pSet1)
-	:ap(ap1), pSet(pSet1)
-
+CHud::CHud(App* ap1)
+	:app(ap1)
+	
 	,asp(1)//,  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
 	,scX(1),scY(1), minX(0),maxX(0), minY(0),maxY(0)
 	,ndLine(0)
@@ -24,6 +25,9 @@ CHud::CHud(App* ap1, SETTINGS* pSet1)
 	
 	for (int i=0; i<4; ++i)
 	{	ndTireVis[i]=0;  moTireVis[i]=0;  }
+	
+	pSet = ap1->pSet;
+	gui = ap1->gui;
 }
 
 CHud::Arrow::Arrow()
@@ -109,11 +113,11 @@ void CHud::UpdMiniTer()
 	try
 	{	Ogre::GpuProgramParametersSharedPtr par = pass->getFragmentProgramParameters();
 		if (par->_findNamedConstantDefinition("showTerrain",false))
-			par->setNamedConstant("showTerrain", ap->pSet->mini_terrain && ap->sc->ter ? 1.f : 0.f);
+			par->setNamedConstant("showTerrain", pSet->mini_terrain && app->sc->ter ? 1.f : 0.f);
 		if (par->_findNamedConstantDefinition("showBorder",false))
-			par->setNamedConstant("showBorder", ap->pSet->mini_border && ap->sc->ter ? 1.f : 0.f);
+			par->setNamedConstant("showBorder", pSet->mini_border && app->sc->ter ? 1.f : 0.f);
 		if (par->_findNamedConstantDefinition("square",false))
-			par->setNamedConstant("square", ap->pSet->mini_zoomed && ap->sc->ter ? 0.f : 1.f);
+			par->setNamedConstant("square", pSet->mini_zoomed && app->sc->ter ? 0.f : 1.f);
 	}
 	catch(...){  }
 }
@@ -129,13 +133,13 @@ Vector3 CHud::projectPoint(const Camera* cam, const Vector3& pos)
 	Real y = -pos2D.y * 0.5f + 0.5f;
 	bool out = !cam->isVisible(pos);
 
-	return Vector3(x * ap->mWindow->getWidth(), y * ap->mWindow->getHeight(), out ? -1.f : 1.f);
+	return Vector3(x * app->mWindow->getWidth(), y * app->mWindow->getHeight(), out ? -1.f : 1.f);
 }
 
 using namespace MyGUI;
 TextBox* CHud::CreateNickText(int carId, String text)
 {
-	TextBox* txt = ap->mGUI->createWidget<TextBox>("TextBox",
+	TextBox* txt = app->mGUI->createWidget<TextBox>("TextBox",
 		100,100, 360,32, Align::Center, "Back", "NickTxt"+toStr(carId));
 	txt->setVisible(false);
 	txt->setFontHeight(28);  //par 24..32
