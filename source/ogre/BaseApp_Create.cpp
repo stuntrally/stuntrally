@@ -18,6 +18,7 @@
 
 #include <OgreFontManager.h>
 #include <OgreLogManager.h>
+#include <OgreOverlaySystem.h>
 
 #include "boost/filesystem.hpp"
 
@@ -26,6 +27,7 @@
 #include "common/MyGUI_D3D11.h"
 
 #include <OgreRTShaderSystem.h>
+#include <OgreOverlayManager.h>
 #include "Compositor.h"
 
 #include "../shiny/Main/Factory.hpp"
@@ -385,23 +387,6 @@ bool BaseApp::setup()
 	Ogre::LogManager::getSingleton().setLogDetail(Ogre::LL_BOREME);//
 	#endif
 
-	//RT ShaderSystem
-	if (Ogre::RTShader::ShaderGenerator::initialize())
-	{ 
-		// Grab the shader generator pointer.
-		mShaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
- 
-		// Add the shader libs resource location.
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(PATHMANAGER::Data()+"/RTShaderLib", "FileSystem");
- 
-		// Set shader cache path.
-		mShaderGenerator->setShaderCachePath(PATHMANAGER::ShaderDir());		
- 
-		// Create and register the material manager listener.
-		mMaterialMgrListener = new MaterialMgrListener(mShaderGenerator);
-		Ogre::MaterialManager::getSingleton().addListener(mMaterialMgrListener);
-	}
-
 	setupResources();
 
 	if (!configure())
@@ -409,10 +394,30 @@ bool BaseApp::setup()
 
 
 	mSceneMgr = mRoot->createSceneManager(/*ST_GENERIC/**/Ogre::ST_EXTERIOR_FAR/**/);
+
+	Ogre::OverlaySystem* pOverlaySystem = new Ogre::OverlaySystem();
+	mSceneMgr->addRenderQueueListener(pOverlaySystem);
+
 	mSplitMgr = new SplitScreenManager(mSceneMgr, mWindow, pSet);
 
-	if (mShaderGenerator != NULL)
+	//RT ShaderSystem
+	if (Ogre::RTShader::ShaderGenerator::initialize())
+	{
+		// Grab the shader generator pointer.
+		mShaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
+
+		// Add the shader libs resource location.
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(PATHMANAGER::Data()+"/RTShaderLib", "FileSystem");
+
+		// Set shader cache path.
+		mShaderGenerator->setShaderCachePath(PATHMANAGER::ShaderDir());
+
+		// Create and register the material manager listener.
+		mMaterialMgrListener = new MaterialMgrListener(mShaderGenerator);
+		Ogre::MaterialManager::getSingleton().addListener(mMaterialMgrListener);
+
 		mShaderGenerator->addSceneManager(mSceneMgr);
+	}
 
 
 	createViewports();  // calls mSplitMgr->Align();

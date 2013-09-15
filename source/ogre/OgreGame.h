@@ -24,6 +24,7 @@
 #include <boost/thread.hpp>
 #include <MyGUI.h>
 #include <OgreShadowCameraSetup.h>
+#include <OgreOverlayElement.h>
 
 #include "../shiny/Main/Factory.hpp"
 

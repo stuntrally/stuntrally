@@ -13,7 +13,11 @@
 #include <OgreRenderTargetListener.h>
 #include <OgreFrameListener.h>
 #include <OgreWindowEventUtilities.h>*/
+
+//FIXME
 #include <Ogre.h>
+#include <OgreOverlay.h>
+#include <OgreOverlayElement.h>
 
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
