@@ -2,7 +2,7 @@
 #include "common/Defines.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
-#include "OgreGame.h"
+#include "CGame.h"
 #include "common/Gui_Def.h"
 
 using namespace std;

@@ -57,6 +57,9 @@ class BaseApp :
 		public ICS::ChannelListener, public ICS::DetectingBindingListener
 {
 	friend class CarModel;
+	friend class CGame;
+	friend class CHud;
+	friend class CGui;
 public:
 	BaseApp();
 	virtual ~BaseApp();

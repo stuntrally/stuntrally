@@ -7,7 +7,7 @@
 	#include "../../editor/settings.h"
 	#include "../../road/Road.h"
 #else
-	#include "../OgreGame.h"
+	#include "../CGame.h"
 	#include "../../vdrift/settings.h"
 	#include "../../road/Road.h"
 	#include "../SplitScreen.h"

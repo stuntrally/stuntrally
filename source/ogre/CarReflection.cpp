@@ -4,7 +4,7 @@
 #include "../vdrift/settings.h"
 #include "../ogre/common/RenderConst.h"
 
-#include "OgreGame.h"
+#include "CGame.h"
 
 #include <OgreSceneManager.h>
 #include <OgreLogManager.h>

@@ -3,7 +3,9 @@
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
-#include "OgreGame.h"
+#include "CGame.h"
+#include "CHud.h"
+
 #include <boost/filesystem.hpp>
 #include <OgreRoot.h>
 #include <OgreRenderWindow.h>
@@ -169,7 +171,7 @@ void App::InitGui()
 
 	//  hud
 	Chk("Digits", chkDigits, pSet->show_digits);
-	Chk("Gauges", chkGauges, pSet->show_gauges);  ShowHUD();//
+	Chk("Gauges", chkGauges, pSet->show_gauges);  hud->ShowHUD();//
 	Chk("Arrow", chkArrow, pSet->check_arrow);
 	Chk("ChkBeam", chkBeam, pSet->check_beam);
 	

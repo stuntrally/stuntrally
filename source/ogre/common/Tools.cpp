@@ -3,7 +3,8 @@
 #include "../vdrift/pathmanager.h"
 #include "../../road/Road.h"
 #ifndef SR_EDITOR
-	#include "../OgreGame.h"
+	#include "../CGame.h"
+	#include "../CHud.h"
 	#include "../vdrift/timer.h"
 	#include "../vdrift/game.h"
 #else
@@ -254,9 +255,9 @@ void App::ToolGhosts()
 		ostringstream s;
 		s << fixed << left << setw(18) << trk;  //align
 		#if 0
-		s << "  E " << GetTimeShort(timeES);  // Expected car ES or S1
-		s << "  T " << GetTimeShort(timeTrk);  // trk time from .xml
-		s << "  b " << GetTimeShort(timeES == timeBest ? 0.f : timeBest);
+		s << "  E " << CHud::GetTimeShort(timeES);  // Expected car ES or S1
+		s << "  T " << CHud::GetTimeShort(timeTrk);  // trk time from .xml
+		s << "  b " << CHud::GetTimeShort(timeES == timeBest ? 0.f : timeBest);
 		s << "  E-b " << (timeES > 0.f && timeES != timeBest ?
 						fToStr(timeES - timeBest ,0,2) : "  ");
 		s << "  T-E " << (timeES > 0.f ?
@@ -332,7 +333,7 @@ void App::ToolGhostsConv()
 				{	float dist = (fr.pos - oldPos).MagnitudeSquared();
 					if (dist > 16.f)  //1.f small
 					{	
-						LogO("!Jump at "+GetTimeShort(fr.time)+"  d "+fToStr(sqrt(dist),0)+"m");
+						LogO("!Jump at "+CHud::GetTimeShort(fr.time)+"  d "+fToStr(sqrt(dist),0)+"m");
 						++jmp;
 				}	}
 				//  check vel at start
@@ -342,7 +343,7 @@ void App::ToolGhostsConv()
 					float vel = 3.6f * dist / (fr.time - oldTime);
 					bool bad = vel > 30;
 					if (bad)
-						LogO("!Vel at "+GetTimeString(fr.time)+" kmh "+fToStr(vel,0) + (bad ? "  BAD":""));
+						LogO("!Vel at "+CHud::GetTimeString(fr.time)+" kmh "+fToStr(vel,0) + (bad ? "  BAD":""));
 				}
 				oldPos = fr.pos;  oldTime = fr.time;
 			}

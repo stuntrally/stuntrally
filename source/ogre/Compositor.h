@@ -3,7 +3,7 @@
 #ifndef _HelperLogics_H__
 #define _HelperLogics_H__
 
-#include "OgreGame.h"
+#include "CGame.h"
 
 #include <OgrePrerequisites.h>
 #include <OgreCompositorLogic.h>

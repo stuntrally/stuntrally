@@ -6,7 +6,7 @@
 #include "tracksurface.h"
 #include "configfile.h"
 #include "settings.h"
-#include "../ogre/OgreGame.h"  //+ replay
+#include "../ogre/CGame.h"  //+ replay
 #include "../ogre/CarModel.h"  //+ camera pos
 #include "../ogre/FollowCamera.h"  //+ camera pos
 #include "../ogre/common/Defines.h"

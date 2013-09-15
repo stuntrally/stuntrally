@@ -8,7 +8,7 @@
 #ifdef SR_EDITOR
 	#include "../../editor/OgreApp.h"
 #else
-	#include "../OgreGame.h"
+	#include "../CGame.h"
 	#include "../../vdrift/game.h"
 #endif
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"

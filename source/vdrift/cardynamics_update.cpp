@@ -3,7 +3,7 @@
 #include "collision_world.h"
 #include "settings.h"
 #include "tobullet.h"
-#include "../ogre/OgreGame.h"
+#include "../ogre/CGame.h"
 #include "Buoyancy.h"
 #include "../ogre/common/Defines.h"
 #include "../ogre/common/SceneXml.h"

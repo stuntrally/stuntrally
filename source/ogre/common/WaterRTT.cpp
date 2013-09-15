@@ -52,8 +52,8 @@ void WaterRTT::create()
 		else mRefractionTarget = rtt;
 	}
 
-	sh::Factory::getInstance ().setTextureAlias ("WaterReflection", "PlaneReflection");
-	sh::Factory::getInstance ().setTextureAlias ("WaterRefraction", "PlaneRefraction");
+	sh::Factory::getInstance().setTextureAlias("WaterReflection", "PlaneReflection");
+	sh::Factory::getInstance().setTextureAlias("WaterRefraction", "PlaneRefraction");
 }
 
 void WaterRTT::setViewerCamera(Ogre::Camera* cam)
@@ -111,7 +111,7 @@ void WaterRTT::preRenderTargetUpdate(const RenderTargetEvent& evt)
 		
 	if (evt.source == mReflectionTarget)
 	{
-		if (mCamera->getPosition ().y > -mWaterPlane.d)
+		if (mCamera->getPosition().y > -mWaterPlane.d)
 			mCamera->enableCustomNearClipPlane(mWaterPlane);
 		mCamera->enableReflection(mWaterPlane);
 	}

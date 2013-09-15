@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "performance_testing.h"
 #include "configfile.h"
-#include "../ogre/OgreGame.h"  // pApp
+#include "../ogre/CGame.h"  // pApp
 #include "../ogre/common/Defines.h"
 using namespace std;
 

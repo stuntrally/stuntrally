@@ -4,7 +4,8 @@
 #include "../../vdrift/pathmanager.h"
 #ifndef SR_EDITOR
 	#include "../../vdrift/game.h"
-	#include "../OgreGame.h"
+	#include "../CGame.h"
+	#include "../CHud.h"
 	#include "../SplitScreen.h"
 #else
 	#include "../../editor/OgreApp.h"
@@ -571,18 +572,18 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTr
 	float timeTrk = tracksXml.times[sTrack];
 	std::string speedTrk = fToStr(len / timeTrk * m, 0,3) + unit;
 	float timeT = (/*place*/1 * carsXml.magic * timeTrk + timeTrk) / carMul;
-	if (stTrk[ch][6])  stTrk[ch][6]->setCaption(GetTimeString(timeT));
+	if (stTrk[ch][6])  stTrk[ch][6]->setCaption(CHud::GetTimeString(timeT));
 	if (stTrk[ch][7])  stTrk[ch][7]->setCaption(timeT < 0.1f ? "--" : speedTrk);
 
 	if (timeCur < 0.1f)
 	{
-		if (stTrk[ch][8])  stTrk[ch][8]->setCaption(GetTimeString(0.f));
+		if (stTrk[ch][8])  stTrk[ch][8]->setCaption(CHud::GetTimeString(0.f));
 		if (stTrk[ch][9])  stTrk[ch][9]->setCaption("--");
 		if (stTrk[ch][10])  stTrk[ch][10]->setCaption("--");
 	}else
 	{	//  car record
 		std::string speed = fToStr(len / timeCur * m, 0,3) + unit;
-		if (stTrk[ch][8])  stTrk[ch][8]->setCaption(GetTimeString(timeCur));
+		if (stTrk[ch][8])  stTrk[ch][8]->setCaption(CHud::GetTimeString(timeCur));
 		if (stTrk[ch][9])  stTrk[ch][9]->setCaption(speed);
 		//  points
 		float points = 0.f;

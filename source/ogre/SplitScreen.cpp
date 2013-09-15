@@ -3,7 +3,8 @@
 #include "common/RenderConst.h"
 #include "SplitScreen.h"
 
-#include "OgreGame.h"
+#include "CGame.h"
+#include "CHud.h"
 #include "CarModel.h"
 #include "../vdrift/settings.h"
 #include "../road/Road.h"
@@ -206,8 +207,8 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		sscanf(vpName.c_str(), "PlayerCamera%d", &carId);
 
 		//  Update HUD for this car
-		pApp->ShowHUDvp(true);
-		pApp->UpdateHUD(carId, 1.f / mWindow->getLastFPS());
+		pApp->hud->ShowHUDvp(true);
+		pApp->hud->UpdateHUD(carId, 1.f / mWindow->getLastFPS());
 
 		///  Set skybox pos to camera  - TODO: fix, sky is center only for last player ...
 		//  idea: with compositor this needs separate sky nodes (own sky for each player) and showing 1 sky for 1 player
@@ -268,7 +269,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 				Ogre::TexturePtr depthTexture =	compositor->getTextureInstance("mrt_output",2);
 				if(!depthTexture.isNull())
 				{
-					sh::Factory::getInstance ().setTextureAlias ("SceneDepth", depthTexture->getName());
+					sh::Factory::getInstance().setTextureAlias("SceneDepth", depthTexture->getName());
 				}
 			}
 		}
@@ -276,8 +277,8 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 	else
 	{
 		//  Gui viewport - hide stuff we don't want
-		pApp->UpdateHUD(-1, 1.f / mWindow->getLastFPS());
-		pApp->ShowHUDvp(false);
+		pApp->hud->UpdateHUD(-1, 1.f / mWindow->getLastFPS());
+		pApp->hud->ShowHUDvp(false);
 		
 		// no mouse in key capture mode
 		//if (pApp->bAssignKey)  hideMouse();

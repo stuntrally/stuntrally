@@ -11,7 +11,7 @@
 	#include "../../editor/settings.h"
 	#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #else
-	#include "../OgreGame.h"
+	#include "../CGame.h"
 	#include "../../vdrift/game.h"
 	#include "../../vdrift/settings.h"
 #endif

@@ -13,7 +13,7 @@
 #include <cstdio>
 
 #include "unittest.h"
-#include "../ogre/OgreGame.h"
+#include "../ogre/CGame.h"
 
 using namespace std;
 using namespace joeserialize;

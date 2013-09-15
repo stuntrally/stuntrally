@@ -2,7 +2,7 @@
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 //	#include "vld.h" // mem leaks +
 #endif
-#include "OgreGame.h"
+#include "CGame.h"
 #include "../vdrift/game.h"
 #include "../vdrift/logging.h"
 #include "../vdrift/pathmanager.h"

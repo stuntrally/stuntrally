@@ -8,7 +8,7 @@
 #include <MyGUI.h>
 using namespace Ogre;
 using namespace MyGUI;
-#include "OgreGame.h"
+#include "CGame.h"
 #include "../vdrift/settings.h"
 
 

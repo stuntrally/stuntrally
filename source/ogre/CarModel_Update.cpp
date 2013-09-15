@@ -5,7 +5,7 @@
 #include "../vdrift/mathvector.h"
 #include "../vdrift/track.h"
 #include "../vdrift/game.h"
-#include "OgreGame.h"
+#include "CGame.h"
 #include "SplitScreen.h"
 #include "common/SceneXml.h"
 #include "FollowCamera.h"

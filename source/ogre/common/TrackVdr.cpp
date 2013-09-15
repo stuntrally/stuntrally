@@ -17,7 +17,8 @@
 
 #include "../../vdrift/track.h"
 #ifndef SR_EDITOR
-	#include "../OgreGame.h"
+	#include "../CGame.h"
+	#include "../CHud.h"
 	#include "../../vdrift/game.h"
 	#include "../SplitScreen.h"  //-
 #else
@@ -171,8 +172,8 @@ void App::CreateRacingLine()
 	}
 	m->setCastShadows(false);	
 	m->end();
-	ndLine = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	ndLine->attachObject(m);
+	hud->ndLine = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	hud->ndLine->attachObject(m);
 	//ndLine->setVisible(pSet->racingline);
 }
 		
@@ -184,7 +185,8 @@ void App::CreateRacingLine()
 
 void App::CreateMinimap()
 {
-	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
+#if 0
+	asp = float(hud->mWindow->getWidth())/float(hud->mWindow->getHeight());
 
 	//  get track sizes
 	minX=FLT_MAX; maxX=FLT_MIN;  minY=FLT_MAX; maxY=FLT_MIN;
@@ -288,6 +290,7 @@ void App::CreateMinimap()
 		vNdPos[0][c]->attachObject(vMoPos[0][c]);  vNdPos[0][c]->setVisible(false);
 	}
 	ndMap[0]->setVisible(pSet->trackmap);*/
+#endif
 }
 #endif
 

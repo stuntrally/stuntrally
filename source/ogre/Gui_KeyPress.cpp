@@ -3,7 +3,8 @@
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
-#include "OgreGame.h"
+#include "CGame.h"
+#include "CHud.h"
 #include "common/Gui_Def.h"
 #include "common/GraphView.h"
 #include "common/Slider.h"
@@ -203,30 +204,30 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 			case key(F7):		// Times
 				if (shift)
-				{	WP wp = chOpponents;  ChkEv(show_opponents);  ShowHUD();  }
+				{	WP wp = chOpponents;  ChkEv(show_opponents);  hud->ShowHUD();  }
 				else if (!ctrl)
-				{	WP wp = chTimes;  ChkEv(show_times);  ShowHUD();  }
+				{	WP wp = chTimes;  ChkEv(show_times);  hud->ShowHUD();  }
 				return false;
 
 			case key(F8):		// car debug bars
 				if (ctrl)
-				{	WP wp = chDbgB;  ChkEv(car_dbgbars);   ShowHUD();  }
+				{	WP wp = chDbgB;  ChkEv(car_dbgbars);   hud->ShowHUD();  }
 				else		// Minimap
 				if (!shift)
 				{	WP wp = chMinimp;  ChkEv(trackmap);
-					for (int c=0; c < hud.size(); ++c)
-						if (hud[c].ndMap)  hud[c].ndMap->setVisible(pSet->trackmap);
+					for (int c=0; c < hud->hud.size(); ++c)
+						if (hud->hud[c].ndMap)  hud->hud[c].ndMap->setVisible(pSet->trackmap);
 				}	return false;
 
 			case key(F9):
 				if (ctrl)
-				{	WP wp = chTireVis;  ChkEv(car_tirevis);  DestroyHUD();  CreateHUD();  }
+				{	WP wp = chTireVis;  ChkEv(car_tirevis);  hud->DestroyHUD();  hud->CreateHUD();  }
 				else
 				if (alt)	// car debug surfaces
-				{	WP wp = chDbgS;  ChkEv(car_dbgsurf);  ShowHUD();  }
+				{	WP wp = chDbgS;  ChkEv(car_dbgsurf);  hud->ShowHUD();  }
 				else
 				if (shift)	// car debug text
-				{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  ShowHUD();  }
+				{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  hud->ShowHUD();  }
 				else		// graphs
 				{	WP wp = chGraphs;  ChkEv(show_graphs);
 					for (int i=0; i < graphs.size(); ++i)
@@ -236,7 +237,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 			case key(F11):
 				if (shift)	// profiler times
-				{	WP wp = chProfTxt;  ChkEv(profilerTxt);  ShowHUD();  }
+				{	WP wp = chProfTxt;  ChkEv(profilerTxt);  hud->ShowHUD();  }
 				else
 				if (!ctrl)  // Fps
 				{	WP wp = chFps;  ChkEv(show_fps);

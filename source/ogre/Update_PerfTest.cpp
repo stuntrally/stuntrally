@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "common/Defines.h"
-#include "OgreGame.h"
+#include "CGame.h"
 #include "../vdrift/game.h"
 using namespace Ogre;
 
