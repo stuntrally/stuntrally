@@ -14,6 +14,7 @@
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"
 #include "../paged-geom/PagedGeometry.h"
+#include "../shiny/Main/Factory.hpp"
 
 #include <boost/thread.hpp>
 #include <boost/filesystem.hpp>
@@ -24,8 +25,6 @@
 #include <OgreTerrainGroup.h>
 using namespace MyGUI;
 using namespace Ogre;
-
-#include "../shiny/Main/Factory.hpp"
 
 
 //  Create Scene
@@ -198,7 +197,7 @@ void App::NewGame()
 	if (mWndRpl)  mWndRpl->setVisible(false);  // hide rpl ctrl
 
 	LoadingOn();
-	hud->ShowHUD(true);  // hide HUD
+	hud->Show(true);  // hide HUD
 	//mFpsOverlay->hide();  // hide FPS
 	hideMouse();
 
@@ -214,7 +213,7 @@ void App::LoadCleanUp()  // 1 first
 	
 	DestroyFluids();  DestroyObjects(true);
 	
-	DestroyGraphs();  hud->DestroyHUD();
+	DestroyGraphs();  hud->Destroy();
 	
 
 	// rem old track
@@ -546,8 +545,8 @@ void App::LoadRoad()  // 6
 {
 	CreateRoad();
 		
-	if (road && road->getNumPoints() == 0 && hud->arrowRotNode)
-		hud->arrowRotNode->setVisible(false);  // hide when no road
+	if (road && road->getNumPoints() == 0 && hud->arrow.nodeRot)
+		hud->arrow.nodeRot->setVisible(false);  // hide when no road
 
 	///  Run track's ghost
 	// to get times at checkpoints
@@ -611,9 +610,9 @@ void App::LoadMisc()  // 9 last
 	if (pGame && pGame->cars.size() > 0)  //todo: move this into gui track tab chg evt, for cur game type
 		UpdGuiRdStats(road, sc, sListTrack, pGame->timer.GetBestLap(0, pSet->game.trackreverse));  // current
 
-	hud->CreateHUD();
+	hud->Create();
 	// immediately hide it
-	hud->ShowHUD(true);
+	hud->Show(true);
 	
 	// Camera settings
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); ++it)
@@ -692,7 +691,7 @@ void App::NewGameDoLoad()
 		#endif
 		mLoadingBar->SetWidth(100.f);
 				
-		hud->ShowHUD();
+		hud->Show();
 		//if (pSet->show_fps)
 		//	mFpsOverlay->show();
 		//.mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);

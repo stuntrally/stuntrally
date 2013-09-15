@@ -293,7 +293,7 @@ void App::newPoses(float time)  // time only for camera update
 				{
 					int size = replay.GetNumFrames() * sizeof(ReplayFrame);
 					std::string s = fToStr( float(size)/1000000.f, 2,5);
-					String ss = String( TR("#{RplRecTime}: ")) + CHud::GetTimeString(replay.GetTimeLength()) + TR("   #{RplSize}: ") + s + TR(" #{UnitMB}");
+					String ss = String( TR("#{RplRecTime}: ")) + CHud::StrTime(replay.GetTimeLength()) + TR("   #{RplSize}: ") + s + TR(" #{UnitMB}");
 					valRplName2->setCaption(ss);
 				}
 			}
@@ -310,10 +310,10 @@ void App::newPoses(float time)  // time only for camera update
 		{
 			// checkpoint arrow  --------------------------------------
 			if (pSet->check_arrow && carM->eType == CarModel::CT_LOCAL
-			  && !bRplPlay && hud->arrowNode && road && road->mChks.size()>0)
+			  && !bRplPlay && hud->arrow.node && road && road->mChks.size()>0)
 			{
 				// set animation start to old orientation
-				hud->arrowAnimStart = hud->arrowAnimCur;
+				hud->arrow.qStart = hud->arrow.qCur;
 				
 				// game start: no animation
 				bool noAnim = carM->iNumChks == 0;
@@ -335,12 +335,12 @@ void App::newPoses(float time)  // time only for camera update
 
 				const bool valid = !quat.isNaN();
 				if (valid)
-				{	if (noAnim)  hud->arrowAnimStart = quat;
-					hud->arrowAnimEnd = quat;
+				{	if (noAnim)  hud->arrow.qStart = quat;
+					hud->arrow.qEnd = quat;
 				
 					// set arrow color (wrong direction: red arrow)
 					// calc angle towards cam
-					Real angle = (hud->arrowAnimCur.zAxis().dotProduct(carM->fCam->mCamera->getOrientation().zAxis())+1)/2.0f;
+					Real angle = (hud->arrow.qCur.zAxis().dotProduct(carM->fCam->mCamera->getOrientation().zAxis())+1)/2.0f;
 					// set color in material
 
 					// green: 0.0 1.0 0.0     0.0 0.4 0.0
@@ -544,8 +544,8 @@ void App::updatePoses(float time)
 		double pos = pGame->timer.GetPlayerTime(0);
 		float len = replay.GetTimeLength();
 		if (valRplPerc)  valRplPerc->setCaption(fToStr(pos/len*100.f, 1,4)+" %");
-		if (valRplCur)  valRplCur->setCaption(CHud::GetTimeString(pos));
-		if (valRplLen)  valRplLen->setCaption(CHud::GetTimeString(len));
+		if (valRplCur)  valRplCur->setCaption(CHud::StrTime(pos));
+		if (valRplLen)  valRplLen->setCaption(CHud::StrTime(len));
 
 		if (slRplPos)
 		{	float v = pos/len;  slRplPos->setValue(v);  }

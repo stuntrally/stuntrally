@@ -31,12 +31,8 @@ public:
 	
 	CHud(App* ap1, SETTINGS* pSet1);
 		
-	//BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
-	//void bltDumpRecursive(class CProfileIterator* profileIterator, int spacing, std::stringstream& os);
-	//void bltDumpAll(std::stringstream& os);
-
 	
-	///  HUD, 2D  ------------
+	///  HUD  ------------
 	class Hud  // for 1 viewport/player
 	{
 	public:
@@ -79,6 +75,7 @@ public:
 		Hud();
 	};
 	std::vector<Hud> hud;  // const size: max viewports 4
+
 	///  global hud
 	//  chat messages
 	MyGUI::TextBox *txMsg;  MyGUI::ImageBox *bckMsg;
@@ -90,12 +87,6 @@ public:
 	Ogre::SceneNode    *ndTireVis[4];
 	Ogre::ManualObject *moTireVis[4];
 
-	Ogre::SceneNode* arrowNode,*arrowRotNode;  // checkpoint arrow
-	Ogre::Quaternion arrowAnimStart, arrowAnimEnd, arrowAnimCur; // smooth animation
-		
-	float asp, scX,scY, minX,maxX, minY,maxY;  // minimap visible range
-	Ogre::SceneNode *ndLine;
-
 	struct OvrDbg
 	{
 		Ogre::OverlayElement* oL,*oR,*oS, *oU,*oX;
@@ -105,20 +96,33 @@ public:
 	Ogre::Overlay *ovCarDbg,*ovCarDbgTxt,*ovCarDbgExt;
 
 
+	///  checkpoint arrow
+	struct Arrow
+	{
+		Ogre::SceneNode* node,*nodeRot;  // checkpoint arrow
+		Ogre::Quaternion qStart, qEnd, qCur;  // smooth animation
+		Arrow();
+	} arrow;
+		
+	float asp, scX,scY, minX,maxX, minY,maxY;  // minimap visible range
+	Ogre::SceneNode *ndLine;
+
+	//------------------------------------------
+
 	//  init
-	void CreateHUD(), DestroyHUD();
+	void Create(), Destroy();
 	void CreateArrow();
 
 	//  show, size
-	void SizeHUD(bool full, Ogre::Viewport* vp=NULL);
-	void ShowHUD(bool hideAll=false), ShowHUDvp(bool vp);
+	void Size(bool full, Ogre::Viewport* vp=NULL);
+	void Show(bool hideAll=false), ShowVp(bool vp);
 
 	///  update
-	void UpdateHUD(int carId, float time);
+	void Update(int carId, float time);
 
 	//  update internal
-	void UpdHUDRot(int baseCarId, int carId, float vel, float rpm);
-	void GetHUDVals(int id, float* vel, float* rpm, float* clutch, int* gear);
+	void UpdRot(int baseCarId, int carId, float vel, float rpm);
+	void GetVals(int id, float* vel, float* rpm, float* clutch, int* gear);
 	void UpdMiniTer(), UpdDbgTxtClr();
 
 	//  util create
@@ -131,7 +135,7 @@ public:
 	Ogre::Vector3 projectPoint(const Ogre::Camera* cam, const Ogre::Vector3& pos);  // 2d xy, z - out info
 
 	//  string utils
-	static Ogre::String GetTimeString(float time), GetTimeShort(float time);
+	static Ogre::String StrTime(float time), StrTime2(float time);  // 2=short
 	Ogre::String StrClr(Ogre::ColourValue c);
 
 	//  bullet debug text

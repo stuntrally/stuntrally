@@ -159,7 +159,7 @@ void App::Ch_XmlLoad()
 			time += (*it).second;
 			++trks;
 	}	}
-	LogO("Total tracks: "+ toStr(trks) + ", total time: "+ CHud::GetTimeShort(time/60.f)+" h:m");
+	LogO("Total tracks: "+ toStr(trks) + ", total time: "+ CHud::StrTime2(time/60.f)+" h:m");
 	#endif
 	
 	#if 0  /* test race pos,points */
@@ -350,7 +350,7 @@ void App::StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress
 	liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
 	liStages->setSubItemNameAt(3,l, clrsDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
 	liStages->setSubItemNameAt(4,l, "#60C0A0  "+toStr(laps));
-	liStages->setSubItemNameAt(5,l, "#80C0F0 "+CHud::GetTimeShort(time));
+	liStages->setSubItemNameAt(5,l, "#80C0F0 "+CHud::StrTime2(time));
 	liStages->setSubItemNameAt(6,l, progress);
 }
 

@@ -207,8 +207,8 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		sscanf(vpName.c_str(), "PlayerCamera%d", &carId);
 
 		//  Update HUD for this car
-		pApp->hud->ShowHUDvp(true);
-		pApp->hud->UpdateHUD(carId, 1.f / mWindow->getLastFPS());
+		pApp->hud->ShowVp(true);
+		pApp->hud->Update(carId, 1.f / mWindow->getLastFPS());
 
 		///  Set skybox pos to camera  - TODO: fix, sky is center only for last player ...
 		//  idea: with compositor this needs separate sky nodes (own sky for each player) and showing 1 sky for 1 player
@@ -277,8 +277,8 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 	else
 	{
 		//  Gui viewport - hide stuff we don't want
-		pApp->hud->UpdateHUD(-1, 1.f / mWindow->getLastFPS());
-		pApp->hud->ShowHUDvp(false);
+		pApp->hud->Update(-1, 1.f / mWindow->getLastFPS());
+		pApp->hud->ShowVp(false);
 		
 		// no mouse in key capture mode
 		//if (pApp->bAssignKey)  hideMouse();

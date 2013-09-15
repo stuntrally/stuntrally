@@ -3,7 +3,6 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "../vdrift/game.h"
-#include "../vdrift/quickprof.h"
 #include "../road/Road.h"
 #include "SplitScreen.h"
 #include "common/RenderConst.h"
@@ -24,7 +23,7 @@ using namespace MyGUI;
 
 ///  HUD resize
 //---------------------------------------------------------------------------------------------------------------
-void CHud::SizeHUD(bool full, Viewport* vp)
+void CHud::Size(bool full, Viewport* vp)
 {
 	float wx = ap->mWindow->getWidth(), wy = ap->mWindow->getHeight();
 	asp = wx/wy;
@@ -136,8 +135,9 @@ void CHud::SizeHUD(bool full, Viewport* vp)
 ///  HUD create
 ///---------------------------------------------------------------------------------------------------------------
 
-void CHud::CreateHUD()
+void CHud::Create()
 {
+	//Destroy();  //
 	if (ap->carModels.size() == 0)  return;
 
 	QTimer ti;  ti.update();  /// time
@@ -453,7 +453,7 @@ void CHud::CreateHUD()
 		ov[i].oS = ovr.getOverlayElement("S_"+s);	ov[i].oU = ovr.getOverlayElement("U_"+s);
 		ov[i].oX = ovr.getOverlayElement("X_"+s);
 	}
-	ShowHUD();  //_
+	Show();  //_
 	ap->bSizeHUD = true;
 	//SizeHUD(true);
 	
@@ -491,7 +491,7 @@ CHud::Hud::Hud()
 	vNdPos.resize(6,0);  vMoPos.resize(6,0);
 }
 
-void CHud::DestroyHUD()
+void CHud::Destroy()
 {
 	SceneManager* scm = ap->mSplitMgr->mGuiSceneMgr;
 	int i,c;
@@ -535,7 +535,7 @@ void CHud::DestroyHUD()
 
 //  HUD show/hide
 //---------------------------------------------------------------------------------------------------------------
-void CHud::ShowHUD(bool hideAll)
+void CHud::Show(bool hideAll)
 {
 	if (hideAll || ap->iLoad1stFrames >= 0)  // still loading
 	{
@@ -599,11 +599,11 @@ void CHud::ShowHUD(bool hideAll)
 	if (ap->mWndRpl && !ap->bLoading)  ap->mWndRpl->setVisible(ap->bRplPlay && ap->bRplWnd);  //
 }
 
-void CHud::ShowHUDvp(bool vp)	// todo: use vis mask ..
+void CHud::ShowVp(bool vp)	// todo: use vis mask ..
 {
 	// show/hide for render viewport / gui viewport
 	// first show everything
-	ShowHUD(false);  // todo: don't here
+	Show(false);  // todo: don't here
 	// now hide things we dont want
 	if (!vp)
 	{
@@ -619,13 +619,13 @@ void CHud::ShowHUDvp(bool vp)	// todo: use vis mask ..
 
 void CHud::CreateArrow()
 {
-	if (!arrowNode)  arrowNode = ap->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Ogre::Entity* arrowEnt = ap->mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
-	arrowEnt->setRenderQueueGroup(RQG_Hud3);
-	arrowEnt->setCastShadows(false);
-	arrowRotNode = arrowNode->createChildSceneNode();
-	arrowRotNode->attachObject(arrowEnt);
-	arrowRotNode->setScale(pSet->size_arrow/2.f, pSet->size_arrow/2.f, pSet->size_arrow/2.f);
-	arrowEnt->setVisibilityFlags(RV_Hud); // hide in reflection
-	arrowRotNode->setVisible(pSet->check_arrow); //!
+	if (!arrow.node)  arrow.node = ap->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Ogre::Entity* ent = ap->mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
+	ent->setRenderQueueGroup(RQG_Hud3);
+	ent->setCastShadows(false);
+	arrow.nodeRot = arrow.node->createChildSceneNode();
+	arrow.nodeRot->attachObject(ent);
+	arrow.nodeRot->setScale(pSet->size_arrow/2.f, pSet->size_arrow/2.f, pSet->size_arrow/2.f);
+	ent->setVisibilityFlags(RV_Hud);
+	arrow.nodeRot->setVisible(pSet->check_arrow);
 }

@@ -116,7 +116,7 @@ void App::listRplChng(List* li, size_t pos)
 		ss = String(TR("#{Car}: ")) + rpl.header.car + "       "+
 			(rpl.header.numPlayers == 1 ? "" : (TR("#{Players}: ") + toStr(rpl.header.numPlayers))) + "  " +
 			(rpl.header.networked == 0 ? "" : "M") +  //TR("#{Multiplayer}")
-			"\n#C0D8F0" + TR("#{RplTime}: ") + CHud::GetTimeString(rpl.GetTimeLength()) +
+			"\n#C0D8F0" + TR("#{RplTime}: ") + CHud::StrTime(rpl.GetTimeLength()) +
 			"\n#90A0B0" + TR("#{Simulation}: ") + rpl.header.sim_mode;
 		if (rpl.header.networked == 1)  // list nicks
 			ss += String("\n#90C0E0")+rpl.header.nicks[0]+"  "+rpl.header.nicks[1]+"  "+rpl.header.nicks[2]+"  "+rpl.header.nicks[3];

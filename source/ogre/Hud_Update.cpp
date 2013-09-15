@@ -47,7 +47,7 @@ bool SortWin(const CarModel* cm2, const CarModel* cm1)
 }
 
 
-void CHud::GetHUDVals(int id, float* vel, float* rpm, float* clutch, int* gear)
+void CHud::GetVals(int id, float* vel, float* rpm, float* clutch, int* gear)
 {
 	#ifdef DEBUG
 	assert(id >= 0);
@@ -72,13 +72,13 @@ void CHud::GetHUDVals(int id, float* vel, float* rpm, float* clutch, int* gear)
 ///---------------------------------------------------------------------------------------------------------------
 //  Update HUD
 ///---------------------------------------------------------------------------------------------------------------
-void CHud::UpdateHUD(int carId, float time)
+void CHud::Update(int carId, float time)
 {
 	PROFILER.beginBlock("g.hud");
 
 	if (ap->bSizeHUD)	// update sizes once after change
 	{	ap->bSizeHUD = false;
-		SizeHUD(true);	}
+		Size(true);	}
 
 	
 	//  update HUD elements for all cars that have a viewport (local or replay)
@@ -92,11 +92,11 @@ void CHud::UpdateHUD(int carId, float time)
 	{
 		//  hud rpm,vel
 		float vel=0.f, rpm=0.f, clutch=1.f;  int gear=1;
-		GetHUDVals(c,&vel,&rpm,&clutch,&gear);
+		GetVals(c,&vel,&rpm,&clutch,&gear);
 		
 		//  update pos tri on minimap  (all)
 		for (int i=0; i < cntG; ++i)
-			UpdHUDRot(c, i, vel, rpm);
+			UpdRot(c, i, vel, rpm);
 	}
 
 	if (carId == -1 || ap->carModels.empty())
@@ -114,7 +114,7 @@ void CHud::UpdateHUD(int carId, float time)
 	CAR* pCar = pCarM ? pCarM->pCar : 0;
 
 	float vel=0.f, rpm=0.f, clutch=1.f;  int gear=1;
-	GetHUDVals(carId,&vel,&rpm,&clutch,&gear);
+	GetVals(carId,&vel,&rpm,&clutch,&gear);
 	Hud& h = hud[carId];
 
 
@@ -185,9 +185,9 @@ void CHud::UpdateHUD(int carId, float time)
 				li->addItem(""/*clr+ toStr(c+1)*/, 0);  int l = li->getItemCount()-1;
 				li->setSubItemNameAt(1,l, clr+ (cm->iWonPlace == 0 ? "--" : toStr(cm->iWonPlace)));
 				li->setSubItemNameAt(2,l, clr+ cm->sDispName);
-				li->setSubItemNameAt(3,l, clr+ GetTimeString( cm->iWonPlace == 0 ? 0.f : ap->pGame->timer.GetPlayerTimeTot(cm->iIndex) ));
+				li->setSubItemNameAt(3,l, clr+ StrTime( cm->iWonPlace == 0 ? 0.f : ap->pGame->timer.GetPlayerTimeTot(cm->iIndex) ));
 				//li->setSubItemNameAt(4,l, clr+ fToStr(cm->iWonMsgTime,1,3));
-				li->setSubItemNameAt(4,l, clr+ GetTimeString( ap->pGame->timer.GetBestLapRace(cm->iIndex) ));
+				li->setSubItemNameAt(4,l, clr+ StrTime( ap->pGame->timer.GetBestLapRace(cm->iIndex) ));
 				li->setSubItemNameAt(5,l, clr+ toStr( ap->pGame->timer.GetCurrentLap(cm->iIndex) ));
 		}	}
 		tm = 0.f;
@@ -407,9 +407,9 @@ void CHud::UpdateHUD(int carId, float time)
 			bool any = cur || b;
 	
 			h.sTimes =
-				"\n#80C8FF" + GetTimeString(last)+
-				"\n#80E0E0" + GetTimeString(best)+
-				"\n#80E080" + GetTimeString(time)+
+				"\n#80C8FF" + StrTime(last)+
+				"\n#80E0E0" + StrTime(best)+
+				"\n#80E080" + StrTime(time)+
 				"\n\n#D0D040" + (any ? toStr( cur ? chkPlace  : place)      : "--")+
 				"\n#F0A040" +   (any ? fToStr(cur ? chkPoints : points,1,3) : "--");
 				//"\n\n#D0D040" + (b ? toStr(place)      + (cur ? "    "+toStr(chkPlace)     :"") : "--")+  // both-
@@ -418,7 +418,7 @@ void CHud::UpdateHUD(int carId, float time)
 		if (h.txTimes)
 			h.txTimes->setCaption(
 				(hasLaps ? "#D0FFE8"+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps) : "") +
-				"\n#C0E0F0" + GetTimeString(tim.GetPlayerTime(carId))+
+				"\n#C0E0F0" + StrTime(tim.GetPlayerTime(carId))+
 				(cur ? String("  ")+ (diff > 0.f ? "#80E0FF+" : "#60FF60-") + fToStr(fabs(diff),2,4) : "")+
 				h.sTimes);
 	}
@@ -645,7 +645,7 @@ void CHud::UpdateHUD(int carId, float time)
 //---------------------------------------------------------------------------------------------------------------
 //  Update HUD rotated elems - for carId, in baseCarId's space
 //---------------------------------------------------------------------------------------------------------------
-void CHud::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
+void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 {
 	//if (carId == -1)  return;
 	int b = baseCarId, c = carId;

@@ -204,14 +204,14 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 			case key(F7):		// Times
 				if (shift)
-				{	WP wp = chOpponents;  ChkEv(show_opponents);  hud->ShowHUD();  }
+				{	WP wp = chOpponents;  ChkEv(show_opponents);  hud->Show();  }
 				else if (!ctrl)
-				{	WP wp = chTimes;  ChkEv(show_times);  hud->ShowHUD();  }
+				{	WP wp = chTimes;  ChkEv(show_times);  hud->Show();  }
 				return false;
 
 			case key(F8):		// car debug bars
 				if (ctrl)
-				{	WP wp = chDbgB;  ChkEv(car_dbgbars);   hud->ShowHUD();  }
+				{	WP wp = chDbgB;  ChkEv(car_dbgbars);   hud->Show();  }
 				else		// Minimap
 				if (!shift)
 				{	WP wp = chMinimp;  ChkEv(trackmap);
@@ -221,13 +221,13 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 			case key(F9):
 				if (ctrl)
-				{	WP wp = chTireVis;  ChkEv(car_tirevis);  hud->DestroyHUD();  hud->CreateHUD();  }
+				{	WP wp = chTireVis;  ChkEv(car_tirevis);  hud->Destroy();  hud->Create();  }
 				else
 				if (alt)	// car debug surfaces
-				{	WP wp = chDbgS;  ChkEv(car_dbgsurf);  hud->ShowHUD();  }
+				{	WP wp = chDbgS;  ChkEv(car_dbgsurf);  hud->Show();  }
 				else
 				if (shift)	// car debug text
-				{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  hud->ShowHUD();  }
+				{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  hud->Show();  }
 				else		// graphs
 				{	WP wp = chGraphs;  ChkEv(show_graphs);
 					for (int i=0; i < graphs.size(); ++i)
@@ -237,7 +237,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 			case key(F11):
 				if (shift)	// profiler times
-				{	WP wp = chProfTxt;  ChkEv(profilerTxt);  hud->ShowHUD();  }
+				{	WP wp = chProfTxt;  ChkEv(profilerTxt);  hud->Show();  }
 				else
 				if (!ctrl)  // Fps
 				{	WP wp = chFps;  ChkEv(show_fps);

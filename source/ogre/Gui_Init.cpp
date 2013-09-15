@@ -171,7 +171,7 @@ void App::InitGui()
 
 	//  hud
 	Chk("Digits", chkDigits, pSet->show_digits);
-	Chk("Gauges", chkGauges, pSet->show_gauges);  hud->ShowHUD();//
+	Chk("Gauges", chkGauges, pSet->show_gauges);  hud->Show();//
 	Chk("Arrow", chkArrow, pSet->check_arrow);
 	Chk("ChkBeam", chkBeam, pSet->check_beam);
 	

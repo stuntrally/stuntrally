@@ -352,7 +352,7 @@ bool App::frameStart(Real time)
 		
 		// align checkpoint arrow
 		// move in front of camera
-		if (pSet->check_arrow && hud->arrowNode && !bRplPlay)
+		if (pSet->check_arrow && hud->arrow.node && !bRplPlay)
 		{
 			Vector3 camPos = carModels.front()->fCam->mCamera->getPosition();
 			Vector3 dir = carModels.front()->fCam->mCamera->getDirection();
@@ -360,17 +360,17 @@ bool App::frameStart(Real time)
 			Vector3 up = carModels.front()->fCam->mCamera->getUp();
 			up.normalise();
 			Vector3 arrowPos = camPos + 10.0f * dir + 3.5f*up;
-			hud->arrowNode->setPosition(arrowPos);
+			hud->arrow.node->setPosition(arrowPos);
 			
 			// animate
 			if (bFirstFrame) // 1st frame: dont animate
-				hud->arrowAnimCur = hud->arrowAnimEnd;
+				hud->arrow.qCur = hud->arrow.qEnd;
 			else
-				hud->arrowAnimCur = Quaternion::Slerp(time*5, hud->arrowAnimStart, hud->arrowAnimEnd, true);
-			hud->arrowRotNode->setOrientation(hud->arrowAnimCur);
+				hud->arrow.qCur = Quaternion::Slerp(time*5, hud->arrow.qStart, hud->arrow.qEnd, true);
+			hud->arrow.nodeRot->setOrientation(hud->arrow.qCur);
 			
 			// look down -y a bit so we can see the arrow better
-			hud->arrowRotNode->pitch(Degree(-20), SceneNode::TS_LOCAL); 
+			hud->arrow.nodeRot->pitch(Degree(-20), SceneNode::TS_LOCAL); 
 		}
 
 		//  cam info text

@@ -2,6 +2,7 @@
 #include "common/Defines.h"
 #include "CGame.h"
 #include "CHud.h"
+#include <LinearMath/btQuickprof.h>
 using namespace Ogre;
 
 
@@ -10,8 +11,6 @@ CHud::CHud(App* ap1, SETTINGS* pSet1)
 
 	,asp(1)//,  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
 	,scX(1),scY(1), minX(0),maxX(0), minY(0),maxY(0)
-
-	,arrowNode(0),arrowRotNode(0)
 	,ndLine(0)
 
 	,txMsg(0), bckMsg(0)
@@ -26,6 +25,10 @@ CHud::CHud(App* ap1, SETTINGS* pSet1)
 	for (int i=0; i<4; ++i)
 	{	ndTireVis[i]=0;  moTireVis[i]=0;  }
 }
+
+CHud::Arrow::Arrow()
+	:node(0),nodeRot(0)
+{	}
 
 
 ///  HUD utilities
@@ -67,7 +70,7 @@ ManualObject* CHud::Create2D(const String& mat, SceneManager* sceneMgr,
 
 
 //  hud util
-String CHud::GetTimeString(float time)
+String CHud::StrTime(float time)
 {
 	int min = (int) time / 60;
 	float secs = time - min*60;
@@ -80,7 +83,7 @@ String CHud::GetTimeString(float time)
 	}else
 		return "-:--.--";
 }
-String CHud::GetTimeShort(float time)
+String CHud::StrTime2(float time)
 {
 	int min = (int) time / 60;
 	float secs = time - min*60;
