@@ -437,6 +437,7 @@ void App::newPoses(float time)  // time only for camera update
 								carM->UpdNextCheck();
 								//  save car pos and rot
 								carM->pCar->SavePosAtCheck();
+								carM->updTimes = true;
 							}
 							else
 							if (carM->iInChk != carM->iCurChk)
@@ -494,7 +495,7 @@ void App::updatePoses(float time)
 			bool newVisible = bGhostVis && bGhostCar || bGhTrkVis;
 			
 			if (loading)
-				carM->setVisible(true);
+				carM->setVisible(true);  //!carM->isGhost());
 			else
 			{	//  hide ghost when close to player
 				float d = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());

@@ -412,7 +412,7 @@ public:
 	void ChampsListUpdate(), ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
 	void ChallsListUpdate(), ChallFillStageInfo(bool finished), ChallengeAdvance(float timeCur);
 	void btnChampInfo(WP), chkChampRev(WP), UpdChampTabVis();
-	void ToolGhosts(),ToolGhostsConv();  //  _Tools_
+	void ToolGhosts(),ToolGhostsConv(),ToolPresets();  //  _Tools_
 
 	//  chall util
 	Ogre::String StrChallCars(const Chall& ch);
@@ -514,7 +514,8 @@ public:
 	//  sliders  -----------------------------------------
 	SLV(Particles);  SLV(Trails);
 	SLV(ReflSkip);  SLV(ReflSize);  SLV(ReflFaces);  SLV(ReflDist);  SLV(ReflMode); // refl
-	SLV(SizeGaug);  SLV(TypeGaug);  SLV(SizeMinimap);  SLV(SizeArrow);  SLV(ZoomMinimap);
+	SLV(SizeGaug);  SLV(TypeGaug);  SLV(LayoutGaug);
+	SLV(SizeMinimap);  SLV(SizeArrow);  SLV(ZoomMinimap);
 	SLV(CountdownTime);  // view
 	SLV(DbgTxtClr);  SLV(DbgTxtCnt);
 	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolSusp);  SLV(VolEnv);  // sounds

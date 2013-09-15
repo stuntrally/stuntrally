@@ -39,7 +39,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,valTrees(0), valGrass(0), valTreesDist(0), valGrassDist(0)  // paged
 	,valReflSkip(0), valReflSize(0), valReflFaces(0), valReflDist(0), valWaterSize(0)  // refl
 	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0)//, valShadowFilter(0)  // shadow
-	,valSizeGaug(0),valTypeGaug(0), valSizeMinimap(0), valZoomMinimap(0)
+	,valSizeGaug(0),valTypeGaug(0),valLayoutGaug(0), valSizeMinimap(0), valZoomMinimap(0)
 	,valCountdownTime(0), valDbgTxtClr(0),valDbgTxtCnt(0)
 	,cmbGraphs(0), valGraphsType(0) //,slGraphT(0)  // view
 	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0),chDbgS(0), chBlt(0),chBltTxt(0), chTireVis(0)

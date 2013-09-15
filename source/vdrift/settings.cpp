@@ -80,11 +80,12 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "gui.champ_tab", champ_type);		Param(c,w, "gui.tut_tab", tut_type);
 	Param(c,w, "gui.chall_tab", chall_type);		Param(c,w, "gui.champ_info", champ_info);
 
-	Param(c,w, "hud_size.gauges", size_gauges);			Param(c,w, "hud_size.minimap", size_minimap);
+	Param(c,w, "hud_size.gauges", size_gauges);			Param(c,w, "hud_size.arrow", size_arrow);
+	Param(c,w, "hud_size.minimap", size_minimap);
 	Param(c,w, "hud_size.mini_zoom", zoom_minimap);		Param(c,w, "hud_size.mini_zoomed", mini_zoomed);
 	Param(c,w, "hud_size.mini_rotated", mini_rotated);	Param(c,w, "hud_size.mini_terrain", mini_terrain);
 	Param(c,w, "hud_size.mini_border", mini_border);
-	Param(c,w, "hud_size.arrow", size_arrow);			Param(c,w, "hud_size.gauges_type", gauges_type);
+	Param(c,w, "hud_size.gauges_type", gauges_type);	Param(c,w, "hud_size.gauges_layout", gauges_layout);
 
 	//  graphics
 	Param(c,w, "graph_detail.anisotropy", anisotropy);		Param(c,w, "graph_detail.view_dist", view_distance);
@@ -178,7 +179,8 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,car_dbgtxtclr(0), car_dbgtxtcnt(0), car_tirevis(0)
 	,size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0)
 	,mini_zoomed(0), mini_rotated(1), mini_terrain(0), mini_border(1)
-	,check_arrow(0),size_arrow(0.2), check_beam(1),  gauges_type(1),graphs_type(Gh_Fps)
+	,check_arrow(0),size_arrow(0.2), check_beam(1)
+	,gauges_type(1),gauges_layout(1), graphs_type(Gh_Fps)
 	,tracks_view(0), tracks_sort(0), tracks_sortup(1), cars_sort(1), cars_sortup(1)
 	,champ_type(0),tut_type(0),chall_type(0), car_ed_tab(0), champ_info(1)
 	//  graphics

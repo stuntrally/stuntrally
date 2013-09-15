@@ -95,6 +95,12 @@ void App::createScene()
 	exit(0);
 	#endif
 
+	///  _Tool_ presets ..............
+	#if 0
+	ToolPresets();
+	exit(0);
+	#endif
+
 
 	//  gui  * * *
 	if (pSet->startInMain)

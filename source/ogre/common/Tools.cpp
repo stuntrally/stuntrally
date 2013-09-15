@@ -285,7 +285,7 @@ void App::ToolGhosts()
 ///  _Tool_ convert ghosts to track's ghosts (less size and frame data)
 //  put original ghosts into  data/ghosts/original/*_ES.rpl
 //  (ES, normal sim, 1st lap, no boost, use rewind with _Tool_ go back time)
-//  time should be like in times.xml or less
+//  time should be like in tracks.ini or less (last T= )
 ///............................................................................................................................
 void App::ToolGhostsConv()
 {
@@ -365,6 +365,40 @@ void App::ToolGhostsConv()
 		if (!PATHMANAGER::FileExists(fsave))
 			LogO("MISSING for track: "+track);
 	}
+}
+
+//  ed presets
+///............................................................................................................................
+void App::ToolPresets()
+{
+	QTimer ti;  ti.update();  /// time
+	LogO("ALL tracks presets ---------\n");
+
+	std::map<Ogre::String, TerLayer> ter;
+	for (int i=0; i < tracksXml.trks.size(); ++i)
+	{	//  foreach track
+		string trk = tracksXml.trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
+		/**/if (!(trk[0] >= 'A' && trk[0] <= 'Z'))  continue;
+		/**/if (StringUtil::startsWith(trk,"test"))  continue;
+
+		Scene sc;  sc.LoadXml(path +"scene.xml");
+		SplineRoad rd(pGame);  rd.LoadFile(path +"road.xml");
+		LogO("Track: "+trk);
+
+		for (int l=0; l < sc.td.layers.size(); ++l)
+		{
+			const TerLayer& la = sc.td.layersAll[sc.td.layers[l]];
+			LogO(la.texFile+"  dust "+fToStr(la.dust,2,4)+" "+fToStr(la.dustS,2,4)+"  mud "+fToStr(la.mud,2,4)+
+				"  trl "+fToStr(la.tclr.r,2,4)+" "+fToStr(la.tclr.g,2,4)+" "+fToStr(la.tclr.b,2,4)+" "+fToStr(la.tclr.a,2,4));
+			ter[la.texFile] = la;
+		}
+		//sc.layerRoad.texFile
+	}
+	LogO("ALL ter ---------");
+	LogO(toStr(ter.size()));
+	ti.update();  float dt = ti.dt * 1000.f;  /// time
+	LogO(String("::: Time ALL tracks: ") + fToStr(dt,0,3) + " ms");
+	LogO("ALL tracks presets ---------");
 }
 
 #endif

@@ -273,9 +273,14 @@ void App::slSizeGaug(SL)
 	if (valSizeGaug)	valSizeGaug->setCaption(fToStr(v,3,4));
 }
 void App::slTypeGaug(SL)
-{
-	int v = val * 5.f +slHalf;		if (bGI)  {  pSet->gauges_type = v;  DestroyHUD();  CreateHUD();  }
+{	int old = pSet->gauges_type;
+	int v = val * 5.f +slHalf;		if (bGI && v != old)  {  pSet->gauges_type = v;  DestroyHUD();  CreateHUD();  }
 	if (valTypeGaug)	valTypeGaug->setCaption(toStr(v));
+}
+void App::slLayoutGaug(SL)
+{	int old = pSet->gauges_layout;
+	int v = val * 2.0f +slHalf;		if (bGI && v != old)  {  pSet->gauges_layout = v;  DestroyHUD();  CreateHUD();  }
+	if (valLayoutGaug)	valLayoutGaug->setCaption(toStr(v));
 }
 void App::slSizeArrow(SL)
 {
