@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "common/Defines.h"
-#include "OgreGame.h"
+#include "CGame.h"
+#include "CHud.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
 
@@ -292,7 +293,7 @@ void App::newPoses(float time)  // time only for camera update
 				{
 					int size = replay.GetNumFrames() * sizeof(ReplayFrame);
 					std::string s = fToStr( float(size)/1000000.f, 2,5);
-					String ss = String( TR("#{RplRecTime}: ")) + GetTimeString(replay.GetTimeLength()) + TR("   #{RplSize}: ") + s + TR(" #{UnitMB}");
+					String ss = String( TR("#{RplRecTime}: ")) + CHud::StrTime(replay.GetTimeLength()) + TR("   #{RplSize}: ") + s + TR(" #{UnitMB}");
 					valRplName2->setCaption(ss);
 				}
 			}
@@ -309,10 +310,10 @@ void App::newPoses(float time)  // time only for camera update
 		{
 			// checkpoint arrow  --------------------------------------
 			if (pSet->check_arrow && carM->eType == CarModel::CT_LOCAL
-			  && !bRplPlay && arrowNode && road && road->mChks.size()>0)
+			  && !bRplPlay && hud->arrow.node && road && road->mChks.size()>0)
 			{
 				// set animation start to old orientation
-				arrowAnimStart = arrowAnimCur;
+				hud->arrow.qStart = hud->arrow.qCur;
 				
 				// game start: no animation
 				bool noAnim = carM->iNumChks == 0;
@@ -334,12 +335,12 @@ void App::newPoses(float time)  // time only for camera update
 
 				const bool valid = !quat.isNaN();
 				if (valid)
-				{	if (noAnim) arrowAnimStart = quat;
-					arrowAnimEnd = quat;
+				{	if (noAnim)  hud->arrow.qStart = quat;
+					hud->arrow.qEnd = quat;
 				
 					// set arrow color (wrong direction: red arrow)
 					// calc angle towards cam
-					Real angle = (arrowAnimCur.zAxis().dotProduct(carM->fCam->mCamera->getOrientation().zAxis())+1)/2.0f;
+					Real angle = (hud->arrow.qCur.zAxis().dotProduct(carM->fCam->mCamera->getOrientation().zAxis())+1)/2.0f;
 					// set color in material
 
 					// green: 0.0 1.0 0.0     0.0 0.4 0.0
@@ -349,8 +350,8 @@ void App::newPoses(float time)  // time only for camera update
 
 					sh::Vector3* v1 = new sh::Vector3(col1.x, col1.y, col1.z);
 					sh::Vector3* v2 = new sh::Vector3(col2.x, col2.y, col2.z);
-					sh::Factory::getInstance ().setSharedParameter ("arrowColour1", sh::makeProperty <sh::Vector3>(v1));
-					sh::Factory::getInstance ().setSharedParameter ("arrowColour2", sh::makeProperty <sh::Vector3>(v2));
+					sh::Factory::getInstance().setSharedParameter("arrowColour1", sh::makeProperty <sh::Vector3>(v1));
+					sh::Factory::getInstance().setSharedParameter("arrowColour2", sh::makeProperty <sh::Vector3>(v2));
 				}
 			}
 			
@@ -437,6 +438,7 @@ void App::newPoses(float time)  // time only for camera update
 								carM->UpdNextCheck();
 								//  save car pos and rot
 								carM->pCar->SavePosAtCheck();
+								carM->updTimes = true;
 							}
 							else
 							if (carM->iInChk != carM->iCurChk)
@@ -494,7 +496,7 @@ void App::updatePoses(float time)
 			bool newVisible = bGhostVis && bGhostCar || bGhTrkVis;
 			
 			if (loading)
-				carM->setVisible(true);
+				carM->setVisible(true);  //!carM->isGhost());
 			else
 			{	//  hide ghost when close to player
 				float d = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
@@ -528,7 +530,7 @@ void App::updatePoses(float time)
 		if (carM->pNickTxt && carM->pMainNode)
 		{
 			Camera* cam = playerCar->fCam->mCamera;  //above car 1m
-			Vector3 p = projectPoint(cam, carM->pMainNode->getPosition() + Vector3(0,1.f,0));
+			Vector3 p = hud->projectPoint(cam, carM->pMainNode->getPosition() + Vector3(0,1.f,0));
 			p.x = p.x * mSplitMgr->mDims[0].width * 0.5f;  //1st viewport dims
 			p.y = p.y * mSplitMgr->mDims[0].height * 0.5f;
 			carM->pNickTxt->setPosition(p.x-40, p.y-16);  //center doesnt work
@@ -542,8 +544,8 @@ void App::updatePoses(float time)
 		double pos = pGame->timer.GetPlayerTime(0);
 		float len = replay.GetTimeLength();
 		if (valRplPerc)  valRplPerc->setCaption(fToStr(pos/len*100.f, 1,4)+" %");
-		if (valRplCur)  valRplCur->setCaption(GetTimeString(pos));
-		if (valRplLen)  valRplLen->setCaption(GetTimeString(len));
+		if (valRplCur)  valRplCur->setCaption(CHud::StrTime(pos));
+		if (valRplLen)  valRplLen->setCaption(CHud::StrTime(len));
 
 		if (slRplPos)
 		{	float v = pos/len;  slRplPos->setValue(v);  }

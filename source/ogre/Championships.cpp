@@ -2,7 +2,8 @@
 #include "common/Defines.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
-#include "OgreGame.h"
+#include "CGame.h"
+#include "CHud.h"
 #include "../road/Road.h"
 #include "common/MultiList2.h"
 
@@ -58,7 +59,7 @@ void App::ChampsListUpdate()
 			liChamps->setSubItemNameAt(2,l, clrsDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
 
 			liChamps->setSubItemNameAt(3,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ iToStr(ntrks,3));
-			liChamps->setSubItemNameAt(4,l, clrsDiff[std::min(8,int(ch.time/3.f/60.f))]+" "+ GetTimeShort(ch.time));
+			liChamps->setSubItemNameAt(4,l, clrsDiff[std::min(8,int(ch.time/3.f/60.f))]+" "+ CHud::StrTime2(ch.time));
 			liChamps->setSubItemNameAt(5,l, ct == 0 || ct == ntrks ? "" :
 				clr+ fToStr(100.f * ct / ntrks,0,3)+" %");
 
@@ -106,7 +107,7 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 
 	s1 += "\n";  s2 += "\n";
 	clr = clrsDiff[std::min(8,int(ch.time/3.f/60.f))];
-	s1 += TR("#80F0E0#{Time} [m:s.]\n"); s2 += "#C0FFE0"+clr+ GetTimeShort(ch.time)+"\n";
+	s1 += TR("#80F0E0#{Time} [m:s.]\n"); s2 += "#C0FFE0"+clr+ CHud::StrTime2(ch.time)+"\n";
 
 	s1 += "\n\n";  s2 += "\n\n";
 	int cur = progress[p].chs[pos].curTrack, all = champs.all[pos].trks.size();

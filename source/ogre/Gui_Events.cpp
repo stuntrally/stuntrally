@@ -2,7 +2,8 @@
 #include "common/Defines.h"
 #include "../vdrift/settings.h"
 #include "../vdrift/game.h"
-#include "OgreGame.h"
+#include "CGame.h"
+#include "CHud.h"
 #include "SplitScreen.h"
 #include "common/Gui_Def.h"
 #include "common/Slider.h"
@@ -70,7 +71,7 @@ void App::chkDynObjects(WP wp){		ChkEv(gui.dyn_objects);		}
 //  boost, flip
 void App::comboBoost(CMB)
 {
-	pSet->gui.boost_type = val;  ShowHUD();
+	pSet->gui.boost_type = val;  hud->Show();
 }
 void App::comboFlip(CMB)
 {
@@ -269,19 +270,24 @@ void App::recreateReflections()
 //  [View] size
 void App::slSizeGaug(SL)
 {
-	float v = 0.1f + 0.15f * val;	if (bGI)  {  pSet->size_gauges = v;  SizeHUD(true);  }
+	float v = 0.1f + 0.15f * val;	if (bGI)  {  pSet->size_gauges = v;  hud->Size(true);  }
 	if (valSizeGaug)	valSizeGaug->setCaption(fToStr(v,3,4));
 }
 void App::slTypeGaug(SL)
-{
-	int v = val * 5.f +slHalf;		if (bGI)  {  pSet->gauges_type = v;  DestroyHUD();  CreateHUD();  }
+{	int old = pSet->gauges_type;
+	int v = val * 5.f +slHalf;		if (bGI && v != old)  {  pSet->gauges_type = v;  hud->Destroy();  hud->Create();  }
 	if (valTypeGaug)	valTypeGaug->setCaption(toStr(v));
+}
+void App::slLayoutGaug(SL)
+{	int old = pSet->gauges_layout;
+	int v = val * 2.0f +slHalf;		if (bGI && v != old)  {  pSet->gauges_layout = v;  hud->Destroy();  hud->Create();  }
+	if (valLayoutGaug)	valLayoutGaug->setCaption(toStr(v));
 }
 void App::slSizeArrow(SL)
 {
 	float v = val;	if (bGI)  {  pSet->size_arrow = v;  }
 	if (valSizeArrow)	valSizeArrow->setCaption(fToStr(v,3,4));
-	if (arrowNode) arrowRotNode->setScale(v/2.f, v/2.f, v/2.f);
+	if (hud->arrow.nodeRot)  hud->arrow.nodeRot->setScale(v/2.f, v/2.f, v/2.f);
 }
 void App::slCountdownTime(SL)
 {
@@ -292,12 +298,12 @@ void App::slCountdownTime(SL)
 //  minimap
 void App::slSizeMinimap(SL)
 {
-	float v = 0.05f + 0.25f * val;	if (bGI)  {  pSet->size_minimap = v;  SizeHUD(true);  }
+	float v = 0.05f + 0.25f * val;	if (bGI)  {  pSet->size_minimap = v;  hud->Size(true);  }
 	if (valSizeMinimap)  valSizeMinimap->setCaption(fToStr(v,3,4));
 }
 void App::slZoomMinimap(SL)
 {
-	float v = 1.f + 9.f * powf(val, 2.f);	if (bGI)  {  pSet->zoom_minimap = v;  SizeHUD(true);  }
+	float v = 1.f + 9.f * powf(val, 2.f);	if (bGI)  {  pSet->zoom_minimap = v;  hud->Size(true);  }
 	if (valZoomMinimap)  valZoomMinimap->setCaption(fToStr(v,3,4));
 }
 
@@ -372,11 +378,11 @@ void App::toggleWireframe()
 	if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
 }
 //  hud
-void App::chkDigits(WP wp){ 		ChkEv(show_digits);  ShowHUD();  }
-void App::chkGauges(WP wp){			ChkEv(show_gauges);	 ShowHUD();  }
+void App::chkDigits(WP wp){ 		ChkEv(show_digits);  hud->Show();  }
+void App::chkGauges(WP wp){			ChkEv(show_gauges);	 hud->Show();  }
 
-void App::radKmh(WP wp){	bRkmh->setStateSelected(true);  bRmph->setStateSelected(false);  pSet->show_mph = false;  SizeHUD(true);  }
-void App::radMph(WP wp){	bRkmh->setStateSelected(false);  bRmph->setStateSelected(true);  pSet->show_mph = true;   SizeHUD(true);  }
+void App::radKmh(WP wp){	bRkmh->setStateSelected(true);  bRmph->setStateSelected(false);  pSet->show_mph = false;  hud->Size(true);  }
+void App::radMph(WP wp){	bRkmh->setStateSelected(false);  bRmph->setStateSelected(true);  pSet->show_mph = true;   hud->Size(true);  }
 
 void App::radSimEasy(WP){	bRsimEasy->setStateSelected(true);  bRsimNorm->setStateSelected(false);
 	pSet->gui.sim_mode = "easy";	bReloadSim = true;
@@ -388,29 +394,29 @@ void App::radSimNorm(WP){	bRsimEasy->setStateSelected(false);  bRsimNorm->setSta
 }
 
 void App::chkArrow(WP wp){			ChkEv(check_arrow);
-	if (arrowRotNode) arrowRotNode->setVisible(pSet->check_arrow);
+	if (hud->arrow.nodeRot)  hud->arrow.nodeRot->setVisible(pSet->check_arrow);
 }
 void App::chkBeam(WP wp){			ChkEv(check_beam);
 	for (int i=0; i < carModels.size(); ++i)  carModels[i]->ShowNextChk(pSet->check_beam);
 }
 
 void App::chkMinimap(WP wp){		ChkEv(trackmap);
-	for (int c=0; c < hud.size(); ++c)
-		if (hud[c].ndMap)  hud[c].ndMap->setVisible(pSet->trackmap);
+	for (int c=0; c < hud->hud.size(); ++c)
+		if (hud->hud[c].ndMap)  hud->hud[c].ndMap->setVisible(pSet->trackmap);
 }
-void App::chkMiniZoom(WP wp){		ChkEv(mini_zoomed);		UpdMiniTer();  }
+void App::chkMiniZoom(WP wp){		ChkEv(mini_zoomed);		hud->UpdMiniTer();  }
 void App::chkMiniRot(WP wp){		ChkEv(mini_rotated);	}
-void App::chkMiniTer(WP wp){		ChkEv(mini_terrain);	UpdMiniTer();  }
-void App::chkMiniBorder(WP wp){		ChkEv(mini_border);		UpdMiniTer();  }
+void App::chkMiniTer(WP wp){		ChkEv(mini_terrain);	hud->UpdMiniTer();  }
+void App::chkMiniBorder(WP wp){		ChkEv(mini_border);		hud->UpdMiniTer();  }
 
 void App::chkReverse(WP wp){		ChkEv(gui.trackreverse);	ReadTrkStats();  }
 
-void App::chkTimes(WP wp){			ChkEv(show_times);		ShowHUD();	}
-void App::chkOpponents(WP wp){		ChkEv(show_opponents);	ShowHUD();	}
+void App::chkTimes(WP wp){			ChkEv(show_times);		hud->Show();	}
+void App::chkOpponents(WP wp){		ChkEv(show_opponents);	hud->Show();	}
 void App::chkOpponentsSort(WP wp){	ChkEv(opplist_sort);	}
 
 //void App::chkRacingLine(WP wp){		ChkEv(racingline);	if (ndLine)  ndLine->setVisible(pSet->racingline);	}
-void App::chkCamInfo(WP wp){		ChkEv(show_cam);	ShowHUD();	}
+void App::chkCamInfo(WP wp){		ChkEv(show_cam);	hud->Show();	}
 void App::chkCamTilt(WP wp){		ChkEv(cam_tilt);	}
 
 //  other
@@ -421,10 +427,10 @@ void App::chkProfilerTxt(WP wp){	ChkEv(profilerTxt);	}
 void App::chkBltDebug(WP wp){		ChkEv(bltDebug);	}
 void App::chkBltProfilerTxt(WP wp){	ChkEv(bltProfilerTxt);	}
 
-void App::chkCarDbgBars(WP wp){		ChkEv(car_dbgbars);  ShowHUD();  }
-void App::chkCarDbgTxt(WP wp){		ChkEv(car_dbgtxt);   ShowHUD();  }
-void App::chkCarDbgSurf(WP wp){		ChkEv(car_dbgsurf);  ShowHUD();  }
-void App::chkCarTireVis(WP wp){		ChkEv(car_tirevis);  DestroyHUD();  CreateHUD();  }
+void App::chkCarDbgBars(WP wp){		ChkEv(car_dbgbars);  hud->Show();  }
+void App::chkCarDbgTxt(WP wp){		ChkEv(car_dbgtxt);   hud->Show();  }
+void App::chkCarDbgSurf(WP wp){		ChkEv(car_dbgsurf);  hud->Show();  }
+void App::chkCarTireVis(WP wp){		ChkEv(car_tirevis);  hud->Destroy();  hud->Create();  }
 
 void App::chkGraphs(WP wp){			ChkEv(show_graphs);
 	for (int i=0; i < graphs.size(); ++i)

@@ -1703,6 +1703,14 @@
 				Name="Game"
 				>
 				<File
+					RelativePath="..\source\ogre\CGame.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\CGame.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\ogre\Challenges.cpp"
 					>
 				</File>
@@ -1712,6 +1720,14 @@
 				</File>
 				<File
 					RelativePath="..\source\ogre\Championships.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\CHud.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\CHud.h"
 					>
 				</File>
 				<File
@@ -1744,14 +1760,6 @@
 				</File>
 				<File
 					RelativePath="..\source\ogre\common\MyGUI_D3D11.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\OgreGame.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\OgreGame.h"
 					>
 				</File>
 				<File

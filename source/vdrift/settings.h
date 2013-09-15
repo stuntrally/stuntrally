@@ -41,7 +41,7 @@ public:
 		car_dbgbars, car_dbgtxt, car_dbgsurf, car_tirevis,
 		ogre_dialog, show_graphs;
 	float size_gauges, size_minimap, size_arrow, zoom_minimap;
-	int gauges_type;  eGraphType graphs_type;
+	int gauges_type, gauges_layout;  eGraphType graphs_type;
 	int car_dbgtxtclr, car_dbgtxtcnt;
 	//  gui
 	bool tracks_sortup, cars_sortup, champ_info;

@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "common/Defines.h"
-#include "OgreGame.h"
+#include "CGame.h"
+#include "CHud.h"
 #include "../vdrift/game.h"
-#include "../vdrift/quickprof.h"
 #include "../road/Road.h"
 #include "SplitScreen.h"
 #include "common/RenderConst.h"
@@ -23,12 +23,12 @@ using namespace MyGUI;
 
 ///  HUD resize
 //---------------------------------------------------------------------------------------------------------------
-void App::SizeHUD(bool full, Viewport* vp)
+void CHud::Size(bool full, Viewport* vp)
 {
-	float wx = mWindow->getWidth(), wy = mWindow->getHeight();
+	float wx = ap->mWindow->getWidth(), wy = ap->mWindow->getHeight();
 	asp = wx/wy;
-	bool vdrSpl = sc->vdr && pSet->game.local_players > 1;
-	int plr = (int)carModels.size() -(isGhost2nd?1:0);  // others
+	bool vdrSpl = ap->sc->vdr && pSet->game.local_players > 1;
+	int plr = (int)ap->carModels.size() -(ap->isGhost2nd?1:0);  // others
 
 	int cnt = pSet->game.local_players;
 	#ifdef DEBUG
@@ -38,7 +38,7 @@ void App::SizeHUD(bool full, Viewport* vp)
 	for (int c=0; c < cnt; ++c)
 	{
 		Hud& h = hud[c];
-		const SplitScreenManager::VPDims& dim = mSplitMgr->mDims[c];
+		const SplitScreenManager::VPDims& dim = ap->mSplitMgr->mDims[c];
 		//  gauges
 		Real xcRpm,ycRpm, xcVel,ycVel, ygMax, xBFuel;  // -1..1
 		if (h.ndGauges)
@@ -98,7 +98,7 @@ void App::SizeHUD(bool full, Viewport* vp)
 			h.icoBFuel->setPosition(bx-63+54,by-140-5+2);
 
 			//  times
-			bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient;
+			bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || ap->mClient;
 			int tx = xMin + 20, ty = yMin + 40;  // above minimap
 			h.bckTimes->setPosition(tx,ty);
 			tx = 24;  ty = 4;  //(hasLaps ? 16 : 4);
@@ -135,20 +135,21 @@ void App::SizeHUD(bool full, Viewport* vp)
 ///  HUD create
 ///---------------------------------------------------------------------------------------------------------------
 
-void App::CreateHUD()
+void CHud::Create()
 {
-	if (carModels.size() == 0)  return;
+	//Destroy();  //
+	if (ap->carModels.size() == 0)  return;
 
 	QTimer ti;  ti.update();  /// time
 
-	SceneManager* scm = mSplitMgr->mGuiSceneMgr;
+	SceneManager* scm = ap->mSplitMgr->mGuiSceneMgr;
 	if (hud[0].moMap || hud[0].txVel || hud[0].bckTimes)
 		LogO("CreateHUD: Hud exists !");
 
-	CreateGraphs();
+	ap->CreateGraphs();
 		
 	//  minimap from road img
-	int plr = mSplitMgr->mNumViewports;  // pSet->game.local_players;
+	int plr = ap->mSplitMgr->mNumViewports;  // pSet->game.local_players;
 	LogO("-- Create Hud  plrs="+toStr(plr));
 	asp = 1.f;
 
@@ -156,21 +157,21 @@ void App::CreateHUD()
 	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
 	Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
 
-	String path = bRplPlay ? 
-		PathListTrkPrv(replay.header.track_user, replay.header.track) :
-		PathListTrkPrv(pSet->game.track_user, pSet->game.track);
+	String path = ap->bRplPlay ? 
+		ap->PathListTrkPrv(ap->replay.header.track_user, ap->replay.header.track) :
+		ap->PathListTrkPrv(pSet->game.track_user, pSet->game.track);
 	const String sRoad = "road.png", sTer = "terrain.jpg", sGrp = "TrkMini";
 	resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
 	resMgr.unloadResourceGroup(sGrp);
 	resMgr.initialiseResourceGroup(sGrp);
 
-	if (sc->ter)
+	if (ap->sc->ter)
 	{	try {  texMgr.unload(sRoad);  texMgr.load(sRoad, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  }  catch(...) {  }
 		try {  texMgr.unload(sTer);   texMgr.load(sTer,  sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  }  catch(...) {  }
 	}
 
 	//if (terrain)
-	int cnt = std::min(6/**/, (int)carModels.size() -(isGhost2nd?1:0) );  // others
+	int cnt = std::min(6/**/, (int)ap->carModels.size() -(ap->isGhost2nd?1:0) );  // others
 	#ifdef DEBUG
 	assert(plr <= hud.size());
 	assert(cnt <= hud[0].vMoPos.size());
@@ -182,8 +183,8 @@ void App::CreateHUD()
 	{
 		String s = toStr(c);
 		Hud& h = hud[c];
-		if (sc->ter)
-		{	float t = sc->td.fTerWorldSize*0.5;
+		if (ap->sc->ter)
+		{	float t = ap->sc->td.fTerWorldSize*0.5;
 			minX = -t;  minY = -t;  maxX = t;  maxY = t;  }
 
 		float fMapSizeX = maxX - minX, fMapSizeY = maxY - minY;  // map size
@@ -200,14 +201,14 @@ void App::CreateHUD()
 		MaterialPtr mm = MaterialManager::getSingleton().getByName(sMat);
 		Pass* pass = mm->getTechnique(0)->getPass(0);
 		TextureUnitState* tus = pass->getTextureUnitState(0);
-		if (tus)  tus->setTextureName(sc->ter ? sRoad : "alpha.png");
+		if (tus)  tus->setTextureName(ap->sc->ter ? sRoad : "alpha.png");
 		tus = pass->getTextureUnitState(2);
-		if (tus)  tus->setTextureName(sc->ter ? sTer : "alpha.png");
+		if (tus)  tus->setTextureName(ap->sc->ter ? sTer : "alpha.png");
 		UpdMiniTer();
 		
-		float fHudSize = pSet->size_minimap * mSplitMgr->mDims[c].avgsize;
+		float fHudSize = pSet->size_minimap * ap->mSplitMgr->mDims[c].avgsize;
 		SceneNode* rt = scm->getRootSceneNode();
-		if (!sc->vdr)
+		if (!ap->sc->vdr)
 		{	h.ndMap = rt->createChildSceneNode(Vector3(0,0,0));
 			h.ndMap->attachObject(m);
 		}
@@ -237,7 +238,7 @@ void App::CreateHUD()
 
 		///  GUI
 		//  gear, vel text  -----------
-		h.parent = mGUI->createWidget<Widget>("",0,0,2560,1600,Align::Left,"Back","main"+s);
+		h.parent = ap->mGUI->createWidget<Widget>("",0,0,2560,1600,Align::Left,"Back","main"+s);
 
 		h.txGear = h.parent->createWidget<TextBox>("TextBox",
 			0,y, 160,116, Align::Left, "Gear"+s);  h.txGear->setVisible(false);
@@ -307,7 +308,7 @@ void App::CreateHUD()
 			0,y, 120,260, Align::Left, "TimT"+s);
 		h.txTimTxt->setFontName("font.22");  h.txTimTxt->setTextShadow(true);
 		h.txTimTxt->setInheritsAlpha(false);
-		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || pSet->game.chall_num >= 0 || mClient;
+		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || pSet->game.chall_num >= 0 || ap->mClient;
 		h.txTimTxt->setCaption(
 			(hasLaps ? String("#D0F8F0")+TR("#{TBLap}") : "")+
 			"\n#C0E0F0"+TR("#{TBTime}") + 
@@ -383,13 +384,13 @@ void App::CreateHUD()
 	}
 
 	//  camera info
-	txCamInfo = mGUI->createWidget<TextBox>("TextBox",
+	txCamInfo = ap->mGUI->createWidget<TextBox>("TextBox",
 		0,y, 800,100, Align::Left, "Back", "CamIT");  txCamInfo->setVisible(false);
 	txCamInfo->setFontName("font.20");  txCamInfo->setTextShadow(true);
 	txCamInfo->setTextColour(Colour(0.8,0.9,0.9));
 
 	//  chat msg  -----------
-	bckMsg = mGUI->createWidget<ImageBox>("ImageBox",
+	bckMsg = ap->mGUI->createWidget<ImageBox>("ImageBox",
 		0,y, 400,60, Align::Left, "Back", "MsgB");  bckMsg->setVisible(false);
 	bckMsg->setAlpha(0.8f);
 	bckMsg->setImageTexture("back_times.png");
@@ -403,18 +404,18 @@ void App::CreateHUD()
 	resMgr.removeResourceLocation(path, sGrp);
 	
 	//-  cars need update
-	for (int i=0; i < carModels.size(); ++i)
-		carModels[i]->updTimes = true;
+	for (int i=0; i < ap->carModels.size(); ++i)
+		ap->carModels[i]->updTimes = true;
 
 	
 	///  tire vis circles  + + + +
-	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
+	asp = float(ap->mWindow->getWidth())/float(ap->mWindow->getHeight());
 
 	if (pSet->car_tirevis)
 	{	SceneNode* rt = scm->getRootSceneNode();
 		for (int i=0; i < 4; ++i)
 		{
-			ManualObject* m = mSceneMgr->createManualObject();
+			ManualObject* m = ap->mSceneMgr->createManualObject();
 			m->setDynamic(true);
 			m->setUseIdentityProjection(true);
 			m->setUseIdentityView(true);
@@ -452,8 +453,8 @@ void App::CreateHUD()
 		ov[i].oS = ovr.getOverlayElement("S_"+s);	ov[i].oU = ovr.getOverlayElement("U_"+s);
 		ov[i].oX = ovr.getOverlayElement("X_"+s);
 	}
-	ShowHUD();  //_
-	bSizeHUD = true;
+	Show();  //_
+	ap->bSizeHUD = true;
 	//SizeHUD(true);
 	
 	ti.update();	/// time
@@ -465,11 +466,11 @@ void App::CreateHUD()
 
 //  HUD destroy
 //---------------------------------------------------------------------------------------------------------------
-App::OvrDbg::OvrDbg() :
+CHud::OvrDbg::OvrDbg() :
 	oL(0),oR(0),oS(0), oU(0),oX(0)
 {	}
 
-App::Hud::Hud()
+CHud::Hud::Hud()
 	:parent(0)
 	,txTimTxt(0), txTimes(0), bckTimes(0),  sTimes("")
 	,bckOpp(0)
@@ -487,12 +488,12 @@ App::Hud::Hud()
 	,moMap(0),  ndMap(0)
 {
 	for (int i=0; i<3; ++i)  txOpp[i]=0;
-	vNdPos.resize(6,0); vMoPos.resize(6,0);
+	vNdPos.resize(6,0);  vMoPos.resize(6,0);
 }
 
-void App::DestroyHUD()
+void CHud::Destroy()
 {
-	SceneManager* scm = mSplitMgr->mGuiSceneMgr;
+	SceneManager* scm = ap->mSplitMgr->mGuiSceneMgr;
 	int i,c;
 	for (c=0; c < hud.size(); ++c)
 	{	Hud& h = hud[c];
@@ -509,7 +510,7 @@ void App::DestroyHUD()
 		Dest2(h.moNeedles,h.ndNeedles)
 
 		#define Dest(w)  \
-			if (w) {  mGUI->destroyWidget(w);  w = 0;  }
+			if (w) {  ap->mGUI->destroyWidget(w);  w = 0;  }
 		Dest(h.txGear)  Dest(h.txVel)  Dest(h.bckVel)
 		Dest(h.txAbs)  Dest(h.txTcs)  Dest(h.txCam)
 		
@@ -534,14 +535,14 @@ void App::DestroyHUD()
 
 //  HUD show/hide
 //---------------------------------------------------------------------------------------------------------------
-void App::ShowHUD(bool hideAll)
+void CHud::Show(bool hideAll)
 {
-	if (hideAll || iLoad1stFrames >= 0)  // still loading
+	if (hideAll || ap->iLoad1stFrames >= 0)  // still loading
 	{
 		if (ovCarDbg)  ovCarDbg->hide();
 		if (ovCarDbgTxt)  ovCarDbgTxt->hide();
 
-		bckFps->setVisible(false);
+		ap->bckFps->setVisible(false);
 		if (bckMsg)
 		{
 			txCamInfo->setVisible(false);
@@ -552,8 +553,8 @@ void App::ShowHUD(bool hideAll)
 				if (h.parent)
 					h.parent->setVisible(false);
 		}	}
-		hideMouse();
-		if (mWndRpl)  mWndRpl->setVisible(false);
+		ap->hideMouse();
+		if (ap->mWndRpl)  ap->mWndRpl->setVisible(false);
 		return;
 	}
 	//  this goes each frame..
@@ -564,11 +565,11 @@ void App::ShowHUD(bool hideAll)
 	show = pSet->car_dbgsurf;
 	if (ovCarDbgExt){  if (show)  ovCarDbgExt->show();  else  ovCarDbgExt->hide();  }
 
-	bckFps->setVisible(pSet->show_fps);
+	ap->bckFps->setVisible(pSet->show_fps);
 	if (bckMsg)
 	{
-		bool cam = pSet->show_cam && !isFocGui, times = pSet->show_times;
-		bool opp = pSet->show_opponents && (!sc->ter || road && road->getNumPoints() > 0);
+		bool cam = pSet->show_cam && !ap->isFocGui, times = pSet->show_times;
+		bool opp = pSet->show_opponents && (!ap->sc->ter || ap->road && ap->road->getNumPoints() > 0);
 		bool bfuel = pSet->game.boost_type == 1 || pSet->game.boost_type == 2;
 		bool bdmg = pSet->game.damage_type > 0;
 		txCamInfo->setVisible(cam);
@@ -594,15 +595,15 @@ void App::ShowHUD(bool hideAll)
 				h.txCam->setVisible(cam);
 		}	}
 	}
-	updMouse();
-	if (mWndRpl && !bLoading)  mWndRpl->setVisible(bRplPlay && bRplWnd);  //
+	ap->updMouse();
+	if (ap->mWndRpl && !ap->bLoading)  ap->mWndRpl->setVisible(ap->bRplPlay && ap->bRplWnd);  //
 }
 
-void App::ShowHUDvp(bool vp)	// todo: use vis mask ..
+void CHud::ShowVp(bool vp)	// todo: use vis mask ..
 {
 	// show/hide for render viewport / gui viewport
 	// first show everything
-	ShowHUD(false);  // todo: don't here
+	Show(false);  // todo: don't here
 	// now hide things we dont want
 	if (!vp)
 	{
@@ -616,118 +617,15 @@ void App::ShowHUDvp(bool vp)	// todo: use vis mask ..
 }
 
 
-//  HUD utils
-//---------------------------------------------------------------------------------------------------------------
-void App::UpdMiniTer()
+void CHud::CreateArrow()
 {
-	MaterialPtr mm = MaterialManager::getSingleton().getByName("circle_minimap");
-	Pass* pass = mm->getTechnique(0)->getPass(0);
-	if (!pass)  return;
-	try
-	{	Ogre::GpuProgramParametersSharedPtr par = pass->getFragmentProgramParameters();
-		if (par->_findNamedConstantDefinition("showTerrain",false))
-			par->setNamedConstant("showTerrain", pSet->mini_terrain && sc->ter ? 1.f : 0.f);
-		if (par->_findNamedConstantDefinition("showBorder",false))
-			par->setNamedConstant("showBorder", pSet->mini_border && sc->ter ? 1.f : 0.f);
-		if (par->_findNamedConstantDefinition("square",false))
-			par->setNamedConstant("square", pSet->mini_zoomed && sc->ter ? 0.f : 1.f);
-	}
-	catch(...){  }
-}
-
-
-Vector3 App::projectPoint(const Camera* cam, const Vector3& pos)
-{
-	Vector3 pos2D = cam->getProjectionMatrix() * (cam->getViewMatrix() * pos);
-
-	//Real x = std::min(1.f, std::max(0.f,  pos2D.x * 0.5f + 0.5f ));  // leave on screen edges
-	//Real y = std::min(1.f, std::max(0.f, -pos2D.y * 0.5f + 0.5f ));
-	Real x =  pos2D.x * 0.5f + 0.5f;
-	Real y = -pos2D.y * 0.5f + 0.5f;
-	bool out = !cam->isVisible(pos);
-
-	return Vector3(x * mWindow->getWidth(), y * mWindow->getHeight(), out ? -1.f : 1.f);
-}
-
-TextBox* App::CreateNickText(int carId, String text)
-{
-	TextBox* txt = mGUI->createWidget<TextBox>("TextBox",
-		100,100, 360,32, Align::Center, "Back", "NickTxt"+toStr(carId));
-	txt->setVisible(false);
-	txt->setFontHeight(28);  //par 24..32
-	txt->setTextShadow(true);  txt->setTextShadowColour(Colour::Black);
-	txt->setCaption(text);
-	return txt;
-}
-
-//  get color as text eg. #C0E0FF
-String App::StrClr(ColourValue c)
-{
-	char hex[16];
-	sprintf(hex, "#%02x%02x%02x", int(c.r * 255.f), int(c.g * 255.f), int(c.b * 255.f));
-	return String(hex);
-}
-
-
-///  Bullet profiling text
-//--------------------------------------------------------------------------------------------------------------
-
-void App::bltDumpRecursive(CProfileIterator* profileIterator, int spacing, std::stringstream& os)
-{
-	profileIterator->First();
-	if (profileIterator->Is_Done())
-		return;
-
-	float accumulated_time=0,parent_time = profileIterator->Is_Root() ? CProfileManager::Get_Time_Since_Reset() : profileIterator->Get_Current_Parent_Total_Time();
-	int i,j;
-	int frames_since_reset = CProfileManager::Get_Frame_Count_Since_Reset();
-	for (i=0;i<spacing;i++)	os << ".";
-	os << "----------------------------------\n";
-	for (i=0;i<spacing;i++)	os << ".";
-	std::string s = "Profiling: "+String(profileIterator->Get_Current_Parent_Name())+" (total running time: "+fToStr(parent_time,3)+" ms) ---\n";
-	os << s;
-	//float totalTime = 0.f;
-
-	int numChildren = 0;
-	
-	for (i = 0; !profileIterator->Is_Done(); i++,profileIterator->Next())
-	{
-		numChildren++;
-		float current_total_time = profileIterator->Get_Current_Total_Time();
-		accumulated_time += current_total_time;
-		float fraction = parent_time > SIMD_EPSILON ? (current_total_time / parent_time) * 100 : 0.f;
-
-		for (j=0;j<spacing;j++)	os << ".";
-		double ms = (current_total_time / (double)frames_since_reset);
-		s = toStr(i)+" -- "+profileIterator->Get_Current_Name()+" ("+fToStr(fraction,2)+" %) :: "+fToStr(ms,3)+" ms / frame ("+toStr(profileIterator->Get_Current_Total_Calls())+" calls)\n";
-		os << s;
-		//totalTime += current_total_time;
-		//recurse into children
-	}
-
-	if (parent_time < accumulated_time)
-	{
-		os << "what's wrong\n";
-	}
-	for (i=0;i<spacing;i++)	os << ".";
-	double unaccounted=  parent_time > SIMD_EPSILON ? ((parent_time - accumulated_time) / parent_time) * 100 : 0.f;
-	s = "Unaccounted: ("+fToStr(unaccounted,3)+" %) :: "+fToStr(parent_time - accumulated_time,3)+" ms\n";
-	os << s;
-	
-	for (i=0;i<numChildren;i++)
-	{
-		profileIterator->Enter_Child(i);
-		bltDumpRecursive(profileIterator, spacing+3, os);
-		profileIterator->Enter_Parent();
-	}
-}
-
-void App::bltDumpAll(std::stringstream& os)
-{
-	CProfileIterator* profileIterator = 0;
-	profileIterator = CProfileManager::Get_Iterator();
-
-	bltDumpRecursive(profileIterator, 0, os);
-
-	CProfileManager::Release_Iterator(profileIterator);
+	if (!arrow.node)  arrow.node = ap->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Ogre::Entity* ent = ap->mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
+	ent->setRenderQueueGroup(RQG_Hud3);
+	ent->setCastShadows(false);
+	arrow.nodeRot = arrow.node->createChildSceneNode();
+	arrow.nodeRot->attachObject(ent);
+	arrow.nodeRot->setScale(pSet->size_arrow/2.f, pSet->size_arrow/2.f, pSet->size_arrow/2.f);
+	ent->setVisibilityFlags(RV_Hud);
+	arrow.nodeRot->setVisible(pSet->check_arrow);
 }

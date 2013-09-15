@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Compositor.h"
-#include "OgreGame.h"
+#include "CGame.h"
 
 #include <OgreCompositorInstance.h>
 #include <OgreCompositorChain.h>

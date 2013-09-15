@@ -4,7 +4,7 @@
 #ifdef SR_EDITOR
 	#include "../../editor/OgreApp.h"
 #else
-	#include "../OgreGame.h"
+	#include "../CGame.h"
 	#include "../../vdrift/settings.h"
 	#include "../../vdrift/game.h"
 	#include "../SplitScreen.h"

@@ -3,7 +3,9 @@
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
-#include "OgreGame.h"
+#include "CGame.h"
+#include "CHud.h"
+
 #include <boost/filesystem.hpp>
 #include <OgreRoot.h>
 #include <OgreRenderWindow.h>
@@ -121,6 +123,8 @@ void App::InitGui()
 	//  view sizes
 	Slv(SizeGaug,	(pSet->size_gauges-0.1f) /0.15f);
 	Slv(TypeGaug,	pSet->gauges_type /5.f);
+	Slv(LayoutGaug,	pSet->gauges_layout /2.f);
+	
 	Slv(SizeMinimap,(pSet->size_minimap-0.05f) /0.25f);
 	Slv(SizeArrow,  (pSet->size_arrow));
 	Slv(ZoomMinimap,powf((pSet->zoom_minimap-1.0f) /9.f, 0.5f));
@@ -167,7 +171,7 @@ void App::InitGui()
 
 	//  hud
 	Chk("Digits", chkDigits, pSet->show_digits);
-	Chk("Gauges", chkGauges, pSet->show_gauges);  ShowHUD();//
+	Chk("Gauges", chkGauges, pSet->show_gauges);  hud->Show();//
 	Chk("Arrow", chkArrow, pSet->check_arrow);
 	Chk("ChkBeam", chkBeam, pSet->check_beam);
 	

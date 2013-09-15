@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "common/Defines.h"
-#include "OgreGame.h"
+#include "CGame.h"
+#include "CHud.h"
 #include "LoadingBar.h"
 #include "../vdrift/game.h"
 #include "FollowCamera.h"
@@ -13,6 +14,7 @@
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"
 #include "../paged-geom/PagedGeometry.h"
+#include "../shiny/Main/Factory.hpp"
 
 #include <boost/thread.hpp>
 #include <boost/filesystem.hpp>
@@ -23,8 +25,6 @@
 #include <OgreTerrainGroup.h>
 using namespace MyGUI;
 using namespace Ogre;
-
-#include "../shiny/Main/Factory.hpp"
 
 
 //  Create Scene
@@ -92,6 +92,12 @@ void App::createScene()
 	///  _Tool_ convert to track's ghosts ..............
 	#if 0
 	ToolGhostsConv();
+	exit(0);
+	#endif
+
+	///  _Tool_ presets ..............
+	#if 0
+	ToolPresets();
 	exit(0);
 	#endif
 
@@ -191,7 +197,7 @@ void App::NewGame()
 	if (mWndRpl)  mWndRpl->setVisible(false);  // hide rpl ctrl
 
 	LoadingOn();
-	ShowHUD(true);  // hide HUD
+	hud->Show(true);  // hide HUD
 	//mFpsOverlay->hide();  // hide FPS
 	hideMouse();
 
@@ -207,7 +213,7 @@ void App::LoadCleanUp()  // 1 first
 	
 	DestroyFluids();  DestroyObjects(true);
 	
-	DestroyGraphs();  DestroyHUD();
+	DestroyGraphs();  hud->Destroy();
 	
 
 	// rem old track
@@ -330,7 +336,7 @@ void App::LoadGame()  // 2
 		if (nick != "")  // set remote nickname
 		{	car->sDispName = nick;
 			if (i != 0)  // not for local
-				car->pNickTxt = CreateNickText(i, car->sDispName);
+				car->pNickTxt = hud->CreateNickText(i, car->sDispName);
 		}
 	}
 
@@ -397,7 +403,7 @@ void App::LoadScene()  // 3
 	//  set sky tex name for water
 	sh::MaterialInstance* m = mFactory->getMaterialInstance(sc->skyMtr);
 	std::string skyTex = sh::retrieveValue<sh::StringValue>(m->getProperty("texture"), 0).get();
-	sh::Factory::getInstance ().setTextureAlias("SkyReflection", skyTex);
+	sh::Factory::getInstance().setTextureAlias("SkyReflection", skyTex);
 	
 
 	//  weather rain,snow  -----
@@ -419,17 +425,7 @@ void App::LoadScene()  // 3
 	//  checkpoint arrow
 	bool deny = pChall && !pChall->chk_arr;
 	if (!bRplPlay && !deny)
-	{
-		if (!arrowNode)  arrowNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-		Ogre::Entity* arrowEnt = mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
-		arrowEnt->setRenderQueueGroup(RQG_Hud3);
-		arrowEnt->setCastShadows(false);
-		arrowRotNode = arrowNode->createChildSceneNode();
-		arrowRotNode->attachObject(arrowEnt);
-		arrowRotNode->setScale(pSet->size_arrow/2.f, pSet->size_arrow/2.f, pSet->size_arrow/2.f);
-		arrowEnt->setVisibilityFlags(RV_Hud); // hide in reflection
-		arrowRotNode->setVisible(pSet->check_arrow); //!
-	}
+		hud->CreateArrow();
 }
 
 void App::LoadCar()  // 4
@@ -513,7 +509,7 @@ void App::LoadCar()  // 4
 		{
 			CarModel* cm = carModels[p];
 			cm->sDispName = String(replay.header.nicks[p]);
-			cm->pNickTxt = CreateNickText(p, cm->sDispName);
+			cm->pNickTxt = hud->CreateNickText(p, cm->sDispName);
 		}
 	}
 
@@ -549,8 +545,8 @@ void App::LoadRoad()  // 6
 {
 	CreateRoad();
 		
-	if (road && road->getNumPoints() == 0 && arrowRotNode)
-		arrowRotNode->setVisible(false);  // hide when no road
+	if (road && road->getNumPoints() == 0 && hud->arrow.nodeRot)
+		hud->arrow.nodeRot->setVisible(false);  // hide when no road
 
 	///  Run track's ghost
 	// to get times at checkpoints
@@ -614,9 +610,9 @@ void App::LoadMisc()  // 9 last
 	if (pGame && pGame->cars.size() > 0)  //todo: move this into gui track tab chg evt, for cur game type
 		UpdGuiRdStats(road, sc, sListTrack, pGame->timer.GetBestLap(0, pSet->game.trackreverse));  // current
 
-	CreateHUD();
+	hud->Create();
 	// immediately hide it
-	ShowHUD(true);
+	hud->Show(true);
 	
 	// Camera settings
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); ++it)
@@ -695,7 +691,7 @@ void App::NewGameDoLoad()
 		#endif
 		mLoadingBar->SetWidth(100.f);
 				
-		ShowHUD();
+		hud->Show();
 		//if (pSet->show_fps)
 		//	mFpsOverlay->show();
 		//.mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);

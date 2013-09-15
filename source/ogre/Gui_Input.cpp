@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "common/Defines.h"
 #include "../vdrift/game.h"
-#include "OgreGame.h"
+#include "CGame.h"
 #include "common/Gui_Def.h"
 
 #include <OgreRoot.h>

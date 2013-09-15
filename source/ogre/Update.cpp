@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "common/Defines.h"
-#include "OgreGame.h"
+#include "CGame.h"
+#include "CHud.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
 #include "../vdrift/game.h"
@@ -9,6 +10,9 @@
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 #include "LinearMath/btDefaultMotionState.h"
+#include "SplitScreen.h"
+#include "../shiny/Main/Factory.hpp"
+#include "../sdl4ogre/sdlinputwrapper.hpp"
 
 #include <OgreParticleSystem.h>
 #include <OgreManualObject.h>
@@ -16,14 +20,9 @@
 #include "common/Gui_Def.h"
 #include "common/MultiList2.h"
 #include "common/Slider.h"
-#include "SplitScreen.h"
 #include <MyGUI.h>
 using namespace Ogre;
 using namespace MyGUI;
-
-#include "../shiny/Main/Factory.hpp"
-
-#include "../sdl4ogre/sdlinputwrapper.hpp"
 
 
 #define isKey(a)  mInputWrapper->isKeyDown(a)
@@ -353,7 +352,7 @@ bool App::frameStart(Real time)
 		
 		// align checkpoint arrow
 		// move in front of camera
-		if (pSet->check_arrow && arrowNode && !bRplPlay)
+		if (pSet->check_arrow && hud->arrow.node && !bRplPlay)
 		{
 			Vector3 camPos = carModels.front()->fCam->mCamera->getPosition();
 			Vector3 dir = carModels.front()->fCam->mCamera->getDirection();
@@ -361,27 +360,27 @@ bool App::frameStart(Real time)
 			Vector3 up = carModels.front()->fCam->mCamera->getUp();
 			up.normalise();
 			Vector3 arrowPos = camPos + 10.0f * dir + 3.5f*up;
-			arrowNode->setPosition(arrowPos);
+			hud->arrow.node->setPosition(arrowPos);
 			
 			// animate
 			if (bFirstFrame) // 1st frame: dont animate
-				arrowAnimCur = arrowAnimEnd;
+				hud->arrow.qCur = hud->arrow.qEnd;
 			else
-				arrowAnimCur = Quaternion::Slerp(time*5, arrowAnimStart, arrowAnimEnd, true);
-			arrowRotNode->setOrientation(arrowAnimCur);
+				hud->arrow.qCur = Quaternion::Slerp(time*5, hud->arrow.qStart, hud->arrow.qEnd, true);
+			hud->arrow.nodeRot->setOrientation(hud->arrow.qCur);
 			
 			// look down -y a bit so we can see the arrow better
-			arrowRotNode->pitch(Degree(-20), SceneNode::TS_LOCAL); 
+			hud->arrow.nodeRot->pitch(Degree(-20), SceneNode::TS_LOCAL); 
 		}
 
 		//  cam info text
-		if (pSet->show_cam && !carModels.empty() && txCamInfo)
+		if (pSet->show_cam && !carModels.empty() && hud->txCamInfo)
 		{	FollowCamera* cam = carModels[0]->fCam;
 			if (cam)
 			{	bool vis = cam->updInfo(time) && !isFocGui;
 				if (vis)
-					txCamInfo->setCaption(String(cam->ss));
-				txCamInfo->setVisible(vis);
+					hud->txCamInfo->setCaption(String(cam->ss));
+				hud->txCamInfo->setVisible(vis);
 		}	}
 		
 

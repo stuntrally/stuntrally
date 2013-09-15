@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
 #include "carcontrolmap_local.h"
-#include "../ogre/OgreGame.h"
+#include "../ogre/CGame.h"
 
 
 ///  Process Input

@@ -6,7 +6,7 @@
 #ifdef SR_EDITOR
 	#include "../../editor/OgreApp.h"
 #else
-	#include "../OgreGame.h"
+	#include "../CGame.h"
 #endif
 
 

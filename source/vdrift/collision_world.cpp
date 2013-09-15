@@ -7,7 +7,7 @@
 #include "track.h"
 #include "cardynamics.h"
 //#include "car.h"//
-#include "../ogre/OgreGame.h"  //
+#include "../ogre/CGame.h"  //
 #include "game.h"  //
 #include <iostream>
 

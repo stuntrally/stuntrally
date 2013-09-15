@@ -3,7 +3,8 @@
 #include "../vdrift/pathmanager.h"
 #include "../../road/Road.h"
 #ifndef SR_EDITOR
-	#include "../OgreGame.h"
+	#include "../CGame.h"
+	#include "../CHud.h"
 	#include "../vdrift/timer.h"
 	#include "../vdrift/game.h"
 #else
@@ -254,9 +255,9 @@ void App::ToolGhosts()
 		ostringstream s;
 		s << fixed << left << setw(18) << trk;  //align
 		#if 0
-		s << "  E " << GetTimeShort(timeES);  // Expected car ES or S1
-		s << "  T " << GetTimeShort(timeTrk);  // trk time from .xml
-		s << "  b " << GetTimeShort(timeES == timeBest ? 0.f : timeBest);
+		s << "  E " << CHud::GetTimeShort(timeES);  // Expected car ES or S1
+		s << "  T " << CHud::GetTimeShort(timeTrk);  // trk time from .xml
+		s << "  b " << CHud::GetTimeShort(timeES == timeBest ? 0.f : timeBest);
 		s << "  E-b " << (timeES > 0.f && timeES != timeBest ?
 						fToStr(timeES - timeBest ,0,2) : "  ");
 		s << "  T-E " << (timeES > 0.f ?
@@ -285,7 +286,7 @@ void App::ToolGhosts()
 ///  _Tool_ convert ghosts to track's ghosts (less size and frame data)
 //  put original ghosts into  data/ghosts/original/*_ES.rpl
 //  (ES, normal sim, 1st lap, no boost, use rewind with _Tool_ go back time)
-//  time should be like in times.xml or less
+//  time should be like in tracks.ini or less (last T= )
 ///............................................................................................................................
 void App::ToolGhostsConv()
 {
@@ -332,7 +333,7 @@ void App::ToolGhostsConv()
 				{	float dist = (fr.pos - oldPos).MagnitudeSquared();
 					if (dist > 16.f)  //1.f small
 					{	
-						LogO("!Jump at "+GetTimeShort(fr.time)+"  d "+fToStr(sqrt(dist),0)+"m");
+						LogO("!Jump at "+CHud::StrTime2(fr.time)+"  d "+fToStr(sqrt(dist),0)+"m");
 						++jmp;
 				}	}
 				//  check vel at start
@@ -342,7 +343,7 @@ void App::ToolGhostsConv()
 					float vel = 3.6f * dist / (fr.time - oldTime);
 					bool bad = vel > 30;
 					if (bad)
-						LogO("!Vel at "+GetTimeString(fr.time)+" kmh "+fToStr(vel,0) + (bad ? "  BAD":""));
+						LogO("!Vel at "+CHud::StrTime(fr.time)+" kmh "+fToStr(vel,0) + (bad ? "  BAD":""));
 				}
 				oldPos = fr.pos;  oldTime = fr.time;
 			}
@@ -365,6 +366,40 @@ void App::ToolGhostsConv()
 		if (!PATHMANAGER::FileExists(fsave))
 			LogO("MISSING for track: "+track);
 	}
+}
+
+//  ed presets
+///............................................................................................................................
+void App::ToolPresets()
+{
+	QTimer ti;  ti.update();  /// time
+	LogO("ALL tracks presets ---------\n");
+
+	std::map<Ogre::String, TerLayer> ter;
+	for (int i=0; i < tracksXml.trks.size(); ++i)
+	{	//  foreach track
+		string trk = tracksXml.trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
+		/**/if (!(trk[0] >= 'A' && trk[0] <= 'Z'))  continue;
+		/**/if (StringUtil::startsWith(trk,"test"))  continue;
+
+		Scene sc;  sc.LoadXml(path +"scene.xml");
+		SplineRoad rd(pGame);  rd.LoadFile(path +"road.xml");
+		LogO("Track: "+trk);
+
+		for (int l=0; l < sc.td.layers.size(); ++l)
+		{
+			const TerLayer& la = sc.td.layersAll[sc.td.layers[l]];
+			LogO(la.texFile+"  dust "+fToStr(la.dust,2,4)+" "+fToStr(la.dustS,2,4)+"  mud "+fToStr(la.mud,2,4)+
+				"  trl "+fToStr(la.tclr.r,2,4)+" "+fToStr(la.tclr.g,2,4)+" "+fToStr(la.tclr.b,2,4)+" "+fToStr(la.tclr.a,2,4));
+			ter[la.texFile] = la;
+		}
+		//sc.layerRoad.texFile
+	}
+	LogO("ALL ter ---------");
+	LogO(toStr(ter.size()));
+	ti.update();  float dt = ti.dt * 1000.f;  /// time
+	LogO(String("::: Time ALL tracks: ") + fToStr(dt,0,3) + " ms");
+	LogO("ALL tracks presets ---------");
 }
 
 #endif

@@ -451,6 +451,7 @@
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="Gauges">Gauges (rpm, speed)</Tag>
+	<Tag name="Layout">Layout</Tag>
 	<Tag name="Minimap">Minimap</Tag>
 	<Tag name="MinimapZoom">Zoom</Tag>
 	<Tag name="MinimapRotate">Rotate</Tag>

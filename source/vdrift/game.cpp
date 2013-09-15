@@ -14,7 +14,7 @@
 #include "forcefeedback.h"
 #include "../ogre/common/Defines.h"
 #include "../ogre/common/QTimer.h"
-#include "../ogre/OgreGame.h"
+#include "../ogre/CGame.h"
 #include "../ogre/FollowCamera.h"
 
 #define M_PI  3.14159265358979323846

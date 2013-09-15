@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "common/Defines.h"
-#include "OgreGame.h"
+#include "CGame.h"
+#include "CHud.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "SplitScreen.h"
@@ -21,14 +22,6 @@ using namespace Ogre;
 //  ctors  -----------------------------------------------
 App::App(SETTINGS *settings, GAME *game)
 	:pGame(game), sc(0), bGI(0), mThread(), mTimer(0)
-	// ovr
-	,bckMsg(0),txMsg(0),txCamInfo(0)
-	,txDbgCar(0),txDbgTxt(0),txDbgExt(0)
-	,ovCarDbg(0),ovCarDbgTxt(0),ovCarDbgExt(0)
-	// hud
-	,asp(1)//,  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
-	,scX(1),scY(1), minX(0),maxX(0), minY(0),maxY(0)
-	,arrowNode(0),arrowRotNode(0)
 	// ter
 	,mTerrainGlobals(0), mTerrainGroup(0), terrain(0), mPaging(false)
 	,mTerrainPaging(0), mPageManager(0)
@@ -39,7 +32,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,valTrees(0), valGrass(0), valTreesDist(0), valGrassDist(0)  // paged
 	,valReflSkip(0), valReflSize(0), valReflFaces(0), valReflDist(0), valWaterSize(0)  // refl
 	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0)//, valShadowFilter(0)  // shadow
-	,valSizeGaug(0),valTypeGaug(0), valSizeMinimap(0), valZoomMinimap(0)
+	,valSizeGaug(0),valTypeGaug(0),valLayoutGaug(0), valSizeMinimap(0), valZoomMinimap(0)
 	,valCountdownTime(0), valDbgTxtClr(0),valDbgTxtCnt(0)
 	,cmbGraphs(0), valGraphsType(0) //,slGraphT(0)  // view
 	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0),chDbgS(0), chBlt(0),chBltTxt(0), chTireVis(0)
@@ -96,7 +89,7 @@ App::App(SETTINGS *settings, GAME *game)
 	// other
 	,iEdTire(0), iTireLoad(0), iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
 	,iTireSet(0), bchAbs(0),bchTcs(0), slSSSEff(0),slSSSVel(0), slSteerRngSurf(0),slSteerRngSim(0)
-	,mStaticGeom(0), fLastFrameDT(0.001f), ndLine(0)
+	,mStaticGeom(0), fLastFrameDT(0.001f)
 	,edPerfTest(0),edTweakCol(0),tabTweak(0),tabEdCar(0)
 	,txtTweakPath(0),cmbTweakCarSet(0), cmbTweakTireSet(0),txtTweakTire(0), txtTweakPathCol(0)
 	,bPerfTest(0),iPerfTestStage(PT_StartWait), loadReadme(1), isGhost2nd(0)
@@ -113,13 +106,9 @@ App::App(SETTINGS *settings, GAME *game)
 	int i,c;
 	for (i=0; i<3; ++i)
 	{	txtChP[i]=0;  valChP[i]=0;  }
-
-	for (i=0; i<4; ++i)
-	{	ndTireVis[i]=0;  moTireVis[i]=0;  }
-
 	
 	sc = new Scene();
-	hud.resize(4);  frm.resize(4);  ov.resize(5);
+	frm.resize(4);
 
 	for (c=0; c < 2; ++c)
 	{
@@ -141,6 +130,9 @@ App::App(SETTINGS *settings, GAME *game)
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixCar = qr;  }
 	QUATERNION<double> fix;  fix.Rotate(PI_d/2, 0, 1, 0);
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixWh = qr;
+	
+	///  new
+	hud = new CHud(this, pSet);
 
 	if (pSet->multi_thr)
 		mThread = boost::thread(boost::bind(&App::UpdThr, boost::ref(*this)));
@@ -176,6 +168,7 @@ App::~App()
 	delete sc;
 }
 
+
 void App::postInit()
 {
 	SetFactoryDefaults();
@@ -201,6 +194,7 @@ void App::setTranslations()
 
 	loadingStates.insert(std::make_pair(LS_MISC, String(TR("#{LS_MISC}"))));
 }
+
 
 void App::destroyScene()
 {
@@ -234,70 +228,6 @@ void App::destroyScene()
 	delete[] blendMtr;  blendMtr = 0;
 
 	BaseApp::destroyScene();
-}
-
-ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr,
-	Real s,  // scale pos
-	bool dyn, bool clr,
-	Real mul, Vector2 ofs,
-	uint32 vis, uint8 rndQue, bool comb)
-{
-	ManualObject* m = sceneMgr->createManualObject();
-	m->setDynamic(dyn);
-	m->setUseIdentityProjection(true);
-	m->setUseIdentityView(true);
-	m->setCastShadows(false);
-
-	m->estimateVertexCount(comb ? 8 : 4);
-	m->begin(mat, comb ? RenderOperation::OT_TRIANGLE_LIST : RenderOperation::OT_TRIANGLE_STRIP);
-	const static Vector2 uv[4] = { Vector2(0.f,1.f),Vector2(1.f,1.f),Vector2(0.f,0.f),Vector2(1.f,0.f) };
-	int n = comb ? 2 : 1;
-	for (int i=0; i < n; ++i)
-	{	m->position(-s,-s*asp, 0);  m->textureCoord(uv[0]*mul + ofs);  if (clr)  m->colour(0,1,0);
-		m->position( s,-s*asp, 0);  m->textureCoord(uv[1]*mul + ofs);  if (clr)  m->colour(0,0,0);
-		m->position(-s, s*asp, 0);  m->textureCoord(uv[2]*mul + ofs);  if (clr)  m->colour(1,1,0);
-		m->position( s, s*asp, 0);  m->textureCoord(uv[3]*mul + ofs);  if (clr)  m->colour(1,0,0);
-	}
-	if (comb)
-	{	m->quad(0,1,3,2);
-		m->quad(4,5,7,6);
-	}
-	m->end();
- 
-	AxisAlignedBox aabInf;	aabInf.setInfinite();
-	m->setBoundingBox(aabInf);  // always visible
-	m->setVisibilityFlags(vis);
-	m->setRenderQueueGroup(rndQue);  //RQG_Hud2
-	return m;
-}
-
-
-//  hud util
-String App::GetTimeString(float time) const
-{
-	int min = (int) time / 60;
-	float secs = time - min*60;
-
-	if (time != 0.f)
-	{
-		String ss;
-		ss = toStr(min)+":"+fToStr(secs,2,5,'0');
-		return ss;
-	}else
-		return "-:--.--";
-}
-String App::GetTimeShort(float time) const
-{
-	int min = (int) time / 60;
-	float secs = time - min*60;
-
-	if (time != 0.0)
-	{
-		String ss;
-		ss = toStr(min)+":"+fToStr(secs,0,2,'0');
-		return ss;
-	}else
-		return "-:--";
 }
 
 

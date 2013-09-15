@@ -2908,32 +2908,45 @@
 							<Property key="TextColour" value="0.9 0.5 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="344 136 320 18" name="TypeGaug">
+						<Widget type="Slider" skin="Slider" position="344 136 256 16" name="TypeGaug">
 							<Property key="Colour" value="0.9 0.7 0.7"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="232 176 64 24">
+							<Property key="Caption" value="#{Layout}"/>
+							<Property key="TextColour" value="0.8 0.35 0.5"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 176 48 24" name="LayoutGaugVal">
+							<Property key="TextColour" value="0.8 0.4 0.6"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 176 256 16" name="LayoutGaug">
+							<Property key="Colour" value="0.9 0.7 0.8"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
 						
-						<Widget type="Button" skin="CheckBox" position="32 196 184 24" name="Times">
+						<Widget type="Button" skin="CheckBox" position="32 246 184 24" name="Times">
 							<Property key="Caption" value="#{TimesBar} F7"/>
 							<Property key="TextColour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 246 184 24" name="Opponents">
+						<Widget type="Button" skin="CheckBox" position="32 296 184 24" name="Opponents">
 							<Property key="Caption" value="#{OpponentsList}  shift-F7"/>
 							<Property key="TextColour" value="0.6 0.76 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="232 246 260 24" name="OpponentsSort">
+						<Widget type="Button" skin="CheckBox" position="232 296 260 24" name="OpponentsSort">
 							<Property key="Caption" value="#{OpponentsSorted}"/>
 							<Property key="TextColour" value="0.6 0.7 0.8"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 306 184 24" name="CamInfo">
+						<Widget type="Button" skin="CheckBox" position="32 366 184 24" name="CamInfo">
 							<Property key="Caption" value="#{CameraInfo}"/>
 							<Property key="TextColour" value="0.6 0.9 0.75"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="232 306 320 24" name="CamTilt">
+						<Widget type="Button" skin="CheckBox" position="232 366 320 24" name="CamTilt">
 							<Property key="Caption" value="#{CameraAutoTilt}"/>
 							<Property key="TextColour" value="0.6 0.8 0.7"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -2968,30 +2981,30 @@
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 96 140 24" name="MiniZoom">
 							<Property key="Caption" value="#{MinimapZoom}"/>
-							<Property key="TextColour" value="0.6 0.85 0.9"/>
+							<Property key="TextColour" value="0.5 0.9 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 136 140 24" name="MiniRot">
+						<Widget type="Button" skin="CheckBox" position="232 136 140 24" name="MiniRot">
 							<Property key="Caption" value="#{MinimapRotate}"/>
-							<Property key="TextColour" value="0.6 0.85 0.9"/>
+							<Property key="TextColour" value="0.85 0.8 0.75"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="344 98 320 18" name="ZoomMinimap">
-							<Property key="Colour" value="0.8 0.95 1.0"/>
+							<Property key="Colour" value="0.8 0.95 0.95"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="296 98 48 24" name="ZoomMinimapVal">
-							<Property key="TextColour" value="0.7 0.85 0.9"/>
+							<Property key="TextColour" value="0.7 0.85 0.85"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="232 176 140 24" name="MiniBorder">
+						<Widget type="Button" skin="CheckBox" position="32 176 140 24" name="MiniBorder">
 							<Property key="Caption" value="#{MinimapBorder}"/>
-							<Property key="TextColour" value="0.6 0.85 0.9"/>
+							<Property key="TextColour" value="0.7 0.85 0.85"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 176 140 24" name="MiniTer">
+						<Widget type="Button" skin="CheckBox" position="32 136 140 24" name="MiniTer">
 							<Property key="Caption" value="#{MinimapTerrain}"/>
-							<Property key="TextColour" value="0.6 0.85 0.9"/>
+							<Property key="TextColour" value="0.6 0.9 0.75"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 
@@ -3018,16 +3031,16 @@
 							<Property key="Colour" value="0.82 1.0 0.8"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 356 184 24">
+						<Widget type="TextBox" skin="TextBox" position="32 376 184 24">
 							<Property key="Caption" value="#{CountdownTime}"/>
-							<Property key="TextColour" value="0.7 0.8 0.9"/>
+							<Property key="TextColour" value="0.6 0.7 0.8"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="296 356 48 24" name="CountdownTimeVal">
-							<Property key="TextColour" value="0.7 0.8 0.9"/>
+						<Widget type="TextBox" skin="TextBox" position="296 376 48 24" name="CountdownTimeVal">
+							<Property key="TextColour" value="0.65 0.75 0.85"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="344 354 320 18" name="CountdownTime">
+						<Widget type="Slider" skin="Slider" position="344 374 320 18" name="CountdownTime">
 							<Property key="Colour" value="0.7 0.8 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
@@ -3035,22 +3048,22 @@
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#8870A0#{Startup}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
+						<Widget type="Button" skin="CheckBox" position="32 62 256 24" name="MultiThread">
+							<Property key="TextColour" value="0.7 0.86 1.0"/>
+							<Property key="Caption" value="#{MultiThread}*"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 94 256 24" name="StartInMain">
 							<Property key="TextColour" value="0.6 0.7 0.8"/>
 							<Property key="Caption" value="#{StartInMain}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 126 256 24" name="MultiThread">
-							<Property key="TextColour" value="0.7 0.86 1.0"/>
-							<Property key="Caption" value="#{MultiThread}*"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 168 256 24" name="AutoStart">
+						<Widget type="Button" skin="CheckBox" position="32 126 256 24" name="AutoStart">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Caption" value="#{AutoLoad}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 200 256 24" name="EscQuits">
+						<Widget type="Button" skin="CheckBox" position="32 158 256 24" name="EscQuits">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Caption" value="#{EscQuit}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>

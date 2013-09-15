@@ -8,7 +8,7 @@
 	#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #else
 	#include "../common/Defines.h"
-	#include "../OgreGame.h"
+	#include "../CGame.h"
 	#include "../../vdrift/game.h"
 	//#include "../../vdrift/settings.h"
 #endif
