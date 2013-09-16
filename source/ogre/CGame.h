@@ -87,7 +87,7 @@ public:
 	void UpdThr();
 
 	virtual bool keyPressed (const SDL_KeyboardEvent &arg);
-	void App::channelChanged(ICS::Channel *channel, float currentValue, float previousValue);
+	void channelChanged(ICS::Channel *channel, float currentValue, float previousValue);
 	
 	
 	//  BaseApp init
