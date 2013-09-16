@@ -2,7 +2,7 @@
 #include "../common/Defines.h"
 #include "RenderConst.h"
 #ifdef SR_EDITOR
-	#include "../../editor/OgreApp.h"
+	#include "../../editor/CApp.h"
 #else
 	#include "../CGame.h"
 	#include "../../vdrift/settings.h"

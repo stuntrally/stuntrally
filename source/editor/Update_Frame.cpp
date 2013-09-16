@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
-#include "OgreApp.h"
+#include "CApp.h"
+#include "CGui.h"
 #include "../road/Road.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/Gui_Def.h"
@@ -71,7 +72,7 @@ bool App::frameEnded(const FrameEvent& evt)
 	if (ovTerPrv)
 	if (bGuiFocus &&
 		mWndEdit && mWndEdit->getVisible() && mWndTabsEdit->getIndexSelected()==3 &&
-		vSubTabsEdit.size() > 3 && vSubTabsEdit[3]->getIndexSelected() == 1)
+		gui->vSubTabsEdit.size() > 3 && gui->vSubTabsEdit[3]->getIndexSelected() == 1)
 		ovTerPrv->show();  else  ovTerPrv->hide();
 
 	//  track events
@@ -245,24 +246,24 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	processMouse(mDTime);
 
 	
-	UnfocusLists();
+	gui->UnfocusLists();
 	
-	if (iLoadNext)  // load next/prev track
-	{	size_t cnt = trkList->getItemCount();
+	if (gui->iLoadNext)  // load next/prev track
+	{	size_t cnt = gui->trkList->getItemCount();
 		if (cnt > 0)  
-		{	int i = std::max(0, std::min((int)cnt-1, (int)trkList->getIndexSelected() + iLoadNext ));
-			iLoadNext = 0;
-			trkList->setIndexSelected(i);
-			trkList->beginToItemAt(std::max(0, i-11));  // center
-			listTrackChng(trkList,i);
-			btnNewGame(0);
+		{	int i = std::max(0, std::min((int)cnt-1, (int)gui->trkList->getIndexSelected() + gui->iLoadNext ));
+			gui->iLoadNext = 0;
+			gui->trkList->setIndexSelected(i);
+			gui->trkList->beginToItemAt(std::max(0, i-11));  // center
+			gui->listTrackChng(gui->trkList,i);
+			gui->btnNewGame(0);
 	}	}
 	
-	if (bGuiReinit)  // after language change from combo
-	{	bGuiReinit = false;
-		mGUI->destroyWidgets(vwGui);  bnQuit=0;mWndOpts=0;trkList=0; //todo: rest too..
-		InitGui();
-		SetGuiFromXmls();
+	if (gui->bGuiReinit)  // after language change from combo
+	{	gui->bGuiReinit = false;
+		mGUI->destroyWidgets(vwGui);  gui->bnQuit=0; mWndOpts=0; gui->trkList=0; //todo: rest too..
+		gui->InitGui();
+		gui->SetGuiFromXmls();
 		bWindowResized = true;
 		//mWndTabs->setIndexSelected(10);  // switch back to view tab
 	}
@@ -270,11 +271,11 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	if (bWindowResized)
 	{	bWindowResized = false;
 
-		ResizeOptWnd();
+		gui->ResizeOptWnd();
 		//bSizeHUD = true;
-		SizeGUI();
-		updTrkListDim();
-		viewCanvas->setCoord(GetViewSize());
+		gui->SizeGUI();
+		gui->updTrkListDim();
+		gui->viewCanvas->setCoord(gui->GetViewSize());
 		//LoadTrack();  // shouldnt be needed ...
 	}
 	
@@ -286,33 +287,33 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	}
 	
 	///  sort trk list
-	if (trkList && (trkList->mSortColumnIndex != trkList->mSortColumnIndexOld
-		|| trkList->mSortUp != trkList->mSortUpOld))
+	if (gui->trkList && (gui->trkList->mSortColumnIndex != gui->trkList->mSortColumnIndexOld
+		|| gui->trkList->mSortUp != gui->trkList->mSortUpOld))
 	{
-		trkList->mSortColumnIndexOld = trkList->mSortColumnIndex;
-		trkList->mSortUpOld = trkList->mSortUp;
+		gui->trkList->mSortColumnIndexOld = gui->trkList->mSortColumnIndex;
+		gui->trkList->mSortUpOld = gui->trkList->mSortUp;
 
-		pSet->tracks_sort = trkList->mSortColumnIndex;  // to set
-		pSet->tracks_sortup = trkList->mSortUp;
-		TrackListUpd(false);
+		pSet->tracks_sort = gui->trkList->mSortColumnIndex;  // to set
+		pSet->tracks_sortup = gui->trkList->mSortUp;
+		gui->TrackListUpd(false);
 	}
 
 	
 	//--  3d view upd  (is global in window)
 	static bool oldVis = false;
-	int tab = mWndTabsEdit->getIndexSelected(), st5 = vSubTabsEdit[5]->getIndexSelected();
+	int tab = mWndTabsEdit->getIndexSelected(), st5 = gui->vSubTabsEdit[5]->getIndexSelected();
 	bool vis = mWndEdit && mWndEdit->getVisible() && (tab == 7 || tab == 5 && st5 == 2);
 	if (oldVis != vis)
 	{	oldVis = vis;
-		viewCanvas->setVisible(vis);
+		gui->viewCanvas->setVisible(vis);
 	}
-	if (tiViewUpd >= 0.f)
-		tiViewUpd += evt.timeSinceLastFrame;
-	if (tiViewUpd > 0.0f)  //par delay 0.1
-	{	tiViewUpd = -1.f;
-		viewBox.clearScene();
-		if (viewMesh != "" && ResourceGroupManager::getSingleton().resourceExistsInAnyGroup(viewMesh))
-			viewBox.injectObject(viewMesh);
+	if (gui->tiViewUpd >= 0.f)
+		gui->tiViewUpd += evt.timeSinceLastFrame;
+	if (gui->tiViewUpd > 0.0f)  //par delay 0.1
+	{	gui->tiViewUpd = -1.f;
+		gui->viewBox.clearScene();
+		if (gui->viewMesh != "" && ResourceGroupManager::getSingleton().resourceExistsInAnyGroup(gui->viewMesh))
+			gui->viewBox.injectObject(gui->viewMesh);
 	}
 	
 	
@@ -356,10 +357,10 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 
 	
 	///  simulate
-	if (edMode == ED_Objects && objSim /*&& bEdit()*/)
+	if (edMode == ED_Objects && gui->objSim /*&& bEdit()*/)
 		BltUpdate(evt.timeSinceLastFrame);
 	
-	UpdObjNewNode();
+	gui->UpdObjNewNode();
 
 	bFirstRenderFrame = false;
 	

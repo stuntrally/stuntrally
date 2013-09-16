@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
-#include "OgreApp.h"
+#include "CApp.h"
+#include "CGui.h"
 #include <OgreTerrain.h>
 #include <OgreHardwarePixelBuffer.h>
 //#include "../vdrift/settings.h"
@@ -147,11 +148,11 @@ const float App::brClr[4][3] = {
 	{0.3, 0.8, 0.1}, {0.2, 0.8, 0.6}, {0.6, 0.9, 0.6}, {0.4, 0.7, 1.0} };
 
 
-void App::btnBrushPreset(WP img)
+void CGui::btnBrushPreset(WP img)
 {
 	int id = 0;
 	sscanf(img->getName().c_str(), "brI%d", &id);
-	SetBrushPreset(id);
+	app->SetBrushPreset(id);
 }
 void App::SetBrushPreset(int id)
 {
@@ -374,7 +375,7 @@ void App::updBrush()
 
 ///  Terrain  generate
 ///--------------------------------------------------------------------------------------------------------------------------
-void App::btnTerGenerate(WP wp)
+void CGui::btnTerGenerate(WP wp)
 {
 	const std::string& n = wp->getName();
 	bool add = false, sub = false;
@@ -409,7 +410,7 @@ void App::btnTerGenerate(WP wp)
 	for (x=0; x < sx; ++x,++a)
 	{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 
-		c = Noise(y*s1-oy, x*s1+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist) * 0.8f;
+		c = app->Noise(y*s1-oy, x*s1+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist) * 0.8f;
 		c = c >= 0.f ? powf(c, pSet->gen_pow) : -powf(-c, pSet->gen_pow);
 
 		//)  check if on road - uses roadDensity.png
@@ -425,8 +426,8 @@ void App::btnTerGenerate(WP wp)
 			c *= pow(cr, rdPow);
 		}
 		
-		c *= linRange(hfAng[a],  pSet->gen_terMinA,pSet->gen_terMaxA, pSet->gen_terSmA);
-		c *= linRange(hfData[a], pSet->gen_terMinH,pSet->gen_terMaxH, pSet->gen_terSmH);
+		c *= app->linRange(hfAng[a],  pSet->gen_terMinA,pSet->gen_terMaxA, pSet->gen_terSmA);
+		c *= app->linRange(hfData[a], pSet->gen_terMinH,pSet->gen_terMaxH, pSet->gen_terSmH);
 
 		hfData[a] = add ? (hfData[a] + c * pSet->gen_scale + pSet->gen_ofsh) : (
 					sub ? (hfData[a] - c * pSet->gen_scale - pSet->gen_ofsh) :
@@ -447,7 +448,7 @@ void App::btnTerGenerate(WP wp)
 	dt = ti.dt * 1000.f;
 	LogO(String("::: Time Ter Gen save: ") + fToStr(dt,0,3) + " ms");
 
-	bNewHmap = true;	UpdateTrack();
+	app->bNewHmap = true;	app->UpdateTrack();
 }
 
 ///  update terrain generator preview texture

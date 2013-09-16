@@ -9,7 +9,8 @@
 	#include "../vdrift/timer.h"
 	#include "../vdrift/game.h"
 #else
-	#include "../../editor/OgreApp.h"
+	#include "../../editor/CApp.h"
+	#include "../../editor/CGui.h"
 #endif
 using namespace Ogre;
 using namespace std;
@@ -22,7 +23,7 @@ using namespace std;
 
 ///  _Tool_ tex ..........................
 //  (remove alpha channel for ter tex prv img)
-void App::ToolTexAlpha()
+void CGui::ToolTexAlpha()
 {
 	Ogre::Image im;
 	im.load("jungle_5d.png", "General");
@@ -42,7 +43,7 @@ void App::ToolTexAlpha()
 
 ///  _Tool_ scene ...........................
 ///  check/resave all tracks scene.xml 
-void App::ToolSceneXml()
+void CGui::ToolSceneXml()
 {
 	QTimer ti;  ti.update();  /// time
 	LogO("ALL tracks scene ---------");
@@ -67,7 +68,7 @@ void App::ToolSceneXml()
 					lay.windFx *= 0.1f;  lay.windFy *= 0.1f;
 				}/**/
 
-				if (lay.on && !objs.Find(s) && noCol[s]==0)
+				if (lay.on && !app->objs.Find(s) && noCol[s]==0)
 				{	noCol[s] = 1;
 					LogO("All: " + trk + "  no collision.xml for  " + s);
 				}
@@ -97,7 +98,7 @@ void App::ToolSceneXml()
 #define sortDef  bool t = false/*t1.test < t2.test/**/;  if (!t1.ti || !t2.ti)  return t1.name > t2.name || t;
 /* 0  name    */  bool SortT0 (sArg){  sortDef  return t1.name  < t2.name   || t;  }
 
-void App::ToolListSceneryID()
+void CGui::ToolListSceneryID()
 {
 	LogO("ALL tracks ---------");
 
@@ -127,7 +128,7 @@ void App::ToolListSceneryID()
 ///  _Tool_	Warnings ...........................
 ///  check all tracks for warnings
 ///  Warning: takes about 16 sec
-void App::ToolTracksWarnings()
+void CGui::ToolTracksWarnings()
 {
 	QTimer ti;  ti.update();  /// time
 	LogO("ALL tracks warnings ---------\n");
@@ -140,8 +141,8 @@ void App::ToolTracksWarnings()
 		/**/if (StringUtil::startsWith(trk,"test"))  continue;
 
 		Scene sc;  sc.LoadXml(path +"scene.xml");
-		SplineRoad rd(this);  rd.LoadFile(path +"road.xml");
-		LoadStartPos(path, true);  // uses App vars-
+		SplineRoad rd(app);  rd.LoadFile(path +"road.xml");
+		app->LoadStartPos(path, true);  // uses App vars-
 		
 		LogO("Track: "+trk);
 		WarningsCheck(&sc,&rd);
@@ -154,13 +155,13 @@ void App::ToolTracksWarnings()
 
 ///  _Tool_ brushes prv ...........................
 //  update all Brushes png
-void App::ToolBrushesPrv()
+void CGui::ToolBrushesPrv()
 {
 	Image im;
-	for (int i=0; i < brSetsNum; ++i)
+	for (int i=0; i < app->brSetsNum; ++i)
 	{
-		SetBrushPreset(i);
-		brushPrvTex->convertToImage(im);
+		app->SetBrushPreset(i);
+		app->brushPrvTex->convertToImage(im);
 		im.save("data/editor/brush"+toStr(i)+".png");
 		// todo: ?brush presets in xml, auto upd prvs-
 	}

@@ -527,6 +527,22 @@
 			Name="Cfg,Gui"
 			>
 			<File
+				RelativePath="..\source\editor\CApp.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\editor\CApp.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\editor\CGui.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\editor\CGui.h"
+				>
+			</File>
+			<File
 				RelativePath="..\config\championships.xml"
 				>
 			</File>
@@ -608,14 +624,6 @@
 			</File>
 			<File
 				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\ogre_ed.log"
-				>
-			</File>
-			<File
-				RelativePath="..\source\Editor\OgreApp.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\Editor\OgreApp.h"
 				>
 			</File>
 			<File

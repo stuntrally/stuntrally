@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
-#include "OgreApp.h"
+#include "CApp.h"
+#include "CGui.h"
 #include "../vdrift/pathmanager.h"
 
 #include "../ogre/common/Gui_Def.h"
@@ -18,17 +19,17 @@ using namespace Ogre;
 
 ///  gui tweak page, material properties
 //------------------------------------------------------------------------------------------------------------
-void App::CreateGUITweakMtr()
+void CGui::CreateGUITweakMtr()
 {
-	ScrollView* view = mGUI->findWidget<ScrollView>("TweakView",false);
+	ScrollView* view = app->mGUI->findWidget<ScrollView>("TweakView",false);
 	if (!view)  return;
 	
 	//  clear last view
 	MyGUI::EnumeratorWidgetPtr widgets = view->getEnumerator ();
-	mGUI->destroyWidgets(widgets);
+	app->mGUI->destroyWidgets(widgets);
 
 	if (pSet->tweak_mtr == "")  return;
-	sh::MaterialInstance* mat = mFactory->getMaterialInstance(pSet->tweak_mtr);
+	sh::MaterialInstance* mat = app->mFactory->getMaterialInstance(pSet->tweak_mtr);
 	//if (!mat)  return;
 	
 	int y = 0;
@@ -76,14 +77,14 @@ void App::CreateGUITweakMtr()
 				EditBox* edit = view->createWidget<EditBox>("EditBox", x,y, xs,20, Align::Default, nameSi + "E");
 				setOrigPos(edit, "OptionsWnd");  edit->setTextColour(clr);  edit->setColour(clr);
 				edit->setCaption(fToStr(val,3,6));
-				if (edit->eventEditTextChange.empty())  edit->eventEditTextChange += newDelegate(this, &App::edTweak);
+				if (edit->eventEditTextChange.empty())  edit->eventEditTextChange += newDelegate(this, &CGui::edTweak);
 				
 				//  slider
 				x += xs + 10;  xs = 400;
 				Slider* sl = view->createWidget<Slider>("Slider", x,y-1, xs,19, Align::Default, nameSi);
 				setOrigPos(sl, "OptionsWnd");  sl->setColour(clr);
 				sl->setValue(val);  //powf(val * 1.f/2.f, 1.f/2.f));  //v
-				if (sl->eventValueChanged.empty())  sl->eventValueChanged += newDelegate(this, &App::slTweak);
+				if (sl->eventValueChanged.empty())  sl->eventValueChanged += newDelegate(this, &CGui::slTweak);
 
 				y += 22;
 			}
@@ -98,23 +99,23 @@ void App::CreateGUITweakMtr()
 
 //  gui change val events
 //-----------------------------------------------------------------
-void App::slTweak(Slider* sl, float val)
+void CGui::slTweak(Slider* sl, float val)
 {
 	std::string name = sl->getName();
 
-	EditBox* edit = mGUI->findWidget<EditBox>(name + "E");
+	EditBox* edit = app->mGUI->findWidget<EditBox>(name + "E");
 	if (edit)
 		edit->setCaption(fToStr(val,3,6));
 
 	TweakSetMtrPar(name, val);
 }
 
-void App::edTweak(EditPtr ed)
+void CGui::edTweak(EditPtr ed)
 {
 	std::string name = ed->getName();  name = name.substr(0,name.length()-1);  // ends with E
 	float val = s2r(ed->getCaption());
 	
-	Slider* sl = mGUI->findWidget<Slider>(name);
+	Slider* sl = app->mGUI->findWidget<Slider>(name);
 	if (sl)
 		sl->setValue(val);
 
@@ -123,7 +124,7 @@ void App::edTweak(EditPtr ed)
 
 ///  change material property (float component)
 //-----------------------------------------------------------------
-void App::TweakSetMtrPar(std::string name, float val)
+void CGui::TweakSetMtrPar(std::string name, float val)
 {
 	std::string prop = name.substr(0,name.length()-4);  // cut ending, eg :2.1
 	
@@ -135,7 +136,7 @@ void App::TweakSetMtrPar(std::string name, float val)
 	}
 	//val = powf(val * 2.f, 2.f);  //v
 
-	sh::MaterialInstance* mat = mFactory->getMaterialInstance(pSet->tweak_mtr);
+	sh::MaterialInstance* mat = app->mFactory->getMaterialInstance(pSet->tweak_mtr);
 	if (size == 1)  // 1 float
 		mat->setProperty(prop, sh::makeProperty<sh::FloatValue>(new sh::FloatValue(val)));
 	else
@@ -163,7 +164,7 @@ void App::TweakSetMtrPar(std::string name, float val)
 }
 
 //  pick material from combo
-void App::comboTweakMtr(ComboBoxPtr cmb, size_t val)
+void CGui::comboTweakMtr(ComboBoxPtr cmb, size_t val)
 {
 	pSet->tweak_mtr = cmb->getItemNameAt(val);
 	CreateGUITweakMtr();

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
-#include "OgreApp.h"
+#include "CApp.h"
+#include "CGui.h"
 #include "../road/Road.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../vdrift/pathmanager.h"
@@ -46,7 +47,7 @@ void App::createScene()  // once, init
 
 
 	//  tracks.xml
-	tracksXml.LoadIni(PATHMANAGER::GameConfigDir() + "/tracks.ini");
+	gui->tracksXml.LoadIni(PATHMANAGER::GameConfigDir() + "/tracks.ini");
 
 	//  fluids.xml
 	fluidsXml.LoadXml(PATHMANAGER::Data() + "/materials2/fluids.xml");
@@ -81,7 +82,7 @@ void App::createScene()  // once, init
 		
 	bGuiFocus = false/*true*/;  bMoveCam = true;  //*--
 
-	InitGui();
+	gui->InitGui();
 	
 
 	///  _Tool_ write all trks sceneryID .......
@@ -119,7 +120,7 @@ void App::createScene()  // once, init
 	if (!pSet->autostart)
 	{	bGuiFocus = true;  UpdVisGui();	}
 
-	iObjTNew = 0;
+	gui->iObjTNew = 0;
 	//SetObjNewType(0);  //?white
 }
 
@@ -168,7 +169,7 @@ void App::NewCommon(bool onlyTerVeget)
 	track->Clear();
 
 	if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
-		resTrk = TrkDir() + "objects";
+	resTrk = gui->TrkDir() + "objects";
 	mRoot->addResourceLocation(resTrk, "FileSystem");
 
 	Ogre::MeshManager::getSingleton().unloadUnreferencedResources();
@@ -179,7 +180,7 @@ void App::NewCommon(bool onlyTerVeget)
 void App::LoadTrack()
 {
 	eTrkEvent = TE_Load;
-	Status("Loading...", 0.3,0.6,1.0);
+	gui->Status("Loading...", 0.3,0.6,1.0);
 }
 void App::LoadTrackEv()
 {
@@ -190,7 +191,7 @@ void App::LoadTrackEv()
 	{	road->Destroy();  delete road;  road = 0;  }
 
 	// load scene
-	sc->LoadXml(TrkDir()+"scene.xml");
+	sc->LoadXml(gui->TrkDir()+"scene.xml");
 	sc->vdr = IsVdrTrack();
 	if (sc->vdr)  sc->ter = false;
 	
@@ -230,7 +231,7 @@ void App::LoadTrackEv()
 	//  road ~
 	road = new SplineRoad(this);
 	road->Setup("sphere.mesh", 1.4f*pSet->road_sphr, terrain, mSceneMgr, mCamera);
-	road->LoadFile(TrkDir()+"road.xml");
+	road->LoadFile(gui->TrkDir()+"road.xml");
 	UpdPSSMMaterials();
 	
 	CreateObjects();
@@ -241,12 +242,12 @@ void App::LoadTrackEv()
 
 	//  updates after load
 	//--------------------------
-	ReadTrkStats();
-	SetGuiFromXmls();  ///
+	gui->ReadTrkStats();
+	gui->SetGuiFromXmls();  ///
 	
 	Rnd2TexSetup();
 	UpdVisGui();
-	LoadStartPos(TrkDir());
+	LoadStartPos(gui->TrkDir());
 
 	try {
 	TexturePtr tex = TextureManager::getSingleton().getByName("waterDepth.png");
@@ -254,10 +255,10 @@ void App::LoadTrackEv()
 		tex->reload();
 	} catch(...) {  }
 
-	Status("Loaded", 0.5,0.7,1.0);
+	gui->Status("Loaded", 0.5,0.7,1.0);
 	
 	if (pSet->check_load)
-		WarningsCheck(sc,road);
+		gui->WarningsCheck(sc,road);
 
 	ti.update();	/// time
 	float dt = ti.dt * 1000.f;
@@ -270,7 +271,7 @@ void App::LoadTrackEv()
 void App::UpdateTrack()
 {
 	eTrkEvent = TE_Update;
-	Status("Updating...",0.2,1.0,0.5);
+	gui->Status("Updating...",0.2,1.0,0.5);
 }
 void App::UpdateTrackEv()
 {
@@ -291,29 +292,8 @@ void App::UpdateTrackEv()
 
 	Rnd2TexSetup();
 
-	Status("Updated",0.5,1.0,0.7);
+	gui->Status("Updated",0.5,1.0,0.7);
 }
-
-
-void App::UpdWndTitle()
-{
-	String s = String("SR Editor  track: ") + pSet->gui.track;
-	if (pSet->gui.track_user)  s += "  *user*";
-
-	SDL_SetWindowTitle(mSDLWindow, s.c_str());
-}
-
-String App::TrkDir() {
-	int u = pSet->gui.track_user ? 1 : 0;		return pathTrk[u] + pSet->gui.track + "/";  }
-
-String App::PathListTrk(int user) {
-	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;  }
-	
-String App::PathListTrkPrv(int user, String track){
-	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + track + "/preview/";  }
-	
-String App::PathCopyTrk(int user){
-	int u = user == -1 ? bCopyTrackU : user;	return pathTrk[u] + sCopyTrack;  }
 
 
 ///  Save Terrain
@@ -328,41 +308,42 @@ void App::SaveTrack()
 		return;
 	}
 	eTrkEvent = TE_Save;
-	Status("Saving...", 1,0.4,0.1);
+	gui->Status("Saving...", 1,0.4,0.1);
 
 	if (pSet->check_save)
-		WarningsCheck(sc,road);
+		gui->WarningsCheck(sc,road);
 }
 void App::SaveTrackEv()
 {
+	String dir = gui->TrkDir();
 	//  track dir in user
-	CreateDir(TrkDir());
-	CreateDir(TrkDir() + "/objects");
+	gui->CreateDir(dir);
+	gui->CreateDir(dir+"/objects");
 	//  check if succeded ...
 
 	if (terrain)
 	{	float *fHmap = terrain->getHeightData();
 		int size = sc->td.iVertsX * sc->td.iVertsY * sizeof(float);
 
-		String file = TrkDir()+"heightmap.f32";
+		String file = dir+"heightmap.f32";
 		std::ofstream of;
 		of.open(file.c_str(), std::ios_base::binary);
 		of.write((const char*)fHmap, size);
 		of.close();
 	}
 	if (road)
-		road->SaveFile(TrkDir()+"road.xml");
+		road->SaveFile(dir+"road.xml");
 
-	sc->SaveXml(TrkDir()+"scene.xml");
+	sc->SaveXml(dir+"scene.xml");
 
 	bool vdr = IsVdrTrack();
 	/*if (!vdr)*/  SaveGrassDens();
 	if (!vdr)  SaveWaterDepth();  //?-
 
-	SaveStartPos(TrkDir()+"track.txt");  //..load/save inside
+	SaveStartPos(dir+"track.txt");  //..load/save inside
 	
-	Delete(getHMapNew());
-	Status("Saved", 1,0.6,0.2);
+	gui->Delete(gui->getHMapNew());
+	gui->Status("Saved", 1,0.6,0.2);
 }
 
 

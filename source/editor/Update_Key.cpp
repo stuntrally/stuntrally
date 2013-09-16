@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
 #include "../ogre/common/Gui_Def.h"
-#include "OgreApp.h"
+#include "CApp.h"
+#include "CGui.h"
 #include "../road/Road.h"
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/MultiList2.h"
@@ -67,7 +68,7 @@ void App::SetEdMode(ED_MODE newMode)
 	static bool first = true;
 	if (newMode == ED_Objects && first)
 	{
-		SetObjNewType(iObjTNew);
+		gui->SetObjNewType(gui->iObjTNew);
 		first = false;
 	}
 
@@ -87,7 +88,7 @@ void App::UpdVisGui()
 	if (mWndHelp)	mWndHelp->setVisible(notMain && pSet->inMenu == WND_Help);
 	if (mWndOpts)	mWndOpts->setVisible(notMain && pSet->inMenu == WND_Options);
 
-	if (bnQuit)  bnQuit->setVisible(bGuiFocus);
+	if (gui->bnQuit)  gui->bnQuit->setVisible(bGuiFocus);
 
 	bool vis = bGuiFocus || !bMoveCam;
 	mCursorManager->cursorVisibilityChange(vis);
@@ -95,7 +96,7 @@ void App::UpdVisGui()
 	mInputWrapper->setGrabPointer(!vis);
 
 	if (road)  road->SetTerHitVis(bEdit());
-	if (!bGuiFocus && mToolTip)  mToolTip->setVisible(false);
+	if (!bGuiFocus && gui->mToolTip)  gui->mToolTip->setVisible(false);
 
 	if (ovBrushPrv)
 	if (edMode >= ED_Road || bMoveCam)
@@ -104,31 +105,31 @@ void App::UpdVisGui()
 	for (int i=0; i < WND_ALL; ++i)
 		mWndMainPanels[i]->setVisible(pSet->inMenu == i);
 		
-	if (txWarn)  txWarn->setVisible(false);
+	if (gui->txWarn)  gui->txWarn->setVisible(false);
 
 	//  1st center mouse
 	static bool first = true;
 	if (bGuiFocus && first)
 	{	first = false;
-		GuiCenterMouse();
+		gui->GuiCenterMouse();
 	}
 }
 
-void App::toggleGui(bool toggle)
+void CGui::toggleGui(bool toggle)
 {
-	if (edMode == ED_PrvCam)  return;
+	if (app->edMode == ED_PrvCam)  return;
 	if (toggle)
-		bGuiFocus = !bGuiFocus;
-	UpdVisGui();
+		app->bGuiFocus = !app->bGuiFocus;
+	app->UpdVisGui();
 }
 
-void App::Status(String s, float r,float g,float b)
+void CGui::Status(String s, float r,float g,float b)
 {
-	ovStat->setColour(ColourValue(r,g,b));
-	ovStat->setCaption(s);
-	ovSt->setMaterialName("hud/Times");
-	ovSt->show();
-	fStFade = 1.5f;
+	app->ovStat->setColour(ColourValue(r,g,b));
+	app->ovStat->setCaption(s);
+	app->ovSt->setMaterialName("hud/Times");
+	app->ovSt->show();
+	app->fStFade = 1.5f;
 }
 
 
@@ -178,9 +179,9 @@ void App::togPrvCam()
 
 
 //  key util
-void App::trkListNext(int rel)
+void CGui::trkListNext(int rel)  //Gui..
 {
-	bool b = bGuiFocus && (mWndTabsEdit->getIndexSelected() == 1)
+	bool b = app->bGuiFocus && (app->mWndTabsEdit->getIndexSelected() == 1)
 		&& !pSet->isMain && pSet->inMenu == WND_Edit;
 	if (!b)  return;
 	
@@ -192,10 +193,10 @@ void App::trkListNext(int rel)
 	listTrackChng(trkList,i);
 }
 
-void App::MainMenuBtn(MyGUI::WidgetPtr wp)
+void CGui::MainMenuBtn(MyGUI::WidgetPtr wp)
 {
 	for (int i=0; i < WND_ALL; ++i)
-		if (wp == mWndMainBtns[i])
+		if (wp == app->mWndMainBtns[i])
 		{
 			pSet->isMain = false;
 			pSet->inMenu = i;
@@ -204,7 +205,7 @@ void App::MainMenuBtn(MyGUI::WidgetPtr wp)
 		}
 }
 
-void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
+void CGui::MenuTabChg(MyGUI::TabPtr tab, size_t id)
 {
 	if (id != 0)  return;
 	tab->setIndexSelected(1);  // dont switch to 0
@@ -212,13 +213,13 @@ void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
 	toggleGui(false);  // back to main
 }
 
-void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
+void CGui::GuiShortcut(WND_Types wnd, int tab, int subtab)
 {
-	if (subtab == -1 && (!bGuiFocus || pSet->inMenu != wnd))  subtab = -2;  // cancel subtab cycling
+	if (subtab == -1 && (!app->bGuiFocus || pSet->inMenu != wnd))  subtab = -2;  // cancel subtab cycling
 
-	if (!bGuiFocus)
-	if (edMode != ED_PrvCam)  {
-		bGuiFocus = !bGuiFocus;  UpdVisGui();  }
+	if (!app->bGuiFocus)
+	if (app->edMode != ED_PrvCam)  {
+		app->bGuiFocus = !app->bGuiFocus;  app->UpdVisGui();  }
 
 	//isFocGui = true;
 	pSet->isMain = false;  pSet->inMenu = wnd;
@@ -227,9 +228,9 @@ void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 	std::vector<MyGUI::TabControl*>* subt = 0;
 	
 	switch (wnd)
-	{	case WND_Edit:		mWndTabs = mWndTabsEdit;  subt = &vSubTabsEdit;  break;
-		case WND_Help:		mWndTabs = mWndTabsHelp;  subt = &vSubTabsHelp;  break;
-		case WND_Options:	mWndTabs = mWndTabsOpts;  subt = &vSubTabsOpts;  break;
+	{	case WND_Edit:		mWndTabs = app->mWndTabsEdit;  subt = &vSubTabsEdit;  break;
+		case WND_Help:		mWndTabs = app->mWndTabsHelp;  subt = &vSubTabsHelp;  break;
+		case WND_Options:	mWndTabs = app->mWndTabsOpts;  subt = &vSubTabsOpts;  break;
 	}
 	toggleGui(false);
 
@@ -242,7 +243,7 @@ void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 	int  cnt = tc->getItemCount();
 
 	if (t == tab && subtab == -1)  // cycle subpages if same tab
-	{	if (shift)
+	{	if (app->shift)
 			tc->setIndexSelected( (tc->getIndexSelected()-1+cnt) % cnt );
 		else
 			tc->setIndexSelected( (tc->getIndexSelected()+1) % cnt );
@@ -251,9 +252,9 @@ void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 		tc->setIndexSelected( std::min(cnt-1, subtab) );
 }
 
-void App::NumTabNext(int rel)
+void CGui::NumTabNext(int rel)
 {
-	if (!bGuiFocus || pSet->isMain || pSet->inMenu != WND_Edit)  return;
+	if (!app->bGuiFocus || pSet->isMain || pSet->inMenu != WND_Edit)  return;
 
 	MyGUI::TabPtr tab = 0;
 
@@ -262,7 +263,7 @@ void App::NumTabNext(int rel)
 		tab->setIndexSelected( (tab->getIndexSelected()+rel+cnt) % cnt );  \
 		event(tab, tab->getIndexSelected());  }
 
-	int id = mWndTabsEdit->getIndexSelected();
+	int id = app->mWndTabsEdit->getIndexSelected();
 	switch (id)
 	{
 		case 4:  // Layers
@@ -303,9 +304,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 			case key(RETURN):  // save screen
 			{	int u = pSet->allow_save ? pSet->gui.track_user : 1;
-				rt[RTs-1].rndTex->writeContentsToFile(pathTrk[u] + pSet->gui.track + "/preview/view.jpg");
-				listTrackChng(trkList,0);  // upd gui img
-				Status("Preview saved", 1,1,0);
+				rt[RTs-1].rndTex->writeContentsToFile(gui->pathTrk[u] + pSet->gui.track + "/preview/view.jpg");
+				gui->listTrackChng(gui->trkList,0);  // upd gui img
+				gui->Status("Preview saved", 1,1,0);
 			}	break;
 
 			case key(F12):  // screenshot
@@ -325,15 +326,15 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		{
 		case key(UP):  case key(KP_8):
 			pSet->inMenu = (pSet->inMenu-1+WND_ALL)%WND_ALL;
-			toggleGui(false);  return true;
+			gui->toggleGui(false);  return true;
 
 		case key(DOWN):  case key(KP_2):
 			pSet->inMenu = (pSet->inMenu+1)%WND_ALL;
-			toggleGui(false);  return true;
+			gui->toggleGui(false);  return true;
 
 		case key(RETURN):
 			pSet->isMain = false;
-			toggleGui(false);  return true;
+			gui->toggleGui(false);  return true;
 		}
 	}
 	if (!pSet->isMain && bGuiFocus)
@@ -344,7 +345,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			if (pSet->isMain)  break;
 			if (bGuiFocus)
 			{	if (edFoc)  break;
-				pSet->isMain = true;  toggleGui(false);  }
+				pSet->isMain = true;  gui->toggleGui(false);  }
 			return true;
 		}
 	}
@@ -354,9 +355,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	if (bGuiFocus && !pSet->isMain)
 	switch (pSet->inMenu)
 	{
-		case WND_Edit:  tab = mWndTabsEdit;  sub = vSubTabsEdit[tab->getIndexSelected()];  break;
-		case WND_Help:   tab = sub = vSubTabsHelp[1];  iTab1 = 0;  break;
-		case WND_Options:  tab = mWndTabsOpts;  sub = vSubTabsOpts[tab->getIndexSelected()];  break;
+		case WND_Edit:    tab = mWndTabsEdit;  sub = gui->vSubTabsEdit[tab->getIndexSelected()];  break;
+		case WND_Help:    tab = sub = gui->vSubTabsHelp[1];  iTab1 = 0;  break;
+		case WND_Options: tab = mWndTabsOpts;  sub = gui->vSubTabsOpts[tab->getIndexSelected()];  break;
 	}
 
 	//  global keys
@@ -373,18 +374,18 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(GRAVE):
 			if (ctrl)  // context help (show for cur mode)
 			{
-				if (bMoveCam)		 GuiShortcut(WND_Help, 1, 0);
+				if (bMoveCam)		 gui->GuiShortcut(WND_Help, 1, 0);
 				else switch (edMode)
 				{	case ED_Smooth: case ED_Height: case ED_Filter:
-					case ED_Deform:  GuiShortcut(WND_Help, 1, 1);  break;
-					case ED_Road:    GuiShortcut(WND_Help, 1, 2);  break;
-					case ED_Start:   GuiShortcut(WND_Help, 1, 4);  break;
-					case ED_Fluids:  GuiShortcut(WND_Help, 1, 5);  break;
-					case ED_Objects: GuiShortcut(WND_Help, 1, 6);  break;
-					default:		 GuiShortcut(WND_Help, 1, 0);  break;
+					case ED_Deform:  gui->GuiShortcut(WND_Help, 1, 1);  break;
+					case ED_Road:    gui->GuiShortcut(WND_Help, 1, 2);  break;
+					case ED_Start:   gui->GuiShortcut(WND_Help, 1, 4);  break;
+					case ED_Fluids:  gui->GuiShortcut(WND_Help, 1, 5);  break;
+					case ED_Objects: gui->GuiShortcut(WND_Help, 1, 6);  break;
+					default:		 gui->GuiShortcut(WND_Help, 1, 0);  break;
 			}	}
 			else	//  Gui mode, Options
-				toggleGui(true);
+				gui->toggleGui(true);
 			return true;
 
 		case key(F12): //  screenshot
@@ -398,16 +399,16 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 		case key(F9):  // blendmap
 			if (alt)
-			{	WP wp = chAutoBlendmap;  ChkEv(autoBlendmap);  }
+			{	WP wp = gui->chAutoBlendmap;  ChkEv(autoBlendmap);  }
 			else	bTerUpdBlend = true;  return true;
 
 		//  prev num tab (layers,grasses,models)
 		case key(1):
-   			if (alt)  {  NumTabNext(-1);  return true;  }
+   			if (alt)  {  gui->NumTabNext(-1);  return true;  }
 			break;
 		//  next num tab
 		case key(2):
-   			if (alt)  {  NumTabNext(1);  return true;  }
+   			if (alt)  {  gui->NumTabNext(1);  return true;  }
 			break;
 
 		case key(F2):  // +-rt num
@@ -423,7 +424,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
    				else	// prev gui tab
    				{	int num = tab->getItemCount()-1, i = tab->getIndexSelected();
 					if (i==iTab1)  i = num;  else  --i;
-					tab->setIndexSelected(i);  if (iTab1==1)  MenuTabChg(tab,i);
+					tab->setIndexSelected(i);  if (iTab1==1)  gui->MenuTabChg(tab,i);
 	   			}
    			break;
 
@@ -440,14 +441,14 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	   			else	// next gui tab
 	   			{	int num = tab->getItemCount()-1, i = tab->getIndexSelected();
 					if (i==num)  i = iTab1;  else  ++i;
-					tab->setIndexSelected(i);  if (iTab1==1)  MenuTabChg(tab,i);
+					tab->setIndexSelected(i);  if (iTab1==1)  gui->MenuTabChg(tab,i);
 				}
    			break;
    			
 		case key(RETURN):  // load track
 			if (bGuiFocus)
 			if (mWndTabsEdit->getIndexSelected() == 1 && !pSet->isMain && pSet->inMenu == WND_Edit)
-				btnNewGame(0);
+				gui->btnNewGame(0);
    			break;
 
 		//  Wire Frame  F11
@@ -460,18 +461,18 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 		//  Show Stats  ctrl-I
 		case key(I):
-   			if (ctrl)  {  chkInputBar(chInputBar);  return true;  }
+   			if (ctrl)  {  gui->chkInputBar(gui->chInputBar);  return true;  }
 			break;
 
 		//  Top view  alt-Z
 		case key(Z):
-			if (alt)  {  toggleTopView();  return true;  }
+			if (alt)  {  gui->toggleTopView();  return true;  }
 			break;
 
 		//  load next track  F6
 		case key(F6):
 			if (pSet->check_load)
-			{	iLoadNext = shift ? -1 : 1;  return true;  }
+			{	gui->iLoadNext = shift ? -1 : 1;  return true;  }
 			break;
 	}
 
@@ -532,7 +533,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 			//  ins
 			case key(INSERT):  case key(KP_0):
-				if (ctrl && !shift && !alt)	{	if (road->CopySel())  Status("Copy",0.6,0.8,1.0);  }
+				if (ctrl && !shift && !alt)	{	if (road->CopySel())  gui->Status("Copy",0.6,0.8,1.0);  }
 				else if (!ctrl && shift && !alt)	road->Paste();
 				else if ( ctrl && shift && !alt)	road->Paste(true);
 				else
@@ -643,85 +644,85 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 	//  Objects  | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |
 	if (edMode == ED_Objects)
-	{	int objs = sc->objects.size(), objAll = vObjNames.size();
+	{	int objs = sc->objects.size(), objAll = gui->vObjNames.size();
 		switch (skey)
 		{
 			case key(SPACE):
-				iObjCur = -1;  PickObject();  UpdObjPick();  break;
+				gui->iObjCur = -1;  PickObject();  UpdObjPick();  break;
 				
 			//  prev,next type
-			case key(9):  case key(MINUS):   SetObjNewType((iObjTNew-1 + objAll) % objAll);  break;
-			case key(0):  case key(EQUALS):  SetObjNewType((iObjTNew+1) % objAll);  break;
+			case key(9):  case key(MINUS):   gui->SetObjNewType((gui->iObjTNew-1 + objAll) % objAll);  break;
+			case key(0):  case key(EQUALS):  gui->SetObjNewType((gui->iObjTNew+1) % objAll);  break;
 				
 			//  ins
 			case key(INSERT):	case key(KP_0):
 			if (road && road->bHitTer)
 			{
-				AddNewObj();
+				gui->AddNewObj();
 				//iObjCur = sc->objects.size()-1;  // auto select inserted-
 				UpdObjPick();
 			}	break;
 			
 			//  sel
 			case key(BACKSPACE):
-				if (ctrl)  vObjSel.clear();  // unsel all
+				if (ctrl)  gui->vObjSel.clear();  // unsel all
 				else
-				if (iObjCur > -1)
-					if (vObjSel.find(iObjCur) == vObjSel.end())
-						vObjSel.insert(iObjCur);  // add to sel
+				if (gui->iObjCur > -1)
+					if (gui->vObjSel.find(gui->iObjCur) == gui->vObjSel.end())
+						gui->vObjSel.insert(gui->iObjCur);  // add to sel
 					else
-						vObjSel.erase(iObjCur);  // unselect
+						gui->vObjSel.erase(gui->iObjCur);  // unselect
 				break;
 		}
-		::Object* o = iObjCur == -1 ? &objNew :
-					((iObjCur >= 0 && objs > 0 && iObjCur < objs) ? &sc->objects[iObjCur] : 0);
+		::Object* o = gui->iObjCur == -1 ? &gui->objNew :
+					((gui->iObjCur >= 0 && objs > 0 && gui->iObjCur < objs) ? &sc->objects[gui->iObjCur] : 0);
 		switch (skey)
 		{
 			//  first, last
 			case key(HOME):  case key(KP_7):
-				iObjCur = 0;  UpdObjPick();  break;
+				gui->iObjCur = 0;  UpdObjPick();  break;
 			case key(END):  case key(KP_1):
-				if (objs > 0)  iObjCur = objs-1;  UpdObjPick();  break;
+				if (objs > 0)  gui->iObjCur = objs-1;  UpdObjPick();  break;
 
 			//  prev,next
 			case key(PAGEUP):  case key(KP_9):
-				if (objs > 0) {  iObjCur = (iObjCur-1+objs)%objs;  }  UpdObjPick();  break;
+				if (objs > 0) {  gui->iObjCur = (gui->iObjCur-1+objs)%objs;  }  UpdObjPick();  break;
 			case key(PAGEDOWN):	case key(KP_3):
-				if (objs > 0) {  iObjCur = (iObjCur+1)%objs;	  }  UpdObjPick();  break;
+				if (objs > 0) {  gui->iObjCur = (gui->iObjCur+1)%objs;	  }  UpdObjPick();  break;
 
 			//  del
 			case key(DELETE):  case key(KP_PERIOD):
 			case key(KP_5):
-				if (iObjCur >= 0 && objs > 0)
-				{	::Object& o = sc->objects[iObjCur];
+				if (gui->iObjCur >= 0 && objs > 0)
+				{	::Object& o = sc->objects[gui->iObjCur];
 					mSceneMgr->destroyEntity(o.ent);
 					mSceneMgr->destroySceneNode(o.nd);
 					
 					if (objs == 1)	sc->objects.clear();
-					else			sc->objects.erase(sc->objects.begin() + iObjCur);
-					iObjCur = std::min(iObjCur, (int)sc->objects.size()-1);
+					else			sc->objects.erase(sc->objects.begin() + gui->iObjCur);
+					gui->iObjCur = std::min(gui->iObjCur, (int)sc->objects.size()-1);
 					UpdObjPick();
 				}	break;
 
 			//  move,rot,scale
 			case key(1):
-				if (!shift)  objEd = EO_Move;
+				if (!shift)  gui->objEd = EO_Move;
 				else if (o)
 				{
-					if (iObjCur == -1)  // reset h
+					if (gui->iObjCur == -1)  // reset h
 					{
 						o->pos[2] = 0.f;  o->SetFromBlt();  UpdObjPick();
 					}
 					else if (road)  // move to ter
 					{
 						const Ogre::Vector3& v = road->posHit;
-						o->pos[0] = v.x;  o->pos[1] =-v.z;  o->pos[2] = v.y + objNew.pos[2];
+						o->pos[0] = v.x;  o->pos[1] =-v.z;  o->pos[2] = v.y + gui->objNew.pos[2];
 						o->SetFromBlt();  UpdObjPick();
 					}
 				}	break;
 
 			case key(2):
-				if (!shift)  objEd = EO_Rotate;
+				if (!shift)  gui->objEd = EO_Rotate;
 				else if (o)  // reset rot
 				{
 					o->rot = QUATERNION<float>(0,1,0,0);
@@ -729,7 +730,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				}	break;
 
 			case key(3):
-				if (!shift)  objEd = EO_Scale;
+				if (!shift)  gui->objEd = EO_Scale;
 				else if (o)  // reset scale
 				{
 					o->scale = Ogre::Vector3::UNIT_SCALE * (ctrl ? 0.5f : 1.f);
@@ -748,32 +749,32 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	if (alt)
 	switch (skey)
 	{
-		case key(Q):  GuiShortcut(WND_Edit, 1);  return true;  // Q Track
-		case key(S):  GuiShortcut(WND_Edit, 2);  return true;  // S Sun
+		case key(Q):  gui->GuiShortcut(WND_Edit, 1);  return true;  // Q Track
+		case key(S):  gui->GuiShortcut(WND_Edit, 2);  return true;  // S Sun
 
-		case key(H):  GuiShortcut(WND_Edit, 3);  return true;  // H Heightmap
-		 case key(D): GuiShortcut(WND_Edit, 3,0);  return true;  //  D -Brushes
+		case key(H):  gui->GuiShortcut(WND_Edit, 3);  return true;  // H Heightmap
+		 case key(D): gui->GuiShortcut(WND_Edit, 3,0);  return true;  //  D -Brushes
 
-		case key(T):  GuiShortcut(WND_Edit, 4);  return true;  // T Layers (Terrain)
-		 case key(B): GuiShortcut(WND_Edit, 4,0);  return true;  //  B -Blendmap
-		 case key(P): GuiShortcut(WND_Edit, 4,1);  return true;  //  P -Particles
-		 case key(U): GuiShortcut(WND_Edit, 4,2);  return true;  //  U -Surfaces
+		case key(T):  gui->GuiShortcut(WND_Edit, 4);  return true;  // T Layers (Terrain)
+		 case key(B): gui->GuiShortcut(WND_Edit, 4,0);  return true;  //  B -Blendmap
+		 case key(P): gui->GuiShortcut(WND_Edit, 4,1);  return true;  //  P -Particles
+		 case key(U): gui->GuiShortcut(WND_Edit, 4,2);  return true;  //  U -Surfaces
 
-		case key(V):  GuiShortcut(WND_Edit, 5);  return true;  // V Vegetation
-		 case key(M): GuiShortcut(WND_Edit, 5,2);  return true;  //  M -Models
+		case key(V):  gui->GuiShortcut(WND_Edit, 5);  return true;  // V Vegetation
+		 case key(M): gui->GuiShortcut(WND_Edit, 5,2);  return true;  //  M -Models
 
-		case key(R):  GuiShortcut(WND_Edit, 6);  return true;  // R Road
-		case key(X):  GuiShortcut(WND_Edit, 7);  return true;  // X Objects
-		case key(O):  GuiShortcut(WND_Edit, 8);  return true;  // O Tools
+		case key(R):  gui->GuiShortcut(WND_Edit, 6);  return true;  // R Road
+		case key(X):  gui->GuiShortcut(WND_Edit, 7);  return true;  // X Objects
+		case key(O):  gui->GuiShortcut(WND_Edit, 8);  return true;  // O Tools
 
-		case key(C):  GuiShortcut(WND_Options, 1);  return true;  // C Screen
-		case key(G):  GuiShortcut(WND_Options, 2);  return true;  // G Graphics
-		 case key(N): GuiShortcut(WND_Options, 2,3);  return true;  // N -Vegetation
-		case key(E):  GuiShortcut(WND_Options, 3);  return true;  // E Settings
-		case key(K):  GuiShortcut(WND_Options, 4);  return true;  // K Tweak
+		case key(C):  gui->GuiShortcut(WND_Options, 1);  return true;  // C Screen
+		case key(G):  gui->GuiShortcut(WND_Options, 2);  return true;  // G Graphics
+		 case key(N): gui->GuiShortcut(WND_Options, 2,3);  return true;  // N -Vegetation
+		case key(E):  gui->GuiShortcut(WND_Options, 3);  return true;  // E Settings
+		case key(K):  gui->GuiShortcut(WND_Options, 4);  return true;  // K Tweak
 
-		case key(I):  GuiShortcut(WND_Help, 1);  return true;  // I Input/help
-		case key(J):  GuiShortcut(WND_Edit, 9);  return true;  // J Warnings
+		case key(I):  gui->GuiShortcut(WND_Help, 1);  return true;  // I Input/help
+		case key(J):  gui->GuiShortcut(WND_Edit, 9);  return true;  // J Warnings
 	}
 	else
 	switch (skey)
@@ -785,12 +786,12 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 		//  fog
 		case key(G):  {
-			pSet->bFog = !pSet->bFog;  chkFog->setStateSelected(pSet->bFog);  UpdFog();  }  break;
+			pSet->bFog = !pSet->bFog;  gui->chkFog->setStateSelected(pSet->bFog);  UpdFog();  }  break;
 		//  trees
 		case key(V):  bTrGrUpd = true;  break;
 		//  weather
 		case key(I):  {
-			pSet->bWeather = !pSet->bWeather;  chkWeather->setStateSelected(pSet->bWeather);  }  break;
+			pSet->bWeather = !pSet->bWeather;  gui->chkWeather->setStateSelected(pSet->bWeather);  }  break;
 
 		//  terrain
 		case key(D):  if (bEdit()){  SetEdMode(ED_Deform);  curBr = 0;  updBrush();  UpdEditWnds();  }	break;
@@ -798,13 +799,12 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(E):  if (bEdit()){  SetEdMode(ED_Height);  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
 		case key(F):  if (bEdit()){  SetEdMode(ED_Filter);  curBr = 3;  updBrush();  UpdEditWnds();  }
 			else  //  focus on find edit  (global)
-			if (ctrl && edFind //&& bGuiFocus &&
-						  //!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 1
-				)
+			if (ctrl && gui->edFind /*&& bGuiFocus &&
+				!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 1*/)
 			{
-				GuiShortcut(WND_Edit, 1);  // Track tab
+				gui->GuiShortcut(WND_Edit, 1);  // Track tab
 				MyGUI::InputManager::getInstance().resetKeyFocusWidget();
-				MyGUI::InputManager::getInstance().setKeyFocusWidget(edFind);
+				MyGUI::InputManager::getInstance().setKeyFocusWidget(gui->edFind);
 				return true;
 			}	break;
 
@@ -826,7 +826,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(F10):  SaveWaterDepth();   break;
 
 		//  objects
-		case key(C):  if (edMode == ED_Objects)  {  objSim = !objSim;  ToggleObjSim();  }  break;
+		case key(C):  if (edMode == ED_Objects)  {  gui->objSim = !gui->objSim;  ToggleObjSim();  }  break;
 		case key(X):  if (bEdit()){  SetEdMode(ED_Objects);  UpdEditWnds();  }   break;
 		
 		//  rivers

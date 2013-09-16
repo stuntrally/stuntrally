@@ -9,7 +9,8 @@
 	#include "../CGui.h"
 	#include "../SplitScreen.h"
 #else
-	#include "../../editor/OgreApp.h"
+	#include "../../editor/CApp.h"
+	#include "../../editor/CGui.h"
 #endif
 #include <OgreRoot.h>
 #include <OgreMaterialManager.h>
@@ -65,7 +66,7 @@ void CGui::slViewDist(SL)
 	#ifndef SR_EDITOR
 	/*?if (bGI)*/  app->mSplitMgr->UpdateCamDist();
 	#else
-	mCamera->setFarClipDistance(pSet->view_distance*1.1f);
+	app->mCamera->setFarClipDistance(pSet->view_distance*1.1f);
 	#endif
 }
 

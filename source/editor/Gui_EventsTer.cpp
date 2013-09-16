@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
-#include "OgreApp.h"
+#include "CApp.h"
+#include "CGui.h"
 #include "../road/Road.h"
 #include <fstream>
 #include "../ogre/common/Gui_Def.h"
@@ -15,7 +16,7 @@ using namespace Ogre;
 
 ///  Change terrain texture layer, update values
 //
-void App::tabTerLayer(TabPtr wp, size_t id)
+void CGui::tabTerLayer(TabPtr wp, size_t id)
 {
 	idTerLay = id;  // help vars
 	bTerLay = id < sc->td.ciNumLay;
@@ -76,12 +77,12 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 	noBlendUpd = false;
 }
 
-void App::editTerTriSize(EditPtr ed)
+void CGui::editTerTriSize(EditPtr ed)
 {
 	Real r = std::max(0.1f, s2r(ed->getCaption()) );
 	sc->td.fTriangleSize = r;  sc->td.UpdVals();
 
-	Slider* sl = (Slider*)mWndOpts->findWidget("TerTriSize");  // set slider
+	Slider* sl = (Slider*)app->mWndOpts->findWidget("TerTriSize");  // set slider
 	float v = std::min(1.f, powf((r -0.1f)/5.9f, 0.5f) );
 	if (sl)  sl->setValue(v);
 	// result val text
@@ -89,7 +90,7 @@ void App::editTerTriSize(EditPtr ed)
 	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 }
 // |
-void App::slTerTriSize(SL)
+void CGui::slTerTriSize(SL)
 {
 	Real v = 0.1f + 5.9f * powf(val, 2.f);
 	sc->td.fTriangleSize = v;  sc->td.UpdVals();
@@ -99,35 +100,35 @@ void App::slTerTriSize(SL)
 	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 }
 
-int App::getHMapSizeTab()
+int CGui::getHMapSizeTab()
 {
 	//string str = tabsHmap->getItemSelected()->getCaption().asUTF8().substr(7).c_str();
 	switch (tabsHmap->getIndexSelected())
 	{	case 0: return 128;  case 1: return 256;  case 2: return 512;  case 3: return 1024;  case 4: return 2048;  }
 	return 512;
 }
-void App::tabHmap(TabPtr wp, size_t id)
+void CGui::tabHmap(TabPtr wp, size_t id)
 {
 	int size = getHMapSizeTab();
 	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
 }
 
-void App::editTerErrorNorm(MyGUI::EditPtr ed)
+void CGui::editTerErrorNorm(MyGUI::EditPtr ed)
 {
 	Real r = std::max(0.f, s2r(ed->getCaption()) );
-	sc->td.errorNorm = r;  UpdTerErr();
+	sc->td.errorNorm = r;  app->UpdTerErr();
 }
 
 
 //  - - - -  Hmap tools  - - - -
-const char* App::getHMapNew()
+const char* CGui::getHMapNew()
 {
 	static String name = TrkDir() + "heightmap-new.f32";
 	return name.c_str();
 }
 
 //----------------------------------------------------------------------------------------------------------
-void App::btnTerrainNew(WP)
+void CGui::btnTerrainNew(WP)
 {
 	int size = getHMapSizeTab();
 	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
@@ -150,12 +151,12 @@ void App::btnTerrainNew(WP)
 	of.close();
 
 	delete[] hfData;
-	bNewHmap = true;	UpdateTrack();
+	app->bNewHmap = true;	app->UpdateTrack();
 }
 
 
 //  Terrain  half  --------------------------------
-void App::btnTerrainHalf(WP)
+void CGui::btnTerrainHalf(WP)
 {
 	int size = getHMapSizeTab() / 2;
 	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
@@ -179,12 +180,12 @@ void App::btnTerrainHalf(WP)
 
 	sc->td.fTriangleSize *= 2.f;
 	sc->td.iVertsX = halfSize;  sc->td.UpdVals();
-	bNewHmap = true;	UpdateTrack();
+	app->bNewHmap = true;	app->UpdateTrack();
 }
 
 //  Terrain  double  --------------------------------
 #if 1
-void App::btnTerrainDouble(WP)
+void CGui::btnTerrainDouble(WP)
 {
 	int size = getHMapSizeTab() / 2;
 	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
@@ -207,11 +208,11 @@ void App::btnTerrainDouble(WP)
 	delete[] hfData;
 
 	sc->td.iVertsX = dblSize;  sc->td.UpdVals();
-	bNewHmap = true;	UpdateTrack();
+	app->bNewHmap = true;	app->UpdateTrack();
 }
 #else
 //  Terrain  resize ..  --------------------------------
-void App::btnTerrainDouble(WP)
+void CGui::btnTerrainDouble(WP)
 {
 	int size = getHMapSizeTab() / 2;
 	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
@@ -243,15 +244,15 @@ void App::btnTerrainDouble(WP)
 	
 	sc->td.fTriangleSize * scale * 2.f;
 	sc->td.iVertsX = newSize;  sc->td.UpdVals();
-	bNewHmap = true;	UpdateTrack();  SetGuiFromXmls();
+	app->bNewHmap = true;	app->UpdateTrack();  SetGuiFromXmls();
 }
 #endif
 
 //  Terrain  move  --------------------------------
-void App::btnTerrainMove(WP)
+void CGui::btnTerrainMove(WP)
 {
-	EditPtr ex = (EditPtr)mWndEdit->findWidget("TerMoveX");
-	EditPtr ey = (EditPtr)mWndEdit->findWidget("TerMoveY");
+	EditPtr ex = (EditPtr)app->mWndEdit->findWidget("TerMoveX");
+	EditPtr ey = (EditPtr)app->mWndEdit->findWidget("TerMoveY");
 	int mx = ex ? s2i(ex->getCaption()) : 0;
 	int my = ey ?-s2i(ey->getCaption()) : 0;
 	
@@ -275,24 +276,24 @@ void App::btnTerrainMove(WP)
 	of.close();
 	delete[] hfData;
 	
-	road->SelAll();
-	road->Move(Vector3(my,0,mx) * -sc->td.fTriangleSize);
-	road->SelClear();
-	//start,objects-
+	app->road->SelAll();
+	app->road->Move(Vector3(my,0,mx) * -sc->td.fTriangleSize);
+	app->road->SelClear();
+	//start, objects-
 
-	bNewHmap = true;	UpdateTrack();
+	app->bNewHmap = true;	app->UpdateTrack();
 }
 
 //  Terrain  height scale  --------------------------------
-void App::btnScaleTerH(WP)
+void CGui::btnScaleTerH(WP)
 {
-	if (!edScaleTerHMul || !road)  return;
+	if (!edScaleTerHMul || !app->road)  return;
 	Real sf = std::max(0.1f, s2r(edScaleTerHMul->getCaption()) );  // scale mul
 
 	//  road
-	for (int i=0; i < road->getNumPoints(); ++i)
-		road->Scale1(i, 0.f, sf);
-	road->bSelChng = true;
+	for (int i=0; i < app->road->getNumPoints(); ++i)
+		app->road->Scale1(i, 0.f, sf);
+	app->road->bSelChng = true;
 	
 	//  fluids
 	for (int i=0; i < sc->fluids.size(); ++i)
@@ -326,102 +327,102 @@ void App::btnScaleTerH(WP)
 	of.close();
 
 	delete[] hfData;
-	bNewHmap = true;	UpdateTrack();
+	app->bNewHmap = true;	app->UpdateTrack();
 
 	//  road upd
 	if (0) //road)  // doesnt work here..
-	{	road->UpdPointsH();
-		road->RebuildRoad(true);
+	{	app->road->UpdPointsH();
+		app->road->RebuildRoad(true);
 	}
 
 	//  start pos
 	const int n = 0;  // 1st..
-	vStartPos[n][2] *= sf;  UpdStartPos();
+	app->vStartPos[n][2] *= sf;  app->UpdStartPos();
 }
 //----------------------------------------------------------------------------------------------------------
 
 
 ///  generator  . . . . . . .
-void App::slTerGenScale(SL)
+void CGui::slTerGenScale(SL)
 {
 	float v = 160.f * powf(val, 2.f);	if (bGI)  pSet->gen_scale = v;
 	if (valTerGenScale)  valTerGenScale->setCaption(fToStr(v,2,4));
 }
-void App::slTerGenOfsX(SL)
+void CGui::slTerGenOfsX(SL)
 {
 	float v = -12.f + 24.f * val;	if (bGI)  pSet->gen_ofsx = v;
-	if (valTerGenOfsX)  valTerGenOfsX->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
+	if (valTerGenOfsX)  valTerGenOfsX->setCaption(fToStr(v,3,5));  app->bUpdTerPrv = true;
 }
-void App::slTerGenOfsY(SL)
+void CGui::slTerGenOfsY(SL)
 {
 	float v = -12.f + 24.f * val;	if (bGI)  pSet->gen_ofsy = v;
-	if (valTerGenOfsY)  valTerGenOfsY->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
+	if (valTerGenOfsY)  valTerGenOfsY->setCaption(fToStr(v,3,5));  app->bUpdTerPrv = true;
 }
 
-void App::slTerGenFreq(SL)
+void CGui::slTerGenFreq(SL)
 {
 	float v = 0.06f + 2.94f * powf(val,2.f);	if (bGI)  pSet->gen_freq = v;
-	if (valTerGenFreq)  valTerGenFreq->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
+	if (valTerGenFreq)  valTerGenFreq->setCaption(fToStr(v,3,5));  app->bUpdTerPrv = true;
 }
-void App::slTerGenOct(SL)
+void CGui::slTerGenOct(SL)
 {
 	int v = val * 9.f +slHalf;			if (bGI)  pSet->gen_oct = v;
-	if (valTerGenOct)  valTerGenOct->setCaption(toStr(v));  bUpdTerPrv = true;
+	if (valTerGenOct)  valTerGenOct->setCaption(toStr(v));  app->bUpdTerPrv = true;
 }
-void App::slTerGenPers(SL)
+void CGui::slTerGenPers(SL)
 {
 	float v = 0.7f * val;				if (bGI)  pSet->gen_persist = v;
-	if (valTerGenPers)  valTerGenPers->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
+	if (valTerGenPers)  valTerGenPers->setCaption(fToStr(v,3,5));  app->bUpdTerPrv = true;
 }
-void App::slTerGenPow(SL)
+void CGui::slTerGenPow(SL)
 {
 	float v = 6.f * powf(val, 2.f);		if (bGI)  pSet->gen_pow = v;
-	if (valTerGenPow)  valTerGenPow->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
+	if (valTerGenPow)  valTerGenPow->setCaption(fToStr(v,3,5));  app->bUpdTerPrv = true;
 }
 
-void App::slTerGenMul(SL)
+void CGui::slTerGenMul(SL)
 {
 	float v = 6.f * powf(val, 2.f);		if (bGI)  pSet->gen_mul = v;
-	if (valTerGenMul)  valTerGenMul->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
+	if (valTerGenMul)  valTerGenMul->setCaption(fToStr(v,3,5));  app->bUpdTerPrv = true;
 }
-void App::slTerGenOfsH(SL)
+void CGui::slTerGenOfsH(SL)
 {
 	float v = 60.f * powf(val, 2.f);	if (bGI)  pSet->gen_ofsh = v;
-	if (valTerGenOfsH)  valTerGenOfsH->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
+	if (valTerGenOfsH)  valTerGenOfsH->setCaption(fToStr(v,3,5));  app->bUpdTerPrv = true;
 }
-void App::slTerGenRoadSm(SL)
+void CGui::slTerGenRoadSm(SL)
 {
 	float v = 6.f * val;				if (bGI)  pSet->gen_roadsm = v;
-	if (valTerGenRoadSm)  valTerGenRoadSm->setCaption(fToStr(v,3,5));  bUpdTerPrv = true;
+	if (valTerGenRoadSm)  valTerGenRoadSm->setCaption(fToStr(v,3,5));  app->bUpdTerPrv = true;
 }
 
 //  ter gen h,a
-void App::slTerGenAngMin(SL)
+void CGui::slTerGenAngMin(SL)
 {
 	float v = 90.f * val;	pSet->gen_terMinA = v;
 	if (valTerGenAngMin){	valTerGenAngMin->setCaption(fToStr(v,0,4));  }
 }
-void App::slTerGenAngMax(SL)
+void CGui::slTerGenAngMax(SL)
 {
 	float v = 90.f * val;	pSet->gen_terMaxA = v;
 	if (valTerGenAngMax){	valTerGenAngMax->setCaption(fToStr(v,0,4));  }
 }
-void App::slTerGenAngSm(SL)
+void CGui::slTerGenAngSm(SL)
 {
 	float v = 90.f * val;	pSet->gen_terSmA = v;
 	if (valTerGenAngSm){	valTerGenAngSm->setCaption(fToStr(v,0,4));  }
 }
-void App::slTerGenHMin(SL)
+void CGui::slTerGenHMin(SL)
 {
 	float v = -300.f + 600.f * val;  pSet->gen_terMinH = v;
 	if (valTerGenHMin){		valTerGenHMin->setCaption(fToStr(v,0,4));  }
 }
-void App::slTerGenHMax(SL)
+void CGui::slTerGenHMax(SL)
 {
 	float v = -300.f + 600.f * val;  pSet->gen_terMaxH = v;
 	if (valTerGenHMax){		valTerGenHMax->setCaption(fToStr(v,0,4));  }
 }
-void App::slTerGenHSm(SL)
+void CGui::slTerGenHSm(SL)
 {
 	float v = 200.f * val;  pSet->gen_terSmH = v;
 	if (valTerGenHSm){		valTerGenHSm->setCaption(fToStr(v,0,4));  }
@@ -430,7 +431,7 @@ void App::slTerGenHSm(SL)
 
 ///  Terrain layers  -----------------------------
 //
-void App::chkTerLayOn(WP wp)
+void CGui::chkTerLayOn(WP wp)
 {
 	if (!bTerLay)  return;
 	sc->td.layersAll[idTerLay].on = !sc->td.layersAll[idTerLay].on;
@@ -439,10 +440,10 @@ void App::chkTerLayOn(WP wp)
 	sc->td.UpdLayers();
 	SetUsedStr(valTerLAll, sc->td.layers.size(), 3);
 	//  force update, blendmap sliders crash if not, !! this doesnt save hmap if changed  todo..
-	UpdateTrack();
+	app->UpdateTrack();
 }
 
-void App::chkTerLayTriplOn(WP wp)
+void CGui::chkTerLayTriplOn(WP wp)
 {
 	if (!bTerLay)  return;
 	sc->td.layersAll[idTerLay].triplanar = !sc->td.layersAll[idTerLay].triplanar;
@@ -451,14 +452,14 @@ void App::chkTerLayTriplOn(WP wp)
 	sc->td.UpdLayers();
 }
 
-void App::chkTexNormAutoOn(WP wp)
+void CGui::chkTexNormAutoOn(WP wp)
 {
 	bTexNormAuto = !bTexNormAuto;
 	ButtonPtr chk = wp->castType<Button>();
 	chk->setStateSelected(bTexNormAuto);
 }
 
-void App::comboTexDiff(ComboBoxPtr cmb, size_t val)
+void CGui::comboTexDiff(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
 	if (bTerLay)  sc->td.layersAll[idTerLay].texFile = s;
@@ -478,13 +479,13 @@ void App::comboTexDiff(ComboBoxPtr cmb, size_t val)
     imgTexDiff->setImageTexture(sTex + "_prv.png");
 }
 
-void App::comboTexNorm(ComboBoxPtr cmb, size_t val)
+void CGui::comboTexNorm(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
 	if (bTerLay)  sc->td.layersAll[idTerLay].texNorm = s;
 }
 
-void App::editTerLScale(EditPtr ed)
+void CGui::editTerLScale(EditPtr ed)
 {
 	Real r = std::max(0.01f, s2r(ed->getCaption()) );
 	if (bTerLay)  sc->td.layersAll[idTerLay].tiling = r;
@@ -493,7 +494,7 @@ void App::editTerLScale(EditPtr ed)
 	if (sldTerLScale)  sldTerLScale->setValue(v);
 }
 // |
-void App::slTerLScale(SL)  //  scale layer
+void CGui::slTerLScale(SL)  //  scale layer
 {
 	Real v = 2.0f + 24.0f * powf(val, 1.5f);  // 0.1 + 89.9, 1 + 19
 	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].tiling = v;
@@ -503,71 +504,71 @@ void App::slTerLScale(SL)  //  scale layer
 
 ///  Terrain BlendMap  -----------------------------
 //
-void App::slTerLAngMin(SL)
+void CGui::slTerLAngMin(SL)
 {
 	float v = 90.f * val;
 	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].angMin = v;
 	if (valTerLAngMin){	valTerLAngMin->setCaption(fToStr(v,0,4));  }
-	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;  //initBlendMaps(terrain);
+	if (app->terrain && bGI && !noBlendUpd)  app->bTerUpdBlend = true;  //initBlendMaps(terrain);
 }
-void App::slTerLAngMax(SL)
+void CGui::slTerLAngMax(SL)
 {
 	float v = 90.f * val;
 	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].angMax = v;
 	if (valTerLAngMax){	valTerLAngMax->setCaption(fToStr(v,0,4));  }
-	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
+	if (app->terrain && bGI && !noBlendUpd)  app->bTerUpdBlend = true;
 }
-void App::slTerLAngSm(SL)
+void CGui::slTerLAngSm(SL)
 {
 	float v = 90.f * val;
 	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].angSm = v;
 	if (valTerLAngSm){	valTerLAngSm->setCaption(fToStr(v,0,4));  }
-	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
+	if (app->terrain && bGI && !noBlendUpd)  app->bTerUpdBlend = true;
 }
 
-void App::slTerLHMin(SL)
+void CGui::slTerLHMin(SL)
 {
 	float v = -300.f + 600.f * val;
 	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].hMin = v;
 	if (valTerLHMin){	valTerLHMin->setCaption(fToStr(v,0,4));  }
-	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
+	if (app->terrain && bGI && !noBlendUpd)  app->bTerUpdBlend = true;
 }
-void App::slTerLHMax(SL)
+void CGui::slTerLHMax(SL)
 {
 	float v = -300.f + 600.f * val;
 	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].hMax = v;
 	if (valTerLHMax){	valTerLHMax->setCaption(fToStr(v,0,4));  }
-	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
+	if (app->terrain && bGI && !noBlendUpd)  app->bTerUpdBlend = true;
 }
-void App::slTerLHSm(SL)
+void CGui::slTerLHSm(SL)
 {
 	float v = 200.f * val;
 	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].hSm = v;
 	if (valTerLHSm){	valTerLHSm->setCaption(fToStr(v,0,4));  }
-	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
+	if (app->terrain && bGI && !noBlendUpd)  app->bTerUpdBlend = true;
 }
 
-void App::slTerLNoise(SL)
+void CGui::slTerLNoise(SL)
 {
 	float v = -2.f + 4.f * val;
 	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].noise = v;
 	if (valTerLNoise){	valTerLNoise->setCaption(fToStr(v,2,4));  }
-	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
+	if (app->terrain && bGI && !noBlendUpd)  app->bTerUpdBlend = true;
 }
 
-void App::chkTerLNoiseOnlyOn(WP wp)
+void CGui::chkTerLNoiseOnlyOn(WP wp)
 {
 	if (!bTerLay)  return;
 	sc->td.layersAll[idTerLay].bNoiseOnly = !sc->td.layersAll[idTerLay].bNoiseOnly;
 	ButtonPtr chk = wp->castType<Button>();
 	chk->setStateSelected(sc->td.layersAll[idTerLay].bNoiseOnly);
-	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
+	if (app->terrain && bGI && !noBlendUpd)  app->bTerUpdBlend = true;
 }
 
 
 ///  Terrain Particles  -----------------------------
 //
-void App::editLDust(EditPtr ed)
+void CGui::editLDust(EditPtr ed)
 {
 	Real r = s2r(ed->getCaption());
 	TerLayer* l = !bTerLay ? &sc->td.layerRoad : &sc->td.layersAll[idTerLay];
@@ -576,7 +577,7 @@ void App::editLDust(EditPtr ed)
 		 if (n=="LDust")   l->dust = r;		else if (n=="LDustS")  l->dustS = r;
 	else if (n=="LMud")    l->mud = r;		else if (n=="LSmoke")  l->smoke = r;
 }
-void App::editLTrlClr(EditPtr ed)
+void CGui::editLTrlClr(EditPtr ed)
 {
 	ColourValue c = s2c(ed->getCaption());
 	if (!bTerLay)   sc->td.layerRoad.tclr = c;
@@ -584,7 +585,7 @@ void App::editLTrlClr(EditPtr ed)
 	if (clrTrail)  clrTrail->setColour(Colour(c.r,c.g,c.b));
 }
 
-void App::comboParDust(ComboBoxPtr cmb, size_t val)
+void CGui::comboParDust(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
 	String n = cmb->getName();
@@ -597,7 +598,7 @@ void App::comboParDust(ComboBoxPtr cmb, size_t val)
 
 ///  Terrain Surface  -----------------------------
 //
-void App::comboSurface(ComboBoxPtr cmb, size_t val)
+void CGui::comboSurface(ComboBoxPtr cmb, size_t val)
 {
 	std::string s = cmb->getItemNameAt(val);
 	if (!bTerLay)
@@ -607,12 +608,12 @@ void App::comboSurface(ComboBoxPtr cmb, size_t val)
 	UpdSurfInfo();
 }
 
-void App::UpdSurfInfo()
+void CGui::UpdSurfInfo()
 {
 	std::string s = cmbSurface->getCaption();
-	int id = surf_map[s]-1;
+	int id = app->surf_map[s]-1;
 	if (id == -1)  return;  //not found..
-	const TRACKSURFACE& su = surfaces[id];
+	const TRACKSURFACE& su = app->surfaces[id];
 
 	txtSurfTire->setCaption(su.tireName);
 	txtSuBumpWave->setCaption(fToStr(su.bumpWaveLength, 1,3));

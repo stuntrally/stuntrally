@@ -18,8 +18,9 @@
 
 #include <OgreFontManager.h>
 #include <OgreLogManager.h>
+#if OGRE_VERSION >= MYGUI_DEFINE_VERSION(1, 9, 0) 
 #include <OgreOverlaySystem.h>
-
+#endif
 #include "boost/filesystem.hpp"
 
 #include <MyGUI.h>
@@ -397,8 +398,10 @@ bool BaseApp::setup()
 
 	mSceneMgr = mRoot->createSceneManager(/*ST_GENERIC/**/Ogre::ST_EXTERIOR_FAR/**/);
 
+	#if OGRE_VERSION >= MYGUI_DEFINE_VERSION(1, 9, 0) 
 	Ogre::OverlaySystem* pOverlaySystem = new Ogre::OverlaySystem();
 	mSceneMgr->addRenderQueueListener(pOverlaySystem);
+	#endif
 
 	mSplitMgr = new SplitScreenManager(mSceneMgr, mWindow, pSet);
 

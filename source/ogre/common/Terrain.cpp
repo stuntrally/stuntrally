@@ -7,7 +7,8 @@
 #include "TerrainMaterial.h"
 
 #ifdef SR_EDITOR
-	#include "../../editor/OgreApp.h"
+	#include "../../editor/CApp.h"
+	#include "../../editor/CGui.h"
 	#include "../../editor/settings.h"
 	#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #else

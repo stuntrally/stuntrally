@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
-#include "OgreApp.h"
+#include "CApp.h"
+#include "CGui.h"
 #include "../road/Road.h"
 #include "../ogre/common/RenderConst.h"
 #include "../ogre/common/SceneXml.h"
@@ -146,7 +147,7 @@ void App::UpdStartPos()
 
 const static String clrWarn[5] = {"#FF4040","#FFA040","#E0E040","#80F040","#60A0E0"};
 const static String strWarn[5] = {"ERR   ","WARN  ","Info  ","Note  ","Txt   "};
-void App::Warn(eWarn type, String text)
+void CGui::Warn(eWarn type, String text)
 {
 	if (logWarn)
 		LogO(strWarn[type]+text);
@@ -155,7 +156,7 @@ void App::Warn(eWarn type, String text)
 	if (type == ERR || type == WARN)  ++cntWarn;  // count serious only
 }
 	
-void App::WarningsCheck(const Scene* sc, const SplineRoad* road)
+void CGui::WarningsCheck(const Scene* sc, const SplineRoad* road)
 {
 	if (!edWarn && !logWarn)  return;
 	cntWarn = 0;
@@ -168,7 +169,7 @@ void App::WarningsCheck(const Scene* sc, const SplineRoad* road)
 	{
 		///-  start  -------------
 		int cnt = road->getNumPoints();
-		const float* pos = &vStartPos[0][0], *rot = &vStartRot[0][0];
+		const float* pos = &app->vStartPos[0][0], *rot = &app->vStartRot[0][0];
 		Vector3 stPos = Vector3(pos[0],pos[2],-pos[1]);
 
 		Quaternion q(rot[0],rot[1],rot[2],rot[3]);
@@ -206,8 +207,8 @@ void App::WarningsCheck(const Scene* sc, const SplineRoad* road)
 		if (stPos.x < -tws || stPos.x > tws || stPos.z < -tws || stPos.z > tws)
 			Warn(ERR,"Car start outside track area  Whoa :o");
 		
-		if (terrain)  // won't work in tool..
-		{	float yt = terrain->getHeightAtWorldPosition(stPos), yd = stPos.y - yt - 0.5f;
+		if (app->terrain)  // won't work in tool..
+		{	float yt = app->terrain->getHeightAtWorldPosition(stPos), yd = stPos.y - yt - 0.5f;
 			//Warn(TXT,"Car start to terrain distance "+fToStr(yd,1,4));
 			if (yd < 0.f)   Warn(ERR, "Car start below terrain  Whoa :o");
 			if (yd > 0.3f)  Warn(INFO,"Car start far above terrain\n (skip this if on bridge or in pipe), distance: "+fToStr(yd,1,4));
@@ -215,11 +216,11 @@ void App::WarningsCheck(const Scene* sc, const SplineRoad* road)
 		
 
 		//-  other start places inside terrain (split screen)  ----
-		if (terrain)  // won't work in tool..
+		if (app->terrain)  // won't work in tool..
 		for (int i=1; i<4; ++i)
 		{
 			Vector3 p = stPos + i * stDir * 6.f;  //par dist
-			float yt = terrain->getHeightAtWorldPosition(p), yd = p.y - yt - 0.5f;
+			float yt = app->terrain->getHeightAtWorldPosition(p), yd = p.y - yt - 0.5f;
 			String si = toStr(i);
 							Warn(TXT, "Car "+si+" start to ter dist "+fToStr(yd,1,4));
 			//if (yd < 0.f)   Warn(WARN,"Car "+si+" start below terrain !");  // moved above in game

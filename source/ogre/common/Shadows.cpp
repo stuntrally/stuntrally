@@ -3,7 +3,7 @@
 #include "../common/RenderConst.h"
 
 #ifdef SR_EDITOR
-	#include "../../editor/OgreApp.h"
+	#include "../../editor/CApp.h"
 	#include "../../editor/settings.h"
 	#include "../../road/Road.h"
 #else

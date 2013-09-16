@@ -6,7 +6,8 @@
 #include "../../road/Road.h"
 
 #ifdef SR_EDITOR
-	#include "../../editor/OgreApp.h"
+	#include "../../editor/CApp.h"
+	#include "../../editor/CGui.h"
 #else
 	#include "../CGame.h"
 	#include "../../vdrift/game.h"
@@ -189,7 +190,7 @@ void App::CreateObjects()
 	delete fileLoader;
 
 	#ifdef SR_EDITOR
-	iObjLast = sc->objects.size();
+	gui->iObjLast = sc->objects.size();
 	#endif
 }
 
@@ -243,15 +244,15 @@ void App::UpdObjPick()
 		ndStBox->setVisible(edMode == ED_Start && !bMoveCam);
 
 	int objs = sc->objects.size();
-	bool bObjects = edMode == ED_Objects && !bMoveCam && objs > 0 && iObjCur >= 0;
+	bool bObjects = edMode == ED_Objects && !bMoveCam && objs > 0 && gui->iObjCur >= 0;
 	if (objs > 0)
-		iObjCur = std::min(iObjCur, objs-1);
+		gui->iObjCur = std::min(gui->iObjCur, objs-1);
 
 	if (!ndObjBox)  return;
 	ndObjBox->setVisible(bObjects);
 	if (!bObjects)  return;
 	
-	const Object& o = sc->objects[iObjCur];
+	const Object& o = sc->objects[gui->iObjCur];
 	const AxisAlignedBox& ab = o.nd->getAttachedObject(0)->getBoundingBox();
 	//Vector3 p = ab.getCenter();
 	Vector3 s = o.scale * ab.getSize();  // * sel obj's node aabb
@@ -272,7 +273,7 @@ void App::PickObject()
 {
 	if (sc->objects.empty())  return;
 
-	iObjCur = -1;
+	gui->iObjCur = -1;
 	const MyGUI::IntPoint& mp = MyGUI::InputManager::getInstance().getMousePosition();
 	Real mx = Real(mp.left)/mWindow->getWidth(), my = Real(mp.top)/mWindow->getHeight();
 	Ray ray = mCamera->getCameraToViewportRay(mx,my);  // 0..1
@@ -299,7 +300,7 @@ void App::PickObject()
 			//  pick if closer
 			if (i != -1 && (*it).distance < dist)
 			{
-				iObjCur = i;
+				gui->iObjCur = i;
 				dist = (*it).distance;
 			}
 		}
@@ -313,11 +314,11 @@ void App::PickObject()
 //-------------------------------------------------------------------------------------------------------
 void App::ToggleObjSim()
 {
-	if (objPan)  objPan->setVisible(objSim);
+	if (gui->objPan)  gui->objPan->setVisible(gui->objSim);
 	
 	DestroyObjects(false);
 
-	if (!objSim)  // off sim
+	if (!gui->objSim)  // off sim
 	{
 		// Destroy blt world
 		for(int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
@@ -348,7 +349,7 @@ void App::ToggleObjSim()
 }
 
 ///  add new object
-void App::AddNewObj()
+void CGui::AddNewObj()  //App..
 {
 	::Object o = objNew;
 	o.name = vObjNames[iObjTNew];
@@ -357,12 +358,12 @@ void App::AddNewObj()
 	///TODO: ?dyn objs size, !?get center,size, rmb height..
 
 	//  pos, rot
-	const Ogre::Vector3& v = road->posHit;
+	const Ogre::Vector3& v = app->road->posHit;
 	o.pos[0] = v.x;  o.pos[1] =-v.z;  o.pos[2] = v.y + objNew.pos[2];
 
 	//  create object
-	o.ent = mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
-	o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s);
+	o.ent = app->mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
+	o.nd = app->mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s);
 	o.SetFromBlt();
 	o.nd->setScale(o.scale);
 	o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
@@ -385,17 +386,17 @@ void CGui::listObjsChng(MyGUI::List* l, size_t t)
 }
 
 //  preview model for insert
-void App::SetObjNewType(int tnew)
+void CGui::SetObjNewType(int tnew)
 {
 	iObjTNew = tnew;
-	if (objNew.nd)	{	mSceneMgr->destroySceneNode(objNew.nd);  objNew.nd = 0;  }
-	if (objNew.ent)	{	mSceneMgr->destroyEntity(objNew.ent);  objNew.ent = 0;  }
+	if (objNew.nd)	{	app->mSceneMgr->destroySceneNode(objNew.nd);  objNew.nd = 0;  }
+	if (objNew.ent)	{	app->mSceneMgr->destroyEntity(objNew.ent);  objNew.ent = 0;  }
 	
 	String name = vObjNames[iObjTNew];
 	objNew.dyn = boost::filesystem::exists(PATHMANAGER::Data()+"/objects/"+ name + ".bullet");
 	if (objNew.dyn)  objNew.scale = Vector3::UNIT_SCALE;  // dyn no scale
-	objNew.ent = mSceneMgr->createEntity("-oE", name + ".mesh");
-	objNew.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("-oN");
+	objNew.ent = app->mSceneMgr->createEntity("-oE", name + ".mesh");
+	objNew.nd = app->mSceneMgr->getRootSceneNode()->createChildSceneNode("-oN");
 	objNew.nd->attachObject(objNew.ent);  objNew.ent->setVisibilityFlags(RV_Vegetation);
 	UpdObjNewNode();
 
@@ -404,15 +405,15 @@ void App::SetObjNewType(int tnew)
 	if (objListBld) objListBld->setIndexSelected(-1);
 }
 
-void App::UpdObjNewNode()
+void CGui::UpdObjNewNode()
 {
-	if (!road || !objNew.nd)  return;
+	if (!app->road || !objNew.nd)  return;
 
-	bool vis = road->bHitTer && bEdit() && iObjCur == -1 && edMode == ED_Objects;
+	bool vis = app->road->bHitTer && app->bEdit() && iObjCur == -1 && app->edMode == ED_Objects;
 	objNew.nd->setVisible(vis);
 	if (!vis)  return;
 	
-	Vector3 p = road->posHit;  p.y += objNew.pos[2];
+	Vector3 p = app->road->posHit;  p.y += objNew.pos[2];
 	objNew.SetFromBlt();
 	objNew.nd->setPosition(p);
 	objNew.nd->setScale(objNew.scale);

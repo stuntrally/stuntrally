@@ -146,6 +146,7 @@ public:
 	Ogre::Camera* mCamera;
 private:
 	friend class App;
+	friend class CGui;
 
 	int iSelPoint, iChosen;  // -1 if none
 	std::set<int> vSel;  // selection

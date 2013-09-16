@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
-#include "OgreApp.h"
+#include "CApp.h"
+#include "CGui.h"
 #include "../road/Road.h"
 #include "../ogre/common/Gui_Def.h"
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
@@ -111,15 +112,15 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 
 	//  keys up/dn - trklist
 
-	WP wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();
+	MyGUI::Widget* wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();
 	static float dirU = 0.f,dirD = 0.f;
-	if (bGuiFocus && wf != trkDesc[0])
+	if (bGuiFocus && wf != gui->trkDesc[0])
 	{	if (isKey(UP)  ||isKey(KP_8))  dirD += evt.timeSinceLastFrame;  else
 		if (isKey(DOWN)||isKey(KP_2))  dirU += evt.timeSinceLastFrame;  else
 		{	dirU = 0.f;  dirD = 0.f;  }
 		int d = ctrl ? 4 : 1;
-		if (dirU > 0.0f) {  trkListNext( d);  dirU = -0.2f;  }
-		if (dirD > 0.0f) {  trkListNext(-d);  dirD = -0.2f;  }
+		if (dirU > 0.0f) {  gui->trkListNext( d);  dirU = -0.2f;  }
+		if (dirD > 0.0f) {  gui->trkListNext(-d);  dirD = -0.2f;  }
 	}
 
 	
@@ -132,6 +133,9 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		int ic = road->iChosen;  bool bCur = ic >= 0;
 		SplinePoint& sp = bCur ? road->getPoint(ic) : road->newP;
 		std::string s;
+		MyGUI::StaticTextPtr
+			*rdTxt = gui->rdTxt, *rdVal = gui->rdVal, *rdKey = gui->rdVal,
+			*rdTxtSt = gui->rdTxtSt, *rdValSt = gui->rdValSt;
 
 		static bool first = true;
 		if (first)  // once, static text
@@ -235,6 +239,9 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	//--------------------------------------------------------------------------------------------------------------------------------
 	else if (edMode < ED_Road)
 	{
+		MyGUI::StaticTextPtr
+			*brTxt = gui->brTxt, *brVal = gui->brVal, *brKey = gui->brVal;
+
 		static bool first = true;
 		if (first)  // once, static text
 		{	first = false;
@@ -316,6 +323,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	//----------------------------------------------------------------
 	else if (edMode == ED_Start && road)
 	{
+		MyGUI::StaticTextPtr
+			*stTxt = gui->stTxt;
 		Vector3 p;  if (ndCar)  p = ndCar->getPosition();
 		stTxt[0]->setCaption("");
 		stTxt[1]->setCaption("width "+fToStr(road->vStBoxDim.z,1,4));
@@ -333,10 +342,12 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	//----------------------------------------------------------------
 	else if (edMode == ED_Fluids)
 	{
+		MyGUI::StaticTextPtr
+			*flTxt = gui->flTxt;
 		if (sc->fluids.empty())
 		{
 			if (flTxt[0])	flTxt[0]->setCaption("None");
-			for (int i=1; i < FL_TXT; ++i)
+			for (int i=1; i < gui->FL_TXT; ++i)
 				if (flTxt[i])  flTxt[i]->setCaption("");
 		}else
 		{	FluidBox& fb = sc->fluids[iFlCur];
@@ -364,26 +375,28 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	//----------------------------------------------------------------
 	else if (edMode == ED_Objects)
 	{
+		MyGUI::StaticTextPtr
+			*objTxt = gui->objTxt;
 		int objs = sc->objects.size();
-		bool bNew = iObjCur == -1;
-		const Object& o = bNew || sc->objects.empty() ? objNew : sc->objects[iObjCur];
+		bool bNew = gui->iObjCur == -1;
+		const Object& o = bNew || sc->objects.empty() ? gui->objNew : sc->objects[gui->iObjCur];
 		const Quaternion& q = o.nd->getOrientation();
 		//Quaternion q(o.rot.w(),o.rot.x(),o.rot.y(),o.rot.z());
 		objTxt[0]->setCaption((bNew ? "#80FF80New#B0D0B0     " : "#A0D0FFCur#B0B0D0     ")
-							+(vObjSel.empty() ? (bNew ? "-" : toStr(iObjCur+1))+" / "+toStr(objs)
-							: "#00FFFFSel  "+toStr(vObjSel.size())));
-		objTxt[1]->setCaption(bNew ? vObjNames[iObjTNew] : o.name);
-		objTxt[2]->setCaption(String(objEd==EO_Move  ?"#60FF60":"")+"Pos:  "+fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
-		objTxt[3]->setCaption(String(objEd==EO_Rotate?"#FFA0A0":"")+"Rot:  y "+fToStr(q.getYaw().valueDegrees(),0,3)+" p "+fToStr(q.getPitch().valueDegrees(),0,3)+" r "+fToStr(q.getRoll().valueDegrees(),0,3));
-		objTxt[4]->setCaption(String(objEd==EO_Scale ?"#60F0FF":"")+"Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
+							+(gui->vObjSel.empty() ? (bNew ? "-" : toStr(gui->iObjCur+1))+" / "+toStr(objs)
+							: "#00FFFFSel  "+toStr(gui->vObjSel.size())));
+		objTxt[1]->setCaption(bNew ? gui->vObjNames[gui->iObjTNew] : o.name);
+		objTxt[2]->setCaption(String(gui->objEd==EO_Move  ?"#60FF60":"")+"Pos:  "+fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
+		objTxt[3]->setCaption(String(gui->objEd==EO_Rotate?"#FFA0A0":"")+"Rot:  y "+fToStr(q.getYaw().valueDegrees(),0,3)+" p "+fToStr(q.getPitch().valueDegrees(),0,3)+" r "+fToStr(q.getRoll().valueDegrees(),0,3));
+		objTxt[4]->setCaption(String(gui->objEd==EO_Scale ?"#60F0FF":"")+"Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
 
-		objTxt[5]->setCaption(String("Sim: ") + (objSim?"ON":"off") + "      "+toStr(world->getNumCollisionObjects()));
-		objTxt[5]->setTextColour(objSim ? MyGUI::Colour(1.0,0.9,1.0) : MyGUI::Colour(0.77,0.77,0.8));
+		objTxt[5]->setCaption(String("Sim: ") + (gui->objSim?"ON":"off") + "      "+toStr(world->getNumCollisionObjects()));
+		objTxt[5]->setTextColour(gui->objSim ? MyGUI::Colour(1.0,0.9,1.0) : MyGUI::Colour(0.77,0.77,0.8));
 
 		//  edit
 		if (mz != 0 && bEdit())  // wheel prev/next
 		{
-			if (objs > 0)  {  iObjCur = (iObjCur-mz+objs)%objs;  UpdObjPick();  }
+			if (objs > 0)  {  gui->iObjCur = (gui->iObjCur-mz+objs)%objs;  UpdObjPick();  }
 		}
 	}
 	mz = 0;  // mouse wheel
@@ -567,16 +580,16 @@ void App::editMouse()
 	if (edMode == ED_Objects && mbAny)
 	{
 		const Real fMove(0.5f), fRot(1.5f), fScale(0.02f);  //par speed
-		bool upd = false, sel = !vObjSel.empty();
+		bool upd = false, sel = !gui->vObjSel.empty();
 		//  selection, picked or new
-		std::set<int>::iterator it = vObjSel.begin();
-		int i = sel ? *it : iObjCur;
+		std::set<int>::iterator it = gui->vObjSel.begin();
+		int i = sel ? *it : gui->iObjCur;
 		while (i == -1 || (i >= 0 && i < sc->objects.size()))
 		{
-			Object& o = i == -1 ? objNew : sc->objects[i];
+			Object& o = i == -1 ? gui->objNew : sc->objects[i];
 			bool upd1 = false;
 
-			switch (objEd)
+			switch (gui->objEd)
 			{
 				case EO_Move:
 				{
@@ -627,7 +640,7 @@ void App::editMouse()
 
 			if (sel)
 			{	++it;  // next sel
-				if (it == vObjSel.end())  break;
+				if (it == gui->vObjSel.end())  break;
 				i = *it;
 			}else  break;  // only 1
 		}

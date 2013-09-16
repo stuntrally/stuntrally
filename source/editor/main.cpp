@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
-#include "OgreApp.h"
+#include "CApp.h"
 #include "../vdrift/pathmanager.h"
 #include <locale.h>
 #include <boost/filesystem.hpp>
@@ -54,8 +54,7 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 
 	//  Start
 	//----------------------------------------------------------------
-	App* pApp = new App();
-	pApp->pSet = settings;  //app.appThr.pSet = &settings;
+	App* pApp = new App(settings);
 
 	try
 	{

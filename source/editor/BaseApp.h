@@ -33,6 +33,13 @@ namespace SFO
     class SDLCursorManager;
 }
 
+enum ED_MODE  {
+	ED_Deform=0, ED_Smooth, ED_Height, ED_Filter, /*ED_Paint,*/
+	ED_Road, ED_Start, ED_PrvCam, ED_Fluids, ED_Objects, ED_Rivers, ED_ALL  };
+
+enum WND_Types {  WND_Edit=0, WND_Help, WND_Options, WND_ALL  };  // pSet->inMenu
+
+
 class BaseApp :
 		public Ogre::FrameListener,
 		public SFO::KeyListener, public SFO::MouseListener, public SFO::WindowListener
@@ -112,10 +119,7 @@ protected:
 	Ogre::Real mRotX, mRotY,  mRotKX, mRotKY,  moveMul, rotMul;
 	Ogre::Vector3 mTrans;
 
-	enum ED_MODE
-	{	ED_Deform=0, ED_Smooth, ED_Height, ED_Filter, /*ED_Paint,*/
-		ED_Road, ED_Start, ED_PrvCam, ED_Fluids, ED_Objects, ED_Rivers, ED_ALL
-	} edMode,edModeOld;
+	ED_MODE	edMode,edModeOld;
 
 
 	///  Gui
@@ -135,7 +139,7 @@ protected:
 	MyGUI::TextBox*	txFps;
 
 	//  main menu
-	enum WND_Types {  WND_Edit=0, WND_Help, WND_Options, WND_ALL  };  // pSet->inMenu
+	friend class CGui;
 	MyGUI::WidgetPtr mWndMain,mWndEdit,mWndHelp,mWndOpts;  // menu, windows
 	MyGUI::TabPtr mWndTabsEdit,mWndTabsHelp,mWndTabsOpts;  // main tabs on windows
 	MyGUI::WidgetPtr mWndMainPanels[WND_ALL];  MyGUI::ButtonPtr mWndMainBtns[WND_ALL];

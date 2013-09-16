@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
-#include "OgreApp.h"
+#include "CApp.h"
+#include "CGui.h"
 #include "../road/Road.h"
 #include <boost/filesystem.hpp>
 #include "../ogre/common/Gui_Def.h"
@@ -12,15 +13,15 @@ using namespace Ogre;
 //  Gui from xml (scene, road), after load
 //..........................................................................................................
 
-void App::SetGuiFromXmls()
+void CGui::SetGuiFromXmls()
 {
-	if (!mWndEdit)  return;
+	if (!app->mWndEdit)  return;
 	bGI = false;
 	// set slider value, upd text
 	Slider* sl;
 
 	#define _Slv(name, val)  \
-		sl = (Slider*)mWndEdit->findWidget(#name);  \
+		sl = (Slider*)app->mWndEdit->findWidget(#name);  \
 		if (sl)  sl->setValue(val);  sl##name(sl, val);
 	
 	#define _Ed(name, val)  ed##name->setCaption(toStr(val));
@@ -79,29 +80,29 @@ void App::SetGuiFromXmls()
 	//  [Road]
 	//-----------------------------------------------
 	for (int i=0; i < 4/*MTRs*/; ++i)
-	{	_Cmb(cmbRoadMtr[i], road->sMtrRoad[i]);
-		_Cmb(cmbPipeMtr[i], road->sMtrPipe[i]);  }
-	_Cmb(cmbRoadWMtr, road->sMtrWall);  _Cmb(cmbRoadColMtr, road->sMtrCol);
-	_Cmb(cmbPipeWMtr, road->sMtrWallPipe);
+	{	_Cmb(cmbRoadMtr[i], app->road->sMtrRoad[i]);
+		_Cmb(cmbPipeMtr[i], app->road->sMtrPipe[i]);  }
+	_Cmb(cmbRoadWMtr, app->road->sMtrWall);  _Cmb(cmbRoadColMtr, app->road->sMtrCol);
+	_Cmb(cmbPipeWMtr, app->road->sMtrWallPipe);
 
-	_Ed(RdTcMul, road->tcMul);  _Ed(RdTcMulW, road->tcMul);
-	_Ed(RdTcMulP, road->tcMul); _Ed(RdTcMulPW, road->tcMul);  _Ed(RdTcMulC, road->tcMul);
-	_Ed(RdColN, road->colN);		_Ed(RdColR, road->colR);
-	_Ed(RdLenDim, road->lenDiv0);	_Ed(RdWidthSteps,road->iw0);
-	_Ed(RdPwsM, road->iwPmul);		_Ed(RdPlsM, road->ilPmul);
-	_Ed(RdHeightOfs,road->fHeight);
-	_Ed(RdSkirtLen,	road->skirtLen);	_Ed(RdSkirtH,	road->skirtH);
-	_Ed(RdMergeLen,	road->setMrgLen);	_Ed(RdLodPLen,	road->lposLen);
+	_Ed(RdTcMul, app->road->tcMul);  _Ed(RdTcMulW, app->road->tcMul);
+	_Ed(RdTcMulP, app->road->tcMul); _Ed(RdTcMulPW, app->road->tcMul);  _Ed(RdTcMulC, app->road->tcMul);
+	_Ed(RdColN, app->road->colN);		_Ed(RdColR, app->road->colR);
+	_Ed(RdLenDim, app->road->lenDiv0);	_Ed(RdWidthSteps,app->road->iw0);
+	_Ed(RdPwsM, app->road->iwPmul);		_Ed(RdPlsM, app->road->ilPmul);
+	_Ed(RdHeightOfs,app->road->fHeight);
+	_Ed(RdSkirtLen,	app->road->skirtLen);	_Ed(RdSkirtH,	app->road->skirtH);
+	_Ed(RdMergeLen,	app->road->setMrgLen);	_Ed(RdLodPLen,	app->road->lposLen);
 	bGI = true;
 }
 
 
-void App::btnNewGame(WP)
+void CGui::btnNewGame(WP)
 {
 	if (trkName)  trkName->setCaption(sListTrack.c_str());
 	pSet->gui.track = sListTrack;
 	pSet->gui.track_user = bListTrackU;  //UpdWndTitle();//? load
-	LoadTrack();
+	app->LoadTrack();
 }
 
 
@@ -118,14 +119,14 @@ const Ogre::String
 	csTrkFd[cnTrkFd] = {"/heightmap-new.f32", "/records.txt"};  // del
 
 
-void App::btnTrkCopySel(WP)  // set copy source
+void CGui::btnTrkCopySel(WP)  // set copy source
 {
 	sCopyTrack = sListTrack;
 	bCopyTrackU = bListTrackU;
 	if (valTrkCpySel)  valTrkCpySel->setCaption(sCopyTrack);
 }
 
-bool App::ChkTrkCopy()
+bool CGui::ChkTrkCopy()
 {
 	if (sCopyTrack == "")  // none
 	{
@@ -145,7 +146,7 @@ bool App::ChkTrkCopy()
 }
 
 ///  copy Hmap
-void App::btnCopyTerHmap(WP)
+void CGui::btnCopyTerHmap(WP)
 {
 	if (!ChkTrkCopy())  return;
 
@@ -157,13 +158,13 @@ void App::btnCopyTerHmap(WP)
 	sc->td.iVertsX = sF.td.iTerSize;  //  ter sizes
 	sc->td.fTriangleSize = sF.td.fTriangleSize;
 	sc->td.UpdVals();
-	bNewHmap = true;
-	SetGuiFromXmls();	UpdateTrack();
-	if (road)  road->UpdAllMarkers();
+	app->bNewHmap = true;
+	SetGuiFromXmls();	app->UpdateTrack();
+	if (app->road)  app->road->UpdAllMarkers();
 }
 
 //  copy sun, etc.
-void App::btnCopySun(WP)
+void CGui::btnCopySun(WP)
 {
 	if (!ChkTrkCopy())  return;
 	String from = PathCopyTrk();
@@ -180,12 +181,12 @@ void App::btnCopySun(WP)
 
 	sc->ldPitch = sF.ldPitch;  sc->ldYaw = sF.ldYaw;  // light
 	sc->lAmb = sF.lAmb;  sc->lDiff = sF.lDiff;  sc->lSpec = sF.lSpec;
-	SetGuiFromXmls();	UpdateTrack();
-	DestroyWeather();  CreateWeather();
+	SetGuiFromXmls();	app->UpdateTrack();
+	app->DestroyWeather();  app->CreateWeather();
 }
 
 //  copy ter layers
-void App::btnCopyTerLayers(WP)
+void CGui::btnCopyTerLayers(WP)
 {
 	if (!ChkTrkCopy())  return;
 	String from = PathCopyTrk();
@@ -202,11 +203,11 @@ void App::btnCopyTerLayers(WP)
 	String to = TrkDir() + "objects";  // to, new
 	Copy(sto + csTrkFo[0], to + csTrkFo[0]);
 
-	SetGuiFromXmls();	UpdateTrack();
+	SetGuiFromXmls();	app->UpdateTrack();
 }
 
 //  copy paged layers
-void App::btnCopyVeget(WP)
+void CGui::btnCopyVeget(WP)
 {
 	if (!ChkTrkCopy())  return;
 	String from = PathCopyTrk();
@@ -224,79 +225,79 @@ void App::btnCopyVeget(WP)
 	for (int i=0; i < sc->ciNumPgLay; ++i)
 		sc->pgLayersAll[i] = sF.pgLayersAll[i];
 
-	SetGuiFromXmls();	UpdateTrack();
+	SetGuiFromXmls();	app->UpdateTrack();
 }
 
 //  copy road
-void App::btnCopyRoad(WP)
+void CGui::btnCopyRoad(WP)
 {
-	if (!ChkTrkCopy() || !road)  return;
+	if (!ChkTrkCopy() || !app->road)  return;
 	String from = PathCopyTrk();
-	road->LoadFile(from + "/road.xml");
+	app->road->LoadFile(from + "/road.xml");
 
-	SetGuiFromXmls();	road->RebuildRoad(true);
-	UpdPSSMMaterials();	road->UpdAllMarkers();
+	SetGuiFromXmls();	app->road->RebuildRoad(true);
+	app->UpdPSSMMaterials();	app->road->UpdAllMarkers();
 }
 
 //  copy road pars
-void App::btnCopyRoadPars(WP)
+void CGui::btnCopyRoadPars(WP)
 {
-	if (!ChkTrkCopy() || !road)  return;
+	if (!ChkTrkCopy() || !app->road)  return;
 	String from = PathCopyTrk();
-	SplineRoad rd(this);  rd.LoadFile(from + "/road.xml",false);
+	SplineRoad rd(app);  rd.LoadFile(from + "/road.xml",false);
 
 	for (int i=0; i < MTRs; ++i)
-	{	road->sMtrRoad[i] = rd.sMtrRoad[i];
-		road->SetMtrPipe(i, rd.sMtrPipe[i]);  }
+	{	app->road->sMtrRoad[i] = rd.sMtrRoad[i];
+		app->road->SetMtrPipe(i, rd.sMtrPipe[i]);  }
 
-	road->tcMul = rd.tcMul;		road->colN = rd.colN;
-	road->lenDiv0 = rd.lenDiv0;	road->colR = rd.colR;
-	road->iw0 =	rd.iw0;			road->iwPmul = rd.iwPmul;
-	road->fHeight =	rd.fHeight;	road->ilPmul = rd.ilPmul;
-	road->skirtLen = rd.skirtLen;	road->skirtH = rd.skirtH;
-	road->setMrgLen = rd.setMrgLen;  road->lposLen = rd.lposLen;
+	app->road->tcMul = rd.tcMul;		app->road->colN = rd.colN;
+	app->road->lenDiv0 = rd.lenDiv0;	app->road->colR = rd.colR;
+	app->road->iw0 =	rd.iw0;			app->road->iwPmul = rd.iwPmul;
+	app->road->fHeight =	rd.fHeight;	app->road->ilPmul = rd.ilPmul;
+	app->road->skirtLen = rd.skirtLen;	app->road->skirtH = rd.skirtH;
+	app->road->setMrgLen = rd.setMrgLen;  app->road->lposLen = rd.lposLen;
 
-	SetGuiFromXmls();	road->RebuildRoad(true);
-	UpdPSSMMaterials();	road->UpdAllMarkers();
+	SetGuiFromXmls();	app->road->RebuildRoad(true);
+	app->UpdPSSMMaterials();	app->road->UpdAllMarkers();
 }
 
 
 ///  tools 	. . . . . . . . . . . . . . . . . . . .	. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-void App::btnDeleteRoad(WP)
+void CGui::btnDeleteRoad(WP)
 {
-	int l = road->getNumPoints();
+	int l = app->road->getNumPoints();
 	for (int i=0; i < l; ++i)
 	{
-		road->iChosen = road->getNumPoints()-1;
-		road->Delete();
+		app->road->iChosen = app->road->getNumPoints()-1;
+		app->road->Delete();
 	}
-	//road->RebuildRoad(true);
+	//app->road->RebuildRoad(true);
 }
-void App::btnDeleteFluids(WP)
+void CGui::btnDeleteFluids(WP)
 {
 	sc->fluids.clear();
-	bRecreateFluids = true;
+	app->bRecreateFluids = true;
 }
-void App::btnDeleteObjects(WP)
+void CGui::btnDeleteObjects(WP)
 {
-	DestroyObjects(true);
+	app->DestroyObjects(true);
 	iObjCur = -1;
 }
 
 //  Scale track  --------------------------------
-void App::btnScaleAll(WP)
+void CGui::btnScaleAll(WP)
 {
-	if (!edScaleAllMul || !road)  return;
+	if (!edScaleAllMul || !app->road)  return;
 	Real sf = std::max(0.1f, s2r(edScaleAllMul->getCaption()) );  // scale mul
 	
 	//  road
-	for (int i=0; i < road->getNumPoints(); ++i)
+	for (int i=0; i < app->road->getNumPoints(); ++i)
 	{
-		road->Scale1(i, sf, 0.f);
-		road->mP[i].width *= sf;
+		app->road->Scale1(i, sf, 0.f);
+		app->road->mP[i].width *= sf;
 	}
-	road->bSelChng = true;
+	app->road->bSelChng = true;
 	
 	//  fluids
 	for (int i=0; i < sc->fluids.size(); ++i)
@@ -317,24 +318,24 @@ void App::btnScaleAll(WP)
 	//  ter  ---
 	sc->td.fTriangleSize *= sf;  sc->td.UpdVals();
 	
-	SetGuiFromXmls();	UpdateTrack();
+	SetGuiFromXmls();	app->UpdateTrack();
 	
 	//  road upd
 	if (0) //road)  // doesnt work here..
-	{	road->UpdPointsH();
-		road->RebuildRoad(true);
+	{	app->road->UpdPointsH();
+		app->road->RebuildRoad(true);
 	}
 
 	//  start pos
 	const int n = 0;  // 1st entry - all same / edit 4..
-	vStartPos[n][0] *= sf;
-	vStartPos[n][1] *= sf;  UpdStartPos();
+	app->vStartPos[n][0] *= sf;
+	app->vStartPos[n][1] *= sf;  app->UpdStartPos();
 }
 
-void App::editScaleAllMul(EditPtr)
+void CGui::editScaleAllMul(EditPtr)
 {	}
 
-void App::editScaleTerHMul(EditPtr)
+void CGui::editScaleTerHMul(EditPtr)
 {	}
 
 
@@ -343,7 +344,7 @@ void App::editScaleTerHMul(EditPtr)
 //-----------------------------------------------------------------------------------------------------------
 
 ///  New (duplicate)
-void App::btnTrackNew(WP)
+void CGui::btnTrackNew(WP)
 {
 	String name = trkName->getCaption();
 	name = StringUtil::replaceAll(name, "*", "");
@@ -365,13 +366,14 @@ void App::btnTrackNew(WP)
 	for (i=0; i < cnTrkFo; ++i)  Copy(sto + csTrkFo[i], to + csTrkFo[i]);
 	for (i=1; i < cnTrkFp; ++i)  Copy(stp + csTrkFp[i], tp + csTrkFp[i]);  // 1-not view.jpg
 
-	sListTrack = name;  pSet->gui.track = name;  pSet->gui.track_user = 1;  UpdWndTitle();
+	sListTrack = name;  pSet->gui.track = name;  pSet->gui.track_user = 1;
+	app->UpdWndTitle();
 	FillTrackLists();
 	TrackListUpd();
 }
 
 ///  Rename
-void App::btnTrackRename(WP)
+void CGui::btnTrackRename(WP)
 {
 	String name = trkName->getCaption();
 	if (name == sListTrack)  return;
@@ -391,21 +393,22 @@ void App::btnTrackRename(WP)
 	//  Rename
 	Rename(pathTrk[bListTrackU] + sListTrack, pathTrk[/*1*/bListTrackU] + name);
 	
-	sListTrack = name;  pSet->gui.track = sListTrack;  pSet->gui.track_user = 1;/**/  UpdWndTitle();
+	sListTrack = name;  pSet->gui.track = sListTrack;  pSet->gui.track_user = 1;/**/
+	app->UpdWndTitle();
 	FillTrackLists();
 	TrackListUpd();  //listTrackChng(trkList,0);
 }
 
 ///  Delete
-void App::btnTrackDel(WP)
+void CGui::btnTrackDel(WP)
 {
 	Message* message = Message::createMessageBox(
 		"Message", bListTrackU==0 ? "Delete original Track ?" : "Delete Track ?", sListTrack,
 		MessageBoxStyle::IconQuest | MessageBoxStyle::Yes | MessageBoxStyle::No);
-	message->eventMessageBoxResult += newDelegate(this, &App::msgTrackDel);
+	message->eventMessageBoxResult += newDelegate(this, &CGui::msgTrackDel);
 	//message->setUserString("FileName", fileName);
 }
-void App::msgTrackDel(Message* sender, MessageBoxStyle result)
+void CGui::msgTrackDel(Message* sender, MessageBoxStyle result)
 {
 	if (result != MessageBoxStyle::Yes)
 		return;
@@ -422,7 +425,7 @@ void App::msgTrackDel(Message* sender, MessageBoxStyle result)
 	FillTrackLists();
 	TrackListUpd();
 	if (st != pSet->gui.track)
-		LoadTrack();  //load 1st if deleted cur
+		app->LoadTrack();  //load 1st if deleted cur
 }
 
 
@@ -452,7 +455,7 @@ void App::msgTrackDel(Message* sender, MessageBoxStyle result)
 	}
 }/**/
 
-void App::GetMaterials(String filename, bool clear, String type)
+void CGui::GetMaterials(String filename, bool clear, String type)
 {
 	if (clear)
 		vsMaterials.clear();
@@ -495,7 +498,7 @@ void App::GetMaterials(String filename, bool clear, String type)
 	stream->close();
 }
 
-void App::GetMaterialsMat(String filename, bool clear, String type)
+void CGui::GetMaterialsMat(String filename, bool clear, String type)
 {
 	if (clear)
 		vsMaterials.clear();
@@ -544,7 +547,7 @@ void App::GetMaterialsMat(String filename, bool clear, String type)
 //-----------------------------------------------------------------------------------------------------------
 namespace bfs = boost::filesystem;
 
-bool App::TrackExists(String name/*, bool user*/)
+bool CGui::TrackExists(String name/*, bool user*/)
 {	// ignore letters case..
 	for (strlist::const_iterator it = liTracks.begin(); it != liTracks.end(); ++it)
 		if (*it == name)  return true;
@@ -553,7 +556,7 @@ bool App::TrackExists(String name/*, bool user*/)
 	return false;
 }
 
-bool App::Rename(String from, String to)
+bool CGui::Rename(String from, String to)
 {
 	try
 	{	if (bfs::exists(from.c_str()))
@@ -569,7 +572,7 @@ bool App::Rename(String from, String to)
 	return true;
 }
 
-bool App::Delete(String file)
+bool CGui::Delete(String file)
 {
 	try
 	{	bfs::remove(file.c_str());
@@ -584,7 +587,7 @@ bool App::Delete(String file)
 	return true;
 }
 
-bool App::DeleteDir(String dir)
+bool CGui::DeleteDir(String dir)
 {
 	try
 	{	bfs::remove_all(dir.c_str());
@@ -599,7 +602,7 @@ bool App::DeleteDir(String dir)
 	return true;
 }
 
-bool App::CreateDir(String dir)
+bool CGui::CreateDir(String dir)
 {
 	try
 	{	bfs::create_directory(dir.c_str());
@@ -614,7 +617,7 @@ bool App::CreateDir(String dir)
 	return true;
 }
 
-bool App::Copy(String file, String to)
+bool CGui::Copy(String file, String to)
 {
 	try
 	{	if (bfs::exists(to.c_str()))
@@ -632,3 +635,24 @@ bool App::Copy(String file, String to)
 	}
 	return true;
 }
+
+
+void App::UpdWndTitle()
+{
+	String s = String("SR Editor  track: ") + pSet->gui.track;
+	if (pSet->gui.track_user)  s += "  *user*";
+
+	SDL_SetWindowTitle(mSDLWindow, s.c_str());
+}
+
+String CGui::TrkDir() {
+	int u = pSet->gui.track_user ? 1 : 0;		return pathTrk[u] + pSet->gui.track + "/";  }
+
+String CGui::PathListTrk(int user) {
+	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;  }
+	
+String CGui::PathListTrkPrv(int user, String track){
+	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + track + "/preview/";  }
+	
+String CGui::PathCopyTrk(int user){
+	int u = user == -1 ? bCopyTrackU : user;	return pathTrk[u] + sCopyTrack;  }

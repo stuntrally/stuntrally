@@ -3,17 +3,6 @@
 #include "RenderConst.h"
 
 #include <boost/filesystem.hpp>
-//#include <Ogre.h>
-//#include <OgreMaterialManager.h>
-//#include <OgreTechnique.h>
-//#include <OgrePass.h>
-//#include <OgreManualObject.h>
-//#include <OgreSceneManager.h>
-//#include <OgreSceneNode.h>
-//#include <OgreStaticGeometry.h>
-//#include <OgreRenderWindow.h>
-//#include <OgrePixelFormat.h>
-//#include <OgreTexture.h>
 
 #include "../../vdrift/track.h"
 #ifndef SR_EDITOR
@@ -23,7 +12,8 @@
 	#include "../../vdrift/game.h"
 	#include "../SplitScreen.h"  //-
 #else
-	#include "../../editor/OgreApp.h"
+	#include "../../editor/CApp.h"
+	#include "../../editor/CGui.h"
 	#include "../../editor/settings.h"
 	#include "../../vdrift/pathmanager.h"
 #endif

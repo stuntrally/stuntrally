@@ -8,7 +8,8 @@
 	#include "../CGui.h"
 	#include "../SplitScreen.h"
 #else
-	#include "../../editor/OgreApp.h"
+	#include "../../editor/CApp.h"
+	#include "../../editor/CGui.h"
 #endif
 #include <OgreRoot.h>
 #include <OgreMaterialManager.h>

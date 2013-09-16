@@ -5,12 +5,14 @@
 #include <boost/filesystem.hpp>
 
 #include "BaseApp.h"
-#include "OgreApp.h" //
+#include "CApp.h" //
 
 #include "../vdrift/pathmanager.h"
 #include "../ogre/Localization.h"
 #include <OgreConfigFile.h>
+#if OGRE_VERSION >= MYGUI_DEFINE_VERSION(1, 9, 0) 
 #include <OgreOverlaySystem.h>
+#endif
 #include <OgreOverlayManager.h>
 
 #include "../ogre/common/MyGUI_D3D11.h"

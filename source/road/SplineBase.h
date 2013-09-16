@@ -49,7 +49,8 @@ class SplineBase
 public:
 	SplineBase();
 	~SplineBase();
-
+	friend class CGui;
+	
 
 	void clear();
 	void addPoint(const Ogre::Vector3& p);

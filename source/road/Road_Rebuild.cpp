@@ -5,7 +5,7 @@
 #ifndef SR_EDITOR
 #include "../vdrift/game.h"
 #else
-#include "../editor/OgreApp.h"
+#include "../editor/CApp.h"
 #include "../bullet/BulletCollision/CollisionShapes/btTriangleMesh.h"
 #include "../bullet/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h"
 #include "../bullet/BulletCollision/CollisionDispatch/btCollisionObject.h"

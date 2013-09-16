@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
-#include "OgreApp.h"
+#include "CApp.h"
+#include "CGui.h"
 #include "../road/Road.h"
 #include <fstream>
 #include "../ogre/common/Gui_Def.h"
@@ -10,11 +11,11 @@ using namespace Ogre;
 
 
 ///  used value colors  blue,green,yellow,orange,red,black  ..
-const Colour App::sUsedClr[8] = {
+const Colour CGui::sUsedClr[8] = {
 	Colour(0.2,0.6,1), Colour(0,1,0.6), Colour(0,1,0), Colour(0.5,1,0),
 	Colour(1,1,0), Colour(1,0.5,0), Colour(1,0,0), Colour(1,0.5,0.5)};
 
-void App::SetUsedStr(MyGUI::StaticTextPtr valUsed, int cnt, int yellowAt)
+void CGui::SetUsedStr(MyGUI::StaticTextPtr valUsed, int cnt, int yellowAt)
 {
 	if (!valUsed)  return;
 	valUsed->setCaption(TR("#{Used}") + ": " + toStr(cnt));
@@ -27,114 +28,114 @@ void App::SetUsedStr(MyGUI::StaticTextPtr valUsed, int cnt, int yellowAt)
 //  [Sky]
 //-----------------------------------------------------------------------------------------------------------
 
-void App::comboSky(ComboBoxPtr cmb, size_t val)  // sky materials
+void CGui::comboSky(ComboBoxPtr cmb, size_t val)  // sky materials
 {
 	String s = cmb->getItemNameAt(val);
-	sc->skyMtr = s;  UpdateTrack();
+	sc->skyMtr = s;  app->UpdateTrack();
 }
 
-void App::comboRain1(ComboBoxPtr cmb, size_t val)  // rain types
+void CGui::comboRain1(ComboBoxPtr cmb, size_t val)  // rain types
 {
 	String s = cmb->getItemNameAt(val);  sc->rainName = s;
-	DestroyWeather();  CreateWeather();
+	app->DestroyWeather();  app->CreateWeather();
 }
-void App::comboRain2(ComboBoxPtr cmb, size_t val)
+void CGui::comboRain2(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);  sc->rain2Name = s;
-	DestroyWeather();  CreateWeather();
+	app->DestroyWeather();  app->CreateWeather();
 }
 
-void App::slRain1Rate(SL)  // rain rates
+void CGui::slRain1Rate(SL)  // rain rates
 {
 	float v = 6000.f * val;		sc->rainEmit = v;
-	if (valRain1Rate){	valRain1Rate->setCaption(fToStr(v,0,4));  }	UpdSun();
+	if (valRain1Rate){	valRain1Rate->setCaption(fToStr(v,0,4));  }  app->UpdSun();
 }
-void App::slRain2Rate(SL)
+void CGui::slRain2Rate(SL)
 {
 	float v = 6000.f * val;		sc->rain2Emit = v;
-	if (valRain2Rate){	valRain2Rate->setCaption(fToStr(v,0,4));  }	UpdSun();
+	if (valRain2Rate){	valRain2Rate->setCaption(fToStr(v,0,4));  }  app->UpdSun();
 }
 
-void App::slSunPitch(SL)  // sun pitch, yaw
+void CGui::slSunPitch(SL)  // sun pitch, yaw
 {
 	float v = 90.f * val;	sc->ldPitch = v;
-	if (valSunPitch){	valSunPitch->setCaption(fToStr(v,1,4));  }	UpdSun();
+	if (valSunPitch){	valSunPitch->setCaption(fToStr(v,1,4));  }  app->UpdSun();
 }
-void App::slSunYaw(SL)
+void CGui::slSunYaw(SL)
 {
 	float v = -180.f + 360.f * val;  sc->ldYaw = v;
-	if (valSunYaw){	valSunYaw->setCaption(fToStr(v,1,4));  }  UpdSun();
+	if (valSunYaw){	valSunYaw->setCaption(fToStr(v,1,4));  }  app->UpdSun();
 }
 
-void App::editLiAmb(Edit* ed)  // edit light clrs
+void CGui::editLiAmb(Edit* ed)  // edit light clrs
 {
-	Vector3 c = s2v(ed->getCaption());	sc->lAmb = c;  UpdSun();
+	Vector3 c = s2v(ed->getCaption());	sc->lAmb = c;  app->UpdSun();
 	if (clrAmb)  clrAmb->setColour(Colour(c.x,c.y,c.z));
 }
-void App::editLiDiff(Edit* ed)
+void CGui::editLiDiff(Edit* ed)
 {
-	Vector3 c = s2v(ed->getCaption());	sc->lDiff = c;  UpdSun();
+	Vector3 c = s2v(ed->getCaption());	sc->lDiff = c;  app->UpdSun();
 	if (clrDiff)  clrDiff->setColour(Colour(c.x,c.y,c.z));
 }
-void App::editLiSpec(Edit* ed)
+void CGui::editLiSpec(Edit* ed)
 {
-	Vector3 c = s2v(ed->getCaption());	sc->lSpec = c;  UpdSun();
+	Vector3 c = s2v(ed->getCaption());	sc->lSpec = c;  app->UpdSun();
 	if (clrSpec)  clrSpec->setColour(Colour(c.x,c.y,c.z));
 }
 
 //  fog
-void App::slFogStart(SL)  // fog start, end
+void CGui::slFogStart(SL)  // fog start, end
 {
-	float v = 2000.f * powf(val, 2.f);		sc->fogStart = v;  UpdFog();
+	float v = 2000.f * powf(val, 2.f);		sc->fogStart = v;  app->UpdFog();
 	if (valFogStart){	valFogStart->setCaption(fToStr(v,0,3));  }
 }
-void App::slFogEnd(SL)
+void CGui::slFogEnd(SL)
 {
-	float v = 2000.f * powf(val, 2.f);		sc->fogEnd = v;    UpdFog();
+	float v = 2000.f * powf(val, 2.f);		sc->fogEnd = v;    app->UpdFog();
 	if (valFogEnd){	 valFogEnd->setCaption(fToStr(v,0,3));  }
 }
-void App::slFogHStart(SL)
+void CGui::slFogHStart(SL)
 {
-	float v = 2000.f * powf(val, 2.f);		sc->fogHStart = v;  UpdFog();
+	float v = 2000.f * powf(val, 2.f);		sc->fogHStart = v;  app->UpdFog();
 	if (valFogHStart){	valFogHStart->setCaption(fToStr(v,0,3));  }
 }
-void App::slFogHEnd(SL)
+void CGui::slFogHEnd(SL)
 {
-	float v = 2000.f * powf(val, 2.f);		sc->fogHEnd = v;    UpdFog();
+	float v = 2000.f * powf(val, 2.f);		sc->fogHEnd = v;    app->UpdFog();
 	if (valFogHEnd){	 valFogHEnd->setCaption(fToStr(v,0,3));  }
 }
-void App::slFogHeight(SL)  // edit-
+void CGui::slFogHeight(SL)  // edit-
 {
-	float v = -200.f + 400.f * val;			sc->fogHeight = v;  UpdFog();
+	float v = -200.f + 400.f * val;			sc->fogHeight = v;  app->UpdFog();
 	if (valFogHeight){	valFogHeight->setCaption(fToStr(v,1,4));  }
 }
-void App::slFogHDensity(SL)
+void CGui::slFogHDensity(SL)
 {
-	float v = 200.f * powf(val, 2.f);		sc->fogHDensity = v;    UpdFog();
+	float v = 200.f * powf(val, 2.f);		sc->fogHDensity = v;    app->UpdFog();
 	if (valFogHDensity){	valFogHDensity->setCaption(fToStr(v,1,4));  }
 }
 
-void App::editFogClr(Edit* ed)  // edit fog clr
+void CGui::editFogClr(Edit* ed)  // edit fog clr
 {
-	Vector4 c = s2v4(ed->getCaption());  sc->fogClr = c;  UpdFog();
+	Vector4 c = s2v4(ed->getCaption());  sc->fogClr = c;  app->UpdFog();
 	if (clrFog)  clrFog->setColour(Colour(c.x,c.y,c.z));
 }
-void App::editFogClr2(Edit* ed)
+void CGui::editFogClr2(Edit* ed)
 {
-	Vector4 c = s2v4(ed->getCaption());  sc->fogClr2 = c;  UpdFog();
+	Vector4 c = s2v4(ed->getCaption());  sc->fogClr2 = c;  app->UpdFog();
 	if (clrFog2)  clrFog2->setColour(Colour(c.x,c.y,c.z));
 }
-void App::editFogClrH(Edit* ed)
+void CGui::editFogClrH(Edit* ed)
 {
-	Vector4 c = s2v4(ed->getCaption());  sc->fogClrH = c;  UpdFog();
+	Vector4 c = s2v4(ed->getCaption());  sc->fogClrH = c;  app->UpdFog();
 	if (clrFogH)  clrFogH->setColour(Colour(c.x,c.y,c.z));
 }
 
-void App::chkFogDisable(WP wp)  // chk fog disable
+void CGui::chkFogDisable(WP wp)  // chk fog disable
 {
-	ChkEv(bFog);  UpdFog();
+	ChkEv(bFog);  app->UpdFog();
 }
-void App::chkWeatherDisable(WP wp)
+void CGui::chkWeatherDisable(WP wp)
 {
 	ChkEv(bWeather);
 }
@@ -143,7 +144,7 @@ void App::chkWeatherDisable(WP wp)
 //  [Vegetation]
 //-----------------------------------------------------------------------------------------------------------
 
-void App::editTrGr(EditPtr ed)
+void CGui::editTrGr(EditPtr ed)
 {
 	Real r = s2r(ed->getCaption());
 	String n = ed->getName();
@@ -170,14 +171,14 @@ void App::editTrGr(EditPtr ed)
 	else if (n=="SceneryId")  sc->sceneryId = ed->getCaption();
 }
 
-void App::comboGrassMtr(ComboBoxPtr cmb, size_t val)
+void CGui::comboGrassMtr(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
 	SGrassLayer* gr = &sc->grLayersAll[idGrLay];
 	gr->material = s;
 	if (imgGrass)	imgGrass->setImageTexture(gr->material + ".png");  // same mtr name as tex
 }
-void App::comboGrassClr(ComboBoxPtr cmb, size_t val)
+void CGui::comboGrassClr(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
 	SGrassLayer* gr = &sc->grLayersAll[idGrLay];
@@ -188,7 +189,7 @@ void App::comboGrassClr(ComboBoxPtr cmb, size_t val)
 
 ///  Grass layers  ----------------------------------------------------------
 
-void App::tabGrLayers(TabPtr wp, size_t id)
+void CGui::tabGrLayers(TabPtr wp, size_t id)
 {
 	idGrLay = id;  // help var
 	const SGrassLayer* gr = &sc->grLayersAll[idGrLay], *g0 = &sc->grLayersAll[0];
@@ -220,7 +221,7 @@ void App::tabGrLayers(TabPtr wp, size_t id)
 	_Ed(GrTerMaxHeight, g0->terMaxH);
 }
 
-void App::chkGrLayOn(WP wp)
+void CGui::chkGrLayOn(WP wp)
 {
 	sc->grLayersAll[idGrLay].on = !sc->grLayersAll[idGrLay].on;
 
@@ -234,7 +235,7 @@ void App::chkGrLayOn(WP wp)
 
 ///  Vegetation layers  -----------------------------------------------------
 
-void App::tabPgLayers(TabPtr wp, size_t id)
+void CGui::tabPgLayers(TabPtr wp, size_t id)
 {
 	idPgLay = id;  // help var
 	const PagedLayer& lay = sc->pgLayersAll[idPgLay];
@@ -260,7 +261,7 @@ void App::tabPgLayers(TabPtr wp, size_t id)
 	if (edLTrFlDepth)  edLTrFlDepth->setCaption(toStr(lay.maxDepth));
 }
 
-void App::chkPgLayOn(WP wp)
+void CGui::chkPgLayOn(WP wp)
 {
 	sc->pgLayersAll[idPgLay].on = !sc->pgLayersAll[idPgLay].on;
 	sc->UpdPgLayers();
@@ -269,102 +270,102 @@ void App::chkPgLayOn(WP wp)
 	SetUsedStr(valLTrAll, sc->pgLayers.size(), 5);
 }
 
-void App::comboPgLay(ComboBoxPtr cmb, size_t val)
+void CGui::comboPgLay(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val) + ".mesh";
 	sc->pgLayersAll[idPgLay].name = s;
 	Upd3DView(s);
 }
 
-void App::Upd3DView(String mesh)
+void CGui::Upd3DView(String mesh)
 {
 	viewMesh = mesh;
 	tiViewUpd = 0.f;
 }
 
 
-void App::slGrMinX(SL)
+void CGui::slGrMinX(SL)
 {
 	Real v = 0.1f + 4.0f * powf(val, 2.f);  sc->grLayersAll[idGrLay].minSx = v;
 	if (valGrMinX){  valGrMinX->setCaption(fToStr(v,2,4));  }
 }
-void App::slGrMaxX(SL)
+void CGui::slGrMaxX(SL)
 {
 	Real v = 0.1f + 4.0f * powf(val, 2.f);  sc->grLayersAll[idGrLay].maxSx = v;
 	if (valGrMaxX){  valGrMaxX->setCaption(fToStr(v,2,4));  }
 }
-void App::slGrMinY(SL)
+void CGui::slGrMinY(SL)
 {
 	Real v = 0.1f + 4.0f * powf(val, 2.f);  sc->grLayersAll[idGrLay].minSy = v;
 	if (valGrMinY){  valGrMinY->setCaption(fToStr(v,2,4));  }
 }
-void App::slGrMaxY(SL)
+void CGui::slGrMaxY(SL)
 {
 	Real v = 0.1f + 4.0f * powf(val, 2.f);  sc->grLayersAll[idGrLay].maxSy = v;
 	if (valGrMaxY){  valGrMaxY->setCaption(fToStr(v,2,4));  }
 }
 
 
-void App::slLGrDens(SL)  //  sliders
+void CGui::slLGrDens(SL)  //  sliders
 {
 	Real v = 0.001f + 1.0f * powf(val, 2.f);  sc->grLayersAll[idGrLay].dens = v;
 	if (valLGrDens){  valLGrDens->setCaption(fToStr(v,3,5));  }
 }
 
-void App::slLTrDens(SL)
+void CGui::slLTrDens(SL)
 {
 	Real v = 0.001f + 1.0f * powf(val, 2.f);  sc->pgLayersAll[idPgLay].dens = v;
 	if (valLTrDens){  valLTrDens->setCaption(fToStr(v,3,5));  }
 }
-void App::slLTrRdDist(SL)
+void CGui::slLTrRdDist(SL)
 {
 	int v = val * 20.f +slHalf;
 	sc->pgLayersAll[idPgLay].addRdist = v;
 	if (valLTrRdDist)  valLTrRdDist->setCaption(toStr(v));
 }
-void App::slLTrRdDistMax(SL)
+void CGui::slLTrRdDistMax(SL)
 {
 	int v = val * 20.f +slHalf;
 	sc->pgLayersAll[idPgLay].maxRdist = v;
 	if (valLTrRdDistMax)  valLTrRdDistMax->setCaption(toStr(v));
 }
 
-void App::slLTrMinSc(SL)
+void CGui::slLTrMinSc(SL)
 {
 	Real v = 6.0f * powf(val, 3.f);		sc->pgLayersAll[idPgLay].minScale = v;
 	if (valLTrMinSc){  valLTrMinSc->setCaption(fToStr(v,3,5));  }
 }
-void App::slLTrMaxSc(SL)
+void CGui::slLTrMaxSc(SL)
 {
 	Real v = 6.0f * powf(val, 3.f);		sc->pgLayersAll[idPgLay].maxScale = v;
 	if (valLTrMaxSc){  valLTrMaxSc->setCaption(fToStr(v,3,5));  }
 }
 
-void App::slLTrWindFx(SL)
+void CGui::slLTrWindFx(SL)
 {
 	Real v = 12.0f * powf(val, 3.f);	sc->pgLayersAll[idPgLay].windFx = v;
 	if (valLTrWindFx){  valLTrWindFx->setCaption(fToStr(v,3,5));  }
 }
-void App::slLTrWindFy(SL)
+void CGui::slLTrWindFy(SL)
 {
 	Real v = 12.0f * powf(val, 3.f);	sc->pgLayersAll[idPgLay].windFy = v;
 	if (valLTrWindFy){  valLTrWindFy->setCaption(fToStr(v,3,5));  }
 }
 
-void App::slLTrMaxTerAng(SL)
+void CGui::slLTrMaxTerAng(SL)
 {
 	Real v = 90.0f * powf(val, 2.f);	sc->pgLayersAll[idPgLay].maxTerAng = v;
 	if (valLTrMaxTerAng){  valLTrMaxTerAng->setCaption(fToStr(v,1,5));  }
 }
-void App::editLTrMinTerH(EditPtr ed)
+void CGui::editLTrMinTerH(EditPtr ed)
 {
 	sc->pgLayersAll[idPgLay].minTerH = s2r(ed->getCaption());
 }
-void App::editLTrMaxTerH(EditPtr ed)
+void CGui::editLTrMaxTerH(EditPtr ed)
 {
 	sc->pgLayersAll[idPgLay].maxTerH = s2r(ed->getCaption());
 }
-void App::editLTrFlDepth(EditPtr ed)
+void CGui::editLTrFlDepth(EditPtr ed)
 {
 	sc->pgLayersAll[idPgLay].maxDepth = s2r(ed->getCaption());
 }
@@ -373,74 +374,74 @@ void App::editLTrFlDepth(EditPtr ed)
 //  [Road]
 //-----------------------------------------------------------------------------------------------------------
 
-void App::editTrkDesc(EditPtr ed)
+void CGui::editTrkDesc(EditPtr ed)
 {
-	road->sTxtDesc = ed->getCaption();
+	app->road->sTxtDesc = ed->getCaption();
 }
 
-void App::comboRoadMtr(ComboBoxPtr cmb, size_t val)
+void CGui::comboRoadMtr(ComboBoxPtr cmb, size_t val)
 {
 	String sn = cmb->getName().substr(String("RdMtr").length(), cmb->getName().length());
 	int id = atoi(sn.c_str())-1;  if (id < 0 || id >= MTRs)  return;
 
 	String s = cmb->getItemNameAt(val);
-	road->sMtrRoad[id] = s;  road->RebuildRoad(true);  UpdPSSMMaterials();
+	app->road->sMtrRoad[id] = s;  app->road->RebuildRoad(true);  app->UpdPSSMMaterials();
 }
 
-void App::comboPipeMtr(ComboBoxPtr cmb, size_t val)
+void CGui::comboPipeMtr(ComboBoxPtr cmb, size_t val)
 {
 	String sn = cmb->getName().substr(String("RdMtrP").length(), cmb->getName().length());
 	int id = atoi(sn.c_str())-1;  if (id < 0 || id >= MTRs)  return;
 
 	String s = cmb->getItemNameAt(val);
-	road->SetMtrPipe(id, s);  road->RebuildRoad(true);  UpdPSSMMaterials();
+	app->road->SetMtrPipe(id, s);  app->road->RebuildRoad(true);  app->UpdPSSMMaterials();
 }
 
-void App::comboRoadWMtr(ComboBoxPtr cmb, size_t val)
+void CGui::comboRoadWMtr(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	road->sMtrWall = s;  road->RebuildRoad(true);  UpdPSSMMaterials();
+	app->road->sMtrWall = s;  app->road->RebuildRoad(true);  app->UpdPSSMMaterials();
 }
-void App::comboPipeWMtr(ComboBoxPtr cmb, size_t val)
+void CGui::comboPipeWMtr(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	road->sMtrWallPipe = s;  road->RebuildRoad(true);  UpdPSSMMaterials();
+	app->road->sMtrWallPipe = s;  app->road->RebuildRoad(true);  app->UpdPSSMMaterials();
 }
-void App::comboRoadColMtr(ComboBoxPtr cmb, size_t val)
+void CGui::comboRoadColMtr(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	road->sMtrCol = s;  road->RebuildRoad(true);  UpdPSSMMaterials();
+	app->road->sMtrCol = s;  app->road->RebuildRoad(true);  app->UpdPSSMMaterials();
 }
 
-void App::editRoad(EditPtr ed)
+void CGui::editRoad(EditPtr ed)
 {
-	if (!road)  return;
+	if (!app->road)  return;
 	Real r = s2r(ed->getCaption());
 	String n = ed->getName();
 
-		 if (n=="RdTcMul")		road->tcMul = r;	else if (n=="RdTcMulP")	road->tcMulP = r;
-	else if (n=="RdTcMulW")		road->tcMulW = r;	else if (n=="RdTcMulPW") road->tcMulPW = r;  else if (n=="RdTcMulC")	road->tcMulC = r;
-	else if (n=="RdColR")		road->colR = r;		else if (n=="RdColN")	road->colN = std::max(3.f, r);
-	else if (n=="RdLenDim")		road->lenDiv0 = r;	
-	else if (n=="RdWidthSteps")	road->iw0 = r;		else if (n=="RdPwsM")	road->iwPmul = r;
-	else if (n=="RdHeightOfs")	road->fHeight = r;	else if (n=="RdPlsM")	road->ilPmul = r;
-	else if (n=="RdSkirtLen")	road->skirtLen = r;	else if (n=="RdSkirtH")	road->skirtH = r;
-	else if (n=="RdMergeLen")	road->setMrgLen = r;
-	else if (n=="RdLodPLen")	road->lposLen = r;
-	//road->RebuildRoad(true);  //on Enter ?..
+		 if (n=="RdTcMul")		app->road->tcMul = r;	else if (n=="RdTcMulP")	app->road->tcMulP = r;
+	else if (n=="RdTcMulW")		app->road->tcMulW = r;	else if (n=="RdTcMulPW") app->road->tcMulPW = r;  else if (n=="RdTcMulC")	app->road->tcMulC = r;
+	else if (n=="RdColR")		app->road->colR = r;	else if (n=="RdColN")	app->road->colN = std::max(3.f, r);
+	else if (n=="RdLenDim")		app->road->lenDiv0 = r;	
+	else if (n=="RdWidthSteps")	app->road->iw0 = r;		else if (n=="RdPwsM")	app->road->iwPmul = r;
+	else if (n=="RdHeightOfs")	app->road->fHeight = r;	else if (n=="RdPlsM")	app->road->ilPmul = r;
+	else if (n=="RdSkirtLen")	app->road->skirtLen = r;else if (n=="RdSkirtH")	app->road->skirtH = r;
+	else if (n=="RdMergeLen")	app->road->setMrgLen = r;
+	else if (n=="RdLodPLen")	app->road->lposLen = r;
+	//app->road->RebuildRoad(true);  //on Enter ?..
 }
 
-void App::slAlignWidthAdd(SL)
+void CGui::slAlignWidthAdd(SL)
 {
 	Real v = 20.f * val;	pSet->al_w_add = v;
 	if (valAlignWidthAdd)  valAlignWidthAdd->setCaption(fToStr(v,1,3));
 }
-void App::slAlignWidthMul(SL)
+void CGui::slAlignWidthMul(SL)
 {
 	Real v = 1.f + 4.f * val;	pSet->al_w_mul = v;
 	if (valAlignWidthMul)  valAlignWidthMul->setCaption(fToStr(v,2,4));
 }
-void App::slAlignSmooth(SL)
+void CGui::slAlignSmooth(SL)
 {
 	Real v = 6.f * val;		pSet->al_smooth = v;
 	if (valAlignSmooth)  valAlignSmooth->setCaption(fToStr(v,1,3));
@@ -450,70 +451,71 @@ void App::slAlignSmooth(SL)
 //  [Settings]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 //  Startup
-void App::chkStartInMain(WP wp)	{	ChkEv(startInMain);    }
-void App::chkAutoStart(WP wp)	{	ChkEv(autostart);	}
-void App::chkEscQuits(WP wp)	{	ChkEv(escquit);		}
-void App::chkOgreDialog(WP wp)	{	ChkEv(ogre_dialog);	}
+void CGui::chkStartInMain(WP wp)	{	ChkEv(startInMain);    }
+void CGui::chkAutoStart(WP wp)	{	ChkEv(autostart);	}
+void CGui::chkEscQuits(WP wp)	{	ChkEv(escquit);		}
+void CGui::chkOgreDialog(WP wp)	{	ChkEv(ogre_dialog);	}
 
-void App::chkCamPos(WP wp){			ChkEv(camPos);
-	if (pSet->camPos)  ovPos->show();  else  ovPos->hide();  }
+void CGui::chkCamPos(WP wp){			ChkEv(camPos);
+	if (pSet->camPos)  app->ovPos->show();  else  app->ovPos->hide();  }
 
-void App::chkInputBar(WP wp){		ChkEv(inputBar);
-	if (pSet->inputBar)  mDebugOverlay->show();  else  mDebugOverlay->hide();  }
+void CGui::chkInputBar(WP wp){		ChkEv(inputBar);
+	if (pSet->inputBar)  app->mDebugOverlay->show();  else  app->mDebugOverlay->hide();  }
 
-void App::chkCheckSave(WP wp)	{	ChkEv(check_save);  }
-void App::chkCheckLoad(WP wp)	{	ChkEv(check_load);  }
+void CGui::chkCheckSave(WP wp)	{	ChkEv(check_save);  }
+void CGui::chkCheckLoad(WP wp)	{	ChkEv(check_load);  }
 
 
-void App::slMiniUpd(SL)
+void CGui::slMiniUpd(SL)
 {
 	int v = val * 20.f +slHalf;  pSet->mini_skip = v;
 	if (valMiniUpd){	valMiniUpd->setCaption(toStr(v));  }
 }
 
-void App::slSizeRoadP(SL)
+void CGui::slSizeRoadP(SL)
 {
 	Real v = 0.1f + 11.9f * val;  pSet->road_sphr = v;
 	if (valSizeRoadP){	valSizeRoadP->setCaption(fToStr(v,2,4));  }
-	if (road)
-	{	road->fMarkerScale = v;
-		road->UpdAllMarkers();  }
+	if (app->road)
+	{	app->road->fMarkerScale = v;
+		app->road->UpdAllMarkers();  }
 }
 
-void App::slCamInert(SL)
+void CGui::slCamInert(SL)
 {
 	Real v = val;  pSet->cam_inert = v;
 	if (valCamInert){	valCamInert->setCaption(fToStr(v,2,4));  }
 }
-void App::slCamSpeed(SL)
+void CGui::slCamSpeed(SL)
 {
 	Real v = 0.1f + 3.9f * powf(val, 1.f);  pSet->cam_speed = v;
 	if (valCamSpeed){	valCamSpeed->setCaption(fToStr(v,2,4));  }
 }
 
-void App::slTerUpd(SL)
+void CGui::slTerUpd(SL)
 {
 	int v = val * 20.f +slHalf;  pSet->ter_skip = v;
 	if (valTerUpd){	valTerUpd->setCaption(toStr(v));  }
 }
 
-void App::slSizeMinmap(SL)
+void CGui::slSizeMinmap(SL)
 {
 	float v = 0.15f + 1.85f * val;	pSet->size_minimap = v;
 	if (valSizeMinmap){	valSizeMinmap->setCaption(fToStr(v,3,4));  }
 	Real sz = pSet->size_minimap;  //int all = 0;
-	xm1 = 1-sz/asp, ym1 = -1+sz, xm2 = 1.0, ym2 = -1.0;
-	for (int i=0; i < RTs+1; ++i)  if (i != RTs)  {
-		if (rt[i].rcMini)  rt[i].rcMini->setCorners(xm1, ym1, xm2, ym2);  }
+	app->xm1 = 1-sz/app->asp;  app->ym1 = -1+sz;  app->xm2 = 1.0;  app->ym2 = -1.0;
+	for (int i=0; i < app->RTs+1; ++i)  if (i != app->RTs)
+		if (app->rt[i].rcMini)
+			app->rt[i].rcMini->setCorners(app->xm1, app->ym1, app->xm2, app->ym2);
 }
 
-void App::chkMinimap(WP wp)
+void CGui::chkMinimap(WP wp)
 {
-	ChkEv(trackmap);  UpdMiniVis();
-	if (ndPos)  ndPos->setVisible(pSet->trackmap);
+	ChkEv(trackmap);  app->UpdMiniVis();
+	if (app->ndPos)  app->ndPos->setVisible(pSet->trackmap);
 }
 
-void App::chkAutoBlendmap(WP wp)
+void CGui::chkAutoBlendmap(WP wp)
 {
 	ChkEv(autoBlendmap);
 }
@@ -524,52 +526,55 @@ void App::SaveCam()
 {
 	if (!mCamera)  return;
 	Vector3 p = mCamera->getPosition(), d = mCamera->getDirection();
-	if (bTopView)  {  p = oldPos;  d = oldRot;  }
+	if (gui->bTopView)  {  p = gui->oldPos;  d = gui->oldRot;  }
 	pSet->cam_x  = p.x;  pSet->cam_y  = p.y;  pSet->cam_z  = p.z;
 	pSet->cam_dx = d.x;  pSet->cam_dy = d.y;  pSet->cam_dz = d.z;
 }
 
 //  set predefined camera view
-void App::btnSetCam(WP wp)
+void CGui::btnSetCam(WP wp)
 {
 	String s = wp->getName();
 	Real y0 = 20, xz = sc->td.fTerWorldSize*0.5f, r = 45.f * 0.5f*PI_d/180.f, yt = xz / Math::Tan(r);
+	Camera* cam = app->mCamera;
 
-		 if (s=="CamView1")	{	mCamera->setPosition(xz*0.8,60,0);  mCamera->setDirection(-1,-0.3,0);  }
-	else if (s=="CamView2")	{	mCamera->setPosition(xz*0.6,80,xz*0.6);  mCamera->setDirection(-1,-0.5,-1);  }
-	else if (s=="CamView3")	{	mCamera->setPosition(-xz*0.7,80,-xz*0.5);  mCamera->setDirection(0.8,-0.5,0.5);  }
+		 if (s=="CamView1")	{	cam->setPosition(xz*0.8,60,0);  cam->setDirection(-1,-0.3,0);  }
+	else if (s=="CamView2")	{	cam->setPosition(xz*0.6,80,xz*0.6);  cam->setDirection(-1,-0.5,-1);  }
+	else if (s=="CamView3")	{	cam->setPosition(-xz*0.7,80,-xz*0.5);  cam->setDirection(0.8,-0.5,0.5);  }
 	else if (s=="CamView4")	{
-		Vector3 cp = ndCar->getPosition();  float cy = ndCar->getOrientation().getYaw().valueRadians();
+		Vector3 cp = app->ndCar->getPosition();  float cy = app->ndCar->getOrientation().getYaw().valueRadians();
 		Vector3 cd = Vector3(cosf(cy),0,-sinf(cy));
-		mCamera->setPosition(cp - cd * 15 + Vector3(0,7,0));  cd.y = -0.3f;
-		mCamera->setDirection(cd);  }
+		cam->setPosition(cp - cd * 15 + Vector3(0,7,0));  cd.y = -0.3f;
+		cam->setDirection(cd);  }
 
-	else if (s=="CamTop")	{	mCamera->setPosition(0,yt,0);  mCamera->setDirection(-0.0001,-1,0);  }
-	else if (s=="CamLeft")	{	mCamera->setPosition(0,y0, xz);  mCamera->setDirection(0,0,-1);  }
-	else if (s=="CamRight")	{	mCamera->setPosition(0,y0,-xz);  mCamera->setDirection(0,0, 1);  }
-	else if (s=="CamFront")	{	mCamera->setPosition( xz,y0,0);  mCamera->setDirection(-1,0,0);  }
-	else if (s=="CamBack")	{	mCamera->setPosition(-xz,y0,0);  mCamera->setDirection( 1,0,0);  }
+	else if (s=="CamTop")	{	cam->setPosition(0,yt,0);  cam->setDirection(-0.0001,-1,0);  }
+	else if (s=="CamLeft")	{	cam->setPosition(0,y0, xz);  cam->setDirection(0,0,-1);  }
+	else if (s=="CamRight")	{	cam->setPosition(0,y0,-xz);  cam->setDirection(0,0, 1);  }
+	else if (s=="CamFront")	{	cam->setPosition( xz,y0,0);  cam->setDirection(-1,0,0);  }
+	else if (s=="CamBack")	{	cam->setPosition(-xz,y0,0);  cam->setDirection( 1,0,0);  }
 }
 
 //  toggle top view camera
-void App::toggleTopView()
+void CGui::toggleTopView()
 {
 	bTopView = !bTopView;
+	Camera* cam = app->mCamera;
+	
 	if (bTopView)
 	{	// store old
-		oldPos = mCamera->getPosition();
-		oldRot = mCamera->getDirection();
+		oldPos = cam->getPosition();
+		oldRot = cam->getDirection();
 		
 		Real xz = sc->td.fTerWorldSize*0.5f, r = 45.f * 0.5f*PI_d/180.f, yt = xz / Math::Tan(r);
-		mCamera->setPosition(0,yt,0);  mCamera->setDirection(-0.0001,-1,0);
+		cam->setPosition(0,yt,0);  cam->setDirection(-0.0001,-1,0);
 
 		oldFog = pSet->bFog;
-		pSet->bFog = true;  chkFog->setStateSelected(pSet->bFog);  UpdFog();
+		pSet->bFog = true;  chkFog->setStateSelected(pSet->bFog);  app->UpdFog();
 	}else
 	{	// restore
-		mCamera->setPosition(oldPos);
-		mCamera->setDirection(oldRot);
+		cam->setPosition(oldPos);
+		cam->setDirection(oldRot);
 
-		pSet->bFog = oldFog;  chkFog->setStateSelected(pSet->bFog);  UpdFog();
+		pSet->bFog = oldFog;  chkFog->setStateSelected(pSet->bFog);  app->UpdFog();
 	}
 }

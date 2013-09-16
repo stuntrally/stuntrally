@@ -3,7 +3,7 @@
 
 #ifdef SR_EDITOR
 	#include "../common/Defines.h"
-	#include "../../editor/OgreApp.h"
+	#include "../../editor/CApp.h"
 	#include "../../editor/settings.h"
 	#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #else

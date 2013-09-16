@@ -9,7 +9,8 @@
 	#include "../CGui.h"
 	#include "../SplitScreen.h"
 #else
-	#include "../../editor/OgreApp.h"
+	#include "../../editor/CApp.h"
+	#include "../../editor/CGui.h"
 #endif
 #include "MultiList2.h"
 #include <OgreRoot.h>
@@ -98,7 +99,7 @@ void CGui::TrackListUpd(bool resetNotFound)
 		if (resetNotFound && !bFound && !liTracks.empty())
 		{	pSet->gui.track = *liTracks.begin();  pSet->gui.track_user = 0;
 			#ifdef SR_EDITOR
-			UpdWndTitle();
+			app->UpdWndTitle();
 			#endif
 		}
 		if (si > -1)  // center
@@ -498,7 +499,7 @@ void CGui::ReadTrkStats()
 
 	UpdGuiRdStats(&rd,sc, sListTrack, tim.GetBestLap(0, pSet->gui.trackreverse));
 #else
-	SplineRoad rd(this);  rd.LoadFile(sRd,false);  // load
+	SplineRoad rd(app);  rd.LoadFile(sRd,false);  // load
 	UpdGuiRdStats(&rd,sc, sListTrack, 0.f);
 #endif
 	delete sc;

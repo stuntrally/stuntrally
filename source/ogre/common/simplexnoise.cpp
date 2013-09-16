@@ -4,7 +4,7 @@
 //#include <algorithm>
 
 #ifdef SR_EDITOR
-	#include "../../editor/OgreApp.h"
+	#include "../../editor/CApp.h"
 #else
 	#include "../CGame.h"
 #endif
