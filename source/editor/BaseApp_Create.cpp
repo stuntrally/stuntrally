@@ -10,6 +10,8 @@
 #include "../vdrift/pathmanager.h"
 #include "../ogre/Localization.h"
 #include <OgreConfigFile.h>
+#include <OgreOverlaySystem.h>
+#include <OgreOverlayManager.h>
 
 #include "../ogre/common/MyGUI_D3D11.h"
 #include "../sdl4ogre/sdlinputwrapper.hpp"
@@ -310,6 +312,10 @@ bool BaseApp::setup()
 		return false;
 
 	mSceneMgr = mRoot->createSceneManager(/*ST_GENERIC/**/Ogre::ST_EXTERIOR_FAR/**/);
+
+	Ogre::OverlaySystem* pOverlaySystem = new Ogre::OverlaySystem();
+	mSceneMgr->addRenderQueueListener(pOverlaySystem);
+
 	createCamera();
 
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);

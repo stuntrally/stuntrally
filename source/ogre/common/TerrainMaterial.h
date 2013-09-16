@@ -35,6 +35,8 @@ public:
 
 		virtual void requestOptions(Ogre::Terrain* terrain);
 
+		virtual void setLightmapEnabled(bool) {}
+
 	private:
 		sh::MaterialInstance* mMaterial;
 		Ogre::String mMatName, mMatNameComp;
