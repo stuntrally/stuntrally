@@ -86,6 +86,9 @@ App::~App()
 
 	OGRE_DELETE dbgdraw;
 	delete sc;
+	
+	delete gui;
+	delete hud;
 }
 
 
