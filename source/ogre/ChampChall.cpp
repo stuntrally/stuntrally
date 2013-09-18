@@ -5,6 +5,7 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
+#include "CData.h"
 #include "../road/Road.h"
 #include "common/MultiList2.h"
 
@@ -105,9 +106,9 @@ float App::GetCarTimeMul(const string& car, const string& sim_mode)
 	//  car factor (time mul, for less power)
 	//  times.xml has ES or S1 best lap time from normal sim
 	float carMul = 1.f;
-	int id = gui->carsXml.carmap[car];
+	int id = data->cars->carmap[car];
 	if (id > 0)
-	{	const CarInfo& ci = gui->carsXml.cars[id-1];
+	{	const CarInfo& ci = data->cars->cars[id-1];
 		bool easy = sim_mode == "easy";
 		carMul = easy ? ci.easy : ci.norm;
 	}
@@ -129,7 +130,7 @@ int App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldSta
 	float timeC = timeCur + (coldStart ? 0 : 1);
 	float time = timeC * carTimeMul;
 
-	float place = (time - timeTrk)/timeTrk / gui->carsXml.magic;
+	float place = (time - timeTrk)/timeTrk / data->cars->magic;
 	// time = (place * magic * timeTrk + timeTrk) / carTimeMul;  //todo: show this in lists and hud..
 	if (pPoints)
 		*pPoints = std::max(0.f, (20.f - place) * 0.5f);
@@ -144,15 +145,15 @@ int App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldSta
 //-----------------------------------------------------------------------------------------------
 void CGui::Ch_XmlLoad()
 {
-	champs.LoadXml(PATHMANAGER::GameConfigDir() + "/championships.xml", &tracksXml);
+	champs.LoadXml(PATHMANAGER::GameConfigDir() + "/championships.xml", data->tracks);
 	LogO(String("**** Loaded Championships: ") + toStr(champs.all.size()));
-	chall.LoadXml(PATHMANAGER::GameConfigDir() + "/challenges.xml", &tracksXml);
+	chall.LoadXml(PATHMANAGER::GameConfigDir() + "/challenges.xml", data->tracks);
 	LogO(String("**** Loaded Challenges: ") + toStr(chall.all.size()));
 
 	#if 1  /* stats */
 	float time = 0.f;  int trks = 0;
-	for (std::map<std::string, float>::const_iterator it = tracksXml.times.begin();
-		it != tracksXml.times.end(); ++it)
+	for (std::map<std::string, float>::const_iterator it = data->tracks->times.begin();
+		it != data->tracks->times.end(); ++it)
 	{
 		const string& trk = (*it).first;
 		if (trk.substr(0,4) != "Test")
@@ -342,11 +343,11 @@ void CGui::StageListAdd(int n, Ogre::String name, int laps, Ogre::String progres
 	liStages->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liStages->getItemCount()-1;
 	liStages->setSubItemNameAt(1,l, clr+ name.c_str());
 
-	int id = tracksXml.trkmap[name]-1;  if (id < 0)  return;
-	const TrackInfo& ti = tracksXml.trks[id];
+	int id = data->tracks->trkmap[name]-1;  if (id < 0)  return;
+	const TrackInfo& ti = data->tracks->trks[id];
 
 	float carMul = app->GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
-	float time = (tracksXml.times[name] * laps /*laps > 1 -1*/) / carMul;
+	float time = (data->tracks->times[name] * laps /*laps > 1 -1*/) / carMul;
 
 	liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
 	liStages->setSubItemNameAt(3,l, clrsDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));

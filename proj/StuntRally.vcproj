@@ -1103,6 +1103,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\ogre\CarPosInfo.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\ogre\CarReflection.cpp"
 					>
 				</File>

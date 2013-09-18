@@ -1,20 +1,12 @@
 #pragma once
 #include "BaseApp.h"
 #include "common/Gui_Popup.h"
-//#include "common/SceneXml.h"
-#include "common/BltObjects.h"
-#include "common/TracksXml.h"
-#include "common/FluidsXml.h"
+
 #include "common/WaterRTT.h"
-//#include "ChampsXml.h"
-//#include "ChallengesXml.h"
 
 #include "ReplayGame.h"
 #include "../vdrift/cardefs.h"
-//#include "../vdrift/settings.h"
-#include "CarModel.h"  //posInfo
-//#include "CarReflection.h"
-#include "common/GraphView.h"
+#include "CarPosInfo.h"
 
 #include <boost/thread.hpp>
 #include <OgreShadowCameraSetup.h>
@@ -31,27 +23,22 @@ class GAME;
 class Scene;
 class GraphView;
 class CInput;
+class CData;
 const int CarPosCnt = 8;  // size of poses queue
 
 
 class App : public BaseApp, public sh::MaterialListener,
-			public ICS::ChannelListener  //, public ICS::DetectingBindingListener
+			public ICS::ChannelListener
 {
 public:
 	App(SETTINGS* settings, GAME* game);
 	virtual ~App();
 	
-	GAME* pGame;  ///*
-	void updatePoses(float time), newPoses(float time), newPerfTest(float time);
-	void UpdThr();
+	GAME* pGame;
+	
 
-	virtual bool keyPressed (const SDL_KeyboardEvent &arg);
-	void channelChanged(ICS::Channel *channel, float currentValue, float previousValue);
-	
-	
 	//  BaseApp init
 	void postInit(), SetFactoryDefaults();
-	void setTranslations();
 		
 	
 	///  Game Cars Data
@@ -60,6 +47,10 @@ public:
 	int iCurPoses[8];  // current index for carPoses queue
 	std::map<int,int> carsCamNum;  // picked camera number for cars
 	Ogre::Quaternion qFixCar,qFixWh;  // utility
+
+	void newPoses(float time), newPerfTest(float time);  // vdrift
+	void updatePoses(float time);  // ogre
+	void UpdThr();
 
 	//  replay - full, user saves
 	//  ghost - saved when best lap
@@ -75,8 +66,9 @@ public:
 
 
 	Scene* sc;  /// scene.xml
-	FluidsXml fluidsXml;  /// fluid params xml
-	BltObjects objs;  // veget collision in bullet
+	
+	CData* data;  // all xmls
+
 	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 
 	// vdrift static
@@ -144,13 +136,8 @@ public:
 	void LoadCleanUp(), LoadGame(), LoadScene(), LoadCar(), LoadTerrain(), LoadRoad(), LoadObjects(), LoadTrees(), LoadMisc();
 	enum ELoadState { LS_CLEANUP=0, LS_GAME, LS_SCENE, LS_CAR, LS_TERRAIN, LS_ROAD, LS_OBJECTS, LS_TREES, LS_MISC, LS_ALL };
 	static Ogre::String cStrLoad[LS_ALL+1];
-	//int iLoadCur;
-	
-	// id, display name, initialised in App()
-	// e.g.: 0, Cleaning up or 3, Loading scene
+	int curLoadState;
 	std::map<int, std::string> loadingStates;
-	// 1 behind map ( map.end() ): loading finished
-	std::map<int, std::string>::iterator curLoadState;
 
 	float mTimer;  // wind,water
 
@@ -197,6 +184,9 @@ public:
 
 	//  Input
 	CInput* input;
+
+	virtual bool keyPressed (const SDL_KeyboardEvent &arg);
+	void channelChanged(ICS::Channel *channel, float currentValue, float previousValue);
 
 
 	///  Gui

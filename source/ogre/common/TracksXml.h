@@ -1,4 +1,8 @@
 #pragma once
+#include <vector>
+#include <map>
+#include <string>
+
 
 struct Date
 {
@@ -72,16 +76,6 @@ public:
 };
 
 
-//  tracks list item - with info for sorting
-struct TrkL
-{
-	std::string name;
-	const TrackInfo* ti;
-	//const class CGui* pA;
-	int test;  //Test*
-};
-
-
 //--------------------------------------------------------------------
 
 //  Car's additional info
@@ -113,13 +107,4 @@ public:
 	
 	//  methods
 	bool LoadXml(std::string file);
-};
-
-
-//  cars list item - with info for sorting
-struct CarL
-{
-	std::string name;
-	const CarInfo* ci;
-	//const class CGui* pA;
 };

@@ -4,8 +4,8 @@
 #include "../vdrift/pathmanager.h"
 
 
-CGui::CGui(App* ap1)
-	: app(ap1), bGI(0)
+CGui::CGui(App* app1)
+	: app(app1), bGI(0)
 	// gui
 	,mToolTip(0), mToolTipTxt(0), carList(0), trkList(0), resList(0), btRplPl(0)
 	,valReflSkip(0), valReflSize(0), valReflFaces(0), valReflDist(0)  // refl
@@ -67,10 +67,11 @@ CGui::CGui(App* ap1)
 	,txtInpDetail(0), panInputDetail(0), edInputIncrease(0), chOneAxis(0)
 	,bUpdCarClr(1), bListTrackU(0), iCurCar(0)
 {
-	pSet = ap1->pSet;
-	sc = ap1->sc;
-	pGame = ap1->pGame;
-	hud = ap1->hud;
+	pSet = app1->pSet;
+	sc = app1->sc;
+	pGame = app1->pGame;
+	hud = app1->hud;
+	data = app1->data;
 
 	int i,c;
 	for (i=0; i<3; ++i)

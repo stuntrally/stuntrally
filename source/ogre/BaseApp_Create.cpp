@@ -778,9 +778,6 @@ void BaseApp::baseInitGui()
 		
 	mPlatform->getRenderManagerPtr()->setSceneManager(mSplitMgr->mGuiSceneMgr);
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
-	
-	// After having initialised mygui, we can set translated strings
-	setTranslations();
 
 
 	///  create widgets

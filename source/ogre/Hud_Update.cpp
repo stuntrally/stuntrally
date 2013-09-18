@@ -3,6 +3,7 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
+#include "CData.h"
 #include "../vdrift/game.h"
 #include "../vdrift/quickprof.h"
 #include "../road/Road.h"
@@ -391,12 +392,12 @@ void CHud::Update(int carId, float time)
 			//  track time, points
 			float last = tim.GetLastLap(carId), best = tim.GetBestLap(carId, pSet->game.trackreverse);
 			float timeCur = last < 0.1f ? best : last;
-			float timeTrk = gui->tracksXml.times[pSet->game.track];
+			float timeTrk = app->data->tracks->times[pSet->game.track];
 			bool b = timeTrk > 0.f && timeCur > 0.f;
 
 			//bool coldStart = tim.GetCurrentLap(carId) == 1;  // was 0
-			float time = (/*place*/1 * gui->carsXml.magic * timeTrk + timeTrk) / carMul;
-			//float t1pl = g->carsXml.magic * timeTrk;
+			float time = (/*place*/1 * app->data->cars->magic * timeTrk + timeTrk) / carMul;
+			//float t1pl = data->carsXml.magic * timeTrk;
 
 			float points = 0.f, curPoints = 0.f;
 			int place = app->GetRacePos(timeCur, timeTrk, carMul, coldStart, &points);

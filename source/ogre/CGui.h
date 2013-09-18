@@ -22,6 +22,23 @@ class Scene;
 class SplineRoad;
 class GAME;
 class CHud;
+class CData;
+
+
+//  tracks list item - with info for sorting
+struct TrkL
+{
+	std::string name;
+	const class TrackInfo* ti;
+	int test;  //Test*
+};
+
+//  cars list item - with info for sorting
+struct CarL
+{
+	std::string name;
+	const class CarInfo* ci;
+};
 
 
 class CGui : public GameClientCallback, public MasterClientCallback,
@@ -33,6 +50,7 @@ public:
 	SETTINGS* pSet;
 	Scene* sc;
 	CHud* hud;
+	CData* data;
 	
 	CGui(App* ap1);
 	
@@ -87,7 +105,6 @@ public:
 	MyGUI::StaticTextPtr valTrkNet, stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
-	TracksXml tracksXml;  CarsXml carsXml;  UserXml userXml;  //xml
 	void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
 	void updTrkListDim(), updChampListDim();
 	//  const list column widths

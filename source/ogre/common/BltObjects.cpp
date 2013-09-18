@@ -21,6 +21,9 @@ BltCollision::BltCollision()
 	//shapes
 }
 
+BltObjects::BltObjects()
+{	}
+
 
 //  Load  collision objects from xml
 ///--------------------------------------------------------------------------------------------------------------------------------------

@@ -7,6 +7,7 @@
 	#include "../CGame.h"
 	#include "../CHud.h"
 	#include "../CGui.h"
+	#include "../CData.h"
 	#include "../vdrift/timer.h"
 	#include "../vdrift/game.h"
 #else
@@ -50,9 +51,9 @@ void CGui::ToolSceneXml()
 	LogO("ALL tracks scene ---------");
 	std::map<string, int> noCol,minSc;
 
-	for (int i=0; i < tracksXml.trks.size(); ++i)
+	for (int i=0; i < data->tracks->trks.size(); ++i)
 	{	//  foreach track
-		string trk = tracksXml.trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
+		string trk = data->tracks->trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
 		Scene sc;  sc.LoadXml(path +"scene.xml");
 		for (int l=0; l < Scene::ciNumPgLay; ++l)
 		{
@@ -135,9 +136,9 @@ void CGui::ToolTracksWarnings()
 	LogO("ALL tracks warnings ---------\n");
 	logWarn = true;
 
-	for (int i=0; i < tracksXml.trks.size(); ++i)
+	for (int i=0; i < data->tracks->trks.size(); ++i)
 	{	//  foreach track
-		string trk = tracksXml.trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
+		string trk = data->tracks->trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
 		/**/if (!(trk[0] >= 'A' && trk[0] <= 'Z'))  continue;
 		/**/if (StringUtil::startsWith(trk,"test"))  continue;
 
@@ -211,13 +212,13 @@ void CGui::ToolGhosts()
 	//  all cars
 	std::vector<string> cars;
 	std::vector<float> plc;
-	for (int c=0; c < carsXml.cars.size(); ++c)
-	{	cars.push_back(carsXml.cars[c].name);
+	for (int c=0; c < data->cars->cars.size(); ++c)
+	{	cars.push_back(data->cars->cars[c].name);
 		plc.push_back(0.f);  }
 
 	//  foreach track
-	for (int i=0; i < tracksXml.trks.size(); ++i)
-	{	string trk = tracksXml.trks[i].name;
+	for (int i=0; i < data->tracks->trks.size(); ++i)
+	{	string trk = data->tracks->trks[i].name;
 		if (trk.substr(0,4) == "Test" && trk.substr(0,5) != "TestC")  continue;
 
 		//  records
@@ -237,7 +238,7 @@ void CGui::ToolGhosts()
 		if (timeES==tMax)  timeES=0.f;
 		if (timeBest==tMax)  timeBest=0.f;
 		//  times.xml
-		float timeTrk = tracksXml.times[trk];// + 2;
+		float timeTrk = data->tracks->times[trk];// + 2;
 
 		//float timeB = timeTrk * 1.1f;  // champs factor mostly 0.1
 		//const float decFactor = 1.5f;
@@ -299,8 +300,8 @@ void CGui::ToolGhostsConv()
 	//for both dir sRev..
 	
 	//  foreach track
-	for (int i=0; i < tracksXml.trks.size(); ++i)
-	{	string track = tracksXml.trks[i].name;
+	for (int i=0; i < data->tracks->trks.size(); ++i)
+	{	string track = data->tracks->trks[i].name;
 		if (track.substr(0,4) == "Test" && track.substr(0,5) != "TestC")  continue;
 		
 		//  load
@@ -361,8 +362,8 @@ void CGui::ToolGhostsConv()
 	}
 
 	//  check missing
-	for (int i=0; i < tracksXml.trks.size(); ++i)
-	{	string track = tracksXml.trks[i].name;
+	for (int i=0; i < data->tracks->trks.size(); ++i)
+	{	string track = data->tracks->trks[i].name;
 		if (track.substr(0,4) == "Test" && track.substr(0,5) != "TestC")  continue;
 		
 		string fsave = PATHMANAGER::TrkGhosts()+"/"+ track + sRev + ".gho";
@@ -379,9 +380,9 @@ void CGui::ToolPresets()
 	LogO("ALL tracks presets ---------\n");
 
 	std::map<Ogre::String, TerLayer> ter;
-	for (int i=0; i < tracksXml.trks.size(); ++i)
+	for (int i=0; i < data->tracks->trks.size(); ++i)
 	{	//  foreach track
-		string trk = tracksXml.trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
+		string trk = data->tracks->trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
 		/**/if (!(trk[0] >= 'A' && trk[0] <= 'Z'))  continue;
 		/**/if (StringUtil::startsWith(trk,"test"))  continue;
 

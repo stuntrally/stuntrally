@@ -5,6 +5,7 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
+#include "CData.h"
 #include "../road/Road.h"
 #include "common/MultiList2.h"
 
@@ -225,7 +226,7 @@ void CGui::ChampionshipAdvance(float timeCur)
 	LogO("|| --- Champ end: " + ch.name);
 
 	///  compute track  poins  --------------
-	float timeTrk = tracksXml.times[trk.name];
+	float timeTrk = data->tracks->times[trk.name];
 	if (timeTrk < 1.f)
 	{	LogO("|| Error: Track has no best time !");  timeTrk = 10.f;	}
 	timeTrk *= trk.laps;
@@ -316,10 +317,10 @@ void CGui::ChampFillStageInfo(bool finished)
 
 	if (!finished)  // track info at start
 	{
-		int id = tracksXml.trkmap[trk.name];
+		int id = data->tracks->trkmap[trk.name];
 		if (id > 0)
 		{
-			const TrackInfo* ti = &tracksXml.trks[id-1];
+			const TrackInfo* ti = &data->tracks->trks[id-1];
 			s += "#A0D0FF"+ TR("#{Difficulty}:  ") + clrsDiff[ti->diff] + TR("#{Diff"+toStr(ti->diff)+"}") + "\n";
 			if (app->road)
 			{	Real len = app->road->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);

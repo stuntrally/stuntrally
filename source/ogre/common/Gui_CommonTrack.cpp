@@ -3,11 +3,13 @@
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
 #include "../common/SceneXml.h"
+#include "../common/TracksXml.h"
 #ifndef SR_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../CGame.h"
 	#include "../CHud.h"
 	#include "../CGui.h"
+	#include "../CData.h"
 	#include "../SplitScreen.h"
 #else
 	#include "../../editor/CApp.h"
@@ -468,16 +470,16 @@ void CGui::FillTrackLists()
 		else  ++i;
 	}
 
-	//  get info for track name, from tracksXml
+	//  get info for track name, from data->tracks
 	liTrk.clear();
 	for (strlist::iterator i = liTracks.begin(); i != liTracks.end(); ++i)
 	{
 		TrkL trl;  trl.name = *i;  //trl.pA = this;
 		trl.test = StringUtil::startsWith(trl.name,"test");
 
-		int id = tracksXml.trkmap[*i];
-		const TrackInfo* pTrk = id==0 ? 0 : &tracksXml.trks[id-1];
-		trl.ti = pTrk;  // 0 if not in tracksXml
+		int id = data->tracks->trkmap[*i];
+		const TrackInfo* pTrk = id==0 ? 0 : &data->tracks->trks[id-1];
+		trl.ti = pTrk;  // 0 if not in data->tracks
 		liTrk.push_back(trl);
 	}
 }
@@ -546,11 +548,11 @@ void CGui::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sT
 	if (stTrk[ch][4])  stTrk[ch][4]->setCaption(fToStr(rd->st.OnTer ,0,2)+"%");
 	if (stTrk[ch][5])  stTrk[ch][5]->setCaption(fToStr(rd->st.Pipes ,0,2)+"%");
 					
-	int id = tracksXml.trkmap[sTrack];
+	int id = data->tracks->trkmap[sTrack];
 	for (int i=0; i < InfTrk; ++i)
 		if (infTrk[ch][i])  infTrk[ch][i]->setCaption("");
 	if (id > 0)
-	{	const TrackInfo& ti = tracksXml.trks[id-1];
+	{	const TrackInfo& ti = data->tracks->trks[id-1];
 		#define str0(v)  ((v)==0 ? "" : toStr(v))
 		if (infTrk[ch][0])  infTrk[ch][0]->setCaption(str0(ti.fluids));
 		if (infTrk[ch][1])  infTrk[ch][1]->setCaption(str0(ti.bumps));		if (infTrk[ch][2])  infTrk[ch][2]->setCaption(str0(ti.jumps));
@@ -572,9 +574,9 @@ void CGui::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sT
 
 	//  track time
 	float carMul = app->GetCarTimeMul(pSet->gui.car[0], pSet->gui.sim_mode);
-	float timeTrk = tracksXml.times[sTrack];
+	float timeTrk = data->tracks->times[sTrack];
 	std::string speedTrk = fToStr(len / timeTrk * m, 0,3) + unit;
-	float timeT = (/*place*/1 * carsXml.magic * timeTrk + timeTrk) / carMul;
+	float timeT = (/*place*/1 * data->cars->magic * timeTrk + timeTrk) / carMul;
 	if (stTrk[ch][6])  stTrk[ch][6]->setCaption(CHud::StrTime(timeT));
 	if (stTrk[ch][7])  stTrk[ch][7]->setCaption(timeT < 0.1f ? "--" : speedTrk);
 

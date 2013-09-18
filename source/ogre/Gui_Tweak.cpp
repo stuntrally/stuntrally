@@ -4,7 +4,10 @@
 #include "../vdrift/game.h"
 #include "CGui.h"
 #include "CGame.h"
+#include "CData.h"
+#include "CarModel.h"
 #include "common/Gui_Def.h"
+#include "common/BltObjects.h"
 
 using namespace std;
 using namespace Ogre;
@@ -242,8 +245,8 @@ void CGui::TweakColSave()
 	fo.close();
 	TweakColUpd(true);
 	
-	app->objs.LoadXml();
-	LogO(String("**** Loaded Vegetation objects: ") + toStr(app->objs.colsMap.size()));
+	app->data->objs->LoadXml();
+	LogO(String("**** Loaded Vegetation objects: ") + toStr(app->data->objs->colsMap.size()));
 	app->NewGame();
 }
 

@@ -7,6 +7,7 @@
 #include "configfile.h"
 #include "settings.h"
 #include "../ogre/CGame.h"  //+ replay
+#include "../ogre/CData.h"
 #include "../ogre/CarModel.h"  //+ camera pos
 #include "../ogre/FollowCamera.h"  //+ camera pos
 #include "../ogre/common/Defines.h"
@@ -124,7 +125,7 @@ bool CAR::Load(class App* pApp1,
 		rotAtStart = rotLastCheck = orientation;
 		dmgLastCheck = 0.f;
 		
-		dynamics.Init(pSet, pApp->sc, &pApp->fluidsXml,
+		dynamics.Init(pSet, pApp->sc, pApp->data->fluids,
 			world, bodymodel, wheelmodelfront, wheelmodelrear, position, orientation);
 
 		dynamics.SetABS(defaultabs);

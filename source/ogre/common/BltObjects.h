@@ -41,4 +41,6 @@ public:
 
 	bool LoadXml();
 	const BltCollision* Find(std::string mesh);
+
+	BltObjects();
 };

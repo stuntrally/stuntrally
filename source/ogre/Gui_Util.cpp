@@ -4,6 +4,7 @@
 #include "../vdrift/settings.h"
 #include "CGame.h"
 #include "CGui.h"
+#include "CData.h"
 #include "common/Gui_Def.h"
 #include "common/TracksXml.h"
 #include "common/MultiList2.h"
@@ -84,7 +85,7 @@ void CGui::AddCarL(std::string name, const CarInfo* ci)
 	MultiList2* li = carList;
 	CarInfo cci;
 	if (!ci)  ci = &cci;  //  details
-	String clr = carsXml.colormap[ci->type];  if (clr.length() != 7)  clr = "#C0D0E0";
+	String clr = data->cars->colormap[ci->type];  if (clr.length() != 7)  clr = "#C0D0E0";
 	
 	li->addItem(clr+ name);  int l = li->getItemCount()-1, y = ci->year%100;
 	li->setSubItemNameAt(1,l, clrsDiff[std::min(7, (int)(ci->speed*0.9f))]+ toStr(ci->speed));
@@ -102,8 +103,8 @@ void CGui::FillCarList()
 		if (boost::filesystem::exists(PATHMANAGER::Cars() + "/" + *i + "/about.txt"))
 		{	String s = *i;
 			CarL c;  c.name = *i;  //c.pA = this;
-			int id = carsXml.carmap[*i];
-			c.ci = id==0 ? 0 : &carsXml.cars[id-1];
+			int id = data->cars->carmap[*i];
+			c.ci = id==0 ? 0 : &data->cars->cars[id-1];
 			liCar.push_back(c);
 	}	}
 }
@@ -237,11 +238,11 @@ void CGui::listCarChng(MultiList2* li, size_t pos)
 		carDesc->setCaption(sdesc);
 	}
 	//  car info
-	int id = carsXml.carmap[sl];
+	int id = data->cars->carmap[sl];
 	if (id > 0 && txCarSpeed && txCarType)
-	{	const CarInfo& ci = carsXml.cars[id-1];
+	{	const CarInfo& ci = data->cars->cars[id-1];
 		txCarSpeed->setCaption(clrsDiff[std::min(7, (int)(ci.speed*0.9f))]+ toStr(ci.speed));
-		txCarType->setCaption(carsXml.colormap[ci.type]+ TR("#{CarType_"+ci.type+"}"));
+		txCarType->setCaption(data->cars->colormap[ci.type]+ TR("#{CarType_"+ci.type+"}"));
 	}
 
 	changeCar();

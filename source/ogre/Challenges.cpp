@@ -5,6 +5,7 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
+#include "CData.h"
 #include "../road/Road.h"
 #include "common/MultiList2.h"
 
@@ -53,7 +54,7 @@ void CGui::ChallsListUpdate()
 			const ProgressChall& pc = progressL[p].chs[i];
 			int ntrks = pc.trks.size(), ct = pc.curTrack;
 			const String& clr = clrCh[chl.type];
-			//String cars = carsXml.colormap[chl.ci->type];  if (cars.length() != 7)  clr = "#C0D0E0";
+			//String cars = data->carsXml.colormap[chl.ci->type];  if (cars.length() != 7)  clr = "#C0D0E0";
 			
 			liChalls->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liChalls->getItemCount()-1;
 			liChalls->setSubItemNameAt(1,l, clr+ chl.name.c_str());
@@ -112,12 +113,12 @@ String CGui::StrChallCars(const Chall& ch)
 	for (i=0; i < s; ++i)
 	{
 		const String& ct = ch.carTypes[i];
-			str += carsXml.colormap[ct];  // car type color
+			str += data->cars->colormap[ct];  // car type color
 		str += ct;
 		if (i+1 < s)  str += ",";
 	}
-	//int id = carsXml.carmap[*i];
-	//carsXml.cars[id-1];
+	//int id = data->carsXml.carmap[*i];
+	//data->carsXml.cars[id-1];
 	if (!str.empty())
 		str += " ";
 	
@@ -125,8 +126,8 @@ String CGui::StrChallCars(const Chall& ch)
 	for (i=0; i < s; ++i)
 	{
 		const String& c = ch.cars[i];
-			int id = carsXml.carmap[c]-1;  // get car color from type
-			if (id >= 0)  str += carsXml.colormap[ carsXml.cars[id].type ];
+			int id = data->cars->carmap[c]-1;  // get car color from type
+			if (id >= 0)  str += data->cars->colormap[ data->cars->cars[id].type ];
 		str += c;
 		if (i+1 < s)  str += ",";
 	}
@@ -145,10 +146,10 @@ bool CGui::IsChallCar(String name)
 	if (!ch.carTypes.empty())
 	{	s = ch.carTypes.size();
 
-		int id = carsXml.carmap[name]-1;
+		int id = data->cars->carmap[name]-1;
 		if (id >= 0)
 		{
-			String type = carsXml.cars[id].type;
+			String type = data->cars->cars[id].type;
 
 			for (i=0; i < s; ++i)
 				if (type == ch.carTypes[i])  return true;
@@ -261,7 +262,7 @@ void CGui::ChallengeAdvance(float timeCur/*total*/)
 	LogO("|] --- Chall end: " + ch.name);
 
 	///  compute track  poins  --------------
-	float timeTrk = tracksXml.times[trk.name];
+	float timeTrk = data->tracks->times[trk.name];
 	if (timeTrk < 1.f)
 	{	LogO("|] Error: Track has no best time !");  timeTrk = 10.f;	}
 	timeTrk *= trk.laps;
@@ -470,10 +471,10 @@ void CGui::ChallFillStageInfo(bool finished)
 
 	if (!finished)  // track info at start
 	{
-		int id = tracksXml.trkmap[trk.name];
+		int id = data->tracks->trkmap[trk.name];
 		if (id > 0)
 		{
-			const TrackInfo* ti = &tracksXml.trks[id-1];
+			const TrackInfo* ti = &data->tracks->trks[id-1];
 			s += "#A0D0FF"+ TR("#{Difficulty}:  ") + clrsDiff[ti->diff] + TR("#{Diff"+toStr(ti->diff)+"}") + "\n";
 			if (app->road)
 			{	Real len = app->road->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);

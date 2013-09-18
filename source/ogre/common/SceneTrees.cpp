@@ -6,6 +6,7 @@
 	#include "../../editor/CApp.h"
 #else
 	#include "../CGame.h"
+	#include "../CData.h"
 	#include "../../vdrift/settings.h"
 	#include "../../vdrift/game.h"
 	#include "../SplitScreen.h"
@@ -209,7 +210,7 @@ void App::CreateTrees()
 
 
 			///  collision object
-			const BltCollision* col = objs.Find(pg.name);
+			const BltCollision* col = data->objs->Find(pg.name);
 			Vector3 ofs(0,0,0);  if (col)  ofs = col->offset;  // mesh offset
 
 			//  num trees  ----------------------------------------------------------------

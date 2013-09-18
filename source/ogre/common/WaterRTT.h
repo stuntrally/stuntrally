@@ -2,7 +2,7 @@
 #include <OgreRenderTargetListener.h>
 #include <OgreRenderTarget.h>
 
-namespace Ogre { class Camera;  class SceneManager; }
+namespace Ogre {  class Camera;  class SceneManager;  }
 
 /*
  * Class that handles RenderTargets for water reflection and refraction.

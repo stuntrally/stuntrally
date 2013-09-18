@@ -2,6 +2,7 @@
 #include "../common/RenderConst.h"
 #include "../common/Defines.h"
 #include "../common/SceneXml.h"
+#include "../common/FluidsXml.h"
 
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
@@ -9,6 +10,7 @@
 	#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #else
 	#include "../CGame.h"
+	#include "../CData.h"
 	#include "../../vdrift/game.h"
 	//#include "../../vdrift/settings.h"
 #endif
@@ -53,7 +55,7 @@ void App::CreateFluids()
 		if (!mesh->suggestTangentVectorBuildParams(VES_TANGENT, src,dest))
 			mesh->buildTangentVectors(VES_TANGENT, src,dest);
 
-		String sMtr = fb.id == -1 ? "" : fluidsXml.fls[fb.id].material;  //"Water"+toStr(1+fb.type)
+		String sMtr = fb.id == -1 ? "" : data->fluids->fls[fb.id].material;  //"Water"+toStr(1+fb.type)
 		MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr);  //par,temp
 
 		efl->setMaterial(mtr);  efl->setCastShadows(false);

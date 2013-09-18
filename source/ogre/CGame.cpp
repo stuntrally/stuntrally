@@ -3,6 +3,7 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
+#include "CData.h"
 #include "common/SceneXml.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
@@ -54,11 +55,11 @@ App::App(SETTINGS *settings, GAME *game)
 	resCar = "";  resTrk = "";  resDrv = "";
 	
 	///  new
+	data = new CData();
 	hud = new CHud(this);
 	gui = new CGui(this);
 	hud->gui = gui;
 	mBindListner = gui;
-	
 	input = new CInput(this);
 
 	if (pSet->multi_thr)
@@ -83,6 +84,7 @@ App::~App()
 
 	OGRE_DELETE dbgdraw;
 	delete sc;
+	delete data;
 	delete gui;
 	delete hud;
 	delete input;
@@ -96,23 +98,6 @@ void App::postInit()
 	mSplitMgr->pApp = this;
 
 	mFactory->setMaterialListener(this);
-}
-
-void App::setTranslations()
-{
-	// loading states
-	loadingStates.clear();
-	loadingStates.insert(std::make_pair(LS_CLEANUP, String(TR("#{LS_CLEANUP}"))));
-	loadingStates.insert(std::make_pair(LS_GAME, String(TR("#{LS_GAME}"))));
-	loadingStates.insert(std::make_pair(LS_SCENE, String(TR("#{LS_SCENE}"))));
-	loadingStates.insert(std::make_pair(LS_CAR, String(TR("#{LS_CAR}"))));
-
-	loadingStates.insert(std::make_pair(LS_TERRAIN, String(TR("#{LS_TER}"))));
-	loadingStates.insert(std::make_pair(LS_ROAD, String(TR("#{LS_ROAD}"))));
-	loadingStates.insert(std::make_pair(LS_OBJECTS, String(TR("#{LS_OBJS}"))));
-	loadingStates.insert(std::make_pair(LS_TREES, String(TR("#{LS_TREES}"))));
-
-	loadingStates.insert(std::make_pair(LS_MISC, String(TR("#{LS_MISC}"))));
 }
 
 

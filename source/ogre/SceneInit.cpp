@@ -3,6 +3,7 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
+#include "CData.h"
 #include "common/SceneXml.h"
 #include "LoadingBar.h"
 #include "../vdrift/game.h"
@@ -40,9 +41,9 @@ void App::createScene()
 
 	QTimer ti;  ti.update();  /// time
 
-	//  tracks.xml
-	gui->tracksXml.LoadIni(PATHMANAGER::GameConfigDir() + "/tracks.ini");
-	gui->carsXml.LoadXml(PATHMANAGER::GameConfigDir() + "/cars.xml");
+	//  data xml
+	data->Load();
+	sc->pFluidsXml = data->fluids;
 
 	//  championships.xml, progress.xml
 	gui->Ch_XmlLoad();
@@ -50,9 +51,9 @@ void App::createScene()
 	//  user.xml
 	#if 0
 	userXml.LoadXml(PATHMANAGER::UserConfigDir() + "/user.xml");
-	for (int i=0; i < tracksXml.trks.size(); ++i)
+	for (int i=0; i < data->tracks->trks.size(); ++i)
 	{
-		const TrackInfo& ti = tracksXml.trks[i];
+		const TrackInfo& ti = data->tracks->trks[i];
 		if (userXml.trkmap[ti.name]==0)
 		{	// not found, add
 			UserTrkInfo tu;  tu.name = ti.name;
@@ -62,15 +63,6 @@ void App::createScene()
 	}	}
 	userXml.SaveXml(PATHMANAGER::UserConfigDir() + "/user.xml");
 	#endif
-
-	//  fluids.xml
-	fluidsXml.LoadXml(PATHMANAGER::Data() + "/materials2/fluids.xml");
-	sc->pFluidsXml = &fluidsXml;
-	LogO(String("**** Loaded fluids.xml: ") + toStr(fluidsXml.fls.size()));
-
-	//  collisions.xml
-	objs.LoadXml();
-	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
 
 	LogO(String("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
 	LogO(String("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
@@ -199,7 +191,7 @@ void App::NewGame()
 	//mFpsOverlay->hide();  // hide FPS
 	hideMouse();
 
-	curLoadState = loadingStates.begin();
+	curLoadState = 0;
 }
 
 /* *  Loading steps (in this order)  * */
@@ -678,9 +670,12 @@ void App::LoadMisc()  // 9 last
 
 //  Performs a single loading step.  Actual loading procedure that gets called every frame during load.
 //---------------------------------------------------------------------------------------------------------------
+String App::cStrLoad[LS_ALL+1] = 
+	{"LS_CLEANUP","LS_GAME","LS_SCENE","LS_CAR","LS_TER","LS_ROAD","LS_OBJS","LS_TREES","LS_MISC","LS_ALL"};
+
 void App::NewGameDoLoad()
 {
-	if (curLoadState == loadingStates.end())
+	if (curLoadState == LS_ALL)
 	{
 		// Loading finished
 		bLoading = false;
@@ -701,7 +696,7 @@ void App::NewGameDoLoad()
 	}
 	//  Do the next loading step
 	int perc = 0;
-	switch ( (*curLoadState).first )
+	switch (curLoadState)
 	{
 		case LS_CLEANUP:	LoadCleanUp();	perc = 3;	break;
 		case LS_GAME:		LoadGame();		perc = 10;	break;
@@ -717,7 +712,7 @@ void App::NewGameDoLoad()
 	}
 
 	//  Update bar,txt
-	txLoad->setCaption( (*curLoadState).second );
+	txLoad->setCaption(TR("#{"+cStrLoad[curLoadState]+"}"));
 	mLoadingBar->SetWidth(perc);
 
 	//  next loading step

@@ -74,8 +74,6 @@ public:
 	
 	//  stuff to be executed in App after BaseApp init
 	virtual void postInit() = 0;
-	
-	virtual void setTranslations() = 0;
 		
 	///  effects
 	class SplitScreenManager* mSplitMgr;

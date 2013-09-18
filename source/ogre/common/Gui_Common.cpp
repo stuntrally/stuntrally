@@ -122,20 +122,20 @@ void CGui::GuiInitGraphics()  // also called on preset change with bGI true
 	SliderValue::bGI = &bGI;
 
 	SliderValue* sv;
-	#define Sev(ev)  if (sv->event.empty())  sv->event += newDelegate(this, &CGui::##ev)
+	#define Sev(ev)  if (sv->event.empty())  sv->event += newDelegate(this, &CGui::sl##ev)
 	//Check* ck;
 	//#define Cev(ev)  if (sv->event.empty())  ck->event += newDelegate(this, &CGui::##ev)
 	
 	//  detail
-	sv= &svTerDetail;	sv->Init("TerDetail",	&pSet->terdetail,	0.f,2.f);  Sev(slTerDetail);
-	sv= &svTerDist;		sv->Init("TerDist",		&pSet->terdist, 0.f,2000.f, 2.f, 0,3, 1.f," m");  Sev(slTerDist);
+	sv= &svTerDetail;	sv->Init("TerDetail",	&pSet->terdetail,	0.f,2.f);  Sev(TerDetail);
+	sv= &svTerDist;		sv->Init("TerDist",		&pSet->terdist, 0.f,2000.f, 2.f, 0,3, 1.f," m");  Sev(TerDist);
 	sv= &svRoadDist;	sv->Init("RoadDist",	&pSet->road_dist,	0.f,4.f, 2.f, 2,5);
 
 	//  textures
 	Cmb(cmb, "TexFiltering", comboTexFilter);
 
-	sv= &svViewDist;	sv->Init("ViewDist",	&pSet->view_distance, 50.f,20000.f, 2.f, 1,4, 0.001f," km");  Sev(slViewDist);
-	sv= &svAnisotropy;	sv->Init("Anisotropy",	&pSet->anisotropy,	0.f,16.f);  Sev(slAnisotropy);
+	sv= &svViewDist;	sv->Init("ViewDist",	&pSet->view_distance, 50.f,20000.f, 2.f, 1,4, 0.001f," km");  Sev(ViewDist);
+	sv= &svAnisotropy;	sv->Init("Anisotropy",	&pSet->anisotropy,	0.f,16.f);  Sev(Anisotropy);
 	sv= &svTexSize;
 		sv->strMap[0] = "Small";  sv->strMap[1] = "Big";
 						sv->Init("TexSize",		&pSet->tex_size,	0.f,1.f);
@@ -443,10 +443,6 @@ void CGui::comboLanguage(MyGUI::ComboBox* wp, size_t val)
 
 	//  reinit gui
 	bGuiReinit = true;
-	
-	#ifndef SR_EDITOR
-	app->setTranslations();
-	#endif
 }
 
 //  [Screen] 

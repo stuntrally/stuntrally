@@ -11,7 +11,7 @@
 #include "../vdrift/collision_world.h"
 #include "../btOgre/BtOgreDebug.h"
 #include "btBulletCollisionCommon.h"
-#include "CarModel.h"  //posInfo
+#include "CarPosInfo.h"
 
 #include <OgreCamera.h>
 #include <OgreSceneNode.h>
