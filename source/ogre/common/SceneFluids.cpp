@@ -3,28 +3,26 @@
 #include "../common/Defines.h"
 #include "../common/SceneXml.h"
 #include "../common/FluidsXml.h"
-
+#include "../common/CData.h"
+#include "../common/ShapeData.h"
+#include "../common/WaterRTT.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
 	#include "../../editor/settings.h"
 	#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #else
 	#include "../CGame.h"
-	#include "../CData.h"
 	#include "../../vdrift/game.h"
 	//#include "../../vdrift/settings.h"
 #endif
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
 #include "BulletCollision/CollisionShapes/btBoxShape.h"
-
 #include <OgreManualObject.h>
 #include <OgreMeshManager.h>
 #include <OgreMaterialManager.h>
 #include <OgreEntity.h>
 #include "../common/QTimer.h"
-
 #include "../shiny/Main/Factory.hpp"
-
 using namespace Ogre;
 
 
@@ -37,8 +35,8 @@ void App::CreateFluids()
 	#ifdef SR_EDITOR
 	UpdFluidBox();
 	#endif
-	if (!mWaterRTT.mNdFluidsRoot)
-		mWaterRTT.mNdFluidsRoot = mSceneMgr->getRootSceneNode()->createChildSceneNode("FluidsRootNode");
+	if (!mWaterRTT->mNdFluidsRoot)
+		mWaterRTT->mNdFluidsRoot = mSceneMgr->getRootSceneNode()->createChildSceneNode("FluidsRootNode");
 			
 	for (int i=0; i < sc->fluids.size(); i++)
 	{
@@ -61,7 +59,7 @@ void App::CreateFluids()
 		efl->setMaterial(mtr);  efl->setCastShadows(false);
 		efl->setRenderQueueGroup(RQG_Fluid);  efl->setVisibilityFlags(RV_Terrain);
 
-		SceneNode* nfl = mWaterRTT.mNdFluidsRoot->createChildSceneNode(
+		SceneNode* nfl = mWaterRTT->mNdFluidsRoot->createChildSceneNode(
 			fb.pos/*, Quaternion(Degree(fb.rot.x),Vector3::UNIT_Y)*/);
 		nfl->attachObject(efl);
 
@@ -149,13 +147,13 @@ void App::UpdMtrWaterDepth()
 void App::UpdateWaterRTT(Ogre::Camera* cam)
 {
 	//  water RTT
-	mWaterRTT.setViewerCamera(cam);
-	mWaterRTT.setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
-	mWaterRTT.setReflect(pSet->water_reflect);
-	mWaterRTT.setRefract(pSet->water_refract);
-	mWaterRTT.mSceneMgr = mSceneMgr;
+	mWaterRTT->setViewerCamera(cam);
+	mWaterRTT->setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
+	mWaterRTT->setReflect(pSet->water_reflect);
+	mWaterRTT->setRefract(pSet->water_refract);
+	mWaterRTT->mSceneMgr = mSceneMgr;
 	if (!sc->fluids.empty())
-		mWaterRTT.setPlane(Plane(Vector3::UNIT_Y, sc->fluids.front().pos.y));
-	mWaterRTT.recreate();
-	mWaterRTT.setActive(!sc->fluids.empty());
+		mWaterRTT->setPlane(Plane(Vector3::UNIT_Y, sc->fluids.front().pos.y));
+	mWaterRTT->recreate();
+	mWaterRTT->setActive(!sc->fluids.empty());
 }

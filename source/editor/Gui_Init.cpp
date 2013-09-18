@@ -3,16 +3,13 @@
 #include "CApp.h"
 #include "CGui.h"
 #include "../vdrift/pathmanager.h"
-
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/Slider.h"
 #include <boost/filesystem.hpp>
-
+#include "../sdl4ogre/sdlcursormanager.hpp"
 using namespace MyGUI;
 using namespace Ogre;
-
-#include "../sdl4ogre/sdlcursormanager.hpp"
 
 
 ///  Gui Init

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
 #include "../ogre/common/RenderConst.h"
+#include "../ogre/common/ShapeData.h"
 #include "Road.h"
 #ifndef SR_EDITOR
 #include "../vdrift/game.h"

@@ -1,23 +1,22 @@
 #include "pch.h"
 #include "common/Defines.h"
+#include "common/RenderConst.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
-#include "CData.h"
+#include "common/CData.h"
 #include "common/SceneXml.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "SplitScreen.h"
 #include "../paged-geom/PagedGeometry.h"
-#include "common/RenderConst.h"
+#include "common/WaterRTT.h"
 #include "common/MultiList2.h"
-
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
 #include <OgreTerrainPaging.h>
 #include <OgrePageManager.h>
 #include <OgreManualObject.h>
-
 #include "../shiny/Platforms/Ogre/OgreMaterial.hpp"
 using namespace Ogre;
 
@@ -43,6 +42,7 @@ App::App(SETTINGS *settings, GAME *game)
 	pGame->collision.pApp = this;
 
 	sc = new Scene();
+	mWaterRTT = new WaterRTT();
 	frm.resize(4);
 
 	//  util for update rot
@@ -88,6 +88,7 @@ App::~App()
 	delete gui;
 	delete hud;
 	delete input;
+	//delete mWaterRTT;  // todo: crash at exit..
 }
 
 

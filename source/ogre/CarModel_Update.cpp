@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "common/Defines.h"
+#include "common/RenderConst.h"
 #include "CarModel.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/mathvector.h"
@@ -11,10 +12,6 @@
 #include "FollowCamera.h"
 #include "CarReflection.h"
 #include "../road/Road.h"
-#include "common/RenderConst.h"
-
-#include "boost/filesystem.hpp"
-#define  FileExists(s)  boost::filesystem::exists(s)
 
 #include <OgreRoot.h>
 #include <OgreTerrain.h>
@@ -25,7 +22,7 @@
 #include <OgreParticleEmitter.h>
 #include <OgreParticleAffector.h>
 #include <OgreRibbonTrail.h>
-
+#include <MyGUI_TextBox.h>
 using namespace Ogre;
 
 

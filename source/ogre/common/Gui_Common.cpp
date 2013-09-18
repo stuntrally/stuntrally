@@ -18,13 +18,12 @@
 #include <OgreTerrain.h>
 #include <OgreRenderWindow.h>
 #include "Slider.h"
+#include "WaterRTT.h"
+#include "../shiny/Main/Factory.hpp"
+#include "../sdl4ogre/sdlinputwrapper.hpp"
 using namespace MyGUI;
 using namespace Ogre;
 using namespace std;
-
-
-#include "../shiny/Main/Factory.hpp"
-#include "../sdl4ogre/sdlinputwrapper.hpp"
 
 
 
@@ -99,17 +98,17 @@ void CGui::btnShaders(WP){	app->changeShadows();	}
 void CGui::chkWaterReflect(WP wp)
 {
 	ChkEv(water_reflect);
-	app->mWaterRTT.setReflect(pSet->water_reflect);
+	app->mWaterRTT->setReflect(pSet->water_reflect);
 	app->changeShadows();
-	app->mWaterRTT.recreate();
+	app->mWaterRTT->recreate();
 }
 
 void CGui::chkWaterRefract(WP wp)
 {
 	ChkEv(water_refract);
-	app->mWaterRTT.setRefract(pSet->water_refract);
+	app->mWaterRTT->setRefract(pSet->water_refract);
 	app->changeShadows();
-	app->mWaterRTT.recreate();
+	app->mWaterRTT->recreate();
 }
 
 //  init  common

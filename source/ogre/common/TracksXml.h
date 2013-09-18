@@ -44,6 +44,7 @@ public:
 	std::map<std::string, float> times;  // track times
 	
 	bool LoadIni(std::string file);
+	TracksXml() {  }
 };
 
 
@@ -73,6 +74,7 @@ public:
 	
 	//  methods
 	bool LoadXml(std::string file), SaveXml(std::string file);
+	UserXml() {  }
 };
 
 
@@ -107,4 +109,5 @@ public:
 	
 	//  methods
 	bool LoadXml(std::string file);
+	CarsXml(){  }
 };

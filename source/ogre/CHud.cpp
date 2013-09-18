@@ -5,6 +5,7 @@
 #include "CGui.h"
 #include "common/SceneXml.h"
 #include <LinearMath/btQuickprof.h>
+#include "../vdrift/settings.h"
 using namespace Ogre;
 
 

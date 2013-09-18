@@ -4,12 +4,12 @@
 #include "../../vdrift/pathmanager.h"
 #include "../common/SceneXml.h"
 #include "../common/TracksXml.h"
+#include "../common/CData.h"
 #ifndef SR_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../CGame.h"
 	#include "../CHud.h"
 	#include "../CGui.h"
-	#include "../CData.h"
 	#include "../SplitScreen.h"
 #else
 	#include "../../editor/CApp.h"

@@ -4,7 +4,7 @@
 #include "../vdrift/game.h"
 #include "CGui.h"
 #include "CGame.h"
-#include "CData.h"
+#include "common/CData.h"
 #include "CarModel.h"
 #include "common/Gui_Def.h"
 #include "common/BltObjects.h"

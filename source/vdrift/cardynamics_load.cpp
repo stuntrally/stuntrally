@@ -6,6 +6,7 @@
 #include "model.h"
 #include "settings.h"
 #include "../ogre/common/Defines.h"
+#include "../ogre/common/ShapeData.h"
 #include "Buoyancy.h"
 #include "../ogre/common/QTimer.h"
 using namespace std;

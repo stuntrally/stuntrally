@@ -1,16 +1,16 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
+#include "../ogre/common/RenderConst.h"
+#include "../ogre/common/CData.h"
+#include "../vdrift/pathmanager.h"
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"
-#include "../vdrift/pathmanager.h"
 #include "../paged-geom/PagedGeometry.h"
-#include "../ogre/common/RenderConst.h"
+#include "../ogre/common/WaterRTT.h"
 
 #include "../shiny/Main/Factory.hpp"
 #include "../shiny/Platforms/Ogre/OgrePlatform.hpp"
-
-#include <string>
 #include <OgreTerrainPaging.h>
 #include <OgreTerrainGroup.h>
 
@@ -58,6 +58,9 @@ App::App(SETTINGS* pSet1)  //  gui wigdets--
 	sBrushTest[0]=0;   updBrush();
 	iSnap = 0;  angSnap = crAngSnaps[iSnap];
 
+	///  new
+	mWaterRTT = new WaterRTT();
+	data = new CData();
 	gui = new CGui(this);
 	
 	track = new TRACK(std::cout, std::cerr);  //!

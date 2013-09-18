@@ -2,11 +2,11 @@
 #include "../common/Defines.h"
 #include "../common/RenderConst.h"
 #include "../common/SceneXml.h"
+#include "../common/ShapeData.h"
+#include "../common/QTimer.h"
 #include "../../road/Road.h"  // sun rot
 #include "../shiny/Main/Factory.hpp"
-
 #include "TerrainMaterial.h"
-
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
 	#include "../../editor/CGui.h"
@@ -20,7 +20,6 @@
 #endif
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
 #include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
-
 #include <OgreRoot.h>
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
@@ -28,8 +27,6 @@
 #include <OgreMeshManager.h>
 #include <OgreMaterialManager.h>
 #include <OgreEntity.h>
-#include "../common/QTimer.h"
-
 using namespace Ogre;
 
 

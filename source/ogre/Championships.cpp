@@ -5,7 +5,8 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
-#include "CData.h"
+#include "common/CData.h"
+#include "common/TracksXml.h"
 #include "../road/Road.h"
 #include "common/MultiList2.h"
 
@@ -46,9 +47,9 @@ void CGui::ChampsListUpdate()
 
 	liChamps->removeAllItems();  int n=1;  size_t sel = ITEM_NONE;
 	int p = pSet->gui.champ_rev ? 1 : 0;
-	for (int i=0; i < champs.all.size(); ++i,++n)
+	for (int i=0; i < data->champs->all.size(); ++i,++n)
 	{
-		const Champ& ch = champs.all[i];
+		const Champ& ch = data->champs->all[i];
 		if (pSet->inMenu == MNU_Tutorial && ch.type == pSet->tut_type ||
 			pSet->inMenu == MNU_Champ && ch.type - 2 == pSet->champ_type)
 		{
@@ -82,10 +83,10 @@ void CGui::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 	liStages->removeAllItems();
 
 	int pos = s2i(liChamps->getItemNameAt(id).substr(7))-1;
-	if (pos < 0 || pos >= champs.all.size())  {  LogO("Error champ sel > size.");  return;  }
+	if (pos < 0 || pos >= data->champs->all.size())  {  LogO("Error champ sel > size.");  return;  }
 
 	int n = 1, p = pSet->gui.champ_rev ? 1 : 0;
-	const Champ& ch = champs.all[pos];
+	const Champ& ch = data->champs->all[pos];
 	int ntrks = ch.trks.size();
 	for (int i=0; i < ntrks; ++i,++n)
 	{
@@ -112,7 +113,7 @@ void CGui::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 	s1 += TR("#80F0E0#{Time} [m:s.]\n"); s2 += "#C0FFE0"+clr+ CHud::StrTime2(ch.time)+"\n";
 
 	s1 += "\n\n";  s2 += "\n\n";
-	int cur = progress[p].chs[pos].curTrack, all = champs.all[pos].trks.size();
+	int cur = progress[p].chs[pos].curTrack, all = data->champs->all[pos].trks.size();
 	s1 += TR("#B0C0E0#{Progress}\n");    s2 += "#B0D0F0"+(cur == all ? TR("#{Finished}").asUTF8() : fToStr(100.f * cur / all,0,3)+" %")+"\n";
 	s1 += TR("#D8C0FF#{Score}\n");       s2 += "#F0D8FF"+fToStr(progress[p].chs[pos].points,1,5)+"\n";
 
@@ -157,7 +158,7 @@ void CGui::btnChampStageStart(WP)
 	//  check if champ ended
 	int chId = pSet->game.champ_num, p = pSet->game.champ_rev ? 1 : 0;
 	ProgressChamp& pc = progress[p].chs[chId];
-	const Champ& ch = champs.all[chId];
+	const Champ& ch = data->champs->all[chId];
 	bool last = pc.curTrack == ch.trks.size();
 
 	LogO("|| This was stage " + toStr(pc.curTrack) + "/" + toStr(ch.trks.size()) + " btn");
@@ -221,7 +222,7 @@ void CGui::ChampionshipAdvance(float timeCur)
 {
 	int chId = pSet->game.champ_num, p = pSet->game.champ_rev ? 1 : 0;
 	ProgressChamp& pc = progress[p].chs[chId];
-	const Champ& ch = champs.all[chId];
+	const Champ& ch = data->champs->all[chId];
 	const ChampTrack& trk = ch.trks[pc.curTrack];
 	LogO("|| --- Champ end: " + ch.name);
 
@@ -306,7 +307,7 @@ void CGui::ChampFillStageInfo(bool finished)
 {
 	int chId = pSet->game.champ_num, p = pSet->game.champ_rev ? 1 : 0;
 	ProgressChamp& pc = progress[p].chs[chId];
-	const Champ& ch = champs.all[chId];
+	const Champ& ch = data->champs->all[chId];
 	const ChampTrack& trk = ch.trks[pc.curTrack];
 	bool last = pc.curTrack+1 == ch.trks.size();
 

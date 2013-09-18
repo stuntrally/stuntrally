@@ -7,7 +7,7 @@
 #include "configfile.h"
 #include "settings.h"
 #include "../ogre/CGame.h"  //+ replay
-#include "../ogre/CData.h"
+#include "../ogre/common/CData.h"
 #include "../ogre/CarModel.h"  //+ camera pos
 #include "../ogre/FollowCamera.h"  //+ camera pos
 #include "../ogre/common/Defines.h"

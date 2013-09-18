@@ -2,8 +2,6 @@
 #include "BaseApp.h"
 #include "common/Defines.h"
 #include "common/Gui_Def.h"
-#include "CGame.h"  //xml..
-#include "../vdrift/settings.h"
 #include "common/Slider.h"
 #include "common/SliderValue.h"
 #include "common/Gui_Popup.h"
@@ -12,7 +10,7 @@
 #include "common/MessageBox/MessageBoxStyle.h"
 #include "../network/networkcallbacks.hpp"
 #include "../oics/ICSInputControlSystem.h"
-#include "ChampsXml.h"
+#include "ChampsXml.h"  // progress..
 #include "ChallengesXml.h"
 #include "CInput.h"
 
@@ -25,15 +23,13 @@ class CHud;
 class CData;
 
 
-//  tracks list item - with info for sorting
+//  tracks,cars list items - with info for sorting
 struct TrkL
 {
 	std::string name;
 	const class TrackInfo* ti;
 	int test;  //Test*
 };
-
-//  cars list item - with info for sorting
 struct CarL
 {
 	std::string name;
@@ -153,8 +149,8 @@ public:
 	void StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress);
 	
 	//  xml  [1]= reversed  L= challenge
-	ChampsXml champs;  ProgressXml progress[2];
-	ChallXml chall;  ProgressLXml progressL[2];
+	ProgressXml progress[2];
+	ProgressLXml progressL[2];
 	void ProgressSave(bool upgGui=true), ProgressLSave(bool upgGui=true);
 	friend class CarModel;
 	Chall* pChall;  // current challenge or 0 if not

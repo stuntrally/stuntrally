@@ -1,12 +1,13 @@
 #include "pch.h"
 #include "../common/Defines.h"
 #include "../common/SceneXml.h"
+#include "../common/CData.h"
+#include "../common/ShapeData.h"
 #include "RenderConst.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
 #else
 	#include "../CGame.h"
-	#include "../CData.h"
 	#include "../../vdrift/settings.h"
 	#include "../../vdrift/game.h"
 	#include "../SplitScreen.h"

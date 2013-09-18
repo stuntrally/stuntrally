@@ -1,13 +1,5 @@
 #pragma once
 #include "BaseApp.h"
-#include "../ogre/common/SceneXml.h"
-#include "../ogre/common/BltObjects.h"
-#include "../ogre/common/TracksXml.h"
-#include "../ogre/common/FluidsXml.h"
-#include "../ogre/common/MessageBox/MessageBox.h"
-#include "../ogre/common/MessageBox/MessageBoxStyle.h"
-#include "../ogre/common/WaterRTT.h"
-
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
 #include "../vdrift/tracksurface.h"
@@ -21,22 +13,20 @@
 #include "../ogre/common/RenderBoxScene.h"
 
 
-const int ciShadowNumSizes = 5;
-const int ciShadowSizesA[ciShadowNumSizes] = {256,512,1024,2048,4096};
 #define BrushMaxSize  512
 
 //  Gui
 const int ciAngSnapsNum = 7;
 const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,5,15,30,45,90,180};
 
-namespace sh { class Factory; }
-
-
 namespace Forests {  class PagedGeometry;  }
 namespace MyGUI  {  class MultiList2;  class Slider;  }
-
 namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  class Light;  }
+namespace sh {  class Factory;  }
+class WaterRTT;
+class Scene;
 class CGui;
+class CData;
 
 
 class App : public BaseApp, public Ogre::RenderTargetListener
@@ -46,8 +36,8 @@ public:
 	virtual ~App();
 
 	Scene* sc;  /// scene.xml
-	FluidsXml fluidsXml;  /// fluid params xml
-	BltObjects objs;  // veget collision in bullet
+
+	CData* data;  // xmls
 
 	std::vector <TRACKSURFACE> surfaces;  /// New  all surfaces
 	std::map <std::string, int> surf_map;  // name to surface id
@@ -156,7 +146,7 @@ public:
 	Ogre::Vector4 splitPoints;
 	Ogre::ShadowCameraSetupPtr mPSSMSetup;
 
-	WaterRTT mWaterRTT;
+	WaterRTT* mWaterRTT;
 
 	//  ter circle mesh
 	Ogre::ManualObject* moTerC;  Ogre::SceneNode* ndTerC;

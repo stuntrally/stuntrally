@@ -8,8 +8,9 @@
 #include <MyGUI_OgrePlatform.h>
 
 #include <boost/scoped_ptr.hpp>
-//#include <boost/thread.hpp>
-
+#include "../sdl4ogre/events.h"
+namespace SFO {  class InputWrapper;  class SDLCursorManager;  }
+namespace ICS {  class InputControlSystem;  class DetectingBindingListener;  }
 
 namespace MyGUI{  class OgreD3D11Platform; }
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
@@ -17,12 +18,6 @@ namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class Rend
 namespace sh   {  class Factory;  }
 
 class MasterClient;  class P2PGameClient;
-
-
-#include "../sdl4ogre/events.h"
-
-namespace SFO {  class InputWrapper;  class SDLCursorManager;  }
-namespace ICS {  class InputControlSystem;  class DetectingBindingListener;  }
 
 
 //  mtr

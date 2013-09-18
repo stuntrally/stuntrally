@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
+#include "../ogre/common/ShapeData.h"
 #include "collision_world.h"
 #include "tobullet.h"
 #include "collision_contact.h"
@@ -57,10 +58,8 @@ void IntTickCallback(btDynamicsWorld *world, btScalar timeStep)
 						hit.vel = sdCar ? sdCar->pCarDyn->velPrev : (btVector3(1,1,1)*0.1f);
 						cw->world->vHits.push_back(hit);
 						//sdCar->pCarDyn->hitPnts.push_back(pt);  ///i
-					}
-				}
-			}
-		}
+				}	}
+		}	}
 	}
 }
 

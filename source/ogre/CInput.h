@@ -1,4 +1,7 @@
 #pragma once
+#include <string>
+//#include "SDL_keycode.h"
+
 
 // These IDs are referenced in the user config files.
 // To keep them valid, make sure to:
@@ -16,6 +19,7 @@ enum PlayerActions
 
 namespace ICS
 {	class InputControlSystem;  class Control;  }
+
 
 //  Input
 //-----------------------------------------------------------------

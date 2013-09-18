@@ -121,4 +121,5 @@ CGui::CGui(App* app1)  //  gui wigdets--
 
 	sc = app1->sc;
 	pSet = app1->pSet;
+	data = app->data;
 }

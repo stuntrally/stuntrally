@@ -47,7 +47,7 @@
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="pch.h"
-				WarningLevel="3"
+				WarningLevel="1"
 				DebugInformationFormat="4"
 				DisableSpecificWarnings="4996;"
 			/>
@@ -784,6 +784,14 @@
 			</File>
 			<File
 				RelativePath="..\source\ogre\common\BltObjects.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\ogre\common\CData.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\ogre\common\CData.h"
 				>
 			</File>
 			<File

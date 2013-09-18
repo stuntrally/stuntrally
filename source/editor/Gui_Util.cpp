@@ -6,6 +6,7 @@
 #include <boost/filesystem.hpp>
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/Slider.h"
+#include "../ogre/common/MessageBox/MessageBox.h"
 using namespace MyGUI;
 using namespace Ogre;
 

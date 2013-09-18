@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
 #include "../vdrift/pathmanager.h"

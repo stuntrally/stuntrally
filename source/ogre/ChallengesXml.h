@@ -67,6 +67,7 @@ public:
 	std::vector<Chall> all;
 	
 	bool LoadXml(std::string file, class TracksXml* times);
+	ChallXml();
 };
 
 

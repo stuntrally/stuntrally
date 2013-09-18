@@ -5,7 +5,8 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
-#include "CData.h"
+#include "common/CData.h"
+#include "common/TracksXml.h"
 #include "../road/Road.h"
 #include "common/MultiList2.h"
 
@@ -20,8 +21,8 @@ using namespace MyGUI;
 ///______________________________________________________________________________________________
 void App::Ch_NewGame()
 {
-	if (pSet->game.champ_num >= (int)gui->champs.all.size() ||
-		pSet->game.chall_num >= (int)gui->chall.all.size())  // range
+	if (pSet->game.champ_num >= (int)data->champs->all.size() ||
+		pSet->game.chall_num >= (int)data->chall->all.size())  // range
 	{	pSet->game.champ_num = -1;
 		pSet->game.chall_num = -1;  }
 
@@ -32,7 +33,7 @@ void App::Ch_NewGame()
 		///  challenge stage
 		int p = pSet->game.champ_rev ? 1 : 0;
 		ProgressChall& pc = gui->progressL[p].chs[iChall];
-		Chall& chl = gui->chall.all[iChall];
+		Chall& chl = data->chall->all[iChall];
 		if (pc.curTrack >= chl.trks.size())  pc.curTrack = 0;  // restart
 		const ChallTrack& trk = chl.trks[pc.curTrack];
 		gui->pChall = &chl;  // set
@@ -77,7 +78,7 @@ void App::Ch_NewGame()
 		///  championship stage
 		int p = pSet->game.champ_rev ? 1 : 0;
 		ProgressChamp& pc = gui->progress[p].chs[iChamp];
-		const Champ& ch = gui->champs.all[iChamp];
+		const Champ& ch = data->champs->all[iChamp];
 		if (pc.curTrack >= ch.trks.size())  pc.curTrack = 0;  // restart
 		const ChampTrack& trk = ch.trks[pc.curTrack];
 		pSet->game.track = trk.name;  pSet->game.track_user = 0;
@@ -145,11 +146,6 @@ int App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldSta
 //-----------------------------------------------------------------------------------------------
 void CGui::Ch_XmlLoad()
 {
-	champs.LoadXml(PATHMANAGER::GameConfigDir() + "/championships.xml", data->tracks);
-	LogO(String("**** Loaded Championships: ") + toStr(champs.all.size()));
-	chall.LoadXml(PATHMANAGER::GameConfigDir() + "/challenges.xml", data->tracks);
-	LogO(String("**** Loaded Challenges: ") + toStr(chall.all.size()));
-
 	#if 1  /* stats */
 	float time = 0.f;  int trks = 0;
 	for (std::map<std::string, float>::const_iterator it = data->tracks->times.begin();
@@ -181,7 +177,7 @@ void CGui::Ch_XmlLoad()
 	oldprog[0].LoadXml(PATHMANAGER::UserConfigDir() + "/progress.xml");
 	oldprog[1].LoadXml(PATHMANAGER::UserConfigDir() + "/progress_rev.xml");
 
-	int chs = champs.all.size();
+	int chs = data->champs->all.size();
 	
 	///  this is for old progress ver loading, from game with newer champs
 	///  it resets progress only for champs which ver has changed (or track count)
@@ -191,7 +187,7 @@ void CGui::Ch_XmlLoad()
 		progress[pr].chs.clear();
 		for (int c=0; c < chs; ++c)
 		{
-			const Champ& ch = champs.all[c];
+			const Champ& ch = data->champs->all[c];
 			
 			//  find this champ in loaded progress
 			bool found = false;  int p = 0;
@@ -229,8 +225,8 @@ void CGui::Ch_XmlLoad()
 	}	}
 	ProgressSave(false);  //will be later in guiInit
 	
-	if (progress[0].chs.size() != champs.all.size() ||
-		progress[1].chs.size() != champs.all.size())
+	if (progress[0].chs.size() != data->champs->all.size() ||
+		progress[1].chs.size() != data->champs->all.size())
 		LogO("|| ERROR: champs and progress sizes differ !");
 
 
@@ -239,7 +235,7 @@ void CGui::Ch_XmlLoad()
 	oldpr[0].LoadXml(PATHMANAGER::UserConfigDir() + "/progressL.xml");
 	oldpr[1].LoadXml(PATHMANAGER::UserConfigDir() + "/progressL_rev.xml");
 
-	chs = chall.all.size();
+	chs = data->chall->all.size();
 	
 	///  this is for old progress ver loading, from game with newer challs
 	///  it resets progress only for challs which ver has changed (or track count)
@@ -249,7 +245,7 @@ void CGui::Ch_XmlLoad()
 		progressL[pr].chs.clear();
 		for (int c=0; c < chs; ++c)
 		{
-			const Chall& ch = chall.all[c];
+			const Chall& ch = data->chall->all[c];
 			
 			//  find this chall in loaded progress
 			bool found = false;  int p = 0;
@@ -292,8 +288,8 @@ void CGui::Ch_XmlLoad()
 	}	}
 	ProgressLSave(false);  //will be later in guiInit
 	
-	if (progressL[0].chs.size() != chall.all.size() ||
-		progressL[1].chs.size() != chall.all.size())
+	if (progressL[0].chs.size() != data->chall->all.size() ||
+		progressL[1].chs.size() != data->chall->all.size())
 		LogO("|] ERROR: challs and progressL sizes differ !");
 }
 
@@ -367,9 +363,9 @@ void CGui::listStageChng(MyGUI::MultiList2* li, size_t pos)
 	if (isChallGui())
 	{	if (liChalls->getIndexSelected()==ITEM_NONE)  return;
 		int nch = s2i(liChalls->getItemNameAt(liChalls->getIndexSelected()).substr(7))-1;
-		if (nch >= chall.all.size())  {  LogO("Error chall sel > size.");  return;  }
+		if (nch >= data->chall->all.size())  {  LogO("Error chall sel > size.");  return;  }
 
-		const Chall& ch = chall.all[nch];
+		const Chall& ch = data->chall->all[nch];
 		if (pos >= ch.trks.size())  {  LogO("Error stage sel > tracks.");  return;  }
 		trk = ch.trks[pos].name;  rev = ch.trks[pos].reversed;  all = ch.trks.size();
 
@@ -377,9 +373,9 @@ void CGui::listStageChng(MyGUI::MultiList2* li, size_t pos)
 	}else
 	{	if (liChamps->getIndexSelected()==ITEM_NONE)  return;
 		int nch = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()).substr(7))-1;
-		if (nch >= champs.all.size())  {  LogO("Error champ sel > size.");  return;  }
+		if (nch >= data->champs->all.size())  {  LogO("Error champ sel > size.");  return;  }
 
-		const Champ& ch = champs.all[nch];
+		const Champ& ch = data->champs->all[nch];
 		if (pos >= ch.trks.size())  {  LogO("Error stage sel > tracks.");  return;  }
 		trk = ch.trks[pos].name;  rev = ch.trks[pos].reversed;  all = ch.trks.size();
 	}

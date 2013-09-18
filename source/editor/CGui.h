@@ -4,21 +4,30 @@
 #include "../vdrift/track.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/SliderValue.h"
+#include "../ogre/common/SceneXml.h"  //Object-
 
 #include <OgreCommon.h>
 #include <OgreVector3.h>
 #include <OgreString.h>
 
 #include <MyGUI.h>
-//#include "../ogre/common/MessageBox/MessageBox.h"
 #include "../ogre/common/MessageBox/MessageBoxStyle.h"
 #include "../ogre/common/RenderBoxScene.h"
 
 
-namespace MyGUI  {  class MultiList2;  class Slider;  }
+namespace MyGUI  {  class MultiList2;  class Slider;  class Message;  }
 class App;  class Scene;
 
 enum ED_OBJ {  EO_Move=0, EO_Rotate, EO_Scale  };
+
+
+//  tracks,cars list items - with info for sorting
+struct TrkL
+{
+	std::string name;
+	const class TrackInfo* ti;
+	int test;  //Test*
+};
 
 
 class CGui
@@ -27,6 +36,7 @@ public:
 	App* app;
 	SETTINGS* pSet;
 	Scene* sc;
+	CData* data;
 
 	CGui(App* app1);
 	//virtual ~CGui();
@@ -78,7 +88,7 @@ public:
 	MyGUI::StaticTextPtr valTrk[1], stTrk[1][StTrk], infTrk[1][InfTrk];  // [1] 2nd is in game (common code)
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
-	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
+	void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
 	void updTrkListDim();
 	const static int colTrk[32];
 	const static Ogre::String clrsDiff[9],clrsRating[6],clrsLong[10];

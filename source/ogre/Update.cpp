@@ -1,9 +1,11 @@
 #include "pch.h"
 #include "common/Defines.h"
+#include "common/Gui_Def.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
 #include "FollowCamera.h"
+#include "common/WaterRTT.h"
 #include "../road/Road.h"
 #include "../vdrift/game.h"
 #include "../vdrift/quickprof.h"
@@ -18,7 +20,6 @@
 #include <OgreParticleSystem.h>
 #include <OgreManualObject.h>
 #include <OgreMaterialManager.h>
-#include "common/Gui_Def.h"
 #include "common/MultiList2.h"
 #include "common/Slider.h"
 #include <MyGUI.h>
@@ -203,7 +204,7 @@ bool App::frameStart(Real time)
 		if (!mSplitMgr->mCameras.empty())
 		{
 			Camera* cam1 = *mSplitMgr->mCameras.begin();
-			mWaterRTT.setViewerCamera(cam1);
+			mWaterRTT->setViewerCamera(cam1);
 			if (grass)  grass->setCamera(cam1);
 			if (trees)  trees->setCamera(cam1);
 		}

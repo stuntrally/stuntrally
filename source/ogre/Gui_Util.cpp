@@ -4,7 +4,7 @@
 #include "../vdrift/settings.h"
 #include "CGame.h"
 #include "CGui.h"
-#include "CData.h"
+#include "common/CData.h"
 #include "common/Gui_Def.h"
 #include "common/TracksXml.h"
 #include "common/MultiList2.h"

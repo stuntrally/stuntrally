@@ -1715,14 +1715,6 @@
 				Name="Game"
 				>
 				<File
-					RelativePath="..\source\ogre\CData.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\CData.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\ogre\CGame.cpp"
 					>
 				</File>
@@ -1828,6 +1820,14 @@
 				</File>
 				<File
 					RelativePath="..\source\ogre\common\BltObjects.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\CData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\CData.h"
 					>
 				</File>
 				<File

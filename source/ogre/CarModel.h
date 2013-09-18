@@ -1,7 +1,3 @@
-/*
- * CarModel is the "Ogre" part of the car.
- * It is used to put meshes together, particle emitters, etc.
- */
 #pragma once
 #include <OgreVector2.h>
 #include <OgreVector3.h>
@@ -14,13 +10,15 @@
 #include "../shiny/Main/MaterialInstance.hpp"
 #include "CarPosInfo.h"
 
-
-class SETTINGS;  class GAME;  class CAR;  class Scene;  class App;  class FollowCamera;  class CarReflection;
-
 namespace Ogre {  class SceneNode;  class Terrain;  class Camera;  class SceneManager;
 	class ParticleSystem;  class Entity;  class RibbonTrail;  class ManualObject;  class AxisAlignedBox;  }
 namespace MyGUI {  class TextBox;  }
+class SETTINGS;  class GAME;  class CAR;
+class Scene;  class App;  class FollowCamera;  class CarReflection;
 
+
+//  CarModel is the "Ogre" part of the car.
+//  It is used to put meshes together, particle emitters, etc.
 
 class CarModel : public sh::MaterialInstanceListener
 {

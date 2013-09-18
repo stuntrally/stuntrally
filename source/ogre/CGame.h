@@ -1,9 +1,5 @@
 #pragma once
 #include "BaseApp.h"
-#include "common/Gui_Popup.h"
-
-#include "common/WaterRTT.h"
-
 #include "ReplayGame.h"
 #include "../vdrift/cardefs.h"
 #include "CarPosInfo.h"
@@ -19,6 +15,7 @@ namespace Ogre {  class SceneNode;  class SceneManager;  class Light;
 	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
 namespace Forests {  class PagedGeometry;  }
 namespace BtOgre  {  class DebugDrawer;  }
+class WaterRTT;
 class GAME;
 class Scene;
 class GraphView;
@@ -84,7 +81,7 @@ public:
 
 	boost::thread mThread;  // 2nd thread for simulation
 
-	WaterRTT mWaterRTT;
+	WaterRTT* mWaterRTT;
 
 	virtual void createScene();
 	virtual void destroyScene();

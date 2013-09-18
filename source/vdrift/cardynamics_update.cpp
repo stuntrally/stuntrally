@@ -3,12 +3,12 @@
 #include "collision_world.h"
 #include "settings.h"
 #include "tobullet.h"
-#include "../ogre/CGame.h"
-#include "../ogre/CData.h"
-#include "Buoyancy.h"
 #include "../ogre/common/Defines.h"
+#include "../ogre/common/CData.h"
 #include "../ogre/common/SceneXml.h"
 #include "../ogre/common/FluidsXml.h"
+#include "../ogre/CGame.h"
+#include "Buoyancy.h"
 
 
 // executed as last function(after integration) in bullet singlestepsimulation

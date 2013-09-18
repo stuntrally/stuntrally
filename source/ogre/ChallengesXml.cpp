@@ -24,6 +24,9 @@ Chall::Chall()  //  defaults
 	,carChng(0), prizes(2), factor(1.f)
 {	}
 
+ChallXml::ChallXml()
+{	}
+
 
 //  Load challenges
 //-------------------------------------------------------------------------------------------------------------

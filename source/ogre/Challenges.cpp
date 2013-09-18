@@ -5,7 +5,8 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
-#include "CData.h"
+#include "common/CData.h"
+#include "common/TracksXml.h"
 #include "../road/Road.h"
 #include "common/MultiList2.h"
 
@@ -46,9 +47,9 @@ void CGui::ChallsListUpdate()
 
 	liChalls->removeAllItems();  int n=1;  size_t sel = ITEM_NONE;
 	int p = pSet->gui.champ_rev ? 1 : 0;
-	for (int i=0; i < chall.all.size(); ++i,++n)
+	for (int i=0; i < data->chall->all.size(); ++i,++n)
 	{
-		const Chall& chl = chall.all[i];
+		const Chall& chl = data->chall->all[i];
 		if (chl.type == pSet->chall_type)
 		{
 			const ProgressChall& pc = progressL[p].chs[i];
@@ -81,7 +82,7 @@ void CGui::listChallChng(MyGUI::MultiList2* chlist, size_t id)
 	if (id==ITEM_NONE || liChalls->getItemCount() == 0)  return;
 
 	int nch = s2i(liChalls->getItemNameAt(id).substr(7))-1;
-	if (nch < 0 || nch >= chall.all.size())  {  LogO("Error chall sel > size.");  return;  }
+	if (nch < 0 || nch >= data->chall->all.size())  {  LogO("Error chall sel > size.");  return;  }
 
 	CarListUpd();  // filter car list
 
@@ -89,7 +90,7 @@ void CGui::listChallChng(MyGUI::MultiList2* chlist, size_t id)
 	liStages->removeAllItems();
 
 	int n = 1, p = pSet->gui.champ_rev ? 1 : 0;
-	const Chall& ch = chall.all[nch];
+	const Chall& ch = data->chall->all[nch];
 	int ntrks = ch.trks.size();
 	for (int i=0; i < ntrks; ++i,++n)
 	{
@@ -140,7 +141,7 @@ bool CGui::IsChallCar(String name)
 	if (!liChalls || liChalls->getIndexSelected()==ITEM_NONE)  return true;
 
 	int chId = s2i(liChalls->getItemNameAt(liChalls->getIndexSelected()).substr(7))-1;
-	const Chall& ch = chall.all[chId];
+	const Chall& ch = data->chall->all[chId];
 
 	int i,s;
 	if (!ch.carTypes.empty())
@@ -192,7 +193,7 @@ void CGui::btnChallStageStart(WP)
 	//  check if chall ended
 	int chId = pSet->game.chall_num, p = pSet->game.champ_rev ? 1 : 0;
 	ProgressChall& pc = progressL[p].chs[chId];
-	const Chall& ch = chall.all[chId];
+	const Chall& ch = data->chall->all[chId];
 	bool last = pc.curTrack == ch.trks.size();
 
 	LogO("|] This was stage " + toStr(pc.curTrack) + "/" + toStr(ch.trks.size()) + " btn");
@@ -257,7 +258,7 @@ void CGui::ChallengeAdvance(float timeCur/*total*/)
 	int chId = pSet->game.chall_num, p = pSet->game.champ_rev ? 1 : 0;
 	ProgressChall& pc = progressL[p].chs[chId];
 	ProgressTrackL& pt = pc.trks[pc.curTrack];
-	const Chall& ch = chall.all[chId];
+	const Chall& ch = data->chall->all[chId];
 	const ChallTrack& trk = ch.trks[pc.curTrack];
 	LogO("|] --- Chall end: " + ch.name);
 
@@ -460,7 +461,7 @@ void CGui::ChallFillStageInfo(bool finished)
 	int chId = pSet->game.chall_num, p = pSet->game.champ_rev ? 1 : 0;
 	const ProgressChall& pc = progressL[p].chs[chId];
 	const ProgressTrackL& pt = pc.trks[pc.curTrack];
-	const Chall& ch = chall.all[chId];
+	const Chall& ch = data->chall->all[chId];
 	const ChallTrack& trk = ch.trks[pc.curTrack];
 	bool last = pc.curTrack+1 == ch.trks.size();
 
@@ -551,7 +552,7 @@ void CGui::ChallFillStageInfo(bool finished)
 //----------------------------------------------------------------------------------------------------------------------
 void CGui::UpdChallDetail(int id)
 {
-	const Chall& ch = chall.all[id];
+	const Chall& ch = data->chall->all[id];
 	int ntrks = ch.trks.size();
 	int p = pSet->gui.champ_rev ? 1 : 0;
 	
@@ -635,7 +636,7 @@ void CGui::UpdChallDetail(int id)
 	//  progress  --------
 	s1 = "";  s2 = "";
 	const ProgressChall& pc = progressL[p].chs[id];
-	int cur = pc.curTrack, all = chall.all[id].trks.size();
+	int cur = pc.curTrack, all = data->chall->all[id].trks.size();
 	if (cur > 0)
 	{
 		s1 += TR("#B0FFFF#{Progress}\n");    s2 += "#D0FFFF"+(cur == all ? TR("#{Finished}").asUTF8() : fToStr(100.f * cur / all,0,3)+" %")+"\n";

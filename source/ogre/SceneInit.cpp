@@ -3,7 +3,7 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
-#include "CData.h"
+#include "common/CData.h"
 #include "common/SceneXml.h"
 #include "LoadingBar.h"
 #include "../vdrift/game.h"

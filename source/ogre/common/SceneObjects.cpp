@@ -5,6 +5,7 @@
 #include "../../vdrift/pathmanager.h"
 #include "../../btOgre/BtOgreGP.h"
 #include "../../road/Road.h"
+#include "../common/ShapeData.h"
 
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"

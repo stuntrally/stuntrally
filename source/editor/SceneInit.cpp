@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
+#include "../ogre/common/CData.h"
+#include "../ogre/common/ShapeData.h"
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"
@@ -12,6 +14,7 @@
 
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
+#include "../ogre/common/MessageBox/MessageBox.h"
 using namespace Ogre;
 
 
@@ -19,8 +22,6 @@ using namespace Ogre;
 //-------------------------------------------------------------------------------------
 void App::createScene()  // once, init
 {
-	LogO("sizeof: baseApp "+toStr(sizeof(BaseApp))+ " App "+toStr(sizeof(App)));
-
 	//  camera
 	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 	mCamera->setFarClipDistance(pSet->view_distance*1.1f);
@@ -46,20 +47,14 @@ void App::createScene()  // once, init
 	#endif
 
 
-	//  tracks.xml
-	gui->tracksXml.LoadIni(PATHMANAGER::GameConfigDir() + "/tracks.ini");
-
-	//  fluids.xml
-	fluidsXml.LoadXml(PATHMANAGER::Data() + "/materials2/fluids.xml");
-	sc->pFluidsXml = &fluidsXml;
-	LogO(String("**** Loaded fluids.xml: ") + toStr(fluidsXml.fls.size()));
-
-	//  collisions.xml
-	objs.LoadXml();
-	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
+	//  data load xml
+	data->Load();
+	sc->pFluidsXml = data->fluids;
 	
 	//  surfaces.cfg
 	LoadAllSurfaces();
+	
+	// TODO: ter/road layer  presets.xml
 
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;

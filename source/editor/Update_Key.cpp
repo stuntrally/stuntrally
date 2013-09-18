@@ -1,23 +1,24 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
+#include "../ogre/common/RenderConst.h"
 #include "../ogre/common/Gui_Def.h"
+#include "../ogre/common/SceneXml.h"
+#include "../ogre/common/CData.h"
+#include "../ogre/common/FluidsXml.h"
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/MultiList2.h"
-#include "../ogre/common/RenderConst.h"
-#include "../ogre/common/SceneXml.h"
 #include <OgreTerrain.h>
 #include <MyGUI.h>
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
-using namespace MyGUI;
-using namespace Ogre;
-
 #include "../sdl4ogre/sdlinputwrapper.hpp"
 #include "../sdl4ogre/sdlcursormanager.hpp"
+using namespace MyGUI;
+using namespace Ogre;
 
 
 //  Update  input, info
@@ -631,13 +632,13 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			//  prev,next type
 			case key(9):  case key(MINUS):
 			{	FluidBox& fb = sc->fluids[iFlCur];
-				fb.id = (fb.id-1 + fluidsXml.fls.size()) % fluidsXml.fls.size();
-				fb.name = fluidsXml.fls[fb.id].name;
+				fb.id = (fb.id-1 + data->fluids->fls.size()) % data->fluids->fls.size();
+				fb.name = data->fluids->fls[fb.id].name;
 				bRecreateFluids = true;  }	break;
 			case key(0):  case key(EQUALS):
 			{	FluidBox& fb = sc->fluids[iFlCur];
-				fb.id = (fb.id+1) % fluidsXml.fls.size();
-				fb.name = fluidsXml.fls[fb.id].name;
+				fb.id = (fb.id+1) % data->fluids->fls.size();
+				fb.name = data->fluids->fls[fb.id].name;
 				bRecreateFluids = true;  }	break;
 		}
 	}

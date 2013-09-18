@@ -1,13 +1,15 @@
 #include "pch.h"
 #include "Defines.h"
 #include "../common/SceneXml.h"
+#include "../common/CData.h"
+#include "../common/TracksXml.h"
+#include "../common/BltObjects.h"
 #include "../vdrift/pathmanager.h"
 #include "../../road/Road.h"
 #ifndef SR_EDITOR
 	#include "../CGame.h"
 	#include "../CHud.h"
 	#include "../CGui.h"
-	#include "../CData.h"
 	#include "../vdrift/timer.h"
 	#include "../vdrift/game.h"
 #else
@@ -70,7 +72,7 @@ void CGui::ToolSceneXml()
 					lay.windFx *= 0.1f;  lay.windFy *= 0.1f;
 				}/**/
 
-				if (lay.on && !app->objs.Find(s) && noCol[s]==0)
+				if (lay.on && !data->objs->Find(s) && noCol[s]==0)
 				{	noCol[s] = 1;
 					LogO("All: " + trk + "  no collision.xml for  " + s);
 				}

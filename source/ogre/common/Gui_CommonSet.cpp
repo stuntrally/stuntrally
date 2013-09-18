@@ -1,5 +1,7 @@
 #include "pch.h"
-#include "../common/Defines.h"
+#include "Defines.h"
+#include "Gui_Def.h"
+#include "WaterRTT.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
 #ifndef SR_EDITOR
@@ -16,7 +18,6 @@
 #include <OgreSceneManager.h>
 #include <OgreTerrain.h>
 #include <OgreRenderWindow.h>
-#include "Gui_Def.h"
 #include "Slider.h"
 using namespace MyGUI;
 using namespace Ogre;
@@ -213,8 +214,8 @@ void CGui::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	Chk("UseImposters", chkUseImposters, pSet->use_imposters);
 	Chk("ImpostorsOnly", chkImpostorsOnly, pSet->imposters_only);
 
-	app->mWaterRTT.setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
-	app->mWaterRTT.recreate();
+	app->mWaterRTT->setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
+	app->mWaterRTT->recreate();
 
 	app->changeShadows();  // apply shadow, material factory generate
 }
