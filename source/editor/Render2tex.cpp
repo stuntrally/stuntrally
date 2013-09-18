@@ -26,9 +26,10 @@ void App::Rnd2TexSetup()
 	const int dim[RTs] =  //1025: sc->td.iVertsX
 		{ 1024, 1025, 512, 1024 };
 		
-	AxisAlignedBox big(-100000.0*Vector3::UNIT_SCALE, 100000.0*Vector3::UNIT_SCALE);
+	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 	Real sz = pSet->size_minimap;
 	xm1 = 1-sz/asp, ym1 = -1+sz, xm2 = 1.0, ym2 = -1.0;
+	AxisAlignedBox big(-100000.0*Vector3::UNIT_SCALE, 100000.0*Vector3::UNIT_SCALE);
 	
 	for (int i=0; i < RTs+RTsAdd; ++i)
 	{

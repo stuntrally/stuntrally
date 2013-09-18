@@ -28,6 +28,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_show.tracks_view", tracks_view);
 	Param(c,w, "hud_show.tracks_sort", tracks_sort);		Param(c,w, "hud_show.tracks_sortup", tracks_sortup);
 
+	Param(c,w, "graph_detail.preset", preset);
 	Param(c,w, "graph_detail.anisotropy", anisotropy);		Param(c,w, "graph_detail.view_dist", view_distance);
 	Param(c,w, "graph_detail.ter_detail", terdetail);		Param(c,w, "graph_detail.ter_dist", terdist);
 	Param(c,w, "graph_detail.road_dist", road_dist);		Param(c,w, "graph_detail.tex_size", tex_size);
@@ -35,9 +36,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "graph_shadow.dist", shadow_dist);			Param(c,w, "graph_shadow.size", shadow_size);
 	Param(c,w, "graph_shadow.count",shadow_count);			Param(c,w, "graph_shadow.type", shadow_type);
-	Param(c,w, "graph_shadow.shaders", shaders);			Param(c,w, "graph_shadow.lightmap_size", lightmap_size);
-	Param(c,w, "graph_shadow.filter", shadow_filter);
-	Param(c,w, "graph_shadow.shader_mode", shader_mode);
+	Param(c,w, "graph_shadow.shader_mode", shader_mode);	Param(c,w, "graph_shadow.lightmap_size", lightmap_size);
 	
 	Param(c,w, "graph_reflect.water_reflect", water_reflect); Param(c,w, "graph_reflect.water_refract", water_refract);
 	Param(c,w, "graph_reflect.water_rttsize", water_rttsize);
@@ -87,10 +86,11 @@ SETTINGS::SETTINGS()  ///  Defaults
 	,show_fps(1), trackmap(1), size_minimap(0.5), num_mini(0), brush_prv(1)
 	,tracks_view(0), tracks_sort(0), tracks_sortup(0)
 	//  graphics
+	,preset(4)
 	,anisotropy(8),	view_distance(3600)
 	,terdetail(1.f), terdist(300), road_dist(1.0), tex_size(1), ter_mtr(2), ter_tripl(0)
-	,shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(2), shadow_filter(1)  /*<+*/
-	,shaders(0.5), lightmap_size(0)
+	,shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(2)
+	,lightmap_size(0)
 	,grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(false), imposters_only(false)
 	,water_reflect(0), water_refract(0), water_rttsize(0)
 	,shader_mode("")

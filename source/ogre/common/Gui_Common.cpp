@@ -583,7 +583,9 @@ void CGui::chkVidFullscr(WP wp)
 {
 	ChkEv(fullscreen);
 	SDL_SetWindowFullscreen(app->mSDLWindow,  wp->castType<MyGUI::Button>()->getStateSelected()? SDL_WINDOW_FULLSCREEN : 0);
+	#ifndef SR_EDITOR
 	app->bSizeHUD = true;
+	#endif
 }
 
 void CGui::chkVidVSync(WP wp)

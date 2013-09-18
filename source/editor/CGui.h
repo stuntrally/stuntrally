@@ -3,10 +3,12 @@
 #include "../ogre/common/MessageBox/MessageBox.h"
 #include "../ogre/common/MessageBox/MessageBoxStyle.h"
 
-#include "../vdrift/mathvector.h"
-#include "../vdrift/quaternion.h"
+//#include "../vdrift/mathvector.h"
+//#include "../vdrift/quaternion.h"
 #include "../vdrift/tracksurface.h"
 #include "../vdrift/track.h"
+#include "../ogre/common/Gui_Def.h"
+#include "../ogre/common/SliderValue.h"
 
 #include <OgreCommon.h>
 #include <OgreVector3.h>
@@ -17,8 +19,6 @@
 
 
 namespace MyGUI  {  class MultiList2;  class Slider;  }
-
-typedef MyGUI::WidgetPtr WP;
 class App;  class Scene;
 
 enum ED_OBJ {  EO_Move=0, EO_Rotate, EO_Scale  };
@@ -39,24 +39,16 @@ public:
 	///-----------------------------------------------------------------------------------------------------------------	
 	//  size
 	void SizeGUI(); void doSizeGUI(MyGUI::EnumeratorWidgetPtr);
-	std::vector<MyGUI::TabControl*> vSubTabsEdit,vSubTabsHelp,vSubTabsOpts;
-
-	//  shortcuts
-	typedef std::list <std::string> strlist;
-	//  slider event and its text field for value
-	#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
-	#define SL  MyGUI::Slider* wp, float val			//  slider event args
-	#define CMB  MyGUI::ComboBoxPtr cmb, size_t val		//  combo event args
-	#define TAB  MyGUI::Tab* tab, size_t id			//  tab event args
+	std::vector<MyGUI::TabControl*> vSubTabsEdit, vSubTabsHelp, vSubTabsOpts;
 
 	
 	///  Gui common   --------------------------
 	//  graphics
-	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);
-	SLV(TexSize);  SLV(TerMtr);  SLV(TerTripl);  // detail
-	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
-	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  //SLV(ShadowFilter); // shadow
-	SLV(WaterSize);  // screen
+	SlV(Anisotropy);  SlV(ViewDist);  SlV(TerDetail);  SlV(TerDist);  SlV(RoadDist);
+	SlV(TexSize);  SlV(TerMtr);  SlV(TerTripl);  // detail
+	SlV(Trees);  SlV(Grass);  SlV(TreesDist);  SlV(GrassDist);  // paged
+	SlV(ShadowType);  SlV(ShadowCount);  SlV(ShadowSize);  SlV(ShadowDist);  // shadow
+	SlV(WaterSize);  // screen
 	void comboTexFilter(CMB), btnShadows(WP), btnShaders(WP), btnTrGrReset(WP),
 		chkWaterReflect(WP), chkWaterRefract(WP),
 		chkUseImposters(WP), chkImpostorsOnly(WP), cmbAntiAliasing(CMB);

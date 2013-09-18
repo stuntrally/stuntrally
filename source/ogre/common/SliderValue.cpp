@@ -3,6 +3,11 @@
 #include "Gui_Def.h"
 #include "Slider.h"
 #include "SliderValue.h"
+
+#include "MyGUI_Prerequest.h"
+#include "MyGUI_Gui.h"
+#include "MyGUI_Button.h"
+#include "MyGUI_TextBox.h"
 using namespace Ogre;
 
 

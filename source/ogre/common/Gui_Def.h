@@ -46,9 +46,11 @@
 
 //  slider event and its text field for value
 #define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
-#define SL   MyGUI::Slider* wp, float val    // slider event args
-#define CMB  MyGUI::ComboBox* wp, size_t val // combobox event args
+#define SL   MyGUI::Slider* wp, float val     // slider event args
+#define CMB  MyGUI::ComboBox* wp, size_t val  // combobox event args
+#define TAB  MyGUI::Tab* tab, size_t id       //  tab event args
 
-typedef MyGUI::WidgetPtr WP;
+namespace MyGUI {  class Widget;  }
+typedef MyGUI::Widget* WP;
 
 typedef std::list <std::string> strlist;

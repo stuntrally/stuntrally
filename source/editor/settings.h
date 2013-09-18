@@ -2,7 +2,7 @@
 #include "../vdrift/configfile.h"
 
 
-#define SET_VER  2200  // 2.2
+#define SET_VER  2202  // 2.2
 
 enum eShadowType  {  Sh_None=0, Sh_Simple, Sh_Depth, Sh_Soft  };
 
@@ -19,10 +19,11 @@ public:
 	int tracks_view, tracks_sort;  bool tracks_sortup;
 
 	//  graphics
+	int preset;
 	int anisotropy, tex_size, ter_mtr, ter_tripl;
 	float shaders;
 	float view_distance, terdetail,terdist, road_dist;
-	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type, shadow_filter;
+	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type;
 	float grass, trees_dist, grass_dist;
 	bool water_reflect, water_refract; int water_rttsize;
 	bool use_imposters, imposters_only;
