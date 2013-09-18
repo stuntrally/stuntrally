@@ -4,7 +4,7 @@
 #include "configfile.h"
 
 
-#define SET_VER  2200  // 2.2
+#define SET_VER  2202  // 2.2
 
 
 enum eGraphType  {
@@ -49,10 +49,10 @@ public:
 		tut_type,champ_type,chall_type, car_ed_tab;
 
 	//  graphics
+	int preset;  // last set, info only
 	int anisotropy, tex_size, ter_mtr, ter_tripl;  bool bFog;
-	float shaders;
 	float view_distance, terdetail,terdist, road_dist;
-	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_filter;  eShadowType shadow_type;
+	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type; //eShadowType
 	int refl_skip, refl_faces, refl_size;  float refl_dist;
 	bool water_reflect, water_refract; int water_rttsize;
 	int refl_mode; // 0 static, 1 single, 2 full, explanation: see CarReflection.h

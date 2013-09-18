@@ -2463,20 +2463,7 @@
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 110 144 24">
-							<Property key="Colour" value="0 0 0"/>
-							<Property key="Caption" value="#{Shaders}"/>
-							<Property key="TextColour" value="1.0 1.0 0.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="248 110 320 18" name="Shaders">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="180 110 60 24" name="ShadersVal">
-							<Property key="TextColour" value="1.0 1.0 0.1"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="Button" position="32 150 200 26" layer="Back" name="ApplyShaders">
+						<Widget type="Button" skin="Button" position="32 120 200 26" layer="Back" name="ApplyShaders">
 							<Property key="Caption" value="#{ApplyShaders}"/>
 							<Property key="Colour" value="0.8 1.0 0.7"/>
 							<Property key="TextColour" value="0.8 1.0 0.7"/>

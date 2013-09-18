@@ -88,6 +88,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_size.gauges_type", gauges_type);	Param(c,w, "hud_size.gauges_layout", gauges_layout);
 
 	//  graphics
+	Param(c,w, "graph_detail.preset", preset);
 	Param(c,w, "graph_detail.anisotropy", anisotropy);		Param(c,w, "graph_detail.view_dist", view_distance);
 	Param(c,w, "graph_detail.ter_detail", terdetail);		Param(c,w, "graph_detail.ter_dist", terdist);
 	Param(c,w, "graph_detail.road_dist", road_dist);		Param(c,w, "graph_detail.tex_size", tex_size);
@@ -103,10 +104,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "graph_reflect.water_rttsize", water_rttsize);
 	
 	Param(c,w, "graph_shadow.dist", shadow_dist);			Param(c,w, "graph_shadow.size", shadow_size);
-	Param(c,w, "graph_shadow.count",shadow_count);			Param(c,w, "graph_shadow.type", (int&)shadow_type);
-	Param(c,w, "graph_shadow.shaders", shaders);			Param(c,w, "graph_shadow.lightmap_size", lightmap_size);
-	Param(c,w, "graph_shadow.filter", shadow_filter);
-	Param(c,w, "graph_shadow.shader_mode", shader_mode);
+	Param(c,w, "graph_shadow.count",shadow_count);			Param(c,w, "graph_shadow.type", shadow_type);
+	Param(c,w, "graph_shadow.shader_mode", shader_mode);	Param(c,w, "graph_shadow.lightmap_size", lightmap_size);
 
 	Param(c,w, "graph_veget.trees", gui.trees);				Param(c,w, "graph_veget.grass", grass);
 	Param(c,w, "graph_veget.trees_dist", trees_dist);		Param(c,w, "graph_veget.grass_dist", grass_dist);
@@ -184,12 +183,13 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,tracks_view(0), tracks_sort(0), tracks_sortup(1), cars_sort(1), cars_sortup(1)
 	,champ_type(0),tut_type(0),chall_type(0), car_ed_tab(0), champ_info(1)
 	//  graphics
+	,preset(4)
 	,anisotropy(4),	view_distance(2000), bFog(0)
-	,terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2), ter_tripl(0), shaders(0.5)
+	,terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2), ter_tripl(0)
 	,refl_skip(200), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode(1)
 	,water_reflect(0), water_refract(0), water_rttsize(0)
 	,shadow_type(Sh_Depth), shadow_size(2), shadow_count(3), shadow_dist(3000)
-	,shadow_filter(1), lightmap_size(0)
+	,lightmap_size(0) //-
 	,grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(true), imposters_only(false)
 	,particles(true), trails(true), particles_len(1.f), trails_len(1.f), boost_fov(true)
 	//  car

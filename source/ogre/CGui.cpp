@@ -8,11 +8,7 @@ CGui::CGui(App* ap1)
 	: app(ap1), bGI(0)
 	// gui
 	,mToolTip(0), mToolTipTxt(0), carList(0), trkList(0), resList(0), btRplPl(0)
-	,valAnisotropy(0), valViewDist(0), valTerDetail(0), valTerDist(0), valRoadDist(0)  // detail
-	,valTexSize(0), valTerMtr(0), valTerTripl(0)  // detail
-	,valTrees(0), valGrass(0), valTreesDist(0), valGrassDist(0)  // paged
-	,valReflSkip(0), valReflSize(0), valReflFaces(0), valReflDist(0), valWaterSize(0)  // refl
-	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0)//, valShadowFilter(0)  // shadow
+	,valReflSkip(0), valReflSize(0), valReflFaces(0), valReflDist(0)  // refl
 	,valSizeGaug(0),valTypeGaug(0),valLayoutGaug(0), valSizeMinimap(0), valZoomMinimap(0)
 	,valCountdownTime(0), valDbgTxtClr(0),valDbgTxtCnt(0)
 	,cmbGraphs(0), valGraphsType(0) //,slGraphT(0)  // view

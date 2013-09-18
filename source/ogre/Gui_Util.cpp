@@ -531,7 +531,7 @@ void CGui::LNext(int rel)
 }
 
 
-///   Update (frame start)
+///  Update (frame start)
 void CGui::GuiUpdate()
 {
 	UnfocusLists();
@@ -541,8 +541,9 @@ void CGui::GuiUpdate()
 	{	bGuiReinit = false;
 
 		app->mGUI->destroyWidgets(app->vwGui);
-		bnQuit=0; app->mWndOpts=0;  //todo: rest too..
+		bnQuit=0; app->mWndOpts=0;  //todo: rest too..  delete, new gui; ?
 
+		bGI = false;
 		InitGui();
 		app->bWindowResized = true;
 		app->mWndTabsOpts->setIndexSelected(3);  // switch back to view tab

@@ -158,9 +158,9 @@ void App::materialCreated(sh::MaterialInstance* m, const std::string& configurat
 {
 	Ogre::Technique* t = static_cast<sh::OgreMaterial*>(m->getMaterial())->getOgreTechniqueForConfiguration (configuration, lodIndex);
 
-	if (pSet->shadow_type <= 1)
+	if (pSet->shadow_type == Sh_None)
 	{
-		t->setShadowCasterMaterial ("");
+		t->setShadowCasterMaterial("");
 		return;
 	}
 

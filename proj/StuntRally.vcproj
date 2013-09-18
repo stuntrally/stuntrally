@@ -1551,6 +1551,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\ogre\common\SliderValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\SliderValue.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\ogre\common\Terrain.cpp"
 					>
 				</File>

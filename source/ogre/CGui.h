@@ -1,24 +1,18 @@
 #pragma once
 #include "BaseApp.h"
-#include "CGame.h"
-#include "common/Gui_Popup.h"
-#include "common/SceneXml.h"
-
-#include "ReplayGame.h"
-#include "../vdrift/cardefs.h"
+#include "common/Defines.h"
+#include "common/Gui_Def.h"
+#include "CGame.h"  //xml..
 #include "../vdrift/settings.h"
-#include "CarModel.h"
-#include "CarReflection.h"
-#include "CGame.h"  //input-
+#include "common/Slider.h"
+#include "common/SliderValue.h"
+#include "common/Gui_Popup.h"
 
 #include "common/MessageBox/MessageBox.h"
 #include "common/MessageBox/MessageBoxStyle.h"
 
 #include "../network/networkcallbacks.hpp"
-#include "../shiny/Main/Factory.hpp"
-#include <boost/thread.hpp>
 #include <MyGUI.h>
-#include <OgreShadowCameraSetup.h>
 
 
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;  }
@@ -27,8 +21,6 @@ class Scene;
 class SplineRoad;
 class GAME;
 class CHud;
-
-typedef MyGUI::WidgetPtr WP;
 
 
 class CGui : public GameClientCallback, public MasterClientCallback,
@@ -49,23 +41,17 @@ public:
 	///-----------------------------------------------------------------------------------------------------------------
 	//  size
 	void SizeGUI(); void doSizeGUI(MyGUI::EnumeratorWidgetPtr);
-	std::vector<MyGUI::TabControl*> vSubTabsGame,vSubTabsOpts;
-
-	//  shortcuts
-	typedef std::list <std::string> strlist;
-	//  slider event and its text field for value
-	#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
-	#define SL  MyGUI::Slider* wp, float val
-	#define CMB MyGUI::ComboBox* wp, size_t val // combobox event args
+	std::vector<MyGUI::TabControl*> vSubTabsGame, vSubTabsOpts;
 
 
 	///  Gui common   --------------------------
 	//  graphics
-	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);
-	SLV(TexSize);  SLV(TerMtr);  SLV(TerTripl);  // detail
-	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
-	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  //SLV(ShadowFilter); // shadow
-	SLV(WaterSize);  // screen
+	SlV(ViewDist);  SlV(Anisotropy);
+	SlV(TerDetail);  SlV(TerDist);  SV svRoadDist;
+	SlV(TexSize);  SlV(TerMtr);  SlV(TerTripl);  // detail
+	SlV(Trees);  SlV(Grass);  SlV(TreesDist);  SlV(GrassDist);  // paged
+	SlV(ShadowType);  SlV(ShadowCount);  SlV(ShadowSize);  SlV(ShadowDist);  // shadow
+	SlV(WaterSize);  // screen
 	void comboTexFilter(CMB), btnShadows(WP), btnShaders(WP), btnTrGrReset(WP),
 		chkWaterReflect(WP), chkWaterRefract(WP),
 		chkUseImposters(WP), chkImpostorsOnly(WP), cmbAntiAliasing(CMB);
@@ -295,7 +281,8 @@ public:
 		chkRplChkRewind(WP), chkRplChkGhostOther(WP), chkRplChkTrackGhost(WP),  // replay
 		btnRplToStart(WP),btnRplToEnd(WP), btnRplPlay(WP),  // controls
 		btnRplCur(WP),btnRplAll(WP),chkRplGhosts(WP);  // radio
-	MyGUI::ButtonPtr rbRplCur, rbRplAll;
+	MyGUI::ButtonPtr btRplPl;  void UpdRplPlayBtn();
+	MyGUI::ButtonPtr rbRplCur, rbRplAll;  // radio
 
 	void btnRplBackDn(WP,int,int,MyGUI::MouseButton),btnRplBackUp(WP,int,int,MyGUI::MouseButton);
 	void btnRplFwdDn(WP,int,int,MyGUI::MouseButton),btnRplFwdUp(WP,int,int,MyGUI::MouseButton);
@@ -310,8 +297,6 @@ public:
 		txCarSpeed,txCarType, txCarAuthor,txTrackAuthor;
 	void UpdCarStatsTxt();  // car stats
 
-
-	MyGUI::ButtonPtr btRplPl;  void UpdRplPlayBtn();
 	///---------------------------------------
 
 	//  game

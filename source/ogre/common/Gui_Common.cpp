@@ -31,105 +31,51 @@ using namespace std;
 ///  Gui Init  [Graphics]
 //----------------------------------------------------------------------------------------------------------------
 
-//  textures
 void CGui::comboTexFilter(CMB)
 {
-	TextureFilterOptions tfo;							
+	TextureFilterOptions tfo;
 	switch (val)  {
 		case 0:	 tfo = TFO_BILINEAR;	break;
 		case 1:	 tfo = TFO_TRILINEAR;	break;
 		case 2:	 tfo = TFO_ANISOTROPIC;	break;	}
-	MaterialManager::getSingleton().setDefaultTextureFiltering(tfo);  //if (bGI)
+	MaterialManager::getSingleton().setDefaultTextureFiltering(tfo);
 }
 
-void CGui::slAnisotropy(SL)
+void CGui::slAnisotropy(SV*)
 {
-	int v = val * 16.f +slHalf;  if (bGI)  {
-		MaterialManager::getSingleton().setDefaultAnisotropy(v);	pSet->anisotropy = v;  }
-	if (valAnisotropy)	valAnisotropy->setCaption(toStr(v));
+	MaterialManager::getSingleton().setDefaultAnisotropy(pSet->anisotropy);
 }
 
-//  view dist
-void CGui::slViewDist(SL)
+void CGui::slViewDist(SV* sv)
 {
-	Real v = 50.f + 19950.f * powf(val, 2.f);
-	Vector3 sc = v*Vector3::UNIT_SCALE;
+	Vector3 sc = (*sv->pFloat) * Vector3::UNIT_SCALE;
 
-	/*SceneNode* nskb = ap->mSceneMgr->getSkyBoxNode();
-	if (nskb)  nskb->setScale(sc*0.58f);
-	else*/  if (app->ndSky)  app->ndSky->setScale(sc);
-
-	if (bGI)  pSet->view_distance = v;
-	if (valViewDist){	valViewDist->setCaption(fToStr(v*0.001f, 1,4)+" km");  }
-
-	// Set new far clip distance for all cams
+	if (app->ndSky)  app->ndSky->setScale(sc);
 	#ifndef SR_EDITOR
-	/*?if (bGI)*/  app->mSplitMgr->UpdateCamDist();
+		app->mSplitMgr->UpdateCamDist();  // game, for all cams
 	#else
-	app->mCamera->setFarClipDistance(pSet->view_distance*1.1f);
+		app->mCamera->setFarClipDistance(pSet->view_distance*1.1f);
 	#endif
 }
 
-//  ter detail
-void CGui::slTerDetail(SL)
+void CGui::slTerDetail(SV*)
 {
-	Real v = 2.f * val;  if (bGI)  {  pSet->terdetail = v;  app->UpdTerErr();  }
-	if (valTerDetail){	valTerDetail->setCaption(fToStr(v, 2,4));  }
+	app->UpdTerErr();
 }
 
-//  ter dist
-void CGui::slTerDist(SL)
+void CGui::slTerDist(SV*)
 {
-	Real v = 2000.f * powf(val, 2.f);  if (bGI)  {  pSet->terdist = v;
-		if (app->mTerrainGlobals)
-			app->mTerrainGlobals->setCompositeMapDistance(v);  }
-	if (valTerDist){	valTerDist->setCaption(fToStr(v,0,4)+" m");  }
+	if (app->mTerrainGlobals)
+		app->mTerrainGlobals->setCompositeMapDistance(pSet->terdist);
 }
-
-//  road dist
-void CGui::slRoadDist(SL)
-{
-	Real v = 4.f * powf(val, 2.f);  if (bGI)  pSet->road_dist = v;
-	if (valRoadDist){	valRoadDist->setCaption(fToStr(v,2,5));  }
-}
-
 
 //  trees/grass
-void CGui::slTrees(SL)
-{
-	Real v = 4.f * powf(val, 2.f);  if (bGI)  pSet->gui.trees = v;
-	if (valTrees){	valTrees->setCaption(fToStr(v,2,4));  }
-}
-void CGui::slGrass(SL)
-{
-	Real v = 4.f * powf(val, 2.f);  if (bGI)  pSet->grass = v;
-	if (valGrass){	valGrass->setCaption(fToStr(v,2,4));  }
-}
-
-void CGui::slTreesDist(SL)
-{
-	Real v = 0.5f + 6.5f * powf(val, 2.f);  if (bGI)  pSet->trees_dist = v;
-	if (valTreesDist){	valTreesDist->setCaption(fToStr(v,2,4));  }
-}
-void CGui::slGrassDist(SL)
-{
-	Real v = 0.5f + 6.5f * powf(val, 2.f);  if (bGI)  pSet->grass_dist = v;
-	if (valGrassDist){	valGrassDist->setCaption(fToStr(v,2,4));  }
-}
-
 void CGui::btnTrGrReset(WP wp)
 {
-	Slider* sl;  float v;
-	#define setSld(name)  sl##name(0,v);  \
-		sl = (Slider*)app->mWndOpts->findWidget(#name);  if (sl)  sl->setValue(v);
-	v = powf(1.5f /4.f, 0.5f);
-	setSld(Trees);
-	v = powf(1.f /4.f, 0.5f);
-	setSld(Grass);
-	v = powf((1.f-0.5f) /6.5f, 0.5f);
-	setSld(TreesDist);
-	v = powf((2.f-0.5f) /6.5f, 0.5f);
-	setSld(GrassDist);
+	svTrees.SetValueF(1.5f);
+	svGrass.SetValueF(1.f);
+	svTreesDist.SetValueF(1.f);
+	svGrassDist.SetValueF(2.f);
 }
 
 void CGui::chkUseImposters(WP wp)
@@ -141,97 +87,15 @@ void CGui::chkImpostorsOnly(WP wp)
 	ChkEv(imposters_only);
 }
 
-void CGui::slShaders(SL)
-{
-	float v = val;  if (bGI)  pSet->shaders = v;
-	if (valShaders)
-	{	valShaders->setCaption(TR("#{GraphicsAll_Lowest}"));
-		if (v > 0.2)  valShaders->setCaption(TR("#{GraphicsAll_Low}"));
-		if (v > 0.4)  valShaders->setCaption(TR("#{GraphicsAll_Medium}"));
-		if (v > 0.6)  valShaders->setCaption(TR("#{GraphicsAll_High}"));
-		if (v > 0.8)  valShaders->setCaption(TR("#{GraphicsAll_VeryHigh}"));
-	}
-	//if (materialFactory) materialFactory->setShaderQuality(v);
-}
-
-void CGui::slTexSize(SL)
-{
-	int v = val*1.f +slHalf;  if (bGI)  pSet->tex_size = v;
-	if (valTexSize)
-	{	if (v == 0)  valTexSize->setCaption("Small");  else
-		if (v == 1)  valTexSize->setCaption("Big");  }
-}
-
-void CGui::slTerMtr(SL)
-{
-	int v = val*3.f +slHalf;  if (bGI)  pSet->ter_mtr = v;
-	if (valTerMtr)
-	{	if (v == 0)  valTerMtr->setCaption(TR("#{GraphicsAll_Lowest}"));  else
-		if (v == 1)  valTerMtr->setCaption(TR("#{GraphicsAll_Medium}"));  else
-		if (v == 2)  valTerMtr->setCaption(TR("#{GraphicsAll_High}"));  else
-		if (v == 3)  valTerMtr->setCaption("Parallax");  }
-	//if (bGI)  changeShadows();
-}
-
-void CGui::slTerTripl(SL)
-{
-	int v = val*2.f +slHalf;  if (bGI)  pSet->ter_tripl = v;
-	if (valTerTripl)
-	{	if (v == 0)  valTerTripl->setCaption("Off");  else
-		if (v == 1)  valTerTripl->setCaption("One");  else
-		if (v == 2)  valTerTripl->setCaption("Full");  }
-	//if (bGI)  changeShadows();
-}
-
-
 
 //  shadows
 void CGui::btnShadows(WP){	app->changeShadows();	}
 void CGui::btnShaders(WP){	app->changeShadows();	}
 
-void CGui::slShadowType(SL)
-{
-	int v = val*2.f +slHalf;	if (bGI)  pSet->shadow_type = eShadowType(v);
-	if (valShadowType)
-	{	if (v == 0)  valShadowType->setCaption("None");  else
-		if (v == 1)  valShadowType->setCaption("Simple");  else
-		if (v == 2)  valShadowType->setCaption("Depth");  else
-		if (v == 3)  valShadowType->setCaption("Soft");  }
-}
 
-void CGui::slShadowCount(SL)
-{
-	int v = 1 + 2.f * val +slHalf;	if (bGI)  pSet->shadow_count = v;
-	if (valShadowCount)  valShadowCount->setCaption(toStr(v));
-}
 
-void CGui::slShadowSize(SL)
-{
-	int v = max( 0.0f, min((float) ciShadowNumSizes-1, ciShadowNumSizes * val +slHalf));
-	if (bGI)  pSet->shadow_size = v;
-	if (valShadowSize)  valShadowSize->setCaption(toStr(ciShadowSizesA[v]));
-}
-
-void CGui::slShadowDist(SL)
-{
-	Real v = 20.f + 4780.f * powf(val, 3.f);	if (bGI)  pSet->shadow_dist = v;
-	if (valShadowDist){  valShadowDist->setCaption(fToStr(v,0,2)+" m");  }
-}
-
-/*void CGui::slShadowFilter(SL)
-{
-	int v = 1 + 3 * val +slHalf;  if (bGI)  pSet->shadow_filter = v;
-	//if (materialFactory)  materialFactory->setShadowsFilterSize(v);  //TODO..
-	if (valShadowFilter)  valShadowFilter->setCaption(toStr(v));
-}*/
 
 //  water
-void CGui::slWaterSize(SL)
-{
-	int v = 2.f * val +slHalf;	if (bGI)  pSet->water_rttsize = v;
-	if (valWaterSize)  valWaterSize->setCaption(toStr(ciShadowSizesA[v]));
-}
-
 void CGui::chkWaterReflect(WP wp)
 {
 	ChkEv(water_reflect);
@@ -248,58 +112,61 @@ void CGui::chkWaterRefract(WP wp)
 	app->mWaterRTT.recreate();
 }
 
-
 //  init  common
 //----------------------------------------------------------------------------------------------------------------
-void CGui::GuiInitGraphics()
+void CGui::GuiInitGraphics()  // also called on preset change with bGI true
 {
-	ButtonPtr btn, bchk;  ComboBoxPtr combo;
+	ButtonPtr btn, bchk;  ComboBoxPtr cmb;
 	Slider* sl;  size_t v;
+	SliderValue::pGUI = app->mGUI;
+	SliderValue::bGI = &bGI;
 
+	SliderValue* sv;
+	#define Sev(ev)  if (sv->event.empty())  sv->event += newDelegate(this, &CGui::##ev)
+	//Check* ck;
+	//#define Cev(ev)  if (sv->event.empty())  ck->event += newDelegate(this, &CGui::##ev)
+	
 	//  detail
-	Slv(TerDetail,	pSet->terdetail /2.f);
-	Slv(TerDist,	powf(pSet->terdist /2000.f, 0.5f));
-	Slv(ViewDist,	powf((pSet->view_distance -50.f)/19950.f, 0.5f));
-	Slv(RoadDist,	powf(pSet->road_dist /4.f, 0.5f));
+	sv= &svTerDetail;	sv->Init("TerDetail",	&pSet->terdetail,	0.f,2.f);  Sev(slTerDetail);
+	sv= &svTerDist;		sv->Init("TerDist",		&pSet->terdist, 0.f,2000.f, 2.f, 0,3, 1.f," m");  Sev(slTerDist);
+	sv= &svRoadDist;	sv->Init("RoadDist",	&pSet->road_dist,	0.f,4.f, 2.f, 2,5);
 
 	//  textures
-	Cmb(combo, "TexFiltering", comboTexFilter);
-	Slv(Anisotropy,	pSet->anisotropy /16.f);
-	Slv(Shaders,	pSet->shaders);
-	Slv(TexSize,	pSet->tex_size /1.f);
-	Slv(TerMtr,		pSet->ter_mtr /3.f);
-	Slv(TerTripl,	pSet->ter_tripl /2.f);
+	Cmb(cmb, "TexFiltering", comboTexFilter);
+
+	sv= &svViewDist;	sv->Init("ViewDist",	&pSet->view_distance, 50.f,20000.f, 2.f, 1,4, 0.001f," km");  Sev(slViewDist);
+	sv= &svAnisotropy;	sv->Init("Anisotropy",	&pSet->anisotropy,	0.f,16.f);  Sev(slAnisotropy);
+	sv= &svTexSize;
+		sv->strMap[0] = "Small";  sv->strMap[1] = "Big";
+						sv->Init("TexSize",		&pSet->tex_size,	0.f,1.f);
+	sv= &svTerMtr;
+		sv->strMap[0] = TR("#{GraphicsAll_Lowest}");	sv->strMap[1] = TR("#{GraphicsAll_Medium}");
+		sv->strMap[2] = TR("#{GraphicsAll_High}");		sv->strMap[3] = "Parallax";
+						sv->Init("TerMtr",		&pSet->ter_mtr,		0.f,3.f);
+	sv= &svTerTripl;
+		sv->strMap[0] = "Off";  sv->strMap[1] = "One";  sv->strMap[2] = "Full";
+						sv->Init("TerTripl",	&pSet->ter_tripl,	0.f,2.f);
 
 	//  trees/grass
-	Slv(Trees,		powf(pSet->gui.trees /4.f, 0.5f));
-	Slv(Grass,		powf(pSet->grass /4.f, 0.5f));
-	Slv(TreesDist,	powf((pSet->trees_dist-0.5f) /6.5f, 0.5f));
-	Slv(GrassDist,	powf((pSet->grass_dist-0.5f) /6.5f, 0.5f));
-	Btn("TrGrReset", btnTrGrReset);
-	Chk("UseImposters", chkUseImposters, pSet->use_imposters);
+	sv= &svTrees;		sv->Init("Trees",		&pSet->gui.trees,	0.f,4.f, 2.f);
+	sv= &svGrass;		sv->Init("Grass",		&pSet->grass,		0.f,4.f, 2.f);
+	sv= &svTreesDist;	sv->Init("TreesDist",   &pSet->trees_dist,	0.5f,7.f, 2.f);
+	sv= &svGrassDist;	sv->Init("GrassDist",   &pSet->grass_dist,	0.5f,7.f, 2.f);
+	Btn("TrGrReset",  btnTrGrReset);
+
+	//ck = ckUseImposters; ck->Init("UseImposters", pSet->use_imposters);  Cev(chkUseImposters);
+	Chk("UseImposters",  chkUseImposters,  pSet->use_imposters);
 	Chk("ImpostorsOnly", chkImpostorsOnly, pSet->imposters_only);
 
-	//  screen
-	Cmb(combo, "CmbAntiAliasing", cmbAntiAliasing);
-	int si=0;
-	if (combo)
-	{	combo->removeAllItems();
-		int a[6] = {0,1,2,4,8,16};
-		for (int i=0; i < 6; ++i)
-		{	int v = a[i];
-			combo->addItem(toStr(v));
-			if (pSet->fsaa >= v)
-				si = i;
-		}
-		combo->setIndexSelected(si);
-	}
-
 	//  shadows
-	Slv(ShadowType,	pSet->shadow_type /2.f);
-	Slv(ShadowCount,(pSet->shadow_count-1) /2.f);
-	//Slv(ShadowFilter, (pSet->shadow_filter-1) /3.f);
-	Slv(ShadowSize,	pSet->shadow_size /float(ciShadowNumSizes));
-	Slv(ShadowDist,	powf((pSet->shadow_dist -20.f)/4780.f, 1.f/3.f));
+	sv= &svShadowType;
+		sv->strMap[0] = "None";		sv->strMap[1] = "Depth";	sv->strMap[2] = "Soft-";
+						sv->Init("ShadowType",	&pSet->shadow_type, 0.f,1.f); //2.f);
+	sv= &svShadowCount;	sv->Init("ShadowCount",	&pSet->shadow_count, 1.f,3.f);
+	sv= &svShadowSize;
+		for (int i=0; i < ciShadowNumSizes; ++i)  sv->strMap[i] = toStr(ciShadowSizesA[i]);
+						sv->Init("ShadowSize",	&pSet->shadow_size, 0.f,ciShadowNumSizes-1);
+	sv= &svShadowDist;	sv->Init("ShadowDist",	&pSet->shadow_dist, 20.f,5000.f, 3.f, 0,3, 1.f," m");
 	Btn("Apply", btnShadows);
 	
 	Btn("ApplyShaders", btnShaders);
@@ -308,25 +175,40 @@ void CGui::GuiInitGraphics()
 	//  water
 	Chk("WaterReflection", chkWaterReflect, pSet->water_reflect);
 	Chk("WaterRefraction", chkWaterRefract, pSet->water_refract);
-	Slv(WaterSize, pSet->water_rttsize /2.f);
+	sv= &svWaterSize;
+		for (int i=0; i <= 2; ++i)  sv->strMap[i] = toStr(ciShadowSizesA[i]);
+						sv->Init("WaterSize",	&pSet->water_rttsize, 0.f,2.f);
 	
-	Cmb(combo, "CmbGraphicsAll", comboGraphicsAll);
-	if (combo)
-	{	combo->removeAllItems();
-		combo->addItem(TR("#{GraphicsAll_Lowest}"));
-		combo->addItem(TR("#{GraphicsAll_Low}"));
-		combo->addItem(TR("#{GraphicsAll_Medium}"));
-		combo->addItem(TR("#{GraphicsAll_High}"));
-		combo->addItem(TR("#{GraphicsAll_Higher}"));
-		combo->addItem(TR("#{GraphicsAll_VeryHigh}"));
-		combo->addItem(TR("#{GraphicsAll_Ultra}"));
-		combo->addItem(TR("#{GraphicsAll_Impossible}"));
+	//  presets
+	Cmb(cmb, "CmbGraphicsAll", comboGraphicsAll);
+	if (cmb)
+	{	cmb->removeAllItems();
+		cmb->addItem(TR("#{GraphicsAll_Lowest}"));  cmb->addItem(TR("#{GraphicsAll_Low}"));
+		cmb->addItem(TR("#{GraphicsAll_Medium}"));  cmb->addItem(TR("#{GraphicsAll_High}"));
+		cmb->addItem(TR("#{GraphicsAll_Higher}"));  cmb->addItem(TR("#{GraphicsAll_VeryHigh}"));
+		cmb->addItem(TR("#{GraphicsAll_Ultra}"));   cmb->addItem(TR("#{GraphicsAll_Impossible}"));
+		cmb->setIndexSelected(pSet->preset);
 	}
 	
+	//  screen
+	Cmb(cmb, "CmbAntiAliasing", cmbAntiAliasing);
+	int si=0;
+	if (cmb)
+	{	cmb->removeAllItems();
+		int a[6] = {0,1,2,4,8,16};
+		for (int i=0; i < 6; ++i)
+		{	int v = a[i];
+			cmb->addItem(toStr(v));
+			if (pSet->fsaa >= v)
+				si = i;
+		}
+		cmb->setIndexSelected(si);
+	}
+
 	//  render systems
-	Cmb(combo, "CmbRendSys", comboRenderSystem);
-	if (combo)
-	{	combo->removeAllItems();
+	Cmb(cmb, "CmbRendSys", comboRenderSystem);
+	if (cmb)
+	{	cmb->removeAllItems();
 
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		const int nRS = 3;  //4
@@ -339,15 +221,16 @@ void CGui::GuiInitGraphics()
 			
 		for (int i=0; i < nRS; ++i)
 		{
-			combo->addItem(rs[i]);
+			cmb->addItem(rs[i]);
 			if (pSet->rendersystem == rs[i])
-				combo->setIndexSelected(combo->findItemIndexWith(rs[i]));
+				cmb->setIndexSelected(cmb->findItemIndexWith(rs[i]));
 		}
 		//const RenderSystemList& rsl = Ogre::Root::getSingleton().getAvailableRenderers();
 		//for (int i=0; i < rsl.size(); ++i)
 		//	combo->addItem(rsl[i]->getName());
 	}
 }
+
 
 
 //  util
@@ -460,33 +343,7 @@ void CGui::setToolTips(EnumeratorWidgetPtr widgets)
 	{
 		WidgetPtr wp = widgets.current();
 		wp->setAlign(Align::Default);
-		
-		///
-		/*if (wp->getTypeName() == "TabControl") //&& wp->getSkinWidgetsByNameskin="TabControlIcon
-		{
-			ISubWidgetRect* r = wp->getSubWidgetMain();
-			if (r)
-			r->setCoord(IntCoord(100,100,200,200));
-			if (r)
-			LogO("r: "+r->getTypeName()+" "+r->getClassTypeName());
-
-			//ap->mGUI->mSubWidgetManager
-			//wp->getSubWidgetMain
-			LogO(wp->getName());
-			size_t ch = wp->getChildCount();
-			for (size_t c=0; c < ch; ++c)
-			{
-				Widget* w = wp->getChildAt(c);
-				LogO("  "+w->getName()+" "+w->getTypeName());
-
-				size_t ch1 = w->getChildCount();
-				for (size_t c1=0; c1 < ch1; ++c1)
-				{
-					Widget* w1 = w->getChildAt(c1);
-					LogO("    "+w1->getName()+" "+w1->getTypeName());
-		}	}	}
-		/**/
-		
+				
 		IntPoint origPos = wp->getPosition();
 		IntSize origSize = wp->getSize();
 		
@@ -554,14 +411,10 @@ void CGui::boundedMove(Widget* moving, const IntPoint& point)
 //----------------------------------------------------------------------------------------------------------------
 void CGui::GuiInitLang()
 {
-	languages["en"] = TR("#{LANG_EN}");  //English
-	languages["de"] = TR("#{LANG_DE}");  //German
-	languages["fi"] = TR("#{LANG_FI}");  //Finnish
-	languages["pl"] = TR("#{LANG_PL}");  //Polish
-	languages["ro"] = TR("#{LANG_RO}");  //Romanian
-	languages["fr"] = TR("#{LANG_FR}");  //French
-	languages["ru"] = TR("#{LANG_RU}");  //Russian
-	languages["pt"] = TR("#{LANG_PT}");  //Portuguese
+	languages["en"] = TR("#{LANG_EN}");  languages["de"] = TR("#{LANG_DE}");
+	languages["fr"] = TR("#{LANG_FR}");  languages["pl"] = TR("#{LANG_PL}");
+	languages["ru"] = TR("#{LANG_RU}");  languages["fi"] = TR("#{LANG_FI}");
+	languages["pt"] = TR("#{LANG_PT}");  languages["ro"] = TR("#{LANG_RO}");
 
 	ComboBoxPtr combo = app->mGUI->findWidget<ComboBox>("Lang");
 	if (!combo)  return;
@@ -730,6 +583,7 @@ void CGui::chkVidFullscr(WP wp)
 {
 	ChkEv(fullscreen);
 	SDL_SetWindowFullscreen(app->mSDLWindow,  wp->castType<MyGUI::Button>()->getStateSelected()? SDL_WINDOW_FULLSCREEN : 0);
+	app->bSizeHUD = true;
 }
 
 void CGui::chkVidVSync(WP wp)

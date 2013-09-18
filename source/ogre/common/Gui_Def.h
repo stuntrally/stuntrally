@@ -1,12 +1,10 @@
-#ifndef _Gui_Def_h_
-#define _Gui_Def_h_
-
+#pragma once
 
 //  Gui Shortcuts: find control, assign event, set value
 //------------------------------------------------------------------------
-//ButtonPtr btn, bchk;  ComboBoxPtr combo;
-//Slider* sl;  size_t v;
-//TODO: make App methods of these..
+//ButtonPtr btn, bchk;  ComboBoxPtr cmb;
+//Slider* sl;
+//TODO: make classes with methods for these..
 
 #define Slv(name, vset)  \
 	sl = app->mGUI->findWidget<Slider>(#name);  \
@@ -46,6 +44,11 @@
     chk->setStateSelected(pSet->var);  }
 
 
-const float slHalf = 0.45f;  // added to int value sliders to their float value
+//  slider event and its text field for value
+#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
+#define SL   MyGUI::Slider* wp, float val    // slider event args
+#define CMB  MyGUI::ComboBox* wp, size_t val // combobox event args
 
-#endif
+typedef MyGUI::WidgetPtr WP;
+
+typedef std::list <std::string> strlist;

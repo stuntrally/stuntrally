@@ -39,7 +39,7 @@ void App::changeShadows()
 	QTimer ti;  ti.update();  /// time
 	
 	//  get settings
-	bool enabled = pSet->shadow_type != 0;
+	bool enabled = pSet->shadow_type != Sh_None;
 	bool bDepth = pSet->shadow_type >= Sh_Depth;
 	bool bSoft = pSet->shadow_type == Sh_Soft;
 	
