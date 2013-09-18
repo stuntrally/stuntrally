@@ -111,9 +111,9 @@ bool App::frameStart(Real time)
 
 	for (int i=0; i<4; ++i)
 	{
-		boost::lock_guard<boost::mutex> lock(mPlayerInputStateMutex);
+		boost::lock_guard<boost::mutex> lock(input->mPlayerInputStateMutex);
 		for (int a = 0; a < NumPlayerActions; ++a)
-			mPlayerInputState[i][a] = mInputCtrlPlayer[i]->getChannel(a)->getValue();
+			input->mPlayerInputState[i][a] = mInputCtrlPlayer[i]->getChannel(a)->getValue();
 	}
 
 	if (imgBack && pGame)  // show/hide background image

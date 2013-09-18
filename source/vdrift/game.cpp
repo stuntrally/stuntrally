@@ -13,9 +13,12 @@
 #include "tracksurface.h"
 #include "forcefeedback.h"
 #include "../ogre/common/Defines.h"
+#include "../ogre/common/SceneXml.h"
 #include "../ogre/common/QTimer.h"
 #include "../ogre/CGame.h"
+#include "../ogre/CInput.h"
 #include "../ogre/FollowCamera.h"
+#include "../oics/ICSInputControlSystem.h"
 
 #define M_PI  3.14159265358979323846
 using namespace std;
@@ -32,7 +35,7 @@ GAME::GAME(ostream & info_out, ostream & err_out, SETTINGS* pSettings) :
 	particle_timer(0), race_laps(0),
 	track(info_out, err_out), /*tracknode(NULL),*/
 	framerate(1.0 / pSettings->game_fq),
-	pOgreGame(NULL)
+	app(NULL)
 {
 	track.pGame = this;
 	carcontrols_local.first = NULL;
@@ -364,7 +367,7 @@ void GAME::Tick(double deltat)
 	if (deltat > maxtime)
 		deltat = maxtime;
 
-	if (pOgreGame && pOgreGame->bPerfTest)  // speed up perf test
+	if (app && app->bPerfTest)  // speed up perf test
 		deltat *= settings->perf_speed;
 	
 	target_time += deltat;
@@ -376,8 +379,8 @@ void GAME::Tick(double deltat)
 		frame++;
 		AdvanceGameLogic(deltat > 0.f ? tickperriod : 0.f);
 
-		if (pOgreGame)
-			pOgreGame->newPoses(tickperriod);
+		if (app)
+			app->newPoses(tickperriod);
 
 		curticks++;
 		target_time -= tickperriod;
@@ -444,18 +447,18 @@ void GAME::UpdateCarInputs(CAR & car)
 {
 	vector <float> carinputs(CARINPUT::ALL, 0.0f);
 	//  race countdown or loading
-	bool forceBrake = timer.waiting || timer.pretime > 0.f || pOgreGame->iLoad1stFrames > -2;
+	bool forceBrake = timer.waiting || timer.pretime > 0.f || app->iLoad1stFrames > -2;
 
-	int i = pOgreGame->sc->asphalt ? 1 : 0;
+	int i = app->sc->asphalt ? 1 : 0;
 	float sss_eff = settings->sss_effect[i], sss_velf = settings->sss_velfactor[i];
 	float carspeed = car.GetSpeedDir();  //car.GetSpeed();
 	//LogO(fToStr(car.GetSpeed(),2,6)+" "+fToStr(car.GetSpeedDir(),2,6));
 
-	boost::lock_guard<boost::mutex> lock(pOgreGame->mPlayerInputStateMutex);
+	boost::lock_guard<boost::mutex> lock(app->input->mPlayerInputStateMutex);
 	carinputs = carcontrols_local.second.ProcessInput(
-		pOgreGame->mPlayerInputState[car.id], car.id,
-		carspeed, sss_eff, sss_velf,  pOgreGame->mInputCtrlPlayer[car.id]->mbOneAxisThrottleBrake,
-		forceBrake, pOgreGame->bPerfTest, pOgreGame->iPerfTestStage);
+		app->input->mPlayerInputState[car.id], car.id,
+		carspeed, sss_eff, sss_velf,  app->mInputCtrlPlayer[car.id]->mbOneAxisThrottleBrake,
+		forceBrake, app->bPerfTest, app->iPerfTestStage);
 
 	car.HandleInputs(carinputs, TickPeriod());
 }
@@ -540,7 +543,7 @@ CAR* GAME::LoadCar(const string & pathCar, const string & carname, const MATHVEC
 
 	cars.push_back(CAR());
 
-	if (!cars.back().Load(pOgreGame,
+	if (!cars.back().Load(app,
 		carconf, carname,
 		start_position, start_orientation,
 		collision,
@@ -654,7 +657,7 @@ void GAME::ProcessNewSettings()
 {
 	if (carcontrols_local.first)
 	{
-		int i = pOgreGame->sc->asphalt ? 1 : 0;
+		int i = app->sc->asphalt ? 1 : 0;
 		carcontrols_local.first->SetABS(settings->abs[i]);
 		carcontrols_local.first->SetTCS(settings->tcs[i]);
 		carcontrols_local.first->SetAutoShift(settings->autoshift);
@@ -914,7 +917,7 @@ bool GAME::ParseArguments(list <string> & args)
 
 void GAME::UpdateTimer()
 {
-	if (pOgreGame->iLoad1stFrames == -2)  // ended loading
+	if (app->iLoad1stFrames == -2)  // ended loading
 		timer.Tick(TickPeriod());
 	//timer.DebugPrint(info_output);
 }

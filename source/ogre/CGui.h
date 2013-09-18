@@ -10,9 +10,11 @@
 #include <MyGUI.h>
 //#include "common/MessageBox/MessageBox.h"
 #include "common/MessageBox/MessageBoxStyle.h"
-
 #include "../network/networkcallbacks.hpp"
-
+#include "../oics/ICSInputControlSystem.h"
+#include "ChampsXml.h"
+#include "ChallengesXml.h"
+#include "CInput.h"
 
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;  }
 namespace MyGUI  {  class MultiList2;  class Slider;  class Message;  }
@@ -178,10 +180,8 @@ public:
 
 	void CreateInputTab(const std::string& title, bool playerTab, const std::vector<InputAction>& actions, ICS::InputControlSystem* ICS);
 	void InitInputGui(), inputBindBtnClicked(WP), inputUnbind(WP), inputBindBtn2(WP, int, int, MyGUI::MouseButton mb);
-	// bind=1: "<Assign>"
-	// bind=2: "Key1, <Assign>"
-	// bind=0: "Key1, Key2"
-	void UpdateInputButton(MyGUI::Button* button, const InputAction& action, int bind=0);
+	enum EBind {  B_Done=0, B_First, B_Second  };
+	void UpdateInputButton(MyGUI::Button* button, const InputAction& action, EBind bind = B_Done);
 
 	InputAction* mBindingAction;
 	MyGUI::Button* mBindingSender;

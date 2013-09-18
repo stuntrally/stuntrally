@@ -1711,6 +1711,14 @@
 				Name="Game"
 				>
 				<File
+					RelativePath="..\source\ogre\CData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\CData.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\ogre\CGame.cpp"
 					>
 				</File>
@@ -1744,6 +1752,14 @@
 				</File>
 				<File
 					RelativePath="..\source\ogre\CHud.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\CInput.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\CInput.h"
 					>
 				</File>
 				<File

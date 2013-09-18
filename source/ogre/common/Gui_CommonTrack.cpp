@@ -2,6 +2,7 @@
 #include "../common/Defines.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
+#include "../common/SceneXml.h"
 #ifndef SR_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../CGame.h"

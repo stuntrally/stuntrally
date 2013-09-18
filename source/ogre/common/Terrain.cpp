@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../common/Defines.h"
 #include "../common/RenderConst.h"
+#include "../common/SceneXml.h"
 #include "../../road/Road.h"  // sun rot
 #include "../shiny/Main/Factory.hpp"
 

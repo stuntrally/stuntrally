@@ -8,6 +8,7 @@
 #include "cardynamics.h"
 //#include "car.h"//
 #include "../ogre/CGame.h"  //
+#include "../ogre/common/SceneXml.h"
 #include "game.h"  //
 #include <iostream>
 

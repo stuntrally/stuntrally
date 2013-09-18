@@ -4,7 +4,7 @@
 #include "../vdrift/game.h"
 #include "../vdrift/car.h"
 //#include "../vdrift/quickprof.h"
-
+#include "common/SceneXml.h"
 #include "common/GraphView.h"
 #include "SplitScreen.h"
 #include <OgreSceneManager.h>

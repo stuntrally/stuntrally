@@ -40,6 +40,9 @@ const static float gfBoostFuelStart = 3.f,  // seconds (each lap)
 	gfBoostFuelMax = 3.f,  // max val, tank	
 	gfBoostFuelAddSec = 0.1f;  // add value each second
 
+const int ciShadowNumSizes = 5;
+const int ciShadowSizesA[ciShadowNumSizes] = {256,512,1024,2048,4096};
+
 
 //  info  for shape user data (void*)
 //------------------------------------------

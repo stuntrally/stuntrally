@@ -22,33 +22,37 @@ std::string GetKeyName(SDL_Keycode key, bool omit = false)
 
 
 ///  Input caption  ---------------------
-void CGui::UpdateInputButton(MyGUI::Button* button, const InputAction& action, int bind)
+void CGui::UpdateInputButton(MyGUI::Button* button, const InputAction& action, EBind bind)
 {
 	std::string s, sAssign = TR("#FFA030#{InputAssignKey}");  // caption
 
 	SDL_Keycode decKey = action.mICS->getKeyBinding(action.mControl, ICS::Control::DECREASE);
 	SDL_Keycode incKey = action.mICS->getKeyBinding(action.mControl, ICS::Control::INCREASE);
 
+	//  B_First:  "<Assign>"
+	//  B_Second: "Key1, <Assign>"
+	//  B_Done:   "Key1, Key2"
+
 	if (action.mType == InputAction::Axis)
 	{
-		if (bind == 1)
+		if (bind == B_First)
 			s = sAssign;
 		else
 		{	s += GetKeyName(decKey,true);
 			if (!s.empty())  s += " , ";
-			if (bind == 2)
+			if (bind == B_Second)
 				s += sAssign;
 			else
 				s += GetKeyName(incKey,true);
 		}
 	}else
-	{	if (bind == 1)
+	{	if (bind == B_First)
 			s = sAssign;
 		else
 			s += GetKeyName(incKey, action.mType & InputAction::Axis);
 	}
 
-	if (bind == 0)
+	if (bind == B_Done)
 	{
 		for (int j=0; j < SDL_NumJoysticks(); ++j)
 		{
@@ -191,7 +195,7 @@ void CGui::CreateInputTab(const std::string& title, bool playerTab, const std::v
 
 void CGui::InitInputGui()
 {
-	app->LoadInputDefaults();
+	app->input->LoadInputDefaults();
 
 	txtInpDetail = app->mGUI->findWidget<StaticText>("InputDetail");
 	panInputDetail = app->mGUI->findWidget<Widget>("PanInputDetail");
@@ -221,9 +225,10 @@ void CGui::InitInputGui()
 
 
 	///  insert a tab item for every schema (global, 4players)
-	CreateInputTab("#80C0FF#{InputMapGeneral}", false, app->mInputActions, app->mInputCtrl);
+	CreateInputTab("#80C0FF#{InputMapGeneral}", false, app->input->mInputActions, app->mInputCtrl);
 	for (int i=0; i < 4; ++i)
-		CreateInputTab(String("#FFF850") + (i==0 ? "#{Player} ":" ") +toStr(i+1), true, app->mInputActionsPlayer[i], app->mInputCtrlPlayer[i]);
+		CreateInputTab(String("#FFF850") + (i==0 ? "#{Player} ":" ") +toStr(i+1), true,
+			app->input->mInputActionsPlayer[i], app->mInputCtrlPlayer[i]);
 
 
 	TabItemPtr tabitem = tabInput->addItem(TR("#C0C0FF#{Other}"));
@@ -299,7 +304,7 @@ void CGui::inputBindBtnClicked(WP sender)
 	}else
 		action->mICS->enableDetectingBindingState(action->mControl, ICS::Control::INCREASE);
 
-	UpdateInputButton(mBindingSender, *action, 1);
+	UpdateInputButton(mBindingSender, *action, B_First);
 
 	// activate key capture mode
 	app->bAssignKey = true;
@@ -308,7 +313,7 @@ void CGui::inputBindBtnClicked(WP sender)
 
 void CGui::notifyInputActionBound(bool complete)
 {	
-	UpdateInputButton(mBindingSender, *mBindingAction, complete ? 0 : 2);
+	UpdateInputButton(mBindingSender, *mBindingAction, complete ? B_Done : B_Second);
 	if (complete)
 	{	app->bAssignKey = false;
 

@@ -6,6 +6,7 @@
 #include "../vdrift/game.h"
 #include "../vdrift/quickprof.h"
 #include "../road/Road.h"
+#include "common/SceneXml.h"
 #include "SplitScreen.h"
 #include "FollowCamera.h"
 #include "common/RenderConst.h"

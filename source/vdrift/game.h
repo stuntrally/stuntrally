@@ -25,9 +25,8 @@
 
 class GAME
 {
-//private:
 public:
-	class App* pOgreGame;
+	class App* app;
 	double TickPeriod() const {  return framerate;  }
 	bool OneLoop(double dt);  std::string strProfInfo;
 	QTimer qtim;

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "../common/Defines.h"
+#include "../common/SceneXml.h"
 #include "RenderConst.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"

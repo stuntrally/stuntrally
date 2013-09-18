@@ -13,6 +13,7 @@
 using namespace Ogre;
 
 #include "../sdl4ogre/sdlinputwrapper.hpp"
+#include "../oics/ICSInputControlSystem.h"
 
 
 //  rendering

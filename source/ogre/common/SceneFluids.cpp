@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "../common/RenderConst.h"
+#include "../common/Defines.h"
+#include "../common/SceneXml.h"
 
 #ifdef SR_EDITOR
-	#include "../common/Defines.h"
 	#include "../../editor/CApp.h"
 	#include "../../editor/settings.h"
 	#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #else
-	#include "../common/Defines.h"
 	#include "../CGame.h"
 	#include "../../vdrift/game.h"
 	//#include "../../vdrift/settings.h"

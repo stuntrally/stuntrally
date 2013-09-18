@@ -39,6 +39,7 @@
 #include "../sdl4ogre/sdlwindowhelper.hpp"
 
 #include "common/PointerFix.h"
+#include "../oics/ICSInputControlSystem.h"
 
 
 namespace

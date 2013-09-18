@@ -12,12 +12,9 @@
 #include <OgreTexture.h>
 
 
-class SETTINGS; class App;
 namespace Ogre {  class Camera;  class SceneManager;  }
+class SETTINGS;  class App;
 
-
-const int ciShadowNumSizes = 5;
-const int ciShadowSizesA[ciShadowNumSizes] = {256,512,1024,2048,4096};
 
 
 class CarReflection
@@ -77,8 +74,6 @@ private:
 	// The cube map textures have an index too, so we need this to get the right texture / material.
 	unsigned int iIndex;
 	
-	// Settings, needed to get the user settings for cube maps
 	SETTINGS* pSet;
-	
 	App* pApp;
 };

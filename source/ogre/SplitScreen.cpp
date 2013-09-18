@@ -6,6 +6,7 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "CarModel.h"
+#include "common/SceneXml.h"
 #include "../vdrift/settings.h"
 #include "../road/Road.h"
 #include "MyGUI_PointerManager.h"

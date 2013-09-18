@@ -3,6 +3,7 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
+#include "common/SceneXml.h"
 #include <LinearMath/btQuickprof.h>
 using namespace Ogre;
 

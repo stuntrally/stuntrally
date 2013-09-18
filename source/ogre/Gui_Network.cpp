@@ -7,6 +7,7 @@
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 #include "common/MultiList2.h"
+#include "common/MessageBox/MessageBox.h"
 
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>

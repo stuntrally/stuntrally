@@ -118,7 +118,7 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 	pGame->Start(args);  //game.End();
 
 	App* pApp = new App(settings, pGame);
-	pGame->pOgreGame = pApp;
+	pGame->app = pApp;
 
 	try
 	{

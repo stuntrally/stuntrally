@@ -10,28 +10,22 @@
 #include <boost/scoped_ptr.hpp>
 //#include <boost/thread.hpp>
 
+
 namespace MyGUI{  class OgreD3D11Platform; }
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
 	namespace RTShader {  class ShaderGenerator;  }  }
+namespace sh   {  class Factory;  }
+
 class MasterClient;  class P2PGameClient;
 
-namespace sh
-{
-	class Factory;
-}
 
 #include "../sdl4ogre/events.h"
 
-#include "../oics/ICSChannelListener.h"
-#include "../oics/ICSInputControlSystem.h"
+namespace SFO {  class InputWrapper;  class SDLCursorManager;  }
+namespace ICS {  class InputControlSystem;  class DetectingBindingListener;  }
 
 
-namespace SFO
-{
-	class InputWrapper;
-	class SDLCursorManager;
-}
-
+//  mtr
 class MaterialMgrListener : public Ogre::MaterialManager::Listener
 {
 public:
@@ -48,10 +42,12 @@ protected:
 };
 
 
+//  gui
 enum MNU_Btns {  MNU_Single=0, MNU_Tutorial, MNU_Champ, MNU_Challenge, MNU_Replays, MNU_Help, MNU_Options, ciMainBtns  };
 enum TAB_Game {  TAB_Back=0, TAB_Track,TAB_Car, TAB_Setup,TAB_Game, TAB_Multi, TAB_Champs,TAB_Stages,TAB_Stage  };
 
 enum LobbyState { DISCONNECTED, HOSTING, JOINED };
+
 
 
 class BaseApp :

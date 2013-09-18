@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Defines.h"
+#include "../common/SceneXml.h"
 #include "../vdrift/pathmanager.h"
 #include "../../road/Road.h"
 #ifndef SR_EDITOR

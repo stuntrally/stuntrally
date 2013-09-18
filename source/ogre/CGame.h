@@ -1,76 +1,37 @@
 #pragma once
 #include "BaseApp.h"
 #include "common/Gui_Popup.h"
-#include "common/SceneXml.h"
+//#include "common/SceneXml.h"
 #include "common/BltObjects.h"
 #include "common/TracksXml.h"
 #include "common/FluidsXml.h"
 #include "common/WaterRTT.h"
-#include "ChampsXml.h"
-#include "ChallengesXml.h"
+//#include "ChampsXml.h"
+//#include "ChallengesXml.h"
 
 #include "ReplayGame.h"
 #include "../vdrift/cardefs.h"
-#include "../vdrift/settings.h"
-#include "CarModel.h"
-#include "CarReflection.h"
-
-#include "common/MessageBox/MessageBox.h"
-#include "common/MessageBox/MessageBoxStyle.h"
+//#include "../vdrift/settings.h"
+#include "CarModel.h"  //posInfo
+//#include "CarReflection.h"
 #include "common/GraphView.h"
 
-#include "../network/networkcallbacks.hpp"
 #include <boost/thread.hpp>
-#include <MyGUI.h>
 #include <OgreShadowCameraSetup.h>
-
 #include "../shiny/Main/Factory.hpp"
+#include "../network/networkcallbacks.hpp"
+#include "../oics/ICSChannelListener.h"
 
 
-namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;
+namespace Ogre {  class SceneNode;  class SceneManager;  class Light;
 	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
 namespace Forests {  class PagedGeometry;  }
 namespace BtOgre  {  class DebugDrawer;  }
-namespace MyGUI  {  class MultiList2;  class Slider;  }
+class GAME;
+class Scene;
 class GraphView;
+class CInput;
 const int CarPosCnt = 8;  // size of poses queue
-
-
-//  Input
-//-----------------------------------------------------------------
-struct InputAction
-{
-	std::string mName;  int mId;
-	SDL_Keycode mKeyInc, mKeyDec;
-
-	enum Type
-	{	Trigger = 0x00,
-		Axis = 0x01,     // 2-sided axis, centered in the middle, keyboard emulation with left & right keys
-		HalfAxis = 0x11  // 1-sided axis, keyboard emulation with 1 key
-	} mType;
-
-	ICS::InputControlSystem* mICS;
-	ICS::Control* mControl;
-
-	InputAction(int id, const std::string& name, SDL_Keycode incKey, Type type)
-		: mId(id), mName(name), mKeyInc(incKey), mKeyDec(SDLK_UNKNOWN), mType(type)
-	{	}
-	InputAction(int id, const std::string &name, SDL_Keycode decKey, SDL_Keycode incKey, Type type)
-		: mId(id), mName(name), mKeyInc(incKey), mKeyDec(decKey), mType(Axis)
-	{	}
-};
-
-// These IDs are referenced in the user config files.
-// To keep them valid, make sure to:
-// - Add new actions at the end of the enum
-// - Instead of deleting an action, replace it with a dummy one eg A_Unused
-enum Actions
-{	A_ShowOptions, A_PrevTab, A_NextTab, A_RestartGame, A_ResetGame, A_Screenshot, NumActions	};
-enum PlayerActions
-{	A_Throttle, A_Brake, A_Steering, A_HandBrake, A_Boost, A_Flip,
-	A_ShiftUp, A_ShiftDown, // TODO: Shift up/down could be a single "shift" action
-	A_PrevCamera, A_NextCamera, A_LastChk, A_Rewind, NumPlayerActions
-};
 
 
 class App : public BaseApp, public sh::MaterialListener,
@@ -80,7 +41,7 @@ public:
 	App(SETTINGS* settings, GAME* game);
 	virtual ~App();
 	
-	class GAME* pGame;  ///*
+	GAME* pGame;  ///*
 	void updatePoses(float time), newPoses(float time), newPerfTest(float time);
 	void UpdThr();
 
@@ -235,14 +196,7 @@ public:
 
 
 	//  Input
-	float mPlayerInputState[4][NumPlayerActions];
-	boost::mutex mPlayerInputStateMutex;
-
-	std::vector<InputAction> mInputActions;
-	std::vector<InputAction> mInputActionsPlayer[4];
-
-	void LoadInputDefaults();
-	void LoadInputDefaults(std::vector<InputAction>& actions, ICS::InputControlSystem* ICS);
+	CInput* input;
 
 
 	///  Gui

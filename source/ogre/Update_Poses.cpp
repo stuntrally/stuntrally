@@ -3,15 +3,13 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
+#include "common/SceneXml.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
-
 #include "../vdrift/game.h"
 #include "../vdrift/quickprof.h"
 #include "../network/gameclient.hpp"
-
 #include "../shiny/Main/Factory.hpp"
-
 #include "common/Slider.h"
 #include "SplitScreen.h"
 using namespace Ogre;
