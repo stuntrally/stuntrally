@@ -1,6 +1,4 @@
-#ifndef _ROADPATCH_H
-#define _ROADPATCH_H
-
+#pragma once
 #include "bezier.h"
 #include "mathvector.h"
 #include "vertexarray.h"
@@ -64,5 +62,3 @@ private:
 public:	
 	VERTEXARRAY racingline_vertexarray;
 };
-
-#endif // _ROADPATCH_H

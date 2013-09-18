@@ -6,10 +6,7 @@
  * a seperate cube map for each car, or one cubemap for all cars,
  * or no cube map at all (static map loaded from file)
  */
-
-#ifndef _CarReflection_H_
-#define _CarReflection_H_
-
+#pragma once
 #include <OgreVector3.h>
 #include <OgreString.h>
 #include <OgreTexture.h>
@@ -85,5 +82,3 @@ private:
 	
 	App* pApp;
 };
-
-#endif

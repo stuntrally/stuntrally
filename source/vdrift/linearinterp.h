@@ -1,6 +1,4 @@
-#ifndef _LINEARINTERP_H
-#define _LINEARINTERP_H
-
+#pragma once
 #include "pairsort.h"
 
 #include <ostream>
@@ -119,5 +117,3 @@ public:
 	}
 	
 };
-
-#endif

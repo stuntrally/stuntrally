@@ -14,10 +14,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 //StaticBillboardSet does not allow billboards to be moved or deleted individually in
 //real-time)
 //-------------------------------------------------------------------------------------
-
-#ifndef __StaticBillboardSet_H__
-#define __StaticBillboardSet_H__
-
+#pragma once
 #include <OgrePrerequisites.h>
 #include <OgreRoot.h>
 #include <OgreRenderSystem.h>
@@ -315,5 +312,3 @@ namespace Forests
       Ogre::BillboardOrigin origin;
    };
 }
-
-#endif

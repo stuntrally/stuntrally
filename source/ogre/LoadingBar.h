@@ -1,6 +1,4 @@
-#ifndef _LoadBar_h_
-#define _LoadBar_h_
-
+#pragma once
 #include <OgreString.h>
 #include <OgreResource.h>
 #include <OgreResourceGroupManager.h>
@@ -75,5 +73,3 @@ public:
 	void worldGeometryStageEnded();
 
 };
-
-#endif

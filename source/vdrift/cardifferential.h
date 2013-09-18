@@ -1,6 +1,4 @@
-#ifndef _CARDIFFERENTIAL_H
-#define _CARDIFFERENTIAL_H
-
+#pragma once
 #include "dbl.h"
 #include <iostream>
 #include "../ogre/common/Defines.h"
@@ -71,5 +69,3 @@ public:
 	void SetFinalDrive(const Dbl& value){	final_drive = value;	}
 	Dbl GetFinalDrive() const			{	return final_drive;		}
 };
-
-#endif

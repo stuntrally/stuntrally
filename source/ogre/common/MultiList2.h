@@ -20,12 +20,8 @@
 	You should have received a copy of the GNU Lesser General Public License
 	along with MyGUI.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef __MYGUI_MULTI_LIST2_H__
-#define __MYGUI_MULTI_LIST2_H__
-
+#pragma once
 #include "MyGUI_Prerequest.h"
-
-// for Mygui 3.2+
 #include "MyGUI_Widget.h"
 #include "MyGUI_ListBox.h"
 #include "MyGUI_Any.h"
@@ -403,5 +399,3 @@ namespace MyGUI
 	};
 
 } // namespace MyGUI
-
-#endif // __MYGUI_MULTI_LIST_H__

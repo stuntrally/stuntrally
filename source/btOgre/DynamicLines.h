@@ -1,9 +1,6 @@
-#ifndef _Dynamic_Lines_H_
-#define _Dynamic_Lines_H_
-
+#pragma once
 #include <OgreRenderOperation.h>
 #include <OgreSimpleRenderable.h>
-
 #include <vector>
 
 
@@ -56,5 +53,3 @@ protected:
    virtual void createVertexDeclaration();
    virtual void fillHardwareBuffers();
 };
-
-#endif

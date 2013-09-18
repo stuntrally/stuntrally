@@ -1,6 +1,4 @@
-#ifndef _MATHVECTOR_H
-#define _MATHVECTOR_H
-
+#pragma once
 #include <vector>
 #include <cassert>
 #include <cmath>
@@ -454,5 +452,3 @@ std::ostream & operator << (std::ostream &os, const MATHVECTOR<T, dimension> & v
 	os << v[dimension-1];// << std::endl;
 	return os;
 }
-
-#endif

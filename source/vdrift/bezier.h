@@ -1,6 +1,4 @@
-#ifndef _BEZIER_H
-#define _BEZIER_H
-
+#pragma once
 #include "mathvector.h"
 #include "aabb.h"
 
@@ -137,5 +135,3 @@ private:
 };
 
 std::ostream & operator << (std::ostream &os, const BEZIER & b);
-
-#endif

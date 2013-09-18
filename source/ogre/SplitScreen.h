@@ -1,6 +1,4 @@
-#ifndef _SplitScreenManager_h_
-#define _SplitScreenManager_h_
-
+#pragma once
 #include <OgreRenderTargetListener.h>
 #include <list>
 
@@ -74,5 +72,3 @@ private:
 	// Render window to use
 	Ogre::RenderWindow* mWindow;
 };
-
-#endif

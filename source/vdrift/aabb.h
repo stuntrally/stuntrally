@@ -1,6 +1,4 @@
-#ifndef _AABB_H
-#define _AABB_H
-
+#pragma once
 //#include <ostream>
 
 #include "mathvector.h"
@@ -210,5 +208,3 @@ public:
 		return true;
 	}
 };
-
-#endif

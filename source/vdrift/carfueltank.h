@@ -1,6 +1,4 @@
-#ifndef _CARFUELTANK_H
-#define _CARFUELTANK_H
-
+#pragma once
 #include "dbl.h"
 #include "mathvector.h"
 #include <iostream>
@@ -75,5 +73,3 @@ public:
 		UpdateMass();
 	}
 };
-
-#endif

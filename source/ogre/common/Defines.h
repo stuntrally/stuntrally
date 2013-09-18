@@ -1,6 +1,4 @@
-#ifndef __Defines_h__
-#define __Defines_h__
-
+#pragma once
 
 #define PI_d  3.14159265358979323846
 
@@ -80,5 +78,3 @@ public:
 		: type(type1), pCarDyn(pCarDyn1), pFluid(pFluid1), whNum(whNum1)
 	{	}
 };
-
-#endif

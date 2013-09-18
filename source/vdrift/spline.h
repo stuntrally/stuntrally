@@ -1,6 +1,4 @@
-#ifndef _SPLINE_H
-#define _SPLINE_H
-
+#pragma once
 #include "pairsort.h"
 
 //#include <ostream>
@@ -153,5 +151,3 @@ public:
 			+ b * ( b2 - 1.0 ) * sq * second_deriv [high];
 	}
 };
-
-#endif

@@ -1,6 +1,4 @@
-#ifndef _OBJECTLOADER_H
-#define _OBJECTLOADER_H
-
+#pragma once
 #include "joepack.h"
 #include "model_joe03.h"
 #include "track_object.h"
@@ -97,5 +95,3 @@ private:
 		return true;
 	}
 };
-
-#endif // _OBJECTLOADER_H

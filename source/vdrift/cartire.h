@@ -1,6 +1,4 @@
-#ifndef _CARTIRE_H
-#define _CARTIRE_H
-
+#pragma once
 //#include <map>
 #include <iostream>
 #include <vector>
@@ -56,5 +54,3 @@ public:
 
 	static /*const*/CARTIRE * None();  // default, inited, won't crash, not to be used in game
 };
-
-#endif

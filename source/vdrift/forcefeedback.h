@@ -1,6 +1,4 @@
-#ifndef _FORCEFEEDBACK_H
-#define _FORCEFEEDBACK_H
-
+#pragma once
 #include <OgrePlatform.h>
 
 // force feedback is only supported on linux.
@@ -35,5 +33,3 @@ private:
 };
 
 #endif // ENABLE_FORCE_FEEDBACK
-
-#endif // _FORCEFEEDBACK_H

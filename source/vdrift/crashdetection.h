@@ -1,6 +1,4 @@
-#ifndef _CRASHDETECTION_H
-#define _CRASHDETECTION_H
-
+#pragma once
 
 class CRASHDETECTION
 {
@@ -20,5 +18,3 @@ public:
 	float maxdecel;
 	float deceltrigger;
 };
-
-#endif // _CRASHDETECTION_H

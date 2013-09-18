@@ -23,15 +23,10 @@ OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ------------------------------------------------------- */
-
-#ifndef _InputControlSystem_H_
-#define _InputControlSystem_H_
-
+#pragma once
 #include "ICSPrerequisites.h"
-
 #include "ICSControl.h"
 #include "ICSChannel.h"
-
 #include "../sdl4ogre/events.h"
 
 #define ICS_LOG(text) if(mLog) mLog->logMessage( ("ICS: " + std::string(text)).c_str() );
@@ -244,6 +239,3 @@ namespace ICS
 
 	static const float ICS_MAX = std::numeric_limits<float>::max();
 }
-
-
-#endif

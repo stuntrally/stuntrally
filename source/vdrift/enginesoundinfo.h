@@ -1,5 +1,4 @@
-#ifndef _ENGINESOUNDINFO_H
-#define _ENGINESOUNDINFO_H
+#pragma once
 
 class ENGINESOUNDINFO
 {
@@ -16,5 +15,3 @@ class ENGINESOUNDINFO
 
 		bool operator < (const ENGINESOUNDINFO & other) const {return minrpm < other.minrpm;}
 };
-
-#endif // _ENGINESOUNDINFO_H

@@ -5,9 +5,7 @@
 	@module
 */
 
-#ifndef __RENDER_BOX_H__
-#define __RENDER_BOX_H__
-
+#pragma once
 #include <Ogre.h>
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
@@ -140,5 +138,3 @@ namespace wraps
 	};
 
 } // namespace wraps
-
-#endif // __RENDER_BOX_H__

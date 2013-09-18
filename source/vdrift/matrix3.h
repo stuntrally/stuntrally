@@ -1,10 +1,6 @@
-#ifndef _MATRIX3_H
-#define _MATRIX3_H
-
+#pragma once
 //#include <iostream>
-
 #include "mathvector.h"
-
 //#include <cstring>
 
 template <typename T>
@@ -318,5 +314,3 @@ class MATRIX3
 		  return -1;
 		}
 };
-#endif
-

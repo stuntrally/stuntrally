@@ -1,6 +1,4 @@
-﻿#ifndef __MYGUI_OGRE_D3D11PLATFORM_H__
-#define __MYGUI_OGRE_D3D11PLATFORM_H__
-
+﻿#pragma once
 #include "MyGUI_OgreTexture.h"
 #include "MyGUI_OgreVertexBuffer.h"
 #include "MyGUI_OgreRenderManager.h"
@@ -203,5 +201,3 @@ namespace MyGUI
 } 
 
 #endif
-
-#endif 

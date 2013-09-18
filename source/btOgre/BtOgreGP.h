@@ -5,10 +5,7 @@
  *		Created:  27/12/2008 03:29:56 AM
  *		 Author:  Nikhilesh (nikki)
  * =====================================================================================*/
-
-#ifndef _BtOgrePG_H_
-#define _BtOgrePG_H_
-
+#pragma once
 //#include "btBulletDynamicsCommon.h"
 #include "BtOgreDebug.h"
 
@@ -121,5 +118,3 @@ protected:
 };
 
 }
-
-#endif

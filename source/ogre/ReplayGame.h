@@ -1,9 +1,6 @@
-#ifndef _Replay_h_
-#define _Replay_h_
-
+#pragma once
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
-
 #include <OgreVector3.h>
 
 const static int ciRplHdrSize = 1024;
@@ -210,5 +207,3 @@ public:
 	std::vector<TrackFrame> frames;
 	int idLast;  // last index from GetFrame
 };
-
-#endif

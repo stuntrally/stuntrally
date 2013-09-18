@@ -1,6 +1,4 @@
-#ifndef _CARAERO_H
-#define _CARAERO_H
-
+#pragma once
 #include "dbl.h"
 #include "mathvector.h"
 #include "../ogre/common/Defines.h"
@@ -64,5 +62,3 @@ public:
 	MATHVECTOR<Dbl,3> GetLiftVector() const	{	return lift_vector;		}
 	MATHVECTOR<Dbl,3> GetDragVector() const	{	return drag_vector;		}
 };
-
-#endif

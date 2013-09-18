@@ -1,6 +1,4 @@
-#ifndef _CARBRAKE_H
-#define _CARBRAKE_H
-
+#pragma once
 #include "dbl.h"
 #include <iostream>
 #include "../ogre/common/Defines.h"
@@ -61,5 +59,3 @@ public:
 	Dbl GetHandbrakeFactor() const		{	return handbrake_factor;	}
 	void SetHandbrake (const Dbl& value)	{	handbrake = value;	}
 };
-
-#endif

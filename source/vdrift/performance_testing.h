@@ -1,6 +1,4 @@
-#ifndef _PERFORMANCE_TESTING_H
-#define _PERFORMANCE_TESTING_H
-
+#pragma once
 #include "car.h"
 
 //#include <ostream>
@@ -22,5 +20,3 @@ public:
 	PERFORMANCE_TESTING();
 	void Test(const std::string & carpath, class App* pApp, std::ostream & info_output, std::ostream & error_output);
 };
-
-#endif

@@ -1,6 +1,4 @@
-#ifndef _SOUND_H
-#define _SOUND_H
-
+#pragma once
 #include <iostream>
 #include <string>
 #include <list>
@@ -300,5 +298,3 @@ public:
 	bool Enabled() const {  return !disable;  }
 	const SOUNDINFO & GetDeviceInfo() {  return deviceinfo;  }
 };
-
-#endif

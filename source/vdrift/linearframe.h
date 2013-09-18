@@ -1,6 +1,4 @@
-#ifndef _LINEARFRAME_H
-#define _LINEARFRAME_H
-
+#pragma once
 #include "dbl.h"
 #include "mathvector.h"
 
@@ -148,5 +146,3 @@ public:
 		return old_force;
 	}
 };
-
-#endif

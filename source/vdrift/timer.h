@@ -1,6 +1,4 @@
-#ifndef _TIMER_H
-#define _TIMER_H
-
+#pragma once
 #include "configfile.h"
 #include "../ogre/common/Defines.h"
 
@@ -403,5 +401,3 @@ public:
 			car[index].GetDriftScore().SetMaxSpeed(speed);
 	}
 };
-
-#endif

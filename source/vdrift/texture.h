@@ -1,6 +1,4 @@
-#ifndef _TEXTURE_H
-#define _TEXTURE_H
-
+#pragma once
 #include "reseatable_reference.h"
 
 #include <string>
@@ -176,5 +174,3 @@ class TEXTURELIBRARY
 			resourcemap.clear();
 		}
 };
-
-#endif

@@ -1,6 +1,4 @@
-#ifndef _TEXTURELIBRARY_H
-#define _TEXTURELIBRARY_H
-
+#pragma once
 #include <string>
 #include <iostream>
 #include "texture.h"
@@ -65,5 +63,3 @@ private:
 		return f;
 	}
 };
-
-#endif // _TEXTURELIBRARY_H

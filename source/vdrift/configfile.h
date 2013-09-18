@@ -1,6 +1,4 @@
-#ifndef _CONFIGFILE_H
-#define _CONFIGFILE_H
-
+#pragma once
 #include <string>
 #include <map>
 #include <list>
@@ -136,8 +134,4 @@ public:
 	
 	unsigned int GetNumParams() {return variables.GetTotalObjects();}
 	//unsigned int GetNumParams() {return variables.size();}
-	
-	//CONFIGVARIABLE * GetHead() {return vars;}
 };
-
-#endif /* _CONFIGFILE_H */

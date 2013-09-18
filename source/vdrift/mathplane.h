@@ -1,6 +1,4 @@
-#ifndef _MATHPLANE_H
-#define _MATHPLANE_H
-
+#pragma once
 //#include <vector>
 //#include <cassert>
 //#include <cmath>
@@ -138,5 +136,3 @@ std::ostream & operator << (std::ostream &os, const MATHPLANE <T> & v)
 	os << v[3];// << std::endl;
 	return os;
 }
-
-#endif

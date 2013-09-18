@@ -1,6 +1,4 @@
-#ifndef _BulletCollision_h_
-#define _BulletCollision_h_
-
+#pragma once
 #include <vector>
 #include <string>
 #include <map>
@@ -44,6 +42,3 @@ public:
 	bool LoadXml();
 	const BltCollision* Find(std::string mesh);
 };
-
-
-#endif

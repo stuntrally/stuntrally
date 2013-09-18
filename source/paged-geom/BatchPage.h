@@ -11,9 +11,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 /// \file BatchPage.h
 /// \brief BatchPage is an extension to PagedGeometry which displays entities as static geometry.
 //-------------------------------------------------------------------------------------
-#ifndef __BatchPage_H__
-#define __BatchPage_H__
-
+#pragma once
 #include "PagedGeometry.h"
 #include "BatchedGeometry.h"
 
@@ -105,5 +103,3 @@ namespace Forests
    };
 
 }
-
-#endif

@@ -1,6 +1,4 @@
-#ifndef _SIGNALPROCESSING_H
-#define _SIGNALPROCESSING_H
-
+#pragma once
 //#include <ostream>
 //#include <vector>
 
@@ -96,5 +94,3 @@ class PID
 };
 
 }
-
-#endif

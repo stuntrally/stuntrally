@@ -1,6 +1,4 @@
-#ifndef _DERIVED_H
-#define _DERIVED_H
-
+#pragma once
 //#include <memory>
 //#include <cassert>
 
@@ -36,5 +34,3 @@ class DERIVED
 			return *this;
 		}
 };
-
-#endif

@@ -1,6 +1,4 @@
-#ifndef _RANDOM_H
-#define _RANDOM_H
-
+#pragma once
 #include <stdio.h>
 
 #include <stdlib.h>
@@ -32,5 +30,3 @@ public:
 
 	double Get() {return (double) rand()/RAND_MAX;}
 };
-
-#endif

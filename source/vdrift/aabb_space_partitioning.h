@@ -1,6 +1,4 @@
-#ifndef _AABB_SPACE_PARTITIONING_H
-#define _AABB_SPACE_PARTITIONING_H
-
+#pragma once
 #include "aabb.h"
 #include "mathvector.h"
 
@@ -288,5 +286,3 @@ class AABB_SPACE_PARTITIONING_NODE
 			}
 		}
 };
-
-#endif

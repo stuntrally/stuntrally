@@ -1,6 +1,4 @@
-#ifndef _FolowCamera_h_
-#define _FolowCamera_h_
-
+#pragma once
 #include <OgreVector3.h>
 #include <OgreQuaternion.h>
 #include <OgreString.h>
@@ -92,5 +90,3 @@ public:
 	Ogre::String sFmt_Follow, sFmt_Free, sFmt_ExtAng, sFmt_Arena, sFmt_Car;
 	void updFmtTxt();
 };
-
-#endif

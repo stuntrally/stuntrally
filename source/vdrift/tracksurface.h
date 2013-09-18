@@ -1,6 +1,4 @@
-#ifndef _TRACKSURFACE_H
-#define _TRACKSURFACE_H
-
+#pragma once
 #include <string>
 #include <assert.h>
 #include "cartire.h"
@@ -54,5 +52,3 @@ public:
 		return &s;
 	}
 };
-
-#endif //_TRACKSURFACE_H

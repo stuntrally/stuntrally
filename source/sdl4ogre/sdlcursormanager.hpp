@@ -1,6 +1,4 @@
-#ifndef _SDL4OGRE_CURSORMANAGER_H
-#define _SDL4OGRE_CURSORMANAGER_H
-
+#pragma once
 #include <SDL.h>
 
 #include "cursormanager.hpp"
@@ -38,5 +36,3 @@ namespace SFO
         bool mCursorVisible;
     };
 }
-
-#endif

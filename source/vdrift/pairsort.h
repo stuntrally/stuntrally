@@ -1,6 +1,4 @@
-#ifndef _PAIRSORT_H
-#define _PAIRSORT_H
-
+#pragma once
 #include <map>
 
 template <typename T>
@@ -22,5 +20,3 @@ class PAIRSORTER_SECOND
 		return p1.second < p2.second;
 	}
 };
-
-#endif

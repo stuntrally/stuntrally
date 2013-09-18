@@ -1,6 +1,4 @@
-#ifndef _FluidsXml_h_
-#define _FluidsXml_h_
-
+#pragma once
 #include <string>
 #include <vector>
 #include <map>
@@ -39,5 +37,3 @@ public:
 	//FluidsXml();  void Default();
 	bool LoadXml(std::string file);
 };
-
-#endif

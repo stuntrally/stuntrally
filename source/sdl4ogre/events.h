@@ -1,6 +1,4 @@
-#ifndef _SFO_EVENTS_H
-#define _SFO_EVENTS_H
-
+#pragma once
 #include <SDL.h>
 
 
@@ -74,5 +72,3 @@ public:
 };
 
 }
-
-#endif

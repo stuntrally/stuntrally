@@ -1,6 +1,4 @@
-#ifndef _BaseApp_h_
-#define _BaseApp_h_
-
+#pragma once
 #include "../ogre/common/QTimer.h"
 #include "settings.h"
 
@@ -150,4 +148,3 @@ public:
 	inline bool bEdit() {  return !bMoveCam && !bGuiFocus;  }
 	
 };
-#endif

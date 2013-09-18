@@ -1,6 +1,4 @@
-#ifndef _TERRAINMATERIAL_H
-#define _TERRAINMATERIAL_H
-
+#pragma once
 #include "OgreTerrainPrerequisites.h"
 #include "OgreTerrainMaterialGenerator.h"
 #include "OgreGpuProgramParams.h"
@@ -24,13 +22,11 @@ public:
 		virtual bool isVertexCompressionSupported() const { return false; }
 
 		virtual Ogre::MaterialPtr generate(const Ogre::Terrain* terrain);
-
 		virtual Ogre::MaterialPtr generateForCompositeMap(const Ogre::Terrain* terrain);
 
 		virtual Ogre::uint8 getMaxLayers(const Ogre::Terrain* terrain) const;
 
 		virtual void updateParams(const Ogre::MaterialPtr& mat, const Ogre::Terrain* terrain);
-
 		virtual void updateParamsForCompositeMap(const Ogre::MaterialPtr& mat, const Ogre::Terrain* terrain);
 
 		virtual void requestOptions(Ogre::Terrain* terrain);
@@ -47,6 +43,3 @@ public:
 
 	TerrainMaterial();
 };
-
-
-#endif

@@ -25,9 +25,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ------------------------------------------------------- */
 
 //! @todo add mouse wheel support
-
-#ifndef _InputControlSystem_Prerequisites_H_
-#define _InputControlSystem_Prerequisites_H_
+#pragma once
 
 /// Include external headers
 #include <sstream>
@@ -105,5 +103,3 @@ namespace ICS
 	class DetectingBindingListener;
 	class InputControlSystemLog;
 }
-
-#endif

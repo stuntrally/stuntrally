@@ -1,6 +1,4 @@
-#ifndef _ChampsXml_h_
-#define _ChampsXml_h_
-
+#pragma once
 #include <string>
 #include <vector>
 #include <map>
@@ -76,5 +74,3 @@ public:
 	std::vector<ProgressChamp> chs;
 	bool LoadXml(std::string file), SaveXml(std::string file);
 };
-
-#endif

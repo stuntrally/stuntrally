@@ -1,6 +1,4 @@
-#ifndef _MODEL_H
-#define _MODEL_H
-
+#pragma once
 #include <string>
 #include <iostream>
 #include <cassert>
@@ -116,5 +114,3 @@ public:
 		return output;
 	}
 };
-
-#endif

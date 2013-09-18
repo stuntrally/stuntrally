@@ -7,10 +7,7 @@ Permission is granted to anyone to use this software for any purpose, including 
     2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
     3. This notice may not be removed or altered from any source distribution.
 -------------------------------------------------------------------------------------*/
-
-#ifndef __GrassLoader_H__
-#define __GrassLoader_H__
-
+#pragma once
 #include "PagedGeometry.h"
 #include "PropertyMaps.h"
 #include "RandomTable.h"
@@ -593,5 +590,3 @@ private:
 
 
 }
-
-#endif

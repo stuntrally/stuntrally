@@ -1,6 +1,4 @@
-#ifndef _CARENGINE_H
-#define _CARENGINE_H
-
+#pragma once
 #include <iostream>
 #include <map>
 #include <fstream>
@@ -169,5 +167,3 @@ public:
 		return !stalled;
 	}
 };
-
-#endif

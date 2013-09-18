@@ -1,8 +1,5 @@
-#ifndef _CONTAINERALGORITHM_H
-#define _CONTAINERALGORITHM_H
-
+#pragma once
 //wrap a bunch of the standard library algorithms to work on whole containers
-
 #include <algorithm>
 #include <functional>
 #include <vector>
@@ -107,5 +104,3 @@ namespace calgo
 		}
 	}
 }
-
-#endif

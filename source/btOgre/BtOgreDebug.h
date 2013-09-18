@@ -4,10 +4,7 @@
  *		Created:  27/12/2008 01:45:56 PM
  *		 Author:  Nikhilesh (nikki)
  * =====================================================================================*/
-
-#ifndef _BtOgreShapes_H_
-#define _BtOgreShapes_H_
-
+#pragma once
 #include "btBulletDynamicsCommon.h"
 #include "DynamicLines.h"
 
@@ -81,5 +78,3 @@ public:
 };
 
 }
-
-#endif

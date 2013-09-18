@@ -1,6 +1,4 @@
-#ifndef _Settings_h_
-#define _Settings_h_
-
+#pragma once
 #include "../vdrift/configfile.h"
 
 
@@ -81,5 +79,3 @@ public:
 	void Serialize(bool write, CONFIGFILE & config);
 	void Load(std::string sfile), Save(std::string sfile);
 };
-
-#endif

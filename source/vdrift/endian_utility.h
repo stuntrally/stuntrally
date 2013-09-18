@@ -1,5 +1,4 @@
-#ifndef _ENDIAN_UTILITY_H
-#define _ENDIAN_UTILITY_H
+#pragma once
 
 #ifdef __BIG_ENDIAN__
 	#define ENDIAN_SWAP_16(A)  ((((uint16_t)(A) & 0xff00) >> 8) | \
@@ -35,6 +34,4 @@
 	#define ENDIAN_SWAP_32(A)  (A)
 	#define ENDIAN_SWAP_64(A)  (A)
 	#define ENDIAN_SWAP_FLOAT(A)  (A)
-#endif
-
 #endif

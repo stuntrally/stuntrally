@@ -1,6 +1,4 @@
-#ifndef _OgreGame_h_
-#define _OgreGame_h_
-
+#pragma once
 #include "BaseApp.h"
 #include "common/Gui_Popup.h"
 #include "common/SceneXml.h"
@@ -273,5 +271,3 @@ public:
 	bool bPerfTest;  EPerfTest iPerfTestStage;
 	void PerfLogVel(class CAR* pCar, float time);
 };
-
-#endif

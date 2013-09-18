@@ -5,10 +5,7 @@
  *		Created:  27/12/2008 03:40:56 AM
  *		 Author:  Nikhilesh (nikki)
  * =====================================================================================*/
-
-#ifndef _BtOgreGP_H_
-#define _BtOgreGP_H_
-
+#pragma once
 //#include "btBulletDynamicsCommon.h"
 #include "BtOgreDebug.h"
 
@@ -50,5 +47,3 @@ class RigidBodyState : public btMotionState
 };
 
 }
-
-#endif

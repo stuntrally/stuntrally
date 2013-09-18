@@ -1,6 +1,4 @@
-#ifndef _CAR_H
-#define _CAR_H
-
+#pragma once
 #include "dbl.h"
 #include "cardynamics.h"
 #include "model_joe03.h"
@@ -349,5 +347,3 @@ public:
 	int iCamNext;
 	bool bLastChk,bLastChkOld, bRewind;
 };
-
-#endif

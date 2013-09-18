@@ -1,6 +1,4 @@
-#ifndef _LOGGING_H
-#define _LOGGING_H
-
+#pragma once
 //#include <iostream>
 //#include <string>
 
@@ -186,5 +184,3 @@ namespace logging
 			}
 	};
 }
-
-#endif

@@ -1,6 +1,4 @@
-#ifndef _MODEL_OBJ_H
-#define _MODEL_OBJ_H
-
+#pragma once
 #include "model.h"
 
 #include <string>
@@ -18,5 +16,3 @@ public:
 	virtual bool CanSave() const {return true;}
 	virtual bool Save(const std::string & strFileName, std::ostream & error_output) const;
 };
-
-#endif

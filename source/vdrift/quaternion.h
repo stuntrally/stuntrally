@@ -1,6 +1,4 @@
-#ifndef _QUATERNION_H
-#define _QUATERNION_H
-
+#pragma once
 #include <vector>
 #include <cassert>
 //#include <cmath>
@@ -457,5 +455,3 @@ std::ostream & operator << (std::ostream &os, const QUATERNION<T> & v)
 	os << "x=" << v[0] << ", y=" << v[1] << ", z=" << v[2] << ", w=" << v[3];
 	return os;
 }
-
-#endif

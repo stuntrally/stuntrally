@@ -1,6 +1,4 @@
-#ifndef _Localization_h_
-#define _Localization_h_
-
+#pragma once
 #include <string>
 #include <locale.h>
 #include <boost/algorithm/string.hpp>
@@ -48,5 +46,3 @@ static std::string getSystemLanguage()
 	}
 	return locstr;
 }
-
-#endif

@@ -1,6 +1,4 @@
-#ifndef _CARSUSPENSION_H
-#define _CARSUSPENSION_H
-
+#pragma once
 #include <iostream>
 #include <cmath>
 
@@ -89,5 +87,3 @@ public:
 	void SetDamperFactorPoints(std::vector <std::pair <Dbl, Dbl> > & curve);
 	void SetSpringFactorPoints(std::vector <std::pair <Dbl, Dbl> > & curve);
 };
-
-#endif

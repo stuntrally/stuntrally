@@ -1,6 +1,4 @@
-#ifndef _QTimer_H_
-#define _QTimer_H_
-
+#pragma once
 #include <OgrePlatform.h>
 
 #if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
@@ -27,5 +25,3 @@ class QTimer
 		QTimer();
 		bool update();
 };
-
-#endif

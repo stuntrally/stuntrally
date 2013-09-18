@@ -1,6 +1,4 @@
-#ifndef _MATRIX4_H
-#define _MATRIX4_H
-
+#pragma once
 //#include <iostream>
 //#include <cstring>
 
@@ -192,5 +190,3 @@ class MATRIX4
 			return Inv;
 		}
 };
-
-#endif

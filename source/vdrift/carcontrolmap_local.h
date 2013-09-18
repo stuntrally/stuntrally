@@ -1,6 +1,4 @@
-#ifndef _CARCONTROLMAP_LOCAL_H
-#define _CARCONTROLMAP_LOCAL_H
-
+#pragma once
 #include "cardefs.h"
 #include <vector>
 
@@ -31,5 +29,3 @@ public:
 		bool forceBrake=false,  // for race countdown
 		bool bPerfTest=false, EPerfTest iPerfTestStage=PT_StartWait);  // perf test
 };
-
-#endif

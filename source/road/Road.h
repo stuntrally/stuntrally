@@ -1,6 +1,4 @@
-#ifndef _SplineRoad_h_
-#define _SplineRoad_h_
-
+#pragma once
 #include "SplineBase.h"
 
 #include <vector>
@@ -198,5 +196,3 @@ public:
 	// params for editor tool: align terrain to road
 	float edWadd,edWmul;  // const added width and width multipler for whole road
 };
-
-#endif

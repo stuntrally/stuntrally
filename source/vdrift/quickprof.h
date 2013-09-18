@@ -26,9 +26,7 @@
 // Please visit the project website (http://quickprof.sourceforge.net) 
 // for usage instructions.
 
-#ifndef _QUICK_PROF_H_
-#define _QUICK_PROF_H_
-
+#pragma once
 //#include <iostream>
 //#include <fstream>
 //#include <sstream>
@@ -904,5 +902,3 @@ namespace quickprof
 		return suffix;
 	}
 };
-
-#endif

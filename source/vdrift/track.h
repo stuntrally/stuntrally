@@ -1,6 +1,4 @@
-#ifndef _TRACK_H
-#define _TRACK_H
-
+#pragma once
 #include <memory>
 
 #include "model_joe03.h"
@@ -218,5 +216,3 @@ private:
 	bool loaded;
 	bool cull;
 };
-
-#endif

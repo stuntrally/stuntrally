@@ -1,6 +1,4 @@
-#ifndef _ROTATIONALFRAME_H
-#define _ROTATIONALFRAME_H
-
+#pragma once
 #include "dbl.h"
 #include "quaternion.h"
 #include "mathvector.h"
@@ -206,5 +204,3 @@ public:
 		return orientation;
 	}
 };
-
-#endif

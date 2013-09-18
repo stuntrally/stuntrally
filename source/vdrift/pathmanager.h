@@ -1,6 +1,4 @@
-#ifndef _PATHMANAGER_H
-#define _PATHMANAGER_H
-
+#pragma once
 #ifdef unix
 #include <dirent.h>
 #endif
@@ -53,5 +51,3 @@ public:
 
 	static bool CreateDir(const std::string& path, std::ostream & error_output);
 };
-
-#endif

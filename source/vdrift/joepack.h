@@ -1,6 +1,4 @@
-#ifndef _JOEPACK_H
-#define _JOEPACK_H
-
+#pragma once
 #include <string>
 #include <map>
 #include <fstream>
@@ -35,5 +33,3 @@ public:
 	
 	const std::map <std::string, JOEPACK_FADATA> & GetFAT() const {return fat;}
 };
-
-#endif

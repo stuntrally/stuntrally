@@ -1,6 +1,4 @@
-#ifndef _BaseApp_h_
-#define _BaseApp_h_
-
+#pragma once
 #include <OgreVector3.h>
 #include <OgreFrameListener.h>
 #include <OgreWindowEventUtilities.h>
@@ -210,5 +208,3 @@ protected:
 	boost::scoped_ptr<P2PGameClient> mClient;
 	LobbyState mLobbyState;
 };
-
-#endif

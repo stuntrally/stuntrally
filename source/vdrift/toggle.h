@@ -1,6 +1,4 @@
-#ifndef _TOGGLE_H
-#define _TOGGLE_H
-
+#pragma once
 #include <ostream>
 
 class TOGGLE
@@ -25,5 +23,3 @@ public:
 
 	void Tick();
 };
-
-#endif

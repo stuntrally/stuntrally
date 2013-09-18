@@ -1,6 +1,4 @@
-#ifndef _BUCKETED_HASHMAP_H
-#define _BUCKETED_HASHMAP_H
-
+#pragma once
 #include <vector>
 #include <map>
 #include <cassert>
@@ -375,5 +373,3 @@ public:
 		return longest;
 	}
 };
-
-#endif

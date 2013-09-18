@@ -1,6 +1,4 @@
-#ifndef _MODEL_JOE03_H
-#define _MODEL_JOE03_H
-
+#pragma once
 #include "model.h"
 
 #include <string>
@@ -43,5 +41,3 @@ private:
 	// This reads in the data from the MD2 file and stores it in the member variable
 	void ReadData(FILE * m_FilePointer, JOEPACK * pack, JOEObject & Object);
 };
-
-#endif

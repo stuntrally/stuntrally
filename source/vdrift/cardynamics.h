@@ -1,6 +1,4 @@
-#ifndef _CARDYNAMICS_H
-#define _CARDYNAMICS_H
-
+#pragma once
 #include "dbl.h"
 #include "mathvector.h"
 #include "quaternion.h"
@@ -274,5 +272,3 @@ public:
 		
 	char IsBraking() const;
 };
-
-#endif

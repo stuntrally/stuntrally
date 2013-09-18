@@ -1,6 +1,4 @@
-#ifndef _TracksXml_h_
-#define _TracksXml_h_
-
+#pragma once
 
 struct Date
 {
@@ -125,6 +123,3 @@ struct CarL
 	const CarInfo* ci;
 	//const class CGui* pA;
 };
-
-
-#endif

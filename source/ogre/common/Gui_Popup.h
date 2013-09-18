@@ -1,8 +1,5 @@
-#ifndef _Gui_Popup_h_
-#define _Gui_Popup_h_
-
+#pragma once
 #include <MyGUI.h>
-
 #include <MyGUI_OgrePlatform.h>
 #include "MyGUI_D3D11.h"
 
@@ -54,5 +51,3 @@ protected:
 	MyGUI::WindowPtr mWnd;
 	PopupDelegates mDelegates;
 };
-
-#endif

@@ -1,6 +1,4 @@
-#ifndef _ROADSTRIP_H
-#define _ROADSTRIP_H
-
+#pragma once
 #include "roadpatch.h"
 #include "aabb_space_partitioning.h"
 #include "optional.h"
@@ -46,5 +44,3 @@ private:
 	
 	void GenerateSpacePartitioning();
 };
-
-#endif // _ROADSTRIP_H

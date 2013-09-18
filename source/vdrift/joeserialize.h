@@ -1,6 +1,4 @@
-#ifndef _JOESERIALIZE_H
-#define _JOESERIALIZE_H
-
+#pragma once
 #include <list>
 #include <deque>
 #include <map>
@@ -1520,5 +1518,3 @@ void LoadObjectFromFileOrCreateDefault(const std::string & path, T & object, std
 }
 
 }
-
-#endif

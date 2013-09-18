@@ -1,6 +1,4 @@
-#ifndef _RESEATABLE_REFERENCE_H
-#define _RESEATABLE_REFERENCE_H
-
+#pragma once
 #include <cassert>
 #include <cstdlib>
 
@@ -43,5 +41,3 @@ class reseatable_reference
 		
 		void clear() {ptr = NULL;}
 };
-
-#endif

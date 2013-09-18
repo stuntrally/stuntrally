@@ -12,10 +12,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 //ImpostorPage.h
 //ImposterPage is an extension to PagedGeometry which displays entities as imposters.
 //-------------------------------------------------------------------------------------
-
-#ifndef __ImpostorPage_H__
-#define __ImpostorPage_H__
-
+#pragma once
 #include "PagedGeometry.h"
 #include "StaticBillboardSet.h"
 
@@ -413,5 +410,3 @@ inline void ImpostorBatch::addBillboard(const Ogre::Vector3 &position, const Ogr
 }
 
 }  // end namespace
-
-#endif

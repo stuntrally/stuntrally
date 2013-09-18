@@ -1,6 +1,4 @@
-#ifndef __MYGUI_SLIDER_H__
-#define __MYGUI_SLIDER_H__
-
+#pragma once
 #include "MyGUI_Prerequest.h"
 #include "MyGUI_Widget.h"
 
@@ -59,5 +57,3 @@ namespace MyGUI
 	};
 
 }
-
-#endif

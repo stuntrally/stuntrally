@@ -1,6 +1,4 @@
-#ifndef _OIS_SDL_COMPAT_H
-#define _OIS_SDL_COMPAT_H
-
+#pragma once
 #include <SDL_events.h>
 #include <SDL_types.h>
 
@@ -156,4 +154,3 @@ enum KeyCode
     KC_MEDIASELECT = 0xED     // Media Select
 };
 }
-#endif

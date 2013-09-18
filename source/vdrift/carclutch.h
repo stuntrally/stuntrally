@@ -1,6 +1,4 @@
-#ifndef _CARCLUTCH_H
-#define _CARCLUTCH_H
-
+#pragma once
 #include "dbl.h"
 #include <iostream>
 #include "../ogre/common/Defines.h"
@@ -51,5 +49,3 @@ public:
 	
 	Dbl GetLastTorque() const	{	return last_torque;		}
 };
-
-#endif

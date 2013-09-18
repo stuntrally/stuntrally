@@ -1,6 +1,4 @@
-#ifndef _SplineBase_h_
-#define _SplineBase_h_
-
+#pragma once
 #include <OgreVector3.h>
 
 
@@ -89,5 +87,3 @@ protected:
 	std::deque<SplinePoint> mP;  // points
 	static std::deque<SplinePoint> mPc;  // copy points
 };
-
-#endif

@@ -1,6 +1,4 @@
-#ifndef _COLLISION_WORLD_H
-#define _COLLISION_WORLD_H
-
+#pragma once
 #include "btBulletCollisionCommon.h"
 #include "btBulletDynamicsCommon.h"
 //#include "btAlignedObjectArray.h"
@@ -99,5 +97,3 @@ public:
 	btCollisionShape * AddMeshShape(const MODEL & model);
 	btIndexedMesh GetIndexedMesh(const MODEL & model);
 };
-
-#endif // _COLLISION_WORLD_H

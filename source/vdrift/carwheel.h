@@ -1,6 +1,4 @@
-#ifndef _CARWHEEL_H
-#define _CARWHEEL_H
-
+#pragma once
 #include "dbl.h"
 #include <iostream>
 #include "mathvector.h"
@@ -129,5 +127,3 @@ public:
 
 	void SetCamberDeg (const Dbl& value)	{	camber_deg = value;		}
 };
-
-#endif

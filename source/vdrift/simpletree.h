@@ -1,6 +1,4 @@
-#ifndef _SIMPLETREE_H
-#define _SIMPLETREE_H
-
+#pragma once
 //#include <map>
 //#include <iostream>
 
@@ -37,6 +35,3 @@ public:
 	
 	void DebugPrint() {DebugPrint(0,cout);}
 };
-
-
-#endif

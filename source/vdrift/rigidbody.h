@@ -1,6 +1,4 @@
-#ifndef _RIGIDBODY_H
-#define _RIGIDBODY_H
-
+#pragma once
 #include "dbl.h"
 #include "linearframe.h"
 #include "rotationalframe.h"
@@ -83,5 +81,3 @@ public:
 		rotation.ApplyTorque(torque);
 	}
 };
-
-#endif

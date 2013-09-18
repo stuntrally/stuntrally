@@ -1,6 +1,4 @@
-#ifndef _GraphView_H_
-#define _GraphView_H_
-
+#pragma once
 #include <vector>
 #include <OgreString.h>
 #include <MyGUI_Colour.h>
@@ -68,5 +66,3 @@ protected:
 	MyGUI::TextBox* txt;
 	float txPosX;  int txH, txAlignY;  // title text pos, height
 };
-
-#endif

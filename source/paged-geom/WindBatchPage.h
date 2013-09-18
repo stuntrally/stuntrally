@@ -10,9 +10,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 
 /// \file WindBatchPage.h
 /// \brief WindBatchPage is child of BatchPage to include a wind effect.
-#ifndef __WindBatchPage_H__
-#define __WindBatchPage_H__
-
+#pragma once
 #include <OgrePrerequisites.h>
 #include <OgreStringConverter.h>
 
@@ -66,5 +64,3 @@ namespace Forests
    };
 
 }
-
-#endif

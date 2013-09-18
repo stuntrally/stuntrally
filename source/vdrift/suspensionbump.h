@@ -1,5 +1,4 @@
-#ifndef _SUSPENSIONBUMPDETECTION_H
-#define _SUSPENSIONBUMPDETECTION_H
+#pragma once
 
 class CAR;
 
@@ -44,4 +43,3 @@ private:
 	float settletimer;
 	float dpstart, dpend;
 };
-#endif // _SUSPENSIONBUMPDETECTION_H

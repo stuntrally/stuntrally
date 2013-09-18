@@ -96,10 +96,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 //# pragma warning(disable: 4244)
 #endif //_MSC_VER
 
-
-#ifndef __PagedGeometry_H__
-#define __PagedGeometry_H__
-
+#pragma once
 #include <limits> // numeric_limits<>
 #include <memory>
 
@@ -1642,8 +1639,3 @@ template <class PageType> inline void GeometryPageManager::initPages(const TBoun
 
 
 }
-
-
-
-
-#endif

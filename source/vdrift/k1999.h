@@ -6,10 +6,7 @@
 // This is an adaption of Remi Coulom's K1999 driver for TORCS
 //
 ////////////////////////////////////////////////////////////////////////////
-
-#ifndef _K1999_H
-#define _K1999_H
-
+#pragma once
 #include <vector>
 //#include <iostream>
 //#include <fstream>
@@ -45,5 +42,3 @@ public:
 	void CalcRaceLine(); 
 	void UpdateRoadStrip(ROADSTRIP* road);
 };
-
-#endif //_K1999_H

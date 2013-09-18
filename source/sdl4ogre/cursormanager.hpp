@@ -1,6 +1,4 @@
-#ifndef _SDL4OGRE_CURSOR_MANAGER_H
-#define _SDL4OGRE_CURSOR_MANAGER_H
-
+#pragma once
 #include <SDL_types.h>
 #include <string>
 
@@ -28,5 +26,3 @@ public:
     virtual void setEnabled(bool enabled) = 0;
 };
 }
-
-#endif

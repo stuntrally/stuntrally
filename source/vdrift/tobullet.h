@@ -1,6 +1,4 @@
-#ifndef _TOBULLET_H
-#define _TOBULLET_H
-
+#pragma once
 #include "mathvector.h"
 #include "quaternion.h"
 #include "matrix3.h"
@@ -37,5 +35,3 @@ template <typename T> QUATERNION<T> ToMathQuaternion(const btQuaternion & q)
 {
 	return QUATERNION<T> (q.x(), q.y(), q.z(), q.w());
 }
-
-#endif // _TOBULLET_H

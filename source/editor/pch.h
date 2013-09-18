@@ -1,5 +1,4 @@
-#ifndef __PCH_H__
-#define __PCH_H__
+#pragma once
 
 //  this is the precompiled header file for VS, only for Windows build
 #ifdef aa_MSC_VER
@@ -62,5 +61,4 @@
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
 
-#endif
 #endif

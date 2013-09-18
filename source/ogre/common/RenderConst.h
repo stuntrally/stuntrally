@@ -1,6 +1,4 @@
-#ifndef _Render_Const_h_
-#define _Render_Const_h_
-
+#pragma once
 #include <OgreRenderQueue.h>
 
 
@@ -52,5 +50,3 @@ const Ogre::uint32
 
 	RV_MaskAll = 511,
 	RV_MaskPrvCam = 512;
-
-#endif

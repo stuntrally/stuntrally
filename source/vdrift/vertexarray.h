@@ -1,6 +1,4 @@
-#ifndef _VERTEXARRAY_H
-#define _VERTEXARRAY_H
-
+#pragma once
 #include <vector>
 #include <cassert>
 #include <cstring>
@@ -178,5 +176,3 @@ public:
 	void Translate(float x, float y, float z);
 	void Rotate(float a, float x, float y, float z);
 };
-
-#endif

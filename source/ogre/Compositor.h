@@ -1,8 +1,5 @@
 // adapted from OGRE compositor sample
-
-#ifndef _HelperLogics_H__
-#define _HelperLogics_H__
-
+#pragma once
 #include "CGame.h"
 
 #include <OgrePrerequisites.h>
@@ -131,4 +128,3 @@ public:
 private:
 	BaseApp * mApp;
 };
-#endif

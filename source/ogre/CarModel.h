@@ -2,10 +2,7 @@
  * CarModel is the "Ogre" part of the car.
  * It is used to put meshes together, particle emitters, etc.
  */
- 
-#ifndef _CarModel_H_
-#define _CarModel_H_
- 
+#pragma once
 #include <OgreVector2.h>
 #include <OgreVector3.h>
 #include <OgreQuaternion.h>
@@ -219,5 +216,3 @@ public:
     virtual void requestedConfiguration (sh::MaterialInstance* m, const std::string& configuration);
     virtual void createdConfiguration (sh::MaterialInstance* m, const std::string& configuration);
 };
-
-#endif

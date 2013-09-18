@@ -1,5 +1,4 @@
-#ifndef _NUMPROCESSORS_H
-#define _NUMPROCESSORS_H
+#pragma once
 
 namespace NUMPROCESSORS
 {
@@ -69,5 +68,3 @@ namespace NUMPROCESSORS
 	}
 
 }
-
-#endif

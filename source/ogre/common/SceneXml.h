@@ -1,6 +1,4 @@
-#ifndef _SceneXml_h_
-#define _SceneXml_h_
-
+#pragma once
 #include <OgreCommon.h>
 #include <OgreVector3.h>
 #include <OgreVector2.h>
@@ -185,5 +183,3 @@ public:
 	class GAME* pGame;  // for all surfaces by name
 	bool LoadXml(Ogre::String file, bool bTer = true), SaveXml(Ogre::String file);
 };
-
-#endif

@@ -1,6 +1,4 @@
-#ifndef _ChallengesXml_h_
-#define _ChallengesXml_h_
-
+#pragma once
 #include <string>
 #include <vector>
 #include <map>
@@ -105,5 +103,3 @@ public:
 	std::vector<ProgressChall> chs;
 	bool LoadXml(std::string file), SaveXml(std::string file);
 };
-
-#endif

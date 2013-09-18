@@ -1,6 +1,4 @@
-#ifndef _OPTIONAL_H
-#define _OPTIONAL_H
-
+#pragma once
 #include <cassert>
 
 template <typename T>
@@ -22,5 +20,3 @@ class optional
 		const T get() const {assert(is_initialized());return value;}
 		T get_or_default(T thedefault) {return is_initialized()?get():thedefault;}
 };
-
-#endif

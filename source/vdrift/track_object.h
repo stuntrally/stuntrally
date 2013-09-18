@@ -1,6 +1,4 @@
-#ifndef _TRACK_OBJECT_H
-#define _TRACK_OBJECT_H
-
+#pragma once
 class MODEL;
 class TEXTURE_GL;
 class TRACKSURFACE;
@@ -29,5 +27,3 @@ private:
 	//const TRACKSURFACE * surface; //old
 	bool surface;
 };
-
-#endif

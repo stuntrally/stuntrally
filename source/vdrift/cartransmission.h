@@ -1,6 +1,4 @@
-#ifndef _CARTRANSMISSION_H
-#define _CARTRANSMISSION_H
-
+#pragma once
 #include "dbl.h"
 #include <iostream>
 #include "../ogre/common/Defines.h"
@@ -60,5 +58,3 @@ public:
 	///get the rotational speed of the clutch given the rotational speed of the driveshaft (const)
 	Dbl GetClutchSpeed(Dbl driveshaft_speed) const;
 };
-
-#endif

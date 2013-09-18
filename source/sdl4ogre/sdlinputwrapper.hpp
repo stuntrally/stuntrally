@@ -1,6 +1,4 @@
-#ifndef _SDL4OGRE_SDLINPUTWRAPPER_H
-#define _SDL4OGRE_SDLINPUTWRAPPER_H
-
+#pragma once
 #include <SDL_events.h>
 
 #include <OgreRenderWindow.h>
@@ -73,5 +71,3 @@ namespace SFO
     };
 
 }
-
-#endif

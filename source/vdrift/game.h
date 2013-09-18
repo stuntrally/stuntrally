@@ -1,6 +1,4 @@
-#ifndef _GAME_H
-#define _GAME_H
-
+#pragma once
 #include "dbl.h"
 #include "settings.h"
 #include "pathmanager.h"
@@ -134,5 +132,3 @@ public:
 	void Start(std::list <std::string> & args);
 	void ReloadSimData();
 };
-
-#endif

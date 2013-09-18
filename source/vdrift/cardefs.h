@@ -1,5 +1,4 @@
-#ifndef _CARINPUT_H
-#define _CARINPUT_H
+#pragma once
 
 enum WHEEL_POSITION
 {
@@ -44,6 +43,4 @@ const int Ncrashsounds = 12, Nwatersounds = 3;
 #ifdef _WIN32
 static bool isnan(float number)  {  return (number != number);  }
 static bool isnan(double number) {  return (number != number);  }
-#endif
-
 #endif
