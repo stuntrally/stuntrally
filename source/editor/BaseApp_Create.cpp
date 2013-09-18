@@ -489,7 +489,6 @@ void BaseApp::baseInitGui()
 
 	MyGUI::FactoryManager::getInstance().registerFactory<ResourceImageSetPointerFix>("Resource", "ResourceImageSetPointer");
 	MyGUI::ResourceManager::getInstance().load("core.xml");
-	MyGUI::ResourceManager::getInstance().load("MessageBoxResources.xml");
 
 	MyGUI::PointerManager::getInstance().eventChangeMousePointer +=
 			MyGUI::newDelegate(this, &BaseApp::onCursorChange);

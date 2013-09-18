@@ -7,16 +7,15 @@
 #include "common/Slider.h"
 #include "common/SliderValue.h"
 #include "common/Gui_Popup.h"
-
-#include "common/MessageBox/MessageBox.h"
+#include <MyGUI.h>
+//#include "common/MessageBox/MessageBox.h"
 #include "common/MessageBox/MessageBoxStyle.h"
 
 #include "../network/networkcallbacks.hpp"
-#include <MyGUI.h>
 
 
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;  }
-namespace MyGUI  {  class MultiList2;  class Slider;  }
+namespace MyGUI  {  class MultiList2;  class Slider;  class Message;  }
 class Scene;
 class SplineRoad;
 class GAME;

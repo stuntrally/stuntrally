@@ -9,5 +9,6 @@
 	<List file="core_layers.xml"/>
 	<List file="core_language.xml"/>
 	<List file="core_settings.xml"/>
+	<List file="MessageBoxIcons.xml"/>
 	
 </MyGUI>

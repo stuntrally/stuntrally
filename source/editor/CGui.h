@@ -1,10 +1,5 @@
 #pragma once
 #include "BaseApp.h"
-#include "../ogre/common/MessageBox/MessageBox.h"
-#include "../ogre/common/MessageBox/MessageBoxStyle.h"
-
-//#include "../vdrift/mathvector.h"
-//#include "../vdrift/quaternion.h"
 #include "../vdrift/tracksurface.h"
 #include "../vdrift/track.h"
 #include "../ogre/common/Gui_Def.h"
@@ -15,6 +10,8 @@
 #include <OgreString.h>
 
 #include <MyGUI.h>
+//#include "../ogre/common/MessageBox/MessageBox.h"
+#include "../ogre/common/MessageBox/MessageBoxStyle.h"
 #include "../ogre/common/RenderBoxScene.h"
 
 

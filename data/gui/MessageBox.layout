@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowC" position="20 20 170 135" layer="Info" name="Root">
+    <Widget type="Window" skin="WindowC" position="20 20 170 135" layer="Popup" name="Root">
         <Property key="Snap" value="true"/>
         <UserString key="ButtonSkin" value="Button"/>
         <Widget type="ImageBox" skin="ImageBox" position="5 5 50 50" name="Icon">
