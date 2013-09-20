@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "PropertySortModel.hpp"
 
 #include "Query.hpp"

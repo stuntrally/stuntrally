@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "NewMaterialDialog.hpp"
 #include "ui_newmaterialdialog.h"
 

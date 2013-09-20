@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Platform.hpp"
 
 #include <stdexcept>

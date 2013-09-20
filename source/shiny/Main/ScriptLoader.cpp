@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "ScriptLoader.hpp"
 
 #include <vector>

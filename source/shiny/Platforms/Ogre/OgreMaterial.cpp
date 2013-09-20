@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "OgreMaterial.hpp"
 
 #include <OgreMaterialManager.h>

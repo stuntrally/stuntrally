@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Actions.hpp"
 
 #include "../Main/Factory.hpp"
