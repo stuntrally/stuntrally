@@ -10,6 +10,8 @@
 #include <OgreTechnique.h>
 #include <OgreCamera.h>
 #include <OgreGpuProgramParams.h>
+#include <OgreRenderTarget.h>
+#include <OgreRenderWindow.h>
 #include "SplitScreen.h"
 #include "../vdrift/settings.h"
 //#include "HDRCompositor.h"

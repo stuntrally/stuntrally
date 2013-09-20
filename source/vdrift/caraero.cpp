@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "caraero.h"
+#include "../ogre/common/Defines.h"
 
 
 void CARAERO::DebugPrint(std::ostream & out)

@@ -2,6 +2,8 @@
 #include "../ogre/common/Defines.h"
 #include "../ogre/common/CData.h"
 #include "../ogre/common/ShapeData.h"
+#include "../ogre/common/QTimer.h"
+#include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"

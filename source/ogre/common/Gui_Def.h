@@ -30,9 +30,7 @@ public:
 #define CMB  Cmb wp, size_t val  // combobox event args
 #define TAB  Tab tab, size_t id       //  tab event args
 
-typedef std::list <std::string> strlist;
-
-
+//  short Finding widgets
 #define fWnd(s)  mGui->findWidget<Window>(s)
 #define fTxt(s)  mGui->findWidget<TextBox>(s)
 #define fImg(s)  mGui->findWidget<ImageBox>(s)

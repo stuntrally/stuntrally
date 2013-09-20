@@ -1,12 +1,10 @@
 #pragma once
-//#include <map>
 #include <iostream>
 #include <vector>
 #include <cmath>
 
 #include "dbl.h"
 #include "mathvector.h"
-#include "../ogre/common/Defines.h"
 #include "carwheel.h"
 
 

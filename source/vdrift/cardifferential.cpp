@@ -1,5 +1,7 @@
 #include "pch.h"
+#include "dbl.h"
 #include "cardifferential.h"
+#include "../ogre/common/Defines.h"
 
 
 //default constructor makes an S2000-like car

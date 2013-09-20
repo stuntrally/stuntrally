@@ -3,9 +3,11 @@
 #include "../common/SceneXml.h"
 #include "../common/CData.h"
 #include "../common/ShapeData.h"
+#include "../common/QTimer.h"
 #include "RenderConst.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
+	#include "../../editor/settings.h"
 #else
 	#include "../CGame.h"
 	#include "../../vdrift/settings.h"
@@ -23,6 +25,7 @@
 
 #include <boost/filesystem.hpp>
 #include <OgreTerrain.h>
+#include <OgreSubMesh.h>
 using namespace Ogre;
 
 

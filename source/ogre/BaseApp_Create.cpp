@@ -18,7 +18,8 @@
 
 #include <OgreFontManager.h>
 #include <OgreLogManager.h>
-#if OGRE_VERSION >= MYGUI_DEFINE_VERSION(1, 9, 0) 
+#include <MyGUI_Prerequest.h>
+#if OGRE_VERSION >= MYGUI_DEFINE_VERSION(1, 9, 0)
 #include <OgreOverlaySystem.h>
 #endif
 #include "boost/filesystem.hpp"
@@ -404,7 +405,7 @@ bool BaseApp::setup()
 	mSceneMgr->addRenderQueueListener(pOverlaySystem);
 	#endif
 
-	mSplitMgr = new SplitScreenManager(mSceneMgr, mWindow, pSet);
+	mSplitMgr = new SplitScr(mSceneMgr, mWindow, pSet);
 
 	//RT ShaderSystem
 	if (Ogre::RTShader::ShaderGenerator::initialize())

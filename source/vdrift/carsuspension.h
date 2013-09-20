@@ -6,7 +6,6 @@
 #include "mathvector.h"
 #include "linearframe.h"
 #include "linearinterp.h"
-#include "../ogre/common/Defines.h"
 
 
 class CARSUSPENSION

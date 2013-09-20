@@ -1,11 +1,13 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
+#include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/Slider.h"
+#include "../ogre/common/QTimer.h"
 #include <boost/filesystem.hpp>
 #include "../sdl4ogre/sdlcursormanager.hpp"
 using namespace MyGUI;
@@ -26,28 +28,31 @@ void CGui::InitGui()
 	FactoryManager::getInstance().registerFactory<Slider>("Widget");
 	int i;
 
-	//  load layout - wnds
+	//  load layout
 	app->vwGui = LayoutManager::getInstance().loadLayout("Editor.layout");
+
 	for (VectorWidgetPtr::iterator it = app->vwGui.begin(); it != app->vwGui.end(); ++it)
 	{
 		const std::string& name = (*it)->getName();
 		setToolTips((*it)->getEnumerator());
-		if (name == "MainMenuWnd"){  app->mWndMain = *it;	} else
-		if (name == "EditorWnd")  {  app->mWndEdit = *it;	} else
-		if (name == "OptionsWnd") {  app->mWndOpts = *it;	} else
-		if (name == "HelpWnd")    {  app->mWndHelp = *it;	} else
-
-		if (name == "CamWnd")     {  app->mWndCam = *it;	(*it)->setPosition(0,64);	} else
-		if (name == "StartWnd")   {  app->mWndStart = *it;	(*it)->setPosition(0,64);	} else
-		if (name == "BrushWnd")   {  app->mWndBrush = *it;	(*it)->setPosition(0,64);	} else
-
-		if (name == "RoadCur")    {  app->mWndRoadCur = *it;	(*it)->setPosition(0,34);	} else
-		if (name == "RoadStats")  {  app->mWndRoadStats = *it;	(*it)->setPosition(0,328);	} else
-
-		if (name == "FluidsWnd")  {  app->mWndFluids = *it;	(*it)->setPosition(0,64);	} else
-		if (name == "ObjectsWnd") {  app->mWndObjects= *it; (*it)->setPosition(0,64);	} else
-		if (name == "RiversWnd")  {  app->mWndRivers = *it;	(*it)->setPosition(0,64);	}
 	}
+	//  wnds
+	app->mWndMain = fWnd("MainMenuWnd");
+	app->mWndEdit = fWnd("EditorWnd");
+	app->mWndOpts = fWnd("OptionsWnd");
+	app->mWndHelp = fWnd("HelpWnd");
+
+	app->mWndCam =   fWnd("CamWnd");    app->mWndCam->setPosition(0,64);
+	app->mWndStart = fWnd("StartWnd");  app->mWndStart->setPosition(0,64);
+	app->mWndBrush = fWnd("BrushWnd");  app->mWndBrush->setPosition(0,64);
+
+	app->mWndRoadCur =   fWnd("RoadCur");    app->mWndRoadCur->setPosition(0,34);
+	app->mWndRoadStats = fWnd("RoadStats");  app->mWndRoadStats->setPosition(0,328);
+
+	app->mWndFluids = fWnd("FluidsWnd");   app->mWndFluids->setPosition(0,64);
+	app->mWndObjects= fWnd("ObjectsWnd");  app->mWndObjects->setPosition(0,64);
+	app->mWndRivers = fWnd("RiversWnd");   app->mWndRivers->setPosition(0,64);
+
 	if (app->mWndRoadStats)  app->mWndRoadStats->setVisible(false);
 
 	//  main menu

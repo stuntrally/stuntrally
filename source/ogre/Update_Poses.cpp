@@ -8,6 +8,7 @@
 #include "../road/Road.h"
 #include "../vdrift/game.h"
 #include "../vdrift/quickprof.h"
+#include "../vdrift/dbl.h"
 #include "../network/gameclient.hpp"
 #include "../shiny/Main/Factory.hpp"
 #include "common/Slider.h"

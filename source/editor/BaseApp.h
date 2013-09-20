@@ -1,44 +1,27 @@
 #pragma once
-#include "../ogre/common/QTimer.h"
-#include "settings.h"
-
-/*#include <OgreVector3.h>
+#include "../ogre/common/Gui_Def.h"
+#include <OgreVector3.h>
 #include <OgreString.h>
-
-#include <OgreOverlay.h>
-#include <OgreOverlayElement.h>
-
-#include <OgreRenderTargetListener.h>
 #include <OgreFrameListener.h>
-#include <OgreWindowEventUtilities.h>*/
-
-//FIXME
-#include <Ogre.h>
-#include <OgreOverlay.h>
-#include <OgreOverlayElement.h>
-
-#include <MyGUI.h>
-#include <MyGUI_OgrePlatform.h>
-
-namespace boost { class thread; }
-namespace MyGUI { class OgreD3D11Platform; }
-
 #include "../sdl4ogre/events.h"
+namespace SFO  {  class InputWrapper;  class SDLCursorManager;  }
+struct SDL_Window;
+namespace MyGUI{  class OgreD3D11Platform;  class OgrePlatform;  }
+namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
+	class Viewport;  class Camera;  class Overlay;  class OverlayElement;  }
+class SplineRoad;  class SETTINGS;
+	
 
-namespace SFO
+enum ED_MODE
 {
-    class InputWrapper;
-    class SDLCursorManager;
-}
-
-enum ED_MODE  {
 	ED_Deform=0, ED_Smooth, ED_Height, ED_Filter, /*ED_Paint,*/
-	ED_Road, ED_Start, ED_PrvCam, ED_Fluids, ED_Objects, ED_Rivers, ED_ALL  };
+	ED_Road, ED_Start, ED_PrvCam, ED_Fluids, ED_Objects, ED_Rivers, ED_ALL
+};
+enum WND_Types
+{	WND_Edit=0, WND_Help, WND_Options, WND_ALL  };  // pSet->inMenu
 
-enum WND_Types {  WND_Edit=0, WND_Help, WND_Options, WND_ALL  };  // pSet->inMenu
 
-
-class BaseApp :
+class BaseApp : public BGui,
 		public Ogre::FrameListener,
 		public SFO::KeyListener, public SFO::MouseListener, public SFO::WindowListener
 		//public Ogre::RenderTargetListener
@@ -47,7 +30,7 @@ public:
 	BaseApp();	virtual ~BaseApp();
 	virtual void Run( bool showDialog );
 
-	class SplineRoad* road; //-
+	SplineRoad* road; //-
 	
 	SETTINGS* pSet;
 
@@ -120,27 +103,32 @@ protected:
 	ED_MODE	edMode,edModeOld;
 
 
-	///  Gui
+	///  Gui  ..........................
 	bool bGuiFocus;  // gui shown
-	MyGUI::Gui* mGui;  void baseInitGui();
+	MyGUI::Gui* mGui;
+	void baseInitGui();
+	
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	MyGUI::OgreD3D11Platform* mPlatform;
 	#else
 	MyGUI::OgrePlatform* mPlatform;
 	#endif
-	MyGUI::WidgetPtr  // tool windows
-		mWndBrush, mWndCam, mWndStart,
+	Wnd mWndBrush, mWndCam, mWndStart,  // tool windows
 		mWndRoadCur, mWndRoadStats,
 		mWndFluids, mWndObjects, mWndRivers;
-	MyGUI::VectorWidgetPtr vwGui;  // all widgets to destroy
-	MyGUI::ImageBox* imgCur, *bckFps;
-	MyGUI::TextBox*	txFps;
 
-	//  main menu
+	//MyGUI::VectorWidgetPtr
+	std::vector<WP> vwGui;  // all widgets to destroy
+	Img bckFps, imgCur;
+	Txt txFps;
+
+	Wnd mWndMain,mWndEdit,mWndHelp,mWndOpts;  // menu, windows
+	Tab mWndTabsEdit,mWndTabsHelp,mWndTabsOpts;  // main tabs on windows
+
+	///  main menu
 	friend class CGui;
-	MyGUI::WidgetPtr mWndMain,mWndEdit,mWndHelp,mWndOpts;  // menu, windows
-	MyGUI::TabPtr mWndTabsEdit,mWndTabsHelp,mWndTabsOpts;  // main tabs on windows
-	MyGUI::WidgetPtr mWndMainPanels[WND_ALL];  MyGUI::ButtonPtr mWndMainBtns[WND_ALL];
+	WP mWndMainPanels[WND_ALL];
+	Btn mWndMainBtns[WND_ALL];
 
 	
 public:

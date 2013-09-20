@@ -5,6 +5,7 @@
 #include "../ogre/common/SceneXml.h"
 #include "../ogre/common/CData.h"
 #include "../ogre/common/FluidsXml.h"
+#include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"

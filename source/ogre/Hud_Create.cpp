@@ -40,7 +40,7 @@ void CHud::Size(bool full, Viewport* vp)
 	for (int c=0; c < cnt; ++c)
 	{
 		Hud& h = hud[c];
-		const SplitScreenManager::VPDims& dim = app->mSplitMgr->mDims[c];
+		const SplitScr::VPDims& dim = app->mSplitMgr->mDims[c];
 		//  gauges
 		Real xcRpm,ycRpm, xcVel,ycVel, ygMax, xBFuel;  // -1..1
 		if (h.ndGauges)

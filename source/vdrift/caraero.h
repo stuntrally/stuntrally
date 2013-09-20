@@ -1,7 +1,6 @@
 #pragma once
 #include "dbl.h"
 #include "mathvector.h"
-#include "../ogre/common/Defines.h"
 
 
 class CARAERO

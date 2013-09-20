@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "carengine.h"
+#include "../ogre/common/Defines.h"
 
 
 CARENGINE::CARENGINE()

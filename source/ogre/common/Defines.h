@@ -1,14 +1,20 @@
 #pragma once
-
-#define PI_d  3.14159265358979323846
+// -- NOT to be included in headers  --
 
 #include <OgreLogManager.h>
+#include <OgreStringConverter.h>
+
+
+//  Log in ogre.log
 #define LogO(s)  Ogre::LogManager::getSingleton().logMessage(s)
 
-#include <OgreStringConverter.h>
+
+//  to string
 #define toStr(v)   Ogre::StringConverter::toString(v)
 #define toStrC(v)  Ogre::StringConverter::toString(v).c_str()
 
+
+//  format int,float to string
 static Ogre::String iToStr(const int v, const char width=0)
 {
 	std::ostringstream s;
@@ -24,21 +30,19 @@ static Ogre::String fToStr(const float v, const char precision, const char width
 	return s.str();
 }
 
+//  string to var
 #define s2r(s)  Ogre::StringConverter::parseReal(s)
 #define s2i(s)  Ogre::StringConverter::parseInt(s)
 #define s2c(s)  Ogre::StringConverter::parseColourValue(s)
 #define s2v(s)  Ogre::StringConverter::parseVector3(s)
 #define s2v4(s)  Ogre::StringConverter::parseVector4(s)
+
 #define b2s(b)  (b) ? "true" : "false"
 
-/// translation
+
+//  translation
 #define TR(s)  MyGUI::LanguageManager::getInstance().replaceTags(s)
 
 
-///  boost fuel params  ----
-const static float gfBoostFuelStart = 3.f,  // seconds (each lap)
-	gfBoostFuelMax = 3.f,  // max val, tank	
-	gfBoostFuelAddSec = 0.1f;  // add value each second
-
-const int ciShadowNumSizes = 5;
-const int ciShadowSizesA[ciShadowNumSizes] = {256,512,1024,2048,4096};
+const int ciShadowSizesNum = 5;
+const int ciShadowSizesA[ciShadowSizesNum] = {256,512,1024,2048,4096};
