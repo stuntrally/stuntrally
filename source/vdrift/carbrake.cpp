@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "carbrake.h"
-#include "../ogre/common/Defines.h"
+#include "../ogre/common/Def_Str.h"
 
 
 void CARBRAKE::DebugPrint(std::ostream & out)

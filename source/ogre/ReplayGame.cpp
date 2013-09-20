@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "ReplayGame.h"
-#include "common/Defines.h"
+#include "common/Def_Str.h"
 #include "common/QTimer.h"
 
 //  replay load log and check

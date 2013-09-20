@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "common/Defines.h"
+#include "common/Def_Str.h"
 #include "ChallengesXml.h"
 #include "common/TracksXml.h"
 #include "tinyxml.h"

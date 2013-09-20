@@ -12,7 +12,7 @@
 #include "quickprof.h"
 #include "tracksurface.h"
 #include "forcefeedback.h"
-#include "../ogre/common/Defines.h"
+#include "../ogre/common/Def_Str.h"
 #include "../ogre/common/SceneXml.h"
 #include "../ogre/common/QTimer.h"
 #include "../ogre/CGame.h"

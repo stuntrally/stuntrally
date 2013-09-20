@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "carwheel.h"
-#include "../ogre/common/Defines.h"
+#include "../ogre/common/Def_Str.h"
 
 
 void CARWHEEL::DebugPrint(std::ostream & out)

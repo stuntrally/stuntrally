@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../common/Defines.h"
+#include "../common/Def_Str.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
 #include "../common/SceneXml.h"

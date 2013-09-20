@@ -9,7 +9,7 @@
 #include "../ogre/CGame.h"  //+ replay
 #include "../ogre/CarModel.h"  //+ camera pos
 #include "../ogre/FollowCamera.h"  //+ camera pos
-#include "../ogre/common/Defines.h"
+#include "../ogre/common/Def_Str.h"
 #include "../ogre/common/SceneXml.h"
 #include "../ogre/common/GraphView.h"
 #include "../network/protocol.hpp"

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "gameclient.hpp"
 #include "xtime.hpp"
-#include "../ogre/common/Defines.h"
+#include "../ogre/common/Def_Str.h"
 
 #include <MyGUI_LanguageManager.h>
 #include <ctime>

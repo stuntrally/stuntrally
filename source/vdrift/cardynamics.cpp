@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "cardynamics.h"
 #include "tobullet.h"
-#include "../ogre/common/Defines.h"
+#include "../ogre/common/Def_Str.h"
 
 
 MATHVECTOR<Dbl,3> CARDYNAMICS::GetWheelPosition(WHEEL_POSITION wp) const

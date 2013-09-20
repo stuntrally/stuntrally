@@ -9,7 +9,7 @@
 #include "spline.h"
 #include "linearinterp.h"
 #include "mathvector.h"
-#include "../ogre/common/Defines.h"
+#include "../ogre/common/Def_Str.h"
 
 
 class CARENGINE
@@ -112,7 +112,7 @@ public:
 	void StartEngine()
 	{
 		MATHVECTOR<Dbl,3> v;
-		v[0] = start_rpm * M_PI / 30.0;
+		v[0] = start_rpm * PI_d / 30.0;
 		crankshaft.SetAngularVelocity(v);
 	}
 	

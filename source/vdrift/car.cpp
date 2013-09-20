@@ -10,7 +10,7 @@
 #include "../ogre/common/CData.h"
 #include "../ogre/CarModel.h"  //+ camera pos
 #include "../ogre/FollowCamera.h"  //+ camera pos
-#include "../ogre/common/Defines.h"
+#include "../ogre/common/Def_Str.h"
 #include "../ogre/common/GraphView.h"
 #include "../network/protocol.hpp"
 #include "tobullet.h"

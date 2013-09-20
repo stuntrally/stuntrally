@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CData.h"
 #include "../vdrift/pathmanager.h"
-#include "Defines.h"
+#include "Def_Str.h"
 using Ogre::String;
 
 #include "FluidsXml.h"

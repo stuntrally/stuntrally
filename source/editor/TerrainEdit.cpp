@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../ogre/common/Defines.h"
+#include "../ogre/common/Def_Str.h"
 #include "../ogre/common/QTimer.h"
 #include "settings.h"
 #include "CApp.h"

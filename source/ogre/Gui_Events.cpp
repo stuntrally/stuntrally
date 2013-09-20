@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "common/Defines.h"
+#include "common/Def_Str.h"
 #include "../vdrift/settings.h"
 #include "../vdrift/game.h"
 #include "CGame.h"

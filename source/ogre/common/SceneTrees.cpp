@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../common/Defines.h"
+#include "../common/Def_Str.h"
 #include "../common/SceneXml.h"
 #include "../common/CData.h"
 #include "../common/ShapeData.h"

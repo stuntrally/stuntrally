@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "rigidbody.h"
 #include "unittest.h"
-#include "../ogre/common/Defines.h"
+#include "../ogre/common/Def_Str.h"
 
 //#include <iostream>
 using std::cout;

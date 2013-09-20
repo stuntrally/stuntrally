@@ -7,7 +7,7 @@
 #include "objectloader.h"
 #include <functional>
 #include <algorithm>
-#include "../ogre/common/Defines.h"
+#include "../ogre/common/Def_Str.h"
 #include "game.h"  // for tires map
 
 #include <list>

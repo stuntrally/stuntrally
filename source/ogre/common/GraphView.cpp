@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "GraphView.h"
 #include "RenderConst.h"
-#include "Defines.h"
+#include "Def_Str.h"
 
 #include <OgreManualObject.h>
 #include <OgreSceneManager.h>

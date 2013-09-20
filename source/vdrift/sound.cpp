@@ -25,7 +25,7 @@ using std::string;
 #else
 #include <vorbis/vorbisfile.h>
 #endif
-//#include "../ogre/common/Defines.h"
+//#include "../ogre/common/Def_Str.h"
 
 
 //  Load sound file

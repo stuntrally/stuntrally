@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "cartransmission.h"
-#include "../ogre/common/Defines.h"
+#include "../ogre/common/Def_Str.h"
 
 
 void CARTRANSMISSION::DebugPrint(std::ostream & out)

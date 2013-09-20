@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "RenderConst.h"
-#include "Defines.h"
+#include "Def_Str.h"
 #include "../common/SceneXml.h"
 #include "../../vdrift/pathmanager.h"
 #include "../../btOgre/BtOgreGP.h"

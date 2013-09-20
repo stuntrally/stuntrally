@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "common/Defines.h"
+#include "common/Def_Str.h"
 #include "common/Gui_Def.h"
 #include "CGame.h"
 #include "CHud.h"

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Defines.h"
+#include "Def_Str.h"
 #include "../common/SceneXml.h"
 #include "../common/CData.h"
 #include "../common/TracksXml.h"
