@@ -43,7 +43,7 @@ void SliderValue::Move(Slider* sl, float val)
 	}
 	else //if (pInt)
 	{
-		int i = fMin + fRange * val + slHalf;
+		int i = fMin + fRange * (fPow != 1.f ? powS(val, fPow) : val) + slHalf;
 		if (gi)
 			*pInt = i;
 	}
@@ -150,6 +150,8 @@ float SliderValue::setValF(float f)
 float SliderValue::setValI(int i)
 {
 	float v = (i - fMin) / fRange;
+	if (fPow != 1.f)
+		v = powS(v, 1.f/fPow);
 
 	slider->setValue(v);
 	return v;
@@ -207,7 +209,7 @@ void SliderValue::Init(
 	float valMul, String suffix)
 {
 	initGui(name);
-	fPow = rPow;  fMin = rMin;
+	fMin = rMin;  fPow = rPow;
 	fRange = rMax - rMin;
 	fmtDigits = fmtDig;  fmtLen = fmtLength;
 	fmtValMul = valMul;  sSuffix = suffix;
@@ -221,10 +223,11 @@ void SliderValue::Init(
 //------------------------------------
 void SliderValue::Init(
 	String name, int* pI,
-	float rMin, float rMax)
+	int rMin, int rMax, float rPow)
 {
 	initGui(name);
-	fMin = rMin;  fRange = rMax - rMin;
+	fMin = rMin;  fPow = rPow;
+	fRange = rMax - rMin;
 
 	pInt = pI;
 	float v = setValI(*pI);

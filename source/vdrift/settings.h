@@ -117,14 +117,14 @@ public:
 	int blt_iter, dyn_iter,  multi_thr, thread_sleep;
 	
 	//  compositor
-	bool bloom, hdr, motionblur, all_effects;
-	float bloomintensity, bloomorig, motionblurintensity;
-	float depthOfFieldFocus, depthOfFieldFar;
+	bool bloom, hdr, blur, all_effects;
+	float bloom_int, bloom_orig, blur_int;  // intensity
+	float dof_focus, dof_far;
 	//  hdr
-	float hdrbloomint, hdrbloomorig;
+	float hdrBloomint, hdrBloomorig;
 	float hdrParam1, hdrParam2, hdrParam3;
 	float hdrAdaptationScale;
-	float vignettingRadius, vignettingDarkness;
+	float vignRadius, vignDarkness;
 	//  video
 	int windowx, windowy, fsaa;
 	bool fullscreen, vsync, ssao, godrays, softparticles, dof, filmgrain;

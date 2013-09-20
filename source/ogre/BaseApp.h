@@ -166,7 +166,7 @@ protected:
 	///  Gui
 	bool isFocGui,isFocRpl;  // gui shown
 	bool isTweak();
-	MyGUI::Gui* mGUI;  void baseInitGui(), baseSizeGui();
+	MyGUI::Gui* mGui;  void baseInitGui(), baseSizeGui();
 	MyGUI::ImageBox* bckFps, *imgBack;
 	MyGUI::TextBox*	txFps;
 public:

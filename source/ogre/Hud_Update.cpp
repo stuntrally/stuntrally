@@ -285,7 +285,7 @@ void CHud::Update(int carId, float time)
 
 	//  Set motion blur intensity for this viewport, depending on car's linear velocity
 	//-----------------------------------------------------------------------------------
-	if (pSet->motionblur)
+	if (pSet->blur)
 	{
 		// use velocity squared to achieve an exponential motion blur
 		float speed = pCar->GetVelocity().MagnitudeSquared();
@@ -293,7 +293,7 @@ void CHud::Update(int carId, float time)
 		// peak at 250 kmh (=69 m/s), 69² = 4761
 		// motion blur slider: 1.0 = peak at 100 km/h   0.0 = peak at 400 km/h   -> 0.5 = peak at 250 km/h
 		// lerp(100, 400, 1-motionBlurIntensity)
-		float peakSpeed = 100 + (1-pSet->motionblurintensity) * (400-100);
+		float peakSpeed = 100 + (1-pSet->blur_int) * (400-100);
 		float intens = std::abs(speed) / pow((peakSpeed/3.6f), 2);
 		
 		// higher fps = less perceived motion blur time a frame will be still visible on screen:

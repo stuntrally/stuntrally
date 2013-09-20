@@ -21,12 +21,12 @@ using namespace Ogre;
 //------------------------------------------------------------------------------------------------------------
 void CGui::CreateGUITweakMtr()
 {
-	ScrollView* view = app->mGUI->findWidget<ScrollView>("TweakView",false);
+	ScrollView* view = app->mGui->findWidget<ScrollView>("TweakView",false);
 	if (!view)  return;
 	
 	//  clear last view
 	MyGUI::EnumeratorWidgetPtr widgets = view->getEnumerator ();
-	app->mGUI->destroyWidgets(widgets);
+	app->mGui->destroyWidgets(widgets);
 
 	if (pSet->tweak_mtr == "")  return;
 	sh::MaterialInstance* mat = app->mFactory->getMaterialInstance(pSet->tweak_mtr);
@@ -103,7 +103,7 @@ void CGui::slTweak(Slider* sl, float val)
 {
 	std::string name = sl->getName();
 
-	EditBox* edit = app->mGUI->findWidget<EditBox>(name + "E");
+	EditBox* edit = app->mGui->findWidget<EditBox>(name + "E");
 	if (edit)
 		edit->setCaption(fToStr(val,3,6));
 
@@ -115,7 +115,7 @@ void CGui::edTweak(EditPtr ed)
 	std::string name = ed->getName();  name = name.substr(0,name.length()-1);  // ends with E
 	float val = s2r(ed->getCaption());
 	
-	Slider* sl = app->mGUI->findWidget<Slider>(name);
+	Slider* sl = app->mGui->findWidget<Slider>(name);
 	if (sl)
 		sl->setValue(val);
 

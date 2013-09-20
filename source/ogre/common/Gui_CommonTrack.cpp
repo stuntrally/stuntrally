@@ -198,15 +198,15 @@ void CGui::GuiInitTrack()
    	trkList->setVisible(false);
 	
 	//  preview images
-	imgPrv[0] = app->mGUI->findWidget<StaticImage>("TrackImg");
-	imgTer[0] = app->mGUI->findWidget<StaticImage>("TrkTerImg");
-	imgMini[0] = app->mGUI->findWidget<StaticImage>("TrackMap");
+	imgPrv[0] = fImg("TrackImg");
+	imgTer[0] = fImg("TrkTerImg");
+	imgMini[0] = fImg("TrackMap");
 
 	//  stats text
-	for (int i=0; i < StTrk; ++i) //!
-		stTrk[0][i] = app->mGUI->findWidget<StaticText>("iv"+toStr(i+1), false);
+	for (int i=0; i < StTrk; ++i)
+		stTrk[0][i] = fTxt("iv"+toStr(i));
 	for (int i=0; i < InfTrk; ++i)
-		infTrk[0][i] = app->mGUI->findWidget<StaticText>("ti"+toStr(i+1), false);
+		infTrk[0][i] = fTxt("ti"+toStr(i));
 		
 	Edt(edFind, "TrackFind", edTrkFind);
 	#ifndef SR_EDITOR
@@ -215,9 +215,10 @@ void CGui::GuiInitTrack()
 	#endif
 
 	ButtonPtr btn;
-	Btn("TrkView1", btnTrkView1);	Btn("TrkView2", btnTrkView2);
-	imgTrkIco1 = app->mGUI->findWidget<StaticImage>("TrkView2icons1");
-	imgTrkIco2 = app->mGUI->findWidget<StaticImage>("TrkView2icons2");
+	Btn("TrkView1", btnTrkView1);
+	Btn("TrkView2", btnTrkView2);
+	imgTrkIco1 = fImg("TrkView2icons1");
+	imgTrkIco2 = fImg("TrkView2icons2");
 	
 	li->removeAllColumns();  int c=0;
 	li->addColumn("#E0FFE0"+TR("#{Name}"), colTrk[c++]);
@@ -378,7 +379,7 @@ void CGui::updTrkListDim()
 	
 	#ifndef SR_EDITOR
 	if (panelNetTrack)  {
-		TabItem* trkTab = app->mGUI->findWidget<TabItem>("TabTrack");
+		TabItem* trkTab = app->mGui->findWidget<TabItem>("TabTrack");
 		const IntCoord& tc = trkTab->getCoord();
 		panelNetTrack->setCoord(0, 0.82f*tc.height, tc.width*0.64f, 0.162f*tc.height);  }
 	#endif

@@ -54,7 +54,7 @@ void App::CreateGraphs()
 	case Gh_Fps:  /// fps
 		for (int i=0; i < 2; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			GraphView* gv = new GraphView(scm,mWindow,mGui);
 			int c = i;
 			gv->Create(400, "graph"+toStr(c+1), i==0 ? 0.4f : 0.f);
 			if (i == 0)
@@ -70,7 +70,7 @@ void App::CreateGraphs()
 	case Gh_CarAccelG:  /// car accel
 		for (int i=0; i < 3; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			GraphView* gv = new GraphView(scm,mWindow,mGui);
 			const int t[3] = {0,1,2};
 			int c = t[i];
 			gv->Create(256, "graph"+toStr(c+1), i==0 ? 0.45f : 0.f);
@@ -90,7 +90,7 @@ void App::CreateGraphs()
 	case Gh_BulletHit:  /// bullet hit
 		for (int i=0; i < 6; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			GraphView* gv = new GraphView(scm,mWindow,mGui);
 			int c = i%6;  /*clr*/
 			gv->Create(256/*len*/, "graph"+toStr(c+1), i==0||i==2 ? 0.52f : 0.f/*alpha*/);
 			switch(i)
@@ -113,7 +113,7 @@ void App::CreateGraphs()
 	case Gh_Sound:  /// sound
 		for (int i=0; i < 4; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			GraphView* gv = new GraphView(scm,mWindow,mGui);
 			int c = i%2*2;
 			gv->Create(i < 2 ? 512 : 2*512, "graph"+toStr(c+1), c>0 ? 0.f : 0.4f);
 			if (c == 0)
@@ -136,7 +136,7 @@ void App::CreateGraphs()
 	case Gh_Suspension:	 /// susp
 		for (int i=0; i < 8; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			GraphView* gv = new GraphView(scm,mWindow,mGui);
 			int c = i%4;
 			gv->Create(256/*512*/, "graph"+toStr(c+1), c>0 ? 0.f : (i < 14 ? 0.44f : 0.62f));
 			if (c == 0)
@@ -170,7 +170,7 @@ void App::CreateGraphs()
 	case Gh_TireEdit:  /// tires edit pacejka
 		for (int i=0; i < TireNG*2; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			GraphView* gv = new GraphView(scm,mWindow,mGui);
 			int c = i%TireNG;  bool b = i >= TireNG;
 			gv->Create(TireLenG, String("graph")+(b?"B":"A")+toStr(c), i>0 ? 0.f : 0.4f, true);
 			if (c == 0)
@@ -188,14 +188,14 @@ void App::CreateGraphs()
 			graphs.push_back(gv);
 		}
 		{	//  edit vals area
-			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			GraphView* gv = new GraphView(scm,mWindow,mGui);
 			gv->Create(1, "graphA6", 0.4f);  gv->CreateTitle("", 5+1, 0.f, -2, 24, 30/*, true*/);
 			gv->SetSize(0.73f, 0.48f, 0.07f, 0.44f);
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
 
 			//  vals descr
-			gv = new GraphView(scm,mWindow,mGUI);
+			gv = new GraphView(scm,mWindow,mGui);
 			gv->Create(1, "graphB6", 0.3f);  gv->CreateTitle("", 5+8, 0.f, -2, 24, 30/*, true*/);
 			gv->SetSize(0.80f, 0.48f, 0.20f, 0.44f);
 			gv->SetVisible(pSet->show_graphs);
@@ -208,7 +208,7 @@ void App::CreateGraphs()
 		for (int w=0; w < 6*2; ++w)
 		{
 			int i = w % 6, n = w / 6;
-			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			GraphView* gv = new GraphView(scm,mWindow,mGui);
 			gv->Create(512, String("graph")+(n>0 ? "B":"A")+toStr(i), w>0 ? 0.f : 0.5f, true);
 			if (n == 0)
 			if (i == 0)	{   gv->CreateGrid(4,5, 0.f, 0.5f);
@@ -227,7 +227,7 @@ void App::CreateGraphs()
 	case Gh_Engine:  /// engine torque, power
 		for (int i=0; i < 2; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			GraphView* gv = new GraphView(scm,mWindow,mGui);
 			gv->Create(512, String("graph")+toStr(i*3+1), i>0 ? 0.f : 0.4f, true);
 			if (i == 0)
 			{	gv->CreateGrid(6,6, 0.f, 0.6f);
@@ -245,7 +245,7 @@ void App::CreateGraphs()
 	case Gh_Clutch:
 		for (int i=0; i < 4; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			GraphView* gv = new GraphView(scm,mWindow,mGui);
 			gv->Create(160, String("graph")+toStr(3-i), i==0 ? 0.43f : i==3 ? 0.3f : 0.f);
 			if (i == 3)
 			{	gv->CreateGrid(6,1, 0.f, 0.3f);
@@ -268,7 +268,7 @@ void App::CreateGraphs()
 	case Gh_Diffs:
 		for (int i=0; i < 3; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			GraphView* gv = new GraphView(scm,mWindow,mGui);
 			gv->Create(256, String("graph")+toStr(i+1), i==0 ? 0.4f : i==2 ? 0.3f : 0.f);
 			if (i == 2)
 			{	gv->CreateGrid(4,1, 0.f, 0.3f);

@@ -17,7 +17,8 @@ using namespace Ogre;
 
 void CGui::InitGui() 
 {
-	if (!app->mGUI)  return;
+	mGui = app->mGui;
+	if (!mGui)  return;
 	QTimer ti;  ti.update();  /// time
 
 	//  new widgets
@@ -66,45 +67,32 @@ void CGui::InitGui()
 	GuiInitTooltip();
 	
 	//  assign controls, tool window texts  ----------------------
-	if (app->mWndBrush)
-	for (i=0; i<BR_TXT; ++i)
-	{
-		brTxt[i] = app->mGUI->findWidget<StaticText>("brTxt"+toStr(i),false);
-		brVal[i] = app->mGUI->findWidget<StaticText>("brVal"+toStr(i),false);
-		brKey[i] = app->mGUI->findWidget<StaticText>("brKey"+toStr(i),false);
+	for (i=0; i<12; ++i)
+	{	String s = toStr(i);
+		if (i<BR_TXT)
+		{	brTxt[i] = fTxt("brTxt"+s);
+			brVal[i] = fTxt("brVal"+s);
+			brKey[i] = fTxt("brKey"+s);  }
+		if (i<RD_TXT)
+		{	rdTxt[i] = fTxt("rdTxt"+s);
+			rdVal[i] = fTxt("rdVal"+s);
+			rdKey[i] = fTxt("rdKey"+s);  }
+		if (i<RDS_TXT)
+		{	rdTxtSt[i] = fTxt("rdTxtSt"+s);
+			rdValSt[i] = fTxt("rdValSt"+s);  }
+		if (i<ST_TXT)	stTxt[i] = fTxt("stTxt"+s);
+		if (i<FL_TXT)	flTxt[i] = fTxt("flTxt"+s);
+		if (i<OBJ_TXT)	objTxt[i]= fTxt("objTxt"+s);
+		if (i<RI_TXT)	riTxt[i] = fTxt("riTxt"+s);
 	}
-	brImg = app->mGUI->findWidget<StaticImage>("brushImg", false);
-
-	if (app->mWndRoadCur)
-	for (i=0; i<RD_TXT; ++i)
-	{	rdTxt[i] = app->mGUI->findWidget<StaticText>("rdTxt"+toStr(i),false);
-		rdVal[i] = app->mGUI->findWidget<StaticText>("rdVal"+toStr(i),false);
-		rdKey[i] = app->mGUI->findWidget<StaticText>("rdKey"+toStr(i),false);
-	}
-	if (app->mWndRoadStats)
-	for (i=0; i<RDS_TXT; ++i)
-	{	rdTxtSt[i] = app->mGUI->findWidget<StaticText>("rdTxtSt"+toStr(i),false);
-		rdValSt[i] = app->mGUI->findWidget<StaticText>("rdValSt"+toStr(i),false);
-	}
-	
-	if (app->mWndStart)
-		for (i=0; i<ST_TXT; ++i)	stTxt[i] = app->mGUI->findWidget<StaticText>("stTxt"+toStr(i),false);
-
-	if (app->mWndFluids)
-		for (i=0; i<FL_TXT; ++i)	flTxt[i] = app->mGUI->findWidget<StaticText>("flTxt"+toStr(i),false);
-		
-	if (app->mWndObjects)
-		for (i=0; i<OBJ_TXT; ++i)	objTxt[i] = app->mGUI->findWidget<StaticText>("objTxt"+toStr(i),false);
-	objPan = app->mGUI->findWidget<Widget>("objPan",false);  if (objPan)  objPan->setVisible(false);
-
-	if (app->mWndRivers)
-		for (i=0; i<RI_TXT; ++i)	riTxt[i] = app->mGUI->findWidget<StaticText>("riTxt"+toStr(i),false);
+	objPan = app->mGui->findWidget<Widget>("objPan",false);  if (objPan)  objPan->setVisible(false);
 		
 	//  Tabs
 	TabPtr tab;
-	tab = app->mGUI->findWidget<Tab>("TabWndEdit");  app->mWndTabsEdit = tab;  tab->setIndexSelected(1);  tab->eventTabChangeSelect += newDelegate(this, &CGui::MenuTabChg);
-	tab = app->mGUI->findWidget<Tab>("TabWndOpts");  app->mWndTabsOpts = tab;  tab->setIndexSelected(1);  tab->eventTabChangeSelect += newDelegate(this, &CGui::MenuTabChg);
-	tab = app->mGUI->findWidget<Tab>("TabWndHelp");  app->mWndTabsHelp = tab;  tab->setIndexSelected(1);  tab->eventTabChangeSelect += newDelegate(this, &CGui::MenuTabChg);
+	#define fTab1(s)  tab = fTab(s);  tab->setIndexSelected(1);  tab->eventTabChangeSelect += newDelegate(this, &CGui::MenuTabChg);
+	fTab1("TabWndEdit");  app->mWndTabsEdit = tab;
+	fTab1("TabWndOpts");  app->mWndTabsOpts = tab;
+	fTab1("TabWndHelp");  app->mWndTabsHelp = tab;
 
 	//  Options
 	if (app->mWndOpts)
@@ -184,7 +172,7 @@ void CGui::InitGui()
 	Chk("EscQuits", chkEscQuits, pSet->escquit);
 	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
 
-	bnQuit = app->mGUI->findWidget<Button>("Quit");
+	bnQuit = app->mGui->findWidget<Button>("Quit");
 	if (bnQuit)  {  bnQuit->eventMouseButtonClick += newDelegate(this, &CGui::btnQuit);  bnQuit->setVisible(false);  }
 	
 
@@ -209,7 +197,7 @@ void CGui::InitGui()
 	Ed(LiAmb, editLiAmb);  Ed(LiDiff, editLiDiff);  Ed(LiSpec, editLiSpec);
 	Ed(FogClr, editFogClr);  Ed(FogClr2, editFogClr2);  Ed(FogClrH, editFogClrH);
 
-	#define Img(s)  app->mGUI->findWidget<ImageBox>(s)
+	#define Img(s)  app->mGui->findWidget<ImageBox>(s)
 	clrAmb = Img("ClrAmb");   clrDiff = Img("ClrDiff");
 	clrSpec= Img("ClrSpec");  clrTrail= Img("ClrTrail");
 	clrFog = Img("ClrFog");   clrFog2 = Img("ClrFog2");
@@ -218,7 +206,7 @@ void CGui::InitGui()
 
 	///  [Terrain]
 	//------------------------------------------------------------------------
-	imgTexDiff = app->mGUI->findWidget<StaticImage>("TerImgDiff");
+	imgTexDiff = fImg("TerImgDiff");
 	Tab(tabsHmap, "TabHMapSize", tabHmap);
 	Edt(edTerErrorNorm, "edTerErrorNorm", editTerErrorNorm);
 
@@ -228,7 +216,7 @@ void CGui::InitGui()
 
 
 	///  brush presets   o o o o o o o o 
-	ScrollView* scv = app->mGUI->findWidget<ScrollView>("svBrushes");
+	ScrollView* scv = app->mGui->findWidget<ScrollView>("svBrushes");
 	int j=0, n=0;  const int z = 128;
 	for (i=0; i < app->brSetsNum; ++i,++n)
 	{
@@ -294,7 +282,7 @@ void CGui::InitGui()
 
 	///  [Layers]  ------------------------------------
 	Chk("TerLayOn", chkTerLayOn, 1);  chkTerLay = bchk;
-	valTerLAll = app->mGUI->findWidget<StaticText>("TerLayersAll");
+	valTerLAll = fTxt("TerLayersAll");
 	Tab(tabsTerLayers, "TabTerLay", tabTerLayer);
 
 	Chk("TexNormAuto", chkTexNormAutoOn, 1);  chkTexNormAuto = bchk;
@@ -320,12 +308,12 @@ void CGui::InitGui()
 	Cmb(cmbParSmoke,"CmbParSmoke",comboParDust);
 
 	Cmb(cmbSurface, "Surface", comboSurface);  //1 txt-
-	txtSuBumpWave	= app->mGUI->findWidget<StaticText>("SuBumpWave");
-	txtSuBumpAmp	= app->mGUI->findWidget<StaticText>("SuBumpAmp");
-	txtSuRollDrag	= app->mGUI->findWidget<StaticText>("SuRollDrag");
-	txtSuFrict		= app->mGUI->findWidget<StaticText>("SuFrict");
-	txtSurfTire		= app->mGUI->findWidget<StaticText>("SurfTire");
-	txtSurfType		= app->mGUI->findWidget<StaticText>("SurfType");
+	txtSuBumpWave = fTxt("SuBumpWave");
+	txtSuBumpAmp  = fTxt("SuBumpAmp");
+	txtSuRollDrag = fTxt("SuRollDrag");
+	txtSuFrict    = fTxt("SuFrict");
+	txtSurfTire   = fTxt("SurfTire");
+	txtSurfType   = fTxt("SurfType");
 
 	
 	///  [Vegetation]  ------------------------------------
@@ -335,7 +323,7 @@ void CGui::InitGui()
 	Ed(GrDensSmooth, editTrGr);  Ed(SceneryId, editTrGr);
 
 	Chk("LTrEnabled", chkPgLayOn, 1);  chkPgLay = bchk;
-	valLTrAll = app->mGUI->findWidget<StaticText>("LTrAll");
+	valLTrAll = fTxt("LTrAll");
 	Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);
 
 	sv= &svLTrDens;		sv->Init("LTrDens",		 &f, 0.001f,1.0f, 2.f);
@@ -359,7 +347,7 @@ void CGui::InitGui()
 
 	///  Grass  ------------------------------------
 	Chk("LGrEnabled", chkGrLayOn, 1);  chkGrLay = bchk;
-	valLGrAll = app->mGUI->findWidget<StaticText>("LGrAll");
+	valLGrAll = fTxt("LGrAll");
 	Tab(tabsGrLayers, "LGrLayTab", tabGrLayers);
 
 	sv= &svGrMinX;	sv->Init("GrMinX",	&f, 0.1f,4.1, 2.f);
@@ -373,8 +361,8 @@ void CGui::InitGui()
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
 	Ed(GrTerMaxAngle, editTrGr);  Ed(GrTerSmAngle, editTrGr);
 	Ed(GrTerMinHeight, editTrGr);  Ed(GrTerMaxHeight, editTrGr);  Ed(GrTerSmHeight, editTrGr);
-	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);	imgGrass = app->mGUI->findWidget<StaticImage>("ImgGrass");
-	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);	imgGrClr = app->mGUI->findWidget<StaticImage>("ImgGrClr");
+	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);	imgGrass = fImg("ImgGrass");
+	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);	imgGrClr = fImg("ImgGrClr");
 
 	
 	///  [Road]  ------------------------------------
@@ -389,7 +377,7 @@ void CGui::InitGui()
 
 	///  [Tools]  ------------------------------------
 	Btn("TrackCopySel", btnTrkCopySel);
-	valTrkCpySel = app->mGUI->findWidget<StaticText>("TrkCopySelName");
+	valTrkCpySel = fTxt("TrkCopySelName");
 	Btn("CopySun", btnCopySun);				Btn("CopyTerHmap", btnCopyTerHmap);
 	Btn("CopyTerLayers", btnCopyTerLayers);	Btn("CopyVeget", btnCopyVeget);
 	Btn("CopyRoad", btnCopyRoad);			Btn("CopyRoadPars", btnCopyRoadPars);
@@ -403,13 +391,13 @@ void CGui::InitGui()
 	sv= &svAlignSmooth;		sv->Init("AlignSmooth",		&pSet->al_w_add, 0.f,6.f, 1.f, 1,3);
 	
 	//  warnings
-	edWarn = app->mGUI->findWidget<EditBox>("Warnings",false);
-	txWarn = app->mGUI->createWidget<TextBox>("TextBox", 300,20, 360,32, Align::Left, "Back");
+	edWarn = app->mGui->findWidget<EditBox>("Warnings",false);
+	txWarn = app->mGui->createWidget<TextBox>("TextBox", 300,20, 360,32, Align::Left, "Back");
 	txWarn->setTextShadow(true);  txWarn->setTextShadowColour(Colour::Black);
 	txWarn->setTextColour(Colour(1.0,0.4,0.2));  txWarn->setFontHeight(24);
 	txWarn->setVisible(false);
-	imgWarn = app->mGUI->findWidget<StaticImage>("ImgWarn", false);  imgWarn->setVisible(false);
-	imgInfo = app->mGUI->findWidget<StaticImage>("ImgInfo", false);
+	imgWarn = fImg("ImgWarn");  imgWarn->setVisible(false);
+	imgInfo = fImg("ImgInfo");
 	Chk("CheckSave", chkCheckSave, pSet->check_save);
 	Chk("CheckLoad", chkCheckLoad, pSet->check_load);
 	
@@ -529,9 +517,9 @@ void CGui::InitGui()
 		if (StringUtil::endsWith(*i,".mesh") && (*i) != "sphere.mesh")
 			vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
 	
-	objListSt = app->mGUI->findWidget<List>("ObjListSt");
-	objListDyn = app->mGUI->findWidget<List>("ObjListDyn");
-	objListBld = app->mGUI->findWidget<List>("ObjListBld");
+	objListSt = app->mGui->findWidget<List>("ObjListSt");
+	objListDyn = app->mGui->findWidget<List>("ObjListDyn");
+	objListBld = app->mGui->findWidget<List>("ObjListBld");
 	if (objListSt && objListDyn && objListDyn)
 	{
 		for (int i=0; i < vObjNames.size(); ++i)
@@ -581,7 +569,7 @@ void CGui::InitGui()
 	
 	//  text desc
 	Edt(trkDesc[0], "TrackDesc", editTrkDesc);
-	trkName = app->mGUI->findWidget<Edit>("TrackName");
+	trkName = app->mGui->findWidget<Edit>("TrackName");
 	if (trkName)  trkName->setCaption(pSet->gui.track);
 
 	GuiInitTrack();

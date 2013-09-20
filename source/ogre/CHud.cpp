@@ -141,7 +141,7 @@ Vector3 CHud::projectPoint(const Camera* cam, const Vector3& pos)
 using namespace MyGUI;
 TextBox* CHud::CreateNickText(int carId, String text)
 {
-	TextBox* txt = app->mGUI->createWidget<TextBox>("TextBox",
+	TextBox* txt = app->mGui->createWidget<TextBox>("TextBox",
 		100,100, 360,32, Align::Center, "Back", "NickTxt"+toStr(carId));
 	txt->setVisible(false);
 	txt->setFontHeight(28);  //par 24..32

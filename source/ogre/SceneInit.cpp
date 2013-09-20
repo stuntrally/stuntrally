@@ -221,7 +221,7 @@ void App::LoadCleanUp()  // 1 first
 			if (i < 4)
 				pSet->cam_view[i] = carsCamNum[i];
 		}
-		if (c->pNickTxt)  {  mGUI->destroyWidget(c->pNickTxt);  c->pNickTxt = 0;  }
+		if (c->pNickTxt)  {  mGui->destroyWidget(c->pNickTxt);  c->pNickTxt = 0;  }
 		delete c;
 	}
 	carModels.clear();  //carPoses.clear();

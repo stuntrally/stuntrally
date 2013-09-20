@@ -38,7 +38,7 @@ public:
 
 	GuiPopup();
 	
-	MyGUI::Gui* mGUI;
+	MyGUI::Gui* mGui;
 	
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	MyGUI::OgreD3D11Platform* mPlatform;

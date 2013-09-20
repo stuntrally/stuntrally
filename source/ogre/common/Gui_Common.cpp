@@ -115,7 +115,7 @@ void CGui::chkWaterRefract(WP wp)
 //----------------------------------------------------------------------------------------------------------------
 void CGui::GuiInitGraphics()  // also called on preset change with bGI true
 {
-	SliderValue::pGUI = app->mGUI;
+	SliderValue::pGUI = app->mGui;
 	SliderValue::bGI = &bGI;
 
 	ButtonPtr btn, bchk;  ComboBoxPtr cmb;
@@ -161,7 +161,7 @@ void CGui::GuiInitGraphics()  // also called on preset change with bGI true
 	sv= &svShadowCount;	sv->Init("ShadowCount",	&pSet->shadow_count, 1.f,3.f);
 	sv= &svShadowSize;
 		for (int i=0; i < ciShadowNumSizes; ++i)  sv->strMap[i] = toStr(ciShadowSizesA[i]);
-						sv->Init("ShadowSize",	&pSet->shadow_size, 0.f,ciShadowNumSizes-1);
+						sv->Init("ShadowSize",	&pSet->shadow_size, 0,ciShadowNumSizes-1);
 	sv= &svShadowDist;	sv->Init("ShadowDist",	&pSet->shadow_dist, 20.f,5000.f, 3.f, 0,3, 1.f," m");
 	Btn("Apply", btnShadows);
 	
@@ -294,7 +294,7 @@ void CGui::doSizeGUI(EnumeratorWidgetPtr widgets)
 				relativeSize = IntSize(app->mWindow->getWidth(), app->mWindow->getHeight());
 			else
 			{
-				WidgetPtr window = app->mGUI->findWidget<Widget>(relativeTo);
+				WidgetPtr window = app->mGui->findWidget<Widget>(relativeTo);
 				relativeSize = window->getSize();
 			}
 			
@@ -412,7 +412,7 @@ void CGui::GuiInitLang()
 	languages["ru"] = TR("#{LANG_RU}");  languages["fi"] = TR("#{LANG_FI}");
 	languages["pt"] = TR("#{LANG_PT}");  languages["ro"] = TR("#{LANG_RO}");
 
-	ComboBoxPtr combo = app->mGUI->findWidget<ComboBox>("Lang");
+	ComboBoxPtr combo = app->mGui->findWidget<ComboBox>("Lang");
 	if (!combo)  return;
 	combo->eventComboChangePosition += newDelegate(this, &CGui::comboLanguage);
 	for (std::map<std::string, UString>::const_iterator it = languages.begin();
@@ -494,7 +494,7 @@ void CGui::InitGuiScreenRes()
 	Chk("VSync", chkVidVSync, pSet->vsync);
 
 	//  video resolutions combobox
-	resList = app->mGUI->findWidget<List>("ResList");
+	resList = app->mGui->findWidget<List>("ResList");
 	if (resList)
 	{
 		//  get resolutions
@@ -530,7 +530,7 @@ void CGui::InitGuiScreenRes()
 		if (modeSel != "")
 			resList->setIndexSelected(resList->findItemIndexWith(modeSel));
 	}
-	ButtonPtr btnRes = app->mGUI->findWidget<Button>("ResChange");
+	ButtonPtr btnRes = app->mGui->findWidget<Button>("ResChange");
 	if (btnRes)  {  btnRes->eventMouseButtonClick += newDelegate(this, &CGui::btnResChng);  }
 }
 

@@ -174,7 +174,7 @@ BaseApp::BaseApp()
 	,mShowDialog(1), mShutDown(false), bWindowResized(0)
 	,alt(0), ctrl(0), shift(0), roadUpdTm(0.f)
 	,mbLeft(0), mbRight(0), mbMiddle(0)
-	,isFocGui(0),isFocRpl(0), mGUI(0), mPlatform(0)
+	,isFocGui(0),isFocRpl(0), mGui(0), mPlatform(0)
 	,mWndTabsGame(0),mWndTabsOpts(0),mWndTabsHelp(0),mWndTabsRpl(0)
 	,mWndMain(0),mWndGame(0),mWndReplays(0),mWndHelp(0),mWndOpts(0)
 	,mWndRpl(0), mWndNetEnd(0), mWndTweak(0)
@@ -207,8 +207,8 @@ BaseApp::~BaseApp()
 	delete mLoadingBar;
 	delete mSplitMgr;
 	
-	if (mGUI)  {
-		mGUI->shutdown();  delete mGUI;  mGUI = 0;  }
+	if (mGui)  {
+		mGui->shutdown();  delete mGui;  mGui = 0;  }
 	if (mPlatform)  {
 		mPlatform->shutdown();  delete mPlatform;  mPlatform = 0;  }
 
@@ -585,7 +585,7 @@ bool BaseApp::keyReleased(const SDL_KeyboardEvent& arg)
 
 	if (bAssignKey) return true;
 
-	if (mGUI && (isFocGui || isTweak()))  {
+	if (mGui && (isFocGui || isTweak()))  {
 
 		OIS::KeyCode kc = mInputWrapper->sdl2OISKeyCode(arg.keysym.sym);
 
@@ -608,7 +608,7 @@ bool BaseApp::mouseMoved(const SFO::MouseMotionEvent &arg)
 	mMouseX = arg.x;
 	mMouseY = arg.y;
 
-	if (IsFocGui() && mGUI)  {
+	if (IsFocGui() && mGui)  {
 		MyGUI::InputManager::getInstance().injectMouseMove(arg.x, arg.y, arg.z);
 		return true;  }
 
@@ -629,7 +629,7 @@ bool BaseApp::mousePressed( const SDL_MouseButtonEvent& arg, Uint8 id )
 	for (int i=0; i<4; ++i)  mInputCtrlPlayer[i]->mousePressed(arg, id);
 
 	if (bAssignKey)  return true;
-	if (IsFocGui() && mGUI)  {
+	if (IsFocGui() && mGui)  {
 		MyGUI::InputManager::getInstance().injectMousePress(arg.x, arg.y, sdlButtonToMyGUI(id));
 		return true;  }
 
@@ -645,7 +645,7 @@ bool BaseApp::mouseReleased( const SDL_MouseButtonEvent& arg, Uint8 id )
 	for (int i=0; i<4; ++i)  mInputCtrlPlayer[i]->mouseReleased(arg, id);
 
 	if (bAssignKey)  return true;
-	if (IsFocGui() && mGUI)  {
+	if (IsFocGui() && mGui)  {
 		MyGUI::InputManager::getInstance().injectMouseRelease(arg.x, arg.y, sdlButtonToMyGUI(id));
 		return true;  }
 
@@ -753,9 +753,9 @@ void BaseApp::baseInitGui()
 	#endif
 	
 	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::UserConfigDir() + "/MyGUI.log");
-	mGUI = new MyGUI::Gui();
+	mGui = new MyGUI::Gui();
 
-	mGUI->initialise("");
+	mGui->initialise("");
 
 	MyGUI::FactoryManager::getInstance().registerFactory<ResourceImageSetPointerFix>("Resource", "ResourceImageSetPointer");
 	MyGUI::ResourceManager::getInstance().load("core.xml");
@@ -783,7 +783,7 @@ void BaseApp::baseInitGui()
 	///  create widgets
 	//------------------------------------------------
 	//  Fps
-	bckFps = mGUI->createWidget<ImageBox>("ImageBox",
+	bckFps = mGui->createWidget<ImageBox>("ImageBox",
 		0,0, 212,25, Align::Default, "Pointer", "FpsB");
 	bckFps->setImageTexture("Border_Center.png");
 
@@ -795,7 +795,7 @@ void BaseApp::baseInitGui()
 
 
 	//  loading
-	bckLoad = mGUI->createWidget<ImageBox>("ImageBox",
+	bckLoad = mGui->createWidget<ImageBox>("ImageBox",
 		100,100, 500,110, Align::Default, "Pointer", "LoadBck");
 	bckLoad->setImageTexture("loading_back.jpg");
 
@@ -826,13 +826,13 @@ void BaseApp::baseInitGui()
 	//  dont show for autoload and no loadingbackground
 	if (!(!pSet->loadingbackground && pSet->autostart))
 	{
-		imgBack = mGUI->createWidget<ImageBox>("ImageBox",
+		imgBack = mGui->createWidget<ImageBox>("ImageBox",
 			0,0, 800,600, Align::Default, "Back","ImgBack");
 		imgBack->setImageTexture("background.jpg");
 	}
 
 	///  loading background img
-	imgLoad = mGUI->createWidget<ImageBox>("ImageBox",
+	imgLoad = mGui->createWidget<ImageBox>("ImageBox",
 		0,0, 800,600, Align::Default, "Back", "ImgLoad");
 	//imgLoad->setImageTexture("background.png");
 	//imgLoad->setVisible(true);

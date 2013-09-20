@@ -180,7 +180,7 @@ BaseApp::BaseApp()
 	,ovPos(0), ovDbg(0), ovInfo(0), ovStat(0)
 	,ovFocus(0),ovFocBck(0), ovBrushPrv(0),ovBrushMtr(0), ovTerPrv(0),ovTerMtr(0)
 
-	,mbWireFrame(0), mx(0),my(0),mz(0),  mGUI(0), mPlatform(0)
+	,mbWireFrame(0), mx(0),my(0),mz(0),  mGui(0), mPlatform(0)
 
 	,mWndMain(0),mWndEdit(0),mWndHelp(0),mWndOpts(0)
 	,mWndTabsEdit(0),mWndTabsHelp(0),mWndTabsOpts(0)
@@ -195,8 +195,8 @@ BaseApp::BaseApp()
 
 BaseApp::~BaseApp()
 {	
-	if (mGUI)  {
-		mGUI->shutdown();	delete mGUI;	mGUI = 0;  }
+	if (mGui)  {
+		mGui->shutdown();	delete mGui;	mGui = 0;  }
 	if (mPlatform)  {
 		mPlatform->shutdown();	delete mPlatform;	mPlatform = 0;  }
 
@@ -483,9 +483,9 @@ void BaseApp::baseInitGui()
 	#endif
 
 	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::UserConfigDir() + "/MyGUI.log");
-	mGUI = new MyGUI::Gui();
+	mGui = new MyGUI::Gui();
 
-	mGUI->initialise("");
+	mGui->initialise("");
 
 	MyGUI::FactoryManager::getInstance().registerFactory<ResourceImageSetPointerFix>("Resource", "ResourceImageSetPointer");
 	MyGUI::ResourceManager::getInstance().load("core.xml");
@@ -509,11 +509,11 @@ void BaseApp::baseInitGui()
 	///  create widgets
 	//------------------------------------------------
 	//  Fps
-	bckFps = mGUI->createWidget<ImageBox>("ImageBox",
+	bckFps = mGui->createWidget<ImageBox>("ImageBox",
 		0,0, 212,25, Align::Default, "Pointer", "FpsB");
 	bckFps->setImageTexture("Border_Center.png");
 
-	txFps = mGUI->createWidget<TextBox>("TextBox",
+	txFps = mGui->createWidget<TextBox>("TextBox",
 		1,1, 212,25, Align::Default, "Pointer", "FpsT");
 	txFps->setFontName("fps.17");
 

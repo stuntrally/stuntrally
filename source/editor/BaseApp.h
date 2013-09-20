@@ -122,7 +122,7 @@ protected:
 
 	///  Gui
 	bool bGuiFocus;  // gui shown
-	MyGUI::Gui* mGUI;  void baseInitGui();
+	MyGUI::Gui* mGui;  void baseInitGui();
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	MyGUI::OgreD3D11Platform* mPlatform;
 	#else

@@ -37,6 +37,7 @@ public:
 	SETTINGS* pSet;
 	Scene* sc;
 	CData* data;
+	MyGUI::Gui* mGui;
 
 	CGui(App* app1);
 	//virtual ~CGui();
@@ -84,7 +85,7 @@ public:
 		ReadTrkStats();
 	MyGUI::MultiList2* trkList;  MyGUI::EditPtr trkDesc[1];
 	MyGUI::StaticImagePtr imgPrv[1],imgMini[1],imgTer[1], imgTrkIco1,imgTrkIco2;
-	const static int StTrk = 12, InfTrk = 11;
+	const static int StTrk = 6, InfTrk = 8;
 	MyGUI::StaticTextPtr valTrk[1], stTrk[1][StTrk], infTrk[1][InfTrk];  // [1] 2nd is in game (common code)
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
@@ -120,7 +121,7 @@ public:
 	//  tool windows texts
 	const static int
 		BR_TXT=9, RD_TXT=11, RDS_TXT=9,
-		ST_TXT=6, FL_TXT=6, OBJ_TXT=7, RI_TXT=6;
+		ST_TXT=6, FL_TXT=6, OBJ_TXT=6, RI_TXT=6;
 	MyGUI::StaticTextPtr
 		brTxt[BR_TXT],brVal[BR_TXT],brKey[BR_TXT],
 		rdTxt[RD_TXT],rdVal[RD_TXT],rdKey[RD_TXT],

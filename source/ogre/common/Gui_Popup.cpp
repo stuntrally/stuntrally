@@ -8,7 +8,7 @@ using namespace MyGUI;
 
 ///----------------------------------------------------------------------------------------------------------------
 GuiPopup::GuiPopup()
-	:mGUI(0), mWnd(0), mPlatform(0)
+	:mGui(0), mWnd(0), mPlatform(0)
 	,isVisible(false), btnResult(-1)
 {	}
 
@@ -32,7 +32,7 @@ bool GuiPopup::Show(
 	int wnd_w = 392, wnd_h = 140 + numEdits * 80,
 		wnd_x = (scr_w - wnd_w)/2, wnd_y = (scr_h - wnd_h)/2;  // center
 
-	mWnd = mGUI->createWidget<Window>("WindowC", wnd_x,wnd_y, wnd_w,wnd_h, Align::Center, "Popup", "WndPop");
+	mWnd = mGui->createWidget<Window>("WindowC", wnd_x,wnd_y, wnd_w,wnd_h, Align::Center, "Popup", "WndPop");
 	mWnd->setColour(Colour(0.8f,0.96f,1.f));
 	mWnd->setAlpha(0.9f);
 	mWnd->setCaption(title);
@@ -108,7 +108,7 @@ void GuiPopup::Hide()
 	if (mWnd)
 	{
 		mWnd->setVisible(false);
-		mGUI->destroyWidget(mWnd);
+		mGui->destroyWidget(mWnd);
 		mWnd = 0;
 	}
 }

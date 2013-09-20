@@ -47,6 +47,7 @@ public:
 	Scene* sc;
 	CHud* hud;
 	CData* data;
+	MyGUI::Gui* mGui;
 	
 	CGui(App* ap1);
 	
@@ -97,7 +98,7 @@ public:
 		ReadTrkStats(), ReadTrkStatsChamp(Ogre::String track,bool reverse);
 	MyGUI::MultiList2* trkList;  MyGUI::EditPtr trkDesc[2];
 	MyGUI::StaticImagePtr imgPrv[2],imgMini[2],imgTer[2], imgTrkIco1,imgTrkIco2;
-	const static int StTrk = 12, InfTrk = 11;
+	const static int StTrk = 6, InfTrk = 11;
 	MyGUI::StaticTextPtr valTrkNet, stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
@@ -238,23 +239,39 @@ public:
 
 
 	//  sliders  -----------------------------------------
-	SLV(Particles);  SLV(Trails);
-	SLV(ReflSkip);  SLV(ReflSize);  SLV(ReflFaces);  SLV(ReflDist);  SLV(ReflMode); // refl
-	SLV(SizeGaug);  SLV(TypeGaug);  SLV(LayoutGaug);
-	SLV(SizeMinimap);  SLV(SizeArrow);  SLV(ZoomMinimap);
-	SLV(CountdownTime);  // view
-	SLV(DbgTxtClr);  SLV(DbgTxtCnt);
-	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolSusp);  SLV(VolEnv);  // sounds
-	SLV(VolFlSplash);  SLV(VolFlCont);  SLV(VolCarCrash);  SLV(VolCarScrap);
+	//  reflection
+	SV svParticles, svTrails;
+	SV svReflSkip, svReflFaces, svReflSize;
+	SlV(ReflDist);  SlV(ReflMode);
+	//  hud view
+	SV svSizeGaug;
+	SV svTypeGaug, svLayoutGaug;
+	SV svSizeMinimap, svZoomMinimap;
+	void slHudSize(SV*), slHudCreate(SV*);
+	SlV(SizeArrow);
+	SLV(CountdownTime);//-
+	SV svDbgTxtClr, svDbgTxtCnt;
+	//  sound
+	SlV(VolMaster);
+	SV svVolEngine, svVolTires, svVolSusp, svVolEnv;
+	SV svVolFlSplash, svVolFlCont, svVolCarCrash, svVolCarScrap;
 	
-	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  SLV(CarClrGloss);  SLV(CarClrRefl);  // car clr
-	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
-	SLV(DepthOfFieldFocus);  SLV(DepthOfFieldFar);  // dof
-	SLV(HDRParam1);  SLV(HDRParam2);  SLV(HDRParam3);  // hdr
-	SLV(HDRBloomInt);  SLV(HDRBloomOrig);  SLV(HDRAdaptationScale);
-	SLV(HDRVignettingRadius);  SLV(HDRVignettingDarkness);
-	SLV(NumLaps);  SLV(RplNumViewports);  // setup
-	SLV(SSSEffect);  SLV(SSSVelFactor);  SLV(SteerRangeSurf);  SLV(SteerRangeSim);
+	//  car clr
+	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);
+	SLV(CarClrGloss);  SLV(CarClrRefl);
+	//  video effects
+	SV svBloomInt, svBloomOrig;
+	SV svBlurIntens;  // motion blur
+	SV svDofFocus, svDofFar;  // DepthOfField
+	void slBloom(SV*);
+	//  hdr
+	SV svHDRParam1, svHDRParam2, svHDRParam3;
+	SV svHDRBloomInt, svHDRBloomOrig, svHDRAdaptScale;
+	SV svHDRVignRadius, svHDRVignDark;
+	//  setup
+	SV svNumLaps;  SLV(RplNumViewports);
+	SLV(SSSEffect);  SLV(SSSVelFactor);
+	SLV(SteerRangeSurf);  SLV(SteerRangeSim);
 	
 	//  checks
 	void chkGauges(WP),	chkArrow(WP),chkBeam(WP), chkDigits(WP),
@@ -274,7 +291,8 @@ public:
 	// gui car tire set gravel/asphalt
 	int iTireSet;
 	void tabTireSet(MyGUI::TabPtr wp, size_t id);
-	MyGUI::ButtonPtr bchAbs,bchTcs;  MyGUI::Slider* slSSSEff,*slSSSVel,*slSteerRngSurf,*slSteerRngSim;
+	MyGUI::ButtonPtr bchAbs,bchTcs;
+	MyGUI::Slider* slSSSEff,*slSSSVel,*slSteerRngSurf,*slSteerRngSim;
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP), toggleWireframe();
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP);
@@ -352,9 +370,10 @@ public:
 	void uploadGameInfo();
 
 	mutable boost::mutex netGuiMutex;
+	protocol::GameInfo netGameInfo;
+	//  chat,msg
 	MyGUI::UString sChatBuffer,sChatLast1,sChatLast2;  int iChatMove;
 	void AddChatMsg(const MyGUI::UString& clr, const MyGUI::UString& msg, bool add=true);
-	protocol::GameInfo netGameInfo;
 
 	bool bRebuildPlayerList, bRebuildGameList;
 	bool bUpdateGameInfo, bStartGame, bStartedGame, bUpdChat;

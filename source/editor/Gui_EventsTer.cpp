@@ -176,6 +176,7 @@ void CGui::btnTerrainHalf(WP)
 
 	sc->td.fTriangleSize *= 2.f;
 	sc->td.iVertsX = halfSize;  sc->td.UpdVals();
+	updTabHmap();  svTerTriSize.Upd();
 	app->bNewHmap = true;	app->UpdateTrack();
 }
 
@@ -201,6 +202,7 @@ void CGui::btnTerrainDouble(WP)
 	delete[] hfData;
 
 	sc->td.iVertsX = dblSize;  sc->td.UpdVals();
+	updTabHmap();
 	app->bNewHmap = true;	app->UpdateTrack();
 }
 #else
@@ -237,7 +239,8 @@ void CGui::btnTerrainDouble(WP)
 	
 	sc->td.fTriangleSize * scale * 2.f;
 	sc->td.iVertsX = newSize;  sc->td.UpdVals();
-	app->bNewHmap = true;	app->UpdateTrack();  SetGuiFromXmls();
+	updTabHmap();  svTerTriSize.Upd();
+	app->bNewHmap = true;	app->UpdateTrack();  //SetGuiFromXmls();
 }
 #endif
 

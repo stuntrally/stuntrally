@@ -142,20 +142,20 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	//  effects
 	Param(c,w, "video_eff.all_effects", all_effects);
-	Param(c,w, "video_eff.bloom", bloom);				Param(c,w, "video_eff.bloomintensity", bloomintensity);
-	Param(c,w, "video_eff.bloomorig", bloomorig);		
-	Param(c,w, "video_eff.motionblur", motionblur);		Param(c,w, "video_eff.motionblurintensity", motionblurintensity);
+	Param(c,w, "video_eff.bloom", bloom);				Param(c,w, "video_eff.bloomintensity", bloom_int);
+	Param(c,w, "video_eff.bloomorig", bloom_orig);		
+	Param(c,w, "video_eff.motionblur", blur);			Param(c,w, "video_eff.motionblurintensity", blur_int);
 	Param(c,w, "video_eff.ssao", ssao);					Param(c,w, "video_eff.softparticles", softparticles);
 	Param(c,w, "video_eff.godrays", godrays);
 	Param(c,w, "video_eff.dof", dof);
-	Param(c,w, "video_eff.dof_focus", depthOfFieldFocus);	Param(c,w, "video_eff.dof_far", depthOfFieldFar);
+	Param(c,w, "video_eff.dof_focus", dof_focus);		Param(c,w, "video_eff.dof_far", dof_far);
 	Param(c,w, "video_eff.boost_fov", boost_fov);
 	//  effects hdr
 	Param(c,w, "video_eff.hdr", hdr);					Param(c,w, "video_eff.hdr_p1", hdrParam1);
 	Param(c,w, "video_eff.hdr_p2", hdrParam2);			Param(c,w, "video_eff.hdr_p3", hdrParam3);
-	Param(c,w, "video_eff.hdr_bloomint", hdrbloomint);	Param(c,w, "video_eff.hdr_bloomorig", hdrbloomorig);
+	Param(c,w, "video_eff.hdr_bloomint", hdrBloomint);	Param(c,w, "video_eff.hdr_bloomorig", hdrBloomorig);
 	Param(c,w, "video_eff.hdr_adaptationScale", hdrAdaptationScale);
-	Param(c,w, "video_eff.hdr_vignettingRadius", vignettingRadius);  Param(c,w, "video_eff.hdr_vignettingDarkness", vignettingDarkness);
+	Param(c,w, "video_eff.hdr_vignettingRadius", vignRadius);  Param(c,w, "video_eff.hdr_vignettingDarkness", vignDarkness);
 	
 	//  video
 	Param(c,w, "video.windowx", windowx);			Param(c,w, "video.windowy", windowy);
@@ -226,14 +226,14 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,buffer("FBO"), fsaa(0)
 	//  video eff
 	,all_effects(false), godrays(false), filmgrain(false)
-	,bloom(false), bloomintensity(0.13), bloomorig(0.9), hdr(false)
-	,motionblur(false), motionblurintensity(0.1)
-	,depthOfFieldFocus(100), depthOfFieldFar(1000)
+	,bloom(false), bloom_int(0.13), bloom_orig(0.9), hdr(false)
+	,blur(false), blur_int(0.1)
+	,dof_focus(100), dof_far(1000)
 	,ssao(false), softparticles(false)
 	//  hdr
 	,hdrParam1(0.62), hdrParam2(0.10), hdrParam3(0.79)
-	,hdrbloomint(0.81), hdrbloomorig(0.34), hdrAdaptationScale(0.51)
-	,vignettingRadius(2.85), vignettingDarkness(0.34)
+	,hdrBloomint(0.81), hdrBloomorig(0.34), hdrAdaptationScale(0.51)
+	,vignRadius(2.85), vignDarkness(0.34)
 	//  not in gui
 	,boostFromExhaust(0), net_local_plr(-1)
 	,renderNotActive(false)

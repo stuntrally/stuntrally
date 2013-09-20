@@ -233,12 +233,12 @@ void HDRListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 		}
 		if (params->_findNamedConstantDefinition("bloomSettings"))
 		{
-			Vector4 bloomSettings(mApp->pSet->hdrbloomorig*2, mApp->pSet->hdrbloomint, 1.0, 1.0);
+			Vector4 bloomSettings(mApp->pSet->hdrBloomorig*2, mApp->pSet->hdrBloomint, 1.0, 1.0);
 			params->setNamedConstant("bloomSettings", bloomSettings);
 		}
 		if (params->_findNamedConstantDefinition("vignettingSettings"))
 		{
-			Vector4 vignettingSettings(mApp->pSet->vignettingRadius, mApp->pSet->vignettingDarkness, 1.0, 1.0);
+			Vector4 vignettingSettings(mApp->pSet->vignRadius, mApp->pSet->vignDarkness, 1.0, 1.0);
 			params->setNamedConstant("vignettingSettings", vignettingSettings);
 		}
 
@@ -580,7 +580,7 @@ void DepthOfFieldListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 
 		if (params->_findNamedConstantDefinition("dofparams"))
 		{
-			Vector4 dofParams(0.0f,mApp->pSet->depthOfFieldFocus,mApp->pSet->depthOfFieldFar,1.0);
+			Vector4 dofParams(0.0f,mApp->pSet->dof_focus,mApp->pSet->dof_far,1.0);
 			params->setNamedConstant("dofparams", dofParams);
 		}
 	}
@@ -609,7 +609,7 @@ void DepthOfFieldListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat
 
 		if (params->_findNamedConstantDefinition("dofparams"))
 		{
-			Vector4 dofParams(0.0f,mApp->pSet->depthOfFieldFocus,mApp->pSet->depthOfFieldFar,1.0);
+			Vector4 dofParams(0.0f,mApp->pSet->dof_focus,mApp->pSet->dof_far,1.0);
 			params->setNamedConstant("dofparams", dofParams);
 		}
 	}
@@ -766,7 +766,7 @@ void CameraBlurListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 			if (params->_findNamedConstantDefinition("EPF_PreviousViewProjectionMatrix"))
 				params->setNamedConstant("EPF_PreviousViewProjectionMatrix", prevviewproj);
 			if (params->_findNamedConstantDefinition("intensity"))
-				params->setNamedConstant("intensity", mApp->pSet->motionblurintensity);
+				params->setNamedConstant("intensity", mApp->pSet->blur_int);
 
 			float interpolationFactor = m_lastFPS * 0.03f ; //* m_timeScale m_timeScale is a multiplier to control motion blur interactively
 			Quaternion current_orientation = cam->getDerivedOrientation();

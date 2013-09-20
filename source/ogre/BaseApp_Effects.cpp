@@ -72,7 +72,7 @@ void BaseApp::createViewports()
 bool BaseApp::AnyEffectEnabled()
 {
 	//any new effect need to be added here to have UI Rendered on it
-	return pSet->all_effects && (pSet->softparticles || /*?*/pSet->bloom || pSet->hdr || pSet->motionblur || pSet->ssao || pSet->godrays || pSet->dof || pSet->filmgrain);
+	return pSet->all_effects && (pSet->softparticles || /*?*/pSet->bloom || pSet->hdr || pSet->blur || pSet->ssao || pSet->godrays || pSet->dof || pSet->filmgrain);
 }
 
 bool BaseApp::NeedMRTBuffer()
@@ -121,8 +121,8 @@ void BaseApp::refreshCompositor(bool disableAll)
 	if(!bloom.isNull())
 	{
 		GpuProgramParametersSharedPtr params = bloom->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-		params->setNamedConstant("OriginalImageWeight", pSet->bloomorig);
-		params->setNamedConstant("BlurWeight", pSet->bloomintensity);
+		params->setNamedConstant("OriginalImageWeight", pSet->bloom_orig);
+		params->setNamedConstant("BlurWeight", pSet->bloom_int);
 	}
 	}catch(...)
 	{	LogO("!!! Failed to set bloom shader params.");  }
@@ -157,7 +157,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		cmp.setCompositorEnabled((*it), "Bloom", pSet->bloom);
 		cmp.setCompositorEnabled((*it), "HDR", pSet->hdr && NeedMRTBuffer());
 		cmp.setCompositorEnabled((*it), "HDRNoMRT", pSet->hdr && !NeedMRTBuffer());
-		cmp.setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
+		cmp.setCompositorEnabled((*it), "Motion Blur", pSet->blur);
 		//cmp.setCompositorEnabled((*it), "CamBlur", pSet->camblur);
 		cmp.setCompositorEnabled((*it), "FilmGrain", pSet->hdr);
 

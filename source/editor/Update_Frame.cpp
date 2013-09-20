@@ -264,7 +264,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	
 	if (gui->bGuiReinit)  // after language change from combo
 	{	gui->bGuiReinit = false;
-		mGUI->destroyWidgets(vwGui);  gui->bnQuit=0; mWndOpts=0; gui->trkList=0; //todo: rest too..
+		mGui->destroyWidgets(vwGui);  gui->bnQuit=0; mWndOpts=0; gui->trkList=0; //todo: rest too..
 		gui->InitGui();
 		gui->SetGuiFromXmls();
 		bWindowResized = true;

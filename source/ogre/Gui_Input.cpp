@@ -197,10 +197,10 @@ void CGui::InitInputGui()
 {
 	app->input->LoadInputDefaults();
 
-	txtInpDetail = app->mGUI->findWidget<StaticText>("InputDetail");
-	panInputDetail = app->mGUI->findWidget<Widget>("PanInputDetail");
+	txtInpDetail = app->mGui->findWidget<StaticText>("InputDetail");
+	panInputDetail = app->mGui->findWidget<Widget>("PanInputDetail");
 
-	TabItemPtr inpTabAll = app->mGUI->findWidget<TabItem>("InputTabAll");  if (!inpTabAll)  return;
+	TabItemPtr inpTabAll = app->mGui->findWidget<TabItem>("InputTabAll");  if (!inpTabAll)  return;
 	Tab(tabInput, "InputTab", tabInputChg);
 	if (!tabInput)  return;
 
@@ -319,7 +319,7 @@ void CGui::notifyInputActionBound(bool complete)
 
 		// If a key was assigned that used to belong to another control, it will now be unassigned,
 		// so we need to force-update button labels
-		TabControl* inputTab = app->mGUI->findWidget<TabControl>("InputTab");  if (!inputTab)  return;
+		TabControl* inputTab = app->mGui->findWidget<TabControl>("InputTab");  if (!inputTab)  return;
 		TabItem* current = inputTab->getItemSelected();
 		for (int i=0; i < current->getChildCount(); ++i)
 		{
@@ -368,7 +368,7 @@ void CGui::inputDetailBtn(WP sender)
 	mBindingAction = sender->getUserData<InputAction>();
 	if (panInputDetail)  panInputDetail->setVisible(false);
 
-	Button* btnInputInv = app->mGUI->findWidget<Button>("InputInv");
+	Button* btnInputInv = app->mGui->findWidget<Button>("InputInv");
 	if (btnInputInv)  btnInputInv->setStateSelected(mBindingAction->mControl->getInverted());
 	if (edInputIncrease)  edInputIncrease->setCaption(toStr(action.mControl->getStepSize() * action.mControl->getStepsPerSeconds()));
 }
@@ -443,7 +443,7 @@ void CGui::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 //-------------------------------------------------------------------------------
 void CGui::UpdateInputBars()
 {
-	TabControl* inputTab = app->mGUI->findWidget<TabControl>("InputTab");  if (!inputTab)  return;
+	TabControl* inputTab = app->mGui->findWidget<TabControl>("InputTab");  if (!inputTab)  return;
 	TabItem* current = inputTab->getItemSelected();
 	for (int i=0; i<current->getChildCount(); ++i)
 	{

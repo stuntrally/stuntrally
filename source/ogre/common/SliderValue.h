@@ -67,7 +67,7 @@ public:
 			float valMul, Ogre::String suffix);
 	//  int*
 	void Init(Ogre::String name, int* pI,
-			float rMin=0.f, float rMax=1.f);
+			int rMin=0, int rMax=1, float rPow=1.f);
 
 	//  update slider and text (new value in *pFloat or pFloat changed)
 	void Upd();

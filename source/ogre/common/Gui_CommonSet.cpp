@@ -101,7 +101,7 @@ void CGui::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	
 	s.all_effects = val >= 4;  // only bloom on Higher
 	s.bloom = val >= 3;
-	s.motionblur = val >= 5;
+	s.blur = val >= 5;
 	s.softparticles = val >= 5;
 	s.ssao = val >= 6;
 	s.dof = val >= 7;
@@ -176,26 +176,22 @@ void CGui::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	//  update gui  sld,val,chk
 	//-----------------------------------------------------------------
-	GuiInitGraphics();  // += newDelegate..?
+	GuiInitGraphics();  // += newDelegate..?  // duplicated code..
 
 	ButtonPtr bchk;  Slider* sl;
 #ifndef SR_EDITOR  /// game only
-	// duplicated code..
 	Chk("ParticlesOn", chkParticles, pSet->particles);
 	Chk("TrailsOn", chkTrails, pSet->trails);
-	Slv(Particles,	powf(pSet->particles_len /4.f, 0.5f));
-	Slv(Trails,		powf(pSet->trails_len /4.f, 0.5f));
 
-	Slv(ReflSkip,	powf(pSet->refl_skip /1000.f, 0.5f));
-	Slv(ReflSize,	pSet->refl_size /float(ciShadowNumSizes));
-	Slv(ReflFaces,	pSet->refl_faces /6.f);
-	Slv(ReflDist,	powf((pSet->refl_dist -20.f)/1480.f, 0.5f));
-	Slv(ReflMode,   pSet->refl_mode /2.f);
+	svParticles.Upd();  svTrails.Upd();
+
+	svReflSkip.Upd();  svReflFaces.Upd();  svReflSize.Upd();
+	svReflDist.Upd();  svReflMode.Upd();
 
 	Chk("AllEffects", chkVidEffects, pSet->all_effects);
 	Chk("Bloom", chkVidBloom, pSet->bloom);
 	//Chk("HDR", chkVidHDR, pSet->hdr);
-	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
+	Chk("MotionBlur", chkVidBlur, pSet->blur);
 	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);
 	Chk("ssao", chkVidSSAO, pSet->ssao);
 	Chk("DepthOfField", chkVidDepthOfField, pSet->dof);
@@ -210,9 +206,6 @@ void CGui::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	svTerUpd.Upd();
 	svMiniUpd.Upd();
 #endif
-
-	Chk("UseImposters", chkUseImposters, pSet->use_imposters);
-	Chk("ImpostorsOnly", chkImpostorsOnly, pSet->imposters_only);
 
 	app->mWaterRTT->setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
 	app->mWaterRTT->recreate();

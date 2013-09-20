@@ -664,7 +664,6 @@ void GAME::ProcessNewSettings()
 		carcontrols_local.first->SetAutoRear(settings->autorear);
 		//carcontrols_local.first->SetAutoClutch(settings->rear_inv);
 	}
-
 	sound.SetMasterVolume(settings->vol_master);
 }
 

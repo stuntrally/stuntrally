@@ -240,7 +240,7 @@ void CHud::Create()
 
 		///  GUI
 		//  gear, vel text  -----------
-		h.parent = app->mGUI->createWidget<Widget>("",0,0,2560,1600,Align::Left,"Back","main"+s);
+		h.parent = app->mGui->createWidget<Widget>("",0,0,2560,1600,Align::Left,"Back","main"+s);
 
 		h.txGear = h.parent->createWidget<TextBox>("TextBox",
 			0,y, 160,116, Align::Left, "Gear"+s);  h.txGear->setVisible(false);
@@ -386,13 +386,13 @@ void CHud::Create()
 	}
 
 	//  camera info
-	txCamInfo = app->mGUI->createWidget<TextBox>("TextBox",
+	txCamInfo = app->mGui->createWidget<TextBox>("TextBox",
 		0,y, 800,100, Align::Left, "Back", "CamIT");  txCamInfo->setVisible(false);
 	txCamInfo->setFontName("font.20");  txCamInfo->setTextShadow(true);
 	txCamInfo->setTextColour(Colour(0.8,0.9,0.9));
 
 	//  chat msg  -----------
-	bckMsg = app->mGUI->createWidget<ImageBox>("ImageBox",
+	bckMsg = app->mGui->createWidget<ImageBox>("ImageBox",
 		0,y, 400,60, Align::Left, "Back", "MsgB");  bckMsg->setVisible(false);
 	bckMsg->setAlpha(0.8f);
 	bckMsg->setImageTexture("back_times.png");
@@ -512,7 +512,7 @@ void CHud::Destroy()
 		Dest2(h.moNeedles,h.ndNeedles)
 
 		#define Dest(w)  \
-			if (w) {  app->mGUI->destroyWidget(w);  w = 0;  }
+			if (w) {  app->mGui->destroyWidget(w);  w = 0;  }
 		Dest(h.txGear)  Dest(h.txVel)  Dest(h.bckVel)
 		Dest(h.txAbs)  Dest(h.txTcs)  Dest(h.txCam)
 		

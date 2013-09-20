@@ -17,9 +17,9 @@ using namespace MyGUI;
 ///  Gui Events
 
 //    [Car]
-void CGui::chkAbs(WP wp){	if (pChall /*&& !pChall->abs*/)  return;
+void CGui::chkAbs(WP wp){	if (pChall && !pChall->abs)  return;
 	ChkEv(abs[iTireSet]);	if (pGame)  pGame->ProcessNewSettings();	}
-void CGui::chkTcs(WP wp){	if (pChall /*&& !pChall->tcs*/)  return;
+void CGui::chkTcs(WP wp){	if (pChall && !pChall->tcs)  return;
 	ChkEv(tcs[iTireSet]);	if (pGame)  pGame->ProcessNewSettings();	}
 
 void CGui::tabTireSet(MyGUI::TabPtr wp, size_t id)
@@ -107,12 +107,6 @@ void CGui::chkStartOrd(WP wp)
     chk->setStateSelected(pSet->gui.start_order > 0);
 }
 
-void CGui::slNumLaps(SL)
-{
-	int v = 20.f * val + 1 +slHalf;  if (bGI)  pSet->gui.num_laps = v;
-	if (valNumLaps){  valNumLaps->setCaption(toStr(v));  }
-}
-
 void CGui::tabPlayer(TabPtr wp, size_t id)
 {
 	iCurCar = id;
@@ -149,6 +143,11 @@ void CGui::UpdCarMClr()
 		if (iCurCar < s)  // player
 			app->carModels[iCurCar]->ChangeClr();
 }
+/*void CGui::sldUpdCarClr()
+{
+	SV* sv;
+	sv= &
+}*/
 void CGui::slCarClrH(SL)
 {
 	Real v = val;  if (bGI)  pSet->gui.car_hue[iCurCar] = v;
@@ -203,60 +202,21 @@ void CGui::btnCarClrRandom(WP)
 //  [Graphics]
 //---------------------------------------------------------------------
 
-//  particles/trails
-void CGui::slParticles(SL)
-{
-	Real v = 4.f * powf(val, 2.f);  if (bGI)  pSet->particles_len = v;
-	if (valParticles){	valParticles->setCaption(fToStr(v,2,4));  }
-}
-void CGui::slTrails(SL)
-{
-	Real v = 4.f * powf(val, 2.f);  if (bGI)  pSet->trails_len = v;
-	if (valTrails){		valTrails->setCaption(fToStr(v,2,4));  }
-}
-
 //  reflect
-void CGui::slReflSkip(SL)
+void CGui::slReflDist(SV*)
 {
-	int v = 1000.f * powf(val, 2.f) +slHalf;	if (bGI)  pSet->refl_skip = v;
-	if (valReflSkip)  valReflSkip->setCaption(toStr(v));
-}
-void CGui::slReflSize(SL)
-{
-	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val)) +slHalf;
-	if (bGI)  pSet->refl_size = v;
-	if (valReflSize)  valReflSize->setCaption(toStr(ciShadowSizesA[v]));
-}
-void CGui::slReflFaces(SL)
-{
-	int v = val * 6.f +slHalf;
-	if (bGI)  pSet->refl_faces = v;
-	if (valReflFaces)  valReflFaces->setCaption(toStr(v));
-}
-void CGui::slReflDist(SL)
-{
-	float v = 20.f + 1480.f * powf(val, 2.f);	if (bGI)  pSet->refl_dist = v;
-	if (valReflDist){	valReflDist->setCaption(fToStr(v,0,4)+" m");  }
-	
 	app->recreateReflections();
 }
-void CGui::slReflMode(SL)
+void CGui::slReflMode(SV* sv)
 {
-	int old = pSet->refl_mode;
-	pSet->refl_mode = val * 2.f +slHalf;
-	
-	if (pSet->refl_mode != old)
-		app->recreateReflections();
-		
-	if (valReflMode)
+	if (sv->text)
+	switch (pSet->refl_mode)
 	{
-		switch (pSet->refl_mode)
-		{
-		case 0: valReflMode->setCaption( TR("#{ReflMode_static}") );  valReflMode->setTextColour(MyGUI::Colour(0.0, 1.0, 0.0));  break;
-		case 1: valReflMode->setCaption( TR("#{ReflMode_single}") );  valReflMode->setTextColour(MyGUI::Colour(1.0, 0.5, 0.0));  break;
-		case 2: valReflMode->setCaption( TR("#{ReflMode_full}") );  valReflMode->setTextColour(MyGUI::Colour(1.0, 0.0, 0.0));  break;
-		}
+		case 0: sv->text->setTextColour(Colour(0.0, 1.0, 0.0));  break;
+		case 1: sv->text->setTextColour(Colour(1.0, 0.5, 0.0));  break;
+		case 2: sv->text->setTextColour(Colour(1.0, 0.0, 0.0));  break;
 	}
+	app->recreateReflections();
 }
 void App::recreateReflections()
 {
@@ -269,83 +229,32 @@ void App::recreateReflections()
 
 
 //  [View] size
-void CGui::slSizeGaug(SL)
+void CGui::slHudSize(SV*)
 {
-	float v = 0.1f + 0.15f * val;	if (bGI)  {  pSet->size_gauges = v;  hud->Size(true);  }
-	if (valSizeGaug)	valSizeGaug->setCaption(fToStr(v,3,4));
+	hud->Size(true);
 }
-void CGui::slTypeGaug(SL)
-{	int old = pSet->gauges_type;
-	int v = val * 5.f +slHalf;		if (bGI && v != old)  {  pSet->gauges_type = v;  hud->Destroy();  hud->Create();  }
-	if (valTypeGaug)	valTypeGaug->setCaption(toStr(v));
-}
-void CGui::slLayoutGaug(SL)
-{	int old = pSet->gauges_layout;
-	int v = val * 2.0f +slHalf;		if (bGI && v != old)  {  pSet->gauges_layout = v;  hud->Destroy();  hud->Create();  }
-	if (valLayoutGaug)	valLayoutGaug->setCaption(toStr(v));
-}
-void CGui::slSizeArrow(SL)
+void CGui::slHudCreate(SV*)
 {
-	float v = val;	if (bGI)  {  pSet->size_arrow = v;  }
-	if (valSizeArrow)	valSizeArrow->setCaption(fToStr(v,3,4));
-	if (hud->arrow.nodeRot)  hud->arrow.nodeRot->setScale(v/2.f, v/2.f, v/2.f);
+	hud->Destroy();  hud->Create();
+}
+
+void CGui::slSizeArrow(SV*)
+{
+	float v = pSet->size_arrow * 0.5f;
+	if (hud->arrow.nodeRot)
+		hud->arrow.nodeRot->setScale(v * Vector3::UNIT_SCALE);
 }
 void CGui::slCountdownTime(SL)
 {
-	float v = (int)(val * 6.f +slHalf) * 0.5f;	if (bGI)  {  pSet->gui.pre_time = v;  }
+	float v = (int)(val * 6.f +slHalf) * 0.5f;	if (bGI)  pSet->gui.pre_time = v;
 	if (valCountdownTime){	valCountdownTime->setCaption(fToStr(v,1,4));  }
-}
-
-//  minimap
-void CGui::slSizeMinimap(SL)
-{
-	float v = 0.05f + 0.25f * val;	if (bGI)  {  pSet->size_minimap = v;  hud->Size(true);  }
-	if (valSizeMinimap)  valSizeMinimap->setCaption(fToStr(v,3,4));
-}
-void CGui::slZoomMinimap(SL)
-{
-	float v = 1.f + 9.f * powf(val, 2.f);	if (bGI)  {  pSet->zoom_minimap = v;  hud->Size(true);  }
-	if (valZoomMinimap)  valZoomMinimap->setCaption(fToStr(v,3,4));
 }
 
 
 //  [Sound]
-void CGui::slVolMaster(SL)
+void CGui::slVolMaster(SV*)
 {
-	Real v = 1.6f * val;	if (bGI)  {  pSet->vol_master = v;  pGame->ProcessNewSettings();  }
-	if (valVolMaster)  valVolMaster->setCaption(fToStr(v,2,4));
-}
-void CGui::slVolEngine(SL)
-{
-	Real v = 1.4f * val;  if (bGI)  pSet->vol_engine = v;	if (valVolEngine)  valVolEngine->setCaption(fToStr(v,2,4));
-}
-void CGui::slVolTires(SL)
-{
-	Real v = 1.4f * val;  if (bGI)  pSet->vol_tires = v;	if (valVolTires)  valVolTires->setCaption(fToStr(v,2,4));
-}
-void CGui::slVolSusp(SL)
-{
-	Real v = 1.4f * val;  if (bGI)  pSet->vol_susp = v;		if (valVolSusp)  valVolSusp->setCaption(fToStr(v,2,4));
-}
-void CGui::slVolEnv(SL)
-{
-	Real v = 1.4f * val;  if (bGI)  pSet->vol_env = v;		if (valVolEnv)  valVolEnv->setCaption(fToStr(v,2,4));
-}
-void CGui::slVolFlSplash(SL)
-{
-	Real v = 1.4f * val;  if (bGI)  pSet->vol_fl_splash = v;	if (valVolFlSplash)  valVolFlSplash->setCaption(fToStr(v,2,4));
-}
-void CGui::slVolFlCont(SL)
-{
-	Real v = 1.4f * val;  if (bGI)  pSet->vol_fl_cont = v;		if (valVolFlCont)  valVolFlCont->setCaption(fToStr(v,2,4));
-}
-void CGui::slVolCarCrash(SL)
-{
-	Real v = 1.4f * val;  if (bGI)  pSet->vol_car_crash = v;	if (valVolCarCrash)  valVolCarCrash->setCaption(fToStr(v,2,4));
-}
-void CGui::slVolCarScrap(SL)
-{
-	Real v = 1.4f * val;  if (bGI)  pSet->vol_car_scrap = v;	if (valVolCarScrap)  valVolCarScrap->setCaption(fToStr(v,2,4));
+	pGame->ProcessNewSettings();
 }
 
 
@@ -380,7 +289,7 @@ void CGui::toggleWireframe()
 }
 //  hud
 void CGui::chkDigits(WP wp){ 		ChkEv(show_digits);  hud->Show();  }
-void CGui::chkGauges(WP wp){			ChkEv(show_gauges);	 hud->Show();  }
+void CGui::chkGauges(WP wp){		ChkEv(show_gauges);	 hud->Show();  }
 
 void CGui::radKmh(WP wp){	bRkmh->setStateSelected(true);  bRmph->setStateSelected(false);  pSet->show_mph = false;  hud->Size(true);  }
 void CGui::radMph(WP wp){	bRkmh->setStateSelected(false);  bRmph->setStateSelected(true);  pSet->show_mph = true;   hud->Size(true);  }
@@ -428,12 +337,12 @@ void CGui::chkProfilerTxt(WP wp){	ChkEv(profilerTxt);	}
 void CGui::chkBltDebug(WP wp){		ChkEv(bltDebug);	}
 void CGui::chkBltProfilerTxt(WP wp){	ChkEv(bltProfilerTxt);	}
 
-void CGui::chkCarDbgBars(WP wp){		ChkEv(car_dbgbars);  hud->Show();  }
+void CGui::chkCarDbgBars(WP wp){	ChkEv(car_dbgbars);  hud->Show();  }
 void CGui::chkCarDbgTxt(WP wp){		ChkEv(car_dbgtxt);   hud->Show();  }
-void CGui::chkCarDbgSurf(WP wp){		ChkEv(car_dbgsurf);  hud->Show();  }
-void CGui::chkCarTireVis(WP wp){		ChkEv(car_tirevis);  hud->Destroy();  hud->Create();  }
+void CGui::chkCarDbgSurf(WP wp){	ChkEv(car_dbgsurf);  hud->Show();  }
+void CGui::chkCarTireVis(WP wp){	ChkEv(car_tirevis);  hud->Destroy();  hud->Create();  }
 
-void CGui::chkGraphs(WP wp){			ChkEv(show_graphs);
+void CGui::chkGraphs(WP wp){		ChkEv(show_graphs);
 	for (int i=0; i < app->graphs.size(); ++i)
 		app->graphs[i]->SetVisible(pSet->show_graphs);
 }
@@ -444,22 +353,11 @@ void CGui::comboGraphs(CMB)
 	{	pSet->graphs_type = (eGraphType)val;  app->DestroyGraphs();  app->CreateGraphs();  }
 }
 
-void CGui::slDbgTxtClr(SL)
-{
-	int v = val +slHalf;  if (bGI)  pSet->car_dbgtxtclr = v;
-	if (valDbgTxtClr)	valDbgTxtClr->setCaption(toStr(v));
-}
-void CGui::slDbgTxtCnt(SL)
-{
-	int v = val*8 +slHalf;  if (bGI)  pSet->car_dbgtxtcnt = v;
-	if (valDbgTxtCnt)	valDbgTxtCnt->setCaption(toStr(v));
-}
-
 //  Startup
-void CGui::chkStartInMain(WP wp)	{	ChkEv(startInMain);    }
+void CGui::chkStartInMain(WP wp){	ChkEv(startInMain);    }
 void CGui::chkAutoStart(WP wp){		ChkEv(autostart);	}
 void CGui::chkEscQuits(WP wp){		ChkEv(escquit);		}
-void CGui::chkOgreDialog(WP wp){		ChkEv(ogre_dialog);	}
+void CGui::chkOgreDialog(WP wp){	ChkEv(ogre_dialog);	}
 
 void CGui::chkBltLines(WP wp){		ChkEv(bltLines);	}
 void CGui::chkLoadPics(WP wp){		ChkEv(loadingbackground);	}
@@ -483,50 +381,10 @@ void CGui::chkVidHDR(WP wp)
 {			
 	ChkEv(hdr);  app->refreshCompositor();
 }
-void CGui::slHDRParam1(SL)
-{
-	Real v = val;  if (bGI)  pSet->hdrParam1 = v;
-	if (valHDRParam1)	valHDRParam1->setCaption(fToStr(v,2,4));
-}
-void CGui::slHDRParam2(SL)
-{
-	Real v = val;  if (bGI)  pSet->hdrParam2 = v;
-	if (valHDRParam2)	valHDRParam2->setCaption(fToStr(v,2,4));
-}
-void CGui::slHDRParam3(SL)
-{
-	Real v = val;  if (bGI)  pSet->hdrParam3 = v;
-	if (valHDRParam3)	valHDRParam3->setCaption(fToStr(v,2,4));
-}
-void CGui::slHDRAdaptationScale(SL)
-{
-	Real v = val;  if (bGI)  pSet->hdrAdaptationScale = v;
-	if (valHDRAdaptationScale)	valHDRAdaptationScale->setCaption(fToStr(v,2,4));
-}
-void CGui::slHDRBloomInt(SL)
-{
-	Real v = val;  if (bGI)  pSet->hdrbloomint = v;
-	if (valHDRBloomInt)  valHDRBloomInt->setCaption(fToStr(v,2,4));
-}
-void CGui::slHDRBloomOrig(SL)
-{
-	Real v = val;  if (bGI)  pSet->hdrbloomorig = v;
-	if (valHDRBloomOrig)  valHDRBloomOrig->setCaption(fToStr(v,2,4));
-}
-void CGui::slHDRVignettingRadius(SL)
-{
-	Real v = 10 * val;  if (bGI)  pSet->vignettingRadius = v;
-	if (valHDRVignettingRadius)  valHDRVignettingRadius->setCaption(fToStr(v,2,4));
-}
-void CGui::slHDRVignettingDarkness(SL)
-{
-	Real v = val;  if (bGI)  pSet->vignettingDarkness = v;
-	if (valHDRVignettingDarkness)  valHDRVignettingDarkness->setCaption(fToStr(v,2,4));
-}
 
 void CGui::chkVidBlur(WP wp)
 {		
-	ChkEv(motionblur);
+	ChkEv(blur);
 	app->refreshCompositor();  app->changeShadows();
 }
 void CGui::chkVidSSAO(WP wp)
@@ -553,30 +411,8 @@ void CGui::chkVidBoostFOV(WP wp)
 {		
 	ChkEv(boost_fov);
 }
-void CGui::slBloomInt(SL)
+
+void CGui::slBloom(SV*)
 {
-	Real v = val;  if (bGI)  pSet->bloomintensity = v;
-	if (valBloomInt)  valBloomInt->setCaption(fToStr(v,2,4));
 	if (bGI)  app->refreshCompositor();
-}
-void CGui::slBloomOrig(SL)
-{
-	Real v = val;  if (bGI)  pSet->bloomorig = v;
-	if (valBloomOrig)  valBloomOrig->setCaption(fToStr(v,2,4));
-	if (bGI)  app->refreshCompositor();
-}
-void CGui::slBlurIntens(SL)
-{
-	Real v = val;  if (bGI)  pSet->motionblurintensity = v;
-	if (valBlurIntens)  valBlurIntens->setCaption(fToStr(v,2,4));
-}
-void CGui::slDepthOfFieldFocus(SL)
-{
-	Real v = 2000.f * powf(val, 2.f);  if (bGI)  pSet->depthOfFieldFocus = v;
-	if (valDepthOfFieldFocus)  valDepthOfFieldFocus->setCaption(fToStr(v,0,4));
-}
-void CGui::slDepthOfFieldFar(SL)
-{
-	Real v = 2000.f * powf(val, 2.f);  if (bGI)  pSet->depthOfFieldFar = v;
-	if (valDepthOfFieldFar)  valDepthOfFieldFar->setCaption(fToStr(v,0,4));
 }

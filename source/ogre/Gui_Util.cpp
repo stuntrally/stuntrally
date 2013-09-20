@@ -333,7 +333,7 @@ void CGui::toggleGui(bool toggle)
 	if (app->mWndHelp && app->mWndHelp->getVisible() && loadReadme)
 	{
 		loadReadme = false;
-		EditBox* edit = app->mGUI->findWidget<EditBox>("Readme",false);
+		EditBox* edit = app->mGui->findWidget<EditBox>("Readme",false);
 		if (edit)
 		{	std::string path = PATHMANAGER::Data()+"/../Readme.txt";
 			std::ifstream fi(path.c_str());
@@ -541,7 +541,7 @@ void CGui::GuiUpdate()
 	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;
 
-		app->mGUI->destroyWidgets(app->vwGui);
+		app->mGui->destroyWidgets(app->vwGui);
 		bnQuit=0; app->mWndOpts=0;  //todo: rest too..  delete, new gui; ?
 
 		bGI = false;
