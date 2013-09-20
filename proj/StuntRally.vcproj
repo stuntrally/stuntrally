@@ -1210,6 +1210,38 @@
 					RelativePath="..\source\ogre\Gui_Util.cpp"
 					>
 				</File>
+				<Filter
+					Name="MsgBox"
+					>
+					<File
+						RelativePath="..\source\ogre\common\MessageBox\Attribute.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\MessageBox\BaseLayout.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\MessageBox\MessageBox.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\MessageBox\MessageBox.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\MessageBox\MessageBoxStyle.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\MessageBox\MessageBoxStyle.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\MessageBox\WrapsAttribute.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="materials"

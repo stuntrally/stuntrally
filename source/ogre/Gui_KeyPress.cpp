@@ -156,6 +156,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 	//  not main menus
 	//--------------------------------------------------------------------------------------------------------------
+	typedef CGui::WP WP;
 	if (!tweak)
 	{
 		Widget* wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();

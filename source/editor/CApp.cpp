@@ -8,6 +8,7 @@
 #include "../road/Road.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/WaterRTT.h"
+#include "../ogre/common/RenderBoxScene.h"
 
 #include "../shiny/Main/Factory.hpp"
 #include "../shiny/Platforms/Ogre/OgrePlatform.hpp"
@@ -62,6 +63,7 @@ App::App(SETTINGS* pSet1)  //  gui wigdets--
 	mWaterRTT = new WaterRTT();
 	data = new CData();
 	gui = new CGui(this);
+	gui->viewBox = new wraps::RenderBoxScene();
 	
 	track = new TRACK(std::cout, std::cerr);  //!
 	sc = new Scene();
@@ -85,7 +87,8 @@ void App::postInit()
 
 App::~App()
 {
-	gui->viewBox.destroy();
+	gui->viewBox->destroy();
+	delete gui->viewBox;
 
 	BltWorldDestroy();
 	

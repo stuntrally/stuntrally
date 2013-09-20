@@ -8,6 +8,7 @@
 #include "MyGUI_Gui.h"
 #include "MyGUI_Button.h"
 #include "MyGUI_TextBox.h"
+#include "MyGUI_EditBox.h"
 using namespace Ogre;
 using namespace MyGUI;
 

@@ -5,16 +5,17 @@
 */
 #ifndef __MESSAGE_BOX_STYLE_H__
 #define __MESSAGE_BOX_STYLE_H__
+#include <vector>
+//#include <MyGUI_Prerequest.h>
 
-#include <MyGUI.h>
-
-#include <MyGUI_Prerequest.h>
 
 namespace MyGUI
 {
 
 	struct MessageBoxStyle
 	{
+			#define MYGUI_FLAG_NONE  0
+			#define MYGUI_FLAG(num)  (1<<(num))
 		enum Enum
 		{
 			None = MYGUI_FLAG_NONE,
@@ -57,8 +58,7 @@ namespace MyGUI
 
 		MessageBoxStyle(Enum _value = None) :
 			value(_value)
-		{
-		}
+		{	}
 
 		MessageBoxStyle& operator |= (MessageBoxStyle const& _other)
 		{
@@ -86,7 +86,7 @@ namespace MyGUI
 			return a.value != b.value;
 		}
 
-		friend std::ostream& operator << (std::ostream& _stream, const MessageBoxStyle&  _value)
+		/*friend std::ostream& operator << (std::ostream& _stream, const MessageBoxStyle&  _value)
 		{
 			//_stream << _value.print();
 			return _stream;
@@ -98,129 +98,20 @@ namespace MyGUI
 			_stream >> value;
 			_value = parse(value);
 			return _stream;
-		}
+		}*/
 
-		// возвращает индекс иконки
-		size_t getIconIndex()
-		{
-			size_t index = 0;
-			int num = value >> _IndexIcon1;
+		size_t getIconIndex();
 
-			while (num != 0)
-			{
-				if ((num & 1) == 1)
-					return index;
+		size_t getButtonIndex();
 
-				++index;
-				num >>= 1;
-			}
+		std::vector<MessageBoxStyle> getButtons();
 
-			return ITEM_NONE;
-		}
+		//typedef std::map<std::string, int> MapAlign;
 
-		// возвращает индекс иконки
-		size_t getButtonIndex()
-		{
-			size_t index = 0;
-			int num = value;
+		//static MessageBoxStyle parse(const std::string& _value);
 
-			while (num != 0)
-			{
-				if ((num & 1) == 1)
-					return index;
-
-				++index;
-				num >>= 1;
-			}
-
-			return ITEM_NONE;
-		}
-
-		// возвращает список кнопок
-		std::vector<MessageBoxStyle> getButtons()
-		{
-			std::vector<MessageBoxStyle> buttons;
-
-			size_t index = 0;
-			int num = value;
-			while (index < _IndexIcon1)
-			{
-				if ((num & 1) == 1)
-				{
-					buttons.push_back(MessageBoxStyle::Enum( MYGUI_FLAG(index)));
-				}
-
-				++index;
-				num >>= 1;
-			}
-
-			return buttons;
-		}
-
-		typedef std::map<std::string, int> MapAlign;
-
-		static MessageBoxStyle parse(const std::string& _value)
-		{
-			MessageBoxStyle result(MessageBoxStyle::Enum(0));
-			const MapAlign& map_names = result.getValueNames();
-			const std::vector<std::string>& vec = utility::split(_value);
-			for (size_t pos = 0; pos < vec.size(); pos++)
-			{
-				MapAlign::const_iterator iter = map_names.find(vec[pos]);
-				if (iter != map_names.end())
-				{
-					result.value = Enum(int(result.value) | int(iter->second));
-				}
-				else
-				{
-					MYGUI_LOG(Warning, "Cannot parse type '" << vec[pos] << "'");
-				}
-			}
-			return result;
-		}
-
-	private:
-		const MapAlign& getValueNames()
-		{
-			static MapAlign map_names;
-
-			if (map_names.empty())
-			{
-				MYGUI_REGISTER_VALUE(map_names, None);
-				MYGUI_REGISTER_VALUE(map_names, Ok);
-				MYGUI_REGISTER_VALUE(map_names, Yes);
-				MYGUI_REGISTER_VALUE(map_names, No);
-				MYGUI_REGISTER_VALUE(map_names, Abort);
-				MYGUI_REGISTER_VALUE(map_names, Retry);
-				MYGUI_REGISTER_VALUE(map_names, Ignore);
-				MYGUI_REGISTER_VALUE(map_names, Cancel);
-				MYGUI_REGISTER_VALUE(map_names, Try);
-				MYGUI_REGISTER_VALUE(map_names, Continue);
-
-				MYGUI_REGISTER_VALUE(map_names, Button1);
-				MYGUI_REGISTER_VALUE(map_names, Button2);
-				MYGUI_REGISTER_VALUE(map_names, Button3);
-				MYGUI_REGISTER_VALUE(map_names, Button4);
-
-				MYGUI_REGISTER_VALUE(map_names, IconDefault);
-
-				MYGUI_REGISTER_VALUE(map_names, IconInfo);
-				MYGUI_REGISTER_VALUE(map_names, IconQuest);
-				MYGUI_REGISTER_VALUE(map_names, IconError);
-				MYGUI_REGISTER_VALUE(map_names, IconWarning);
-
-				MYGUI_REGISTER_VALUE(map_names, Icon1);
-				MYGUI_REGISTER_VALUE(map_names, Icon2);
-				MYGUI_REGISTER_VALUE(map_names, Icon3);
-				MYGUI_REGISTER_VALUE(map_names, Icon4);
-				MYGUI_REGISTER_VALUE(map_names, Icon5);
-				MYGUI_REGISTER_VALUE(map_names, Icon6);
-				MYGUI_REGISTER_VALUE(map_names, Icon7);
-				MYGUI_REGISTER_VALUE(map_names, Icon8);
-			}
-
-			return map_names;
-		}
+	//private:
+		//const MapAlign& getValueNames();
 
 	private:
 		Enum value;

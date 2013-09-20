@@ -594,10 +594,10 @@ void CGui::InitGui()
 	viewCanvas->setInheritsAlpha(false);
 	viewCanvas->setPointer("hand");
 	viewCanvas->setVisible(false);
-	viewBox.setCanvas(viewCanvas);
-	viewBox.setBackgroundColour(Colour(0.32,0.35,0.37,0.7));
-	viewBox.setAutoRotation(true);
-	viewBox.setMouseRotation(true);
+	viewBox->setCanvas(viewCanvas);
+	viewBox->setBackgroundColour(Colour(0.32,0.35,0.37,0.7));
+	viewBox->setAutoRotation(true);
+	viewBox->setMouseRotation(true);
 	
 
 	bGI = true;  // gui inited, gui events can now save vals
