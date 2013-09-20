@@ -11,28 +11,6 @@ using namespace Ogre;
 ///  Get Materials
 //-----------------------------------------------------------------------------------------------------------
 
-/*void App::GetMaterialsFromDef(String filename, bool clear)
-{
-	if (clear)
-		vsMaterials.clear();
-	
-	ConfigFile cf;
-	cf.load(filename, Ogre::ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME, "\t:=", true);
-	
-	ConfigFile::SectionIterator seci = cf.getSectionIterator();
-	String secName, key, value;
-
-	while (seci.hasMoreElements())
-	{
-		secName = seci.peekNextKey();
-		
-		if (!(cf.getSetting("abstract", secName) == "true"))
-			vsMaterials.push_back(secName);
-		
-		seci.getNext();
-	}
-}/**/
-
 void CGui::GetMaterials(String filename, bool clear, String type)
 {
 	if (clear)

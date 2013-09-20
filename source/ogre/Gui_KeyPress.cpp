@@ -11,7 +11,6 @@
 #include "common/Slider.h"
 #include "FollowCamera.h"
 #include <boost/algorithm/string.hpp>
-
 #include "../sdl4ogre/sdlinputwrapper.hpp"
 
 using namespace std;
@@ -80,10 +79,10 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(Z):  // alt-Z Tweak (alt-shift-Z save&reload)
 				gui->TweakToggle();	return true;
 
-			case key(Q):	gui->GuiShortcut(MNU_Single, TAB_Track);	return true;  // Q Track
+			case key(Q):	gui->GuiShortcut(MNU_Single, TAB_Track);return true;  // Q Track
 			case key(C):	gui->GuiShortcut(MNU_Single, TAB_Car);	return true;  // C Car
 
-			case key(T):	gui->GuiShortcut(MNU_Single, TAB_Setup);	return true;  // T Car Setup
+			case key(T):	gui->GuiShortcut(MNU_Single, TAB_Setup);return true;  // T Car Setup
 			case key(W):	gui->GuiShortcut(MNU_Single, TAB_Game);	return true;  // W Game Setup
 
 			case key(J):	gui->GuiShortcut(MNU_Tutorial, TAB_Champs);	return true;  // J Tutorials
@@ -91,18 +90,18 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(L):	gui->GuiShortcut(MNU_Challenge,TAB_Champs);	return true;  // L Challenges
 
 			case key(U):	gui->GuiShortcut(MNU_Single, TAB_Multi);	return true;	// U Multiplayer
-			case key(R):	gui->GuiShortcut(MNU_Replays, 1);		return true;		// R Replays
+			case key(R):	gui->GuiShortcut(MNU_Replays, 1);	return true;		// R Replays
 
-			case key(S):	gui->GuiShortcut(MNU_Options, 1);		return true;  // S Screen
+			case key(S):	gui->GuiShortcut(MNU_Options, 1);	return true;  // S Screen
 			 case key(E):	gui->GuiShortcut(MNU_Options, 1,1);	return true;  // E -Effects
-			case key(G):	gui->GuiShortcut(MNU_Options, 2);		return true;  // G Graphics
+			case key(G):	gui->GuiShortcut(MNU_Options, 2);	return true;  // G Graphics
 			 case key(N):	gui->GuiShortcut(MNU_Options, 2,3);	return true;  // N -Vegetation
 
-			case key(V):	gui->GuiShortcut(MNU_Options, 3);		return true;  // V View
+			case key(V):	gui->GuiShortcut(MNU_Options, 3);	return true;  // V View
 			 case key(M):	gui->GuiShortcut(MNU_Options, 3,1);	return true;  // M -Minimap
 			 case key(O):	gui->GuiShortcut(MNU_Options, 3,3);	return true;  // O -Other
-			case key(I):	gui->GuiShortcut(MNU_Options, 4);		return true;  // I Input
-			case key(P):	gui->GuiShortcut(MNU_Options, 5);		return true;  // P Sound
+			case key(I):	gui->GuiShortcut(MNU_Options, 4);	return true;  // I Input
+			case key(P):	gui->GuiShortcut(MNU_Options, 5);	return true;  // P Sound
 		}
 
 

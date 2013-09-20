@@ -1047,6 +1047,22 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\ogre\CInput.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\CInput.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\Compositor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\Compositor.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\ogre\FollowCamera.cpp"
 					>
 				</File>
@@ -1060,6 +1076,14 @@
 				</File>
 				<File
 					RelativePath="..\source\ogre\LoadingBar.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\SplitScreen.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\SplitScreen.h"
 					>
 				</File>
 			</Filter>
@@ -1115,43 +1139,11 @@
 				Name="Gui"
 				>
 				<File
-					RelativePath="..\data\gui\core_blackblueskins.xml"
+					RelativePath="..\source\ogre\CGui.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\data\gui\core_blackbluetemplates.xml"
-					>
-				</File>
-				<File
-					RelativePath="..\data\gui\core_font.xml"
-					>
-				</File>
-				<File
-					RelativePath="..\data\gui\core_images.xml"
-					>
-				</File>
-				<File
-					RelativePath="..\data\gui\core_language_en_tag.xml"
-					>
-				</File>
-				<File
-					RelativePath="..\data\gui\Game.layout"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\Gui_Common.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\Gui_CommonSet.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\Gui_CommonTrack.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\Gui_Def.h"
+					RelativePath="..\source\ogre\CGui.h"
 					>
 				</File>
 				<File
@@ -1187,34 +1179,22 @@
 					>
 				</File>
 				<Filter
-					Name="MsgBox"
+					Name="Common"
 					>
 					<File
-						RelativePath="..\source\ogre\common\MessageBox\Attribute.h"
+						RelativePath="..\source\ogre\common\Gui_Common.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\source\ogre\common\MessageBox\BaseLayout.h"
+						RelativePath="..\source\ogre\common\Gui_CommonSet.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\source\ogre\common\MessageBox\MessageBox.cpp"
+						RelativePath="..\source\ogre\common\Gui_CommonTrack.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\source\ogre\common\MessageBox\MessageBox.h"
-						>
-					</File>
-					<File
-						RelativePath="..\source\ogre\common\MessageBox\MessageBoxStyle.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\ogre\common\MessageBox\MessageBoxStyle.h"
-						>
-					</File>
-					<File
-						RelativePath="..\source\ogre\common\MessageBox\WrapsAttribute.h"
+						RelativePath="..\source\ogre\common\Gui_Def.h"
 						>
 					</File>
 				</Filter>
@@ -1479,38 +1459,6 @@
 				Name="SceneCommon"
 				>
 				<File
-					RelativePath="..\source\ogre\common\GraphView.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\GraphView.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\Gui_Popup.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\Gui_Popup.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\MultiList2.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\MultiList2.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\PointerFix.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\PointerFix.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\ogre\common\SceneFluids.cpp"
 					>
 				</File>
@@ -1528,22 +1476,6 @@
 				</File>
 				<File
 					RelativePath="..\source\ogre\common\simplexnoise.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\Slider.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\Slider.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\SliderValue.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\SliderValue.h"
 					>
 				</File>
 				<File
@@ -1566,6 +1498,58 @@
 					RelativePath="..\source\ogre\common\TrackVdr.cpp"
 					>
 				</File>
+				<Filter
+					Name="Widgets"
+					>
+					<File
+						RelativePath="..\source\ogre\common\GraphView.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\GraphView.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\Gui_Popup.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\Gui_Popup.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\MultiList2.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\MultiList2.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\PointerFix.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\PointerFix.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\Slider.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\Slider.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\SliderValue.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\SliderValue.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="mat-eff"
@@ -1707,14 +1691,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\CGui.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\CGui.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\ogre\Challenges.cpp"
 					>
 				</File>
@@ -1735,22 +1711,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\CInput.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\CInput.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\Compositor.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\Compositor.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\ogre\Hud_Create.cpp"
 					>
 				</File>
@@ -1760,26 +1720,6 @@
 				</File>
 				<File
 					RelativePath="..\source\ogre\Hud_Update.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\Localization.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\MyGUI_D3D11.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\common\MyGUI_D3D11.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\SplitScreen.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\ogre\SplitScreen.h"
 					>
 				</File>
 				<File
@@ -1902,6 +1842,78 @@
 					RelativePath="..\source\network\xtime.hpp"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="Cfg"
+				>
+				<File
+					RelativePath="..\data\gui\core_blackblueskins.xml"
+					>
+				</File>
+				<File
+					RelativePath="..\data\gui\core_blackbluetemplates.xml"
+					>
+				</File>
+				<File
+					RelativePath="..\data\gui\core_font.xml"
+					>
+				</File>
+				<File
+					RelativePath="..\data\gui\core_images.xml"
+					>
+				</File>
+				<File
+					RelativePath="..\data\gui\core_language_en_tag.xml"
+					>
+				</File>
+				<File
+					RelativePath="..\data\gui\Game.layout"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\Localization.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\MyGUI_D3D11.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\MyGUI_D3D11.h"
+					>
+				</File>
+				<Filter
+					Name="MsgBox"
+					>
+					<File
+						RelativePath="..\source\ogre\common\MessageBox\Attribute.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\MessageBox\BaseLayout.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\MessageBox\MessageBox.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\MessageBox\MessageBox.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\MessageBox\MessageBoxStyle.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\MessageBox\MessageBoxStyle.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\MessageBox\WrapsAttribute.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
