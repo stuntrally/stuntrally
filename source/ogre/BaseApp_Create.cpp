@@ -486,15 +486,6 @@ bool BaseApp::setup()
 
 void BaseApp::destroyScene()
 {
-	bool bCache = false;
-	if (bCache)
-	{
-		Ogre::String file = PATHMANAGER::ShaderDir() + "/shadercache.txt";
-		std::fstream inp;
-		inp.open(file.c_str(), std::ios::out | std::ios::binary);
-		Ogre::DataStreamPtr shaderCache (OGRE_NEW Ogre::FileStreamDataStream(file, &inp, false));
-		Ogre::GpuProgramManager::getSingleton().saveMicrocodeCache(shaderCache);
-	}
 }
 
 //  Resources
