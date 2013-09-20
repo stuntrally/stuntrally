@@ -97,7 +97,7 @@ void CGui::InitGui()
 	vSubTabsOpts.clear();
 	for (size_t i=0; i < app->mWndTabsOpts->getItemCount(); ++i)
 	{
-		MyGUI::TabPtr sub = (TabPtr)app->mWndTabsOpts->getItemAt(i)->findWidget(i==4 ? "InputTab" : "SubTab");
+		MyGUI::TabPtr sub = (TabPtr)app->mWndTabsOpts->getItemAt(i)->findWidget(i==TABo_Input ? "InputTab" : "SubTab");
 		vSubTabsOpts.push_back(sub);
 	}
 

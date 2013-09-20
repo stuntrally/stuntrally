@@ -241,7 +241,8 @@ bool App::frameStart(Real time)
 		}
 		
 				
-		if (isFocGui && mWndTabsOpts->getIndexSelected() == 4 && pSet->inMenu == MNU_Options && !pSet->isMain)
+		if (isFocGui && pSet->inMenu == MNU_Options && !pSet->isMain &&
+			mWndTabsOpts->getIndexSelected() == TABo_Input)
 			gui->UpdateInputBars();
 		
 		
