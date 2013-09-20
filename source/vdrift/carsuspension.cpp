@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "carsuspension.h"
+#include "../ogre/common/Defines.h"
 
 
 void CARSUSPENSION::DebugPrint(std::ostream & out)

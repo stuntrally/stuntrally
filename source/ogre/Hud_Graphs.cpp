@@ -8,6 +8,7 @@
 #include "common/GraphView.h"
 #include "SplitScreen.h"
 #include <OgreSceneManager.h>
+#include <OgreRenderWindow.h>
 using namespace Ogre;
 using namespace MyGUI;
 

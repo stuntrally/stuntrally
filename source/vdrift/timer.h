@@ -1,6 +1,7 @@
 #pragma once
 #include "configfile.h"
-#include "../ogre/common/Defines.h"
+#include "dbl.h"
+
 
 class TIMER
 {

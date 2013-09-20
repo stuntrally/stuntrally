@@ -4,6 +4,7 @@
 #include "../common/CData.h"
 #include "../common/TracksXml.h"
 #include "../common/BltObjects.h"
+#include "../common/QTimer.h"
 #include "../vdrift/pathmanager.h"
 #include "../../road/Road.h"
 #ifndef SR_EDITOR

@@ -2,7 +2,6 @@
 #include "dbl.h"
 #include "mathvector.h"
 #include <iostream>
-#include "../ogre/common/Defines.h"
 
 
 class CARFUELTANK

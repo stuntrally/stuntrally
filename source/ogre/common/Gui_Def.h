@@ -3,9 +3,11 @@
 //  forward declare
 namespace MyGUI
 {
-	class Widget;  class Window;  class TabControl;  class TabItem;  class ComboBox;  class ListBox;
+	class Gui;
+	class Widget;  class Window;  class TabControl;  class TabItem;  class ComboBox;
 	class Button;  class TextBox;  class ImageBox;  class EditBox;  class Slider;
-	class Canvas;  class ScrollView;
+	class ListBox; class MultiListBox;  class MultiList2;
+	class Canvas;  class ScrollView;  class Message;
 }
 
 //  Base Gui
@@ -14,23 +16,21 @@ class BGui
 public:
 	#define TD(w,n)  typedef MyGUI::w* n
 	//  short Widget names
-	TD(Widget, WP);  TD(Window, Wnd);  TD(TabControl, Tab);  TD(TabItem, Tbi);  TD(ComboBox, Cmb);  TD(ListBox, Lis);
+	TD(Widget, WP);  TD(Window, Wnd);  TD(TabControl, Tab);  TD(TabItem, Tbi);  TD(ComboBox, Cmb);
 	TD(Button, Btn);  TD(TextBox, Txt);  TD(ImageBox, Img);  TD(EditBox, Ed);  TD(Slider, Sl);
+	TD(ListBox, Li);  TD(MultiListBox, Mli);  TD(MultiList2, Mli2);
 	TD(Canvas, Can);  TD(ScrollView, Scv);
 };
 
 //  short Arguments for events
 //  slider event and its text field for value
-#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;  //old!
-#define SL   MyGUI::Slider* wp, float val     // slider event args  //old!
+#define SLV(name)  void sl##name(SL);  Txt val##name;  //old!
+#define SL   Sl wp, float val     // slider event args  //old!
 
-#define CMB  MyGUI::ComboBox* wp, size_t val  // combobox event args
-#define TAB  MyGUI::Tab* tab, size_t id       //  tab event args
-typedef MyGUI::Widget* WP;
+#define CMB  Cmb wp, size_t val  // combobox event args
+#define TAB  Tab tab, size_t id       //  tab event args
 
-typedef std::list <std::string> strlist;
-
-
+//  short Finding widgets
 #define fWnd(s)  mGui->findWidget<Window>(s)
 #define fTxt(s)  mGui->findWidget<TextBox>(s)
 #define fImg(s)  mGui->findWidget<ImageBox>(s)

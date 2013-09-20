@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
+#include "settings.h"
 #include "CApp.h"
 #include "../vdrift/pathmanager.h"
 #include <locale.h>

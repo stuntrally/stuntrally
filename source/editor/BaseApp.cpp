@@ -1,7 +1,17 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
 #include "BaseApp.h"
+#include "settings.h"
 #include "../road/Road.h"
+
+#include <OgreOverlayElement.h>
+#include <OgreCamera.h>
+#include <OgreRenderTarget.h>
+#include <OgreRenderWindow.h>
+#include <OgreTextureManager.h>
+#include <OgreMeshManager.h>
+#include <OgreSceneNode.h>
+#include <MyGUI_TextBox.h>
 using namespace Ogre;
 
 

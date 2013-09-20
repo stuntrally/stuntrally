@@ -10,15 +10,14 @@
 #include <OgreVector3.h>
 #include <OgreString.h>
 
-#include <MyGUI.h>
 #include "../ogre/common/MessageBox/MessageBoxStyle.h"
-#include "../ogre/common/RenderBoxScene.h"
 
 
-namespace MyGUI  {  class MultiList2;  class Slider;  class Message;  }
-class App;  class Scene;  class CData;  class SETTINGS;
+namespace wraps {	class RenderBoxScene;  }
+class App;  class SETTINGS;  class Scene;  class CData;
 
 enum ED_OBJ {  EO_Move=0, EO_Rotate, EO_Scale  };
+
 
 
 //  tracks,cars list items - with info for sorting
@@ -30,7 +29,7 @@ struct TrkL
 };
 
 
-class CGui //: public BGui
+class CGui : public BGui
 {
 public:
 	App* app;
@@ -42,12 +41,14 @@ public:
 	CGui(App* app1);
 	//virtual ~CGui();
 
+	typedef std::list <std::string> strlist;
+
 	///-----------------------------------------------------------------------------------------------------------------
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------	
 	//  size
 	void SizeGUI(); void doSizeGUI(MyGUI::EnumeratorWidgetPtr);
-	std::vector<MyGUI::TabControl*> vSubTabsEdit, vSubTabsHelp, vSubTabsOpts;
+	std::vector<Tab> vSubTabsEdit, vSubTabsHelp, vSubTabsOpts;
 
 	
 	///  Gui common   --------------------------
@@ -63,16 +64,16 @@ public:
 	void setOrigPos(WP wp, const char* relToWnd);
 
 	//  tooltip
-	WP mToolTip;  MyGUI::EditPtr mToolTipTxt;
+	WP mToolTip;  Ed mToolTipTxt;
 	void setToolTips(MyGUI::EnumeratorWidgetPtr widgets);
-	void notifyToolTip(MyGUI::Widget* sender, const MyGUI::ToolTipInfo& info);
-	void boundedMove(MyGUI::Widget *moving, const MyGUI::IntPoint & point);
+	void notifyToolTip(WP sender, const MyGUI::ToolTipInfo& info);
+	void boundedMove(WP moving, const MyGUI::IntPoint & point);
 
 	//  language
 	void comboLanguage(CMB);
 	std::map<std::string, MyGUI::UString> languages; // <short name, display name>
 	bool bGuiReinit;  void UnfocusLists();
-	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
+	Btn bnQuit;  void btnQuit(WP);
 
 	//  init
 	void InitGui();  bool bGI;
@@ -83,23 +84,23 @@ public:
 	//  track
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const Ogre::String& sTrack, float time, bool champ=false),
 		ReadTrkStats();
-	MyGUI::MultiList2* trkList;  MyGUI::EditPtr trkDesc[1];
-	MyGUI::StaticImagePtr imgPrv[1],imgMini[1],imgTer[1], imgTrkIco1,imgTrkIco2;
+	Mli2 trkList;  Ed trkDesc[1];
+	Img imgPrv[1],imgMini[1],imgTer[1], imgTrkIco1,imgTrkIco2;
 	const static int StTrk = 6, InfTrk = 8;
-	MyGUI::StaticTextPtr valTrk[1], stTrk[1][StTrk], infTrk[1][InfTrk];  // [1] 2nd is in game (common code)
+	Txt valTrk[1], stTrk[1][StTrk], infTrk[1][InfTrk];  // [1] 2nd is in game (common code)
 
-	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
-	void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
+	void listTrackChng(Mli2, size_t), TrackListUpd(bool resetNotFound=false);
+	void btnTrkView1(WP),btnTrkView2(WP), ChangeTrackView();
 	void updTrkListDim();
 	const static int colTrk[32];
-	const static Ogre::String clrsDiff[9],clrsRating[6],clrsLong[10];
+	const static Ogre::String clrsDiff[9], clrsRating[6], clrsLong[10];
 
-	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;  MyGUI::EditPtr edFind;
+	void edTrkFind(Ed);  Ogre::String sTrkFind;  Ed edFind;
 	strlist liTracks,liTracksUser;  void FillTrackLists();
 	std::list<TrkL> liTrk;
 
 	//  screen
-	MyGUI::ListPtr resList;
+	Li resList;
 	void InitGuiScreenRes(), btnResChng(WP), ResizeOptWnd();
 	void chkVidFullscr(WP), chkVidVSync(WP);
 
@@ -112,7 +113,7 @@ public:
 	void SetGuiFromXmls();  bool noBlendUpd;
 
 	const static MyGUI::Colour sUsedClr[8];
-	void SetUsedStr(MyGUI::StaticTextPtr valUsed, int cnt, int yellowAt);
+	void SetUsedStr(Txt valUsed, int cnt, int yellowAt);
 	
 	//  _Tools_
 	void ToolTexAlpha(),ToolSceneXml(),ToolListSceneryID(),ToolTracksWarnings(),ToolBrushesPrv();	
@@ -122,17 +123,17 @@ public:
 	const static int
 		BR_TXT=9, RD_TXT=11, RDS_TXT=9,
 		ST_TXT=6, FL_TXT=6, OBJ_TXT=6, RI_TXT=6;
-	MyGUI::StaticTextPtr
-		brTxt[BR_TXT],brVal[BR_TXT],brKey[BR_TXT],
+
+	Txt	brTxt[BR_TXT],brVal[BR_TXT],brKey[BR_TXT],
 		rdTxt[RD_TXT],rdVal[RD_TXT],rdKey[RD_TXT],
 		rdTxtSt[RDS_TXT],rdValSt[RDS_TXT],
 		stTxt[ST_TXT],  flTxt[FL_TXT], objTxt[OBJ_TXT], riTxt[RI_TXT];
-	MyGUI::WidgetPtr objPan;
-	MyGUI::StaticImagePtr brImg;  MyGUI::TabPtr wndTabs;
+	WP objPan;
+	Img brImg;  Tab wndTabs;
 
 	//  main menu
 	void toggleGui(bool toggle=false), GuiShortcut(WND_Types wnd, int tab, int subtab=-1), NumTabNext(int rel);
-	void MainMenuBtn(MyGUI::WidgetPtr), MenuTabChg(MyGUI::TabPtr, size_t);
+	void MainMenuBtn(WP), MenuTabChg(Tab, size_t);
 
 
 	//  [settings]
@@ -144,7 +145,7 @@ public:
 	SV svTerUpd, svMiniUpd;
 
 	void chkMinimap(WP), btnSetCam(WP);
-	void chkAutoBlendmap(WP);  MyGUI::ButtonPtr chAutoBlendmap, chInputBar;
+	void chkAutoBlendmap(WP);  Btn chAutoBlendmap, chInputBar;
 	void chkCamPos(WP), chkInputBar(WP);
 
 	void toggleTopView();  bool bTopView, oldFog;
@@ -152,7 +153,7 @@ public:
 
 
 	//  [Sky]  ----
-	MyGUI::ComboBoxPtr cmbSky, cmbRain1,cmbRain2;
+	Cmb cmbSky, cmbRain1,cmbRain2;
 	void comboSky(CMB), comboRain1(CMB),comboRain2(CMB);
 
 	SV svRain1Rate, svRain2Rate;
@@ -162,27 +163,28 @@ public:
 	SV svFogHStart, svFogHEnd;  // Hfog
 	SV svFogHeight, svFogHDensity;
 
-	MyGUI::EditPtr edLiAmb,edLiDiff,edLiSpec, edFogClr,edFogClr2,edFogClrH;
-	MyGUI::ImageBox* clrAmb,*clrDiff,*clrSpec, *clrFog,*clrFog2,*clrFogH;
-	void editFogClr(MyGUI::EditPtr),editFogClr2(MyGUI::EditPtr),editFogClrH(MyGUI::EditPtr);
-	void editLiAmb(MyGUI::EditPtr),editLiDiff(MyGUI::EditPtr),editLiSpec(MyGUI::EditPtr);
+	Ed edLiAmb,edLiDiff,edLiSpec, edFogClr,edFogClr2,edFogClrH;
+	Img clrAmb, clrDiff, clrSpec, clrFog, clrFog2, clrFogH;
+	void editFogClr(Ed), editFogClr2(Ed), editFogClrH(Ed);
+	void editLiAmb(Ed), editLiDiff(Ed), editLiSpec(Ed);
 
-	void chkFogDisable(WP),chkWeatherDisable(WP);  MyGUI::ButtonPtr chkFog, chkWeather;
+	void chkFogDisable(WP), chkWeatherDisable(WP);
+	Btn chkFog, chkWeather;
 
 	
 	///  [Terrain]  --------------------
-	MyGUI::ComboBoxPtr cmbTexDiff, cmbTexNorm;
+	Cmb cmbTexDiff, cmbTexNorm;
 	void comboTexDiff(CMB), comboTexNorm(CMB);
-	MyGUI::StaticImagePtr imgTexDiff;
+	Img imgTexDiff;
 
-	MyGUI::ButtonPtr chkTerLay, chkTerLNoiseOnly, chkTerLayTripl;
+	Btn chkTerLay, chkTerLNoiseOnly, chkTerLayTripl;
 	void chkTerLayOn(WP), chkTerLNoiseOnlyOn(WP), chkTerLayTriplOn(WP);  // on
 	//  HMap tab
-	MyGUI::TabPtr tabsHmap;	 void tabHmap(TAB);
+	Tab tabsHmap;  void tabHmap(TAB);
 	void updTabHmap();  int getHMapSizeTab();
 	
 	bool bTexNormAuto;  // auto norm tex
-	MyGUI::ButtonPtr chkTexNormAuto;  void chkTexNormAutoOn(WP);
+	Btn chkTexNormAuto;  void chkTexNormAutoOn(WP);
 	
 	void btnBrushPreset(WP);
 
@@ -197,16 +199,16 @@ public:
 	
 	//  Ter HMap
 	SlV(TerTriSize);  int UpdTxtTerSize(float mul=1.f);
-	MyGUI::EditPtr edTerErrorNorm;  void editTerErrorNorm(MyGUI::EditPtr);
+	Ed edTerErrorNorm;  void editTerErrorNorm(Ed);
 	void btnTerrainNew(WP), btnTerGenerate(WP);
 	void btnTerrainHalf(WP), btnTerrainDouble(WP), btnTerrainMove(WP);
 	Ogre::String getHMapNew();
-	MyGUI::StaticTextPtr valTerLAll;
+	Txt valTerLAll;
 	
 	//  Ter Layer
 	int idTerLay;  bool bTerLay;  // help vars
 	void sldUpdTerL();
-	MyGUI::TabPtr tabsTerLayers; void tabTerLayer(TAB);
+	Tab tabsTerLayers; void tabTerLayer(TAB);
 
 	SV svTerLScale;
 	SV svTerLAngMin, svTerLHMin, svTerLAngSm;  // blendmap
@@ -215,36 +217,40 @@ public:
 	void slTerLay(SV*);
 
 	//  Ter Particles
-	MyGUI::EditPtr edLDust,edLDustS,edLMud,edLSmoke, edLTrlClr;  MyGUI::ImageBox* clrTrail;
-	void editLDust(MyGUI::EditPtr), editLTrlClr(MyGUI::EditPtr);
-	MyGUI::ComboBoxPtr cmbParDust,cmbParMud,cmbParSmoke;  void comboParDust(CMB);
+	Ed edLDust,edLDustS,edLMud,edLSmoke, edLTrlClr;  Img clrTrail;
+	void editLDust(Ed), editLTrlClr(Ed);
+	Cmb cmbParDust,cmbParMud,cmbParSmoke;  void comboParDust(CMB);
 	
 	//  Ter Surfaces
-	MyGUI::ComboBoxPtr cmbSurface;  void comboSurface(CMB), UpdSurfInfo();
-	MyGUI::StaticTextPtr txtSurfTire, txtSuBumpWave,txtSuBumpAmp, txtSuRollDrag, txtSuFrict, txtSurfType;
+	Cmb cmbSurface;  void comboSurface(CMB), UpdSurfInfo();
+	Txt txtSurfTire, txtSuBumpWave,txtSuBumpAmp, txtSuRollDrag, txtSuFrict, txtSurfType;
 	
 
 	///  [Vegetation]  --------------------
-	MyGUI::EditPtr edGrassDens,edTreesDens, edGrPage,edGrDist, edTrPage,edTrDist,
+	Ed edGrassDens,edTreesDens, edGrPage,edGrDist, edTrPage,edTrDist,
 		edGrSwayDistr, edGrSwayLen, edGrSwaySpd, edTrRdDist, edTrImpDist,
 		edGrDensSmooth, edSceneryId,
 		edGrTerMaxAngle,edGrTerSmAngle, edGrTerMinHeight,edGrTerMaxHeight,edGrTerSmHeight;
 
-	MyGUI::ComboBoxPtr cmbGrassMtr;  void comboGrassMtr(CMB);
-	MyGUI::ComboBoxPtr cmbGrassClr;  void comboGrassClr(CMB);
-	void editTrGr(MyGUI::EditPtr);
+	Cmb cmbGrassMtr;  void comboGrassMtr(CMB);
+	Cmb cmbGrassClr;  void comboGrassClr(CMB);
+	void editTrGr(Ed);
 
-	//  3d model view  (veget,objs)
-	MyGUI::Canvas* viewCanvas;  wraps::RenderBoxScene viewBox;  MyGUI::IntCoord GetViewSize();
-	Ogre::String viewMesh;  void Upd3DView(Ogre::String mesh);  float tiViewUpd;
+	//  model view 3d  (veget,objs)
+	Can viewCanvas;
+	wraps::RenderBoxScene* viewBox;
+	MyGUI::IntCoord GetViewSize();
+	Ogre::String viewMesh;
+	float tiViewUpd;
+	void Upd3DView(Ogre::String mesh);
 	
 	//  paged layers  ----
 	int idPgLay;  // tab
 	void sldUpdPgL();
-	MyGUI::TabPtr tabsPgLayers;  void tabPgLayers(TAB);
+	Tab tabsPgLayers;  void tabPgLayers(TAB);
 
-	MyGUI::ButtonPtr chkPgLay;  void chkPgLayOn(WP);  MyGUI::StaticTextPtr valLTrAll;
-	MyGUI::ComboBoxPtr cmbPgLay;  void comboPgLay(CMB);
+	Btn chkPgLay;  void chkPgLayOn(WP);  Txt valLTrAll;
+	Cmb cmbPgLay;  void comboPgLay(CMB);
 
 	SV svLTrDens;
 	SV svLTrRdDist, svLTrRdDistMax;
@@ -252,33 +258,33 @@ public:
 	SV svLTrWindFx, svLTrWindFy;
 	SV svLTrMaxTerAng;
 
-	MyGUI::EditPtr edLTrMinTerH,edLTrMaxTerH,edLTrFlDepth;
-	void editLTrMinTerH(MyGUI::EditPtr),editLTrMaxTerH(MyGUI::EditPtr),editLTrFlDepth(MyGUI::EditPtr);
+	Ed edLTrMinTerH, edLTrMaxTerH, edLTrFlDepth;
+	void editLTrMinTerH(Ed), editLTrMaxTerH(Ed), editLTrFlDepth(Ed);
 
 	//  grass layers  ----
 	int idGrLay;  // tab
 	void sldUpdGrL();
-	MyGUI::TabPtr tabsGrLayers;  void tabGrLayers(TAB);
+	Tab tabsGrLayers;  void tabGrLayers(TAB);
 
 	SV svLGrDens;
 	SV svGrMinX, svGrMaxX;
 	SV svGrMinY, svGrMaxY;
 
-	MyGUI::ButtonPtr chkGrLay;  void chkGrLayOn(WP);
-	MyGUI::StaticImagePtr imgGrass,imgGrClr;  MyGUI::StaticTextPtr valLGrAll;
+	Btn chkGrLay;  void chkGrLayOn(WP);
+	Img imgGrass,imgGrClr;  Txt valLGrAll;
 
 	
 	//  [Road]  ----
-	MyGUI::ComboBoxPtr cmbRoadMtr[4],cmbPipeMtr[4],
-		cmbRoadWMtr,cmbPipeWMtr,cmbRoadColMtr;
-	void comboRoadMtr(CMB),comboPipeMtr(CMB),
-		comboRoadWMtr(CMB),comboPipeWMtr(CMB),comboRoadColMtr(CMB);
+	Cmb cmbRoadMtr[4], cmbPipeMtr[4],
+		cmbRoadWMtr, cmbPipeWMtr, cmbRoadColMtr;
+	void comboRoadMtr(CMB), comboPipeMtr(CMB),
+		comboRoadWMtr(CMB), comboPipeWMtr(CMB), comboRoadColMtr(CMB);
 
-	MyGUI::EditPtr edRdTcMul,edRdTcMulW,edRdTcMulP,edRdTcMulPW,edRdTcMulC,
+	Ed edRdTcMul,edRdTcMulW,edRdTcMulP,edRdTcMulPW,edRdTcMulC,
 		edRdLenDim,edRdWidthSteps,edRdHeightOfs,
 		edRdSkirtLen,edRdSkirtH, edRdMergeLen,edRdLodPLen,
 		edRdColN,edRdColR, edRdPwsM,edRdPlsM;
-	void editRoad(MyGUI::EditPtr);
+	void editRoad(Ed);
 
 
 	///  [Objects]  ----
@@ -287,22 +293,22 @@ public:
 	void SetObjNewType(int tnew),UpdObjNewNode(), AddNewObj();
 	int iObjCur,iObjLast, iObjTNew;  std::set<int> vObjSel;
 	bool objSim;  Object objNew;
-	MyGUI::List* objListDyn,*objListSt,*objListBld;  void listObjsChng(MyGUI::List* l,size_t);
+	Li objListDyn, objListSt, objListBld;  void listObjsChng(Li, size_t);
 	
 
 	//  [Tools]  ----
-	MyGUI::StaticTextPtr valTrkCpySel;
+	Txt valTrkCpySel;
 	void btnTrkCopySel(WP);  bool ChkTrkCopy();
 	void btnCopySun(WP), btnCopyTerHmap(WP), btnCopyTerLayers(WP),
 		btnCopyVeget(WP), btnCopyRoad(WP), btnCopyRoadPars(WP);
 	void btnScaleAll(WP),btnScaleTerH(WP), btnDeleteRoad(WP),btnDeleteFluids(WP),btnDeleteObjects(WP);
-	MyGUI::EditPtr edScaleAllMul;  void editScaleAllMul(MyGUI::EditPtr);
-	MyGUI::EditPtr edScaleTerHMul;  void editScaleTerHMul(MyGUI::EditPtr);
+	Ed edScaleAllMul;  void editScaleAllMul(Ed);
+	Ed edScaleTerHMul;  void editScaleTerHMul(Ed);
 	SV svAlignWidthAdd, svAlignWidthMul, svAlignSmooth;
 
 	//  [Warnings]  ----
-	MyGUI::EditPtr edWarn;  MyGUI::StaticTextPtr txWarn;
-	MyGUI::StaticImagePtr imgWarn,imgInfo;
+	Ed edWarn;  Txt txWarn;
+	Img imgWarn,imgInfo;
 	void WarningsCheck(const class Scene* sc, const SplineRoad* road);
 	int cntWarn;  bool logWarn;  // only log warnings (tool)
 	enum eWarn {  ERR=0, WARN, INFO, NOTE, TXT  };
@@ -310,7 +316,7 @@ public:
 	void chkCheckSave(WP),chkCheckLoad(WP);  int iLoadNext;
 
 	//  Tweak
-	void CreateGUITweakMtr(), slTweak(SL),edTweak(MyGUI::EditPtr);
+	void CreateGUITweakMtr(), slTweak(SL),edTweak(Ed);
 	void TweakSetMtrPar(std::string name, float val);  void comboTweakMtr(CMB);
 
 
@@ -327,7 +333,7 @@ public:
 		msgTrackDel(MyGUI::Message* sender, MyGUI::MessageBoxStyle result);
 	void btnNewGame(WP);
 
-	MyGUI::EditPtr trkName;  void editTrkDesc(MyGUI::EditPtr);
+	Ed trkName;  void editTrkDesc(Ed);
 	
 
 

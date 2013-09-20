@@ -11,6 +11,7 @@
 #else
 	#include "../../editor/CApp.h"
 	#include "../../editor/CGui.h"
+	#include "../../editor/settings.h"
 #endif
 #include <OgreRoot.h>
 #include <OgreMaterialManager.h>
@@ -160,8 +161,8 @@ void CGui::GuiInitGraphics()  // also called on preset change with bGI true
 						sv->Init("ShadowType",	&pSet->shadow_type, 0.f,1.f); //2.f);
 	sv= &svShadowCount;	sv->Init("ShadowCount",	&pSet->shadow_count, 1.f,3.f);
 	sv= &svShadowSize;
-		for (int i=0; i < ciShadowNumSizes; ++i)  sv->strMap[i] = toStr(ciShadowSizesA[i]);
-						sv->Init("ShadowSize",	&pSet->shadow_size, 0,ciShadowNumSizes-1);
+		for (int i=0; i < ciShadowSizesNum; ++i)  sv->strMap[i] = toStr(ciShadowSizesA[i]);
+						sv->Init("ShadowSize",	&pSet->shadow_size, 0,ciShadowSizesNum-1);
 	sv= &svShadowDist;	sv->Init("ShadowDist",	&pSet->shadow_dist, 20.f,5000.f, 3.f, 0,3, 1.f," m");
 	Btn("Apply", btnShadows);
 	

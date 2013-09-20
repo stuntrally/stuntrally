@@ -5,6 +5,7 @@
 #include "../ogre/common/SceneXml.h"
 #include "../ogre/common/CData.h"
 #include "../ogre/common/FluidsXml.h"
+#include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"
@@ -400,7 +401,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 		case key(F9):  // blendmap
 			if (alt)
-			{	/*BGui::*/WP wp = gui->chAutoBlendmap;  ChkEv(autoBlendmap);  }
+			{	BGui::WP wp = gui->chAutoBlendmap;  ChkEv(autoBlendmap);  }
 			else	bTerUpdBlend = true;  return true;
 
 		//  prev num tab (layers,grasses,models)

@@ -14,6 +14,7 @@
 #else
 	#include "../../editor/CApp.h"
 	#include "../../editor/CGui.h"
+	#include "../../editor/settings.h"
 #endif
 #include "MultiList2.h"
 #include <OgreRoot.h>

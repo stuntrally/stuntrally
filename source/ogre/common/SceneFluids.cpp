@@ -21,6 +21,7 @@
 #include <OgreMeshManager.h>
 #include <OgreMaterialManager.h>
 #include <OgreEntity.h>
+#include <OgreSceneManager.h>
 #include "../common/QTimer.h"
 #include "../shiny/Main/Factory.hpp"
 using namespace Ogre;

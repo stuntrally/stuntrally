@@ -2,7 +2,7 @@
 #include "../common/Defines.h"
 #include "../common/RenderConst.h"
 #include "../common/SceneXml.h"
-
+#include "../common/QTimer.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
 	#include "../../editor/settings.h"
@@ -23,11 +23,10 @@
 #include <OgreOverlay.h>
 #include <OgreOverlayContainer.h>
 #include <OgreOverlayManager.h>
+#include <OgreStaticGeometry.h>
 
 #include "../../shiny/Main/Factory.hpp"
 #include "../../shiny/Platforms/Ogre/OgreMaterial.hpp"
-
-#include "../common/QTimer.h"
 
 using namespace Ogre;
 using namespace Forests;
@@ -44,7 +43,7 @@ void App::changeShadows()
 	bool bDepth = pSet->shadow_type >= Sh_Depth;
 	bool bSoft = pSet->shadow_type == Sh_Soft;
 	
-	pSet->shadow_size = std::max(0,std::min(ciShadowNumSizes-1, pSet->shadow_size));
+	pSet->shadow_size = std::max(0,std::min(ciShadowSizesNum-1, pSet->shadow_size));
 	int fTex = ciShadowSizesA[pSet->shadow_size], fTex2 = fTex/2;
 	int num = pSet->shadow_count;
 

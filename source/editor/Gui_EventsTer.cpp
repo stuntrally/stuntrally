@@ -1,12 +1,13 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
+#include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"
-#include <fstream>
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/Slider.h"
 #include "../vdrift/pathmanager.h"
+#include <fstream>
 using namespace MyGUI;
 using namespace Ogre;
 

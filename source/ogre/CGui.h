@@ -1,26 +1,23 @@
 #pragma once
 #include "BaseApp.h"
-#include "common/Defines.h"
 #include "common/Gui_Def.h"
-#include "common/Slider.h"
+//#include "common/Slider.h"
 #include "common/SliderValue.h"
-#include "common/Gui_Popup.h"
-#include <MyGUI.h>
-//#include "common/MessageBox/MessageBox.h"
+#include "common/Gui_Popup.h" //-
+
+#include "MyGUI_Enumerator.h"
 #include "common/MessageBox/MessageBoxStyle.h"
+
 #include "../network/networkcallbacks.hpp"
 #include "../oics/ICSInputControlSystem.h"
+
 #include "ChampsXml.h"  // progress..
 #include "ChallengesXml.h"
 #include "CInput.h"
 
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;  }
 namespace MyGUI  {  class MultiList2;  class Slider;  class Message;  }
-class Scene;
-class SplineRoad;
-class GAME;
-class CHud;
-class CData;
+class Scene;  class SplineRoad;  class GAME;  class CHud;  class CData;
 
 
 //  tracks,cars list items - with info for sorting
@@ -37,7 +34,8 @@ struct CarL
 };
 
 
-class CGui : public GameClientCallback, public MasterClientCallback,
+class CGui : public BGui,
+			 public GameClientCallback, public MasterClientCallback,
 			 public ICS::DetectingBindingListener
 {
 public:
@@ -51,13 +49,14 @@ public:
 	
 	CGui(App* ap1);
 	
+	typedef std::list <std::string> strlist;
 
 	///-----------------------------------------------------------------------------------------------------------------
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------
 	//  size
 	void SizeGUI(); void doSizeGUI(MyGUI::EnumeratorWidgetPtr);
-	std::vector<MyGUI::TabControl*> vSubTabsGame, vSubTabsOpts;
+	std::vector<Tab> vSubTabsGame, vSubTabsOpts;
 
 
 	///  Gui common   --------------------------
@@ -74,16 +73,16 @@ public:
 	void setOrigPos(WP wp, const char* relToWnd);
 
 	//  tooltip
-	WP mToolTip;  MyGUI::EditPtr mToolTipTxt;
+	WP mToolTip;  Ed mToolTipTxt;
 	void setToolTips(MyGUI::EnumeratorWidgetPtr widgets);
-	void notifyToolTip(MyGUI::Widget* sender, const MyGUI::ToolTipInfo& info);
-	void boundedMove(MyGUI::Widget *moving, const MyGUI::IntPoint & point);
+	void notifyToolTip(WP sender, const MyGUI::ToolTipInfo& info);
+	void boundedMove(WP moving, const MyGUI::IntPoint & point);
 
 	//  language
 	void comboLanguage(CMB);
 	std::map<std::string, MyGUI::UString> languages; // <short name, display name>
 	bool bGuiReinit;  void UnfocusLists();
-	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
+	Btn bnQuit;  void btnQuit(WP);
 
 	//  init
 	void InitGui();  bool bGI;
@@ -96,20 +95,20 @@ public:
 	///  track
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const Ogre::String& sTrack, float timeCur, bool champ=false),
 		ReadTrkStats(), ReadTrkStatsChamp(Ogre::String track,bool reverse);
-	MyGUI::MultiList2* trkList;  MyGUI::EditPtr trkDesc[2];
-	MyGUI::StaticImagePtr imgPrv[2],imgMini[2],imgTer[2], imgTrkIco1,imgTrkIco2;
+	Mli2 trkList;  Ed trkDesc[2];
+	Img imgPrv[2],imgMini[2],imgTer[2], imgTrkIco1,imgTrkIco2;
 	const static int StTrk = 6, InfTrk = 11;
-	MyGUI::StaticTextPtr valTrkNet, stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
+	Txt valTrkNet, stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
 
-	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
+	void listTrackChng(Mli2, size_t), TrackListUpd(bool resetNotFound=false);
 	void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
 	void updTrkListDim(), updChampListDim();
 	//  const list column widths
 	const static int colTrk[32],colCar[16],colCh[16],colChL[16],colSt[16];
 	const static Ogre::String clrsDiff[9],clrsRating[6],clrsLong[10];
 
-	void edTrkFind(MyGUI::EditPtr),edRplFind(MyGUI::EditPtr);
-	Ogre::String sTrkFind,sRplFind;  MyGUI::EditPtr edFind;
+	void edTrkFind(Ed),edRplFind(Ed);
+	Ogre::String sTrkFind,sRplFind;  Ed edFind;
 	strlist liTracks,liTracksUser;  void FillTrackLists();
 	std::list<TrkL> liTrk;
 
@@ -118,7 +117,7 @@ public:
 	std::list<CarL> liCar;  void FillCarList();
 
 	//  screen
-	MyGUI::ListPtr resList;
+	Li resList;
 	void InitGuiScreenRes(), btnResChng(WP), ResizeOptWnd();
 	void chkVidFullscr(WP), chkVidVSync(WP);
 
@@ -129,24 +128,24 @@ public:
 
 	//  main menu
 	void toggleGui(bool toggle=true), GuiShortcut(MNU_Btns mnu, int tab, int subtab=-1);
-	void MainMenuBtn(MyGUI::WidgetPtr), MenuTabChg(MyGUI::TabPtr, size_t);  bool loadReadme;
+	void MainMenuBtn(WP), MenuTabChg(Tab, size_t);  bool loadReadme;
 
 	void UpdCarClrSld(bool upd=true), UpdCarMClr();  bool bUpdCarClr;
 	void btnNetEndClose(WP);
 
 
 	///  championships & challenges
-	MyGUI::ButtonPtr btStTut, btStChamp, btStChall;
-	MyGUI::StaticImagePtr imgTut, imgChamp, imgChall;
+	Btn btStTut, btStChamp, btStChall;
+	Img imgTut, imgChamp, imgChall;
 	//  tabs
-	MyGUI::TabPtr tabTut, tabChamp, tabChall;
-	void tabTutType(MyGUI::TabPtr wp, size_t id), tabChampType(MyGUI::TabPtr wp, size_t id);
-	void tabChallType(MyGUI::TabPtr wp, size_t id);
+	Tab tabTut, tabChamp, tabChall;
+	void tabTutType(Tab, size_t), tabChampType(Tab, size_t);
+	void tabChallType(Tab, size_t);
 
 	//  stages
-	MyGUI::EditBox* edChInfo,*edChDesc;  MyGUI::Widget* panCh;
-	MyGUI::TextBox* txtCh,*valCh,*txtChP[3],*valChP[3];  // stages info, pass/progress
-	void btnStageNext(WP), btnStagePrev(WP);  MyGUI::StaticText* valStageNum;
+	Ed edChInfo, edChDesc;  WP panCh;
+	Txt txtCh, valCh, txtChP[3], valChP[3];  // stages info, pass/progress
+	void btnStageNext(WP), btnStagePrev(WP);  Txt valStageNum;
 	void StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress);
 	
 	//  xml  [1]= reversed  L= challenge
@@ -164,18 +163,18 @@ public:
 	const static int ciAddPos[3];  const static float cfSubPoints[3];
 	
 	//  common
-	MyGUI::MultiList2* liStages, *liNetEnd;  void listStageChng(MyGUI::MultiList2* li, size_t pos);
-	MyGUI::MultiList2* liChamps;  void listChampChng(MyGUI::MultiList2* li, size_t pos);
-	MyGUI::MultiList2* liChalls;  void listChallChng(MyGUI::MultiList2* li, size_t pos);
+	Mli2 liStages, liNetEnd;  void listStageChng(Mli2, size_t);
+	Mli2 liChamps;  void listChampChng(Mli2, size_t);
+	Mli2 liChalls;  void listChallChng(Mli2, size_t);
 
 	void btnChampStart(WP), btnChampEndClose(WP), btnChampStageBack(WP), btnChampStageStart(WP);
 	void btnChallStart(WP), btnChallEndClose(WP), btnChallStageBack(WP), btnChallStageStart(WP);
-	void btnChRestart(WP);  MyGUI::ButtonPtr btChRestart;
+	void btnChRestart(WP);  Btn btChRestart;
 
-	MyGUI::ButtonPtr btChampStage, btChallStage;
-	MyGUI::EditBox* edChampStage,*edChampEnd;  MyGUI::ImageBox* imgChampStage,*imgChampEndCup;
-	MyGUI::EditBox* edChallStage,*edChallEnd;  MyGUI::ImageBox* imgChallStage;
-	MyGUI::ImageBox* imgChallFail,*imgChallCup;  MyGUI::TextBox* txChallEndC,*txChallEndF;
+	Btn btChampStage, btChallStage;
+	Ed edChampStage, edChampEnd;  Img imgChampStage, imgChampEndCup;
+	Ed edChallStage, edChallEnd;  Img imgChallStage;
+	Img imgChallFail, imgChallCup;  Txt txChallEndC, txChallEndF;
 
 	//  main
 	void ChampsListUpdate(), ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
@@ -195,10 +194,10 @@ public:
 	void CreateInputTab(const std::string& title, bool playerTab, const std::vector<InputAction>& actions, ICS::InputControlSystem* ICS);
 	void InitInputGui(), inputBindBtnClicked(WP), inputUnbind(WP), inputBindBtn2(WP, int, int, MyGUI::MouseButton mb);
 	enum EBind {  B_Done=0, B_First, B_Second  };
-	void UpdateInputButton(MyGUI::Button* button, const InputAction& action, EBind bind = B_Done);
+	void UpdateInputButton(Btn button, const InputAction& action, EBind bind = B_Done);
 
 	InputAction* mBindingAction;
-	MyGUI::Button* mBindingSender;
+	Btn mBindingSender;
 	virtual void mouseAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
 		ICS::InputControlSystem::NamedAxis axis, ICS::Control::ControlChangingDirection direction);
 	virtual void keyBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
@@ -218,24 +217,24 @@ public:
 	void UpdateInputBars(), inputDetailBtn(WP);
 
 	//  joy events
-	MyGUI::TabPtr tabInput;  void tabInputChg(MyGUI::TabPtr, size_t);
-	MyGUI::StaticTextPtr txtInpDetail;  MyGUI::WidgetPtr panInputDetail;  MyGUI::ButtonPtr chOneAxis;
-	MyGUI::EditPtr edInputIncrease;  void editInput(MyGUI::EditPtr), btnInputInv(WP), chkOneAxis(WP);
+	Tab tabInput;  void tabInputChg(Tab, size_t);
+	Txt txtInpDetail;  WP panInputDetail;  Btn chOneAxis;
+	Ed edInputIncrease;  void editInput(Ed), btnInputInv(WP), chkOneAxis(WP);
 	void comboInputKeyAllPreset(CMB);  bool TabInputId(int* pId);
 
 
 	///  tweak  -----------------------------------------
 	const static int ciEdCar = 12;
-	MyGUI::EditPtr edCar[ciEdCar],edPerfTest, edTweakCol;  MyGUI::TabPtr tabTweak, tabEdCar;
-	MyGUI::StaticTextPtr txtTweakPath, txtTweakTire, txtTweakPathCol;
-	MyGUI::ComboBoxPtr cmbTweakCarSet, cmbTweakTireSet;
-	void CmbTweakCarSet(CMB), CmbTweakTireSet(CMB), CmbEdTweakCarSet(MyGUI::EditPtr), CmbEdTweakTireSet(MyGUI::EditPtr);
+	Ed edCar[ciEdCar],edPerfTest, edTweakCol;  Tab tabTweak, tabEdCar;
+	Txt txtTweakPath, txtTweakTire, txtTweakPathCol;
+	Cmb cmbTweakCarSet, cmbTweakTireSet;
+	void CmbTweakCarSet(CMB), CmbTweakTireSet(CMB), CmbEdTweakCarSet(Ed), CmbEdTweakTireSet(Ed);
 	void TweakToggle(), TweakCarSave(),TweakCarLoad(), TweakTireSave();
 	void TweakColUpd(bool user), TweakColLoad(),TweakColSave();
 	void btnTweakCarSave(WP),btnTweakCarLoad(WP), btnTweakTireSave(WP), btnTweakColSave(WP);
-	void tabCarEdChng(MyGUI::TabPtr, size_t);
+	void tabCarEdChng(Tab, size_t);
 	//  graphs
-	MyGUI::ComboBox* cmbGraphs;  void comboGraphs(CMB);  MyGUI::StaticTextPtr valGraphsType;
+	Cmb cmbGraphs;  void comboGraphs(CMB);  Txt valGraphsType;
 
 
 	//  sliders  -----------------------------------------
@@ -290,40 +289,40 @@ public:
 
 	// gui car tire set gravel/asphalt
 	int iTireSet;
-	void tabTireSet(MyGUI::TabPtr wp, size_t id);
-	MyGUI::ButtonPtr bchAbs,bchTcs;
-	MyGUI::Slider* slSSSEff,*slSSSVel,*slSteerRngSurf,*slSteerRngSim;
+	void tabTireSet(Tab wp, size_t);
+	Btn bchAbs,bchTcs;
+	Sl slSSSEff, slSSSVel, slSteerRngSurf, slSteerRngSim;
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP), toggleWireframe();
-	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP);
-	MyGUI::ButtonPtr bRsimEasy, bRsimNorm;  void radSimEasy(WP), radSimNorm(WP);  bool bReloadSim;
-	MyGUI::ButtonPtr chFps,chWire, chBlt,chBltTxt, chProfTxt,
+	Btn bRkmh, bRmph;  void radKmh(WP), radMph(WP);
+	Btn bRsimEasy, bRsimNorm;  void radSimEasy(WP), radSimNorm(WP);  bool bReloadSim;
+	Btn chFps,chWire, chBlt,chBltTxt, chProfTxt,
 		chDbgT,chDbgB,chDbgS, chGraphs, chTireVis,
 		chTimes,chMinimp,chOpponents;
 
 	///  replay  -----------------------------
-	MyGUI::StaticTextPtr valRplPerc, valRplCur, valRplLen,
+	Txt valRplPerc, valRplCur, valRplLen,
 		valRplName,valRplInfo,valRplName2,valRplInfo2;
-	MyGUI::Slider* slRplPos;  void slRplPosEv(SL);
-	MyGUI::EditPtr edRplName, edRplDesc;
+	Sl slRplPos;  void slRplPosEv(SL);
+	Ed edRplName, edRplDesc;
 	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP), btnRplRename(WP),  // btn
 		chkRplAutoRec(WP), chkRplChkGhost(WP), chkRplChkBestOnly(WP), chkRplChkPar(WP),
 		chkRplChkRewind(WP), chkRplChkGhostOther(WP), chkRplChkTrackGhost(WP),  // replay
 		btnRplToStart(WP),btnRplToEnd(WP), btnRplPlay(WP),  // controls
 		btnRplCur(WP),btnRplAll(WP),chkRplGhosts(WP);  // radio
-	MyGUI::ButtonPtr btRplPl;  void UpdRplPlayBtn();
-	MyGUI::ButtonPtr rbRplCur, rbRplAll;  // radio
+	Btn btRplPl;  void UpdRplPlayBtn();
+	Btn rbRplCur, rbRplAll;  // radio
 
-	void btnRplBackDn(WP,int,int,MyGUI::MouseButton),btnRplBackUp(WP,int,int,MyGUI::MouseButton);
-	void btnRplFwdDn(WP,int,int,MyGUI::MouseButton),btnRplFwdUp(WP,int,int,MyGUI::MouseButton);
+	void btnRplBackDn(WP,int,int,MyGUI::MouseButton), btnRplBackUp(WP,int,int,MyGUI::MouseButton);
+	void btnRplFwdDn(WP,int,int, MyGUI::MouseButton), btnRplFwdUp(WP,int,int, MyGUI::MouseButton);
 	bool bRplBack,bRplFwd;
 		
 	void msgRplDelete(MyGUI::Message*, MyGUI::MessageBoxStyle);
 	
 	void btnNumPlayers(WP);  void chkSplitVert(WP), chkStartOrd(WP);
-	MyGUI::StaticTextPtr valLocPlayers;
+	Txt valLocPlayers;
 	
-	MyGUI::StaticTextPtr txCarStatsTxt,txCarStatsVals,
+	Txt txCarStatsTxt,txCarStatsVals,
 		txCarSpeed,txCarType, txCarAuthor,txTrackAuthor;
 	void UpdCarStatsTxt();  // car stats
 
@@ -331,12 +330,12 @@ public:
 
 	//  game
 	void btnNewGame(WP),btnNewGameStart(WP);
-	MyGUI::MultiList2* carList;  MyGUI::ListPtr rplList;  void updReplaysList();
-	void listRplChng(MyGUI::List* li, size_t pos),  changeCar();
-	void listCarChng(MyGUI::MultiList2* li, size_t pos),  changeTrack();
-	int LNext(MyGUI::MultiList2* lp, int rel, int ofs), LNext(MyGUI::ListPtr lp, int rel, int ofs),
-		LNext(MyGUI::MultiList* lp, int rel);  // util next in list
-	void LNext(int rel);  void tabPlayer(MyGUI::TabPtr wp, size_t id);
+	Mli2 carList;  Li rplList;  void updReplaysList();
+	void listRplChng(Li, size_t),  changeCar();
+	void listCarChng(Mli2, size_t),  changeTrack();
+	int LNext(Mli2, int rel, int ofs), LNext(Li, int rel, int ofs),
+		LNext(Mli, int rel);  // util next in list
+	void LNext(int rel);  void tabPlayer(Tab wp, size_t id);
 
 	int iCurCar;
 	Ogre::String sListCar,sListTrack;  int bListTrackU;
@@ -346,8 +345,8 @@ public:
 	const Ogre::String& GetGhostFile(std::string* ghCar=NULL);
 	std::string GetRplListDir();
 
-	MyGUI::StaticImagePtr imgCar;  MyGUI::EditPtr carDesc;
-	MyGUI::ComboBoxPtr cmbBoost, cmbFlip, cmbDamage, cmbRewind;
+	Img imgCar;  Ed carDesc;
+	Cmb cmbBoost, cmbFlip, cmbDamage, cmbRewind;
 	void comboBoost(CMB), comboFlip(CMB), comboDamage(CMB), comboRewind(CMB);
 
 	GuiPopup popup;
@@ -379,27 +378,27 @@ public:
 	bool bUpdateGameInfo, bStartGame, bStartedGame, bUpdChat;
 
 	///  multiplayer gui  --------------------
-	MyGUI::TabPtr tabsNet;  //void tabNet(TabPtr tab, size_t id);
-	MyGUI::WidgetPtr panelNetServer,panelNetGame,panelNetTrack;
-	MyGUI::MultiListPtr listServers, listPlayers;
-	MyGUI::EditPtr edNetChat;  // chat area, set text through sChatBuffer
-	int iColLock,iColHost,iColPort;  //ids of columns in listServers, set in gui init
+	Tab tabsNet;  //void tabNet(TabPtr tab, size_t id);
+	WP panelNetServer, panelNetGame, panelNetTrack;
+	Mli listServers, listPlayers;
+	Ed edNetChat;  // chat area, set text through sChatBuffer
+	int iColLock, iColHost, iColPort;  // ids of columns in listServers, set in gui init
 
-	MyGUI::ButtonPtr btnNetRefresh,btnNetJoin,btnNetCreate,btnNetDirect;
-	MyGUI::ButtonPtr btnNetReady,btnNetLeave;
+	Btn btnNetRefresh, btnNetJoin, btnNetCreate, btnNetDirect;
+	Btn btnNetReady, btnNetLeave;
 	void evBtnNetRefresh(WP);
 	void evBtnNetJoin(WP), evBtnNetJoinLockedClose();
 	void evBtnNetCreate(WP);
-	void evBtnNetDirect(WP),evBtnNetDirectClose();
-	void evBtnNetReady(WP),evBtnNetLeave(WP);
+	void evBtnNetDirect(WP), evBtnNetDirectClose();
+	void evBtnNetReady(WP), evBtnNetLeave(WP);
 
-	MyGUI::StaticTextPtr valNetGameName, valNetChat, valNetGameInfo, valNetPassword;
-	MyGUI::ButtonPtr btnNetSendMsg;  void chatSendMsg();
-	MyGUI::EditPtr edNetGameName, edNetChatMsg, edNetPassword,
+	Txt valNetGameName, valNetChat, valNetGameInfo, valNetPassword;
+	Btn btnNetSendMsg;  void chatSendMsg();
+	Ed edNetGameName, edNetChatMsg, edNetPassword,
 		edNetNick, edNetServerIP, edNetServerPort, edNetLocalPort;
-	void evEdNetGameName(MyGUI::EditPtr), evEdNetPassword(MyGUI::EditPtr),
-		evEdNetNick(MyGUI::EditPtr), evEdNetServerIP(MyGUI::EditPtr),
-		evEdNetServerPort(MyGUI::EditPtr), evEdNetLocalPort(MyGUI::EditPtr);
+	void evEdNetGameName(Ed), evEdNetPassword(Ed),
+		evEdNetNick(Ed), evEdNetServerIP(Ed),
+		evEdNetServerPort(Ed), evEdNetLocalPort(Ed);
 	void UpdGuiNetw();
 
 	bool GetCarPath(std::string* pathCar/*out*/,

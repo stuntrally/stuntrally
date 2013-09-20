@@ -155,8 +155,8 @@ void CGui::InitGui()
 	sv= &svReflSkip;	sv->Init("ReflSkip",	&pSet->refl_skip,    0,1000, 2.f);
 	sv= &svReflFaces;	sv->Init("ReflFaces",	&pSet->refl_faces,   0,6);
 	sv= &svReflSize;
-		for (int i=0; i < ciShadowNumSizes; ++i)  sv->strMap[i] = toStr(ciShadowSizesA[i]);
-						sv->Init("ReflSize",	&pSet->refl_size,    0,ciShadowNumSizes-1);
+		for (int i=0; i < ciShadowSizesNum; ++i)  sv->strMap[i] = toStr(ciShadowSizesA[i]);
+						sv->Init("ReflSize",	&pSet->refl_size,    0,ciShadowSizesNum-1);
 
 	sv= &svReflDist;	sv->Init("ReflDist",	&pSet->refl_dist,   20.f,1500.f, 2.f, 0,4, 1.f," m");  Sev(ReflDist);
 	sv= &svReflMode;

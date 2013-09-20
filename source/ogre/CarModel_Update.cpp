@@ -22,6 +22,7 @@
 #include <OgreParticleEmitter.h>
 #include <OgreParticleAffector.h>
 #include <OgreRibbonTrail.h>
+#include <OgreBillboardSet.h>
 #include <MyGUI_TextBox.h>
 using namespace Ogre;
 

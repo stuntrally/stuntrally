@@ -16,12 +16,12 @@ namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class Rend
  * and it will be destroyed when game quits.
  */
 
-class SplitScreenManager : public Ogre::RenderTargetListener
+class SplitScr : public Ogre::RenderTargetListener
 {
 public:
 	// Constructor, only assign members
-	SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set);
-	~SplitScreenManager();
+	SplitScr(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set);
+	~SplitScr();
 	
 	// Number of viewports / cameras
 	int mNumViewports;

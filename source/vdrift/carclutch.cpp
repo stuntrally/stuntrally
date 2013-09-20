@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "carclutch.h"
+#include "../ogre/common/Defines.h"
 
 
 void CARCLUTCH::DebugPrint(std::ostream & out)

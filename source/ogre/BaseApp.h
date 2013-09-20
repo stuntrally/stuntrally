@@ -1,18 +1,16 @@
 #pragma once
-#include <OgreVector3.h>
 #include <OgreFrameListener.h>
 #include <OgreWindowEventUtilities.h>
+#include <OgreMaterialManager.h>
 
-#include <MyGUI_Prerequest.h>
-#include <MyGUI_Widget.h>
-#include <MyGUI_OgrePlatform.h>
-
+#include "common/Gui_Def.h"
+//#include <MyGUI_Prerequest.h>
 #include <boost/scoped_ptr.hpp>
 #include "../sdl4ogre/events.h"
 namespace SFO {  class InputWrapper;  class SDLCursorManager;  }
 namespace ICS {  class InputControlSystem;  class DetectingBindingListener;  }
 
-namespace MyGUI{  class OgreD3D11Platform; }
+namespace MyGUI{  class OgreD3D11Platform;  class OgrePlatform;  }
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
 	namespace RTShader {  class ShaderGenerator;  }  }
 namespace sh   {  class Factory;  }
@@ -45,7 +43,7 @@ enum LobbyState { DISCONNECTED, HOSTING, JOINED };
 
 
 
-class BaseApp :
+class BaseApp : public BGui,
 		public Ogre::FrameListener,
 		public SFO::KeyListener, public SFO::MouseListener,
 		public SFO::JoyListener, public SFO::WindowListener
@@ -71,7 +69,7 @@ public:
 	virtual void postInit() = 0;
 		
 	///  effects
-	class SplitScreenManager* mSplitMgr;
+	class SplitScr* mSplitMgr;
 	class HDRLogic* mHDRLogic; class MotionBlurLogic* mMotionBlurLogic;
 	class CameraBlurLogic* mCameraBlurLogic;
 	class SSAOLogic* mSSAOLogic;
@@ -163,16 +161,19 @@ protected:
 	bool mbWireFrame, mbShowCamPos;  // on/off
 	int iCurCam;
 
-	///  Gui
+	///  Gui  ..........................
 	bool isFocGui,isFocRpl;  // gui shown
 	bool isTweak();
-	MyGUI::Gui* mGui;  void baseInitGui(), baseSizeGui();
-	MyGUI::ImageBox* bckFps, *imgBack;
-	MyGUI::TextBox*	txFps;
+	
+	MyGUI::Gui* mGui;
+	void baseInitGui(), baseSizeGui();
+
+	Img bckFps, imgBack;
+	Txt txFps;
 public:
 	//  loading
-	MyGUI::ImageBox *bckLoad,*bckLoadBar,*barLoad, *imgLoad;
-	MyGUI::TextBox *txLoadBig,*txLoad;
+	Img bckLoad, bckLoadBar, barLoad, imgLoad;
+	Txt txLoadBig, txLoad;
 	int barSizeX, barSizeY;
 protected:
 	
@@ -183,14 +184,16 @@ protected:
 	#endif
 	
 	///  main menu  // pSet->inMenu
-	MyGUI::WidgetPtr mWndMainPanels[ciMainBtns];  MyGUI::ButtonPtr mWndMainBtns[ciMainBtns];
+	WP mWndMainPanels[ciMainBtns];
+	Btn mWndMainBtns[ciMainBtns];
 
-	MyGUI::WindowPtr mWndMain,mWndGame,mWndReplays,mWndHelp,mWndOpts,  // menu, windows
+	Wnd mWndMain,mWndGame,mWndReplays,mWndHelp,mWndOpts,  // menu, windows
 		mWndRpl, mWndNetEnd, mWndTweak,  // rpl controls, netw, tools
 		mWndChampStage,mWndChampEnd, mWndChallStage,mWndChallEnd;
-	MyGUI::TabPtr mWndTabsGame,mWndTabsOpts,mWndTabsHelp,mWndTabsRpl;  // main tabs on windows
+	Tab mWndTabsGame,mWndTabsOpts,mWndTabsHelp,mWndTabsRpl;  // main tabs on windows
 	
-	MyGUI::VectorWidgetPtr vwGui;  // all widgets to destroy
+	//MyGUI::VectorWidgetPtr
+	std::vector<WP> vwGui;  // all widgets to destroy
 
 	///  networking
 	boost::scoped_ptr<MasterClient> mMasterClient;

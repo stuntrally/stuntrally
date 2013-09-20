@@ -4,7 +4,6 @@
 #include "mathvector.h"
 #include "rotationalframe.h"
 #include "matrix3.h"
-#include "../ogre/common/Defines.h"
 
 
 class CARWHEEL

@@ -2,16 +2,13 @@
 #include "common/Defines.h"
 #include "common/RenderConst.h"
 #include "SplitScreen.h"
-
 #include "CGame.h"
 #include "CHud.h"
 #include "CarModel.h"
 #include "common/SceneXml.h"
 #include "../vdrift/settings.h"
 #include "../road/Road.h"
-#include "MyGUI_PointerManager.h"
 #include "../vdrift/car.h"
-
 #include "../shiny/Main/Factory.hpp"
 
 #include <OgreRoot.h>
@@ -23,11 +20,13 @@
 #include <OgreParticleSystem.h>
 #include <OgreParticleEmitter.h>
 #include <OgreRTShaderSystem.h>
-
+#include <OgreCompositorManager.h>
+#include <OgreCompositorChain.h>
+#include "MyGUI_PointerManager.h"
 using namespace Ogre;
 
 
-SplitScreenManager::SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set) :
+SplitScr::SplitScr(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set) :
 	pApp(0), mGuiViewport(0), mGuiSceneMgr(0),
 	mWindow(window), mSceneMgr(sceneMgr), pSet(set)
 {
@@ -35,26 +34,26 @@ SplitScreenManager::SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::Rende
 	mWindow->addListener(this);
 }
 
-SplitScreenManager::~SplitScreenManager()
+SplitScr::~SplitScr()
 {
 	CleanUp();
 	mWindow->removeListener(this);
 }
 
-void SplitScreenManager::SetBackground(const Ogre::ColourValue& value)
+void SplitScr::SetBackground(const Ogre::ColourValue& value)
 {
 	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
 		(*vpIt)->setBackgroundColour(value);
 }
 
-void SplitScreenManager::UpdateCamDist()
+void SplitScr::UpdateCamDist()
 {
 	for (std::list<Ogre::Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); ++it)
 		(*it)->setFarClipDistance(pSet->view_distance*1.1f);
 }
 
 //  CleanUp
-void SplitScreenManager::CleanUp()
+void SplitScr::CleanUp()
 {
 	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
 	{
@@ -71,7 +70,7 @@ void SplitScreenManager::CleanUp()
 
 ///  Align
 //------------------------------------------------------------------------------------------------------------------
-void SplitScreenManager::Align()
+void SplitScr::Align()
 {
 	CleanUp();
 	LogO("-- Screen Align");
@@ -178,7 +177,7 @@ void SplitScreenManager::Align()
 }
 
 
-void SplitScreenManager::AdjustRatio()
+void SplitScr::AdjustRatio()
 {
 	// Go through all viewports & cameras and adjust camera aspect ratio so that it fits to the viewport.
 	std::list<Ogre::Camera*>::iterator camIt = mCameras.begin();
@@ -192,7 +191,7 @@ void SplitScreenManager::AdjustRatio()
 
 ///  pre viewport update
 //------------------------------------------------------------------------------------------------------------------
-void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
+void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 {
 	if (!pApp || pApp->bLoading)  return;
 
@@ -262,16 +261,14 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 
 		//update soft particle Depth Target
 
-		if(pApp->pSet->softparticles && pApp->pSet->all_effects)
+		if (pApp->pSet->softparticles && pApp->pSet->all_effects)
 		{
-			Ogre::CompositorInstance  *compositor= Ogre::CompositorManager::getSingleton().getCompositorChain(evt.source)->getCompositor("gbuffer");
-			if(compositor!=NULL)
+			Ogre::CompositorInstance  *compositor = Ogre::CompositorManager::getSingleton().getCompositorChain(evt.source)->getCompositor("gbuffer");
+			if (compositor!=NULL)
 			{
 				Ogre::TexturePtr depthTexture =	compositor->getTextureInstance("mrt_output",2);
-				if(!depthTexture.isNull())
-				{
+				if (!depthTexture.isNull())
 					sh::Factory::getInstance().setTextureAlias("SceneDepth", depthTexture->getName());
-				}
 			}
 		}
 	}
@@ -287,7 +284,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 }
 
 
-void SplitScreenManager::postViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
+void SplitScr::postViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 {
 
 }

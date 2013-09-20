@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
+#include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"
@@ -314,9 +315,9 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		gui->tiViewUpd += evt.timeSinceLastFrame;
 	if (gui->tiViewUpd > 0.0f)  //par delay 0.1
 	{	gui->tiViewUpd = -1.f;
-		gui->viewBox.clearScene();
+		gui->viewBox->clearScene();
 		if (gui->viewMesh != "" && ResourceGroupManager::getSingleton().resourceExistsInAnyGroup(gui->viewMesh))
-			gui->viewBox.injectObject(gui->viewMesh);
+			gui->viewBox->injectObject(gui->viewMesh);
 	}
 	
 	

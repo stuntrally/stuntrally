@@ -1,4 +1,5 @@
 #pragma once
+#include "common/Gui_Def.h"
 #include "BaseApp.h"
 #include "ReplayGame.h"
 #include "../vdrift/cardefs.h"
@@ -15,12 +16,8 @@ namespace Ogre {  class SceneNode;  class SceneManager;  class Light;
 	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
 namespace Forests {  class PagedGeometry;  }
 namespace BtOgre  {  class DebugDrawer;  }
-class WaterRTT;
-class GAME;
-class Scene;
-class GraphView;
-class CInput;
-class CData;
+class GAME;  class Scene;  class CData;  class CInput;  class WaterRTT;  class GraphView;  
+
 const int CarPosCnt = 8;  // size of poses queue
 
 

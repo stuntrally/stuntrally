@@ -16,6 +16,8 @@
 #include "tobullet.h"
 #include "game.h"  //sound
 #include "../ogre/SplitScreen.h"  // num plr
+#include <OgreCamera.h>
+
 
 //--------------------------------------------------------------------------------------------------------------------------
 bool CAR::LoadSounds(
