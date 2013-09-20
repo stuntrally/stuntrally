@@ -30,7 +30,7 @@ struct TrkL
 };
 
 
-class CGui
+class CGui //: public BGui
 {
 public:
 	App* app;
@@ -169,19 +169,23 @@ public:
 	void chkFogDisable(WP),chkWeatherDisable(WP);  MyGUI::ButtonPtr chkFog, chkWeather;
 
 	
-	///  [Terrain]  ----
+	///  [Terrain]  --------------------
 	MyGUI::ComboBoxPtr cmbTexDiff, cmbTexNorm;
 	void comboTexDiff(CMB), comboTexNorm(CMB);
 	MyGUI::StaticImagePtr imgTexDiff;
 
-	MyGUI::ButtonPtr chkTerLay,chkTerLNoiseOnly,chkTerLayTripl;
-	void chkTerLayOn(WP),chkTerLNoiseOnlyOn(WP),chkTerLayTriplOn(WP);  // on
-	MyGUI::TabPtr tabsHmap;	  void tabHmap(TAB);  int getHMapSizeTab();  // tabs
-	MyGUI::ButtonPtr chkTexNormAuto;  void chkTexNormAutoOn(WP);  bool bTexNormAuto;  // auto
+	MyGUI::ButtonPtr chkTerLay, chkTerLNoiseOnly, chkTerLayTripl;
+	void chkTerLayOn(WP), chkTerLNoiseOnlyOn(WP), chkTerLayTriplOn(WP);  // on
+	//  HMap tab
+	MyGUI::TabPtr tabsHmap;	 void tabHmap(TAB);
+	void updTabHmap();  int getHMapSizeTab();
+	
+	bool bTexNormAuto;  // auto norm tex
+	MyGUI::ButtonPtr chkTexNormAuto;  void chkTexNormAutoOn(WP);
 	
 	void btnBrushPreset(WP);
 
-	//  ter generator
+	//  Ter Generator
 	SV svTerGenScale, svTerGenOfsX, svTerGenOfsY;
 	SV svTerGenFreq, svTerGenOct, svTerGenPers, svTerGenPow;
 	SV svTerGenMul, svTerGenOfsH, svTerGenRoadSm;
@@ -190,34 +194,36 @@ public:
 	void slTerGen(SV*);
 	
 	
-	//  ter size
-	SLV(TerTriSize);  SLV(TerLScale);
-	MyGUI::EditPtr edTerTriSize, edTerLScale, edTerErrorNorm;  MyGUI::Slider* sldTerLScale;
-	void editTerTriSize(MyGUI::EditPtr), editTerLScale(MyGUI::EditPtr), editTerErrorNorm(MyGUI::EditPtr);
-	void btnTerrainNew(WP), btnTerGenerate(WP), btnTerrainHalf(WP), btnTerrainDouble(WP), btnTerrainMove(WP);
-	const char* getHMapNew();
+	//  Ter HMap
+	SlV(TerTriSize);  int UpdTxtTerSize(float mul=1.f);
+	MyGUI::EditPtr edTerErrorNorm;  void editTerErrorNorm(MyGUI::EditPtr);
+	void btnTerrainNew(WP), btnTerGenerate(WP);
+	void btnTerrainHalf(WP), btnTerrainDouble(WP), btnTerrainMove(WP);
+	Ogre::String getHMapNew();
 	MyGUI::StaticTextPtr valTerLAll;
 	
-	//  ter layer
+	//  Ter Layer
 	int idTerLay;  bool bTerLay;  // help vars
 	void sldUpdTerL();
 	MyGUI::TabPtr tabsTerLayers; void tabTerLayer(TAB);
 
-	SLV(TerLAngMin);  SLV(TerLHMin);  SLV(TerLAngSm);  // blendmap
-	SLV(TerLAngMax);  SLV(TerLHMax);  SLV(TerLHSm);
-	SLV(TerLNoise);  //Chk("TerLNoiseOnly", chkTerLNoiseOnly, 0);
+	SV svTerLScale;
+	SV svTerLAngMin, svTerLHMin, svTerLAngSm;  // blendmap
+	SV svTerLAngMax, svTerLHMax, svTerLHSm;
+	SV svTerLNoise;  //TerLNoiseOnly
+	void slTerLay(SV*);
 
-	//  ter particles
-	MyGUI::EditPtr edLDust,edLDustS, edLMud,edLSmoke, edLTrlClr;  MyGUI::ImageBox* clrTrail;
+	//  Ter Particles
+	MyGUI::EditPtr edLDust,edLDustS,edLMud,edLSmoke, edLTrlClr;  MyGUI::ImageBox* clrTrail;
 	void editLDust(MyGUI::EditPtr), editLTrlClr(MyGUI::EditPtr);
 	MyGUI::ComboBoxPtr cmbParDust,cmbParMud,cmbParSmoke;  void comboParDust(CMB);
 	
-	//  ter surfaces
+	//  Ter Surfaces
 	MyGUI::ComboBoxPtr cmbSurface;  void comboSurface(CMB), UpdSurfInfo();
 	MyGUI::StaticTextPtr txtSurfTire, txtSuBumpWave,txtSuBumpAmp, txtSuRollDrag, txtSuFrict, txtSurfType;
 	
 
-	///  [Vegetation]  ----
+	///  [Vegetation]  --------------------
 	MyGUI::EditPtr edGrassDens,edTreesDens, edGrPage,edGrDist, edTrPage,edTrDist,
 		edGrSwayDistr, edGrSwayLen, edGrSwaySpd, edTrRdDist, edTrImpDist,
 		edGrDensSmooth, edSceneryId,
@@ -293,7 +299,7 @@ public:
 	MyGUI::EditPtr edScaleTerHMul;  void editScaleTerHMul(MyGUI::EditPtr);
 	SV svAlignWidthAdd, svAlignWidthMul, svAlignSmooth;
 
-	//  warnings
+	//  [Warnings]  ----
 	MyGUI::EditPtr edWarn;  MyGUI::StaticTextPtr txWarn;
 	MyGUI::StaticImagePtr imgWarn,imgInfo;
 	void WarningsCheck(const class Scene* sc, const SplineRoad* road);
@@ -302,7 +308,7 @@ public:
 	void Warn(eWarn type, Ogre::String text);
 	void chkCheckSave(WP),chkCheckLoad(WP);  int iLoadNext;
 
-	//  tweak page
+	//  Tweak
 	void CreateGUITweakMtr(), slTweak(SL),edTweak(MyGUI::EditPtr);
 	void TweakSetMtrPar(std::string name, float val);  void comboTweakMtr(CMB);
 

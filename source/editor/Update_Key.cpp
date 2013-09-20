@@ -400,7 +400,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 		case key(F9):  // blendmap
 			if (alt)
-			{	WP wp = gui->chAutoBlendmap;  ChkEv(autoBlendmap);  }
+			{	/*BGui::*/WP wp = gui->chAutoBlendmap;  ChkEv(autoBlendmap);  }
 			else	bTerUpdBlend = true;  return true;
 
 		//  prev num tab (layers,grasses,models)

@@ -13,7 +13,7 @@
 namespace wraps
 {
 
-	class RenderBoxScene : public RenderBox
+	class RenderBoxScene : public RenderBox /*Canvas*/
 	{
 	public:
 		RenderBoxScene() :

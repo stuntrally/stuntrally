@@ -1,5 +1,38 @@
 #pragma once
 
+//  forward declare
+namespace MyGUI
+{
+	class Widget;  class Window;  class TabControl;  class TabItem;  class ComboBox;  class ListBox;
+	class Button;  class TextBox;  class ImageBox;  class EditBox;  class Slider;
+	class Canvas;  class ScrollView;
+}
+
+#if 0
+//  base Gui
+//  short Widget names
+class BGui
+{
+public:
+	#define TD(w,n)  typedef MyGUI::w* n
+	TD(Widget, WP);  TD(Window, Wnd);  TD(TabControl, Tab);  TD(TabItem, Tbi);  TD(ComboBox, Cmb);  TD(ListBox, Lis);
+	TD(Button, Btn);  TD(TextBox, Txt);  TD(ImageBox, Img);  TD(EditBox, Ed);  TD(Slider, Sl);
+	TD(Canvas, Can);  TD(ScrollView, Scv);
+};
+#endif
+
+//  short Arguments for events
+//  slider event and its text field for value
+#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;  //old!
+#define SL   MyGUI::Slider* wp, float val     // slider event args  //old!
+
+#define CMB  MyGUI::ComboBox* wp, size_t val  // combobox event args
+#define TAB  MyGUI::Tab* tab, size_t id       //  tab event args
+typedef MyGUI::Widget* WP;
+
+typedef std::list <std::string> strlist;
+
+
 //  Gui Shortcuts: find control, assign event, set value
 //------------------------------------------------------------------------
 //ButtonPtr btn, bchk;  ComboBoxPtr cmb;
@@ -36,21 +69,8 @@
 	if (tab && tab->eventTabChangeSelect.empty())  tab->eventTabChangeSelect += newDelegate(this, &CGui::event);
 		
 		
-//  checkboxes event
-//------------------------------------------------------------------------
+//  checkbox event
 #define ChkEv(var)  \
 	pSet->var = !pSet->var;  if (wp) {  \
 	ButtonPtr chk = wp->castType<MyGUI::Button>(); \
     chk->setStateSelected(pSet->var);  }
-
-
-//  slider event and its text field for value
-#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
-#define SL   MyGUI::Slider* wp, float val     // slider event args
-#define CMB  MyGUI::ComboBox* wp, size_t val  // combobox event args
-#define TAB  MyGUI::Tab* tab, size_t id       //  tab event args
-
-namespace MyGUI {  class Widget;  }
-typedef MyGUI::Widget* WP;
-
-typedef std::list <std::string> strlist;

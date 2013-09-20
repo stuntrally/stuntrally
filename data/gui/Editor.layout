@@ -1229,7 +1229,7 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipTerTriSize}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="168 71 80 24" name="edTerTriSize">
+				<Widget type="EditBox" skin="EditBox" position="168 71 80 24" name="TerTriSizeEdit">
 					<Property key="TextColour" value="0.7 1 0.8"/>
 					<Property key="Colour" value="0.7 1 0.8"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
@@ -1743,13 +1743,13 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipTexNormAuto}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="192 129 48 24">
+				<Widget type="TextBox" skin="TextBox" position="192 129 58 24">
 					<Property key="Caption" value="#{scale}"/>
 					<Property key="TextColour" value="0.6 1 0.6"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipTexTiling}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="240 126 72 24" name="edTerLScale">
+				<Widget type="EditBox" skin="EditBox" position="250 126 60 24" name="TerLScaleEdit">
 					<Property key="Colour" value="0.6 1 0.6"/>
 					<Property key="TextColour" value="0.6 1 0.6"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
@@ -1768,114 +1768,116 @@
 					<Widget type="TabItem" skin="" position="2 24 730 272">
 						<Property key="Caption" value="#B0F060#{BlendMap}"/>
 						<UserString key="RelativeTo" value="EditorWnd"/>
-						<Widget type="TextBox" skin="TextBox" position="10 25 86 24">
+						<Widget type="TextBox" skin="TextBox" position="10 25 110 24">
 							<Property key="Caption" value="#{AngleMin}"/>
 							<Property key="TextColour" value="0.6 0.9 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngMin}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="110 25 56 24" name="TerLAngMinVal">
+						<Widget type="TextBox" skin="TextBox" position="120 25 56 24" name="TerLAngMinVal">
 							<Property key="TextColour" value="0.6 0.9 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngMin}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="162 25 360 16" name="TerLAngMin">
+						<Widget type="Slider" skin="Slider" position="172 25 360 16" name="TerLAngMin">
 							<Property key="Colour" value="0.6 0.9 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngMin}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="10 50 86 24">
+						<Widget type="TextBox" skin="TextBox" position="10 50 110 24">
 							<Property key="Caption" value="#{AngleMax}"/>
 							<Property key="TextColour" value="0.6 0.9 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngMax}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="110 50 56 24" name="TerLAngMaxVal">
+						<Widget type="TextBox" skin="TextBox" position="120 50 56 24" name="TerLAngMaxVal">
 							<Property key="TextColour" value="0.6 0.9 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngMax}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="162 50 360 16" name="TerLAngMax">
+						<Widget type="Slider" skin="Slider" position="172 50 360 16" name="TerLAngMax">
 							<Property key="Colour" value="0.6 0.9 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngMax}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="10 75 86 24">
+						<Widget type="TextBox" skin="TextBox" position="10 75 110 24">
 							<Property key="Caption" value="#{TerLAngSm}"/>
 							<Property key="TextColour" value="0.6 0.8 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngSm}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="110 75 56 24" name="TerLAngSmVal">
+						<Widget type="TextBox" skin="TextBox" position="120 75 56 24" name="TerLAngSmVal">
 							<Property key="TextColour" value="0.6 0.8 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngSm}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="162 75 360 16" name="TerLAngSm">
+						<Widget type="Slider" skin="Slider" position="172 75 360 16" name="TerLAngSm">
 							<Property key="Colour" value="0.6 0.8 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngSm}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="10 110 86 24">
+						<Widget type="TextBox" skin="TextBox" position="10 110 110 24">
 							<Property key="Caption" value="#{HeightMin}"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLHMin}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="110 110 56 24" name="TerLHMinVal">
+						<Widget type="EditBox" skin="EditBox" position="116 107 50 24" name="TerLHMinEdit">
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
-							<UserString key="RelativeTo" value="EditorWnd"/>
-							<UserString key="tip" value="#{TipTerLHMin}"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="162 110 560 16" name="TerLHMin">
 							<Property key="Colour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLHMin}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="10 135 86 24">
+						<Widget type="Slider" skin="Slider" position="172 110 460 16" name="TerLHMin">
+							<Property key="Colour" value="0.6 0.9 0.6"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipTerLHMin}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="10 135 110 24">
 							<Property key="Caption" value="#{HeightMax}"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLHMax}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="110 135 56 24" name="TerLHMaxVal">
+						<Widget type="EditBox" skin="EditBox" position="116 132 50 24" name="TerLHMaxEdit">
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
-							<UserString key="RelativeTo" value="EditorWnd"/>
-							<UserString key="tip" value="#{TipTerLHMax}"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="162 135 560 16" name="TerLHMax">
 							<Property key="Colour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLHMax}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="10 160 86 24">
+						<Widget type="Slider" skin="Slider" position="172 135 460 16" name="TerLHMax">
+							<Property key="Colour" value="0.6 0.9 0.6"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+							<UserString key="tip" value="#{TipTerLHMax}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="10 160 110 24">
 							<Property key="Caption" value="#{TerLHSm}"/>
 							<Property key="TextColour" value="0.6 0.75 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLHSm}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="110 160 56 24" name="TerLHSmVal">
+						<Widget type="TextBox" skin="TextBox" position="120 160 56 24" name="TerLHSmVal">
 							<Property key="TextColour" value="0.6 0.75 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLHSm}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="162 160 360 16" name="TerLHSm">
+						<Widget type="Slider" skin="Slider" position="172 160 360 16" name="TerLHSm">
 							<Property key="Colour" value="0.6 0.75 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLHSm}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="10 195 86 24">
+						<Widget type="TextBox" skin="TextBox" position="10 195 110 24">
 							<Property key="Caption" value="#{TerLNoise}"/>
 							<Property key="TextColour" value="0.6 0.9 0.7"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLNoise}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="110 195 56 24" name="TerLNoiseVal">
+						<Widget type="TextBox" skin="TextBox" position="120 195 56 24" name="TerLNoiseVal">
 							<Property key="TextColour" value="0.6 0.9 0.7"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLNoise}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="162 195 360 16" name="TerLNoise">
+						<Widget type="Slider" skin="Slider" position="172 195 360 16" name="TerLNoise">
 							<Property key="Colour" value="0.6 0.7 0.75"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLNoise}"/>

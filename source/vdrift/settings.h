@@ -24,7 +24,7 @@ const static std::string csGraphNames[Gh_ALL] = {
 	"Clutch, Rpm, Gear", "Differentials"
 	};
 
-enum eShadowType  {  Sh_None=0, Sh_Simple, Sh_Depth, Sh_Soft  };
+enum eShadowType  {  Sh_None=0, Sh_Depth, Sh_Soft  };
 
 class SETTINGS
 {

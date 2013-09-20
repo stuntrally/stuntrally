@@ -8,13 +8,14 @@ const float slHalf = 0.45f;  // added to int value sliders to their float value
 namespace MyGUI {  class Slider;  }
 
 
-//TODO: class SliderEdit for ed..
-
 class SliderValue
 {
+	friend class CGui;
 private:
 	MyGUI::Slider* slider;
+	//  not required
 	MyGUI::TextBox* text;  // for value show
+	MyGUI::EditBox* edit;  // for value edit
 
 public:
 	typedef MyGUI::delegates::CMultiDelegate1<SliderValue*> ValueChanged;
@@ -22,21 +23,26 @@ public:
 	
 
 	//  set this first
-	static MyGUI::Gui* pGUI;
-	static bool* bGI;  // gui inited, true to assign value on move (to pF or pI), false in init
+	static MyGUI::Gui* pGUI;  // for findWidget
+	//  gui inited, true to assign value on move (to pF or pI), false in init
+	static bool* bGI;
 
 
 	//  pointer to value
 	float* pFloat;
 	int* pInt;
+
 	
 	//  format float value (for display only)
 	int fmtDigits, fmtLength;
+
 	float fmtValMul;  // value multiplier
 	Ogre::String sSuffix;
 
-	//  map with strings for all int values (fill before init)
+
+	//  map with strings for all int values (if needed, fill it before init)
 	StrMap strMap;
+
 
 	//  slider value range
 	float fMin, fRange, fPow;
@@ -48,7 +54,8 @@ public:
 	//  ctor
 	SliderValue();
 
-	//  float   // name in .layout  // power, 1=linear
+	//  Init
+	//  float*  // name in .layout  // power, 1=linear
 	void Init(Ogre::String name, float* pF,
 			float rMin=0.f, float rMax=1.f, float rPow=1.f);
 	void Init(Ogre::String name, float* pF,
@@ -58,12 +65,17 @@ public:
 			float rMin, float rMax, float rPow,
 			int fmtDig, int fmtLen,
 			float valMul, Ogre::String suffix);
-	//  int
+	//  int*
 	void Init(Ogre::String name, int* pI,
 			float rMin=0.f, float rMax=1.f);
 
-	void Upd();  // update slider, and text (new value in *pFloat or pFloat changed)
+	//  update slider and text (new value in *pFloat or pFloat changed)
+	void Upd();
+	
+	void setVisible(bool vis);
 
+
+	//  default value for RMB click
 	void DefaultF(float f);
 	void DefaultI(int i);
 
@@ -74,13 +86,17 @@ private:
 	float setValF(float f);
 	float setValI(int i);
 
-	//  event move slider
+
+	//  event  slider moved
 	void Move(MyGUI::Slider* sl, float val);
+
+	//  event  editbox text changed
+	void Edit(MyGUI::EditBox* sl);
 
 	//  update text and send event
 	void Update(), UpdTxt();
 
-	//  gui
+	//  init Gui
 	void initGui(Ogre::String name);
 };
 
@@ -96,7 +112,7 @@ public:
 
 	//  set this first
 	static MyGUI::Gui* pGUI;
-	static bool* bGI;  // gui inited, true to assign value on move (to pF or pI), false in init
+	static bool* bGI;  // gui inited, true to assign value, false in init
 
 
 	//  pointer to value
@@ -112,24 +128,34 @@ public:
 	//  init   // name in .layout
 	void Init(Ogre::String name, bool* pB);
 
+	//  update checkbox if value or pointer changed
+	void Upd();
+
+
 	void SetValue(bool b);
 
 private:
 	void setVal(bool b);
 
-	//  event gui
+
+	//  event  clicked
 	void Click(MyGUI::Widget* btn);
 
 	//  update text and send event
 	void Update();
 
-	//  gui
+	//  init Gui
 	void initGui(Ogre::String name);
 };
 
 
 
-///  .h
+///  shortcuts  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
 typedef SliderValue SV;
 
-#define SlV(a)  SV sv##a;  void sl##a(SV*)  // declare slider and its event
+//  declare slider and its event in .h
+#define SlV(a)  SV sv##a;  void sl##a(SV*)
+
+//  set event
+#define Sev(ev)  if (sv->event.empty())  sv->event += newDelegate(this, &CGui::sl##ev)

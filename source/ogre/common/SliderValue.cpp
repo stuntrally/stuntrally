@@ -9,43 +9,69 @@
 #include "MyGUI_Button.h"
 #include "MyGUI_TextBox.h"
 using namespace Ogre;
+using namespace MyGUI;
+
+#define powS(x, p)  (x >= 0.f ? powf(x, p) : -powf(-x, p))
 
 
-MyGUI::Gui* SliderValue::pGUI = 0;
-bool* SliderValue::bGI = 0;
+Gui* SliderValue::pGUI = NULL;
+bool* SliderValue::bGI = NULL;
 
 //  ctor
 SliderValue::SliderValue()
-	:slider(0), text(0)
-	,pFloat(0), pInt(0)
-	,fMin(0), fRange(1.f), fPow(1.f)
+	:slider(NULL), text(NULL), edit(NULL)
+	,pFloat(NULL), pInt(NULL)
+	,fMin(0.f), fRange(1.f), fPow(1.f)
 	,fmtDigits(2), fmtLength(4)
 	,fmtValMul(1.f), sSuffix()
 {	}
 
 
-//  event move slider
+//  events
 //-------------------------------------------------------------------------
-void SliderValue::Move(MyGUI::Slider* sl, float val)
+
+//  slider moved
+void SliderValue::Move(Slider* sl, float val)
 {
 	bool gi = bGI && *bGI;  // Gui was inited, set values and post event
 	
 	if (pFloat)
 	{
-		float v = fPow != 1.f ?
-			fMin + fRange * powf(val, fPow) :
-			fMin + fRange * val;
+		float v = fMin + fRange * (fPow != 1.f ? powS(val, fPow) : val);
 		if (gi)
 			*pFloat = v;
 	}
 	else //if (pInt)
 	{
-		int i = fMin + val * fRange +slHalf;
+		int i = fMin + fRange * val + slHalf;
 		if (gi)
 			*pInt = i;
 	}
 	Update();
 }
+
+//  editbox text changed  (if present)
+void SliderValue::Edit(EditBox* ed)
+{
+	if (pFloat)
+	{
+		float val = s2r(ed->getCaption());
+		*pFloat = val;
+		setValF(*pFloat);  // upd slider
+	}
+	else //if (pInt)
+	{
+		int val = s2i(ed->getCaption());
+		*pInt = val;
+		setValI(*pInt);
+	}
+	if (bGI && *bGI)
+		event(this);  // callback
+}
+
+
+//  Update
+//-------------------------------------------------------------------------
 
 //  new val, upd sld and txt
 //  (pFloat or val changed)
@@ -62,13 +88,13 @@ void SliderValue::Upd()
 //  update internal
 void SliderValue::UpdTxt()
 {
-	if (text)
-		text->setCaption(
-			pFloat ?
-				fToStr(*pFloat * fmtValMul, fmtDigits,fmtLength) + sSuffix :
-			(strMap.empty() ?
-				iToStr(*pInt) :
-				strMap[*pInt]));
+	String s = 
+		pFloat ?
+			fToStr(*pFloat * fmtValMul, fmtDigits,fmtLength) + sSuffix :
+		(strMap.empty() ?
+			iToStr(*pInt) :
+			strMap[*pInt]);
+	(edit ? edit : text)->setCaption(s);
 }
 
 void SliderValue::Update()
@@ -79,7 +105,9 @@ void SliderValue::Update()
 		event(this);  // callback
 }
 
+//  Set Value
 //-------------------------------------------------------------------------
+
 //  set default value for RMB on slider
 void SliderValue::DefaultF(float f)
 {
@@ -111,9 +139,10 @@ void SliderValue::SetValueI(int i)
 //  set val internal
 float SliderValue::setValF(float f)
 {
-	float v = fPow != 1.f ?
-		powf( (f - fMin) / fRange, 1.f/fPow) :
-			( (f - fMin) / fRange);
+	float v = (f - fMin) / fRange;
+	if (fPow != 1.f)
+		v = powS(v, 1.f/fPow);
+
 	slider->setValue(v);
 	return v;
 }
@@ -121,6 +150,7 @@ float SliderValue::setValF(float f)
 float SliderValue::setValI(int i)
 {
 	float v = (i - fMin) / fRange;
+
 	slider->setValue(v);
 	return v;
 }
@@ -132,13 +162,26 @@ float SliderValue::setValI(int i)
 //  Gui
 void SliderValue::initGui(String name)
 {
-	slider = pGUI->findWidget<MyGUI::Slider>(name);  // throws if not found
+	slider = pGUI->findWidget<Slider>(name);  // throws if not found
 
 	if (slider->eventValueChanged.empty())
 		slider->eventValueChanged += newDelegate(this, &SliderValue::Move);
 
-	text = pGUI->findWidget<MyGUI::TextBox>(name+"Val", false);  // not required
+	text = pGUI->findWidget<TextBox>(name+"Val", false);   // not required
+
+	edit = pGUI->findWidget<EditBox>(name+"Edit", false);  // not required
+
+	if (edit && edit->eventEditTextChange.empty())
+	            edit->eventEditTextChange += newDelegate(this, &SliderValue::Edit);
 }
+
+void SliderValue::setVisible(bool vis)
+{
+	if (slider)  slider->setVisible(vis);
+	if (text)  text->setVisible(vis);
+	if (edit)  edit->setVisible(vis);
+}
+
 
 //  Float
 //------------------------------------
@@ -191,17 +234,18 @@ void SliderValue::Init(
 
 //  Check
 //------------------------------------------------------------------------------------------------
-MyGUI::Gui* Check::pGUI = 0;
-bool* Check::bGI = 0;
+
+Gui* Check::pGUI = NULL;
+bool* Check::bGI = NULL;
 
 //  ctor
 Check::Check()
-	:chk(0), pBool(0)
+	:chk(NULL), pBool(NULL)
 {	}
 
 
 //  button event
-void Check::Click(MyGUI::Widget* btn)
+void Check::Click(Widget* btn)
 {
 	bool gi = bGI && *bGI;  // Gui inited
 	if (pBool)
@@ -210,6 +254,12 @@ void Check::Click(MyGUI::Widget* btn)
 			*pBool = b;
 	}
 	Update();
+}
+
+//  update checkbox if value or pointer changed
+void Check::Upd()
+{
+	chk->setStateSelected(*pBool);
 }
 
 //  update internal
@@ -234,7 +284,7 @@ void Check::SetValue(bool b)
 
 void Check::initGui(String name)
 {
-	chk = pGUI->findWidget<MyGUI::Button>(name);  // throws if not found
+	chk = pGUI->findWidget<Button>(name);  // throws if not found
 
 	if (chk->eventMouseButtonClick.empty())
 		chk->eventMouseButtonClick += newDelegate(this, &Check::Click);

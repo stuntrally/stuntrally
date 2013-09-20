@@ -115,15 +115,12 @@ void CGui::chkWaterRefract(WP wp)
 //----------------------------------------------------------------------------------------------------------------
 void CGui::GuiInitGraphics()  // also called on preset change with bGI true
 {
-	ButtonPtr btn, bchk;  ComboBoxPtr cmb;
-	Slider* sl;  size_t v;
 	SliderValue::pGUI = app->mGUI;
 	SliderValue::bGI = &bGI;
 
+	ButtonPtr btn, bchk;  ComboBoxPtr cmb;
 	SliderValue* sv;
-	#define Sev(ev)  if (sv->event.empty())  sv->event += newDelegate(this, &CGui::sl##ev)
 	//Check* ck;
-	//#define Cev(ev)  if (sv->event.empty())  ck->event += newDelegate(this, &CGui::##ev)
 	
 	//  detail
 	sv= &svTerDetail;	sv->Init("TerDetail",	&pSet->terdetail,	0.f,2.f);  Sev(TerDetail);

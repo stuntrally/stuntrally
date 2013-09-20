@@ -20,19 +20,17 @@ void CGui::tabTerLayer(TabPtr wp, size_t id)
 {
 	idTerLay = id;  // help vars
 	bTerLay = id < sc->td.ciNumLay;
-	float scale = 0.f;
-	TerLayer* lay = &sc->td.layerRoad;
-	noBlendUpd = true;
+	TerLayer* lay = bTerLay ? &sc->td.layersAll[idTerLay] : &sc->td.layerRoad;
 
-	//if (tabsTerLayers->getItemSelected()->getCaption().asUTF8() == "Road")
+	noBlendUpd = true;
+	sldUpdTerL();
+
 	cmbTexDiff->setVisible(bTerLay);  cmbTexNorm->setVisible(bTerLay);
 	chkTerLay->setVisible(bTerLay);   chkTexNormAuto->setVisible(bTerLay);  chkTerLayTripl->setVisible(bTerLay);
-	imgTexDiff->setVisible(bTerLay);  edTerLScale->setVisible(bTerLay);
+	imgTexDiff->setVisible(bTerLay);
 	
 	if (bTerLay)
-	{	if (id >= sc->td.ciNumLay)  return;
-		lay = &sc->td.layersAll[id];
-
+	{
 		chkTerLay->setStateSelected(lay->on);
 		cmbTexDiff->setIndexSelected( cmbTexDiff->findItemIndexWith(lay->texFile) );
 		cmbTexNorm->setIndexSelected( cmbTexNorm->findItemIndexWith(lay->texNorm) );
@@ -45,23 +43,14 @@ void CGui::tabTerLayer(TabPtr wp, size_t id)
 		chkTexNormAuto->setStateSelected(bAuto);
 		//  tex image
 	    imgTexDiff->setImageTexture(sTex + "_prv.png");
-	    scale = lay->tiling;
 
 		//  Ter Blendmap
-		Slider* sl;
-		Slv(TerLAngMin, lay->angMin/90.f);  Slv(TerLHMin, (lay->hMin+300.f)/600.f);
-		Slv(TerLAngMax, lay->angMax/90.f);	Slv(TerLHMax, (lay->hMax+300.f)/600.f);
-		Slv(TerLAngSm, lay->angSm/90.f);	Slv(TerLHSm, lay->hSm/200.f);
-		Slv(TerLNoise, (lay->noise+2.f)/4.f);
 		chkTerLNoiseOnly->setStateSelected(lay->bNoiseOnly);
 		chkTerLayTripl->setStateSelected(lay->triplanar);
 	}
 
 	//  scale layer
-	sldTerLScale->setVisible(bTerLay);
-	if (bTerLay)  {
-		edTerLScale->setCaption(toStr(scale));
-		editTerLScale(edTerLScale);  }
+	svTerLScale.setVisible(bTerLay);
 	SetUsedStr(valTerLAll, sc->td.layers.size(), 3);
 	
 	//  Terrain Particles
@@ -77,40 +66,53 @@ void CGui::tabTerLayer(TabPtr wp, size_t id)
 	noBlendUpd = false;
 }
 
-void CGui::editTerTriSize(EditPtr ed)
+void CGui::sldUpdTerL()
 {
-	Real r = std::max(0.1f, s2r(ed->getCaption()) );
-	sc->td.fTriangleSize = r;  sc->td.UpdVals();
-
-	Slider* sl = (Slider*)app->mWndOpts->findWidget("TerTriSize");  // set slider
-	float v = std::min(1.f, powf((r -0.1f)/5.9f, 0.5f) );
-	if (sl)  sl->setValue(v);
-	// result val text
-	int size = getHMapSizeTab();
-	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
-}
-// |
-void CGui::slTerTriSize(SL)
-{
-	Real v = 0.1f + 5.9f * powf(val, 2.f);
-	sc->td.fTriangleSize = v;  sc->td.UpdVals();
-	if (edTerTriSize)  edTerTriSize->setCaption(toStr(v));  // set edit
-	// result val text
-	int size = getHMapSizeTab();
-	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
+	TerLayer* lay = bTerLay ? &sc->td.layersAll[idTerLay] : &sc->td.layerRoad;
+	SV* sv;
+	sv= &svTerLScale;  sv->pFloat = &lay->tiling;  sv->Upd();
+	sv= &svTerLAngMin; sv->pFloat = &lay->angMin;  sv->Upd();
+	sv= &svTerLAngMax; sv->pFloat = &lay->angMax;  sv->Upd();
+	sv= &svTerLHMin;   sv->pFloat = &lay->hMin;    sv->Upd();
+	sv= &svTerLHMax;   sv->pFloat = &lay->hMax;    sv->Upd();
+	sv= &svTerLAngSm;  sv->pFloat = &lay->angSm;   sv->Upd();
+	sv= &svTerLHSm;    sv->pFloat = &lay->hSm;     sv->Upd();
+	sv= &svTerLNoise;  sv->pFloat = &lay->noise;   sv->Upd();
 }
 
+//  Tri size
+void CGui::slTerTriSize(SV* sv)
+{
+	sc->td.UpdVals();
+	UpdTxtTerSize();
+}
+
+int CGui::UpdTxtTerSize(float mul)
+{
+	int size = getHMapSizeTab()*mul;
+	float res = sc->td.fTriangleSize * size;
+	if (svTerTriSize.text)  //  result size text
+		svTerTriSize.text->setCaption(fToStr(res,0,3));
+	return size;
+}
+
+//  HMap size tab
+void CGui::updTabHmap()
+{
+	static std::map<int,int> h;
+	if (h.empty()) {  h[128]=0; h[256]=1; h[512]=2; h[1024]=3; h[2048]=4;  }
+	tabsHmap->setIndexSelected( h[ sc->td.iTerSize- 1] );
+	tabHmap(0,0);
+}
 int CGui::getHMapSizeTab()
 {
-	//string str = tabsHmap->getItemSelected()->getCaption().asUTF8().substr(7).c_str();
-	switch (tabsHmap->getIndexSelected())
-	{	case 0: return 128;  case 1: return 256;  case 2: return 512;  case 3: return 1024;  case 4: return 2048;  }
-	return 512;
+	static std::map<int,int> h;
+	if (h.empty()) {  h[0]=128; h[1]=256; h[2]=512; h[3]=1024; h[4]=2048;  }
+	return h[ tabsHmap->getIndexSelected() ];
 }
 void CGui::tabHmap(TabPtr wp, size_t id)
 {
-	int size = getHMapSizeTab();
-	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
+	UpdTxtTerSize();
 }
 
 void CGui::editTerErrorNorm(MyGUI::EditPtr ed)
@@ -121,18 +123,15 @@ void CGui::editTerErrorNorm(MyGUI::EditPtr ed)
 
 
 //  - - - -  Hmap tools  - - - -
-const char* CGui::getHMapNew()
+String CGui::getHMapNew()
 {
-	static String name = TrkDir() + "heightmap-new.f32";
-	return name.c_str();
+	return TrkDir() + "heightmap-new.f32";
 }
 
 //----------------------------------------------------------------------------------------------------------
 void CGui::btnTerrainNew(WP)
 {
-	int size = getHMapSizeTab();
-	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
-
+	int size = UpdTxtTerSize();
 	sc->td.iVertsX = size+1;  sc->td.UpdVals();  // new hf
 
 	float* hfData = new float[sc->td.iVertsX * sc->td.iVertsY];
@@ -146,7 +145,7 @@ void CGui::btnTerrainNew(WP)
 			hfData[a] = 0.f;  //sc->td.getHeight(i,j);
 	}
 	std::ofstream of;
-	of.open(getHMapNew(), std::ios_base::binary);
+	of.open(getHMapNew().c_str(), std::ios_base::binary);
 	of.write((const char*)&hfData[0], siz);
 	of.close();
 
@@ -158,9 +157,6 @@ void CGui::btnTerrainNew(WP)
 //  Terrain  half  --------------------------------
 void CGui::btnTerrainHalf(WP)
 {
-	int size = getHMapSizeTab() / 2;
-	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
-
 	int halfSize = (sc->td.iVertsX-1) / 2 +1;
 	float* hfData = new float[halfSize * halfSize];
 	int siz = halfSize * halfSize * sizeof(float);
@@ -173,7 +169,7 @@ void CGui::btnTerrainHalf(WP)
 		{	hfData[a] = sc->td.hfHeight[a2];  a2+=2;  }
 	}
 	std::ofstream of;
-	of.open(getHMapNew(), std::ios_base::binary);
+	of.open(getHMapNew().c_str(), std::ios_base::binary);
 	of.write((const char*)&hfData[0], siz);
 	of.close();
 	delete[] hfData;
@@ -187,9 +183,6 @@ void CGui::btnTerrainHalf(WP)
 #if 1
 void CGui::btnTerrainDouble(WP)
 {
-	int size = getHMapSizeTab() / 2;
-	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc->td.fTriangleSize * size,2,4));  }
-
 	int dblSize = (sc->td.iVertsX-1) * 2 +1;
 	float* hfData = new float[dblSize * dblSize];
 	int siz = dblSize * dblSize * sizeof(float);
@@ -202,7 +195,7 @@ void CGui::btnTerrainDouble(WP)
 		{	hfData[a] = sc->td.hfHeight[a2];  ++a2;  }
 	}
 	std::ofstream of;
-	of.open(getHMapNew(), std::ios_base::binary);
+	of.open(getHMapNew().c_str(), std::ios_base::binary);
 	of.write((const char*)&hfData[0], siz);
 	of.close();
 	delete[] hfData;
@@ -237,7 +230,7 @@ void CGui::btnTerrainDouble(WP)
 		}
 	}
 	std::ofstream of;
-	of.open(getHMapNew(), std::ios_base::binary);
+	of.open(getHMapNew().c_str(), std::ios_base::binary);
 	of.write((const char*)&hfData[0], si * sizeof(float));
 	of.close();
 	delete[] hfData;
@@ -271,7 +264,7 @@ void CGui::btnTerrainMove(WP)
 		}
 	}
 	std::ofstream of;
-	of.open(getHMapNew(), std::ios_base::binary);
+	of.open(getHMapNew().c_str(), std::ios_base::binary);
 	of.write((const char*)&hfData[0], si * sizeof(float));
 	of.close();
 	delete[] hfData;
@@ -322,7 +315,7 @@ void CGui::btnScaleTerH(WP)
 			hfData[a] = sc->td.hfHeight[a] * sf;
 	}
 	std::ofstream of;
-	of.open(getHMapNew(), std::ios_base::binary);
+	of.open(getHMapNew().c_str(), std::ios_base::binary);
 	of.write((const char*)&hfData[0], siz);
 	of.close();
 
@@ -405,75 +398,10 @@ void CGui::comboTexNorm(ComboBoxPtr cmb, size_t val)
 	if (bTerLay)  sc->td.layersAll[idTerLay].texNorm = s;
 }
 
-void CGui::editTerLScale(EditPtr ed)
+//  Terrain BlendMap
+void CGui::slTerLay(SV*)
 {
-	Real r = std::max(0.01f, s2r(ed->getCaption()) );
-	if (bTerLay)  sc->td.layersAll[idTerLay].tiling = r;
-
-	float v = std::min(1.f,std::max(0.f, powf((r - 2.0f)/24.0f, 1.f/1.5f) ));
-	if (sldTerLScale)  sldTerLScale->setValue(v);
-}
-// |
-void CGui::slTerLScale(SL)  //  scale layer
-{
-	Real v = 2.0f + 24.0f * powf(val, 1.5f);  // 0.1 + 89.9, 1 + 19
-	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].tiling = v;
-	if (edTerLScale)  edTerLScale->setCaption(toStr(v));  // set edit
-}
-
-
-///  Terrain BlendMap  -----------------------------
-//
-void CGui::slTerLAngMin(SL)
-{
-	float v = 90.f * val;
-	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].angMin = v;
-	if (valTerLAngMin){	valTerLAngMin->setCaption(fToStr(v,0,4));  }
-	if (app->terrain && bGI && !noBlendUpd)  app->bTerUpdBlend = true;  //initBlendMaps(terrain);
-}
-void CGui::slTerLAngMax(SL)
-{
-	float v = 90.f * val;
-	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].angMax = v;
-	if (valTerLAngMax){	valTerLAngMax->setCaption(fToStr(v,0,4));  }
-	if (app->terrain && bGI && !noBlendUpd)  app->bTerUpdBlend = true;
-}
-void CGui::slTerLAngSm(SL)
-{
-	float v = 90.f * val;
-	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].angSm = v;
-	if (valTerLAngSm){	valTerLAngSm->setCaption(fToStr(v,0,4));  }
-	if (app->terrain && bGI && !noBlendUpd)  app->bTerUpdBlend = true;
-}
-
-void CGui::slTerLHMin(SL)
-{
-	float v = -300.f + 600.f * val;
-	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].hMin = v;
-	if (valTerLHMin){	valTerLHMin->setCaption(fToStr(v,0,4));  }
-	if (app->terrain && bGI && !noBlendUpd)  app->bTerUpdBlend = true;
-}
-void CGui::slTerLHMax(SL)
-{
-	float v = -300.f + 600.f * val;
-	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].hMax = v;
-	if (valTerLHMax){	valTerLHMax->setCaption(fToStr(v,0,4));  }
-	if (app->terrain && bGI && !noBlendUpd)  app->bTerUpdBlend = true;
-}
-void CGui::slTerLHSm(SL)
-{
-	float v = 200.f * val;
-	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].hSm = v;
-	if (valTerLHSm){	valTerLHSm->setCaption(fToStr(v,0,4));  }
-	if (app->terrain && bGI && !noBlendUpd)  app->bTerUpdBlend = true;
-}
-
-void CGui::slTerLNoise(SL)
-{
-	float v = -2.f + 4.f * val;
-	if (bTerLay && bGI)  sc->td.layersAll[idTerLay].noise = v;
-	if (valTerLNoise){	valTerLNoise->setCaption(fToStr(v,2,4));  }
-	if (app->terrain && bGI && !noBlendUpd)  app->bTerUpdBlend = true;
+	app->bTerUpdBlend = true;
 }
 
 void CGui::chkTerLNoiseOnlyOn(WP wp)
@@ -482,7 +410,7 @@ void CGui::chkTerLNoiseOnlyOn(WP wp)
 	sc->td.layersAll[idTerLay].bNoiseOnly = !sc->td.layersAll[idTerLay].bNoiseOnly;
 	ButtonPtr chk = wp->castType<Button>();
 	chk->setStateSelected(sc->td.layersAll[idTerLay].bNoiseOnly);
-	if (app->terrain && bGI && !noBlendUpd)  app->bTerUpdBlend = true;
+	if (/*app->terrain &&*/ bGI /*&& !noBlendUpd*/)  app->bTerUpdBlend = true;
 }
 
 

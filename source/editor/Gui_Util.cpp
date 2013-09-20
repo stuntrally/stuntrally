@@ -13,7 +13,6 @@ using namespace Ogre;
 
 //  Gui from xml (scene, road), after load
 //..........................................................................................................
-
 void CGui::SetGuiFromXmls()
 {
 	if (!app->mWndEdit)  return;
@@ -43,12 +42,8 @@ void CGui::SetGuiFromXmls()
 	
 	//  [Terrain]
 	//-----------------------------------------------
-	static std::map<int,int> hs;
-	if (hs.empty()) {  hs[128]=0; hs[256]=1; hs[512]=2; hs[1024]=3; hs[2048]=4;  }
-	tabsHmap->setIndexSelected( hs[sc->td.iTerSize-1] );
-	tabHmap(0,0);
-	if (edTerTriSize)  edTerTriSize->setCaption(toStr(sc->td.fTriangleSize));
-	editTerTriSize(edTerTriSize);
+	updTabHmap();
+	svTerTriSize.Upd();
 	if (edTerErrorNorm)  edTerErrorNorm->setCaption(fToStr(sc->td.errorNorm,2,4));
 	
 	tabTerLayer(tabsTerLayers, idTerLay);

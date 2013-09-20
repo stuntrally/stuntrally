@@ -439,7 +439,7 @@ void CGui::btnTerGenerate(WP wp)
 	LogO(String("::: Time Ter Gen: ") + fToStr(dt,0,3) + " ms");
 
 	std::ofstream of;
-	of.open(getHMapNew(), std::ios_base::binary);
+	of.open(getHMapNew().c_str(), std::ios_base::binary);
 	int siz = sx * sx * sizeof(float);
 	of.write((const char*)&hfData[0], siz);
 	of.close();
