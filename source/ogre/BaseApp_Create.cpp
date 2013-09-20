@@ -531,19 +531,6 @@ void BaseApp::createResourceListener()
 void BaseApp::loadResources()
 {
 	LoadingOn();
-	bool bCache = false;
-	Ogre::GpuProgramManager::getSingletonPtr()->setSaveMicrocodesToCache(bCache);
-	if (bCache)
-	{
-		Ogre::String file = PATHMANAGER::ShaderDir() + "/shadercache.txt";
-		if (boost::filesystem::exists(file) && bCache)
-		{
-			std::ifstream inp;
-			inp.open(file.c_str(), std::ios::in | std::ios::binary);
-			Ogre::DataStreamPtr shaderCache(OGRE_NEW Ogre::FileStreamDataStream(file, &inp, false));
-			Ogre::GpuProgramManager::getSingleton().loadMicrocodeCache(shaderCache);
-		}
-	}
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 	LoadingOff();
 }
