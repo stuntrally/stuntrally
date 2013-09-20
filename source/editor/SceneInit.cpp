@@ -169,9 +169,9 @@ void App::NewCommon(bool onlyTerVeget)
 	resTrk = gui->TrkDir() + "objects";
 	mRoot->addResourceLocation(resTrk, "FileSystem");
 
-	Ogre::MeshManager::getSingleton().unloadUnreferencedResources();
+	MeshManager::getSingleton().unloadUnreferencedResources();
 	sh::Factory::getInstance().unloadUnreferencedMaterials();
-	Ogre::TextureManager::getSingleton().unloadUnreferencedResources();
+	TextureManager::getSingleton().unloadUnreferencedResources();
 }
 //---------------------------------------------------------------------------------------------------------------
 void App::LoadTrack()

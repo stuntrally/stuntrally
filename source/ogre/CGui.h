@@ -5,7 +5,7 @@
 #include "common/SliderValue.h"
 #include "common/Gui_Popup.h" //-
 
-#include "MyGUI_Enumerator.h"
+#include <MyGUI_Enumerator.h>
 #include "common/MessageBox/MessageBoxStyle.h"
 
 #include "../network/networkcallbacks.hpp"

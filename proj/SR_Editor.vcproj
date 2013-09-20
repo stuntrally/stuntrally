@@ -199,6 +199,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\config\editor-default.cfg"
+				>
+			</File>
+			<File
+				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\editor.cfg"
+				>
+			</File>
+			<File
 				RelativePath="..\source\Editor\settings.cpp"
 				>
 			</File>
@@ -524,24 +532,8 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Cfg,Gui"
+			Name="Cfg"
 			>
-			<File
-				RelativePath="..\source\editor\CApp.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\editor\CApp.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\editor\CGui.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\editor\CGui.h"
-				>
-			</File>
 			<File
 				RelativePath="..\config\championships.xml"
 				>
@@ -563,55 +555,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\config\editor-default.cfg"
-				>
-			</File>
-			<File
-				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\editor.cfg"
-				>
-			</File>
-			<File
 				RelativePath="..\data\gui\Editor.layout"
 				>
 			</File>
 			<File
 				RelativePath="..\data\hud\Editor.overlay"
-				>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\Gui_Common.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\Gui_CommonSet.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\Gui_CommonTrack.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\Gui_Def.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\editor\Gui_Events.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\editor\Gui_EventsTer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\editor\Gui_Init.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\editor\Gui_Tweak.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\editor\Gui_Util.cpp"
 				>
 			</File>
 			<File
@@ -624,10 +572,6 @@
 			</File>
 			<File
 				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\ogre_ed.log"
-				>
-			</File>
-			<File
-				RelativePath="..\source\Editor\Render2tex.cpp"
 				>
 			</File>
 			<File
@@ -698,54 +642,18 @@
 				RelativePath="..\source\editor\Update_Key.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\source\editor\UtilitySystem.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\editor\Warnings.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="SceneCommon"
 			>
-			<File
-				RelativePath="..\source\ogre\common\MultiList2.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\MultiList2.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\PointerFix.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\PointerFix.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\RenderBox.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\RenderBoxScene.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\RenderBoxScene.h"
-				>
-			</File>
 			<File
 				RelativePath="..\source\ogre\common\SceneFluids.cpp"
 				>
@@ -764,22 +672,6 @@
 			</File>
 			<File
 				RelativePath="..\source\ogre\common\simplexnoise.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\Slider.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\Slider.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\SliderValue.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\SliderValue.h"
 				>
 			</File>
 			<File
@@ -810,6 +702,70 @@
 				RelativePath="..\source\ogre\common\WaterRTT.h"
 				>
 			</File>
+			<Filter
+				Name="Widgets"
+				>
+				<File
+					RelativePath="..\source\ogre\common\MultiList2.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\MultiList2.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\PointerFix.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\PointerFix.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\RenderBox.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\RenderBoxScene.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\RenderBoxScene.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\Slider.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\Slider.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\SliderValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\SliderValue.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="SceneComXml"
@@ -1651,6 +1607,74 @@
 				</File>
 				<File
 					RelativePath="..\source\shiny\Main\ShaderSet.hpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Gui"
+			>
+			<File
+				RelativePath="..\source\editor\CApp.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\editor\CApp.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\editor\CGui.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\editor\CGui.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\editor\Gui_Events.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\editor\Gui_EventsTer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\editor\Gui_Init.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\editor\Gui_Tools.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\editor\Gui_Tweak.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\editor\Gui_Util.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\Editor\Render2tex.cpp"
+				>
+			</File>
+			<Filter
+				Name="Common"
+				>
+				<File
+					RelativePath="..\source\ogre\common\Gui_Common.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\Gui_CommonSet.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\Gui_CommonTrack.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\Gui_Def.h"
 					>
 				</File>
 			</Filter>
