@@ -113,7 +113,9 @@ namespace sh
 
 	void OgrePlatform::serializeShaders (const std::string& file)
 	{
+#if OGRE_VERSION >= (1 << 16 | 9 << 8 | 0)
 		if (Ogre::GpuProgramManager::getSingleton().isCacheDirty())
+#endif
 		{
 			std::fstream output;
 			output.open(file.c_str(), std::ios::out | std::ios::binary);
