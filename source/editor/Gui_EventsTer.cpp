@@ -342,90 +342,10 @@ void CGui::btnScaleTerH(WP)
 //----------------------------------------------------------------------------------------------------------
 
 
-///  generator  . . . . . . .
-void CGui::slTerGenScale(SL)
+//  generator  . . . . . . .
+void CGui::slTerGen(SV*)
 {
-	float v = 160.f * powf(val, 2.f);	if (bGI)  pSet->gen_scale = v;
-	if (valTerGenScale)  valTerGenScale->setCaption(fToStr(v,2,4));
-}
-void CGui::slTerGenOfsX(SL)
-{
-	float v = -12.f + 24.f * val;	if (bGI)  pSet->gen_ofsx = v;
-	if (valTerGenOfsX)  valTerGenOfsX->setCaption(fToStr(v,3,5));  app->bUpdTerPrv = true;
-}
-void CGui::slTerGenOfsY(SL)
-{
-	float v = -12.f + 24.f * val;	if (bGI)  pSet->gen_ofsy = v;
-	if (valTerGenOfsY)  valTerGenOfsY->setCaption(fToStr(v,3,5));  app->bUpdTerPrv = true;
-}
-
-void CGui::slTerGenFreq(SL)
-{
-	float v = 0.06f + 2.94f * powf(val,2.f);	if (bGI)  pSet->gen_freq = v;
-	if (valTerGenFreq)  valTerGenFreq->setCaption(fToStr(v,3,5));  app->bUpdTerPrv = true;
-}
-void CGui::slTerGenOct(SL)
-{
-	int v = val * 9.f +slHalf;			if (bGI)  pSet->gen_oct = v;
-	if (valTerGenOct)  valTerGenOct->setCaption(toStr(v));  app->bUpdTerPrv = true;
-}
-void CGui::slTerGenPers(SL)
-{
-	float v = 0.7f * val;				if (bGI)  pSet->gen_persist = v;
-	if (valTerGenPers)  valTerGenPers->setCaption(fToStr(v,3,5));  app->bUpdTerPrv = true;
-}
-void CGui::slTerGenPow(SL)
-{
-	float v = 6.f * powf(val, 2.f);		if (bGI)  pSet->gen_pow = v;
-	if (valTerGenPow)  valTerGenPow->setCaption(fToStr(v,3,5));  app->bUpdTerPrv = true;
-}
-
-void CGui::slTerGenMul(SL)
-{
-	float v = 6.f * powf(val, 2.f);		if (bGI)  pSet->gen_mul = v;
-	if (valTerGenMul)  valTerGenMul->setCaption(fToStr(v,3,5));  app->bUpdTerPrv = true;
-}
-void CGui::slTerGenOfsH(SL)
-{
-	float v = 60.f * powf(val, 2.f);	if (bGI)  pSet->gen_ofsh = v;
-	if (valTerGenOfsH)  valTerGenOfsH->setCaption(fToStr(v,3,5));  app->bUpdTerPrv = true;
-}
-void CGui::slTerGenRoadSm(SL)
-{
-	float v = 6.f * val;				if (bGI)  pSet->gen_roadsm = v;
-	if (valTerGenRoadSm)  valTerGenRoadSm->setCaption(fToStr(v,3,5));  app->bUpdTerPrv = true;
-}
-
-//  ter gen h,a
-void CGui::slTerGenAngMin(SL)
-{
-	float v = 90.f * val;	pSet->gen_terMinA = v;
-	if (valTerGenAngMin){	valTerGenAngMin->setCaption(fToStr(v,0,4));  }
-}
-void CGui::slTerGenAngMax(SL)
-{
-	float v = 90.f * val;	pSet->gen_terMaxA = v;
-	if (valTerGenAngMax){	valTerGenAngMax->setCaption(fToStr(v,0,4));  }
-}
-void CGui::slTerGenAngSm(SL)
-{
-	float v = 90.f * val;	pSet->gen_terSmA = v;
-	if (valTerGenAngSm){	valTerGenAngSm->setCaption(fToStr(v,0,4));  }
-}
-void CGui::slTerGenHMin(SL)
-{
-	float v = -300.f + 600.f * val;  pSet->gen_terMinH = v;
-	if (valTerGenHMin){		valTerGenHMin->setCaption(fToStr(v,0,4));  }
-}
-void CGui::slTerGenHMax(SL)
-{
-	float v = -300.f + 600.f * val;  pSet->gen_terMaxH = v;
-	if (valTerGenHMax){		valTerGenHMax->setCaption(fToStr(v,0,4));  }
-}
-void CGui::slTerGenHSm(SL)
-{
-	float v = 200.f * val;  pSet->gen_terSmH = v;
-	if (valTerGenHSm){		valTerGenHSm->setCaption(fToStr(v,0,4));  }
+	app->bUpdTerPrv = true;
 }
 
 

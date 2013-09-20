@@ -207,8 +207,8 @@ void CGui::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 #ifdef SR_EDITOR  /// editor only
 	Chk("Minimap", chkMinimap, pSet->trackmap);
-	Slv(TerUpd, pSet->ter_skip /20.f);
-	Slv(MiniUpd, pSet->mini_skip /20.f);
+	svTerUpd.Upd();
+	svMiniUpd.Upd();
 #endif
 
 	Chk("UseImposters", chkUseImposters, pSet->use_imposters);

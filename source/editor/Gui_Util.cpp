@@ -18,35 +18,28 @@ void CGui::SetGuiFromXmls()
 {
 	if (!app->mWndEdit)  return;
 	bGI = false;
-	// set slider value, upd text
-	Slider* sl;
-
-	#define _Slv(name, val)  \
-		sl = (Slider*)app->mWndEdit->findWidget(#name);  \
-		if (sl)  sl->setValue(val);  sl##name(sl, val);
 	
-	#define _Ed(name, val)  ed##name->setCaption(toStr(val));
-	#define _Clr(name, val)  clr##name->setColour(Colour(val.x,val.y,val.z));
-	#define _Cmb(cmb, str)  cmb->setIndexSelected( cmb->findItemIndexWith(str) );
+	#define _Ed(name, val)  ed##name->setCaption(toStr(val))
+	#define _Clr(name, val)  clr##name->setColour(Colour(val.x,val.y,val.z))
+	#define _Cmb(cmb, str)  cmb->setIndexSelected( cmb->findItemIndexWith(str) )
 	
 
 	//  [Sky]
 	//-----------------------------------------------
 	_Cmb(cmbSky, sc->skyMtr);
-	_Slv(SunPitch, sc->ldPitch /90.f);
-	_Slv(SunYaw,   (sc->ldYaw + 180.f) /360.f);
+	svSunPitch.Upd();
+	svSunYaw.Upd();
 	_Ed(LiAmb, sc->lAmb);  _Ed(LiDiff, sc->lDiff);  _Ed(LiSpec, sc->lSpec);
 	_Clr(Amb, sc->lAmb);  _Clr(Diff, sc->lDiff);  _Clr(Spec, sc->lSpec);
 	//  fog
 	_Clr(Fog, sc->fogClr);  _Clr(Fog2, sc->fogClr2);  _Clr(FogH, sc->fogClrH);
 	_Ed(FogClr, sc->fogClr);  _Ed(FogClr2, sc->fogClr2);  _Ed(FogClrH, sc->fogClrH);
-	_Slv(FogStart, powf(sc->fogStart /2000.f, 0.5f));  _Slv(FogEnd,   powf(sc->fogEnd   /2000.f, 0.5f));
-	_Slv(FogHStart,powf(sc->fogHStart/2000.f, 0.5f));
-	_Slv(FogHeight, (sc->fogHeight +200.f) /400.f );
-	_Slv(FogHEnd,  powf(sc->fogHEnd  /2000.f, 0.5f));  _Slv(FogHDensity,powf(sc->fogHDensity /200.f, 1/ 2.f));
-
-	_Cmb(cmbRain1, sc->rainName);	_Slv(Rain1Rate, sc->rainEmit /6000.f);
-	_Cmb(cmbRain2, sc->rain2Name);	_Slv(Rain2Rate, sc->rain2Emit /6000.f);	
+	svFogStart.Upd();	svFogEnd.Upd();
+	svFogHStart.Upd();	svFogHEnd.Upd();
+	svFogHeight.Upd();	svFogHDensity.Upd();
+	svRain1Rate.Upd();	svRain2Rate.Upd();	
+	_Cmb(cmbRain1, sc->rainName);
+	_Cmb(cmbRain2, sc->rain2Name);
 	
 	//  [Terrain]
 	//-----------------------------------------------
@@ -58,7 +51,7 @@ void CGui::SetGuiFromXmls()
 	editTerTriSize(edTerTriSize);
 	if (edTerErrorNorm)  edTerErrorNorm->setCaption(fToStr(sc->td.errorNorm,2,4));
 	
-	tabTerLayer(tabsTerLayers, 0);  // set 1st
+	tabTerLayer(tabsTerLayers, idTerLay);
 	_Cmb(cmbParDust, sc->sParDust);	_Cmb(cmbParMud,  sc->sParMud);
 	_Cmb(cmbParSmoke,sc->sParSmoke);
 

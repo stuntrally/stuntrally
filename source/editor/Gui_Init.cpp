@@ -15,7 +15,7 @@ using namespace Ogre;
 ///  Gui Init
 //----------------------------------------------------------------------------------------------------------------------
 
-void CGui::InitGui()
+void CGui::InitGui() 
 {
 	if (!app->mGUI)  return;
 	QTimer ti;  ti.update();  /// time
@@ -150,7 +150,8 @@ void CGui::InitGui()
 	}
 	
 	ButtonPtr btn, bchk;  ComboBoxPtr combo;  // for defines
-	Slider* sl;
+	Slider* sl;  SliderValue* sv;
+	#define Sev(ev)  if (sv->event.empty())  sv->event += newDelegate(this, &CGui::sl##ev)
 
 	///  [Graphics]
 	//------------------------------------------------------------------------
@@ -160,12 +161,13 @@ void CGui::InitGui()
 	///  [Settings]
 	//------------------------------------------------------------------------
 	Chk("Minimap", chkMinimap, pSet->trackmap);
-	Slv(SizeMinmap,	(pSet->size_minimap-0.15f) /1.85f);
-	Slv(CamSpeed, powf((pSet->cam_speed-0.1f) / 3.9f, 1.f));
-	Slv(CamInert, pSet->cam_inert);
-	Slv(TerUpd, pSet->ter_skip /20.f);
-	Slv(MiniUpd, pSet->mini_skip /20.f);
-	Slv(SizeRoadP, (pSet->road_sphr-0.1f) /11.9f);
+	sv= &svSizeMinmap;	sv->Init("SizeMinmap",	&pSet->size_minimap, 0.15f,2.f);  Sev(SizeMinmap);
+	sv= &svCamSpeed;	sv->Init("CamSpeed",	&pSet->cam_speed, 0.1f,4.f);
+	sv= &svCamInert;	sv->Init("CamInert",	&pSet->cam_inert, 0.f,1.f);
+	sv= &svTerUpd;		sv->Init("TerUpd",		&pSet->ter_skip,  0.f,20.f);
+	sv= &svMiniUpd;		sv->Init("MiniUpd",		&pSet->mini_skip, 0.f,20.f);
+	sv= &svSizeRoadP;	sv->Init("SizeRoadP",	&pSet->road_sphr, 0.1f,12.f);  Sev(SizeRoadP);
+	
 	Chk("AutoBlendmap", chkAutoBlendmap, pSet->autoBlendmap);  chAutoBlendmap = bchk;
 	Chk("CamPos", chkCamPos, pSet->camPos);
 	Chk("InputBar", chkInputBar, pSet->inputBar);  chInputBar = bchk;
@@ -189,24 +191,35 @@ void CGui::InitGui()
 
 	///  [Sun]
 	//----------------------------------------------------------------------------------------------
-	Slv(SunPitch,0);  Slv(SunYaw,0);
-	Slv(FogStart,0);  Slv(FogEnd,0);  Slv(FogHStart,0);  Slv(FogHEnd,0);  Slv(FogHeight,0);  Slv(FogHDensity,0);
+	sv= &svSunPitch;	sv->Init("SunPitch",	&sc->ldPitch, 0.f,90.f, 1.f, 1,4);  Sev(UpdSun);
+	sv= &svSunYaw;		sv->Init("SunYaw",		&sc->ldYaw, -180.f,180.f, 1.f, 1,4);  Sev(UpdSun);
+	sv= &svRain1Rate;	sv->Init("Rain1Rate",	&sc->rainEmit, 0.f,6000.f);
+	sv= &svRain2Rate;	sv->Init("Rain2Rate",	&sc->rain2Emit,0.f,6000.f);
+	//  fog
+	sv= &svFogStart;	sv->Init("FogStart",	&sc->fogStart, 0.f,2000.f, 2.f, 0,3);  Sev(UpdFog);
+	sv= &svFogEnd;		sv->Init("FogEnd",		&sc->fogEnd,   0.f,2000.f, 2.f, 0,3);  Sev(UpdFog);
+	sv= &svFogHStart;	sv->Init("FogHStart",	&sc->fogHStart,0.f,2000.f, 2.f, 0,3);  Sev(UpdFog);
+	sv= &svFogHEnd;		sv->Init("FogHEnd",		&sc->fogHEnd,  0.f,2000.f, 2.f, 0,3);  Sev(UpdFog);
+	sv= &svFogHeight;	sv->Init("FogHeight",	&sc->fogHeight, -200.f,200.f, 1.f, 1,4);  Sev(UpdFog);  //edit..
+	sv= &svFogHDensity;	sv->Init("FogHDensity",	&sc->fogHDensity,  0.f,200.f, 2.f, 1,4);  Sev(UpdFog);
+
 	Chk("FogDisable", chkFogDisable, pSet->bFog);  chkFog = bchk;
 	Chk("WeatherDisable", chkWeatherDisable, pSet->bWeather);  chkWeather = bchk;
+
+	//  light
 	Ed(LiAmb, editLiAmb);  Ed(LiDiff, editLiDiff);  Ed(LiSpec, editLiSpec);
 	Ed(FogClr, editFogClr);  Ed(FogClr2, editFogClr2);  Ed(FogClrH, editFogClrH);
+
 	clrAmb = app->mGUI->findWidget<ImageBox>("ClrAmb");		clrDiff = app->mGUI->findWidget<ImageBox>("ClrDiff");
 	clrSpec = app->mGUI->findWidget<ImageBox>("ClrSpec");	clrTrail = app->mGUI->findWidget<ImageBox>("ClrTrail");
 	clrFog = app->mGUI->findWidget<ImageBox>("ClrFog");		clrFog2 = app->mGUI->findWidget<ImageBox>("ClrFog2");
 	clrFogH = app->mGUI->findWidget<ImageBox>("ClrFogH");	//Todo: on click event - open color dialog
-	Slv(Rain1Rate,0);  Slv(Rain2Rate,0);
 
 
 	///  [Terrain]
 	//------------------------------------------------------------------------
 	imgTexDiff = app->mGUI->findWidget<StaticImage>("TerImgDiff");
 	Tab(tabsHmap, "TabHMapSize", tabHmap);
-	Tab(tabsTerLayers, "TabTerLay", tabTerLayer);
 
 	Edt(edTerTriSize, "edTerTriSize", editTerTriSize);
 	Edt(edTerErrorNorm, "edTerErrorNorm", editTerErrorNorm);
@@ -219,7 +232,7 @@ void CGui::InitGui()
 
 
 	///  brush presets   o o o o o o o o 
-	ScrollView* sv = app->mGUI->findWidget<ScrollView>("svBrushes");
+	ScrollView* scv = app->mGUI->findWidget<ScrollView>("svBrushes");
 	int j=0, n=0;  const int z = 128;
 	for (i=0; i < app->brSetsNum; ++i,++n)
 	{
@@ -232,7 +245,7 @@ void CGui::InitGui()
 			x = 20+ n*70;  y = 10+ j*70;  xt= x + 25;  yt= y + 55;  sx = 64;
 			if (st.newLine < 0)  n -= st.newLine;  // -1 empty x
 		}
-		StaticImage* img = sv->createWidget<StaticImage>("ImageBox", x,y, sx,sx, Align::Default, "brI"+s);
+		StaticImage* img = scv->createWidget<StaticImage>("ImageBox", x,y, sx,sx, Align::Default, "brI"+s);
 		img->eventMouseButtonClick += newDelegate(this, &CGui::btnBrushPreset);
 		img->setUserString("tip", st.name);  img->setNeedToolTip(true);
 		img->setImageTexture("brushes.png");
@@ -240,7 +253,7 @@ void CGui::InitGui()
 		if (!st.name.empty())  img->eventToolTip += newDelegate(this, &CGui::notifyToolTip);
 		setOrigPos(img, "EditorWnd");
 		
-		StaticText* txt = sv->createWidget<StaticText>("TextBox", xt,yt, 40,22, Align::Default, "brT"+s);
+		StaticText* txt = scv->createWidget<StaticText>("TextBox", xt,yt, 40,22, Align::Default, "brT"+s);
 		txt->setCaption(fToStr(st.Size,0,2));
 			int edMode = st.edMode;
 			float fB = app->brClr[edMode][0], fG = app->brClr[edMode][1], fR = app->brClr[edMode][2];
@@ -249,7 +262,7 @@ void CGui::InitGui()
 		txt->setTextColour(Colour(mul(fB,m), mul(fG,m), mul(fR,m)) );
 		setOrigPos(txt, "EditorWnd");
 	}
-	//sv->setCanvasSize(1020,j*90+300);
+	//scv->setCanvasSize(1020,j*90+300);
 
 
 	#if 0  ///0 _tool_ fix video capture cursor
@@ -260,25 +273,25 @@ void CGui::InitGui()
 	
 
 	///  generator  . . . . . . .
-	Slv(TerGenScale,powf(pSet->gen_scale /160.f, 1.f/2.f));
-	Slv(TerGenOfsX, (pSet->gen_ofsx+12.f) /24.f);
-	Slv(TerGenOfsY, (pSet->gen_ofsy+12.f) /24.f);
+	sv= &svTerGenScale;	sv->Init("TerGenScale",	&pSet->gen_scale, 0.f,160.f, 2.f, 2,4);
+	sv= &svTerGenOfsX;	sv->Init("TerGenOfsX",	&pSet->gen_ofsx, -12.f,12.f, 1.f, 3,5);  Sev(TerGen);
+	sv= &svTerGenOfsY;	sv->Init("TerGenOfsY",	&pSet->gen_ofsy, -12.f,12.f, 1.f, 3,5);  Sev(TerGen);
 
-	Slv(TerGenFreq, powf((pSet->gen_freq-0.06f) /2.94f, 1.f/2.f));
-	Slv(TerGenOct,  Real(pSet->gen_oct)	/9.f);  sl->mfDefault = 4.f /9.f;
-	Slv(TerGenPers, pSet->gen_persist /0.7f);  sl->mfDefault = 0.4f /0.7f;
-	Slv(TerGenPow,  powf(pSet->gen_pow /6.f,  1.f/2.f));  sl->mfDefault = powf(1.f /6.f,  1.f/2.f);
+	sv= &svTerGenFreq;	sv->Init("TerGenFreq",	&pSet->gen_freq, 0.06f,3.f, 2.f, 3,5);  Sev(TerGen);
+	sv= &svTerGenOct;	sv->Init("TerGenOct",	&pSet->gen_oct,  0.f,9.f);  sv->DefaultI(4);  Sev(TerGen);
+	sv= &svTerGenPers;	sv->Init("TerGenPers",	&pSet->gen_persist, 0.f,0.7f, 1.f, 3,5);  sv->DefaultF(0.4f);  Sev(TerGen);
+	sv= &svTerGenPow;	sv->Init("TerGenPow",	&pSet->gen_pow, 0.f,6.f, 2.f, 3,5);  sv->DefaultF(1.f);  Sev(TerGen);
 	
-	Slv(TerGenMul,  powf(pSet->gen_mul /6.f,  1.f/2.f));  sl->mfDefault = powf(1.f /6.f,  1.f/2.f);
-	Slv(TerGenOfsH, powf(pSet->gen_ofsh /60.f, 1.f/2.f));  sl->mfDefault = 0.f;
-	Slv(TerGenRoadSm, pSet->gen_roadsm /6.f);  sl->mfDefault = 0.f;
+	sv= &svTerGenMul;	sv->Init("TerGenMul",	&pSet->gen_mul,  0.f,6.f,  2.f, 3,5);  sv->DefaultF(1.f);  Sev(TerGen);
+	sv= &svTerGenOfsH;	sv->Init("TerGenOfsH",	&pSet->gen_ofsh, 0.f,60.f, 2.f, 3,5);  sv->DefaultF(0.f);  Sev(TerGen);
+	sv= &svTerGenRoadSm;sv->Init("TerGenRoadSm",&pSet->gen_roadsm, 0.f,6.f, 1.f, 3,5);  sv->DefaultF(0.f);  Sev(TerGen);
 
-	Slv(TerGenAngMin, pSet->gen_terMinA /90.f);  sl->mfDefault = 0.f;
-	Slv(TerGenAngMax, pSet->gen_terMaxA /90.f);  sl->mfDefault = 1.f;
-	Slv(TerGenAngSm, pSet->gen_terSmA /90.f);  sl->mfDefault = 0.1f;
-	Slv(TerGenHMin, (pSet->gen_terMinH +300.f)/600.f);  sl->mfDefault = 0.f;
-	Slv(TerGenHMax, (pSet->gen_terMaxH +300.f)/600.f);  sl->mfDefault = 1.f;
-	Slv(TerGenHSm, pSet->gen_terSmH /200.f);  sl->mfDefault = 0.1f;
+	sv= &svTerGenAngMin;sv->Init("TerGenAngMin",&pSet->gen_terMinA, 0.f,90.f, 1.f, 0,3);  sv->DefaultF(0.f);
+	sv= &svTerGenAngMax;sv->Init("TerGenAngMax",&pSet->gen_terMaxA, 0.f,90.f, 1.f, 0,3);  sv->DefaultF(90.f);
+	sv= &svTerGenAngSm;	sv->Init("TerGenAngSm",	&pSet->gen_terSmA,  0.f,90.f, 1.f, 0,3);  sv->DefaultF(10.f);
+	sv= &svTerGenHMin;	sv->Init("TerGenHMin",	&pSet->gen_terMinH, -300.f,300.f, 1.f, 0,3);  sv->DefaultF(-300.f);
+	sv= &svTerGenHMax;	sv->Init("TerGenHMax",	&pSet->gen_terMaxH, -300.f,300.f, 1.f, 0,3);  sv->DefaultF( 300.f);
+	sv= &svTerGenHSm;	sv->Init("TerGenHSm",	&pSet->gen_terSmH,     0.f,200.f, 1.f, 0,3);  sv->DefaultF(20.f);
 
 
 	///  [Layers]  ------------------------------------
@@ -286,7 +299,8 @@ void CGui::InitGui()
 	valTerLAll = app->mGUI->findWidget<StaticText>("TerLayersAll");
 	Chk("TexNormAuto", chkTexNormAutoOn, 1);  chkTexNormAuto = bchk;
 	Chk("TerLayTripl", chkTerLayTriplOn, 1);  chkTerLayTripl = bchk;
-	
+	Tab(tabsTerLayers, "TabTerLay", tabTerLayer);
+
 	Slv(TerLAngMin,0);  Slv(TerLHMin,0);  Slv(TerLAngSm,0);  // blendmap
 	Slv(TerLAngMax,0);  Slv(TerLHMax,0);  Slv(TerLHSm,0);
 	Slv(TerLNoise,0);   Chk("TerLNoiseOnly", chkTerLNoiseOnlyOn, 0);  chkTerLNoiseOnly = bchk;
@@ -298,7 +312,7 @@ void CGui::InitGui()
 	Cmb(cmbParMud,  "CmbParMud",  comboParDust);
 	Cmb(cmbParSmoke,"CmbParSmoke",comboParDust);
 
-	Cmb(cmbSurface, "Surface", comboSurface);
+	Cmb(cmbSurface, "Surface", comboSurface);  //1 txt-
 	txtSuBumpWave	= app->mGUI->findWidget<StaticText>("SuBumpWave");
 	txtSuBumpAmp	= app->mGUI->findWidget<StaticText>("SuBumpAmp");
 	txtSuRollDrag	= app->mGUI->findWidget<StaticText>("SuRollDrag");
@@ -317,23 +331,44 @@ void CGui::InitGui()
 	valLTrAll = app->mGUI->findWidget<StaticText>("LTrAll");
 	Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);
 
-	Slv(LTrDens, 0);	Slv(LTrRdDist, 0);  Slv(LTrRdDistMax, 0);
-	Slv(LTrMinSc, 0);	Slv(LTrMaxSc, 0);	Slv(LTrWindFx, 0);	Slv(LTrWindFy, 0);
-	Slv(LTrMaxTerAng, 0);  Ed(LTrMinTerH, editLTrMinTerH);  Ed(LTrMaxTerH, editLTrMaxTerH);
+	float f=0.f;  i=0;  // temp vars
+	sv= &svLTrDens;		sv->Init("LTrDens",		 &f, 0.001f,1.0f, 2.f);
+	
+	sv= &svLTrRdDist;	sv->Init("LTrRdDist",	 &i, 0.f,20.f);
+	sv= &svLTrRdDistMax;sv->Init("LTrRdDistMax", &i, 0.f,20.f);
+
+	sv= &svLTrMinSc;	sv->Init("LTrMinSc",	 &f, 0.f,6.f, 3.f);
+	sv= &svLTrMaxSc;	sv->Init("LTrMaxSc",	 &f, 0.f,6.f, 3.f);
+
+	sv= &svLTrWindFx;	sv->Init("LTrWindFx",	 &f, 0.f,3.f, 3.f);
+	sv= &svLTrWindFy;	sv->Init("LTrWindFy",	 &f, 0.f,0.4f, 3.f);
+	
+	sv= &svLTrMaxTerAng;sv->Init("LTrMaxTerAng", &f, 0.f,90.f, 2.f);
+	sldUpdPgL();  // real &f set here
+
+	Ed(LTrMinTerH, editLTrMinTerH);
+	Ed(LTrMaxTerH, editLTrMaxTerH);
 	Ed(LTrFlDepth, editLTrFlDepth);
 
-	///  grass
-	Slv(GrMinX, 0);  Slv(GrMaxX, 0);  Slv(GrMinY, 0);  Slv(GrMaxY, 0);
+
+	///  Grass  ------------------------------------
+	Chk("LGrEnabled", chkGrLayOn, 1);  chkGrLay = bchk;
+	valLGrAll = app->mGUI->findWidget<StaticText>("LGrAll");
+	Tab(tabsGrLayers, "LGrLayTab", tabGrLayers);
+
+	sv= &svGrMinX;	sv->Init("GrMinX",	&f, 0.1f,4.1, 2.f);
+	sv= &svGrMaxX;	sv->Init("GrMaxX",	&f, 0.1f,4.1, 2.f);
+	sv= &svGrMinY;	sv->Init("GrMinY",	&f, 0.1f,4.1, 2.f);
+	sv= &svGrMaxY;	sv->Init("GrMaxY",	&f, 0.1f,4.1, 2.f);
+
+	sv= &svLGrDens;	sv->Init("LGrDens",	&f, 0.001f,1.f, 2.f, 3,5);
+	sldUpdGrL();
+
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
 	Ed(GrTerMaxAngle, editTrGr);  Ed(GrTerSmAngle, editTrGr);
 	Ed(GrTerMinHeight, editTrGr);  Ed(GrTerMaxHeight, editTrGr);  Ed(GrTerSmHeight, editTrGr);
 	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);	imgGrass = app->mGUI->findWidget<StaticImage>("ImgGrass");
 	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);	imgGrClr = app->mGUI->findWidget<StaticImage>("ImgGrClr");
-
-	Chk("LGrEnabled", chkGrLayOn, 1);  chkGrLay = bchk;
-	valLGrAll = app->mGUI->findWidget<StaticText>("LGrAll");
-	Tab(tabsGrLayers, "LGrLayTab", tabGrLayers);
-	Slv(LGrDens, 0);
 
 	
 	///  [Road]  ------------------------------------
@@ -357,9 +392,9 @@ void CGui::InitGui()
 	Btn("ScaleAll", btnScaleAll);	Ed(ScaleAllMul, editScaleAllMul);
 	Btn("ScaleTerH", btnScaleTerH);	Ed(ScaleTerHMul, editScaleTerHMul);
 
-	Slv(AlignWidthAdd, pSet->al_w_add /20.f);
-	Slv(AlignWidthMul, (pSet->al_w_mul-1.f) /4.f);
-	Slv(AlignSmooth, pSet->al_smooth /6.f);
+	sv= &svAlignWidthAdd;	sv->Init("AlignWidthAdd",	&pSet->al_w_add, 0.f,20.f,1.f, 1,3);
+	sv= &svAlignWidthMul;	sv->Init("AlignWidthMul",	&pSet->al_w_mul, 1.f,4.f, 1.f, 2,4);
+	sv= &svAlignSmooth;		sv->Init("AlignSmooth",		&pSet->al_w_add, 0.f,6.f, 1.f, 1,3);
 	
 	//  warnings
 	edWarn = app->mGUI->findWidget<EditBox>("Warnings",false);

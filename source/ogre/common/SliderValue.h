@@ -62,6 +62,11 @@ public:
 	void Init(Ogre::String name, int* pI,
 			float rMin=0.f, float rMax=1.f);
 
+	void Upd();  // update slider, and text (new value in *pFloat or pFloat changed)
+
+	void DefaultF(float f);
+	void DefaultI(int i);
+
 	void SetValueF(float f);
 	void SetValueI(int i);
 
@@ -73,7 +78,7 @@ private:
 	void Move(MyGUI::Slider* sl, float val);
 
 	//  update text and send event
-	void Update();
+	void Update(), UpdTxt();
 
 	//  gui
 	void initGui(Ogre::String name);

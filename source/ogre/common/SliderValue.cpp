@@ -47,8 +47,20 @@ void SliderValue::Move(MyGUI::Slider* sl, float val)
 	Update();
 }
 
+//  new val, upd sld and txt
+//  (pFloat or val changed)
+void SliderValue::Upd()
+{
+	if (!pFloat && !pInt)  return;
+	if (pFloat)
+		setValF(*pFloat);
+	else //if (pInt)
+		setValI(*pInt);
+	UpdTxt();
+}
+
 //  update internal
-void SliderValue::Update()
+void SliderValue::UpdTxt()
 {
 	if (text)
 		text->setCaption(
@@ -57,13 +69,31 @@ void SliderValue::Update()
 			(strMap.empty() ?
 				iToStr(*pInt) :
 				strMap[*pInt]));
+}
+
+void SliderValue::Update()
+{
+	UpdTxt();
 
 	if (bGI && *bGI)
 		event(this);  // callback
 }
 
-//  set value
 //-------------------------------------------------------------------------
+//  set default value for RMB on slider
+void SliderValue::DefaultF(float f)
+{
+	float v = setValF(f);
+	slider->mfDefault = v;
+}
+
+void SliderValue::DefaultI(int i)
+{
+	float v = setValI(i);
+	slider->mfDefault = v;
+}
+
+//  set value
 void SliderValue::SetValueF(float f)
 {
 	*pFloat = f;
@@ -134,8 +164,8 @@ void SliderValue::Init(
 	float valMul, String suffix)
 {
 	initGui(name);
-	fPow = rPow;
-	fMin = rMin;  fRange = rMax - rMin;
+	fPow = rPow;  fMin = rMin;
+	fRange = rMax - rMin;
 	fmtDigits = fmtDig;  fmtLen = fmtLength;
 	fmtValMul = valMul;  sSuffix = suffix;
 

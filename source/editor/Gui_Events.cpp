@@ -45,29 +45,14 @@ void CGui::comboRain2(ComboBoxPtr cmb, size_t val)
 	app->DestroyWeather();  app->CreateWeather();
 }
 
-void CGui::slRain1Rate(SL)  // rain rates
+//  sun pitch, yaw
+void CGui::slUpdSun(SV*)
 {
-	float v = 6000.f * val;		sc->rainEmit = v;
-	if (valRain1Rate){	valRain1Rate->setCaption(fToStr(v,0,4));  }  app->UpdSun();
-}
-void CGui::slRain2Rate(SL)
-{
-	float v = 6000.f * val;		sc->rain2Emit = v;
-	if (valRain2Rate){	valRain2Rate->setCaption(fToStr(v,0,4));  }  app->UpdSun();
+	app->UpdSun();
 }
 
-void CGui::slSunPitch(SL)  // sun pitch, yaw
-{
-	float v = 90.f * val;	sc->ldPitch = v;
-	if (valSunPitch){	valSunPitch->setCaption(fToStr(v,1,4));  }  app->UpdSun();
-}
-void CGui::slSunYaw(SL)
-{
-	float v = -180.f + 360.f * val;  sc->ldYaw = v;
-	if (valSunYaw){	valSunYaw->setCaption(fToStr(v,1,4));  }  app->UpdSun();
-}
-
-void CGui::editLiAmb(Edit* ed)  // edit light clrs
+//  light clrs
+void CGui::editLiAmb(Edit* ed)
 {
 	Vector3 c = s2v(ed->getCaption());	sc->lAmb = c;  app->UpdSun();
 	if (clrAmb)  clrAmb->setColour(Colour(c.x,c.y,c.z));
@@ -84,38 +69,12 @@ void CGui::editLiSpec(Edit* ed)
 }
 
 //  fog
-void CGui::slFogStart(SL)  // fog start, end
+void CGui::slUpdFog(SV*)
 {
-	float v = 2000.f * powf(val, 2.f);		sc->fogStart = v;  app->UpdFog();
-	if (valFogStart){	valFogStart->setCaption(fToStr(v,0,3));  }
-}
-void CGui::slFogEnd(SL)
-{
-	float v = 2000.f * powf(val, 2.f);		sc->fogEnd = v;    app->UpdFog();
-	if (valFogEnd){	 valFogEnd->setCaption(fToStr(v,0,3));  }
-}
-void CGui::slFogHStart(SL)
-{
-	float v = 2000.f * powf(val, 2.f);		sc->fogHStart = v;  app->UpdFog();
-	if (valFogHStart){	valFogHStart->setCaption(fToStr(v,0,3));  }
-}
-void CGui::slFogHEnd(SL)
-{
-	float v = 2000.f * powf(val, 2.f);		sc->fogHEnd = v;    app->UpdFog();
-	if (valFogHEnd){	 valFogHEnd->setCaption(fToStr(v,0,3));  }
-}
-void CGui::slFogHeight(SL)  // edit-
-{
-	float v = -200.f + 400.f * val;			sc->fogHeight = v;  app->UpdFog();
-	if (valFogHeight){	valFogHeight->setCaption(fToStr(v,1,4));  }
-}
-void CGui::slFogHDensity(SL)
-{
-	float v = 200.f * powf(val, 2.f);		sc->fogHDensity = v;    app->UpdFog();
-	if (valFogHDensity){	valFogHDensity->setCaption(fToStr(v,1,4));  }
+	app->UpdFog();
 }
 
-void CGui::editFogClr(Edit* ed)  // edit fog clr
+void CGui::editFogClr(Edit* ed)
 {
 	Vector4 c = s2v4(ed->getCaption());  sc->fogClr = c;  app->UpdFog();
 	if (clrFog)  clrFog->setColour(Colour(c.x,c.y,c.z));
@@ -131,7 +90,8 @@ void CGui::editFogClrH(Edit* ed)
 	if (clrFogH)  clrFogH->setColour(Colour(c.x,c.y,c.z));
 }
 
-void CGui::chkFogDisable(WP wp)  // chk fog disable
+//  chk disable
+void CGui::chkFogDisable(WP wp)
 {
 	ChkEv(bFog);  app->UpdFog();
 }
@@ -192,6 +152,7 @@ void CGui::comboGrassClr(ComboBoxPtr cmb, size_t val)
 void CGui::tabGrLayers(TabPtr wp, size_t id)
 {
 	idGrLay = id;  // help var
+	sldUpdGrL();
 	const SGrassLayer* gr = &sc->grLayersAll[idGrLay], *g0 = &sc->grLayersAll[0];
 
 	chkGrLay->setStateSelected(gr->on);
@@ -203,14 +164,9 @@ void CGui::tabGrLayers(TabPtr wp, size_t id)
 
 	#define _Ed(name, val)  ed##name->setCaption(toStr(val));
 	#define _Cmb(cmb, str)  cmb->setIndexSelected( cmb->findItemIndexWith(str) );
-	Slider* sl;
-	Slv(LGrDens, powf((gr->dens-0.001f) /1.0f, 0.5f));
-	_Cmb(cmbGrassMtr, gr->material);  _Cmb(cmbGrassClr, gr->colorMap);
 
-	Slv(GrMinX, powf((gr->minSx-0.1f) /4.0f, 1.f/2.f));
-	Slv(GrMaxX, powf((gr->maxSx-0.1f) /4.0f, 1.f/2.f));
-	Slv(GrMinY, powf((gr->minSy-0.1f) /4.0f, 1.f/2.f));
-	Slv(GrMaxY, powf((gr->maxSy-0.1f) /4.0f, 1.f/2.f));
+	_Cmb(cmbGrassMtr, gr->material);
+	_Cmb(cmbGrassClr, gr->colorMap);
 
 	_Ed(GrSwayDistr, g0->swayDistr);
 	_Ed(GrSwayLen, g0->swayLen);
@@ -219,6 +175,18 @@ void CGui::tabGrLayers(TabPtr wp, size_t id)
 	_Ed(GrTerMaxAngle, g0->terMaxAng);  _Ed(GrTerSmAngle, g0->terAngSm);
 	_Ed(GrTerMinHeight, g0->terMinH);  _Ed(GrTerSmHeight, g0->terHSm);
 	_Ed(GrTerMaxHeight, g0->terMaxH);
+}
+
+//  tab changed, set slider pointer values, and update
+void CGui::sldUpdGrL()
+{
+	SGrassLayer& gr =  sc->grLayersAll[idGrLay];
+	SV* sv;
+	sv = &svGrMinX;  sv->pFloat = &gr.minSx;  sv->Upd();
+	sv = &svGrMaxX;  sv->pFloat = &gr.maxSx;  sv->Upd();
+	sv = &svGrMinY;  sv->pFloat = &gr.minSy;  sv->Upd();
+	sv = &svGrMaxY;  sv->pFloat = &gr.maxSy;  sv->Upd();
+	sv = &svLGrDens; sv->pFloat = &gr.dens;   sv->Upd();
 }
 
 void CGui::chkGrLayOn(WP wp)
@@ -238,6 +206,7 @@ void CGui::chkGrLayOn(WP wp)
 void CGui::tabPgLayers(TabPtr wp, size_t id)
 {
 	idPgLay = id;  // help var
+	sldUpdPgL();
 	const PagedLayer& lay = sc->pgLayersAll[idPgLay];
 
 	chkPgLay->setStateSelected(lay.on);
@@ -245,20 +214,28 @@ void CGui::tabPgLayers(TabPtr wp, size_t id)
 	Upd3DView(lay.name);
 	SetUsedStr(valLTrAll, sc->pgLayers.size(), 5);
 
-	//  set slider values
-	Slider* sl;
-	Slv(LTrDens, powf((lay.dens-0.001f) /1.0f, 0.5f));
-	Slv(LTrRdDist, lay.addRdist /20.f);
-	Slv(LTrRdDistMax, lay.maxRdist /20.f);
-
-	Slv(LTrMinSc, powf(lay.minScale /6.0f, 1.f/3.f));
-	Slv(LTrMaxSc, powf(lay.maxScale /6.0f, 1.f/3.f));
-	Slv(LTrWindFx, powf(lay.windFx /12.0f, 1.f/3.f));
-	Slv(LTrWindFy, powf(lay.windFy /12.0f, 1.f/3.f));
-	Slv(LTrMaxTerAng, powf(lay.maxTerAng /90.0f, 1.f/2.f));
 	if (edLTrMinTerH)  edLTrMinTerH->setCaption(toStr(lay.minTerH));
 	if (edLTrMaxTerH)  edLTrMaxTerH->setCaption(toStr(lay.maxTerH));
 	if (edLTrFlDepth)  edLTrFlDepth->setCaption(toStr(lay.maxDepth));
+}
+
+//  tab changed
+void CGui::sldUpdPgL()
+{
+	PagedLayer& lay = sc->pgLayersAll[idPgLay];
+	SV* sv;
+	sv = &svLTrDens;    sv->pFloat = &lay.dens;  sv->Upd();
+
+	sv = &svLTrRdDist;     sv->pInt = &lay.addRdist;  sv->Upd();
+	sv = &svLTrRdDistMax;  sv->pInt = &lay.maxRdist;  sv->Upd();
+
+	sv = &svLTrMinSc;   sv->pFloat = &lay.minScale;  sv->Upd();
+	sv = &svLTrMaxSc;   sv->pFloat = &lay.maxScale;  sv->Upd();
+
+	sv = &svLTrWindFx;  sv->pFloat = &lay.windFx;  sv->Upd();
+	sv = &svLTrWindFy;  sv->pFloat = &lay.windFy;  sv->Upd();
+
+	sv = &svLTrMaxTerAng;  sv->pFloat = &lay.maxTerAng;  sv->Upd();
 }
 
 void CGui::chkPgLayOn(WP wp)
@@ -284,79 +261,6 @@ void CGui::Upd3DView(String mesh)
 }
 
 
-void CGui::slGrMinX(SL)
-{
-	Real v = 0.1f + 4.0f * powf(val, 2.f);  sc->grLayersAll[idGrLay].minSx = v;
-	if (valGrMinX){  valGrMinX->setCaption(fToStr(v,2,4));  }
-}
-void CGui::slGrMaxX(SL)
-{
-	Real v = 0.1f + 4.0f * powf(val, 2.f);  sc->grLayersAll[idGrLay].maxSx = v;
-	if (valGrMaxX){  valGrMaxX->setCaption(fToStr(v,2,4));  }
-}
-void CGui::slGrMinY(SL)
-{
-	Real v = 0.1f + 4.0f * powf(val, 2.f);  sc->grLayersAll[idGrLay].minSy = v;
-	if (valGrMinY){  valGrMinY->setCaption(fToStr(v,2,4));  }
-}
-void CGui::slGrMaxY(SL)
-{
-	Real v = 0.1f + 4.0f * powf(val, 2.f);  sc->grLayersAll[idGrLay].maxSy = v;
-	if (valGrMaxY){  valGrMaxY->setCaption(fToStr(v,2,4));  }
-}
-
-
-void CGui::slLGrDens(SL)  //  sliders
-{
-	Real v = 0.001f + 1.0f * powf(val, 2.f);  sc->grLayersAll[idGrLay].dens = v;
-	if (valLGrDens){  valLGrDens->setCaption(fToStr(v,3,5));  }
-}
-
-void CGui::slLTrDens(SL)
-{
-	Real v = 0.001f + 1.0f * powf(val, 2.f);  sc->pgLayersAll[idPgLay].dens = v;
-	if (valLTrDens){  valLTrDens->setCaption(fToStr(v,3,5));  }
-}
-void CGui::slLTrRdDist(SL)
-{
-	int v = val * 20.f +slHalf;
-	sc->pgLayersAll[idPgLay].addRdist = v;
-	if (valLTrRdDist)  valLTrRdDist->setCaption(toStr(v));
-}
-void CGui::slLTrRdDistMax(SL)
-{
-	int v = val * 20.f +slHalf;
-	sc->pgLayersAll[idPgLay].maxRdist = v;
-	if (valLTrRdDistMax)  valLTrRdDistMax->setCaption(toStr(v));
-}
-
-void CGui::slLTrMinSc(SL)
-{
-	Real v = 6.0f * powf(val, 3.f);		sc->pgLayersAll[idPgLay].minScale = v;
-	if (valLTrMinSc){  valLTrMinSc->setCaption(fToStr(v,3,5));  }
-}
-void CGui::slLTrMaxSc(SL)
-{
-	Real v = 6.0f * powf(val, 3.f);		sc->pgLayersAll[idPgLay].maxScale = v;
-	if (valLTrMaxSc){  valLTrMaxSc->setCaption(fToStr(v,3,5));  }
-}
-
-void CGui::slLTrWindFx(SL)
-{
-	Real v = 12.0f * powf(val, 3.f);	sc->pgLayersAll[idPgLay].windFx = v;
-	if (valLTrWindFx){  valLTrWindFx->setCaption(fToStr(v,3,5));  }
-}
-void CGui::slLTrWindFy(SL)
-{
-	Real v = 12.0f * powf(val, 3.f);	sc->pgLayersAll[idPgLay].windFy = v;
-	if (valLTrWindFy){  valLTrWindFy->setCaption(fToStr(v,3,5));  }
-}
-
-void CGui::slLTrMaxTerAng(SL)
-{
-	Real v = 90.0f * powf(val, 2.f);	sc->pgLayersAll[idPgLay].maxTerAng = v;
-	if (valLTrMaxTerAng){  valLTrMaxTerAng->setCaption(fToStr(v,1,5));  }
-}
 void CGui::editLTrMinTerH(EditPtr ed)
 {
 	sc->pgLayersAll[idPgLay].minTerH = s2r(ed->getCaption());
@@ -431,32 +335,16 @@ void CGui::editRoad(EditPtr ed)
 	//app->road->RebuildRoad(true);  //on Enter ?..
 }
 
-void CGui::slAlignWidthAdd(SL)
-{
-	Real v = 20.f * val;	pSet->al_w_add = v;
-	if (valAlignWidthAdd)  valAlignWidthAdd->setCaption(fToStr(v,1,3));
-}
-void CGui::slAlignWidthMul(SL)
-{
-	Real v = 1.f + 4.f * val;	pSet->al_w_mul = v;
-	if (valAlignWidthMul)  valAlignWidthMul->setCaption(fToStr(v,2,4));
-}
-void CGui::slAlignSmooth(SL)
-{
-	Real v = 6.f * val;		pSet->al_smooth = v;
-	if (valAlignSmooth)  valAlignSmooth->setCaption(fToStr(v,1,3));
-}
-
 
 //  [Settings]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 //  Startup
-void CGui::chkStartInMain(WP wp)	{	ChkEv(startInMain);    }
+void CGui::chkStartInMain(WP wp){	ChkEv(startInMain);    }
 void CGui::chkAutoStart(WP wp)	{	ChkEv(autostart);	}
 void CGui::chkEscQuits(WP wp)	{	ChkEv(escquit);		}
 void CGui::chkOgreDialog(WP wp)	{	ChkEv(ogre_dialog);	}
 
-void CGui::chkCamPos(WP wp){			ChkEv(camPos);
+void CGui::chkCamPos(WP wp){		ChkEv(camPos);
 	if (pSet->camPos)  app->ovPos->show();  else  app->ovPos->hide();  }
 
 void CGui::chkInputBar(WP wp){		ChkEv(inputBar);
@@ -466,42 +354,15 @@ void CGui::chkCheckSave(WP wp)	{	ChkEv(check_save);  }
 void CGui::chkCheckLoad(WP wp)	{	ChkEv(check_load);  }
 
 
-void CGui::slMiniUpd(SL)
+void CGui::slSizeRoadP(SV*)
 {
-	int v = val * 20.f +slHalf;  pSet->mini_skip = v;
-	if (valMiniUpd){	valMiniUpd->setCaption(toStr(v));  }
-}
-
-void CGui::slSizeRoadP(SL)
-{
-	Real v = 0.1f + 11.9f * val;  pSet->road_sphr = v;
-	if (valSizeRoadP){	valSizeRoadP->setCaption(fToStr(v,2,4));  }
 	if (app->road)
-	{	app->road->fMarkerScale = v;
+	{	app->road->fMarkerScale = pSet->road_sphr;
 		app->road->UpdAllMarkers();  }
 }
 
-void CGui::slCamInert(SL)
+void CGui::slSizeMinmap(SV*)
 {
-	Real v = val;  pSet->cam_inert = v;
-	if (valCamInert){	valCamInert->setCaption(fToStr(v,2,4));  }
-}
-void CGui::slCamSpeed(SL)
-{
-	Real v = 0.1f + 3.9f * powf(val, 1.f);  pSet->cam_speed = v;
-	if (valCamSpeed){	valCamSpeed->setCaption(fToStr(v,2,4));  }
-}
-
-void CGui::slTerUpd(SL)
-{
-	int v = val * 20.f +slHalf;  pSet->ter_skip = v;
-	if (valTerUpd){	valTerUpd->setCaption(toStr(v));  }
-}
-
-void CGui::slSizeMinmap(SL)
-{
-	float v = 0.15f + 1.85f * val;	pSet->size_minimap = v;
-	if (valSizeMinmap){	valSizeMinmap->setCaption(fToStr(v,3,4));  }
 	Real sz = pSet->size_minimap;  //int all = 0;
 	app->xm1 = 1-sz/app->asp;  app->ym1 = -1+sz;  app->xm2 = 1.0;  app->ym2 = -1.0;
 	for (int i=0; i < app->RTs+1; ++i)  if (i != app->RTs)

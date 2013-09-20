@@ -16,7 +16,7 @@
 
 
 namespace MyGUI  {  class MultiList2;  class Slider;  class Message;  }
-class App;  class Scene;
+class App;  class Scene;  class CData;  class SETTINGS;
 
 enum ED_OBJ {  EO_Move=0, EO_Rotate, EO_Scale  };
 
@@ -137,8 +137,11 @@ public:
 	//  [settings]
 	void chkMouseCapture(WP), chkOgreDialog(WP),
 		chkAutoStart(WP), chkEscQuits(WP), chkStartInMain(WP);  // startup
-	SLV(SizeMinmap);  SLV(CamSpeed);  SLV(CamInert);
-	SLV(TerUpd);  SLV(SizeRoadP);  SLV(MiniUpd);
+
+	SlV(SizeMinmap);  SlV(SizeRoadP);
+	SV svCamSpeed, svCamInert;
+	SV svTerUpd, svMiniUpd;
+
 	void chkMinimap(WP), btnSetCam(WP);
 	void chkAutoBlendmap(WP);  MyGUI::ButtonPtr chAutoBlendmap, chInputBar;
 	void chkCamPos(WP), chkInputBar(WP);
@@ -150,13 +153,19 @@ public:
 	//  [Sky]  ----
 	MyGUI::ComboBoxPtr cmbSky, cmbRain1,cmbRain2;
 	void comboSky(CMB), comboRain1(CMB),comboRain2(CMB);
-	SLV(Rain1Rate);  SLV(Rain2Rate);
-	SLV(SunPitch);  SLV(SunYaw);
-	SLV(FogStart); SLV(FogEnd);  SLV(FogHStart); SLV(FogHEnd);  SLV(FogHeight); SLV(FogHDensity);
+
+	SV svRain1Rate, svRain2Rate;
+	SV svSunPitch, svSunYaw;
+	void slUpdSun(SV*), slUpdFog(SV*);
+	SV svFogStart, svFogEnd;
+	SV svFogHStart, svFogHEnd;  // Hfog
+	SV svFogHeight, svFogHDensity;
+
 	MyGUI::EditPtr edLiAmb,edLiDiff,edLiSpec, edFogClr,edFogClr2,edFogClrH;
 	MyGUI::ImageBox* clrAmb,*clrDiff,*clrSpec, *clrFog,*clrFog2,*clrFogH;
 	void editFogClr(MyGUI::EditPtr),editFogClr2(MyGUI::EditPtr),editFogClrH(MyGUI::EditPtr);
 	void editLiAmb(MyGUI::EditPtr),editLiDiff(MyGUI::EditPtr),editLiSpec(MyGUI::EditPtr);
+
 	void chkFogDisable(WP),chkWeatherDisable(WP);  MyGUI::ButtonPtr chkFog, chkWeather;
 
 	
@@ -168,18 +177,17 @@ public:
 	MyGUI::ButtonPtr chkTerLay,chkTerLNoiseOnly,chkTerLayTripl;
 	void chkTerLayOn(WP),chkTerLNoiseOnlyOn(WP),chkTerLayTriplOn(WP);  // on
 	MyGUI::TabPtr tabsHmap;	  void tabHmap(TAB);  int getHMapSizeTab();  // tabs
-	MyGUI::TabPtr tabsTerLayers; void tabTerLayer(TAB);
-	int idTerLay;  bool bTerLay;  // help vars
 	MyGUI::ButtonPtr chkTexNormAuto;  void chkTexNormAutoOn(WP);  bool bTexNormAuto;  // auto
 	
 	void btnBrushPreset(WP);
 
 	//  ter generator
-	SLV(TerGenScale);  SLV(TerGenOfsX);  SLV(TerGenOfsY);
-	SLV(TerGenFreq);  SLV(TerGenOct);  SLV(TerGenPers);  SLV(TerGenPow);
-	SLV(TerGenMul);  SLV(TerGenOfsH);  SLV(TerGenRoadSm);
-	SLV(TerGenAngMin);  SLV(TerGenAngMax);  SLV(TerGenAngSm);
-	SLV(TerGenHMin);  SLV(TerGenHMax);  SLV(TerGenHSm);
+	SV svTerGenScale, svTerGenOfsX, svTerGenOfsY;
+	SV svTerGenFreq, svTerGenOct, svTerGenPers, svTerGenPow;
+	SV svTerGenMul, svTerGenOfsH, svTerGenRoadSm;
+	SV svTerGenAngMin, svTerGenAngMax, svTerGenAngSm;
+	SV svTerGenHMin, svTerGenHMax, svTerGenHSm;
+	void slTerGen(SV*);
 	
 	
 	//  ter size
@@ -190,8 +198,12 @@ public:
 	const char* getHMapNew();
 	MyGUI::StaticTextPtr valTerLAll;
 	
-	//  ter blendmap
-	SLV(TerLAngMin);  SLV(TerLHMin);  SLV(TerLAngSm);
+	//  ter layer
+	int idTerLay;  bool bTerLay;  // help vars
+	void sldUpdTerL();
+	MyGUI::TabPtr tabsTerLayers; void tabTerLayer(TAB);
+
+	SLV(TerLAngMin);  SLV(TerLHMin);  SLV(TerLAngSm);  // blendmap
 	SLV(TerLAngMax);  SLV(TerLHMax);  SLV(TerLHSm);
 	SLV(TerLNoise);  //Chk("TerLNoiseOnly", chkTerLNoiseOnly, 0);
 
@@ -206,40 +218,55 @@ public:
 	
 
 	///  [Vegetation]  ----
-	SLV(GrMinX);  SLV(GrMaxX);  SLV(GrMinY);  SLV(GrMaxY);
 	MyGUI::EditPtr edGrassDens,edTreesDens, edGrPage,edGrDist, edTrPage,edTrDist,
 		edGrSwayDistr, edGrSwayLen, edGrSwaySpd, edTrRdDist, edTrImpDist,
 		edGrDensSmooth, edSceneryId,
 		edGrTerMaxAngle,edGrTerSmAngle, edGrTerMinHeight,edGrTerMaxHeight,edGrTerSmHeight;
+
 	MyGUI::ComboBoxPtr cmbGrassMtr;  void comboGrassMtr(CMB);
 	MyGUI::ComboBoxPtr cmbGrassClr;  void comboGrassClr(CMB);
 	void editTrGr(MyGUI::EditPtr);
-	//  3d view  (veget,objs)
+
+	//  3d model view  (veget,objs)
 	MyGUI::Canvas* viewCanvas;  wraps::RenderBoxScene viewBox;  MyGUI::IntCoord GetViewSize();
 	Ogre::String viewMesh;  void Upd3DView(Ogre::String mesh);  float tiViewUpd;
 	
-	//  paged layers
-	MyGUI::TabPtr tabsPgLayers;  void tabPgLayers(TAB);
+	//  paged layers  ----
 	int idPgLay;  // tab
+	void sldUpdPgL();
+	MyGUI::TabPtr tabsPgLayers;  void tabPgLayers(TAB);
+
 	MyGUI::ButtonPtr chkPgLay;  void chkPgLayOn(WP);  MyGUI::StaticTextPtr valLTrAll;
 	MyGUI::ComboBoxPtr cmbPgLay;  void comboPgLay(CMB);
-	SLV(LTrDens);	SLV(LTrRdDist);  SLV(LTrRdDistMax);
-	SLV(LTrMinSc);	SLV(LTrMaxSc);	SLV(LTrWindFx);	SLV(LTrWindFy);
-	SLV(LTrMaxTerAng);
+
+	SV svLTrDens;
+	SV svLTrRdDist, svLTrRdDistMax;
+	SV svLTrMinSc, svLTrMaxSc;
+	SV svLTrWindFx, svLTrWindFy;
+	SV svLTrMaxTerAng;
+
 	MyGUI::EditPtr edLTrMinTerH,edLTrMaxTerH,edLTrFlDepth;
 	void editLTrMinTerH(MyGUI::EditPtr),editLTrMaxTerH(MyGUI::EditPtr),editLTrFlDepth(MyGUI::EditPtr);
 
-	//  grass layers
-	MyGUI::TabPtr tabsGrLayers;  void tabGrLayers(TAB);
+	//  grass layers  ----
 	int idGrLay;  // tab
+	void sldUpdGrL();
+	MyGUI::TabPtr tabsGrLayers;  void tabGrLayers(TAB);
+
+	SV svLGrDens;
+	SV svGrMinX, svGrMaxX;
+	SV svGrMinY, svGrMaxY;
+
 	MyGUI::ButtonPtr chkGrLay;  void chkGrLayOn(WP);
 	MyGUI::StaticImagePtr imgGrass,imgGrClr;  MyGUI::StaticTextPtr valLGrAll;
-	SLV(LGrDens);
-	
+
 	
 	//  [Road]  ----
-	MyGUI::ComboBoxPtr cmbRoadMtr[4],cmbPipeMtr[4],cmbRoadWMtr,cmbPipeWMtr,cmbRoadColMtr;
-	void comboRoadMtr(CMB),comboPipeMtr(CMB),comboRoadWMtr(CMB),comboPipeWMtr(CMB),comboRoadColMtr(CMB);
+	MyGUI::ComboBoxPtr cmbRoadMtr[4],cmbPipeMtr[4],
+		cmbRoadWMtr,cmbPipeWMtr,cmbRoadColMtr;
+	void comboRoadMtr(CMB),comboPipeMtr(CMB),
+		comboRoadWMtr(CMB),comboPipeWMtr(CMB),comboRoadColMtr(CMB);
+
 	MyGUI::EditPtr edRdTcMul,edRdTcMulW,edRdTcMulP,edRdTcMulPW,edRdTcMulC,
 		edRdLenDim,edRdWidthSteps,edRdHeightOfs,
 		edRdSkirtLen,edRdSkirtH, edRdMergeLen,edRdLodPLen,
@@ -264,7 +291,7 @@ public:
 	void btnScaleAll(WP),btnScaleTerH(WP), btnDeleteRoad(WP),btnDeleteFluids(WP),btnDeleteObjects(WP);
 	MyGUI::EditPtr edScaleAllMul;  void editScaleAllMul(MyGUI::EditPtr);
 	MyGUI::EditPtr edScaleTerHMul;  void editScaleTerHMul(MyGUI::EditPtr);
-	SLV(AlignWidthAdd);  SLV(AlignWidthMul);  SLV(AlignSmooth);
+	SV svAlignWidthAdd, svAlignWidthMul, svAlignSmooth;
 
 	//  warnings
 	MyGUI::EditPtr edWarn;  MyGUI::StaticTextPtr txWarn;
