@@ -10,6 +10,8 @@
 #include <OgreVector3.h>
 #include <OgreString.h>
 
+#include <MyGUI_Enumerator.h>
+#include <MyGUI_WidgetDefines.h>  //EnumeratorWidgetPtr
 #include "../ogre/common/MessageBox/MessageBoxStyle.h"
 
 
@@ -326,6 +328,7 @@ public:
 
 	Ogre::String sListTrack;  int bListTrackU;
 	Ogre::String sCopyTrack;  int bCopyTrackU;  // for tools
+
 	Ogre::String PathListTrk(int user=-1), PathListTrkPrv(int user/*=-1*/, Ogre::String track);
 	Ogre::String PathCopyTrk(int user=-1);
 
@@ -342,6 +345,8 @@ public:
 	bool Rename(Ogre::String from, Ogre::String to), Delete(Ogre::String file), DeleteDir(Ogre::String dir),
 		 CreateDir(Ogre::String dir), Copy(Ogre::String file, Ogre::String to);
 	bool TrackExists(Ogre::String name);  // util
+
+	bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");
 
 	std::vector<Ogre::String> vsMaterials;
 	//void GetMaterialsFromDef(Ogre::String filename, bool clear=true);

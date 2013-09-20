@@ -438,8 +438,8 @@ void CGui::InitGui()
 	Cmb(cmbTexNorm, "TexNormal", comboTexNorm);  cmbTexNorm->addItem("flat_n.png");
 
 	strlist li;
-	app->GetFolderIndex(PATHMANAGER::Data() + "/terrain", li);
-	app->GetFolderIndex(PATHMANAGER::Data() + "/terrain2", li);
+	GetFolderIndex(PATHMANAGER::Data() + "/terrain", li);
+	GetFolderIndex(PATHMANAGER::Data() + "/terrain2", li);
 
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 	if (!StringUtil::match(*i, "*.txt", false))
@@ -470,7 +470,7 @@ void CGui::InitGui()
 		if (s.length() > 5)  //!= "grass")
 			cmbGrassMtr->addItem(s);
 	}
-	app->GetFolderIndex(PATHMANAGER::Data() + "/grass", li);
+	GetFolderIndex(PATHMANAGER::Data() + "/grass", li);
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 	{
 		if (StringUtil::startsWith(*i, "grClr", false))
@@ -480,9 +480,9 @@ void CGui::InitGui()
 	//---------------------  Trees  ---------------------
 	Cmb(cmbPgLay, "LTrCombo", comboPgLay);
 	strlist lt;
-	app->GetFolderIndex(PATHMANAGER::Data() + "/trees", lt);
-	app->GetFolderIndex(PATHMANAGER::Data() + "/trees2", lt);
-	app->GetFolderIndex(PATHMANAGER::Data() + "/trees-old", lt);
+	GetFolderIndex(PATHMANAGER::Data() + "/trees", lt);
+	GetFolderIndex(PATHMANAGER::Data() + "/trees2", lt);
+	GetFolderIndex(PATHMANAGER::Data() + "/trees-old", lt);
 	for (strlist::iterator i = lt.begin(); i != lt.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh"))  {
 			std::string s = *i;  s = s.substr(0, s.length()-5);
@@ -517,7 +517,7 @@ void CGui::InitGui()
 
 	//---------------------  Objects  ---------------------
 	strlist lo;  vObjNames.clear();
-	app->GetFolderIndex(PATHMANAGER::Data() + "/objects", lo);
+	GetFolderIndex(PATHMANAGER::Data() + "/objects", lo);
 	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh") && (*i) != "sphere.mesh")
 			vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext

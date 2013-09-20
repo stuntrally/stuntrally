@@ -78,9 +78,8 @@ public:
 	void UpdFluidBox(), UpdateWaterRTT(Ogre::Camera* cam), UpdMtrWaterDepth();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 
-	bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");
+	//  vdrift
 	bool IsVdrTrack();
-	// vdrift:
 	void CreateVdrTrack(std::string strack, class TRACK* pTrack), CreateVdrTrackBlt(), DestroyVdrTrackBlt(),
 		CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
 	static Ogre::ManualObject* CreateModel(Ogre::SceneManager* sceneMgr, const Ogre::String& mat,
