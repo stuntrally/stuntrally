@@ -679,6 +679,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\editor\TerrainBrushes.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\Editor\TerrainEdit.cpp"
 				>
 			</File>
