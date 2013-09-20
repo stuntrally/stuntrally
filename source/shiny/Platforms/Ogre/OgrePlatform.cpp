@@ -64,11 +64,11 @@ namespace sh
 
 	bool OgrePlatform::supportsShaderSerialization ()
 	{
-#if OGRE_VERSION >= (1 << 16 | 9 << 8 | 0)
+		#if OGRE_VERSION >= (1 << 16 | 9 << 8 | 0)
 		return true;
-#else
+		#else
 		return Ogre::Root::getSingleton ().getRenderSystem ()->getName ().find("OpenGL") == std::string::npos;
-#endif
+		#endif
 	}
 
 	bool OgrePlatform::supportsMaterialQueuedListener ()
@@ -113,9 +113,9 @@ namespace sh
 
 	void OgrePlatform::serializeShaders (const std::string& file)
 	{
-#if OGRE_VERSION >= (1 << 16 | 9 << 8 | 0)
+		#if OGRE_VERSION >= (1 << 16 | 9 << 8 | 0)
 		if (Ogre::GpuProgramManager::getSingleton().isCacheDirty())
-#endif
+		#endif
 		{
 			std::fstream output;
 			output.open(file.c_str(), std::ios::out | std::ios::binary);
