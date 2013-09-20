@@ -222,7 +222,7 @@ bool string_compare(const std::string& s1, const std::string& s2)
 	return strcmp(s1.c_str(), s2.c_str()) != 0;
 }
 
-bool CGui::GetFolderIndex(std::string dirpath, std::list <std::string>& dirlist, std::string extension)
+bool CGui::DirList(std::string dirpath, strlist& dirlist, std::string extension)
 {
 #ifndef _WIN32
 	DIR *dp;
@@ -249,7 +249,7 @@ bool CGui::GetFolderIndex(std::string dirpath, std::list <std::string>& dirlist,
 	WIN32_FIND_DATA FileData;
 
 	// Get the proper directory path
-	sprintf(szDir, "%s\\*", dirpath.c_str ());
+	sprintf(szDir, "%s\\*", dirpath.c_str());
 
 	// Get the first file
 	hList = FindFirstFile(szDir, &FileData);
@@ -280,14 +280,14 @@ bool CGui::GetFolderIndex(std::string dirpath, std::list <std::string>& dirlist,
 	//remove non-matcthing extensions
 	if (!extension.empty())
 	{
-		std::list <std::list <std::string>::iterator> todel;
-		for (std::list <std::string>::iterator i = dirlist.begin(); i != dirlist.end(); ++i)
+		std::list <strlist::iterator> todel;
+		for (strlist::iterator i = dirlist.begin(); i != dirlist.end(); ++i)
 		{
 			if (i->find(extension) != i->length()-extension.length())
 				todel.push_back(i);
 		}
 		
-		for (std::list <std::list <std::string>::iterator>::iterator i = todel.begin(); i != todel.end(); ++i)
+		for (std::list <strlist::iterator>::iterator i = todel.begin(); i != todel.end(); ++i)
 			dirlist.erase(*i);
 	}
 	

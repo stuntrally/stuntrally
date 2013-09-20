@@ -296,6 +296,7 @@ void CGui::InitGui()
 	float f=0.f;  i=0;  // temp vars
 	sv= &svTerTriSize;	sv->Init("TerTriSize", &sc->td.fTriangleSize,  0.1f,6.f, 2.f);  Sev(TerTriSize);
 	sv= &svTerLScale;	sv->Init("TerLScale",  &f, 1.0f, 64.f,  3.f);  Sev(TerLay);  // 2 24 1.5
+	//  blendmap
 	sv= &svTerLAngMin;  sv->Init("TerLAngMin", &f, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(0.f);  Sev(TerLay);
 	sv= &svTerLAngMax;  sv->Init("TerLAngMax", &f, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(90.f);  Sev(TerLay);
 	sv= &svTerLHMin;    sv->Init("TerLHMin",   &f,-100.f,200.f, 2.f, 0,3);  sv->DefaultF(-300.f);  Sev(TerLay);
@@ -305,6 +306,7 @@ void CGui::InitGui()
 	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f,-2.f,2.f);
 	Chk("TerLNoiseOnly", chkTerLNoiseOnlyOn, 0);  chkTerLNoiseOnly = bchk;
 	
+	//  particles
 	Ed(LDust, editLDust);	Ed(LDustS, editLDust);
 	Ed(LMud,  editLDust);	Ed(LSmoke, editLDust);
 	Ed(LTrlClr, editLTrlClr);
@@ -312,6 +314,7 @@ void CGui::InitGui()
 	Cmb(cmbParMud,  "CmbParMud",  comboParDust);
 	Cmb(cmbParSmoke,"CmbParSmoke",comboParDust);
 
+	//  surface
 	Cmb(cmbSurface, "Surface", comboSurface);  //1 txt-
 	txtSuBumpWave = fTxt("SuBumpWave");
 	txtSuBumpAmp  = fTxt("SuBumpAmp");
@@ -330,7 +333,7 @@ void CGui::InitGui()
 	Chk("LTrEnabled", chkPgLayOn, 1);  chkPgLay = bchk;
 	valLTrAll = fTxt("LTrAll");
 	Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);
-
+	//  veget layers, models
 	sv= &svLTrDens;		sv->Init("LTrDens",		 &f, 0.001f,1.0f, 2.f);
 	
 	sv= &svLTrRdDist;	sv->Init("LTrRdDist",	 &i, 0.f,20.f);
@@ -383,26 +386,32 @@ void CGui::InitGui()
 	///  [Tools]  ------------------------------------
 	Btn("TrackCopySel", btnTrkCopySel);
 	valTrkCpySel = fTxt("TrkCopySelName");
+
 	Btn("CopySun", btnCopySun);				Btn("CopyTerHmap", btnCopyTerHmap);
 	Btn("CopyTerLayers", btnCopyTerLayers);	Btn("CopyVeget", btnCopyVeget);
 	Btn("CopyRoad", btnCopyRoad);			Btn("CopyRoadPars", btnCopyRoadPars);
+
 	Btn("DeleteRoad", btnDeleteRoad);		Btn("DeleteFluids", btnDeleteFluids);
 	Btn("DeleteObjects", btnDeleteObjects);
+
 	Btn("ScaleAll", btnScaleAll);	Ed(ScaleAllMul, editScaleAllMul);
 	Btn("ScaleTerH", btnScaleTerH);	Ed(ScaleTerHMul, editScaleTerHMul);
 
-	sv= &svAlignWidthAdd;	sv->Init("AlignWidthAdd",	&pSet->al_w_add, 0.f,20.f,1.f, 1,3);
-	sv= &svAlignWidthMul;	sv->Init("AlignWidthMul",	&pSet->al_w_mul, 1.f,4.f, 1.f, 2,4);
-	sv= &svAlignSmooth;		sv->Init("AlignSmooth",		&pSet->al_w_add, 0.f,6.f, 1.f, 1,3);
+	sv= &svAlignWidthAdd;	sv->Init("AlignWidthAdd",	&pSet->al_w_add,  0.f,20.f,1.f, 1,3);
+	sv= &svAlignWidthMul;	sv->Init("AlignWidthMul",	&pSet->al_w_mul,  1.f,4.f, 1.f, 2,4);
+	sv= &svAlignSmooth;		sv->Init("AlignSmooth",		&pSet->al_smooth, 0.f,6.f, 1.f, 1,3);
+
 	
-	//  warnings
+	///  [Warnings]  ------------------------------------
 	edWarn = app->mGui->findWidget<EditBox>("Warnings",false);
 	txWarn = app->mGui->createWidget<TextBox>("TextBox", 300,20, 360,32, Align::Left, "Back");
 	txWarn->setTextShadow(true);  txWarn->setTextShadowColour(Colour::Black);
 	txWarn->setTextColour(Colour(1.0,0.4,0.2));  txWarn->setFontHeight(24);
 	txWarn->setVisible(false);
+
 	imgWarn = fImg("ImgWarn");  imgWarn->setVisible(false);
 	imgInfo = fImg("ImgInfo");
+
 	Chk("CheckSave", chkCheckSave, pSet->check_save);
 	Chk("CheckLoad", chkCheckLoad, pSet->check_load);
 	
@@ -414,7 +423,8 @@ void CGui::InitGui()
 	
 	//---------------------  Skies  ---------------------
 	Cmb(cmbSky, "SkyCombo", comboSky);
-	String sMat = PATHMANAGER::Data()+"/materials/";  // path
+	std::string data = PATHMANAGER::Data();
+	String sMat = data +"/materials/";  // path
 
 	GetMaterialsMat(sMat+"sky.mat");
 	for (size_t i=0; i < vsMaterials.size(); ++i)
@@ -438,8 +448,8 @@ void CGui::InitGui()
 	Cmb(cmbTexNorm, "TexNormal", comboTexNorm);  cmbTexNorm->addItem("flat_n.png");
 
 	strlist li;
-	GetFolderIndex(PATHMANAGER::Data() + "/terrain", li);
-	GetFolderIndex(PATHMANAGER::Data() + "/terrain2", li);
+	DirList(data + "/terrain", li);
+	DirList(data + "/terrain2", li);
 
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 	if (!StringUtil::match(*i, "*.txt", false))
@@ -470,7 +480,7 @@ void CGui::InitGui()
 		if (s.length() > 5)  //!= "grass")
 			cmbGrassMtr->addItem(s);
 	}
-	GetFolderIndex(PATHMANAGER::Data() + "/grass", li);
+	DirList(data + "/grass", li);
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 	{
 		if (StringUtil::startsWith(*i, "grClr", false))
@@ -480,9 +490,9 @@ void CGui::InitGui()
 	//---------------------  Trees  ---------------------
 	Cmb(cmbPgLay, "LTrCombo", comboPgLay);
 	strlist lt;
-	GetFolderIndex(PATHMANAGER::Data() + "/trees", lt);
-	GetFolderIndex(PATHMANAGER::Data() + "/trees2", lt);
-	GetFolderIndex(PATHMANAGER::Data() + "/trees-old", lt);
+	DirList(data + "/trees", lt);
+	DirList(data + "/trees2", lt);
+	DirList(data + "/trees-old", lt);
 	for (strlist::iterator i = lt.begin(); i != lt.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh"))  {
 			std::string s = *i;  s = s.substr(0, s.length()-5);
@@ -517,7 +527,7 @@ void CGui::InitGui()
 
 	//---------------------  Objects  ---------------------
 	strlist lo;  vObjNames.clear();
-	GetFolderIndex(PATHMANAGER::Data() + "/objects", lo);
+	DirList(data + "/objects", lo);
 	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh") && (*i) != "sphere.mesh")
 			vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
@@ -534,7 +544,7 @@ void CGui::InitGui()
 				if (StringUtil::startsWith(name,"pers_",false))
 					objListBld->addItem("#E0E070"+name);  // buildings
 				else
-				if (boost::filesystem::exists(PATHMANAGER::Data()+"/objects/"+ name + ".bullet"))
+				if (boost::filesystem::exists(data+"/objects/"+ name + ".bullet"))
 					objListDyn->addItem("#80D0FF"+name);  // dynamic
 				else
 					objListSt->addItem("#C8C8C8"+name);

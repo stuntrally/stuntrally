@@ -414,6 +414,7 @@ void CGui::MenuTabChg(TabPtr tab, size_t id)
 }
 
 
+//  Gui Shortcut  alt-letters
 void CGui::GuiShortcut(MNU_Btns mnu, int tab, int subtab)
 {
 	if (subtab == -1 && (!app->isFocGui || pSet->inMenu != mnu))  subtab = -2;  // cancel subtab cycling

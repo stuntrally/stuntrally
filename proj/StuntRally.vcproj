@@ -1182,19 +1182,27 @@
 					Name="Common"
 					>
 					<File
-						RelativePath="..\source\ogre\common\Gui_Common.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\ogre\common\Gui_CommonSet.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\ogre\common\Gui_CommonTrack.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\source\ogre\common\Gui_Def.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\GuiCom_Options.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\GuiCom_Screen.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\GuiCom_Set.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\GuiCom_Track.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\GuiCom_Util.cpp"
 						>
 					</File>
 				</Filter>
@@ -1759,7 +1767,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\Defines.h"
+					RelativePath="..\source\ogre\Def_Str.h"
 					>
 				</File>
 				<File

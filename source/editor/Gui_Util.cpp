@@ -1,18 +1,20 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
+#include "../ogre/common/Gui_Def.h"
+#include "../ogre/common/RenderConst.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"
-#include <boost/filesystem.hpp>
-#include "../ogre/common/Gui_Def.h"
-#include "../ogre/common/Slider.h"
-#include "../ogre/common/MessageBox/MessageBox.h"
+#include "../ogre/common/MultiList2.h"
+#include "../sdl4ogre/sdlcursormanager.hpp"
+#include "../sdl4ogre/sdlinputwrapper.hpp"
+#include <OgreTerrain.h>
 using namespace MyGUI;
 using namespace Ogre;
 
 
-//  Gui from xml (scene, road), after load
+//  set Gui from xml (scene, road), after track load
 //..........................................................................................................
 void CGui::SetGuiFromXmls()
 {
@@ -69,20 +71,21 @@ void CGui::SetGuiFromXmls()
 
 	//  [Road]
 	//-----------------------------------------------
+	SplineRoad* rd = app->road;
 	for (int i=0; i < 4/*MTRs*/; ++i)
-	{	_Cmb(cmbRoadMtr[i], app->road->sMtrRoad[i]);
-		_Cmb(cmbPipeMtr[i], app->road->sMtrPipe[i]);  }
-	_Cmb(cmbRoadWMtr, app->road->sMtrWall);  _Cmb(cmbRoadColMtr, app->road->sMtrCol);
-	_Cmb(cmbPipeWMtr, app->road->sMtrWallPipe);
+	{	_Cmb(cmbRoadMtr[i], rd->sMtrRoad[i]);
+		_Cmb(cmbPipeMtr[i], rd->sMtrPipe[i]);  }
+	_Cmb(cmbRoadWMtr, rd->sMtrWall);  _Cmb(cmbRoadColMtr, rd->sMtrCol);
+	_Cmb(cmbPipeWMtr, rd->sMtrWallPipe);
 
-	_Ed(RdTcMul, app->road->tcMul);  _Ed(RdTcMulW, app->road->tcMul);
-	_Ed(RdTcMulP, app->road->tcMul); _Ed(RdTcMulPW, app->road->tcMul);  _Ed(RdTcMulC, app->road->tcMul);
-	_Ed(RdColN, app->road->colN);		_Ed(RdColR, app->road->colR);
-	_Ed(RdLenDim, app->road->lenDiv0);	_Ed(RdWidthSteps,app->road->iw0);
-	_Ed(RdPwsM, app->road->iwPmul);		_Ed(RdPlsM, app->road->ilPmul);
-	_Ed(RdHeightOfs,app->road->fHeight);
-	_Ed(RdSkirtLen,	app->road->skirtLen);	_Ed(RdSkirtH,	app->road->skirtH);
-	_Ed(RdMergeLen,	app->road->setMrgLen);	_Ed(RdLodPLen,	app->road->lposLen);
+	_Ed(RdTcMul,  rd->tcMul);  _Ed(RdTcMulW,  rd->tcMul);
+	_Ed(RdTcMulP, rd->tcMul);  _Ed(RdTcMulPW, rd->tcMul);  _Ed(RdTcMulC, rd->tcMul);
+	_Ed(RdColN, rd->colN);  _Ed(RdPwsM, rd->iwPmul);
+	_Ed(RdColR, rd->colR);  _Ed(RdPlsM, rd->ilPmul);
+	_Ed(RdLenDim, rd->lenDiv0);  _Ed(RdWidthSteps, rd->iw0);
+	_Ed(RdSkirtLen,	rd->skirtLen);  _Ed(RdHeightOfs,rd->fHeight);
+	_Ed(RdSkirtH,	rd->skirtH);
+	_Ed(RdMergeLen,	rd->setMrgLen);  _Ed(RdLodPLen,	rd->lposLen);
 	bGI = true;
 }
 
@@ -290,6 +293,8 @@ void CGui::MenuTabChg(MyGUI::TabPtr tab, size_t id)
 	toggleGui(false);  // back to main
 }
 
+
+//  Gui Shortcut  alt-letters
 void CGui::GuiShortcut(WND_Types wnd, int tab, int subtab)
 {
 	if (subtab == -1 && (!app->bGuiFocus || pSet->inMenu != wnd))  subtab = -2;  // cancel subtab cycling
@@ -328,6 +333,7 @@ void CGui::GuiShortcut(WND_Types wnd, int tab, int subtab)
 	if (subtab > -1)
 		tc->setIndexSelected( std::min(cnt-1, subtab) );
 }
+
 
 //  next num tab  alt-1,2
 void CGui::NumTabNext(int rel)

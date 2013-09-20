@@ -10,6 +10,8 @@
 #include <OgreVector3.h>
 #include <OgreString.h>
 
+#include <MyGUI_Types.h>
+#include <MyGUI_WidgetTooltip.h>
 #include <MyGUI_Enumerator.h>
 #include <MyGUI_WidgetDefines.h>  //EnumeratorWidgetPtr
 #include "../ogre/common/MessageBox/MessageBoxStyle.h"
@@ -69,7 +71,7 @@ public:
 	WP mToolTip;  Ed mToolTipTxt;
 	void setToolTips(MyGUI::EnumeratorWidgetPtr widgets);
 	void notifyToolTip(WP sender, const MyGUI::ToolTipInfo& info);
-	void boundedMove(WP moving, const MyGUI::IntPoint & point);
+	void boundedMove(WP moving, const MyGUI::IntPoint& point);
 
 	//  language
 	void comboLanguage(CMB);
@@ -346,7 +348,7 @@ public:
 		 CreateDir(Ogre::String dir), Copy(Ogre::String file, Ogre::String to);
 	bool TrackExists(Ogre::String name);  // util
 
-	bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");
+	bool DirList(std::string folderpath, strlist& outputfolderlist, std::string extension="");
 
 	std::vector<Ogre::String> vsMaterials;
 	//void GetMaterialsFromDef(Ogre::String filename, bool clear=true);
