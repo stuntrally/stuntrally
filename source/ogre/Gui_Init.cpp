@@ -522,7 +522,7 @@ void CGui::InitGui()
 	
 	///  tweak
 	for (int i=0; i < ciEdCar; ++i)
-		edCar[i] = fEd("EdCar"+toStr(i),false);
+		edCar[i] = fEd("EdCar"+toStr(i));
 	edTweakCol = fEd("TweakEditCol");
 	edPerfTest = fEd("TweakPerfTest");
 	tabEdCar = fTab("TabEdCar");
@@ -609,9 +609,9 @@ void CGui::InitGui()
 	imgMini[1] = fImg("TrackMap2");
 	//  track stats text
 	for (int i=0; i < StTrk; ++i)
-		stTrk[1][i] = fTxt("2iv"+toStr(i+1), false);
+		stTrk[1][i] = fTxt("2iv"+toStr(i+1));
 	for (int i=0; i < InfTrk; ++i)
-		infTrk[1][i] = fTxt("2ti"+toStr(i+1), false);
+		infTrk[1][i] = fTxt("2ti"+toStr(i+1));
 
 	edChInfo = fEd("ChampInfo");
 	if (edChInfo)  edChInfo->setVisible(pSet->champ_info);
