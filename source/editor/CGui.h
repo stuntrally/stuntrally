@@ -57,7 +57,8 @@ public:
 	
 	///  Gui common   --------------------------
 	//  graphics
-	SlV(Anisotropy);  SlV(ViewDist);  SlV(TerDetail);  SlV(TerDist);  SlV(RoadDist);
+	SlV(ViewDist);  SlV(Anisotropy);
+	SlV(TerDetail);  SlV(TerDist);  SV svRoadDist;
 	SlV(TexSize);  SlV(TerMtr);  SlV(TerTripl);  // detail
 	SlV(Trees);  SlV(Grass);  SlV(TreesDist);  SlV(GrassDist);  // paged
 	SlV(ShadowType);  SlV(ShadowCount);  SlV(ShadowSize);  SlV(ShadowDist);  // shadow
@@ -80,26 +81,28 @@ public:
 	Btn bnQuit;  void btnQuit(WP);
 
 	//  init
-	void InitGui();  bool bGI;
+	bool bGI;
 	void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(), GuiInitGraphics(),GuiInitTrack();
 	Ogre::String GetSceneryColor(Ogre::String name);
 	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
 	
-	//  track
-	void UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const Ogre::String& sTrack, float time, bool champ=false),
+	///  track
+	void UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const Ogre::String& sTrack, float timeCur, bool champ=false),
 		ReadTrkStats();
-	Mli2 trkList;  Ed trkDesc[1];
-	Img imgPrv[1],imgMini[1],imgTer[1], imgTrkIco1,imgTrkIco2;
+	Mli2 trkList;  Ed trkDesc[2];
+	Img imgPrv[2],imgMini[2],imgTer[2], imgTrkIco1,imgTrkIco2;
 	const static int StTrk = 6, InfTrk = 8;
-	Txt valTrk[1], stTrk[1][StTrk], infTrk[1][InfTrk];  // [1] 2nd is in game (common code)
+	Txt valTrk[2], stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 1 unused, is in game (common code)
 
 	void listTrackChng(Mli2, size_t), TrackListUpd(bool resetNotFound=false);
 	void btnTrkView1(WP),btnTrkView2(WP), ChangeTrackView();
 	void updTrkListDim();
+	//  const list column widths
 	const static int colTrk[32];
 	const static Ogre::String clrsDiff[9], clrsRating[6], clrsLong[10];
 
-	void edTrkFind(Ed);  Ogre::String sTrkFind;  Ed edFind;
+	void edTrkFind(Ed);
+	Ogre::String sTrkFind;  Ed edFind;
 	strlist liTracks,liTracksUser;  void FillTrackLists();
 	std::list<TrkL> liTrk;
 
@@ -111,6 +114,9 @@ public:
 	void comboGraphicsAll(CMB), comboRenderSystem(CMB);
 
 	///-----------------------------------------
+	
+	void InitGui();
+	
 	
 	void trkListNext(int rel);
 	void Status(Ogre::String s, float r,float g,float b);
