@@ -8,11 +8,11 @@
 #ifndef SR_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../CGame.h"
-	//#include "../CGui.h"
+	#include "../CGui.h"
 	#include "../SplitScreen.h"
 #else
 	#include "../../editor/CApp.h"
-	#include "../../editor/CGui.h"//
+	#include "../../editor/CGui.h"
 	#include "../../editor/settings.h"
 #endif
 #include <OgreRoot.h>
@@ -183,7 +183,7 @@ void CGuiCom::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	ButtonPtr bchk;  Slider* sl;
 #ifndef SR_EDITOR  /// game only
-	Chk("ParticlesOn", chkParticles, pSet->particles);
+	/*Chk("ParticlesOn", chkParticles, pSet->particles);
 	Chk("TrailsOn", chkTrails, pSet->trails);
 
 	svParticles.Upd();  svTrails.Upd();
@@ -201,7 +201,7 @@ void CGuiCom::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	Chk("godrays", chkVidGodRays, pSet->godrays);
 	
 	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
-	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);
+	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);*/
 #endif
 
 #ifdef SR_EDITOR  /// editor only

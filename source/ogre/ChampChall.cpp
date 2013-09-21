@@ -2,6 +2,7 @@
 #include "common/Def_Str.h"
 #include "common/data/CData.h"
 #include "common/data/TracksXml.h"
+#include "common/GuiCom.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
@@ -9,7 +10,6 @@
 #include "CHud.h"
 #include "CGui.h"
 #include "common/MultiList2.h"
-
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;
@@ -335,7 +335,7 @@ void CGui::btnChampInfo(WP)
 //-----------------------------------------------------------------------------------------------
 void CGui::StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress)
 {
-	String clr = GetSceneryColor(name);
+	String clr = gcom->GetSceneryColor(name);
 	liStages->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liStages->getItemCount()-1;
 	liStages->setSubItemNameAt(1,l, clr+ name.c_str());
 
@@ -346,7 +346,7 @@ void CGui::StageListAdd(int n, Ogre::String name, int laps, Ogre::String progres
 	float time = (data->tracks->times[name] * laps /*laps > 1 -1*/) / carMul;
 
 	liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
-	liStages->setSubItemNameAt(3,l, clrsDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
+	liStages->setSubItemNameAt(3,l, gcom->clrsDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
 	liStages->setSubItemNameAt(4,l, "#60C0A0  "+toStr(laps));
 	liStages->setSubItemNameAt(5,l, "#80C0F0 "+CHud::StrTime2(time));
 	liStages->setSubItemNameAt(6,l, progress);

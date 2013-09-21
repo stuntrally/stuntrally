@@ -4,7 +4,6 @@
 #include <OgreMaterialManager.h>
 
 #include "common/Gui_Def.h"
-//#include <MyGUI_Prerequest.h>
 #include <boost/scoped_ptr.hpp>
 #include "../sdl4ogre/events.h"
 namespace SFO {  class InputWrapper;  class SDLCursorManager;  }
@@ -94,12 +93,11 @@ public:
 	class LoadingBar* mLoadingBar;
 	Ogre::SceneNode* ndSky;  //-
 	
-protected:
+
 	bool mShowDialog, mShutDown;
 	bool setup(), configure();  void updateStats();
 
-	int mMouseX;
-	int mMouseY;
+	int mMouseX,mMouseY;
 	
 	///  create
 	virtual void createScene() = 0;
@@ -139,7 +137,6 @@ protected:
 
 
 	///  input
-public:
 	SFO::InputWrapper* mInputWrapper;
 	SFO::SDLCursorManager* mCursorManager;
 	ICS::InputControlSystem* mInputCtrl;
@@ -153,7 +150,6 @@ public:
 	bool IsFocGuiInput()  {  return isFocGui || isFocRpl;  }
 	bool IsFocGui();
 	Ogre::RenderWindow* getWindow()  {  return mWindow;  }
-protected:
 
 	///  input
 	bool alt, ctrl, shift;  // key modifiers
@@ -170,12 +166,12 @@ protected:
 
 	Img bckFps, imgBack;
 	Txt txFps;
-public:
+
 	//  loading
 	Img bckLoad, bckLoadBar, barLoad, imgLoad;
 	Txt txLoadBig, txLoad;
 	int barSizeX, barSizeY;
-protected:
+
 	
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	MyGUI::OgreD3D11Platform* mPlatform;

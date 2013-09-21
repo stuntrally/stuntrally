@@ -2,6 +2,7 @@
 #include "common/Def_Str.h"
 #include "common/data/CData.h"
 #include "common/data/TracksXml.h"
+#include "common/GuiCom.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
@@ -59,11 +60,11 @@ void CGui::ChallsListUpdate()
 			
 			liChalls->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liChalls->getItemCount()-1;
 			liChalls->setSubItemNameAt(1,l, clr+ chl.name.c_str());
-			liChalls->setSubItemNameAt(2,l, clrsDiff[chl.diff]+ TR("#{Diff"+toStr(chl.diff)+"}"));
+			liChalls->setSubItemNameAt(2,l, gcom->clrsDiff[chl.diff]+ TR("#{Diff"+toStr(chl.diff)+"}"));
 			liChalls->setSubItemNameAt(3,l, StrChallCars(chl));
 			
-			liChalls->setSubItemNameAt(4,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ iToStr(ntrks,3));
-			liChalls->setSubItemNameAt(5,l, clrsDiff[std::min(8,int(chl.time/3.f/60.f))]+ CHud::StrTime2(chl.time));
+			liChalls->setSubItemNameAt(4,l, gcom->clrsDiff[std::min(8,ntrks*2/3+1)]+ iToStr(ntrks,3));
+			liChalls->setSubItemNameAt(5,l, gcom->clrsDiff[std::min(8,int(chl.time/3.f/60.f))]+ CHud::StrTime2(chl.time));
 			liChalls->setSubItemNameAt(6,l, ct == 0 || ct == ntrks ? "" :
 				clr+ fToStr(100.f * ct / ntrks,0,3)+" %");
 
@@ -476,7 +477,7 @@ void CGui::ChallFillStageInfo(bool finished)
 		if (id > 0)
 		{
 			const TrackInfo* ti = &data->tracks->trks[id-1];
-			s += "#A0D0FF"+ TR("#{Difficulty}:  ") + clrsDiff[ti->diff] + TR("#{Diff"+toStr(ti->diff)+"}") + "\n";
+			s += "#A0D0FF"+ TR("#{Difficulty}:  ") + gcom->clrsDiff[ti->diff] + TR("#{Diff"+toStr(ti->diff)+"}") + "\n";
 			if (app->road)
 			{	Real len = app->road->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);
 				s += "#A0D0FF"+ TR("#{Distance}:  ") + "#B0E0FF" + fToStr(len, 1,4) + (pSet->show_mph ? " mi" : " km") + "\n\n";
@@ -530,7 +531,7 @@ void CGui::ChallFillStageInfo(bool finished)
 		ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
 		Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
 
-		String path = PathListTrkPrv(0, trk.name), sGrp = "TrkPrvCh";
+		String path = gcom->PathListTrkPrv(0, trk.name), sGrp = "TrkPrvCh";
 		resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
 		resMgr.unloadResourceGroup(sGrp);
 		resMgr.initialiseResourceGroup(sGrp);
@@ -560,14 +561,14 @@ void CGui::UpdChallDetail(int id)
 	//s1 += "\n";  s2 += "\n";
 
 	//  track  --------
-	clr = clrsDiff[ch.diff];
+	clr = gcom->clrsDiff[ch.diff];
 	s1 += clr+ TR("#{Difficulty}\n");    s2 += clr+ TR("#{Diff"+toStr(ch.diff)+"}")+"\n";
 
-	clr = clrsDiff[std::min(8,ntrks*2/3+1)];
+	clr = gcom->clrsDiff[std::min(8,ntrks*2/3+1)];
 	s1 += clr+ TR("#{Tracks}\n");        s2 += clr+ toStr(ntrks)+"\n";
 
 	//s1 += "\n";  s2 += "\n";
-	clr = clrsDiff[std::min(8,int(ch.time/3.f/60.f))];
+	clr = gcom->clrsDiff[std::min(8,int(ch.time/3.f/60.f))];
 	s1 += TR("#80F0E0#{Time} [m:s.]\n"); s2 += "#C0FFE0"+clr+ CHud::StrTime2(ch.time)+"\n";
 
 	//  cars  --------

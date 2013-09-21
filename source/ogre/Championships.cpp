@@ -2,6 +2,7 @@
 #include "common/Def_Str.h"
 #include "common/data/CData.h"
 #include "common/data/TracksXml.h"
+#include "common/GuiCom.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "CGame.h"
@@ -59,10 +60,10 @@ void CGui::ChampsListUpdate()
 
 			liChamps->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liChamps->getItemCount()-1;
 			liChamps->setSubItemNameAt(1,l, clr+ ch.name.c_str());
-			liChamps->setSubItemNameAt(2,l, clrsDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
+			liChamps->setSubItemNameAt(2,l, gcom->clrsDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
 
-			liChamps->setSubItemNameAt(3,l, clrsDiff[std::min(8,ntrks*2/3+1)]+ iToStr(ntrks,3));
-			liChamps->setSubItemNameAt(4,l, clrsDiff[std::min(8,int(ch.time/3.f/60.f))]+" "+ CHud::StrTime2(ch.time));
+			liChamps->setSubItemNameAt(3,l, gcom->clrsDiff[std::min(8,ntrks*2/3+1)]+ iToStr(ntrks,3));
+			liChamps->setSubItemNameAt(4,l, gcom->clrsDiff[std::min(8,int(ch.time/3.f/60.f))]+" "+ CHud::StrTime2(ch.time));
 			liChamps->setSubItemNameAt(5,l, ct == 0 || ct == ntrks ? "" :
 				clr+ fToStr(100.f * ct / ntrks,0,3)+" %");
 
@@ -70,6 +71,53 @@ void CGui::ChampsListUpdate()
 			if (n-1 == pSet->gui.champ_num)  sel = l;
 	}	}
 	liChamps->setIndexSelected(sel);
+}
+
+///  upd dim  champ,chall,stages lists  ----------
+void CGui::updChampListDim()
+{
+	const IntCoord& wi = app->mWndGame->getCoord();
+
+	//  Champs  -----
+	if (!liChamps)  return;
+
+	int sum = 0, cnt = liChamps->getColumnCount(), sw = 0;
+	for (int c=0; c < cnt; ++c)  sum += colCh[c];
+	for (int c=0; c < cnt; ++c)
+	{
+		int w = c==cnt-1 ? 18 : float(colCh[c]) / sum * 0.72/*width*/ * wi.width * 0.97/*frame*/;
+		liChamps->setColumnWidthAt(c, w);  sw += w;
+	}
+	int xt = 0.038*wi.width, yt = 0.10*wi.height;  // pos
+	liChamps->setCoord(xt, yt, sw + 8/*frame*/, 0.32/*height*/*wi.height);
+	liChamps->setVisible(!isChallGui());
+
+	//  Stages  -----
+	if (!liStages)  return;
+
+	sum = 0;  cnt = liStages->getColumnCount();  sw = 0;
+	for (int c=0; c < cnt; ++c)  sum += colSt[c];  sum += 43;//-
+	for (int c=0; c < cnt; ++c)
+	{
+		int w = c==cnt-1 ? 18 : float(colSt[c]) / sum * 0.58/*width*/ * wi.width * 0.97/**/;
+		liStages->setColumnWidthAt(c, w);  sw += w;
+	}
+	liStages->setCoord(xt, yt, sw + 8/**/, 0.50/*height*/*wi.height);
+	liStages->setVisible(true);
+
+	//  Challs  -----
+	if (!liChalls)  return;
+
+	sum = 0;  cnt = liChalls->getColumnCount();  sw = 0;
+	for (int c=0; c < cnt; ++c)  sum += colChL[c];
+	for (int c=0; c < cnt; ++c)
+	{
+		int w = c==cnt-1 ? 18 : float(colChL[c]) / sum * 0.71/*width*/ * wi.width * 0.97/**/;
+		liChalls->setColumnWidthAt(c, w);  sw += w;
+	}
+	xt = 0.038*wi.width, yt = 0.10*wi.height;  // pos
+	liChalls->setCoord(xt, yt, sw + 8/**/, 0.32/*height*/*wi.height);
+	liChalls->setVisible(isChallGui());
 }
 
 
@@ -102,14 +150,14 @@ void CGui::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 	for (i=0; i<1; ++i)  {
 		s1 += "\n";  s2 += "\n";  }
 
-	clr = clrsDiff[ch.diff];
+	clr = gcom->clrsDiff[ch.diff];
 	s1 += clr+ TR("#{Difficulty}\n");    s2 += clr+ TR("#{Diff"+toStr(ch.diff)+"}")+"\n";
 
-	clr = clrsDiff[std::min(8,ntrks*2/3+1)];
+	clr = gcom->clrsDiff[std::min(8,ntrks*2/3+1)];
 	s1 += clr+ TR("#{Tracks}\n");        s2 += clr+ toStr(ntrks)+"\n";
 
 	s1 += "\n";  s2 += "\n";
-	clr = clrsDiff[std::min(8,int(ch.time/3.f/60.f))];
+	clr = gcom->clrsDiff[std::min(8,int(ch.time/3.f/60.f))];
 	s1 += TR("#80F0E0#{Time} [m:s.]\n"); s2 += "#C0FFE0"+clr+ CHud::StrTime2(ch.time)+"\n";
 
 	s1 += "\n\n";  s2 += "\n\n";
@@ -322,7 +370,7 @@ void CGui::ChampFillStageInfo(bool finished)
 		if (id > 0)
 		{
 			const TrackInfo* ti = &data->tracks->trks[id-1];
-			s += "#A0D0FF"+ TR("#{Difficulty}:  ") + clrsDiff[ti->diff] + TR("#{Diff"+toStr(ti->diff)+"}") + "\n";
+			s += "#A0D0FF"+ TR("#{Difficulty}:  ") + gcom->clrsDiff[ti->diff] + TR("#{Diff"+toStr(ti->diff)+"}") + "\n";
 			if (app->road)
 			{	Real len = app->road->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);
 				s += "#A0D0FF"+ TR("#{Distance}:  ") + "#B0E0FF" + fToStr(len, 1,4) + (pSet->show_mph ? " mi" : " km") + "\n\n";
@@ -353,7 +401,7 @@ void CGui::ChampFillStageInfo(bool finished)
 		ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
 		Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
 
-		String path = PathListTrkPrv(0, trk.name), sGrp = "TrkPrvCh";
+		String path = gcom->PathListTrkPrv(0, trk.name), sGrp = "TrkPrvCh";
 		resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
 		resMgr.unloadResourceGroup(sGrp);
 		resMgr.initialiseResourceGroup(sGrp);

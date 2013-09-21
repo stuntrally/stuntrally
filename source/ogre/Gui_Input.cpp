@@ -1,15 +1,13 @@
 #include "pch.h"
 #include "common/Def_Str.h"
+#include "common/Gui_Def.h"
+#include "common/GuiCom.h"
 #include "../vdrift/game.h"
 #include "CGame.h"
 #include "CGui.h"
-#include "common/Gui_Def.h"
-
 #include <OgreRoot.h>
 using namespace MyGUI;
 using namespace Ogre;
-
-#define ALIGN  Align::Default
 
 
 std::string GetKeyName(SDL_Keycode key, bool omit = false)
@@ -90,8 +88,8 @@ void CGui::CreateInputTab(const std::string& title, bool playerTab, const std::v
 		yh = 20, ya = 14,  s0 = x1-x0-5;
 
 	#define CreateText(x,y, w,h, name, text)  {  StaticTextPtr txt =  \
-		tabitem->createWidget<TextBox>("TextBox", x,y+2, w,h, ALIGN, name);  \
-		setOrigPos(txt, "OptionsWnd");  \
+		tabitem->createWidget<TextBox>("TextBox", x,y+2, w,h, Align::Default, name);  \
+		gcom->setOrigPos(txt, "OptionsWnd");  \
 		txt->setCaption(text);  }
 
 
@@ -125,8 +123,8 @@ void CGui::CreateInputTab(const std::string& title, bool playerTab, const std::v
 
 		//  description label  ----------------
 		StaticTextPtr desc = tabitem->createWidget<TextBox>("TextBox",
-			x0, y+3, s0, sy,  ALIGN);
-		setOrigPos(desc, "OptionsWnd");
+			x0, y+3, s0, sy,  Align::Default);
+		gcom->setOrigPos(desc, "OptionsWnd");
 		desc->setCaption( TR("#{InputMap" + name + "}") );
 		desc->setTextColour(Colour(0.86f,0.94f,1.f));
 
@@ -136,8 +134,8 @@ void CGui::CreateInputTab(const std::string& title, bool playerTab, const std::v
 
 		//  binding button  ----------------
 		ButtonPtr btn1 = tabitem->createWidget<Button>("Button",
-			x1, y, sx, sy,  ALIGN);
-		setOrigPos(btn1, "OptionsWnd");
+			x1, y, sx, sy,  Align::Default);
+		gcom->setOrigPos(btn1, "OptionsWnd");
 		UpdateInputButton(btn1, *it);
 		btn1->eventMouseButtonClick += newDelegate(this, &CGui::inputBindBtnClicked);
 		btn1->eventMouseButtonPressed += newDelegate(this, &CGui::inputBindBtn2);
@@ -151,9 +149,9 @@ void CGui::CreateInputTab(const std::string& title, bool playerTab, const std::v
 		if (playerTab)
 		{
 			StaticImagePtr bar = tabitem->createWidget<ImageBox>("ImageBox",
-				x2 + (twosided ? 0 : 64), y+4, twosided ? 128 : 64, 16, ALIGN,
+				x2 + (twosided ? 0 : 64), y+4, twosided ? 128 : 64, 16, Align::Default,
 				"bar_" + toStr(i) + "_" + sPlr);
-			setOrigPos(bar, "OptionsWnd");
+			gcom->setOrigPos(bar, "OptionsWnd");
 			bar->setUserData(*it);
 			bar->setImageTexture(String("input_bar.png"));  bar->setImageCoord(IntCoord(0,0,128,16));
 		}
@@ -161,9 +159,9 @@ void CGui::CreateInputTab(const std::string& title, bool playerTab, const std::v
 		//  detail btn  ----------------
 		if (analog)
 		{	btn1 = tabitem->createWidget<Button>("Button",
-				x3, y, 32, sy,  ALIGN,
+				x3, y, 32, sy,  Align::Default,
 				"inputdetail_" + toStr(i) + "_" + sPlr + "_1");
-			setOrigPos(btn1, "OptionsWnd");
+			gcom->setOrigPos(btn1, "OptionsWnd");
 			btn1->setCaption(">");
 			btn1->setTextColour(Colour(0.6f,0.7f,0.8f));
 			btn1->setColour(Colour(0.6f,0.8f,1.0f));
@@ -251,8 +249,8 @@ void CGui::InitInputGui()
 
 	y = 32;
 	tabitem = tabInput->addItem(TR("#B0A0E0#{Shortcuts}"));
-	EditBox* ed = tabitem->createWidget<EditBox>("EditBoxEmpty", xa,y, 360,36, ALIGN, "txtshc0");
-	ed->setCaption("#A0C0E0"+TR("#{ShortcutsInfo}"));  setOrigPos(ed, "OptionsWnd");  y+=5*yb;
+	EditBox* ed = tabitem->createWidget<EditBox>("EditBoxEmpty", xa,y, 360,36, Align::Default, "txtshc0");
+	ed->setCaption("#A0C0E0"+TR("#{ShortcutsInfo}"));  gcom->setOrigPos(ed, "OptionsWnd");  y+=5*yb;
 	ed->setEditReadOnly(1);  ed->setEditMultiLine(1);  ed->setEditWordWrap(1);
 
 	CreateText(xa,y, 200,24, "txtshc1", "#60FF60"+TR("Q  #{Track}"));  y+=2*yb;

@@ -1330,6 +1330,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\ogre\common\GuiCom.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\ogre\common\GuiCom_Options.cpp"
 					>
 				</File>

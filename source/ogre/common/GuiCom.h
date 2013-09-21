@@ -90,6 +90,7 @@ public:
 	void trkListNext(int rel);
 
 	Mli2 trkList;  Ed trkDesc[2];
+	bool SortMList(Mli2 li);
 	Img imgPrv[2], imgMini[2], imgTer[2];  // view,  mini: road, terrain
 	Img imgTrkIco1, imgTrkIco2;
 
@@ -98,6 +99,7 @@ public:
 
 	bool bListTrackU;  // user
 	Ogre::String sListTrack;  // sel track name
+	
 	void listTrackChng(Mli2, size_t);
 	void SortTrkList();
 	void TrackListUpd(bool resetNotFound=false);

@@ -1,18 +1,18 @@
 #include "pch.h"
 #include "common/Def_Str.h"
+#include "common/Gui_Def.h"
+#include "common/GuiCom.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
-#include "common/Gui_Def.h"
 #include "common/GraphView.h"
 #include "common/Slider.h"
 #include "FollowCamera.h"
 #include <boost/algorithm/string.hpp>
 #include "../sdl4ogre/sdlinputwrapper.hpp"
-
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;
@@ -192,13 +192,13 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				break;
 
 			case key(F):	// focus on find edit
-				if (ctrl && gui->edFind && (pSet->dev_keys || isFocGui &&
+				if (ctrl && gcom->edTrkFind && (pSet->dev_keys || isFocGui &&
 					!pSet->isMain && pSet->inMenu == MNU_Single && mWndTabsGame->getIndexSelected() == TAB_Track))
 				{
 					if (pSet->dev_keys)
 						gui->GuiShortcut(MNU_Single, 1);	// Track tab
 					MyGUI::InputManager::getInstance().resetKeyFocusWidget();
-					MyGUI::InputManager::getInstance().setKeyFocusWidget(gui->edFind);
+					MyGUI::InputManager::getInstance().setKeyFocusWidget(gcom->edTrkFind);
 					return true;
 				}	break;
 

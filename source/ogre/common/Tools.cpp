@@ -387,7 +387,7 @@ void CGui::ToolPresets()
 	std::map<Ogre::String, TerLayer> ter;
 	for (int i=0; i < data->tracks->trks.size(); ++i)
 	{	//  foreach track
-		string trk = data->tracks->trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
+		string trk = data->tracks->trks[i].name, path = gcom->pathTrk[0] +"/"+ trk +"/";
 		/**/if (!(trk[0] >= 'A' && trk[0] <= 'Z'))  continue;
 		/**/if (StringUtil::startsWith(trk,"test"))  continue;
 

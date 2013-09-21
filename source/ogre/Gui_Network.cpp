@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "common/Def_Str.h"
+#include "common/GuiCom.h"
 #include "CGame.h"
 #include "CGui.h"
 #include "../vdrift/settings.h"
@@ -8,10 +9,7 @@
 #include "../network/gameclient.hpp"
 #include "common/MultiList2.h"
 #include "common/MessageBox/MessageBox.h"
-
-#include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
-
 using namespace std;
 using namespace MyGUI;
 
@@ -105,8 +103,8 @@ void CGui::updateGameInfo()
 	}
 	if (netGameInfo.track)
 	{	string track(netGameInfo.track);
-		sListTrack = track;
-		ReadTrkStats();
+		gcom->sListTrack = track;
+		gcom->ReadTrkStats();
 	}
 	updateGameSet();
 	updateGameInfoGUI();
@@ -119,7 +117,7 @@ void CGui::updateGameInfoGUI()
 	using Ogre::String;
 
 	String s;  const protocol::GameInfo& g = netGameInfo;
-	s += TR("#40FF40#{Track}: ") + sListTrack +"\n";
+	s += TR("#40FF40#{Track}: ") + gcom->sListTrack +"\n";
 	s += TR("#60A060#{Reverse}: ") + yesno(g.reversed) +"\n";
 	s += "\n";
 	s += TR("#80F0F0#{Laps}: ") + toStr(g.laps) +"\n";
@@ -174,7 +172,7 @@ void CGui::uploadGameInfo()
 		return;
 	protocol::GameInfo game;
 	string sGame = edNetGameName->getCaption();
-	string sTrack = sListTrack, sSim = pSet->gui.sim_mode;
+	string sTrack = gcom->sListTrack, sSim = pSet->gui.sim_mode;
 	
 	memset(game.name, 0, sizeof(game.name));
 	memset(game.track, 0, sizeof(game.track));
@@ -357,7 +355,7 @@ void CGui::join(string host, string port, string password)
 
 	tabsNet->setIndexSelected(1);
 	panelNetServer->setVisible(true);  panelNetGame->setVisible(false);
-	panelNetTrack->setVisible(true);   trkList->setVisible(false);
+	panelNetTrack->setVisible(true);   gcom->trkList->setVisible(false);
 }
 
 void CGui::evBtnNetRefresh(WP)
@@ -428,7 +426,7 @@ void CGui::evBtnNetCreate(WP)
 
 		tabsNet->setIndexSelected(1);
 		panelNetServer->setVisible(true);  panelNetGame->setVisible(false);
-		panelNetTrack->setVisible(false);  trkList->setVisible(true);
+		panelNetTrack->setVisible(false);  gcom->trkList->setVisible(true);
 
 		boost::mutex::scoped_lock lock(netGuiMutex);
 		AddChatMsg("#00FFC0", TR("Listening on port ")  + toStr(pSet->local_port) + "...", false);  //clears chat
@@ -445,7 +443,7 @@ void CGui::evBtnNetLeave(WP)
 
 	tabsNet->setIndexSelected(0);
 	panelNetServer->setVisible(false);  panelNetGame->setVisible(true);
-	panelNetTrack->setVisible(false);   trkList->setVisible(true);
+	panelNetTrack->setVisible(false);   gcom->trkList->setVisible(true);
 }
 
 void CGui::evBtnNetDirect(WP)

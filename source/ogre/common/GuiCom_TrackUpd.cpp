@@ -10,7 +10,7 @@
 	#include "../../vdrift/game.h"
 	#include "../CGame.h"
 	#include "../CHud.h"
-	//#include "../CGui.h"
+	#include "../CGui.h"
 	#include "../SplitScreen.h"
 #else
 	#include "../../editor/CApp.h"
@@ -118,15 +118,22 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 	}
 }
 
+bool CGuiCom::SortMList(Mli2 li)
+{
+	if (!li)  return false;
+	if (li->mSortColumnIndex != li->mSortColumnIndexOld ||
+		li->mSortUp != li->mSortUpOld)
+	{
+		li->mSortColumnIndexOld = li->mSortColumnIndex;
+		li->mSortUpOld = li->mSortUp;
+		return true;
+	}
+	return false;
+}
 void CGuiCom::SortTrkList()
 {	
-	if (!trkList)  return;
-	if (trkList->mSortColumnIndex != trkList->mSortColumnIndexOld ||
-		trkList->mSortUp != trkList->mSortUpOld)
+	if (SortMList(trkList))
 	{
-		trkList->mSortColumnIndexOld = trkList->mSortColumnIndex;
-		trkList->mSortUpOld = trkList->mSortUp;
-
 		pSet->tracks_sort = trkList->mSortColumnIndex;  // to set
 		pSet->tracks_sortup = trkList->mSortUp;
 		TrackListUpd(false);
@@ -189,7 +196,7 @@ void CGuiCom::editTrkFind(EditPtr ed)
 }
 
 #ifndef SR_EDITOR
-void CGuiCom::edRplFind(EditPtr ed)
+/*void CGuiCom::edRplFind(EditPtr ed)
 {
 	String s = ed->getCaption();
 	if (s == "")
@@ -199,7 +206,7 @@ void CGuiCom::edRplFind(EditPtr ed)
 		StringUtil::toLowerCase(sRplFind);
 	}
 	updReplaysList();
-}
+}*/
 #endif
 
 
@@ -256,81 +263,31 @@ void CGuiCom::updTrkListDim()
 	imgTrkIco1->setCoord(xt + xico1+2, yico, 3*wico, wico);
 	imgTrkIco2->setCoord(xt + xico2+2, yico, 8*wico, wico);
 	#ifndef SR_EDITOR
-	bool hid = panelNetTrack && panelNetTrack->getVisible();
+	bool hid = app->gui->panelNetTrack && app->gui->panelNetTrack->getVisible();
 	if (!hid)
 	#endif
 		trkList->setVisible(true);
 
 	//  car list  ----------
 	#ifndef SR_EDITOR
-	sum = 0;  sw = 0;  cnt = carList->getColumnCount();
-	for (c=0; c < cnt; ++c)  sum += colCar[c];
+	sum = 0;  sw = 0;  cnt = app->gui->carList->getColumnCount();
+	for (c=0; c < cnt; ++c)  sum += app->gui->colCar[c];
 
 	for (c=0; c < cnt; ++c)
 	{
-		int w = (c==cnt-1) ? 18 : (float(colCar[c]) / sum * 0.21/*width*/ * wi.width * 0.97/*frame*/);
-		carList->setColumnWidthAt(c, w);
+		int w = (c==cnt-1) ? 18 : (float(app->gui->colCar[c]) / sum * 0.21/*width*/ * wi.width * 0.97/*frame*/);
+		app->gui->carList->setColumnWidthAt(c, w);
 		sw += w;
 	}
 
 	xt = 0.018*wi.width;  yt = 0.024*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
-	carList->setCoord(xt, yt, sw + 8/*frame*/, 0.41/*height*/*wi.height);
+	app->gui->carList->setCoord(xt, yt, sw + 8/*frame*/, 0.41/*height*/*wi.height);
 	#endif
 	
 	#ifndef SR_EDITOR
-	if (panelNetTrack)  {
-		TabItem* trkTab = app->mGui->findWidget<TabItem>("TabTrack");
+	if (app->gui->panelNetTrack)  {
+		TabItem* trkTab = mGui->findWidget<TabItem>("TabTrack");
 		const IntCoord& tc = trkTab->getCoord();
-		panelNetTrack->setCoord(0, 0.82f*tc.height, tc.width*0.64f, 0.162f*tc.height);  }
+		app->gui->panelNetTrack->setCoord(0, 0.82f*tc.height, tc.width*0.64f, 0.162f*tc.height);  }
 	#endif
 }
-
-#ifndef SR_EDITOR
-///  champ,chall,stages lists  ----------
-void CGuiCom::updChampListDim()
-{
-	const IntCoord& wi = app->mWndGame->getCoord();
-
-	//  Champs  -----
-	if (!liChamps)  return;
-
-	int sum = 0, cnt = liChamps->getColumnCount(), sw = 0;
-	for (int c=0; c < cnt; ++c)  sum += colCh[c];
-	for (int c=0; c < cnt; ++c)
-	{
-		int w = c==cnt-1 ? 18 : float(colCh[c]) / sum * 0.72/*width*/ * wi.width * 0.97/*frame*/;
-		liChamps->setColumnWidthAt(c, w);  sw += w;
-	}
-	int xt = 0.038*wi.width, yt = 0.10*wi.height;  // pos
-	liChamps->setCoord(xt, yt, sw + 8/*frame*/, 0.32/*height*/*wi.height);
-	liChamps->setVisible(!isChallGui());
-
-	//  Stages  -----
-	if (!liStages)  return;
-
-	sum = 0;  cnt = liStages->getColumnCount();  sw = 0;
-	for (int c=0; c < cnt; ++c)  sum += colSt[c];  sum += 43;//-
-	for (int c=0; c < cnt; ++c)
-	{
-		int w = c==cnt-1 ? 18 : float(colSt[c]) / sum * 0.58/*width*/ * wi.width * 0.97/**/;
-		liStages->setColumnWidthAt(c, w);  sw += w;
-	}
-	liStages->setCoord(xt, yt, sw + 8/**/, 0.50/*height*/*wi.height);
-	liStages->setVisible(true);
-
-	//  Challs  -----
-	if (!liChalls)  return;
-
-	sum = 0;  cnt = liChalls->getColumnCount();  sw = 0;
-	for (int c=0; c < cnt; ++c)  sum += colChL[c];
-	for (int c=0; c < cnt; ++c)
-	{
-		int w = c==cnt-1 ? 18 : float(colChL[c]) / sum * 0.71/*width*/ * wi.width * 0.97/**/;
-		liChalls->setColumnWidthAt(c, w);  sw += w;
-	}
-	xt = 0.038*wi.width, yt = 0.10*wi.height;  // pos
-	liChalls->setCoord(xt, yt, sw + 8/**/, 0.32/*height*/*wi.height);
-	liChalls->setVisible(isChallGui());
-}
-#endif
-

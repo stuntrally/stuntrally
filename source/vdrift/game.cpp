@@ -170,7 +170,7 @@ bool GAME::LoadTires()
 	
 	string path = PATHMANAGER::CarSim() + "/" + settings->game.sim_mode + "/tires";
 	list <string> li;
-	PATHMANAGER::GetFolderIndex(path, li);
+	PATHMANAGER::DirList(path, li);
 	for (list <string>::iterator i = li.begin(); i != li.end(); ++i)
 	{
 		string file = *i;
@@ -227,7 +227,7 @@ bool GAME::LoadSusp()
 	
 	string path = PATHMANAGER::CarSim() + "/" + settings->game.sim_mode + "/susp";
 	list <string> li;
-	PATHMANAGER::GetFolderIndex(path, li);
+	PATHMANAGER::DirList(path, li);
 	for (list <string>::iterator i = li.begin(); i != li.end(); ++i)
 	{
 		string file = *i;

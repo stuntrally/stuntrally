@@ -5,7 +5,7 @@
 #include "../../vdrift/pathmanager.h"
 #ifndef SR_EDITOR
 	#include "../CGame.h"
-	//#include "../CGui.h"
+	#include "../CGui.h"
 	#include "../../vdrift/settings.h"
 #else
 	#include "../../editor/CApp.h"
@@ -33,7 +33,7 @@ CGuiCom::CGuiCom(App* app1)
 {
 	pSet = app1->pSet;
 	sc = app1->sc;
-	mGui = app1->mGui;
+	//mGui = app1->mGui;
 
 	pathTrk[0] = PATHMANAGER::Tracks() + "/";
 	pathTrk[1] = PATHMANAGER::TracksUser() + "/";
@@ -68,17 +68,18 @@ void CGuiCom::btnQuit(WP)
 //  unfocus lists (would have double up/dn key input)
 void CGuiCom::UnfocusLists()
 {
-	Widget* w = MyGUI::InputManager::getInstance().getKeyFocusWidget();
+	WP w = MyGUI::InputManager::getInstance().getKeyFocusWidget();
 	while (w)
 	{
 		//LogO(wg->getTypeName() +" "+ wg->getName());
 		w = w->getParent();
 
 		#ifdef SR_EDITOR
-		if (w == (Widget*)trkList)
+		if (w == (WP)trkList)
 		#else
-		if (w == (Widget*)trkList  || w == (Widget*)carList  || w == (Widget*)liChalls ||
-			w == (Widget*)liChamps || w == (Widget*)liStages || w == (Widget*)rplList)
+		if (w == (WP)trkList  || (app && app->gui && (
+			w == (WP)app->gui->carList  || w == (WP)app->gui->liChalls ||
+			w == (WP)app->gui->liChamps || w == (WP)app->gui->liStages || w == (WP)app->gui->rplList)) )
 		#endif
 		{
 			MyGUI::InputManager::getInstance().resetKeyFocusWidget();

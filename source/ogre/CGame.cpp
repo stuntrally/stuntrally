@@ -58,9 +58,10 @@ App::App(SETTINGS *settings, GAME *game)
 	///  new
 	data = new CData();
 	hud = new CHud(this);
-	gui = new CGui(this);
-	hud->gui = gui;
 	gcom = new CGuiCom(this);
+	gui = new CGui(this);
+	gui->gcom = gcom;
+	hud->gui = gui;
 	mBindListner = gui;
 	input = new CInput(this);
 
@@ -122,7 +123,7 @@ void App::destroyScene()
 	carModels.clear();
 	//carPoses.clear();
 	
-	gui->mToolTip = 0;  //?
+	gcom->mToolTip = 0;  //?
 
 	if (road)
 	{	road->DestroyRoad();  delete road;  road = 0;  }

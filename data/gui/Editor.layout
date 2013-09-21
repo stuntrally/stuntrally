@@ -4806,5 +4806,6 @@
 	<Widget type="Button" skin="Button" position_real="0.909063 0 0.089375 0.02875" layer="Popup" name="Quit">
 		<Property key="Caption" value="#{Quit}"/>
 		<Property key="Colour" value="1 0.4 0.4"/>
+		<Property key="Visible" value="false"/>
 	</Widget>
 </MyGUI>

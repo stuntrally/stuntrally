@@ -4,8 +4,9 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
-#include "FollowCamera.h"
+#include "common/GuiCom.h"
 #include "common/WaterRTT.h"
+#include "FollowCamera.h"
 #include "../road/Road.h"
 #include "../vdrift/game.h"
 #include "../vdrift/quickprof.h"
@@ -190,9 +191,11 @@ bool App::frameStart(Real time)
 
 	if (bWindowResized)
 	{	bWindowResized = false;
-		gui->ResizeOptWnd();
-		gui->SizeGUI();
-		gui->updTrkListDim();  gui->updChampListDim();  // resize lists
+
+		gcom->ResizeOptWnd();
+		gcom->SizeGUI();
+		gcom->updTrkListDim();
+		gui->updChampListDim();  // resize lists
 		bSizeHUD = true;
 		
 		if (mSplitMgr)  //  reassign car cameras from new viewports

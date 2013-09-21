@@ -144,7 +144,7 @@ void CGuiCom::GuiInitTrack()
 	//EdC(TrkFind);
 	#ifndef SR_EDITOR
 	EditPtr ed;
-	Ed(RplFind, edRplFind);//-
+	//Ed(RplFind, edRplFind);//-
 	#endif
 
 	ButtonPtr btn;
@@ -245,10 +245,10 @@ void CGuiCom::ReadTrkStats()
 
 	Scene* sc = new Scene();  sc->LoadXml(sSc);  // fails to defaults
 #ifndef SR_EDITOR  // game
-	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
+	SplineRoad rd(app->pGame);  rd.LoadFile(sRd,false);  // load
 
-	TIMER tim;  tim.Load(PATHMANAGER::Records()+"/"+ pSet->gui.sim_mode+"/"+ sListTrack+".txt", 0.f, pGame->error_output);
-	tim.AddCar(sListCar);
+	TIMER tim;  tim.Load(PATHMANAGER::Records()+"/"+ pSet->gui.sim_mode+"/"+ sListTrack+".txt", 0.f, app->pGame->error_output);
+	tim.AddCar(app->gui->sListCar);
 
 	UpdGuiRdStats(&rd,sc, sListTrack, tim.GetBestLap(0, pSet->gui.trackreverse));
 #else
@@ -259,10 +259,10 @@ void CGuiCom::ReadTrkStats()
 }
 
 #ifndef SR_EDITOR  // game
-void CGuiCom::ReadTrkStatsChamp(String track, bool reverse)
+void CGui::ReadTrkStatsChamp(String track, bool reverse)
 {
-	String sRd = pathTrk[0] + track + "/road.xml";
-	String sSc = pathTrk[0] + track + "/scene.xml";
+	String sRd = gcom->pathTrk[0] + track + "/road.xml";
+	String sSc = gcom->pathTrk[0] + track + "/scene.xml";
 
 	Scene* sc = new Scene();  sc->LoadXml(sSc);  // fails to defaults
 	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
@@ -270,7 +270,7 @@ void CGuiCom::ReadTrkStatsChamp(String track, bool reverse)
 	TIMER tim;  tim.Load(PATHMANAGER::Records()+"/"+ pSet->gui.sim_mode+"/"+ track+".txt", 0.f, pGame->error_output);
 	tim.AddCar(sListCar);
 
-	UpdGuiRdStats(&rd,sc, track, tim.GetBestLap(0, reverse), true);
+	gcom->UpdGuiRdStats(&rd,sc, track, tim.GetBestLap(0, reverse), true);
 }
 #endif
 
@@ -330,12 +330,14 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 		if (infTrk[ch][1])  infTrk[ch][1]->setCaption(str0(ti.bumps));		if (infTrk[ch][2])  infTrk[ch][2]->setCaption(str0(ti.jumps));
 		if (infTrk[ch][3])  infTrk[ch][3]->setCaption(str0(ti.loops));		if (infTrk[ch][4])  infTrk[ch][4]->setCaption(str0(ti.pipes));
 		if (infTrk[ch][5])  infTrk[ch][5]->setCaption(str0(ti.banked));		if (infTrk[ch][6])  infTrk[ch][6]->setCaption(str0(ti.frenzy));
+
 		if (infTrk[ch][7])  infTrk[ch][7]->setCaption(clrsLong[ti.longn] + str0(ti.longn));
 		if (infTrk[ch][8])  infTrk[ch][8]->setCaption(ti.diff==0   ? "" : (clrsDiff[ti.diff] + toStr(ti.diff)));
 		if (infTrk[ch][9])  infTrk[ch][9]->setCaption(ti.rating==0 ? "" : (clrsRating[ti.rating] + toStr(ti.rating)));
 		if (infTrk[ch][10]) infTrk[ch][10]->setCaption(str0(ti.objects));
 		#ifndef SR_EDITOR
-		if (txTrackAuthor)  txTrackAuthor->setCaption(ti.author=="CH" ? "CryHam" : ti.author);
+		if (app->gui->txTrackAuthor)
+			app->gui->txTrackAuthor->setCaption(ti.author=="CH" ? "CryHam" : ti.author);
 		#endif
 	}
 
@@ -348,7 +350,7 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	float carMul = app->GetCarTimeMul(pSet->gui.car[0], pSet->gui.sim_mode);
 	float timeTrk = app->data->tracks->times[sTrack];
 	std::string speedTrk = fToStr(len / timeTrk * m, 0,3) + unit;
-	float timeT = (/*place*/1 * data->cars->magic * timeTrk + timeTrk) / carMul;
+	float timeT = (/*place*/1 * app->data->cars->magic * timeTrk + timeTrk) / carMul;
 	if (stTrk[ch][6])  stTrk[ch][6]->setCaption(CHud::StrTime(timeT));
 	if (stTrk[ch][7])  stTrk[ch][7]->setCaption(timeT < 0.1f ? "--" : speedTrk);
 

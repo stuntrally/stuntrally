@@ -17,16 +17,10 @@
 
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;  }
 namespace MyGUI  {  class MultiList2;  class Slider;  class Message;  }
-class Scene;  class SplineRoad;  class GAME;  class CHud;  class CData;
+class Scene;  class SplineRoad;  class GAME;  class CHud;  class CData;  class CGuiCom;
 
 
 //  tracks,cars list items - with info for sorting
-struct TrkL
-{
-	std::string name;
-	const class TrackInfo* ti;
-	int test;  //Test*
-};
 struct CarL
 {
 	std::string name;
@@ -39,33 +33,30 @@ class CGui : public BGui,
 			 public ICS::DetectingBindingListener
 {
 public:
-	App* app;
-	GAME* pGame;
-	SETTINGS* pSet;
-	Scene* sc;
-	CHud* hud;
-	CData* data;
-	MyGUI::Gui* mGui;
+	App* app;  GAME* pGame;  SETTINGS* pSet;  Scene* sc;  CData* data;
+	CHud* hud;  MyGUI::Gui* mGui;  CGuiCom* gcom;
 	
 	CGui(App* ap1);
 	
 	typedef std::list <std::string> strlist;
 
-	///-----------------------------------------------------------------------------------------------------------------
+
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------
-	//  size
+
+	//  resize
 	void SizeGUI(); void doSizeGUI(MyGUI::EnumeratorWidgetPtr);
-	std::vector<Tab> vSubTabsGame, vSubTabsOpts;
-
-	Txt valTrkNet;
-
 	
+	bool bGI;  // gui inited  set values
 	void InitGui(), GuiUpdate();
 
+	//  car list
 	void CarListUpd(bool resetNotFound=false);
 	void AddCarL(std::string name, const class CarInfo* ci);
 	std::list<CarL> liCar;  void FillCarList();
+
+	Txt valTrkNet;
+	std::vector<Tab> vSubTabsGame, vSubTabsOpts;
 
 	void ReadTrkStatsChamp(Ogre::String track,bool reverse);
 	void updChampListDim();
@@ -84,6 +75,7 @@ public:
 
 
 	///  championships & challenges
+	///-----------------------------------------------------------------------------------------------------------------
 	Btn btStTut, btStChamp, btStChall;
 	Img imgTut, imgChamp, imgChall;
 	//  tabs
@@ -137,7 +129,7 @@ public:
 	bool isChallGui();  void BackFromChs();
 
 
-	///  input tab
+	///  [Input] tab
 	///-----------------------------------------------------------------------------------------------------------------
 
 	void CreateInputTab(const std::string& title, bool playerTab, const std::vector<InputAction>& actions, ICS::InputControlSystem* ICS);
@@ -172,7 +164,7 @@ public:
 	void comboInputKeyAllPreset(CMB);  bool TabInputId(int* pId);
 
 
-	///  tweak  -----------------------------------------
+	///  [Tweak]  -----------------------------------------
 	const static int ciEdCar = 12;
 	Ed edCar[ciEdCar],edPerfTest, edTweakCol;  Tab tabTweak, tabEdCar;
 	Txt txtTweakPath, txtTweakTire, txtTweakPathCol;
@@ -186,7 +178,8 @@ public:
 	Cmb cmbGraphs;  void comboGraphs(CMB);  Txt valGraphsType;
 
 
-	//  sliders  -----------------------------------------
+	///  [Options]  game only
+	///-----------------------------------------------------------------------------------------------------------------
 	//  reflection
 	SV svParticles, svTrails;
 	SV svReflSkip, svReflFaces, svReflSize;
@@ -236,7 +229,7 @@ public:
 		chkVidSoftParticles(WP), chkVidGodRays(WP), chkVidDepthOfField(WP), chkVidBoostFOV(WP),
 		chkVegetCollis(WP), chkCarCollis(WP), chkRoadWCollis(WP), chkDynObjects(WP);  //game
 
-	// gui car tire set gravel/asphalt
+	//  gui car tire set gravel/asphalt
 	int iTireSet;
 	void tabTireSet(Tab wp, size_t);
 	Btn bchAbs,bchTcs;
@@ -245,6 +238,7 @@ public:
 	void imgBtnCarClr(WP), btnCarClrRandom(WP), toggleWireframe();
 	Btn bRkmh, bRmph;  void radKmh(WP), radMph(WP);
 	Btn bRsimEasy, bRsimNorm;  void radSimEasy(WP), radSimNorm(WP);  bool bReloadSim;
+	//  view toggle
 	Btn chFps,chWire, chBlt,chBltTxt, chProfTxt,
 		chDbgT,chDbgB,chDbgS, chGraphs, chTireVis,
 		chTimes,chMinimp,chOpponents;
@@ -279,17 +273,18 @@ public:
 
 	//  game
 	void btnNewGame(WP),btnNewGameStart(WP);
+
 	Mli2 carList;  Li rplList;  void updReplaysList();
+
 	void listRplChng(Li, size_t),  changeCar();
 	void listCarChng(Mli2, size_t),  changeTrack();
+
 	int LNext(Mli2, int rel, int ofs), LNext(Li, int rel, int ofs),
 		LNext(Mli, int rel);  // util next in list
 	void LNext(int rel);  void tabPlayer(Tab wp, size_t id);
 
 	int iCurCar;
-	Ogre::String sListCar,sListTrack;  int bListTrackU;
-	Ogre::String pathTrk[2];  Ogre::String TrkDir();
-	Ogre::String PathListTrk(int user=-1), PathListTrkPrv(int user/*=-1*/, Ogre::String track);
+	Ogre::String sListCar;
 
 	const Ogre::String& GetGhostFile(std::string* ghCar=NULL);
 	std::string GetRplListDir();

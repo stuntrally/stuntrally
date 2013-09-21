@@ -1,16 +1,17 @@
 #include "pch.h"
 #include "common/Def_Str.h"
+#include "common/RenderConst.h"
+#include "common/data/CData.h"
+#include "common/data/SceneXml.h"
+#include "common/GuiCom.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
-#include "common/data/CData.h"
-#include "common/data/SceneXml.h"
-#include "LoadingBar.h"
 #include "../vdrift/game.h"
-#include "FollowCamera.h"
 #include "../road/Road.h"
+#include "LoadingBar.h"
+#include "FollowCamera.h"
 #include "SplitScreen.h"
-#include "common/RenderConst.h"
 #include "common/GraphView.h"
 
 #include "../network/gameclient.hpp"
@@ -30,6 +31,8 @@ using namespace Ogre;
 //-------------------------------------------------------------------------------------
 void App::createScene()
 {
+	gcom->mGui = mGui;
+
 	//  tex fil
 	MaterialManager::getSingleton().setDefaultTextureFiltering(TFO_ANISOTROPIC);
 	MaterialManager::getSingleton().setDefaultAnisotropy(pSet->anisotropy);
@@ -173,13 +176,13 @@ void App::NewGame()
 	newGameRpl = false;
 
 	///  check if track exist ..
-	if (!PATHMANAGER::FileExists(gui->TrkDir()+"scene.xml"))
+	if (!PATHMANAGER::FileExists(gcom->TrkDir()+"scene.xml"))
 	{
 		bLoading = false;  //iLoad1stFrames = -2;
 		gui->BackFromChs();
 		//toggleGui(true);  // show gui
 		Message::createMessageBox("Message", TR("#{Track}"),
-			TR("#{TrackNotFound}")+"\n"+pSet->game.track+(pSet->game.track_user?" *user*":"")+"\nPath: "+gui->TrkDir(),
+			TR("#{TrackNotFound}")+"\n"+pSet->game.track+(pSet->game.track_user?" *user*":"")+"\nPath: "+gcom->TrkDir(),
 			MessageBoxStyle::IconError | MessageBoxStyle::Ok);
 		//todo: gui is stuck..
 		return;
@@ -208,7 +211,7 @@ void App::LoadCleanUp()  // 1 first
 
 	// rem old track
 	if (resTrk != "")  Ogre::Root::getSingletonPtr()->removeResourceLocation(resTrk);
-	resTrk = gui->TrkDir() + "objects";
+	resTrk = gcom->TrkDir() + "objects";
 	mRoot->addResourceLocation(resTrk, "FileSystem");
 	
 	//  Delete all cars
@@ -274,7 +277,7 @@ void App::LoadGame()  // 2
 	//  need to know sc->asphalt before vdrift car load
 	bool vdr = IsVdrTrack();
 	sc->pGame = pGame;
-	sc->LoadXml(gui->TrkDir()+"scene.xml", !vdr/*for asphalt*/);
+	sc->LoadXml(gcom->TrkDir()+"scene.xml", !vdr/*for asphalt*/);
 	sc->vdr = vdr;
 	pGame->track.asphalt = sc->asphalt;  //*
 	pGame->track.sDefaultTire = sc->asphalt ? "asphalt" : "gravel";  //*
@@ -598,7 +601,7 @@ void App::LoadTrees()  // 8
 void App::LoadMisc()  // 9 last
 {
 	if (pGame && pGame->cars.size() > 0)  //todo: move this into gui track tab chg evt, for cur game type
-		gui->UpdGuiRdStats(road, sc, gui->sListTrack, pGame->timer.GetBestLap(0, pSet->game.trackreverse));  // current
+		gcom->UpdGuiRdStats(road, sc, gcom->sListTrack, pGame->timer.GetBestLap(0, pSet->game.trackreverse));  // current
 
 	hud->Create();
 	// immediately hide it
@@ -733,8 +736,8 @@ void App::CreateRoad()
 	road = new SplineRoad(pGame);  // sphere.mesh
 	road->Setup("", 0.7,  terrain, mSceneMgr, *mSplitMgr->mCameras.begin());
 	
-	String sr = gui->TrkDir()+"road.xml";
-	road->LoadFile(gui->TrkDir()+"road.xml");
+	String sr = gcom->TrkDir()+"road.xml";
+	road->LoadFile(gcom->TrkDir()+"road.xml");
 	
 	//  after road load we have iChk1 so set it for carModels
 	for (int i=0; i < carModels.size(); ++i)

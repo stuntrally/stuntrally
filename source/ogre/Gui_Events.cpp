@@ -1,12 +1,13 @@
 #include "pch.h"
 #include "common/Def_Str.h"
+#include "common/Gui_Def.h"
+#include "common/GuiCom.h"
 #include "../vdrift/settings.h"
 #include "../vdrift/game.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
 #include "SplitScreen.h"
-#include "common/Gui_Def.h"
 #include "common/Slider.h"
 #include "common/MultiList2.h"
 using namespace std;
@@ -319,7 +320,7 @@ void CGui::chkMiniRot(WP wp){		ChkEv(mini_rotated);	}
 void CGui::chkMiniTer(WP wp){		ChkEv(mini_terrain);	hud->UpdMiniTer();  }
 void CGui::chkMiniBorder(WP wp){		ChkEv(mini_border);		hud->UpdMiniTer();  }
 
-void CGui::chkReverse(WP wp){		ChkEv(gui.trackreverse);	ReadTrkStats();  }
+void CGui::chkReverse(WP wp){		ChkEv(gui.trackreverse);	gcom->ReadTrkStats();  }
 
 void CGui::chkTimes(WP wp){			ChkEv(show_times);		hud->Show();	}
 void CGui::chkOpponents(WP wp){		ChkEv(show_opponents);	hud->Show();	}

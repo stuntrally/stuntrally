@@ -151,9 +151,6 @@ void CGuiCom::ResizeOptWnd()
 		bnQuit->setCoord(wx - 0.09*wx, 0, 0.09*wx, 0.03*wy);
 
 	updTrkListDim();
-	#ifndef SR_EDITOR
-	updChampListDim();  // resize lists
-	#endif
 }
 
 void CGuiCom::chkVidFullscr(WP wp)

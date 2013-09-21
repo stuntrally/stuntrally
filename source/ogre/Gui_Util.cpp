@@ -7,6 +7,7 @@
 #include "CGui.h"
 #include "common/data/CData.h"
 #include "common/data/TracksXml.h"
+#include "common/GuiCom.h"
 #include "common/MultiList2.h"
 #include "common/Slider.h"
 //#include "../network/masterclient.hpp"
@@ -88,7 +89,7 @@ void CGui::AddCarL(std::string name, const CarInfo* ci)
 	String clr = data->cars->colormap[ci->type];  if (clr.length() != 7)  clr = "#C0D0E0";
 	
 	li->addItem(clr+ name);  int l = li->getItemCount()-1, y = ci->year%100;
-	li->setSubItemNameAt(1,l, clrsDiff[std::min(7, (int)(ci->speed*0.9f))]+ toStr(ci->speed));
+	li->setSubItemNameAt(1,l, gcom->clrsDiff[std::min(7, (int)(ci->speed*0.9f))]+ toStr(ci->speed));
 	li->setSubItemNameAt(2,l, clr+ "\'"+toStr(y/10)+toStr(y%10));
 	li->setSubItemNameAt(3,l, clr+ TR("#{CarType_"+ci->type+"}"));
 }
@@ -97,7 +98,7 @@ void CGui::FillCarList()
 {
 	liCar.clear();
 	strlist li;
-	PATHMANAGER::GetFolderIndex(PATHMANAGER::Cars(), li);
+	PATHMANAGER::DirList(PATHMANAGER::Cars(), li);
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 	{
 		if (boost::filesystem::exists(PATHMANAGER::Cars() + "/" + *i + "/about.txt"))
@@ -198,15 +199,6 @@ std::string CGui::GetRplListDir()
 		: PATHMANAGER::Replays() );
 }
 
-String CGui::TrkDir() {
-	int u = pSet->game.track_user ? 1 : 0;		return pathTrk[u] + pSet->game.track + "/";  }
-
-String CGui::PathListTrk(int user) {
-	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;  }
-
-String CGui::PathListTrkPrv(int user, String track){
-	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + track + "/preview/";  }
-	
 
 //  [Game] 	. . . . . . . . . . . . . . . . . . . .    --- lists ----    . . . . . . . . . . . . . . . . . . 
 
@@ -241,7 +233,7 @@ void CGui::listCarChng(MultiList2* li, size_t pos)
 	int id = data->cars->carmap[sl];
 	if (id > 0 && txCarSpeed && txCarType)
 	{	const CarInfo& ci = data->cars->cars[id-1];
-		txCarSpeed->setCaption(clrsDiff[std::min(7, (int)(ci.speed*0.9f))]+ toStr(ci.speed));
+		txCarSpeed->setCaption(gcom->clrsDiff[std::min(7, (int)(ci.speed*0.9f))]+ toStr(ci.speed));
 		txCarType->setCaption(data->cars->colormap[ci.type]+ TR("#{CarType_"+ci.type+"}"));
 	}
 
@@ -285,8 +277,8 @@ void CGui::UpdCarStatsTxt()
 //  track
 void CGui::changeTrack()
 {
-	pSet->gui.track = sListTrack;
-	pSet->gui.track_user = bListTrackU;
+	pSet->gui.track = gcom->sListTrack;
+	pSet->gui.track_user = gcom->bListTrackU;
 							//_ only for host..
 	if (app->mMasterClient && valNetPassword->getVisible())
 	{	uploadGameInfo();
@@ -302,11 +294,11 @@ void CGui::btnNewGame(WP)
 	app->NewGame();  app->isFocGui = false;  // off gui
 	if (app->mWndOpts)  app->mWndOpts->setVisible(app->isFocGui);
 	if (app->mWndRpl)  app->mWndRpl->setVisible(false);//
-	if (bnQuit)  bnQuit->setVisible(app->isFocGui);
+	if (gcom->bnQuit)  gcom->bnQuit->setVisible(app->isFocGui);
 	
 	app->updMouse();
 	
-	mToolTip->setVisible(false);
+	gcom->mToolTip->setVisible(false);
 }
 void CGui::btnNewGameStart(WP wp)
 {
@@ -375,9 +367,9 @@ void CGui::toggleGui(bool toggle)
 		app->mWndTabsGame->setButtonWidthAt(TAB_Stage, chAny ?-1 : 1);  if (id == TAB_Stage  && !chAny)  app->mWndTabsGame->setIndexSelected(TAB_Track);
 	}
 
-	if (bnQuit)  bnQuit->setVisible(app->isFocGui);
+	if (gcom->bnQuit)  gcom->bnQuit->setVisible(app->isFocGui);
 	app->updMouse();
-	if (!app->isFocGui)  mToolTip->setVisible(false);
+	if (!app->isFocGui)  gcom->mToolTip->setVisible(false);
 
 	for (int i=0; i < ciMainBtns; ++i)
 		app->mWndMainPanels[i]->setVisible(pSet->inMenu == i);
@@ -386,7 +378,7 @@ void CGui::toggleGui(bool toggle)
 	static bool first = true;
 	if (app->isFocGui && first)
 	{	first = false;
-		GuiCenterMouse();
+		gcom->GuiCenterMouse();
 	}
 }
 
@@ -519,7 +511,7 @@ void CGui::LNext(int rel)
 	else
 		if (app->mWndGame->getVisible())
 		switch (app->mWndTabsGame->getIndexSelected())
-		{	case TAB_Track:  listTrackChng(trkList,  LNext(trkList, rel, 11));  return;
+		{	case TAB_Track:  gcom->listTrackChng(gcom->trkList,  LNext(gcom->trkList, rel, 11));  return;
 			case TAB_Car:	 listCarChng(carList,    LNext(carList, rel, 5));  return;
 			case TAB_Game:	 if (rel > 0)  radSimNorm(0);  else  radSimEasy(0);  return;
 			case TAB_Champs:
@@ -536,41 +528,29 @@ void CGui::LNext(int rel)
 ///  Update (frame start)
 void CGui::GuiUpdate()
 {
-	UnfocusLists();
+	gcom->UnfocusLists();
 
 
-	if (bGuiReinit)  // after language change from combo
-	{	bGuiReinit = false;
+	if (gcom->bGuiReinit)  // after language change from combo
+	{	gcom->bGuiReinit = false;
 
 		app->mGui->destroyWidgets(app->vwGui);
-		bnQuit=0; app->mWndOpts=0;  //todo: rest too..  delete, new gui; ?
+		gcom->bnQuit=0; app->mWndOpts=0;  //todo: rest too..  delete, new gui; ?
 
 		bGI = false;
 		InitGui();
+
 		app->bWindowResized = true;
 		app->mWndTabsOpts->setIndexSelected(3);  // switch back to view tab
 	}
 
 		
-	///  sort trk list
-	if (trkList && trkList->mSortColumnIndex != trkList->mSortColumnIndexOld
-		|| trkList->mSortUp != trkList->mSortUpOld)
-	{
-		trkList->mSortColumnIndexOld = trkList->mSortColumnIndex;
-		trkList->mSortUpOld = trkList->mSortUp;
-
-		pSet->tracks_sort = trkList->mSortColumnIndex;  // to set
-		pSet->tracks_sortup = trkList->mSortUp;
-		TrackListUpd(false);
-	}
+	//  sort trk list
+	gcom->SortTrkList();
 
 	///  sort car list
-	if (carList && carList->mSortColumnIndex != carList->mSortColumnIndexOld
-		|| carList->mSortUp != carList->mSortUpOld)
+	if (gcom->SortMList(carList))
 	{
-		carList->mSortColumnIndexOld = carList->mSortColumnIndex;
-		carList->mSortUpOld = carList->mSortUp;
-
 		pSet->cars_sort = carList->mSortColumnIndex;  // to set
 		pSet->cars_sortup = carList->mSortUp;
 		CarListUpd(false);

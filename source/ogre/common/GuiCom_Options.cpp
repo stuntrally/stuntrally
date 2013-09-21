@@ -37,7 +37,7 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 	//Check* ck;
 
 	bnQuit = app->mGui->findWidget<Button>("Quit");
-	if (bnQuit)  {  bnQuit->eventMouseButtonClick += newDelegate(this, &CGuiCom::btnQuit);  bnQuit->setVisible(false);  }
+	if (bnQuit)  bnQuit->eventMouseButtonClick += newDelegate(this, &CGuiCom::btnQuit);
 	
 	//  detail
 	sv= &svTerDetail;	sv->Init("TerDetail",	&pSet->terdetail,	0.f,2.f);  //Sev(TerDetail);

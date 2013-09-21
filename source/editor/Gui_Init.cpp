@@ -26,18 +26,19 @@ void CGui::InitGui()
 {
 	mGui = app->mGui;
 	gcom->mGui = mGui;
+	SliderValue::pGUI = app->mGui;
+	SliderValue::bGI = &bGI;
+
 	if (!mGui)  return;
 	QTimer ti;  ti.update();  /// time
+
 
 	//  new widgets
 	FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
 	FactoryManager::getInstance().registerFactory<Slider>("Widget");
 	int i;
 
-	SliderValue::pGUI = app->mGui;
-	SliderValue::bGI = &bGI;
-
-	//  load layout
+	//  load
 	app->vwGui = LayoutManager::getInstance().loadLayout("Editor.layout");
 
 	for (VectorWidgetPtr::iterator it = app->vwGui.begin(); it != app->vwGui.end(); ++it)
@@ -80,7 +81,7 @@ void CGui::InitGui()
 
 	gcom->GuiInitTooltip();
 	
-	//  assign controls, tool window texts  ----------------------
+	//  tool window texts  ----------------------
 	for (i=0; i<12; ++i)
 	{	String s = toStr(i);
 		if (i<BR_TXT)

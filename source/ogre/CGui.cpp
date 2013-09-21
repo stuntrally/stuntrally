@@ -8,8 +8,7 @@
 CGui::CGui(App* app1)
 	: app(app1), bGI(0)
 	// gui
-	,mToolTip(0), mToolTipTxt(0)
-	,carList(0), trkList(0), resList(0), btRplPl(0)
+	,carList(0), btRplPl(0)
 	// hud
 	,valCountdownTime(0)
 	,cmbGraphs(0), valGraphsType(0) //,slGraphT(0)
@@ -31,9 +30,9 @@ CGui::CGui(App* app1)
 	,slSSSEff(0),slSSSVel(0)
 	,slSteerRngSurf(0),slSteerRngSim(0)
 	// replay
-	,imgCar(0),carDesc(0), imgTrkIco1(0),imgTrkIco2(0), bnQuit(0)
+	,imgCar(0),carDesc(0)
 	,cmbBoost(0), cmbFlip(0), cmbDamage(0), cmbRewind(0)
-	,valLocPlayers(0), edFind(0)
+	,valLocPlayers(0)
 	,txCarStatsTxt(0), txCarStatsVals(0)
 	,txCarSpeed(0),txCarType(0)
 	,txCarAuthor(0),txTrackAuthor(0)
@@ -43,7 +42,6 @@ CGui::CGui(App* app1)
 	,valRplName2(0),valRplInfo2(0)
 	,edRplName(0), edRplDesc(0)
 	,rbRplCur(0), rbRplAll(0), bRplBack(0),bRplFwd(0)
-	,bGuiReinit(0)
 	// gui multiplayer
 	,netGuiMutex(), netGameInfo()
 	,bUpdChat(false), iChatMove(0)
@@ -78,7 +76,7 @@ CGui::CGui(App* app1)
 	,cmbTweakTireSet(0),txtTweakTire(0)
 	,txtTweakPathCol(0)
 	, loadReadme(1)
-	, bUpdCarClr(1), bListTrackU(0), iCurCar(0)
+	, bUpdCarClr(1), iCurCar(0)
 	// input
 	,mBindingAction(NULL), mBindingSender(NULL), tabInput(0)
 	,txtInpDetail(0), panInputDetail(0), edInputIncrease(0), chOneAxis(0)
@@ -93,16 +91,7 @@ CGui::CGui(App* app1)
 	for (i=0; i<3; ++i)
 	{	txtChP[i]=0;  valChP[i]=0;  }
 
-
-	for (c=0; c < 2; ++c)
-	{
-		trkDesc[c]=0;  imgPrv[c]=0; imgMini[c]=0; imgTer[c]=0;
-		for (i=0; i < StTrk;  ++i)  stTrk[c][i] = 0;
-		for (i=0; i < InfTrk; ++i)  infTrk[c][i] = 0;
-	}	
-	pathTrk[0] = PATHMANAGER::Tracks() + "/";
-	pathTrk[1] = PATHMANAGER::TracksUser() + "/";
-	sListCar = "";  sListTrack = "";
+	sListCar = "";
 
 	for (i=0; i < ciEdCar; ++i)
 		edCar[i] = 0;

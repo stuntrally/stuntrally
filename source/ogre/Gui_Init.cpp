@@ -1,20 +1,18 @@
 #include "pch.h"
 #include "common/Def_Str.h"
+#include "common/Gui_Def.h"
+#include "common/GuiCom.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
-
-#include <boost/filesystem.hpp>
+#include "common/MultiList2.h"
+#include "common/Slider.h"
 #include <OgreRoot.h>
 #include <OgreRenderWindow.h>
 #include <OgreOverlay.h>
-#include "common/Gui_Def.h"
-#include "common/MultiList2.h"
-#include "common/Slider.h"
-
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -25,24 +23,26 @@ using namespace Ogre;
 void CGui::InitGui()
 {
 	mGui = app->mGui;
-	if (!mGui)  return;
+	gcom->mGui = mGui;
+	SliderValue::pGUI = app->mGui;
+	SliderValue::bGI = &bGI;
 
 	popup.mGui = mGui;
 	popup.mPlatform = app->mPlatform;
 
+	if (!mGui)  return;
 	QTimer ti;  ti.update();  /// time
-	loadReadme = true;
 
 
 	//  new widgets
 	MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
 	MyGUI::FactoryManager::getInstance().registerFactory<Slider>("Widget");
-	
+	loadReadme = true;
 
-	//  load Options layout
+	//  load
 	app->vwGui = LayoutManager::getInstance().loadLayout("Game.layout");
 
-	//  window
+	//  wnds
 	app->mWndMain = fWnd("MainMenuWnd");
 	app->mWndGame = fWnd("GameWnd");
 	app->mWndReplays = fWnd("ReplaysWnd");
@@ -66,7 +66,6 @@ void CGui::InitGui()
 		app->mWndMainBtns[i] = (ButtonPtr)app->mWndMain->findWidget("BtnMenu"+s);
 		app->mWndMainBtns[i]->eventMouseButtonClick += newDelegate(this, &CGui::MainMenuBtn);
 	}
-		
 	app->updMouse();
 	
 	//  center
@@ -104,22 +103,24 @@ void CGui::InitGui()
 	//  tooltip  ------
 	for (VectorWidgetPtr::iterator it = app->vwGui.begin(); it != app->vwGui.end(); ++it)
 	{
-		setToolTips((*it)->getEnumerator());
+		gcom->setToolTips((*it)->getEnumerator());
 		//const std::string& name = (*it)->getName();
 	}
 
 	app->mWndRpl = fWnd("RplWnd");
 	if (app->mWndRpl)  app->mWndRpl->setVisible(false);
 
-	GuiInitTooltip();
+
+	gcom->GuiInitTooltip();
 
 	toggleGui(false);
 	
 
-	GuiInitLang();
+	gcom->GuiInitLang();
 
-	GuiInitGraphics();
-
+	gcom->GuiInitGraphics();
+	
+	gcom->bnQuit->setVisible(app->isFocGui);
 	
 
 	///  Sliders
@@ -181,8 +182,6 @@ void CGui::InitGui()
 
 	///  Checkboxes
     //------------------------------------------------------------------------
-    Btn("Quit", btnQuit);  bnQuit = btn;  btn->setVisible(app->isFocGui);
-
 	Chk("ReverseOn", chkReverse, pSet->gui.trackreverse);
 	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
 
@@ -331,9 +330,6 @@ void CGui::InitGui()
 	sv= &svDofFocus;	sv->Init("DofFocus",	&pSet->dof_focus, 0.f, 2000.f, 2.f);
 	sv= &svDofFar;		sv->Init("DofFar",		&pSet->dof_far,   0.f, 2000.f, 2.f);
 	
-	Chk("FullScreen", chkVidFullscr, pSet->fullscreen);
-	Chk("VSync", chkVidVSync, pSet->vsync);
-
 	
 	//  replays  ------------------------------------------------------------
 	Btn("RplLoad", btnRplLoad);  Btn("RplSave", btnRplSave);
@@ -542,7 +538,7 @@ void CGui::InitGui()
 	///  input tab  -------
 	InitInputGui();
 	
-	InitGuiScreenRes();
+	gcom->InitGuiScreenRes();
 	
 	
 	///  cars list
@@ -574,10 +570,10 @@ void CGui::InitGui()
     ///  tracks list, text, chg btn
     //------------------------------------------------------------------------
 
-	trkDesc[0] = fEd("TrackDesc");
-	sListTrack = pSet->gui.track;
+	gcom->trkDesc[0] = fEd("TrackDesc");
+	gcom->sListTrack = pSet->gui.track;
 
-    GuiInitTrack();
+    gcom->GuiInitTrack();
 
 	//if (!panelNetTrack)
 	{
@@ -600,18 +596,22 @@ void CGui::InitGui()
 
 	//  championships
 	//------------------------------------------------------------------------
+
 	//  track stats 2nd set
-	trkDesc[1] = fEd("TrackDesc2");
+	gcom->trkDesc[1] = fEd("TrackDesc2");
     valTrkNet = fTxt("TrackText");
+
 	//  preview images
-	imgPrv[1] = fImg("TrackImg2");
-	imgTer[1] = fImg("TrkTerImg2");
-	imgMini[1] = fImg("TrackMap2");
+	gcom->imgPrv[1] = fImg("TrackImg2");
+	gcom->imgTer[1] = fImg("TrkTerImg2");
+	gcom->imgMini[1] = fImg("TrackMap2");
+
 	//  track stats text
-	for (int i=0; i < StTrk; ++i)
-		stTrk[1][i] = fTxt("2iv"+toStr(i+1));
-	for (int i=0; i < InfTrk; ++i)
-		infTrk[1][i] = fTxt("2ti"+toStr(i+1));
+	int i;
+	for (i=0; i < gcom->StTrk; ++i)
+		gcom->stTrk[1][i] = fTxt("2iv"+toStr(i));
+	for (i=0; i < gcom->InfTrk; ++i)
+		gcom->infTrk[1][i] = fTxt("2ti"+toStr(i));
 
 	edChInfo = fEd("ChampInfo");
 	if (edChInfo)  edChInfo->setVisible(pSet->champ_info);

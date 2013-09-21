@@ -1,13 +1,14 @@
 #include "pch.h"
 #include "common/Def_Str.h"
+#include "common/data/SceneXml.h"
+#include "common/RenderConst.h"
+#include "common/GuiCom.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "SplitScreen.h"
-#include "common/data/SceneXml.h"
-#include "common/RenderConst.h"
 
 #include <OgreRenderWindow.h>
 #include <OgreSceneNode.h>
@@ -160,8 +161,8 @@ void CHud::Create()
 	Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
 
 	String path = app->bRplPlay ? 
-		gui->PathListTrkPrv(app->replay.header.track_user, app->replay.header.track) :
-		gui->PathListTrkPrv(pSet->game.track_user, pSet->game.track);
+		app->gcom->PathListTrkPrv(app->replay.header.track_user, app->replay.header.track) :
+		app->gcom->PathListTrkPrv(pSet->game.track_user, pSet->game.track);
 	const String sRoad = "road.png", sTer = "terrain.jpg", sGrp = "TrkMini";
 	resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
 	resMgr.unloadResourceGroup(sGrp);

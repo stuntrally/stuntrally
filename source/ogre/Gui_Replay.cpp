@@ -1,14 +1,15 @@
 #include "pch.h"
 #include "common/Def_Str.h"
+#include "common/Gui_Def.h"
+#include "common/GuiCom.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
 #include "FollowCamera.h"
-#include <boost/filesystem.hpp>
 #include <time.h>
-#include "common/Gui_Def.h"
+#include <boost/filesystem.hpp>
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;
@@ -82,7 +83,7 @@ void CGui::btnRplSave(WP)  // Save
 	String edit = edRplName->getCaption();
 	String file = PATHMANAGER::Replays() + "/" + pSet->game.track + "_" + edit + ".rpl";
 	///  save
-	if (boost::filesystem::exists(file.c_str()))
+	if (PATHMANAGER::FileExists(file))
 	{
 		Message::createMessageBox(  // #{..
 			"Message", "Save Replay", "File already exists.",
@@ -111,7 +112,8 @@ void CGui::listRplChng(List* li, size_t pos)
 	Replay rpl;  char stm[128];
 	if (rpl.LoadFile(file,true))
 	{
-		String ss = String(TR("#{Track}: ")) + GetSceneryColor(rpl.header.track)+rpl.header.track + (rpl.header.track_user ? "  *user*" : "");
+		String ss = String(TR("#{Track}: ")) + gcom->GetSceneryColor(rpl.header.track) +
+			rpl.header.track + (rpl.header.track_user ? "  *user*" : "");
 		valRplName->setCaption(ss);
 
 		ss = String(TR("#{Car}: ")) + rpl.header.car + "       "+
@@ -219,7 +221,7 @@ void CGui::updReplaysList()
 	rplList->removeAllItems();
 
 	strlist li;
-	PATHMANAGER::GetFolderIndex(GetRplListDir(), li, "rpl");
+	PATHMANAGER::DirList(GetRplListDir(), li, "rpl");
 	
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 	if (StringUtil::endsWith(*i, ".rpl"))
@@ -234,7 +236,7 @@ void CGui::updReplaysList()
 			for (int i=0; i < l; ++i)
 				if (s[i] >= 'A' && s[i] <= 'Z') {  ch = s[i];  break;  }
 
-			rplList->addItem(GetSceneryColor(s) + s);
+			rplList->addItem(gcom->GetSceneryColor(s) + s);
 		}
 	}
 }
