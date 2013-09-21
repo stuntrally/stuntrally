@@ -4,8 +4,8 @@
 #include <OgreVector2.h>
 #include <OgreColourValue.h>
 #include <OgreQuaternion.h>
-#include "../../vdrift/mathvector.h"
-#include "../../vdrift/quaternion.h"
+#include "../../../vdrift/mathvector.h"
+#include "../../../vdrift/quaternion.h"
 
 namespace Ogre {  class SceneNode;  class Entity;  }
 

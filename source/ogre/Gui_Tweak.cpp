@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "common/Def_Str.h"
+#include "common/Gui_Def.h"
+#include "common/data/CData.h"
+#include "common/data/BltObjects.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "CGui.h"
 #include "CGame.h"
-#include "common/CData.h"
 #include "CarModel.h"
-#include "common/Gui_Def.h"
-#include "common/BltObjects.h"
 
 using namespace std;
 using namespace Ogre;

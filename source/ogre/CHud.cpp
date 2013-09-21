@@ -3,7 +3,7 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
-#include "common/SceneXml.h"
+#include "common/data/SceneXml.h"
 #include <LinearMath/btQuickprof.h>
 #include "../vdrift/settings.h"
 using namespace Ogre;

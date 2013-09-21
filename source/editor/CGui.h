@@ -4,7 +4,7 @@
 #include "../vdrift/track.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/SliderValue.h"
-#include "../ogre/common/SceneXml.h"  //Object-
+#include "../ogre/common/data/SceneXml.h"  //Object-
 
 #include <OgreCommon.h>
 #include <OgreVector3.h>

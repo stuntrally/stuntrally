@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "common/Def_Str.h"
+#include "common/data/CData.h"
+#include "common/data/TracksXml.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
+#include "../road/Road.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
-#include "common/CData.h"
-#include "common/TracksXml.h"
-#include "../road/Road.h"
 #include "common/MultiList2.h"
 
 using namespace std;

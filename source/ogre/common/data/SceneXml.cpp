@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Def_Str.h"
+#include "../Def_Str.h"
 #include "SceneXml.h"
 #include "FluidsXml.h"
 #include "tinyxml.h"

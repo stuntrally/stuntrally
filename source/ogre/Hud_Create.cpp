@@ -6,7 +6,7 @@
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "SplitScreen.h"
-#include "common/SceneXml.h"
+#include "common/data/SceneXml.h"
 #include "common/RenderConst.h"
 
 #include <OgreRenderWindow.h>

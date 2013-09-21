@@ -6,11 +6,11 @@
 #include "tracksurface.h"
 #include "configfile.h"
 #include "settings.h"
+#include "../ogre/common/Def_Str.h"
+#include "../ogre/common/data/CData.h"
 #include "../ogre/CGame.h"  //+ replay
-#include "../ogre/common/CData.h"
 #include "../ogre/CarModel.h"  //+ camera pos
 #include "../ogre/FollowCamera.h"  //+ camera pos
-#include "../ogre/common/Def_Str.h"
 #include "../ogre/common/GraphView.h"
 #include "../network/protocol.hpp"
 #include "tobullet.h"

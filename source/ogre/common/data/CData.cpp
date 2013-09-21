@@ -1,15 +1,15 @@
 #include "pch.h"
 #include "CData.h"
 #include "../vdrift/pathmanager.h"
-#include "Def_Str.h"
+#include "../Def_Str.h"
 using Ogre::String;
 
 #include "FluidsXml.h"
 #include "BltObjects.h"
 #include "TracksXml.h"
 #ifndef SR_EDITOR
-#include "../ChampsXml.h"
-#include "../ChallengesXml.h"
+#include "../../ChampsXml.h"
+#include "../../ChallengesXml.h"
 #endif
 
 CData::CData()

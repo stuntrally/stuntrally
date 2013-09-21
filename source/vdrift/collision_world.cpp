@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
+#include "../ogre/common/data/SceneXml.h"
 #include "../ogre/common/ShapeData.h"
 #include "collision_world.h"
 #include "tobullet.h"
@@ -8,9 +9,8 @@
 #include "track.h"
 #include "cardynamics.h"
 //#include "car.h"//
-#include "../ogre/CGame.h"  //
-#include "../ogre/common/SceneXml.h"
 #include "game.h"  //
+#include "../ogre/CGame.h"  //
 #include <iostream>
 
 

@@ -1,25 +1,21 @@
 #include "pch.h"
 #include "common/Def_Str.h"
-#include "CarModel.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/mathvector.h"
 #include "../vdrift/track.h"
 #include "../vdrift/game.h"
 #include "../vdrift/performance_testing.h"
+#include "common/data/SceneXml.h"
+#include "common/RenderConst.h"
 #include "CGame.h"
 #include "CGui.h"
+#include "CarModel.h"
 #include "SplitScreen.h"
-#include "common/SceneXml.h"
 #include "FollowCamera.h"
 #include "CarReflection.h"
 #include "../road/Road.h"
-#include "common/RenderConst.h"
 #include "../shiny/Main/Factory.hpp"
 #include "../network/gameclient.hpp"
-
-#include "boost/filesystem.hpp"
-#define  FileExists(s)  boost::filesystem::exists(s)
-
 #include <OgreRoot.h>
 #include <OgreTerrain.h>
 #include <OgreEntity.h>
@@ -30,6 +26,7 @@
 #include <OgreParticleAffector.h>
 #include <OgreRibbonTrail.h>
 using namespace Ogre;
+#define  FileExists(s)  PATHMANAGER::FileExists(s)
 
 
 //  ctor

@@ -2,9 +2,9 @@
 #include "../common/Def_Str.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
-#include "../common/SceneXml.h"
-#include "../common/TracksXml.h"
-#include "../common/CData.h"
+#include "../common/data/SceneXml.h"
+#include "../common/data/TracksXml.h"
+#include "../common/data/CData.h"
 #ifndef SR_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../CGame.h"

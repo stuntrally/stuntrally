@@ -3,7 +3,7 @@
 #include "CGame.h"
 #include "CGui.h"
 #include "CarModel.h"
-#include "common/SceneXml.h"
+#include "common/data/SceneXml.h"
 #include "../vdrift/game.h"
 using namespace Ogre;
 

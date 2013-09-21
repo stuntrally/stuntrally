@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/RenderConst.h"
-#include "../ogre/common/CData.h"
+#include "../ogre/common/data/CData.h"
 #include "../vdrift/pathmanager.h"
 #include "CApp.h"
 #include "CGui.h"

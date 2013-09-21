@@ -1751,19 +1751,19 @@
 				Name="SceneComXml"
 				>
 				<File
-					RelativePath="..\source\ogre\common\BltObjects.cpp"
+					RelativePath="..\source\ogre\common\data\BltObjects.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\common\BltObjects.h"
+					RelativePath="..\source\ogre\common\data\BltObjects.h"
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\common\CData.cpp"
+					RelativePath="..\source\ogre\common\data\CData.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\common\CData.h"
+					RelativePath="..\source\ogre\common\data\CData.h"
 					>
 				</File>
 				<File
@@ -1775,11 +1775,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\common\FluidsXml.cpp"
+					RelativePath="..\source\ogre\common\data\FluidsXml.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\common\FluidsXml.h"
+					RelativePath="..\source\ogre\common\data\FluidsXml.h"
 					>
 				</File>
 				<File
@@ -1787,19 +1787,19 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\common\SceneXml.cpp"
+					RelativePath="..\source\ogre\common\data\SceneXml.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\common\SceneXml.h"
+					RelativePath="..\source\ogre\common\data\SceneXml.h"
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\common\TracksXml.cpp"
+					RelativePath="..\source\ogre\common\data\TracksXml.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\common\TracksXml.h"
+					RelativePath="..\source\ogre\common\data\TracksXml.h"
 					>
 				</File>
 			</Filter>

@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "../common/RenderConst.h"
 #include "../common/Def_Str.h"
-#include "../common/SceneXml.h"
-#include "../common/FluidsXml.h"
-#include "../common/CData.h"
+#include "../common/data/SceneXml.h"
+#include "../common/data/FluidsXml.h"
+#include "../common/data/CData.h"
 #include "../common/ShapeData.h"
 #include "../common/WaterRTT.h"
 #ifdef SR_EDITOR

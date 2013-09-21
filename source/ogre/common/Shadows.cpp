@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "../common/Def_Str.h"
 #include "../common/RenderConst.h"
-#include "../common/SceneXml.h"
+#include "../common/data/SceneXml.h"
 #include "../common/QTimer.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"

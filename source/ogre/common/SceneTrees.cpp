@@ -1,10 +1,11 @@
 #include "pch.h"
-#include "../common/Def_Str.h"
-#include "../common/SceneXml.h"
-#include "../common/CData.h"
-#include "../common/ShapeData.h"
-#include "../common/QTimer.h"
+#include "Def_Str.h"
 #include "RenderConst.h"
+#include "data/CData.h"
+#include "data/SceneXml.h"
+#include "data/BltObjects.h"
+#include "ShapeData.h"
+#include "QTimer.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
 	#include "../../editor/settings.h"
@@ -21,8 +22,6 @@
 #include "../../paged-geom/ImpostorPage.h"
 #include "../../paged-geom/TreeLoader2D.h"
 #include "../../paged-geom/MersenneTwister.h"
-#include "BltObjects.h"
-
 #include <boost/filesystem.hpp>
 #include <OgreTerrain.h>
 #include <OgreSubMesh.h>

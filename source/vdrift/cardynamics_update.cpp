@@ -4,9 +4,9 @@
 #include "settings.h"
 #include "tobullet.h"
 #include "../ogre/common/Def_Str.h"
-#include "../ogre/common/CData.h"
-#include "../ogre/common/SceneXml.h"
-#include "../ogre/common/FluidsXml.h"
+#include "../ogre/common/data/CData.h"
+#include "../ogre/common/data/SceneXml.h"
+#include "../ogre/common/data/FluidsXml.h"
 #include "../ogre/CGame.h"
 #include "Buoyancy.h"
 

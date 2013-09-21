@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "Def_Str.h"
+#include "../Def_Str.h"
 #include "BltObjects.h"
-#include "../../vdrift/pathmanager.h"
+#include "../../../vdrift/pathmanager.h"
 #include "tinyxml2.h"
 using namespace tinyxml2;
 
