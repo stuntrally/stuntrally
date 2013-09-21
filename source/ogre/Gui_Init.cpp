@@ -26,6 +26,8 @@ void CGui::InitGui()
 	gcom->mGui = mGui;
 	SliderValue::pGUI = app->mGui;
 	SliderValue::bGI = &bGI;
+	Check::pGUI = app->mGui;
+	Check::bGI = &bGI;
 
 	popup.mGui = mGui;
 	popup.mPlatform = app->mPlatform;

@@ -105,7 +105,7 @@ public:
 	Img imgTrkIco1, imgTrkIco2;
 
 	//  track,road stats,info
-	const static int StTrk = 6, InfTrk = 11;
+	const static int StTrk = 11, InfTrk = 11;
 	Txt stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
 
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const Ogre::String& sTrack, float timeCur, bool champ=false);

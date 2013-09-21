@@ -130,13 +130,14 @@ void CGuiCom::GuiInitTrack()
 	imgMini[0] = fImg("TrackMap");
 
 	//  stats text
-	for (int i=0; i < StTrk; ++i)
-		stTrk[0][i] = fTxt("iv"+toStr(i));
-
 	#ifdef SR_EDITOR
+	for (int i=0; i < 6; ++i)
+		stTrk[0][i] = fTxt("iv"+toStr(i));
 	for (int i=0; i < 8; ++i)
 		infTrk[0][i] = fTxt("ti"+toStr(i));
 	#else
+	for (int i=0; i < StTrk; ++i)
+		stTrk[0][i] = fTxt("iv"+toStr(i));
 	for (int i=0; i < InfTrk; ++i)
 		infTrk[0][i] = fTxt("ti"+toStr(i));
 	#endif
@@ -271,8 +272,13 @@ void CGui::ReadTrkStatsChamp(String track, bool reverse)
 #endif
 
 
+#ifndef SR_EDITOR  // game
+String CGuiCom::TrkDir() {
+	int u = pSet->game.track_user ? 1 : 0;		return pathTrk[u] + pSet->game.track + "/";  }
+#else
 String CGuiCom::TrkDir() {
 	int u = pSet->gui.track_user ? 1 : 0;		return pathTrk[u] + pSet->gui.track + "/";  }
+#endif
 
 String CGuiCom::PathListTrk(int user) {
 	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;  }

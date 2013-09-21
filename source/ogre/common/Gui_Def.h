@@ -32,7 +32,7 @@ public:
 
 //  short Finding widgets
 #define fWnd(s)  mGui->findWidget<Window>(s)
-#define fTxt(s)  mGui->findWidget<TextBox>(s)
+#define fTxt(s)  mGui->findWidget<TextBox>(s,false)
 #define fImg(s)  mGui->findWidget<ImageBox>(s)
 #define fEd(s)   mGui->findWidget<EditBox>(s)
 #define fTab(s)  mGui->findWidget<TabControl>(s)
