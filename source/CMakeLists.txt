@@ -42,6 +42,8 @@ if (BUILD_GAME)
 		ogre/*.cpp
 		ogre/common/*.cpp
 		ogre/common/*.h
+		ogre/common/*/*.cpp
+		ogre/common/*/*.h
 		road/*
 		network/*.hpp
 		network/*.cpp
@@ -95,6 +97,8 @@ if (BUILD_EDITOR)
 		vdrift/cartire.*
 		ogre/common/*.cpp
 		ogre/common/*.h
+		ogre/common/*/*.cpp
+		ogre/common/*/*.h
 		road/*
 		../data/gui/Editor.layout
 	)

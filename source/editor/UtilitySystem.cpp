@@ -5,7 +5,9 @@
 #include "CGui.h"
 #include <boost/filesystem.hpp>
 #include <Ogre.h>
-//using namespace MyGUI;
+#ifndef _WIN32
+#include <dirent.h>
+#endif
 using namespace Ogre;
 
 

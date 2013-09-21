@@ -12,7 +12,7 @@
 	//#include "../../editor/CGui.h"
 	#include "../../editor/settings.h"
 #endif
-#include "SDL_Video.h"
+#include "SDL_video.h"
 #include <OgreRoot.h>
 #include <OgreRenderWindow.h>
 #include <MyGUI_Widget.h>
