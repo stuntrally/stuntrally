@@ -3,6 +3,7 @@
 #include "../ogre/common/data/CData.h"
 #include "../ogre/common/ShapeData.h"
 #include "../ogre/common/QTimer.h"
+#include "../ogre/common/GuiCom.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -16,6 +17,13 @@
 
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
+#include <OgreRenderWindow.h>
+#include <OgreOverlay.h>
+#include <OgreOverlayElement.h>
+#include <OgreMeshManager.h>
+#include <OgreParticleSystem.h>
+#include <OgreParticleEmitter.h>
+#include <OgreManualObject.h>
 #include "../ogre/common/MessageBox/MessageBox.h"
 using namespace Ogre;
 
@@ -166,7 +174,7 @@ void App::NewCommon(bool onlyTerVeget)
 	track->Clear();
 
 	if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
-	resTrk = gui->TrkDir() + "objects";
+	resTrk = gcom->TrkDir() + "objects";
 	mRoot->addResourceLocation(resTrk, "FileSystem");
 
 	MeshManager::getSingleton().unloadUnreferencedResources();
@@ -188,7 +196,7 @@ void App::LoadTrackEv()
 	{	road->Destroy();  delete road;  road = 0;  }
 
 	// load scene
-	sc->LoadXml(gui->TrkDir()+"scene.xml");
+	sc->LoadXml(gcom->TrkDir()+"scene.xml");
 	sc->vdr = IsVdrTrack();
 	if (sc->vdr)  sc->ter = false;
 	
@@ -228,7 +236,7 @@ void App::LoadTrackEv()
 	//  road ~
 	road = new SplineRoad(this);
 	road->Setup("sphere.mesh", 1.4f*pSet->road_sphr, terrain, mSceneMgr, mCamera);
-	road->LoadFile(gui->TrkDir()+"road.xml");
+	road->LoadFile(gcom->TrkDir()+"road.xml");
 	UpdPSSMMaterials();
 	
 	CreateObjects();
@@ -239,12 +247,12 @@ void App::LoadTrackEv()
 
 	//  updates after load
 	//--------------------------
-	gui->ReadTrkStats();
+	gcom->ReadTrkStats();
 	gui->SetGuiFromXmls();  ///
 	
 	Rnd2TexSetup();
 	UpdVisGui();
-	LoadStartPos(gui->TrkDir());
+	LoadStartPos(gcom->TrkDir());
 
 	try {
 	TexturePtr tex = TextureManager::getSingleton().getByName("waterDepth.png");
@@ -312,7 +320,7 @@ void App::SaveTrack()
 }
 void App::SaveTrackEv()
 {
-	String dir = gui->TrkDir();
+	String dir = gcom->TrkDir();
 	//  track dir in user
 	gui->CreateDir(dir);
 	gui->CreateDir(dir+"/objects");

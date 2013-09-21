@@ -6,7 +6,6 @@
 #include "../../btOgre/BtOgreGP.h"
 #include "../../road/Road.h"
 #include "../common/ShapeData.h"
-
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
 	#include "../../editor/CGui.h"
@@ -22,7 +21,6 @@
 #include "LinearMath/btSerializer.h"
 #include "Serialize/BulletFileLoader/btBulletFile.h"
 #include "Serialize/BulletWorldImporter/btBulletWorldImporter.h"
-#include <boost/filesystem.hpp>
 
 #include <OgreManualObject.h>
 #include <OgreMeshManager.h>
@@ -30,6 +28,9 @@
 #include <OgreEntity.h>
 #include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
+#include <OgreRenderWindow.h>
+#include <MyGUI.h>
+#include <MyGUI_InputManager.h>
 using namespace Ogre;
 
 
@@ -108,12 +109,12 @@ void App::CreateObjects()
 	}
 	for (map<string,bool>::iterator it = objExists.begin(); it != objExists.end(); ++it)
 	{
-		bool ex = boost::filesystem::exists(PATHMANAGER::Data()+"/objects/"+ (*it).first + ".mesh");
+		bool ex = PATHMANAGER::FileExists(PATHMANAGER::Data()+"/objects/"+ (*it).first + ".mesh");
 		(*it).second = ex;
 		if (!ex)  LogO("CreateObjects mesh doesn't exist: " + (*it).first + ".mesh");
 	}
 	for (map<string,bool>::iterator it = objHasBlt.begin(); it != objHasBlt.end(); ++it)
-		(*it).second = boost::filesystem::exists(PATHMANAGER::Data()+"/objects/"+ (*it).first + ".bullet");
+		(*it).second = PATHMANAGER::FileExists(PATHMANAGER::Data()+"/objects/"+ (*it).first + ".bullet");
 
 	//  loader
 	#ifndef SR_EDITOR
@@ -372,7 +373,7 @@ void CGui::AddNewObj()  //App..
 	o.nd->setScale(o.scale);
 	o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
 
-	o.dyn = boost::filesystem::exists(PATHMANAGER::Data()+"/objects/"+ o.name + ".bullet");
+	o.dyn = PATHMANAGER::FileExists(PATHMANAGER::Data()+"/objects/"+ o.name + ".bullet");
 	sc->objects.push_back(o);
 }
 
@@ -397,7 +398,7 @@ void CGui::SetObjNewType(int tnew)
 	if (objNew.ent)	{	app->mSceneMgr->destroyEntity(objNew.ent);  objNew.ent = 0;  }
 	
 	String name = vObjNames[iObjTNew];
-	objNew.dyn = boost::filesystem::exists(PATHMANAGER::Data()+"/objects/"+ name + ".bullet");
+	objNew.dyn = PATHMANAGER::FileExists(PATHMANAGER::Data()+"/objects/"+ name + ".bullet");
 	if (objNew.dyn)  objNew.scale = Vector3::UNIT_SCALE;  // dyn no scale
 	objNew.ent = app->mSceneMgr->createEntity("-oE", name + ".mesh");
 	objNew.nd = app->mSceneMgr->getRootSceneNode()->createChildSceneNode("-oN");

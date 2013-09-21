@@ -1,23 +1,58 @@
 #include "pch.h"
 #include "Def_Str.h"
 #include "Gui_Def.h"
+#include "GuiCom.h"
+#include "../../vdrift/pathmanager.h"
 #ifndef SR_EDITOR
 	#include "../CGame.h"
-	#include "../CGui.h"
+	//#include "../CGui.h"
 	#include "../../vdrift/settings.h"
 #else
 	#include "../../editor/CApp.h"
-	#include "../../editor/CGui.h"
+	//#include "../../editor/CGui.h"
 	#include "../../editor/settings.h"
 #endif
 #include "../../sdl4ogre/sdlinputwrapper.hpp"
+#include <MyGUI_InputManager.h>
+#include <MyGUI_Widget.h>
+#include <MyGUI_EditBox.h>
+#include <MyGUI_ComboBox.h>
+#include <MyGUI_Gui.h>
 using namespace MyGUI;
 using namespace Ogre;
 
 
+CGuiCom::CGuiCom(App* app1)
+	:app(app1)
+	,bGuiReinit(0)
+	,mToolTip(0), mToolTipTxt(0)
+	,bnQuit(0)
+	,trkList(0), imgTrkIco1(0),imgTrkIco2(0)
+	, bListTrackU(0)
+	,edTrkFind(0), resList(0)
+{
+	pSet = app1->pSet;
+	sc = app1->sc;
+	mGui = app1->mGui;
+
+	pathTrk[0] = PATHMANAGER::Tracks() + "/";
+	pathTrk[1] = PATHMANAGER::TracksUser() + "/";
+	
+	int t,i;
+	for (t=0; t<2; ++t)
+	{	
+		trkDesc[t] = 0;
+		imgPrv[t] = 0; imgMini[t] = 0; imgTer[t] = 0;
+
+		for (i=0; i < StTrk; ++i)  stTrk[t][i] = 0;
+		for (i=0; i < InfTrk; ++i)  infTrk[t][i] = 0;
+	}
+}
+
+
 //  Util
 //----------------------------------------------------------------------------------------------------------------
-void CGui::GuiCenterMouse()
+void CGuiCom::GuiCenterMouse()
 {	
 	int xm = app->mWindow->getWidth()/2, ym = app->mWindow->getHeight()/2;
 
@@ -25,13 +60,13 @@ void CGui::GuiCenterMouse()
 	MyGUI::InputManager::getInstance().injectMouseMove(xm, ym, 0);
 }
 
-void CGui::btnQuit(WP)
+void CGuiCom::btnQuit(WP)
 {
 	app->mShutDown = true;
 }
 
 //  unfocus lists (would have double up/dn key input)
-void CGui::UnfocusLists()
+void CGuiCom::UnfocusLists()
 {
 	Widget* w = MyGUI::InputManager::getInstance().getKeyFocusWidget();
 	while (w)
@@ -55,7 +90,7 @@ void CGui::UnfocusLists()
 //  Resize MyGUI
 //-----------------------------------------------------------------------------------
 
-void CGui::SizeGUI()
+void CGuiCom::SizeGUI()
 {
 	#ifndef SR_EDITOR
 	app->baseSizeGui();
@@ -66,7 +101,7 @@ void CGui::SizeGUI()
 		doSizeGUI((*it)->getEnumerator());
 }
 
-void CGui::doSizeGUI(EnumeratorWidgetPtr widgets)
+void CGuiCom::doSizeGUI(EnumeratorWidgetPtr widgets)
 {
 	while (widgets.next())
 	{
@@ -113,14 +148,14 @@ void CGui::doSizeGUI(EnumeratorWidgetPtr widgets)
 
 ///  Tooltips
 //----------------------------------------------------------------------------------------------------------------
-void CGui::GuiInitTooltip()
+void CGuiCom::GuiInitTooltip()
 {
-	mToolTip = Gui::getInstance().findWidget<Widget>("ToolTip");
+	mToolTip = mGui->findWidget<Widget>("ToolTip");
 	mToolTip->setVisible(false);
 	mToolTipTxt = mToolTip->getChildAt(0)->castType<Edit>();
 }
 
-void CGui::setToolTips(EnumeratorWidgetPtr widgets)
+void CGuiCom::setToolTips(EnumeratorWidgetPtr widgets)
 {
 	while (widgets.next())
 	{
@@ -141,14 +176,14 @@ void CGui::setToolTips(EnumeratorWidgetPtr widgets)
 			// needed for translation
 			wp->setUserString("tip", LanguageManager::getInstance().replaceTags(wp->getUserString("tip")));
 			wp->setNeedToolTip(true);
-			wp->eventToolTip += newDelegate(this, &CGui::notifyToolTip);
+			wp->eventToolTip += newDelegate(this, &CGuiCom::notifyToolTip);
 		}
 		//LogO(wp->getName() + (tip ? "  *" : ""));
 		setToolTips(wp->getEnumerator());
 	}
 }
 
-void CGui::notifyToolTip(Widget *sender, const ToolTipInfo &info)
+void CGuiCom::notifyToolTip(Widget *sender, const ToolTipInfo &info)
 {
 	if (!mToolTip)  return;
 
@@ -173,7 +208,7 @@ void CGui::notifyToolTip(Widget *sender, const ToolTipInfo &info)
 }
 
 //  Move a widget to a point while making it stay in the viewport.
-void CGui::boundedMove(Widget* moving, const IntPoint& point)
+void CGuiCom::boundedMove(Widget* moving, const IntPoint& point)
 {
 	const IntPoint offset(20, 20);  // mouse cursor
 	IntPoint p = point + offset;
@@ -192,7 +227,7 @@ void CGui::boundedMove(Widget* moving, const IntPoint& point)
 
 //  Languages combo
 //----------------------------------------------------------------------------------------------------------------
-void CGui::GuiInitLang()
+void CGuiCom::GuiInitLang()
 {
 	languages["en"] = TR("#{LANG_EN}");  languages["de"] = TR("#{LANG_DE}");
 	languages["fr"] = TR("#{LANG_FR}");  languages["pl"] = TR("#{LANG_PL}");
@@ -201,7 +236,7 @@ void CGui::GuiInitLang()
 
 	ComboBoxPtr combo = app->mGui->findWidget<ComboBox>("Lang");
 	if (!combo)  return;
-	combo->eventComboChangePosition += newDelegate(this, &CGui::comboLanguage);
+	combo->eventComboChangePosition += newDelegate(this, &CGuiCom::comboLanguage);
 	for (std::map<std::string, UString>::const_iterator it = languages.begin();
 		it != languages.end(); ++it)
 	{
@@ -211,7 +246,7 @@ void CGui::GuiInitLang()
 	}
 }
 
-void CGui::comboLanguage(MyGUI::ComboBox* wp, size_t val)
+void CGuiCom::comboLanguage(MyGUI::ComboBox* wp, size_t val)
 {
 	if (val == MyGUI::ITEM_NONE)  return;
 	MyGUI::UString sel = wp->getItemNameAt(val);

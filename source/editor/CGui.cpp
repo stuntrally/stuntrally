@@ -8,8 +8,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 CGui::CGui(App* app1)  //  gui wigdets--
 	: app(app1)
-	,mToolTip(0), mToolTipTxt(0)
-	,brImg(0), wndTabs(0), bnQuit(0)  // brush
+	,bGI(0)
+	,brImg(0), wndTabs(0)  // brush
 	,chAutoBlendmap(0), chInputBar(0)  // settings
 	// sun
 	,cmbSky(0), cmbRain1(0),cmbRain2(0)
@@ -74,23 +74,15 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,edWarn(0),txWarn(0)
 	,imgWarn(0),imgInfo(0)
 	// track
-	, bListTrackU(0)
-	,trkList(0),trkName(0)
-	,imgTrkIco1(0),imgTrkIco2(0), edFind(0)
+	, bListTrackU(0), trkName(0)
 	// gui
-	, bGuiReinit(0), bGI(0), resList(0)
-	, bTopView(0)
-	,noBlendUpd(0)
+	, bTopView(0), noBlendUpd(0)
 	// obj
 	,iObjCur(-1), iObjTNew(0), iObjLast(0)
 	, objSim(0), objEd(EO_Move)
 	,objListSt(0),objListDyn(0),objListBld(0), objPan(0)
-{
-	imgPrv[0]=0; imgMini[0]=0; imgTer[0]=0;  trkDesc[0]=0;
-	
-	pathTrk[0] = PATHMANAGER::Tracks() + "/";
-	pathTrk[1] = PATHMANAGER::TracksUser() + "/";
-	/*resTrk = "";*/  strFSerrors = "";
+{	
+	strFSerrors = "";
 
 	int i;  // tool texts
 	for (i=0; i<BR_TXT; ++i){  brTxt[i]=0;  brVal[i]=0;  brKey[i]=0;  }
@@ -102,7 +94,6 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	for (i=0; i<OBJ_TXT;++i)  objTxt[i]=0;
 	for (i=0; i<RI_TXT; ++i)  riTxt[i]=0;
 	
-	for (i=0; i < StTrk; ++i)  stTrk[0][i] = 0;
 	for (i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }
 
 	sc = app1->sc;

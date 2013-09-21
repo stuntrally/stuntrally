@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Def_Str.h"
+#include "GuiCom.h"
 #include "../common/data/SceneXml.h"
 #include "../common/data/CData.h"
 #include "../common/data/TracksXml.h"
@@ -17,6 +18,7 @@
 	#include "../../editor/CApp.h"
 	#include "../../editor/CGui.h"
 #endif
+#include <OgreResourceGroupManager.h>
 using namespace Ogre;
 using namespace std;
 
@@ -56,7 +58,7 @@ void CGui::ToolSceneXml()
 
 	for (int i=0; i < data->tracks->trks.size(); ++i)
 	{	//  foreach track
-		string trk = data->tracks->trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
+		string trk = data->tracks->trks[i].name, path = gcom->pathTrk[0] +"/"+ trk +"/";
 		Scene sc;  sc.LoadXml(path +"scene.xml");
 		for (int l=0; l < Scene::ciNumPgLay; ++l)
 		{
@@ -107,13 +109,13 @@ void CGui::ToolListSceneryID()
 {
 	LogO("ALL tracks ---------");
 
-	std::list<TrkL> liTrk2 = liTrk;
+	std::list<TrkL> liTrk2 = gcom->liTrk;
 	liTrk2.sort(SortT0);  liTrk2.reverse();
 
 	//  foreach track
 	for (std::list<TrkL>::iterator it = liTrk2.begin(); it != liTrk2.end(); ++it)
 	{
-		string trk = (*it).name, path = pathTrk[0] +"/"+ trk +"/";
+		string trk = (*it).name, path = gcom->pathTrk[0] +"/"+ trk +"/";
 		Scene sc;  sc.LoadXml(path +"scene.xml");
 
 		ostringstream s;
@@ -141,7 +143,7 @@ void CGui::ToolTracksWarnings()
 
 	for (int i=0; i < data->tracks->trks.size(); ++i)
 	{	//  foreach track
-		string trk = data->tracks->trks[i].name, path = pathTrk[0] +"/"+ trk +"/";
+		string trk = data->tracks->trks[i].name, path = gcom->pathTrk[0] +"/"+ trk +"/";
 		/**/if (!(trk[0] >= 'A' && trk[0] <= 'Z'))  continue;
 		/**/if (StringUtil::startsWith(trk,"test"))  continue;
 

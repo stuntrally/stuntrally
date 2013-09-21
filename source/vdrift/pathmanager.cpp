@@ -209,7 +209,7 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 	//  Subdirs for each sim_mode
 	///--------------------------------------------------
 	std::list <std::string> li;
-	PATHMANAGER::GetFolderIndex(PATHMANAGER::CarSim(), li);
+	PATHMANAGER::DirList(PATHMANAGER::CarSim(), li);
 	for (std::list <std::string>::iterator i = li.begin(); i != li.end(); ++i)
 	{
 		CreateDir(Records()+"/"+*i, error_output);
@@ -261,26 +261,26 @@ bool PATHMANAGER::CreateDir(const std::string& path, std::ostream & error_output
 }
 
 
-// TODO: This is probably far easier and more elegant to implement with boost::filesystem
-bool PATHMANAGER::GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension)
+// TODO: implement with boost::filesystem
+bool PATHMANAGER::DirList(std::string dirpath, std::list <std::string> & dirlist, std::string extension)
 {
 //------Folder listing code for POSIX
 #ifndef _WIN32
 	DIR *dp;
 	struct dirent *ep;
-	dp = opendir (folderpath.c_str());
+	dp = opendir(dirpath.c_str());
 	if (dp != NULL)
 	{
-		while ( ( ep = readdir( dp ) ) )
+		while (ep = readdir(dp))
 		{
 			//puts (ep->d_name);
 			std::string newname = ep->d_name;
 			if (newname[0] != '.')
 			{
-				outputfolderlist.push_back(newname);
+				dirlist.push_back(newname);
 			}
 		}
-		(void) closedir (dp);
+		(void) closedir(dp);
 	}
 	else
 		return false;
@@ -291,7 +291,7 @@ bool PATHMANAGER::GetFolderIndex(std::string folderpath, std::list <std::string>
 	WIN32_FIND_DATA FileData;
 
 	// Get the proper directory path
-	sprintf(szDir, "%s\\*", folderpath.c_str ());
+	sprintf(szDir, "%s\\*", dirpath.c_str());
 
 	// Get the first file
 	hList = FindFirstFile(szDir, &FileData);
@@ -310,7 +310,7 @@ bool PATHMANAGER::GetFolderIndex(std::string folderpath, std::list <std::string>
 			{
 				if (FileData.cFileName[0] != '.')
 				{
-					outputfolderlist.push_back (FileData.cFileName);
+					dirlist.push_back(FileData.cFileName);
 				}
 			}
 		}
@@ -324,17 +324,17 @@ bool PATHMANAGER::GetFolderIndex(std::string folderpath, std::list <std::string>
 	if (!extension.empty())
 	{
 		std::list <std::list <std::string>::iterator> todel;
-		for (std::list <std::string>::iterator i = outputfolderlist.begin(); i != outputfolderlist.end(); ++i)
+		for (std::list <std::string>::iterator i = dirlist.begin(); i != dirlist.end(); ++i)
 		{
 			if (i->find(extension) != i->length()-extension.length())
 				todel.push_back(i);
 		}
 		
 		for (std::list <std::list <std::string>::iterator>::iterator i = todel.begin(); i != todel.end(); ++i)
-			outputfolderlist.erase(*i);
+			dirlist.erase(*i);
 	}
 	
-	outputfolderlist.sort();
+	dirlist.sort();
 	return true;
 }
 

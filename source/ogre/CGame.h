@@ -16,7 +16,8 @@ namespace Ogre {  class SceneNode;  class SceneManager;  class Light;
 	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
 namespace Forests {  class PagedGeometry;  }
 namespace BtOgre  {  class DebugDrawer;  }
-class GAME;  class Scene;  class CData;  class CInput;  class WaterRTT;  class GraphView;  
+class Scene;  class WaterRTT;  class CData;  class CInput;  class GraphView;
+class GAME;  class SplineRoad;  class CHud;  class CGui;  class CGuiCom;
 
 const int CarPosCnt = 8;  // size of poses queue
 
@@ -98,7 +99,7 @@ public:
 
 
 	///  HUD
-	class CHud* hud;
+	CHud* hud;
 
 
 	///  create  . . . . . . . . . . . . . . . . . . . . . . . . 
@@ -164,7 +165,7 @@ public:
 	}
 
 	//  road
-	class SplineRoad* road;
+	SplineRoad* road;
 
 	//  shadows
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
@@ -185,7 +186,8 @@ public:
 
 	///  Gui
 	//-----------------------------------------------------------------
-	class CGui* gui;
+	CGui* gui;
+	CGuiCom* gcom;
 
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
 	int carIdWin, iRplCarOfs;

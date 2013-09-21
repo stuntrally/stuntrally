@@ -5,6 +5,7 @@
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"
+#include <Ogre.h>
 using namespace Ogre;
 
 

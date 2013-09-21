@@ -5,6 +5,7 @@
 #include "../vdrift/pathmanager.h"
 #include "CApp.h"
 #include "CGui.h"
+#include "../ogre/common/GuiCom.h"
 #include "../road/Road.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/WaterRTT.h"
@@ -27,7 +28,7 @@ using namespace Ogre;
 //----------------------------------------------------------------------------------------------------------------------
 App::App(SETTINGS* pSet1)  //  gui wigdets--
 	:mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)
-	,bTerUpd(0), curBr(0)//, bGuiReinit(0)//, noBlendUpd(0)
+	,bTerUpd(0), curBr(0)
 	,ndPos(0), mpos(0), asp(4.f/3.f)
 	,ndCar(0),entCar(0), ndStBox(0),entStBox(0), ndFluidBox(0),entFluidBox(0), ndObjBox(0),entObjBox(0)
 	,grass(0), trees(0), sun(0), pr(0),pr2(0)
@@ -62,8 +63,12 @@ App::App(SETTINGS* pSet1)  //  gui wigdets--
 	///  new
 	mWaterRTT = new WaterRTT();
 	data = new CData();
+
+	gcom = new CGuiCom(this);
+	gcom->mGui = mGui;
 	gui = new CGui(this);
 	gui->viewBox = new wraps::RenderBoxScene();
+	gui->gcom = gcom;
 	
 	track = new TRACK(std::cout, std::cerr);  //!
 	sc = new Scene();
@@ -106,8 +111,11 @@ App::~App()
 
 	OGRE_DELETE mTerrainGlobals;
 	delete sc;
-	
+	//delete mWaterRTT; //!
+
+	delete gcom;
 	delete gui;
+	delete data;
 }
 
 void App::destroyScene()

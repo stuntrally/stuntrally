@@ -7,6 +7,12 @@
 #include <fstream>
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/Slider.h"
+#include <MyGUI.h>
+#include <OgreOverlay.h>
+#include <OgreOverlayElement.h>
+#include <OgreRectangle2D.h>
+#include <OgreSceneNode.h>
+#include <OgreCamera.h>
 using namespace MyGUI;
 using namespace Ogre;
 

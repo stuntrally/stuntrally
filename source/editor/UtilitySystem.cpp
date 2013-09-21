@@ -4,7 +4,8 @@
 #include "CApp.h"
 #include "CGui.h"
 #include <boost/filesystem.hpp>
-using namespace MyGUI;
+#include <Ogre.h>
+//using namespace MyGUI;
 using namespace Ogre;
 
 
@@ -103,14 +104,6 @@ void CGui::GetMaterialsMat(String filename, bool clear, String type)
 //-----------------------------------------------------------------------------------------------------------
 namespace bfs = boost::filesystem;
 
-bool CGui::TrackExists(String name/*, bool user*/)
-{	// ignore letters case..
-	for (strlist::const_iterator it = liTracks.begin(); it != liTracks.end(); ++it)
-		if (*it == name)  return true;
-	for (strlist::const_iterator it = liTracksUser.begin(); it != liTracksUser.end(); ++it)
-		if (*it == name)  return true;
-	return false;
-}
 
 bool CGui::Rename(String from, String to)
 {
@@ -199,99 +192,4 @@ void App::UpdWndTitle()
 	if (pSet->gui.track_user)  s += "  *user*";
 
 	SDL_SetWindowTitle(mSDLWindow, s.c_str());
-}
-
-String CGui::TrkDir() {
-	int u = pSet->gui.track_user ? 1 : 0;		return pathTrk[u] + pSet->gui.track + "/";  }
-
-String CGui::PathListTrk(int user) {
-	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;  }
-	
-String CGui::PathListTrkPrv(int user, String track){
-	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + track + "/preview/";  }
-	
-String CGui::PathCopyTrk(int user){
-	int u = user == -1 ? bCopyTrackU : user;	return pathTrk[u] + sCopyTrack;  }
-
-
-
-//  vdr util, get tracks
-//----------------------------------------------------------------------------------------------------------------------
-bool string_compare(const std::string& s1, const std::string& s2)
-{
-	return strcmp(s1.c_str(), s2.c_str()) != 0;
-}
-
-bool CGui::DirList(std::string dirpath, strlist& dirlist, std::string extension)
-{
-#ifndef _WIN32
-	DIR *dp;
-	struct dirent *ep;
-	dp = opendir(dirpath.c_str());
-	if (dp != NULL)
-	{
-		while ( ( ep = readdir( dp ) ) )
-		{
-			//puts (ep->d_name);
-			std::string newname = ep->d_name;
-			if (newname[0] != '.')
-			{
-				dirlist.push_back(newname);
-			}
-		}
-		(void) closedir(dp);
-	}
-	else
-		return false;
-#else
-	HANDLE	  hList;
-	TCHAR	  szDir[MAX_PATH+1];
-	WIN32_FIND_DATA FileData;
-
-	// Get the proper directory path
-	sprintf(szDir, "%s\\*", dirpath.c_str());
-
-	// Get the first file
-	hList = FindFirstFile(szDir, &FileData);
-	if (hList == INVALID_HANDLE_VALUE)
-	{ 
-		//no files found.  that's OK
-	}
-	else
-	{
-		// Traverse through the directory structure
-		while (FindNextFile(hList, &FileData))
-		{
-			// Check the object is a directory or not
-			if (FileData.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN)
-			{} else
-			{
-				if (FileData.cFileName[0] != '.')
-				{
-					dirlist.push_back (FileData.cFileName);
-				}
-			}
-		}
-	}
-
-	FindClose(hList);
-#endif
-	
-	//remove non-matcthing extensions
-	if (!extension.empty())
-	{
-		std::list <strlist::iterator> todel;
-		for (strlist::iterator i = dirlist.begin(); i != dirlist.end(); ++i)
-		{
-			if (i->find(extension) != i->length()-extension.length())
-				todel.push_back(i);
-		}
-		
-		for (std::list <strlist::iterator>::iterator i = todel.begin(); i != todel.end(); ++i)
-			dirlist.erase(*i);
-	}
-	
-	dirlist.sort();
-	//dirlist.sort(dirlist.begin(), dirlist.end(), string_compare);  //?-
-	return true;
 }

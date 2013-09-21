@@ -9,9 +9,9 @@
 #include <OgreVector3.h>
 #include <OgreString.h>
 
-#include <MyGUI.h>
-#include "../ogre/common/RenderBoxScene.h"
-
+#include <OgreRenderTargetListener.h>
+#include <OgreShadowCameraSetup.h>
+#include <OgreTexture.h>
 
 #define BrushMaxSize  512
 
@@ -21,12 +21,10 @@ const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,5,15,30,45,90,180};
 
 namespace Forests {  class PagedGeometry;  }
 namespace MyGUI  {  class MultiList2;  class Slider;  }
-namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  class Light;  }
+namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;
+	class Light;  class Rectangle2D;  class SceneNode;  class RenderTexture;  }
 namespace sh {  class Factory;  }
-class WaterRTT;
-class Scene;
-class CGui;
-class CData;
+class Scene;  class WaterRTT;  class CData;  class CGui;  class CGuiCom;
 
 
 class App : public BaseApp, public Ogre::RenderTargetListener
@@ -96,7 +94,7 @@ public:
 	struct SRndTrg
 	{
 		Ogre::Camera* rndCam;  Ogre::RenderTexture* rndTex;
-		Ogre::Rectangle2D *rcMini;	Ogre::SceneNode* ndMini;
+		Ogre::Rectangle2D* rcMini;	Ogre::SceneNode* ndMini;
 		SRndTrg() : rndCam(0),rndTex(0),rcMini(0),ndMini(0) {  }
 	};
 	SRndTrg rt[RTs+RTsAdd];
@@ -240,5 +238,6 @@ public:
 
 	///  Gui
 	CGui* gui;
+	CGuiCom* gcom;
 	
 };

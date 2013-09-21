@@ -19,7 +19,12 @@
 #include "../sdl4ogre/sdlcursormanager.hpp"
 #include "../sdl4ogre/sdlwindowhelper.hpp"
 #include "../ogre/common/PointerFix.h"
-
+#include <MyGUI_PointerManager.h>
+#include <MyGUI_Gui.h>
+#include <MyGUI_InputManager.h>
+#include <MyGUI_FactoryManager.h>
+#include <MyGUI_ImageBox.h>
+#include <MyGUI_TextBox.h>
 
 namespace
 {
@@ -143,8 +148,8 @@ void BaseApp::createFrameListener()
 	mCursorManager->setEnabled(true);
 	onCursorChange(MyGUI::PointerManager::getInstance().getDefaultPointer());
 
-
-	mRoot->addFrameListener(this);}
+	mRoot->addFrameListener(this);
+}
 
 void BaseApp::destroyScene()
 {

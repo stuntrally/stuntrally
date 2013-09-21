@@ -1,17 +1,18 @@
 #include "pch.h"
 #include "Def_Str.h"
 #include "Gui_Def.h"
+#include "GuiCom.h"
 #include "WaterRTT.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
 #ifndef SR_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../CGame.h"
-	#include "../CGui.h"
+	//#include "../CGui.h"
 	#include "../SplitScreen.h"
 #else
 	#include "../../editor/CApp.h"
-	#include "../../editor/CGui.h"
+	#include "../../editor/CGui.h"//
 	#include "../../editor/settings.h"
 #endif
 #include <OgreRoot.h>
@@ -19,6 +20,7 @@
 #include <OgreSceneManager.h>
 #include <OgreTerrain.h>
 #include <OgreRenderWindow.h>
+#include <MyGui.h>
 #include "Slider.h"
 using namespace MyGUI;
 using namespace Ogre;
@@ -26,7 +28,7 @@ using namespace Ogre;
 
 ///  change all Graphics settings
 ///..............................................................................................................................
-void CGui::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
+void CGuiCom::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 {
 	pSet->preset = val;  // for info
 	//"TexFiltering", comboTexFilter ?
@@ -203,9 +205,9 @@ void CGui::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 #endif
 
 #ifdef SR_EDITOR  /// editor only
-	Chk("Minimap", chkMinimap, pSet->trackmap);
-	svTerUpd.Upd();
-	svMiniUpd.Upd();
+	//Chk("Minimap", chkMinimap, pSet->trackmap);
+	app->gui->svTerUpd.Upd();
+	app->gui->svMiniUpd.Upd();
 #endif
 
 	app->mWaterRTT->setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
@@ -215,7 +217,7 @@ void CGui::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 }
 
 
-void CGui::setOrigPos(WP wp, const char* relToWnd)
+void CGuiCom::setOrigPos(WP wp, const char* relToWnd)
 {
 	if (!wp)  return;
 	wp->setUserString("origPosX", toStr(wp->getPosition().left));

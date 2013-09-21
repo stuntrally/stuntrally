@@ -835,7 +835,7 @@
 					<UserString key="tip" value="#{TipFind}"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="16 502 88 24" name="TrackFind">
+				<Widget type="EditBox" skin="EditBox" position="16 502 88 24" name="TrkFind">
 					<Property key="Colour" value="0.7 0.8 0.9"/>
 					<Property key="MaxTextLength" value="20"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
@@ -1293,7 +1293,7 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipTerErrorNorm}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="668 103 56 24" name="edTerErrorNorm">
+				<Widget type="EditBox" skin="EditBox" position="668 103 56 24" name="TerErrorNorm">
 					<Property key="Colour" value="0.5 0.6 0.4"/>
 					<Property key="TextColour" value="0.7 0.8 0.6"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>

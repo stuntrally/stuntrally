@@ -4,6 +4,7 @@
 #include "../common/data/SceneXml.h"
 #include "../common/ShapeData.h"
 #include "../common/QTimer.h"
+#include "../common/GuiCom.h"
 #include "../../road/Road.h"  // sun rot
 #include "../shiny/Main/Factory.hpp"
 #include "TerrainMaterial.h"
@@ -281,7 +282,7 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 		delete[] sc->td.hfAngle;   sc->td.hfAngle = new float[wxy];
 		int siz = wxy * sizeof(float);
 
-		String name = gui->TrkDir() + (bNewHmap ? "heightmap-new.f32" : "heightmap.f32");
+		String name = gcom->TrkDir() + (bNewHmap ? "heightmap-new.f32" : "heightmap.f32");
 
 		//  load from f32 HMap +
 		{

@@ -58,66 +58,8 @@ public:
 	void SizeGUI(); void doSizeGUI(MyGUI::EnumeratorWidgetPtr);
 	std::vector<Tab> vSubTabsGame, vSubTabsOpts;
 
+	Txt valTrkNet;
 
-	///  Gui common   --------------------------
-	//  graphics
-	SlV(ViewDist);  SlV(Anisotropy);
-	SlV(TerDetail);  SlV(TerDist);  SV svRoadDist;
-	SlV(TexSize);  SlV(TerMtr);  SlV(TerTripl);  // detail
-	SlV(Trees);  SlV(Grass);  SlV(TreesDist);  SlV(GrassDist);  // paged
-	SlV(ShadowType);  SlV(ShadowCount);  SlV(ShadowSize);  SlV(ShadowDist);  // shadow
-	SlV(WaterSize);  // screen
-	void comboTexFilter(CMB), btnShadows(WP), btnShaders(WP), btnTrGrReset(WP),
-		chkWaterReflect(WP), chkWaterRefract(WP),
-		chkUseImposters(WP), chkImpostorsOnly(WP), cmbAntiAliasing(CMB);
-	void setOrigPos(WP wp, const char* relToWnd);
-
-	//  tooltip
-	WP mToolTip;  Ed mToolTipTxt;
-	void setToolTips(MyGUI::EnumeratorWidgetPtr widgets);
-	void notifyToolTip(WP sender, const MyGUI::ToolTipInfo& info);
-	void boundedMove(WP moving, const MyGUI::IntPoint& point);
-
-	//  language
-	void comboLanguage(CMB);
-	std::map<std::string, MyGUI::UString> languages; // <short name, display name>
-	bool bGuiReinit;  void UnfocusLists();
-	Btn bnQuit;  void btnQuit(WP);
-
-	//  init
-	bool bGI;
-	void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(), GuiInitGraphics(),GuiInitTrack();
-	Ogre::String GetSceneryColor(Ogre::String name);
-	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
-
-	///  track
-	void UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const Ogre::String& sTrack, float timeCur, bool champ=false),
-		ReadTrkStats();
-	Mli2 trkList;  Ed trkDesc[2];
-	Img imgPrv[2],imgMini[2],imgTer[2], imgTrkIco1,imgTrkIco2;
-	const static int StTrk = 6, InfTrk = 11;
-	Txt valTrkNet, stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
-
-	void listTrackChng(Mli2, size_t), TrackListUpd(bool resetNotFound=false);
-	void btnTrkView1(WP),btnTrkView2(WP), ChangeTrackView();
-	void updTrkListDim();
-	//  const list column widths
-	const static int colTrk[32];
-	const static Ogre::String clrsDiff[9], clrsRating[6], clrsLong[10];
-
-	void edTrkFind(Ed); 
-	Ogre::String sTrkFind;  Ed edFind;
-	strlist liTracks,liTracksUser;  void FillTrackLists();
-	std::list<TrkL> liTrk;
-
-	//  screen
-	Li resList;
-	void InitGuiScreenRes(), btnResChng(WP), ResizeOptWnd();
-	void chkVidFullscr(WP), chkVidVSync(WP);
-
-	void comboGraphicsAll(CMB), comboRenderSystem(CMB);
-		
-	///-----------------------------------------
 	
 	void InitGui(), GuiUpdate();
 

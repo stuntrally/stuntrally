@@ -1,13 +1,15 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
-#include "settings.h"
-#include "CApp.h"
-#include "CGui.h"
-#include "../road/Road.h"
 #include "../ogre/common/Gui_Def.h"
+#include "settings.h"
+#include "CGui.h"
+#include "CApp.h"
+#include "../ogre/common/GuiCom.h"
+#include "../road/Road.h"
 #include "../ogre/common/Slider.h"
 #include "../vdrift/pathmanager.h"
 #include <fstream>
+#include <MyGUI.h>
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -126,7 +128,7 @@ void CGui::editTerErrorNorm(MyGUI::EditPtr ed)
 //  - - - -  Hmap tools  - - - -
 String CGui::getHMapNew()
 {
-	return TrkDir() + "heightmap-new.f32";
+	return gcom->TrkDir() + "heightmap-new.f32";
 }
 
 //----------------------------------------------------------------------------------------------------------

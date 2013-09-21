@@ -1,10 +1,12 @@
 #include "pch.h"
-#include "../common/Def_Str.h"
+#include "Def_Str.h"
+#include "Gui_Def.h"
+#include "GuiCom.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
-#include "../common/data/SceneXml.h"
-#include "../common/data/TracksXml.h"
-#include "../common/data/CData.h"
+#include "data/SceneXml.h"
+#include "data/TracksXml.h"
+#include "data/CData.h"
 #ifndef SR_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../CGame.h"
@@ -22,8 +24,14 @@
 #include <OgreSceneManager.h>
 #include <OgreTerrain.h>
 #include <OgreRenderWindow.h>
-#include "Gui_Def.h"
-#include <boost/filesystem.hpp>
+#include <MyGUI.h>
+//#include <MyGUI_Delegate.h>
+//#include <MyGUI_Widget.h>
+//#include <MyGUI_EditBox.h>
+//#include <MyGUI_ImageBox.h>
+//#include <MyGUI_Gui.h>
+//#include <MyGUI_Window.h>
+//#include <MyGUI_TabItem.h>
 using namespace MyGUI;
 using namespace Ogre;
 using namespace std;
@@ -32,7 +40,7 @@ using namespace std;
 ///  * * * *  CONST  * * * *
 //  add track item to gui list
 //-----------------------------------------------------------------------------------------------------------
-String CGui::GetSceneryColor(String name)
+String CGuiCom::GetSceneryColor(String name)
 {
 	if (name.empty())  return "#707070";
 	if (name.c_str()[0]=='*')  name = name.substr(1);
@@ -50,14 +58,14 @@ String CGui::GetSceneryColor(String name)
 }
 
 // track difficulties colors from value
-const String CGui::clrsDiff[9] =  // difficulty
+const String CGuiCom::clrsDiff[9] =  // difficulty
 	{"#60C0FF", "#00FF00", "#60FF00", "#C0FF00", "#FFFF00", "#FFC000", "#FF6000", "#FF4040", "#B060B0"};
-const String CGui::clrsRating[6] =  // rating
+const String CGuiCom::clrsRating[6] =  // rating
 	{"#808080", "#606060", "#7090A0", "#60C8D8", "#A0D0F0", "#E0F0FF"};
-const String CGui::clrsLong[10] =  // long
+const String CGuiCom::clrsLong[10] =  // long
 	{"#E0D0D0", "#E8C0C0", "#F0B0B0", "#F8A0A0", "#FF9090", "#FF8080", "#F07070", "#F06060", "#E04040", "#D02020"};
 
-void CGui::AddTrkL(std::string name, int user, const TrackInfo* ti)
+void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 {
 	String c = GetSceneryColor(name);
 
@@ -89,7 +97,7 @@ void CGui::AddTrkL(std::string name, int user, const TrackInfo* ti)
 //  * * * *  CONST  * * * *
 //  column widths in MultiList2
 const int wi = 26;  // track detailed
-const int CGui::colTrk[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
+const int CGuiCom::colTrk[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
 #ifndef SR_EDITOR
 const int CGui::colCar[16] = {34, 17, 35, 40, 20};  // car
 const int CGui::colCh [16] = {30, 180, 120, 50, 80, 80, 60, 40};  // champs
@@ -100,7 +108,7 @@ const int CGui::colSt [16] = {30, 170, 100, 90, 50, 80, 70};  // stages
 
 //  Gui Init [Track] once
 //-----------------------------------------------------------------------------------------------------------
-void CGui::GuiInitTrack()
+void CGuiCom::GuiInitTrack()
 {
 	#ifdef SR_EDITOR
 	TabItem* trktab = (TabItem*)app->mWndEdit->findWidget("TabTrack");
@@ -113,7 +121,7 @@ void CGui::GuiInitTrack()
 	//*li->setAlpha(0.8);*/  li->setInheritsAlpha(false);
 	
 	trkList = li;  if (!li)  LogO("Error: No MListTracks in layout !");
-   	trkList->eventListChangePosition += newDelegate(this, &CGui::listTrackChng);
+   	trkList->eventListChangePosition += newDelegate(this, &CGuiCom::listTrackChng);
    	trkList->setVisible(false);
 	
 	//  preview images
@@ -124,18 +132,24 @@ void CGui::GuiInitTrack()
 	//  stats text
 	for (int i=0; i < StTrk; ++i)
 		stTrk[0][i] = fTxt("iv"+toStr(i));
+
+	#ifdef SR_EDITOR
+	for (int i=0; i < 8; ++i)
+		infTrk[0][i] = fTxt("ti"+toStr(i));
+	#else
 	for (int i=0; i < InfTrk; ++i)
 		infTrk[0][i] = fTxt("ti"+toStr(i));
+	#endif
 		
-	Edt(edFind, "TrackFind", edTrkFind);
+	//EdC(TrkFind);
 	#ifndef SR_EDITOR
 	EditPtr ed;
-	Edt(ed, "RplFind", edRplFind);
+	Ed(RplFind, edRplFind);//-
 	#endif
 
 	ButtonPtr btn;
-	Btn("TrkView1", btnTrkView1);
-	Btn("TrkView2", btnTrkView2);
+	BtnC("TrkView1", btnTrkView1);
+	BtnC("TrkView2", btnTrkView2);
 	imgTrkIco1 = fImg("TrkView2icons1");
 	imgTrkIco2 = fImg("TrkView2icons2");
 	
@@ -172,7 +186,7 @@ void CGui::GuiInitTrack()
 
 //  done once to fill tracks list from dirs
 //-----------------------------------------------------------------------------------------------------------
-void CGui::FillTrackLists()
+void CGuiCom::FillTrackLists()
 {
 	liTracks.clear();  liTracksUser.clear();
 	#ifdef SR_EDITOR
@@ -181,8 +195,8 @@ void CGui::FillTrackLists()
 	std::string chkfile = "/track.txt";
 	#endif
 
-	PATHMANAGER::GetFolderIndex(pathTrk[0], liTracks);
-	PATHMANAGER::GetFolderIndex(pathTrk[1], liTracksUser);  //name duplicates
+	PATHMANAGER::DirList(pathTrk[0], liTracks);
+	PATHMANAGER::DirList(pathTrk[1], liTracksUser);  //name duplicates
 	if (liTracks.size() == 0)
 		LogO("Error: no tracks !!! in data/tracks/ crashing.");
 
@@ -192,7 +206,7 @@ void CGui::FillTrackLists()
 	while (i != liTracks.end())
 	{
 		std::string s = pathTrk[0] + *i + chkfile;
-		if (!boost::filesystem::exists(s))
+		if (!PATHMANAGER::FileExists(s))
 			i = liTracks.erase(i);
 		else  ++i;
 	}
@@ -201,7 +215,7 @@ void CGui::FillTrackLists()
 	while (i != liTracksUser.end())
 	{
 		std::string s = pathTrk[1] + *i + chkfile;
-		if (!boost::filesystem::exists(s))
+		if (!PATHMANAGER::FileExists(s))
 			i = liTracksUser.erase(i);
 		else  ++i;
 	}
@@ -213,8 +227,8 @@ void CGui::FillTrackLists()
 		TrkL trl;  trl.name = *i;  //trl.pA = this;
 		trl.test = StringUtil::startsWith(trl.name,"test");
 
-		int id = data->tracks->trkmap[*i];
-		const TrackInfo* pTrk = id==0 ? 0 : &data->tracks->trks[id-1];
+		int id = app->data->tracks->trkmap[*i];
+		const TrackInfo* pTrk = id==0 ? 0 : &app->data->tracks->trks[id-1];
 		trl.ti = pTrk;  // 0 if not in data->tracks
 		liTrk.push_back(trl);
 	}
@@ -224,7 +238,7 @@ void CGui::FillTrackLists()
 ///  . .  util tracks stats  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 //----------------------------------------------------------------------------------------------------------------
 
-void CGui::ReadTrkStats()
+void CGuiCom::ReadTrkStats()
 {
 	String sRd = PathListTrk() + "/road.xml";
 	String sSc = PathListTrk() + "/scene.xml";
@@ -245,7 +259,7 @@ void CGui::ReadTrkStats()
 }
 
 #ifndef SR_EDITOR  // game
-void CGui::ReadTrkStatsChamp(String track, bool reverse)
+void CGuiCom::ReadTrkStatsChamp(String track, bool reverse)
 {
 	String sRd = pathTrk[0] + track + "/road.xml";
 	String sSc = pathTrk[0] + track + "/scene.xml";
@@ -260,7 +274,29 @@ void CGui::ReadTrkStatsChamp(String track, bool reverse)
 }
 #endif
 
-void CGui::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTrack, float timeCur, bool champ)
+
+String CGuiCom::TrkDir() {
+	int u = pSet->gui.track_user ? 1 : 0;		return pathTrk[u] + pSet->gui.track + "/";  }
+
+String CGuiCom::PathListTrk(int user) {
+	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;  }
+	
+String CGuiCom::PathListTrkPrv(int user, String track) {
+	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + track + "/preview/";  }
+
+
+bool CGuiCom::TrackExists(String name/*, bool user*/)
+{
+	// ignore letters case..
+	for (strlist::const_iterator it = liTracks.begin(); it != liTracks.end(); ++it)
+		if (*it == name)  return true;
+	for (strlist::const_iterator it = liTracksUser.begin(); it != liTracksUser.end(); ++it)
+		if (*it == name)  return true;
+	return false;
+}
+
+
+void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTrack, float timeCur, bool champ)
 {
 #ifndef SR_EDITOR  // game
 	bool mph = pSet->show_mph;
@@ -284,11 +320,11 @@ void CGui::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sT
 	if (stTrk[ch][4])  stTrk[ch][4]->setCaption(fToStr(rd->st.OnTer ,0,2)+"%");
 	if (stTrk[ch][5])  stTrk[ch][5]->setCaption(fToStr(rd->st.Pipes ,0,2)+"%");
 					
-	int id = data->tracks->trkmap[sTrack];
+	int id = app->data->tracks->trkmap[sTrack];
 	for (int i=0; i < InfTrk; ++i)
 		if (infTrk[ch][i])  infTrk[ch][i]->setCaption("");
 	if (id > 0)
-	{	const TrackInfo& ti = data->tracks->trks[id-1];
+	{	const TrackInfo& ti = app->data->tracks->trks[id-1];
 		#define str0(v)  ((v)==0 ? "" : toStr(v))
 		if (infTrk[ch][0])  infTrk[ch][0]->setCaption(str0(ti.fluids));
 		if (infTrk[ch][1])  infTrk[ch][1]->setCaption(str0(ti.bumps));		if (infTrk[ch][2])  infTrk[ch][2]->setCaption(str0(ti.jumps));
@@ -310,7 +346,7 @@ void CGui::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sT
 
 	//  track time
 	float carMul = app->GetCarTimeMul(pSet->gui.car[0], pSet->gui.sim_mode);
-	float timeTrk = data->tracks->times[sTrack];
+	float timeTrk = app->data->tracks->times[sTrack];
 	std::string speedTrk = fToStr(len / timeTrk * m, 0,3) + unit;
 	float timeT = (/*place*/1 * data->cars->magic * timeTrk + timeTrk) / carMul;
 	if (stTrk[ch][6])  stTrk[ch][6]->setCaption(CHud::StrTime(timeT));
@@ -332,8 +368,8 @@ void CGui::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sT
 		if (stTrk[ch][10])  stTrk[ch][10]->setCaption(fToStr(points ,1,3));
 	}
 #else
-	if (trkName)  //
-		trkName->setCaption(sTrack.c_str());
+	if (app->gui->trkName)  //
+		app->gui->trkName->setCaption(sTrack.c_str());
 #endif
 	if (trkDesc[ch])  // desc
 		trkDesc[ch]->setCaption(rd->sTxtDesc.c_str());

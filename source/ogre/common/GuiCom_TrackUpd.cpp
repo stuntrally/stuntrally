@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "../common/Def_Str.h"
+#include "GuiCom.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
 #include "../common/data/SceneXml.h"
@@ -9,7 +10,7 @@
 	#include "../../vdrift/game.h"
 	#include "../CGame.h"
 	#include "../CHud.h"
-	#include "../CGui.h"
+	//#include "../CGui.h"
 	#include "../SplitScreen.h"
 #else
 	#include "../../editor/CApp.h"
@@ -24,6 +25,12 @@
 #include <OgreRenderWindow.h>
 #include "Gui_Def.h"
 #include <boost/filesystem.hpp>
+#include <MyGUI_Window.h>
+#include <MyGUI_TabItem.h>
+#include <MyGUI_TabControl.h>
+#include <MyGUI_ImageBox.h>
+#include <MyGUI_Gui.h>
+#include <MyGUI_EditBox.h>
 using namespace MyGUI;
 using namespace Ogre;
 using namespace std;
@@ -61,7 +68,7 @@ bool (*TrkSort[allSortFunc])(const TrkL& t1, const TrkL& t2) = {
 //  done every list sort column change or find edit text change
 //  fills gui track list
 //-----------------------------------------------------------------------------------------------------------
-void CGui::TrackListUpd(bool resetNotFound)
+void CGuiCom::TrackListUpd(bool resetNotFound)
 {
 	if (trkList)
 	{	trkList->removeAllItems();
@@ -111,12 +118,27 @@ void CGui::TrackListUpd(bool resetNotFound)
 	}
 }
 
+void CGuiCom::SortTrkList()
+{	
+	if (!trkList)  return;
+	if (trkList->mSortColumnIndex != trkList->mSortColumnIndexOld ||
+		trkList->mSortUp != trkList->mSortUpOld)
+	{
+		trkList->mSortColumnIndexOld = trkList->mSortColumnIndex;
+		trkList->mSortUpOld = trkList->mSortUp;
+
+		pSet->tracks_sort = trkList->mSortColumnIndex;  // to set
+		pSet->tracks_sortup = trkList->mSortUp;
+		TrackListUpd(false);
+	}
+}
+
 
 //  events  . . . . . . . . . . . . . . . . . . . . . . . . . 
 //-----------------------------------------------------------------------------------------------------------
 
 //  list changed position
-void CGui::listTrackChng(MultiList2* li, size_t pos)
+void CGuiCom::listTrackChng(MultiList2* li, size_t pos)
 {
 	if (!li)  return;
 	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
@@ -128,16 +150,33 @@ void CGui::listTrackChng(MultiList2* li, size_t pos)
 	sListTrack = s;
 
 #ifndef SR_EDITOR
-	changeTrack();
+	app->gui->changeTrack();
 #endif
 #ifdef SR_EDITOR
-	if (iLoadNext==0)
+	if (app->gui->iLoadNext==0)
 #endif
 		ReadTrkStats();
 }
 
+//  key util
+#ifdef SR_EDITOR
+void CGuiCom::trkListNext(int rel)
+{
+	bool b = app->bGuiFocus && (app->mWndTabsEdit->getIndexSelected() == 1)
+		&& !pSet->isMain && pSet->inMenu == WND_Edit;
+	if (!b)  return;
+	
+	size_t cnt = trkList->getItemCount();
+	if (cnt == 0)  return;
+	int i = std::max(0, std::min((int)cnt-1, (int)trkList->getIndexSelected()+rel ));
+	trkList->setIndexSelected(i);
+	trkList->beginToItemAt(std::max(0, i-11));  // center
+	listTrackChng(trkList,i);
+}
+#endif
+
 //  find edit changed text
-void CGui::edTrkFind(EditPtr ed)
+void CGuiCom::editTrkFind(EditPtr ed)
 {
 	String s = ed->getCaption();
 	if (s == "")
@@ -150,7 +189,7 @@ void CGui::edTrkFind(EditPtr ed)
 }
 
 #ifndef SR_EDITOR
-void CGui::edRplFind(EditPtr ed)
+void CGuiCom::edRplFind(EditPtr ed)
 {
 	String s = ed->getCaption();
 	if (s == "")
@@ -166,22 +205,22 @@ void CGui::edRplFind(EditPtr ed)
 
 //  view change
 //-----------------------------------------------------------------------------------------------------------
-void CGui::btnTrkView1(WP wp)
+void CGuiCom::btnTrkView1(WP wp)
 {
 	pSet->tracks_view = 0;  ChangeTrackView();
 }
-void CGui::btnTrkView2(WP wp)
+void CGuiCom::btnTrkView2(WP wp)
 {
 	pSet->tracks_view = 1;  ChangeTrackView();
 }
 
-void CGui::ChangeTrackView()
+void CGuiCom::ChangeTrackView()
 {
 	bool full = pSet->tracks_view;
 
 	if (!imgPrv[0])  return;
 	imgPrv[0]->setVisible(!full);
-	trkDesc[0]->setVisible(!full);
+	//trkDesc[0]->setVisible(!full);
 	imgTrkIco1->setVisible(full);
 	imgTrkIco2->setVisible(full);
 
@@ -189,7 +228,7 @@ void CGui::ChangeTrackView()
 }
 
 //  adjust list size, columns
-void CGui::updTrkListDim()
+void CGuiCom::updTrkListDim()
 {
 	//  tracks list  ----------
 	if (!trkList)  return;
@@ -248,7 +287,7 @@ void CGui::updTrkListDim()
 
 #ifndef SR_EDITOR
 ///  champ,chall,stages lists  ----------
-void CGui::updChampListDim()
+void CGuiCom::updChampListDim()
 {
 	const IntCoord& wi = app->mWndGame->getCoord();
 
@@ -294,3 +333,4 @@ void CGui::updChampListDim()
 	liChalls->setVisible(isChallGui());
 }
 #endif
+

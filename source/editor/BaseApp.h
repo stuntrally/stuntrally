@@ -30,6 +30,9 @@ public:
 	BaseApp();	virtual ~BaseApp();
 	virtual void Run( bool showDialog );
 
+	friend class CGui;
+	friend class CGuiCom;
+
 	SplineRoad* road; //-
 	
 	SETTINGS* pSet;
@@ -126,7 +129,6 @@ protected:
 	Tab mWndTabsEdit,mWndTabsHelp,mWndTabsOpts;  // main tabs on windows
 
 	///  main menu
-	friend class CGui;
 	WP mWndMainPanels[WND_ALL];
 	Btn mWndMainBtns[WND_ALL];
 

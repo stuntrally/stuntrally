@@ -5,6 +5,7 @@
 #include "../ogre/common/data/CData.h"
 #include "../ogre/common/data/SceneXml.h"
 #include "../ogre/common/data/FluidsXml.h"
+#include "../ogre/common/GuiCom.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -41,8 +42,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 			case key(RETURN):  // save screen
 			{	int u = pSet->allow_save ? pSet->gui.track_user : 1;
-				rt[RTs-1].rndTex->writeContentsToFile(gui->pathTrk[u] + pSet->gui.track + "/preview/view.jpg");
-				gui->listTrackChng(gui->trkList,0);  // upd gui img
+				rt[RTs-1].rndTex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/view.jpg");
+				//gui->listTrackChng(gui->trkList,0);  // upd gui img
 				gui->Status("Preview saved", 1,1,0);
 			}	break;
 
@@ -536,12 +537,12 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(E):  if (bEdit()){  SetEdMode(ED_Height);  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
 		case key(F):  if (bEdit()){  SetEdMode(ED_Filter);  curBr = 3;  updBrush();  UpdEditWnds();  }
 			else  //  focus on find edit  (global)
-			if (ctrl && gui->edFind /*&& bGuiFocus &&
+			if (ctrl && gcom->edTrkFind /*&& bGuiFocus &&
 				!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 1*/)
 			{
 				gui->GuiShortcut(WND_Edit, 1);  // Track tab
 				MyGUI::InputManager::getInstance().resetKeyFocusWidget();
-				MyGUI::InputManager::getInstance().setKeyFocusWidget(gui->edFind);
+				MyGUI::InputManager::getInstance().setKeyFocusWidget(gcom->edTrkFind);
 				return true;
 			}	break;
 

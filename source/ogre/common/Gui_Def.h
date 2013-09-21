@@ -40,41 +40,66 @@ public:
 
 //  Gui Shortcuts: find control, assign event, set value
 //------------------------------------------------------------------------
-//ButtonPtr btn, bchk;  ComboBoxPtr cmb;
-//Slider* sl;
-//TODO: make classes with methods for these..
+//Btn btn, bchk;  Cmb cmb;  Sl* sl;
 
 #define Slv(name, vset)  \
-	sl = app->mGui->findWidget<Slider>(#name);  \
+	sl = mGui->findWidget<Slider>(#name);  \
 	if (sl && sl->eventValueChanged.empty())  sl->eventValueChanged += newDelegate(this, &CGui::sl##name);  \
-	val##name = app->mGui->findWidget<StaticText>(#name"Val",false);  \
+	val##name = mGui->findWidget<TextBox>(#name"Val",false);  \
 	if (sl)  sl->setValue(vset);  sl##name(sl, vset);
 
+
+//  button
 #define Btn(name, event)  \
-	btn = app->mGui->findWidget<Button>(name);  \
+	btn = mGui->findWidget<Button>(name);  \
 	if (btn && btn->eventMouseButtonClick.empty())  btn->eventMouseButtonClick += newDelegate(this, &CGui::event);
 
+#define BtnC(name, event)  \
+	btn = mGui->findWidget<Button>(name);  \
+	if (btn && btn->eventMouseButtonClick.empty())  btn->eventMouseButtonClick += newDelegate(this, &CGuiCom::event);
+
+
+//  check
 #define Chk(name, event, var)  \
-	bchk = app->mGui->findWidget<Button>(name);  \
+	bchk = mGui->findWidget<Button>(name);  \
 	if (bchk && bchk->eventMouseButtonClick.empty())  {  bchk->eventMouseButtonClick += newDelegate(this, &CGui::event);  }  \
 	if (bchk)  bchk->setStateSelected(var);
 
-#define Edt(edit, name, event)  \
-	edit = app->mGui->findWidget<EditBox>(name);  \
-	if (edit && edit->eventEditTextChange.empty())  edit->eventEditTextChange += newDelegate(this, &CGui::event);		
+#define ChkC(name, event, var)  \
+	bchk = mGui->findWidget<Button>(name);  \
+	if (bchk && bchk->eventMouseButtonClick.empty())  {  bchk->eventMouseButtonClick += newDelegate(this, &CGuiCom::event);  }  \
+	if (bchk)  bchk->setStateSelected(var);
 
-#define Ed(name, evt)  Edt(ed##name, #name, evt)
+
+//  edit
+#define Edt(edit, name, event)  \
+	edit = mGui->findWidget<EditBox>(name);  \
+	if (edit && edit->eventEditTextChange.empty())  edit->eventEditTextChange += newDelegate(this, &CGui::event);
+
+#define Ed(name, event)  Edt(ed##name, #name, event)
+
+#define EdC(edit, name, event)  \
+	edit = mGui->findWidget<EditBox>(name);  \
+	if (edit && edit->eventEditTextChange.empty())  edit->eventEditTextChange += newDelegate(this, &CGuiCom::event);
+
 	
+//  combo
 #define Cmb(cmb, name, event)  \
-	cmb = app->mGui->findWidget<ComboBox>(name);  \
+	cmb = mGui->findWidget<ComboBox>(name);  \
 	if (cmb && cmb->eventComboChangePosition.empty())  cmb->eventComboChangePosition += newDelegate(this, &CGui::event);
 
+#define CmbC(cmb, name, event)  \
+	cmb = mGui->findWidget<ComboBox>(name);  \
+	if (cmb && cmb->eventComboChangePosition.empty())  cmb->eventComboChangePosition += newDelegate(this, &CGuiCom::event);
+
+
+//  tab
 #define Tab(tab, name, event)  \
-	tab = app->mGui->findWidget<TabControl>(name);  \
+	tab = mGui->findWidget<TabControl>(name);  \
 	if (tab && tab->eventTabChangeSelect.empty())  tab->eventTabChangeSelect += newDelegate(this, &CGui::event);
 		
 		
-//  checkbox event
+//  check event
 #define ChkEv(var)  \
 	pSet->var = !pSet->var;  if (wp) {  \
 	ButtonPtr chk = wp->castType<MyGUI::Button>(); \

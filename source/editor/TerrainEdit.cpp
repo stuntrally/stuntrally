@@ -7,6 +7,9 @@
 #include <OgreTerrain.h>
 #include <OgreHardwarePixelBuffer.h>
 //#include "../vdrift/settings.h"
+#include <MyGUI.h>
+#include <OgreOverlay.h>
+#include <OgreOverlayElement.h>
 using namespace Ogre;
 
 

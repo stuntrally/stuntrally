@@ -1,5 +1,6 @@
 #pragma once
 //#include <map>
+#include <OgreString.h>
 #include <MyGUI_Delegate.h>
 
 const float slHalf = 0.45f;  // added to int value sliders to their float value

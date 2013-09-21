@@ -1,14 +1,24 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
+#include "../ogre/common/Gui_Def.h"
+#include "../ogre/common/GuiCom.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"
-#include "../ogre/common/Gui_Def.h"
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
-using namespace Ogre;
-
 #include "../sdl4ogre/sdlinputwrapper.hpp"
+#include <OgreCamera.h>
+#include <OgreSceneNode.h>
+#include <OgreManualObject.h>
+#include <OgreOverlay.h>
+#include <OgreOverlayElement.h>
+#include <MyGUI_InputManager.h>
+#include <MyGUI_Widget.h>
+#include <MyGUI_TextBox.h>
+#include <MyGUI_ImageBox.h>
+#include <MyGUI_Window.h>
+using namespace Ogre;
 
 
 //  Update  input, info
@@ -113,15 +123,15 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 
 	//  keys up/dn - trklist
 
-	MyGUI::Widget* wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();
+	WP wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();
 	static float dirU = 0.f,dirD = 0.f;
-	if (bGuiFocus && wf != gui->trkDesc[0])
+	if (bGuiFocus && wf != (WP)gcom->trkDesc[0])
 	{	if (isKey(UP)  ||isKey(KP_8))  dirD += evt.timeSinceLastFrame;  else
 		if (isKey(DOWN)||isKey(KP_2))  dirU += evt.timeSinceLastFrame;  else
 		{	dirU = 0.f;  dirD = 0.f;  }
 		int d = ctrl ? 4 : 1;
-		if (dirU > 0.0f) {  gui->trkListNext( d);  dirU = -0.2f;  }
-		if (dirD > 0.0f) {  gui->trkListNext(-d);  dirD = -0.2f;  }
+		if (dirU > 0.0f) {  gcom->trkListNext( d);  dirU = -0.2f;  }
+		if (dirD > 0.0f) {  gcom->trkListNext(-d);  dirD = -0.2f;  }
 	}
 
 	

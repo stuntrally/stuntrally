@@ -1,15 +1,20 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
+#include "../ogre/common/Gui_Def.h"
+#include "../ogre/common/GuiCom.h"
+#include "../ogre/common/QTimer.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
 #include "../vdrift/pathmanager.h"
-#include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/Slider.h"
-#include "../ogre/common/QTimer.h"
 #include <boost/filesystem.hpp>
 #include "../sdl4ogre/sdlcursormanager.hpp"
+#include <MyGUI.h>
+#include <MyGUI_InputManager.h>
+#include <OgreRenderWindow.h>
+#include "../ogre/common/RenderBoxScene.h"
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -20,6 +25,7 @@ using namespace Ogre;
 void CGui::InitGui() 
 {
 	mGui = app->mGui;
+	gcom->mGui = mGui;
 	if (!mGui)  return;
 	QTimer ti;  ti.update();  /// time
 
@@ -28,13 +34,16 @@ void CGui::InitGui()
 	FactoryManager::getInstance().registerFactory<Slider>("Widget");
 	int i;
 
+	SliderValue::pGUI = app->mGui;
+	SliderValue::bGI = &bGI;
+
 	//  load layout
 	app->vwGui = LayoutManager::getInstance().loadLayout("Editor.layout");
 
 	for (VectorWidgetPtr::iterator it = app->vwGui.begin(); it != app->vwGui.end(); ++it)
 	{
 		const std::string& name = (*it)->getName();
-		setToolTips((*it)->getEnumerator());
+		gcom->setToolTips((*it)->getEnumerator());
 	}
 	//  wnds
 	app->mWndMain = fWnd("MainMenuWnd");
@@ -69,7 +78,7 @@ void CGui::InitGui()
 	app->mWndMain->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
 
 
-	GuiInitTooltip();
+	gcom->GuiInitTooltip();
 	
 	//  assign controls, tool window texts  ----------------------
 	for (i=0; i<12; ++i)
@@ -127,12 +136,12 @@ void CGui::InitGui()
 			vSubTabsOpts.push_back(sub);
 		}
 		//app->mWndTabs->setIndexSelected(3);  //default*--
-		ResizeOptWnd();
+		gcom->ResizeOptWnd();
 	}
 
 	//  center mouse pos
 	app->mCursorManager->cursorVisibilityChange(app->bGuiFocus || !app->bMoveCam);
-	GuiCenterMouse();
+	gcom->GuiCenterMouse();
 	
 	//  hide  ---
 	app->SetEdMode(ED_Deform);  app->UpdEditWnds();  // *  UpdVisHit(); //after track
@@ -147,7 +156,7 @@ void CGui::InitGui()
 
 	///  [Graphics]
 	//------------------------------------------------------------------------
-	GuiInitGraphics();
+	gcom->GuiInitGraphics();
 
 
 	///  [Settings]
@@ -176,9 +185,6 @@ void CGui::InitGui()
 	Chk("AutoStart", chkAutoStart, pSet->autostart);
 	Chk("EscQuits", chkEscQuits, pSet->escquit);
 	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
-
-	bnQuit = app->mGui->findWidget<Button>("Quit");
-	if (bnQuit)  {  bnQuit->eventMouseButtonClick += newDelegate(this, &CGui::btnQuit);  bnQuit->setVisible(false);  }
 	
 
 	///  [Sun]
@@ -213,7 +219,7 @@ void CGui::InitGui()
 	//------------------------------------------------------------------------
 	imgTexDiff = fImg("TerImgDiff");
 	Tab(tabsHmap, "TabHMapSize", tabHmap);
-	Edt(edTerErrorNorm, "edTerErrorNorm", editTerErrorNorm);
+	Ed(TerErrorNorm, editTerErrorNorm);
 
 	Btn("TerrainNew", btnTerrainNew);
 	Btn("TerrainGenAdd", btnTerGenerate);  Btn("TerrainGenSub", btnTerGenerate);   Btn("TerrainGenMul", btnTerGenerate);
@@ -241,8 +247,8 @@ void CGui::InitGui()
 		img->setUserString("tip", st.name);  img->setNeedToolTip(true);
 		img->setImageTexture("brushes.png");
 		img->setImageCoord(IntCoord(i%16*z,i/16*z, z,z));
-		if (!st.name.empty())  img->eventToolTip += newDelegate(this, &CGui::notifyToolTip);
-		setOrigPos(img, "EditorWnd");
+		if (!st.name.empty())  img->eventToolTip += newDelegate(gcom, &CGuiCom::notifyToolTip);
+		gcom->setOrigPos(img, "EditorWnd");
 		
 		StaticText* txt = scv->createWidget<StaticText>("TextBox", xt,yt, 40,22, Align::Default, "brT"+s);
 		txt->setCaption(fToStr(st.Size,0,2));
@@ -251,7 +257,7 @@ void CGui::InitGui()
 			float m = st.Size / 160.f + 0.4f;
 			#define mul(v,m)  std::min(1.f, std::max(0.f, v * m))
 		txt->setTextColour(Colour(mul(fB,m), mul(fG,m), mul(fR,m)) );
-		setOrigPos(txt, "EditorWnd");
+		gcom->setOrigPos(txt, "EditorWnd");
 	}
 	//scv->setCanvasSize(1020,j*90+300);
 
@@ -419,7 +425,7 @@ void CGui::InitGui()
 	///  Fill Combo boxes  . . . . . . .
 	//------------------------------------------------------------------------------------------------------------
 
-	GuiInitLang();
+	gcom->GuiInitLang();
 	
 	//---------------------  Skies  ---------------------
 	Cmb(cmbSky, "SkyCombo", comboSky);
@@ -448,8 +454,8 @@ void CGui::InitGui()
 	Cmb(cmbTexNorm, "TexNormal", comboTexNorm);  cmbTexNorm->addItem("flat_n.png");
 
 	strlist li;
-	DirList(data + "/terrain", li);
-	DirList(data + "/terrain2", li);
+	PATHMANAGER::DirList(data + "/terrain", li);
+	PATHMANAGER::DirList(data + "/terrain2", li);
 
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 	if (!StringUtil::match(*i, "*.txt", false))
@@ -480,7 +486,7 @@ void CGui::InitGui()
 		if (s.length() > 5)  //!= "grass")
 			cmbGrassMtr->addItem(s);
 	}
-	DirList(data + "/grass", li);
+	PATHMANAGER::DirList(data + "/grass", li);
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 	{
 		if (StringUtil::startsWith(*i, "grClr", false))
@@ -490,9 +496,9 @@ void CGui::InitGui()
 	//---------------------  Trees  ---------------------
 	Cmb(cmbPgLay, "LTrCombo", comboPgLay);
 	strlist lt;
-	DirList(data + "/trees", lt);
-	DirList(data + "/trees2", lt);
-	DirList(data + "/trees-old", lt);
+	PATHMANAGER::DirList(data + "/trees", lt);
+	PATHMANAGER::DirList(data + "/trees2", lt);
+	PATHMANAGER::DirList(data + "/trees-old", lt);
 	for (strlist::iterator i = lt.begin(); i != lt.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh"))  {
 			std::string s = *i;  s = s.substr(0, s.length()-5);
@@ -527,7 +533,7 @@ void CGui::InitGui()
 
 	//---------------------  Objects  ---------------------
 	strlist lo;  vObjNames.clear();
-	DirList(data + "/objects", lo);
+	PATHMANAGER::DirList(data + "/objects", lo);
 	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh") && (*i) != "sphere.mesh")
 			vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
@@ -572,7 +578,7 @@ void CGui::InitGui()
 	cmbTwk->setIndexSelected( cmbTwk->findItemIndexWith(pSet->tweak_mtr) );
 	//-----------------------------------------------------
 
-	InitGuiScreenRes();
+	gcom->InitGuiScreenRes();
 	
 
 	///  [Track]
@@ -583,11 +589,11 @@ void CGui::InitGui()
 	bCopyTrackU = 0;
 	
 	//  text desc
-	Edt(trkDesc[0], "TrackDesc", editTrkDesc);
+	//Edt(trkDesc[0], "TrackDesc", editTrkDesc);
 	trkName = app->mGui->findWidget<Edit>("TrackName");
 	if (trkName)  trkName->setCaption(pSet->gui.track);
 
-	GuiInitTrack();
+	gcom->GuiInitTrack();
 	
 	//  btn change,  new, rename, delete
 	//Btn("ChangeTrack",	btnChgTrack);

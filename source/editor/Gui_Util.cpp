@@ -2,6 +2,7 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/RenderConst.h"
+#include "../ogre/common/GuiCom.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -10,6 +11,9 @@
 #include "../sdl4ogre/sdlcursormanager.hpp"
 #include "../sdl4ogre/sdlinputwrapper.hpp"
 #include <OgreTerrain.h>
+#include <OgreOverlay.h>
+#include <OgreOverlayElement.h>
+#include <MyGUI.h>
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -86,6 +90,7 @@ void CGui::SetGuiFromXmls()
 	_Ed(RdSkirtLen,	rd->skirtLen);  _Ed(RdHeightOfs,rd->fHeight);
 	_Ed(RdSkirtH,	rd->skirtH);
 	_Ed(RdMergeLen,	rd->setMrgLen);  _Ed(RdLodPLen,	rd->lposLen);
+	
 	bGI = true;
 }
 
@@ -168,7 +173,7 @@ void App::UpdVisGui()
 	if (mWndHelp)	mWndHelp->setVisible(notMain && pSet->inMenu == WND_Help);
 	if (mWndOpts)	mWndOpts->setVisible(notMain && pSet->inMenu == WND_Options);
 
-	if (gui->bnQuit)  gui->bnQuit->setVisible(bGuiFocus);
+	if (gcom->bnQuit)  gcom->bnQuit->setVisible(bGuiFocus);
 
 	bool vis = bGuiFocus || !bMoveCam;
 	mCursorManager->cursorVisibilityChange(vis);
@@ -176,7 +181,7 @@ void App::UpdVisGui()
 	mInputWrapper->setGrabPointer(!vis);
 
 	if (road)  road->SetTerHitVis(bEdit());
-	if (!bGuiFocus && gui->mToolTip)  gui->mToolTip->setVisible(false);
+	if (!bGuiFocus && gcom->mToolTip)  gcom->mToolTip->setVisible(false);
 
 	if (ovBrushPrv)
 	if (edMode >= ED_Road || bMoveCam)
@@ -191,7 +196,7 @@ void App::UpdVisGui()
 	static bool first = true;
 	if (bGuiFocus && first)
 	{	first = false;
-		gui->GuiCenterMouse();
+		gcom->GuiCenterMouse();
 	}
 }
 
@@ -258,21 +263,7 @@ void App::togPrvCam()
 }
 
 
-//  key util
-void CGui::trkListNext(int rel)  //Gui..
-{
-	bool b = app->bGuiFocus && (app->mWndTabsEdit->getIndexSelected() == 1)
-		&& !pSet->isMain && pSet->inMenu == WND_Edit;
-	if (!b)  return;
-	
-	size_t cnt = trkList->getItemCount();
-	if (cnt == 0)  return;
-	int i = std::max(0, std::min((int)cnt-1, (int)trkList->getIndexSelected()+rel ));
-	trkList->setIndexSelected(i);
-	trkList->beginToItemAt(std::max(0, i-11));  // center
-	listTrackChng(trkList,i);
-}
-
+//  main menu
 void CGui::MainMenuBtn(MyGUI::WidgetPtr wp)
 {
 	for (int i=0; i < WND_ALL; ++i)
@@ -363,7 +354,4 @@ void CGui::NumTabNext(int rel)
 			}
 		}	break;
 	}
-	//Tab(tabsTerLayers, "TabTerLay", tabTerLayer);
-	//Tab(tabsGrLayers, "LGrLayTab", tabGrLayers);
-	//Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);
 }

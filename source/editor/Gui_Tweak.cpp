@@ -1,19 +1,17 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
+#include "../ogre/common/Gui_Def.h"
+#include "../ogre/common/GuiCom.h"
+#include "../vdrift/pathmanager.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
-#include "../vdrift/pathmanager.h"
-
-#include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/Slider.h"
-#include <boost/filesystem.hpp>
-
 #include "../shiny/Main/Factory.hpp"
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
-
+#include <MyGUI.h>
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -70,20 +68,20 @@ void CGui::CreateGUITweakMtr()
 				//  name text
 				int x = 0, xs = 150;
 				TextBox* txt = view->createWidget<TextBox>("TextBox", x,y, xs,20, Align::Default, nameSi + ".txt");
-				setOrigPos(txt, "OptionsWnd");  txt->setTextColour(clr);
+				gcom->setOrigPos(txt, "OptionsWnd");  txt->setTextColour(clr);
 				txt->setCaption(size == 1 ? name : name + "." + ch[t]);
 
 				//  val edit
 				x += xs;  xs = 60;
 				EditBox* edit = view->createWidget<EditBox>("EditBox", x,y, xs,20, Align::Default, nameSi + "E");
-				setOrigPos(edit, "OptionsWnd");  edit->setTextColour(clr);  edit->setColour(clr);
+				gcom->setOrigPos(edit, "OptionsWnd");  edit->setTextColour(clr);  edit->setColour(clr);
 				edit->setCaption(fToStr(val,3,6));
 				if (edit->eventEditTextChange.empty())  edit->eventEditTextChange += newDelegate(this, &CGui::edTweak);
 				
 				//  slider
 				x += xs + 10;  xs = 400;
 				Slider* sl = view->createWidget<Slider>("Slider", x,y-1, xs,19, Align::Default, nameSi);
-				setOrigPos(sl, "OptionsWnd");  sl->setColour(clr);
+				gcom->setOrigPos(sl, "OptionsWnd");  sl->setColour(clr);
 				sl->setValue(val);  //powf(val * 1.f/2.f, 1.f/2.f));  //v
 				if (sl->eventValueChanged.empty())  sl->eventValueChanged += newDelegate(this, &CGui::slTweak);
 
@@ -95,7 +93,7 @@ void CGui::CreateGUITweakMtr()
 	view->setCanvasSize(1100, y+500);  //?..
 	view->setCanvasAlign(Align::Default);
 
-	doSizeGUI(view->getEnumerator());
+	gcom->doSizeGUI(view->getEnumerator());
 }
 
 //  gui change val events

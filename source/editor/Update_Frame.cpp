@@ -1,21 +1,27 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
+#include "../ogre/common/Gui_Def.h"
+#include "../ogre/common/GuiCom.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"
 #include "../paged-geom/PagedGeometry.h"
-#include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MultiList2.h"
+#include "../ogre/common/RenderBoxScene.h"
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 //#include "LinearMath/btDefaultMotionState.h"
 //#include "BulletDynamics/Dynamics/btRigidBody.h"
+#include "../shiny/Main/Factory.hpp"
+#include "../sdl4ogre/sdlinputwrapper.hpp"
+#include <MyGUI.h>
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
-#include "../shiny/Main/Factory.hpp"
+#include <OgreParticleEmitter.h>
+#include <OgreParticleSystem.h>
+#include <OgreOverlay.h>
+#include <OgreOverlayElement.h>
 using namespace Ogre;
-
-#include "../sdl4ogre/sdlinputwrapper.hpp"
 
 
 ///  Mouse
@@ -250,35 +256,37 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	processMouse(mDTime);
 
 	
-	gui->UnfocusLists();
+	gcom->UnfocusLists();
 	
-	if (gui->iLoadNext)  // load next/prev track
-	{	size_t cnt = gui->trkList->getItemCount();
-		if (cnt > 0)  
-		{	int i = std::max(0, std::min((int)cnt-1, (int)gui->trkList->getIndexSelected() + gui->iLoadNext ));
-			gui->iLoadNext = 0;
-			gui->trkList->setIndexSelected(i);
-			gui->trkList->beginToItemAt(std::max(0, i-11));  // center
-			gui->listTrackChng(gui->trkList,i);
-			gui->btnNewGame(0);
-	}	}
+	//if (gui->iLoadNext)  // load next/prev track
+	//{	size_t cnt = gui->trkList->getItemCount();
+	//	if (cnt > 0)  
+	//	{	int i = std::max(0, std::min((int)cnt-1, (int)gui->trkList->getIndexSelected() + gui->iLoadNext ));
+	//		gui->iLoadNext = 0;
+	//		gui->trkList->setIndexSelected(i);
+	//		gui->trkList->beginToItemAt(std::max(0, i-11));  // center
+	//		gui->listTrackChng(gui->trkList,i);
+	//		gui->btnNewGame(0);
+	//}	}
 	
-	if (gui->bGuiReinit)  // after language change from combo
-	{	gui->bGuiReinit = false;
-		mGui->destroyWidgets(vwGui);  gui->bnQuit=0; mWndOpts=0; gui->trkList=0; //todo: rest too..
+	if (gcom->bGuiReinit)  // after language change from combo
+	{	gcom->bGuiReinit = false;
+
+		gui->mGui->destroyWidgets(vwGui);
+		gcom->bnQuit=0; mWndOpts=0; gcom->trkList=0; //todo: rest too..
+
 		gui->InitGui();
 		gui->SetGuiFromXmls();
 		bWindowResized = true;
-		//mWndTabs->setIndexSelected(10);  // switch back to view tab
 	}
 
 	if (bWindowResized)
 	{	bWindowResized = false;
 
-		gui->ResizeOptWnd();
+		gcom->ResizeOptWnd();
 		//bSizeHUD = true;
-		gui->SizeGUI();
-		gui->updTrkListDim();
+		gcom->SizeGUI();
+		gcom->updTrkListDim();
 		gui->viewCanvas->setCoord(gui->GetViewSize());
 		//LoadTrack();  // shouldnt be needed ...
 	}
@@ -290,17 +298,8 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		UpdFluidBox();
 	}
 	
-	///  sort trk list
-	if (gui->trkList && (gui->trkList->mSortColumnIndex != gui->trkList->mSortColumnIndexOld
-		|| gui->trkList->mSortUp != gui->trkList->mSortUpOld))
-	{
-		gui->trkList->mSortColumnIndexOld = gui->trkList->mSortColumnIndex;
-		gui->trkList->mSortUpOld = gui->trkList->mSortUp;
-
-		pSet->tracks_sort = gui->trkList->mSortColumnIndex;  // to set
-		pSet->tracks_sortup = gui->trkList->mSortUp;
-		gui->TrackListUpd(false);
-	}
+	//  sort trk list
+	gcom->SortTrkList();
 
 	
 	//--  3d view upd  (is global in window)

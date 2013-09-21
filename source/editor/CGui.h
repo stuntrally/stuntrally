@@ -14,23 +14,14 @@
 #include <MyGUI_WidgetTooltip.h>
 #include <MyGUI_Enumerator.h>
 #include <MyGUI_WidgetDefines.h>  //EnumeratorWidgetPtr
+#include <MyGUI_Colour.h>  //EnumeratorWidgetPtr
 #include "../ogre/common/MessageBox/MessageBoxStyle.h"
 
 
 namespace wraps {	class RenderBoxScene;  }
-class App;  class SETTINGS;  class Scene;  class CData;
+class App;  class SETTINGS;  class Scene;  class CData;  class CGuiCom;
 
 enum ED_OBJ {  EO_Move=0, EO_Rotate, EO_Scale  };
-
-
-
-//  tracks,cars list items - with info for sorting
-struct TrkL
-{
-	std::string name;
-	const class TrackInfo* ti;
-	int test;  //Test*
-};
 
 
 class CGui : public BGui
@@ -41,87 +32,27 @@ public:
 	Scene* sc;
 	CData* data;
 	MyGUI::Gui* mGui;
+	CGuiCom* gcom;
 
 	CGui(App* app1);
 	//virtual ~CGui();
 
 	typedef std::list <std::string> strlist;
 
-	///-----------------------------------------------------------------------------------------------------------------
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------	
-	//  size
-	void SizeGUI(); void doSizeGUI(MyGUI::EnumeratorWidgetPtr);
-	std::vector<Tab> vSubTabsEdit, vSubTabsHelp, vSubTabsOpts;
-
 	
-	///  Gui common   --------------------------
-	//  graphics
-	SlV(ViewDist);  SlV(Anisotropy);
-	SlV(TerDetail);  SlV(TerDist);  SV svRoadDist;
-	SlV(TexSize);  SlV(TerMtr);  SlV(TerTripl);  // detail
-	SlV(Trees);  SlV(Grass);  SlV(TreesDist);  SlV(GrassDist);  // paged
-	SlV(ShadowType);  SlV(ShadowCount);  SlV(ShadowSize);  SlV(ShadowDist);  // shadow
-	SlV(WaterSize);  // screen
-	void comboTexFilter(CMB), btnShadows(WP), btnShaders(WP), btnTrGrReset(WP),
-		chkWaterReflect(WP), chkWaterRefract(WP),
-		chkUseImposters(WP), chkImpostorsOnly(WP), cmbAntiAliasing(CMB);
-	void setOrigPos(WP wp, const char* relToWnd);
-
-	//  tooltip
-	WP mToolTip;  Ed mToolTipTxt;
-	void setToolTips(MyGUI::EnumeratorWidgetPtr widgets);
-	void notifyToolTip(WP sender, const MyGUI::ToolTipInfo& info);
-	void boundedMove(WP moving, const MyGUI::IntPoint& point);
-
-	//  language
-	void comboLanguage(CMB);
-	std::map<std::string, MyGUI::UString> languages; // <short name, display name>
-	bool bGuiReinit;  void UnfocusLists();
-	Btn bnQuit;  void btnQuit(WP);
-
-	//  init
-	bool bGI;
-	void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(), GuiInitGraphics(),GuiInitTrack();
-	Ogre::String GetSceneryColor(Ogre::String name);
-	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
-	
-	///  track
-	void UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const Ogre::String& sTrack, float timeCur, bool champ=false),
-		ReadTrkStats();
-	Mli2 trkList;  Ed trkDesc[2];
-	Img imgPrv[2],imgMini[2],imgTer[2], imgTrkIco1,imgTrkIco2;
-	const static int StTrk = 6, InfTrk = 8;
-	Txt valTrk[2], stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 1 unused, is in game (common code)
-
-	void listTrackChng(Mli2, size_t), TrackListUpd(bool resetNotFound=false);
-	void btnTrkView1(WP),btnTrkView2(WP), ChangeTrackView();
-	void updTrkListDim();
-	//  const list column widths
-	const static int colTrk[32];
-	const static Ogre::String clrsDiff[9], clrsRating[6], clrsLong[10];
-
-	void edTrkFind(Ed);
-	Ogre::String sTrkFind;  Ed edFind;
-	strlist liTracks,liTracksUser;  void FillTrackLists();
-	std::list<TrkL> liTrk;
-
-	//  screen
-	Li resList;
-	void InitGuiScreenRes(), btnResChng(WP), ResizeOptWnd();
-	void chkVidFullscr(WP), chkVidVSync(WP);
-
-	void comboGraphicsAll(CMB), comboRenderSystem(CMB);
-
-	///-----------------------------------------
-	
+	bool bGI;  // gui inited  set values
 	void InitGui();
-	
-	
-	void trkListNext(int rel);
-	void Status(Ogre::String s, float r,float g,float b);
-	void SetGuiFromXmls();  bool noBlendUpd;
 
+	Txt valTrk[2];
+	std::vector<Tab> vSubTabsEdit, vSubTabsHelp, vSubTabsOpts;
+	
+	void Status(Ogre::String s, float r,float g,float b);
+	void SetGuiFromXmls();
+	bool noBlendUpd;
+
+	//  clr
 	const static MyGUI::Colour sUsedClr[8];
 	void SetUsedStr(Txt valUsed, int cnt, int yellowAt);
 	
@@ -331,13 +262,8 @@ public:
 
 
 	//  [Track]  ----
-	Ogre::String pathTrk[2];    // 0 read only  1 //U user paths for save
-	std::string TrkDir();  // path to track dir (from pSet settings)
-
 	Ogre::String sListTrack;  int bListTrackU;
 	Ogre::String sCopyTrack;  int bCopyTrackU;  // for tools
-
-	Ogre::String PathListTrk(int user=-1), PathListTrkPrv(int user/*=-1*/, Ogre::String track);
 	Ogre::String PathCopyTrk(int user=-1);
 
 	void btnTrackNew(WP),btnTrackRename(WP),btnTrackDel(WP),  // track
@@ -352,12 +278,9 @@ public:
 	Ogre::String strFSerrors;
 	bool Rename(Ogre::String from, Ogre::String to), Delete(Ogre::String file), DeleteDir(Ogre::String dir),
 		 CreateDir(Ogre::String dir), Copy(Ogre::String file, Ogre::String to);
-	bool TrackExists(Ogre::String name);  // util
-
-	bool DirList(std::string folderpath, strlist& outputfolderlist, std::string extension="");
 
 	std::vector<Ogre::String> vsMaterials;
 	//void GetMaterialsFromDef(Ogre::String filename, bool clear=true);
-	void GetMaterials(Ogre::String filename, bool clear=true, Ogre::String type="material");  // ogre resource
+	void GetMaterials(   Ogre::String filename, bool clear=true, Ogre::String type="material");  // ogre resource
 	void GetMaterialsMat(Ogre::String filename, bool clear=true, Ogre::String type="material");  // direct path+file
 };

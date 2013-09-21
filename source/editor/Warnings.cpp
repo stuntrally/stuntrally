@@ -6,6 +6,9 @@
 #include "CGui.h"
 #include "../road/Road.h"
 #include <OgreTerrain.h>
+#include <MyGUI_TextBox.h>
+#include <MyGUI_ImageBox.h>
+#include <MyGUI_EditBox.h>
 using namespace Ogre;
 
 

@@ -45,7 +45,7 @@ public:
 	static std::string Screenshots() {     return user_data + "/screenshots";  }
 
 	//  list files
-	static bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");
+	static bool DirList(std::string dirpath, std::list <std::string> & dirlist, std::string extension="");
 
 	static bool FileExists(const std::string & filename);
 

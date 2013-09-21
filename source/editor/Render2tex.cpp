@@ -2,6 +2,7 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/RenderConst.h"
 #include "../ogre/common/QTimer.h"
+#include "../ogre/common/GuiCom.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -13,7 +14,9 @@
 #include "BulletCollision/CollisionDispatch/btCollisionWorld.h"
 
 #include <OgreTerrain.h>
-
+#include <OgreRenderWindow.h>
+#include <OgreManualObject.h>
+#include <OgreHardwarePixelBuffer.h>
 using namespace Ogre;
 
 
@@ -164,7 +167,7 @@ void App::SaveGrassDens()
 	{
 		Image im;  // for trees, before grass angle and height
 		im.loadDynamicImage((uchar*)gd, w,h,1, PF_BYTE_RGBA);
-		im.save(gui->TrkDir()+"objects/roadDensity.png");
+		im.save(gcom->TrkDir()+"objects/roadDensity.png");
 
 		///  terrain - max angle, height for grass  -----------
 		for (y = 0; y < h; ++y) {  b = y*w;
@@ -189,14 +192,14 @@ void App::SaveGrassDens()
 
 		//Image im;
 		im.loadDynamicImage((uchar*)gd, w,h,1, PF_BYTE_RGBA);
-		im.save(gui->TrkDir()+"objects/grassDensity.png");
+		im.save(gcom->TrkDir()+"objects/grassDensity.png");
 	}
 	delete[] rd;  delete[] gd;  delete[] mask;
 
 	//  road, terrain  ----------------
 	int u = pSet->allow_save ? pSet->gui.track_user : 1;
-	rt[0].rndTex->writeContentsToFile(gui->pathTrk[u] + pSet->gui.track + "/preview/road.png");
-	rt[2].rndTex->writeContentsToFile(gui->pathTrk[u] + pSet->gui.track + "/preview/terrain.jpg");
+	rt[0].rndTex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/road.png");
+	rt[2].rndTex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/terrain.jpg");
 }
 
 
@@ -242,7 +245,7 @@ void App::SaveWaterDepth()
 {
 	if (sc->fluids.empty())
 	{
-		gui->Delete(gui->TrkDir()+"objects/waterDepth.png");  // no tex if no fluids
+		gui->Delete(gcom->TrkDir()+"objects/waterDepth.png");  // no tex if no fluids
 		return;
 	}
 	QTimer ti;  ti.update();  ///T  /// time
@@ -288,7 +291,7 @@ void App::SaveWaterDepth()
 
 	Image im;  // save img
 	im.loadDynamicImage((uchar*)wd, w,h,1, PF_BYTE_RGBA);
-	im.save(gui->TrkDir()+"objects/waterDepth.png");
+	im.save(gcom->TrkDir()+"objects/waterDepth.png");
 	delete[] wd;
 
 	try {

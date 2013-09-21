@@ -1,10 +1,11 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
+#include "../ogre/common/Gui_Def.h"
+#include "../ogre/common/GuiCom.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"
-#include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MessageBox/MessageBox.h"
 using namespace MyGUI;
 using namespace Ogre;
@@ -54,7 +55,7 @@ void CGui::btnCopyTerHmap(WP)
 	if (!ChkTrkCopy())  return;
 
 	String from = PathCopyTrk(),
-		name = TrkDir() + "heightmap-new.f32";
+		name = gcom->TrkDir() + "heightmap-new.f32";
 	Copy(from + "/heightmap.f32", name);
 	
 	Scene sF;  sF.LoadXml(from + "/scene.xml");
@@ -103,7 +104,7 @@ void CGui::btnCopyTerLayers(WP)
 
 	//  copy grass dens only
 	String sto = from + "/objects";  // from
-	String to = TrkDir() + "objects";  // to, new
+	String to = gcom->TrkDir() + "objects";  // to, new
 	Copy(sto + csTrkFo[0], to + csTrkFo[0]);
 
 	SetGuiFromXmls();	app->UpdateTrack();
@@ -246,19 +247,23 @@ void CGui::editScaleTerHMul(EditPtr)
 ///  track 	. . . . . . . . . . . . . . . . . . . .	. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 //-----------------------------------------------------------------------------------------------------------
 
+String CGui::PathCopyTrk(int user) {
+	int u = user == -1 ? bCopyTrackU : user;	return gcom->pathTrk[u] + sCopyTrack;  }
+
+
 ///  New (duplicate)
 void CGui::btnTrackNew(WP)
 {
 	String name = trkName->getCaption();
 	name = StringUtil::replaceAll(name, "*", "");
 
-	if (TrackExists(name))  {
+	if (gcom->TrackExists(name))  {
 		Message::createMessageBox(
 			"Message", "New Track", "Track " + name + " already exists.",
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 		return;  }
 
-	String st = pathTrk[bListTrackU] + sListTrack, t = pathTrk[1] + name,
+	String st = gcom->pathTrk[bListTrackU] + sListTrack, t = gcom->pathTrk[1] + name,
 		sto = st + "/objects", stp = st + "/preview",  // from
 		to = t + "/objects",   tp = t + "/preview";  // to,new
 
@@ -271,8 +276,7 @@ void CGui::btnTrackNew(WP)
 
 	sListTrack = name;  pSet->gui.track = name;  pSet->gui.track_user = 1;
 	app->UpdWndTitle();
-	FillTrackLists();
-	TrackListUpd();
+	gcom->FillTrackLists();  gcom->TrackListUpd();
 }
 
 ///  Rename
@@ -287,19 +291,18 @@ void CGui::btnTrackRename(WP)
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 			return;  }/**/
 
-	if (TrackExists(name))  {
+	if (gcom->TrackExists(name))  {
 		Message::createMessageBox(
 			"Message", "Rename Track", "Track " + name + " already exists.",
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 		return;  }
 	
 	//  Rename
-	Rename(pathTrk[bListTrackU] + sListTrack, pathTrk[/*1*/bListTrackU] + name);
+	Rename(gcom->pathTrk[bListTrackU] + sListTrack, gcom->pathTrk[/*1*/bListTrackU] + name);
 	
 	sListTrack = name;  pSet->gui.track = sListTrack;  pSet->gui.track_user = 1;/**/
 	app->UpdWndTitle();
-	FillTrackLists();
-	TrackListUpd();  //listTrackChng(trkList,0);
+	gcom->FillTrackLists();  gcom->TrackListUpd();  //gcom->listTrackChng(trkList,0);
 }
 
 ///  Delete
@@ -315,7 +318,7 @@ void CGui::msgTrackDel(Message* sender, MessageBoxStyle result)
 {
 	if (result != MessageBoxStyle::Yes)
 		return;
-	String t = pathTrk[bListTrackU] + sListTrack,
+	String t = gcom->pathTrk[bListTrackU] + sListTrack,
 		to = t + "/objects", tp = t + "/preview";
 	int i;
 	for (i=0; i < cnTrkFo; ++i)  Delete(to + csTrkFo[i]);
@@ -325,8 +328,8 @@ void CGui::msgTrackDel(Message* sender, MessageBoxStyle result)
 	DeleteDir(to);  DeleteDir(tp);  DeleteDir(t);
 
 	String st = pSet->gui.track;
-	FillTrackLists();
-	TrackListUpd();
+	gcom->FillTrackLists();
+	gcom->TrackListUpd();
 	if (st != pSet->gui.track)
 		app->LoadTrack();  //load 1st if deleted cur
 }

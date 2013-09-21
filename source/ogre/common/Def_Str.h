@@ -3,6 +3,7 @@
 
 #include <OgreLogManager.h>
 #include <OgreStringConverter.h>
+#include <MyGUI_LanguageManager.h>
 
 
 //  Log in ogre.log

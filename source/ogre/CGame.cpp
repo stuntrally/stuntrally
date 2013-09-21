@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "common/Def_Str.h"
 #include "common/RenderConst.h"
+#include "common/GuiCom.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
@@ -59,6 +60,7 @@ App::App(SETTINGS *settings, GAME *game)
 	hud = new CHud(this);
 	gui = new CGui(this);
 	hud->gui = gui;
+	gcom = new CGuiCom(this);
 	mBindListner = gui;
 	input = new CInput(this);
 
@@ -85,6 +87,7 @@ App::~App()
 	OGRE_DELETE dbgdraw;
 	delete sc;
 	delete data;
+	delete gcom;
 	delete gui;
 	delete hud;
 	delete input;

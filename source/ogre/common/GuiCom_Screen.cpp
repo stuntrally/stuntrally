@@ -1,17 +1,27 @@
 #include "pch.h"
 #include "Def_Str.h"
 #include "Gui_Def.h"
+#include "GuiCom.h"
 #ifndef SR_EDITOR
 	#include "../CGame.h"
-	#include "../CGui.h"
+	//#include "../CGui.h"
 	#include "../SplitScreen.h"
 	#include "../vdrift/settings.h"
 #else
 	#include "../../editor/CApp.h"
-	#include "../../editor/CGui.h"
+	//#include "../../editor/CGui.h"
 	#include "../../editor/settings.h"
 #endif
 #include "SDL_Video.h"
+#include <OgreRoot.h>
+#include <OgreRenderWindow.h>
+#include <MyGUI_Widget.h>
+#include <MyGUI_EditBox.h>
+#include <MyGUI_ListBox.h>
+#include <MyGUI_ComboBox.h>
+#include <MyGUI_Gui.h>
+#include <MyGUI_Button.h>
+#include <MyGUI_Window.h>
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -19,15 +29,15 @@ using namespace Ogre;
 //  [Screen] 
 //-----------------------------------------------------------------------------------------------------------
 
-void CGui::cmbAntiAliasing(MyGUI::ComboBox* wp, size_t val)
+void CGuiCom::cmbAntiAliasing(MyGUI::ComboBox* wp, size_t val)
 {
 	int v = s2i(wp->getItemNameAt(val));
-	if (bGI)  pSet->fsaa = v;
+	/*if (app->gui->bGI)*/  pSet->fsaa = v;
 }
 
 ///  resolutions
 //  change
-void CGui::btnResChng(WP)
+void CGuiCom::btnResChng(WP)
 {
 	if (!resList)  return;
 	if (resList->getIndexSelected() == MyGUI::ITEM_NONE)  return;
@@ -62,11 +72,11 @@ bool ResSort(const ScrRes& r1, const ScrRes& r2)
 	return (r1.w <= r2.w) && (r1.h <= r2.h);
 }
 
-void CGui::InitGuiScreenRes()
+void CGuiCom::InitGuiScreenRes()
 {
 	ButtonPtr bchk;
-	Chk("FullScreen", chkVidFullscr, pSet->fullscreen);
-	Chk("VSync", chkVidVSync, pSet->vsync);
+	ChkC("FullScreen", chkVidFullscr, pSet->fullscreen);
+	ChkC("VSync", chkVidVSync, pSet->vsync);
 
 	//  video resolutions combobox
 	resList = app->mGui->findWidget<List>("ResList");
@@ -106,12 +116,12 @@ void CGui::InitGuiScreenRes()
 			resList->setIndexSelected(resList->findItemIndexWith(modeSel));
 	}
 	ButtonPtr btnRes = app->mGui->findWidget<Button>("ResChange");
-	if (btnRes)  {  btnRes->eventMouseButtonClick += newDelegate(this, &CGui::btnResChng);  }
+	if (btnRes)  {  btnRes->eventMouseButtonClick += newDelegate(this, &CGuiCom::btnResChng);  }
 }
 
 
 //  resize Options wnd
-void CGui::ResizeOptWnd()
+void CGuiCom::ResizeOptWnd()
 {
 	if (!app->mWndOpts)  return;
 
@@ -146,7 +156,7 @@ void CGui::ResizeOptWnd()
 	#endif
 }
 
-void CGui::chkVidFullscr(WP wp)
+void CGuiCom::chkVidFullscr(WP wp)
 {
 	ChkEv(fullscreen);
 	SDL_SetWindowFullscreen(app->mSDLWindow,  wp->castType<MyGUI::Button>()->getStateSelected()? SDL_WINDOW_FULLSCREEN : 0);
@@ -155,13 +165,13 @@ void CGui::chkVidFullscr(WP wp)
 	#endif
 }
 
-void CGui::chkVidVSync(WP wp)
+void CGuiCom::chkVidVSync(WP wp)
 {		
 	ChkEv(vsync); 
 	Ogre::Root::getSingleton().getRenderSystem()->setWaitForVerticalBlank(pSet->vsync);
 }
 
-void CGui::comboRenderSystem(ComboBoxPtr wp, size_t val)
+void CGuiCom::comboRenderSystem(ComboBoxPtr wp, size_t val)
 {
 	pSet->rendersystem = wp->getItemNameAt(val);
 }
