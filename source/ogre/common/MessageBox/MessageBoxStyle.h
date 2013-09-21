@@ -6,6 +6,7 @@
 #ifndef __MESSAGE_BOX_STYLE_H__
 #define __MESSAGE_BOX_STYLE_H__
 #include <vector>
+#include <cstddef>
 //#include <MyGUI_Prerequest.h>
 
 

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "MessageBoxStyle.h"
-#include "MyGui_Macros.h"
+#include "MyGUI_Macros.h"
 
 namespace MyGUI
 {
