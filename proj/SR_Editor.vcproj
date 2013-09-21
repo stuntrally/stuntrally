@@ -1346,6 +1346,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\ogre\common\GuiCom_TrackUpd.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\ogre\common\GuiCom_Util.cpp"
 					>
 				</File>
