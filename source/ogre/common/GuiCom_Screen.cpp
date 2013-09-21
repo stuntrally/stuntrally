@@ -11,7 +11,7 @@
 	#include "../../editor/CGui.h"
 	#include "../../editor/settings.h"
 #endif
-#include "SDL_Video.h"
+#include "SDL_video.h"
 using namespace MyGUI;
 using namespace Ogre;
 

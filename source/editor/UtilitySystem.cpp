@@ -4,6 +4,9 @@
 #include "CApp.h"
 #include "CGui.h"
 #include <boost/filesystem.hpp>
+#ifndef _WIN32
+#include <dirent.h>
+#endif
 using namespace MyGUI;
 using namespace Ogre;
 

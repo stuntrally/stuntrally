@@ -11,7 +11,7 @@
 #include <OgreString.h>
 
 #include <MyGUI_Types.h>
-#include <MyGUI_WidgetTooltip.h>
+#include <MyGUI_WidgetToolTip.h>
 #include <MyGUI_Enumerator.h>
 #include <MyGUI_WidgetDefines.h>  //EnumeratorWidgetPtr
 #include "../ogre/common/MessageBox/MessageBoxStyle.h"
