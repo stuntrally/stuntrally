@@ -34,7 +34,6 @@ public:
 	
 	CGuiCom(App* app1);
 
-
 	typedef std::list <std::string> strlist;
 
 
@@ -69,12 +68,15 @@ public:
 	SlV(ViewDist);  SlV(Anisotropy);
 	SlV(TerDetail);  SlV(TerDist);  SV svRoadDist;
 	SlV(TexSize);  SlV(TerMtr);  SlV(TerTripl);  // detail
-	SlV(Trees);  SlV(Grass);  SlV(TreesDist);  SlV(GrassDist);  // paged
+	SlV(Trees);  SlV(Grass);  SlV(TreesDist);  SlV(GrassDist);  // veget
 	SlV(ShadowType);  SlV(ShadowCount);  SlV(ShadowSize);  SlV(ShadowDist);  // shadow
-	SlV(WaterSize);  // screen
-	void comboTexFilter(CMB), btnShadows(WP), btnShaders(WP), btnTrGrReset(WP),
-		chkWaterReflect(WP), chkWaterRefract(WP),
-		chkUseImposters(WP), chkImpostorsOnly(WP), cmbAntiAliasing(CMB);
+	SlV(WaterSize);
+
+	Ck ckUseImposters, ckImpostorsOnly;
+	Ck ckWaterReflect, ckWaterRefract;  void chkWater(Ck*);
+
+	void comboTexFilter(CMB), cmbAntiAliasing(CMB);
+	void btnShadows(WP), btnShaders(WP), btnTrGrReset(WP);
 
 	//  track path 
 	Ogre::String pathTrk[2];    // 0 read only  1 //U user paths for save
@@ -135,7 +137,8 @@ public:
 	Li resList;
 	void InitGuiScreenRes(), ResizeOptWnd();
 
-	void btnResChng(WP), chkVidFullscr(WP), chkVidVSync(WP);
+	CK(VidFullscr);  CK(VidVSync);
+	void btnResChng(WP);
 	void comboGraphicsAll(CMB), comboRenderSystem(CMB);
 		
 };

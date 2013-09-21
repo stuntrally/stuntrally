@@ -74,9 +74,9 @@ bool ResSort(const ScrRes& r1, const ScrRes& r2)
 
 void CGuiCom::InitGuiScreenRes()
 {
-	ButtonPtr bchk;
-	ChkC("FullScreen", chkVidFullscr, pSet->fullscreen);
-	ChkC("VSync", chkVidVSync, pSet->vsync);
+	Ck* ck;
+	ck= &ckVidFullscr;  ck->Init("FullScreen", &pSet->fullscreen);  CevC(VidFullscr);
+	ck= &ckVidVSync;	ck->Init("VSync",      &pSet->vsync);		CevC(VidVSync);
 
 	//  video resolutions combobox
 	resList = app->mGui->findWidget<List>("ResList");
@@ -153,18 +153,16 @@ void CGuiCom::ResizeOptWnd()
 	updTrkListDim();
 }
 
-void CGuiCom::chkVidFullscr(WP wp)
+void CGuiCom::chkVidFullscr(Ck*)
 {
-	ChkEv(fullscreen);
-	SDL_SetWindowFullscreen(app->mSDLWindow,  wp->castType<MyGUI::Button>()->getStateSelected()? SDL_WINDOW_FULLSCREEN : 0);
+	SDL_SetWindowFullscreen(app->mSDLWindow, pSet->fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
 	#ifndef SR_EDITOR
 	app->bSizeHUD = true;
 	#endif
 }
 
-void CGuiCom::chkVidVSync(WP wp)
+void CGuiCom::chkVidVSync(Ck*)
 {		
-	ChkEv(vsync); 
 	Ogre::Root::getSingleton().getRenderSystem()->setWaitForVerticalBlank(pSet->vsync);
 }
 

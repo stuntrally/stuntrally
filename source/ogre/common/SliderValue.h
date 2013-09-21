@@ -3,10 +3,27 @@
 #include <OgreString.h>
 #include <MyGUI_Delegate.h>
 
+namespace MyGUI {  class Slider;  }
+
 const float slHalf = 0.45f;  // added to int value sliders to their float value
 
 
-namespace MyGUI {  class Slider;  }
+///  shortcuts  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+//  declare slider and its event in .h
+#define SlV(a)  SV sv##a;  void sl##a(SV*)
+
+//  set event
+#define Sev(ev)   if (sv->event.empty())  sv->event += newDelegate(this, &CGui::sl##ev)
+#define SevC(ev)  if (sv->event.empty())  sv->event += newDelegate(this, &CGuiCom::sl##ev)
+
+//  check declare
+#define CK(a)   Ck ck##a;  void chk##a(Ck*)
+
+//  check set event
+#define Cev(ev)   if (ck->event.empty())  ck->event += newDelegate(this, &CGui::chk##ev)
+#define CevC(ev)  if (ck->event.empty())  ck->event += newDelegate(this, &CGuiCom::chk##ev)
+
 
 
 class SliderValue
@@ -150,13 +167,5 @@ private:
 };
 
 
-
-///  shortcuts  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
 typedef SliderValue SV;
-
-//  declare slider and its event in .h
-#define SlV(a)  SV sv##a;  void sl##a(SV*)
-
-//  set event
-#define Sev(ev)  if (sv->event.empty())  sv->event += newDelegate(this, &CGui::sl##ev)
+typedef Check Ck;

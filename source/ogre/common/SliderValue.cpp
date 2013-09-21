@@ -253,7 +253,9 @@ void Check::Click(Widget* btn)
 {
 	bool gi = bGI && *bGI;  // Gui inited
 	if (pBool)
-	{	bool b = chk->getStateSelected();
+	{
+		bool b = !chk->getStateSelected();
+		chk->setStateSelected(b);
 		if (gi)
 			*pBool = b;
 	}

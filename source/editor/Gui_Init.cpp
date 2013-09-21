@@ -28,6 +28,8 @@ void CGui::InitGui()
 	gcom->mGui = mGui;
 	SliderValue::pGUI = app->mGui;
 	SliderValue::bGI = &bGI;
+	Check::pGUI = app->mGui;
+	Check::bGI = &bGI;
 
 	if (!mGui)  return;
 	QTimer ti;  ti.update();  /// time
@@ -596,8 +598,7 @@ void CGui::InitGui()
 
 	gcom->GuiInitTrack();
 	
-	//  btn change,  new, rename, delete
-	//Btn("ChangeTrack",	btnChgTrack);
+	//  btn  new, rename, delete
 	Btn("TrackNew",		btnTrackNew);
 	Btn("TrackRename",	btnTrackRename);
 	Btn("TrackDelete",	btnTrackDel);

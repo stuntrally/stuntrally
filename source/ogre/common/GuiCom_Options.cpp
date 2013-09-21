@@ -18,7 +18,6 @@
 #include "../sdl4ogre/sdlinputwrapper.hpp"
 #include <OgreTerrain.h>
 #include <MyGUI.h>
-//#include <MyGUI_D.h>
 using namespace MyGUI;
 using namespace Ogre;
 using namespace std;
@@ -31,21 +30,20 @@ using namespace std;
 void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 {
 	ButtonPtr btn, bchk;  ComboBoxPtr cmb;
-	SliderValue* sv;
-	//Check* ck;
+	SliderValue* sv;  Check* ck;
 
 	BtnC("Quit", btnQuit);  bnQuit = btn;
 	
 	//  detail
-	sv= &svTerDetail;	sv->Init("TerDetail",	&pSet->terdetail,	0.f,2.f);  //Sev(TerDetail);
-	sv= &svTerDist;		sv->Init("TerDist",		&pSet->terdist, 0.f,2000.f, 2.f, 0,3, 1.f," m");  //Sev(TerDist);
+	sv= &svTerDetail;	sv->Init("TerDetail",	&pSet->terdetail,	0.f,2.f);  SevC(TerDetail);
+	sv= &svTerDist;		sv->Init("TerDist",		&pSet->terdist, 0.f,2000.f, 2.f, 0,3, 1.f," m");  SevC(TerDist);
 	sv= &svRoadDist;	sv->Init("RoadDist",	&pSet->road_dist,	0.f,4.f, 2.f, 2,5);
 
 	//  textures
 	CmbC(cmb, "TexFiltering", comboTexFilter);
 
-	sv= &svViewDist;	sv->Init("ViewDist",	&pSet->view_distance, 50.f,20000.f, 2.f, 1,4, 0.001f," km");  //Sev(ViewDist);
-	sv= &svAnisotropy;	sv->Init("Anisotropy",	&pSet->anisotropy,	0.f,16.f);  //Sev(Anisotropy);
+	sv= &svViewDist;	sv->Init("ViewDist",	&pSet->view_distance, 50.f,20000.f, 2.f, 1,4, 0.001f," km");  SevC(ViewDist);
+	sv= &svAnisotropy;	sv->Init("Anisotropy",	&pSet->anisotropy,	0.f,16.f);  SevC(Anisotropy);
 	sv= &svTexSize;
 		sv->strMap[0] = "Small";  sv->strMap[1] = "Big";
 						sv->Init("TexSize",		&pSet->tex_size,	0.f,1.f);
@@ -64,9 +62,8 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 	sv= &svGrassDist;	sv->Init("GrassDist",   &pSet->grass_dist,	0.5f,7.f, 2.f);
 	BtnC("TrGrReset",  btnTrGrReset);
 
-	//ck = ckUseImposters; ck->Init("UseImposters", pSet->use_imposters);  Cev(chkUseImposters);
-	ChkC("UseImposters",  chkUseImposters,  pSet->use_imposters);
-	ChkC("ImpostorsOnly", chkImpostorsOnly, pSet->imposters_only);
+	ck= &ckUseImposters;  ck->Init("UseImposters", &pSet->use_imposters);
+	ck= &ckImpostorsOnly; ck->Init("ImpostorsOnly",&pSet->imposters_only);
 
 	//  shadows
 	sv= &svShadowType;
@@ -83,8 +80,8 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 	BtnC("ApplyShadersWater", btnShaders);
 	
 	//  water
-	ChkC("WaterReflection", chkWaterReflect, pSet->water_reflect);
-	ChkC("WaterRefraction", chkWaterRefract, pSet->water_refract);
+	ck= &ckWaterReflect; ck->Init("WaterReflection", &pSet->water_reflect);  CevC(Water);
+	ck= &ckWaterRefract; ck->Init("WaterRefraction", &pSet->water_refract);  CevC(Water);
 	sv= &svWaterSize;
 		for (int i=0; i <= 2; ++i)  sv->strMap[i] = toStr(ciShadowSizesA[i]);
 						sv->Init("WaterSize",	&pSet->water_rttsize, 0.f,2.f);
@@ -191,15 +188,6 @@ void CGuiCom::btnTrGrReset(WP wp)
 	svGrassDist.SetValueF(2.f);
 }
 
-void CGuiCom::chkUseImposters(WP wp)
-{
-	ChkEv(use_imposters);
-}
-void CGuiCom::chkImpostorsOnly(WP wp)
-{
-	ChkEv(imposters_only);
-}
-
 
 //  shadows
 void CGuiCom::btnShadows(WP){	app->changeShadows();	}
@@ -207,17 +195,9 @@ void CGuiCom::btnShaders(WP){	app->changeShadows();	}
 
 
 //  water
-void CGuiCom::chkWaterReflect(WP wp)
+void CGuiCom::chkWater(Ck*)
 {
-	ChkEv(water_reflect);
 	app->mWaterRTT->setReflect(pSet->water_reflect);
-	app->changeShadows();
-	app->mWaterRTT->recreate();
-}
-
-void CGuiCom::chkWaterRefract(WP wp)
-{
-	ChkEv(water_refract);
 	app->mWaterRTT->setRefract(pSet->water_refract);
 	app->changeShadows();
 	app->mWaterRTT->recreate();

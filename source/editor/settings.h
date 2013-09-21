@@ -4,7 +4,7 @@
 
 #define SET_VER  2202  // 2.2
 
-enum eShadowType  {  Sh_None=0, Sh_Simple, Sh_Depth, Sh_Soft  };
+enum eShadowType  {  Sh_None=0, Sh_Depth, Sh_Soft  };
 
 class SETTINGS
 {

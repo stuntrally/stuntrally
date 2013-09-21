@@ -179,7 +179,24 @@ void CGuiCom::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	//  update gui  sld,val,chk
 	//-----------------------------------------------------------------
-	GuiInitGraphics();  // += newDelegate..?  // duplicated code..
+	//old GuiInitGraphics();  // += newDelegate..?  // duplicated code..
+
+	//?CmbC(cmb, "TexFiltering", comboTexFilter);
+
+	svTerDetail.Upd();  svTerDist.Upd();  svRoadDist.Upd();
+	svViewDist.Upd();  svAnisotropy.Upd();
+	svTexSize.Upd();  svTerMtr.Upd();  svTerTripl.Upd();
+
+	svTrees.Upd();  svTreesDist.Upd();
+	svGrass.Upd();	svGrassDist.Upd();
+	ckUseImposters.Upd();  ckImpostorsOnly.Upd();
+
+	svShadowType.Upd();  svShadowCount.Upd();
+	svShadowSize.Upd();  svShadowDist.Upd();
+		
+	ckWaterReflect.Upd();  ckWaterRefract.Upd();
+	svWaterSize.Upd();
+
 
 	app->gui->UpdGuiAfterPreset();
 
@@ -219,7 +236,7 @@ void CGui::UpdGuiAfterPreset()
 
 #ifdef SR_EDITOR  /// editor only
 	Chk("Minimap", chkMinimap, pSet->trackmap);
-	app->gui->svTerUpd.Upd();
-	app->gui->svMiniUpd.Upd();
+	svTerUpd.Upd();
+	svMiniUpd.Upd();
 #endif
 }
