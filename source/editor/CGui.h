@@ -14,7 +14,7 @@
 #include <MyGUI_WidgetTooltip.h>
 #include <MyGUI_Enumerator.h>
 #include <MyGUI_WidgetDefines.h>  //EnumeratorWidgetPtr
-#include <MyGUI_Colour.h>  //EnumeratorWidgetPtr
+#include <MyGUI_Colour.h>
 #include "../ogre/common/MessageBox/MessageBoxStyle.h"
 
 
@@ -27,27 +27,30 @@ enum ED_OBJ {  EO_Move=0, EO_Rotate, EO_Scale  };
 class CGui : public BGui
 {
 public:
-	App* app;
-	SETTINGS* pSet;
-	Scene* sc;
-	CData* data;
-	MyGUI::Gui* mGui;
-	CGuiCom* gcom;
+	App* app;  SETTINGS* pSet;  Scene* sc;  CData* data;
+	MyGUI::Gui* mGui;  CGuiCom* gcom;
 
 	CGui(App* app1);
-	//virtual ~CGui();
 
 	typedef std::list <std::string> strlist;
+
 
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------	
 	
 	bool bGI;  // gui inited  set values
-	void InitGui();
+	void InitGui(), GuiUpdate();
+	void UpdGuiAfterPreset();
 
 	Txt valTrk[2];
 	std::vector<Tab> vSubTabsEdit, vSubTabsHelp, vSubTabsOpts;
 	
+	//  main menu
+	void toggleGui(bool toggle=false);
+	void GuiShortcut(WND_Types wnd, int tab, int subtab=-1), NumTabNext(int rel);
+	void MainMenuBtn(WP), MenuTabChg(Tab, size_t);
+
+	//  ed
 	void Status(Ogre::String s, float r,float g,float b);
 	void SetGuiFromXmls();
 	bool noBlendUpd;
@@ -57,7 +60,7 @@ public:
 	void SetUsedStr(Txt valUsed, int cnt, int yellowAt);
 	
 	//  _Tools_
-	void ToolTexAlpha(),ToolSceneXml(),ToolListSceneryID(),ToolTracksWarnings(),ToolBrushesPrv();	
+	void ToolTexAlpha(), ToolSceneXml(), ToolListSceneryID(), ToolTracksWarnings(), ToolBrushesPrv();	
 
 
 	//  tool windows texts
@@ -72,14 +75,10 @@ public:
 	WP objPan;
 	Img brImg;  Tab wndTabs;
 
-	//  main menu
-	void toggleGui(bool toggle=false), GuiShortcut(WND_Types wnd, int tab, int subtab=-1), NumTabNext(int rel);
-	void MainMenuBtn(WP), MenuTabChg(Tab, size_t);
-
 
 	//  [settings]
-	void chkMouseCapture(WP), chkOgreDialog(WP),
-		chkAutoStart(WP), chkEscQuits(WP), chkStartInMain(WP);  // startup
+	void chkAutoStart(WP), chkEscQuits(WP);  // startup
+	void chkStartInMain(WP), chkOgreDialog(WP);
 
 	SlV(SizeMinmap);  SlV(SizeRoadP);
 	SV svCamSpeed, svCamInert;
@@ -89,7 +88,9 @@ public:
 	void chkAutoBlendmap(WP);  Btn chAutoBlendmap, chInputBar;
 	void chkCamPos(WP), chkInputBar(WP);
 
-	void toggleTopView();  bool bTopView, oldFog;
+	//  top view
+	void toggleTopView();
+	bool bTopView, oldFog;
 	Ogre::Vector3 oldPos,oldRot;
 
 

@@ -44,19 +44,17 @@ public:
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------
 
-	//  resize
-	void SizeGUI(); void doSizeGUI(MyGUI::EnumeratorWidgetPtr);
-	
 	bool bGI;  // gui inited  set values
 	void InitGui(), GuiUpdate();
+	void UpdGuiAfterPreset();
+
+	Txt valTrkNet;
+	std::vector<Tab> vSubTabsGame, vSubTabsOpts;
 
 	//  car list
 	void CarListUpd(bool resetNotFound=false);
 	void AddCarL(std::string name, const class CarInfo* ci);
 	std::list<CarL> liCar;  void FillCarList();
-
-	Txt valTrkNet;
-	std::vector<Tab> vSubTabsGame, vSubTabsOpts;
 
 	void ReadTrkStatsChamp(Ogre::String track,bool reverse);
 	void updChampListDim();
@@ -67,7 +65,8 @@ public:
 
 
 	//  main menu
-	void toggleGui(bool toggle=true), GuiShortcut(MNU_Btns mnu, int tab, int subtab=-1);
+	void toggleGui(bool toggle=true);
+	void GuiShortcut(MNU_Btns mnu, int tab, int subtab=-1);
 	void MainMenuBtn(WP), MenuTabChg(Tab, size_t);  bool loadReadme;
 
 	void UpdCarClrSld(bool upd=true), UpdCarMClr();  bool bUpdCarClr;

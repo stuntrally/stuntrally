@@ -111,6 +111,8 @@ bool App::frameStart(Real time)
 	PROFILER.beginBlock(" frameSt");
 	fLastFrameDT = time;
 
+
+	//  input
 	for (int i=0; i<4; ++i)
 	{
 		boost::lock_guard<boost::mutex> lock(input->mPlayerInputStateMutex);
@@ -188,7 +190,7 @@ bool App::frameStart(Real time)
 	///  gui
 	gui->GuiUpdate();
 
-
+	
 	if (bWindowResized)
 	{	bWindowResized = false;
 
@@ -212,7 +214,7 @@ bool App::frameStart(Real time)
 			if (trees)  trees->setCamera(cam1);
 		}
 	}
-	
+
 
 	if (bLoading)
 	{
@@ -242,8 +244,9 @@ bool App::frameStart(Real time)
 			//if (imgBack)
 			//imgBack->setVisible(false);
 		}
+
 		
-				
+		//  input
 		if (isFocGui && pSet->inMenu == MNU_Options && !pSet->isMain &&
 			mWndTabsOpts->getIndexSelected() == TABo_Input)
 			gui->UpdateInputBars();
@@ -263,6 +266,7 @@ bool App::frameStart(Real time)
 		
 		///  Gui updates from Networking
 		gui->UpdGuiNetw();
+
 
 		//  replay forward,backward keys
 		if (bRplPlay)
@@ -344,12 +348,14 @@ bool App::frameStart(Real time)
 			(*it)->pReflect->Update(iLoad1stFrames == -1);
 		PROFILER.endBlock("g.refl");
 
+
 		//  trees
 		PROFILER.beginBlock("g.veget");
 		if (road) {
 			if (grass)  grass->update();
 			if (trees)  trees->update();  }
 		PROFILER.endBlock("g.veget");
+
 
 		//  road upd lods
 		if (road)

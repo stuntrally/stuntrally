@@ -123,19 +123,19 @@ void CGuiCom::doSizeGUI(EnumeratorWidgetPtr widgets)
 			
 			// retrieve original size & pos
 			IntPoint origPos;  IntSize origSize;
-			origPos.left = s2i( wp->getUserString("origPosX") );
-			origPos.top = s2i( wp->getUserString("origPosY") );
-			origSize.width = s2i( wp->getUserString("origSizeX") );
-			origSize.height = s2i( wp->getUserString("origSizeY") );
+			origPos.left = s2i(wp->getUserString("origPosX"));
+			origPos.top  = s2i(wp->getUserString("origPosY"));
+			origSize.width  = s2i(wp->getUserString("origSizeX"));
+			origSize.height = s2i(wp->getUserString("origSizeY"));
 			
 			// calc new size & pos
 			const IntPoint& newPos = IntPoint(
 				int(origPos.left * (float(relativeSize.width) / 800)),
-				int(origPos.top * (float(relativeSize.height) / 600)) );
+				int(origPos.top  * (float(relativeSize.height)/ 600)) );
 			
 			const IntSize& newScale = IntSize(
-				int(origSize.width * (float(relativeSize.width) / 800)),
-				int(origSize.height * (float(relativeSize.height) / 600)) );
+				int(origSize.width  * (float(relativeSize.width) / 800)),
+				int(origSize.height * (float(relativeSize.height)/ 600)) );
 			
 			// apply
 			wp->setPosition(newPos);
@@ -144,6 +144,16 @@ void CGuiCom::doSizeGUI(EnumeratorWidgetPtr widgets)
 		
 		doSizeGUI(wp->getEnumerator());
 	}
+}
+
+void CGuiCom::setOrigPos(WP wp, const char* relToWnd)
+{
+	if (!wp)  return;
+	wp->setUserString("origPosX", toStr(wp->getPosition().left));
+	wp->setUserString("origPosY", toStr(wp->getPosition().top));
+	wp->setUserString("origSizeX", toStr(wp->getSize().width));
+	wp->setUserString("origSizeY", toStr(wp->getSize().height));
+	wp->setUserString("RelativeTo", relToWnd);
 }
 
 

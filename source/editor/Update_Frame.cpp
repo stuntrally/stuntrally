@@ -256,64 +256,34 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	processMouse(mDTime);
 
 	
-	gcom->UnfocusLists();
+	///  gui
+	gui->GuiUpdate();
 	
-	//if (gui->iLoadNext)  // load next/prev track
-	//{	size_t cnt = gui->trkList->getItemCount();
-	//	if (cnt > 0)  
-	//	{	int i = std::max(0, std::min((int)cnt-1, (int)gui->trkList->getIndexSelected() + gui->iLoadNext ));
-	//		gui->iLoadNext = 0;
-	//		gui->trkList->setIndexSelected(i);
-	//		gui->trkList->beginToItemAt(std::max(0, i-11));  // center
-	//		gui->listTrackChng(gui->trkList,i);
-	//		gui->btnNewGame(0);
-	//}	}
-	
-	if (gcom->bGuiReinit)  // after language change from combo
-	{	gcom->bGuiReinit = false;
-
-		gui->mGui->destroyWidgets(vwGui);
-		gcom->bnQuit=0; mWndOpts=0; gcom->trkList=0; //todo: rest too..
-
-		gui->InitGui();
-		gui->SetGuiFromXmls();
-		bWindowResized = true;
-	}
-
-	if (bWindowResized)
-	{	bWindowResized = false;
-
-		gcom->ResizeOptWnd();
-		//bSizeHUD = true;
-		gcom->SizeGUI();
-		gcom->updTrkListDim();
-		gui->viewCanvas->setCoord(gui->GetViewSize());
-		//LoadTrack();  // shouldnt be needed ...
-	}
 	
 	if (bRecreateFluids)
 	{	bRecreateFluids = false;
+
 		DestroyFluids();
 		CreateFluids();
 		UpdFluidBox();
 	}
 	
-	//  sort trk list
-	gcom->SortTrkList();
-
 	
 	//--  3d view upd  (is global in window)
 	static bool oldVis = false;
 	int tab = mWndTabsEdit->getIndexSelected(), st5 = gui->vSubTabsEdit[5]->getIndexSelected();
 	bool vis = mWndEdit && mWndEdit->getVisible() && (tab == 7 || tab == 5 && st5 == 2);
+
 	if (oldVis != vis)
 	{	oldVis = vis;
 		gui->viewCanvas->setVisible(vis);
 	}
 	if (gui->tiViewUpd >= 0.f)
 		gui->tiViewUpd += evt.timeSinceLastFrame;
+
 	if (gui->tiViewUpd > 0.0f)  //par delay 0.1
 	{	gui->tiViewUpd = -1.f;
+
 		gui->viewBox->clearScene();
 		if (gui->viewMesh != "" && ResourceGroupManager::getSingleton().resourceExistsInAnyGroup(gui->viewMesh))
 			gui->viewBox->injectObject(gui->viewMesh);
@@ -352,18 +322,19 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	}/**/
 	
 	
-	//  upd ter gen prv tex
+	//  upd terrain generator preview
 	if (bUpdTerPrv)
 	{	bUpdTerPrv = false;
 		updateTerPrv();
 	}
 
 	
-	///  simulate
+	///  simulate objects
 	if (edMode == ED_Objects && gui->objSim /*&& bEdit()*/)
 		BltUpdate(evt.timeSinceLastFrame);
 	
 	gui->UpdObjNewNode();
+
 
 	bFirstRenderFrame = false;
 	

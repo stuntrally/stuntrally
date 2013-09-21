@@ -525,11 +525,10 @@ void CGui::LNext(int rel)
 }
 
 
-///  Update (frame start)
+///  Update (frame start)  .,.,.,.,..,.,.,.,..,.,.,.,..,.,.,.,.
 void CGui::GuiUpdate()
 {
 	gcom->UnfocusLists();
-
 
 	if (gcom->bGuiReinit)  // after language change from combo
 	{	gcom->bGuiReinit = false;
@@ -548,11 +547,12 @@ void CGui::GuiUpdate()
 	//  sort trk list
 	gcom->SortTrkList();
 
-	///  sort car list
-	if (gcom->SortMList(carList))
+	//  sort car list
+	if (gcom->needSort(carList))
 	{
-		pSet->cars_sort = carList->mSortColumnIndex;  // to set
+		pSet->cars_sort = carList->mSortColumnIndex;
 		pSet->cars_sortup = carList->mSortUp;
 		CarListUpd(false);
 	}
+
 }

@@ -590,7 +590,7 @@ void CGui::InitGui()
 	bCopyTrackU = 0;
 	
 	//  text desc
-	//Edt(trkDesc[0], "TrackDesc", editTrkDesc);
+	Edt(gcom->trkDesc[0], "TrackDesc", editTrkDesc);
 	trkName = app->mGui->findWidget<Edit>("TrackName");
 	if (trkName)  trkName->setCaption(pSet->gui.track);
 

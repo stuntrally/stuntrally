@@ -141,11 +141,7 @@ void CGuiCom::GuiInitTrack()
 		infTrk[0][i] = fTxt("ti"+toStr(i));
 	#endif
 		
-	//EdC(TrkFind);
-	#ifndef SR_EDITOR
-	EditPtr ed;
-	//Ed(RplFind, edRplFind);//-
-	#endif
+	EdC(edTrkFind, "TrkFind", editTrkFind);
 
 	ButtonPtr btn;
 	BtnC("TrkView1", btnTrkView1);

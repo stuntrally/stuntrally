@@ -355,3 +355,50 @@ void CGui::NumTabNext(int rel)
 		}	break;
 	}
 }
+
+
+///  Update (frame start)  .,.,.,.,..,.,.,.,..,.,.,.,..,.,.,.,.
+void CGui::GuiUpdate()
+{
+	gcom->UnfocusLists();
+	
+	if (iLoadNext)  // load next/prev track  (warnings)
+	{	size_t cnt = gcom->trkList->getItemCount();
+		if (cnt > 0)  
+		{	int i = std::max(0, std::min((int)cnt-1, (int)gcom->trkList->getIndexSelected() + iLoadNext ));
+			iLoadNext = 0;
+			gcom->trkList->setIndexSelected(i);
+			gcom->trkList->beginToItemAt(std::max(0, i-11));  // center
+			gcom->listTrackChng(gcom->trkList,i);
+			btnNewGame(0);
+	}	}
+	
+	if (gcom->bGuiReinit)  // after language change from combo
+	{	gcom->bGuiReinit = false;
+
+		mGui->destroyWidgets(app->vwGui);
+		gcom->bnQuit=0; app->mWndOpts=0; gcom->trkList=0; //todo: rest too..
+
+		bGI = false;
+		InitGui();
+		
+		SetGuiFromXmls();
+		app->bWindowResized = true;
+	}
+
+	//  sort trk list
+	gcom->SortTrkList();
+
+
+	if (app->bWindowResized)
+	{	app->bWindowResized = false;
+
+		gcom->ResizeOptWnd();
+		//bSizeHUD = true;
+		gcom->SizeGUI();
+		gcom->updTrkListDim();
+		viewCanvas->setCoord(GetViewSize());
+		//LoadTrack();  // shouldnt be needed ...
+	}
+
+}

@@ -181,6 +181,17 @@ void CGuiCom::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	//-----------------------------------------------------------------
 	GuiInitGraphics();  // += newDelegate..?  // duplicated code..
 
+	app->gui->UpdGuiAfterPreset();
+
+	app->mWaterRTT->setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
+	app->mWaterRTT->recreate();
+
+	app->changeShadows();  // apply shadow, material factory generate
+}
+
+
+void CGui::UpdGuiAfterPreset()
+{
 	ButtonPtr bchk;  Slider* sl;
 #ifndef SR_EDITOR  /// game only
 	/*Chk("ParticlesOn", chkParticles, pSet->particles);
@@ -209,20 +220,4 @@ void CGuiCom::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	app->gui->svTerUpd.Upd();
 	app->gui->svMiniUpd.Upd();
 #endif
-
-	app->mWaterRTT->setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
-	app->mWaterRTT->recreate();
-
-	app->changeShadows();  // apply shadow, material factory generate
-}
-
-
-void CGuiCom::setOrigPos(WP wp, const char* relToWnd)
-{
-	if (!wp)  return;
-	wp->setUserString("origPosX", toStr(wp->getPosition().left));
-	wp->setUserString("origPosY", toStr(wp->getPosition().top));
-	wp->setUserString("origSizeX", toStr(wp->getSize().width));
-	wp->setUserString("origSizeY", toStr(wp->getSize().height));
-	wp->setUserString("RelativeTo", relToWnd);
 }

@@ -575,6 +575,9 @@ void CGui::InitGui()
 
     gcom->GuiInitTrack();
 
+	Ed ed;
+	Edt(ed,"RplFind",edRplFind);
+
 	//if (!panelNetTrack)
 	{
 		TabItem* trkTab = mGui->findWidget<TabItem>("TabTrack");

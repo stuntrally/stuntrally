@@ -7,11 +7,9 @@
 #ifndef SR_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../CGame.h"
-	//#include "../CGui.h"
 	#include "../SplitScreen.h"
 #else
 	#include "../../editor/CApp.h"
-	//#include "../../editor/CGui.h"
 	#include "../../editor/settings.h"
 #endif
 #include "Slider.h"

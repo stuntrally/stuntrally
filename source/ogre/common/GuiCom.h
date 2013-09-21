@@ -64,6 +64,7 @@ public:
 	void GuiInitGraphics(), GuiInitTrack();  // tabs
 	Ogre::String GetSceneryColor(Ogre::String name);
 
+
 	///  [Graphics]
 	SlV(ViewDist);  SlV(Anisotropy);
 	SlV(TerDetail);  SlV(TerDist);  SV svRoadDist;
@@ -83,27 +84,32 @@ public:
 	Ogre::String PathListTrkPrv(int user/*=-1*/, Ogre::String track);
 	bool TrackExists(Ogre::String name);
 
+
 	///  [Track]
-	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
-	void UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const Ogre::String& sTrack, float timeCur, bool champ=false);
-	void ReadTrkStats();
-	void trkListNext(int rel);
 
-	Mli2 trkList;  Ed trkDesc[2];
-	bool SortMList(Mli2 li);
-	Img imgPrv[2], imgMini[2], imgTer[2];  // view,  mini: road, terrain
-	Img imgTrkIco1, imgTrkIco2;
-
-	const static int StTrk = 6, InfTrk = 11;
-	Txt stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
-
-	bool bListTrackU;  // user
-	Ogre::String sListTrack;  // sel track name
+	//  selected track name, user
+	Ogre::String sListTrack;
+	bool bListTrackU;
 	
 	void listTrackChng(Mli2, size_t);
 	void SortTrkList();
 	void TrackListUpd(bool resetNotFound=false);
 
+	Mli2 trkList;
+	Ed trkDesc[2];  // description
+	bool needSort(Mli2 li);
+
+	Img imgPrv[2], imgMini[2], imgTer[2];  // view,  mini: road, terrain
+	Img imgTrkIco1, imgTrkIco2;
+
+	//  track,road stats,info
+	const static int StTrk = 6, InfTrk = 11;
+	Txt stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
+
+	void UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const Ogre::String& sTrack, float timeCur, bool champ=false);
+	void ReadTrkStats();
+
+	//  track views
 	void btnTrkView1(WP), btnTrkView2(WP);
 	void ChangeTrackView();
 	void updTrkListDim();
@@ -112,11 +118,18 @@ public:
 	const static int colTrk[32];
 	const static Ogre::String clrsDiff[9], clrsRating[6], clrsLong[10];
 
-	Ogre::String sTrkFind;  // find
+	//  track find
+	Ogre::String sTrkFind;
 	Ed edTrkFind;  void editTrkFind(Ed); 
 
-	strlist liTracks,liTracksUser;  void FillTrackLists();
+	//  list fill
+	strlist liTracks,liTracksUser;
 	std::list<TrkL> liTrk;
+	void FillTrackLists();
+
+	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
+	void trkListNext(int rel);
+
 
 	///  [Screen]
 	Li resList;

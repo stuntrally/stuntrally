@@ -118,7 +118,7 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 	}
 }
 
-bool CGuiCom::SortMList(Mli2 li)
+bool CGuiCom::needSort(Mli2 li)
 {
 	if (!li)  return false;
 	if (li->mSortColumnIndex != li->mSortColumnIndexOld ||
@@ -132,9 +132,9 @@ bool CGuiCom::SortMList(Mli2 li)
 }
 void CGuiCom::SortTrkList()
 {	
-	if (SortMList(trkList))
+	if (needSort(trkList))
 	{
-		pSet->tracks_sort = trkList->mSortColumnIndex;  // to set
+		pSet->tracks_sort = trkList->mSortColumnIndex;
 		pSet->tracks_sortup = trkList->mSortUp;
 		TrackListUpd(false);
 	}
@@ -196,7 +196,7 @@ void CGuiCom::editTrkFind(EditPtr ed)
 }
 
 #ifndef SR_EDITOR
-/*void CGuiCom::edRplFind(EditPtr ed)
+void CGui::edRplFind(EditPtr ed)
 {
 	String s = ed->getCaption();
 	if (s == "")
@@ -206,7 +206,7 @@ void CGuiCom::editTrkFind(EditPtr ed)
 		StringUtil::toLowerCase(sRplFind);
 	}
 	updReplaysList();
-}*/
+}
 #endif
 
 
@@ -227,7 +227,7 @@ void CGuiCom::ChangeTrackView()
 
 	if (!imgPrv[0])  return;
 	imgPrv[0]->setVisible(!full);
-	//trkDesc[0]->setVisible(!full);
+	trkDesc[0]->setVisible(!full);
 	imgTrkIco1->setVisible(full);
 	imgTrkIco2->setVisible(full);
 
