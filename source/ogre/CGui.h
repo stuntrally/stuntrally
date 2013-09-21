@@ -131,11 +131,15 @@ public:
 	///  [Input] tab
 	///-----------------------------------------------------------------------------------------------------------------
 
-	void CreateInputTab(const std::string& title, bool playerTab, const std::vector<InputAction>& actions, ICS::InputControlSystem* ICS);
-	void InitInputGui(), inputBindBtnClicked(WP), inputUnbind(WP), inputBindBtn2(WP, int, int, MyGUI::MouseButton mb);
+	//  init
+	void CreateInputTab( const std::string& title, bool playerTab, const std::vector<InputAction>& actions, ICS::InputControlSystem* ICS);
+	void InitInputGui();
+	//  bind
+	void inputBindBtnClicked(WP), inputUnbind(WP), inputBindBtn2(WP, int, int, MyGUI::MouseButton mb);
 	enum EBind {  B_Done=0, B_First, B_Second  };
 	void UpdateInputButton(Btn button, const InputAction& action, EBind bind = B_Done);
 
+	//  bind events
 	InputAction* mBindingAction;
 	Btn mBindingSender;
 	virtual void mouseAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
@@ -152,27 +156,41 @@ public:
 		int deviceId, int pov, ICS::InputControlSystem::POVAxis axis, ICS::Control::ControlChangingDirection direction);
 
 	virtual void notifyInputActionBound(bool complete);
-
 	bool actionIsActive(std::string, std::string);
-	void UpdateInputBars(), inputDetailBtn(WP);
 
-	//  joy events
+	//  input gui
 	Tab tabInput;  void tabInputChg(Tab, size_t);
 	Txt txtInpDetail;  WP panInputDetail;  Btn chOneAxis;
-	Ed edInputIncrease;  void editInput(Ed), btnInputInv(WP), chkOneAxis(WP);
-	void comboInputKeyAllPreset(CMB);  bool TabInputId(int* pId);
+	Ed edInputIncrease;
+
+	void editInput(Ed), btnInputInv(WP), chkOneAxis(WP);
+	void comboInputKeyAllPreset(CMB);
+	void UpdateInputBars(), inputDetailBtn(WP);
+	bool TabInputId(int* pId);
 
 
 	///  [Tweak]  -----------------------------------------
 	const static int ciEdCar = 12;
-	Ed edCar[ciEdCar],edPerfTest, edTweakCol;  Tab tabTweak, tabEdCar;
+	Ed edCar[ciEdCar],edPerfTest, edTweakCol;
+	Tab tabTweak, tabEdCar;
 	Txt txtTweakPath, txtTweakTire, txtTweakPathCol;
 	Cmb cmbTweakCarSet, cmbTweakTireSet;
-	void CmbTweakCarSet(CMB), CmbTweakTireSet(CMB), CmbEdTweakCarSet(Ed), CmbEdTweakTireSet(Ed);
-	void TweakToggle(), TweakCarSave(),TweakCarLoad(), TweakTireSave();
-	void TweakColUpd(bool user), TweakColLoad(),TweakColSave();
-	void btnTweakCarSave(WP),btnTweakCarLoad(WP), btnTweakTireSave(WP), btnTweakColSave(WP);
+
+	void CmbTweakCarSet(CMB), CmbTweakTireSet(CMB);
+	void CmbEdTweakCarSet(Ed), CmbEdTweakTireSet(Ed);
 	void tabCarEdChng(Tab, size_t);
+
+	void TweakToggle();
+	void TweakCarSave(),TweakCarLoad(), TweakTireSave();
+	void TweakColUpd(bool user), TweakColLoad(),TweakColSave();
+
+	void btnTweakCarSave(WP),btnTweakCarLoad(WP);
+	void btnTweakTireSave(WP), btnTweakColSave(WP);
+
+	bool GetCarPath(std::string* pathCar/*out*/,
+		std::string* pathSave/*=0*/, std::string* pathSaveDir/*=0*/,
+		std::string carname, /*std::string tweakSetup="",*/ bool forceOrig=false);
+
 	//  graphs
 	Cmb cmbGraphs;  void comboGraphs(CMB);  Txt valGraphsType;
 
@@ -242,7 +260,12 @@ public:
 		chDbgT,chDbgB,chDbgS, chGraphs, chTireVis,
 		chTimes,chMinimp,chOpponents;
 
-	///  replay  -----------------------------
+
+	///  [Replay]  -----------------------------
+	Li rplList;
+	void listRplChng(Li, size_t);
+	void updReplaysList();
+	
 	Txt valRplPerc, valRplCur, valRplLen,
 		valRplName,valRplInfo,valRplName2,valRplInfo2;
 	Sl slRplPos;  void slRplPosEv(SL);
@@ -260,30 +283,32 @@ public:
 	bool bRplBack,bRplFwd;
 		
 	void msgRplDelete(MyGUI::Message*, MyGUI::MessageBoxStyle);
-	
-	void btnNumPlayers(WP);  void chkSplitVert(WP), chkStartOrd(WP);
-	Txt valLocPlayers;
-	
+		
 	Txt txCarStatsTxt,txCarStatsVals,
 		txCarSpeed,txCarType, txCarAuthor,txTrackAuthor;
 	void UpdCarStatsTxt();  // car stats
 
 	///---------------------------------------
 
+
 	//  game
 	void btnNewGame(WP),btnNewGameStart(WP);
 
-	Mli2 carList;  Li rplList;  void updReplaysList();
+	void btnNumPlayers(WP);  void chkSplitVert(WP), chkStartOrd(WP);
+	Txt valLocPlayers;
 
-	void listRplChng(Li, size_t),  changeCar();
-	void listCarChng(Mli2, size_t),  changeTrack();
+	int iCurCar;  // current
+	Ogre::String sListCar;
 
+	Mli2 carList;
+	void listCarChng(Mli2, size_t);
+
+	void changeCar(), changeTrack();
+
+	//  key util
 	int LNext(Mli2, int rel, int ofs), LNext(Li, int rel, int ofs),
 		LNext(Mli, int rel);  // util next in list
 	void LNext(int rel);  void tabPlayer(Tab wp, size_t id);
-
-	int iCurCar;
-	Ogre::String sListCar;
 
 	const Ogre::String& GetGhostFile(std::string* ghCar=NULL);
 	std::string GetRplListDir();
@@ -292,9 +317,9 @@ public:
 	Cmb cmbBoost, cmbFlip, cmbDamage, cmbRewind;
 	void comboBoost(CMB), comboFlip(CMB), comboDamage(CMB), comboRewind(CMB);
 
-	GuiPopup popup;
 
-	///  multiplayer  ---------------------------------------
+	//  multiplayer
+	//------------------------------------------------------------------------------
 	void rebuildGameList(), rebuildPlayerList();
 	void updateGameInfo(), updateGameSet(), updateGameInfoGUI();
 	void setNetGuiHosting(bool enabled);
@@ -319,6 +344,7 @@ public:
 
 	bool bRebuildPlayerList, bRebuildGameList;
 	bool bUpdateGameInfo, bStartGame, bStartedGame, bUpdChat;
+	GuiPopup popup;
 
 	///  multiplayer gui  --------------------
 	Tab tabsNet;  //void tabNet(TabPtr tab, size_t id);
@@ -343,8 +369,4 @@ public:
 		evEdNetNick(Ed), evEdNetServerIP(Ed),
 		evEdNetServerPort(Ed), evEdNetLocalPort(Ed);
 	void UpdGuiNetw();
-
-	bool GetCarPath(std::string* pathCar/*out*/,
-		std::string* pathSave/*=0*/, std::string* pathSaveDir/*=0*/,
-		std::string carname, /*std::string tweakSetup="",*/ bool forceOrig=false);
 };

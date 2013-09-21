@@ -319,6 +319,7 @@ void CGui::InitGui()
 
 	Chk("SoftParticles", chkVidSoftParticles, pSet->softparticles);
 	Chk("DepthOfField", chkVidDepthOfField, pSet->dof);
+
 	Chk("GodRays", chkVidGodRays, pSet->godrays);
 	Chk("BoostFOV", chkVidBoostFOV, pSet->boost_fov);
 

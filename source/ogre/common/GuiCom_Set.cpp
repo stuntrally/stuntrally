@@ -194,7 +194,7 @@ void CGui::UpdGuiAfterPreset()
 {
 	ButtonPtr bchk;  Slider* sl;
 #ifndef SR_EDITOR  /// game only
-	/*Chk("ParticlesOn", chkParticles, pSet->particles);
+	Chk("ParticlesOn", chkParticles, pSet->particles);
 	Chk("TrailsOn", chkTrails, pSet->trails);
 
 	svParticles.Upd();  svTrails.Upd();
@@ -206,17 +206,19 @@ void CGui::UpdGuiAfterPreset()
 	Chk("Bloom", chkVidBloom, pSet->bloom);
 	//Chk("HDR", chkVidHDR, pSet->hdr);
 	Chk("MotionBlur", chkVidBlur, pSet->blur);
-	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);
-	Chk("ssao", chkVidSSAO, pSet->ssao);
+
+	Chk("SSAO", chkVidSSAO, pSet->ssao);
+	Chk("SoftParticles", chkVidSoftParticles, pSet->softparticles);
+
 	Chk("DepthOfField", chkVidDepthOfField, pSet->dof);
-	Chk("godrays", chkVidGodRays, pSet->godrays);
+	Chk("GodRays", chkVidGodRays, pSet->godrays);
 	
 	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
-	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);*/
+	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);
 #endif
 
 #ifdef SR_EDITOR  /// editor only
-	//Chk("Minimap", chkMinimap, pSet->trackmap);
+	Chk("Minimap", chkMinimap, pSet->trackmap);
 	app->gui->svTerUpd.Upd();
 	app->gui->svMiniUpd.Upd();
 #endif
