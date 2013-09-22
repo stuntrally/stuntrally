@@ -37,7 +37,7 @@ protected:
 //  gui
 enum MNU_Btns {  MNU_Single=0, MNU_Tutorial, MNU_Champ, MNU_Challenge, MNU_Replays, MNU_Help, MNU_Options, ciMainBtns  };
 enum TAB_Game {  TAB_Back=0, TAB_Track,TAB_Car, TAB_Setup,TAB_Game, TAB_Multi, TAB_Champs,TAB_Stages,TAB_Stage  };
-const int TABo_Input = 3;  // Options
+enum TAB_Options {  TABo_Back=0, TABo_Screen, TABo_View, TABo_Input, TABo_Sound  };
 enum LobbyState { DISCONNECTED, HOSTING, JOINED };
 
 
@@ -154,7 +154,7 @@ public:
 	///  input
 	bool alt, ctrl, shift;  // key modifiers
 	bool mbLeft, mbRight, mbMiddle;  // mouse buttons
-	bool mbWireFrame, mbShowCamPos;  // on/off
+	bool mbWireFrame;
 	int iCurCam;
 
 	///  Gui  ..........................

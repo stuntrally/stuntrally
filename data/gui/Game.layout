@@ -2926,7 +2926,7 @@
 							<Property key="TextColour" value="0.6 0.76 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="232 296 260 24" name="OpponentsSort">
+						<Widget type="Button" skin="CheckBox" position="232 296 260 24" name="OppSort">
 							<Property key="Caption" value="#{OpponentsSorted}"/>
 							<Property key="TextColour" value="0.6 0.7 0.8"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>

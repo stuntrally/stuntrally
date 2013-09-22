@@ -11,11 +11,10 @@ CGui::CGui(App* app1)
 	,carList(0), btRplPl(0)
 	// hud
 	,valCountdownTime(0)
-	,cmbGraphs(0), valGraphsType(0) //,slGraphT(0)
+	,cmbGraphs(0), valGraphsType(0)
 	// view
 	,bRkmh(0),bRmph(0)
-	,chFps(0), chWire(0), chProfTxt(0), chGraphs(0)
-	,chTimes(0),chMinimp(0),chOpponents(0)
+	,chProfTxt(0), chGraphs(0)
 	// dbg
 	,chDbgT(0),chDbgB(0),chDbgS(0)
 	,chBlt(0),chBltTxt(0), chTireVis(0)

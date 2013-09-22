@@ -68,7 +68,7 @@ void CGui::chkRearInv(WP wp){	ChkEv(rear_inv);	if (pGame)  pGame->ProcessNewSett
 void CGui::chkVegetCollis(WP wp){	ChkEv(gui.collis_veget);	}
 void CGui::chkCarCollis(WP wp){		ChkEv(gui.collis_cars);		}
 void CGui::chkRoadWCollis(WP wp){	ChkEv(gui.collis_roadw);	}
-void CGui::chkDynObjects(WP wp){		ChkEv(gui.dyn_objects);		}
+void CGui::chkDynObjects(WP wp){	ChkEv(gui.dyn_objects);		}
 
 //  boost, flip
 void CGui::comboBoost(CMB)
@@ -200,10 +200,10 @@ void CGui::btnCarClrRandom(WP)
 }
 
 
-//  [Graphics]
+//  [Graphics]  options  (game only)
 //---------------------------------------------------------------------
 
-//  reflect
+//  reflection
 void CGui::slReflDist(SV*)
 {
 	app->recreateReflections();
@@ -228,8 +228,14 @@ void App::recreateReflections()
 	}
 }
 
+void CGui::chkParTrl(Ck*)
+{		
+	for (std::vector<CarModel*>::iterator it=app->carModels.begin(); it!=app->carModels.end(); it++)
+		(*it)->UpdParsTrails();
+}
 
-//  [View] size
+
+//  [View] size  . . . . . . . . . . . . . . . . . . . .
 void CGui::slHudSize(SV*)
 {
 	hud->Size(true);
@@ -252,95 +258,76 @@ void CGui::slCountdownTime(SL)
 }
 
 
-//  [Sound]
-void CGui::slVolMaster(SV*)
-{
-	pGame->ProcessNewSettings();
-}
-
-
 //  [View]  . . . . . . . . . . . . . . . . . . . .    ---- checks ----    . . . . . . . . . . . . . . . . . . . .
 
-void CGui::chkParticles(WP wp)
-{		
-	ChkEv(particles);
-	for (std::vector<CarModel*>::iterator it=app->carModels.begin(); it!=app->carModels.end(); it++)
-		(*it)->UpdParsTrails();
-}
-void CGui::chkTrails(WP wp)
-{			
-	ChkEv(trails);		
-	for (std::vector<CarModel*>::iterator it=app->carModels.begin(); it!=app->carModels.end(); it++)
-		(*it)->UpdParsTrails();
-}
-void CGui::toggleWireframe()
+void CGui::chkWireframe(Ck*)
 {
-	bool& b = app->mbWireFrame;  b = !b;
-	if (chWire)  chWire->setStateSelected(b);
+	bool b = app->mbWireFrame;
 	
 	///  Set for all cameras
 	PolygonMode mode = b ? PM_WIREFRAME : PM_SOLID;
 	
-	app->refreshCompositor(mode == PM_WIREFRAME);  // disable effects
+	app->refreshCompositor(b);  // disable effects
+
 	if (app->mSplitMgr)
 	for (std::list<Camera*>::iterator it=app->mSplitMgr->mCameras.begin(); it!=app->mSplitMgr->mCameras.end(); ++it)
 		(*it)->setPolygonMode(mode);
 	
-	if (app->ndSky)	app->ndSky->setVisible(!b);  // hide sky
+	if (app->ndSky)
+		app->ndSky->setVisible(!b);  // hide sky
 }
-//  hud
-void CGui::chkDigits(WP wp){ 		ChkEv(show_digits);  hud->Show();  }
-void CGui::chkGauges(WP wp){		ChkEv(show_gauges);	 hud->Show();  }
 
-void CGui::radKmh(WP wp){	bRkmh->setStateSelected(true);  bRmph->setStateSelected(false);  pSet->show_mph = false;  hud->Size(true);  }
-void CGui::radMph(WP wp){	bRkmh->setStateSelected(false);  bRmph->setStateSelected(true);  pSet->show_mph = true;   hud->Size(true);  }
+//  Hud
+void CGui::chkHudShow(Ck*)
+{
+	hud->Show();
+}
 
-void CGui::radSimEasy(WP){	bRsimEasy->setStateSelected(true);  bRsimNorm->setStateSelected(false);
+#define Radio2(bR1,bR2, b)  bR1->setStateSelected(b);  bR2->setStateSelected(!b);
+
+void CGui::radKmh(WP wp){	Radio2(bRkmh, bRmph, true);   pSet->show_mph = false;  hud->Size(true);  }
+void CGui::radMph(WP wp){	Radio2(bRkmh, bRmph, false);  pSet->show_mph = true;   hud->Size(true);  }
+
+void CGui::radSimEasy(WP){	Radio2(bRsimEasy, bRsimNorm, true);
 	pSet->gui.sim_mode = "easy";	bReloadSim = true;
 	tabTireSet(0,iTireSet);  listCarChng(carList,0);
 }
-void CGui::radSimNorm(WP){	bRsimEasy->setStateSelected(false);  bRsimNorm->setStateSelected(true);
+void CGui::radSimNorm(WP){	Radio2(bRsimEasy, bRsimNorm, false);
 	pSet->gui.sim_mode = "normal";	bReloadSim = true;
 	tabTireSet(0,iTireSet);  listCarChng(carList,0);
 }
 
-void CGui::chkArrow(WP wp){			ChkEv(check_arrow);
-	if (hud->arrow.nodeRot)  hud->arrow.nodeRot->setVisible(pSet->check_arrow);
+void CGui::chkArrow(Ck*)
+{
+	if (hud->arrow.nodeRot)
+		hud->arrow.nodeRot->setVisible(pSet->check_arrow);
 }
-void CGui::chkBeam(WP wp){			ChkEv(check_beam);
-	for (int i=0; i < app->carModels.size(); ++i)  app->carModels[i]->ShowNextChk(pSet->check_beam);
+void CGui::chkBeam(Ck*)
+{
+	for (int i=0; i < app->carModels.size(); ++i)
+		app->carModels[i]->ShowNextChk(pSet->check_beam);
 }
 
-void CGui::chkMinimap(WP wp){		ChkEv(trackmap);
+//  hud minimap
+void CGui::chkMinimap(Ck*)
+{
 	for (int c=0; c < hud->hud.size(); ++c)
-		if (hud->hud[c].ndMap)  hud->hud[c].ndMap->setVisible(pSet->trackmap);
+		if (hud->hud[c].ndMap)
+			hud->hud[c].ndMap->setVisible(pSet->trackmap);
 }
-void CGui::chkMiniZoom(WP wp){		ChkEv(mini_zoomed);		hud->UpdMiniTer();  }
-void CGui::chkMiniRot(WP wp){		ChkEv(mini_rotated);	}
-void CGui::chkMiniTer(WP wp){		ChkEv(mini_terrain);	hud->UpdMiniTer();  }
-void CGui::chkMiniBorder(WP wp){		ChkEv(mini_border);		hud->UpdMiniTer();  }
 
-void CGui::chkReverse(WP wp){		ChkEv(gui.trackreverse);	gcom->ReadTrkStats();  }
+void CGui::chkMiniUpd(Ck*)
+{
+	hud->UpdMiniTer();
+}
 
-void CGui::chkTimes(WP wp){			ChkEv(show_times);		hud->Show();	}
-void CGui::chkOpponents(WP wp){		ChkEv(show_opponents);	hud->Show();	}
-void CGui::chkOpponentsSort(WP wp){	ChkEv(opplist_sort);	}
+void CGui::chkReverse(Ck*){  gcom->ReadTrkStats();  }
 
-//void CGui::chkRacingLine(WP wp){		ChkEv(racingline);	if (ndLine)  ndLine->setVisible(pSet->racingline);	}
-void CGui::chkCamInfo(WP wp){		ChkEv(show_cam);	hud->Show();	}
-void CGui::chkCamTilt(WP wp){		ChkEv(cam_tilt);	}
-
-//  other
-void CGui::chkFps(WP wp){			ChkEv(show_fps);	}
-void CGui::chkWireframe(WP wp){		toggleWireframe();  }
-
+//  dbg,other
 void CGui::chkProfilerTxt(WP wp){	ChkEv(profilerTxt);	}
 void CGui::chkBltDebug(WP wp){		ChkEv(bltDebug);	}
 void CGui::chkBltProfilerTxt(WP wp){	ChkEv(bltProfilerTxt);	}
 
-void CGui::chkCarDbgBars(WP wp){	ChkEv(car_dbgbars);  hud->Show();  }
-void CGui::chkCarDbgTxt(WP wp){		ChkEv(car_dbgtxt);   hud->Show();  }
-void CGui::chkCarDbgSurf(WP wp){	ChkEv(car_dbgsurf);  hud->Show();  }
 void CGui::chkCarTireVis(WP wp){	ChkEv(car_tirevis);  hud->Destroy();  hud->Create();  }
 
 void CGui::chkGraphs(WP wp){		ChkEv(show_graphs);
@@ -370,7 +357,8 @@ void CGui::chkMultiThread(WP wp){	pSet->multi_thr = pSet->multi_thr ? 0 : 1;  if
 
 void CGui::chkVidEffects(WP wp)
 {
-	ChkEv(all_effects);  app->recreateCompositor();  //refreshCompositor();
+	ChkEv(all_effects);
+	app->recreateCompositor();  //refreshCompositor();
 	app->changeShadows();
 }
 void CGui::chkVidBloom(WP wp)
@@ -416,4 +404,11 @@ void CGui::chkVidBoostFOV(WP wp)
 void CGui::slBloom(SV*)
 {
 	if (bGI)  app->refreshCompositor();
+}
+
+
+//  [Sound]
+void CGui::slVolMaster(SV*)
+{
+	pGame->ProcessNewSettings();
 }

@@ -31,8 +31,6 @@ using namespace Ogre;
 //-------------------------------------------------------------------------------------
 void App::createScene()
 {
-	gcom->mGui = mGui;
-
 	//  tex fil
 	MaterialManager::getSingleton().setDefaultTextureFiltering(TFO_ANISOTROPIC);
 	MaterialManager::getSingleton().setDefaultAnisotropy(pSet->anisotropy);
@@ -121,24 +119,6 @@ void App::createScene()
 	//  load
 	if (pSet->autostart)
 		NewGame();
-	
-	#if 0  // autoload replay
-		std::string file = PATHMANAGER::GetReplayPath() + "/S12-Infinity_good_x3.rpl"; //+ pSet->track + ".rpl";
-		if (replay.LoadFile(file))
-		{
-			std::string car = replay.header.car, trk = replay.header.track;
-			bool usr = replay.header.track_user == 1;
-
-			pSet->car[0] = car;  pSet->track = trk;  pSet->track_user = usr;
-			pSet->car_hue[0] = replay.header.hue[0];  pSet->car_sat[0] = replay.header.sat[0];  pSet->car_val[0] = replay.header.val[0];
-			for (int p=1; p < replay.header.numPlayers; ++p)
-			{	pSet->car[p] = replay.header.cars[p-1];
-				pSet->car_hue[p] = replay.header.hue[p];  pSet->car_sat[p] = replay.header.sat[p];  pSet->car_val[p] = replay.header.val[p];
-			}
-			btnNewGame(0);
-			bRplPlay = 1;
-		}
-	#endif
 }
 
 
@@ -242,6 +222,7 @@ void App::LoadCleanUp()  // 1 first
 	if (road)
 	{	road->DestroyRoad();  delete road;  road = 0;  }
 
+
 	///  destroy all  TODO ...
 	///!  remove this and destroy everything with* manually  destroyCar, destroyScene, destroyHud
 	///!  check if scene (track), car changed, omit creating the same if not
@@ -260,6 +241,7 @@ void App::LoadCleanUp()  // 1 first
 	Ogre::TextureManager::getSingleton().unloadUnreferencedResources();
 }
 
+
 void App::LoadGame()  // 2
 {
 	//  viewports
@@ -269,10 +251,12 @@ void App::LoadGame()  // 2
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 	
 	pGame->NewGameDoCleanup();
+
 	if (gui->bReloadSim)
 	{	gui->bReloadSim = false;
 		pGame->ReloadSimData();
 	}
+	
 	//  load scene.xml - default if not found
 	//  need to know sc->asphalt before vdrift car load
 	bool vdr = IsVdrTrack();
@@ -288,10 +272,11 @@ void App::LoadGame()  // 2
 	{	sc->td.hfHeight = sc->td.hfAngle = NULL;  }  // sc->td.layerRoad.smoke = 1.f;
 	
 	// upd car abs,tcs,sss
-	if (pGame)  pGame->ProcessNewSettings();
+	pGame->ProcessNewSettings();
 
 		
 	///  init car models
+	///--------------------------------------------
 	//  will create vdrift cars, actual car loading will be done later in LoadCar()
 	//  this is just here because vdrift car has to be created first
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
@@ -334,6 +319,7 @@ void App::LoadGame()  // 2
 	}
 
 	///  ghost car - last in carModels
+	///--------------------------------------------
 	ghplay.Clear();
 	if (!bRplPlay/*|| pSet->rpl_show_ghost)*/ && pSet->rpl_ghost && !mClient)
 	{
@@ -358,6 +344,7 @@ void App::LoadGame()  // 2
 		}
 	}
 	///  track's ghost  . . .
+	///--------------------------------------------
 	ghtrk.Clear();  vTimeAtChks.clear();
 	bool deny = gui->pChall && !gui->pChall->trk_ghost;
 	if (!bRplPlay /*&& pSet->rpl_trackghost?*/ && !mClient && !pSet->game.track_user && !deny)
@@ -381,7 +368,6 @@ void App::LoadGame()  // 2
 
 void App::LoadScene()  // 3
 {
-	//before car-- load scene.xml
 
 	//  water RTT
 	UpdateWaterRTT(mSplitMgr->mCameras.front());
@@ -447,10 +433,6 @@ void App::LoadCar()  // 4
 				it != mSplitMgr->mViewports.end(); ++it)
 				(*it)->setVisibilityMask(visMask);
 		}
-
-		//  Reserve an entry in newPosInfos
-		//PosInfo carPosInfo;  carPosInfo.bNew = false;  //-
-		//carPoses.push_back(carPosInfo);
 		iCurPoses[i] = 0;
 	}
 	
@@ -541,6 +523,7 @@ void App::LoadRoad()  // 6
 	if (road && road->getNumPoints() == 0 && hud->arrow.nodeRot)
 		hud->arrow.nodeRot->setVisible(false);  // hide when no road
 
+
 	///  Run track's ghost
 	// to get times at checkpoints
 	if (!road || ghtrk.GetTimeLength() < 1.f)  return;
@@ -578,6 +561,7 @@ void App::LoadTrees()  // 8
 {
 	if (sc->ter)
 		CreateTrees();
+	
 		
 	//  check for cars inside terrain ___
 	if (terrain)
@@ -603,9 +587,9 @@ void App::LoadMisc()  // 9 last
 	if (pGame && pGame->cars.size() > 0)  //todo: move this into gui track tab chg evt, for cur game type
 		gcom->UpdGuiRdStats(road, sc, gcom->sListTrack, pGame->timer.GetBestLap(0, pSet->game.trackreverse));  // current
 
+
 	hud->Create();
-	// immediately hide it
-	hud->Show(true);
+	hud->Show(true);  // hide
 	
 	// Camera settings
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); ++it)
@@ -620,6 +604,7 @@ void App::LoadMisc()  // 9 last
 	if (!tex.isNull())
 		tex->reload();
 	} catch(...) {  }
+
 	
 	/// rendertextures debug
 	#if 0
@@ -670,6 +655,7 @@ void App::LoadMisc()  // 9 last
 	}
 	#endif
 }
+
 
 //  Performs a single loading step.  Actual loading procedure that gets called every frame during load.
 //---------------------------------------------------------------------------------------------------------------

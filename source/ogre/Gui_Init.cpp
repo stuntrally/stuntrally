@@ -24,9 +24,9 @@ void CGui::InitGui()
 {
 	mGui = app->mGui;
 	gcom->mGui = mGui;
-	SliderValue::pGUI = app->mGui;
+	SliderValue::pGUI = mGui;
 	SliderValue::bGI = &bGI;
-	Check::pGUI = app->mGui;
+	Check::pGUI = mGui;
 	Check::bGI = &bGI;
 
 	popup.mGui = mGui;
@@ -126,20 +126,22 @@ void CGui::InitGui()
 	
 
 	///  Sliders
-    //------------------------------------------------------------------------
+	//------------------------------------------------------------------------
 	ButtonPtr btn,bchk;  ComboBoxPtr combo;
-	SliderValue* sv;  Slider* sl;
+	SV* sv;  Slider* sl;  Ck* ck;
 	    
-	//  view sizes
+	//  Hud view sizes  ----
 	sv= &svSizeGaug;	sv->Init("SizeGaug",	&pSet->size_gauges,    0.1f, 0.3f,  1.f, 3,4);  Sev(HudSize);
 	sv= &svTypeGaug;	sv->Init("TypeGaug",	&pSet->gauges_type,    0, 5);  Sev(HudCreate);
 	sv= &svLayoutGaug;	sv->Init("LayoutGaug",	&pSet->gauges_layout,  0, 2);  Sev(HudCreate);
-	
+
 	sv= &svSizeMinimap;	sv->Init("SizeMinimap",	&pSet->size_minimap,   0.05f, 0.3f, 1.f, 3,4);  Sev(HudSize);
 	sv= &svZoomMinimap;	sv->Init("ZoomMinimap",	&pSet->zoom_minimap,   1.f, 10.f,   2.f, 3,4);  Sev(HudSize);
 	sv= &svSizeArrow;	sv->Init("SizeArrow",   &pSet->size_arrow,     0.f, 1.f, 1.f, 3,4);  Sev(SizeArrow);
 	Slv(CountdownTime,  pSet->gui.pre_time / 0.5f /6.f);
 
+
+	//  graphs
 	valGraphsType = fTxt("GraphsTypeVal");
 	Cmb(combo, "CmbGraphsType", comboGraphs);  cmbGraphs = combo;
 	if (combo)
@@ -149,12 +151,13 @@ void CGui::InitGui()
 		combo->setIndexSelected(pSet->graphs_type);
 	}
 	valGraphsType->setCaption(toStr(pSet->graphs_type));
-	
-	//  particles/trails
+
+
+	//  Options  ----
 	sv= &svParticles;	sv->Init("Particles",	&pSet->particles_len, 0.f, 4.f, 2.f);
 	sv= &svTrails;		sv->Init("Trails",		&pSet->trails_len,    0.f, 4.f, 2.f);
 
-	//  reflect
+	//  reflection
 	sv= &svReflSkip;	sv->Init("ReflSkip",	&pSet->refl_skip,    0,1000, 2.f);
 	sv= &svReflFaces;	sv->Init("ReflFaces",	&pSet->refl_faces,   0,6);
 	sv= &svReflSize;
@@ -166,57 +169,72 @@ void CGui::InitGui()
 		sv->strMap[0] = TR("#{ReflMode_static}");  sv->strMap[1] = TR("#{ReflMode_single}");
 		sv->strMap[2] = TR("#{ReflMode_full}");
 						sv->Init("ReflMode",	&pSet->refl_mode,   0,2);  Sev(ReflMode);
-	
-    //  sound
+
+	//  Sound
 	sv= &svVolMaster;	sv->Init("VolMaster",	&pSet->vol_master, 0.f, 1.6f);  Sev(VolMaster);
+
 	sv= &svVolEngine;	sv->Init("VolEngine",	&pSet->vol_engine, 0.f, 1.4f);
 	sv= &svVolTires;	sv->Init("VolTires",	&pSet->vol_tires,  0.f, 1.4f);
 	sv= &svVolSusp;		sv->Init("VolSusp",		&pSet->vol_susp,   0.f, 1.4f);
 	sv= &svVolEnv;		sv->Init("VolEnv",		&pSet->vol_env,    0.f, 1.4f);
+
 	sv= &svVolFlSplash;	sv->Init("VolFlSplash",	&pSet->vol_fl_splash, 0.f, 1.4f);
 	sv= &svVolFlCont;	sv->Init("VolFlCont",	&pSet->vol_fl_cont,   0.f, 1.4f);
 	sv= &svVolCarCrash;	sv->Init("VolCarCrash",	&pSet->vol_car_crash, 0.f, 1.4f);
 	sv= &svVolCarScrap;	sv->Init("VolCarScrap",	&pSet->vol_car_scrap, 0.f, 1.4f);
-	
+
+
 	//  car color
 	UpdCarClrSld();
 
 
-	///  Checkboxes
-    //------------------------------------------------------------------------
-	Chk("ReverseOn", chkReverse, pSet->gui.trackreverse);
-	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
+	///  Checks
+	//------------------------------------------------------------------------
+	ck= &ckReverse;		ck->Init("ReverseOn", &pSet->gui.trackreverse);  Cev(Reverse);
 
-	//  hud
-	Chk("Digits", chkDigits, pSet->show_digits);
-	Chk("Gauges", chkGauges, pSet->show_gauges);  hud->Show();//
-	Chk("Arrow", chkArrow, pSet->check_arrow);
-	Chk("ChkBeam", chkBeam, pSet->check_beam);
-	
-	Chk("Minimap", chkMinimap, pSet->trackmap);	chMinimp = bchk;
-	Chk("MiniZoom", chkMiniZoom, pSet->mini_zoomed);  Chk("MiniRot", chkMiniRot, pSet->mini_rotated);
-	Chk("MiniTer", chkMiniTer, pSet->mini_terrain);   Chk("MiniBorder", chkMiniBorder, pSet->mini_border);
+	//  Options  ----
+	ck= &ckParticles;	ck->Init("ParticlesOn", &pSet->particles);   Cev(ParTrl);
+	ck= &ckTrails;		ck->Init("TrailsOn",    &pSet->trails);      Cev(ParTrl);
 
-	Chk("CamInfo", chkCamInfo, pSet->show_cam);
-	Chk("CamTilt", chkCamTilt, pSet->cam_tilt);
+	//  Hud  ----
+	ck= &ckDigits;		ck->Init("Digits",      &pSet->show_digits);   Cev(HudShow);
+	ck= &ckGauges;		ck->Init("Gauges",      &pSet->show_gauges);   Cev(HudShow);  //hud->Show();//?
 
-	Chk("Times", chkTimes, pSet->show_times);	chTimes  = bchk;
-	Chk("Opponents", chkOpponents, pSet->show_opponents);  chOpponents = bchk;
-	Chk("OpponentsSort", chkOpponentsSort, pSet->opplist_sort);
+	ck= &ckArrow;		ck->Init("Arrow",       &pSet->check_arrow);   Cev(Arrow);
+	ck= &ckBeam;		ck->Init("ChkBeam",     &pSet->check_beam);    Cev(Beam);
+
+	//  minimap
+	ck= &ckMinimap;		ck->Init("Minimap",     &pSet->trackmap);      Cev(Minimap);
+	ck= &ckMiniZoom;	ck->Init("MiniZoom",    &pSet->mini_zoomed);   Cev(MiniUpd);
+	ck= &ckMiniRot;		ck->Init("MiniRot",     &pSet->mini_rotated);
+	ck= &ckMiniTer;		ck->Init("MiniTer",     &pSet->mini_terrain);  Cev(MiniUpd);
+	ck= &ckMiniBorder;	ck->Init("MiniBorder",  &pSet->mini_border);   Cev(MiniUpd);
+
+	//  cam
+	ck= &ckCamInfo;		ck->Init("CamInfo",     &pSet->show_cam);   Cev(HudShow);
+	ck= &ckCamTilt;		ck->Init("CamTilt",     &pSet->cam_tilt);
+
+	//  times, opp
+	ck= &ckTimes;		ck->Init("Times",       &pSet->show_times);      Cev(HudShow);
+	ck= &ckOpponents;	ck->Init("Opponents",   &pSet->show_opponents);  Cev(HudShow);
+	ck= &ckOppSort;		ck->Init("OppSort",     &pSet->opplist_sort);
 
 
-	//  other
-	Chk("Fps", chkFps, pSet->show_fps);  chFps = bchk;
+	//  dbg,other
+	ck= &ckFps;			ck->Init("Fps",			&pSet->show_fps);
 	app->bckFps->setVisible(pSet->show_fps);
-	Chk("Wireframe", chkWireframe, app->mbWireFrame);  chWire = bchk;
+	ck= &ckWireframe;	ck->Init("Wireframe",   &app->mbWireFrame);  Cev(Wireframe);
 
 	Chk("ProfilerTxt", chkProfilerTxt, pSet->profilerTxt);	chProfTxt = bchk;
 	Chk("BulletDebug", chkBltDebug, pSet->bltDebug);		chBlt = bchk;
 	Chk("BulletProfilerTxt", chkBltProfilerTxt, pSet->bltProfilerTxt);	chBltTxt = bchk;
 
-	Chk("CarDbgBars", chkCarDbgBars, pSet->car_dbgbars);	chDbgB = bchk;
-	Chk("CarDbgTxt", chkCarDbgTxt, pSet->car_dbgtxt);		chDbgT = bchk;
-	Chk("CarDbgSurf", chkCarDbgSurf, pSet->car_dbgsurf);	chDbgS = bchk;
+	ck= &ckCarDbgBars;	ck->Init("CarDbgBars",  &pSet->car_dbgbars);   Cev(HudShow);
+	ck= &ckCarDbgTxt;	ck->Init("CarDbgTxt",   &pSet->car_dbgtxt);    Cev(HudShow);
+	ck= &ckCarDbgSurf;	ck->Init("CarDbgSurf",  &pSet->car_dbgsurf);   Cev(HudShow);
+	//Chk("CarDbgBars", chkCarDbgBars, pSet->car_dbgbars);	chDbgB = bchk;
+	//Chk("CarDbgTxt", chkCarDbgTxt, pSet->car_dbgtxt);		chDbgT = bchk;
+	//Chk("CarDbgSurf", chkCarDbgSurf, pSet->car_dbgsurf);	chDbgS = bchk;
 	Chk("CarTireVis", chkCarTireVis, pSet->car_tirevis);	chTireVis = bchk;
 	Chk("Graphs", chkGraphs, pSet->show_graphs);		chGraphs = bchk;
 
@@ -729,7 +747,7 @@ void CGui::InitGui()
 	imgChampStage = (ImageBox*)app->mWndChampStage->findWidget("ChampStageImg");
 	imgChallStage = (ImageBox*)app->mWndChallStage->findWidget("ChallStageImg");
 
-	imgChampEndCup  = (ImageBox*)app->mWndChampEnd->findWidget("ChampEndImgCup");
+	imgChampEndCup = (ImageBox*)app->mWndChampEnd->findWidget("ChampEndImgCup");
 	imgChallFail = (ImageBox*)app->mWndChallEnd->findWidget("ChallEndImgFail");
 	imgChallCup  = (ImageBox*)app->mWndChallEnd->findWidget("ChallEndImgCup");
 	txChallEndC = (TextBox*)app->mWndChallEnd->findWidget("ChallEndCongrats");

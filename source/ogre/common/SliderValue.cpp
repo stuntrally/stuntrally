@@ -285,6 +285,12 @@ void Check::SetValue(bool b)
 	Update();
 }
 
+void Check::Invert()
+{
+	SetValue(!(*pBool));
+}
+
+
 //  Init
 //------------------------------------
 

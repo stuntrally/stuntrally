@@ -182,7 +182,7 @@ BaseApp::BaseApp()
 	,mWndChampStage(0),mWndChampEnd(0), mWndChallStage(0),mWndChallEnd(0)
 	,bSizeHUD(true), bLoading(false), iLoad1stFrames(0), bAssignKey(false), bLoadingEnd(0), bSimulating(0)
 	,mMasterClient(), mClient(), mLobbyState(DISCONNECTED)
-	,mbShowCamPos(0), ndSky(0),	mbWireFrame(0)
+	,ndSky(0),	mbWireFrame(0)
 	,iCurCam(0), mSplitMgr(0), motionBlurIntensity(0.9)
 	,mMouseX(0), mMouseY(0), mCursorManager(NULL), mInputWrapper(NULL)
 {

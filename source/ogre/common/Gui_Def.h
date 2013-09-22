@@ -9,20 +9,22 @@ namespace MyGUI
 	class ListBox; class MultiListBox;  class MultiList2;
 	class Canvas;  class ScrollView;  class Message;
 }
+class SliderValue;  class Check;
 
 //  Base Gui
 class BGui
 {
 public:
 	#define TD(w,n)  typedef MyGUI::w* n
-	//  short Widget names
+	///  short Widget names
 	TD(Widget, WP);  TD(Window, Wnd);  TD(TabControl, Tab);  TD(TabItem, Tbi);  TD(ComboBox, Cmb);
 	TD(Button, Btn);  TD(TextBox, Txt);  TD(ImageBox, Img);  TD(EditBox, Ed);  TD(Slider, Sl);
 	TD(ListBox, Li);  TD(MultiListBox, Mli);  TD(MultiList2, Mli2);
 	TD(Canvas, Can);  TD(ScrollView, Scv);
+	typedef SliderValue SV;  typedef Check Ck;
 };
 
-//  short Arguments for events
+///  short Arguments for events
 //  slider event and its text field for value
 #define SLV(name)  void sl##name(SL);  Txt val##name;  //old!
 #define SL   Sl wp, float val     // slider event args  //old!
@@ -30,7 +32,25 @@ public:
 #define CMB  Cmb wp, size_t val  // combobox event args
 #define TAB  Tab tab, size_t id       //  tab event args
 
-//  short Finding widgets
+
+//  declare slider and its event in .h
+#define SlV(a)  SV sv##a;  void sl##a(SV*)
+
+//  set event
+#define Sev(ev)   if (sv->event.empty())  sv->event += newDelegate(this, &CGui::sl##ev)
+#define SevC(ev)  if (sv->event.empty())  sv->event += newDelegate(this, &CGuiCom::sl##ev)
+
+
+//  check declare
+#define CK(a)   Ck ck##a;  void chk##a(Ck*)
+
+//  check set event
+#define Cev(ev)   if (ck->event.empty())  ck->event += newDelegate(this, &CGui::chk##ev)
+#define CevC(ev)  if (ck->event.empty())  ck->event += newDelegate(this, &CGuiCom::chk##ev)
+
+
+
+///  short Finding widgets
 #define fWnd(s)  mGui->findWidget<Window>(s)
 #define fTxt(s)  mGui->findWidget<TextBox>(s,false)
 #define fImg(s)  mGui->findWidget<ImageBox>(s)
@@ -38,7 +58,7 @@ public:
 #define fTab(s)  mGui->findWidget<TabControl>(s)
 
 
-//  Gui Shortcuts: find control, assign event, set value
+///  find control, assign event, set value (old)
 //------------------------------------------------------------------------
 //Btn btn, bchk;  Cmb cmb;  Sl* sl;
 

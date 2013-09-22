@@ -204,11 +204,14 @@ public:
 	//  hud view
 	SV svSizeGaug;
 	SV svTypeGaug, svLayoutGaug;
+	
 	SV svSizeMinimap, svZoomMinimap;
 	void slHudSize(SV*), slHudCreate(SV*);
+
 	SlV(SizeArrow);
 	SLV(CountdownTime);//-
 	SV svDbgTxtClr, svDbgTxtCnt;
+
 	//  sound
 	SlV(VolMaster);
 	SV svVolEngine, svVolTires, svVolSusp, svVolEnv;
@@ -217,6 +220,7 @@ public:
 	//  car clr
 	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);
 	SLV(CarClrGloss);  SLV(CarClrRefl);
+
 	//  video effects
 	SV svBloomInt, svBloomOrig;
 	SV svBlurIntens;  // motion blur
@@ -226,24 +230,44 @@ public:
 	SV svHDRParam1, svHDRParam2, svHDRParam3;
 	SV svHDRBloomInt, svHDRBloomOrig, svHDRAdaptScale;
 	SV svHDRVignRadius, svHDRVignDark;
+
 	//  setup
 	SV svNumLaps;  SLV(RplNumViewports);
 	SLV(SSSEffect);  SLV(SSSVelFactor);
 	SLV(SteerRangeSurf);  SLV(SteerRangeSim);
 	
-	//  checks
-	void chkGauges(WP),	chkArrow(WP),chkBeam(WP), chkDigits(WP),
-		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP), chkMiniTer(WP), chkMiniBorder(WP),  // view
-		chkFps(WP), chkWireframe(WP), 
-		chkCamInfo(WP), chkTimes(WP), chkOpponents(WP), chkOpponentsSort(WP), chkCamTilt(WP),
-		chkCarDbgBars(WP), chkCarDbgTxt(WP), chkCarDbgSurf(WP), chkGraphs(WP), chkCarTireVis(WP), 
+	///  Checks  . . . . . . . . . . . . . . . . . . . .
+	CK(Reverse);  // track
+	//  Options
+	Ck ckParticles, ckTrails;  void chkParTrl(Ck*);
+
+	//  Hud view
+	Ck ckDigits, ckGauges;  void chkHudShow(Ck*);
+	//  Minimap
+	CK(Arrow);  CK(Beam);
+	CK(Minimap);  void chkMiniUpd(Ck*);
+	Ck ckMiniZoom, ckMiniRot, ckMiniTer, ckMiniBorder;
+	//  cam
+	Ck ckCamInfo, ckCamTilt;
+	//  Times, opp
+	Ck ckTimes;
+	Ck ckOpponents, ckOppSort;
+	
+	//  Hud dbg,other
+	Ck ckFps;  CK(Wireframe);
+	Ck ckCarDbgBars, ckCarDbgTxt, ckCarDbgSurf;
+	void
+		chkGraphs(WP), chkCarTireVis(WP), 
 		chkBltDebug(WP), chkBltProfilerTxt(WP), chkProfilerTxt(WP),
-		chkReverse(WP), chkParticles(WP), chkTrails(WP),
+
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkRearInv(WP),  // car
+
 		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP),
 		chkStartInMain(WP), chkBltLines(WP), chkLoadPics(WP), chkMultiThread(WP),  // startup
+
 		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // effects
 		chkVidSoftParticles(WP), chkVidGodRays(WP), chkVidDepthOfField(WP), chkVidBoostFOV(WP),
+
 		chkVegetCollis(WP), chkCarCollis(WP), chkRoadWCollis(WP), chkDynObjects(WP);  //game
 
 	//  gui car tire set gravel/asphalt
@@ -252,13 +276,17 @@ public:
 	Btn bchAbs,bchTcs;
 	Sl slSSSEff, slSSSVel, slSteerRngSurf, slSteerRngSim;
 
-	void imgBtnCarClr(WP), btnCarClrRandom(WP), toggleWireframe();
-	Btn bRkmh, bRmph;  void radKmh(WP), radMph(WP);
-	Btn bRsimEasy, bRsimNorm;  void radSimEasy(WP), radSimNorm(WP);  bool bReloadSim;
+	void imgBtnCarClr(WP), btnCarClrRandom(WP);
+	
+	//  radios
+	Btn bRkmh, bRmph;
+	void radKmh(WP), radMph(WP);
+	Btn bRsimEasy, bRsimNorm;
+	void radSimEasy(WP), radSimNorm(WP);  bool bReloadSim;
+	
 	//  view toggle
-	Btn chFps,chWire, chBlt,chBltTxt, chProfTxt,
-		chDbgT,chDbgB,chDbgS, chGraphs, chTireVis,
-		chTimes,chMinimp,chOpponents;
+	Btn chBlt,chBltTxt, chProfTxt,
+		chDbgT,chDbgB,chDbgS, chGraphs, chTireVis;
 
 
 	///  [Replay]  -----------------------------

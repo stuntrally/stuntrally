@@ -92,16 +92,16 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(U):	gui->GuiShortcut(MNU_Single, TAB_Multi);	return true;	// U Multiplayer
 			case key(R):	gui->GuiShortcut(MNU_Replays, 1);	return true;		// R Replays
 
-			case key(S):	gui->GuiShortcut(MNU_Options, 1);	return true;  // S Screen
-			 case key(E):	gui->GuiShortcut(MNU_Options, 1,1);	return true;  // E -Effects
-			case key(G):	gui->GuiShortcut(MNU_Options, 2);	return true;  // G Graphics
-			 case key(N):	gui->GuiShortcut(MNU_Options, 2,3);	return true;  // N -Vegetation
+			case key(S):	gui->GuiShortcut(MNU_Options, TABo_Screen);		return true;  // S Screen
+			 case key(E):	gui->GuiShortcut(MNU_Options, TABo_Screen,2);	return true;  // E -Effects
+			case key(G):	gui->GuiShortcut(MNU_Options, TABo_Screen,1);	return true;  // G -Graphics
+			 //case key(N):	gui->GuiShortcut(MNU_Options, TABo_Screen,1,3);	return true;  // N --Vegetation !
 
-			case key(V):	gui->GuiShortcut(MNU_Options, 3);	return true;  // V View
-			 case key(M):	gui->GuiShortcut(MNU_Options, 3,1);	return true;  // M -Minimap
-			 case key(O):	gui->GuiShortcut(MNU_Options, 3,3);	return true;  // O -Other
-			case key(I):	gui->GuiShortcut(MNU_Options, 4);	return true;  // I Input
-			case key(P):	gui->GuiShortcut(MNU_Options, 5);	return true;  // P Sound
+			case key(V):	gui->GuiShortcut(MNU_Options, TABo_View);	return true;  // V View
+			 case key(M):	gui->GuiShortcut(MNU_Options, TABo_View,1);	return true;  // M -Minimap
+			 case key(O):	gui->GuiShortcut(MNU_Options, TABo_View,3);	return true;  // O -Other
+			case key(I):	gui->GuiShortcut(MNU_Options, TABo_Input);	return true;  // I Input
+			case key(P):	gui->GuiShortcut(MNU_Options, TABo_Sound);	return true;  // P Sound
 		}
 
 
@@ -187,7 +187,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(K):	// replay car ofs
 				if (bRplPlay && !isFocGui)	{	--iRplCarOfs;  return true;  }
 				break;
-			case key(L):	// replay car ofs
+			case key(L):
 				if (bRplPlay && !isFocGui)	{	++iRplCarOfs;  return true;  }
 				break;
 
@@ -203,32 +203,25 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				}	break;
 
 
-			case key(F7):		// Times
-				if (shift)
-				{	WP wp = gui->chOpponents;  ChkEv(show_opponents);  hud->Show();  }
-				else if (!ctrl)
-				{	WP wp = gui->chTimes;  ChkEv(show_times);  hud->Show();  }
+			case key(F7):	// Times
+				if (shift)	gui->ckOpponents.Invert();
+				else
+				if (!ctrl)	gui->ckTimes.Invert();
 				return false;
 
-			case key(F8):		// car debug bars
-				if (ctrl)
-				{	WP wp = gui->chDbgB;  ChkEv(car_dbgbars);   hud->Show();  }
-				else		// Minimap
-				if (!shift)
-				{	WP wp = gui->chMinimp;  ChkEv(trackmap);
-					for (int c=0; c < hud->hud.size(); ++c)
-						if (hud->hud[c].ndMap)  hud->hud[c].ndMap->setVisible(pSet->trackmap);
-				}	return false;
+			case key(F8):	// Minimap
+				if (ctrl)	gui->ckCarDbgBars.Invert();
+				else
+				if (!shift)	gui->ckMinimap.Invert();
+				return false;
 
 			case key(F9):
-				if (ctrl)
+				if (ctrl)	
 				{	WP wp = gui->chTireVis;  ChkEv(car_tirevis);  hud->Destroy();  hud->Create();  }
 				else
-				if (alt)	// car debug surfaces
-				{	WP wp = gui->chDbgS;  ChkEv(car_dbgsurf);  hud->Show();  }
+				if (alt)	gui->ckCarDbgSurf.Invert();
 				else
-				if (shift)	// car debug text
-				{	WP wp = gui->chDbgT;  ChkEv(car_dbgtxt);  hud->Show();  }
+				if (shift)	gui->ckCarDbgTxt.Invert();
 				else		// graphs
 				{	WP wp = gui->chGraphs;  ChkEv(show_graphs);
 					for (int i=0; i < graphs.size(); ++i)
@@ -241,9 +234,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				{	WP wp = gui->chProfTxt;  ChkEv(profilerTxt);  hud->Show();  }
 				else
 				if (!ctrl)  // Fps
-				{	WP wp = gui->chFps;  ChkEv(show_fps);
-					return false;
-				}	break;
+					gui->ckFps.Invert();
+				break;
 
 			case key(F10):	//  blt debug, txt
 				if (shift)
@@ -251,7 +243,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				else if (ctrl)
 				{	WP wp = gui->chBlt;  ChkEv(bltDebug);  return false;  }
 				else		// wireframe
-					gui->toggleWireframe();
+					gui->ckWireframe.Invert();
 				return false;
 
 

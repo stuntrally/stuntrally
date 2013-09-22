@@ -182,7 +182,7 @@ void CGuiCom::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	//old GuiInitGraphics();  // += newDelegate..?  // duplicated code..
 
 	//?CmbC(cmb, "TexFiltering", comboTexFilter);
-
+	///  common only
 	svTerDetail.Upd();  svTerDist.Upd();  svRoadDist.Upd();
 	svViewDist.Upd();  svAnisotropy.Upd();
 	svTexSize.Upd();  svTerMtr.Upd();  svTerTripl.Upd();
@@ -209,11 +209,10 @@ void CGuiCom::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 void CGui::UpdGuiAfterPreset()
 {
-	ButtonPtr bchk;  Slider* sl;
-#ifndef SR_EDITOR  /// game only
-	Chk("ParticlesOn", chkParticles, pSet->particles);
-	Chk("TrailsOn", chkTrails, pSet->trails);
+	ButtonPtr bchk;
 
+#ifndef SR_EDITOR  /// game only
+	ckParticles.Upd();  ckTrails.Upd();
 	svParticles.Upd();  svTrails.Upd();
 
 	svReflSkip.Upd();  svReflFaces.Upd();  svReflSize.Upd();
@@ -232,9 +231,7 @@ void CGui::UpdGuiAfterPreset()
 	
 	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
 	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);
-#endif
-
-#ifdef SR_EDITOR  /// editor only
+#else     /// editor only
 	Chk("Minimap", chkMinimap, pSet->trackmap);
 	svTerUpd.Upd();
 	svMiniUpd.Upd();

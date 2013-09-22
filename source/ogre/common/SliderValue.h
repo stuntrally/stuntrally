@@ -8,24 +8,6 @@ namespace MyGUI {  class Slider;  }
 const float slHalf = 0.45f;  // added to int value sliders to their float value
 
 
-///  shortcuts  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-//  declare slider and its event in .h
-#define SlV(a)  SV sv##a;  void sl##a(SV*)
-
-//  set event
-#define Sev(ev)   if (sv->event.empty())  sv->event += newDelegate(this, &CGui::sl##ev)
-#define SevC(ev)  if (sv->event.empty())  sv->event += newDelegate(this, &CGuiCom::sl##ev)
-
-//  check declare
-#define CK(a)   Ck ck##a;  void chk##a(Ck*)
-
-//  check set event
-#define Cev(ev)   if (ck->event.empty())  ck->event += newDelegate(this, &CGui::chk##ev)
-#define CevC(ev)  if (ck->event.empty())  ck->event += newDelegate(this, &CGuiCom::chk##ev)
-
-
-
 class SliderValue
 {
 	friend class CGui;
@@ -151,6 +133,7 @@ public:
 
 
 	void SetValue(bool b);
+	void Invert();  // set opposite value
 
 private:
 	void setVal(bool b);
@@ -165,7 +148,3 @@ private:
 	//  init Gui
 	void initGui(Ogre::String name);
 };
-
-
-typedef SliderValue SV;
-typedef Check Ck;

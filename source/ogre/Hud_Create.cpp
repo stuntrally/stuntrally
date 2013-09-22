@@ -514,6 +514,7 @@ void CHud::Destroy()
 
 		#define Dest(w)  \
 			if (w) {  app->mGui->destroyWidget(w);  w = 0;  }
+			
 		Dest(h.txGear)  Dest(h.txVel)  Dest(h.bckVel)
 		Dest(h.txAbs)  Dest(h.txTcs)  Dest(h.txCam)
 		
