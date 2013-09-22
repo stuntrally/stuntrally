@@ -55,11 +55,6 @@ public:
 	void CarListUpd(bool resetNotFound=false);
 	void AddCarL(std::string name, const class CarInfo* ci);
 	std::list<CarL> liCar;  void FillCarList();
-
-	void ReadTrkStatsChamp(Ogre::String track,bool reverse);
-	void updChampListDim();
-
-	void edRplFind(Ed);  Ogre::String sRplFind;
 	
 	const static int colCar[16],colCh[16],colChL[16],colSt[16];
 
@@ -119,13 +114,19 @@ public:
 	//  main
 	void ChampsListUpdate(), ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
 	void ChallsListUpdate(), ChallFillStageInfo(bool finished), ChallengeAdvance(float timeCur);
-	void btnChampInfo(WP), chkChampRev(WP), UpdChampTabVis();
-	void ToolGhosts(),ToolGhostsConv(),ToolPresets();  //  _Tools_
+	void btnChampInfo(WP), UpdChampTabVis();
+	CK(ChampRev);
+
+	void ReadTrkStatsChamp(Ogre::String track,bool reverse);
+	void updChampListDim();
 
 	//  chall util
 	Ogre::String StrChallCars(const Chall& ch);
 	bool IsChallCar(Ogre::String name);
 	bool isChallGui();  void BackFromChs();
+
+	//  _Tools_
+	void ToolGhosts(),ToolGhostsConv(),ToolPresets();
 
 
 	///  [Input] tab
@@ -255,20 +256,27 @@ public:
 	
 	//  Hud dbg,other
 	Ck ckFps;  CK(Wireframe);
+	//  profiler
+	Ck ckProfilerTxt, ckBulletDebug, ckBltProfTxt;
+	//  car dbg
 	Ck ckCarDbgBars, ckCarDbgTxt, ckCarDbgSurf;
-	void
-		chkGraphs(WP), chkCarTireVis(WP), 
-		chkBltDebug(WP), chkBltProfilerTxt(WP), chkProfilerTxt(WP),
+	Ck ckTireVis;  void chkHudCreate(Ck*);
+	CK(Graphs);
 
-		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkRearInv(WP),  // car
-
-		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP),
-		chkStartInMain(WP), chkBltLines(WP), chkLoadPics(WP), chkMultiThread(WP),  // startup
-
+	//  car
+	Ck ckCarGear, ckCarRear, ckCarRearInv;  void chkGear(Ck*);
+	void chkAbs(WP), chkTcs(WP),
 		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // effects
-		chkVidSoftParticles(WP), chkVidGodRays(WP), chkVidDepthOfField(WP), chkVidBoostFOV(WP),
+		chkVidSoftParticles(WP), chkVidGodRays(WP), chkVidDepthOfField(WP), chkVidBoostFOV(WP);
+	//  Game
+	Ck ckVegetCollis, ckCarCollis, ckRoadWCollis, ckDynamicObjs;
 
-		chkVegetCollis(WP), chkCarCollis(WP), chkRoadWCollis(WP), chkDynObjects(WP);  //game
+	//  Startup
+	Ck ckAutoStart, ckEscQuits;
+	Ck ckStartInMain, ckOgreDialog;
+	Ck ckBltLines, ckShowPics;
+	void chkMultiThread(WP);
+	
 
 	//  gui car tire set gravel/asphalt
 	int iTireSet;
@@ -283,48 +291,57 @@ public:
 	void radKmh(WP), radMph(WP);
 	Btn bRsimEasy, bRsimNorm;
 	void radSimEasy(WP), radSimNorm(WP);  bool bReloadSim;
-	
-	//  view toggle
-	Btn chBlt,chBltTxt, chProfTxt,
-		chDbgT,chDbgB,chDbgS, chGraphs, chTireVis;
 
 
 	///  [Replay]  -----------------------------
 	Li rplList;
 	void listRplChng(Li, size_t);
 	void updReplaysList();
-	
-	Txt valRplPerc, valRplCur, valRplLen,
-		valRplName,valRplInfo,valRplName2,valRplInfo2;
-	Sl slRplPos;  void slRplPosEv(SL);
-	Ed edRplName, edRplDesc;
-	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP), btnRplRename(WP),  // btn
-		chkRplAutoRec(WP), chkRplChkGhost(WP), chkRplChkBestOnly(WP), chkRplChkPar(WP),
-		chkRplChkRewind(WP), chkRplChkGhostOther(WP), chkRplChkTrackGhost(WP),  // replay
-		btnRplToStart(WP),btnRplToEnd(WP), btnRplPlay(WP),  // controls
-		btnRplCur(WP),btnRplAll(WP),chkRplGhosts(WP);  // radio
-	Btn btRplPl;  void UpdRplPlayBtn();
-	Btn rbRplCur, rbRplAll;  // radio
 
+	//  cur rpl stats gui
+	Txt valRplName, valRplInfo,
+		valRplName2,valRplInfo2;
+	
+	//  controls percent and time info
+	Txt valRplPerc, valRplCur, valRplLen;
+
+	//  gui save
+	Ed edRplName, edRplDesc;
+	void btnRplLoad(WP), btnRplSave(WP);
+	void btnRplDelete(WP), btnRplRename(WP);
+	
+	//  chk options
+	Ck ckRplAutoRec, ckRplBestOnly, ckRplGhost, ckRplParticles;
+	Ck ckRplRewind, ckRplGhostOther, ckRplTrackGhost;
+
+	//  list filtering
+	Btn rbRplCur, rbRplAll;  // radio
+	void btnRplCur(WP),btnRplAll(WP);
+	CK(RplGhosts);
+	void edRplFind(Ed);  Ogre::String sRplFind;
+
+	//  controls bar buttons
+	Btn btRplPl;  void UpdRplPlayBtn();
+	Sl slRplPos;  void slRplPosEv(SL);
+	bool bRplBack, bRplFwd;
+	void btnRplToStart(WP),btnRplToEnd(WP), btnRplPlay(WP);
 	void btnRplBackDn(WP,int,int,MyGUI::MouseButton), btnRplBackUp(WP,int,int,MyGUI::MouseButton);
 	void btnRplFwdDn(WP,int,int, MyGUI::MouseButton), btnRplFwdUp(WP,int,int, MyGUI::MouseButton);
-	bool bRplBack,bRplFwd;
-		
 	void msgRplDelete(MyGUI::Message*, MyGUI::MessageBoxStyle);
-		
-	Txt txCarStatsTxt,txCarStatsVals,
-		txCarSpeed,txCarType, txCarAuthor,txTrackAuthor;
-	void UpdCarStatsTxt();  // car stats
-
+	
 	///---------------------------------------
 
 
 	//  game
-	void btnNewGame(WP),btnNewGameStart(WP);
+	void btnNewGame(WP), btnNewGameStart(WP);
 
-	void btnNumPlayers(WP);  void chkSplitVert(WP), chkStartOrd(WP);
+	//  split
+	void btnNumPlayers(WP);
 	Txt valLocPlayers;
+	Ck ckSplitVert;
+	void chkStartOrd(WP);
 
+	//  [Car] list
 	int iCurCar;  // current
 	Ogre::String sListCar;
 
@@ -332,6 +349,13 @@ public:
 	void listCarChng(Mli2, size_t);
 
 	void changeCar(), changeTrack();
+
+	//  [Car] stats
+	Txt txCarStatsTxt, txCarStatsVals,
+		txCarSpeed, txCarType,
+		txCarAuthor,txTrackAuthor;
+	void UpdCarStatsTxt();
+
 
 	//  key util
 	int LNext(Mli2, int rel, int ofs), LNext(Li, int rel, int ofs),

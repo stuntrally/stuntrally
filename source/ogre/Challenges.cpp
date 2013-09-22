@@ -31,7 +31,7 @@ bool CGui::isChallGui()
 	return pSet->inMenu == MNU_Challenge;
 }
 
-void CGui::tabChallType(MyGUI::TabPtr wp, size_t id)
+void CGui::tabChallType(Tab wp, size_t id)
 {
 	pSet->chall_type = id;
 	ChallsListUpdate();

@@ -3125,7 +3125,7 @@
 							<Property key="TextColour" value="0.9 0.85 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="388 214 256 24" name="BulletProfilerTxt">
+						<Widget type="Button" skin="CheckBox" position="388 214 256 24" name="BltProfTxt">
 							<Property key="Caption" value="#{BulletProfilerTxt}  shift-F10"/>
 							<Property key="TextColour" value="0.7 0.65 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>

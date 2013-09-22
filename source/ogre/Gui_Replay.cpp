@@ -143,21 +143,6 @@ void CGui::listRplChng(List* li, size_t pos)
 
 //  replay settings
 
-void CGui::chkRplAutoRec(WP wp)
-{
-	app->bRplRec = !app->bRplRec;  // changes take effect next game start
-	if (!wp)  return;
-	ButtonPtr chk = wp->castType<MyGUI::Button>();
-    chk->setStateSelected(app->bRplRec);
-}
-
-void CGui::chkRplChkGhost(WP wp){		ChkEv(rpl_ghost);		}
-void CGui::chkRplChkBestOnly(WP wp){	ChkEv(rpl_bestonly);	}
-void CGui::chkRplChkPar(WP wp){			ChkEv(rpl_ghostpar);	}
-void CGui::chkRplChkRewind(WP wp){		ChkEv(rpl_ghostrewind);	}
-void CGui::chkRplChkGhostOther(WP wp){	ChkEv(rpl_ghostother);	}
-void CGui::chkRplChkTrackGhost(WP wp){	ChkEv(rpl_trackghost);	}
-
 void CGui::slRplNumViewports(SL)
 {
 	int v = 1.f + 3.f * val;	if (bGI)  pSet->rpl_numViews = v;
@@ -179,9 +164,9 @@ void CGui::btnRplCur(WP)
 	pSet->rpl_listview = 1;  updReplaysList();
 }
 
-void CGui::chkRplGhosts(WP wp)
+void CGui::chkRplGhosts(Ck*)
 {
-	ChkEv(rpl_listghosts);  updReplaysList();
+	updReplaysList();
 }
 
 

@@ -17,21 +17,18 @@ using namespace MyGUI;
 
 
 
-void CGui::chkChampRev(WP wp)
+void CGui::chkChampRev(Ck*)
 {
-	pSet->gui.champ_rev = !pSet->gui.champ_rev;
-	ButtonPtr chk = wp->castType<MyGUI::Button>();
-    chk->setStateSelected(pSet->gui.champ_rev);
 	ChampsListUpdate();
 	ChallsListUpdate();
 }
 
-void CGui::tabTutType(MyGUI::TabPtr wp, size_t id)
+void CGui::tabTutType(Tab wp, size_t id)
 {
 	pSet->tut_type = id;
 	ChampsListUpdate();
 }
-void CGui::tabChampType(MyGUI::TabPtr wp, size_t id)
+void CGui::tabChampType(Tab wp, size_t id)
 {
 	pSet->champ_type = id;
 	ChampsListUpdate();

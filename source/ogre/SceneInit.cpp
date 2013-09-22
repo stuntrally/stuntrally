@@ -97,9 +97,13 @@ void App::createScene()
 	if (pSet->startInMain)
 		pSet->isMain = true;
 
-	if (!pSet->autostart)  isFocGui = true;
+	if (!pSet->autostart)
+		isFocGui = true;
+
 	pSet->gui.champ_num = -1;  //dont auto start old chs
 	pSet->gui.chall_num = -1;
+
+	bRplRec = pSet->rpl_rec;  // startup setting
 
 	gui->InitGui();
 
@@ -114,8 +118,6 @@ void App::createScene()
 			1 /*0xfe/*8+(1<<13)*/);
 	}
 	
-	bRplRec = pSet->rpl_rec;  // startup setting
-
 	//  load
 	if (pSet->autostart)
 		NewGame();

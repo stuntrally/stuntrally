@@ -204,47 +204,38 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				}	break;
 
 
-			case key(F7):	// Times
+			case key(F7):	//  Times
 				if (shift)	gui->ckOpponents.Invert();
 				else
 				if (!ctrl)	gui->ckTimes.Invert();
 				return false;
 
-			case key(F8):	// Minimap
+			case key(F8):	//  Minimap
 				if (ctrl)	gui->ckCarDbgBars.Invert();
 				else
 				if (!shift)	gui->ckMinimap.Invert();
 				return false;
 
-			case key(F9):
-				if (ctrl)	
-				{	WP wp = gui->chTireVis;  ChkEv(car_tirevis);  hud->Destroy();  hud->Create();  }
+			case key(F9):	//  car dbg
+				if (ctrl)	gui->ckTireVis.Invert();
 				else
 				if (alt)	gui->ckCarDbgSurf.Invert();
 				else
 				if (shift)	gui->ckCarDbgTxt.Invert();
-				else		// graphs
-				{	WP wp = gui->chGraphs;  ChkEv(show_graphs);
-					for (int i=0; i < graphs.size(); ++i)
-						graphs[i]->SetVisible(pSet->show_graphs);
-				}
+				else		gui->ckGraphs.Invert();
 				return true;
 
-			case key(F11):
-				if (shift)	// profiler times
-				{	WP wp = gui->chProfTxt;  ChkEv(profilerTxt);  hud->Show();  }
-				else
-				if (!ctrl)  // Fps
-					gui->ckFps.Invert();
+			case key(F11):	//  profiler times
+				if (shift)	gui->ckProfilerTxt.Invert();
+				else		//  Fps
+				if (!ctrl)	gui->ckFps.Invert();
 				break;
 
-			case key(F10):	//  blt debug, txt
-				if (shift)
-				{	WP wp = gui->chBltTxt;  ChkEv(bltProfilerTxt);  return false;  }
-				else if (ctrl)
-				{	WP wp = gui->chBlt;  ChkEv(bltDebug);  return false;  }
-				else		// wireframe
-					gui->ckWireframe.Invert();
+			case key(F10):	//  blt debug
+				if (shift)	gui->ckBltProfTxt.Invert();
+				else
+				if (ctrl)	gui->ckBulletDebug.Invert();
+				else		gui->ckWireframe.Invert();
 				return false;
 
 

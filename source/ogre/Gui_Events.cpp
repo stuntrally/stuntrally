@@ -18,10 +18,15 @@ using namespace MyGUI;
 ///  Gui Events
 
 //    [Car]
-void CGui::chkAbs(WP wp){	if (pChall && !pChall->abs)  return;
-	ChkEv(abs[iTireSet]);	if (pGame)  pGame->ProcessNewSettings();	}
-void CGui::chkTcs(WP wp){	if (pChall && !pChall->tcs)  return;
-	ChkEv(tcs[iTireSet]);	if (pGame)  pGame->ProcessNewSettings();	}
+void CGui::chkAbs(WP wp)
+{	if (pChall && !pChall->abs)  return;	ChkEv(abs[iTireSet]);	if (pGame)  pGame->ProcessNewSettings();	}
+void CGui::chkTcs(WP wp)
+{	if (pChall && !pChall->tcs)  return;	ChkEv(tcs[iTireSet]);	if (pGame)  pGame->ProcessNewSettings();	}
+
+void CGui::chkGear(Ck*)
+{
+	if (pGame)  pGame->ProcessNewSettings();
+}
 
 void CGui::tabTireSet(MyGUI::TabPtr wp, size_t id)
 {
@@ -59,16 +64,6 @@ void CGui::slSteerRangeSim(SL)
 	if (valSteerRangeSim){		valSteerRangeSim->setCaption(fToStr(v,2,4));  }
 }
 
-void CGui::chkGear(WP wp){		ChkEv(autoshift);	if (pGame)  pGame->ProcessNewSettings();	}
-void CGui::chkRear(WP wp){		ChkEv(autorear);	if (pGame)  pGame->ProcessNewSettings();	}
-void CGui::chkRearInv(WP wp){	ChkEv(rear_inv);	if (pGame)  pGame->ProcessNewSettings();	}
-
-
-//    [Game]
-void CGui::chkVegetCollis(WP wp){	ChkEv(gui.collis_veget);	}
-void CGui::chkCarCollis(WP wp){		ChkEv(gui.collis_cars);		}
-void CGui::chkRoadWCollis(WP wp){	ChkEv(gui.collis_roadw);	}
-void CGui::chkDynObjects(WP wp){	ChkEv(gui.dyn_objects);		}
 
 //  boost, flip
 void CGui::comboBoost(CMB)
@@ -95,10 +90,6 @@ void CGui::btnNumPlayers(WP wp)
 	else if (wp->getName() == "btnPlayers3")  pSet->gui.local_players = 3;
 	else if (wp->getName() == "btnPlayers4")  pSet->gui.local_players = 4;
 	if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->gui.local_players));
-}
-void CGui::chkSplitVert(WP wp)
-{
-	ChkEv(split_vertically); 
 }
 
 void CGui::chkStartOrd(WP wp)
@@ -244,6 +235,10 @@ void CGui::slHudCreate(SV*)
 {
 	hud->Destroy();  hud->Create();
 }
+void CGui::chkHudCreate(Ck*)
+{
+	hud->Destroy();  hud->Create();
+}
 
 void CGui::slSizeArrow(SV*)
 {
@@ -323,34 +318,26 @@ void CGui::chkMiniUpd(Ck*)
 
 void CGui::chkReverse(Ck*){  gcom->ReadTrkStats();  }
 
-//  dbg,other
-void CGui::chkProfilerTxt(WP wp){	ChkEv(profilerTxt);	}
-void CGui::chkBltDebug(WP wp){		ChkEv(bltDebug);	}
-void CGui::chkBltProfilerTxt(WP wp){	ChkEv(bltProfilerTxt);	}
-
-void CGui::chkCarTireVis(WP wp){	ChkEv(car_tirevis);  hud->Destroy();  hud->Create();  }
-
-void CGui::chkGraphs(WP wp){		ChkEv(show_graphs);
+//  graphs
+void CGui::chkGraphs(Ck*)
+{
 	for (int i=0; i < app->graphs.size(); ++i)
 		app->graphs[i]->SetVisible(pSet->show_graphs);
 }
 void CGui::comboGraphs(CMB)
 {
-	if (valGraphsType)	valGraphsType->setCaption(toStr(val));
-	if (bGI /*&& pSet->graphs_type != v*/)
-	{	pSet->graphs_type = (eGraphType)val;  app->DestroyGraphs();  app->CreateGraphs();  }
+	if (valGraphsType)
+		valGraphsType->setCaption(toStr(val));
+	if (bGI /*&& pSet->graphs_type != v*/)  {
+		pSet->graphs_type = (eGraphType)val;
+		app->DestroyGraphs();  app->CreateGraphs(); }
 }
 
 //  Startup
-void CGui::chkStartInMain(WP wp){	ChkEv(startInMain);    }
-void CGui::chkAutoStart(WP wp){		ChkEv(autostart);	}
-void CGui::chkEscQuits(WP wp){		ChkEv(escquit);		}
-void CGui::chkOgreDialog(WP wp){	ChkEv(ogre_dialog);	}
-
-void CGui::chkBltLines(WP wp){		ChkEv(bltLines);	}
-void CGui::chkLoadPics(WP wp){		ChkEv(loadingbackground);	}
-void CGui::chkMultiThread(WP wp){	pSet->multi_thr = pSet->multi_thr ? 0 : 1;  if (wp) {
-	ButtonPtr chk = wp->castType<MyGUI::Button>();  chk->setStateSelected(pSet->multi_thr > 0);  }	}
+void CGui::chkMultiThread(WP wp)
+{	pSet->multi_thr = pSet->multi_thr ? 0 : 1;  if (wp) {
+	ButtonPtr chk = wp->castType<MyGUI::Button>();  chk->setStateSelected(pSet->multi_thr > 0);  }
+}
 
 
 //  [Video]  . . . . . . . . . . . . . . . . . . . .    ---- ------ ----    . . . . . . . . . . . . . . . . . . . .

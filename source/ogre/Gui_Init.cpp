@@ -127,7 +127,7 @@ void CGui::InitGui()
 
 	///  Sliders
 	//------------------------------------------------------------------------
-	ButtonPtr btn,bchk;  ComboBoxPtr combo;
+	ButtonPtr btn,bchk;  ComboBoxPtr cmb;
 	SV* sv;  Slider* sl;  Ck* ck;
 	    
 	//  Hud view sizes  ----
@@ -143,12 +143,12 @@ void CGui::InitGui()
 
 	//  graphs
 	valGraphsType = fTxt("GraphsTypeVal");
-	Cmb(combo, "CmbGraphsType", comboGraphs);  cmbGraphs = combo;
-	if (combo)
-	{	combo->removeAllItems();
+	Cmb(cmb, "CmbGraphsType", comboGraphs);  cmbGraphs = cmb;
+	if (cmb)
+	{	cmb->removeAllItems();
 		for (int i=0; i < Gh_ALL; ++i)
-			combo->addItem(csGraphNames[i]);
-		combo->setIndexSelected(pSet->graphs_type);
+			cmb->addItem(csGraphNames[i]);
+		cmb->setIndexSelected(pSet->graphs_type);
 	}
 	valGraphsType->setCaption(toStr(pSet->graphs_type));
 
@@ -199,7 +199,7 @@ void CGui::InitGui()
 
 	//  Hud  ----
 	ck= &ckDigits;		ck->Init("Digits",      &pSet->show_digits);   Cev(HudShow);
-	ck= &ckGauges;		ck->Init("Gauges",      &pSet->show_gauges);   Cev(HudShow);  //hud->Show();//?
+	ck= &ckGauges;		ck->Init("Gauges",      &pSet->show_gauges);   Cev(HudShow);
 
 	ck= &ckArrow;		ck->Init("Arrow",       &pSet->check_arrow);   Cev(Arrow);
 	ck= &ckBeam;		ck->Init("ChkBeam",     &pSet->check_beam);    Cev(Beam);
@@ -226,18 +226,16 @@ void CGui::InitGui()
 	app->bckFps->setVisible(pSet->show_fps);
 	ck= &ckWireframe;	ck->Init("Wireframe",   &app->mbWireFrame);  Cev(Wireframe);
 
-	Chk("ProfilerTxt", chkProfilerTxt, pSet->profilerTxt);	chProfTxt = bchk;
-	Chk("BulletDebug", chkBltDebug, pSet->bltDebug);		chBlt = bchk;
-	Chk("BulletProfilerTxt", chkBltProfilerTxt, pSet->bltProfilerTxt);	chBltTxt = bchk;
+	ck= &ckProfilerTxt;	ck->Init("ProfilerTxt",  &pSet->profilerTxt);
+	ck= &ckBulletDebug;	ck->Init("BulletDebug",  &pSet->bltDebug);
+	ck= &ckBltProfTxt;	ck->Init("BltProfTxt",   &pSet->bltProfilerTxt);
 
 	ck= &ckCarDbgBars;	ck->Init("CarDbgBars",  &pSet->car_dbgbars);   Cev(HudShow);
 	ck= &ckCarDbgTxt;	ck->Init("CarDbgTxt",   &pSet->car_dbgtxt);    Cev(HudShow);
 	ck= &ckCarDbgSurf;	ck->Init("CarDbgSurf",  &pSet->car_dbgsurf);   Cev(HudShow);
-	//Chk("CarDbgBars", chkCarDbgBars, pSet->car_dbgbars);	chDbgB = bchk;
-	//Chk("CarDbgTxt", chkCarDbgTxt, pSet->car_dbgtxt);		chDbgT = bchk;
-	//Chk("CarDbgSurf", chkCarDbgSurf, pSet->car_dbgsurf);	chDbgS = bchk;
-	Chk("CarTireVis", chkCarTireVis, pSet->car_tirevis);	chTireVis = bchk;
-	Chk("Graphs", chkGraphs, pSet->show_graphs);		chGraphs = bchk;
+	
+	ck= &ckTireVis;		ck->Init("CarTireVis",  &pSet->car_tirevis);   Cev(HudCreate);
+	ck= &ckGraphs;		ck->Init("Graphs",		&pSet->show_graphs);   Cev(Graphs);
 
 	sv= &svDbgTxtClr;	sv->Init("DbgTxtClr",	&pSet->car_dbgtxtclr, 0, 1);
 	sv= &svDbgTxtCnt;	sv->Init("DbgTxtCnt",	&pSet->car_dbgtxtcnt, 0, 8);
@@ -245,9 +243,11 @@ void CGui::InitGui()
 
 	//  car setup  todo: for each player ..
 	Chk("CarABS",  chkAbs, pSet->abs[0]);  bchAbs = bchk;
-	Chk("CarTCS", chkTcs, pSet->tcs[0]);  bchTcs = bchk;
-	Chk("CarGear", chkGear, pSet->autoshift);	Chk("CarRear", chkRear, pSet->autorear);
-	Chk("CarRearThrInv", chkRearInv, pSet->rear_inv);
+	Chk("CarTCS",  chkTcs, pSet->tcs[0]);  bchTcs = bchk;
+	
+	ck= &ckCarGear;		ck->Init("CarGear",		&pSet->autoshift);  Cev(Gear);
+	ck= &ckCarRear;		ck->Init("CarRear",		&pSet->autorear);   Cev(Gear);
+	ck= &ckCarRearInv;	ck->Init("CarRearThrInv",&pSet->rear_inv);  Cev(Gear);
 
 	TabPtr tTires = fTab("tabCarTires");
 	if (tTires)  tTires->eventTabChangeSelect += newDelegate(this, &CGui::tabTireSet);
@@ -259,40 +259,41 @@ void CGui::InitGui()
 
 
 	//  game  ------------------------------------------------------------
-	Chk("VegetCollis", chkVegetCollis, pSet->gui.collis_veget);
-	Chk("CarCollis", chkCarCollis, pSet->gui.collis_cars);
-	Chk("RoadWCollis", chkRoadWCollis, pSet->gui.collis_roadw);
-	Chk("DynamicObjects", chkDynObjects, pSet->gui.dyn_objects);
+	ck= &ckVegetCollis;	ck->Init("VegetCollis",	&pSet->gui.collis_veget);
+	ck= &ckCarCollis;	ck->Init("CarCollis",	&pSet->gui.collis_cars);
+	ck= &ckRoadWCollis;	ck->Init("RoadWCollis",	&pSet->gui.collis_roadw);
+	ck= &ckDynamicObjs;	ck->Init("DynamicObjects", &pSet->gui.dyn_objects);
 
-	Cmb(combo, "CmbBoost", comboBoost);		cmbBoost = combo;	if (combo)
-	{	combo->removeAllItems();
-		combo->addItem(TR("#{Never}"));		combo->addItem(TR("#{FuelLap}"));
-		combo->addItem(TR("#{FuelTime}"));	combo->addItem(TR("#{Always}"));
-		combo->setIndexSelected(pSet->gui.boost_type);
+	Cmb(cmb, "CmbBoost", comboBoost);		cmbBoost = cmb;	if (cmb)
+	{	cmb->removeAllItems();
+		cmb->addItem(TR("#{Never}"));		cmb->addItem(TR("#{FuelLap}"));
+		cmb->addItem(TR("#{FuelTime}"));	cmb->addItem(TR("#{Always}"));
+		cmb->setIndexSelected(pSet->gui.boost_type);
 	}
-	Cmb(combo, "CmbFlip", comboFlip);		cmbFlip = combo;	if (combo)
-	{	combo->removeAllItems();
-		combo->addItem(TR("#{Never}"));		combo->addItem(TR("#{FuelBoost}"));
-		combo->addItem(TR("#{Always}"));
-		combo->setIndexSelected(pSet->gui.flip_type);
+	Cmb(cmb, "CmbFlip", comboFlip);		cmbFlip = cmb;	if (cmb)
+	{	cmb->removeAllItems();
+		cmb->addItem(TR("#{Never}"));		cmb->addItem(TR("#{FuelBoost}"));
+		cmb->addItem(TR("#{Always}"));
+		cmb->setIndexSelected(pSet->gui.flip_type);
 	}
-	Cmb(combo, "CmbDamage", comboDamage);	cmbDamage = combo;	if (combo)
-	{	combo->removeAllItems();
-		combo->addItem(TR("#{None}"));		combo->addItem(TR("#{Reduced}"));
-		combo->addItem(TR("#{Normal}"));
-		combo->setIndexSelected(pSet->gui.damage_type);
+	Cmb(cmb, "CmbDamage", comboDamage);	cmbDamage = cmb;	if (cmb)
+	{	cmb->removeAllItems();
+		cmb->addItem(TR("#{None}"));		cmb->addItem(TR("#{Reduced}"));
+		cmb->addItem(TR("#{Normal}"));
+		cmb->setIndexSelected(pSet->gui.damage_type);
 	}
-	Cmb(combo, "CmbRewind", comboRewind);	cmbRewind = combo;	if (combo)
-	{	combo->removeAllItems();
-		combo->addItem(TR("#{None}"));		combo->addItem(TR("#{Always}"));
-		combo->addItem(TR("#{FuelLap}"));	combo->addItem(TR("#{FuelTime}"));
-		combo->setIndexSelected(pSet->gui.rewind_type);
+	Cmb(cmb, "CmbRewind", comboRewind);	cmbRewind = cmb;	if (cmb)
+	{	cmb->removeAllItems();
+		cmb->addItem(TR("#{None}"));		cmb->addItem(TR("#{Always}"));
+		cmb->addItem(TR("#{FuelLap}"));	cmb->addItem(TR("#{FuelTime}"));
+		cmb->setIndexSelected(pSet->gui.rewind_type);
 	}
 
 	//  split
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
 	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
-	Chk("chkSplitVertically", chkSplitVert, pSet->split_vertically);
+	
+	ck= &ckSplitVert;	ck->Init("chkSplitVertically", &pSet->split_vertically);
 	Chk("chkStartOrderRev", chkStartOrd, pSet->gui.start_order);
 	valLocPlayers = fTxt("valLocPlayers");
 	if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->gui.local_players));
@@ -308,13 +309,13 @@ void CGui::InitGui()
 
 
 	//  startup
-	Chk("StartInMain", chkStartInMain, pSet->startInMain);
-	Chk("AutoStart", chkAutoStart, pSet->autostart);
-	Chk("EscQuits", chkEscQuits, pSet->escquit);
-	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
+	ck= &ckStartInMain;	ck->Init("StartInMain", &pSet->startInMain);
+	ck= &ckAutoStart;	ck->Init("AutoStart",   &pSet->autostart);
+	ck= &ckEscQuits;	ck->Init("EscQuits",    &pSet->escquit);
+	ck= &ckOgreDialog;	ck->Init("OgreDialog",  &pSet->ogre_dialog);
 
-	Chk("BltLines", chkBltLines, pSet->bltLines);
-	Chk("ShowPictures", chkLoadPics, pSet->loadingbackground);
+	ck= &ckBltLines;	ck->Init("BltLines",	&pSet->bltLines);
+	ck= &ckShowPics;	ck->Init("ShowPictures",&pSet->loadingbackground);
 	Chk("MultiThread", chkMultiThread, pSet->multi_thr > 0);
 
 	
@@ -341,7 +342,7 @@ void CGui::InitGui()
 	Chk("SoftParticles", chkVidSoftParticles, pSet->softparticles);
 	Chk("DepthOfField", chkVidDepthOfField, pSet->dof);
 
-	Chk("GodRays", chkVidGodRays, pSet->godrays);
+	Chk("GodRays",  chkVidGodRays,  pSet->godrays);
 	Chk("BoostFOV", chkVidBoostFOV, pSet->boost_fov);
 
 	sv= &svBlurIntens;	sv->Init("BlurIntens",	&pSet->blur_int);
@@ -354,32 +355,33 @@ void CGui::InitGui()
 	
 	
 	//  replays  ------------------------------------------------------------
-	Btn("RplLoad", btnRplLoad);  Btn("RplSave", btnRplSave);
+	Btn("RplLoad",   btnRplLoad);    Btn("RplSave",   btnRplSave);
 	Btn("RplDelete", btnRplDelete);  Btn("RplRename", btnRplRename);
 	//  settings
-	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
-	Chk("RplChkBestOnly", chkRplChkBestOnly, pSet->rpl_bestonly);
-	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);
-	Chk("RplChkParticles", chkRplChkPar, pSet->rpl_ghostpar);
-
-	Chk("RplChkRewind", chkRplChkRewind, pSet->rpl_ghostrewind);
-	Chk("RplChkGhostOther", chkRplChkGhostOther, pSet->rpl_ghostother);
-	Chk("RplChkTrackGhost", chkRplChkTrackGhost, pSet->rpl_trackghost);
+	ck= &ckRplAutoRec;		ck->Init("RplChkAutoRec",	&app->bRplRec);
+	ck= &ckRplBestOnly;		ck->Init("RplChkBestOnly",	&pSet->rpl_bestonly);
+	ck= &ckRplGhost;		ck->Init("RplChkGhost",		&pSet->rpl_ghost);
+	ck= &ckRplParticles;	ck->Init("RplChkParticles",	&pSet->rpl_ghostpar);
+		   
+	ck= &ckRplRewind;		ck->Init("RplChkRewind",	&pSet->rpl_ghostrewind);
+	ck= &ckRplGhostOther;	ck->Init("RplChkGhostOther",&pSet->rpl_ghostother);
+	ck= &ckRplTrackGhost;	ck->Init("RplChkTrackGhost",&pSet->rpl_trackghost);
 	Slv(RplNumViewports, (pSet->rpl_numViews-1) / 3.f);
 
-	//  radios
+	//  radios, filter
+	ck= &ckRplGhosts;	ck->Init("RplBtnGhosts",  &pSet->rpl_listghosts);  Cev(RplGhosts);
 	Btn("RplBtnAll", btnRplAll);  rbRplAll = btn;
 	Btn("RplBtnCur", btnRplCur);  rbRplCur = btn;
-	Chk("RplBtnGhosts",chkRplGhosts, pSet->rpl_listghosts);
 	btn = pSet->rpl_listview == 0 ? rbRplAll : rbRplCur;
 	if (btn)  btn->setStateSelected(true);
+
 	
     if (app->mWndRpl)
 	{	//  replay controls
 		Btn("RplToStart", btnRplToStart);  Btn("RplToEnd", btnRplToEnd)
 		Btn("RplPlay", btnRplPlay);  btRplPl = btn;
-		btn = mGui->findWidget<Button>("RplBack");	if (btn)  {		btn->eventMouseButtonPressed += newDelegate(this, &CGui::btnRplBackDn);  btn->eventMouseButtonReleased += newDelegate(this, &CGui::btnRplBackUp);  }
-		btn = mGui->findWidget<Button>("RplForward");  if (btn)  {	btn->eventMouseButtonPressed += newDelegate(this, &CGui::btnRplFwdDn);  btn->eventMouseButtonReleased += newDelegate(this, &CGui::btnRplFwdUp);  }
+		btn = mGui->findWidget<Button>("RplBack");		btn->eventMouseButtonPressed += newDelegate(this, &CGui::btnRplBackDn);  btn->eventMouseButtonReleased += newDelegate(this, &CGui::btnRplBackUp);
+		btn = mGui->findWidget<Button>("RplForward");	btn->eventMouseButtonPressed += newDelegate(this, &CGui::btnRplFwdDn);   btn->eventMouseButtonReleased += newDelegate(this, &CGui::btnRplFwdUp);
 		
 		//  info
 		slRplPos = (Slider*)app->mWndRpl->findWidget("RplSlider");
@@ -389,7 +391,7 @@ void CGui::InitGui()
     	valRplCur = fTxt("RplTimeCur");
     	valRplLen = fTxt("RplTimeLen");
 	}
-	//  text desc
+	//  text desc, stats
 	valRplName = fTxt("RplName");  valRplName2 = fTxt("RplName2");
 	valRplInfo = fTxt("RplInfo");  valRplInfo2 = fTxt("RplInfo2");
 	edRplName = fEd("RplNameEdit");
@@ -445,7 +447,7 @@ void CGui::InitGui()
 	
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
 	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
-	Chk("chkSplitVertically", chkSplitVert, pSet->split_vertically);
+	ck= &ckSplitVert;	ck->Init("chkSplitVertically",  &pSet->split_vertically);
 
 
 	///  Multiplayer
@@ -701,22 +703,10 @@ void CGui::InitGui()
 
 
 	//  tabs
-	tabTut = fTab("TutType");
-	if (tabTut)
-	{	tabTut->setIndexSelected(pSet->tut_type);
-		tabTut->eventTabChangeSelect += newDelegate(this, &CGui::tabTutType);
-	}
-	tabChamp = fTab("ChampType");
-	if (tabChamp)
-	{	tabChamp->setIndexSelected(pSet->champ_type);
-		tabChamp->eventTabChangeSelect += newDelegate(this, &CGui::tabChampType);
-	}
-	tabChall = fTab("ChallType");
-	if (tabChall)
-	{	tabChall->setIndexSelected(pSet->chall_type);
-		tabChall->eventTabChangeSelect += newDelegate(this, &CGui::tabChallType);
-	}
-	imgTut = fImg("imgTut");
+	tabTut   = fTab("TutType");    Tev(tabTut,   TutType);    tabTut->setIndexSelected(pSet->tut_type);
+	tabChamp = fTab("ChampType");  Tev(tabChamp, ChampType);  tabChamp->setIndexSelected(pSet->champ_type);
+	tabChall = fTab("ChallType");  Tev(tabChall, ChallType);  tabChall->setIndexSelected(pSet->chall_type);
+	imgTut   = fImg("imgTut");
 	imgChamp = fImg("imgChamp");
 	imgChall = fImg("imgChall");
 
@@ -727,7 +717,7 @@ void CGui::InitGui()
 
 
 	//  ch other
-	Chk("ChampRev", chkChampRev, pSet->gui.champ_rev);
+	ck= &ckChampRev;	ck->Init("ChampRev",    &pSet->gui.champ_rev);   Cev(ChampRev);
 	
 	Btn("btnChampStageBack", btnChampStageBack);
 	Btn("btnChampStageStart", btnChampStageStart);  btChampStage = btn;

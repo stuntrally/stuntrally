@@ -228,8 +228,8 @@ void CGui::UpdGuiAfterPreset()
 	Chk("DepthOfField", chkVidDepthOfField, pSet->dof);
 	Chk("GodRays", chkVidGodRays, pSet->godrays);
 	
-	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
-	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);
+	ckRplAutoRec.Upd();
+	ckRplGhost.Upd();
 #else     /// editor only
 	Chk("Minimap", chkMinimap, pSet->trackmap);
 	svTerUpd.Upd();
