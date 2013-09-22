@@ -600,7 +600,8 @@ void CHud::Show(bool hideAll)
 		}	}
 	}
 	app->updMouse();
-	if (app->mWndRpl && !app->bLoading)  app->mWndRpl->setVisible(app->bRplPlay && app->bRplWnd);  //
+	if (app->mWndRpl && !app->bLoading)
+		app->mWndRpl->setVisible(app->bRplPlay && app->bRplWnd);  //
 }
 
 void CHud::ShowVp(bool vp)	// todo: use vis mask ..
