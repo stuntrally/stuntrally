@@ -24,27 +24,32 @@ using namespace Ogre;
 
 //  ctors  -----------------------------------------------
 App::App(SETTINGS *settings, GAME *game)
-	:pGame(game), sc(0), mThread(), mTimer(0)
+	:pGame(game), pSet(settings),
+	,sc(0), data(0), hud(0), gui(0), gcom(0), input(0), mBindListner(0)
+	,mThread(), mTimer(0.f)
 	// ter
 	,mTerrainGlobals(0), mTerrainGroup(0), terrain(0), mPaging(false)
 	,mTerrainPaging(0), mPageManager(0)
 	// game
 	,blendMtr(0), iBlendMaps(0), dbgdraw(0), noBlendUpd(0), blendMapSize(513)
 	,grass(0), trees(0), road(0)
-	,pr(0),pr2(0), sun(0)
+	,pr(0),pr2(0), sun(0), mStaticGeom(0)
 	,carIdWin(-1), iRplCarOfs(0)
 	// other
-	,newGameRpl(0)
+	,newGameRpl(0), curLoadState(0)
+	,bRplPlay(0),bRplPause(0), bRplRec(0), bRplWnd(0)
 	,iEdTire(0), iTireLoad(0), iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
 	,mStaticGeom(0), fLastFrameDT(0.001f)
 	,bPerfTest(0),iPerfTestStage(PT_StartWait), isGhost2nd(0)
 {
-	pSet = settings;
 	pGame->collision.pApp = this;
 
 	sc = new Scene();
 	mWaterRTT = new WaterRTT();
 	frm.resize(4);
+	
+	for (int i=0; i < 8; ++i)
+		iCurPoses = 0;
 
 	//  util for update rot
 	Quaternion qr;  {

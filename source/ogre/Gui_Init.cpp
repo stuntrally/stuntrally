@@ -191,7 +191,7 @@ void CGui::InitGui()
 
 	///  Checks
 	//------------------------------------------------------------------------
-	ck= &ckReverse;		ck->Init("ReverseOn", &pSet->gui.trackreverse);  Cev(Reverse);
+	ck= &ckReverse;		ck->Init("ReverseOn",	&pSet->gui.trackreverse);  Cev(Reverse);
 
 	//  Options  ----
 	ck= &ckParticles;	ck->Init("ParticlesOn", &pSet->particles);   Cev(ParTrl);
