@@ -200,7 +200,7 @@ void App::LoadTrackEv()
 	sc->vdr = IsVdrTrack();
 	if (sc->vdr)  sc->ter = false;
 	
-	//  water RTT
+	//  water RTT recreate
 	UpdateWaterRTT(mCamera);
 	
 	BltWorldInit();

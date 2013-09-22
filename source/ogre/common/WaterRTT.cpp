@@ -31,7 +31,7 @@ void WaterRTT::create()
 		mCamera->setAspectRatio(mViewerCamera->getAspectRatio());
 	}
 	
-	for (unsigned int i = 0; i < 2; ++i)
+	for (int i = 0; i < 2; ++i)
 	{
 		if (i==0 && !mReflect) continue;
 		if (i==1 && !mRefract) continue;
@@ -44,12 +44,12 @@ void WaterRTT::create()
 		vp->setOverlaysEnabled(false);
 		vp->setBackgroundColour(ColourValue(0.8f, 0.9f, 1.0f));
 		vp->setShadowsEnabled(false);
-		vp->setMaterialScheme ("reflection");
-		vp->setVisibilityMask( i == 0 ? RV_WaterReflect : RV_WaterRefract);
+		vp->setMaterialScheme("reflection");
+		vp->setVisibilityMask(i == 0 ? RV_WaterReflect : RV_WaterRefract);
 		rtt->addListener(this);
 
-		if (i == 0) mReflectionTarget = rtt;
-		else mRefractionTarget = rtt;
+		if (i == 0)  mReflectionTarget = rtt;
+		else  mRefractionTarget = rtt;
 	}
 
 	sh::Factory::getInstance().setTextureAlias("WaterReflection", "PlaneReflection");
@@ -75,17 +75,24 @@ void WaterRTT::setActive(const bool active)
 
 void WaterRTT::destroy()
 {
-	if (mCamera && mSceneMgr) mSceneMgr->destroyCamera(mCamera);
-	
 	if (mReflectionTarget)
 	{
+		mReflectionTarget->removeAllListeners();
+		mReflectionTarget->removeAllViewports();
 		TextureManager::getSingleton().remove("PlaneReflection");
 		mReflectionTarget = 0;
 	}
 	if (mRefractionTarget)
 	{
+		mRefractionTarget->removeAllListeners();
+		mRefractionTarget->removeAllViewports();
 		TextureManager::getSingleton().remove("PlaneRefraction");
 		mRefractionTarget = 0;
+	}
+	if (mCamera && mSceneMgr)
+	{
+		mSceneMgr->destroyCamera(mCamera);
+		mCamera = 0;
 	}
 }
 

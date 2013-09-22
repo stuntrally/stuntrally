@@ -111,7 +111,7 @@ App::~App()
 
 	OGRE_DELETE mTerrainGlobals;
 	delete sc;
-	//delete mWaterRTT; //!
+	delete mWaterRTT;
 
 	delete gcom;
 	delete gui;
@@ -120,7 +120,10 @@ App::~App()
 
 void App::destroyScene()
 {
+	mWaterRTT->destroy();
+
 	//NewCommon(false);  //?
+
 	if (road)
 	{	road->DestroyRoad();  delete road;  road = 0;  }
 

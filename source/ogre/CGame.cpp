@@ -24,7 +24,7 @@ using namespace Ogre;
 
 //  ctors  -----------------------------------------------
 App::App(SETTINGS *settings, GAME *game)
-	:pGame(game), pSet(settings)
+	:pGame(game)
 	,sc(0), data(0), hud(0), gui(0), gcom(0), input(0)
 	,mThread(), mTimer(0.f)
 	// ter
@@ -42,6 +42,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,fLastFrameDT(0.001f)
 	,bPerfTest(0),iPerfTestStage(PT_StartWait), isGhost2nd(0)
 {
+	pSet = settings;
 	pGame->collision.pApp = this;
 
 	sc = new Scene();
@@ -49,7 +50,7 @@ App::App(SETTINGS *settings, GAME *game)
 	frm.resize(4);
 	
 	for (int i=0; i < 8; ++i)
-		iCurPoses = 0;
+		iCurPoses[i] = 0;
 
 	//  util for update rot
 	Quaternion qr;  {
@@ -91,13 +92,13 @@ App::~App()
 	OGRE_DELETE mTerrainGlobals;
 
 	OGRE_DELETE dbgdraw;
+	delete mWaterRTT;
 	delete sc;
 	delete data;
 	delete gcom;
 	delete gui;
 	delete hud;
 	delete input;
-	//delete mWaterRTT;  // todo: crash at exit..
 }
 
 
@@ -113,6 +114,8 @@ void App::postInit()
 
 void App::destroyScene()
 {
+	mWaterRTT->destroy();
+	
 	DestroyObjects(true);
 	
 	for (int i=0; i < graphs.size(); ++i)
