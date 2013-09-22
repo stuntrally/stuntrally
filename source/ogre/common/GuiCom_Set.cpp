@@ -20,7 +20,7 @@
 #include <OgreSceneManager.h>
 #include <OgreTerrain.h>
 #include <OgreRenderWindow.h>
-#include <MyGui.h>
+#include <MyGUI.h>
 #include "Slider.h"
 using namespace MyGUI;
 using namespace Ogre;
