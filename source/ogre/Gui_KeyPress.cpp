@@ -90,16 +90,17 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(L):	gui->GuiShortcut(MNU_Challenge,TAB_Champs);	return true;  // L Challenges
 
 			case key(U):	gui->GuiShortcut(MNU_Single, TAB_Multi);	return true;	// U Multiplayer
-			case key(R):	gui->GuiShortcut(MNU_Replays, 1);	return true;		// R Replays
+			case key(R):	gui->GuiShortcut(MNU_Replays, 1);	return true;			// R Replays
 
 			case key(S):	gui->GuiShortcut(MNU_Options, TABo_Screen);		return true;  // S Screen
-			 case key(E):	gui->GuiShortcut(MNU_Options, TABo_Screen,2);	return true;  // E -Effects
-			case key(G):	gui->GuiShortcut(MNU_Options, TABo_Screen,1);	return true;  // G -Graphics
+			 case key(G):	gui->GuiShortcut(MNU_Options, TABo_Screen,1);	return true;  // G -Graphics
 			 //case key(N):	gui->GuiShortcut(MNU_Options, TABo_Screen,1,3);	return true;  // N --Vegetation !
+			 case key(E):	gui->GuiShortcut(MNU_Options, TABo_Screen,2);	return true;  // E -Effects
 
 			case key(V):	gui->GuiShortcut(MNU_Options, TABo_View);	return true;  // V View
 			 case key(M):	gui->GuiShortcut(MNU_Options, TABo_View,1);	return true;  // M -Minimap
-			 case key(O):	gui->GuiShortcut(MNU_Options, TABo_View,3);	return true;  // O -Other
+			 case key(O):	gui->GuiShortcut(MNU_Options, TABo_View,4);	return true;  // O -Graphs
+			
 			case key(I):	gui->GuiShortcut(MNU_Options, TABo_Input);	return true;  // I Input
 			case key(P):	gui->GuiShortcut(MNU_Options, TABo_Sound);	return true;  // P Sound
 		}

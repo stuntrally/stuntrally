@@ -134,7 +134,7 @@ public:
 
 
 	///  [Screen]
-	Li resList;
+	Cmb resList;
 	void InitGuiScreenRes(), ResizeOptWnd();
 
 	CK(VidFullscr);  CK(VidVSync);

@@ -356,7 +356,7 @@
 	<Tag name="Change">Change</Tag>
 	<Tag name="PostfilterAA">Post-filter antialiasing</Tag>
 
-	<Tag name="GraphicsAllSettings">Change all graphics settings to preset:</Tag>
+	<Tag name="GraphicsPreset">Graphics preset</Tag>
 	<Tag name="GraphicsAll_Lowest">Lowest</Tag>
 	<Tag name="GraphicsAll_Low">Low</Tag>
 	<Tag name="GraphicsAll_Medium">Medium</Tag>

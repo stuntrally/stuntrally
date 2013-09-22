@@ -35,16 +35,17 @@ void CGuiCom::cmbAntiAliasing(MyGUI::ComboBox* wp, size_t val)
 	/*if (app->gui->bGI)*/  pSet->fsaa = v;
 }
 
-///  resolutions
-//  change
+///  change resolution
 void CGuiCom::btnResChng(WP)
 {
 	if (!resList)  return;
 	if (resList->getIndexSelected() == MyGUI::ITEM_NONE)  return;
-	String mode = resList->getItemNameAt(resList->getIndexSelected());
+	String mode = resList->getItemNameAt(resList->getIndexSelected()).substr(7);
 
-	pSet->windowx = StringConverter::parseInt(StringUtil::split(mode, "x")[0]);
-	pSet->windowy = StringConverter::parseInt(StringUtil::split(mode, "x")[1]);
+	StringVector wh = StringUtil::split(mode," x");  // only resolution
+	int w = s2i(wh[0]), h = s2i(wh[1]);
+	pSet->windowx = w;
+	pSet->windowy = h;
 
 	Uint32 flags = SDL_GetWindowFlags(app->mSDLWindow);
 	if (flags & SDL_WINDOW_MAXIMIZED)  // Can't change size of a maximized window
@@ -64,7 +65,7 @@ void CGuiCom::btnResChng(WP)
 }
 
 
-//  get screen resolutions
+//  resolution sort
 struct ScrRes {  int w,h;  String mode;  };
 
 bool ResSort(const ScrRes& r1, const ScrRes& r2)
@@ -72,6 +73,21 @@ bool ResSort(const ScrRes& r1, const ScrRes& r2)
 	return (r1.w <= r2.w) && (r1.h <= r2.h);
 }
 
+//  aspect color
+const static int iClrA = 4;
+const static String clrAsp[iClrA] = {"#E0E0E0","#A0FFFF","#C0FFC0","#F0F060"};
+
+int clrAspect(float asp, String* sa)
+{
+	int ca = 0;  *sa = "";
+	     if (fabs(asp - 16.f/10.f) < 0.05f) {  ca = 1;  *sa = "  16:10";  }
+	else if (fabs(asp - 16.f/ 9.f) < 0.05f) {  ca = 2;  *sa = "  16:9";  }
+	else if (fabs(asp -  4.f/ 3.f) < 0.05f) {  ca = 3;  *sa = "  4:3";  }
+	return ca;
+}
+
+///  init screen resolutions
+//-----------------------------------------------------------------------------------------------------------
 void CGuiCom::InitGuiScreenRes()
 {
 	Ck* ck;
@@ -79,44 +95,53 @@ void CGuiCom::InitGuiScreenRes()
 	ck= &ckVidVSync;	ck->Init("VSync",      &pSet->vsync);		CevC(VidVSync);
 
 	//  video resolutions combobox
-	resList = app->mGui->findWidget<List>("ResList");
+	resList = app->mGui->findWidget<ComboBox>("ResList");
 	if (resList)
 	{
 		//  get resolutions
-		const StringVector& videoModes = Root::getSingleton().getRenderSystem()->getConfigOptions()["Video Mode"].possibleValues;
 		String modeSel = "";
 		std::vector<ScrRes> vRes;
+
+		const StringVector& videoModes = app->mRoot->getRenderSystem()->getConfigOptions()["Video Mode"].possibleValues;
 		for (int i=0; i < videoModes.size(); i++)
 		{
 			String mode = videoModes[i];
 			StringUtil::trim(mode);
 			if (StringUtil::match(mode, "*16-bit*"))  continue;  //skip ?DX
 
-			StringVector vmopts = StringUtil::split(mode, " x");  // only resolution
-			int w = StringConverter::parseUnsignedInt(vmopts[0]);
-			int h = StringConverter::parseUnsignedInt(vmopts[1]);
+			StringVector wh = StringUtil::split(mode, " x");  // only resolution
+			int w = s2i(wh[0]), h = s2i(wh[1]);
 			
 			if (w >= 800 && h >= 600)  // min res
 			{
-				mode = toStr(w) + " x " + toStr(h);
+				//  color aspect
+				float asp = float(w)/h;
+				String sa = "";
+				int ca = clrAspect(asp, &sa);
+				
+				mode = clrAsp[ca] + toStr(w) + " x " + toStr(h) + sa;
+
 				ScrRes res;  res.w = w;  res.h = h;  res.mode = mode;
 				vRes.push_back(res);
+
 				int ww = w - app->mWindow->getWidth(), hh = h - app->mWindow->getHeight();
 				if (abs(ww) < 30 && abs(hh) < 50)  // window difference
 					modeSel = mode;
 			}
 		}
+
 		//  sort and add
 		std::sort(vRes.begin(), vRes.end(), ResSort);
-		for (int r=0; r < vRes.size(); ++r)
-			resList->addItem(vRes[r].mode);
+		int rr = (int)vRes.size()-1;
+		for (int r=0; r <= rr; ++r)
+			resList->addItem(vRes[rr-r].mode);  // bigger to lower
 
 		//  sel current mode
 		if (modeSel != "")
 			resList->setIndexSelected(resList->findItemIndexWith(modeSel));
 	}
-	ButtonPtr btnRes = app->mGui->findWidget<Button>("ResChange");
-	if (btnRes)  {  btnRes->eventMouseButtonClick += newDelegate(this, &CGuiCom::btnResChng);  }
+	Btn btn;
+	BtnC("ResChange",btnResChng);
 }
 
 

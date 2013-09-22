@@ -165,9 +165,10 @@ float SliderValue::setValI(int i)
 //  Gui
 void SliderValue::initGui(String name)
 {
-	slider = pGUI->findWidget<Slider>(name);  // throws if not found
+	slider = pGUI->findWidget<Slider>(name, false);
+	if (!slider)  LogO("GUI slider not found: "+name);  // will crash
 
-	if (slider->eventValueChanged.empty())
+	if (slider && slider->eventValueChanged.empty())
 		slider->eventValueChanged += newDelegate(this, &SliderValue::Move);
 
 	text = pGUI->findWidget<TextBox>(name+"Val", false);   // not required
@@ -175,7 +176,7 @@ void SliderValue::initGui(String name)
 	edit = pGUI->findWidget<EditBox>(name+"Edit", false);  // not required
 
 	if (edit && edit->eventEditTextChange.empty())
-	            edit->eventEditTextChange += newDelegate(this, &SliderValue::Edit);
+		edit->eventEditTextChange += newDelegate(this, &SliderValue::Edit);
 }
 
 void SliderValue::setVisible(bool vis)
@@ -296,7 +297,8 @@ void Check::Invert()
 
 void Check::initGui(String name)
 {
-	chk = pGUI->findWidget<Button>(name);  // throws if not found
+	chk = pGUI->findWidget<Button>(name, false);
+	if (!chk)  LogO("GUI button not found: "+name);  // will crash
 
 	if (chk->eventMouseButtonClick.empty())
 		chk->eventMouseButtonClick += newDelegate(this, &Check::Click);

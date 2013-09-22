@@ -35,31 +35,34 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 	BtnC("Quit", btnQuit);  bnQuit = btn;
 	
 	//  detail
-	sv= &svTerDetail;	sv->Init("TerDetail",	&pSet->terdetail,	0.f,2.f);  SevC(TerDetail);
-	sv= &svTerDist;		sv->Init("TerDist",		&pSet->terdist, 0.f,2000.f, 2.f, 0,3, 1.f," m");  SevC(TerDist);
-	sv= &svRoadDist;	sv->Init("RoadDist",	&pSet->road_dist,	0.f,4.f, 2.f, 2,5);
+	sv= &svTerDetail;	sv->Init("TerDetail",	&pSet->terdetail,	0.f,2.f);	SevC(TerDetail);  sv->DefaultF(1.f);
+	sv= &svTerDist;		sv->Init("TerDist",		&pSet->terdist, 0.f,2000.f, 2.f, 0,3, 1.f," m");
+																				SevC(TerDist);  sv->DefaultI(2000.f); //hq
+	sv= &svRoadDist;	sv->Init("RoadDist",	&pSet->road_dist,	0.f,4.f, 2.f, 2,5);  sv->DefaultF(1.6f);
 
 	//  textures
 	CmbC(cmb, "TexFiltering", comboTexFilter);
 
-	sv= &svViewDist;	sv->Init("ViewDist",	&pSet->view_distance, 50.f,20000.f, 2.f, 1,4, 0.001f," km");  SevC(ViewDist);
-	sv= &svAnisotropy;	sv->Init("Anisotropy",	&pSet->anisotropy,	0.f,16.f);  SevC(Anisotropy);
+	sv= &svViewDist;	sv->Init("ViewDist",	&pSet->view_distance, 50.f,20000.f, 2.f, 1,4, 0.001f," km");
+																				SevC(ViewDist);  sv->DefaultF(8000.f);
+	sv= &svAnisotropy;	sv->Init("Anisotropy",	&pSet->anisotropy,	0,16);		SevC(Anisotropy);  sv->DefaultI(4);
 	sv= &svTexSize;
 		sv->strMap[0] = "Small";  sv->strMap[1] = "Big";
-						sv->Init("TexSize",		&pSet->tex_size,	0.f,1.f);
+						sv->Init("TexSize",		&pSet->tex_size,	0,1);	sv->DefaultI(1);
+	//  terrain
 	sv= &svTerMtr;
 		sv->strMap[0] = TR("#{GraphicsAll_Lowest}");	sv->strMap[1] = TR("#{GraphicsAll_Medium}");
 		sv->strMap[2] = TR("#{GraphicsAll_High}");		sv->strMap[3] = "Parallax";
-						sv->Init("TerMtr",		&pSet->ter_mtr,		0.f,3.f);
+						sv->Init("TerMtr",		&pSet->ter_mtr,		0,3);	sv->DefaultI(3);
 	sv= &svTerTripl;
 		sv->strMap[0] = "Off";  sv->strMap[1] = "One";  sv->strMap[2] = "Full";
-						sv->Init("TerTripl",	&pSet->ter_tripl,	0.f,2.f);
+						sv->Init("TerTripl",	&pSet->ter_tripl,	0,2);	sv->DefaultF(1);
 
 	//  trees/grass
-	sv= &svTrees;		sv->Init("Trees",		&pSet->gui.trees,	0.f,4.f, 2.f);
-	sv= &svGrass;		sv->Init("Grass",		&pSet->grass,		0.f,4.f, 2.f);
-	sv= &svTreesDist;	sv->Init("TreesDist",   &pSet->trees_dist,	0.5f,7.f, 2.f);
-	sv= &svGrassDist;	sv->Init("GrassDist",   &pSet->grass_dist,	0.5f,7.f, 2.f);
+	sv= &svTrees;		sv->Init("Trees",		&pSet->gui.trees,	0.f,4.f, 2.f);   sv->DefaultF(1.5f);
+	sv= &svGrass;		sv->Init("Grass",		&pSet->grass,		0.f,4.f, 2.f);   sv->DefaultF(1.f);
+	sv= &svTreesDist;	sv->Init("TreesDist",   &pSet->trees_dist,	0.5f,7.f, 2.f);  sv->DefaultF(1.f);
+	sv= &svGrassDist;	sv->Init("GrassDist",   &pSet->grass_dist,	0.5f,7.f, 2.f);  sv->DefaultF(2.f);
 	BtnC("TrGrReset",  btnTrGrReset);
 
 	ck= &ckUseImposters;  ck->Init("UseImposters", &pSet->use_imposters);
@@ -68,14 +71,14 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 	//  shadows
 	sv= &svShadowType;
 		sv->strMap[0] = "None";		sv->strMap[1] = "Depth";	sv->strMap[2] = "Soft-";
-						sv->Init("ShadowType",	&pSet->shadow_type, 0.f,1.f); //2.f);
-	sv= &svShadowCount;	sv->Init("ShadowCount",	&pSet->shadow_count, 1.f,3.f);
+						sv->Init("ShadowType",	&pSet->shadow_type,  0,1);  sv->DefaultI(1);
+	sv= &svShadowCount;	sv->Init("ShadowCount",	&pSet->shadow_count, 1,3);  sv->DefaultI(2);
 	sv= &svShadowSize;
 		for (int i=0; i < ciShadowSizesNum; ++i)  sv->strMap[i] = toStr(ciShadowSizesA[i]);
-						sv->Init("ShadowSize",	&pSet->shadow_size, 0,ciShadowSizesNum-1);
-	sv= &svShadowDist;	sv->Init("ShadowDist",	&pSet->shadow_dist, 20.f,5000.f, 3.f, 0,3, 1.f," m");
+						sv->Init("ShadowSize",	&pSet->shadow_size, 0,ciShadowSizesNum-1);   sv->DefaultI(3);
+	sv= &svShadowDist;	sv->Init("ShadowDist",	&pSet->shadow_dist, 20.f,5000.f, 3.f, 0,3, 1.f," m");  sv->DefaultF(1300.f);
+
 	BtnC("Apply", btnShadows);
-	
 	BtnC("ApplyShaders", btnShaders);
 	BtnC("ApplyShadersWater", btnShaders);
 	
@@ -84,7 +87,7 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 	ck= &ckWaterRefract; ck->Init("WaterRefraction", &pSet->water_refract);  CevC(Water);
 	sv= &svWaterSize;
 		for (int i=0; i <= 2; ++i)  sv->strMap[i] = toStr(ciShadowSizesA[i]);
-						sv->Init("WaterSize",	&pSet->water_rttsize, 0.f,2.f);
+						sv->Init("WaterSize",	&pSet->water_rttsize, 0.f,2.f);  sv->DefaultI(0);
 	
 	//  presets
 	CmbC(cmb, "CmbGraphicsAll", comboGraphicsAll);
@@ -102,9 +105,11 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 	int si=0;
 	if (cmb)
 	{	cmb->removeAllItems();
+
 		int a[6] = {0,1,2,4,8,16};
 		for (int i=0; i < 6; ++i)
 		{	int v = a[i];
+
 			cmb->addItem(toStr(v));
 			if (pSet->fsaa >= v)
 				si = i;

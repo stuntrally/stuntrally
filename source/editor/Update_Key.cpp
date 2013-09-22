@@ -505,9 +505,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(X):  gui->GuiShortcut(WND_Edit, 7);  return true;  // X Objects
 		case key(O):  gui->GuiShortcut(WND_Edit, 8);  return true;  // O Tools
 
-		case key(C):  gui->GuiShortcut(WND_Options, 1);    return true;  // C Screen
-		case key(G):  gui->GuiShortcut(WND_Options, 1,1);  return true;  // G -Graphics
-		//case key(N): gui->GuiShortcut(WND_Options, 1,1,3);return true;  // N --Vegetation !
+		case key(C):  gui->GuiShortcut(WND_Options, 1,0);	return true;  // C Screen
+		case key(G):  gui->GuiShortcut(WND_Options, 1,1);	return true;  // G -Graphics
+		//case key(N):  gui->GuiShortcut(WND_Options, 1,1);	return true;  // N --Vegetation !
 		case key(K):  gui->GuiShortcut(WND_Options, 1,2);  return true;  // K -Tweak
 		case key(E):  gui->GuiShortcut(WND_Options, 2);    return true;  // E Settings
 		
