@@ -241,8 +241,8 @@ bool App::frameStart(Real time)
 			--iLoad1stFrames;  // -2 end
 
 			imgLoad->setVisible(false);  // hide back imgs
-			//if (imgBack)
-			//imgBack->setVisible(false);
+			if (imgBack)
+				imgBack->setVisible(false);
 		}
 
 		

@@ -87,7 +87,7 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 	ck= &ckWaterRefract; ck->Init("WaterRefraction", &pSet->water_refract);  CevC(Water);
 	sv= &svWaterSize;
 		for (int i=0; i <= 2; ++i)  sv->strMap[i] = toStr(ciShadowSizesA[i]);
-						sv->Init("WaterSize",	&pSet->water_rttsize, 0.f,2.f);  sv->DefaultI(0);
+						sv->Init("WaterSize",	&pSet->water_rttsize, 0.f,2.f);  sv->DefaultI(0);  SevC(WaterSize);
 	
 	//  presets
 	CmbC(cmb, "CmbGraphicsAll", comboGraphicsAll);
@@ -205,5 +205,11 @@ void CGuiCom::chkWater(Ck*)
 	app->mWaterRTT->setReflect(pSet->water_reflect);
 	app->mWaterRTT->setRefract(pSet->water_refract);
 	app->changeShadows();
+	app->mWaterRTT->recreate();
+}
+
+void CGuiCom::slWaterSize(SV*)
+{
+	app->mWaterRTT->setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
 	app->mWaterRTT->recreate();
 }

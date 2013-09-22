@@ -201,9 +201,8 @@ void CGuiCom::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	app->gui->UpdGuiAfterPreset();
 
 	app->mWaterRTT->setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
-	app->mWaterRTT->recreate();
-
-	app->changeShadows();  // apply shadow, material factory generate
+	chkWater(0);
+	//^app->changeShadows();  // apply shadow, material factory generate
 }
 
 

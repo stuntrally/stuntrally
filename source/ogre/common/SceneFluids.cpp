@@ -144,16 +144,18 @@ void App::UpdMtrWaterDepth()
 }
 #endif
 
-//  water rtt
+
+//  Water rtt, setup and recreate
 void App::UpdateWaterRTT(Ogre::Camera* cam)
 {
-	//  water RTT
-	mWaterRTT->setViewerCamera(cam);
 	mWaterRTT->setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
 	mWaterRTT->setReflect(pSet->water_reflect);
 	mWaterRTT->setRefract(pSet->water_refract);
+
+	mWaterRTT->setViewerCamera(cam);
 	mWaterRTT->mSceneMgr = mSceneMgr;
-	if (!sc->fluids.empty())
+
+	if (!sc->fluids.empty())  // first fluid's plane
 		mWaterRTT->setPlane(Plane(Vector3::UNIT_Y, sc->fluids.front().pos.y));
 	mWaterRTT->recreate();
 	mWaterRTT->setActive(!sc->fluids.empty());

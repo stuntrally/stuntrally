@@ -67,9 +67,9 @@ public:
 	///  [Graphics]
 	SlV(ViewDist);  SlV(Anisotropy);
 	SlV(TerDetail);  SlV(TerDist);  SV svRoadDist;
-	SlV(TexSize);  SlV(TerMtr);  SlV(TerTripl);  // detail
-	SlV(Trees);  SlV(Grass);  SlV(TreesDist);  SlV(GrassDist);  // veget
-	SlV(ShadowType);  SlV(ShadowCount);  SlV(ShadowSize);  SlV(ShadowDist);  // shadow
+	SV svTexSize, svTerMtr, svTerTripl;  // detail
+	SV svTrees, svGrass, svTreesDist, svGrassDist;  // veget
+	SV svShadowType, svShadowCount, svShadowSize, svShadowDist;  // shadow
 	SlV(WaterSize);
 
 	Ck ckUseImposters, ckImpostorsOnly;

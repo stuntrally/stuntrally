@@ -23,7 +23,7 @@ using namespace Ogre;
 
 
 CGuiCom::CGuiCom(App* app1)
-	:app(app1)
+	:app(app1), pSet(0), sc(0),	mGui(0)
 	,bGuiReinit(0)
 	,mToolTip(0), mToolTipTxt(0)
 	,bnQuit(0)
@@ -33,7 +33,7 @@ CGuiCom::CGuiCom(App* app1)
 {
 	pSet = app1->pSet;
 	sc = app1->sc;
-	//mGui = app1->mGui;
+	//mGui = app1->mGui;  set in GuiInit
 
 	pathTrk[0] = PATHMANAGER::Tracks() + "/";
 	pathTrk[1] = PATHMANAGER::TracksUser() + "/";

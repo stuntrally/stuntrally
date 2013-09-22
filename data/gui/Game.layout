@@ -917,6 +917,7 @@
                 <Widget type="ComboBox" skin="ComboBox" position="168 192 160 24" name="CmbBoost">
 					<Property key="Colour" value="0.55 0.75 1"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="Static" value="true"/>
 					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
@@ -934,6 +935,7 @@
                 <Widget type="ComboBox" skin="ComboBox" position="168 224 160 24" name="CmbFlip">
 					<Property key="Colour" value="0.60 0.70 1"/>
 					<Property key="TextColour" value="0.65 0.75 1"/>
+					<Property key="Static" value="true"/>
 					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
@@ -951,6 +953,7 @@
                 <Widget type="ComboBox" skin="ComboBox" position="168 256 160 24" name="CmbDamage">
 					<Property key="Colour" value="0.7 0.6 1"/>
 					<Property key="TextColour" value="0.8 0.7 1"/>
+					<Property key="Static" value="true"/>
 					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
@@ -968,7 +971,8 @@
                 <Widget type="ComboBox" skin="ComboBox" position="168 288 160 24" name="CmbRewind">
                     <Property key="Colour" value="0.9 0.6 1"/>
                     <Property key="TextColour" value="0.8 0.7 1"/>
-                    <Property key="ReadOnly" value="true"/>
+					<Property key="Static" value="true"/>
+					<Property key="ReadOnly" value="true"/>
                     <UserString key="RelativeTo" value="GameWnd"/>
                 </Widget>
 

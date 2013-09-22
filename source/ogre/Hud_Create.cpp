@@ -576,7 +576,7 @@ void CHud::Show(bool hideAll)
 		bool opp = pSet->show_opponents && (!app->sc->ter || app->road && app->road->getNumPoints() > 0);
 		bool bfuel = pSet->game.boost_type == 1 || pSet->game.boost_type == 2;
 		bool bdmg = pSet->game.damage_type > 0;
-		txCamInfo->setVisible(cam);
+		//txCamInfo->setVisible(cam);
 
 		show = pSet->show_gauges;
 		for (int c=0; c < hud.size(); ++c)
