@@ -353,10 +353,11 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	float timeTrk = app->data->tracks->times[sTrack];
 	std::string speedTrk = fToStr(len / timeTrk * m, 0,3) + unit;
 	float timeT = (/*place*/1 * app->data->cars->magic * timeTrk + timeTrk) / carMul;
-	if (stTrk[ch][6])  stTrk[ch][6]->setCaption(CHud::StrTime(timeT));
-	if (stTrk[ch][7])  stTrk[ch][7]->setCaption(timeT < 0.1f ? "--" : speedTrk);
+	bool no = timeCur < 0.1f || !rd;
+	if (stTrk[ch][6])  stTrk[ch][6]->setCaption(CHud::StrTime(no ? 0.f : timeT));
+	if (stTrk[ch][7])  stTrk[ch][7]->setCaption(no ? "--" : speedTrk);
 
-	if (timeCur < 0.1f)
+	if (no)
 	{
 		if (stTrk[ch][8])  stTrk[ch][8]->setCaption(CHud::StrTime(0.f));
 		if (stTrk[ch][9])  stTrk[ch][9]->setCaption("--");
