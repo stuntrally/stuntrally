@@ -112,13 +112,13 @@ void SliderValue::Update()
 //  set default value for RMB on slider
 void SliderValue::DefaultF(float f)
 {
-	float v = setValF(f);
+	float v = getValF(f);
 	slider->mfDefault = v;
 }
 
 void SliderValue::DefaultI(int i)
 {
-	float v = setValI(i);
+	float v = getValI(i);
 	slider->mfDefault = v;
 }
 
@@ -126,36 +126,40 @@ void SliderValue::DefaultI(int i)
 void SliderValue::SetValueF(float f)
 {
 	*pFloat = f;
-	float v = setValF(f);
+	setValF(f);
 	Update();
 }
 
 void SliderValue::SetValueI(int i)
 {
 	*pInt = i;
-	float v = setValI(i);
+	setValI(i);
 	Update();
 }
 
 //  set val internal
-float SliderValue::setValF(float f)
+float SliderValue::getValF(float f)
 {
 	float v = (f - fMin) / fRange;
 	if (fPow != 1.f)
 		v = powS(v, 1.f/fPow);
-
-	slider->setValue(v);
 	return v;
 }
+void SliderValue::setValF(float f)
+{
+	slider->setValue(getValF(f));
+}
 
-float SliderValue::setValI(int i)
+float SliderValue::getValI(int i)
 {
 	float v = (i - fMin) / fRange;
 	if (fPow != 1.f)
 		v = powS(v, 1.f/fPow);
-
-	slider->setValue(v);
 	return v;
+}
+void SliderValue::setValI(int i)
+{
+	slider->setValue(getValI(i));
 }
 
 
@@ -217,8 +221,8 @@ void SliderValue::Init(
 	fmtValMul = valMul;  sSuffix = suffix;
 
 	pFloat = pF;
-	float v = setValF(*pF);
-	Move(slider, v);  // no event bGI=false
+	setValF(*pF);
+	Update();  // no event bGI=false
 }
 
 //  Int
@@ -232,8 +236,8 @@ void SliderValue::Init(
 	fRange = rMax - rMin;
 
 	pInt = pI;
-	float v = setValI(*pI);
-	Move(slider, v);
+	setValI(*pI);
+	Update();
 }
 
 

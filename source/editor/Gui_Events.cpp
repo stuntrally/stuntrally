@@ -345,20 +345,11 @@ void CGui::editRoad(EditPtr ed)
 
 //  [Settings]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-//  Startup
-void CGui::chkStartInMain(WP wp){	ChkEv(startInMain);    }
-void CGui::chkAutoStart(WP wp)	{	ChkEv(autostart);	}
-void CGui::chkEscQuits(WP wp)	{	ChkEv(escquit);		}
-void CGui::chkOgreDialog(WP wp)	{	ChkEv(ogre_dialog);	}
-
 void CGui::chkCamPos(WP wp){		ChkEv(camPos);
 	if (pSet->camPos)  app->ovPos->show();  else  app->ovPos->hide();  }
 
 void CGui::chkInputBar(WP wp){		ChkEv(inputBar);
 	if (pSet->inputBar)  app->mDebugOverlay->show();  else  app->mDebugOverlay->hide();  }
-
-void CGui::chkCheckSave(WP wp)	{	ChkEv(check_save);  }
-void CGui::chkCheckLoad(WP wp)	{	ChkEv(check_load);  }
 
 
 void CGui::slSizeRoadP(SV*)

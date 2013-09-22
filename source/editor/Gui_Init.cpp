@@ -155,7 +155,7 @@ void CGui::InitGui()
 	}
 	
 	ButtonPtr btn, bchk;  ComboBoxPtr combo;  // for defines
-	Slider* sl;  SliderValue* sv;
+	Sl* sl;  SV* sv;  Ck* ck;
 
 	///  [Graphics]
 	//------------------------------------------------------------------------
@@ -165,12 +165,12 @@ void CGui::InitGui()
 	///  [Settings]
 	//------------------------------------------------------------------------
 	Chk("Minimap", chkMinimap, pSet->trackmap);
-	sv= &svSizeMinmap;	sv->Init("SizeMinmap",	&pSet->size_minimap, 0.15f,2.f);  Sev(SizeMinmap);
-	sv= &svCamSpeed;	sv->Init("CamSpeed",	&pSet->cam_speed, 0.1f,4.f);
-	sv= &svCamInert;	sv->Init("CamInert",	&pSet->cam_inert, 0.f, 1.f);
-	sv= &svTerUpd;		sv->Init("TerUpd",		&pSet->ter_skip,  0.f, 20.f);
-	sv= &svMiniUpd;		sv->Init("MiniUpd",		&pSet->mini_skip, 0.f, 20.f);
-	sv= &svSizeRoadP;	sv->Init("SizeRoadP",	&pSet->road_sphr, 0.1f,12.f);  Sev(SizeRoadP);
+	sv= &svSizeMinmap;	sv->Init("SizeMinmap",	&pSet->size_minimap, 0.15f,2.f);  sv->DefaultF(0.55f);  Sev(SizeMinmap);
+	sv= &svCamSpeed;	sv->Init("CamSpeed",	&pSet->cam_speed, 0.1f,4.f);  sv->DefaultF(0.9f);
+	sv= &svCamInert;	sv->Init("CamInert",	&pSet->cam_inert, 0.f, 1.f);  sv->DefaultF(0.4f);
+	sv= &svSizeRoadP;	sv->Init("SizeRoadP",	&pSet->road_sphr, 0.1f,12.f); sv->DefaultF(1.5f);  Sev(SizeRoadP);
+	sv= &svTerUpd;		sv->Init("TerUpd",		&pSet->ter_skip,  0, 20);  sv->DefaultI(1);
+	sv= &svMiniUpd;		sv->Init("MiniUpd",		&pSet->mini_skip, 0, 20);  sv->DefaultI(4);
 	
 	Chk("AutoBlendmap", chkAutoBlendmap, pSet->autoBlendmap);  chAutoBlendmap = bchk;
 	Chk("CamPos", chkCamPos, pSet->camPos);
@@ -179,30 +179,30 @@ void CGui::InitGui()
 	//  set camera btns
 	Btn("CamView1", btnSetCam);  Btn("CamView2", btnSetCam);
 	Btn("CamView3", btnSetCam);  Btn("CamView4", btnSetCam);
-	Btn("CamTop", btnSetCam);
-	Btn("CamLeft", btnSetCam);   Btn("CamRight", btnSetCam);
-	Btn("CamFront", btnSetCam);  Btn("CamBack", btnSetCam);
+	Btn("CamTop",   btnSetCam);
+	Btn("CamLeft",  btnSetCam);  Btn("CamRight", btnSetCam);
+	Btn("CamFront", btnSetCam);  Btn("CamBack",  btnSetCam);
 
 	//  startup
-	Chk("StartInMain", chkStartInMain, pSet->startInMain);
-	Chk("AutoStart", chkAutoStart, pSet->autostart);
-	Chk("EscQuits", chkEscQuits, pSet->escquit);
-	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
+	ck= &ckStartInMain;	ck->Init("StartInMain", &pSet->startInMain);
+	ck= &ckAutoStart;	ck->Init("AutoStart",   &pSet->autostart);
+	ck= &ckEscQuits;	ck->Init("EscQuits",    &pSet->escquit);
+	ck= &ckOgreDialog;	ck->Init("OgreDialog",  &pSet->ogre_dialog);
 	
 
 	///  [Sun]
 	//----------------------------------------------------------------------------------------------
-	sv= &svSunPitch;	sv->Init("SunPitch",	&sc->ldPitch,    0.f,90.f,  1.f, 1,4);  Sev(UpdSun);
-	sv= &svSunYaw;		sv->Init("SunYaw",		&sc->ldYaw,   -180.f,180.f, 1.f, 1,4);  Sev(UpdSun);
-	sv= &svRain1Rate;	sv->Init("Rain1Rate",	&sc->rainEmit,   0.f,6000.f);
-	sv= &svRain2Rate;	sv->Init("Rain2Rate",	&sc->rain2Emit,  0.f,6000.f);
+	sv= &svSunPitch;	sv->Init("SunPitch",	&sc->ldPitch,    0.f,90.f,  1.f, 1,4);  sv->DefaultF(54.f);    Sev(UpdSun);
+	sv= &svSunYaw;		sv->Init("SunYaw",		&sc->ldYaw,   -180.f,180.f, 1.f, 1,4);  sv->DefaultF(-123.f);  Sev(UpdSun);
+	sv= &svRain1Rate;	sv->Init("Rain1Rate",	&sc->rainEmit,   0.f,6000.f);  sv->DefaultF(1000.f);
+	sv= &svRain2Rate;	sv->Init("Rain2Rate",	&sc->rain2Emit,  0.f,6000.f);  sv->DefaultF(1000.f);
 	//  fog
-	sv= &svFogStart;	sv->Init("FogStart",	&sc->fogStart,   0.f,2000.f, 2.f, 0,3);  Sev(UpdFog);
-	sv= &svFogEnd;		sv->Init("FogEnd",		&sc->fogEnd,     0.f,2000.f, 2.f, 0,3);  Sev(UpdFog);
-	sv= &svFogHStart;	sv->Init("FogHStart",	&sc->fogHStart,  0.f,2000.f, 2.f, 0,3);  Sev(UpdFog);
-	sv= &svFogHEnd;		sv->Init("FogHEnd",		&sc->fogHEnd,    0.f,2000.f, 2.f, 0,3);  Sev(UpdFog);
-	sv= &svFogHeight;	sv->Init("FogHeight",	&sc->fogHeight, -200.f,200.f, 1.f, 1,4);  Sev(UpdFog);  //edit..
-	sv= &svFogHDensity;	sv->Init("FogHDensity",	&sc->fogHDensity,  0.f,200.f, 2.f, 1,4);  Sev(UpdFog);
+	sv= &svFogStart;	sv->Init("FogStart",	&sc->fogStart,   0.f,2000.f, 2.f, 0,3);  sv->DefaultF(100.f);  Sev(UpdFog);
+	sv= &svFogEnd;		sv->Init("FogEnd",		&sc->fogEnd,     0.f,2000.f, 2.f, 0,3);  sv->DefaultF(600.f);  Sev(UpdFog);
+	sv= &svFogHStart;	sv->Init("FogHStart",	&sc->fogHStart,  0.f,2000.f, 2.f, 0,3);  sv->DefaultF(0.f);    Sev(UpdFog);
+	sv= &svFogHEnd;		sv->Init("FogHEnd",		&sc->fogHEnd,    0.f,2000.f, 2.f, 0,3);  sv->DefaultF(60.f);   Sev(UpdFog);
+	sv= &svFogHeight;	sv->Init("FogHeight",	&sc->fogHeight, -200.f,200.f, 1.f, 1,4);  sv->DefaultF(-300.f);  Sev(UpdFog);  //edit..
+	sv= &svFogHDensity;	sv->Init("FogHDensity",	&sc->fogHDensity,  0.f,200.f, 2.f, 1,4);  sv->DefaultF(60.f);  Sev(UpdFog);
 
 	Chk("FogDisable", chkFogDisable, pSet->bFog);  chkFog = bchk;
 	Chk("WeatherDisable", chkWeatherDisable, pSet->bWeather);  chkWeather = bchk;
@@ -273,13 +273,13 @@ void CGui::InitGui()
 	
 
 	///  generator  . . . . . . .
-	sv= &svTerGenScale;	sv->Init("TerGenScale",	&pSet->gen_scale, 0.f,160.f, 2.f, 2,4);
-	sv= &svTerGenOfsX;	sv->Init("TerGenOfsX",	&pSet->gen_ofsx, -12.f,12.f, 1.f, 3,5);  Sev(TerGen);
-	sv= &svTerGenOfsY;	sv->Init("TerGenOfsY",	&pSet->gen_ofsy, -12.f,12.f, 1.f, 3,5);  Sev(TerGen);
+	sv= &svTerGenScale;	sv->Init("TerGenScale",	&pSet->gen_scale, 0.f,160.f, 2.f, 2,4);  sv->DefaultF(52.f);
+	sv= &svTerGenOfsX;	sv->Init("TerGenOfsX",	&pSet->gen_ofsx, -12.f,12.f, 1.f, 3,5);  sv->DefaultF(0.14f);   Sev(TerGen);
+	sv= &svTerGenOfsY;	sv->Init("TerGenOfsY",	&pSet->gen_ofsy, -12.f,12.f, 1.f, 3,5);  sv->DefaultF(-1.54f);  Sev(TerGen);
 
-	sv= &svTerGenFreq;	sv->Init("TerGenFreq",	&pSet->gen_freq,  0.06f,3.f, 2.f, 3,5);  Sev(TerGen);
-	sv= &svTerGenOct;	sv->Init("TerGenOct",	&pSet->gen_oct,    0.f, 9.f);             sv->DefaultI(4);  Sev(TerGen);
-	sv= &svTerGenPers;	sv->Init("TerGenPers",	&pSet->gen_persist,0.f, 0.7f, 1.f, 3,5);  sv->DefaultF(0.4f);  Sev(TerGen);
+	sv= &svTerGenFreq;	sv->Init("TerGenFreq",	&pSet->gen_freq,  0.06f,3.f, 2.f, 3,5);  sv->DefaultF(0.914f);  Sev(TerGen);
+	sv= &svTerGenOct;	sv->Init("TerGenOct",	&pSet->gen_oct,    0.f, 9.f);             sv->DefaultI(4);    Sev(TerGen);
+	sv= &svTerGenPers;	sv->Init("TerGenPers",	&pSet->gen_persist,0.f, 0.7f, 1.f, 3,5);  sv->DefaultF(0.347f);  Sev(TerGen);
 	sv= &svTerGenPow;	sv->Init("TerGenPow",	&pSet->gen_pow,    0.f, 6.f,  2.f, 3,5);  sv->DefaultF(1.f);  Sev(TerGen);
 	
 	sv= &svTerGenMul;	sv->Init("TerGenMul",	&pSet->gen_mul,    0.f, 6.f,  2.f, 3,5);  sv->DefaultF(1.f);  Sev(TerGen);
@@ -303,8 +303,9 @@ void CGui::InitGui()
 	Chk("TerLayTripl", chkTerLayTriplOn, 1);  chkTerLayTripl = bchk;
 
 	float f=0.f;  i=0;  // temp vars
-	sv= &svTerTriSize;	sv->Init("TerTriSize", &sc->td.fTriangleSize,  0.1f,6.f, 2.f);  Sev(TerTriSize);
-	sv= &svTerLScale;	sv->Init("TerLScale",  &f, 1.0f, 64.f,  3.f);  Sev(TerLay);  // 2 24 1.5
+	sv= &svTerTriSize;	sv->Init("TerTriSize", &sc->td.fTriangleSize,  0.1f,6.f, 2.f);  sv->DefaultF(1.4f);  Sev(TerTriSize);
+	//  ter layer
+	sv= &svTerLScale;	sv->Init("TerLScale",  &f, 4.0f, 64.f,  3.f);  sv->DefaultF(8.f);  Sev(TerLay);  // 2 24 1.5
 	//  blendmap
 	sv= &svTerLAngMin;  sv->Init("TerLAngMin", &f, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(0.f);  Sev(TerLay);
 	sv= &svTerLAngMax;  sv->Init("TerLAngMax", &f, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(90.f);  Sev(TerLay);
@@ -343,18 +344,18 @@ void CGui::InitGui()
 	valLTrAll = fTxt("LTrAll");
 	Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);
 	//  veget layers, models
-	sv= &svLTrDens;		sv->Init("LTrDens",		 &f, 0.001f,1.0f, 2.f);
+	sv= &svLTrDens;		sv->Init("LTrDens",		 &f, 0.001f,1.0f, 2.f);  sv->DefaultF(0.15f);
 	
-	sv= &svLTrRdDist;	sv->Init("LTrRdDist",	 &i, 0.f,20.f);
-	sv= &svLTrRdDistMax;sv->Init("LTrRdDistMax", &i, 0.f,20.f);
-
-	sv= &svLTrMinSc;	sv->Init("LTrMinSc",	 &f, 0.f,6.f, 3.f);
-	sv= &svLTrMaxSc;	sv->Init("LTrMaxSc",	 &f, 0.f,6.f, 3.f);
-
-	sv= &svLTrWindFx;	sv->Init("LTrWindFx",	 &f, 0.f,3.f, 3.f);
-	sv= &svLTrWindFy;	sv->Init("LTrWindFy",	 &f, 0.f,0.4f, 3.f);
+	sv= &svLTrRdDist;	sv->Init("LTrRdDist",	 &i, 0,20);  sv->DefaultI(0);
+	sv= &svLTrRdDistMax;sv->Init("LTrRdDistMax", &i, 0,20);  sv->DefaultI(20);
 	
-	sv= &svLTrMaxTerAng;sv->Init("LTrMaxTerAng", &f, 0.f,90.f, 2.f);
+	sv= &svLTrMinSc;	sv->Init("LTrMinSc",	 &f, 0.f,6.f, 3.f);  sv->DefaultF(0.7f);
+	sv= &svLTrMaxSc;	sv->Init("LTrMaxSc",	 &f, 0.f,6.f, 3.f);  sv->DefaultF(1.2f);
+	
+	sv= &svLTrWindFx;	sv->Init("LTrWindFx",	 &f, 0.f,3.f, 3.f);   sv->DefaultF(0.5f);
+	sv= &svLTrWindFy;	sv->Init("LTrWindFy",	 &f, 0.f,0.4f, 3.f);  sv->DefaultF(0.06f);
+	
+	sv= &svLTrMaxTerAng;sv->Init("LTrMaxTerAng", &f, 0.f,90.f, 2.f);  sv->DefaultF(25.f);
 	sldUpdPgL();  // real &f set here
 
 	Ed(LTrMinTerH, editLTrMinTerH);
@@ -367,12 +368,12 @@ void CGui::InitGui()
 	valLGrAll = fTxt("LGrAll");
 	Tab(tabsGrLayers, "LGrLayTab", tabGrLayers);
 
-	sv= &svGrMinX;	sv->Init("GrMinX",	&f, 0.1f,4.1, 2.f);
-	sv= &svGrMaxX;	sv->Init("GrMaxX",	&f, 0.1f,4.1, 2.f);
-	sv= &svGrMinY;	sv->Init("GrMinY",	&f, 0.1f,4.1, 2.f);
-	sv= &svGrMaxY;	sv->Init("GrMaxY",	&f, 0.1f,4.1, 2.f);
-
-	sv= &svLGrDens;	sv->Init("LGrDens",	&f, 0.001f,1.f, 2.f, 3,5);
+	sv= &svGrMinX;	sv->Init("GrMinX",	&f, 0.1f,4.1, 2.f);  sv->DefaultF(1.3f);
+	sv= &svGrMaxX;	sv->Init("GrMaxX",	&f, 0.1f,4.1, 2.f);  sv->DefaultF(1.5f);
+	sv= &svGrMinY;	sv->Init("GrMinY",	&f, 0.1f,4.1, 2.f);  sv->DefaultF(1.4f);
+	sv= &svGrMaxY;	sv->Init("GrMaxY",	&f, 0.1f,4.1, 2.f);  sv->DefaultF(1.6f);
+	
+	sv= &svLGrDens;	sv->Init("LGrDens",	&f, 0.001f,1.f, 2.f, 3,5);  sv->DefaultF(0.22f);
 	sldUpdGrL();
 
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
@@ -406,9 +407,9 @@ void CGui::InitGui()
 	Btn("ScaleAll", btnScaleAll);	Ed(ScaleAllMul, editScaleAllMul);
 	Btn("ScaleTerH", btnScaleTerH);	Ed(ScaleTerHMul, editScaleTerHMul);
 
-	sv= &svAlignWidthAdd;	sv->Init("AlignWidthAdd",	&pSet->al_w_add,  0.f,20.f,1.f, 1,3);
-	sv= &svAlignWidthMul;	sv->Init("AlignWidthMul",	&pSet->al_w_mul,  1.f,4.f, 1.f, 2,4);
-	sv= &svAlignSmooth;		sv->Init("AlignSmooth",		&pSet->al_smooth, 0.f,6.f, 1.f, 1,3);
+	sv= &svAlignWidthAdd;	sv->Init("AlignWidthAdd",	&pSet->al_w_add,  0.f,20.f,1.f, 1,3);  sv->DefaultF(10.f);
+	sv= &svAlignWidthMul;	sv->Init("AlignWidthMul",	&pSet->al_w_mul,  1.f,4.f, 1.f, 2,4);  sv->DefaultF(1.f);
+	sv= &svAlignSmooth;		sv->Init("AlignSmooth",		&pSet->al_smooth, 0.f,6.f, 1.f, 1,3);  sv->DefaultF(3.f);
 
 	
 	///  [Warnings]  ------------------------------------
@@ -421,8 +422,8 @@ void CGui::InitGui()
 	imgWarn = fImg("ImgWarn");  imgWarn->setVisible(false);
 	imgInfo = fImg("ImgInfo");
 
-	Chk("CheckSave", chkCheckSave, pSet->check_save);
-	Chk("CheckLoad", chkCheckLoad, pSet->check_load);
+	ck= &ckCheckSave;	ck->Init("CheckSave",	&pSet->check_save);
+	ck= &ckCheckLoad;	ck->Init("CheckLoad",	&pSet->check_load);
 	
 
 	///  Fill Combo boxes  . . . . . . .

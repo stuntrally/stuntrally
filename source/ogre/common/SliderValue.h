@@ -75,7 +75,7 @@ public:
 	void setVisible(bool vis);
 
 
-	//  default value for RMB click
+	//  default value for RMB click (real values)
 	void DefaultF(float f);
 	void DefaultI(int i);
 
@@ -83,8 +83,11 @@ public:
 	void SetValueI(int i);
 
 private:
-	float setValF(float f);
-	float setValI(int i);
+	void setValF(float f);  // set slider
+	void setValI(int i);
+
+	float getValF(float f);  // get slider value (0..1) for given float value (real)
+	float getValI(int i);    // - - for int value
 
 
 	//  event  slider moved
