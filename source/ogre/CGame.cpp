@@ -24,8 +24,8 @@ using namespace Ogre;
 
 //  ctors  -----------------------------------------------
 App::App(SETTINGS *settings, GAME *game)
-	:pGame(game), pSet(settings),
-	,sc(0), data(0), hud(0), gui(0), gcom(0), input(0), mBindListner(0)
+	:pGame(game), pSet(settings)
+	,sc(0), data(0), hud(0), gui(0), gcom(0), input(0)
 	,mThread(), mTimer(0.f)
 	// ter
 	,mTerrainGlobals(0), mTerrainGroup(0), terrain(0), mPaging(false)
@@ -39,7 +39,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,newGameRpl(0), curLoadState(0)
 	,bRplPlay(0),bRplPause(0), bRplRec(0), bRplWnd(0)
 	,iEdTire(0), iTireLoad(0), iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
-	,mStaticGeom(0), fLastFrameDT(0.001f)
+	,fLastFrameDT(0.001f)
 	,bPerfTest(0),iPerfTestStage(PT_StartWait), isGhost2nd(0)
 {
 	pGame->collision.pApp = this;
