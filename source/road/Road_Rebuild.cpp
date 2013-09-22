@@ -850,7 +850,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					
 					//  Road  ~
 					btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
-					int su = (pipe ? SU_Pipe : SU_Road) + mtrId;
+					size_t su = (pipe ? SU_Pipe : SU_Road) + mtrId;
 					shape->setUserPointer((void*)su);  // mark as road/pipe + mtrId
 					
 					btCollisionObject* bco = new btCollisionObject();
