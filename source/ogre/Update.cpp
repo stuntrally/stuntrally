@@ -198,7 +198,7 @@ bool App::frameStart(Real time)
 		gcom->SizeGUI();
 		gcom->updTrkListDim();
 		gui->updChampListDim();  // resize lists
-		bSizeHUD = true;
+		bRecreateHUD = true;
 		
 		if (mSplitMgr)  //  reassign car cameras from new viewports
 		{	std::list<Camera*>::iterator it = mSplitMgr->mCameras.begin();
@@ -213,6 +213,18 @@ bool App::frameStart(Real time)
 			if (grass)  grass->setCamera(cam1);
 			if (trees)  trees->setCamera(cam1);
 		}
+	}
+
+	//  hud update sizes, after res change
+	if (bRecreateHUD)
+	{	bRecreateHUD = false;
+		
+		hud->Destroy();  hud->Create();
+	}
+	if (bSizeHUD)
+	{	bSizeHUD = false;
+
+		hud->Size(true);
 	}
 
 

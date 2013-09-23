@@ -4743,8 +4743,7 @@
 							<Property key="ReadOnly" value="false"/>
 							<Property key="MultiLine" value="true"/>
 							<Property key="WordWrap" value="true"/>
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Caption" value="#{ShortcutsInfo}"/>
+							<Property key="Caption" value="#A0C0E0#{ShortcutsInfo}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 60 196 20">

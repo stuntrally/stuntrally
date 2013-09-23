@@ -44,6 +44,11 @@ void CGui::InitGui()
 	app->vwGui = LayoutManager::getInstance().loadLayout("Editor.layout");
 
 
+	gcom->InitMainMenu();
+
+	gcom->GuiInitTooltip();
+
+
 	//  wnds
 	app->mWndMain = fWnd("MainMenuWnd");
 	app->mWndEdit = fWnd("EditorWnd");
@@ -66,11 +71,6 @@ void CGui::InitGui()
 	Btn btn, bchk;
 	Sl* sl;  SV* sv;  Ck* ck;
 
-
-	gcom->InitMainMenu();
-
-
-	gcom->GuiInitTooltip();
 	
 	//  tool window texts  ----------------------
 	for (i=0; i<12; ++i)

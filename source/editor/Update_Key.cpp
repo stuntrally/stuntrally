@@ -55,7 +55,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	}
 
 	//  main menu keys
-	Widget* wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();
+	Widget* wf = InputManager::getInstance().getKeyFocusWidget();
 	bool edFoc = wf && wf->getTypeName() == "EditBox";
 
 	if (pSet->isMain && bGuiFocus)
@@ -89,7 +89,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	}
 
 	//  change gui tabs
-	TabPtr tab = 0;  MyGUI::TabControl* sub = 0;  int iTab1 = 1;
+	TabPtr tab = 0;  TabControl* sub = 0;  int iTab1 = 1;
 	if (bGuiFocus && !pSet->isMain)
 	switch (pSet->inMenu)
 	{
@@ -217,7 +217,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	//  GUI  keys in edits  ---------------------
 	if (bGuiFocus && mGui && !alt && !ctrl)
 	{
-		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(mInputWrapper->sdl2OISKeyCode(arg.keysym.sym)), 0);
+		InputManager::getInstance().injectKeyPress(KeyCode::Enum(mInputWrapper->sdl2OISKeyCode(arg.keysym.sym)), 0);
 		return true;
 	}
 
@@ -546,8 +546,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 1*/)
 			{
 				gui->GuiShortcut(WND_Edit, 1);  // Track tab
-				MyGUI::InputManager::getInstance().resetKeyFocusWidget();
-				MyGUI::InputManager::getInstance().setKeyFocusWidget(gcom->edTrkFind);
+				InputManager::getInstance().resetKeyFocusWidget();
+				InputManager::getInstance().setKeyFocusWidget(gcom->edTrkFind);
 				return true;
 			}	break;
 

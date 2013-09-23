@@ -118,7 +118,7 @@ public:
 	void CreateArrow();
 
 	//  show, size
-	void Size(bool full, Ogre::Viewport* vp=NULL);
+	void Size(bool full);
 	void Show(bool hideAll=false), ShowVp(bool vp);
 
 	///  update

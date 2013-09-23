@@ -80,10 +80,6 @@ void CHud::Update(int carId, float time)
 {
 	PROFILER.beginBlock("g.hud");
 
-	if (app->bSizeHUD)	// update sizes once after change
-	{	app->bSizeHUD = false;
-		Size(true);	}
-
 	
 	//  update HUD elements for all cars that have a viewport (local or replay)
 	//-----------------------------------------------------------------------------------
@@ -647,7 +643,7 @@ void CHud::Update(int carId, float time)
 
 
 //---------------------------------------------------------------------------------------------------------------
-//  Update HUD rotated elems - for carId, in baseCarId's space
+///  Update HUD rotated elems - for carId, in baseCarId's space
 //---------------------------------------------------------------------------------------------------------------
 void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 {

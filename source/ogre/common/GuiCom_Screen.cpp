@@ -182,7 +182,7 @@ void CGuiCom::chkVidFullscr(Ck*)
 {
 	SDL_SetWindowFullscreen(app->mSDLWindow, pSet->fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
 	#ifndef SR_EDITOR
-	app->bSizeHUD = true;
+	app->bRecreateHUD = true;
 	#endif
 }
 

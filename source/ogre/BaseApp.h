@@ -88,7 +88,7 @@ public:
 	sh::Factory* mFactory;
 
 	//  wnd, hud, upl
-	bool bWindowResized, bSizeHUD;
+	bool bWindowResized, bSizeHUD, bRecreateHUD;
 	float roadUpdTm;
 	class LoadingBar* mLoadingBar;
 	Ogre::SceneNode* ndSky;  //-

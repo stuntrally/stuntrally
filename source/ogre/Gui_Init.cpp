@@ -247,30 +247,29 @@ void CGui::InitGui()
 	ck= &ckRoadWCollis;	ck->Init("RoadWCollis",	&pSet->gui.collis_roadw);
 	ck= &ckDynamicObjs;	ck->Init("DynamicObjects", &pSet->gui.dyn_objects);
 
-	Cmb(cmb, "CmbBoost", comboBoost);		cmbBoost = cmb;	if (cmb)
-	{	cmb->removeAllItems();
+	Cmb(cmb, "CmbBoost", comboBoost);	cmbBoost = cmb;
+		cmb->removeAllItems();
 		cmb->addItem(TR("#{Never}"));		cmb->addItem(TR("#{FuelLap}"));
 		cmb->addItem(TR("#{FuelTime}"));	cmb->addItem(TR("#{Always}"));
 		cmb->setIndexSelected(pSet->gui.boost_type);
-	}
-	Cmb(cmb, "CmbFlip", comboFlip);		cmbFlip = cmb;	if (cmb)
-	{	cmb->removeAllItems();
+
+	Cmb(cmb, "CmbFlip", comboFlip);		cmbFlip = cmb;
+		cmb->removeAllItems();
 		cmb->addItem(TR("#{Never}"));		cmb->addItem(TR("#{FuelBoost}"));
 		cmb->addItem(TR("#{Always}"));
 		cmb->setIndexSelected(pSet->gui.flip_type);
-	}
-	Cmb(cmb, "CmbDamage", comboDamage);	cmbDamage = cmb;	if (cmb)
-	{	cmb->removeAllItems();
+
+	Cmb(cmb, "CmbDamage", comboDamage);	cmbDamage = cmb;
+		cmb->removeAllItems();
 		cmb->addItem(TR("#{None}"));		cmb->addItem(TR("#{Reduced}"));
 		cmb->addItem(TR("#{Normal}"));
 		cmb->setIndexSelected(pSet->gui.damage_type);
-	}
-	Cmb(cmb, "CmbRewind", comboRewind);	cmbRewind = cmb;	if (cmb)
-	{	cmb->removeAllItems();
+
+	Cmb(cmb, "CmbRewind", comboRewind);	cmbRewind = cmb;
+		cmb->removeAllItems();
 		cmb->addItem(TR("#{None}"));		cmb->addItem(TR("#{Always}"));
-		cmb->addItem(TR("#{FuelLap}"));	cmb->addItem(TR("#{FuelTime}"));
+		cmb->addItem(TR("#{FuelLap}"));		cmb->addItem(TR("#{FuelTime}"));
 		cmb->setIndexSelected(pSet->gui.rewind_type);
-	}
 
 	//  split
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
@@ -616,10 +615,8 @@ void CGui::InitGui()
 
 	//  track stats text
 	int i;
-	for (i=0; i < gcom->StTrk; ++i)
-		gcom->stTrk[1][i] = fTxt("2iv"+toStr(i));
-	for (i=0; i < gcom->InfTrk; ++i)
-		gcom->infTrk[1][i] = fTxt("2ti"+toStr(i));
+	for (i=0; i < gcom->StTrk; ++i)   gcom->stTrk[1][i] =  fTxt("2iv"+toStr(i));
+	for (i=0; i < gcom->InfTrk; ++i)  gcom->infTrk[1][i] = fTxt("2ti"+toStr(i));
 
 	edChInfo = fEd("ChampInfo");
 	if (edChInfo)  edChInfo->setVisible(pSet->champ_info);
@@ -632,6 +629,7 @@ void CGui::InitGui()
 		txtChP[i] = fTxt("txtChP"+s);
 		valChP[i] = fTxt("valChP"+s);  }
 	edChDesc = fEd("ChampDescr");
+
 
 	//  Champs list  -------------
 	Mli2 li;
@@ -720,6 +718,7 @@ void CGui::InitGui()
 
 	//  netw end list  ------
 	Btn("btnNetEndClose", btnNetEndClose);
+
 	li = app->mWndNetEnd->createWidget<MultiList2>("MultiListBox",4,42,632,360, Align::Left | Align::VStretch);
 	li->setInheritsAlpha(false);  li->setColour(Colour(0.8,0.9,1,1));
 	li->removeAllColumns();

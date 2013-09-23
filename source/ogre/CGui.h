@@ -160,7 +160,8 @@ public:
 		ICS::Control::ControlChangingDirection direction) {  return;  }
 
 	//  init
-	void CreateInputTab( const std::string& title, bool playerTab, const std::vector<InputAction>& actions, ICS::InputControlSystem* ICS);
+	void CreateInputTab( int iTab, bool player,
+		const std::vector<InputAction>& actions, ICS::InputControlSystem* ICS);
 	void InitInputGui();
 
 	//  bind

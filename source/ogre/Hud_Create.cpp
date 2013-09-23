@@ -26,7 +26,7 @@ using namespace MyGUI;
 
 ///  HUD resize
 //---------------------------------------------------------------------------------------------------------------
-void CHud::Size(bool full, Viewport* vp)
+void CHud::Size(bool full)
 {
 	float wx = app->mWindow->getWidth(), wy = app->mWindow->getHeight();
 	asp = wx/wy;
@@ -456,6 +456,7 @@ void CHud::Create()
 		ov[i].oS = ovr.getOverlayElement("S_"+s);	ov[i].oU = ovr.getOverlayElement("U_"+s);
 		ov[i].oX = ovr.getOverlayElement("X_"+s);
 	}
+
 	Show();  //_
 	app->bSizeHUD = true;
 	//SizeHUD(true);
