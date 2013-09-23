@@ -38,15 +38,9 @@ void CGui::InitGui()
 	//  new widgets
 	FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
 	FactoryManager::getInstance().registerFactory<Slider>("Widget");
-	int i;
 
 	//  load
 	app->vwGui = LayoutManager::getInstance().loadLayout("Editor.layout");
-
-
-	gcom->InitMainMenu();
-
-	gcom->GuiInitTooltip();
 
 
 	//  wnds
@@ -72,7 +66,56 @@ void CGui::InitGui()
 	Sl* sl;  SV* sv;  Ck* ck;
 
 	
+	//  Tabs
+	TabPtr tab,sub;
+	fTabW("TabWndEdit");  app->mWndTabsEdit = tab;
+	fTabW("TabWndOpts");  app->mWndTabsOpts = tab;
+	fTabW("TabWndHelp");  app->mWndTabsHelp = tab;
+
+	//  get sub tabs
+	vSubTabsEdit.clear();
+	for (size_t i=0; i < app->mWndTabsEdit->getItemCount(); ++i)
+	{
+		sub = (TabPtr)app->mWndTabsEdit->getItemAt(i)->findWidget("SubTab");
+		vSubTabsEdit.push_back(sub);  // 0 for not found
+	}
+	vSubTabsHelp.clear();
+	for (size_t i=0; i < app->mWndTabsHelp->getItemCount(); ++i)
+	{
+		sub = (TabPtr)app->mWndTabsHelp->getItemAt(i)->findWidget("SubTab");
+		vSubTabsHelp.push_back(sub);
+	}
+	vSubTabsOpts.clear();
+	for (size_t i=0; i < app->mWndTabsOpts->getItemCount(); ++i)
+	{
+		sub = (TabPtr)app->mWndTabsOpts->getItemAt(i)->findWidget("SubTab");
+		vSubTabsOpts.push_back(sub);
+	}
+
+	///  Gui common init  ---
+	gcom->InitMainMenu();
+	gcom->GuiInitTooltip();
+	gcom->GuiInitLang();
+
+	gcom->GuiInitGraphics();
+	gcom->InitGuiScreenRes();
+
+
+	//app->mWndTabs->setIndexSelected(3);  //default*--
+	gcom->ResizeOptWnd(); //?
+
+
+	//  center mouse pos
+	app->mCursorManager->cursorVisibilityChange(app->bGuiFocus || !app->bMoveCam);
+	gcom->GuiCenterMouse();
+	
+	//  hide  ---
+	app->SetEdMode(ED_Deform);
+	app->UpdEditWnds();  // UpdVisHit(); //after track
+	
+
 	//  tool window texts  ----------------------
+	int i;
 	for (i=0; i<12; ++i)
 	{	String s = toStr(i);
 		if (i<BR_TXT)
@@ -91,55 +134,6 @@ void CGui::InitGui()
 		if (i<OBJ_TXT)	objTxt[i]= fTxt("objTxt"+s);
 		if (i<RI_TXT)	riTxt[i] = fTxt("riTxt"+s);
 	}
-		
-	//  Tabs
-	TabPtr tab;
-	fTabW("TabWndEdit");  app->mWndTabsEdit = tab;
-	fTabW("TabWndOpts");  app->mWndTabsOpts = tab;
-	fTabW("TabWndHelp");  app->mWndTabsHelp = tab;
-
-	//  Options
-	{
-		//  get sub tabs
-		vSubTabsEdit.clear();
-		TabPtr sub;
-		for (size_t i=0; i < app->mWndTabsEdit->getItemCount(); ++i)
-		{
-			sub = (TabPtr)app->mWndTabsEdit->getItemAt(i)->findWidget("SubTab");
-			vSubTabsEdit.push_back(sub);  // 0 for not found
-		}
-		vSubTabsHelp.clear();
-		for (size_t i=0; i < app->mWndTabsHelp->getItemCount(); ++i)
-		{
-			sub = (TabPtr)app->mWndTabsHelp->getItemAt(i)->findWidget("SubTab");
-			vSubTabsHelp.push_back(sub);
-		}
-		vSubTabsOpts.clear();
-		for (size_t i=0; i < app->mWndTabsOpts->getItemCount(); ++i)
-		{
-			sub = (TabPtr)app->mWndTabsOpts->getItemAt(i)->findWidget("SubTab");
-			vSubTabsOpts.push_back(sub);
-		}
-		//app->mWndTabs->setIndexSelected(3);  //default*--
-		gcom->ResizeOptWnd();
-	}
-
-	//  center mouse pos
-	app->mCursorManager->cursorVisibilityChange(app->bGuiFocus || !app->bMoveCam);
-	gcom->GuiCenterMouse();
-	
-	//  hide  ---
-	app->SetEdMode(ED_Deform);  app->UpdEditWnds();  // *  UpdVisHit(); //after track
-	if (!app->mWndOpts) 
-	{
-		LogO("WARNING: failed to create options window");
-		return;  // error
-	}
-	
-
-	///  [Graphics]
-	//------------------------------------------------------------------------
-	gcom->GuiInitGraphics();
 
 
 	///  [Settings]
@@ -408,7 +402,6 @@ void CGui::InitGui()
 	///  Fill Combo boxes  . . . . . . .
 	//------------------------------------------------------------------------------------------------------------
 
-	gcom->GuiInitLang();
 	
 	//---------------------  Skies  ---------------------
 	Cmb(cmbSky, "SkyCombo", comboSky);
@@ -557,8 +550,6 @@ void CGui::InitGui()
 	}
 	cmbTwk->setIndexSelected( cmbTwk->findItemIndexWith(pSet->tweak_mtr) );
 	//-----------------------------------------------------
-
-	gcom->InitGuiScreenRes();
 	
 
 	///  [Track]

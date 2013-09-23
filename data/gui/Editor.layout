@@ -4022,27 +4022,27 @@
 							<Property key="TextColour" value="0.8 0.9 0.7"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 22 128 24">
+						<Widget type="TextBox" skin="TextBox" position="32 22 184 24">
 							<Property key="TextColour" value="0.75 0.85 0.95"/>
 							<Property key="Caption" value="#{Startup}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 62 160 24" name="StartInMain">
+						<Widget type="Button" skin="CheckBox" position="32 62 256 24" name="StartInMain">
 							<Property key="TextColour" value="0.6 0.7 0.8"/>
 							<Property key="Caption" value="#{StartInMain}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 94 160 24" name="AutoStart">
+						<Widget type="Button" skin="CheckBox" position="32 94 256 24" name="AutoStart">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Caption" value="#{TrackAutoLoad}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 126 160 24" name="EscQuits">
+						<Widget type="Button" skin="CheckBox" position="32 126 256 24" name="EscQuits">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Caption" value="#{EscQuit}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 158 160 24" name="OgreDialog">
+						<Widget type="Button" skin="CheckBox" position="32 158 256 24" name="OgreDialog">
 							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<Property key="Caption" value="#{OgreDialog}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -4058,7 +4058,7 @@
 							<Property key="TextColour" value="0.65 0.7 0.75"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="332 126 160 24" name="Wireframe">
+						<Widget type="Button" skin="CheckBox" position="332 126 200 24" name="Wireframe">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Caption" value="#{Wireframe} F11"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -4120,8 +4120,9 @@
 					<UserString key="RelativeTo" value="HelpWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="146 513 64 16">
-					<Property key="ImageTexture" value="en_de.png"/>
+					<Property key="ImageCoord" value="512 991 128 32"/>
 					<Property key="Alpha" value="0.5"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
 					<UserString key="RelativeTo" value="HelpWnd"/>
 				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="30 24 720 472" name="SubTab">
@@ -4743,7 +4744,8 @@
 							<Property key="ReadOnly" value="false"/>
 							<Property key="MultiLine" value="true"/>
 							<Property key="WordWrap" value="true"/>
-							<Property key="Caption" value="#A0C0E0#{ShortcutsInfo}"/>
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="#{ShortcutsInfo}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 60 196 20">

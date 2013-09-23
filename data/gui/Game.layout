@@ -1065,8 +1065,14 @@
 					<Widget type="TabItem" skin="" position="2 24 738 469">
 						<Property key="Caption" value="#FFFF40#{NetServer}"/>
 						<UserString key="RelativeTo" value="GameWnd"/>
-						<Widget type="MultiListBox" skin="MultiListBox" position="20 54 696 338" name="MListServers">
-							<Property key="Colour" value="0.6 1 0.6"/>
+						<Widget type="ImageBox" skin="ImageBox" position="660 2 56 56">
+							<Property key="ImageCoord" value="640 0 128 128"/>
+							<Property key="Alpha" value="0.6"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+							<UserString key="RelativeTo" value="GameWnd"/>
+						</Widget>
+						<Widget type="MultiListBox" skin="MultiListBox" position="20 80 696 292" name="MListServers">
+							<Property key="Colour" value="0.7 1 0.7"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="20 22 224 24">
@@ -1992,8 +1998,9 @@
 					<UserString key="RelativeTo" value="HelpWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="146 513 64 16">
-					<Property key="ImageTexture" value="en_de.png"/>
+					<Property key="ImageCoord" value="512 991 128 32"/>
 					<Property key="Alpha" value="0.5"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
 					<UserString key="RelativeTo" value="HelpWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 406 600 24">
@@ -2651,118 +2658,130 @@
 							</Widget>
 						</Widget>
 					</Widget>
-
-
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#E0C080#{Effects}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
-						<Widget type="Button" skin="CheckBox" position="28 20 252 24" name="AllEffects">
+						<Widget type="ImageBox" skin="ImageBox" position="660 20 56 56">
+							<Property key="ImageCoord" value="640 128 128 128"/>
+							<Property key="Alpha" value="0.4"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="28 20 152 24" name="BoostFOV">
+							<Property key="Caption" value="#{BoostFOV}"/>
+							<Property key="TextColour" value="0.6 1 1"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="28 64 408 24" name="AllEffects">
 							<Property key="Caption" value="#{AllEffects}"/>
-							<Property key="TextColour" value="1.0 1.0 0.85"/>
+							<Property key="TextColour" value="1.0 1.0 0.9"/>
+							<Property key="TextShadow" value="true"/>
+							<Property key="FontName" value="font.17"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="28 60 164 24" name="Bloom">
+
+						<Widget type="Button" skin="CheckBox" position="28 110 164 24" name="Bloom">
 							<Property key="Caption" value="#{Bloom}"/>
-							<Property key="TextColour" value="1 1 0.5"/>
+							<Property key="TextColour" value="1 1 0.3"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="196 60 128 24">
+						<Widget type="TextBox" skin="TextBox" position="196 110 128 24">
 							<Property key="Caption" value="#{Intensity}"/>
 							<Property key="TextColour" value="1.0 0.9 0.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="28 120 164 24" name="MotionBlur">
-							<Property key="Caption" value="#{MotionBlur}"/>
-							<Property key="TextColour" value="0.6 1 0.3"/>
+						<Widget type="Slider" skin="Slider" position="392 110 320 18" name="BloomInt">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="392 120 320 18" name="BlurIntens">
+						<Widget type="TextBox" skin="TextBox" position="328 110 60 26" name="BloomIntVal">
+							<Property key="TextColour" value="1.0 1 0.2"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="196 120 128 24">
-							<Property key="Caption" value="#{Intensity}"/>
+						<Widget type="TextBox" skin="TextBox" position="328 178 60 24" name="BlurIntensVal">
 							<Property key="TextColour" value="0.7 1 0.4"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="392 60 320 18" name="BloomInt">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="196 88 128 24">
+						<Widget type="TextBox" skin="TextBox" position="196 134 128 24">
 							<Property key="Caption" value="#{OrigImage}"/>
 							<Property key="TextColour" value="1 1 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="392 88 320 18" name="BloomOrig">
+						<Widget type="Slider" skin="Slider" position="392 134 320 18" name="BloomOrig">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="328 60 60 26" name="BloomIntVal">
-							<Property key="TextColour" value="1.0 1 0.2"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="328 88 60 24" name="BloomOrigVal">
+						<Widget type="TextBox" skin="TextBox" position="328 134 60 24" name="BloomOrigVal">
 							<Property key="TextColour" value="1 1 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="328 120 60 24" name="BlurIntensVal">
+
+						<Widget type="Button" skin="CheckBox" position="28 178 164 24" name="MotionBlur">
+							<Property key="Caption" value="#{MotionBlur}"/>
+							<Property key="TextColour" value="0.6 1 0.1"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="392 178 320 18" name="BlurIntens">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="196 178 128 24">
+							<Property key="Caption" value="#{Intensity}"/>
 							<Property key="TextColour" value="0.7 1 0.4"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="28 156 256 24" name="SSAO">
+
+						<Widget type="Button" skin="CheckBox" position="28 274 256 24" name="SSAO">
 							<Property key="Caption" value="#{ssao}"/>
-							<Property key="TextColour" value="0.6 1 0.3"/>
+							<Property key="TextColour" value="1 0.6 0.3"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="28 188 256 24" name="SoftParticles">
+						<Widget type="Button" skin="CheckBox" position="28 238 256 24" name="SoftParticles">
 							<Property key="Caption" value="#{softparticles}"/>
-							<Property key="TextColour" value="0.6 1 0.3"/>
+							<Property key="TextColour" value="1 0.7 0.2"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="28 220 148 24" name="DepthOfField">
+						
+						<Widget type="Button" skin="CheckBox" position="28 326 168 24" name="DepthOfField">
 							<Property key="Caption" value="#{DepthOfField}"/>
-							<Property key="TextColour" value="0.6 1 0.3"/>
+							<Property key="TextColour" value="1 0.3 0.3"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="196 220 118 24">
+						<Widget type="TextBox" skin="TextBox" position="196 326 118 24">
 							<Property key="Caption" value="#{Near}"/>
 							<Property key="TextColour" value="0.7 1 0.4"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="328 220 60 24" name="DofFocusVal">
+						
+						<Widget type="TextBox" skin="TextBox" position="328 326 60 24" name="DofFocusVal">
 							<Property key="TextColour" value="1.0 1 0.2"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="392 220 320 18" name="DofFocus">
+						<Widget type="Slider" skin="Slider" position="392 326 320 18" name="DofFocus">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="196 248 118 24">
+						<Widget type="TextBox" skin="TextBox" position="196 350 118 24">
 							<Property key="Caption" value="#{Far}"/>
 							<Property key="TextColour" value="0.7 1 0.4"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="328 248 60 24" name="DofFarVal">
+						<Widget type="TextBox" skin="TextBox" position="328 350 60 24" name="DofFarVal">
 							<Property key="TextColour" value="1.0 1 0.2"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="392 248 320 18" name="DofFar">
+						<Widget type="Slider" skin="Slider" position="392 350 320 18" name="DofFar">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="28 272 152 24" name="GodRays">
+
+						<Widget type="Button" skin="CheckBox" position="28 374 168 24" name="GodRays">
 							<Property key="Caption" value="#{godrays}"/>
-							<Property key="TextColour" value="0.6 1 0.3"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="28 304 152 24" name="BoostFOV">
-							<Property key="Caption" value="#{BoostFOV}"/>
-							<Property key="TextColour" value="0.6 1 0.3"/>
+							<Property key="TextColour" value="1 0.3 0.1"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
-						<Property key="Caption" value="#604050#{HDRTab}"/>
+						<Property key="Caption" value="#804060#{HDRTab}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Widget type="Button" skin="CheckBox" position="28 20 152 24" name="HDR">
 							<Property key="Caption" value="#{HDR}"/>
-							<Property key="TextColour" value="0.6 1 0.3"/>
+							<Property key="TextColour" value="0.8 0.3 0.6"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="196 20 118 24">
@@ -2921,7 +2940,7 @@
 							<Property key="TextColour" value="0.9 0.5 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="344 136 256 16" name="TypeGaug">
+						<Widget type="Slider" skin="Slider" position="344 136 216 16" name="TypeGaug">
 							<Property key="Colour" value="0.9 0.7 0.7"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
@@ -2934,14 +2953,14 @@
 							<Property key="TextColour" value="0.8 0.4 0.6"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="344 176 256 16" name="LayoutGaug">
+						<Widget type="Slider" skin="Slider" position="344 176 216 16" name="LayoutGaug">
 							<Property key="Colour" value="0.9 0.7 0.8"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 
-						<Widget type="Button" skin="CheckBox" position="32 246 184 24" name="Times">
+						<Widget type="Button" skin="CheckBox" position="32 256 184 24" name="Times">
 							<Property key="Caption" value="#{TimesBar} F7"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="TextColour" value="0.75 0.88 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 296 184 24" name="Opponents">
@@ -2954,19 +2973,21 @@
 							<Property key="TextColour" value="0.6 0.7 0.8"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 366 184 24" name="CamInfo">
+						
+						<Widget type="Button" skin="CheckBox" position="32 364 184 24" name="CamInfo">
 							<Property key="Caption" value="#{CameraInfo}"/>
 							<Property key="TextColour" value="0.6 0.9 0.75"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="232 366 320 24" name="CamTilt">
+						<Widget type="Button" skin="CheckBox" position="232 364 320 24" name="CamTilt">
 							<Property key="Caption" value="#{CameraAutoTilt}"/>
 							<Property key="TextColour" value="0.6 0.8 0.7"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="648 8 76 76">
+
+						<Widget type="ImageBox" skin="ImageBox" position="614 140 90 90">
 							<Property key="ImageCoord" value="128 256 128 128"/>
-							<Property key="Alpha" value="0.6"/>
+							<Property key="Alpha" value="0.5"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
@@ -2974,6 +2995,13 @@
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#60F8F8#{Minimap}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
+						<Widget type="ImageBox" skin="ImageBox" position="620 140 80 80">
+							<Property key="ImageCoord" value="512 512 128 128"/>
+							<Property key="Alpha" value="0.7"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+
 						<Widget type="Button" skin="CheckBox" position="32 56 184 24" name="Minimap">
 							<Property key="Caption" value="#{Minimap} F8"/>
 							<Property key="TextColour" value="0.4 1.0 1.0"/>
@@ -3002,11 +3030,11 @@
 							<Property key="TextColour" value="0.85 0.8 0.75"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="344 98 320 18" name="ZoomMinimap">
+						<Widget type="Slider" skin="Slider" position="344 96 320 18" name="ZoomMinimap">
 							<Property key="Colour" value="0.8 0.95 0.95"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="296 98 48 24" name="ZoomMinimapVal">
+						<Widget type="TextBox" skin="TextBox" position="296 96 48 24" name="ZoomMinimapVal">
 							<Property key="TextColour" value="0.7 0.85 0.85"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
@@ -3044,16 +3072,17 @@
 							<Property key="Colour" value="0.82 1.0 0.8"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 376 184 24">
+						
+						<Widget type="TextBox" skin="TextBox" position="32 366 184 24">
 							<Property key="Caption" value="#{CountdownTime}"/>
 							<Property key="TextColour" value="0.6 0.7 0.8"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="296 376 48 24" name="CountdownTimeVal">
+						<Widget type="TextBox" skin="TextBox" position="296 366 48 24" name="CountdownTimeVal">
 							<Property key="TextColour" value="0.65 0.75 0.85"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="344 374 320 18" name="CountdownTime">
+						<Widget type="Slider" skin="Slider" position="344 364 320 18" name="CountdownTime">
 							<Property key="Colour" value="0.7 0.8 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
@@ -3061,11 +3090,11 @@
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#60A0FF#{Settings}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
-						<!--<Widget type="TextBox" skin="TextBox" position="32 32 184 24">
+						<Widget type="TextBox" skin="TextBox" position="32 32 184 24">
 							<Property key="Caption" value="#{Startup}"/>
 							<Property key="TextColour" value="0.6 0.7 0.8"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>-->
+						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 62 256 24" name="MultiThread">
 							<Property key="TextColour" value="0.7 0.89 1.0"/>
 							<Property key="Caption" value="#{MultiThread} *"/>
@@ -3110,22 +3139,28 @@
 							<Property key="TextColour" value="0.56 0.56 0.75"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 126 256 24" name="Wireframe">
+						<Widget type="ImageBox" skin="ImageBox" position="32 120 40 40">
+							<Property key="ImageCoord" value="640 256 128 128"/>
+							<Property key="Alpha" value="0.6"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 176 256 24" name="Wireframe">
 							<Property key="Caption" value="#{Wireframe}  F10"/>
 							<Property key="TextColour" value="0.8 0.8 0.8"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 182 256 24" name="BltLines">
+						<Widget type="Button" skin="CheckBox" position="32 222 256 24" name="BltLines">
 							<Property key="TextColour" value="0.9 0.85 0.5"/>
 							<Property key="Caption" value="#{BulletLines} (#{Startup}) *"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 214 256 24" name="BulletDebug">
+						<Widget type="Button" skin="CheckBox" position="32 254 256 24" name="BulletDebug">
 							<Property key="Caption" value="#{BulletDebug}  ctrl-F10"/>
 							<Property key="TextColour" value="0.9 0.85 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="388 214 256 24" name="BltProfTxt">
+						<Widget type="Button" skin="CheckBox" position="388 254 256 24" name="BltProfTxt">
 							<Property key="Caption" value="#{BulletProfilerTxt}  shift-F10"/>
 							<Property key="TextColour" value="0.7 0.65 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -3180,11 +3215,10 @@
 						</Widget>
 
 						<Widget type="ImageBox" skin="ImageBox" position="388 158 40 40">
-							<Property key="ImageCoord" value="256 768 128 128"/>
-							<Property key="Alpha" value="0.5"/>
-							<Property key="Colour" value="0.9 0.75 0.6"/>
+							<Property key="ImageCoord" value="256 640 128 128"/>
+							<Property key="Alpha" value="0.4"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="388 220 256 24" name="CarDbgTxt">
 							<Property key="Caption" value="#{CarDebugText}  shift-F9"/>
@@ -3288,12 +3322,12 @@
 
 						<Widget type="ImageBox" skin="ImageBox" position="20 120 80 80">
 							<Property key="ImageCoord" value="384 640 128 128"/>
-							<Property key="Alpha" value="0.7"/>
+							<Property key="Alpha" value="0.5"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="90 110 500 24">
-							<Property key="Caption" value="#D0B0C0#{TiresEdit} *6"/>
+						<Widget type="TextBox" skin="TextBox" position="106 110 500 24">
+							<Property key="Caption" value="#D8B8C8#{TiresEdit} *6"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="106 136 500 24">
@@ -3318,15 +3352,21 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="20 342 500 24">
+						<Widget type="ImageBox" skin="ImageBox" position="20 350 60 60">
+							<Property key="ImageCoord" value="256 640 128 128"/>
+							<Property key="Alpha" value="0.4"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="106 342 500 24">
 							<Property key="Caption" value="#A0B8D0#{TweakEdit1}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="20 368 500 24">
+						<Widget type="TextBox" skin="TextBox" position="106 368 500 24">
 							<Property key="Caption" value="#A0B8D0#{TweakEdit2}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="20 406 500 24">
+						<Widget type="TextBox" skin="TextBox" position="106 406 500 24">
 							<Property key="Caption" value="#90B0C8#{TweakEdit3}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
@@ -3340,7 +3380,7 @@
 							<Property key="WordWrap" value="true"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{ShortcutsInfo}"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="20 82 200 24">
 							<Property key="Caption" value="#60FF60 Q  #{Track}"/>

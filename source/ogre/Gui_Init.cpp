@@ -39,10 +39,10 @@ void CGui::InitGui()
 	//  new widgets
 	FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
 	FactoryManager::getInstance().registerFactory<Slider>("Widget");
-	loadReadme = true;
 
 	//  load
 	app->vwGui = LayoutManager::getInstance().loadLayout("Game.layout");
+
 
 	//  wnds
 	app->mWndMain = fWnd("MainMenuWnd");
@@ -66,18 +66,12 @@ void CGui::InitGui()
 	Slider* sl;  SV* sv;  Ck* ck;
 
 
-	gcom->InitMainMenu();
-
-
-	app->updMouse();
-
+	//  Tabs
 	TabPtr tab,sub;
 	fTabW("TabWndGame");    app->mWndTabsGame = tab;
 	fTabW("TabWndReplays"); app->mWndTabsRpl = tab;
 	fTabW("TabWndHelp");    app->mWndTabsHelp = tab;
 	fTabW("TabWndOptions"); app->mWndTabsOpts = tab;
-
-	if (pSet->inMenu > MNU_Single && pSet->inMenu <= MNU_Challenge)  app->mWndTabsGame->setIndexSelected(TAB_Champs);
 
 	//  get sub tabs
 	vSubTabsGame.clear();
@@ -95,19 +89,24 @@ void CGui::InitGui()
 		vSubTabsOpts.push_back(sub);
 	}
 
+	if (pSet->inMenu > MNU_Single && pSet->inMenu <= MNU_Challenge)
+		app->mWndTabsGame->setIndexSelected(TAB_Champs);
+
 	app->mWndRpl = fWnd("RplWnd");
-	if (app->mWndRpl)  app->mWndRpl->setVisible(false);
 
 
+	///  Gui common init  ---
+	gcom->InitMainMenu();
 	gcom->GuiInitTooltip();
-
-	toggleGui(false);
-	
-
 	gcom->GuiInitLang();
 
 	gcom->GuiInitGraphics();
-	
+	gcom->InitGuiScreenRes();
+
+
+	loadReadme = true;
+	toggleGui(false);
+	app->updMouse();
 	gcom->bnQuit->setVisible(app->isFocGui);
 	
 
@@ -120,7 +119,7 @@ void CGui::InitGui()
 	sv= &svLayoutGaug;	sv->Init("LayoutGaug",	&pSet->gauges_layout,  0, 2);  sv->DefaultI(1);  Sev(HudCreate);
 
 	sv= &svSizeMinimap;	sv->Init("SizeMinimap",	&pSet->size_minimap,   0.05f, 0.3f, 1.f, 3,4);  sv->DefaultF(0.165f);  Sev(HudSize);
-	sv= &svZoomMinimap;	sv->Init("ZoomMinimap",	&pSet->zoom_minimap,   0.5f, 3.f,   1.f, 3,4);  sv->DefaultF(1.6f);    Sev(HudSize);
+	sv= &svZoomMinimap;	sv->Init("ZoomMinimap",	&pSet->zoom_minimap,   0.9f, 4.f,   1.f, 3,4);  sv->DefaultF(1.6f);    Sev(HudSize);
 	sv= &svSizeArrow;	sv->Init("SizeArrow",   &pSet->size_arrow,     0.1f, 0.5f,  1.f, 3,4);  sv->DefaultF(0.26f);  Sev(SizeArrow);
 	Slv(CountdownTime,  pSet->gui.pre_time / 0.5f /6.f);
 
@@ -541,9 +540,7 @@ void CGui::InitGui()
 
 	///  input tab  -------
 	InitInputGui();
-	
-	gcom->InitGuiScreenRes();
-	
+		
 	
 	///  cars list
     //------------------------------------------------------------------------
