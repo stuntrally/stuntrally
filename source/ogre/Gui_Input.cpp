@@ -361,14 +361,18 @@ void CGui::inputUnbind(WP sender)
 void CGui::inputDetailBtn(WP sender)
 {
 	const InputAction& action = *sender->getUserData<InputAction>();
-	if (txtInpDetail)  txtInpDetail->setCaptionWithReplacing(TR("#{InputDetailsFor}")+":  #{InputMap"+action.mName+"}");
+	if (txtInpDetail)
+		txtInpDetail->setCaptionWithReplacing( TR("#{InputDetailsFor}")+":  #{InputMap"+action.mName+"}");
 
 	mBindingAction = sender->getUserData<InputAction>();
-	if (panInputDetail)  panInputDetail->setVisible(false);
+	if (panInputDetail)
+		panInputDetail->setVisible(false);
 
 	Button* btnInputInv = app->mGui->findWidget<Button>("InputInv");
-	if (btnInputInv)  btnInputInv->setStateSelected(mBindingAction->mControl->getInverted());
-	if (edInputIncrease)  edInputIncrease->setCaption(toStr(action.mControl->getStepSize() * action.mControl->getStepsPerSeconds()));
+	if (btnInputInv)
+		btnInputInv->setStateSelected( mBindingAction->mControl->getInverted());
+	if (edInputIncrease)
+		edInputIncrease->setCaption( toStr(action.mControl->getStepSize() * action.mControl->getStepsPerSeconds()));
 }
 
 void CGui::editInput(MyGUI::EditPtr ed)
@@ -452,67 +456,63 @@ void CGui::UpdateInputBars()
 		const InputAction& action = *image->getUserData<InputAction>();
 		float val = action.mICS->getChannel(action.mId)->getValue();
 
-		const int wf = 128, w = 256;  int v = -val * 128, vf = -(val*2-1) * 64, s=512, s0=s/2;
+		const int wf = 128, w = 256;
+		int v = -val * 128, vf = -(val*2-1) * 64, s=512, s0=s/2;
 
 		bool full = action.mType == InputAction::Axis;
 
 		if (full)	image->setImageCoord(IntCoord(std::max(0, std::min(s-wf, vf + s0 -wf/2)), 0, wf, 16));
-		else		image->setImageCoord(IntCoord(std::max(0, std::min(s-w, v + s0)), 0, w, 16));
+		else		image->setImageCoord(IntCoord(std::max(0, std::min(s-w,  v  + s0))      , 0, w, 16));
 	}
 }
 
-
-void CGui::mouseAxisBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
-	ICS::InputControlSystem::NamedAxis axis, ICS::Control::ControlChangingDirection direction)
-{
-	// we don't want mouse movement bindings
-	return;
-}
-
-void CGui::keyBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
-	SDL_Keycode key, ICS::Control::ControlChangingDirection direction)
+//  Bind Key   . . . . .
+void CGui::keyBindingDetected(
+	ICS::InputControlSystem* pICS, ICS::Control* control,
+	SDL_Keycode key,
+	ICS::Control::ControlChangingDirection direction)
 {
 	ICS::DetectingBindingListener::keyBindingDetected(pICS, control, key, direction);
 	
 	if (direction == ICS::Control::DECREASE)
 	{
 		pICS->enableDetectingBindingState(control, ICS::Control::INCREASE);
-		notifyInputActionBound(false); // second key still needs binding
+		notifyInputActionBound(false);  //  second key still needs binding
 	}else
-		notifyInputActionBound(true); // done
+		notifyInputActionBound(true);  //  done
 }
 
-void CGui::mouseButtonBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
-	unsigned int button, ICS::Control::ControlChangingDirection direction)
+//  Bind Joy Axis   . . . . .
+void CGui::joystickAxisBindingDetected(
+	ICS::InputControlSystem* pICS, ICS::Control* control,
+	int deviceId, int axis,
+	ICS::Control::ControlChangingDirection direction)
 {
-	return;
-}
+	ICS::DetectingBindingListener::joystickAxisBindingDetected(
+		pICS, control, deviceId, axis, ICS::Control::INCREASE);
 
-void CGui::joystickAxisBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
-	int deviceId, int axis, ICS::Control::ControlChangingDirection direction)
-{
-	ICS::DetectingBindingListener::joystickAxisBindingDetected(pICS, control, deviceId, axis, ICS::Control::INCREASE);
 	std::string s = control->getName();
 	//LogO("Control "+s);
-	//  inverted throttle and brake by default
-	bool inv = s != "2" && s != "5";  // only steering and flip normal
+
+	///  inverted throttle and brake by default
+	bool inv = s != "2" && s != "5";  //  only steering and flip normal
 	control->setInverted(inv);
+	
 	notifyInputActionBound(true);
 }
 
-void CGui::joystickButtonBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
-	int deviceId, unsigned int button, ICS::Control::ControlChangingDirection direction)
+//  Bind Joy Button  . . . . .
+void CGui::joystickButtonBindingDetected(
+	ICS::InputControlSystem* pICS, ICS::Control* control,
+	int deviceId, unsigned int button,
+	ICS::Control::ControlChangingDirection direction)
 {
-	// 2-sided axis can't be bound with a JS button
+	//  2-sided axis can't be bound with a JS button
 	if (mBindingAction->mType == InputAction::Axis)
 		return;
 
-	ICS::DetectingBindingListener::joystickButtonBindingDetected(pICS, control, deviceId, button, ICS::Control::INCREASE);
+	ICS::DetectingBindingListener::joystickButtonBindingDetected(
+		pICS, control, deviceId, button, ICS::Control::INCREASE);
+	
 	notifyInputActionBound(true);
-}
-
-void CGui::joystickPOVBindingDetected(ICS::InputControlSystem* pICS, ICS::Control* control,
-	int deviceId, int pov,ICS:: InputControlSystem::POVAxis axis, ICS::Control::ControlChangingDirection direction)
-{
-	return;
 }

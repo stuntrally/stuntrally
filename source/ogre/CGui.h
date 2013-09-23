@@ -132,29 +132,44 @@ public:
 	///  [Input] tab
 	///-----------------------------------------------------------------------------------------------------------------
 
+	//  bind events   . . . . .
+	virtual void keyBindingDetected(
+		ICS::InputControlSystem* ICS, ICS::Control* control,  SDL_Keycode key,
+		ICS::Control::ControlChangingDirection direction);
+
+	virtual void joystickAxisBindingDetected(
+		ICS::InputControlSystem* ICS, ICS::Control* control,  int deviceId, int axis,
+		ICS::Control::ControlChangingDirection direction);
+
+	virtual void joystickButtonBindingDetected(
+		ICS::InputControlSystem* ICS, ICS::Control* control,  int deviceId, unsigned int button,
+		ICS::Control::ControlChangingDirection direction);
+
+	//  not needed
+	virtual void joystickPOVBindingDetected(
+		ICS::InputControlSystem* ICS, ICS::Control* control,  int deviceId, int pov,
+		ICS::InputControlSystem::POVAxis axis,
+		ICS::Control::ControlChangingDirection direction) {  return;  }
+
+	virtual void mouseAxisBindingDetected(
+		ICS::InputControlSystem* ICS, ICS::Control* control,  ICS::InputControlSystem::NamedAxis axis,
+		ICS::Control::ControlChangingDirection direction) {  return;  }
+
+	virtual void mouseButtonBindingDetected(
+		ICS::InputControlSystem* ICS, ICS::Control* control,  unsigned int button,
+		ICS::Control::ControlChangingDirection direction) {  return;  }
+
 	//  init
 	void CreateInputTab( const std::string& title, bool playerTab, const std::vector<InputAction>& actions, ICS::InputControlSystem* ICS);
 	void InitInputGui();
+
 	//  bind
 	void inputBindBtnClicked(WP), inputUnbind(WP), inputBindBtn2(WP, int, int, MyGUI::MouseButton mb);
 	enum EBind {  B_Done=0, B_First, B_Second  };
 	void UpdateInputButton(Btn button, const InputAction& action, EBind bind = B_Done);
 
-	//  bind events
 	InputAction* mBindingAction;
 	Btn mBindingSender;
-	virtual void mouseAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
-		ICS::InputControlSystem::NamedAxis axis, ICS::Control::ControlChangingDirection direction);
-	virtual void keyBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
-		SDL_Keycode key, ICS::Control::ControlChangingDirection direction);
-	virtual void mouseButtonBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
-		unsigned int button, ICS::Control::ControlChangingDirection direction);
-	virtual void joystickAxisBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
-		int deviceId, int axis, ICS::Control::ControlChangingDirection direction);
-	virtual void joystickButtonBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
-		int deviceId, unsigned int button, ICS::Control::ControlChangingDirection direction);
-	virtual void joystickPOVBindingDetected(ICS::InputControlSystem* ICS, ICS::Control* control,
-		int deviceId, int pov, ICS::InputControlSystem::POVAxis axis, ICS::Control::ControlChangingDirection direction);
 
 	virtual void notifyInputActionBound(bool complete);
 	bool actionIsActive(std::string, std::string);
