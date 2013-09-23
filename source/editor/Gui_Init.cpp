@@ -26,9 +26,9 @@ void CGui::InitGui()
 {
 	mGui = app->mGui;
 	gcom->mGui = mGui;
-	SliderValue::pGUI = app->mGui;
+	SliderValue::pGUI = mGui;
 	SliderValue::bGI = &bGI;
-	Check::pGUI = app->mGui;
+	Check::pGUI = mGui;
 	Check::bGI = &bGI;
 
 	if (!mGui)  return;
@@ -43,11 +43,7 @@ void CGui::InitGui()
 	//  load
 	app->vwGui = LayoutManager::getInstance().loadLayout("Editor.layout");
 
-	for (VectorWidgetPtr::iterator it = app->vwGui.begin(); it != app->vwGui.end(); ++it)
-	{
-		const std::string& name = (*it)->getName();
-		gcom->setToolTips((*it)->getEnumerator());
-	}
+
 	//  wnds
 	app->mWndMain = fWnd("MainMenuWnd");
 	app->mWndEdit = fWnd("EditorWnd");
@@ -65,20 +61,13 @@ void CGui::InitGui()
 	app->mWndObjects= fWnd("ObjectsWnd");  app->mWndObjects->setPosition(0,64);
 	app->mWndRivers = fWnd("RiversWnd");   app->mWndRivers->setPosition(0,64);
 
-	if (app->mWndRoadStats)  app->mWndRoadStats->setVisible(false);
 
-	//  main menu
-	for (i=0; i < WND_ALL; ++i)
-	{
-		const String s = toStr(i);
-		app->mWndMainPanels[i] = app->mWndMain->findWidget("PanMenu"+s);
-		app->mWndMainBtns[i] = (ButtonPtr)app->mWndMain->findWidget("BtnMenu"+s);
-		app->mWndMainBtns[i]->eventMouseButtonClick += newDelegate(this, &CGui::MainMenuBtn);
-	}
-	//  center
-	int sx = app->mWindow->getWidth(), sy = app->mWindow->getHeight();
-	IntSize w = app->mWndMain->getSize();
-	app->mWndMain->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
+	//  for find defines
+	Btn btn, bchk;
+	Sl* sl;  SV* sv;  Ck* ck;
+
+
+	gcom->InitMainMenu();
 
 
 	gcom->GuiInitTooltip();
@@ -102,22 +91,16 @@ void CGui::InitGui()
 		if (i<OBJ_TXT)	objTxt[i]= fTxt("objTxt"+s);
 		if (i<RI_TXT)	riTxt[i] = fTxt("riTxt"+s);
 	}
-	objPan = app->mGui->findWidget<Widget>("objPan",false);  if (objPan)  objPan->setVisible(false);
+	objPan = app->mGui->findWidget<Widget>("objPan");
 		
 	//  Tabs
 	TabPtr tab;
-	#define fTab1(s)  tab = fTab(s);  tab->setIndexSelected(1);  tab->eventTabChangeSelect += newDelegate(this, &CGui::MenuTabChg);
-	fTab1("TabWndEdit");  app->mWndTabsEdit = tab;
-	fTab1("TabWndOpts");  app->mWndTabsOpts = tab;
-	fTab1("TabWndHelp");  app->mWndTabsHelp = tab;
+	fTabW("TabWndEdit");  app->mWndTabsEdit = tab;
+	fTabW("TabWndOpts");  app->mWndTabsOpts = tab;
+	fTabW("TabWndHelp");  app->mWndTabsHelp = tab;
 
 	//  Options
-	if (app->mWndOpts)
-	{	/*mWndOpts->setVisible(false);
-		int sx = app->mWindow->getWidth(), sy = app->mWindow->getHeight();
-		IntSize w = mWndOpts->getSize();  // center
-		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);*/
-
+	{
 		//  get sub tabs
 		vSubTabsEdit.clear();
 		TabPtr sub;
@@ -154,8 +137,6 @@ void CGui::InitGui()
 		return;  // error
 	}
 	
-	ButtonPtr btn, bchk;  ComboBoxPtr combo;  // for defines
-	Sl* sl;  SV* sv;  Ck* ck;
 
 	///  [Graphics]
 	//------------------------------------------------------------------------
@@ -211,11 +192,10 @@ void CGui::InitGui()
 	Ed(LiAmb, editLiAmb);  Ed(LiDiff, editLiDiff);  Ed(LiSpec, editLiSpec);
 	Ed(FogClr, editFogClr);  Ed(FogClr2, editFogClr2);  Ed(FogClrH, editFogClrH);
 
-	#define Img(s)  app->mGui->findWidget<ImageBox>(s)
-	clrAmb = Img("ClrAmb");   clrDiff = Img("ClrDiff");
-	clrSpec= Img("ClrSpec");  clrTrail= Img("ClrTrail");
-	clrFog = Img("ClrFog");   clrFog2 = Img("ClrFog2");
-	clrFogH= Img("ClrFogH");  //Todo: on click event - open color dialog
+	clrAmb = fImg("ClrAmb");   clrDiff = fImg("ClrDiff");
+	clrSpec= fImg("ClrSpec");  clrTrail= fImg("ClrTrail");
+	clrFog = fImg("ClrFog");   clrFog2 = fImg("ClrFog2");
+	clrFogH= fImg("ClrFogH");  //Todo: on click event - open color dialog
 
 
 	///  [Terrain]
@@ -413,8 +393,8 @@ void CGui::InitGui()
 
 	
 	///  [Warnings]  ------------------------------------
-	edWarn = app->mGui->findWidget<EditBox>("Warnings",false);
-	txWarn = app->mGui->createWidget<TextBox>("TextBox", 300,20, 360,32, Align::Left, "Back");
+	edWarn = fEd("Warnings");
+	txWarn = mGui->createWidget<TextBox>("TextBox", 300,20, 360,32, Align::Left, "Back");
 	txWarn->setTextShadow(true);  txWarn->setTextShadowColour(Colour::Black);
 	txWarn->setTextColour(Colour(1.0,0.4,0.2));  txWarn->setFontHeight(24);
 	txWarn->setVisible(false);
@@ -542,9 +522,9 @@ void CGui::InitGui()
 		if (StringUtil::endsWith(*i,".mesh") && (*i) != "sphere.mesh")
 			vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
 	
-	objListSt = app->mGui->findWidget<List>("ObjListSt");
-	objListDyn = app->mGui->findWidget<List>("ObjListDyn");
-	objListBld = app->mGui->findWidget<List>("ObjListBld");
+	objListSt = mGui->findWidget<List>("ObjListSt");
+	objListDyn = mGui->findWidget<List>("ObjListDyn");
+	objListBld = mGui->findWidget<List>("ObjListBld");
 	if (objListSt && objListDyn && objListDyn)
 	{
 		for (int i=0; i < vObjNames.size(); ++i)
@@ -594,7 +574,7 @@ void CGui::InitGui()
 	
 	//  text desc
 	Edt(gcom->trkDesc[0], "TrackDesc", editTrkDesc);
-	trkName = app->mGui->findWidget<Edit>("TrackName");
+	trkName = fEd("TrackName");
 	if (trkName)  trkName->setCaption(pSet->gui.track);
 
 	gcom->GuiInitTrack();
@@ -613,7 +593,7 @@ void CGui::InitGui()
 
 	///  3d view []  (veget models, objects)
 	//--------------------------------------------
-	//rndCanvas = app->mGUI->findWidget<Canvas>("CanVeget");  //?
+	//rndCanvas = mGUI->findWidget<Canvas>("CanVeget");  //?
 	viewCanvas = app->mWndEdit->createWidget<Canvas>("Canvas", GetViewSize(), Align::Stretch);
 	viewCanvas->setInheritsAlpha(false);
 	viewCanvas->setPointer("hand");

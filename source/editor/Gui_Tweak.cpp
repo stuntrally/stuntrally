@@ -102,7 +102,7 @@ void CGui::slTweak(Slider* sl, float val)
 {
 	std::string name = sl->getName();
 
-	EditBox* edit = app->mGui->findWidget<EditBox>(name + "E");
+	EditBox* edit = fEd(name + "E");
 	if (edit)
 		edit->setCaption(fToStr(val,3,6));
 

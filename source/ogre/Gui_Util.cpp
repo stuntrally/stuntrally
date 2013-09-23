@@ -81,7 +81,7 @@ void CGui::CarListUpd(bool resetNotFound)
 	}
 }
 
-void CGui::AddCarL(std::string name, const CarInfo* ci)
+void CGui::AddCarL(string name, const CarInfo* ci)
 {
 	MultiList2* li = carList;
 	CarInfo cci;
@@ -114,7 +114,6 @@ void CGui::FillCarList()
 
 //  ghost filename
 //
-using std::string;
 string ghostFile(SETTINGS* pSet, string sim_mode, string car)
 {
 	return PATHMANAGER::Ghosts()+"/" +sim_mode+"/"
@@ -122,7 +121,7 @@ string ghostFile(SETTINGS* pSet, string sim_mode, string car)
 		+ "_" + car + ".rpl";
 }
 
-const String& CGui::GetGhostFile(std::string* ghCar)
+const String& CGui::GetGhostFile(string* ghCar)
 {
 	static String file;
 	string sim_mode = pSet->game.sim_mode, car = pSet->game.car[0];
@@ -192,7 +191,7 @@ const String& CGui::GetGhostFile(std::string* ghCar)
 	return file;
 }
 
-std::string CGui::GetRplListDir()
+string CGui::GetRplListDir()
 {
 	return (pSet->rpl_listghosts
 		? (PATHMANAGER::Ghosts() + "/" + pSet->gui.sim_mode)
@@ -249,7 +248,7 @@ void CGui::changeCar()
 ///  car stats txt
 void CGui::UpdCarStatsTxt()
 {
-	std::string path;
+	string path;
 	//GetCarPath(&path, 0, 0, sListCar, true);
 	//path = path.substr(0, path.length()-4) + "_stats.txt";
 	path = PATHMANAGER::CarSim() + "/" + pSet->gui.sim_mode + "/cars/" + sListCar + "_stats.txt";
@@ -325,9 +324,9 @@ void CGui::toggleGui(bool toggle)
 	if (app->mWndHelp && app->mWndHelp->getVisible() && loadReadme)
 	{
 		loadReadme = false;
-		EditBox* edit = app->mGui->findWidget<EditBox>("Readme",false);
-		if (edit)
-		{	std::string path = PATHMANAGER::Data()+"/../Readme.txt";
+		Ed ed = fEd("Readme");
+		if (ed)
+		{	string path = PATHMANAGER::Data()+"/../Readme.txt";
 			std::ifstream fi(path.c_str());
 			if (fi.good())
 			{	String text = "", s;
@@ -335,8 +334,8 @@ void CGui::toggleGui(bool toggle)
 					text += s + "\n";
 
 				text = StringUtil::replaceAll(text, "#", "##");
-				edit->setCaption(UString(text));
-				edit->setVScrollPosition(0);
+				ed->setCaption(UString(text));
+				ed->setVScrollPosition(0);
 	}	}	}
 
 	///  update track tab, for champs wnd
@@ -359,12 +358,13 @@ void CGui::toggleGui(bool toggle)
 	}
 	if (notMain && gc)  // show hide champs,stages
 	{
-		size_t id = app->mWndTabsGame->getIndexSelected();
-		app->mWndTabsGame->setButtonWidthAt(TAB_Track, chAny ? 1 :-1);  if (id == TAB_Track && chAny)  app->mWndTabsGame->setIndexSelected(TAB_Champs);
-		app->mWndTabsGame->setButtonWidthAt(TAB_Multi, chAny ? 1 :-1);  if (id == TAB_Multi && chAny)  app->mWndTabsGame->setIndexSelected(TAB_Champs);
-		app->mWndTabsGame->setButtonWidthAt(TAB_Champs,chAny ?-1 : 1);  if (id == TAB_Champs && !chAny)  app->mWndTabsGame->setIndexSelected(TAB_Track);
-		app->mWndTabsGame->setButtonWidthAt(TAB_Stages,chAny ?-1 : 1);  if (id == TAB_Stages && !chAny)  app->mWndTabsGame->setIndexSelected(TAB_Track);
-		app->mWndTabsGame->setButtonWidthAt(TAB_Stage, chAny ?-1 : 1);  if (id == TAB_Stage  && !chAny)  app->mWndTabsGame->setIndexSelected(TAB_Track);
+		Tab t = app->mWndTabsGame;
+		size_t id = t->getIndexSelected();
+		t->setButtonWidthAt(TAB_Track, chAny ? 1 :-1);  if (id == TAB_Track && chAny)  t->setIndexSelected(TAB_Champs);
+		t->setButtonWidthAt(TAB_Multi, chAny ? 1 :-1);  if (id == TAB_Multi && chAny)  t->setIndexSelected(TAB_Champs);
+		t->setButtonWidthAt(TAB_Champs,chAny ?-1 : 1);  if (id == TAB_Champs && !chAny)  t->setIndexSelected(TAB_Track);
+		t->setButtonWidthAt(TAB_Stages,chAny ?-1 : 1);  if (id == TAB_Stages && !chAny)  t->setIndexSelected(TAB_Track);
+		t->setButtonWidthAt(TAB_Stage, chAny ?-1 : 1);  if (id == TAB_Stage  && !chAny)  t->setIndexSelected(TAB_Track);
 	}
 
 	if (gcom->bnQuit)  gcom->bnQuit->setVisible(app->isFocGui);
@@ -380,29 +380,6 @@ void CGui::toggleGui(bool toggle)
 	{	first = false;
 		gcom->GuiCenterMouse();
 	}
-}
-
-void CGui::MainMenuBtn(WidgetPtr wp)
-{
-	for (int i=0; i < ciMainBtns; ++i)
-		if (wp == app->mWndMainBtns[i])
-		{
-			pSet->isMain = false;
-			pSet->inMenu = i;
-			toggleGui(false);
-			return;
-		}
-}
-
-void CGui::MenuTabChg(TabPtr tab, size_t id)
-{
-	if (tab == app->mWndTabsGame && id == TAB_Car)
-		CarListUpd();  // off filtering
-
-	if (id != 0)  return;  // <back
-	tab->setIndexSelected(1);  // dont switch to 0
-	pSet->isMain = true;
-	toggleGui(false);  // back to main
 }
 
 
@@ -476,7 +453,7 @@ void CGui::UpdCarClrSld(bool upd)
 
 
 //  next/prev in list by key
-int CGui::LNext(MultiList2* lp, int rel, int ofs)
+int CGui::LNext(Mli2 lp, int rel, int ofs)
 {
 	size_t cnt = lp->getItemCount();
 	if (cnt==0)  return 0;
@@ -485,7 +462,7 @@ int CGui::LNext(MultiList2* lp, int rel, int ofs)
 	lp->beginToItemAt(std::max(0, i-ofs));  // center
 	return i;
 }
-int CGui::LNext(MultiList* lp, int rel)
+int CGui::LNext(Mli lp, int rel)
 {
 	size_t cnt = lp->getItemCount();
 	if (cnt==0)  return 0;
@@ -493,7 +470,7 @@ int CGui::LNext(MultiList* lp, int rel)
 	lp->setIndexSelected(i);
 	return i;
 }
-int CGui::LNext(ListPtr lp, int rel, int ofs)
+int CGui::LNext(Li lp, int rel, int ofs)
 {
 	size_t cnt = lp->getItemCount();
 	if (cnt==0)  return 0;
@@ -533,7 +510,7 @@ void CGui::GuiUpdate()
 	if (gcom->bGuiReinit)  // after language change from combo
 	{	gcom->bGuiReinit = false;
 
-		app->mGui->destroyWidgets(app->vwGui);
+		mGui->destroyWidgets(app->vwGui);
 		gcom->bnQuit=0; app->mWndOpts=0;  //todo: rest too..  delete, new gui; ?
 
 		bGI = false;

@@ -59,10 +59,10 @@ public:
 	const static int colCar[16],colCh[16],colChL[16],colSt[16];
 
 
-	//  main menu
+	//  util
 	void toggleGui(bool toggle=true);
 	void GuiShortcut(MNU_Btns mnu, int tab, int subtab=-1);
-	void MainMenuBtn(WP), MenuTabChg(Tab, size_t);  bool loadReadme;
+	bool loadReadme;
 
 	void UpdCarClrSld(bool upd=true), UpdCarMClr();  bool bUpdCarClr;
 	void btnNetEndClose(WP);
@@ -173,19 +173,20 @@ public:
 	///  [Tweak]  -----------------------------------------
 	const static int ciEdCar = 12;
 	Ed edCar[ciEdCar],edPerfTest, edTweakCol;
-	Tab tabTweak, tabEdCar;
 	Txt txtTweakPath, txtTweakTire, txtTweakPathCol;
-	Cmb cmbTweakCarSet, cmbTweakTireSet;
 
+	Tab tabTweak, tabEdCar;
+	void tabCarEdChng(Tab, size_t);
+
+	Cmb cmbTweakCarSet, cmbTweakTireSet;
 	void CmbTweakCarSet(CMB), CmbTweakTireSet(CMB);
 	void CmbEdTweakCarSet(Ed), CmbEdTweakTireSet(Ed);
-	void tabCarEdChng(Tab, size_t);
 
 	void TweakToggle();
 	void TweakCarSave(),TweakCarLoad(), TweakTireSave();
 	void TweakColUpd(bool user), TweakColLoad(),TweakColSave();
 
-	void btnTweakCarSave(WP),btnTweakCarLoad(WP);
+	void btnTweakCarSave(WP),  btnTweakCarLoad(WP);
 	void btnTweakTireSave(WP), btnTweakColSave(WP);
 
 	bool GetCarPath(std::string* pathCar/*out*/,

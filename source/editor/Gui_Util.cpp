@@ -263,28 +263,6 @@ void App::togPrvCam()
 }
 
 
-//  main menu
-void CGui::MainMenuBtn(MyGUI::WidgetPtr wp)
-{
-	for (int i=0; i < WND_ALL; ++i)
-		if (wp == app->mWndMainBtns[i])
-		{
-			pSet->isMain = false;
-			pSet->inMenu = i;
-			toggleGui(false);
-			return;
-		}
-}
-
-void CGui::MenuTabChg(MyGUI::TabPtr tab, size_t id)
-{
-	if (id != 0)  return;
-	tab->setIndexSelected(1);  // dont switch to 0
-	pSet->isMain = true;
-	toggleGui(false);  // back to main
-}
-
-
 //  Gui Shortcut  alt-letters
 void CGui::GuiShortcut(WND_Types wnd, int tab, int subtab)
 {

@@ -25,12 +25,12 @@ public:
 };
 
 ///  short Arguments for events
-//  slider event and its text field for value
-#define SLV(name)  void sl##name(SL);  Txt val##name;  //old!
-#define SL   Sl wp, float val     // slider event args  //old!
+//  declare slider event and its text
+#define SLV(name)  void sl##name(SL);  Txt val##name;   //old
+#define SL   Sl wp, float val
 
-#define CMB  Cmb wp, size_t val  // combobox event args
-#define TAB  Tab tab, size_t id       //  tab event args
+#define CMB  Cmb wp, size_t val
+#define TAB  Tab tab, size_t id
 
 
 //  declare slider and its event in .h
@@ -59,6 +59,10 @@ public:
 #define fTab(s)  mGui->findWidget<TabControl>(s)
 #define Tev(tb,evt)  tb->eventTabChangeSelect += newDelegate(this, &CGui::tab##evt)
 
+#define fTabW(s)  tab = fTab(s); \
+	tab->setIndexSelected(1);  tab->setSmoothShow(false); \
+	tab->eventTabChangeSelect += newDelegate(gcom, &CGuiCom::tabMainMenu);
+
 
 ///  find control, assign event, set value (old)
 //------------------------------------------------------------------------
@@ -67,7 +71,7 @@ public:
 #define Slv(name, vset)  \
 	sl = mGui->findWidget<Slider>(#name);  \
 	if (sl && sl->eventValueChanged.empty())  sl->eventValueChanged += newDelegate(this, &CGui::sl##name);  \
-	val##name = mGui->findWidget<TextBox>(#name"Val",false);  \
+	val##name = fTxt(#name"Val");  \
 	if (sl)  sl->setValue(vset);  sl##name(sl, vset);
 
 
@@ -95,13 +99,13 @@ public:
 
 //  edit
 #define Edt(edit, name, event)  \
-	edit = mGui->findWidget<EditBox>(name);  \
+	edit = fEd(name);  \
 	if (edit && edit->eventEditTextChange.empty())  edit->eventEditTextChange += newDelegate(this, &CGui::event);
 
 #define Ed(name, event)  Edt(ed##name, #name, event)
 
 #define EdC(edit, name, event)  \
-	edit = mGui->findWidget<EditBox>(name);  \
+	edit = fEd(name);  \
 	if (edit && edit->eventEditTextChange.empty())  edit->eventEditTextChange += newDelegate(this, &CGuiCom::event);
 
 	

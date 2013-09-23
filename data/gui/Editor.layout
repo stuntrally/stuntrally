@@ -335,6 +335,7 @@
 			<Property key="Colour" value="1.0 0.9 1.0"/>
 			<Property key="Alpha" value="0.5"/>
 			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Visible" value="false"/>
 		</Widget>
 		<Widget type="TextBox" skin="TextBox" position="4 120 190 20" name="objTxt5">
 			<Property key="InheritsAlpha" value="false"/>
@@ -500,6 +501,7 @@
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Caption" value="#{RoadStats}"/>
 		<Property key="Snap" value="true"/>
+		<Property key="Visible" value="false"/>
 		<Widget type="TextBox" skin="TextBox" position="4 0 120 20" name="rdTxtSt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.68 0.82 1.0"/>

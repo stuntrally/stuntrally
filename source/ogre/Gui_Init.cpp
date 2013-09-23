@@ -37,8 +37,8 @@ void CGui::InitGui()
 
 
 	//  new widgets
-	MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
-	MyGUI::FactoryManager::getInstance().registerFactory<Slider>("Widget");
+	FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
+	FactoryManager::getInstance().registerFactory<Slider>("Widget");
 	loadReadme = true;
 
 	//  load
@@ -57,33 +57,25 @@ void CGui::InitGui()
 	app->mWndChallEnd   = fWnd("WndChallEnd");    app->mWndChallEnd->setVisible(false);
 
 	app->mWndNetEnd = fWnd("WndNetEnd");  app->mWndNetEnd->setVisible(false);
-	app->mWndTweak = fWnd("WndTweak");  app->mWndTweak->setVisible(false);
+	app->mWndTweak = fWnd("WndTweak");    app->mWndTweak->setVisible(false);
 	app->mWndTweak->setPosition(0,40);
 	
-	//  main menu
-	for (int i=0; i < ciMainBtns; ++i)
-	{
-		const String s = toStr(i);
-		app->mWndMainPanels[i] = app->mWndMain->findWidget("PanMenu"+s);
-		app->mWndMainBtns[i] = (ButtonPtr)app->mWndMain->findWidget("BtnMenu"+s);
-		app->mWndMainBtns[i]->eventMouseButtonClick += newDelegate(this, &CGui::MainMenuBtn);
-	}
+
+	//  for find defines
+	Btn btn, bchk;  Cmb cmb;
+	Slider* sl;  SV* sv;  Ck* ck;
+
+
+	gcom->InitMainMenu();
+
+
 	app->updMouse();
-	
-	//  center
-	IntSize w = app->mWndMain->getSize();
-	int wx = app->mWindow->getWidth(), wy = app->mWindow->getHeight();
-	app->mWndMain->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f);
 
 	TabPtr tab;
-	#define fTab1(s)  tab = fTab(s); \
-		tab->setIndexSelected(1);  tab->setSmoothShow(false); \
-		tab->eventTabChangeSelect += newDelegate(this, &CGui::MenuTabChg);
-
-	fTab1("TabWndGame");    app->mWndTabsGame = tab;
-	fTab1("TabWndReplays"); app->mWndTabsRpl = tab;
-	fTab1("TabWndHelp");    app->mWndTabsHelp = tab;
-	fTab1("TabWndOptions"); app->mWndTabsOpts = tab;
+	fTabW("TabWndGame");    app->mWndTabsGame = tab;
+	fTabW("TabWndReplays"); app->mWndTabsRpl = tab;
+	fTabW("TabWndHelp");    app->mWndTabsHelp = tab;
+	fTabW("TabWndOptions"); app->mWndTabsOpts = tab;
 
 	if (pSet->inMenu > MNU_Single && pSet->inMenu <= MNU_Challenge)  app->mWndTabsGame->setIndexSelected(TAB_Champs);
 
@@ -91,22 +83,15 @@ void CGui::InitGui()
 	vSubTabsGame.clear();
 	for (size_t i=0; i < app->mWndTabsGame->getItemCount(); ++i)
 	{	// todo: startsWith("SubTab")..
-		MyGUI::TabPtr sub = (TabPtr)app->mWndTabsGame->getItemAt(i)->findWidget(
+		TabPtr sub = (TabPtr)app->mWndTabsGame->getItemAt(i)->findWidget(
 			i==TAB_Champs ? "ChampType" : (i==TAB_Multi ? "tabsNet" : "tabPlayer") );
 		vSubTabsGame.push_back(sub);  // 0 for not found
 	}
 	vSubTabsOpts.clear();
 	for (size_t i=0; i < app->mWndTabsOpts->getItemCount(); ++i)
 	{
-		MyGUI::TabPtr sub = (TabPtr)app->mWndTabsOpts->getItemAt(i)->findWidget(i==TABo_Input ? "InputTab" : "SubTab");
+		TabPtr sub = (TabPtr)app->mWndTabsOpts->getItemAt(i)->findWidget(i==TABo_Input ? "InputTab" : "SubTab");
 		vSubTabsOpts.push_back(sub);
-	}
-
-	//  tooltip  ------
-	for (VectorWidgetPtr::iterator it = app->vwGui.begin(); it != app->vwGui.end(); ++it)
-	{
-		gcom->setToolTips((*it)->getEnumerator());
-		//const std::string& name = (*it)->getName();
 	}
 
 	app->mWndRpl = fWnd("RplWnd");
@@ -127,8 +112,6 @@ void CGui::InitGui()
 
 	///  Sliders
 	//------------------------------------------------------------------------
-	ButtonPtr btn,bchk;  ComboBoxPtr cmb;
-	SV* sv;  Slider* sl;  Ck* ck;
 	    
 	//  Hud view sizes  ----
 	sv= &svSizeGaug;	sv->Init("SizeGaug",	&pSet->size_gauges,    0.1f, 0.3f,  1.f, 3,4);  sv->DefaultF(0.19f);  Sev(HudSize);
@@ -249,8 +232,7 @@ void CGui::InitGui()
 	ck= &ckCarRear;		ck->Init("CarRear",		&pSet->autorear);   Cev(Gear);
 	ck= &ckCarRearInv;	ck->Init("CarRearThrInv",&pSet->rear_inv);  Cev(Gear);
 
-	TabPtr tTires = fTab("tabCarTires");
-	if (tTires)  tTires->eventTabChangeSelect += newDelegate(this, &CGui::tabTireSet);
+	TabPtr tTires = fTab("tabCarTires");  Tev(tTires, TireSet);
 	
 	Slv(SSSEffect,	pSet->sss_effect[0]);  slSSSEff = sl;
 	Slv(SSSVelFactor, pSet->sss_velfactor[0]/2.f);  slSSSVel = sl;
@@ -442,8 +424,7 @@ void CGui::InitGui()
     txCarAuthor = fTxt("CarAuthor");
     txTrackAuthor = fTxt("TrackAuthor");
 	
-	TabPtr tPlr = fTab("tabPlayer");
-	if (tPlr)  tPlr->eventTabChangeSelect += newDelegate(this, &CGui::tabPlayer);
+	TabPtr tPlr = fTab("tabPlayer");  Tev(tPlr, Player);
 	
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
 	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
@@ -531,12 +512,12 @@ void CGui::InitGui()
 
 	
 	//  quick help text
-	MyGUI::EditPtr edHelp = fEd("QuickHelpText");
+	Ed edHelp = fEd("QuickHelpText");
 	String s = TR("#{QuickHelpText}");
 	s = StringUtil::replaceAll(s, "@", "\n");
 	edHelp->setCaption(s);
 	//  user dir
-    MyGUI::EditPtr edUserDir = fEd("EdUserDir");
+    Ed edUserDir = fEd("EdUserDir");
 	edUserDir->setCaption(PATHMANAGER::UserConfigDir());
 
 	
@@ -545,9 +526,7 @@ void CGui::InitGui()
 		edCar[i] = fEd("EdCar"+toStr(i));
 	edTweakCol = fEd("TweakEditCol");
 	edPerfTest = fEd("TweakPerfTest");
-	tabEdCar = fTab("TabEdCar");
-	tabEdCar->setIndexSelected(pSet->car_ed_tab);
-	tabEdCar->eventTabChangeSelect += newDelegate(this, &CGui::tabCarEdChng);
+	tabEdCar = fTab("TabEdCar");  Tev(tabEdCar, CarEdChng);  tabEdCar->setIndexSelected(pSet->car_ed_tab);
 
 	tabTweak = fTab("TabTweak");
 	txtTweakPath = fTxt("TweakPath");
@@ -556,7 +535,8 @@ void CGui::InitGui()
 
 	Btn("TweakCarSave", btnTweakCarSave);  Btn("TweakTireSave", btnTweakTireSave);
 	Btn("TweakColSave", btnTweakColSave);
-	Cmb(cmbTweakTireSet,"TweakTireSet",CmbTweakTireSet);  cmbTweakTireSet->eventEditTextChange+= newDelegate(this, &CGui::CmbEdTweakTireSet);
+	Cmb(cmbTweakTireSet,"TweakTireSet",CmbTweakTireSet);
+	cmbTweakTireSet->eventEditTextChange += newDelegate(this, &CGui::CmbEdTweakTireSet);
 
 
 	///  input tab  -------
@@ -567,8 +547,8 @@ void CGui::InitGui()
 	
 	///  cars list
     //------------------------------------------------------------------------
-	TabItem* cartab = (TabItem*)app->mWndGame->findWidget("TabCar");
-	carList = cartab->createWidget<MultiList2>("MultiListBox",16,48,200,110, Align::Left | Align::VStretch);
+	TabItem* carTab = (TabItem*)app->mWndGame->findWidget("TabCar");
+	carList = carTab->createWidget<MultiList2>("MultiListBox",16,48,200,110, Align::Left | Align::VStretch);
 	carList->setColour(Colour(0.7,0.85,1.0));
 	carList->removeAllColumns();  int n=0;
 	carList->addColumn("#FF8888"+TR("#{Car}"), colCar[n++]);
@@ -653,7 +633,7 @@ void CGui::InitGui()
 	edChDesc = fEd("ChampDescr");
 
 	//  Champs list  -------------
-	MyGUI::MultiList2* li;
+	Mli2 li;
 	TabItem* trktab = (TabItem*)app->mWndGame->findWidget("TabChamps");
 	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
 	li->eventListChangePosition += newDelegate(this, &CGui::listChampChng);

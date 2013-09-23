@@ -9,7 +9,7 @@
 	#include "../../vdrift/settings.h"
 #else
 	#include "../../editor/CApp.h"
-	//#include "../../editor/CGui.h"
+	#include "../../editor/CGui.h"
 	#include "../../editor/settings.h"
 #endif
 #include "../../sdl4ogre/sdlinputwrapper.hpp"
@@ -164,6 +164,9 @@ void CGuiCom::GuiInitTooltip()
 	mToolTip = mGui->findWidget<Widget>("ToolTip");
 	mToolTip->setVisible(false);
 	mToolTipTxt = mToolTip->getChildAt(0)->castType<Edit>();
+
+	for (VectorWidgetPtr::iterator it = app->vwGui.begin(); it != app->vwGui.end(); ++it)
+		setToolTips((*it)->getEnumerator());
 }
 
 void CGuiCom::setToolTips(EnumeratorWidgetPtr widgets)
@@ -272,4 +275,56 @@ void CGuiCom::comboLanguage(MyGUI::ComboBox* wp, size_t val)
 
 	//  reinit gui
 	bGuiReinit = true;
+}
+
+
+//  Main menu
+//----------------------------------------------------------------------------------------------------------------
+#ifdef SR_EDITOR
+	#define cntMain WND_ALL
+#else
+	#define cntMain ciMainBtns
+#endif
+
+void CGuiCom::InitMainMenu()
+{
+	Btn btn;
+	for (int i=0; i < cntMain; ++i)
+	{
+		const String s = toStr(i);
+		app->mWndMainPanels[i] = app->mWndMain->findWidget("PanMenu"+s);
+		BtnC("BtnMenu"+s, btnMainMenu);  app->mWndMainBtns[i] = btn;
+	}
+
+	//  center
+	int wx = app->mWindow->getWidth(), wy = app->mWindow->getHeight();
+	Wnd wnd = app->mWndMain;
+
+	IntSize w = wnd->getSize();
+	wnd->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f);
+}
+
+void CGuiCom::btnMainMenu(WP wp)
+{
+	for (int i=0; i < cntMain; ++i)
+		if (wp == app->mWndMainBtns[i])
+		{
+			pSet->isMain = false;
+			pSet->inMenu = i;
+			app->gui->toggleGui(false);
+			return;
+		}
+}
+
+void CGuiCom::tabMainMenu(Tab tab, size_t id)
+{
+	#ifndef SR_EDITOR
+	if (tab == app->mWndTabsGame && id == TAB_Car)
+		app->gui->CarListUpd();  // off filtering
+	#endif
+
+	if (id != 0)  return;  // <back
+	tab->setIndexSelected(1);  // dont switch to 0
+	pSet->isMain = true;
+	app->gui->toggleGui(false);  // back to main
 }

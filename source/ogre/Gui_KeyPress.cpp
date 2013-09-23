@@ -156,12 +156,12 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 	//  not main menus
 	//--------------------------------------------------------------------------------------------------------------
-	typedef CGui::WP WP;
 	if (!tweak)
 	{
 		Widget* wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();
 		bool edFoc = wf && wf->getTypeName() == "EditBox";
 		//if (wf)  LogO(wf->getTypeName()+" " +toStr(edFoc));
+		bool rpl = bRplPlay && !isFocGui;
 		switch (skey)
 		{
 			case key(BACKSPACE):
@@ -180,16 +180,16 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				return true;
 
 			case key(P):	// replay play/pause
-				if (bRplPlay && !isFocGui)
+				if (rpl)
 				{	bRplPause = !bRplPause;  gui->UpdRplPlayBtn();
 					return true;  }
 				break;
 
 			case key(K):	// replay car ofs
-				if (bRplPlay && !isFocGui)	{	--iRplCarOfs;  return true;  }
+				if (rpl) {  --iRplCarOfs;  return true;  }
 				break;
 			case key(L):
-				if (bRplPlay && !isFocGui)	{	++iRplCarOfs;  return true;  }
+				if (rpl) {  ++iRplCarOfs;  return true;  }
 				break;
 
 			case key(F):	// focus on find edit
@@ -205,35 +205,29 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 
 			case key(F7):	//  Times
-				if (shift)	gui->ckOpponents.Invert();
-				else
+				if (shift)	gui->ckOpponents.Invert(); else
 				if (!ctrl)	gui->ckTimes.Invert();
 				return false;
 
 			case key(F8):	//  Minimap
-				if (ctrl)	gui->ckCarDbgBars.Invert();
-				else
+				if (ctrl)	gui->ckCarDbgBars.Invert(); else
 				if (!shift)	gui->ckMinimap.Invert();
 				return false;
 
 			case key(F9):	//  car dbg
-				if (ctrl)	gui->ckTireVis.Invert();
-				else
-				if (alt)	gui->ckCarDbgSurf.Invert();
-				else
+				if (ctrl)	gui->ckTireVis.Invert(); else
+				if (alt)	gui->ckCarDbgSurf.Invert(); else
 				if (shift)	gui->ckCarDbgTxt.Invert();
 				else		gui->ckGraphs.Invert();
 				return true;
 
-			case key(F11):	//  profiler times
-				if (shift)	gui->ckProfilerTxt.Invert();
-				else		//  Fps
+			case key(F11):	//  Fps, profiler times
+				if (shift)	gui->ckProfilerTxt.Invert(); else
 				if (!ctrl)	gui->ckFps.Invert();
 				break;
 
 			case key(F10):	//  blt debug
-				if (shift)	gui->ckBltProfTxt.Invert();
-				else
+				if (shift)	gui->ckBltProfTxt.Invert(); else
 				if (ctrl)	gui->ckBulletDebug.Invert();
 				else		gui->ckWireframe.Invert();
 				return false;
@@ -254,8 +248,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 					{	if (mWndGame->getVisible())
 						switch (mWndTabsGame->getIndexSelected())
 						{
-						case TAB_Track:	 gui->changeTrack();	gui->btnNewGame(0);  break;
-						case TAB_Car:	 gui->changeCar();	gui->btnNewGame(0);  break;
+						case TAB_Track:	 gui->changeTrack();  gui->btnNewGame(0);  break;
+						case TAB_Car:	 gui->changeCar();    gui->btnNewGame(0);  break;
 						case TAB_Multi:	 gui->chatSendMsg();  break;
 						case TAB_Champs:
 							if (gui->isChallGui())
@@ -283,8 +277,9 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 
 	#define action(a) (channel->getNumber() == a)
 
-	//  change tweak tabs
+	//  change tabs
 	//----------------------------------------------------------------------------------------
+	//  tweak
 	if (mWndTweak->getVisible())
 	{
 		TabPtr tab = gui->tabTweak;
@@ -302,9 +297,9 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 		{	pSet->car_ed_tab = tab->getIndexSelected();
 			MyGUI::InputManager::getInstance().resetKeyFocusWidget();
 			MyGUI::InputManager::getInstance().setKeyFocusWidget(gui->edCar[tab->getIndexSelected()]);  }
-	}else
+	}
 	//  change gui tabs
-	if (isFocGui && !pSet->isMain)
+	else if (isFocGui && !pSet->isMain)
 	{
 		MyGUI::TabPtr tab = 0;  MyGUI::TabControl* sub = 0;
 		switch (pSet->inMenu)
@@ -341,14 +336,15 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 				chng = true;
 			}
 			if (chng)
-			{	tab->setIndexSelected(i);  gui->MenuTabChg(tab,i);  return;  }
+			{	tab->setIndexSelected(i);  gcom->tabMainMenu(tab,i);  return;  }
 		}
 	}
-	else if (!isFocGui && pSet->show_graphs)  // change graphs type
+	//  change graphs type
+	else if (!isFocGui && pSet->show_graphs)
 	{
 		int& v = (int&)pSet->graphs_type;  int vo = v;
 		if (action(A_PrevTab))  v = (v-1 + Gh_ALL) % Gh_ALL;
-		if (action(A_NextTab))	v = (v+1) % Gh_ALL;
+		if (action(A_NextTab))  v = (v+1) % Gh_ALL;
 		if (vo != v)
 		{
 			gui->cmbGraphs->setIndexSelected(v);
@@ -362,13 +358,16 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 	//  Gui on/off  or close wnds
 	if (action(A_ShowOptions) && !alt)
 	{
-		if (mWndNetEnd && mWndNetEnd->getVisible())  {  mWndNetEnd->setVisible(false);  // hide netw end
+		Wnd wnd = mWndNetEnd;
+		if (wnd && wnd->getVisible())  {  wnd->setVisible(false);  // hide netw end
 			return;	}
 		else
-		{
-			if (mWndChampEnd && mWndChampEnd->getVisible())  mWndChampEnd->setVisible(false);  // hide champs end
-			if (mWndChallEnd && mWndChallEnd->getVisible())  mWndChallEnd->setVisible(false);  // chall
-			gui->toggleGui(true);  return;
+		{	wnd = mWndChampEnd;
+			if (wnd && wnd->getVisible())  wnd->setVisible(false);  // hide champs end
+			wnd = mWndChallEnd;
+			if (wnd && wnd->getVisible())  wnd->setVisible(false);  // chall
+			gui->toggleGui(true);
+			return;
 		}
 	}
 

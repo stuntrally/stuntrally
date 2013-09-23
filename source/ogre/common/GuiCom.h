@@ -60,8 +60,12 @@ public:
 	//  init
 	void GuiCenterMouse();
 	void GuiInitTooltip(), GuiInitLang();
-	void GuiInitGraphics(), GuiInitTrack();  // tabs
-	Ogre::String GetSceneryColor(Ogre::String name);
+	//  init tabs
+	void GuiInitGraphics(), GuiInitTrack();
+
+	//  main menu
+	void InitMainMenu();
+	void btnMainMenu(WP);  void tabMainMenu(Tab tab, size_t id);
 
 
 	///  [Graphics]
@@ -84,7 +88,9 @@ public:
 
 	Ogre::String PathListTrk(int user=-1);
 	Ogre::String PathListTrkPrv(int user/*=-1*/, Ogre::String track);
+
 	bool TrackExists(Ogre::String name);
+	Ogre::String GetSceneryColor(Ogre::String name);
 
 
 	///  [Track]

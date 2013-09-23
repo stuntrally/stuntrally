@@ -87,7 +87,7 @@ void CGui::CreateInputTab(const std::string& title, bool playerTab, const std::v
 		x0 = 16, x1 = 140, x2 = 310, x3 = 454,
 		yh = 20, ya = 14,  s0 = x1-x0-5;
 
-	#define CreateText(x,y, w,h, name, text)  {  StaticTextPtr txt =  \
+	#define CreateText(x,y, w,h, name, text)  {  Txt txt =  \
 		tabitem->createWidget<TextBox>("TextBox", x,y+2, w,h, Align::Default, name);  \
 		gcom->setOrigPos(txt, "OptionsWnd");  \
 		txt->setCaption(text);  }

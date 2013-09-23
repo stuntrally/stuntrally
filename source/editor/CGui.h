@@ -45,10 +45,9 @@ public:
 	Txt valTrk[2];
 	std::vector<Tab> vSubTabsEdit, vSubTabsHelp, vSubTabsOpts;
 	
-	//  main menu
+	//  util
 	void toggleGui(bool toggle=false);
 	void GuiShortcut(WND_Types wnd, int tab, int subtab=-1), NumTabNext(int rel);
-	void MainMenuBtn(WP), MenuTabChg(Tab, size_t);
 
 	//  ed
 	void Status(Ogre::String s, float r,float g,float b);

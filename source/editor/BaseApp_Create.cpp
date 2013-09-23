@@ -480,22 +480,21 @@ void BaseApp::baseInitGui()
 	using namespace MyGUI;
 	//  Gui
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	mPlatform = new MyGUI::OgreD3D11Platform();
+	mPlatform = new OgreD3D11Platform();
 	#else
-	mPlatform = new MyGUI::OgrePlatform();
+	mPlatform = new OgrePlatform();
 	#endif
 
 	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::UserConfigDir() + "/MyGUI.log");
-	mGui = new MyGUI::Gui();
+	mGui = new Gui();
 
 	mGui->initialise("");
 
-	MyGUI::FactoryManager::getInstance().registerFactory<ResourceImageSetPointerFix>("Resource", "ResourceImageSetPointer");
-	MyGUI::ResourceManager::getInstance().load("core.xml");
+	FactoryManager::getInstance().registerFactory<ResourceImageSetPointerFix>("Resource", "ResourceImageSetPointer");
+	ResourceManager::getInstance().load("core.xml");
 
-	MyGUI::PointerManager::getInstance().eventChangeMousePointer +=
-			MyGUI::newDelegate(this, &BaseApp::onCursorChange);
-	MyGUI::PointerManager::getInstance().setVisible(false);
+	PointerManager::getInstance().eventChangeMousePointer += newDelegate(this, &BaseApp::onCursorChange);
+	PointerManager::getInstance().setVisible(false);
 	
 	//------------------------ lang
 	if (pSet->language == "")  // autodetect
@@ -505,7 +504,7 @@ void BaseApp::baseInitGui()
 	if (!boost::filesystem::exists(PATHMANAGER::Data() + "/gui/core_language_" + pSet->language + "_tag.xml"))
 		pSet->language = "en";  // use en if not found
 		
-	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
+	LanguageManager::getInstance().setCurrentLanguage(pSet->language);
 	//------------------------
 
 

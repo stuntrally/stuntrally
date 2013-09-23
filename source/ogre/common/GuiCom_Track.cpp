@@ -358,8 +358,7 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	if (stTrk[ch][7])  stTrk[ch][7]->setCaption(no ? "--" : speedTrk);
 
 	if (no)
-	{
-		if (stTrk[ch][8])  stTrk[ch][8]->setCaption(CHud::StrTime(0.f));
+	{	if (stTrk[ch][8])  stTrk[ch][8]->setCaption(CHud::StrTime(0.f));
 		if (stTrk[ch][9])  stTrk[ch][9]->setCaption("--");
 		if (stTrk[ch][10])  stTrk[ch][10]->setCaption("--");
 	}else

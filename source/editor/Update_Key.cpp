@@ -162,7 +162,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
    				else	// prev gui tab
    				{	int num = tab->getItemCount()-1, i = tab->getIndexSelected();
 					if (i==iTab1)  i = num;  else  --i;
-					tab->setIndexSelected(i);  if (iTab1==1)  gui->MenuTabChg(tab,i);
+					tab->setIndexSelected(i);  if (iTab1==1)  gcom->tabMainMenu(tab,i);
 	   			}
    			break;
 
@@ -179,7 +179,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	   			else	// next gui tab
 	   			{	int num = tab->getItemCount()-1, i = tab->getIndexSelected();
 					if (i==num)  i = iTab1;  else  ++i;
-					tab->setIndexSelected(i);  if (iTab1==1)  gui->MenuTabChg(tab,i);
+					tab->setIndexSelected(i);  if (iTab1==1)  gcom->tabMainMenu(tab,i);
 				}
    			break;
    			
@@ -308,10 +308,10 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	if (edMode < ED_Road && !alt)
 	switch (skey)
 	{
-		case key(K):	if (ctrl)  {  mBrShape[curBr] = (EBrShape)((mBrShape[curBr]-1 + BRS_ALL) % BRS_ALL);  updBrush();  }  break;
-		case key(L):	if (ctrl)  {  mBrShape[curBr] = (EBrShape)((mBrShape[curBr]+1) % BRS_ALL);            updBrush();  }  break;
-		case key(N): case key(COMMA):	mBrOct[curBr] = std::max(1, mBrOct[curBr]-1);  updBrush();  break;
-		case key(M): case key(PERIOD):	mBrOct[curBr] = std::min(7, mBrOct[curBr]+1);  updBrush();  break;
+		case key(K):    if (ctrl)  {  mBrShape[curBr] = (EBrShape)((mBrShape[curBr]-1 + BRS_ALL) % BRS_ALL);  updBrush();  }  break;
+		case key(L):    if (ctrl)  {  mBrShape[curBr] = (EBrShape)((mBrShape[curBr]+1) % BRS_ALL);            updBrush();  }  break;
+		case key(N): case key(COMMA):   mBrOct[curBr] = std::max(1, mBrOct[curBr]-1);  updBrush();  break;
+		case key(M): case key(PERIOD):  mBrOct[curBr] = std::min(7, mBrOct[curBr]+1);  updBrush();  break;
 	}
 
 	//  ter brush presets  ----
@@ -327,6 +327,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	//  Fluids  ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 	if (edMode == ED_Fluids)
 	{	int fls = sc->fluids.size();
+		const std::vector<FluidParams>& dfl = data->fluids->fls;
 		switch (skey)
 		{
 			//  ins
@@ -334,8 +335,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			if (road && road->bHitTer)
 			{
 				FluidBox fb;	fb.name = "water blue";
-				fb.pos = road->posHit;	fb.rot = Ogre::Vector3(0.f, 0.f, 0.f);
-				fb.size = Ogre::Vector3(50.f, 20.f, 50.f);	fb.tile = Vector2(0.01f, 0.01f);
+				fb.pos = road->posHit;	fb.rot = Vector3(0.f, 0.f, 0.f);
+				fb.size = Vector3(50.f, 20.f, 50.f);	fb.tile = Vector2(0.01f, 0.01f);
 				sc->fluids.push_back(fb);
 				sc->UpdateFluidsId();
 				iFlCur = sc->fluids.size()-1;
@@ -368,15 +369,19 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 			//  prev,next type
 			case key(9):  case key(MINUS):
-			{	FluidBox& fb = sc->fluids[iFlCur];
-				fb.id = (fb.id-1 + data->fluids->fls.size()) % data->fluids->fls.size();
-				fb.name = data->fluids->fls[fb.id].name;
-				bRecreateFluids = true;  }	break;
+			{
+				FluidBox& fb = sc->fluids[iFlCur];
+				fb.id = (fb.id-1 + dfl.size()) % dfl.size();
+				fb.name = dfl[fb.id].name;
+				bRecreateFluids = true;
+			}	break;
 			case key(0):  case key(EQUALS):
-			{	FluidBox& fb = sc->fluids[iFlCur];
-				fb.id = (fb.id+1) % data->fluids->fls.size();
-				fb.name = data->fluids->fls[fb.id].name;
-				bRecreateFluids = true;  }	break;
+			{
+				FluidBox& fb = sc->fluids[iFlCur];
+				fb.id = (fb.id+1) % dfl.size();
+				fb.name = dfl[fb.id].name;
+				bRecreateFluids = true;
+			}	break;
 		}
 	}
 
@@ -453,7 +458,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 					}
 					else if (road)  // move to ter
 					{
-						const Ogre::Vector3& v = road->posHit;
+						const Vector3& v = road->posHit;
 						o->pos[0] = v.x;  o->pos[1] =-v.z;  o->pos[2] = v.y + gui->objNew.pos[2];
 						o->SetFromBlt();  UpdObjPick();
 					}
@@ -471,7 +476,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				if (!shift)  gui->objEd = EO_Scale;
 				else if (o)  // reset scale
 				{
-					o->scale = Ogre::Vector3::UNIT_SCALE * (ctrl ? 0.5f : 1.f);
+					o->scale = Vector3::UNIT_SCALE * (ctrl ? 0.5f : 1.f);
 					o->nd->setScale(o->scale);  UpdObjPick();
 				}	break;
 		}
