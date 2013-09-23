@@ -91,7 +91,6 @@ void CGui::InitGui()
 		if (i<OBJ_TXT)	objTxt[i]= fTxt("objTxt"+s);
 		if (i<RI_TXT)	riTxt[i] = fTxt("riTxt"+s);
 	}
-	objPan = app->mGui->findWidget<Widget>("objPan");
 		
 	//  Tabs
 	TabPtr tab;
@@ -210,7 +209,7 @@ void CGui::InitGui()
 
 
 	///  brush presets   o o o o o o o o 
-	ScrollView* scv = app->mGui->findWidget<ScrollView>("svBrushes");
+	ScrollView* scv = mGui->findWidget<ScrollView>("svBrushes");
 	int j=0, n=0;  const int z = 128;
 	for (i=0; i < app->brSetsNum; ++i,++n)
 	{
@@ -246,7 +245,7 @@ void CGui::InitGui()
 
 
 	#if 0  ///0 _tool_ fix video capture cursor
-	imgCur = app->mGUI->createWidget<ImageBox>("ImageBox", 100,100, 32,32, Align::Default, "Pointer");
+	imgCur = mGui->createWidget<ImageBox>("ImageBox", 100,100, 32,32, Align::Default, "Pointer");
 	imgCur->setImageTexture("pointer.png");
 	imgCur->setVisible(true);
 	#endif
@@ -522,10 +521,10 @@ void CGui::InitGui()
 		if (StringUtil::endsWith(*i,".mesh") && (*i) != "sphere.mesh")
 			vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
 	
-	objListSt = mGui->findWidget<List>("ObjListSt");
-	objListDyn = mGui->findWidget<List>("ObjListDyn");
-	objListBld = mGui->findWidget<List>("ObjListBld");
-	if (objListSt && objListDyn && objListDyn)
+	objListSt = mGui->findWidget<List>("ObjListSt");    Lev(objListSt,  ObjsChng);
+	objListDyn = mGui->findWidget<List>("ObjListDyn");	Lev(objListDyn, ObjsChng);
+	objListBld = mGui->findWidget<List>("ObjListBld");	Lev(objListBld, ObjsChng);
+	objPan = mGui->findWidget<Widget>("objPan");
 	{
 		for (int i=0; i < vObjNames.size(); ++i)
 		{	const std::string& name = vObjNames[i];
@@ -540,9 +539,6 @@ void CGui::InitGui()
 					objListSt->addItem("#C8C8C8"+name);
 		}	}
 		//objList->setIndexSelected(0);  //objList->findItemIndexWith(modeSel)
-		objListSt->eventListChangePosition += newDelegate(this, &CGui::listObjsChng);
-		objListDyn->eventListChangePosition += newDelegate(this, &CGui::listObjsChng);
-		objListBld->eventListChangePosition += newDelegate(this, &CGui::listObjsChng);
 	}
 
 	

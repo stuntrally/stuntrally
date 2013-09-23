@@ -71,7 +71,7 @@ void CGui::InitGui()
 
 	app->updMouse();
 
-	TabPtr tab;
+	TabPtr tab,sub;
 	fTabW("TabWndGame");    app->mWndTabsGame = tab;
 	fTabW("TabWndReplays"); app->mWndTabsRpl = tab;
 	fTabW("TabWndHelp");    app->mWndTabsHelp = tab;
@@ -83,14 +83,15 @@ void CGui::InitGui()
 	vSubTabsGame.clear();
 	for (size_t i=0; i < app->mWndTabsGame->getItemCount(); ++i)
 	{	// todo: startsWith("SubTab")..
-		TabPtr sub = (TabPtr)app->mWndTabsGame->getItemAt(i)->findWidget(
+		sub = (TabPtr)app->mWndTabsGame->getItemAt(i)->findWidget(
 			i==TAB_Champs ? "ChampType" : (i==TAB_Multi ? "tabsNet" : "tabPlayer") );
 		vSubTabsGame.push_back(sub);  // 0 for not found
 	}
 	vSubTabsOpts.clear();
 	for (size_t i=0; i < app->mWndTabsOpts->getItemCount(); ++i)
 	{
-		TabPtr sub = (TabPtr)app->mWndTabsOpts->getItemAt(i)->findWidget(i==TABo_Input ? "InputTab" : "SubTab");
+		sub = (TabPtr)app->mWndTabsOpts->getItemAt(i)->findWidget(
+			i==TABo_Input ? "InputTab" : "SubTab");
 		vSubTabsOpts.push_back(sub);
 	}
 
@@ -380,7 +381,7 @@ void CGui::InitGui()
 	//edRplDesc = fEd("RplDesc");
 
 	rplList = mGui->findWidget<List>("RplList");
-	if (rplList)  rplList->eventListChangePosition += newDelegate(this, &CGui::listRplChng);
+	Lev(rplList, RplChng);
 	updReplaysList();
 
 
@@ -561,7 +562,7 @@ void CGui::InitGui()
 
 	carList->mSortColumnIndex = pSet->cars_sort;
 	carList->mSortUp = pSet->cars_sortup;
-   	carList->eventListChangePosition += newDelegate(this, &CGui::listCarChng);
+	Lev(carList, CarChng);
 
    	CarListUpd(false);  //upd
 
@@ -625,19 +626,18 @@ void CGui::InitGui()
 	Btn("btnChampInfo",btnChampInfo);
 
 	panCh = app->mWndGame->findWidget("panCh");
-	txtCh = (TextBox*)app->mWndGame->findWidget("txtChDetail");
-	valCh = (TextBox*)app->mWndGame->findWidget("valChDetail");
+	txtCh = fTxt("txtChDetail");
+	valCh = fTxt("valChDetail");
 	for (int i=0; i<3; ++i) {  String s = toStr(i);
-		txtChP[i] = (TextBox*)app->mWndGame->findWidget("txtChP"+s);
-		valChP[i] = (TextBox*)app->mWndGame->findWidget("valChP"+s);  }
+		txtChP[i] = fTxt("txtChP"+s);
+		valChP[i] = fTxt("valChP"+s);  }
 	edChDesc = fEd("ChampDescr");
 
 	//  Champs list  -------------
 	Mli2 li;
 	TabItem* trktab = (TabItem*)app->mWndGame->findWidget("TabChamps");
 	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
-	li->eventListChangePosition += newDelegate(this, &CGui::listChampChng);
-   	li->setVisible(false);
+	Lev(li, ChampChng);  li->setVisible(false);
 	
 	li->removeAllColumns();  c=0;
 	li->addColumn("#80A080N", colCh[c++]);
@@ -649,8 +649,7 @@ void CGui::InitGui()
 
 	//  Challs list  -------------
 	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
-	li->eventListChangePosition += newDelegate(this, &CGui::listChallChng);
-   	li->setVisible(false);
+	Lev(li, ChallChng);  li->setVisible(false);
 	
 	li->removeAllColumns();  c=0;
 	li->addColumn("#80A080N", colChL[c++]);
@@ -666,8 +665,7 @@ void CGui::InitGui()
 	trktab = (TabItem*)app->mWndGame->findWidget("TabStages");
 	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
 	li->setColour(Colour(0.7,0.73,0.76));
-	li->eventListChangePosition += newDelegate(this, &CGui::listStageChng);
-   	li->setVisible(false);
+	Lev(li, StageChng);  li->setVisible(false);
 	
 	li->removeAllColumns();  c=0;
 	li->addColumn("#80A080N", colSt[c++]);
@@ -690,39 +688,32 @@ void CGui::InitGui()
 	imgChamp = fImg("imgChamp");
 	imgChall = fImg("imgChall");
 
-	Btn("btnTutStart", btnChampStart);    btStTut = btn;
-	Btn("btnChampStart", btnChampStart);  btStChamp = btn;
-	Btn("btnChallStart", btnChallStart);  btStChall = btn;
-	Btn("btnChRestart", btnChRestart);  btChRestart = btn;
+	Btn("btnTutStart",  btnChampStart);  btStTut = btn;
+	Btn("btnChampStart",btnChampStart);  btStChamp = btn;
+	Btn("btnChallStart",btnChallStart);  btStChall = btn;
+	Btn("btnChRestart", btnChRestart);   btChRestart = btn;
 
 
 	//  ch other
 	ck= &ckChampRev;	ck->Init("ChampRev",    &pSet->gui.champ_rev);   Cev(ChampRev);
 	
 	Btn("btnChampStageBack", btnChampStageBack);
-	Btn("btnChampStageStart", btnChampStageStart);  btChampStage = btn;
+	Btn("btnChampStageStart",btnChampStageStart);  btChampStage = btn;
 	Btn("btnChampEndClose", btnChampEndClose);
 
 	Btn("btnChallStageBack", btnChallStageBack);
-	Btn("btnChallStageStart", btnChallStageStart);  btChallStage = btn;
+	Btn("btnChallStageStart",btnChallStageStart);  btChallStage = btn;
 	Btn("btnChallEndClose", btnChallEndClose);
 
 	Btn("btnStageNext", btnStageNext);
 	Btn("btnStagePrev", btnStagePrev);
     valStageNum = fTxt("StageNum");
 
-	edChampStage = (EditBox*)app->mWndChampStage->findWidget("ChampStageText");
-	edChallStage = (EditBox*)app->mWndChallStage->findWidget("ChallStageText");
-	edChampEnd   = (EditBox*)app->mWndChampEnd->findWidget("ChampEndText");
-	edChallEnd   = (EditBox*)app->mWndChallEnd->findWidget("ChallEndText");
-	imgChampStage = (ImageBox*)app->mWndChampStage->findWidget("ChampStageImg");
-	imgChallStage = (ImageBox*)app->mWndChallStage->findWidget("ChallStageImg");
-
-	imgChampEndCup = (ImageBox*)app->mWndChampEnd->findWidget("ChampEndImgCup");
-	imgChallFail = (ImageBox*)app->mWndChallEnd->findWidget("ChallEndImgFail");
-	imgChallCup  = (ImageBox*)app->mWndChallEnd->findWidget("ChallEndImgCup");
-	txChallEndC = (TextBox*)app->mWndChallEnd->findWidget("ChallEndCongrats");
-	txChallEndF = (TextBox*)app->mWndChallEnd->findWidget("ChallEndFinished");
+	edChampStage = fEd("ChampStageText");  edChampEnd = fEd("ChampEndText");  imgChampStage = fImg("ChampStageImg");
+	edChallStage = fEd("ChallStageText");  edChallEnd = fEd("ChallEndText");  imgChallStage = fImg("ChallStageImg");
+	imgChampEndCup = fImg("ChampEndImgCup");
+	imgChallFail = fImg("ChallEndImgFail");  txChallEndF = fTxt("ChallEndFinished");
+	imgChallCup  = fImg("ChallEndImgCup");   txChallEndC = fTxt("ChallEndCongrats");
 
 	UpdChampTabVis();
 

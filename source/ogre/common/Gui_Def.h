@@ -56,12 +56,16 @@ public:
 #define fImg(s)  mGui->findWidget<ImageBox>(s)
 #define fEd(s)   mGui->findWidget<EditBox>(s)
 
+//  tab
 #define fTab(s)  mGui->findWidget<TabControl>(s)
-#define Tev(tb,evt)  tb->eventTabChangeSelect += newDelegate(this, &CGui::tab##evt)
+#define Tev(tb, evt)  tb->eventTabChangeSelect += newDelegate(this, &CGui::tab##evt)
 
 #define fTabW(s)  tab = fTab(s); \
 	tab->setIndexSelected(1);  tab->setSmoothShow(false); \
 	tab->eventTabChangeSelect += newDelegate(gcom, &CGuiCom::tabMainMenu);
+
+//  list
+#define Lev(li, evt)  li->eventListChangePosition += newDelegate(this, &CGui::list##evt)
 
 
 ///  find control, assign event, set value (old)
@@ -125,7 +129,7 @@ public:
 	if (tab && tab->eventTabChangeSelect.empty())  tab->eventTabChangeSelect += newDelegate(this, &CGui::event);
 		
 		
-//  check event
+//  check event, toggle  //old
 #define ChkEv(var)  \
 	pSet->var = !pSet->var;  if (wp) {  \
 	ButtonPtr chk = wp->castType<MyGUI::Button>(); \

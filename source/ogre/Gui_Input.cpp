@@ -82,10 +82,13 @@ void CGui::CreateInputTab(const std::string& title, bool playerTab, const std::v
 
 	std::string sPlr = title;
 
-	//  button size and columns positons
-	const int sx = 150, sy = 24,
+	//  dimensions
+	const int sx = 150, sy = 24,  // button size
+		//  columns positon x
 		x0 = 16, x1 = 140, x2 = 310, x3 = 454,
-		yh = 20, ya = 14,  s0 = x1-x0-5;
+		yh = 20,  // header start
+		ya = 14,  // y add with new row
+		s0 = x1-x0-5;  // descr size x
 
 	#define CreateText(x,y, w,h, name, text)  {  Txt txt =  \
 		tabitem->createWidget<TextBox>("TextBox", x,y+2, w,h, Align::Default, name);  \
@@ -195,10 +198,10 @@ void CGui::InitInputGui()
 {
 	app->input->LoadInputDefaults();
 
-	txtInpDetail = app->mGui->findWidget<StaticText>("InputDetail");
-	panInputDetail = app->mGui->findWidget<Widget>("PanInputDetail");
+	txtInpDetail = mGui->findWidget<StaticText>("InputDetail");
+	panInputDetail = mGui->findWidget<Widget>("PanInputDetail");
 
-	TabItemPtr inpTabAll = app->mGui->findWidget<TabItem>("InputTabAll");  if (!inpTabAll)  return;
+	TabItemPtr inpTabAll = mGui->findWidget<TabItem>("InputTabAll");  if (!inpTabAll)  return;
 	Tab(tabInput, "InputTab", tabInputChg);
 	if (!tabInput)  return;
 
@@ -209,13 +212,13 @@ void CGui::InitInputGui()
 	Chk("OneAxisThrBrk", chkOneAxis, false);  chOneAxis = bchk;
 
 	//  key emul presets combo
-	ComboBoxPtr combo;
-	Cmb(combo, "CmbInputKeysAllPreset", comboInputKeyAllPreset);
-	if (combo)
-	{	combo->removeAllItems();  combo->addItem("");
-		combo->addItem(TR("#{InpSet_Slow}"));
-		combo->addItem(TR("#{InpSet_Medium}"));
-		combo->addItem(TR("#{InpSet_Fast}"));
+	Cmb cmb;
+	Cmb(cmb, "CmbInputKeysAllPreset", comboInputKeyAllPreset);
+	if (cmb)
+	{	cmb->removeAllItems();  cmb->addItem("");
+		cmb->addItem(TR("#{InpSet_Slow}"));
+		cmb->addItem(TR("#{InpSet_Medium}"));
+		cmb->addItem(TR("#{InpSet_Fast}"));
 	}
 	
 	//  button size and columns positon
@@ -317,7 +320,7 @@ void CGui::notifyInputActionBound(bool complete)
 
 		// If a key was assigned that used to belong to another control, it will now be unassigned,
 		// so we need to force-update button labels
-		TabControl* inputTab = app->mGui->findWidget<TabControl>("InputTab");  if (!inputTab)  return;
+		TabControl* inputTab = mGui->findWidget<TabControl>("InputTab");  if (!inputTab)  return;
 		TabItem* current = inputTab->getItemSelected();
 		for (int i=0; i < current->getChildCount(); ++i)
 		{
@@ -368,7 +371,7 @@ void CGui::inputDetailBtn(WP sender)
 	if (panInputDetail)
 		panInputDetail->setVisible(false);
 
-	Button* btnInputInv = app->mGui->findWidget<Button>("InputInv");
+	Button* btnInputInv = mGui->findWidget<Button>("InputInv");
 	if (btnInputInv)
 		btnInputInv->setStateSelected( mBindingAction->mControl->getInverted());
 	if (edInputIncrease)
@@ -445,7 +448,7 @@ void CGui::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 //-------------------------------------------------------------------------------
 void CGui::UpdateInputBars()
 {
-	TabControl* inputTab = app->mGui->findWidget<TabControl>("InputTab");  if (!inputTab)  return;
+	TabControl* inputTab = mGui->findWidget<TabControl>("InputTab");  if (!inputTab)  return;
 	TabItem* current = inputTab->getItemSelected();
 	for (int i=0; i<current->getChildCount(); ++i)
 	{
