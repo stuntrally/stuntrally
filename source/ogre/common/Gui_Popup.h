@@ -1,5 +1,7 @@
 #pragma once
 
+#include <OgrePlatform.h>
+
 #include <MyGUI_Delegate.h>
 #include <MyGUI_UString.h>
 
