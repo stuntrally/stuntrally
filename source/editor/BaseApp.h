@@ -24,7 +24,6 @@ enum WND_Types
 class BaseApp : public BGui,
 		public Ogre::FrameListener,
 		public SFO::KeyListener, public SFO::MouseListener, public SFO::WindowListener
-		//public Ogre::RenderTargetListener
 {
 public:
 	BaseApp();	virtual ~BaseApp();
@@ -52,10 +51,10 @@ protected:
 	
 	///  create
 	virtual void createScene() = 0;
-	virtual void destroyScene();
+	virtual void destroyScene() = 0;
 
 	void createCamera(), createFrameListener();
-	void setupResources(), createResourceListener(), loadResources();
+	void setupResources(), loadResources();
 
 	///  frame events
 	virtual bool frameStarted(const Ogre::FrameEvent& evt);
@@ -64,11 +63,11 @@ protected:
 	
 	///  input events
 	/*virtual*/
-    bool keyPressed(const SDL_KeyboardEvent &arg) = 0;
+    bool keyPressed( const SDL_KeyboardEvent &arg) = 0;
     bool keyReleased(const SDL_KeyboardEvent &arg);
     bool mouseMoved( const SFO::MouseMotionEvent &arg );
     bool mousePressed( const SDL_MouseButtonEvent &arg, Uint8 id );
-    bool mouseReleased( const SDL_MouseButtonEvent &arg, Uint8 id );
+    bool mouseReleased(const SDL_MouseButtonEvent &arg, Uint8 id );
 	void textInput(const SDL_TextInputEvent &arg);
 
 	void onCursorChange(const std::string& name);
@@ -95,11 +94,12 @@ protected:
 
 	bool alt, ctrl, shift;  // key modifiers
 	bool mbLeft, mbRight, mbMiddle;  // mouse buttons
+
 	Ogre::String  mDebugText;	// info texts
-	bool mbWireFrame;
+	bool mbWireFrame;  void UpdWireframe();
 
 	///  camera upd
-	bool bMoveCam;	int mx,my,mz;  double mDTime;
+	bool bMoveCam;  int mx,my,mz;  double mDTime;
 	Ogre::Real mRotX, mRotY,  mRotKX, mRotKY,  moveMul, rotMul;
 	Ogre::Vector3 mTrans;
 

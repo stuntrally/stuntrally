@@ -51,7 +51,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				mWindow->writeContentsToTimestampedFile(PATHMANAGER::Screenshots() + "/", ".jpg");
 				return true;
 		}
-		return true;  //!
+		return true;
 	}
 
 	//  main menu keys
@@ -126,7 +126,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				gui->toggleGui(true);
 			return true;
 
-		case key(F12): //  screenshot
+		case key(F12):  //  screenshot
 			mWindow->writeContentsToTimestampedFile(PATHMANAGER::Screenshots() + "/", ".jpg");
 			return true;
 
@@ -136,9 +136,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(F8):  UpdateTrack();  return true;
 
 		case key(F9):  // blendmap
-			if (alt)
-			{	BGui::WP wp = gui->chAutoBlendmap;  ChkEv(autoBlendmap);  }
+			if (alt)  gui->ckAutoBlendmap.Invert();
 			else	bTerUpdBlend = true;  return true;
+
 
 		//  prev num tab (layers,grasses,models)
 		case key(1):
@@ -189,17 +189,14 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				gui->btnNewGame(0);
    			break;
 
-		//  Wire Frame  F11
-		case key(F11):
-		{	mbWireFrame = !mbWireFrame;
-			mCamera->setPolygonMode(mbWireFrame ? PM_WIREFRAME : PM_SOLID);
-			if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
+
+		//  WireFrame  F11
+		case key(F11):  gui->ckWireframe.Invert();
 			return true;
-		}	break;
 
 		//  Show Stats  ctrl-I
 		case key(I):
-   			if (ctrl)  {  gui->chkInputBar(gui->chInputBar);  return true;  }
+   			if (ctrl) {  gui->ckInputBar.Invert();  return true;  }
 			break;
 
 		//  Top view  alt-Z
@@ -527,14 +524,10 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			bMoveCam = !bMoveCam;  UpdVisGui();  UpdFluidBox();  UpdObjPick();
 		}	break;
 
-		//  fog
-		case key(G):  {
-			pSet->bFog = !pSet->bFog;  gui->chkFog->setStateSelected(pSet->bFog);  UpdFog();  }  break;
-		//  trees
+		//  toggle fog, veget, weather
+		case key(G):  gui->ckFog.Invert();  break;
 		case key(V):  bTrGrUpd = true;  break;
-		//  weather
-		case key(I):  {
-			pSet->bWeather = !pSet->bWeather;  gui->chkWeather->setStateSelected(pSet->bWeather);  }  break;
+		case key(I):  gui->ckWeather.Invert();  break;
 
 		//  terrain
 		case key(D):  if (bEdit()){  SetEdMode(ED_Deform);  curBr = 0;  updBrush();  UpdEditWnds();  }	break;

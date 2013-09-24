@@ -11,7 +11,7 @@
 #include <MyGUI_Prerequest.h>
 #if MYGUI_VERSION_MINOR >= 2
 
-#include <MyGUI.h>
+#include <MyGUI.h>  // !!
 #include "WrapsAttribute.h"
 
 namespace wraps

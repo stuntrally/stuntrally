@@ -10,7 +10,7 @@
 #include "CGui.h"
 #include "../road/Road.h"
 #include "common/MultiList2.h"
-
+#include <OgreTextureManager.h>
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;

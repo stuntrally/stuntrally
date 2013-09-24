@@ -3,6 +3,14 @@
 //#include "../Def_Str.h"
 #include <stdio.h>
 
+#include <MyGUI_Gui.h>
+#include <MyGUI_OgrePlatform.h>
+#include "MyGUI_D3D11.h"
+#include <MyGUI_Window.h>
+#include <MyGUI_TextBox.h>
+#include <MyGUI_EditBox.h>
+#include <MyGUI_Button.h>
+#include <MyGUI_InputManager.h>
 using namespace MyGUI;
 
 

@@ -1,9 +1,7 @@
 #pragma once
 #include "BaseApp.h"
 #include "common/Gui_Def.h"
-//#include "common/Slider.h"
 #include "common/SliderValue.h"
-#include "common/Gui_Popup.h" //-
 
 #include <MyGUI_Enumerator.h>
 #include "common/MessageBox/MessageBoxStyle.h"
@@ -16,15 +14,16 @@
 #include "CInput.h"
 
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;  }
-namespace MyGUI  {  class MultiList2;  class Slider;  class Message;  }
-class Scene;  class SplineRoad;  class GAME;  class CHud;  class CData;  class CGuiCom;
+namespace MyGUI{  class MultiList2;  class Slider;  class Message;  }
+class Scene;  class SplineRoad;  class GAME;  class CHud;  class CData;
+class CGuiCom;  class CarInfo;  class GuiPopup;
 
 
 //  tracks,cars list items - with info for sorting
 struct CarL
 {
 	std::string name;
-	const class CarInfo* ci;
+	const CarInfo* ci;
 };
 
 
@@ -37,6 +36,7 @@ public:
 	CHud* hud;  MyGUI::Gui* mGui;  CGuiCom* gcom;
 	
 	CGui(App* ap1);
+	//friend class CarModel;
 	
 	typedef std::list <std::string> strlist;
 
@@ -53,7 +53,7 @@ public:
 
 	//  car list
 	void CarListUpd(bool resetNotFound=false);
-	void AddCarL(std::string name, const class CarInfo* ci);
+	void AddCarL(std::string name, const CarInfo* ci);
 	std::list<CarL> liCar;  void FillCarList();
 	
 	const static int colCar[16],colCh[16],colChL[16],colSt[16];
@@ -87,7 +87,6 @@ public:
 	ProgressXml progress[2];
 	ProgressLXml progressL[2];
 	void ProgressSave(bool upgGui=true), ProgressLSave(bool upgGui=true);
-	friend class CarModel;
 	Chall* pChall;  // current challenge or 0 if not
 
 	//  load
@@ -227,7 +226,7 @@ public:
 	void slHudSize(SV*), slHudCreate(SV*);
 
 	SlV(SizeArrow);
-	SLV(CountdownTime);//-
+	SLV(CountdownTime);  //-
 	SV svDbgTxtClr, svDbgTxtCnt;
 
 	//  sound
@@ -251,7 +250,7 @@ public:
 
 	//  setup
 	SV svNumLaps;  SLV(RplNumViewports);
-	SLV(SSSEffect);  SLV(SSSVelFactor);
+	SLV(SSSEffect);  SLV(SSSVelFactor);  //-
 	SLV(SteerRangeSurf);  SLV(SteerRangeSim);
 	
 	///  Checks  . . . . . . . . . . . . . . . . . . . .
@@ -346,10 +345,9 @@ public:
 	void btnRplFwdDn(WP,int,int, MyGUI::MouseButton), btnRplFwdUp(WP,int,int, MyGUI::MouseButton);
 	void msgRplDelete(MyGUI::Message*, MyGUI::MessageBoxStyle);
 	
+
+	//  Game
 	///---------------------------------------
-
-
-	//  game
 	void btnNewGame(WP), btnNewGameStart(WP);
 
 	//  split
@@ -387,7 +385,7 @@ public:
 	void comboBoost(CMB), comboFlip(CMB), comboDamage(CMB), comboRewind(CMB);
 
 
-	//  multiplayer
+	//  multiplayer game
 	//------------------------------------------------------------------------------
 	void rebuildGameList(), rebuildPlayerList();
 	void updateGameInfo(), updateGameSet(), updateGameInfoGUI();
@@ -407,20 +405,21 @@ public:
 
 	mutable boost::mutex netGuiMutex;
 	protocol::GameInfo netGameInfo;
-	//  chat,msg
-	MyGUI::UString sChatBuffer,sChatLast1,sChatLast2;  int iChatMove;
-	void AddChatMsg(const MyGUI::UString& clr, const MyGUI::UString& msg, bool add=true);
 
 	bool bRebuildPlayerList, bRebuildGameList;
 	bool bUpdateGameInfo, bStartGame, bStartedGame, bUpdChat;
-	GuiPopup popup;
 
 	///  multiplayer gui  --------------------
 	Tab tabsNet;  //void tabNet(TabPtr tab, size_t id);
-	WP panelNetServer, panelNetGame, panelNetTrack;
+	WP  panelNetServer, panelNetGame, panelNetTrack;
 	Mli listServers, listPlayers;
-	Ed edNetChat;  // chat area, set text through sChatBuffer
 	int iColLock, iColHost, iColPort;  // ids of columns in listServers, set in gui init
+
+	//  chat,msg
+	Ed edNetChat;  // chat area, set text through sChatBuffer
+	MyGUI::UString sChatBuffer,sChatLast1,sChatLast2;  int iChatMove;
+	void AddChatMsg(const MyGUI::UString& clr, const MyGUI::UString& msg, bool add=true);
+	GuiPopup* popup;  // msg with edits
 
 	Btn btnNetRefresh, btnNetJoin, btnNetCreate, btnNetDirect;
 	Btn btnNetReady, btnNetLeave;

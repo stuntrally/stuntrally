@@ -151,10 +151,6 @@ void BaseApp::createFrameListener()
 	mRoot->addFrameListener(this);
 }
 
-void BaseApp::destroyScene()
-{
-}
-
 //  Run
 //-------------------------------------------------------------------------------------
 void BaseApp::Run( bool showDialog )
@@ -328,7 +324,6 @@ bool BaseApp::setup()
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
 	mSceneMgr->setFog(Ogre::FOG_NONE);
 
-	createResourceListener();
 	loadResources();
 
 	baseInitGui();
@@ -372,9 +367,6 @@ void BaseApp::setupResources()
 	}
 }
 
-void BaseApp::createResourceListener()
-{
-}
 void BaseApp::loadResources()
 {
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();

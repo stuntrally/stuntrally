@@ -114,41 +114,42 @@ void CGui::InitGui()
 	app->UpdEditWnds();  // UpdVisHit(); //after track
 	
 
+	#if 0  ///0 _tool_ fix video capture cursor
+	imgCur = mGui->createWidget<ImageBox>("ImageBox", 100,100, 32,32, Align::Default, "Pointer");
+	imgCur->setImageTexture("pointer.png");
+	imgCur->setVisible(true);
+	#endif
+
+
 	//  tool window texts  ----------------------
 	int i;
-	for (i=0; i<12; ++i)
+	for (i=0; i<MAX_TXT; ++i)
 	{	String s = toStr(i);
-		if (i<BR_TXT)
-		{	brTxt[i] = fTxt("brTxt"+s);
-			brVal[i] = fTxt("brVal"+s);
-			brKey[i] = fTxt("brKey"+s);  }
-		if (i<RD_TXT)
-		{	rdTxt[i] = fTxt("rdTxt"+s);
-			rdVal[i] = fTxt("rdVal"+s);
-			rdKey[i] = fTxt("rdKey"+s);  }
-		if (i<RDS_TXT)
-		{	rdTxtSt[i] = fTxt("rdTxtSt"+s);
-			rdValSt[i] = fTxt("rdValSt"+s);  }
-		if (i<ST_TXT)	stTxt[i] = fTxt("stTxt"+s);
-		if (i<FL_TXT)	flTxt[i] = fTxt("flTxt"+s);
-		if (i<OBJ_TXT)	objTxt[i]= fTxt("objTxt"+s);
-		if (i<RI_TXT)	riTxt[i] = fTxt("riTxt"+s);
+		if (i<BR_TXT){  brTxt[i] = fTxt("brTxt"+s);  brVal[i] = fTxt("brVal"+s);  brKey[i] = fTxt("brKey"+s);  }
+		if (i<RD_TXT){  rdTxt[i] = fTxt("rdTxt"+s);  rdVal[i] = fTxt("rdVal"+s);  rdKey[i] = fTxt("rdKey"+s);  }
+		if (i<RDS_TXT){ rdTxtSt[i] = fTxt("rdTxtSt"+s);  rdValSt[i] = fTxt("rdValSt"+s);  }
+		if (i<ST_TXT)   stTxt[i] = fTxt("stTxt"+s);    if (i<FL_TXT)  flTxt[i] = fTxt("flTxt"+s);
+		if (i<OBJ_TXT)  objTxt[i]= fTxt("objTxt"+s);   if (i<RI_TXT)  riTxt[i] = fTxt("riTxt"+s);
 	}
 
 
 	///  [Settings]
 	//------------------------------------------------------------------------
-	Chk("Minimap", chkMinimap, pSet->trackmap);
-	sv= &svSizeMinmap;	sv->Init("SizeMinmap",	&pSet->size_minimap, 0.15f,2.f);  sv->DefaultF(0.55f);  Sev(SizeMinmap);
 	sv= &svCamSpeed;	sv->Init("CamSpeed",	&pSet->cam_speed, 0.1f,4.f);  sv->DefaultF(0.9f);
 	sv= &svCamInert;	sv->Init("CamInert",	&pSet->cam_inert, 0.f, 1.f);  sv->DefaultF(0.4f);
+
+	ck= &ckMinimap;		ck->Init("Minimap",		&pSet->trackmap);  Cev(Minimap);
+	sv= &svSizeMinimap;	sv->Init("SizeMinimap",	&pSet->size_minimap, 0.15f,2.f);  sv->DefaultF(0.55f);  Sev(SizeMinimap);
+
 	sv= &svSizeRoadP;	sv->Init("SizeRoadP",	&pSet->road_sphr, 0.1f,12.f); sv->DefaultF(1.5f);  Sev(SizeRoadP);
+
 	sv= &svTerUpd;		sv->Init("TerUpd",		&pSet->ter_skip,  0, 20);  sv->DefaultI(1);
 	sv= &svMiniUpd;		sv->Init("MiniUpd",		&pSet->mini_skip, 0, 20);  sv->DefaultI(4);
-	
-	Chk("AutoBlendmap", chkAutoBlendmap, pSet->autoBlendmap);  chAutoBlendmap = bchk;
-	Chk("CamPos", chkCamPos, pSet->camPos);
-	Chk("InputBar", chkInputBar, pSet->inputBar);  chInputBar = bchk;
+	ck= &ckAutoBlendmap;ck->Init("AutoBlendmap",&pSet->autoBlendmap);
+
+	ck= &ckWireframe;	ck->Init("Wireframe",	&app->mbWireFrame);  Cev(Wireframe);
+	ck= &ckCamPos;		ck->Init("CamPos",		&pSet->camPos);    Cev(CamPos);
+	ck= &ckInputBar;	ck->Init("InputBar",	&pSet->inputBar);  Cev(InputBar);
 
 	//  set camera btns
 	Btn("CamView1", btnSetCam);  Btn("CamView2", btnSetCam);
@@ -178,8 +179,8 @@ void CGui::InitGui()
 	sv= &svFogHeight;	sv->Init("FogHeight",	&sc->fogHeight, -200.f,200.f, 1.f, 1,4);  sv->DefaultF(-300.f);  Sev(UpdFog);  //edit..
 	sv= &svFogHDensity;	sv->Init("FogHDensity",	&sc->fogHDensity,  0.f,200.f, 2.f, 1,4);  sv->DefaultF(60.f);  Sev(UpdFog);
 
-	Chk("FogDisable", chkFogDisable, pSet->bFog);  chkFog = bchk;
-	Chk("WeatherDisable", chkWeatherDisable, pSet->bWeather);  chkWeather = bchk;
+	ck= &ckFog;			ck->Init("FogDisable",		&pSet->bFog);  Cev(Fog);
+	ck= &ckWeather;		ck->Init("WeatherDisable",	&pSet->bWeather);
 
 	//  light
 	Ed(LiAmb, editLiAmb);  Ed(LiDiff, editLiDiff);  Ed(LiSpec, editLiSpec);
@@ -237,13 +238,6 @@ void CGui::InitGui()
 	}
 	//scv->setCanvasSize(1020,j*90+300);
 
-
-	#if 0  ///0 _tool_ fix video capture cursor
-	imgCur = mGui->createWidget<ImageBox>("ImageBox", 100,100, 32,32, Align::Default, "Pointer");
-	imgCur->setImageTexture("pointer.png");
-	imgCur->setVisible(true);
-	#endif
-	
 
 	///  generator  . . . . . . .
 	sv= &svTerGenScale;	sv->Init("TerGenScale",	&pSet->gen_scale, 0.f,160.f, 2.f, 2,4);  sv->DefaultF(52.f);
@@ -554,8 +548,8 @@ void CGui::InitGui()
 
 	///  [Track]
 	//------------------------------------------------------------------------
-	sListTrack = pSet->gui.track;  //! set last
-	bListTrackU = pSet->gui.track_user;
+	gcom->sListTrack = pSet->gui.track;  //! set last
+	gcom->bListTrackU = pSet->gui.track_user;
 	sCopyTrack = "";  //! none
 	bCopyTrackU = 0;
 	

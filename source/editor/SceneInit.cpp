@@ -143,6 +143,7 @@ void App::UpdTrees()
 		CreateTrees();
 }
 
+//  destroy
 void App::NewCommon(bool onlyTerVeget)
 {
 	//  destroy all
@@ -181,6 +182,8 @@ void App::NewCommon(bool onlyTerVeget)
 	sh::Factory::getInstance().unloadUnreferencedMaterials();
 	TextureManager::getSingleton().unloadUnreferencedResources();
 }
+
+//  create
 //---------------------------------------------------------------------------------------------------------------
 void App::LoadTrack()
 {
@@ -229,7 +232,6 @@ void App::LoadTrackEv()
 		
 		CreateVdrTrack(pSet->gui.track, track);
 		CreateVdrTrackBlt();
-		//CreateRoadBezier();
 	}
 
 

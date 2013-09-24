@@ -95,6 +95,8 @@ App::~App()
 	gui->viewBox->destroy();
 	delete gui->viewBox;
 
+	//delete mFactory;  //!
+
 	BltWorldDestroy();
 	
 	delete track;  //!
@@ -102,14 +104,14 @@ App::~App()
 
 	delete[] mBrushData;
 	delete road;
+
 	if (mTerrainPaging)
-	{
-		OGRE_DELETE mTerrainPaging;
+	{	OGRE_DELETE mTerrainPaging;
 		OGRE_DELETE mPageManager;
 	}else
 		OGRE_DELETE mTerrainGroup;
-
 	OGRE_DELETE mTerrainGlobals;
+
 	delete sc;
 	delete mWaterRTT;
 
@@ -134,8 +136,6 @@ void App::destroyScene()
 
 	delete[] sc->td.hfHeight;
 	delete[] sc->td.hfAngle;
-
-	BaseApp::destroyScene();
 }
 	
 

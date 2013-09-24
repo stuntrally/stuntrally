@@ -13,6 +13,13 @@
 //#include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 #include <boost/filesystem.hpp>
+#include <MyGUI_Gui.h>
+#include <MyGUI_TabControl.h>
+#include <MyGUI_TabItem.h>
+#include <MyGUI_EditBox.h>
+#include <MyGUI_Window.h>
+#include <MyGUI_ImageBox.h>
+#include <MyGUI_MultiListBox.h>
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;

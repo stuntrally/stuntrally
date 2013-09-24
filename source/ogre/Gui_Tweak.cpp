@@ -8,7 +8,13 @@
 #include "CGui.h"
 #include "CGame.h"
 #include "CarModel.h"
-
+#include <MyGUI_Window.h>
+#include <MyGUI_InputManager.h>
+#include <MyGUI_TabControl.h>
+#include <MyGUI_TabItem.h>
+#include <MyGUI_EditBox.h>
+#include <MyGUI_TextBox.h>
+#include <MyGUI_ComboBox.h>
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;

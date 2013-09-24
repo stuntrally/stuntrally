@@ -1,9 +1,8 @@
 #pragma once
+#include "common/Gui_Def.h"
 #include <OgreFrameListener.h>
 #include <OgreWindowEventUtilities.h>
 #include <OgreMaterialManager.h>
-
-#include "common/Gui_Def.h"
 #include <boost/scoped_ptr.hpp>
 #include "../sdl4ogre/events.h"
 namespace SFO {  class InputWrapper;  class SDLCursorManager;  }

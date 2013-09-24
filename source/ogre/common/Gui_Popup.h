@@ -1,7 +1,11 @@
 #pragma once
-#include <MyGUI.h>
-#include <MyGUI_OgrePlatform.h>
-#include "MyGUI_D3D11.h"
+
+#include <MyGUI_Delegate.h>
+#include <MyGUI_UString.h>
+
+namespace MyGUI {  class OgreD3D11Platform;  class OgrePlatform;
+	class Widget;  class Window;  class Gui;  }
+
 
 typedef MyGUI::delegates::CMultiDelegate0 PopupDelegates;
 typedef MyGUI::delegates::CMultiDelegate0::IDelegate PopupDelegate;
@@ -47,7 +51,7 @@ public:
 	#endif
 	
 protected:
-	void ButtonClick(MyGUI::WidgetPtr);
-	MyGUI::WindowPtr mWnd;
+	void ButtonClick(MyGUI::Widget*);
+	MyGUI::Window* mWnd;
 	PopupDelegates mDelegates;
 };

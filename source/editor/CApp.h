@@ -20,7 +20,6 @@ const int ciAngSnapsNum = 7;
 const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,5,15,30,45,90,180};
 
 namespace Forests {  class PagedGeometry;  }
-namespace MyGUI  {  class MultiList2;  class Slider;  }
 namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;
 	class Light;  class Rectangle2D;  class SceneNode;  class RenderTexture;  }
 namespace sh {  class Factory;  }
@@ -33,23 +32,41 @@ public:
 	App(class SETTINGS* pSet1);
 	virtual ~App();
 
+
 	Scene* sc;  /// scene.xml
 
 	CData* data;  // xmls
 
-	std::vector <TRACKSURFACE> surfaces;  /// New  all surfaces
-	std::map <std::string, int> surf_map;  // name to surface id
-	bool LoadAllSurfaces();
+	//  materials
+	sh::Factory* mFactory;
+	//  to be executed after BaseApp init
+	void postInit(), SetFactoryDefaults();
 
-	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
+	WaterRTT* mWaterRTT;
 
-	void UpdWndTitle(), SaveCam();
+	///  Gui
+	CGui* gui;
+	CGuiCom* gcom;
+
+
+	Ogre::Light* sun;
+	void UpdFog(bool bForce=false), UpdSun();
+
+	//  Weather  rain, snow
+	Ogre::ParticleSystem *pr,*pr2;
+	void CreateWeather(),DestroyWeather();
+	float mTimer;
+
+	//  trees
+	class Forests::PagedGeometry *trees, *grass;
+
+	
+	///  main
 	void LoadTrack(), SaveTrack(), UpdateTrack();
 	
-	// stuff to be executed after BaseApp init
-	void postInit(), SetFactoryDefaults();
 	void SetEdMode(ED_MODE newMode);
 	void UpdVisGui(), UpdEditWnds();
+	void UpdWndTitle(), SaveCam();
 
 
 	bool keyPressed(const SDL_KeyboardEvent &arg);
@@ -67,28 +84,29 @@ public:
 	void processMouse(double dt);
 	Ogre::Vector3 vNew;	void editMouse();
 	
+
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	bool bNewHmap, bTrGrUpd;
 	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget), UpdTrees();
-	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
-	void CreateTrees(),  CreateObjects(), DestroyObjects(bool clear), UpdObjPick(), PickObject(), ToggleObjSim();
+
+	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(),
+		GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
+	void CreateTrees();
+
+	void CreateObjects(), DestroyObjects(bool clear);
+	void UpdObjPick(), PickObject(), ToggleObjSim();
+
 	void CreateFluids(), DestroyFluids(), CreateBltFluids();
 	void UpdFluidBox(), UpdateWaterRTT(Ogre::Camera* cam), UpdMtrWaterDepth();
-	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 
-	//  vdrift
-	bool IsVdrTrack();
-	void CreateVdrTrack(std::string strack, class TRACK* pTrack), CreateVdrTrackBlt(), DestroyVdrTrackBlt(),
-		CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
-	static Ogre::ManualObject* CreateModel(Ogre::SceneManager* sceneMgr, const Ogre::String& mat,
-		class VERTEXARRAY* a, Ogre::Vector3 vPofs, bool flip, bool track=false, const Ogre::String& name="");
+	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 
 
 	///  rnd to tex  minimap  * * * * * * * * *
-	Ogre::SceneNode *ndPos;  Ogre::ManualObject* mpos;
+	Ogre::SceneNode *ndPos;
+	Ogre::ManualObject* mpos;
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::Real s, bool dyn=false);
 	Ogre::Real asp, xm1,ym1,xm2,ym2;
-	void Rnd2TexSetup(), UpdMiniVis();
 
 	const static int RTs = 4, RTsAdd = 2;
 	struct SRndTrg
@@ -98,32 +116,30 @@ public:
 		SRndTrg() : rndCam(0),rndTex(0),rcMini(0),ndMini(0) {  }
 	};
 	SRndTrg rt[RTs+RTsAdd];
+
+	void Rnd2TexSetup(), UpdMiniVis();
 	virtual void preRenderTargetUpdate(const Ogre::RenderTargetEvent &evt);
 	virtual void postRenderTargetUpdate(const Ogre::RenderTargetEvent &evt);
 	
 
-	///  fluids to destroy
+	//  fluids to destroy
 	std::vector<Ogre::String/*MeshPtr*/> vFlSMesh;
 	std::vector<Ogre::Entity*> vFlEnt;
 	std::vector<Ogre::SceneNode*> vFlNd;
 	int iFlCur;  bool bRecreateFluids;
 
-	// vdrift static
-	Ogre::StaticGeometry* mStaticGeom;
-
-	// materials
-	sh::Factory* mFactory;
-	
 	
 	///  terrain
 	Ogre::Terrain* terrain;
 	Ogre::TerrainGlobalOptions* mTerrainGlobals;
 	Ogre::TerrainGroup* mTerrainGroup;  bool mPaging;
-	Ogre::TerrainPaging* mTerrainPaging;  Ogre::PageManager* mPageManager;
+	Ogre::TerrainPaging* mTerrainPaging;
+	Ogre::PageManager* mPageManager;
+	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
 
 	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
 	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
-	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
+
 	float Noise(float x, float zoom, int octaves, float persistence);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
 	//     xa  xb
@@ -139,19 +155,23 @@ public:
 		return 0.f;
 	}
 		
+	//  shadows
 	void changeShadows(), UpdPSSMMaterials();
 	Ogre::Vector4 splitPoints;
 	Ogre::ShadowCameraSetupPtr mPSSMSetup;
 
-	WaterRTT* mWaterRTT;
 
-	//  ter circle mesh
-	Ogre::ManualObject* moTerC;  Ogre::SceneNode* ndTerC;
+	//  terrain cursor, circle mesh
+	Ogre::ManualObject* moTerC;
+	Ogre::SceneNode* ndTerC;
 	void TerCircleInit(), TerCircleUpd();
 
 	//  brush preview tex
-	void createBrushPrv(),updateBrushPrv(bool first=false),updateTerPrv(bool first=false);
-	Ogre::TexturePtr brushPrvTex, terPrvTex;  bool bUpdTerPrv;
+	void createBrushPrv();
+	void updateBrushPrv(bool first=false), updateTerPrv(bool first=false);
+
+	bool bUpdTerPrv;
+	Ogre::TexturePtr brushPrvTex, terPrvTex;
 	const static int BrPrvSize = 128, TerPrvSize = 256;
 
 
@@ -168,20 +188,27 @@ public:
 		float Filter,HSet;
 		char newLine;  Ogre::String name;
 	};
+
 	const static int brSetsNum = 87;
 	const static BrushSet brSets[brSetsNum];
 	const static float brClr[4][3];
 
 	void SetBrushPreset(int id);
-	int curBr;
 	void updBrush();
+
+
+	//  brush vars
+	int curBr;
 	bool bTerUpd,bTerUpdBlend;  char sBrushTest[512];
 	float* pBrFmask, *mBrushData;
 
+	//  params
 	float terSetH, mBrFilt,mBrFiltOld;
-	float mBrSize[ED_ALL],mBrIntens[ED_ALL],  mBrPow[ED_ALL],  //params
-		mBrFq[ED_ALL],mBrNOf[ED_ALL];  int mBrOct[ED_ALL];
+	float mBrSize[ED_ALL],mBrIntens[ED_ALL], mBrPow[ED_ALL];
+	float mBrFq[ED_ALL],mBrNOf[ED_ALL];  int mBrOct[ED_ALL];
 
+
+	//  brush deform
 	bool getEditRect(Ogre::Vector3& pos, Ogre::Rect& brushrect, Ogre::Rect& maprect, int size, int& cx, int& cy);
 
 	void deform(Ogre::Vector3 &pos, float dtime, float brMul);
@@ -193,34 +220,22 @@ public:
 
 	void filter(Ogre::Vector3 &pos, float dtime, float brMul);
 
-	//void splat(Ogre::Vector3 &pos, float dtime);
-	//void paint(Ogre::Vector3 &pos, float dtime);
-	//void splatGrass(Ogre::Vector3 &pos, float dtime);
-	//bool update(float dtime);
 
-
-	///  bullet world
+	///  bullet world, simulate
 	class btDiscreteDynamicsWorld* world;
 	class btDefaultCollisionConfiguration* config;
 	class btCollisionDispatcher* dispatcher;
 	class bt32BitAxisSweep3* broadphase;
 	class btSequentialImpulseConstraintSolver* solver;
 
-	class btCollisionObject* trackObject;  // vdrift track col
-	class btTriangleIndexVertexArray* trackMesh;
 	void BltWorldInit(), BltWorldDestroy(), BltClear(), BltUpdate(float dt);
 
 
-	// Weather  rain, snow
-	Ogre::ParticleSystem *pr,*pr2;  void CreateWeather(),DestroyWeather();
-	float mTimer;
-
-	//  trees
-	class Forests::PagedGeometry *trees, *grass;
-
-	//  road  -in base
-	void SaveGrassDens(), SaveWaterDepth(), AlignTerToRoad();
+	//  tools, road  -in base
+	void SaveGrassDens(), SaveWaterDepth();
+	void AlignTerToRoad();
 	int iSnap;  Ogre::Real angSnap;
+
 
 	//  car start
 	bool LoadStartPos(std::string path, bool tool=false), SaveStartPos(std::string path);  void UpdStartPos();
@@ -231,13 +246,23 @@ public:
 	void togPrvCam();
 
 
-	//  vdr trk
+	//  vdrift track
 	TRACK* track;
+	Ogre::StaticGeometry* mStaticGeom;
+
+	class btCollisionObject* trackObject;
+	class btTriangleIndexVertexArray* trackMesh;
+
+	bool IsVdrTrack();
 	bool LoadTrackVdr(const std::string & trackname);
+	void CreateVdrTrack(std::string strack, class TRACK* pTrack),
+		CreateVdrTrackBlt(), DestroyVdrTrackBlt();
+	static Ogre::ManualObject* CreateModel(Ogre::SceneManager* sceneMgr, const Ogre::String& mat,
+		class VERTEXARRAY* a, Ogre::Vector3 vPofs, bool flip, bool track=false, const Ogre::String& name="");
 
-
-	///  Gui
-	CGui* gui;
-	CGuiCom* gcom;
+	//  surfaces
+	std::vector <TRACKSURFACE> surfaces;  // all
+	std::map <std::string, int> surf_map;  // name to surface id
+	bool LoadAllSurfaces();
 	
 };

@@ -8,6 +8,7 @@
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 #include "common/MultiList2.h"
+#include "common/Gui_Popup.h"
 #include "common/MessageBox/MessageBox.h"
 #include <boost/algorithm/string.hpp>
 using namespace std;
@@ -380,7 +381,7 @@ void CGui::evBtnNetJoin(WP)
 		
 		join(host, port, "");
 	}else
-		popup.Show(newDelegate(this, &CGui::evBtnNetJoinLockedClose),
+		popup->Show(newDelegate(this, &CGui::evBtnNetJoinLockedClose),
 			TR("#{NetJoinLocked}"), true,
 			TR("#{NetPassword}"), "", "", "",
 			"", "", "","",
@@ -389,14 +390,14 @@ void CGui::evBtnNetJoin(WP)
 
 void CGui::evBtnNetJoinLockedClose()
 {
-	popup.Hide();
-	if (popup.btnResult != 0 || !listServers || !pSet)  return;
+	popup->Hide();
+	if (popup->btnResult != 0 || !listServers || !pSet)  return;
 	size_t i = listServers->getIndexSelected();  if (i == ITEM_NONE)  return;
 
 	string host = listServers->getSubItemNameAt(iColHost, i).substr(7);
 	string port = listServers->getSubItemNameAt(iColPort, i).substr(7);
 
-	join(host, port, popup.edit0);  // host, port, password
+	join(host, port, popup->edit0);  // host, port, password
 }
 
 void CGui::evBtnNetCreate(WP)
@@ -448,7 +449,7 @@ void CGui::evBtnNetLeave(WP)
 
 void CGui::evBtnNetDirect(WP)
 {
-	popup.Show(newDelegate(this, &CGui::evBtnNetDirectClose),
+	popup->Show(newDelegate(this, &CGui::evBtnNetDirectClose),
 		TR("#{NetDirectConnect}"), true,
 		TR("#{NetAddress}"), TR("#{NetPort}"), TR("#{NetPassword}"), "",
 		"localhost", toStr(protocol::DEFAULT_PORT), "","",
@@ -457,10 +458,10 @@ void CGui::evBtnNetDirect(WP)
 
 void CGui::evBtnNetDirectClose()
 {
-	popup.Hide();
-	if (popup.btnResult != 0)  return;
+	popup->Hide();
+	if (popup->btnResult != 0)  return;
 
-	join(popup.edit0, popup.edit1, popup.edit2);  // host, port, password
+	join(popup->edit0, popup->edit1, popup->edit2);  // host, port, password
 }
 
 void CGui::evBtnNetReady(WP)

@@ -5,6 +5,9 @@
 #include "CarModel.h"
 #include "common/data/SceneXml.h"
 #include "../vdrift/game.h"
+#include <MyGUI_EditBox.h>
+#include <MyGUI_Window.h>
+#include <MyGUI_TabControl.h>
 using namespace Ogre;
 
 

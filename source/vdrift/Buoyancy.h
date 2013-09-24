@@ -17,11 +17,10 @@ appreciated but is not required.
 misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 */
-
-#ifndef BUOYANCY_H
-#define BUOYANCY_H
+#pragma once
 
 #include "BuoyMath.h"
+
 
 struct Face
 {
@@ -63,5 +62,3 @@ float ComputeVolume(Polyhedron& poly);
 // Compute the buoyancy and drag forces.
 bool ComputeBuoyancy(RigidBody& body, Polyhedron& poly,
 					 WaterVolume& water, float gravity);
-
-#endif

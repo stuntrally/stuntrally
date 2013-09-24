@@ -51,7 +51,7 @@ public:
 
 	//  ed
 	void Status(Ogre::String s, float r,float g,float b);
-	void SetGuiFromXmls();
+	void SetGuiFromXmls();  // update gui controls
 	bool noBlendUpd;
 
 	//  clr
@@ -63,13 +63,13 @@ public:
 
 
 	//  tool windows texts
-	const static int
+	const static int MAX_TXT=11,
 		BR_TXT=9, RD_TXT=11, RDS_TXT=9,  //  brush, road, road stats
 		ST_TXT=6, FL_TXT=6, OBJ_TXT=6, RI_TXT=6;  //  start, fluids, objects,
 
-	Txt	brTxt[BR_TXT],brVal[BR_TXT],brKey[BR_TXT],
-		rdTxt[RD_TXT],rdVal[RD_TXT],rdKey[RD_TXT],
-		rdTxtSt[RDS_TXT],rdValSt[RDS_TXT],
+	Txt	brTxt[BR_TXT], brVal[BR_TXT], brKey[BR_TXT],
+		rdTxt[RD_TXT], rdVal[RD_TXT], rdKey[RD_TXT],
+		rdTxtSt[RDS_TXT], rdValSt[RDS_TXT],
 		stTxt[ST_TXT], flTxt[FL_TXT], objTxt[OBJ_TXT], riTxt[RI_TXT];
 	WP objPan;
 	Img brImg;  Tab wndTabs;
@@ -79,15 +79,16 @@ public:
 	Ck ckAutoStart, ckEscQuits;  // startup
 	Ck ckStartInMain, ckOgreDialog;
 
-	SlV(SizeMinmap);  SlV(SizeRoadP);
+	SlV(SizeMinimap);  SlV(SizeRoadP);
 	SV svCamSpeed, svCamInert;
 	SV svTerUpd, svMiniUpd;
 
-	void chkMinimap(WP), btnSetCam(WP);
-	Btn chAutoBlendmap;  void chkAutoBlendmap(WP);
+	CK(Minimap);
+	void btnSetCam(WP);
+	Ck ckAutoBlendmap;
 
-	Btn chInputBar;  void chkInputBar(WP);
-	void chkCamPos(WP);
+	CK(InputBar);  CK(CamPos);
+	CK(Wireframe);
 
 	//  top view
 	void toggleTopView();
@@ -113,8 +114,7 @@ public:
 	void editFogClr(Ed), editFogClr2(Ed), editFogClrH(Ed);
 	void editLiAmb(Ed), editLiDiff(Ed), editLiSpec(Ed);
 
-	Btn chkFog, chkWeather;
-	void chkFogDisable(WP), chkWeatherDisable(WP);
+	CK(Fog);  Ck ckWeather;
 
 	
 	///  [Terrain]  --------------------
@@ -289,9 +289,9 @@ public:
 
 
 	//  [Track]  ----
-	Ogre::String sListTrack;  int bListTrackU;  // current track
 	Ogre::String sCopyTrack;  int bCopyTrackU;  // for copy tools
 	Ogre::String PathCopyTrk(int user=-1);
+	Ogre::String GetListTrk();
 
 	void btnTrackNew(WP), btnTrackRename(WP);
 	void btnTrackDel(WP);  // track

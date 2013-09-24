@@ -11,6 +11,7 @@
 #include "SplitScreen.h"
 
 #include <OgreRenderWindow.h>
+#include <OgreEntity.h>
 #include <OgreSceneNode.h>
 #include <OgreMaterialManager.h>
 #include <OgreManualObject.h>

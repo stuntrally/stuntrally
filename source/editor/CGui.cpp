@@ -10,14 +10,12 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	: app(app1)
 	,bGI(0)
 	,brImg(0), wndTabs(0)  // brush
-	,chAutoBlendmap(0), chInputBar(0)  // settings
 	// sun
 	,cmbSky(0), cmbRain1(0),cmbRain2(0)
 	// light
 	,edLiAmb(0),edLiDiff(0),edLiSpec(0)
 	,clrAmb(0),clrDiff(0),clrSpec(0)
 	// fog
-	, chkFog(0), chkWeather(0)
 	,edFogClr(0),edFogClr2(0),edFogClrH(0)
 	,clrFog(0),clrFog2(0),clrFogH(0)
 	// terrain
@@ -74,7 +72,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,edWarn(0),txWarn(0)
 	,imgWarn(0),imgInfo(0)
 	// track
-	, bListTrackU(0), trkName(0)
+	, trkName(0)
 	// gui
 	, bTopView(0), noBlendUpd(0)
 	// obj

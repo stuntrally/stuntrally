@@ -10,7 +10,7 @@
 #include "CHud.h"
 #include "CGui.h"
 #include "common/MultiList2.h"
-
+#include <OgreTextureManager.h>
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;

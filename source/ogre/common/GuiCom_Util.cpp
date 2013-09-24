@@ -18,6 +18,8 @@
 #include <MyGUI_EditBox.h>
 #include <MyGUI_ComboBox.h>
 #include <MyGUI_Gui.h>
+#include <MyGUI_Window.h>
+#include <MyGUI_TabControl.h>
 using namespace MyGUI;
 using namespace Ogre;
 

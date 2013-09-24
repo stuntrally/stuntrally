@@ -4,8 +4,13 @@
 #include "CHud.h"
 #include "CGui.h"
 #include "common/data/SceneXml.h"
-#include <LinearMath/btQuickprof.h>
 #include "../vdrift/settings.h"
+#include <LinearMath/btQuickprof.h>
+#include <OgreManualObject.h>
+#include <OgreSceneManager.h>
+#include <OgreSceneNode.h>
+#include <OgreRenderWindow.h>
+#include <MyGUI_TextBox.h>
 using namespace Ogre;
 
 

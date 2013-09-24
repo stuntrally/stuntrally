@@ -13,6 +13,7 @@
 #include "../shiny/Main/Factory.hpp"
 #include "common/Slider.h"
 #include "SplitScreen.h"
+#include <OgreCamera.h>
 using namespace Ogre;
 
 

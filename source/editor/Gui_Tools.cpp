@@ -25,8 +25,8 @@ const Ogre::String
 
 void CGui::btnTrkCopySel(WP)  // set copy source
 {
-	sCopyTrack = sListTrack;
-	bCopyTrackU = bListTrackU;
+	sCopyTrack = gcom->sListTrack;
+	bCopyTrackU = gcom->bListTrackU;
 	if (valTrkCpySel)  valTrkCpySel->setCaption(sCopyTrack);
 }
 
@@ -263,7 +263,7 @@ void CGui::btnTrackNew(WP)
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 		return;  }
 
-	String st = gcom->pathTrk[bListTrackU] + sListTrack, t = gcom->pathTrk[1] + name,
+	String st = gcom->PathListTrk(),  t = gcom->pathTrk[1] + name,
 		sto = st + "/objects", stp = st + "/preview",  // from
 		to = t + "/objects",   tp = t + "/preview";  // to,new
 
@@ -274,7 +274,7 @@ void CGui::btnTrackNew(WP)
 	for (i=0; i < cnTrkFo; ++i)  Copy(sto + csTrkFo[i], to + csTrkFo[i]);
 	for (i=1; i < cnTrkFp; ++i)  Copy(stp + csTrkFp[i], tp + csTrkFp[i]);  // 1-not view.jpg
 
-	sListTrack = name;  pSet->gui.track = name;  pSet->gui.track_user = 1;
+	gcom->sListTrack = name;  pSet->gui.track = name;  pSet->gui.track_user = 1;
 	app->UpdWndTitle();
 	gcom->FillTrackLists();  gcom->TrackListUpd();
 }
@@ -283,7 +283,7 @@ void CGui::btnTrackNew(WP)
 void CGui::btnTrackRename(WP)
 {
 	String name = trkName->getCaption();
-	if (name == sListTrack)  return;
+	if (name == gcom->sListTrack)  return;
 
 	/*if (bListTrackU==0)  {  // could force when originals writable..
 		Message::createMessageBox(
@@ -298,9 +298,9 @@ void CGui::btnTrackRename(WP)
 		return;  }
 	
 	//  Rename
-	Rename(gcom->pathTrk[bListTrackU] + sListTrack, gcom->pathTrk[/*1*/bListTrackU] + name);
+	Rename(gcom->PathListTrk(), gcom->pathTrk[/*1*/gcom->bListTrackU ? 1 : 0] + name);
 	
-	sListTrack = name;  pSet->gui.track = sListTrack;  pSet->gui.track_user = 1;/**/
+	gcom->sListTrack = name;  pSet->gui.track = name;  pSet->gui.track_user = 1;/**/
 	app->UpdWndTitle();
 	gcom->FillTrackLists();  gcom->TrackListUpd();  //gcom->listTrackChng(trkList,0);
 }
@@ -309,7 +309,7 @@ void CGui::btnTrackRename(WP)
 void CGui::btnTrackDel(WP)
 {
 	Message* message = Message::createMessageBox(
-		"Message", bListTrackU==0 ? "Delete original Track ?" : "Delete Track ?", sListTrack,
+		"Message", gcom->bListTrackU==0 ? "Delete original Track ?" : "Delete Track ?", gcom->sListTrack,
 		MessageBoxStyle::IconQuest | MessageBoxStyle::Yes | MessageBoxStyle::No);
 	message->eventMessageBoxResult += newDelegate(this, &CGui::msgTrackDel);
 	//message->setUserString("FileName", fileName);
@@ -318,7 +318,7 @@ void CGui::msgTrackDel(Message* sender, MessageBoxStyle result)
 {
 	if (result != MessageBoxStyle::Yes)
 		return;
-	String t = gcom->pathTrk[bListTrackU] + sListTrack,
+	String t = gcom->PathListTrk(),
 		to = t + "/objects", tp = t + "/preview";
 	int i;
 	for (i=0; i < cnTrkFo; ++i)  Delete(to + csTrkFo[i]);

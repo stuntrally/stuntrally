@@ -31,10 +31,7 @@ using namespace Ogre;
 void CGuiCom::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 {
 	pSet->preset = val;  // for info
-	//"TexFiltering", comboTexFilter ?
-	//fsaa = 0;  vsync = false;  //?  rpl?
-	//  sim  - other combobox, not recommended_
-	//game_fq = 100.f;  blt_fq = 60.f;  blt_iter = 7;  dyn_iter = 10;  mult_thr = 0;  //<low
+	//game_fq = 100.f;  blt_fq = 60.f;  blt_iter = 7;  dyn_iter = 10;  mult_thr = 0;  //sim low
 	//veget_collis = true;  car_collis = false;
 
 	SETTINGS& s = *pSet;
@@ -179,9 +176,6 @@ void CGuiCom::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	//  update gui  sld,val,chk
 	//-----------------------------------------------------------------
-	//old GuiInitGraphics();  // += newDelegate..?  // duplicated code..
-
-	//?CmbC(cmb, "TexFiltering", comboTexFilter);
 	///  common only
 	svTerDetail.Upd();  svTerDist.Upd();  svRoadDist.Upd();
 	svViewDist.Upd();  svAnisotropy.Upd();
@@ -210,7 +204,8 @@ void CGui::UpdGuiAfterPreset()
 {
 	ButtonPtr bchk;
 
-#ifndef SR_EDITOR  /// game only
+#ifndef SR_EDITOR
+	///  game only
 	ckParticles.Upd();  ckTrails.Upd();
 	svParticles.Upd();  svTrails.Upd();
 
@@ -230,8 +225,8 @@ void CGui::UpdGuiAfterPreset()
 	
 	ckRplAutoRec.Upd();
 	ckRplGhost.Upd();
-#else     /// editor only
-	Chk("Minimap", chkMinimap, pSet->trackmap);
+#else	///  editor only
+	ckMinimap.Upd();
 	svTerUpd.Upd();
 	svMiniUpd.Upd();
 #endif

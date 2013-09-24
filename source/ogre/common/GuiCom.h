@@ -2,7 +2,6 @@
 #include "Gui_Def.h"
 #include "SliderValue.h"
 
-//#include <MyGUI.h>
 #include <MyGUI_Prerequest.h>
 //#include <MyGUI_Types.h>
 #include <MyGUI_WidgetToolTip.h>

@@ -20,11 +20,14 @@
 #include <OgreTerrain.h>
 #include <OgreEntity.h>
 #include <OgreManualObject.h>
+#include <OgreSubMesh.h>
 #include <OgreMaterialManager.h>
 #include <OgreParticleSystem.h>
 #include <OgreParticleEmitter.h>
 #include <OgreParticleAffector.h>
 #include <OgreRibbonTrail.h>
+#include <OgreBillboardSet.h>
+#include <OgreBillboardChain.h>
 using namespace Ogre;
 #define  FileExists(s)  PATHMANAGER::FileExists(s)
 

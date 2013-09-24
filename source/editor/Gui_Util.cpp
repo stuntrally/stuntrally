@@ -18,7 +18,9 @@ using namespace MyGUI;
 using namespace Ogre;
 
 
-//  set Gui from xml (scene, road), after track load
+///  Update all Gui controls
+///  (after track Load, or Copy)
+///  basing on values in scene and road
 //..........................................................................................................
 void CGui::SetGuiFromXmls()
 {
@@ -70,9 +72,6 @@ void CGui::SetGuiFromXmls()
 	tabGrLayers(tabsGrLayers, idGrLay);
 	tabPgLayers(tabsPgLayers, idPgLay);
 
-	//MeshPtr mp = MeshManager::load(sc->pgLayersAll[0].name);
-	//mp->getSubMesh(0)->
-
 	//  [Road]
 	//-----------------------------------------------
 	SplineRoad* rd = app->road;
@@ -97,9 +96,9 @@ void CGui::SetGuiFromXmls()
 
 void CGui::btnNewGame(WP)
 {
-	if (trkName)  trkName->setCaption(sListTrack.c_str());
-	pSet->gui.track = sListTrack;
-	pSet->gui.track_user = bListTrackU;  //UpdWndTitle();//? load
+	if (trkName)  trkName->setCaption(gcom->sListTrack);
+	pSet->gui.track = gcom->sListTrack;
+	pSet->gui.track_user = gcom->bListTrackU;  //UpdWndTitle();//? load
 	app->LoadTrack();
 }
 
@@ -111,20 +110,20 @@ void App::UpdEditWnds()
 {
 	if (mWndBrush)
 	{	if (edMode == ED_Deform)
-		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Terrain Deform");  
-			mWndBrush->setColour(MyGUI::Colour(0.5f, 0.9f, 0.3f));
+		{	mWndBrush->setCaption("Terrain Deform");
+			mWndBrush->setColour(Colour(0.5f, 0.9f, 0.3f));
 			mWndBrush->setVisible(true);  }
 		else if (edMode == ED_Filter)
-		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Terrain Filter");
-			mWndBrush->setColour(MyGUI::Colour(0.5f, 0.75f, 1.0f));
+		{	mWndBrush->setCaption("Terrain Filter");
+			mWndBrush->setColour(Colour(0.5f, 0.75f, 1.0f));
 			mWndBrush->setVisible(true);  }
 		else if (edMode == ED_Smooth)
-		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Terrain Smooth");
-			mWndBrush->setColour(MyGUI::Colour(0.3f, 0.8f, 0.8f));
+		{	mWndBrush->setCaption("Terrain Smooth");
+			mWndBrush->setColour(Colour(0.3f, 0.8f, 0.8f));
 			mWndBrush->setVisible(true);  }
 		else if (edMode == ED_Height)
-		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Terrain Height");
-			mWndBrush->setColour(MyGUI::Colour(0.7f, 1.0f, 0.7f));
+		{	mWndBrush->setCaption("Terrain Height");
+			mWndBrush->setColour(Colour(0.7f, 1.0f, 0.7f));
 			mWndBrush->setVisible(true);  }
 		else
 			mWndBrush->setVisible(false);
@@ -147,6 +146,8 @@ void App::UpdEditWnds()
 	UpdMtrWaterDepth();
 }
 
+
+//  change editor mode
 void App::SetEdMode(ED_MODE newMode)
 {
 	static bool first = true;
@@ -208,6 +209,8 @@ void CGui::toggleGui(bool toggle)
 	app->UpdVisGui();
 }
 
+
+//  bottom status bar
 void CGui::Status(String s, float r,float g,float b)
 {
 	app->ovStat->setColour(ColourValue(r,g,b));
@@ -275,8 +278,8 @@ void CGui::GuiShortcut(WND_Types wnd, int tab, int subtab)
 	//isFocGui = true;
 	pSet->isMain = false;  pSet->inMenu = wnd;
 	
-	MyGUI::TabPtr mWndTabs = 0;
-	std::vector<MyGUI::TabControl*>* subt = 0;
+	TabPtr mWndTabs = 0;
+	std::vector<TabControl*>* subt = 0;
 	
 	switch (wnd)
 	{	case WND_Edit:		mWndTabs = app->mWndTabsEdit;  subt = &vSubTabsEdit;  break;
@@ -290,7 +293,7 @@ void CGui::GuiShortcut(WND_Types wnd, int tab, int subtab)
 	mWndTabs->setIndexSelected(tab);
 
 	if (!subt)  return;
-	MyGUI::TabControl* tc = (*subt)[tab];  if (!tc)  return;
+	TabControl* tc = (*subt)[tab];  if (!tc)  return;
 	int  cnt = tc->getItemCount();
 
 	if (t == tab && subtab == -1)  // cycle subpages if same tab
@@ -309,7 +312,7 @@ void CGui::NumTabNext(int rel)
 {
 	if (!app->bGuiFocus || pSet->isMain || pSet->inMenu != WND_Edit)  return;
 
-	MyGUI::TabPtr tab = 0;
+	TabPtr tab = 0;
 
 	#define tabNum(event)  {  \
 		int cnt = tab->getItemCount();  \

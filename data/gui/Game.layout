@@ -2690,27 +2690,23 @@
 							<Property key="TextColour" value="1.0 0.9 0.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="392 110 320 18" name="BloomInt">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="328 110 60 26" name="BloomIntVal">
 							<Property key="TextColour" value="1.0 1 0.2"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="328 178 60 24" name="BlurIntensVal">
-							<Property key="TextColour" value="0.7 1 0.4"/>
+						<Widget type="Slider" skin="Slider" position="392 110 320 18" name="BloomInt">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="196 134 128 24">
 							<Property key="Caption" value="#{OrigImage}"/>
-							<Property key="TextColour" value="1 1 0.5"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="392 134 320 18" name="BloomOrig">
+							<Property key="TextColour" value="0.8 0.8 0.1"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="328 134 60 24" name="BloomOrigVal">
-							<Property key="TextColour" value="1 1 0.5"/>
+							<Property key="TextColour" value="0.8 0.8 0.2"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="392 134 320 18" name="BloomOrig">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 
@@ -2719,12 +2715,16 @@
 							<Property key="TextColour" value="0.6 1 0.1"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="392 178 320 18" name="BlurIntens">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="196 178 128 24">
 							<Property key="Caption" value="#{Intensity}"/>
 							<Property key="TextColour" value="0.7 1 0.4"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="328 178 60 24" name="BlurIntensVal">
+							<Property key="TextColour" value="0.7 1 0.4"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="392 178 320 18" name="BlurIntens">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 
@@ -2739,40 +2739,39 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						
-						<Widget type="Button" skin="CheckBox" position="28 326 168 24" name="DepthOfField">
-							<Property key="Caption" value="#{DepthOfField}"/>
-							<Property key="TextColour" value="1 0.3 0.3"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="196 326 118 24">
-							<Property key="Caption" value="#{Near}"/>
-							<Property key="TextColour" value="0.7 1 0.4"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						
-						<Widget type="TextBox" skin="TextBox" position="328 326 60 24" name="DofFocusVal">
-							<Property key="TextColour" value="1.0 1 0.2"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="392 326 320 18" name="DofFocus">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="196 350 118 24">
-							<Property key="Caption" value="#{Far}"/>
-							<Property key="TextColour" value="0.7 1 0.4"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="328 350 60 24" name="DofFarVal">
-							<Property key="TextColour" value="1.0 1 0.2"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="392 350 320 18" name="DofFar">
+						<Widget type="Button" skin="CheckBox" position="28 326 168 24" name="GodRays">
+							<Property key="Caption" value="#{godrays}"/>
+							<Property key="TextColour" value="1 0.4 0.1"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 
-						<Widget type="Button" skin="CheckBox" position="28 374 168 24" name="GodRays">
-							<Property key="Caption" value="#{godrays}"/>
-							<Property key="TextColour" value="1 0.3 0.1"/>
+						<Widget type="Button" skin="CheckBox" position="28 374 168 24" name="DepthOfField">
+							<Property key="Caption" value="#{DepthOfField}"/>
+							<Property key="TextColour" value="0.9 0.3 0.3"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="196 374 118 24">
+							<Property key="Caption" value="#{Near}"/>
+							<Property key="TextColour" value="0.9 0.6 0.4"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>						
+						<Widget type="TextBox" skin="TextBox" position="328 374 60 24" name="DofFocusVal">
+							<Property key="TextColour" value="1.0 0.7 0.5"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="392 374 320 18" name="DofFocus">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="196 398 118 24">
+							<Property key="Caption" value="#{Far}"/>
+							<Property key="TextColour" value="0.9 0.6 0.4"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="328 398 60 24" name="DofFarVal">
+							<Property key="TextColour" value="1.0 0.7 0.5"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="392 398 320 18" name="DofFar">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 					</Widget>

@@ -7,12 +7,12 @@
 #include <fstream>
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/Slider.h"
-#include <MyGUI.h>
 #include <OgreOverlay.h>
 #include <OgreOverlayElement.h>
 #include <OgreRectangle2D.h>
 #include <OgreSceneNode.h>
 #include <OgreCamera.h>
+#include <MyGUI.h>
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -62,17 +62,17 @@ void CGui::slUpdSun(SV*)
 void CGui::editLiAmb(Edit* ed)
 {
 	Vector3 c = s2v(ed->getCaption());	sc->lAmb = c;  app->UpdSun();
-	if (clrAmb)  clrAmb->setColour(Colour(c.x,c.y,c.z));
+	clrAmb->setColour(Colour(c.x,c.y,c.z));
 }
 void CGui::editLiDiff(Edit* ed)
 {
 	Vector3 c = s2v(ed->getCaption());	sc->lDiff = c;  app->UpdSun();
-	if (clrDiff)  clrDiff->setColour(Colour(c.x,c.y,c.z));
+	clrDiff->setColour(Colour(c.x,c.y,c.z));
 }
 void CGui::editLiSpec(Edit* ed)
 {
 	Vector3 c = s2v(ed->getCaption());	sc->lSpec = c;  app->UpdSun();
-	if (clrSpec)  clrSpec->setColour(Colour(c.x,c.y,c.z));
+	clrSpec->setColour(Colour(c.x,c.y,c.z));
 }
 
 //  fog
@@ -84,27 +84,23 @@ void CGui::slUpdFog(SV*)
 void CGui::editFogClr(Edit* ed)
 {
 	Vector4 c = s2v4(ed->getCaption());  sc->fogClr = c;  app->UpdFog();
-	if (clrFog)  clrFog->setColour(Colour(c.x,c.y,c.z));
+	clrFog->setColour(Colour(c.x,c.y,c.z));
 }
 void CGui::editFogClr2(Edit* ed)
 {
 	Vector4 c = s2v4(ed->getCaption());  sc->fogClr2 = c;  app->UpdFog();
-	if (clrFog2)  clrFog2->setColour(Colour(c.x,c.y,c.z));
+	clrFog2->setColour(Colour(c.x,c.y,c.z));
 }
 void CGui::editFogClrH(Edit* ed)
 {
 	Vector4 c = s2v4(ed->getCaption());  sc->fogClrH = c;  app->UpdFog();
-	if (clrFogH)  clrFogH->setColour(Colour(c.x,c.y,c.z));
+	clrFogH->setColour(Colour(c.x,c.y,c.z));
 }
 
 //  chk disable
-void CGui::chkFogDisable(WP wp)
+void CGui::chkFog(Ck*)
 {
-	ChkEv(bFog);  app->UpdFog();
-}
-void CGui::chkWeatherDisable(WP wp)
-{
-	ChkEv(bWeather);
+	app->UpdFog();
 }
 
 
@@ -345,12 +341,16 @@ void CGui::editRoad(EditPtr ed)
 
 //  [Settings]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-void CGui::chkCamPos(WP wp){		ChkEv(camPos);
+void CGui::chkCamPos(Ck*){
 	if (pSet->camPos)  app->ovPos->show();  else  app->ovPos->hide();  }
 
-void CGui::chkInputBar(WP wp){		ChkEv(inputBar);
+void CGui::chkInputBar(Ck*){	
 	if (pSet->inputBar)  app->mDebugOverlay->show();  else  app->mDebugOverlay->hide();  }
 
+void CGui::chkWireframe(Ck*)
+{
+	app->UpdWireframe();
+}
 
 void CGui::slSizeRoadP(SV*)
 {
@@ -359,7 +359,7 @@ void CGui::slSizeRoadP(SV*)
 		app->road->UpdAllMarkers();  }
 }
 
-void CGui::slSizeMinmap(SV*)
+void CGui::slSizeMinimap(SV*)
 {
 	Real sz = pSet->size_minimap;  //int all = 0;
 	app->xm1 = 1-sz/app->asp;  app->ym1 = -1+sz;  app->xm2 = 1.0;  app->ym2 = -1.0;
@@ -368,15 +368,11 @@ void CGui::slSizeMinmap(SV*)
 			app->rt[i].rcMini->setCorners(app->xm1, app->ym1, app->xm2, app->ym2);
 }
 
-void CGui::chkMinimap(WP wp)
+void CGui::chkMinimap(Ck*)
 {
-	ChkEv(trackmap);  app->UpdMiniVis();
-	if (app->ndPos)  app->ndPos->setVisible(pSet->trackmap);
-}
-
-void CGui::chkAutoBlendmap(WP wp)
-{
-	ChkEv(autoBlendmap);
+	app->UpdMiniVis();
+	if (app->ndPos)
+		app->ndPos->setVisible(pSet->trackmap);
 }
 
 
@@ -428,12 +424,12 @@ void CGui::toggleTopView()
 		cam->setPosition(0,yt,0);  cam->setDirection(-0.0001,-1,0);
 
 		oldFog = pSet->bFog;
-		pSet->bFog = true;  chkFog->setStateSelected(pSet->bFog);  app->UpdFog();
+		pSet->bFog = true;  ckFog.Upd();  app->UpdFog();
 	}else
 	{	// restore
 		cam->setPosition(oldPos);
 		cam->setDirection(oldRot);
 
-		pSet->bFog = oldFog;  chkFog->setStateSelected(pSet->bFog);  app->UpdFog();
+		pSet->bFog = oldFog;  ckFog.Upd();  app->UpdFog();
 	}
 }

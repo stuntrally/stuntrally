@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "common/Def_Str.h"
-#include "common/RenderConst.h"
-#include "common/GuiCom.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
+#include "common/Def_Str.h"
+#include "common/RenderConst.h"
+#include "common/GuiCom.h"
 #include "common/data/CData.h"
 #include "common/data/SceneXml.h"
 #include "../vdrift/game.h"
@@ -13,6 +13,7 @@
 #include "../paged-geom/PagedGeometry.h"
 #include "common/WaterRTT.h"
 #include "common/MultiList2.h"
+#include "common/Gui_Popup.h"
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
 #include <OgreTerrainPaging.h>
@@ -64,10 +65,13 @@ App::App(SETTINGS *settings, GAME *game)
 	///  new
 	data = new CData();
 	hud = new CHud(this);
+
 	gcom = new CGuiCom(this);
 	gui = new CGui(this);
 	gui->gcom = gcom;
 	hud->gui = gui;
+	gui->popup = new GuiPopup();
+
 	mBindListner = gui;
 	input = new CInput(this);
 
@@ -95,8 +99,11 @@ App::~App()
 	delete mWaterRTT;
 	delete sc;
 	delete data;
+
+	delete gui->popup;
 	delete gcom;
 	delete gui;
+
 	delete hud;
 	delete input;
 }

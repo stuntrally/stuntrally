@@ -212,9 +212,6 @@ BaseApp::BaseApp()
 //-------------------------------------------------------------------------------------
 BaseApp::~BaseApp()
 {
-	SDL_SetWindowFullscreen(mSDLWindow, 0);
-	SDL_DestroyWindow(mSDLWindow);
-
 	delete mFactory;
 	//if (mSplitMgr)
 		//refreshCompositor(false);
@@ -262,6 +259,9 @@ BaseApp::~BaseApp()
 
 	OGRE_DELETE mRoot;
 	delete mHDRLogic;  mHDRLogic = 0;
+
+	SDL_SetWindowFullscreen(mSDLWindow, 0);
+	SDL_DestroyWindow(mSDLWindow);
 }
 
 //  config

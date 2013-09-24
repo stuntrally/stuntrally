@@ -36,7 +36,6 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 	bool bGenerate = 0, gen = !hasMatOrig && !hasMatCache || bGenerate;  // set 1 to force generate for new vdrift tracks
 
 
-
 	//TODO .mat ..rewrite this code for new system
 #if 0
 	if (gen)
@@ -282,7 +281,6 @@ void App::CreateMinimap()
 	ndMap[0]->setVisible(pSet->trackmap);*/
 #endif
 }
-#endif
 
 
 //---------------------------------------------------------------------------------------------------------------
@@ -360,6 +358,7 @@ void App::CreateRoadBezier()
 	m->setBoundingBox(aabInf);  // always visible
 	mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(m);
 }
+#endif
 
 
 //  utility - create VDrift model in Ogre

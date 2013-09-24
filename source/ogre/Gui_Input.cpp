@@ -6,6 +6,13 @@
 #include "CGame.h"
 #include "CGui.h"
 #include <OgreRoot.h>
+#include <MyGUI_Gui.h>
+#include <MyGUI_Button.h>
+#include <MyGUI_ImageBox.h>
+#include <MyGUI_EditBox.h>
+#include <MyGUI_TabControl.h>
+#include <MyGUI_TabItem.h>
+#include <MyGUI_ComboBox.h>
 using namespace MyGUI;
 using namespace Ogre;
 

@@ -10,6 +10,7 @@
 #include "SplitScreen.h"
 #include "common/Slider.h"
 #include "common/MultiList2.h"
+#include <OgreCamera.h>
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;

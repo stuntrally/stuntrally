@@ -10,6 +10,7 @@
 #include "CGui.h"
 #include "common/MultiList2.h"
 #include "common/Slider.h"
+#include "common/Gui_Popup.h"
 #include <OgreRoot.h>
 #include <OgreRenderWindow.h>
 #include <OgreOverlay.h>
@@ -29,8 +30,8 @@ void CGui::InitGui()
 	Check::pGUI = mGui;
 	Check::bGI = &bGI;
 
-	popup.mGui = mGui;
-	popup.mPlatform = app->mPlatform;
+	popup->mGui = mGui;
+	popup->mPlatform = app->mPlatform;
 
 	if (!mGui)  return;
 	QTimer ti;  ti.update();  /// time
@@ -281,8 +282,8 @@ void CGui::InitGui()
 
 
 	//  sim mode radio
-	Btn("SimModeEasy", radSimEasy);  bRsimEasy = btn;  btn->setStateSelected(pSet->gui.sim_mode == "normal");
-	Btn("SimModeNorm", radSimNorm);	 bRsimNorm = btn;  btn->setStateSelected(pSet->gui.sim_mode == "easy");
+	Btn("SimModeEasy", radSimEasy);  bRsimEasy = btn;  btn->setStateSelected(pSet->gui.sim_mode == "easy");
+	Btn("SimModeNorm", radSimNorm);	 bRsimNorm = btn;  btn->setStateSelected(pSet->gui.sim_mode == "normal");
 
 	//  kmh/mph radio
 	Btn("kmh", radKmh);  bRkmh = btn;  bRkmh->setStateSelected(!pSet->show_mph);
@@ -331,8 +332,8 @@ void CGui::InitGui()
 	sv= &svBloomOrig;	sv->Init("BloomOrig",	&pSet->bloom_orig);
 	sv= &svBloomOrig;	sv->Init("BloomOrig",	&pSet->bloom_orig);
 
-	sv= &svDofFocus;	sv->Init("DofFocus",	&pSet->dof_focus, 0.f, 2000.f, 2.f);
-	sv= &svDofFar;		sv->Init("DofFar",		&pSet->dof_far,   0.f, 2000.f, 2.f);
+	sv= &svDofFocus;	sv->Init("DofFocus",	&pSet->dof_focus, 0.f, 2000.f, 2.f, 0,3);
+	sv= &svDofFar;		sv->Init("DofFar",		&pSet->dof_far,   0.f, 2000.f, 2.f, 0,4);
 	
 	
 	//  replays  ------------------------------------------------------------

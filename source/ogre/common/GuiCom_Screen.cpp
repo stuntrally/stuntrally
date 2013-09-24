@@ -4,12 +4,10 @@
 #include "GuiCom.h"
 #ifndef SR_EDITOR
 	#include "../CGame.h"
-	//#include "../CGui.h"
 	#include "../SplitScreen.h"
 	#include "../vdrift/settings.h"
 #else
 	#include "../../editor/CApp.h"
-	//#include "../../editor/CGui.h"
 	#include "../../editor/settings.h"
 #endif
 #include "SDL_video.h"
