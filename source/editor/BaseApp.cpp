@@ -87,3 +87,9 @@ bool BaseApp::frameEnded(const FrameEvent& evt)
 	//updateStats();
 	return true;
 }
+
+void BaseApp::UpdWireframe()
+{
+	mCamera->setPolygonMode(mbWireFrame ? PM_WIREFRAME : PM_SOLID);
+	if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
+}

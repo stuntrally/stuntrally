@@ -202,8 +202,6 @@ void CGuiCom::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 void CGui::UpdGuiAfterPreset()
 {
-	ButtonPtr bchk;
-
 #ifndef SR_EDITOR
 	///  game only
 	ckParticles.Upd();  ckTrails.Upd();
@@ -212,6 +210,7 @@ void CGui::UpdGuiAfterPreset()
 	svReflSkip.Upd();  svReflFaces.Upd();  svReflSize.Upd();
 	svReflDist.Upd();  svReflMode.Upd();
 
+	ButtonPtr bchk;
 	Chk("AllEffects", chkVidEffects, pSet->all_effects);
 	Chk("Bloom", chkVidBloom, pSet->bloom);
 	//Chk("HDR", chkVidHDR, pSet->hdr);
