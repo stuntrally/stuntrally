@@ -341,52 +341,20 @@ void CGui::chkMultiThread(WP wp)
 }
 
 
-//  [Video]  . . . . . . . . . . . . . . . . . . . .    ---- ------ ----    . . . . . . . . . . . . . . . . . . . .
+//  [Effects]  . . . . . . . . . . . . . . . . . . . .    ---- ------ ----    . . . . . . . . . . . . . . . . . . . .
 
-void CGui::chkVidEffects(WP wp)
+void CGui::chkAllEffects(Ck*)
 {
-	ChkEv(all_effects);
-	app->recreateCompositor();  //refreshCompositor();
+	app->recreateCompositor();  //app->refreshCompositor();
 	app->changeShadows();
 }
-void CGui::chkVidBloom(WP wp)
+void CGui::chkEffUpd(Ck*)
 {		
-	ChkEv(bloom);  app->refreshCompositor();
+	app->refreshCompositor();
 }
-
-void CGui::chkVidHDR(WP wp)
-{			
-	ChkEv(hdr);  app->refreshCompositor();
-}
-
-void CGui::chkVidBlur(WP wp)
-{		
-	ChkEv(blur);
+void CGui::chkEffUpdShd(Ck*)
+{
 	app->refreshCompositor();  app->changeShadows();
-}
-void CGui::chkVidSSAO(WP wp)
-{		
-	ChkEv(ssao);
-	app->refreshCompositor();  app->changeShadows();
-}
-void CGui::chkVidSoftParticles(WP wp)
-{		
-	ChkEv(softparticles);
-	app->refreshCompositor();  app->changeShadows();
-}
-void CGui::chkVidDepthOfField(WP wp)
-{		
-	ChkEv(dof);
-	app->refreshCompositor();  app->changeShadows();
-}
-void CGui::chkVidGodRays(WP wp)
-{		
-	ChkEv(godrays);
-	app->refreshCompositor();  app->changeShadows();
-}
-void CGui::chkVidBoostFOV(WP wp)
-{		
-	ChkEv(boost_fov);
 }
 
 void CGui::slBloom(SV*)

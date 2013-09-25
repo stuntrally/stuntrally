@@ -210,23 +210,16 @@ void CGui::UpdGuiAfterPreset()
 	svReflSkip.Upd();  svReflFaces.Upd();  svReflSize.Upd();
 	svReflDist.Upd();  svReflMode.Upd();
 
-	ButtonPtr bchk;
-	Chk("AllEffects", chkVidEffects, pSet->all_effects);
-	Chk("Bloom", chkVidBloom, pSet->bloom);
-	//Chk("HDR", chkVidHDR, pSet->hdr);
-	Chk("MotionBlur", chkVidBlur, pSet->blur);
-
-	Chk("SSAO", chkVidSSAO, pSet->ssao);
-	Chk("SoftParticles", chkVidSoftParticles, pSet->softparticles);
-
-	Chk("DepthOfField", chkVidDepthOfField, pSet->dof);
-	Chk("GodRays", chkVidGodRays, pSet->godrays);
+	ckAllEffects.Upd();
+	ckBloom.Upd();  ckBlur.Upd();  //ckHDR.Upd();
+	ckSoftPar.Upd();  ckSSAO.Upd();
+	ckGodRays.Upd();  ckDoF.Upd();
 	
 	ckRplAutoRec.Upd();
 	ckRplGhost.Upd();
-#else	///  editor only
+#else
+	///  editor only
 	ckMinimap.Upd();
-	svTerUpd.Upd();
-	svMiniUpd.Upd();
+	svMiniUpd.Upd();  svTerUpd.Upd();
 #endif
 }

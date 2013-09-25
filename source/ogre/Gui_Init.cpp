@@ -302,38 +302,34 @@ void CGui::InitGui()
 
 	
 	//  effects
-	Chk("AllEffects", chkVidEffects, pSet->all_effects);
-	Chk("Bloom", chkVidBloom, pSet->bloom);
+	ck= &ckAllEffects;	ck->Init("AllEffects",	&pSet->all_effects);  Cev(AllEffects);
+	ck= &ckBoostFOV;	ck->Init("BoostFOV",	&pSet->boost_fov);
 
-	sv= &svBloomInt;	sv->Init("BloomInt",	&pSet->bloom_int);
-	sv= &svBloomOrig;	sv->Init("BloomOrig",	&pSet->bloom_orig);
-
-	Chk("HDR", chkVidHDR, pSet->hdr);
-	sv= &svHDRParam1;	sv->Init("HDRParam1",	&pSet->hdrParam1);
-	sv= &svHDRParam2;	sv->Init("HDRParam2",	&pSet->hdrParam2);
-	sv= &svHDRParam3;	sv->Init("HDRParam3",	&pSet->hdrParam3);
-	sv= &svHDRAdaptScale;	sv->Init("HDRAdaptScale",	&pSet->hdrAdaptationScale);
-	sv= &svHDRBloomInt;		sv->Init("HDRBloomInt",		&pSet->hdrBloomint);
-	sv= &svHDRBloomOrig;	sv->Init("HDRBloomOrig",	&pSet->hdrBloomorig);
-	sv= &svHDRVignRadius;	sv->Init("HDRVignRadius",	&pSet->vignRadius, 0.f, 10.f);
-	sv= &svHDRVignDark;		sv->Init("HDRVignDark",		&pSet->vignDarkness);
+	ck= &ckBloom;		ck->Init("Bloom",		&pSet->bloom);  Cev(EffUpd);
+	sv= &svBloomInt;	sv->Init("BloomInt",	&pSet->bloom_int);   sv->DefaultF(0.13f);
+	sv= &svBloomOrig;	sv->Init("BloomOrig",	&pSet->bloom_orig);	 sv->DefaultF(0.91f);
 	
-	Chk("MotionBlur", chkVidBlur, pSet->blur);
-	Chk("SSAO", chkVidSSAO, pSet->ssao);
+	ck= &ckBlur;		ck->Init("MotionBlur",	&pSet->blur);  Cev(EffUpdShd);
+	sv= &svBlurIntens;	sv->Init("BlurIntens",	&pSet->blur_int);	sv->DefaultF(0.4f);
 
-	Chk("SoftParticles", chkVidSoftParticles, pSet->softparticles);
-	Chk("DepthOfField", chkVidDepthOfField, pSet->dof);
-
-	Chk("GodRays",  chkVidGodRays,  pSet->godrays);
-	Chk("BoostFOV", chkVidBoostFOV, pSet->boost_fov);
-
-	sv= &svBlurIntens;	sv->Init("BlurIntens",	&pSet->blur_int);
+	ck= &ckSSAO;		ck->Init("SSAO",		&pSet->ssao);  Cev(EffUpdShd);
+	ck= &ckSoftPar;		ck->Init("SoftParticles",&pSet->softparticles);  Cev(EffUpdShd);
+	ck= &ckGodRays;		ck->Init("GodRays",		&pSet->godrays);  Cev(EffUpdShd);
 	
-	sv= &svBloomOrig;	sv->Init("BloomOrig",	&pSet->bloom_orig);
-	sv= &svBloomOrig;	sv->Init("BloomOrig",	&pSet->bloom_orig);
+	ck= &ckDoF;			ck->Init("DepthOfField",&pSet->dof);  Cev(EffUpdShd);
+	sv= &svDofFocus;	sv->Init("DofFocus",	&pSet->dof_focus, 0.f, 2000.f, 2.f, 0,3);	sv->DefaultF(100.f);
+	sv= &svDofFar;		sv->Init("DofFar",		&pSet->dof_far,   0.f, 2000.f, 2.f, 0,4);	sv->DefaultF(1000.f);
 
-	sv= &svDofFocus;	sv->Init("DofFocus",	&pSet->dof_focus, 0.f, 2000.f, 2.f, 0,3);
-	sv= &svDofFar;		sv->Init("DofFar",		&pSet->dof_far,   0.f, 2000.f, 2.f, 0,4);
+	//  hdr
+	ck= &ckHDR;				ck->Init("HDR",				&pSet->hdr);  Cev(EffUpd);
+	sv= &svHDRParam1;		sv->Init("HDRParam1",		&pSet->hdrParam1);  sv->DefaultF(0.62f);
+	sv= &svHDRParam2;		sv->Init("HDRParam2",		&pSet->hdrParam2);  sv->DefaultF(0.10f);
+	sv= &svHDRParam3;		sv->Init("HDRParam3",		&pSet->hdrParam3);  sv->DefaultF(0.79f);
+	sv= &svHDRAdaptScale;	sv->Init("HDRAdaptScale",	&pSet->hdrAdaptationScale);  sv->DefaultF(0.51f);
+	sv= &svHDRBloomInt;		sv->Init("HDRBloomInt",		&pSet->hdrBloomint);   sv->DefaultF(0.81f);
+	sv= &svHDRBloomOrig;	sv->Init("HDRBloomOrig",	&pSet->hdrBloomorig);  sv->DefaultF(0.34f);
+	sv= &svHDRVignRadius;	sv->Init("HDRVignRadius",	&pSet->vignRadius, 0.f, 10.f);  sv->DefaultF(2.85f);
+	sv= &svHDRVignDark;		sv->Init("HDRVignDark",		&pSet->vignDarkness);  sv->DefaultF(0.34f);
 	
 	
 	//  replays  ------------------------------------------------------------

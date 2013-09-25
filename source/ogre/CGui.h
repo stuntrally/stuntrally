@@ -281,11 +281,16 @@ public:
 
 	//  car
 	Ck ckCarGear, ckCarRear, ckCarRearInv;  void chkGear(Ck*);
-	void chkAbs(WP), chkTcs(WP),
-		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // effects
-		chkVidSoftParticles(WP), chkVidGodRays(WP), chkVidDepthOfField(WP), chkVidBoostFOV(WP);
+	void chkAbs(WP), chkTcs(WP);
+
 	//  Game
 	Ck ckVegetCollis, ckCarCollis, ckRoadWCollis, ckDynamicObjs;
+
+	//  effects
+	CK(AllEffects);
+	Ck ckBoostFOV;
+	Ck ckBloom, ckBlur, ckSoftPar, ckSSAO, ckGodRays, ckDoF, ckHDR;
+	void chkEffUpd(Ck*), chkEffUpdShd(Ck*);
 
 	//  Startup
 	Ck ckAutoStart, ckEscQuits;

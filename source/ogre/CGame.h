@@ -75,7 +75,6 @@ public:
 	//  trees
 	Forests::PagedGeometry *trees, *grass;
 		
-	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };
 
 	boost::thread mThread;  // 2nd thread for simulation
 
