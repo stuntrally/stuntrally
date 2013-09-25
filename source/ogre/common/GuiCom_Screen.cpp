@@ -93,7 +93,7 @@ void CGuiCom::InitGuiScreenRes()
 	ck= &ckVidVSync;	ck->Init("VSync",      &pSet->vsync);		CevC(VidVSync);
 
 	//  video resolutions combobox
-	resList = app->mGui->findWidget<ComboBox>("ResList");
+	resList = fCmb("ResList");
 	if (resList)
 	{
 		//  get resolutions

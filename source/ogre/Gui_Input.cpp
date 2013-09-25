@@ -221,15 +221,14 @@ void CGui::InitInputGui()
 	app->input->LoadInputDefaults();
 
 
-	txtInpDetail = mGui->findWidget<StaticText>("InputDetail");
-	panInputDetail = mGui->findWidget<Widget>("PanInputDetail");
+	txtInpDetail = fTxt("InputDetail");
+	panInputDetail = fWP("PanInputDetail");
 
-	TabItemPtr inpTabAll = mGui->findWidget<TabItem>("InputTabAll");  if (!inpTabAll)  return;
 	Tab(tabInput, "InputTab", tabInputChg);
 	if (!tabInput)  return;
 
 	//  details edits
-	ButtonPtr btn, bchk;
+	Btn btn, bchk;
 	Btn("InputInv", btnInputInv);  //Ed(InputMul, editInput);
 	Ed(InputIncrease, editInput);  //Ed(InputReturn, editInput);
 	Chk("OneAxisThrBrk", chkOneAxis, false);  chOneAxis = bchk;
@@ -289,7 +288,7 @@ void CGui::notifyInputActionBound(bool complete)
 
 		// If a key was assigned that used to belong to another control, it will now be unassigned,
 		// so we need to force-update button labels
-		TabControl* inputTab = mGui->findWidget<TabControl>("InputTab");  if (!inputTab)  return;
+		TabControl* inputTab = fTab("InputTab");  if (!inputTab)  return;
 		TabItem* current = inputTab->getItemSelected();
 		for (int i=0; i < current->getChildCount(); ++i)
 		{
@@ -340,7 +339,7 @@ void CGui::inputDetailBtn(WP sender)
 	if (panInputDetail)
 		panInputDetail->setVisible(false);
 
-	Button* btnInputInv = mGui->findWidget<Button>("InputInv");
+	Button* btnInputInv = fBtn("InputInv");
 	if (btnInputInv)
 		btnInputInv->setStateSelected( mBindingAction->mControl->getInverted());
 	if (edInputIncrease)
@@ -417,7 +416,7 @@ void CGui::comboInputKeyAllPreset(ComboBoxPtr cmb, size_t val)
 //-------------------------------------------------------------------------------
 void CGui::UpdateInputBars()
 {
-	TabControl* inputTab = mGui->findWidget<TabControl>("InputTab");  if (!inputTab)  return;
+	TabControl* inputTab = fTab("InputTab");  if (!inputTab)  return;
 	TabItem* current = inputTab->getItemSelected();
 	for (int i=0; i<current->getChildCount(); ++i)
 	{

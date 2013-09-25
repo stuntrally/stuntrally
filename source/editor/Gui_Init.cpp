@@ -245,20 +245,20 @@ void CGui::InitGui()
 	sv= &svTerGenOfsY;	sv->Init("TerGenOfsY",	&pSet->gen_ofsy, -12.f,12.f, 1.f, 3,5);  sv->DefaultF(-1.54f);  Sev(TerGen);
 
 	sv= &svTerGenFreq;	sv->Init("TerGenFreq",	&pSet->gen_freq,  0.06f,3.f, 2.f, 3,5);  sv->DefaultF(0.914f);  Sev(TerGen);
-	sv= &svTerGenOct;	sv->Init("TerGenOct",	&pSet->gen_oct,    0.f, 9.f);             sv->DefaultI(4);    Sev(TerGen);
-	sv= &svTerGenPers;	sv->Init("TerGenPers",	&pSet->gen_persist,0.f, 0.7f, 1.f, 3,5);  sv->DefaultF(0.347f);  Sev(TerGen);
-	sv= &svTerGenPow;	sv->Init("TerGenPow",	&pSet->gen_pow,    0.f, 6.f,  2.f, 3,5);  sv->DefaultF(1.f);  Sev(TerGen);
+	sv= &svTerGenOct;	sv->Init("TerGenOct",	&pSet->gen_oct,    0.f, 9.f);             sv->DefaultI(4);      Sev(TerGen);
+	sv= &svTerGenPers;	sv->Init("TerGenPers",	&pSet->gen_persist,0.f, 0.7f, 1.f, 3,5);  sv->DefaultF(0.347f); Sev(TerGen);
+	sv= &svTerGenPow;	sv->Init("TerGenPow",	&pSet->gen_pow,    0.f, 6.f,  2.f, 2,4);  sv->DefaultF(1.f);    Sev(TerGen);
 	
-	sv= &svTerGenMul;	sv->Init("TerGenMul",	&pSet->gen_mul,    0.f, 6.f,  2.f, 3,5);  sv->DefaultF(1.f);  Sev(TerGen);
-	sv= &svTerGenOfsH;	sv->Init("TerGenOfsH",	&pSet->gen_ofsh,   0.f, 60.f, 2.f, 3,5);  sv->DefaultF(0.f);  Sev(TerGen);
-	sv= &svTerGenRoadSm;sv->Init("TerGenRoadSm",&pSet->gen_roadsm, 0.f, 6.f,  1.f, 3,5);  sv->DefaultF(0.f);  Sev(TerGen);
+	sv= &svTerGenMul;	sv->Init("TerGenMul",	&pSet->gen_mul,    0.f, 6.f,  2.f, 2,4);  sv->DefaultF(1.f);
+	sv= &svTerGenOfsH;	sv->Init("TerGenOfsH",	&pSet->gen_ofsh,   0.f, 60.f, 2.f, 2,4);  sv->DefaultF(0.f);
+	sv= &svTerGenRoadSm;sv->Init("TerGenRoadSm",&pSet->gen_roadsm, 0.f, 6.f,  1.f, 2,4);  sv->DefaultF(0.f);
 
-	sv= &svTerGenAngMin;sv->Init("TerGenAngMin",&pSet->gen_terMinA, 0.f,  90.f,  1.f, 0,3);  sv->DefaultF(0.f);
-	sv= &svTerGenAngMax;sv->Init("TerGenAngMax",&pSet->gen_terMaxA, 0.f,  90.f,  1.f, 0,3);  sv->DefaultF(90.f);
-	sv= &svTerGenAngSm;	sv->Init("TerGenAngSm",	&pSet->gen_terSmA,  0.f,  90.f,  1.f, 0,3);  sv->DefaultF(10.f);
-	sv= &svTerGenHMin;	sv->Init("TerGenHMin",	&pSet->gen_terMinH,-300.f,300.f, 1.f, 0,3);  sv->DefaultF(-300.f);
-	sv= &svTerGenHMax;	sv->Init("TerGenHMax",	&pSet->gen_terMaxH,-300.f,300.f, 1.f, 0,3);  sv->DefaultF( 300.f);
-	sv= &svTerGenHSm;	sv->Init("TerGenHSm",	&pSet->gen_terSmH,  0.f,  200.f, 1.f, 0,3);  sv->DefaultF(20.f);
+	sv= &svTerGenAngMin;sv->Init("TerGenAngMin",&pSet->gen_terMinA, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(0.f);
+	sv= &svTerGenAngMax;sv->Init("TerGenAngMax",&pSet->gen_terMaxA, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(90.f);
+	sv= &svTerGenAngSm;	sv->Init("TerGenAngSm",	&pSet->gen_terSmA,  0.f,  90.f,  2.f, 1,4);  sv->DefaultF(10.f);
+	sv= &svTerGenHMin;	sv->Init("TerGenHMin",	&pSet->gen_terMinH,-150.f,150.f, 1.f, 0,3);  sv->DefaultF(-300.f);
+	sv= &svTerGenHMax;	sv->Init("TerGenHMax",	&pSet->gen_terMaxH,-150.f,150.f, 1.f, 0,3);  sv->DefaultF( 300.f);
+	sv= &svTerGenHSm;	sv->Init("TerGenHSm",	&pSet->gen_terSmH,  0.f,  100.f, 2.f, 1,4);  sv->DefaultF(20.f);
 
 
 	///  [Layers]  ------------------------------------
@@ -272,13 +272,13 @@ void CGui::InitGui()
 	float f=0.f;  i=0;  // temp vars
 	sv= &svTerTriSize;	sv->Init("TerTriSize", &sc->td.fTriangleSize,  0.1f,6.f, 2.f);  sv->DefaultF(1.4f);  Sev(TerTriSize);
 	//  ter layer
-	sv= &svTerLScale;	sv->Init("TerLScale",  &f, 4.0f, 64.f,  3.f);  sv->DefaultF(8.f);  Sev(TerLay);  // 2 24 1.5
+	sv= &svTerLScale;	sv->Init("TerLScale",  &f, 4.0f, 64.f,  3.f);  sv->DefaultF(8.f);  //Sev(TerLay);  // 2 24 1.5
 	//  blendmap
 	sv= &svTerLAngMin;  sv->Init("TerLAngMin", &f, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(0.f);  Sev(TerLay);
 	sv= &svTerLAngMax;  sv->Init("TerLAngMax", &f, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(90.f);  Sev(TerLay);
-	sv= &svTerLHMin;    sv->Init("TerLHMin",   &f,-100.f,200.f, 2.f, 0,3);  sv->DefaultF(-300.f);  Sev(TerLay);
-	sv= &svTerLHMax;    sv->Init("TerLHMax",   &f,-100.f,200.f, 2.f, 0,3);  sv->DefaultF( 300.f);  Sev(TerLay);
-	sv= &svTerLAngSm;   sv->Init("TerLAngSm",  &f, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(20.f);  Sev(TerLay);
+	sv= &svTerLAngSm;   sv->Init("TerLAngSm",  &f, 0.f,  90.f,  2.f, 1,4);  sv->DefaultF(20.f);  Sev(TerLay);
+	sv= &svTerLHMin;    sv->Init("TerLHMin",   &f,-150.f,150.f, 1.f, 0,3);  sv->DefaultF(-300.f);  Sev(TerLay);
+	sv= &svTerLHMax;    sv->Init("TerLHMax",   &f,-150.f,150.f, 1.f, 0,3);  sv->DefaultF( 300.f);  Sev(TerLay);
 	sv= &svTerLHSm;     sv->Init("TerLHSm",    &f, 0.f,  100.f, 2.f, 1,4);  sv->DefaultF(20.f);  Sev(TerLay);
 	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f,-2.f,2.f);
 	Chk("TerLNoiseOnly", chkTerLNoiseOnlyOn, 0);  chkTerLNoiseOnly = bchk;
@@ -311,19 +311,19 @@ void CGui::InitGui()
 	valLTrAll = fTxt("LTrAll");
 	Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);
 	//  veget layers, models
-	sv= &svLTrDens;		sv->Init("LTrDens",		 &f, 0.001f,1.0f, 2.f);  sv->DefaultF(0.15f);
+	sv= &svLTrDens;		sv->Init("LTrDens",		 &f, 0.001f,1.0f, 2.f, 3,5);  sv->DefaultF(0.15f);
 	
 	sv= &svLTrRdDist;	sv->Init("LTrRdDist",	 &i, 0,20);  sv->DefaultI(0);
 	sv= &svLTrRdDistMax;sv->Init("LTrRdDistMax", &i, 0,20);  sv->DefaultI(20);
 	
-	sv= &svLTrMinSc;	sv->Init("LTrMinSc",	 &f, 0.f,6.f, 3.f);  sv->DefaultF(0.7f);
-	sv= &svLTrMaxSc;	sv->Init("LTrMaxSc",	 &f, 0.f,6.f, 3.f);  sv->DefaultF(1.2f);
+	sv= &svLTrMinSc;	sv->Init("LTrMinSc",	 &f, 0.f,6.f, 3.f, 3,5);  sv->DefaultF(0.7f);
+	sv= &svLTrMaxSc;	sv->Init("LTrMaxSc",	 &f, 0.f,6.f, 3.f, 3,5);  sv->DefaultF(1.2f);
 	
-	sv= &svLTrWindFx;	sv->Init("LTrWindFx",	 &f, 0.f,3.f, 3.f);   sv->DefaultF(0.5f);
-	sv= &svLTrWindFy;	sv->Init("LTrWindFy",	 &f, 0.f,0.4f, 3.f);  sv->DefaultF(0.06f);
+	sv= &svLTrWindFx;	sv->Init("LTrWindFx",	 &f, 0.f,3.f, 3.f, 3,5);  sv->DefaultF(0.5f);
+	sv= &svLTrWindFy;	sv->Init("LTrWindFy",	 &f, 0.f,0.4f,3.f, 3,5);  sv->DefaultF(0.06f);
 	
-	sv= &svLTrMaxTerAng;sv->Init("LTrMaxTerAng", &f, 0.f,90.f, 2.f);  sv->DefaultF(25.f);
-	sldUpdPgL();  // real &f set here
+	sv= &svLTrMaxTerAng;sv->Init("LTrMaxTerAng", &f, 0.f,90.f, 2.f, 1,4);  sv->DefaultF(25.f);
+	SldUpd_PgL();  // real &f set here
 
 	Ed(LTrMinTerH, editLTrMinTerH);
 	Ed(LTrMaxTerH, editLTrMaxTerH);
@@ -341,7 +341,7 @@ void CGui::InitGui()
 	sv= &svGrMaxY;	sv->Init("GrMaxY",	&f, 0.1f,4.1, 2.f);  sv->DefaultF(1.6f);
 	
 	sv= &svLGrDens;	sv->Init("LGrDens",	&f, 0.001f,1.f, 2.f, 3,5);  sv->DefaultF(0.22f);
-	sldUpdGrL();
+	SldUpd_GrL();
 
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
 	Ed(GrTerMaxAngle, editTrGr);  Ed(GrTerSmAngle, editTrGr);
@@ -371,8 +371,8 @@ void CGui::InitGui()
 	Btn("DeleteRoad", btnDeleteRoad);		Btn("DeleteFluids", btnDeleteFluids);
 	Btn("DeleteObjects", btnDeleteObjects);
 
-	Btn("ScaleAll", btnScaleAll);	Ed(ScaleAllMul, editScaleAllMul);
-	Btn("ScaleTerH", btnScaleTerH);	Ed(ScaleTerHMul, editScaleTerHMul);
+	Btn("ScaleAll",  btnScaleAll);   Ed(ScaleAllMul,  editScaleAllMul);
+	Btn("ScaleTerH", btnScaleTerH);  Ed(ScaleTerHMul, editScaleTerHMul);
 
 	sv= &svAlignWidthAdd;	sv->Init("AlignWidthAdd",	&pSet->al_w_add,  0.f,20.f,1.f, 1,3);  sv->DefaultF(10.f);
 	sv= &svAlignWidthMul;	sv->Init("AlignWidthMul",	&pSet->al_w_mul,  1.f,4.f, 1.f, 2,4);  sv->DefaultF(1.f);
@@ -502,31 +502,30 @@ void CGui::InitGui()
 
 
 	//---------------------  Objects  ---------------------
-	strlist lo;  vObjNames.clear();
+	vObjNames.clear();  strlist lo;
 	PATHMANAGER::DirList(data + "/objects", lo);
 	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh") && (*i) != "sphere.mesh")
 			vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
 	
-	objListSt = mGui->findWidget<List>("ObjListSt");    Lev(objListSt,  ObjsChng);
-	objListDyn = mGui->findWidget<List>("ObjListDyn");	Lev(objListDyn, ObjsChng);
-	objListBld = mGui->findWidget<List>("ObjListBld");	Lev(objListBld, ObjsChng);
-	objPan = mGui->findWidget<Widget>("objPan");
-	{
-		for (int i=0; i < vObjNames.size(); ++i)
-		{	const std::string& name = vObjNames[i];
-			if (name != "sphere")
-			{
-				if (StringUtil::startsWith(name,"pers_",false))
-					objListBld->addItem("#E0E070"+name);  // buildings
-				else
-				if (boost::filesystem::exists(data+"/objects/"+ name + ".bullet"))
-					objListDyn->addItem("#80D0FF"+name);  // dynamic
-				else
-					objListSt->addItem("#C8C8C8"+name);
-		}	}
-		//objList->setIndexSelected(0);  //objList->findItemIndexWith(modeSel)
-	}
+	objListSt = fLi("ObjListSt");    Lev(objListSt,  ObjsChng);
+	objListDyn = fLi("ObjListDyn");  Lev(objListDyn, ObjsChng);
+	objListBld = fLi("ObjListBld");  Lev(objListBld, ObjsChng);
+	objPan = fWP("objPan");
+
+	for (int i=0; i < vObjNames.size(); ++i)
+	{	const std::string& name = vObjNames[i];
+		if (name != "sphere")
+		{
+			if (StringUtil::startsWith(name,"pers_",false))
+				objListBld->addItem("#E0E070"+name);  // buildings
+			else
+			if (boost::filesystem::exists(data+"/objects/"+ name + ".bullet"))
+				objListDyn->addItem("#A0E0FF"+name);  // dynamic
+			else
+				objListSt->addItem("#C8C8C8"+name);
+	}	}
+	//objList->setIndexSelected(0);  //objList->findItemIndexWith(modeSel)
 
 	
 	//---------------------  Tweak  ---------------------

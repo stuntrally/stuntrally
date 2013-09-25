@@ -263,7 +263,7 @@ void CGuiCom::updTrkListDim()
 	imgTrkIco1->setCoord(xt + xico1+2, yico, 3*wico, wico);
 	imgTrkIco2->setCoord(xt + xico2+2, yico, 8*wico, wico);
 	#ifndef SR_EDITOR
-	bool hid = app->gui->panelNetTrack && app->gui->panelNetTrack->getVisible();
+	bool hid = app->gui->panNetTrack && app->gui->panNetTrack->getVisible();
 	if (!hid)
 	#endif
 		trkList->setVisible(true);
@@ -285,9 +285,9 @@ void CGuiCom::updTrkListDim()
 	#endif
 	
 	#ifndef SR_EDITOR
-	if (app->gui->panelNetTrack)  {
-		TabItem* trkTab = mGui->findWidget<TabItem>("TabTrack");
+	if (app->gui->panNetTrack)  {
+		Tbi trkTab = fTbi("TabTrack");
 		const IntCoord& tc = trkTab->getCoord();
-		app->gui->panelNetTrack->setCoord(0, 0.82f*tc.height, tc.width*0.64f, 0.162f*tc.height);  }
+		app->gui->panNetTrack->setCoord(0, 0.82f*tc.height, tc.width*0.64f, 0.162f*tc.height);  }
 	#endif
 }

@@ -442,23 +442,6 @@ void CGui::btnNetEndClose(WP)
 //  utility
 //---------------------------------------------------------------------------------------------------------------------
 
-void CGui::UpdCarClrSld(bool upd)
-{
-	Slider* sl;
-	Slv(CarClrH, pSet->gui.car_hue[iCurCar]);
-	Slv(CarClrS, pSet->gui.car_sat[iCurCar]);
-	Slv(CarClrV, pSet->gui.car_val[iCurCar]);
-	Slv(CarClrGloss, powf(pSet->gui.car_gloss[iCurCar], 1.f/ 1.6f));
-	Slv(CarClrRefl, pSet->gui.car_refl[iCurCar] /1.4f);
-	pSet->game.car_hue[iCurCar] = pSet->gui.car_hue[iCurCar];  // copy to apply
-	pSet->game.car_sat[iCurCar] = pSet->gui.car_sat[iCurCar];
-	pSet->game.car_val[iCurCar] = pSet->gui.car_val[iCurCar];
-	pSet->game.car_gloss[iCurCar] = pSet->gui.car_gloss[iCurCar];
-	pSet->game.car_refl[iCurCar] = pSet->gui.car_refl[iCurCar];
-	bUpdCarClr = true;
-}
-
-
 //  next/prev in list by key
 int CGui::LNext(Mli2 lp, int rel, int ofs)
 {

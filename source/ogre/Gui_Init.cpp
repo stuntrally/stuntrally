@@ -68,7 +68,7 @@ void CGui::InitGui()
 
 
 	//  Tabs
-	TabPtr tab,sub;
+	Tab tab,sub;
 	fTabW("TabWndGame");    app->mWndTabsGame = tab;
 	fTabW("TabWndReplays"); app->mWndTabsRpl = tab;
 	fTabW("TabWndHelp");    app->mWndTabsHelp = tab;
@@ -78,14 +78,14 @@ void CGui::InitGui()
 	vSubTabsGame.clear();
 	for (size_t i=0; i < app->mWndTabsGame->getItemCount(); ++i)
 	{	// todo: startsWith("SubTab")..
-		sub = (TabPtr)app->mWndTabsGame->getItemAt(i)->findWidget(
+		sub = (Tab)app->mWndTabsGame->getItemAt(i)->findWidget(
 			i==TAB_Champs ? "ChampType" : (i==TAB_Multi ? "tabsNet" : "tabPlayer") );
 		vSubTabsGame.push_back(sub);  // 0 for not found
 	}
 	vSubTabsOpts.clear();
 	for (size_t i=0; i < app->mWndTabsOpts->getItemCount(); ++i)
 	{
-		sub = (TabPtr)app->mWndTabsOpts->getItemAt(i)->findWidget(
+		sub = (Tab)app->mWndTabsOpts->getItemAt(i)->findWidget(
 			i==TABo_Input ? "InputTab" : "SubTab");
 		vSubTabsOpts.push_back(sub);
 	}
@@ -120,7 +120,7 @@ void CGui::InitGui()
 	sv= &svLayoutGaug;	sv->Init("LayoutGaug",	&pSet->gauges_layout,  0, 2);  sv->DefaultI(1);  Sev(HudCreate);
 
 	sv= &svSizeMinimap;	sv->Init("SizeMinimap",	&pSet->size_minimap,   0.05f, 0.3f, 1.f, 3,4);  sv->DefaultF(0.165f);  Sev(HudSize);
-	sv= &svZoomMinimap;	sv->Init("ZoomMinimap",	&pSet->zoom_minimap,   0.9f, 4.f,   1.f, 3,4);  sv->DefaultF(1.6f);    Sev(HudSize);
+	sv= &svZoomMinimap;	sv->Init("ZoomMinimap",	&pSet->zoom_minimap,   0.9f, 4.f,   1.f, 2,4);  sv->DefaultF(1.6f);    Sev(HudSize);
 	sv= &svSizeArrow;	sv->Init("SizeArrow",   &pSet->size_arrow,     0.1f, 0.5f,  1.f, 3,4);  sv->DefaultF(0.26f);  Sev(SizeArrow);
 	Slv(CountdownTime,  pSet->gui.pre_time / 0.5f /6.f);
 
@@ -170,6 +170,12 @@ void CGui::InitGui()
 
 
 	//  car color
+	float f;  // temp
+	sv= &svCarClrH;		sv->Init("CarClrH", &f, 0.f,1.f);  Sev(CarClr);
+	sv= &svCarClrS;		sv->Init("CarClrS", &f, 0.f,1.f);  Sev(CarClr);
+	sv= &svCarClrV;		sv->Init("CarClrV", &f, 0.f,1.f);  Sev(CarClr);
+	sv= &svCarClrGloss;	sv->Init("CarClrGloss", &f, 0.f,1.f, 1.6f);  Sev(CarClr);
+	sv= &svCarClrRefl;	sv->Init("CarClrRefl",  &f, 0.f,1.4f);  Sev(CarClr);
 	UpdCarClrSld();
 
 
@@ -195,7 +201,7 @@ void CGui::InitGui()
 	ck= &ckMiniTer;		ck->Init("MiniTer",     &pSet->mini_terrain);  Cev(MiniUpd);
 	ck= &ckMiniBorder;	ck->Init("MiniBorder",  &pSet->mini_border);   Cev(MiniUpd);
 
-	//  cam
+	//  camera
 	ck= &ckCamInfo;		ck->Init("CamInfo",     &pSet->show_cam);   Cev(HudShow);
 	ck= &ckCamTilt;		ck->Init("CamTilt",     &pSet->cam_tilt);
 
@@ -235,17 +241,18 @@ void CGui::InitGui()
 
 	TabPtr tTires = fTab("tabCarTires");  Tev(tTires, TireSet);
 	
-	Slv(SSSEffect,	pSet->sss_effect[0]);  slSSSEff = sl;
-	Slv(SSSVelFactor, pSet->sss_velfactor[0]/2.f);  slSSSVel = sl;
-	Slv(SteerRangeSurf, pSet->steer_range[0]-0.3f);  slSteerRngSurf = sl;
-	Slv(SteerRangeSim, (pSet->gui.sim_mode == "easy" ? pSet->steer_sim_easy : pSet->steer_sim_normal)-0.3f);  slSteerRngSim = sl;
+	sv= &svSSSEffect;		sv->Init("SSSEffect",		&f, 0.f, 1.f);
+	sv= &svSSSVelFactor;	sv->Init("SSSVelFactor",	&f, 0.f, 2.f);
+	sv= &svSteerRangeSurf;	sv->Init("SteerRangeSurf",	&f, 0.3f, 1.3f);
+	sv= &svSteerRangeSim;	sv->Init("SteerRangeSim",	&f, 0.3f, 1.3f);
+	SldUpd_TireSet();
 
 
 	//  game  ------------------------------------------------------------
-	ck= &ckVegetCollis;	ck->Init("VegetCollis",	&pSet->gui.collis_veget);
-	ck= &ckCarCollis;	ck->Init("CarCollis",	&pSet->gui.collis_cars);
-	ck= &ckRoadWCollis;	ck->Init("RoadWCollis",	&pSet->gui.collis_roadw);
-	ck= &ckDynamicObjs;	ck->Init("DynamicObjects", &pSet->gui.dyn_objects);
+	ck= &ckVegetCollis;		ck->Init("VegetCollis",		&pSet->gui.collis_veget);
+	ck= &ckCarCollis;		ck->Init("CarCollis",		&pSet->gui.collis_cars);
+	ck= &ckRoadWCollis;		ck->Init("RoadWCollis",		&pSet->gui.collis_roadw);
+	ck= &ckDynamicObjs;		ck->Init("DynamicObjects",	&pSet->gui.dyn_objects);
 
 	Cmb(cmb, "CmbBoost", comboBoost);	cmbBoost = cmb;
 		cmb->removeAllItems();
@@ -358,8 +365,8 @@ void CGui::InitGui()
 	{	//  replay controls
 		Btn("RplToStart", btnRplToStart);  Btn("RplToEnd", btnRplToEnd)
 		Btn("RplPlay", btnRplPlay);  btRplPl = btn;
-		btn = mGui->findWidget<Button>("RplBack");		btn->eventMouseButtonPressed += newDelegate(this, &CGui::btnRplBackDn);  btn->eventMouseButtonReleased += newDelegate(this, &CGui::btnRplBackUp);
-		btn = mGui->findWidget<Button>("RplForward");	btn->eventMouseButtonPressed += newDelegate(this, &CGui::btnRplFwdDn);   btn->eventMouseButtonReleased += newDelegate(this, &CGui::btnRplFwdUp);
+		btn = fBtn("RplBack");		btn->eventMouseButtonPressed += newDelegate(this, &CGui::btnRplBackDn);  btn->eventMouseButtonReleased += newDelegate(this, &CGui::btnRplBackUp);
+		btn = fBtn("RplForward");	btn->eventMouseButtonPressed += newDelegate(this, &CGui::btnRplFwdDn);   btn->eventMouseButtonReleased += newDelegate(this, &CGui::btnRplFwdUp);
 		
 		//  info
 		slRplPos = (Slider*)app->mWndRpl->findWidget("RplSlider");
@@ -375,7 +382,7 @@ void CGui::InitGui()
 	edRplName = fEd("RplNameEdit");
 	//edRplDesc = fEd("RplDesc");
 
-	rplList = mGui->findWidget<List>("RplList");
+	rplList = fLi("RplList");
 	Lev(rplList, RplChng);
 	updReplaysList();
 
@@ -400,7 +407,7 @@ void CGui::InitGui()
 	};
 	for (int i=0; i < clrBtn; ++i)
 	{
-		StaticImagePtr img = fImg("carClr"+toStr(i));
+		Img img = fImg("carClr"+toStr(i));
 		Real h = hsv[i][0], s = hsv[i][1], v = hsv[i][2], g = hsv[i][3], r = hsv[i][4];
 		ColourValue c;  c.setHSB(1.f-h, s, v);
 		img->setColour(Colour(c.r,c.g,c.b));
@@ -436,88 +443,71 @@ void CGui::InitGui()
 	//tabsNet->setIndexSelected( (tabsNet->getIndexSelected() - 1 + num) % num );
 	
 	//  server, games
-	listServers = mGui->findWidget<MultiList>("MListServers");  int c=0;
-	if (listServers)
-	{	listServers->addColumn("#C0FFC0"+TR("#{Game name}"), 160);  ++c;
-		listServers->addColumn("#50FF50"+TR("#{Track}"), 120);  ++c;
-		listServers->addColumn("#80FFC0"+TR("#{Laps}"), 60);  ++c;
-		listServers->addColumn("#FFFF00"+TR("#{Players}"), 60);  ++c;
-		listServers->addColumn("#80FFFF"+TR("#{Collis.}"), 70);  ++c;
-		listServers->addColumn("#A0D0FF"+TR("#{Simulation}"), 80);  ++c;
-		listServers->addColumn("#A0D0FF"+TR("#{Boost}"), 90);  ++c;
-		listServers->addColumn("#FF6060"+TR("#{Locked}"), 60);  iColLock = c;  ++c;
-		listServers->addColumn("#FF9000"+TR("#{NetHost}"), 140);  iColHost = c;  ++c;
-		listServers->addColumn("#FFB000"+TR("#{NetPort}"), 80);  iColPort = c;  ++c;
-	}
-	Btn("btnNetRefresh", evBtnNetRefresh);  btnNetRefresh = btn;
-	Btn("btnNetJoin", evBtnNetJoin);  btnNetJoin = btn;
+	listServers = fMli("MListServers");  int c=0;
+	Mli ml = listServers;
+		ml->addColumn("#C0FFC0"+TR("#{Game name}"), 160);  ++c;
+		ml->addColumn("#50FF50"+TR("#{Track}"), 120);  ++c;
+		ml->addColumn("#80FFC0"+TR("#{Laps}"), 60);  ++c;
+		ml->addColumn("#FFFF00"+TR("#{Players}"), 60);  ++c;
+		ml->addColumn("#80FFFF"+TR("#{Collis.}"), 70);  ++c;
+		ml->addColumn("#A0D0FF"+TR("#{Simulation}"), 80);  ++c;
+		ml->addColumn("#A0D0FF"+TR("#{Boost}"), 90);  ++c;
+		ml->addColumn("#FF6060"+TR("#{Locked}"), 60);  iColLock = c;  ++c;
+		ml->addColumn("#FF9000"+TR("#{NetHost}"), 140);  iColHost = c;  ++c;
+		ml->addColumn("#FFB000"+TR("#{NetPort}"), 80);  iColPort = c;  ++c;
+
+	Btn("btnNetRefresh",evBtnNetRefresh); btnNetRefresh = btn;
+	Btn("btnNetJoin",   evBtnNetJoin);    btnNetJoin = btn;
 	Btn("btnNetCreate", evBtnNetCreate);  btnNetCreate = btn;
 	Btn("btnNetDirect", evBtnNetDirect);  btnNetDirect = btn;
 
 	//  game, players
-	valNetGameName = fTxt("valNetGameName");
-	edNetGameName = fEd("edNetGameName");
-	if (edNetGameName)
-	{	edNetGameName->setCaption(pSet->netGameName);
-		edNetGameName->eventEditTextChange += newDelegate(this, &CGui::evEdNetGameName);
-	}
-	//  password
+	Edt(edNetGameName, "edNetGameName", evEdNetGameName);  edNetGameName->setCaption(pSet->netGameName);
 	valNetPassword = fTxt("valNetPassword");
-	edNetPassword = fEd("edNetPassword");
-	if (edNetPassword)
-		edNetPassword->eventEditTextChange += newDelegate(this, &CGui::evEdNetPassword);
+	Edt(edNetPassword, "edNetPassword", evEdNetPassword);
 
-	listPlayers = mGui->findWidget<MultiList>("MListPlayers");
-	if (listPlayers)
-	{	listPlayers->addColumn("#80C0FF"+TR("#{Player}"), 140);
-		listPlayers->addColumn("#F08080"+TR("#{Car}"), 60);
-		listPlayers->addColumn("#C0C060"+TR("#{Peers}"), 60);
-		listPlayers->addColumn("#60F0F0"+TR("#{Ping}"), 60);
-		listPlayers->addColumn("#40F040"+TR("#{NetReady}"), 60);
-	}
+	listPlayers = fMli("MListPlayers");
+	ml = listPlayers;
+		ml->addColumn("#80C0FF"+TR("#{Player}"), 140);
+		ml->addColumn("#F08080"+TR("#{Car}"), 60);
+		ml->addColumn("#C0C060"+TR("#{Peers}"), 60);
+		ml->addColumn("#60F0F0"+TR("#{Ping}"), 60);
+		ml->addColumn("#40F040"+TR("#{NetReady}"), 60);
+
 	Btn("btnNetReady", evBtnNetReady);  btnNetReady = btn;
 	Btn("btnNetLeave", evBtnNetLeave);	btnNetLeave = btn;
 
 	//  panels to hide tabs
-	panelNetServer = mGui->findWidget<Widget>("panelNetServer");
-	panelNetGame = mGui->findWidget<Widget>("panelNetGame");
-	//panelNetTrack = mGui->findWidget<Widget>("panelNetTrack",false);
-	panelNetServer->setVisible(false);
-	panelNetGame->setVisible(true);
+	panNetServer = fWP("panelNetServer");
+	panNetGame = fWP("panelNetGame");
+	panNetServer->setVisible(false);
+	panNetGame->setVisible(true);
 
     //  chat
-    valNetChat = fTxt("valNetChat");
     edNetChat = fEd("edNetChat");  // chat area
     edNetChatMsg = fEd("edNetChatMsg");  // user text
     //  track,game text
     valNetGameInfo = fTxt("valNetGameInfo");
 
 	//  settings
-	edNetNick = fEd("edNetNick");
-	edNetServerIP = fEd("edNetServerIP");
-	edNetServerPort = fEd("edNetServerPort");
-	edNetLocalPort = fEd("edNetLocalPort");
-	if (edNetNick)		{	edNetNick->setCaption(pSet->nickname);						
-		edNetNick->eventEditTextChange += newDelegate(this, &CGui::evEdNetNick);	}
-	if (edNetServerIP)	{	edNetServerIP->setCaption(pSet->master_server_address);
-		edNetServerIP->eventEditTextChange += newDelegate(this, &CGui::evEdNetServerIP);	}
-	if (edNetServerPort){	edNetServerPort->setCaption(toStr(pSet->master_server_port));
-		edNetServerPort->eventEditTextChange += newDelegate(this, &CGui::evEdNetServerPort);	}
-	if (edNetLocalPort)	{	edNetLocalPort->setCaption(toStr(pSet->local_port));
-		edNetLocalPort->eventEditTextChange += newDelegate(this, &CGui::evEdNetLocalPort);	}
+	Edt(edNetNick,		"edNetNick",		evEdNetNick);		edNetNick->setCaption(		pSet->nickname);
+	Edt(edNetServerIP,	"edNetServerIP",	evEdNetServerIP);	edNetServerIP->setCaption(	pSet->master_server_address);
+	Edt(edNetServerPort,"edNetServerPort",	evEdNetServerPort);	edNetServerPort->setCaption(toStr(pSet->master_server_port));
+	Edt(edNetLocalPort,	"edNetLocalPort",	evEdNetLocalPort);	edNetLocalPort->setCaption(	toStr(pSet->local_port));
 
 	
-	//  quick help text
+	//  quick help text  ----
 	Ed edHelp = fEd("QuickHelpText");
 	String s = TR("#{QuickHelpText}");
 	s = StringUtil::replaceAll(s, "@", "\n");
 	edHelp->setCaption(s);
+
 	//  user dir
     Ed edUserDir = fEd("EdUserDir");
 	edUserDir->setCaption(PATHMANAGER::UserConfigDir());
 
 	
-	///  tweak
+	///  tweak  ----
 	for (int i=0; i < ciEdCar; ++i)
 		edCar[i] = fEd("EdCar"+toStr(i));
 	edTweakCol = fEd("TweakEditCol");
@@ -541,20 +531,21 @@ void CGui::InitGui()
 	
 	///  cars list
     //------------------------------------------------------------------------
-	TabItem* carTab = (TabItem*)app->mWndGame->findWidget("TabCar");
-	carList = carTab->createWidget<MultiList2>("MultiListBox",16,48,200,110, Align::Left | Align::VStretch);
-	carList->setColour(Colour(0.7,0.85,1.0));
-	carList->removeAllColumns();  int n=0;
-	carList->addColumn("#FF8888"+TR("#{Car}"), colCar[n++]);
-	carList->addColumn("#FFC080"+TR("#{CarSpeed}"), colCar[n++]);
-	carList->addColumn("#B0B8C0"+TR("#{CarYear}"), colCar[n++]);
-	carList->addColumn("#C0C0E0"+TR("#{CarType}"), colCar[n++]);
-	carList->addColumn(" ", colCar[n++]);
+	Tbi carTab = fTbi("TabCar");
+	Mli2 li = carTab->createWidget<MultiList2>("MultiListBox",16,48,200,110, Align::Left | Align::VStretch);
+	li->setColour(Colour(0.7,0.85,1.0));
+	li->removeAllColumns();  int n=0;
+	li->addColumn("#FF8888"+TR("#{Car}"), colCar[n++]);
+	li->addColumn("#FFC080"+TR("#{CarSpeed}"), colCar[n++]);
+	li->addColumn("#B0B8C0"+TR("#{CarYear}"), colCar[n++]);
+	li->addColumn("#C0C0E0"+TR("#{CarType}"), colCar[n++]);
+	li->addColumn(" ", colCar[n++]);
+	carList = li;
 
 	FillCarList();  //once
 
-	carList->mSortColumnIndex = pSet->cars_sort;
-	carList->mSortUp = pSet->cars_sortup;
+	li->mSortColumnIndex = pSet->cars_sort;
+	li->mSortUp = pSet->cars_sortup;
 	Lev(carList, CarChng);
 
    	CarListUpd(false);  //upd
@@ -576,19 +567,17 @@ void CGui::InitGui()
 	Ed ed;
 	Edt(ed,"RplFind",edRplFind);
 
-	//if (!panelNetTrack)
-	{
-		TabItem* trkTab = mGui->findWidget<TabItem>("TabTrack");
-		trkTab->setColour(Colour(0.8f,0.96f,1.f));
-		const IntCoord& tc = trkTab->getCoord();
+	//  netw
+	Tbi trkTab = fTbi("TabTrack");
+	trkTab->setColour(Colour(0.8f,0.96f,1.f));
+	const IntCoord& tc = trkTab->getCoord();
 
-		panelNetTrack = trkTab->createWidget<Widget>(
-			"PanelSkin", 0,0,tc.width*0.66f,tc.height, Align::Default/*, "Popup", "panelNetTrack"*/);
-		panelNetTrack->setColour(Colour(0.8f,0.96f,1.f));
-		panelNetTrack->setAlpha(0.8f);
-		panelNetTrack->setVisible(false);
-		//<UserString key="RelativeTo" value="OptionsWnd"/>
-	}
+	WP wp = trkTab->createWidget<Widget>(
+		"PanelSkin", 0,0,tc.width*0.66f,tc.height, Align::Default/*, "Popup", "panelNetTrack"*/);
+	wp->setColour(Colour(0.8f,0.96f,1.f));
+	wp->setAlpha(0.8f);  wp->setVisible(false);
+	panNetTrack = wp;
+	//<UserString key="RelativeTo" value="OptionsWnd"/>
 
     //  new game
     for (int i=1; i<=3; ++i)
@@ -616,7 +605,7 @@ void CGui::InitGui()
 	if (edChInfo)  edChInfo->setVisible(pSet->champ_info);
 	Btn("btnChampInfo",btnChampInfo);
 
-	panCh = app->mWndGame->findWidget("panCh");
+	panCh = fWP("panCh");
 	txtCh = fTxt("txtChDetail");
 	valCh = fTxt("valChDetail");
 	for (int i=0; i<3; ++i) {  String s = toStr(i);
@@ -626,8 +615,7 @@ void CGui::InitGui()
 
 
 	//  Champs list  -------------
-	Mli2 li;
-	TabItem* trktab = (TabItem*)app->mWndGame->findWidget("TabChamps");
+	Tbi trktab = fTbi("TabChamps");
 	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
 	Lev(li, ChampChng);  li->setVisible(false);
 	
@@ -691,11 +679,11 @@ void CGui::InitGui()
 	
 	Btn("btnChampStageBack", btnChampStageBack);
 	Btn("btnChampStageStart",btnChampStageStart);  btChampStage = btn;
-	Btn("btnChampEndClose", btnChampEndClose);
+	Btn("btnChampEndClose",  btnChampEndClose);
 
 	Btn("btnChallStageBack", btnChallStageBack);
 	Btn("btnChallStageStart",btnChallStageStart);  btChallStage = btn;
-	Btn("btnChallEndClose", btnChallEndClose);
+	Btn("btnChallEndClose",  btnChallEndClose);
 
 	Btn("btnStageNext", btnStageNext);
 	Btn("btnStagePrev", btnStagePrev);

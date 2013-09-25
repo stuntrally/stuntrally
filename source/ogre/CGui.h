@@ -54,7 +54,8 @@ public:
 	//  car list
 	void CarListUpd(bool resetNotFound=false);
 	void AddCarL(std::string name, const CarInfo* ci);
-	std::list<CarL> liCar;  void FillCarList();
+	std::list<CarL> liCar;
+	void FillCarList();
 	
 	const static int colCar[16],colCh[16],colChL[16],colSt[16];
 
@@ -63,69 +64,6 @@ public:
 	void toggleGui(bool toggle=true);
 	void GuiShortcut(MNU_Btns mnu, int tab, int subtab=-1);
 	bool loadReadme;
-
-	void UpdCarClrSld(bool upd=true), UpdCarMClr();  bool bUpdCarClr;
-	void btnNetEndClose(WP);
-
-
-	///  championships & challenges
-	///-----------------------------------------------------------------------------------------------------------------
-	Btn btStTut, btStChamp, btStChall;
-	Img imgTut, imgChamp, imgChall;
-	//  tabs
-	Tab tabTut, tabChamp, tabChall;
-	void tabTutType(Tab, size_t), tabChampType(Tab, size_t);
-	void tabChallType(Tab, size_t);
-
-	//  stages
-	Ed edChInfo, edChDesc;  WP panCh;
-	Txt txtCh, valCh, txtChP[3], valChP[3];  // stages info, pass/progress
-	void btnStageNext(WP), btnStagePrev(WP);  Txt valStageNum;
-	void StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress);
-	
-	//  xml  [1]= reversed  L= challenge
-	ProgressXml progress[2];
-	ProgressLXml progressL[2];
-	void ProgressSave(bool upgGui=true), ProgressLSave(bool upgGui=true);
-	Chall* pChall;  // current challenge or 0 if not
-
-	//  load
-	void Ch_XmlLoad(), Ch_LoadEnd();
-	void UpdChallDetail(int id);
-	//  const
-	const static Ogre::String StrPrize(int i/*0 none..3 gold*/), strPrize[4],clrPrize[4];
-	const static int ciAddPos[3];  const static float cfSubPoints[3];
-	
-	//  common
-	Mli2 liStages, liNetEnd;  void listStageChng(Mli2, size_t);
-	Mli2 liChamps;  void listChampChng(Mli2, size_t);
-	Mli2 liChalls;  void listChallChng(Mli2, size_t);
-
-	void btnChampStart(WP), btnChampEndClose(WP), btnChampStageBack(WP), btnChampStageStart(WP);
-	void btnChallStart(WP), btnChallEndClose(WP), btnChallStageBack(WP), btnChallStageStart(WP);
-	void btnChRestart(WP);  Btn btChRestart;
-
-	Btn btChampStage, btChallStage;
-	Ed edChampStage, edChampEnd;  Img imgChampStage, imgChampEndCup;
-	Ed edChallStage, edChallEnd;  Img imgChallStage;
-	Img imgChallFail, imgChallCup;  Txt txChallEndC, txChallEndF;
-
-	//  main
-	void ChampsListUpdate(), ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
-	void ChallsListUpdate(), ChallFillStageInfo(bool finished), ChallengeAdvance(float timeCur);
-	void btnChampInfo(WP), UpdChampTabVis();
-	CK(ChampRev);
-
-	void ReadTrkStatsChamp(Ogre::String track,bool reverse);
-	void updChampListDim();
-
-	//  chall util
-	Ogre::String StrChallCars(const Chall& ch);
-	bool IsChallCar(Ogre::String name);
-	bool isChallGui();  void BackFromChs();
-
-	//  _Tools_
-	void ToolGhosts(),ToolGhostsConv(),ToolPresets();
 
 
 	///  [Input] tab
@@ -215,9 +153,9 @@ public:
 	///  [Options]  game only
 	///-----------------------------------------------------------------------------------------------------------------
 	//  reflection
-	SV svParticles, svTrails;
 	SV svReflSkip, svReflFaces, svReflSize;
 	SlV(ReflDist);  SlV(ReflMode);
+
 	//  hud view
 	SV svSizeGaug;
 	SV svTypeGaug, svLayoutGaug;
@@ -234,28 +172,11 @@ public:
 	SV svVolEngine, svVolTires, svVolSusp, svVolEnv;
 	SV svVolFlSplash, svVolFlCont, svVolCarCrash, svVolCarScrap;
 	
-	//  car clr
-	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);
-	SLV(CarClrGloss);  SLV(CarClrRefl);
-
-	//  video effects
-	SV svBloomInt, svBloomOrig;
-	SV svBlurIntens;  // motion blur
-	SV svDofFocus, svDofFar;  // DepthOfField
-	void slBloom(SV*);
-	//  hdr
-	SV svHDRParam1, svHDRParam2, svHDRParam3;
-	SV svHDRBloomInt, svHDRBloomOrig, svHDRAdaptScale;
-	SV svHDRVignRadius, svHDRVignDark;
-
-	//  setup
-	SV svNumLaps;  SLV(RplNumViewports);
-	SLV(SSSEffect);  SLV(SSSVelFactor);  //-
-	SLV(SteerRangeSurf);  SLV(SteerRangeSim);
-	
 	///  Checks  . . . . . . . . . . . . . . . . . . . .
 	CK(Reverse);  // track
+
 	//  Options
+	SV svParticles, svTrails;
 	Ck ckParticles, ckTrails;  void chkParTrl(Ck*);
 
 	//  Hud view
@@ -279,39 +200,62 @@ public:
 	Ck ckTireVis;  void chkHudCreate(Ck*);
 	CK(Graphs);
 
-	//  car
-	Ck ckCarGear, ckCarRear, ckCarRearInv;  void chkGear(Ck*);
-	void chkAbs(WP), chkTcs(WP);
-
-	//  Game
-	Ck ckVegetCollis, ckCarCollis, ckRoadWCollis, ckDynamicObjs;
-
-	//  effects
-	CK(AllEffects);
-	Ck ckBoostFOV;
-	Ck ckBloom, ckBlur, ckSoftPar, ckSSAO, ckGodRays, ckDoF, ckHDR;
-	void chkEffUpd(Ck*), chkEffUpdShd(Ck*);
-
 	//  Startup
 	Ck ckAutoStart, ckEscQuits;
 	Ck ckStartInMain, ckOgreDialog;
 	Ck ckBltLines, ckShowPics;
 	void chkMultiThread(WP);
 	
+	//  [Effects]
+	CK(AllEffects);
+	Ck ckBoostFOV;
+	Ck ckBloom, ckBlur, ckSoftPar, ckSSAO, ckGodRays, ckDoF, ckHDR;
+	void chkEffUpd(Ck*), chkEffUpdShd(Ck*);
+
+	SV svBloomInt, svBloomOrig;
+	SV svBlurIntens;  // motion blur
+	SV svDofFocus, svDofFar;  // depth of field
+	void slBloom(SV*);
+	//  hdr
+	SV svHDRParam1, svHDRParam2, svHDRParam3;
+	SV svHDRBloomInt, svHDRBloomOrig, svHDRAdaptScale;
+	SV svHDRVignRadius, svHDRVignDark;
+
+
+	///  [Car] color  --===---
+	SV svCarClrH, svCarClrS, svCarClrV;
+	SV svCarClrGloss, svCarClrRefl;  void slCarClr(SV*);
+	void SldUpd_CarClr();
+	void UpdCarClrSld(bool upd=true);
+	void SetCarClr();
+
+
+	//  [Setup] car
+	Ck ckCarGear, ckCarRear, ckCarRearInv;  void chkGear(Ck*);
+	Ck ckAbs, ckTcs;
+	Btn bchAbs,bchTcs;
+	void chkAbs(WP), chkTcs(WP);
 
 	//  gui car tire set gravel/asphalt
 	int iTireSet;
-	void tabTireSet(Tab wp, size_t);
-	Btn bchAbs,bchTcs;
-	Sl slSSSEff, slSSSVel, slSteerRngSurf, slSteerRngSim;
+	void tabTireSet(Tab, size_t);
+	void SldUpd_TireSet();
+
+	SV svSSSEffect, svSSSVelFactor;
+	SV svSteerRangeSurf, svSteerRangeSim;
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP);
 	
 	//  radios
-	Btn bRkmh, bRmph;
+	Btn bRkmh, bRmph;  // km/h, mph
 	void radKmh(WP), radMph(WP);
-	Btn bRsimEasy, bRsimNorm;
+
+	Btn bRsimEasy, bRsimNorm;  // sim easy, normal
 	void radSimEasy(WP), radSimNorm(WP);  bool bReloadSim;
+
+	//  [Game] setup
+	Ck ckVegetCollis, ckCarCollis, ckRoadWCollis, ckDynamicObjs;
+	SV svNumLaps;  SLV(RplNumViewports);  //-
 
 
 	///  [Replay]  -----------------------------
@@ -376,22 +320,82 @@ public:
 		txCarAuthor,txTrackAuthor;
 	void UpdCarStatsTxt();
 
-
-	//  key util
-	int LNext(Mli2, int rel, int ofs), LNext(Li, int rel, int ofs),
-		LNext(Mli, int rel);  // util next in list
-	void LNext(int rel);  void tabPlayer(Tab wp, size_t id);
-
-	const Ogre::String& GetGhostFile(std::string* ghCar=NULL);
-	std::string GetRplListDir();
-
 	Img imgCar;  Ed carDesc;
 	Cmb cmbBoost, cmbFlip, cmbDamage, cmbRewind;
 	void comboBoost(CMB), comboFlip(CMB), comboDamage(CMB), comboRewind(CMB);
 
 
-	//  multiplayer game
-	//------------------------------------------------------------------------------
+	//  key util
+	int LNext(Mli2, int rel, int ofs), LNext(Li, int rel, int ofs),
+		LNext(Mli, int rel);  // util next in list
+	void LNext(int rel);  void tabPlayer(Tab, size_t);
+
+	const Ogre::String& GetGhostFile(std::string* ghCar=NULL);
+	std::string GetRplListDir();
+
+
+	///  championships & challenges
+	///-----------------------------------------------------------------------------------------------------------------
+	Btn btStTut, btStChamp, btStChall;
+	Img imgTut, imgChamp, imgChall;
+	//  tabs
+	Tab tabTut, tabChamp, tabChall;
+	void tabTutType(Tab, size_t), tabChampType(Tab, size_t);
+	void tabChallType(Tab, size_t);
+
+	//  stages
+	Ed edChInfo, edChDesc;  WP panCh;
+	Txt txtCh, valCh, txtChP[3], valChP[3];  // stages info, pass/progress
+	void btnStageNext(WP), btnStagePrev(WP);  Txt valStageNum;
+	void StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress);
+	
+	//  xml  [1]= reversed  L= challenge
+	ProgressXml progress[2];
+	ProgressLXml progressL[2];
+	void ProgressSave(bool upgGui=true), ProgressLSave(bool upgGui=true);
+	Chall* pChall;  // current challenge or 0 if not
+
+	//  load
+	void Ch_XmlLoad(), Ch_LoadEnd();
+	void UpdChallDetail(int id);
+	//  const
+	const static Ogre::String StrPrize(int i/*0 none..3 gold*/), strPrize[4],clrPrize[4];
+	const static int ciAddPos[3];  const static float cfSubPoints[3];
+	
+	//  common
+	Mli2 liStages, liNetEnd;  void listStageChng(Mli2, size_t);
+	Mli2 liChamps;  void listChampChng(Mli2, size_t);
+	Mli2 liChalls;  void listChallChng(Mli2, size_t);
+
+	void btnChampStart(WP), btnChampEndClose(WP), btnChampStageBack(WP), btnChampStageStart(WP);
+	void btnChallStart(WP), btnChallEndClose(WP), btnChallStageBack(WP), btnChallStageStart(WP);
+	void btnChRestart(WP);  Btn btChRestart;
+
+	Btn btChampStage, btChallStage;
+	Ed edChampStage, edChampEnd;  Img imgChampStage, imgChampEndCup;
+	Ed edChallStage, edChallEnd;  Img imgChallStage;
+	Img imgChallFail, imgChallCup;  Txt txChallEndC, txChallEndF;
+
+	//  main
+	void ChampsListUpdate(), ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
+	void ChallsListUpdate(), ChallFillStageInfo(bool finished), ChallengeAdvance(float timeCur);
+	void btnChampInfo(WP), UpdChampTabVis();
+	CK(ChampRev);
+
+	void ReadTrkStatsChamp(Ogre::String track,bool reverse);
+	void updChampListDim();
+
+	//  chall util
+	Ogre::String StrChallCars(const Chall& ch);
+	bool IsChallCar(Ogre::String name);
+	bool isChallGui();  void BackFromChs();
+
+	//  _Tools_
+	void ToolGhosts(),ToolGhostsConv(),ToolPresets();
+
+
+	///  multiplayer game
+	///-----------------------------------------------------------------------------------------------------------------
 	void rebuildGameList(), rebuildPlayerList();
 	void updateGameInfo(), updateGameSet(), updateGameInfoGUI();
 	void setNetGuiHosting(bool enabled);
@@ -411,35 +415,35 @@ public:
 	mutable boost::mutex netGuiMutex;
 	protocol::GameInfo netGameInfo;
 
-	bool bRebuildPlayerList, bRebuildGameList;
-	bool bUpdateGameInfo, bStartGame, bStartedGame, bUpdChat;
-
 	///  multiplayer gui  --------------------
-	Tab tabsNet;  //void tabNet(TabPtr tab, size_t id);
-	WP  panelNetServer, panelNetGame, panelNetTrack;
+	Tab tabsNet;
+	WP  panNetServer, panNetGame, panNetTrack;
 	Mli listServers, listPlayers;
-	int iColLock, iColHost, iColPort;  // ids of columns in listServers, set in gui init
+	int iColLock, iColHost, iColPort;  // ids of columns in listServers
 
-	//  chat,msg
+	//  upd gui triggers
+	bool bRebuildPlayerList, bRebuildGameList;
+	bool bUpdateGameInfo, bUpdChat;
+	bool bStartGame, bStartedGame;
+	void UpdGuiNetw();
+
+	//  chat,msg  ----
 	Ed edNetChat;  // chat area, set text through sChatBuffer
 	MyGUI::UString sChatBuffer,sChatLast1,sChatLast2;  int iChatMove;
 	void AddChatMsg(const MyGUI::UString& clr, const MyGUI::UString& msg, bool add=true);
+
+	Ed edNetChatMsg;
+	Btn btnNetSendMsg;  void chatSendMsg();
 	GuiPopup* popup;  // msg with edits
 
-	Btn btnNetRefresh, btnNetJoin, btnNetCreate, btnNetDirect;
-	Btn btnNetReady, btnNetLeave;
-	void evBtnNetRefresh(WP);
-	void evBtnNetJoin(WP), evBtnNetJoinLockedClose();
-	void evBtnNetCreate(WP);
-	void evBtnNetDirect(WP), evBtnNetDirectClose();
-	void evBtnNetReady(WP), evBtnNetLeave(WP);
+	//  Net gui
+	Btn btnNetRefresh, btnNetJoin;    void evBtnNetRefresh(WP), evBtnNetJoin(WP),   evBtnNetJoinLockedClose();
+	Btn btnNetCreate,  btnNetDirect;  void evBtnNetCreate(WP),  evBtnNetDirect(WP), evBtnNetDirectClose();
+	Btn btnNetReady,   btnNetLeave;	  void evBtnNetReady(WP),   evBtnNetLeave(WP);
+	void btnNetEndClose(WP);
 
-	Txt valNetGameName, valNetChat, valNetGameInfo, valNetPassword;
-	Btn btnNetSendMsg;  void chatSendMsg();
-	Ed edNetGameName, edNetChatMsg, edNetPassword,
-		edNetNick, edNetServerIP, edNetServerPort, edNetLocalPort;
-	void evEdNetGameName(Ed), evEdNetPassword(Ed),
-		evEdNetNick(Ed), evEdNetServerIP(Ed),
-		evEdNetServerPort(Ed), evEdNetLocalPort(Ed);
-	void UpdGuiNetw();
+	Txt valNetGameInfo, valNetPassword;
+	Ed edNetGameName,   edNetPassword;   void evEdNetGameName(Ed),   evEdNetPassword(Ed);
+	Ed edNetNick,       edNetLocalPort;  void evEdNetNick(Ed),       evEdNetLocalPort(Ed);
+	Ed edNetServerPort, edNetServerIP;   void evEdNetServerPort(Ed), evEdNetServerIP(Ed);
 };

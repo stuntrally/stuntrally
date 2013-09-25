@@ -153,7 +153,7 @@ public:
 	
 	//  Ter Layer
 	int idTerLay;  bool bTerLay;  // help vars
-	void sldUpdTerL();
+	void SldUpd_TerL();
 	Tab tabsTerLayers; void tabTerLayer(TAB);
 
 	Txt valTerLAll;
@@ -181,8 +181,8 @@ public:
 	//  grass
 	Ed edGrSwayDistr, edGrSwayLen, edGrSwaySpd,
 		edGrDensSmooth, edSceneryId,
-		edGrTerMaxAngle,edGrTerSmAngle,
-		edGrTerMinHeight,edGrTerMaxHeight,edGrTerSmHeight;
+		edGrTerMaxAngle, edGrTerSmAngle,
+		edGrTerMinHeight, edGrTerMaxHeight, edGrTerSmHeight;
 
 	Cmb cmbGrassMtr;  void comboGrassMtr(CMB);
 	Cmb cmbGrassClr;  void comboGrassClr(CMB);
@@ -198,7 +198,7 @@ public:
 	
 	///  paged layers  --------
 	int idPgLay;  // tab
-	void sldUpdPgL();
+	void SldUpd_PgL();
 	Tab tabsPgLayers;  void tabPgLayers(TAB);
 
 	Btn chkPgLay;  void chkPgLayOn(WP);  Txt valLTrAll;
@@ -215,7 +215,7 @@ public:
 
 	///  grass layers  --------
 	int idGrLay;  // tab
-	void sldUpdGrL();
+	void SldUpd_GrL();
 	Tab tabsGrLayers;  void tabGrLayers(TAB);
 
 	SV svLGrDens;
@@ -288,7 +288,7 @@ public:
 
 
 
-	//  [Track]  ----
+	///  [Track]  ----
 	Ogre::String sCopyTrack;  int bCopyTrackU;  // for copy tools
 	Ogre::String PathCopyTrk(int user=-1);
 	Ogre::String GetListTrk();
@@ -300,7 +300,6 @@ public:
 
 	Ed trkName;  void editTrkDesc(Ed);
 	
-
 
 	//  system, utils
 	Ogre::String strFSerrors;

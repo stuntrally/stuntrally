@@ -108,7 +108,7 @@ void CGuiCom::doSizeGUI(EnumeratorWidgetPtr widgets)
 {
 	while (widgets.next())
 	{
-		WidgetPtr wp = widgets.current();
+		WP wp = widgets.current();
 		std::string relativeTo = wp->getUserString("RelativeTo");
 
 		if (relativeTo != "")
@@ -118,8 +118,7 @@ void CGuiCom::doSizeGUI(EnumeratorWidgetPtr widgets)
 			if (relativeTo == "Screen")
 				relativeSize = IntSize(app->mWindow->getWidth(), app->mWindow->getHeight());
 			else
-			{
-				WidgetPtr window = app->mGui->findWidget<Widget>(relativeTo);
+			{	WP window = fWP(relativeTo);
 				relativeSize = window->getSize();
 			}
 			
@@ -163,7 +162,7 @@ void CGuiCom::setOrigPos(WP wp, const char* relToWnd)
 //----------------------------------------------------------------------------------------------------------------
 void CGuiCom::GuiInitTooltip()
 {
-	mToolTip = mGui->findWidget<Widget>("ToolTip");
+	mToolTip = fWP("ToolTip");
 	mToolTip->setVisible(false);
 	mToolTipTxt = mToolTip->getChildAt(0)->castType<Edit>();
 
@@ -250,7 +249,7 @@ void CGuiCom::GuiInitLang()
 	languages["ru"] = TR("#{LANG_RU}");  languages["fi"] = TR("#{LANG_FI}");
 	languages["pt"] = TR("#{LANG_PT}");  languages["ro"] = TR("#{LANG_RO}");
 
-	ComboBoxPtr combo = app->mGui->findWidget<ComboBox>("Lang");
+	ComboBoxPtr combo = fCmb("Lang");
 	if (!combo)  return;
 	combo->eventComboChangePosition += newDelegate(this, &CGuiCom::comboLanguage);
 	for (std::map<std::string, UString>::const_iterator it = languages.begin();
@@ -294,7 +293,7 @@ void CGuiCom::InitMainMenu()
 	for (int i=0; i < cntMain; ++i)
 	{
 		const String s = toStr(i);
-		app->mWndMainPanels[i] = app->mWndMain->findWidget("PanMenu"+s);
+		app->mWndMainPanels[i] = fWP("PanMenu"+s);
 		BtnC("BtnMenu"+s, btnMainMenu);  app->mWndMainBtns[i] = btn;
 	}
 

@@ -74,8 +74,19 @@ void SliderValue::Edit(EditBox* ed)
 //  Update
 //-------------------------------------------------------------------------
 
-//  new val, upd sld and txt
-//  (pFloat or val changed)
+//  change ponter to value
+void SliderValue::UpdF(float *pF)
+{
+	pFloat = pF;
+	Upd();
+}
+void SliderValue::UpdI(int *pI)
+{
+	pInt = pI;
+	Upd();
+}
+
+//  value changed, update slided and text
 void SliderValue::Upd()
 {
 	if (!pFloat && !pInt)  return;
@@ -170,7 +181,7 @@ void SliderValue::setValI(int i)
 void SliderValue::initGui(String name)
 {
 	slider = pGUI->findWidget<Slider>(name, false);
-	if (!slider)  LogO("GUI slider not found: "+name);  // will crash
+	if (!slider)  LogO("GUI slider not found: "+name);  // will crash after
 
 	if (slider && slider->eventValueChanged.empty())
 		slider->eventValueChanged += newDelegate(this, &SliderValue::Move);
@@ -189,6 +200,15 @@ void SliderValue::setVisible(bool vis)
 	if (text)  text->setVisible(vis);
 	if (edit)  edit->setVisible(vis);
 }
+
+void SliderValue::setText(String txt)
+{
+	if (text)  text->setCaption(txt);
+}
+void SliderValue::setTextClr(float r,float g,float b)
+{
+	if (text)  text->setTextColour(Colour(r,g,b));
+}	
 
 
 //  Float
@@ -302,7 +322,7 @@ void Check::Invert()
 void Check::initGui(String name)
 {
 	chk = pGUI->findWidget<Button>(name, false);
-	if (!chk)  LogO("GUI button not found: "+name);  // will crash
+	if (!chk)  LogO("GUI button not found: "+name);  // will crash after
 
 	if (chk->eventMouseButtonClick.empty())
 		chk->eventMouseButtonClick += newDelegate(this, &Check::Click);

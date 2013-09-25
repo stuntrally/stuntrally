@@ -10,12 +10,15 @@ const float slHalf = 0.45f;  // added to int value sliders to their float value
 
 class SliderValue
 {
-	friend class CGui;
 private:
 	MyGUI::Slider* slider;
 	//  not required
 	MyGUI::TextBox* text;  // for value show
 	MyGUI::EditBox* edit;  // for value edit
+
+	//  pointer to value  // call UpdF or UpdI to change after init
+	float* pFloat;
+	int* pInt;
 
 public:
 	typedef MyGUI::delegates::CMultiDelegate1<SliderValue*> ValueChanged;
@@ -26,11 +29,6 @@ public:
 	static MyGUI::Gui* pGUI;  // for findWidget
 	//  gui inited, true to assign value on move (to pF or pI), false in init
 	static bool* bGI;
-
-
-	//  pointer to value
-	float* pFloat;
-	int* pInt;
 
 	
 	//  format float value (for display only)
@@ -69,10 +67,16 @@ public:
 	void Init(Ogre::String name, int* pI,
 			int rMin=0, int rMax=1, float rPow=1.f);
 
-	//  update slider and text (new value in *pFloat or pFloat changed)
+	//  update slider and text (value changed)
 	void Upd();
+	//  change pointer to value (does also Upd)
+	void UpdF(float *pF);
+	void UpdI(int *pI);
 	
 	void setVisible(bool vis);
+
+	void setText(Ogre::String txt);  // only if needed manually
+	void setTextClr(float r,float g,float b);
 
 
 	//  default value for RMB click (real values)

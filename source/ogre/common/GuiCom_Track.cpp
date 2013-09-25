@@ -110,19 +110,14 @@ const int CGui::colSt [16] = {30, 170, 100, 90, 50, 80, 70};  // stages
 //-----------------------------------------------------------------------------------------------------------
 void CGuiCom::GuiInitTrack()
 {
-	#ifdef SR_EDITOR
-	TabItem* trktab = (TabItem*)app->mWndEdit->findWidget("TabTrack");
-	#else
-	TabItem* trktab = (TabItem*)app->mWndGame->findWidget("TabTrack");
-	#endif
-	MultiList2* li = trktab->createWidget<MultiList2>("MultiListBox",0,0,500,300, Align::Left | Align::VStretch);
+	Tbi trktab = fTbi("TabTrack");
+	Mli2 li = trktab->createWidget<MultiList2>("MultiListBox",0,0,500,300, Align::Left | Align::VStretch);
 	li->setColour(Colour(0.8,0.9,0.8));
 	//li->setUserString("RelativeTo", "OptionsWnd");
 	//*li->setAlpha(0.8);*/  li->setInheritsAlpha(false);
-	
-	trkList = li;  if (!li)  LogO("Error: No MListTracks in layout !");
-   	trkList->eventListChangePosition += newDelegate(this, &CGuiCom::listTrackChng);
-   	trkList->setVisible(false);
+	trkList = li;
+   	li->eventListChangePosition += newDelegate(this, &CGuiCom::listTrackChng);
+   	li->setVisible(false);
 	
 	//  preview images
 	imgPrv[0] = fImg("TrackImg");
@@ -171,8 +166,8 @@ void CGuiCom::GuiInitTrack()
 
 	FillTrackLists();  //once
 
-	trkList->mSortColumnIndex = pSet->tracks_sort;
-	trkList->mSortUp = pSet->tracks_sortup;
+	li->mSortColumnIndex = pSet->tracks_sort;
+	li->mSortUp = pSet->tracks_sortup;
 
     TrackListUpd(true);  //upd
 	listTrackChng(trkList,0);

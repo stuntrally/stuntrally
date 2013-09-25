@@ -37,7 +37,7 @@ namespace
 void CGui::rebuildGameList()
 {
 	if (!listServers || !app->mMasterClient)  return;
-	MultiListPtr li = listServers;
+	Mli li = listServers;
 	li->removeAllItems();
 
 	protocol::GameList list = app->mMasterClient->getList();
@@ -61,7 +61,7 @@ void CGui::rebuildGameList()
 void CGui::rebuildPlayerList()
 {
 	if (!listPlayers || !app->mClient)  return;
-	MultiListPtr li = listPlayers;
+	Mli li = listPlayers;
 	li->removeAllItems();
 
 	//  Add self
@@ -111,9 +111,9 @@ void CGui::updateGameInfo()
 	updateGameInfoGUI();
 }
 
+///  update game info
 void CGui::updateGameInfoGUI()
 {
-	//  update track,game info
 	if (!valNetGameInfo)  return;
 	using Ogre::String;
 
@@ -355,8 +355,8 @@ void CGui::join(string host, string port, string password)
 	setNetGuiHosting(false);
 
 	tabsNet->setIndexSelected(1);
-	panelNetServer->setVisible(true);  panelNetGame->setVisible(false);
-	panelNetTrack->setVisible(true);   gcom->trkList->setVisible(false);
+	panNetServer->setVisible(true);  panNetGame->setVisible(false);
+	panNetTrack->setVisible(true);   gcom->trkList->setVisible(false);
 }
 
 void CGui::evBtnNetRefresh(WP)
@@ -426,8 +426,8 @@ void CGui::evBtnNetCreate(WP)
 		setNetGuiHosting(true);
 
 		tabsNet->setIndexSelected(1);
-		panelNetServer->setVisible(true);  panelNetGame->setVisible(false);
-		panelNetTrack->setVisible(false);  gcom->trkList->setVisible(true);
+		panNetServer->setVisible(true);  panNetGame->setVisible(false);
+		panNetTrack->setVisible(false);  gcom->trkList->setVisible(true);
 
 		boost::mutex::scoped_lock lock(netGuiMutex);
 		AddChatMsg("#00FFC0", TR("Listening on port ")  + toStr(pSet->local_port) + "...", false);  //clears chat
@@ -443,8 +443,8 @@ void CGui::evBtnNetLeave(WP)
 	setNetGuiHosting(false);
 
 	tabsNet->setIndexSelected(0);
-	panelNetServer->setVisible(false);  panelNetGame->setVisible(true);
-	panelNetTrack->setVisible(false);   gcom->trkList->setVisible(true);
+	panNetServer->setVisible(false);  panNetGame->setVisible(true);
+	panNetTrack->setVisible(false);   gcom->trkList->setVisible(true);
 }
 
 void CGui::evBtnNetDirect(WP)
@@ -560,15 +560,15 @@ void CGui::UpdGuiNetw()
 					MessageBoxStyle::IconError | MessageBoxStyle::Ok);
 		}
 		boost::mutex::scoped_lock lock(netGuiMutex);
-		if (bRebuildGameList)
-		{	bRebuildGameList = false;  rebuildGameList();  }
-		if (bRebuildPlayerList)
-		{	bRebuildPlayerList = false;  rebuildPlayerList();  }
-		if (bUpdateGameInfo)
-		{	bUpdateGameInfo = false;  updateGameInfo();  }
-		if (bUpdChat)
-		{	bUpdChat = false;  edNetChat->setCaption(sChatBuffer);  }
-		if (bStartGame)
-		{	bStartGame = false;  app->mClient->startGame();  btnNewGameStart(NULL);  }
+		if (bRebuildGameList) {
+			bRebuildGameList = false;  rebuildGameList();  }
+		if (bRebuildPlayerList) {
+			bRebuildPlayerList = false;  rebuildPlayerList();  }
+		if (bUpdateGameInfo) {
+			bUpdateGameInfo = false;  updateGameInfo();  }
+		if (bUpdChat) {
+			bUpdChat = false;  edNetChat->setCaption(sChatBuffer);  }
+		if (bStartGame) {
+			bStartGame = false;  app->mClient->startGame();  btnNewGameStart(NULL);  }
 	}
 }

@@ -40,8 +40,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 		Param(c,w, "car1.sss_velfactor"+s, sss_velfactor[i]);
 		Param(c,w, "car1.steer_range"+s, steer_range[i]);
 	}
-	Param(c,w, "car1.steer_sim_easy", steer_sim_easy);
-	Param(c,w, "car1.steer_sim_normal", steer_sim_normal);
+	Param(c,w, "car1.steer_sim_easy", steer_sim[0]);
+	Param(c,w, "car1.steer_sim_normal", steer_sim[1]);
 
 	//  game
 	Param(c,w, "game.start_in_main", startInMain);
@@ -268,7 +268,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	sss_effect[0] = 0.f;  sss_effect[1] = 0.85f;
 	sss_velfactor[0] = 1.f;  sss_velfactor[1] = 1.f;
 	steer_range[0] = 1.0;  steer_range[1] = 0.7;
-	steer_sim_easy = 0.51;  steer_sim_normal = 0.81;
+	steer_sim[0] = 0.51;  steer_sim[1] = 0.81;
 }
 
 SETTINGS::GameSet::GameSet()

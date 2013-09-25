@@ -155,7 +155,7 @@ void CGui::comboGrassClr(ComboBoxPtr cmb, size_t val)
 void CGui::tabGrLayers(TabPtr wp, size_t id)
 {
 	idGrLay = id;  // help var
-	sldUpdGrL();
+	SldUpd_GrL();
 	const SGrassLayer* gr = &sc->grLayersAll[idGrLay], *g0 = &sc->grLayersAll[0];
 
 	chkGrLay->setStateSelected(gr->on);
@@ -181,15 +181,14 @@ void CGui::tabGrLayers(TabPtr wp, size_t id)
 }
 
 //  tab changed, set slider pointer values, and update
-void CGui::sldUpdGrL()
+void CGui::SldUpd_GrL()
 {
 	SGrassLayer& gr =  sc->grLayersAll[idGrLay];
-	SV* sv;
-	sv = &svGrMinX;  sv->pFloat = &gr.minSx;  sv->Upd();
-	sv = &svGrMaxX;  sv->pFloat = &gr.maxSx;  sv->Upd();
-	sv = &svGrMinY;  sv->pFloat = &gr.minSy;  sv->Upd();
-	sv = &svGrMaxY;  sv->pFloat = &gr.maxSy;  sv->Upd();
-	sv = &svLGrDens; sv->pFloat = &gr.dens;   sv->Upd();
+	svGrMinX.UpdF(&gr.minSx);
+	svGrMaxX.UpdF(&gr.maxSx);
+	svGrMinY.UpdF(&gr.minSy);
+	svGrMaxY.UpdF(&gr.maxSy);
+	svLGrDens.UpdF(&gr.dens);
 }
 
 void CGui::chkGrLayOn(WP wp)
@@ -209,7 +208,7 @@ void CGui::chkGrLayOn(WP wp)
 void CGui::tabPgLayers(TabPtr wp, size_t id)
 {
 	idPgLay = id;  // help var
-	sldUpdPgL();
+	SldUpd_PgL();
 	const PagedLayer& lay = sc->pgLayersAll[idPgLay];
 
 	chkPgLay->setStateSelected(lay.on);
@@ -223,22 +222,22 @@ void CGui::tabPgLayers(TabPtr wp, size_t id)
 }
 
 //  tab changed
-void CGui::sldUpdPgL()
+void CGui::SldUpd_PgL()
 {
 	PagedLayer& lay = sc->pgLayersAll[idPgLay];
-	SV* sv;
-	sv = &svLTrDens;    sv->pFloat = &lay.dens;  sv->Upd();
 
-	sv = &svLTrRdDist;     sv->pInt = &lay.addRdist;  sv->Upd();
-	sv = &svLTrRdDistMax;  sv->pInt = &lay.maxRdist;  sv->Upd();
+	svLTrDens.UpdF(&lay.dens);
 
-	sv = &svLTrMinSc;   sv->pFloat = &lay.minScale;  sv->Upd();
-	sv = &svLTrMaxSc;   sv->pFloat = &lay.maxScale;  sv->Upd();
+	svLTrRdDist.UpdI(&lay.addRdist);
+	svLTrRdDistMax.UpdI(&lay.maxRdist);
 
-	sv = &svLTrWindFx;  sv->pFloat = &lay.windFx;  sv->Upd();
-	sv = &svLTrWindFy;  sv->pFloat = &lay.windFy;  sv->Upd();
+	svLTrMinSc.UpdF(&lay.minScale);
+	svLTrMaxSc.UpdF(&lay.maxScale);
 
-	sv = &svLTrMaxTerAng;  sv->pFloat = &lay.maxTerAng;  sv->Upd();
+	svLTrWindFx.UpdF(&lay.windFx);
+	svLTrWindFy.UpdF(&lay.windFy);
+
+	svLTrMaxTerAng.UpdF(&lay.maxTerAng);
 }
 
 void CGui::chkPgLayOn(WP wp)

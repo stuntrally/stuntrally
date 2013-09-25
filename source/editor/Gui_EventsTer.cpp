@@ -26,7 +26,7 @@ void CGui::tabTerLayer(TabPtr wp, size_t id)
 	TerLayer* lay = bTerLay ? &sc->td.layersAll[idTerLay] : &sc->td.layerRoad;
 
 	noBlendUpd = true;
-	sldUpdTerL();
+	SldUpd_TerL();
 
 	cmbTexDiff->setVisible(bTerLay);  cmbTexNorm->setVisible(bTerLay);
 	chkTerLay->setVisible(bTerLay);   chkTexNormAuto->setVisible(bTerLay);  chkTerLayTripl->setVisible(bTerLay);
@@ -69,18 +69,14 @@ void CGui::tabTerLayer(TabPtr wp, size_t id)
 	noBlendUpd = false;
 }
 
-void CGui::sldUpdTerL()
+void CGui::SldUpd_TerL()
 {
 	TerLayer* lay = bTerLay ? &sc->td.layersAll[idTerLay] : &sc->td.layerRoad;
-	SV* sv;
-	sv= &svTerLScale;  sv->pFloat = &lay->tiling;  sv->Upd();
-	sv= &svTerLAngMin; sv->pFloat = &lay->angMin;  sv->Upd();
-	sv= &svTerLAngMax; sv->pFloat = &lay->angMax;  sv->Upd();
-	sv= &svTerLHMin;   sv->pFloat = &lay->hMin;    sv->Upd();
-	sv= &svTerLHMax;   sv->pFloat = &lay->hMax;    sv->Upd();
-	sv= &svTerLAngSm;  sv->pFloat = &lay->angSm;   sv->Upd();
-	sv= &svTerLHSm;    sv->pFloat = &lay->hSm;     sv->Upd();
-	sv= &svTerLNoise;  sv->pFloat = &lay->noise;   sv->Upd();
+	svTerLScale.UpdF(&lay->tiling);
+	svTerLAngMin.UpdF(&lay->angMin);  svTerLHMin.UpdF(&lay->hMin);
+	svTerLAngMax.UpdF(&lay->angMax);  svTerLHMax.UpdF(&lay->hMax);
+	svTerLAngSm.UpdF(&lay->angSm);    svTerLHSm.UpdF(&lay->hSm);
+	svTerLNoise.UpdF(&lay->noise);
 }
 
 //  Tri size
@@ -92,10 +88,9 @@ void CGui::slTerTriSize(SV* sv)
 
 int CGui::UpdTxtTerSize(float mul)
 {
-	int size = getHMapSizeTab()*mul;
-	float res = sc->td.fTriangleSize * size;
-	if (svTerTriSize.text)  //  result size text
-		svTerTriSize.text->setCaption(fToStr(res,0,3));
+	int size = getHMapSizeTab() * mul;
+	float res = sc->td.fTriangleSize * size;  // result size
+	svTerTriSize.setText(fToStr(res,0,3));
 	return size;
 }
 

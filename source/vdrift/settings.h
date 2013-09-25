@@ -33,29 +33,34 @@ public:
 	int version;  // file version
 
 	//  show
-	bool show_fps, show_gauges, check_beam, check_arrow, trackmap,
-		mini_zoomed, mini_rotated, mini_terrain, mini_border,
-		show_cam, show_times, show_digits, show_opponents, cam_tilt,
-		car_dbgbars, car_dbgtxt, car_dbgsurf, car_tirevis,
-		ogre_dialog, show_graphs;
+	bool show_fps,
+		show_gauges, show_digits,
+		trackmap, mini_zoomed, mini_rotated, mini_terrain, mini_border,
+		check_beam, check_arrow,
+		show_times, show_opponents, opplist_sort,
+		show_cam, cam_tilt,
+		car_dbgbars, car_dbgtxt, car_dbgsurf,
+		car_tirevis, show_graphs;
+
 	float size_gauges, size_minimap, size_arrow, zoom_minimap;
-	int gauges_type, gauges_layout;  eGraphType graphs_type;
+	int gauges_type, gauges_layout;
+	eGraphType graphs_type;
 	int car_dbgtxtclr, car_dbgtxtcnt;
 	//  gui
 	bool tracks_sortup, cars_sortup, champ_info;
 	int tracks_view, tracks_sort, cars_sort,
-		tut_type,champ_type,chall_type, car_ed_tab;
+		tut_type, champ_type, chall_type, car_ed_tab;
 
 	//  graphics
 	int preset;  // last set, info only
 	int anisotropy, tex_size, ter_mtr, ter_tripl;  bool bFog;
-	float view_distance, terdetail,terdist, road_dist;
+	float view_distance, terdetail, terdist, road_dist;
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type; //eShadowType
-	int refl_skip, refl_faces, refl_size;  float refl_dist;
-	bool water_reflect, water_refract; int water_rttsize;
-	int refl_mode; // 0 static, 1 single, 2 full, explanation: see CarReflection.h
-	bool particles, trails;  float grass, trees_dist, grass_dist;
 	bool use_imposters, imposters_only;
+	int refl_skip, refl_faces, refl_size;  float refl_dist;
+	int refl_mode;  // 0 static, 1 single, 2 full
+	bool water_reflect, water_refract;  int water_rttsize;
+	bool particles, trails;  float grass, trees_dist, grass_dist;
 	float particles_len, trails_len;
 	bool boost_fov;
 
@@ -67,7 +72,7 @@ public:
 	float sss_effect[2], sss_velfactor[2];
 	//  steering range multipliers
 	float steer_range[2],  // gravel/asphalt
-		steer_sim_easy,steer_sim_normal;  // simulation modes
+		steer_sim[2];  // simulation modes  0 easy 1 normal
 	std::vector<int> cam_view;  //[4]
 
 	//---------------  game config
@@ -98,36 +103,41 @@ public:
 	//---------------
 	
 	//  misc
-	bool split_vertically;  std::string language;
-	bool isMain, startInMain;  int inMenu;  // last menu id
+	bool isMain;  int inMenu;  // last menu id
 	bool dev_keys, dev_no_prvs;  // dev
+	std::string language;
+	bool split_vertically;
 	
-	//  joystick ff
+	//  startup, other
+	bool autostart, escquit, startInMain;
+	bool bltDebug, bltLines, bltProfilerTxt, profilerTxt;
+	bool loadingbackground, ogre_dialog;
+
+	//  joystick ff (old-)
 	std::string ff_device;	float ff_gain;	bool ff_invert;
 
-	//  other
+	//  sound
 	float vol_master, vol_engine, vol_tires, vol_susp, vol_env,
 		vol_fl_splash,vol_fl_cont, vol_car_crash,vol_car_scrap;
-	bool autostart, escquit;
-	bool bltDebug, bltLines, bltProfilerTxt, profilerTxt;
-	bool loadingbackground, opplist_sort;
 	
 	//  sim freq (1/interval timestep)
 	float game_fq, blt_fq,  perf_speed;
 	int blt_iter, dyn_iter,  multi_thr, thread_sleep;
 	
-	//  compositor
-	bool bloom, hdr, blur, all_effects;
+	//  effects
+	bool all_effects, bloom, blur, hdr;
 	float bloom_int, bloom_orig, blur_int;  // intensity
 	float dof_focus, dof_far;
+	bool softparticles, ssao, godrays, dof, filmgrain;
 	//  hdr
 	float hdrBloomint, hdrBloomorig;
 	float hdrParam1, hdrParam2, hdrParam3;
 	float hdrAdaptationScale;
 	float vignRadius, vignDarkness;
-	//  video
+
+	//  screen
 	int windowx, windowy, fsaa;
-	bool fullscreen, vsync, ssao, godrays, softparticles, dof, filmgrain;
+	bool fullscreen, vsync;
 	std::string buffer, rendersystem;
 	
 	//  replay
@@ -136,7 +146,7 @@ public:
 	bool rpl_ghostpar, rpl_ghostrewind, rpl_listghosts;
 	int rpl_listview, rpl_numViews;
 	
-	// network
+	//  network
 	std::string nickname, netGameName;
 	std::string master_server_address;
 	int master_server_port, local_port;

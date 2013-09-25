@@ -925,7 +925,7 @@ void GAME::UpdateTimer()
 ///  Car Steering range multiplier
 float GAME::GetSteerRange() const
 {
-	float range = (settings->gui.sim_mode == "easy") ? settings->steer_sim_easy : settings->steer_sim_normal;
+	float range = settings->steer_sim[settings->gui.sim_mode == "easy" ? 0 : 1];
 	range *= settings->steer_range[track.asphalt];
 	return range;
 }

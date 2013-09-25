@@ -19,6 +19,7 @@ using namespace MyGUI;
 ///  Gui Events
 
 //    [Car]
+//---------------------------------------------------------------------
 void CGui::chkAbs(WP wp)
 {	if (pChall && !pChall->abs)  return;	ChkEv(abs[iTireSet]);	if (pGame)  pGame->ProcessNewSettings();	}
 void CGui::chkTcs(WP wp)
@@ -29,44 +30,123 @@ void CGui::chkGear(Ck*)
 	if (pGame)  pGame->ProcessNewSettings();
 }
 
-void CGui::tabTireSet(MyGUI::TabPtr wp, size_t id)
+//  gravel/asphalt
+void CGui::tabTireSet(Tab, size_t id)
 {
 	iTireSet = id;
-	// UpdGuiTireSet
-	bchAbs->setStateSelected(pSet->abs[iTireSet]);
-	bchTcs->setStateSelected(pSet->tcs[iTireSet]);
-	Real v = pSet->sss_effect[iTireSet];
-	slSSSEff->setValue(v);  valSSSEffect->setCaption(fToStr(v,2,4));
-	v = pSet->sss_velfactor[iTireSet];
-	slSSSVel->setValue(v/2.f);  valSSSVelFactor->setCaption(fToStr(v,2,4));
-	v = pSet->steer_range[iTireSet];
-	slSteerRngSurf->setValue(v-0.3f);  valSteerRangeSurf->setCaption(fToStr(v,2,4));
-	v = pSet->gui.sim_mode == "easy" ? pSet->steer_sim_easy : pSet->steer_sim_normal;
-	slSteerRngSim->setValue(v-0.3f);  valSteerRangeSim->setCaption(fToStr(v,2,4));
+	SldUpd_TireSet();
+	bchAbs->setStateSelected(pSet->abs[id]);
+	bchTcs->setStateSelected(pSet->tcs[id]);
 }
-void CGui::slSSSEffect(SL)
+
+void CGui::SldUpd_TireSet()
 {
-	Real v = 1.f * val;  if (bGI)  pSet->sss_effect[iTireSet] = v;
-	if (valSSSEffect){	valSSSEffect->setCaption(fToStr(v,2,4));  }
+	int i = iTireSet;
+	svSSSEffect.UpdF(&pSet->sss_effect[i]);
+	svSSSVelFactor.UpdF(&pSet->sss_velfactor[i]);
+	svSteerRangeSurf.UpdF(&pSet->steer_range[i]);
+	svSteerRangeSim.UpdF(&pSet->steer_sim[pSet->gui.sim_mode == "easy" ? 0 : 1]);
 }
-void CGui::slSSSVelFactor(SL)
+
+//  player
+void CGui::tabPlayer(Tab, size_t id)
 {
-	Real v = 2.f * val;  if (bGI)  pSet->sss_velfactor[iTireSet] = v;
-	if (valSSSVelFactor){	valSSSVelFactor->setCaption(fToStr(v,2,4));  }
+	iCurCar = id;
+	//  update gui for this car (color h,s,v, name, img)
+	bool plr = iCurCar < 4;
+	if (plr)
+	{
+		string c = pSet->gui.car[iCurCar];
+		for (size_t i=0; i < carList->getItemCount(); ++i)
+		if (carList->getItemNameAt(i).substr(7) == c)
+		{	carList->setIndexSelected(i);
+			listCarChng(carList, i);
+	}	}
+	carList->setVisible(plr);
+
+	UpdCarClrSld(false);  // no car color change
 }
-void CGui::slSteerRangeSurf(SL)
+
+//  car color
+//---------------------------------------------------------------------
+//  3. apply new color to car/ghost
+void CGui::SetCarClr()
 {
-	Real v = val +0.3f;  if (bGI)  pSet->steer_range[iTireSet] = v;
-	if (valSteerRangeSurf){		valSteerRangeSurf->setCaption(fToStr(v,2,4));  }
+	if (!bGI)  return;
+	
+	int s = app->carModels.size(), i;
+	if (iCurCar == 4)  // ghost
+	{
+		for (i=0; i < s; ++i)
+			if (app->carModels[i]->isGhost() && !app->carModels[i]->isGhostTrk())
+				app->carModels[i]->ChangeClr();
+	}
+	else if (iCurCar == 5)  // track's ghost
+	{
+		for (i=0; i < s; ++i)
+			if (app->carModels[i]->isGhostTrk())
+				app->carModels[i]->ChangeClr();
+	}else
+		if (iCurCar < s)  // player
+			app->carModels[iCurCar]->ChangeClr();
 }
-void CGui::slSteerRangeSim(SL)
+
+//  2. upd game set color and sliders
+void CGui::UpdCarClrSld(bool upd)
 {
-	Real v = val +0.3f;  if (bGI)  pSet->steer_range[iTireSet] = v;
-	if (valSteerRangeSim){		valSteerRangeSim->setCaption(fToStr(v,2,4));  }
+	SldUpd_CarClr();
+	int i = iCurCar;
+	pSet->game.car_hue[i] = pSet->gui.car_hue[i];  // copy to apply
+	pSet->game.car_sat[i] = pSet->gui.car_sat[i];
+	pSet->game.car_val[i] = pSet->gui.car_val[i];
+	pSet->game.car_gloss[i]= pSet->gui.car_gloss[i];
+	pSet->game.car_refl[i] = pSet->gui.car_refl[i];
+	if (upd)
+		SetCarClr();
+}
+
+//  1. upd sld and pointers after tab change
+void CGui::SldUpd_CarClr()
+{
+	int i = iCurCar;
+	svCarClrH.UpdF(&pSet->gui.car_hue[i]);
+	svCarClrS.UpdF(&pSet->gui.car_sat[i]);
+	svCarClrV.UpdF(&pSet->gui.car_val[i]);
+	svCarClrGloss.UpdF(&pSet->gui.car_gloss[i]);
+	svCarClrRefl.UpdF(&pSet->gui.car_refl[i]);
+}
+
+void CGui::slCarClr(SV*)
+{
+	SetCarClr();
+}
+
+//  color buttons
+void CGui::imgBtnCarClr(WP img)
+{
+	int i = iCurCar;
+	pSet->gui.car_hue[i] = s2r(img->getUserString("h"));
+	pSet->gui.car_sat[i] = s2r(img->getUserString("s"));
+	pSet->gui.car_val[i] = s2r(img->getUserString("v"));
+	pSet->gui.car_gloss[i]= s2r(img->getUserString("g"));
+	pSet->gui.car_refl[i] = s2r(img->getUserString("r"));
+	UpdCarClrSld();
+}
+void CGui::btnCarClrRandom(WP)
+{
+	int i = iCurCar;
+	pSet->gui.car_hue[i] = Math::UnitRandom();
+	pSet->gui.car_sat[i] = Math::UnitRandom();
+	pSet->gui.car_val[i] = Math::UnitRandom();
+	pSet->gui.car_gloss[i]= Math::UnitRandom();
+	pSet->gui.car_refl[i] = Math::RangeRandom(0.3f,1.1f);
+	UpdCarClrSld();
 }
 
 
-//  boost, flip
+//  [Game]
+//---------------------------------------------------------------------
+
 void CGui::comboBoost(CMB)
 {
 	pSet->gui.boost_type = val;  app->hud->Show();
@@ -84,6 +164,20 @@ void CGui::comboRewind(CMB)
 	pSet->gui.rewind_type = val;
 }
 	
+#define Radio2(bR1,bR2, b)  bR1->setStateSelected(b);  bR2->setStateSelected(!b);
+
+void CGui::radKmh(WP wp){	Radio2(bRkmh, bRmph, true);   pSet->show_mph = false;  hud->Size(true);  }
+void CGui::radMph(WP wp){	Radio2(bRkmh, bRmph, false);  pSet->show_mph = true;   hud->Size(true);  }
+
+void CGui::radSimEasy(WP){	Radio2(bRsimEasy, bRsimNorm, true);
+	pSet->gui.sim_mode = "easy";	bReloadSim = true;
+	tabTireSet(0,iTireSet);  listCarChng(carList,0);
+}
+void CGui::radSimNorm(WP){	Radio2(bRsimEasy, bRsimNorm, false);
+	pSet->gui.sim_mode = "normal";	bReloadSim = true;
+	tabTireSet(0,iTireSet);  listCarChng(carList,0);
+}
+
 void CGui::btnNumPlayers(WP wp)
 {
 	if      (wp->getName() == "btnPlayers1")  pSet->gui.local_players = 1;
@@ -96,99 +190,8 @@ void CGui::btnNumPlayers(WP wp)
 void CGui::chkStartOrd(WP wp)
 {
 	pSet->gui.start_order = pSet->gui.start_order==0 ? 1 : 0;
-	ButtonPtr chk = wp->castType<MyGUI::Button>();
+	Btn chk = wp->castType<Button>();
     chk->setStateSelected(pSet->gui.start_order > 0);
-}
-
-void CGui::tabPlayer(TabPtr wp, size_t id)
-{
-	iCurCar = id;
-	//  update gui for this car (color h,s,v, name, img)
-	bool plr = iCurCar < 4;
-	if (plr)
-	{
-		string c = pSet->gui.car[iCurCar];
-		for (size_t i=0; i < carList->getItemCount(); ++i)
-		if (carList->getItemNameAt(i).substr(7) == c)
-		{	carList->setIndexSelected(i);
-			listCarChng(carList, i);
-	}	}
-	carList->setVisible(plr);
-	UpdCarClrSld(false);  // no car color change
-}
-
-//  car color
-void CGui::UpdCarMClr()
-{
-	if (!bUpdCarClr || !bGI)  return;
-	
-	int s = app->carModels.size();
-	if (iCurCar == 4)  // ghost
-	{
-		for (int i=0; i < s; ++i)
-			if (app->carModels[i]->isGhost() && !app->carModels[i]->isGhostTrk())  app->carModels[i]->ChangeClr();
-	}
-	else if (iCurCar == 5)  // track's ghost
-	{
-		for (int i=0; i < s; ++i)
-			if (app->carModels[i]->isGhostTrk())  app->carModels[i]->ChangeClr();
-	}else
-		if (iCurCar < s)  // player
-			app->carModels[iCurCar]->ChangeClr();
-}
-/*void CGui::sldUpdCarClr()
-{
-	SV* sv;
-	sv= &
-}*/
-void CGui::slCarClrH(SL)
-{
-	Real v = val;  if (bGI)  pSet->gui.car_hue[iCurCar] = v;
-	if (valCarClrH){	valCarClrH->setCaption(fToStr(v,2,4));  }
-	UpdCarMClr();
-}
-void CGui::slCarClrS(SL)
-{
-	Real v = val;  if (bGI)  pSet->gui.car_sat[iCurCar] = v;
-	if (valCarClrS){	valCarClrS->setCaption(fToStr(v,2,4));  }
-	UpdCarMClr();
-}
-void CGui::slCarClrV(SL)
-{
-	Real v = val;  if (bGI)  pSet->gui.car_val[iCurCar] = v;
-	if (valCarClrV){	valCarClrV->setCaption(fToStr(v,2,4));  }
-	UpdCarMClr();
-}
-void CGui::slCarClrGloss(SL)
-{
-	Real v = powf(val, 1.6f);  if (bGI)  pSet->gui.car_gloss[iCurCar] = v;
-	if (valCarClrGloss){	valCarClrGloss->setCaption(fToStr(v,2,4));  }
-	UpdCarMClr();
-}
-void CGui::slCarClrRefl(SL)
-{
-	Real v = 1.4f * val;  if (bGI)  pSet->gui.car_refl[iCurCar] = v;
-	if (valCarClrRefl){		valCarClrRefl->setCaption(fToStr(v,2,4));  }
-	UpdCarMClr();
-}
-
-void CGui::imgBtnCarClr(WP img)
-{
-	pSet->gui.car_hue[iCurCar] = s2r(img->getUserString("h"));
-	pSet->gui.car_sat[iCurCar] = s2r(img->getUserString("s"));
-	pSet->gui.car_val[iCurCar] = s2r(img->getUserString("v"));
-	pSet->gui.car_gloss[iCurCar]= s2r(img->getUserString("g"));
-	pSet->gui.car_refl[iCurCar] = s2r(img->getUserString("r"));
-	UpdCarClrSld();
-}
-void CGui::btnCarClrRandom(WP)
-{
-	pSet->gui.car_hue[iCurCar] = Math::UnitRandom();
-	pSet->gui.car_sat[iCurCar] = Math::UnitRandom();
-	pSet->gui.car_val[iCurCar] = Math::UnitRandom();
-	pSet->gui.car_gloss[iCurCar] = Math::UnitRandom();
-	pSet->gui.car_refl[iCurCar] = Math::RangeRandom(0.3f,1.1f);
-	UpdCarClrSld();
 }
 
 
@@ -202,12 +205,12 @@ void CGui::slReflDist(SV*)
 }
 void CGui::slReflMode(SV* sv)
 {
-	if (sv->text)
+	if (bGI)
 	switch (pSet->refl_mode)
 	{
-		case 0: sv->text->setTextColour(Colour(0.0, 1.0, 0.0));  break;
-		case 1: sv->text->setTextColour(Colour(1.0, 0.5, 0.0));  break;
-		case 2: sv->text->setTextColour(Colour(1.0, 0.0, 0.0));  break;
+		case 0: sv->setTextClr(0.0, 1.0, 0.0);  break;
+		case 1: sv->setTextClr(1.0, 0.5, 0.0);  break;
+		case 2: sv->setTextClr(1.0, 0.0, 0.0);  break;
 	}
 	app->recreateReflections();
 }
@@ -279,20 +282,6 @@ void CGui::chkHudShow(Ck*)
 	hud->Show();
 }
 
-#define Radio2(bR1,bR2, b)  bR1->setStateSelected(b);  bR2->setStateSelected(!b);
-
-void CGui::radKmh(WP wp){	Radio2(bRkmh, bRmph, true);   pSet->show_mph = false;  hud->Size(true);  }
-void CGui::radMph(WP wp){	Radio2(bRkmh, bRmph, false);  pSet->show_mph = true;   hud->Size(true);  }
-
-void CGui::radSimEasy(WP){	Radio2(bRsimEasy, bRsimNorm, true);
-	pSet->gui.sim_mode = "easy";	bReloadSim = true;
-	tabTireSet(0,iTireSet);  listCarChng(carList,0);
-}
-void CGui::radSimNorm(WP){	Radio2(bRsimEasy, bRsimNorm, false);
-	pSet->gui.sim_mode = "normal";	bReloadSim = true;
-	tabTireSet(0,iTireSet);  listCarChng(carList,0);
-}
-
 void CGui::chkArrow(Ck*)
 {
 	if (hud->arrow.nodeRot)
@@ -336,8 +325,10 @@ void CGui::comboGraphs(CMB)
 
 //  Startup
 void CGui::chkMultiThread(WP wp)
-{	pSet->multi_thr = pSet->multi_thr ? 0 : 1;  if (wp) {
-	ButtonPtr chk = wp->castType<MyGUI::Button>();  chk->setStateSelected(pSet->multi_thr > 0);  }
+{
+	pSet->multi_thr = pSet->multi_thr ? 0 : 1;
+	Btn chk = wp->castType<Button>();
+	chk->setStateSelected(pSet->multi_thr > 0);
 }
 
 

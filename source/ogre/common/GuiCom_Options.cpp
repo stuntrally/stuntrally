@@ -29,8 +29,8 @@ using namespace std;
 
 void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 {
-	ButtonPtr btn, bchk;  ComboBoxPtr cmb;
-	SliderValue* sv;  Check* ck;
+	Btn btn;  Cmb cmb;
+	SV* sv;  Ck* ck;
 
 	BtnC("Quit", btnQuit);  bnQuit = btn;
 	
@@ -163,7 +163,7 @@ void CGuiCom::slAnisotropy(SV*)
 
 void CGuiCom::slViewDist(SV* sv)
 {
-	Vector3 sc = (*sv->pFloat) * Vector3::UNIT_SCALE;
+	Vector3 sc = pSet->view_distance * Vector3::UNIT_SCALE;
 
 	if (app->ndSky)  app->ndSky->setScale(sc);
 	#ifndef SR_EDITOR
