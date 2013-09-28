@@ -187,17 +187,40 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 	}
 
 	//load the differential(s)
+	string drivetype;
+	if (!c.GetParam("drive", drivetype, error_output))  return false;
+	SetDrive(drivetype);
+	float final_drive, a, a_tq(0), a_tq_dec(0);
+	
+	///  new 3 sets
+	if (drivetype == "AWD" &&
+		c.GetParam("diff-center.final-drive", a))
 	{
-		float final_drive, a, a_tq(0), a_tq_dec(0);
+		c.GetParam("diff-rear.anti-slip", a, error_output);
+		c.GetParam("diff-rear.torque", a_tq);
+		c.GetParam("diff-rear.torque-dec", a_tq_dec);
+		diff_rear.SetFinalDrive(1.0);
+		diff_rear.SetAntiSlip(a, a_tq, a_tq_dec);
 
+		c.GetParam("diff-front.anti-slip", a, error_output);
+		c.GetParam("diff-front.torque", a_tq);
+		c.GetParam("diff-front.torque-dec", a_tq_dec);
+		diff_front.SetFinalDrive(1.0);
+		diff_front.SetAntiSlip(a, a_tq, a_tq_dec);
+
+		c.GetParam("diff-center.final-drive", final_drive, error_output);
+		c.GetParam("diff-center.anti-slip", a, error_output);
+		c.GetParam("diff-center.torque", a_tq);
+		c.GetParam("diff-center.torque-dec", a_tq_dec);
+		diff_center.SetFinalDrive(final_drive);
+		diff_center.SetAntiSlip(a, a_tq, a_tq_dec);
+	}
+	else  // old 1 for all
+	{
 		if (!c.GetParam("differential.final-drive", final_drive, error_output))  return false;
 		if (!c.GetParam("differential.anti-slip", a, error_output))  return false;
-		c.GetParam("differential.anti-slip-torque", a_tq);
-		c.GetParam("differential.anti-slip-torque-deceleration-factor", a_tq_dec);
-
-		string drivetype;
-		if (!c.GetParam("drive", drivetype, error_output))  return false;
-		SetDrive(drivetype);
+		c.GetParam("differential.torque", a_tq);
+		c.GetParam("differential.torque-dec", a_tq_dec);
 
 		if (drivetype == "RWD")
 		{
@@ -219,10 +242,8 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 
 			diff_center.SetFinalDrive(final_drive);
 			diff_center.SetAntiSlip(a, a_tq, a_tq_dec);
-		}
-		else
-		{
-			error_output << "Unknown drive type: " << drive << endl;
+		}else
+		{	error_output << "Unknown drive type: " << drive << endl;
 			return false;
 		}
 	}

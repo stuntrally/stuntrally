@@ -183,7 +183,7 @@ void App::CreateGraphs()
 			else if (i == 2)
 				gv->CreateTitle("", 5, 0.5f, -2, 24);
 			
-			gv->SetSize(0.00f, 0.41f, 0.35f, 0.50f);
+			gv->SetSize(0.f, 0.41f, 0.35f, 0.50f);
 
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
@@ -219,7 +219,7 @@ void App::CreateGraphs()
 			else if (i==3)  gv->CreateTitle("Wheel  Torque curves\n2400 Nm", 5, 0.0f, -2, 24, 2);
 			else if (i==4)  gv->CreateTitle("Car Vel.\n250 kmh", 6, 0.86f, 3, 24, 2);
 			
-			gv->SetSize(0.00f, 0.40f, 0.45f, 0.50f);
+			gv->SetSize(0.f, 0.40f, 0.45f, 0.50f);
 
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
@@ -237,7 +237,7 @@ void App::CreateGraphs()
 				gv->CreateTitle("\nPower 600 bhp", 3, 0.0f, -2, 24, 2);
 			//rpm min,max..
 			
-			gv->SetSize(0.00f, 0.41f, 0.35f, 0.50f);
+			gv->SetSize(0.f, 0.41f, 0.35f, 0.50f);
 
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
@@ -267,22 +267,22 @@ void App::CreateGraphs()
 		}	break;
 
 	case Gh_Diffs:
-		for (int i=0; i < 3; ++i)
-		{
+		for (int i=0; i < 3*2; ++i)
+		{	int n = i/3, c = i%3;
 			GraphView* gv = new GraphView(scm,mWindow,mGui);
-			gv->Create(256, String("graph")+toStr(i+1), i==0 ? 0.4f : i==2 ? 0.3f : 0.f);
+			gv->Create(256, String("graph")+(n?"B":"A")+toStr(c+2), n > 0 ? 0.f :  c<2 ? 0.4f : 0.3f);
 			if (i == 2)
 			{	gv->CreateGrid(4,1, 0.f, 0.3f);
-				gv->CreateTitle("Center", 2, 0.0f, -2, 24, 1);
-				gv->SetSize(0.00f, 0.27f, 0.36f, 0.2f);
+				gv->CreateTitle("Center, torque", 2, 0.0f, -2, 24, 1);
 			}else
 			{	if (i == 0)
-				{	gv->CreateGrid(4,1, 0.f, 0.3f);
-					gv->CreateTitle("Front", 0, 0.0f, -2, 24, 1);
-				}else if (i==1)
-					gv->CreateTitle("\nRear", 1, 0.0f, -2, 24, 2);
-				gv->SetSize(0.00f, 0.47f, 0.36f, 0.15f);
+					gv->CreateTitle("Front, speed", 0, 0.0f, -2, 24, 1);
+				else if (i==1)
+					gv->CreateTitle("Rear",  1, 0.0f, -2, 24, 2);
+				gv->CreateGrid(4,1, 0.f, 0.3f);
 			}
+			if (c==2)	gv->SetSize(0.f,		0.27f,			0.32f, 0.2f);
+			else		gv->SetSize(0.f, c==0 ? 0.47f : 0.12f,	0.32f, 0.15f);
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
 		}	break;
@@ -511,18 +511,23 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 
 
 	case Gh_Diffs:  /// differentials
-		if (gsi >= 3)
-		for (int i=0; i < 3; ++i)
+		if (gsi >= 6)
+		for (int i=0; i < 3*2; ++i)
 		{
 			CARDIFFERENTIAL* diff;
-			switch (i)
+			switch (i%3)
 			{
 			case 0: diff = &dynamics.diff_front;  break;
 			case 1: diff = &dynamics.diff_rear;  break;
 			case 2: diff = &dynamics.diff_center;  break;
 			}
-			Dbl d = diff->GetSide1Speed() - diff->GetSide2Speed();
-			d = negPow(d, 0.4)*0.07 + 0.5;
+			Dbl d;
+			if (i/3==0) {
+				d = diff->GetSide1Speed() - diff->GetSide2Speed();
+				d = negPow(d, 0.4)*0.07 + 0.5;  }  // blue
+			else {
+				d = diff->GetSide1Torque() - diff->GetSide2Torque();
+				d = d*0.0004 + 0.5;  }  // orange
 			pApp->graphs[i]->AddVal(d);
 		}	break;
 		

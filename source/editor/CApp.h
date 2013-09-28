@@ -49,6 +49,7 @@ public:
 	CGuiCom* gcom;
 
 
+	// TODO:  CScene* scn;  //...
 	Ogre::Light* sun;
 	void UpdFog(bool bForce=false), UpdSun();
 
@@ -58,7 +59,7 @@ public:
 	float mTimer;
 
 	//  trees
-	class Forests::PagedGeometry *trees, *grass;
+	Forests::PagedGeometry *trees, *grass;
 
 	
 	///  main
