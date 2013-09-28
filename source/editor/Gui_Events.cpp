@@ -22,7 +22,7 @@ const Colour CGui::sUsedClr[8] = {
 	Colour(0.2,0.6,1), Colour(0,1,0.6), Colour(0,1,0), Colour(0.5,1,0),
 	Colour(1,1,0), Colour(1,0.5,0), Colour(1,0,0), Colour(1,0.5,0.5)};
 
-void CGui::SetUsedStr(MyGUI::StaticTextPtr valUsed, int cnt, int yellowAt)
+void CGui::SetUsedStr(Txt valUsed, int cnt, int yellowAt)
 {
 	if (!valUsed)  return;
 	valUsed->setCaption(TR("#{Used}") + ": " + toStr(cnt));

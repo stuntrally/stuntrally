@@ -219,7 +219,7 @@ void CGui::InitGui()
 			xt = x + 25;  yt = y + 55;  sx = 64;
 			if (st.newLine < 0)  n -= st.newLine;  // -1 empty x
 		}
-		StaticImage* img = scv->createWidget<StaticImage>("ImageBox", x,y, sx,sx, Align::Default, "brI"+s);
+		Img img = scv->createWidget<ImageBox>("ImageBox", x,y, sx,sx, Align::Default, "brI"+s);
 		img->eventMouseButtonClick += newDelegate(this, &CGui::btnBrushPreset);
 		img->setUserString("tip", st.name);  img->setNeedToolTip(true);
 		img->setImageTexture("brushes.png");
@@ -227,7 +227,7 @@ void CGui::InitGui()
 		if (!st.name.empty())  img->eventToolTip += newDelegate(gcom, &CGuiCom::notifyToolTip);
 		gcom->setOrigPos(img, "EditorWnd");
 		
-		StaticText* txt = scv->createWidget<StaticText>("TextBox", xt,yt, 40,22, Align::Default, "brT"+s);
+		Txt txt = scv->createWidget<TextBox>("TextBox", xt,yt, 40,22, Align::Default, "brT"+s);
 		txt->setCaption(fToStr(st.Size,0,2));
 			int edMode = st.edMode;
 			float fB = app->brClr[edMode][0], fG = app->brClr[edMode][1], fR = app->brClr[edMode][2];
