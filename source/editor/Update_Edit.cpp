@@ -332,7 +332,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	//----------------------------------------------------------------
 	else if (edMode == ED_Start && road)
 	{
-		Txt* stTxt = gui->stTxt;
+		Txt *stTxt = gui->stTxt;
 		Vector3 p;  if (ndCar)  p = ndCar->getPosition();
 		stTxt[0]->setCaption("");
 		stTxt[1]->setCaption("width "+fToStr(road->vStBoxDim.z,1,4));
@@ -350,7 +350,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	//----------------------------------------------------------------
 	else if (edMode == ED_Fluids)
 	{
-		Txt* flTxt = gui->flTxt;
+		Txt *flTxt = gui->flTxt;
 		if (sc->fluids.empty())
 		{
 			if (flTxt[0])	flTxt[0]->setCaption("None");
@@ -382,7 +382,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	//----------------------------------------------------------------
 	else if (edMode == ED_Objects)
 	{
-		Txt* objTxt = gui->objTxt;
+		Txt *objTxt = gui->objTxt;
 		int objs = sc->objects.size();
 		bool bNew = gui->iObjCur == -1;
 		const Object& o = bNew || sc->objects.empty() ? gui->objNew : sc->objects[gui->iObjCur];

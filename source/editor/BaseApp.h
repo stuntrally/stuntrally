@@ -63,11 +63,11 @@ protected:
 	
 	///  input events
 	/*virtual*/
-    bool keyPressed( const SDL_KeyboardEvent &arg) = 0;
-    bool keyReleased(const SDL_KeyboardEvent &arg);
-    bool mouseMoved( const SFO::MouseMotionEvent &arg );
-    bool mousePressed( const SDL_MouseButtonEvent &arg, Uint8 id );
-    bool mouseReleased(const SDL_MouseButtonEvent &arg, Uint8 id );
+	bool keyPressed( const SDL_KeyboardEvent &arg) = 0;
+	bool keyReleased(const SDL_KeyboardEvent &arg);
+	bool mouseMoved( const SFO::MouseMotionEvent &arg );
+	bool mousePressed( const SDL_MouseButtonEvent &arg, Uint8 id );
+	bool mouseReleased(const SDL_MouseButtonEvent &arg, Uint8 id );
 	void textInput(const SDL_TextInputEvent &arg);
 
 	void onCursorChange(const std::string& name);
@@ -77,15 +77,15 @@ protected:
 
 	///  Ogre
 	Ogre::Root *mRoot;  Ogre::SceneManager* mSceneMgr;
-    Ogre::Viewport* mViewport;
-    Ogre::RenderWindow* mWindow;
-    SDL_Window* mSDLWindow;
+	Ogre::Viewport* mViewport;
+	Ogre::RenderWindow* mWindow;
+	SDL_Window* mSDLWindow;
 	Ogre::Camera* mCamera;
 	Ogre::Vector3 mCamPosOld,mCamDirOld;
 	
 	///  input
-    SFO::InputWrapper* mInputWrapper;
-    SFO::SDLCursorManager* mCursorManager;
+	SFO::InputWrapper* mInputWrapper;
+	SFO::SDLCursorManager* mCursorManager;
 
 	///  ovelay
 	Ogre::Overlay* mDebugOverlay, *ovBrushPrv, *ovTerPrv;

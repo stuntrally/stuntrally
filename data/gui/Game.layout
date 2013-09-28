@@ -3373,7 +3373,7 @@
 					<Widget type="TabItem" skin="" position="2 24 510 492">
 						<Property key="Caption" value="#B0A0E0#{Shortcuts}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
-						<Widget type="EditBox" skin="EditBoxEmpty" position="20 32 360 36">
+                        <Widget type="EditBox" skin="EditBoxEmpty" position="20 20 464 48">
 							<Property key="ReadOnly" value="false"/>
 							<Property key="MultiLine" value="true"/>
 							<Property key="WordWrap" value="true"/>

@@ -180,6 +180,6 @@ public:
 	int iCamNextOld;
 	bool bLastChkOld;
 
-    virtual void requestedConfiguration (sh::MaterialInstance* m, const std::string& configuration);
-    virtual void createdConfiguration (sh::MaterialInstance* m, const std::string& configuration);
+	virtual void requestedConfiguration (sh::MaterialInstance* m, const std::string& configuration);
+	virtual void createdConfiguration (sh::MaterialInstance* m, const std::string& configuration);
 };

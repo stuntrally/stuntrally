@@ -4807,7 +4807,7 @@
 					<Widget type="TabItem" skin="" position="2 24 714 444">
 						<Property key="Caption" value="#B0A0FF#{Shortcuts}"/>
 						<UserString key="RelativeTo" value="HelpWnd"/>
-						<Widget type="EditBox" skin="EditBoxEmpty" position="32 20 676 32">
+                        <Widget type="EditBox" skin="EditBoxEmpty" position="32 16 676 44">
 							<Property key="ReadOnly" value="false"/>
 							<Property key="MultiLine" value="true"/>
 							<Property key="WordWrap" value="true"/>
