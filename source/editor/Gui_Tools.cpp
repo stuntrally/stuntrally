@@ -192,8 +192,8 @@ void CGui::btnDeleteObjects(WP)
 //  Scale track  --------------------------------
 void CGui::btnScaleAll(WP)
 {
-	if (!edScaleAllMul || !app->road)  return;
-	Real sf = std::max(0.1f, s2r(edScaleAllMul->getCaption()) );  // scale mul
+	if (!app->road)  return;
+	Real sf = std::max(0.1f, fScale);  // scale mul
 	
 	//  road
 	for (int i=0; i < app->road->getNumPoints(); ++i)
@@ -235,13 +235,6 @@ void CGui::btnScaleAll(WP)
 	app->vStartPos[n][0] *= sf;
 	app->vStartPos[n][1] *= sf;  app->UpdStartPos();
 }
-
-void CGui::editScaleAllMul(EditPtr)
-{	}
-
-void CGui::editScaleTerHMul(EditPtr)
-{	}
-
 
 
 ///  track 	. . . . . . . . . . . . . . . . . . . .	. . . . . . . . . . . . . . . . . . . . . . . . . . . . .

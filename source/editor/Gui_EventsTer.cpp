@@ -281,8 +281,8 @@ void CGui::btnTerrainMove(WP)
 //  Terrain  height scale  --------------------------------
 void CGui::btnScaleTerH(WP)
 {
-	if (!edScaleTerHMul || !app->road)  return;
-	Real sf = std::max(0.1f, s2r(edScaleTerHMul->getCaption()) );  // scale mul
+	if (!app->road)  return;
+	Real sf = std::max(0.1f, fScaleTer);  // scale mul
 
 	//  road
 	for (int i=0; i < app->road->getNumPoints(); ++i)

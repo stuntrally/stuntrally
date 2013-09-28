@@ -215,10 +215,6 @@ void CGui::tabPgLayers(TabPtr wp, size_t id)
 	cmbPgLay->setIndexSelected( cmbPgLay->findItemIndexWith(lay.name.substr(0,lay.name.length()-5)) );
 	Upd3DView(lay.name);
 	SetUsedStr(valLTrAll, sc->pgLayers.size(), 5);
-
-	if (edLTrMinTerH)  edLTrMinTerH->setCaption(toStr(lay.minTerH));
-	if (edLTrMaxTerH)  edLTrMaxTerH->setCaption(toStr(lay.maxTerH));
-	if (edLTrFlDepth)  edLTrFlDepth->setCaption(toStr(lay.maxDepth));
 }
 
 //  tab changed
@@ -238,6 +234,9 @@ void CGui::SldUpd_PgL()
 	svLTrWindFy.UpdF(&lay.windFy);
 
 	svLTrMaxTerAng.UpdF(&lay.maxTerAng);
+	svLTrMinTerH.UpdF(&lay.minTerH);
+	svLTrMaxTerH.UpdF(&lay.maxTerH);
+	svLTrFlDepth.UpdF(&lay.maxDepth);
 }
 
 void CGui::chkPgLayOn(WP wp)
@@ -260,20 +259,6 @@ void CGui::Upd3DView(String mesh)
 {
 	viewMesh = mesh;
 	tiViewUpd = 0.f;
-}
-
-
-void CGui::editLTrMinTerH(EditPtr ed)
-{
-	sc->pgLayersAll[idPgLay].minTerH = s2r(ed->getCaption());
-}
-void CGui::editLTrMaxTerH(EditPtr ed)
-{
-	sc->pgLayersAll[idPgLay].maxTerH = s2r(ed->getCaption());
-}
-void CGui::editLTrFlDepth(EditPtr ed)
-{
-	sc->pgLayersAll[idPgLay].maxDepth = s2r(ed->getCaption());
 }
 
 

@@ -51,7 +51,6 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	, idPgLay(0), tabsPgLayers(0)
 	,chkPgLay(0), valLTrAll(0)
 	,cmbPgLay(0)
-	,edLTrMinTerH(0),edLTrMaxTerH(0),edLTrFlDepth(0)
 	// grass layers
 	, idGrLay(0), tabsGrLayers(0)
 	,chkGrLay(0), valLGrAll(0)
@@ -66,7 +65,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,edRdPwsM(0),edRdPlsM(0)
 	,cmbRoadWMtr(0),cmbPipeWMtr(0),cmbRoadColMtr(0)
 	// tools
-	,edScaleAllMul(0),edScaleTerHMul(0)
+	,fScale(1.f),fScaleTer(1.f)
 	// warnings
 	, cntWarn(0), logWarn(0), iLoadNext(0)
 	,edWarn(0),txWarn(0)

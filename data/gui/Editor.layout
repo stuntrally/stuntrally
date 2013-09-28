@@ -2784,13 +2784,13 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipLTrMinTerH}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="136 355 48 24" name="LTrMinTerH">
+						<Widget type="EditBox" skin="EditBox" position="136 355 48 24" name="LTrMinTerHEdit">
 							<Property key="Colour" value="0.5 0.7 0.5"/>
 							<Property key="TextColour" value="0.6 1 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipLTrMinTerH}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="196 357 268 16" name="LTrMinTerH-">
+						<Widget type="Slider" skin="Slider" position="196 357 268 16" name="LTrMinTerH">
 							<Property key="Colour" value="0.5 0.7 0.5"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipLTrMaxTerAng}"/>
@@ -2801,13 +2801,13 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipLTrMaxTerH}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="136 383 48 24" name="LTrMaxTerH">
+						<Widget type="EditBox" skin="EditBox" position="136 383 48 24" name="LTrMaxTerHEdit">
 							<Property key="Colour" value="0.5 0.7 0.5"/>
 							<Property key="TextColour" value="0.6 1 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipLTrMaxTerH}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="196 385 268 16" name="LTrMaxTerH-">
+						<Widget type="Slider" skin="Slider" position="196 385 268 16" name="LTrMaxTerH">
 							<Property key="Colour" value="0.5 0.7 0.5"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipLTrMaxTerAng}"/>
@@ -2818,13 +2818,13 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipLTrFlDepth}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="136 419 48 24" name="LTrFlDepth">
+						<Widget type="EditBox" skin="EditBox" position="136 419 48 24" name="LTrFlDepthEdit">
 							<Property key="Colour" value="0.6 0.76 0.9"/>
 							<Property key="TextColour" value="0.6 0.76 0.9"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipLTrFlDepth}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="196 421 268 16" name="LTrFlDepth-">
+						<Widget type="Slider" skin="Slider" position="196 421 268 16" name="LTrFlDepth">
 							<Property key="Colour" value="0.5 0.75 1"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipLTrMaxTerAng}"/>
@@ -3341,24 +3341,24 @@
 					<Property key="Caption" value="#{ScaleTerHeight}"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="168 210 50 24" name="ScaleAllMul">
+				<Widget type="EditBox" skin="EditBox" position="168 210 50 24" name="ScaleAllMulEdit">
 					<Property key="Colour" value="0.7 1 0.8"/>
 					<Property key="TextColour" value="0.7 1 0.8"/>
 					<Property key="Caption" value="1.0"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="234 214 260 16" name="ScaleAllMul-">
+				<Widget type="Slider" skin="Slider" position="234 214 260 16" name="ScaleAllMul">
 					<Property key="Colour" value="0.8 1 0.8"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipTerLHMax}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="168 248 50 24" name="ScaleTerHMul">
+				<Widget type="EditBox" skin="EditBox" position="168 248 50 24" name="ScaleTerHMulEdit">
 					<Property key="Colour" value="0.3 1 0.3"/>
 					<Property key="TextColour" value="0.3 1 0.3"/>
 					<Property key="Caption" value="1.0"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="234 252 260 16" name="ScaleTerHMul-">
+				<Widget type="Slider" skin="Slider" position="234 252 260 16" name="ScaleTerHMul">
 					<Property key="Colour" value="0.5 1 0.5"/>
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipTerLHMax}"/>

@@ -323,11 +323,11 @@ void CGui::InitGui()
 	sv= &svLTrWindFy;	sv->Init("LTrWindFy",	 &f, 0.f,0.4f,3.f, 3,5);  sv->DefaultF(0.06f);
 	
 	sv= &svLTrMaxTerAng;sv->Init("LTrMaxTerAng", &f, 0.f,90.f, 2.f, 1,4);  sv->DefaultF(25.f);
-	SldUpd_PgL();  // real &f set here
 
-	Ed(LTrMinTerH, editLTrMinTerH);
-	Ed(LTrMaxTerH, editLTrMaxTerH);
-	Ed(LTrFlDepth, editLTrFlDepth);
+	sv= &svLTrMinTerH;	sv->Init("LTrMinTerH",	 &f,-60.f,60.f, 1.f, 1,4);  sv->DefaultF(-100.f);
+	sv= &svLTrMaxTerH;	sv->Init("LTrMaxTerH",	 &f, 0.f,120.f, 1.f, 1,4);  sv->DefaultF( 100.f);
+	sv= &svLTrFlDepth;	sv->Init("LTrFlDepth",	 &f, 0.f,5.f, 2.f, 1,4);  sv->DefaultF(0.f);
+	SldUpd_PgL();  // real &f set here
 
 
 	///  Grass  ------------------------------------
@@ -371,8 +371,9 @@ void CGui::InitGui()
 	Btn("DeleteRoad", btnDeleteRoad);		Btn("DeleteFluids", btnDeleteFluids);
 	Btn("DeleteObjects", btnDeleteObjects);
 
-	Btn("ScaleAll",  btnScaleAll);   Ed(ScaleAllMul,  editScaleAllMul);
-	Btn("ScaleTerH", btnScaleTerH);  Ed(ScaleTerHMul, editScaleTerHMul);
+	sv= &svScaleAllMul;		sv->Init("ScaleAllMul",		&fScale,    0.5f,2.f, 1.5f);  sv->DefaultF(1.f);
+	sv= &svScaleTerHMul;	sv->Init("ScaleTerHMul",	&fScaleTer, 0.5f,2.f, 1.5f);  sv->DefaultF(1.f);
+	Btn("ScaleAll",  btnScaleAll);  Btn("ScaleTerH", btnScaleTerH);
 
 	sv= &svAlignWidthAdd;	sv->Init("AlignWidthAdd",	&pSet->al_w_add,  0.f,20.f,1.f, 1,3);  sv->DefaultF(10.f);
 	sv= &svAlignWidthMul;	sv->Init("AlignWidthMul",	&pSet->al_w_mul,  1.f,4.f, 1.f, 2,4);  sv->DefaultF(1.f);

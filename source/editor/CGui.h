@@ -209,9 +209,7 @@ public:
 	SV svLTrMinSc,  svLTrMaxSc;
 	SV svLTrWindFx, svLTrWindFy;
 	SV svLTrMaxTerAng;
-
-	Ed edLTrMinTerH, edLTrMaxTerH, edLTrFlDepth;
-	void editLTrMinTerH(Ed), editLTrMaxTerH(Ed), editLTrFlDepth(Ed);
+	SV svLTrMinTerH, svLTrMaxTerH, svLTrFlDepth;
 
 	///  grass layers  --------
 	int idGrLay;  // tab
@@ -260,9 +258,9 @@ public:
 	//  delete
 	void btnDeleteRoad(WP),btnDeleteFluids(WP),btnDeleteObjects(WP);
 	//  scale
-	Ed edScaleAllMul;  void editScaleAllMul(Ed);
-	Ed edScaleTerHMul; void editScaleTerHMul(Ed);
-	void btnScaleAll(WP),btnScaleTerH(WP);
+	float fScale, fScaleTer;
+	SV svScaleAllMul, svScaleTerHMul;
+	void btnScaleAll(WP), btnScaleTerH(WP);
 	//  align
 	SV svAlignWidthAdd, svAlignWidthMul, svAlignSmooth;
 
