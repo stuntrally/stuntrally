@@ -160,15 +160,18 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 	//determine to what extent the tires are long (x) gripping vs lat (y) gripping
 	float longfactor = 1.0;
 	float combforce = std::abs(Fx)+std::abs(Fy);
-	if (combforce > 1) //avoid divide by zero (assume longfactor = 1 for this case)
-		longfactor = std::abs(Fx)/combforce; //1.0 when Fy is zero, 0.0 when Fx is zero
-	//determine the maximum force for this amount of long vs lat grip
+	if (combforce > 1)  // avoid divide by zero (assume longfactor = 1 for this case)
+		longfactor = std::abs(Fx)/combforce;  // 1.0 when Fy is zero, 0.0 when Fx is zero
+	//  determine the maximum force for this amount of long vs lat grip
 	float maxforce = std::abs(max_Fx)*longfactor + (1.0-longfactor)*std::abs(max_Fy); //linear interpolation
-	if (combforce > maxforce) //cap forces
+	if (combforce > maxforce)  // cap forces
 	{
 		//scale down forces to fit into the maximum
-		Fx *= maxforce / combforce;
-		Fy *= maxforce / combforce;
+		Dbl sc = maxforce / combforce;
+		Fx *= sc;
+		Fy *= sc;
+		//max_Fx *= sc;  //vis only
+		//max_Fy *= sc;
 		assert(!isnan(Fx));
 		assert(!isnan(Fy));
 		//std::cout << "Limiting " << combforce << " to " << maxforce << std::endl;

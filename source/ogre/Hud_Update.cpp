@@ -600,14 +600,19 @@ void CHud::Update(int carId, float time)
 	///  tire vis circles  + + + +
 	if (pCar && moTireVis[0] && pSet->car_tirevis)
 	{
-		const Real z = 8000.f;  // scale
+		const Real z = 8000.f, m_z = 2.f * z;  // scale, max factor
 		const int na = 32;  // circle quality
 		const Real ad = 2.f*PI_d/na, u = 0.02f;  // u line thickness
 		const ColourValue cb(0.8,0.8,0.8),cl(0.2,1,0.2),cc(1,1,0);
 		
 		for (int i=0; i < 4; ++i)
 		{
-			const CARWHEEL::SlideSlip& t = pCar->dynamics.wheel[i].slips;
+			const CARDYNAMICS& cd = pCar->dynamics;
+			const CARWHEEL::SlideSlip& t = cd.wheel[i].slips;
+			float d = cd.wheel_contact[i].GetDepth() - 2*cd.wheel[i].GetRadius();
+			bool off = !(d > -0.1f && d <= -0.01f);  // not in air
+			//bool on = cd.wheel_contact[i].GetColObj();
+			
 			ManualObject* m = moTireVis[i];
 			m->beginUpdate(0);
 			//  back +
@@ -617,13 +622,15 @@ void CHud::Update(int carId, float time)
 			m->position(0, 1,0);  m->colour(cb);
 			
 			//  tire line /
+			Real lx = off ? 0.f : t.Fy/z, ly = off ? 0.f : t.Fx/z;
 			for (int y=-2; y<=2; ++y)
 			for (int x=-2; x<=2; ++x)  {
-				m->position(0      +x*u, 0      +y*u, 0);  m->colour(cl);
-				m->position(t.Fy/z +x*u, t.Fx/z +y*u, 0);  m->colour(cl);  }
+				m->position(0  +x*u, 0  +y*u, 0);  m->colour(cl);
+				m->position(lx +x*u, ly +y*u, 0);  m->colour(cl);  }
 
 			//  max circle o
-			Real rx = t.Fym/z, ry = t.Fxm/z, a = 0.f;
+			Real rx = off || t.Fym > m_z ? 0.f : t.Fym/z,
+			     ry = off || t.Fxm > m_z ? 0.f : t.Fxm/z, a = 0.f;
 			Vector3 p(0,0,0),po(0,0,0);
 			
 			for (int n=0; n <= na; ++n)
