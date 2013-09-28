@@ -362,7 +362,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			flTxt[1]->setCaption(fb.name);
 			flTxt[2]->setCaption("Pos:  "+fToStr(fb.pos.x,1,4)+" "+fToStr(fb.pos.y,1,4)+" "+fToStr(fb.pos.z,1,4));
 			flTxt[3]->setCaption("");
-	//flTxt[3]->setCaption("Rot:  "+fToStr(fb.rot.x,1,4));
+			//flTxt[3]->setCaption("Rot:  "+fToStr(fb.rot.x,1,4));
 			flTxt[3]->setCaption("Size:  "+fToStr(fb.size.x,1,4)+" "+fToStr(fb.size.y,1,4)+" "+fToStr(fb.size.z,1,4));
 			flTxt[4]->setCaption("Tile:  "+fToStr(fb.tile.x,3,5)+" "+fToStr(fb.tile.y,3,5));
 

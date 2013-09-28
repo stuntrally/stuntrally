@@ -398,7 +398,10 @@ void BaseApp::textInput(const SDL_TextInputEvent &arg)
 //-------------------------------------------------------------------------------------
 bool BaseApp::mouseMoved( const SFO::MouseMotionEvent &arg )
 {
-	mx += arg.xrel;  my += arg.yrel;  mz += arg.zrel / 50;
+	mx += arg.xrel;  my += arg.yrel;
+	int dz = arg.zrel / 50;
+	if (dz != 0)
+		mz += dz > 0 ? 1 : -1;
 	//if (bGuiFocus)
 		MyGUI::InputManager::getInstance().injectMouseMove(arg.x, arg.y, arg.z);
 	return true;
