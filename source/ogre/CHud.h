@@ -116,6 +116,7 @@ public:
 	//  init
 	void Create(), Destroy();
 	void CreateArrow();
+	void CreateVdrMinimap();  //vdr only
 
 	//  show, size
 	void Size(bool full);

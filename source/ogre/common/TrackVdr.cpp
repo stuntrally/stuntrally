@@ -172,15 +172,14 @@ void App::CreateRacingLine()
 ///	 track 2D minimap  -mesh, optym texture..  -todo: editor tex save, remove this ...
 //---------------------------------------------------------------------------------------------------------------
 
-void App::CreateMinimap()
+void CHud::CreateVdrMinimap()
 {
-#if 0
-	asp = float(hud->mWindow->getWidth())/float(hud->mWindow->getHeight());
+	asp = float(app->mWindow->getWidth())/float(app->mWindow->getHeight());
 
 	//  get track sizes
 	minX=FLT_MAX; maxX=FLT_MIN;  minY=FLT_MAX; maxY=FLT_MIN;
 
-	const std::list <ROADSTRIP>& roads = pGame->track.GetRoadList();
+	const std::list <ROADSTRIP>& roads = app->pGame->track.GetRoadList();
 	for (std::list <ROADSTRIP>::const_iterator it = roads.begin(); it != roads.end(); ++it)
 	{
 		const std::list <ROADPATCH>& pats = (*it).GetPatchList();
@@ -202,7 +201,7 @@ void App::CreateMinimap()
 	float size = std::max(fMapSizeX, fMapSizeY);
 	scX = 1.f / size;  scY = 1.f / size;
 
-	ManualObject* m = mSceneMgr->createManualObject();
+	ManualObject* m = app->mSceneMgr->createManualObject();
 	m->begin("hud/Minimap", RenderOperation::OT_TRIANGLE_LIST);
 	int ii = 0;
 
@@ -263,7 +262,7 @@ void App::CreateMinimap()
 	int plr = 1;  //todo?: mSplitMgr->mNumViewports;
 	for (int i=0; i < plr; ++i)
 	{
-		hud[i].ndMap = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
+		hud[i].ndMap = app->mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
 		hud[i].ndMap->scale(fHudSize, fHudSize*asp, 1);
 		hud[i].ndMap->attachObject(m);
 	}
@@ -279,7 +278,6 @@ void App::CreateMinimap()
 		vNdPos[0][c]->attachObject(vMoPos[0][c]);  vNdPos[0][c]->setVisible(false);
 	}
 	ndMap[0]->setVisible(pSet->trackmap);*/
-#endif
 }
 
 

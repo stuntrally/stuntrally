@@ -507,7 +507,7 @@ void CHud::Destroy()
 			if (mo) {  scm->destroyManualObject(mo);  mo=0;  } \
 			if (nd) {  scm->destroySceneNode(nd);  nd=0;  }  }
 
-		for (i=0; i < 6; ++i)
+		for (i=0; i < 6; ++i)  //TODO: crash on vdr trk ...
 			Dest2(h.vMoPos[i],h.vNdPos[i])
 		
 		Dest2(h.moMap,h.ndMap)

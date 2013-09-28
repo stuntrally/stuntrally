@@ -512,7 +512,7 @@ void App::LoadTerrain()  // 5
 	if (sc->vdr)  // vdrift track
 	{
 		CreateVdrTrack(pSet->game.track, &pGame->track);
-		CreateMinimap();
+		hud->CreateVdrMinimap();
 		//CreateRacingLine();  //?-
 		//CreateRoadBezier();  //-
 	}
