@@ -35,18 +35,18 @@ void CGui::SetUsedStr(Txt valUsed, int cnt, int yellowAt)
 //  [Sky]
 //-----------------------------------------------------------------------------------------------------------
 
-void CGui::comboSky(ComboBoxPtr cmb, size_t val)  // sky materials
+void CGui::comboSky(Cmb cmb, size_t val)  // sky materials
 {
 	String s = cmb->getItemNameAt(val);
 	sc->skyMtr = s;  app->UpdateTrack();
 }
 
-void CGui::comboRain1(ComboBoxPtr cmb, size_t val)  // rain types
+void CGui::comboRain1(Cmb cmb, size_t val)  // rain types
 {
 	String s = cmb->getItemNameAt(val);  sc->rainName = s;
 	app->DestroyWeather();  app->CreateWeather();
 }
-void CGui::comboRain2(ComboBoxPtr cmb, size_t val)
+void CGui::comboRain2(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);  sc->rain2Name = s;
 	app->DestroyWeather();  app->CreateWeather();
@@ -59,17 +59,17 @@ void CGui::slUpdSun(SV*)
 }
 
 //  light clrs
-void CGui::editLiAmb(Edit* ed)
+void CGui::editLiAmb(Ed ed)
 {
 	Vector3 c = s2v(ed->getCaption());	sc->lAmb = c;  app->UpdSun();
 	clrAmb->setColour(Colour(c.x,c.y,c.z));
 }
-void CGui::editLiDiff(Edit* ed)
+void CGui::editLiDiff(Ed ed)
 {
 	Vector3 c = s2v(ed->getCaption());	sc->lDiff = c;  app->UpdSun();
 	clrDiff->setColour(Colour(c.x,c.y,c.z));
 }
-void CGui::editLiSpec(Edit* ed)
+void CGui::editLiSpec(Ed ed)
 {
 	Vector3 c = s2v(ed->getCaption());	sc->lSpec = c;  app->UpdSun();
 	clrSpec->setColour(Colour(c.x,c.y,c.z));
@@ -81,17 +81,17 @@ void CGui::slUpdFog(SV*)
 	app->UpdFog();
 }
 
-void CGui::editFogClr(Edit* ed)
+void CGui::editFogClr(Ed ed)
 {
 	Vector4 c = s2v4(ed->getCaption());  sc->fogClr = c;  app->UpdFog();
 	clrFog->setColour(Colour(c.x,c.y,c.z));
 }
-void CGui::editFogClr2(Edit* ed)
+void CGui::editFogClr2(Ed ed)
 {
 	Vector4 c = s2v4(ed->getCaption());  sc->fogClr2 = c;  app->UpdFog();
 	clrFog2->setColour(Colour(c.x,c.y,c.z));
 }
-void CGui::editFogClrH(Edit* ed)
+void CGui::editFogClrH(Ed ed)
 {
 	Vector4 c = s2v4(ed->getCaption());  sc->fogClrH = c;  app->UpdFog();
 	clrFogH->setColour(Colour(c.x,c.y,c.z));
@@ -107,7 +107,7 @@ void CGui::chkFog(Ck*)
 //  [Vegetation]
 //-----------------------------------------------------------------------------------------------------------
 
-void CGui::editTrGr(EditPtr ed)
+void CGui::editTrGr(Ed ed)
 {
 	Real r = s2r(ed->getCaption());
 	String n = ed->getName();
@@ -134,14 +134,14 @@ void CGui::editTrGr(EditPtr ed)
 	else if (n=="SceneryId")  sc->sceneryId = ed->getCaption();
 }
 
-void CGui::comboGrassMtr(ComboBoxPtr cmb, size_t val)
+void CGui::comboGrassMtr(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
 	SGrassLayer* gr = &sc->grLayersAll[idGrLay];
 	gr->material = s;
 	if (imgGrass)	imgGrass->setImageTexture(gr->material + ".png");  // same mtr name as tex
 }
-void CGui::comboGrassClr(ComboBoxPtr cmb, size_t val)
+void CGui::comboGrassClr(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
 	SGrassLayer* gr = &sc->grLayersAll[idGrLay];
@@ -152,7 +152,7 @@ void CGui::comboGrassClr(ComboBoxPtr cmb, size_t val)
 
 ///  Grass layers  ----------------------------------------------------------
 
-void CGui::tabGrLayers(TabPtr wp, size_t id)
+void CGui::tabGrLayers(Tab wp, size_t id)
 {
 	idGrLay = id;  // help var
 	SldUpd_GrL();
@@ -205,7 +205,7 @@ void CGui::chkGrLayOn(Ck*)
 
 ///  Vegetation layers  -----------------------------------------------------
 
-void CGui::tabPgLayers(TabPtr wp, size_t id)
+void CGui::tabPgLayers(Tab wp, size_t id)
 {
 	idPgLay = id;  // help var
 	SldUpd_PgL();
@@ -244,7 +244,7 @@ void CGui::chkPgLayOn(Ck*)
 	SetUsedStr(valLTrAll, sc->pgLayers.size(), 5);
 }
 
-void CGui::comboPgLay(ComboBoxPtr cmb, size_t val)
+void CGui::comboPgLay(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val) + ".mesh";
 	sc->pgLayersAll[idPgLay].name = s;
@@ -261,12 +261,12 @@ void CGui::Upd3DView(String mesh)
 //  [Road]
 //-----------------------------------------------------------------------------------------------------------
 
-void CGui::editTrkDesc(EditPtr ed)
+void CGui::editTrkDesc(Ed ed)
 {
 	app->road->sTxtDesc = ed->getCaption();
 }
 
-void CGui::comboRoadMtr(ComboBoxPtr cmb, size_t val)
+void CGui::comboRoadMtr(Cmb cmb, size_t val)
 {
 	String sn = cmb->getName().substr(String("RdMtr").length(), cmb->getName().length());
 	int id = atoi(sn.c_str())-1;  if (id < 0 || id >= MTRs)  return;
@@ -275,7 +275,7 @@ void CGui::comboRoadMtr(ComboBoxPtr cmb, size_t val)
 	app->road->sMtrRoad[id] = s;  app->road->RebuildRoad(true);  app->UpdPSSMMaterials();
 }
 
-void CGui::comboPipeMtr(ComboBoxPtr cmb, size_t val)
+void CGui::comboPipeMtr(Cmb cmb, size_t val)
 {
 	String sn = cmb->getName().substr(String("RdMtrP").length(), cmb->getName().length());
 	int id = atoi(sn.c_str())-1;  if (id < 0 || id >= MTRs)  return;
@@ -284,23 +284,23 @@ void CGui::comboPipeMtr(ComboBoxPtr cmb, size_t val)
 	app->road->SetMtrPipe(id, s);  app->road->RebuildRoad(true);  app->UpdPSSMMaterials();
 }
 
-void CGui::comboRoadWMtr(ComboBoxPtr cmb, size_t val)
+void CGui::comboRoadWMtr(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
 	app->road->sMtrWall = s;  app->road->RebuildRoad(true);  app->UpdPSSMMaterials();
 }
-void CGui::comboPipeWMtr(ComboBoxPtr cmb, size_t val)
+void CGui::comboPipeWMtr(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
 	app->road->sMtrWallPipe = s;  app->road->RebuildRoad(true);  app->UpdPSSMMaterials();
 }
-void CGui::comboRoadColMtr(ComboBoxPtr cmb, size_t val)
+void CGui::comboRoadColMtr(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
 	app->road->sMtrCol = s;  app->road->RebuildRoad(true);  app->UpdPSSMMaterials();
 }
 
-void CGui::editRoad(EditPtr ed)
+void CGui::editRoad(Ed ed)
 {
 	if (!app->road)  return;
 	Real r = s2r(ed->getCaption());

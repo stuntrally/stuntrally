@@ -118,21 +118,20 @@ public:
 
 	
 	///  [Terrain]  --------------------
-	Cmb cmbTexDiff, cmbTexNorm;
-	void comboTexDiff(CMB), comboTexNorm(CMB);
-	Img imgTexDiff;
-
-	Btn chkTerLay, chkTerLNoiseOnly, chkTerLayTripl;  // on
-	void chkTerLayOn(WP), chkTerLNoiseOnlyOn(WP), chkTerLayTriplOn(WP);
-	
-	//  HMap tab
+	//  Ter HMap
 	Tab tabsHmap;  void tabHmap(TAB);
 	void updTabHmap();  int getHMapSizeTab();
 	
-	Ck ckTexNormAuto;  bool bTexNormAuto;  // auto norm tex
+	//  Ter HMap
+	SlV(TerTriSize);  int UpdTxtTerSize(float mul=1.f);
+	Ed edTerErrorNorm;  void editTerErrorNorm(Ed);
+	
+	Ogre::String getHMapNew();
+	void btnTerrainNew(WP), btnTerGenerate(WP);
+	void btnTerrainHalf(WP), btnTerrainDouble(WP), btnTerrainMove(WP);  // tools
 	
 	void btnBrushPreset(WP);
-
+	
 	//  Ter Generator
 	SV svTerGenScale, svTerGenOfsX, svTerGenOfsY;
 	SV svTerGenFreq, svTerGenOct, svTerGenPers, svTerGenPow;
@@ -142,25 +141,26 @@ public:
 	void slTerGen(SV*);
 	
 	
-	//  Ter HMap
-	SlV(TerTriSize);  int UpdTxtTerSize(float mul=1.f);
-	Ed edTerErrorNorm;  void editTerErrorNorm(Ed);
-
-	Ogre::String getHMapNew();
-	void btnTerrainNew(WP), btnTerGenerate(WP);
-	void btnTerrainHalf(WP), btnTerrainDouble(WP), btnTerrainMove(WP);  // tools
-	
-	//  Ter Layer
+	//  Ter Layer  ----
 	int idTerLay;  bool bTerLay;  // help vars
 	void SldUpd_TerL();
-	Tab tabsTerLayers; void tabTerLayer(TAB);
+	Tab tabsTerLayers;  void tabTerLayer(TAB);
 
-	Txt valTerLAll;
+	CK(TerLayOn);  Txt valTerLAll;
+
+	//  texture
+	Cmb cmbTexDiff, cmbTexNorm;
+	void comboTexDiff(CMB), comboTexNorm(CMB);
+	Img imgTexDiff;
+	Ck ckTexNormAuto;  bool bTexNormAuto;  // auto norm tex name
+
+	//  Ter blendmap
 	SV svTerLScale;
-	SV svTerLAngMin, svTerLHMin, svTerLAngSm;  // blendmap
+	SV svTerLAngMin, svTerLHMin, svTerLAngSm;
 	SV svTerLAngMax, svTerLHMax, svTerLHSm;
-	SV svTerLNoise;  //TerLNoiseOnly
+	SV svTerLNoise;
 	void slTerLay(SV*);
+	CK(TerLNoiseOnly);  CK(TerLayTripl);
 
 	//  Ter Particles
 	Ed edLDust,edLDustS,edLMud,edLSmoke, edLTrlClr;  Img clrTrail;

@@ -19,7 +19,7 @@ using namespace Ogre;
 
 ///  Change terrain texture layer, update values
 //
-void CGui::tabTerLayer(TabPtr wp, size_t id)
+void CGui::tabTerLayer(Tab wp, size_t id)
 {
 	idTerLay = id;  // help vars
 	bTerLay = id < sc->td.ciNumLay;
@@ -29,28 +29,24 @@ void CGui::tabTerLayer(TabPtr wp, size_t id)
 	SldUpd_TerL();
 
 	cmbTexDiff->setVisible(bTerLay);  cmbTexNorm->setVisible(bTerLay);
-	chkTerLay->setVisible(bTerLay);   ckTexNormAuto.setVisible(bTerLay);  chkTerLayTripl->setVisible(bTerLay);
+	ckTerLayOn.setVisible(bTerLay);   ckTexNormAuto.setVisible(bTerLay);  ckTerLayTripl.setVisible(bTerLay);
 	imgTexDiff->setVisible(bTerLay);
 	
 	if (bTerLay)
 	{
-		chkTerLay->setStateSelected(lay->on);
 		cmbTexDiff->setIndexSelected( cmbTexDiff->findItemIndexWith(lay->texFile) );
 		cmbTexNorm->setIndexSelected( cmbTexNorm->findItemIndexWith(lay->texNorm) );
+		bool noNorm = cmbTexNorm->getIndexSelected() == ITEM_NONE;
 
 		//  auto norm check  if  norm = tex + _nh
 		String sTex,sNorm, sExt;
 		StringUtil::splitBaseFilename(lay->texFile,sTex,sExt);
 		StringUtil::splitBaseFilename(lay->texNorm,sNorm,sExt);
-		bool bAuto = sTex + "_nh" == sNorm;
+		bool bAuto = !sNorm.empty() && !noNorm && (sTex + "_nh" == sNorm);
 		bTexNormAuto = bAuto;
 		ckTexNormAuto.Upd();
 		//  tex image
 	    imgTexDiff->setImageTexture(sTex + "_prv.png");
-
-		//  Ter Blendmap
-		chkTerLNoiseOnly->setStateSelected(lay->bNoiseOnly);
-		chkTerLayTripl->setStateSelected(lay->triplanar);
 	}
 
 	//  scale layer
@@ -73,6 +69,10 @@ void CGui::tabTerLayer(TabPtr wp, size_t id)
 void CGui::SldUpd_TerL()
 {
 	TerLayer* lay = bTerLay ? &sc->td.layersAll[idTerLay] : &sc->td.layerRoad;
+	ckTerLayOn.Upd(&lay->on);
+	ckTerLNoiseOnly.Upd(&lay->bNoiseOnly);
+	ckTerLayTripl.Upd(&lay->triplanar);
+	
 	svTerLScale.UpdF(&lay->tiling);
 	svTerLAngMin.UpdF(&lay->angMin);  svTerLHMin.UpdF(&lay->hMin);
 	svTerLAngMax.UpdF(&lay->angMax);  svTerLHMax.UpdF(&lay->hMax);
@@ -109,12 +109,12 @@ int CGui::getHMapSizeTab()
 	if (h.empty()) {  h[0]=128; h[1]=256; h[2]=512; h[3]=1024; h[4]=2048;  }
 	return h[ tabsHmap->getIndexSelected() ];
 }
-void CGui::tabHmap(TabPtr wp, size_t id)
+void CGui::tabHmap(Tab, size_t)
 {
 	UpdTxtTerSize();
 }
 
-void CGui::editTerErrorNorm(MyGUI::EditPtr ed)
+void CGui::editTerErrorNorm(Ed ed)
 {
 	Real r = std::max(0.f, s2r(ed->getCaption()) );
 	sc->td.errorNorm = r;  app->UpdTerErr();
@@ -246,8 +246,8 @@ void CGui::btnTerrainDouble(WP)
 //  Terrain  move  --------------------------------
 void CGui::btnTerrainMove(WP)
 {
-	EditPtr ex = (EditPtr)app->mWndEdit->findWidget("TerMoveX");
-	EditPtr ey = (EditPtr)app->mWndEdit->findWidget("TerMoveY");
+	Ed ex = (Ed)app->mWndEdit->findWidget("TerMoveX");
+	Ed ey = (Ed)app->mWndEdit->findWidget("TerMoveY");
 	int mx = ex ? s2i(ex->getCaption()) : 0;
 	int my = ey ?-s2i(ey->getCaption()) : 0;
 	
@@ -346,28 +346,20 @@ void CGui::slTerGen(SV*)
 
 ///  Terrain layers  -----------------------------
 //
-void CGui::chkTerLayOn(WP wp)
+void CGui::chkTerLayOn(Ck*)
 {
-	if (!bTerLay)  return;
-	sc->td.layersAll[idTerLay].on = !sc->td.layersAll[idTerLay].on;
-	ButtonPtr chk = wp->castType<Button>();
-	chk->setStateSelected(sc->td.layersAll[idTerLay].on);
 	sc->td.UpdLayers();
 	SetUsedStr(valTerLAll, sc->td.layers.size(), 3);
 	//  force update, blendmap sliders crash if not, !! this doesnt save hmap if changed  todo..
 	app->UpdateTrack();
 }
 
-void CGui::chkTerLayTriplOn(WP wp)
+void CGui::chkTerLayTripl(Ck*)
 {
-	if (!bTerLay)  return;
-	sc->td.layersAll[idTerLay].triplanar = !sc->td.layersAll[idTerLay].triplanar;
-	ButtonPtr chk = wp->castType<Button>();
-	chk->setStateSelected(sc->td.layersAll[idTerLay].triplanar);
 	sc->td.UpdLayers();
 }
 
-void CGui::comboTexDiff(ComboBoxPtr cmb, size_t val)
+void CGui::comboTexDiff(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
 	if (bTerLay)  sc->td.layersAll[idTerLay].texFile = s;
@@ -381,13 +373,13 @@ void CGui::comboTexDiff(ComboBoxPtr cmb, size_t val)
 	{	size_t id = cmbTexNorm->findItemIndexWith(sNorm);
 		if (id != ITEM_NONE)  // set only if found
 			cmbTexNorm->setIndexSelected(id);
-		if (bTerLay)  sc->td.layersAll[idTerLay].texNorm = sNorm;  }
-	    
+		if (bTerLay)  sc->td.layersAll[idTerLay].texNorm = sNorm;
+	}
 	//  tex image
     imgTexDiff->setImageTexture(sTex + "_prv.png");
 }
 
-void CGui::comboTexNorm(ComboBoxPtr cmb, size_t val)
+void CGui::comboTexNorm(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
 	if (bTerLay)  sc->td.layersAll[idTerLay].texNorm = s;
@@ -399,19 +391,15 @@ void CGui::slTerLay(SV*)
 	app->bTerUpdBlend = true;
 }
 
-void CGui::chkTerLNoiseOnlyOn(WP wp)
+void CGui::chkTerLNoiseOnly(Ck*)
 {
-	if (!bTerLay)  return;
-	sc->td.layersAll[idTerLay].bNoiseOnly = !sc->td.layersAll[idTerLay].bNoiseOnly;
-	ButtonPtr chk = wp->castType<Button>();
-	chk->setStateSelected(sc->td.layersAll[idTerLay].bNoiseOnly);
 	if (/*app->terrain &&*/ bGI /*&& !noBlendUpd*/)  app->bTerUpdBlend = true;
 }
 
 
 ///  Terrain Particles  -----------------------------
 //
-void CGui::editLDust(EditPtr ed)
+void CGui::editLDust(Ed ed)
 {
 	Real r = s2r(ed->getCaption());
 	TerLayer* l = !bTerLay ? &sc->td.layerRoad : &sc->td.layersAll[idTerLay];
@@ -420,7 +408,7 @@ void CGui::editLDust(EditPtr ed)
 		 if (n=="LDust")   l->dust = r;		else if (n=="LDustS")  l->dustS = r;
 	else if (n=="LMud")    l->mud = r;		else if (n=="LSmoke")  l->smoke = r;
 }
-void CGui::editLTrlClr(EditPtr ed)
+void CGui::editLTrlClr(Ed ed)
 {
 	ColourValue c = s2c(ed->getCaption());
 	if (!bTerLay)   sc->td.layerRoad.tclr = c;
@@ -428,7 +416,7 @@ void CGui::editLTrlClr(EditPtr ed)
 	if (clrTrail)  clrTrail->setColour(Colour(c.r,c.g,c.b));
 }
 
-void CGui::comboParDust(ComboBoxPtr cmb, size_t val)
+void CGui::comboParDust(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
 	String n = cmb->getName();
@@ -441,7 +429,7 @@ void CGui::comboParDust(ComboBoxPtr cmb, size_t val)
 
 ///  Terrain Surface  -----------------------------
 //
-void CGui::comboSurface(ComboBoxPtr cmb, size_t val)
+void CGui::comboSurface(Cmb cmb, size_t val)
 {
 	std::string s = cmb->getItemNameAt(val);
 	if (!bTerLay)

@@ -256,19 +256,19 @@ void CGui::InitGui()
 	sv= &svTerGenAngMin;sv->Init("TerGenAngMin",&pSet->gen_terMinA, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(0.f);
 	sv= &svTerGenAngMax;sv->Init("TerGenAngMax",&pSet->gen_terMaxA, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(90.f);
 	sv= &svTerGenAngSm;	sv->Init("TerGenAngSm",	&pSet->gen_terSmA,  0.f,  90.f,  2.f, 1,4);  sv->DefaultF(10.f);
-	sv= &svTerGenHMin;	sv->Init("TerGenHMin",	&pSet->gen_terMinH,-150.f,150.f, 1.f, 0,3);  sv->DefaultF(-300.f);
-	sv= &svTerGenHMax;	sv->Init("TerGenHMax",	&pSet->gen_terMaxH,-150.f,150.f, 1.f, 0,3);  sv->DefaultF( 300.f);
+	sv= &svTerGenHMin;	sv->Init("TerGenHMin",	&pSet->gen_terMinH,-150.f,150.f, 1.f, 0,1);  sv->DefaultF(-300.f);
+	sv= &svTerGenHMax;	sv->Init("TerGenHMax",	&pSet->gen_terMaxH,-150.f,150.f, 1.f, 0,1);  sv->DefaultF( 300.f);
 	sv= &svTerGenHSm;	sv->Init("TerGenHSm",	&pSet->gen_terSmH,  0.f,  100.f, 2.f, 1,4);  sv->DefaultF(20.f);
 
 
 	///  [Layers]  ------------------------------------
 	bool b;
-	Chk("TerLayOn", chkTerLayOn, 1);  chkTerLay = bchk;
+	ck= &ckTerLayOn;	ck->Init("TerLayOn",	&b);   Cev(TerLayOn);
 	valTerLAll = fTxt("TerLayersAll");
 	Tab(tabsTerLayers, "TabTerLay", tabTerLayer);
 
 	ck= &ckTexNormAuto;	ck->Init("TexNormAuto",	&bTexNormAuto);
-	Chk("TerLayTripl", chkTerLayTriplOn, 1);  chkTerLayTripl = bchk;
+	ck= &ckTerLayTripl;	ck->Init("TerLayTripl",	&b);   Cev(TerLayTripl);
 
 	float f=0.f;  i=0;  // temp vars
 	sv= &svTerTriSize;	sv->Init("TerTriSize", &sc->td.fTriangleSize,  0.1f,6.f, 2.f);  sv->DefaultF(1.4f);  Sev(TerTriSize);
@@ -282,7 +282,7 @@ void CGui::InitGui()
 	sv= &svTerLHMax;    sv->Init("TerLHMax",   &f,-150.f,150.f, 1.f, 0,2);  sv->DefaultF( 300.f);  Sev(TerLay);
 	sv= &svTerLHSm;     sv->Init("TerLHSm",    &f, 0.f,  100.f, 2.f, 1,4);  sv->DefaultF(20.f);  Sev(TerLay);
 	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f,-2.f,2.f);
-	Chk("TerLNoiseOnly", chkTerLNoiseOnlyOn, 0);  chkTerLNoiseOnly = bchk;
+	ck= &ckTerLNoiseOnly; ck->Init("TerLNoiseOnly",	&b);   Cev(TerLNoiseOnly);
 	
 	//  particles
 	Ed(LDust, editLDust);	Ed(LDustS, editLDust);
@@ -300,6 +300,7 @@ void CGui::InitGui()
 	txtSuFrict    = fTxt("SuFrict");
 	txtSurfTire   = fTxt("SurfTire");
 	txtSurfType   = fTxt("SurfType");
+	SldUpd_TerL();
 
 	
 	///  [Vegetation]  ------------------------------------
