@@ -262,6 +262,7 @@ void CGui::InitGui()
 
 
 	///  [Layers]  ------------------------------------
+	bool b;
 	Chk("TerLayOn", chkTerLayOn, 1);  chkTerLay = bchk;
 	valTerLAll = fTxt("TerLayersAll");
 	Tab(tabsTerLayers, "TabTerLay", tabTerLayer);
@@ -277,8 +278,8 @@ void CGui::InitGui()
 	sv= &svTerLAngMin;  sv->Init("TerLAngMin", &f, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(0.f);  Sev(TerLay);
 	sv= &svTerLAngMax;  sv->Init("TerLAngMax", &f, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(90.f);  Sev(TerLay);
 	sv= &svTerLAngSm;   sv->Init("TerLAngSm",  &f, 0.f,  90.f,  2.f, 1,4);  sv->DefaultF(20.f);  Sev(TerLay);
-	sv= &svTerLHMin;    sv->Init("TerLHMin",   &f,-150.f,150.f, 1.f, 0,3);  sv->DefaultF(-300.f);  Sev(TerLay);
-	sv= &svTerLHMax;    sv->Init("TerLHMax",   &f,-150.f,150.f, 1.f, 0,3);  sv->DefaultF( 300.f);  Sev(TerLay);
+	sv= &svTerLHMin;    sv->Init("TerLHMin",   &f,-150.f,150.f, 1.f, 0,2);  sv->DefaultF(-300.f);  Sev(TerLay);
+	sv= &svTerLHMax;    sv->Init("TerLHMax",   &f,-150.f,150.f, 1.f, 0,2);  sv->DefaultF( 300.f);  Sev(TerLay);
 	sv= &svTerLHSm;     sv->Init("TerLHSm",    &f, 0.f,  100.f, 2.f, 1,4);  sv->DefaultF(20.f);  Sev(TerLay);
 	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f,-2.f,2.f);
 	Chk("TerLNoiseOnly", chkTerLNoiseOnlyOn, 0);  chkTerLNoiseOnly = bchk;
@@ -307,7 +308,7 @@ void CGui::InitGui()
 	Ed(TrRdDist, editTrGr);  Ed(TrImpDist, editTrGr);
 	Ed(GrDensSmooth, editTrGr);  Ed(SceneryId, editTrGr);
 
-	Chk("LTrEnabled", chkPgLayOn, 1);  chkPgLay = bchk;
+	ck= &ckPgLayOn;		ck->Init("LTrEnabled",	&b);   Cev(PgLayOn);
 	valLTrAll = fTxt("LTrAll");
 	Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);
 	//  veget layers, models
@@ -331,7 +332,7 @@ void CGui::InitGui()
 
 
 	///  Grass  ------------------------------------
-	Chk("LGrEnabled", chkGrLayOn, 1);  chkGrLay = bchk;
+	ck= &ckGrLayOn;		ck->Init("LGrEnabled",	&b);   Cev(GrLayOn);
 	valLGrAll = fTxt("LGrAll");
 	Tab(tabsGrLayers, "LGrLayTab", tabGrLayers);
 

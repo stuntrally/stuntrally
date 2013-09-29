@@ -4795,10 +4795,15 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="376 140 320 20">
 							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="Caption" value="#{InputRoadPick}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 180 320 20">
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
 							<Property key="Caption" value="#{InputRoadSel}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="408 160 300 20">
+						<Widget type="TextBox" skin="TextBox" position="408 200 300 20">
 							<Property key="TextColour" value="0.5 0.65 0.8"/>
 							<Property key="Caption" value="#{InputRoadSelAlt}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>

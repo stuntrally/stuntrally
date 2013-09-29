@@ -405,6 +405,10 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			
 			//  sel
 			case key(BACKSPACE):
+				if (alt)  // select all
+					for (int i=0; i < objs; ++i)
+						gui->vObjSel.insert(i);
+				else
 				if (ctrl)  gui->vObjSel.clear();  // unsel all
 				else
 				if (gui->iObjCur > -1)
