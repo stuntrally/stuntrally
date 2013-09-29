@@ -320,6 +320,11 @@ void Check::Invert()
 	SetValue(!(*pBool));
 }
 
+void Check::setVisible(bool vis)
+{
+	chk->setVisible(vis);
+}
+
 
 //  Init
 //------------------------------------

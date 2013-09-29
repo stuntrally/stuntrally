@@ -29,7 +29,7 @@ void CGui::tabTerLayer(TabPtr wp, size_t id)
 	SldUpd_TerL();
 
 	cmbTexDiff->setVisible(bTerLay);  cmbTexNorm->setVisible(bTerLay);
-	chkTerLay->setVisible(bTerLay);   chkTexNormAuto->setVisible(bTerLay);  chkTerLayTripl->setVisible(bTerLay);
+	chkTerLay->setVisible(bTerLay);   ckTexNormAuto.setVisible(bTerLay);  chkTerLayTripl->setVisible(bTerLay);
 	imgTexDiff->setVisible(bTerLay);
 	
 	if (bTerLay)
@@ -43,7 +43,8 @@ void CGui::tabTerLayer(TabPtr wp, size_t id)
 		StringUtil::splitBaseFilename(lay->texFile,sTex,sExt);
 		StringUtil::splitBaseFilename(lay->texNorm,sNorm,sExt);
 		bool bAuto = sTex + "_nh" == sNorm;
-		chkTexNormAuto->setStateSelected(bAuto);
+		bTexNormAuto = bAuto;
+		ckTexNormAuto.Upd();
 		//  tex image
 	    imgTexDiff->setImageTexture(sTex + "_prv.png");
 
@@ -364,13 +365,6 @@ void CGui::chkTerLayTriplOn(WP wp)
 	ButtonPtr chk = wp->castType<Button>();
 	chk->setStateSelected(sc->td.layersAll[idTerLay].triplanar);
 	sc->td.UpdLayers();
-}
-
-void CGui::chkTexNormAutoOn(WP wp)
-{
-	bTexNormAuto = !bTexNormAuto;
-	ButtonPtr chk = wp->castType<Button>();
-	chk->setStateSelected(bTexNormAuto);
 }
 
 void CGui::comboTexDiff(ComboBoxPtr cmb, size_t val)

@@ -139,6 +139,7 @@ public:
 	void Upd();
 	void Upd(bool* pB);
 
+	void setVisible(bool vis);
 
 	void SetValue(bool b);
 	void Invert();  // set opposite value

@@ -23,7 +23,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,valTerLAll(0),tabsHmap(0),tabsTerLayers(0)
 	, idTerLay(0),bTerLay(1)
 	,chkTerLay(0)
-	,chkTexNormAuto(0), bTexNormAuto(1)
+	,bTexNormAuto(1)
 	,chkTerLNoiseOnly(0), chkTerLayTripl(0)
 	,edTerErrorNorm(0)
 	// ter particles

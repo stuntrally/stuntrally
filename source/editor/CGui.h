@@ -129,8 +129,7 @@ public:
 	Tab tabsHmap;  void tabHmap(TAB);
 	void updTabHmap();  int getHMapSizeTab();
 	
-	bool bTexNormAuto;  // auto norm tex
-	Btn chkTexNormAuto;  void chkTexNormAutoOn(WP);
+	Ck ckTexNormAuto;  bool bTexNormAuto;  // auto norm tex
 	
 	void btnBrushPreset(WP);
 

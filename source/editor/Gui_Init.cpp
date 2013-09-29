@@ -267,7 +267,7 @@ void CGui::InitGui()
 	valTerLAll = fTxt("TerLayersAll");
 	Tab(tabsTerLayers, "TabTerLay", tabTerLayer);
 
-	Chk("TexNormAuto", chkTexNormAutoOn, 1);  chkTexNormAuto = bchk;
+	ck= &ckTexNormAuto;	ck->Init("TexNormAuto",	&bTexNormAuto);
 	Chk("TerLayTripl", chkTerLayTriplOn, 1);  chkTerLayTripl = bchk;
 
 	float f=0.f;  i=0;  // temp vars
