@@ -158,11 +158,12 @@ void CGui::tabGrLayers(TabPtr wp, size_t id)
 	SldUpd_GrL();
 	const SGrassLayer* gr = &sc->grLayersAll[idGrLay], *g0 = &sc->grLayersAll[0];
 
-	chkGrLay->setStateSelected(gr->on);
 	if (imgGrass)	imgGrass->setImageTexture(gr->material + ".png");  // same mtr name as tex
 	if (imgGrClr)	imgGrClr->setImageTexture(gr->colorMap);
 
-	int used=0;  for (int i=0; i < sc->ciNumGrLay; ++i)  if (sc->grLayersAll[i].on)  ++used;
+	int used=0;
+	for (int i=0; i < sc->ciNumGrLay; ++i)
+		if (sc->grLayersAll[i].on)  ++used;
 	SetUsedStr(valLGrAll, used, 4);
 
 	#define _Ed(name, val)  ed##name->setCaption(toStr(val));
@@ -184,21 +185,20 @@ void CGui::tabGrLayers(TabPtr wp, size_t id)
 void CGui::SldUpd_GrL()
 {
 	SGrassLayer& gr =  sc->grLayersAll[idGrLay];
+	ckGrLayOn.Upd(&gr.on);
+	svLGrDens.UpdF(&gr.dens);
+
 	svGrMinX.UpdF(&gr.minSx);
 	svGrMaxX.UpdF(&gr.maxSx);
 	svGrMinY.UpdF(&gr.minSy);
 	svGrMaxY.UpdF(&gr.maxSy);
-	svLGrDens.UpdF(&gr.dens);
 }
 
-void CGui::chkGrLayOn(WP wp)
+void CGui::chkGrLayOn(Ck*)
 {
-	sc->grLayersAll[idGrLay].on = !sc->grLayersAll[idGrLay].on;
-
-	ButtonPtr chk = wp->castType<Button>();
-	chk->setStateSelected(sc->grLayersAll[idGrLay].on);
-
-	int used=0;  for (int i=0; i < sc->ciNumGrLay; ++i)  if (sc->grLayersAll[i].on)  ++used;
+	int used=0;
+	for (int i=0; i < sc->ciNumGrLay; ++i)
+		if (sc->grLayersAll[i].on)  ++used;
 	SetUsedStr(valLGrAll, used, 4);
 }
 
@@ -211,7 +211,6 @@ void CGui::tabPgLayers(TabPtr wp, size_t id)
 	SldUpd_PgL();
 	const PagedLayer& lay = sc->pgLayersAll[idPgLay];
 
-	chkPgLay->setStateSelected(lay.on);
 	cmbPgLay->setIndexSelected( cmbPgLay->findItemIndexWith(lay.name.substr(0,lay.name.length()-5)) );
 	Upd3DView(lay.name);
 	SetUsedStr(valLTrAll, sc->pgLayers.size(), 5);
@@ -221,7 +220,7 @@ void CGui::tabPgLayers(TabPtr wp, size_t id)
 void CGui::SldUpd_PgL()
 {
 	PagedLayer& lay = sc->pgLayersAll[idPgLay];
-
+	ckPgLayOn.Upd(&lay.on);
 	svLTrDens.UpdF(&lay.dens);
 
 	svLTrRdDist.UpdI(&lay.addRdist);
@@ -239,12 +238,9 @@ void CGui::SldUpd_PgL()
 	svLTrFlDepth.UpdF(&lay.maxDepth);
 }
 
-void CGui::chkPgLayOn(WP wp)
+void CGui::chkPgLayOn(Ck*)
 {
-	sc->pgLayersAll[idPgLay].on = !sc->pgLayersAll[idPgLay].on;
 	sc->UpdPgLayers();
-	ButtonPtr chk = wp->castType<Button>();
-	chk->setStateSelected(sc->pgLayersAll[idPgLay].on);
 	SetUsedStr(valLTrAll, sc->pgLayers.size(), 5);
 }
 

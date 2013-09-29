@@ -48,12 +48,10 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,cmbGrassMtr(0), cmbGrassClr(0)
 	,viewCanvas(0), tiViewUpd(-1.f)
 	// paged layers, veget models
-	, idPgLay(0), tabsPgLayers(0)
-	,chkPgLay(0), valLTrAll(0)
+	, idPgLay(0), tabsPgLayers(0), valLTrAll(0)
 	,cmbPgLay(0)
 	// grass layers
-	, idGrLay(0), tabsGrLayers(0)
-	,chkGrLay(0), valLGrAll(0)
+	, idGrLay(0), tabsGrLayers(0), valLGrAll(0)
 	,imgGrass(0),imgGrClr(0)
 	// road
 	,edRdTcMul(0),edRdTcMulW(0)

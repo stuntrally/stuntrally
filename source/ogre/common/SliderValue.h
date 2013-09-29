@@ -137,6 +137,7 @@ public:
 
 	//  update checkbox if value or pointer changed
 	void Upd();
+	void Upd(bool* pB);
 
 
 	void SetValue(bool b);

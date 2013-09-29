@@ -183,9 +183,6 @@ public:
 		edGrDensSmooth, edSceneryId,
 		edGrTerMaxAngle, edGrTerSmAngle,
 		edGrTerMinHeight, edGrTerMaxHeight, edGrTerSmHeight;
-
-	Cmb cmbGrassMtr;  void comboGrassMtr(CMB);
-	Cmb cmbGrassClr;  void comboGrassClr(CMB);
 	void editTrGr(Ed);
 
 	//  model view 3d  (veget,objs)
@@ -201,7 +198,7 @@ public:
 	void SldUpd_PgL();
 	Tab tabsPgLayers;  void tabPgLayers(TAB);
 
-	Btn chkPgLay;  void chkPgLayOn(WP);  Txt valLTrAll;
+	CK(PgLayOn);  Txt valLTrAll;
 	Cmb cmbPgLay;  void comboPgLay(CMB);
 
 	SV svLTrDens;
@@ -216,12 +213,14 @@ public:
 	void SldUpd_GrL();
 	Tab tabsGrLayers;  void tabGrLayers(TAB);
 
+	CK(GrLayOn);  Txt valLGrAll;
 	SV svLGrDens;
 	SV svGrMinX, svGrMaxX;
 	SV svGrMinY, svGrMaxY;
 
-	Btn chkGrLay;  void chkGrLayOn(WP);
-	Img imgGrass,imgGrClr;  Txt valLGrAll;
+	Cmb cmbGrassMtr;  void comboGrassMtr(CMB);
+	Cmb cmbGrassClr;  void comboGrassClr(CMB);
+	Img imgGrass,imgGrClr;
 
 	
 	//  [Road]  ----
@@ -243,8 +242,10 @@ public:
 	std::vector<std::string> vObjNames;
 	void SetObjNewType(int tnew), UpdObjNewNode();
 	void AddNewObj();
-	int iObjCur,iObjLast, iObjTNew;  std::set<int> vObjSel;
+	int iObjCur,iObjLast, iObjTNew;
+	std::set<int> vObjSel;
 	bool objSim;  Object objNew;  //Object*..
+	std::vector<Object> vObjCopy;
 	//  lists
 	Li objListDyn, objListSt, objListBld;  void listObjsChng(Li, size_t);
 	

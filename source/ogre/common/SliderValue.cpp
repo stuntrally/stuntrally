@@ -288,6 +288,11 @@ void Check::Click(Widget* btn)
 }
 
 //  update checkbox if value or pointer changed
+void Check::Upd(bool* pB)
+{
+	pBool = pB;
+	Upd();
+}
 void Check::Upd()
 {
 	chk->setStateSelected(*pBool);
