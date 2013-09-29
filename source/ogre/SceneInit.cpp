@@ -75,20 +75,20 @@ void App::createScene()
 
 	///  _Tool_ ghosts times ...........................
 	#if 0
-	ToolGhosts();
+	gui->ToolGhosts();
 	//mShutDown = true;  return;
 	exit(0);
 	#endif
 
 	///  _Tool_ convert to track's ghosts ..............
 	#if 0
-	ToolGhostsConv();
+	gui->ToolGhostsConv();
 	exit(0);
 	#endif
 
 	///  _Tool_ presets ..............
 	#if 0
-	ToolPresets();
+	gui->ToolPresets();
 	exit(0);
 	#endif
 
