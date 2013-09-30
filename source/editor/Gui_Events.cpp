@@ -113,14 +113,11 @@ void CGui::editTrGr(Ed ed)
 	String n = ed->getName();
 	SGrassLayer* gr = &sc->grLayersAll[idGrLay], *g0 = &sc->grLayersAll[0];
 
-	if (n=="GrassDens")  sc->densGrass = r;    else if (n=="TreesDens")  sc->densTrees = r;
-	else if (n=="TrPage")  sc->trPage = r;     else if (n=="TrDist")  sc->trDist = r;
-	else if (n=="TrRdDist")  sc->trRdDist = r; else if (n=="TrImpDist")  sc->trDistImp = r;
+	     if (n=="GrPage")  sc->grPage = r;   else if (n=="GrDist")  sc->grDist = r;
+	else if (n=="TrPage")  sc->trPage = r;   else if (n=="TrDist")  sc->trDist = r;
+	else if (n=="TrImpDist")  sc->trDistImp = r;
 
-	else if (n=="GrPage")  sc->grPage = r;   else if (n=="GrDist")  sc->grDist = r;
-	else if (n=="GrDensSmooth")  sc->grDensSmooth = r;
-
-	else if (n=="GrSwayDistr")  g0->swayDistr = r;
+	else if (n=="GrSwayDistr")  g0->swayDistr = r;  // todo: sway params broken -
 	else if (n=="GrSwayLen")  g0->swayLen = r;
 	else if (n=="GrSwaySpd")  g0->swaySpeed = r;
 

@@ -34,12 +34,9 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,txtSuBumpWave(0),txtSuBumpAmp(0)
 	,txtSuRollDrag(0),txtSuFrict(0)
 	// vegetation
-	,edGrassDens(0),edTreesDens(0)
 	,edGrPage(0),edGrDist(0)
-	,edTrPage(0),edTrDist(0)
+	,edTrPage(0),edTrDist(0),edTrImpDist(0)
 	,edGrSwayDistr(0), edGrSwayLen(0), edGrSwaySpd(0)
-	,edTrRdDist(0), edTrImpDist(0)
-	,edGrDensSmooth(0)
 	,edGrTerMaxAngle(0),edGrTerSmAngle(0)
 	,edGrTerMinHeight(0),edGrTerMaxHeight(0),edGrTerSmHeight(0)
 	,edSceneryId(0)

@@ -61,12 +61,10 @@ void CGui::SetGuiFromXmls()
 
 	//  [Vegetation]
 	//-----------------------------------------------
-	_Ed(GrassDens, sc->densGrass);	_Ed(TreesDens, sc->densTrees);
-	_Ed(TrPage, sc->trPage);		_Ed(TrDist, sc->trDist);
-	_Ed(GrPage, sc->grPage);		_Ed(GrDist, sc->grDist);
-
-	_Ed(TrRdDist, sc->trRdDist);	_Ed(TrImpDist, sc->trDistImp);
-	_Ed(GrDensSmooth, sc->grDensSmooth);
+	svGrassDens.Upd();  svTreesDens.Upd();
+	_Ed(TrPage, sc->trPage);  _Ed(TrDist, sc->trDist);
+	_Ed(GrPage, sc->grPage);  _Ed(GrDist, sc->grDist);  _Ed(TrImpDist, sc->trDistImp);
+	svTrRdDist.Upd();  svGrDensSmooth.Upd();
 	edSceneryId->setCaption(sc->sceneryId);
 
 	tabGrLayers(tabsGrLayers, idGrLay);

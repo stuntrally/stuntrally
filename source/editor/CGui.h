@@ -171,15 +171,17 @@ public:
 
 	///  [Vegetation]  --------------------
 	//  global params
-	Ed edGrassDens,edTreesDens;
-	Ed edGrPage,edGrDist, edTrPage,edTrDist;
-	Ed edTrRdDist, edTrImpDist;
+	SV svGrassDens, svTreesDens;
+	Ed edGrPage,edGrDist;
+	Ed edTrPage,edTrDist, edTrImpDist;
 	//  grass
 	Ed edGrSwayDistr, edGrSwayLen, edGrSwaySpd,
-		edGrDensSmooth, edSceneryId,
 		edGrTerMaxAngle, edGrTerSmAngle,
 		edGrTerMinHeight, edGrTerMaxHeight, edGrTerSmHeight;
 	void editTrGr(Ed);
+	SV svTrRdDist;
+	SV svGrDensSmooth;
+	Ed edSceneryId;
 
 	//  model view 3d  (veget,objs)
 	Can viewCanvas;

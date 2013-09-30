@@ -133,6 +133,42 @@ void CGui::InitGui()
 	}
 
 
+	///  brush presets   o o o o o o o o 
+	ScrollView* scv = mGui->findWidget<ScrollView>("svBrushes");
+	int j=0, n=0;  const int z = 128;
+	for (i=0; i < app->brSetsNum; ++i,++n)
+	{
+		const App::BrushSet& st = app->brSets[i];  const String s = toStr(i);
+		int x,y, xt,yt, sx, row1 = i-14;  // y,x for next lines
+		if (row1 < 0)  // top row
+		{	x = 10+ i*50;  y = 10;
+			xt = x + 20;  yt = y + 50;  sx = 48;
+		}else
+		{	if (st.newLine==1 && n > 0 || n > 9) {  n=0;  ++j;  }  // 1 new line
+			x = 20+ n*70;  y = 10+ j*70;
+			xt = x + 25;  yt = y + 55;  sx = 64;
+			if (st.newLine < 0)  n -= st.newLine;  // -1 empty x
+		}
+		Img img = scv->createWidget<ImageBox>("ImageBox", x,y, sx,sx, Align::Default, "brI"+s);
+		img->eventMouseButtonClick += newDelegate(this, &CGui::btnBrushPreset);
+		img->setUserString("tip", st.name);  img->setNeedToolTip(true);
+		img->setImageTexture("brushes.png");
+		img->setImageCoord(IntCoord(i%16*z,i/16*z, z,z));
+		if (!st.name.empty())  img->eventToolTip += newDelegate(gcom, &CGuiCom::notifyToolTip);
+		gcom->setOrigPos(img, "EditorWnd");
+		
+		Txt txt = scv->createWidget<TextBox>("TextBox", xt,yt, 40,22, Align::Default, "brT"+s);
+		txt->setCaption(fToStr(st.Size,0,2));
+			int edMode = st.edMode;
+			float fB = app->brClr[edMode][0], fG = app->brClr[edMode][1], fR = app->brClr[edMode][2];
+			float m = st.Size / 160.f + 0.4f;
+			#define mul(v,m)  std::min(1.f, std::max(0.f, v * m))
+		txt->setTextColour(Colour(mul(fB,m), mul(fG,m), mul(fR,m)) );
+		gcom->setOrigPos(txt, "EditorWnd");
+	}
+	//scv->setCanvasSize(1020,j*90+300);
+
+
 	///  [Settings]
 	//------------------------------------------------------------------------
 	sv= &svCamSpeed;	sv->Init("CamSpeed",	&pSet->cam_speed, 0.1f,4.f);  sv->DefaultF(0.9f);
@@ -176,7 +212,7 @@ void CGui::InitGui()
 	sv= &svFogEnd;		sv->Init("FogEnd",		&sc->fogEnd,     0.f,2000.f, 2.f, 0,3);  sv->DefaultF(600.f);  Sev(UpdFog);
 	sv= &svFogHStart;	sv->Init("FogHStart",	&sc->fogHStart,  0.f,2000.f, 2.f, 0,3);  sv->DefaultF(0.f);    Sev(UpdFog);
 	sv= &svFogHEnd;		sv->Init("FogHEnd",		&sc->fogHEnd,    0.f,2000.f, 2.f, 0,3);  sv->DefaultF(60.f);   Sev(UpdFog);
-	sv= &svFogHeight;	sv->Init("FogHeight",	&sc->fogHeight, -200.f,200.f, 1.f, 1,4);  sv->DefaultF(-300.f);  Sev(UpdFog);  //edit..
+	sv= &svFogHeight;	sv->Init("FogHeight",	&sc->fogHeight, -200.f,200.f, 1.f, 1,4);  sv->DefaultF(-300.f);  Sev(UpdFog);
 	sv= &svFogHDensity;	sv->Init("FogHDensity",	&sc->fogHDensity,  0.f,200.f, 2.f, 1,4);  sv->DefaultF(60.f);  Sev(UpdFog);
 
 	ck= &ckFog;			ck->Init("FogDisable",		&pSet->bFog);  Cev(Fog);
@@ -201,42 +237,6 @@ void CGui::InitGui()
 	Btn("TerrainNew", btnTerrainNew);
 	Btn("TerrainGenAdd", btnTerGenerate);  Btn("TerrainGenSub", btnTerGenerate);   Btn("TerrainGenMul", btnTerGenerate);
 	Btn("TerrainHalf", btnTerrainHalf);  Btn("TerrainDouble", btnTerrainDouble);  Btn("TerrainMove", btnTerrainMove);
-
-
-	///  brush presets   o o o o o o o o 
-	ScrollView* scv = mGui->findWidget<ScrollView>("svBrushes");
-	int j=0, n=0;  const int z = 128;
-	for (i=0; i < app->brSetsNum; ++i,++n)
-	{
-		const App::BrushSet& st = app->brSets[i];  const String s = toStr(i);
-		int x,y, xt,yt, sx, row1 = i-14;  // y,x for next lines
-		if (row1 < 0)  // top row
-		{	x = 10+ i*50;  y = 10;
-			xt = x + 20;  yt = y + 50;  sx = 48;
-		}else
-		{	if (st.newLine==1 && n > 0 || n > 9) {  n=0;  ++j;  }  // 1 new line
-			x = 20+ n*70;  y = 10+ j*70;
-			xt = x + 25;  yt = y + 55;  sx = 64;
-			if (st.newLine < 0)  n -= st.newLine;  // -1 empty x
-		}
-		Img img = scv->createWidget<ImageBox>("ImageBox", x,y, sx,sx, Align::Default, "brI"+s);
-		img->eventMouseButtonClick += newDelegate(this, &CGui::btnBrushPreset);
-		img->setUserString("tip", st.name);  img->setNeedToolTip(true);
-		img->setImageTexture("brushes.png");
-		img->setImageCoord(IntCoord(i%16*z,i/16*z, z,z));
-		if (!st.name.empty())  img->eventToolTip += newDelegate(gcom, &CGuiCom::notifyToolTip);
-		gcom->setOrigPos(img, "EditorWnd");
-		
-		Txt txt = scv->createWidget<TextBox>("TextBox", xt,yt, 40,22, Align::Default, "brT"+s);
-		txt->setCaption(fToStr(st.Size,0,2));
-			int edMode = st.edMode;
-			float fB = app->brClr[edMode][0], fG = app->brClr[edMode][1], fR = app->brClr[edMode][2];
-			float m = st.Size / 160.f + 0.4f;
-			#define mul(v,m)  std::min(1.f, std::max(0.f, v * m))
-		txt->setTextColour(Colour(mul(fB,m), mul(fG,m), mul(fR,m)) );
-		gcom->setOrigPos(txt, "EditorWnd");
-	}
-	//scv->setCanvasSize(1020,j*90+300);
 
 
 	///  generator  . . . . . . .
@@ -294,25 +294,28 @@ void CGui::InitGui()
 
 	//  surface
 	Cmb(cmbSurface, "Surface", comboSurface);  //1 txt-
-	txtSuBumpWave = fTxt("SuBumpWave");
-	txtSuBumpAmp  = fTxt("SuBumpAmp");
-	txtSuRollDrag = fTxt("SuRollDrag");
-	txtSuFrict    = fTxt("SuFrict");
-	txtSurfTire   = fTxt("SurfTire");
-	txtSurfType   = fTxt("SurfType");
+	txtSuBumpWave = fTxt("SuBumpWave");   txtSuFrict  = fTxt("SuFrict");
+	txtSuBumpAmp  = fTxt("SuBumpAmp");	  txtSurfTire = fTxt("SurfTire");
+	txtSuRollDrag = fTxt("SuRollDrag");	  txtSurfType = fTxt("SurfType");
 	SldUpd_TerL();
 
 	
 	///  [Vegetation]  ------------------------------------
-	Ed(GrassDens, editTrGr);  Ed(TreesDens, editTrGr);
-	Ed(GrPage, editTrGr);  Ed(GrDist, editTrGr);  Ed(TrPage, editTrGr);  Ed(TrDist, editTrGr);
-	Ed(TrRdDist, editTrGr);  Ed(TrImpDist, editTrGr);
-	Ed(GrDensSmooth, editTrGr);  Ed(SceneryId, editTrGr);
+	sv= &svGrassDens;	sv->Init("GrassDens",	&sc->densGrass, 0.001f,1.0f, 2.f);  sv->DefaultF(0.2f);
+	sv= &svTreesDens;	sv->Init("TreesDens",	&sc->densTrees, 0.01f, 3.0f, 2.f);  sv->DefaultF(0.3f);
 
+	Ed(GrPage, editTrGr);  Ed(GrDist, editTrGr);
+	Ed(TrPage, editTrGr);  Ed(TrDist, editTrGr);  Ed(TrImpDist, editTrGr);
+	
+	sv= &svTrRdDist;	sv->Init("TrRdDist",	&sc->trRdDist,     0,6);   sv->DefaultI(1);
+	sv= &svGrDensSmooth;sv->Init("GrDensSmooth",&sc->grDensSmooth, 0,10);  sv->DefaultI(3);
+	Ed(SceneryId, editTrGr);
+
+	//  veget models
 	ck= &ckPgLayOn;		ck->Init("LTrEnabled",	&b);   Cev(PgLayOn);
 	valLTrAll = fTxt("LTrAll");
 	Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);
-	//  veget layers, models
+
 	sv= &svLTrDens;		sv->Init("LTrDens",		 &f, 0.001f,1.0f, 2.f, 3,5);  sv->DefaultF(0.15f);
 	
 	sv= &svLTrRdDist;	sv->Init("LTrRdDist",	 &i, 0,20);  sv->DefaultI(0);
@@ -321,8 +324,8 @@ void CGui::InitGui()
 	sv= &svLTrMinSc;	sv->Init("LTrMinSc",	 &f, 0.f,6.f, 3.f, 3,5);  sv->DefaultF(0.7f);
 	sv= &svLTrMaxSc;	sv->Init("LTrMaxSc",	 &f, 0.f,6.f, 3.f, 3,5);  sv->DefaultF(1.2f);
 	
-	sv= &svLTrWindFx;	sv->Init("LTrWindFx",	 &f, 0.f,3.f, 3.f, 3,5);  sv->DefaultF(0.5f);
-	sv= &svLTrWindFy;	sv->Init("LTrWindFy",	 &f, 0.f,0.4f,3.f, 3,5);  sv->DefaultF(0.06f);
+	sv= &svLTrWindFx;	sv->Init("LTrWindFx",	 &f, 0.f,12.f, 3.f, 3,5);  sv->DefaultF(0.5f);
+	sv= &svLTrWindFy;	sv->Init("LTrWindFy",	 &f, 0.f,0.4f, 3.f, 3,5);  sv->DefaultF(0.06f);
 	
 	sv= &svLTrMaxTerAng;sv->Init("LTrMaxTerAng", &f, 0.f,90.f, 2.f, 1,4);  sv->DefaultF(25.f);
 
@@ -346,8 +349,10 @@ void CGui::InitGui()
 	SldUpd_GrL();
 
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
+
 	Ed(GrTerMaxAngle, editTrGr);  Ed(GrTerSmAngle, editTrGr);
 	Ed(GrTerMinHeight, editTrGr);  Ed(GrTerMaxHeight, editTrGr);  Ed(GrTerSmHeight, editTrGr);
+
 	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);	imgGrass = fImg("ImgGrass");
 	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);	imgGrClr = fImg("ImgGrClr");
 
@@ -355,11 +360,14 @@ void CGui::InitGui()
 	///  [Road]  ------------------------------------
 	Ed(RdTcMul, editRoad);  Ed(RdTcMulW, editRoad);
 	Ed(RdTcMulP, editRoad);  Ed(RdTcMulPW, editRoad);  Ed(RdTcMulC, editRoad);
+	
 	Ed(RdLenDim, editRoad);  Ed(RdWidthSteps,editRoad);
+	Ed(RdPwsM, editRoad);  Ed(RdPlsM, editRoad);
+
 	Ed(RdHeightOfs, editRoad);  Ed(RdSkirtLen, editRoad);  Ed(RdSkirtH, editRoad);
 	Ed(RdMergeLen, editRoad);  Ed(RdLodPLen, editRoad);
+
 	Ed(RdColN, editRoad);  Ed(RdColR, editRoad);
-	Ed(RdPwsM, editRoad);  Ed(RdPlsM, editRoad);
 	
 
 	///  [Tools]  ------------------------------------
