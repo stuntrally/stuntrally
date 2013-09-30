@@ -186,7 +186,7 @@ void CGui::btnDeleteFluids(WP)
 void CGui::btnDeleteObjects(WP)
 {
 	app->DestroyObjects(true);
-	iObjCur = -1;
+	app->iObjCur = -1;
 }
 
 //  Scale track  --------------------------------

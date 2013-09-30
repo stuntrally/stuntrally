@@ -330,10 +330,10 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 
 	
 	///  simulate objects
-	if (edMode == ED_Objects && gui->objSim /*&& bEdit()*/)
+	if (edMode == ED_Objects && objSim /*&& bEdit()*/)
 		BltUpdate(evt.timeSinceLastFrame);
 	
-	gui->UpdObjNewNode();
+	UpdObjNewNode();
 
 
 	bFirstRenderFrame = false;

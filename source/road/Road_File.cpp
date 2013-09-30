@@ -157,7 +157,7 @@ void SplineRoad::UpdLodVis(/*Camera* pCam,*/ float fBias, bool bFull)
 			else  vis = i == 3;  /**/// check lod 0
 			
 			#ifdef SR_EDITOR
-			if (vis)
+			if (vis)  //  road mark selected segments, vSel, SELECTED_GLOW, isSelected in main.shader
 			{	rs.road[i].ent->getSubEntity(0)->setCustomParameter(1, Vector4(bSel ? 1 : 0, 0,0,0));
 				if (rs.blend[i].ent)
 				rs.blend[i].ent->getSubEntity(0)->setCustomParameter(1, Vector4(bSel ? 1 : 0, 0,0,0));

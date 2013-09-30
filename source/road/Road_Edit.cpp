@@ -474,7 +474,7 @@ void SplineRoad::AddBoxH(Real rel)
 	vStBoxDim.y = std::max(5.f, vStBoxDim.y + rel);
 }
 
-void SplineRoad::AddWidth(Real relW)     ///  Width
+void SplineRoad::AddWidth(Real relW)    ///  Width
 {
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)

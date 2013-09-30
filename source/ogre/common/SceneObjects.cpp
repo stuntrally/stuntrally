@@ -195,7 +195,7 @@ void App::CreateObjects()
 	delete fileLoader;
 
 	#ifdef SR_EDITOR
-	gui->iObjLast = sc->objects.size();
+	iObjLast = sc->objects.size();
 	#endif
 }
 
@@ -249,15 +249,15 @@ void App::UpdObjPick()
 		ndStBox->setVisible(edMode == ED_Start && !bMoveCam);
 
 	int objs = sc->objects.size();
-	bool bObjects = edMode == ED_Objects && !bMoveCam && objs > 0 && gui->iObjCur >= 0;
+	bool bObjects = edMode == ED_Objects && !bMoveCam && objs > 0 && iObjCur >= 0;
 	if (objs > 0)
-		gui->iObjCur = std::min(gui->iObjCur, objs-1);
+		iObjCur = std::min(iObjCur, objs-1);
 
 	if (!ndObjBox)  return;
 	ndObjBox->setVisible(bObjects);
 	if (!bObjects)  return;
 	
-	const Object& o = sc->objects[gui->iObjCur];
+	const Object& o = sc->objects[iObjCur];
 	const AxisAlignedBox& ab = o.nd->getAttachedObject(0)->getBoundingBox();
 	//Vector3 p = ab.getCenter();
 	Vector3 s = o.scale * ab.getSize();  // * sel obj's node aabb
@@ -278,7 +278,7 @@ void App::PickObject()
 {
 	if (sc->objects.empty())  return;
 
-	gui->iObjCur = -1;
+	iObjCur = -1;
 	const MyGUI::IntPoint& mp = MyGUI::InputManager::getInstance().getMousePosition();
 	Real mx = Real(mp.left)/mWindow->getWidth(), my = Real(mp.top)/mWindow->getHeight();
 	Ray ray = mCamera->getCameraToViewportRay(mx,my);  // 0..1
@@ -305,7 +305,7 @@ void App::PickObject()
 			//  pick if closer
 			if (i != -1 && (*it).distance < dist)
 			{
-				gui->iObjCur = i;
+				iObjCur = i;
 				dist = (*it).distance;
 			}
 		}
@@ -314,16 +314,26 @@ void App::PickObject()
 	mSceneMgr->destroyQuery(rq);
 }
 
+//  upd selected glow
+void App::UpdObjSel()
+{
+	int objs = sc->objects.size();
+	for (int i=0; i < objs; ++i)
+	{	bool bSel = vObjSel.find(i) != vObjSel.end();
+		sc->objects[i].ent->getSubEntity(0)->setCustomParameter(1, Vector4(bSel ? 1 : 0, 0,0,0));
+	}
+}
+
 
 ///  toggle objects simulation (bullet world)
 //-------------------------------------------------------------------------------------------------------
 void App::ToggleObjSim()
 {
-	if (gui->objPan)  gui->objPan->setVisible(gui->objSim);
+	if (gui->objPan)  gui->objPan->setVisible(objSim);
 	
 	DestroyObjects(false);
 
-	if (!gui->objSim)  // off sim
+	if (!objSim)  // off sim
 	{
 		// Destroy blt world
 		for(int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
@@ -354,21 +364,28 @@ void App::ToggleObjSim()
 }
 
 ///  add new object
-void CGui::AddNewObj()  //App..
+void App::AddNewObj(bool getName)  //App..
 {
 	::Object o = objNew;
-	o.name = vObjNames[iObjTNew];
+	if (getName)
+		o.name = vObjNames[iObjTNew];
 	++iObjLast;
 	String s = toStr(iObjLast);  // counter for names
 	///TODO: ?dyn objs size, !?get center,size, rmb height..
 
 	//  pos, rot
-	const Ogre::Vector3& v = app->road->posHit;
-	o.pos[0] = v.x;  o.pos[1] =-v.z;  o.pos[2] = v.y + objNew.pos[2];
+	if (getName)
+	{	// one new
+		const Ogre::Vector3& v = road->posHit;
+		o.pos[0] = v.x;  o.pos[1] =-v.z;  o.pos[2] = v.y + objNew.pos[2];
+	}else  // many
+	{	// offset for cursor pos..
+		//o.pos[0] = v.x;  o.pos[1] =-v.z;  o.pos[2] = v.y + objNew.pos[2];
+	}
 
 	//  create object
-	o.ent = app->mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
-	o.nd = app->mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s);
+	o.ent = mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
+	o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s);
 	o.SetFromBlt();
 	o.nd->setScale(o.scale);
 	o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
@@ -381,44 +398,45 @@ void CGui::AddNewObj()  //App..
 void CGui::listObjsChng(MyGUI::List* l, size_t t)
 {
 	std::string s = l->getItemNameAt(t).substr(7);
-	for (int i=0; i < vObjNames.size(); ++i)
-		if (s == vObjNames[i])
+	for (int i=0; i < app->vObjNames.size(); ++i)
+		if (s == app->vObjNames[i])
 		{
-			SetObjNewType(i);
+			app->SetObjNewType(i);
 			Upd3DView(s+".mesh");
 			return;
 		}
 }
 
 //  preview model for insert
-void CGui::SetObjNewType(int tnew)
+void App::SetObjNewType(int tnew)
 {
 	iObjTNew = tnew;
-	if (objNew.nd)	{	app->mSceneMgr->destroySceneNode(objNew.nd);  objNew.nd = 0;  }
-	if (objNew.ent)	{	app->mSceneMgr->destroyEntity(objNew.ent);  objNew.ent = 0;  }
+	if (objNew.nd)	{	mSceneMgr->destroySceneNode(objNew.nd);  objNew.nd = 0;  }
+	if (objNew.ent)	{	mSceneMgr->destroyEntity(objNew.ent);  objNew.ent = 0;  }
 	
 	String name = vObjNames[iObjTNew];
 	objNew.dyn = PATHMANAGER::FileExists(PATHMANAGER::Data()+"/objects/"+ name + ".bullet");
 	if (objNew.dyn)  objNew.scale = Vector3::UNIT_SCALE;  // dyn no scale
-	objNew.ent = app->mSceneMgr->createEntity("-oE", name + ".mesh");
-	objNew.nd = app->mSceneMgr->getRootSceneNode()->createChildSceneNode("-oN");
+	objNew.ent = mSceneMgr->createEntity("-oE", name + ".mesh");
+	objNew.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("-oN");
 	objNew.nd->attachObject(objNew.ent);  objNew.ent->setVisibilityFlags(RV_Vegetation);
 	UpdObjNewNode();
 
-	if (objListSt)  objListSt->setIndexSelected(-1);  // unselect
-	if (objListDyn) objListDyn->setIndexSelected(-1);
-	if (objListBld) objListBld->setIndexSelected(-1);
+	if (!gui->objListSt)  return;
+	gui->objListSt->setIndexSelected(-1);  // unselect
+	gui->objListDyn->setIndexSelected(-1);
+	gui->objListBld->setIndexSelected(-1);
 }
 
-void CGui::UpdObjNewNode()
+void App::UpdObjNewNode()
 {
-	if (!app->road || !objNew.nd)  return;
+	if (!road || !objNew.nd)  return;
 
-	bool vis = app->road->bHitTer && app->bEdit() && iObjCur == -1 && app->edMode == ED_Objects;
+	bool vis = road->bHitTer && bEdit() && iObjCur == -1 && edMode == ED_Objects;
 	objNew.nd->setVisible(vis);
 	if (!vis)  return;
 	
-	Vector3 p = app->road->posHit;  p.y += objNew.pos[2];
+	Vector3 p = road->posHit;  p.y += objNew.pos[2];
 	objNew.SetFromBlt();
 	objNew.nd->setPosition(p);
 	objNew.nd->setScale(objNew.scale);

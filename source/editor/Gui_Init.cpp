@@ -505,19 +505,19 @@ void CGui::InitGui()
 
 
 	//---------------------  Objects  ---------------------
-	vObjNames.clear();  strlist lo;
+	app->vObjNames.clear();  strlist lo;
 	PATHMANAGER::DirList(data + "/objects", lo);
 	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh") && (*i) != "sphere.mesh")
-			vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
+			app->vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
 	
 	objListSt = fLi("ObjListSt");    Lev(objListSt,  ObjsChng);
 	objListDyn = fLi("ObjListDyn");  Lev(objListDyn, ObjsChng);
 	objListBld = fLi("ObjListBld");  Lev(objListBld, ObjsChng);
 	objPan = fWP("objPan");
 
-	for (int i=0; i < vObjNames.size(); ++i)
-	{	const std::string& name = vObjNames[i];
+	for (int i=0; i < app->vObjNames.size(); ++i)
+	{	const std::string& name = app->vObjNames[i];
 		if (name != "sphere")
 		{
 			if (StringUtil::startsWith(name,"pers_",false))

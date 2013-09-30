@@ -26,7 +26,7 @@ using namespace Ogre;
 
 //  ctor
 //----------------------------------------------------------------------------------------------------------------------
-App::App(SETTINGS* pSet1)  //  gui wigdets--
+App::App(SETTINGS* pSet1)
 	:mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)
 	,bTerUpd(0), curBr(0)
 	,ndPos(0), mpos(0), asp(4.f/3.f)
@@ -39,14 +39,12 @@ App::App(SETTINGS* pSet1)  //  gui wigdets--
 	,world(0), config(0), dispatcher(0), broadphase(0), solver(0)  //blt
 	,trackObject(0), trackMesh(0)
 	,mStaticGeom(0), mTimer(0.f), bUpdTerPrv(0)
+	//  objs
+	,iObjCur(-1), iObjTNew(0), iObjLast(0)
+	,objSim(0), objEd(EO_Move)
 {
 	pSet = pSet1;
-	//imgPrv[0]=0; imgMini[0]=0; imgTer[0]=0;  trkDesc[0]=0;
 	
-	//pathTrk[0] = PATHMANAGER::Tracks() + "/";
-	//pathTrk[1] = PATHMANAGER::TracksUser() + "/";
-	//resTrk = "";  strFSerrors = "";
-
 	mBrSize[0] = 16.f;	mBrSize[1] = 24.f;	mBrSize[2] = 16.f;	mBrSize[3] = 16.f;
 	mBrIntens[0] = 20.f;mBrIntens[1] = 20.f;mBrIntens[2] = 20.f;mBrIntens[3] = 20.f;
 	mBrPow[0] = 2.f;	mBrPow[1] = 2.f;	mBrPow[2] = 2.f;	mBrPow[3] = 2.f;

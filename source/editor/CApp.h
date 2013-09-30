@@ -13,6 +13,8 @@
 #include <OgreShadowCameraSetup.h>
 #include <OgreTexture.h>
 
+#include "../ogre/common/data/SceneXml.h"  //Object-
+
 #define BrushMaxSize  512
 
 //  Gui
@@ -24,6 +26,8 @@ namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGro
 	class Light;  class Rectangle2D;  class SceneNode;  class RenderTexture;  }
 namespace sh {  class Factory;  }
 class Scene;  class WaterRTT;  class CData;  class CGui;  class CGuiCom;
+
+enum ED_OBJ {  EO_Move=0, EO_Rotate, EO_Scale  };
 
 
 class App : public BaseApp, public Ogre::RenderTargetListener
@@ -247,7 +251,30 @@ public:
 	void togPrvCam();
 
 
-	//  vdrift track
+	//  [Objects]  ----
+	ED_OBJ objEd;  // edit mode
+
+	int iObjCur;  // picked id
+	int iObjLast;  // last counter, just for naming
+
+	//  new object's type
+	int iObjTNew;  // id for vObjNames
+	std::vector<std::string> vObjNames;
+	void SetObjNewType(int tnew), UpdObjNewNode();
+
+	void AddNewObj(bool getName=true);
+
+	std::set<int> vObjSel;  // selected ids for sc.objects[]
+	void UpdObjSel();  // upd selected glow
+
+	bool objSim;  // dynamic simulate on
+	Object objNew;  //Object*..
+
+	std::vector<Object> vObjCopy;  // copied objects
+
+
+
+	//-  vdrift track
 	TRACK* track;
 	Ogre::StaticGeometry* mStaticGeom;
 

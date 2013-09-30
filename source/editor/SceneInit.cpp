@@ -125,7 +125,7 @@ void App::createScene()  // once, init
 	if (!pSet->autostart)
 	{	bGuiFocus = true;  UpdVisGui();	}
 
-	gui->iObjTNew = 0;
+	iObjTNew = 0;
 	//SetObjNewType(0);  //?white
 }
 

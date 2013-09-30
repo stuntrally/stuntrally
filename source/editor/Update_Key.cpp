@@ -259,6 +259,12 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				road->PrevPoint();  break;
 			case key(PAGEDOWN):	case key(KP_3):
 				road->NextPoint();  break;
+				
+			//  chkR
+			case key(K):
+				break;
+			case key(L):
+				break;
 
 			//  del
 			case key(DELETE):  case key(KP_PERIOD):
@@ -384,89 +390,121 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 	//  Objects  | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |
 	if (edMode == ED_Objects)
-	{	int objs = sc->objects.size(), objAll = gui->vObjNames.size();
+	{	int objs = sc->objects.size(), objAll = vObjNames.size();
 		switch (skey)
 		{
 			case key(SPACE):
-				gui->iObjCur = -1;  PickObject();  UpdObjPick();  break;
+				iObjCur = -1;  PickObject();  UpdObjPick();  break;
 				
 			//  prev,next type
-			case key(9):  case key(MINUS):   gui->SetObjNewType((gui->iObjTNew-1 + objAll) % objAll);  break;
-			case key(0):  case key(EQUALS):  gui->SetObjNewType((gui->iObjTNew+1) % objAll);  break;
+			case key(9):  case key(MINUS):   SetObjNewType((iObjTNew-1 + objAll) % objAll);  break;
+			case key(0):  case key(EQUALS):  SetObjNewType((iObjTNew+1) % objAll);  break;
+
 				
 			//  ins
 			case key(INSERT):	case key(KP_0):
-			if (road && road->bHitTer)
+			if (ctrl)  // copy selected
 			{
-				gui->AddNewObj();
+				if (!vObjSel.empty())
+				{
+					vObjCopy.clear();
+					for (std::set<int>::iterator it = vObjSel.begin();
+						it != vObjSel.end(); ++it)
+					{
+						vObjCopy.push_back(sc->objects[*it]);
+					}
+					gui->Status("Copy",0.6,0.8,1.0);
+			}	}
+			else if (shift)  // paste copied
+			{
+				if (!vObjCopy.empty())
+				{
+					vObjSel.clear();  // unsel
+					Object o = objNew;
+					for (int i=0; i < vObjCopy.size(); ++i)
+					{
+						objNew = vObjCopy[i];
+						AddNewObj(false);
+						vObjSel.insert(sc->objects.size()-1);  // add it to sel
+					}
+					objNew = o;
+					UpdObjSel();  UpdObjPick();
+			}	}
+			else
+			if (road && road->bHitTer)  // insert new
+			{
+				AddNewObj();
 				//iObjCur = sc->objects.size()-1;  // auto select inserted-
 				UpdObjPick();
 			}	break;
+
 			
 			//  sel
 			case key(BACKSPACE):
 				if (alt)  // select all
 					for (int i=0; i < objs; ++i)
-						gui->vObjSel.insert(i);
+						vObjSel.insert(i);
 				else
-				if (ctrl)  gui->vObjSel.clear();  // unsel all
+				if (ctrl)  vObjSel.clear();  // unsel all
 				else
-				if (gui->iObjCur > -1)
-					if (gui->vObjSel.find(gui->iObjCur) == gui->vObjSel.end())
-						gui->vObjSel.insert(gui->iObjCur);  // add to sel
+				if (iObjCur > -1)
+					if (vObjSel.find(iObjCur) == vObjSel.end())
+						vObjSel.insert(iObjCur);  // add to sel
 					else
-						gui->vObjSel.erase(gui->iObjCur);  // unselect
+						vObjSel.erase(iObjCur);  // unselect				
+
+				UpdObjSel();
 				break;
 		}
-		::Object* o = gui->iObjCur == -1 ? &gui->objNew :
-					((gui->iObjCur >= 0 && objs > 0 && gui->iObjCur < objs) ? &sc->objects[gui->iObjCur] : 0);
+		::Object* o = iObjCur == -1 ? &objNew :
+					((iObjCur >= 0 && objs > 0 && iObjCur < objs) ? &sc->objects[iObjCur] : 0);
 		switch (skey)
 		{
 			//  first, last
 			case key(HOME):  case key(KP_7):
-				gui->iObjCur = 0;  UpdObjPick();  break;
+				iObjCur = 0;  UpdObjPick();  break;
 			case key(END):  case key(KP_1):
-				if (objs > 0)  gui->iObjCur = objs-1;  UpdObjPick();  break;
+				if (objs > 0)  iObjCur = objs-1;  UpdObjPick();  break;
 
 			//  prev,next
 			case key(PAGEUP):  case key(KP_9):
-				if (objs > 0) {  gui->iObjCur = (gui->iObjCur-1+objs)%objs;  }  UpdObjPick();  break;
+				if (objs > 0) {  iObjCur = (iObjCur-1+objs)%objs;  }  UpdObjPick();  break;
 			case key(PAGEDOWN):	case key(KP_3):
-				if (objs > 0) {  gui->iObjCur = (gui->iObjCur+1)%objs;	  }  UpdObjPick();  break;
+				if (objs > 0) {  iObjCur = (iObjCur+1)%objs;       }  UpdObjPick();  break;
 
 			//  del
 			case key(DELETE):  case key(KP_PERIOD):
 			case key(KP_5):
-				if (gui->iObjCur >= 0 && objs > 0)
-				{	::Object& o = sc->objects[gui->iObjCur];
+				if (iObjCur >= 0 && objs > 0)
+				{	::Object& o = sc->objects[iObjCur];
 					mSceneMgr->destroyEntity(o.ent);
 					mSceneMgr->destroySceneNode(o.nd);
 					
 					if (objs == 1)	sc->objects.clear();
-					else			sc->objects.erase(sc->objects.begin() + gui->iObjCur);
-					gui->iObjCur = std::min(gui->iObjCur, (int)sc->objects.size()-1);
+					else			sc->objects.erase(sc->objects.begin() + iObjCur);
+					iObjCur = std::min(iObjCur, (int)sc->objects.size()-1);
 					UpdObjPick();
 				}	break;
 
 			//  move,rot,scale
 			case key(1):
-				if (!shift)  gui->objEd = EO_Move;
+				if (!shift)  objEd = EO_Move;
 				else if (o)
 				{
-					if (gui->iObjCur == -1)  // reset h
+					if (iObjCur == -1)  // reset h
 					{
 						o->pos[2] = 0.f;  o->SetFromBlt();  UpdObjPick();
 					}
 					else if (road)  // move to ter
 					{
 						const Vector3& v = road->posHit;
-						o->pos[0] = v.x;  o->pos[1] =-v.z;  o->pos[2] = v.y + gui->objNew.pos[2];
+						o->pos[0] = v.x;  o->pos[1] =-v.z;  o->pos[2] = v.y + objNew.pos[2];
 						o->SetFromBlt();  UpdObjPick();
 					}
 				}	break;
 
 			case key(2):
-				if (!shift)  gui->objEd = EO_Rotate;
+				if (!shift)  objEd = EO_Rotate;
 				else if (o)  // reset rot
 				{
 					o->rot = QUATERNION<float>(0,1,0,0);
@@ -474,7 +512,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				}	break;
 
 			case key(3):
-				if (!shift)  gui->objEd = EO_Scale;
+				if (!shift)  objEd = EO_Scale;
 				else if (o)  // reset scale
 				{
 					o->scale = Vector3::UNIT_SCALE * (ctrl ? 0.5f : 1.f);
@@ -566,7 +604,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(F10):  SaveWaterDepth();   break;
 
 		//  objects
-		case key(C):  if (edMode == ED_Objects)  {  gui->objSim = !gui->objSim;  ToggleObjSim();  }  break;
+		case key(C):  if (edMode == ED_Objects)  {  objSim = !objSim;  ToggleObjSim();  }  break;
 		case key(X):  if (bEdit()){  SetEdMode(ED_Objects);  UpdEditWnds();  }   break;
 		
 		//  rivers

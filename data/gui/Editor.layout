@@ -306,38 +306,38 @@
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="440 676 210 180" layer="Back" name="ObjectsWnd">
+	<Widget type="Window" skin="WindowC" position="440 676 230 180" layer="Back" name="ObjectsWnd">
 		<Property key="Caption" value="#{Objects}"/>
 		<Property key="Colour" value="1.0 1.0 1.0"/>
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
-		<Widget type="TextBox" skin="TextBox" position="4 0 190 20" name="objTxt0">
+		<Widget type="TextBox" skin="TextBox" position="4 0 220 20" name="objTxt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.9 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 20 190 20" name="objTxt1">
+		<Widget type="TextBox" skin="TextBox" position="4 20 220 20" name="objTxt1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.9 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 50 190 20" name="objTxt2">
+		<Widget type="TextBox" skin="TextBox" position="4 50 220 20" name="objTxt2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.75 0.85 0.95"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 70 190 20" name="objTxt3">
+		<Widget type="TextBox" skin="TextBox" position="4 70 220 20" name="objTxt3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.65 0.81 0.95"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 90 190 20" name="objTxt4">
+		<Widget type="TextBox" skin="TextBox" position="4 90 220 20" name="objTxt4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.61 0.75 0.85"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="0 118 190 26" name="objPan">
+		<Widget type="Widget" skin="PanelSkin" position="0 118 220 26" name="objPan">
 			<Property key="Colour" value="1.0 0.9 1.0"/>
 			<Property key="Alpha" value="0.5"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Visible" value="false"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 120 190 20" name="objTxt5">
+		<Widget type="TextBox" skin="TextBox" position="4 120 220 20" name="objTxt5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.9 1.0"/>
 		</Widget>

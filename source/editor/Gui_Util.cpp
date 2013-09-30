@@ -153,7 +153,7 @@ void App::SetEdMode(ED_MODE newMode)
 	static bool first = true;
 	if (newMode == ED_Objects && first)
 	{
-		gui->SetObjNewType(gui->iObjTNew);
+		SetObjNewType(iObjTNew);
 		first = false;
 	}
 

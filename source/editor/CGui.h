@@ -4,7 +4,6 @@
 #include "../vdrift/track.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/SliderValue.h"
-#include "../ogre/common/data/SceneXml.h"  //Object-
 
 #include <OgreCommon.h>
 #include <OgreVector3.h>
@@ -20,8 +19,6 @@
 
 namespace wraps {	class RenderBoxScene;  }
 class App;  class SETTINGS;  class Scene;  class CData;  class CGuiCom;
-
-enum ED_OBJ {  EO_Move=0, EO_Rotate, EO_Scale  };
 
 
 class CGui : public BGui
@@ -236,17 +233,10 @@ public:
 	void editRoad(Ed);
 
 
-	///  [Objects]  ----
-	ED_OBJ objEd;  // edit mode
-	std::vector<std::string> vObjNames;
-	void SetObjNewType(int tnew), UpdObjNewNode();
-	void AddNewObj();
-	int iObjCur,iObjLast, iObjTNew;
-	std::set<int> vObjSel;
-	bool objSim;  Object objNew;  //Object*..
-	std::vector<Object> vObjCopy;
-	//  lists
-	Li objListDyn, objListSt, objListBld;  void listObjsChng(Li, size_t);
+	//  [Objects]  ----
+	//  gui lists
+	Li objListDyn, objListSt, objListBld;
+	void listObjsChng(Li, size_t);
 	
 
 	//  [Tools]  ----
