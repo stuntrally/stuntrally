@@ -2357,13 +2357,13 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrTerMaxAngle}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="152 324 48 24" name="GrTerMaxAngle">
+						<Widget type="EditBox" skin="EditBox" position="152 324 48 24" name="GrTerMaxAngleEdit">
 							<Property key="Colour" value="0.7 0.9 0.5"/>
 							<Property key="TextColour" value="0.6 0.9 0.5"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrTerMaxAngle}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="224 328 300 16" name="GrTerAngMax-">
+						<Widget type="Slider" skin="Slider" position="224 328 300 16" name="GrTerMaxAngle">
 							<Property key="Colour" value="0.6 0.9 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrTerMaxAngle}"/>
@@ -2375,13 +2375,13 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngSm}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="152 348 48 24" name="GrTerSmAngle">
+						<Widget type="EditBox" skin="EditBox" position="152 348 48 24" name="GrTerSmAngleEdit">
 							<Property key="Colour" value="0.6 0.8 0.5"/>
 							<Property key="TextColour" value="0.6 0.8 0.5"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngSm}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="224 352 300 16" name="GrTerAngSm-">
+						<Widget type="Slider" skin="Slider" position="224 352 300 16" name="GrTerSmAngle">
 							<Property key="Colour" value="0.6 0.8 0.2"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLAngSm}"/>
@@ -2393,13 +2393,13 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrTerMinHeight}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="152 380 48 24" name="GrTerMinHeight">
+						<Widget type="EditBox" skin="EditBox" position="152 380 48 24" name="GrTerMinHeightEdit">
 							<Property key="Colour" value="0.6 0.9 0.6"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrTerMinHeight}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="224 384 340 16" name="GrTerLHMin-">
+						<Widget type="Slider" skin="Slider" position="224 384 340 16" name="GrTerMinHeight">
 							<Property key="Colour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrTerMinHeight}"/>
@@ -2411,13 +2411,13 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrTerMaxHeight}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="152 404 48 24" name="GrTerMaxHeight">
+						<Widget type="EditBox" skin="EditBox" position="152 404 48 24" name="GrTerMaxHeightEdit">
 							<Property key="Colour" value="0.6 0.9 0.6"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrTerMaxHeight}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="224 408 340 16" name="GrTerLHMax-">
+						<Widget type="Slider" skin="Slider" position="224 408 340 16" name="GrTerMaxHeight">
 							<Property key="Colour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipGrTerMaxHeight}"/>
@@ -2429,13 +2429,13 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLHSm}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="152 428 48 24" name="GrTerSmHeight">
+						<Widget type="EditBox" skin="EditBox" position="152 428 48 24" name="GrTerSmHeightEdit">
 							<Property key="Colour" value="0.6 0.8 0.6"/>
 							<Property key="TextColour" value="0.6 0.75 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLHSm}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="224 432 300 16" name="GrTerLHSm-">
+						<Widget type="Slider" skin="Slider" position="224 432 300 16" name="GrTerSmHeight">
 							<Property key="Colour" value="0.6 0.75 0.6"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>

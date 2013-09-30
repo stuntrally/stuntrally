@@ -327,7 +327,7 @@ void CGui::InitGui()
 	sv= &svLTrWindFx;	sv->Init("LTrWindFx",	 &f, 0.f,12.f, 3.f, 3,5);  sv->DefaultF(0.5f);
 	sv= &svLTrWindFy;	sv->Init("LTrWindFy",	 &f, 0.f,0.4f, 3.f, 3,5);  sv->DefaultF(0.06f);
 	
-	sv= &svLTrMaxTerAng;sv->Init("LTrMaxTerAng", &f, 0.f,90.f, 2.f, 1,4);  sv->DefaultF(25.f);
+	sv= &svLTrMaxTerAng;sv->Init("LTrMaxTerAng", &f, 0.f,90.f, 2.f, 1,4);  sv->DefaultF(30.f);
 
 	sv= &svLTrMinTerH;	sv->Init("LTrMinTerH",	 &f,-60.f,60.f, 1.f, 1,4);  sv->DefaultF(-100.f);
 	sv= &svLTrMaxTerH;	sv->Init("LTrMaxTerH",	 &f, 0.f,120.f, 1.f, 1,4);  sv->DefaultF( 100.f);
@@ -336,6 +336,17 @@ void CGui::InitGui()
 
 
 	///  Grass  ------------------------------------
+	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
+
+	SGrassLayer* g0 = &sc->grLayersAll[0];
+	sv= &svGrTerMaxAngle;	sv->Init("GrTerMaxAngle",	&g0->terMaxAng, 0.f,90.f, 1.f, 1,4);  sv->DefaultF(30.f);
+	sv= &svGrTerSmAngle;	sv->Init("GrTerSmAngle",	&g0->terAngSm,  0.f,50.f, 2.f, 1,4);  sv->DefaultF(20.f);
+									  
+	sv= &svGrTerMinHeight;	sv->Init("GrTerMinHeight",	&g0->terMinH,-60.f,60.f,  1.f, 1,4);  sv->DefaultF(-200.f);
+	sv= &svGrTerMaxHeight;	sv->Init("GrTerMaxHeight",	&g0->terMaxH,  0.f,120.f, 1.f, 1,4);  sv->DefaultF( 200.f);
+	sv= &svGrTerSmHeight;	sv->Init("GrTerSmHeight",	&g0->terHSm,   0.f,60.f,  2.f, 1,4);  sv->DefaultF(20.f);
+
+	//  grass layers
 	ck= &ckGrLayOn;		ck->Init("LGrEnabled",	&b);   Cev(GrLayOn);
 	valLGrAll = fTxt("LGrAll");
 	Tab(tabsGrLayers, "LGrLayTab", tabGrLayers);
@@ -347,11 +358,6 @@ void CGui::InitGui()
 	
 	sv= &svLGrDens;	sv->Init("LGrDens",	&f, 0.001f,1.f, 2.f, 3,5);  sv->DefaultF(0.22f);
 	SldUpd_GrL();
-
-	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
-
-	Ed(GrTerMaxAngle, editTrGr);  Ed(GrTerSmAngle, editTrGr);
-	Ed(GrTerMinHeight, editTrGr);  Ed(GrTerMaxHeight, editTrGr);  Ed(GrTerSmHeight, editTrGr);
 
 	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);	imgGrass = fImg("ImgGrass");
 	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);	imgGrClr = fImg("ImgGrClr");

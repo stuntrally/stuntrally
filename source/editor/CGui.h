@@ -175,13 +175,12 @@ public:
 	Ed edGrPage,edGrDist;
 	Ed edTrPage,edTrDist, edTrImpDist;
 	//  grass
-	Ed edGrSwayDistr, edGrSwayLen, edGrSwaySpd,
-		edGrTerMaxAngle, edGrTerSmAngle,
-		edGrTerMinHeight, edGrTerMaxHeight, edGrTerSmHeight;
+	Ed edGrSwayDistr, edGrSwayLen, edGrSwaySpd;
 	void editTrGr(Ed);
-	SV svTrRdDist;
-	SV svGrDensSmooth;
-	Ed edSceneryId;
+	SV svGrTerMaxAngle,  svGrTerSmAngle;
+	SV svGrTerMinHeight, svGrTerMaxHeight, svGrTerSmHeight;
+
+	SV svTrRdDist;  SV svGrDensSmooth;  Ed edSceneryId;
 
 	//  model view 3d  (veget,objs)
 	Can viewCanvas;

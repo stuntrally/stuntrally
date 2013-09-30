@@ -119,14 +119,7 @@ void CGui::editTrGr(Ed ed)
 
 	else if (n=="GrSwayDistr")  g0->swayDistr = r;  // todo: sway params broken -
 	else if (n=="GrSwayLen")  g0->swayLen = r;
-	else if (n=="GrSwaySpd")  g0->swaySpeed = r;
-
-	else if (n=="GrTerMaxAngle")  g0->terMaxAng = r;  // todo: more, grass channels
-	else if (n=="GrTerSmAngle")  g0->terAngSm = r;
-
-	else if (n=="GrTerMinHeight")  g0->terMinH = r;
-	else if (n=="GrTerMaxHeight")  g0->terMaxH = r;
-	else if (n=="GrTerSmHeight")  g0->terHSm = r;
+	else if (n=="GrSwaySpd")  g0->swaySpeed = r;  // todo: more, grass channels
 	
 	else if (n=="SceneryId")  sc->sceneryId = ed->getCaption();
 }
@@ -173,9 +166,8 @@ void CGui::tabGrLayers(Tab wp, size_t id)
 	_Ed(GrSwayLen, g0->swayLen);
 	_Ed(GrSwaySpd, g0->swaySpeed);
 	
-	_Ed(GrTerMaxAngle, g0->terMaxAng);  _Ed(GrTerSmAngle, g0->terAngSm);
-	_Ed(GrTerMinHeight, g0->terMinH);  _Ed(GrTerSmHeight, g0->terHSm);
-	_Ed(GrTerMaxHeight, g0->terMaxH);
+	svGrTerMaxAngle.Upd();  svGrTerSmAngle.Upd();
+	svGrTerMinHeight.Upd(); svGrTerMaxHeight.Upd();  svGrTerSmHeight.Upd();
 }
 
 //  tab changed, set slider pointer values, and update
