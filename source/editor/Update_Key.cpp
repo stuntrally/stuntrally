@@ -260,12 +260,6 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(PAGEDOWN):	case key(KP_3):
 				road->NextPoint();  break;
 				
-			//  chkR
-			case key(K):
-				break;
-			case key(L):
-				break;
-
 			//  del
 			case key(DELETE):  case key(KP_PERIOD):
 			case key(KP_5):

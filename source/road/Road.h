@@ -89,7 +89,7 @@ public:
 	void ToggleOnTerrain(), ToggleColums();  // on chosen point
 	void AddWidth(Ogre::Real relW), AddYaw(Ogre::Real relA,Ogre::Real snapA, bool alt),AddRoll(Ogre::Real relA,Ogre::Real snapA, bool alt);
 	void AddPipe(Ogre::Real relP), ChgMtrId(int relId), ChgAngType(int relId), AngZero();
-	void AddChkR(Ogre::Real relR), AddBoxW(Ogre::Real rel),AddBoxH(Ogre::Real rel), Set1stChk();
+	void AddChkR(Ogre::Real relR, bool dontCheckR=false), AddBoxW(Ogre::Real rel),AddBoxH(Ogre::Real rel), Set1stChk();
 	const Ogre::String& getMtrStr(int seg);  bool isPipe(int seg);
 	
 	//  point sel

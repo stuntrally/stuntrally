@@ -241,8 +241,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(LEFTBRACKET) ||isKey(O))  road->AddPipe(-q*0.2);
 		if (isKey(RIGHTBRACKET)||isKey(P))  road->AddPipe( q*0.2);
 
-		if (isKey(K))  road->AddChkR(-q*0.2);  // chk
-		if (isKey(L))  road->AddChkR( q*0.2);
+		if (isKey(K))  road->AddChkR(-q*0.2, ctrl);  // chk
+		if (isKey(L))  road->AddChkR( q*0.2, ctrl);
 
 		if (mz > 0)			road->NextPoint();
 		else if (mz < 0)	road->PrevPoint();

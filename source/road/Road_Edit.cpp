@@ -460,11 +460,36 @@ void SplineRoad::LastPoint()
 
 //  modify, controls+-
 //--------------------------------------------------------------------------------------
-void SplineRoad::AddChkR(Real relR)    ///  ChkR
+void SplineRoad::AddChkR(Real relR, bool dontCheckR)    ///  ChkR
 {
-	if (iChosen == -1)  return;
-	mP[iChosen].chkR = std::max(0.f, mP[iChosen].chkR + relR);
+	int seg = iChosen;
+	if (seg == -1)  return;
+	mP[seg].chkR = std::max(0.f, mP[seg].chkR + relR);
+	if (dontCheckR)  return;
+
+	//  disallow between 0..1
+	if (relR < 0.f && mP[seg].chkR < 1.f)
+		mP[seg].chkR = 0.f;
+	else
+	if (relR > 0.f && mP[seg].chkR < 1.f)
+		mP[seg].chkR = 1.f;
+	
+	//  max radius  (or const on bridges or pipes)
+	int all = getNumPoints();
+	if (all < 2)  return;
+	int next = (seg+1) % all, prev = (seg-1+all) % all;
+	bool bridge = !mP[seg].onTer || !mP[next].onTer || !mP[prev].onTer;
+	bool pipe = mP[seg].pipe > 0.5f;  // || mP[next].pipe > 0.5f || mP[prev].pipe > 0.5f;
+
+	Real maxR = pipe ? 1.7f : bridge ? 1.f : 2.5f;
+	if (bridge || pipe)
+	{	if (relR > 0.f)  mP[seg].chkR = maxR;  else
+		if (relR < 0.f)  mP[seg].chkR = 0.f;
+	}else
+	if (relR > 0.f && mP[seg].chkR > maxR)
+		mP[seg].chkR = maxR;
 }
+
 void SplineRoad::AddBoxW(Real rel)
 {
 	vStBoxDim.z = std::max(6.f, vStBoxDim.z + rel);
