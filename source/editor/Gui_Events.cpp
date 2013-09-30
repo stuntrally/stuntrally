@@ -117,10 +117,10 @@ void CGui::editTrGr(Ed ed)
 	else if (n=="TrPage")  sc->trPage = r;   else if (n=="TrDist")  sc->trDist = r;
 	else if (n=="TrImpDist")  sc->trDistImp = r;
 
-	else if (n=="GrSwayDistr")  g0->swayDistr = r;  // todo: sway params broken -
+	else if (n=="GrSwayDistr")  g0->swayDistr = r;
 	else if (n=="GrSwayLen")  g0->swayLen = r;
-	else if (n=="GrSwaySpd")  g0->swaySpeed = r;  // todo: more, grass channels
-	
+	else if (n=="GrSwaySpd")  g0->swaySpeed = r;
+
 	else if (n=="SceneryId")  sc->sceneryId = ed->getCaption();
 }
 
@@ -166,6 +166,7 @@ void CGui::tabGrLayers(Tab wp, size_t id)
 	_Ed(GrSwayLen, g0->swayLen);
 	_Ed(GrSwaySpd, g0->swaySpeed);
 	
+	// todo: more, grass channels..
 	svGrTerMaxAngle.Upd();  svGrTerSmAngle.Upd();
 	svGrTerMinHeight.Upd(); svGrTerMaxHeight.Upd();  svGrTerSmHeight.Upd();
 }

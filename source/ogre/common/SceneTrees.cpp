@@ -101,16 +101,19 @@ void App::CreateTrees()
 		grassLoader->setHeightFunction(&getTerrainHeight);
 
 		//  Grass layers
+		const SGrassLayer* g0 = &sc->grLayersAll[0];
 		for (int i=0; i < sc->ciNumGrLay; ++i)
 		{
 			const SGrassLayer* gr = &sc->grLayersAll[i];
 			if (gr->on)
 			{
 				GrassLayer *l = grassLoader->addLayer(gr->material);
-				l->setMinimumSize(gr->minSx, gr->minSy);  l->setMaximumSize(gr->maxSx, gr->maxSy);
+				l->setMinimumSize(gr->minSx, gr->minSy);
+				l->setMaximumSize(gr->maxSx, gr->maxSy);
 				l->setDensity(gr->dens * fGrass);
-				l->setSwayDistribution(gr->swayDistr);
-				l->setSwayLength(gr->swayLen);  l->setSwaySpeed(gr->swaySpeed);
+
+				l->setSwayDistribution(g0->swayDistr);
+				l->setSwayLength(g0->swayLen);  l->setSwaySpeed(g0->swaySpeed);
 
 				l->setAnimationEnabled(true);  //l->setLightingEnabled(true);
 				l->setRenderTechnique(GRASSTECH_CROSSQUADS);  //GRASSTECH_SPRITE-
