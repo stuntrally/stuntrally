@@ -33,6 +33,7 @@
 	<Tag name="PostfilterAA">Фильтр сглаживания</Tag>
 	<Tag name="Prize">Приз</Tag>
 	<Tag name="TipLTrMinTerH">Высота ландшафта, ниже которой модель не появится.</Tag>
+	<Tag name="SimModeEasy">Легко</Tag>
 	<Tag name="Sky">Небо</Tag>
 	<Tag name="TBPosition">Поз.</Tag>
 	<Tag name="Pipe">Труба</Tag>
@@ -44,13 +45,12 @@
 	<Tag name="TipTrackImg">Снимок трека для игры</Tag>
 	<Tag name="TerLNoiseOnly">Только шум</Tag>
 	<Tag name="InputValueChange">Жми или двинь (мышь/кнопка) </Tag>
-	<Tag name="SteerRange">Коэф. диапазона управления</Tag>
-	<Tag name="TipOneAxisThrottleBrake">Ваш контроллер имеет ли газ и тормоз на одной оси, проверте это. Привяжите ось к газу, отвяжите от тормоза. Используйте инверсию от газа если это необходимо.</Tag>
+	<Tag name="Chall_Rally">Ралли</Tag>
 	<Tag name="TipChangeGloss">Изменяет блеск окраски автомобиля (матовый-блестящий).</Tag>
 	<Tag name="Surface">Поверхность</Tag>
 	<Tag name="ChallEndFinished">Вы прошли этот вызов.</Tag>
 	<Tag name="About">О игре</Tag>
-	<Tag name="Allowed">Позволено</Tag>
+	<Tag name="TBScore">Очки</Tag>
 	<Tag name="InputRoadChkFirst">0   - устан. контр. точку 1-ой</Tag>
 	<Tag name="HDROrigImage">Затемнение</Tag>
 	<Tag name="InputObjectsIns">Ins - вставить, где курсор</Tag>
@@ -73,7 +73,7 @@
 	<Tag name="TerGenOfsY">Смещение по Y</Tag>
 	<Tag name="FuelBoost">Нитро</Tag>
 	<Tag name="pipes">трубы</Tag>
-	<Tag name="InputFluidsTile">[,] - изменить текстуру</Tag>
+	<Tag name="CarTireVisCircles">Визуализ. нагр. на шины</Tag>
 	<Tag name="InputFluidsUpdate">F10 - обновить отображение глубины в ландшафте</Tag>
 	<Tag name="InputHeaderTxt1">Действие</Tag>
 	<Tag name="DepthOfField">Прорисовка</Tag>
@@ -100,7 +100,7 @@
 	<Tag name="NetGamesAvail">Доступные игры</Tag>
 	<Tag name="HDRAdaptationScale">Адап. гамма</Tag>
 	<Tag name="TBLast">Посл.</Tag>
-	<Tag name="Ping">Пинг</Tag>
+	<Tag name="Chall_Chase">Погоня</Tag>
 	<Tag name="InputMaxVal">Макс. значение</Tag>
 	<Tag name="TipRollDrag">Для колес, чем больше значение тем быстрее замедление (напр. 140 для снега, 80 для травы).</Tag>
 	<Tag name="TipTrackList">Список треков. Кликни, чтобы выбрать и увидеть инфо. Нажми Enter или [Новая игра], чтобы на нем поехать.</Tag>
@@ -155,7 +155,7 @@
 	<Tag name="NetLeaveGame">Покинуть игру</Tag>
 	<Tag name="banked">накренился</Tag>
 	<Tag name="frenzy">безумие (фигурные дороги)</Tag>
-	<Tag name="InputRoadChkRadius">K,L - пределы контр. точки (0 - нет)</Tag>
+	<Tag name="InputRoadChkRadius">K,L - пределы контр. точки (КТ 0 - нет)</Tag>
 	<Tag name="TipCarSpeed">Оценка скорости автомобиля. Чем больше, тем быстрее автомобиль. Предупреждаем, на гравии слишком быстрые автомобили не будут быстрее, потому что у них не достаточно сцепления с дорогой.</Tag>
 	<Tag name="InputRoadInsAlt">Alt-Shift - в начале Alt-Ctrl - в конце</Tag>
 	<Tag name="RearThrottleInverse">Инверсия газа</Tag>
@@ -180,6 +180,7 @@
 	<Tag name="MessageBox_Try">Пробовать</Tag>
 	<Tag name="InputMapRewind">Перемотка</Tag>
 	<Tag name="InputKeyAllPreset">По умолчанию</Tag>
+	<Tag name="Chall_Endurance">Выносливость</Tag>
 	<Tag name="InpSet_Slow">Медленно</Tag>
 	<Tag name="InputAssignKey">&lt;Назнач&gt;</Tag>
 	<Tag name="Wireframe">Каркас</Tag>
@@ -208,7 +209,7 @@
 	<Tag name="softparticles">Мягкие частицы</Tag>
 	<Tag name="TipSunDirYaw">Направление солнца - угол отклонения.</Tag>
 	<Tag name="Players">Игроки</Tag>
-	<Tag name="Road_ChkR">Охват</Tag>
+	<Tag name="Road_ChkR">КТ</Tag>
 	<Tag name="Continue">Продолжить</Tag>
 	<Tag name="Length">Длина</Tag>
 	<Tag name="TipCarsList">Список автомобилей. Нажми Enter или [Новая игра], чтобы на нем поехать.</Tag>
@@ -219,7 +220,7 @@
 	<Tag name="Triplanar">Трех плоскостной</Tag>
 	<Tag name="View">Вид</Tag>
 	<Tag name="TipModelRoadDist">Дистанция от дороги к моделям (глобальная, добавляет к каждой модели свое значение).</Tag>
-	<Tag name="CarDebug">Авто susp, long|,lat- скольжение</Tag>
+	<Tag name="CarDebug">Подвеска авто|, скольж.</Tag>
 	<Tag name="TerLAngSm">Ровный угол</Tag>
 	<Tag name="Digits">Цифры (пер., скор.)</Tag>
 	<Tag name="MapSize">Размер карты</Tag>
@@ -235,7 +236,6 @@
 	<Tag name="wind">ветер</Tag>
 	<Tag name="TipTerLHMax">Окончание высоты ландшафта на слое.</Tag>
 	<Tag name="TipDustSize">Размер частиц пыли.</Tag>
-	<Tag name="ChampEndCongrats">Поздравляем !</Tag>
 	<Tag name="LS_CAR">Загрузка авто</Tag>
 	<Tag name="Author">Автор(ы)</Tag>
 	<Tag name="MaxScale">макс. масштаб</Tag>
@@ -258,7 +258,7 @@
 	<Tag name="Sound">Звук</Tag>
 	<Tag name="InputFluidsIns">Ins -вставить жидкость где курсор</Tag>
 	<Tag name="TipVegetGroups">Группы растительности (рекомендуем использовать 4-6), влияет на производительность.</Tag>
-	<Tag name="Car">Автомобиль</Tag>
+	<Tag name="Car">Авто</Tag>
 	<Tag name="Challenge">Вызов</Tag>
 	<Tag name="FuelLap">Нитро за круг</Tag>
 	<Tag name="TipSkyMats">Названия материалов для неба (из SkyDome.material).</Tag>
@@ -290,7 +290,7 @@
 	<Tag name="HDR">HDR+разм.</Tag>
 	<Tag name="TipABS">Предотвращает блокировку колес при торможении (по умолчанию выключено).</Tag>
 	<Tag name="TipGrassPatchHeightMin">Минимальная высота травы</Tag>
-	<Tag name="Terrain">Ландш.</Tag>
+	<Tag name="TipOneAxisThrottleBrake">Ваш контроллер имеет ли газ и тормоз на одной оси, проверте это. Привяжите ось к газу, отвяжите от тормоза. Используйте инверсию от газа если это необходимо.</Tag>
 	<Tag name="CarType_Terrain">Земной</Tag>
 	<Tag name="InputObjectsRotReset">shift-2 - сброс вращ.</Tag>
 	<Tag name="EdInputBar">Панель ввода Ctrl-I</Tag>
@@ -322,7 +322,7 @@
 	<Tag name="MessageBox_Abort">Отмена</Tag>
 	<Tag name="Brush_ShapeNoise">Шум</Tag>
 	<Tag name="Grasses">Трава</Tag>
-	<Tag name="TBScore">Очки</Tag>
+	<Tag name="Allowed">Позволено</Tag>
 	<Tag name="InputMapFlip">Сальто</Tag>
 	<Tag name="FogHeight">Высота</Tag>
 	<Tag name="difficulty">сложность</Tag>
@@ -397,7 +397,7 @@
 	<Tag name="Ambient">Окр. среда</Tag>
 	<Tag name="SkirtLength">Длина края</Tag>
 	<Tag name="InputRoadNotOnTer">не на ландшафте</Tag>
-	<Tag name="ApplyShadows">Применить тени</Tag>
+	<Tag name="ChampEndCongrats">Поздравляем !</Tag>
 	<Tag name="TiresEdit2">1,2 или Num /,* - изм. знач.</Tag>
 	<Tag name="TipGrassColorMap">Отображение цвета травы для ландшафта, обычно такой же как у материала травы. Дополнительная окраска травы.</Tag>
 	<Tag name="Multiplayer">По сети</Tag>
@@ -455,15 +455,14 @@
 	<Tag name="BulletLines">Линии отладки Bullet</Tag>
 	<Tag name="InputRoadLMB">LMB (или стрелки)</Tag>
 	<Tag name="TBPoints">Очки</Tag>
-	<Tag name="SimModeEasy">Легко</Tag>
+	<Tag name="InputFluidsTile">[,] - изменить текстуру</Tag>
 	<Tag name="TreeDens">Плотность деревьев</Tag>
-	<Tag name="WrongChk">Propustil KT</Tag>
+	<Tag name="WrongChk">Пропустил КТ</Tag>
 	<Tag name="DisableEdit">Откл. для ред.</Tag>
 	<Tag name="MinimapUpdSkip">Пропуск обновления мини-карты</Tag>
 	<Tag name="InputReloadTrack">F5 - перезагрузить трек</Tag>
 	<Tag name="InputIncreaseSensitivity">Чувствит.</Tag>
 	<Tag name="CheckOnSave">Пров. при сохр.</Tag>
-	<Tag name="GraphicsAllSettings">По умолчанию</Tag>
 	<Tag name="InputTerPaint">A - Краска текстур (слоев)</Tag>
 	<Tag name="NetPort">Порт</Tag>
 	<Tag name="CarType_Gravel">Гравий</Tag>
@@ -474,10 +473,11 @@
 	<Tag name="InputFluidsSize">alt-LMB - размер alt-RMB - глубина</Tag>
 	<Tag name="Bronze">Бронза</Tag>
 	<Tag name="TexCoordMul">Тех. коор.</Tag>
-	<Tag name="Shadows">Тени</Tag>
+	<Tag name="SteerRange">Коэф. диапазона управления</Tag>
 	<Tag name="ShowPictures">Показать картинку при загр.</Tag>
 	<Tag name="distance">дистанция</Tag>
 	<Tag name="SSS_Effect">Эффект</Tag>
+	<Tag name="Chall_Extreme">Экстрим</Tag>
 	<Tag name="PreviewCam">Смот. камера</Tag>
 	<Tag name="TipModelMinScale">Минимальный масштаб модели.</Tag>
 	<Tag name="InputFluidsDel">Del - удалить</Tag>
@@ -497,7 +497,9 @@
 	<Tag name="NetGameName">Имя игры</Tag>
 	<Tag name="TexSize">Разм. текстуры</Tag>
 	<Tag name="TipSunAmbient">Цвет окружающей среды солнечного света (константа). R G B значения от 0 до 1 (напр. 0.4 0.4 0.4)</Tag>
+	<Tag name="ApplyShadows">Применить тени</Tag>
 	<Tag name="ChngTrkTab">изм. в [Трек] вкладке</Tag>
+	<Tag name="Shadows">Тени</Tag>
 	<Tag name="InputRplCtrl2">P - пауза/играть повтор</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - ветер сзади/спереди (shift - слабый, ctrl,alt - сильный)</Tag>
 	<Tag name="Laps">Круги</Tag>
@@ -550,7 +552,7 @@
 	<Tag name="TipTerrainMove">Двигать ландшафт.</Tag>
 	<Tag name="TerHQDist">Ландш. HQ дист.</Tag>
 	<Tag name="InputRoadRoll">- вращать/масш. выб.</Tag>
-	<Tag name="CarDebugSurfaces">Поверхности шины</Tag>
+	<Tag name="CarDebugSurfaces">Поверхности шин</Tag>
 	<Tag name="TrackArea">Площ.</Tag>
 	<Tag name="FacesOnce">Сталк. сразу</Tag>
 	<Tag name="TipTrackDescEditor">Описание трека (нажми для редактирования).</Tag>
@@ -574,7 +576,7 @@
 	<Tag name="ObjStatic">Статич.</Tag>
 	<Tag name="TerrainBrush">Кисть ландшафта</Tag>
 	<Tag name="TipTexNormAuto">Когда отмечено, нормальная текстура автоматически устанавливается из текстур распростраения (+ _nh в название файла).</Tag>
-	<Tag name="TrackBestTime">Лучш. время</Tag>
+	<Tag name="TrackBestTime">Луч. время</Tag>
 	<Tag name="InputRoadMMB">MMB (или Num /,*)</Tag>
 	<Tag name="Textures">Текстуры</Tag>
 	<Tag name="TipTerVertCount">Количество вершин ландшафта на одной стороне (квадраты). Применяется с кнопками [Новая равнина] или [Менять размеры].</Tag>
@@ -682,7 +684,7 @@
 	<Tag name="Tutorial">Обучение</Tag>
 	<Tag name="FinishedCommaPlace">финиш, место</Tag>
 	<Tag name="InputObjectsDel">Del - удалить текущий</Tag>
-	<Tag name="ChallInfo">В режиме вызов игра имеет специальные настройки. Нужно время или позиция. Попробуй получить бронзу, серебро или золото.</Tag>
+	<Tag name="ChallInfo">В режиме вызов игра имеет большинство неизменяемых настроек. Нужно время или позиция. Попробуй получить бронзу, серебро или золото.</Tag>
 	<Tag name="Tools">Инстр.</Tag>
 	<Tag name="NetCreateGame">Создать игру</Tag>
 	<Tag name="TipGrassSwaySpd">Скор. качания травы.</Tag>
@@ -739,6 +741,7 @@
 	<Tag name="SourceTrack">Источник трека</Tag>
 	<Tag name="NetHost">Хост</Tag>
 	<Tag name="Road_AngleAuto">Авто</Tag>
+	<Tag name="Ping">Пинг</Tag>
 	<Tag name="ImpostorDist">Дист. спрайта</Tag>
 	<Tag name="AlignSmooth">Ровность</Tag>
 	<Tag name="page">ст.</Tag>
@@ -812,6 +815,7 @@
 	<Tag name="InputRoadAlignTerrain">U - вырав. ландш. с дорогой (для выб. сегментов)</Tag>
 	<Tag name="Add">Добавить</Tag>
 	<Tag name="GraphicsAll_High">Высоко</Tag>
+	<Tag name="Chall_Stunts">Трюки</Tag>
 	<Tag name="Environment">Окр. среда</Tag>
 	<Tag name="SpeedUnit">Единица скорости</Tag>
 	<Tag name="Used">Исп.</Tag>
@@ -906,16 +910,13 @@
 	<Tag name="CarScrap">Лом авто</Tag>
 	<Tag name="RplSave">Сохранить</Tag>
 	<Tag name="InputPressButtonTip">Нажми кнопку для теста</Tag>
+	<Tag name="Terrain">Ландш.</Tag>
 	<Tag name="Pitch">наклон</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - пред,след Опции вкладка (shift - подменю)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="Chall_Rally">Rally</Tag>
-	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
-	<Tag name="Chall_Chase">Chase</Tag>
-	<Tag name="Chall_Endurance">Endurance</Tag>
-	<Tag name="Chall_Extreme">Extreme</Tag>
-	<Tag name="Chall_Stunts">Stunts</Tag>
+	<Tag name="GraphicsPreset">Graphics preset</Tag>
+	<Tag name="Layout">Layout</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -33,6 +33,7 @@
 	<Tag name="PostfilterAA">Filtr krawędzi (antyaliasing)</Tag>
 	<Tag name="Prize">Nagroda</Tag>
 	<Tag name="TipLTrMinTerH">Wyoskość terenu poniżej której model nie występuje.</Tag>
+	<Tag name="SimModeEasy">Łatwy (początkujący)</Tag>
 	<Tag name="Sky">Niebo</Tag>
 	<Tag name="TBPosition">Pozycja</Tag>
 	<Tag name="Pipe">Rura</Tag>
@@ -44,13 +45,12 @@
 	<Tag name="TipTrackImg">Zrzut z gry dla wybranej trasy.</Tag>
 	<Tag name="TerLNoiseOnly">Tylko szum</Tag>
 	<Tag name="InputValueChange">Każdy ruch myszą lub zmiana wartości z </Tag>
-	<Tag name="SteerRange">Mnożniki zakresu skręcania</Tag>
-	<Tag name="TipOneAxisThrottleBrake">Jeśli Twój kontroler ma gaz i hamulec na jednej osi, zaznacz to. Przypisz tą oś do gazu, usuń z hamulca. Użyj Odwrócenia gazu jeśli potrzeba.</Tag>
+	<Tag name="Chall_Rally">Rajd</Tag>
 	<Tag name="TipChangeGloss">Zmień połysk auta (matowy-błyszczący).</Tag>
 	<Tag name="Surface">Nawierzchnia</Tag>
 	<Tag name="ChallEndFinished">Wygrałeś to wyzwanie.</Tag>
 	<Tag name="About">O grze</Tag>
-	<Tag name="Allowed">Dozwolone</Tag>
+	<Tag name="TBScore">Punkty</Tag>
 	<Tag name="InputRoadChkFirst">0 - ustaw sferę kontrolną jako pierwszą (1)</Tag>
 	<Tag name="HDROrigImage">Blask Ciemniej</Tag>
 	<Tag name="InputObjectsIns">Ins - wstaw nowy, pod kursorem</Tag>
@@ -73,7 +73,7 @@
 	<Tag name="TerGenOfsY">Przesunięcie Y</Tag>
 	<Tag name="FuelBoost">Paliwo dopalacza</Tag>
 	<Tag name="pipes">rury</Tag>
-	<Tag name="InputFluidsTile">[,] - zmień skalę tekstury</Tag>
+	<Tag name="CarTireVisCircles">Wizualizacja kołowa sił opon</Tag>
 	<Tag name="InputFluidsUpdate">F10 - odśwież mapę głębokości, po deformacji terenu przy brzegu</Tag>
 	<Tag name="InputHeaderTxt1">Akcja</Tag>
 	<Tag name="DepthOfField">Głębia ostrości</Tag>
@@ -100,7 +100,7 @@
 	<Tag name="NetGamesAvail">Dostępne gry</Tag>
 	<Tag name="HDRAdaptationScale">Skala dostosowania</Tag>
 	<Tag name="TBLast">Ostatni</Tag>
-	<Tag name="Ping">Ping</Tag>
+	<Tag name="Chall_Chase">Pościg</Tag>
 	<Tag name="InputMaxVal">Max. Wartość</Tag>
 	<Tag name="TipRollDrag">Opór dla kół, większy spowoduje szybsze zwalnianie (np. 140 dla śniegu, 80 dla trawy).</Tag>
 	<Tag name="TipTrackList">Lista tras, wybierz by zobaczyć info. Naciśnij Enter lub [Nowa Gra] by jechać na trasie.</Tag>
@@ -180,6 +180,7 @@
 	<Tag name="MessageBox_Try">Spróbuj</Tag>
 	<Tag name="InputMapRewind">Powrót (czasu)</Tag>
 	<Tag name="InputKeyAllPreset">Wszystkie z ustawień</Tag>
+	<Tag name="Chall_Endurance">Wytrzymałość</Tag>
 	<Tag name="InpSet_Slow">Wolne</Tag>
 	<Tag name="InputAssignKey">&lt;Przypisz&gt;</Tag>
 	<Tag name="Wireframe">Szkielet</Tag>
@@ -235,7 +236,6 @@
 	<Tag name="wind">wiatr</Tag>
 	<Tag name="TipTerLHMax">Końcowa wysokość terenu dla warstwy.</Tag>
 	<Tag name="TipDustSize">Wielkość cząstek kurzu.</Tag>
-	<Tag name="ChampEndCongrats">Gratulacje !</Tag>
 	<Tag name="LS_CAR">Wczytuję auto</Tag>
 	<Tag name="Author">Autor(zy)</Tag>
 	<Tag name="MaxScale">maks. skala</Tag>
@@ -290,7 +290,7 @@
 	<Tag name="HDR">HDR+Blask</Tag>
 	<Tag name="TipABS">Zapobiega blokadzie kół przy hamowaniu (domyślnie: wył.)</Tag>
 	<Tag name="TipGrassPatchHeightMin">Minimalna wysokość trawy.</Tag>
-	<Tag name="Terrain">Teren</Tag>
+	<Tag name="TipOneAxisThrottleBrake">Jeśli Twój kontroler ma gaz i hamulec na jednej osi, zaznacz to. Przypisz tą oś do gazu, usuń z hamulca. Użyj Odwrócenia gazu jeśli potrzeba.</Tag>
 	<Tag name="CarType_Terrain">Terenowy</Tag>
 	<Tag name="InputObjectsRotReset">shift-2 - resetuj obrót</Tag>
 	<Tag name="EdInputBar">Pasek wejścia Ctrl-I</Tag>
@@ -322,7 +322,7 @@
 	<Tag name="MessageBox_Abort">Przerwij</Tag>
 	<Tag name="Brush_ShapeNoise">Szum</Tag>
 	<Tag name="Grasses">Trawy</Tag>
-	<Tag name="TBScore">Punkty</Tag>
+	<Tag name="Allowed">Dozwolone</Tag>
 	<Tag name="InputMapFlip">Odwróć</Tag>
 	<Tag name="FogHeight">Wysokość</Tag>
 	<Tag name="difficulty">trudność</Tag>
@@ -397,7 +397,7 @@
 	<Tag name="Ambient">Ambient</Tag>
 	<Tag name="SkirtLength">Długość łaty</Tag>
 	<Tag name="InputRoadNotOnTer">gdy nie na terenie</Tag>
-	<Tag name="ApplyShadows">Zmień cienie</Tag>
+	<Tag name="ChampEndCongrats">Gratulacje !</Tag>
 	<Tag name="TiresEdit2">1,2 lub Num /,* - zmień wartość</Tag>
 	<Tag name="TipGrassColorMap">Mapa koloru trawy, dla scenerii. Zazwyczaj ten sam wybór, co dla materiału trawy. Dodatkowo koloruje trawę.</Tag>
 	<Tag name="Multiplayer">Multiplayer</Tag>
@@ -455,7 +455,7 @@
 	<Tag name="BulletLines">linie debug Bullet</Tag>
 	<Tag name="InputRoadLMB">LMB (lub strzałki)</Tag>
 	<Tag name="TBPoints">Punkty</Tag>
-	<Tag name="SimModeEasy">Łatwy (początkujący)</Tag>
+	<Tag name="InputFluidsTile">[,] - zmień skalę tekstury</Tag>
 	<Tag name="TreeDens">Gęstość drzew</Tag>
 	<Tag name="WrongChk">Zły punkt kontrolny</Tag>
 	<Tag name="DisableEdit">Wyłącz do edycji</Tag>
@@ -463,7 +463,6 @@
 	<Tag name="InputReloadTrack">F5 - przeładuj trasę</Tag>
 	<Tag name="InputIncreaseSensitivity">Czułość</Tag>
 	<Tag name="CheckOnSave">Sprawdź przy zapisywaniu</Tag>
-	<Tag name="GraphicsAllSettings">Zmień wszystkie ustawienia na zestaw:</Tag>
 	<Tag name="InputTerPaint">A - maluj tekstury (warstwy)</Tag>
 	<Tag name="NetPort">Port</Tag>
 	<Tag name="CarType_Gravel">Szuter</Tag>
@@ -474,10 +473,11 @@
 	<Tag name="InputFluidsSize">alt-LMB - rozmiar alt-RMB - głębokość</Tag>
 	<Tag name="Bronze">Bronz</Tag>
 	<Tag name="TexCoordMul">Mnożnik tekstury</Tag>
-	<Tag name="Shadows">Cienie</Tag>
+	<Tag name="SteerRange">Mnożniki zakresu skręcania</Tag>
 	<Tag name="ShowPictures">Pokazuj obrazy podczas wczytywania</Tag>
 	<Tag name="distance">odległość</Tag>
 	<Tag name="SSS_Effect">Efekt</Tag>
+	<Tag name="Chall_Extreme">Ekstremalne</Tag>
 	<Tag name="PreviewCam">Poprzedni widok</Tag>
 	<Tag name="TipModelMinScale">Minimalna skala modelu</Tag>
 	<Tag name="InputFluidsDel">Del - zmaż wybraną</Tag>
@@ -497,7 +497,9 @@
 	<Tag name="NetGameName">Nazwa gry</Tag>
 	<Tag name="TexSize">Rozmiar tekstur</Tag>
 	<Tag name="TipSunAmbient">Kolor słońca stały, rozproszony.. R G B składowe 0 do 1 (np. 0.4 0.4 0.4)</Tag>
+	<Tag name="ApplyShadows">Zmień cienie</Tag>
 	<Tag name="ChngTrkTab">zmiana w zakładce [Trasa]</Tag>
+	<Tag name="Shadows">Cienie</Tag>
 	<Tag name="InputRplCtrl2">P - pauza/wznów powtórkę</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - przewiń do tyłu/do przodu (shift - wolno, ctrl,alt - szybko)</Tag>
 	<Tag name="Laps">Okrążenia</Tag>
@@ -739,6 +741,7 @@
 	<Tag name="SourceTrack">Trasa źródłowa</Tag>
 	<Tag name="NetHost">Host</Tag>
 	<Tag name="Road_AngleAuto">Auto</Tag>
+	<Tag name="Ping">Ping</Tag>
 	<Tag name="ImpostorDist">Odległość atrap</Tag>
 	<Tag name="AlignSmooth">Ilość wygładzania</Tag>
 	<Tag name="page">strona</Tag>
@@ -812,6 +815,7 @@
 	<Tag name="InputRoadAlignTerrain">U - Wyrównaj teren do drogi (dla wybranych segmentów).</Tag>
 	<Tag name="Add">Dodaj</Tag>
 	<Tag name="GraphicsAll_High">Wysokie</Tag>
+	<Tag name="Chall_Stunts">Wyczynowe</Tag>
 	<Tag name="Environment">Środowisko</Tag>
 	<Tag name="SpeedUnit">Jednostka</Tag>
 	<Tag name="Used">Używane</Tag>
@@ -906,16 +910,13 @@
 	<Tag name="CarScrap">Auto ocieranie</Tag>
 	<Tag name="RplSave">Zapisz</Tag>
 	<Tag name="InputPressButtonTip">Naciśnij przycisk by zobaczyć</Tag>
+	<Tag name="Terrain">Teren</Tag>
 	<Tag name="Pitch">nachylenie</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="Chall_Rally">Rally</Tag>
-	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
-	<Tag name="Chall_Chase">Chase</Tag>
-	<Tag name="Chall_Endurance">Endurance</Tag>
-	<Tag name="Chall_Extreme">Extreme</Tag>
-	<Tag name="Chall_Stunts">Stunts</Tag>
+	<Tag name="GraphicsPreset">Graphics preset</Tag>
+	<Tag name="Layout">Layout</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

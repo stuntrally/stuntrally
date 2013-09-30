@@ -33,6 +33,7 @@
 	<Tag name="PostfilterAA">Post-filter antialiasing</Tag>
 	<Tag name="Prize">Prize</Tag>
 	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
+	<Tag name="SimModeEasy">Easy (beginner)</Tag>
 	<Tag name="Sky">Cer</Tag>
 	<Tag name="TBPosition">Position</Tag>
 	<Tag name="Pipe">Pipe</Tag>
@@ -44,13 +45,12 @@
 	<Tag name="TipTrackImg">Captură de ecran pentru traseul selectat</Tag>
 	<Tag name="TerLNoiseOnly">Only Noise</Tag>
 	<Tag name="InputValueChange">Fiecare mișcare(mouse/tastă) sau valoare se schimbă cu </Tag>
-	<Tag name="SteerRange">Steering range multipliers</Tag>
-	<Tag name="TipOneAxisThrottleBrake">If your controller has throttle and brake in one axis, check this. Bind axis to throttle, unbind brake. Use Inverse from throttle if needed.</Tag>
+	<Tag name="Chall_Rally">Rally</Tag>
 	<Tag name="TipChangeGloss">Change car color glossiness (matte-shiny).</Tag>
 	<Tag name="Surface">Suprafaţă</Tag>
 	<Tag name="ChallEndFinished">You have passed this challenge.</Tag>
 	<Tag name="About">About</Tag>
-	<Tag name="Allowed">Allowed</Tag>
+	<Tag name="TBScore">Punctaj</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first  (1)</Tag>
 	<Tag name="HDROrigImage">Bloom Darken</Tag>
 	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
@@ -73,7 +73,7 @@
 	<Tag name="TerGenOfsY">Offset Y</Tag>
 	<Tag name="FuelBoost">Boost Fuel</Tag>
 	<Tag name="pipes">pipes</Tag>
-	<Tag name="InputFluidsTile">[,]  - change texture tiling</Tag>
+	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
 	<Tag name="InputFluidsUpdate">F10  - update depth map, after terrain deform near shore</Tag>
 	<Tag name="InputHeaderTxt1">Action</Tag>
 	<Tag name="DepthOfField">Depth of Field</Tag>
@@ -100,7 +100,7 @@
 	<Tag name="NetGamesAvail">Available games</Tag>
 	<Tag name="HDRAdaptationScale">Adapt Scale</Tag>
 	<Tag name="TBLast">Ultimul</Tag>
-	<Tag name="Ping">Ping</Tag>
+	<Tag name="Chall_Chase">Chase</Tag>
 	<Tag name="InputMaxVal">Max. Value</Tag>
 	<Tag name="TipRollDrag">Drag pentru roți,valori mari va face să încetinească mai rapid(ex.140 pentru zăpadă, 80 pentru iarbă ).</Tag>
 	<Tag name="TipTrackList">Tracks list, click to select and see info. Press Enter or [New Game] to drive on it.</Tag>
@@ -180,6 +180,7 @@
 	<Tag name="MessageBox_Try">Try</Tag>
 	<Tag name="InputMapRewind">Rewind (time)</Tag>
 	<Tag name="InputKeyAllPreset">Set all from preset</Tag>
+	<Tag name="Chall_Endurance">Endurance</Tag>
 	<Tag name="InpSet_Slow">Slow</Tag>
 	<Tag name="InputAssignKey">&lt;Assign&gt;</Tag>
 	<Tag name="Wireframe">Cadru</Tag>
@@ -235,7 +236,6 @@
 	<Tag name="wind">Vânt</Tag>
 	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
 	<Tag name="TipDustSize">Mărimea particulelor de praf.</Tag>
-	<Tag name="ChampEndCongrats">Congratulations !</Tag>
 	<Tag name="LS_CAR">Se încarcă mașina</Tag>
 	<Tag name="Author">Author(s)</Tag>
 	<Tag name="MaxScale">scala maximă</Tag>
@@ -290,7 +290,7 @@
 	<Tag name="HDR">HDR+Bloom</Tag>
 	<Tag name="TipABS">Previne blocarea roții la frânare (implicit: oprit)</Tag>
 	<Tag name="TipGrassPatchHeightMin">Înălțime minimă patch iarbă</Tag>
-	<Tag name="Terrain">Teren</Tag>
+	<Tag name="TipOneAxisThrottleBrake">If your controller has throttle and brake in one axis, check this. Bind axis to throttle, unbind brake. Use Inverse from throttle if needed.</Tag>
 	<Tag name="CarType_Terrain">Terrain</Tag>
 	<Tag name="InputObjectsRotReset">shift-2 - reset rotation</Tag>
 	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
@@ -322,7 +322,7 @@
 	<Tag name="MessageBox_Abort">Abort</Tag>
 	<Tag name="Brush_ShapeNoise">Noise</Tag>
 	<Tag name="Grasses">Grasses</Tag>
-	<Tag name="TBScore">Punctaj</Tag>
+	<Tag name="Allowed">Allowed</Tag>
 	<Tag name="InputMapFlip">Flip</Tag>
 	<Tag name="FogHeight">Height</Tag>
 	<Tag name="difficulty">difficulty</Tag>
@@ -397,7 +397,7 @@
 	<Tag name="Ambient">Ambient</Tag>
 	<Tag name="SkirtLength">Lungime fustă drum</Tag>
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
-	<Tag name="ApplyShadows">Aplică umbre</Tag>
+	<Tag name="ChampEndCongrats">Congratulations !</Tag>
 	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
 	<Tag name="Multiplayer">Multiplayer</Tag>
@@ -455,7 +455,7 @@
 	<Tag name="BulletLines">Bullet debug lines</Tag>
 	<Tag name="InputRoadLMB">LMB (or Arrows)</Tag>
 	<Tag name="TBPoints">Points</Tag>
-	<Tag name="SimModeEasy">Easy (beginner)</Tag>
+	<Tag name="InputFluidsTile">[,]  - change texture tiling</Tag>
 	<Tag name="TreeDens">Densitatea pomilor</Tag>
 	<Tag name="WrongChk">Wrong Checkpoint</Tag>
 	<Tag name="DisableEdit">Dezactivează pentru editare</Tag>
@@ -463,7 +463,6 @@
 	<Tag name="InputReloadTrack">F5 - reîncarcă traseul</Tag>
 	<Tag name="InputIncreaseSensitivity">Sensitivity</Tag>
 	<Tag name="CheckOnSave">Check on save</Tag>
-	<Tag name="GraphicsAllSettings">Change all graphics settings to preset:</Tag>
 	<Tag name="InputTerPaint">A - Colorează texturile (straturi)</Tag>
 	<Tag name="NetPort">Port</Tag>
 	<Tag name="CarType_Gravel">Gravel</Tag>
@@ -474,10 +473,11 @@
 	<Tag name="InputFluidsSize">alt-LMB - size   alt-RMB - depth</Tag>
 	<Tag name="Bronze">Bronze</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
-	<Tag name="Shadows">Umbre</Tag>
+	<Tag name="SteerRange">Steering range multipliers</Tag>
 	<Tag name="ShowPictures">Arată imagini cât timp încarcă</Tag>
 	<Tag name="distance">distanță</Tag>
 	<Tag name="SSS_Effect">Effect</Tag>
+	<Tag name="Chall_Extreme">Extreme</Tag>
 	<Tag name="PreviewCam">Preview Camera</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
 	<Tag name="InputFluidsDel">Del - delete current</Tag>
@@ -497,7 +497,9 @@
 	<Tag name="NetGameName">Game Name</Tag>
 	<Tag name="TexSize">Texture size</Tag>
 	<Tag name="TipSunAmbient">Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)</Tag>
+	<Tag name="ApplyShadows">Aplică umbre</Tag>
 	<Tag name="ChngTrkTab">changed in [Track] tab</Tag>
+	<Tag name="Shadows">Umbre</Tag>
 	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
 	<Tag name="Laps">Laps</Tag>
@@ -739,6 +741,7 @@
 	<Tag name="SourceTrack">Source track</Tag>
 	<Tag name="NetHost">Host</Tag>
 	<Tag name="Road_AngleAuto">Auto</Tag>
+	<Tag name="Ping">Ping</Tag>
 	<Tag name="ImpostorDist">Impostors dist.</Tag>
 	<Tag name="AlignSmooth">Smooth size</Tag>
 	<Tag name="page">page</Tag>
@@ -812,6 +815,7 @@
 	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
 	<Tag name="Add">Add</Tag>
 	<Tag name="GraphicsAll_High">High</Tag>
+	<Tag name="Chall_Stunts">Stunts</Tag>
 	<Tag name="Environment">Environment</Tag>
 	<Tag name="SpeedUnit">Speed unit</Tag>
 	<Tag name="Used">Used</Tag>
@@ -906,16 +910,13 @@
 	<Tag name="CarScrap">Car Scrap</Tag>
 	<Tag name="RplSave">Save</Tag>
 	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
+	<Tag name="Terrain">Teren</Tag>
 	<Tag name="Pitch">gudron</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="Chall_Rally">Rally</Tag>
-	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
-	<Tag name="Chall_Chase">Chase</Tag>
-	<Tag name="Chall_Endurance">Endurance</Tag>
-	<Tag name="Chall_Extreme">Extreme</Tag>
-	<Tag name="Chall_Stunts">Stunts</Tag>
+	<Tag name="GraphicsPreset">Graphics preset</Tag>
+	<Tag name="Layout">Layout</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

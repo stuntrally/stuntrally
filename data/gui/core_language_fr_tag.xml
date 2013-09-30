@@ -33,6 +33,7 @@
 	<Tag name="PostfilterAA">Anti-crénelage</Tag>
 	<Tag name="Prize">Prize</Tag>
 	<Tag name="TipLTrMinTerH">En-dessous de cette altitude, le modèle n'apparaîtra pas.</Tag>
+	<Tag name="SimModeEasy">Facile (débutant)</Tag>
 	<Tag name="Sky">Ciel</Tag>
 	<Tag name="TBPosition">Position</Tag>
 	<Tag name="Pipe">Tube</Tag>
@@ -44,13 +45,12 @@
 	<Tag name="TipTrackImg">Capture d'écran du jeu pour la piste sélectionnée.</Tag>
 	<Tag name="TerLNoiseOnly">Bruit seulement</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
-	<Tag name="SteerRange">Steering range multipliers</Tag>
-	<Tag name="TipOneAxisThrottleBrake">Si votre manette ou volant a l'accélération et le freinage sur le même axe, cochez cette case. Liez l'axe à \un axe inversé si nécessaire.</Tag>
+	<Tag name="Chall_Rally">Rally</Tag>
 	<Tag name="TipChangeGloss">Changer la brillance de la peinture (mat/brillant).</Tag>
 	<Tag name="Surface">Surface</Tag>
 	<Tag name="ChallEndFinished">You have passed this challenge.</Tag>
 	<Tag name="About">À propos</Tag>
-	<Tag name="Allowed">Allowed</Tag>
+	<Tag name="TBScore">Score</Tag>
 	<Tag name="InputRoadChkFirst">0 - définir point de contrôle comme premier</Tag>
 	<Tag name="HDROrigImage">Intensité de l'ébouissement</Tag>
 	<Tag name="InputObjectsIns">Insér. - insérer nouveau, au curseur</Tag>
@@ -73,7 +73,7 @@
 	<Tag name="TerGenOfsY">Décalage Y</Tag>
 	<Tag name="FuelBoost">Fuel Boost</Tag>
 	<Tag name="pipes">tubes</Tag>
-	<Tag name="InputFluidsTile">[,] - changer la répétition des textures</Tag>
+	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
 	<Tag name="InputFluidsUpdate">F10 - mettre à jour la carte de profondeur, après avoir édité du terrain près d'une côte</Tag>
 	<Tag name="InputHeaderTxt1">Action</Tag>
 	<Tag name="DepthOfField">Profondeur du terrain</Tag>
@@ -100,7 +100,7 @@
 	<Tag name="NetGamesAvail">Parties disponibles</Tag>
 	<Tag name="HDRAdaptationScale">Adapter l'échelle</Tag>
 	<Tag name="TBLast">Dernier</Tag>
-	<Tag name="Ping">Latence</Tag>
+	<Tag name="Chall_Chase">Chase</Tag>
 	<Tag name="InputMaxVal">Valeur Maximale</Tag>
 	<Tag name="TipRollDrag">Friction des roues, une valeur plus élevée réduit la vitesse (exemple : 140 pour la neige, 80 pour l'herbe).</Tag>
 	<Tag name="TipTrackList">Liste des circuits, cliquez pour sélectionner et voir l'information. Appuyez sur Entrée ou [Nouvelle partie] pour conduire dessus.</Tag>
@@ -180,6 +180,7 @@
 	<Tag name="MessageBox_Try">Essayer</Tag>
 	<Tag name="InputMapRewind">Retour (dans le temps)</Tag>
 	<Tag name="InputKeyAllPreset">Définir depuis un pré-réglage</Tag>
+	<Tag name="Chall_Endurance">Endurance</Tag>
 	<Tag name="InpSet_Slow">Lent</Tag>
 	<Tag name="InputAssignKey">&lt;Attacher&gt;</Tag>
 	<Tag name="Wireframe">Fil de fer</Tag>
@@ -235,7 +236,6 @@
 	<Tag name="wind">vent</Tag>
 	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
 	<Tag name="TipDustSize">Taille des particules de sable.</Tag>
-	<Tag name="ChampEndCongrats">Félicitations !</Tag>
 	<Tag name="LS_CAR">Chargement de la voiture</Tag>
 	<Tag name="Author">Auteur(s)</Tag>
 	<Tag name="MaxScale">échelle max.</Tag>
@@ -290,7 +290,7 @@
 	<Tag name="HDR">HDR + ébouissement</Tag>
 	<Tag name="TipABS">Évite le blocage des roues au freinage (par défaut : désactivé).</Tag>
 	<Tag name="TipGrassPatchHeightMin">Hauteur minimale de l'herbe.</Tag>
-	<Tag name="Terrain">Terrain</Tag>
+	<Tag name="TipOneAxisThrottleBrake">Si votre manette ou volant a l'accélération et le freinage sur le même axe, cochez cette case. Liez l'axe à \un axe inversé si nécessaire.</Tag>
 	<Tag name="CarType_Terrain">Terrain</Tag>
 	<Tag name="InputObjectsRotReset">Maj.-2 - réinit. la rotation</Tag>
 	<Tag name="EdInputBar">Barre d'entrée Ctrl-I</Tag>
@@ -322,7 +322,7 @@
 	<Tag name="MessageBox_Abort">Annuler</Tag>
 	<Tag name="Brush_ShapeNoise">Bruit</Tag>
 	<Tag name="Grasses">Herbes</Tag>
-	<Tag name="TBScore">Score</Tag>
+	<Tag name="Allowed">Allowed</Tag>
 	<Tag name="InputMapFlip">Retourner</Tag>
 	<Tag name="FogHeight">Hauteur</Tag>
 	<Tag name="difficulty">difficulté</Tag>
@@ -397,7 +397,7 @@
 	<Tag name="Ambient">Ambience</Tag>
 	<Tag name="SkirtLength">Skirt Length</Tag>
 	<Tag name="InputRoadNotOnTer">quand n'est pas sur le terrain</Tag>
-	<Tag name="ApplyShadows">Appliquer</Tag>
+	<Tag name="ChampEndCongrats">Félicitations !</Tag>
 	<Tag name="TiresEdit2">1,2 ou pavé num. /,* - changer la valeur</Tag>
 	<Tag name="TipGrassColorMap">Carte de couleur pour le paysage, généralement le même choix que pour le matériau d'herbe. Permet de changer la couleur de l'herbe.</Tag>
 	<Tag name="Multiplayer">Multijoueur</Tag>
@@ -455,7 +455,7 @@
 	<Tag name="BulletLines">Lignes de débogage de Bullet</Tag>
 	<Tag name="InputRoadLMB">Clic gauche (ou flèches)</Tag>
 	<Tag name="TBPoints">Points</Tag>
-	<Tag name="SimModeEasy">Facile (débutant)</Tag>
+	<Tag name="InputFluidsTile">[,] - changer la répétition des textures</Tag>
 	<Tag name="TreeDens">Densité des arbres</Tag>
 	<Tag name="WrongChk">Mauvais point de contrôle</Tag>
 	<Tag name="DisableEdit">Desactiver pour éditer</Tag>
@@ -463,7 +463,6 @@
 	<Tag name="InputReloadTrack">F5 - rechargement du circuit</Tag>
 	<Tag name="InputIncreaseSensitivity">Sensibilité</Tag>
 	<Tag name="CheckOnSave">Vérifier en sauvegardant</Tag>
-	<Tag name="GraphicsAllSettings">Changer tous les paramètres graphiques :</Tag>
 	<Tag name="InputTerPaint">A - peindre des textures (calques)</Tag>
 	<Tag name="NetPort">Port</Tag>
 	<Tag name="CarType_Gravel">Gravier</Tag>
@@ -474,10 +473,11 @@
 	<Tag name="InputFluidsSize">Alt-Clic gauche - taille Alt-Clic droit - profondeur</Tag>
 	<Tag name="Bronze">Bronze</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
-	<Tag name="Shadows">Ombres</Tag>
+	<Tag name="SteerRange">Steering range multipliers</Tag>
 	<Tag name="ShowPictures">Montrer des images pendant le chargement</Tag>
 	<Tag name="distance">distance</Tag>
 	<Tag name="SSS_Effect">Effet</Tag>
+	<Tag name="Chall_Extreme">Extreme</Tag>
 	<Tag name="PreviewCam">Caméra d'aperçu</Tag>
 	<Tag name="TipModelMinScale">Taille minimum du modèle.</Tag>
 	<Tag name="InputFluidsDel">Supr. - supprimer la sélection</Tag>
@@ -497,7 +497,9 @@
 	<Tag name="NetGameName">Nom du jeu</Tag>
 	<Tag name="TexSize">Taille des textures</Tag>
 	<Tag name="TipSunAmbient">Ambience de la lumière du soleil (couleur constante). Composants R V B de 0 à 1 (exemple : 0.4 0.4 0.4)</Tag>
+	<Tag name="ApplyShadows">Appliquer</Tag>
 	<Tag name="ChngTrkTab">changé dans l'onglet [Circuit]</Tag>
+	<Tag name="Shadows">Ombres</Tag>
 	<Tag name="InputRplCtrl2">P - mettre en pause/reprendre le replay</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - aller en avant/arrière (Maj. - lent, Ctrl,Alt - rapide)</Tag>
 	<Tag name="Laps">Tours</Tag>
@@ -739,6 +741,7 @@
 	<Tag name="SourceTrack">Circuit source</Tag>
 	<Tag name="NetHost">Hôte</Tag>
 	<Tag name="Road_AngleAuto">Automatique</Tag>
+	<Tag name="Ping">Latence</Tag>
 	<Tag name="ImpostorDist">Distance des sprites</Tag>
 	<Tag name="AlignSmooth">Taille d'adoucissement</Tag>
 	<Tag name="page">page</Tag>
@@ -812,6 +815,7 @@
 	<Tag name="InputRoadAlignTerrain">U - aligner le terrain à la route (pour les segments sélectionnés)</Tag>
 	<Tag name="Add">Ajouter</Tag>
 	<Tag name="GraphicsAll_High">Élevé</Tag>
+	<Tag name="Chall_Stunts">Stunts</Tag>
 	<Tag name="Environment">Environnement</Tag>
 	<Tag name="SpeedUnit">Unité de vitesse</Tag>
 	<Tag name="Used">Utilisé</Tag>
@@ -906,16 +910,13 @@
 	<Tag name="CarScrap">Ferraille de voiture</Tag>
 	<Tag name="RplSave">Sauvegarder</Tag>
 	<Tag name="InputPressButtonTip">appuyer sur un bouton pour voir son numéro</Tag>
+	<Tag name="Terrain">Terrain</Tag>
 	<Tag name="Pitch">angle vertical</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - onglet d'Options précédent/suivant (Maj. sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="Chall_Rally">Rally</Tag>
-	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
-	<Tag name="Chall_Chase">Chase</Tag>
-	<Tag name="Chall_Endurance">Endurance</Tag>
-	<Tag name="Chall_Extreme">Extreme</Tag>
-	<Tag name="Chall_Stunts">Stunts</Tag>
+	<Tag name="GraphicsPreset">Graphics preset</Tag>
+	<Tag name="Layout">Layout</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
