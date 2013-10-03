@@ -441,6 +441,7 @@
 	<Tag name="InputTogglePreview">F7 - wejdź/wyjdź z kamery podglądu</Tag>
 	<Tag name="GameBy">Gra przez</Tag>
 	<Tag name="SunWeather">Słońce i Pogoda</Tag>
+	<Tag name="GraphicsPreset">Ustawienia grafiki</Tag>
 	<Tag name="RollingDrag">Opór toczenia</Tag>
 	<Tag name="RplDelete">Usuń</Tag>
 	<Tag name="TipAutoRear">Odznacz dla ręcznej zmiany wstecznego.</Tag>
@@ -574,7 +575,7 @@
 	<Tag name="MessageBox_Ignore">Zignoruj</Tag>
 	<Tag name="GraphicsAll_Impossible">Niemożliwe</Tag>
 	<Tag name="ObjStatic">Statyczne</Tag>
-	<Tag name="TerrainBrush">Pędzel terenu</Tag>
+	<Tag name="Layout">Układ</Tag>
 	<Tag name="TipTexNormAuto">Gdy zaznaczony, tekstura normalna jest automatycznie ustawiana na podstawie diffuse (+ _nh w nazwie).</Tag>
 	<Tag name="TrackBestTime">Najlepszy</Tag>
 	<Tag name="InputRoadMMB">MMB (lub Num /,*)</Tag>
@@ -600,6 +601,7 @@
 	<Tag name="LS_GAME">Wczytywanie gry</Tag>
 	<Tag name="TipSceneryId">Identyfikator nazwy trasy, która ma podobne oświetlenie (lub tej jeśli ma oryginalne). Używane do generacji atrap modeli.</Tag>
 	<Tag name="TreeMult">Mnożnik drzew</Tag>
+	<Tag name="Gold">Złoto</Tag>
 	<Tag name="InputTopView">Alt-Z - przełącz widok z góry</Tag>
 	<Tag name="FogStart">start</Tag>
 	<Tag name="InputToggleGUIMode">F1 lub ` - tryb GUI (Opcje)</Tag>
@@ -852,7 +854,7 @@
 	<Tag name="Left">Lewo</Tag>
 	<Tag name="InputBrushOctaves">, .  -  Oktawy szumu (detal)</Tag>
 	<Tag name="CarSpeed">Szybkość</Tag>
-	<Tag name="Gold">Złoto</Tag>
+	<Tag name="TerrainBrush">Pędzel terenu</Tag>
 	<Tag name="InputStartHeight">[,] - dostosuj obszar startu (większy dla rur)</Tag>
 	<Tag name="InputStartDir">Space - zmień kierunek drogi (+ lub -)</Tag>
 	<Tag name="GrMaterial">Materiał</Tag>
@@ -915,8 +917,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="GraphicsPreset">Graphics preset</Tag>
-	<Tag name="Layout">Layout</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
