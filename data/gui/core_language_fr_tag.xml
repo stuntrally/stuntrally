@@ -31,7 +31,7 @@
 	<Tag name="Road_Roll">Roulis</Tag>
 	<Tag name="TipFogHStart">Hauteur de la brume volumétrique [mètres] à laquelle la brume commence à s'intensifier.</Tag>
 	<Tag name="PostfilterAA">Anti-crénelage</Tag>
-	<Tag name="Prize">Prize</Tag>
+	<Tag name="Prize">Prix</Tag>
 	<Tag name="TipLTrMinTerH">En-dessous de cette altitude, le modèle n'apparaîtra pas.</Tag>
 	<Tag name="SimModeEasy">Facile (débutant)</Tag>
 	<Tag name="Sky">Ciel</Tag>
@@ -48,7 +48,7 @@
 	<Tag name="Chall_Rally">Rally</Tag>
 	<Tag name="TipChangeGloss">Changer la brillance de la peinture (mat/brillant).</Tag>
 	<Tag name="Surface">Surface</Tag>
-	<Tag name="ChallEndFinished">You have passed this challenge.</Tag>
+	<Tag name="ChallEndFinished">Vous avez réussi ce défi.</Tag>
 	<Tag name="About">À propos</Tag>
 	<Tag name="TBScore">Score</Tag>
 	<Tag name="InputRoadChkFirst">0 - définir point de contrôle comme premier</Tag>
@@ -100,7 +100,7 @@
 	<Tag name="NetGamesAvail">Parties disponibles</Tag>
 	<Tag name="HDRAdaptationScale">Adapter l'échelle</Tag>
 	<Tag name="TBLast">Dernier</Tag>
-	<Tag name="Chall_Chase">Chase</Tag>
+	<Tag name="Chall_Chase">Poursuivre</Tag>
 	<Tag name="InputMaxVal">Valeur Maximale</Tag>
 	<Tag name="TipRollDrag">Friction des roues, une valeur plus élevée réduit la vitesse (exemple : 140 pour la neige, 80 pour l'herbe).</Tag>
 	<Tag name="TipTrackList">Liste des circuits, cliquez pour sélectionner et voir l'information. Appuyez sur Entrée ou [Nouvelle partie] pour conduire dessus.</Tag>
@@ -143,7 +143,7 @@
 	<Tag name="MinimapZoom">Zoom</Tag>
 	<Tag name="OneAxisThrottleBrake">Un axe pour accélérer et freiner</Tag>
 	<Tag name="ViewRight">Vue de droite</Tag>
-	<Tag name="Restart">Restart</Tag>
+	<Tag name="Restart">Recommencer</Tag>
 	<Tag name="Count">Nombre</Tag>
 	<Tag name="InputBrushPower">; &apos;  (or alt-Wheel)  -  Power exponent</Tag>
 	<Tag name="UnitKm">km</Tag>
@@ -210,7 +210,7 @@
 	<Tag name="TipSunDirYaw">Direction du soleil - angle horizontal.</Tag>
 	<Tag name="Players">Joueurs</Tag>
 	<Tag name="Road_ChkR">ChkR</Tag>
-	<Tag name="Continue">Continue</Tag>
+	<Tag name="Continue">Continuer</Tag>
 	<Tag name="Length">Longueur</Tag>
 	<Tag name="TipCarsList">Liste des voitures. Appuyez sur Entrée ou [Nouvelle partie] pour les conduire.</Tag>
 	<Tag name="FluidSplash">Éclaboussures</Tag>
@@ -322,7 +322,7 @@
 	<Tag name="MessageBox_Abort">Annuler</Tag>
 	<Tag name="Brush_ShapeNoise">Bruit</Tag>
 	<Tag name="Grasses">Herbes</Tag>
-	<Tag name="Allowed">Allowed</Tag>
+	<Tag name="Allowed">Admis</Tag>
 	<Tag name="InputMapFlip">Retourner</Tag>
 	<Tag name="FogHeight">Hauteur</Tag>
 	<Tag name="difficulty">difficulté</Tag>
@@ -335,7 +335,7 @@
 	<Tag name="Rename">Renommer</Tag>
 	<Tag name="Asphalt">Bitume</Tag>
 	<Tag name="TipModelPageLength">Models Page length (low will reload often and make too many batches, high will cause visible switching and make too many drawn triangles).</Tag>
-	<Tag name="ReverseStartOrder">Reverse starting order</Tag>
+	<Tag name="ReverseStartOrder">Inverser l'ordre de départ</Tag>
 	<Tag name="LightmapSize">Taille de la lightmap</Tag>
 	<Tag name="OpponentsSorted">Trier les adversaires</Tag>
 	<Tag name="RoadQual">Détails de la route</Tag>
@@ -355,7 +355,7 @@
 	<Tag name="Detail">Detail</Tag>
 	<Tag name="TriSize">Taille du triangle</Tag>
 	<Tag name="SplitVertically">Scinder verticalement</Tag>
-	<Tag name="Start">Start</Tag>
+	<Tag name="Start">Démarrer</Tag>
 	<Tag name="TipGrTerMinHeight">En-dessous de cette altitude, il n'y aura pas (ou moins) d'herbe.</Tag>
 	<Tag name="Road_Snap">Aimanter</Tag>
 	<Tag name="InputRoadShiftReverse">Maj.-Insér. - coller Maj.-Ctrl-Insér. - inversé</Tag>
@@ -441,6 +441,7 @@
 	<Tag name="InputTogglePreview">F7 - activer/désactiver la caméra d'aperçu</Tag>
 	<Tag name="GameBy">Un jeu de</Tag>
 	<Tag name="SunWeather">Soleil et Temps</Tag>
+	<Tag name="GraphicsPreset">Pré-réglage graphique</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplDelete">Supprimer</Tag>
 	<Tag name="TipAutoRear">Décochez pour changer les rapports manuellement.</Tag>
@@ -468,7 +469,7 @@
 	<Tag name="CarType_Gravel">Gravier</Tag>
 	<Tag name="NetMasterConnectionError">Impossible d'atteindre le serveur maître.</Tag>
 	<Tag name="Brush_CurrentH">H. actuelle</Tag>
-	<Tag name="CarChange">Car change</Tag>
+	<Tag name="CarChange">Changement de voiture</Tag>
 	<Tag name="LTrFlDepth">profondeur maximale dans le liquide</Tag>
 	<Tag name="InputFluidsSize">Alt-Clic gauche - taille Alt-Clic droit - profondeur</Tag>
 	<Tag name="Bronze">Bronze</Tag>
@@ -477,7 +478,7 @@
 	<Tag name="ShowPictures">Montrer des images pendant le chargement</Tag>
 	<Tag name="distance">distance</Tag>
 	<Tag name="SSS_Effect">Effet</Tag>
-	<Tag name="Chall_Extreme">Extreme</Tag>
+	<Tag name="Chall_Extreme">Extrême</Tag>
 	<Tag name="PreviewCam">Caméra d'aperçu</Tag>
 	<Tag name="TipModelMinScale">Taille minimum du modèle.</Tag>
 	<Tag name="InputFluidsDel">Supr. - supprimer la sélection</Tag>
@@ -529,7 +530,7 @@
 	<Tag name="Brush_ShapeN-gon">N-gone</Tag>
 	<Tag name="ChampInfo">En mode tutoriel/championnat, vous conduisez sur une série de circuits. Un score minimum (en fonction de votre temps) est nécessaire pour passer au stage suivant. Il est possible d'utiliser n'importe quelle voiture.</Tag>
 	<Tag name="AutoUpdateBlendmap">Mettre à jour la blendmap automatiquement</Tag>
-	<Tag name="TrackNotFound">Track not found !</Tag>
+	<Tag name="TrackNotFound">Circuit non trouvé !</Tag>
 	<Tag name="InputMapThrottle">Accélérer</Tag>
 	<Tag name="TBLap">Tour</Tag>
 	<Tag name="Road_AngleBoth">Les deux</Tag>
@@ -574,7 +575,7 @@
 	<Tag name="MessageBox_Ignore">Ignorer</Tag>
 	<Tag name="GraphicsAll_Impossible">Impossible</Tag>
 	<Tag name="ObjStatic">Statique</Tag>
-	<Tag name="TerrainBrush">Brosse du terrain</Tag>
+	<Tag name="Layout">Disposition</Tag>
 	<Tag name="TipTexNormAuto">Quand coché, la texture de normale est automatiquement prise depuis (la texture + _nh) dans le nom de fichier.</Tag>
 	<Tag name="TrackBestTime">Meilleur temps</Tag>
 	<Tag name="InputRoadMMB">Clic du milieu (ou pavé num. /,*)</Tag>
@@ -583,7 +584,7 @@
 	<Tag name="RplCurrent">Courrante</Tag>
 	<Tag name="InputBrushFreq">O,P - fréquence du bruit (échelle)</Tag>
 	<Tag name="InputCamControl2">Clic gauche - tourner Clic droit - zoomer</Tag>
-	<Tag name="Cars">Cars</Tag>
+	<Tag name="Cars">Voitures</Tag>
 	<Tag name="CarType_Slow">Lent:</Tag>
 	<Tag name="Diff5">Très difficile</Tag>
 	<Tag name="LS_CLEANUP">Nettoyage</Tag>
@@ -600,8 +601,9 @@
 	<Tag name="LS_GAME">Chargement du jeu</Tag>
 	<Tag name="TipSceneryId">ID d'un circuit qui a un éclairage similaire (ou celui de ce circuit s'il est unique). Utilisé pour la génération de sprites.</Tag>
 	<Tag name="TreeMult">Multi. d'arbres</Tag>
+	<Tag name="Gold">Or</Tag>
 	<Tag name="InputTopView">Alt-Z - activer la vue du dessus</Tag>
-	<Tag name="FogStart">start</Tag>
+	<Tag name="FogStart">début</Tag>
 	<Tag name="InputToggleGUIMode">F1 ou ` - mode graphique (Options)</Tag>
 	<Tag name="InpSet_AxisFullInv">Axe complet inversé</Tag>
 	<Tag name="TipGrassMaterial">Grass material (type) for this layer, chosen to match track's scenery.</Tag>
@@ -623,7 +625,7 @@
 	<Tag name="VSync">Synchronisation verticale</Tag>
 	<Tag name="Tweak">Ajuster</Tag>
 	<Tag name="TipChangeBright">Changer la luminosité de la peinture de la voiture (sombre/clair).</Tag>
-	<Tag name="NetNew">New game</Tag>
+	<Tag name="NetNew">Nouvelle partie</Tag>
 	<Tag name="Road_Width">Largeur</Tag>
 	<Tag name="Size">Taille</Tag>
 	<Tag name="Reset">Réinitialiser</Tag>
@@ -657,7 +659,7 @@
 	<Tag name="TipWindInflH">Influence du vent sur le modèle (dans le sens de la hauteur).</Tag>
 	<Tag name="NetLocalPort">Port local</Tag>
 	<Tag name="InputStartLMB">Ctrl-Clic gauche - placer Clic gauche - se déplacer Clic droit - hauteur</Tag>
-	<Tag name="Silver">Silver</Tag>
+	<Tag name="Silver">Argent</Tag>
 	<Tag name="TipWindInflL">Influence du vent sur le modèle (dans le sens de la largeur).</Tag>
 	<Tag name="InputRoadCopySel">Ctrl-Insér. - copier la sélection Ctrl-Suppr. - supprimer la sélection</Tag>
 	<Tag name="InputFluidsType">-,= - changer le type de liquide (eau, boue, etc.)</Tag>
@@ -684,7 +686,7 @@
 	<Tag name="Tutorial">Tutoriel</Tag>
 	<Tag name="FinishedCommaPlace">fini, place</Tag>
 	<Tag name="InputObjectsDel">Supr. - supprimer la sélection</Tag>
-	<Tag name="ChallInfo">In challenge mode the game has setup, most settings can't be changed. Time or position is needed. If you pass you receive bronze, silver or gold prize.</Tag>
+	<Tag name="ChallInfo">En mode défi le jeu est déjà paramétré, les paramètres ne peuvent être changés. Un temps ou une position sont nécessaires pour être admis. Si vous êtes admis vous recevez une médaille de bronze, d'argent ou d'or.</Tag>
 	<Tag name="Tools">Outils</Tag>
 	<Tag name="NetCreateGame">Créer une partie</Tag>
 	<Tag name="TipGrassSwaySpd">Vitesse du \</Tag>
@@ -757,7 +759,7 @@
 	<Tag name="OgreDialog">Montrer la fenêtre Ogre</Tag>
 	<Tag name="MultiThread">Utiliser plusieurs Threads</Tag>
 	<Tag name="Editor">Éditeur</Tag>
-	<Tag name="Any">Any</Tag>
+	<Tag name="Any">Tous</Tag>
 	<Tag name="TipTrkViewDetailed">Vue détaillée.</Tag>
 	<Tag name="AndContributors">et contributeurs</Tag>
 	<Tag name="InputRoadSelectMany">Sélectionner (plusieurs)</Tag>
@@ -798,7 +800,7 @@
 	<Tag name="NewGame">Nouvelle partie</Tag>
 	<Tag name="StartInMain">Démarrer dans le menu principal</Tag>
 	<Tag name="Find">Rechercher</Tag>
-	<Tag name="FogEnd">end</Tag>
+	<Tag name="FogEnd">fin</Tag>
 	<Tag name="InputMapSteering">Direction</Tag>
 	<Tag name="InputDetailsFor">Détails pour</Tag>
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
@@ -815,7 +817,7 @@
 	<Tag name="InputRoadAlignTerrain">U - aligner le terrain à la route (pour les segments sélectionnés)</Tag>
 	<Tag name="Add">Ajouter</Tag>
 	<Tag name="GraphicsAll_High">Élevé</Tag>
-	<Tag name="Chall_Stunts">Stunts</Tag>
+	<Tag name="Chall_Stunts">Acrobaties</Tag>
 	<Tag name="Environment">Environnement</Tag>
 	<Tag name="SpeedUnit">Unité de vitesse</Tag>
 	<Tag name="Used">Utilisé</Tag>
@@ -852,7 +854,7 @@
 	<Tag name="Left">Gauche</Tag>
 	<Tag name="InputBrushOctaves">, . - Octaves de bruit (détail)</Tag>
 	<Tag name="CarSpeed">Vitesse</Tag>
-	<Tag name="Gold">Gold</Tag>
+	<Tag name="TerrainBrush">Brosse du terrain</Tag>
 	<Tag name="InputStartHeight">[,]  -  adjust start box height (bigger for pipes)</Tag>
 	<Tag name="InputStartDir">Espace - changer la direction de la route (+ ou -)</Tag>
 	<Tag name="GrMaterial">Matériel</Tag>
@@ -871,7 +873,7 @@
 	<Tag name="ObjBuildings">Bâtiments</Tag>
 	<Tag name="TipTrkScreenEditor">Capture d'écran du jeu pour la piste sélectionnée.</Tag>
 	<Tag name="InputObjectsRot">2 - tourner localement (Alt - globalement) Clic gauche : Z Clic droit : Y Clic du milieu : X</Tag>
-	<Tag name="Needed">Needed</Tag>
+	<Tag name="Needed">Nécessaire</Tag>
 	<Tag name="BulletDebug">Débogage Bullet</Tag>
 	<Tag name="InputRoadHeight">- changer la hauteur</Tag>
 	<Tag name="TipSunSpecular">Couleur des reflets de la lumière du soleil. Composants R V B de 0 à 1 (exemple : 0.6 0.6 0.6)</Tag>
@@ -915,8 +917,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet d'Options précédent/suivant (Maj. sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="GraphicsPreset">Graphics preset</Tag>
-	<Tag name="Layout">Layout</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

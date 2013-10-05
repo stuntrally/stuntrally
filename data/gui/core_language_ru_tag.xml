@@ -441,6 +441,7 @@
 	<Tag name="InputTogglePreview">F7 - войти/выйти смот. камера</Tag>
 	<Tag name="GameBy">Игра</Tag>
 	<Tag name="SunWeather">Солнце и погода</Tag>
+	<Tag name="GraphicsPreset">Graphics preset</Tag>
 	<Tag name="RollingDrag">Вращ. движ.</Tag>
 	<Tag name="RplDelete">Удалить</Tag>
 	<Tag name="TipAutoRear">Не отмечайте для ручного переключения задней передачи.</Tag>
@@ -574,7 +575,7 @@
 	<Tag name="MessageBox_Ignore">игнорировать</Tag>
 	<Tag name="GraphicsAll_Impossible">Невозможно</Tag>
 	<Tag name="ObjStatic">Статич.</Tag>
-	<Tag name="TerrainBrush">Кисть ландшафта</Tag>
+	<Tag name="Layout">Layout</Tag>
 	<Tag name="TipTexNormAuto">Когда отмечено, нормальная текстура автоматически устанавливается из текстур распростраения (+ _nh в название файла).</Tag>
 	<Tag name="TrackBestTime">Луч. время</Tag>
 	<Tag name="InputRoadMMB">MMB (или Num /,*)</Tag>
@@ -600,6 +601,7 @@
 	<Tag name="LS_GAME">Загрузка игры</Tag>
 	<Tag name="TipSceneryId">Название id трека, это схоже с запуском (трек должен быть уникальный ). Используется для генерации спрайтов.</Tag>
 	<Tag name="TreeMult">Коэф. деревьев</Tag>
+	<Tag name="Gold">Золото</Tag>
 	<Tag name="InputTopView">Alt-Z - вид сверху</Tag>
 	<Tag name="FogStart">начало</Tag>
 	<Tag name="InputToggleGUIMode">F1 или ` - режим GUI</Tag>
@@ -852,7 +854,7 @@
 	<Tag name="Left">Налево</Tag>
 	<Tag name="InputBrushOctaves">, .   -  шум наборов</Tag>
 	<Tag name="CarSpeed">Скорость</Tag>
-	<Tag name="Gold">Золото</Tag>
+	<Tag name="TerrainBrush">Кисть ландшафта</Tag>
 	<Tag name="InputStartHeight">[,]  -  регул. высоты старта (больше для труб)</Tag>
 	<Tag name="InputStartDir">Space - изм. напр. дороги (+ или -)</Tag>
 	<Tag name="GrMaterial">Материал</Tag>
@@ -915,8 +917,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред,след Опции вкладка (shift - подменю)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="GraphicsPreset">Graphics preset</Tag>
-	<Tag name="Layout">Layout</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

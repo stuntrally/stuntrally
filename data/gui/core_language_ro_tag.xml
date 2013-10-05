@@ -441,6 +441,7 @@
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
 	<Tag name="GameBy">A game by</Tag>
 	<Tag name="SunWeather">Soare si vreme</Tag>
+	<Tag name="GraphicsPreset">Graphics preset</Tag>
 	<Tag name="RollingDrag">Învârtire mașină</Tag>
 	<Tag name="RplDelete">Delete</Tag>
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
@@ -574,7 +575,7 @@
 	<Tag name="MessageBox_Ignore">Ignore</Tag>
 	<Tag name="GraphicsAll_Impossible">Impossible</Tag>
 	<Tag name="ObjStatic">Static</Tag>
-	<Tag name="TerrainBrush">Terrain brush</Tag>
+	<Tag name="Layout">Layout</Tag>
 	<Tag name="TipTexNormAuto">When checked, Normal texture is automatically set from Diffuse texture (+ _nh in filename).</Tag>
 	<Tag name="TrackBestTime">Cel mai bun timp</Tag>
 	<Tag name="InputRoadMMB">MMB (or Num /,*)</Tag>
@@ -600,6 +601,7 @@
 	<Tag name="LS_GAME">Loading game</Tag>
 	<Tag name="TipSceneryId">Name id of track, that has similar lighting (or this track's if has unique). Used for impostors generation.</Tag>
 	<Tag name="TreeMult">Trees multiplier</Tag>
+	<Tag name="Gold">Gold</Tag>
 	<Tag name="InputTopView">Alt-Z - toggle top view</Tag>
 	<Tag name="FogStart">start</Tag>
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
@@ -852,7 +854,7 @@
 	<Tag name="Left">Left</Tag>
 	<Tag name="InputBrushOctaves">, .   -  noise Octaves (detail)</Tag>
 	<Tag name="CarSpeed">Speed</Tag>
-	<Tag name="Gold">Gold</Tag>
+	<Tag name="TerrainBrush">Terrain brush</Tag>
 	<Tag name="InputStartHeight">[,] - ajustează înălțimea casetei de start (mai mare pentru conducte)</Tag>
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="GrMaterial">Material</Tag>
@@ -915,8 +917,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="GraphicsPreset">Graphics preset</Tag>
-	<Tag name="Layout">Layout</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
