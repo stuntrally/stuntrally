@@ -2441,7 +2441,12 @@
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipTerLHSm}"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="244 68 96 96"/>
+						<!--<Widget type="ImageBox" skin="ImageBox" position="244 22 96 96">
+							<Property key="ImageCoord" value="256 512 128 128"/>
+							<Property key="Alpha" value="0.6"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+							<UserString key="RelativeTo" value="EditorWnd"/>
+						</Widget>-->
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 746 468">
 						<Property key="Caption" value="#B0E0A0#{Grasses}"/>

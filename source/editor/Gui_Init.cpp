@@ -301,8 +301,8 @@ void CGui::InitGui()
 
 	
 	///  [Vegetation]  ------------------------------------
-	sv= &svGrassDens;	sv->Init("GrassDens",	&sc->densGrass, 0.001f,1.0f, 2.f);  sv->DefaultF(0.2f);
-	sv= &svTreesDens;	sv->Init("TreesDens",	&sc->densTrees, 0.01f, 3.0f, 2.f);  sv->DefaultF(0.3f);
+	sv= &svGrassDens;	sv->Init("GrassDens",	&sc->densGrass, 0.f, 1.f, 2.f);  sv->DefaultF(0.2f);
+	sv= &svTreesDens;	sv->Init("TreesDens",	&sc->densTrees, 0.f, 3.f, 2.f);  sv->DefaultF(0.3f);
 
 	Ed(GrPage, editTrGr);  Ed(GrDist, editTrGr);
 	Ed(TrPage, editTrGr);  Ed(TrDist, editTrGr);  Ed(TrImpDist, editTrGr);
@@ -316,7 +316,7 @@ void CGui::InitGui()
 	valLTrAll = fTxt("LTrAll");
 	Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);
 
-	sv= &svLTrDens;		sv->Init("LTrDens",		 &f, 0.001f,1.0f, 2.f, 3,5);  sv->DefaultF(0.15f);
+	sv= &svLTrDens;		sv->Init("LTrDens",		 &f, 0.f, 1.f, 2.f, 3,5);  sv->DefaultF(0.15f);
 	
 	sv= &svLTrRdDist;	sv->Init("LTrRdDist",	 &i, 0,20);  sv->DefaultI(0);
 	sv= &svLTrRdDistMax;sv->Init("LTrRdDistMax", &i, 0,20);  sv->DefaultI(20);
