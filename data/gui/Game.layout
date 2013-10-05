@@ -186,7 +186,7 @@
 					<Property key="TextColour" value="0.4 0.5 0.6"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="616 528 148 20" name="TrackAuthor">
+				<Widget type="TextBox" skin="TextBox" position="616 528 250 20" name="TrackAuthor">
 					<Property key="TextColour" value="0.4 0.5 0.6"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
@@ -493,7 +493,7 @@
 					<Property key="TextColour" value="0.4 0.5 0.6"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="552 528 224 24" name="CarAuthor">
+				<Widget type="TextBox" skin="TextBox" position="552 528 250 24" name="CarAuthor">
 					<Property key="Caption" value="#{Author}"/>
 					<Property key="TextColour" value="0.4 0.5 0.6"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
