@@ -113,34 +113,27 @@ void CGuiCom::doSizeGUI(EnumeratorWidgetPtr widgets)
 
 		if (relativeTo != "")
 		{
-			// position & size relative to the widget specified in "RelativeTo" property (or full screen)
-			IntSize relativeSize;
+			//  position & size relative to the widget specified in "RelativeTo" property (or full screen)
+			IntSize relSize;
 			if (relativeTo == "Screen")
-				relativeSize = IntSize(app->mWindow->getWidth(), app->mWindow->getHeight());
+				relSize = IntSize(app->mWindow->getWidth(), app->mWindow->getHeight());
 			else
 			{	WP window = fWP(relativeTo);
-				relativeSize = window->getSize();
+				relSize = window->getSize();
 			}
 			
-			// retrieve original size & pos
+			//  retrieve original size & pos
 			IntPoint origPos;  IntSize origSize;
 			origPos.left = s2i(wp->getUserString("origPosX"));
 			origPos.top  = s2i(wp->getUserString("origPosY"));
 			origSize.width  = s2i(wp->getUserString("origSizeX"));
 			origSize.height = s2i(wp->getUserString("origSizeY"));
 			
-			// calc new size & pos
-			const IntPoint& newPos = IntPoint(
-				int(origPos.left * (float(relativeSize.width) / 800)),
-				int(origPos.top  * (float(relativeSize.height)/ 600)) );
-			
-			const IntSize& newScale = IntSize(
-				int(origSize.width  * (float(relativeSize.width) / 800)),
-				int(origSize.height * (float(relativeSize.height)/ 600)) );
-			
-			// apply
-			wp->setPosition(newPos);
-			wp->setSize(newScale);
+			//  calc new size & pos
+			float sx = relSize.width / 800.f, sy = relSize.height / 600.f;
+			//  apply
+			wp->setPosition(IntPoint( int(origPos.left * sx), int(origPos.top * sy) ));
+			wp->setSize(IntSize(    int(origSize.width * sx), int(origSize.height * sy) ));
 		}
 		
 		doSizeGUI(wp->getEnumerator());
@@ -174,7 +167,7 @@ void CGuiCom::setToolTips(EnumeratorWidgetPtr widgets)
 {
 	while (widgets.next())
 	{
-		WidgetPtr wp = widgets.current();
+		WP wp = widgets.current();
 		wp->setAlign(Align::Default);
 				
 		IntPoint origPos = wp->getPosition();
@@ -184,6 +177,19 @@ void CGuiCom::setToolTips(EnumeratorWidgetPtr widgets)
 		wp->setUserString("origPosY", toStr(origPos.top));
 		wp->setUserString("origSizeX", toStr(origSize.width));
 		wp->setUserString("origSizeY", toStr(origSize.height));
+
+		//  find parent window
+		WP p = wp->getParent();
+		while (p)
+		{
+			if (p->getTypeName() == "Window")
+			{
+				if (p->getUserString("NotSized").empty())
+					wp->setUserString("RelativeTo", p->getName());
+				break;
+			}
+			p = p->getParent();
+		}
 		
 		bool tip = wp->isUserString("tip");
 		if (tip)  // if has tooltip string
