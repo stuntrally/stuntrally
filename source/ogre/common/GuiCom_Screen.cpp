@@ -165,6 +165,7 @@ void CGuiCom::ResizeOptWnd()
 	app->mWndReplays->setCoord(xm, ym, xo, yo);
 	//ap->mWndTweak->setCoord(0, 6, xo/3, yo-ym);
 	#else  // editor
+	app->mWndTrack->setCoord(xm, ym, xo, yo);
 	app->mWndEdit->setCoord(xm, ym, xo, yo);
 	#endif  // both
 	app->mWndHelp->setCoord(xm, ym, xo, yo);

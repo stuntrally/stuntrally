@@ -18,7 +18,7 @@ enum ED_MODE
 	ED_Road, ED_Start, ED_PrvCam, ED_Fluids, ED_Objects, ED_Rivers, ED_ALL
 };
 enum WND_Types
-{	WND_Edit=0, WND_Help, WND_Options, WND_ALL  };  // pSet->inMenu
+{	WND_Track=0, WND_Edit, WND_Help, WND_Options, WND_ALL  };  // pSet->inMenu
 
 
 class BaseApp : public BGui,
@@ -125,8 +125,8 @@ protected:
 	Img bckFps, imgCur;
 	Txt txFps;
 
-	Wnd mWndMain,mWndEdit,mWndHelp,mWndOpts;  // menu, windows
-	Tab mWndTabsEdit,mWndTabsHelp,mWndTabsOpts;  // main tabs on windows
+	Wnd mWndMain,mWndTrack,mWndEdit,mWndHelp,mWndOpts;  // menu, windows
+	Tab mWndTabsTrack,mWndTabsEdit,mWndTabsHelp,mWndTabsOpts;  // main tabs on windows
 
 	///  main menu
 	WP mWndMainPanels[WND_ALL];

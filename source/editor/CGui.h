@@ -40,7 +40,7 @@ public:
 	void UpdGuiAfterPreset();
 
 	Txt valTrk[2];
-	std::vector<Tab> vSubTabsEdit, vSubTabsHelp, vSubTabsOpts;
+	std::vector<Tab> vSubTabsTrack, vSubTabsEdit, vSubTabsHelp, vSubTabsOpts;
 	
 	//  util
 	void toggleGui(bool toggle=false);

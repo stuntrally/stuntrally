@@ -167,10 +167,11 @@ void App::SetEdMode(ED_MODE newMode)
 void App::UpdVisGui()
 {
 	bool notMain = bGuiFocus && !pSet->isMain;
-	if (mWndMain)	mWndMain->setVisible(bGuiFocus && pSet->isMain);
-	if (mWndEdit)	mWndEdit->setVisible(notMain && pSet->inMenu == WND_Edit);
-	if (mWndHelp)	mWndHelp->setVisible(notMain && pSet->inMenu == WND_Help);
-	if (mWndOpts)	mWndOpts->setVisible(notMain && pSet->inMenu == WND_Options);
+	mWndMain->setVisible(bGuiFocus && pSet->isMain);
+	mWndTrack->setVisible(notMain && pSet->inMenu == WND_Track);
+	mWndEdit->setVisible(notMain && pSet->inMenu == WND_Edit);
+	mWndHelp->setVisible(notMain && pSet->inMenu == WND_Help);
+	mWndOpts->setVisible(notMain && pSet->inMenu == WND_Options);
 
 	if (gcom->bnQuit)  gcom->bnQuit->setVisible(bGuiFocus);
 
@@ -280,7 +281,8 @@ void CGui::GuiShortcut(WND_Types wnd, int tab, int subtab)
 	std::vector<TabControl*>* subt = 0;
 	
 	switch (wnd)
-	{	case WND_Edit:		mWndTabs = app->mWndTabsEdit;  subt = &vSubTabsEdit;  break;
+	{	case WND_Track:		mWndTabs = app->mWndTabsTrack;  subt = &vSubTabsTrack;  break;
+		case WND_Edit:		mWndTabs = app->mWndTabsEdit;  subt = &vSubTabsEdit;  break;
 		case WND_Help:		mWndTabs = app->mWndTabsHelp;  subt = &vSubTabsHelp;  break;
 		case WND_Options:	mWndTabs = app->mWndTabsOpts;  subt = &vSubTabsOpts;  break;
 	}
@@ -308,7 +310,7 @@ void CGui::GuiShortcut(WND_Types wnd, int tab, int subtab)
 //  next num tab  alt-1,2
 void CGui::NumTabNext(int rel)
 {
-	if (!app->bGuiFocus || pSet->isMain || pSet->inMenu != WND_Edit)  return;
+	if (!app->bGuiFocus || pSet->isMain /*|| pSet->inMenu != WND_Edit*/)  return;
 
 	TabPtr tab = 0;
 
@@ -320,18 +322,9 @@ void CGui::NumTabNext(int rel)
 	int id = app->mWndTabsEdit->getIndexSelected();
 	switch (id)
 	{
-		case 4:  // Layers
-		{	tab = tabsTerLayers;  tabNum(tabTerLayer);
-		}	break;
-		case 5:  // Vegetation
-		{
-			int sid = vSubTabsEdit[id]->getIndexSelected();
-			switch (sid)
-			{
-			case 1:  tab = tabsGrLayers;  tabNum(tabGrLayers);  break;
-			case 2:  tab = tabsPgLayers;  tabNum(tabPgLayers);  break;
-			}
-		}	break;
+		case 3:  tab = tabsTerLayers;  tabNum(tabTerLayer);  break;  // Layers
+		case 4:  tab = tabsGrLayers;  tabNum(tabGrLayers);  break;  // Grasses
+		case 5:  tab = tabsPgLayers;  tabNum(tabPgLayers);  break;  // Vegetation
 	}
 }
 

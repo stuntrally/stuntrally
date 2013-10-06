@@ -181,8 +181,8 @@ BaseApp::BaseApp()
 
 	,mbWireFrame(0), mx(0),my(0),mz(0),  mGui(0), mPlatform(0)
 
-	,mWndMain(0),mWndEdit(0),mWndHelp(0),mWndOpts(0)
-	,mWndTabsEdit(0),mWndTabsHelp(0),mWndTabsOpts(0)
+	,mWndMain(0), mWndTrack(0),mWndEdit(0),mWndHelp(0),mWndOpts(0)
+	,mWndTabsTrack(0),mWndTabsEdit(0),mWndTabsHelp(0),mWndTabsOpts(0)
 	,mWndBrush(0), mWndCam(0), mWndStart(0)
 	,mWndRoadCur(0), mWndRoadStats(0)
 	,mWndFluids(0), mWndObjects(0), mWndRivers(0)

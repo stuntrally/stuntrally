@@ -45,6 +45,7 @@ void CGui::InitGui()
 
 	//  wnds
 	app->mWndMain = fWnd("MainMenuWnd");
+	app->mWndTrack = fWnd("TrackWnd");
 	app->mWndEdit = fWnd("EditorWnd");
 	app->mWndOpts = fWnd("OptionsWnd");
 	app->mWndHelp = fWnd("HelpWnd");
@@ -68,11 +69,18 @@ void CGui::InitGui()
 	
 	//  Tabs
 	TabPtr tab,sub;
+	fTabW("TabWndTrack"); app->mWndTabsTrack = tab;
 	fTabW("TabWndEdit");  app->mWndTabsEdit = tab;
 	fTabW("TabWndOpts");  app->mWndTabsOpts = tab;
 	fTabW("TabWndHelp");  app->mWndTabsHelp = tab;
 
 	//  get sub tabs
+	vSubTabsTrack.clear();
+	for (size_t i=0; i < app->mWndTabsTrack->getItemCount(); ++i)
+	{
+		sub = (TabPtr)app->mWndTabsTrack->getItemAt(i)->findWidget("SubTab");
+		vSubTabsTrack.push_back(sub);
+	}
 	vSubTabsEdit.clear();
 	for (size_t i=0; i < app->mWndTabsEdit->getItemCount(); ++i)
 	{

@@ -169,8 +169,8 @@ void CGuiCom::listTrackChng(MultiList2* li, size_t pos)
 #ifdef SR_EDITOR
 void CGuiCom::trkListNext(int rel)
 {
-	bool b = app->bGuiFocus && (app->mWndTabsEdit->getIndexSelected() == 1)
-		&& !pSet->isMain && pSet->inMenu == WND_Edit;
+	bool b = app->bGuiFocus && (app->mWndTabsTrack->getIndexSelected() == 1)
+		&& !pSet->isMain && pSet->inMenu == WND_Track;
 	if (!b)  return;
 	
 	size_t cnt = trkList->getItemCount();

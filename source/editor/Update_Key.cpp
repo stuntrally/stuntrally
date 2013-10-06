@@ -93,6 +93,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	if (bGuiFocus && !pSet->isMain)
 	switch (pSet->inMenu)
 	{
+		case WND_Track:   tab = mWndTabsTrack;  sub = gui->vSubTabsTrack[tab->getIndexSelected()];  break;
 		case WND_Edit:    tab = mWndTabsEdit;  sub = gui->vSubTabsEdit[tab->getIndexSelected()];  break;
 		case WND_Help:    tab = sub = gui->vSubTabsHelp[1];  iTab1 = 0;  break;
 		case WND_Options: tab = mWndTabsOpts;  sub = gui->vSubTabsOpts[tab->getIndexSelected()];  break;
@@ -185,7 +186,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
    			
 		case key(RETURN):  // load track
 			if (bGuiFocus)
-			if (mWndTabsEdit->getIndexSelected() == 1 && !pSet->isMain && pSet->inMenu == WND_Edit)
+			if (mWndTabsTrack->getIndexSelected() == 1 && !pSet->isMain && pSet->inMenu == WND_Track)
 				gui->btnNewGame(0);
    			break;
 
@@ -525,32 +526,33 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	if (alt)
 	switch (skey)
 	{
-		case key(Q):  gui->GuiShortcut(WND_Edit, 1);  return true;  // Q Track
-		case key(S):  gui->GuiShortcut(WND_Edit, 2);  return true;  // S Sun
+		case key(Q):  gui->GuiShortcut(WND_Track, 1);  return true;  // Q Track
+		case key(O):  gui->GuiShortcut(WND_Track, 2);  return true;  // O Tools
+		case key(J):  gui->GuiShortcut(WND_Track, 3);  return true;  // J Warnings
 
-		case key(H):  gui->GuiShortcut(WND_Edit, 3);  return true;  // H Heightmap
-		 case key(D): gui->GuiShortcut(WND_Edit, 3,0);  return true;  //  D -Brushes
+		case key(S):  gui->GuiShortcut(WND_Edit, 1);  return true;  // S Sun
+		case key(H):  gui->GuiShortcut(WND_Edit, 2);  return true;  // H Heightmap
+		 case key(D): gui->GuiShortcut(WND_Edit, 2,0);  return true;  //  D -Brushes
 
-		case key(T):  gui->GuiShortcut(WND_Edit, 4);  return true;  // T Layers (Terrain)
-		 case key(B): gui->GuiShortcut(WND_Edit, 4,0);  return true;  //  B -Blendmap
-		 case key(P): gui->GuiShortcut(WND_Edit, 4,1);  return true;  //  P -Particles
-		 case key(U): gui->GuiShortcut(WND_Edit, 4,2);  return true;  //  U -Surfaces
+		case key(T):  gui->GuiShortcut(WND_Edit, 3);  return true;  // T Layers (Terrain)
+		 case key(B): gui->GuiShortcut(WND_Edit, 3,0);  return true;  //  B -Blendmap
+		 case key(P): gui->GuiShortcut(WND_Edit, 3,1);  return true;  //  P -Particles
+		 case key(U): gui->GuiShortcut(WND_Edit, 3,2);  return true;  //  U -Surfaces
 
+		case key(G):  gui->GuiShortcut(WND_Edit, 4);  return true;  // G Grasses
 		case key(V):  gui->GuiShortcut(WND_Edit, 5);  return true;  // V Vegetation
-		 case key(M): gui->GuiShortcut(WND_Edit, 5,2);  return true;  //  M -Models
+		 case key(M): gui->GuiShortcut(WND_Edit, 5,1);  return true;  //  M -Models
 
 		case key(R):  gui->GuiShortcut(WND_Edit, 6);  return true;  // R Road
 		case key(X):  gui->GuiShortcut(WND_Edit, 7);  return true;  // X Objects
-		case key(O):  gui->GuiShortcut(WND_Edit, 8);  return true;  // O Tools
 
-		case key(C):  gui->GuiShortcut(WND_Options, 1,0);	return true;  // C Screen
-		case key(G):  gui->GuiShortcut(WND_Options, 1,1);	return true;  // G -Graphics
+		case key(C):  gui->GuiShortcut(WND_Options, 1);		return true;  // C Screen
+		//case key(G):  gui->GuiShortcut(WND_Options, 1,1);	return true;  // G -Graphics
 		//case key(N):  gui->GuiShortcut(WND_Options, 1,1);	return true;  // N --Vegetation !
 		case key(K):  gui->GuiShortcut(WND_Options, 1,2);  return true;  // K -Tweak
 		case key(E):  gui->GuiShortcut(WND_Options, 2);    return true;  // E View /Settings
 		
 		case key(I):  gui->GuiShortcut(WND_Help, 1);  return true;  // I Input/help
-		case key(J):  gui->GuiShortcut(WND_Edit, 9);  return true;  // J Warnings
 	}
 	else
 	switch (skey)
