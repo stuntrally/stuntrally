@@ -119,8 +119,7 @@ void CGuiCom::doSizeGUI(EnumeratorWidgetPtr widgets)
 				relSize = IntSize(app->mWindow->getWidth(), app->mWindow->getHeight());
 			else
 			{	WP window = fWP(relativeTo);
-				relSize = window->getSize();
-			}
+				relSize = window->getSize();  }
 			
 			//  retrieve original size & pos
 			IntPoint origPos;  IntSize origSize;
@@ -129,9 +128,8 @@ void CGuiCom::doSizeGUI(EnumeratorWidgetPtr widgets)
 			origSize.width  = s2i(wp->getUserString("origSizeX"));
 			origSize.height = s2i(wp->getUserString("origSizeY"));
 			
-			//  calc new size & pos
+			//  calc & apply new size & pos
 			float sx = relSize.width / 800.f, sy = relSize.height / 600.f;
-			//  apply
 			wp->setPosition(IntPoint( int(origPos.left * sx), int(origPos.top * sy) ));
 			wp->setSize(IntSize(    int(origSize.width * sx), int(origSize.height * sy) ));
 		}

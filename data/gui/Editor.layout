@@ -2107,7 +2107,7 @@
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 746 468">
-						<Property key="Caption" value="#C0C040#{Properties}"/>
+						<Property key="Caption" value="#B0B060#{Properties}"/>
 						<Widget type="ImageBox" skin="ImageBox" position="620 2 96 96">
 							<Property key="ImageCoord" value="256 512 128 128"/>
 							<Property key="Alpha" value="1.0"/>
@@ -2443,7 +2443,7 @@
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 746 468">
-						<Property key="Caption" value="#B0C000#{Properties}"/>
+						<Property key="Caption" value="#88B8B8#{Properties}"/>
 						<Widget type="ImageBox" skin="ImageBox" position="608 2 112 112">
 							<Property key="ImageCoord" value="384 256 128 128"/>
 							<Property key="Alpha" value="1.0"/>
