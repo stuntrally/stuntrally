@@ -306,16 +306,16 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	
 	//  road stats
 	//---------------------------------------------------------------------------
-	if (stTrk[ch][1])  stTrk[ch][1]->setCaption(fToStr(sc->td.fTerWorldSize*0.001f*m ,3,5)+km);
+	stTrk[ch][1]->setCaption(fToStr(sc->td.fTerWorldSize*0.001f*m ,3,5)+km);
 	if (!rd)  return;
 	float len = rd->st.Length;
-	if (stTrk[ch][0])  stTrk[ch][0]->setCaption(fToStr(len*0.001f*m ,3,5)+km);
+	stTrk[ch][0]->setCaption(fToStr(len*0.001f*m ,3,5)+km);
 
-	if (stTrk[ch][2])  stTrk[ch][2]->setCaption(fToStr(rd->st.WidthAvg ,1,3)+" m");
-	if (stTrk[ch][3])  stTrk[ch][3]->setCaption(fToStr(rd->st.HeightDiff ,0,2)+" m");
+	stTrk[ch][2]->setCaption(fToStr(rd->st.WidthAvg ,1,3)+" m");
+	stTrk[ch][3]->setCaption(fToStr(rd->st.HeightDiff ,0,2)+" m");
 
-	if (stTrk[ch][4])  stTrk[ch][4]->setCaption(fToStr(rd->st.OnTer ,0,2)+"%");
-	if (stTrk[ch][5])  stTrk[ch][5]->setCaption(fToStr(rd->st.Pipes ,0,2)+"%");
+	stTrk[ch][4]->setCaption(fToStr(rd->st.OnTer ,0,2)+"%");
+	stTrk[ch][5]->setCaption(fToStr(rd->st.Pipes ,0,2)+"%");
 					
 	int id = app->data->tracks->trkmap[sTrack];
 	for (int i=0; i < InfTrk; ++i)
@@ -323,16 +323,15 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	if (id > 0)
 	{	const TrackInfo& ti = app->data->tracks->trks[id-1];
 		#define str0(v)  ((v)==0 ? "" : toStr(v))
-		if (infTrk[ch][0])  infTrk[ch][0]->setCaption(str0(ti.fluids));
-		if (infTrk[ch][1])  infTrk[ch][1]->setCaption(str0(ti.bumps));		if (infTrk[ch][2])  infTrk[ch][2]->setCaption(str0(ti.jumps));
-		if (infTrk[ch][3])  infTrk[ch][3]->setCaption(str0(ti.loops));		if (infTrk[ch][4])  infTrk[ch][4]->setCaption(str0(ti.pipes));
-		if (infTrk[ch][5])  infTrk[ch][5]->setCaption(str0(ti.banked));		if (infTrk[ch][6])  infTrk[ch][6]->setCaption(str0(ti.frenzy));
-
-		if (infTrk[ch][7])  infTrk[ch][7]->setCaption(clrsLong[ti.longn] + str0(ti.longn));
-		if (infTrk[ch][8])  infTrk[ch][8]->setCaption(ti.diff==0   ? "" : (clrsDiff[ti.diff] + toStr(ti.diff)));
-		if (infTrk[ch][9])  infTrk[ch][9]->setCaption(ti.rating==0 ? "" : (clrsRating[ti.rating] + toStr(ti.rating)));
-		if (infTrk[ch][10]) infTrk[ch][10]->setCaption(str0(ti.objects));
+		infTrk[ch][0]->setCaption(str0(ti.fluids));
+		infTrk[ch][1]->setCaption(str0(ti.bumps));		infTrk[ch][2]->setCaption(str0(ti.jumps));
+		infTrk[ch][3]->setCaption(str0(ti.loops));		infTrk[ch][4]->setCaption(str0(ti.pipes));
+		infTrk[ch][5]->setCaption(str0(ti.banked));		infTrk[ch][6]->setCaption(str0(ti.frenzy));
+		infTrk[ch][7]->setCaption(clrsLong[ti.longn] + str0(ti.longn));
 		#ifndef SR_EDITOR
+		infTrk[ch][8]->setCaption(ti.diff==0   ? "" : (clrsDiff[ti.diff] + toStr(ti.diff)));
+		infTrk[ch][9]->setCaption(ti.rating==0 ? "" : (clrsRating[ti.rating] + toStr(ti.rating)));
+		infTrk[ch][10]->setCaption(str0(ti.objects));
 		if (app->gui->txTrackAuthor)
 			app->gui->txTrackAuthor->setCaption(ti.author=="CH" ? "CryHam" : ti.author);
 		#endif
@@ -349,22 +348,22 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	std::string speedTrk = fToStr(len / timeTrk * m, 0,3) + unit;
 	float timeT = (/*place*/1 * app->data->cars->magic * timeTrk + timeTrk) / carMul;
 	bool no = timeCur < 0.1f || !rd;
-	if (stTrk[ch][6])  stTrk[ch][6]->setCaption(CHud::StrTime(no ? 0.f : timeT));
-	if (stTrk[ch][7])  stTrk[ch][7]->setCaption(no ? "--" : speedTrk);
+	stTrk[ch][6]->setCaption(CHud::StrTime(no ? 0.f : timeT));
+	stTrk[ch][7]->setCaption(no ? "--" : speedTrk);
 
 	if (no)
-	{	if (stTrk[ch][8])  stTrk[ch][8]->setCaption(CHud::StrTime(0.f));
-		if (stTrk[ch][9])  stTrk[ch][9]->setCaption("--");
-		if (stTrk[ch][10])  stTrk[ch][10]->setCaption("--");
+	{	stTrk[ch][8]->setCaption(CHud::StrTime(0.f));
+		stTrk[ch][9]->setCaption("--");
+		stTrk[ch][10]->setCaption("--");
 	}else
 	{	//  car record
 		std::string speed = fToStr(len / timeCur * m, 0,3) + unit;
-		if (stTrk[ch][8])  stTrk[ch][8]->setCaption(CHud::StrTime(timeCur));
-		if (stTrk[ch][9])  stTrk[ch][9]->setCaption(speed);
+		stTrk[ch][8]->setCaption(CHud::StrTime(timeCur));
+		stTrk[ch][9]->setCaption(speed);
 		//  points
 		float points = 0.f;
 		app->GetRacePos(timeCur, timeTrk, carMul, false, &points);
-		if (stTrk[ch][10])  stTrk[ch][10]->setCaption(fToStr(points ,1,3));
+		stTrk[ch][10]->setCaption(fToStr(points ,1,3));
 	}
 #else
 	if (app->gui->trkName)  //

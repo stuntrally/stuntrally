@@ -281,7 +281,7 @@ void CGui::GuiShortcut(WND_Types wnd, int tab, int subtab)
 	std::vector<TabControl*>* subt = 0;
 	
 	switch (wnd)
-	{	case WND_Track:		mWndTabs = app->mWndTabsTrack;  subt = &vSubTabsTrack;  break;
+	{	case WND_Track:		mWndTabs = app->mWndTabsTrack; subt = &vSubTabsTrack; break;
 		case WND_Edit:		mWndTabs = app->mWndTabsEdit;  subt = &vSubTabsEdit;  break;
 		case WND_Help:		mWndTabs = app->mWndTabsHelp;  subt = &vSubTabsHelp;  break;
 		case WND_Options:	mWndTabs = app->mWndTabsOpts;  subt = &vSubTabsOpts;  break;
