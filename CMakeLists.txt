@@ -30,11 +30,6 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 endif()
 
-# Platform specific libs
-if(UNIX)
-	list(APPEND LIBS "X11" "Xcursor")
-endif(UNIX)
-
 
 # Set default compile flags for VS
 if(MSVC)
