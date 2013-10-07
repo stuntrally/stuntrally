@@ -348,9 +348,11 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	std::string speedTrk = fToStr(len / timeTrk * m, 0,3) + unit;
 	float timeT = (/*place*/1 * app->data->cars->magic * timeTrk + timeTrk) / carMul;
 	bool no = timeCur < 0.1f || !rd;
+	if (ch==1)  no = false;  // show track's not current
 	stTrk[ch][6]->setCaption(CHud::StrTime(no ? 0.f : timeT));
 	stTrk[ch][7]->setCaption(no ? "--" : speedTrk);
 
+	if (ch==0)
 	if (no)
 	{	stTrk[ch][8]->setCaption(CHud::StrTime(0.f));
 		stTrk[ch][9]->setCaption("--");

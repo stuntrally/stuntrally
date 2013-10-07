@@ -1262,10 +1262,10 @@
 					<Property key="Caption" value="#{TrackAvgSpeed}"/>
 					<Property key="TextColour" value="0.7 0.86 1.0"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="620 24 64 18" name="2iv8">
+				<Widget type="TextBox" skin="TextBox" position="620 24 64 18" name="2iv6">
 					<Property key="TextColour" value="0.7 1 0.7"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="620 44 64 18" name="2iv9">
+				<Widget type="TextBox" skin="TextBox" position="620 44 64 18" name="2iv7">
 					<Property key="TextColour" value="0.7 1 0.7"/>
 				</Widget>
 
