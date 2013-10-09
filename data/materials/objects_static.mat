@@ -93,3 +93,79 @@ material watchtower2
 	diffuse 0.8 0.8 0.8
 	specular 0.1 0.1 0.1 8
 }
+
+material gate_01
+{
+	parent base
+	diffuseMap gate_01.jpg
+	normalMap gate_01_norm.jpg
+	ambient 1 1 1
+	diffuse 0.8 0.8 0.8
+	specular 0.1 0.1 0.1 8
+	bump_scale 3.3
+}
+
+material gas_tank
+{
+	parent base
+	diffuseMap gas_tank.jpg
+	normalMap gas_tank_norm.jpg
+	ambient 0.90 0.90 0.95
+	diffuse 0.70 0.70 0.75
+	specular 0.2 0.2 0.22 16
+	terrain_light_map true
+	bump_scale 2.0
+}
+
+material well
+{
+	parent base
+	diffuseMap well.jpg
+	normalMap well_norm.jpg
+	ambient 0.90 0.90 0.95
+	diffuse 0.70 0.70 0.75
+	specular 0.1 0.1 0.1 32
+	terrain_light_map true
+	bump_scale 2.0
+}
+
+material house_1_4
+{
+	parent base
+	diffuseMap house_1_4.png
+	ambient 0.90 0.90 0.95
+	diffuse 0.70 0.70 0.75
+	specular 0.1 0.1 0.1 32
+	terrain_light_map true
+}
+
+material house_2_4
+{
+	parent base
+	diffuseMap house_2_4.png
+	ambient 0.90 0.90 0.95
+	diffuse 0.70 0.70 0.75
+	specular 0.1 0.1 0.1 32
+	terrain_light_map true
+}
+
+material house_3_4
+{
+	parent base
+	diffuseMap house_3_4.png
+	ambient 0.90 0.90 0.95
+	diffuse 0.70 0.70 0.75
+	specular 0.1 0.1 0.1 32
+	terrain_light_map true
+}
+
+material house_4_4
+{
+	parent base
+	diffuseMap house_4_4.png
+	ambient 0.90 0.90 0.95
+	diffuse 0.70 0.70 0.75
+	specular 0.1 0.1 0.1 32
+	terrain_light_map true
+}
+

@@ -110,3 +110,15 @@ material plastic_big_hvy
 	specular 1.00 1.00 1.00 16
 	bump_scale 0.6
 }
+
+material wooden_barrel
+{
+	parent base
+	diffuseMap wooden_barrel.jpg
+	normalMap wooden_barrel_norm.jpg
+	terrain_light_map true
+	ambient 0.9 1 1
+	diffuse 0.9 1 1
+	specular 0.35 0.35 0.35 32
+	bump_scale 4.0
+}
