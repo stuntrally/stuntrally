@@ -61,3 +61,10 @@ Watchtower-Wood
 Author: atze
 License: CC0
 http://opengameart.org/content/watchtower-wood
+
+---- wooden_barrel
+Barrel
+Author: ahedov
+License: CC-BY-SA
+http://www.blendswap.com/blends/view/69152
+
