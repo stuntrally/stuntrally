@@ -187,7 +187,13 @@ void CGuiCom::chkVidFullscr(Ck*)
 
 void CGuiCom::chkVidVSync(Ck*)
 {		
+#if OGRE_VERSION < (1 << 16 | 9 << 8 | 0)
+	// This method is redundant and was removed in 1.9
 	Ogre::Root::getSingleton().getRenderSystem()->setWaitForVerticalBlank(pSet->vsync);
+#endif
+	// Note that vsync toggle is broken on linux in 1.8 https://ogre3d.atlassian.net/browse/OGRE-278
+	// TODO: Once we have completely moved to 1.9+, remove the (**) from the VSync checkbox to indicate that it applies immediately
+	app->mWindow->setVSyncEnabled(pSet->vsync);
 }
 
 void CGuiCom::comboRenderSystem(ComboBoxPtr wp, size_t val)
