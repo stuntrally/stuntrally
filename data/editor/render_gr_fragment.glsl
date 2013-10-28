@@ -10,5 +10,5 @@ void main(void)
 {
 	float bridge = c.w;
 
-	gl_FragColor = vec4(bridge * vec4(1,1,1), bridge);
+	gl_FragColor = bridge * vec4(1,1,1,1);
 }
