@@ -68,3 +68,18 @@ Author: ahedov
 License: CC-BY-SA
 http://www.blendswap.com/blends/view/69152
 
+---- gas_tank
+model:
+Rusted Gas Tank
+License: CC0
+Author: MrBlenderModels
+http://www.blendswap.com/blends/view/41282
+
+texture:
+License: CC0
+Author: yughues
+http://opengameart.org/content/free-tiling-textures-42
+
+---- Obstacle1..4
+Author: rubberduck
+License: ..?
