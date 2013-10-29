@@ -306,7 +306,7 @@ void CHud::Create()
 		//  times text  -----------
 		h.bckTimes = h.parent->createWidget<ImageBox>("ImageBox",
 			0,y, 356,260, Align::Left, "TimP"+s);  h.bckTimes->setVisible(false);
-		h.bckTimes->setAlpha(0.1f);
+		h.bckTimes->setAlpha(0.f);
 		h.bckTimes->setImageTexture("back_times.png");
 
 		h.txTimTxt = h.bckTimes->createWidget<TextBox>("TextBox",
