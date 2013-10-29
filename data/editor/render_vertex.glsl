@@ -19,7 +19,7 @@ void main(void)
 {
 	uv = uv0;
 	wp = (wMat * vertex);
-	p = (wvpMat * vertex);
+	gl_Position = (wvpMat * vertex);
 	n = normal;
 	c = colour;
 }
