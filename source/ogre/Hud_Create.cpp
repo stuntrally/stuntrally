@@ -95,9 +95,10 @@ void CHud::Size(bool full)
 			h.icoRewind->setPosition(bx+50,by-5);
 			#endif
 
-			h.txDamage ->setPosition(bx-70,   by-70);
-			h.icoDamage->setPosition(bx-70+50,by-70-5);
-
+			if (h.txDamage)
+			{	h.txDamage ->setPosition(bx-70,   by-70);
+				h.icoDamage->setPosition(bx-70+50,by-70-5);
+			}
 			h.txBFuel ->setPosition(bx-63,   by-140);
 			h.icoBFuel->setPosition(bx-63+54,by-140-5+2);
 
@@ -589,7 +590,8 @@ void CHud::Show(bool hideAll)
 				h.txGear->setVisible(pSet->show_digits);
 				h.txVel->setVisible(pSet->show_digits);
 				h.txBFuel->setVisible(show && bfuel);  h.icoBFuel->setVisible(show && bfuel);
-				h.txDamage->setVisible(show && bdmg);  h.icoDamage->setVisible(show && bdmg);
+				if (h.txDamage)
+				{	h.txDamage->setVisible(show && bdmg);  h.icoDamage->setVisible(show && bdmg);	}
 				//txRewind;icoRewind;
 
 				h.ndGauges->setVisible(show);
