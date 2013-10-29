@@ -41,7 +41,7 @@ http://www.blendswap.com/blends/misc-objects/road-block-set/
 
 ----  wood_block.mesh
 Wood parts
-By B65ISP
+Author: B65ISP
 License: CC0
 http://www.blendswap.com/blends/architecture/wood-parts/
 
@@ -71,15 +71,17 @@ http://www.blendswap.com/blends/view/69152
 ---- gas_tank
 model:
 Rusted Gas Tank
-License: CC0
 Author: MrBlenderModels
+License: CC0
 http://www.blendswap.com/blends/view/41282
 
 texture:
-License: CC0
 Author: yughues
+License: CC0
 http://opengameart.org/content/free-tiling-textures-42
 
 ---- Obstacle1..4
+Pipe Obstacles
 Author: rubberduck
-License: ..?
+License: CC0
+
