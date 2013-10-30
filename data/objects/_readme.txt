@@ -68,7 +68,7 @@ Author: ahedov
 License: CC-BY-SA
 http://www.blendswap.com/blends/view/69152
 
----- gas_tank
+---- gas_tank.mesh
 model:
 Rusted Gas Tank
 Author: MrBlenderModels
@@ -80,7 +80,7 @@ Author: yughues
 License: CC0
 http://opengameart.org/content/free-tiling-textures-42
 
----- Obstacle1..4
+---- Obstacle1.mesh (1..4)
 Pipe Obstacles
 Author: rubberduck
 License: CC0
@@ -89,3 +89,14 @@ License: CC0
 ---- pallet
 License: CC0
 
+---- Crate_1.mesh and 2
+Game Crates
+Author: Quandtum
+License: CC0
+http://opengameart.org/content/game-crates
+
+---- woodBox1.mesh and 2
+Wood Boxes
+Author: groemk
+License: CC0
+http://opengameart.org/content/wood-boxes
