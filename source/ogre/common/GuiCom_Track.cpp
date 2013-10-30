@@ -316,7 +316,11 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 
 	stTrk[ch][4]->setCaption(fToStr(rd->st.OnTer ,0,2)+"%");
 	stTrk[ch][5]->setCaption(fToStr(rd->st.Pipes ,0,2)+"%");
-					
+	#ifndef SR_EDITOR
+	if (app->gui->txTrackAuthor)
+		app->gui->txTrackAuthor->setCaption("");  // user trks
+	#endif
+	
 	int id = app->data->tracks->trkmap[sTrack];
 	for (int i=0; i < InfTrk; ++i)
 		if (infTrk[ch][i])  infTrk[ch][i]->setCaption("");
