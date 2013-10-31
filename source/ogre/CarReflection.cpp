@@ -14,12 +14,11 @@
 using namespace Ogre;
 
 
-CarReflection::CarReflection(SETTINGS* set, App* app, SceneManager* sceneMgr, unsigned int index)
+CarReflection::CarReflection(SETTINGS* set, App* app, SceneManager* sceneMgr, unsigned int index, char suffix)
 	: iCam(0), iCounter(0)
 {
-	pSet = set;
-	pApp = app;
-	iIndex = index;
+	pSet = set;  pApp = app;
+	iIndex = index;  hSuffix = suffix;
 	pSceneMgr = sceneMgr;
 	iCounter = pSet->refl_skip;
 
@@ -32,15 +31,12 @@ CarReflection::~CarReflection()
 	for (int i=0; i < 6; ++i)
 	{	pCams[i] = 0;  pRTs[i] = 0;  }
 	
-	for (int face = 0; face < 6; face++)
+	for (size_t i=0; i < vCams.size(); ++i)
 	{
-		std::string camName = "Reflect_" + toStr(iIndex) + "_" + toStr(face);
-		if (pSceneMgr->hasCamera(camName))
-		{
-			Camera* cam = pSceneMgr->getCamera("Reflect_" + toStr(iIndex) + "_" + toStr(face));
-			pSceneMgr->destroyCamera(cam);
-		}
+		pSceneMgr->destroyCamera(vCams[i]);
+		//LogO("dest REFL_CAM: ");
 	}
+	vCams.clear();
 
 	// destroy cube tex - only if created by ourself
 	if ( !(pSet->refl_mode == 1 && iIndex != 0) )
@@ -58,7 +54,7 @@ void CarReflection::Create()
 		if (cubetexName == "ReflectionCube0")
 			cubetexName = "ReflectionCube";
 	}
-	else /* static */
+	else /* 0 static */
 		cubetexName = "ReflectionCube";
 	
 	TextureManager* tm = TextureManager::getSingletonPtr();
@@ -74,7 +70,10 @@ void CarReflection::Create()
 
 		for (int face = 0; face < 6; face++)
 		{
-			Camera* mCam = pSceneMgr->createCamera("Reflect_" + toStr(iIndex) + "_" + toStr(face));
+			String name = "Reflect_" + toStr(iIndex) + hSuffix + "_" + toStr(face);
+			//LogO("REFL_CAM: " + name);
+			Camera* mCam = pSceneMgr->createCamera(name);
+			vCams.push_back(mCam);
 			mCam->setAspectRatio(1.0f);  mCam->setFOVy(Degree(90));
 			mCam->setNearClipDistance(0.1);
 			mCam->setFarClipDistance(pSet->refl_dist * 1.1f);

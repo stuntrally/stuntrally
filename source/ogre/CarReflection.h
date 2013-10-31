@@ -10,6 +10,7 @@
 #include <OgreVector3.h>
 #include <OgreString.h>
 #include <OgreTexture.h>
+#include <vector>
 
 
 namespace Ogre {  class Camera;  class SceneManager;  }
@@ -21,7 +22,7 @@ class CarReflection
 {
 public:
 	// Constructor, assign members.
-	CarReflection(SETTINGS* set, App* app, Ogre::SceneManager* sceneMgr, unsigned int index);
+	CarReflection(SETTINGS* set, App* app, Ogre::SceneManager* sceneMgr, unsigned int index, char suffix);
 	
 	// Destructor, will delete the texture, and cameras / render targets.
 	~CarReflection();
@@ -44,6 +45,8 @@ public:
 		Mtr_CarTireFront, Mtr_CarTireRear,
 		NumMaterials  };
 	Ogre::String sMtr[NumMaterials];
+	
+	std::vector<Ogre::Camera*> vCams;
 
 private:
 	// SceneManager to use, needed to create refl. cameras.
@@ -73,6 +76,7 @@ private:
 	// index of the car this reflection belongs to.
 	// The cube map textures have an index too, so we need this to get the right texture / material.
 	unsigned int iIndex;
+	char hSuffix;  // also for name (is same index for 2nd and track ghost)
 	
 	SETTINGS* pSet;
 	App* pApp;
