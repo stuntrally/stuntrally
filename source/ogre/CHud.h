@@ -18,7 +18,7 @@
 #include "../shiny/Main/Factory.hpp"
 
 
-namespace Ogre {  class SceneNode;  class SceneManager;  class Viewport;  }
+namespace Ogre {  class SceneNode;  class SceneManager;  class Viewport;  class ManualObject;  }
 namespace MyGUI  {  class MultiList2;  class Slider;  }
 class GraphView;
 class App;
@@ -116,7 +116,7 @@ public:
 	//  init
 	void Create(), Destroy();
 	void CreateArrow();
-	void CreateVdrMinimap();  //vdr only
+	Ogre::ManualObject* CreateVdrMinimap();  //vdr only
 
 	//  show, size
 	void Size(bool full);
