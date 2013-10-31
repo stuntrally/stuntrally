@@ -93,8 +93,6 @@ App::~App()
 	gui->viewBox->destroy();
 	delete gui->viewBox;
 
-	//delete mFactory;  //!
-
 	BltWorldDestroy();
 	
 	delete track;  //!
@@ -109,6 +107,8 @@ App::~App()
 	}else
 		OGRE_DELETE mTerrainGroup;
 	OGRE_DELETE mTerrainGlobals;
+
+	delete mFactory;  //!
 
 	delete sc;
 	delete mWaterRTT;
