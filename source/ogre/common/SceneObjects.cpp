@@ -283,39 +283,57 @@ void App::PickObject()
 	const MyGUI::IntPoint& mp = MyGUI::InputManager::getInstance().getMousePosition();
 	Real mx = Real(mp.left)/mWindow->getWidth(), my = Real(mp.top)/mWindow->getHeight();
 	Ray ray = mCamera->getCameraToViewportRay(mx,my);  // 0..1
+	const Vector3& pos = mCamera->getDerivedPosition(), dir = ray.getDirection();
 
 	//  query scene (aabbs are enough)
 	RaySceneQuery* rq = mSceneMgr->createRayQuery(ray);
 	rq->setSortByDistance(true);
 	RaySceneQueryResult& res = rq->execute();
 
-	Real dist = 100000.f;
+	Real distC = 100000.f;
+	int io = -1;
 	for (RaySceneQueryResult::iterator it = res.begin(); it != res.end(); ++it)
 	{
 		const String& s = (*it).movable->getName();
-		//LogO("RAY "+s+" "+fToStr((*it).distance,2,4));
-
 		if (StringUtil::startsWith(s,"oE",false))
 		{
+			//LogO("RAY "+s+" "+fToStr((*it).distance,2,4)+"  n "+toStr(n)+"  nn "+toStr(nn));
 			int i = -1;
 			//  find obj with same ent name
 			for (int o=0; o < sc->objects.size(); ++o)
 				if (s == sc->objects[o].ent->getName())
 				{	i = o;  break;  }
-
-			//  pick if closer
-			if (i != -1 && (*it).distance < dist)
+			
+			//  pick
+			if (i != -1)
 			{
-				iObjCur = i;
-				dist = (*it).distance;
-			}
-		}
-	}
+				//AxisAlignedBox ab = sc->objects[i].ent->getBoundingBox();
+				//ab.getCenter();  ab.getSize();
+
+				//  closest to obj center
+				const Vector3 posSph = sc->objects[i].nd->getPosition();
+				const Vector3 ps = pos - posSph;
+				Vector3 crs = ps.crossProduct(dir);
+				Real dC = crs.length() / dir.length();
+
+				//if ((*it).distance < dist)  // closest aabb
+				if (dC < distC)  // closest center
+				{
+					io = i;
+					//dist = (*it).distance;
+					distC = dC;
+			}	}
+	}	}
+	
+	if (io != -1)  //  if none picked
+	if (iObjCur == -1)
+		iObjCur = io;
+	
 	//rq->clearResults();
 	mSceneMgr->destroyQuery(rq);
 }
 
-//  upd selected glow
+//  upd obj selected glow
 void App::UpdObjSel()
 {
 	int objs = sc->objects.size();

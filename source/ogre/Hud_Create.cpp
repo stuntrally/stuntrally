@@ -31,7 +31,6 @@ void CHud::Size(bool full)
 {
 	float wx = app->mWindow->getWidth(), wy = app->mWindow->getHeight();
 	asp = wx/wy;
-	bool vdrSpl = app->sc->vdr && pSet->game.local_players > 1;
 	int plr = (int)app->carModels.size() -(app->isGhost2nd?1:0);  // others
 
 	int cnt = pSet->game.local_players;
@@ -62,13 +61,13 @@ void CHud::Size(bool full)
 		//  minimap
 		Real sc = pSet->size_minimap * dim.avgsize;
 		const Real marg = 1.3f; //1.05f;  // from border
-		Real fMiniX = vdrSpl ? (1.f - 2.f*sc * marg) : (dim.left + sc * marg);  //(dim.right - sc * marg);
+		Real fMiniX = dim.left + sc * marg;  //(dim.right - sc * marg);
 		Real fMiniY =-dim.bottom + sc*asp * marg;  //-dim.top - sc*asp * marg;
 		Real miniTopY = fMiniY + sc*asp * 1.5f;  //par above
 
 		if (h.ndMap)
 		{
-			h.ndMap->setScale((vdrSpl ? 2 : 1)*sc, sc*asp,1);
+			h.ndMap->setScale(sc, sc*asp,1);
 			h.ndMap->setPosition(Vector3(fMiniX,fMiniY,0.f));
 		}
 	
@@ -95,9 +94,10 @@ void CHud::Size(bool full)
 			h.icoRewind->setPosition(bx+50,by-5);
 			#endif
 
-			h.txDamage ->setPosition(bx-70,   by-70);
-			h.icoDamage->setPosition(bx-70+50,by-70-5);
-
+			if (h.txDamage)
+			{	h.txDamage ->setPosition(bx-70,   by-70);
+				h.icoDamage->setPosition(bx-70+50,by-70-5);
+			}
 			h.txBFuel ->setPosition(bx-63,   by-140);
 			h.icoBFuel->setPosition(bx-63+54,by-140-5+2);
 
@@ -194,14 +194,9 @@ void CHud::Create()
 		float fMapSizeX = maxX - minX, fMapSizeY = maxY - minY;  // map size
 		float size = std::max(fMapSizeX, fMapSizeY*asp);
 		scX = 1.f / size;  scY = 1.f / size;
-
-		String sMat = "circle_minimap";
-		asp = 1.f;  //_temp
-
-		ManualObject* m = Create2D(sMat,scm,1, true,true, 1.f,Vector2(1,1), RV_Hud,RQG_Hud1);  h.moMap = m;
-		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		
 		//  change minimap image
+		String sMat = "circle_minimap";
 		MaterialPtr mm = MaterialManager::getSingleton().getByName(sMat);
 		Pass* pass = mm->getTechnique(0)->getPass(0);
 		TextureUnitState* tus = pass->getTextureUnitState(0);
@@ -212,10 +207,15 @@ void CHud::Create()
 		
 		float fHudSize = pSet->size_minimap * app->mSplitMgr->mDims[c].avgsize;
 		SceneNode* rt = scm->getRootSceneNode();
+		h.ndMap = rt->createChildSceneNode();
 		if (!app->sc->vdr)
-		{	h.ndMap = rt->createChildSceneNode(Vector3(0,0,0));
+		{	asp = 1.f;  //_temp
+			ManualObject* m = Create2D(sMat,scm,1, true,true, 1.f,Vector2(1,1), RV_Hud,RQG_Hud1);  h.moMap = m;
 			h.ndMap->attachObject(m);
-		}
+			//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
+		}else
+			h.ndMap->attachObject(CreateVdrMinimap());
+			
 		//  car pos tri - for all carModels (ghost and remote too)
 		for (int i=0; i < cnt; ++i)
 		{
@@ -305,7 +305,7 @@ void CHud::Create()
 		//  times text  -----------
 		h.bckTimes = h.parent->createWidget<ImageBox>("ImageBox",
 			0,y, 356,260, Align::Left, "TimP"+s);  h.bckTimes->setVisible(false);
-		h.bckTimes->setAlpha(0.1f);
+		h.bckTimes->setAlpha(0.f);
 		h.bckTimes->setImageTexture("back_times.png");
 
 		h.txTimTxt = h.bckTimes->createWidget<TextBox>("TextBox",
@@ -507,7 +507,7 @@ void CHud::Destroy()
 			if (mo) {  scm->destroyManualObject(mo);  mo=0;  } \
 			if (nd) {  scm->destroySceneNode(nd);  nd=0;  }  }
 
-		for (i=0; i < 6; ++i)  //TODO: crash on vdr trk ...
+		for (i=0; i < 6; ++i)
 			Dest2(h.vMoPos[i],h.vNdPos[i])
 		
 		Dest2(h.moMap,h.ndMap)
@@ -589,7 +589,8 @@ void CHud::Show(bool hideAll)
 				h.txGear->setVisible(pSet->show_digits);
 				h.txVel->setVisible(pSet->show_digits);
 				h.txBFuel->setVisible(show && bfuel);  h.icoBFuel->setVisible(show && bfuel);
-				h.txDamage->setVisible(show && bdmg);  h.icoDamage->setVisible(show && bdmg);
+				if (h.txDamage)
+				{	h.txDamage->setVisible(show && bdmg);  h.icoDamage->setVisible(show && bdmg);	}
 				//txRewind;icoRewind;
 
 				h.ndGauges->setVisible(show);
@@ -632,7 +633,7 @@ void CHud::CreateArrow()
 	ent->setCastShadows(false);
 	arrow.nodeRot = arrow.node->createChildSceneNode();
 	arrow.nodeRot->attachObject(ent);
-	arrow.nodeRot->setScale(pSet->size_arrow/2.f, pSet->size_arrow/2.f, pSet->size_arrow/2.f);
+	arrow.nodeRot->setScale(pSet->size_arrow/2.f * Vector3::UNIT_SCALE);
 	ent->setVisibilityFlags(RV_Hud);
 	arrow.nodeRot->setVisible(pSet->check_arrow);
 }

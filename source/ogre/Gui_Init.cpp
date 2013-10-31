@@ -122,7 +122,7 @@ void CGui::InitGui()
 	sv= &svSizeMinimap;	sv->Init("SizeMinimap",	&pSet->size_minimap,   0.05f, 0.3f, 1.f, 3,4);  sv->DefaultF(0.165f);  Sev(HudSize);
 	sv= &svZoomMinimap;	sv->Init("ZoomMinimap",	&pSet->zoom_minimap,   0.9f, 4.f,   1.f, 2,4);  sv->DefaultF(1.6f);    Sev(HudSize);
 	sv= &svSizeArrow;	sv->Init("SizeArrow",   &pSet->size_arrow,     0.1f, 0.5f,  1.f, 3,4);  sv->DefaultF(0.26f);  Sev(SizeArrow);
-	Slv(CountdownTime,  pSet->gui.pre_time / 0.5f /6.f);
+	Slv(CountdownTime,  pSet->gui.pre_time / 0.5f /6.f);  sl->mfDefault = 4.f /6.f;
 
 
 	//  graphs
@@ -478,10 +478,8 @@ void CGui::InitGui()
 	Btn("btnNetLeave", evBtnNetLeave);	btnNetLeave = btn;
 
 	//  panels to hide tabs
-	panNetServer = fWP("panelNetServer");
-	panNetGame = fWP("panelNetGame");
-	panNetServer->setVisible(false);
-	panNetGame->setVisible(true);
+	panNetServer = fWP("panelNetServer");  panNetServer->setVisible(false);
+	panNetGame = fWP("panelNetGame");      panNetGame->setVisible(true);
 
     //  chat
     edNetChat = fEd("edNetChat");  // chat area
@@ -622,7 +620,7 @@ void CGui::InitGui()
 	li->removeAllColumns();  c=0;
 	li->addColumn("#80A080N", colCh[c++]);
 	li->addColumn(TR("#40F040#{Name}"), colCh[c++]);		li->addColumn(TR("#F0F040#{Difficulty}"), colCh[c++]);
-	li->addColumn(TR("#80F0C0#{Stages}"), colCh[c++]);		li->addColumn(TR("#80E0FF#{Time} m:s"), colCh[c++]);
+	li->addColumn(TR("#80F0C0#{Stages}"), colCh[c++]);		li->addColumn(TR("#80E0FF#{Time} #{TimeMS}"), colCh[c++]);
 	li->addColumn(TR("#D0C0FF#{Progress}"), colCh[c++]);	li->addColumn(TR("#F0E0F0#{Score}"), colCh[c++]);
 	li->addColumn(" ", colCh[c++]);
 	liChamps = li;
@@ -651,7 +649,7 @@ void CGui::InitGui()
 	li->addColumn("#80A080N", colSt[c++]);
 	li->addColumn(TR("#50F050#{Track}"), colSt[c++]);		li->addColumn(TR("#80FF80#{Scenery}"), colSt[c++]);
 	li->addColumn(TR("#F0F040#{Difficulty}"), colSt[c++]);	li->addColumn(TR("#60E0A0#{Laps}"), colSt[c++]);
-	li->addColumn(TR("#80E0FF#{Time} m:s"), colSt[c++]);	li->addColumn(TR("#F0E0F0#{Score}"), colSt[c++]);
+	li->addColumn(TR("#80E0FF#{Time} #{TimeMS}"), colSt[c++]);	li->addColumn(TR("#F0E0F0#{Score}"), colSt[c++]);
 	li->addColumn(" ", colSt[c++]);
 	liStages = li;
 

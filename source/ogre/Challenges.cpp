@@ -569,7 +569,7 @@ void CGui::UpdChallDetail(int id)
 
 	//s1 += "\n";  s2 += "\n";
 	clr = gcom->clrsDiff[std::min(8,int(ch.time/3.f/60.f))];
-	s1 += TR("#80F0E0#{Time} [m:s.]\n"); s2 += "#C0FFE0"+clr+ CHud::StrTime2(ch.time)+"\n";
+	s1 += TR("#80F0E0#{Time} [#{TimeMS}.]\n"); s2 += "#C0FFE0"+clr+ CHud::StrTime2(ch.time)+"\n";
 
 	//  cars  --------
 	s1 += "\n";  s2 += "\n";

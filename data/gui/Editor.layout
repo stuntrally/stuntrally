@@ -1422,7 +1422,7 @@
 				</Widget>
 
 				<Widget type="TabControl" skin="TabControl" position="14 170 756 370" name="SubTab">
-					<Property key="Colour" value="0.7 0.9 0.7"/>
+					<Property key="Colour" value="0.7 0.9 0.8"/>
 					<Property key="SmoothShow" value="false"/>
 					<UserString key="tip" value="#{TipTerLayers}"/>
 					<Widget type="TabItem" skin="" position="2 24 750 342">
@@ -2454,7 +2454,7 @@
 							<Property key="TextColour" value="0.9 0.9 0.6"/>
 							<UserString key="tip" value="#{TipTreeDens}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="90 38 262 20" name="TreesDens">
+						<Widget type="Slider" skin="Slider" position="90 38 320 20" name="TreesDens">
 							<Property key="Colour" value="1 1 0.5"/>
 							<UserString key="tip" value="#{TipTreeDens}"/>
 						</Widget>
@@ -3627,7 +3627,7 @@
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#FFFF60#{InputHelp}"/>
 				<Widget type="TextBox" skin="TextBox" position="32 513 116 24">
-					<Property key="Caption" value="Language"/>
+					<Property key="Caption" value="#{Language}"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="236 510 140 24" name="Lang">
@@ -3930,15 +3930,15 @@
 							<Property key="TextColour" value="1.0 0.66 0.7"/>
 							<Property key="Caption" value="#{InputRoadAlignTerrain}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 320 332 20">
+						<Widget type="TextBox" skin="TextBox" position="32 330 332 20">
 							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<Property key="Caption" value="#{InputRoadMerge}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 342 332 20">
+						<Widget type="TextBox" skin="TextBox" position="32 352 332 20">
 							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<Property key="Caption" value="#{InputRoadStats}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 364 332 20">
+						<Widget type="TextBox" skin="TextBox" position="32 374 332 20">
 							<Property key="TextColour" value="0.4 0.5 0.6"/>
 							<Property key="Caption" value="#{InputRoadLooped}"/>
 						</Widget>

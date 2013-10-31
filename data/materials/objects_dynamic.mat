@@ -122,3 +122,147 @@ material wooden_barrel
 	specular 0.35 0.35 0.35 32
 	bump_scale 4.0
 }
+
+material atomic_barrel
+{
+   parent base
+   diffuseMap atomic_barrel.jpg
+   normalMap atomic_barrel_norm.jpg
+   specMap atomic_barrel_spec.png
+   terrain_light_map true
+   ambient 1.50 1.50 1.50
+   diffuse 1.00 1.00 1.00
+   specular 0.6 0.6 0.6 4
+   bump_scale 0.2
+}
+
+material pallet
+{
+   parent base
+   diffuseMap pallet.jpg
+   normalMap pallet_norm.jpg
+   specMap pallet_spec.jpg
+   terrain_light_map true
+   ambient 0.9 1 1
+   diffuse 0.9 1 1
+   specular 0.55 0.6 0.6 32
+   bump_scale 4.0
+}
+
+
+material Crate_1
+{
+   parent base
+   diffuseMap Crate_1.jpg
+   normalMap Crate_1_norm.jpg
+   terrain_light_map true
+   ambient 0.9 1 1
+   diffuse 0.9 1 1
+   specular 0.55 0.6 0.6 32
+   bump_scale 4.0
+}
+
+material Crate_2
+{
+   parent base
+   diffuseMap Crate_2.jpg
+   normalMap Crate_2_norm.jpg
+   terrain_light_map true
+   ambient 0.9 1 1
+   diffuse 0.9 1 1
+   specular 0.55 0.6 0.6 32
+   bump_scale 4.0
+}
+
+material woodBox1
+{
+   parent base
+   diffuseMap woodBox1.jpg
+   normalMap woodBox1_norm.jpg
+   specMap woodBox1_spec.jpg
+   terrain_light_map true
+   ambient 1.50 1.50 1.50
+   diffuse 1.00 1.00 1.00
+   specular 0.6 0.6 0.6 4
+   bump_scale 0.2
+}
+
+material woodBox2
+{
+   parent base
+   diffuseMap woodBox2.jpg
+   normalMap woodBox2_norm.jpg
+   specMap woodBox2_spec.jpg
+   terrain_light_map true
+   ambient 1.50 1.50 1.50
+   diffuse 1.00 1.00 1.00
+   specular 0.6 0.6 0.6 4
+   bump_scale 0.2
+}
+
+
+material metal_barrel_blue
+{
+	parent base
+	diffuseMap metal_barrel_blue.jpg
+	normalMap metal_barrel_norm.jpg
+	specMap metal_barrel_spec.jpg
+	terrain_light_map true
+	ambient 1.50 1.50 1.50
+	diffuse 1.00 1.00 1.00
+	specular 0.6 0.6 0.6 4
+	bump_scale 0.2
+}
+
+material metal_barrel_red
+{
+	parent base
+	diffuseMap metal_barrel_red.jpg
+	normalMap metal_barrel_norm.jpg
+	specMap metal_barrel_spec.jpg
+	terrain_light_map true
+	ambient 1.50 1.50 1.50
+	diffuse 1.00 1.00 1.00
+	specular 0.6 0.6 0.6 4
+	bump_scale 0.2
+}
+
+material metal_barrel_green
+{
+	parent base
+	diffuseMap metal_barrel_green.jpg
+	normalMap metal_barrel_norm.jpg
+	specMap metal_barrel_spec.jpg
+	terrain_light_map true
+	ambient 1.50 1.50 1.50
+	diffuse 1.00 1.00 1.00
+	specular 0.6 0.6 0.6 4
+	bump_scale 0.2
+}
+
+material metal_barrel_yellow
+{
+	parent base
+	diffuseMap metal_barrel_yellow.jpg
+	normalMap metal_barrel_norm.jpg
+	specMap metal_barrel_spec.jpg
+	terrain_light_map true
+	ambient 1.50 1.50 1.50
+	diffuse 1.00 1.00 1.00
+	specular 0.6 0.6 0.6 4
+	bump_scale 0.2
+}
+
+material metal_barrel_black
+{
+	parent base
+	diffuseMap metal_barrel_black.jpg
+	normalMap metal_barrel_norm.jpg
+	specMap metal_barrel_spec.jpg
+	terrain_light_map true
+	ambient 1.50 1.50 1.50
+	diffuse 1.00 1.00 1.00
+	specular 0.6 0.6 0.6 4
+	bump_scale 0.2
+}
+

@@ -9,6 +9,7 @@
 	<Tag name="LANG_FR">Français</Tag>
 	<Tag name="LANG_RU">Русский</Tag>
 	<Tag name="LANG_PT">Português</Tag>
+	<Tag name="Language">Language</Tag>
 
 	<!-- General -->
 	<Tag name="Yes">Yes</Tag>
@@ -107,6 +108,7 @@
 	<Tag name="Difficulty">Difficulty</Tag>
 	<Tag name="Distance">Distance</Tag>
 	<Tag name="Time">Time</Tag>
+	<Tag name="TimeMS">m:s</Tag>
 	<Tag name="Progress">Progress</Tag>
 	<Tag name="Score">Score</Tag>
 	<Tag name="TotalScore">Total score</Tag>

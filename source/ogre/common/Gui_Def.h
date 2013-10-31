@@ -62,14 +62,13 @@ public:
 
 #define fTab(s)  mGui->findWidget<TabControl>(s)
 #define fTbi(s)  mGui->findWidget<TabItem>(s)
+
 #define Tev(tb, evt)  tb->eventTabChangeSelect += newDelegate(this, &CGui::tab##evt)
+#define Lev(li, evt)  li->eventListChangePosition += newDelegate(this, &CGui::list##evt)
 
 #define fTabW(s)  tab = fTab(s); \
 	tab->setIndexSelected(1);  tab->setSmoothShow(false); \
 	tab->eventTabChangeSelect += newDelegate(gcom, &CGuiCom::tabMainMenu);
-
-//  list
-#define Lev(li, evt)  li->eventListChangePosition += newDelegate(this, &CGui::list##evt)
 
 
 ///  find control, assign event, set value (old)

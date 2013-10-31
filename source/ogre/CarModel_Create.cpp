@@ -673,7 +673,8 @@ void CarModel::setMtrNames()
 //  ----------------- Reflection ------------------------
 void CarModel::CreateReflection()
 {
-	pReflect = new CarReflection(pSet, pApp, mSceneMgr, iIndex);
+	char suffix = (eType == CT_TRACK ? 'Z' : (eType == CT_GHOST2 ? 'V' :' '));
+	pReflect = new CarReflection(pSet, pApp, mSceneMgr, iIndex, suffix);
 	for (int i=0; i < NumMaterials; i++)
 		pReflect->sMtr[i] = sMtr[i];
 
