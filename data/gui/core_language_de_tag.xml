@@ -917,6 +917,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
+	<Tag name="TimeMS">m:s</Tag>
+	<Tag name="Language">Language</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

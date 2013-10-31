@@ -296,7 +296,7 @@
 	<Tag name="EdInputBar">Панель ввода Ctrl-I</Tag>
 	<Tag name="TipFogClr2">Конец цвета тумана, когда отводишь взгляд от солнца.</Tag>
 	<Tag name="Readme">Прочти</Tag>
-	<Tag name="Substract">Substract</Tag>
+	<Tag name="Substract">Основа</Tag>
 	<Tag name="TipSunDirPitch">Направление солнца - угол наклона.</Tag>
 	<Tag name="Passed">Пройдено</Tag>
 	<Tag name="InputMapHandBrake">Ручник</Tag>
@@ -441,7 +441,7 @@
 	<Tag name="InputTogglePreview">F7 - войти/выйти смот. камера</Tag>
 	<Tag name="GameBy">Игра</Tag>
 	<Tag name="SunWeather">Солнце и погода</Tag>
-	<Tag name="GraphicsPreset">Graphics preset</Tag>
+	<Tag name="GraphicsPreset">Задан. графика</Tag>
 	<Tag name="RollingDrag">Вращ. движ.</Tag>
 	<Tag name="RplDelete">Удалить</Tag>
 	<Tag name="TipAutoRear">Не отмечайте для ручного переключения задней передачи.</Tag>
@@ -575,7 +575,7 @@
 	<Tag name="MessageBox_Ignore">игнорировать</Tag>
 	<Tag name="GraphicsAll_Impossible">Невозможно</Tag>
 	<Tag name="ObjStatic">Статич.</Tag>
-	<Tag name="Layout">Layout</Tag>
+	<Tag name="Layout">План</Tag>
 	<Tag name="TipTexNormAuto">Когда отмечено, нормальная текстура автоматически устанавливается из текстур распростраения (+ _nh в название файла).</Tag>
 	<Tag name="TrackBestTime">Луч. время</Tag>
 	<Tag name="InputRoadMMB">MMB (или Num /,*)</Tag>
@@ -917,6 +917,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред,след Опции вкладка (shift - подменю)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
+	<Tag name="TimeMS">m:s</Tag>
+	<Tag name="Language">Language</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
