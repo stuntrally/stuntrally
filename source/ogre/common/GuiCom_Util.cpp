@@ -208,10 +208,12 @@ void CGuiCom::notifyToolTip(Widget *sender, const ToolTipInfo &info)
 
 	#ifndef SR_EDITOR
 	if (!app->isFocGui)
-	{	mToolTip->setVisible(false);
-		return;  }
+	#else
+	if (!app->bGuiFocus)
 	#endif
-
+	{	mToolTip->setVisible(false);
+		return;
+	}
 	if (info.type == ToolTipInfo::Show)
 	{	// TODO: Tooltip isn't resizing properly ..
 		mToolTip->setSize(320, 96);  // start size for wrap

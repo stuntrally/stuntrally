@@ -1676,7 +1676,7 @@
 					<Property key="Colour" value="0.6 0.76 0.9"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 513 180 24">
-					<Property key="Caption" value="Language"/>
+					<Property key="Caption" value="#{Language}"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="236 510 140 24" name="Lang">
