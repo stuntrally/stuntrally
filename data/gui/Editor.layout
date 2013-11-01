@@ -3627,7 +3627,7 @@
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#FFFF60#{InputHelp}"/>
 				<Widget type="TextBox" skin="TextBox" position="32 513 116 24">
-					<Property key="Caption" value="#{Language}"/>
+					<Property key="Caption" value="#{Language}**"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="236 510 140 24" name="Lang">

@@ -281,7 +281,9 @@ void CGuiCom::comboLanguage(MyGUI::ComboBox* wp, size_t val)
 	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
 
 	//  reinit gui
+	#ifndef SR_EDITOR  //todo: fix in ed
 	bGuiReinit = true;
+	#endif
 }
 
 
