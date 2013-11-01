@@ -16,6 +16,9 @@
 #include <OgreCamera.h>
 using namespace Ogre;
 
+/// _Tool_ go back time rewind (1 for making best ghosts), save ghost always
+const bool backTime = 0;  //0 in release
+
 
 //  newPoses - Get new car pos from game
 //  caution: called from GAME, 2nd thread, no Ogre stuff here
@@ -197,11 +200,10 @@ void App::newPoses(float time)  // time only for camera update
 			gtime = std::max(0.0, gtime - time * 5.f);  //par speed
 			double& ghtim = pGame->timer.GetRewindTimeGh(c);
 			ghtim = std::max(0.0, ghtim - time * 5.f);  //rewind ghost time too
-			#if 0  /// _Tool_ go back time (for making best ghosts)
-			pGame->timer.Back(c, - time * 5.f);
-			ghost.DeleteFrames(0, ghtim);
-			#endif
-
+			if (backTime)
+			{	pGame->timer.Back(c, - time * 5.f);
+				ghost.DeleteFrames(0, ghtim);
+			}
 			RewindFrame rf;
 			bool ok = rewind.GetFrame(gtime, &rf, c);
 
@@ -384,7 +386,7 @@ void App::newPoses(float time)  // time only for camera update
 							mClient->lap(pGame->timer.GetCurrentLap(c), pGame->timer.GetLastLap(c));
 
 						///  new best lap, save ghost
-						if (!pSet->rpl_bestonly || best)
+						if (!pSet->rpl_bestonly || best || backTime)
 						if (c==0 && pSet->rpl_rec)  // for many, only 1st car
 						{
 							ghost.SaveFile(gui->GetGhostFile());  //,boost_type?
