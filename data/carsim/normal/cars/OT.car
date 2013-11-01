@@ -14,7 +14,9 @@ yaw2  = 2.0
 
 [ model_ofs ]
 rot_fix = on
-boost-y = -0.6
+boost-y = -2.2
+boost-z = 1.05
+boost-x = 0.4
 exhaust-x = 2.2
 exhaust-y = 0.45
 exhaust-z = 0.56
