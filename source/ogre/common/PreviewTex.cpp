@@ -1,18 +1,18 @@
 #include "pch.h"
 #include "PreviewTex.h"
-// #include <OgreResourceGroupManager.h>
-// #include <OgreTextureManager.h>
-// #include <OgreImage.h>
-// #include <OgreDataStream.h>
-// #include <fstream>
+#include <fstream>
+#include <OgreResourceGroupManager.h>
+#include <OgreTextureManager.h>
+#include <OgreImage.h>
+#include <OgreDataStream.h>
 using namespace Ogre;
 using Ogre::uint8;
 
 
 PreviewTex::PreviewTex()
 	:xSize(0), ySize(0)
-{
-}
+{	}
+
 
 bool PreviewTex::Create(int x, int y, String texName)
 {
@@ -26,6 +26,7 @@ bool PreviewTex::Create(int x, int y, String texName)
 	//Clear();
 	return !prvTex.isNull();
 }
+
 
 bool PreviewTex::Load(String path, bool force)
 {
@@ -55,7 +56,9 @@ bool PreviewTex::Load(String path, bool force)
 			loaded = true;
 		}
 		ifs.close();
-	}
+	}else
+		Clear();
+
 	return loaded;
 }
 
@@ -63,23 +66,20 @@ bool PreviewTex::Load(String path, bool force)
 void PreviewTex::Clear()
 {
 	//  fill texture
-	HardwarePixelBufferSharedPtr pixelBuffer = prvTex->getBuffer();
-	pixelBuffer->lock(HardwareBuffer::HBL_DISCARD);
-	const PixelBox& pixelBox = pixelBuffer->getCurrentLock();
-	 
-	uint8* pDest = static_cast<Ogre::uint8*>(pixelBox.data);
+	HardwarePixelBufferSharedPtr pb = prvTex->getBuffer();
+	pb->lock(HardwareBuffer::HBL_DISCARD);
+
+	const PixelBox& pixelBox = pb->getCurrentLock();
+	uint8* pDest = static_cast<uint8*>(pixelBox.data);
 	 
 	size_t j,i;
-	for (j = 0; j < 1024; ++j)
+	for (j = 0; j < ySize; ++j)
 	{
-		for (i = 0; i < 1024; ++i)
-		{
-			*pDest++ = 255; // B
-			*pDest++ = rand()%255; // G
-			*pDest++ =   0; // R
-			*pDest++ = 127; // A
-		}
+		for (i = 0; i < xSize; ++i)   // B,G,R,A
+		{	*pDest++ = 100;  *pDest++ = 90;  *pDest++ = 80;  *pDest++ = 120;  }
+		//{	*pDest++ = 0;  *pDest++ = 0;  *pDest++ = 0;  *pDest++ = 0;  }
+
 		pDest += pixelBox.getRowSkip() * PixelUtil::getNumElemBytes(pixelBox.format);
 	}
-	pixelBuffer->unlock();
+	pb->unlock();
 }
