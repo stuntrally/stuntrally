@@ -2444,7 +2444,7 @@
 						<Widget type="Slider" skin="Slider" position="344 136 216 16" name="TypeGaug">
 							<Property key="Colour" value="0.9 0.7 0.7"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="232 176 64 24">
+						<!--<Widget type="TextBox" skin="TextBox" position="232 176 64 24">
 							<Property key="Caption" value="#{Layout}"/>
 							<Property key="TextColour" value="0.8 0.35 0.5"/>
 						</Widget>
@@ -2453,7 +2453,7 @@
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="344 176 216 16" name="LayoutGaug">
 							<Property key="Colour" value="0.9 0.7 0.8"/>
-						</Widget>
+						</Widget>-->
 
 						<Widget type="Button" skin="CheckBox" position="32 256 184 24" name="Times">
 							<Property key="Caption" value="#{TimesBar} F7"/>
