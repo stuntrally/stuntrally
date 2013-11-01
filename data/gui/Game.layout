@@ -705,6 +705,12 @@
 				</Widget>
 				<Widget type="Slider" skin="Slider" position="32 450 200 16" name="SSSVelFactor">
 				</Widget>
+				<Widget type="Button" skin="Button" position="64 490 120 24" name="SSSReset">
+					<Property key="Caption" value="#{Reset}"/>
+					<Property key="Colour" value="0.6 0.8 1.0"/>
+					<Property key="TextColour" value="0.5 0.75 1"/>
+				</Widget>
+
 				<Widget type="TextBox" skin="TextBox" position="332 340 312 24">
 					<Property key="Caption" value="#{SteerRange}"/>
 					<Property key="TextColour" value="0.85 1.0 0.92"/>
@@ -732,6 +738,11 @@
 				</Widget>
 				<Widget type="Slider" skin="Slider" position="332 450 300 16" name="SteerRangeSurf">
 					<UserString key="tip" value="#{TipSteerSurf}"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="364 490 120 24" name="SteerReset">
+					<Property key="Caption" value="#{Reset}"/>
+					<Property key="Colour" value="0.6 0.9 1.0"/>
+					<Property key="TextColour" value="0.5 0.8 1"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">

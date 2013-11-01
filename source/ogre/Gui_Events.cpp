@@ -30,6 +30,20 @@ void CGui::chkGear(Ck*)
 	if (pGame)  pGame->ProcessNewSettings();
 }
 
+//  reset to same as in default.cfg
+void CGui::btnSSSReset(WP)
+{
+	pSet->sss_effect[0] = 0.43f;  pSet->sss_velfactor[0] = 1.22f;
+	pSet->sss_effect[1] = 0.43f;  pSet->sss_velfactor[1] = 1.22f;
+	SldUpd_TireSet();
+}
+void CGui::btnSteerReset(WP)
+{
+	pSet->steer_range[0] = 1.00f;  pSet->steer_sim[0] = 0.51f;
+	pSet->steer_range[1] = 0.70f;  pSet->steer_sim[1] = 0.81f;
+	SldUpd_TireSet();
+}
+
 //  gravel/asphalt
 void CGui::tabTireSet(Tab, size_t id)
 {

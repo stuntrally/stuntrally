@@ -245,6 +245,7 @@ void CGui::InitGui()
 	sv= &svSSSVelFactor;	sv->Init("SSSVelFactor",	&f, 0.f, 2.f);
 	sv= &svSteerRangeSurf;	sv->Init("SteerRangeSurf",	&f, 0.3f, 1.3f);
 	sv= &svSteerRangeSim;	sv->Init("SteerRangeSim",	&f, 0.3f, 1.3f);
+	Btn("SSSReset", btnSSSReset);  Btn("SteerReset", btnSteerReset);
 	SldUpd_TireSet();
 
 

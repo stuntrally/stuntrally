@@ -243,6 +243,7 @@ public:
 
 	SV svSSSEffect, svSSSVelFactor;
 	SV svSteerRangeSurf, svSteerRangeSim;
+	void btnSSSReset(WP), btnSteerReset(WP);
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP);
 	
