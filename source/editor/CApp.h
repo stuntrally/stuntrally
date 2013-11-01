@@ -14,6 +14,7 @@
 #include <OgreTexture.h>
 
 #include "../ogre/common/data/SceneXml.h"  //Object-
+#include "../ogre/common/PreviewTex.h"
 
 #define BrushMaxSize  512
 
@@ -51,6 +52,8 @@ public:
 	///  Gui
 	CGui* gui;
 	CGuiCom* gcom;
+
+	PreviewTex prvView,prvRoad,prvTer;  // track tab
 
 
 	// TODO:  CScene* scn;  //...
@@ -107,7 +110,7 @@ public:
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 
 
-	///  rnd to tex  minimap  * * * * * * * * *
+	///  rnd to tex  minimap  * * * * * * * * *	
 	Ogre::SceneNode *ndPos;
 	Ogre::ManualObject* mpos;
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::Real s, bool dyn=false);

@@ -9,6 +9,7 @@ CGui::CGui(App* app1)
 	: app(app1), bGI(0)
 	//  gui
 	,carList(0), btRplPl(0)
+	,btNewGameCar(0)
 	//  hud
 	,valCountdownTime(0)
 	,cmbGraphs(0), valGraphsType(0)

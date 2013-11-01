@@ -10,6 +10,7 @@
 #include "../shiny/Main/Factory.hpp"
 #include "../network/networkcallbacks.hpp"
 #include "../oics/ICSChannelListener.h"
+#include "common/PreviewTex.h"
 
 
 namespace Ogre {  class SceneNode;  class SceneManager;  class Light;
@@ -187,6 +188,9 @@ public:
 	//-----------------------------------------------------------------
 	CGui* gui;
 	CGuiCom* gcom;
+
+	PreviewTex prvView,prvRoad,prvTer;  // track tab
+	PreviewTex prvStCh;  // champ,chall stage view
 
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
 	int carIdWin, iRplCarOfs;

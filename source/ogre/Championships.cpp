@@ -392,25 +392,10 @@ void CGui::ChampFillStageInfo(bool finished)
 	edChampStage->setCaption(s);
 	btChampStage->setCaption(finished ? TR("#{Continue}") : TR("#{Start}"));
 	
-	//  preview image
-	if (!finished)  // only at champ start
+	//  preview image at start
+	if (!finished)
 	{
-		ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
-		Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
-
-		String path = gcom->PathListTrkPrv(0, trk.name), sGrp = "TrkPrvCh";
-		resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
-		resMgr.unloadResourceGroup(sGrp);
-		resMgr.initialiseResourceGroup(sGrp);
-
-		if (imgChampStage)
-		{	try
-			{	s = "view.jpg";
-				texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  // need to load it first
-				imgChampStage->setImageTexture(s);  // just for dim, doesnt set texture
-				imgChampStage->_setTextureName(path+s);
-			} catch(...) {  }
-		}
-		resMgr.removeResourceLocation(path, sGrp);
+		String path = gcom->PathListTrkPrv(0, trk.name);
+		app->prvStCh.Load(path+"view.jpg");
 	}
 }

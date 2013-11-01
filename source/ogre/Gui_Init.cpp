@@ -579,8 +579,7 @@ void CGui::InitGui()
 
     //  new game
     for (int i=1; i<=3; ++i)
-    {	Btn("NewGame"+toStr(i), btnNewGame);  }
-	
+    {	Btn("NewGame"+toStr(i), btnNewGame);  if (i==2)  btNewGameCar = btn;  }
 
 	//  championships
 	//------------------------------------------------------------------------
@@ -590,9 +589,9 @@ void CGui::InitGui()
     valTrkNet = fTxt("TrackText");
 
 	//  preview images
-	gcom->imgPrv[1] = fImg("TrackImg2");
-	gcom->imgTer[1] = fImg("TrkTerImg2");
-	gcom->imgMini[1] = fImg("TrackMap2");
+	gcom->imgPrv[1] = fImg("TrackImg2");   gcom->imgPrv[1]->setImageTexture("PrvView");
+	gcom->imgTer[1] = fImg("TrkTerImg2");  gcom->imgTer[1]->setImageTexture("PrvTer");
+	gcom->imgMini[1] = fImg("TrackMap2");  gcom->imgMini[1]->setImageTexture("PrvRoad");
 
 	//  track stats text
 	int i;
@@ -687,8 +686,12 @@ void CGui::InitGui()
 	Btn("btnStagePrev", btnStagePrev);
     valStageNum = fTxt("StageNum");
 
-	edChampStage = fEd("ChampStageText");  edChampEnd = fEd("ChampEndText");  imgChampStage = fImg("ChampStageImg");
-	edChallStage = fEd("ChallStageText");  edChallEnd = fEd("ChallEndText");  imgChallStage = fImg("ChallStageImg");
+	edChampStage = fEd("ChampStageText");  edChampEnd = fEd("ChampEndText");
+	edChallStage = fEd("ChallStageText");  edChallEnd = fEd("ChallEndText");
+	//  stage prv
+	imgChampStage = fImg("ChampStageImg");  imgChampStage->setImageTexture("PrvStCh");
+	imgChallStage = fImg("ChallStageImg");	imgChallStage->setImageTexture("PrvStCh");
+	
 	imgChampEndCup = fImg("ChampEndImgCup");
 	imgChallFail = fImg("ChallEndImgFail");  txChallEndF = fTxt("ChallEndFinished");
 	imgChallCup  = fImg("ChallEndImgCup");   txChallEndC = fTxt("ChallEndCongrats");

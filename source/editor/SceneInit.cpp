@@ -32,6 +32,12 @@ using namespace Ogre;
 //-------------------------------------------------------------------------------------
 void App::createScene()  // once, init
 {
+	//  prv tex
+	prvView.Create(1024,1024,"PrvView");
+	prvRoad.Create(1024,1024,"PrvRoad");
+	prvTer.Create(512,512,"PrvTer");
+
+
 	//  camera
 	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 	mCamera->setFarClipDistance(pSet->view_distance*1.1f);

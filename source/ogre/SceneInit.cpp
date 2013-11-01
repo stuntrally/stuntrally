@@ -31,6 +31,14 @@ using namespace Ogre;
 //-------------------------------------------------------------------------------------
 void App::createScene()
 {
+	//  prv tex
+	prvView.Create(1024,1024,"PrvView");
+	prvRoad.Create(1024,1024,"PrvRoad");
+	prvTer.Create(512,512,"PrvTer");
+	//  ch stage
+	prvStCh.Create(1024,1024,"PrvStCh");
+	
+
 	//  tex fil
 	MaterialManager::getSingleton().setDefaultTextureFiltering(TFO_ANISOTROPIC);
 	MaterialManager::getSingleton().setDefaultAnisotropy(pSet->anisotropy);

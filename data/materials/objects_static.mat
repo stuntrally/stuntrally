@@ -169,3 +169,33 @@ material house_4_4
 	terrain_light_map true
 }
 
+material rover
+{
+	parent base
+	diffuseMap rover.png
+	ambient 0.90 0.90 0.95
+	diffuse 0.70 0.70 0.75
+	specular 0.1 0.1 0.1 32
+	terrain_light_map true
+}
+
+material flag
+{
+	parent base
+	diffuseMap flag.png
+	ambient 0.90 0.90 0.95
+	diffuse 0.70 0.70 0.75
+	specular 0.1 0.1 0.1 32
+	terrain_light_map true
+}
+
+material woodmetal
+{
+	parent base
+	diffuseMap woodmetal.jpg
+	ambient 0.90 0.90 0.95
+	diffuse 0.70 0.70 0.75
+	specular 0.1 0.1 0.1 32
+	terrain_light_map true
+}
+

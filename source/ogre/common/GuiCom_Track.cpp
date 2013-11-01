@@ -120,30 +120,25 @@ void CGuiCom::GuiInitTrack()
    	li->setVisible(false);
 	
 	//  preview images
-	imgPrv[0] = fImg("TrackImg");
-	imgTer[0] = fImg("TrkTerImg");
-	imgMini[0] = fImg("TrackMap");
+	imgPrv[0] = fImg("TrackImg");   imgPrv[0]->setImageTexture("PrvView");
+	imgTer[0] = fImg("TrkTerImg");  imgTer[0]->setImageTexture("PrvTer");
+	imgMini[0] = fImg("TrackMap");  imgMini[0]->setImageTexture("PrvRoad");
 
 	//  stats text
+	int i;
 	#ifdef SR_EDITOR
-	for (int i=0; i < 6; ++i)
-		stTrk[0][i] = fTxt("iv"+toStr(i));
-	for (int i=0; i < 8; ++i)
-		infTrk[0][i] = fTxt("ti"+toStr(i));
+	for (i=0; i < 6; ++i)	stTrk[0][i] = fTxt("iv"+toStr(i));
+	for (i=0; i < 8; ++i)	infTrk[0][i] = fTxt("ti"+toStr(i));
 	#else
-	for (int i=0; i < StTrk; ++i)
-		stTrk[0][i] = fTxt("iv"+toStr(i));
-	for (int i=0; i < InfTrk; ++i)
-		infTrk[0][i] = fTxt("ti"+toStr(i));
+	for (i=0; i < StTrk; ++i)	stTrk[0][i] = fTxt("iv"+toStr(i));
+	for (i=0; i < InfTrk; ++i)	infTrk[0][i] = fTxt("ti"+toStr(i));
 	#endif
 		
 	EdC(edTrkFind, "TrkFind", editTrkFind);
 
 	ButtonPtr btn;
-	BtnC("TrkView1", btnTrkView1);
-	BtnC("TrkView2", btnTrkView2);
-	imgTrkIco1 = fImg("TrkView2icons1");
-	imgTrkIco2 = fImg("TrkView2icons2");
+	BtnC("TrkView1", btnTrkView1);  imgTrkIco1 = fImg("TrkView2icons1");
+	BtnC("TrkView2", btnTrkView2);  imgTrkIco2 = fImg("TrkView2icons2");
 	
 	li->removeAllColumns();  int c=0;
 	li->addColumn("#E0FFE0"+TR("#{Name}"), colTrk[c++]);
@@ -384,38 +379,10 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 #ifndef SR_EDITOR
 	if (pSet->dev_no_prvs)  return;
 #endif
-	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
-	Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
 
-	String path = PathListTrkPrv(-1, sTrack), s, sGrp = "TrkPrv"+toStr(ch);
-	resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
-	resMgr.unloadResourceGroup(sGrp);
-	resMgr.initialiseResourceGroup(sGrp);
+	String path = PathListTrkPrv(-1, sTrack);
 
-	if (imgPrv[ch])  // track view, preview shot
-	{	try
-		{	s = "view.jpg";
-			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  // need to load it first
-			imgPrv[ch]->setImageTexture(s);  // just for dim, doesnt set texture
-			imgPrv[ch]->_setTextureName(path+s);  imgPrv[ch]->setVisible(ch == 0 && pSet->tracks_view == 0 || ch == 1);
-			//texMgr.unload(path+s);
-		} catch(...) {  imgPrv[ch]->setVisible(false);  }  // hide if not found
-	}
-	if (imgTer[ch])  // terrain background
-	{	try
-		{	s = "terrain.jpg";
-			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);
-			imgTer[ch]->setImageTexture(s);
-			imgTer[ch]->_setTextureName(path+s);  imgTer[ch]->setVisible(true);
-		} catch(...) {  imgTer[ch]->setVisible(false);  }
-	}
-	if (imgMini[ch])  // road alpha
-	{	try
-		{	s = "road.png";
-			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);
-			imgMini[ch]->setImageTexture(s);
-			imgMini[ch]->_setTextureName(path+s);  imgMini[ch]->setVisible(true);
-		} catch(...) {  imgMini[ch]->setVisible(false);  }
-	}
-	resMgr.removeResourceLocation(path, sGrp);
+	app->prvView.Load(path+"view.jpg");
+	app->prvRoad.Load(path+"road.png");
+	app->prvTer.Load(path+"terrain.jpg");
 }

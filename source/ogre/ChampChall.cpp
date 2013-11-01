@@ -301,16 +301,18 @@ void CGui::UpdChampTabVis()
 	if (!liChamps || !tabChamp || !btStChamp)  return;
 	static int oldMenu = pSet->inMenu;
 	bool tutor = pSet->inMenu == MNU_Tutorial, champ = pSet->inMenu == MNU_Champ, chall = pSet->inMenu == MNU_Challenge;
+	bool any = tutor || champ || chall;
 
 	tabTut->setVisible(tutor);    imgTut->setVisible(tutor);    btStTut->setVisible(tutor);
 	tabChamp->setVisible(champ);  imgChamp->setVisible(champ);  btStChamp->setVisible(champ);
 	tabChall->setVisible(chall);  imgChall->setVisible(chall);  btStChall->setVisible(chall);
+	btNewGameCar->setVisible(!any);
 
 	liChamps->setVisible(!chall);  liChamps->setColour(tutor ? Colour(0.85,0.8,0.75) : Colour(0.75,0.8,0.85));
 	liChalls->setVisible( chall);  liChalls->setColour(Colour(0.74,0.7,0.82));
 	panCh->setColour(tutor ? Colour(0.9,0.8,0.7) : champ ? Colour(0.7,0.9,0.8) : Colour(0.77,0.75,0.92));
 
-	if (oldMenu != pSet->inMenu && (tutor || champ || chall))
+	if (oldMenu != pSet->inMenu && any)
 	{	oldMenu = pSet->inMenu;
 		if (chall)  ChallsListUpdate();
 		else        ChampsListUpdate();

@@ -655,6 +655,14 @@
 			Name="SceneCommon"
 			>
 			<File
+				RelativePath="..\source\ogre\common\PreviewTex.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\ogre\common\PreviewTex.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\ogre\common\SceneFluids.cpp"
 				>
 			</File>

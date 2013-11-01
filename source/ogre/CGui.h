@@ -297,6 +297,7 @@ public:
 
 	//  Game
 	///---------------------------------------
+	Btn btNewGameCar;
 	void btnNewGame(WP), btnNewGameStart(WP);
 
 	//  split
