@@ -119,3 +119,9 @@ http://www.blendswap.com/blends/view/56205
 Author: ahedov
 License: CC-BY-SA
 http://www.blendswap.com/blends/view/69148
+
+---- cave_* and rock_*.mesh
+made by rubberduck from these:
+Artist: yughues
+License: CC0
+http://opengameart.org/content/rocks-0

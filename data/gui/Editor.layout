@@ -2103,7 +2103,7 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#B0F040#{Grasses}"/>
-				<Widget type="TabControl" skin="TabControl" position="16 24 752 496" name="SubTab">
+				<Widget type="TabControl" skin="TabControl" position="16 24 760 506" name="SubTab">
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 746 468">
@@ -2439,7 +2439,7 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#80F0F0#{Vegetation}"/>
-				<Widget type="TabControl" skin="TabControl" position="16 24 752 496" name="SubTab">
+				<Widget type="TabControl" skin="TabControl" position="16 24 760 506" name="SubTab">
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 746 468">
@@ -3027,25 +3027,32 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#D0D0D0#{Objects}"/>
-				<Widget type="TextBox" skin="TextBox" position="32 16 128 24">
+                <Widget type="TextBox" skin="TextBox" position="14 16 120 24">
 					<Property key="Caption" value="#{ObjDynamic}"/>
 					<Property key="TextColour" value="0.6 0.82 1.0"/>
 				</Widget>
-				<Widget type="ListBox" skin="ListBox" position="32 48 130 468" name="ObjListDyn">
+                <Widget type="ListBox" skin="ListBox" position="12 40 116 500" name="ObjListDyn">
 					<Property key="Colour" value="0.6 0.8 1"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="182 16 128 24">
+                <Widget type="TextBox" skin="TextBox" position="138 16 128 24">
 					<Property key="Caption" value="#{ObjStatic}"/>
 					<Property key="TextColour" value="0.92 0.92 0.92"/>
 				</Widget>
-				<Widget type="ListBox" skin="ListBox" position="182 48 140 468" name="ObjListSt">
+                <Widget type="ListBox" skin="ListBox" position="136 40 116 500" name="ObjListSt">
 					<Property key="Colour" value="0.8 0.8 0.8"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="342 16 128 24">
+                <Widget type="TextBox" skin="TextBox" position="260 16 90 24">
+					<Property key="Caption" value="#{ObjRocks}"/>
+					<Property key="TextColour" value="0.95 0.75 0.5"/>
+				</Widget>
+                <Widget type="ListBox" skin="ListBox" position="258 40 90 500" name="ObjListRck">
+					<Property key="Colour" value="0.9 0.8 0.7"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="358 16 128 24">
 					<Property key="Caption" value="#{ObjBuildings}"/>
 					<Property key="TextColour" value="0.95 0.95 0.5"/>
 				</Widget>
-				<Widget type="ListBox" skin="ListBox" position="342 48 140 468" name="ObjListBld">
+                <Widget type="ListBox" skin="ListBox" position="356 40 128 500" name="ObjListBld">
 					<Property key="Colour" value="0.9 0.9 0.7"/>
 				</Widget>
 			</Widget>

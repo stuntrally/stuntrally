@@ -66,7 +66,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	// gui
 	, bTopView(0), noBlendUpd(0)
 	// obj
-	,objListSt(0),objListDyn(0),objListBld(0), objPan(0)
+	,objListSt(0),objListDyn(0),objListRck(0),objListBld(0), objPan(0)
 {	
 	strFSerrors = "";
 

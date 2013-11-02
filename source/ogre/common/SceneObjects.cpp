@@ -442,8 +442,9 @@ void App::SetObjNewType(int tnew)
 	UpdObjNewNode();
 
 	if (!gui->objListSt)  return;
-	gui->objListSt->setIndexSelected(-1);  // unselect
 	gui->objListDyn->setIndexSelected(-1);
+	gui->objListSt->setIndexSelected(-1);  // unselect
+	gui->objListRck->setIndexSelected(-1);
 	gui->objListBld->setIndexSelected(-1);
 }
 

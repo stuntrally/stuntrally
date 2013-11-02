@@ -236,7 +236,7 @@ public:
 
 	//  [Objects]  ----
 	//  gui lists
-	Li objListDyn, objListSt, objListBld;
+	Li objListDyn, objListSt, objListRck, objListBld;
 	void listObjsChng(Li, size_t);
 	
 

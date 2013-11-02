@@ -533,8 +533,9 @@ void CGui::InitGui()
 		if (StringUtil::endsWith(*i,".mesh") && (*i) != "sphere.mesh")
 			app->vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
 	
-	objListSt = fLi("ObjListSt");    Lev(objListSt,  ObjsChng);
 	objListDyn = fLi("ObjListDyn");  Lev(objListDyn, ObjsChng);
+	objListSt  = fLi("ObjListSt");   Lev(objListSt,  ObjsChng);
+	objListRck = fLi("ObjListRck");  Lev(objListRck, ObjsChng);
 	objListBld = fLi("ObjListBld");  Lev(objListBld, ObjsChng);
 	objPan = fWP("objPan");
 
@@ -545,6 +546,9 @@ void CGui::InitGui()
 			if (StringUtil::startsWith(name,"pers_",false))
 				objListBld->addItem("#E0E070"+name);  // buildings
 			else
+			if (StringUtil::startsWith(name,"rock",false)||StringUtil::startsWith(name,"cave",false))
+				objListRck->addItem("#E0B070"+name);  // rocks
+			else 
 			if (boost::filesystem::exists(data+"/objects/"+ name + ".bullet"))
 				objListDyn->addItem("#A0E0FF"+name);  // dynamic
 			else
@@ -620,5 +624,5 @@ void CGui::InitGui()
 IntCoord CGui::GetViewSize()
 {
 	IntCoord ic = app->mWndEdit->getClientCoord();
-	return IntCoord(ic.width*0.62f, ic.height*0.45f, ic.width*0.34f, ic.height*0.45f);
+	return IntCoord(ic.width*0.63f, ic.height*0.45f, ic.width*0.34f, ic.height*0.45f);
 }
