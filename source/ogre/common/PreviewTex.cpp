@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "PreviewTex.h"
 #include <fstream>
+#include <OgreHardwarePixelBuffer.h>
 #include <OgreResourceGroupManager.h>
 #include <OgreTextureManager.h>
 #include <OgreImage.h>
