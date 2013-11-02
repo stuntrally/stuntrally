@@ -81,6 +81,16 @@ bool BltObjects::LoadXml()
 		colsMap[col.mesh] = col;  // map
 		m = m->NextSiblingElement("object");
 	}
+
+	//  default params
+	defPars.friction = 0.2f;
+	defPars.restitution = 0.9f;
+	n = root->FirstChildElement("default");
+	if (n)
+	{
+		a = n->Attribute("frict");	if (a)  defPars.friction = s2r(a);
+		a = n->Attribute("restit");	if (a)  defPars.restitution = s2r(a);
+	}
 	return true;
 }
 

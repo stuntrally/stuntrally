@@ -14,6 +14,7 @@
 	#include "../../vdrift/settings.h"
 	#include "../../vdrift/game.h"
 	#include "../SplitScreen.h"
+	#include "../../btOgre/BtOgreGP.h"
 #endif
 #include "../../vdrift/pathmanager.h"
 #include "../../paged-geom/GrassLoader.h"
@@ -212,7 +213,7 @@ void App::CreateTrees()
 					resMgr.declareResource(fpng, "Texture", "BinFolder");  // preload
 				}catch (Ogre::Exception&)
 				{	}
-			}			
+			}
 
 
 			///  collision object
@@ -275,7 +276,7 @@ void App::CreateTrees()
 					if (bMax && /*d > 1 &&*/ rmin > d-1)  // max dist (optional)
 						add = false;
 				}
-				if (!add)  continue;  //?faster
+				if (!add)  continue;  //
 
 				//  check ter angle  ------------
 				int mx = (pos.x + 0.5*tws)/tws*sc->td.iVertsX,
@@ -313,7 +314,7 @@ void App::CreateTrees()
 				if (fa > pg.maxDepth)
 					add = false;
 				
-				if (!add)  continue;
+				if (!add)  continue;  //
 
 				treeLoader->addTree(ent, pos0, yaw, scl);
 				cntr++;
@@ -321,8 +322,13 @@ void App::CreateTrees()
 				
 				///  add to bullet world
 				#ifndef SR_EDITOR  //  in Game
-				if (pSet->game.collis_veget && col)
-				for (int c=0; c < col->shapes.size(); ++c)  // all shapes
+				int cc = col ? col->shapes.size() : 0;
+				//  not found or specified
+				bool useTrimesh = cc == 0 || cc == 1 && col->shapes[0].type == BLT_Mesh;
+
+				if (pSet->game.collis_veget)
+				if (!useTrimesh)
+				for (int c=0; c < cc; ++c)  // all shapes
 				{
 					const BltShape* shp = &col->shapes[c];
 					Vector3 pos = pos0;  // restore original place
@@ -349,12 +355,32 @@ void App::CreateTrees()
 					btCollisionObject* bco = new btCollisionObject();
 					bco->setActivationState(DISABLE_SIMULATION);
 					bco->setCollisionShape(bshp);	bco->setWorldTransform(tr);
-					bco->setFriction(shp->friction);   //+
-					bco->setRestitution(shp->restitution);
+					bco->setFriction(shp->friction);  bco->setRestitution(shp->restitution);
 					bco->setCollisionFlags(bco->getCollisionFlags() |
 						btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 					pGame->collision.world->addCollisionObject(bco);
 					pGame->collision.shapes.push_back(bshp);
+					++cntshp;
+				}
+				else  // use trimesh  . . . . . . . . . . . . 
+				{
+					const BltShape* shp = !col ? &data->objs->defPars : &col->shapes[0];
+					Vector3 pc(pos0.x, pos.y, pos0.z);
+					Quaternion q;  q.FromAngleAxis(yaw, Vector3::UNIT_Y);
+					Matrix4 tre;  tre.makeTransform(pc, scl*Vector3::UNIT_SCALE, q);
+					BtOgre::StaticMeshToShapeConverter converter(ent, tre);
+					btCollisionShape* shape = converter.createTrimesh();
+					shape->setUserPointer((void*)SU_Vegetation);
+
+					btCollisionObject* bco = new btCollisionObject();
+					btTransform tr;  tr.setIdentity();
+					bco->setActivationState(DISABLE_SIMULATION);
+					bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
+					bco->setFriction(shp->friction);  bco->setRestitution(shp->restitution);
+					bco->setCollisionFlags(bco->getCollisionFlags() |
+						btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
+					pGame->collision.world->addCollisionObject(bco);
+					pGame->collision.shapes.push_back(shape);
 					++cntshp;
 				}
 				#endif

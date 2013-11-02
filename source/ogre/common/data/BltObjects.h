@@ -6,8 +6,8 @@
 #include <OgreVector3.h>
 
 
-enum eBLTshape {  BLT_None=0, BLT_Sphere, BLT_CapsZ, BLT_ALL };
-static std::string sBLTshape[BLT_ALL] = {"", "sphere", "capsZ" };
+enum eBLTshape {  BLT_None=0, BLT_Sphere, BLT_CapsZ, BLT_Mesh, BLT_ALL };
+static std::string sBLTshape[BLT_ALL] = {"", "sphere", "capsZ", "mesh" };
 
 
 struct BltShape
@@ -38,6 +38,8 @@ public:
 	//std::vector<BltCollision> cols;
 	std::map <std::string, BltCollision> colsMap;
 	std::map <std::string, BltCollision>::const_iterator colsMapFind;
+
+	BltShape defPars;  // default if not found, for trimesh frict,rest params..
 
 	bool LoadXml();
 	const BltCollision* Find(std::string mesh);

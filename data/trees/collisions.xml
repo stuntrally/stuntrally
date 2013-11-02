@@ -1,30 +1,13 @@
 <collisions>
+	<!--for trimeshes if not found here-->
+	<default frict="0.3" restit="0.8" />
+	
+<!-- old -->
 	<object mesh= "tree.07.mesh" ofs="1.2 -0.7 1.4">
 		<shape type="capsZ" ofs="1.2 -0.7 1.4" r="1.1" h="2.0" frict="0.2" restit="0.9" />
 	</object>
 	<object mesh= "tree.09.mesh" ofs="-1.2 -0.35 1.4">
 		<shape type="capsZ" ofs="-1.2 -0.35 1.4" r="1.3" h="2.0" frict="0.2" restit="0.9" />
-	</object>
-
-	<object mesh= "rock.05.mesh">
-		<shape type="sphere" ofs="2 2 0.4" r="12.0" frict="0.2" restit="0.9" />
-		<shape type="sphere" ofs="-7 -7 6.5" r="9.0" frict="0.2" restit="0.9" />
-	</object>
-	<object mesh= "rock.05w.mesh">
-		<shape type="sphere" ofs="2 2 0.4" r="12.0" frict="0.2" restit="0.9" />
-		<shape type="sphere" ofs="-7 -7 6.5" r="9.0" frict="0.2" restit="0.9" />
-	</object>
-
-	<object mesh= "rock.07.mesh">
-		<shape type="sphere" ofs="4 4 1.4" r="10.0" frict="0.2" restit="0.9" />
-		<shape type="sphere" ofs="-8 -8 5" r="11.0" frict="0.2" restit="0.9" />
-	</object>
-	<object mesh= "rock.07w.mesh">
-		<shape type="sphere" ofs="4 4 1.4" r="10.0" frict="0.2" restit="0.9" />
-		<shape type="sphere" ofs="-8 -8 5" r="11.0" frict="0.2" restit="0.9" />
-	</object>
-	<object mesh= "rock.mesh">
-		<shape type="sphere" ofs="0 0 0" r="1.6" frict="0.2" restit="0.9" />
 	</object>
 
 	<object mesh= "farn1.mesh">
@@ -70,6 +53,7 @@
 	<object mesh= "jungle_tree.mesh">
 		<shape type="capsZ" ofs="-0.2 -0.1 2" r="0.7" h="9.0" frict="0.7" restit="0.9" />
 	</object>
+
 
 <!--Autumn-->
 	<object mesh= "treeAO-25oakWMed.mesh">
@@ -133,10 +117,6 @@
 	<object mesh= "treeGW-41aspMid.mesh">
 		<shape type="capsZ" ofs="0.0 0.0 2" r="0.25" h="8.0" frict="0.7" restit="0.9" />
 	</object>
-	<object mesh= "rock_n2-GYel.mesh">
-		<shape type="sphere" ofs="1 0.3 0.4" r="2.2" frict="0.2" restit="0.9" />
-		<shape type="sphere" ofs="-2.2 0.1 0.8" r="2.1" frict="0.2" restit="0.9" />
-	</object>
 
 <!--Desert-->
 	<object mesh= "treeD-22desMed.mesh">
@@ -150,26 +130,6 @@
 	</object>
 
 <!--Pines-->
-	<object mesh= "rock_n5v-W.mesh">
-		<shape type="sphere" ofs="0.0 0.7 0.4" r="2.1" frict="0.2" restit="0.9" />
-		<shape type="sphere" ofs="-0.1 -1.0 2.5" r="1.3" frict="0.2" restit="0.9" />
-	</object>
-	<object mesh= "rock_n4r-W.mesh">
-		<shape type="sphere" ofs="0.5 -0.1 0.6" r="1.9" frict="0.2" restit="0.9" />
-		<shape type="sphere" ofs="0.2 -0.2 1.6" r="1.8" frict="0.2" restit="0.9" />
-	</object>
-	<object mesh= "rock_n1-W.mesh">
-		<shape type="sphere" ofs="0.05 0 0.3" r="1.1" frict="0.2" restit="0.9" />
-	</object>
-	<object mesh= "rock_n2.mesh">
-		<shape type="sphere" ofs="0.5 0.4 0.4" r="2.2" frict="0.2" restit="0.9" />
-		<shape type="sphere" ofs="-0.3 -0.6 0.4" r="2.34" frict="0.2" restit="0.9" />
-	</object>
-	<object mesh= "rock_n3r.mesh">
-		<shape type="sphere" ofs="-0.4 2.3 0.4" r="1.5" frict="0.2" restit="0.9" />
-		<shape type="sphere" ofs="0.1 -1.5 0.8" r="1.9" frict="0.2" restit="0.9" />
-	</object>
-
 	<object mesh= "pine1_norm.mesh">
 		<shape type="capsZ" ofs="0.0 0.0 2" r="0.4" h="4.0" frict="0.7" restit="0.9" />
 	</object>
@@ -206,5 +166,61 @@
 	<object mesh= "treeG-16birTallUp.mesh">
 		<shape type="capsZ" ofs="0.0 0.0 4" r="0.2" h="8.0" frict="0.7" restit="0.9" />
 	</object>
+
+
+<!-- Rocks ALL -->
+	<!--using <default>, or needed custom then use this:-->
+
+	<!--<object mesh= "rock.05.mesh">
+		<shape type="mesh" frict="0.2" restit="0.9" />
+	</object>-->
+
+	<!--OLD spheres (low quality gui chk?)
+
+	<object mesh= "rock.05.mesh">
+		<shape type="sphere" ofs="2 2 0.4" r="12.0" frict="0.2" restit="0.9" />
+		<shape type="sphere" ofs="-7 -7 6.5" r="9.0" frict="0.2" restit="0.9" />
+	</object>
+	<object mesh= "rock.05w.mesh">
+		<shape type="sphere" ofs="2 2 0.4" r="12.0" frict="0.2" restit="0.9" />
+		<shape type="sphere" ofs="-7 -7 6.5" r="9.0" frict="0.2" restit="0.9" />
+	</object>
+
+	<object mesh= "rock.07.mesh">
+		<shape type="sphere" ofs="4 4 1.4" r="10.0" frict="0.2" restit="0.9" />
+		<shape type="sphere" ofs="-8 -8 5" r="11.0" frict="0.2" restit="0.9" />
+	</object>
+	<object mesh= "rock.07w.mesh">
+		<shape type="sphere" ofs="4 4 1.4" r="10.0" frict="0.2" restit="0.9" />
+		<shape type="sphere" ofs="-8 -8 5" r="11.0" frict="0.2" restit="0.9" />
+	</object>
+	<object mesh= "rock.mesh">
+		<shape type="sphere" ofs="0 0 0" r="1.6" frict="0.2" restit="0.9" />
+	</object>
+
+	<object mesh= "rock_n2-GYel.mesh">
+		<shape type="sphere" ofs="1 0.3 0.4" r="2.2" frict="0.2" restit="0.9" />
+		<shape type="sphere" ofs="-2.2 0.1 0.8" r="2.1" frict="0.2" restit="0.9" />
+	</object>
+
+	<object mesh= "rock_n5v-W.mesh">
+		<shape type="sphere" ofs="0.0 0.7 0.4" r="2.1" frict="0.2" restit="0.9" />
+		<shape type="sphere" ofs="-0.1 -1.0 2.5" r="1.3" frict="0.2" restit="0.9" />
+	</object>
+	<object mesh= "rock_n4r-W.mesh">
+		<shape type="sphere" ofs="0.5 -0.1 0.6" r="1.9" frict="0.2" restit="0.9" />
+		<shape type="sphere" ofs="0.2 -0.2 1.6" r="1.8" frict="0.2" restit="0.9" />
+	</object>
+	<object mesh= "rock_n1-W.mesh">
+		<shape type="sphere" ofs="0.05 0 0.3" r="1.1" frict="0.2" restit="0.9" />
+	</object>
+	<object mesh= "rock_n2.mesh">
+		<shape type="sphere" ofs="0.5 0.4 0.4" r="2.2" frict="0.2" restit="0.9" />
+		<shape type="sphere" ofs="-0.3 -0.6 0.4" r="2.34" frict="0.2" restit="0.9" />
+	</object>
+	<object mesh= "rock_n3r.mesh">
+		<shape type="sphere" ofs="-0.4 2.3 0.4" r="1.5" frict="0.2" restit="0.9" />
+		<shape type="sphere" ofs="0.1 -1.5 0.8" r="1.9" frict="0.2" restit="0.9" />
+	</object>-->
 
 </collisions>
