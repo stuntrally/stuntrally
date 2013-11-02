@@ -62,7 +62,8 @@ Author: atze
 License: CC0
 http://opengameart.org/content/watchtower-wood
 
----- wooden_barrel
+
+---- wooden_barrel.mesh _big
 Barrel
 Author: ahedov
 License: CC-BY-SA
@@ -80,13 +81,14 @@ Author: yughues
 License: CC0
 http://opengameart.org/content/free-tiling-textures-42
 
+
 ---- Obstacle1.mesh (1..4)
 Pipe Obstacles
 Author: rubberduck
 License: CC0
 
----- atomic_barrel
----- pallet
+---- atomic_barrel.mesh
+---- pallet.mesh
 License: CC0
 
 ---- Crate_1.mesh and 2
@@ -100,3 +102,20 @@ Wood Boxes
 Author: groemk
 License: CC0
 http://opengameart.org/content/wood-boxes
+
+
+---- gate_01.mesh
+Author: rubberduck
+License: CC0
+texture:
+http://opengameart.org/content/metalstone-textures
+
+---- house_1.mesh (1..4)
+Author: Daniel74
+License: CC0
+http://www.blendswap.com/blends/view/56205
+
+---- well.mesh
+Author: ahedov
+License: CC-BY-SA
+http://www.blendswap.com/blends/view/69148
