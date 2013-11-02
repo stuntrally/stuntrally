@@ -46,20 +46,11 @@ material obelisk
 material Temple
 {
 	parent base
-	//ambient 0.79 0.76 0.49
-	//diffuse 0.63 0.62 0.39
-	//specular 0.14 0.14 0.135 32
 	diffuseMap pyramid_big.dds
 	normalMap pyramid_big_norm.png
-	//ambient 0.47 0.58 0.49
-	//diffuse 0.57 0.70 0.60
-	//specular 0.24 0.24 0.235 32
 	ambient 0.53 0.65 0.49
 	diffuse 0.35 0.46 0.31
-	//diffuse 0.48 0.57 0.41
 	specular 0.14 0.18 0.13 32
-	//receivesShadows false
-	//receivesDepthShadows true
 	terrain_light_map true
 	bump_scale 1.0
 }
@@ -112,9 +103,45 @@ material gas_tank
 	normalMap gas_tank_norm.jpg
 	ambient 0.90 0.90 0.95
 	diffuse 0.70 0.70 0.75
-	specular 0.2 0.2 0.22 16
+	specular 0.3 0.3 0.32 32
 	terrain_light_map true
-	bump_scale 2.0
+}
+
+material house
+{
+	parent base
+	ambient 0.9 0.9 0.9
+	diffuse 0.8 0.8 0.8
+	specular 0.3 0.3 0.3 64
+	terrain_light_map true
+}
+
+material house_1_4
+{
+	parent house
+	diffuseMap house_1.jpg
+	normalMap house_1_norm.jpg
+}
+
+material house_2_4
+{
+	parent house
+	diffuseMap house_2.jpg
+	normalMap house_2_norm.jpg
+}
+
+material house_3_4
+{
+	parent house
+	diffuseMap house_3.jpg
+	normalMap house_3_norm.jpg
+}
+
+material house_4_4
+{
+	parent house
+	diffuseMap house_4.jpg
+	normalMap house_4_norm.jpg
 }
 
 material well
@@ -122,80 +149,9 @@ material well
 	parent base
 	diffuseMap well.jpg
 	normalMap well_norm.jpg
-	ambient 0.90 0.90 0.95
-	diffuse 0.70 0.70 0.75
-	specular 0.1 0.1 0.1 32
+	ambient 1.2 1.2 1.2
+	diffuse 0.7 0.7 0.7
+	specular 0.2 0.2 0.2 32
 	terrain_light_map true
-	bump_scale 2.0
+	shadowBias 0.0001
 }
-
-material house_1_4
-{
-	parent base
-	diffuseMap house_1_4.png
-	ambient 0.90 0.90 0.95
-	diffuse 0.70 0.70 0.75
-	specular 0.1 0.1 0.1 32
-	terrain_light_map true
-}
-
-material house_2_4
-{
-	parent base
-	diffuseMap house_2_4.png
-	ambient 0.90 0.90 0.95
-	diffuse 0.70 0.70 0.75
-	specular 0.1 0.1 0.1 32
-	terrain_light_map true
-}
-
-material house_3_4
-{
-	parent base
-	diffuseMap house_3_4.png
-	ambient 0.90 0.90 0.95
-	diffuse 0.70 0.70 0.75
-	specular 0.1 0.1 0.1 32
-	terrain_light_map true
-}
-
-material house_4_4
-{
-	parent base
-	diffuseMap house_4_4.png
-	ambient 0.90 0.90 0.95
-	diffuse 0.70 0.70 0.75
-	specular 0.1 0.1 0.1 32
-	terrain_light_map true
-}
-
-material rover
-{
-	parent base
-	diffuseMap rover.png
-	ambient 0.90 0.90 0.95
-	diffuse 0.70 0.70 0.75
-	specular 0.1 0.1 0.1 32
-	terrain_light_map true
-}
-
-material flag
-{
-	parent base
-	diffuseMap flag.png
-	ambient 0.90 0.90 0.95
-	diffuse 0.70 0.70 0.75
-	specular 0.1 0.1 0.1 32
-	terrain_light_map true
-}
-
-material woodmetal
-{
-	parent base
-	diffuseMap woodmetal.jpg
-	ambient 0.90 0.90 0.95
-	diffuse 0.70 0.70 0.75
-	specular 0.1 0.1 0.1 32
-	terrain_light_map true
-}
-

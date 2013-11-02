@@ -133,7 +133,7 @@ material atomic_barrel
    ambient 1.50 1.50 1.50
    diffuse 1.00 1.00 1.00
    specular 0.6 0.6 0.6 4
-   bump_scale 0.2
+   bump_scale 0.5
 }
 
 material pallet
@@ -153,25 +153,23 @@ material pallet
 material Crate_1
 {
    parent base
-   diffuseMap Crate_1.jpg
-   normalMap Crate_1_norm.jpg
+   diffuseMap crate_1.jpg
+   normalMap crate_1_norm.jpg
    terrain_light_map true
    ambient 0.9 1 1
    diffuse 0.9 1 1
    specular 0.55 0.6 0.6 32
-   bump_scale 4.0
 }
 
 material Crate_2
 {
    parent base
-   diffuseMap Crate_2.jpg
-   normalMap Crate_2_norm.jpg
+   diffuseMap crate_2.jpg
+   normalMap crate_2_norm.jpg
    terrain_light_map true
    ambient 0.9 1 1
    diffuse 0.9 1 1
    specular 0.55 0.6 0.6 32
-   bump_scale 4.0
 }
 
 material woodBox1
@@ -201,68 +199,27 @@ material woodBox2
 }
 
 
-material metal_barrel_blue
+material metal_barrel
 {
 	parent base
-	diffuseMap metal_barrel_blue.jpg
 	normalMap metal_barrel_norm.jpg
 	specMap metal_barrel_spec.jpg
 	terrain_light_map true
 	ambient 1.50 1.50 1.50
 	diffuse 1.00 1.00 1.00
 	specular 0.6 0.6 0.6 4
-	bump_scale 0.2
-}
-
-material metal_barrel_red
-{
-	parent base
-	diffuseMap metal_barrel_red.jpg
-	normalMap metal_barrel_norm.jpg
-	specMap metal_barrel_spec.jpg
-	terrain_light_map true
-	ambient 1.50 1.50 1.50
-	diffuse 1.00 1.00 1.00
-	specular 0.6 0.6 0.6 4
-	bump_scale 0.2
+	bump_scale 0.5
 }
 
 material metal_barrel_green
 {
-	parent base
+	parent metal_barrel
 	diffuseMap metal_barrel_green.jpg
-	normalMap metal_barrel_norm.jpg
-	specMap metal_barrel_spec.jpg
-	terrain_light_map true
-	ambient 1.50 1.50 1.50
-	diffuse 1.00 1.00 1.00
-	specular 0.6 0.6 0.6 4
-	bump_scale 0.2
-}
-
-material metal_barrel_yellow
-{
-	parent base
-	diffuseMap metal_barrel_yellow.jpg
-	normalMap metal_barrel_norm.jpg
-	specMap metal_barrel_spec.jpg
-	terrain_light_map true
-	ambient 1.50 1.50 1.50
-	diffuse 1.00 1.00 1.00
-	specular 0.6 0.6 0.6 4
-	bump_scale 0.2
 }
 
 material metal_barrel_black
 {
-	parent base
+	parent metal_barrel
 	diffuseMap metal_barrel_black.jpg
-	normalMap metal_barrel_norm.jpg
-	specMap metal_barrel_spec.jpg
-	terrain_light_map true
-	ambient 1.50 1.50 1.50
-	diffuse 1.00 1.00 1.00
-	specular 0.6 0.6 0.6 4
-	bump_scale 0.2
 }
 
