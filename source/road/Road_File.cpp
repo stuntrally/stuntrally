@@ -33,8 +33,8 @@ SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame),
 	Defaults();
 	iMrgSegs = 0;  segsMrg = 0;  iOldHide = -1;
 	st.Length = 0.f;  st.WidthAvg = 0.f;  st.HeightDiff = 0.f;
-	st.OnTer = 0.f;  st.Pipes = 0.f;
-	st.Yaw = 0.f;  st.Pitch = 0.f;  st.Roll = 0.f;
+	st.OnTer = 0.f;  st.Pipes = 0.f;  st.OnPipe = 0.f;
+	st.bankAvg = 0.f;  st.bankMax = 0.f;
 }
 void SplineRoad::Defaults()
 {
@@ -278,10 +278,10 @@ bool SplineRoad::LoadFile(String fname, bool build)
 		a = n->Attribute("height");		if (a)  st.HeightDiff = s2r(a);
 		  a = n->Attribute("onTer");	if (a)  st.OnTer = s2r(a);
 		  a = n->Attribute("pipes");	if (a)  st.Pipes = s2r(a);
-		a = n->Attribute("yaw");		if (a)  st.Yaw = s2r(a);
-		a = n->Attribute("pitch");		if (a)  st.Pitch = s2r(a);
-		a = n->Attribute("roll");		if (a)  st.Roll = s2r(a);	}
-	
+		  a = n->Attribute("onPipe");	if (a)  st.OnPipe = s2r(a);
+		  a = n->Attribute("bnkAvg");	if (a)  st.bankAvg = s2r(a);
+		  a = n->Attribute("bnkMax");	if (a)  st.bankMax = s2r(a);
+	}	
 	n = root->FirstChildElement("txt");	if (n)  {
 		a = n->Attribute("desc");		if (a)  sTxtDesc = String(a);
 	}
@@ -305,6 +305,8 @@ bool SplineRoad::LoadFile(String fname, bool build)
 		a = n->Attribute("mtr");	newP.idMtr = !a ? 0 : std::max(-1, std::min(MTRs-1, s2i(a)));
 		
 		a = n->Attribute("chkR");	newP.chkR = !a ? 0.f : s2r(a);
+		a = n->Attribute("ckL");	newP.loopChk = !a ? 0 : s2i(a);
+		a = n->Attribute("onP");	newP.onPipe = !a ? 0 : s2i(a);
 				
 		//  Add point
 		//newP.pos *= 0.7f;  //scale
@@ -352,45 +354,46 @@ bool SplineRoad::SaveFile(String fname)
 	root.InsertEndChild(mtr);
 	
 	TiXmlElement dim("dim");
-		dim.SetAttribute("tcMul",		toStr( tcMul ).c_str());
-		dim.SetAttribute("tcW",			toStr( tcMulW ).c_str());
-		dim.SetAttribute("tcP",			toStr( tcMulP ).c_str());
-		dim.SetAttribute("tcPW",		toStr( tcMulPW ).c_str());
-		dim.SetAttribute("tcC",			toStr( tcMulC ).c_str());
+		dim.SetAttribute("tcMul",		toStrC( tcMul ));
+		dim.SetAttribute("tcW",			toStrC( tcMulW ));
+		dim.SetAttribute("tcP",			toStrC( tcMulP ));
+		dim.SetAttribute("tcPW",		toStrC( tcMulPW ));
+		dim.SetAttribute("tcC",			toStrC( tcMulC ));
 
-		dim.SetAttribute("lenDim",		toStr( lenDiv0 ).c_str());
-		dim.SetAttribute("widthSteps",	toStr( iw0  ).c_str());
-		dim.SetAttribute("heightOfs",	toStr( fHeight ).c_str());
+		dim.SetAttribute("lenDim",		toStrC( lenDiv0 ));
+		dim.SetAttribute("widthSteps",	toStrC( iw0  ));
+		dim.SetAttribute("heightOfs",	toStrC( fHeight ));
 	root.InsertEndChild(dim);
 
 	TiXmlElement mrg("mrg");
-		mrg.SetAttribute("skirtLen",	toStr( skirtLen ).c_str());
-		mrg.SetAttribute("skirtH",		toStr( skirtH ).c_str());
+		mrg.SetAttribute("skirtLen",	toStrC( skirtLen ));
+		mrg.SetAttribute("skirtH",		toStrC( skirtH ));
 
 		mrg.SetAttribute("merge",		"1");  // always 1 for game, 0 set in editor
-		mrg.SetAttribute("mergeLen",	toStr( setMrgLen ).c_str());
-		mrg.SetAttribute("lodPntLen",	toStr( lposLen ).c_str());
+		mrg.SetAttribute("mergeLen",	toStrC( setMrgLen ));
+		mrg.SetAttribute("lodPntLen",	toStrC( lposLen ));
 	root.InsertEndChild(mrg);
 
 	TiXmlElement geo("geom");
-		geo.SetAttribute("colN",	toStr( colN ).c_str());
-		geo.SetAttribute("colR",	toStr( colR ).c_str());
-		geo.SetAttribute("wsPm",	toStr( iwPmul ).c_str());
-		geo.SetAttribute("lsPm",	toStr( ilPmul ).c_str());
-		geo.SetAttribute("stBox",	toStr( vStBoxDim ).c_str());
-		geo.SetAttribute("iDir",	toStr( iDir ).c_str());
-		geo.SetAttribute("iChk1",	toStr( iP1 ).c_str());
+		geo.SetAttribute("colN",	toStrC( colN ));
+		geo.SetAttribute("colR",	toStrC( colR ));
+		geo.SetAttribute("wsPm",	toStrC( iwPmul ));
+		geo.SetAttribute("lsPm",	toStrC( ilPmul ));
+		geo.SetAttribute("stBox",	toStrC( vStBoxDim ));
+		geo.SetAttribute("iDir",	toStrC( iDir ));
+		geo.SetAttribute("iChk1",	toStrC( iP1 ));
 	root.InsertEndChild(geo);
 
 	TiXmlElement ste("stats");
-		ste.SetAttribute("length",	toStr( st.Length ).c_str());
-		ste.SetAttribute("width",	toStr( st.WidthAvg ).c_str());
-		ste.SetAttribute("height",	toStr( st.HeightDiff ).c_str());
-		  ste.SetAttribute("onTer",	toStr( st.OnTer ).c_str());
-		  ste.SetAttribute("pipes",	toStr( st.Pipes ).c_str());
-		ste.SetAttribute("yaw",		toStr( st.Yaw ).c_str());
-		ste.SetAttribute("pitch",	toStr( st.Pitch ).c_str());
-		ste.SetAttribute("roll",	toStr( st.Roll ).c_str());
+		ste.SetAttribute("length",	toStrC( st.Length ));
+		ste.SetAttribute("width",	toStrC( st.WidthAvg ));
+		ste.SetAttribute("height",	toStrC( st.HeightDiff ));
+		  ste.SetAttribute("onTer",	toStrC( st.OnTer ));
+		  ste.SetAttribute("pipes",	toStrC( st.Pipes ));
+		  if (st.OnPipe > 0.f)
+		  ste.SetAttribute("onPipe",toStrC( st.OnPipe ));
+		  ste.SetAttribute("bnkAvg",toStrC( st.bankAvg ));
+		  ste.SetAttribute("bnkMax",toStrC( st.bankMax ));
 	root.InsertEndChild(ste);
 		
 	TiXmlElement txt("txt");
@@ -404,28 +407,33 @@ bool SplineRoad::SaveFile(String fname)
 		TiXmlElement p("P");
 		{
 			Vector3 pos = getPos(i);  if (onTer)  pos.y = 0.f;  // no need to save
-			p.SetAttribute("pos",	toStr( pos ).c_str());
-			p.SetAttribute("w",		toStr( mP[i].width ).c_str());
+			p.SetAttribute("pos",	toStrC( pos ));
+			p.SetAttribute("w",		toStrC( mP[i].width ));
 		
 			if (!onTer)
 				p.SetAttribute("onTer",	"0");
 
 			if (!onTer || !onTer1 || !onTer_1)
-			{	p.SetAttribute("a",  toStr( mP[i].mYaw ).c_str());
-				p.SetAttribute("ar", toStr( mP[i].mRoll ).c_str());
+			{	p.SetAttribute("a",  toStrC( mP[i].mYaw ));
+				p.SetAttribute("ar", toStrC( mP[i].mRoll ));
 			}
-			p.SetAttribute("aT", toStr( (int)mP[i].aType ).c_str());
+			p.SetAttribute("aT", toStrC( (int)mP[i].aType ));
 
 			if (mP[i].cols != 1)
-				p.SetAttribute("col", toStr( mP[i].cols ).c_str());
+				p.SetAttribute("col", toStrC( mP[i].cols ));
 			if (mP[i].pipe > 0.f)
-				p.SetAttribute("pipe", toStr( mP[i].pipe ).c_str());
+				p.SetAttribute("pipe", toStrC( mP[i].pipe ));
 
 			if (mP[i].idMtr != 0)
-				p.SetAttribute("mtr", toStr( mP[i].idMtr ).c_str());
+				p.SetAttribute("mtr", toStrC( mP[i].idMtr ));
 
 			if (mP[i].chkR > 0.f)
-				p.SetAttribute("chkR", toStr( mP[i].chkR ).c_str());
+			{	p.SetAttribute("chkR", toStrC( mP[i].chkR ));
+				if (mP[i].loopChk)
+					p.SetAttribute("ckL", toStrC( mP[i].loopChk ));
+			}
+			if (mP[i].onPipe > 0)
+				p.SetAttribute("onP", toStrC( mP[i].onPipe ));
 		}
 		root.InsertEndChild(p);
 	}

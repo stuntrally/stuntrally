@@ -194,6 +194,6 @@ void SplineRoad::DestroyRoad()
 	iMrgSegs = 0;  segsMrg = 0;
 	//  stats
 	st.Length = 0.f;  st.WidthAvg = 0.f;  st.HeightDiff = 0.f;
-	st.OnTer = 0.f;  st.Pipes = 0.f;
-	st.Yaw = 0.f;  st.Pitch = 0.f;  st.Roll = 0.f;
+	st.OnTer = 0.f;  st.Pipes = 0.f;  st.OnPipe = 0.f;
+	st.bankAvg = 0.f;  st.bankMax = 0.f;
 }

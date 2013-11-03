@@ -545,6 +545,7 @@ void SplineRoad::AddRoll(Real relA, Real snapA, bool alt)   ///  Roll
 	RebuildRoad();
 }
 
+
 void SplineRoad::ToggleOnTerrain()   ///  On Ter
 {
 	if (!vSel.empty()) {  // sel
@@ -560,7 +561,7 @@ void SplineRoad::ToggleOnTerrain()   ///  On Ter
 		Move(Vector3::ZERO);
 }
 
-void SplineRoad::ToggleColums()      ///  Column
+void SplineRoad::ToggleColumns()      ///  Column
 {
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
@@ -573,6 +574,33 @@ void SplineRoad::ToggleColums()      ///  Column
 	mP[iChosen].cols  = 1-mP[iChosen].cols;
 	Move(Vector3::ZERO);
 }
+
+void SplineRoad::ToggleOnPipe()       ///  On Pipe (for stats only)
+{
+	if (!vSel.empty()) {  // sel
+		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
+			mP[*it].onPipe = 1-mP[*it].onPipe;
+		return;  }
+
+	if (iChosen == -1)  {  // one
+			newP.onPipe = 1-newP.onPipe;  return;  }
+
+	mP[iChosen].onPipe  = 1-mP[iChosen].onPipe;
+}
+
+void SplineRoad::ToggleLoopChk()       ///  Loop chkR (for camera change)
+{
+	if (!vSel.empty()) {  // sel
+		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
+			mP[*it].loopChk = 1-mP[*it].loopChk;
+		return;  }
+
+	if (iChosen == -1)  {  // one
+			newP.loopChk = 1-newP.loopChk;  return;  }
+
+	mP[iChosen].loopChk  = 1-mP[iChosen].loopChk;
+}
+
 
 void SplineRoad::AddPipe(Real relP)    ///  Pipe
 {

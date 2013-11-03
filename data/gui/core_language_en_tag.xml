@@ -170,6 +170,7 @@
 	<Tag name="TrackHeightDiff">Height diff.</Tag>
 	<Tag name="TrackInAir">In air</Tag>
 	<Tag name="TrackPipes">Pipes</Tag>
+	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>	
 	
 
 	<!--  Car  -->
@@ -809,8 +810,10 @@
 	<Tag name="Road_Roll">Roll</Tag>
 	<Tag name="Road_Snap">Snap</Tag>
 	<Tag name="Road_Pipe">Pipe</Tag>
+	<Tag name="Road_OnPipe">On Pipe</Tag>
 	<Tag name="Road_Column">Column</Tag>
 	<Tag name="Road_ChkR">ChkR</Tag>
+	<Tag name="Road_Loop">Loop</Tag>
 
 	<Tag name="Road_Cur">Cur</Tag>
 	<Tag name="Road_New">New</Tag>

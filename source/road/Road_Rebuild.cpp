@@ -156,7 +156,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		vector<int> viwEq;			// 1 if equal width steps at whole length, in seg
 
 		Real sumLenMrg = 0.f, ltc = 0.f;  int mrgGrp = 0;  //#  stats
-		Real roadLen = 0.f, rdOnT = 0.f, rdPipe = 0.f,
+		Real roadLen = 0.f, rdOnT = 0.f, rdPipe = 0.f, rdOnPipe = 0.f,
 			avgWidth = 0.f, stMaxH = FLT_MIN, stMinH = FLT_MAX;
 				
 		
@@ -182,10 +182,12 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			Real la = 1.f / il;
 			viL.push_back(il);
 			vSegLen.push_back(len);
+
 			roadLen += len;  //#
 			if (sp > 0.f || sp1 > 0.f)
-				rdPipe += len; //#
-
+			{	rdPipe += len; //#
+				if (mP[seg].onPipe)  rdOnPipe += len;  //#
+			}
 
 			///-  Merge conditions
 			sumLenMrg += len;
@@ -287,9 +289,12 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		bool stats = lod == 0 && iDirtyId == -1;
 		if (stats)
 		{	st.Length = roadLen;  st.WidthAvg = avgWidth / roadLen;
-			st.OnTer = rdOnT / roadLen * 100.f;  st.Pipes = rdPipe / roadLen * 100.f;
+			st.OnTer = rdOnT / roadLen * 100.f;
+			st.Pipes = rdPipe / roadLen * 100.f;
+			st.OnPipe = rdOnPipe / roadLen * 100.f;
 			segsMrg = mrgGrp;
 		}
+		Real bankAvg = 0.f, bankMax = 0.f;  //#
 
 
 		//--------------------------------------------------------------------------------------------------------------------------
@@ -448,7 +453,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				//  pipe width
 				Real l01 = max(0.f, min(1.f, Real(i)/Real(il) ));
 				Real p1 = mP[seg].pipe, p2 = mP[seg1].pipe;
-				Real pipe = p1 + (p2-p1)*l01;
+				Real fPipe = p1 + (p2-p1)*l01;
 				bool trans = (p1 == 0.f || p2 == 0.f) && !viwEq[seg];
 				Real trp = (p1 == 0.f) ? 1.f - l01 : l01;
 				//LogR("   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw)
@@ -458,6 +463,10 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				
 				///  road ~    Width  vertices
 				//-----------------------------------------------------------------------------------------------------------------
+				Vector3 vH0, vH1;  //#  positions for bank angle
+				int w0 = pipe ? iw/4   : 0,
+					w1 = pipe ? iw*3/4 : iw;
+
 				Real tcL = tc * (pipe ? tcMulP : tcMul);
 				for (int w=0; w <= iw; ++w)  // width +1
 				{
@@ -465,7 +474,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					Vector3 vP,vN;	Real tcw = Real(w)/Real(iw);
 
 					Real yTer = 0.f;
-					if (pipe == 0.f)
+					if (fPipe == 0.f)
 					{	//  flat --
 						vP = vL0 + vw * (tcw - 0.5);
 						vN = vn;
@@ -477,10 +486,11 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 						}
 					}else
 					{	///  pipe (_)
-						Real oo = (tcw - 0.5)/0.5 * PI_d * pipe, so = sinf(oo), co = cosf(oo);
+						Real oo = (tcw - 0.5)/0.5 * PI_d * fPipe, so = sinf(oo), co = cosf(oo);
 						vP = vL0 + vw  * 0.5 * so +
 								 + vn * (0.5 - 0.5 * co) * wiMul;
 						vN = vn * co + vwn * so;
+						//LogO(toStr(w)+" "+fToStr(so,2,4));
 
 						if (vN.y < 0.f)  vN.y = -vN.y;
 						if (trans)  //  transition from flat to pipe
@@ -497,7 +507,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					//  ---~~~====~~~---
 					Real brdg = min(1.f, abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
 					Real h = max(0.f, 1.f - abs(vP.y - yTer) / 30.f);  // for grass dens tex
-					Vector4 c(brdg,pipe, 1.f, h);
+					Vector4 c(brdg,fPipe, 1.f, h);
 					Vector2 vtc(tcw * 1.f /**2p..*/, tcL);
 
 					//>  data road
@@ -509,9 +519,20 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 						posB.push_back(vP);   normB.push_back(vN);
 						tcsB.push_back(vtc);  clrB.push_back(c);
 					}					
-					//#
+					//#  stats
 					if (vP.y < stMinH)  stMinH = vP.y;
 					if (vP.y > stMaxH)  stMaxH = vP.y;
+					if (w==w0)  vH0 = vP;  //#
+					if (w==w1)  vH1 = vP;
+				}
+				//#  stats  banking angle
+				if (lod==0 && i==0)
+				{
+					float h = (vH0.y - vH1.y), w = vH0.distance(vH1), d = fabs(h/w), a = asin(d)*180.f/PI_d;
+					bankAvg += a;
+					if (a > bankMax)  bankMax = a;
+					//LogO("RD seg :" + toStr(seg)+ "  h " + fToStr(h,1,3)
+					//	+ "  w " + fToStr(w,1,3)+ "  d " + fToStr(d,1,3)+ "  a " + fToStr(a,1,3) );
 				}
 				
 
@@ -911,7 +932,12 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 	
 		//#  stats
 		if (stats)
+		{
 			st.HeightDiff = max(0.f, stMaxH - stMinH);
+			st.bankAvg = bankAvg / segs;
+			st.bankMax = bankMax;
+			//LogO("RD bank angle:  avg "+fToStr(st.bankAvg,1,3)+"  max "+fToStr(st.bankMax,1,3));
+		}
 	}
 	//  lod end
 

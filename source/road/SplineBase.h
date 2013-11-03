@@ -17,8 +17,11 @@ public:
 	Ogre::Real tYaw,tRoll;  //- angles+tan interp, not used yet
 	Ogre::Real aY,aR;   // after prepass+
 
+	//  on/off
 	bool onTer;   // sticked on terrain
-	int  cols;    // on/off columns
+	int cols;     // has column
+	int onPipe;   // for stats only (driven on pipe)
+	int loopChk;  // chk is start or end of loop (for auto camera change)
 
 	Ogre::Real pipe;    // pipe width
 	int idMtr;    // material id road/pipe

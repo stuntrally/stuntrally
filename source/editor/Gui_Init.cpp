@@ -54,8 +54,8 @@ void CGui::InitGui()
 	app->mWndStart = fWnd("StartWnd");  app->mWndStart->setPosition(0,64);
 	app->mWndBrush = fWnd("BrushWnd");  app->mWndBrush->setPosition(0,64);
 
-	app->mWndRoadCur =   fWnd("RoadCur");    app->mWndRoadCur->setPosition(0,34);
-	app->mWndRoadStats = fWnd("RoadStats");  app->mWndRoadStats->setPosition(0,328);
+	app->mWndRoadCur =   fWnd("RoadCur");    app->mWndRoadCur->setPosition(0,40);
+	app->mWndRoadStats = fWnd("RoadStats");  app->mWndRoadStats->setPosition(0,338);
 
 	app->mWndFluids = fWnd("FluidsWnd");   app->mWndFluids->setPosition(0,64);
 	app->mWndObjects= fWnd("ObjectsWnd");  app->mWndObjects->setPosition(0,64);

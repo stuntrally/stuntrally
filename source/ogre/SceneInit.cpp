@@ -556,7 +556,7 @@ void App::LoadRoad()  // 6
 			if (d2 < cs.r2)  // inside
 			if (vTimeAtChks[c] == 0.f)
 			{	vTimeAtChks[c] = tf.time;
-				LogO("Chk "+toStr(c)+" ti "+fToStr(tf.time,1,4));
+				//LogO("Chk "+toStr(c)+" ti "+fToStr(tf.time,1,4));
 		}	}
 	}
 }

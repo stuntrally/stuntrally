@@ -61,7 +61,7 @@ public:
 
 	//  tool windows texts
 	const static int MAX_TXT=11,
-		BR_TXT=9, RD_TXT=11, RDS_TXT=9,  //  brush, road, road stats
+		BR_TXT=9, RD_TXT=11, RDS_TXT=11,  //  brush, road, road stats
 		ST_TXT=6, FL_TXT=6, OBJ_TXT=6, RI_TXT=6;  //  start, fluids, objects,
 
 	Txt	brTxt[BR_TXT], brVal[BR_TXT], brKey[BR_TXT],

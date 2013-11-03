@@ -152,8 +152,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		{	first = false;
 															rdKey[0]->setCaption("Home");
 			rdTxt[1]->setCaption(TR("#{Road_Width}"));		rdKey[1]->setCaption("/ *");
-			rdTxt[2]->setCaption(TR("#{Road_Yaw}"));		rdKey[2]->setCaption("1 2");
-			rdTxt[3]->setCaption(TR("#{Road_Roll}"));		rdKey[3]->setCaption("3 4");
+			rdTxt[2]->setCaption(TR("#{Road_Roll}"));		rdKey[2]->setCaption("1 2");
+			rdTxt[3]->setCaption(TR("#{Road_Yaw}"));		rdKey[3]->setCaption("3 4");
 															rdKey[4]->setCaption("5 6");
 			rdTxt[5]->setCaption(TR("#{Road_Snap}"));		rdKey[5]->setCaption("7 8");
 			rdTxt[6]->setCaption(TR("#{Road_Pipe}"));		rdKey[6]->setCaption("O P");//[ ]
@@ -166,10 +166,13 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		rdVal[0]->setCaption(sp.onTer ? "" : fToStr(sp.pos.y,1,3));
 
 		rdVal[1]->setCaption(fToStr(sp.width,2,4));
-		rdVal[2]->setCaption(fToStr(sp.aYaw,1,3));
-		rdVal[3]->setCaption(fToStr(sp.aRoll,1,3));
+		rdVal[2]->setCaption(fToStr(sp.aRoll,1,3));
+		rdVal[3]->setCaption(fToStr(sp.aYaw,1,3));
 		rdTxt[4]->setCaption(toStr(sp.aType)+" "+TR("#{Road_Angle"+csAngType[sp.aType]+"}"));
 		rdVal[5]->setCaption(fToStr(angSnap,0,1));
+		
+		rdTxt[6]->setCaption(sp.onPipe ? TR("#{Road_OnPipe}") : TR("#{Road_Pipe}"));
+		rdTxt[6]->setTextColour(sp.onPipe ? MyGUI::Colour(1.0,0.45,0.2) : MyGUI::Colour(0.86,0.86,0));
 		rdVal[6]->setCaption(sp.pipe==0.f ? "" : fToStr(sp.pipe,2,4));
 		
 		rdTxt[7]->setVisible(!sp.onTer);	rdKey[7]->setVisible(!sp.onTer);
@@ -200,25 +203,28 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 
 				rdTxtSt[3]->setCaption(TR("#{TrackInAir}"));
 				rdTxtSt[4]->setCaption(TR("#{TrackPipes}"));
+				rdTxtSt[5]->setCaption(TR("#{Road_OnPipe}"));
+				rdTxtSt[6]->setCaption(TR("#{TrackBankAng}"));
 
-				rdTxtSt[5]->setCaption("lod pnt");
-				rdTxtSt[6]->setCaption("segs Mrg");
-				rdTxtSt[7]->setCaption("vis");
-				rdTxtSt[8]->setCaption("tri");
-			}
-			
+				rdTxtSt[7]->setCaption("lod pnt");
+				rdTxtSt[8]->setCaption("segs Mrg");
+				rdTxtSt[9]->setCaption("vis");
+				rdTxtSt[10]->setCaption("tri");
+			}			
 			rdValSt[0]->setCaption(fToStr(road->st.Length,0,4));
 			rdValSt[1]->setCaption(fToStr(road->st.WidthAvg,2,5));
 			rdValSt[2]->setCaption(fToStr(road->st.HeightDiff,2,5));
 
 			rdValSt[3]->setCaption(fToStr(road->st.OnTer,1,4)+"%");
 			rdValSt[4]->setCaption(fToStr(road->st.Pipes,1,4)+"%");
+			rdValSt[5]->setCaption(fToStr(road->st.OnPipe,1,4)+"%");
+			rdValSt[6]->setCaption(fToStr(road->st.bankAvg,0,2)+" /"+fToStr(road->st.bankMax,0,2));
 
 			int lp = !bCur ? -1 : road->vSegs[road->iChosen].lpos.size();
-			rdValSt[5]->setCaption(toStr(lp));
-			rdValSt[6]->setCaption(fToStr(road->segsMrg+1,0,2));
-			rdValSt[7]->setCaption(fToStr(road->iVis,0,2));
-			rdValSt[8]->setCaption(fToStr(road->iTris/1000.f,1,4)+"k");
+			rdValSt[7]->setCaption(toStr(lp));
+			rdValSt[8]->setCaption(fToStr(road->segsMrg+1,0,2));
+			rdValSt[9]->setCaption(fToStr(road->iVis,0,2));
+			rdValSt[10]->setCaption(fToStr(road->iTris/1000.f,1,4)+"k");
 		}
 
 		//  edit  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -231,12 +237,12 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(DOWN) ||isKey(KP_2))  road->Move(-vz*q);
 		if (isKey(UP)   ||isKey(KP_8))  road->Move( vz*q);
 
-		if (isKey(KP_MINUS)) road->Move(-vy*q);		if (isKey(KP_MULTIPLY))		road->AddWidth( q*0.4f);
-		if (isKey(KP_PLUS))  road->Move( vy*q);		if (isKey(KP_DIVIDE))	road->AddWidth(-q*0.4f);
+		if (isKey(KP_MINUS)) road->Move(-vy*q);  if (isKey(KP_MULTIPLY)) road->AddWidth( q*0.4f);
+		if (isKey(KP_PLUS))  road->Move( vy*q);  if (isKey(KP_DIVIDE))   road->AddWidth(-q*0.4f);
 
 		if (iSnap == 0)
-		{	if (isKey(1))	road->AddYaw(-q*3,0,alt);	if (isKey(3))	road->AddRoll(-q*3,0,alt);
-			if (isKey(2))	road->AddYaw( q*3,0,alt);	if (isKey(4))	road->AddRoll( q*3,0,alt);
+		{	if (isKey(3))	road->AddYaw(-q*3,0,alt);	if (isKey(1))	road->AddRoll(-q*3,0,alt);
+			if (isKey(4))	road->AddYaw( q*3,0,alt);	if (isKey(2))	road->AddRoll( q*3,0,alt);
 		}
 		if (isKey(LEFTBRACKET) ||isKey(O))  road->AddPipe(-q*0.2);
 		if (isKey(RIGHTBRACKET)||isKey(P))  road->AddPipe( q*0.2);

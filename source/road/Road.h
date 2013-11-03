@@ -86,7 +86,7 @@ public:
 	void MirrorSel(bool alt);
 
 	//  modify point
-	void ToggleOnTerrain(), ToggleColums();  // on chosen point
+	void ToggleOnTerrain(), ToggleColumns(), ToggleOnPipe(), ToggleLoopChk();  // on chosen point
 	void AddWidth(Ogre::Real relW), AddYaw(Ogre::Real relA,Ogre::Real snapA, bool alt),AddRoll(Ogre::Real relA,Ogre::Real snapA, bool alt);
 	void AddPipe(Ogre::Real relP), ChgMtrId(int relId), ChgAngType(int relId), AngZero();
 	void AddChkR(Ogre::Real relR, bool dontCheckR=false), AddBoxW(Ogre::Real rel),AddBoxH(Ogre::Real rel), Set1stChk();
@@ -181,8 +181,10 @@ public:
 	Ogre::Real ilPmul,iwPmul;	 // length,width steps multiplier for pipe
 
 	struct stats  //  for info
-	{	Ogre::Real Length,WidthAvg,HeightDiff,
-		OnTer,Pipes, Yaw,Pitch,Roll;
+	{
+		Ogre::Real Length, WidthAvg, HeightDiff;
+		Ogre::Real OnTer, Pipes, OnPipe;
+		Ogre::Real bankAvg, bankMax;  // banking angle
 	} st;
 	Ogre::String  sTxtDesc;  // track description text
 	

@@ -253,7 +253,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			//  cols
 			case key(END):  case key(KP_1):
 				if (ctrl)	road->LastPoint();
-				else		road->ToggleColums();  break;
+				else		road->ToggleColumns();  break;
 
 			//  prev,next
 			case key(PAGEUP):  case key(KP_9):
@@ -285,6 +285,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				if (ctrl)  {   road->Set1stChk();  break;  }
 			case key(EQUALS):  road->ChgMtrId(1);  break;
 			case key(9):
+				if (shift) {   road->ToggleLoopChk();  break;  } else
+				if (ctrl)  {   road->ToggleOnPipe();  break;  }
 			case key(MINUS):   road->ChgMtrId(-1);  break;
 
 			case key(5):  road->ChgAngType(-1);  break;

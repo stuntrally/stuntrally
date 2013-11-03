@@ -127,12 +127,11 @@ void CGuiCom::GuiInitTrack()
 	//  stats text
 	int i;
 	#ifdef SR_EDITOR
-	for (i=0; i < 6; ++i)	stTrk[0][i] = fTxt("iv"+toStr(i));
-	for (i=0; i < 8; ++i)	infTrk[0][i] = fTxt("ti"+toStr(i));
+	for (i=0; i < 9;     ++i)	stTrk[0][i] = fTxt("iv"+toStr(i));
 	#else
 	for (i=0; i < StTrk; ++i)	stTrk[0][i] = fTxt("iv"+toStr(i));
-	for (i=0; i < InfTrk; ++i)	infTrk[0][i] = fTxt("ti"+toStr(i));
 	#endif
+	for (i=0; i < InfTrk; ++i)	infTrk[0][i] = fTxt("ti"+toStr(i));
 		
 	EdC(edTrkFind, "TrkFind", editTrkFind);
 
@@ -146,7 +145,7 @@ void CGuiCom::GuiInitTrack()
 	li->addColumn("#80FF80"+TR("#{Scenery}"), colTrk[c++]);
 	li->addColumn("#80FF80""ver", colTrk[c++]);  // created- modified-
 
-	li->addColumn("#C0D0FF""diff", colTrk[c++]);  // rateuser  drivenlaps ..
+	li->addColumn("#C0D0FF""diff", colTrk[c++]);  //todo: rateuser, drivenlaps ..
 	li->addColumn("#C0E0FF""*", colTrk[c++]);   // rating
 	li->addColumn("#FF80C0""o", colTrk[c++]);   // objects
 	li->addColumn("#80C0FF""f", colTrk[c++]);   // fluids
@@ -309,8 +308,12 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	stTrk[ch][2]->setCaption(fToStr(rd->st.WidthAvg ,1,3)+" m");
 	stTrk[ch][3]->setCaption(fToStr(rd->st.HeightDiff ,0,2)+" m");
 
-	stTrk[ch][4]->setCaption(fToStr(rd->st.OnTer ,0,2)+"%");
-	stTrk[ch][5]->setCaption(fToStr(rd->st.Pipes ,0,2)+"%");
+	stTrk[ch][4]->setCaption(fToStr(rd->st.OnTer ,0,1)/*+"%"*/);
+	stTrk[ch][5]->setCaption(fToStr(rd->st.Pipes ,0,1)/*+"%"*/);
+
+	stTrk[ch][6]->setCaption(fToStr(rd->st.bankAvg,0,1)+"\'");
+	stTrk[ch][7]->setCaption(fToStr(rd->st.bankMax,0,1)+"\'");
+	stTrk[ch][8]->setCaption(fToStr(rd->st.OnPipe,0,1)/*+"%"*/);
 	#ifndef SR_EDITOR
 	if (app->gui->txTrackAuthor)
 		app->gui->txTrackAuthor->setCaption("");  // user trks
@@ -327,10 +330,10 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 		infTrk[ch][3]->setCaption(str0(ti.loops));		infTrk[ch][4]->setCaption(str0(ti.pipes));
 		infTrk[ch][5]->setCaption(str0(ti.banked));		infTrk[ch][6]->setCaption(str0(ti.frenzy));
 		infTrk[ch][7]->setCaption(clrsLong[ti.longn] + str0(ti.longn));
-		#ifndef SR_EDITOR
 		infTrk[ch][8]->setCaption(ti.diff==0   ? "" : (clrsDiff[ti.diff] + toStr(ti.diff)));
 		infTrk[ch][9]->setCaption(ti.rating==0 ? "" : (clrsRating[ti.rating] + toStr(ti.rating)));
 		infTrk[ch][10]->setCaption(str0(ti.objects));
+		#ifndef SR_EDITOR
 		if (app->gui->txTrackAuthor)
 			app->gui->txTrackAuthor->setCaption(ti.author=="CH" ? "CryHam" : ti.author);
 		#endif
@@ -348,23 +351,23 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	float timeT = (/*place*/1 * app->data->cars->magic * timeTrk + timeTrk) / carMul;
 	bool no = timeCur < 0.1f || !rd;
 	if (ch==1)  no = false;  // show track's not current
-	stTrk[ch][6]->setCaption(CHud::StrTime(no ? 0.f : timeT));
-	stTrk[ch][7]->setCaption(no ? "--" : speedTrk);
+	stTrk[ch][9]->setCaption(CHud::StrTime(no ? 0.f : timeT));
+	stTrk[ch][10]->setCaption(no ? "--" : speedTrk);
 
 	if (ch==0)
 	if (no)
-	{	stTrk[ch][8]->setCaption(CHud::StrTime(0.f));
-		stTrk[ch][9]->setCaption("--");
-		stTrk[ch][10]->setCaption("--");
+	{	stTrk[ch][11]->setCaption(CHud::StrTime(0.f));
+		stTrk[ch][12]->setCaption("--");
+		stTrk[ch][13]->setCaption("--");
 	}else
 	{	//  car record
 		std::string speed = fToStr(len / timeCur * m, 0,3) + unit;
-		stTrk[ch][8]->setCaption(CHud::StrTime(timeCur));
-		stTrk[ch][9]->setCaption(speed);
+		stTrk[ch][11]->setCaption(CHud::StrTime(timeCur));
+		stTrk[ch][12]->setCaption(speed);
 		//  points
 		float points = 0.f;
 		app->GetRacePos(timeCur, timeTrk, carMul, false, &points);
-		stTrk[ch][10]->setCaption(fToStr(points ,1,3));
+		stTrk[ch][13]->setCaption(fToStr(points ,1,3));
 	}
 #else
 	if (app->gui->trkName)  //
