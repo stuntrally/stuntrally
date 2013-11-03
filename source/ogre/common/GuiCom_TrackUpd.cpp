@@ -86,6 +86,9 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 		{
 			String name = (*i).name, nlow = name;  StringUtil::toLowerCase(nlow);
 			if (sTrkFind == "" || strstr(nlow.c_str(), sTrkFind.c_str()) != 0)
+			/// todo: filtering gui..
+			//if ((*i).ti->rating > 2)
+			//if ((*i).ti->diff > 3)
 			{
 				AddTrkL(name, 0, (*i).ti);
 				if (!pSet->gui.track_user && name == pSet->gui.track)  {  si = ii;
