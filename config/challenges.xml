@@ -95,29 +95,33 @@
 -->
 
 
+	<!--	unused tracks
+			<t name="S2-Frenzy"    
+			<t name="F3-Snail"     
+			<t name="J9-Sharp"     
+
+			<t name="I1-star3"     
+			<t name="I2-S8"        
+			<t name="D9-Mud"       
+			<t name="V3-Crater"    
+
+			<t name="S9-demo"      
+			<t name="J19-demo2"    
+			<t name="D3-P"         
+			<t name="F14-Maze"     
+
+			<t name="J4-Pipe8"     
+			<t name="S10-Pipe88"   
+			<t name="A2-PipeCoil"  
+
+			<t name="M3-Mudlake"   
+			<t name="D13-Winding"  
+			<t name="O4-MossyMntn" 
+	-->
+
 
 <!--  Rally  short,easy  -->
 <!--========================================================================================================================-->
-	<!--	unused
-			<t name="S2-Frenzy"    time="193.1" />
-			<t name="F3-Snail"     time="40.1" />
-			<t name="J9-Sharp"     passPoints="10" />
-
-			<t name="I1-star3"     time="48.0" />
-			<t name="I2-S8"        time="40.0" />
-			<t name="D9-Mud"       time="47.0" />
-			<t name="V3-Crater"    time="51.3" />
-
-			<t name="S9-demo"      time="36.1" />
-			<t name="J19-demo2"    time="58.2" />
-			<t name="D3-P"         time="53.4" />
-			<t name="F14-Maze"     time="210.3" />
-
-			<t name="J4-Pipe8"     time="21.0" />
-			<t name="S10-Pipe88"   passPoints="9" />
-			<t name="A2-PipeCoil"  time="45.8" />
-			<t name="0W8-pipe8x8"  time="55.7" />
-	-->
 
 	<challenge name="Slippery Shorts" ver="1" difficulty="2" type="0" 
 			descr="Short tracks on wet, very slippery road.">
@@ -185,7 +189,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Autumn Forests" ver="1" difficulty="2" type="1" 
+	<challenge name="Autumn Forests" ver="1" difficulty="1" type="1" 
 			descr="Forest tracks, mostly in nice autumn colors.">
 		<cartype names="Gravel|Terrain" />
 		<car names="N1" />
@@ -220,17 +224,28 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Desert Visit" ver="1" difficulty="3" type="1" 
-			descr="Visit to desert, starting on sand dunes and ending in a small persian city.">
+	<challenge name="Desert Visit" ver="2" difficulty="3" type="1" 
+			descr="Visit to desert, on sand dunes.">
 		<car names="UV|HR|LK4" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="D1-simple"       passPoints="9" />
 			<t name="D4-SBridge"      passPoints="9" />
 			<t name="D8-Technical"    passPoints="9" />
-			<t name="D11-PersianCity" passPoints="9" />
 		</tracks>
 	</challenge>
+	
+	<challenge name="Persian Fun" ver="2" difficulty="3" type="1" 
+			descr="Drive in narrow Persian cities.">
+		<cartype names="Gravel|Terrain" />
+		<pass avgPoints="11" />
+		<tracks>
+			<t name="D11-PersianCity" passPoints="9" />
+			<t name="D15-CityWall"    passPoints="9" />
+			<t name="D14-JumpCrazy"   passPoints="9" />
+		</tracks>
+	</challenge>
+
 	
 	<challenge name="Winter Sleep" ver="1" difficulty="2" type="1" 
 			descr="Winter rally, slippery snow tracks.">
@@ -268,6 +283,30 @@
 			<t name="G4-River"      passPoints="9" />
 			<t name="G3-Butterfly"  passPoints="9" />
 			<t name="G5-Climb"      passPoints="9" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Mossy Jungle" ver="1" difficulty="2" type="1" 
+			descr="Banked and mossy jungle tracks.">
+		<cartype names="Gravel|Terrain" />
+		<car names="N1|M3" />
+		<pass avgPoints="11" />
+		<tracks>
+			<t name="O1-Moss"       passPoints="9" />
+			<t name="O2-Mouse"      passPoints="9" />
+			<t name="O4-MossyMntn"  passPoints="9" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Canyon Side" ver="1" difficulty="3" type="1" 
+			descr="Highest banked tracks.">
+		<cartype names="Gravel|Racing|Asphalt" />
+		<car names="M3" />
+		<pass avgPoints="11" />
+		<tracks>
+			<t name="C1-Hairpins"   passPoints="9" />
+			<t name="C2-CanyonRun"  passPoints="9" />
+			<t name="C4-Sway"       passPoints="9" />
 		</tracks>
 	</challenge>
 	
@@ -518,14 +557,25 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Stunt Sway" ver="1" difficulty="4" type="4" 
+	<challenge name="Stunt Sway" ver="2" difficulty="4" type="4" 
 			descr="Smooth highly banked terrain and half pipes.">
 		<car names="S8|TC6|FM" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="0W9-IceFrenzy"  passPoints="9" />
-			<t name="A4-Snake"       passPoints="9" />
+			<t name="C4-Sway"        passPoints="9" />
 			<t name="S13-Hole"       passPoints="9" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Half Pipes" ver="1" difficulty="4" type="4" 
+			descr="Smooth highly banked terrain and half pipes.">
+		<car names="ES|S1|S8|N1" />
+		<pass avgPoints="11" />
+		<tracks>
+			<t name="A4-Snake"       passPoints="9" />
+			<t name="J22-Knotted"    passPoints="9" />
+			<t name="G6-Halfpipes"   passPoints="9" />
 		</tracks>
 	</challenge>
 
@@ -563,7 +613,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Pipe Master" ver="1" difficulty="7" type="4" 
+	<challenge name="Pipe Master" ver="1" difficulty="6" type="4" 
 			descr="Most difficult all-pipe tracks. Long and winding.">
 		<sim boost="2" />
 		<car names="ES|S8|UV" />
@@ -603,27 +653,43 @@
 	</challenge>
 
 	<challenge name="Expedition" ver="1" difficulty="3" type="5" 
-			descr="An expedition into other planets, originally driven with electic powered vehicle.">
+			descr="An expedition into other planets, originally driven with electic powered vehicle. Bumpy tracks.">
 		<car names="UV" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="V4-Spikeland"  passPoints="10" />
+			<t name="R3-Hot"        passPoints="9" />
 			<t name="X3-Cloud"      passPoints="8" />
-			<t name="R1-Mars"       passPoints="6" />
+			<t name="R2-Red"        passPoints="9" />
+			<t name="X6-Wild"       passPoints="9" />
 		</tracks>
 	</challenge>
+
 
 	<challenge name="Outer Stunts" ver="1" difficulty="6" type="5" 
 			descr="Great, very fast stunts on other planets. Need to use the rechargable boost to be faster.">
 		<sim boost="2" />
-		<car names="ES|S1|XZ" />
+		<car names="ES|S1|XZ|UV" />
 		<pass avgPoints="14" />
 		<tracks>
 			<t name="R1-Mars"       passPoints="12.0" />
 			<t name="X4-Pipeline"   passPoints="14.0" />
+			<t name="X5-PipeJumps"  passPoints="11.0" />
+			<t name="V6-Crematoria" passPoints="11.0" />
 		</tracks>
 	</challenge>
 	
+	<challenge name="Really Dangerous" ver="1" difficulty="7" type="5" 
+			descr="The very dangerous tracks. Driving on pipe, or with obstacles. When on pipe, drive slowly and stay on top, go lower only in turns.">
+		<sim boost="2" />
+		<car names="ES|S1|S8|N1" />
+		<pass avgPoints="14" />
+		<tracks>
+			<t name="V7-Radioactive"  passPoints="9" />
+			<t name="C5-Obstacles"    passPoints="9" />
+			<t name="0W14-DangerRoad" passPoints="9" />
+		</tracks>
+	</challenge>
 
 
 <!--  Test  -->

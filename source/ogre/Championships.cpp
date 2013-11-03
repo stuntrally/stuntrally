@@ -86,7 +86,7 @@ void CGui::updChampListDim()
 		liChamps->setColumnWidthAt(c, w);  sw += w;
 	}
 	int xt = 0.038*wi.width, yt = 0.10*wi.height;  // pos
-	liChamps->setCoord(xt, yt, sw + 8/*frame*/, 0.32/*height*/*wi.height);
+	liChamps->setCoord(xt, yt, sw + 8/*frame*/, 0.34/*height*/*wi.height);
 	liChamps->setVisible(!isChallGui());
 
 	//  Stages  -----
@@ -113,7 +113,7 @@ void CGui::updChampListDim()
 		liChalls->setColumnWidthAt(c, w);  sw += w;
 	}
 	xt = 0.038*wi.width, yt = 0.10*wi.height;  // pos
-	liChalls->setCoord(xt, yt, sw + 8/**/, 0.32/*height*/*wi.height);
+	liChalls->setCoord(xt, yt, sw + 8/**/, 0.36/*height*/*wi.height);
 	liChalls->setVisible(isChallGui());
 }
 

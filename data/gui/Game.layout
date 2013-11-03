@@ -1072,7 +1072,7 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562" name="TabChamps">
 				<Property key="Caption" value="#80C0FF#{Championship}"/>
-				<Widget type="TabControl" skin="TabControl" position="32 26 542 36" name="TutType">
+				<Widget type="TabControl" skin="TabControl" position="32 26 538 36" name="TutType">
 					<Property key="Colour" value="1.0 0.9 0.8"/>
 					<Widget type="TabItem" skin="" position="2 24 536 8">
 						<Property key="Caption" value="#FFFFA0#{Diff2}"/>
@@ -1081,7 +1081,7 @@
 						<Property key="Caption" value="#E0E000#{Diff3}"/>
 					</Widget>
 				</Widget>
-				<Widget type="TabControl" skin="TabControl" position="32 26 542 36" name="ChampType">
+				<Widget type="TabControl" skin="TabControl" position="32 26 538 36" name="ChampType">
 					<Property key="Colour" value="0.8 0.9 1.0"/>
 					<Widget type="TabItem" skin="" position="2 24 536 8">
 						<Property key="Caption" value="#A0F0FF#{Diff3}"/>
@@ -1099,7 +1099,7 @@
 						<Property key="Caption" value="#909090Test"/>
 					</Widget>
 				</Widget>
-				<Widget type="TabControl" skin="TabControl" position="32 26 569 36" name="ChallType">
+				<Widget type="TabControl" skin="TabControl" position="32 26 566 36" name="ChallType">
 					<Property key="Colour" value="0.9 0.8 1.0"/>
 					<Widget type="TabItem" skin="" position="2 24 563 8">
 						<Property key="Caption" value="#A0D0FF#{Chall_Rally}"/>
@@ -1139,25 +1139,25 @@
 					<Property key="ImageTexture" value="gui_icons.png"/>
 				</Widget>
 
-				<Widget type="Button" skin="CheckBox" position="630 362 120 24" name="ChampRev">
+				<Widget type="Button" skin="CheckBox" position="630 372 120 24" name="ChampRev">
 					<Property key="Caption" value="#{Reverse}"/>
 					<Property key="Colour" value="0.8 1 0.6"/>
 					<Property key="TextColour" value="0.8 1 0.5"/>
 					<UserString key="tip" value="#{TipReverse}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="40 268 694 50" name="ChampDescr">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="38 288 694 50" name="ChampDescr">
 					<Property key="TextColour" value="0.7 0.9 1.0"/>
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
 				</Widget>
-				<Widget type="Widget" skin="PanelSkin" position="32 260 710 66">
+				<Widget type="Widget" skin="PanelSkin" position="30 280 710 66">
 					<Property key="Colour" value="0.6 0.75 0.9"/>
 					<Property key="Alpha" value="0.8"/>
 					<Property key="InheritsAlpha" value="false"/>
 				</Widget>
 
-				<Widget type="Button" skin="Button" position="320 350 144 40" name="btnTutStart">
+				<Widget type="Button" skin="Button" position="320 360 144 40" name="btnTutStart">
 					<Property key="Caption" value="#{Start}"/>
 					<Property key="Colour" value="1.0 0.8 0.4"/>
 					<Property key="TextColour" value="1.0 0.8 0.4"/>
@@ -1168,7 +1168,7 @@
 						<Property key="NeedMouse" value="false"/>
 					</Widget>
 				</Widget>
-				<Widget type="Button" skin="Button" position="320 350 144 40" name="btnChampStart">
+				<Widget type="Button" skin="Button" position="320 360 144 40" name="btnChampStart">
 					<Property key="Caption" value="#{Start}"/>
 					<Property key="Colour" value="0.6 1 0.6"/>
 					<Property key="TextColour" value="0.6 1 0.6"/>
@@ -1179,7 +1179,7 @@
 						<Property key="NeedMouse" value="false"/>
 					</Widget>
 				</Widget>
-				<Widget type="Button" skin="Button" position="320 350 144 40" name="btnChallStart">
+				<Widget type="Button" skin="Button" position="320 360 144 40" name="btnChallStart">
 					<Property key="Caption" value="#{Start}"/>
 					<Property key="Colour" value="0.4 1 0.8"/>
 					<Property key="TextColour" value="0.4 1 0.8"/>
@@ -1190,7 +1190,7 @@
 						<Property key="NeedMouse" value="false"/>
 					</Widget>
 				</Widget>
-				<Widget type="Button" skin="Button" position="100 355 144 30" name="btnChRestart">
+				<Widget type="Button" skin="Button" position="100 365 144 30" name="btnChRestart">
 					<Property key="Caption" value="#{Restart}"/>
 					<Property key="Colour" value="0.75 0.6 0.6"/>
 					<Property key="TextColour" value="0.75 0.6 0.6"/>
