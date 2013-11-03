@@ -41,7 +41,7 @@ public:
 	{
 	public:
 		//  times bar
-		MyGUI::TextBox *txTimTxt,*txTimes;  MyGUI::ImageBox *bckTimes;
+		MyGUI::TextBox *txTimTxt,*txTimes;  //MyGUI::ImageBox *bckTimes;
 		Ogre::String sTimes;
 		//  opponents list  columns: trk %, dist m, nick
 		MyGUI::TextBox *txOpp[3];  MyGUI::ImageBox *bckOpp;

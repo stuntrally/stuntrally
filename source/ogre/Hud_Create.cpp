@@ -104,8 +104,8 @@ void CHud::Size(bool full)
 			//  times
 			bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || app->mClient;
 			int tx = xMin + 20, ty = yMin + 40;  // above minimap
-			h.bckTimes->setPosition(tx,ty);
-			tx = 24;  ty = 4;  //(hasLaps ? 16 : 4);
+			//h.bckTimes->setPosition(tx,ty);
+			//tx = 24;  ty = 4;  //(hasLaps ? 16 : 4);
 			h.txTimTxt->setPosition(tx,ty);
 			h.txTimes->setPosition(tx+126,ty);
 				
@@ -117,7 +117,7 @@ void CHud::Size(bool full)
 				h.txOpp[n]->setPosition(n*65+5,0);
 			
 			//  warn,win
-			ox = xMin + 300;  oy = yMin + 15;
+			ox = (xMax-xMin)/2 + xMin - 200;  oy = yMin + 15;
 			h.bckWarn->setPosition(ox,oy);
 			h.bckPlace->setPosition(ox,oy + 40);
 			
@@ -147,7 +147,7 @@ void CHud::Create()
 	QTimer ti;  ti.update();  /// time
 
 	SceneManager* scm = app->mSplitMgr->mGuiSceneMgr;
-	if (hud[0].moMap || hud[0].txVel || hud[0].bckTimes)
+	if (hud[0].moMap || hud[0].txVel || hud[0].txTimes)
 		LogO("CreateHUD: Hud exists !");
 
 	app->CreateGraphs();
@@ -303,12 +303,12 @@ void CHud::Create()
 
 
 		//  times text  -----------
-		h.bckTimes = h.parent->createWidget<ImageBox>("ImageBox",
+		/*h.bckTimes = h.parent->createWidget<ImageBox>("ImageBox",
 			0,y, 356,260, Align::Left, "TimP"+s);  h.bckTimes->setVisible(false);
 		h.bckTimes->setAlpha(0.f);
-		h.bckTimes->setImageTexture("back_times.png");
+		h.bckTimes->setImageTexture("back_times.png");*/
 
-		h.txTimTxt = h.bckTimes->createWidget<TextBox>("TextBox",
+		h.txTimTxt = h.parent->createWidget<TextBox>("TextBox",
 			0,y, 120,260, Align::Left, "TimT"+s);
 		h.txTimTxt->setFontName("font.22");  h.txTimTxt->setTextShadow(true);
 		h.txTimTxt->setInheritsAlpha(false);
@@ -322,7 +322,7 @@ void CHud::Create()
 			"\n\n#C0C030"+TR("#{TBPosition}") +
 			"\n#F0C050"+TR("#{TBPoints}") );
 
-		h.txTimes = h.bckTimes->createWidget<TextBox>("TextBox",
+		h.txTimes = h.parent->createWidget<TextBox>("TextBox",
 			0,y, 230,260, Align::Left, "Tim"+s);
 		h.txTimes->setInheritsAlpha(false);
 		h.txTimes->setFontName("font.22");  h.txTimes->setTextShadow(true);
@@ -477,7 +477,7 @@ CHud::OvrDbg::OvrDbg() :
 
 CHud::Hud::Hud()
 	:parent(0)
-	,txTimTxt(0), txTimes(0), bckTimes(0),  sTimes("")
+	,txTimTxt(0), txTimes(0), /*bckTimes(0),*/  sTimes("")
 	,bckOpp(0)
 	,txWarn(0), txPlace(0),  bckWarn(0), bckPlace(0)
 	,txCountdown(0)
@@ -525,7 +525,7 @@ void CHud::Destroy()
 
 		for (i=0; i < 3; ++i)  Dest(h.txOpp[i])
 		Dest(h.bckOpp)
-		Dest(h.txTimTxt)  Dest(h.txTimes)  Dest(h.bckTimes)
+		Dest(h.txTimTxt)  Dest(h.txTimes)  //Dest(h.bckTimes)
 		h.sTimes = "";
 		
 		Dest(h.txWarn)  Dest(h.bckWarn)
@@ -597,7 +597,7 @@ void CHud::Show(bool hideAll)
 				h.ndNeedles->setVisible(show);
 
 				h.ndMap->setVisible(pSet->trackmap);
-				h.bckTimes->setVisible(times);
+				h.txTimes->setVisible(times);  h.txTimTxt->setVisible(times);
 				h.bckOpp->setVisible(opp);
 				h.txCam->setVisible(cam);
 		}	}
