@@ -30,7 +30,7 @@ BltObjects::BltObjects()
 
 bool BltObjects::LoadXml()
 {
-	//cols.clear();
+	colNone.clear();
 	colsMap.clear();
 	colsMapFind = colsMap.end();
 	
@@ -90,6 +90,19 @@ bool BltObjects::LoadXml()
 	{
 		a = n->Attribute("frict");	if (a)  defPars.friction = s2r(a);
 		a = n->Attribute("restit");	if (a)  defPars.restitution = s2r(a);
+	}
+	
+	//  no collision
+	n = root->FirstChildElement("none");
+	if (n)
+	{	m = n->FirstChildElement("object");
+		while (m)
+		{
+			a = m->Attribute("mesh");
+			if (a)
+				colNone[std::string(a)] = true;
+			m = m->NextSiblingElement("object");
+		}
 	}
 	return true;
 }

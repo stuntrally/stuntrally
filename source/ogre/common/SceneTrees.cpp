@@ -323,10 +323,11 @@ void App::CreateTrees()
 				///  add to bullet world
 				#ifndef SR_EDITOR  //  in Game
 				int cc = col ? col->shapes.size() : 0;
-				//  not found or specified
-				bool useTrimesh = cc == 0 || cc == 1 && col->shapes[0].type == BLT_Mesh;
+				//  not found in xml or specified, 1 shape
+				bool useTrimesh = !col || cc == 1 && col->shapes[0].type == BLT_Mesh;
+				bool noCol = data->objs->colNone[pg.name];
 
-				if (pSet->game.collis_veget)
+				if (pSet->game.collis_veget && !noCol)
 				if (!useTrimesh)
 				for (int c=0; c < cc; ++c)  // all shapes
 				{

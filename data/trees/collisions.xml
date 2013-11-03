@@ -1,6 +1,22 @@
 <collisions>
 	<!--for trimeshes if not found here-->
 	<default frict="0.3" restit="0.8" />
+	<!--if a mesh isnt here it will have trimesh collison by default (for rocks)-->
+	
+	<none>
+	<!-- no collision (add all that need here) -->
+	<!--<object mesh= "farn1.mesh" />
+		<object mesh= "farn2.mesh" />-->
+
+		<object mesh= "fern.mesh" />
+		<object mesh= "fern2.mesh" />
+
+		<object mesh= "plant1.mesh" />
+		<object mesh= "plant2.mesh" />
+
+		<object mesh= "plant_tropical.mesh" />
+		<object mesh= "palm_plant.mesh" />
+	</none>
 	
 <!-- old -->
 	<object mesh= "tree.07.mesh" ofs="1.2 -0.7 1.4">
@@ -35,7 +51,6 @@
 	<object mesh= "fir14w.mesh">
 		<shape type="capsZ" ofs="0 0 30" r="4.1" h="69.0" frict="0.2" restit="0.9" />
 	</object>
-	<!--none: plant1 plant2 shroom1_1 shroom1_2 shroom1_3 shroom2_1 shroom2_2 shroom2_3-->
 
 <!-- new -->
 	<object mesh= "palm.mesh">
@@ -169,7 +184,8 @@
 
 
 <!-- Rocks ALL -->
-	<!--using <default>, or needed custom then use this:-->
+	<!--use trimesh with params from <default>
+		if need custom params use this:-->
 
 	<!--<object mesh= "rock.05.mesh">
 		<shape type="mesh" frict="0.2" restit="0.9" />

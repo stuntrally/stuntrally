@@ -35,7 +35,7 @@ public:
 class BltObjects
 {
 public:
-	//std::vector<BltCollision> cols;
+	std::map <std::string, bool> colNone;
 	std::map <std::string, BltCollision> colsMap;
 	std::map <std::string, BltCollision>::const_iterator colsMapFind;
 
