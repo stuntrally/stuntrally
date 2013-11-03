@@ -10,7 +10,7 @@ class ChampTrack
 public:
 	std::string name;  bool reversed;  // track
 	int laps;  // number of laps
-	float factor;  // time factor (difficulty) - how near to best time you need to drive
+	//float factor;  // time factor (difficulty) - how near to best time you need to drive
 	float passScore;
 	ChampTrack();
 };

@@ -8,7 +8,7 @@ using namespace tinyxml2;
 
 
 ChampTrack::ChampTrack() :
-	laps(0), factor(1.f), reversed(0), passScore(100.f)  // default
+	laps(0), /*factor(1.f),*/ reversed(0), passScore(100.f)  // default
 {	}
 
 Champ::Champ() :
@@ -53,7 +53,7 @@ bool ChampsXml::LoadXml(std::string file, TracksXml* trks)
 			ChampTrack t;	//name="S4-Hills" laps="1" factor="0.1"
 			a = eTr->Attribute("name");		if (a)  t.name = std::string(a);
 			a = eTr->Attribute("laps");		if (a)  t.laps = s2i(a);
-			a = eTr->Attribute("factor");	if (a)  t.factor = s2r(a);
+			//a = eTr->Attribute("factor");	if (a)  t.factor = s2r(a);
 			a = eTr->Attribute("reversed");	if (a)  t.reversed = s2i(a) > 0;
 			a = eTr->Attribute("passScore");if (a)  t.passScore = s2r(a);
 			
