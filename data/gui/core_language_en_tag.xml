@@ -466,6 +466,7 @@
 	<Tag name="OpponentsSorted">Opponents Sorted</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="CameraAutoTilt">Camera auto tilt on slopes</Tag>
+	<Tag name="CameraLoopChange">Camera change in loops</Tag>
 	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
 	<Tag name="CheckBeam">Next checkpoint beam</Tag>
 	<Tag name="CountdownTime">Race countdown time</Tag>
@@ -968,11 +969,14 @@
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle  (no pipe when 0)</Tag>
 	<Tag name="InputRoadMat">-,=  - road/pipe material  (-1 hidden)</Tag>
 	<Tag name="InputRoadChkRadius">K,L  - checkpoint radius  (ChkR 0 - none)</Tag>
-
-	<Tag name="InputRoadAngType">5,6   - angles type</Tag>
-	<Tag name="InputRoadAngSnap">7,8   - angles snap</Tag>
-	<Tag name="InputRoadAngZero">shift-6  - zero angles</Tag>
+	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first  (1)</Tag>
+
+	<Tag name="InputRoadAngType">alt-1,2   - angles type</Tag>
+	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
+	<Tag name="InputRoadAngZero">alt-shift-1  - zero angles</Tag>
+	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
+	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
 
 	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 

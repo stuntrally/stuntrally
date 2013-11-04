@@ -4092,11 +4092,11 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="170 112 190 20">
 							<Property key="TextColour" value="1.0 0.8 0.6"/>
-							<Property key="Caption" value="#{InputRoadYaw}*"/>
+							<Property key="Caption" value="#{InputRoadRoll}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="170 134 190 20">
 							<Property key="TextColour" value="1.0 0.6 0.6"/>
-							<Property key="Caption" value="#{InputRoadRoll}"/>
+							<Property key="Caption" value="#{InputRoadYaw}*"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="376 116 320 20">
 							<Property key="TextColour" value="0.7 0.86 0.86"/>
@@ -4118,24 +4118,39 @@
 							<Property key="TextColour" value="0.75 0.64 0.96"/>
 							<Property key="Caption" value="#{InputRoadChkRadius}"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="406 174 320 20">
+							<Property key="TextColour" value="0.65 0.54 0.86"/>
+							<Property key="Alpha" value="0.7"/>
+							<Property key="Caption" value="#{InputRoadChkCtrl}"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 202 328 20">
 							<Property key="TextColour" value="0.9 0.6 0.8"/>
 							<Property key="Caption" value="#{InputRoadAngType}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 246 328 20">
+						<Widget type="TextBox" skin="TextBox" position="32 224 328 20">
 							<Property key="TextColour" value="1.0 0.7 0.6"/>
 							<Property key="Alpha" value="0.9"/>
 							<Property key="Caption" value="#{InputRoadAngZero}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 224 328 20">
+						<Widget type="TextBox" skin="TextBox" position="32 246 328 20">
 							<Property key="TextColour" value="0.75 0.45 0.55"/>
 							<Property key="Caption" value="#{InputRoadAngSnap}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="376 174 320 20">
+						<Widget type="TextBox" skin="TextBox" position="376 196 320 20">
 							<Property key="TextColour" value="0.7 0.7 1.0"/>
 							<Property key="Caption" value="ctrl-#{InputRoadChkFirst}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 320 328 20">
+						<Widget type="TextBox" skin="TextBox" position="32 284 420 20">
+							<Property key="TextColour" value="0.5 0.9 0.9"/>
+							<Property key="Alpha" value="0.7"/>
+							<Property key="Caption" value="#{InputRoadLoopChk}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 304 320 20">
+							<Property key="TextColour" value="0.9 0.4 0.2"/>
+							<Property key="Alpha" value="0.7"/>
+							<Property key="Caption" value="#{InputRoadOnPipe}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 360 328 20">
 							<Property key="Caption" value="#{InputRoadMostSel}"/>
 							<Property key="TextColour" value="0.5 0.8 1"/>
 						</Widget>

@@ -98,6 +98,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case WND_Help:    tab = sub = gui->vSubTabsHelp[1];  iTab1 = 0;  break;
 		case WND_Options: tab = mWndTabsOpts;  sub = gui->vSubTabsOpts[tab->getIndexSelected()];  break;
 	}
+	bool bRoad = edMode == ED_Road && road && bEdit();
 
 	//  global keys
 	//------------------------------------------------------------------------------------------------------------------------------
@@ -116,11 +117,11 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				if (bMoveCam)		 gui->GuiShortcut(WND_Help, 1, 0);
 				else switch (edMode)
 				{	case ED_Smooth: case ED_Height: case ED_Filter:
-					case ED_Deform:  gui->GuiShortcut(WND_Help, 1, 1);  break;
-					case ED_Road:    gui->GuiShortcut(WND_Help, 1, 2);  break;
-					case ED_Start:   gui->GuiShortcut(WND_Help, 1, 4);  break;
-					case ED_Fluids:  gui->GuiShortcut(WND_Help, 1, 5);  break;
-					case ED_Objects: gui->GuiShortcut(WND_Help, 1, 6);  break;
+					case ED_Deform:  gui->GuiShortcut(WND_Help, 1, 3);  break;
+					case ED_Road:    gui->GuiShortcut(WND_Help, 1, 5);  break;
+					case ED_Start:   gui->GuiShortcut(WND_Help, 1, 6);  break;
+					case ED_Fluids:  gui->GuiShortcut(WND_Help, 1, 7);  break;
+					case ED_Objects: gui->GuiShortcut(WND_Help, 1, 8);  break;
 					default:		 gui->GuiShortcut(WND_Help, 1, 0);  break;
 			}	}
 			else	//  Gui mode, Options
@@ -143,11 +144,11 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 		//  prev num tab (layers,grasses,models)
 		case key(1):
-   			if (alt)  {  gui->NumTabNext(-1);  return true;  }
+   			if (alt && !bRoad)  {  gui->NumTabNext(-1);  return true;  }
 			break;
 		//  next num tab
 		case key(2):
-   			if (alt)  {  gui->NumTabNext(1);  return true;  }
+   			if (alt && !bRoad)  {  gui->NumTabNext(1);  return true;  }
 			break;
 
 		case key(F2):  // +-rt num
@@ -221,15 +222,15 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 
 	///  Road keys  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
-	if (edMode == ED_Road && road && bEdit())
+	if (bRoad)
 	{
-		if (iSnap > 0)
+		if (iSnap > 0 && !alt)
 		switch (skey)
 		{
-			case key(1):  road->AddYaw(-1,angSnap,alt);  break;
-			case key(2):  road->AddYaw( 1,angSnap,alt);  break;
-			case key(3):  road->AddRoll(-1,angSnap,alt);  break;
-			case key(4):  road->AddRoll( 1,angSnap,alt);  break;
+			case key(1):  road->AddRoll(-1,angSnap,alt);  break;
+			case key(2):  road->AddRoll( 1,angSnap,alt);  break;
+			case key(3):  road->AddYaw(-1,angSnap,alt);  break;
+			case key(4):  road->AddYaw( 1,angSnap,alt);  break;
 		}
 		switch (skey)
 		{
@@ -285,16 +286,18 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				if (ctrl)  {   road->Set1stChk();  break;  }
 			case key(EQUALS):  road->ChgMtrId(1);  break;
 			case key(9):
-				if (shift) {   road->ToggleLoopChk();  break;  } else
-				if (ctrl)  {   road->ToggleOnPipe();  break;  }
 			case key(MINUS):   road->ChgMtrId(-1);  break;
 
-			case key(5):  road->ChgAngType(-1);  break;
-			case key(6):  if (shift)  road->AngZero();  else
-						road->ChgAngType(1);  break;
+			case key(1):  if (alt)
+						if (shift)	road->AngZero();
+						else		road->ChgAngType(-1);  break;
+			case key(2):  if (alt)	road->ChgAngType(1);  break;
 
-			case key(7):  iSnap = (iSnap-1+ciAngSnapsNum)%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];  break;
-			case key(8):  iSnap = (iSnap+1)%ciAngSnapsNum;                angSnap = crAngSnaps[iSnap];  break;
+			case key(7):	road->ToggleLoopChk();  break;  
+			case key(8):	road->ToggleOnPipe();  break;
+
+			case key(5):  iSnap = (iSnap-1+ciAngSnapsNum)%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];  break;
+			case key(6):  iSnap = (iSnap+1)%ciAngSnapsNum;                angSnap = crAngSnaps[iSnap];  break;
 			
 			case key(U):  AlignTerToRoad();  break;
 			

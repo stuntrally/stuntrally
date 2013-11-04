@@ -154,8 +154,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			rdTxt[1]->setCaption(TR("#{Road_Width}"));		rdKey[1]->setCaption("/ *");
 			rdTxt[2]->setCaption(TR("#{Road_Roll}"));		rdKey[2]->setCaption("1 2");
 			rdTxt[3]->setCaption(TR("#{Road_Yaw}"));		rdKey[3]->setCaption("3 4");
-															rdKey[4]->setCaption("5 6");
-			rdTxt[5]->setCaption(TR("#{Road_Snap}"));		rdKey[5]->setCaption("7 8");
+															rdKey[4]->setCaption(TR("#{InputRoadAngType}"));
+			rdTxt[5]->setCaption(TR("#{Road_Snap}"));		rdKey[5]->setCaption("5 6");
 			rdTxt[6]->setCaption(TR("#{Road_Pipe}"));		rdKey[6]->setCaption("O P");//[ ]
 			rdTxt[7]->setCaption(TR("#{Road_Column}"));		rdKey[7]->setCaption("End");
 															rdKey[8]->setCaption("9 0");//- =
@@ -179,6 +179,9 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		rdVal[7]->setCaption(sp.onTer ? "" : toStr(sp.cols));
 		
 		rdTxt[8]->setCaption(toStr(sp.idMtr)+" "+road->getMtrStr(ic));
+
+		rdTxt[9]->setTextColour(sp.loopChk ? MyGUI::Colour(0.5,1,1) : MyGUI::Colour(0.75,0.64,0.96));
+		rdTxt[9]->setCaption(sp.loopChk ? TR("#{Road_Loop}") : TR("#{Road_ChkR}"));
 		rdVal[9]->setCaption( sp.chkR == 0.f ? "" : fToStr(sp.chkR,1,3)+"  "+ (road->iP1 == ic ? "#D0D0FF(1)":"") );
 
 		if (road->vSel.size() > 0)  s = TR("#{Road_sel}")+": "+toStr(road->vSel.size());
@@ -240,7 +243,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(KP_MINUS)) road->Move(-vy*q);  if (isKey(KP_MULTIPLY)) road->AddWidth( q*0.4f);
 		if (isKey(KP_PLUS))  road->Move( vy*q);  if (isKey(KP_DIVIDE))   road->AddWidth(-q*0.4f);
 
-		if (iSnap == 0)
+		if (iSnap == 0 && !alt)
 		{	if (isKey(3))	road->AddYaw(-q*3,0,alt);	if (isKey(1))	road->AddRoll(-q*3,0,alt);
 			if (isKey(4))	road->AddYaw( q*3,0,alt);	if (isKey(2))	road->AddRoll( q*3,0,alt);
 		}
