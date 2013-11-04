@@ -371,7 +371,7 @@ void App::newPoses(float time)  // time only for camera update
 				if (ncs > 0)
 				{
 					//  Finish  --------------------------------------
-					if (carM->eType == CarModel::CT_LOCAL &&  // only local car(s)
+					if (carM->eType == CarModel::CT_LOCAL &&
 						(carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1))
 					{
 						///  Lap
@@ -416,6 +416,7 @@ void App::newPoses(float time)  // time only for camera update
 								gui->ChallengeAdvance(timeCur);
 						}
 					}
+					
 					//  checkpoints  --------------------------------------
 					for (int i=0; i < ncs; ++i)
 					{
@@ -424,6 +425,21 @@ void App::newPoses(float time)  // time only for camera update
 						if (d2 < cs.r2)  // car in checkpoint
 						{
 							carM->iInChk = i;
+							
+							//\  loop camera change
+							if (pSet->cam_loop_chng && carM->fCam &&
+								cs.loop && (carM->iLoopChk == -1 || carM->iLoopChk != i))
+							{
+								carM->iLoopChk = i;
+								if (carM->iLoopLastCam == -1)
+								{
+									carM->iLoopLastCam = carM->fCam->miCurrent;
+									carM->fCam->setCamera(pSet->cam_in_loop);
+								}else
+								{	carM->fCam->setCamera(carM->iLoopLastCam);
+									carM->iLoopLastCam = -1;
+								}
+							}
 							//  next check
 							if (i == carM->iNextChk && carM->iNumChks < ncs)
 							{

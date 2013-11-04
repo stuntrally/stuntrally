@@ -2458,7 +2458,7 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#D0FFFF#{View}"/>
-				<Widget type="TabControl" skin="TabControl" position="16 15 744 460" name="SubTab">
+				<Widget type="TabControl" skin="TabControl" position="16 15 744 500" name="SubTab">
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
@@ -2533,6 +2533,10 @@
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="232 364 320 24" name="CamTilt">
 							<Property key="Caption" value="#{CameraAutoTilt}"/>
+							<Property key="TextColour" value="0.6 0.8 0.7"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="232 404 320 24" name="CamLoop">
+							<Property key="Caption" value="#{CameraLoopChange}"/>
 							<Property key="TextColour" value="0.6 0.8 0.7"/>
 						</Widget>
 

@@ -69,6 +69,7 @@ void CarModel::ResetChecks(bool bDist)  // needs to be done after road load!
 {
 	updTimes = true;
 	iCurChk = -1;  iNumChks = 0;  // reset lap, chk vars
+	iLoopChk = -1;  iLoopLastCam = -1;
 	trackPercent = 0.f;
 	if (!pApp || !pApp->road)  return;
 	

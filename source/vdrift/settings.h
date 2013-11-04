@@ -44,6 +44,8 @@ public:
 
 	float size_gauges, size_minimap, size_arrow, zoom_minimap;
 	int gauges_type, gauges_layout;
+	bool cam_loop_chng;  int cam_in_loop;
+	
 	eGraphType graphs_type;
 	int car_dbgtxtclr, car_dbgtxtcnt;
 	//  gui

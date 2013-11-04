@@ -38,6 +38,7 @@ class CheckSphere
 public:  // for car checking
 	Ogre::Vector3 pos;
 	Ogre::Real r,r2;  // radius, r*r
+	bool loop;  // for car camera change
 	
 	//  for drive progress %
 	Ogre::Real dist[2];  // summed distances (cur to next)

@@ -186,7 +186,7 @@ public:
 	CK(Minimap);  void chkMiniUpd(Ck*);
 	Ck ckMiniZoom, ckMiniRot, ckMiniTer, ckMiniBorder;
 	//  cam
-	Ck ckCamInfo, ckCamTilt;
+	Ck ckCamInfo, ckCamTilt, ckCamLoop;
 	//  Times, opp
 	Ck ckTimes;
 	Ck ckOpponents, ckOppSort;

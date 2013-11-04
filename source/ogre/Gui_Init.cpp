@@ -204,6 +204,8 @@ void CGui::InitGui()
 	//  camera
 	ck= &ckCamInfo;		ck->Init("CamInfo",     &pSet->show_cam);   Cev(HudShow);
 	ck= &ckCamTilt;		ck->Init("CamTilt",     &pSet->cam_tilt);
+	ck= &ckCamLoop;		ck->Init("CamLoop",     &pSet->cam_loop_chng);
+
 
 	//  times, opp
 	ck= &ckTimes;		ck->Init("Times",       &pSet->show_times);      Cev(HudShow);
@@ -276,7 +278,7 @@ void CGui::InitGui()
 	Cmb(cmb, "CmbRewind", comboRewind);	cmbRewind = cmb;
 		cmb->removeAllItems();
 		cmb->addItem(TR("#{None}"));		cmb->addItem(TR("#{Always}"));
-		cmb->addItem(TR("#{FuelLap}"));		cmb->addItem(TR("#{FuelTime}"));
+		//cmb->addItem(TR("#{FuelLap}"));		cmb->addItem(TR("#{FuelTime}"));
 		cmb->setIndexSelected(pSet->gui.rewind_type);
 
 	//  split

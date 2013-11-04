@@ -75,6 +75,7 @@ void SplineRoad::SetChecks()  // after xml load
 			cs.pos = mP[i].pos;  // +ofs_y ?-
 			cs.r = mP[i].chkR * mP[i].width;
 			cs.r2 = cs.r * cs.r;
+			cs.loop = mP[i].loopChk > 0;
 
 			if (i == iP1)  //1st checkpoint
 				iChkId1 = mChks.size();
