@@ -210,7 +210,9 @@ void App::LoadCleanUp()  // 1 first
 		CarModel* c = carModels[i];
 		if (c && c->fCam)
 		{
-			carsCamNum[i] = c->fCam->miCurrent +1;  // save which cam view
+			carsCamNum[i] = 
+				c->iLoopLastCam != -1 ? c->iLoopLastCam +1 :  //o
+				c->fCam->miCurrent +1;  // save which cam view
 			if (i < 4)
 				pSet->cam_view[i] = carsCamNum[i];
 		}
@@ -535,6 +537,7 @@ void App::LoadRoad()  // 6
 
 	///  Run track's ghost
 	// to get times at checkpoints
+	fLastTime = 1.f;
 	if (!road || ghtrk.GetTimeLength() < 1.f)  return;
 	int ncs = road->mChks.size();
 	if (ncs == 0)  return;
@@ -548,6 +551,8 @@ void App::LoadRoad()  // 6
 	for (i=0; i < si; ++i)
 	{
 		const TrackFrame& tf = ghtrk.frames[i];  // car
+		if (tf.time > fLastTime)
+			fLastTime = tf.time;
 		for (c=0; c < ncs; ++c)  // test if in any checkpoint
 		{
 			const CheckSphere& cs = road->mChks[c];

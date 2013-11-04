@@ -41,7 +41,8 @@ App::App(SETTINGS *settings, GAME *game)
 	,bRplPlay(0),bRplPause(0), bRplRec(0), bRplWnd(0)
 	,iEdTire(0), iTireLoad(0), iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
 	,fLastFrameDT(0.001f)
-	,bPerfTest(0),iPerfTestStage(PT_StartWait), isGhost2nd(0)
+	,bPerfTest(0),iPerfTestStage(PT_StartWait)
+	,isGhost2nd(0),fLastTime(1.f)
 {
 	pSet = settings;
 	pGame->collision.pApp = this;

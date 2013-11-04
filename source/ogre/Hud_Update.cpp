@@ -376,14 +376,17 @@ void CHud::Update(int carId, float time)
 		//  times  ------------------------------
 		bool cur = pCarM->iCurChk >= 0 && !app->vTimeAtChks.empty();
 		float ghTimeES = cur ? app->vTimeAtChks[pCarM->iCurChk] : 0.f;
+		float part = ghTimeES / app->fLastTime;  // fraction which track ghost has driven
+
 		bool coldStart = tim.GetCurrentLap(carId) == 1;  // was 0
 		float carMul = app->GetCarTimeMul(pSet->game.car[carId], pSet->game.sim_mode);
 		//| cur
 		float ghTimeC = ghTimeES + (coldStart ? 0 : 1);
-		float ghTime = ghTimeC * carMul;
-		float diff = pCarM->timeAtCurChk - ghTime;  // diff at chk
+		float ghTime = ghTimeC * carMul;  // scaled
+		float diffT = pCarM->timeAtCurChk - ghTime;  // cur car diff at chk
+		float diff = 0.f;  // on hud
 		
-		if (pCarM->updTimes)
+		//!- if (pCarM->updTimes || pCarM->updLap)
 		{	pCarM->updTimes = false;
 
 			//  track time, points
@@ -393,7 +396,7 @@ void CHud::Update(int carId, float time)
 			bool b = timeTrk > 0.f && timeCur > 0.f;
 
 			//bool coldStart = tim.GetCurrentLap(carId) == 1;  // was 0
-			float time = (/*place*/1 * app->data->cars->magic * timeTrk + timeTrk) / carMul;
+			float time = (/*place*/1 * app->data->cars->magic * timeTrk + timeTrk) / carMul;  // trk time (for 1st place)
 			//float t1pl = data->carsXml.magic * timeTrk;
 
 			float points = 0.f, curPoints = 0.f;
@@ -401,26 +404,53 @@ void CHud::Update(int carId, float time)
 			//| cur
 			float timCC = timeTrk + (coldStart ? 0 : 1);
 			float timCu = timCC * carMul;
+			diff = pCarM->timeAtCurChk + /*(coldStart ? 1:0)*carMul*/ - time * part;  ///new
 
 			float chkPoints = 0.f;  // cur, at chk, assume diff time later than track ghost
-			int chkPlace = app->GetRacePos(timCu + diff, timeTrk, carMul, coldStart, &chkPoints);
+			int chkPlace = app->GetRacePos(timCu + diffT, timeTrk, carMul, coldStart, &chkPoints);
 			bool any = cur || b;
 	
 			h.sTimes =
+				"\n#80E080" + StrTime(time)+
+				"\n#D0D040" + (cur ? toStr( chkPlace )     : "--")+
+				"\n#F0A040" + (cur ? fToStr(chkPoints,1,3) : "--");
+			float dlap = last - time;
+			h.sLap =
+				"#D0E8FF"+TR("#{TBLapResults}") +
 				"\n#80C8FF" + StrTime(last)+
+				(last > 0.f ? String("  ") + (dlap > 0.f ? "#80E0FF+" : "#60FF60-") + fToStr(fabs(dlap), 1,3) : "")+
 				"\n#80E0E0" + StrTime(best)+
 				"\n#80E080" + StrTime(time)+
-				"\n\n#D0D040" + (any ? toStr( cur ? chkPlace  : place)      : "--")+
-				"\n#F0A040" +   (any ? fToStr(cur ? chkPoints : points,1,3) : "--");
-				//"\n\n#D0D040" + (b ? toStr(place)      + (cur ? "    "+toStr(chkPlace)     :"") : "--")+  // both-
-				//"\n#F0A040" +   (b ? fToStr(points,1,3)+ (cur ? "   "+fToStr(chkPoints,1,3):"") : "--");
+				"\n#D0D040" + (b ? toStr(place)      : "--")+
+				"\n#F0A040" + (b ? fToStr(points,1,3) : "--");
+			if (h.txLap)
+				h.txLap->setCaption(h.sLap);
 		}
 		if (h.txTimes)
 			h.txTimes->setCaption(
 				(hasLaps ? "#D0FFE8"+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps) : "") +
-				"\n#C0E0F0" + StrTime(tim.GetPlayerTime(carId))+
-				(cur ? String("  ")+ (diff > 0.f ? "#80E0FF+" : "#60FF60-") + fToStr(fabs(diff),2,4) : "")+
-				h.sTimes);
+				"\n#A0E0E0" + StrTime(tim.GetPlayerTime(carId))+
+				(cur ? String("  ") + (diff > 0.f ? "#80E0FF+" : "#60FF60-")+
+					fToStr(fabs(diff), /*diff > 10.f ? 1 : 2*/2,4) : "")+
+				h.sTimes+
+				"\n#E0B090" + fToStr(pCarM->trackPercent,0,1)+"%" );
+
+		if (h.txLap)  // fade out
+		{
+			//if (pCarM->updLap)
+			//{	pCarM->updLap = false;
+				//h.txLap->setCaption(h.sLap);
+			//}
+			float a = std::min(1.f, pCarM->fLapAlpha * 2.f);
+			bool b = a > 0.f;
+			if (b)
+			{	pCarM->fLapAlpha -= time * 0.1f; //0.04f;
+				h.bckLap->setAlpha(a);
+				h.txLapTxt->setAlpha(a);  h.txLap->setAlpha(a);
+			}
+			h.bckLap->setVisible(b);
+			h.txLapTxt->setVisible(b);  h.txLap->setVisible(b);
+		}
 	}
 
 

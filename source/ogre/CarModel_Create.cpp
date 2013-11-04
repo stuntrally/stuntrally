@@ -48,7 +48,8 @@ CarModel::CarModel(int index, int colorId, eCarType type, const std::string& nam
 	,bGetStPos(true), fChkTime(0.f), iWonPlace(0), iWonPlaceOld(0)
 	,iCurChk(-1), iNumChks(0), iNextChk(0), iLoopChk(-1)  //ResetChecks();  // road isnt yet
 	,timeAtCurChk(0.f), iLoopLastCam(-1)
-	,distFirst(1.f), distLast(1.f), distTotal(10.f), trackPercent(0.f), updTimes(1)
+	,distFirst(1.f), distLast(1.f), distTotal(10.f), trackPercent(0.f)
+	,updTimes(1), updLap(1), fLapAlpha(1.f)
 {
 	for (int w = 0; w < 4; ++w)
 	{

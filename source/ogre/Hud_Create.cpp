@@ -103,15 +103,21 @@ void CHud::Size(bool full)
 
 			//  times
 			bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || app->mClient;
-			int tx = xMin + 20, ty = yMin + 40;  // above minimap
+			int tx = xMin + 20, ty = yMin + 40;
 			//h.bckTimes->setPosition(tx,ty);
 			//tx = 24;  ty = 4;  //(hasLaps ? 16 : 4);
 			h.txTimTxt->setPosition(tx,ty);
 			h.txTimes->setPosition(tx+126,ty);
+			
+			//  lap result
+			int lx = xMax - 320, ly = ty;
+			h.bckLap->setPosition(lx-14,ly-8);
+			h.txLapTxt->setPosition(lx,ly);
+			h.txLap->setPosition(lx+126,ly);
 				
 			//  opp list
 			//int ox = itx + 5, oy = (ycRpm+1.f)*0.5f*wy - 10;
-			int ox = xMin + 50, oy = (-miniTopY+1.f)*0.5f*wy;  //ty + 440;
+			int ox = xMin + 50, oy = (-miniTopY+1.f)*0.5f*wy - plr*20;//..  //ty + 440;
 			h.bckOpp->setPosition(ox,oy -2);  h.bckOpp->setSize(230, plr*25 +4);
 			for (int n=0; n<3; ++n)
 				h.txOpp[n]->setPosition(n*65+5,0);
@@ -302,30 +308,54 @@ void CHud::Create()
 		#endif
 
 
-		//  times text  -----------
+		///  times text  ----------------------
 		/*h.bckTimes = h.parent->createWidget<ImageBox>("ImageBox",
 			0,y, 356,260, Align::Left, "TimP"+s);  h.bckTimes->setVisible(false);
 		h.bckTimes->setAlpha(0.f);
 		h.bckTimes->setImageTexture("back_times.png");*/
+		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || pSet->game.chall_num >= 0 || app->mClient;
 
 		h.txTimTxt = h.parent->createWidget<TextBox>("TextBox",
 			0,y, 120,260, Align::Left, "TimT"+s);
 		h.txTimTxt->setFontName("font.22");  h.txTimTxt->setTextShadow(true);
 		h.txTimTxt->setInheritsAlpha(false);
-		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || pSet->game.chall_num >= 0 || app->mClient;
 		h.txTimTxt->setCaption(
 			(hasLaps ? String("#D0F8F0")+TR("#{TBLap}") : "")+
-			"\n#C0E0F0"+TR("#{TBTime}") + 
-			"\n#80C0F0"+TR("#{TBLast}") + 
-			"\n#80E0E0"+TR("#{TBBest}") +
+			"\n#A0E0E0"+TR("#{TBTime}") +
 			"\n#70D070"+TR("#{Track}") +
-			"\n\n#C0C030"+TR("#{TBPosition}") +
-			"\n#F0C050"+TR("#{TBPoints}") );
+			"\n#C0C030"+TR("#{TBPosition}") +
+			"\n#F0C050"+TR("#{TBPoints}") +
+			"\n#C8A898"+TR("#{Progress}") );
 
 		h.txTimes = h.parent->createWidget<TextBox>("TextBox",
 			0,y, 230,260, Align::Left, "Tim"+s);
 		h.txTimes->setInheritsAlpha(false);
 		h.txTimes->setFontName("font.22");  h.txTimes->setTextShadow(true);
+
+
+		///  lap results  ----------------------
+		h.bckLap = h.parent->createWidget<ImageBox>("ImageBox",
+			0,y, 320,210, Align::Left, "LapP"+s);  h.bckLap->setVisible(false);
+		h.bckLap->setColour(Colour(0.4,0.4,0.4));
+		h.bckLap->setAlpha(0.5f);
+		h.bckLap->setImageTexture("back_times.png");
+
+		h.txLapTxt = h.parent->createWidget<TextBox>("TextBox",
+			0,y, 120,300, Align::Left, "LapT"+s);
+		h.txLapTxt->setFontName("font.22");  h.txLapTxt->setTextShadow(true);
+		h.txLapTxt->setInheritsAlpha(false);
+		h.txLapTxt->setCaption(//String("\n")+
+			//(hasLaps ? String("#D0F8F0")+TR("#{TBLap}") : "")+
+			"\n#80C0F0"+TR("#{TBLast}") +
+			"\n#80E0E0"+TR("#{TBBest}") +
+			"\n#70D070"+TR("#{Track}") +
+			"\n#C0C030"+TR("#{TBPosition}") +
+			"\n#F0C050"+TR("#{TBPoints}") );
+
+		h.txLap = h.parent->createWidget<TextBox>("TextBox",
+			0,y, 230,320, Align::Left, "Lap"+s);
+		h.txLap->setInheritsAlpha(false);
+		h.txLap->setFontName("font.22");  h.txLap->setTextShadow(true);
 
 
 		//  opp list  -----------
@@ -409,7 +439,10 @@ void CHud::Create()
 	
 	//-  cars need update
 	for (int i=0; i < app->carModels.size(); ++i)
-		app->carModels[i]->updTimes = true;
+	{	CarModel* cm = app->carModels[i];
+		cm->updTimes = true;
+		cm->updLap = true;  cm->fLapAlpha = 1.f;
+	}
 
 	
 	///  tire vis circles  + + + +
@@ -478,6 +511,7 @@ CHud::OvrDbg::OvrDbg() :
 CHud::Hud::Hud()
 	:parent(0)
 	,txTimTxt(0), txTimes(0), /*bckTimes(0),*/  sTimes("")
+	,txLapTxt(0), txLap(0), bckLap(0)
 	,bckOpp(0)
 	,txWarn(0), txPlace(0),  bckWarn(0), bckPlace(0)
 	,txCountdown(0)
@@ -526,7 +560,8 @@ void CHud::Destroy()
 		for (i=0; i < 3; ++i)  Dest(h.txOpp[i])
 		Dest(h.bckOpp)
 		Dest(h.txTimTxt)  Dest(h.txTimes)  //Dest(h.bckTimes)
-		h.sTimes = "";
+		Dest(h.txLapTxt)  Dest(h.txLap)  Dest(h.bckLap)
+		h.sTimes = "";  h.sLap = "";
 		
 		Dest(h.txWarn)  Dest(h.bckWarn)
 		Dest(h.txPlace)  Dest(h.bckPlace)
@@ -598,6 +633,7 @@ void CHud::Show(bool hideAll)
 
 				h.ndMap->setVisible(pSet->trackmap);
 				h.txTimes->setVisible(times);  h.txTimTxt->setVisible(times);
+				h.txLap->setVisible(times);  h.txLapTxt->setVisible(times);  h.bckLap->setVisible(times);
 				h.bckOpp->setVisible(opp);
 				h.txCam->setVisible(cam);
 		}	}

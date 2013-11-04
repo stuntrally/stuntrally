@@ -48,6 +48,7 @@
 	<Tag name="TBPlace">Place</Tag>
 	<Tag name="TBPosition">Position</Tag>
 	<Tag name="TBPoints">Points</Tag>
+	<Tag name="TBLapResults">Lap Results</Tag>
 	<Tag name="WrongChk">Wrong Checkpoint</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
 	<Tag name="Graphs">Graphs</Tag>

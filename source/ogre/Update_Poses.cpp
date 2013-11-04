@@ -381,7 +381,7 @@ void App::newPoses(float time)  // time only for camera update
 							pGame->timer.Lap(c, 0,0, !finished, pSet->game.trackreverse);  //,boost_type?
 						double timeCur = pGame->timer.GetPlayerTimeTot(c);
 
-						//  Network notification, send: car id, lap time
+						//  Network notification, send: car id, lap time  ----
 						if (mClient && c == 0 && !finished)
 							mClient->lap(pGame->timer.GetCurrentLap(c), pGame->timer.GetLastLap(c));
 
@@ -396,9 +396,13 @@ void App::newPoses(float time)  // time only for camera update
 						ghost.Clear();
 						
 						carM->ResetChecks();
-						//  restore boost fuel, each lap
+						//  restore boost fuel, each lap  ----
 						if (pSet->game.boost_type == 1 && carM->pCar)
 							carM->pCar->dynamics.boostFuel = gfBoostFuelStart;
+
+						//  upd lap results ----
+						carM->updLap = false;
+						carM->fLapAlpha = 1.f;
 
 						///  all laps
 						finished = pGame->timer.GetCurrentLap(c) >= pSet->game.num_laps;

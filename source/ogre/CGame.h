@@ -59,6 +59,7 @@ public:
 
 	bool isGhost2nd;  // if present (ghost but from other car)
 	std::vector<float> vTimeAtChks;  // track ghost's times at road checkpoints
+	float fLastTime;  // thk ghost total time
 
 
 	Scene* sc;  /// scene.xml
