@@ -41,7 +41,7 @@
 	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
 	<Tag name="TerNormal">Normală</Tag>
 	<Tag name="NeedNewGame">* necesită Joc nou</Tag>
-	<Tag name="InputRoadAngZero">shift-6  - zero angles</Tag>
+	<Tag name="InputRoadAngZero">alt-shift-1  - zero angles</Tag>
 	<Tag name="TipTrackImg">Captură de ecran pentru traseul selectat</Tag>
 	<Tag name="TerLNoiseOnly">Only Noise</Tag>
 	<Tag name="InputValueChange">Fiecare mișcare(mouse/tastă) sau valoare se schimbă cu </Tag>
@@ -127,7 +127,7 @@
 	<Tag name="NetReady">Ready</Tag>
 	<Tag name="Road_Height">Height</Tag>
 	<Tag name="InputNoJS">No joystick</Tag>
-	<Tag name="InputRoadAngType">5,6   - angles type</Tag>
+	<Tag name="InputRoadAngType">alt-1,2   - angles type</Tag>
 	<Tag name="NetMasterPort">Master Server Port</Tag>
 	<Tag name="InpSet_KeyHalf">Key Half</Tag>
 	<Tag name="TerLHSm">Height smooth</Tag>
@@ -182,6 +182,7 @@
 	<Tag name="InputKeyAllPreset">Set all from preset</Tag>
 	<Tag name="Chall_Endurance">Endurance</Tag>
 	<Tag name="InpSet_Slow">Slow</Tag>
+	<Tag name="TimeMS">m:s</Tag>
 	<Tag name="InputAssignKey">&lt;Assign&gt;</Tag>
 	<Tag name="Wireframe">Cadru</Tag>
 	<Tag name="TerUpdSkip">Ignoră actualizarea terenului</Tag>
@@ -272,7 +273,7 @@
 	<Tag name="TipCopySource">Alege traseul selectat pentru sursă de copiere,folosit in tab-ul [Instrumente]</Tag>
 	<Tag name="InputBrushSize">-,=  (or Wheel)  -  Size</Tag>
 	<Tag name="Layer">Strat</Tag>
-	<Tag name="WaterRefraction">Refraction</Tag>
+	<Tag name="NetLocalPort">Local Port</Tag>
 	<Tag name="EscQuit">Esc iese din joc</Tag>
 	<Tag name="Gauges">Indicatoare (rpm,viteză)</Tag>
 	<Tag name="LengthDim">Dimensiune lungime</Tag>
@@ -374,7 +375,7 @@
 	<Tag name="InputPaintColor">C- Vopsește</Tag>
 	<Tag name="TireTrails">Tire Trails</Tag>
 	<Tag name="TipFogClrRGBA">R G B A components 0 to 1 (eg. 0.7 0.8 0.9 1). Last can be used to lower maximum density (1 is full).</Tag>
-	<Tag name="InputBrushParams">Parametri pensulei</Tag>
+	<Tag name="Language">Language</Tag>
 	<Tag name="InputMapShowOptions">Arată opțiunile</Tag>
 	<Tag name="InputCameraMode">Modul cameră</Tag>
 	<Tag name="Enabled">Activat</Tag>
@@ -415,6 +416,7 @@
 	<Tag name="Development">Dezvoltare</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
 	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
+	<Tag name="InputBrushParams">Parametri pensulei</Tag>
 	<Tag name="min">min</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle  (no pipe when 0)</Tag>
@@ -546,7 +548,7 @@
 	<Tag name="InputToggleCam">Tab - camera / edit mode toggle</Tag>
 	<Tag name="Brush_Freq">Freq</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotate   alt-RMB - pitch</Tag>
-	<Tag name="InputRoadAngSnap">7,8   - angles snap</Tag>
+	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
 	<Tag name="TerGenOfsX">Offset X</Tag>
 	<Tag name="TipTexTiling">Texture tiling length (less means more repeats).</Tag>
 	<Tag name="InputBrushShape">K,L  -  Shape</Tag>
@@ -657,7 +659,7 @@
 	<Tag name="set2">set2</Tag>
 	<Tag name="auto">Auto</Tag>
 	<Tag name="TipWindInflH">Wind influence on model, height scale.</Tag>
-	<Tag name="NetLocalPort">Local Port</Tag>
+	<Tag name="WaterRefraction">Refraction</Tag>
 	<Tag name="InputStartLMB">ctrl-LMB - place   LMB - move   RMB - height</Tag>
 	<Tag name="Silver">Silver</Tag>
 	<Tag name="TipWindInflL">Wind influence on model, length scale.</Tag>
@@ -917,8 +919,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="TimeMS">m:s</Tag>
-	<Tag name="Language">Language</Tag>
+	<Tag name="TBLapResults">Lap Results</Tag>
+	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
+	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
+	<Tag name="CameraLoopChange">Camera change in loops</Tag>
+	<Tag name="Road_Loop">Loop</Tag>
+	<Tag name="ObjRocks">Rocks</Tag>
+	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
+	<Tag name="Road_OnPipe">On Pipe</Tag>
+	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

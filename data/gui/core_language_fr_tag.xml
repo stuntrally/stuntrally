@@ -41,7 +41,7 @@
 	<Tag name="TipChangeSat">Changer la saturation de la couleur de la voiture (blanc/noir).</Tag>
 	<Tag name="TerNormal">Normal</Tag>
 	<Tag name="NeedNewGame">* besoin d'une nouvelle partie</Tag>
-	<Tag name="InputRoadAngZero">shift-6  - zero angles</Tag>
+	<Tag name="InputRoadAngZero">alt-shift-1  - zero angles</Tag>
 	<Tag name="TipTrackImg">Capture d'écran du jeu pour la piste sélectionnée.</Tag>
 	<Tag name="TerLNoiseOnly">Bruit seulement</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
@@ -182,6 +182,7 @@
 	<Tag name="InputKeyAllPreset">Définir depuis un pré-réglage</Tag>
 	<Tag name="Chall_Endurance">Endurance</Tag>
 	<Tag name="InpSet_Slow">Lent</Tag>
+	<Tag name="TimeMS">m:s</Tag>
 	<Tag name="InputAssignKey">&lt;Attacher&gt;</Tag>
 	<Tag name="Wireframe">Fil de fer</Tag>
 	<Tag name="TerUpdSkip">Fréq. de MAJ du terrain</Tag>
@@ -272,7 +273,7 @@
 	<Tag name="TipCopySource">Prendre le circuit sélectionné comme source pour la copie, utilisé dans l'onglet [Outils].</Tag>
 	<Tag name="InputBrushSize">,= (ou molette) - taille</Tag>
 	<Tag name="Layer">Calque</Tag>
-	<Tag name="WaterRefraction">Réfraction</Tag>
+	<Tag name="NetLocalPort">Port local</Tag>
 	<Tag name="EscQuit">Esc quitte</Tag>
 	<Tag name="Gauges">Jauges (tours/min, vitesse)</Tag>
 	<Tag name="LengthDim">Mesure de longueur</Tag>
@@ -374,7 +375,7 @@
 	<Tag name="InputPaintColor">C - Couleur de la peinture</Tag>
 	<Tag name="TireTrails">Traces de pneus</Tag>
 	<Tag name="TipFogClrRGBA">Composants R V B A de 0 à 1 (exemple : 0.7 0.8 0.9 1). Le dernier peut être utilisé pour réduire la densité maximale (1 étant 100%).</Tag>
-	<Tag name="InputBrushParams">Paramètres de la brosse</Tag>
+	<Tag name="Language">Language</Tag>
 	<Tag name="InputMapShowOptions">Afficher les options</Tag>
 	<Tag name="InputCameraMode">Mode de la caméra</Tag>
 	<Tag name="Enabled">Activé</Tag>
@@ -415,6 +416,7 @@
 	<Tag name="Development">Développement</Tag>
 	<Tag name="InputRoadIns">Insér. - insérer nouveau (après sélection, Alt : avant sélection)</Tag>
 	<Tag name="TweakEdit1">Alt-Z - afficher la fenêtre d'édition de voiture</Tag>
+	<Tag name="InputBrushParams">Paramètres de la brosse</Tag>
 	<Tag name="min">min</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="InputRoadPipeAngle">[,] - angle du tuyau (pas de tuyau quand égal à 0)</Tag>
@@ -546,7 +548,7 @@
 	<Tag name="InputToggleCam">Tab - changer entre mode édition et caméra</Tag>
 	<Tag name="Brush_Freq">Fréq.</Tag>
 	<Tag name="InputStartAltLMB">Alt-Clic gauche - tourner Alt-Clic droit - tourner verticalement</Tag>
-	<Tag name="InputRoadAngSnap">7,8   - angles snap</Tag>
+	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
 	<Tag name="TerGenOfsX">Décalage X</Tag>
 	<Tag name="TipTexTiling">Répétitions de la texture (moins = plus de répétitions).</Tag>
 	<Tag name="InputBrushShape">K,L - forme</Tag>
@@ -657,7 +659,7 @@
 	<Tag name="set2">set2</Tag>
 	<Tag name="auto">Automatique</Tag>
 	<Tag name="TipWindInflH">Influence du vent sur le modèle (dans le sens de la hauteur).</Tag>
-	<Tag name="NetLocalPort">Port local</Tag>
+	<Tag name="WaterRefraction">Réfraction</Tag>
 	<Tag name="InputStartLMB">Ctrl-Clic gauche - placer Clic gauche - se déplacer Clic droit - hauteur</Tag>
 	<Tag name="Silver">Argent</Tag>
 	<Tag name="TipWindInflL">Influence du vent sur le modèle (dans le sens de la largeur).</Tag>
@@ -917,8 +919,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet d'Options précédent/suivant (Maj. sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="TimeMS">m:s</Tag>
-	<Tag name="Language">Language</Tag>
+	<Tag name="TBLapResults">Lap Results</Tag>
+	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
+	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
+	<Tag name="CameraLoopChange">Camera change in loops</Tag>
+	<Tag name="Road_Loop">Loop</Tag>
+	<Tag name="ObjRocks">Rocks</Tag>
+	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
+	<Tag name="Road_OnPipe">On Pipe</Tag>
+	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -182,6 +182,7 @@
 	<Tag name="InputKeyAllPreset">Wszystkie z ustawień</Tag>
 	<Tag name="Chall_Endurance">Wytrzymałość</Tag>
 	<Tag name="InpSet_Slow">Wolne</Tag>
+	<Tag name="TimeMS">m:s</Tag>
 	<Tag name="InputAssignKey">&lt;Przypisz&gt;</Tag>
 	<Tag name="Wireframe">Szkielet</Tag>
 	<Tag name="TerUpdSkip">Pominięć odśw. terenu</Tag>
@@ -272,7 +273,7 @@
 	<Tag name="TipCopySource">Wybierz trasę jako źródło skąd kopiować, używane w zakładce [Narzędzia].</Tag>
 	<Tag name="InputBrushSize">-,= (lub Kółko) - Rozmiar</Tag>
 	<Tag name="Layer">Warstwa</Tag>
-	<Tag name="WaterRefraction">Załamanie</Tag>
+	<Tag name="NetLocalPort">Port lokany</Tag>
 	<Tag name="EscQuit">Esc wychodzi</Tag>
 	<Tag name="Gauges">Liczniki (obroty, szybkość)</Tag>
 	<Tag name="LengthDim">Wymiar długości</Tag>
@@ -374,7 +375,7 @@
 	<Tag name="InputPaintColor">C - maluj kolor</Tag>
 	<Tag name="TireTrails">Ślady opon</Tag>
 	<Tag name="TipFogClrRGBA">R G B A składowe 0 do 1 (np. 0.7 0.8 0.9 1). Ostatnią można użyć do zmniejszenia maksymalnej gęstości (1 pełna).</Tag>
-	<Tag name="InputBrushParams">Parametry pędzla</Tag>
+	<Tag name="Language">Język</Tag>
 	<Tag name="InputMapShowOptions">Pokaż opcje</Tag>
 	<Tag name="InputCameraMode">Tryb kamery</Tag>
 	<Tag name="Enabled">Włączony</Tag>
@@ -415,6 +416,7 @@
 	<Tag name="Development">Narzędzia</Tag>
 	<Tag name="InputRoadIns">Ins - wstaw nowy (za wybranym, alt - przed)</Tag>
 	<Tag name="TweakEdit1">Alt-Z - przełącz okno dostosowywania (edycja auta)</Tag>
+	<Tag name="InputBrushParams">Parametry pędzla</Tag>
 	<Tag name="min">min.</Tag>
 	<Tag name="BumpWavelen">Wyboje: Częstość</Tag>
 	<Tag name="InputRoadPipeAngle">[,] - kąt rury (brak rury gdy 0)</Tag>
@@ -657,7 +659,7 @@
 	<Tag name="set2">ust.2</Tag>
 	<Tag name="auto">Automatycznie</Tag>
 	<Tag name="TipWindInflH">Wpływ wiatru na model, skala wysokości.</Tag>
-	<Tag name="NetLocalPort">Port lokany</Tag>
+	<Tag name="WaterRefraction">Załamanie</Tag>
 	<Tag name="InputStartLMB">ctrl-LMB - ustaw LMB - przesuń RMB - wysokość</Tag>
 	<Tag name="Silver">Srebro</Tag>
 	<Tag name="TipWindInflL">Wpływ wiatru na model, skala długości.</Tag>
@@ -917,8 +919,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="TimeMS">m:s</Tag>
-	<Tag name="Language">Language</Tag>
+	<Tag name="TBLapResults">Lap Results</Tag>
+	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
+	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
+	<Tag name="CameraLoopChange">Camera change in loops</Tag>
+	<Tag name="Road_Loop">Loop</Tag>
+	<Tag name="ObjRocks">Rocks</Tag>
+	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
+	<Tag name="Road_OnPipe">On Pipe</Tag>
+	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

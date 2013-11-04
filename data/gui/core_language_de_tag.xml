@@ -45,7 +45,7 @@
 	<Tag name="TipTrackImg">Bildschirmfoto der ausgewählten Strecke.</Tag>
 	<Tag name="TerLNoiseOnly">Nur Rauschen</Tag>
 	<Tag name="InputValueChange">Jede Bewegung/Werteveränderung mit </Tag>
-	<Tag name="Chall_Rally">Rally</Tag>
+	<Tag name="Chall_Rally">Rallye</Tag>
 	<Tag name="TipChangeGloss">Auto Farbe Glossinen ändern (matte-glänzend).</Tag>
 	<Tag name="Surface">Oberfläche</Tag>
 	<Tag name="ChallEndFinished">Du hast die Herausforderung gewonnen.</Tag>
@@ -100,7 +100,7 @@
 	<Tag name="NetGamesAvail">Verfügbare Spiele</Tag>
 	<Tag name="HDRAdaptationScale">Adaptionsrate</Tag>
 	<Tag name="TBLast">Letzte</Tag>
-	<Tag name="Chall_Chase">Chase</Tag>
+	<Tag name="Chall_Chase">Jagd</Tag>
 	<Tag name="InputMaxVal">Max. Wert</Tag>
 	<Tag name="TipRollDrag">Reifenwiderstand, größerer Wert bremst diese stärker ab (z.B. 140 für Schnee, 80 für Gras)</Tag>
 	<Tag name="TipTrackList">Streckenliste, wähle eine Strecke um Info anzusehen. Enter drücken oder [Neues Spiel] klicken um zu fahren.</Tag>
@@ -143,7 +143,7 @@
 	<Tag name="MinimapZoom">Vergrößerung</Tag>
 	<Tag name="OneAxisThrottleBrake">Eine Achse für Gas und Bremse</Tag>
 	<Tag name="ViewRight">Ans. Rechts</Tag>
-	<Tag name="Restart">Neustarten</Tag>
+	<Tag name="Restart">Neustart</Tag>
 	<Tag name="Count">Anzahl</Tag>
 	<Tag name="InputBrushPower">; &apos; (oder alt-Mausrad) - Exponent (Gestalt)</Tag>
 	<Tag name="UnitKm">km</Tag>
@@ -180,8 +180,9 @@
 	<Tag name="MessageBox_Try">Versuchen</Tag>
 	<Tag name="InputMapRewind">Zurück (Zeit)</Tag>
 	<Tag name="InputKeyAllPreset">Voreinstellung</Tag>
-	<Tag name="Chall_Endurance">Endurance</Tag>
+	<Tag name="Chall_Endurance">Ausdauer</Tag>
 	<Tag name="InpSet_Slow">Langsam</Tag>
+	<Tag name="TimeMS">m:s</Tag>
 	<Tag name="InputAssignKey">&lt;Binden&gt;</Tag>
 	<Tag name="Wireframe">Drahtgitter</Tag>
 	<Tag name="TerUpdSkip">Terrain-Update überspr.</Tag>
@@ -272,7 +273,7 @@
 	<Tag name="TipCopySource">Strecke als Kopierquelle für den [Werkzeuge] Tab auswählen.</Tag>
 	<Tag name="InputBrushSize">-,= (oder Mausrad) - Größe</Tag>
 	<Tag name="Layer">Layer</Tag>
-	<Tag name="WaterRefraction">Brechung</Tag>
+	<Tag name="NetLocalPort">Lokaler Port</Tag>
 	<Tag name="EscQuit">Beenden mit Esc</Tag>
 	<Tag name="Gauges">Tacho</Tag>
 	<Tag name="LengthDim">Längen dim.</Tag>
@@ -374,7 +375,7 @@
 	<Tag name="InputPaintColor">C - Anstrichfarbe</Tag>
 	<Tag name="TireTrails">Reifenspuren</Tag>
 	<Tag name="TipFogClrRGBA">R G B A Komponenten 0 bis 1 (z.B. 0.7 0.8 0.9 1). Letztes ist Nebel Dichte (1 ist voll).</Tag>
-	<Tag name="InputBrushParams">Pinseleigenschaften</Tag>
+	<Tag name="Language">Sprache</Tag>
 	<Tag name="InputMapShowOptions">Optionen zeigen</Tag>
 	<Tag name="InputCameraMode">Kameramodus</Tag>
 	<Tag name="Enabled">Aktiviert</Tag>
@@ -415,6 +416,7 @@
 	<Tag name="Development">Entwicklung</Tag>
 	<Tag name="InputRoadIns">Einfg - Punkt danach einfügen, mit Alt - davor</Tag>
 	<Tag name="TweakEdit1">Alt-Z - Tweak Fenster umschalten (Auto bearbeiten)</Tag>
+	<Tag name="InputBrushParams">Pinseleigenschaften</Tag>
 	<Tag name="min">min.</Tag>
 	<Tag name="BumpWavelen">Bump: WaveLen</Tag>
 	<Tag name="InputRoadPipeAngle">[,] - Rohre Winkel (keine für 0)</Tag>
@@ -441,7 +443,7 @@
 	<Tag name="InputTogglePreview">F7 - Vorschaukamera</Tag>
 	<Tag name="GameBy">Ein Spiel von</Tag>
 	<Tag name="SunWeather">Sonne und Wetter</Tag>
-	<Tag name="GraphicsPreset">Graphics preset</Tag>
+	<Tag name="GraphicsPreset">Grafikeinstellungen</Tag>
 	<Tag name="RollingDrag">Rollwiderstand</Tag>
 	<Tag name="RplDelete">Löschen</Tag>
 	<Tag name="TipAutoRear">Für manuellen Rückwärtsgang Haken rausnehmen.</Tag>
@@ -478,7 +480,7 @@
 	<Tag name="ShowPictures">Bilder beim Laden anzeigen</Tag>
 	<Tag name="distance">Distanz</Tag>
 	<Tag name="SSS_Effect">Effekt</Tag>
-	<Tag name="Chall_Extreme">Extreme</Tag>
+	<Tag name="Chall_Extreme">Extrem</Tag>
 	<Tag name="PreviewCam">Vorschaukamera</Tag>
 	<Tag name="TipModelMinScale">Minimale Skalierung des Modells.</Tag>
 	<Tag name="InputFluidsDel">Entf - löschen</Tag>
@@ -657,7 +659,7 @@
 	<Tag name="set2">set2</Tag>
 	<Tag name="auto">Auto</Tag>
 	<Tag name="TipWindInflH">Einfluss des Winds auf das Modell, Höhenskalierung.</Tag>
-	<Tag name="NetLocalPort">Lokaler Port</Tag>
+	<Tag name="WaterRefraction">Brechung</Tag>
 	<Tag name="InputStartLMB">ctrl-LMB - platzieren LMB - bewegen RMB - höhe</Tag>
 	<Tag name="Silver">Silber</Tag>
 	<Tag name="TipWindInflL">Einfluss des Winds auf das Modell, Längenskalierung.</Tag>
@@ -917,8 +919,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="TimeMS">m:s</Tag>
-	<Tag name="Language">Language</Tag>
+	<Tag name="TBLapResults">Lap Results</Tag>
+	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
+	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
+	<Tag name="CameraLoopChange">Camera change in loops</Tag>
+	<Tag name="Road_Loop">Loop</Tag>
+	<Tag name="ObjRocks">Rocks</Tag>
+	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
+	<Tag name="Road_OnPipe">On Pipe</Tag>
+	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -182,6 +182,7 @@
 	<Tag name="InputKeyAllPreset">По умолчанию</Tag>
 	<Tag name="Chall_Endurance">Выносливость</Tag>
 	<Tag name="InpSet_Slow">Медленно</Tag>
+	<Tag name="TimeMS">м:с</Tag>
 	<Tag name="InputAssignKey">&lt;Назнач&gt;</Tag>
 	<Tag name="Wireframe">Каркас</Tag>
 	<Tag name="TerUpdSkip">Пропустить обновление ландшафта</Tag>
@@ -272,7 +273,7 @@
 	<Tag name="TipCopySource">Выбираем трек для копирования, используется в [Инструменты] вкладке.</Tag>
 	<Tag name="InputBrushSize">-,=  (или Wheel) - размер</Tag>
 	<Tag name="Layer">Слой</Tag>
-	<Tag name="WaterRefraction">Отражение</Tag>
+	<Tag name="NetLocalPort">Локальный порт</Tag>
 	<Tag name="EscQuit">Esc выйти</Tag>
 	<Tag name="Gauges">Приборы (об., скор.)</Tag>
 	<Tag name="LengthDim">Длина</Tag>
@@ -374,7 +375,7 @@
 	<Tag name="InputPaintColor">C - цвет краски</Tag>
 	<Tag name="TireTrails">Следы шины</Tag>
 	<Tag name="TipFogClrRGBA">R G B A значения от 0 до 1 (напр. 0.7 0.8 0.9 1). Последний используется для уменьшения максимальной густоты (1 является полной).</Tag>
-	<Tag name="InputBrushParams">Параметры кисти</Tag>
+	<Tag name="Language">Язык</Tag>
 	<Tag name="InputMapShowOptions">Показ. опции</Tag>
 	<Tag name="InputCameraMode">Режим камеры</Tag>
 	<Tag name="Enabled">Вкл.</Tag>
@@ -415,6 +416,7 @@
 	<Tag name="Development">Разработка</Tag>
 	<Tag name="InputRoadIns">Ins - вставить (после., alt - до)</Tag>
 	<Tag name="TweakEdit1">Alt-Z - окно наладки (ред. авто)</Tag>
+	<Tag name="InputBrushParams">Параметры кисти</Tag>
 	<Tag name="min">мин.</Tag>
 	<Tag name="BumpWavelen">Ухаб: длина волны</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - угол трубы (0 нет трубы)</Tag>
@@ -441,7 +443,7 @@
 	<Tag name="InputTogglePreview">F7 - войти/выйти смот. камера</Tag>
 	<Tag name="GameBy">Игра</Tag>
 	<Tag name="SunWeather">Солнце и погода</Tag>
-	<Tag name="GraphicsPreset">Задан. графика</Tag>
+	<Tag name="GraphicsPreset">Заданная графика</Tag>
 	<Tag name="RollingDrag">Вращ. движ.</Tag>
 	<Tag name="RplDelete">Удалить</Tag>
 	<Tag name="TipAutoRear">Не отмечайте для ручного переключения задней передачи.</Tag>
@@ -643,7 +645,7 @@
 	<Tag name="TipModelDens">Как часто модель будет появлятся в области трека.</Tag>
 	<Tag name="InputOther2">Enter - показать/скрыть игроков по сети в окне</Tag>
 	<Tag name="InpSet_Fast">Быстро</Tag>
-	<Tag name="InputMain">Главный</Tag>
+	<Tag name="InputMain">Главное</Tag>
 	<Tag name="NewTerrainFlat">Новая плоскость</Tag>
 	<Tag name="ColSat">Насыщен.</Tag>
 	<Tag name="TipTCS">Предотвращает кручение колеса при ускорении (по умолчанию: выключено).</Tag>
@@ -657,7 +659,7 @@
 	<Tag name="set2">набор2</Tag>
 	<Tag name="auto">Авто</Tag>
 	<Tag name="TipWindInflH">Влияние ветра на модель, шкала высоты.</Tag>
-	<Tag name="NetLocalPort">Локальный порт</Tag>
+	<Tag name="WaterRefraction">Отражение</Tag>
 	<Tag name="InputStartLMB">ctrl-LMB - место LMB - движ. RMB - высота</Tag>
 	<Tag name="Silver">Серебро</Tag>
 	<Tag name="TipWindInflL">Влияние ветра на модель, шкала длины.</Tag>
@@ -917,8 +919,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред,след Опции вкладка (shift - подменю)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="TimeMS">m:s</Tag>
-	<Tag name="Language">Language</Tag>
+	<Tag name="TBLapResults">Lap Results</Tag>
+	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
+	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
+	<Tag name="CameraLoopChange">Camera change in loops</Tag>
+	<Tag name="Road_Loop">Loop</Tag>
+	<Tag name="ObjRocks">Rocks</Tag>
+	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
+	<Tag name="Road_OnPipe">On Pipe</Tag>
+	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
