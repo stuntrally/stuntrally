@@ -431,20 +431,23 @@ void CHud::Update(int carId, float time)
 				(hasLaps ? "#D0FFE8"+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps) : "") +
 				"\n#A0E0E0" + StrTime(tim.GetPlayerTime(carId))+
 				(cur ? String("  ") + (diff > 0.f ? "#80E0FF+" : "#60FF60-")+
-					fToStr(fabs(diff), /*diff > 10.f ? 1 : 2*/2,4) : "")+
+					fToStr(fabs(diff), 1,3) : "")+
 				h.sTimes+
 				"\n#E0B090" + fToStr(pCarM->trackPercent,0,1)+"%" );
 
-		if (h.txLap)  // fade out
+		if (h.txLap)
 		{
 			//if (pCarM->updLap)
 			//{	pCarM->updLap = false;
 				//h.txLap->setCaption(h.sLap);
 			//}
 			float a = std::min(1.f, pCarM->fLapAlpha * 2.f);
-			bool b = a > 0.f;
+			bool b = a > 0.f, hasRoad = app->road && app->road->getNumPoints() > 2;
 			if (b)
-			{	pCarM->fLapAlpha -= time * 0.1f; //0.04f;
+			{	if (app->iLoad1stFrames == -2)  //bLoading)  //  fade out
+				{	pCarM->fLapAlpha -= !hasRoad ? 1.f : time * 0.1f; //0.04f;
+					if (pCarM->fLapAlpha < 0.f)  pCarM->fLapAlpha = 0.f;
+				}
 				h.bckLap->setAlpha(a);
 				h.txLapTxt->setAlpha(a);  h.txLap->setAlpha(a);
 			}

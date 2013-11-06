@@ -137,7 +137,7 @@ void CHud::Size(bool full)
 	}
 	if (txCamInfo)
 	{	txCamInfo->setPosition(300,wy-100);
-		bckMsg->setPosition(400,10);
+		bckMsg->setPosition(256,0);
 	}
 }
 
@@ -425,14 +425,16 @@ void CHud::Create()
 
 	//  chat msg  -----------
 	bckMsg = app->mGui->createWidget<ImageBox>("ImageBox",
-		0,y, 400,60, Align::Left, "Back", "MsgB");  bckMsg->setVisible(false);
-	bckMsg->setAlpha(0.8f);
+		0,y, 600,180, Align::Left, "Back", "MsgB");  bckMsg->setVisible(false);
+	bckMsg->setAlpha(0.9f);
+	bckMsg->setColour(Colour(0.5,0.5,0.5));
 	bckMsg->setImageTexture("back_times.png");
 
 	txMsg = bckMsg->createWidget<TextBox>("TextBox",
-		10,10, 800,60, Align::Left, "PlcT");
+		16,10, 800,180, Align::Left, "PlcT");
+	txMsg->setInheritsAlpha(false);
 	txMsg->setFontName("font.20");  txMsg->setTextShadow(true);
-	txMsg->setTextColour(Colour(0.8,0.9,1.0));
+	txMsg->setTextColour(Colour(0.95,0.95,1.0));
 
 	///  tex
 	resMgr.removeResourceLocation(path, sGrp);
