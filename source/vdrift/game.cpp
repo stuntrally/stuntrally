@@ -366,6 +366,12 @@ void GAME::Tick(double deltat)
 	//  throw away wall clock time if necessary to keep the framerate above the minimum
 	if (deltat > maxtime)
 		deltat = maxtime;
+		
+	//.  dont simulate before /network start
+	bool sim = app->iLoad1stFrames == -2 && !timer.waiting;
+
+	//if (rand()%200 > 2)  sim = false;  // test start pos
+	//LogO("SIM:"+fToStr(deltat,4,6) + (!sim ? "----":""));
 
 	if (app && app->bPerfTest)  // speed up perf test
 		deltat *= settings->perf_speed;
@@ -377,7 +383,7 @@ void GAME::Tick(double deltat)
 	while (target_time > tickperriod && curticks < maxticks)
 	{
 		frame++;
-		AdvanceGameLogic(deltat > 0.f ? tickperriod : 0.f);
+		AdvanceGameLogic(sim ? tickperriod : 0.0);
 
 		if (app)
 			app->newPoses(tickperriod);
@@ -415,7 +421,8 @@ void GAME::AdvanceGameLogic(double dt)
 					(*i).dynamics.inFluidsWh[w].clear();
 			}
 
-			collision.Update(dt, settings->bltProfilerTxt);
+			if (dt > 0.0)
+				collision.Update(dt, settings->bltProfilerTxt);
 			PROFILER.endBlock("-physics");
 
 			PROFILER.beginBlock("-car-sim");

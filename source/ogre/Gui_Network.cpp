@@ -118,23 +118,23 @@ void CGui::updateGameInfoGUI()
 	using Ogre::String;
 
 	String s;  const protocol::GameInfo& g = netGameInfo;
-	s += TR("#40FF40#{Track}: ") + gcom->sListTrack +"\n";
-	s += TR("#60A060#{Reverse}: ") + yesno(g.reversed) +"\n";
+	s += TR("#40FF40#{Track}:      ") + gcom->sListTrack +"\n";
+	s += TR("#60A060#{Reverse}:  ") + yesno(g.reversed) +"\n";
 	s += "\n";
-	s += TR("#80F0F0#{Laps}: ") + toStr(g.laps) +"\n";
-	s += TR("#409090#{ReverseStartOrder}: ") + yesno(g.start_order) +"\n";
-	s += TR("#F0F040#{Players}: ") + toStr(g.players) +"\n";
+	s += TR("#80F0F0#{Laps}:   ") + toStr(g.laps) +"\n";
+	s += TR("#409090#{ReverseStartOrder}:  ") + yesno(g.start_order) +"\n";
+	s += TR("#F0F040#{Players}:  ") + toStr(g.players) +"\n";
 	s += "\n";
 	s += TR("#D090E0#{Game}") +"\n";
-	s += TR("#90B0E0  #{Simulation}: ") + String(g.sim_mode) +"\n";
-	s += TR("#A0D0D0  #{CarCollis}: ") + yesno(g.collisions) +"\n";
+	s += TR("#90B0E0  #{Simulation}:  ") + String(g.sim_mode) +"\n";
+	s += TR("#A0D0D0  #{CarCollis}:  ") + yesno(g.collisions) +"\n";
 	s += "\n";
 	#define cmbs(cmb, i)  (i>=0 && i < cmb->getItemCount() ? cmb->getItemNameAt(i) : TR("#{Any}"))
-	s += TR("#80C0FF  #{Boost}: ") + "#90D0FF"+ cmbs(cmbBoost, g.boost_type) +"\n";
-	s += TR("#6098A0  #{Flip}: ") + "#7098A0"+ cmbs(cmbFlip, g.flip_type) +"\n";
+	s += TR("#80C0FF  #{Boost}:  ") + "#90D0FF"+ cmbs(cmbBoost, g.boost_type) +"\n";
+	s += TR("#6098A0  #{Flip}:  ") + "#7098A0"+ cmbs(cmbFlip, g.flip_type) +"\n";
 	s += "\n";
-	s += TR("#A090E0  #{Damage}: ") + "#B090FF"+ cmbs(cmbDamage, g.damage_type) +"\n";
-	s += TR("#B080C0  #{InputMapRewind}: ") + "#C090D0"+ cmbs(cmbRewind, g.rewind_type) +"\n";
+	s += TR("#A090E0  #{Damage}:  ") + "#B090FF"+ cmbs(cmbDamage, g.damage_type) +"\n";
+	s += TR("#B080C0  #{InputMapRewind}:  ") + "#C090D0"+ cmbs(cmbRewind, g.rewind_type) +"\n";
 	//float boost_power;
 	//float damage_lap_dec, boost_lap_inc, rewind_lap_inc;  //todo
 	//uint8_t tree_collis;  float tree_mult;

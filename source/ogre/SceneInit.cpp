@@ -688,12 +688,22 @@ void App::NewGameDoLoad()
 		mLoadingBar->SetWidth(100.f);
 				
 		hud->Show();
+
+		//-  cars need update
+		for (int i=0; i < carModels.size(); ++i)
+		{	CarModel* cm = carModels[i];
+			cm->updTimes = true;
+			cm->updLap = true;  cm->fLapAlpha = 1.f;
+		}
+
 		//if (pSet->show_fps)
 		//	mFpsOverlay->show();
 		//.mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
 
 		//.ChampLoadEnd();
-		//boost::this_thread::sleep(boost::posix_time::milliseconds(6000 * mClient->getId())); // Test loading synchronization
+		/**if (mClient)
+			boost::this_thread::sleep(boost::posix_time::milliseconds(
+				3000 * mClient->getId()));  /**/  // Test loading synchronization
 		//.bLoadingEnd = true;
 		return;
 	}
