@@ -43,13 +43,14 @@ void CHud::Size(bool full)
 		Hud& h = hud[c];
 		const SplitScr::VPDims& dim = app->mSplitMgr->mDims[c];
 		//  gauges
-		Real xcRpm,ycRpm, xcVel,ycVel, ygMax, xBFuel;  // -1..1
+		Real xcRpm,ycRpm,xcRpmL, xcVel,ycVel, ygMax, xBFuel;  // -1..1
 		if (h.ndGauges)
 		{
 			Real sc = pSet->size_gauges * dim.avgsize;
 			Real spx = sc * 1.1f, spy = spx*asp;
 			//xcRpm = dim.left + spx;   ycRpm =-dim.bottom + spy;
 			xcRpm = dim.right - spx*0.5f;  ycRpm =-dim.bottom + spy*2.f;
+			xcRpmL = dim.right - spx;
 			xcVel = dim.right - spx;       ycVel =-dim.bottom + spy*0.9f;
 			ygMax = ycVel - sc;  xBFuel = xcVel - sc;
 
@@ -82,6 +83,7 @@ void CHud::Size(bool full)
 		{
 			int vv = pSet->gauges_type > 0 ? -45 : 40;
 			int gx = (xcRpm+1.f)*0.5f*wx - 10, gy = (-ycRpm+1.f)*0.5f*wy +22;
+			int gxL=(xcRpmL+1.f)*0.5f*wx - 10;
 			int vx = (xcVel+1.f)*0.5f*wx + vv, vy = std::min(yMax -91, my - 15);
 			int bx =(xBFuel+1.f)*0.5f*wx - 10, by = std::min(yMax -36, my + 5);
 				vx = std::min(vx, xMax -100);
@@ -94,12 +96,21 @@ void CHud::Size(bool full)
 			h.icoRewind->setPosition(bx+50,by-5);
 			#endif
 
+			#if 1
+			if (h.txDamage)
+			{	h.txDamage ->setPosition(gxL-90,   gy+10);
+				h.icoDamage->setPosition(gxL-90+50,gy+10-5);
+			}
+			h.txBFuel ->setPosition(gxL-83,   gy-60);
+			h.icoBFuel->setPosition(gxL-83+54,gy-60-5+2);
+			#else
 			if (h.txDamage)
 			{	h.txDamage ->setPosition(bx-70,   by-70);
 				h.icoDamage->setPosition(bx-70+50,by-70-5);
 			}
 			h.txBFuel ->setPosition(bx-63,   by-140);
 			h.icoBFuel->setPosition(bx-63+54,by-140-5+2);
+			#endif
 
 			//  times
 			bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || app->mClient;
