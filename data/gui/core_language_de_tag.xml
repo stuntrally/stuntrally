@@ -41,7 +41,8 @@
 	<Tag name="TipChangeSat">Sättigung ändern</Tag>
 	<Tag name="TerNormal">Normal</Tag>
 	<Tag name="NeedNewGame">* neues Spiel erforderlich</Tag>
-	<Tag name="InputRoadAngZero">shift-6 - Winkel leeren</Tag>
+	<Tag name="InputRoadAngZero">alt-shift-1  - zero angles</Tag>
+	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
 	<Tag name="TipTrackImg">Bildschirmfoto der ausgewählten Strecke.</Tag>
 	<Tag name="TerLNoiseOnly">Nur Rauschen</Tag>
 	<Tag name="InputValueChange">Jede Bewegung/Werteveränderung mit </Tag>
@@ -75,7 +76,7 @@
 	<Tag name="pipes">röhren</Tag>
 	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
 	<Tag name="InputFluidsUpdate">F10 - Depth map aktualisieren</Tag>
-	<Tag name="InputHeaderTxt1">Aktion</Tag>
+	<Tag name="TBLapResults">Lap Results</Tag>
 	<Tag name="DepthOfField">Tiefenunschärfe</Tag>
 	<Tag name="Game">Spiel</Tag>
 	<Tag name="InputObjectsScale">3 - Skalieren LMT - uniform XYZ RMT: Y MMT: Z</Tag>
@@ -100,6 +101,7 @@
 	<Tag name="NetGamesAvail">Verfügbare Spiele</Tag>
 	<Tag name="HDRAdaptationScale">Adaptionsrate</Tag>
 	<Tag name="TBLast">Letzte</Tag>
+	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
 	<Tag name="Chall_Chase">Jagd</Tag>
 	<Tag name="InputMaxVal">Max. Wert</Tag>
 	<Tag name="TipRollDrag">Reifenwiderstand, größerer Wert bremst diese stärker ab (z.B. 140 für Schnee, 80 für Gras)</Tag>
@@ -127,7 +129,7 @@
 	<Tag name="NetReady">Bereit</Tag>
 	<Tag name="Road_Height">Höhe</Tag>
 	<Tag name="InputNoJS">Kein Joystick</Tag>
-	<Tag name="InputRoadAngType">5,6 - Winkeltyp</Tag>
+	<Tag name="InputRoadAngType">alt-1,2   - angles type</Tag>
 	<Tag name="NetMasterPort">Masterserver-Port</Tag>
 	<Tag name="InpSet_KeyHalf">Taste halb</Tag>
 	<Tag name="TerLHSm">Höhenglättung</Tag>
@@ -249,6 +251,7 @@
 	<Tag name="TerrainError">Terrain Fehler</Tag>
 	<Tag name="InputGraphsType">Graphentyp ändern</Tag>
 	<Tag name="NetMasterProtocolError">Inkompatibles protokoll - Spiel aktualisieren oder Server-Administrator kontaktieren.</Tag>
+	<Tag name="InputRoadModify">Bearbeiten</Tag>
 	<Tag name="No">Nein</Tag>
 	<Tag name="CheckOnLoad">Bei laden prüfen</Tag>
 	<Tag name="Effects">Effekte</Tag>
@@ -312,6 +315,7 @@
 	<Tag name="RplMaxNumViewports">Max. Anzahl von Ansichten nebeneinander</Tag>
 	<Tag name="SingleRace">Schnelles Spiel</Tag>
 	<Tag name="TipNewGameCar">Neu starten.</Tag>
+	<Tag name="Intensity">Intensität</Tag>
 	<Tag name="TipGrassPatchLengthMax">Maximale Länge des Grasflecks.</Tag>
 	<Tag name="Vegetation">Vegetation</Tag>
 	<Tag name="ssao">SSAO</Tag>
@@ -337,6 +341,7 @@
 	<Tag name="Asphalt">Asphalt</Tag>
 	<Tag name="TipModelPageLength">Models Page length (low will reload often and make too many batches, high will cause visible switching and make too many drawn triangles).</Tag>
 	<Tag name="ReverseStartOrder">Reihenfolge am Start umkehren</Tag>
+	<Tag name="InputHeaderTxt1">Aktion</Tag>
 	<Tag name="LightmapSize">Lightmap-Größe</Tag>
 	<Tag name="OpponentsSorted">Gegner sortieren</Tag>
 	<Tag name="RoadQual">Straßenqualität</Tag>
@@ -398,7 +403,7 @@
 	<Tag name="Ambient">Umgebung</Tag>
 	<Tag name="SkirtLength">Skirt-Länge</Tag>
 	<Tag name="InputRoadNotOnTer">wenn nicht auf Terrain</Tag>
-	<Tag name="ChampEndCongrats">Glückwunsch!</Tag>
+	<Tag name="CameraLoopChange">Camera change in loops</Tag>
 	<Tag name="TiresEdit2">1,2 oder Num /,* - Wert ändern</Tag>
 	<Tag name="TipGrassColorMap">Gras Colormap, legt die Grasfarbe entlang der Karte fest.</Tag>
 	<Tag name="Multiplayer">Mehrspieler</Tag>
@@ -495,7 +500,7 @@
 	<Tag name="MinimapAndSize">Minimap, Größe</Tag>
 	<Tag name="TipChangeHue">Farbe ändern (Farbton)</Tag>
 	<Tag name="TipDustInt">Intensität der Staubpartikel.</Tag>
-	<Tag name="Intensity">Intensität</Tag>
+	<Tag name="Road_Loop">Loop</Tag>
 	<Tag name="InputBrushForce">[,] (oder shift-Mausrad) - Stärke (Intensität)</Tag>
 	<Tag name="NetGameName">Spielname</Tag>
 	<Tag name="TexSize">Texturgröße</Tag>
@@ -540,7 +545,7 @@
 	<Tag name="InputObjectsMode">X - Objekte bearbeiten</Tag>
 	<Tag name="TipGrassVisDist">Sichtbarkeitsdistanz für Gras-Pages</Tag>
 	<Tag name="TracksGhost">Geist von der Strecke (ES Auto, beste Fahrt auf der Strecke)</Tag>
-	<Tag name="TipModelVisDist">Visibility distance for 3d models, after this they turn into 2d impostors.</Tag>
+	<Tag name="TipNewDup">Erstellen einer neuen Strecke durch Duplizieren der ausgewählten Strecke unter neuem Namen (erst Namen ändern)</Tag>
 	<Tag name="TerGenScale">Höhenskalierung</Tag>
 	<Tag name="Settings">Optionen</Tag>
 	<Tag name="InputRoadRMB">RMB (oder Num+,-)</Tag>
@@ -548,7 +553,7 @@
 	<Tag name="InputToggleCam">Tab - Kamera/Edit-modus umsch.</Tag>
 	<Tag name="Brush_Freq">Freq</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotieren alt-RMB - neigen</Tag>
-	<Tag name="InputRoadAngSnap">7,8, - Winkel einrasten</Tag>
+	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
 	<Tag name="TerGenOfsX">Versatz X</Tag>
 	<Tag name="TipTexTiling">Kachellänge der Textur (kleinerer Wert bedeutet mehr Wiederholungen)</Tag>
 	<Tag name="InputBrushShape">K,L - Gestalt</Tag>
@@ -567,7 +572,7 @@
 	<Tag name="Road_Yaw">Yaw</Tag>
 	<Tag name="TrackAvgSpeed">Avg. Geschw.</Tag>
 	<Tag name="Yes">Ja</Tag>
-	<Tag name="TipNewDup">Erstellen einer neuen Strecke durch Duplizieren der ausgewählten Strecke unter neuem Namen (erst Namen ändern)</Tag>
+	<Tag name="ChampEndCongrats">Glückwunsch!</Tag>
 	<Tag name="TerGenPers">Rauschen</Tag>
 	<Tag name="RoadStats">Straßen Statist.</Tag>
 	<Tag name="SunDir">Sonnenrichtung</Tag>
@@ -613,6 +618,7 @@
 	<Tag name="LS_ROAD">Lade Straßen</Tag>
 	<Tag name="RoadPoint">Straßenpunkt</Tag>
 	<Tag name="CarStartPos">Auto Startpos.</Tag>
+	<Tag name="ObjRocks">Rocks</Tag>
 	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
 	<Tag name="AlignWidthMul">Breite multiplizieren</Tag>
 	<Tag name="NetMasterIp">Master-Server IP</Tag>
@@ -668,6 +674,7 @@
 	<Tag name="TrackWidthAvg">Breite avg.</Tag>
 	<Tag name="Road_Length">Länge</Tag>
 	<Tag name="RplGhostOther">Anderes Auto Geist (wenn aktuelles nicht verfügbar)</Tag>
+	<Tag name="TipModelVisDist">Visibility distance for 3d models, after this they turn into 2d impostors.</Tag>
 	<Tag name="NetAddress">Adresse</Tag>
 	<Tag name="Road_sel">sel</Tag>
 	<Tag name="AutoLoad">Strecke autom. Laden</Tag>
@@ -730,9 +737,10 @@
 	<Tag name="TrackPipes">Röhren</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Höhen-Offset</Tag>
+	<Tag name="Road_OnPipe">On Pipe</Tag>
 	<Tag name="Amplitude">Amplitude</Tag>
 	<Tag name="TipGrassLayerDens">Grasdichte für Schicht (wie häufig wird es aufkommen)</Tag>
-	<Tag name="InputRoadModify">Bearbeiten</Tag>
+	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
 	<Tag name="TextColor">Textfarbe</Tag>
 	<Tag name="Reduced">Reduziert</Tag>
 	<Tag name="ColBright">Helligkeit</Tag>
@@ -768,6 +776,7 @@
 	<Tag name="Copy">Kopieren</Tag>
 	<Tag name="Reverse">Rückwärts</Tag>
 	<Tag name="TipFind">Nach Streckenname suchen</Tag>
+	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
 	<Tag name="scale">Skalieren</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="HeightMin">Höhe Min</Tag>
@@ -919,15 +928,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="TBLapResults">Lap Results</Tag>
-	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
-	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
-	<Tag name="CameraLoopChange">Camera change in loops</Tag>
-	<Tag name="Road_Loop">Loop</Tag>
-	<Tag name="ObjRocks">Rocks</Tag>
-	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
-	<Tag name="Road_OnPipe">On Pipe</Tag>
-	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
+	<Tag name="DamageDecLap">Repair each lap</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
