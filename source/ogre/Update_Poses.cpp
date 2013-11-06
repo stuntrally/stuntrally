@@ -194,8 +194,8 @@ void App::newPoses(float time)  // time only for camera update
 		//  rewind
 		///-----------------------------------------------------------------------
 		if (!bRplPlay && !pGame->pause && !bGhost && pCar)
-		if (pCar->bRewind)  // do rewind (go back)
-		{
+		if (pCar->bRewind && pSet->game.rewind_type > 0)
+		{	//  do rewind (go back)
 			double& gtime = pGame->timer.GetRewindTime(c);
 			gtime = std::max(0.0, gtime - time * 5.f);  //par speed
 			double& ghtim = pGame->timer.GetRewindTimeGh(c);

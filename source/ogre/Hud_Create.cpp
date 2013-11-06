@@ -425,13 +425,13 @@ void CHud::Create()
 
 	//  chat msg  -----------
 	bckMsg = app->mGui->createWidget<ImageBox>("ImageBox",
-		0,y, 600,180, Align::Left, "Back", "MsgB");  bckMsg->setVisible(false);
+		0,y, 600,80, Align::Left, "Back", "MsgB");  bckMsg->setVisible(false);
 	bckMsg->setAlpha(0.9f);
 	bckMsg->setColour(Colour(0.5,0.5,0.5));
 	bckMsg->setImageTexture("back_times.png");
 
 	txMsg = bckMsg->createWidget<TextBox>("TextBox",
-		16,10, 800,180, Align::Left, "PlcT");
+		16,10, 800,80, Align::Left, "PlcT");
 	txMsg->setInheritsAlpha(false);
 	txMsg->setFontName("font.20");  txMsg->setTextShadow(true);
 	txMsg->setTextColour(Colour(0.95,0.95,1.0));
