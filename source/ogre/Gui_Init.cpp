@@ -25,10 +25,8 @@ void CGui::InitGui()
 {
 	mGui = app->mGui;
 	gcom->mGui = mGui;
-	SliderValue::pGUI = mGui;
-	SliderValue::bGI = &bGI;
-	Check::pGUI = mGui;
-	Check::bGI = &bGI;
+	Check::pGUI = mGui;  SliderValue::pGUI = mGui;
+	Check::bGI = &bGI;   SliderValue::bGI = &bGI;
 
 	popup->mGui = mGui;
 	popup->mPlatform = app->mPlatform;
@@ -252,6 +250,7 @@ void CGui::InitGui()
 
 
 	//  game  ------------------------------------------------------------
+	sv= &svDamageDec;	sv->Init("DamageDec",	&pSet->gui.damage_dec, 0.f, 100.f, 1.f, 0,1, 1.f, " %");
 	ck= &ckVegetCollis;		ck->Init("VegetCollis",		&pSet->gui.collis_veget);
 	ck= &ckCarCollis;		ck->Init("CarCollis",		&pSet->gui.collis_cars);
 	ck= &ckRoadWCollis;		ck->Init("RoadWCollis",		&pSet->gui.collis_roadw);

@@ -292,6 +292,7 @@
 	<Tag name="None">None</Tag>
 	<Tag name="Reduced">Reduced</Tag>
 	<Tag name="Normal">Normal</Tag>
+	<Tag name="DamageDecLap">Repair each lap</Tag>
 
 	<Tag name="Boost">Boost</Tag>
 	<Tag name="Flip">Flip</Tag>

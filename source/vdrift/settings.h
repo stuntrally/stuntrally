@@ -90,7 +90,7 @@ public:
 		std::string sim_mode;
 		bool collis_veget, collis_cars, collis_roadw, dyn_objects;
 		int boost_type, flip_type, damage_type, rewind_type;  float boost_power;
-		float trees;
+		float trees, damage_dec;
 		
 		bool rpl_rec;
 		//  champ

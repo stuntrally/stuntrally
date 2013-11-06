@@ -396,9 +396,15 @@ void App::newPoses(float time)  // time only for camera update
 						ghost.Clear();
 						
 						carM->ResetChecks();
+						
 						//  restore boost fuel, each lap  ----
 						if (pSet->game.boost_type == 1 && carM->pCar)
 							carM->pCar->dynamics.boostFuel = gfBoostFuelStart;
+
+						//  damage decrease, each lap  ---
+						if (pSet->game.damage_dec > 0.f)
+							carM->pCar->dynamics.fDamage = std::max(0.f,
+								carM->pCar->dynamics.fDamage - pSet->game.damage_dec);
 
 						//  upd lap results ----
 						carM->updLap = false;

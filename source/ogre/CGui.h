@@ -257,6 +257,7 @@ public:
 	//  [Game] setup
 	Ck ckVegetCollis, ckCarCollis, ckRoadWCollis, ckDynamicObjs;
 	SV svNumLaps;  SLV(RplNumViewports);  //-
+	SV svDamageDec;
 
 
 	///  [Replay]  -----------------------------
