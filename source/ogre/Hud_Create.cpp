@@ -646,7 +646,7 @@ void CHud::Show(bool hideAll)
 
 				h.ndMap->setVisible(pSet->trackmap);
 				h.txTimes->setVisible(times);  h.txTimTxt->setVisible(times);
-				h.txLap->setVisible(times);  h.txLapTxt->setVisible(times);  h.bckLap->setVisible(times);
+				//h.txLap->setVisible(times);  h.txLapTxt->setVisible(times);  h.bckLap->setVisible(times);
 				h.bckOpp->setVisible(opp);
 				h.txCam->setVisible(cam);
 		}	}

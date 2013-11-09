@@ -26,6 +26,7 @@ void App::Ch_NewGame()
 	{	pSet->game.champ_num = -1;
 		pSet->game.chall_num = -1;  }
 
+	pGame->timer.end_sim = false;
 	int iChamp = pSet->game.champ_num;
 	int iChall = pSet->game.chall_num;
 	if (iChall >= 0)

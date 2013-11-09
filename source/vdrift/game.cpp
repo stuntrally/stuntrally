@@ -368,7 +368,7 @@ void GAME::Tick(double deltat)
 		deltat = maxtime;
 		
 	//.  dont simulate before /network start
-	bool sim = app->iLoad1stFrames == -2 && !timer.waiting;
+	bool sim = app->iLoad1stFrames == -2 && (!timer.waiting || timer.end_sim);
 
 	//if (rand()%200 > 2)  sim = false;  // test start pos
 	//LogO("SIM:"+fToStr(deltat,4,6) + (!sim ? "----":""));

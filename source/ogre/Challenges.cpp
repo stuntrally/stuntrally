@@ -171,6 +171,7 @@ bool CGui::IsChallCar(String name)
 void CGui::btnChallStart(WP)
 {
 	if (liChalls->getIndexSelected()==ITEM_NONE)  return;
+	pSet->gui.champ_num = -1;
 	pSet->gui.chall_num = s2i(liChalls->getItemNameAt(liChalls->getIndexSelected()).substr(7))-1;
 
 	//  if already finished, restart - will loose progress and scores ..
@@ -221,6 +222,7 @@ void CGui::btnChallStageStart(WP)
 		app->mWndChallStage->setVisible(false);
 		pGame->pause = false;
 		pGame->timer.waiting = false;
+		pGame->timer.end_sim = false;
 	}
 }
 
@@ -314,15 +316,17 @@ void CGui::ChallengeAdvance(float timeCur/*total*/)
 	//  --------------  advance  --------------
 	bool last = pc.curTrack+1 == ch.trks.size();
 	LogO("|] This was stage " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()));
+
+	pGame->pause = true;
+	pGame->timer.waiting = true;
+	pGame->timer.end_sim = true;
+
+	//  show stage end [window]
+	ChallFillStageInfo(true);  // cur track
+	app->mWndChallStage->setVisible(true);
+
 	if (!last || (last && !passed))
 	{
-		//  show stage end [window]
-		pGame->pause = true;
-		pGame->timer.waiting = true;
-
-		ChallFillStageInfo(true);  // cur track
-		app->mWndChallStage->setVisible(true);
-		
 		if (pc.curTrack == 0)  // save picked car
 			pc.car = pSet->game.car[0];
 		if (passed)
@@ -333,11 +337,6 @@ void CGui::ChallengeAdvance(float timeCur/*total*/)
 
 	//  challenge end
 	//-----------------------------------------------------------------------------------------------
-	pGame->pause = true;
-	pGame->timer.waiting = true;
-
-	ChallFillStageInfo(true);  // cur track
-	app->mWndChallStage->setVisible(true);
 
 	//  compute avg
 	float avgPos = 0.f, avgPoints = 0.f, totalTime = 0.f;

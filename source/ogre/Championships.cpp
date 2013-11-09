@@ -180,6 +180,7 @@ void CGui::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 void CGui::btnChampStart(WP)
 {
 	if (liChamps->getIndexSelected()==ITEM_NONE)  return;
+	pSet->gui.chall_num = -1;
 	pSet->gui.champ_num = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()).substr(7))-1;
 
 	//  if already finished, restart - will loose progress and scores ..
@@ -206,6 +207,7 @@ void CGui::btnChampStageStart(WP)
 	const Champ& ch = data->champs->all[chId];
 	bool last = pc.curTrack == ch.trks.size();
 
+	pGame->timer.end_sim = false;
 	LogO("|| This was stage " + toStr(pc.curTrack) + "/" + toStr(ch.trks.size()) + " btn");
 	if (last)
 	{	//  show end window, todo: start particles..
@@ -302,27 +304,22 @@ void CGui::ChampionshipAdvance(float timeCur)
 	//  --------------  advance  --------------
 	bool last = pc.curTrack+1 == ch.trks.size();
 	LogO("|| This was stage " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()));
+
+	pGame->pause = true;
+	pGame->timer.waiting = true;
+	pGame->timer.end_sim = true;
+
+	//  show stage end [window]
+	ChampFillStageInfo(true);  // cur track
+	app->mWndChampStage->setVisible(true);
+
 	if (!last || (last && !passed))
 	{
-		//  show stage end [window]
-		pGame->pause = true;
-		pGame->timer.waiting = true;
-
-		ChampFillStageInfo(true);  // cur track
-		app->mWndChampStage->setVisible(true);
-		
 		if (passed)
 			pc.curTrack++;  // next stage
 		ProgressSave();
 	}else
-	{
-		//  champ ended
-		pGame->pause = true;
-		pGame->timer.waiting = true;
-
-		ChampFillStageInfo(true);  // cur track
-		app->mWndChampStage->setVisible(true);
-
+	{	//  champ ended
 		///  compute champ :score:  --------------
 		int ntrk = pc.trks.size();  float sum = 0.f;
 		for (int t=0; t < ntrk; ++t)

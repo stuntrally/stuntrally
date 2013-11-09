@@ -442,8 +442,9 @@ void CHud::Update(int carId, float time)
 				//h.txLap->setCaption(h.sLap);
 			//}
 			float a = std::min(1.f, pCarM->fLapAlpha * 2.f);
-			bool b = a > 0.f, hasRoad = app->road && app->road->getNumPoints() > 2;
-			if (b)
+			bool hasRoad = app->road && app->road->getNumPoints() > 2;
+			bool vis = pSet->show_times && hasRoad && a > 0.f;
+			if (vis)
 			{	if (app->iLoad1stFrames == -2)  //bLoading)  //  fade out
 				{	pCarM->fLapAlpha -= !hasRoad ? 1.f : time * 0.1f; //0.04f;
 					if (pCarM->fLapAlpha < 0.f)  pCarM->fLapAlpha = 0.f;
@@ -451,8 +452,8 @@ void CHud::Update(int carId, float time)
 				h.bckLap->setAlpha(a);
 				h.txLapTxt->setAlpha(a);  h.txLap->setAlpha(a);
 			}
-			h.bckLap->setVisible(b);
-			h.txLapTxt->setVisible(b);  h.txLap->setVisible(b);
+			h.bckLap->setVisible(vis);
+			h.txLapTxt->setVisible(vis);  h.txLap->setVisible(vis);
 		}
 	}
 

@@ -23,15 +23,15 @@ void CARDIFFERENTIAL::DebugPrint(std::ostream & out)
 void CARDIFFERENTIAL::ComputeWheelTorques(Dbl driveshaft_torque)
 {
 	//determine torque from the anti-slip mechanism
-	Dbl current_anti_slip = anti_slip;
+	Dbl cas = anti_slip;
 	if (anti_slip_torque > 0)  // if torque sensitive
-		current_anti_slip = anti_slip_torque*driveshaft_torque;  //TODO: add some minimum anti-slip
+		cas = anti_slip_torque * driveshaft_torque;  //TODO: add some minimum anti-slip
 
-	if (current_anti_slip < 0)  // determine behavior for deceleration
-		current_anti_slip *= -anti_slip_torque_decel_factor;
+	if (cas < 0)  // determine behavior for deceleration
+		cas *= -anti_slip_torque_decel_factor;
 
-	current_anti_slip = std::max(0.0,current_anti_slip);
-	Dbl drag = clamp(current_anti_slip * (side1_speed - side2_speed),-anti_slip,anti_slip);
+	cas = std::max(0.0,cas);
+	Dbl drag = clamp(cas * (side1_speed - side2_speed),-anti_slip,anti_slip);
 	
 	Dbl torque = driveshaft_torque * final_drive;
 	side1_torque = torque*(1.0-torque_split) - drag;

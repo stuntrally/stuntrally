@@ -313,6 +313,7 @@ void CGui::startRace()
 {
 	LogO("== Netw startRace +");
 	pGame->timer.waiting = false;
+	pGame->timer.end_sim = false;
 }
 
 ///  Lap time got from network

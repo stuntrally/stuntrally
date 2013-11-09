@@ -282,11 +282,12 @@ private:
 	//unsigned int carId; //the index for the player's car; defaults to zero
 
 public:
-	TIMER() : loaded(false),pretime(0.0)/*,carId(0)*/,waiting(false) {	}
+	TIMER() : loaded(false),pretime(0.0)/*,carId(0)*/,waiting(false),end_sim(false) {	}
 	~TIMER() {	Unload();	}
 
 	float pretime; // amount of time left in staging
 	bool waiting;  // for other players in multi or in champs to close info wnd
+	bool end_sim;  // simulate at end of champ, no input, wnd shown
 
 	bool Load(const std::string & trackrecordspath, float stagingtime, std::ostream & error_output);
 	///add a car of the given type and return the integer identifier that the track system will use

@@ -373,8 +373,10 @@ void App::LoadGame()  // 2
 	
 	float pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
 	if (bRplPlay)  pretime = 0.f;
-	if (mClient)  pGame->timer.waiting = true;  //+
-	
+	if (mClient)
+	{	pGame->timer.waiting = true;  //+
+		pGame->timer.end_sim = false;
+	}
 	pGame->NewGameDoLoadMisc(pretime);
 }
 
