@@ -592,7 +592,7 @@ void App::LoadTrees()  // 8
 			//todo: either sweep test car body, or world->CastRay x4 at wheels -for bridges, pipes
 			//pGame->collision.world->;  //car->dynamics.chassis
 			if (yd < 0.f)
-				pos[2] += -yd + 0.9f;
+				pos[2] += -yd + (pSet->game.sim_mode == "easy" ? -0.1f : 0.9f);
 			car->SetPosition1(pos);
 	}	}
 }
