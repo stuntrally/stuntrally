@@ -41,7 +41,8 @@
 	<Tag name="TipChangeSat">Zmień nasycenie koloru auta (biały-czarny).</Tag>
 	<Tag name="TerNormal">Normalny</Tag>
 	<Tag name="NeedNewGame">* potrzebuje Nowej Gry</Tag>
-	<Tag name="InputRoadAngZero">shift-6 - zeruj kąty</Tag>
+	<Tag name="InputRoadAngZero">alt-shift-1 - wyzeruj kąty</Tag>
+	<Tag name="InputRoadChkCtrl">z ctrl - wymuś dowolny promień</Tag>
 	<Tag name="TipTrackImg">Zrzut z gry dla wybranej trasy.</Tag>
 	<Tag name="TerLNoiseOnly">Tylko szum</Tag>
 	<Tag name="InputValueChange">Każdy ruch myszą lub zmiana wartości z </Tag>
@@ -75,7 +76,7 @@
 	<Tag name="pipes">rury</Tag>
 	<Tag name="CarTireVisCircles">Wizualizacja kołowa sił opon</Tag>
 	<Tag name="InputFluidsUpdate">F10 - odśwież mapę głębokości, po deformacji terenu przy brzegu</Tag>
-	<Tag name="InputHeaderTxt1">Akcja</Tag>
+	<Tag name="TBLapResults">Wyniki okrążenia</Tag>
 	<Tag name="DepthOfField">Głębia ostrości</Tag>
 	<Tag name="Game">Gra</Tag>
 	<Tag name="InputObjectsScale">3 - Skaluj  LMB - jednakowo  RMB: Y  MMB: Z</Tag>
@@ -100,6 +101,7 @@
 	<Tag name="NetGamesAvail">Dostępne gry</Tag>
 	<Tag name="HDRAdaptationScale">Skala dostosowania</Tag>
 	<Tag name="TBLast">Ostatni</Tag>
+	<Tag name="TrackBankAng">Kąty pochylenia drogi: średni i maksymalny, w stopniach.</Tag>
 	<Tag name="Chall_Chase">Pościg</Tag>
 	<Tag name="InputMaxVal">Max. Wartość</Tag>
 	<Tag name="TipRollDrag">Opór dla kół, większy spowoduje szybsze zwalnianie (np. 140 dla śniegu, 80 dla trawy).</Tag>
@@ -127,7 +129,7 @@
 	<Tag name="NetReady">Gotowy</Tag>
 	<Tag name="Road_Height">Wysokość</Tag>
 	<Tag name="InputNoJS">Brak joystick</Tag>
-	<Tag name="InputRoadAngType">5,6 - typ kątów</Tag>
+	<Tag name="InputRoadAngType">alt-1,2 typ kątów</Tag>
 	<Tag name="NetMasterPort">Port serwera</Tag>
 	<Tag name="InpSet_KeyHalf">Klawisz, połowa</Tag>
 	<Tag name="TerLHSm">Wysokość przejście</Tag>
@@ -249,6 +251,7 @@
 	<Tag name="TerrainError">Błąd terenu</Tag>
 	<Tag name="InputGraphsType">zmień typ grafów w grze</Tag>
 	<Tag name="NetMasterProtocolError">Niekompatybilne wersje protokołu - pobierz nowsze Stunt Rally lub skontaktuj się z administratorem serwera.</Tag>
+	<Tag name="InputRoadModify">Zmień</Tag>
 	<Tag name="No">Nie</Tag>
 	<Tag name="CheckOnLoad">Sprawdź przy ładowaniu</Tag>
 	<Tag name="Effects">Efekty</Tag>
@@ -312,6 +315,7 @@
 	<Tag name="RplMaxNumViewports">Maks. liczba widoków (dla powtórek kilkugraczowych)</Tag>
 	<Tag name="SingleRace">Pojedynczy wyścig</Tag>
 	<Tag name="TipNewGameCar">Restart gry.</Tag>
+	<Tag name="Intensity">Intensywność</Tag>
 	<Tag name="TipGrassPatchLengthMax">Maksymalna wysokość trawy.</Tag>
 	<Tag name="Vegetation">Wegetacja</Tag>
 	<Tag name="ssao">SSAO</Tag>
@@ -337,6 +341,7 @@
 	<Tag name="Asphalt">Asfalt</Tag>
 	<Tag name="TipModelPageLength">Długość strony modeli (niska będzie przeładowywać często i używać zbyt dużo batchy, wysoka powoduje widzialne przełączanie i zbyt wiele rysowanych trójkątów)</Tag>
 	<Tag name="ReverseStartOrder">Odwróć pozycje startowe</Tag>
+	<Tag name="InputHeaderTxt1">Akcja</Tag>
 	<Tag name="LightmapSize">Wielkość Lightmap</Tag>
 	<Tag name="OpponentsSorted">Sortowanie przeciwników</Tag>
 	<Tag name="RoadQual">Jakość drogi daleko</Tag>
@@ -398,7 +403,7 @@
 	<Tag name="Ambient">Ambient</Tag>
 	<Tag name="SkirtLength">Długość łaty</Tag>
 	<Tag name="InputRoadNotOnTer">gdy nie na terenie</Tag>
-	<Tag name="ChampEndCongrats">Gratulacje !</Tag>
+	<Tag name="CameraLoopChange">Zmień kamerę w pętlach</Tag>
 	<Tag name="TiresEdit2">1,2 lub Num /,* - zmień wartość</Tag>
 	<Tag name="TipGrassColorMap">Mapa koloru trawy, dla scenerii. Zazwyczaj ten sam wybór, co dla materiału trawy. Dodatkowo koloruje trawę.</Tag>
 	<Tag name="Multiplayer">Multiplayer</Tag>
@@ -495,7 +500,7 @@
 	<Tag name="MinimapAndSize">Minimapa, rozmiar</Tag>
 	<Tag name="TipChangeHue">Zmień kolor auta (odcień)</Tag>
 	<Tag name="TipDustInt">Intensywność cząstek kurzu.</Tag>
-	<Tag name="Intensity">Intensywność</Tag>
+	<Tag name="Road_Loop">Pętla</Tag>
 	<Tag name="InputBrushForce">[,] (lub shift-Kółko) - ŚForce (intensity)</Tag>
 	<Tag name="NetGameName">Nazwa gry</Tag>
 	<Tag name="TexSize">Rozmiar tekstur</Tag>
@@ -540,7 +545,7 @@
 	<Tag name="InputObjectsMode">X - edytuj obiekty</Tag>
 	<Tag name="TipGrassVisDist">Dystans widoczności dla stron trawy.</Tag>
 	<Tag name="TracksGhost">Duch trasy (auto ES, nalepszy przejazd dla trasy)</Tag>
-	<Tag name="TipModelVisDist">Dystans widoczności modeli 3d, po tym stają się 2d atrapami.</Tag>
+	<Tag name="TipNewDup">Stwórz nową trasę przez zduplikowanie wybranej, używając nowej nazwy (wprować nazwę najpierw).</Tag>
 	<Tag name="TerGenScale">Skaluj wysokość</Tag>
 	<Tag name="Settings">Ustawienia</Tag>
 	<Tag name="InputRoadRMB">RMB (lub Num +,-)</Tag>
@@ -548,7 +553,7 @@
 	<Tag name="InputToggleCam">Tab - tryb kamery / edycji</Tag>
 	<Tag name="Brush_Freq">Częst</Tag>
 	<Tag name="InputStartAltLMB">alt-LPM - obróć  alt-PPM - połóż</Tag>
-	<Tag name="InputRoadAngSnap">7,8 - przyciąganie kąta</Tag>
+	<Tag name="InputRoadAngSnap">5,6 - skok kąta</Tag>
 	<Tag name="TerGenOfsX">Przesunięcie X</Tag>
 	<Tag name="TipTexTiling">Odległość powtarzania tekstury (mniejsza znaczy więcej powtórzeń).</Tag>
 	<Tag name="InputBrushShape">K,L - Kształt</Tag>
@@ -567,7 +572,7 @@
 	<Tag name="Road_Yaw">Obr</Tag>
 	<Tag name="TrackAvgSpeed">Śred. szybk.</Tag>
 	<Tag name="Yes">Tak</Tag>
-	<Tag name="TipNewDup">Stwórz nową trasę przez zduplikowanie wybranej, używając nowej nazwy (wprować nazwę najpierw).</Tag>
+	<Tag name="ChampEndCongrats">Gratulacje !</Tag>
 	<Tag name="TerGenPers">Szum</Tag>
 	<Tag name="RoadStats">Stat. drogi</Tag>
 	<Tag name="SunDir">Kierunek słońca</Tag>
@@ -613,6 +618,7 @@
 	<Tag name="LS_ROAD">Ładowanie trasy</Tag>
 	<Tag name="RoadPoint">Punkt drogi</Tag>
 	<Tag name="CarStartPos">Pozycja startowa</Tag>
+	<Tag name="ObjRocks">Skały</Tag>
 	<Tag name="ShortcutsInfo">Naciśnij z alt by szybko przejść do zakładki (lub sub). Kolejne będzie przechodzić po sub-zakładkach (jeśli są).</Tag>
 	<Tag name="AlignWidthMul">Mnożnik szerokości</Tag>
 	<Tag name="NetMasterIp">IP serwera</Tag>
@@ -668,6 +674,7 @@
 	<Tag name="TrackWidthAvg">Śred. szer.</Tag>
 	<Tag name="Road_Length">Długość</Tag>
 	<Tag name="RplGhostOther">Duch innego auta (kiedy obecny nie istnieje).</Tag>
+	<Tag name="TipModelVisDist">Dystans widoczności modeli 3d, po tym stają się 2d atrapami.</Tag>
 	<Tag name="NetAddress">Adres</Tag>
 	<Tag name="Road_sel">zazn</Tag>
 	<Tag name="AutoLoad">Autom. wczytywanie trasy</Tag>
@@ -730,9 +737,10 @@
 	<Tag name="TrackPipes">Rury</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Przesunięcie wysokości</Tag>
+	<Tag name="Road_OnPipe">Na Rurze</Tag>
 	<Tag name="Amplitude">Amplituda</Tag>
 	<Tag name="TipGrassLayerDens">Gęstość trawy dla warstwy (jak często występuje).</Tag>
-	<Tag name="InputRoadModify">Zmień</Tag>
+	<Tag name="InputRoadLoopChk">7 - zaznacz pkt. kontr. jako pocz./koniec pętli (do zmiany kamery)</Tag>
 	<Tag name="TextColor">Kolor tekstu</Tag>
 	<Tag name="Reduced">Zredukowane</Tag>
 	<Tag name="ColBright">Jasność</Tag>
@@ -768,6 +776,7 @@
 	<Tag name="Copy">Kopiuj</Tag>
 	<Tag name="Reverse">Odwrócenie</Tag>
 	<Tag name="TipFind">Wpisz część nazwy by znaleźć (filtruje listę).</Tag>
+	<Tag name="InputRoadOnPipe">8 - zaznacz jako jazda na rurze</Tag>
 	<Tag name="scale">Skala</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="HeightMin">Wysokość Min</Tag>
@@ -919,15 +928,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="TBLapResults">Lap Results</Tag>
-	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
-	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
-	<Tag name="CameraLoopChange">Camera change in loops</Tag>
-	<Tag name="Road_Loop">Loop</Tag>
-	<Tag name="ObjRocks">Rocks</Tag>
-	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
-	<Tag name="Road_OnPipe">On Pipe</Tag>
-	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
+	<Tag name="DamageDecLap">Repair each lap</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

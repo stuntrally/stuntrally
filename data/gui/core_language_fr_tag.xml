@@ -42,6 +42,7 @@
 	<Tag name="TerNormal">Normal</Tag>
 	<Tag name="NeedNewGame">* besoin d'une nouvelle partie</Tag>
 	<Tag name="InputRoadAngZero">alt-shift-1  - zero angles</Tag>
+	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
 	<Tag name="TipTrackImg">Capture d'écran du jeu pour la piste sélectionnée.</Tag>
 	<Tag name="TerLNoiseOnly">Bruit seulement</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
@@ -75,7 +76,7 @@
 	<Tag name="pipes">tubes</Tag>
 	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
 	<Tag name="InputFluidsUpdate">F10 - mettre à jour la carte de profondeur, après avoir édité du terrain près d'une côte</Tag>
-	<Tag name="InputHeaderTxt1">Action</Tag>
+	<Tag name="TBLapResults">Lap Results</Tag>
 	<Tag name="DepthOfField">Profondeur du terrain</Tag>
 	<Tag name="Game">Jeu</Tag>
 	<Tag name="InputObjectsScale">3 - Échelle Clic gauche - uniforme XYZ Clic droit : Y Clic du milieu : Z</Tag>
@@ -100,6 +101,7 @@
 	<Tag name="NetGamesAvail">Parties disponibles</Tag>
 	<Tag name="HDRAdaptationScale">Adapter l'échelle</Tag>
 	<Tag name="TBLast">Dernier</Tag>
+	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
 	<Tag name="Chall_Chase">Poursuivre</Tag>
 	<Tag name="InputMaxVal">Valeur Maximale</Tag>
 	<Tag name="TipRollDrag">Friction des roues, une valeur plus élevée réduit la vitesse (exemple : 140 pour la neige, 80 pour l'herbe).</Tag>
@@ -127,7 +129,7 @@
 	<Tag name="NetReady">Prêt</Tag>
 	<Tag name="Road_Height">Hauteur</Tag>
 	<Tag name="InputNoJS">Pas de joystick</Tag>
-	<Tag name="InputRoadAngType">5,6 - types d'angle</Tag>
+	<Tag name="InputRoadAngType">alt-1,2   - angles type</Tag>
 	<Tag name="NetMasterPort">Port du serveur maître</Tag>
 	<Tag name="InpSet_KeyHalf">Touche partielle</Tag>
 	<Tag name="TerLHSm">Adoucir la hauteur</Tag>
@@ -249,6 +251,7 @@
 	<Tag name="TerrainError">Erreur du terrain</Tag>
 	<Tag name="InputGraphsType">changer le type de graphiques dans le jeu</Tag>
 	<Tag name="NetMasterProtocolError">Version du protocole incompatible - mettez à jour Stunt Rally ou contactez l'administrateur du serveur.</Tag>
+	<Tag name="InputRoadModify">Modifier</Tag>
 	<Tag name="No">Non</Tag>
 	<Tag name="CheckOnLoad">Vérifier en chargeant</Tag>
 	<Tag name="Effects">Effets</Tag>
@@ -312,6 +315,7 @@
 	<Tag name="RplMaxNumViewports">Nombre de vues maximum</Tag>
 	<Tag name="SingleRace">Simple course</Tag>
 	<Tag name="TipNewGameCar">Redémarrer la partie</Tag>
+	<Tag name="Intensity">Intensité</Tag>
 	<Tag name="TipGrassPatchLengthMax">Longueur maximale de l'herbe.</Tag>
 	<Tag name="Vegetation">Végétation</Tag>
 	<Tag name="ssao">SSAO</Tag>
@@ -337,6 +341,7 @@
 	<Tag name="Asphalt">Bitume</Tag>
 	<Tag name="TipModelPageLength">Models Page length (low will reload often and make too many batches, high will cause visible switching and make too many drawn triangles).</Tag>
 	<Tag name="ReverseStartOrder">Inverser l'ordre de départ</Tag>
+	<Tag name="InputHeaderTxt1">Action</Tag>
 	<Tag name="LightmapSize">Taille de la lightmap</Tag>
 	<Tag name="OpponentsSorted">Trier les adversaires</Tag>
 	<Tag name="RoadQual">Détails de la route</Tag>
@@ -398,7 +403,7 @@
 	<Tag name="Ambient">Ambience</Tag>
 	<Tag name="SkirtLength">Skirt Length</Tag>
 	<Tag name="InputRoadNotOnTer">quand n'est pas sur le terrain</Tag>
-	<Tag name="ChampEndCongrats">Félicitations !</Tag>
+	<Tag name="CameraLoopChange">Camera change in loops</Tag>
 	<Tag name="TiresEdit2">1,2 ou pavé num. /,* - changer la valeur</Tag>
 	<Tag name="TipGrassColorMap">Carte de couleur pour le paysage, généralement le même choix que pour le matériau d'herbe. Permet de changer la couleur de l'herbe.</Tag>
 	<Tag name="Multiplayer">Multijoueur</Tag>
@@ -495,7 +500,7 @@
 	<Tag name="MinimapAndSize">Taille de la mini carte</Tag>
 	<Tag name="TipChangeHue">Changer la couleur de la voiture (teinte).</Tag>
 	<Tag name="TipDustInt">Intensité des particules de poussière.</Tag>
-	<Tag name="Intensity">Intensité</Tag>
+	<Tag name="Road_Loop">Loop</Tag>
 	<Tag name="InputBrushForce">[,] (ou Shift-molette) - Force (intensité)</Tag>
 	<Tag name="NetGameName">Nom du jeu</Tag>
 	<Tag name="TexSize">Taille des textures</Tag>
@@ -540,7 +545,7 @@
 	<Tag name="InputObjectsMode">X - éditer les objets</Tag>
 	<Tag name="TipGrassVisDist">Distance de vue de l'herbe.</Tag>
 	<Tag name="TracksGhost">Fantôme du circuit (voiture ES)</Tag>
-	<Tag name="TipModelVisDist">Distance de vue pour les modèles 3D, après cette distance ils se transforment en sprites 2D.</Tag>
+	<Tag name="TipNewDup">Crée un nouveau circuit en dupliquant le circuit sélectionné et en utilisant le nouveau nom (changez le nom d'abord).</Tag>
 	<Tag name="TerGenScale">Hauteur</Tag>
 	<Tag name="Settings">Paramètres</Tag>
 	<Tag name="InputRoadRMB">Clic droit (ou pavé num. +,-)</Tag>
@@ -567,7 +572,7 @@
 	<Tag name="Road_Yaw">Angle horizontal</Tag>
 	<Tag name="TrackAvgSpeed">Vitesse moyenne</Tag>
 	<Tag name="Yes">Oui</Tag>
-	<Tag name="TipNewDup">Crée un nouveau circuit en dupliquant le circuit sélectionné et en utilisant le nouveau nom (changez le nom d'abord).</Tag>
+	<Tag name="ChampEndCongrats">Félicitations !</Tag>
 	<Tag name="TerGenPers">Bruit persistant</Tag>
 	<Tag name="RoadStats">Statistiques de la route</Tag>
 	<Tag name="SunDir">Dir. du soleil</Tag>
@@ -613,6 +618,7 @@
 	<Tag name="LS_ROAD">Chargement de la route</Tag>
 	<Tag name="RoadPoint">Point de la route</Tag>
 	<Tag name="CarStartPos">Position de départ de la voiture</Tag>
+	<Tag name="ObjRocks">Rocks</Tag>
 	<Tag name="ShortcutsInfo">Cliquez avec Alt pour accéder rapidement à un onglet (ou sous-onglet). Cliquez encore pour naviguer entre les sous-onglets (s'il y en a).</Tag>
 	<Tag name="AlignWidthMul">Multiplicateur de largeur</Tag>
 	<Tag name="NetMasterIp">IP du serveur maître</Tag>
@@ -668,6 +674,7 @@
 	<Tag name="TrackWidthAvg">Largeur moyenne</Tag>
 	<Tag name="Road_Length">Longueur</Tag>
 	<Tag name="RplGhostOther">Fantômes d'autres voitures (si l'actuel est indisponible)</Tag>
+	<Tag name="TipModelVisDist">Distance de vue pour les modèles 3D, après cette distance ils se transforment en sprites 2D.</Tag>
 	<Tag name="NetAddress">Adresse</Tag>
 	<Tag name="Road_sel">sél</Tag>
 	<Tag name="AutoLoad">Chargement automatique du circuit</Tag>
@@ -730,9 +737,10 @@
 	<Tag name="TrackPipes">Tubes</Tag>
 	<Tag name="Specular">Spéculaire</Tag>
 	<Tag name="HeightOffset">Décalage de hauteur</Tag>
+	<Tag name="Road_OnPipe">On Pipe</Tag>
 	<Tag name="Amplitude">Amplitude</Tag>
 	<Tag name="TipGrassLayerDens">Densité de l'herbe pour ce calque.</Tag>
-	<Tag name="InputRoadModify">Modifier</Tag>
+	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
 	<Tag name="TextColor">Couleur du texte</Tag>
 	<Tag name="Reduced">Réduit</Tag>
 	<Tag name="ColBright">Luminosité</Tag>
@@ -768,6 +776,7 @@
 	<Tag name="Copy">Copier</Tag>
 	<Tag name="Reverse">Inverser</Tag>
 	<Tag name="TipFind">Entrez une partie du nom du circuit à trouver (filtre la liste).</Tag>
+	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
 	<Tag name="scale">Échelle</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="HeightMin">Hauteur Min</Tag>
@@ -919,15 +928,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet d'Options précédent/suivant (Maj. sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="TBLapResults">Lap Results</Tag>
-	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
-	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
-	<Tag name="CameraLoopChange">Camera change in loops</Tag>
-	<Tag name="Road_Loop">Loop</Tag>
-	<Tag name="ObjRocks">Rocks</Tag>
-	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
-	<Tag name="Road_OnPipe">On Pipe</Tag>
-	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
+	<Tag name="DamageDecLap">Repair each lap</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

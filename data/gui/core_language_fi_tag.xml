@@ -42,6 +42,7 @@
 	<Tag name="TerNormal">Normaali</Tag>
 	<Tag name="NeedNewGame">* peli tarvitsee aloittaa alusta</Tag>
 	<Tag name="InputRoadAngZero">alt-shift-1  - zero angles</Tag>
+	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
 	<Tag name="TipTrackImg">Kuvankaappaus pelitilanteesta valitulla radalla.</Tag>
 	<Tag name="TerLNoiseOnly">Vain kohina</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
@@ -75,7 +76,7 @@
 	<Tag name="pipes">putket</Tag>
 	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
 	<Tag name="InputFluidsUpdate">F10  - update depth map, after terrain deform near shore</Tag>
-	<Tag name="InputHeaderTxt1">Toiminto</Tag>
+	<Tag name="TBLapResults">Lap Results</Tag>
 	<Tag name="DepthOfField">Syväterävyysalue</Tag>
 	<Tag name="Game">Peli</Tag>
 	<Tag name="InputObjectsScale">3 - Scale   LMB - uniform XYZ  RMB: Y  MMB: Z</Tag>
@@ -100,6 +101,7 @@
 	<Tag name="NetGamesAvail">Saatavilla olevat pelit</Tag>
 	<Tag name="HDRAdaptationScale">Adapt Scale</Tag>
 	<Tag name="TBLast">Viimeinen</Tag>
+	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
 	<Tag name="Chall_Chase">Takaa-ajo</Tag>
 	<Tag name="InputMaxVal">Maksimi arvo</Tag>
 	<Tag name="TipRollDrag">Drag for wheels, bigger will make them slow down faster (eg. 140 for snow, 80 for grass).</Tag>
@@ -127,7 +129,7 @@
 	<Tag name="NetReady">Valmis</Tag>
 	<Tag name="Road_Height">Korkeus</Tag>
 	<Tag name="InputNoJS">Ei peliohjainta</Tag>
-	<Tag name="InputRoadAngType">5,6 - kulman tyyppi</Tag>
+	<Tag name="InputRoadAngType">alt-1,2   - angles type</Tag>
 	<Tag name="NetMasterPort">Pääpalvelimen portti</Tag>
 	<Tag name="InpSet_KeyHalf">Key Half</Tag>
 	<Tag name="TerLHSm">Korkeus pehmennys</Tag>
@@ -249,6 +251,7 @@
 	<Tag name="TerrainError">Maaston virhe</Tag>
 	<Tag name="InputGraphsType">change graphs type in game</Tag>
 	<Tag name="NetMasterProtocolError">Incompatible protocol version - update Stunt Rally or contact server administrator.</Tag>
+	<Tag name="InputRoadModify">Muokkaa</Tag>
 	<Tag name="No">Ei</Tag>
 	<Tag name="CheckOnLoad">Check on load</Tag>
 	<Tag name="Effects">Tehosteet</Tag>
@@ -312,6 +315,7 @@
 	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
 	<Tag name="SingleRace">Yksittäinen kilpailu</Tag>
 	<Tag name="TipNewGameCar">Restart game.</Tag>
+	<Tag name="Intensity">Voimakkuus</Tag>
 	<Tag name="TipGrassPatchLengthMax">Maximal grass patch length.</Tag>
 	<Tag name="Vegetation">Kasvillisuus</Tag>
 	<Tag name="ssao">SSAO</Tag>
@@ -337,6 +341,7 @@
 	<Tag name="Asphalt">Asfaltti</Tag>
 	<Tag name="TipModelPageLength">Models Page length (low will reload often and make too many batches, high will cause visible switching and make too many drawn triangles).</Tag>
 	<Tag name="ReverseStartOrder">Reverse starting order</Tag>
+	<Tag name="InputHeaderTxt1">Toiminto</Tag>
 	<Tag name="LightmapSize">Valaistuskartan koko</Tag>
 	<Tag name="OpponentsSorted">Opponents Sorted</Tag>
 	<Tag name="RoadQual">Tien laatu kaukana</Tag>
@@ -398,7 +403,7 @@
 	<Tag name="Ambient">Ambient</Tag>
 	<Tag name="SkirtLength">Skirt Length</Tag>
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
-	<Tag name="ChampEndCongrats">Onneksi olkoon!</Tag>
+	<Tag name="CameraLoopChange">Camera change in loops</Tag>
 	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
 	<Tag name="Multiplayer">Moninpeli</Tag>
@@ -495,7 +500,7 @@
 	<Tag name="MinimapAndSize">Pienoiskartta, koko</Tag>
 	<Tag name="TipChangeHue">Vaihda auton värisävyä.</Tag>
 	<Tag name="TipDustInt">Pölyhiukkasten voimakkuus.</Tag>
-	<Tag name="Intensity">Voimakkuus</Tag>
+	<Tag name="Road_Loop">Loop</Tag>
 	<Tag name="InputBrushForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
 	<Tag name="NetGameName">Pelin nimi</Tag>
 	<Tag name="TexSize">Tekstuurien koko</Tag>
@@ -540,7 +545,7 @@
 	<Tag name="InputObjectsMode">X - edit Objects</Tag>
 	<Tag name="TipGrassVisDist">Näkyysetäisyys ruohosivuille.</Tag>
 	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
-	<Tag name="TipModelVisDist">Visibility distance for 3d models, after this they turn into 2d impostors.</Tag>
+	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
 	<Tag name="TerGenScale">Korkeus skaalaus</Tag>
 	<Tag name="Settings">Asetukset</Tag>
 	<Tag name="InputRoadRMB">RMB (or Num +,-)</Tag>
@@ -567,7 +572,7 @@
 	<Tag name="Road_Yaw">Yaw</Tag>
 	<Tag name="TrackAvgSpeed">Keskimääräinen nopeus</Tag>
 	<Tag name="Yes">Kyllä</Tag>
-	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
+	<Tag name="ChampEndCongrats">Onneksi olkoon!</Tag>
 	<Tag name="TerGenPers">Persistance noise</Tag>
 	<Tag name="RoadStats">Tien tilastot</Tag>
 	<Tag name="SunDir">Auringon suunta</Tag>
@@ -613,6 +618,7 @@
 	<Tag name="LS_ROAD">Ladataan tietä</Tag>
 	<Tag name="RoadPoint">Tiepiste</Tag>
 	<Tag name="CarStartPos">Auton lähtöpaikka</Tag>
+	<Tag name="ObjRocks">Rocks</Tag>
 	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
 	<Tag name="AlignWidthMul">Width multiply</Tag>
 	<Tag name="NetMasterIp">Pääpalvelimen IP-osoite</Tag>
@@ -668,6 +674,7 @@
 	<Tag name="TrackWidthAvg">Width avg.</Tag>
 	<Tag name="Road_Length">Pituus</Tag>
 	<Tag name="RplGhostOther">Other car ghost (when current unavailable)</Tag>
+	<Tag name="TipModelVisDist">Visibility distance for 3d models, after this they turn into 2d impostors.</Tag>
 	<Tag name="NetAddress">Osoite</Tag>
 	<Tag name="Road_sel">sel</Tag>
 	<Tag name="AutoLoad">Lataa rata automaattisesti</Tag>
@@ -730,9 +737,10 @@
 	<Tag name="TrackPipes">Putket</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Height offset</Tag>
+	<Tag name="Road_OnPipe">On Pipe</Tag>
 	<Tag name="Amplitude">Amplitudi</Tag>
 	<Tag name="TipGrassLayerDens">Grass density for layer (how often it will appear).</Tag>
-	<Tag name="InputRoadModify">Muokkaa</Tag>
+	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
 	<Tag name="TextColor">Tekstin väri</Tag>
 	<Tag name="Reduced">Lievennetty</Tag>
 	<Tag name="ColBright">Kirkkaus</Tag>
@@ -768,6 +776,7 @@
 	<Tag name="Copy">Kopio</Tag>
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="TipFind">Enter part of name to find (filters list).</Tag>
+	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
 	<Tag name="scale">Skaala</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="HeightMin">Height Min</Tag>
@@ -919,15 +928,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="TBLapResults">Lap Results</Tag>
-	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
-	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
-	<Tag name="CameraLoopChange">Camera change in loops</Tag>
-	<Tag name="Road_Loop">Loop</Tag>
-	<Tag name="ObjRocks">Rocks</Tag>
-	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
-	<Tag name="Road_OnPipe">On Pipe</Tag>
-	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
+	<Tag name="DamageDecLap">Repair each lap</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

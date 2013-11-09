@@ -41,7 +41,8 @@
 	<Tag name="TipChangeSat">Изменяет насыщенность цвета авто (белый-черный).</Tag>
 	<Tag name="TerNormal">Нормальный</Tag>
 	<Tag name="NeedNewGame">* нужна Новая игра</Tag>
-	<Tag name="InputRoadAngZero">shift-6 - углы ноль</Tag>
+	<Tag name="InputRoadAngZero">alt-shift-1  - углы 0</Tag>
+	<Tag name="InputRoadChkCtrl">с ctrl - сила задан. радиуса</Tag>
 	<Tag name="TipTrackImg">Снимок трека для игры</Tag>
 	<Tag name="TerLNoiseOnly">Только шум</Tag>
 	<Tag name="InputValueChange">Жми или двинь (мышь/кнопка) </Tag>
@@ -75,7 +76,7 @@
 	<Tag name="pipes">трубы</Tag>
 	<Tag name="CarTireVisCircles">Визуализ. нагр. на шины</Tag>
 	<Tag name="InputFluidsUpdate">F10 - обновить отображение глубины в ландшафте</Tag>
-	<Tag name="InputHeaderTxt1">Действие</Tag>
+	<Tag name="TBLapResults">Итоги круга</Tag>
 	<Tag name="DepthOfField">Прорисовка</Tag>
 	<Tag name="Game">Игра</Tag>
 	<Tag name="InputObjectsScale">3 - Масштаб LMB - все RMB: Y MMB: Z</Tag>
@@ -100,6 +101,7 @@
 	<Tag name="NetGamesAvail">Доступные игры</Tag>
 	<Tag name="HDRAdaptationScale">Адап. гамма</Tag>
 	<Tag name="TBLast">Посл.</Tag>
+	<Tag name="TrackBankAng">Углы виражей дороги: сред. и макс., в градусах.</Tag>
 	<Tag name="Chall_Chase">Погоня</Tag>
 	<Tag name="InputMaxVal">Макс. значение</Tag>
 	<Tag name="TipRollDrag">Для колес, чем больше значение тем быстрее замедление (напр. 140 для снега, 80 для травы).</Tag>
@@ -127,7 +129,7 @@
 	<Tag name="NetReady">Готов</Tag>
 	<Tag name="Road_Height">Высота</Tag>
 	<Tag name="InputNoJS">Нет джойстика</Tag>
-	<Tag name="InputRoadAngType">5,6 - тип углов</Tag>
+	<Tag name="InputRoadAngType">alt-1,2   - тип углов</Tag>
 	<Tag name="NetMasterPort">Гл. порт серевера</Tag>
 	<Tag name="InpSet_KeyHalf">2 кнопки</Tag>
 	<Tag name="TerLHSm">Ровная высота</Tag>
@@ -249,6 +251,7 @@
 	<Tag name="TerrainError">Ошибка ландш.</Tag>
 	<Tag name="InputGraphsType">изменить тип схем в игре</Tag>
 	<Tag name="NetMasterProtocolError">несовместимая версия протокола - обнови Stunt Rally или свяжись с сервером администратора.</Tag>
+	<Tag name="InputRoadModify">Изменить</Tag>
 	<Tag name="No">Нет</Tag>
 	<Tag name="CheckOnLoad">Пров. при загр.</Tag>
 	<Tag name="Effects">Эффекты</Tag>
@@ -312,6 +315,7 @@
 	<Tag name="RplMaxNumViewports">Макимальное количество окон экрана</Tag>
 	<Tag name="SingleRace">Одна гонка</Tag>
 	<Tag name="TipNewGameCar">Перезапустите игру.</Tag>
+	<Tag name="Intensity">Интен.</Tag>
 	<Tag name="TipGrassPatchLengthMax">Максимальная длина участка травы.</Tag>
 	<Tag name="Vegetation">Растит.</Tag>
 	<Tag name="ssao">SSAO</Tag>
@@ -337,6 +341,7 @@
 	<Tag name="Asphalt">Асфальт</Tag>
 	<Tag name="TipModelPageLength">Длина страницы памяти моделей (ниже будет перезагружаться часто и будет много пакетов данных, выше будут визуальные переключения и много искаженных треугольников или групп из трех частей).</Tag>
 	<Tag name="ReverseStartOrder">Обр. старт. порядок</Tag>
+	<Tag name="InputHeaderTxt1">Действие</Tag>
 	<Tag name="LightmapSize">Размер карты осв.</Tag>
 	<Tag name="OpponentsSorted">Сорт. оппонентов</Tag>
 	<Tag name="RoadQual">Качество дороги</Tag>
@@ -398,7 +403,7 @@
 	<Tag name="Ambient">Окр. среда</Tag>
 	<Tag name="SkirtLength">Длина края</Tag>
 	<Tag name="InputRoadNotOnTer">не на ландшафте</Tag>
-	<Tag name="ChampEndCongrats">Поздравляем !</Tag>
+	<Tag name="CameraLoopChange">Изм. камеру на петлях</Tag>
 	<Tag name="TiresEdit2">1,2 или Num /,* - изм. знач.</Tag>
 	<Tag name="TipGrassColorMap">Отображение цвета травы для ландшафта, обычно такой же как у материала травы. Дополнительная окраска травы.</Tag>
 	<Tag name="Multiplayer">По сети</Tag>
@@ -495,7 +500,7 @@
 	<Tag name="MinimapAndSize">Мини-карта, размер</Tag>
 	<Tag name="TipChangeHue">Изменяет цвет авто (оттенок).</Tag>
 	<Tag name="TipDustInt">Интенсивность частиц пыли.</Tag>
-	<Tag name="Intensity">Интен.</Tag>
+	<Tag name="Road_Loop">Петля</Tag>
 	<Tag name="InputBrushForce">[,]  (или shift-Wheel)  -  сила (интен.)</Tag>
 	<Tag name="NetGameName">Имя игры</Tag>
 	<Tag name="TexSize">Разм. текстуры</Tag>
@@ -540,7 +545,7 @@
 	<Tag name="InputObjectsMode">X - ред. объекты</Tag>
 	<Tag name="TipGrassVisDist">Дистанция видимости для страниц памяти травы.</Tag>
 	<Tag name="TracksGhost">Призрак трека (лучш. езда для трека)</Tag>
-	<Tag name="TipModelVisDist">Дистанция видимости для 3d моделей, после этого они превращаются в 2d спрайты.</Tag>
+	<Tag name="TipNewDup">Создает новый трек, дублируя выбранный трек, и использует новое имя (во-первых измени имя).</Tag>
 	<Tag name="TerGenScale">Шкала высоты</Tag>
 	<Tag name="Settings">Настройки</Tag>
 	<Tag name="InputRoadRMB">RMB (или Num +,-)</Tag>
@@ -548,7 +553,7 @@
 	<Tag name="InputToggleCam">Tab - камера / ред.  режим</Tag>
 	<Tag name="Brush_Freq">Част.</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - вращ.   alt-RMB - наклон</Tag>
-	<Tag name="InputRoadAngSnap">7,8   - захват углов</Tag>
+	<Tag name="InputRoadAngSnap">5,6   - захват углов</Tag>
 	<Tag name="TerGenOfsX">Смещ. X</Tag>
 	<Tag name="TipTexTiling">Длина текстуры покрытия плитками (меньше означает больше повторов).</Tag>
 	<Tag name="InputBrushShape">K,L  -  форма</Tag>
@@ -567,7 +572,7 @@
 	<Tag name="Road_Yaw">Откл.</Tag>
 	<Tag name="TrackAvgSpeed">Ср. скор.</Tag>
 	<Tag name="Yes">Да</Tag>
-	<Tag name="TipNewDup">Создает новый трек, дублируя выбранный трек, и использует новое имя (во-первых измени имя).</Tag>
+	<Tag name="ChampEndCongrats">Поздравляем !</Tag>
 	<Tag name="TerGenPers">Инерция шума</Tag>
 	<Tag name="RoadStats">Стат. дороги</Tag>
 	<Tag name="SunDir">Напр. солнца</Tag>
@@ -613,6 +618,7 @@
 	<Tag name="LS_ROAD">Загрузка дороги</Tag>
 	<Tag name="RoadPoint">Точка дороги</Tag>
 	<Tag name="CarStartPos">Старт авто</Tag>
+	<Tag name="ObjRocks">Скалы</Tag>
 	<Tag name="ShortcutsInfo">Нажми с alt для доступа к gui вкладке (или подменю). Нажатие снова циклит подменю (если есть).</Tag>
 	<Tag name="AlignWidthMul">Увел. ширину</Tag>
 	<Tag name="NetMasterIp">Гл. сервера IP</Tag>
@@ -668,6 +674,7 @@
 	<Tag name="TrackWidthAvg">Ср. ширина</Tag>
 	<Tag name="Road_Length">Длина</Tag>
 	<Tag name="RplGhostOther">Призрак другого автомобиля</Tag>
+	<Tag name="TipModelVisDist">Дистанция видимости для 3d моделей, после этого они превращаются в 2d спрайты.</Tag>
 	<Tag name="NetAddress">Адрес</Tag>
 	<Tag name="Road_sel">выб</Tag>
 	<Tag name="AutoLoad">Автозагр. трека</Tag>
@@ -730,9 +737,10 @@
 	<Tag name="TrackPipes">Трубы</Tag>
 	<Tag name="Specular">Зеркальный</Tag>
 	<Tag name="HeightOffset">Смещ. высоты</Tag>
+	<Tag name="Road_OnPipe">По трубе</Tag>
 	<Tag name="Amplitude">Амплитуда</Tag>
 	<Tag name="TipGrassLayerDens">Густота травы для слоя (как часто она появляется).</Tag>
-	<Tag name="InputRoadModify">Изменить</Tag>
+	<Tag name="InputRoadLoopChk">7   - пометить КТ как петлю начало/конец (изм. камеры авто)</Tag>
 	<Tag name="TextColor">Цвет текста</Tag>
 	<Tag name="Reduced">Умень.</Tag>
 	<Tag name="ColBright">Яркость</Tag>
@@ -768,6 +776,7 @@
 	<Tag name="Copy">Копировать</Tag>
 	<Tag name="Reverse">Обратно</Tag>
 	<Tag name="TipFind">Введи часть имени, чтобы найти (фильтрует список).</Tag>
+	<Tag name="InputRoadOnPipe">8   - езда по трубе</Tag>
 	<Tag name="scale">Масштаб</Tag>
 	<Tag name="UnitMph">м/ч</Tag>
 	<Tag name="HeightMin">Мин. высота</Tag>
@@ -919,15 +928,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред,след Опции вкладка (shift - подменю)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="TBLapResults">Lap Results</Tag>
-	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
-	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
-	<Tag name="CameraLoopChange">Camera change in loops</Tag>
-	<Tag name="Road_Loop">Loop</Tag>
-	<Tag name="ObjRocks">Rocks</Tag>
-	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
-	<Tag name="Road_OnPipe">On Pipe</Tag>
-	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
+	<Tag name="DamageDecLap">Repair each lap</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

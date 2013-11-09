@@ -41,7 +41,8 @@
 	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
 	<Tag name="TerNormal">Normal</Tag>
 	<Tag name="NeedNewGame">* necessita Novo Jogo</Tag>
-	<Tag name="InputRoadAngZero">Shift-6 - Zerar ângulos</Tag>
+	<Tag name="InputRoadAngZero">alt-shift-1  - zero angles</Tag>
+	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
 	<Tag name="TipTrackImg">Screenshot do jogo para a pista selecionada.</Tag>
 	<Tag name="TerLNoiseOnly">Somente Ruído</Tag>
 	<Tag name="InputValueChange">Cada movimento (mouse/teclado) ou mudança de valores com </Tag>
@@ -75,7 +76,7 @@
 	<Tag name="pipes">canos</Tag>
 	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
 	<Tag name="InputFluidsUpdate">F10  - update depth map, after terrain deform near shore</Tag>
-	<Tag name="InputHeaderTxt1">Ação</Tag>
+	<Tag name="TBLapResults">Lap Results</Tag>
 	<Tag name="DepthOfField">Profundidade do campo</Tag>
 	<Tag name="Game">Jogo</Tag>
 	<Tag name="InputObjectsScale">3 - Scale   LMB - uniform XYZ  RMB: Y  MMB: Z</Tag>
@@ -100,6 +101,7 @@
 	<Tag name="NetGamesAvail">Available games</Tag>
 	<Tag name="HDRAdaptationScale">Adapt Scale</Tag>
 	<Tag name="TBLast">Último</Tag>
+	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
 	<Tag name="Chall_Chase">Chase</Tag>
 	<Tag name="InputMaxVal">Valor Máximo</Tag>
 	<Tag name="TipRollDrag">Arrasto para as rodas, maior irá fazer elas pararem mais rápido (ex. 140 para neve, 80 para grama).</Tag>
@@ -127,7 +129,7 @@
 	<Tag name="NetReady">Pronto</Tag>
 	<Tag name="Road_Height">Altura</Tag>
 	<Tag name="InputNoJS">Sem controle</Tag>
-	<Tag name="InputRoadAngType">5, 6 - tipos de ângulo</Tag>
+	<Tag name="InputRoadAngType">alt-1,2   - angles type</Tag>
 	<Tag name="NetMasterPort">Porta do Servidor Mestre</Tag>
 	<Tag name="InpSet_KeyHalf">Key Half</Tag>
 	<Tag name="TerLHSm">Height smooth</Tag>
@@ -249,6 +251,7 @@
 	<Tag name="TerrainError">Terrain Error</Tag>
 	<Tag name="InputGraphsType">change graphs type in game</Tag>
 	<Tag name="NetMasterProtocolError">Versão de protocolo incompatível - atualize o Stunt Rally ou contate o administrador do servidor.</Tag>
+	<Tag name="InputRoadModify">Modify</Tag>
 	<Tag name="No">No</Tag>
 	<Tag name="CheckOnLoad">Check on load</Tag>
 	<Tag name="Effects">Efeitos</Tag>
@@ -312,6 +315,7 @@
 	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
 	<Tag name="SingleRace">Single Race</Tag>
 	<Tag name="TipNewGameCar">Restart game.</Tag>
+	<Tag name="Intensity">Intensity</Tag>
 	<Tag name="TipGrassPatchLengthMax">Maximal grass patch length.</Tag>
 	<Tag name="Vegetation">Vegetation</Tag>
 	<Tag name="ssao">SSAO</Tag>
@@ -337,6 +341,7 @@
 	<Tag name="Asphalt">Asphalt</Tag>
 	<Tag name="TipModelPageLength">Models Page length (low will reload often and make too many batches, high will cause visible switching and make too many drawn triangles).</Tag>
 	<Tag name="ReverseStartOrder">Reverse starting order</Tag>
+	<Tag name="InputHeaderTxt1">Ação</Tag>
 	<Tag name="LightmapSize">Lightmap size</Tag>
 	<Tag name="OpponentsSorted">Opponents Sorted</Tag>
 	<Tag name="RoadQual">Road far quality</Tag>
@@ -398,7 +403,7 @@
 	<Tag name="Ambient">Ambient</Tag>
 	<Tag name="SkirtLength">Skirt Length</Tag>
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
-	<Tag name="ChampEndCongrats">Congratulations !</Tag>
+	<Tag name="CameraLoopChange">Camera change in loops</Tag>
 	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
 	<Tag name="Multiplayer">Multiplayer</Tag>
@@ -495,7 +500,7 @@
 	<Tag name="MinimapAndSize">Minimap, size</Tag>
 	<Tag name="TipChangeHue">Change car color (hue).</Tag>
 	<Tag name="TipDustInt">Intensidade das partículas de poeira.</Tag>
-	<Tag name="Intensity">Intensity</Tag>
+	<Tag name="Road_Loop">Loop</Tag>
 	<Tag name="InputBrushForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
 	<Tag name="NetGameName">Game Name</Tag>
 	<Tag name="TexSize">Texture size</Tag>
@@ -540,7 +545,7 @@
 	<Tag name="InputObjectsMode">X - edit Objects</Tag>
 	<Tag name="TipGrassVisDist">Visibility distance for grass pages.</Tag>
 	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
-	<Tag name="TipModelVisDist">Visibility distance for 3d models, after this they turn into 2d impostors.</Tag>
+	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
 	<Tag name="TerGenScale">Scale Height</Tag>
 	<Tag name="Settings">Settings</Tag>
 	<Tag name="InputRoadRMB">RMB (or Num +,-)</Tag>
@@ -567,7 +572,7 @@
 	<Tag name="Road_Yaw">Yaw</Tag>
 	<Tag name="TrackAvgSpeed">Avg. speed</Tag>
 	<Tag name="Yes">Yes</Tag>
-	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
+	<Tag name="ChampEndCongrats">Congratulations !</Tag>
 	<Tag name="TerGenPers">Persistance noise</Tag>
 	<Tag name="RoadStats">Road Stats</Tag>
 	<Tag name="SunDir">Sun dir.</Tag>
@@ -613,6 +618,7 @@
 	<Tag name="LS_ROAD">Loading Road</Tag>
 	<Tag name="RoadPoint">Road Point</Tag>
 	<Tag name="CarStartPos">Car Start Pos</Tag>
+	<Tag name="ObjRocks">Rocks</Tag>
 	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
 	<Tag name="AlignWidthMul">Width multiply</Tag>
 	<Tag name="NetMasterIp">Master Server IP</Tag>
@@ -668,6 +674,7 @@
 	<Tag name="TrackWidthAvg">Width avg.</Tag>
 	<Tag name="Road_Length">Length</Tag>
 	<Tag name="RplGhostOther">Other car ghost (when current unavailable)</Tag>
+	<Tag name="TipModelVisDist">Visibility distance for 3d models, after this they turn into 2d impostors.</Tag>
 	<Tag name="NetAddress">Address</Tag>
 	<Tag name="Road_sel">sel</Tag>
 	<Tag name="AutoLoad">Auto Load track</Tag>
@@ -730,9 +737,10 @@
 	<Tag name="TrackPipes">Pipes</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Height offset</Tag>
+	<Tag name="Road_OnPipe">On Pipe</Tag>
 	<Tag name="Amplitude">Amplitude</Tag>
 	<Tag name="TipGrassLayerDens">Grass density for layer (how often it will appear).</Tag>
-	<Tag name="InputRoadModify">Modify</Tag>
+	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
 	<Tag name="TextColor">Text color</Tag>
 	<Tag name="Reduced">Reduced</Tag>
 	<Tag name="ColBright">Brightness</Tag>
@@ -768,6 +776,7 @@
 	<Tag name="Copy">Copy</Tag>
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="TipFind">Enter part of name to find (filters list).</Tag>
+	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
 	<Tag name="scale">Scale</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="HeightMin">Height Min</Tag>
@@ -919,15 +928,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="TBLapResults">Lap Results</Tag>
-	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
-	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
-	<Tag name="CameraLoopChange">Camera change in loops</Tag>
-	<Tag name="Road_Loop">Loop</Tag>
-	<Tag name="ObjRocks">Rocks</Tag>
-	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
-	<Tag name="Road_OnPipe">On Pipe</Tag>
-	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
+	<Tag name="DamageDecLap">Repair each lap</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
