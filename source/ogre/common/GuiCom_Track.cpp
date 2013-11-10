@@ -52,12 +52,12 @@ String CGuiCom::GetSceneryColor(String name)
 		case 'J':  c = "#50FF50";  break;  case 'S':  c = "#C0E080";  break;  case 'F':  c = "#A0C000";  break;
 		case 'G':  c = "#B0FF00";  break;  case '0':  c = "#E8E8E8";  break;  case 'I':  c = "#FFFF80";  break;
 		case 'A':  c = "#FFA080";  break;  case 'D':  c = "#F0F000";  break;  case 'C':  c = "#E0B090";  break;
-		case 'V':  c = "#1E1E0E";  break;  case 'X':  c = "#8080D0";  break;  case 'M':  c = "#A0A000";  break;
+		case 'V':  c = "#080800";  break;  case 'X':  c = "#8080D0";  break;  case 'M':  c = "#A0A000";  break;
 		case 'O':  c = "#70F0B0";  break;  case 'E':  c = "#A0E080";  break;  case 'R':  c = "#A04840";  break;  }
 	return c;
 }
 
-// track difficulties colors from value
+//  track difficulties colors from value
 const String CGuiCom::clrsDiff[9] =  // difficulty
 	{"#60C0FF", "#00FF00", "#60FF00", "#C0FF00", "#FFFF00", "#FFC000", "#FF6000", "#FF4040", "#B060B0"};
 const String CGuiCom::clrsRating[6] =  // rating

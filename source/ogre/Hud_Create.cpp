@@ -362,11 +362,13 @@ void CHud::Create()
 			"\n#70D070"+TR("#{Track}") +
 			"\n#C0C030"+TR("#{TBPosition}") +
 			"\n#F0C050"+TR("#{TBPoints}") );
+		h.txLapTxt->setVisible(false);
 
 		h.txLap = h.parent->createWidget<TextBox>("TextBox",
 			0,y, 230,320, Align::Left, "Lap"+s);
 		h.txLap->setInheritsAlpha(false);
 		h.txLap->setFontName("font.22");  h.txLap->setTextShadow(true);
+		h.txLap->setVisible(false);
 
 
 		//  opp list  -----------
