@@ -196,7 +196,7 @@ void CHud::Update(int carId, float time)
 
 	///  opponents list
 	// -----------------------------------------------------------------------------------
-	if (/*pSet->show_opponents*/ && pCarM && pCarM->pMainNode)
+	if (/*pSet->show_opponents &&*/ pCarM && pCarM->pMainNode)
 	{
 		std::list<CarModel*> cms;  // sorted list
 		for (int o=0; o < cntG; ++o)
