@@ -1,9 +1,5 @@
 #!/bin/bash -e
-# This script figures out library dependencies of Stunt Rally on Linux
-# and copies them to one place to easen the process of creating a portable
-# binary archive.
-#
-# Run it from CMake build directory without arguments.
+# Compiles SR and puts it into release archive file structure with deps.
 
 BUILDDIR=build
 STAGEDIR="`pwd`/stage"
