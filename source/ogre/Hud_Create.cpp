@@ -67,8 +67,7 @@ void CHud::Size(bool full)
 		Real miniTopY = fMiniY + sc*asp;
 
 		if (h.ndMap)
-		{
-			h.ndMap->setScale(sc, sc*asp,1);
+		{	h.ndMap->setScale(sc, sc*asp,1);
 			h.ndMap->setPosition(Vector3(fMiniX,fMiniY,0.f));
 		}
 	
@@ -197,10 +196,19 @@ void CHud::Create()
 	int cnt = std::min(6/**/, (int)app->carModels.size() );  // others
 	#ifdef DEBUG
 	assert(plr <= hud.size());
-	assert(cnt <= hud[0].vMoPos.size());
+	//assert(cnt <= hud[0].moPos.size());
 	#endif
 	int y=1200; //off 0
+
 	
+	//  car pos tris (form all cars on all viewports)
+	SceneNode* rt = scm->getRootSceneNode();
+	asp = 1.f;  //_temp
+	moPos = Create2D("hud/CarPos", scm, 0.4f, true,true, 1.f,Vector2(1,1), RV_Hud,RQG_Hud3, plr * 6);
+	ndPos = rt->createChildSceneNode();
+	ndPos->attachObject(moPos);
+
+
 	//  for each car
 	for (int c=0; c < plr; ++c)
 	{
@@ -225,7 +233,6 @@ void CHud::Create()
 		UpdMiniTer();
 		
 		float fHudSize = pSet->size_minimap * app->mSplitMgr->mDims[c].avgsize;
-		SceneNode* rt = scm->getRootSceneNode();
 		h.ndMap = rt->createChildSceneNode();
 		if (!app->sc->vdr)
 		{	asp = 1.f;  //_temp
@@ -234,28 +241,17 @@ void CHud::Create()
 			//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		}else
 			h.ndMap->attachObject(CreateVdrMinimap());
-			
-		//  car pos tri - for all carModels (ghost and remote too)
-		for (int i=0; i < cnt; ++i)
-		{
-			h.vMoPos[i] = Create2D("hud/CarPos", scm, 0.4f, true,true, 1.f,Vector2(1,1), RV_Hud,RQG_Hud3);
-				  
-			h.vNdPos[i] = h.ndMap ? h.ndMap->createChildSceneNode() : hud[0].ndMap->createChildSceneNode();
-			h.vNdPos[i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
-			h.vNdPos[i]->attachObject(h.vMoPos[i]);
-		}
-		if (h.ndMap)
-			h.ndMap->setVisible(false/*pSet->trackmap*/);
+		h.ndMap->setVisible(false/*pSet->trackmap*/);
 
 	
 		//  gauges  backgr  -----------
 		String st = toStr(pSet->gauges_type);
 		const Real sc = 0.5f;
-		h.moGauges = Create2D("hud/"+st,scm,1, true,false, sc,Vector2(0.f,0.5f), RV_Hud,RQG_Hud1, true);
+		h.moGauges = Create2D("hud/"+st,scm,1, true,false, sc,Vector2(0.f,0.5f), RV_Hud,RQG_Hud1, 2);
 		h.ndGauges = rt->createChildSceneNode();  h.ndGauges->attachObject(h.moGauges);  h.ndGauges->setVisible(false);
 
 		//  gauges  needles
-		h.moNeedles = Create2D("hud/"+st,scm,1, true,false, sc,Vector2(0.5f,0.5f), RV_Hud,RQG_Hud3, true);
+		h.moNeedles = Create2D("hud/"+st,scm,1, true,false, sc,Vector2(0.5f,0.5f), RV_Hud,RQG_Hud3, 2);
 		h.ndNeedles = rt->createChildSceneNode();  h.ndNeedles->attachObject(h.moNeedles);  h.ndNeedles->setVisible(false);
 
 
@@ -542,10 +538,10 @@ CHud::Hud::Hud()
 	,txBFuel(0), txDamage(0), txRewind(0)
 	,icoBFuel(0), icoDamage(0), icoRewind(0)
 
-	,moMap(0),  ndMap(0)
+	,moMap(0), ndMap(0)
 {
 	for (int i=0; i<3; ++i)  txOpp[i]=0;
-	vNdPos.resize(6,0);  vMoPos.resize(6,0);
+	vMiniPos.resize(6);
 }
 
 void CHud::Destroy()
@@ -558,9 +554,6 @@ void CHud::Destroy()
 		#define Dest2(mo,nd)  {  \
 			if (mo) {  scm->destroyManualObject(mo);  mo=0;  } \
 			if (nd) {  scm->destroySceneNode(nd);  nd=0;  }  }
-
-		for (i=0; i < 6; ++i)
-			Dest2(h.vMoPos[i],h.vNdPos[i])
 		
 		Dest2(h.moMap,h.ndMap)
 		Dest2(h.moGauges,h.ndGauges)
@@ -585,6 +578,7 @@ void CHud::Destroy()
 		Dest(h.txPlace)  Dest(h.bckPlace)
 		Dest(h.txCountdown)
 	}
+	Dest2(moPos, ndPos)
 	Dest(txMsg)  Dest(bckMsg)
 	Dest(txCamInfo)
 	
@@ -656,6 +650,8 @@ void CHud::Show(bool hideAll)
 				h.txCam->setVisible(cam);
 		}	}
 	}
+	if (ndPos)  ndPos->setVisible(pSet->trackmap);
+	
 	app->updMouse();
 	if (app->mWndRpl && !app->bLoading)
 		app->mWndRpl->setVisible(app->bRplPlay && app->bRplWnd);  //

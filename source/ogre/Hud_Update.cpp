@@ -101,6 +101,42 @@ void CHud::Update(int carId, float time)
 			UpdRot(c, i, vel, rpm);
 	}
 
+	///  all minimap car pos-es rot
+	const static Real tc[4][2] = {{0,1}, {1,1}, {0,0}, {1,0}};
+	const float z = 0.12f;  // par tri size
+	
+	if (carId == -1 && moPos)
+	{	moPos->beginUpdate(0);
+
+		const int plr = app->mSplitMgr->mNumViewports;
+		for (int v = 0; v < plr; ++v)  // all viewports
+		{
+			const Hud& h = hud[v];
+			const float sc = pSet->size_minimap * app->mSplitMgr->mDims[v].avgsize;
+			const Vector3& pos = h.ndMap->getPosition();
+			
+			for (c = 0; c < cntC; ++c)  // all mini pos for one car
+			{
+				const SMiniPos& sp = h.vMiniPos[c];
+				const ColourValue& clr = app->carModels[c]->color;
+
+				for (int p=0; p < 4; ++p)  // all 4 points
+				{
+					float x = pos.x + (sp.x + sp.px[p]*z)*sc;
+					float y = pos.y + (sp.y + sp.py[p]*z)*sc*asp;
+					moPos->position(x, y, 0);
+					moPos->textureCoord(tc[p][0], tc[p][1]);
+					moPos->colour(clr);
+		}	}	}
+		
+		int ii = plr * cntC;
+		for (int i=0; i < ii; ++i)
+		{	int n = i*4;
+			moPos->quad(n,n+1,n+3,n+2);
+		}
+		moPos->end();
+	}
+
 	//  track% local, updated always
 	for (c = 0; c < cntC; ++c)
 	{	CarModel* cm = app->carModels[c];
@@ -225,8 +261,7 @@ void CHud::Update(int carId, float time)
 		for (c=0; c < cnt; ++c)
 		{	//  add last, if visible, ghost1 (dont add 2nd) and track's ghost
 			CarModel* cm = app->carModels[c];
-			if (//cm->isGhost() && cm->mbVisible ||
-				cm->eType == (app->isGhost2nd ? CarModel::CT_GHOST2 : CarModel::CT_GHOST) && pSet->rpl_ghost ||
+			if (cm->eType == (app->isGhost2nd ? CarModel::CT_GHOST2 : CarModel::CT_GHOST) && pSet->rpl_ghost ||
 				cm->isGhostTrk() && pSet->rpl_trackghost)
 			{
 				cm->trackPercent = app->carPoses[app->iCurPoses[c]][c].percent;  // ghost,rpl
@@ -250,7 +285,7 @@ void CHud::Update(int carId, float time)
 					s1 += "\n";
 				else
 				{	Vector3 v = cm->pMainNode->getPosition() - pCarM->pMainNode->getPosition();
-					float dist = v.length();  // meters, mph:feet?
+					float dist = v.length();  // meters
 					Real h = std::min(60.f, dist) / 60.f;
 					clr.setHSB(0.5f - h * 0.4f, 1, 1);
 					s1 += StrClr(clr)+ fToStr(dist,0,3)+"m\n";
@@ -709,8 +744,7 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 	assert(b < hud.size());  // only b
 	assert(c < app->carModels.size());
 	assert(b < app->carModels.size());
-	assert(c < hud[b].vMoPos.size());
-	assert(c < hud[b].vNdPos.size());
+	assert(c < hud[b].vMiniPos.size());
 	#endif
 	float angBase = app->carModels[b]->angCarY;
 	
@@ -733,7 +767,6 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 
 	Hud& h = hud[b];  int p;
 	float sx = 1.4f * h.fScale, sy = sx*asp;  // *par len
-	float ps = 2.1f * pSet->size_minimap;  // *par len
 
 	//  4 points, 2d pos
 	const static Real tc[4][2] = {{0,1}, {1,1}, {0,0}, {1,0}};  // defaults, no rot
@@ -755,8 +788,8 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 
 		//  mini
 		if (bRot && bZoom && main)
-			{  px[i] = ps*tp[i][0];  py[i] = ps*tp[i][1];  }
-		else{  px[i] = ps*cp*1.4f;   py[i] =-ps*sp*1.4f;   }
+			{  px[i] = tp[i][0];  py[i] = tp[i][1];  }
+		else{  px[i] = cp*1.4f;   py[i] =-sp*1.4f;   }
 
 		float z = bRot ? 0.70f/pSet->zoom_minimap : 0.5f/pSet->zoom_minimap;
 		if (!bRot)
@@ -802,13 +835,10 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 
 		
 	///  minimap car pos-es rot
-	if (h.vMoPos[c])
-	{	h.vMoPos[c]->beginUpdate(0);
-		for (p=0; p<4; ++p)  {
-			h.vMoPos[c]->position(px[p],py[p], 0);  h.vMoPos[c]->textureCoord(tc[p][0], tc[p][1]);
-			h.vMoPos[c]->colour(app->carModels[c]->color);  }
-		h.vMoPos[c]->end();
-		//todo: combine all in 1 mo ..
+	for (p=0; p<4; ++p)
+	{	
+		h.vMiniPos[c].px[p] = px[p];
+		h.vMiniPos[c].py[p] = py[p];
 	}
 	
 	//  minimap circle/rect rot
@@ -867,11 +897,13 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 	
 	//  visible
 	bool hide = !app->carModels[c]->mbVisible;
-	if (h.vNdPos[c])
-		if (hide)
-			h.vNdPos[c]->setPosition(-100,0,0);
-		else if (bZoom && main)
-			h.vNdPos[c]->setPosition(0,0,0);
-		else
-			h.vNdPos[c]->setPosition(xp,yp,0);
+	if (hide)
+	{	h.vMiniPos[c].x = -100.f;
+		h.vMiniPos[c].y = 0.f;  }
+	else if (bZoom && main)
+	{	h.vMiniPos[c].x = 0.f;
+		h.vMiniPos[c].y = 0.f;  }
+	else
+	{	h.vMiniPos[c].x = xp;
+		h.vMiniPos[c].y = yp;  }
 }

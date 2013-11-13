@@ -36,6 +36,13 @@ public:
 	CHud(App* ap1);
 		
 	
+	//  minimap pos triangle, all needed info
+	struct SMiniPos
+	{
+		float x,y;  // pos
+		float px[4],py[4];  // points, rotation
+	};
+
 	///  HUD  ------------
 	class Hud  // for 1 viewport/player
 	{
@@ -70,9 +77,8 @@ public:
 
 		//  miniap
 		Ogre::ManualObject *moMap;  Ogre::SceneNode *ndMap;
-		//  car pos tris on minimap +2ghosts
-		std::vector<Ogre::SceneNode*> vNdPos;  //const size: 6
-		std::vector<Ogre::ManualObject*> vMoPos;
+		//  all info for this car's minimap
+		std::vector<SMiniPos> vMiniPos;  // const size: 6
 		
 		//  center position .
 		Ogre::Vector2 vcRpm, vcVel;  Ogre::Real fScale;
@@ -83,7 +89,13 @@ public:
 	};
 	std::vector<Hud> hud;  // const size: max viewports 4
 
-	///  global hud
+	///  global hud  ---------
+
+	//  car pos tris on minimap
+	//  one for all cars on all viewports
+	Ogre::SceneNode* ndPos;
+	Ogre::ManualObject* moPos;
+
 	//  chat messages
 	MyGUI::TextBox *txMsg;  MyGUI::ImageBox *bckMsg;
 	//  camera move info
@@ -137,7 +149,7 @@ public:
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr,
 		Ogre::Real size, bool dyn /*= false*/, bool clr /*= false*/,
 		Ogre::Real mul, Ogre::Vector2 ofs,
-		Ogre::uint32 vis, Ogre::uint8 rndQue, bool comb = false);
+		Ogre::uint32 vis, Ogre::uint8 rndQue, int cnt = 1);
 
 	MyGUI::TextBox* CreateNickText(int carId, Ogre::String text);
 	Ogre::Vector3 projectPoint(const Ogre::Camera* cam, const Ogre::Vector3& pos);  // 2d xy, z - out info

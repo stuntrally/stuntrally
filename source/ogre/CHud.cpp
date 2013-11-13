@@ -21,6 +21,8 @@ CHud::CHud(App* ap1)
 	,scX(1),scY(1), minX(0),maxX(0), minY(0),maxY(0)
 	,ndLine(0)
 
+	,moPos(0) ,ndPos(0)
+	
 	,txMsg(0), bckMsg(0)
 	,txCamInfo(0)
 
@@ -48,7 +50,8 @@ ManualObject* CHud::Create2D(const String& mat, SceneManager* sceneMgr,
 	Real s,  // scale pos
 	bool dyn, bool clr,
 	Real mul, Vector2 ofs,
-	uint32 vis, uint8 rndQue, bool comb)
+	uint32 vis, uint8 rndQue,
+	int cnt)
 {
 	ManualObject* m = sceneMgr->createManualObject();
 	m->setDynamic(dyn);
@@ -56,19 +59,20 @@ ManualObject* CHud::Create2D(const String& mat, SceneManager* sceneMgr,
 	m->setUseIdentityView(true);
 	m->setCastShadows(false);
 
-	m->estimateVertexCount(comb ? 8 : 4);
-	m->begin(mat, comb ? RenderOperation::OT_TRIANGLE_LIST : RenderOperation::OT_TRIANGLE_STRIP);
+	m->estimateVertexCount(cnt * 4);
+	m->begin(mat, cnt > 1 ? RenderOperation::OT_TRIANGLE_LIST : RenderOperation::OT_TRIANGLE_STRIP);
 	const static Vector2 uv[4] = { Vector2(0.f,1.f),Vector2(1.f,1.f),Vector2(0.f,0.f),Vector2(1.f,0.f) };
-	int n = comb ? 2 : 1;
-	for (int i=0; i < n; ++i)
+
+	for (int i=0; i < cnt; ++i)
 	{	m->position(-s,-s*asp, 0);  m->textureCoord(uv[0]*mul + ofs);  if (clr)  m->colour(0,1,0);
 		m->position( s,-s*asp, 0);  m->textureCoord(uv[1]*mul + ofs);  if (clr)  m->colour(0,0,0);
 		m->position(-s, s*asp, 0);  m->textureCoord(uv[2]*mul + ofs);  if (clr)  m->colour(1,1,0);
 		m->position( s, s*asp, 0);  m->textureCoord(uv[3]*mul + ofs);  if (clr)  m->colour(1,0,0);
 	}
-	if (comb)
-	{	m->quad(0,1,3,2);
-		m->quad(4,5,7,6);
+	if (cnt > 1)
+	for (int i=0; i < cnt; ++i)
+	{	int n = i*4;
+		m->quad(n,n+1,n+3,n+2);
 	}
 	m->end();
  
