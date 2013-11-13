@@ -34,7 +34,7 @@ public:
 
 	enum eCarType {  CT_LOCAL=0, CT_REMOTE, CT_REPLAY,  CT_GHOST, CT_GHOST2, CT_TRACK };
 	eCarType eType;
-	bool isGhost() const {  return eType >= CT_GHOST;/* || eType == CT_GHOST2 || eType == CT_TRACK;*/  }
+	bool isGhost() const {  return eType >= CT_GHOST;  }
 	bool isGhostTrk() const {  return eType == CT_TRACK;  }
 	
 

@@ -83,22 +83,32 @@ void CHud::Update(int carId, float time)
 	
 	//  update HUD elements for all cars that have a viewport (local or replay)
 	//-----------------------------------------------------------------------------------
-	int cntG = std::min(6/**/, (int)app->carModels.size() -(app->isGhost2nd?1:0));  // all
-	int cntC = std::min(4/*?*/, cntG);  // cars only 
+	int cnt = std::min(6/**/, (int)app->carModels.size());  // all cars
+	int cntC = std::min(4/**/, cnt -(app->isGhost2nd?1:0));  // all vis plr
+	int c;
 	
-	if (carId == -1)  // gui vp - done once for all
-	for (int c = 0; c < cntC; ++c)
+	//  gui viewport - done once for all
+	if (carId == -1)
+	for (c = 0; c < cntC; ++c)
 	if (app->carModels[c]->eType == CarModel::CT_LOCAL)
 	{
 		//  hud rpm,vel
 		float vel=0.f, rpm=0.f, clutch=1.f;  int gear=1;
 		GetVals(c,&vel,&rpm,&clutch,&gear);
 		
-		//  update pos tri on minimap  (all)
-		for (int i=0; i < cntG; ++i)
+		//  update all mini pos tri
+		for (int i=0; i < cnt; ++i)
 			UpdRot(c, i, vel, rpm);
 	}
 
+	//  track% local, updated always
+	for (c = 0; c < cntC; ++c)
+	{	CarModel* cm = app->carModels[c];
+		if (cm->eType == CarModel::CT_LOCAL ||
+			cm->eType == CarModel::CT_REPLAY)
+			cm->UpdTrackPercent();
+	}
+	
 	if (carId == -1 || app->carModels.empty())
 	{
 		PROFILER.endBlock("g.hud");
@@ -109,7 +119,8 @@ void CHud::Update(int carId, float time)
 	assert(carId >= 0);
 	assert(carId < app->carModels.size());
 	#endif
-	
+
+
 	CarModel* pCarM = app->carModels[carId];
 	CAR* pCar = pCarM ? pCarM->pCar : 0;
 
@@ -126,8 +137,8 @@ void CHud::Update(int carId, float time)
 	{
 		//  sort winners
 		std::list<CarModel*> cms;
-		for (int o=0; o < cntG; ++o)
-			cms.push_back(app->carModels[o]);
+		for (c=0; c < cnt; ++c)
+			cms.push_back(app->carModels[c]);
 
 		cms.sort(SortWin);
 		//stable_sort(cms.begin(), cms.end(), SortWin);
@@ -196,87 +207,88 @@ void CHud::Update(int carId, float time)
 
 	///  opponents list
 	// -----------------------------------------------------------------------------------
-	if (/*pSet->show_opponents &&*/ pCarM && pCarM->pMainNode)
+	bool visOpp = h.txOpp[0] && pSet->show_opponents;
+	if (visOpp && pCarM && pCarM->pMainNode)
 	{
 		std::list<CarModel*> cms;  // sorted list
-		for (int o=0; o < cntG; ++o)
-		{	// cars only
-			if (!app->carModels[o]->isGhost())
+		for (c=0; c < cnt; ++c)
+		{	//  cars only
+			CarModel* cm = app->carModels[c];
+			if (!cm->isGhost())
 			{	if (app->bRplPlay)
-					app->carModels[o]->trackPercent = app->carPoses[app->iCurPoses[o]][o].percent;
-				cms.push_back(app->carModels[o]);	}
-		}
+					cm->trackPercent = app->carPoses[app->iCurPoses[c]][c].percent;
+				cms.push_back(cm);
+		}	}
 		if (pSet->opplist_sort)
 			cms.sort(SortPerc);
 		
-		for (int o=0; o < cntG; ++o)
-		{	// add ghost1 last (dont add 2nd)
-			if (app->carModels[o]->eType == CarModel::CT_GHOST || app->carModels[o]->eType == CarModel::CT_TRACK)
-			{	app->carModels[o]->trackPercent = app->carPoses[app->iCurPoses[o]][o].percent;  // ghost,rpl
-				cms.push_back(app->carModels[o]);	}
-		}
-
-		if (h.txOpp[0])
-		{	String s0,s1,s2;  // %,dist,nick
-			ColourValue clr;
-			for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it)
+		for (c=0; c < cnt; ++c)
+		{	//  add last, if visible, ghost1 (dont add 2nd) and track's ghost
+			CarModel* cm = app->carModels[c];
+			if (//cm->isGhost() && cm->mbVisible ||
+				cm->eType == (app->isGhost2nd ? CarModel::CT_GHOST2 : CarModel::CT_GHOST) && pSet->rpl_ghost ||
+				cm->isGhostTrk() && pSet->rpl_trackghost)
 			{
-				CarModel* cm = *it;
-				if (cm->pMainNode)
-				{
-					bool bGhost = cm->isGhost();
-					bool bGhostVis = (app->ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
-					bool bGhEmpty = bGhost && !bGhostVis;
-
-					if (!bGhost && cm->eType != CarModel::CT_REMOTE)
-						cm->UpdTrackPercent();
-
-					//  dist  -----------
-					if (cm == pCarM || bGhEmpty)  // no dist to self or to empty ghost
-						s1 += "\n";
-					else
-					{	Vector3 v = cm->pMainNode->getPosition() - pCarM->pMainNode->getPosition();
-						float dist = v.length();  // meters, mph:feet?
-						Real h = std::min(60.f, dist) / 60.f;
-						clr.setHSB(0.5f - h * 0.4f, 1,1);
-						//  dist m
-						s1 += StrClr(clr)+ fToStr(dist,0,3)+"m\n";
-					}
-						
-					//  percent %  -----------
-					if (bGhEmpty || cm->isGhostTrk())
-						s0 += "\n";
-					else
-					{	float perc = cm->trackPercent;
-						if (bGhost && app->pGame->timer.GetPlayerTime(0) > app->ghplay.GetTimeLength())
-							perc = 100.f;  // force 100 at ghost end
-						clr.setHSB(perc*0.01f*0.4f, 0.7f,1);
-						s0 += StrClr(clr)+ fToStr(perc,0,3)+"%\n";
-					}
-					
-					//  nick name  -----------
-					if (cm->eType != CarModel::CT_REPLAY)
-					{
-						s2 += StrClr(cm->color)+ cm->sDispName;
-
-						//  place (1)
-						/*float t = 0.f;  int lap = -1;
-						if (!bGhost)
-						{
-							TIMER& tim = ap->pGame->timer;
-							t = ap->pGame->timer.GetLastLap(cm->iIndex);  // GetPlayerTimeTot
-							lap = ap->pGame->timer.GetPlayerCurrentLap(cm->iIndex);  // not o, sorted index
-							s2 += "   " + toStr(lap) + " " + CHud::GetTimeString(t);
-						}*/
-						bool end = app->pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps
-								&& (app->mClient || pSet->game.local_players > 1);  // multiplay or split
-						if (end)
-							s2 += "  (" + toStr(cm->iWonPlace) + ")";
-						s2 += "\n";
-					}
-				}
-				h.txOpp[0]->setCaption(s0);  h.txOpp[1]->setCaption(s1);  h.txOpp[2]->setCaption(s2);
+				cm->trackPercent = app->carPoses[app->iCurPoses[c]][c].percent;  // ghost,rpl
+				cms.push_back(cm);
 		}	}
+
+		bool bGhostEnd = app->pGame->timer.GetPlayerTime(0) > app->ghplay.GetTimeLength();
+		String s0,s1,s2;  // Track% Dist Nick
+		ColourValue clr;  c = 0;
+		for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it)
+		{
+			CarModel* cm = *it;
+			if (cm->pMainNode)
+			{
+				bool bGhost = cm->isGhost() && !cm->isGhostTrk();
+				bool bGhostVis = (app->ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
+				bool bGhEmpty = bGhost && !bGhostVis;
+
+				//  dist  -----------
+				if (cm == pCarM || bGhEmpty)  // no dist to self or to empty ghost
+					s1 += "\n";
+				else
+				{	Vector3 v = cm->pMainNode->getPosition() - pCarM->pMainNode->getPosition();
+					float dist = v.length();  // meters, mph:feet?
+					Real h = std::min(60.f, dist) / 60.f;
+					clr.setHSB(0.5f - h * 0.4f, 1, 1);
+					s1 += StrClr(clr)+ fToStr(dist,0,3)+"m\n";
+				}
+					
+				//  percent %  -----------
+				if (bGhEmpty || cm->isGhostTrk())
+					s0 += "\n";
+				else
+				{	float perc = bGhost && bGhostEnd ? 100.f : cm->trackPercent;
+					clr.setHSB(perc*0.01f * 0.4f, 0.7f, 1);
+					s0 += StrClr(clr)+ fToStr(perc,0,3)+"%\n";
+				}
+				
+				//  nick name  -----------
+				if (cm->eType != CarModel::CT_REPLAY)
+				{
+					s2 += StrClr(cm->color)+ cm->sDispName;
+					bool end = app->pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps
+							&& (app->mClient || pSet->game.local_players > 1);  // multiplay or split
+					if (end)  //  place (1)
+						s2 += "  (" + toStr(cm->iWonPlace) + ")";
+				}
+				s2 += "\n";  ++c;
+		}	}
+		//  upd pos, size
+		if (h.lastOppH != c)
+		{	h.lastOppH = c;
+			int y = c*25 +4, yo = h.yOpp - y-4;
+
+			for (int n=0; n < 3; ++n)
+			{	h.txOpp[n]->setPosition(h.xOpp + n*65+5, yo + 3);
+				h.txOpp[n]->setSize(90,y);
+			}
+			h.bckOpp->setPosition(h.xOpp, yo);
+			h.bckOpp->setSize(230,y);
+		}
+		h.txOpp[0]->setCaption(s0);  h.txOpp[1]->setCaption(s1);  h.txOpp[2]->setCaption(s2);
 	}
 
 	//  Set motion blur intensity for this viewport, depending on car's linear velocity
@@ -547,7 +559,7 @@ void CHud::Update(int carId, float time)
 	{
 		if (pSet->bltProfilerTxt)
 		{
-			static int cc = 0;  cc++;
+			static int cc = 0;  ++cc;
 			if (cc > 40)
 			{	cc = 0;
 				std::stringstream os;
@@ -853,13 +865,13 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 		yp = std::min(1.f, std::max(-1.f, yp));
 	}
 	
-	bool bGhost = app->carModels[c]->isGhost(),
-		bGhostVis = (app->ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
-
+	//  visible
+	bool hide = !app->carModels[c]->mbVisible;
 	if (h.vNdPos[c])
-		if (bGhost && !bGhostVis)
-			 h.vNdPos[c]->setPosition(-100,0,0);  //hide
+		if (hide)
+			h.vNdPos[c]->setPosition(-100,0,0);
 		else if (bZoom && main)
-			 h.vNdPos[c]->setPosition(0,0,0);
-		else h.vNdPos[c]->setPosition(xp,yp,0);
+			h.vNdPos[c]->setPosition(0,0,0);
+		else
+			h.vNdPos[c]->setPosition(xp,yp,0);
 }

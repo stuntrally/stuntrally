@@ -64,7 +64,7 @@ void CHud::Size(bool full)
 		const Real marg = 1.3f; //1.05f;  // from border
 		Real fMiniX = dim.left + sc * marg;  //(dim.right - sc * marg);
 		Real fMiniY =-dim.bottom + sc*asp * marg;  //-dim.top - sc*asp * marg;
-		Real miniTopY = fMiniY + sc*asp * 1.5f;  //par above
+		Real miniTopY = fMiniY + sc*asp;
 
 		if (h.ndMap)
 		{
@@ -114,7 +114,7 @@ void CHud::Size(bool full)
 
 			//  times
 			bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || app->mClient;
-			int tx = xMin + 20, ty = yMin + 40;
+			int tx = xMin + 40, ty = yMin + 40;
 			//h.bckTimes->setPosition(tx,ty);
 			//tx = 24;  ty = 4;  //(hasLaps ? 16 : 4);
 			h.txTimTxt->setPosition(tx,ty);
@@ -128,10 +128,12 @@ void CHud::Size(bool full)
 				
 			//  opp list
 			//int ox = itx + 5, oy = (ycRpm+1.f)*0.5f*wy - 10;
-			int ox = xMin + 50, oy = (-miniTopY+1.f)*0.5f*wy - plr*20;//..  //ty + 440;
-			h.bckOpp->setPosition(ox,oy -2);  h.bckOpp->setSize(230, plr*25 +4);
-			for (int n=0; n<3; ++n)
-				h.txOpp[n]->setPosition(n*65+5,0);
+			int ox = xMin + 40, oy = (-miniTopY+1.f)*0.5f*wy - 5;  //par
+			h.xOpp = ox;  h.yOpp = oy;
+			h.lastOppH = -1;
+			//h.bckOpp->setPosition(ox,oy -2);  //h.bckOpp->setSize(230, plr*25 +4);
+			//for (int n=0; n<3; ++n)
+			//	h.txOpp[n]->setPosition(n*65+5,0);
 			
 			//  warn,win
 			ox = (xMax-xMin)/2 + xMin - 200;  oy = yMin + 15;
@@ -192,7 +194,7 @@ void CHud::Create()
 	}
 
 	//if (terrain)
-	int cnt = std::min(6/**/, (int)app->carModels.size() -(app->isGhost2nd?1:0) );  // others
+	int cnt = std::min(6/**/, (int)app->carModels.size() );  // others
 	#ifdef DEBUG
 	assert(plr <= hud.size());
 	assert(cnt <= hud[0].vMoPos.size());
@@ -379,11 +381,12 @@ void CHud::Create()
 
 		for (int n=0; n < 3; ++n)
 		{
-			h.txOpp[n] = h.bckOpp->createWidget<TextBox>("TextBox",
+			h.txOpp[n] = h.parent->createWidget<TextBox>("TextBox",
 				n*80+10,0, 90,180, n == 2 ? Align::Left : Align::Right, "Opp"+toStr(n)+s);
-			h.txOpp[n]->setFontName("font.20");
+			h.txOpp[n]->setFontName("font.20");  h.txOpp[n]->setVisible(false);
 			if (n==0)  h.txOpp[n]->setTextShadow(true);
 		}
+		h.lastOppH = -1;  // upd size
 
 		//  wrong chk warning  -----------
 		h.bckWarn = h.parent->createWidget<ImageBox>("ImageBox",
@@ -527,7 +530,7 @@ CHud::Hud::Hud()
 	:parent(0)
 	,txTimTxt(0), txTimes(0), /*bckTimes(0),*/  sTimes("")
 	,txLapTxt(0), txLap(0), bckLap(0)
-	,bckOpp(0)
+	,bckOpp(0), lastOppH(-1), xOpp(0), yOpp(0)
 	,txWarn(0), txPlace(0),  bckWarn(0), bckPlace(0)
 	,txCountdown(0)
 
@@ -643,13 +646,13 @@ void CHud::Show(bool hideAll)
 				{	h.txDamage->setVisible(show && bdmg);  h.icoDamage->setVisible(show && bdmg);	}
 				//txRewind;icoRewind;
 
-				h.ndGauges->setVisible(show);
-				h.ndNeedles->setVisible(show);
-
+				h.ndGauges->setVisible(show);  h.ndNeedles->setVisible(show);
 				h.ndMap->setVisible(pSet->trackmap);
+
 				h.txTimes->setVisible(times);  h.txTimTxt->setVisible(times);
 				//h.txLap->setVisible(times);  h.txLapTxt->setVisible(times);  h.bckLap->setVisible(times);
 				h.bckOpp->setVisible(opp);
+				h.txOpp[0]->setVisible(opp);  h.txOpp[1]->setVisible(opp);  h.txOpp[2]->setVisible(opp);
 				h.txCam->setVisible(cam);
 		}	}
 	}

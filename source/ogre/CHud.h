@@ -47,6 +47,7 @@ public:
 		MyGUI::TextBox *txLapTxt,*txLap;  MyGUI::ImageBox *bckLap;
 		//  opponents list  columns: trk %, dist m, nick
 		MyGUI::TextBox *txOpp[3];  MyGUI::ImageBox *bckOpp;
+		int xOpp, yOpp, lastOppH;
 
 		//  wrong check warning, win place
 		MyGUI::TextBox *txWarn,*txPlace;  MyGUI::ImageBox *bckWarn,*bckPlace;
