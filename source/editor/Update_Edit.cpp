@@ -207,12 +207,12 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 				rdTxtSt[3]->setCaption(TR("#{TrackInAir}"));
 				rdTxtSt[4]->setCaption(TR("#{TrackPipes}"));
 				rdTxtSt[5]->setCaption(TR("#{Road_OnPipe}"));
-				rdTxtSt[6]->setCaption(TR("#{TrackBankAng}"));
+				rdTxtSt[6]->setCaption("BnkAng");
 
-				rdTxtSt[7]->setCaption("lod pnt");
-				rdTxtSt[8]->setCaption("segs Mrg");
+				rdTxtSt[7]->setCaption("lod points");
+				rdTxtSt[8]->setCaption("segs Merge");
 				rdTxtSt[9]->setCaption("vis");
-				rdTxtSt[10]->setCaption("tri");
+				rdTxtSt[10]->setCaption("tris");
 			}			
 			rdValSt[0]->setCaption(fToStr(road->st.Length,0,4));
 			rdValSt[1]->setCaption(fToStr(road->st.WidthAvg,2,5));
