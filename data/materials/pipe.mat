@@ -62,6 +62,7 @@ material pipe_glass
 		alpha_rejection $alpha_rejection
 		depth_write $depth_write
 		depth_bias $depth_bias
+		transparent_sorting force
 
 		shader_properties
 		{
@@ -180,6 +181,7 @@ material pipe_glass
 		alpha_rejection $alpha_rejection
 		depth_write $depth_write
 		depth_bias $depth_bias
+		transparent_sorting force
 
 		shader_properties
 		{
