@@ -1,9 +1,12 @@
 material FluidMud
 {
     parent Base_particle
-    emissive 1 1 1
-    ambient 0 0 0
-    diffuse 0 0 0 1
+    ambient 1.6 1.6 1.6
+    //diffuse 0.5 0.5 1.5
+    //specular 1 1 0 32
+    emissive 0.3 0.3 0.3
+
+    water_particles_lit true
     vertex_colour true
     scene_blend alpha_blend
     diffuseMap fluid-mud-dark.png

@@ -128,9 +128,9 @@ particle_system FluidWater
 		height	0.7
 		depth	0.4  //h
 
-		colour				1.0 1.0 1.0  0.7
-		colour_range_start	0.9 0.9 0.9  0.5
-		colour_range_end	1.0 1.0 1.0  0.9
+		colour				0.8 0.8 0.8  0.6
+		colour_range_start	0.8 0.8 0.8  0.4
+		colour_range_end	0.9 0.9 0.9  0.8
 
 		velocity_min	1.5
 		velocity_max	3.0

@@ -38,6 +38,7 @@ material base
     twoside_diffuse false
     road_blend false
 	shadowBias 0
+    water_particles_lit false
 	//  car body only
 	glossiness 0.5
 	reflectiveness 1.0
@@ -95,6 +96,7 @@ material base
 
             twoside_diffuse $twoside_diffuse
             road_blend $road_blend
+            water_particles_lit $water_particles_lit
             shadowBias $shadowBias
 		    
 		    fresnel $fresnel

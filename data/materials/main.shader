@@ -41,6 +41,7 @@
 #define VERTEX_COLOUR  @shPropertyBool(vertex_colour)
 #define TWOSIDE_DIFFUSE  @shPropertyBool(twoside_diffuse)
 #define ROAD_BLEND  @shPropertyBool(road_blend)
+#define WATER_PARTICLES_LIT  @shPropertyBool(water_particles_lit)
 
 
 #ifdef SH_VERTEX_SHADER
@@ -377,7 +378,13 @@
 		normal = normalize (shMatrixMult( transpose(tbn), TSnormal ));
 #endif
 
+#if WATER_PARTICLES_LIT
+		// *** water particles only  average, don't color
+		float ambAvg = lightAmbient.x+lightAmbient.y+lightAmbient.z;
+		float3 ambient = materialAmbient.xyz * ambAvg / 3.f;
+#else   
 		float3 ambient = materialAmbient.xyz * lightAmbient.xyz;
+#endif
 		
 	
 		//  shadows
