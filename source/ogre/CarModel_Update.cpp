@@ -348,10 +348,12 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 			{
 				float vel = posInfo.speed;  // depth.. only on surface?
 				bool e = idPar == 0 && ghPar &&  vel > 10.f && posInfo.whH[w] < 1.f;
-				float emitW = e ?  std::min(80.f, 3.0f * vel)  : 0.f;
+				float emitW = e ?  std::min(80.f, 5.0f * vel)  : 0.f;
 
 				ParticleEmitter* pe = ps->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
+				pe->setMinParticleVelocity(0.07* vel);
+				pe->setMaxParticleVelocity(0.20* vel);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitW * pSet->particles_len);
 			}
 			ps = par[PAR_MudHard][w];
