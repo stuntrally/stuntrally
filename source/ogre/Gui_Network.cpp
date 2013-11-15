@@ -160,9 +160,11 @@ void CGui::updateGameSet()
 	pSet->game.boost_type = netGameInfo.boost_type;
 	pSet->game.boost_power = netGameInfo.boost_power;
 	pSet->game.flip_type = netGameInfo.flip_type;
+
 	pSet->game.damage_type = netGameInfo.damage_type;
+	pSet->game.damage_dec = netGameInfo.damage_lap_dec;
 	pSet->game.rewind_type = netGameInfo.rewind_type;
-	//damage_lap_dec, boost_lap_inc, rewind_lap_inc;  //todo
+	//boost_lap_inc, rewind_lap_inc;  //todo
 }
 
 ///  Send  upload to peers
@@ -194,9 +196,11 @@ void CGui::uploadGameInfo()
 	game.boost_type = pSet->gui.boost_type;
 	game.boost_power = pSet->gui.boost_power;
 	game.flip_type = pSet->gui.flip_type;
+
 	game.damage_type = pSet->gui.damage_type;
+	game.damage_lap_dec = pSet->gui.damage_dec;
 	game.rewind_type = pSet->gui.rewind_type;
-	//damage_lap_dec, boost_lap_inc, rewind_lap_inc;  //todo
+	//boost_lap_inc, rewind_lap_inc;  //todo
 	
 	game.port = pSet->local_port;
 	game.locked = !edNetPassword->getCaption().empty();
