@@ -132,6 +132,9 @@ void App::SaveGrassDens()
 
 	//  gauss kernel for smoothing
 	int *mask = new int[(f*2+1)*(f*2+1)];  m = 0;
+	if (f==0)
+	{	mask[0] = 256.f;  ff = 256.f;  }
+	else
 	for (j = -f; j <= f; ++j)
 	for (i = -f; i <= f; ++i, ++m)
 	{
