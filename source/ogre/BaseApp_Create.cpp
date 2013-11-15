@@ -846,7 +846,7 @@ void BaseApp::baseSizeGui()
 	//return;
 
 	//  fit image to window, preserve aspect
-	int ix = 1912, iy = 1080;  // get org img size ...
+	int ix = 1920, iy = 1200;  // get org img size ...
 	int six, siy;  // sized to window
 	int oix=0, oiy=0;  // offset pos
 	float sa = float(sx)/sy, si = float(ix)/iy;  // aspects
