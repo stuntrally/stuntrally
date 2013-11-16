@@ -343,6 +343,27 @@ void App::UpdObjSel()
 	}
 }
 
+//  selection center pos, or picked pos for multi rotate and scale
+Vector3 App::GetObjPos0()
+{
+	Vector3 pos0(0,0,0);
+	if (iObjCur>=0)
+	{
+		MATHVECTOR<float,3> p = sc->objects[iObjCur].pos;
+		pos0 = Vector3(p[0],p[2],-p[1]);
+	}
+	else if (!vObjSel.empty())
+	{
+		for (std::set<int>::iterator it = vObjSel.begin(); it != vObjSel.end(); ++it)
+		{
+			MATHVECTOR<float,3> p = sc->objects[(*it)].pos;
+			pos0 += Vector3(p[0],p[2],-p[1]);
+		}
+		pos0 /= Real(vObjSel.size());
+	}
+	return pos0;
+}
+
 
 ///  toggle objects simulation (bullet world)
 //-------------------------------------------------------------------------------------------------------

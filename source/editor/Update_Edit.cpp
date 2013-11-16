@@ -600,6 +600,15 @@ void App::editMouse()
 	{
 		const Real fMove(0.5f), fRot(1.5f), fScale(0.02f);  //par speed
 		bool upd = false, sel = !vObjSel.empty();
+
+		Vector3 pos0;  Matrix3 m;
+		if (sel)
+		{	pos0 = GetObjPos0();
+			Real relA = -vNew.x * fRot * moveMul;
+			Quaternion q;  q.FromAngleAxis(Degree(relA), mbLeft ? -Vector3::UNIT_Y : (mbRight ? -Vector3::UNIT_Z : Vector3::UNIT_X));
+			q.ToRotationMatrix(m);
+		}
+
 		//  selection, picked or new
 		std::set<int>::iterator it = vObjSel.begin();
 		int i = sel ? *it : iObjCur;
@@ -633,6 +642,14 @@ void App::editMouse()
 					Real xm = -vNew.x * fRot * moveMul *PI_d/180.f;
 					Quaternion q(o.rot.w(),o.rot.x(),o.rot.y(),o.rot.z());
 					Radian r = Radian(xm);  Quaternion qr;
+
+					if (sel)
+					{
+						Vector3 p(o.pos[0],o.pos[2],-o.pos[1]);  p = p-pos0;
+						p = m * p;
+						o.pos = MATHVECTOR<float,3>(p.x+pos0.x, -p.z-pos0.z, p.y+pos0.y);
+						//o.SetFromBlt();	 upd1 = true;
+					}
 
 					qr.FromAngleAxis(r, mbLeft ? Vector3::UNIT_Z : (mbRight ? Vector3::UNIT_Y : Vector3::UNIT_X));
 					if (alt)  q = qr * q;  else  q = q * qr;

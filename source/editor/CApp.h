@@ -269,6 +269,7 @@ public:
 
 	std::set<int> vObjSel;  // selected ids for sc.objects[]
 	void UpdObjSel();  // upd selected glow
+	Ogre::Vector3 GetObjPos0();  // sel center
 
 	bool objSim;  // dynamic simulate on
 	Object objNew;  //Object*..
