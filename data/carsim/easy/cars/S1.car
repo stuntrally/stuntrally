@@ -29,13 +29,14 @@ exhaust-mirror-second = 0
 #  collision shape params
 #---------------------------
 [ collision ]
+com_ofs_L = 0.0
 com_ofs_H = -0.4
 radius = 0.4
 width = 0.49
 height = 0.43
 posLrear = -1.92
 posLfront = 1.93
-offsetL = -0.3
+offsetL = -0.1
 offsetW = 0.0
 offsetH = 0.22
 start-offsetY = 0.64
