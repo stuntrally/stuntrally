@@ -194,6 +194,7 @@ void CGui::InitGui()
 	ck= &ckWireframe;	ck->Init("Wireframe",	&app->mbWireFrame);  Cev(Wireframe);
 	ck= &ckCamPos;		ck->Init("CamPos",		&pSet->camPos);    Cev(CamPos);
 	ck= &ckInputBar;	ck->Init("InputBar",	&pSet->inputBar);  Cev(InputBar);
+	ck= &ckAllowSave;	ck->Init("AllowSave",	&pSet->allow_save);
 
 	//  set camera btns
 	Btn("CamView1", btnSetCam);  Btn("CamView2", btnSetCam);

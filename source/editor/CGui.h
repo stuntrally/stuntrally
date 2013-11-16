@@ -85,7 +85,7 @@ public:
 	Ck ckAutoBlendmap;
 
 	CK(InputBar);  CK(CamPos);
-	CK(Wireframe);
+	CK(Wireframe);  Ck ckAllowSave;
 
 	//  top view
 	void toggleTopView();

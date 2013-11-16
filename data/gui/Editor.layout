@@ -3668,22 +3668,14 @@
 							<Property key="Caption" value="#{Wireframe} F11"/>
 						</Widget>
 
-						<!--<Widget type="TextBox" skin="TextBox" position="32 222 192 24">
-							<Property key="TextColour" value="0.9 0.8 0.7"/>
+						<Widget type="TextBox" skin="TextBox" position="32 222 192 24">
+							<Property key="TextColour" value="0.75 0.6 0.6"/>
 							<Property key="Caption" value="#{Advanced}"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 262 256 24" name="StartInMain">
-							<Property key="TextColour" value="0.7 0.6 0.6"/>
+						<Widget type="Button" skin="CheckBox" position="32 262 326 24" name="AllowSave">
+							<Property key="TextColour" value="0.65 0.5 0.5"/>
 							<Property key="Caption" value="#{AllowSaveOrigTrk}"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 294 256 24" name="AutoStart">
-							<Property key="TextColour" value="0.7 0.8 0.9"/>
-							<Property key="Caption" value="#{TrackAutoLoad}"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 326 256 24" name="EscQuits">
-							<Property key="TextColour" value="0.7 0.8 0.9"/>
-							<Property key="Caption" value="#{EscQuit}"/>
-						</Widget>-->
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#6868B0#{Tweak}"/>
