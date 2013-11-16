@@ -204,6 +204,7 @@ public:
 	Ck ckAutoStart, ckEscQuits;
 	Ck ckStartInMain, ckOgreDialog;
 	Ck ckBltLines, ckShowPics;
+	Ck ckDevKeys;
 	void chkMultiThread(WP);
 	
 	//  [Effects]

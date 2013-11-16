@@ -103,7 +103,7 @@ void CHud::Update(int carId, float time)
 
 	///  all minimap car pos-es rot
 	const static Real tc[4][2] = {{0,1}, {1,1}, {0,0}, {1,0}};
-	const float z = 0.12f;  // par tri size
+	const float z = pSet->size_minipos;  // tri size
 	
 	if (carId == -1 && moPos)
 	{	moPos->beginUpdate(0);

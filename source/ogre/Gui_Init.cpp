@@ -308,6 +308,7 @@ void CGui::InitGui()
 	ck= &ckBltLines;	ck->Init("BltLines",	&pSet->bltLines);
 	ck= &ckShowPics;	ck->Init("ShowPictures",&pSet->loadingbackground);
 	Chk("MultiThread", chkMultiThread, pSet->multi_thr > 0);
+	ck= &ckDevKeys;		ck->Init("DevKeys",		&pSet->dev_keys);
 
 	
 	//  effects

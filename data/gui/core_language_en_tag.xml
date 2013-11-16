@@ -473,6 +473,7 @@
 	<Tag name="CheckBeam">Next checkpoint beam</Tag>
 	<Tag name="CountdownTime">Race countdown time</Tag>
 
+	<!--  Settings  -->
 	<Tag name="Other">Other</Tag>
 	<Tag name="Development">Development</Tag>
 	<Tag name="FPS">Fps, Triangles, Batches</Tag>
@@ -481,6 +482,8 @@
 	<Tag name="Wireframe">Wireframe</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="BulletProfilerTxt">Bullet Profiler Times</Tag>
+	<Tag name="DevKeys">Developer keys. Ctrl-F global, Alt-shift-1..6 load test tracks.</Tag>
+	
 	<Tag name="CarDebugText">Car debug text </Tag>
 	<Tag name="CarDebugSurfaces">Car tire surfaces</Tag>
 	<Tag name="ProfilerTxt">Profiler times text </Tag>

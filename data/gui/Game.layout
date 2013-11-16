@@ -2653,6 +2653,10 @@
 							<Property key="Caption" value="#{BulletProfilerTxt}  shift-F10"/>
 							<Property key="TextColour" value="0.7 0.65 0.5"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 342 656 24" name="DevKeys">
+							<Property key="TextColour" value="0.65 0.5 0.5"/>
+							<Property key="Caption" value="#{DevKeys}"/>
+						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#C0A0E0#{Graphs}"/>

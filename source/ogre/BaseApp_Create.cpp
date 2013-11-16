@@ -340,12 +340,6 @@ bool BaseApp::configure()
 	helper.setWindowIcon("stuntrally.png");
 	mWindow = helper.getWindow();
 
-
-	//  use this in local networking tests to render when window inactive
-	/// \todo
-	//if (pSet->renderNotActive)
-		//mWindow->setDeactivateOnFocusChange(false);
-
 	return true;
 }
 

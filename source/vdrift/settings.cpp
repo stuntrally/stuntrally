@@ -59,10 +59,6 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.local_players", gui.local_players); Param(c,w, "game.num_laps", gui.num_laps);
 	Param(c,w, "game.start_order", gui.start_order);	Param(c,w, "game.split_vertically", split_vertically);
 	
-	//  joystick
-	Param(c,w, "joystick.ff_device", ff_device);		Param(c,w, "joystick.ff_gain", ff_gain);
-	Param(c,w, "joystick.ff_invert", ff_invert);
-
 	//  hud
 	Param(c,w, "hud_show.fps", show_fps);				Param(c,w, "hud_show.mph", show_mph);
 	Param(c,w, "hud_show.gauges", show_gauges);			Param(c,w, "hud_show.show_digits", show_digits);
@@ -82,7 +78,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "gui.chall_tab", chall_type);		Param(c,w, "gui.champ_info", champ_info);
 
 	Param(c,w, "hud_size.gauges", size_gauges);			Param(c,w, "hud_size.arrow", size_arrow);
-	Param(c,w, "hud_size.minimap", size_minimap);
+	Param(c,w, "hud_size.minimap", size_minimap);		Param(c,w, "hud_size.minipos", size_minipos);
 	Param(c,w, "hud_size.mini_zoom", zoom_minimap);		Param(c,w, "hud_size.mini_zoomed", mini_zoomed);
 	Param(c,w, "hud_size.mini_rotated", mini_rotated);	Param(c,w, "hud_size.mini_terrain", mini_terrain);
 	Param(c,w, "hud_size.mini_border", mini_border);
@@ -165,7 +161,6 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video.fullscreen", fullscreen);		Param(c,w, "video.vsync", vsync);
 	Param(c,w, "video.fsaa", fsaa);
 	Param(c,w, "video.buffer", buffer);				Param(c,w, "video.rendersystem", rendersystem);
-	Param(c,w, "video.render_not_active", renderNotActive);
 	
 	// not in gui-
 	Param(c,w, "misc.boostFromExhaust", boostFromExhaust);
@@ -179,7 +174,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,show_opponents(1), opplist_sort(true), cam_tilt(1)
 	,car_dbgtxt(0), car_dbgbars(0), car_dbgsurf(0), show_graphs(0)
 	,car_dbgtxtclr(0), car_dbgtxtcnt(0), car_tirevis(0)
-	,size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0)
+	,size_gauges(0.18), size_minimap(0.2), size_minipos(0.1), zoom_minimap(1.0)
 	,mini_zoomed(0), mini_rotated(1), mini_terrain(0), mini_border(1)
 	,check_arrow(0),size_arrow(0.2), check_beam(1)
 	,gauges_type(1),gauges_layout(1), graphs_type(Gh_Fps)
@@ -203,8 +198,6 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,isMain(1), startInMain(1), inMenu(0), rpl_rec(0)
 	,dev_keys(0), dev_no_prvs(0)
 	,split_vertically(true), language("") // "" = autodetect lang
-	//  joystick
-	,ff_device("/dev/input/event0"), ff_gain(1.0), ff_invert(false)
 	//  misc
 	,autostart(0), ogre_dialog(0), escquit(0)
 	,bltDebug(0), bltLines(1),  bltProfilerTxt(0), profilerTxt(0)
@@ -241,7 +234,6 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,vignRadius(2.85), vignDarkness(0.34)
 	//  not in gui
 	,boostFromExhaust(0), net_local_plr(-1)
-	,renderNotActive(false)
 	,shader_mode("")
 {
 	//  track

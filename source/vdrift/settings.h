@@ -42,7 +42,7 @@ public:
 		car_dbgbars, car_dbgtxt, car_dbgsurf,
 		car_tirevis, show_graphs;
 
-	float size_gauges, size_minimap, size_arrow, zoom_minimap;
+	float size_gauges, size_minimap, size_minipos, size_arrow, zoom_minimap;
 	int gauges_type, gauges_layout;
 	bool cam_loop_chng;  int cam_in_loop;
 	
@@ -115,9 +115,6 @@ public:
 	bool bltDebug, bltLines, bltProfilerTxt, profilerTxt;
 	bool loadingbackground, ogre_dialog;
 
-	//  joystick ff (old-)
-	std::string ff_device;	float ff_gain;	bool ff_invert;
-
 	//  sound
 	float vol_master, vol_engine, vol_tires, vol_susp, vol_env,
 		vol_fl_splash,vol_fl_cont, vol_car_crash,vol_car_scrap;
@@ -155,7 +152,6 @@ public:
 
 	// not in gui
 	bool boostFromExhaust;  int net_local_plr;
-	bool renderNotActive;
 	
 //------------------------------------------
 	SETTINGS();
