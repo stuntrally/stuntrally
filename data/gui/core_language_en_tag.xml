@@ -1059,6 +1059,9 @@
 
 	<Tag name="InputObjectsType">-,=  - change object type</Tag>
 	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>
+
+	<Tag name="InputObjectsCopySel">ctrl-Ins - copy selection</Tag>
+	<Tag name="InputObjectsPaste">shift-Ins - paste copied</Tag>
 	
 
 	<!--  Rivers  -->
