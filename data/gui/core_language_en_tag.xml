@@ -76,6 +76,9 @@
 	<Tag name="ChallEndFinished">You have passed this challenge.</Tag>
 	<Tag name="ChampInfo">In tutorial/championship mode you drive a series of tracks. Minimum score (depending on your time) is needed to pass to next stage. Car changing is possible.</Tag>
 	<Tag name="ChallInfo">In challenge mode the game has setup, most settings can't be changed. Time or position is needed. If you pass you receive bronze, silver or gold prize.</Tag>
+	<Tag name="ChampInfo2">Championships are usually long, have many tracks, but are easy to pass.</Tag>
+	<Tag name="ChallInfo2">Challenges are short but usually difficult to pass.</Tag>
+	<Tag name="TutorInfo">Tutorials have just a few tracks. They are easy to pass and show various track elements.</Tag>
 	<Tag name="Start">Start</Tag>
 	<Tag name="Continue">Continue</Tag>
 	<Tag name="Restart">Restart</Tag>

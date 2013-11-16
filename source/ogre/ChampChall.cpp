@@ -321,8 +321,11 @@ void CGui::UpdChampTabVis()
 	//if (pSet->inMenu == MNU_Single)
 	//	BackFromChs();
 	
-	if (edChInfo->getVisible())
-		edChInfo->setCaption(chall ? TR("#{ChallInfo}") : TR("#{ChampInfo}"));
+	if (edChInfo->getVisible())  // info texts
+		edChInfo->setCaption(
+			chall ? TR("#{ChallInfo2}")+"\n"+TR("#{ChallInfo}") :
+			 tutor ? TR("#{TutorInfo}")+"\n"+TR("#{ChampInfo}") :
+					TR("#{ChampInfo2}")+"\n"+TR("#{ChampInfo}"));
 	
 	btChRestart->setVisible(false);
 }
