@@ -138,10 +138,10 @@ particle_system DustSmall
 
 particle_system Mud
 {
-	material			Mud
+	material			Mud  //FluidMudSoft
 	quota				1000
-	particle_width		0.3
-	particle_height		0.3
+	particle_width		0.8
+	particle_height		0.8
 	cull_each			false
 	billboard_type		point
 	//renderer			billboard
@@ -150,21 +150,21 @@ particle_system Mud
 	emitter Box
 	{
 		angle	20
-		position	0 0.2 0
-		direction	0 1 0
+		position	0 0.4 0
+		direction	0 1 1
 		width	0.8
 		height	0.5
 		depth	0.3  //h
 
-		colour				1 1 0.9  1
-		colour_range_start	1 1 0.9  1
-		colour_range_end	0.9 0.8 0.7  0.9
+		colour				0.55 0.5 0.5  0.97
+		colour_range_start	0.55 0.4 0.5  0.95
+		colour_range_end	0.65 0.55 0.5  1
 
 		//emission_rate	20
-		velocity_min	2.1
-		velocity_max	3.8
+		velocity_min	1.7
+		velocity_max	2.8
 		time_to_live_min	0.5
-		time_to_live_max	1
+		time_to_live_max	0.7
 	}
 
 	affector Rotator
