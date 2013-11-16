@@ -3,7 +3,7 @@ version = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
-max-angle = 25
+max-angle = 30
 angular-damping = 0.0
 flip-pow-mul = 2
 
@@ -29,7 +29,8 @@ exhaust-mirror-second = 0
 #  collision shape params
 #---------------------------
 [ collision ]
-com_ofs_H = -0.3
+com_ofs_L = 0.15
+com_ofs_H = -0.05
 radius = 0.304
 width = 1.2
 height = 0.6
@@ -88,7 +89,7 @@ shift-delay = 0.04
 
 [ differential ]
 final-drive = 10.0
-anti-slip = 600.0
+anti-slip = 400.0
 
 [ fuel-tank ]
 position = -0.12, -0.16, -0.56
@@ -144,14 +145,14 @@ width-trail = 0.6
 [ brakes-front ]
 friction = 0.98
 max-pressure = 6.2e6
-bias = 0.4
+bias = 0.45
 radius = 0.18
 area = 0.016
 
 [ brakes-rear ]
 friction = 0.98
 max-pressure = 6.2e6
-bias = 0.6
+bias = 0.55
 radius = 0.18
 area = 0.016
 handbrake = 3.1
