@@ -38,6 +38,7 @@ material pipe_glass
 	twoside_diffuse true
 	road_blend false
 	shadowBias 0
+    water_particles_lit false
 	
 	normalMap
 	reflMap
@@ -89,6 +90,7 @@ material pipe_glass
 
 			twoside_diffuse $twoside_diffuse
 			road_blend $road_blend
+            water_particles_lit $water_particles_lit
 			shadowBias $shadowBias
 			
 			fresnel $fresnel
@@ -208,6 +210,7 @@ material pipe_glass
 
 			twoside_diffuse $twoside_diffuse
 			road_blend $road_blend
+            water_particles_lit $water_particles_lit
 			shadowBias $shadowBias
 			
 			fresnel $fresnel
