@@ -1104,6 +1104,9 @@
 						<Property key="Caption" value="#80FF80#{Scenery}"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 536 8">
+						<Property key="Caption" value="#A0D080#{Scenery} 2"/>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 536 8">
 						<Property key="Caption" value="#909090Test"/>
 					</Widget>
 				</Widget>

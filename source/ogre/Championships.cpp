@@ -39,9 +39,9 @@ void CGui::tabChampType(Tab wp, size_t id)
 //----------------------------------------------------------------------------------------------------------------------
 void CGui::ChampsListUpdate()
 {
-	const char clrCh[7][8] = {
-	//  0 tutorial  1 tutorial hard  // 2 normal  3 hard  4 very hard  // 5 scenery  6 test
-		"#FFFFA0", "#E0E000",   "#A0F0FF", "#60C0FF", "#A0A0E0",   "#80FF80", "#909090"  };
+	const char clrCh[8][8] = {
+	//  0 tutorial  1 tutorial hard  // 2 normal  3 hard  4 very hard  // 5 scenery  6 scenery2  7 test
+		"#FFFFA0", "#E0E000",   "#A0F0FF", "#60C0FF", "#A0A0E0",   "#80FF80", "#A0D080",  "#909090"  };
 
 	liChamps->removeAllItems();  int n=1;  size_t sel = ITEM_NONE;
 	int p = pSet->gui.champ_rev ? 1 : 0;

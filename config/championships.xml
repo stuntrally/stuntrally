@@ -2,7 +2,7 @@
 <!--  type=
 	0 tutorial  1 tutorial hard
 	2 normal  3 hard  4 very hard
-	5 scenery  6 test  -->
+	5 scenery  6 scenery2  7 test  -->
 <!-- by default:  laps="1"/>-->
 
 	<!--  unused tracks
@@ -315,7 +315,7 @@
 
 
 <!--========================================================================================================================-->
-<!--  Senery champs  -->
+<!--  Senery champs  part 1, big  -->
 <!--========================================================================================================================-->
 
 	<champ name="Desert" ver="2" difficulty="2" type="5" 
@@ -444,13 +444,16 @@
 		<t name="I12-Beach"/>
 		<t name="I13-Beauty"/>
 	</champ>
-	<champ name="Mud" ver="1" difficulty="2" type="5" 
+	
+	
+<!--  Senery champs,  part 2  -->
+	<champ name="Mud" ver="1" difficulty="2" type="6" 
 			descr="Mud championship.">
 		<t name="M1-Hills"/>
 		<t name="M2-Bumps"/>
 		<t name="M3-Mudlake"/>
 	</champ>
-	<champ name="Canyon" ver="1" difficulty="2" type="5" 
+	<champ name="Canyon" ver="1" difficulty="2" type="6" 
 			descr="Canyon championship.">
 		<t name="C1-Hairpins"/>
 		<t name="C2-CanyonRun"/>
@@ -458,7 +461,7 @@
 		<t name="C4-Sway"/>
 		<t name="C5-Obstacles"/>
 	</champ>
-	<champ name="Australia" ver="1" difficulty="4" type="5" 
+	<champ name="Australia" ver="1" difficulty="4" type="6" 
 			descr="Australia championship.">
 		<t name="A1-StuntPark"/>
 		<t name="A2-PipeCoil"/>
@@ -467,7 +470,7 @@
 		<t name="A5-TopTwist"/>
 		<t name="A6-Cannon"/>
 	</champ>
-	<champ name="Greece" ver="1" difficulty="3" type="5" 
+	<champ name="Greece" ver="1" difficulty="3" type="6" 
 			descr="Greece championship.">
 		<t name="G1-Long"/>
 		<t name="G2-Coast"/>
@@ -476,7 +479,7 @@
 		<t name="G5-Climb"/>
 		<t name="G6-Halfpipes"/>
 	</champ>
-	<champ name="Autumn" ver="1" difficulty="2" type="5" 
+	<champ name="Autumn" ver="1" difficulty="2" type="6" 
 			descr="Autumn championship.">
 		<t name="T1-Autumn"/>
 		<t name="T2-RedOakPark"/>
@@ -485,14 +488,14 @@
 		<t name="T5-Twister"/>
 		<t name="T6-Sunset"/>
 	</champ>
-	<champ name="Moss" ver="1" difficulty="2" type="5" 
+	<champ name="Moss" ver="1" difficulty="2" type="6" 
 			descr="Moss championship.">
 		<t name="O1-Moss"/>
 		<t name="O2-Mouse"/>
 		<t name="O3-Air"/>
 		<t name="O4-MossyMntn"/>
 	</champ>
-	<champ name="Volcanic" ver="1" difficulty="4" type="5" 
+	<champ name="Volcanic" ver="1" difficulty="4" type="6" 
 			descr="Volcanic championship.">
 		<t name="V1-Dark"/>
 		<t name="V2-Volcanic"/>
@@ -502,7 +505,7 @@
 		<t name="V6-Crematoria"/>
 		<t name="V7-Radioactive"/>
 	</champ>
-	<champ name="Unidentified" ver="1" difficulty="4" type="5" 
+	<champ name="Unidentified" ver="1" difficulty="4" type="6" 
 			descr="Unidentified championship.">
 		<t name="X1-Magic"/>
 		<t name="X2-Swirl"/>
@@ -511,7 +514,7 @@
 		<t name="X5-PipeJumps"/>
 		<t name="X6-Wild"/>
 	</champ>
-	<champ name="Mars" ver="1" difficulty="2" type="5" 
+	<champ name="Mars" ver="1" difficulty="2" type="6" 
 			descr="Mars championship.">
 		<t name="R1-Mars"/>
 		<t name="R2-Red"/>
@@ -521,17 +524,17 @@
 <!--  Test  -->
 <!--========================================================================================================================-->
 
-	<champ name="Test-1" ver="1" difficulty="0" type="6" 
+	<champ name="Test-1" ver="1" difficulty="0" type="7" 
 			descr="Fastest 1 track, to test logic.">
 		<t name="TestC6-temp"/>
 	</champ>
-	<champ name="Test-3" ver="1" difficulty="0" type="6" 
+	<champ name="Test-3" ver="1" difficulty="0" type="7" 
 			descr="Fastest 3 tracks, to test logic.">
 		<t name="TestC6-temp" reversed="0"/>
 		<t name="TestC4-ow"/>
 		<t name="TestC1-circle"/>
 	</champ>
-	<champ name="Test tracks" ver="1" difficulty="1" type="6" 
+	<champ name="Test tracks" ver="1" difficulty="1" type="7" 
 			descr="Really short and circular tracks. 2 Laps on each.">
 		<t name="TestC1-circle"		laps="2"/>
 		<t name="TestC2-pipe-half"	laps="2"/>

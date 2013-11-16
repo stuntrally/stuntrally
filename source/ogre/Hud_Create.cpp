@@ -329,7 +329,7 @@ void CHud::Create()
 		h.txTimTxt->setFontName("font.22");  h.txTimTxt->setTextShadow(true);
 		h.txTimTxt->setInheritsAlpha(false);
 		h.txTimTxt->setCaption(
-			(hasLaps ? String("#D0F8F0")+TR("#{TBLap}") : "")+
+			(hasLaps ? String("#90D0C0")+TR("#{TBLap}") : "")+
 			"\n#A0E0E0"+TR("#{TBTime}") +
 			"\n#70D070"+TR("#{Track}") +
 			"\n#C0C030"+TR("#{TBPosition}") +

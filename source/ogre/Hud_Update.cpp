@@ -475,7 +475,7 @@ void CHud::Update(int carId, float time)
 		}
 		if (h.txTimes)
 			h.txTimes->setCaption(
-				(hasLaps ? "#D0FFE8"+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps) : "") +
+				(hasLaps ? "#A0E0D0"+toStr(tim.GetCurrentLap(carId)+1)+" / "+toStr(pSet->game.num_laps) : "") +
 				"\n#A0E0E0" + StrTime(tim.GetPlayerTime(carId))+
 				(cur ? String("  ") + (diff > 0.f ? "#80E0FF+" : "#60FF60-")+
 					fToStr(fabs(diff), 1,3) : "")+
