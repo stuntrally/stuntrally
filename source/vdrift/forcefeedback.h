@@ -3,7 +3,7 @@
 
 // force feedback is only supported on linux.
 #if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-	#define ENABLE_FORCE_FEEDBACK
+	//#define ENABLE_FORCE_FEEDBACK
 #endif
 
 #ifdef ENABLE_FORCE_FEEDBACK
