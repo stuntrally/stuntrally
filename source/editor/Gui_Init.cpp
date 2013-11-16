@@ -566,6 +566,7 @@ void CGui::InitGui()
 	GetMaterialsMat(sMat+"road.mat",false);
 	GetMaterialsMat(sMat+"objects_static.mat",false);
 
+	cmbTwk->addItem("");
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	String s = vsMaterials[i];
 			cmbTwk->addItem(s);
