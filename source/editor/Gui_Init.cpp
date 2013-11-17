@@ -382,8 +382,8 @@ void CGui::InitGui()
 
 	sv= &svRdLenDim;	sv->Init("RdLenDim",	&f, 0.5f, 4.f, 1.5f, 2,4);  sv->DefaultF(1.f);
 	sv= &svRdWidthSteps;sv->Init("RdWidthSteps",&i, 3,16, 1.5f);  sv->DefaultI(6);
-	sv= &svRdPwsM;		sv->Init("RdPwsM",		&f, 1.f, 8.f, 1.5f, 1,3);  sv->DefaultF(1.f);
 	sv= &svRdPlsM;		sv->Init("RdPlsM",		&f, 1.f, 8.f, 1.5f, 1,3);  sv->DefaultF(1.f);
+	sv= &svRdPwsM;		sv->Init("RdPwsM",		&f, 1.f, 8.f, 1.5f, 1,3);  sv->DefaultF(4.f);
 
 	sv= &svRdColN;		sv->Init("RdColN",		&i, 3,16, 1.5f);  sv->DefaultI(4);
 	sv= &svRdColR;		sv->Init("RdColR",		&f, 1.0f, 6.f, 1.5f, 2,4);  sv->DefaultF(2.f);
