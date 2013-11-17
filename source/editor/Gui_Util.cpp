@@ -79,14 +79,9 @@ void CGui::SetGuiFromXmls()
 	_Cmb(cmbRoadWMtr, rd->sMtrWall);  _Cmb(cmbRoadColMtr, rd->sMtrCol);
 	_Cmb(cmbPipeWMtr, rd->sMtrWallPipe);
 
-	_Ed(RdTcMul,  rd->tcMul);  _Ed(RdTcMulW,  rd->tcMul);
-	_Ed(RdTcMulP, rd->tcMul);  _Ed(RdTcMulPW, rd->tcMul);  _Ed(RdTcMulC, rd->tcMul);
-	_Ed(RdColN, rd->colN);  _Ed(RdPwsM, rd->iwPmul);
-	_Ed(RdColR, rd->colR);  _Ed(RdPlsM, rd->ilPmul);
-	_Ed(RdLenDim, rd->lenDiv0);  _Ed(RdWidthSteps, rd->iw0);
-	_Ed(RdSkirtLen,	rd->skirtLen);  _Ed(RdHeightOfs,rd->fHeight);
-	_Ed(RdSkirtH,	rd->skirtH);
-	_Ed(RdMergeLen,	rd->setMrgLen);  _Ed(RdLodPLen,	rd->lposLen);
+	_Ed(RdHeightOfs, rd->fHeight);
+	_Ed(RdSkirtLen, rd->skirtLen);  _Ed(RdSkirtH, rd->skirtH);
+	SldUpd_Road();
 	
 	bGI = true;
 }

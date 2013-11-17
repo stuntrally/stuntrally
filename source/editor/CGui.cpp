@@ -47,13 +47,8 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	, idGrLay(0), tabsGrLayers(0), valLGrAll(0)
 	,imgGrass(0),imgGrClr(0)
 	// road
-	,edRdTcMul(0),edRdTcMulW(0)
-	,edRdTcMulP(0),edRdTcMulPW(0),edRdTcMulC(0)
-	,edRdLenDim(0),edRdWidthSteps(0),edRdHeightOfs(0)
+	,edRdHeightOfs(0)
 	,edRdSkirtLen(0),edRdSkirtH(0)
-	,edRdMergeLen(0),edRdLodPLen(0)
-	,edRdColN(0),edRdColR(0)
-	,edRdPwsM(0),edRdPlsM(0)
 	,cmbRoadWMtr(0),cmbPipeWMtr(0),cmbRoadColMtr(0)
 	// tools
 	,fScale(1.f),fScaleTer(1.f)

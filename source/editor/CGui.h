@@ -227,10 +227,11 @@ public:
 	void comboRoadMtr(CMB), comboPipeMtr(CMB),
 		comboRoadWMtr(CMB), comboPipeWMtr(CMB), comboRoadColMtr(CMB);
 	//  params
-	Ed edRdTcMul,edRdTcMulW,edRdTcMulP,edRdTcMulPW,edRdTcMulC,
-		edRdLenDim,edRdWidthSteps,edRdHeightOfs,
-		edRdSkirtLen,edRdSkirtH, edRdMergeLen,edRdLodPLen,
-		edRdColN,edRdColR, edRdPwsM,edRdPlsM;
+	SV svRdTcMul,svRdTcMulW, svRdTcMulP,svRdTcMulPW, svRdTcMulC;
+	SV svRdLenDim,svRdWidthSteps, svRdPwsM,svRdPlsM;
+	SV svRdMergeLen,svRdLodPLen, svRdColN,svRdColR;
+	void SldUpd_Road();
+	Ed edRdSkirtLen,edRdSkirtH, edRdHeightOfs;
 	void editRoad(Ed);
 
 

@@ -1033,8 +1033,7 @@
 					<Property key="Caption" value="#{AlignWidthAdd}"/>
 					<Property key="TextColour" value="0.8 0.5 0.5"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="248 340 320 18" name="AlignWidthAdd">
-				</Widget>
+				<Widget type="Slider" skin="Slider" position="248 340 320 18" name="AlignWidthAdd"/>
 				<Widget type="TextBox" skin="TextBox" position="180 340 60 24" name="AlignWidthAddVal">
 					<Property key="TextColour" value="0.8 0.5 0.5"/>
 				</Widget>
@@ -1042,8 +1041,7 @@
 					<Property key="Caption" value="#{AlignWidthMul}"/>
 					<Property key="TextColour" value="0.8 0.5 0.4"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="248 370 320 18" name="AlignWidthMul">
-				</Widget>
+				<Widget type="Slider" skin="Slider" position="248 370 320 18" name="AlignWidthMul"/>
 				<Widget type="TextBox" skin="TextBox" position="180 370 60 24" name="AlignWidthMulVal">
 					<Property key="TextColour" value="0.8 0.5 0.4"/>
 				</Widget>
@@ -1051,8 +1049,7 @@
 					<Property key="Caption" value="#{AlignSmooth}"/>
 					<Property key="TextColour" value="0.8 0.6 0.2"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="248 400 320 18" name="AlignSmooth">
-				</Widget>
+				<Widget type="Slider" skin="Slider" position="248 400 320 18" name="AlignSmooth"/>
 				<Widget type="TextBox" skin="TextBox" position="180 400 60 24" name="AlignSmoothVal">
 					<Property key="TextColour" value="0.8 0.6 0.2"/>
 				</Widget>
@@ -2560,7 +2557,6 @@
 						<Widget type="TextBox" skin="TextBox" position="32 132 144 24">
 							<Property key="Caption" value="#{ImpostorDist}"/>
 							<Property key="TextColour" value="0.7 0.7 0.4"/>
-							<!--<Property key="TextAlign" value="Right Top"/>-->
 							<UserString key="tip" value="#{TipImpDist}"/>
 						</Widget>
 						<Widget type="EditBox" skin="EditBox" position="176 128 48 24" name="TrImpDist">
@@ -2825,7 +2821,7 @@
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 746 468">
 						<Property key="Caption" value="#C0F0F0#{Road}"/>
-						<Widget type="TextBox" skin="TextBox" position="60 32 156 24">
+						<Widget type="TextBox" skin="TextBox" position="60 32 200 24">
 							<Property key="Caption" value="#{RoadMaterials}"/>
 							<Property key="TextColour" value="0.5 1 1"/>
 						</Widget>
@@ -2880,47 +2876,32 @@
 							<Property key="ReadOnly" value="true"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="36 196 164 24">
+						<Widget type="TextBox" skin="TextBox" position="36 196 184 24">
 							<Property key="Caption" value="#{TexCoordMul}"/>
 							<Property key="TextColour" value="0.6 1 1"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="36 224 48 24" name="RdTcMul">
+						<Widget type="EditBox" skin="EditBox" position="36 224 56 24" name="RdTcMulEdit">
 							<Property key="TextColour" value="0.6 1 1"/>
 							<Property key="Colour" value="0.6 1 1"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="380 196 164 24">
+						<Widget type="Slider" skin="Slider" position="96 227 256 18" name="RdTcMul">
+							<Property key="Colour" value="0.6 1 1"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="380 196 184 24">
 							<Property key="Caption" value="#{TexCoordMul}"/>
 							<Property key="TextColour" value="0.6 0.7 0.7"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="380 224 48 24" name="RdTcMulW">
+						<Widget type="EditBox" skin="EditBox" position="380 224 56 24" name="RdTcMulWEdit">
 							<Property key="TextColour" value="0.6 0.7 0.7"/>
 							<Property key="Colour" value="0.6 0.7 0.7"/>
 						</Widget>
-
-						<Widget type="TextBox" skin="TextBox" position="36 280 144 24">
-							<Property key="Caption" value="#{Detail}"/>
-							<Property key="TextColour" value="0.5 0.7 0.7"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="36 308 144 24">
-							<Property key="Caption" value="#{LengthDim}"/>
-							<Property key="TextColour" value="0.5 1 0.7"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="180 304 48 24" name="RdLenDim">
-							<Property key="Colour" value="0.5 1 0.7"/>
-							<Property key="TextColour" value="0.5 1 0.7"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="36 336 144 24">
-							<Property key="Caption" value="#{WidthSteps}"/>
-							<Property key="TextColour" value="0.5 1 0.7"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="180 332 48 24" name="RdWidthSteps">
-							<Property key="Colour" value="0.5 1 0.7"/>
-							<Property key="TextColour" value="0.5 1 0.7"/>
+						<Widget type="Slider" skin="Slider" position="440 227 256 18" name="RdTcMulW">
+							<Property key="Colour" value="0.6 0.7 0.7"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 746 468">
 						<Property key="Caption" value="#F0F0C0#{Pipe}"/>
-						<Widget type="TextBox" skin="TextBox" position="60 32 156 24">
+						<Widget type="TextBox" skin="TextBox" position="60 32 200 24">
 							<Property key="Caption" value="#{PipeMaterials}"/>
 							<Property key="TextColour" value="1 1 0.5"/>
 						</Widget>
@@ -2965,42 +2946,27 @@
 							<Property key="ReadOnly" value="true"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="36 196 164 24">
+						<Widget type="TextBox" skin="TextBox" position="36 196 184 24">
 							<Property key="Caption" value="#{TexCoordMul}"/>
 							<Property key="TextColour" value="1 1 0.6"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="36 224 48 24" name="RdTcMulP">
+						<Widget type="EditBox" skin="EditBox" position="36 224 56 24" name="RdTcMulPEdit">
 							<Property key="TextColour" value="1 1 0.6"/>
 							<Property key="Colour" value="1 1 0.6"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="380 196 164 24">
+						<Widget type="Slider" skin="Slider" position="96 227 256 18" name="RdTcMulP">
+							<Property key="Colour" value="1 1 0.6"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="380 196 184 24">
 							<Property key="Caption" value="#{TexCoordMul}"/>
 							<Property key="TextColour" value="0.7 0.7 0.6"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="380 224 48 24" name="RdTcMulPW">
+						<Widget type="EditBox" skin="EditBox" position="380 224 56 24" name="RdTcMulPWEdit">
 							<Property key="TextColour" value="0.7 0.7 0.6"/>
 							<Property key="Colour" value="0.7 0.7 0.6"/>
 						</Widget>
-
-						<Widget type="TextBox" skin="TextBox" position="36 280 144 24">
-							<Property key="Caption" value="#{Detail}"/>
-							<Property key="TextColour" value="0.8 0.6 0.4"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="36 308 144 24">
-							<Property key="Caption" value="#{PipeLStepsMul}"/>
-							<Property key="TextColour" value="0.9 0.7 0.4"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="180 304 48 24" name="RdPlsM">
-							<Property key="TextColour" value="0.9 0.7 0.4"/>
-							<Property key="Colour" value="0.9 0.7 0.4"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="36 336 144 24">
-							<Property key="Caption" value="#{PipeWStepsMul}"/>
-							<Property key="TextColour" value="0.9 0.7 0.4"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="180 332 48 24" name="RdPwsM">
-							<Property key="Colour" value="0.9 0.7 0.4"/>
-							<Property key="TextColour" value="0.9 0.7 0.4"/>
+						<Widget type="Slider" skin="Slider" position="440 227 256 18" name="RdTcMulPW">
+							<Property key="Colour" value="0.7 0.7 0.6"/>
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="380 32 168 24">
@@ -3015,9 +2981,9 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 746 468">
-						<Property key="Caption" value="#B0B0C8#{Other}"/>
-						<Widget type="TextBox" skin="TextBox" position="36 32 176 24">
-							<Property key="Caption" value="#{Column}"/>
+						<Property key="Caption" value="#B0B0C8#{Column}"/>
+						<Widget type="TextBox" skin="TextBox" position="36 32 200 24">
+							<Property key="Caption" value="#{GrMaterial}"/>
 							<Property key="TextColour" value="0.9 0.9 0.9"/>
 						</Widget>
 						<Widget type="ComboBox" skin="ComboBox" position="36 64 160 24" name="RdMtrC1">
@@ -3026,73 +2992,148 @@
 							<Property key="Static" value="true"/>
 							<Property key="ReadOnly" value="true"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="36 118 144 24">
-							<Property key="Caption" value="#{ColumnNSides}"/>
-							<Property key="TextColour" value="0.7 0.7 0.7"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="180 114 48 24" name="RdColN">
-							<Property key="Colour" value="0.7 0.7 0.7"/>
-							<Property key="TextColour" value="0.7 0.7 0.7"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="36 148 144 24">
-							<Property key="Caption" value="#{ColumnRadius}"/>
-							<Property key="TextColour" value="0.8 0.8 0.8"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="180 144 48 24" name="RdColR">
-							<Property key="Colour" value="0.8 0.8 0.8"/>
-							<Property key="TextColour" value="0.8 0.8 0.8"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="36 196 164 24">
+						<Widget type="TextBox" skin="TextBox" position="36 196 184 24">
 							<Property key="Caption" value="#{TexCoordMul}"/>
-							<Property key="TextColour" value="0.6 0.6 0.6"/>
+							<Property key="TextColour" value="0.7 0.7 0.7"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="36 224 48 24" name="RdTcMulC">
-							<Property key="TextColour" value="0.6 0.6 0.6"/>
-							<Property key="Colour" value="0.6 0.6 0.6"/>
+						<Widget type="EditBox" skin="EditBox" position="36 224 56 24" name="RdTcMulCEdit">
+							<Property key="TextColour" value="0.7 0.7 0.7"/>
+							<Property key="Colour" value="0.7 0.7 0.7"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="436 16 128 24">
-							<Property key="Caption" value="#{Advanced}"/>
-							<Property key="TextColour" value="0.5 0.8 0.7"/>
+						<Widget type="Slider" skin="Slider" position="96 227 256 18" name="RdTcMulC">
+							<Property key="Colour" value="0.7 0.7 0.7"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="436 224 140 24">
-							<Property key="Caption" value="#{HeightOffset}"/>
-							<Property key="TextColour" value="0.5 0.8 0.8"/>
+
+						<Widget type="TextBox" skin="TextBox" position="36 320 180 24">
+							<Property key="Caption" value="#{ColumnNSides}"/>
+							<Property key="TextColour" value="0.8 0.8 1.0"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="576 220 48 24" name="RdHeightOfs">
-							<Property key="Colour" value="0.5 0.8 0.8"/>
-							<Property key="TextColour" value="0.5 0.8 0.8"/>
+						<Widget type="EditBox" skin="EditBox" position="36 346 48 24" name="RdColNEdit">
+							<Property key="Colour" value="0.7 0.7 0.9"/>
+							<Property key="TextColour" value="0.7 0.7 0.9"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="436 148 140 24">
-							<Property key="Caption" value="#{SkirtLength}"/>
-							<Property key="TextColour" value="0.5 0.7 0.9"/>
+						<Widget type="Slider" skin="Slider" position="96 349 256 18" name="RdColN">
+							<Property key="Colour" value="0.7 0.7 0.9"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="576 144 48 24" name="RdSkirtLen">
-							<Property key="Colour" value="0.5 0.7 0.9"/>
-							<Property key="TextColour" value="0.5 0.7 0.9"/>
+						<Widget type="TextBox" skin="TextBox" position="36 380 180 24">
+							<Property key="Caption" value="#{ColumnRadius}"/>
+							<Property key="TextColour" value="0.8 0.8 1.0"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="436 180 140 24">
-							<Property key="Caption" value="#{SkirtHeight}"/>
-							<Property key="TextColour" value="0.5 0.7 0.9"/>
+						<Widget type="EditBox" skin="EditBox" position="36 406 48 24" name="RdColREdit">
+							<Property key="Colour" value="0.8 0.8 1.0"/>
+							<Property key="TextColour" value="0.8 0.8 1.0"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="576 176 48 24" name="RdSkirtH">
-							<Property key="Colour" value="0.5 0.7 0.9"/>
-							<Property key="TextColour" value="0.5 0.7 0.9"/>
+						<Widget type="Slider" skin="Slider" position="96 409 256 18" name="RdColR">
+							<Property key="Colour" value="0.8 0.8 1.0"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="436 68 140 24">
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 746 468">
+						<Property key="Caption" value="#C09090#{Detail}"/>
+
+						<Widget type="TextBox" skin="TextBox" position="36 32 184 24">
 							<Property key="Caption" value="#{MergeLength}"/>
 							<Property key="TextColour" value="0.4 0.9 0.4"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="576 60 48 24" name="RdMergeLen">
+						<Widget type="EditBox" skin="EditBox" position="36 56 48 24" name="RdMergeLenEdit">
 							<Property key="Colour" value="0.4 0.9 0.4"/>
 							<Property key="TextColour" value="0.4 0.9 0.4"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="436 100 140 24">
+						<Widget type="Slider" skin="Slider" position="96 59 256 18" name="RdMergeLen">
+							<Property key="Colour" value="0.4 0.9 0.4"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="36 98 184 24">
 							<Property key="Caption" value="#{LODPointsDist}"/>
 							<Property key="TextColour" value="0.4 0.9 0.4"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="576 92 48 24" name="RdLodPLen">
-							<Property key="Colour" value="0.4 0.9 0.4"/>
-							<Property key="TextColour" value="0.4 0.9 0.4"/>
+						<Widget type="EditBox" skin="EditBox" position="36 122 48 24" name="RdLodPLenEdit">
+							<Property key="Colour" value="0.4 0.8 0.4"/>
+							<Property key="TextColour" value="0.4 0.8 0.4"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="96 125 256 18" name="RdLodPLen">
+							<Property key="Colour" value="0.4 0.8 0.4"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="36 204 188 24">
+							<Property key="Caption" value="#{Road}"/>
+							<Property key="TextColour" value="0.5 0.9 0.7"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="36 236 144 24">
+							<Property key="Caption" value="#{LengthDim}"/>
+							<Property key="TextColour" value="0.5 0.9 0.7"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="180 232 48 24" name="RdLenDimEdit">
+							<Property key="Colour" value="0.5 0.9 0.7"/>
+							<Property key="TextColour" value="0.5 0.9 0.7"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="240 236 256 16" name="RdLenDim">
+							<Property key="Colour" value="0.5 0.9 0.7"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="36 264 144 24">
+							<Property key="Caption" value="#{WidthSteps}"/>
+							<Property key="TextColour" value="0.5 0.9 0.7"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="180 260 48 24" name="RdWidthStepsEdit">
+							<Property key="Colour" value="0.5 0.9 0.7"/>
+							<Property key="TextColour" value="0.5 0.9 0.7"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="240 264 256 16" name="RdWidthSteps">
+							<Property key="Colour" value="0.5 0.9 0.7"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="36 320 188 24">
+							<Property key="Caption" value="#{Pipe}"/>
+							<Property key="TextColour" value="0.8 0.8 0.4"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="36 352 144 24">
+							<Property key="Caption" value="#{PipeLStepsMul}"/>
+							<Property key="TextColour" value="0.8 0.8 0.4"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="180 348 48 24" name="RdPlsMEdit">
+							<Property key="TextColour" value="0.8 0.8 0.4"/>
+							<Property key="Colour" value="0.8 0.8 0.4"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="240 352 256 16" name="RdPlsM">
+							<Property key="Colour" value="0.8 0.8 0.4"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="36 380 144 24">
+							<Property key="Caption" value="#{PipeWStepsMul}"/>
+							<Property key="TextColour" value="0.8 0.8 0.4"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="180 376 48 24" name="RdPwsMEdit">
+							<Property key="Colour" value="0.8 0.8 0.4"/>
+							<Property key="TextColour" value="0.8 0.8 0.4"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="240 380 256 16" name="RdPwsM">
+							<Property key="Colour" value="0.8 0.8 0.4"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="480 28 140 24">
+							<Property key="Caption" value="#{Advanced}"/>
+							<Property key="TextColour" value="0.5 0.8 0.7"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="480 140 140 24">
+							<Property key="Caption" value="#{HeightOffset}"/>
+							<Property key="TextColour" value="0.5 0.8 0.8"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="620 136 48 24" name="RdHeightOfs">
+							<Property key="Colour" value="0.5 0.8 0.8"/>
+							<Property key="TextColour" value="0.5 0.8 0.8"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="480 68 140 24">
+							<Property key="Caption" value="#{SkirtLength}"/>
+							<Property key="TextColour" value="0.5 0.7 0.9"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="620 64 48 24" name="RdSkirtLen">
+							<Property key="Colour" value="0.5 0.7 0.9"/>
+							<Property key="TextColour" value="0.5 0.7 0.9"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="480 100 140 24">
+							<Property key="Caption" value="#{SkirtHeight}"/>
+							<Property key="TextColour" value="0.5 0.7 0.9"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="620 96 48 24" name="RdSkirtH">
+							<Property key="Colour" value="0.5 0.7 0.9"/>
+							<Property key="TextColour" value="0.5 0.7 0.9"/>
 						</Widget>
 					</Widget>
 				</Widget>
@@ -3263,8 +3304,7 @@
 									<Property key="Colour" value="0 0 0"/>
 									<Property key="TextColour" value="0.6 1.0 0.0"/>
 								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 50 320 18" name="TerMtr">
-								</Widget>
+								<Widget type="Slider" skin="Slider" position="280 50 320 18" name="TerMtr"/>
 								<Widget type="TextBox" skin="TextBox" position="210 50 60 24" name="TerMtrVal">
 									<Property key="TextColour" value="0.6 1.0 0.1"/>
 								</Widget>
@@ -3273,8 +3313,7 @@
 									<Property key="Colour" value="0 0 0"/>
 									<Property key="TextColour" value="0.6 0.9 0.6"/>
 								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 80 320 18" name="TerTripl">
-								</Widget>
+								<Widget type="Slider" skin="Slider" position="280 80 320 18" name="TerTripl"/>
 								<Widget type="TextBox" skin="TextBox" position="210 80 60 24" name="TerTriplVal">
 									<Property key="TextColour" value="0.6 0.9 0.6"/>
 								</Widget>
@@ -3306,8 +3345,7 @@
 									<Property key="Colour" value="0 0 0"/>
 									<Property key="TextColour" value="0.2 1 0.2"/>
 								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 80 320 18" name="Anisotropy">
-								</Widget>
+								<Widget type="Slider" skin="Slider" position="280 80 320 18" name="Anisotropy"/>
 								<Widget type="TextBox" skin="TextBox" position="210 80 60 24" name="AnisotropyVal">
 									<Property key="TextColour" value="0.2 1 0.2"/>
 								</Widget>
@@ -3315,8 +3353,7 @@
 									<Property key="Caption" value="#{TexSize}**"/>
 									<Property key="TextColour" value="0.6 0.9 0.6"/>
 								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 110 320 18" name="TexSize">
-								</Widget>
+								<Widget type="Slider" skin="Slider" position="280 110 320 18" name="TexSize"/>
 								<Widget type="TextBox" skin="TextBox" position="210 110 60 24" name="TexSizeVal">
 									<Property key="TextColour" value="0.6 0.9 0.6"/>
 								</Widget>
@@ -3328,22 +3365,19 @@
 									<Property key="Colour" value="0 0 0"/>
 									<Property key="TextColour" value="0.3 0.9 0.9"/>
 								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 50 320 18" name="TerDetail">
-								</Widget>
+								<Widget type="Slider" skin="Slider" position="280 50 320 18" name="TerDetail"/>
 								<Widget type="TextBox" skin="TextBox" position="32 80 172 24">
 									<Property key="Caption" value="#{TerHQDist}*"/>
 									<Property key="Colour" value="0 0 0"/>
 									<Property key="TextColour" value="0.6 1 0.9"/>
 								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 80 320 18" name="TerDist">
-								</Widget>
+								<Widget type="Slider" skin="Slider" position="280 80 320 18" name="TerDist"/>
 								<Widget type="TextBox" skin="TextBox" position="32 110 172 24">
 									<Property key="Caption" value="#{ViewDist}"/>
 									<Property key="Colour" value="0 0 0"/>
 									<Property key="TextColour" value="0.5 1 0.8"/>
 								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 110 320 18" name="ViewDist">
-								</Widget>
+								<Widget type="Slider" skin="Slider" position="280 110 320 18" name="ViewDist"/>
 								<Widget type="TextBox" skin="TextBox" position="210 50 60 24" name="TerDetailVal">
 									<Property key="TextColour" value="0.3 0.9 0.9"/>
 								</Widget>
@@ -3358,8 +3392,7 @@
 									<Property key="Colour" value="0 0 0"/>
 									<Property key="TextColour" value="0.3 0.9 0.9"/>
 								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 140 320 18" name="RoadDist">
-								</Widget>
+								<Widget type="Slider" skin="Slider" position="280 140 320 18" name="RoadDist"/>
 								<Widget type="TextBox" skin="TextBox" position="210 140 60 24" name="RoadDistVal">
 									<Property key="TextColour" value="0.3 0.9 0.9"/>
 								</Widget>
@@ -3391,14 +3424,10 @@
 									<Property key="Colour" value="0 0 0"/>
 									<Property key="TextColour" value="0.7 0.8 0.5"/>
 								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 50 320 18" name="Trees">
-								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 80 320 18" name="TreesDist">
-								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 110 320 18" name="Grass">
-								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 140 320 18" name="GrassDist">
-								</Widget>
+								<Widget type="Slider" skin="Slider" position="280 50 320 18" name="Trees"/>
+								<Widget type="Slider" skin="Slider" position="280 80 320 18" name="TreesDist"/>
+								<Widget type="Slider" skin="Slider" position="280 110 320 18" name="Grass"/>
+								<Widget type="Slider" skin="Slider" position="280 140 320 18" name="GrassDist"/>
 								<Widget type="TextBox" skin="TextBox" position="210 50 60 24" name="TreesVal">
 									<Property key="TextColour" value="0.5 1 0.5"/>
 								</Widget>
@@ -3447,14 +3476,10 @@
 									<Property key="Colour" value="0 0 0"/>
 									<Property key="TextColour" value="0.7 0.8 0.9"/>
 								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 50 320 18" name="ShadowType">
-								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 80 320 18" name="ShadowSize">
-								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 110 320 18" name="ShadowCount">
-								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 140 320 18" name="ShadowDist">
-								</Widget>
+								<Widget type="Slider" skin="Slider" position="280 50 320 18" name="ShadowType"/>
+								<Widget type="Slider" skin="Slider" position="280 80 320 18" name="ShadowSize"/>
+								<Widget type="Slider" skin="Slider" position="280 110 320 18" name="ShadowCount"/>
+								<Widget type="Slider" skin="Slider" position="280 140 320 18" name="ShadowDist"/>
 								<Widget type="TextBox" skin="TextBox" position="210 50 60 24" name="ShadowTypeVal">
 									<Property key="TextColour" value="0.5 0.8 1"/>
 								</Widget>
@@ -3483,8 +3508,7 @@
 									<Property key="Caption" value="#{Size}"/>
 									<Property key="TextColour" value="0.7 0.85 1.0"/>
 								</Widget>
-								<Widget type="Slider" skin="Slider" position="280 110 320 18" name="WaterSize">
-								</Widget>
+								<Widget type="Slider" skin="Slider" position="280 110 320 18" name="WaterSize"/>
 								<Widget type="TextBox" skin="TextBox" position="210 110 60 24" name="WaterSizeVal">
 									<Property key="TextColour" value="0.7 0.85 1.0"/>
 								</Widget>

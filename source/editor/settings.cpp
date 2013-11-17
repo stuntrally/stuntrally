@@ -89,7 +89,7 @@ SETTINGS::SETTINGS()  ///  Defaults
 	,preset(4)
 	,anisotropy(8),	view_distance(3600)
 	,terdetail(1.f), terdist(300), road_dist(1.0), tex_size(1), ter_mtr(2), ter_tripl(0)
-	,shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(2)
+	,shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(Sh_Depth)
 	,lightmap_size(0)
 	,grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(false), imposters_only(false)
 	,water_reflect(0), water_refract(0), water_rttsize(0)

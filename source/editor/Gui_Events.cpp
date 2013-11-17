@@ -296,16 +296,24 @@ void CGui::editRoad(Ed ed)
 	Real r = s2r(ed->getCaption());
 	String n = ed->getName();
 
-		 if (n=="RdTcMul")		app->road->tcMul = r;	else if (n=="RdTcMulP")	app->road->tcMulP = r;
-	else if (n=="RdTcMulW")		app->road->tcMulW = r;	else if (n=="RdTcMulPW") app->road->tcMulPW = r;  else if (n=="RdTcMulC")	app->road->tcMulC = r;
-	else if (n=="RdColR")		app->road->colR = r;	else if (n=="RdColN")	app->road->colN = std::max(3.f, r);
-	else if (n=="RdLenDim")		app->road->lenDiv0 = r;	
-	else if (n=="RdWidthSteps")	app->road->iw0 = r;		else if (n=="RdPwsM")	app->road->iwPmul = r;
-	else if (n=="RdHeightOfs")	app->road->fHeight = r;	else if (n=="RdPlsM")	app->road->ilPmul = r;
+		 if (n=="RdHeightOfs")	app->road->fHeight = r;
 	else if (n=="RdSkirtLen")	app->road->skirtLen = r;else if (n=="RdSkirtH")	app->road->skirtH = r;
-	else if (n=="RdMergeLen")	app->road->setMrgLen = r;
-	else if (n=="RdLodPLen")	app->road->lposLen = r;
 	//app->road->RebuildRoad(true);  //on Enter ?..
+}
+
+//  set slider pointer values, and update
+void CGui::SldUpd_Road()
+{
+	if (!app->road)  return;
+	SplineRoad& r = *app->road;
+	
+	svRdTcMul.UpdF(&r.tcMul);	svRdTcMulW.UpdF(&r.tcMulW);
+	svRdTcMulP.UpdF(&r.tcMulP);	svRdTcMulPW.UpdF(&r.tcMulPW);
+	svRdTcMulC.UpdF(&r.tcMulC);
+	svRdLenDim.UpdF(&r.lenDiv0);  svRdWidthSteps.UpdI(&r.iw0);
+	svRdPwsM.UpdF(&r.iwPmul);  svRdPlsM.UpdF(&r.ilPmul);
+	svRdMergeLen.UpdF(&r.setMrgLen);  svRdLodPLen.UpdF(&r.lposLen);
+	svRdColN.UpdI(&r.colN);  svRdColR.UpdF(&r.colR);
 }
 
 
