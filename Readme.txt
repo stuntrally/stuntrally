@@ -45,9 +45,9 @@ Editor tutorial:
 
 Description
 
-The game features 127 tracks in 24 sceneries and 19 cars.
-Game modes include: Single Race, Tutorials and Championships, Multiplayer,
-Split Screen. Also Replays and Ghost drive are present.
+The game features 146 tracks in 24 sceneries and 19 cars.
+Game modes include: Single Race, Tutorials, Championships, Challenges,
+Multiplayer and Split Screen. Also Replays and Ghost drive are present.
 
 The Track Editor allows modifying and creating tracks.
 Both run on Linux and Windows.
@@ -63,11 +63,13 @@ For full features list check: http://code.google.com/p/vdrift-ogre/wiki/Features
 Hardware requirements
 
 The minimum hardware is:
-a CPU with 2 cores, and GPU: GeForce 9600 GT or Radeon HD 3870,
-with Shader Model 3.0 supported and 256 MB GPU RAM.
+a CPU with 2 cores, above 2.0GHz,
+and GPU: GeForce 9600 GT or Radeon HD 3870,
+with Shader Model 3.0 supported and 256 MB GPU RAM (512 on higher settings).
+A good GPU for smooth play at Higher preset is GTX 560 Ti (no effects).
 
 It is possible to run on older, but
-integrated GPUs (or laptops) can't handle the game well (or at all).
+integrated GPUs or laptops can't handle the game well (or at all).
 
 ----------------------------------------------------------------------------------
 
@@ -75,14 +77,15 @@ Running
 
 In game Esc/Tab key shows/hides Options.
 
-At first (in Options window) go to tab [Screen] and adjust resolution.
-On [Graphics] tab pick settings preset according to your GPU.
-Restart after changing preset, changing it in game is not recommended.
+At first in Options window (tab Screen) adjust resolution and
+pick settings preset according to your GPU.
+Restart after changing preset.
 
 Keys used in game can be seen in Options tab [Input].
 If you want to reassign keys, or have a game controller
 go to tab [Input] to configure it and test range.
 
+By default, drive with arrow keys, use backspace to rewind after crashes.
 Change cameras with C/X (with shift for main cameras only).
 Cameras can be adjusted in game, by mouse - move mouse to see actions.
 
@@ -97,11 +100,11 @@ In editor, F1 key shows/hides Options,
 press Ctrl-F1 to read what can be edited and how.
 Tab key switches between Camera/Edit mode.
 There isn't (and won't be) an undo function -
-hit F5 to reload last track state, and F4 to save it.
-After saving, track can be played in game (exports all data).
+hit F5 to reload last track state, and F4 to save it (often).
+After each save, track can be tested in game.
 
 There is an Editor Tutorial Wiki page (link at top)
-with videos: 10 chapters, 44 minutes total.
+with videos: 14 chapters, 64 minutes total.
 
 Have fun !
 
@@ -132,14 +135,14 @@ BtOgre *
 OICS *
 PagedGeometry 1.1.1 *
 shiny
-TinyXML
+TinyXML,TinyXML2
 * are modified sources
 
 ----------------------------------------------------------------------------------
 
 Help is welcomed
 
-Currently there is 1 (or 2) active programmers.
+Currently there is 1 active programmer.
 We are looking for skilled and motivated people
 that can help improving the game or editor.
 
