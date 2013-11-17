@@ -601,13 +601,15 @@ void App::editMouse()
 		const Real fMove(0.5f), fRot(1.5f), fScale(0.02f);  //par speed
 		bool upd = false, sel = !vObjSel.empty();
 
+		//  rotate/scale selected
 		Vector3 pos0;  Matrix3 m;
-		if (sel)
+		if (sel && objEd != EO_Move)
 		{	pos0 = GetObjPos0();
-			Real relA = -vNew.x * fRot * moveMul;
-			Quaternion q;  q.FromAngleAxis(Degree(relA), mbLeft ? -Vector3::UNIT_Y : (mbRight ? -Vector3::UNIT_Z : Vector3::UNIT_X));
-			q.ToRotationMatrix(m);
-		}
+			if (objEd == EO_Rotate)
+			{	Real relA = -vNew.x * fRot * moveMul;
+				Quaternion q;  q.FromAngleAxis(Degree(relA), mbLeft ? -Vector3::UNIT_Y : (mbRight ? -Vector3::UNIT_Z : Vector3::UNIT_X));
+				q.ToRotationMatrix(m);
+		}	}
 
 		//  selection, picked or new
 		std::set<int>::iterator it = vObjSel.begin();
@@ -643,32 +645,43 @@ void App::editMouse()
 					Quaternion q(o.rot.w(),o.rot.x(),o.rot.y(),o.rot.z());
 					Radian r = Radian(xm);  Quaternion qr;
 
-					if (sel)
+					if (sel)  // rotate selected
 					{
 						Vector3 p(o.pos[0],o.pos[2],-o.pos[1]);  p = p-pos0;
 						p = m * p;
 						o.pos = MATHVECTOR<float,3>(p.x+pos0.x, -p.z-pos0.z, p.y+pos0.y);
-						//o.SetFromBlt();	 upd1 = true;
+						///TODO: wrong local quat rot !?..
 					}
 
 					qr.FromAngleAxis(r, mbLeft ? Vector3::UNIT_Z : (mbRight ? Vector3::UNIT_Y : Vector3::UNIT_X));
 					if (alt)  q = qr * q;  else  q = q * qr;
 					o.rot = QUATERNION<float>(q.x,q.y,q.z,q.w);
-					//o.rot = QUATERNION<float>::SetAxisAngle ..
+
 					o.SetFromBlt();	 upd1 = true;
 				}	break;
 
 				case EO_Scale:
-				if (!o.dyn)  // static objs only
 				{
 					float vm = (vNew.y - vNew.x) * fMove * moveMul;
-					if (mbLeft)  // xyz
-						o.scale *= 1.f - vm * fScale;
-					else if (mbRight)  // y
-						o.scale.y *= 1.f - vm * fScale;
-					else  // z
-						o.scale.z *= 1.f - vm * fScale;
-					o.nd->setScale(o.scale);  upd1 = true;
+					float sc = 1.f - vm * fScale;
+			
+					if (sel)  // scale selected
+					{
+						Vector3 p(o.pos[0],o.pos[2],-o.pos[1]);  p = p-pos0;
+						p = p * sc + pos0;
+						if (mbLeft)        o.pos = MATHVECTOR<float,3>(p.x, -p.z, p.y);
+						else if (mbRight)  o.pos = MATHVECTOR<float,3>(o.pos[0], o.pos[1], p.y);
+						else               o.pos = MATHVECTOR<float,3>(p.x, o.pos[1], o.pos[2]);  // todo: use rot for x,z ..
+					}
+					
+					if (!o.dyn)  // static objs only
+					{
+						if (mbLeft)        o.scale *= sc;  // xyz
+						else if (mbRight)  o.scale.y *= sc;  // y
+						else               o.scale.z *= sc;  // z
+						o.nd->setScale(o.scale);
+					}
+					o.SetFromBlt();	 upd1 = true;
 				}	break;
 			}
 			if (upd1)
