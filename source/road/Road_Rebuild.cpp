@@ -171,8 +171,10 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			Real p = sp * iwPmul, pl = max(sp, sp1)* iwPmul/4;
 			if (p < 0.f)  p = 1.f;  else  p = 1.f + p;
 			if (pl< 0.f)  pl= 1.f;  else  pl= 1.f + pl;
+			bool pipe = sp > 0.f || sp1 > 0.f;
+			int wmin = pipe ? 5 : 1;  // min w steps  //par
 
-			int iw = max(1, (int)(p * iw0 / lodDiv));  //* wid/widDiv..
+			int iw = max(wmin, (int)(p * iw0 / lodDiv));  //* wid/widDiv..
 			viW.push_back(iw);
 			int iwl = max(1, (int)(pl * iw0 / lodDiv));
 
@@ -184,7 +186,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			vSegLen.push_back(len);
 
 			roadLen += len;  //#
-			if (sp > 0.f || sp1 > 0.f)
+			if (pipe)
 			{	rdPipe += len; //#
 				if (mP[seg].onPipe)  rdOnPipe += len;  //#
 			}
@@ -584,7 +586,6 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					for (int h=0; h <= 1; ++h)  // height
 					for (int w=0; w <= iwC; ++w)  // width +1
 					{
-						Real ht = (h==0) ? 0.f : vL0.y - (mTerrain ? mTerrain->getHeightAtWorldPosition(vL0) : 0.f);
 						Real a = Real(w)/iwC *2*PI_d,  //+PI_d/4.f
 							x = r*cosf(a), y = r*sinf(a);
 
@@ -594,19 +595,18 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 						if (h==0)  // top below road
 						{	yy = vn.y * -0.8f;  //pars
-							vP.y += yy;  ht += yy;
+							vP.y += yy;
 						}
 						else  // bottom below ground
 						{	yy = (mTerrain ? mTerrain->getHeightAtWorldPosition(vP) : 0.f) - 0.3f;
 							vP.y = yy;
 						}
-						ht += yy;
 
 						Vector3 vN(vP.x-vL0.x, 0.f, vP.z-vL0.z);  vN.normalise();
 
 						//>  data Col
 						posC.push_back(vP);  normC.push_back(vN);
-						tcsC.push_back(Vector2( Real(w)/iwC * 4, ht * tcMulC ));  //pars
+						tcsC.push_back(Vector2( Real(w)/iwC * 4, vP.y * tcMulC ));  //pars
 					}
 				}
 				
