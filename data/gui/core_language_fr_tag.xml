@@ -46,6 +46,7 @@
 	<Tag name="TipTrackImg">Capture d'écran du jeu pour la piste sélectionnée.</Tag>
 	<Tag name="TerLNoiseOnly">Bruit seulement</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
+	<Tag name="SteerRange">Steering range multipliers</Tag>
 	<Tag name="Chall_Rally">Rally</Tag>
 	<Tag name="TipChangeGloss">Changer la brillance de la peinture (mat/brillant).</Tag>
 	<Tag name="Surface">Surface</Tag>
@@ -76,7 +77,7 @@
 	<Tag name="pipes">tubes</Tag>
 	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
 	<Tag name="InputFluidsUpdate">F10 - mettre à jour la carte de profondeur, après avoir édité du terrain près d'une côte</Tag>
-	<Tag name="TBLapResults">Lap Results</Tag>
+	<Tag name="TBLapResults">Résultats du tour</Tag>
 	<Tag name="DepthOfField">Profondeur du terrain</Tag>
 	<Tag name="Game">Jeu</Tag>
 	<Tag name="InputObjectsScale">3 - Échelle Clic gauche - uniforme XYZ Clic droit : Y Clic du milieu : Z</Tag>
@@ -101,7 +102,7 @@
 	<Tag name="NetGamesAvail">Parties disponibles</Tag>
 	<Tag name="HDRAdaptationScale">Adapter l'échelle</Tag>
 	<Tag name="TBLast">Dernier</Tag>
-	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
+	<Tag name="TrackBankAng">Angles d'incurvation de la route : moyen et maximum, en degrés.</Tag>
 	<Tag name="Chall_Chase">Poursuivre</Tag>
 	<Tag name="InputMaxVal">Valeur Maximale</Tag>
 	<Tag name="TipRollDrag">Friction des roues, une valeur plus élevée réduit la vitesse (exemple : 140 pour la neige, 80 pour l'herbe).</Tag>
@@ -328,6 +329,7 @@
 	<Tag name="Brush_ShapeNoise">Bruit</Tag>
 	<Tag name="Grasses">Herbes</Tag>
 	<Tag name="Allowed">Admis</Tag>
+	<Tag name="DamageDecLap">Réparer à chaque tour</Tag>
 	<Tag name="InputMapFlip">Retourner</Tag>
 	<Tag name="FogHeight">Hauteur</Tag>
 	<Tag name="difficulty">difficulté</Tag>
@@ -380,7 +382,7 @@
 	<Tag name="InputPaintColor">C - Couleur de la peinture</Tag>
 	<Tag name="TireTrails">Traces de pneus</Tag>
 	<Tag name="TipFogClrRGBA">Composants R V B A de 0 à 1 (exemple : 0.7 0.8 0.9 1). Le dernier peut être utilisé pour réduire la densité maximale (1 étant 100%).</Tag>
-	<Tag name="Language">Language</Tag>
+	<Tag name="Language">Langue</Tag>
 	<Tag name="InputMapShowOptions">Afficher les options</Tag>
 	<Tag name="InputCameraMode">Mode de la caméra</Tag>
 	<Tag name="Enabled">Activé</Tag>
@@ -403,7 +405,7 @@
 	<Tag name="Ambient">Ambience</Tag>
 	<Tag name="SkirtLength">Skirt Length</Tag>
 	<Tag name="InputRoadNotOnTer">quand n'est pas sur le terrain</Tag>
-	<Tag name="CameraLoopChange">Camera change in loops</Tag>
+	<Tag name="CameraLoopChange">Changement de caméra dans les boucles</Tag>
 	<Tag name="TiresEdit2">1,2 ou pavé num. /,* - changer la valeur</Tag>
 	<Tag name="TipGrassColorMap">Carte de couleur pour le paysage, généralement le même choix que pour le matériau d'herbe. Permet de changer la couleur de l'herbe.</Tag>
 	<Tag name="Multiplayer">Multijoueur</Tag>
@@ -481,7 +483,7 @@
 	<Tag name="InputFluidsSize">Alt-Clic gauche - taille Alt-Clic droit - profondeur</Tag>
 	<Tag name="Bronze">Bronze</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
-	<Tag name="SteerRange">Steering range multipliers</Tag>
+	<Tag name="Shadows">Ombres</Tag>
 	<Tag name="ShowPictures">Montrer des images pendant le chargement</Tag>
 	<Tag name="distance">distance</Tag>
 	<Tag name="SSS_Effect">Effet</Tag>
@@ -500,14 +502,13 @@
 	<Tag name="MinimapAndSize">Taille de la mini carte</Tag>
 	<Tag name="TipChangeHue">Changer la couleur de la voiture (teinte).</Tag>
 	<Tag name="TipDustInt">Intensité des particules de poussière.</Tag>
-	<Tag name="Road_Loop">Loop</Tag>
+	<Tag name="Road_Loop">Boucle</Tag>
 	<Tag name="InputBrushForce">[,] (ou Shift-molette) - Force (intensité)</Tag>
 	<Tag name="NetGameName">Nom du jeu</Tag>
 	<Tag name="TexSize">Taille des textures</Tag>
 	<Tag name="TipSunAmbient">Ambience de la lumière du soleil (couleur constante). Composants R V B de 0 à 1 (exemple : 0.4 0.4 0.4)</Tag>
 	<Tag name="ApplyShadows">Appliquer</Tag>
 	<Tag name="ChngTrkTab">changé dans l'onglet [Circuit]</Tag>
-	<Tag name="Shadows">Ombres</Tag>
 	<Tag name="InputRplCtrl2">P - mettre en pause/reprendre le replay</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - aller en avant/arrière (Maj. - lent, Ctrl,Alt - rapide)</Tag>
 	<Tag name="Laps">Tours</Tag>
@@ -618,7 +619,7 @@
 	<Tag name="LS_ROAD">Chargement de la route</Tag>
 	<Tag name="RoadPoint">Point de la route</Tag>
 	<Tag name="CarStartPos">Position de départ de la voiture</Tag>
-	<Tag name="ObjRocks">Rocks</Tag>
+	<Tag name="ObjRocks">Roches</Tag>
 	<Tag name="ShortcutsInfo">Cliquez avec Alt pour accéder rapidement à un onglet (ou sous-onglet). Cliquez encore pour naviguer entre les sous-onglets (s'il y en a).</Tag>
 	<Tag name="AlignWidthMul">Multiplicateur de largeur</Tag>
 	<Tag name="NetMasterIp">IP du serveur maître</Tag>
@@ -680,7 +681,7 @@
 	<Tag name="AutoLoad">Chargement automatique du circuit</Tag>
 	<Tag name="Distance">Distance</Tag>
 	<Tag name="RplGhost">Montrer le fantôme - meilleur tour</Tag>
-	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
+	<Tag name="TipGrassPageLength">Longueur de la page d'herbe (une valeur basse rechargera souvent, une valeur élevée peut causer des problèmes d'affichage)</Tag>
 	<Tag name="Shaders">Shaders</Tag>
 	<Tag name="dust">poussière</Tag>
 	<Tag name="InputUnbind">Clic droit sur un bouton pour ne plus assigner.</Tag>
@@ -737,7 +738,7 @@
 	<Tag name="TrackPipes">Tubes</Tag>
 	<Tag name="Specular">Spéculaire</Tag>
 	<Tag name="HeightOffset">Décalage de hauteur</Tag>
-	<Tag name="Road_OnPipe">On Pipe</Tag>
+	<Tag name="Road_OnPipe">Sur un tube</Tag>
 	<Tag name="Amplitude">Amplitude</Tag>
 	<Tag name="TipGrassLayerDens">Densité de l'herbe pour ce calque.</Tag>
 	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
@@ -791,7 +792,7 @@
 	<Tag name="TerLayers">Calques du terrain</Tag>
 	<Tag name="TipLTrMaxTerH">Au-delà de cette altitude, le modèle n'apparaîtra pas.</Tag>
 	<Tag name="TotalScore">Score total</Tag>
-	<Tag name="InputLoadNextTrack">Load next track (shift - previous)</Tag>
+	<Tag name="InputLoadNextTrack">Charger le circuit précédent (Maj - Préc.)</Tag>
 	<Tag name="TrackDifficulties">Différentes difficultés</Tag>
 	<Tag name="TipModelPrev">Image d'aperçu du modèle.</Tag>
 	<Tag name="InputRoadEdit">R - mode édition de route</Tag>
@@ -928,7 +929,13 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet d'Options précédent/suivant (Maj. sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="DamageDecLap">Repair each lap</Tag>
+	<Tag name="DevKeys">Developer keys. Ctrl-F global, Alt-shift-1..6 load test tracks.</Tag>
+	<Tag name="ChallInfo2">Challenges are short but usually difficult to pass.</Tag>
+	<Tag name="AllowSaveOrigTrk">Allow saving original tracks</Tag>
+	<Tag name="TutorInfo">Tutorials have just a few tracks. They are easy to pass and show various track elements.</Tag>
+	<Tag name="InputObjectsPaste">shift-Ins - paste copied</Tag>
+	<Tag name="InputObjectsCopySel">ctrl-Ins - copy selection</Tag>
+	<Tag name="ChampInfo2">Championships are usually long, have many tracks, but are easy to pass.</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
