@@ -419,7 +419,7 @@
 	</challenge>
 
 	<challenge name="Turtle Slow" ver="1" difficulty="2" type="2" 
-			descr="Challenge This is the slowest truck.">
+			descr="Few tracks driven with the slowest truck. Patience needed.">
 		<sim boost="0" />
 		<car names="OT" />
 		<pass avgPoints="16" factor="2" />
