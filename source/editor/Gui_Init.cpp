@@ -380,15 +380,15 @@ void CGui::InitGui()
 	sv= &svRdTcMulPW;	sv->Init("RdTcMulPW",	&f, 0.01f,0.4f, 1.5f, 3,5);  sv->DefaultF(0.2f);
 	sv= &svRdTcMulC;	sv->Init("RdTcMulC",	&f, 0.01f,0.4f, 1.5f, 3,5);  sv->DefaultF(0.2f);
 
-	sv= &svRdLenDim;	sv->Init("RdLenDim",	&f, 0.01f,10.f, 1.5f, 2,4);  sv->DefaultF(1.f);
-	sv= &svRdWidthSteps;sv->Init("RdWidthSteps",&i, 1,16, 1.5f);  sv->DefaultI(6);
+	sv= &svRdLenDim;	sv->Init("RdLenDim",	&f, 0.5f, 4.f, 1.5f, 2,4);  sv->DefaultF(1.f);
+	sv= &svRdWidthSteps;sv->Init("RdWidthSteps",&i, 3,16, 1.5f);  sv->DefaultI(6);
 	sv= &svRdPwsM;		sv->Init("RdPwsM",		&f, 1.f, 8.f, 1.5f, 1,3);  sv->DefaultF(1.f);
 	sv= &svRdPlsM;		sv->Init("RdPlsM",		&f, 1.f, 8.f, 1.5f, 1,3);  sv->DefaultF(1.f);
 
 	sv= &svRdColN;		sv->Init("RdColN",		&i, 3,16, 1.5f);  sv->DefaultI(4);
 	sv= &svRdColR;		sv->Init("RdColR",		&f, 1.0f, 6.f, 1.5f, 2,4);  sv->DefaultF(2.f);
-	sv= &svRdMergeLen;	sv->Init("RdMergeLen",	&f, 40.f, 2000.f, 2.f, 0,1);  sv->DefaultF(400.f);
-	sv= &svRdLodPLen;	sv->Init("RdLodPLen",	&f, 10.f, 160.f, 2.f, 0,1);  sv->DefaultF(20.f);
+	sv= &svRdMergeLen;	sv->Init("RdMergeLen",	&f, 40.f, 2000.f, 2.f, 0,2);  sv->DefaultF(400.f);
+	sv= &svRdLodPLen;	sv->Init("RdLodPLen",	&f, 10.f, 160.f, 2.f, 0,2);  sv->DefaultF(20.f);
 	SldUpd_Road();
 	
 	Ed(RdHeightOfs, editRoad);
