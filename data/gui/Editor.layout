@@ -3667,6 +3667,10 @@
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Caption" value="#{Wireframe} F11"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="332 158 360 24" name="MouseCapture">
+							<Property key="Caption" value="#{MouseCapture}"/>
+							<Property key="TextColour" value="0.55 0.6 0.65"/>
+						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="32 222 192 24">
 							<Property key="TextColour" value="0.75 0.6 0.6"/>

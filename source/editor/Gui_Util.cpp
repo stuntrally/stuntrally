@@ -178,7 +178,7 @@ void App::UpdVisGui()
 	bool vis = bGuiFocus || !bMoveCam;
 	mCursorManager->cursorVisibilityChange(vis);
 	mInputWrapper->setMouseRelative(!vis);
-	mInputWrapper->setGrabPointer(!vis);
+	mInputWrapper->setGrabPointer(!vis && pSet->mouse_capture);
 
 	if (road)  road->SetTerHitVis(bEdit());
 	if (!bGuiFocus && gcom->mToolTip)  gcom->mToolTip->setVisible(false);

@@ -304,6 +304,7 @@ void CGui::InitGui()
 	ck= &ckAutoStart;	ck->Init("AutoStart",   &pSet->autostart);
 	ck= &ckEscQuits;	ck->Init("EscQuits",    &pSet->escquit);
 	ck= &ckOgreDialog;	ck->Init("OgreDialog",  &pSet->ogre_dialog);
+	ck= &ckMouseCapture;ck->Init("MouseCapture",&pSet->mouse_capture);
 
 	ck= &ckBltLines;	ck->Init("BltLines",	&pSet->bltLines);
 	ck= &ckShowPics;	ck->Init("ShowPictures",&pSet->loadingbackground);

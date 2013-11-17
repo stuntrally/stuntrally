@@ -114,6 +114,7 @@ public:
 	bool autostart, escquit, startInMain;
 	bool bltDebug, bltLines, bltProfilerTxt, profilerTxt;
 	bool loadingbackground, ogre_dialog;
+	bool mouse_capture;
 
 	//  sound
 	float vol_master, vol_engine, vol_tires, vol_susp, vol_env,

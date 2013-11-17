@@ -691,7 +691,7 @@ void BaseApp::updMouse()
 	else			hideMouse();
 
 	mInputWrapper->setMouseRelative(!IsFocGui());
-	mInputWrapper->setGrabPointer(!IsFocGui());
+	mInputWrapper->setGrabPointer(!IsFocGui() && pSet->mouse_capture);
 }
 
 void BaseApp::onCursorChange(const std::string &name)

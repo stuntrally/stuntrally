@@ -2624,6 +2624,10 @@
 							<Property key="TextColour" value="0.4 0.5 0.6"/>
 							<Property key="Caption" value="#{OgreDialog}"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="362 158 256 24" name="MouseCapture">
+							<Property key="TextColour" value="0.6 0.7 0.8"/>
+							<Property key="Caption" value="#{MouseCapture}"/>
+						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#C0A0E0#{Other}"/>
