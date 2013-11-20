@@ -46,7 +46,7 @@ void CGui::tabTerLayer(Tab wp, size_t id)
 		bTexNormAuto = bAuto;
 		ckTexNormAuto.Upd();
 		//  tex image
-	    imgTexDiff->setImageTexture(sTex + "_prv.png");
+	    imgTexDiff->setImageTexture(sTex + "_prv.jpg");
 	}
 
 	//  scale layer
@@ -376,7 +376,7 @@ void CGui::comboTexDiff(Cmb cmb, size_t val)
 		if (bTerLay)  sc->td.layersAll[idTerLay].texNorm = sNorm;
 	}
 	//  tex image
-    imgTexDiff->setImageTexture(sTex + "_prv.png");
+    imgTexDiff->setImageTexture(sTex + "_prv.jpg");
 }
 
 void CGui::comboTexNorm(Cmb cmb, size_t val)
