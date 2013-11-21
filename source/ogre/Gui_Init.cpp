@@ -696,7 +696,7 @@ void CGui::InitGui()
 	imgChampStage = fImg("ChampStageImg");  imgChampStage->setImageTexture("PrvStCh");
 	imgChallStage = fImg("ChallStageImg");	imgChallStage->setImageTexture("PrvStCh");
 	
-	imgChampEndCup = fImg("ChampEndImgCup");
+	imgChampEndCup = fImg("ChampEndImgCup"); txChampEndF = fTxt("ChampEndFinished");
 	imgChallFail = fImg("ChallEndImgFail");  txChallEndF = fTxt("ChallEndFinished");
 	imgChallCup  = fImg("ChallEndImgCup");   txChallEndC = fTxt("ChallEndCongrats");
 

@@ -28,6 +28,7 @@ public:
 
 	std::vector<ChampTrack> trks;
 	Champ();
+	bool isTut() const {  return type < 2;  }
 };
 
 

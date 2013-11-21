@@ -72,6 +72,7 @@
 
 	<!--  Championship  -->
 	<Tag name="ChampEndCongrats">Congratulations !</Tag>
+	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
 	<Tag name="ChampEndFinished">You have finished this championship.</Tag>
 	<Tag name="ChallEndFinished">You have passed this challenge.</Tag>
 	<Tag name="ChampInfo">In tutorial/championship mode you drive a series of tracks. Minimum score (depending on your time) is needed to pass to next stage. Car changing is possible.</Tag>
@@ -82,6 +83,7 @@
 	<Tag name="Start">Start</Tag>
 	<Tag name="Continue">Continue</Tag>
 	<Tag name="Restart">Restart</Tag>
+	<Tag name="Close">Close</Tag>
 
 	<Tag name="Prize">Prize</Tag>
 	<Tag name="Bronze">Bronze</Tag>

@@ -77,12 +77,13 @@ void CGui::updChampListDim()
 
 	//  Champs  -----
 	if (!liChamps)  return;
+	int c,w;
 
 	int sum = 0, cnt = liChamps->getColumnCount(), sw = 0;
-	for (int c=0; c < cnt; ++c)  sum += colCh[c];
-	for (int c=0; c < cnt; ++c)
+	for (c=0; c < cnt; ++c)  sum += colCh[c];
+	for (c=0; c < cnt; ++c)
 	{
-		int w = c==cnt-1 ? 18 : float(colCh[c]) / sum * 0.72/*width*/ * wi.width * 0.97/*frame*/;
+		w = c==cnt-1 ? 18 : float(colCh[c]) / sum * 0.72/*width*/ * wi.width * 0.97/*frame*/;
 		liChamps->setColumnWidthAt(c, w);  sw += w;
 	}
 	int xt = 0.038*wi.width, yt = 0.10*wi.height;  // pos
@@ -93,10 +94,10 @@ void CGui::updChampListDim()
 	if (!liStages)  return;
 
 	sum = 0;  cnt = liStages->getColumnCount();  sw = 0;
-	for (int c=0; c < cnt; ++c)  sum += colSt[c];  sum += 43;//-
-	for (int c=0; c < cnt; ++c)
+	for (c=0; c < cnt; ++c)  sum += colSt[c];  sum += 43;//-
+	for (c=0; c < cnt; ++c)
 	{
-		int w = c==cnt-1 ? 18 : float(colSt[c]) / sum * 0.58/*width*/ * wi.width * 0.97/**/;
+		w = c==cnt-1 ? 18 : float(colSt[c]) / sum * 0.58/*width*/ * wi.width * 0.97/**/;
 		liStages->setColumnWidthAt(c, w);  sw += w;
 	}
 	liStages->setCoord(xt, yt, sw + 8/**/, 0.50/*height*/*wi.height);
@@ -106,10 +107,10 @@ void CGui::updChampListDim()
 	if (!liChalls)  return;
 
 	sum = 0;  cnt = liChalls->getColumnCount();  sw = 0;
-	for (int c=0; c < cnt; ++c)  sum += colChL[c];
-	for (int c=0; c < cnt; ++c)
+	for (c=0; c < cnt; ++c)  sum += colChL[c];
+	for (c=0; c < cnt; ++c)
 	{
-		int w = c==cnt-1 ? 18 : float(colChL[c]) / sum * 0.71/*width*/ * wi.width * 0.97/**/;
+		w = c==cnt-1 ? 18 : float(colChL[c]) / sum * 0.71/*width*/ * wi.width * 0.97/**/;
 		liChalls->setColumnWidthAt(c, w);  sw += w;
 	}
 	xt = 0.038*wi.width, yt = 0.10*wi.height;  // pos
@@ -210,12 +211,19 @@ void CGui::btnChampStageStart(WP)
 	pGame->timer.end_sim = false;
 	LogO("|| This was stage " + toStr(pc.curTrack) + "/" + toStr(ch.trks.size()) + " btn");
 	if (last)
-	{	//  show end window, todo: start particles..
+	{
+		//  show end window, todo: start particles..
 		app->mWndChampStage->setVisible(false);
+
 		// tutorial, tutorial hard, normal, hard, very hard, scenery, test
+		bool tut = ch.isTut();
 		const int ui[8] = {0,1,2,3,4,5,0,0};
 		if (imgChampEndCup)
 			imgChampEndCup->setImageCoord(IntCoord(ui[std::min(7, std::max(0, ch.type))]*128,0,128,256));
+
+		app->mWndChampEnd->setCaption(TR(tut ? "#{Tutorial}" : "#{Championship}"));
+		txChampEndF->setCaption(TR(tut ? "#{TutorEndFinished}" : "#{ChampEndFinished}"));
+
 		app->mWndChampEnd->setVisible(true);
 		return;
 	}
@@ -335,7 +343,7 @@ void CGui::ChampionshipAdvance(float timeCur)
 		
 		//  upd champ end [window]
 		String s = 
-			TR("#{Championship}") + ":  " + ch.name + "\n" +
+			TR(ch.isTut() ? /*"#{Tutorial}"*/"" : "#{Championship}:  ") + ch.name + "\n" +
 			TR("#{TotalScore}") + ": " + fToStr(pc.points,1,5);
 		edChampEnd->setCaption(s);
 		//mWndChampEnd->setVisible(true);  // show after stage end
@@ -357,6 +365,7 @@ void CGui::ChampFillStageInfo(bool finished)
 	s = "#80FFE0"+ ch.name + "\n\n" +
 		"#80FFC0"+ TR("#{Stage}") + ":  " + toStr(pc.curTrack+1) + " / " + toStr(ch.trks.size()) + "\n" +
 		"#80FF80"+ TR("#{Track}") + ":  " + trk.name + "\n\n";
+	app->mWndChampStage->setCaption(TR(ch.isTut() ? "#{Tutorial}" : "#{Championship}"));
 
 	if (!finished)  // track info at start
 	{

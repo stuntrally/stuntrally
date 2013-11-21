@@ -378,7 +378,8 @@ public:
 	Btn btChampStage, btChallStage;
 	Ed edChampStage, edChampEnd;  Img imgChampStage, imgChampEndCup;
 	Ed edChallStage, edChallEnd;  Img imgChallStage;
-	Img imgChallFail, imgChallCup;  Txt txChallEndC, txChallEndF;
+	Img imgChallFail, imgChallCup;
+	Txt txChallEndC, txChallEndF, txChampEndF;
 
 	//  main
 	void ChampsListUpdate(), ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
