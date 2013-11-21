@@ -29,22 +29,46 @@ using namespace std;
 ///........................................................................................................
 
 ///  _Tool_ tex ..........................
-//  (remove alpha channel for ter tex prv img)
+//  (split 1 rgba terrain texture to 2, 1st rgb and 2nd with alpha in red)
 void CGui::ToolTexAlpha()
 {
-	Ogre::Image im;
-	im.load("jungle_5d.png", "General");
+	strlist li;
+	std::string data = PATHMANAGER::Data()+"/terrain";
+	PATHMANAGER::DirList(data, li);
+	//PATHMANAGER::DirList(data+"2", li);
 
-	PixelBox pb = im.getPixelBox();
-	int w = pb.getWidth(), h = pb.getHeight();
-	for(int j=0; j < h; ++j)
-	for(int i=0; i < w; ++i)
+	int ii=0;
+	for (strlist::iterator i = li.begin(); i != li.end(); ++i,++ii)
+	if (/*ii < 3 &&*/ !StringUtil::match(*i, "*.txt", false))
 	{
-		ColourValue c = pb.getColourAt(i,j,0);
-		c.a = 1.f;
-		pb.setColourAt(c,i,j,0);
+		String n = *i;
+		Image im;
+		im.load(n, "General");
+
+		PixelBox pb = im.getPixelBox();
+		//pb.setConsecutive();
+		int w = pb.getWidth(), h = pb.getHeight();
+
+		uchar* rgb = new uchar[w*h*3];
+		uchar* aa = new uchar[w*h];
+		register int i,j,a=0,b=0;
+		for (j=0; j < h; ++j)
+		for (i=0; i < w; ++i)
+		{
+			//pb.data
+			ColourValue c = pb.getColourAt(i,j,0);
+			rgb[a++] = c.b * 255.f;
+			rgb[a++] = c.g * 255.f;
+			rgb[a++] = c.r * 255.f;
+			aa[b++] = c.a * 255.f;
+		}
+		Ogre::Image ic,ia;
+		ic.loadDynamicImage(rgb, w,h, PF_R8G8B8);
+		ic.save(PATHMANAGER::Data()+"/"+n+"_d.png");
+		ia.loadDynamicImage(aa, w,h, PF_L8);
+		ia.save(PATHMANAGER::Data()+"/"+n+"_s.png");
+		delete[]rgb;  delete[]aa;
 	}
-	im.save(PATHMANAGER::Data()+"/prv.png");
 }
 
 
