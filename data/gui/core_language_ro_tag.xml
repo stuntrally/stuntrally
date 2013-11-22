@@ -53,6 +53,7 @@
 	<Tag name="ChallEndFinished">You have passed this challenge.</Tag>
 	<Tag name="About">About</Tag>
 	<Tag name="TBScore">Punctaj</Tag>
+	<Tag name="DevKeys">Developer keys. Ctrl-F global, Alt-shift-1..6 load test tracks.</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first  (1)</Tag>
 	<Tag name="HDROrigImage">Bloom Darken</Tag>
 	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
@@ -205,6 +206,7 @@
 	<Tag name="TerGenFreq">Freq. zoom</Tag>
 	<Tag name="Road_OnTerrain">On Terrain</Tag>
 	<Tag name="Ghost">Ghost</Tag>
+	<Tag name="Near">Near</Tag>
 	<Tag name="FogNormal">Normal</Tag>
 	<Tag name="SetCamTo">Setează camera la</Tag>
 	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
@@ -284,6 +286,7 @@
 	<Tag name="Bloom">Încețoșare</Tag>
 	<Tag name="TipRenameTrk">Redenumește traseul selectat.</Tag>
 	<Tag name="TerrainHalf">Half</Tag>
+	<Tag name="ChallInfo2">Challenges are short but usually difficult to pass.</Tag>
 	<Tag name="GrColorMap">Color map</Tag>
 	<Tag name="TipBumpAmp">Amplitudinea denivelărilor suplimentare pe suprafaţă (cât de mare).</Tag>
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
@@ -459,6 +462,7 @@
 	<Tag name="TipTrailClr">Tire trails color. R G B A components 0 to 1 (eg. 0.4 0.4 0.2 0.6)</Tag>
 	<Tag name="MinimapTerrain">Terrain</Tag>
 	<Tag name="NewDup">Nou (copie)</Tag>
+	<Tag name="TutorInfo">Tutorials have just a few tracks. They are easy to pass and show various track elements.</Tag>
 	<Tag name="TrackHeightDiff">Diferență de nivel</Tag>
 	<Tag name="RoadMaterials">Materiale drum</Tag>
 	<Tag name="Fullscreen">Ecran complet</Tag>
@@ -609,6 +613,7 @@
 	<Tag name="LS_GAME">Loading game</Tag>
 	<Tag name="TipSceneryId">Name id of track, that has similar lighting (or this track's if has unique). Used for impostors generation.</Tag>
 	<Tag name="TreeMult">Trees multiplier</Tag>
+	<Tag name="InputObjectsPaste">shift-Ins - paste copied</Tag>
 	<Tag name="Gold">Gold</Tag>
 	<Tag name="InputTopView">Alt-Z - toggle top view</Tag>
 	<Tag name="FogStart">start</Tag>
@@ -706,6 +711,7 @@
 	<Tag name="TipToggleLayer">Activează/dezactivează stratul texturii alese.</Tag>
 	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
 	<Tag name="InputMapNextCamera">Next Camera</Tag>
+	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
 	<Tag name="EdCamPos">Camera position</Tag>
 	<Tag name="GraphicsAll_Lowest">Lowest</Tag>
 	<Tag name="InputReadyToPlay">(ready to play in game)</Tag>
@@ -798,7 +804,7 @@
 	<Tag name="InputRoadEdit">R - edit road mode</Tag>
 	<Tag name="jumps">jumps</Tag>
 	<Tag name="TBBest">Best</Tag>
-	<Tag name="Near">Near</Tag>
+	<Tag name="InputObjectsCopySel">ctrl-Ins - copy selection</Tag>
 	<Tag name="Materials">Materials</Tag>
 	<Tag name="Gravel">Gravel</Tag>
 	<Tag name="InputMultiplier">Multiplier</Tag>
@@ -841,7 +847,7 @@
 	<Tag name="TipDisableFog">Disable fog when editing road from distance.</Tag>
 	<Tag name="long">long</Tag>
 	<Tag name="PipeWStepsMul">Pipe W steps mul.</Tag>
-	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
+	<Tag name="AllowSaveOrigTrk">Allow saving original tracks</Tag>
 	<Tag name="RplLoad">Load</Tag>
 	<Tag name="InpSet_AxisHalfInv">Axis Half Inversed</Tag>
 	<Tag name="ScaleTerHeight">Terrain Height</Tag>
@@ -856,6 +862,7 @@
 	<Tag name="InputStartAltMMB">alt-MMB - resetează rotația</Tag>
 	<Tag name="Column">Column</Tag>
 	<Tag name="TipRoadDist">How far from road will the model appear.</Tag>
+	<Tag name="ChampInfo2">Championships are usually long, have many tracks, but are easy to pass.</Tag>
 	<Tag name="EnterSave">Enter - salvare</Tag>
 	<Tag name="DistMult">Distance mul</Tag>
 	<Tag name="InputStartWidth">; &apos; - ajustează lățimea casetei de start (pentru lăţimea drumului)</Tag>
@@ -929,13 +936,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="DevKeys">Developer keys. Ctrl-F global, Alt-shift-1..6 load test tracks.</Tag>
-	<Tag name="ChallInfo2">Challenges are short but usually difficult to pass.</Tag>
-	<Tag name="AllowSaveOrigTrk">Allow saving original tracks</Tag>
-	<Tag name="TutorInfo">Tutorials have just a few tracks. They are easy to pass and show various track elements.</Tag>
-	<Tag name="InputObjectsPaste">shift-Ins - paste copied</Tag>
-	<Tag name="InputObjectsCopySel">ctrl-Ins - copy selection</Tag>
-	<Tag name="ChampInfo2">Championships are usually long, have many tracks, but are easy to pass.</Tag>
+	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
+	<Tag name="Close">Close</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
