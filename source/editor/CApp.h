@@ -138,6 +138,8 @@ public:
 
 	
 	///  terrain
+	PreviewTex texLayD[6],texLayN[6];
+	//Ogre::Image texNoise[4];
 	Ogre::Terrain* terrain;
 	Ogre::TerrainGlobalOptions* mTerrainGlobals;
 	Ogre::TerrainGroup* mTerrainGroup;  bool mPaging;

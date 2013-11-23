@@ -8,6 +8,7 @@
 #include "../../road/Road.h"  // sun rot
 #include "../shiny/Main/Factory.hpp"
 #include "TerrainMaterial.h"
+#include "../vdrift/pathmanager.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
 	#include "../../editor/CGui.h"
@@ -93,10 +94,10 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 		//Real p = (b >= 4) ? 3.f : ( (b >= 3) ? 2.f : 1.f );  p += 3;  //test
 		float fx = f*x, fy = f*y;	//  val,val1:  0 0 - [0]   1 0  - [1]   0 1 - [2]
 		const Real p = (b >= 4) ? 3.f : ( (b >= 3) ? 2.f : 1.f ), q = 1.f;
-		if (b >= 1)  val[0] =                      pow(0.5f + 0.5f *sin_(24.f* fx)*cos_(24.f* fy), p);
-		if (b >= 2)  val[1] = std::max(0.f, (float)pow(0.5f + 0.5f *cos_(18.f* fy)*sin_(18.f* fx), p) - val[0]);
-		if (b >= 3)  val[2] = std::max(0.f, (float)   (0.5f + 0.5f *cos_(22.f* fy)*sin_(21.f* fx)   ) - val[0]-val[1]);
-		if (b >= 4)  val[3] = std::max(0.f, (float)   (0.5f + 0.5f *cos_(19.f* fy)*sin_(20.f* fx)   ) - val[0]-val[1]-val[2]);
+		if (b >= 1)  val[0] =                      pow(0.5f + 0.5f *sin_(24.f* fx)*cos_(24.f* fy)/*+noise[0]*(rand()%1024/4024.f)*/, p);
+		if (b >= 2)  val[1] = std::max(0.f, (float)pow(0.5f + 0.5f *cos_(18.f* fy)*sin_(18.f* fx)/*+noise[1]*(rand()%1024/4024.f)*/, p) - val[0]);
+		if (b >= 3)  val[2] = std::max(0.f, (float)   (0.5f + 0.5f *cos_(22.f* fy)*sin_(21.f* fx)/*+noise[2]*(rand()%1024/4024.f)*/   ) - val[0]-val[1]);
+		if (b >= 4)  val[3] = std::max(0.f, (float)   (0.5f + 0.5f *cos_(19.f* fy)*sin_(20.f* fx)/*+noise[3]*(rand()%1024/4024.f)*/   ) - val[0]-val[1]-val[2]);
 		// todo: noise par is only working on [1] mul val[i] *= ...
 
 		//  ter angle and height ranges
@@ -219,6 +220,7 @@ void App::configureTerrainDefaults(Light* l)
 	//mTerrainGlobals->setUseRayBoxDistanceCalculation(true);
 	//mTerrainGlobals->getDefaultMaterialGenerator()->setDebugLevel(1);
 	if (l)  {
+	mTerrainGlobals->setLayerBlendMapSize(1024);
 	mTerrainGlobals->setLightMapDirection(l->getDerivedDirection());
 	mTerrainGlobals->setCompositeMapAmbient(mSceneMgr->getAmbientLight());
 	mTerrainGlobals->setCompositeMapDiffuse(l->getDiffuseColour());
@@ -248,8 +250,50 @@ void App::configureTerrainDefaults(Light* l)
 	{
 		TerLayer& l = sc->td.layersAll[sc->td.layers[i]];
 		di.layerList[i].worldSize = l.tiling;
+
+		#if 1  // new, combine rgb,a
+		String pt = PATHMANAGER::Data()+"/terrain",
+			pt2=pt+"2/", p;  pt+="/";
+		
+		//  diff
+		p = PATHMANAGER::FileExists(pt2+ l.texFile) ? pt2 : pt;
+		String tx_d, tx_s;		
+		if (!StringUtil::match(l.texFile, "*_d.*", false))
+		{	//  old no _d
+			tx_d = StringUtil::replaceAll(l.texFile,".","_d.");
+			tx_s = StringUtil::replaceAll(l.texFile,".","_s.");
+		}else
+		{	tx_d = l.texFile;  // new with _d
+			tx_s = StringUtil::replaceAll(l.texFile,"_d.","_s.");
+		}
+		//if (PATHMANAGER::FileExists(p+ tx_s))
+			texLayD[i].LoadTer(p+ tx_d, p+ tx_s, 0.f);
+		//else
+		//	texLayD[i].LoadTer(p+ tx_d, pt2+ "flat_s.png");
+
+		//  norm
+		bool fl = l.texNorm == "flat_n.png";
+		p = fl||PATHMANAGER::FileExists(pt2+ l.texNorm) ? pt2 : pt;
+		String n_n, n_h;
+		if (fl||StringUtil::match(l.texFile, "*_nh.*", false))
+		{	//  old _nh
+			n_n = fl ? "flat_n.png" : StringUtil::replaceAll(l.texNorm,"_nh.","_n.");
+			n_h = fl ? "flat_h.png" : StringUtil::replaceAll(l.texNorm,"_nh.","_h.");
+		}else
+		{	n_n = l.texNorm;  // new with _n
+			n_h = StringUtil::replaceAll(l.texNorm,"_n.","_h.");
+		}
+		//if (PATHMANAGER::FileExists(p+ n_h))
+			texLayN[i].LoadTer(p+ n_n, p+ n_h, 1.f);
+		//else
+		//	texLayN[i].LoadTer(p+ n_n, pt2+ "flat_h.png");
+		
+		di.layerList[i].textureNames.push_back("layD"+toStr(i));
+		di.layerList[i].textureNames.push_back("layN"+toStr(i));
+		#else  // old
 		di.layerList[i].textureNames.push_back(l.texFile);
 		di.layerList[i].textureNames.push_back(l.texNorm);
+		#endif
 	}
 }
 

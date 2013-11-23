@@ -10,14 +10,16 @@ class PreviewTex
 public:
 	PreviewTex();
 	//~PreviewTex();
-	//bool Destroy();
 
 	//  call first with size of texture (x,y) and name
+	void SetName(Ogre::String texName);
 	bool Create(int x, int y, Ogre::String texName);
-	void Clear();
+	void Clear(),Destroy();
 
 	//  load image from global path
 	bool Load(Ogre::String path, bool force=false);
+	//  for terrain textures
+	bool LoadTer(Ogre::String rgb, Ogre::String a, float defA = 0.f);
 
 protected:
 	int xSize, ySize;

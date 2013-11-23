@@ -464,12 +464,16 @@ void CGui::InitGui()
 	PATHMANAGER::DirList(data + "/terrain2", li);
 
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
-	if (!StringUtil::match(*i, "*.txt", false))
+	if (!StringUtil::match(*i, "*.txt", false) &&
+		!StringUtil::match(*i, "*_prv.*", false))
 	{
-		if (!StringUtil::match(*i, "*_prv.*", false))
-		if (StringUtil::match(*i, "*_nh.*", false))
+		String s = *i;
+		if (StringUtil::match(*i, "*_n.*", false) /*||
+			StringUtil::match(*i, "*_nh.*", false)*/)
 			cmbTexNorm->addItem(*i);
 		else
+		if (StringUtil::match(*i, "*_d.*", false))
+			//if (StringUtil::match(*i, "*_nh.*", false))
 			cmbTexDiff->addItem(*i);
 	}
 	
