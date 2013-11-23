@@ -205,7 +205,7 @@
 	<Tag name="AutoRear">Автоматическая задняя передача</Tag>
 	<Tag name="TerGenFreq">Частота увел.</Tag>
 	<Tag name="Road_OnTerrain">На ландшафте</Tag>
-	<Tag name="Ghost">Призр.</Tag>
+	<Tag name="ReflMode_single">Одно</Tag>
 	<Tag name="Near">Близко</Tag>
 	<Tag name="FogNormal">Нормальный</Tag>
 	<Tag name="SetCamTo">Камера у</Tag>
@@ -292,7 +292,7 @@
 	<Tag name="InputFluidsMove">LMB - движение RMB - высота</Tag>
 	<Tag name="TipNormalTex">Нормальные текстуры (высота в альфа).</Tag>
 	<Tag name="CountdownTime">Обратный отсчет (с)</Tag>
-	<Tag name="ReflMode_single">Одно</Tag>
+	<Tag name="Ghost">Призр.</Tag>
 	<Tag name="CamInfoStrings">Тип,Откл.,Накл.,Дист.,Высота,Скорость,Смещ.,Влево,Вправо,Середина,Колесо,сдвиг,Вращ.,сброс,движ.,H,Поз.</Tag>
 	<Tag name="rating">оценка</Tag>
 	<Tag name="HDR">HDR+разм.</Tag>
@@ -559,6 +559,7 @@
 	<Tag name="Brush_Freq">Част.</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - вращ.   alt-RMB - наклон</Tag>
 	<Tag name="InputRoadAngSnap">5,6   - захват углов</Tag>
+	<Tag name="Close">Закрыть</Tag>
 	<Tag name="TerGenOfsX">Смещ. X</Tag>
 	<Tag name="TipTexTiling">Длина текстуры покрытия плитками (меньше означает больше повторов).</Tag>
 	<Tag name="InputBrushShape">K,L  -  форма</Tag>
@@ -704,6 +705,7 @@
 	<Tag name="ChallInfo">В режиме вызов игра имеет большинство неизменяемых настроек. Нужно время или позиция. Попробуй получить бронзу, серебро или золото.</Tag>
 	<Tag name="Tools">Инстр.</Tag>
 	<Tag name="NetCreateGame">Создать игру</Tag>
+	<Tag name="TutorEndFinished">Вы закончили это обучение.</Tag>
 	<Tag name="TipGrassSwaySpd">Скор. качания травы.</Tag>
 	<Tag name="MaterialProperties">Свойства материала</Tag>
 	<Tag name="FrictionTread">Шаг трения</Tag>
@@ -936,8 +938,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред,след Опции вкладка (shift - подменю)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
-	<Tag name="Close">Close</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
