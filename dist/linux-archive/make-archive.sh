@@ -32,7 +32,7 @@ make -j $JOBS
 make install
 
 # Libs
-$THISDIR/copy-libs-linux.sh "$STAGEDIR/bin/stuntrally" "$STAGEDIR/lib/64"
+$THISDIR/copy-libs-linux.sh "$STAGEDIR/bin/stuntrally" "$LIBPATH"
 
 echo "Doing some file shuffling..."
 
