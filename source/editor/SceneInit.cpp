@@ -43,6 +43,19 @@ void App::createScene()  // once, init
 		texLayD[i].SetName("layD"+si);
 		texLayN[i].SetName("layN"+si);
 	}
+	///  ter noise tex
+	{
+		QTimer ti;  ti.update();  /// time
+		//String path = PATHMANAGER::Data()+"/terrain2/noise";
+		for (int i=0; i < 4; ++i)
+		{	String si = toStr(i+1);
+			texNoise[i].load("noise"+si+".png",ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+			//texNoise[i].Load(path+si+".png");
+		}
+		ti.update();  /// time
+		float dt = ti.dt * 1000.f;
+		LogO(String("::: Time load noise: ") + fToStr(dt,0,3) + " ms");
+	}
 
 	//  camera
 	asp = float(mWindow->getWidth())/float(mWindow->getHeight());

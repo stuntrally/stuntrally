@@ -87,22 +87,24 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 		xB = xb / fw * ft;  yB = yb / fw * ft;
 		xE = xe / fw * ft;  yE = ye / fw * ft;
 	}
+	//texNoise->getData()
 	for (y = yB; y < yE; ++y)  {  int aa = y*t + xB, bb = (t-1-y)*t + xB;
 	for (x = xB; x < xE; ++x,++aa,++bb)
 	{
-		//float fx = f*x*0.2, fy = f*y*0.4;	//  val,val1:  0 0 - [0]   1 0  - [1]   0 1 - [2]
-		//Real p = (b >= 4) ? 3.f : ( (b >= 3) ? 2.f : 1.f );  p += 3;  //test
 		float fx = f*x, fy = f*y;	//  val,val1:  0 0 - [0]   1 0  - [1]   0 1 - [2]
-		const Real p = (b >= 4) ? 3.f : ( (b >= 3) ? 2.f : 1.f ), q = 1.f;
-		if (b >= 1)  val[0] =                      pow(0.5f + 0.5f *sin_(24.f* fx)*cos_(24.f* fy)/*+noise[0]*(rand()%1024/4024.f)*/, p);
-		if (b >= 2)  val[1] = std::max(0.f, (float)pow(0.5f + 0.5f *cos_(18.f* fy)*sin_(18.f* fx)/*+noise[1]*(rand()%1024/4024.f)*/, p) - val[0]);
-		if (b >= 3)  val[2] = std::max(0.f, (float)   (0.5f + 0.5f *cos_(22.f* fy)*sin_(21.f* fx)/*+noise[2]*(rand()%1024/4024.f)*/   ) - val[0]-val[1]);
-		if (b >= 4)  val[3] = std::max(0.f, (float)   (0.5f + 0.5f *cos_(19.f* fy)*sin_(20.f* fx)/*+noise[3]*(rand()%1024/4024.f)*/   ) - val[0]-val[1]-val[2]);
-		// todo: noise par is only working on [1] mul val[i] *= ...
+		//const Real p = (b >= 4) ? 3.f : ( (b >= 3) ? 2.f : 1.f ), q = 1.f;
+		int x1 = ( x*1     )%1024, y1 = ( y*1     )%1024;
+		int x2 = (-x*1+1524)%1024, y2 = ( y*1+600 )%1024;
+		int x3 = ( x*1+150 )%1024, y3 = ( y*1+1124)%1024;
+		int x4 = ( x*1+300 )%1024, y4 = (-y*1+1224)%1024;
+		if (b >= 1)  val[0] =                      pow(texNoise[3].getColourAt(x1,y1,0).r, 0.4f);
+		if (b >= 2)  val[1] = std::max(0.f, (float)pow(texNoise[1].getColourAt(x2,y2,0).r, 0.4f) - val[0]);
+		if (b >= 3)  val[2] = std::max(0.f, (float)   (texNoise[2].getColourAt(x3,y3,0).r   ) - val[0]-val[1]);
+		if (b >= 4)  val[3] = std::max(0.f, (float)   (texNoise[0].getColourAt(x4,y4,0).r   ) - val[0]-val[1]-val[2]);
 
 		//  ter angle and height ranges
 		#if 1
-		int tx = (float)(x)/ft * w, ty = (float)(y)/ft * w, tt = ty * w + tx;
+		//int tx = (float)(x)/ft * w, ty = (float)(y)/ft * w, tt = ty * w + tx;
 		float a = sc->td.hfAngle[tt], h = fHmap[tt];  // sc->td.hfHeight[tt];
 		for (i=0; i < b; ++i)  if (!bNOnly[i]) {  const int i1 = i+1;
 			val[i] = m01( val[i1]*noise[i] + linRange(a,aMin[i1],aMax[i1],aSm[i1]) * linRange(h,hMin[i1],hMax[i1],hSm[i1]) );  }
