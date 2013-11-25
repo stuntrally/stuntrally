@@ -205,7 +205,7 @@
 	<Tag name="AutoRear">Marche aarière automatique</Tag>
 	<Tag name="TerGenFreq">Fréquence, Zoom</Tag>
 	<Tag name="Road_OnTerrain">Sur le terrain</Tag>
-	<Tag name="ReflMode_single">Unique</Tag>
+	<Tag name="Ghost">Fantôme</Tag>
 	<Tag name="Near">Proche</Tag>
 	<Tag name="FogNormal">Normale</Tag>
 	<Tag name="SetCamTo">Caméra définie :</Tag>
@@ -292,7 +292,7 @@
 	<Tag name="InputFluidsMove">Clic gauche - se déplacer Clic droit - hauteur</Tag>
 	<Tag name="TipNormalTex">Texture de normale (hauteur en alpha).</Tag>
 	<Tag name="CountdownTime">Compte à rebours avant une course</Tag>
-	<Tag name="Ghost">Fantôme</Tag>
+	<Tag name="ReflMode_single">Unique</Tag>
 	<Tag name="CamInfoStrings">Type,Angle vertical,Angle horizontal,Distance,Hauteur,Vitesse,Décalage,GAUCHE,DROITE,Milieu,Molette,maj.,Tourner,réinit.,déplacer,H,Pos</Tag>
 	<Tag name="rating">avis</Tag>
 	<Tag name="HDR">HDR + ébouissement</Tag>
@@ -559,7 +559,6 @@
 	<Tag name="Brush_Freq">Fréq.</Tag>
 	<Tag name="InputStartAltLMB">Alt-Clic gauche - tourner Alt-Clic droit - tourner verticalement</Tag>
 	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
-	<Tag name="Close">Close</Tag>
 	<Tag name="TerGenOfsX">Décalage X</Tag>
 	<Tag name="TipTexTiling">Répétitions de la texture (moins = plus de répétitions).</Tag>
 	<Tag name="InputBrushShape">K,L - forme</Tag>
@@ -705,7 +704,6 @@
 	<Tag name="ChallInfo">En mode défi le jeu est déjà paramétré, les paramètres ne peuvent être changés. Un temps ou une position sont nécessaires pour être admis. Si vous êtes admis vous recevez une médaille de bronze, d'argent ou d'or.</Tag>
 	<Tag name="Tools">Outils</Tag>
 	<Tag name="NetCreateGame">Créer une partie</Tag>
-	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
 	<Tag name="TipGrassSwaySpd">Vitesse du \</Tag>
 	<Tag name="MaterialProperties">Propriétés du matériau</Tag>
 	<Tag name="FrictionTread">Friction</Tag>
@@ -938,6 +936,9 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet d'Options précédent/suivant (Maj. sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
+	<Tag name="LANG_IT">Italiano</Tag>
+	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
+	<Tag name="Close">Close</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
