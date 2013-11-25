@@ -85,13 +85,13 @@ list(APPEND LIBS ${Boost_LIBRARIES})
 # We can significantly reduce deps if only building master server
 if(BUILD_GAME OR BUILD_EDITOR)
 	find_package(OGRE REQUIRED QUIET)
-        include_directories(${OGRE_INCLUDE_DIRS} ${OGRE_Terrain_INCLUDE_DIRS} ${OGRE_Paging_INCLUDE_DIRS} ${OGRE_RTShaderSystem_INCLUDE_DIRS})
+        include_directories(${OGRE_INCLUDE_DIRS} ${OGRE_Terrain_INCLUDE_DIRS} ${OGRE_Paging_INCLUDE_DIRS})
         # Overlay moved to separate component in 1.9
         if (OGRE_VERSION_MAJOR GREATER 1 OR OGRE_VERSION_MINOR GREATER 8)
             include_directories(${OGRE_Overlay_INCLUDE_DIRS})
         endif()
         link_directories(${OGRE_LIBRARY_DIRS})
-        list(APPEND LIBS ${OGRE_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES} ${OGRE_RTShaderSystem_LIBRARIES})
+        list(APPEND LIBS ${OGRE_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES})
         # Overlay moved to separate component in 1.9
         if (OGRE_VERSION_MAJOR GREATER 1 OR OGRE_VERSION_MINOR GREATER 8)
             list(APPEND LIBS ${OGRE_Overlay_LIBRARIES})
