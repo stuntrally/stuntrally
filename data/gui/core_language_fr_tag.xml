@@ -497,6 +497,7 @@
 	<Tag name="InputFluidsDel">Supr. - supprimer la sélection</Tag>
 	<Tag name="Leave">Quitter</Tag>
 	<Tag name="InputRoadMove">- déplacer le point</Tag>
+	<Tag name="CarSpeed">Vitesse</Tag>
 	<Tag name="GrassSway">Vent</Tag>
 	<Tag name="NetGameProtocolError">Versions du protocole incompatibles entre les pairs.</Tag>
 	<Tag name="Right">Droite</Tag>
@@ -874,7 +875,7 @@
 	<Tag name="GrassSize">Taille</Tag>
 	<Tag name="Left">Gauche</Tag>
 	<Tag name="InputBrushOctaves">, . - Octaves de bruit (détail)</Tag>
-	<Tag name="CarSpeed">Vitesse</Tag>
+	<Tag name="LANG_IT">Italiano</Tag>
 	<Tag name="TerrainBrush">Brosse du terrain</Tag>
 	<Tag name="InputStartHeight">[,]  -  adjust start box height (bigger for pipes)</Tag>
 	<Tag name="InputStartDir">Espace - changer la direction de la route (+ ou -)</Tag>
@@ -948,5 +949,6 @@
 	<Tag name="LANG_FR">Français</Tag>
 	<Tag name="LANG_RU">Русский</Tag>
 	<Tag name="LANG_PT">Português</Tag>
+	<Tag name="LANG_IT">Italiano</Tag>
 
 </MyGUI>

@@ -9,28 +9,10 @@ namespace SFO {  class InputWrapper;  class SDLCursorManager;  }
 namespace ICS {  class InputControlSystem;  class DetectingBindingListener;  }
 
 namespace MyGUI{  class OgreD3D11Platform;  class OgrePlatform;  }
-namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
-	namespace RTShader {  class ShaderGenerator;  }  }
+namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow; }
 namespace sh   {  class Factory;  }
 
 class MasterClient;  class P2PGameClient;
-
-
-//  mtr
-class MaterialMgrListener : public Ogre::MaterialManager::Listener
-{
-public:
-	MaterialMgrListener(Ogre::RTShader::ShaderGenerator* pShaderGenerator)
-		: mShaderGenerator(pShaderGenerator)
-	{  }
-
-	virtual Ogre::Technique* handleSchemeNotFound(
-		unsigned short schemeIndex, const Ogre::String& schemeName,
-		Ogre::Material* originalMaterial, unsigned short lodIndex,
-		const Ogre::Renderable* rend);
-protected:	
-	Ogre::RTShader::ShaderGenerator* mShaderGenerator;
-};
 
 
 //  gui
@@ -80,7 +62,6 @@ public:
 	bool AnyEffectEnabled();
 	bool NeedMRTBuffer();
 	float motionBlurIntensity;
-	void CreateRTfixed();
 
 	class SETTINGS* pSet;
 
@@ -129,8 +110,6 @@ public:
 	Ogre::Root* mRoot;  Ogre::SceneManager* mSceneMgr;
 	Ogre::RenderWindow* mWindow;
 	SDL_Window* mSDLWindow;
-	Ogre::RTShader::ShaderGenerator* mShaderGenerator;
-	MaterialMgrListener* mMaterialMgrListener;  // Shader generator material manager listener.	
 
 	virtual void windowResized (int x, int y);
 

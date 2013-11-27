@@ -254,6 +254,7 @@ void CGuiCom::GuiInitLang()
 	languages["fr"] = TR("#{LANG_FR}");  languages["pl"] = TR("#{LANG_PL}");
 	languages["ru"] = TR("#{LANG_RU}");  languages["fi"] = TR("#{LANG_FI}");
 	languages["pt"] = TR("#{LANG_PT}");  languages["ro"] = TR("#{LANG_RO}");
+	languages["it"] = TR("#{LANG_IT}");
 
 	ComboBoxPtr combo = fCmb("Lang");
 	if (!combo)  return;
