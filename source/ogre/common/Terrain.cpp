@@ -97,22 +97,26 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 		int x2 = (-x*1+1524)%1024, y2 = ( y*1+600 )%1024;
 		int x3 = ( x*1+150 )%1024, y3 = ( y*1+1124)%1024;
 		int x4 = ( x*1+300 )%1024, y4 = (-y*1+1224)%1024;
-		if (b >= 1)  val[0] =                      pow(texNoise[3].getColourAt(x1,y1,0).r, 0.4f);
-		if (b >= 2)  val[1] = std::max(0.f, (float)pow(texNoise[1].getColourAt(x2,y2,0).r, 0.4f) - val[0]);
-		if (b >= 3)  val[2] = std::max(0.f, (float)   (texNoise[2].getColourAt(x3,y3,0).r   ) - val[0]-val[1]);
-		if (b >= 4)  val[3] = std::max(0.f, (float)   (texNoise[0].getColourAt(x4,y4,0).r   ) - val[0]-val[1]-val[2]);
+		if (b >= 1)  val[0] = 0.f*(texNoise[3].getColourAt(x1,y1,0).r )*noise[0];
+		if (b >= 2)  val[1] = 0.f*(texNoise[0].getColourAt(x2,y2,0).r )*noise[1];
+		if (b >= 3)  val[2] = 0.f*(texNoise[1].getColourAt(x3,y3,0).r )*noise[2];
+		if (b >= 4)  val[3] = 0.f*(texNoise[2].getColourAt(x4,y4,0).r )*noise[3];
 
 		//  ter angle and height ranges
 		#if 1
-		//int tx = (float)(x)/ft * w, ty = (float)(y)/ft * w, tt = ty * w + tx;
+		int tx = (float)(x)/ft * w, ty = (float)(y)/ft * w, tt = ty * w + tx;
 		float a = sc->td.hfAngle[tt], h = fHmap[tt];  // sc->td.hfHeight[tt];
-		for (i=0; i < b; ++i)  if (!bNOnly[i]) {  const int i1 = i+1;
-			val[i] = m01( val[i1]*noise[i] + linRange(a,aMin[i1],aMax[i1],aSm[i1]) * linRange(h,hMin[i1],hMax[i1],hSm[i1]) );  }
+		for (i=0; i < b; ++i)  if (!bNOnly[i]) {  const int i1 = i;//+1;
+			val[i] += /*m01*/( /*val[i1]*noise[i] + */linRange(a,aMin[i1],aMax[i1],aSm[i1]) * linRange(h,hMin[i1],hMax[i1],hSm[i1]) );  }
 		#endif
+		float norm = 0.f;
+		for (i=0; i < b; ++i)
+			norm += val[i];
+		//norm /= b;
 
 		char mtr = 1;
 		for (i=0; i < b; ++i)
-		{	*(pB[i]+bb) = val[i];  if (val[i] > 0.5f)  mtr = i+2;  }
+		{	*(pB[i]+bb) = val[i] / norm;  if (val[i]*norm > 0.5f)  mtr = i+2;  }
 
 		#ifndef SR_EDITOR
 		blendMtr[aa] = mtr;
@@ -123,6 +127,7 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 	{
 		if (full)	bMap[i]->dirty();
 		else		bMap[i]->dirtyRect(Rect(xB,t-yE,xE,t-yB));  //t-1? max(0,
+		//bMap[i]->blit
 		bMap[i]->update();
 	}
 	

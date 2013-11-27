@@ -53,6 +53,7 @@ void App::Rnd2TexSetup()
 				  ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D,
 				  dim[i], dim[i], 0, PF_R8G8B8A8, TU_RENDERTARGET);
 				  
+			//texture->copyToTexture
 			r.rndCam = mSceneMgr->createCamera(sCam);  // up
 			r.rndCam->setPosition(Vector3(0,1000,0/*-300..*/));  r.rndCam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
 			r.rndCam->setNearClipDistance(0.5);		r.rndCam->setFarClipDistance(50000);

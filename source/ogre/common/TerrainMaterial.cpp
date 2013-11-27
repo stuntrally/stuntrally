@@ -106,7 +106,7 @@ void TerrainMaterial::Profile::createMaterial(const Ogre::String& matName, const
 		sh::MaterialInstanceTextureUnit* diffuseTex = p->createTextureUnit("diffuseMap" + Ogre::StringConverter::toString(i));
 		diffuseTex->setProperty("direct_texture", sh::makeProperty<sh::StringValue>(new sh::StringValue(terrain->getLayerTextureName(i, 0))));
 		p->mShaderProperties.setProperty("blendmap_component_" + Ogre::StringConverter::toString(i),
-			sh::makeProperty<sh::StringValue>(new sh::StringValue(Ogre::StringConverter::toString(int((i-1) / 4)) + "." + getComponent(int((i-1) % 4)))));
+			sh::makeProperty<sh::StringValue>(new sh::StringValue(Ogre::StringConverter::toString(int((i/*-1*/) / 4)) + "." + getComponent(int((i/*-1*/) % 4)))));
 	}
 
 	// layer normalheight

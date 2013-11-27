@@ -322,6 +322,7 @@
 #endif
         
         float3 albedo = float3(0,0,0);
+        float3 bb = float3(0,0,0);
         float4 diffuseSpec;
         float uvMul;
         
@@ -401,13 +402,28 @@
 ///---------------------------------------------------------------------------------------------
 
 
-        // albedo
+        //// albedo
+        //#if @shIterator == 0
+        //// first layer doesn't need a blend map
+        //albedo = diffuseSpec.rgb;
+        //#else
+        //albedo = shLerp(albedo, diffuseSpec.rgb, blendValues@shPropertyString(blendmap_component_@shIterator));
+        //#endif
+
         #if @shIterator == 0
-        // first layer doesn't need a blend map
-        albedo = diffuseSpec.rgb;
-        #else
-        albedo = shLerp(albedo, diffuseSpec.rgb, blendValues@shPropertyString(blendmap_component_@shIterator));
+        bb = float3(1,0,0);
         #endif
+        #if @shIterator == 1
+        bb = float3(0,1,0);
+        #endif
+        #if @shIterator == 2
+        bb = float3(0,0,1);
+        #endif
+        #if @shIterator == 3  // only 4 are possible
+        bb = float3(0.3,0.3,0.3);
+        #endif
+
+        albedo += diffuseSpec.rgb * blendValues@shPropertyString(blendmap_component_@shIterator);
 
 
 	#if NORMAL_MAPPING
@@ -440,9 +456,9 @@
     @shEndForeach
 
         
-        shOutputColour(0) = float4(1,1,1,1);
+        shOutputColour(0).a = 1.f;
        
-        shOutputColour(0).rgb *= albedo;
+        shOutputColour(0).rgb = albedo;
         
         
         
@@ -496,10 +512,6 @@
         float3 viewNormal = normalize(shMatrixMult(wvMat, float4(normal, 0)).xyz);
         shOutputColour(1) = float4(length(viewPosition) / far, normalize(viewNormal));
         shOutputColour(2) = float4(depth / far, 0, depth / objSpacePosition.w, 0);
-#endif
-
-#if COMPOSITE_MAP
-        shOutputColour(0).xyz = float3(1,1,1);
 #endif
 
 
