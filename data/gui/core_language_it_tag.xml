@@ -205,7 +205,7 @@
 	<Tag name="AutoRear">Auto Rear gear</Tag>
 	<Tag name="TerGenFreq">Freq. zoom</Tag>
 	<Tag name="Road_OnTerrain">Su terreno</Tag>
-	<Tag name="Ghost">Fantasma</Tag>
+	<Tag name="ReflMode_single">Singolo</Tag>
 	<Tag name="Near">Vicino</Tag>
 	<Tag name="FogNormal">Normal</Tag>
 	<Tag name="SetCamTo">Set camera to</Tag>
@@ -292,7 +292,7 @@
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
 	<Tag name="TipNormalTex">Normal texture (Height in alpha).</Tag>
 	<Tag name="CountdownTime">Race countdown time</Tag>
-	<Tag name="ReflMode_single">Singolo</Tag>
+	<Tag name="Ghost">Fantasma</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
 	<Tag name="rating">valutazione</Tag>
 	<Tag name="HDR">HDR+Bloom</Tag>
@@ -497,6 +497,7 @@
 	<Tag name="InputFluidsDel">Del - delete current</Tag>
 	<Tag name="Leave">Lascia (esci)</Tag>
 	<Tag name="InputRoadMove">- move point</Tag>
+	<Tag name="CarSpeed">Velocità</Tag>
 	<Tag name="GrassSway">Ondeggiamento</Tag>
 	<Tag name="NetGameProtocolError">Incompatible protocol versions between peers.</Tag>
 	<Tag name="Right">Destra</Tag>
@@ -559,6 +560,7 @@
 	<Tag name="Brush_Freq">Freq</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotate   alt-RMB - pitch</Tag>
 	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
+	<Tag name="Close">Close</Tag>
 	<Tag name="TerGenOfsX">Offset X</Tag>
 	<Tag name="TipTexTiling">Texture tiling length (less means more repeats).</Tag>
 	<Tag name="InputBrushShape">K,L  -  Shape</Tag>
@@ -704,6 +706,7 @@
 	<Tag name="ChallInfo">In challenge mode the game has setup, most settings can't be changed. Time or position is needed. If you pass you receive bronze, silver or gold prize.</Tag>
 	<Tag name="Tools">Tools</Tag>
 	<Tag name="NetCreateGame">Crea gioco</Tag>
+	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
 	<Tag name="MaterialProperties">Material Properties</Tag>
 	<Tag name="FrictionTread">FrictionTread</Tag>
@@ -872,7 +875,7 @@
 	<Tag name="GrassSize">Grandezza</Tag>
 	<Tag name="Left">Sinistra</Tag>
 	<Tag name="InputBrushOctaves">, .   -  noise Octaves (detail)</Tag>
-	<Tag name="CarSpeed">Velocità</Tag>
+	<Tag name="LANG_IT">Italiano</Tag>
 	<Tag name="TerrainBrush">Terrain brush</Tag>
 	<Tag name="InputStartHeight">[,]  -  adjust start box height (bigger for pipes)</Tag>
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
@@ -936,9 +939,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Estrema</Tag>
 	<Tag name="RplAll">Tutto</Tag>
-	<Tag name="LANG_IT">Italiano</Tag>
-	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
-	<Tag name="Close">Close</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
@@ -949,5 +949,6 @@
 	<Tag name="LANG_FR">Français</Tag>
 	<Tag name="LANG_RU">Русский</Tag>
 	<Tag name="LANG_PT">Português</Tag>
+	<Tag name="LANG_IT">Italiano</Tag>
 
 </MyGUI>

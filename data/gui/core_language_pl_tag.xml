@@ -205,7 +205,7 @@
 	<Tag name="AutoRear">Automatyczny wsteczny</Tag>
 	<Tag name="TerGenFreq">Częstotliwość</Tag>
 	<Tag name="Road_OnTerrain">Na Terenie</Tag>
-	<Tag name="Ghost">Duch</Tag>
+	<Tag name="ReflMode_single">Pojedyncze</Tag>
 	<Tag name="Near">Blisko</Tag>
 	<Tag name="FogNormal">Normalna</Tag>
 	<Tag name="SetCamTo">Ustaw kamerę na</Tag>
@@ -292,7 +292,7 @@
 	<Tag name="InputFluidsMove">LMB - przesuń RMB - wysokość</Tag>
 	<Tag name="TipNormalTex">Tekstura normalna (wysokość w alpha)</Tag>
 	<Tag name="CountdownTime">Czas odliczania startu</Tag>
-	<Tag name="ReflMode_single">Pojedyncze</Tag>
+	<Tag name="Ghost">Duch</Tag>
 	<Tag name="CamInfoStrings">Typ,Kąt,Nachyl,Odl,Wysok,Szybk,Przesun,LEWY,PRAWY,Środkowy,Kółko,shift,Obróć,reset,ruch,Wys,Pozycja</Tag>
 	<Tag name="rating">ocena</Tag>
 	<Tag name="HDR">HDR+Blask</Tag>
@@ -497,6 +497,7 @@
 	<Tag name="InputFluidsDel">Del - zmaż wybraną</Tag>
 	<Tag name="Leave">Opuść (wyjdź)</Tag>
 	<Tag name="InputRoadMove">- przesuń punkt</Tag>
+	<Tag name="CarSpeed">Szybkość</Tag>
 	<Tag name="GrassSway">Kołysanie</Tag>
 	<Tag name="NetGameProtocolError">Niekompatybilne wersje protokołu między graczami.</Tag>
 	<Tag name="Right">Prawo</Tag>
@@ -559,6 +560,7 @@
 	<Tag name="Brush_Freq">Częst</Tag>
 	<Tag name="InputStartAltLMB">alt-LPM - obróć  alt-PPM - połóż</Tag>
 	<Tag name="InputRoadAngSnap">5,6 - skok kąta</Tag>
+	<Tag name="Close">Close</Tag>
 	<Tag name="TerGenOfsX">Przesunięcie X</Tag>
 	<Tag name="TipTexTiling">Odległość powtarzania tekstury (mniejsza znaczy więcej powtórzeń).</Tag>
 	<Tag name="InputBrushShape">K,L - Kształt</Tag>
@@ -704,6 +706,7 @@
 	<Tag name="ChallInfo">W trybie wyzwań gra ma ustawienia, większość nie może być zmieniona. Czas lub pozycja jest wymagana. Jeśli wygrasz otrzymujesz nagrodę: bronz, srebro lub złoto.</Tag>
 	<Tag name="Tools">Narzędzia</Tag>
 	<Tag name="NetCreateGame">Stwórz grę</Tag>
+	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
 	<Tag name="TipGrassSwaySpd">Efekt kołysania trawy, szybkość.</Tag>
 	<Tag name="MaterialProperties">Właściwości materiału</Tag>
 	<Tag name="FrictionTread">Tarcie</Tag>
@@ -872,7 +875,7 @@
 	<Tag name="GrassSize">Rozmiar</Tag>
 	<Tag name="Left">Lewo</Tag>
 	<Tag name="InputBrushOctaves">, .  -  Oktawy szumu (detal)</Tag>
-	<Tag name="CarSpeed">Szybkość</Tag>
+	<Tag name="LANG_IT">Italiano</Tag>
 	<Tag name="TerrainBrush">Pędzel terenu</Tag>
 	<Tag name="InputStartHeight">[,] - dostosuj obszar startu (większy dla rur)</Tag>
 	<Tag name="InputStartDir">Space - zmień kierunek drogi (+ lub -)</Tag>
@@ -936,9 +939,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="LANG_IT">Italiano</Tag>
-	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
-	<Tag name="Close">Close</Tag>
 	<Tag name="GameVersion">2.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
@@ -949,5 +949,6 @@
 	<Tag name="LANG_FR">Français</Tag>
 	<Tag name="LANG_RU">Русский</Tag>
 	<Tag name="LANG_PT">Português</Tag>
+	<Tag name="LANG_IT">Italiano</Tag>
 
 </MyGUI>
