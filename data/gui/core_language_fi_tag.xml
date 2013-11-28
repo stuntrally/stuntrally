@@ -497,7 +497,6 @@
 	<Tag name="InputFluidsDel">Del - poista nykyinen</Tag>
 	<Tag name="Leave">Poistu</Tag>
 	<Tag name="InputRoadMove">- liikuta pistettä</Tag>
-	<Tag name="CarSpeed">Nopeus</Tag>
 	<Tag name="GrassSway">Huojunta</Tag>
 	<Tag name="NetGameProtocolError">Vertaisten protokollaversiot ovat epäyhteensopivia.</Tag>
 	<Tag name="Right">Oikea</Tag>
@@ -875,7 +874,7 @@
 	<Tag name="GrassSize">Koko</Tag>
 	<Tag name="Left">Vasen</Tag>
 	<Tag name="InputBrushOctaves">, .   -  noise Octaves (detail)</Tag>
-	<Tag name="LANG_IT">Italiano</Tag>
+	<Tag name="CarSpeed">Nopeus</Tag>
 	<Tag name="TerrainBrush">Maaston sivellin</Tag>
 	<Tag name="InputStartHeight">[,]  -  adjust start box height (bigger for pipes)</Tag>
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
@@ -939,7 +938,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="GameVersion">2.2</Tag>
+	<Tag name="GameVersion">2.2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>

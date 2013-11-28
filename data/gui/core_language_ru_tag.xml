@@ -497,7 +497,6 @@
 	<Tag name="InputFluidsDel">Del - удалить</Tag>
 	<Tag name="Leave">Выход</Tag>
 	<Tag name="InputRoadMove">- двиг. точку</Tag>
-	<Tag name="CarSpeed">Скорость</Tag>
 	<Tag name="GrassSway">Качание</Tag>
 	<Tag name="NetGameProtocolError">Несовместимая версия протокола между ровнями.</Tag>
 	<Tag name="Right">Вправо</Tag>
@@ -875,7 +874,7 @@
 	<Tag name="GrassSize">Размер</Tag>
 	<Tag name="Left">Налево</Tag>
 	<Tag name="InputBrushOctaves">, .   -  шум наборов</Tag>
-	<Tag name="LANG_IT">Italiano</Tag>
+	<Tag name="CarSpeed">Скорость</Tag>
 	<Tag name="TerrainBrush">Кисть ландшафта</Tag>
 	<Tag name="InputStartHeight">[,]  -  регул. высоты старта (больше для труб)</Tag>
 	<Tag name="InputStartDir">Space - изм. напр. дороги (+ или -)</Tag>
@@ -939,7 +938,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред,след Опции вкладка (shift - подменю)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="GameVersion">2.2</Tag>
+	<Tag name="GameVersion">2.2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>

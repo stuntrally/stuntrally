@@ -497,7 +497,6 @@
 	<Tag name="InputFluidsDel">Del - delete current</Tag>
 	<Tag name="Leave">Leave (exit)</Tag>
 	<Tag name="InputRoadMove">- move point</Tag>
-	<Tag name="CarSpeed">Speed</Tag>
 	<Tag name="GrassSway">Sway</Tag>
 	<Tag name="NetGameProtocolError">Incompatible protocol versions between peers.</Tag>
 	<Tag name="Right">Right</Tag>
@@ -875,7 +874,7 @@
 	<Tag name="GrassSize">Size</Tag>
 	<Tag name="Left">Left</Tag>
 	<Tag name="InputBrushOctaves">, .   -  noise Octaves (detail)</Tag>
-	<Tag name="LANG_IT">Italiano</Tag>
+	<Tag name="CarSpeed">Speed</Tag>
 	<Tag name="TerrainBrush">Terrain brush</Tag>
 	<Tag name="InputStartHeight">[,]  -  adjust start box height (bigger for pipes)</Tag>
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
@@ -939,7 +938,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="GameVersion">2.2</Tag>
+	<Tag name="GameVersion">2.2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>

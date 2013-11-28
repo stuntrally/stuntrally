@@ -497,7 +497,6 @@
 	<Tag name="InputFluidsDel">Del - zmaż wybraną</Tag>
 	<Tag name="Leave">Opuść (wyjdź)</Tag>
 	<Tag name="InputRoadMove">- przesuń punkt</Tag>
-	<Tag name="CarSpeed">Szybkość</Tag>
 	<Tag name="GrassSway">Kołysanie</Tag>
 	<Tag name="NetGameProtocolError">Niekompatybilne wersje protokołu między graczami.</Tag>
 	<Tag name="Right">Prawo</Tag>
@@ -875,7 +874,7 @@
 	<Tag name="GrassSize">Rozmiar</Tag>
 	<Tag name="Left">Lewo</Tag>
 	<Tag name="InputBrushOctaves">, .  -  Oktawy szumu (detal)</Tag>
-	<Tag name="LANG_IT">Italiano</Tag>
+	<Tag name="CarSpeed">Szybkość</Tag>
 	<Tag name="TerrainBrush">Pędzel terenu</Tag>
 	<Tag name="InputStartHeight">[,] - dostosuj obszar startu (większy dla rur)</Tag>
 	<Tag name="InputStartDir">Space - zmień kierunek drogi (+ lub -)</Tag>
@@ -939,7 +938,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="GameVersion">2.2</Tag>
+	<Tag name="GameVersion">2.2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>
