@@ -211,8 +211,6 @@ void CGuiCom::FillTrackLists()
 	for (strlist::iterator i = liTracks.begin(); i != liTracks.end(); ++i)
 	{
 		TrkL trl;  trl.name = *i;  //trl.pA = this;
-		trl.test = StringUtil::startsWith(trl.name,"test");
-
 		int id = app->data->tracks->trkmap[*i];
 		const TrackInfo* pTrk = id==0 ? 0 : &app->data->tracks->trks[id-1];
 		trl.ti = pTrk;  // 0 if not in data->tracks

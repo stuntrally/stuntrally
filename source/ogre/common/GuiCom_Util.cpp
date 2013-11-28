@@ -54,7 +54,7 @@ CGuiCom::CGuiCom(App* app1)
 int TrkL::idSort = 0;
 
 TrkL::TrkL() :
-	ti(0),test(false),vdrift(false)
+	ti(0)
 {	}
 
 
