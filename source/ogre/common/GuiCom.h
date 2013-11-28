@@ -18,8 +18,10 @@ class App;  class SETTINGS;
 struct TrkL
 {
 	std::string name;
-	const class TrackInfo* ti;
-	int test;  //Test*
+	const class TrackInfo* ti;  // 0 means user trk
+	bool test, vdrift;
+	static int idSort;
+	TrkL();
 };
 
 

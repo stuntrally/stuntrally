@@ -38,32 +38,45 @@ using namespace std;
 
 //  sort	 . . . . . . . . . . . . . . . . . . . . . . 
 //-----------------------------------------------------------------------------------------------------------
-/*  common sort code,  no info only by name  */
-#define sArg  const TrkL& t2, const TrkL& t1
-#define sortDef  bool t = false/*t1.test < t2.test/**/;  if (!t1.ti || !t2.ti)  return t1.name > t2.name || t;
-const int allSortFunc = 15;
+bool TrkSort(const TrkL& t1, const TrkL& t2)
+{
+	if (t1.ti && t2.ti)  // both are in tracks.ini
+	{
+		if (t1.ti->testC  != t2.ti->testC)   return t1.ti->testC;  // TestC first
+		if (t1.ti->test   != t2.ti->test)    return t1.ti->test;   // Test after
+		if (t1.ti->vdrift != t2.ti->vdrift)  return t1.ti->vdrift; // vdrift next
+		
+		if (TrkL::idSort > 1)
+		{		 if (TrkL::idSort==2) {  if (t1.ti->scenery != t2.ti->scenery)  return t1.ti->scenery < t2.ti->scenery;  }
+			else if (TrkL::idSort==3) {  if (t1.ti->crtver  != t2.ti->crtver)   return t1.ti->crtver  < t2.ti->crtver;   }
+			else if (TrkL::idSort==4) {  if (t1.ti->diff    != t2.ti->diff)     return t1.ti->diff    < t2.ti->diff;     }
+			else if (TrkL::idSort==5) {  if (t1.ti->rating  != t2.ti->rating)   return t1.ti->rating  < t2.ti->rating;   }
+			else if (TrkL::idSort==6) {  if (t1.ti->objects != t2.ti->objects)  return t1.ti->objects < t2.ti->objects;  }
+			else if (TrkL::idSort==7) {  if (t1.ti->fluids  != t2.ti->fluids)   return t1.ti->fluids  < t2.ti->fluids;   }
+			else if (TrkL::idSort==8) {  if (t1.ti->bumps   != t2.ti->bumps)    return t1.ti->bumps   < t2.ti->bumps;    }
+			else if (TrkL::idSort==9) {  if (t1.ti->jumps   != t2.ti->jumps)    return t1.ti->jumps   < t2.ti->jumps;    }
+			else if (TrkL::idSort==10){  if (t1.ti->loops   != t2.ti->loops)    return t1.ti->loops   < t2.ti->loops;    }
+			else if (TrkL::idSort==11){  if (t1.ti->pipes   != t2.ti->pipes)    return t1.ti->pipes   < t2.ti->pipes;    }
+			else if (TrkL::idSort==12){  if (t1.ti->banked  != t2.ti->banked)   return t1.ti->banked  < t2.ti->banked;   }
+			else if (TrkL::idSort==13){  if (t1.ti->frenzy  != t2.ti->frenzy)   return t1.ti->frenzy  < t2.ti->frenzy;   }
+			else if (TrkL::idSort==14){  if (t1.ti->longn   != t2.ti->longn)    return t1.ti->longn   < t2.ti->longn;    }
+		}
+		else if (TrkL::idSort==1)	// 1 n
+			if (t1.ti->n != t2.ti->n)  return t1.ti->n < t2.ti->n;
 
-//  sorting functions for columns
-/* 0  name    */  bool Sort0 (sArg){  sortDef  return t1.name  < t2.name   || t;  }
-/* 1  n       */  bool Sort1 (sArg){  sortDef  return t1.ti->n < t2.ti->n  || t;  }
-/* 2  scenery */  bool Sort2 (sArg){  sortDef  return t1.ti->scenery < t2.ti->scenery || t;  }
-/* 3  crtver  */  bool Sort3 (sArg){  sortDef  return t1.ti->crtver < t2.ti->crtver  || t;  }
-/* 4  diff    */  bool Sort4 (sArg){  sortDef  return t1.ti->diff   < t2.ti->diff    || t;  }
-/* 5  rating  */  bool Sort5 (sArg){  sortDef  return t1.ti->rating < t2.ti->rating  || t;  }
-/* 6  objects */  bool Sort6 (sArg){  sortDef  return t1.ti->objects < t2.ti->objects || t;  }
-/* 7  fluids  */  bool Sort7 (sArg){  sortDef  return t1.ti->fluids < t2.ti->fluids  || t;  }
-/* 8  bumps   */  bool Sort8 (sArg){  sortDef  return t1.ti->bumps  < t2.ti->bumps   || t;  }
-/* 9  jumps   */  bool Sort9 (sArg){  sortDef  return t1.ti->jumps  < t2.ti->jumps   || t;  }
-/* 10 loops   */  bool Sort10(sArg){  sortDef  return t1.ti->loops  < t2.ti->loops   || t;  }
-/* 11 pipes   */  bool Sort11(sArg){  sortDef  return t1.ti->pipes  < t2.ti->pipes   || t;  }
-/* 12 banked  */  bool Sort12(sArg){  sortDef  return t1.ti->banked < t2.ti->banked  || t;  }
-/* 13 frenzy  */  bool Sort13(sArg){  sortDef  return t1.ti->frenzy < t2.ti->frenzy  || t;  }
-/* 14 longn   */  bool Sort14(sArg){  sortDef  return t1.ti->longn  < t2.ti->longn   || t;  }
+		//if (TrkL::idSort==0)		// 0 name, default
+		if (t1.name[0] == t2.name[0] &&
+			t1.ti->nn != t2.ti->nn)
+			return t1.ti->nn < t2.ti->nn;  // using nn in name too
 
-//  sorting functions array (to access by column index)
-bool (*TrkSort[allSortFunc])(const TrkL& t1, const TrkL& t2) = {
-	Sort0, Sort1, Sort2, Sort3, Sort4, Sort5, Sort6, Sort7, Sort8, Sort9, Sort10, Sort11, Sort12, Sort13, Sort14 };
+		return t1.ti->name < t2.ti->name;
+	}
+	//  user trks last
+	if ( t1.ti &&!t2.ti)  return true;
+	if (!t1.ti && t2.ti)  return false;
 
+	return t1.name < t2.name;
+}
 
 //  done every list sort column change or find edit text change
 //  fills gui track list
@@ -75,11 +88,11 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 		int ii = 0, si = -1;  bool bFound = false;
 
 		//  sort
-		int numFunc = min(allSortFunc-1, (int)trkList->mSortColumnIndex);
+		TrkL::idSort = min(14, (int)trkList->mSortColumnIndex);
+
 		std::list<TrkL> liTrk2 = liTrk;  // copy
-		//liTrk2.sort(TrkSort[0]);
-		liTrk2.sort(TrkSort[numFunc]);
-		if (trkList->mSortUp)  liTrk2.reverse();
+		liTrk2.sort(TrkSort);
+		if (!trkList->mSortUp)  liTrk2.reverse();
 		
 		//  original
 		for (std::list<TrkL>::iterator i = liTrk2.begin(); i != liTrk2.end(); ++i)
