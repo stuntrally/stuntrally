@@ -53,7 +53,7 @@
 	<Tag name="ChallEndFinished">Du hast die Herausforderung gewonnen.</Tag>
 	<Tag name="About">Über</Tag>
 	<Tag name="TBScore">Punkte</Tag>
-	<Tag name="DevKeys">Developer keys. Ctrl-F global, Alt-shift-1..6 load test tracks.</Tag>
+	<Tag name="DevKeys">Entwicklertasten. Strg-F: global; Alt-Umschalt-1 bis 6: Teststrecken laden.</Tag>
 	<Tag name="InputRoadChkFirst">0 - Wegpunkt als ersten markieren (1)</Tag>
 	<Tag name="HDROrigImage">Bloom-Darken</Tag>
 	<Tag name="InputObjectsIns">EInfg - bei Cursor platzieren</Tag>
@@ -76,7 +76,7 @@
 	<Tag name="TerGenOfsY">Y-Versatz</Tag>
 	<Tag name="FuelBoost">Boost-Tank</Tag>
 	<Tag name="pipes">Röhren</Tag>
-	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
+	<Tag name="CarTireVisCircles">Rad-Kraftkreise-Visualisation</Tag>
 	<Tag name="InputFluidsUpdate">F10 - Depth map aktualisieren</Tag>
 	<Tag name="TBLapResults">Rundenergebnisse</Tag>
 	<Tag name="DepthOfField">Tiefenunschärfe</Tag>
@@ -559,7 +559,7 @@
 	<Tag name="Brush_Freq">Freq</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotieren alt-RMB - neigen</Tag>
 	<Tag name="InputRoadAngSnap">5,6 - Winkel rasten ein</Tag>
-	<Tag name="Close">Schließen</Tag>
+	<Tag name="Close">Close</Tag>
 	<Tag name="TerGenOfsX">X-Versatz</Tag>
 	<Tag name="TipTexTiling">Kachellänge der Textur (kleinerer Wert bedeutet mehr Wiederholungen)</Tag>
 	<Tag name="InputBrushShape">K,L - Gestalt</Tag>
@@ -697,7 +697,7 @@
 	<Tag name="TiresEdit1">Bild auf/ab - vorheriger, nächster Wert</Tag>
 	<Tag name="TiresEdit3">Pos1 - schalte längs/seitliche Parameter um</Tag>
 	<Tag name="TipDiffuseTex">Diffusetextur (Specular in Alphakanal).</Tag>
-	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
+	<Tag name="TiresEdit4">Ende – Ausrichtungsmomentparameter ein/aus</Tag>
 	<Tag name="AntiAliasing">Antialiasing</Tag>
 	<Tag name="Tutorial">Einführung</Tag>
 	<Tag name="FinishedCommaPlace">Beendet, Platz</Tag>
@@ -705,7 +705,7 @@
 	<Tag name="ChallInfo">Im Herausforderungsmodus wurde das Spiel fertig aufgesetzt, die meisten Einstellungen sind unveränderlich. Zeit oder Position ist benötigt. Wenn Sie bestehen, gewinnen sie einen Bronze-, Silber- oder Gold-Preis.</Tag>
 	<Tag name="Tools">Werkzeuge</Tag>
 	<Tag name="NetCreateGame">Erstellen</Tag>
-	<Tag name="TutorEndFinished">Diese Einführung ist beendet.</Tag>
+	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
 	<Tag name="TipGrassSwaySpd">Grasschwingung Geschw.</Tag>
 	<Tag name="MaterialProperties">Materialeinstellungen</Tag>
 	<Tag name="FrictionTread">ReibungsProfil</Tag>
@@ -938,7 +938,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="GameVersion">2.2</Tag>
+	<Tag name="GameVersion">2.2.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>
@@ -948,5 +948,6 @@
 	<Tag name="LANG_FR">Français</Tag>
 	<Tag name="LANG_RU">Русский</Tag>
 	<Tag name="LANG_PT">Português</Tag>
+	<Tag name="LANG_IT">Italiano</Tag>
 
 </MyGUI>

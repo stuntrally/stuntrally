@@ -174,7 +174,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			bool pipe = sp > 0.f || sp1 > 0.f;
 			int wmin = pipe ? 5 : 1;  // min w steps  //par
 
-			int iw = max(wmin, (int)(p * iw0 / lodDiv));  //* wid/widDiv..
+			int iw = max(1/*wmin*/, (int)(p * iw0 / lodDiv));  //* wid/widDiv..
 			viW.push_back(iw);
 			int iwl = max(1, (int)(pl * iw0 / lodDiv));
 

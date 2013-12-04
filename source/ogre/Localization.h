@@ -14,7 +14,7 @@ static std::string getSystemLanguage()
 	const std::string default_lang = "en";
 
 	setlocale(LC_ALL, "");
-	
+
 	char *loc = setlocale(LC_ALL, NULL);
 	if (!loc)
 		return default_lang;
@@ -34,6 +34,7 @@ static std::string getSystemLanguage()
 		else if (!strcmp(buf,"French"))     loc = "fr";
 		else if (!strcmp(buf,"Russian"))    loc = "ru";
 		else if (!strcmp(buf,"Portuguese")) loc = "pt";
+		else if (!strcmp(buf,"Italian"))    loc = "it";
 	#endif
 
 	// We parse here only the first part of two part codes (e.g.fi_FI).
