@@ -22,13 +22,18 @@ struct Date
 class TrackInfo
 {
 public:
-	int n;  float crtver;
+	int n;  // unique id for track, from ini
+	float crtver;  // created in ver
 	std::string name, scenery, author;
 	Date created, modified;
 
-	// track characteristics  (char)
+	//  track characteristics  (char)
 	int fluids,bumps,jumps,loops,pipes,banked,frenzy,longn,objects;
 	int diff, rating;
+
+	int nn;  // number got from name eg. for D15-.. it is 15
+	bool test,testC;  // starts with Test.. or TestC..
+	bool vdrift;  // from author name
 
 	TrackInfo();
 };

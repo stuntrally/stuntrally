@@ -28,7 +28,6 @@
 #include <MyGUI_OgrePlatform.h>
 #include "common/MyGUI_D3D11.h"
 
-#include <OgreRTShaderSystem.h>
 #include <OgreOverlayManager.h>
 #include "Compositor.h"
 
@@ -175,7 +174,6 @@ BaseApp::BaseApp()
 	,mGodRaysLogic(0), mSoftParticlesLogic(0), mGBufferLogic(0)
 	,mDepthOfFieldLogic(0), mFilmGrainLogic(0)
 	
-	,mShaderGenerator(0),mMaterialMgrListener(0)
 	,mShowDialog(0), mShutDown(0)
 
 	,bWindowResized(0), mLoadingBar(0), roadUpdTm(0.f)
@@ -236,20 +234,6 @@ BaseApp::~BaseApp()
 	delete mInputWrapper;
 	delete mCursorManager;
 
-	// Unregister the material manager listener.
-	if (mMaterialMgrListener != NULL)
-	{			
-		Ogre::MaterialManager::getSingleton().removeListener(mMaterialMgrListener);
-		delete mMaterialMgrListener;
-		mMaterialMgrListener = NULL;
-	}
-
-	// Finalize RTShader system.
-	if (mShaderGenerator != NULL)
-	{				
-		Ogre::RTShader::ShaderGenerator::finalize();
-		mShaderGenerator = NULL;
-	}
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		mRoot->unloadPlugin("RenderSystem_Direct3D9");
 		//mRoot->unloadPlugin("RenderSystem_Direct3D11");
@@ -416,26 +400,6 @@ bool BaseApp::setup()
 
 	mSplitMgr = new SplitScr(mSceneMgr, mWindow, pSet);
 
-	//RT ShaderSystem
-	if (Ogre::RTShader::ShaderGenerator::initialize())
-	{
-		// Grab the shader generator pointer.
-		mShaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
-
-		// Add the shader libs resource location.
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(PATHMANAGER::Data()+"/RTShaderLib", "FileSystem");
-
-		// Set shader cache path.
-		mShaderGenerator->setShaderCachePath(PATHMANAGER::ShaderDir());
-
-		// Create and register the material manager listener.
-		mMaterialMgrListener = new MaterialMgrListener(mShaderGenerator);
-		Ogre::MaterialManager::getSingleton().addListener(mMaterialMgrListener);
-
-		mShaderGenerator->addSceneManager(mSceneMgr);
-	}
-
-
 	createViewports();  // calls mSplitMgr->Align();
 
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
@@ -447,8 +411,6 @@ bool BaseApp::setup()
 
 	//  Gui
 	baseInitGui();
-
-	CreateRTfixed();
 
 		ti.update();  dt = ti.dt * 1000.f;  /// time
 		LogO(Ogre::String(":::: Time setup gui: ") + fToStr(dt,0,3) + " ms");

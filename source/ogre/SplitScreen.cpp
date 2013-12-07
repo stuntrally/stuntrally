@@ -19,7 +19,6 @@
 #include <OgreLogManager.h>
 #include <OgreParticleSystem.h>
 #include <OgreParticleEmitter.h>
-#include <OgreRTShaderSystem.h>
 #include <OgreCompositorManager.h>
 #include <OgreCompositorChain.h>
 #include "MyGUI_PointerManager.h"
@@ -162,12 +161,6 @@ void SplitScr::Align()
 		Ogre::Camera* guiCam = mGuiSceneMgr->createCamera("GuiCam1");
 		mGuiViewport = mWindow->addViewport(guiCam, 100);
 		mGuiViewport->setVisibilityMask(RV_Hud);
-
-		Ogre::RTShader::ShaderGenerator *mShaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
-		if(mShaderGenerator != NULL)
-		{
-			mShaderGenerator->addSceneManager(mSceneMgr);
-		}
 	}
 	
 	AdjustRatio();

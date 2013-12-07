@@ -10,58 +10,10 @@
 //#include "HDRCompositor.h"
 
 #include <OgreRoot.h>
-#include <OgreRTShaderSystem.h>
 #include <OgreCompositorManager.h>
 #include <OgreCompositionTargetPass.h>
+#include <OgreCompositionPass.h>
 using namespace Ogre;
-
-
-/** This class demonstrates basic usage of the RTShader system.
-	It sub class the material manager listener class and when a target scheme callback
-	is invoked with the shader generator scheme it tries to create an equivalent shader
-	based technique based on the default technique of the given material.
-	It also makes a nice tea and cleans your room.
-*/
-Ogre::Technique* MaterialMgrListener::handleSchemeNotFound(unsigned short schemeIndex,
-					   const Ogre::String& schemeName, Ogre::Material* originalMaterial, unsigned short lodIndex,
-					   const Ogre::Renderable* rend)
-{	
-	Ogre::Technique* generatedTech = NULL;
-
-	// Case this is the default shader generator scheme.
-	if (schemeName == Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME)
-	{
-		bool techniqueCreated;
-
-		// Create shader generated technique for this material.
-		techniqueCreated = mShaderGenerator->createShaderBasedTechnique(
-			originalMaterial->getName(), 
-			Ogre::MaterialManager::DEFAULT_SCHEME_NAME, 
-			schemeName);	
-
-		// Case technique registration succeeded.
-		if (techniqueCreated)
-		{
-			// Force creating the shaders for the generated technique.
-			mShaderGenerator->validateMaterial(schemeName, originalMaterial->getName());
-
-			// Grab the generated technique.
-			Ogre::Material::TechniqueIterator itTech = originalMaterial->getTechniqueIterator();
-
-			while (itTech.hasMoreElements())
-			{
-				Ogre::Technique* curTech = itTech.getNext();
-
-				if (curTech->getSchemeName() == schemeName)
-				{
-					generatedTech = curTech;
-					break;
-				}
-			}
-		}
-	}
-	return generatedTech;
-}
 
 
 void BaseApp::createViewports()
@@ -369,38 +321,3 @@ void BaseApp::recreateCompositor()
 	refreshCompositor();
 }
 
-
-//  util
-//-------------------------------------------------------------------------------------
-void BaseApp::CreateRTfixed()
-{
-	if (mShaderGenerator != NULL && mRoot->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_FIXED_FUNCTION) == false)
-	{
-		// creates shaders for base material BaseWhite using the RTSS
-		Ogre::MaterialPtr baseWhite = Ogre::MaterialManager::getSingleton().getByName("BaseWhite", Ogre::ResourceGroupManager::INTERNAL_RESOURCE_GROUP_NAME);				
-		baseWhite->setLightingEnabled(false);
-		mShaderGenerator->createShaderBasedTechnique(
-			"BaseWhite", 
-			Ogre::MaterialManager::DEFAULT_SCHEME_NAME, 
-			Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);	
-		mShaderGenerator->validateMaterial(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, 
-			"BaseWhite");
-		baseWhite->getTechnique(0)->getPass(0)->setVertexProgram(
-			baseWhite->getTechnique(1)->getPass(0)->getVertexProgram()->getName());
-		baseWhite->getTechnique(0)->getPass(0)->setFragmentProgram(
-			baseWhite->getTechnique(1)->getPass(0)->getFragmentProgram()->getName());
-
-		// creates shaders for base material BaseWhiteNoLighting using the RTSS
-		mShaderGenerator->createShaderBasedTechnique(
-			"BaseWhiteNoLighting", 
-			Ogre::MaterialManager::DEFAULT_SCHEME_NAME, 
-			Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);	
-		mShaderGenerator->validateMaterial(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, 
-			"BaseWhiteNoLighting");
-		Ogre::MaterialPtr baseWhiteNoLighting = Ogre::MaterialManager::getSingleton().getByName("BaseWhiteNoLighting", Ogre::ResourceGroupManager::INTERNAL_RESOURCE_GROUP_NAME);
-		baseWhiteNoLighting->getTechnique(0)->getPass(0)->setVertexProgram(
-			baseWhiteNoLighting->getTechnique(1)->getPass(0)->getVertexProgram()->getName());
-		baseWhiteNoLighting->getTechnique(0)->getPass(0)->setFragmentProgram(
-			baseWhiteNoLighting->getTechnique(1)->getPass(0)->getFragmentProgram()->getName());
-	}
-}

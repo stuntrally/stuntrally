@@ -23,12 +23,13 @@ string dt2s(const Date& dt)
 
 //-------------------------------------------------------------------------------------
 TrackInfo::TrackInfo()
-	:n(-1),crtver(0.0),name("none")
-	,scenery("none"),author("none")
-	,objects(0),fluids(0),bumps(0)
-	,jumps(0),loops(0),pipes(0)
-	,banked(0),frenzy(0),longn(0)
-	,diff(0),rating(0)
+	:n(-1), crtver(0.f), name("none")
+	,scenery("none"), author("none")
+	,objects(0), fluids(0), bumps(0)
+	,jumps(0), loops(0), pipes(0)
+	,banked(0), frenzy(0), longn(0)
+	,diff(0), rating(0)
+	,nn(0), test(0), testC(0)
 {	}
 
 UserTrkInfo::UserTrkInfo()
@@ -135,6 +136,23 @@ bool TracksXml::LoadIni(std::string file)
 			t.name = name;
 			t.scenery = scenery;
 			t.author = author;
+			
+			//  get number from name, id for scenery
+			t.nn = 0;
+			size_t p2 = t.name.find('-'), p1;
+			if (p2 != string::npos)
+			{
+				p1 = t.name.find_first_of("1234567890", 1);  //1 ignore 0W
+				if (p1 != string::npos && p1 <= p2-1)
+				{
+					string ss = t.name.substr(p1, p2-1);
+					t.nn = atoi(ss.c_str());
+			}	}
+			
+				t.testC = t.name.length() > 5 ? t.name.substr(0,5)=="TestC" : false;
+			if (t.testC)  t.test = false;  else
+				t.test  = t.name.length() > 4 ? t.name.substr(0,4)=="Test"  : false;
+			t.vdrift = author == "VDrift";
 
 			trks.push_back(t);
 			trkmap[name] = i++;
