@@ -245,7 +245,7 @@ void App::togPrvCam()
 		rt[RTs].ndMini->setVisible(true);
 		ndCar->setVisible(false);
 
-		UpdateWaterRTT(rt[3].rndCam);
+		UpdateWaterRTT(rt[3].cam);
 		UpdFog(true);  // on fog, veget, weather
 		if (!pSet->bTrees)  {  bTrGrUpd = true;  oldV = true;  }
 		oldI = pSet->bWeather;  pSet->bWeather = false;

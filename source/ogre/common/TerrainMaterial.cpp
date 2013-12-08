@@ -1,14 +1,20 @@
 #include "pch.h"
+#include "Def_Str.h"
 #include "TerrainMaterial.h"
 
 #include <OgreTerrain.h>
 
 #include "../../shiny/Platforms/Ogre/OgreMaterial.hpp"
 #include "../../shiny/Main/Factory.hpp"
+using namespace Ogre;
+
+
+#define  STR(a)  sh::makeProperty<sh::StringValue>(new sh::StringValue( a ))
+
 
 namespace
 {
-	Ogre::String getComponent(int num)
+	String getComponent(int num)
 	{
 			if (num == 0)	return "x";
 		else if (num == 1)	return "y";
@@ -20,13 +26,13 @@ namespace
 
 TerrainMaterial::TerrainMaterial()
 {
-	mLayerDecl.samplers.push_back(Ogre::TerrainLayerSampler("albedo_specular", Ogre::PF_BYTE_RGBA));
-	mLayerDecl.samplers.push_back(Ogre::TerrainLayerSampler("normal_height", Ogre::PF_BYTE_RGBA));
+	mLayerDecl.samplers.push_back(TerrainLayerSampler("albedo_specular", PF_BYTE_RGBA));
+	mLayerDecl.samplers.push_back(TerrainLayerSampler("normal_height", PF_BYTE_RGBA));
 
-	mLayerDecl.elements.push_back(Ogre::TerrainLayerSamplerElement(0, Ogre::TLSS_ALBEDO, 0, 3));
-	mLayerDecl.elements.push_back(Ogre::TerrainLayerSamplerElement(0, Ogre::TLSS_SPECULAR, 3, 1));
-	mLayerDecl.elements.push_back(Ogre::TerrainLayerSamplerElement(1, Ogre::TLSS_NORMAL, 0, 3));
-	mLayerDecl.elements.push_back(Ogre::TerrainLayerSamplerElement(1, Ogre::TLSS_HEIGHT, 3, 1));
+	mLayerDecl.elements.push_back(TerrainLayerSamplerElement(0, TLSS_ALBEDO, 0, 3));
+	mLayerDecl.elements.push_back(TerrainLayerSamplerElement(0, TLSS_SPECULAR, 3, 1));
+	mLayerDecl.elements.push_back(TerrainLayerSamplerElement(1, TLSS_NORMAL, 0, 3));
+	mLayerDecl.elements.push_back(TerrainLayerSamplerElement(1, TLSS_HEIGHT, 3, 1));
 
 
 	mProfiles.push_back(OGRE_NEW Profile(this, "SM2", "Profile for rendering on Shader Model 2 capable cards"));
@@ -35,8 +41,8 @@ TerrainMaterial::TerrainMaterial()
 
 // -----------------------------------------------------------------------------------------------------------------------
 
-TerrainMaterial::Profile::Profile(Ogre::TerrainMaterialGenerator* parent, const Ogre::String& name, const Ogre::String& desc)
-	: Ogre::TerrainMaterialGenerator::Profile(parent, name, desc)
+TerrainMaterial::Profile::Profile(TerrainMaterialGenerator* parent, const String& name, const String& desc)
+	: TerrainMaterialGenerator::Profile(parent, name, desc)
 {
 }
 
@@ -46,22 +52,22 @@ TerrainMaterial::Profile::~Profile()
 	sh::Factory::getInstance().destroyMaterialInstance(mMatNameComp);
 }
 
-void TerrainMaterial::Profile::createMaterial(const Ogre::String& matName, const Ogre::Terrain* terrain, bool renderCompositeMap)
+void TerrainMaterial::Profile::createMaterial(const String& matName, const Terrain* terrain, bool renderCompositeMap)
 {
 	sh::Factory::getInstance().destroyMaterialInstance(matName);
 
-	Ogre::MaterialPtr mat = Ogre::MaterialManager::getSingleton().getByName(matName);
+	MaterialPtr mat = MaterialManager::getSingleton().getByName(matName);
 	if (!mat.isNull())
-		Ogre::MaterialManager::getSingleton().remove(matName);
+		MaterialManager::getSingleton().remove(matName);
 
 	mMaterial = sh::Factory::getInstance().createMaterialInstance(matName);
 
 	if (!renderCompositeMap)
 	{
-		Ogre::MaterialPtr ogreMat = static_cast<sh::OgreMaterial*>(mMaterial->getMaterial())->getOgreMaterial();
+		MaterialPtr ogreMat = static_cast<sh::OgreMaterial*>(mMaterial->getMaterial())->getOgreMaterial();
 
-		Ogre::Material::LodValueList list;
-		list.push_back(Ogre::TerrainGlobalOptions::getSingleton().getCompositeMapDistance());
+		Material::LodValueList list;
+		list.push_back(TerrainGlobalOptions::getSingleton().getCompositeMapDistance());
 		ogreMat->setLodLevels(list);
 	}
 
@@ -69,117 +75,115 @@ void TerrainMaterial::Profile::createMaterial(const Ogre::String& matName, const
 
 	sh::MaterialInstancePass* p = mMaterial->createPass();
 
-	p->setProperty("vertex_program", sh::makeProperty<sh::StringValue>(new sh::StringValue("terrain_vertex")));
-	p->setProperty("fragment_program", sh::makeProperty<sh::StringValue>(new sh::StringValue("terrain_fragment")));
+	p->setProperty("vertex_program",   STR("terrain_vertex"));
+	p->setProperty("fragment_program", STR("terrain_fragment"));
 
 	p->mShaderProperties.setProperty("composite_map", sh::makeProperty<sh::BooleanValue>(new sh::BooleanValue(renderCompositeMap)));
 
 
-	// global normal map
+	//  global normal map
 	sh::MaterialInstanceTextureUnit* normalMap = p->createTextureUnit("normalMap");
-	normalMap->setProperty("direct_texture", sh::makeProperty<sh::StringValue>(new sh::StringValue(terrain->getTerrainNormalMap()->getName())));
-	normalMap->setProperty("tex_address_mode", sh::makeProperty<sh::StringValue>(new sh::StringValue("clamp")));
+	normalMap->setProperty("direct_texture",   STR(terrain->getTerrainNormalMap()->getName()));
+	normalMap->setProperty("tex_address_mode", STR("clamp"));
 
-	// light map
+	//  light map
 	sh::MaterialInstanceTextureUnit* lightMap = p->createTextureUnit("lightMap");
-	lightMap->setProperty("direct_texture", sh::makeProperty<sh::StringValue>(new sh::StringValue(terrain->getLightmap()->getName())));
-	lightMap->setProperty("tex_address_mode", sh::makeProperty<sh::StringValue>(new sh::StringValue("clamp")));
+	lightMap->setProperty("direct_texture",   STR(terrain->getLightmap()->getName()));
+	lightMap->setProperty("tex_address_mode", STR("clamp"));
 
-	unsigned int maxLayers = getMaxLayers(terrain);
-	unsigned int numBlendTextures = std::min(terrain->getBlendTextureCount(maxLayers), terrain->getBlendTextureCount());
-	unsigned int numLayers = std::min(maxLayers, static_cast<unsigned int>(terrain->getLayerCount()));
+	uint maxLayers = getMaxLayers(terrain),
+		numBlendTextures = std::min(terrain->getBlendTextureCount(maxLayers), terrain->getBlendTextureCount()),
+		numLayers = std::min(maxLayers, static_cast<uint>(terrain->getLayerCount()));
 
-	p->mShaderProperties.setProperty("num_layers", sh::makeProperty<sh::StringValue>(new sh::StringValue(Ogre::StringConverter::toString(numLayers))));
-	p->mShaderProperties.setProperty("num_blendmaps", sh::makeProperty<sh::StringValue>(new sh::StringValue(Ogre::StringConverter::toString(numBlendTextures))));
+	p->mShaderProperties.setProperty("num_layers",    STR(toStr(numLayers)));
+	p->mShaderProperties.setProperty("num_blendmaps", STR(toStr(numBlendTextures)));
 
-	// blend maps
-	for(int i = 0; i < numBlendTextures; ++i)
+	//  blend maps
+	for (uint i = 0; i < numBlendTextures; ++i)
 	{
-		sh::MaterialInstanceTextureUnit* blendTex = p->createTextureUnit("blendMap" + Ogre::StringConverter::toString(i));
-		blendTex->setProperty("direct_texture", sh::makeProperty<sh::StringValue>(new sh::StringValue(terrain->getBlendTextureName(i))));
-		blendTex->setProperty("tex_address_mode", sh::makeProperty<sh::StringValue>(new sh::StringValue("clamp")));
+		sh::MaterialInstanceTextureUnit* blendTex = p->createTextureUnit("blendMap" + toStr(i));
+		blendTex->setProperty("direct_texture",   STR(terrain->getBlendTextureName(i)));
+		blendTex->setProperty("tex_address_mode", STR("clamp"));
 	}
 
-	// layer diffuse
-	for (int i = 0; i < numLayers; ++i)
+	//  layer diffuse
+	for (uint i = 0; i < numLayers; ++i)
 	{
-		sh::MaterialInstanceTextureUnit* diffuseTex = p->createTextureUnit("diffuseMap" + Ogre::StringConverter::toString(i));
-		diffuseTex->setProperty("direct_texture", sh::makeProperty<sh::StringValue>(new sh::StringValue(terrain->getLayerTextureName(i, 0))));
-		p->mShaderProperties.setProperty("blendmap_component_" + Ogre::StringConverter::toString(i),
-			sh::makeProperty<sh::StringValue>(new sh::StringValue(Ogre::StringConverter::toString(int((i/*-1*/) / 4)) + "." + getComponent(int((i/*-1*/) % 4)))));
+		sh::MaterialInstanceTextureUnit* diffuseTex = p->createTextureUnit("diffuseMap" + toStr(i));
+		diffuseTex->setProperty("direct_texture", STR(terrain->getLayerTextureName(i, 0)));
+		p->mShaderProperties.setProperty("blendmap_component_" + toStr(i),
+			STR(toStr(int((i-1) / 4)) + "." + getComponent(int((i-1) % 4))));
 	}
 
-	// layer normalheight
-	for (int i = 0; i < numLayers; ++i)
+	//  layer normalheight
+	for (uint i = 0; i < numLayers; ++i)
 	{
-		sh::MaterialInstanceTextureUnit* normalTex = p->createTextureUnit("normalMap" + Ogre::StringConverter::toString(i));
-		normalTex->setProperty("direct_texture", sh::makeProperty<sh::StringValue>(new sh::StringValue(terrain->getLayerTextureName(i, 1))));
+		sh::MaterialInstanceTextureUnit* normalTex = p->createTextureUnit("normalMap" + toStr(i));
+		normalTex->setProperty("direct_texture", STR(terrain->getLayerTextureName(i, 1)));
 	}
 
-	// shadow
+	//  shadow
 	if (!renderCompositeMap)
 	{
 		for (int i = 0; i < 3; ++i)
 		{
-			sh::MaterialInstanceTextureUnit* shadowTex = p->createTextureUnit("shadowMap" + Ogre::StringConverter::toString(i));
-			shadowTex->setProperty("content_type", sh::makeProperty<sh::StringValue>(new sh::StringValue("shadow")));
+			sh::MaterialInstanceTextureUnit* shadowTex = p->createTextureUnit("shadowMap" + toStr(i));
+			shadowTex->setProperty("content_type", STR("shadow"));
 		}
 	}
 
-	// composite map
+	//  composite map
 	sh::MaterialInstanceTextureUnit* compositeMap = p->createTextureUnit("compositeMap");
-	compositeMap->setProperty("direct_texture", sh::makeProperty<sh::StringValue>(new sh::StringValue(terrain->getCompositeMap()->getName())));
+	compositeMap->setProperty("direct_texture", STR(terrain->getCompositeMap()->getName()));
 
-	// uv multipliers
-	unsigned int numUVMul = numLayers / 4;
+	//  uv multipliers
+	uint numUVMul = numLayers / 4;
 	if (numLayers % 4)
 		++numUVMul;
 	for (int i = 0; i < numUVMul; ++i)
 	{
+		int ii = i * 4;
 		sh::Vector4* uvMul = new sh::Vector4(
-			terrain->getLayerUVMultiplier(i * 4),
-			terrain->getLayerUVMultiplier(i * 4 + 1),
-			terrain->getLayerUVMultiplier(i * 4 + 2),
-			terrain->getLayerUVMultiplier(i * 4 + 3)
-			);
+			terrain->getLayerUVMultiplier(ii),     terrain->getLayerUVMultiplier(ii + 1),
+			terrain->getLayerUVMultiplier(ii + 2), terrain->getLayerUVMultiplier(ii + 3) );
+
 		for (int j=0; j<4; ++j)
 		{
-			p->mShaderProperties.setProperty("uv_component_" + Ogre::StringConverter::toString(i*4+j), sh::makeProperty<sh::StringValue>(new sh::StringValue(
-			Ogre::StringConverter::toString(i) + "." + getComponent(j) )));
+			p->mShaderProperties.setProperty("uv_component_" + toStr(i*4+j), STR(
+				toStr(i) + "." + getComponent(j) ));
 		}
-		p->mShaderProperties.setProperty("uv_mul_" + Ogre::StringConverter::toString(i), sh::makeProperty<sh::Vector4>(uvMul));
+		p->mShaderProperties.setProperty("uv_mul_" + toStr(i), sh::makeProperty<sh::Vector4>(uvMul));
 	}
-	p->mShaderProperties.setProperty("num_uv_mul", sh::makeProperty<sh::StringValue>(new sh::StringValue(Ogre::StringConverter::toString(numUVMul))));
+	p->mShaderProperties.setProperty("num_uv_mul", STR(toStr(numUVMul)));
 
-	p->mShaderProperties.setProperty("shadowtexture_offset", sh::makeProperty<sh::StringValue>(new sh::StringValue(
-		Ogre::StringConverter::toString(0))));
+	p->mShaderProperties.setProperty("shadowtexture_offset", STR(toStr(0)));
 }
 
 
-Ogre::MaterialPtr TerrainMaterial::Profile::generate(const Ogre::Terrain* terrain)
+MaterialPtr TerrainMaterial::Profile::generate(const Terrain* terrain)
 {
-	const Ogre::String& matName = terrain->getMaterialName();
+	const String& matName = terrain->getMaterialName();
 	mMatName = matName;
 
 	createMaterial(matName, terrain, false);
 
-	return Ogre::MaterialManager::getSingleton().getByName(matName);
+	return MaterialManager::getSingleton().getByName(matName);
 }
 
-Ogre::MaterialPtr TerrainMaterial::Profile::generateForCompositeMap(const Ogre::Terrain* terrain)
+MaterialPtr TerrainMaterial::Profile::generateForCompositeMap(const Terrain* terrain)
 {
-	const Ogre::String& matName = terrain->getMaterialName()+"/comp";
+	const String& matName = terrain->getMaterialName()+"/comp";
 	mMatNameComp = matName;
 
 	createMaterial(matName, terrain, true);
 
-	return Ogre::MaterialManager::getSingleton().getByName(matName);
+	return MaterialManager::getSingleton().getByName(matName);
 }
 
-Ogre::uint8 TerrainMaterial::Profile::getMaxLayers(const Ogre::Terrain* terrain) const
+uint8 TerrainMaterial::Profile::getMaxLayers(const Terrain* terrain) const
 {
 	// count the texture units free
-	Ogre::uint8 freeTextureUnits = 16;
+	uint8 freeTextureUnits = 16;
 	--freeTextureUnits;  // normalmap
 	--freeTextureUnits;  // colourmap
 	--freeTextureUnits;  // lightmap
@@ -189,18 +193,20 @@ Ogre::uint8 TerrainMaterial::Profile::getMaxLayers(const Ogre::Terrain* terrain)
 	//--freeTextureUnits; // caustics
 
 	// each layer needs 2.25 units(1xdiffusespec, 1xnormalheight, 0.25xblend)
-	return static_cast<Ogre::uint8>(freeTextureUnits / 2.25f);
+
+	///  max is 4 layers,  more would need 2nd pass ...
+	return static_cast<uint8>(freeTextureUnits / 2.25f);
 }
 
-void TerrainMaterial::Profile::updateParams(const Ogre::MaterialPtr& mat, const Ogre::Terrain* terrain)
+void TerrainMaterial::Profile::updateParams(const MaterialPtr& mat, const Terrain* terrain)
 {
 }
 
-void TerrainMaterial::Profile::updateParamsForCompositeMap(const Ogre::MaterialPtr& mat, const Ogre::Terrain* terrain)
+void TerrainMaterial::Profile::updateParamsForCompositeMap(const MaterialPtr& mat, const Terrain* terrain)
 {
 }
 
-void TerrainMaterial::Profile::requestOptions(Ogre::Terrain* terrain)
+void TerrainMaterial::Profile::requestOptions(Terrain* terrain)
 {
 	terrain->_setMorphRequired(true);
 	terrain->_setNormalMapRequired(true); // global normal map

@@ -37,8 +37,8 @@ for t in trks:
 		xTag = dom.getElementsByTagName('stats')[0].toxml()
 		#print xTag
 		xNew = xTag.replace('<stats','<s n="'+t+'" t="'+map.get(t,'0')+'"').replace('yaw="0"','').replace('pitch="0" ','').replace('roll="0" ','')
-		xNew = xNew.replace('height','h').replace('length','l').replace('width','w').replace('bnkAvg','ba').replace('bnkMax','bm')
-		xNew = xNew.replace('onPipe','op').replace('onTer','ot').replace('pipes','p')
+		xNew = xNew.replace('height=','h=').replace('length=','l=').replace('width=','w=').replace('bnkAvg=','ba=').replace('bnkMax=','bm=')
+		xNew = xNew.replace('onPipe=','op=').replace('onTer=','ot=').replace('pipes=','p=')
 		#print xNew
 		print t
 		stats.write(xNew+'\n');
