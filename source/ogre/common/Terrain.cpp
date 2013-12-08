@@ -32,6 +32,48 @@
 using namespace Ogre;
 
 
+//  blendmap rtt setup
+//--------------------------------------------------------------------------------------------------------------------------
+void App::CreateBlendTex()
+{
+	bl.scm = mRoot->createSceneManager(ST_GENERIC);
+
+	uint size = 1024;  Real fDim = 1.f;
+	TexturePtr texture = Ogre::TextureManager::getSingleton().createManual("blRTex",
+		  ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D,
+		  size, size, 0, PF_R8G8B8A8, TU_RENDERTARGET);
+		  
+	bl.cam = bl.scm->createCamera("blCam");
+	bl.cam->setPosition(Vector3(0,10,0));	bl.cam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
+	bl.cam->setNearClipDistance(0.5f);	bl.cam->setFarClipDistance(500.f);
+	bl.cam->setAspectRatio(1.f);	bl.cam->setProjectionType(PT_ORTHOGRAPHIC);
+	bl.cam->setOrthoWindow(fDim,fDim);
+
+	bl.rnd = texture->getBuffer()->getRenderTarget();
+	bl.rnd->setAutoUpdated(false);	bl.rnd->addListener(this);
+	bl.vp = bl.rnd->addViewport(bl.cam);
+	bl.vp->setClearEveryFrame(true);   bl.vp->setBackgroundColour(ColourValue(0,0,0,0));
+	bl.vp->setOverlaysEnabled(false);  bl.vp->setSkiesEnabled(false);  bl.vp->setShadowsEnabled(false);
+	bl.vp->setShadowsEnabled(false);  //bl.vp->setVisibilityMask();
+	//bl.vp->setMaterialScheme("reflection");
+	//bl.vp->update();
+
+	bl.rect = new Ogre::Rectangle2D(true);
+	bl.rect->setCorners(-1.f, 1.f, 1.f, -1.f);
+	Vector3 vb = 1000.f*Vector3::UNIT_SCALE;  AxisAlignedBox big(-vb, vb);
+	bl.rect->setBoundingBox(big);
+
+	bl.nd = bl.scm->getRootSceneNode()->createChildSceneNode("blN");
+	bl.nd->attachObject(bl.rect);
+
+	bl.rect->setCastShadows(false);
+	bl.rect->setMaterial("blendmapRT");
+
+	bl.rnd->update();
+	bl.rnd->writeContentsToFile(/*PATHMANAGER::DataUser()+*/ "blend.png");
+}
+
+
 //  fill Blend maps
 //--------------------------------------------------------------------------------------------------------------------------
 void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool full)

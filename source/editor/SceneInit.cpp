@@ -73,6 +73,7 @@ void App::createScene()  // once, init
 
 	QTimer ti;  ti.update();  /// time
 
+	CreateBlendTex();
 
 	///  _Tool_ tex ..........................
 	//  (remove alpha channel for ter tex prv img)

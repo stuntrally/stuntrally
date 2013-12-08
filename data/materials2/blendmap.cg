@@ -1,0 +1,33 @@
+///  blendmap
+///--------------------------------------------
+
+struct BIn
+{
+	float4 p	: POSITION;
+	float2 uv   : TEXCOORD0;
+};
+struct BOut
+{
+	float4 p	: POSITION;
+	float2 uv	: TEXCOORD0;
+};
+
+BOut blendmap_vs(BIn IN,
+	uniform float4x4 wvpMat)
+{
+	BOut OUT;  OUT.uv = IN.uv;
+	OUT.p = mul(wvpMat, IN.p);
+	return OUT;
+}
+
+float4 blendmap_ps(
+	in float4 p : POSITION,
+	in float2 uv : TEXCOORD0,
+	//uniform float square,
+	uniform sampler2D terMap : TEXUNIT0): COLOR0
+{
+	//float4 ter = tex2D(terMap, uv);
+
+	float4 c = float4((1-uv.x)*(uv.y),0,uv.x*(1-uv.y),1);
+	return c;
+}

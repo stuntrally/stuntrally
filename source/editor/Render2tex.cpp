@@ -158,7 +158,7 @@ void App::SaveGrassDens()
 
 		v = std::max(0, (int)(255.f * (1.f - v * ff) ));  // avg, inv, clamp
 		
-		gd[a] = 0xFF000000 + /*0x010101 */ v;  // write
+		gd[a] = 0xFF000000 + v;  // write
 	}	}
 
 	v = 0xFFFFFFFF;  //  frame f []  todo: get from rd[b] not clear..
