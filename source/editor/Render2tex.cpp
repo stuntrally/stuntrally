@@ -53,15 +53,15 @@ void App::Rnd2TexSetup()
 				  ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D,
 				  dim[i], dim[i], 0, PF_R8G8B8A8, TU_RENDERTARGET);
 				  
-			r.rndCam = mSceneMgr->createCamera(sCam);  // up
-			r.rndCam->setPosition(Vector3(0,1000,0/*-300..*/));  r.rndCam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
-			r.rndCam->setNearClipDistance(0.5);		r.rndCam->setFarClipDistance(50000);
-			r.rndCam->setAspectRatio(1.0);			if (!full)  r.rndCam->setProjectionType(PT_ORTHOGRAPHIC);
-			r.rndCam->setOrthoWindow(fDim,fDim);	//rt[i].rndCam->setPolygonMode(PM_WIREFRAME);
+			r.cam = mSceneMgr->createCamera(sCam);  // up
+			r.cam->setPosition(Vector3(0,1000,0/*-300..*/));  r.cam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
+			r.cam->setNearClipDistance(0.5);		r.cam->setFarClipDistance(50000);
+			r.cam->setAspectRatio(1.0);			if (!full)  r.cam->setProjectionType(PT_ORTHOGRAPHIC);
+			r.cam->setOrthoWindow(fDim,fDim);	//rt[i].rndCam->setPolygonMode(PM_WIREFRAME);
 
-			r.rndTex = texture->getBuffer()->getRenderTarget();
-			r.rndTex->setAutoUpdated(false);	r.rndTex->addListener(this);
-			Viewport* rvp = r.rndTex->addViewport(r.rndCam);
+			r.tex = texture->getBuffer()->getRenderTarget();
+			r.tex->setAutoUpdated(false);	r.tex->addListener(this);
+			Viewport* rvp = r.tex->addViewport(r.cam);
 			rvp->setClearEveryFrame(true);   rvp->setBackgroundColour(ColourValue(0,0,0,0));
 			rvp->setOverlaysEnabled(false);  rvp->setSkiesEnabled(full);
 			rvp->setVisibilityMask(visMask[i]);
@@ -75,16 +75,16 @@ void App::Rnd2TexSetup()
 		ResourcePtr mt = Ogre::MaterialManager::getSingleton().getByName(sMtr);
 		if (!mt.isNull())  mt->reload();
 
-		r.rcMini = new Ogre::Rectangle2D(true);  // screen rect preview
-		if (i == RTs)  r.rcMini->setCorners(-1/asp, 1, 1/asp, -1);  // fullscr,square
-		else  r.rcMini->setCorners(xm1, ym1, xm2, ym2);  //+i*sz*all
+		r.mini = new Ogre::Rectangle2D(true);  // screen rect preview
+		if (i == RTs)  r.mini->setCorners(-1/asp, 1, 1/asp, -1);  // fullscr,square
+		else  r.mini->setCorners(xm1, ym1, xm2, ym2);  //+i*sz*all
 
-		r.rcMini->setBoundingBox(big);
+		r.mini->setBoundingBox(big);
 		r.ndMini = mSceneMgr->getRootSceneNode()->createChildSceneNode("Minimap"+si);
-		r.ndMini->attachObject(r.rcMini);	r.rcMini->setCastShadows(false);
-		r.rcMini->setMaterial(i == RTs+1 ? "BrushPrvMtr" : sMtr);
-		r.rcMini->setRenderQueueGroup(RQG_Hud2);
-		r.rcMini->setVisibilityFlags(i == RTs ? RV_MaskPrvCam : RV_Hud);
+		r.ndMini->attachObject(r.mini);	r.mini->setCastShadows(false);
+		r.mini->setMaterial(i == RTs+1 ? "BrushPrvMtr" : sMtr);
+		r.mini->setRenderQueueGroup(RQG_Hud2);
+		r.mini->setVisibilityFlags(i == RTs ? RV_MaskPrvCam : RV_Hud);
 	}
 
 	//  pos dot on minimap  . . . . . . . .
@@ -115,16 +115,16 @@ void App::SaveGrassDens()
 {
 	for (int i=0; i < RTs-1; ++i)  //-1 preview camera manual
 	{
-		if (!rt[i].rndTex)  return;
-		rt[i].rndTex->update();  // all have to exist
+		if (!rt[i].tex)  return;
+		rt[i].tex->update();  // all have to exist
 	}
 
-	int w = rt[1].rndTex->getWidth(), h = rt[1].rndTex->getHeight();
+	int w = rt[1].tex->getWidth(), h = rt[1].tex->getHeight();
 	using Ogre::uint;
 	uint *rd = new uint[w*h];   // road render
 	uint *gd = new uint[w*h];   // grass dens
 	PixelBox pb_rd(w,h,1, PF_BYTE_RGBA, rd);
-	rt[1].rndTex->copyContentsToMemory(pb_rd, RenderTarget::FB_FRONT);
+	rt[1].tex->copyContentsToMemory(pb_rd, RenderTarget::FB_FRONT);
 
 	const int f = std::max(0, sc->grDensSmooth);
 	float ff = 0.f;  //2.f / ((f*2+1)*(f*2+1)) / 255.f;
@@ -201,8 +201,8 @@ void App::SaveGrassDens()
 
 	//  road, terrain  ----------------
 	int u = pSet->allow_save ? pSet->gui.track_user : 1;
-	rt[0].rndTex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/road.png");
-	rt[2].rndTex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/terrain.jpg");
+	rt[0].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/road.png");
+	rt[2].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/terrain.jpg");
 }
 
 
@@ -215,8 +215,8 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 	
 	if (num == 3)  // full
 	{
-		rt[3].rndCam->setPosition(mCamera->getPosition());
-		rt[3].rndCam->setDirection(mCamera->getDirection());
+		rt[3].cam->setPosition(mCamera->getPosition());
+		rt[3].cam->setDirection(mCamera->getDirection());
 	}
 	else if (road)
 		road->SetForRnd(num == 0 ? "render_clr" : "render_grass");

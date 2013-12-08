@@ -189,6 +189,8 @@ Ogre::uint8 TerrainMaterial::Profile::getMaxLayers(const Ogre::Terrain* terrain)
 	//--freeTextureUnits; // caustics
 
 	// each layer needs 2.25 units(1xdiffusespec, 1xnormalheight, 0.25xblend)
+
+	///  max is 4 layers,  more would need 2nd pass ...
 	return static_cast<Ogre::uint8>(freeTextureUnits / 2.25f);
 }
 

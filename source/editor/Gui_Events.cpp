@@ -342,8 +342,8 @@ void CGui::slSizeMinimap(SV*)
 	Real sz = pSet->size_minimap;  //int all = 0;
 	app->xm1 = 1-sz/app->asp;  app->ym1 = -1+sz;  app->xm2 = 1.0;  app->ym2 = -1.0;
 	for (int i=0; i < app->RTs+1; ++i)  if (i != app->RTs)
-		if (app->rt[i].rcMini)
-			app->rt[i].rcMini->setCorners(app->xm1, app->ym1, app->xm2, app->ym2);
+		if (app->rt[i].mini)
+			app->rt[i].mini->setCorners(app->xm1, app->ym1, app->xm2, app->ym2);
 }
 
 void CGui::chkMinimap(Ck*)

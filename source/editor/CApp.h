@@ -119,9 +119,9 @@ public:
 	const static int RTs = 4, RTsAdd = 2;
 	struct SRndTrg
 	{
-		Ogre::Camera* rndCam;  Ogre::RenderTexture* rndTex;
-		Ogre::Rectangle2D* rcMini;	Ogre::SceneNode* ndMini;
-		SRndTrg() : rndCam(0),rndTex(0),rcMini(0),ndMini(0) {  }
+		Ogre::Camera* cam;  Ogre::RenderTexture* tex;
+		Ogre::Rectangle2D* mini;	Ogre::SceneNode* ndMini;
+		SRndTrg() : cam(0),tex(0),mini(0),ndMini(0) {  }
 	};
 	SRndTrg rt[RTs+RTsAdd];
 
