@@ -49,3 +49,42 @@ void shadow_caster_alpha_ps(
 	oColour = float4(finalDepth, finalDepth, finalDepth, trans.w);
 	clip( oColour.a > 0.5 ? 1:-1);
 }
+
+
+void shadow_caster_instancing_vs(
+	float4 position : POSITION,
+	float2 uv : TEXCOORD0,
+	
+	float4 uv1 : TEXCOORD1,
+	float4 uv2 : TEXCOORD2,
+	float4 uv3 : TEXCOORD3,
+	
+	uniform float4x4 viewProjMatrix,
+	
+	out float4 oPosition : POSITION,
+	out float2 oDepth : TEXCOORD0,
+	out float2 oUv : TEXCOORD1,
+	
+	
+	uniform float4x4 wvpMat)
+{
+	float3x4 worldMatrix;
+	worldMatrix[0] = uv1;
+	worldMatrix[1] = uv2;
+	worldMatrix[2] = uv3;
+
+	float4 worldPos = float4( mul( worldMatrix, position ).xyz, 1.0f );
+
+	//Transform the position
+	oPosition		= mul( viewProjMatrix, worldPos );
+
+	// depth info for the fragment.
+	oDepth.x = oPosition.z;
+	oDepth.y = oPosition.w;
+
+	// clamp z to zero. seem to do the trick. :-/
+	oPosition.z = max(oPosition.z, 0);
+	
+	oUv = uv;
+}
+

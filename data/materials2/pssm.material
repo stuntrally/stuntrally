@@ -92,6 +92,43 @@ material PSSM/shadow_caster
 	}
 }
 
+material PSSM/shadow_caster_instancing
+{
+	technique
+	{
+		pass
+		{
+			fog_override true
+			cull_hardware none
+			vertex_program_ref PSSM/shadow_caster_instancing_vs
+			{
+			}
+
+			fragment_program_ref PSSM/shadow_caster_ps
+			{
+			}
+		}
+	}
+}
+
+material PSSM/shadow_caster_noalpha_instancing
+{
+	technique
+	{
+		pass
+		{
+			fog_override true
+			vertex_program_ref PSSM/shadow_caster_instancing_vs
+			{
+			}
+
+			fragment_program_ref PSSM/shadow_caster_ps
+			{
+			}
+		}
+	}
+}
+
 material PSSM/shadow_caster_noalpha
 {
 	technique

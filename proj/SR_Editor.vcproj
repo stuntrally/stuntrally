@@ -655,6 +655,14 @@
 			Name="SceneCommon"
 			>
 			<File
+				RelativePath="..\source\ogre\common\Instancing.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\ogre\common\Instancing.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\ogre\common\PreviewTex.cpp"
 				>
 			</File>

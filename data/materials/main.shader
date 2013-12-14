@@ -28,6 +28,7 @@
 #define TERRAIN_LIGHT_MAP  @shPropertyBool(terrain_light_map)
 #define TERRAIN_LIGHT_MAP_TOGGLEABLE  @shPropertyBool(terrain_light_map_toggleable)
 
+#define INSTANCING  @shPropertyBool(instancing)
 #define SOFT_PARTICLES  (@shPropertyBool(soft_particles) &&  @shGlobalSettingBool(soft_particles))
 #define SELECTED_GLOW  @shGlobalSettingBool(editor)
 #define SPECULAR_ALPHA  @shPropertyBool(specular_alpha)
@@ -83,6 +84,13 @@
 		shVertexInput(float4, uv2)  // originPos
 #endif
 
+#if INSTANCING
+		shVertexInput(float4, uv1)  // windParams
+		shVertexInput(float4, uv2)  // originPos
+		shVertexInput(float4, uv3)  // windParams
+		shUniform(float4x4, viewProjMatrix) @shAutoConstant(viewProjMatrix, viewproj_matrix)
+#endif
+ 
 #if GRASS_WIND
 
 		shUniform(float, grassTimer)  @shSharedParameter(grassTimer)
@@ -100,7 +108,11 @@
 #if SHADOWS
 	 @shForeach(3)
 		shOutput(float4, lightSpacePos@shIterator)
+        #if INSTANCING
+        shUniform(float4x4, texViewProjMatrix@shIterator) @shAutoConstant(texViewProjMatrix@shIterator, texture_viewproj_matrix, @shIterator)
+        #else
 		shUniform(float4x4, texWorldViewProjMatrix@shIterator)  @shAutoConstant(texWorldViewProjMatrix@shIterator, texture_worldviewproj_matrix,  @shIterator)
+        #endif
 	 @shEndForeach
 #endif
 
@@ -111,6 +123,23 @@
 	{
 	
 		float4 position = shInputPosition;
+
+#if INSTANCING
+	    float4x4 worldMatrix;
+	    worldMatrix[0] = uv1;
+	    worldMatrix[1] = uv2;
+	    worldMatrix[2] = uv3;
+	    worldMatrix[3] = float4( 0, 0, 0, 1 );
+	    
+	    #if SH_GLSL
+	    worldMatrix = transpose(worldMatrix);
+	    #endif
+
+
+	    float4 worldPos		= shMatrixMult(worldMatrix, shInputPosition);
+	    float3 worldNorm		= shMatrixMult(worldMatrix, float4(normal.xyz, 0)).xyz;
+	    normalPassthrough = worldNorm.xyz;
+#endif
 
 #if TREE_WIND
 		//float radiusCoeff = windParams.x;
@@ -161,7 +190,12 @@
 			#endif
 		}
 #endif
+
+#if INSTANCING
+        shOutputPosition = shMatrixMult(viewProjMatrix, worldPos);
+#else
 		shOutputPosition = shMatrixMult(wvp, position);
+#endif
 
 
 #if SOFT_PARTICLES
@@ -195,7 +229,11 @@
 
 #if SHADOWS
 	 @shForeach(3)
+        #if INSTANCING
+        lightSpacePos@shIterator = shMatrixMult(texViewProjMatrix@shIterator, worldPos);
+        #else
 		lightSpacePos@shIterator = shMatrixMult(texWorldViewProjMatrix@shIterator, position);
+        #endif
 	 @shEndForeach
 #endif
 	}

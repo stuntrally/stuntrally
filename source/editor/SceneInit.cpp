@@ -25,6 +25,7 @@
 #include <OgreParticleEmitter.h>
 #include <OgreManualObject.h>
 #include "../ogre/common/MessageBox/MessageBox.h"
+#include "../ogre/common/Instancing.h"
 using namespace Ogre;
 
 
@@ -155,6 +156,8 @@ void App::NewCommon(bool onlyTerVeget)
 	//  destroy all
 	if (ndSky)
 		mSceneMgr->destroySceneNode(ndSky);
+		
+	if (inst) {  delete inst;  inst=0;  }
 
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
@@ -246,6 +249,11 @@ void App::LoadTrackEv()
 	road->Setup("sphere.mesh", 1.4f*pSet->road_sphr, terrain, mSceneMgr, mCamera);
 	road->LoadFile(gcom->TrkDir()+"road.xml");
 	UpdPSSMMaterials();
+	
+	
+	inst = new Instanced();
+	inst->Create(mSceneMgr,"sphere_inst.mesh");
+	
 	
 	CreateObjects();
 

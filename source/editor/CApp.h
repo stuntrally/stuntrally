@@ -38,6 +38,8 @@ public:
 	virtual ~App();
 
 
+	class Instanced* inst;
+
 	Scene* sc;  /// scene.xml
 
 	CData* data;  // xmls

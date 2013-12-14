@@ -42,6 +42,7 @@ App::App(SETTINGS* pSet1)
 	//  objs
 	,iObjCur(-1), iObjTNew(0), iObjLast(0)
 	,objSim(0), objEd(EO_Move)
+	,inst(0)
 {
 	pSet = pSet1;
 	

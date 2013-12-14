@@ -33,6 +33,7 @@ material base
     mrt_output true
     diffuse_address_mode wrap
     fog_en true
+	instancing false
 
 	//  extras2
     twoside_diffuse false
@@ -88,6 +89,7 @@ material base
 		    mrt_output $mrt_output
 		    soft_particles $soft_particles
 			fog_en $fog_en
+			instancing $instancing
 		    
             tree_wind $tree_wind
             grass_wind $grass_wind
