@@ -6,6 +6,7 @@
 #include <OgreSceneManager.h>
 #include <OgrePlane.h>
 #include <OgreHardwarePixelBuffer.h>
+#include <OgreCamera.h>
 
 #include "../../shiny/Main/Factory.hpp"
 

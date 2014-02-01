@@ -17,6 +17,8 @@
 #include <OgreRenderWindow.h>
 #include <OgreManualObject.h>
 #include <OgreHardwarePixelBuffer.h>
+#include <OgreCamera.h>
+
 using namespace Ogre;
 
 
