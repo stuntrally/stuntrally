@@ -192,15 +192,15 @@ bool App::frameEnded(const FrameEvent& evt)
 	{
 		sc->camPos = mCamera->getPosition();
 		sc->camDir = mCamera->getDirection();
-		if (rt[RTs-1].rndTex)
-			rt[RTs-1].rndTex->update();
+		if (rt[RTs-1].tex)
+			rt[RTs-1].tex->update();
 	}else{
 		static int ri = 0;
 		if (ri >= pSet->mini_skip)
 		{	ri = 0;
 			for (int i=0; i < RTs-1/**/; ++i)
-				if (rt[i].rndTex)
-					rt[i].rndTex->update();
+				if (rt[i].tex)
+					rt[i].tex->update();
 		}	ri++;
 	}
 	//LogO(toStr(evt.timeSinceLastFrame));
