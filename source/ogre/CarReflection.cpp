@@ -11,6 +11,8 @@
 #include <OgreTextureManager.h>
 #include <OgreMaterialManager.h>
 #include <OgreHardwarePixelBuffer.h>
+#include <OgreCamera.h>
+
 using namespace Ogre;
 
 

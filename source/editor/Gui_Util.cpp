@@ -13,6 +13,7 @@
 #include <OgreTerrain.h>
 #include <OgreOverlay.h>
 #include <OgreOverlayElement.h>
+#include <OgreCamera.h>
 #include <MyGUI.h>
 using namespace MyGUI;
 using namespace Ogre;

@@ -30,6 +30,7 @@
 #include <OgreSceneNode.h>
 #include <OgreRenderWindow.h>
 #include <OgreSubEntity.h>
+#include <OgreCamera.h>
 #include <MyGUI.h>
 #include <MyGUI_InputManager.h>
 using namespace Ogre;

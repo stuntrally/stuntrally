@@ -17,6 +17,7 @@
 #include "../shiny/Main/Factory.hpp"
 #include "../sdl4ogre/sdlinputwrapper.hpp"
 #include <OgreTerrain.h>
+#include <OgreCamera.h>
 #include <MyGUI.h>
 using namespace MyGUI;
 using namespace Ogre;
