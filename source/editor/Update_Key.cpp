@@ -258,9 +258,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 			//  prev,next
 			case key(PAGEUP):  case key(KP_9):
-				road->PrevPoint();  break;
+				if (shift)  road->SelAddPoint();	road->PrevPoint();  break;
 			case key(PAGEDOWN):	case key(KP_3):
-				road->NextPoint();  break;
+				if (shift)  road->SelAddPoint();	road->NextPoint();  break;
 				
 			//  del
 			case key(DELETE):  case key(KP_PERIOD):
