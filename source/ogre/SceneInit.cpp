@@ -157,8 +157,6 @@ void App::NewGame()
 	{
 		pSet->game = pSet->gui;  // copy game config from gui
 		Ch_NewGame();
-		if (sc->denyReversed)
-			pSet->game.trackreverse = false;
 
 		if (mClient && mLobbyState != HOSTING)  // all but host
 			gui->updateGameSet();  // override gameset params for networked game (from host gameset)
@@ -279,6 +277,8 @@ void App::LoadGame()  // 2
 	sc->vdr = vdr;
 	pGame->track.asphalt = sc->asphalt;  //*
 	pGame->track.sDefaultTire = sc->asphalt ? "asphalt" : "gravel";  //*
+	if (sc->denyReversed)
+		pSet->game.trackreverse = false;
 
 	pGame->NewGameDoLoadTrack();
 
