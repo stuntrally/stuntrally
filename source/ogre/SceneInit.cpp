@@ -157,6 +157,8 @@ void App::NewGame()
 	{
 		pSet->game = pSet->gui;  // copy game config from gui
 		Ch_NewGame();
+		if (sc->denyReversed)
+			pSet->game.trackreverse = false;
 
 		if (mClient && mLobbyState != HOSTING)  // all but host
 			gui->updateGameSet();  // override gameset params for networked game (from host gameset)
@@ -391,6 +393,8 @@ void App::LoadScene()  // 3
 
 	//  fluids
 	CreateFluids();
+
+	pGame->collision.world->setGravity(btVector3(0.0, 0.0, -sc->gravity));
 
 
 	//  set sky tex name for water

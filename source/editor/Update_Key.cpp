@@ -533,7 +533,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	{
 		case key(Q):  gui->GuiShortcut(WND_Track, 1);  return true;  // Q Track
 		case key(O):  gui->GuiShortcut(WND_Track, 2);  return true;  // O Tools
-		case key(J):  gui->GuiShortcut(WND_Track, 3);  return true;  // J Warnings
+		case key(J):  gui->GuiShortcut(WND_Track, 4);  return true;  // J Warnings
 
 		case key(S):  gui->GuiShortcut(WND_Edit, 1);  return true;  // S Sun
 		case key(H):  gui->GuiShortcut(WND_Edit, 2);  return true;  // H Heightmap

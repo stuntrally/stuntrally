@@ -1055,6 +1055,41 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
+				<Property key="Caption" value="#C090B0#{Game}"/>
+				<Widget type="TextBox" skin="TextBox" position="32 60 268 24">
+					<Property key="Caption" value="#{Damage}: #{InputMultiplier}"/>
+					<Property key="TextColour" value="0.7 0.7 0.9"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="96 88 248 18" name="DamageMul"/>
+				<Widget type="TextBox" skin="TextBox" position="32 88 60 24" name="DamageMulVal">
+					<Property key="TextColour" value="0.7 0.7 0.9"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 152 276 24" name="TiresAsphalt">
+					<Property key="Caption" value="#{Tires}: #{Asphalt}"/>
+					<Property key="TextColour" value="0.8 0.7 0.7"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="380 60 264 24">
+					<Property key="Caption" value="#{Gravity}"/>
+					<Property key="TextColour" value="0.9 0.76 0.6"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="444 80 320 18" name="Gravity"/>
+				<Widget type="TextBox" skin="TextBox" position="380 80 60 24" name="GravityVal">
+					<Property key="TextColour" value="0.9 0.76 0.6"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="380 128 264 24">
+					<Property key="Caption" value="#{Wind}"/>
+					<Property key="TextColour" value="0.7 0.9 0.7"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="444 152 320 18" name="WindAmt"/>
+				<Widget type="TextBox" skin="TextBox" position="380 152 60 24" name="WindAmtVal">
+					<Property key="TextColour" value="0.7 0.9 0.7"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 196 276 24" name="DenyReversed">
+					<Property key="Caption" value="#{DenyReversed}"/>
+					<Property key="TextColour" value="0.6 0.8 0.8"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#E0A0A0#{Warnings}"/>
 				<Widget type="ImageBox" skin="ImageBox" position="660 32 64 64" name="ImgInfo">
 					<Property key="ImageCoord" value="128 768 128 128"/>

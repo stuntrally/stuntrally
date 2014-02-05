@@ -1,4 +1,11 @@
------  file from:  0 A.D.\binaries\data\mods\public\art\LICENSE.txt  -----
+-----
+file from:  0 A.D.\binaries\data\mods\public\art\LICENSE.txt
+appiles to:
+
+obelisk*
+pers_*
+pyramid*
+-----
 
 The files in this directory are Copyright (C) 2009 Wildfire Games.
 
@@ -19,7 +26,3 @@ Briefly, this means:
 
 * If you distribute one of these files, you must release it (and any
   modifications you have made to it) under the CC-by-sa license.
-
-Some of the files in the "textures/" directory are derived from materials provided by CGTextures (http://www.cgtextures.com/). The original materials are the property of CGTextures or its contributors. Special permission has been granted by CGTextures to distribute these derived textures as CC-BY-SA. (This has no effect on the standard licensing of CGTextures materials, or on any other work derived from them.)
-
-All CGTextures materials have been altered from their original form. To access original super-high resolution CGTextures materials, please visit http://www.cgtextures.com/ .

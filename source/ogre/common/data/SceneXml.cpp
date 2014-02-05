@@ -18,12 +18,15 @@ Scene::Scene()
 }
 void Scene::Default()
 {
-	asphalt = false;  ter = true;  vdr = false;
+	ter = true;  vdr = false;
+
+	asphalt = false;  denyReversed = false;
+	windAmt = 0.f;  damageMul = 1.f;
+	gravity = 9.81f;
 
 	skyMtr = "World/NoonSky";
 	rainEmit = 0;  rainName = "";
 	rain2Emit = 0;  rain2Name = "";
-	windAmt = 0.f;  damageMul = 1.f;
 
 	fogStart = 600;  fogEnd = 1600;
 	fogClr = fogClr2 = fogClrH = Vector4(0.73f, 0.86f, 1.0f, 1.f);
@@ -182,6 +185,9 @@ bool Scene::LoadXml(String file, bool bTer)
 	{
 		a = eCar->Attribute("tires");		if (a)  asphalt = s2i(a) > 0;
 		a = eCar->Attribute("damage");		if (a)  damageMul = s2r(a);
+
+		a = eCar->Attribute("denyRev");		if (a)  denyReversed = s2i(a) > 0;
+		a = eCar->Attribute("gravity");		if (a)  gravity = s2r(a);
 	}
 
 	///  sky
@@ -449,6 +455,11 @@ bool Scene::SaveXml(String file)
 		car.SetAttribute("tires",	asphalt ? "1":"0");
 		if (damageMul != 1.f)
 			car.SetAttribute("damage",	toStrC( damageMul ));
+
+		if (denyReversed)
+			car.SetAttribute("denyRev",	"1");
+		if (gravity != 9.81f)
+			car.SetAttribute("gravity",	toStrC( gravity ));
 	root.InsertEndChild(car);
 
 
@@ -462,7 +473,7 @@ bool Scene::SaveXml(String file)
 		{	sky.SetAttribute("rain2Name",	rain2Name.c_str());
 			sky.SetAttribute("rain2Emit",	toStrC( rain2Emit ));
 		}
-		if (windAmt > 0.f)
+		if (windAmt != 0.f)
 			sky.SetAttribute("windAmt",	toStrC( windAmt ));
 	root.InsertEndChild(sky);
 
