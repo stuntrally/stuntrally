@@ -209,6 +209,7 @@ public:
 	int curBr;
 	bool bTerUpd,bTerUpdBlend;  char sBrushTest[512];
 	float* pBrFmask, *mBrushData;
+	bool brLockPos;
 
 	//  params
 	float terSetH, mBrFilt,mBrFiltOld;

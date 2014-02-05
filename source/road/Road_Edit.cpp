@@ -10,7 +10,7 @@ using namespace Ogre;
 
 ///  Pick marker
 //---------------------------------------------------------------------------------------------------------------
-void SplineRoad::Pick(Camera* mCamera, Real mx, Real my, bool bAddH, bool bHide)
+void SplineRoad::Pick(Camera* mCamera, Real mx, Real my,  bool bRay, bool bAddH, bool bHide)
 {
 	iSelPoint = -1;
 	//if (vMarkNodes.size() != getNumPoints())
@@ -50,7 +50,7 @@ void SplineRoad::Pick(Camera* mCamera, Real mx, Real my, bool bAddH, bool bHide)
 	}
 	
 	//  ray terrain hit pos
-	if (ndHit && mTerrain)
+	if (bRay && ndHit && mTerrain)
 	{
 		std::pair<bool, Vector3> p = mTerrain->rayIntersects(ray);
 		bHitTer = p.first;  //ndHit->setVisible(bHitTer);

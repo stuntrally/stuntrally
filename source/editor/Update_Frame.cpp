@@ -99,8 +99,8 @@ bool App::frameEnded(const FrameEvent& evt)
 	{
 		const MyGUI::IntPoint& mp = MyGUI::InputManager::getInstance().getMousePosition();
 		Real mx = Real(mp.left)/mWindow->getWidth(), my = Real(mp.top)/mWindow->getHeight();
-		road->Pick(mCamera, mx, my,
-			edMode == ED_Road,  !(edMode == ED_Road && bEdit()));
+		bool setpos = edMode >= ED_Road || !brLockPos, hide = !(edMode == ED_Road && bEdit());
+		road->Pick(mCamera, mx, my,  setpos, edMode == ED_Road, hide);
 
 		if (sc->vdr)  // blt ray hit
 		{

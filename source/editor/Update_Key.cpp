@@ -315,6 +315,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(L):    if (ctrl)  {  mBrShape[curBr] = (EBrShape)((mBrShape[curBr]+1) % BRS_ALL);            updBrush();  }  break;
 		case key(N): case key(COMMA):   mBrOct[curBr] = std::max(1, mBrOct[curBr]-1);  updBrush();  break;
 		case key(M): case key(PERIOD):  mBrOct[curBr] = std::min(7, mBrOct[curBr]+1);  updBrush();  break;
+		case key(RETURN):  brLockPos = !brLockPos;  break;
 	}
 
 	//  ter brush presets  ----

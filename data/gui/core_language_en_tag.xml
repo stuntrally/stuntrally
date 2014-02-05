@@ -759,6 +759,7 @@
 	<Tag name="Brush_Height">Height</Tag>
 	<Tag name="Brush_Filter">Filter</Tag>
 	<Tag name="Brush_CurrentH">Curr.H</Tag>
+	<Tag name="Lock">Lock</Tag>
 
 
 	<!--  Vegetation  -->
@@ -946,6 +947,7 @@
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="InputMinimapType">alt-F2,F3 - Prev,next minimap type</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
+	<Tag name="InputLockBrush">Enter - lock brush position</Tag>
 
 	<!--  Terrain  brush  -->
 	<Tag name="InputBrushParams">Brush parameters</Tag>
@@ -1003,6 +1005,7 @@
 	<Tag name="InputRoadPickOne">Pick (one)</Tag>
 	<Tag name="InputRoadPick">Space - pick one/none</Tag>
 	<Tag name="InputRoadNext">PgUp,PgDn (or Wheel) - previous/next point</Tag>
+	<Tag name="InputRoadShiftSel">shift - select</Tag>
 
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>

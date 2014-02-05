@@ -28,7 +28,7 @@ using namespace Ogre;
 //----------------------------------------------------------------------------------------------------------------------
 App::App(SETTINGS* pSet1)
 	:mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)
-	,bTerUpd(0), curBr(0)
+	,bTerUpd(0), curBr(0), brLockPos(0)
 	,ndPos(0), mpos(0), asp(4.f/3.f)
 	,ndCar(0),entCar(0), ndStBox(0),entStBox(0), ndFluidBox(0),entFluidBox(0), ndObjBox(0),entObjBox(0)
 	,grass(0), trees(0), sun(0), pr(0),pr2(0)
