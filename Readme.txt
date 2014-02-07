@@ -115,29 +115,6 @@ Compiling
 For newest sources and how to compile them check
 project's Wiki page [Compiling].
 
-We are using CMake and C++.
-Car simulation is done by VDrift also using bullet. Rendering by OGRE.
-Trees/grass by PagedGeometry, Gui by MyGUI, materials managed by shiny.
-
--- Currently these are used (and need to build before game):
--- newer versions can be used
-OGRE 1.8 with plugins
-MyGUI 3.2
-Boost 1.49
-
-SDL2-2.0.0
-libvorbis-1.3.3, libogg-1.3.0
-ENet 1.3.4
-
--- These are included in Source (and compiled with project):
-Bullet 2.79 (need this version)
-BtOgre *
-OICS *
-PagedGeometry 1.1.1 *
-shiny
-TinyXML,TinyXML2
-* are modified sources
-
 ----------------------------------------------------------------------------------
 
 Help is welcomed
@@ -158,18 +135,16 @@ Programmers
 Artists
     Help exporting existing models from Blender to Ogre.
     Editing meshes for game, uv unwrap, texturing etc.
-    If you can create/edit 3D models
-    (cars, trees, plants, rocks, objects etc),
-    textures for them or for terrain.
-    If you can record/edit sounds for the game.
-
-Translators
-    If you want to help translating into
-    a language, check Wiki page [Localization].
+    If you can create/edit 3D models and textures
+	or record/edit sounds for the game.
 
 Track creators
     If you manage to create an interesting track,
     it could be released in future versions.
+
+Translators
+    If you want to help translating into
+    a language, check Wiki page [Localization].
 
 If so, tell us on IRC at #stuntrally on freenode,
 or by posting on Forum,
