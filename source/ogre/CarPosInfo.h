@@ -1,6 +1,11 @@
 #pragma once
 #include <OgreVector3.h>
 #include <OgreQuaternion.h>
+#include "../vdrift/mathvector.h"
+#include "../vdrift/quaternion.h"
+
+struct ReplayFrame;
+class CAR;
 
 
 //  Stores all the needed information about car coming from vdrift
@@ -30,7 +35,27 @@ struct PosInfo
 	//  camera view
 	Ogre::Vector3 camPos;  Ogre::Quaternion camRot;
 
-	PosInfo() : bNew(false),  // not inited
-		pos(0,-200,0), percent(0.f), braking(0)
-	{}
+
+	//  ctor
+	PosInfo();
+	
+	//  copy
+	void FromRpl(const ReplayFrame* rf);
+	void FromCar(CAR* pCar);
+};
+
+
+struct Axes
+{
+	static void Init();
+	static Ogre::Quaternion qFixCar,qFixWh;
+
+	//  to ogre from vdrift
+	static void toOgre(Ogre::Vector3& vOut, const MATHVECTOR<float,3>& vIn);
+	static Ogre::Vector3 Axes::toOgre(const MATHVECTOR<float,3>& vIn);
+
+	static Ogre::Quaternion toOgre(const QUATERNION<float>& vIn);  // car
+	static Ogre::Quaternion toOgre(const QUATERNION<double>& vIn);
+	static Ogre::Quaternion toOgreW(const QUATERNION<float>& vIn);  // wheels
+	static Ogre::Quaternion toOgreW(const QUATERNION<double>& vIn);
 };

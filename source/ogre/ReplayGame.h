@@ -2,6 +2,7 @@
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
 #include <OgreVector3.h>
+class CAR;
 
 const static int ciRplHdrSize = 1024;
 const static int cDefSize = 8*1024;
@@ -87,6 +88,7 @@ struct ReplayFrame
 	float whMudSpin, fHitForce, fCarScrap, fCarScreech;
 
 	ReplayFrame();
+	void FromCar(const CAR* pCar);
 };
 
 

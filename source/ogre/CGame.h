@@ -42,8 +42,7 @@ public:
 	PosInfo carPoses[CarPosCnt][8];  // max 8 cars
 	int iCurPoses[8];  // current index for carPoses queue
 	std::map<int,int> carsCamNum;  // picked camera number for cars
-	Ogre::Quaternion qFixCar,qFixWh;  // utility
-
+	
 	void newPoses(float time), newPerfTest(float time);  // vdrift
 	void updatePoses(float time);  // ogre
 	void UpdThr();

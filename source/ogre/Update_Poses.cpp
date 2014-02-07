@@ -30,7 +30,7 @@ void App::newPoses(float time)  // time only for camera update
 		return;
 	PROFILER.beginBlock(".newPos ");
 
-	double rplTime = pGame->timer.GetReplayTime(0);
+	double rplTime = pGame->timer.GetReplayTime(0);  // from start
 	double lapTime = pGame->timer.GetPlayerTime(0);
 	double rewTime = pSet->rpl_ghostrewind ? pGame->timer.GetRewindTimeGh(0) : lapTime;
 
@@ -39,33 +39,30 @@ void App::newPoses(float time)  // time only for camera update
 	for (int c = 0; c < carModels.size(); ++c)
 	{
 		CarModel* carM = carModels[c];
-		CAR* pCar = carM->pCar;
-		PosInfo pi;  // new, to fill data
 		bool bGhost = carM->isGhost();
-		
-		//  local data  car,wheels
-		MATHVECTOR<float,3> pos, whPos[4];
-		QUATERNION<float> rot, whRot[4];
+		CAR* pCar = carM->pCar;
+
+		PosInfo pi;  // new, to fill data
 
 
-		///  car perf test  logic
-		//-----------------------------------------------------------------------
+		//  car perf test  logic
+		//--------------------------------
 		if (bPerfTest && c==0)
 			newPerfTest(time);
 
 
-		///-----------------------------------------------------------------------
 		//  play  get data from replay / ghost
 		///-----------------------------------------------------------------------
 		if (bGhost)
-		{	// track's ghost
+		{	///>>  track's ghost
 			if (carM->isGhostTrk())
 			{
-				TrackFrame tf;       // par sec after, 1st lap
+				TrackFrame tf;       // par: sec after, 1st lap
 				float lap1 = pGame->timer.GetCurrentLap(0) > 0 ? 2.f : 0.f;
 				bool ok = ghtrk.GetFrame(rewTime + lap1, &tf);
 				//  car
-				pos = tf.pos;  rot = tf.rot;
+				Axes::toOgre(pi.pos, tf.pos);
+				pi.rot = Axes::toOgre(tf.rot);
 				pi.braking = tf.brake;
 				pi.steer = tf.steer / 127.f;
 				//pi.fboost = 0.f;  pi.speed = 0.f;  pi.percent = 0.f;
@@ -79,119 +76,50 @@ void App::newPoses(float time)  // time only for camera update
 					MATHVECTOR<float,3> whP = carM->whPos[w];
 					whP[2] += 0.05f;  // up
 					tf.rot.RotateVector(whP);
-					whPos[w] = tf.pos + whP;
+					Axes::toOgre(pi.whPos[w], tf.pos + whP);
 					if (w < 2)  // front steer
 					{	float a = (pi.steer * carM->maxangle) * -PI_d/180.f;
 						QUATERNION<float> q;  q.Rotate(a, 0,0,1);
-						whRot[w] = tf.rot * carM->qFixWh[w%2] * q;
+						pi.whRot[w] = Axes::toOgreW(tf.rot * carM->qFixWh[w%2] * q);
 					}else
-						whRot[w] = tf.rot * carM->qFixWh[w%2];
+						pi.whRot[w] = Axes::toOgreW(tf.rot * carM->qFixWh[w%2]);
 				}
-			}else  // ghost
+			}else  ///>>  ghost
 			{
-				ReplayFrame rf;
-				bool ok = ghplay.GetFrame(rewTime, &rf, 0);
-				//  car
-				pos = rf.pos;  rot = rf.rot;  pi.speed = rf.speed;
-				pi.fboost = rf.fboost;  pi.steer = rf.steer;
-				pi.percent = rf.percent;  pi.braking = rf.braking;
-				pi.fHitTime = rf.fHitTime;	pi.fParIntens = rf.fParIntens;	pi.fParVel = rf.fParVel;
-				pi.vHitPos = rf.vHitPos;	pi.vHitNorm = rf.vHitNorm;
-				//  wheels
+				ReplayFrame gf;
+				bool ok = ghplay.GetFrame(rewTime, &gf, 0);
+
+				pi.FromRpl(&gf);
+
 				for (int w=0; w < 4; ++w)
-				{
-					whPos[w] = rf.whPos[w];  whRot[w] = rf.whRot[w];
-					pi.whVel[w] = rf.whVel[w];
-					pi.whSlide[w] = rf.slide[w];  pi.whSqueal[w] = rf.squeal[w];
-					pi.whR[w] = replay.header.whR[c][w];//
-					pi.whTerMtr[w] = rf.whTerMtr[w];  pi.whRoadMtr[w] = rf.whRoadMtr[w];
-					pi.whH[w] = rf.whH[w];  pi.whP[w] = rf.whP[w];
-					pi.whAngVel[w] = rf.whAngVel[w];
-					if (w < 2)  pi.whSteerAng[w] = rf.whSteerAng[w];
-				}
+					pi.whR[w] = replay.header.whR[c][w]; //
 			}
 		}
-		else  // replay
-		if (bRplPlay)  // class member frm - used for sounds in car.cpp
+		else  ///>>  replay
+		if (bRplPlay)
 		{
-			//  time  from start
 			#ifdef DEBUG
 			assert(c < frm.size());
 			#endif
-			ReplayFrame& fr = frm[c];
-			bool ok = replay.GetFrame(rplTime, &fr, c);
-				if (!ok)	pGame->timer.RestartReplay(0);  //at end
-			
-			//  car
-			pos = fr.pos;  rot = fr.rot;  pi.speed = fr.speed;
-			pi.fboost = fr.fboost;  pi.steer = fr.steer;
-			pi.percent = fr.percent;  pi.braking = fr.braking;
-			pi.fHitTime = fr.fHitTime;	pi.fParIntens = fr.fParIntens;	pi.fParVel = fr.fParVel;
-			pi.vHitPos = fr.vHitPos;	pi.vHitNorm = fr.vHitNorm;
-			//  wheels
+			ReplayFrame& rf = frm[c];  // frm also used in car.cpp for sounds
+			bool ok = replay.GetFrame(rplTime, &rf, c);
+			if (!ok)  pGame->timer.RestartReplay(0);  //at end
+
+			pi.FromRpl(&rf);
+
 			for (int w=0; w < 4; ++w)
-			{
-				whPos[w] = fr.whPos[w];  whRot[w] = fr.whRot[w];
-				pi.whVel[w] = fr.whVel[w];
-				pi.whSlide[w] = fr.slide[w];  pi.whSqueal[w] = fr.squeal[w];
-				pi.whR[w] = replay.header.whR[c][w];//
-				pi.whTerMtr[w] = fr.whTerMtr[w];  pi.whRoadMtr[w] = fr.whRoadMtr[w];
-				pi.whH[w] = fr.whH[w];  pi.whP[w] = fr.whP[w];
-				pi.whAngVel[w] = fr.whAngVel[w];
-				if (w < 2)  pi.whSteerAng[w] = fr.whSteerAng[w];
-			}
+				pi.whR[w] = replay.header.whR[c][w]; //
 		}
-		else  // sim, game
-		//  get data from vdrift
-		//-----------------------------------------------------------------------
+		else  ///>>  sim, game  -  get data from vdrift
 		if (pCar)
 		{
-			const CARDYNAMICS& cd = pCar->dynamics;
-			pos = cd.GetPosition();  rot = cd.GetOrientation();
-			//  car
-			pi.fboost = cd.boostVal;	//posInfo.steer = cd.steer;
-			pi.speed = pCar->GetSpeed();
-			pi.percent = carM->trackPercent;	pi.braking = cd.IsBraking();
-			pi.fHitTime = cd.fHitTime;	pi.fParIntens = cd.fParIntens;	pi.fParVel = cd.fParVel;
-			pi.vHitPos = cd.vHitPos;	pi.vHitNorm = cd.vHitNorm;
-			//  wheels
-			for (int w=0; w < 4; ++w)
-			{	WHEEL_POSITION wp = WHEEL_POSITION(w);
-				whPos[w] = cd.GetWheelPosition(wp);  whRot[w] = cd.GetWheelOrientation(wp);
-				//float wR = pCar->GetTireRadius(wp);
-				pi.whVel[w] = cd.GetWheelVelocity(wp).Magnitude();
-				pi.whSlide[w] = -1.f;  pi.whSqueal[w] = pCar->GetTireSquealAmount(wp, &pi.whSlide[w]);
-				pi.whR[w] = pCar->GetTireRadius(wp);//
-				pi.whTerMtr[w] = cd.whTerMtr[w];  pi.whRoadMtr[w] = cd.whRoadMtr[w];
-				pi.whH[w] = cd.whH[w];  pi.whP[w] = cd.whP[w];
-				pi.whAngVel[w] = cd.wheel[w].GetAngularVelocity();
-				if (w < 2)  pi.whSteerAng[w] = cd.wheel[w].GetSteerAngle();
-			}
-		}
-		
-
-		//  transform axes, vdrift to ogre  car & wheels
-		//-----------------------------------------------------------------------
-
-		pi.pos = Vector3(pos[0],pos[2],-pos[1]);
-		Quaternion q(rot[0],rot[1],rot[2],rot[3]), q1;
-		Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
-		q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));  pi.rot = q1 * qFixCar;
-		Vector3 vcx,vcz;  q1.ToAxes(vcx,pi.carY,vcz);
-
-		if (!isnan(whPos[0][0]))
-		for (int w=0; w < 4; ++w)
-		{
-			pi.whPos[w] = Vector3(whPos[w][0],whPos[w][2],-whPos[w][1]);
-			Quaternion q(whRot[w][0],whRot[w][1],whRot[w][2],whRot[w][3]), q1;
-			Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
-			q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));  pi.whRot[w] = q1 * qFixWh;
+			pi.FromCar(pCar);
+			pi.percent = carM->trackPercent;
 		}
 		pi.bNew = true;
 		
 
-		///-----------------------------------------------------------------------
-		//  rewind
+		//<<  rewind
 		///-----------------------------------------------------------------------
 		if (!bRplPlay && !pGame->pause && !bGhost && pCar)
 		if (pCar->bRewind && pSet->game.rewind_type > 0)
@@ -226,64 +154,19 @@ void App::newPoses(float time)  // time only for camera update
 			rewind.AddFrame(fr, c);  // rec rewind
 		}
 		
-		///-----------------------------------------------------------------------
-		//  record  save data
+		//<<  record  save data
 		///-----------------------------------------------------------------------
 		if (pSet->rpl_rec && !pGame->pause && !bGhost && pCar && c < 4)
 		{
 			//static int ii = 0;
 			//if (ii++ >= 0)	// 1 half game framerate
-			{	//ii = 0;
-				const CARDYNAMICS& cd = pCar->dynamics;
-				ReplayFrame fr;
-				fr.time = rplTime;  //  time  from start
-				fr.pos = pos;  fr.rot = rot;  //  car
-				//  wheels
-				for (int w=0; w < 4; ++w)
-				{	fr.whPos[w] = whPos[w];  fr.whRot[w] = whRot[w];
+			//{	ii = 0;
 
-					WHEEL_POSITION wp = WHEEL_POSITION(w);
-					const TRACKSURFACE* surface = cd.GetWheelContact(wp).GetSurfacePtr();
-					fr.surfType[w] = !surface ? TRACKSURFACE::NONE : surface->type;
-					//  squeal
-					fr.slide[w] = -1.f;  fr.squeal[w] = pCar->GetTireSquealAmount(wp, &fr.slide[w]);
-					fr.whVel[w] = cd.GetWheelVelocity(wp).Magnitude();
-					//  susp
-					fr.suspVel[w] = cd.GetSuspension(wp).GetVelocity();
-					fr.suspDisp[w] = cd.GetSuspension(wp).GetDisplacementPercent();
-					if (w < 2)
-						fr.whSteerAng[w] = cd.wheel[w].GetSteerAngle();
-					//replay.header.whR[w] = pCar->GetTireRadius(wp);//
-					fr.whTerMtr[w] = cd.whTerMtr[w];  fr.whRoadMtr[w] = cd.whRoadMtr[w];
-					//  fluids
-					fr.whH[w] = cd.whH[w];  fr.whP[w] = cd.whP[w];
-					fr.whAngVel[w] = cd.wheel[w].GetAngularVelocity();
-					bool inFl = cd.inFluidsWh[w].size() > 0;
-					int idPar = -1;
-					if (inFl)
-					{	const FluidBox* fb = *cd.inFluidsWh[w].begin();
-						idPar = fb->idParticles;  }
-					fr.whP[w] = idPar;
-					if (w < 2)  pi.whSteerAng[w] = cd.wheel[w].GetSteerAngle();
-				}
-				//  hud
-				fr.vel = pCar->GetSpeedometer();  fr.rpm = pCar->GetEngineRPM();
-				fr.gear = pCar->GetGear();  fr.clutch = pCar->GetClutch();
-				fr.throttle = cd.GetEngine().GetThrottle();
-				fr.steer = pCar->GetLastSteer();
-				fr.fboost = cd.doBoost;		fr.percent = carM->trackPercent;
-				//  eng snd
-				fr.posEngn = cd.GetEnginePosition();
-				fr.speed = pCar->GetSpeed();
-				fr.dynVel = cd.GetVelocity().Magnitude();
-				fr.braking = cd.IsBraking();  //// from posInfo?, todo: simplify this code here ^^
-				//  hit sparks
-				fr.fHitTime = cd.fHitTime;	fr.fParIntens = cd.fParIntens;	fr.fParVel = cd.fParVel;
-				fr.vHitPos = cd.vHitPos;	fr.vHitNorm = cd.vHitNorm;
-				fr.whMudSpin = pCar->whMudSpin;
-				fr.fHitForce = cd.fHitForce;
-				fr.fCarScrap = std::min(1.f, cd.fCarScrap);
-				fr.fCarScreech = std::min(1.f, cd.fCarScreech);
+				ReplayFrame fr;
+				fr.time = rplTime;
+				fr.percent = carM->trackPercent;
+
+				fr.FromCar(pCar);
 				
 				replay.AddFrame(fr, c);  // rec replay
 				if (c==0)  /// rec ghost lap
@@ -299,7 +182,7 @@ void App::newPoses(float time)  // time only for camera update
 					String ss = String( TR("#{RplRecTime}: ")) + CHud::StrTime(replay.GetTimeLength()) + TR("   #{RplSize}: ") + s + TR(" #{UnitMB}");
 					gui->valRplName2->setCaption(ss);
 				}
-			}
+			//}
 		}
 		if (bRplPlay && gui->valRplName2)  gui->valRplName2->setCaption("");
 		///-----------------------------------------------------------------------
@@ -311,7 +194,7 @@ void App::newPoses(float time)  // time only for camera update
 			carM->bWrongChk = false;
 		else
 		{
-			//  arrow update  --------------------------------------
+			///  arrow update  --------------------------------------
 			if (pSet->check_arrow && carM->eType == CarModel::CT_LOCAL
 			  && !bRplPlay && hud->arrow.node && road && road->mChks.size()>0)
 			{
