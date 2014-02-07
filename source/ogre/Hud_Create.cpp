@@ -204,7 +204,7 @@ void CHud::Create()
 	//  car pos tris (form all cars on all viewports)
 	SceneNode* rt = scm->getRootSceneNode();
 	asp = 1.f;  //_temp
-	moPos = Create2D("hud/CarPos", scm, 0.4f, true,true, 1.f,Vector2(1,1), RV_Hud,RQG_Hud3, plr * 6);
+	moPos = Create2D("hud/CarPos", scm, 0.0f, true,true, 1.f,Vector2(1,1), RV_Hud,RQG_Hud3, plr * 6);
 	ndPos = rt->createChildSceneNode();
 	ndPos->attachObject(moPos);
 
