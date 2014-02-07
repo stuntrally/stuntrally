@@ -53,20 +53,25 @@ public:
 	int tracks_view, tracks_sort, cars_sort,
 		tut_type, champ_type, chall_type, car_ed_tab;
 
-	//  graphics
+	//  graphics common
 	int preset;  // last set, info only
 	int anisotropy, tex_size, ter_mtr, ter_tripl;  bool bFog;
 	float view_distance, terdetail, terdist, road_dist;
+	bool horizon;
+	
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type; //eShadowType
 	bool use_imposters, imposters_only;
+	float grass, trees_dist, grass_dist;
+	bool water_reflect, water_refract;  int water_rttsize;
+	std::string shader_mode;
+
+	//  graphics
 	int refl_skip, refl_faces, refl_size;  float refl_dist;
 	int refl_mode;  // 0 static, 1 single, 2 full
-	bool water_reflect, water_refract;  int water_rttsize;
-	bool particles, trails;  float grass, trees_dist, grass_dist;
+
+	bool particles, trails;
 	float particles_len, trails_len;
 	bool boost_fov;
-
-	std::string shader_mode;
 
 	//---------------  car setup
 	bool abs[2], tcs[2],  // [2] = 0 gravel 1 asphalt

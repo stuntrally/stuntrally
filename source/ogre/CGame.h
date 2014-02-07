@@ -138,18 +138,22 @@ public:
 	float mTimer;  // wind,water
 
 
-	///  terrain
-	Ogre::TerrainGlobalOptions* mTerrainGlobals;
-	Ogre::TerrainGroup* mTerrainGroup;  bool mPaging;
-	Ogre::TerrainPaging* mTerrainPaging;  Ogre::PageManager* mPageManager;
-	//Vector3 getNormalAtWorldPosition(Terrain* terrain, Real x, Real z, Real s);
+	///  horizon
+	Ogre::Terrain* horizon;
+	Ogre::TerrainGlobalOptions* mHorizonGlobals;
+	Ogre::TerrainGroup* mHorizonGroup;
+	void configureHorizonDefaults(Ogre::Light* l);
 
+	///  terrain
 	Ogre::Terrain* terrain; 
+	Ogre::TerrainGlobalOptions* mTerrainGlobals;
+	Ogre::TerrainGroup* mTerrainGroup;
+	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
+
 	int iBlendMaps, blendMapSize;	bool noBlendUpd;  //  mtr from ter  . . . 
 	char* blendMtr;  // mtr [blendMapSize x blendMapSize]
-
 	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
-	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
+
 	float Noise(float x, float zoom, int octaves, float persistance);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
 	//     xa  xb

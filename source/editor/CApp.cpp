@@ -27,7 +27,8 @@ using namespace Ogre;
 //  ctor
 //----------------------------------------------------------------------------------------------------------------------
 App::App(SETTINGS* pSet1)
-	:mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)
+	:terrain(0), mTerrainGroup(0), mTerrainGlobals(0)
+	,horizon(0), mHorizonGroup(0), mHorizonGlobals(0)
 	,bTerUpd(0), curBr(0), brLockPos(0)
 	,ndPos(0), mpos(0), asp(4.f/3.f)
 	,ndCar(0),entCar(0), ndStBox(0),entStBox(0), ndFluidBox(0),entFluidBox(0), ndObjBox(0),entObjBox(0)
@@ -101,11 +102,10 @@ App::~App()
 	delete[] mBrushData;
 	delete road;
 
-	if (mTerrainPaging)
-	{	OGRE_DELETE mTerrainPaging;
-		OGRE_DELETE mPageManager;
-	}else
-		OGRE_DELETE mTerrainGroup;
+	OGRE_DELETE mHorizonGroup;
+	OGRE_DELETE mHorizonGlobals;
+
+	OGRE_DELETE mTerrainGroup;
 	OGRE_DELETE mTerrainGlobals;
 
 	delete mFactory;  //!

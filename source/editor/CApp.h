@@ -137,12 +137,16 @@ public:
 	int iFlCur;  bool bRecreateFluids;
 
 	
+	///  horizon
+	Ogre::Terrain* horizon;
+	Ogre::TerrainGlobalOptions* mHorizonGlobals;
+	Ogre::TerrainGroup* mHorizonGroup;
+	void configureHorizonDefaults(Ogre::Light* l);
+	
 	///  terrain
 	Ogre::Terrain* terrain;
 	Ogre::TerrainGlobalOptions* mTerrainGlobals;
-	Ogre::TerrainGroup* mTerrainGroup;  bool mPaging;
-	Ogre::TerrainPaging* mTerrainPaging;
-	Ogre::PageManager* mPageManager;
+	Ogre::TerrainGroup* mTerrainGroup;
 	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
 
 	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 

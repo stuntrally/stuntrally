@@ -187,6 +187,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,preset(4)
 	,anisotropy(4),	view_distance(2000), bFog(0)
 	,terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2), ter_tripl(0)
+	,horizon(0)
 	,refl_skip(200), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode(1)
 	,water_reflect(0), water_refract(0), water_rttsize(0)
 	,shadow_type(Sh_Depth), shadow_size(2), shadow_count(3), shadow_dist(3000)
