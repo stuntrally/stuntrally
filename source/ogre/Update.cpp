@@ -414,8 +414,8 @@ bool App::frameStart(Real time)
 
 		///()  grass sphere pos
 		if (!carModels.empty())
-		{			//par
-			Real r = 1.7;  r *= r;
+		{
+			Real r = 1.7;  r *= r;  //par
 			const Vector3* p = &carModels[0]->posSph[0];
 			mFactory->setSharedParameter("posSph0", sh::makeProperty <sh::Vector4>(new sh::Vector4(p->x,p->y,p->z,r)));
 			p = &carModels[0]->posSph[1];

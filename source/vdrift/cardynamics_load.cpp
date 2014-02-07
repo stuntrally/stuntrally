@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "par.h"
 #include "cardynamics.h"
 #include "collision_world.h"
 #include "game.h"  // tire params map
@@ -36,7 +37,7 @@ CARDYNAMICS::CARDYNAMICS() :
 		whTerMtr[i]=0;  whRoadMtr[i]=0;
 		whH[i]=0.f;  whP[i]=-1;
 	}
-	boostFuel = gfBoostFuelStart;
+	boostFuel = gPar.boostFuelStart;
 
 	for (int i=0; i<4; ++i)
 		rot_coef[i] = 0.0;
@@ -729,7 +730,7 @@ void CARDYNAMICS::Init(
 		for (int w=0; w < 4; ++w)
 		{
 			WHEEL_POSITION wp = WHEEL_POSITION(w);
-			Dbl whR = GetWheel(wp).GetRadius() * 1.2;  //bigger par..
+			Dbl whR = GetWheel(wp).GetRadius() * 1.2;  //par bigger
 			MATHVECTOR<float,3> wheelpos = GetWheelPosition(wp, 0);  //par
 			wheelpos[0] += coll_Lofs;
 			wheelpos[2] += coll_flTrig_H;

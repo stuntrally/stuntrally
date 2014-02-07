@@ -43,7 +43,7 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 	float* pB[6];	TerrainLayerBlendMap* bMap[6];
 	int t = terrain->getLayerBlendMapSize(), x,y;
 	//LogO(String("Ter blendmap size: ")+toStr(t));
-	const float f = 0.8f / t * 2 * sc->td.fTerWorldSize / t * 3.14f;  //par-
+	const float f = 0.8f / t * 2 * sc->td.fTerWorldSize / t * 3.14f;  //par repeat-
 
 	//  mtr map
 	#ifndef SR_EDITOR

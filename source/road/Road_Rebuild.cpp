@@ -571,7 +571,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 						//>  data Wall
 						posW.push_back(vP);  normW.push_back(vN);
-						tcsW.push_back(0.25f * Vector2(uv, tcLW));  //pars
+						tcsW.push_back(0.25f * Vector2(uv, tcLW));  //par
 					}
 				}
 				
@@ -594,7 +594,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 						Real yy;
 
 						if (h==0)  // top below road
-						{	yy = vn.y * -0.8f;  //pars
+						{	yy = vn.y * -0.8f;  //par
 							vP.y += yy;
 						}
 						else  // bottom below ground
@@ -606,7 +606,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 						//>  data Col
 						posC.push_back(vP);  normC.push_back(vN);
-						tcsC.push_back(Vector2( Real(w)/iwC * 4, vP.y * tcMulC ));  //pars
+						tcsC.push_back(Vector2( Real(w)/iwC * 4, vP.y * tcMulC ));  //par
 					}
 				}
 				

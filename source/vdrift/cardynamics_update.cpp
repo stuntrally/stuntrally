@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "par.h"
 #include "cardynamics.h"
 #include "collision_world.h"
 #include "settings.h"
@@ -378,16 +379,16 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	}else
 		boostVal = 0.f;
 	
-	fBoostFov += (boostVal - fBoostFov) * 0.0005f;  //par speed (delay smooth)
+	fBoostFov += (boostVal - fBoostFov) * gPar.FOVspeed;
 		
 	//  add fuel over time
 	if (pSet->game.boost_type == 2)
 	{
-		boostFuel += dt * gfBoostFuelAddSec;
-		if (boostFuel > gfBoostFuelMax)  boostFuel = gfBoostFuelMax;
+		boostFuel += dt * gPar.boostFuelAddSec;
+		if (boostFuel > gPar.boostFuelMax)  boostFuel = gPar.boostFuelMax;
 	}
-	//LogO(toStr(boostFuel));
 	///***  --------------------------------------------------
+	
 	
 	int i;
 	Dbl normal_force[WHEEL_POSITION_SIZE];
@@ -400,8 +401,6 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 		MATHVECTOR<Dbl,3> tire_friction = ApplyTireForce(i, normal_force[i], wheel_orientation[i]);
 		ApplyWheelTorque(dt, drive_torque[i], i, tire_friction, wheel_orientation[i]);
 	}
-
-	//sumWhTest = sum;
 
 	body.Integrate2(dt);
 	//chassis->integrateVelocities(dt);

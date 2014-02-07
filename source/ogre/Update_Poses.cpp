@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "../vdrift/par.h"
 #include "common/Def_Str.h"
 #include "CGame.h"
 #include "CHud.h"
@@ -15,9 +16,6 @@
 #include "SplitScreen.h"
 #include <OgreCamera.h>
 using namespace Ogre;
-
-/// _Tool_ go back time rewind (1 for making best ghosts), save ghost always
-const bool backTime = 0;  //0 in release
 
 
 //  newPoses - Get new car pos from game
@@ -68,15 +66,16 @@ void App::newPoses(float time)  // time only for camera update
 				//pi.fboost = 0.f;  pi.speed = 0.f;  pi.percent = 0.f;
 				//pi.fHitTime = 0.f;  pi.fParIntens = 0.f;  pi.fParVel = 0.f;
 				//pi.vHitPos = Vector3::ZERO;  pi.vHitNorm = Vector3::UNIT_Y;
+
 				//  wheels
 				//dynamics.SetSteering(state.steer, pGame->GetSteerRange());  //peers can have other game settins..
-				
 				for (int w=0; w < 4; ++w)
 				{
 					MATHVECTOR<float,3> whP = carM->whPos[w];
 					whP[2] += 0.05f;  // up
 					tf.rot.RotateVector(whP);
 					Axes::toOgre(pi.whPos[w], tf.pos + whP);
+
 					if (w < 2)  // front steer
 					{	float a = (pi.steer * carM->maxangle) * -PI_d/180.f;
 						QUATERNION<float> q;  q.Rotate(a, 0,0,1);
@@ -125,11 +124,11 @@ void App::newPoses(float time)  // time only for camera update
 		if (pCar->bRewind && pSet->game.rewind_type > 0)
 		{	//  do rewind (go back)
 			double& gtime = pGame->timer.GetRewindTime(c);
-			gtime = std::max(0.0, gtime - time * 5.f);  //par speed
+			gtime = std::max(0.0, gtime - time * gPar.rewindSpeed);
 			double& ghtim = pGame->timer.GetRewindTimeGh(c);
-			ghtim = std::max(0.0, ghtim - time * 5.f);  //rewind ghost time too
-			if (backTime)
-			{	pGame->timer.Back(c, - time * 5.f);
+			ghtim = std::max(0.0, ghtim - time * gPar.rewindSpeed);  //rewind ghost time too
+			if (gPar.backTime)
+			{	pGame->timer.Back(c, - time * gPar.rewindSpeed);
 				ghost.DeleteFrames(0, ghtim);
 			}
 			RewindFrame rf;
@@ -269,7 +268,7 @@ void App::newPoses(float time)  // time only for camera update
 							mClient->lap(pGame->timer.GetCurrentLap(c), pGame->timer.GetLastLap(c));
 
 						///  new best lap, save ghost
-						if (!pSet->rpl_bestonly || best || backTime)
+						if (!pSet->rpl_bestonly || best || gPar.backTime)
 						if (c==0 && pSet->rpl_rec)  // for many, only 1st car
 						{
 							ghost.SaveFile(gui->GetGhostFile());  //,boost_type?
@@ -282,7 +281,7 @@ void App::newPoses(float time)  // time only for camera update
 						
 						//  restore boost fuel, each lap  ----
 						if (pSet->game.boost_type == 1 && carM->pCar)
-							carM->pCar->dynamics.boostFuel = gfBoostFuelStart;
+							carM->pCar->dynamics.boostFuel = gPar.boostFuelStart;
 
 						//  damage decrease, each lap  ---
 						if (pSet->game.damage_dec > 0.f)
@@ -405,20 +404,20 @@ void App::updatePoses(float time)
 			else
 			{	//  hide ghost when close to player
 				float d = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
-				if (d < 16.f)
+				if (d < gPar.ghostHideDist)
 					newVisible = false;
 
 				if (carM->isGhostTrk() && cgh >= 0)  // hide track's ghost when near ghost
 				{
 					float d = carM->pMainNode->getPosition().squaredDistance(carModels[cgh]->pMainNode->getPosition());
-					if (d < 25.f)
+					if (d < gPar.ghostHideDistTrk)
 						newVisible = false;
 				}
 				if (curVisible == newVisible)
 					carM->hideTime = 0.f;
 				else
 				{	carM->hideTime += time;  // change vis after delay
-					if (carM->hideTime > 0.2f)  // par sec
+					if (carM->hideTime > gPar.ghostHideTime)
 						carM->setVisible(newVisible);
 				}
 		}	}
