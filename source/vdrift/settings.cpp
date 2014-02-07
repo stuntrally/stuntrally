@@ -183,7 +183,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,gauges_type(1),gauges_layout(1), graphs_type(Gh_Fps)
 	//  cam
 	,cam_loop_chng(1), cam_in_loop(1)
-	,cam_bounce(0/*1*/), cam_bnc_mul(1.f)
+	,cam_bounce(1), cam_bnc_mul(1.f)
 	//  gui
 	,tracks_view(0), tracks_sort(0), tracks_sortup(1), cars_sort(1), cars_sortup(1)
 	,champ_type(0),tut_type(0),chall_type(0), car_ed_tab(0), champ_info(1)

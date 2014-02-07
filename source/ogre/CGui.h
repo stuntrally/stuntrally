@@ -187,6 +187,7 @@ public:
 	Ck ckMiniZoom, ckMiniRot, ckMiniTer, ckMiniBorder;
 	//  cam
 	Ck ckCamInfo, ckCamTilt, ckCamLoop;
+	Ck ckCamBnc;  SV svCamBnc;
 	//  Times, opp
 	Ck ckTimes;
 	Ck ckOpponents, ckOppSort;

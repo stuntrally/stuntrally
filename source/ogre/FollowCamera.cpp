@@ -217,7 +217,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 			pos += addPos;
 			camPosFinal = pos + ofs;
 		
-			goalLook = posGoal + ofs/*  + 2*hitOfs*/;
+			goalLook = posGoal + ofs;
 			if (first)	{	mLook = goalLook;  }
 
 			addLook = (goalLook - mLook) * dtmul;//Rot;
@@ -234,8 +234,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
         Ogre::Quaternion q;  q.FromAxes(xVec, yVec, zdir);
 		camRotFinal = q;
 	}
-	//camPosFinal += hitOfs;
-		
+	
 	//  cast ray from car to camera, reduce dist if hit
 	//-------------------------------------------------------------------------------------------
 	Vector3 p = posGoal;  p.y += 1.f;  //up

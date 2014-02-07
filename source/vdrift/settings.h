@@ -7,12 +7,12 @@
 
 enum eGraphType  {
 	Gh_Fps=0,
-	Gh_CarAccelG, Gh_BulletHit,
+	Gh_CarAccelG, Gh_CamBounce, Gh_BulletHit,
 	Gh_Sound,
 	Gh_TireSlips, Gh_Suspension,
 	Gh_TireEdit,
 	Gh_TorqueCurve, Gh_Engine,
-	Gh_Clutch, Gh_Diffs, //todo: tire friction circles,
+	Gh_Clutch, Gh_Diffs,
 	Gh_ALL  };  // total count
 const static std::string csGraphNames[Gh_ALL] = {
 	"Fps graphics perf.",
