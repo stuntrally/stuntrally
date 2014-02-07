@@ -360,7 +360,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 	case Gh_CarAccelG:  /// car accel x,y,z
 		if (gsi >= 3)
 		{
-			MATHVECTOR<Dbl,3> v = dynamics.body.GetForce();
+			/*MATHVECTOR<Dbl,3> v = dynamics.body.GetForce();
 			(-dynamics.Orientation()).RotateVector(v);
 			float m = dynamics.body.GetMass();
 			//LogO("mass: "+fToStr(m,1,5)+"  x: "+fToStr(v[0]/m,2,4)+"  y: "+fToStr(v[1]/m,2,4)+"  z: "+fToStr(v[2]/m,2,4));
@@ -368,6 +368,13 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			for (int i=0; i < 3; ++i)
 				pApp->graphs[i]->AddVal( std::max(0.f, std::min(1.f, float(
 					v[i]/m *0.63f /9.81f/3.f + (i==2 ? 0.f : 0.5f) ) )));
+			*/
+			//pApp->graphs[0]->AddVal( std::max(0.f, std::min(1.f, 
+			//	dynamics.velDiff * 0.02f)));
+			const MATHVECTOR<Dbl,3> v = dynamics.cam_body.GetPosition();
+			for (int i=0; i < 3; ++i)
+				pApp->graphs[i]->AddVal( std::max(0.f, std::min(1.f, 
+					(float)v[i] * 3.f + 0.5f)));
 		}	break;
 		
 	case Gh_TireSlips:  /// tire slide,slip

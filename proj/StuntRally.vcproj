@@ -499,6 +499,10 @@
 				Name="Game"
 				>
 				<File
+					RelativePath="..\source\vdrift\dbl.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\vdrift\game.cpp"
 					>
 				</File>
@@ -907,10 +911,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\vdrift\dbl.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\vdrift\enginesoundinfo.h"
 					>
 				</File>
@@ -1100,6 +1100,10 @@
 				</File>
 				<File
 					RelativePath="..\source\ogre\CarModel_Update.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\CarPosInfo.cpp"
 					>
 				</File>
 				<File

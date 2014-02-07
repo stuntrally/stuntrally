@@ -141,6 +141,7 @@ public:
 	MATHVECTOR<Dbl,3> center_of_mass;
 	COLLISION_WORLD * world;
 	btRigidBody *chassis, *whTrigs;
+	LINEARFRAME cam_body;  // for camera bounce
 
 	///  for buoyancy
 	float whH[4];  // wheel submerge 0..1
@@ -231,6 +232,7 @@ public:
 
 	void Tick(Dbl dt);  /// update simulation
 	void UpdateBody(Dbl dt, Dbl drive_torque[]);	// advance chassis(body, suspension, wheels) simulation by dt
+
 	void UpdateMass();
 	void SynchronizeBody();
 	void SynchronizeChassis();

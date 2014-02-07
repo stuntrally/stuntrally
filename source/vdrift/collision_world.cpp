@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "par.h"
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/data/SceneXml.h"
 #include "../ogre/common/ShapeData.h"
@@ -136,8 +137,12 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 		cd->fParIntens = 10.f + 30.f * vlen;
 		
 		///----  damage normal
-		MATHVECTOR<float,3> pos(hit.pos.getX(), hit.pos.getY(), hit.pos.getZ());
-		MATHVECTOR<float,3> cN = pos - cd->GetPosition();
+		MATHVECTOR<float,3> pos(hit.pos.getX(), hit.pos.getY(), hit.pos.getZ()),
+			cN = pos - cd->GetPosition(),
+			f = cN * force;
+			f[0] *= gPar.camBncFHit;  f[1] *= gPar.camBncFHit;  f[2] *= gPar.camBncFHitY;
+			cd->cam_body.ApplyForce(f);  // cam bounce hit ++
+
 		(-cd->GetOrientation()).RotateVector(cN);
 		cd->vHitCarN = Ogre::Vector3(cN[0],cN[1],cN[2]);  cd->vHitCarN.normalise();
 		//----  factors

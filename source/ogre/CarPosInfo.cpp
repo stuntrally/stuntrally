@@ -127,9 +127,9 @@ void PosInfo::FromCar(CAR* pCar)
 		whAngVel[w] = cd->wheel[w].GetAngularVelocity();
 		if (w < 2)  whSteerAng[w] = cd->wheel[w].GetSteerAngle();
 	}
+	camOfs = Axes::toOgre(cd->cam_body.GetPosition());  ///..
 }
 
-//  get from track's ghost
 
 //  set from simulation
 //-----------------------------------------------------------------------

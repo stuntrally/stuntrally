@@ -619,6 +619,8 @@ void CARDYNAMICS::Init(
 	body.SetOrientation(orientation);
 	body.SetInitialForce(zero);
 	body.SetInitialTorque(zero);
+	cam_body.SetPosition(zero);
+	cam_body.SetInitialForce(zero);
 
 	// init engine
 	engine.SetInitialConditions();

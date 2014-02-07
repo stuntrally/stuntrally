@@ -313,7 +313,14 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 
 void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 {
+	//  camera bounce sim - spring and damper
+	MATHVECTOR<Dbl,3> p = cam_body.GetPosition(), v = cam_body.GetVelocity();
+	MATHVECTOR<Dbl,3> f = p * gPar.camBncSpring + v * gPar.camBncDamp;
+	cam_body.ApplyForce(f);
+
+
 	body.Integrate1(dt);
+	cam_body.Integrate1(dt);
 	//chassis->clearForces();
 
 	UpdateWheelVelocity();
@@ -403,6 +410,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	}
 
 	body.Integrate2(dt);
+	cam_body.Integrate2(dt);
 	//chassis->integrateVelocities(dt);
 
 	// update wheel state
@@ -513,6 +521,7 @@ void CARDYNAMICS::UpdateMass()
 	center_of_mass =  center_of_mass + fuel_tank.GetPosition() * fuel_tank.GetMass();
 
 	body.SetMass(total_mass);
+	cam_body.SetMass(total_mass * gPar.camBncMass);
 
 	center_of_mass = center_of_mass * (1.0 / total_mass);
 
