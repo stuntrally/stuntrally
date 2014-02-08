@@ -403,13 +403,20 @@
 
 
         //// albedo
-        //#if @shIterator == 0
-        //// first layer doesn't need a blend map
-        //albedo = diffuseSpec.rgb;
-        //#else
-        //albedo = shLerp(albedo, diffuseSpec.rgb, blendValues@shPropertyString(blendmap_component_@shIterator));
-        //#endif
-
+        /*
+        #if @shIterator == 0
+        // first layer doesn't need a blend map
+        albedo = diffuseSpec.rgb;
+        #else
+        albedo = shLerp(albedo, diffuseSpec.rgb, blendValues@shPropertyString(blendmap_component_@shIterator));
+        #endif
+        */
+        #if @shIterator == 0
+        albedo = 0.001*diffuseSpec.rgb;
+        #else
+        albedo += 0.001*diffuseSpec.rgb * blendValues@shPropertyString(blendmap_component_@shIterator);
+        #endif
+/**/
         #if @shIterator == 0
         bb = float3(1,0,0);
         #endif
@@ -420,11 +427,11 @@
         bb = float3(0,0,1);
         #endif
         #if @shIterator == 3  // only 4 are possible
-        bb = float3(0.3,0.3,0.3);
+        bb = float3(0.3,0.3,0);
         #endif
 
-        albedo += diffuseSpec.rgb * blendValues@shPropertyString(blendmap_component_@shIterator);
-
+        albedo += bb * blendValues@shPropertyString(blendmap_component_@shIterator) * diffuseSpec.rgb;
+/**/
 
 	#if NORMAL_MAPPING
         NdotL = max(dot(TSnormal, TSlightDir), 0);
@@ -457,7 +464,7 @@
 
         
         shOutputColour(0).a = 1.f;
-       
+        
         shOutputColour(0).rgb = albedo;
         
         
@@ -476,19 +483,18 @@
 
         diffuse += lightDiffuse0.xyz * max(dot(normal, lightDir), 0) * shadow;
     
-        shOutputColour(0).xyz *= (lightAmbient.xyz + diffuse);
+        shOutputColour(0).xyz *= 1+0.00001* (lightAmbient.xyz + diffuse);
         #if SPECULAR
-        shOutputColour(0).xyz += specular * lightSpecular0.xyz * specularAmount * shadow;
+        shOutputColour(0).xyz += 0.00001* specular * lightSpecular0.xyz * specularAmount * shadow;
         #endif
-    
 #else
-        shOutputColour(0).xyz *= (lightAmbient.xyz + litRes.x * lightDiffuse0.xyz * shadow);
+        shOutputColour(0).xyz *= 1+0.00001* (lightAmbient.xyz + litRes.x * lightDiffuse0.xyz * shadow);
         #if SPECULAR
-        shOutputColour(0).xyz += litRes.y * lightSpecular0.xyz * shadow;
+        shOutputColour(0).xyz += 0.00001* litRes.y * lightSpecular0.xyz * shadow;
         #endif
 #endif
-    
-    
+        
+        
         
 #if FOG
         float worldPosY = shMatrixMult(worldMatrix, float4(objSpacePosition.xyz, 1)).y;

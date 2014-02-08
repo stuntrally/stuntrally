@@ -102,7 +102,7 @@ void TerrainMaterial::Profile::createMaterial(const String& matName, const Terra
 	for (uint i = 0; i < numBlendTextures; ++i)
 	{
 		sh::MaterialInstanceTextureUnit* blendTex = p->createTextureUnit("blendMap" + toStr(i));
-		blendTex->setProperty("direct_texture",   STR(terrain->getBlendTextureName(i)));
+		blendTex->setProperty("direct_texture",   STR(/*terrain->getBlendTextureName(i)*/"blendmapRTex"));
 		blendTex->setProperty("tex_address_mode", STR("clamp"));
 	}
 
@@ -112,7 +112,7 @@ void TerrainMaterial::Profile::createMaterial(const String& matName, const Terra
 		sh::MaterialInstanceTextureUnit* diffuseTex = p->createTextureUnit("diffuseMap" + toStr(i));
 		diffuseTex->setProperty("direct_texture", STR(terrain->getLayerTextureName(i, 0)));
 		p->mShaderProperties.setProperty("blendmap_component_" + toStr(i),
-			STR(toStr(int((i-1) / 4)) + "." + getComponent(int((i-1) % 4))));
+			STR(toStr(i / 4) + "." + getComponent(i % 4)));
 	}
 
 	//  layer normalheight

@@ -36,12 +36,46 @@ using namespace Ogre;
 //--------------------------------------------------------------------------------------------------------------------------
 void App::CreateBlendTex()
 {
-	bl.scm = mRoot->createSceneManager(ST_GENERIC);
+	///  params
+	uint size = 2*512;  Real fDim = 1.f;
 
-	uint size = 512;  Real fDim = 1.f;
+	QTimer ti;  ti.update();  /// time
+
+	/// Hmap
+	TexturePtr hmap = Ogre::TextureManager::getSingleton().createManual(
+		"Hmap", rgDef, TEX_TYPE_2D,
+		size, size, 0, PF_FLOAT32_R, TU_DYNAMIC_WRITE_ONLY);
+	
+	//  fill hmap
+	HardwarePixelBufferSharedPtr pt = hmap->getBuffer();
+	pt->lock(HardwareBuffer::HBL_DISCARD);
+
+	const PixelBox& pb = pt->getCurrentLock();
+	float* pD = static_cast<float*>(pb.data);
+	size_t aD = pb.getRowSkip() * PixelUtil::getNumElemBytes(pb.format);
+	 
+	register size_t j,i,a=0, s = sc->td.iTerSize;
+	for (j = 0; j < size; ++j)
+	{
+		for (i = 0; i < size; ++i)
+		{	
+			*pD++ = sc->td.hfHeight[a++];
+		}
+		pD += aD;  a++;
+	}
+	pt->unlock();
+
+	ti.update();  /// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time fill Hmap: ") + fToStr(dt,3,5) + " ms");
+
+
+	///  RTT
 	TexturePtr texture = Ogre::TextureManager::getSingleton().createManual(
 		"blendmapRTex", rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_R8G8B8A8, TU_RENDERTARGET);
+
+	bl.scm = mRoot->createSceneManager(ST_GENERIC);
 		  
 	bl.cam = bl.scm->createCamera("blCam");
 	bl.cam->setPosition(Vector3(0,10,0));	bl.cam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
@@ -67,7 +101,8 @@ void App::CreateBlendTex()
 	bl.nd->attachObject(bl.rect);
 
 	bl.rect->setCastShadows(false);
-	bl.rect->setMaterial("blendmapRT");
+	bl.rect->setMaterial("blend");
+	//bl.rect->setMaterial("blendmapRT");
 
 	bl.rnd->update();
 	bl.rnd->writeContentsToFile(/*PATHMANAGER::DataUser()+*/ "blend.png");

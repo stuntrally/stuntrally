@@ -1,0 +1,20 @@
+material blend
+{
+    pass
+    {
+        vertex_program blend_vertex
+        fragment_program blend_fragment
+        
+		//lighting off
+		depth_check off
+		depth_write off
+		cull_hardware none
+        fog_override true  // no fog
+        
+        texture_unit HMap
+        {
+            texture Hmap
+            tex_address_mode clamp
+        }
+    }
+}
