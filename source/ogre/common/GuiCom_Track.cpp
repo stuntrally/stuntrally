@@ -379,9 +379,11 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	//---------------------------------------------------------------------------
 #ifndef SR_EDITOR
 	if (pSet->dev_no_prvs)  return;
+	bool any = pSet->inMenu == MNU_Tutorial || pSet->inMenu == MNU_Champ || pSet->inMenu == MNU_Challenge;
+#else
+	bool any = false;
 #endif
-
-	String path = PathListTrkPrv(-1, sTrack);
+	String path = PathListTrkPrv(any ? 0 : -1, sTrack);
 
 	app->prvView.Load(path+"view.jpg");
 	app->prvRoad.Load(path+"road.png");

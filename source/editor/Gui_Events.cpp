@@ -317,6 +317,16 @@ void CGui::SldUpd_Road()
 }
 
 
+//  [Game]
+//-----------------------------------------------------------------------------------------------------------
+void CGui::SldUpd_Game()
+{
+	svDamage.UpdF(&sc->damageMul);
+	svWind.UpdF(&sc->windAmt);
+	svGravity.UpdF(&sc->gravity);
+}
+
+
 //  [Settings]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 void CGui::chkCamPos(Ck*){

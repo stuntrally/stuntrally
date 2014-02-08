@@ -137,14 +137,18 @@ public:
 	int iFlCur;  bool bRecreateFluids;
 
 	
+	///  horizon
+	Ogre::Terrain* horizon;
+	Ogre::TerrainGlobalOptions* mHorizonGlobals;
+	Ogre::TerrainGroup* mHorizonGroup;
+	void configureHorizonDefaults(Ogre::Light* l);
+	
 	///  terrain
 	PreviewTex texLayD[6],texLayN[6];
 	Ogre::Image texNoise[4];
 	Ogre::Terrain* terrain;
 	Ogre::TerrainGlobalOptions* mTerrainGlobals;
-	Ogre::TerrainGroup* mTerrainGroup;  bool mPaging;
-	Ogre::TerrainPaging* mTerrainPaging;
-	Ogre::PageManager* mPageManager;
+	Ogre::TerrainGroup* mTerrainGroup;
 	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
 
 	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
@@ -220,6 +224,7 @@ public:
 	int curBr;
 	bool bTerUpd,bTerUpdBlend;  char sBrushTest[512];
 	float* pBrFmask, *mBrushData;
+	bool brLockPos;
 
 	//  params
 	float terSetH, mBrFilt,mBrFiltOld;

@@ -289,6 +289,8 @@ void App::LoadGame()  // 2
 	sc->vdr = vdr;
 	pGame->track.asphalt = sc->asphalt;  //*
 	pGame->track.sDefaultTire = sc->asphalt ? "asphalt" : "gravel";  //*
+	if (sc->denyReversed)
+		pSet->game.trackreverse = false;
 
 	pGame->NewGameDoLoadTrack();
 
@@ -403,6 +405,8 @@ void App::LoadScene()  // 3
 
 	//  fluids
 	CreateFluids();
+
+	pGame->collision.world->setGravity(btVector3(0.0, 0.0, -sc->gravity));
 
 
 	//  set sky tex name for water

@@ -35,7 +35,7 @@ done
 # Find and copy OGRE plugins
 copy_plugin()
 {
-	plugin=`locate "$1" | grep "/usr" | grep "\.so" | head -1`
+	plugin=`locate "$1" | grep "/usr" | grep "\.so\." | head -1`
 	if [ "$plugin" ]; then
 		echo "Copying OGRE plugin $plugin"
 		cp "$plugin" "$OUTDIR"

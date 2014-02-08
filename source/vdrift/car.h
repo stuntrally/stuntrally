@@ -78,7 +78,7 @@ public:
 	    dynamics.ShiftGear(gear);
 	}
 	
-	float GetClutch()
+	float GetClutch() const
 	{
 		return dynamics.GetClutch().GetClutch();
 	}
@@ -163,7 +163,7 @@ public:
 		return last_steer;
 	}
 
-	float GetSpeed()
+	float GetSpeed() const
 	{
 		return dynamics.GetSpeed();
 	}

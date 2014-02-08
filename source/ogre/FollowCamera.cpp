@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "../vdrift/par.h"
 #include "common/Def_Str.h"
 #include "FollowCamera.h"
 #include "../vdrift/settings.h"
@@ -174,9 +175,9 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 				Real vel = (posGoal - mPosNodeOld).length() / std::max(0.002f, std::min(0.1f, time));
 				mPosNodeOld = posGoal;
 				if (first)  mVel = 0.f;  else
-					mVel += (vel - mVel) * time * 8.f;  // par  vel smooth speed
+					mVel += (vel - mVel) * time * 8.f;  //par-  vel smooth speed
 				if (!first)
-					xyz *= 1.f + std::min(100.f, mVel) * 0.01f;  // par  vel dist factor
+					xyz *= 1.f + std::min(100.f, mVel) * 0.01f;  //par-  vel dist factor
 			}
 			#endif
 
@@ -295,8 +296,10 @@ void FollowCamera::Apply(const PosInfo& posIn)
 	//boost::this_thread::sleep(boost::posix_time::milliseconds(rand()%20));
 	if (!mCamera)  return;
 
-	//mCamera->setPosition( moveAboveTerrain(posIn.camPos) );
-	mCamera->setPosition(posIn.camPos);
+	Vector3 pos = posIn.camPos;  //moveAboveTerrain(posIn.camPos);
+	if (pSet->cam_bounce)
+		pos += posIn.camOfs * gPar.camBncScale * pSet->cam_bnc_mul;
+	mCamera->setPosition(pos);
 	mCamera->setOrientation(posIn.camRot);
 }
 

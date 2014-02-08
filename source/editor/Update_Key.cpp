@@ -258,9 +258,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 			//  prev,next
 			case key(PAGEUP):  case key(KP_9):
-				road->PrevPoint();  break;
+				if (shift)  road->SelAddPoint();	road->PrevPoint();  break;
 			case key(PAGEDOWN):	case key(KP_3):
-				road->NextPoint();  break;
+				if (shift)  road->SelAddPoint();	road->NextPoint();  break;
 				
 			//  del
 			case key(DELETE):  case key(KP_PERIOD):
@@ -315,6 +315,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(L):    if (ctrl)  {  mBrShape[curBr] = (EBrShape)((mBrShape[curBr]+1) % BRS_ALL);            updBrush();  }  break;
 		case key(N): case key(COMMA):   mBrOct[curBr] = std::max(1, mBrOct[curBr]-1);  updBrush();  break;
 		case key(M): case key(PERIOD):  mBrOct[curBr] = std::min(7, mBrOct[curBr]+1);  updBrush();  break;
+		case key(RETURN):  brLockPos = !brLockPos;  break;
 	}
 
 	//  ter brush presets  ----
@@ -533,7 +534,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	{
 		case key(Q):  gui->GuiShortcut(WND_Track, 1);  return true;  // Q Track
 		case key(O):  gui->GuiShortcut(WND_Track, 2);  return true;  // O Tools
-		case key(J):  gui->GuiShortcut(WND_Track, 3);  return true;  // J Warnings
+		case key(J):  gui->GuiShortcut(WND_Track, 4);  return true;  // J Warnings
 
 		case key(S):  gui->GuiShortcut(WND_Edit, 1);  return true;  // S Sun
 		case key(H):  gui->GuiShortcut(WND_Edit, 2);  return true;  // H Heightmap

@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "par.h"
 #include "cardynamics.h"
 #include "collision_world.h"
 #include "settings.h"
@@ -312,7 +313,14 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 
 void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 {
+	//  camera bounce sim - spring and damper
+	MATHVECTOR<Dbl,3> p = cam_body.GetPosition(), v = cam_body.GetVelocity();
+	MATHVECTOR<Dbl,3> f = p * gPar.camBncSpring + v * gPar.camBncDamp;
+	cam_body.ApplyForce(f);
+
+
 	body.Integrate1(dt);
+	cam_body.Integrate1(dt);
 	//chassis->clearForces();
 
 	UpdateWheelVelocity();
@@ -378,16 +386,16 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	}else
 		boostVal = 0.f;
 	
-	fBoostFov += (boostVal - fBoostFov) * 0.0005f;  //par speed (delay smooth)
+	fBoostFov += (boostVal - fBoostFov) * gPar.FOVspeed;
 		
 	//  add fuel over time
 	if (pSet->game.boost_type == 2)
 	{
-		boostFuel += dt * gfBoostFuelAddSec;
-		if (boostFuel > gfBoostFuelMax)  boostFuel = gfBoostFuelMax;
+		boostFuel += dt * gPar.boostFuelAddSec;
+		if (boostFuel > gPar.boostFuelMax)  boostFuel = gPar.boostFuelMax;
 	}
-	//LogO(toStr(boostFuel));
 	///***  --------------------------------------------------
+	
 	
 	int i;
 	Dbl normal_force[WHEEL_POSITION_SIZE];
@@ -401,9 +409,8 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 		ApplyWheelTorque(dt, drive_torque[i], i, tire_friction, wheel_orientation[i]);
 	}
 
-	//sumWhTest = sum;
-
 	body.Integrate2(dt);
+	cam_body.Integrate2(dt);
 	//chassis->integrateVelocities(dt);
 
 	// update wheel state
@@ -514,6 +521,7 @@ void CARDYNAMICS::UpdateMass()
 	center_of_mass =  center_of_mass + fuel_tank.GetPosition() * fuel_tank.GetMass();
 
 	body.SetMass(total_mass);
+	cam_body.SetMass(total_mass * gPar.camBncMass);
 
 	center_of_mass = center_of_mass * (1.0 / total_mass);
 

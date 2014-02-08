@@ -92,7 +92,7 @@ void App::newPerfTest(float time)
 
 			///  end accel, reached max vel
 			if (timeQM > 0.f &&
-				avg_kmh - kmhOld < 0.01f)  ///par
+				avg_kmh - kmhOld < 0.01f)  //par
 			{
 				iPerfTestStage = PT_Brake;
 				maxVel = kmh;  tiMaxVel = ti;  PerfLogVel(pCar,ti);  ti = 0.f;

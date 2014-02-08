@@ -230,9 +230,9 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.9 0.7"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="134 180 60 20" name="brKey8">
+		<Widget type="TextBox" skin="TextBox" position="119 180 60 20" name="brKey8">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.5 1.0 0.5"/>
+			<Property key="TextColour" value="0.84 0.9 0.84"/>
 		</Widget>
 
 	</Widget>
@@ -1052,6 +1052,41 @@
 				<Widget type="Slider" skin="Slider" position="248 400 320 18" name="AlignSmooth"/>
 				<Widget type="TextBox" skin="TextBox" position="180 400 60 24" name="AlignSmoothVal">
 					<Property key="TextColour" value="0.8 0.6 0.2"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 562">
+				<Property key="Caption" value="#C090B0#{Game}"/>
+				<Widget type="TextBox" skin="TextBox" position="32 60 268 24">
+					<Property key="Caption" value="#{Damage}: #{InputMultiplier}"/>
+					<Property key="TextColour" value="0.7 0.7 0.9"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="96 88 248 18" name="DamageMul"/>
+				<Widget type="TextBox" skin="TextBox" position="32 88 60 24" name="DamageMulVal">
+					<Property key="TextColour" value="0.7 0.7 0.9"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 152 276 24" name="TiresAsphalt">
+					<Property key="Caption" value="#{Tires}: #{Asphalt}"/>
+					<Property key="TextColour" value="0.8 0.7 0.7"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="380 60 264 24">
+					<Property key="Caption" value="#{Gravity}"/>
+					<Property key="TextColour" value="0.9 0.76 0.6"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="444 80 320 18" name="Gravity"/>
+				<Widget type="TextBox" skin="TextBox" position="380 80 60 24" name="GravityVal">
+					<Property key="TextColour" value="0.9 0.76 0.6"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="380 128 264 24">
+					<Property key="Caption" value="#{Wind}"/>
+					<Property key="TextColour" value="0.7 0.9 0.7"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="444 152 320 18" name="WindAmt"/>
+				<Widget type="TextBox" skin="TextBox" position="380 152 60 24" name="WindAmtVal">
+					<Property key="TextColour" value="0.7 0.9 0.7"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 196 276 24" name="DenyReversed">
+					<Property key="Caption" value="#{DenyReversed}"/>
+					<Property key="TextColour" value="0.6 0.8 0.8"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
@@ -3951,13 +3986,17 @@
 							<Property key="Caption" value="#{InputToggleVeget}"/>
 							<Property key="TextColour" value="0.6 1.0 0.2"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 196 312 20">
-							<Property key="Caption" value="#{InputMinimapType}"/>
-							<Property key="TextColour" value="0.3 0.6 0.3"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 230 312 20">
+						<Widget type="TextBox" skin="TextBox" position="32 186 312 20">
 							<Property key="Caption" value="#{InputUpdBlendmap}"/>
 							<Property key="TextColour" value="0.5 0.7 0.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 230 312 20">
+							<Property key="Caption" value="#{InputLockBrush}"/>
+							<Property key="TextColour" value="0.3 0.8 0.2"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 260 312 20">
+							<Property key="Caption" value="#{InputMinimapType}"/>
+							<Property key="TextColour" value="0.3 0.6 0.3"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 308 540 20">
 							<Property key="Caption" value="#{TipBrushPick}"/>
@@ -4016,6 +4055,10 @@
 						<Widget type="TextBox" skin="TextBox" position="32 60 332 20">
 							<Property key="TextColour" value="0.8 0.8 0.9"/>
 							<Property key="Caption" value="#{InputRoadNext}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="182 80 182 20">
+							<Property key="TextColour" value="0.6 0.6 0.65"/>
+							<Property key="Caption" value="#{InputRoadShiftSel}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 94 332 20">
 							<Property key="Caption" value="#{InputRoadDel}"/>

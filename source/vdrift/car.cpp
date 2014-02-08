@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "par.h"
 #include "car.h"
 #include "cardefs.h"
 #include "configfile.h"
@@ -397,7 +398,7 @@ void CAR::ResetPos(bool fromStart)
 	dynamics.SynchronizeBody();  // set body from chassis
 	if (fromStart)
 	{
-		dynamics.boostFuel = gfBoostFuelStart;  // restore boost fuel
+		dynamics.boostFuel = gPar.boostFuelStart;  // restore boost fuel
 		dynamics.fDamage = 0.f;  // clear damage
 	}else
 		dynamics.fDamage = dmgLastCheck;

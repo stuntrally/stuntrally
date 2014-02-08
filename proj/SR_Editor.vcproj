@@ -871,6 +871,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\vdrift\par.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\vdrift\par.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\vdrift\roadpatch.cpp"
 				>
 			</File>

@@ -29,8 +29,8 @@ App::App(SETTINGS *settings, GAME *game)
 	,sc(0), data(0), hud(0), gui(0), gcom(0), input(0)
 	,mThread(), mTimer(0.f)
 	// ter
-	,mTerrainGlobals(0), mTerrainGroup(0), terrain(0), mPaging(false)
-	,mTerrainPaging(0), mPageManager(0)
+	,terrain(0), mTerrainGroup(0), mTerrainGlobals(0)
+	,horizon(0), mHorizonGroup(0), mHorizonGlobals(0)
 	// game
 	,blendMtr(0), iBlendMaps(0), dbgdraw(0), noBlendUpd(0), blendMapSize(513)
 	,grass(0), trees(0), road(0)
@@ -54,12 +54,7 @@ App::App(SETTINGS *settings, GAME *game)
 	for (int i=0; i < 8; ++i)
 		iCurPoses[i] = 0;
 
-	//  util for update rot
-	Quaternion qr;  {
-	QUATERNION<double> fix;  fix.Rotate(PI_d, 0, 1, 0);
-	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixCar = qr;  }
-	QUATERNION<double> fix;  fix.Rotate(PI_d/2, 0, 1, 0);
-	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixWh = qr;
+	Axes::Init();
 
 	resCar = "";  resTrk = "";  resDrv = "";
 	
@@ -88,12 +83,10 @@ App::~App()
 		mThread.join();
 
 	delete road;
-	if (mTerrainPaging) {
-		OGRE_DELETE mTerrainPaging;
-		OGRE_DELETE mPageManager;
-	} else {
-		OGRE_DELETE mTerrainGroup;
-	}
+	OGRE_DELETE mHorizonGroup;
+	OGRE_DELETE mHorizonGlobals;
+
+	OGRE_DELETE mTerrainGroup;
 	OGRE_DELETE mTerrainGlobals;
 
 	OGRE_DELETE dbgdraw;

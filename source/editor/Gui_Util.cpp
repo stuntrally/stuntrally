@@ -13,6 +13,7 @@
 #include <OgreTerrain.h>
 #include <OgreOverlay.h>
 #include <OgreOverlayElement.h>
+#include <OgreCamera.h>
 #include <MyGUI.h>
 using namespace MyGUI;
 using namespace Ogre;
@@ -82,6 +83,12 @@ void CGui::SetGuiFromXmls()
 	_Ed(RdHeightOfs, rd->fHeight);
 	_Ed(RdSkirtLen, rd->skirtLen);  _Ed(RdSkirtH, rd->skirtH);
 	SldUpd_Road();
+	
+	//  [Game]
+	//-----------------------------------------------
+	ckDenyReversed.Upd(&sc->denyReversed);
+	ckTiresAsphalt.Upd(&sc->asphalt);
+	SldUpd_Game();
 	
 	bGI = true;
 }

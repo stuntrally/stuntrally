@@ -55,7 +55,7 @@ void App::CreateFluids()
 			mesh->buildTangentVectors(VES_TANGENT, src,dest);
 
 		String sMtr = fb.id == -1 ? "" : data->fluids->fls[fb.id].material;  //"Water"+toStr(1+fb.type)
-		MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr);  //par,temp
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr);  //temp
 
 		efl->setMaterial(mtr);  efl->setCastShadows(false);
 		efl->setRenderQueueGroup(RQG_Fluid);  efl->setVisibilityFlags(RV_Terrain);

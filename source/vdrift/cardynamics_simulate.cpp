@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "par.h"
 #include "cardynamics.h"
 #include "tobullet.h"
 #include "../ogre/common/Def_Str.h"
@@ -246,8 +247,7 @@ void CARDYNAMICS::InterpolateWheelContacts(Dbl dt)
 	{
 		MATHVECTOR<float,3> raystart = LocalToWorld(wheel[i].GetExtendedPosition());
 		raystart = raystart - raydir * wheel[i].GetRadius();
-		const float raylen = 1.5f;  //par-
-		GetWheelContact(WHEEL_POSITION(i)).CastRay(raystart, raydir, raylen);
+		GetWheelContact(WHEEL_POSITION(i)).CastRay(raystart, raydir, gPar.raylen);
 	}
 }
 

@@ -233,6 +233,12 @@ public:
 	void SldUpd_Road();
 	Ed edRdSkirtLen,edRdSkirtH, edRdHeightOfs;
 	void editRoad(Ed);
+	
+	
+	//  [Game]  ----
+	SV svDamage, svWind, svGravity;
+	CK(DenyReversed);  CK(TiresAsphalt);
+	void SldUpd_Game();
 
 
 	//  [Objects]  ----

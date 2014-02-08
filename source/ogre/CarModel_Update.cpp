@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "../vdrift/par.h"
 #include "common/Def_Str.h"
 #include "common/RenderConst.h"
 #include "CarModel.h"
@@ -54,9 +55,9 @@ void CarModel::UpdNextCheck()
 	else
 		p = pApp->road->mChks[iNextChk].pos;
 		
-	p.y -= 44.f;  //par lower
+	p.y -= gPar.chkBeamSy;  // lower
 	ndNextChk->setPosition(p);
-	ndNextChk->setScale(5,44,5);  //par
+	ndNextChk->setScale(gPar.chkBeamSx, gPar.chkBeamSy, gPar.chkBeamSx);
 	ndNextChk->setVisible(pSet->check_beam);
 }
 void CarModel::ShowNextChk(bool visible)
@@ -186,8 +187,8 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	posSph[0] = posInfo.pos + vx;  posSph[0].y += 0.5f;
 	posSph[1] = posInfo.pos - vx;  posSph[1].y += 0.5f;
 	if (ndSph)  // sph test
-	{	ndSph->setPosition(posSph[0]);		//par
-		ndSph->setScale(Vector3::UNIT_SCALE * 1.7 *2/0.6f);
+	{	ndSph->setPosition(posSph[0]);
+		ndSph->setScale(Vector3::UNIT_SCALE * 1.7 *2/0.6f);  //par
 	}
 
 	//  set camera view

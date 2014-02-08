@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "../vdrift/par.h"
 #include "common/Def_Str.h"
 #include "common/RenderConst.h"
 #include "common/data/SceneXml.h"
@@ -246,8 +247,7 @@ void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 			CAR* pCar = pApp->carModels[carId]->pCar;
 			if (pCar)
 			{
-				const static Real minFOV = 45, maxFOV = 60, rangeFOV = maxFOV-minFOV;  //par
-				float fov = minFOV + rangeFOV * pCar->dynamics.fBoostFov;
+				float fov = gPar.FOVmin + gPar.FOVrange * pCar->dynamics.fBoostFov;
 				evt.source->getCamera()->setFOVy(Degree(fov));
 			}
 		}

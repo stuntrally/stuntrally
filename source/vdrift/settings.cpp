@@ -83,7 +83,9 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_size.mini_rotated", mini_rotated);	Param(c,w, "hud_size.mini_terrain", mini_terrain);
 	Param(c,w, "hud_size.mini_border", mini_border);
 	Param(c,w, "hud_size.gauges_type", gauges_type);	//Param(c,w, "hud_size.gauges_layout", gauges_layout);
+	//  cam
 	Param(c,w, "hud_size.cam_loop_chng", cam_loop_chng); Param(c,w, "hud_size.cam_in_loop", cam_in_loop);
+	Param(c,w, "hud_size.cam_bounce", cam_bounce); Param(c,w, "hud_size.cam_bnc_mul", cam_bnc_mul);
 
 
 	//  graphics
@@ -179,7 +181,9 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,mini_zoomed(0), mini_rotated(1), mini_terrain(0), mini_border(1)
 	,check_arrow(0),size_arrow(0.2), check_beam(1)
 	,gauges_type(1),gauges_layout(1), graphs_type(Gh_Fps)
+	//  cam
 	,cam_loop_chng(1), cam_in_loop(1)
+	,cam_bounce(1), cam_bnc_mul(1.f)
 	//  gui
 	,tracks_view(0), tracks_sort(0), tracks_sortup(1), cars_sort(1), cars_sortup(1)
 	,champ_type(0),tut_type(0),chall_type(0), car_ed_tab(0), champ_info(1)
@@ -187,6 +191,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,preset(4)
 	,anisotropy(4),	view_distance(2000), bFog(0)
 	,terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2), ter_tripl(0)
+	,horizon(0)
 	,refl_skip(200), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode(1)
 	,water_reflect(0), water_refract(0), water_rttsize(0)
 	,shadow_type(Sh_Depth), shadow_size(2), shadow_count(3), shadow_dist(3000)

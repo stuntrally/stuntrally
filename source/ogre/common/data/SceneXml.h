@@ -119,7 +119,6 @@ public:
 class Scene		///  Scene
 {
 public:
-	bool asphalt;  // use asphalt tires car
 	//  sky
 	Ogre::String skyMtr;
 	int  rainEmit,rain2Emit;  Ogre::String rainName,rain2Name;
@@ -134,9 +133,14 @@ public:
 	Ogre::Vector4 fogClrH;  // height fog color
 	Ogre::Real fogHeight, fogHDensity, fogHStart, fogHEnd;
 
-	//  wind
+
+	//  game
+	bool asphalt;  // use asphalt tires car
+	bool denyReversed;  // track (road) dir
+
 	float windAmt;  //, windDirYaw, windTurbulFreq,windTurbulAmp;
 	float damageMul;  // reduce car damage in loops
+	float gravity;  // 9.81
 
 
 	//  particle types

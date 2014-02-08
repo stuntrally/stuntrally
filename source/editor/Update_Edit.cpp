@@ -312,7 +312,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		
 		brTxt[8]->setCaption(edH ? "" : TR("#{Brush_CurrentH}"));
 		brVal[8]->setCaption(edH ? "" : fToStr(road->posHit.y,1,4));
-		brKey[8]->setCaption(edH ? "" : "");
+		brKey[8]->setCaption(brLockPos ? TR("#{Lock}") : "");
 		
 		
 		//  edit  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

@@ -86,7 +86,7 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 	float* pB[6];	TerrainLayerBlendMap* bMap[6];
 	int t = terrain->getLayerBlendMapSize(), x,y;
 	//LogO(String("Ter blendmap size: ")+toStr(t));
-	const float f = 0.8f / t * 2 * sc->td.fTerWorldSize / t * 3.14f;  //par-
+	const float f = 0.8f / t * 2 * sc->td.fTerWorldSize / t * 3.14f;  //par repeat-
 
 	//  mtr map
 	#ifndef SR_EDITOR
@@ -266,19 +266,15 @@ void App::configureTerrainDefaults(Light* l)
 	mTerrainGlobals->setDefaultMaterialGenerator(matGen);
 	UpdTerErr();
 
-	//mTerrainGlobals->setUseRayBoxDistanceCalculation(true);
-	//mTerrainGlobals->getDefaultMaterialGenerator()->setDebugLevel(1);
-	if (l)  {
 	mTerrainGlobals->setLayerBlendMapSize(1024);
 	mTerrainGlobals->setLightMapDirection(l->getDerivedDirection());
 	mTerrainGlobals->setCompositeMapAmbient(mSceneMgr->getAmbientLight());
 	mTerrainGlobals->setCompositeMapDiffuse(l->getDiffuseColour());
-	}
+
 	mTerrainGlobals->setCompositeMapSize(sc->td.iTerSize-1);  // par, ..1k
 	mTerrainGlobals->setCompositeMapDistance(pSet->terdist);  //400
 	mTerrainGlobals->setLightMapSize(ciShadowSizesA[pSet->lightmap_size]);  //256 ..2k
-	mTerrainGlobals->setSkirtSize(1);  //`
-	//matProfile->setLightmapEnabled(false);
+	mTerrainGlobals->setSkirtSize(1);  // low because in water reflect
 
 	// Configure default import settings for if we use imported image
 	Terrain::ImportData& di = mTerrainGroup->getDefaultImportSettings();
@@ -346,6 +342,45 @@ void App::configureTerrainDefaults(Light* l)
 	}
 }
 
+void App::configureHorizonDefaults(Ogre::Light* l)
+{
+	TerrainMaterialGeneratorPtr matGen;
+	TerrainMaterial* matGenP = new TerrainMaterial();
+	matGen.bind(matGenP);
+
+	mHorizonGlobals->setDefaultMaterialGenerator(matGen);
+	mTerrainGlobals->setMaxPixelError(pSet->terdetail * sc->td.errorNorm);  // 1.7 ..20
+
+	mHorizonGlobals->setLightMapDirection(l->getDerivedDirection());
+	mHorizonGlobals->setCompositeMapAmbient(mSceneMgr->getAmbientLight());
+	mHorizonGlobals->setCompositeMapDiffuse(l->getDiffuseColour());
+
+	mHorizonGlobals->setCompositeMapSize(sc->td.iTerSize-1);  // par, 128,256 ..
+	mHorizonGlobals->setCompositeMapDistance(pSet->terdist);  //..
+	mHorizonGlobals->setLightMapSize(ciShadowSizesA[pSet->lightmap_size]);  //256 ..2k
+	mHorizonGlobals->setSkirtSize(1);
+	//matProfile->setLightmapEnabled(false);
+
+	Terrain::ImportData& di = mHorizonGroup->getDefaultImportSettings();
+	di.terrainSize = sc->td.iTerSize;
+	di.worldSize = sc->td.fTerWorldSize;
+	di.minBatchSize = 65;
+	di.maxBatchSize = Terrain::TERRAIN_MAX_BATCH_SIZE;  // 129
+	LogO("Horizon size: "+toStr(sc->td.iTerSize)+"  err:"+fToStr(mHorizonGlobals->getMaxPixelError(),2,4)+
+		"  batch: "+toStr(di.minBatchSize)+" "+toStr(di.maxBatchSize));
+
+	//  textures  iBlendMaps-
+	int ls = 1; //sc->td.layers.size();
+	di.layerList.resize(ls);
+	for (int i=0; i < ls; ++i)
+	{
+		TerLayer& l = sc->td.layersAll[sc->td.layers[i]];
+		di.layerList[i].worldSize = l.tiling * 16.f;
+		di.layerList[i].textureNames.push_back(l.texFile);
+		di.layerList[i].textureNames.push_back(l.texNorm);
+	}
+}
+
 
 ///--------------------------------------------------------------------------------------------------------------------------
 ///  Create Terrain
@@ -401,8 +436,7 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 		if (!mTerrainGlobals)
 			mTerrainGlobals = OGRE_NEW TerrainGlobalOptions();
 		if (mTerrainGroup)
-		{
-			OGRE_DELETE mTerrainGroup;
+		{	OGRE_DELETE mTerrainGroup;
 			mTerrainGroup = 0;
 		}
 		mTerrainGroup = OGRE_NEW TerrainGroup(mSceneMgr, Terrain::ALIGN_X_Z,
@@ -416,7 +450,7 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 		else
 			mTerrainGroup->defineTerrain(0,0, 0.f);
 
-		// sync load since we want everything in place when we start
+		//  sync load since we want everything in place when we start
 		mTerrainGroup->loadAllTerrains(true);
 
 		TerrainGroup::TerrainIterator ti = mTerrainGroup->getTerrainIterator();
@@ -427,8 +461,40 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 			terrain = t;  //<set
 			terrain->setVisibilityFlags(RV_Terrain);
 		}
-
 		mTerrainGroup->freeTemporaryResources();
+
+	//  Horizon  ----------
+	if (pSet->horizon)
+	{
+		if (!mHorizonGlobals)
+			mHorizonGlobals = OGRE_NEW TerrainGlobalOptions();
+		if (mHorizonGroup)
+		{	OGRE_DELETE mHorizonGroup;
+			mHorizonGroup = 0;
+		}
+		mHorizonGroup = OGRE_NEW TerrainGroup(mSceneMgr, Terrain::ALIGN_X_Z,
+			sc->td.iTerSize, sc->td.fTerWorldSize * 16.f);
+		mHorizonGroup->setOrigin(Vector3::ZERO);
+
+		configureHorizonDefaults(sun);
+
+		//if (sc->td.hfHeight)
+		//	mHorizonGroup->defineTerrain(0,0, sc->td.hfHeight);
+		//else
+			mHorizonGroup->defineTerrain(0,0, 0.f);
+
+		mHorizonGroup->loadAllTerrains(true);
+
+		ti = mHorizonGroup->getTerrainIterator();
+		while (ti.hasMoreElements())
+		{
+			Terrain* t = ti.getNext()->instance;
+			//initBlendMaps(t);
+			horizon = t;  //<set
+			horizon->setVisibilityFlags(RV_Terrain);
+		}
+		mHorizonGroup->freeTemporaryResources();
+	}
 
 		tm.update();	/// time
 		float dt = tm.dt * 1000.f;

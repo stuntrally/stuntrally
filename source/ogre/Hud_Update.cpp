@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "../vdrift/par.h"
 #include "common/Def_Str.h"
 #include "common/RenderConst.h"
 #include "common/data/CData.h"
@@ -189,7 +190,7 @@ void CHud::Update(int carId, float time)
 			//  detect change (won),  can happen more than once, if time diff < ping delay
 			if (cm->iWonPlace != cm->iWonPlaceOld)
 			{	cm->iWonPlaceOld = cm->iWonPlace;
-				cm->iWonMsgTime = 4.f;  //par in sec
+				cm->iWonMsgTime = gPar.timeWonMsg;
 				if (cm->iIndex == 0)  // for local player, show end wnd
 					app->mWndNetEnd->setVisible(true);
 			}
@@ -493,7 +494,7 @@ void CHud::Update(int carId, float time)
 			bool vis = pSet->show_times && hasRoad && a > 0.f;
 			if (vis)
 			{	if (app->iLoad1stFrames == -2)  //bLoading)  //  fade out
-				{	pCarM->fLapAlpha -= !hasRoad ? 1.f : time * 0.1f; //0.04f;
+				{	pCarM->fLapAlpha -= !hasRoad ? 1.f : time * gPar.fadeLapResults;
 					if (pCarM->fLapAlpha < 0.f)  pCarM->fLapAlpha = 0.f;
 				}
 				h.bckLap->setAlpha(a);
@@ -519,7 +520,7 @@ void CHud::Update(int carId, float time)
 		}	/**/
 
 		if (pCarM->bWrongChk)
-			pCarM->fChkTime = 2.f;  //par sec
+			pCarM->fChkTime = gPar.timeShowChkWarn;
 			
 		bool show = pCarM->fChkTime > 0.f;
 		if (show)  pCarM->fChkTime -= time;
