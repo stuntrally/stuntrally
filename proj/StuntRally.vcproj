@@ -431,6 +431,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\vdrift\dbl.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\vdrift\derived.h"
 					>
 				</File>
@@ -499,15 +503,19 @@
 				Name="Game"
 				>
 				<File
-					RelativePath="..\source\vdrift\dbl.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\vdrift\game.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\vdrift\game.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\vdrift\par.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\vdrift\par.h"
 					>
 				</File>
 				<File
