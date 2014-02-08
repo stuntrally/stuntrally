@@ -49,7 +49,7 @@ void App::createScene()  // once, init
 		//String path = PATHMANAGER::Data()+"/terrain2/noise";
 		for (int i=0; i < 4; ++i)
 		{	String si = toStr(i+1);
-			texNoise[i].load("noise"+si+".png",ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+			texNoise[i].load("noise"+si+".png", rgDef);
 			//texNoise[i].Load(path+si+".png");
 		}
 		ti.update();  /// time
@@ -73,7 +73,6 @@ void App::createScene()  // once, init
 
 	QTimer ti;  ti.update();  /// time
 
-	CreateBlendTex();
 
 	///  _Tool_ tex ..........................
 	//  (remove alpha channel for ter tex prv img)

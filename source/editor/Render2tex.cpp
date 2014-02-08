@@ -51,13 +51,13 @@ void App::Rnd2TexSetup()
 			
 			///  rnd to tex - same dim as Hmap	// after track load
 			Real fDim = sc->td.fTerWorldSize;  // world dim  ..vdr
-			Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().createManual(sTex,
-				  ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D,
-				  dim[i], dim[i], 0, PF_R8G8B8A8, TU_RENDERTARGET);
+			Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().createManual(
+				sTex, rgDef, TEX_TYPE_2D,
+				dim[i], dim[i], 0, PF_R8G8B8A8, TU_RENDERTARGET);
 				  
 			r.cam = mSceneMgr->createCamera(sCam);  // up
 			r.cam->setPosition(Vector3(0,1000,0/*-300..*/));  r.cam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
-			r.cam->setNearClipDistance(0.5);		r.cam->setFarClipDistance(50000);
+			r.cam->setNearClipDistance(0.5);	r.cam->setFarClipDistance(50000);
 			r.cam->setAspectRatio(1.0);			if (!full)  r.cam->setProjectionType(PT_ORTHOGRAPHIC);
 			r.cam->setOrthoWindow(fDim,fDim);	//rt[i].rndCam->setPolygonMode(PM_WIREFRAME);
 
@@ -69,8 +69,7 @@ void App::Rnd2TexSetup()
 			rvp->setVisibilityMask(visMask[i]);
 			rvp->setShadowsEnabled(false);
 
-			if (i != 3)
-				rvp->setMaterialScheme ("reflection");
+			if (i != 3)  rvp->setMaterialScheme("reflection");
 		}
 		///  minimap  . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 		if (r.ndMini)  mSceneMgr->destroySceneNode(r.ndMini);
@@ -304,7 +303,7 @@ void App::SaveWaterDepth()
 	if (!tex.isNull())
 		tex->reload();
 	else  // 1st fluid after start, refresh matdef ?..
-		TextureManager::getSingleton().load("waterDepth.png",ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		TextureManager::getSingleton().load("waterDepth.png", rgDef);
 	} catch(...) {  }
 
 

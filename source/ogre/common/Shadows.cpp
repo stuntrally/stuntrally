@@ -167,8 +167,7 @@ void App::changeShadows()
 		if (MaterialManager::getSingleton().resourceExists("Ogre/DebugTexture" + toStr(i)))
 			MaterialManager::getSingleton().remove("Ogre/DebugTexture" + toStr(i));
 		MaterialPtr debugMat = MaterialManager::getSingleton().create(
-			"Ogre/DebugTexture" + toStr(i), 
-			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+			"Ogre/DebugTexture" + toStr(i), rgDef);
 			
 		debugMat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
 		TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(tex->getName());

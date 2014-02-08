@@ -38,10 +38,10 @@ void App::CreateBlendTex()
 {
 	bl.scm = mRoot->createSceneManager(ST_GENERIC);
 
-	uint size = 1024;  Real fDim = 1.f;
-	TexturePtr texture = Ogre::TextureManager::getSingleton().createManual("blRTex",
-		  ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D,
-		  size, size, 0, PF_R8G8B8A8, TU_RENDERTARGET);
+	uint size = 512;  Real fDim = 1.f;
+	TexturePtr texture = Ogre::TextureManager::getSingleton().createManual(
+		"blendmapRTex", rgDef, TEX_TYPE_2D,
+		size, size, 0, PF_R8G8B8A8, TU_RENDERTARGET);
 		  
 	bl.cam = bl.scm->createCamera("blCam");
 	bl.cam->setPosition(Vector3(0,10,0));	bl.cam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
@@ -175,10 +175,8 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 	
 	iBlendMaps = b+1;  blendMapSize = t;
 
-	//terrain->getLayerBlendTexture(
-	//bMap[i]->loadImage();
-	//bMap[0]->loadImage("blendmap.png", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-	//bMap[0]->loadImage("mapB.jpg", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	//LogO("blTex: "+terrain->getBlendTextureName(0));  //TerrBlend1
+	//bMap[0]->loadImage("blendmap.png", rgDef);
 	//bMap[0]->dirty();  bMap[0]->update();
 	/*Image bl0;  // ?-
 	terrain->getLayerBlendTexture(0)->convertToImage(bl0);
@@ -190,7 +188,7 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 	{
 		terrain->setGlobalColourMapEnabled(true);
 		Image colourMap;
-		colourMap.load("testcolourmap.jpg", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		colourMap.load("testcolourmap.jpg", rgDef);
 		terrain->getGlobalColourMap()->loadImage(colourMap);
 	}*/
 	
@@ -419,6 +417,8 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 			fi.read((char*)&sc->td.hfHeight[0], siz);
 			fi.close();
 		}
+
+		CreateBlendTex();  ///++
 
 		GetTerAngles();
 		

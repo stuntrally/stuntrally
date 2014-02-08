@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "../ogre/common/RenderConst.h"
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/QTimer.h"
 #include "settings.h"
@@ -611,12 +612,12 @@ void App::filter(Vector3 &pos, float dtime, float brMul)
 void App::createBrushPrv()
 {
 	brushPrvTex = TextureManager::getSingleton().createManual(
-		"BrushPrvTex", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		TEX_TYPE_2D, BrPrvSize,BrPrvSize,0, PF_BYTE_RGBA, TU_DYNAMIC);
+		"BrushPrvTex", rgDef, TEX_TYPE_2D,
+		BrPrvSize,BrPrvSize,0, PF_BYTE_RGBA, TU_DYNAMIC);
 	 	
 	// Create a material using the texture
 	MaterialPtr material = MaterialManager::getSingleton().create(
-		"BrushPrvMtr", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		"BrushPrvMtr", rgDef);
 	 
 	Pass* pass = material->getTechnique(0)->getPass(0);
 	pass->createTextureUnitState("BrushPrvTex");
@@ -629,11 +630,11 @@ void App::createBrushPrv()
 	
 	
 	terPrvTex = TextureManager::getSingleton().createManual(
-		"TerPrvTex", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		TEX_TYPE_2D, TerPrvSize,TerPrvSize,0, PF_BYTE_RGBA, TU_DYNAMIC);
+		"TerPrvTex", rgDef, TEX_TYPE_2D,
+		TerPrvSize,TerPrvSize,0, PF_BYTE_RGBA, TU_DYNAMIC);
 	 	
 	material = MaterialManager::getSingleton().create(
-		"TerPrvMtr", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		"TerPrvMtr", rgDef);
 	 
 	pass = material->getTechnique(0)->getPass(0);
 	pass->createTextureUnitState("TerPrvTex");

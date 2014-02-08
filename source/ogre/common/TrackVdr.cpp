@@ -51,7 +51,7 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 			TexturePtr tex = TextureManager::getSingleton().getByName(msh.material);
 			if (tex.isNull())
 			try{
-				tex = TextureManager::getSingleton().load(msh.material, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);  }
+				tex = TextureManager::getSingleton().load(msh.material, rgDef);  }
 			catch(...){
 				found = false;  }
 			msh.found = found;  // dont create meshes for not found textures, test

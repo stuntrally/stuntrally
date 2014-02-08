@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "RenderConst.h"
 #include "PreviewTex.h"
 #include "Def_Str.h"
 #include <fstream>
@@ -28,8 +29,8 @@ bool PreviewTex::Create(int x, int y, String texName)
 	xSize = x;  ySize = y;
 	sName = texName;
 	prvTex = TextureManager::getSingleton().createManual(
-		sName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		TEX_TYPE_2D, x, y, 5, //par mipmaps
+		sName, rgDef, TEX_TYPE_2D,
+		x, y, 5, //par mipmaps
 		PF_BYTE_BGRA, TU_DEFAULT);  //TU_DYNAMIC_WRITE_ONLY_DISCARDABLE
 		
 	//Clear();
@@ -73,7 +74,7 @@ bool PreviewTex::Load(String path, bool force)
 
 			//prvTex->loadRawData
 			//TextureManager::getSingleton().loadImage("PrvView",
-			//	ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, img, TEX_TYPE_2D, 0, 1.0f);
+			//	rgDef, img, TEX_TYPE_2D, 0, 1.0f);
 			loaded = true;
 		}
 		ifs.close();
@@ -132,8 +133,8 @@ bool PreviewTex::LoadTer(String sRgb, String sAa, float defA)
 
 		xSize = imR.getWidth();  ySize = imR.getHeight();
 		prvTex = TextureManager::getSingleton().createManual(
-			sName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			TEX_TYPE_2D, xSize, ySize, 5,
+			sName, rgDef, TEX_TYPE_2D,
+			xSize, ySize, 5,
 			PF_BYTE_BGRA, TU_DEFAULT);
 
 		//  fill texture  rgb,a
@@ -180,8 +181,8 @@ bool PreviewTex::LoadTer(String sRgb, String sAa, float defA)
 
 		xSize = imR.getWidth();  ySize = imR.getHeight();
 		prvTex = TextureManager::getSingleton().createManual(
-			sName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			TEX_TYPE_2D, xSize, ySize, 5,
+			sName, rgDef, TEX_TYPE_2D,
+			xSize, ySize, 5,
 			PF_BYTE_BGRA, TU_DEFAULT);
 
 		//  fill texture  rgb,a
