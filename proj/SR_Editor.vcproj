@@ -319,31 +319,15 @@
 			Name="materials"
 			>
 			<File
-				RelativePath="..\data\materials\arrow.mat"
+				RelativePath="..\data\materials\blend.mat"
 				>
 			</File>
 			<File
-				RelativePath="..\data\materials\arrow.shader"
+				RelativePath="..\data\materials\blend.shader"
 				>
 			</File>
 			<File
-				RelativePath="..\data\materials\arrow.shaderset"
-				>
-			</File>
-			<File
-				RelativePath="..\data\hud\Camera.overlay"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials\car.mat"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials\car_particle.mat"
-				>
-			</File>
-			<File
-				RelativePath="..\data\hud\CarDbg.overlay"
+				RelativePath="..\data\materials\blend.shaderset"
 				>
 			</File>
 			<File
@@ -351,27 +335,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\data\materials\editor.mat"
+				RelativePath="..\data\materials\imposter.mat"
 				>
 			</File>
 			<File
-				RelativePath="..\data\particles\fluids.particle"
+				RelativePath="..\data\materials\imposter.shader"
 				>
 			</File>
 			<File
-				RelativePath="..\data\materials2\fluids.xml"
-				>
-			</File>
-			<File
-				RelativePath="..\data\hud\Focus.material"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials\grass.mat"
-				>
-			</File>
-			<File
-				RelativePath="..\data\hud\Hud.material"
+				RelativePath="..\data\materials\imposter.shaderset"
 				>
 			</File>
 			<File
@@ -391,83 +363,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\data\materials2\normal.cg"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials2\normal.program"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials\objects_dynamic.mat"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials\objects_static.mat"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials2\occluder.cg"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials2\occluder.program"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials\pipe.mat"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials2\pssm.cg"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials2\pssm.material"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials2\psvsm.cg"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials2\psvsm.material"
-				>
-			</File>
-			<File
-				RelativePath="..\data\editor\render.cg"
-				>
-			</File>
-			<File
-				RelativePath="..\data\editor\render.material"
-				>
-			</File>
-			<File
-				RelativePath="..\data\editor\render.program"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials2\rnd.cg"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials2\rnd.material"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials\road.mat"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials\road_wall_pipe.mat"
-				>
-			</File>
-			<File
 				RelativePath="..\data\materials\shadows.h"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials\sky.mat"
 				>
 			</File>
 			<File
@@ -483,30 +379,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\data\materials\tire_particle.mat"
-				>
-			</File>
-			<File
-				RelativePath="..\data\particles\tires.particle"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials\trees.mat"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials\trees_ch.mat"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials\trees_old.mat"
-				>
-			</File>
-			<File
-				RelativePath="..\data\materials\vdrift.mat"
-				>
-			</File>
-			<File
 				RelativePath="..\data\materials\water.mat"
 				>
 			</File>
@@ -518,18 +390,70 @@
 				RelativePath="..\data\materials\water.shaderset"
 				>
 			</File>
-			<File
-				RelativePath="..\data\materials\water_particle.mat"
+			<Filter
+				Name="scene"
 				>
-			</File>
-			<File
-				RelativePath="..\data\materials\weather.mat"
-				>
-			</File>
-			<File
-				RelativePath="..\data\particles\weather.particle"
-				>
-			</File>
+				<File
+					RelativePath="..\data\materials\scene\car.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials\scene\car_particle.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials\scene\editor.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials\scene\grass.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials\scene\objects_dynamic.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials\scene\objects_static.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials\scene\pipe.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials\scene\road.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials\scene\sky.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials\scene\tire_particle.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials\scene\trees.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials\scene\trees_ch.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials\scene\trees_old.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials\scene\water_particle.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials\scene\weather.mat"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Cfg"
@@ -683,7 +607,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\ogre\common\Sky.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\ogre\common\Terrain.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\ogre\common\TerrainBlend.cpp"
 				>
 			</File>
 			<File
@@ -780,6 +712,10 @@
 			</File>
 			<File
 				RelativePath="..\source\ogre\common\Def_Str.h"
+				>
+			</File>
+			<File
+				RelativePath="..\data\materials2\fluids.xml"
 				>
 			</File>
 			<File

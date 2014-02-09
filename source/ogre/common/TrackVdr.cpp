@@ -251,7 +251,7 @@ ManualObject* CHud::CreateVdrMinimap()
 	m->end();
 	m->setUseIdentityProjection(true);  m->setUseIdentityView(true);  // on hud
 	m->setCastShadows(false);
-	AxisAlignedBox aabInf;	aabInf.setInfinite();  m->setBoundingBox(aabInf);  // draw always
+	AxisAlignedBox aab;  aab.setInfinite();  m->setBoundingBox(aab);  // draw always
 	m->setRenderingDistance(100000.f);
 	m->setRenderQueueGroup(RQG_Hud2);  m->setVisibilityFlags(RV_Hud);
 	return m;

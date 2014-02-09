@@ -18,7 +18,6 @@
 #include <OgreManualObject.h>
 #include <OgreHardwarePixelBuffer.h>
 #include <OgreCamera.h>
-
 using namespace Ogre;
 
 
@@ -28,7 +27,7 @@ void App::Rnd2TexSetup()
 {
 	/// rt:  0 road minimap,  1 road for grass,  2 terrain minimap,  3 track preview full
 	// visibility:  1 road  2 hud,ed  4 terrain  8 trees  16-car glass  32 sky
-	const Ogre::uint32 visMask[RTs] =
+	const uint32 visMask[RTs] =
 		{ RV_Road, RV_Road+RV_Objects, RV_Terrain+RV_Objects, RV_MaskAll-RV_Hud };
 	const int dim[RTs] =  //1025: sc->td.iVertsX
 		{ 1024, 1025, 512, 1024 };
@@ -36,7 +35,7 @@ void App::Rnd2TexSetup()
 	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 	Real sz = pSet->size_minimap;
 	xm1 = 1-sz/asp, ym1 = -1+sz, xm2 = 1.0, ym2 = -1.0;
-	AxisAlignedBox big(-100000.0*Vector3::UNIT_SCALE, 100000.0*Vector3::UNIT_SCALE);
+	AxisAlignedBox aab;  aab.setInfinite();
 	
 	for (int i=0; i < RTs+RTsAdd; ++i)
 	{
@@ -46,12 +45,12 @@ void App::Rnd2TexSetup()
 		{
 			String sTex = "RttTex"+si, sCam = "RttCam"+si;
 
-			Ogre::TextureManager::getSingleton().remove(sTex);
+			TextureManager::getSingleton().remove(sTex);
 			mSceneMgr->destroyCamera(sCam);  // dont destroy old - const tex sizes opt..
 			
 			///  rnd to tex - same dim as Hmap	// after track load
 			Real fDim = sc->td.fTerWorldSize;  // world dim  ..vdr
-			Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().createManual(
+			TexturePtr texture = TextureManager::getSingleton().createManual(
 				sTex, rgDef, TEX_TYPE_2D,
 				dim[i], dim[i], 0, PF_R8G8B8A8, TU_RENDERTARGET);
 				  
@@ -73,14 +72,14 @@ void App::Rnd2TexSetup()
 		}
 		///  minimap  . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 		if (r.ndMini)  mSceneMgr->destroySceneNode(r.ndMini);
-		ResourcePtr mt = Ogre::MaterialManager::getSingleton().getByName(sMtr);
+		ResourcePtr mt = MaterialManager::getSingleton().getByName(sMtr);
 		if (!mt.isNull())  mt->reload();
 
-		r.mini = new Ogre::Rectangle2D(true);  // screen rect preview
+		r.mini = new Rectangle2D(true);  // screen rect preview
 		if (i == RTs)  r.mini->setCorners(-1/asp, 1, 1/asp, -1);  // fullscr,square
 		else  r.mini->setCorners(xm1, ym1, xm2, ym2);  //+i*sz*all
 
-		r.mini->setBoundingBox(big);
+		r.mini->setBoundingBox(aab);
 		r.ndMini = mSceneMgr->getRootSceneNode()->createChildSceneNode("Minimap"+si);
 		r.ndMini->attachObject(r.mini);	r.mini->setCastShadows(false);
 		r.mini->setMaterial(i == RTs+1 ? "BrushPrvMtr" : sMtr);
@@ -89,15 +88,16 @@ void App::Rnd2TexSetup()
 	}
 
 	//  pos dot on minimap  . . . . . . . .
-	if (!ndPos)  {
-		mpos = Create2D("hud/CarPos", 0.2f, true);  // dot size
+	if (!ndPos)
+	{	mpos = Create2D("hud/CarPos", 0.2f, true);  // dot size
 		mpos->setVisibilityFlags(RV_Hud);
 		mpos->setRenderQueueGroup(RQG_Hud3 /*RENDER_QUEUE_OVERLAY+1*/);
 		ndPos = mSceneMgr->getRootSceneNode()->createChildSceneNode(
 			Vector3(xm1+(xm2-xm1)/2, ym1+(ym2-ym1)/2, 0));
 		float fHudSize = 0.04f;
 		ndPos->scale(fHudSize, fHudSize, 1);
-		ndPos->attachObject(mpos);  }
+		ndPos->attachObject(mpos);
+	}
 	if (ndPos)   ndPos->setVisible(pSet->trackmap);
 	UpdMiniVis();
 }

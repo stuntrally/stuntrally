@@ -301,7 +301,7 @@
         blend_weights = max(blend_weights, 0);
 
         // Force weights to sum to 1.0
-        blend_weights /= (blend_weights.x + blend_weights.y + blend_weights.z );
+        blend_weights /= blend_weights.x + blend_weights.y + blend_weights.z;
         
         float2 coord1, coord2, coord3;
         float4 col1, col2, col3;
@@ -321,15 +321,18 @@
         float specularAmount = 0;
 #endif
         
+        //  vars
         float3 albedo = float3(0,0,0);
-        float3 bb = float3(0,0,0);
+        float3 bb;
         float4 diffuseSpec;
         float uvMul;
+		float fBlend;
+
         
-        
-        // per layer calculations
+//-----  per layer calculations
     @shForeach(@shPropertyString(num_layers))
     
+        fBlend = blendValues@shPropertyString(blendmap_component_@shIterator);
     
 ///---------------------------------------------------------------------------------------------
 #if TRIPLANAR
@@ -401,22 +404,12 @@
 #endif
 ///---------------------------------------------------------------------------------------------
 
-
+        
         //// albedo
-        /*
-        #if @shIterator == 0
-        // first layer doesn't need a blend map
-        albedo = diffuseSpec.rgb;
-        #else
-        albedo = shLerp(albedo, diffuseSpec.rgb, blendValues@shPropertyString(blendmap_component_@shIterator));
-        #endif
-        */
-        #if @shIterator == 0
-        albedo = 0.001*diffuseSpec.rgb;
-        #else
-        albedo += 0.001*diffuseSpec.rgb * blendValues@shPropertyString(blendmap_component_@shIterator);
-        #endif
+
+        albedo += 0.01*diffuseSpec.rgb * fBlend;
 /**/
+        bb = float3(0,0,0);
         #if @shIterator == 0
         bb = float3(1,0,0);
         #endif
@@ -426,11 +419,11 @@
         #if @shIterator == 2
         bb = float3(0,0,1);
         #endif
-        #if @shIterator == 3  // only 4 are possible
-        bb = float3(0.3,0.3,0);
+        #if @shIterator == 3  // only 4
+        bb = float3(0.0,0.5,0.5);
         #endif
 
-        albedo += bb * blendValues@shPropertyString(blendmap_component_@shIterator) * diffuseSpec.rgb;
+        albedo += bb * fBlend;
 /**/
 
 	#if NORMAL_MAPPING
@@ -443,9 +436,9 @@
 			litRes.y = specular;
 			#endif
         #else
-			litRes.x = shLerp (litRes.x, NdotL, blendValues@shPropertyString(blendmap_component_@shIterator));
+			litRes.x = shLerp (litRes.x, NdotL, fBlend);
 			#if SPECULAR
-			litRes.y = shLerp (litRes.y, specular, blendValues@shPropertyString(blendmap_component_@shIterator));
+			litRes.y = shLerp (litRes.y, specular, fBlend);
 			#endif
         #endif
         
@@ -454,14 +447,15 @@
         #if @shIterator == 0
         specularAmount = diffuseSpec.a;
         #else
-        specularAmount = shLerp (specularAmount, diffuseSpec.a, blendValues@shPropertyString(blendmap_component_@shIterator));
+        specularAmount = shLerp (specularAmount, diffuseSpec.a, fBlend);
         #endif
         
 	#endif
         
         
     @shEndForeach
-
+//-----  per layer
+	
         
         shOutputColour(0).a = 1.f;
         

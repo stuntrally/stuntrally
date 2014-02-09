@@ -19,9 +19,11 @@ struct TerLayer		// terrain texture layer
 	float dust, mud, dustS, smoke;  // particles intensities
 	Ogre::ColourValue tclr;  // trail color
 	
-	//  min,max range and smooth range for angle and height for blendmap
+	//  blendmap
+	//  min,max range and smooth range for angle and height
 	float angMin,angMax,angSm, hMin,hMax,hSm;
-	float noise;  bool bNoiseOnly;  // blendmap noise
+	//  noise
+	float noise;  bool bNoiseOnly;
 	
 	//  surface params bind
 	std::string surfName;  int surfId;

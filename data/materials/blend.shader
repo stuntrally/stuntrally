@@ -27,18 +27,29 @@ SH_BEGIN_PROGRAM
 
 	shInput(float2, uv)
 
-	//shUniform(float3, arrowColour1)     @shSharedParameter(arrowColour1)
+	#if 0
+	//  blendmap params for 4 layers
+	shUniform(float4, Hmin)   @shSharedParameter(Hmin)
+	shUniform(float4, Hmax)   @shSharedParameter(Hmax)
+	shUniform(float4, Hsm)    @shSharedParameter(Hsm)
 
-	shSampler2D(HMap)
+	shUniform(float4, Amin)   @shSharedParameter(Amin)
+	shUniform(float4, Amax)   @shSharedParameter(Amax)
+	shUniform(float4, Asm)    @shSharedParameter(Asm)
+
+	shUniform(float4, fNoise) @shSharedParameter(fNoise)
+	#endif
+
+	shSampler2D(samHMap)
 
 SH_START_PROGRAM
 {
-	float h = shSample(HMap, float2(uv.x,1-uv.y) );
+	float h = shSample(samHMap, float2(uv.x,1-uv.y) );
 	
-	//shOutputColour(0).xyz = float3(uv.x, uv.y, 1);
-	shOutputColour(0).xyz = float3(abs(h)*0.04, abs(h)*0.01, abs(h)*0.004);
+	//shOutputColour(0) = float4(uv.x, uv.y, 1, 1);
 
-	shOutputColour(0).w = 1;
+	float ah = abs(h);
+	shOutputColour(0) = float4(ah*0.04, ah*0.01, ah*0.004, 0/*abs(4-ah)/4*/);
 }
 
 #endif

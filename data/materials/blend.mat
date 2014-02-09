@@ -1,4 +1,4 @@
-material blend
+material blendMat
 {
     pass
     {
@@ -11,9 +11,9 @@ material blend
 		cull_hardware none
         fog_override true  // no fog
         
-        texture_unit HMap
+        texture_unit samHMap
         {
-            texture Hmap
+            texture HmapTex
             tex_address_mode clamp
         }
     }

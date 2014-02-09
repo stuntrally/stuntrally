@@ -67,8 +67,10 @@ bool PreviewTex::Load(String path, bool force)
 			if (prvTex.isNull())
 				Create(img.getWidth(), img.getHeight(), sName);
 				
-			LogO(path+" "+toStr(img.getWidth())+" "+toStr(img.getHeight()));
+			//LogO(path+" "+toStr(img.getWidth())+" "+toStr(img.getHeight()));
+
 			prvTex->getBuffer()->blitFromMemory(img.getPixelBox());
+
 			//prvTex->setNumMipmaps(5);
 			//prvTex->unload();  prvTex->loadImage(img);  //same
 

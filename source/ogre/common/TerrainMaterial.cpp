@@ -92,7 +92,7 @@ void TerrainMaterial::Profile::createMaterial(const String& matName, const Terra
 	lightMap->setProperty("tex_address_mode", STR("clamp"));
 
 	uint maxLayers = getMaxLayers(terrain),
-		numBlendTextures = std::min(terrain->getBlendTextureCount(maxLayers), terrain->getBlendTextureCount()),
+		numBlendTextures = std::min(terrain->getBlendTextureCount(maxLayers), terrain->getBlendTextureCount()),  // = 1
 		numLayers = std::min(maxLayers, static_cast<uint>(terrain->getLayerCount()));
 
 	p->mShaderProperties.setProperty("num_layers",    STR(toStr(numLayers)));
@@ -102,7 +102,9 @@ void TerrainMaterial::Profile::createMaterial(const String& matName, const Terra
 	for (uint i = 0; i < numBlendTextures; ++i)
 	{
 		sh::MaterialInstanceTextureUnit* blendTex = p->createTextureUnit("blendMap" + toStr(i));
-		blendTex->setProperty("direct_texture",   STR(/*terrain->getBlendTextureName(i)*/"blendmapRTex"));
+		//blendTex->setProperty("direct_texture",   STR(terrain->getBlendTextureName(i)));
+		blendTex->setProperty("direct_texture",   STR("blendmapRTT"));
+		//blendTex->setProperty("direct_texture",   STR("blendmapT"));
 		blendTex->setProperty("tex_address_mode", STR("clamp"));
 	}
 
