@@ -1,5 +1,15 @@
 material blendMat
 {
+	Hmin 0 0 0 0
+	Hmax 0 0 0 0
+	Hsmt 0 0 0 0
+
+	Amin 0 0 0 0
+	Amax 0 0 0 0
+	Asmt 0 0 0 0
+
+	//Fnoise 0 0 0 0
+
     pass
     {
         vertex_program blend_vertex
@@ -11,10 +21,28 @@ material blendMat
 		cull_hardware none
         fog_override true  // no fog
         
+        shader_properties
+        {
+			Hmin $Hmin
+			Hmax $Hmax
+			Hsmt $Hsmt
+				 
+			Amin $Amin
+			Amax $Amax
+			Asmt $Asmt
+			  
+			//Fnoise $Fnoise
+        }
+
         texture_unit samHMap
         {
             texture HmapTex
-            tex_address_mode clamp
+            tex_address_mode border
+        }
+        texture_unit samAng
+        {
+            texture AnglesRTT
+            tex_address_mode border
         }
     }
 }

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "../common/RenderConst.h"
+#include "../common/Def_Str.h"
 #include "../common/QTimer.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
@@ -9,11 +10,12 @@
 #include <OgreRoot.h>
 #include <OgreTerrain.h>
 #include <OgreHardwarePixelBuffer.h>
+#include "../../shiny/Main/Factory.hpp"
 using namespace Ogre;
 
 
 //  common rtt setup
-void App::Blmap::Setup(String sName, TexturePtr pTex, String sMtr)
+void App::RenderToTex::Setup(String sName, TexturePtr pTex, String sMtr)
 {
 	if (!scm)  return;  // once-
 	//  destroy old
@@ -44,10 +46,12 @@ void App::Blmap::Setup(String sName, TexturePtr pTex, String sMtr)
 	nd->attachObject(rect);
 }
 
-//  blendmap setup
+///  blendmap setup
 //  every time terrain hmap size changes
-//--------------------------------------------------------------------------------------------------------------------------
-const static String sHmap = "HmapTex", sAng = "AnglesRTT", sBlend = "blendmapRTT";
+//----------------------------------------------------------------------------------------------------
+const String App::sHmap = "HmapTex",
+	App::sAng = "AnglesRTT", App::sBlend = "blendmapRTT",
+	App::sAngMat = "anglesMat", App::sBlendMat = "blendMat";
 void App::CreateBlendTex()
 {
 	uint size = sc->td.iTerSize-1;
@@ -57,18 +61,16 @@ void App::CreateBlendTex()
 	texMgr.remove(sBlend);
 
 	//  Hmap tex
-	hMap = texMgr.createManual(
-		sHmap, rgDef, TEX_TYPE_2D,
+	hMap = texMgr.createManual( sHmap, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_FLOAT32_R, TU_DYNAMIC_WRITE_ONLY); //TU_STATIC_WRITE_ONLY?
 	
 	//  Angles rtt
-	angRT = texMgr.createManual(
-		sAng, rgDef, TEX_TYPE_2D,
+	angRT = texMgr.createManual( sAng, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_FLOAT32_R, TU_RENDERTARGET);
+	if (angRT.isNull())  LogO("Can't create Float32 Render Target!");
 	
 	//  blendmap rtt
-	blRT = texMgr.createManual(
-		sBlend, rgDef, TEX_TYPE_2D,
+	blRT = texMgr.createManual(	sBlend, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_R8G8B8A8, TU_RENDERTARGET);
 
 	//  rtt copy  (not needed?)
@@ -78,20 +80,24 @@ void App::CreateBlendTex()
 	
 	if (!bl.scm)
 		bl.scm = mRoot->createSceneManager(ST_GENERIC);
-		//ang.scm = mRoot->createSceneManager(ST_GENERIC);
-	bl.Setup("bl", blRT, "blendMat");
-	//ang.Setup("ang", angMapRT, "anglesMat");
+	ang.scm = bl.scm;
+
+	bl.Setup("bl", blRT, sBlendMat);
+	ang.Setup("ang", angRT, sAngMat);
 }
 
-//  update
+
+///  update, fill hmap texture from cpu floats
+//  every terrain hmap edit
+//--------------------------------------------------------------------------
 void App::FillHmapTex()
 {
-	QTimer ti;  ti.update();  /// time
+	//QTimer ti;  ti.update();  /// time
 
-	uint size = sc->td.iTerSize-1; //!^
+	uint size = sc->td.iTerSize-1;  //!^ same as in create
 	float* fHmap = terrain ? terrain->getHeightData() : sc->td.hfHeight;
 
-	//  fill hmap
+	//  fill hmap (full, is fast)
 	HardwarePixelBufferSharedPtr pt = hMap->getBuffer();
 	pt->lock(HardwareBuffer::HBL_DISCARD);
 
@@ -110,17 +116,50 @@ void App::FillHmapTex()
 	}
 	pt->unlock();
 
-	if (bl.rnd)
-	{	bl.rnd->update();
+	//  rtt
+	if (ang.rnd && bl.rnd)
+	{	
+		UpdLayerPars();
+		
+		ang.rnd->update();
+		bl.rnd->update();
 		//  copy from rtt to normal texture
 		//HardwarePixelBufferSharedPtr b = blMap->getBuffer();
 		//b->blit(pt);
 		//bl.rnd->writeContentsToFile(/*PATHMANAGER::DataUser()+*/ "blend.png");
 	}
 
-	ti.update();  /// time (1ms on 512, 4ms on 1k)
-	float dt = ti.dt * 1000.f;
+	//ti.update();  /// time (1ms on 512, 4ms on 1k)
+	//float dt = ti.dt * 1000.f;
 	//LogO(String("::: Time fill Hmap: ") + fToStr(dt,3,5) + " ms");
+}
+
+
+///  update blendmap layer params in shader
+//--------------------------------------------------------------------------
+void App::UpdLayerPars()
+{
+	//  angles
+	sh::MaterialInstance* mat = sh::Factory::getInstance().getMaterialInstance(sAngMat);
+	mat->setProperty("InvTerSize", sh::makeProperty<sh::FloatValue>(new sh::FloatValue( 1.f / float(sc->td.iTerSize) )));
+	mat->setProperty("TriSize",    sh::makeProperty<sh::FloatValue>(new sh::FloatValue( 2.f * sc->td.fTriangleSize )));
+
+	//  blendmap
+	mat = sh::Factory::getInstance().getMaterialInstance(sBlendMat);
+	//  copy
+	float Hmin[4],Hmax[4],Hsmt[4], Amin[4],Amax[4],Asmt[4], Fnoise[4];
+	int nl = std::min(4, (int)sc->td.layers.size());
+	for (int i=0; i < nl; ++i)
+	{
+		const TerLayer& l = sc->td.layersAll[sc->td.layers[i]];
+		Hmin[i] = l.hMin;	Hmax[i] = l.hMax;	Hsmt[i] = l.hSm;
+		Amin[i] = l.angMin;	Amax[i] = l.angMax;	Asmt[i] = l.angSm;
+		Fnoise[i] = l.noise;
+	}
+	#define SetV(s,v)  mat->setProperty(s, sh::makeProperty<sh::Vector4>(new sh::Vector4(v[0], v[1], v[2], v[3])))
+	SetV("Hmin", Hmin);  SetV("Hmax", Hmax);  SetV("Hsmt", Hsmt);
+	SetV("Amin", Amin);  SetV("Amax", Amax);  SetV("Asmt", Asmt);
+	//SetV("Fnoise", Fnoise);
 }
 
 
@@ -128,6 +167,7 @@ void App::FillHmapTex()
 //--------------------------------------------------------------------------------------------------------------------------
 void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool full)
 {
+	return;  //
 	QTimer ti;  ti.update();  /// time
 	//for (float f=-1.f; f<=2.f; f+=0.02f)  // test
 	//	LogO(toStr(f) + " = " + toStr( linRange(f,-0.5f,1.5f,0.2f) ));

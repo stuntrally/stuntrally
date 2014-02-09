@@ -407,7 +407,7 @@
         
         //// albedo
 
-        albedo += 0.01*diffuseSpec.rgb * fBlend;
+        albedo += diffuseSpec.rgb * fBlend;
 /**/
         bb = float3(0,0,0);
         #if @shIterator == 0
@@ -423,7 +423,7 @@
         bb = float3(0.0,0.5,0.5);
         #endif
 
-        albedo += bb * fBlend;
+        //albedo += bb * fBlend;
 /**/
 
 	#if NORMAL_MAPPING
@@ -477,14 +477,14 @@
 
         diffuse += lightDiffuse0.xyz * max(dot(normal, lightDir), 0) * shadow;
     
-        shOutputColour(0).xyz *= 1+0.00001* (lightAmbient.xyz + diffuse);
+        shOutputColour(0).xyz *= (lightAmbient.xyz + diffuse);
         #if SPECULAR
-        shOutputColour(0).xyz += 0.00001* specular * lightSpecular0.xyz * specularAmount * shadow;
+        shOutputColour(0).xyz +=  specular * lightSpecular0.xyz * specularAmount * shadow;
         #endif
 #else
-        shOutputColour(0).xyz *= 1+0.00001* (lightAmbient.xyz + litRes.x * lightDiffuse0.xyz * shadow);
+        shOutputColour(0).xyz *= (lightAmbient.xyz + litRes.x * lightDiffuse0.xyz * shadow);
         #if SPECULAR
-        shOutputColour(0).xyz += 0.00001* litRes.y * lightSpecular0.xyz * shadow;
+        shOutputColour(0).xyz +=  litRes.y * lightSpecular0.xyz * shadow;
         #endif
 #endif
         

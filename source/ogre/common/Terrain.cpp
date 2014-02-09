@@ -38,7 +38,7 @@ void App::configureTerrainDefaults(Light* l)
 	mTerrainGlobals->setDefaultMaterialGenerator(matGen);
 	UpdTerErr();
 
-	mTerrainGlobals->setLayerBlendMapSize(1024);
+	mTerrainGlobals->setLayerBlendMapSize(4);  // we use our own rtt, so reduce this
 	mTerrainGlobals->setLightMapDirection(l->getDerivedDirection());
 	mTerrainGlobals->setCompositeMapAmbient(mSceneMgr->getAmbientLight());
 	mTerrainGlobals->setCompositeMapDiffuse(l->getDiffuseColour());

@@ -80,14 +80,15 @@ void TerrainMaterial::Profile::createMaterial(const String& matName, const Terra
 
 	p->mShaderProperties.setProperty("composite_map", sh::makeProperty<sh::BooleanValue>(new sh::BooleanValue(renderCompositeMap)));
 
-
-	//  global normal map
-	sh::MaterialInstanceTextureUnit* normalMap = p->createTextureUnit("normalMap");
+	typedef sh::MaterialInstanceTextureUnit* MatTex;
+	
+	//  global normal map ?-
+	MatTex normalMap = p->createTextureUnit("normalMap");
 	normalMap->setProperty("direct_texture",   STR(terrain->getTerrainNormalMap()->getName()));
 	normalMap->setProperty("tex_address_mode", STR("clamp"));
 
 	//  light map
-	sh::MaterialInstanceTextureUnit* lightMap = p->createTextureUnit("lightMap");
+	MatTex lightMap = p->createTextureUnit("lightMap");
 	lightMap->setProperty("direct_texture",   STR(terrain->getLightmap()->getName()));
 	lightMap->setProperty("tex_address_mode", STR("clamp"));
 
@@ -101,26 +102,26 @@ void TerrainMaterial::Profile::createMaterial(const String& matName, const Terra
 	//  blend maps
 	for (uint i = 0; i < numBlendTextures; ++i)
 	{
-		sh::MaterialInstanceTextureUnit* blendTex = p->createTextureUnit("blendMap" + toStr(i));
+		MatTex blendTex = p->createTextureUnit("blendMap" + toStr(i));
 		//blendTex->setProperty("direct_texture",   STR(terrain->getBlendTextureName(i)));
 		blendTex->setProperty("direct_texture",   STR("blendmapRTT"));
 		//blendTex->setProperty("direct_texture",   STR("blendmapT"));
 		blendTex->setProperty("tex_address_mode", STR("clamp"));
 	}
 
-	//  layer diffuse
+	//  layer diffuse+spec
 	for (uint i = 0; i < numLayers; ++i)
 	{
-		sh::MaterialInstanceTextureUnit* diffuseTex = p->createTextureUnit("diffuseMap" + toStr(i));
+		MatTex diffuseTex = p->createTextureUnit("diffuseMap" + toStr(i));
 		diffuseTex->setProperty("direct_texture", STR(terrain->getLayerTextureName(i, 0)));
 		p->mShaderProperties.setProperty("blendmap_component_" + toStr(i),
 			STR(toStr(i / 4) + "." + getComponent(i % 4)));
 	}
 
-	//  layer normalheight
+	//  layer normal+height
 	for (uint i = 0; i < numLayers; ++i)
 	{
-		sh::MaterialInstanceTextureUnit* normalTex = p->createTextureUnit("normalMap" + toStr(i));
+		MatTex normalTex = p->createTextureUnit("normalMap" + toStr(i));
 		normalTex->setProperty("direct_texture", STR(terrain->getLayerTextureName(i, 1)));
 	}
 
@@ -129,16 +130,16 @@ void TerrainMaterial::Profile::createMaterial(const String& matName, const Terra
 	{
 		for (int i = 0; i < 3; ++i)
 		{
-			sh::MaterialInstanceTextureUnit* shadowTex = p->createTextureUnit("shadowMap" + toStr(i));
+			MatTex shadowTex = p->createTextureUnit("shadowMap" + toStr(i));
 			shadowTex->setProperty("content_type", STR("shadow"));
 		}
 	}
 
 	//  composite map
-	sh::MaterialInstanceTextureUnit* compositeMap = p->createTextureUnit("compositeMap");
+	MatTex compositeMap = p->createTextureUnit("compositeMap");
 	compositeMap->setProperty("direct_texture", STR(terrain->getCompositeMap()->getName()));
 
-	//  uv multipliers
+	//  uv multipliers ?-
 	uint numUVMul = numLayers / 4;
 	if (numLayers % 4)
 		++numUVMul;
@@ -194,7 +195,7 @@ uint8 TerrainMaterial::Profile::getMaxLayers(const Terrain* terrain) const
 
 	//--freeTextureUnits; // caustics
 
-	// each layer needs 2.25 units(1xdiffusespec, 1xnormalheight, 0.25xblend)
+	// each layer needs 2.25 units (1 diffusespec, 1 normalheight, 0.25 blend)
 
 	///  max is 4 layers,  more would need 2nd pass ...
 	return static_cast<uint8>(freeTextureUnits / 2.25f);

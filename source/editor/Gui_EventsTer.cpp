@@ -391,7 +391,10 @@ void CGui::comboTexNorm(Cmb cmb, size_t val)
 //  Terrain BlendMap
 void CGui::slTerLay(SV*)
 {
-	app->bTerUpdBlend = true;
+	//app->bTerUpdBlend = true;
+	app->UpdLayerPars();
+	if (app->ang.rnd)  app->ang.rnd->update();
+	if (app->bl.rnd)  app->bl.rnd->update();
 }
 
 void CGui::chkTerLNoiseOnly(Ck*)
