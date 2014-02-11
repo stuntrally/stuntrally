@@ -460,10 +460,9 @@ void App::AlignTerToRoad()
 	}
 
 
-	//  update terrain  todo: rect only
-	terrain->dirty();  //dirtyRect(Rect());
-	//GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
-	//initBlendMaps(terrain);
+	//  update terrain
+	terrain->dirty();  //rect..
+	UpdBlendmap();
 	bTerUpd = true;
 
 

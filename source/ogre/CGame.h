@@ -151,9 +151,7 @@ public:
 	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
 
 	//  blendmap
-	int blendMapSize;  char* blendMtr;  //  mtr from ter  . . . 
-	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
-	void CreateBlendTex(), FillHmapTex(), UpdLayerPars(), GetTerMtrIds();
+	void CreateBlendTex(), UpdBlendmap(), UpdLayerPars();
 
 	const static Ogre::String sHmap, sAng, sBlend, sAngMat, sBlendMat;  // tex, mtr names
 	Ogre::TexturePtr hMap, angRT, blRT; //, blMap;  // height, angles, blend
@@ -187,6 +185,11 @@ public:
 		if (x > xb)  return (xb-x)/s+1;
 		return 0.f;
 	}
+
+	//  mtr from ter  . . . 
+	int blendMapSize;  char* blendMtr;
+	void GetTerMtrIds();
+
 
 	//  road
 	SplineRoad* road;

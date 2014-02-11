@@ -97,8 +97,7 @@ public:
 	bool bNewHmap, bTrGrUpd;
 	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget), UpdTrees();
 
-	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(),
-		GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
+	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain();
 	void CreateTrees();
 
 	void CreateObjects(), DestroyObjects(bool clear);
@@ -151,13 +150,10 @@ public:
 	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
 
 	//  blendmap
-	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
-
-	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
-	void CreateBlendTex(), FillHmapTex(), UpdLayerPars();
+	void CreateBlendTex(), UpdBlendmap(), UpdLayerPars();
 	
 	const static Ogre::String sHmap, sAng, sBlend, sAngMat, sBlendMat;  // tex, mtr names
-	Ogre::TexturePtr hMap, angRT, blRT, blMap;  // height, angles, blend
+	Ogre::TexturePtr hMap, angRT, blRT; //, blMap;  // height, angles, blend
 
 	struct RenderToTex  // rtt common
 	{

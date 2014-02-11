@@ -36,7 +36,7 @@ App::App(SETTINGS* pSet1)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
 	,iFlCur(0), bRecreateFluids(0)
 	
-	,bTerUpdBlend(1), track(0)
+	,bTerUpdBlend(0), track(0)
 	,world(0), config(0), dispatcher(0), broadphase(0), solver(0)  //blt
 	,trackObject(0), trackMesh(0)
 	,mStaticGeom(0), mTimer(0.f), bUpdTerPrv(0)

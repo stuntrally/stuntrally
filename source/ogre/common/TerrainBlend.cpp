@@ -79,26 +79,28 @@ void App::CreateBlendTex()
 	//	"blendmapT", rgDef, TEX_TYPE_2D,
 	//	size, size, 0, PF_R8G8B8A8, TU_DEFAULT);
 	
-	if (!bl.scm)
-		bl.scm = mRoot->createSceneManager(ST_GENERIC);
-	ang.scm = bl.scm;
+	if (!bl.scm)  bl.scm = mRoot->createSceneManager(ST_GENERIC);
+	if (!ang.scm)  ang.scm = mRoot->createSceneManager(ST_GENERIC);
+	//ang.scm = bl.scm;
 
 	bl.Setup("bl", blRT, sBlendMat);
 	ang.Setup("ang", angRT, sAngMat);
+	
+	UpdBlendmap();  //
 }
 
 
 ///  update, fill hmap texture from cpu floats
 //  every terrain hmap edit
 //--------------------------------------------------------------------------
-void App::FillHmapTex()
+void App::UpdBlendmap()
 {
 	//QTimer ti;  ti.update();  /// time
 
 	size_t size = sc->td.iTerSize-1;  //!^ same as in create
 	float* fHmap = terrain ? terrain->getHeightData() : sc->td.hfHeight;
 
-	//  fill hmap (full, is fast)
+	//  fill hmap  (copy to tex, full is fast)
 	HardwarePixelBufferSharedPtr pt = hMap->getBuffer();
 	pt->lock(HardwareBuffer::HBL_DISCARD);
 
@@ -132,7 +134,7 @@ void App::FillHmapTex()
 
 	//ti.update();  /// time (1ms on 512, 4ms on 1k)
 	//float dt = ti.dt * 1000.f;
-	//LogO(String("::: Time fill Hmap: ") + fToStr(dt,3,5) + " ms");
+	//LogO(String("::: Time Upd blendmap: ") + fToStr(dt,3,5) + " ms");
 }
 
 
@@ -141,7 +143,7 @@ void App::FillHmapTex()
 #ifndef SR_EDITOR
 void App::GetTerMtrIds()
 {
-	QTimer ti;  ti.update();  /// time
+	//QTimer ti;  ti.update();  /// time
 
 	size_t size = sc->td.iTerSize-1;  //!^ same as in create
 	size_t size2 = size*size;
@@ -180,9 +182,9 @@ void App::GetTerMtrIds()
 	}
 	delete[] pd;
 
-	ti.update();  /// time (10ms on 1k)
-	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time Ter Ids: ") + fToStr(dt,3,5) + " ms");
+	//ti.update();  /// time (10ms on 1k)
+	//float dt = ti.dt * 1000.f;
+	//LogO(String("::: Time Ter Ids: ") + fToStr(dt,3,5) + " ms");
 }
 #endif
 
@@ -212,15 +214,4 @@ void App::UpdLayerPars()
 	SetV("Hmin", Hmin);  SetV("Hmax", Hmax);  SetV("Hsmt", Hsmt);
 	SetV("Amin", Amin);  SetV("Amax", Amax);  SetV("Asmt", Asmt);
 	//SetV("Fnoise", Fnoise);
-}
-
-
-void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool full)
-{
-}
-
-//  Hmap angles
-void App::GetTerAngles(int xb,int yb, int xe,int ye, bool full)
-{
-	FillHmapTex();
 }

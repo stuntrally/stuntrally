@@ -210,8 +210,6 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 
 		CreateBlendTex();  //+
 
-		GetTerAngles();
-		
 		ti.update();  /// time
 		float dt = ti.dt * 1000.f;
 		LogO(String("::: Time Hmap: ") + fToStr(dt,0,3) + " ms");
@@ -245,11 +243,12 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 		while (ti.hasMoreElements())
 		{
 			Terrain* t = ti.getNext()->instance;
-			initBlendMaps(t);
 			terrain = t;  //<set
 			terrain->setVisibilityFlags(RV_Terrain);
 		}
 		mTerrainGroup->freeTemporaryResources();
+
+		UpdBlendmap();  //
 
 	//  Horizon  ----------
 	if (pSet->horizon)
