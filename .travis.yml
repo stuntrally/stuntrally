@@ -23,6 +23,6 @@ notifications:
   irc:
     channels:
       - "chat.freenode.net#stuntrally"
-    on_success: never
+    on_success: change
     on_failure: always
 
