@@ -559,7 +559,7 @@
 	<Tag name="Brush_Freq">Част.</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - вращ.   alt-RMB - наклон</Tag>
 	<Tag name="InputRoadAngSnap">5,6   - захват углов</Tag>
-	<Tag name="Close">Close</Tag>
+	<Tag name="Close">Закрыть</Tag>
 	<Tag name="TerGenOfsX">Смещ. X</Tag>
 	<Tag name="TipTexTiling">Длина текстуры покрытия плитками (меньше означает больше повторов).</Tag>
 	<Tag name="InputBrushShape">K,L  -  форма</Tag>
@@ -705,7 +705,7 @@
 	<Tag name="ChallInfo">В режиме вызов игра имеет большинство неизменяемых настроек. Нужно время или позиция. Попробуй получить бронзу, серебро или золото.</Tag>
 	<Tag name="Tools">Инстр.</Tag>
 	<Tag name="NetCreateGame">Создать игру</Tag>
-	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
+	<Tag name="TutorEndFinished">Вы закончили это обучение.</Tag>
 	<Tag name="TipGrassSwaySpd">Скор. качания травы.</Tag>
 	<Tag name="MaterialProperties">Свойства материала</Tag>
 	<Tag name="FrictionTread">Шаг трения</Tag>
@@ -938,7 +938,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред,след Опции вкладка (shift - подменю)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="GameVersion">2.2.1</Tag>
+	<Tag name="Gravity">Gravity</Tag>
+	<Tag name="Camera">Camera</Tag>
+	<Tag name="InputRoadShiftSel">shift - select</Tag>
+	<Tag name="DenyReversed">Deny reversed direction</Tag>
+	<Tag name="Lock">Lock</Tag>
+	<Tag name="InputLockBrush">Enter - lock brush position</Tag>
+	<Tag name="Wind">Wind</Tag>
+	<Tag name="CameraBounce">Dynamic camera bouncing</Tag>
+	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>

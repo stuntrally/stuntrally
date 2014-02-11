@@ -1,0 +1,27 @@
+language: cpp
+compiler:
+ - gcc
+branches:
+  only:
+    - master
+    - ter_tex
+before_install:
+ - pwd
+ - echo "yes" | sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu `lsb_release -sc` main universe restricted multiverse"
+ - echo "yes" | sudo apt-add-repository ppa:openmw/openmw
+ - sudo apt-get update -qq
+ - sudo apt-get install -qq libboost-all-dev 
+ - sudo apt-get install -qq libenet-dev libvorbisfile3 libogg-dev libvorbis-dev
+ - sudo apt-get install -qq libogre-1.9-dev libmygui-dev libsdl2-dev
+before_script:
+ - mkdir build
+ - cd build
+ - cmake .. 
+script:
+ - make -j4
+notifications:
+  recipients:
+    - scrawl123@gmail.com
+  email:
+    on_success: change
+    on_failure: always

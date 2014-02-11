@@ -938,7 +938,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="GameVersion">2.2.1</Tag>
+	<Tag name="Gravity">Gravity</Tag>
+	<Tag name="Camera">Camera</Tag>
+	<Tag name="InputRoadShiftSel">shift - select</Tag>
+	<Tag name="DenyReversed">Deny reversed direction</Tag>
+	<Tag name="Lock">Lock</Tag>
+	<Tag name="InputLockBrush">Enter - lock brush position</Tag>
+	<Tag name="Wind">Wind</Tag>
+	<Tag name="CameraBounce">Dynamic camera bouncing</Tag>
+	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>

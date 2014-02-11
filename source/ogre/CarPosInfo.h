@@ -52,7 +52,7 @@ struct Axes
 
 	//  to ogre from vdrift
 	static void toOgre(Ogre::Vector3& vOut, const MATHVECTOR<float,3>& vIn);
-	static Ogre::Vector3 Axes::toOgre(const MATHVECTOR<float,3>& vIn);
+	static Ogre::Vector3 toOgre(const MATHVECTOR<float,3>& vIn);
 
 	static Ogre::Quaternion toOgre(const QUATERNION<float>& vIn);  // car
 	static Ogre::Quaternion toOgre(const QUATERNION<double>& vIn);
