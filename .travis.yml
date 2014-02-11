@@ -20,8 +20,9 @@ before_script:
 script:
  - make -j4
 notifications:
-  recipients:
-    - scrawl123@gmail.com
-  email:
-    on_success: change
+  irc:
+    channels:
+      - "chat.freenode.net#stuntrally"
+    on_success: never
     on_failure: always
+
