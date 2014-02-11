@@ -264,7 +264,7 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::GetWheelPositionAtDisplacement(WHEEL_POSITION wp,
 void CARDYNAMICS::ApplyForce(const MATHVECTOR<Dbl,3> & force)
 {
 	body.ApplyForce(force);
-	cam_body.ApplyForce(force * gPar.camBncF);
+	cam_body.ApplyForce(force * gPar.camBncF * fBncMass);
 	//chassis->applyCentralForce(ToBulletVector(force));
 }
 
@@ -272,7 +272,7 @@ void CARDYNAMICS::ApplyForce(const MATHVECTOR<Dbl,3> & force, const MATHVECTOR<D
 {
 	body.ApplyForce(force, offset);
 	MATHVECTOR<Dbl,3> fo = offset * force.Magnitude();
-	cam_body.ApplyForce(force * gPar.camBncFo + fo * gPar.camBncFof);
+	cam_body.ApplyForce((force * gPar.camBncFo + fo * gPar.camBncFof) * fBncMass);
 	//chassis->applyForce(ToBulletVector(force), ToBulletVector(offset));
 }
 
