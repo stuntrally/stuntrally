@@ -133,7 +133,6 @@ void App::destroyScene()
 	DestroyWeather();
 
 	delete[] sc->td.hfHeight;
-	delete[] sc->td.hfAngle;
 }
 	
 

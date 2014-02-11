@@ -4,6 +4,7 @@
 #include "../common/ShapeData.h"
 #include "../common/QTimer.h"
 #include "../common/GuiCom.h"
+#include "../common/data/SceneXml.h"
 #include "TerrainMaterial.h"
 #include "../vdrift/pathmanager.h"
 #ifdef SR_EDITOR
@@ -12,6 +13,7 @@
 	#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #else
 	#include "../CGame.h"
+	#include "../../vdrift/game.h"
 	#include "../../vdrift/settings.h"
 #endif
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
@@ -60,7 +62,18 @@ void App::configureTerrainDefaults(Light* l)
 	LogO("Terrain size: "+toStr(sc->td.iTerSize)+"  err:"+fToStr(mTerrainGlobals->getMaxPixelError(),2,4)+
 		"  batch: "+toStr(di.minBatchSize)+" "+toStr(di.maxBatchSize)+" /"+toStr(Terrain::TERRAIN_MAX_BATCH_SIZE));
 
-	//  textures  iBlendMaps-
+	//terrain->getCompositeMapMaterial
+	/*// set up a colour map
+	if (!terrain->getGlobalColourMapEnabled())
+	{
+		terrain->setGlobalColourMapEnabled(true);
+		Image colourMap;
+		colourMap.load("colormap.jpg", rgDef);
+		terrain->getGlobalColourMap()->loadImage(colourMap);
+	}/**/
+
+
+	//  textures
 	int ls = sc->td.layers.size();
 	di.layerList.resize(ls);
 	for (int i=0; i < ls; ++i)
@@ -68,11 +81,13 @@ void App::configureTerrainDefaults(Light* l)
 		TerLayer& l = sc->td.layersAll[sc->td.layers[i]];
 		di.layerList[i].worldSize = l.tiling;
 
-		#if 1  // new, combine rgb,a
+	//  new, combine rgb,a from 2 tex
+	//----------------------
+	#if 1
 		String pt = PATHMANAGER::Data()+"/terrain",
 			pt2=pt+"2/", p;  pt+="/";
 		
-		//  diff
+		///  diff  -----------
 		p = PATHMANAGER::FileExists(pt2+ l.texFile) ? pt2 : pt;
 		String tx_d, tx_s;		
 		if (!StringUtil::match(l.texFile, "*_d.*", false))
@@ -88,7 +103,7 @@ void App::configureTerrainDefaults(Light* l)
 		//else
 		//	texLayD[i].LoadTer(p+ tx_d, pt2+ "flat_s.png");
 
-		//  norm
+		///  norm  -----------
 		bool fl = l.texNorm == "flat_n.png";
 		p = fl||PATHMANAGER::FileExists(pt2+ l.texNorm) ? pt2 : pt;
 		String n_n, n_h;
@@ -107,10 +122,12 @@ void App::configureTerrainDefaults(Light* l)
 		
 		di.layerList[i].textureNames.push_back("layD"+toStr(i));
 		di.layerList[i].textureNames.push_back("layN"+toStr(i));
-		#else  // old
+	#else
+		//  old, 1 rgba tex
+		//----------------------
 		di.layerList[i].textureNames.push_back(l.texFile);
 		di.layerList[i].textureNames.push_back(l.texNorm);
-		#endif
+	#endif
 	}
 }
 
@@ -159,7 +176,7 @@ void App::configureHorizonDefaults(Ogre::Light* l)
 ///--------------------------------------------------------------------------------------------------------------
 void App::CreateTerrain(bool bNewHmap, bool bTer)
 {
-	iBlendMaps = 0;  terrain = 0;
+	terrain = 0;
 	
 	///  sky
 	Vector3 scl = pSet->view_distance*Vector3::UNIT_SCALE;
@@ -179,7 +196,6 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 
 		int wx = sc->td.iVertsX, wy = sc->td.iVertsY, wxy = wx * wy;  //wy=wx
 		delete[] sc->td.hfHeight;  sc->td.hfHeight = new float[wxy];
-		delete[] sc->td.hfAngle;   sc->td.hfAngle = new float[wxy];
 		const int size = wxy * sizeof(float);
 
 		String name = gcom->TrkDir() + (bNewHmap ? "heightmap-new.f32" : "heightmap.f32");

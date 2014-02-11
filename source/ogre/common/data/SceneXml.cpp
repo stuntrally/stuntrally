@@ -668,7 +668,7 @@ bool Scene::SaveXml(String file)
 
 TerData::TerData()
 {
-	hfHeight = NULL;  hfAngle = NULL;
+	hfHeight = NULL;
 	Default();
 }
 void TerData::Default()

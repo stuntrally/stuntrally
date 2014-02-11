@@ -1515,7 +1515,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\ogre\common\Sky.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\ogre\common\Terrain.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\TerrainBlend.cpp"
 					>
 				</File>
 				<File

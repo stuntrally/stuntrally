@@ -254,7 +254,7 @@ void CGui::btnTerGenerate(WP wp)
 	if (n == "TerrainGenSub")  sub = true;/*else
 	if (n == "TerrainGenMul")  mul = true;*/
 
-	float* hfData = sc->td.hfHeight, *hfAng = sc->td.hfAngle;
+	float* hfData = sc->td.hfHeight; //, *hfAng = sc->td.hfAngle;
 	const int sx = sc->td.iVertsX;  // sx=sy
 	const float s = sx * 0.5f, s1 = 1.f/s;
 	const float ox = pSet->gen_ofsx, oy = pSet->gen_ofsy;
@@ -296,8 +296,8 @@ void CGui::btnTerGenerate(WP wp)
 			//c = c + std::max(0.f, std::min(1.f, 2*c-cr)) * pow(cr, rdPow);
 			c *= pow(cr, rdPow);
 		}
-		
-		c *= app->linRange(hfAng[a],  pSet->gen_terMinA,pSet->gen_terMaxA, pSet->gen_terSmA);
+		//FIXME: ter gen ang pars
+		//c *= app->linRange(hfAng[a],  pSet->gen_terMinA,pSet->gen_terMaxA, pSet->gen_terSmA);
 		c *= app->linRange(hfData[a], pSet->gen_terMinH,pSet->gen_terMaxH, pSet->gen_terSmH);
 
 		hfData[a] = add ? (hfData[a] + c * pSet->gen_scale + pSet->gen_ofsh) : (

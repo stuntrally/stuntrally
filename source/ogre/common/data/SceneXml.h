@@ -35,7 +35,7 @@ class TerData		///  Terrain
 {
 public:	
 	//  height field
-	float* hfHeight,*hfAngle;
+	float* hfHeight;
 	
 	//  size
 	int iVertsX, iVertsY, iTerSize;  // size in vertices

@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "../common/Def_Str.h"
 #include "../common/RenderConst.h"
+#include "../common/data/SceneXml.h"
 #include "../../road/Road.h"  // sun rot
 #include "../shiny/Main/Factory.hpp"
+#include "../../vdrift/dbl.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
 	#include "../../editor/settings.h"

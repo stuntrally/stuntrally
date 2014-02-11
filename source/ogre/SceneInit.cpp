@@ -295,7 +295,7 @@ void App::LoadGame()  // 2
 	pGame->NewGameDoLoadTrack();
 
 	if (!sc->ter)
-	{	sc->td.hfHeight = sc->td.hfAngle = NULL;  }  // sc->td.layerRoad.smoke = 1.f;
+		sc->td.hfHeight = NULL;  // sc->td.layerRoad.smoke = 1.f;
 	
 	// upd car abs,tcs,sss
 	pGame->ProcessNewSettings();
@@ -527,6 +527,7 @@ void App::LoadCar()  // 4
 void App::LoadTerrain()  // 5
 {
 	CreateTerrain(false,sc->ter);  // common
+	GetTerMtrIds();
 	if (sc->ter)
 		CreateBltTerrain();
 	

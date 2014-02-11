@@ -145,7 +145,6 @@ public:
 	
 	///  terrain
 	PreviewTex texLayD[6],texLayN[6];
-	Ogre::Image texNoise[4];
 	Ogre::Terrain* terrain;
 	Ogre::TerrainGlobalOptions* mTerrainGlobals;
 	Ogre::TerrainGroup* mTerrainGroup;
@@ -153,6 +152,7 @@ public:
 
 	//  blendmap
 	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
+
 	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
 	void CreateBlendTex(), FillHmapTex(), UpdLayerPars();
 	

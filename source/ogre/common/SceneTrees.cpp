@@ -6,6 +6,7 @@
 #include "data/BltObjects.h"
 #include "ShapeData.h"
 #include "QTimer.h"
+#include "../../road/SplineBase.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
 	#include "../../editor/settings.h"
@@ -279,10 +280,8 @@ void App::CreateTrees()
 				if (!add)  continue;  //
 
 				//  check ter angle  ------------
-				int mx = (pos.x + 0.5*tws)/tws*sc->td.iVertsX,
-					my =(-pos.z + 0.5*tws)/tws*sc->td.iVertsY;
-				int a = std::max(0, std::min(txy, my*sc->td.iVertsX+mx));
-				if (sc->td.hfAngle[a] > pg.maxTerAng)
+				float ang = TerUtil::GetAngleAt(terrain, pos.x, pos.z, sc->td.fTriangleSize);
+				if (ang > pg.maxTerAng)
 					add = false;
 
 				if (!add)  continue;  //

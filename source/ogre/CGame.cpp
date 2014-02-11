@@ -32,7 +32,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,terrain(0), mTerrainGroup(0), mTerrainGlobals(0)
 	,horizon(0), mHorizonGroup(0), mHorizonGlobals(0)
 	// game
-	,blendMtr(0), iBlendMaps(0), dbgdraw(0), noBlendUpd(0), blendMapSize(513)
+	,blendMtr(0), blendMapSize(513), dbgdraw(0)
 	,grass(0), trees(0), road(0)
 	,pr(0),pr2(0), sun(0), mStaticGeom(0)
 	,carIdWin(-1), iRplCarOfs(0)
@@ -143,7 +143,6 @@ void App::destroyScene()
 	if (pGame)
 		pGame->End();
 	delete[] sc->td.hfHeight;
-	delete[] sc->td.hfAngle;
 	delete[] blendMtr;  blendMtr = 0;
 
 	BaseApp::destroyScene();
