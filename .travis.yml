@@ -13,7 +13,6 @@ before_install:
  - sudo apt-get install -qq libenet-dev libvorbisfile3 libogg-dev
  - sudo apt-get install -qq libogre-1.9-dev libmygui-dev libsdl2-dev
 before_script:
- - cd -
  - mkdir build
  - cd build
  - cmake .. 
