@@ -14,7 +14,7 @@
 
 
 namespace Ogre {  class SceneNode;  class SceneManager;  class Light;
-	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
+	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  class Rectangle2D;  }
 namespace Forests {  class PagedGeometry;  }
 namespace BtOgre  {  class DebugDrawer;  }
 class Scene;  class WaterRTT;  class CData;  class CInput;  class GraphView;
