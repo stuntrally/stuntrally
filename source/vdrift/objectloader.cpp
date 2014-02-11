@@ -6,7 +6,10 @@
 #include "texture.h"
 #include "reseatable_reference.h"
 #include "track.h"
-#include "../ogre/CGame.h"
+#ifndef SR_EDITOR
+	#include "../ogre/CGame.h"
+#endif
+
 
 OBJECTLOADER::OBJECTLOADER(
 	const std::string & ntrackpath,

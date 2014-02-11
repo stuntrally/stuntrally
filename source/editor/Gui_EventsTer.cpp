@@ -10,6 +10,7 @@
 #include "../vdrift/pathmanager.h"
 #include <fstream>
 #include <MyGUI.h>
+#include <OgreRenderTexture.h>
 using namespace MyGUI;
 using namespace Ogre;
 

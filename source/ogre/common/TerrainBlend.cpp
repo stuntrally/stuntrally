@@ -10,6 +10,7 @@
 #endif
 #include <OgreRoot.h>
 #include <OgreTerrain.h>
+#include <OgreCamera.h>
 #include <OgreHardwarePixelBuffer.h>
 #include "../../shiny/Main/Factory.hpp"
 using namespace Ogre;
