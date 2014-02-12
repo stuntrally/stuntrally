@@ -405,10 +405,9 @@
 ///---------------------------------------------------------------------------------------------
 
         
-        //// albedo
+        ////  albedo
 
-        albedo += diffuseSpec.rgb * fBlend;
-/**/
+		/**/
         bb = float3(0,0,0);
         #if @shIterator == 0
         bb = float3(1,0,0);
@@ -420,11 +419,11 @@
         bb = float3(0,0,1);
         #endif
         #if @shIterator == 3  // only 4
-        bb = float3(0.0,0.5,0.5);
+        bb = float3(0.5,0.5,0.5);
         #endif
-
+		/**/
         //albedo += bb * fBlend;
-/**/
+        albedo += diffuseSpec.rgb * fBlend;
 
 	#if NORMAL_MAPPING
         NdotL = max(dot(TSnormal, TSlightDir), 0);
@@ -458,9 +457,7 @@
 	
         
         shOutputColour(0).a = 1.f;
-        
         shOutputColour(0).rgb = albedo;
-        
         
         
         // Lighting

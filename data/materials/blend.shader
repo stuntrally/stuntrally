@@ -1,4 +1,5 @@
 #include "core.h"
+#include "noise.h"
 
 
 float linRange(float x, float xa, float xb, float s)  // val, min, max, smooth range
@@ -46,6 +47,8 @@ SH_BEGIN_PROGRAM
 	shUniform(float4, Amax)   @shUniformProperty4f(Amax, Amax)
 	shUniform(float4, Asmt)   @shUniformProperty4f(Asmt, Asmt)
 
+	shUniform(float4, Nmul)   @shUniformProperty4f(Nmul, Nmul)
+
 	shSampler2D(samHMap)
 	shSampler2D(samAng)
 
@@ -55,16 +58,32 @@ SH_START_PROGRAM
 	float h = shSample(samHMap, uv1);
 	float a = shSample(samAng,  uv);
 	
-	float l0 = linRange(a, Amin.x, Amax.x, Asmt.x) * linRange(h, Hmin.x, Hmax.x, Hsmt.x);
-	float l1 = linRange(a, Amin.y, Amax.y, Asmt.y) * linRange(h, Hmin.y, Hmax.y, Hsmt.y);
-	float l2 = linRange(a, Amin.z, Amax.z, Asmt.z) * linRange(h, Hmin.z, Hmax.z, Hsmt.z);
-	float l3 = linRange(a, Amin.w, Amax.w, Asmt.w) * linRange(h, Hmin.w, Hmax.w, Hsmt.w);
+	//  ter ang,h ranges
+	float l0a = linRange(a, Amin.x, Amax.x, Asmt.x) * linRange(h, Hmin.x, Hmax.x, Hsmt.x), l0 = l0a;
+	float l1a = linRange(a, Amin.y, Amax.y, Asmt.y) * linRange(h, Hmin.y, Hmax.y, Hsmt.y), l1 = l1a;
+	float l2a = linRange(a, Amin.z, Amax.z, Asmt.z) * linRange(h, Hmin.z, Hmax.z, Hsmt.z), l2 = l2a;
+	float l3a = linRange(a, Amin.w, Amax.w, Asmt.w) * linRange(h, Hmin.w, Hmax.w, Hsmt.w), l3 = l3a;
 	
-	//  normalize
-	float ll = max(0.01f, l0+l1+l2+l3);
-	l0 /= ll;  l1 /= ll;  l2 /= ll;  l3 /= ll;
+	//  noise par
+	//float n0 = pow( snoise(uv1, 0.006f, 3, 0.25f) * snoise(uv1, 0.02f, 3, 0.3f) * snoise(uv1, 0.05f, 3, 0.4f), 2);
+	//float n = lerp( snoise(uv1, 0.006f, 3, 0.25f) * snoise(uv1, 0.02f, 3, 0.3f) * snoise(uv1, 0.05f, 3, 0.4f),
+	//	snoise(uv1, 0.01f, 4, 0.3f), snoise(uv1, 0.03f, 4, 0.2f) );
+	float n0 = Nmul.x * snoise(uv1, 0.0121f, 3, 0.27f);
+	float n1 = Nmul.y * snoise(uv1, 0.0135f, 3, 0.30f);
+	float n2 = Nmul.z * snoise(uv1, 0.0130f, 3, 0.31f);
+	float n3 = Nmul.w * snoise(uv1, 0.0126f, 3, 0.33f);
+
+	//  add noise
+	l1 += l0a * n0;  l0 *= 1-n0;
+	l2 += l1a * n1;  l1 *= 1-n1;
+	l3 += l2a * n2;  l2 *= 1-n2;
+	l2 += l3a * n3;  l3 *= 1-n3;  //back to l2
+	
+	//  normalize  (sum = 1)
+	l0 = saturate(l0);  l1 = saturate(l1);  l2 = saturate(l2);  l3 = saturate(l3);  // fix white dots
+	float ll = l0+l1+l2+l3;
+	if (ll < 0.01f)  {  l0 = 1.f;  ll = l0+l1+l2+l3;  }  // fix black dots
+	ll = 1/ll;  l0 *= ll;  l1 *= ll;  l2 *= ll;  l3 *= ll;  // norm
 	shOutputColour(0) = float4(l0, l1, l2, l3);
-
 }
-
 #endif

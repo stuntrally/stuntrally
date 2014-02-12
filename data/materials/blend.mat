@@ -1,5 +1,6 @@
 material blendMat
 {
+	//  Height, Angle, Noise  params for 4 layers
 	Hmin 0 0 0 0
 	Hmax 0 0 0 0
 	Hsmt 0 0 0 0
@@ -8,18 +9,17 @@ material blendMat
 	Amax 0 0 0 0
 	Asmt 0 0 0 0
 
-	//Fnoise 0 0 0 0
+	Nmul 0 0 0 0
 
     pass
     {
         vertex_program blend_vertex
         fragment_program blend_fragment
         
-		//lighting off
 		depth_check off
 		depth_write off
 		cull_hardware none
-        fog_override true  // no fog
+        fog_override true
         
         shader_properties
         {
@@ -31,18 +31,18 @@ material blendMat
 			Amax $Amax
 			Asmt $Asmt
 			  
-			//Fnoise $Fnoise
+			Nmul $Nmul
         }
 
         texture_unit samHMap
         {
             texture HmapTex
-            tex_address_mode border
+            tex_address_mode clamp
         }
         texture_unit samAng
         {
             texture AnglesRTT
-            tex_address_mode border
+            tex_address_mode clamp
         }
     }
 }

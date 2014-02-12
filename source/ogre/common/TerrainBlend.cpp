@@ -202,17 +202,17 @@ void App::UpdLayerPars()
 	//  blendmap
 	mat = sh::Factory::getInstance().getMaterialInstance(sBlendMat);
 	//  copy
-	float Hmin[4],Hmax[4],Hsmt[4], Amin[4],Amax[4],Asmt[4], Fnoise[4];
+	float Hmin[4],Hmax[4],Hsmt[4], Amin[4],Amax[4],Asmt[4], Nmul[4];
 	int nl = std::min(4, (int)sc->td.layers.size());
 	for (int i=0; i < nl; ++i)
 	{
 		const TerLayer& l = sc->td.layersAll[sc->td.layers[i]];
 		Hmin[i] = l.hMin;	Hmax[i] = l.hMax;	Hsmt[i] = l.hSm;
 		Amin[i] = l.angMin;	Amax[i] = l.angMax;	Asmt[i] = l.angSm;
-		Fnoise[i] = l.noise;
+		Nmul[i] = l.noise;
 	}
 	#define SetV(s,v)  mat->setProperty(s, sh::makeProperty<sh::Vector4>(new sh::Vector4(v[0], v[1], v[2], v[3])))
 	SetV("Hmin", Hmin);  SetV("Hmax", Hmax);  SetV("Hsmt", Hsmt);
 	SetV("Amin", Amin);  SetV("Amax", Amax);  SetV("Asmt", Asmt);
-	//SetV("Fnoise", Fnoise);
+	SetV("Nmul", Nmul);
 }

@@ -192,7 +192,7 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 	///  --------  fill HeightField data --------
 	if (bTer)
 	{
-		QTimer ti;  ti.update();  /// time
+		//QTimer ti;  ti.update();  /// time
 
 		int wx = sc->td.iVertsX, wy = sc->td.iVertsY, wxy = wx * wy;  //wy=wx
 		delete[] sc->td.hfHeight;  sc->td.hfHeight = new float[wxy];
@@ -210,9 +210,9 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 
 		CreateBlendTex();  //+
 
-		ti.update();  /// time
-		float dt = ti.dt * 1000.f;
-		LogO(String("::: Time Hmap: ") + fToStr(dt,0,3) + " ms");
+		//ti.update();  /// time  4MB ~13ms
+		//float dt = ti.dt * 1000.f;
+		//LogO(String("::: Time Hmap: ") + fToStr(dt,0,3) + " ms");
 	}
 	///
 
