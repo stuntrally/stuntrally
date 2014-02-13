@@ -291,8 +291,8 @@ void CGui::InitGui()
 	sv= &svTerLHMin;    sv->Init("TerLHMin",   &f,-150.f,150.f, 1.f, 0,2);  sv->DefaultF(-300.f);  Sev(TerLay);
 	sv= &svTerLHMax;    sv->Init("TerLHMax",   &f,-150.f,150.f, 1.f, 0,2);  sv->DefaultF( 300.f);  Sev(TerLay);
 	sv= &svTerLHSm;     sv->Init("TerLHSm",    &f, 0.f,  100.f, 2.f, 1,4);  sv->DefaultF(20.f);  Sev(TerLay);
-	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f,-2.f,2.f);  Sev(TerLay);
-	ck= &ckTerLNoiseOnly; ck->Init("TerLNoiseOnly",	&b);   Cev(TerLNoiseOnly);
+	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f,-0.5f,1.5f);  Sev(TerLay);
+	//..
 	
 	//  particles
 	Ed(LDust, editLDust);	Ed(LDustS, editLDust);

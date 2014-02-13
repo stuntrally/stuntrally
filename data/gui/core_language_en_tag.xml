@@ -702,6 +702,7 @@
 	<Tag name="TerNormal">Normal</Tag>
 	<Tag name="auto">Auto</Tag>
 	<Tag name="scale">Scale</Tag>
+	<Tag name="Test">Test</Tag>
 
 	<!--  Terrain  generate  -->
 	<Tag name="Generator">Generator</Tag>
@@ -723,6 +724,7 @@
 	<Tag name="TerLHSm">Height smooth</Tag>
 	<Tag name="TerLNoise">Noise</Tag>
 	<Tag name="TerLNoiseOnly">Only Noise</Tag>
+	
 
 	<!--  Terrain  particles  -->
 	<Tag name="DustSize">dust size</Tag>
@@ -793,6 +795,7 @@
 	<Tag name="SceneryId">Scenery Id</Tag>
 	<Tag name="GrMaterial">Material</Tag>
 	<Tag name="GrColorMap">Color map</Tag>
+	<Tag name="Channels">Channels</Tag>
 
 
 	<!--  Road  -->

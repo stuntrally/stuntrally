@@ -72,14 +72,14 @@ void CGui::SldUpd_TerL()
 {
 	TerLayer* lay = bTerLay ? &sc->td.layersAll[idTerLay] : &sc->td.layerRoad;
 	ckTerLayOn.Upd(&lay->on);
-	ckTerLNoiseOnly.Upd(&lay->bNoiseOnly);
 	ckTerLayTripl.Upd(&lay->triplanar);
 	
 	svTerLScale.UpdF(&lay->tiling);
 	svTerLAngMin.UpdF(&lay->angMin);  svTerLHMin.UpdF(&lay->hMin);
 	svTerLAngMax.UpdF(&lay->angMax);  svTerLHMax.UpdF(&lay->hMax);
 	svTerLAngSm.UpdF(&lay->angSm);    svTerLHSm.UpdF(&lay->hSm);
-	svTerLNoise.UpdF(&lay->noise);
+
+	svTerLNoise.UpdF(&lay->noise);  //..
 }
 
 //  Tri size
@@ -397,11 +397,6 @@ void CGui::slTerLay(SV*)
 	app->UpdLayerPars();
 	if (app->ang.rnd)  app->ang.rnd->update();
 	if (app->bl.rnd)  app->bl.rnd->update();
-}
-
-void CGui::chkTerLNoiseOnly(Ck*)
-{
-	if (/*app->terrain &&*/ bGI /*&& !noBlendUpd*/)  app->bTerUpdBlend = true;
 }
 
 

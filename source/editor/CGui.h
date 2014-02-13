@@ -155,9 +155,9 @@ public:
 	SV svTerLScale;
 	SV svTerLAngMin, svTerLHMin, svTerLAngSm;
 	SV svTerLAngMax, svTerLHMax, svTerLHSm;
-	SV svTerLNoise;
+	SV svTerLNoise, svTerLNprev, svTerLNoise2;
 	void slTerLay(SV*);
-	CK(TerLNoiseOnly);  CK(TerLayTripl);
+	CK(TerLayTripl);
 
 	//  Ter Particles
 	Ed edLDust,edLDustS,edLMud,edLSmoke, edLTrlClr;  Img clrTrail;
