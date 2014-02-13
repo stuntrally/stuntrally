@@ -9,7 +9,9 @@ material blendMat
 	Amax 0 0 0 0
 	Asmt 0 0 0 0
 
-	Nmul 0 0 0 0
+	Nnext 0 0 0
+	//Nprev 0 0 0
+	//Nnext2 0 0
 
     pass
     {
@@ -31,7 +33,9 @@ material blendMat
 			Amax $Amax
 			Asmt $Asmt
 			  
-			Nmul $Nmul
+			Nnext $Nnext
+			//Nprev $Nprev
+			//Nnext2 $Nnext2
         }
 
         texture_unit samHMap

@@ -47,7 +47,9 @@ SH_BEGIN_PROGRAM
 	shUniform(float4, Amax)   @shUniformProperty4f(Amax, Amax)
 	shUniform(float4, Asmt)   @shUniformProperty4f(Asmt, Asmt)
 
-	shUniform(float4, Nmul)   @shUniformProperty4f(Nmul, Nmul)
+	shUniform(float3, Nnext)    @shUniformProperty3f(Nnext, Nnext)
+	//shUniform(float3, Nprev)    @shUniformProperty3f(Nprev, Nprev)
+	//shUniform(float4, Nnx2pv2)  @shUniformProperty4f(Nnx2pv2, Nnx2pv2)
 
 	shSampler2D(samHMap)
 	shSampler2D(samAng)
@@ -64,20 +66,30 @@ SH_START_PROGRAM
 	float l2a = linRange(a, Amin.z, Amax.z, Asmt.z) * linRange(h, Hmin.z, Hmax.z, Hsmt.z), l2 = l2a;
 	float l3a = linRange(a, Amin.w, Amax.w, Asmt.w) * linRange(h, Hmin.w, Hmax.w, Hsmt.w), l3 = l3a;
 	
-	//  noise par
 	//float n0 = pow( snoise(uv1, 0.006f, 3, 0.25f) * snoise(uv1, 0.02f, 3, 0.3f) * snoise(uv1, 0.05f, 3, 0.4f), 2.f);
-	//float n = lerp( snoise(uv1, 0.006f, 3, 0.25f) * snoise(uv1, 0.02f, 3, 0.3f) * snoise(uv1, 0.05f, 3, 0.4f),
-	//	snoise(uv1, 0.01f, 4, 0.3f), snoise(uv1, 0.03f, 4, 0.2f) );
-	float n0 = Nmul.x * snoise(uv1, 0.0121f, 3, 0.27f);
-	float n1 = Nmul.y * snoise(uv1, 0.0135f, 3, 0.30f);
-	float n2 = Nmul.z * snoise(uv1, 0.0130f, 3, 0.31f);
-	float n3 = Nmul.w * snoise(uv1, 0.0126f, 3, 0.29f);
+	//float n = lerp( snoise(uv1, 0.02f, 3, 0.3f), snoise(uv1, 0.01f, 4, 0.3f), snoise(uv1, 0.03f, 4, 0.2f) );
+
+	//  noise par
+	float n0 = Nnext.x < 0.01f ? 0.f : Nnext.x * snoise(uv1, 0.0121f, 3, 0.27f);  // par.. freq, oct, pers, pow
+	float n1 = Nnext.x < 0.01f ? 0.f : Nnext.y * snoise(uv1, 0.0135f, 3, 0.30f);
+	float n2 = Nnext.x < 0.01f ? 0.f : Nnext.z * snoise(uv1, 0.0130f, 3, 0.31f);
+
+	//float p1 = Nprev.x < 0.01f ? 0.f : Nprev.x * snoise(uv1, 0.0126f, 3, 0.29f);
+	//float p2 = Nprev.y < 0.01f ? 0.f : Nprev.y * snoise(uv1, 0.0126f, 3, 0.29f);
+	//float p3 = Nprev.z < 0.01f ? 0.f : Nprev.z * snoise(uv1, 0.0126f, 3, 0.29f);
 
 	//  add noise
-	l1 += l0a * n0;  l0 *= 1-n0;
-	l2 += l1a * n1;  l1 *= 1-n1;
-	l3 += l2a * n2;  l2 *= 1-n2;
-	l2 += l3a * n3;  l3 *= 1-n3;  //back to l2  todo: Nbck params for all, next+2 par for 1st layer
+	//  +1, to next layer
+	l1 += l0a * n0;  l0 *= 1.f-n0;
+	l2 += l1a * n1;  l1 *= 1.f-n1;
+	l3 += l2a * n2;  l2 *= 1.f-n2;
+	//  -1, to prev
+	//l0 += l1a * p1;  l1 *= 1.f-p1;
+	//l1 += l2a * p2;  l2 *= 1.f-p2;
+	//l2 += l3a * p3;  l3 *= 1.f-p3;
+	//  +2
+	//l2 += l0a * nn0;  l0 *= 1.f-nn0;
+	//l3 += l1a * nn1;  l1 *= 1.f-nn1;
 	
 	//  normalize  (sum = 1)
 	l0 = shSaturate(l0);  l1 = shSaturate(l1);  l2 = shSaturate(l2);  l3 = shSaturate(l3);  // fix white dots

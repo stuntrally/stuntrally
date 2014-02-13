@@ -201,18 +201,28 @@ void App::UpdLayerPars()
 
 	//  blendmap
 	mat = sh::Factory::getInstance().getMaterialInstance(sBlendMat);
-	//  copy
-	float Hmin[4],Hmax[4],Hsmt[4], Amin[4],Amax[4],Asmt[4], Nmul[4];
+
+	//  height,angle ranges, noise pars
+	float Hmin[4],Hmax[4],Hsmt[4], Amin[4],Amax[4],Asmt[4];
+	float Nnext[4],Nprev[4],Nnext2[2];
+	
 	int nl = std::min(4, (int)sc->td.layers.size());
 	for (int i=0; i < nl; ++i)
 	{
 		const TerLayer& l = sc->td.layersAll[sc->td.layers[i]];
 		Hmin[i] = l.hMin;	Hmax[i] = l.hMax;	Hsmt[i] = l.hSm;
 		Amin[i] = l.angMin;	Amax[i] = l.angMax;	Asmt[i] = l.angSm;
-		Nmul[i] = l.noise;
+		Nnext[i] = i < nl-1 ? l.noise : 0.f;  // dont +1 last
+		//Nprev[i] = i > 0    ? l.nprev : 0.f;  // dont -1 first
+		//Nnext2[i] = l.Nnext2;
 	}
-	#define SetV(s,v)  mat->setProperty(s, sh::makeProperty<sh::Vector4>(new sh::Vector4(v[0], v[1], v[2], v[3])))
-	SetV("Hmin", Hmin);  SetV("Hmax", Hmax);  SetV("Hsmt", Hsmt);
-	SetV("Amin", Amin);  SetV("Amax", Amax);  SetV("Asmt", Asmt);
-	SetV("Nmul", Nmul);
+	//  noise
+	float Nmul[4];
+
+	#define Set4(s,v)  mat->setProperty(s, sh::makeProperty<sh::Vector4>(new sh::Vector4(v[0], v[1], v[2], v[3])))
+	#define Set3(s,v)  mat->setProperty(s, sh::makeProperty<sh::Vector3>(new sh::Vector3(v[0], v[1], v[2])))
+	#define Set2(s,v)  mat->setProperty(s, sh::makeProperty<sh::Vector2>(new sh::Vector2(v[0], v[1])))
+	Set4("Hmin", Hmin);  Set4("Hmax", Hmax);  Set4("Hsmt", Hsmt);
+	Set4("Amin", Amin);  Set4("Amax", Amax);  Set4("Asmt", Asmt);
+	Set3("Nnext", Nnext);  //Set3("Nprev", Nprev);  //Set2("Nnext2", Nnext2);
 }
