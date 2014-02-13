@@ -71,16 +71,16 @@ SH_START_PROGRAM
 	float n0 = Nmul.x * snoise(uv1, 0.0121f, 3, 0.27f);
 	float n1 = Nmul.y * snoise(uv1, 0.0135f, 3, 0.30f);
 	float n2 = Nmul.z * snoise(uv1, 0.0130f, 3, 0.31f);
-	float n3 = Nmul.w * snoise(uv1, 0.0126f, 3, 0.33f);
+	float n3 = Nmul.w * snoise(uv1, 0.0126f, 3, 0.29f);
 
 	//  add noise
 	l1 += l0a * n0;  l0 *= 1-n0;
 	l2 += l1a * n1;  l1 *= 1-n1;
 	l3 += l2a * n2;  l2 *= 1-n2;
-	l2 += l3a * n3;  l3 *= 1-n3;  //back to l2
+	l2 += l3a * n3;  l3 *= 1-n3;  //back to l2  todo: Nbck params for all, next+2 par for 1st layer
 	
 	//  normalize  (sum = 1)
-	l0 = saturate(l0);  l1 = saturate(l1);  l2 = saturate(l2);  l3 = saturate(l3);  // fix white dots
+	l0 = shSaturate(l0);  l1 = shSaturate(l1);  l2 = shSaturate(l2);  l3 = shSaturate(l3);  // fix white dots
 	float ll = l0+l1+l2+l3;
 	if (ll < 0.01f)  {  l0 = 1.f;  ll = l0+l1+l2+l3;  }  // fix black dots
 	ll = 1/ll;  l0 *= ll;  l1 *= ll;  l2 *= ll;  l3 *= ll;  // norm
