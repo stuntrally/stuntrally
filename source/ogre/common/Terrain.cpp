@@ -83,7 +83,7 @@ void App::configureTerrainDefaults(Light* l)
 
 	//  new, combine rgb,a from 2 tex
 	//----------------------
-	#if 1
+	#if 0
 		String pt = PATHMANAGER::Data()+"/terrain",
 			pt2=pt+"2/", p;  pt+="/";
 		

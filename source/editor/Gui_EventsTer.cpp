@@ -47,7 +47,8 @@ void CGui::tabTerLayer(Tab wp, size_t id)
 		bTexNormAuto = bAuto;
 		ckTexNormAuto.Upd();
 		//  tex image
-	    imgTexDiff->setImageTexture(lay->texFile/*sTex + "_prv.jpg"*/);
+	    //imgTexDiff->setImageTexture(lay->texFile);
+	    imgTexDiff->setImageTexture(sTex + "_prv.jpg");
 	}
 
 	//  scale layer
