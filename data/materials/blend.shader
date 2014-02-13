@@ -48,7 +48,7 @@ SH_BEGIN_PROGRAM
 	shUniform(float4, Asmt)   @shUniformProperty4f(Asmt, Asmt)
 
 	shUniform(float3, Nnext)    @shUniformProperty3f(Nnext, Nnext)
-	//shUniform(float3, Nprev)    @shUniformProperty3f(Nprev, Nprev)
+	shUniform(float3, Nprev)    @shUniformProperty3f(Nprev, Nprev)
 	//shUniform(float4, Nnx2pv2)  @shUniformProperty4f(Nnx2pv2, Nnx2pv2)
 
 	shSampler2D(samHMap)
@@ -71,12 +71,12 @@ SH_START_PROGRAM
 
 	//  noise par
 	float n0 = Nnext.x < 0.01f ? 0.f : Nnext.x * snoise(uv1, 0.0121f, 3, 0.27f);  // par.. freq, oct, pers, pow
-	float n1 = Nnext.x < 0.01f ? 0.f : Nnext.y * snoise(uv1, 0.0135f, 3, 0.30f);
-	float n2 = Nnext.x < 0.01f ? 0.f : Nnext.z * snoise(uv1, 0.0130f, 3, 0.31f);
+	float n1 = Nnext.y < 0.01f ? 0.f : Nnext.y * snoise(uv1, 0.0135f, 3, 0.30f);
+	float n2 = Nnext.z < 0.01f ? 0.f : Nnext.z * snoise(uv1, 0.0130f, 3, 0.31f);
 
-	//float p1 = Nprev.x < 0.01f ? 0.f : Nprev.x * snoise(uv1, 0.0126f, 3, 0.29f);
-	//float p2 = Nprev.y < 0.01f ? 0.f : Nprev.y * snoise(uv1, 0.0126f, 3, 0.29f);
-	//float p3 = Nprev.z < 0.01f ? 0.f : Nprev.z * snoise(uv1, 0.0126f, 3, 0.29f);
+	float p1 = Nprev.x < 0.01f ? 0.f : Nprev.x * snoise(uv1, 0.0126f, 3, 0.39f);
+	float p2 = Nprev.y < 0.01f ? 0.f : Nprev.y * snoise(uv1, 0.0131f, 3, 0.32f);
+	float p3 = Nprev.z < 0.01f ? 0.f : Nprev.z * snoise(uv1, 0.0123f, 3, 0.27f);
 
 	//  add noise
 	//  +1, to next layer
@@ -84,9 +84,9 @@ SH_START_PROGRAM
 	l2 += l1a * n1;  l1 *= 1.f-n1;
 	l3 += l2a * n2;  l2 *= 1.f-n2;
 	//  -1, to prev
-	//l0 += l1a * p1;  l1 *= 1.f-p1;
-	//l1 += l2a * p2;  l2 *= 1.f-p2;
-	//l2 += l3a * p3;  l3 *= 1.f-p3;
+	l0 += l1a * p1;  l1 *= 1.f-p1;
+	l1 += l2a * p2;  l2 *= 1.f-p2;
+	l2 += l3a * p3;  l3 *= 1.f-p3;
 	//  +2
 	//l2 += l0a * nn0;  l0 *= 1.f-nn0;
 	//l3 += l1a * nn1;  l1 *= 1.f-nn1;

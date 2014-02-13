@@ -213,7 +213,7 @@ void App::UpdLayerPars()
 		Hmin[i] = l.hMin;	Hmax[i] = l.hMax;	Hsmt[i] = l.hSm;
 		Amin[i] = l.angMin;	Amax[i] = l.angMax;	Asmt[i] = l.angSm;
 		Nnext[i] = i < nl-1 ? l.noise : 0.f;  // dont +1 last
-		//Nprev[i] = i > 0    ? l.nprev : 0.f;  // dont -1 first
+		if (i > 0)  Nprev[i-1] = l.nprev;  // dont -1 first
 		//Nnext2[i] = l.Nnext2;
 	}
 	//  noise
@@ -224,5 +224,5 @@ void App::UpdLayerPars()
 	#define Set2(s,v)  mat->setProperty(s, sh::makeProperty<sh::Vector2>(new sh::Vector2(v[0], v[1])))
 	Set4("Hmin", Hmin);  Set4("Hmax", Hmax);  Set4("Hsmt", Hsmt);
 	Set4("Amin", Amin);  Set4("Amax", Amax);  Set4("Asmt", Asmt);
-	Set3("Nnext", Nnext);  //Set3("Nprev", Nprev);  //Set2("Nnext2", Nnext2);
+	Set3("Nnext", Nnext);  Set3("Nprev", Nprev);  //Set2("Nnext2", Nnext2);
 }

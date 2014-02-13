@@ -299,6 +299,9 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = eTex->Attribute("hSm");		if (a)  l->hSm = s2r(a);
 
 			a = eTex->Attribute("noise");	if (a)  l->noise = s2r(a);
+			a = eTex->Attribute("n_1");		if (a)  l->nprev = s2r(a);
+			a = eTex->Attribute("n2");		if (a)  l->nnext2 = s2r(a);
+
 			a = eTex->Attribute("nOnly");	if (a)  l->bNoiseOnly = s2i(a) > 0;  else  l->bNoiseOnly = true;
 			a = eTex->Attribute("triplanar");	if (a)  l->triplanar = true;  else  l->triplanar = false;
 
@@ -546,7 +549,11 @@ bool Scene::SaveXml(String file)
 			tex.SetAttribute("hMin",	toStrC( l->hMin ));
 			tex.SetAttribute("hMax",	toStrC( l->hMax ));
 			tex.SetAttribute("hSm",		toStrC( l->hSm ));
+
 			tex.SetAttribute("noise",	toStrC( l->noise ));
+			tex.SetAttribute("n_1",		toStrC( l->nprev ));
+			tex.SetAttribute("n2",		toStrC( l->nnext2 ));
+
 			tex.SetAttribute("nOnly",	l->bNoiseOnly ? 1 : 0);
 			if (l->triplanar)  tex.SetAttribute("triplanar", 1);
 			ter.InsertEndChild(tex);
@@ -698,7 +705,8 @@ TerLayer::TerLayer() : on(true), tiling(4.f), triplanar(false),
 	dust(0.f),dustS(0.2f), mud(0.f), smoke(0.f), tclr(ColourValue::Black),
 	angMin(0.f),angMax(90.f), angSm(20.f),
 	hMin(-300.f),hMax(300.f), hSm(20.f),
-	noise(1.f), bNoiseOnly(1),
+	noise(1.f), nprev(0.f), nnext2(0.f),
+	bNoiseOnly(1),
 	surfName("Default"), surfId(0)  //!
 {	}
 

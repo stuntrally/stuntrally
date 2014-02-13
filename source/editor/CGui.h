@@ -155,7 +155,7 @@ public:
 	SV svTerLScale;
 	SV svTerLAngMin, svTerLHMin, svTerLAngSm;
 	SV svTerLAngMax, svTerLHMax, svTerLHSm;
-	SV svTerLNoise, svTerLNprev, svTerLNoise2;
+	SV svTerLNoise, svTerLNprev, svTerLNnext2;
 	void slTerLay(SV*);
 	CK(TerLayTripl);
 

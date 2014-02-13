@@ -10,7 +10,7 @@ material blendMat
 	Asmt 0 0 0 0
 
 	Nnext 0 0 0
-	//Nprev 0 0 0
+	Nprev 0 0 0
 	//Nnext2 0 0
 
     pass
@@ -34,7 +34,7 @@ material blendMat
 			Asmt $Asmt
 			  
 			Nnext $Nnext
-			//Nprev $Nprev
+			Nprev $Nprev
 			//Nnext2 $Nnext2
         }
 

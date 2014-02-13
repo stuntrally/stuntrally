@@ -291,8 +291,11 @@ void CGui::InitGui()
 	sv= &svTerLHMin;    sv->Init("TerLHMin",   &f,-150.f,150.f, 1.f, 0,2);  sv->DefaultF(-300.f);  Sev(TerLay);
 	sv= &svTerLHMax;    sv->Init("TerLHMax",   &f,-150.f,150.f, 1.f, 0,2);  sv->DefaultF( 300.f);  Sev(TerLay);
 	sv= &svTerLHSm;     sv->Init("TerLHSm",    &f, 0.f,  100.f, 2.f, 1,4);  sv->DefaultF(20.f);  Sev(TerLay);
-	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f,-0.5f,1.5f);  Sev(TerLay);
-	//..
+	//  noise
+	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f,-0.5f,1.5f);  sv->DefaultF(0.f);  Sev(TerLay);
+	sv= &svTerLNprev;   sv->Init("TerLNprev",  &f,-0.5f,1.5f);  sv->DefaultF(0.f);  Sev(TerLay);
+	sv= &svTerLNnext2;  sv->Init("TerLNnext2", &f,-0.5f,1.5f);  sv->DefaultF(0.f);  Sev(TerLay);
+	// freq,oct,pers,pow..
 	
 	//  particles
 	Ed(LDust, editLDust);	Ed(LDustS, editLDust);

@@ -2005,7 +2005,7 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 730 272">
 						<Widget type="TextBox" skin="TextBox" position="10 25 130 24">
-							<Property key="Caption" value="#{TerLNoise}"/>
+							<Property key="Caption" value="#{TerLNoise} +1"/>
 							<Property key="TextColour" value="0.6 0.9 0.7"/>
 							<UserString key="tip" value="#{TipTerLNoise}"/>
 						</Widget>
@@ -2015,6 +2015,36 @@
 							<UserString key="tip" value="#{TipTerLNoise}"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="204 25 400 16" name="TerLNoise">
+							<Property key="Colour" value="0.6 0.7 0.75"/>
+							<UserString key="tip" value="#{TipTerLNoise}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="10 50 130 24">
+							<Property key="Caption" value="#{TerLNoise} -1"/>
+							<Property key="TextColour" value="0.6 0.9 0.7"/>
+							<UserString key="tip" value="#{TipTerLNoise}"/>
+						</Widget>
+						<Property key="Caption" value="#90E0C0#{TerLNoise}"/>
+						<Widget type="TextBox" skin="TextBox" position="144 50 56 24" name="TerLNprevVal">
+							<Property key="TextColour" value="0.6 0.9 0.7"/>
+							<UserString key="tip" value="#{TipTerLNoise}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="204 50 400 16" name="TerLNprev">
+							<Property key="Colour" value="0.6 0.7 0.75"/>
+							<UserString key="tip" value="#{TipTerLNoise}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="10 75 130 24">
+							<Property key="Caption" value="#{TerLNoise} +2"/>
+							<Property key="TextColour" value="0.6 0.9 0.7"/>
+							<UserString key="tip" value="#{TipTerLNoise}"/>
+						</Widget>
+						<Property key="Caption" value="#90E0C0#{TerLNoise}"/>
+						<Widget type="TextBox" skin="TextBox" position="144 75 56 24" name="TerLNnext2Val">
+							<Property key="TextColour" value="0.6 0.9 0.7"/>
+							<UserString key="tip" value="#{TipTerLNoise}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="204 75 400 16" name="TerLNnext2">
 							<Property key="Colour" value="0.6 0.7 0.75"/>
 							<UserString key="tip" value="#{TipTerLNoise}"/>
 						</Widget>

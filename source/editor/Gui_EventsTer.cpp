@@ -79,7 +79,10 @@ void CGui::SldUpd_TerL()
 	svTerLAngMax.UpdF(&lay->angMax);  svTerLHMax.UpdF(&lay->hMax);
 	svTerLAngSm.UpdF(&lay->angSm);    svTerLHSm.UpdF(&lay->hSm);
 
-	svTerLNoise.UpdF(&lay->noise);  //..
+	svTerLNoise.UpdF(&lay->noise);
+	svTerLNprev.UpdF(&lay->nprev);
+	svTerLNnext2.UpdF(&lay->nnext2);
+	//..
 }
 
 //  Tri size
