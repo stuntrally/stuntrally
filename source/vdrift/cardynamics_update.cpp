@@ -504,11 +504,10 @@ void CARDYNAMICS::UpdateMass()
 	typedef std::pair <Dbl, MATHVECTOR<Dbl,3> > MASS_PAIR;
 
 	Dbl total_mass(0);
-
 	center_of_mass.Set(0,0,0);
 
 	// calculate the total mass, and center of mass
-	for ( std::list <MASS_PAIR>::iterator i = mass_only_particles.begin(); i != mass_only_particles.end(); ++i )
+	for (std::list <MASS_PAIR>::iterator i = mass_only_particles.begin(); i != mass_only_particles.end(); ++i)
 	{
 		// add the current mass to the total mass
 		total_mass += i->first;
@@ -519,13 +518,14 @@ void CARDYNAMICS::UpdateMass()
 
 	// account for fuel
 	total_mass += fuel_tank.GetMass();
-	center_of_mass =  center_of_mass + fuel_tank.GetPosition() * fuel_tank.GetMass();
+	center_of_mass = center_of_mass + fuel_tank.GetPosition() * fuel_tank.GetMass();
 
 	body.SetMass(total_mass);
 	cam_body.SetMass(total_mass * gPar.camBncMass);
+	fBncMass = 1350.0 / total_mass;
 
 	center_of_mass = center_of_mass * (1.0 / total_mass);
-
+	
 	// calculate the inertia tensor
 	MATRIX3 <Dbl> inertia;
 	for (int i = 0; i < 9; ++i)

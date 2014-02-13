@@ -389,7 +389,9 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 		{
 			CarModel* cm = carModels[c];
 			if (cm->pCar)  cm->pCar->bResetPos = true;
-			//?if (cm->iLoopLastCam != -1 && cm->fCam)  cm->fCam->miCurrent = cm->iLoopLastCam;  //o restore
+			if (cm->iLoopLastCam != -1 && cm->fCam)
+			{	cm->fCam->setCamera(cm->iLoopLastCam);  //o restore
+				cm->iLoopLastCam = -1;  }
 			cm->First();
 			cm->ResetChecks();
 			cm->iWonPlace = 0;  cm->iWonPlaceOld = 0;

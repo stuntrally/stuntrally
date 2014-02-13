@@ -44,7 +44,8 @@ struct SParams
 
 //  camera bounce sim
 	,camBncF, camBncFo, camBncFof
-	,camBncFHit,camBncFHitY, camBncSpring, camBncDamp
+	,camBncFHit,camBncFHitY
+	,camBncSpring, camBncDamp
 	,camBncScale, camBncMass
 	;
 

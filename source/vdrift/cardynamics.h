@@ -233,7 +233,7 @@ public:
 	void Tick(Dbl dt);  /// update simulation
 	void UpdateBody(Dbl dt, Dbl drive_torque[]);	// advance chassis(body, suspension, wheels) simulation by dt
 
-	void UpdateMass();
+	void UpdateMass();  Dbl fBncMass;
 	void SynchronizeBody();
 	void SynchronizeChassis();
 

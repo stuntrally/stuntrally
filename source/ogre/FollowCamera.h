@@ -15,14 +15,15 @@ enum CamTypes
 	CAM_ALL
 };
 
-const char CAM_Str[CAM_ALL][10] = {"Follow", "Free", "Arena", "Car", "ExtAng" };
+const char CAM_Str[CAM_ALL][10] =
+	{"Follow", "Free", "Arena", "Car", "ExtAng" };
 
 
 class CameraAngle
 {
 public:
 	CamTypes  mType;  Ogre::String  mName;
-	Ogre::Real  mDist, mSpeed, mSpeedRot;
+	Ogre::Real  mDist, mSpeed, mSpeedRot, mOfsMul;
 	Ogre::Radian  mYaw, mPitch;
 	Ogre::Vector3 mOffset;
 	int mMain, mHideGlass;
