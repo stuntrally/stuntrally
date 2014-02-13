@@ -39,7 +39,7 @@ float snoise1(float2 v)
 
 	//  Gradients: 41 points uniformly over a line, mapped onto a diamond.
 	//  The ring size 17*17 = 289 is close to a multiple of 41 (41*7 = 287)
-	float3 x = 2.0 * frac(p * C.www) - 1.0;
+	float3 x = 2.0 * shFract(p * C.www) - 1.0;
 	float3 h = abs(x) - 0.5;
 	float3 ox = floor(x + 0.5);
 	float3 a0 = x - ox;
@@ -61,8 +61,8 @@ float snoise(float2 v, float zoom, int octaves, float persistence)
     float total = 0.0;
     for (int i=0; i < octaves; ++i)
     {
-        float frequency = pow(2.0, i);
-        float amplitude = pow(persistence, i);
+        float frequency = pow(2.f, float(i));
+        float amplitude = pow(persistence, float(i));
         total += snoise1(v * frequency/zoom) * amplitude;
     }
     return total;

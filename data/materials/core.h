@@ -22,6 +22,8 @@
     #define shNormalInput(type) , in type normal : NORMAL
     
     #define shColourInput(type) , in type colour : COLOR
+    
+    #define shFract(val) frac(val)
 
     #ifdef SH_VERTEX_SHADER
 
@@ -56,9 +58,20 @@
 
 #endif
 
-#if SH_GLSL == 1
+#if SH_GLSL == 1 || SH_GLSLES == 1
 
+	#define shFract(val) fract(val)
+
+#if SH_GLSLES == 1
+    @version 100
+#else
     @version 120
+#endif
+
+#if SH_GLSLES == 1 && SH_FRAGMENT_SHADER
+precision mediump int;
+precision mediump float;
+#endif
 
     #define float2 vec2
     #define float3 vec3
@@ -78,7 +91,7 @@
 
     #define shSamplerCube(name) uniform samplerCube name; @shUseSampler(name)
 
-    #define shMatrixMult(m, v) (m * (v))
+    #define shMatrixMult(m, v) ((m) * (v))
 
     #define shOutputPosition gl_Position
 
