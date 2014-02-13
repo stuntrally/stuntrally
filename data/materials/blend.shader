@@ -65,7 +65,7 @@ SH_START_PROGRAM
 	float l3a = linRange(a, Amin.w, Amax.w, Asmt.w) * linRange(h, Hmin.w, Hmax.w, Hsmt.w), l3 = l3a;
 	
 	//  noise par
-	//float n0 = pow( snoise(uv1, 0.006f, 3, 0.25f) * snoise(uv1, 0.02f, 3, 0.3f) * snoise(uv1, 0.05f, 3, 0.4f), 2);
+	//float n0 = pow( snoise(uv1, 0.006f, 3, 0.25f) * snoise(uv1, 0.02f, 3, 0.3f) * snoise(uv1, 0.05f, 3, 0.4f), 2.f);
 	//float n = lerp( snoise(uv1, 0.006f, 3, 0.25f) * snoise(uv1, 0.02f, 3, 0.3f) * snoise(uv1, 0.05f, 3, 0.4f),
 	//	snoise(uv1, 0.01f, 4, 0.3f), snoise(uv1, 0.03f, 4, 0.2f) );
 	float n0 = Nmul.x * snoise(uv1, 0.0121f, 3, 0.27f);
