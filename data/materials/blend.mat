@@ -11,7 +11,7 @@ material blendMat
 
 	Nnext 0 0 0
 	Nprev 0 0 0
-	//Nnext2 0 0
+	Nnext2 0 0
 
     pass
     {
@@ -35,7 +35,7 @@ material blendMat
 			  
 			Nnext $Nnext
 			Nprev $Nprev
-			//Nnext2 $Nnext2
+			Nnext2 $Nnext2
         }
 
         texture_unit samHMap

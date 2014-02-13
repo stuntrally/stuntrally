@@ -47,9 +47,9 @@ SH_BEGIN_PROGRAM
 	shUniform(float4, Amax)   @shUniformProperty4f(Amax, Amax)
 	shUniform(float4, Asmt)   @shUniformProperty4f(Asmt, Asmt)
 
-	shUniform(float3, Nnext)    @shUniformProperty3f(Nnext, Nnext)
-	shUniform(float3, Nprev)    @shUniformProperty3f(Nprev, Nprev)
-	//shUniform(float4, Nnx2pv2)  @shUniformProperty4f(Nnx2pv2, Nnx2pv2)
+	shUniform(float3, Nnext)   @shUniformProperty3f(Nnext, Nnext)
+	shUniform(float3, Nprev)   @shUniformProperty3f(Nprev, Nprev)
+	shUniform(float2, Nnext2)  @shUniformProperty2f(Nnext2, Nnext2)
 
 	shSampler2D(samHMap)
 	shSampler2D(samAng)
@@ -78,6 +78,9 @@ SH_START_PROGRAM
 	float p2 = Nprev.y < 0.01f ? 0.f : Nprev.y * snoise(uv1, 0.0131f, 3, 0.32f);
 	float p3 = Nprev.z < 0.01f ? 0.f : Nprev.z * snoise(uv1, 0.0123f, 3, 0.27f);
 
+	float nn0 = Nnext2.x < 0.01f ? 0.f : Nnext2.x * snoise(uv1, 0.0186f, 3, 0.35f);
+	float nn1 = Nnext2.y < 0.01f ? 0.f : Nnext2.y * snoise(uv1, 0.0191f, 3, 0.34f);
+
 	//  add noise
 	//  +1, to next layer
 	l1 += l0a * n0;  l0 *= 1.f-n0;
@@ -88,8 +91,8 @@ SH_START_PROGRAM
 	l1 += l2a * p2;  l2 *= 1.f-p2;
 	l2 += l3a * p3;  l3 *= 1.f-p3;
 	//  +2
-	//l2 += l0a * nn0;  l0 *= 1.f-nn0;
-	//l3 += l1a * nn1;  l1 *= 1.f-nn1;
+	l2 += l0a * nn0;  l0 *= 1.f-nn0;
+	l3 += l1a * nn1;  l1 *= 1.f-nn1;
 	
 	//  normalize  (sum = 1)
 	l0 = shSaturate(l0);  l1 = shSaturate(l1);  l2 = shSaturate(l2);  l3 = shSaturate(l3);  // fix white dots

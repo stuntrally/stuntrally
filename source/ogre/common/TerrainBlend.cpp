@@ -204,7 +204,7 @@ void App::UpdLayerPars()
 
 	//  height,angle ranges, noise pars
 	float Hmin[4],Hmax[4],Hsmt[4], Amin[4],Amax[4],Asmt[4];
-	float Nnext[4],Nprev[4],Nnext2[2];
+	float Nnext[4],Nprev[3],Nnext2[2];
 	
 	int nl = std::min(4, (int)sc->td.layers.size());
 	for (int i=0; i < nl; ++i)
@@ -214,7 +214,7 @@ void App::UpdLayerPars()
 		Amin[i] = l.angMin;	Amax[i] = l.angMax;	Asmt[i] = l.angSm;
 		Nnext[i] = i < nl-1 ? l.noise : 0.f;  // dont +1 last
 		if (i > 0)  Nprev[i-1] = l.nprev;  // dont -1 first
-		//Nnext2[i] = l.Nnext2;
+		if (i < 2)  Nnext2[i] = l.nnext2;
 	}
 	//  noise
 	float Nmul[4];
@@ -224,5 +224,5 @@ void App::UpdLayerPars()
 	#define Set2(s,v)  mat->setProperty(s, sh::makeProperty<sh::Vector2>(new sh::Vector2(v[0], v[1])))
 	Set4("Hmin", Hmin);  Set4("Hmax", Hmax);  Set4("Hsmt", Hsmt);
 	Set4("Amin", Amin);  Set4("Amax", Amax);  Set4("Asmt", Asmt);
-	Set3("Nnext", Nnext);  Set3("Nprev", Nprev);  //Set2("Nnext2", Nnext2);
+	Set3("Nnext", Nnext);  Set3("Nprev", Nprev);  Set2("Nnext2", Nnext2);
 }
