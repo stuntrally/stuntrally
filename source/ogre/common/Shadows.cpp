@@ -144,6 +144,7 @@ void App::changeShadows()
 	mFactory->setGlobalSetting("soft_particles", b2s(pSet->all_effects && pSet->softparticles));
 	mFactory->setGlobalSetting("mrt_output", b2s(NeedMRTBuffer()));
 #endif
+	mFactory->setGlobalSetting("debug_blend", b2s(false));
 
 	#if 0
 	// shadow tex overlay

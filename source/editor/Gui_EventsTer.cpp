@@ -11,6 +11,7 @@
 #include <fstream>
 #include <MyGUI.h>
 #include <OgreRenderTexture.h>
+#include "../shiny/Main/Factory.hpp"
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -346,6 +347,12 @@ void CGui::btnScaleTerH(WP)
 void CGui::slTerGen(SV*)
 {
 	app->bUpdTerPrv = true;
+}
+
+//  debug
+void CGui::chkDebugBlend(Ck*)
+{
+	app->mFactory->setGlobalSetting("debug_blend", b2s(bDebugBlend));
 }
 
 

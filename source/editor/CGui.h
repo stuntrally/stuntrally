@@ -158,6 +158,7 @@ public:
 	SV svTerLNoise, svTerLNprev, svTerLNnext2;
 	void slTerLay(SV*);
 	CK(TerLayTripl);
+	CK(DebugBlend);  bool bDebugBlend;
 
 	//  Ter Particles
 	Ed edLDust,edLDustS,edLMud,edLSmoke, edLTrlClr;  Img clrTrail;

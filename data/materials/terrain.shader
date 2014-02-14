@@ -9,8 +9,7 @@
 #define FOG  @shGlobalSettingBool(fog) && !RENDER_COMPOSITE_MAP
 #define MRT  (!RENDER_COMPOSITE_MAP && @shGlobalSettingBool(mrt_output))
 
-#define SHADOWS  @shGlobalSettingBool(shadows_pssm) && !RENDER_COMPOSITE_MAP
-
+#define SHADOWS        @shGlobalSettingBool(shadows_pssm) && !RENDER_COMPOSITE_MAP
 #define SHADOWS_DEPTH  @shGlobalSettingBool(shadows_depth)
 
 #if SHADOWS
@@ -19,10 +18,11 @@
 
 #define NUM_LAYERS  @shPropertyString(num_layers)
 
+#define DEBUG_BLEND  @shGlobalSettingBool(debug_blend)
+
 #define NORMAL_MAPPING  @shGlobalSettingBool(terrain_normal)
 
 #define SPECULAR  @shGlobalSettingBool(terrain_specular) && !RENDER_COMPOSITE_MAP
-
 #define SPECULAR_EXPONENT  32
 
 #define PARALLAX_MAPPING  @shGlobalSettingBool(terrain_parallax) && !RENDER_COMPOSITE_MAP && NORMAL_MAPPING
@@ -33,7 +33,7 @@
 #define TRIPLANAR_TYPE @shGlobalSettingString(terrain_triplanarType)
 #define TRIPLANAR_FULL (TRIPLANAR_TYPE == 2)
 #define TRIPLANAR_1 (TRIPLANAR_TYPE == 1)
-#define TRIPLANAR  (TRIPLANAR_TYPE) && !RENDER_COMPOSITE_MAP
+#define TRIPLANAR   (TRIPLANAR_TYPE) && !RENDER_COMPOSITE_MAP
 //  1 layer triplanar only
 #define TRIPLANAR_LAYER @shGlobalSettingString(terrain_triplanarLayer)
 
@@ -407,7 +407,8 @@
         
         ////  albedo
 
-		/**/
+	#if DEBUG_BLEND
+		//  for test
         bb = float3(0,0,0);
         #if @shIterator == 0
         bb = float3(1,0,0);
@@ -421,9 +422,10 @@
         #if @shIterator == 3  // only 4
         bb = float3(0.5,0.5,0.5);
         #endif
-		/**/
-        //albedo += bb * fBlend;
+        albedo += bb * fBlend;
+    #else
         albedo += diffuseSpec.rgb * fBlend;
+    #endif
 
 	#if NORMAL_MAPPING
         NdotL = max(dot(TSnormal, TSlightDir), 0);

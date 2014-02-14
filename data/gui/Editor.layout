@@ -1912,7 +1912,7 @@
 					<Property key="Colour" value="0.6 1 0.6"/>
 					<UserString key="tip" value="#{TipTexTiling}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="572 172 188 20" name="DebugBlendmap">
+				<Widget type="Button" skin="CheckBox" position="572 172 188 20" name="DebugBlend">
 					<Property key="Caption" value="#{Test}"/>
 					<Property key="TextColour" value="0.2 0.6 0.2"/>
 				</Widget>
