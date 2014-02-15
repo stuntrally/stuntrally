@@ -480,12 +480,15 @@ void CGui::InitGui()
 		!StringUtil::match(*i, "*_prv.*", false))
 	{
 		String s = *i;
-		if (StringUtil::match(*i, "*_n.*", false) /*||
-			StringUtil::match(*i, "*_nh.*", false)*/)
+		//if (StringUtil::match(*i, "*_n.*", false))
+		if (StringUtil::match(*i, "*_nh.*", false))
 			cmbTexNorm->addItem(*i);
 		else
-		if (StringUtil::match(*i, "*_d.*", false))
-			//if (StringUtil::match(*i, "*_nh.*", false))
+		//if (StringUtil::match(*i, "*_d.*", false))
+		if (!StringUtil::match(*i, "*_d.*", false) &&
+			!StringUtil::match(*i, "*_s.*", false) &&
+			!StringUtil::match(*i, "*_n.*", false) &&
+			!StringUtil::match(*i, "*_h.*", false))
 			cmbTexDiff->addItem(*i);
 	}
 	

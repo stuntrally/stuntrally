@@ -1,3 +1,6 @@
+//  RTT shader that computes
+//  terrain blendmap with noise
+//  (up to 4 layers in r,g,b,a, sum not lerp)
 #include "core.h"
 #include "noise.h"
 

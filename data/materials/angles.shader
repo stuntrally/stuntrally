@@ -1,3 +1,5 @@
+//  RTT shader that computes
+//  terrain angles from heightmap (both f32 textures)
 #include "core.h"
 
 

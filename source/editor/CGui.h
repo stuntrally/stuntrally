@@ -156,7 +156,7 @@ public:
 	SV svTerLAngMin, svTerLHMin, svTerLAngSm;
 	SV svTerLAngMax, svTerLHMax, svTerLHSm;
 	SV svTerLNoise, svTerLNprev, svTerLNnext2;
-	void slTerLay(SV*);
+	void slTerLay(SV*), SldUpd_TerLNvis();
 	CK(TerLayTripl);
 	CK(DebugBlend);  bool bDebugBlend;
 

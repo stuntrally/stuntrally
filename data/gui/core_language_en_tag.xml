@@ -1161,8 +1161,7 @@
 	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
 	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
 	<Tag name="TipTerLHSm">Height smooth range (transition).</Tag>
-	<Tag name="TipTerLNoise">Factor of additional noise.</Tag>
-	<Tag name="TipTerLNoiseOnly">Use only noise (no angle or height ranges)</Tag>
+	<Tag name="TipTerLNoise">Multiplier for additional noise. +1 blends to next used layer, -1 to previous, +2 to over next.</Tag>
 
 	<!--  Terrain  particles  -->
 	<Tag name="TipDustInt">Dust particles intensity.</Tag>

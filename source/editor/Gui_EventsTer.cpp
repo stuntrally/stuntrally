@@ -56,6 +56,8 @@ void CGui::tabTerLayer(Tab wp, size_t id)
 	svTerLScale.setVisible(bTerLay);
 	SetUsedStr(valTerLAll, sc->td.layers.size(), 3);
 	
+	SldUpd_TerLNvis();
+
 	//  Terrain Particles
 	edLDust->setCaption(toStr(lay->dust));	edLDustS->setCaption(toStr(lay->dustS));
 	edLMud->setCaption(toStr(lay->mud));	edLSmoke->setCaption(toStr(lay->smoke));
@@ -67,6 +69,25 @@ void CGui::tabTerLayer(Tab wp, size_t id)
 	UpdSurfInfo();
 
 	noBlendUpd = false;
+}
+
+void CGui::SldUpd_TerLNvis()
+{
+	//  upd vis of layer noise sliders
+	//  check for valid +1,-1,+2 layers
+	int ll = sc->td.layers.size();
+	int l1 = -1, last = 8, last_2 = 8,  nu = 0;
+	for (int i=0; i < TerData::ciNumLay; ++i)
+	if (sc->td.layersAll[i].on)
+	{	++nu;
+		if (nu==1)  l1 = i;
+		if (nu==ll)  last = i;
+		if (nu==ll-2)  last_2 = i;
+	}
+	bool ok = idTerLay >= l1 && idTerLay <= last;
+	svTerLNoise.setVisible(ok && idTerLay < last);
+	svTerLNprev.setVisible(ok && idTerLay > l1);
+	svTerLNnext2.setVisible(ok && idTerLay <= last_2);
 }
 
 void CGui::SldUpd_TerL()
@@ -364,6 +385,7 @@ void CGui::chkTerLayOn(Ck*)
 	SetUsedStr(valTerLAll, sc->td.layers.size(), 3);
 	//  force update, blendmap sliders crash if not, !! this doesnt save hmap if changed  todo..
 	app->UpdateTrack();
+	SldUpd_TerLNvis();
 }
 
 void CGui::chkTerLayTripl(Ck*)
