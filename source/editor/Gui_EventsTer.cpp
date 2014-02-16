@@ -44,11 +44,11 @@ void CGui::tabTerLayer(Tab wp, size_t id)
 		String sTex,sNorm, sExt;
 		StringUtil::splitBaseFilename(lay->texFile,sTex,sExt);
 		StringUtil::splitBaseFilename(lay->texNorm,sNorm,sExt);
-		bool bAuto = !sNorm.empty() && !noNorm && (sTex + "_n" == sNorm);
+		bool bAuto = !sNorm.empty() && !noNorm && (sTex + "_nh" == sNorm);  //T "_n"
 		bTexNormAuto = bAuto;
 		ckTexNormAuto.Upd();
 		//  tex image
-	    //imgTexDiff->setImageTexture(lay->texFile);
+	    //imgTexDiff->setImageTexture(lay->texFile);  //T
 	    imgTexDiff->setImageTexture(sTex + "_prv.jpg");
 	}
 
@@ -388,7 +388,7 @@ void CGui::chkTerLayOn(Ck*)
 {
 	sc->td.UpdLayers();
 	SetUsedStr(valTerLAll, sc->td.layers.size(), 3);
-	//  force update, blendmap sliders crash if not, !! this doesnt save hmap if changed  todo..
+	//todo..  !! save hmap if changed
 	app->UpdateTrack();
 	SldUpd_TerLNvis();
 }

@@ -490,9 +490,9 @@ void CGui::InitGui()
 	if (!StringUtil::match(*i, "*.txt", false) &&
 		!StringUtil::match(*i, "*_prv.*", false))
 	{
-		String s = *i;
-		//if (StringUtil::match(*i, "*_n.*", false))
-		if (StringUtil::match(*i, "*_nh.*", false))
+		String s = *i;  //T
+		if (StringUtil::match(*i, "*_n.*", false) ||
+			StringUtil::match(*i, "*_nh.*", false))
 			cmbTexNorm->addItem(*i);
 		else
 		//if (StringUtil::match(*i, "*_d.*", false))
