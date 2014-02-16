@@ -163,7 +163,7 @@ public:
 	CK(DebugBlend);  bool bDebugBlend;
 	//  noise btns
 	Btn bRn1, bRn2;
-	void radN1(WP), radN2(WP), btnNpreset(WP);
+	void radN1(WP), radN2(WP), btnNpreset(WP), btnNrandom(WP);
 
 	//  Ter Particles
 	Ed edLDust,edLDustS,edLMud,edLSmoke, edLTrlClr;  Img clrTrail;

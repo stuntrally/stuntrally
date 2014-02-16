@@ -460,6 +460,19 @@ void CGui::btnNpreset(WP wp)
 	SldUpd_TerL();
 	app->UpdBlendmap();
 }
+void CGui::btnNrandom(WP wp)
+{
+	if (!bTerLay)  return;
+	int l = bRn2->getStateSelected() ? 1 : 0;
+
+	TerLayer& t = sc->td.layersAll[idTerLay];
+	t.nFreq[l] = Math::RangeRandom(20.f,70.f);
+	t.nOct[l]  = Math::RangeRandom(2.f,5.f);
+	t.nPers[l] = Math::RangeRandom(0.1f,0.7f);
+	t.nPow[l]  = Math::RangeRandom(0.8f,2.4f);
+	SldUpd_TerL();
+	app->UpdBlendmap();
+}
 
 
 ///  Terrain Particles  -----------------------------

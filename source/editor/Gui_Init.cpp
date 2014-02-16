@@ -307,6 +307,7 @@ void CGui::InitGui()
 	Btn("TerLNbtn2", radN2);  bRn2 = btn;
 	for (i=0; i < 15; ++i)
 	{  Btn("TerLN_"+toStr(i), btnNpreset);  }
+	Btn("TerLNrandom", btnNrandom);
 	
 	//  particles
 	Ed(LDust, editLDust);	Ed(LDustS, editLDust);

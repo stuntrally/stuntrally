@@ -2052,52 +2052,55 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 730 272">
 						<Property key="Caption" value="#90E0C0#{TerLNoise}"/>
-						<Widget type="Button" skin="Button" position="610 60 20 20" name="TerLN_0">
+						<Widget type="Button" skin="Button" position="610 55 20 20" name="TerLN_0">
 							<Property key="Caption" value="#A0C0E00"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="630 60 20 20" name="TerLN_1">
+						<Widget type="Button" skin="Button" position="630 55 20 20" name="TerLN_1">
 							<Property key="Caption" value="#A0C0E01"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="650 60 20 20" name="TerLN_2">
+						<Widget type="Button" skin="Button" position="650 55 20 20" name="TerLN_2">
 							<Property key="Caption" value="#A0C0E02"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="670 60 20 20" name="TerLN_3">
+						<Widget type="Button" skin="Button" position="670 55 20 20" name="TerLN_3">
 							<Property key="Caption" value="#A0C0E03"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="690 60 20 20" name="TerLN_4">
+						<Widget type="Button" skin="Button" position="690 55 20 20" name="TerLN_4">
 							<Property key="Caption" value="#A0C0E04"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="610 80 20 20" name="TerLN_5">
+						<Widget type="Button" skin="Button" position="610 75 20 20" name="TerLN_5">
 							<Property key="Caption" value="#A0C0E05"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="630 80 20 20" name="TerLN_6">
+						<Widget type="Button" skin="Button" position="630 75 20 20" name="TerLN_6">
 							<Property key="Caption" value="#A0C0E06"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="650 80 20 20" name="TerLN_7">
+						<Widget type="Button" skin="Button" position="650 75 20 20" name="TerLN_7">
 							<Property key="Caption" value="#A0C0E07"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="670 80 20 20" name="TerLN_8">
+						<Widget type="Button" skin="Button" position="670 75 20 20" name="TerLN_8">
 							<Property key="Caption" value="#A0C0E08"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="690 80 20 20" name="TerLN_9">
+						<Widget type="Button" skin="Button" position="690 75 20 20" name="TerLN_9">
 							<Property key="Caption" value="#A0C0E09"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="610 100 20 20" name="TerLN_10">
+						<Widget type="Button" skin="Button" position="610 95 20 20" name="TerLN_10">
 							<Property key="Caption" value="#A0C0E0A"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="630 100 20 20" name="TerLN_11">
+						<Widget type="Button" skin="Button" position="630 95 20 20" name="TerLN_11">
 							<Property key="Caption" value="#A0C0E0B"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="650 100 20 20" name="TerLN_12">
+						<Widget type="Button" skin="Button" position="650 95 20 20" name="TerLN_12">
 							<Property key="Caption" value="#A0C0E0C"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="670 100 20 20" name="TerLN_13">
+						<Widget type="Button" skin="Button" position="670 95 20 20" name="TerLN_13">
 							<Property key="Caption" value="#A0C0E0D"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="690 100 20 20" name="TerLN_14">
+						<Widget type="Button" skin="Button" position="690 95 20 20" name="TerLN_14">
 							<Property key="Caption" value="#A0C0E0E"/>
 						</Widget>
-						<Widget type="ProgressBar" skin="ProgressBarFill" position="610 60 100 60">
+						<Widget type="Button" skin="Button" position="610 115 100 20" name="TerLNrandom">
+							<Property key="Caption" value="#A0C0E0#{CarClrRandom}"/>
+						</Widget>
+						<Widget type="ProgressBar" skin="ProgressBarFill" position="610 55 100 80">
 							<Property key="Alpha" value="0.6"/>
 							<Property key="Colour" value="0.6 0.75 0.9"/>
 							<Property key="Enabled" value="false"/>
