@@ -82,7 +82,7 @@ void CGui::SldUpd_TerLNvis()
 	{	++nu;
 		if (nu==1)  l1 = i;
 		if (nu==ll)  last = i;
-		if (nu==ll-2)  last_2 = i;
+		if (nu==ll-2 && ll > 2)  last_2 = i;
 	}
 	bool ok = idTerLay >= l1 && idTerLay <= last;
 	svTerLNoise.setVisible(ok && idTerLay < last);
@@ -434,6 +434,31 @@ void CGui::slTerLay(SV*)
 	app->UpdLayerPars();
 	if (app->ang.rnd)  app->ang.rnd->update();
 	if (app->bl.rnd)  app->bl.rnd->update();
+}
+
+void CGui::radN1(WP) {  Radio2(bRn1, bRn2, bRn2->getStateSelected());  }
+void CGui::radN2(WP) {  Radio2(bRn1, bRn2, bRn2->getStateSelected());  }
+
+///  Noise preset buttons
+const static float ns[15][4] = {  //  freq, oct, pers, pow
+{ 30.4f, 3, 0.33f, 1.5f },{ 36.6f, 4, 0.49f, 1.9f },{ 30.7f, 3, 0.30f, 1.5f },{ 29.5f, 2, 0.13f, 1.8f },{ 40.5f, 3, 0.43f, 2.0f },
+{ 25.3f, 3, 0.30f, 1.2f },{ 31.3f, 5, 0.70f, 2.0f },{ 28.4f, 4, 0.70f, 1.5f },{ 34.5f, 4, 0.40f, 0.9f },{ 34.3f, 4, 0.54f, 1.0f },
+{ 44.6f, 2, 0.30f, 1.1f },{ 48.2f, 3, 0.12f, 1.6f },{ 56.6f, 4, 0.49f, 2.0f },{ 60.4f, 4, 0.51f, 2.0f },{ 62.6f, 3, 0.12f, 2.1f }};
+
+void CGui::btnNpreset(WP wp)
+{
+	if (!bTerLay)  return;
+	int l = bRn2->getStateSelected() ? 1 : 0;
+	String s = wp->getName();  //"TerLN_"
+	int i = s2i(s.substr(6));
+
+	TerLayer& t = sc->td.layersAll[idTerLay];
+	t.nFreq[l] = ns[i][0];
+	t.nOct[l]  = int(ns[i][1]);
+	t.nPers[l] = ns[i][2];
+	t.nPow[l]  = ns[i][3];
+	SldUpd_TerL();
+	app->UpdBlendmap();
 }
 
 

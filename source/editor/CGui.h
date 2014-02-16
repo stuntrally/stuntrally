@@ -161,6 +161,9 @@ public:
 	void slTerLay(SV*), SldUpd_TerLNvis();
 	CK(TerLayTripl);
 	CK(DebugBlend);  bool bDebugBlend;
+	//  noise btns
+	Btn bRn1, bRn2;
+	void radN1(WP), radN2(WP), btnNpreset(WP);
 
 	//  Ter Particles
 	Ed edLDust,edLDustS,edLMud,edLSmoke, edLTrlClr;  Img clrTrail;
