@@ -155,7 +155,9 @@ public:
 	SV svTerLScale;
 	SV svTerLAngMin, svTerLHMin, svTerLAngSm;
 	SV svTerLAngMax, svTerLHMax, svTerLHSm;
+	//  noise
 	SV svTerLNoise, svTerLNprev, svTerLNnext2;
+	SV svTerLN_Freq[2], svTerLN_Oct[2], svTerLN_Pers[2], svTerLN_Pow[2];
 	void slTerLay(SV*), SldUpd_TerLNvis();
 	CK(TerLayTripl);
 	CK(DebugBlend);  bool bDebugBlend;

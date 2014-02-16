@@ -63,7 +63,10 @@ float snoise(float2 v, float zoom, int octaves, float persistence)
     {
         float frequency = pow(2.f, float(i));
         float amplitude = pow(persistence, float(i));
-        total += snoise1(v * frequency/zoom) * amplitude;
+        total += snoise1(v * frequency * zoom) * amplitude;
     }
-    return total;
+    //return total;
+    float m = (persistence - 0.1f) * -0.83f + 1.f;
+    return total * m;
+    // pers = 0.7, mul = 0.5  pers = 0.1, mul = 1
 }

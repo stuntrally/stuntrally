@@ -94,17 +94,22 @@ void CGui::SldUpd_TerL()
 {
 	TerLayer* lay = bTerLay ? &sc->td.layersAll[idTerLay] : &sc->td.layerRoad;
 	ckTerLayOn.Upd(&lay->on);
-	ckTerLayTripl.Upd(&lay->triplanar);
-	
 	svTerLScale.UpdF(&lay->tiling);
+	ckTerLayTripl.Upd(&lay->triplanar);
+	//  blmap
 	svTerLAngMin.UpdF(&lay->angMin);  svTerLHMin.UpdF(&lay->hMin);
 	svTerLAngMax.UpdF(&lay->angMax);  svTerLHMax.UpdF(&lay->hMax);
 	svTerLAngSm.UpdF(&lay->angSm);    svTerLHSm.UpdF(&lay->hSm);
-
-	svTerLNoise.UpdF(&lay->noise);
-	svTerLNprev.UpdF(&lay->nprev);
+	//  noise
+	svTerLNoise.UpdF(&lay->noise);  svTerLNprev.UpdF(&lay->nprev);
 	svTerLNnext2.UpdF(&lay->nnext2);
-	//..
+	//  noise params
+	for (int i=0; i<2; ++i)
+	{	svTerLN_Freq[i].UpdF(&lay->nFreq[i]);
+		svTerLN_Oct[i].UpdI(&lay->nOct[i]);
+		svTerLN_Pers[i].UpdF(&lay->nPers[i]);
+		svTerLN_Pow[i].UpdF(&lay->nPow[i]);
+	}
 }
 
 //  Tri size

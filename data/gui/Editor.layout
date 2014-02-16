@@ -1768,6 +1768,9 @@
 							</Widget>
 						</Widget>
 					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 730 272">
+						<Property key="Caption" value="#90C0F0#{GrColorMap}"/>
+					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 750 342">
 						<Property key="Caption" value="#408040#{Tools}"/>
 						<Widget type="Button" skin="Button" position="32 40 128 24" name="TerrainHalf">
@@ -1913,6 +1916,10 @@
 					<Property key="Colour" value="0.6 1 0.6"/>
 					<UserString key="tip" value="#{TipTexTiling}"/>
 				</Widget>
+				<Widget type="Button" skin="CheckBox" position="650 200 88 20" name="DebugBlend">
+					<Property key="Caption" value="#{Test}"/>
+					<Property key="TextColour" value="0.2 0.6 0.2"/>
+				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="24 224 736 300" name="SubTab">
 					<Property key="Caption" value="#B0F060#{BlendMap}"/>
 					<Property key="ButtonAutoWidth" value="true"/>
@@ -1920,10 +1927,6 @@
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 730 272">
 						<Property key="Caption" value="#B0F060#{BlendMap}"/>
-						<Widget type="Button" skin="CheckBox" position="640 44 88 20" name="DebugBlend">
-							<Property key="Caption" value="#{Test}"/>
-							<Property key="TextColour" value="0.2 0.6 0.2"/>
-						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="10 20 130 24">
 							<Property key="Caption" value="#{AngleMin}"/>
 							<Property key="TextColour" value="0.6 0.9 0.2"/>
@@ -2049,155 +2052,254 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 730 272">
 						<Property key="Caption" value="#90E0C0#{TerLNoise}"/>
-						<Widget type="TextBox" skin="TextBox" position="640 20 130 24">
-							<Property key="Caption" value="+1, -1"/>
-							<Property key="TextColour" value="1.0 1.0 0.6"/>
+						<Widget type="Button" skin="Button" position="610 60 20 20" name="TerLN_0">
+							<Property key="Caption" value="#A0C0E00"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="10 20 130 24">
+						<Widget type="Button" skin="Button" position="630 60 20 20" name="TerLN_1">
+							<Property key="Caption" value="#A0C0E01"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="650 60 20 20" name="TerLN_2">
+							<Property key="Caption" value="#A0C0E02"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="670 60 20 20" name="TerLN_3">
+							<Property key="Caption" value="#A0C0E03"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="690 60 20 20" name="TerLN_4">
+							<Property key="Caption" value="#A0C0E04"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="610 80 20 20" name="TerLN_5">
+							<Property key="Caption" value="#A0C0E05"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="630 80 20 20" name="TerLN_6">
+							<Property key="Caption" value="#A0C0E06"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="650 80 20 20" name="TerLN_7">
+							<Property key="Caption" value="#A0C0E07"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="670 80 20 20" name="TerLN_8">
+							<Property key="Caption" value="#A0C0E08"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="690 80 20 20" name="TerLN_9">
+							<Property key="Caption" value="#A0C0E09"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="610 100 20 20" name="TerLN_10">
+							<Property key="Caption" value="#A0C0E0A"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="630 100 20 20" name="TerLN_11">
+							<Property key="Caption" value="#A0C0E0B"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="650 100 20 20" name="TerLN_12">
+							<Property key="Caption" value="#A0C0E0C"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="670 100 20 20" name="TerLN_13">
+							<Property key="Caption" value="#A0C0E0D"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="690 100 20 20" name="TerLN_14">
+							<Property key="Caption" value="#A0C0E0E"/>
+						</Widget>
+						<Widget type="ProgressBar" skin="ProgressBarFill" position="610 60 100 60">
+							<Property key="Alpha" value="0.6"/>
+							<Property key="Colour" value="0.6 0.75 0.9"/>
+							<Property key="Enabled" value="false"/>
+							<UserString key="tip" value="#{TipTerLNoise}"/>
+						</Widget>
+
+						<Widget type="Button" skin="RadioButton" position="610 26 130 24" name="TerLNbtn1">
+							<Property key="Caption" value="#{TerLNoise} +1, -1"/>
+							<Property key="TextColour" value="0.4 0.8 0.8"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="16 26 108 24">
 							<Property key="Caption" value="#{TerGenFreq}"/>
-							<Property key="TextColour" value="0.86 0.7 0.5"/>
+							<Property key="TextColour" value="0.5 1.0 0.8"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="144 20 56 24" name="TerLNFreqVal">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
+						<Widget type="TextBox" skin="TextBox" position="132 26 56 24" name="TerLNFreq1Val">
+							<Property key="TextColour" value="0.6 1.0 0.8"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="204 20 400 16" name="TerLNFreq">
-							<Property key="Colour" value="0.8 0.9 1.0"/>
+						<Widget type="Slider" skin="Slider" position="192 26 400 16" name="TerLNFreq1">
+							<Property key="Colour" value="0.5 1.0 0.8"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="10 44 130 24">
-							<Property key="Caption" value="#{TerGenPow}"/>
-							<Property key="TextColour" value="0.6 0.9 0.2"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="144 44 56 24" name="TerLNPowVal">
-							<Property key="TextColour" value="0.6 0.9 0.2"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="204 44 400 16" name="TerLNPow">
-							<Property key="Colour" value="0.6 0.9 0.2"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="10 68 130 24">
+						<Widget type="TextBox" skin="TextBox" position="16 52 108 24">
 							<Property key="Caption" value="#{TerGenOct}"/>
-							<Property key="TextColour" value="0.6 0.8 0.2"/>
+							<Property key="TextColour" value="0.3 0.9 0.5"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="144 68 56 24" name="TerLNOctVal">
-							<Property key="TextColour" value="0.6 0.8 0.2"/>
+						<Widget type="TextBox" skin="TextBox" position="132 52 56 24" name="TerLNOct1Val">
+							<Property key="TextColour" value="0.4 1.0 0.6"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="204 68 400 16" name="TerLNOct">
-							<Property key="Colour" value="0.6 0.8 0.2"/>
+						<Widget type="Slider" skin="Slider" position="192 52 400 16" name="TerLNOct1">
+							<Property key="Colour" value="0.3 0.9 0.5"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="10 90 130 24">
+						<Widget type="TextBox" skin="TextBox" position="16 78 108 24">
 							<Property key="Caption" value="#{TerGenPers}"/>
-							<Property key="TextColour" value="0.6 0.8 0.2"/>
+							<Property key="TextColour" value="0.5 0.9 0.8"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="144 90 56 24" name="TerLNPersVal">
-							<Property key="TextColour" value="0.6 0.8 0.2"/>
+						<Widget type="TextBox" skin="TextBox" position="132 78 56 24" name="TerLNPers1Val">
+							<Property key="TextColour" value="0.5 1.0 0.9"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="204 90 400 16" name="TerLNPers">
-							<Property key="Colour" value="0.6 0.8 0.2"/>
+						<Widget type="Slider" skin="Slider" position="192 78 400 16" name="TerLNPers1">
+							<Property key="Colour" value="0.5 0.9 0.8"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="16 104 108 24">
+							<Property key="Caption" value="#{TerGenPow}"/>
+							<Property key="TextColour" value="0.3 0.9 0.7"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="132 104 56 24" name="TerLNPow1Val">
+							<Property key="TextColour" value="0.3 1.0 0.9"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="192 104 400 16" name="TerLNPow1">
+							<Property key="Colour" value="0.3 0.9 0.7"/>
+						</Widget>
+
+						<Widget type="Button" skin="RadioButton" position="610 146 130 24" name="TerLNbtn2">
+							<Property key="Caption" value="#{TerLNoise} +2"/>
+							<Property key="TextColour" value="0.3 0.7 0.7"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="16 146 108 24">
+							<Property key="Caption" value="#{TerGenFreq}"/>
+							<Property key="TextColour" value="0.4 0.9 0.7"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="132 146 56 24" name="TerLNFreq2Val">
+							<Property key="TextColour" value="0.5 0.9 0.7"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="192 146 400 16" name="TerLNFreq2">
+							<Property key="Colour" value="0.4 0.9 0.7"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="16 172 108 24">
+							<Property key="Caption" value="#{TerGenOct}"/>
+							<Property key="TextColour" value="0.2 0.8 0.4"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="132 172 56 24" name="TerLNOct2Val">
+							<Property key="TextColour" value="0.3 0.9 0.5"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="192 172 400 16" name="TerLNOct2">
+							<Property key="Colour" value="0.2 0.8 0.4"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="16 198 108 24">
+							<Property key="Caption" value="#{TerGenPers}"/>
+							<Property key="TextColour" value="0.4 0.8 0.7"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="132 198 56 24" name="TerLNPers2Val">
+							<Property key="TextColour" value="0.4 0.9 0.8"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="192 198 400 16" name="TerLNPers2">
+							<Property key="Colour" value="0.4 0.8 0.7"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="16 224 108 24">
+							<Property key="Caption" value="#{TerGenPow}"/>
+							<Property key="TextColour" value="0.2 0.8 0.6"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="132 224 56 24" name="TerLNPow2Val">
+							<Property key="TextColour" value="0.2 0.9 0.8"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="192 224 400 16" name="TerLNPow2">
+							<Property key="Colour" value="0.2 0.8 0.6"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 730 272">
-						<Property key="Caption" value="#90B0E0#{GrColorMap}"/>
-					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 730 276">
-						<Property key="Caption" value="#A0A060#{Particles}"/>
-						<Widget type="Widget" skin="PanelSkin" position="0 -8 750 300">
+						<Property key="Caption" value="#B0B060#{Surface}"/>
+						<Widget type="Widget" skin="PanelSkin" position="0 -4 450 300">
 							<Property key="Alpha" value="0.2"/>
 							<Property key="Colour" value="1 0.9 0.5"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="636 0 80 80">
+						<Widget type="Widget" skin="PanelSkin" position="450 -4 450 300">
+							<Property key="Alpha" value="0.3"/>
+							<Property key="Colour" value="1 0.7 0.9"/>
+						</Widget>
+
+						<Widget type="ImageBox" skin="ImageBox" position="348 0 60 60">
 							<Property key="ImageCoord" value="384 512 128 128"/>
 							<Property key="Alpha" value="1.0"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="84 56 56 24" name="LDust">
+						<Widget type="EditBox" skin="EditBox" position="84 58 56 20" name="LDust">
 							<Property key="Colour" value="0.8 0.8 0.2"/>
 							<Property key="TextColour" value="0.8 0.8 0.2"/>
 							<UserString key="tip" value="#{TipDustInt}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="112 124 80 24" name="LDustS">
+						<Widget type="EditBox" skin="EditBox" position="84 110 56 20" name="LDustS">
 							<Property key="Colour" value="0.8 0.8 0.2"/>
 							<Property key="TextColour" value="0.8 0.8 0.2"/>
 							<UserString key="tip" value="#{TipDustSize}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="272 56 56 24" name="LMud">
+						<Widget type="EditBox" skin="EditBox" position="264 58 56 20" name="LMud">
 							<Property key="Colour" value="0.8 0.7 0.2"/>
 							<Property key="TextColour" value="0.8 0.7 0.2"/>
 							<UserString key="tip" value="#{TipMudInt}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="460 56 56 24" name="LSmoke">
+						<Widget type="EditBox" skin="EditBox" position="84 142 56 20" name="LSmoke">
 							<Property key="Colour" value="0.7 0.7 0.7"/>
 							<Property key="TextColour" value="0.7 0.7 0.7"/>
 							<UserString key="tip" value="#{TipSmokeInt}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="112 168 160 24" name="LTrlClr">
+						<Widget type="EditBox" skin="EditBox" position="112 196 160 24" name="LTrlClr">
 							<Property key="Colour" value="0.6 0.8 0"/>
 							<Property key="TextColour" value="0.6 0.8 0"/>
 							<UserString key="tip" value="#{TipTrailClr}"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="280 168 24 24" name="ClrTrail">
+						<Widget type="ImageBox" skin="ImageBox" position="280 196 24 24" name="ClrTrail">
 							<Property key="ImageTexture" value="white.png"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="16 60 64 24">
+						<Widget type="TextBox" skin="TextBox" position="16 60 64 20">
 							<Property key="Caption" value="#{dust}"/>
 							<Property key="TextColour" value="0.8 0.8 0.2"/>
 							<UserString key="tip" value="#{TipDustInt}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="16 128 96 24">
+						<Widget type="TextBox" skin="TextBox" position="16 112 64 20">
 							<Property key="Caption" value="#{DustSize}"/>
 							<Property key="TextColour" value="0.8 0.8 0.2"/>
 							<UserString key="tip" value="#{TipDustSize}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="208 60 64 23">
+						<Widget type="TextBox" skin="TextBox" position="200 60 64 20">
 							<Property key="Caption" value="#{mud}"/>
 							<Property key="TextColour" value="0.8 0.7 0.2"/>
 							<UserString key="tip" value="#{TipMudInt}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="392 60 68 24">
+						<Widget type="TextBox" skin="TextBox" position="16 144 68 20">
 							<Property key="Caption" value="#{smoke}"/>
 							<Property key="TextColour" value="0.7 0.7 0.7"/>
 							<UserString key="tip" value="#{TipSmokeInt}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="16 172 96 24">
+						<Widget type="TextBox" skin="TextBox" position="16 200 96 20">
 							<Property key="Caption" value="#{trailColor}"/>
 							<Property key="TextColour" value="0.6 0.8 0"/>
 							<UserString key="tip" value="#{TipTrailClr}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="16 88 64 24">
+						<Widget type="TextBox" skin="TextBox" position="16 80 64 20">
 							<Property key="Caption" value="#{dust}"/>
 							<Property key="TextColour" value="0.8 0.8 0.2"/>
 							<UserString key="tip" value="#{TipParType1}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="208 88 64 24">
+						<Widget type="TextBox" skin="TextBox" position="200 80 64 20">
 							<Property key="Caption" value="#{mud}"/>
 							<Property key="TextColour" value="0.8 0.7 0.2"/>
 							<UserString key="tip" value="#{TipParType2}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="392 88 68 24">
+						<Widget type="TextBox" skin="TextBox" position="16 164 68 20">
 							<Property key="TextColour" value="0.7 0.7 0.7"/>
 							<Property key="Caption" value="#{smoke}"/>
 							<UserString key="tip" value="#{TipParType3}"/>
 						</Widget>
-						<Widget type="ComboBox" skin="ComboBox" position="84 84 96 24" name="CmbParDust">
+						<Widget type="ComboBox" skin="ComboBox" position="84 78 96 20" name="CmbParDust">
 							<Property key="Static" value="true"/>
 							<Property key="ReadOnly" value="true"/>
 							<Property key="Colour" value="0.8 0.8 0.2"/>
 							<Property key="TextColour" value="0.8 0.8 0.2"/>
 							<UserString key="tip" value="#{TipParType1}"/>
 						</Widget>
-						<Widget type="ComboBox" skin="ComboBox" position="272 84 92 24" name="CmbParMud">
+						<Widget type="ComboBox" skin="ComboBox" position="264 78 92 20" name="CmbParMud">
 							<Property key="Static" value="true"/>
 							<Property key="ReadOnly" value="true"/>
 							<Property key="Colour" value="0.8 0.7 0.2"/>
 							<Property key="TextColour" value="0.8 0.7 0.2"/>
 							<UserString key="tip" value="#{TipParType2}"/>
 						</Widget>
-						<Widget type="ComboBox" skin="ComboBox" position="460 84 92 24" name="CmbParSmoke">
+						<Widget type="ComboBox" skin="ComboBox" position="84 162 92 20" name="CmbParSmoke">
 							<Property key="Static" value="true"/>
 							<Property key="ReadOnly" value="true"/>
 							<Property key="Colour" value="0.7 0.7 0.7"/>
 							<Property key="TextColour" value="0.7 0.7 0.7"/>
 							<UserString key="tip" value="#{TipParType3}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="16 24 208 24">
+						<Widget type="TextBox" skin="TextBox" position="16 16 208 24">
 							<Property key="Caption" value="#{ParAmount}"/>
 							<Property key="TextColour" value="0.76 0.73 0.5"/>
 						</Widget>
@@ -2205,78 +2307,72 @@
 							<Property key="Caption" value="#{Particles}"/>
 							<Property key="TextColour" value="0.8 0.8 0.7"/>
 						</Widget>
-					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 730 272">
-						<Property key="Caption" value="#C890FF#{Surface}"/>
-						<Widget type="Widget" skin="PanelSkin" position="0 60 750 310">
-							<Property key="Alpha" value="0.3"/>
-							<Property key="Colour" value="1 0.7 0.9"/>
-						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="646 0 80 80">
+
+						<Widget type="ImageBox" skin="ImageBox" position="670 0 72 72">
 							<Property key="ImageCoord" value="384 640 128 128"/>
 							<Property key="Alpha" value="0.8"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="16 24 96 24">
+						<Widget type="TextBox" skin="TextBox" position="480 20 96 24">
 							<Property key="Caption" value="#{Surface}"/>
 							<Property key="TextColour" value="0.75 0.7 1"/>
 							<UserString key="tip" value="#{TipSurfType}"/>
 						</Widget>
-						<Widget type="ComboBox" skin="ComboBox" position="116 20 176 28" name="Surface">
+						<Widget type="ComboBox" skin="ComboBox" position="476 52 176 28" name="Surface">
 							<Property key="Static" value="true"/>
 							<Property key="ReadOnly" value="true"/>
 							<Property key="Colour" value="0.75 0.7 1"/>
 							<Property key="TextColour" value="0.75 0.7 1.0"/>
 							<UserString key="tip" value="#{TipSurfType}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="148 112 80 20" name="SuBumpWave">
+						<Widget type="TextBox" skin="TextBox" position="612 152 80 20" name="SuBumpWave">
 							<Property key="TextColour" value="0.87 0.75 0.93"/>
 							<UserString key="tip" value="#{TipBumpFreq}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="148 132 80 20" name="SuBumpAmp">
+						<Widget type="TextBox" skin="TextBox" position="612 176 80 20" name="SuBumpAmp">
 							<Property key="TextColour" value="0.9 0.7 1"/>
 							<UserString key="tip" value="#{TipBumpAmp}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="16 180 84 20">
+						<Widget type="TextBox" skin="TextBox" position="480 232 84 20">
 							<Property key="Caption" value="#{Sound}"/>
 							<Property key="TextColour" value="1 0.6 0.6"/>
 							<UserString key="tip" value="#{TipSurfType}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="100 180 112 20" name="SurfType">
+						<Widget type="TextBox" skin="TextBox" position="568 232 112 20" name="SurfType">
 							<Property key="TextColour" value="1 0.7 0.7"/>
 							<UserString key="tip" value="#{TipSurfType}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="16 160 84 20">
+						<Widget type="TextBox" skin="TextBox" position="480 208 84 20">
 							<Property key="Caption" value="#{Tires}"/>
 							<Property key="TextColour" value="0.7 0.7 1"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="100 160 162 20" name="SurfTire">
+						<Widget type="TextBox" skin="TextBox" position="568 208 124 20" name="SurfTire">
 							<Property key="TextColour" value="0.8 0.8 1"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="148 84 80 20" name="SuRollDrag">
+						<Widget type="TextBox" skin="TextBox" position="612 120 80 20" name="SuRollDrag">
 							<Property key="TextColour" value="1 0.75 0.3"/>
 							<UserString key="tip" value="#{TipRollDrag}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="148 64 80 20" name="SuFrict">
+						<Widget type="TextBox" skin="TextBox" position="612 96 80 20" name="SuFrict">
 							<Property key="TextColour" value="1 0.6 0.2"/>
 							<UserString key="tip" value="#{TipSurfFrict}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="16 112 128 20">
+						<Widget type="TextBox" skin="TextBox" position="480 152 128 20">
 							<Property key="Caption" value="#{BumpWavelen}"/>
 							<Property key="TextColour" value="0.8 0.7 1"/>
 							<UserString key="tip" value="#{TipBumpFreq}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="16 132 128 20">
+						<Widget type="TextBox" skin="TextBox" position="480 176 128 20">
 							<Property key="Caption" value="#{Amplitude}"/>
 							<Property key="TextColour" value="0.8 0.6 1"/>
 							<UserString key="tip" value="#{TipBumpAmp}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="16 64 128 20">
+						<Widget type="TextBox" skin="TextBox" position="480 96 128 20">
 							<Property key="Caption" value="#{Friction}"/>
 							<Property key="TextColour" value="1 0.6 0"/>
 							<UserString key="tip" value="#{TipSurfFrict}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="16 84 128 20">
+						<Widget type="TextBox" skin="TextBox" position="480 120 128 20">
 							<Property key="Caption" value="#{RollingDrag}"/>
 							<Property key="TextColour" value="1 0.7 0"/>
 							<UserString key="tip" value="#{TipRollDrag}"/>
@@ -2467,7 +2563,6 @@
 					<Widget type="TabItem" skin="" position="2 24 754 478">
 						<Property key="Caption" value="#C0FF40#{Grasses}"/>
 						<Widget type="Widget" skin="" position="16 12 365 24">
-							<!--285-->
 							<Widget type="TabControl" skin="TabControlIcon" position="0 0 528 24" name="LGrLayTab">
 								<Property key="Colour" value="0.6 0.8 0.8"/>
 								<Property key="Visible" value="true"/>
@@ -2716,7 +2811,6 @@
 					<Widget type="TabItem" skin="" position="2 24 754 478">
 						<Property key="Caption" value="#80F0F0#{Models}"/>
 						<Widget type="Widget" skin="" position="16 12 540 24">
-							<!--440-->
 							<Widget type="TabControl" skin="TabControlIcon" position="0 0 628 24" name="LTrNumTab">
 								<Property key="Colour" value="0.6 0.8 0.8"/>
 								<Property key="Visible" value="true"/>

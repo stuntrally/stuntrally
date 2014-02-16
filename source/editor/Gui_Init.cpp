@@ -254,8 +254,8 @@ void CGui::InitGui()
 	sv= &svTerGenOfsX;	sv->Init("TerGenOfsX",	&pSet->gen_ofsx, -12.f,12.f, 1.f, 3,5);  sv->DefaultF(0.14f);   Sev(TerGen);
 	sv= &svTerGenOfsY;	sv->Init("TerGenOfsY",	&pSet->gen_ofsy, -12.f,12.f, 1.f, 3,5);  sv->DefaultF(-1.54f);  Sev(TerGen);
 
-	sv= &svTerGenFreq;	sv->Init("TerGenFreq",	&pSet->gen_freq,  0.06f,3.f, 2.f, 3,5);  sv->DefaultF(0.914f);  Sev(TerGen);
-	sv= &svTerGenOct;	sv->Init("TerGenOct",	&pSet->gen_oct,    0.f, 9.f);             sv->DefaultI(4);      Sev(TerGen);
+	sv= &svTerGenFreq;	sv->Init("TerGenFreq",	&pSet->gen_freq,   0.06f,3.f, 2.f, 3,5);  sv->DefaultF(0.914f); Sev(TerGen);
+	sv= &svTerGenOct;	sv->Init("TerGenOct",	&pSet->gen_oct,    0, 9);                 sv->DefaultI(4);      Sev(TerGen);
 	sv= &svTerGenPers;	sv->Init("TerGenPers",	&pSet->gen_persist,0.f, 0.7f, 1.f, 3,5);  sv->DefaultF(0.347f); Sev(TerGen);
 	sv= &svTerGenPow;	sv->Init("TerGenPow",	&pSet->gen_pow,    0.f, 6.f,  2.f, 2,4);  sv->DefaultF(1.f);    Sev(TerGen);
 	
@@ -293,10 +293,16 @@ void CGui::InitGui()
 	sv= &svTerLHMax;    sv->Init("TerLHMax",   &f,-150.f,150.f, 1.f, 0,2);  sv->DefaultF( 300.f);  Sev(TerLay);
 	sv= &svTerLHSm;     sv->Init("TerLHSm",    &f, 0.f,  100.f, 2.f, 1,4);  sv->DefaultF(20.f);  Sev(TerLay);
 	//  noise
-	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f,0.f,1.5f);  sv->DefaultF(0.f);  Sev(TerLay);
-	sv= &svTerLNprev;   sv->Init("TerLNprev",  &f,0.f,1.5f);  sv->DefaultF(0.f);  Sev(TerLay);
-	sv= &svTerLNnext2;  sv->Init("TerLNnext2", &f,0.f,1.5f);  sv->DefaultF(0.f);  Sev(TerLay);
-	// freq,oct,pers,pow..
+	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f, 0.f,1.5f);  sv->DefaultF(0.f);  Sev(TerLay);
+	sv= &svTerLNprev;   sv->Init("TerLNprev",  &f, 0.f,1.5f);  sv->DefaultF(0.f);  Sev(TerLay);
+	sv= &svTerLNnext2;  sv->Init("TerLNnext2", &f, 0.f,1.5f);  sv->DefaultF(0.f);  Sev(TerLay);
+	//  noise params
+	for (int i=0; i<2; ++i)  {  String s = toStr(i+1);
+	sv= &svTerLN_Freq[i];  sv->Init("TerLNFreq"+s,  &f, 1.f,300.f, 2.f, 1,3);   sv->DefaultF(30.f);  Sev(TerLay);
+	sv= &svTerLN_Oct[i];   sv->Init("TerLNOct" +s,  &i, 1,5);                   sv->DefaultI(3);     Sev(TerLay);
+	sv= &svTerLN_Pers[i];  sv->Init("TerLNPers"+s,  &f, 0.1f, 0.7f, 1.f, 3,5);  sv->DefaultF(0.3f);  Sev(TerLay);
+	sv= &svTerLN_Pow[i];   sv->Init("TerLNPow" +s,  &f, 0.3f, 4.f,  2.f);       sv->DefaultF(1.f);   Sev(TerLay);  }
+	/// radio1,2.. preset btns..
 	
 	//  particles
 	Ed(LDust, editLDust);	Ed(LDustS, editLDust);

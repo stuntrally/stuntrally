@@ -319,6 +319,18 @@
 			Name="materials"
 			>
 			<File
+				RelativePath="..\data\materials\angles.mat"
+				>
+			</File>
+			<File
+				RelativePath="..\data\materials\angles.shader"
+				>
+			</File>
+			<File
+				RelativePath="..\data\materials\angles.shaderset"
+				>
+			</File>
+			<File
 				RelativePath="..\data\materials\blend.mat"
 				>
 			</File>
@@ -360,6 +372,10 @@
 			</File>
 			<File
 				RelativePath="..\data\materials\materials.lod"
+				>
+			</File>
+			<File
+				RelativePath="..\data\materials\noise.h"
 				>
 			</File>
 			<File

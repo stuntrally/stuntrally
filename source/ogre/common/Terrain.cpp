@@ -176,6 +176,8 @@ void App::configureHorizonDefaults(Ogre::Light* l)
 ///--------------------------------------------------------------------------------------------------------------
 void App::CreateTerrain(bool bNewHmap, bool bTer)
 {
+	QTimer tm;  tm.update();  /// time
+
 	terrain = 0;
 	
 	///  sky
@@ -219,8 +221,6 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 	//  Terrain
 	if (bTer)
 	{
-		QTimer tm;  tm.update();  /// time
-
 		if (!mTerrainGlobals)
 			mTerrainGlobals = OGRE_NEW TerrainGlobalOptions();
 		OGRE_DELETE mTerrainGroup;
@@ -248,7 +248,6 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 		}
 		mTerrainGroup->freeTemporaryResources();
 
-		UpdBlendmap();  //
 
 	//  Horizon  ----------
 	if (pSet->horizon)
@@ -280,11 +279,13 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 		}
 		mHorizonGroup->freeTemporaryResources();
 	}
+	}
+
+	UpdBlendmap();  //
 
 		tm.update();	/// time
 		float dt = tm.dt * 1000.f;
 		LogO(String("::: Time Terrain: ") + fToStr(dt,0,3) + " ms");
-	}
 	
 	changeShadows();
 }

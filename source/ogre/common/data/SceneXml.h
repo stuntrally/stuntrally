@@ -23,8 +23,8 @@ struct TerLayer		// terrain texture layer
 	//  min,max range and smooth range for angle and height
 	float angMin,angMax,angSm, hMin,hMax,hSm;
 	//  noise
-	float noise,nprev,nnext2;
-	bool bNoiseOnly;
+	float noise, nprev, nnext2;   //  factors to blend layer +1,-1,+2
+	float nFreq[2], nPers[2], nPow[2];  int nOct[2];
 	
 	//  surface params bind
 	std::string surfName;  int surfId;

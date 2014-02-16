@@ -5,6 +5,7 @@
 #include "../common/QTimer.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
+	#include "../../editor/CGui.h"
 	#include "../../editor/settings.h"
 	#include "../../road/Road.h"
 #else
@@ -143,8 +144,10 @@ void App::changeShadows()
 #if !SR_EDITOR
 	mFactory->setGlobalSetting("soft_particles", b2s(pSet->all_effects && pSet->softparticles));
 	mFactory->setGlobalSetting("mrt_output", b2s(NeedMRTBuffer()));
-#endif
 	mFactory->setGlobalSetting("debug_blend", b2s(false));
+#else
+	mFactory->setGlobalSetting("debug_blend", b2s(gui->bDebugBlend));
+#endif
 
 	#if 0
 	// shadow tex overlay
