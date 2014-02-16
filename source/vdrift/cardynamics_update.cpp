@@ -313,15 +313,17 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 
 void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 {
+	body.Integrate1(dt);
+	cam_body.Integrate1(dt);
+	//chassis->clearForces();
+
 	//  camera bounce sim - spring and damper
 	MATHVECTOR<Dbl,3> p = cam_body.GetPosition(), v = cam_body.GetVelocity();
 	MATHVECTOR<Dbl,3> f = p * gPar.camBncSpring + v * gPar.camBncDamp;
 	cam_body.ApplyForce(f);
+	cam_body.ApplyForce(cam_force);
+	cam_force[0]=0.0;  cam_force[1]=0.0;  cam_force[2]=0.0;
 
-
-	body.Integrate1(dt);
-	cam_body.Integrate1(dt);
-	//chassis->clearForces();
 
 	UpdateWheelVelocity();
 
