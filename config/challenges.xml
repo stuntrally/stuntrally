@@ -107,11 +107,11 @@
 
 			<t name="S9-demo"      
 			<t name="J19-demo2"    
-			<t name="D3-P"         
+			<t name="D3-Passage"         
 			<t name="F14-Maze"     
 
 			<t name="J4-Pipe8"     
-			<t name="S10-Pipe88"   
+			<t name="S10-PipeCurl"   
 			<t name="A2-PipeCoil"  
 
 			<t name="M3-Mudlake"   
@@ -220,7 +220,7 @@
 		<pass avgPoints="13" factor="2" />
 		<tracks>
 			<t name="S4-Hills"        passPoints="9" />
-			<t name="S8-Frenzy2slow"  passPoints="9" />
+			<t name="S8-SlowFrenzy"   passPoints="9" />
 		</tracks>
 	</challenge>
 
@@ -229,7 +229,7 @@
 		<car names="UV|HR|LK4" />
 		<pass avgPoints="11" />
 		<tracks>
-			<t name="D1-simple"       passPoints="9" />
+			<t name="D1-Dunes"        passPoints="9" />
 			<t name="D4-SBridge"      passPoints="9" />
 			<t name="D8-Technical"    passPoints="9" />
 		</tracks>
@@ -267,7 +267,7 @@
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="F4-OSquare"      passPoints="9" />
-			<t name="F6-DC3"          passPoints="9" />
+			<t name="F6-Banked"       passPoints="9" />
 			<t name="F15-ForestTrip"  passPoints="9" />
 			<t name="F12-HighPeaks"   passPoints="9" />
 		</tracks>
@@ -360,7 +360,7 @@
 			<t name="G1-Long"      passPoints="8" />
 			<t name="C3-Vast"      passPoints="8" />
 			<t name="A6-Cannon"    passPoints="8" />
-			<t name="0W6-88"       passPoints="8" />
+			<t name="0W6-SnowyEights"  passPoints="8" />
 		</tracks>
 	</challenge>
 
@@ -425,7 +425,7 @@
 		<pass avgPoints="16" factor="2" />
 		<tracks>
 			<t name="F11-Dawn"     passPoints="13" />
-			<t name="0W4-ice-blur" passPoints="22" />
+			<t name="0W4-IceSlip"  passPoints="22" />
 			<t name="G4-River"     passPoints="13" />
 			<t name="C1-Hairpins"  passPoints="9" />
 		</tracks>
@@ -451,7 +451,7 @@
 		<pass avgPoints="14" factor="2" />
 		<tracks>
 			<t name="F7-blur3"    laps="2" passPoints="10" />
-			<t name="F6-DC3"      laps="2" passPoints="10" />
+			<t name="F6-Banked"   laps="2" passPoints="10" />
 		</tracks>
 	</challenge>
 
@@ -471,7 +471,7 @@
 		<cartype names="Gravel" />
 		<pass avgPoints="12" factor="1" />
 		<tracks>
-			<t name="J1-T"      laps="2" passPoints="10" />
+			<t name="J1-Curly"  laps="2" passPoints="10" />
 			<t name="J3-Rocky"  laps="2" passPoints="10" />
 			<t name="J8-Round"  laps="2" passPoints="10" />
 		</tracks>
@@ -633,7 +633,7 @@
 		<car names="3S|TC6|M3" />
 		<pass avgPoints="14" factor="2" />
 		<tracks>
-			<t name="0W4-ice-blur"  passPoints="11" />
+			<t name="0W4-IceSlip"   passPoints="11" />
 			<t name="D12-Sandstorm" passPoints="11" />
 			<t name="T5-Twister"    passPoints="5" />
 			<t name="0W13-MtFog"    passPoints="8" />
