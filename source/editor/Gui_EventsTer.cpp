@@ -456,6 +456,7 @@ void CGui::btnTerLmoveL(WP)  // -1
 	st = t;  t = t1;  t1 = st;
 	
 	sc->td.UpdLayers();  NumTabNext(-1);
+	app->UpdBlendmap();
 }
 
 void CGui::btnTerLmoveR(WP)  // +1
@@ -467,6 +468,7 @@ void CGui::btnTerLmoveR(WP)  // +1
 	st = t;  t = t1;  t1 = st;
 	
 	sc->td.UpdLayers();  NumTabNext(1);
+	app->UpdBlendmap();
 }
 
 ///  Noise preset buttons

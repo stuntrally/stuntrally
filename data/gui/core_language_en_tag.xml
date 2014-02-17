@@ -418,6 +418,7 @@
 	<Tag name="Textures">Textures</Tag>
 	<Tag name="Anisotropy">Anisotropy</Tag>
 	<Tag name="Triplanar">Triplanar</Tag>
+	<Tag name="HighestSlopes">Highest slopes</Tag>
 
 	<Tag name="Vegetation">Vegetation</Tag>
 	<Tag name="TreeMult">Trees multiplier</Tag>

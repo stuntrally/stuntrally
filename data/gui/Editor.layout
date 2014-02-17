@@ -1843,7 +1843,7 @@
 					<UserString key="tip" value="#{TipToggleLayer}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="272 170 124 24" name="TerLayTripl">
-					<Property key="Caption" value="#{Triplanar} 1"/>
+					<Property key="Caption" value="#{HighestSlopes}"/>
 					<Property key="TextColour" value="0.6 0.8 0.6"/>
 					<Property key="Colour" value="0.6 0.8 0.6"/>
 					<UserString key="tip" value="#{TipToggleTriplanar}"/>
