@@ -76,18 +76,22 @@ void CGui::SldUpd_TerLNvis()
 	//  upd vis of layer noise sliders
 	//  check for valid +1,-1,+2 layers
 	int ll = sc->td.layers.size();
-	int l1 = -1, last = 8, last_2 = 8,  nu = 0;
+	int l1 = -1, last = 8, last_2 = 8,  nu = 0, ncl = 0;
 	for (int i=0; i < TerData::ciNumLay; ++i)
 	if (sc->td.layersAll[i].on)
 	{	++nu;
+		if (i==idTerLay)  ncl = nu;
 		if (nu==1)  l1 = i;
 		if (nu==ll)  last = i;
-		if (nu==ll-2 && ll > 2)  last_2 = i;
+		if (nu==ll-2)  last_2 = i;
 	}
 	bool ok = idTerLay >= l1 && idTerLay <= last;
 	svTerLNoise.setVisible(ok && idTerLay < last);
 	svTerLNprev.setVisible(ok && idTerLay > l1);
-	svTerLNnext2.setVisible(ok && idTerLay <= last_2);
+	svTerLNnext2.setVisible(ok && idTerLay <= last_2 && nu > 2);
+	//  dbg img clr
+	const static Colour lc[5] = {Colour::Black, Colour::Red, Colour::Green, Colour::Blue, Colour(0.5,0.5,0.5)};
+	dbgLclr->setColour(lc[ncl]);
 }
 
 void CGui::SldUpd_TerL()
@@ -380,6 +384,7 @@ void CGui::slTerGen(SV*)
 void CGui::chkDebugBlend(Ck*)
 {
 	app->mFactory->setGlobalSetting("debug_blend", b2s(bDebugBlend));
+	dbgLclr->setVisible(bDebugBlend);
 }
 
 

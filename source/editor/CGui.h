@@ -163,6 +163,7 @@ public:
 
 	CK(TerLNOnly);  CK(TerLayTripl);
 	CK(DebugBlend);  bool bDebugBlend;
+	Img dbgLclr;
 
 	//  noise btns
 	Btn bRn1, bRn2;

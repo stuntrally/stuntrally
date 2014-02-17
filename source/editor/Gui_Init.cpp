@@ -280,6 +280,7 @@ void CGui::InitGui()
 	ck= &ckTexNormAuto;	ck->Init("TexNormAuto",	&bTexNormAuto);
 	ck= &ckTerLayTripl;	ck->Init("TerLayTripl",	&b);   Cev(TerLayTripl);
 	ck= &ckDebugBlend;	ck->Init("DebugBlend",  &bDebugBlend);  Cev(DebugBlend);
+	dbgLclr = fImg("dbgTerLclr");
 
 	float f=0.f;  i=0;  // temp vars
 	sv= &svTerTriSize;	sv->Init("TerTriSize", &sc->td.fTriangleSize,  0.1f,6.f, 2.f);  sv->DefaultF(1.4f);  Sev(TerTriSize);
@@ -294,6 +295,7 @@ void CGui::InitGui()
 	sv= &svTerLHSm;     sv->Init("TerLHSm",    &f, 0.f,  100.f, 2.f, 1,4);  sv->DefaultF(20.f);  Sev(TerLay);
 	Btn("TerLmoveL", btnTerLmoveL);
 	Btn("TerLmoveR", btnTerLmoveR);
+
 	//  noise
 	ck= &ckTerLNOnly;   ck->Init("TerLNonly",  &b);   Cev(TerLNOnly);
 	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f, 0.f,1.5f);  sv->DefaultF(0.f);  Sev(TerLay);

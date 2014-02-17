@@ -1928,9 +1928,13 @@
 					<Property key="Colour" value="0.6 1 0.6"/>
 					<UserString key="tip" value="#{TipTexTiling}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="650 200 88 20" name="DebugBlend">
+				<Widget type="Button" skin="CheckBox" position="400 200 88 20" name="DebugBlend">
 					<Property key="Caption" value="#{Test} F9"/>
 					<Property key="TextColour" value="0.6 0.8 0.4"/>
+				</Widget>
+				<Widget type="ImageBox" skin="CheckBox" position="370 200 20 20" name="dbgTerLclr">
+					<Property key="ImageTexture" value="white.png"/>
+					<Property key="Visible" value="false"/>
 				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="24 224 736 300" name="SubTab">
 					<Property key="Caption" value="#B0F060#{BlendMap}"/>

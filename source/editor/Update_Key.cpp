@@ -187,6 +187,12 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				}
    			break;
    			
+   		case key(SPACE):  // subtabs
+   			if (bGuiFocus && tab && !pSet->isMain)
+				if (sub)  {  int num = sub->getItemCount();
+					sub->setIndexSelected( (sub->getIndexSelected() + (shift ? -1 : 1) + num) % num );  }
+			break;
+   			
 		case key(RETURN):  // load track
 			if (bGuiFocus)
 			if (mWndTabsTrack->getIndexSelected() == 1 && !pSet->isMain && pSet->inMenu == WND_Track)
