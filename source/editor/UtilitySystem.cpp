@@ -98,6 +98,8 @@ void CGui::GetMaterialsMat(String filename, bool clear, String type)
 			msg << "Exception: FILE: " << __FILE__ << " LINE: " << __LINE__ << " DESC: " << e.getFullDescription() << std::endl;
 			LogO(msg.str());
 	}	}
+	else
+		LogO("GetMat, can't open: " + filename);
 	stream.close();
 }
 

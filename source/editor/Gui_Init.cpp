@@ -465,7 +465,7 @@ void CGui::InitGui()
 	//---------------------  Skies  ---------------------
 	Cmb(cmbSky, "SkyCombo", comboSky);
 	std::string data = PATHMANAGER::Data();
-	String sMat = data +"/materials/";  // path
+	String sMat = data +"/materials/scene/";  // path
 
 	GetMaterialsMat(sMat+"sky.mat");
 	for (size_t i=0; i < vsMaterials.size(); ++i)
@@ -563,10 +563,11 @@ void CGui::InitGui()
 
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	String s = vsMaterials[i];
+		LogO("MTR== "+s);
 		if (StringUtil::startsWith(s,"road") && !StringUtil::startsWith(s,"road_") && !StringUtil::endsWith(s,"_ter") && s != "road")
-			for (int i=0; i<4; ++i)  cmbRoadMtr[i]->addItem(s);
+			for (int n=0; n<4; ++n)  cmbRoadMtr[n]->addItem(s);
 		if (StringUtil::startsWith(s,"pipe") && !StringUtil::startsWith(s,"pipe_"))
-			for (int i=0; i<4; ++i)  cmbPipeMtr[i]->addItem(s);
+			for (int n=0; n<4; ++n)  cmbPipeMtr[n]->addItem(s);
 		if (StringUtil::startsWith(s,"road_wall"))  cmbRoadWMtr->addItem(s);
 		if (StringUtil::startsWith(s,"pipe_wall"))  cmbPipeWMtr->addItem(s);
 		if (StringUtil::startsWith(s,"road_col"))  cmbRoadColMtr->addItem(s);
