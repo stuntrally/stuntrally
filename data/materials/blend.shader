@@ -49,6 +49,7 @@ SH_BEGIN_PROGRAM
 	shUniform(float4, Amin)   @shUniformProperty4f(Amin, Amin)
 	shUniform(float4, Amax)   @shUniformProperty4f(Amax, Amax)
 	shUniform(float4, Asmt)   @shUniformProperty4f(Asmt, Asmt)
+	shUniform(float4, Nonly)  @shUniformProperty4f(Nonly,Nonly)  // bool
 
 	//  noise mul
 	shUniform(float3, Nnext)   @shUniformProperty3f(Nnext, Nnext)
@@ -56,7 +57,7 @@ SH_BEGIN_PROGRAM
 	shUniform(float2, Nnext2)  @shUniformProperty2f(Nnext2,Nnext2)
 	//  noise +1,-1 pars
 	shUniform(float3, Nfreq)   @shUniformProperty3f(Nfreq, Nfreq)
-	shUniform(float3, Noct)    @shUniformProperty3f(Noct,  Noct)
+	shUniform(float3, Noct)    @shUniformProperty3f(Noct,  Noct)  // uint8
 	shUniform(float3, Npers)   @shUniformProperty3f(Npers, Npers)
 	shUniform(float3, Npow)    @shUniformProperty3f(Npow,  Npow)
 	//  noise +2 pars
@@ -77,11 +78,11 @@ SH_START_PROGRAM
 	float h = shSample(samHMap, uv1);
 	float a = shSample(samAng,  uv);
 	
-	//  ter ang,h ranges
-	float l0a = linRange(a, Amin.x, Amax.x, Asmt.x) * linRange(h, Hmin.x, Hmax.x, Hsmt.x), l0 = l0a;
-	float l1a = linRange(a, Amin.y, Amax.y, Asmt.y) * linRange(h, Hmin.y, Hmax.y, Hsmt.y), l1 = l1a;
-	float l2a = linRange(a, Amin.z, Amax.z, Asmt.z) * linRange(h, Hmin.z, Hmax.z, Hsmt.z), l2 = l2a;
-	float l3a = linRange(a, Amin.w, Amax.w, Asmt.w) * linRange(h, Hmin.w, Hmax.w, Hsmt.w), l3 = l3a;
+	//  ter ang,h ranges  (turned off if noise only)
+	float l0a = Nonly.x < 0.1f ? 0.f : linRange(a, Amin.x, Amax.x, Asmt.x) * linRange(h, Hmin.x, Hmax.x, Hsmt.x), l0 = l0a;
+	float l1a = Nonly.y < 0.1f ? 0.f : linRange(a, Amin.y, Amax.y, Asmt.y) * linRange(h, Hmin.y, Hmax.y, Hsmt.y), l1 = l1a;
+	float l2a = Nonly.z < 0.1f ? 0.f : linRange(a, Amin.z, Amax.z, Asmt.z) * linRange(h, Hmin.z, Hmax.z, Hsmt.z), l2 = l2a;
+	float l3a = Nonly.w < 0.1f ? 0.f : linRange(a, Amin.w, Amax.w, Asmt.w) * linRange(h, Hmin.w, Hmax.w, Hsmt.w), l3 = l3a;
 	
 	//  noise par
 	float n0 = Nnext.x < 0.01f ? 0.f : Nnext.x * pow( snoise(tuv, Nfreq.x, int(Noct.x), Npers.x), Npow.x);
@@ -101,9 +102,9 @@ SH_START_PROGRAM
 	l2 += l1a * n1;  l1 *= 1.f-n1;
 	l3 += l2a * n2;  l2 *= 1.f-n2;
 	//  -1, to prev
-	l2 += l3a * p3;  l3 *= 1.f-p3;
-	l1 += l2a * p2;  l2 *= 1.f-p2;
 	l0 += l1a * p1;  l1 *= 1.f-p1;
+	l1 += l2a * p2;  l2 *= 1.f-p2;
+	l2 += l3a * p3;  l3 *= 1.f-p3;
 	//  +2
 	l2 += l0a * m0;  l0 *= 1.f-m0;
 	l3 += l1a * m1;  l1 *= 1.f-m1;

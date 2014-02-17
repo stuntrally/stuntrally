@@ -8,6 +8,7 @@ material blendMat
 	Amin 0 0 0 0
 	Amax 0 0 0 0
 	Asmt 0 0 0 0
+	Nonly 0 0 0 0
 
 	Nnext 0 0 0
 	Nprev 0 0 0
@@ -42,6 +43,7 @@ material blendMat
 			Amin $Amin
 			Amax $Amax
 			Asmt $Asmt
+			Nonly $Nonly
 			  
 			Nnext $Nnext
 			Nprev $Nprev

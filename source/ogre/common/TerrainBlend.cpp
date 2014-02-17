@@ -202,7 +202,7 @@ void App::UpdLayerPars()
 	//  blendmap
 	mat = sh::Factory::getInstance().getMaterialInstance(sBlendMat);
 
-	float Hmin[4],Hmax[4],Hsmt[4], Amin[4],Amax[4],Asmt[4];
+	float Hmin[4],Hmax[4],Hsmt[4], Amin[4],Amax[4],Asmt[4], Nonly[4];
 	float Nnext[4],Nprev[3],Nnext2[2];
 	float Nfreq[3],Noct[3],Npers[3],Npow[3];
 	float Nfreq2[2],Noct2[2],Npers2[2],Npow2[2];
@@ -214,9 +214,10 @@ void App::UpdLayerPars()
 		Hmin[i] = l.hMin;	Hmax[i] = l.hMax;	Hsmt[i] = l.hSm;
 		Amin[i] = l.angMin;	Amax[i] = l.angMax;	Asmt[i] = l.angSm;
 		//  noise
+		Nonly[i] = !l.nOnly ? 1.f : 0.f;
 		Nnext[i] = i < nl-1 ? l.noise : 0.f;  // dont +1 last
 		if (i > 0)  Nprev[i-1] = l.nprev;  // dont -1 first
-		if (i < 2)  Nnext2[i] = l.nnext2;
+		if (i < 2)  Nnext2[i] = nl > 2 ? l.nnext2 : 0.f;
 		//  n par +1,-1, +2
 		if (i < nl-1){  Nfreq[i] = l.nFreq[0];  Noct[i] = l.nOct[0];  Npers[i] = l.nPers[0];  Npow[i] = l.nPow[0];  }
 		if (i < nl-2){  Nfreq2[i]= l.nFreq[1];  Noct2[i]= l.nOct[1];  Npers2[i]= l.nPers[1];  Npow2[i]= l.nPow[1];  }
@@ -225,7 +226,7 @@ void App::UpdLayerPars()
 	#define Set3(s,v)  mat->setProperty(s, sh::makeProperty<sh::Vector3>(new sh::Vector3(v[0], v[1], v[2])))
 	#define Set2(s,v)  mat->setProperty(s, sh::makeProperty<sh::Vector2>(new sh::Vector2(v[0], v[1])))
 	Set4("Hmin", Hmin);  Set4("Hmax", Hmax);  Set4("Hsmt", Hsmt);
-	Set4("Amin", Amin);  Set4("Amax", Amax);  Set4("Asmt", Asmt);
+	Set4("Amin", Amin);  Set4("Amax", Amax);  Set4("Asmt", Asmt);  Set4("Nonly", Nonly);
 	Set3("Nnext", Nnext);  Set3("Nprev", Nprev);  Set2("Nnext2", Nnext2);
 	Set3("Nfreq", Nfreq);  Set3("Noct", Noct);  Set3("Npers", Npers);  Set3("Npow", Npow);
 	Set2("Nfreq2", Nfreq2);  Set2("Noct2", Noct2);  Set2("Npers2", Npers2);  Set2("Npow2", Npow2);

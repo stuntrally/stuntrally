@@ -724,6 +724,7 @@
 	<Tag name="TerLHSm">Height smooth</Tag>
 	<Tag name="TerLNoise">Noise</Tag>
 	<Tag name="TerLNoiseOnly">Only Noise</Tag>
+	<Tag name="Swap">Swap</Tag>
 	
 
 	<!--  Terrain  particles  -->
@@ -1153,6 +1154,7 @@
 	<Tag name="TipNormalTex">Normal texture (Height in alpha).</Tag>
 	<Tag name="TipTexNormAuto">When checked, Normal texture is automatically set from Diffuse texture (+ _nh in filename).</Tag>
 	<Tag name="TipTexTiling">Texture tiling length (less means more repeats).</Tag>
+	<Tag name="TipTerLMove">Move layer, changes order.</Tag>
 
 	<!--  Terrain  blendmap  -->
 	<Tag name="TipTerLAngMin">Starting terrain angle for layer.</Tag>

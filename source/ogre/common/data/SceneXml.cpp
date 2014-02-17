@@ -281,7 +281,7 @@ bool Scene::LoadXml(String file, bool bTer)
 			lay.nFreq[0] += (il-0.7f) * 4.f;  // default, can't be same, needs variation
 			lay.nFreq[1] += (il-0.5f) * 3.f;
 
-			a = eTex->Attribute("on");		if (a)  l->on = s2i(a);  else  l->on = 1;
+			a = eTex->Attribute("on");		if (a)  l->on = s2i(a)>0;  else  l->on = true;
 			a = eTex->Attribute("file");	if (a)  l->texFile = String(a);
 			a = eTex->Attribute("fnorm");	if (a)  l->texNorm = String(a);
 			a = eTex->Attribute("scale");	if (a)  l->tiling = s2r(a);
@@ -299,6 +299,8 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = eTex->Attribute("hMin");	if (a)  l->hMin = s2r(a);
 			a = eTex->Attribute("hMax");	if (a)  l->hMax = s2r(a);
 			a = eTex->Attribute("hSm");		if (a)  l->hSm = s2r(a);
+
+			a = eTex->Attribute("nOn");		if (a)  l->nOnly = s2i(a)>0;
 			a = eTex->Attribute("triplanar");	if (a)  l->triplanar = true;  else  l->triplanar = false;
 
 			a = eTex->Attribute("noise");	if (a)  l->noise = s2r(a);
@@ -558,6 +560,8 @@ bool Scene::SaveXml(String file)
 			tex.SetAttribute("hMin",	toStrC( l->hMin ));
 			tex.SetAttribute("hMax",	toStrC( l->hMax ));
 			tex.SetAttribute("hSm",		toStrC( l->hSm ));
+
+			tex.SetAttribute("nOn",		l->nOnly ? 1 : 0);
 			if (l->triplanar)  tex.SetAttribute("triplanar", 1);
 
 			tex.SetAttribute("noise",	toStrC( l->noise ));
@@ -718,10 +722,11 @@ void TerData::Default()
 	//layers:  1- 230 fps  2- 180 fps  3- 140 fps
 }
 
-TerLayer::TerLayer() : on(true), tiling(4.f), triplanar(false),
+TerLayer::TerLayer() :
+	on(true), tiling(4.f), triplanar(false),
 	dust(0.f),dustS(0.2f), mud(0.f), smoke(0.f), tclr(ColourValue::Black),
 	angMin(0.f),angMax(90.f), angSm(20.f),
-	hMin(-300.f),hMax(300.f), hSm(20.f),
+	hMin(-300.f),hMax(300.f), hSm(20.f), nOnly(false),
 	noise(1.f), nprev(0.f), nnext2(0.f),
 	surfName("Default"), surfId(0)  //!
 {

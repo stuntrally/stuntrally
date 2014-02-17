@@ -92,23 +92,24 @@ void CGui::SldUpd_TerLNvis()
 
 void CGui::SldUpd_TerL()
 {
-	TerLayer* lay = bTerLay ? &sc->td.layersAll[idTerLay] : &sc->td.layerRoad;
-	ckTerLayOn.Upd(&lay->on);
-	svTerLScale.UpdF(&lay->tiling);
-	ckTerLayTripl.Upd(&lay->triplanar);
+	TerLayer* l = bTerLay ? &sc->td.layersAll[idTerLay] : &sc->td.layerRoad;
+	ckTerLayOn.Upd(&l->on);
+	svTerLScale.UpdF(&l->tiling);
+	ckTerLayTripl.Upd(&l->triplanar);
 	//  blmap
-	svTerLAngMin.UpdF(&lay->angMin);  svTerLHMin.UpdF(&lay->hMin);
-	svTerLAngMax.UpdF(&lay->angMax);  svTerLHMax.UpdF(&lay->hMax);
-	svTerLAngSm.UpdF(&lay->angSm);    svTerLHSm.UpdF(&lay->hSm);
+	svTerLAngMin.UpdF(&l->angMin);  svTerLHMin.UpdF(&l->hMin);
+	svTerLAngMax.UpdF(&l->angMax);  svTerLHMax.UpdF(&l->hMax);
+	svTerLAngSm.UpdF(&l->angSm);    svTerLHSm.UpdF(&l->hSm);
+	ckTerLNOnly.Upd(&l->nOnly);
 	//  noise
-	svTerLNoise.UpdF(&lay->noise);  svTerLNprev.UpdF(&lay->nprev);
-	svTerLNnext2.UpdF(&lay->nnext2);
+	svTerLNoise.UpdF(&l->noise);  svTerLNprev.UpdF(&l->nprev);
+	svTerLNnext2.UpdF(&l->nnext2);
 	//  noise params
 	for (int i=0; i<2; ++i)
-	{	svTerLN_Freq[i].UpdF(&lay->nFreq[i]);
-		svTerLN_Oct[i].UpdI(&lay->nOct[i]);
-		svTerLN_Pers[i].UpdF(&lay->nPers[i]);
-		svTerLN_Pow[i].UpdF(&lay->nPow[i]);
+	{	svTerLN_Freq[i].UpdF(&l->nFreq[i]);
+		svTerLN_Oct[i].UpdI(&l->nOct[i]);
+		svTerLN_Pers[i].UpdF(&l->nPers[i]);
+		svTerLN_Pow[i].UpdF(&l->nPow[i]);
 	}
 }
 
@@ -435,11 +436,38 @@ void CGui::slTerLay(SV*)
 	if (app->ang.rnd)  app->ang.rnd->update();
 	if (app->bl.rnd)  app->bl.rnd->update();
 }
+void CGui::chkTerLNOnly(Ck*)
+{
+	slTerLay(0);
+}
 
+//  move layer order
+void CGui::btnTerLmoveL(WP)  // -1
+{
+	if (!bTerLay || idTerLay <= 0)  return;
+
+	TerLayer& t = sc->td.layersAll[idTerLay], st,
+			&t1 = sc->td.layersAll[idTerLay-1];
+	st = t;  t = t1;  t1 = st;
+	
+	sc->td.UpdLayers();  NumTabNext(-1);
+}
+
+void CGui::btnTerLmoveR(WP)  // +1
+{
+	if (!bTerLay || idTerLay >= TerData::ciNumLay-1)  return;
+
+	TerLayer& t = sc->td.layersAll[idTerLay], st,
+			&t1 = sc->td.layersAll[idTerLay+1];
+	st = t;  t = t1;  t1 = st;
+	
+	sc->td.UpdLayers();  NumTabNext(1);
+}
+
+///  Noise preset buttons
 void CGui::radN1(WP) {  Radio2(bRn1, bRn2, bRn2->getStateSelected());  }
 void CGui::radN2(WP) {  Radio2(bRn1, bRn2, bRn2->getStateSelected());  }
 
-///  Noise preset buttons
 const static float ns[15][4] = {  //  freq, oct, pers, pow
 { 30.4f, 3, 0.33f, 1.5f },{ 36.6f, 4, 0.49f, 1.9f },{ 30.7f, 3, 0.30f, 1.5f },{ 29.5f, 2, 0.13f, 1.8f },{ 40.5f, 3, 0.43f, 2.0f },
 { 25.3f, 3, 0.30f, 1.2f },{ 31.3f, 5, 0.70f, 2.0f },{ 28.4f, 4, 0.70f, 1.5f },{ 34.5f, 4, 0.40f, 0.9f },{ 34.3f, 4, 0.54f, 1.0f },
@@ -470,6 +498,20 @@ void CGui::btnNrandom(WP wp)
 	t.nOct[l]  = Math::RangeRandom(2.f,5.f);
 	t.nPers[l] = Math::RangeRandom(0.1f,0.7f);
 	t.nPow[l]  = Math::RangeRandom(0.8f,2.4f);
+	SldUpd_TerL();
+	app->UpdBlendmap();
+}
+
+//  swap noise 1 and 2 params
+void CGui::btnNswap(WP wp)
+{
+	if (!bTerLay)  return;
+
+	TerLayer& t = sc->td.layersAll[idTerLay];
+	std::swap(t.nFreq[0], t.nFreq[1]);
+	std::swap(t.nOct[0] , t.nOct[1] );
+	std::swap(t.nPers[0], t.nPers[1]);
+	std::swap(t.nPow[0] , t.nPow[1] );
 	SldUpd_TerL();
 	app->UpdBlendmap();
 }

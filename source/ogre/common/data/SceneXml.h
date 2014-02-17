@@ -22,6 +22,7 @@ struct TerLayer		// terrain texture layer
 	//  blendmap
 	//  min,max range and smooth range for angle and height
 	float angMin,angMax,angSm, hMin,hMax,hSm;
+	bool nOnly;
 	//  noise
 	float noise, nprev, nnext2;   //  factors to blend layer +1,-1,+2
 	float nFreq[2], nPers[2], nPow[2];  int nOct[2];

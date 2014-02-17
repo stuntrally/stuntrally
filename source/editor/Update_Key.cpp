@@ -139,7 +139,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 		case key(F9):  // blendmap
 			if (alt)  gui->ckAutoBlendmap.Invert();
-			else	bTerUpdBlend = true;  return true;
+			else  gui->ckDebugBlend.Invert();
+			bTerUpdBlend = true;
+			return true;
 
 
 		//  prev num tab (layers,grasses,models)

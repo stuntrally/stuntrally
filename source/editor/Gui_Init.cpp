@@ -292,7 +292,10 @@ void CGui::InitGui()
 	sv= &svTerLHMin;    sv->Init("TerLHMin",   &f,-150.f,150.f, 1.f, 0,2);  sv->DefaultF(-300.f);  Sev(TerLay);
 	sv= &svTerLHMax;    sv->Init("TerLHMax",   &f,-150.f,150.f, 1.f, 0,2);  sv->DefaultF( 300.f);  Sev(TerLay);
 	sv= &svTerLHSm;     sv->Init("TerLHSm",    &f, 0.f,  100.f, 2.f, 1,4);  sv->DefaultF(20.f);  Sev(TerLay);
+	Btn("TerLmoveL", btnTerLmoveL);
+	Btn("TerLmoveR", btnTerLmoveR);
 	//  noise
+	ck= &ckTerLNOnly;   ck->Init("TerLNonly",  &b);   Cev(TerLNOnly);
 	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f, 0.f,1.5f);  sv->DefaultF(0.f);  Sev(TerLay);
 	sv= &svTerLNprev;   sv->Init("TerLNprev",  &f, 0.f,1.5f);  sv->DefaultF(0.f);  Sev(TerLay);
 	sv= &svTerLNnext2;  sv->Init("TerLNnext2", &f, 0.f,1.5f);  sv->DefaultF(0.f);  Sev(TerLay);
@@ -301,13 +304,14 @@ void CGui::InitGui()
 	sv= &svTerLN_Freq[i];  sv->Init("TerLNFreq"+s,  &f, 1.f,300.f, 2.f, 1,3);   sv->DefaultF(30.f);  Sev(TerLay);
 	sv= &svTerLN_Oct[i];   sv->Init("TerLNOct" +s,  &i, 1,5);                   sv->DefaultI(3);     Sev(TerLay);
 	sv= &svTerLN_Pers[i];  sv->Init("TerLNPers"+s,  &f, 0.1f, 0.7f, 1.f, 3,5);  sv->DefaultF(0.3f);  Sev(TerLay);
-	sv= &svTerLN_Pow[i];   sv->Init("TerLNPow" +s,  &f, 0.3f, 4.f,  2.f);       sv->DefaultF(1.f);   Sev(TerLay);  }
+	sv= &svTerLN_Pow[i];   sv->Init("TerLNPow" +s,  &f, 0.2f, 8.f,  2.f);       sv->DefaultF(1.f);   Sev(TerLay);  }
 	//  noise btns
 	Btn("TerLNbtn1", radN1);  bRn1 = btn;  bRn1->setStateSelected(true);
 	Btn("TerLNbtn2", radN2);  bRn2 = btn;
 	for (i=0; i < 15; ++i)
 	{  Btn("TerLN_"+toStr(i), btnNpreset);  }
 	Btn("TerLNrandom", btnNrandom);
+	Btn("TerLNswap", btnNswap);
 	
 	//  particles
 	Ed(LDust, editLDust);	Ed(LDustS, editLDust);

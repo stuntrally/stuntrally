@@ -1817,6 +1817,18 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#80FF00#{Layers}"/>
+				<Widget type="Button" skin="Button" position="615 24 24 22" name="TerLmoveL">
+					<Property key="Colour" value="0.6 0.8 0.6"/>
+					<Property key="TextColour" value="0.2 0.5 0.2"/>
+					<Property key="Caption" value="&lt;"/>
+					<UserString key="tip" value="#{TipTerLMove}"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="640 24 24 22" name="TerLmoveR">
+					<Property key="Colour" value="0.6 0.8 0.6"/>
+					<Property key="TextColour" value="0.2 0.5 0.2"/>
+					<Property key="Caption" value="&gt;"/>
+					<UserString key="tip" value="#{TipTerLMove}"/>
+				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="600 70 128 24" name="TerLayersAll">
 					<Property key="Caption" value="#{Used}: "/>
 					<Property key="TextColour" value="0.4 1 0.4"/>
@@ -1917,8 +1929,8 @@
 					<UserString key="tip" value="#{TipTexTiling}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="650 200 88 20" name="DebugBlend">
-					<Property key="Caption" value="#{Test}"/>
-					<Property key="TextColour" value="0.2 0.6 0.2"/>
+					<Property key="Caption" value="#{Test} F9"/>
+					<Property key="TextColour" value="0.6 0.8 0.4"/>
 				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="24 224 736 300" name="SubTab">
 					<Property key="Caption" value="#B0F060#{BlendMap}"/>
@@ -2049,6 +2061,11 @@
 							<Property key="Colour" value="0.56 0.8 0.86"/>
 							<UserString key="tip" value="#{TipTerLNoise}"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="540 188 160 24" name="TerLNonly">
+							<Property key="Caption" value="#{TerLNoiseOnly}"/>
+							<Property key="TextColour" value="0.4 0.8 0.7"/>
+							<Property key="Colour" value="0.4 0.8 0.7"/>
+						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 730 272">
 						<Property key="Caption" value="#90E0C0#{TerLNoise}"/>
@@ -2098,13 +2115,20 @@
 							<Property key="Caption" value="#A0C0E0E"/>
 						</Widget>
 						<Widget type="Button" skin="Button" position="610 115 100 20" name="TerLNrandom">
-							<Property key="Caption" value="#A0C0E0#{CarClrRandom}"/>
+							<Property key="Colour" value="0.7 0.8 0.9"/>
+							<Property key="TextColour" value="0.6 0.76 0.9"/>
+							<Property key="Caption" value="#{CarClrRandom}"/>
 						</Widget>
-						<Widget type="ProgressBar" skin="ProgressBarFill" position="610 55 100 80">
+						<Widget type="ProgressBar" skin="ProgressBarFill" position="610 55 100 60">
 							<Property key="Alpha" value="0.6"/>
 							<Property key="Colour" value="0.6 0.75 0.9"/>
 							<Property key="Enabled" value="false"/>
 							<UserString key="tip" value="#{TipTerLNoise}"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="610 170 80 20" name="TerLNswap">
+							<Property key="Colour" value="0.7 0.8 0.9"/>
+							<Property key="TextColour" value="0.6 0.76 0.9"/>
+							<Property key="Caption" value="#{Swap}"/>
 						</Widget>
 
 						<Widget type="Button" skin="RadioButton" position="610 26 130 24" name="TerLNbtn1">
