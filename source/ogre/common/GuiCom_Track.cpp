@@ -50,9 +50,9 @@ String CGuiCom::GetSceneryColor(String name)
 		case 'T':  c = (name.c_str()[1] != 'e') ? "#FFA020" : 
 			(name.length() > 5 && name.c_str()[4] == 'C') ? "#A0C0D0" : "#A0A0A0";  break;  // Test,TestC
 		case 'J':  c = "#50FF50";  break;  case 'S':  c = "#C0E080";  break;  case 'F':  c = "#A0C000";  break;
-		case 'G':  c = "#B0FF00";  break;  case '0':  c = "#E8E8E8";  break;  case 'I':  c = "#FFFF80";  break;
+		case 'G':  c = "#B0FF00";  break;  case 'W':  c = "#C0D0D0";  break;  case 'I':  c = "#FFFF80";  break;
 		case 'A':  c = "#FFA080";  break;  case 'D':  c = "#F0F000";  break;  case 'C':  c = "#E0B090";  break;
-		case 'V':  c = "#080800";  break;  case 'X':  c = "#8080D0";  break;  case 'M':  c = "#A0A000";  break;
+		case 'V':  c = "#908030";  break;  case 'X':  c = "#8080D0";  break;  case 'M':  c = "#A0A000";  break;
 		case 'O':  c = "#70F0B0";  break;  case 'E':  c = "#A0E080";  break;  case 'R':  c = "#A04840";  break;  }
 	return c;
 }
