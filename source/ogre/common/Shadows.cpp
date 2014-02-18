@@ -5,6 +5,7 @@
 #include "../common/QTimer.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
+	#include "../../editor/CGui.h"
 	#include "../../editor/settings.h"
 	#include "../../road/Road.h"
 #else
@@ -143,6 +144,9 @@ void App::changeShadows()
 #if !SR_EDITOR
 	mFactory->setGlobalSetting("soft_particles", b2s(pSet->all_effects && pSet->softparticles));
 	mFactory->setGlobalSetting("mrt_output", b2s(NeedMRTBuffer()));
+	mFactory->setGlobalSetting("debug_blend", b2s(false));
+#else
+	mFactory->setGlobalSetting("debug_blend", b2s(gui->bDebugBlend));
 #endif
 
 	#if 0
@@ -167,8 +171,7 @@ void App::changeShadows()
 		if (MaterialManager::getSingleton().resourceExists("Ogre/DebugTexture" + toStr(i)))
 			MaterialManager::getSingleton().remove("Ogre/DebugTexture" + toStr(i));
 		MaterialPtr debugMat = MaterialManager::getSingleton().create(
-			"Ogre/DebugTexture" + toStr(i), 
-			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+			"Ogre/DebugTexture" + toStr(i), rgDef);
 			
 		debugMat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
 		TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(tex->getName());

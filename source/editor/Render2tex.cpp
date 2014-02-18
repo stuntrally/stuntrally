@@ -18,7 +18,6 @@
 #include <OgreManualObject.h>
 #include <OgreHardwarePixelBuffer.h>
 #include <OgreCamera.h>
-
 using namespace Ogre;
 
 
@@ -28,7 +27,7 @@ void App::Rnd2TexSetup()
 {
 	/// rt:  0 road minimap,  1 road for grass,  2 terrain minimap,  3 track preview full
 	// visibility:  1 road  2 hud,ed  4 terrain  8 trees  16-car glass  32 sky
-	const Ogre::uint32 visMask[RTs] =
+	const uint32 visMask[RTs] =
 		{ RV_Road, RV_Road+RV_Objects, RV_Terrain+RV_Objects, RV_MaskAll-RV_Hud };
 	const int dim[RTs] =  //1025: sc->td.iVertsX
 		{ 1024, 1025, 512, 1024 };
@@ -36,7 +35,7 @@ void App::Rnd2TexSetup()
 	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 	Real sz = pSet->size_minimap;
 	xm1 = 1-sz/asp, ym1 = -1+sz, xm2 = 1.0, ym2 = -1.0;
-	AxisAlignedBox big(-100000.0*Vector3::UNIT_SCALE, 100000.0*Vector3::UNIT_SCALE);
+	AxisAlignedBox aab;  aab.setInfinite();
 	
 	for (int i=0; i < RTs+RTsAdd; ++i)
 	{
@@ -46,18 +45,18 @@ void App::Rnd2TexSetup()
 		{
 			String sTex = "RttTex"+si, sCam = "RttCam"+si;
 
-			Ogre::TextureManager::getSingleton().remove(sTex);
+			TextureManager::getSingleton().remove(sTex);
 			mSceneMgr->destroyCamera(sCam);  // dont destroy old - const tex sizes opt..
 			
 			///  rnd to tex - same dim as Hmap	// after track load
 			Real fDim = sc->td.fTerWorldSize;  // world dim  ..vdr
-			Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().createManual(sTex,
-				  ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D,
-				  dim[i], dim[i], 0, PF_R8G8B8A8, TU_RENDERTARGET);
+			TexturePtr texture = TextureManager::getSingleton().createManual(
+				sTex, rgDef, TEX_TYPE_2D,
+				dim[i], dim[i], 0, PF_R8G8B8A8, TU_RENDERTARGET);
 				  
 			r.cam = mSceneMgr->createCamera(sCam);  // up
 			r.cam->setPosition(Vector3(0,1000,0/*-300..*/));  r.cam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
-			r.cam->setNearClipDistance(0.5);		r.cam->setFarClipDistance(50000);
+			r.cam->setNearClipDistance(0.5);	r.cam->setFarClipDistance(50000);
 			r.cam->setAspectRatio(1.0);			if (!full)  r.cam->setProjectionType(PT_ORTHOGRAPHIC);
 			r.cam->setOrthoWindow(fDim,fDim);	//rt[i].rndCam->setPolygonMode(PM_WIREFRAME);
 
@@ -69,19 +68,18 @@ void App::Rnd2TexSetup()
 			rvp->setVisibilityMask(visMask[i]);
 			rvp->setShadowsEnabled(false);
 
-			if (i != 3)
-				rvp->setMaterialScheme ("reflection");
+			if (i != 3)  rvp->setMaterialScheme("reflection");
 		}
 		///  minimap  . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 		if (r.ndMini)  mSceneMgr->destroySceneNode(r.ndMini);
-		ResourcePtr mt = Ogre::MaterialManager::getSingleton().getByName(sMtr);
+		ResourcePtr mt = MaterialManager::getSingleton().getByName(sMtr);
 		if (!mt.isNull())  mt->reload();
 
-		r.mini = new Ogre::Rectangle2D(true);  // screen rect preview
+		r.mini = new Rectangle2D(true);  // screen rect preview
 		if (i == RTs)  r.mini->setCorners(-1/asp, 1, 1/asp, -1);  // fullscr,square
 		else  r.mini->setCorners(xm1, ym1, xm2, ym2);  //+i*sz*all
 
-		r.mini->setBoundingBox(big);
+		r.mini->setBoundingBox(aab);
 		r.ndMini = mSceneMgr->getRootSceneNode()->createChildSceneNode("Minimap"+si);
 		r.ndMini->attachObject(r.mini);	r.mini->setCastShadows(false);
 		r.mini->setMaterial(i == RTs+1 ? "BrushPrvMtr" : sMtr);
@@ -90,15 +88,16 @@ void App::Rnd2TexSetup()
 	}
 
 	//  pos dot on minimap  . . . . . . . .
-	if (!ndPos)  {
-		mpos = Create2D("hud/CarPos", 0.2f, true);  // dot size
+	if (!ndPos)
+	{	mpos = Create2D("hud/CarPos", 0.2f, true);  // dot size
 		mpos->setVisibilityFlags(RV_Hud);
 		mpos->setRenderQueueGroup(RQG_Hud3 /*RENDER_QUEUE_OVERLAY+1*/);
 		ndPos = mSceneMgr->getRootSceneNode()->createChildSceneNode(
 			Vector3(xm1+(xm2-xm1)/2, ym1+(ym2-ym1)/2, 0));
 		float fHudSize = 0.04f;
 		ndPos->scale(fHudSize, fHudSize, 1);
-		ndPos->attachObject(mpos);  }
+		ndPos->attachObject(mpos);
+	}
 	if (ndPos)   ndPos->setVisible(pSet->trackmap);
 	UpdMiniVis();
 }
@@ -159,7 +158,7 @@ void App::SaveGrassDens()
 
 		v = std::max(0, (int)(255.f * (1.f - v * ff) ));  // avg, inv, clamp
 		
-		gd[a] = 0xFF000000 + /*0x010101 */ v;  // write
+		gd[a] = 0xFF000000 + v;  // write
 	}	}
 
 	v = 0xFFFFFFFF;  //  frame f []  todo: get from rd[b] not clear..
@@ -188,7 +187,8 @@ void App::SaveGrassDens()
 			uint uu = 0xFF000000;
 			SGrassLayer* gr = &sc->grLayersAll[0];  ///todo: grass channels, ter range in r,g,b,a..
 			v = std::max(0, std::min(255, int(255.f *
-				linRange(sc->td.hfAngle[a], 0.f,gr->terMaxAng, gr->terAngSm) *
+				///FIXME: //todo: this method on rtt ..
+				//linRange(sc->td.hfAngle[a], 0.f,gr->terMaxAng, gr->terAngSm) *
 				linRange(sc->td.hfHeight[a], gr->terMinH,gr->terMaxH, gr->terHSm) )));
 			v = std::min((int)(gd[b] & 0xFF), v);  // preserve road
 			uu += v;  // v << (i*8)
@@ -304,7 +304,7 @@ void App::SaveWaterDepth()
 	if (!tex.isNull())
 		tex->reload();
 	else  // 1st fluid after start, refresh matdef ?..
-		TextureManager::getSingleton().load("waterDepth.png",ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		TextureManager::getSingleton().load("waterDepth.png", rgDef);
 	} catch(...) {  }
 
 
@@ -460,10 +460,9 @@ void App::AlignTerToRoad()
 	}
 
 
-	//  update terrain  todo: rect only
-	terrain->dirty();  //dirtyRect(Rect());
-	//GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
-	//initBlendMaps(terrain);
+	//  update terrain
+	terrain->dirty();  //rect..
+	UpdBlendmap();
 	bTerUpd = true;
 
 

@@ -123,7 +123,10 @@ public:
 #define Tab(tab, name, event)  \
 	tab = fTab(name);  \
 	if (tab && tab->eventTabChangeSelect.empty())  tab->eventTabChangeSelect += newDelegate(this, &CGui::event);
-		
+
+
+#define Radio2(bR1,bR2, b)  bR1->setStateSelected(b);  bR2->setStateSelected(!b);
+
 		
 //old  -----
 

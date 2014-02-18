@@ -45,8 +45,7 @@ void App::CreateFluids()
 		//  plane
 		Plane p;  p.normal = Vector3::UNIT_Y;  p.d = 0;
 		String smesh = "WaterMesh"+toStr(i);
-		MeshPtr mesh = MeshManager::getSingleton().createPlane(smesh,
-			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		MeshPtr mesh = MeshManager::getSingleton().createPlane( smesh, rgDef,
 			p, fb.size.x,fb.size.z, 6,6, true, 1, fb.tile.x*fb.size.x,fb.tile.y*fb.size.z, Vector3::UNIT_Z);
 
 		Entity* efl = mSceneMgr->createEntity("WaterPlane"+toStr(i), "WaterMesh"+toStr(i));

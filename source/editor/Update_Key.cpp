@@ -139,7 +139,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 		case key(F9):  // blendmap
 			if (alt)  gui->ckAutoBlendmap.Invert();
-			else	bTerUpdBlend = true;  return true;
+			else  gui->ckDebugBlend.Invert();
+			bTerUpdBlend = true;
+			return true;
 
 
 		//  prev num tab (layers,grasses,models)
@@ -184,6 +186,12 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 					tab->setIndexSelected(i);  if (iTab1==1)  gcom->tabMainMenu(tab,i);
 				}
    			break;
+   			
+   		case key(SPACE):  // subtabs
+   			if (bGuiFocus && tab && !pSet->isMain)
+				if (sub)  {  int num = sub->getItemCount();
+					sub->setIndexSelected( (sub->getIndexSelected() + (shift ? -1 : 1) + num) % num );  }
+			break;
    			
 		case key(RETURN):  // load track
 			if (bGuiFocus)

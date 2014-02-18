@@ -278,8 +278,10 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = eTex->Attribute("road");	if (a)  if (s2i(a)==1)  road = true;
 			
 			TerLayer lay, *l = road ? &td.layerRoad : &lay;
+			lay.nFreq[0] += (il-0.7f) * 4.f;  // default, can't be same, needs variation
+			lay.nFreq[1] += (il-0.5f) * 3.f;
 
-			a = eTex->Attribute("on");		if (a)  l->on = s2i(a);  else  l->on = 1;
+			a = eTex->Attribute("on");		if (a)  l->on = s2i(a)>0;  else  l->on = true;
 			a = eTex->Attribute("file");	if (a)  l->texFile = String(a);
 			a = eTex->Attribute("fnorm");	if (a)  l->texNorm = String(a);
 			a = eTex->Attribute("scale");	if (a)  l->tiling = s2r(a);
@@ -298,10 +300,22 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = eTex->Attribute("hMax");	if (a)  l->hMax = s2r(a);
 			a = eTex->Attribute("hSm");		if (a)  l->hSm = s2r(a);
 
-			a = eTex->Attribute("noise");	if (a)  l->noise = s2r(a);
-			a = eTex->Attribute("nOnly");	if (a)  l->bNoiseOnly = s2i(a) > 0;  else  l->bNoiseOnly = true;
+			a = eTex->Attribute("nOn");		if (a)  l->nOnly = s2i(a)>0;
 			a = eTex->Attribute("triplanar");	if (a)  l->triplanar = true;  else  l->triplanar = false;
 
+			a = eTex->Attribute("noise");	if (a)  l->noise = s2r(a);
+			a = eTex->Attribute("n_1");		if (a)  l->nprev = s2r(a);
+			a = eTex->Attribute("n2");		if (a)  l->nnext2 = s2r(a);
+
+			XMLElement* eNoi = eTex->FirstChildElement("noise");
+			if (eNoi)
+			for (int n=0; n < 2; ++n)
+			{	std::string sn = toStr(n), s;
+				s = "frq"+sn;  a = eNoi->Attribute(s.c_str());  if (a)  l->nFreq[n]= s2r(a);
+				s = "oct"+sn;  a = eNoi->Attribute(s.c_str());  if (a)  l->nOct[n] = s2i(a);
+				s = "prs"+sn;  a = eNoi->Attribute(s.c_str());  if (a)  l->nPers[n]= s2r(a);
+				s = "pow"+sn;  a = eNoi->Attribute(s.c_str());  if (a)  l->nPow[n] = s2r(a);
+			}
 			if (!road && il < td.ciNumLay)
 				td.layersAll[il++] = lay;
 			eTex = eTex->NextSiblingElement("texture");
@@ -546,9 +560,23 @@ bool Scene::SaveXml(String file)
 			tex.SetAttribute("hMin",	toStrC( l->hMin ));
 			tex.SetAttribute("hMax",	toStrC( l->hMax ));
 			tex.SetAttribute("hSm",		toStrC( l->hSm ));
-			tex.SetAttribute("noise",	toStrC( l->noise ));
-			tex.SetAttribute("nOnly",	l->bNoiseOnly ? 1 : 0);
+
+			tex.SetAttribute("nOn",		l->nOnly ? 1 : 0);
 			if (l->triplanar)  tex.SetAttribute("triplanar", 1);
+
+			tex.SetAttribute("noise",	toStrC( l->noise ));
+			tex.SetAttribute("n_1",		toStrC( l->nprev ));
+			tex.SetAttribute("n2",		toStrC( l->nnext2 ));
+
+			TiXmlElement noi("noise");
+			for (int n=0; n < 2; ++n)
+			{	std::string sn = toStr(n), s;
+				s = "frq"+sn;  noi.SetAttribute(s.c_str(),  toStrC( l->nFreq[n] ));
+				s = "oct"+sn;  noi.SetAttribute(s.c_str(),  toStrC( l->nOct[n] ));
+				s = "prs"+sn;  noi.SetAttribute(s.c_str(),  toStrC( l->nPers[n] ));
+				s = "pow"+sn;  noi.SetAttribute(s.c_str(),  toStrC( l->nPow[n] ));
+			}
+			tex.InsertEndChild(noi);
 			ter.InsertEndChild(tex);
 		}
 		l = &td.layerRoad;
@@ -668,7 +696,7 @@ bool Scene::SaveXml(String file)
 
 TerData::TerData()
 {
-	hfHeight = NULL;  hfAngle = NULL;
+	hfHeight = NULL;
 	Default();
 }
 void TerData::Default()
@@ -694,13 +722,17 @@ void TerData::Default()
 	//layers:  1- 230 fps  2- 180 fps  3- 140 fps
 }
 
-TerLayer::TerLayer() : on(true), tiling(4.f), triplanar(false),
+TerLayer::TerLayer() :
+	on(true), tiling(4.f), triplanar(false),
 	dust(0.f),dustS(0.2f), mud(0.f), smoke(0.f), tclr(ColourValue::Black),
 	angMin(0.f),angMax(90.f), angSm(20.f),
-	hMin(-300.f),hMax(300.f), hSm(20.f),
-	noise(1.f), bNoiseOnly(1),
+	hMin(-300.f),hMax(300.f), hSm(20.f), nOnly(false),
+	noise(1.f), nprev(0.f), nnext2(0.f),
 	surfName("Default"), surfId(0)  //!
-{	}
+{
+	nFreq[0]=25.f; nPers[0]=0.30f; nPow[0]=1.5f; nOct[0]=3;
+	nFreq[1]=30.f; nPers[1]=0.40f; nPow[1]=1.2f; nOct[1]=3;
+}
 
 void TerData::UpdVals()
 {

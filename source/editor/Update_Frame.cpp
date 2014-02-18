@@ -168,16 +168,10 @@ bool App::frameEnded(const FrameEvent& evt)
 	}	tu++;
 
 	if (bu >= pSet->ter_skip)
-	{	if (gui->noBlendUpd)
-			bTerUpdBlend = false;
-		else
-		if (bTerUpdBlend)
-		{	bTerUpdBlend = false;  bu = 0;
-			if (terrain)
-			{
-				GetTerAngles();  // full
-				initBlendMaps(terrain);
-		}	}
+	if (bTerUpdBlend)
+	{	bTerUpdBlend = false;  bu = 0;
+		//if (terrain)
+			UpdBlendmap();
 	}	bu++;
 
 	

@@ -36,7 +36,13 @@ void App::createScene()  // once, init
 	prvView.Create(1024,1024,"PrvView");
 	prvRoad.Create(1024,1024,"PrvRoad");
 	prvTer.Create(512,512,"PrvTer");
-
+	
+	///  ter lay tex
+	for (int i=0; i < 6; ++i)
+	{	String si = toStr(i);
+		texLayD[i].SetName("layD"+si);
+		texLayN[i].SetName("layN"+si);
+	}
 
 	//  camera
 	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
@@ -58,7 +64,7 @@ void App::createScene()  // once, init
 	///  _Tool_ tex ..........................
 	//  (remove alpha channel for ter tex prv img)
 	#if 0
-	ToolTexAlpha();
+	gui->ToolTexAlpha();
 	exit(0);
 	#endif
 
@@ -172,6 +178,12 @@ void App::NewCommon(bool onlyTerVeget)
 		DestroyFluids();
 	}
 		
+	///  ter tex
+	for (int i=0; i < 6; ++i)
+	{
+		texLayD[i].Destroy();
+		texLayN[i].Destroy();
+	}
 	//  terrain
 	terrain = 0;
 	if (mTerrainGroup)
@@ -413,8 +425,8 @@ void App::TerCircleInit()
 	}
 	moTerC->end();
  
-	AxisAlignedBox aabInf;	aabInf.setInfinite();
-	moTerC->setBoundingBox(aabInf);  // always visible
+	AxisAlignedBox aab;  aab.setInfinite();
+	moTerC->setBoundingBox(aab);  // always visible
 	moTerC->setRenderQueueGroup(RQG_Hud2);
 	moTerC->setVisibilityFlags(RV_Hud);
 	ndTerC = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(0,0,0));

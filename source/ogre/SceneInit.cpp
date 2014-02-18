@@ -38,6 +38,12 @@ void App::createScene()
 	//  ch stage
 	prvStCh.Create(1024,1024,"PrvStCh");
 	
+	///  ter lay tex
+	for (int i=0; i < 6; ++i)
+	{	String si = toStr(i);
+		texLayD[i].SetName("layD"+si);
+		texLayN[i].SetName("layN"+si);
+	}
 
 	//  tex fil
 	MaterialManager::getSingleton().setDefaultTextureFiltering(TFO_ANISOTROPIC);
@@ -228,6 +234,12 @@ void App::LoadCleanUp()  // 1 first
 	if (pr)  {  mSceneMgr->destroyParticleSystem(pr);   pr=0;  }
 	if (pr2) {  mSceneMgr->destroyParticleSystem(pr2);  pr2=0;  }
 
+	///  ter tex
+	for (int i=0; i < 6; ++i)
+	{
+		texLayD[i].Destroy();
+		texLayN[i].Destroy();
+	}
 	terrain = 0;
 	if (mTerrainGroup)
 		mTerrainGroup->removeAllTerrains();
@@ -283,7 +295,7 @@ void App::LoadGame()  // 2
 	pGame->NewGameDoLoadTrack();
 
 	if (!sc->ter)
-	{	sc->td.hfHeight = sc->td.hfAngle = NULL;  }  // sc->td.layerRoad.smoke = 1.f;
+		sc->td.hfHeight = NULL;  // sc->td.layerRoad.smoke = 1.f;
 	
 	// upd car abs,tcs,sss
 	pGame->ProcessNewSettings();
@@ -515,6 +527,7 @@ void App::LoadCar()  // 4
 void App::LoadTerrain()  // 5
 {
 	CreateTerrain(false,sc->ter);  // common
+	GetTerMtrIds();
 	if (sc->ter)
 		CreateBltTerrain();
 	

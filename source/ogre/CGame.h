@@ -14,7 +14,7 @@
 
 
 namespace Ogre {  class SceneNode;  class SceneManager;  class Light;
-	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
+	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  class Rectangle2D;  }
 namespace Forests {  class PagedGeometry;  }
 namespace BtOgre  {  class DebugDrawer;  }
 class Scene;  class WaterRTT;  class CData;  class CInput;  class GraphView;
@@ -144,14 +144,32 @@ public:
 	void configureHorizonDefaults(Ogre::Light* l);
 
 	///  terrain
+	PreviewTex texLayD[6],texLayN[6];
 	Ogre::Terrain* terrain; 
 	Ogre::TerrainGlobalOptions* mTerrainGlobals;
 	Ogre::TerrainGroup* mTerrainGroup;
 	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
 
-	int iBlendMaps, blendMapSize;	bool noBlendUpd;  //  mtr from ter  . . . 
-	char* blendMtr;  // mtr [blendMapSize x blendMapSize]
-	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
+	//  blendmap
+	void CreateBlendTex(), UpdBlendmap(), UpdLayerPars();
+
+	const static Ogre::String sHmap, sAng, sBlend, sAngMat, sBlendMat;  // tex, mtr names
+	Ogre::TexturePtr hMap, angRT, blRT; //, blMap;  // height, angles, blend
+
+	struct RenderToTex  // rtt common
+	{
+		Ogre::RenderTexture* rnd;  Ogre::Texture* tex;
+		Ogre::SceneManager* scm;  Ogre::Camera* cam;  Ogre::Viewport* vp;
+		Ogre::Rectangle2D* rect;  Ogre::SceneNode* nd;
+
+		void Null()
+		{	rnd = 0;  tex = 0;  scm = 0;  cam = 0;  vp = 0;  rect = 0;  nd = 0;   }
+		RenderToTex()
+		{	Null();   }
+
+		void Setup(Ogre::String sName, Ogre::TexturePtr pTex, Ogre::String sMtr);
+	};
+	RenderToTex bl, ang;
 
 	float Noise(float x, float zoom, int octaves, float persistance);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
@@ -167,6 +185,11 @@ public:
 		if (x > xb)  return (xb-x)/s+1;
 		return 0.f;
 	}
+
+	//  mtr from ter  . . . 
+	int blendMapSize;  char* blendMtr;
+	void GetTerMtrIds();
+
 
 	//  road
 	SplineRoad* road;

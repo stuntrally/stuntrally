@@ -150,15 +150,27 @@ public:
 	void comboTexDiff(CMB), comboTexNorm(CMB);
 	Img imgTexDiff;
 	Ck ckTexNormAuto;  bool bTexNormAuto;  // auto norm tex name
+	void btnTerLmoveL(WP),btnTerLmoveR(WP);
 
 	//  Ter blendmap
 	SV svTerLScale;
 	SV svTerLAngMin, svTerLHMin, svTerLAngSm;
 	SV svTerLAngMax, svTerLHMax, svTerLHSm;
-	SV svTerLNoise;
-	void slTerLay(SV*);
-	CK(TerLNoiseOnly);  CK(TerLayTripl);
+	//  noise
+	SV svTerLNoise, svTerLNprev, svTerLNnext2;
+	SV svTerLN_Freq[2], svTerLN_Oct[2], svTerLN_Pers[2], svTerLN_Pow[2];
+	void slTerLay(SV*), SldUpd_TerLNvis();
 
+	CK(TerLNOnly);  CK(TerLayTripl);
+	CK(DebugBlend);  bool bDebugBlend;
+	Img dbgLclr;
+
+	//  noise btns
+	Btn bRn1, bRn2;
+	void radN1(WP), radN2(WP), btnNpreset(WP);
+	void btnNrandom(WP), btnNswap(WP);
+
+	
 	//  Ter Particles
 	Ed edLDust,edLDustS,edLMud,edLSmoke, edLTrlClr;  Img clrTrail;
 	void editLDust(Ed), editLTrlClr(Ed);

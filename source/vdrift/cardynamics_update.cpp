@@ -317,6 +317,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	cam_body.Integrate1(dt);
 	//chassis->clearForces();
 
+
 	//  camera bounce sim - spring and damper
 	MATHVECTOR<Dbl,3> p = cam_body.GetPosition(), v = cam_body.GetVelocity();
 	MATHVECTOR<Dbl,3> f = p * gPar.camBncSpring + v * gPar.camBncDamp;

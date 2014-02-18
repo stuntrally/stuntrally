@@ -491,9 +491,9 @@ bool COLLISION_WORLD::CastRay(
 					float tws = td.fTerWorldSize;
 
 					int mx = (pos[0] + 0.5*tws)/tws*t;  mx = std::max(0,std::min(t-1, mx));
-					int my = (pos[1] + 0.5*tws)/tws*t;  my = std::max(0,std::min(t-1, my));
+					int my = (pos[1] + 0.5*tws)/tws*t;  my = std::max(0,std::min(t-1, t-1-my));
 
-					int mtr = pApp->blendMtr[my*t + mx]-1;
+					int mtr = pApp->blendMtr[my*t + mx];
 
 					int id = td.layersAll[td.layers[mtr]].surfId;
 					surf = &pApp->pGame->surfaces[id];

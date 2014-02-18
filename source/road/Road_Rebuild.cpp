@@ -2,16 +2,22 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/RenderConst.h"
 #include "../ogre/common/ShapeData.h"
+#include "../ogre/common/QTimer.h"
+#include "../vdrift/dbl.h"
 #include "Road.h"
 #ifndef SR_EDITOR
-#include "../vdrift/game.h"
+	#include "../vdrift/game.h"
 #else
-#include "../editor/CApp.h"
-#include "../bullet/BulletCollision/CollisionShapes/btTriangleMesh.h"
-#include "../bullet/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h"
-#include "../bullet/BulletCollision/CollisionDispatch/btCollisionObject.h"
-#include "../bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+	#include "../editor/CApp.h"
+	#include "../bullet/BulletCollision/CollisionShapes/btTriangleMesh.h"
+	#include "../bullet/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h"
+	#include "../bullet/BulletCollision/CollisionDispatch/btCollisionObject.h"
+	#include "../bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #endif
+#include <OgreTerrain.h>
+#include <OgreMeshManager.h>
+#include <OgreEntity.h>
+using namespace Ogre;
 
 #ifdef SR_EDITOR
 #define LogR(a)  //LogO(String("~ Road  ") + a);
@@ -19,37 +25,6 @@
 #define LogR(a)
 #endif
 
-#include <OgreTerrain.h>
-#include <OgreMeshManager.h>
-#include <OgreEntity.h>
-using namespace Ogre;
-#include "../ogre/common/QTimer.h"
-
-
-//---------------------------------------------------------------------------------------------------------------
-Vector3 getNormalAtWorldPosition(Terrain* terrain, Real x, Real z, Real s)
-{
-	Real y0=0;
-	Vector3 vx(x-s, y0, z), vz(x, y0, z-s);
-	Vector3 vX(x+s, y0, z), vZ(x, y0, z+s);
-	vx.y = terrain->getHeightAtWorldPosition(vx);  vX.y = terrain->getHeightAtWorldPosition(vX);
-	vz.y = terrain->getHeightAtWorldPosition(vz);  vZ.y = terrain->getHeightAtWorldPosition(vZ);
-	Vector3 v_x = vx-vX;  v_x.normalise();
-	Vector3 v_z = vz-vZ;  v_z.normalise();
-	Vector3 n = -v_x.crossProduct(v_z);  n.normalise();
-	return n;
-}
-
-static float GetAngle(float x, float y)
-{
-	if (x == 0.f && y == 0.f)
-		return 0.f;
-
-	if (y == 0.f)
-		return (x < 0.f) ? PI_d : 0.f;
-	else
-		return (y < 0.f) ? atan2f(-y, x) : (2*PI_d - atan2f(y, x));
-}
 
 ///  Rebuild
 //---------------------------------------------------------
@@ -118,7 +93,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			const Real dist = 0.1f;
 			Vector3 vl = GetLenDir(seg, 0.f, dist) + GetLenDir(seg0, 1.f-dist, 1.f);  //vl.normalise();
 			Vector3 vw = Vector3(vl.z, 0.f, -vl.x);  //vw.normalise();
-			mP[seg].aYaw  = GetAngle(vw.x, vw.z) *180.f/PI_d;
+			mP[seg].aYaw = TerUtil::GetAngle(vw.x, vw.z) *180.f/PI_d;
 
 			if (mP[seg].aType == AT_Both)
 			{	mP[seg].aYaw += mP[seg].mYaw;  mP[seg].aRoll += mP[seg].mRoll;  }	
@@ -484,7 +459,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 						if (onTer1)  //  onTerrain
 						{
 							vP.y = yTer + fHeight * ((w==0 || w==iw) ? 0.15f : 1.f);
-							vN = mTerrain ? getNormalAtWorldPosition(mTerrain, vP.x, vP.z, lenDiv*0.5f /*0.5f*/) : Vector3::UNIT_Y;
+							vN = mTerrain ? TerUtil::GetNormalAt(mTerrain, vP.x, vP.z, lenDiv*0.5f /*0.5f*/) : Vector3::UNIT_Y;
 						}
 					}else
 					{	///  pipe (_)
