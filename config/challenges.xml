@@ -100,8 +100,8 @@
 			<t name="F3-Snail"     
 			<t name="J9-Sharp"     
 
-			<t name="I1-star3"     
-			<t name="I2-S8"        
+			<t name="I1-Island"     
+			<t name="I2-Sandy"        
 			<t name="D9-Mud"       
 			<t name="V3-Crater"    
 
@@ -130,7 +130,7 @@
 		<tracks>
 			<t name="F1-Slippery"  passPoints="9" />
 			<t name="0W2-Wet"      passPoints="9" />
-			<t name="F8-blurX3"    passPoints="9" />
+			<t name="F8-Stain"    passPoints="9" />
 		</tracks>
 	</challenge>
 
@@ -253,8 +253,8 @@
 		<car names="N1" />
 		<pass avgPoints="10" />
 		<tracks>
-			<t name="0W1-cross"     passPoints="9" />
-			<t name="0W3-mouth"     passPoints="9" />
+			<t name="0W1-Cross"     passPoints="9" />
+			<t name="0W3-Swing"     passPoints="9" />
 			<t name="0W7-LJs-Mntn"  passPoints="9" />
 			<t name="0W10-Whirl"    passPoints="9" />
 		</tracks>
@@ -450,7 +450,7 @@
 		<car names="ES|S1|N1" />
 		<pass avgPoints="14" factor="2" />
 		<tracks>
-			<t name="F7-blur3"    laps="2" passPoints="10" />
+			<t name="F7-Blur"    laps="2" passPoints="10" />
 			<t name="F6-Banked"   laps="2" passPoints="10" />
 		</tracks>
 	</challenge>
@@ -521,7 +521,7 @@
 		<pass avgPoints="12" />
 		<tracks>
 			<t name="S7-HighMadness"  passPoints="9" />
-			<t name="J6-80fun"        passPoints="9" />
+			<t name="J6-Fun"        passPoints="9" />
 		</tracks>
 	</challenge>
 
@@ -530,8 +530,8 @@
 		<car names="ES|S1|N1" />
 		<pass avgPoints="13" />
 		<tracks>
-			<t name="D5-jump8-low"  laps="2" passPoints="11" />
-			<t name="D6-jump0-high" laps="2" passPoints="11" />
+			<t name="D5-LowJumps"  laps="2" passPoints="11" />
+			<t name="D6-HighJumps" laps="2" passPoints="11" />
 		</tracks>
 	</challenge>
 
