@@ -549,7 +549,6 @@ void CGui::InitGui()
 
 	//---------------------  Roads  ---------------------
 	GetMaterialsMat(sMat+"road.mat");
-	GetMaterialsMat(sMat+"road_wall_pipe.mat",false);
 	GetMaterialsMat(sMat+"pipe.mat",false);
 	for (size_t i=0; i<4; ++i)
 	{
@@ -563,7 +562,6 @@ void CGui::InitGui()
 
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	String s = vsMaterials[i];
-		LogO("MTR== "+s);
 		if (StringUtil::startsWith(s,"road") && !StringUtil::startsWith(s,"road_") && !StringUtil::endsWith(s,"_ter") && s != "road")
 			for (int n=0; n<4; ++n)  cmbRoadMtr[n]->addItem(s);
 		if (StringUtil::startsWith(s,"pipe") && !StringUtil::startsWith(s,"pipe_"))
@@ -609,7 +607,7 @@ void CGui::InitGui()
 	ComboBoxPtr cmbTwk;
 	Cmb(cmbTwk, "TweakMtr", comboTweakMtr);
 
-	GetMaterialsMat(sMat+"water.mat");
+	GetMaterialsMat(data +"/materials/water.mat");
 	GetMaterialsMat(sMat+"pipe.mat",false);
 	GetMaterialsMat(sMat+"road.mat",false);
 	GetMaterialsMat(sMat+"objects_static.mat",false);
