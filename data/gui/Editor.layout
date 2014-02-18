@@ -1848,7 +1848,7 @@
 					<Property key="Colour" value="0.6 0.8 0.6"/>
 					<UserString key="tip" value="#{TipToggleTriplanar}"/>
 				</Widget>
-				<Widget type="TabControl" skin="TabControl" position="32 24 560 24" name="TabTerLay">
+				<Widget type="TabControl" skin="TabControl" position="32 24 560 16" name="TabTerLay">
 					<Property key="Colour" value="0.7 0.9 1"/>
 					<Property key="ButtonWidth" value="90"/>
 					<Property key="SmoothShow" value="false"/>
@@ -1875,7 +1875,7 @@
 						<Property key="Caption" value="#FFB020#{Road}"/>
 					</Widget>
 				</Widget>
-				<Widget type="ProgressBar" skin="ProgressBarFill" position="32 24 560 25">
+				<Widget type="ProgressBar" skin="ProgressBarFill" position="32 24 560 16">
 					<Property key="Colour" value="0.4 1 0.4"/>
 					<Property key="Alpha" value="0.2"/>
 					<Property key="Enabled" value="false"/>
@@ -1936,7 +1936,7 @@
 					<Property key="ImageTexture" value="white.png"/>
 					<Property key="Visible" value="false"/>
 				</Widget>
-				<Widget type="TabControl" skin="TabControl" position="24 224 736 300" name="SubTab">
+				<Widget type="TabControl" skin="TabControl" position="24 224 744 300" name="SubTab">
 					<Property key="Caption" value="#B0F060#{BlendMap}"/>
 					<Property key="ButtonAutoWidth" value="true"/>
 					<Property key="Colour" value="0.73 0.88 1"/>

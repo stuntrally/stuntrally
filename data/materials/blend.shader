@@ -5,13 +5,13 @@
 #include "noise.h"
 
 
+//     xa  xb
+//1    .___.
+//0__./     \.___
+//   xa-s    xb+s
 float linRange(float x, float xa, float xb, float s)  // val, min, max, smooth range
 {
-	if (x <= xa-s || x >= xb+s)  return 0.f;
-	if (x >= xa && x <= xb)  return 1.f;
-	if (x < xa)  return (x-xa)/s+1;
-	if (x > xb)  return (xb-x)/s+1;
-	return 0.f;
+	return shSaturate(x < xa ? (x-xa)/s+1.f : (xb-x)/s+1.f);
 }
 	
 
@@ -89,9 +89,9 @@ SH_START_PROGRAM
 	float n1 = Nnext.y < 0.01f ? 0.f : Nnext.y * pow( snoise(tuv, Nfreq.y, int(Noct.y), Npers.y), Npow.y);
 	float n2 = Nnext.z < 0.01f ? 0.f : Nnext.z * pow( snoise(tuv, Nfreq.z, int(Noct.z), Npers.z), Npow.z);
 
-	float p1 = Nprev.x < 0.01f ? 0.f : Nprev.x * pow( snoise(tuv, Nfreq.x, int(Noct.x), Npers.x), Npow.x);
-	float p2 = Nprev.y < 0.01f ? 0.f : Nprev.y * pow( snoise(tuv, Nfreq.y, int(Noct.y), Npers.y), Npow.y);
-	float p3 = Nprev.z < 0.01f ? 0.f : Nprev.z * pow( snoise(tuv, Nfreq.z, int(Noct.z), Npers.z), Npow.z);
+	float p1 = Nprev.x < 0.01f ? 0.f : Nprev.x * pow( snoise(tuv, Nfreq.x+3.f, int(Noct.x), Npers.x), Npow.x);
+	float p2 = Nprev.y < 0.01f ? 0.f : Nprev.y * pow( snoise(tuv, Nfreq.y+3.f, int(Noct.y), Npers.y), Npow.y);
+	float p3 = Nprev.z < 0.01f ? 0.f : Nprev.z * pow( snoise(tuv, Nfreq.z+3.f, int(Noct.z), Npers.z), Npow.z);
 
 	float m0 = Nnext2.x < 0.01f ? 0.f : Nnext2.x * pow( snoise(tuv, Nfreq2.x, int(Noct2.x), Npers2.x), Npow2.x);
 	float m1 = Nnext2.y < 0.01f ? 0.f : Nnext2.y * pow( snoise(tuv, Nfreq2.y, int(Noct2.y), Npers2.y), Npow2.y);
