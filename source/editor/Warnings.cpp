@@ -139,7 +139,6 @@ void CGui::WarningsCheck(const Scene* sc, const SplineRoad* road)
 		Warn(TXT,"Road materials used "+toStr(rdm));
 		hqRoad = rdm >= 3;
 		if (hqTerrain) Warn(INFO,"HQ Road");
-		//if (rdm >= 4)  Warn(WARN,"Too many terrain layers used, not recommended");
 		if (rdm <= 1)  Warn(INFO,"Too few road materials used");
 		
 
@@ -206,7 +205,7 @@ void CGui::WarningsCheck(const Scene* sc, const SplineRoad* road)
 	Warn(NOTE,"Terrain layers used: "+toStr(lay));
 	hqTerrain = lay >= 4;
 	if (hqTerrain) Warn(INFO,"HQ Terrain");
-	if (lay >= 5)  Warn(WARN,"Too many terrain layers used, not recommended");
+	if (lay >= 5)  Warn(ERR,"Too many terrain layers used, max 4 are supported.");
 	if (lay <= 2)  Warn(INFO,"Too few terrain layers used");
 
 	
