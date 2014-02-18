@@ -170,8 +170,8 @@
 	<champ name="Fancy circles" ver="3" difficulty="3" type="2" 
 			descr="The most circullar tracks. Usualy banked, sometimes with easy pipe turns. Require much steering but mostly in same direction.">
 		<t name="J10-Spiral"/>
-		<t name="S9-demo"/>
-		<t name="J19-demo2"/>
+		<t name="S9-Short"/>
+		<t name="J19-ShortFun"/>
 		<t name="W8-PipeCross"/>
 		<t name="I6-Flooded"/>
 		<t name="C2-CanyonRun"/>
@@ -361,7 +361,7 @@
 		<t name="J16-MudMad"/>
 		<t name="J17-JungleCanyons"/>
 		<t name="J18-Tiny"/>
-		<t name="J19-demo2"/>
+		<t name="J19-ShortFun"/>
 		<t name="J20-JungleMaze"/>
 		<t name="J21-Paradise"/>
 		<t name="J22-Knotted"/>
@@ -375,7 +375,7 @@
 		<t name="S6-PipeCrazy"/>
 		<t name="S7-HighMadness"/>
 		<t name="S8-SlowFrenzy"/>
-		<t name="S9-demo"/>
+		<t name="S9-Short"/>
 		<t name="S10-PipeCurl"/>
 	</champ>
 	<champ name="Savanna 2nd" ver="1" difficulty="5" type="5" 
