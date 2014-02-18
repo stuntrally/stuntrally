@@ -2033,7 +2033,7 @@
 							<Property key="TextColour" value="0.65 0.9 0.9"/>
 							<UserString key="tip" value="#{TipTerLNoise}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="204 188 300 16" name="TerLNoise">
+						<Widget type="Slider" skin="Slider" position="204 188 220 16" name="TerLNoise">
 							<Property key="Colour" value="0.6 0.9 0.9"/>
 							<UserString key="tip" value="#{TipTerLNoise}"/>
 						</Widget>
@@ -2047,7 +2047,7 @@
 							<Property key="TextColour" value="0.55 0.75 0.75"/>
 							<UserString key="tip" value="#{TipTerLNoise}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="204 212 300 16" name="TerLNprev">
+						<Widget type="Slider" skin="Slider" position="204 212 220 16" name="TerLNprev">
 							<Property key="Colour" value="0.55 0.7 0.7"/>
 							<UserString key="tip" value="#{TipTerLNoise}"/>
 						</Widget>
@@ -2061,11 +2061,11 @@
 							<Property key="TextColour" value="0.56 0.9 0.9"/>
 							<UserString key="tip" value="#{TipTerLNoise}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="204 236 300 16" name="TerLNnext2">
+						<Widget type="Slider" skin="Slider" position="204 236 220 16" name="TerLNnext2">
 							<Property key="Colour" value="0.56 0.8 0.86"/>
 							<UserString key="tip" value="#{TipTerLNoise}"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="540 188 160 24" name="TerLNonly">
+						<Widget type="Button" skin="CheckBox" position="460 188 160 24" name="TerLNonly">
 							<Property key="Caption" value="#{TerLNoiseOnly}"/>
 							<Property key="TextColour" value="0.4 0.8 0.7"/>
 							<Property key="Colour" value="0.4 0.8 0.7"/>

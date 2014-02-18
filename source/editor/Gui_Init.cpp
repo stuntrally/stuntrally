@@ -298,9 +298,9 @@ void CGui::InitGui()
 
 	//  noise
 	ck= &ckTerLNOnly;   ck->Init("TerLNonly",  &b);   Cev(TerLNOnly);
-	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f, 0.f,1.5f);  sv->DefaultF(0.f);  Sev(TerLay);
-	sv= &svTerLNprev;   sv->Init("TerLNprev",  &f, 0.f,1.5f);  sv->DefaultF(0.f);  Sev(TerLay);
-	sv= &svTerLNnext2;  sv->Init("TerLNnext2", &f, 0.f,1.5f);  sv->DefaultF(0.f);  Sev(TerLay);
+	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f, 0.f,1.f);  sv->DefaultF(0.f);  Sev(TerLay);
+	sv= &svTerLNprev;   sv->Init("TerLNprev",  &f, 0.f,1.f);  sv->DefaultF(0.f);  Sev(TerLay);
+	sv= &svTerLNnext2;  sv->Init("TerLNnext2", &f, 0.f,1.f);  sv->DefaultF(0.f);  Sev(TerLay);
 	//  noise params
 	for (i=0; i<2; ++i)  {  String s = toStr(i+1);
 	sv= &svTerLN_Freq[i];  sv->Init("TerLNFreq"+s,  &f, 1.f,300.f, 2.f, 1,3);   sv->DefaultF(30.f);  Sev(TerLay);

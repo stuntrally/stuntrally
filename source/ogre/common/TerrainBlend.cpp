@@ -202,8 +202,8 @@ void App::UpdLayerPars()
 	//  blendmap
 	mat = sh::Factory::getInstance().getMaterialInstance(sBlendMat);
 
-	float Hmin[4],Hmax[4],Hsmt[4], Amin[4],Amax[4],Asmt[4], Nonly[4];
-	float Nnext[4],Nprev[3],Nnext2[2];
+	float Hmin[4],Hmax[4],Hsmt[4], Amin[4],Amax[4],Asmt[4];
+	float Nnext[4],Nprev[3],Nnext2[2], Nonly[4];
 	float Nfreq[3],Noct[3],Npers[3],Npow[3];
 	float Nfreq2[2],Noct2[2],Npers2[2],Npow2[2];
 	
