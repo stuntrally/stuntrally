@@ -97,8 +97,7 @@ public:
 	bool bNewHmap, bTrGrUpd;
 	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget), UpdTrees();
 
-	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(),
-		GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
+	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain();
 	void CreateTrees();
 
 	void CreateObjects(), DestroyObjects(bool clear);
@@ -144,13 +143,32 @@ public:
 	void configureHorizonDefaults(Ogre::Light* l);
 	
 	///  terrain
+	PreviewTex texLayD[6],texLayN[6];
 	Ogre::Terrain* terrain;
 	Ogre::TerrainGlobalOptions* mTerrainGlobals;
 	Ogre::TerrainGroup* mTerrainGroup;
 	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
 
-	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
-	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
+	//  blendmap
+	void CreateBlendTex(), UpdBlendmap(), UpdLayerPars();
+	
+	const static Ogre::String sHmap, sAng, sBlend, sAngMat, sBlendMat;  // tex, mtr names
+	Ogre::TexturePtr hMap, angRT, blRT; //, blMap;  // height, angles, blend
+
+	struct RenderToTex  // rtt common
+	{
+		Ogre::RenderTexture* rnd;  Ogre::Texture* tex;
+		Ogre::SceneManager* scm;  Ogre::Camera* cam;  Ogre::Viewport* vp;
+		Ogre::Rectangle2D* rect;  Ogre::SceneNode* nd;
+
+		void Null()
+		{	rnd = 0;  tex = 0;  scm = 0;  cam = 0;  vp = 0;  rect = 0;  nd = 0;   }
+		RenderToTex()
+		{	Null();   }
+
+		void Setup(Ogre::String sName, Ogre::TexturePtr pTex, Ogre::String sMtr);
+	};
+	RenderToTex bl, ang;
 
 	float Noise(float x, float zoom, int octaves, float persistence);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
