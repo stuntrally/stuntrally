@@ -12,7 +12,7 @@
 		<t name="D15-CityWall"/>
 		<t name="V7-Radioactive"/>
 		<t name="R3-Hot"/>
-		<t name="0W14-DangerRoad"/>
+		<t name="W14-DangerRoad"/>
 	-->
 
 <!--  Tutorials  -->
@@ -22,7 +22,7 @@
 			descr="Basic tutorial on simplest tracks. One lap on each track. To learn different road surfaces: gravel, wet gravel, snow.">
 		<t name="J3-Rocky"/>
 		<t name="F1-Slippery"/>
-		<t name="0W1-Cross"/>
+		<t name="W1-Cross"/>
 	</champ>
 
 	<champ name="Tutorial Banked" ver="1" difficulty="1" type="0" 
@@ -92,7 +92,7 @@
 		<t name="I4-Sunset"/>
 		<t name="F11-Dawn"/>
 		<t name="F8-Stain"/>
-		<t name="0W7-LJs-Mntn"/>
+		<t name="W7-LJs-Mntn"/>
 		<t name="I1-Island"/>
 		<t name="J12-Fog"/>
 		<t name="M1-Hills"/>
@@ -115,7 +115,7 @@
 		<t name="G4-River"/>
 		<t name="F4-OSquare"/>
 		<t name="I7-Moses"/>
-		<t name="0W2-Wet"/>
+		<t name="W2-Wet"/>
 		<t name="I2-Sandy"/>
 		<t name="T6-Sunset"/>
 	</champ>
@@ -129,7 +129,7 @@
 		<t name="O1-Moss"/>
 		<t name="F6-Banked"/>
 		<t name="J8-Round"/>
-		<t name="0W3-Swing"/>
+		<t name="W3-Swing"/>
 		<t name="C2-CanyonRun"/>
 		<t name="T2-RedOakPark"/>
 	</champ>
@@ -152,9 +152,9 @@
 		<t name="V2-Volcanic"/>
 		<t name="J13-Tropic"/>
 		<t name="F12-HighPeaks"/>
-		<t name="0W11-Glacier"/>
+		<t name="W11-Glacier"/>
 		<t name="A6-Cannon"/>
-		<t name="0W6-SnowyEights"/>
+		<t name="W6-SnowyEights"/>
 		<t name="G1-Long"/>
 	</champ>
 
@@ -172,13 +172,13 @@
 		<t name="J10-Spiral"/>
 		<t name="S9-demo"/>
 		<t name="J19-demo2"/>
-		<t name="0W8-PipeCross"/>
+		<t name="W8-PipeCross"/>
 		<t name="I6-Flooded"/>
 		<t name="C2-CanyonRun"/>
-		<t name="0W5-Circles"/>
+		<t name="W5-Circles"/>
 		<t name="X1-Magic"/>
 		<t name="V3-Crater"/>
-		<t name="0W12-Peaks"/>
+		<t name="W12-Peaks"/>
 		<t name="I8-Pharaoh"/>
 	</champ>
 
@@ -227,14 +227,14 @@
 		<t name="F12-HighPeaks"/>
 		<t name="J20-JungleMaze"/>
 		<t name="F13-Castle"/>
-		<t name="0W7-LJs-Mntn"/>
+		<t name="W7-LJs-Mntn"/>
 		<t name="F10-MntnTrail"/>
 	</champ>
 
 	<champ name="Frenzy fellow" ver="4" difficulty="4" type="3" 
 			descr="Curly tracks, sometimes banked, frequently changing directions. Require lots of steering.">
 		<t name="S2-Frenzy"/>
-		<t name="0W9-IceFrenzy"/>
+		<t name="W9-IceFrenzy"/>
 		<t name="C4-Sway"/>
 		<t name="S8-SlowFrenzy"/>
 		<t name="F9-MadMntn"/>
@@ -247,10 +247,10 @@
 		<t name="T5-Twister"/>
 		<t name="J18-Tiny"/>
 		<t name="J12-Fog"/>
-		<t name="0W10-Whirl"/>
+		<t name="W10-Whirl"/>
 		<t name="V1-Dark"/>
-		<t name="0W4-IceSlip"/>
-		<t name="0W13-MtFog"/>
+		<t name="W4-IceSlip"/>
+		<t name="W13-MtFog"/>
 	</champ>
 
 	<champ name="Dark chase" ver="1" difficulty="3" type="3" 
@@ -387,23 +387,23 @@
 	</champ>
 	<champ name="Winter" ver="1" difficulty="3" type="5" 
 			descr="Winter championship. Part 1.">
-		<t name="0W1-Cross"/>
-		<t name="0W2-Wet"/>
-		<t name="0W3-Swing"/>
-		<t name="0W4-IceSlip"/>
-		<t name="0W5-Circles"/>
-		<t name="0W6-SnowyEights"/>
-		<t name="0W7-LJs-Mntn"/>
-		<t name="0W8-PipeCross"/>
-		<t name="0W9-IceFrenzy"/>
-		<t name="0W10-Whirl"/>
+		<t name="W1-Cross"/>
+		<t name="W2-Wet"/>
+		<t name="W3-Swing"/>
+		<t name="W4-IceSlip"/>
+		<t name="W5-Circles"/>
+		<t name="W6-SnowyEights"/>
+		<t name="W7-LJs-Mntn"/>
+		<t name="W8-PipeCross"/>
+		<t name="W9-IceFrenzy"/>
+		<t name="W10-Whirl"/>
 	</champ>
 	<champ name="Winter 2nd" ver="1" difficulty="4" type="5" 
 			descr="Winter championship. Part 2.">
-		<t name="0W11-Glacier"/>
-		<t name="0W12-Peaks"/>
-		<t name="0W13-MtFog"/>
-		<t name="0W14-DangerRoad"/>
+		<t name="W11-Glacier"/>
+		<t name="W12-Peaks"/>
+		<t name="W13-MtFog"/>
+		<t name="W14-DangerRoad"/>
 	</champ>
 	<champ name="Forest" ver="1" difficulty="4" type="5" 
 			descr="Forest championship. Part 1.">

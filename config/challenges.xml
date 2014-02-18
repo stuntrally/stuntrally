@@ -129,7 +129,7 @@
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="F1-Slippery"  passPoints="9" />
-			<t name="0W2-Wet"      passPoints="9" />
+			<t name="W2-Wet"      passPoints="9" />
 			<t name="F8-Stain"    passPoints="9" />
 		</tracks>
 	</challenge>
@@ -140,7 +140,7 @@
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="I4-Sunset"    passPoints="9" />
-			<t name="0W5-Circles"  passPoints="9" />
+			<t name="W5-Circles"  passPoints="9" />
 			<t name="J8-Round"     passPoints="9" />
 			<t name="J7-Hilly"     passPoints="9" />
 		</tracks>
@@ -253,10 +253,10 @@
 		<car names="N1" />
 		<pass avgPoints="10" />
 		<tracks>
-			<t name="0W1-Cross"     passPoints="9" />
-			<t name="0W3-Swing"     passPoints="9" />
-			<t name="0W7-LJs-Mntn"  passPoints="9" />
-			<t name="0W10-Whirl"    passPoints="9" />
+			<t name="W1-Cross"     passPoints="9" />
+			<t name="W3-Swing"     passPoints="9" />
+			<t name="W7-LJs-Mntn"  passPoints="9" />
+			<t name="W10-Whirl"    passPoints="9" />
 		</tracks>
 	</challenge>
 
@@ -346,7 +346,7 @@
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="C4-Sway"       passPoints="9" />
-			<t name="0W11-Glacier"  passPoints="9" />
+			<t name="W11-Glacier"  passPoints="9" />
 			<t name="G5-Climb"      passPoints="9" />
 		</tracks>
 	</challenge>
@@ -360,7 +360,7 @@
 			<t name="G1-Long"      passPoints="8" />
 			<t name="C3-Vast"      passPoints="8" />
 			<t name="A6-Cannon"    passPoints="8" />
-			<t name="0W6-SnowyEights"  passPoints="8" />
+			<t name="W6-SnowyEights"  passPoints="8" />
 		</tracks>
 	</challenge>
 
@@ -401,7 +401,7 @@
 		<cartype names="Terrain" />
 		<pass avgPoints="12" />
 		<tracks>
-			<t name="0W12-Peaks"  passPoints="9" />
+			<t name="W12-Peaks"  passPoints="9" />
 			<t name="F13-Castle"  passPoints="9" />
 			<t name="F16-Clew"    passPoints="9" />
 		</tracks>
@@ -425,7 +425,7 @@
 		<pass avgPoints="16" factor="2" />
 		<tracks>
 			<t name="F11-Dawn"     passPoints="13" />
-			<t name="0W4-IceSlip"  passPoints="22" />
+			<t name="W4-IceSlip"  passPoints="22" />
 			<t name="G4-River"     passPoints="13" />
 			<t name="C1-Hairpins"  passPoints="9" />
 		</tracks>
@@ -562,7 +562,7 @@
 		<car names="S8|TC6|FM" />
 		<pass avgPoints="11" />
 		<tracks>
-			<t name="0W9-IceFrenzy"  passPoints="9" />
+			<t name="W9-IceFrenzy"  passPoints="9" />
 			<t name="C4-Sway"        passPoints="9" />
 			<t name="S13-Hole"       passPoints="9" />
 		</tracks>
@@ -633,10 +633,10 @@
 		<car names="3S|TC6|M3" />
 		<pass avgPoints="14" factor="2" />
 		<tracks>
-			<t name="0W4-IceSlip"   passPoints="11" />
+			<t name="W4-IceSlip"   passPoints="11" />
 			<t name="D12-Sandstorm" passPoints="11" />
 			<t name="T5-Twister"    passPoints="5" />
-			<t name="0W13-MtFog"    passPoints="8" />
+			<t name="W13-MtFog"    passPoints="8" />
 		</tracks>
 	</challenge>
 
@@ -687,7 +687,7 @@
 		<tracks>
 			<t name="V7-Radioactive"  passPoints="9" />
 			<t name="C5-Obstacles"    passPoints="9" />
-			<t name="0W14-DangerRoad" passPoints="9" />
+			<t name="W14-DangerRoad" passPoints="9" />
 		</tracks>
 	</challenge>
 
