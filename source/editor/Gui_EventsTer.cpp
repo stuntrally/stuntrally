@@ -413,8 +413,8 @@ void CGui::comboTexDiff(Cmb cmb, size_t val)
 	String sTex, sExt, sPrv;
 	StringUtil::splitBaseFilename(s,sTex,sExt);
 	sPrv = s;
-	//sPrv = StringUtil::replaceAll(sTex,"_d.","_prv.") + "_prv.jpg";
-	//sNorm = sTex + "_nh." + sExt;  //same ext
+	sPrv = StringUtil::replaceAll(sTex,"_d.","_prv.") + "_prv.jpg";  //T
+	sNorm = sTex + "_nh." + sExt;  //same ext
 
 	//  auto norm
 	//`-if (bTexNormAuto)
