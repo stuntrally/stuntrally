@@ -448,7 +448,7 @@
         #if @shIterator == 0
         specularAmount = diffuseSpec.a;
         #else
-        specularAmount = shLerp (specularAmount, diffuseSpec.a, fBlend);
+        specularAmount = shLerp(specularAmount, diffuseSpec.a, fBlend);
         #endif
         
 	#endif
@@ -476,12 +476,20 @@
 
         diffuse += lightDiffuse0.xyz * max(dot(normal, lightDir), 0) * shadow;
     
+	#if DEBUG_BLEND
+        shOutputColour(0).xyz *= (float3(0.5,0.5,0.5) + 0.5*diffuse);
+    #else
         shOutputColour(0).xyz *= (lightAmbient.xyz + diffuse);
+    #endif
         #if SPECULAR
         shOutputColour(0).xyz +=  specular * lightSpecular0.xyz * specularAmount * shadow;
         #endif
 #else
+	#if DEBUG_BLEND
+        shOutputColour(0).xyz *= (float3(0.5,0.5,0.5) + litRes.x * float3(0.8,0.8,0.8) * shadow);
+    #else
         shOutputColour(0).xyz *= (lightAmbient.xyz + litRes.x * lightDiffuse0.xyz * shadow);
+    #endif
         #if SPECULAR
         shOutputColour(0).xyz +=  litRes.y * lightSpecular0.xyz * shadow;
         #endif
