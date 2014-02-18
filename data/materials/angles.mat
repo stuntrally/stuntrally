@@ -1,0 +1,28 @@
+material anglesMat
+{
+	InvTerSize 512
+	TriSize 1
+
+    pass
+    {
+        vertex_program angles_vertex
+        fragment_program angles_fragment
+        
+		depth_check off
+		depth_write off
+		cull_hardware none
+        fog_override true
+        
+		shader_properties
+		{
+			InvTerSize $InvTerSize
+			TriSize	$TriSize
+		}
+
+        texture_unit samHMap
+        {
+            texture HmapTex
+            tex_address_mode clamp
+        }
+    }
+}
