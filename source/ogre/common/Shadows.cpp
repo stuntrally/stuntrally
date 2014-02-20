@@ -119,7 +119,7 @@ void App::changeShadows()
 		String shadowCasterMat;
 		if (bDepth) shadowCasterMat = "PSSM/shadow_caster";
 
-		else shadowCasterMat = StringUtil::BLANK;
+		else shadowCasterMat = ""; //StringUtil::BLANK;
 		
 		mSceneMgr->setShadowTextureCasterMaterial(shadowCasterMat);
 	}

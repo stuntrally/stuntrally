@@ -1148,7 +1148,7 @@ void GrassLayer::_updateShaders()
 			//before the page center is out of range.
 
 			//Generate a string ID that identifies the current set of vertex shader options
-			StringUtil::StrStreamType tmpName;
+			std::stringstream tmpName;
 
 			tmpName << "GrassVS_";
 			///T we use our own material (only one) so we want static material name

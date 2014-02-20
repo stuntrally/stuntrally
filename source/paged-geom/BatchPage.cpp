@@ -218,7 +218,7 @@ void BatchPage::_updateShaders()
 		///T removed shader creation code (we have our own shader)
 
 		//Now that the shader is ready to be applied, apply it
-		StringUtil::StrStreamType materialSignature;
+		std::stringstream materialSignature;
 		materialSignature << "BatchMat|";
 		materialSignature << ptrMat->getName() << "|";
 		if (m_bFadeEnabled)

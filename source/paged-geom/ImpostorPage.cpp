@@ -728,7 +728,7 @@ void ImpostorTexture::renderTextures(bool force)
 
 String ImpostorTexture::removeInvalidCharacters(String s)
 {
-	StringUtil::StrStreamType s2;
+	std::stringstream s2;
 
 	for (uint32 i = 0; i < s.length(); ++i){
 		char c = s[i];
