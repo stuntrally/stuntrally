@@ -63,12 +63,12 @@ class PagedLayer	// vegetation layer
 {
 public:
 	bool on;
-	Ogre::String name;  Ogre::Real dens;
-	Ogre::Real windFx, windFy;
+	Ogre::String name;  float dens;
+	float windFx, windFy;
 	int addRdist, maxRdist;  // add,max dist to road
-	Ogre::Real minScale, maxScale, ofsY;
-	Ogre::Real maxTerAng, minTerH, maxTerH;  // terrain
-	Ogre::Real maxDepth;  // in fluid
+	float minScale, maxScale, ofsY;
+	float maxTerAng, minTerH, maxTerH;  // terrain
+	float maxDepth;  // in fluid
 	PagedLayer();
 };
 
@@ -77,9 +77,9 @@ class SGrassLayer	// grass layer
 {
 public:
 	bool on;
-	Ogre::Real dens;
-	Ogre::Real minSx,minSy, maxSx,maxSy;  // sizes
-	Ogre::Real swayDistr, swayLen, swaySpeed;  // sway
+	float dens;
+	float minSx,minSy, maxSx,maxSy;  // sizes
+	float swayDistr, swayLen, swaySpeed;  // sway
 	Ogre::Real terMaxAng, terAngSm;       // max terrain angle, smooth
 	Ogre::Real terMinH, terMaxH, terHSm;  // terrain height
 	Ogre::String material, colorMap;
@@ -87,7 +87,7 @@ public:
 };
 
 
-class FluidBox		// fluid box shape - water, mud, etc.
+class FluidBox		/// fluid box shape - water, mud, etc.
 {
 public:
 	Ogre::Vector3 pos, rot, size;  Ogre::Vector2 tile;
@@ -120,22 +120,22 @@ public:
 };
 
 
-class Scene		///  Scene
+class Scene		///  Scene  . . . . . . .
 {
 public:
 	//  sky
 	Ogre::String skyMtr;
 	int  rainEmit,rain2Emit;  Ogre::String rainName,rain2Name;
 	//  light
-	Ogre::Real ldPitch, ldYaw;  // dir angles
+	float ldPitch, ldYaw;  // dir angles
 	Ogre::Vector3 lDir, lAmb,lDiff,lSpec;
 
 	//  fog
-	Ogre::Real fogStart, fogEnd;  // lin range
+	float fogStart, fogEnd;  // lin range
 	Ogre::Vector4 fogClr,fogClr2;  // 2colors sun-away  .a = intensity
 
 	Ogre::Vector4 fogClrH;  // height fog color
-	Ogre::Real fogHeight, fogHDensity, fogHStart, fogHEnd;
+	float fogHeight, fogHDensity, fogHStart, fogHEnd;
 
 
 	//  game
@@ -157,9 +157,9 @@ public:
 
 	
 	//  Vegetation params
-	Ogre::Real densTrees, densGrass;  int grDensSmooth;
-	Ogre::Real grPage, grDist;
-	Ogre::Real trPage, trDist, trDistImp;
+	float densTrees, densGrass;  int grDensSmooth;
+	float grPage, grDist;
+	float trPage, trDist, trDistImp;
 	int trRdDist;  // dist from road to trees
 
 	//  grass layers
