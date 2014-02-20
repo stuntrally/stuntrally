@@ -5,16 +5,6 @@
 #include "noise.h"
 
 
-//     xa  xb
-//1    .___.
-//0__./     \.___
-//   xa-s    xb+s
-float linRange(float x, float xa, float xb, float s)  // val, min, max, smooth range
-{
-	return shSaturate(x < xa ? (x-xa)/s+1.f : (xb-x)/s+1.f);
-}
-	
-
 #ifdef SH_VERTEX_SHADER
 
 //  vertex  ...........

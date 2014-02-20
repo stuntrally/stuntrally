@@ -70,3 +70,12 @@ float snoise(float2 v, float zoom, int octaves, float persistence)
     return total * m;
     // pers = 0.7, mul = 0.5  pers = 0.1, mul = 1
 }
+
+//     xa  xb
+//1    .___.
+//0__./     \.___
+//   xa-s    xb+s   // val, min, max, smooth range
+float linRange(float x, float xa, float xb, float s)
+{
+	return shSaturate(x < xa ? (x-xa)/s+1.f : (xb-x)/s+1.f);
+}
