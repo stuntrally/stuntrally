@@ -12,6 +12,7 @@
 #include <OgreTerrain.h>
 #include <OgreCamera.h>
 #include <OgreHardwarePixelBuffer.h>
+#include <OgreRectangle2D.h>
 #include "../../shiny/Main/Factory.hpp"
 using namespace Ogre;
 
@@ -72,7 +73,7 @@ void App::CreateBlendTex()
 	if (angRT.isNull())  LogO("Can't create Float32 Render Target!");
 	
 	//  blendmap rtt
-	blRT = texMgr.createManual(	sBlend, rgDef, TEX_TYPE_2D,
+	blRT = texMgr.createManual( sBlend, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_R8G8B8A8, TU_RENDERTARGET);
 
 	//  rtt copy  (not needed?)
@@ -83,7 +84,7 @@ void App::CreateBlendTex()
 	if (!bl.scm)  bl.scm = mRoot->createSceneManager(ST_GENERIC);
 	if (!ang.scm)  ang.scm = mRoot->createSceneManager(ST_GENERIC);
 	//ang.scm = bl.scm;
-
+	
 	bl.Setup("bl", blRT, sBlendMat);
 	ang.Setup("ang", angRT, sAngMat);
 	

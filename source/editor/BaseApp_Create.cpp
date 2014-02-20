@@ -13,6 +13,8 @@
 #if OGRE_VERSION >= MYGUI_DEFINE_VERSION(1, 9, 0) 
 #include <OgreOverlaySystem.h>
 #endif
+#include <OgreOverlay.h>
+#include <OgreOverlayElement.h>
 #include <OgreOverlayManager.h>
 #include "../ogre/common/MyGUI_D3D11.h"
 #include "../sdl4ogre/sdlinputwrapper.hpp"

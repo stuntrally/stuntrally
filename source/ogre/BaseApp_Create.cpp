@@ -16,7 +16,6 @@
 #include "CarModel.h"
 #include "FollowCamera.h"
 
-#include <OgreFontManager.h>
 #include <OgreLogManager.h>
 #include <MyGUI_Prerequest.h>
 #if OGRE_VERSION >= MYGUI_DEFINE_VERSION(1, 9, 0)

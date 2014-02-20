@@ -23,6 +23,7 @@
 #include "common/MyGUI_D3D11.h"
 #include <MyGUI_PointerManager.h>
 #include <OgreTerrainGroup.h>
+#include <OgreParticleSystem.h>
 using namespace MyGUI;
 using namespace Ogre;
 

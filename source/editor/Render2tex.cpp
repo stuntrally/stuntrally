@@ -17,6 +17,7 @@
 #include <OgreRenderWindow.h>
 #include <OgreManualObject.h>
 #include <OgreHardwarePixelBuffer.h>
+#include <OgreRectangle2D.h>
 #include <OgreCamera.h>
 using namespace Ogre;
 
@@ -284,9 +285,9 @@ void App::SaveWaterDepth()
 				float f = fb.pos.y - terrain->getHeightAtTerrainPosition(fx,fz);
 				if (f > fa)  fa = f;
 			}
-		}
-		fd = fa * 0.4f * 255.f;  // depth far
-		fa = fa * 8.f * 255.f;  // alpha near
+		}		//par
+		fd = fa * 0.4f * 255.f;  // depth far  full at 2.5 m
+		fa = fa * 8.f * 255.f;  // alpha near  full at 1/8 m
 
 		ia = std::max(0, std::min(255, (int)fa ));  // clamp
 		id = std::max(0, std::min(255, (int)fd ));
