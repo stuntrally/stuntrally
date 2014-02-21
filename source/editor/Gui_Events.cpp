@@ -146,6 +146,7 @@ void CGui::tabGrLayers(Tab wp, size_t id)
 {
 	idGrLay = id;  // help var
 	SldUpd_GrL();
+	SldUpd_GrChan();
 	const SGrassLayer* gr = &sc->grLayersAll[idGrLay], *g0 = &sc->grLayersAll[0];
 
 	if (imgGrass)	imgGrass->setImageTexture(gr->material + ".png");  // same mtr name as tex
@@ -164,11 +165,7 @@ void CGui::tabGrLayers(Tab wp, size_t id)
 
 	_Ed(GrSwayDistr, g0->swayDistr);
 	_Ed(GrSwayLen, g0->swayLen);
-	_Ed(GrSwaySpd, g0->swaySpeed);
-	
-	// todo: more, grass channels..
-	svGrTerMaxAngle.Upd();  svGrTerSmAngle.Upd();
-	svGrTerMinHeight.Upd(); svGrTerMaxHeight.Upd();  svGrTerSmHeight.Upd();
+	_Ed(GrSwaySpd, g0->swaySpeed);  //g0-
 }
 
 //  tab changed, set slider pointer values, and update
@@ -176,12 +173,28 @@ void CGui::SldUpd_GrL()
 {
 	SGrassLayer& gr =  sc->grLayersAll[idGrLay];
 	ckGrLayOn.Upd(&gr.on);
+	svGrChan.UpdI(&gr.iChan);
 	svLGrDens.UpdF(&gr.dens);
 
-	svGrMinX.UpdF(&gr.minSx);
-	svGrMaxX.UpdF(&gr.maxSx);
-	svGrMinY.UpdF(&gr.minSy);
-	svGrMaxY.UpdF(&gr.maxSy);
+	svGrMinX.UpdF(&gr.minSx);  svGrMaxX.UpdF(&gr.maxSx);
+	svGrMinY.UpdF(&gr.minSy);  svGrMaxY.UpdF(&gr.maxSy);
+}
+
+///  channels
+void CGui::tabGrChan(Tab wp, size_t id)
+{
+	idGrChan = id;
+	SldUpd_GrChan();
+}
+
+void CGui::SldUpd_GrChan()
+{
+	SGrassChannel& gr =  sc->grChan[idGrChan];
+	svGrChAngMin.UpdF(&gr.angMin);  svGrChAngMax.UpdF(&gr.angMax);  svGrChAngSm.UpdF(&gr.angSm);
+	svGrChHMin.UpdF(&gr.hMin);  svGrChHMax.UpdF(&gr.hMax);  svGrChHSm.UpdF(&gr.hSm);
+	svGrChRdPow.UpdF(&gr.rdPow);
+	svGrChNoise.UpdF(&gr.noise);  svGrChNfreq.UpdF(&gr.nFreq);
+	svGrChNoct.UpdI(&gr.nOct);  svGrChNpers.UpdF(&gr.nPers);  svGrChNpow.UpdF(&gr.nPow);
 }
 
 void CGui::chkGrLayOn(Ck*)

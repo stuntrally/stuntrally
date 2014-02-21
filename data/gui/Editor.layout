@@ -2495,87 +2495,6 @@
 							<UserString key="tip" value="#{TipGrassSwayDistr}"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="32 296 136 24">
-							<Property key="Caption" value="#{Terrain}"/>
-							<Property key="TextColour" value="0.4 1 0.4"/>
-						</Widget>
-
-						<Widget type="TextBox" skin="TextBox" position="32 328 116 24">
-							<Property key="Caption" value="#{AngleMax}"/>
-							<Property key="TextColour" value="0.6 0.9 0.2"/>
-							<UserString key="tip" value="#{TipGrTerMaxAngle}"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="152 324 48 24" name="GrTerMaxAngleEdit">
-							<Property key="Colour" value="0.7 0.9 0.5"/>
-							<Property key="TextColour" value="0.6 0.9 0.5"/>
-							<UserString key="tip" value="#{TipGrTerMaxAngle}"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="224 328 300 16" name="GrTerMaxAngle">
-							<Property key="Colour" value="0.6 0.9 0.2"/>
-							<UserString key="tip" value="#{TipGrTerMaxAngle}"/>
-						</Widget>
-
-						<Widget type="TextBox" skin="TextBox" position="32 352 116 24">
-							<Property key="Caption" value="#{TerLAngSm}"/>
-							<Property key="TextColour" value="0.6 0.8 0.2"/>
-							<UserString key="tip" value="#{TipTerLAngSm}"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="152 348 48 24" name="GrTerSmAngleEdit">
-							<Property key="Colour" value="0.6 0.8 0.5"/>
-							<Property key="TextColour" value="0.6 0.8 0.5"/>
-							<UserString key="tip" value="#{TipTerLAngSm}"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="224 352 300 16" name="GrTerSmAngle">
-							<Property key="Colour" value="0.6 0.8 0.2"/>
-							<UserString key="tip" value="#{TipTerLAngSm}"/>
-						</Widget>
-
-						<Widget type="TextBox" skin="TextBox" position="32 384 116 24">
-							<Property key="Caption" value="#{HeightMin}"/>
-							<Property key="TextColour" value="0.6 0.9 0.6"/>
-							<UserString key="tip" value="#{TipGrTerMinHeight}"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="152 380 48 24" name="GrTerMinHeightEdit">
-							<Property key="Colour" value="0.6 0.9 0.6"/>
-							<Property key="TextColour" value="0.6 0.9 0.6"/>
-							<UserString key="tip" value="#{TipGrTerMinHeight}"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="224 384 340 16" name="GrTerMinHeight">
-							<Property key="Colour" value="0.6 0.9 0.6"/>
-							<UserString key="tip" value="#{TipGrTerMinHeight}"/>
-						</Widget>
-
-						<Widget type="TextBox" skin="TextBox" position="32 408 116 24">
-							<Property key="Caption" value="#{HeightMax}"/>
-							<Property key="TextColour" value="0.6 0.9 0.6"/>
-							<UserString key="tip" value="#{TipGrTerMaxHeight}"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="152 404 48 24" name="GrTerMaxHeightEdit">
-							<Property key="Colour" value="0.6 0.9 0.6"/>
-							<Property key="TextColour" value="0.6 0.9 0.6"/>
-							<UserString key="tip" value="#{TipGrTerMaxHeight}"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="224 408 340 16" name="GrTerMaxHeight">
-							<Property key="Colour" value="0.6 0.9 0.6"/>
-							<UserString key="tip" value="#{TipGrTerMaxHeight}"/>
-						</Widget>
-
-						<Widget type="TextBox" skin="TextBox" position="32 432 116 24">
-							<Property key="Caption" value="#{TerLHSm}"/>
-							<Property key="TextColour" value="0.6 0.75 0.6"/>
-							<UserString key="tip" value="#{TipTerLHSm}"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="152 428 48 24" name="GrTerSmHeightEdit">
-							<Property key="Colour" value="0.6 0.8 0.6"/>
-							<Property key="TextColour" value="0.6 0.75 0.6"/>
-							<UserString key="tip" value="#{TipTerLHSm}"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="224 432 300 16" name="GrTerSmHeight">
-							<Property key="Colour" value="0.6 0.75 0.6"/>
-							<Property key="TextColour" value="0.6 0.9 0.6"/>
-							<UserString key="tip" value="#{TipTerLHSm}"/>
-						</Widget>
-
 						<Widget type="TextBox" skin="TextBox" position="368 220 144 24">
 							<Property key="Caption" value="#{GrDensSmooth}"/>
 							<Property key="TextColour" value="0.75 0.95 0.45"/>
@@ -2742,13 +2661,215 @@
 							<Property key="TextColour" value="0.6 1 0.6"/>
 							<UserString key="tip" value="#{TipGrassLayerDens}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="330 336 360 16" name="LGrDens">
+						<Widget type="Slider" skin="Slider" position="330 336 360 20" name="LGrDens">
 							<Property key="Colour" value="0.6 1 0.6"/>
+							<UserString key="tip" value="#{TipGrassLayerDens}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 310 94 24">
+							<Property key="Caption" value="#{Channel}"/>
+							<Property key="TextColour" value="0.7 1 0.7"/>
+							<UserString key="tip" value="#{TipGrassLayerDens}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="124 310 56 24" name="LGrChanVal">
+							<Property key="TextColour" value="0.8 1 0.8"/>
+							<UserString key="tip" value="#{TipGrassLayerDens}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="32 336 210 20" name="LGrChan">
+							<Property key="Colour" value="0.8 1 0.8"/>
 							<UserString key="tip" value="#{TipGrassLayerDens}"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 754 478">
 						<Property key="Caption" value="#70F070#{Channels}"/>
+
+						<Widget type="Widget" skin="" position="16 12 365 18">
+							<Widget type="TabControl" skin="TabControl" position="0 0 528 18" name="GrChanTab">
+								<Property key="Colour" value="0.6 0.8 0.8"/>
+								<Property key="Visible" value="true"/>
+								<Property key="ButtonWidth" value="80"/>
+								<Property key="SmoothShow" value="false"/>
+								<Widget type="TabItem" skin="" position="2 24 522 -4">
+									<Property key="Caption" value="#FFFF58 0"/>
+								</Widget>
+								<Widget type="TabItem" skin="" position="2 24 522 -4">
+									<Property key="Caption" value="#F0F050 1"/>
+								</Widget>
+								<Widget type="TabItem" skin="" position="2 24 522 -4">
+									<Property key="Caption" value="#E0E048 2"/>
+								</Widget>
+								<Widget type="TabItem" skin="" position="2 24 522 -4">
+									<Property key="Caption" value="#D0D040 3"/>
+								</Widget>
+							</Widget>
+							<Widget type="ProgressBar" skin="ProgressBarFill" position="0 0 528 18">
+								<Property key="Alpha" value="0.3"/>
+								<Property key="Colour" value="0.4 0.8 0.4"/>
+								<Property key="Enabled" value="false"/>
+								<UserString key="tip" value="#{TipGrassLayers}"/>
+							</Widget>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="562 64 136 24">
+							<Property key="Caption" value="#{Terrain}"/>
+							<Property key="TextColour" value="0.4 1 0.4"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 64 116 24">
+							<Property key="Caption" value="#{AngleMin}"/>
+							<Property key="TextColour" value="0.6 0.9 0.2"/>
+							<UserString key="tip" value="#{TipGrTerMinAngle}"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="152 60 48 24" name="GrChMinAEdit">
+							<Property key="Colour" value="0.7 0.9 0.5"/>
+							<Property key="TextColour" value="0.6 0.9 0.5"/>
+							<UserString key="tip" value="#{TipGrTerMinAngle}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="224 64 300 16" name="GrChMinA">
+							<Property key="Colour" value="0.6 0.9 0.2"/>
+							<UserString key="tip" value="#{TipGrTerMinAngle}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 88 116 24">
+							<Property key="Caption" value="#{AngleMax}"/>
+							<Property key="TextColour" value="0.6 0.9 0.2"/>
+							<UserString key="tip" value="#{TipGrTerMaxAngle}"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="152 84 48 24" name="GrChMaxAEdit">
+							<Property key="Colour" value="0.7 0.9 0.5"/>
+							<Property key="TextColour" value="0.6 0.9 0.5"/>
+							<UserString key="tip" value="#{TipGrTerMaxAngle}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="224 88 300 16" name="GrChMaxA">
+							<Property key="Colour" value="0.6 0.9 0.2"/>
+							<UserString key="tip" value="#{TipGrTerMaxAngle}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 112 116 24">
+							<Property key="Caption" value="#{TerLAngSm}"/>
+							<Property key="TextColour" value="0.6 0.8 0.2"/>
+							<UserString key="tip" value="#{TipTerLAngSm}"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="152 108 48 24" name="GrChSmAEdit">
+							<Property key="Colour" value="0.6 0.8 0.5"/>
+							<Property key="TextColour" value="0.6 0.8 0.5"/>
+							<UserString key="tip" value="#{TipTerLAngSm}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="224 112 300 16" name="GrChSmA">
+							<Property key="Colour" value="0.6 0.8 0.2"/>
+							<UserString key="tip" value="#{TipTerLAngSm}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 154 116 24">
+							<Property key="Caption" value="#{HeightMin}"/>
+							<Property key="TextColour" value="0.6 0.9 0.6"/>
+							<UserString key="tip" value="#{TipGrTerMinHeight}"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="152 150 48 24" name="GrChMinHEdit">
+							<Property key="Colour" value="0.6 0.9 0.6"/>
+							<Property key="TextColour" value="0.6 0.9 0.6"/>
+							<UserString key="tip" value="#{TipGrTerMinHeight}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="224 154 340 16" name="GrChMinH">
+							<Property key="Colour" value="0.6 0.9 0.6"/>
+							<UserString key="tip" value="#{TipGrTerMinHeight}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 178 116 24">
+							<Property key="Caption" value="#{HeightMax}"/>
+							<Property key="TextColour" value="0.6 0.9 0.6"/>
+							<UserString key="tip" value="#{TipGrTerMaxHeight}"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="152 174 48 24" name="GrChMaxHEdit">
+							<Property key="Colour" value="0.6 0.9 0.6"/>
+							<Property key="TextColour" value="0.6 0.9 0.6"/>
+							<UserString key="tip" value="#{TipGrTerMaxHeight}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="224 178 340 16" name="GrChMaxH">
+							<Property key="Colour" value="0.6 0.9 0.6"/>
+							<UserString key="tip" value="#{TipGrTerMaxHeight}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 202 116 24">
+							<Property key="Caption" value="#{TerLHSm}"/>
+							<Property key="TextColour" value="0.6 0.75 0.6"/>
+							<UserString key="tip" value="#{TipTerLHSm}"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="152 198 48 24" name="GrChSmHEdit">
+							<Property key="Colour" value="0.6 0.8 0.6"/>
+							<Property key="TextColour" value="0.6 0.75 0.6"/>
+							<UserString key="tip" value="#{TipTerLHSm}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="224 202 300 16" name="GrChSmH">
+							<Property key="Colour" value="0.6 0.75 0.6"/>
+							<Property key="TextColour" value="0.6 0.9 0.6"/>
+							<UserString key="tip" value="#{TipTerLHSm}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 242 108 24">
+							<Property key="Caption" value="#{TerLNoise}"/>
+							<Property key="TextColour" value="0.5 0.9 0.9"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="152 242 56 24" name="GrChNoiseVal">
+							<Property key="TextColour" value="0.8 1.0 1.0"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="224 242 400 16" name="GrChNoise">
+							<Property key="Colour" value="0.8 1.0 1.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 276 108 24">
+							<Property key="Caption" value="#{TerGenFreq}"/>
+							<Property key="TextColour" value="0.3 0.9 0.5"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="152 276 56 24" name="GrChNFreqVal">
+							<Property key="TextColour" value="0.6 1.0 0.8"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="224 276 400 16" name="GrChNFreq">
+							<Property key="Colour" value="0.5 1.0 0.8"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 302 108 24">
+							<Property key="Caption" value="#{TerGenOct}"/>
+							<Property key="TextColour" value="0.3 0.9 0.5"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="152 302 56 24" name="GrChNOctVal">
+							<Property key="TextColour" value="0.4 1.0 0.6"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="224 302 400 16" name="GrChNOct">
+							<Property key="Colour" value="0.3 0.9 0.5"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 328 108 24">
+							<Property key="Caption" value="#{TerGenPers}"/>
+							<Property key="TextColour" value="0.5 0.9 0.8"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="152 328 56 24" name="GrChNPersVal">
+							<Property key="TextColour" value="0.5 1.0 0.9"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="224 328 400 16" name="GrChNPers">
+							<Property key="Colour" value="0.5 0.9 0.8"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 354 108 24">
+							<Property key="Caption" value="#{TerGenPow}"/>
+							<Property key="TextColour" value="0.3 0.9 0.7"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="152 354 56 24" name="GrChNPowVal">
+							<Property key="TextColour" value="0.3 1.0 0.9"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="224 354 400 16" name="GrChNPow">
+							<Property key="Colour" value="0.3 0.9 0.7"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 392 116 24">
+							<Property key="Caption" value="#{DistToRoad}"/>
+							<Property key="TextColour" value="0.75 0.6 0.4"/>
+							<UserString key="tip" value="#{TipRoadDist2}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="152 392 48 24" name="GrChRdPowVal">
+							<Property key="TextColour" value="0.75 0.6 0.4"/>
+							<UserString key="tip" value="#{TipRoadDist2}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="224 392 300 16" name="GrChRdPow">
+							<Property key="Colour" value="0.9 0.8 0.7"/>
+							<UserString key="tip" value="#{TipRoadDist2}"/>
+						</Widget>
+
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 754 478">
 						<Property key="Caption" value="#90E0B0#{GrColorMap}"/>

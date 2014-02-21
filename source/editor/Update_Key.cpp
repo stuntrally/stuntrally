@@ -554,6 +554,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		 case key(U): gui->GuiShortcut(WND_Edit, 3,2);  return true;  //  U -Surfaces
 
 		case key(G):  gui->GuiShortcut(WND_Edit, 4);  return true;  // G Grasses
+		 case key(F):  gui->GuiShortcut(WND_Edit, 4,2);  return true;  // F -Channels
 		case key(V):  gui->GuiShortcut(WND_Edit, 5);  return true;  // V Vegetation
 		 case key(M): gui->GuiShortcut(WND_Edit, 5,1);  return true;  //  M -Models
 

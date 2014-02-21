@@ -47,6 +47,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	// grass layers
 	, idGrLay(0), tabsGrLayers(0), valLGrAll(0)
 	,imgGrass(0),imgGrClr(0)
+	, idGrChan(0)
 	// road
 	,edRdHeightOfs(0)
 	,edRdSkirtLen(0),edRdSkirtH(0)

@@ -3,6 +3,7 @@
 #include "../common/Def_Str.h"
 #include "../common/data/SceneXml.h"
 #include "../common/QTimer.h"
+#include "../../vdrift/pathmanager.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
 #else
@@ -14,13 +15,14 @@
 #include <OgreHardwarePixelBuffer.h>
 #include <OgreRectangle2D.h>
 #include "../../shiny/Main/Factory.hpp"
+#include "../../paged-geom/GrassLoader.h"
 using namespace Ogre;
 
 
 //  common rtt setup
-void App::RenderToTex::Setup(String sName, TexturePtr pTex, String sMtr)
+void App::RenderToTex::Setup(Ogre::Root* rt, String sName, TexturePtr pTex, String sMtr)
 {
-	if (!scm)  return;  // once-
+	if (!scm)  scm = rt->createSceneManager(ST_GENERIC);  // once-
 	//  destroy old
 	if (cam)  scm->destroyCamera(cam);
 	if (nd)  scm->destroySceneNode(nd);
@@ -54,14 +56,15 @@ void App::RenderToTex::Setup(String sName, TexturePtr pTex, String sMtr)
 //----------------------------------------------------------------------------------------------------
 const String App::sHmap = "HmapTex",
 	App::sAng = "AnglesRTT", App::sBlend = "blendmapRTT",
-	App::sAngMat = "anglesMat", App::sBlendMat = "blendMat";
+	App::sAngMat = "anglesMat", App::sBlendMat = "blendMat",
+	App::sGrassDens = "GrassDensRTT", App::sGrassDensMat = "grassDensMat";
+
 void App::CreateBlendTex()
 {
 	uint size = sc->td.iTerSize-1;
 	TextureManager& texMgr = TextureManager::getSingleton();
-	texMgr.remove(sHmap);
-	texMgr.remove(sAng);
-	texMgr.remove(sBlend);
+	texMgr.remove(sHmap);  texMgr.remove(sAng);
+	texMgr.remove(sBlend);  texMgr.remove(sGrassDens);
 
 	//  Hmap tex
 	hMap = texMgr.createManual( sHmap, rgDef, TEX_TYPE_2D,
@@ -76,17 +79,18 @@ void App::CreateBlendTex()
 	blRT = texMgr.createManual( sBlend, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_R8G8B8A8, TU_RENDERTARGET);
 
-	//  rtt copy  (not needed?)
-	//blMap = texMgr.createManual(
-	//	"blendmapT", rgDef, TEX_TYPE_2D,
+	//  rtt copy  (not needed)
+	//blMap = texMgr.createManual("blendmapT", rgDef, TEX_TYPE_2D,
 	//	size, size, 0, PF_R8G8B8A8, TU_DEFAULT);
 	
-	if (!bl.scm)  bl.scm = mRoot->createSceneManager(ST_GENERIC);
-	if (!ang.scm)  ang.scm = mRoot->createSceneManager(ST_GENERIC);
-	//ang.scm = bl.scm;
+	//  grass density rtt
+	grdRT = texMgr.createManual( sGrassDens, rgDef, TEX_TYPE_2D,
+		size, size, 0, PF_R8G8B8A8, TU_RENDERTARGET);
+
 	
-	bl.Setup("bl", blRT, sBlendMat);
-	ang.Setup("ang", angRT, sAngMat);
+	bl.Setup(mRoot, "bl", blRT, sBlendMat);
+	ang.Setup(mRoot, "ang", angRT, sAngMat);
+	grd.Setup(mRoot, "grd", grdRT, sGrassDensMat);
 	
 	UpdBlendmap();  //
 }
@@ -97,7 +101,7 @@ void App::CreateBlendTex()
 //--------------------------------------------------------------------------
 void App::UpdBlendmap()
 {
-	//QTimer ti;  ti.update();  /// time
+	QTimer ti;  ti.update();  /// time
 
 	size_t size = sc->td.iTerSize-1;  //!^ same as in create
 	float* fHmap = terrain ? terrain->getHeightData() : sc->td.hfHeight;
@@ -128,15 +132,16 @@ void App::UpdBlendmap()
 		
 		ang.rnd->update();
 		bl.rnd->update();
+
 		//  copy from rtt to normal texture
 		//HardwarePixelBufferSharedPtr b = blMap->getBuffer();
 		//b->blit(pt);
 		//bl.rnd->writeContentsToFile(/*PATHMANAGER::DataUser()+*/ "blend.png");
 	}
 
-	//ti.update();  /// time (1ms on 512, 4ms on 1k)
-	//float dt = ti.dt * 1000.f;
-	//LogO(String("::: Time Upd blendmap: ") + fToStr(dt,3,5) + " ms");
+	ti.update();  /// time (1ms on 512, 4ms on 1k)
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time Upd blendmap: ") + fToStr(dt,3,5) + " ms");
 }
 
 
@@ -226,9 +231,67 @@ void App::UpdLayerPars()
 	#define Set4(s,v)  mat->setProperty(s, sh::makeProperty<sh::Vector4>(new sh::Vector4(v[0], v[1], v[2], v[3])))
 	#define Set3(s,v)  mat->setProperty(s, sh::makeProperty<sh::Vector3>(new sh::Vector3(v[0], v[1], v[2])))
 	#define Set2(s,v)  mat->setProperty(s, sh::makeProperty<sh::Vector2>(new sh::Vector2(v[0], v[1])))
+	#define Set1(s,v)  mat->setProperty(s, sh::makeProperty<sh::FloatValue>(new sh::FloatValue(v)))
 	Set4("Hmin", Hmin);  Set4("Hmax", Hmax);  Set4("Hsmt", Hsmt);
 	Set4("Amin", Amin);  Set4("Amax", Amax);  Set4("Asmt", Asmt);  Set4("Nonly", Nonly);
 	Set3("Nnext", Nnext);  Set3("Nprev", Nprev);  Set2("Nnext2", Nnext2);
 	Set3("Nfreq", Nfreq);  Set3("Noct", Noct);  Set3("Npers", Npers);  Set3("Npow", Npow);
 	Set2("Nfreq2", Nfreq2);  Set2("Noct2", Noct2);  Set2("Npers2", Npers2);  Set2("Npow2", Npow2);
+}
+
+
+///  update grass density channel params in shader
+//--------------------------------------------------------------------------
+void App::UpdGrassDens()
+{
+	if (!grd.rnd)  return;
+
+	QTimer ti;  ti.update();  /// time
+
+	UpdGrassPars();
+	
+	grd.rnd->update();
+
+#if 0  //  save
+	const size_t size = grdRT->getWidth() * grdRT->getHeight() * 4;
+	unsigned char* data = OGRE_ALLOC_T(unsigned char, size, MEMCATEGORY_GENERAL);
+	memset(data, 0, size);
+      
+	Image im;
+	im.loadDynamicImage(data, grdRT->getWidth(), grdRT->getHeight(), 1, Ogre::PF_R8G8B8A8, true);
+
+	HardwarePixelBufferSharedPtr buf = grdRT->getBuffer();
+	const PixelBox pb = im.getPixelBox();
+	buf->blitToMemory(pb);
+
+	im.save(PATHMANAGER::DataUser()+"/grassD.png");
+#endif
+	grd.rnd->writeContentsToFile(PATHMANAGER::DataUser()+"/grassD.png");
+
+	ti.update();  /// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time Grass Dens: ") + fToStr(dt,3,5) + " ms");
+}
+
+void App::UpdGrassPars()
+{
+	sh::MaterialInstance* mat = sh::Factory::getInstance().getMaterialInstance(sGrassDensMat);
+
+	float Hmin[4],Hmax[4],Hsmt[4], Amin[4],Amax[4],Asmt[4];
+	float Nmul[4], Nfreq[4],Noct[4],Npers[4],Npow[4], Rpow[4];
+	
+	for (int i=0; i < 4; ++i)
+	{	//  range
+		const SGrassChannel& gr = sc->grChan[i];
+		Hmin[i] = gr.hMin;  Hmax[i] = gr.hMax;  Hsmt[i] = gr.hSm;
+		Amin[i] = gr.angMin;  Amax[i] = gr.angMax;  Asmt[i] = gr.angSm;
+		Rpow[i] = powf(2.f, gr.rdPow);
+		//  noise
+		Nmul[i] = gr.noise;  Nfreq[i] = gr.nFreq;
+		Noct[i] = gr.nOct;  Npers[i] = gr.nPers;  Npow[i] = gr.nPow;
+	}
+	Set4("Hmin", Hmin);  Set4("Hmax", Hmax);  Set4("Hsmt", Hsmt);
+	Set4("Amin", Amin);  Set4("Amax", Amax);  Set4("Asmt", Asmt);
+	Set4("Nmul", Nmul);  Set4("Nfreq", Nfreq);  Set4("Rpow", Rpow);
+	Set4("Noct", Noct);  Set4("Npers", Npers);  Set4("Npow", Npow);
 }

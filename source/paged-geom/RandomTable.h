@@ -58,7 +58,7 @@ inline void RandomTable::resetRandomIndex()
 inline float RandomTable::getUnitRandom()
 {
 	// prevent against overflow
-	if(customRandomIndex > tableSize - 1)
+	if (customRandomIndex > tableSize - 1)
 		customRandomIndex = 0;
 	return table[customRandomIndex++];
 }

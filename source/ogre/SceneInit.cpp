@@ -39,6 +39,8 @@ void App::createScene()
 	//  ch stage
 	prvStCh.Create(1024,1024,"PrvStCh");
 	
+	roadDens.Create(1025,1025,"RoadDens");
+	
 	///  ter lay tex
 	for (int i=0; i < 6; ++i)
 	{	String si = toStr(i);

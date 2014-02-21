@@ -189,9 +189,6 @@ public:
 	//  grass
 	Ed edGrSwayDistr, edGrSwayLen, edGrSwaySpd;
 	void editTrGr(Ed);
-	SV svGrTerMaxAngle,  svGrTerSmAngle;
-	SV svGrTerMinHeight, svGrTerMaxHeight, svGrTerSmHeight;
-
 	SV svTrRdDist;  SV svGrDensSmooth;  Ed edSceneryId;
 
 	//  model view 3d  (veget,objs)
@@ -223,7 +220,7 @@ public:
 	Tab tabsGrLayers;  void tabGrLayers(TAB);
 
 	CK(GrLayOn);  Txt valLGrAll;
-	SV svLGrDens;
+	SV svLGrDens, svGrChan;
 	SV svGrMinX, svGrMaxX;
 	SV svGrMinY, svGrMaxY;
 
@@ -231,6 +228,15 @@ public:
 	Cmb cmbGrassClr;  void comboGrassClr(CMB);
 	Img imgGrass,imgGrClr;
 
+	///  grass channels  --------
+	int idGrChan;  // tab
+	void SldUpd_GrChan();
+	Tab tabsGrChan;  void tabGrChan(TAB);
+
+	SV svGrChAngMin, svGrChAngMax, svGrChAngSm;  // ter angle,height
+	SV svGrChHMin, svGrChHMax, svGrChHSm, svGrChRdPow;
+	SV svGrChNoise, svGrChNfreq, svGrChNoct, svGrChNpers, svGrChNpow;
+	
 	
 	//  [Road]  ----
 	//  materials

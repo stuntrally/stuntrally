@@ -283,13 +283,14 @@ void CGui::InitGui()
 	dbgLclr = fImg("dbgTerLclr");
 
 	float f=0.f;  i=0;  // temp vars
-	sv= &svTerTriSize;	sv->Init("TerTriSize", &sc->td.fTriangleSize,  0.1f,6.f, 2.f);  sv->DefaultF(1.4f);  Sev(TerTriSize);
 	//  ter layer
+	sv= &svTerTriSize;	sv->Init("TerTriSize", &sc->td.fTriangleSize,  0.1f,6.f, 2.f);  sv->DefaultF(1.4f);  Sev(TerTriSize);
 	sv= &svTerLScale;	sv->Init("TerLScale",  &f, 4.0f, 64.f,  3.f);  sv->DefaultF(8.f);  //Sev(TerLay);  // 2 24 1.5
 	//  blendmap
 	sv= &svTerLAngMin;  sv->Init("TerLAngMin", &f, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(0.f);  Sev(TerLay);
 	sv= &svTerLAngMax;  sv->Init("TerLAngMax", &f, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(90.f);  Sev(TerLay);
 	sv= &svTerLAngSm;   sv->Init("TerLAngSm",  &f, 0.f,  90.f,  2.f, 1,4);  sv->DefaultF(20.f);  Sev(TerLay);
+
 	sv= &svTerLHMin;    sv->Init("TerLHMin",   &f,-150.f,150.f, 1.f, 0,2);  sv->DefaultF(-300.f);  Sev(TerLay);
 	sv= &svTerLHMax;    sv->Init("TerLHMax",   &f,-150.f,150.f, 1.f, 0,2);  sv->DefaultF( 300.f);  Sev(TerLay);
 	sv= &svTerLHSm;     sv->Init("TerLHSm",    &f, 0.f,  100.f, 2.f, 1,4);  sv->DefaultF(20.f);  Sev(TerLay);
@@ -369,13 +370,26 @@ void CGui::InitGui()
 	///  Grass  ------------------------------------
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
 
-	SGrassLayer* g0 = &sc->grLayersAll[0];
-	sv= &svGrTerMaxAngle;	sv->Init("GrTerMaxAngle",	&g0->terMaxAng, 0.f,90.f, 1.f, 1,4);  sv->DefaultF(30.f);
-	sv= &svGrTerSmAngle;	sv->Init("GrTerSmAngle",	&g0->terAngSm,  0.f,50.f, 2.f, 1,4);  sv->DefaultF(20.f);
+	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);	imgGrass = fImg("ImgGrass");
+	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);	imgGrClr = fImg("ImgGrClr");
+
+	//  grass channels
+	sv= &svGrChAngMin;	sv->Init("GrChMinA",	&f, 0.f,90.f, 1.f, 1,4);  sv->DefaultF(30.f);
+	sv= &svGrChAngMax;	sv->Init("GrChMaxA",	&f, 0.f,90.f, 1.f, 1,4);  sv->DefaultF(30.f);
+	sv= &svGrChAngSm;	sv->Init("GrChSmA",		&f, 0.f,50.f, 2.f, 1,4);  sv->DefaultF(20.f);
 									  
-	sv= &svGrTerMinHeight;	sv->Init("GrTerMinHeight",	&g0->terMinH,-60.f,60.f,  1.f, 1,4);  sv->DefaultF(-200.f);
-	sv= &svGrTerMaxHeight;	sv->Init("GrTerMaxHeight",	&g0->terMaxH,  0.f,120.f, 1.f, 1,4);  sv->DefaultF( 200.f);
-	sv= &svGrTerSmHeight;	sv->Init("GrTerSmHeight",	&g0->terHSm,   0.f,60.f,  2.f, 1,4);  sv->DefaultF(20.f);
+	sv= &svGrChHMin;	sv->Init("GrChMinH",	&f,-60.f,60.f,  1.f, 1,4);  sv->DefaultF(-200.f);
+	sv= &svGrChHMax;	sv->Init("GrChMaxH",	&f,  0.f,120.f, 1.f, 1,4);  sv->DefaultF( 200.f);
+	sv= &svGrChHSm;		sv->Init("GrChSmH",		&f,  0.f,60.f,  2.f, 1,4);  sv->DefaultF(20.f);
+	sv= &svGrChRdPow;	sv->Init("GrChRdPow",	&f, -8.f, 8.f,  1.f, 1,4);  sv->DefaultF(0.f);
+	//  noise
+	sv= &svGrChNoise;	sv->Init("GrChNoise",	&f, 0.f,2.f,   1.f, 1,4);   sv->DefaultF(0.f);
+	sv= &svGrChNfreq;	sv->Init("GrChNFreq",	&f, 1.f,300.f, 2.f, 1,3);   sv->DefaultF(30.f);
+	sv= &svGrChNoct;	sv->Init("GrChNOct",	&i, 1,5);                   sv->DefaultI(3);
+	sv= &svGrChNpers;	sv->Init("GrChNPers",	&f, 0.1f, 0.7f, 1.f, 3,5);  sv->DefaultF(0.3f);
+	sv= &svGrChNpow;	sv->Init("GrChNPow",	&f, 0.2f, 8.f,  2.f);       sv->DefaultF(1.f);
+	Tab(tabsGrChan, "GrChanTab", tabGrChan);
+	SldUpd_GrChan();
 
 	//  grass layers
 	ck= &ckGrLayOn;		ck->Init("LGrEnabled",	&b);   Cev(GrLayOn);
@@ -386,12 +400,9 @@ void CGui::InitGui()
 	sv= &svGrMaxX;	sv->Init("GrMaxX",	&f, 0.1f,4.1, 2.f);  sv->DefaultF(1.5f);
 	sv= &svGrMinY;	sv->Init("GrMinY",	&f, 0.1f,4.1, 2.f);  sv->DefaultF(1.4f);
 	sv= &svGrMaxY;	sv->Init("GrMaxY",	&f, 0.1f,4.1, 2.f);  sv->DefaultF(1.6f);
-	
+	sv= &svGrChan;	sv->Init("LGrChan",	&i, 0,3);  sv->DefaultI(0);
 	sv= &svLGrDens;	sv->Init("LGrDens",	&f, 0.001f,1.f, 2.f, 3,5);  sv->DefaultF(0.22f);
 	SldUpd_GrL();
-
-	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);	imgGrass = fImg("ImgGrass");
-	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);	imgGrClr = fImg("ImgGrClr");
 
 	
 	///  [Road]  ------------------------------------

@@ -267,8 +267,7 @@ void CGui::btnTerGenerate(WP wp)
 	if (bRoad)
 	{
 		try {	imgRoad.load(String("roadDensity.png"),"General");  }
-		catch(...)
-			{	imgRoad.load(String("grassDensity.png"),"General");  }
+		catch(...) {	}
 		r = imgRoad.getWidth();
 	}
 

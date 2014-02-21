@@ -3,9 +3,9 @@ Copyright (c) 2006 John Judnich
 
 This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
 Permission is granted to anyone to use this software for any purpose, including commercial applications, and to alter it and redistribute it freely, subject to the following restrictions:
-	1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
-	2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
-	3. This notice may not be removed or altered from any source distribution.
+1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+3. This notice may not be removed or altered from any source distribution.
 -------------------------------------------------------------------------------------*/
 
 //PagedGeometry.h
@@ -25,8 +25,8 @@ using namespace std;
 
 namespace Forests {
 
-//-------------------------------------------------------------------------------------
-PagedGeometry::PagedGeometry(Camera* cam, const Real pageSize, Ogre::RenderQueueGroupID queue) :
+	//-------------------------------------------------------------------------------------
+	PagedGeometry::PagedGeometry(Camera* cam, const Real pageSize, Ogre::RenderQueueGroupID queue) :
 m_nRenderQueue(queue)
 {
 	//Setup camera, scene manager, and scene node
@@ -36,14 +36,14 @@ m_nRenderQueue(queue)
 		sceneMgr = sceneCam->getSceneManager();
 		oldCamPos = sceneCam->getDerivedPosition();
 
-		#ifdef PAGEDGEOMETRY_ALTERNATE_COORDSYSTEM
+#ifdef PAGEDGEOMETRY_ALTERNATE_COORDSYSTEM
 		rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode();	//Create PagedGeometry's root node
-		#else
+#else
 		rootNode = sceneMgr->getRootSceneNode();
-		#endif
+#endif
 	}
-   else
-   {
+	else
+	{
 		sceneCam = NULL;
 		sceneMgr = NULL;
 		rootNode = NULL;
@@ -52,10 +52,10 @@ m_nRenderQueue(queue)
 	lastSceneCam = NULL;
 	lastOldCamPos = Vector3::ZERO;
 
-	#ifdef PAGEDGEOMETRY_ALTERNATE_COORDSYSTEM
+#ifdef PAGEDGEOMETRY_ALTERNATE_COORDSYSTEM
 	//Setup default coordinate system
 	coordinateSystemQuat = Quaternion::IDENTITY;
-	#endif
+#endif
 
 	//Init. timer
 	timer.reset();
@@ -76,11 +76,11 @@ m_nRenderQueue(queue)
 
 PagedGeometry::~PagedGeometry()
 {
-	#ifdef PAGEDGEOMETRY_ALTERNATE_COORDSYSTEM
+#ifdef PAGEDGEOMETRY_ALTERNATE_COORDSYSTEM
 	//Remove PagedGeometry's coordinate system node
 	if (rootNode)
 		sceneMgr->destroySceneNode(rootNode->getName());
-	#endif
+#endif
 
 	//Remove all page managers and the geometry associated with them
 	removeDetailLevels();
@@ -88,7 +88,7 @@ PagedGeometry::~PagedGeometry()
 
 void PagedGeometry::setTempDir(Ogre::String dir)
 {
-   tempdir = dir;
+	tempdir = dir;
 }
 
 void PagedGeometry::setPageLoader(PageLoader *loader)
@@ -114,7 +114,7 @@ void PagedGeometry::setCamera(Camera *cam)
 			lastOldCamPos = oldCamPos;
 			sceneCam = cam;
 		}
-		
+
 		//If sceneMgre is NULL (this only occurs the first time a camera is set),
 		//then set the scene manager (it won't change after this point).
 		if (sceneMgr == NULL)
@@ -124,12 +124,12 @@ void PagedGeometry::setCamera(Camera *cam)
 		//the create a scene node (it won't change after this point) for the coordinate
 		//system translations.
 		if (rootNode == NULL){
-			#ifdef PAGEDGEOMETRY_ALTERNATE_COORDSYSTEM
+#ifdef PAGEDGEOMETRY_ALTERNATE_COORDSYSTEM
 			rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
 			rootNode->setOrientation(coordinateSystemQuat);
-			#else
+#else
 			rootNode = sceneMgr->getRootSceneNode();
-			#endif
+#endif
 		}
 	}
 }
@@ -233,7 +233,7 @@ void PagedGeometry::update()
 		camSpeed = (camPos - oldCamPos) / deltaTime;
 	}
 	oldCamPos = camPos;
-	
+
 	if (pageLoader != 0){
 		//Update the PageLoader
 		pageLoader->frameUpdate();
@@ -243,7 +243,7 @@ void PagedGeometry::update()
 		std::list<GeometryPageManager *>::iterator it;
 		GeometryPageManager *prevMgr = NULL;
 		for (it = managerList.begin(); it != managerList.end(); ++it)
-      {
+		{
 			GeometryPageManager *mgr = *it;
 			mgr->update(deltaTime, camPos, camSpeed, enableCache, prevMgr);
 			prevMgr = mgr;
@@ -251,7 +251,7 @@ void PagedGeometry::update()
 	}
 
 	//Update misc. subsystems
-   StaticBillboardSet::updateAll(_convertToLocal(sceneCam->getDerivedDirection()));
+	StaticBillboardSet::updateAll(_convertToLocal(sceneCam->getDerivedDirection()));
 }
 
 void PagedGeometry::reloadGeometry()
@@ -401,7 +401,7 @@ float PagedGeometry::getCustomParam(const Ogre::String &entity, const Ogre::Stri
 float PagedGeometry::getCustomParam(const Ogre::String &paramName, float defaultParamValue) const
 {
 	TStr2FloatMap::const_iterator it = m_mapCustomParam.find(paramName);
-   return it != m_mapCustomParam.end() ? it->second : defaultParamValue;
+	return it != m_mapCustomParam.end() ? it->second : defaultParamValue;
 }
 
 
@@ -410,11 +410,11 @@ float PagedGeometry::getCustomParam(const Ogre::String &paramName, float default
 
 GeometryPageManager::GeometryPageManager(PagedGeometry *mainGeom)
 : mainGeom(mainGeom)
-	, cacheTimer(0) // Reset the cache timer
-	, scrollBuffer(NULL)
-	, geomGrid(NULL)
-	, geomGridX(0)
-	, geomGridZ(0)
+, cacheTimer(0) // Reset the cache timer
+, scrollBuffer(NULL)
+, geomGrid(NULL)
+, geomGridX(0)
+, geomGridZ(0)
 {
 	//Use default cache speeds
 	setCacheSpeed();
@@ -444,7 +444,7 @@ void GeometryPageManager::update(unsigned long deltaTime, Vector3 &camPos, Vecto
 	//Cache 1 page ahead of the view ranges
 	const Real cacheDist = farTransDist + mainGeom->getPageSize();
 	const Real cacheDistSq = cacheDist * cacheDist;
-	
+
 	//First calculate the general area where the pages will be processed
 	// 0,0 is the left top corner of the bounding box
 	int x1 = (int)Math::Floor(((camPos.x - cacheDist) - gridBounds.left) / mainGeom->getPageSize());
@@ -491,11 +491,11 @@ void GeometryPageManager::update(unsigned long deltaTime, Vector3 &camPos, Vecto
 	for (int x = x1; x <= x2; ++x){
 		for (int z = z1; z <= z2; ++z){
 			GeometryPage *blk = _getGridPage(x, z);
-			
+
 			Real dx = camPos.x - blk->_centerPoint.x;
 			Real dz = camPos.z - blk->_centerPoint.z;
 			Real distSq = dx * dx + dz * dz;
-			
+
 			//If the page is in the cache radius...
 			if (distSq <= cacheDistSq){
 				//If the block hasn't been loaded yet, it should be
@@ -530,8 +530,8 @@ void GeometryPageManager::update(unsigned long deltaTime, Vector3 &camPos, Vecto
 			}
 		}
 	}
-	
-	
+
+
 	//Calculate cache speeds based on camera speed. This is important to keep the cache
 	//process running smooth, because if the cache can't keep up with the camera, the
 	//immediately visible pages will be forced to load instantly, which can cause
@@ -540,7 +540,7 @@ void GeometryPageManager::update(unsigned long deltaTime, Vector3 &camPos, Vecto
 	//instead of loading 10+ blocks every 2 seconds, the cache would load 1 block every
 	//200 milliseconds.
 	Real speed = Math::Sqrt(camSpeed.x * camSpeed.x + camSpeed.z * camSpeed.z);
-	
+
 	unsigned long cacheInterval = 0;
 	if (speed == 0)
 		cacheInterval = maxCacheInterval;
@@ -562,11 +562,11 @@ void GeometryPageManager::update(unsigned long deltaTime, Vector3 &camPos, Vecto
 		while (i1 != i2)
 		{
 			GeometryPage *blk = *i1;
-			
+
 			//Remove it from the pending list
 			i1 = pendingList.erase(i1);
 			blk->_pending = false;
-			
+
 			//If it's within the geometry cache radius, load it and break out of the loop
 			Real dx = camPos.x - blk->_centerPoint.x;
 			Real dz = camPos.z - blk->_centerPoint.z;
@@ -582,7 +582,7 @@ void GeometryPageManager::update(unsigned long deltaTime, Vector3 &camPos, Vecto
 
 			//Otherwise this will keep looping until an unloaded page is found
 		}
-			
+
 		//Reset the cache timer
 		cacheTimer = 0;
 	}
@@ -599,7 +599,7 @@ void GeometryPageManager::update(unsigned long deltaTime, Vector3 &camPos, Vecto
 	while (i1 != i2)
 	{
 		GeometryPage *blk = *i1;
-		
+
 		//If the geometry has expired...
 		if (blk->_inactiveTime >= inactivePageLife){
 			if (!blk->_keepLoaded) {
@@ -630,13 +630,13 @@ void GeometryPageManager::update(unsigned long deltaTime, Vector3 &camPos, Vecto
 			if (tmp > overlap) overlap = tmp;
 
 			Real pageLengthSq = Math::Sqr((mainGeom->getPageSize() + overlap) * 1.41421356f);
-		
+
 			if (distSq + pageLengthSq >= nearDistSq && distSq - pageLengthSq < farTransDistSq){
 				//Fade the page when transitioning
 				bool enable = false;
 				Real fadeNear = 0;
 				Real fadeFar = 0;
-				
+
 				if (fadeEnabled && distSq + pageLengthSq >= farDistSq){
 					//Fade in
 					visible = true;
@@ -651,7 +651,7 @@ void GeometryPageManager::update(unsigned long deltaTime, Vector3 &camPos, Vecto
 					fadeNear = prevManager->farDist + (prevManager->farTransDist - prevManager->farDist) * 0.5f;	//This causes geometry to fade out faster than it fades in, avoiding a state where a transition appears semitransparent
 					fadeFar = prevManager->farDist;
 				}
-				
+
 				//Apply fade settings
 				if (enable != blk->_fadeEnable){
 					blk->setFade(enable, fadeNear, fadeFar);
@@ -682,10 +682,10 @@ void GeometryPageManager::update(unsigned long deltaTime, Vector3 &camPos, Vecto
 
 			//And update it
 			blk->update();
-				
+
 			++i1;
 		}
-		
+
 		//Increment the inactivity timer for the geometry
 		blk->_inactiveTime += deltaTime;		
 	}
@@ -709,7 +709,7 @@ void GeometryPageManager::reloadGeometryPage(const Vector3 &point)
 	//Determine which grid block contains the given points
 	int x = (int)Math::Floor(geomGridX * (point.x - gridBounds.left) / gridBounds.width());
 	int z = (int)Math::Floor(geomGridZ * (point.z - gridBounds.top) / gridBounds.height());
-	
+
 	//Unload the grid block if it's in the grid area, and is loaded
 	if (x >= 0 && z >= 0 && x < geomGridX && z < geomGridZ){
 		GeometryPage *page = _getGridPage(x, z);
@@ -746,7 +746,7 @@ void GeometryPageManager::reloadGeometryPages(const Vector3 &center, Real radius
 				Vector3 pos = page->getCenterPoint();
 				Real distX = (pos.x - center.x), distZ = (pos.z - center.z);
 				Real distSq = distX * distX + distZ * distZ;
-				
+
 				if (distSq <= radius) {
 					_unloadPage(page);
 					loadedList.erase(page->_iter);
@@ -772,12 +772,12 @@ void GeometryPageManager::reloadGeometryPages(const TBounds & area)
 
 	//Unload the grid blocks
 	for (int x = x1; x <= x2; ++x)
-   {
+	{
 		for (int z = z1; z <= z2; ++z)
-      {
+		{
 			GeometryPage *page = _getGridPage(x, z);
 			if (page->_loaded)
-         {
+			{
 				_unloadPage(page);
 				loadedList.erase(page->_iter);
 			}

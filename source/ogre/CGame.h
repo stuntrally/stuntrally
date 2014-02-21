@@ -151,10 +151,10 @@ public:
 	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
 
 	//  blendmap
-	void CreateBlendTex(), UpdBlendmap(), UpdLayerPars();
+	void CreateBlendTex(), UpdBlendmap(), UpdLayerPars(), UpdGrassDens(), UpdGrassPars();
 
-	const static Ogre::String sHmap, sAng, sBlend, sAngMat, sBlendMat;  // tex, mtr names
-	Ogre::TexturePtr hMap, angRT, blRT; //, blMap;  // height, angles, blend
+	const static Ogre::String sHmap, sAng, sBlend, sAngMat, sBlendMat, sGrassDens, sGrassDensMat;  // tex, mtr names
+	Ogre::TexturePtr hMap, angRT, blRT, grdRT; //, blMap;  // height, angles, blend
 
 	struct RenderToTex  // rtt common
 	{
@@ -167,9 +167,9 @@ public:
 		RenderToTex()
 		{	Null();   }
 
-		void Setup(Ogre::String sName, Ogre::TexturePtr pTex, Ogre::String sMtr);
+		void Setup(Ogre::Root* rt, Ogre::String sName, Ogre::TexturePtr pTex, Ogre::String sMtr);
 	};
-	RenderToTex bl, ang;
+	RenderToTex bl, ang, grd;
 
 	float Noise(float x, float zoom, int octaves, float persistance);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
@@ -218,6 +218,7 @@ public:
 
 	PreviewTex prvView,prvRoad,prvTer;  // track tab
 	PreviewTex prvStCh;  // champ,chall stage view
+	PreviewTex roadDens;
 
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
 	int carIdWin, iRplCarOfs;

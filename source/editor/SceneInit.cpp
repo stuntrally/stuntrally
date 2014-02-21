@@ -36,6 +36,8 @@ void App::createScene()  // once, init
 	prvView.Create(1024,1024,"PrvView");
 	prvRoad.Create(1024,1024,"PrvRoad");
 	prvTer.Create(512,512,"PrvTer");
+
+	roadDens.Create(1025,1025,"RoadDens");
 	
 	///  ter lay tex
 	for (int i=0; i < 6; ++i)

@@ -14,6 +14,7 @@
 //#include "BulletDynamics/Dynamics/btRigidBody.h"
 #include "../shiny/Main/Factory.hpp"
 #include "../sdl4ogre/sdlinputwrapper.hpp"
+#include "../paged-geom/GrassLoader.h"
 #include <MyGUI.h>
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
@@ -122,43 +123,7 @@ bool App::frameEnded(const FrameEvent& evt)
 	editMouse();  // edit
 
 
-	///  paged  Upd  * * *
-	if (bTrGrUpd)
-	{	bTrGrUpd = false;
-		pSet->bTrees = !pSet->bTrees;
-		UpdTrees();
-	}
-	///  paged  * * *  ? frameStarted
-	if (road)
-	{	if (grass)  grass->update();
-		if (trees)  trees->update();
-	}
-	
-	///<>  Edit Ter
-	TerCircleUpd();
-	if (terrain && road && bEdit() && road->bHitTer)
-	{
-		float dt = evt.timeSinceLastFrame;
-		Real s = shift ? 0.25 : ctrl ? 4.0 :1.0;
-		switch (edMode)
-		{
-		case ED_Deform:
-			if (mbLeft)   deform(road->posHit, dt, s);  else
-			if (mbRight)  deform(road->posHit, dt,-s);
-			break;
-		case ED_Filter:
-			if (mbLeft)   filter(road->posHit, dt, s);
-			break;
-		case ED_Smooth:
-			if (mbLeft)   smooth(road->posHit, dt);
-			break;
-		case ED_Height:
-			if (mbLeft)   height(road->posHit, dt, s);
-			break;
-		}
-	}
-
-	///<>  Ter upd
+	///<>  Ter upd	- - -
 	static int tu = 0, bu = 0;
 	if (tu >= pSet->ter_skip)
 	if (bTerUpd)
@@ -174,6 +139,93 @@ bool App::frameEnded(const FrameEvent& evt)
 			UpdBlendmap();
 	}	bu++;
 
+
+	///<>  Edit Ter
+	TerCircleUpd();
+	bool def = false;
+	static bool defOld = false;
+	float gd = sc->densGrass;
+	static float gdOld = sc->densGrass;
+	if (terrain && road && bEdit() && road->bHitTer)
+	{
+		float dt = evt.timeSinceLastFrame;
+		Real s = shift ? 0.25 : ctrl ? 4.0 :1.0;
+		switch (edMode)
+		{
+		case ED_Deform:
+			if (mbLeft) {  def = true;  deform(road->posHit, dt, s);  }else
+			if (mbRight){  def = true;  deform(road->posHit, dt,-s);  }
+			break;
+		case ED_Filter:
+			if (mbLeft) {  def = true;  filter(road->posHit, dt, s);  }
+			break;
+		case ED_Smooth:
+			if (mbLeft) {  def = true;  smooth(road->posHit, dt);  }
+			break;
+		case ED_Height:
+			if (mbLeft) {  def = true;  height(road->posHit, dt, s);  }
+			break;
+		}
+	}
+
+if (pSet->bTrees)
+{
+	///  upd grass
+	if (gd != gdOld)
+	{
+		Real fGrass = pSet->grass * sc->densGrass * 3.0f;
+		for (int i=0; i < sc->ciNumGrLay; ++i)
+		{
+			const SGrassLayer* gr = &sc->grLayersAll[i];
+			if (gr->on)
+			{
+				Forests::GrassLayer *l = gr->grl;
+				if (l)
+				{	l->setDensity(gr->dens * fGrass);
+					grass->reloadGeometry();
+				}
+			}
+		}
+	}
+
+	if (!def && defOld)
+	{
+		UpdGrassDens();
+		//if (grd.rnd)
+		//	grd.rnd->update();
+
+		for (int i=0; i < sc->ciNumGrLay; ++i)
+		{
+			const SGrassLayer* gr = &sc->grLayersAll[i];
+			if (gr->on)
+			{
+				Forests::GrassLayer *l = gr->grl;
+				if (l)
+				{	l->setDensityMap(grdRT, Forests::MapChannel(std::min(3,i)));  // l->chan);
+					//l->applyShader();
+					grass->reloadGeometry();
+				}
+			}
+		}
+	}
+	defOld = def;
+	gdOld = gd;
+}
+
+	///  paged  * * *  ? frameStarted
+	if (road)
+	{	if (grass)  grass->update();
+		if (trees)  trees->update();
+	}
+
+
+	///  paged  Upd  * * *
+	if (bTrGrUpd)
+	{	bTrGrUpd = false;
+		pSet->bTrees = !pSet->bTrees;
+		UpdTrees();
+	}
+	
 	
 	if (road)  // road
 	{

@@ -1,0 +1,15 @@
+shader_set grassdens_vertex
+{
+    source grassdens.shader
+    type vertex
+    profiles_cg vs_2_0 arbvp1
+    profiles_hlsl vs_2_0
+}
+
+shader_set grassdens_fragment
+{
+    source grassdens.shader
+    type fragment
+    profiles_cg ps_3_0 arbfp1
+    profiles_hlsl ps_3_0
+}

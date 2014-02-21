@@ -798,6 +798,7 @@
 	<Tag name="GrMaterial">Material</Tag>
 	<Tag name="GrColorMap">Color map</Tag>
 	<Tag name="Channels">Channels</Tag>
+	<Tag name="Channel">Channel</Tag>
 
 
 	<!--  Road  -->

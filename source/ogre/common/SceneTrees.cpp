@@ -7,6 +7,7 @@
 #include "ShapeData.h"
 #include "QTimer.h"
 #include "../../road/SplineBase.h"
+#include "GuiCom.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
 	#include "../../editor/settings.h"
@@ -47,18 +48,22 @@ void App::CreateTrees()
 {
 	QTimer ti;  ti.update();  /// time
 	gTerrain = terrain;
-	
+		
 	//-------------------------------------- Grass --------------------------------------
 	int imgRoadSize = 0;
 	Image imgRoad;
 	try{
 		imgRoad.load(String("roadDensity.png"),"General");
 	}catch(...)
-	{
-		imgRoad.load(String("grassDensity.png"),"General");
+	{	LogO("Trees can't load roadDensity !");
 	}
 	imgRoadSize = imgRoad.getWidth();  // square[]
-		
+	
+	roadDens.Load(gcom->TrkDir()+"objects/roadDensity.png");
+	
+	UpdGrassDens();  //!
+	
+	
 	// remove old BinFolder's (paged geom temp resource groups)
 	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
 	if (resMgr.resourceGroupExists("BinFolder"))
@@ -106,7 +111,7 @@ void App::CreateTrees()
 		const SGrassLayer* g0 = &sc->grLayersAll[0];
 		for (int i=0; i < sc->ciNumGrLay; ++i)
 		{
-			const SGrassLayer* gr = &sc->grLayersAll[i];
+			SGrassLayer* gr = &sc->grLayersAll[i];
 			if (gr->on)
 			{
 				GrassLayer *l = grassLoader->addLayer(gr->material);
@@ -122,11 +127,12 @@ void App::CreateTrees()
 				l->setFadeTechnique(FADETECH_ALPHA);  //FADETECH_GROW-
 
 				l->setColorMap(gr->colorMap);
-				l->setDensityMap("grassDensity.png",CHANNEL_RED);  //todo: more..
+				
+				l->setDensityMap(grdRT, MapChannel(gr->iChan));
 				l->setMapBounds(tbnd);
+				gr->grl = l;
 			}
 		}
-
 		grass->setShadersEnabled(true);
 	}
 	ti.update();  /// time
@@ -266,10 +272,12 @@ void App::CreateTrees()
 							std::max(0,std::min(r-1, mx+ii)),
 							std::max(0,std::min(r-1, my+jj)), 0).r;
 						
-						rr = abs(ii)+abs(jj);
-						//rr = sqrt(float(ii*ii+jj*jj));  // much slower
 						if (cr < 0.75f)  //par-
+						{
+							rr = abs(ii)+abs(jj);
+							//rr = sqrt(float(ii*ii+jj*jj));  // much slower
 							rmin = std::min(rmin, rr);
+						}
 					}
 					if (rmin <= c)
 						add = false;

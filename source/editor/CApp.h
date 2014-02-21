@@ -54,6 +54,7 @@ public:
 	CGuiCom* gcom;
 
 	PreviewTex prvView,prvRoad,prvTer;  // track tab
+	PreviewTex roadDens;
 
 
 	// TODO:  CScene* scn;  //...
@@ -149,11 +150,17 @@ public:
 	Ogre::TerrainGroup* mTerrainGroup;
 	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
 
-	//  blendmap
+	//  blendmap, rtt
 	void CreateBlendTex(), UpdBlendmap(), UpdLayerPars();
+	void UpdGrassDens(), UpdGrassPars();
 	
-	const static Ogre::String sHmap, sAng, sBlend, sAngMat, sBlendMat;  // tex, mtr names
-	Ogre::TexturePtr hMap, angRT, blRT; //, blMap;  // height, angles, blend
+	//  tex, mtr names
+	const static Ogre::String sHmap, sAng,sAngMat,
+		sBlend,sBlendMat, sGrassDens,sGrassDensMat;
+	//  height, angles, blend
+	Ogre::TexturePtr hMap, angRT, blRT;  //, blMap;
+	//  grass density and channels
+	Ogre::TexturePtr grdRT;
 
 	struct RenderToTex  // rtt common
 	{
@@ -166,17 +173,17 @@ public:
 		RenderToTex()
 		{	Null();   }
 
-		void Setup(Ogre::String sName, Ogre::TexturePtr pTex, Ogre::String sMtr);
+		void Setup(Ogre::Root* rt, Ogre::String sName, Ogre::TexturePtr pTex, Ogre::String sMtr);
 	};
-	RenderToTex bl, ang;
+	RenderToTex bl, ang, grd;
 
 	float Noise(float x, float zoom, int octaves, float persistence);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
 	//     xa  xb
 	//1    .___.
 	//0__./     \.___
-	//   xa-s    xb+s
-	inline float linRange(const float& x, const float& xa, const float& xb, const float& s)  // min, max, smooth range
+	//   xa-s    xb+s    // val, min, max, smooth range
+	inline float linRange(const float& x, const float& xa, const float& xb, const float& s)
 	{
 		if (x <= xa-s || x >= xb+s)  return 0.f;
 		if (x >= xa && x <= xb)  return 1.f;

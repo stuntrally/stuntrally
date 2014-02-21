@@ -8,6 +8,7 @@
 #include "../../../vdrift/quaternion.h"
 
 namespace Ogre {  class SceneNode;  class Entity;  }
+namespace Forests {  class GrassLayer;  }
 
 
 struct TerLayer		// terrain texture layer
@@ -20,7 +21,7 @@ struct TerLayer		// terrain texture layer
 	Ogre::ColourValue tclr;  // trail color
 	
 	//  blendmap
-	//  min,max range and smooth range for angle and height
+	//  min,max range and smooth range for terrain angle and height
 	float angMin,angMax,angSm, hMin,hMax,hSm;
 	bool nOnly;
 	//  noise
@@ -80,10 +81,20 @@ public:
 	float dens;
 	float minSx,minSy, maxSx,maxSy;  // sizes
 	float swayDistr, swayLen, swaySpeed;  // sway
-	Ogre::Real terMaxAng, terAngSm;       // max terrain angle, smooth
-	Ogre::Real terMinH, terMaxH, terHSm;  // terrain height
+	int iChan;  // which channel to use
 	Ogre::String material, colorMap;
+	Forests::GrassLayer *grl;  // for update
 	SGrassLayer();
+};
+
+class SGrassChannel  // grass channel
+{
+public:
+	//  min,max range and smooth range for terrain angle and height
+	float angMin,angMax,angSm, hMin,hMax,hSm;
+	float noise, nFreq, nPers, nPow;  int nOct;  // noise params
+	float rdPow;  // road border adjust
+	SGrassChannel();
 };
 
 
@@ -165,6 +176,7 @@ public:
 	//  grass layers
 	const static int ciNumGrLay = 6;  // all, for edit
 	SGrassLayer grLayersAll[ciNumGrLay];
+	SGrassChannel grChan[4];
 
 	//  paged layers  (models: trees,rocks,etc)
 	const static int ciNumPgLay = 10;  // all, for edit

@@ -115,6 +115,8 @@ void App::UpdMiniVis()
 ///  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 void App::SaveGrassDens()
 {
+		QTimer ti;  ti.update();  ///T  /// time
+
 	for (int i=0; i < RTs-1; ++i)  //-1 preview camera manual
 	{
 		if (!rt[i].tex)  return;
@@ -129,21 +131,21 @@ void App::SaveGrassDens()
 	rt[1].tex->copyContentsToMemory(pb_rd, RenderTarget::FB_FRONT);
 
 	const int f = std::max(0, sc->grDensSmooth);
-	float ff = 0.f;  //2.f / ((f*2+1)*(f*2+1)) / 255.f;
-	register int v,i,j,m,x, a,b,d,y;
+	float sum = 0.f;
+	register int v,i,j,x,y, a,b,d,m;
 
 	//  gauss kernel for smoothing
 	int *mask = new int[(f*2+1)*(f*2+1)];  m = 0;
 	if (f==0)
-	{	mask[0] = 256.f;  ff = 256.f;  }
+	{	mask[0] = 256.f;  sum = 256.f;  }
 	else
 	for (j = -f; j <= f; ++j)
 	for (i = -f; i <= f; ++i, ++m)
 	{
 		v = std::max(0.f, (1.f - sqrtf((float)(i*i+j*j)) / float(f)) * 256.f);
-		mask[m] = v;  ff += v;
+		mask[m] = v;  sum += v;
 	}
-	ff = 2.f / ff;  // normally would be 1.f - but road needs to stay black and be smooth outside
+	sum = 2.f / sum;  //par normally would be 1.f - but road needs to stay black and be smooth outside
 	//  change smooth to distance from road with fade ?..
 		
 	///  road - rotate, smooth  -----------
@@ -157,48 +159,26 @@ void App::SaveGrassDens()
 		for (i = -f; i <= f; ++i, ++d, ++m)
 			v += ((rd[d] >> 16) & 0xFF) * mask[m] / 256;  }
 
-		v = std::max(0, (int)(255.f * (1.f - v * ff) ));  // avg, inv, clamp
+		v = std::max(0, (int)(255.f * (1.f - v * sum) ));  // avg, inv, clamp
 		
 		gd[a] = 0xFF000000 + v;  // write
 	}	}
 
-	v = 0xFFFFFFFF;  //  frame f []  todo: get from rd[b] not clear..
+	v = 0xFF0000FF;  //  frame f []  todo: get from rd[b] not clear..
 	for (y = 0;  y <= f; ++y)	for (x=0; x < w; ++x)	gd[y*w+x] = v;  // - up
 	for (y=h-f-1; y < h; ++y)	for (x=0; x < w; ++x)	gd[y*w+x] = v;  // - down
 	for (x = 0;  x <= f; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | left
 	for (x=w-f-1; x < w; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | right
+
+		ti.update();	///T  /// time
+		float dt = ti.dt * 1000.f;
+		LogO(String("::: Time road dens: ") + fToStr(dt,0,3) + " ms");
 
 	if (!IsVdrTrack())  // vdr trk no grass, only previews
 	{
 		Image im;  // for trees, before grass angle and height
 		im.loadDynamicImage((uchar*)gd, w,h,1, PF_BYTE_RGBA);
 		im.save(gcom->TrkDir()+"objects/roadDensity.png");
-
-		///  terrain - max angle, height for grass  -----------
-		for (y = 0; y < h; ++y) {  b = y*w;
-		for (x = 0; x < w; ++x, ++b)
-		{
-			a = (h-1-y) * sc->td.iVertsY / h;  a *= sc->td.iVertsX;
-			a += x * sc->td.iVertsX / w;
-			// would be better to interpolate 4 neighbours, or smooth this map
-
-			//for (int i=0; i < sc->ciNumPgLay; ++i)
-			//	if (sc->pgLayersAll[i].on)
-
-			uint uu = 0xFF000000;
-			SGrassLayer* gr = &sc->grLayersAll[0];  ///todo: grass channels, ter range in r,g,b,a..
-			v = std::max(0, std::min(255, int(255.f *
-				///FIXME: //todo: this method on rtt ..
-				//linRange(sc->td.hfAngle[a], 0.f,gr->terMaxAng, gr->terAngSm) *
-				linRange(sc->td.hfHeight[a], gr->terMinH,gr->terMaxH, gr->terHSm) )));
-			v = std::min((int)(gd[b] & 0xFF), v);  // preserve road
-			uu += v;  // v << (i*8)
-			gd[b] = uu;  // no grass
-		}	}
-
-		//Image im;
-		im.loadDynamicImage((uchar*)gd, w,h,1, PF_BYTE_RGBA);
-		im.save(gcom->TrkDir()+"objects/grassDensity.png");
 	}
 	delete[] rd;  delete[] gd;  delete[] mask;
 
@@ -206,6 +186,10 @@ void App::SaveGrassDens()
 	int u = pSet->allow_save ? pSet->gui.track_user : 1;
 	rt[0].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/road.png");
 	rt[2].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/terrain.jpg");
+
+		ti.update();	///T  /// time
+		dt = ti.dt * 1000.f;
+		LogO(String("::: Time save prv : ") + fToStr(dt,0,3) + " ms");
 }
 
 
