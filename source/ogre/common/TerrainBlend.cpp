@@ -252,21 +252,7 @@ void App::UpdGrassDens()
 	
 	grd.rnd->update();
 
-#if 0  //  save
-	const size_t size = grdRT->getWidth() * grdRT->getHeight() * 4;
-	unsigned char* data = OGRE_ALLOC_T(unsigned char, size, MEMCATEGORY_GENERAL);
-	memset(data, 0, size);
-      
-	Image im;
-	im.loadDynamicImage(data, grdRT->getWidth(), grdRT->getHeight(), 1, Ogre::PF_R8G8B8A8, true);
-
-	HardwarePixelBufferSharedPtr buf = grdRT->getBuffer();
-	const PixelBox pb = im.getPixelBox();
-	buf->blitToMemory(pb);
-
-	im.save(PATHMANAGER::DataUser()+"/grassD.png");
-#endif
-	grd.rnd->writeContentsToFile(PATHMANAGER::DataUser()+"/grassD.png");
+	//grd.rnd->writeContentsToFile(PATHMANAGER::DataUser()+"/grassD.png");
 
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
