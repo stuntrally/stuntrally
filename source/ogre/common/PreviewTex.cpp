@@ -45,7 +45,7 @@ void PreviewTex::Destroy()
 
 
 //  2 load image from path
-bool PreviewTex::Load(String path, bool force)
+bool PreviewTex::Load(String path, bool force,  uint8 b, uint8 g, uint8 r, uint8 a)
 {
 	if (curPath == path && !force)  // check if same
 		return false;
@@ -69,7 +69,11 @@ bool PreviewTex::Load(String path, bool force)
 				
 			//LogO(path+" "+toStr(img.getWidth())+" "+toStr(img.getHeight()));
 
-			prvTex->getBuffer()->blitFromMemory(img.getPixelBox());
+			if (img.getWidth() == prvTex->getWidth() &&
+				img.getHeight() == prvTex->getHeight())  // same dim
+				prvTex->getBuffer()->blitFromMemory(img.getPixelBox());
+			else
+				Clear(b,g,r,a);
 
 			//prvTex->setNumMipmaps(5);
 			//prvTex->unload();  prvTex->loadImage(img);  //same
@@ -81,13 +85,18 @@ bool PreviewTex::Load(String path, bool force)
 		}
 		ifs.close();
 	}else
-		Clear();
+		Clear(b,g,r,a);
 
 	return loaded;
 }
 
+bool PreviewTex::Load(String path, bool force)
+{
+	return Load(path, force, 100, 90, 80, 120);
+}
 
-void PreviewTex::Clear()
+
+void PreviewTex::Clear(const uint8 b, const uint8 g, const uint8 r, const uint8 a)
 {
 	if (prvTex.isNull())  return;
 	//  fill texture
@@ -101,7 +110,7 @@ void PreviewTex::Clear()
 	for (j = 0; j < ySize; ++j)
 	{
 		for (i = 0; i < xSize; ++i)   // B,G,R,A
-		{	*pDest++ = 100;  *pDest++ = 90;  *pDest++ = 80;  *pDest++ = 120;  }  // par clr..
+		{	*pDest++ = b;  *pDest++ = g;  *pDest++ = r;  *pDest++ = a;  }
 
 		pDest += pixelBox.getRowSkip() * PixelUtil::getNumElemBytes(pixelBox.format);
 	}
