@@ -1,9 +1,11 @@
 [Desktop Entry]
 Name=Stunt Rally
 GenericName=Racing game
+GenericName[fr]=Jeu de course
 Comment=3D racing game with stunt and rally elements
 Comment[de]=3D-Rennspiel mit Stunt-Elementen
 Comment[fi]=3D Rallipeli stunttielementein
+Comment[fr]=Jeu de course en 3D avec des éléments acrobatiques
 Exec=stuntrally
 Icon=stuntrally
 StartupNotify=false

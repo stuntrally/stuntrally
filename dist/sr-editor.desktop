@@ -1,9 +1,12 @@
 [Desktop Entry]
 Name=Stunt Rally Track Editor
 GenericName=Track editor
+GenericName[de]=Streckeneditor
+GenericName[fr]=Éditeur de circuits
 Comment=Track editor for Stunt Rally
 Comment[de]=Stunt Rally Streckeneditor
 Comment[fi]=Stunt Rally rataeditori
+Comment[fr]=Éditez des circuits pour Stunt Rally
 Exec=sr-editor
 Icon=sr-editor
 StartupNotify=false
