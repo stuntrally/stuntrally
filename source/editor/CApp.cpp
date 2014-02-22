@@ -11,9 +11,11 @@
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/WaterRTT.h"
 #include "../ogre/common/RenderBoxScene.h"
+#include "settings.h"
 
 #include "../shiny/Main/Factory.hpp"
 #include "../shiny/Platforms/Ogre/OgrePlatform.hpp"
+#include "../shiny/Platforms/Ogre/OgreMaterial.hpp"
 #include <OgreTerrainPaging.h>
 #include <OgreTerrainGroup.h>
 
@@ -87,6 +89,8 @@ void App::postInit()
 	
 	mFactory = new sh::Factory(platform);
 	SetFactoryDefaults();
+
+	mFactory->setMaterialListener(this);
 }
 
 
@@ -130,4 +134,35 @@ ManualObject* App::Create2D(const String& mat, Real s, bool dyn)
 	m->setBoundingBox(aabInf);  // always visible
 	m->setRenderQueueGroup(RQG_Hud2);
 	return m;
+}
+
+
+void App::materialCreated(sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex)
+{
+	//LogO(m->getName());
+	Ogre::Technique* t = static_cast<sh::OgreMaterial*>(m->getMaterial())->getOgreTechniqueForConfiguration (configuration, lodIndex);
+
+	if (pSet->shadow_type == Sh_None)
+	{
+		t->setShadowCasterMaterial("");
+		return;
+	}
+
+	if (m->hasProperty ("transparent") && m->hasProperty ("cull_hardware") && sh::retrieveValue<sh::StringValue>(m->getProperty ("cull_hardware"), 0).get() == "none")
+	{
+		// Crash !?
+		///assert(!MaterialManager::getSingleton().getByName("PSSM/shadow_caster_nocull").isNull ());
+		//t->setShadowCasterMaterial("PSSM/shadow_caster_nocull");
+	}
+
+	if (m->hasProperty ("instancing") && sh::retrieveValue<sh::StringValue>(m->getProperty ("instancing"), 0).get() == "true")
+	{
+		t->setShadowCasterMaterial("PSSM/shadow_caster_instancing");
+		//LogO("Instancing YES");
+	}
+
+	if (!m->hasProperty ("transparent") || !sh::retrieveValue<sh::BooleanValue>(m->getProperty ("transparent"), 0).get())
+	{
+		t->setShadowCasterMaterial("PSSM/shadow_caster_noalpha");
+	}
 }

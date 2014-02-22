@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 
 namespace Ogre {  class InstanceManager;  class InstancedEntity;  class Entity;  class SceneManager;  }

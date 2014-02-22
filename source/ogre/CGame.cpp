@@ -143,12 +143,17 @@ void App::materialCreated(sh::MaterialInstance* m, const std::string& configurat
 		return;
 	}
 
-	// this is just here to set the correct shadow caster
 	if (m->hasProperty ("transparent") && m->hasProperty ("cull_hardware") && sh::retrieveValue<sh::StringValue>(m->getProperty ("cull_hardware"), 0).get() == "none")
 	{
 		// Crash !?
 		///assert(!MaterialManager::getSingleton().getByName("PSSM/shadow_caster_nocull").isNull ());
 		//t->setShadowCasterMaterial("PSSM/shadow_caster_nocull");
+	}
+
+	if (m->hasProperty ("instancing") && sh::retrieveValue<sh::StringValue>(m->getProperty ("instancing"), 0).get() == "true"))
+	{
+		t->setShadowCasterMaterial("PSSM/shadow_caster_instancing");
+		LogO("YES");
 	}
 
 	if (!m->hasProperty ("transparent") || !sh::retrieveValue<sh::BooleanValue>(m->getProperty ("transparent"), 0).get())

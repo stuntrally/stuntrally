@@ -1,13 +1,14 @@
 #pragma once
 #include "pch.h"
 #include "Def_Str.h"
+#include "RenderConst.h"
 #include "Instancing.h"
 using namespace Ogre;
 
 
 void Instanced::Create(SceneManager* mSceneMgr, String sMesh)
 {
-	Entity* ent = mSceneMgr->createEntity("aa1", sMesh);
+	Entity* ent = mSceneMgr->createEntity(sMesh);
 	//ent->setCastShadows(false);
 	int numSubs = ent->getMesh()->getNumSubMeshes();
 	InstMesh imsh;
@@ -17,8 +18,7 @@ void Instanced::Create(SceneManager* mSceneMgr, String sMesh)
 	{
 		InstSub isub;
 		isub.instMgr = mSceneMgr->createInstanceManager(
-			"Inst"+toStr(/**/1)+toStr(s), sMesh,
-			ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME,
+			"Inst"+toStr(/**/1)+toStr(s), sMesh, rgDef,
 			InstanceManager::HWInstancingBasic,
 			ii/*vPoses.size()*/, IM_USEALL, s);
 
@@ -34,7 +34,7 @@ void Instanced::Create(SceneManager* mSceneMgr, String sMesh)
 			//imsh.treeId = p.id;
 			ent->setPosition(Vector3(i%10,0,i/10));
 			ent->setOrientation(Quaternion(Radian(i/40), Vector3::UNIT_Y));
-			ent->setScale((1.f+i/ii) * Vector3::UNIT_SCALE);
+			ent->setScale((1.f+float(i)/ii) * Vector3::UNIT_SCALE);
 				//ent->setPosition(p.pos);
 				//ent->setOrientation(Quaternion(Radian(p.yaw), Vector3::UNIT_Y));
 				//ent->setScale(p.sc * Vector3::UNIT_SCALE);
@@ -51,24 +51,22 @@ void Instanced::Create(SceneManager* mSceneMgr, String sMesh)
 }
 
 
+//InstancedEntity::findVisible 	( 	Camera *  	camera	) 	const
+//InstanceBatch::removeInstancedEntity 	( 	InstancedEntity *  	instancedEntity	) 	
+//mSceneMgr->destroyInstancedEntity( static_cast<InstancedEntity*>(*itor) );
 #if 0
+void Instanced::Update(float dt)
 {
 	static float instUpdTm = 0.f;
-	instUpdTm += dt;  // interval [sec]
-	if (instUpdTm > 0.1f && trees
-	#ifndef ROAD_EDITOR
-		&& mSplitMgr && mSplitMgr->mCameras.front()
-	#endif
-		)
-	{
-		instUpdTm = 0.f;
+	instUpdTm += dt;
+	if (instUpdTm > 0.1f)
+	{	instUpdTm = 0.f;
 		#ifndef ROAD_EDITOR
 		const Vector3& cp = mSplitMgr->mCameras.front()->getPosition();
 		#else
 		const Vector3& cp = mCamera->getPosition();
 		#endif
 
-		///  trees vis   // _par fit to impostors (temp?)
 		const Real dist = 1.2f * sc->trDist * pSet->trees_dist, distSq = dist * dist;
 		for (int l=0; l < inst.size(); ++l)
 		{
