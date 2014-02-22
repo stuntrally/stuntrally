@@ -482,6 +482,62 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="2"
+				>
+				<File
+					RelativePath="..\data\materials2\circle_fragment.glsl"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials2\circle_vertex.glsl"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials2\pssm.cg"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials2\pssm.material"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials2\pssm_alpha_fragment.glsl"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials2\pssm_fragment.glsl"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials2\pssm_vertex.glsl"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials2\rnd.cg"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials2\rnd.material"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials2\rnd_add_fragment.glsl"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials2\rnd_fragment.glsl"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials2\rnd_inv_fragment.glsl"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials2\rnd_vertex.glsl"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Cfg"
@@ -607,19 +663,19 @@
 			Name="SceneCommon"
 			>
 			<File
-				RelativePath="..\source\ogre\common\Instancing.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\Instancing.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\ogre\common\CScene.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\source\ogre\common\CScene.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\ogre\common\Instancing.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\ogre\common\Instancing.h"
 				>
 			</File>
 			<File

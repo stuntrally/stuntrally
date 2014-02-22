@@ -1,3 +1,14 @@
+vertex_program PSSM/shadow_caster_instancing_vs_hlsl hlsl
+{
+	source pssm.cg
+	target vs_2_0
+	entry_point shadow_caster_instancing_vs
+
+	default_params
+	{
+		param_named_auto wvpMat worldviewproj_matrix
+	}
+}
 
 vertex_program PSSM/shadow_caster_vs_hlsl hlsl
 {
@@ -100,7 +111,7 @@ material PSSM/shadow_caster_instancing
 		{
 			fog_override true
 			cull_hardware none
-			vertex_program_ref PSSM/shadow_caster_instancing_vs
+			vertex_program_ref PSSM/shadow_caster_instancing_vs_hlsl
 			{
 			}
 
