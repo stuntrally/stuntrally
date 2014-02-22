@@ -1,6 +1,7 @@
 #include "core.h"
 
 #define ALPHA  @shPropertyBool(shadow_transparency)
+#define INSTANCING  @shPropertyBool(instancing)
 
 #ifdef SH_VERTEX_SHADER
 
@@ -9,13 +10,31 @@
         shVertexInput(float2, uv0)
         shOutput(float2, UV)
 		#endif
+	#if INSTANCING
+        shUniform(float4x4, vp)   @shAutoConstant(vp, viewproj_matrix)
+		shVertexInput(float4, uv1)
+		shVertexInput(float4, uv2)
+		shVertexInput(float4, uv3)
+ 	#else
         shUniform(float4x4, wvp)  @shAutoConstant(wvp, worldviewproj_matrix)
+	#endif
         shOutput(float2, depth)
 
     SH_START_PROGRAM
     {
-	    //  this is the view space position
-	    shOutputPosition = shMatrixMult(wvp, shInputPosition);
+		#if INSTANCING
+			float4x4 world;
+			world[0] = uv1;
+			world[1] = uv2;
+			world[2] = uv3;
+			world[3] = float4(0,0,0,1);
+			float4 wpos = float4( shMatrixMult(world, shInputPosition).xyz, 1.0f);
+			//  transform the position
+			shOutputPosition = shMatrixMult( vp, wpos );
+		#else
+			//  this is the view space position
+			shOutputPosition = shMatrixMult(wvp, shInputPosition);
+	    #endif
 
 	    //  depth info for the fragment
 	    depth.x = shOutputPosition.z;

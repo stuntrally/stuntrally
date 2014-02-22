@@ -151,10 +151,10 @@ void App::materialCreated(sh::MaterialInstance* m, const std::string& configurat
 		t->setShadowCasterMaterial("shadowcaster_nocull");
 	}*/
 
-	/*if (m->hasProperty("instancing") && sh::retrieveValue<sh::StringValue>(m->getProperty("instancing"), 0).get() == "true")
+	if (m->hasProperty("instancing") && sh::retrieveValue<sh::StringValue>(m->getProperty("instancing"), 0).get() == "true")
 	{
 		t->setShadowCasterMaterial("shadowcaster_instancing");
-	}*/
+	}
 
 	if (!m->hasProperty("transparent") || !sh::retrieveValue<sh::BooleanValue>(m->getProperty("transparent"), 0).get())
 	{

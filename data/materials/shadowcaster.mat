@@ -11,6 +11,7 @@ material shadowcaster_default
         shader_properties
         {
             shadow_transparency true
+            instancing false
         }
     }
 }
@@ -28,6 +29,25 @@ material shadowcaster_noalpha
         shader_properties
         {
             shadow_transparency false
+            instancing false
+        }
+    }
+}
+
+material shadowcaster_instancing
+{
+    create_configuration Default
+    allow_fixed_function false
+    pass
+    {
+        fog_override true
+        vertex_program shadowcaster_vertex
+        fragment_program shadowcaster_fragment
+
+        shader_properties
+        {
+            shadow_transparency true
+            instancing true
         }
     }
 }
