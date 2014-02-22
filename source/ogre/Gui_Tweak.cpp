@@ -3,6 +3,7 @@
 #include "common/Gui_Def.h"
 #include "common/data/CData.h"
 #include "common/data/BltObjects.h"
+#include "common/CScene.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "CGui.h"
@@ -251,8 +252,8 @@ void CGui::TweakColSave()
 	fo.close();
 	TweakColUpd(true);
 	
-	app->data->objs->LoadXml();
-	LogO(String("**** Loaded Vegetation objects: ") + toStr(app->data->objs->colsMap.size()));
+	app->scn->data->objs->LoadXml();
+	LogO(String("**** Loaded Vegetation objects: ") + toStr(app->scn->data->objs->colsMap.size()));
 	app->NewGame();
 }
 

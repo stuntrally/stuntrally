@@ -2,6 +2,7 @@
 #include "../common/Def_Str.h"
 #include "../common/RenderConst.h"
 #include "../common/data/SceneXml.h"
+#include "../common/CScene.h"
 #include "../../road/Road.h"  // sun rot
 #include "../shiny/Main/Factory.hpp"
 #include "../../vdrift/dbl.h"
@@ -14,14 +15,15 @@
 #endif
 #include <OgreRoot.h>
 #include <OgreManualObject.h>
+#include <OgreParticleSystem.h>
 using namespace Ogre;
 
 
 //  Sky Dome
-//----------------------------------------------------------------------------------------------------------------------
-void App::CreateSkyDome(String sMater, Vector3 sc)
+//-------------------------------------------------------------------------------------
+void CScene::CreateSkyDome(String sMater, Vector3 sc)
 {
-	ManualObject* m = mSceneMgr->createManualObject();
+	ManualObject* m = app->mSceneMgr->createManualObject();
 	m->begin(sMater, RenderOperation::OT_TRIANGLE_LIST);
 
 	//  divisions- quality
@@ -62,41 +64,92 @@ void App::CreateSkyDome(String sMater, Vector3 sc)
 	m->setVisibilityFlags(RV_Sky);  // hide on minimap
 	#endif
 
-	ndSky = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	ndSky->attachObject(m);
-	ndSky->setScale(sc);
+	app->ndSky = app->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	app->ndSky->attachObject(m);
+	app->ndSky->setScale(sc);
 }
 
-//  fog
-void App::UpdFog(bool bForce)
-{
-	const ColourValue clr(0.5,0.6,0.7,1);
-	bool ok = !pSet->bFog || bForce;
-	if (ok)
-		mSceneMgr->setFog(FOG_LINEAR, clr, 1.f, sc->fogStart, sc->fogEnd);
-	else
-		mSceneMgr->setFog(FOG_NONE, clr, 1.f, 9000, 9200);
 
-	mFactory->setSharedParameter("fogColorSun",  sh::makeProperty<sh::Vector4>(new sh::Vector4(sc->fogClr2.x, sc->fogClr2.y, sc->fogClr2.z, sc->fogClr2.w)));
-	mFactory->setSharedParameter("fogColorAway", sh::makeProperty<sh::Vector4>(new sh::Vector4(sc->fogClr.x,  sc->fogClr.y,  sc->fogClr.z,  sc->fogClr.w)));
-	mFactory->setSharedParameter("fogColorH",    sh::makeProperty<sh::Vector4>(new sh::Vector4(sc->fogClrH.x, sc->fogClrH.y, sc->fogClrH.z, sc->fogClrH.w)));
-	mFactory->setSharedParameter("fogParamsH",   sh::makeProperty<sh::Vector4>(new sh::Vector4(
-		sc->fogHeight, ok ? 1.f/sc->fogHDensity : 0.f, sc->fogHStart, 1.f/(sc->fogHEnd - sc->fogHStart) )));
-}
-
+//  Sun
+//-------------------------------------------------------------------------------------
 inline ColourValue Clr3(const Vector3& v)
 {
 	return ColourValue(v.x, v.y, v.z);
 }
 
-void App::UpdSun()
+void CScene::UpdSun()
 {
 	if (!sun)  return;
 	Vector3 dir = SplineRoad::GetRot(sc->ldYaw, -sc->ldPitch);
 	sun->setDirection(dir);
 	sun->setDiffuseColour(Clr3(sc->lDiff));
 	sun->setSpecularColour(Clr3(sc->lSpec));
-	mSceneMgr->setAmbientLight(Clr3(sc->lAmb));
+	app->mSceneMgr->setAmbientLight(Clr3(sc->lAmb));
+}
+
+//  Fog
+void CScene::UpdFog(bool bForce)
+{
+	const ColourValue clr(0.5,0.6,0.7,1);
+	bool ok = !app->pSet->bFog || bForce;
+	if (ok)
+		app->mSceneMgr->setFog(FOG_LINEAR, clr, 1.f, sc->fogStart, sc->fogEnd);
+	else
+		app->mSceneMgr->setFog(FOG_NONE, clr, 1.f, 9000, 9200);
+
+	app->mFactory->setSharedParameter("fogColorSun",  sh::makeProperty<sh::Vector4>(new sh::Vector4(sc->fogClr2.x, sc->fogClr2.y, sc->fogClr2.z, sc->fogClr2.w)));
+	app->mFactory->setSharedParameter("fogColorAway", sh::makeProperty<sh::Vector4>(new sh::Vector4(sc->fogClr.x,  sc->fogClr.y,  sc->fogClr.z,  sc->fogClr.w)));
+	app->mFactory->setSharedParameter("fogColorH",    sh::makeProperty<sh::Vector4>(new sh::Vector4(sc->fogClrH.x, sc->fogClrH.y, sc->fogClrH.z, sc->fogClrH.w)));
+	app->mFactory->setSharedParameter("fogParamsH",   sh::makeProperty<sh::Vector4>(new sh::Vector4(
+		sc->fogHeight, ok ? 1.f/sc->fogHDensity : 0.f, sc->fogHStart, 1.f/(sc->fogHEnd - sc->fogHStart) )));
+}
+
+
+//  Weather  rain,snow
+//-------------------------------------------------------------------------------------
+void CScene::CreateWeather()
+{
+	if (!pr && !sc->rainName.empty())
+	{	pr = app->mSceneMgr->createParticleSystem("Rain", sc->rainName);
+		pr->setVisibilityFlags(RV_Particles);
+		app->mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr);
+		pr->setRenderQueueGroup(RQG_Weather);
+		pr->getEmitter(0)->setEmissionRate(0);
+	}
+	if (!pr2 && !sc->rain2Name.empty())
+	{	pr2 = app->mSceneMgr->createParticleSystem("Rain2", sc->rain2Name);
+		pr2->setVisibilityFlags(RV_Particles);
+		app->mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr2);
+		pr2->setRenderQueueGroup(RQG_Weather);
+		pr2->getEmitter(0)->setEmissionRate(0);
+	}
+}
+void CScene::DestroyWeather()
+{
+	if (pr)  {  app->mSceneMgr->destroyParticleSystem(pr);   pr=0;  }
+	if (pr2) {  app->mSceneMgr->destroyParticleSystem(pr2);  pr2=0;  }
+}
+
+void CScene::UpdateWeather(Camera* cam, float mul)
+{
+	const Vector3& pos = cam->getPosition(), dir = cam->getDirection();
+	static Vector3 oldPos = Vector3::ZERO;
+
+	Vector3 vel = (pos-oldPos) * app->mWindow->getLastFPS();  oldPos = pos;
+	Vector3 par = pos + dir * 12.f + vel * 0.6f;
+
+	if (pr && sc->rainEmit > 0)
+	{
+		ParticleEmitter* pe = pr->getEmitter(0);
+		pe->setPosition(par);
+		pe->setEmissionRate(mul * sc->rainEmit);
+	}
+	if (pr2 && sc->rain2Emit > 0)
+	{
+		ParticleEmitter* pe = pr2->getEmitter(0);
+		pe->setPosition(par);
+		pe->setEmissionRate(mul * sc->rain2Emit);
+	}
 }
 
 
@@ -143,11 +196,11 @@ void App::SetFactoryDefaults()
 	fct.setGlobalSetting("terrain_normal",   b2s(pSet->ter_mtr >= 2));
 	fct.setGlobalSetting("terrain_parallax", b2s(pSet->ter_mtr >= 3));
 	fct.setGlobalSetting("terrain_triplanarType", toStr(pSet->ter_tripl));
-	fct.setGlobalSetting("terrain_triplanarLayer", toStr(sc->td.triplanar1Layer));
+	fct.setGlobalSetting("terrain_triplanarLayer", toStr(scn->sc->td.triplanar1Layer));
 
 	fct.setGlobalSetting("water_reflect", b2s(pSet->water_reflect));
 	fct.setGlobalSetting("water_refract", b2s(pSet->water_refract));
-	fct.setSharedParameter("waterEnabled", sh::makeProperty<sh::FloatValue> (new sh::FloatValue(0.0)));
+	fct.setSharedParameter("waterEnabled", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(0.0)));
 	fct.setSharedParameter("waterLevel", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(0)));
 	fct.setSharedParameter("waterTimer", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(0)));
 	fct.setSharedParameter("waterSunFade_sunHeight", sh::makeProperty<sh::Vector2>(new sh::Vector2(1, 0.6)));

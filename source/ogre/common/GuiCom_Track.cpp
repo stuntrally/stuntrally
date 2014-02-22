@@ -7,6 +7,7 @@
 #include "data/SceneXml.h"
 #include "data/TracksXml.h"
 #include "data/CData.h"
+#include "CScene.h"
 #ifndef SR_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../CGame.h"
@@ -211,8 +212,8 @@ void CGuiCom::FillTrackLists()
 	for (strlist::iterator i = liTracks.begin(); i != liTracks.end(); ++i)
 	{
 		TrkL trl;  trl.name = *i;  //trl.pA = this;
-		int id = app->data->tracks->trkmap[*i];
-		const TrackInfo* pTrk = id==0 ? 0 : &app->data->tracks->trks[id-1];
+		int id = app->scn->data->tracks->trkmap[*i];
+		const TrackInfo* pTrk = id==0 ? 0 : &app->scn->data->tracks->trks[id-1];
 		trl.ti = pTrk;  // 0 if not in data->tracks
 		liTrk.push_back(trl);
 	}
@@ -317,11 +318,11 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 		app->gui->txTrackAuthor->setCaption("");  // user trks
 	#endif
 	
-	int id = app->data->tracks->trkmap[sTrack];
+	int id = app->scn->data->tracks->trkmap[sTrack];
 	for (int i=0; i < InfTrk; ++i)
 		if (infTrk[ch][i])  infTrk[ch][i]->setCaption("");
 	if (id > 0)
-	{	const TrackInfo& ti = app->data->tracks->trks[id-1];
+	{	const TrackInfo& ti = app->scn->data->tracks->trks[id-1];
 		#define str0(v)  ((v)==0 ? "" : toStr(v))
 		infTrk[ch][0]->setCaption(str0(ti.fluids));
 		infTrk[ch][1]->setCaption(str0(ti.bumps));		infTrk[ch][2]->setCaption(str0(ti.jumps));
@@ -344,9 +345,9 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 
 	//  track time
 	float carMul = app->GetCarTimeMul(pSet->gui.car[0], pSet->gui.sim_mode);
-	float timeTrk = app->data->tracks->times[sTrack];
+	float timeTrk = app->scn->data->tracks->times[sTrack];
 	std::string speedTrk = fToStr(len / timeTrk * m, 0,3) + unit;
-	float timeT = (/*place*/1 * app->data->cars->magic * timeTrk + timeTrk) / carMul;
+	float timeT = (/*place*/1 * app->scn->data->cars->magic * timeTrk + timeTrk) / carMul;
 	bool no = timeCur < 0.1f || !rd;
 	if (ch==1)  no = false;  // show track's not current
 	stTrk[ch][9]->setCaption(CHud::StrTime(no ? 0.f : timeT));

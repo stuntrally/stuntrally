@@ -5,6 +5,7 @@
 #include "data/SceneXml.h"
 #include "data/BltObjects.h"
 #include "ShapeData.h"
+#include "CScene.h"
 #include "QTimer.h"
 #include "../../road/SplineBase.h"
 #include "GuiCom.h"
@@ -36,7 +37,6 @@ using namespace Ogre;
 //---------------------------------------------------------------------------------------------------------------
 
 Terrain* gTerrain = NULL;
-//bool gbLookAround = false;
 
 inline Real getTerrainHeight(const Real x, const Real z, void *userData)
 {
@@ -44,7 +44,26 @@ inline Real getTerrainHeight(const Real x, const Real z, void *userData)
 }
 
 
-void App::CreateTrees()
+void CScene::DestroyTrees()
+{
+	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
+	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
+}
+
+void CScene::RecreateTrees()
+{
+#ifdef SR_EDITOR
+	if (!app->pSet->bTrees)
+		DestroyTrees();
+	else
+		CreateTrees();
+#else
+	DestroyTrees();  // not used
+	CreateTrees();
+#endif
+}
+
+void CScene::CreateTrees()
 {
 	QTimer ti;  ti.update();  /// time
 	gTerrain = terrain;
@@ -59,7 +78,7 @@ void App::CreateTrees()
 	}
 	imgRoadSize = imgRoad.getWidth();  // square[]
 	
-	roadDens.Load(gcom->TrkDir()+"objects/roadDensity.png");
+	roadDens.Load(app->gcom->TrkDir()+"objects/roadDensity.png");
 	
 	UpdGrassDens();  //!
 	
@@ -81,6 +100,7 @@ void App::CreateTrees()
 
 	bool bWind = 1;	 /// WIND
 
+	SETTINGS* pSet = app->pSet;
 	Real fGrass = pSet->grass * sc->densGrass * 3.0f;  // std::min(pSet->grass, 
 	#ifdef SR_EDITOR
 	Real fTrees = pSet->gui.trees * sc->densTrees;
@@ -91,9 +111,9 @@ void App::CreateTrees()
 	if (fGrass > 0.f)
 	{
 		#ifndef SR_EDITOR
-		grass = new PagedGeometry(mSplitMgr->mCameras.front(), sc->grPage);  //30
+		grass = new PagedGeometry(app->mSplitMgr->mCameras.front(), sc->grPage);  //30
 		#else
-		grass = new PagedGeometry(mCamera, sc->grPage);  //30
+		grass = new PagedGeometry(app->mCamera, sc->grPage);  //30
 		#endif
 		
 		// create dir if not exist
@@ -143,11 +163,10 @@ void App::CreateTrees()
 	//---------------------------------------------- Trees ----------------------------------------------
 	if (fTrees > 0.f)
 	{
-		// fast: 100_ 80 j1T!,  400 400 good sav2f  200 220 both`-
 		#ifndef SR_EDITOR
-		trees = new PagedGeometry(mSplitMgr->mCameras.front(), sc->trPage);
+		trees = new PagedGeometry(app->mSplitMgr->mCameras.front(), sc->trPage);
 		#else
-		trees = new PagedGeometry(mCamera, sc->trPage);
+		trees = new PagedGeometry(app->mCamera, sc->trPage);
 		#endif
 		
 		// create dir if not exist
@@ -185,7 +204,7 @@ void App::CreateTrees()
 			PagedLayer& pg = sc->pgLayersAll[sc->pgLayers[l]];
 			String file = pg.name, fpng = file+".png";
 
-			Entity* ent = mSceneMgr->createEntity(file);
+			Entity* ent = app->mSceneMgr->createEntity(file);
 			ent->setVisibilityFlags(RV_Vegetation);  ///vis+  disable in render targets
 			if (pg.windFx > 0.f)  {
 				trees->setCustomParam(ent->getName(), "windFactorX", pg.windFx);
@@ -210,7 +229,7 @@ void App::CreateTrees()
 			{
 				if (!resMgr.resourceExistsInAnyGroup(fpng))
 				{
-					ImpostorPage group(mSceneMgr, trees);
+					ImpostorPage group(app->mSceneMgr, trees);
 					ImpostorTexture* it = new ImpostorTexture(&group, ent, true);  // only to renderTextures()
 					delete it;
 				}
@@ -366,8 +385,8 @@ void App::CreateTrees()
 					bco->setFriction(shp->friction);  bco->setRestitution(shp->restitution);
 					bco->setCollisionFlags(bco->getCollisionFlags() |
 						btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
-					pGame->collision.world->addCollisionObject(bco);
-					pGame->collision.shapes.push_back(bshp);
+					app->pGame->collision.world->addCollisionObject(bco);
+					app->pGame->collision.shapes.push_back(bshp);
 					++cntshp;
 				}
 				else  // use trimesh  . . . . . . . . . . . . 
@@ -387,8 +406,8 @@ void App::CreateTrees()
 					bco->setFriction(shp->friction);  bco->setRestitution(shp->restitution);
 					bco->setCollisionFlags(bco->getCollisionFlags() |
 						btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
-					pGame->collision.world->addCollisionObject(bco);
-					pGame->collision.shapes.push_back(shape);
+					app->pGame->collision.world->addCollisionObject(bco);
+					app->pGame->collision.shapes.push_back(shape);
 					++cntshp;
 				}
 				#endif

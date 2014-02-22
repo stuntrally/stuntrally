@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/data/SceneXml.h"
+#include "../ogre/common/CScene.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -78,8 +79,8 @@ void CGui::WarningsCheck(const Scene* sc, const SplineRoad* road)
 		if (stPos.x < -tws || stPos.x > tws || stPos.z < -tws || stPos.z > tws)
 			Warn(ERR,"Car start outside track area  Whoa :o");
 		
-		if (app->terrain)  // won't work in tool..
-		{	float yt = app->terrain->getHeightAtWorldPosition(stPos), yd = stPos.y - yt - 0.5f;
+		if (app->scn->terrain)  // won't work in tool..
+		{	float yt = app->scn->terrain->getHeightAtWorldPosition(stPos), yd = stPos.y - yt - 0.5f;
 			//Warn(TXT,"Car start to terrain distance "+fToStr(yd,1,4));
 			if (yd < 0.f)   Warn(ERR, "Car start below terrain  Whoa :o");
 			if (yd > 0.3f)  Warn(INFO,"Car start far above terrain\n (skip this if on bridge or in pipe), distance: "+fToStr(yd,1,4));
@@ -87,11 +88,11 @@ void CGui::WarningsCheck(const Scene* sc, const SplineRoad* road)
 		
 
 		//-  other start places inside terrain (split screen)  ----
-		if (app->terrain)  // won't work in tool..
+		if (app->scn->terrain)  // won't work in tool..
 		for (int i=1; i<4; ++i)
 		{
 			Vector3 p = stPos + i * stDir * 6.f;  //par dist
-			float yt = app->terrain->getHeightAtWorldPosition(p), yd = p.y - yt - 0.5f;
+			float yt = app->scn->terrain->getHeightAtWorldPosition(p), yd = p.y - yt - 0.5f;
 			String si = toStr(i);
 							Warn(TXT, "Car "+si+" start to ter dist "+fToStr(yd,1,4));
 			//if (yd < 0.f)   Warn(WARN,"Car "+si+" start below terrain !");  // moved above in game

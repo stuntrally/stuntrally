@@ -2,6 +2,7 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/GuiCom.h"
+#include "../ogre/common/CScene.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -96,6 +97,7 @@ bool App::frameEnded(const FrameEvent& evt)
 	mInputWrapper->capture();
 
 	//  road pick
+	SplineRoad* road = scn->road;
 	if (road)
 	{
 		const MyGUI::IntPoint& mp = MyGUI::InputManager::getInstance().getMousePosition();
@@ -103,7 +105,7 @@ bool App::frameEnded(const FrameEvent& evt)
 		bool setpos = edMode >= ED_Road || !brLockPos, hide = !(edMode == ED_Road && bEdit());
 		road->Pick(mCamera, mx, my,  setpos, edMode == ED_Road, hide);
 
-		if (sc->vdr)  // blt ray hit
+		if (scn->sc->vdr)  // blt ray hit
 		{
 			Ray ray = mCamera->getCameraToViewportRay(mx,my);
 			const Vector3& pos = mCamera->getDerivedPosition(), dir = ray.getDirection();
@@ -128,15 +130,15 @@ bool App::frameEnded(const FrameEvent& evt)
 	if (tu >= pSet->ter_skip)
 	if (bTerUpd)
 	{	bTerUpd = false;  tu = 0;
-		if (mTerrainGroup)
-			mTerrainGroup->update();
+		if (scn->mTerrainGroup)
+			scn->mTerrainGroup->update();
 	}	tu++;
 
 	if (bu >= pSet->ter_skip)
 	if (bTerUpdBlend)
 	{	bTerUpdBlend = false;  bu = 0;
 		//if (terrain)
-			UpdBlendmap();
+			scn->UpdBlendmap();
 	}	bu++;
 
 
@@ -144,9 +146,10 @@ bool App::frameEnded(const FrameEvent& evt)
 	TerCircleUpd();
 	bool def = false;
 	static bool defOld = false;
-	float gd = sc->densGrass;
-	static float gdOld = sc->densGrass;
-	if (terrain && road && bEdit() && road->bHitTer)
+	float gd = scn->sc->densGrass;
+	static float gdOld = scn->sc->densGrass;
+
+	if (scn->terrain && road && bEdit() && road->bHitTer)
 	{
 		float dt = evt.timeSinceLastFrame;
 		Real s = shift ? 0.25 : ctrl ? 4.0 :1.0;
@@ -173,16 +176,16 @@ if (pSet->bTrees)
 	///  upd grass
 	if (gd != gdOld)
 	{
-		Real fGrass = pSet->grass * sc->densGrass * 3.0f;
-		for (int i=0; i < sc->ciNumGrLay; ++i)
+		Real fGrass = pSet->grass * scn->sc->densGrass * 3.0f;
+		for (int i=0; i < scn->sc->ciNumGrLay; ++i)
 		{
-			const SGrassLayer* gr = &sc->grLayersAll[i];
+			const SGrassLayer* gr = &scn->sc->grLayersAll[i];
 			if (gr->on)
 			{
 				Forests::GrassLayer *l = gr->grl;
 				if (l)
 				{	l->setDensity(gr->dens * fGrass);
-					grass->reloadGeometry();
+					scn->grass->reloadGeometry();
 				}
 			}
 		}
@@ -190,20 +193,20 @@ if (pSet->bTrees)
 
 	if (!def && defOld)
 	{
-		UpdGrassDens();
+		scn->UpdGrassDens();
 		//if (grd.rnd)
 		//	grd.rnd->update();
 
-		for (int i=0; i < sc->ciNumGrLay; ++i)
+		for (int i=0; i < scn->sc->ciNumGrLay; ++i)
 		{
-			const SGrassLayer* gr = &sc->grLayersAll[i];
+			const SGrassLayer* gr = &scn->sc->grLayersAll[i];
 			if (gr->on)
 			{
 				Forests::GrassLayer *l = gr->grl;
 				if (l)
-				{	l->setDensityMap(grassDensRTex, Forests::MapChannel(std::min(3,i)));  // l->chan);
+				{	l->setDensityMap(scn->grassDensRTex, Forests::MapChannel(std::min(3,i)));  // l->chan);
 					//l->applyShader();
-					grass->reloadGeometry();
+					scn->grass->reloadGeometry();
 				}
 			}
 		}
@@ -214,8 +217,8 @@ if (pSet->bTrees)
 
 	///  paged  * * *  ? frameStarted
 	if (road)
-	{	if (grass)  grass->update();
-		if (trees)  trees->update();
+	{	if (scn->grass)  scn->grass->update();
+		if (scn->trees)  scn->trees->update();
 	}
 
 
@@ -223,7 +226,7 @@ if (pSet->bTrees)
 	if (bTrGrUpd)
 	{	bTrGrUpd = false;
 		pSet->bTrees = !pSet->bTrees;
-		UpdTrees();
+		scn->RecreateTrees();
 	}
 	
 	
@@ -236,8 +239,8 @@ if (pSet->bTrees)
 	///**  Render Targets update
 	if (edMode == ED_PrvCam)
 	{
-		sc->camPos = mCamera->getPosition();
-		sc->camDir = mCamera->getDirection();
+		scn->sc->camPos = mCamera->getPosition();
+		scn->sc->camDir = mCamera->getDirection();
 		if (rt[RTs-1].tex)
 			rt[RTs-1].tex->update();
 	}else{
@@ -309,8 +312,8 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	if (bRecreateFluids)
 	{	bRecreateFluids = false;
 
-		DestroyFluids();
-		CreateFluids();
+		scn->DestroyFluids();
+		scn->CreateFluids();
 		UpdFluidBox();
 	}
 	
@@ -337,23 +340,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	
 	
 	//  Update rain/snow - depends on camera
-	const Vector3& pos = mCamera->getPosition(), dir = mCamera->getDirection();
-	static Vector3 oldPos = Vector3::ZERO;
-	Vector3 vel = (pos-oldPos)/ (1.0f / mWindow->getLastFPS());  oldPos = pos;
-	Vector3 par = pos + dir * 12 + vel * 0.4;
-	float f = pSet->bWeather ? 0.f : 1.f;
-	if (pr)
-	{
-		ParticleEmitter* pe = pr->getEmitter(0);
-		pe->setPosition(par);
-		pe->setEmissionRate(f * sc->rainEmit);
-	}
-	if (pr2)
-	{
-		ParticleEmitter* pe = pr2->getEmitter(0);
-		pe->setPosition(par);
-		pe->setEmissionRate(f * sc->rain2Emit);
-	}
+	scn->UpdateWeather(mCamera, pSet->bWeather ? 0.f : 1.f);
 
 	// update shader time
 	mTimer += evt.timeSinceLastFrame;

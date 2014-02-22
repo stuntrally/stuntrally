@@ -18,13 +18,14 @@
 
 
 namespace wraps {	class RenderBoxScene;  }
-class App;  class SETTINGS;  class Scene;  class CData;  class CGuiCom;
+class App;  class SETTINGS;  class CScene;  class Scene;  class CData;  class CGuiCom;
 
 
 class CGui : public BGui
 {
 public:
-	App* app;  SETTINGS* pSet;  Scene* sc;  CData* data;
+	App* app;  SETTINGS* pSet;
+	CScene* scn;  Scene* sc;  CData* data;
 	MyGUI::Gui* mGui;  CGuiCom* gcom;
 
 	CGui(App* app1);

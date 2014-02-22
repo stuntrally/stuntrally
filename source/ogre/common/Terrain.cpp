@@ -4,6 +4,7 @@
 #include "../common/ShapeData.h"
 #include "../common/QTimer.h"
 #include "../common/GuiCom.h"
+#include "../common/CScene.h"
 #include "../common/data/SceneXml.h"
 #include "TerrainMaterial.h"
 #include "../vdrift/pathmanager.h"
@@ -25,13 +26,13 @@ using namespace Ogre;
 
 ///  Setup Terrain
 //---------------------------------------------------------------------------------------------------------------
-void App::UpdTerErr()
+void CScene::UpdTerErr()
 {
 	if (mTerrainGlobals)
-		mTerrainGlobals->setMaxPixelError(pSet->terdetail * sc->td.errorNorm);  // 1.7 ..20
+		mTerrainGlobals->setMaxPixelError(app->pSet->terdetail * sc->td.errorNorm);  // 1.7 ..20
 }
 
-void App::configureTerrainDefaults(Light* l)
+void CScene::SetupTerrain()
 {
 	TerrainMaterialGeneratorPtr matGen;
 	TerrainMaterial* matGenP = new TerrainMaterial();
@@ -41,13 +42,13 @@ void App::configureTerrainDefaults(Light* l)
 	UpdTerErr();
 
 	mTerrainGlobals->setLayerBlendMapSize(4);  // we use our own rtt, so reduce this
-	mTerrainGlobals->setLightMapDirection(l->getDerivedDirection());
-	mTerrainGlobals->setCompositeMapAmbient(mSceneMgr->getAmbientLight());
-	mTerrainGlobals->setCompositeMapDiffuse(l->getDiffuseColour());
+	mTerrainGlobals->setLightMapDirection(sun->getDerivedDirection());
+	mTerrainGlobals->setCompositeMapAmbient(app->mSceneMgr->getAmbientLight());
+	mTerrainGlobals->setCompositeMapDiffuse(sun->getDiffuseColour());
 
 	mTerrainGlobals->setCompositeMapSize(sc->td.iTerSize-1);  // par, ..1k
-	mTerrainGlobals->setCompositeMapDistance(pSet->terdist);  //400
-	mTerrainGlobals->setLightMapSize(ciShadowSizesA[pSet->lightmap_size]);  //256 ..2k
+	mTerrainGlobals->setCompositeMapDistance(app->pSet->terdist);  //400
+	mTerrainGlobals->setLightMapSize(ciShadowSizesA[app->pSet->lightmap_size]);  //256 ..2k
 	mTerrainGlobals->setSkirtSize(1);  // low because in water reflect
 
 	//  import settings
@@ -131,22 +132,22 @@ void App::configureTerrainDefaults(Light* l)
 	}
 }
 
-void App::configureHorizonDefaults(Ogre::Light* l)
+void CScene::SetupHorizon()
 {
 	TerrainMaterialGeneratorPtr matGen;
 	TerrainMaterial* matGenP = new TerrainMaterial();
 	matGen.bind(matGenP);
 
 	mHorizonGlobals->setDefaultMaterialGenerator(matGen);
-	mTerrainGlobals->setMaxPixelError(pSet->terdetail * sc->td.errorNorm);  // 1.7 ..20
+	mTerrainGlobals->setMaxPixelError(app->pSet->terdetail * sc->td.errorNorm);  // 1.7 ..20
 
-	mHorizonGlobals->setLightMapDirection(l->getDerivedDirection());
-	mHorizonGlobals->setCompositeMapAmbient(mSceneMgr->getAmbientLight());
-	mHorizonGlobals->setCompositeMapDiffuse(l->getDiffuseColour());
+	mHorizonGlobals->setLightMapDirection(sun->getDerivedDirection());
+	mHorizonGlobals->setCompositeMapAmbient(app->mSceneMgr->getAmbientLight());
+	mHorizonGlobals->setCompositeMapDiffuse(sun->getDiffuseColour());
 
 	mHorizonGlobals->setCompositeMapSize(sc->td.iTerSize-1);  // par, 128,256 ..
-	mHorizonGlobals->setCompositeMapDistance(pSet->terdist);  //..
-	mHorizonGlobals->setLightMapSize(ciShadowSizesA[pSet->lightmap_size]);  //256 ..2k
+	mHorizonGlobals->setCompositeMapDistance(app->pSet->terdist);  //..
+	mHorizonGlobals->setLightMapSize(ciShadowSizesA[app->pSet->lightmap_size]);  //256 ..2k
 	mHorizonGlobals->setSkirtSize(1);
 	//matProfile->setLightmapEnabled(false);
 
@@ -174,20 +175,20 @@ void App::configureHorizonDefaults(Ogre::Light* l)
 ///--------------------------------------------------------------------------------------------------------------
 //  Create Terrain
 ///--------------------------------------------------------------------------------------------------------------
-void App::CreateTerrain(bool bNewHmap, bool bTer)
+void CScene::CreateTerrain(bool bNewHmap, bool bTer)
 {
 	QTimer tm;  tm.update();  /// time
 
 	terrain = 0;
 	
 	///  sky
-	Vector3 scl = pSet->view_distance*Vector3::UNIT_SCALE;
+	Vector3 scl = app->pSet->view_distance*Vector3::UNIT_SCALE;
 	CreateSkyDome(sc->skyMtr, scl);
 	UpdFog();
 
 	//  light
-	mSceneMgr->destroyAllLights();
-	sun = mSceneMgr->createLight("Sun");
+	app->mSceneMgr->destroyAllLights();
+	sun = app->mSceneMgr->createLight("Sun");
 	sun->setType(Light::LT_DIRECTIONAL);  UpdSun();
 
 
@@ -200,7 +201,7 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 		delete[] sc->td.hfHeight;  sc->td.hfHeight = new float[wxy];
 		const int size = wxy * sizeof(float);
 
-		String name = gcom->TrkDir() + (bNewHmap ? "heightmap-new.f32" : "heightmap.f32");
+		String name = app->gcom->TrkDir() + (bNewHmap ? "heightmap-new.f32" : "heightmap.f32");
 
 		//  load from f32 HMap +
 		{
@@ -225,11 +226,11 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 			mTerrainGlobals = OGRE_NEW TerrainGlobalOptions();
 		OGRE_DELETE mTerrainGroup;
 
-		mTerrainGroup = OGRE_NEW TerrainGroup(mSceneMgr, Terrain::ALIGN_X_Z,
+		mTerrainGroup = OGRE_NEW TerrainGroup(app->mSceneMgr, Terrain::ALIGN_X_Z,
 			sc->td.iTerSize, sc->td.fTerWorldSize);
 		mTerrainGroup->setOrigin(Vector3::ZERO);
 
-		configureTerrainDefaults(sun);
+		SetupTerrain();
 
 		if (sc->td.hfHeight)
 			mTerrainGroup->defineTerrain(0,0, sc->td.hfHeight);
@@ -250,17 +251,17 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 
 
 	//  Horizon  ----------
-	if (pSet->horizon)
+	if (app->pSet->horizon)
 	{
 		if (!mHorizonGlobals)
 			mHorizonGlobals = OGRE_NEW TerrainGlobalOptions();
 		OGRE_DELETE mHorizonGroup;
 
-		mHorizonGroup = OGRE_NEW TerrainGroup(mSceneMgr, Terrain::ALIGN_X_Z,
+		mHorizonGroup = OGRE_NEW TerrainGroup(app->mSceneMgr, Terrain::ALIGN_X_Z,
 			sc->td.iTerSize, sc->td.fTerWorldSize * 16.f);
 		mHorizonGroup->setOrigin(Vector3::ZERO);
 
-		configureHorizonDefaults(sun);
+		SetupHorizon();
 
 		//if (sc->td.hfHeight)
 		//	mHorizonGroup->defineTerrain(0,0, sc->td.hfHeight);
@@ -291,9 +292,23 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 }
 
 
+//  Destroy
+void CScene::DestroyTerrain()
+{
+	for (int i=0; i < 6; ++i)
+	{
+		texLayD[i].Destroy();
+		texLayN[i].Destroy();
+	}
+	terrain = 0;
+	if (mTerrainGroup)
+		mTerrainGroup->removeAllTerrains();
+}
+
+
 //  Bullet Terrain
 //---------------------------------------------------------------------------------------------------------------
-void App::CreateBltTerrain()
+void CScene::CreateBltTerrain()
 {
 	btHeightfieldTerrainShape* hfShape = new btHeightfieldTerrainShape(
 		sc->td.iVertsX, sc->td.iVertsY, sc->td.hfHeight, sc->td.fTriangleSize,
@@ -313,10 +328,10 @@ void App::CreateBltTerrain()
 	col->setCollisionFlags(col->getCollisionFlags() |
 		btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 	#ifndef SR_EDITOR  // game
-		pGame->collision.world->addCollisionObject(col);
-		pGame->collision.shapes.push_back(hfShape);
+		app->pGame->collision.world->addCollisionObject(col);
+		app->pGame->collision.shapes.push_back(hfShape);
 	#else
-		world->addCollisionObject(col);
+		app->world->addCollisionObject(col);
 	#endif
 	
 	#ifndef SR_EDITOR
@@ -341,8 +356,8 @@ void App::CreateBltTerrain()
 		col->setCollisionFlags(col->getCollisionFlags() |
 			btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 
-		pGame->collision.world->addCollisionObject(col);
-		pGame->collision.shapes.push_back(shp);
+		app->pGame->collision.world->addCollisionObject(col);
+		app->pGame->collision.shapes.push_back(shp);
 	}
 	#endif
 }

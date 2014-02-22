@@ -4,6 +4,7 @@
 #include "CHud.h"
 #include "CGui.h"
 #include "common/data/SceneXml.h"
+#include "common/CScene.h"
 #include "../vdrift/settings.h"
 #include <LinearMath/btQuickprof.h>
 #include <OgreManualObject.h>
@@ -125,12 +126,13 @@ void CHud::UpdMiniTer()
 	if (!pass)  return;
 	try
 	{	Ogre::GpuProgramParametersSharedPtr par = pass->getFragmentProgramParameters();
+		bool ter = app->scn->sc->ter;
 		if (par->_findNamedConstantDefinition("showTerrain",false))
-			par->setNamedConstant("showTerrain", pSet->mini_terrain && app->sc->ter ? 1.f : 0.f);
+			par->setNamedConstant("showTerrain", pSet->mini_terrain && ter ? 1.f : 0.f);
 		if (par->_findNamedConstantDefinition("showBorder",false))
-			par->setNamedConstant("showBorder", pSet->mini_border && app->sc->ter ? 1.f : 0.f);
+			par->setNamedConstant("showBorder", pSet->mini_border && ter ? 1.f : 0.f);
 		if (par->_findNamedConstantDefinition("square",false))
-			par->setNamedConstant("square", pSet->mini_zoomed && app->sc->ter ? 0.f : 1.f);
+			par->setNamedConstant("square", pSet->mini_zoomed && ter ? 0.f : 1.f);
 	}
 	catch(...){  }
 }

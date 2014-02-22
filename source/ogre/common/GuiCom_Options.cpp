@@ -2,6 +2,7 @@
 #include "Def_Str.h"
 #include "Gui_Def.h"
 #include "GuiCom.h"
+#include "CScene.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
 #ifndef SR_EDITOR
@@ -176,13 +177,13 @@ void CGuiCom::slViewDist(SV* sv)
 
 void CGuiCom::slTerDetail(SV*)
 {
-	app->UpdTerErr();
+	app->scn->UpdTerErr();
 }
 
 void CGuiCom::slTerDist(SV*)
 {
-	if (app->mTerrainGlobals)
-		app->mTerrainGlobals->setCompositeMapDistance(pSet->terdist);
+	if (app->scn->mTerrainGlobals)
+		app->scn->mTerrainGlobals->setCompositeMapDistance(pSet->terdist);
 }
 
 //  trees/grass
@@ -196,21 +197,21 @@ void CGuiCom::btnTrGrReset(WP wp)
 
 
 //  shadows
-void CGuiCom::btnShadows(WP){	app->changeShadows();	}
-void CGuiCom::btnShaders(WP){	app->changeShadows();	}
+void CGuiCom::btnShadows(WP){	app->scn->changeShadows();	}
+void CGuiCom::btnShaders(WP){	app->scn->changeShadows();	}
 
 
 //  water
 void CGuiCom::chkWater(Ck*)
 {
-	app->mWaterRTT->setReflect(pSet->water_reflect);
-	app->mWaterRTT->setRefract(pSet->water_refract);
-	app->changeShadows();
-	app->mWaterRTT->recreate();
+	app->scn->mWaterRTT->setReflect(pSet->water_reflect);
+	app->scn->mWaterRTT->setRefract(pSet->water_refract);
+	app->scn->changeShadows();
+	app->scn->mWaterRTT->recreate();
 }
 
 void CGuiCom::slWaterSize(SV*)
 {
-	app->mWaterRTT->setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
-	app->mWaterRTT->recreate();
+	app->scn->mWaterRTT->setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
+	app->scn->mWaterRTT->recreate();
 }

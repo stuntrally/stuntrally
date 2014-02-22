@@ -22,11 +22,9 @@
 const int ciAngSnapsNum = 7;
 const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,5,15,30,45,90,180};
 
-namespace Forests {  class PagedGeometry;  }
-namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;
-	class Light;  class Rectangle2D;  class SceneNode;  class RenderTexture;  }
+namespace Ogre  {  class Rectangle2D;  class SceneNode;  class RenderTexture;  }
 namespace sh {  class Factory;  }
-class Scene;  class WaterRTT;  class CData;  class CGui;  class CGuiCom;
+class CScene;  class CGui;  class CGuiCom;
 
 enum ED_OBJ {  EO_Move=0, EO_Rotate, EO_Scale  };
 
@@ -37,37 +35,20 @@ public:
 	App(class SETTINGS* pSet1);
 	virtual ~App();
 
-
-	Scene* sc;  /// scene.xml
-
-	CData* data;  // xmls
+	CScene* scn;
 
 	//  materials
 	sh::Factory* mFactory;
-	//  to be executed after BaseApp init
 	void postInit(), SetFactoryDefaults();
 
-	WaterRTT* mWaterRTT;
 
 	///  Gui
 	CGui* gui;
 	CGuiCom* gcom;
 
 	PreviewTex prvView,prvRoad,prvTer;  // track tab
-	PreviewTex roadDens;
 
-
-	// TODO:  CScene* scn;  //...
-	Ogre::Light* sun;
-	void UpdFog(bool bForce=false), UpdSun();
-
-	//  Weather  rain, snow
-	Ogre::ParticleSystem *pr,*pr2;
-	void CreateWeather(),DestroyWeather();
 	float mTimer;
-
-	//  trees
-	Forests::PagedGeometry *trees, *grass;
 
 	
 	///  main
@@ -96,18 +77,10 @@ public:
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	bool bNewHmap, bTrGrUpd;
-	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget), UpdTrees();
-
-	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain();
-	void CreateTrees();
+	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget);
 
 	void CreateObjects(), DestroyObjects(bool clear);
 	void UpdObjPick(), PickObject(), ToggleObjSim();
-
-	void CreateFluids(), DestroyFluids(), CreateBltFluids();
-	void UpdFluidBox(), UpdateWaterRTT(Ogre::Camera* cam), UpdMtrWaterDepth();
-
-	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 
 
 	///  rnd to tex  minimap  * * * * * * * * *	
@@ -130,73 +103,10 @@ public:
 	virtual void postRenderTargetUpdate(const Ogre::RenderTargetEvent &evt);
 	
 
-	//  fluids to destroy
-	std::vector<Ogre::String/*MeshPtr*/> vFlSMesh;
-	std::vector<Ogre::Entity*> vFlEnt;
-	std::vector<Ogre::SceneNode*> vFlNd;
+	//  fluids
 	int iFlCur;  bool bRecreateFluids;
-
+	void UpdFluidBox(), UpdMtrWaterDepth();
 	
-	///  horizon
-	Ogre::Terrain* horizon;
-	Ogre::TerrainGlobalOptions* mHorizonGlobals;
-	Ogre::TerrainGroup* mHorizonGroup;
-	void configureHorizonDefaults(Ogre::Light* l);
-	
-	///  terrain
-	PreviewTex texLayD[6],texLayN[6];
-	Ogre::Terrain* terrain;
-	Ogre::TerrainGlobalOptions* mTerrainGlobals;
-	Ogre::TerrainGroup* mTerrainGroup;
-	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
-
-	//  blendmap, rtt
-	void CreateBlendTex(), UpdBlendmap(), UpdLayerPars();
-	void UpdGrassDens(), UpdGrassPars();
-	
-	//  tex, mtr names
-	const static Ogre::String sHmap, sAng,sAngMat,
-		sBlend,sBlendMat, sGrassDens,sGrassDensMat;
-	//  height, angles, blend
-	Ogre::TexturePtr heightTex, angleRTex, blendRTex;  //, blMap;
-	//  grass density and channels
-	Ogre::TexturePtr grassDensRTex;
-
-	struct RenderToTex  // rtt common
-	{
-		Ogre::RenderTexture* rnd;  Ogre::Texture* tex;
-		Ogre::SceneManager* scm;  Ogre::Camera* cam;  Ogre::Viewport* vp;
-		Ogre::Rectangle2D* rect;  Ogre::SceneNode* nd;
-
-		void Null()
-		{	rnd = 0;  tex = 0;  scm = 0;  cam = 0;  vp = 0;  rect = 0;  nd = 0;   }
-		RenderToTex()
-		{	Null();   }
-
-		void Setup(Ogre::Root* rt, Ogre::String sName, Ogre::TexturePtr pTex, Ogre::String sMtr);
-	};
-	RenderToTex blendRTT, angleRTT, grassDensRTT;
-
-	float Noise(float x, float zoom, int octaves, float persistence);
-	float Noise(float x, float y, float zoom, int octaves, float persistance);
-	//     xa  xb
-	//1    .___.
-	//0__./     \.___
-	//   xa-s    xb+s    // val, min, max, smooth range
-	inline float linRange(const float& x, const float& xa, const float& xb, const float& s)
-	{
-		if (x <= xa-s || x >= xb+s)  return 0.f;
-		if (x >= xa && x <= xb)  return 1.f;
-		if (x < xa)  return (x-xa)/s+1;
-		if (x > xb)  return (xb-x)/s+1;
-		return 0.f;
-	}
-		
-	//  shadows
-	void changeShadows(), UpdPSSMMaterials();
-	Ogre::Vector4 splitPoints;
-	Ogre::ShadowCameraSetupPtr mPSSMSetup;
-
 
 	//  terrain cursor, circle mesh
 	Ogre::ManualObject* moTerC;
@@ -249,6 +159,7 @@ public:
 	//  brush deform
 	bool getEditRect(Ogre::Vector3& pos, Ogre::Rect& brushrect, Ogre::Rect& maprect, int size, int& cx, int& cy);
 
+	//  terrain edit
 	void deform(Ogre::Vector3 &pos, float dtime, float brMul);
 	void height(Ogre::Vector3 &pos, float dtime, float brMul);
 

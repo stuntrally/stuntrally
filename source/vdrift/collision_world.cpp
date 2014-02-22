@@ -3,6 +3,7 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/data/SceneXml.h"
 #include "../ogre/common/ShapeData.h"
+#include "../ogre/common/CScene.h"
 #include "collision_world.h"
 #include "tobullet.h"
 #include "collision_contact.h"
@@ -455,7 +456,7 @@ bool COLLISION_WORLD::CastRay(
 		norm = ToMathVector<float>(res.m_hitNormalWorld);
 		dist = res.m_closestHitFraction * length;
 		col = res.m_collisionObject;
-		const TerData& td = pApp->sc->td;
+		const TerData& td = pApp->scn->sc->td;
 
 		if (col->isStaticObject() /*&& (c->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE == 0)*/)
 		{

@@ -1451,6 +1451,14 @@
 				Name="SceneCommon"
 				>
 				<File
+					RelativePath="..\source\ogre\common\CScene.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\common\CScene.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\ogre\common\PreviewTex.cpp"
 					>
 				</File>

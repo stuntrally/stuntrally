@@ -3,6 +3,7 @@
 #include "../ogre/common/RenderConst.h"
 #include "../ogre/common/QTimer.h"
 #include "../ogre/common/GuiCom.h"
+#include "../ogre/common/CScene.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -50,7 +51,7 @@ void App::Rnd2TexSetup()
 			mSceneMgr->destroyCamera(sCam);  // dont destroy old - const tex sizes opt..
 			
 			///  rnd to tex - same dim as Hmap	// after track load
-			Real fDim = sc->td.fTerWorldSize;  // world dim  ..vdr
+			Real fDim = scn->sc->td.fTerWorldSize;  // world dim  ..vdr
 			TexturePtr texture = TextureManager::getSingleton().createManual(
 				sTex, rgDef, TEX_TYPE_2D,
 				dim[i], dim[i], 0, PF_R8G8B8A8, TU_RENDERTARGET);
@@ -130,7 +131,7 @@ void App::SaveGrassDens()
 	PixelBox pb_rd(w,h,1, PF_BYTE_RGBA, rd);
 	rt[1].tex->copyContentsToMemory(pb_rd, RenderTarget::FB_FRONT);
 
-	const int f = std::max(0, sc->grDensSmooth);
+	const int f = std::max(0, scn->sc->grDensSmooth);
 	float sum = 0.f;
 	register int v,i,j,x,y, a,b,d,m;
 
@@ -205,8 +206,8 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 		rt[3].cam->setPosition(mCamera->getPosition());
 		rt[3].cam->setDirection(mCamera->getDirection());
 	}
-	else if (road)
-		road->SetForRnd(num == 0 ? "render_clr" : "render_grass");
+	else if (scn->road)
+		scn->road->SetForRnd(num == 0 ? "render_clr" : "render_grass");
 }
 
 void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
@@ -217,9 +218,9 @@ void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 	if (num == 3)  // full
 	{
 	}
-	else if (road)
-	{	road->UnsetForRnd();
-		road->UpdLodVis(pSet->road_dist);
+	else if (scn->road)
+	{	scn->road->UnsetForRnd();
+		scn->road->UpdLodVis(pSet->road_dist);
 	}
 
 	//  restore shadows splits todo...
@@ -233,7 +234,7 @@ void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 //-----------------------------------------------------------------------------------------------------------
 void App::SaveWaterDepth()
 {
-	if (sc->fluids.empty())
+	if (scn->sc->fluids.empty())
 	{
 		gui->Delete(gcom->TrkDir()+"objects/waterDepth.png");  // no tex if no fluids
 		return;
@@ -255,18 +256,19 @@ void App::SaveWaterDepth()
 		//  pos 0..1
 		float fx = float(y)/fh, fz = float(x)/fw;
 		//  pos on ter  -terSize..terSize
-		float wx = (fx-0.5f) * sc->td.fTerWorldSize, wz = -(fz-0.5f) * sc->td.fTerWorldSize;
+		float w = scn->sc->td.fTerWorldSize;
+		float wx = (fx-0.5f) * w, wz = -(fz-0.5f) * w;
 
 		fa = 0.f;  // fluid y pos
-		for (i=0; i < sc->fluids.size(); ++i)
+		for (i=0; i < scn->sc->fluids.size(); ++i)
 		{
-			const FluidBox& fb = sc->fluids[i];
+			const FluidBox& fb = scn->sc->fluids[i];
 			const float sizex = fb.size.x*0.5f, sizez = fb.size.z*0.5f;
 			//  check rect 2d - no rot !  todo: make 2nd type circle..
 			if (wx > fb.pos.x - sizex && wx < fb.pos.x + sizex &&
 				wz > fb.pos.z - sizez && wz < fb.pos.z + sizez)
 			{
-				float f = fb.pos.y - terrain->getHeightAtTerrainPosition(fx,fz);
+				float f = fb.pos.y - scn->terrain->getHeightAtTerrainPosition(fx,fz);
 				if (f > fa)  fa = f;
 			}
 		}		//par
@@ -339,6 +341,7 @@ struct RayResult : public btCollisionWorld::RayResultCallback
 
 void App::AlignTerToRoad()
 {
+	SplineRoad* road = scn->road;
 	if (road->vSel.empty())  return;
 	QTimer ti;  ti.update();  ///T  /// time
 
@@ -348,12 +351,14 @@ void App::AlignTerToRoad()
 	road->RebuildRoadInt(true);
 
 	//  terrain
-	float *fHmap = terrain->getHeightData();
-	int w = sc->td.iVertsX, h = w;  float fh = h-1, fw = w-1;
+	float *fHmap = scn->terrain->getHeightData();
+	const int w = scn->sc->td.iVertsX, h = w;
+	const float fh = h-1, fw = w-1;
 
 	float *rd = new float[w*h];  // road depth
 	bool  *rh = new bool[w*h];  // road hit
 
+	const float ws = scn->sc->td.fTerWorldSize;
 	const float Len = 400;  // max ray length
 	register int x,y,a;
 	register float v,k, fx,fz, wx,wz;
@@ -365,7 +370,7 @@ void App::AlignTerToRoad()
 		//  pos 0..1
 		fx = float(x)/fh;  fz = float(y)/fw;
 		//  pos on ter  -terSize..terSize
-		wx = (fx-0.5f) * sc->td.fTerWorldSize;  wz = (fz-0.5f) * sc->td.fTerWorldSize;
+		wx = (fx-0.5f) * ws;  wz = (fz-0.5f) * ws;
 
 		btVector3 from(wx,wz,Len), to(wx,wz,-Len);  // x -z y
 		RayResult rayRes(from, to);
@@ -446,17 +451,17 @@ void App::AlignTerToRoad()
 
 
 	//  update terrain
-	terrain->dirty();  //rect..
-	UpdBlendmap();
+	scn->terrain->dirty();  //rect..
+	scn->UpdBlendmap();
 	bTerUpd = true;
 
 
 	//  put sel segs on terrain
-	for (std::set<int>::const_iterator it = road->vSel.begin(); it != road->vSel.end(); ++it)
-		road->mP[*it].onTer = true;
+	for (std::set<int>::const_iterator it = scn->road->vSel.begin(); it != scn->road->vSel.end(); ++it)
+		scn->road->mP[*it].onTer = true;
 
 	//  restore orig road width
-	road->RebuildRoad(true);
+	scn->road->RebuildRoad(true);
 	
 	// todo: ?restore road sel after load F5..
 

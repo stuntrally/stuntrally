@@ -3,6 +3,7 @@
 #include "RenderConst.h"
 #include "../../vdrift/track.h"
 #include "GuiCom.h"
+#include "CScene.h"
 #ifndef SR_EDITOR
 	#include "../CGame.h"
 	#include "../CHud.h"
@@ -112,15 +113,15 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 	ii += i;
 
 	//  static geom  -------------
-	mStaticGeom = mSceneMgr->createStaticGeometry("track");
-	mStaticGeom->setRegionDimensions(Vector3::UNIT_SCALE * 1000);  // 1000
-	mStaticGeom->setOrigin(Vector3::ZERO);
-	mStaticGeom->setCastShadows(true);
+	scn->vdrTrack = mSceneMgr->createStaticGeometry("track");
+	scn->vdrTrack->setRegionDimensions(Vector3::UNIT_SCALE * 1000);  // 1000
+	scn->vdrTrack->setOrigin(Vector3::ZERO);
+	scn->vdrTrack->setCastShadows(true);
 
 	for (std::vector<Entity*>::iterator it = ents.begin(); it != ents.end(); ++it)
-		mStaticGeom->addEntity(*it, Vector3::ZERO);
+		scn->vdrTrack->addEntity(*it, Vector3::ZERO);
 
-	mStaticGeom->build();
+	scn->vdrTrack->build();
 	//mStaticGeom->dump("_track-sg.txt");
 }
 

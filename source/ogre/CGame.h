@@ -13,12 +13,10 @@
 #include "common/PreviewTex.h"
 
 
-namespace Ogre {  class SceneNode;  class SceneManager;  class Light;
-	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  class Rectangle2D;  }
-namespace Forests {  class PagedGeometry;  }
+namespace Ogre {  class SceneNode;  class SceneManager;  }
 namespace BtOgre  {  class DebugDrawer;  }
-class Scene;  class WaterRTT;  class CData;  class CInput;  class GraphView;
-class GAME;  class SplineRoad;  class CHud;  class CGui;  class CGuiCom;
+class CScene;  class CData;  class CInput;  class GraphView;
+class GAME;  class CHud;  class CGui;  class CGuiCom;
 
 const int CarPosCnt = 8;  // size of poses queue
 
@@ -29,6 +27,9 @@ class App : public BaseApp, public sh::MaterialListener,
 public:
 	App(SETTINGS* settings, GAME* game);
 	virtual ~App();
+	
+	CScene* scn;
+	CData* data;  //p
 	
 	GAME* pGame;
 	
@@ -59,27 +60,10 @@ public:
 	bool isGhost2nd;  // if present (ghost but from other car)
 	std::vector<float> vTimeAtChks;  // track ghost's times at road checkpoints
 	float fLastTime;  // thk ghost total time
-
-
-	Scene* sc;  /// scene.xml
-	
-	CData* data;  // all xmls
-
-	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
-
-	// vdrift static
-	Ogre::StaticGeometry* mStaticGeom;
-	
-	// Weather  rain, snow
-	Ogre::ParticleSystem *pr,*pr2;
-	
-	//  trees
-	Forests::PagedGeometry *trees, *grass;
 		
 
 	boost::thread mThread;  // 2nd thread for simulation
 
-	WaterRTT* mWaterRTT;
 
 	virtual void createScene();
 	virtual void destroyScene();
@@ -105,12 +89,9 @@ public:
 	///  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	Ogre::String resCar, resTrk, resDrv;
 	void CreateCar();
-	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
-	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
-	void CreateTrees(), CreateRoad();
+	void CreateRoad();
 
 	void CreateObjects(),DestroyObjects(bool clear);
-	void CreateFluids(), CreateBltFluids(), UpdateWaterRTT(Ogre::Camera* cam), DestroyFluids();
 
 	void NewGame();  void NewGameDoLoad();  bool IsVdrTrack();  bool newGameRpl;
 
@@ -119,7 +100,7 @@ public:
 	std::vector<Ogre::Entity*> vFlEnt;
 	std::vector<Ogre::SceneNode*> vFlNd;
 
-	// vdrift:
+	//  vdrift
 	void CreateVdrTrack(std::string strack, class TRACK* pTrack),
 		CreateRacingLine(), CreateRoadBezier();
 
@@ -127,7 +108,7 @@ public:
 		class VERTEXARRAY* a, Ogre::Vector3 vPofs, bool flip, bool track=false, const Ogre::String& name="");
 
 	
-	// Loading
+	//  Loading
 	void LoadCleanUp(), LoadGame(), LoadScene(), LoadCar(), LoadTerrain(), LoadRoad(), LoadObjects(), LoadTrees(), LoadMisc();
 	enum ELoadState { LS_CLEANUP=0, LS_GAME, LS_SCENE, LS_CAR, LS_TERRAIN, LS_ROAD, LS_OBJECTS, LS_TREES, LS_MISC, LS_ALL };
 	static Ogre::String cStrLoad[LS_ALL+1];
@@ -137,68 +118,11 @@ public:
 	float mTimer;  // wind,water
 
 
-	///  horizon
-	Ogre::Terrain* horizon;
-	Ogre::TerrainGlobalOptions* mHorizonGlobals;
-	Ogre::TerrainGroup* mHorizonGroup;
-	void configureHorizonDefaults(Ogre::Light* l);
-
-	///  terrain
-	PreviewTex texLayD[6],texLayN[6];
-	Ogre::Terrain* terrain; 
-	Ogre::TerrainGlobalOptions* mTerrainGlobals;
-	Ogre::TerrainGroup* mTerrainGroup;
-	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
-
-	//  blendmap
-	void CreateBlendTex(), UpdBlendmap(), UpdLayerPars(), UpdGrassDens(), UpdGrassPars();
-
-	const static Ogre::String sHmap, sAng, sBlend, sAngMat, sBlendMat, sGrassDens, sGrassDensMat;  // tex, mtr names
-	Ogre::TexturePtr hMap, angRT, blRT, grdRT; //, blMap;  // height, angles, blend
-
-	struct RenderToTex  // rtt common
-	{
-		Ogre::RenderTexture* rnd;  Ogre::Texture* tex;
-		Ogre::SceneManager* scm;  Ogre::Camera* cam;  Ogre::Viewport* vp;
-		Ogre::Rectangle2D* rect;  Ogre::SceneNode* nd;
-
-		void Null()
-		{	rnd = 0;  tex = 0;  scm = 0;  cam = 0;  vp = 0;  rect = 0;  nd = 0;   }
-		RenderToTex()
-		{	Null();   }
-
-		void Setup(Ogre::Root* rt, Ogre::String sName, Ogre::TexturePtr pTex, Ogre::String sMtr);
-	};
-	RenderToTex bl, ang, grd;
-
-	float Noise(float x, float zoom, int octaves, float persistance);
-	float Noise(float x, float y, float zoom, int octaves, float persistance);
-	//     xa  xb
-	//1    .___.
-	//0__./     \.___
-	//   xa-s    xb+s
-	inline float linRange(const float& x, const float& xa, const float& xb, const float& s)  // min, max, smooth range
-	{
-		if (x <= xa-s || x >= xb+s)  return 0.f;
-		if (x >= xa && x <= xb)  return 1.f;
-		if (x < xa)  return (x-xa)/s+1;
-		if (x > xb)  return (xb-x)/s+1;
-		return 0.f;
-	}
-
 	//  mtr from ter  . . . 
 	int blendMapSize;  char* blendMtr;
 	void GetTerMtrIds();
 
 
-	//  road
-	SplineRoad* road;
-
-	//  shadows
-	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
-	Ogre::Vector4 splitPoints;
-
-	Ogre::ShadowCameraSetupPtr mPSSMSetup;
 	void recreateReflections();  // call after refl_mode changed
 
 	virtual void materialCreated(sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex);
@@ -218,7 +142,6 @@ public:
 
 	PreviewTex prvView,prvRoad,prvTer;  // track tab
 	PreviewTex prvStCh;  // champ,chall stage view
-	PreviewTex roadDens;
 
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
 	int carIdWin, iRplCarOfs;
@@ -232,8 +155,8 @@ public:
 
 	///  graphs
 	std::vector<GraphView*> graphs;
-	void CreateGraphs(),DestroyGraphs();
-	void UpdateGraphs(),GraphsNewVals();
+	void CreateGraphs(), DestroyGraphs();
+	void UpdateGraphs(), GraphsNewVals();
 
 	///* tire edit */
 	int iEdTire, iTireLoad, iCurLat,iCurLong,iCurAlign, iUpdTireGr;

@@ -2,6 +2,7 @@
 #include "common/Def_Str.h"
 #include "common/Gui_Def.h"
 #include "common/GuiCom.h"
+#include "common/CScene.h"
 #include "../vdrift/settings.h"
 #include "../vdrift/game.h"
 #include "CGame.h"
@@ -349,7 +350,7 @@ void CGui::chkMultiThread(WP wp)
 void CGui::chkAllEffects(Ck*)
 {
 	app->recreateCompositor();  //app->refreshCompositor();
-	app->changeShadows();
+	app->scn->changeShadows();
 }
 void CGui::chkEffUpd(Ck*)
 {		
@@ -357,7 +358,8 @@ void CGui::chkEffUpd(Ck*)
 }
 void CGui::chkEffUpdShd(Ck*)
 {
-	app->refreshCompositor();  app->changeShadows();
+	app->refreshCompositor();
+	app->scn->changeShadows();
 }
 
 void CGui::slBloom(SV*)

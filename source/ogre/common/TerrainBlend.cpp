@@ -3,6 +3,7 @@
 #include "../common/Def_Str.h"
 #include "../common/data/SceneXml.h"
 #include "../common/QTimer.h"
+#include "../common/CScene.h"
 #include "../../vdrift/pathmanager.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
@@ -20,7 +21,7 @@ using namespace Ogre;
 
 
 //  common rtt setup
-void App::RenderToTex::Setup(Ogre::Root* rt, String sName, TexturePtr pTex, String sMtr)
+void CScene::RenderToTex::Setup(Ogre::Root* rt, String sName, TexturePtr pTex, String sMtr)
 {
 	if (!scm)  scm = rt->createSceneManager(ST_GENERIC);  // once-
 	//  destroy old
@@ -54,12 +55,12 @@ void App::RenderToTex::Setup(Ogre::Root* rt, String sName, TexturePtr pTex, Stri
 ///  blendmap setup
 //  every time terrain hmap size changes
 //----------------------------------------------------------------------------------------------------
-const String App::sHmap = "HmapTex",
-	App::sAng = "AnglesRTT", App::sBlend = "blendmapRTT",
-	App::sAngMat = "anglesMat", App::sBlendMat = "blendMat",
-	App::sGrassDens = "GrassDensRTT", App::sGrassDensMat = "grassDensMat";
+const String CScene::sHmap = "HmapTex",
+	CScene::sAng = "AnglesRTT", CScene::sBlend = "blendmapRTT",
+	CScene::sAngMat = "anglesMat", CScene::sBlendMat = "blendMat",
+	CScene::sGrassDens = "GrassDensRTT", CScene::sGrassDensMat = "grassDensMat";
 
-void App::CreateBlendTex()
+void CScene::CreateBlendTex()
 {
 	uint size = sc->td.iTerSize-1;
 	TextureManager& texMgr = TextureManager::getSingleton();
@@ -88,9 +89,9 @@ void App::CreateBlendTex()
 		size, size, 0, PF_R8G8B8A8, TU_RENDERTARGET);
 
 	
-	blendRTT.Setup(mRoot, "bl", blendRTex, sBlendMat);
-	angleRTT.Setup(mRoot, "ang", angleRTex, sAngMat);
-	grassDensRTT.Setup(mRoot, "grd", grassDensRTex, sGrassDensMat);
+	blendRTT.Setup(app->mRoot, "bl", blendRTex, sBlendMat);
+	angleRTT.Setup(app->mRoot, "ang", angleRTex, sAngMat);
+	grassDensRTT.Setup(app->mRoot, "grd", grassDensRTex, sGrassDensMat);
 	
 	UpdBlendmap();  //
 }
@@ -99,7 +100,7 @@ void App::CreateBlendTex()
 ///  update, fill hmap texture from cpu floats
 //  every terrain hmap edit
 //--------------------------------------------------------------------------
-void App::UpdBlendmap()
+void CScene::UpdBlendmap()
 {
 	QTimer ti;  ti.update();  /// time
 
@@ -152,7 +153,7 @@ void App::GetTerMtrIds()
 {
 	//QTimer ti;  ti.update();  /// time
 
-	size_t size = sc->td.iTerSize-1;  //!^ same as in create
+	size_t size = scn->sc->td.iTerSize-1;  //!^ same as in create
 	size_t size2 = size*size;
 	//  new
 	delete[] blendMtr;
@@ -162,7 +163,7 @@ void App::GetTerMtrIds()
 	blendMapSize = size;
 	uint8* pd = new uint8[size2*4];  // temp
 
-	HardwarePixelBufferSharedPtr pt = blendRTex->getBuffer();
+	HardwarePixelBufferSharedPtr pt = scn->blendRTex->getBuffer();
 	PixelBox pb(pt->getWidth(), pt->getHeight(), pt->getDepth(), pt->getFormat(), pd);
 	assert(pt->getWidth() == size && pt->getHeight() == size);
 
@@ -198,7 +199,7 @@ void App::GetTerMtrIds()
 
 ///  update blendmap layer params in shader
 //--------------------------------------------------------------------------
-void App::UpdLayerPars()
+void CScene::UpdLayerPars()
 {
 	//  angles
 	sh::MaterialInstance* mat = sh::Factory::getInstance().getMaterialInstance(sAngMat);
@@ -242,7 +243,7 @@ void App::UpdLayerPars()
 
 ///  update grass density channel params in shader
 //--------------------------------------------------------------------------
-void App::UpdGrassDens()
+void CScene::UpdGrassDens()
 {
 	if (!grassDensRTT.rnd)  return;
 
@@ -252,14 +253,14 @@ void App::UpdGrassDens()
 	
 	grassDensRTT.rnd->update();
 
-	//grd.rnd->writeContentsToFile(PATHMANAGER::DataUser()+"/grassD.png");
+	//grassDensRTT.rnd->writeContentsToFile(PATHMANAGER::DataUser()+"/grassRD.png");
 
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time Grass Dens: ") + fToStr(dt,3,5) + " ms");
 }
 
-void App::UpdGrassPars()
+void CScene::UpdGrassPars()
 {
 	sh::MaterialInstance* mat = sh::Factory::getInstance().getMaterialInstance(sGrassDensMat);
 

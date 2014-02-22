@@ -5,6 +5,7 @@
 #include "CHud.h"
 #include "CGui.h"
 #include "common/data/SceneXml.h"
+#include "common/CScene.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
 #include "../vdrift/game.h"
@@ -194,6 +195,7 @@ void App::newPoses(float time)  // time only for camera update
 		else
 		{
 			///  arrow update  --------------------------------------
+			SplineRoad* road = scn->road;
 			if (pSet->check_arrow && carM->eType == CarModel::CT_LOCAL
 			  && !bRplPlay && hud->arrow.node && road && road->mChks.size()>0)
 			{
@@ -457,9 +459,9 @@ void App::updatePoses(float time)
 	
 	
 	///  objects - dynamic (props)  -------------------------------------------------------------
-	for (int i=0; i < sc->objects.size(); ++i)
+	for (int i=0; i < scn->sc->objects.size(); ++i)
 	{
-		Object& o = sc->objects[i];
+		Object& o = scn->sc->objects[i];
 		if (o.ms)
 		{
 			btTransform tr, ofs;

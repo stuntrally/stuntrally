@@ -5,6 +5,7 @@
 #include "CGui.h"
 #include "CApp.h"
 #include "../ogre/common/GuiCom.h"
+#include "../ogre/common/CScene.h"
 #include "../road/Road.h"
 #include "../ogre/common/Slider.h"
 #include "../vdrift/pathmanager.h"
@@ -154,7 +155,7 @@ void CGui::tabHmap(Tab, size_t)
 void CGui::editTerErrorNorm(Ed ed)
 {
 	Real r = std::max(0.f, s2r(ed->getCaption()) );
-	sc->td.errorNorm = r;  app->UpdTerErr();
+	sc->td.errorNorm = r;  scn->UpdTerErr();
 }
 
 
@@ -308,9 +309,9 @@ void CGui::btnTerrainMove(WP)
 	of.close();
 	delete[] hfData;
 	
-	app->road->SelAll();
-	app->road->Move(Vector3(my,0,mx) * -sc->td.fTriangleSize);
-	app->road->SelClear();
+	app->scn->road->SelAll();
+	app->scn->road->Move(Vector3(my,0,mx) * -sc->td.fTriangleSize);
+	app->scn->road->SelClear();
 	//start, objects-
 
 	app->bNewHmap = true;	app->UpdateTrack();
@@ -319,13 +320,13 @@ void CGui::btnTerrainMove(WP)
 //  Terrain  height scale  --------------------------------
 void CGui::btnScaleTerH(WP)
 {
-	if (!app->road)  return;
+	if (!app->scn->road)  return;
 	Real sf = std::max(0.1f, fScaleTer);  // scale mul
 
 	//  road
-	for (int i=0; i < app->road->getNumPoints(); ++i)
-		app->road->Scale1(i, 0.f, sf);
-	app->road->bSelChng = true;
+	for (int i=0; i < app->scn->road->getNumPoints(); ++i)
+		app->scn->road->Scale1(i, 0.f, sf);
+	app->scn->road->bSelChng = true;
 	
 	//  fluids
 	for (int i=0; i < sc->fluids.size(); ++i)
@@ -363,8 +364,8 @@ void CGui::btnScaleTerH(WP)
 
 	//  road upd
 	if (0) //road)  // doesnt work here..
-	{	app->road->UpdPointsH();
-		app->road->RebuildRoad(true);
+	{	app->scn->road->UpdPointsH();
+		app->scn->road->RebuildRoad(true);
 	}
 
 	//  start pos
@@ -437,9 +438,9 @@ void CGui::comboTexNorm(Cmb cmb, size_t val)
 void CGui::slTerLay(SV*)
 {
 	//app->bTerUpdBlend = true;
-	app->UpdLayerPars();
-	if (app->angleRTT.rnd)  app->angleRTT.rnd->update();
-	if (app->blendRTT.rnd)  app->blendRTT.rnd->update();
+	scn->UpdLayerPars();
+	if (scn->angleRTT.rnd)  scn->angleRTT.rnd->update();
+	if (scn->blendRTT.rnd)  scn->blendRTT.rnd->update();
 }
 void CGui::chkTerLNOnly(Ck*)
 {
@@ -456,7 +457,7 @@ void CGui::btnTerLmoveL(WP)  // -1
 	st = t;  t = t1;  t1 = st;
 	
 	sc->td.UpdLayers();  NumTabNext(-1);
-	app->UpdBlendmap();
+	app->scn->UpdBlendmap();
 }
 
 void CGui::btnTerLmoveR(WP)  // +1
@@ -468,7 +469,7 @@ void CGui::btnTerLmoveR(WP)  // +1
 	st = t;  t = t1;  t1 = st;
 	
 	sc->td.UpdLayers();  NumTabNext(1);
-	app->UpdBlendmap();
+	app->scn->UpdBlendmap();
 }
 
 ///  Noise preset buttons
@@ -493,7 +494,7 @@ void CGui::btnNpreset(WP wp)
 	t.nPers[l] = ns[i][2];
 	t.nPow[l]  = ns[i][3];
 	SldUpd_TerL();
-	app->UpdBlendmap();
+	app->scn->UpdBlendmap();
 }
 void CGui::btnNrandom(WP wp)
 {
@@ -506,7 +507,7 @@ void CGui::btnNrandom(WP wp)
 	t.nPers[l] = Math::RangeRandom(0.1f,0.7f);
 	t.nPow[l]  = Math::RangeRandom(0.8f,2.4f);
 	SldUpd_TerL();
-	app->UpdBlendmap();
+	app->scn->UpdBlendmap();
 }
 
 //  swap noise 1 and 2 params
@@ -520,7 +521,7 @@ void CGui::btnNswap(WP wp)
 	std::swap(t.nPers[0], t.nPers[1]);
 	std::swap(t.nPow[0] , t.nPow[1] );
 	SldUpd_TerL();
-	app->UpdBlendmap();
+	app->scn->UpdBlendmap();
 }
 
 

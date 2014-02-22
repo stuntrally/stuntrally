@@ -6,6 +6,7 @@
 #include "../ogre/common/data/SceneXml.h"
 #include "../ogre/common/data/FluidsXml.h"
 #include "../ogre/common/GuiCom.h"
+#include "../ogre/common/CScene.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -98,6 +99,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case WND_Help:    tab = sub = gui->vSubTabsHelp[1];  iTab1 = 0;  break;
 		case WND_Options: tab = mWndTabsOpts;  sub = gui->vSubTabsOpts[tab->getIndexSelected()];  break;
 	}
+	SplineRoad* road = scn->road;
 	bool bRoad = edMode == ED_Road && road && bEdit();
 
 	//  global keys
@@ -284,7 +286,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				else
 				{	road->newP.pos.x = road->posHit.x;
 					road->newP.pos.z = road->posHit.z;
-					if (!sc->ter)
+					if (!scn->sc->ter)
 						road->newP.pos.y = road->posHit.y;
 					//road->newP.aType = AT_Both;
 					road->Insert(shift ? INS_Begin : ctrl ? INS_End : alt ? INS_CurPre : INS_Cur);
@@ -338,8 +340,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	
 	//  Fluids  ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 	if (edMode == ED_Fluids)
-	{	int fls = sc->fluids.size();
-		const std::vector<FluidParams>& dfl = data->fluids->fls;
+	{	int fls = scn->sc->fluids.size();
+		const std::vector<FluidParams>& dfl = scn->data->fluids->fls;
 		switch (skey)
 		{
 			//  ins
@@ -349,9 +351,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				FluidBox fb;	fb.name = "water blue";
 				fb.pos = road->posHit;	fb.rot = Vector3(0.f, 0.f, 0.f);
 				fb.size = Vector3(50.f, 20.f, 50.f);	fb.tile = Vector2(0.01f, 0.01f);
-				sc->fluids.push_back(fb);
-				sc->UpdateFluidsId();
-				iFlCur = sc->fluids.size()-1;
+				scn->sc->fluids.push_back(fb);
+				scn->sc->UpdateFluidsId();
+				iFlCur = scn->sc->fluids.size()-1;
 				bRecreateFluids = true;
 			}	break;
 		}
@@ -373,23 +375,23 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			//  del
 			case key(DELETE):  case key(KP_PERIOD):
 			case key(KP_5):
-				if (fls == 1)	sc->fluids.clear();
-				else			sc->fluids.erase(sc->fluids.begin() + iFlCur);
-				iFlCur = std::max(0, std::min(iFlCur, (int)sc->fluids.size()-1));
+				if (fls == 1)	scn->sc->fluids.clear();
+				else			scn->sc->fluids.erase(scn->sc->fluids.begin() + iFlCur);
+				iFlCur = std::max(0, std::min(iFlCur, (int)scn->sc->fluids.size()-1));
 				bRecreateFluids = true;
 				break;
 
 			//  prev,next type
 			case key(9):  case key(MINUS):
 			{
-				FluidBox& fb = sc->fluids[iFlCur];
+				FluidBox& fb = scn->sc->fluids[iFlCur];
 				fb.id = (fb.id-1 + dfl.size()) % dfl.size();
 				fb.name = dfl[fb.id].name;
 				bRecreateFluids = true;
 			}	break;
 			case key(0):  case key(EQUALS):
 			{
-				FluidBox& fb = sc->fluids[iFlCur];
+				FluidBox& fb = scn->sc->fluids[iFlCur];
 				fb.id = (fb.id+1) % dfl.size();
 				fb.name = dfl[fb.id].name;
 				bRecreateFluids = true;
@@ -399,7 +401,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 	//  Objects  | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |
 	if (edMode == ED_Objects)
-	{	int objs = sc->objects.size(), objAll = vObjNames.size();
+	{	int objs = scn->sc->objects.size(), objAll = vObjNames.size();
 		switch (skey)
 		{
 			case key(SPACE):
@@ -420,7 +422,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 					for (std::set<int>::iterator it = vObjSel.begin();
 						it != vObjSel.end(); ++it)
 					{
-						vObjCopy.push_back(sc->objects[*it]);
+						vObjCopy.push_back(scn->sc->objects[*it]);
 					}
 					gui->Status("Copy",0.6,0.8,1.0);
 			}	}
@@ -434,16 +436,16 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 					{
 						objNew = vObjCopy[i];
 						AddNewObj(false);
-						vObjSel.insert(sc->objects.size()-1);  // add it to sel
+						vObjSel.insert(scn->sc->objects.size()-1);  // add it to sel
 					}
 					objNew = o;
 					UpdObjSel();  UpdObjPick();
 			}	}
 			else
-			if (road && road->bHitTer)  // insert new
+			if (scn->road && scn->road->bHitTer)  // insert new
 			{
 				AddNewObj();
-				//iObjCur = sc->objects.size()-1;  // auto select inserted-
+				//iObjCur = scn->sc->objects.size()-1;  // auto select inserted-
 				UpdObjPick();
 			}	break;
 
@@ -466,7 +468,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				break;
 		}
 		::Object* o = iObjCur == -1 ? &objNew :
-					((iObjCur >= 0 && objs > 0 && iObjCur < objs) ? &sc->objects[iObjCur] : 0);
+					((iObjCur >= 0 && objs > 0 && iObjCur < objs) ? &scn->sc->objects[iObjCur] : 0);
 		switch (skey)
 		{
 			//  first, last
@@ -485,13 +487,13 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(DELETE):  case key(KP_PERIOD):
 			case key(KP_5):
 				if (iObjCur >= 0 && objs > 0)
-				{	::Object& o = sc->objects[iObjCur];
+				{	::Object& o = scn->sc->objects[iObjCur];
 					mSceneMgr->destroyEntity(o.ent);
 					mSceneMgr->destroySceneNode(o.nd);
 					
-					if (objs == 1)	sc->objects.clear();
-					else			sc->objects.erase(sc->objects.begin() + iObjCur);
-					iObjCur = std::min(iObjCur, (int)sc->objects.size()-1);
+					if (objs == 1)	scn->sc->objects.clear();
+					else			scn->sc->objects.erase(scn->sc->objects.begin() + iObjCur);
+					iObjCur = std::min(iObjCur, (int)scn->sc->objects.size()-1);
 					UpdObjPick();
 				}	break;
 

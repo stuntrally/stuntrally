@@ -4,6 +4,7 @@
 #include "../ogre/common/ShapeData.h"
 #include "../ogre/common/QTimer.h"
 #include "../ogre/common/GuiCom.h"
+#include "../ogre/common/CScene.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -37,14 +38,15 @@ void App::createScene()  // once, init
 	prvRoad.Create(1024,1024,"PrvRoad");
 	prvTer.Create(512,512,"PrvTer");
 
-	roadDens.Create(1025,1025,"RoadDens");
+	scn->roadDens.Create(1025,1025,"RoadDens");
 	
 	///  ter lay tex
 	for (int i=0; i < 6; ++i)
 	{	String si = toStr(i);
-		texLayD[i].SetName("layD"+si);
-		texLayN[i].SetName("layN"+si);
+		scn->texLayD[i].SetName("layD"+si);
+		scn->texLayN[i].SetName("layN"+si);
 	}
+
 
 	//  camera
 	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
@@ -72,8 +74,8 @@ void App::createScene()  // once, init
 
 
 	//  data load xml
-	data->Load();
-	sc->pFluidsXml = data->fluids;
+	scn->data->Load();
+	scn->sc->pFluidsXml = scn->data->fluids;
 	
 	//  surfaces.cfg
 	LoadAllSurfaces();
@@ -143,19 +145,15 @@ void App::createScene()  // once, init
 	//SetObjNewType(0);  //?white
 }
 
+void App::destroyScene()
+{
+	scn->destroyScene();
+}
+
 
 //---------------------------------------------------------------------------------------------------------------
 ///  Load Track
 //---------------------------------------------------------------------------------------------------------------
-void App::UpdTrees()
-{
-	if (!pSet->bTrees)
-	{
-		if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
-		if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
-	}else
-		CreateTrees();
-}
 
 //  destroy
 void App::NewCommon(bool onlyTerVeget)
@@ -164,11 +162,10 @@ void App::NewCommon(bool onlyTerVeget)
 	if (ndSky)
 		mSceneMgr->destroySceneNode(ndSky);
 
-	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
-	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
+	scn->DestroyTrees();
 
 	if (!onlyTerVeget)
-		DestroyWeather();
+		scn->DestroyWeather();
 
 	mSceneMgr->destroyAllStaticGeometry();
 	mStaticGeom = 0;
@@ -177,19 +174,10 @@ void App::NewCommon(bool onlyTerVeget)
 	if (!onlyTerVeget)
 	{
 		DestroyObjects(true);
-		DestroyFluids();
+		scn->DestroyFluids();
 	}
 		
-	///  ter tex
-	for (int i=0; i < 6; ++i)
-	{
-		texLayD[i].Destroy();
-		texLayN[i].Destroy();
-	}
-	//  terrain
-	terrain = 0;
-	if (mTerrainGroup)
-		mTerrainGroup->removeAllTerrains();
+	scn->DestroyTerrain();
 		
 	//world.Clear();
 	track->Clear();
@@ -215,37 +203,37 @@ void App::LoadTrackEv()
 	QTimer ti;  ti.update();  /// time
 	NewCommon(false);  // full destroy
 
-	if (road)
-	{	road->Destroy();  delete road;  road = 0;  }
+	if (scn->road)
+	{	scn->road->Destroy();  delete scn->road;  scn->road = 0;  }
 
 	// load scene
-	sc->LoadXml(gcom->TrkDir()+"scene.xml");
-	sc->vdr = IsVdrTrack();
-	if (sc->vdr)  sc->ter = false;
+	scn->sc->LoadXml(gcom->TrkDir()+"scene.xml");
+	scn->sc->vdr = IsVdrTrack();
+	if (scn->sc->vdr)  scn->sc->ter = false;
 	
 	//  water RTT recreate
-	UpdateWaterRTT(mCamera);
+	scn->UpdateWaterRTT(mCamera);
 	
 	BltWorldInit();
 
 	UpdWndTitle();
 
-	CreateFluids();
+	scn->CreateFluids();
 
-	CreateWeather();
+	scn->CreateWeather();
 
 
 	//  set sky tex name for water
-	sh::MaterialInstance* m = mFactory->getMaterialInstance(sc->skyMtr);
+	sh::MaterialInstance* m = mFactory->getMaterialInstance(scn->sc->skyMtr);
 	std::string skyTex = sh::retrieveValue<sh::StringValue>(m->getProperty("texture"), 0).get();
 	sh::Factory::getInstance().setTextureAlias("SkyReflection", skyTex);
 	sh::Factory::getInstance().setTextureAlias("CubeReflection", "ReflectionCube");
 
 
 	bNewHmap = false;/**/
-	CreateTerrain(bNewHmap,sc->ter);
+	scn->CreateTerrain(bNewHmap, scn->sc->ter);
 
-	if (sc->vdr)  // vdrift track
+	if (scn->sc->vdr)  // vdrift track
 	{
 		if (!LoadTrackVdr(pSet->gui.track))
 			LogO("Error during track loading: " + pSet->gui.track);
@@ -256,15 +244,15 @@ void App::LoadTrackEv()
 
 
 	//  road ~
-	road = new SplineRoad(this);
-	road->Setup("sphere.mesh", 1.4f*pSet->road_sphr, terrain, mSceneMgr, mCamera);
-	road->LoadFile(gcom->TrkDir()+"road.xml");
-	UpdPSSMMaterials();
+	scn->road = new SplineRoad(this);
+	scn->road->Setup("sphere.mesh", 1.4f*pSet->road_sphr, scn->terrain, mSceneMgr, mCamera);
+	scn->road->LoadFile(gcom->TrkDir()+"road.xml");
+	scn->UpdPSSMMaterials();
 	
 	CreateObjects();
 
-	if (pSet->bTrees && sc->ter)
-		CreateTrees();  // trees after objects so they aren't inside them
+	if (pSet->bTrees && scn->sc->ter)
+		scn->CreateTrees();  // trees after objects so they aren't inside them
 
 
 	//  updates after load
@@ -285,7 +273,7 @@ void App::LoadTrackEv()
 	gui->Status("Loaded", 0.5,0.7,1.0);
 	
 	if (pSet->check_load)
-		gui->WarningsCheck(sc,road);
+		gui->WarningsCheck(scn->sc, scn->road);
 
 	ti.update();	/// time
 	float dt = ti.dt * 1000.f;
@@ -305,17 +293,17 @@ void App::UpdateTrackEv()
 	NewCommon(true);  // destroy only terrain and veget
 	
 	//CreateFluids();
-	CreateTerrain(bNewHmap,true);/**/
+	scn->CreateTerrain(bNewHmap,true);/**/
 
 	//  road ~
-	road->mTerrain = terrain;
-	road->RebuildRoad(true);
-	UpdPSSMMaterials();
+	scn->road->mTerrain = scn->terrain;
+	scn->road->RebuildRoad(true);
+	scn->UpdPSSMMaterials();
 
 	//CreateObjects();
 
 	if (pSet->bTrees)
-		CreateTrees();
+		scn->CreateTrees();
 
 	Rnd2TexSetup();
 
@@ -338,7 +326,7 @@ void App::SaveTrack()
 	gui->Status("Saving...", 1,0.4,0.1);
 
 	if (pSet->check_save)
-		gui->WarningsCheck(sc,road);
+		gui->WarningsCheck(scn->sc, scn->road);
 }
 void App::SaveTrackEv()
 {
@@ -348,9 +336,9 @@ void App::SaveTrackEv()
 	gui->CreateDir(dir+"/objects");
 	//  check if succeded ...
 
-	if (terrain)
-	{	float *fHmap = terrain->getHeightData();
-		int size = sc->td.iVertsX * sc->td.iVertsY * sizeof(float);
+	if (scn->terrain)
+	{	float *fHmap = scn->terrain->getHeightData();
+		int size = scn->sc->td.iVertsX * scn->sc->td.iVertsY * sizeof(float);
 
 		String file = dir+"heightmap.f32";
 		std::ofstream of;
@@ -358,10 +346,10 @@ void App::SaveTrackEv()
 		of.write((const char*)fHmap, size);
 		of.close();
 	}
-	if (road)
-		road->SaveFile(dir+"road.xml");
+	if (scn->road)
+		scn->road->SaveFile(dir+"road.xml");
 
-	sc->SaveXml(dir+"scene.xml");
+	scn->sc->SaveXml(dir+"scene.xml");
 
 	bool vdr = IsVdrTrack();
 	/*if (!vdr)*/  SaveGrassDens();
@@ -371,32 +359,6 @@ void App::SaveTrackEv()
 	
 	gui->Delete(gui->getHMapNew());
 	gui->Status("Saved", 1,0.6,0.2);
-}
-
-
-//  weather rain,snow  -----
-//-------------------------------------------------------------------------------------
-void App::CreateWeather()
-{
-	if (!pr && !sc->rainName.empty())
-	{	pr = mSceneMgr->createParticleSystem("Rain", sc->rainName);
-		pr->setVisibilityFlags(RV_Particles);
-		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr);
-		pr->setRenderQueueGroup(RQG_Weather);
-		pr->getEmitter(0)->setEmissionRate(0);
-	}
-	if (!pr2 && !sc->rain2Name.empty())
-	{	pr2 = mSceneMgr->createParticleSystem("Rain2", sc->rain2Name);
-		pr2->setVisibilityFlags(RV_Particles);
-		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr2);
-		pr2->setRenderQueueGroup(RQG_Weather);
-		pr2->getEmitter(0)->setEmissionRate(0);
-	}
-}
-void App::DestroyWeather()
-{
-	if (pr)  {  mSceneMgr->destroyParticleSystem(pr);   pr=0;  }
-	if (pr2) {  mSceneMgr->destroyParticleSystem(pr2);  pr2=0;  }
 }
 
 
@@ -438,13 +400,13 @@ void App::TerCircleInit()
 
 void App::TerCircleUpd()
 {
-	if (!moTerC || !terrain || !road)  return;
+	if (!moTerC || !scn->terrain || !scn->road)  return;
 
-	bool edTer = bEdit() && (edMode < ED_Road) && road->bHitTer;
+	bool edTer = bEdit() && (edMode < ED_Road) && scn->road->bHitTer;
 	ndTerC->setVisible(edTer);
 	if (!edTer)  return;
 	
-	Real rbr = mBrSize[curBr] * 0.5f * sc->td.fTriangleSize * 0.8f/*?par*/;
+	Real rbr = mBrSize[curBr] * 0.5f * scn->sc->td.fTriangleSize * 0.8f/*?par*/;
 
 	static ED_MODE edOld = ED_ALL;
 	if (edOld != edMode)
@@ -463,8 +425,8 @@ void App::TerCircleUpd()
 		Real a = d/2 * aAdd;
 		Real r = ((d % 2 == 0) ? 1.0f : 0.95f) * rbr;
 		Real x = r * fTcos[d], z = r * fTsin[d];
-		Vector3 p(x,0,z);  p += road->posHit;
-		p.y = terrain->getHeightAtWorldPosition(p) + 0.3f;
+		Vector3 p(x,0,z);  p += scn->road->posHit;
+		p.y = scn->terrain->getHeightAtWorldPosition(p) + 0.3f;
 		moTerC->position(p);  //moTerC->normal(0,1,0);
 		moTerC->textureCoord(d/2*dTc, d%2);
 	}
@@ -593,9 +555,9 @@ void App::BltUpdate(float dt)
 	world->stepSimulation(dt, maxSubsteps, fixedTimestep);
 	
 	///  objects - dynamic (props)  -------------------------------------------------------------
-	for (int i=0; i < sc->objects.size(); ++i)
+	for (int i=0; i < scn->sc->objects.size(); ++i)
 	{
-		Object& o = sc->objects[i];
+		Object& o = scn->sc->objects[i];
 		if (o.ms)
 		{
 			btTransform tr, ofs;

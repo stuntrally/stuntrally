@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/RenderConst.h"
+#include "../ogre/common/CScene.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -134,7 +135,7 @@ void App::UpdStartPos()
 	ndCar->setPosition(p1);    ndCar->setOrientation(q1);
 
 	ndStBox->setPosition(p1);  ndStBox->setOrientation(q1);
-	if (road)
-	ndStBox->setScale(Vector3(1,road->vStBoxDim.y,road->vStBoxDim.z));
+	if (scn->road)
+	ndStBox->setScale(Vector3(1, scn->road->vStBoxDim.y, scn->road->vStBoxDim.z));
 	ndStBox->setVisible(edMode == ED_Start && bEdit());
 }
