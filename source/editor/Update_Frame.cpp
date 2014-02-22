@@ -201,7 +201,7 @@ if (pSet->bTrees)
 			{
 				Forests::GrassLayer *l = gr->grl;
 				if (l)
-				{	l->setDensityMap(grdRT, Forests::MapChannel(std::min(3,i)));  // l->chan);
+				{	l->setDensityMap(grassDensRTex, Forests::MapChannel(std::min(3,i)));  // l->chan);
 					//l->applyShader();
 					grass->reloadGeometry();
 				}

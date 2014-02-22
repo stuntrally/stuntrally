@@ -128,15 +128,15 @@ namespace Forests {
 	void GrassLoader::loadPage(PageInfo &page)
 	{
 		//Generate meshes
-	bool first = true;  ///T
+		bool first = true;  ///T
 
-	std::list<GrassLayer*>::iterator it;
-	for (it = layerList.begin(); it != layerList.end(); ++it)
+		std::list<GrassLayer*>::iterator it;
+		for (it = layerList.begin(); it != layerList.end(); ++it)
 		{	GrassLayer *layer = *it;
 
-		if (first)  ///T once for all layers
-			layer->parent->rTable->resetRandomIndex();
-		first = false;
+			if (first)  ///T once for all layers
+				layer->parent->rTable->resetRandomIndex();
+			first = false;
 
 			// Continue to the next layer if the current page is outside of the layers map boundaries.
 			if (layer->mapBounds.right < page.bounds.left || layer->mapBounds.left > page.bounds.right ||
@@ -155,8 +155,8 @@ namespace Forests {
 			float *position = new float[grassCount*4];
 			if (layer->densityMap)
 			{	if (layer->densityMap->getFilter() == MAPFILTER_NONE)
-					grassCount = layer->_populateGrassList_UnfilteredDM(page, position, grassCount);
-				else
+			grassCount = layer->_populateGrassList_UnfilteredDM(page, position, grassCount);
+			else
 				if (layer->densityMap->getFilter() == MAPFILTER_BILINEAR)
 					grassCount = layer->_populateGrassList_BilinearDM(page, position, grassCount);
 			} else

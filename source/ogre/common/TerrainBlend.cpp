@@ -67,30 +67,30 @@ void App::CreateBlendTex()
 	texMgr.remove(sBlend);  texMgr.remove(sGrassDens);
 
 	//  Hmap tex
-	hMap = texMgr.createManual( sHmap, rgDef, TEX_TYPE_2D,
+	heightTex = texMgr.createManual( sHmap, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_FLOAT32_R, TU_DYNAMIC_WRITE_ONLY); //TU_STATIC_WRITE_ONLY?
 	
 	//  Angles rtt
-	angRT = texMgr.createManual( sAng, rgDef, TEX_TYPE_2D,
+	angleRTex = texMgr.createManual( sAng, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_FLOAT32_R, TU_RENDERTARGET);
-	if (angRT.isNull())  LogO("Can't create Float32 Render Target!");
+	if (angleRTex.isNull())  LogO("Can't create Float32 Render Target!");
 	
-	//  blendmap rtt
-	blRT = texMgr.createManual( sBlend, rgDef, TEX_TYPE_2D,
+	//  Blendmap rtt
+	blendRTex = texMgr.createManual( sBlend, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_R8G8B8A8, TU_RENDERTARGET);
 
 	//  rtt copy  (not needed)
 	//blMap = texMgr.createManual("blendmapT", rgDef, TEX_TYPE_2D,
 	//	size, size, 0, PF_R8G8B8A8, TU_DEFAULT);
 	
-	//  grass density rtt
-	grdRT = texMgr.createManual( sGrassDens, rgDef, TEX_TYPE_2D,
+	//  Grass Density rtt
+	grassDensRTex = texMgr.createManual( sGrassDens, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_R8G8B8A8, TU_RENDERTARGET);
 
 	
-	bl.Setup(mRoot, "bl", blRT, sBlendMat);
-	ang.Setup(mRoot, "ang", angRT, sAngMat);
-	grd.Setup(mRoot, "grd", grdRT, sGrassDensMat);
+	blendRTT.Setup(mRoot, "bl", blendRTex, sBlendMat);
+	angleRTT.Setup(mRoot, "ang", angleRTex, sAngMat);
+	grassDensRTT.Setup(mRoot, "grd", grassDensRTex, sGrassDensMat);
 	
 	UpdBlendmap();  //
 }
@@ -107,7 +107,7 @@ void App::UpdBlendmap()
 	float* fHmap = terrain ? terrain->getHeightData() : sc->td.hfHeight;
 
 	//  fill hmap  (copy to tex, full is fast)
-	HardwarePixelBufferSharedPtr pt = hMap->getBuffer();
+	HardwarePixelBufferSharedPtr pt = heightTex->getBuffer();
 	pt->lock(HardwareBuffer::HBL_DISCARD);
 
 	const PixelBox& pb = pt->getCurrentLock();
@@ -126,12 +126,12 @@ void App::UpdBlendmap()
 	pt->unlock();
 
 	//  rtt
-	if (ang.rnd && bl.rnd)
+	if (angleRTT.rnd && blendRTT.rnd)
 	{	
 		UpdLayerPars();
 		
-		ang.rnd->update();
-		bl.rnd->update();
+		angleRTT.rnd->update();
+		blendRTT.rnd->update();
 
 		//  copy from rtt to normal texture
 		//HardwarePixelBufferSharedPtr b = blMap->getBuffer();
@@ -162,7 +162,7 @@ void App::GetTerMtrIds()
 	blendMapSize = size;
 	uint8* pd = new uint8[size2*4];  // temp
 
-	HardwarePixelBufferSharedPtr pt = blRT->getBuffer();
+	HardwarePixelBufferSharedPtr pt = blendRTex->getBuffer();
 	PixelBox pb(pt->getWidth(), pt->getHeight(), pt->getDepth(), pt->getFormat(), pd);
 	assert(pt->getWidth() == size && pt->getHeight() == size);
 
@@ -244,13 +244,13 @@ void App::UpdLayerPars()
 //--------------------------------------------------------------------------
 void App::UpdGrassDens()
 {
-	if (!grd.rnd)  return;
+	if (!grassDensRTT.rnd)  return;
 
 	QTimer ti;  ti.update();  /// time
 
 	UpdGrassPars();
 	
-	grd.rnd->update();
+	grassDensRTT.rnd->update();
 
 	//grd.rnd->writeContentsToFile(PATHMANAGER::DataUser()+"/grassD.png");
 

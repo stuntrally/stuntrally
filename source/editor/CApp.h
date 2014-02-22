@@ -158,9 +158,9 @@ public:
 	const static Ogre::String sHmap, sAng,sAngMat,
 		sBlend,sBlendMat, sGrassDens,sGrassDensMat;
 	//  height, angles, blend
-	Ogre::TexturePtr hMap, angRT, blRT;  //, blMap;
+	Ogre::TexturePtr heightTex, angleRTex, blendRTex;  //, blMap;
 	//  grass density and channels
-	Ogre::TexturePtr grdRT;
+	Ogre::TexturePtr grassDensRTex;
 
 	struct RenderToTex  // rtt common
 	{
@@ -175,7 +175,7 @@ public:
 
 		void Setup(Ogre::Root* rt, Ogre::String sName, Ogre::TexturePtr pTex, Ogre::String sMtr);
 	};
-	RenderToTex bl, ang, grd;
+	RenderToTex blendRTT, angleRTT, grassDensRTT;
 
 	float Noise(float x, float zoom, int octaves, float persistence);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);

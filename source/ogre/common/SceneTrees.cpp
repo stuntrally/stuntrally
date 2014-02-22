@@ -128,7 +128,7 @@ void App::CreateTrees()
 
 				l->setColorMap(gr->colorMap);
 				
-				l->setDensityMap(grdRT, MapChannel(gr->iChan));
+				l->setDensityMap(grassDensRTex, MapChannel(gr->iChan));
 				l->setMapBounds(tbnd);
 				gr->grl = l;
 			}

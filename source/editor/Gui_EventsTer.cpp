@@ -438,8 +438,8 @@ void CGui::slTerLay(SV*)
 {
 	//app->bTerUpdBlend = true;
 	app->UpdLayerPars();
-	if (app->ang.rnd)  app->ang.rnd->update();
-	if (app->bl.rnd)  app->bl.rnd->update();
+	if (app->angleRTT.rnd)  app->angleRTT.rnd->update();
+	if (app->blendRTT.rnd)  app->blendRTT.rnd->update();
 }
 void CGui::chkTerLNOnly(Ck*)
 {
