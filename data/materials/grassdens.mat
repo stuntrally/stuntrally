@@ -1,0 +1,68 @@
+material grassDensMat
+{
+	//  Height, Angle  params for 4 channels
+	Hmin 0 0 0 0
+	Hmax 0 0 0 0
+	Hsmt 0 0 0 0
+
+	Amin 0 0 0 0
+	Amax 0 0 0 0
+	Asmt 0 0 0 0
+	//  Noise
+	Nmul  0 0 0 0
+	Nfreq 0 0 0 0
+	Noct  0 0 0 0
+	Npers 0 0 0 0
+	Npow  0 0 0 0
+
+	//  offset uv, pow  adjust road tex fit
+	Rofs 0.001 0.001
+	Rpow 1 1 1 1
+	
+    pass
+    {
+        vertex_program grassdens_vertex
+        fragment_program grassdens_fragment
+        
+		depth_check off
+		depth_write off
+		cull_hardware none
+        fog_override true
+        
+        shader_properties
+        {
+			Hmin $Hmin
+			Hmax $Hmax
+			Hsmt $Hsmt
+			
+			Amin $Amin
+			Amax $Amax
+			Asmt $Asmt
+			
+			Nmul  $Nmul
+			Nfreq $Nfreq
+			Noct  $Noct
+			Npers $Npers
+			Npow  $Npow
+
+			Rofs  $Rofs
+			Rpow  $Rpow
+        }
+
+        texture_unit samHMap
+        {
+            texture HmapTex
+            tex_address_mode clamp
+        }
+        texture_unit samAng
+        {
+            texture AnglesRTT
+            tex_address_mode clamp
+        }
+        texture_unit samRoad
+        {
+            texture RoadDens
+            tex_address_mode clamp
+        }
+    }
+}

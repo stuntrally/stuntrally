@@ -2,6 +2,7 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/GuiCom.h"
+#include "../ogre/common/CScene.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -64,7 +65,7 @@ void CGui::btnCopyTerHmap(WP)
 	sc->td.UpdVals();
 	app->bNewHmap = true;
 	SetGuiFromXmls();	app->UpdateTrack();
-	if (app->road)  app->road->UpdAllMarkers();
+	if (app->scn->road)  app->scn->road->UpdAllMarkers();
 }
 
 //  copy sun, etc.
@@ -86,7 +87,7 @@ void CGui::btnCopySun(WP)
 	sc->ldPitch = sF.ldPitch;  sc->ldYaw = sF.ldYaw;  // light
 	sc->lAmb = sF.lAmb;  sc->lDiff = sF.lDiff;  sc->lSpec = sF.lSpec;
 	SetGuiFromXmls();	app->UpdateTrack();
-	app->DestroyWeather();  app->CreateWeather();
+	app->scn->DestroyWeather();  app->scn->CreateWeather();
 }
 
 //  copy ter layers
@@ -135,34 +136,34 @@ void CGui::btnCopyVeget(WP)
 //  copy road
 void CGui::btnCopyRoad(WP)
 {
-	if (!ChkTrkCopy() || !app->road)  return;
+	if (!ChkTrkCopy() || !app->scn->road)  return;
 	String from = PathCopyTrk();
-	app->road->LoadFile(from + "/road.xml");
+	app->scn->road->LoadFile(from + "/road.xml");
 
-	SetGuiFromXmls();	app->road->RebuildRoad(true);
-	app->UpdPSSMMaterials();	app->road->UpdAllMarkers();
+	SetGuiFromXmls();	app->scn->road->RebuildRoad(true);
+	scn->UpdPSSMMaterials();	app->scn->road->UpdAllMarkers();
 }
 
 //  copy road pars
 void CGui::btnCopyRoadPars(WP)
 {
-	if (!ChkTrkCopy() || !app->road)  return;
+	if (!ChkTrkCopy() || !app->scn->road)  return;
 	String from = PathCopyTrk();
 	SplineRoad rd(app);  rd.LoadFile(from + "/road.xml",false);
 
 	for (int i=0; i < MTRs; ++i)
-	{	app->road->sMtrRoad[i] = rd.sMtrRoad[i];
-		app->road->SetMtrPipe(i, rd.sMtrPipe[i]);  }
+	{	app->scn->road->sMtrRoad[i] = rd.sMtrRoad[i];
+		app->scn->road->SetMtrPipe(i, rd.sMtrPipe[i]);  }
 
-	app->road->tcMul = rd.tcMul;		app->road->colN = rd.colN;
-	app->road->lenDiv0 = rd.lenDiv0;	app->road->colR = rd.colR;
-	app->road->iw0 =	rd.iw0;			app->road->iwPmul = rd.iwPmul;
-	app->road->fHeight =	rd.fHeight;	app->road->ilPmul = rd.ilPmul;
-	app->road->skirtLen = rd.skirtLen;	app->road->skirtH = rd.skirtH;
-	app->road->setMrgLen = rd.setMrgLen;  app->road->lposLen = rd.lposLen;
+	app->scn->road->tcMul = rd.tcMul;		app->scn->road->colN = rd.colN;
+	app->scn->road->lenDiv0 = rd.lenDiv0;	app->scn->road->colR = rd.colR;
+	app->scn->road->iw0 =	rd.iw0;			app->scn->road->iwPmul = rd.iwPmul;
+	app->scn->road->fHeight =	rd.fHeight;	app->scn->road->ilPmul = rd.ilPmul;
+	app->scn->road->skirtLen = rd.skirtLen;	app->scn->road->skirtH = rd.skirtH;
+	app->scn->road->setMrgLen = rd.setMrgLen;  app->scn->road->lposLen = rd.lposLen;
 
-	SetGuiFromXmls();	app->road->RebuildRoad(true);
-	app->UpdPSSMMaterials();	app->road->UpdAllMarkers();
+	SetGuiFromXmls();	app->scn->road->RebuildRoad(true);
+	scn->UpdPSSMMaterials();	app->scn->road->UpdAllMarkers();
 }
 
 
@@ -170,13 +171,13 @@ void CGui::btnCopyRoadPars(WP)
 
 void CGui::btnDeleteRoad(WP)
 {
-	int l = app->road->getNumPoints();
+	int l = app->scn->road->getNumPoints();
 	for (int i=0; i < l; ++i)
 	{
-		app->road->iChosen = app->road->getNumPoints()-1;
-		app->road->Delete();
+		app->scn->road->iChosen = app->scn->road->getNumPoints()-1;
+		app->scn->road->Delete();
 	}
-	//app->road->RebuildRoad(true);
+	//app->scn->road->RebuildRoad(true);
 }
 void CGui::btnDeleteFluids(WP)
 {
@@ -192,16 +193,16 @@ void CGui::btnDeleteObjects(WP)
 //  Scale track  --------------------------------
 void CGui::btnScaleAll(WP)
 {
-	if (!app->road)  return;
+	if (!app->scn->road)  return;
 	Real sf = std::max(0.1f, fScale);  // scale mul
 	
 	//  road
-	for (int i=0; i < app->road->getNumPoints(); ++i)
+	for (int i=0; i < app->scn->road->getNumPoints(); ++i)
 	{
-		app->road->Scale1(i, sf, 0.f);
-		app->road->mP[i].width *= sf;
+		app->scn->road->Scale1(i, sf, 0.f);
+		app->scn->road->mP[i].width *= sf;
 	}
-	app->road->bSelChng = true;
+	app->scn->road->bSelChng = true;
 	
 	//  fluids
 	for (int i=0; i < sc->fluids.size(); ++i)
@@ -226,8 +227,8 @@ void CGui::btnScaleAll(WP)
 	
 	//  road upd
 	if (0) //road)  // doesnt work here..
-	{	app->road->UpdPointsH();
-		app->road->RebuildRoad(true);
+	{	app->scn->road->UpdPointsH();
+		app->scn->road->RebuildRoad(true);
 	}
 
 	//  start pos

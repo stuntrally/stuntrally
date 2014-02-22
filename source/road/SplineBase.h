@@ -1,6 +1,17 @@
 #pragma once
 #include <OgreVector3.h>
 
+namespace Ogre {  class Terrain;  }
+
+class TerUtil  //  helper
+{
+public:
+	static float GetAngle(float x, float y);  // atan(y/x)
+	//  terrain
+	static float         GetAngleAt(Ogre::Terrain* terrain, float x, float z, float s);
+	static Ogre::Vector3 GetNormalAt(Ogre::Terrain* terrain, float x, float z, float s);
+};
+
 
 enum AngType {  AT_Manual=0, AT_Auto, AT_Both, AT_ALL  };
 const static std::string csAngType[AT_ALL] = {"Manual", "Auto", "Both"};

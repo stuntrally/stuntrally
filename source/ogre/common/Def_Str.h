@@ -1,6 +1,7 @@
 #pragma once
 // -- NOT to be included in headers  --
 
+#include <iomanip>
 #include <OgreLogManager.h>
 #include <OgreStringConverter.h>
 #include <MyGUI_LanguageManager.h>

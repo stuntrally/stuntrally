@@ -1,19 +1,69 @@
 #include "pch.h"
+#include "../vdrift/dbl.h"
 #include "../ogre/common/Def_Str.h"
 #include "SplineBase.h"
 #include <OgreVector4.h>
 #include <OgreLogManager.h>
+#include <OgreTerrain.h>
 using namespace Ogre;
 
 
-SplineBase::SplineBase() :
-	mAutoCalc(1), isLooped(1/**/)
+//  terrain utility
+//---------------------------------------------------------------------
+
+Vector3 TerUtil::GetNormalAt(Terrain* terrain, float x, float z, float s)
 {
+	Real y0=0;
+	Vector3 vx(x-s, y0, z), vz(x, y0, z-s);
+	Vector3 vX(x+s, y0, z), vZ(x, y0, z+s);
+	vx.y = terrain->getHeightAtWorldPosition(vx);  vX.y = terrain->getHeightAtWorldPosition(vX);
+	vz.y = terrain->getHeightAtWorldPosition(vz);  vZ.y = terrain->getHeightAtWorldPosition(vZ);
+	Vector3 v_x = vx-vX;  v_x.normalise();
+	Vector3 v_z = vz-vZ;  v_z.normalise();
+	Vector3 n = -v_x.crossProduct(v_z);  n.normalise();
+	return n;
 }
 
-SplineBase::~SplineBase()
+float TerUtil::GetAngleAt(Terrain* terrain, float x, float z, float s)
 {
+	//float* hf = terrain ? terrain->getHeightData() : sc->td.hfHeight;
+	//Real t = sc->td.fTriangleSize * 2.f;
+	//Vector3 vx(t, hf[a+1] - hf[a-1], 0);  // x+1 - x-1
+	//Vector3 vz(0, hf[a+wx] - hf[a-wx], t);	// z+1 - z-1
+	//Vector3 norm = -vx.crossProduct(vz);  norm.normalise();
+	//Real ang = Math::ACos(norm.y).valueDegrees();
+
+	Real y0=0;
+	Vector3 vx(x-s, y0, z), vz(x, y0, z-s);
+	Vector3 vX(x+s, y0, z), vZ(x, y0, z+s);
+	vx.y = terrain->getHeightAtWorldPosition(vx);  vX.y = terrain->getHeightAtWorldPosition(vX);
+	vz.y = terrain->getHeightAtWorldPosition(vz);  vZ.y = terrain->getHeightAtWorldPosition(vZ);
+	Vector3 v_x = vx-vX;  //v_x.normalise();
+	Vector3 v_z = vz-vZ;  //v_z.normalise();
+	Vector3 n = -v_x.crossProduct(v_z);  n.normalise();
+	Real a = Math::ACos(n.y).valueDegrees();
+	return a;
 }
+
+float TerUtil::GetAngle(float x, float y)
+{
+	if (x == 0.f && y == 0.f)
+		return 0.f;
+
+	if (y == 0.f)
+		return (x < 0.f) ? PI_d : 0.f;
+	else
+		return (y < 0.f) ? atan2f(-y, x) : (2*PI_d - atan2f(y, x));
+}
+
+
+//  ctor
+SplineBase::SplineBase() :
+	mAutoCalc(1), isLooped(1/**/)
+{	}
+
+SplineBase::~SplineBase()
+{	}
 
 
 //  Interpolate  whole spline  not used-

@@ -21,6 +21,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include <OgreEntity.h>
 #include <OgreSubEntity.h>
 #include <OgreHardwarePixelBuffer.h>
+#include <OgreViewport.h>
 
 #include "ImpostorPage.h"
 #include "StaticBillboardSet.h"
@@ -728,7 +729,7 @@ void ImpostorTexture::renderTextures(bool force)
 
 String ImpostorTexture::removeInvalidCharacters(String s)
 {
-	StringUtil::StrStreamType s2;
+	std::stringstream s2;
 
 	for (uint32 i = 0; i < s.length(); ++i){
 		char c = s[i];

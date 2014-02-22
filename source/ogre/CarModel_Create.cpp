@@ -28,6 +28,7 @@
 #include <OgreRibbonTrail.h>
 #include <OgreBillboardSet.h>
 #include <OgreBillboardChain.h>
+#include <OgreSceneNode.h>
 using namespace Ogre;
 #define  FileExists(s)  PATHMANAGER::FileExists(s)
 

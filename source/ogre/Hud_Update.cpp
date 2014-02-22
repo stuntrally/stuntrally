@@ -5,6 +5,7 @@
 #include "common/data/CData.h"
 #include "common/data/SceneXml.h"
 #include "common/data/TracksXml.h"
+#include "common/CScene.h"
 #include "../vdrift/game.h"
 #include "../vdrift/quickprof.h"
 #include "../road/Road.h"
@@ -490,7 +491,7 @@ void CHud::Update(int carId, float time)
 				//h.txLap->setCaption(h.sLap);
 			//}
 			float a = std::min(1.f, pCarM->fLapAlpha * 2.f);
-			bool hasRoad = app->road && app->road->getNumPoints() > 2;
+			bool hasRoad = app->scn->road && app->scn->road->getNumPoints() > 2;
 			bool vis = pSet->show_times && hasRoad && a > 0.f;
 			if (vis)
 			{	if (app->iLoad1stFrames == -2)  //bLoading)  //  fade out
@@ -507,7 +508,7 @@ void CHud::Update(int carId, float time)
 
 
 	//  checkpoint warning  --------
-	if (app->road && h.bckWarn && pCarM)
+	if (app->scn->road && h.bckWarn && pCarM)
 	{
 		/* checks debug *
 		if (ov[0].oU)  {
@@ -749,8 +750,8 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 	#endif
 	float angBase = app->carModels[b]->angCarY;
 	
-	bool bZoom = pSet->mini_zoomed && app->sc->ter,
-		bRot = pSet->mini_rotated && app->sc->ter;
+	bool bZoom = pSet->mini_zoomed && app->scn->sc->ter,
+		bRot = pSet->mini_rotated && app->scn->sc->ter;
 
 	const float vmin[2] = {0.f,-45.f}, rmin[2] = {0.f,-45.f},
 		vsc_mph[2] = {-180.f/100.f, -(180.f+vmin[1])/90.f},

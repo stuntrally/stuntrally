@@ -8,6 +8,7 @@
 #include "../vdrift/track.h"
 #include "../vdrift/game.h"
 #include "common/data/SceneXml.h"
+#include "common/CScene.h"
 #include "CGame.h"
 #include "SplitScreen.h"
 #include "FollowCamera.h"
@@ -24,6 +25,9 @@
 #include <OgreParticleAffector.h>
 #include <OgreRibbonTrail.h>
 #include <OgreBillboardSet.h>
+#include <OgreSceneNode.h>
+#include <OgreTechnique.h>
+#include <OgreViewport.h>
 #include <MyGUI_TextBox.h>
 using namespace Ogre;
 
@@ -46,14 +50,14 @@ void CarModel::UpdNextCheck()
 {
 	updTimes = true;
 	if (eType != CarModel::CT_LOCAL)  return;
-	if (!ndNextChk || !pApp || !pApp->road)  return;
-	if (pApp->road->mChks.empty())  return;
+	if (!ndNextChk || !pApp || !pApp->scn->road)  return;
+	if (pApp->scn->road->mChks.empty())  return;
 
 	Vector3 p;
-	if (iNumChks == pApp->road->mChks.size() && iCurChk != -1)
+	if (iNumChks == pApp->scn->road->mChks.size() && iCurChk != -1)
 		p = vStartPos;  // finish
 	else
-		p = pApp->road->mChks[iNextChk].pos;
+		p = pApp->scn->road->mChks[iNextChk].pos;
 		
 	p.y -= gPar.chkBeamSy;  // lower
 	ndNextChk->setPosition(p);
@@ -72,9 +76,9 @@ void CarModel::ResetChecks(bool bDist)  // needs to be done after road load!
 	iCurChk = -1;  iNumChks = 0;  // reset lap, chk vars
 	iLoopChk = -1;  iLoopLastCam = -1;
 	trackPercent = 0.f;
-	if (!pApp || !pApp->road)  return;
+	if (!pApp || !pApp->scn->road)  return;
 	
-	const SplineRoad* road = pApp->road;
+	const SplineRoad* road = pApp->scn->road;
 	iNextChk = pSet->game.trackreverse ? road->iChkId1Rev : road->iChkId1;
 	UpdNextCheck();
 
@@ -94,8 +98,8 @@ void CarModel::ResetChecks(bool bDist)  // needs to be done after road load!
 //--------------------------------------------------------------------------------------------------------
 void CarModel::UpdTrackPercent()
 {
-	if (!pApp || !pApp->road)  return;
-	const SplineRoad* road = pApp->road;
+	if (!pApp || !pApp->scn->road)  return;
+	const SplineRoad* road = pApp->scn->road;
 	
 	float perc = 0.f;
 	if (road && !road->mChks.empty() && !isGhost())

@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "Compositor.h"
 #include "CGame.h"
+#include "SplitScreen.h"
+#include "../vdrift/settings.h"
+#include "../vdrift/game.h"
+#include "common/CScene.h"
 
 #include <OgreCompositorInstance.h>
 #include <OgreCompositorChain.h>
@@ -12,10 +16,6 @@
 #include <OgreGpuProgramParams.h>
 #include <OgreRenderTarget.h>
 #include <OgreRenderWindow.h>
-#include "SplitScreen.h"
-#include "../vdrift/settings.h"
-//#include "HDRCompositor.h"
-#include "../vdrift/game.h"
 using namespace Ogre;
 
 
@@ -398,7 +398,7 @@ void GodRaysListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 	#endif
 
 	//update the sun position
-	Light* sun = ((App*)mApp)->sun;  //todo:!?
+	Light* sun = ((App*)mApp)->scn->sun;  //todo:!?
 	GpuProgramParametersSharedPtr params= mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
 	GpuProgramParametersSharedPtr fparams= mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
 	//disable god rays when the sun is not facing us

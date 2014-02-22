@@ -12,6 +12,7 @@
 #include "../ogre/FollowCamera.h"  //+ camera pos
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/data/SceneXml.h"
+#include "../ogre/common/CScene.h"
 #include "../ogre/common/GraphView.h"
 #include "../network/protocol.hpp"
 #include "tobullet.h"
@@ -121,7 +122,7 @@ void CAR::UpdateSounds(float dt)
 
 	bool dmg = pSet->game.damage_type > 0, reduced = pSet->game.damage_type==1;
 	bool terminal = dynamics.fDamage >= 100.f;
-	float fDmg = pApp->sc->damageMul;
+	float fDmg = pApp->scn->sc->damageMul;
 	
 	///  replay play  ------------------------------------------
 	if (pApp->bRplPlay)

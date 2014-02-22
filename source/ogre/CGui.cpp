@@ -2,6 +2,7 @@
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
+#include "common/CScene.h"
 #include "../vdrift/pathmanager.h"
 
 
@@ -79,10 +80,10 @@ CGui::CGui(App* app1)
 	,edInputIncrease(0), chOneAxis(0)
 {
 	pSet = app1->pSet;
-	sc = app1->sc;
+	sc = app1->scn->sc;
 	pGame = app1->pGame;
 	hud = app1->hud;
-	data = app1->data;
+	data = app1->scn->data;
 
 	int i,c;
 	for (i=0; i<3; ++i)

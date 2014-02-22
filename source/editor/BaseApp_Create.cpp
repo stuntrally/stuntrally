@@ -13,6 +13,8 @@
 #if OGRE_VERSION >= MYGUI_DEFINE_VERSION(1, 9, 0) 
 #include <OgreOverlaySystem.h>
 #endif
+#include <OgreOverlay.h>
+#include <OgreOverlayElement.h>
 #include <OgreOverlayManager.h>
 #include "../ogre/common/MyGUI_D3D11.h"
 #include "../sdl4ogre/sdlinputwrapper.hpp"
@@ -173,7 +175,7 @@ BaseApp::BaseApp()
 	,mShowDialog(1), mShutDown(false), bWindowResized(true), bFirstRenderFrame(true)
 	,alt(0), ctrl(0), shift(0)
 	,mbLeft(0), mbRight(0), mbMiddle(0)
-	,ndSky(0), road(0)
+	,ndSky(0)
 
 	,mDebugOverlay(0), ovSt(0)
 	,ovPos(0), ovDbg(0), ovInfo(0), ovStat(0)

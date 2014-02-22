@@ -497,7 +497,7 @@ namespace MyGUI
 		ret->setParameter("profiles", "vs_4_0");
 		ret->setParameter("entry_point", "main_vp");
 
-		Ogre::StringUtil::StrStreamType sourceStr;
+		std::stringstream sourceStr;
 	
 		sourceStr <<
 		"void main_vp( \n"
@@ -532,7 +532,7 @@ namespace MyGUI
 		ret->setParameter("profiles", "ps_4_0");
 		ret->setParameter("entry_point", "main_fp");
 
-		Ogre::StringUtil::StrStreamType sourceStr;
+		std::stringstream sourceStr;
 	
 		sourceStr <<
 		"float4 main_fp(in float4 iPos : POSITION, \n"
@@ -560,7 +560,7 @@ namespace MyGUI
 		ret->setParameter("profiles", "ps_4_0");
 		ret->setParameter("entry_point", "main_fp");
 
-		Ogre::StringUtil::StrStreamType sourceStr;
+		std::stringstream sourceStr;
 	
 		sourceStr <<
 		"float4 main_fp(in float4 iPos : POSITION, \n"

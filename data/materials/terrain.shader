@@ -9,8 +9,7 @@
 #define FOG  @shGlobalSettingBool(fog) && !RENDER_COMPOSITE_MAP
 #define MRT  (!RENDER_COMPOSITE_MAP && @shGlobalSettingBool(mrt_output))
 
-#define SHADOWS  @shGlobalSettingBool(shadows_pssm) && !RENDER_COMPOSITE_MAP
-
+#define SHADOWS        @shGlobalSettingBool(shadows_pssm) && !RENDER_COMPOSITE_MAP
 #define SHADOWS_DEPTH  @shGlobalSettingBool(shadows_depth)
 
 #if SHADOWS
@@ -19,10 +18,11 @@
 
 #define NUM_LAYERS  @shPropertyString(num_layers)
 
+#define DEBUG_BLEND  @shGlobalSettingBool(debug_blend)
+
 #define NORMAL_MAPPING  @shGlobalSettingBool(terrain_normal)
 
 #define SPECULAR  @shGlobalSettingBool(terrain_specular) && !RENDER_COMPOSITE_MAP
-
 #define SPECULAR_EXPONENT  32
 
 #define PARALLAX_MAPPING  @shGlobalSettingBool(terrain_parallax) && !RENDER_COMPOSITE_MAP && NORMAL_MAPPING
@@ -33,7 +33,7 @@
 #define TRIPLANAR_TYPE @shGlobalSettingString(terrain_triplanarType)
 #define TRIPLANAR_FULL (TRIPLANAR_TYPE == 2)
 #define TRIPLANAR_1 (TRIPLANAR_TYPE == 1)
-#define TRIPLANAR  (TRIPLANAR_TYPE) && !RENDER_COMPOSITE_MAP
+#define TRIPLANAR   (TRIPLANAR_TYPE) && !RENDER_COMPOSITE_MAP
 //  1 layer triplanar only
 #define TRIPLANAR_LAYER @shGlobalSettingString(terrain_triplanarLayer)
 
@@ -301,7 +301,7 @@
         blend_weights = max(blend_weights, 0);
 
         // Force weights to sum to 1.0
-        blend_weights /= (blend_weights.x + blend_weights.y + blend_weights.z );
+        blend_weights /= blend_weights.x + blend_weights.y + blend_weights.z;
         
         float2 coord1, coord2, coord3;
         float4 col1, col2, col3;
@@ -321,14 +321,18 @@
         float specularAmount = 0;
 #endif
         
+        //  vars
         float3 albedo = float3(0,0,0);
+        float3 bb;
         float4 diffuseSpec;
         float uvMul;
+		float fBlend;
+
         
-        
-        // per layer calculations
+//-----  per layer calculations
     @shForeach(@shPropertyString(num_layers))
     
+        fBlend = blendValues@shPropertyString(blendmap_component_@shIterator);
     
 ///---------------------------------------------------------------------------------------------
 #if TRIPLANAR
@@ -400,15 +404,28 @@
 #endif
 ///---------------------------------------------------------------------------------------------
 
+        
+        ////  albedo
 
-        // albedo
+	#if DEBUG_BLEND
+		//  for test
+        bb = float3(0,0,0);
         #if @shIterator == 0
-        // first layer doesn't need a blend map
-        albedo = diffuseSpec.rgb;
-        #else
-        albedo = shLerp(albedo, diffuseSpec.rgb, blendValues@shPropertyString(blendmap_component_@shIterator));
+        bb = float3(1,0,0);
         #endif
-
+        #if @shIterator == 1
+        bb = float3(0,1,0);
+        #endif
+        #if @shIterator == 2
+        bb = float3(0,0,1);
+        #endif
+        #if @shIterator == 3  // only 4
+        bb = float3(0.5,0.5,0.5);
+        #endif
+        albedo += bb * fBlend;
+    #else
+        albedo += diffuseSpec.rgb * fBlend;
+    #endif
 
 	#if NORMAL_MAPPING
         NdotL = max(dot(TSnormal, TSlightDir), 0);
@@ -420,9 +437,9 @@
 			litRes.y = specular;
 			#endif
         #else
-			litRes.x = shLerp (litRes.x, NdotL, blendValues@shPropertyString(blendmap_component_@shIterator));
+			litRes.x = shLerp (litRes.x, NdotL, fBlend);
 			#if SPECULAR
-			litRes.y = shLerp (litRes.y, specular, blendValues@shPropertyString(blendmap_component_@shIterator));
+			litRes.y = shLerp (litRes.y, specular, fBlend);
 			#endif
         #endif
         
@@ -431,19 +448,18 @@
         #if @shIterator == 0
         specularAmount = diffuseSpec.a;
         #else
-        specularAmount = shLerp (specularAmount, diffuseSpec.a, blendValues@shPropertyString(blendmap_component_@shIterator));
+        specularAmount = shLerp(specularAmount, diffuseSpec.a, fBlend);
         #endif
         
 	#endif
         
         
     @shEndForeach
-
+//-----  per layer
+	
         
-        shOutputColour(0) = float4(1,1,1,1);
-       
-        shOutputColour(0).rgb *= albedo;
-        
+        shOutputColour(0).a = 1.f;
+        shOutputColour(0).rgb = albedo;
         
         
         // Lighting
@@ -460,19 +476,26 @@
 
         diffuse += lightDiffuse0.xyz * max(dot(normal, lightDir), 0) * shadow;
     
+	#if DEBUG_BLEND
+        shOutputColour(0).xyz *= (float3(0.5,0.5,0.5) + 0.5*diffuse);
+    #else
         shOutputColour(0).xyz *= (lightAmbient.xyz + diffuse);
+    #endif
         #if SPECULAR
-        shOutputColour(0).xyz += specular * lightSpecular0.xyz * specularAmount * shadow;
+        shOutputColour(0).xyz +=  specular * lightSpecular0.xyz * specularAmount * shadow;
         #endif
-    
 #else
+	#if DEBUG_BLEND
+        shOutputColour(0).xyz *= (float3(0.5,0.5,0.5) + litRes.x * float3(0.8,0.8,0.8) * shadow);
+    #else
         shOutputColour(0).xyz *= (lightAmbient.xyz + litRes.x * lightDiffuse0.xyz * shadow);
+    #endif
         #if SPECULAR
-        shOutputColour(0).xyz += litRes.y * lightSpecular0.xyz * shadow;
+        shOutputColour(0).xyz +=  litRes.y * lightSpecular0.xyz * shadow;
         #endif
 #endif
-    
-    
+        
+        
         
 #if FOG
         float worldPosY = shMatrixMult(worldMatrix, float4(objSpacePosition.xyz, 1)).y;
@@ -496,10 +519,6 @@
         float3 viewNormal = normalize(shMatrixMult(wvMat, float4(normal, 0)).xyz);
         shOutputColour(1) = float4(length(viewPosition) / far, normalize(viewNormal));
         shOutputColour(2) = float4(depth / far, 0, depth / objSpacePosition.w, 0);
-#endif
-
-#if COMPOSITE_MAP
-        shOutputColour(0).xyz = float3(1,1,1);
 #endif
 
 

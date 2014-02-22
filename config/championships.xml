@@ -12,7 +12,7 @@
 		<t name="D15-CityWall"/>
 		<t name="V7-Radioactive"/>
 		<t name="R3-Hot"/>
-		<t name="0W14-DangerRoad"/>
+		<t name="W14-DangerRoad"/>
 	-->
 
 <!--  Tutorials  -->
@@ -22,13 +22,13 @@
 			descr="Basic tutorial on simplest tracks. One lap on each track. To learn different road surfaces: gravel, wet gravel, snow.">
 		<t name="J3-Rocky"/>
 		<t name="F1-Slippery"/>
-		<t name="0W1-cross"/>
+		<t name="W1-Cross"/>
 	</champ>
 
 	<champ name="Tutorial Banked" ver="1" difficulty="1" type="0" 
 			descr="Easy tutorial with short tracks having banked turns.">
-		<t name="F7-blur3"/>
-		<t name="F6-DC3"/>
+		<t name="F7-Blur"/>
+		<t name="F6-Banked"/>
 	</champ>
 
 	<champ name="Tutorial Bridges" ver="1" difficulty="2" type="0" 
@@ -40,8 +40,8 @@
 	<champ name="Tutorial Terrain" ver="1" difficulty="2" type="0" 
 			descr="Tutorial with short tracks having hilly or bumpy terrain.">
 		<t name="F11-Dawn"/>
-		<t name="J1-T"/>
-		<t name="D1-simple"/>
+		<t name="J1-Curly"/>
+		<t name="D1-Dunes"/>
 	</champ>
 
 	<champ name="Tutorial Asphalt" ver="1" difficulty="2" type="0" 
@@ -62,8 +62,8 @@
 
 	<champ name="Tutorial Jumps" ver="2" difficulty="3" type="1" 
 			descr="Tutorial for training jumps. Car velocity before jump is most important. In easy mode, you need to use boost to reach it.">
-		<t name="D5-jump8-low"/>
-		<t name="D6-jump0-high"/>
+		<t name="D5-LowJumps"/>
+		<t name="D6-HighJumps"/>
 		<t name="D8-Technical"/>
 	</champ>
 
@@ -76,7 +76,7 @@
 	<champ name="Tutorial Pipes" ver="1" difficulty="4" type="1" 
 			descr="Tutorial for road pipes. Mostly driving inside glass pipes. Some tracks are twisted.">
 		<t name="J5-Pipes"/>
-		<t name="S10-Pipe88"/>
+		<t name="S10-PipeCurl"/>
 		<t name="S6-PipeCrazy"/>
 	</champ>
 
@@ -91,9 +91,9 @@
 			descr="Best short tracks in game, for rally fans, in interesting sceneries.">
 		<t name="I4-Sunset"/>
 		<t name="F11-Dawn"/>
-		<t name="F8-blurX3"/>
-		<t name="0W7-LJs-Mntn"/>
-		<t name="I1-star3"/>
+		<t name="F8-Stain"/>
+		<t name="W7-LJs-Mntn"/>
+		<t name="I1-Island"/>
 		<t name="J12-Fog"/>
 		<t name="M1-Hills"/>
 	</champ>
@@ -111,25 +111,25 @@
 			descr="Other short tracks in game. Some quite circullar.">
 		<t name="G3-Butterfly"/>
 		<t name="J9-Sharp"/>
-		<t name="D3-P"/>
+		<t name="D3-Passage"/>
 		<t name="G4-River"/>
 		<t name="F4-OSquare"/>
 		<t name="I7-Moses"/>
-		<t name="0W2-Wet"/>
-		<t name="I2-S8"/>
+		<t name="W2-Wet"/>
+		<t name="I2-Sandy"/>
 		<t name="T6-Sunset"/>
 	</champ>
 
 	<champ name="Fast fun" ver="1" difficulty="3" type="2" 
 			descr="Fast, short tracks in game. Some quite curly and banked. Driven flat-out.">
-		<t name="D1-simple"/>
-		<t name="F7-blur3"/>
+		<t name="D1-Dunes"/>
+		<t name="F7-Blur"/>
 		<t name="T3-Orange"/>
-		<t name="J1-T"/>
+		<t name="J1-Curly"/>
 		<t name="O1-Moss"/>
-		<t name="F6-DC3"/>
+		<t name="F6-Banked"/>
 		<t name="J8-Round"/>
-		<t name="0W3-mouth"/>
+		<t name="W3-Swing"/>
 		<t name="C2-CanyonRun"/>
 		<t name="T2-RedOakPark"/>
 	</champ>
@@ -152,9 +152,9 @@
 		<t name="V2-Volcanic"/>
 		<t name="J13-Tropic"/>
 		<t name="F12-HighPeaks"/>
-		<t name="0W11-Glacier"/>
+		<t name="W11-Glacier"/>
 		<t name="A6-Cannon"/>
-		<t name="0W6-88"/>
+		<t name="W6-SnowyEights"/>
 		<t name="G1-Long"/>
 	</champ>
 
@@ -170,15 +170,15 @@
 	<champ name="Fancy circles" ver="3" difficulty="3" type="2" 
 			descr="The most circullar tracks. Usualy banked, sometimes with easy pipe turns. Require much steering but mostly in same direction.">
 		<t name="J10-Spiral"/>
-		<t name="S9-demo"/>
-		<t name="J19-demo2"/>
-		<t name="0W8-pipe8x8"/>
+		<t name="S9-Short"/>
+		<t name="J19-ShortFun"/>
+		<t name="W8-PipeCross"/>
 		<t name="I6-Flooded"/>
 		<t name="C2-CanyonRun"/>
-		<t name="0W5-Circles"/>
+		<t name="W5-Circles"/>
 		<t name="X1-Magic"/>
 		<t name="V3-Crater"/>
-		<t name="0W12-Peaks"/>
+		<t name="W12-Peaks"/>
 		<t name="I8-Pharaoh"/>
 	</champ>
 
@@ -227,16 +227,16 @@
 		<t name="F12-HighPeaks"/>
 		<t name="J20-JungleMaze"/>
 		<t name="F13-Castle"/>
-		<t name="0W7-LJs-Mntn"/>
+		<t name="W7-LJs-Mntn"/>
 		<t name="F10-MntnTrail"/>
 	</champ>
 
 	<champ name="Frenzy fellow" ver="4" difficulty="4" type="3" 
 			descr="Curly tracks, sometimes banked, frequently changing directions. Require lots of steering.">
 		<t name="S2-Frenzy"/>
-		<t name="0W9-IceFrenzy"/>
+		<t name="W9-IceFrenzy"/>
 		<t name="C4-Sway"/>
-		<t name="S8-Frenzy2slow"/>
+		<t name="S8-SlowFrenzy"/>
 		<t name="F9-MadMntn"/>
 		<t name="C1-Hairpins"/>
 	</champ>
@@ -247,10 +247,10 @@
 		<t name="T5-Twister"/>
 		<t name="J18-Tiny"/>
 		<t name="J12-Fog"/>
-		<t name="0W10-Whirl"/>
+		<t name="W10-Whirl"/>
 		<t name="V1-Dark"/>
-		<t name="0W4-ice-blur"/>
-		<t name="0W13-MtFog"/>
+		<t name="W4-IceSlip"/>
+		<t name="W13-MtFog"/>
 	</champ>
 
 	<champ name="Dark chase" ver="1" difficulty="3" type="3" 
@@ -269,7 +269,7 @@
 	<champ name="Master of Stunts" ver="2" difficulty="5" type="4" 
 			descr="Best stunt tracks in game, very twisted and difficult. With plenty of loops, jumps and twisted bridges. Lets you master your stunt driving.">
 		<t name="S3-Loops"/>
-		<t name="J6-80fun"/>
+		<t name="J6-Fun"/>
 		<t name="S7-HighMadness"/>
 		<t name="A1-StuntPark"/>
 		<t name="I11-StuntIslands"/>
@@ -297,7 +297,7 @@
 
 	<champ name="Jump mania" ver="2" difficulty="4" type="4" 
 			descr="Tracks with lots of jumps. Fast cars are needed (or boosting to reach jump speeds).">
-		<t name="D6-jump0-high"/>
+		<t name="D6-HighJumps"/>
 		<t name="D7-CrossJumps"/>
 		<t name="A5-TopTwist"/>
 		<t name="R1-Mars"/>
@@ -320,12 +320,12 @@
 
 	<champ name="Desert" ver="2" difficulty="2" type="5" 
 			descr="Desert championship. Part 1.">
-		<t name="D1-simple"/>
+		<t name="D1-Dunes"/>
 		<t name="D2-Mntn"/>
-		<t name="D3-P"/>
+		<t name="D3-Passage"/>
 		<t name="D4-SBridge"/>
-		<t name="D5-jump8-low"/>
-		<t name="D6-jump0-high"/>
+		<t name="D5-LowJumps"/>
+		<t name="D6-HighJumps"/>
 		<t name="D7-CrossJumps"/>
 		<t name="D8-Technical"/>
 	</champ>
@@ -341,11 +341,11 @@
 	</champ>
 	<champ name="Jungle" ver="2" difficulty="3" type="5" 
 			descr="Jungle championship. Part 1.">
-		<t name="J1-T"/>
+		<t name="J1-Curly"/>
 		<t name="J3-Rocky"/>
 		<t name="J4-Pipe8"/>
 		<t name="J5-Pipes"/>
-		<t name="J6-80fun"/>
+		<t name="J6-Fun"/>
 		<t name="J7-Hilly"/>
 		<t name="J8-Round"/>
 		<t name="J9-Sharp"/>
@@ -361,7 +361,7 @@
 		<t name="J16-MudMad"/>
 		<t name="J17-JungleCanyons"/>
 		<t name="J18-Tiny"/>
-		<t name="J19-demo2"/>
+		<t name="J19-ShortFun"/>
 		<t name="J20-JungleMaze"/>
 		<t name="J21-Paradise"/>
 		<t name="J22-Knotted"/>
@@ -374,9 +374,9 @@
 		<t name="S5-LoopBasic"/>
 		<t name="S6-PipeCrazy"/>
 		<t name="S7-HighMadness"/>
-		<t name="S8-Frenzy2slow"/>
-		<t name="S9-demo"/>
-		<t name="S10-Pipe88"/>
+		<t name="S8-SlowFrenzy"/>
+		<t name="S9-Short"/>
+		<t name="S10-PipeCurl"/>
 	</champ>
 	<champ name="Savanna 2nd" ver="1" difficulty="5" type="5" 
 			descr="Savanna championship. Part 2.">
@@ -387,32 +387,32 @@
 	</champ>
 	<champ name="Winter" ver="1" difficulty="3" type="5" 
 			descr="Winter championship. Part 1.">
-		<t name="0W1-cross"/>
-		<t name="0W2-Wet"/>
-		<t name="0W3-mouth"/>
-		<t name="0W4-ice-blur"/>
-		<t name="0W5-Circles"/>
-		<t name="0W6-88"/>
-		<t name="0W7-LJs-Mntn"/>
-		<t name="0W8-pipe8x8"/>
-		<t name="0W9-IceFrenzy"/>
-		<t name="0W10-Whirl"/>
+		<t name="W1-Cross"/>
+		<t name="W2-Wet"/>
+		<t name="W3-Swing"/>
+		<t name="W4-IceSlip"/>
+		<t name="W5-Circles"/>
+		<t name="W6-SnowyEights"/>
+		<t name="W7-LJs-Mntn"/>
+		<t name="W8-PipeCross"/>
+		<t name="W9-IceFrenzy"/>
+		<t name="W10-Whirl"/>
 	</champ>
 	<champ name="Winter 2nd" ver="1" difficulty="4" type="5" 
 			descr="Winter championship. Part 2.">
-		<t name="0W11-Glacier"/>
-		<t name="0W12-Peaks"/>
-		<t name="0W13-MtFog"/>
-		<t name="0W14-DangerRoad"/>
+		<t name="W11-Glacier"/>
+		<t name="W12-Peaks"/>
+		<t name="W13-MtFog"/>
+		<t name="W14-DangerRoad"/>
 	</champ>
 	<champ name="Forest" ver="1" difficulty="4" type="5" 
 			descr="Forest championship. Part 1.">
 		<t name="F1-Slippery"/>
 		<t name="F3-Snail"/>
 		<t name="F4-OSquare"/>
-		<t name="F6-DC3"/>
-		<t name="F7-blur3"/>
-		<t name="F8-blurX3"/>
+		<t name="F6-Banked"/>
+		<t name="F7-Blur"/>
+		<t name="F8-Stain"/>
 		<t name="F9-MadMntn"/>
 		<t name="F10-MntnTrail"/>
 	</champ>
@@ -427,8 +427,8 @@
 	</champ>
 	<champ name="Island" ver="1" difficulty="2" type="5" 
 			descr="Island championship. Part 1.">
-		<t name="I1-star3"/>
-		<t name="I2-S8"/>
+		<t name="I1-Island"/>
+		<t name="I2-Sandy"/>
 		<t name="I3-Islands"/>
 		<t name="I4-Sunset"/>
 		<t name="I5-Shore"/>

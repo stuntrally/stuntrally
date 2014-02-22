@@ -7,6 +7,7 @@
 #include "common/GuiCom.h"
 #include "common/data/CData.h"
 #include "common/data/SceneXml.h"
+#include "common/CScene.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "SplitScreen.h"
@@ -19,6 +20,7 @@
 #include <OgreTerrainPaging.h>
 #include <OgrePageManager.h>
 #include <OgreManualObject.h>
+#include <OgreTechnique.h>
 #include "../shiny/Platforms/Ogre/OgreMaterial.hpp"
 using namespace Ogre;
 
@@ -26,15 +28,10 @@ using namespace Ogre;
 //  ctors  -----------------------------------------------
 App::App(SETTINGS *settings, GAME *game)
 	:pGame(game)
-	,sc(0), data(0), hud(0), gui(0), gcom(0), input(0)
+	,hud(0), gui(0), gcom(0), input(0)
 	,mThread(), mTimer(0.f)
-	// ter
-	,terrain(0), mTerrainGroup(0), mTerrainGlobals(0)
-	,horizon(0), mHorizonGroup(0), mHorizonGlobals(0)
 	// game
-	,blendMtr(0), iBlendMaps(0), dbgdraw(0), noBlendUpd(0), blendMapSize(513)
-	,grass(0), trees(0), road(0)
-	,pr(0),pr2(0), sun(0), mStaticGeom(0)
+	,blendMtr(0), blendMapSize(513), dbgdraw(0)
 	,carIdWin(-1), iRplCarOfs(0)
 	// other
 	,newGameRpl(0), curLoadState(0)
@@ -47,10 +44,7 @@ App::App(SETTINGS *settings, GAME *game)
 	pSet = settings;
 	pGame->collision.pApp = this;
 
-	sc = new Scene();
-	mWaterRTT = new WaterRTT();
 	frm.resize(4);
-	
 	for (int i=0; i < 8; ++i)
 		iCurPoses[i] = 0;
 
@@ -59,7 +53,8 @@ App::App(SETTINGS *settings, GAME *game)
 	resCar = "";  resTrk = "";  resDrv = "";
 	
 	///  new
-	data = new CData();
+	scn = new CScene(this);
+	data = scn->data;
 	hud = new CHud(this);
 
 	gcom = new CGuiCom(this);
@@ -82,21 +77,12 @@ App::~App()
 	if (mThread.joinable())
 		mThread.join();
 
-	delete road;
-	OGRE_DELETE mHorizonGroup;
-	OGRE_DELETE mHorizonGlobals;
-
-	OGRE_DELETE mTerrainGroup;
-	OGRE_DELETE mTerrainGlobals;
-
 	OGRE_DELETE dbgdraw;
-	delete mWaterRTT;
-	delete sc;
-	delete data;
 
 	delete gui->popup;
 	delete gcom;
 	delete gui;
+	delete scn;
 
 	delete hud;
 	delete input;
@@ -115,7 +101,7 @@ void App::postInit()
 
 void App::destroyScene()
 {
-	mWaterRTT->destroy();
+	scn->mWaterRTT->destroy();
 	
 	DestroyObjects(true);
 	
@@ -134,16 +120,13 @@ void App::destroyScene()
 	
 	gcom->mToolTip = 0;  //?
 
-	if (road)
-	{	road->DestroyRoad();  delete road;  road = 0;  }
+	scn->DestroyRoad();
 
-	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
-	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
+	scn->DestroyTrees();
 
 	if (pGame)
 		pGame->End();
-	delete[] sc->td.hfHeight;
-	delete[] sc->td.hfAngle;
+	delete[] scn->sc->td.hfHeight;
 	delete[] blendMtr;  blendMtr = 0;
 
 	BaseApp::destroyScene();

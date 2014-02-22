@@ -3,11 +3,7 @@
 #include <math.h>
 //#include <algorithm>
 
-#ifdef SR_EDITOR
-	#include "../../editor/CApp.h"
-#else
-	#include "../CGame.h"
-#endif
+#include "CScene.h"
 
 
 const float F2 = 0.5*(sqrt(3.0)-1.0);
@@ -142,7 +138,7 @@ float SimplexNoise2D(float xin, float yin)
 
 //  noise with octaves
 //
-float App::Noise(float x, float zoom, int octaves, float persistence)
+float CScene::Noise(float x, float zoom, int octaves, float persistence)
 {
     float total = 0.f;
     for (int i=0; i < octaves; ++i)
@@ -155,7 +151,7 @@ float App::Noise(float x, float zoom, int octaves, float persistence)
     return total;
 }
 
-float App::Noise(float x, float y, float zoom, int octaves, float persistence)
+float CScene::Noise(float x, float y, float zoom, int octaves, float persistence)
 {
     float total = 0.f;
     for (int i=0; i < octaves; ++i)

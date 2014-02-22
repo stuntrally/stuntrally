@@ -3,8 +3,8 @@
 #include "CGame.h"
 #include "../vdrift/game.h"
 #include "../vdrift/car.h"
-//#include "../vdrift/quickprof.h"
 #include "common/data/SceneXml.h"
+#include "common/CScene.h"
 #include "common/GraphView.h"
 #include "SplitScreen.h"
 #include <OgreSceneManager.h>
@@ -575,7 +575,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			const bool common = 1;  // common range for all
 			const bool cust = 1;
 			//  RANGE  gui sld ..
-			const Dbl fMAX = 9000.0, max_y = pApp->sc->asphalt ? 40.0 : 80.0, max_x = 1.0;
+			const Dbl fMAX = 9000.0, max_y = pApp->scn->sc->asphalt ? 40.0 : 80.0, max_x = 1.0;
 
 			///  Fy lateral --
 			for (int i=0; i < TireNG; ++i)

@@ -3,6 +3,7 @@
 #include "common/data/CData.h"
 #include "common/data/TracksXml.h"
 #include "common/GuiCom.h"
+#include "common/CScene.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
@@ -477,8 +478,8 @@ void CGui::ChallFillStageInfo(bool finished)
 		{
 			const TrackInfo* ti = &data->tracks->trks[id-1];
 			s += "#A0D0FF"+ TR("#{Difficulty}:  ") + gcom->clrsDiff[ti->diff] + TR("#{Diff"+toStr(ti->diff)+"}") + "\n";
-			if (app->road)
-			{	Real len = app->road->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);
+			if (app->scn->road)
+			{	Real len = app->scn->road->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);
 				s += "#A0D0FF"+ TR("#{Distance}:  ") + "#B0E0FF" + fToStr(len, 1,4) + (pSet->show_mph ? " mi" : " km") + "\n\n";
 		}	}
 	}
@@ -517,8 +518,7 @@ void CGui::ChallFillStageInfo(bool finished)
 		if (trk.timeNeeded > 0.f)	s += TR("  #D8C0FF#{TBTime}: ") + CHud::StrTime(trk.timeNeeded) +"\n";
 		if (trk.passPoints > 0.f)	s += TR("  #D8C0FF#{TBPoints}: ") + fToStr(trk.passPoints,1) +"\n";
 		if (trk.passPos > 0)		s += TR("  #D8C0FF#{TBPosition}: ") + toStr(trk.passPos) +"\n";
-		if (app->road)
-			s += "\n#A8B8C8"+ app->road->sTxtDesc;
+		if (app->scn->road)			s += "\n#A8B8C8"+ app->scn->road->sTxtDesc;
 	}
 
 	edChallStage->setCaption(s);

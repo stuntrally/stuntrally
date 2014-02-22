@@ -2,6 +2,7 @@
 #include "Def_Str.h"
 #include "Gui_Def.h"
 #include "GuiCom.h"
+#include "CScene.h"
 #include "WaterRTT.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
@@ -194,7 +195,7 @@ void CGuiCom::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	app->gui->UpdGuiAfterPreset();
 
-	app->mWaterRTT->setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
+	app->scn->mWaterRTT->setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
 	chkWater(0);
 	//^app->changeShadows();  // apply shadow, material factory generate
 }

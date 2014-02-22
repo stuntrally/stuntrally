@@ -3,6 +3,7 @@
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/RenderConst.h"
 #include "../ogre/common/GuiCom.h"
+#include "../ogre/common/CScene.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -14,6 +15,8 @@
 #include <OgreOverlay.h>
 #include <OgreOverlayElement.h>
 #include <OgreCamera.h>
+#include <OgreSceneNode.h>
+#include <OgreViewport.h>
 #include <MyGUI.h>
 using namespace MyGUI;
 using namespace Ogre;
@@ -73,7 +76,7 @@ void CGui::SetGuiFromXmls()
 
 	//  [Road]
 	//-----------------------------------------------
-	SplineRoad* rd = app->road;
+	SplineRoad* rd = scn->road;
 	for (int i=0; i < 4/*MTRs*/; ++i)
 	{	_Cmb(cmbRoadMtr[i], rd->sMtrRoad[i]);
 		_Cmb(cmbPipeMtr[i], rd->sMtrPipe[i]);  }
@@ -182,7 +185,7 @@ void App::UpdVisGui()
 	mInputWrapper->setMouseRelative(!vis);
 	mInputWrapper->setGrabPointer(!vis && pSet->mouse_capture);
 
-	if (road)  road->SetTerHitVis(bEdit());
+	if (scn->road)  scn->road->SetTerHitVis(bEdit());
 	if (!bGuiFocus && gcom->mToolTip)  gcom->mToolTip->setVisible(false);
 
 	if (ovBrushPrv)
@@ -233,14 +236,14 @@ void App::togPrvCam()
 		rt[RTs].ndMini->setVisible(false);
 		ndCar->setVisible(true);
 
-		UpdateWaterRTT(mCamera);
-		UpdFog();  // restore fog, veget
+		scn->UpdateWaterRTT(mCamera);
+		scn->UpdFog();  // restore fog, veget
 		if (oldV)  {  bTrGrUpd = true;  oldV = false;  }
 		pSet->bWeather = oldI;
-		UpdTerErr();
+		scn->UpdTerErr();
 
-		sc->camPos = mCamera->getPosition();
-		sc->camDir = mCamera->getDirection();
+		scn->sc->camPos = mCamera->getPosition();
+		scn->sc->camDir = mCamera->getDirection();
 		mCamera->setPosition( mCamPosOld);
 		mCamera->setDirection(mCamDirOld);
 	}else  // enter
@@ -252,16 +255,16 @@ void App::togPrvCam()
 		rt[RTs].ndMini->setVisible(true);
 		ndCar->setVisible(false);
 
-		UpdateWaterRTT(rt[3].cam);
-		UpdFog(true);  // on fog, veget, weather
+		scn->UpdateWaterRTT(rt[3].cam);
+		scn->UpdFog(true);  // on fog, veget, weather
 		if (!pSet->bTrees)  {  bTrGrUpd = true;  oldV = true;  }
 		oldI = pSet->bWeather;  pSet->bWeather = false;
-		mTerrainGlobals->setMaxPixelError(0.5f);  //hq ter
+		scn->mTerrainGlobals->setMaxPixelError(0.5f);  //hq ter
 
 		mCamPosOld = mCamera->getPosition();
 		mCamDirOld = mCamera->getDirection();
-		mCamera->setPosition( sc->camPos);
-		mCamera->setDirection(sc->camDir);
+		mCamera->setPosition( scn->sc->camPos);
+		mCamera->setDirection(scn->sc->camDir);
 	}
 	UpdEditWnds();
 }

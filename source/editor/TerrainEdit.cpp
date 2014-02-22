@@ -1,6 +1,8 @@
 #include "pch.h"
+#include "../ogre/common/RenderConst.h"
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/QTimer.h"
+#include "../ogre/common/CScene.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -10,6 +12,9 @@
 #include <MyGUI.h>
 #include <OgreOverlay.h>
 #include <OgreOverlayElement.h>
+#include <OgreTextureManager.h>
+#include <OgreMaterialManager.h>
+#include <OgreTechnique.h>
 using namespace Ogre;
 
 
@@ -76,7 +81,7 @@ void App::updateBrushPrv(bool first)
 		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
 
-			float c = d * (1.0-pow( fabs(Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*d)) * (1.5f-fP*0.1);
+			float c = d * (1.0-pow( fabs(CScene::Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*d)) * (1.5f-fP*0.1);
 			c = std::max(0.f, c);
 			
 			uint8 bR = c * fR, bG = c * fG, bB = c * fB;
@@ -89,7 +94,7 @@ void App::updateBrushPrv(bool first)
 		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
 
-			float c = d * pow( fabs(Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*0.5f) * 0.9f;
+			float c = d * pow( fabs(CScene::Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*0.5f) * 0.9f;
 			
 			uint8 bR = c * fR, bG = c * fG, bB = c * fB;
 			*p++ = bR;  *p++ = bG;  *p++ = bB;  *p++ = bG > 32 ? 255 : 0;
@@ -158,7 +163,7 @@ void App::updBrush()
 		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
 
-			float c = d * (1.0-pow( fabs(Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*d)) * (1.5f-fP*0.1);
+			float c = d * (1.0-pow( fabs(CScene::Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*d)) * (1.5f-fP*0.1);
 			c = std::max(0.f, c);
 			
 			mBrushData[a] = std::min(1.f, c );
@@ -171,7 +176,7 @@ void App::updBrush()
 		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
 
-			float c = d * pow( fabs(Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*0.5f);
+			float c = d * pow( fabs(CScene::Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*0.5f);
 
 			mBrushData[a] = std::max(-1.f, std::min(1.f, c ));
 		}	}	break;
@@ -253,7 +258,7 @@ void CGui::btnTerGenerate(WP wp)
 	if (n == "TerrainGenSub")  sub = true;/*else
 	if (n == "TerrainGenMul")  mul = true;*/
 
-	float* hfData = sc->td.hfHeight, *hfAng = sc->td.hfAngle;
+	float* hfData = sc->td.hfHeight; //, *hfAng = sc->td.hfAngle;
 	const int sx = sc->td.iVertsX;  // sx=sy
 	const float s = sx * 0.5f, s1 = 1.f/s;
 	const float ox = pSet->gen_ofsx, oy = pSet->gen_ofsy;
@@ -266,8 +271,7 @@ void CGui::btnTerGenerate(WP wp)
 	if (bRoad)
 	{
 		try {	imgRoad.load(String("roadDensity.png"),"General");  }
-		catch(...)
-			{	imgRoad.load(String("grassDensity.png"),"General");  }
+		catch(...) {	}
 		r = imgRoad.getWidth();
 	}
 
@@ -280,7 +284,7 @@ void CGui::btnTerGenerate(WP wp)
 	for (x=0; x < sx; ++x,++a)
 	{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 
-		c = app->Noise(y*s1-oy, x*s1+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist) * 0.8f;
+		c = CScene::Noise(y*s1-oy, x*s1+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist) * 0.8f;
 		c = c >= 0.f ? powf(c, pSet->gen_pow) : -powf(-c, pSet->gen_pow);
 
 		//)  check if on road - uses roadDensity.png
@@ -295,9 +299,9 @@ void CGui::btnTerGenerate(WP wp)
 			//c = c + std::max(0.f, std::min(1.f, 2*c-cr)) * pow(cr, rdPow);
 			c *= pow(cr, rdPow);
 		}
-		
-		c *= app->linRange(hfAng[a],  pSet->gen_terMinA,pSet->gen_terMaxA, pSet->gen_terSmA);
-		c *= app->linRange(hfData[a], pSet->gen_terMinH,pSet->gen_terMaxH, pSet->gen_terSmH);
+		//FIXME: ter gen ang pars
+		//c *= app->linRange(hfAng[a],  pSet->gen_terMinA,pSet->gen_terMaxA, pSet->gen_terSmA);
+		c *= CScene::linRange(hfData[a], pSet->gen_terMinH,pSet->gen_terMaxH, pSet->gen_terSmH);
 
 		hfData[a] = add ? (hfData[a] + c * pSet->gen_scale + pSet->gen_ofsh) : (
 					sub ? (hfData[a] - c * pSet->gen_scale - pSet->gen_ofsh) :
@@ -342,7 +346,7 @@ void App::updateTerPrv(bool first)
 	for (int x = 0; x < TerPrvSize; ++x)
 	{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 
-		float c = Noise(x*s1-oy, y*s1+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist) * 0.8f;  // par fit
+		float c = CScene::Noise(x*s1-oy, y*s1+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist) * 0.8f;  // par fit
 		bool b = c >= 0.f;
 		c = b ? powf(c, pSet->gen_pow) : -powf(-c, pSet->gen_pow);
 
@@ -361,8 +365,8 @@ void App::updateTerPrv(bool first)
 //-----------------------------------------------------------------------------------------------
 bool App::getEditRect(Vector3& pos, Rect& rcBrush, Rect& rcMap, int size,  int& cx, int& cy)
 {
-	float tws = sc->td.fTerWorldSize;
-	int t = sc->td.iTerSize;
+	float tws = scn->sc->td.fTerWorldSize;
+	int t = scn->sc->td.iTerSize;
 
 	//  world float to map int
 	int mapX = (pos.x + 0.5*tws)/tws*t, mapY = (-pos.z + 0.5*tws)/tws*t;
@@ -418,17 +422,17 @@ bool App::getEditRect(Vector3& pos, Rect& rcBrush, Rect& rcMap, int size,  int& 
 void App::deform(Vector3 &pos, float dtime, float brMul)
 {
 	Rect rcBrush, rcMap;  int cx,cy;
-	if (!getEditRect(pos, rcBrush, rcMap, sc->td.iTerSize, cx,cy))
+	if (!getEditRect(pos, rcBrush, rcMap, scn->sc->td.iTerSize, cx,cy))
 		return;
 	
-	float *fHmap = terrain->getHeightData();
+	float *fHmap = scn->terrain->getHeightData();
 	
 	float its = mBrIntens[curBr] * dtime * brMul;
 	int mapPos, brPos, jj = cy;
 	
 	for (int j = rcMap.top; j < rcMap.bottom; ++j,++jj)
 	{
-		mapPos = j * sc->td.iTerSize + rcMap.left;
+		mapPos = j * scn->sc->td.iTerSize + rcMap.left;
 		brPos = jj * BrushMaxSize + cx;
 		//brPos = std::max(0, std::min(BrushMaxSize*BrushMaxSize-1, brPos ));
 
@@ -439,12 +443,9 @@ void App::deform(Vector3 &pos, float dtime, float brMul)
 			++mapPos;  ++brPos;
 		}
 	}
-	terrain->dirtyRect(rcMap);
+	scn->terrain->dirtyRect(rcMap);
 	if (pSet->autoBlendmap)
-	{
-		GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
-		initBlendMaps(terrain, rcMap.left,rcMap.top, rcMap.right,rcMap.bottom, false);
-	}
+		scn->UpdBlendmap();
 	bTerUpd = true;
 }
 
@@ -454,17 +455,17 @@ void App::deform(Vector3 &pos, float dtime, float brMul)
 void App::height(Vector3 &pos, float dtime, float brMul)
 {
 	Rect rcBrush, rcMap;  int cx,cy;
-	if (!getEditRect(pos, rcBrush, rcMap, sc->td.iTerSize, cx,cy))
+	if (!getEditRect(pos, rcBrush, rcMap, scn->sc->td.iTerSize, cx,cy))
 		return;
 	
-	float *fHmap = terrain->getHeightData();
+	float *fHmap = scn->terrain->getHeightData();
 		
 	float its = mBrIntens[curBr] * dtime * brMul;
 	int mapPos, brPos, jj = cy;
 	
 	for (int j = rcMap.top; j < rcMap.bottom; ++j,++jj)
 	{
-		mapPos = j * sc->td.iTerSize + rcMap.left;
+		mapPos = j * scn->sc->td.iTerSize + rcMap.left;
 		brPos = jj * BrushMaxSize + cx;
 
 		for (int i = rcMap.left; i < rcMap.right; ++i)
@@ -475,12 +476,9 @@ void App::height(Vector3 &pos, float dtime, float brMul)
 			++mapPos;  ++brPos;
 		}
 	}
-	terrain->dirtyRect(rcMap);
+	scn->terrain->dirtyRect(rcMap);
 	if (pSet->autoBlendmap)
-	{
-		GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
-		initBlendMaps(terrain, rcMap.left,rcMap.top, rcMap.right,rcMap.bottom, false);
-	}
+		scn->UpdBlendmap();
 	bTerUpd = true;
 }
 
@@ -500,17 +498,17 @@ void App::smooth(Vector3 &pos, float dtime)
 void App::calcSmoothFactor(Vector3 &pos, float& avg, int& sample_count)
 {
 	Rect rcBrush, rcMap;  int cx,cy;
-	if (!getEditRect(pos, rcBrush, rcMap, sc->td.iTerSize, cx,cy))
+	if (!getEditRect(pos, rcBrush, rcMap, scn->sc->td.iTerSize, cx,cy))
 		return;
 	
-	float *fHmap = terrain->getHeightData();
+	float *fHmap = scn->terrain->getHeightData();
 	int mapPos;
 
 	avg = 0.0f;  sample_count = 0;
 	
 	for (int j = rcMap.top;j < rcMap.bottom; ++j)
 	{
-		mapPos = j * sc->td.iTerSize + rcMap.left;
+		mapPos = j * scn->sc->td.iTerSize + rcMap.left;
 		for (int i = rcMap.left;i < rcMap.right; ++i)
 		{
 			avg += fHmap[mapPos];  ++mapPos;
@@ -523,10 +521,10 @@ void App::calcSmoothFactor(Vector3 &pos, float& avg, int& sample_count)
 void App::smoothTer(Vector3 &pos, float avg, float dtime)
 {
 	Rect rcBrush, rcMap;  int cx,cy;
-	if (!getEditRect(pos, rcBrush, rcMap, sc->td.iTerSize, cx,cy))
+	if (!getEditRect(pos, rcBrush, rcMap, scn->sc->td.iTerSize, cx,cy))
 		return;
 	
-	float *fHmap = terrain->getHeightData();
+	float *fHmap = scn->terrain->getHeightData();
 	float mRatio = 1.f, brushPos;
 	int mapPos;
 	float mFactor = mBrIntens[curBr] * dtime * 0.1f;
@@ -536,7 +534,7 @@ void App::smoothTer(Vector3 &pos, float avg, float dtime)
 		brushPos = (rcBrush.top + (int)((j - rcMap.top) * mRatio)) * BrushMaxSize;
 		brushPos += rcBrush.left;
 		//**/brushPos += cy * BrushMaxSize + cx;
-		mapPos = j * sc->td.iTerSize + rcMap.left;
+		mapPos = j * scn->sc->td.iTerSize + rcMap.left;
 
 		for(int i = rcMap.left;i < rcMap.right;i++)
 		{
@@ -547,12 +545,9 @@ void App::smoothTer(Vector3 &pos, float avg, float dtime)
 			brushPos += mRatio;
 		}
 	}
-	terrain->dirtyRect(rcMap);
+	scn->terrain->dirtyRect(rcMap);
 	if (pSet->autoBlendmap)
-	{
-		GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
-		initBlendMaps(terrain, rcMap.left,rcMap.top, rcMap.right,rcMap.bottom, false);
-	}
+		scn->UpdBlendmap();
 	bTerUpd = true;
 }
 
@@ -562,14 +557,14 @@ void App::smoothTer(Vector3 &pos, float avg, float dtime)
 void App::filter(Vector3 &pos, float dtime, float brMul)
 {
 	Rect rcBrush, rcMap;  int cx,cy;
-	if (!getEditRect(pos, rcBrush, rcMap, sc->td.iTerSize, cx,cy))
+	if (!getEditRect(pos, rcBrush, rcMap, scn->sc->td.iTerSize, cx,cy))
 		return;
 	
-	float *fHmap = terrain->getHeightData();
+	float *fHmap = scn->terrain->getHeightData();
 	
 	float its = mBrIntens[curBr] * dtime * std::min(1.f,brMul);  //mul >1 errors
 	int mapPos, brPos, jj = cy,
-		ter = sc->td.iTerSize, ter2 = ter*ter, ter1 = ter+1;
+		ter = scn->sc->td.iTerSize, ter2 = ter*ter, ter1 = ter+1;
 
 	const float fl = mBrFilt;  const int f = ceil(fl);
 	register int x,y,m,yy,i,j;
@@ -593,12 +588,9 @@ void App::filter(Vector3 &pos, float dtime, float brMul)
 		}
 	}
 
-	terrain->dirtyRect(rcMap);
+	scn->terrain->dirtyRect(rcMap);
 	if (pSet->autoBlendmap)
-	{
-		GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
-		initBlendMaps(terrain, rcMap.left,rcMap.top, rcMap.right,rcMap.bottom, false);
-	}
+		scn->UpdBlendmap();
 	bTerUpd = true;
 }
 
@@ -611,12 +603,12 @@ void App::filter(Vector3 &pos, float dtime, float brMul)
 void App::createBrushPrv()
 {
 	brushPrvTex = TextureManager::getSingleton().createManual(
-		"BrushPrvTex", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		TEX_TYPE_2D, BrPrvSize,BrPrvSize,0, PF_BYTE_RGBA, TU_DYNAMIC);
+		"BrushPrvTex", rgDef, TEX_TYPE_2D,
+		BrPrvSize,BrPrvSize,0, PF_BYTE_RGBA, TU_DYNAMIC);
 	 	
 	// Create a material using the texture
 	MaterialPtr material = MaterialManager::getSingleton().create(
-		"BrushPrvMtr", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		"BrushPrvMtr", rgDef);
 	 
 	Pass* pass = material->getTechnique(0)->getPass(0);
 	pass->createTextureUnitState("BrushPrvTex");
@@ -629,11 +621,11 @@ void App::createBrushPrv()
 	
 	
 	terPrvTex = TextureManager::getSingleton().createManual(
-		"TerPrvTex", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		TEX_TYPE_2D, TerPrvSize,TerPrvSize,0, PF_BYTE_RGBA, TU_DYNAMIC);
+		"TerPrvTex", rgDef, TEX_TYPE_2D,
+		TerPrvSize,TerPrvSize,0, PF_BYTE_RGBA, TU_DYNAMIC);
 	 	
 	material = MaterialManager::getSingleton().create(
-		"TerPrvMtr", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		"TerPrvMtr", rgDef);
 	 
 	pass = material->getTechnique(0)->getPass(0);
 	pass->createTextureUnitState("TerPrvTex");

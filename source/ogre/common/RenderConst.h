@@ -1,6 +1,8 @@
 #pragma once
 #include <OgreRenderQueue.h>
 
+#define rgDef  ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
+
 
 //  Render Queue Groups used  //search for setRenderQueueGroup
 //------------------------------------------------------------------------

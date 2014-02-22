@@ -141,9 +141,12 @@ public:
 	MATHVECTOR<Dbl,3> center_of_mass;
 	COLLISION_WORLD * world;
 	btRigidBody *chassis, *whTrigs;
-	LINEARFRAME cam_body;  // for camera bounce
 
-	///  for buoyancy
+	///  camera bounce
+	LINEARFRAME cam_body;
+	MATHVECTOR<Dbl,3> cam_force;
+
+	///  buoyancy
 	float whH[4];  // wheel submerge 0..1
 	int whP[4];  // fluid particles id
 	struct Polyhedron* poly;

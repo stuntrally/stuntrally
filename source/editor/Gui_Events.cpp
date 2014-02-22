@@ -3,6 +3,7 @@
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
+#include "../ogre/common/CScene.h"
 #include "../road/Road.h"
 #include <fstream>
 #include "../ogre/common/Gui_Def.h"
@@ -20,7 +21,7 @@ using namespace Ogre;
 ///  used value colors  blue,green,yellow,orange,red,black  ..
 const Colour CGui::sUsedClr[8] = {
 	Colour(0.2,0.6,1), Colour(0,1,0.6), Colour(0,1,0), Colour(0.5,1,0),
-	Colour(1,1,0), Colour(1,0.5,0), Colour(1,0,0), Colour(1,0.5,0.5)};
+	Colour(1,1,0), Colour(1,0.5,0), Colour(1,0,0), Colour(0.9,0.2,0.2)};
 
 void CGui::SetUsedStr(Txt valUsed, int cnt, int yellowAt)
 {
@@ -44,63 +45,63 @@ void CGui::comboSky(Cmb cmb, size_t val)  // sky materials
 void CGui::comboRain1(Cmb cmb, size_t val)  // rain types
 {
 	String s = cmb->getItemNameAt(val);  sc->rainName = s;
-	app->DestroyWeather();  app->CreateWeather();
+	app->scn->DestroyWeather();  app->scn->CreateWeather();
 }
 void CGui::comboRain2(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);  sc->rain2Name = s;
-	app->DestroyWeather();  app->CreateWeather();
+	app->scn->DestroyWeather();  app->scn->CreateWeather();
 }
 
 //  sun pitch, yaw
 void CGui::slUpdSun(SV*)
 {
-	app->UpdSun();
+	scn->UpdSun();
 }
 
 //  light clrs
 void CGui::editLiAmb(Ed ed)
 {
-	Vector3 c = s2v(ed->getCaption());	sc->lAmb = c;  app->UpdSun();
+	Vector3 c = s2v(ed->getCaption());	sc->lAmb = c;  scn->UpdSun();
 	clrAmb->setColour(Colour(c.x,c.y,c.z));
 }
 void CGui::editLiDiff(Ed ed)
 {
-	Vector3 c = s2v(ed->getCaption());	sc->lDiff = c;  app->UpdSun();
+	Vector3 c = s2v(ed->getCaption());	sc->lDiff = c;  scn->UpdSun();
 	clrDiff->setColour(Colour(c.x,c.y,c.z));
 }
 void CGui::editLiSpec(Ed ed)
 {
-	Vector3 c = s2v(ed->getCaption());	sc->lSpec = c;  app->UpdSun();
+	Vector3 c = s2v(ed->getCaption());	sc->lSpec = c;  scn->UpdSun();
 	clrSpec->setColour(Colour(c.x,c.y,c.z));
 }
 
 //  fog
 void CGui::slUpdFog(SV*)
 {
-	app->UpdFog();
+	scn->UpdFog();
 }
 
 void CGui::editFogClr(Ed ed)
 {
-	Vector4 c = s2v4(ed->getCaption());  sc->fogClr = c;  app->UpdFog();
+	Vector4 c = s2v4(ed->getCaption());  sc->fogClr = c;  scn->UpdFog();
 	clrFog->setColour(Colour(c.x,c.y,c.z));
 }
 void CGui::editFogClr2(Ed ed)
 {
-	Vector4 c = s2v4(ed->getCaption());  sc->fogClr2 = c;  app->UpdFog();
+	Vector4 c = s2v4(ed->getCaption());  sc->fogClr2 = c;  scn->UpdFog();
 	clrFog2->setColour(Colour(c.x,c.y,c.z));
 }
 void CGui::editFogClrH(Ed ed)
 {
-	Vector4 c = s2v4(ed->getCaption());  sc->fogClrH = c;  app->UpdFog();
+	Vector4 c = s2v4(ed->getCaption());  sc->fogClrH = c;  scn->UpdFog();
 	clrFogH->setColour(Colour(c.x,c.y,c.z));
 }
 
 //  chk disable
 void CGui::chkFog(Ck*)
 {
-	app->UpdFog();
+	scn->UpdFog();
 }
 
 
@@ -146,6 +147,7 @@ void CGui::tabGrLayers(Tab wp, size_t id)
 {
 	idGrLay = id;  // help var
 	SldUpd_GrL();
+	SldUpd_GrChan();
 	const SGrassLayer* gr = &sc->grLayersAll[idGrLay], *g0 = &sc->grLayersAll[0];
 
 	if (imgGrass)	imgGrass->setImageTexture(gr->material + ".png");  // same mtr name as tex
@@ -164,11 +166,7 @@ void CGui::tabGrLayers(Tab wp, size_t id)
 
 	_Ed(GrSwayDistr, g0->swayDistr);
 	_Ed(GrSwayLen, g0->swayLen);
-	_Ed(GrSwaySpd, g0->swaySpeed);
-	
-	// todo: more, grass channels..
-	svGrTerMaxAngle.Upd();  svGrTerSmAngle.Upd();
-	svGrTerMinHeight.Upd(); svGrTerMaxHeight.Upd();  svGrTerSmHeight.Upd();
+	_Ed(GrSwaySpd, g0->swaySpeed);  //g0-
 }
 
 //  tab changed, set slider pointer values, and update
@@ -176,12 +174,28 @@ void CGui::SldUpd_GrL()
 {
 	SGrassLayer& gr =  sc->grLayersAll[idGrLay];
 	ckGrLayOn.Upd(&gr.on);
+	svGrChan.UpdI(&gr.iChan);
 	svLGrDens.UpdF(&gr.dens);
 
-	svGrMinX.UpdF(&gr.minSx);
-	svGrMaxX.UpdF(&gr.maxSx);
-	svGrMinY.UpdF(&gr.minSy);
-	svGrMaxY.UpdF(&gr.maxSy);
+	svGrMinX.UpdF(&gr.minSx);  svGrMaxX.UpdF(&gr.maxSx);
+	svGrMinY.UpdF(&gr.minSy);  svGrMaxY.UpdF(&gr.maxSy);
+}
+
+///  channels
+void CGui::tabGrChan(Tab wp, size_t id)
+{
+	idGrChan = id;
+	SldUpd_GrChan();
+}
+
+void CGui::SldUpd_GrChan()
+{
+	SGrassChannel& gr =  sc->grChan[idGrChan];
+	svGrChAngMin.UpdF(&gr.angMin);  svGrChAngMax.UpdF(&gr.angMax);  svGrChAngSm.UpdF(&gr.angSm);
+	svGrChHMin.UpdF(&gr.hMin);  svGrChHMax.UpdF(&gr.hMax);  svGrChHSm.UpdF(&gr.hSm);
+	svGrChRdPow.UpdF(&gr.rdPow);
+	svGrChNoise.UpdF(&gr.noise);  svGrChNfreq.UpdF(&gr.nFreq);
+	svGrChNoct.UpdI(&gr.nOct);  svGrChNpers.UpdF(&gr.nPers);  svGrChNpow.UpdF(&gr.nPow);
 }
 
 void CGui::chkGrLayOn(Ck*)
@@ -253,7 +267,7 @@ void CGui::Upd3DView(String mesh)
 
 void CGui::editTrkDesc(Ed ed)
 {
-	app->road->sTxtDesc = ed->getCaption();
+	app->scn->road->sTxtDesc = ed->getCaption();
 }
 
 void CGui::comboRoadMtr(Cmb cmb, size_t val)
@@ -262,7 +276,7 @@ void CGui::comboRoadMtr(Cmb cmb, size_t val)
 	int id = atoi(sn.c_str())-1;  if (id < 0 || id >= MTRs)  return;
 
 	String s = cmb->getItemNameAt(val);
-	app->road->sMtrRoad[id] = s;  app->road->RebuildRoad(true);  app->UpdPSSMMaterials();
+	app->scn->road->sMtrRoad[id] = s;  app->scn->road->RebuildRoad(true);  scn->UpdPSSMMaterials();
 }
 
 void CGui::comboPipeMtr(Cmb cmb, size_t val)
@@ -271,41 +285,41 @@ void CGui::comboPipeMtr(Cmb cmb, size_t val)
 	int id = atoi(sn.c_str())-1;  if (id < 0 || id >= MTRs)  return;
 
 	String s = cmb->getItemNameAt(val);
-	app->road->SetMtrPipe(id, s);  app->road->RebuildRoad(true);  app->UpdPSSMMaterials();
+	app->scn->road->SetMtrPipe(id, s);  app->scn->road->RebuildRoad(true);  scn->UpdPSSMMaterials();
 }
 
 void CGui::comboRoadWMtr(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	app->road->sMtrWall = s;  app->road->RebuildRoad(true);  app->UpdPSSMMaterials();
+	app->scn->road->sMtrWall = s;  app->scn->road->RebuildRoad(true);  scn->UpdPSSMMaterials();
 }
 void CGui::comboPipeWMtr(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	app->road->sMtrWallPipe = s;  app->road->RebuildRoad(true);  app->UpdPSSMMaterials();
+	app->scn->road->sMtrWallPipe = s;  app->scn->road->RebuildRoad(true);  scn->UpdPSSMMaterials();
 }
 void CGui::comboRoadColMtr(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	app->road->sMtrCol = s;  app->road->RebuildRoad(true);  app->UpdPSSMMaterials();
+	app->scn->road->sMtrCol = s;  app->scn->road->RebuildRoad(true);  scn->UpdPSSMMaterials();
 }
 
 void CGui::editRoad(Ed ed)
 {
-	if (!app->road)  return;
+	if (!app->scn->road)  return;
 	Real r = s2r(ed->getCaption());
 	String n = ed->getName();
 
-		 if (n=="RdHeightOfs")	app->road->fHeight = r;
-	else if (n=="RdSkirtLen")	app->road->skirtLen = r;else if (n=="RdSkirtH")	app->road->skirtH = r;
-	//app->road->RebuildRoad(true);  //on Enter ?..
+		 if (n=="RdHeightOfs")	app->scn->road->fHeight = r;
+	else if (n=="RdSkirtLen")	app->scn->road->skirtLen = r;else if (n=="RdSkirtH")	app->scn->road->skirtH = r;
+	//app->scn->road->RebuildRoad(true);  //on Enter ?..
 }
 
 //  set slider pointer values, and update
 void CGui::SldUpd_Road()
 {
-	if (!app->road)  return;
-	SplineRoad& r = *app->road;
+	if (!app->scn->road)  return;
+	SplineRoad& r = *app->scn->road;
 	
 	svRdTcMul.UpdF(&r.tcMul);	svRdTcMulW.UpdF(&r.tcMulW);
 	svRdTcMulP.UpdF(&r.tcMulP);	svRdTcMulPW.UpdF(&r.tcMulPW);
@@ -342,9 +356,9 @@ void CGui::chkWireframe(Ck*)
 
 void CGui::slSizeRoadP(SV*)
 {
-	if (app->road)
-	{	app->road->fMarkerScale = pSet->road_sphr;
-		app->road->UpdAllMarkers();  }
+	if (app->scn->road)
+	{	app->scn->road->fMarkerScale = pSet->road_sphr;
+		app->scn->road->UpdAllMarkers();  }
 }
 
 void CGui::slSizeMinimap(SV*)
@@ -412,12 +426,12 @@ void CGui::toggleTopView()
 		cam->setPosition(0,yt,0);  cam->setDirection(-0.0001,-1,0);
 
 		oldFog = pSet->bFog;
-		pSet->bFog = true;  ckFog.Upd();  app->UpdFog();
+		pSet->bFog = true;  ckFog.Upd();  scn->UpdFog();
 	}else
 	{	// restore
 		cam->setPosition(oldPos);
 		cam->setDirection(oldRot);
 
-		pSet->bFog = oldFog;  ckFog.Upd();  app->UpdFog();
+		pSet->bFog = oldFog;  ckFog.Upd();  scn->UpdFog();
 	}
 }

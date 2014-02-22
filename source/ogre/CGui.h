@@ -32,7 +32,8 @@ class CGui : public BGui,
 			 public ICS::DetectingBindingListener
 {
 public:
-	App* app;  GAME* pGame;  SETTINGS* pSet;  Scene* sc;  CData* data;
+	App* app;  GAME* pGame;  SETTINGS* pSet;
+	Scene* sc;  CData* data;
 	CHud* hud;  MyGUI::Gui* mGui;  CGuiCom* gcom;
 	
 	CGui(App* ap1);

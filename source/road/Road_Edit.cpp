@@ -5,6 +5,7 @@
 
 #include <OgreCamera.h>
 #include <OgreTerrain.h>
+#include <OgreSceneNode.h>
 using namespace Ogre;
 
 

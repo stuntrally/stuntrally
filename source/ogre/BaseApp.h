@@ -81,7 +81,7 @@ public:
 	
 	///  create
 	virtual void createScene() = 0;
-	virtual void destroyScene();
+	virtual void destroyScene() = 0;
 
 	void createFrameListener(), createViewports(), refreshCompositor(bool disableAll=false);
 	void setupResources(), createResourceListener(), loadResources();

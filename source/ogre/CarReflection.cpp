@@ -12,7 +12,9 @@
 #include <OgreMaterialManager.h>
 #include <OgreHardwarePixelBuffer.h>
 #include <OgreCamera.h>
-
+#include <OgreRenderTarget.h>
+#include <OgreViewport.h>
+#include <OgreSceneNode.h>
 using namespace Ogre;
 
 
@@ -80,7 +82,7 @@ void CarReflection::Create()
 			mCam->setNearClipDistance(0.1);
 			mCam->setFarClipDistance(pSet->refl_dist * 1.1f);
 
-			RenderTarget* mRT = cubetex->getBuffer(face)->getRenderTarget();
+			RenderTarget* mRT = (RenderTarget*)cubetex->getBuffer(face)->getRenderTarget();
 			//LogO( "rt face Name: " + mRT->getName() );
 			mRT->removeAllViewports();
 			Viewport* vp = mRT->addViewport(mCam);
