@@ -1315,6 +1315,18 @@
 					>
 				</File>
 				<File
+					RelativePath="..\data\materials\shadowcaster.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials\shadowcaster.shader"
+					>
+				</File>
+				<File
+					RelativePath="..\data\materials\shadowcaster.shaderset"
+					>
+				</File>
+				<File
 					RelativePath="..\data\materials\shadows.h"
 					>
 				</File>

@@ -143,21 +143,21 @@ void App::materialCreated(sh::MaterialInstance* m, const std::string& configurat
 		return;
 	}
 
-	if (m->hasProperty ("transparent") && m->hasProperty ("cull_hardware") && sh::retrieveValue<sh::StringValue>(m->getProperty ("cull_hardware"), 0).get() == "none")
+	/*if (m->hasProperty("transparent") && m->hasProperty("cull_hardware") &&
+		sh::retrieveValue<sh::StringValue>(m->getProperty("cull_hardware"), 0).get() == "none")
 	{
 		// Crash !?
-		///assert(!MaterialManager::getSingleton().getByName("PSSM/shadow_caster_nocull").isNull ());
-		//t->setShadowCasterMaterial("PSSM/shadow_caster_nocull");
-	}
+		assert(!MaterialManager::getSingleton().getByName("PSSM/shadow_caster_nocull").isNull ());
+		t->setShadowCasterMaterial("shadowcaster_nocull");
+	}*/
 
-	if (m->hasProperty ("instancing") && sh::retrieveValue<sh::StringValue>(m->getProperty ("instancing"), 0).get() == "true"))
+	/*if (m->hasProperty("instancing") && sh::retrieveValue<sh::StringValue>(m->getProperty("instancing"), 0).get() == "true")
 	{
-		t->setShadowCasterMaterial("PSSM/shadow_caster_instancing");
-		LogO("YES");
-	}
+		t->setShadowCasterMaterial("shadowcaster_instancing");
+	}*/
 
-	if (!m->hasProperty ("transparent") || !sh::retrieveValue<sh::BooleanValue>(m->getProperty ("transparent"), 0).get())
+	if (!m->hasProperty("transparent") || !sh::retrieveValue<sh::BooleanValue>(m->getProperty("transparent"), 0).get())
 	{
-		t->setShadowCasterMaterial("PSSM/shadow_caster_noalpha");
+		t->setShadowCasterMaterial("shadowcaster_noalpha");
 	}
 }

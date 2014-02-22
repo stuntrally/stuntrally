@@ -120,13 +120,8 @@ void CScene::changeShadows()
 		
 		mSceneMgr->setShadowTextureSelfShadow(bDepth ? true : false);  //-?
 		mSceneMgr->setShadowCasterRenderBackFaces((bDepth && !bSoft) ? true : false);
-		
-		String shadowCasterMat;
-		if (bDepth) shadowCasterMat = "PSSM/shadow_caster";
 
-		else shadowCasterMat = ""; //StringUtil::BLANK;
-		
-		mSceneMgr->setShadowTextureCasterMaterial(shadowCasterMat);
+		mSceneMgr->setShadowTextureCasterMaterial(bDepth ? "shadowcaster_default" : "");
 	}
 
 	mSceneMgr->setShadowColour(Ogre::ColourValue(0,0,0,1));

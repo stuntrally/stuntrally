@@ -139,7 +139,6 @@ ManualObject* App::Create2D(const String& mat, Real s, bool dyn)
 
 void App::materialCreated(sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex)
 {
-	//LogO(m->getName());
 	Ogre::Technique* t = static_cast<sh::OgreMaterial*>(m->getMaterial())->getOgreTechniqueForConfiguration (configuration, lodIndex);
 
 	if (pSet->shadow_type == Sh_None)
@@ -148,21 +147,21 @@ void App::materialCreated(sh::MaterialInstance* m, const std::string& configurat
 		return;
 	}
 
-	if (m->hasProperty ("transparent") && m->hasProperty ("cull_hardware") && sh::retrieveValue<sh::StringValue>(m->getProperty ("cull_hardware"), 0).get() == "none")
+	/*if (m->hasProperty("transparent") && m->hasProperty("cull_hardware") &&
+		sh::retrieveValue<sh::StringValue>(m->getProperty("cull_hardware"), 0).get() == "none")
 	{
 		// Crash !?
-		///assert(!MaterialManager::getSingleton().getByName("PSSM/shadow_caster_nocull").isNull ());
-		//t->setShadowCasterMaterial("PSSM/shadow_caster_nocull");
-	}
+		assert(!MaterialManager::getSingleton().getByName("PSSM/shadow_caster_nocull").isNull ());
+		t->setShadowCasterMaterial("shadowcaster_nocull");
+	}*/
 
-	if (m->hasProperty ("instancing") && sh::retrieveValue<sh::StringValue>(m->getProperty ("instancing"), 0).get() == "true")
+	/*if (m->hasProperty("instancing") && sh::retrieveValue<sh::StringValue>(m->getProperty("instancing"), 0).get() == "true")
 	{
-		t->setShadowCasterMaterial("PSSM/shadow_caster_instancing");
-		//LogO("Instancing YES");
-	}
+		t->setShadowCasterMaterial("shadowcaster_instancing");
+	}*/
 
-	if (!m->hasProperty ("transparent") || !sh::retrieveValue<sh::BooleanValue>(m->getProperty ("transparent"), 0).get())
+	if (!m->hasProperty("transparent") || !sh::retrieveValue<sh::BooleanValue>(m->getProperty("transparent"), 0).get())
 	{
-		t->setShadowCasterMaterial("PSSM/shadow_caster_noalpha");
+		t->setShadowCasterMaterial("shadowcaster_noalpha");
 	}
 }
