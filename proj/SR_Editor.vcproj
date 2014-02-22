@@ -613,6 +613,7 @@
 			<File
 				RelativePath="..\source\ogre\common\Instancing.h"
 				>
+			</File>
 			<File
 				RelativePath="..\source\ogre\common\CScene.cpp"
 				>
