@@ -13,6 +13,7 @@
 #include <OgreRenderWindow.h>
 #include <OgreCamera.h>
 #include <OgreOverlayElement.h>
+#include <OgreTechnique.h>
 #include <MyGUI_TextBox.h>
 using namespace Ogre;
 

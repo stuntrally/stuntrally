@@ -25,6 +25,9 @@
 #include <OgreParticleAffector.h>
 #include <OgreRibbonTrail.h>
 #include <OgreBillboardSet.h>
+#include <OgreSceneNode.h>
+#include <OgreTechnique.h>
+#include <OgreViewport.h>
 #include <MyGUI_TextBox.h>
 using namespace Ogre;
 

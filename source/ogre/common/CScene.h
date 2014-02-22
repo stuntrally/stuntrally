@@ -1,11 +1,12 @@
 #pragma once
 #include "PreviewTex.h"
+#include <OgreVector4.h>
 
 namespace Forests {  class PagedGeometry;  }
-namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;
+namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class PageManager;
 	class Light;  class Rectangle2D;  class SceneNode;  class RenderTexture;  class Camera;  }
-namespace sh {  class Factory;  }
 class App;  class Scene;  class WaterRTT;  class CData;  class SplineRoad;
+
 
 class CScene
 {

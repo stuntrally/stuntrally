@@ -12,6 +12,9 @@
 #include <MyGUI.h>
 #include <OgreOverlay.h>
 #include <OgreOverlayElement.h>
+#include <OgreTextureManager.h>
+#include <OgreMaterialManager.h>
+#include <OgreTechnique.h>
 using namespace Ogre;
 
 

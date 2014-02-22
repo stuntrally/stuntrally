@@ -8,6 +8,7 @@
 #include <OgreSceneManager.h>
 #include <OgreMeshManager.h>
 #include <OgreEntity.h>
+#include <OgreSceneNode.h>
 using namespace Ogre;
 
 

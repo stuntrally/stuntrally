@@ -15,6 +15,7 @@
 #include <OgreEntity.h>
 #include <OgreSceneNode.h>
 #include <OgreMaterialManager.h>
+#include <OgreTextureManager.h>
 #include <OgreManualObject.h>
 #include <OgrePass.h>
 #include <OgreTechnique.h>

@@ -16,6 +16,7 @@
 #include "common/Slider.h"
 #include "SplitScreen.h"
 #include <OgreCamera.h>
+#include <OgreSceneNode.h>
 using namespace Ogre;
 
 

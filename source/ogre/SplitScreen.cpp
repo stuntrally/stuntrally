@@ -23,6 +23,7 @@
 #include <OgreParticleEmitter.h>
 #include <OgreCompositorManager.h>
 #include <OgreCompositorChain.h>
+#include <OgreSceneNode.h>
 #include "MyGUI_PointerManager.h"
 using namespace Ogre;
 

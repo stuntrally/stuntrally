@@ -19,6 +19,8 @@
 #include "../sdl4ogre/sdlinputwrapper.hpp"
 #include <OgreTerrain.h>
 #include <OgreCamera.h>
+#include <OgreMaterialManager.h>
+#include <OgreSceneNode.h>
 #include <MyGUI.h>
 using namespace MyGUI;
 using namespace Ogre;

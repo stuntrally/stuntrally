@@ -25,6 +25,10 @@
 #include <OgreParticleSystem.h>
 #include <OgreParticleEmitter.h>
 #include <OgreManualObject.h>
+#include <OgreViewport.h>
+#include <OgreMaterialManager.h>
+#include <OgreTextureManager.h>
+#include <OgreSceneNode.h>
 #include "../ogre/common/MessageBox/MessageBox.h"
 using namespace Ogre;
 

@@ -1,5 +1,6 @@
 #pragma once
 #include <OgreString.h>
+#include <OgreSharedPtr.h>
 #include <OgreTexture.h>
 
 

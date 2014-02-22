@@ -21,6 +21,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include <OgreEntity.h>
 #include <OgreSubEntity.h>
 #include <OgreHardwarePixelBuffer.h>
+#include <OgreViewport.h>
 
 #include "ImpostorPage.h"
 #include "StaticBillboardSet.h"

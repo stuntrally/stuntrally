@@ -3,6 +3,7 @@
 #include "TerrainMaterial.h"
 
 #include <OgreTerrain.h>
+#include <OgreMaterialManager.h>
 
 #include "../../shiny/Platforms/Ogre/OgreMaterial.hpp"
 #include "../../shiny/Main/Factory.hpp"

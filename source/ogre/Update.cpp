@@ -22,6 +22,8 @@
 #include <OgreParticleSystem.h>
 #include <OgreManualObject.h>
 #include <OgreMaterialManager.h>
+#include <OgreSceneNode.h>
+#include <OgreViewport.h>
 #include "common/MultiList2.h"
 #include "common/Slider.h"
 #include <MyGUI.h>

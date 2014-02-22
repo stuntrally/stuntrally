@@ -15,7 +15,11 @@
 #endif
 #include <OgreRoot.h>
 #include <OgreManualObject.h>
+#include <OgreSceneNode.h>
+#include <OgreCamera.h>
 #include <OgreParticleSystem.h>
+#include <OgreParticleEmitter.h>
+#include <OgreRenderWindow.h>
 using namespace Ogre;
 
 

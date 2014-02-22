@@ -14,6 +14,8 @@
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/MultiList2.h"
 #include <OgreTerrain.h>
+#include <OgreSceneNode.h>
+#include <OgreRenderTexture.h>
 #include <MyGUI.h>
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"

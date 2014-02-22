@@ -3,6 +3,8 @@
 
 #include <OgreStringConverter.h>
 #include <OgreRoot.h>
+#include <OgreTextureManager.h>
+#include <OgreTechnique.h>
 
 #include <SDL_syswm.h>
 #include <SDL_endian.h>

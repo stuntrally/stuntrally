@@ -22,6 +22,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include <OgreHighLevelGpuProgram.h>
 #include <OgreHighLevelGpuProgramManager.h>
 #include <OgreLogManager.h>
+#include <OgreTechnique.h>
 
 #include "BatchPage.h"
 #include "BatchedGeometry.h"

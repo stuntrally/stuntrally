@@ -30,6 +30,8 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include "OgreRenderSystemCapabilities.h"
 #include "OgreHighLevelGpuProgram.h"
 #include "OgreHighLevelGpuProgramManager.h"
+#include <OgreTechnique.h>
+#include <OgreSceneNode.h>
 
 #include "GrassLoader.h"
 #include "PagedGeometry.h"

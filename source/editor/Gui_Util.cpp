@@ -15,6 +15,8 @@
 #include <OgreOverlay.h>
 #include <OgreOverlayElement.h>
 #include <OgreCamera.h>
+#include <OgreSceneNode.h>
+#include <OgreViewport.h>
 #include <MyGUI.h>
 using namespace MyGUI;
 using namespace Ogre;

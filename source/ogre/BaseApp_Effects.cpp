@@ -13,6 +13,8 @@
 #include <OgreCompositorManager.h>
 #include <OgreCompositionTargetPass.h>
 #include <OgreCompositionPass.h>
+#include <OgreTechnique.h>
+#include <OgreCompositor.h>
 using namespace Ogre;
 
 

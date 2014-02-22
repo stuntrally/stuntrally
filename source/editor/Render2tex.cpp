@@ -20,6 +20,11 @@
 #include <OgreHardwarePixelBuffer.h>
 #include <OgreRectangle2D.h>
 #include <OgreCamera.h>
+#include <OgreTextureManager.h>
+#include <OgreRenderTexture.h>
+#include <OgreViewport.h>
+#include <OgreMaterialManager.h>
+#include <OgreSceneNode.h>
 using namespace Ogre;
 
 

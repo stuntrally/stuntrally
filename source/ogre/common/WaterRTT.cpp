@@ -7,6 +7,10 @@
 #include <OgrePlane.h>
 #include <OgreHardwarePixelBuffer.h>
 #include <OgreCamera.h>
+#include <OgreTextureManager.h>
+#include <OgreRenderTexture.h>
+#include <OgreViewport.h>
+#include <OgreSceneNode.h>
 
 #include "../../shiny/Main/Factory.hpp"
 

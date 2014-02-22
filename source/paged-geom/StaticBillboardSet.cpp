@@ -35,6 +35,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include <OgreHardwareBuffer.h>
 #include <OgreLogManager.h>
 #include <OgreEntity.h>
+#include <OgreTechnique.h>
 
 #include "StaticBillboardSet.h"
 #include "../ogre/common/RenderConst.h"
