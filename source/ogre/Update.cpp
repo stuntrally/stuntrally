@@ -5,6 +5,7 @@
 #include "CHud.h"
 #include "CGui.h"
 #include "common/GuiCom.h"
+#include "common/CScene.h"
 #include "common/WaterRTT.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
@@ -21,6 +22,8 @@
 #include <OgreParticleSystem.h>
 #include <OgreManualObject.h>
 #include <OgreMaterialManager.h>
+#include <OgreSceneNode.h>
+#include <OgreViewport.h>
 #include "common/MultiList2.h"
 #include "common/Slider.h"
 #include <MyGUI.h>
@@ -209,9 +212,9 @@ bool App::frameStart(Real time)
 		if (!mSplitMgr->mCameras.empty())
 		{
 			Camera* cam1 = *mSplitMgr->mCameras.begin();
-			mWaterRTT->setViewerCamera(cam1);
-			if (grass)  grass->setCamera(cam1);
-			if (trees)  trees->setCamera(cam1);
+			scn->mWaterRTT->setViewerCamera(cam1);
+			if (scn->grass)  scn->grass->setCamera(cam1);
+			if (scn->trees)  scn->trees->setCamera(cam1);
 		}
 	}
 
@@ -363,14 +366,14 @@ bool App::frameStart(Real time)
 
 		//  trees
 		PROFILER.beginBlock("g.veget");
-		if (road) {
-			if (grass)  grass->update();
-			if (trees)  trees->update();  }
+		if (scn->road) {
+			if (scn->grass)  scn->grass->update();
+			if (scn->trees)  scn->trees->update();  }
 		PROFILER.endBlock("g.veget");
 
 
 		//  road upd lods
-		if (road)
+		if (scn->road)
 		{
 			//PROFILER.beginBlock("g.road");  // below 0.0 ms
 
@@ -381,7 +384,7 @@ bool App::frameStart(Real time)
 				if (roadUpdTm > 0.1f)  // interval [sec]
 				{
 					roadUpdTm = 0.f;
-					road->UpdLodVis(pSet->road_dist);
+					scn->road->UpdLodVis(pSet->road_dist);
 				}
 			}
 			//PROFILER.endBlock("g.road");
@@ -398,11 +401,11 @@ bool App::frameStart(Real time)
 		//UpdWhTerMtr(pCar);
 		
 		// stop rain/snow when paused
-		if (pr && pr2 && pGame)
+		if (scn->pr && scn->pr2 && pGame)
 		{
 			if (pGame->pause)
-				{	 pr->setSpeedFactor(0.f);	 pr2->setSpeedFactor(0.f);	}
-			else{	 pr->setSpeedFactor(1.f);	 pr2->setSpeedFactor(1.f);	}
+				{	 scn->pr->setSpeedFactor(0.f);  scn->pr2->setSpeedFactor(0.f);  }
+			else{	 scn->pr->setSpeedFactor(1.f);  scn->pr2->setSpeedFactor(1.f);  }
 		}
 
 		
@@ -414,8 +417,8 @@ bool App::frameStart(Real time)
 
 		///()  grass sphere pos
 		if (!carModels.empty())
-		{			//par
-			Real r = 1.7;  r *= r;
+		{
+			Real r = 1.7;  r *= r;  //par
 			const Vector3* p = &carModels[0]->posSph[0];
 			mFactory->setSharedParameter("posSph0", sh::makeProperty <sh::Vector4>(new sh::Vector4(p->x,p->y,p->z,r)));
 			p = &carModels[0]->posSph[1];

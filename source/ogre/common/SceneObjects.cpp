@@ -2,6 +2,7 @@
 #include "RenderConst.h"
 #include "Def_Str.h"
 #include "../common/data/SceneXml.h"
+#include "../common/CScene.h"
 #include "../../vdrift/pathmanager.h"
 #include "../../btOgre/BtOgreGP.h"
 #include "../../road/Road.h"
@@ -30,6 +31,7 @@
 #include <OgreSceneNode.h>
 #include <OgreRenderWindow.h>
 #include <OgreSubEntity.h>
+#include <OgreCamera.h>
 #include <MyGUI.h>
 #include <MyGUI_InputManager.h>
 using namespace Ogre;
@@ -103,9 +105,9 @@ void App::CreateObjects()
 	using std::map;  using std::string;
 	map<string,bool> objExists, objHasBlt;
 	
-	for (int i=0; i < sc->objects.size(); ++i)
+	for (int i=0; i < scn->sc->objects.size(); ++i)
 	{
-		const string& s = sc->objects[i].name;
+		const string& s = scn->sc->objects[i].name;
 		objExists[s] = false;  objHasBlt[s] = false;
 	}
 	for (map<string,bool>::iterator it = objExists.begin(); it != objExists.end(); ++it)
@@ -124,9 +126,9 @@ void App::CreateObjects()
 	BulletWorldOffset* fileLoader = new BulletWorldOffset(world);
 
 	///  create  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-	for (int i=0; i < sc->objects.size(); ++i)
+	for (int i=0; i < scn->sc->objects.size(); ++i)
 	{
-		Object& o = sc->objects[i];
+		Object& o = scn->sc->objects[i];
 		String s = toStr(i);  // counter for names
 		o.dyn = objHasBlt[o.name];
 		#ifndef SR_EDITOR
@@ -196,16 +198,16 @@ void App::CreateObjects()
 	delete fileLoader;
 
 	#ifdef SR_EDITOR
-	iObjLast = sc->objects.size();
+	iObjLast = scn->sc->objects.size();
 	#endif
 }
 
 ///  destroy
 void App::DestroyObjects(bool clear)
 {
-	for (int i=0; i < sc->objects.size(); ++i)
+	for (int i=0; i < scn->sc->objects.size(); ++i)
 	{
-		Object& o = sc->objects[i];
+		Object& o = scn->sc->objects[i];
 		// ogre
 		if (o.nd)  mSceneMgr->destroySceneNode(o.nd);  o.nd = 0;
 		#ifdef SR_EDITOR  // game has destroyAll
@@ -236,7 +238,7 @@ void App::DestroyObjects(bool clear)
 		#endif
 	}
 	if (clear)
-		sc->objects.clear();
+		scn->sc->objects.clear();
 }
 
 
@@ -249,7 +251,7 @@ void App::UpdObjPick()
 	if (ndStBox)
 		ndStBox->setVisible(edMode == ED_Start && !bMoveCam);
 
-	int objs = sc->objects.size();
+	int objs = scn->sc->objects.size();
 	bool bObjects = edMode == ED_Objects && !bMoveCam && objs > 0 && iObjCur >= 0;
 	if (objs > 0)
 		iObjCur = std::min(iObjCur, objs-1);
@@ -258,7 +260,7 @@ void App::UpdObjPick()
 	ndObjBox->setVisible(bObjects);
 	if (!bObjects)  return;
 	
-	const Object& o = sc->objects[iObjCur];
+	const Object& o = scn->sc->objects[iObjCur];
 	const AxisAlignedBox& ab = o.nd->getAttachedObject(0)->getBoundingBox();
 	//Vector3 p = ab.getCenter();
 	Vector3 s = o.scale * ab.getSize();  // * sel obj's node aabb
@@ -277,7 +279,7 @@ void App::UpdObjPick()
 
 void App::PickObject()
 {
-	if (sc->objects.empty())  return;
+	if (scn->sc->objects.empty())  return;
 
 	iObjCur = -1;
 	const MyGUI::IntPoint& mp = MyGUI::InputManager::getInstance().getMousePosition();
@@ -300,8 +302,8 @@ void App::PickObject()
 			//LogO("RAY "+s+" "+fToStr((*it).distance,2,4)+"  n "+toStr(n)+"  nn "+toStr(nn));
 			int i = -1;
 			//  find obj with same ent name
-			for (int o=0; o < sc->objects.size(); ++o)
-				if (s == sc->objects[o].ent->getName())
+			for (int o=0; o < scn->sc->objects.size(); ++o)
+				if (s == scn->sc->objects[o].ent->getName())
 				{	i = o;  break;  }
 			
 			//  pick
@@ -311,7 +313,7 @@ void App::PickObject()
 				//ab.getCenter();  ab.getSize();
 
 				//  closest to obj center
-				const Vector3 posSph = sc->objects[i].nd->getPosition();
+				const Vector3 posSph = scn->sc->objects[i].nd->getPosition();
 				const Vector3 ps = pos - posSph;
 				Vector3 crs = ps.crossProduct(dir);
 				Real dC = crs.length() / dir.length();
@@ -336,10 +338,10 @@ void App::PickObject()
 //  upd obj selected glow
 void App::UpdObjSel()
 {
-	int objs = sc->objects.size();
+	int objs = scn->sc->objects.size();
 	for (int i=0; i < objs; ++i)
 	{	bool bSel = vObjSel.find(i) != vObjSel.end();
-		sc->objects[i].ent->getSubEntity(0)->setCustomParameter(1, Vector4(bSel ? 1 : 0, 0,0,0));
+		scn->sc->objects[i].ent->getSubEntity(0)->setCustomParameter(1, Vector4(bSel ? 1 : 0, 0,0,0));
 	}
 }
 
@@ -349,14 +351,14 @@ Vector3 App::GetObjPos0()
 	Vector3 pos0(0,0,0);
 	if (iObjCur>=0)
 	{
-		MATHVECTOR<float,3> p = sc->objects[iObjCur].pos;
+		MATHVECTOR<float,3> p = scn->sc->objects[iObjCur].pos;
 		pos0 = Vector3(p[0],p[2],-p[1]);
 	}
 	else if (!vObjSel.empty())
 	{
 		for (std::set<int>::iterator it = vObjSel.begin(); it != vObjSel.end(); ++it)
 		{
-			MATHVECTOR<float,3> p = sc->objects[(*it)].pos;
+			MATHVECTOR<float,3> p = scn->sc->objects[(*it)].pos;
 			pos0 += Vector3(p[0],p[2],-p[1]);
 		}
 		pos0 /= Real(vObjSel.size());
@@ -397,7 +399,8 @@ void App::ToggleObjSim()
 	else  // on sim
 	{
 		// Create blt world
-		CreateBltTerrain();  road->RebuildRoadInt(false,true);
+		scn->CreateBltTerrain();
+		scn->road->RebuildRoadInt(false,true);
 	}
 	CreateObjects();
 	UpdObjPick();
@@ -416,7 +419,7 @@ void App::AddNewObj(bool getName)  //App..
 	//  pos, rot
 	if (getName)
 	{	// one new
-		const Ogre::Vector3& v = road->posHit;
+		const Ogre::Vector3& v = scn->road->posHit;
 		o.pos[0] = v.x;  o.pos[1] =-v.z;  o.pos[2] = v.y + objNew.pos[2];
 	}else  // many
 	{	// offset for cursor pos..
@@ -431,7 +434,7 @@ void App::AddNewObj(bool getName)  //App..
 	o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
 
 	o.dyn = PATHMANAGER::FileExists(PATHMANAGER::Data()+"/objects/"+ o.name + ".bullet");
-	sc->objects.push_back(o);
+	scn->sc->objects.push_back(o);
 }
 
 //  change obj to insert
@@ -471,13 +474,13 @@ void App::SetObjNewType(int tnew)
 
 void App::UpdObjNewNode()
 {
-	if (!road || !objNew.nd)  return;
+	if (!scn->road || !objNew.nd)  return;
 
-	bool vis = road->bHitTer && bEdit() && iObjCur == -1 && edMode == ED_Objects;
+	bool vis = scn->road->bHitTer && bEdit() && iObjCur == -1 && edMode == ED_Objects;
 	objNew.nd->setVisible(vis);
 	if (!vis)  return;
 	
-	Vector3 p = road->posHit;  p.y += objNew.pos[2];
+	Vector3 p = scn->road->posHit;  p.y += objNew.pos[2];
 	objNew.SetFromBlt();
 	objNew.nd->setPosition(p);
 	objNew.nd->setScale(objNew.scale);

@@ -1,0 +1,74 @@
+material blendMat
+{
+	//  Height, Angle, Noise  params for 4 layers
+	Hmin 0 0 0 0
+	Hmax 0 0 0 0
+	Hsmt 0 0 0 0
+
+	Amin 0 0 0 0
+	Amax 0 0 0 0
+	Asmt 0 0 0 0
+	Nonly 0 0 0 0
+
+	Nnext 0 0 0
+	Nprev 0 0 0
+	Nnext2 0 0
+
+	Nfreq 0
+	Noct  0
+	Npers 0
+	Npow  0
+	
+	Nfreq2 0
+	Noct2  0
+	Npers2 0
+	Npow2  0
+
+    pass
+    {
+        vertex_program blend_vertex
+        fragment_program blend_fragment
+        
+		depth_check off
+		depth_write off
+		cull_hardware none
+        fog_override true
+        
+        shader_properties
+        {
+			Hmin $Hmin
+			Hmax $Hmax
+			Hsmt $Hsmt
+				 
+			Amin $Amin
+			Amax $Amax
+			Asmt $Asmt
+			Nonly $Nonly
+			  
+			Nnext $Nnext
+			Nprev $Nprev
+			Nnext2 $Nnext2
+
+			Nfreq $Nfreq
+			Noct  $Noct
+			Npers $Npers
+			Npow  $Npow
+
+			Nfreq2 $Nfreq2
+			Noct2  $Noct2
+			Npers2 $Npers2
+			Npow2  $Npow2
+        }
+
+        texture_unit samHMap
+        {
+            texture HmapTex
+            tex_address_mode clamp
+        }
+        texture_unit samAng
+        {
+            texture AnglesRTT
+            tex_address_mode clamp
+        }
+    }
+}

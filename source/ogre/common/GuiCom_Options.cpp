@@ -2,6 +2,7 @@
 #include "Def_Str.h"
 #include "Gui_Def.h"
 #include "GuiCom.h"
+#include "CScene.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
 #ifndef SR_EDITOR
@@ -17,6 +18,9 @@
 #include "../shiny/Main/Factory.hpp"
 #include "../sdl4ogre/sdlinputwrapper.hpp"
 #include <OgreTerrain.h>
+#include <OgreCamera.h>
+#include <OgreMaterialManager.h>
+#include <OgreSceneNode.h>
 #include <MyGUI.h>
 using namespace MyGUI;
 using namespace Ogre;
@@ -35,7 +39,7 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 	BtnC("Quit", btnQuit);  bnQuit = btn;
 	
 	//  detail
-	sv= &svTerDetail;	sv->Init("TerDetail",	&pSet->terdetail,	0.f,2.f);	SevC(TerDetail);  sv->DefaultF(1.f);
+	sv= &svTerDetail;	sv->Init("TerDetail",	&pSet->terdetail,	0.f,4.f, 1.5f);  SevC(TerDetail);  sv->DefaultF(1.f);
 	sv= &svTerDist;		sv->Init("TerDist",		&pSet->terdist, 0.f,2000.f, 2.f, 0,3, 1.f," m");
 																				SevC(TerDist);  sv->DefaultI(500.f); //ed 2000-
 	sv= &svRoadDist;	sv->Init("RoadDist",	&pSet->road_dist,	0.f,4.f, 2.f, 2,5);  sv->DefaultF(1.6f);
@@ -175,13 +179,13 @@ void CGuiCom::slViewDist(SV* sv)
 
 void CGuiCom::slTerDetail(SV*)
 {
-	app->UpdTerErr();
+	app->scn->UpdTerErr();
 }
 
 void CGuiCom::slTerDist(SV*)
 {
-	if (app->mTerrainGlobals)
-		app->mTerrainGlobals->setCompositeMapDistance(pSet->terdist);
+	if (app->scn->mTerrainGlobals)
+		app->scn->mTerrainGlobals->setCompositeMapDistance(pSet->terdist);
 }
 
 //  trees/grass
@@ -195,21 +199,21 @@ void CGuiCom::btnTrGrReset(WP wp)
 
 
 //  shadows
-void CGuiCom::btnShadows(WP){	app->changeShadows();	}
-void CGuiCom::btnShaders(WP){	app->changeShadows();	}
+void CGuiCom::btnShadows(WP){	app->scn->changeShadows();	}
+void CGuiCom::btnShaders(WP){	app->scn->changeShadows();	}
 
 
 //  water
 void CGuiCom::chkWater(Ck*)
 {
-	app->mWaterRTT->setReflect(pSet->water_reflect);
-	app->mWaterRTT->setRefract(pSet->water_refract);
-	app->changeShadows();
-	app->mWaterRTT->recreate();
+	app->scn->mWaterRTT->setReflect(pSet->water_reflect);
+	app->scn->mWaterRTT->setRefract(pSet->water_refract);
+	app->scn->changeShadows();
+	app->scn->mWaterRTT->recreate();
 }
 
 void CGuiCom::slWaterSize(SV*)
 {
-	app->mWaterRTT->setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
-	app->mWaterRTT->recreate();
+	app->scn->mWaterRTT->setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
+	app->scn->mWaterRTT->recreate();
 }

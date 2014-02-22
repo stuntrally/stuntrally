@@ -7,6 +7,7 @@
 #include "data/SceneXml.h"
 #include "data/TracksXml.h"
 #include "data/CData.h"
+#include "CScene.h"
 #ifndef SR_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../CGame.h"
@@ -50,9 +51,9 @@ String CGuiCom::GetSceneryColor(String name)
 		case 'T':  c = (name.c_str()[1] != 'e') ? "#FFA020" : 
 			(name.length() > 5 && name.c_str()[4] == 'C') ? "#A0C0D0" : "#A0A0A0";  break;  // Test,TestC
 		case 'J':  c = "#50FF50";  break;  case 'S':  c = "#C0E080";  break;  case 'F':  c = "#A0C000";  break;
-		case 'G':  c = "#B0FF00";  break;  case '0':  c = "#E8E8E8";  break;  case 'I':  c = "#FFFF80";  break;
+		case 'G':  c = "#B0FF00";  break;  case 'W':  c = "#C0D0D0";  break;  case 'I':  c = "#FFFF80";  break;
 		case 'A':  c = "#FFA080";  break;  case 'D':  c = "#F0F000";  break;  case 'C':  c = "#E0B090";  break;
-		case 'V':  c = "#080800";  break;  case 'X':  c = "#8080D0";  break;  case 'M':  c = "#A0A000";  break;
+		case 'V':  c = "#908030";  break;  case 'X':  c = "#8080D0";  break;  case 'M':  c = "#A0A000";  break;
 		case 'O':  c = "#70F0B0";  break;  case 'E':  c = "#A0E080";  break;  case 'R':  c = "#A04840";  break;  }
 	return c;
 }
@@ -211,8 +212,8 @@ void CGuiCom::FillTrackLists()
 	for (strlist::iterator i = liTracks.begin(); i != liTracks.end(); ++i)
 	{
 		TrkL trl;  trl.name = *i;  //trl.pA = this;
-		int id = app->data->tracks->trkmap[*i];
-		const TrackInfo* pTrk = id==0 ? 0 : &app->data->tracks->trks[id-1];
+		int id = app->scn->data->tracks->trkmap[*i];
+		const TrackInfo* pTrk = id==0 ? 0 : &app->scn->data->tracks->trks[id-1];
 		trl.ti = pTrk;  // 0 if not in data->tracks
 		liTrk.push_back(trl);
 	}
@@ -317,11 +318,11 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 		app->gui->txTrackAuthor->setCaption("");  // user trks
 	#endif
 	
-	int id = app->data->tracks->trkmap[sTrack];
+	int id = app->scn->data->tracks->trkmap[sTrack];
 	for (int i=0; i < InfTrk; ++i)
 		if (infTrk[ch][i])  infTrk[ch][i]->setCaption("");
 	if (id > 0)
-	{	const TrackInfo& ti = app->data->tracks->trks[id-1];
+	{	const TrackInfo& ti = app->scn->data->tracks->trks[id-1];
 		#define str0(v)  ((v)==0 ? "" : toStr(v))
 		infTrk[ch][0]->setCaption(str0(ti.fluids));
 		infTrk[ch][1]->setCaption(str0(ti.bumps));		infTrk[ch][2]->setCaption(str0(ti.jumps));
@@ -344,9 +345,9 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 
 	//  track time
 	float carMul = app->GetCarTimeMul(pSet->gui.car[0], pSet->gui.sim_mode);
-	float timeTrk = app->data->tracks->times[sTrack];
+	float timeTrk = app->scn->data->tracks->times[sTrack];
 	std::string speedTrk = fToStr(len / timeTrk * m, 0,3) + unit;
-	float timeT = (/*place*/1 * app->data->cars->magic * timeTrk + timeTrk) / carMul;
+	float timeT = (/*place*/1 * app->scn->data->cars->magic * timeTrk + timeTrk) / carMul;
 	bool no = timeCur < 0.1f || !rd;
 	if (ch==1)  no = false;  // show track's not current
 	stTrk[ch][9]->setCaption(CHud::StrTime(no ? 0.f : timeT));
@@ -379,9 +380,11 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	//---------------------------------------------------------------------------
 #ifndef SR_EDITOR
 	if (pSet->dev_no_prvs)  return;
+	bool any = pSet->inMenu == MNU_Tutorial || pSet->inMenu == MNU_Champ || pSet->inMenu == MNU_Challenge;
+#else
+	bool any = false;
 #endif
-
-	String path = PathListTrkPrv(-1, sTrack);
+	String path = PathListTrkPrv(any ? 0 : -1, sTrack);
 
 	app->prvView.Load(path+"view.jpg");
 	app->prvRoad.Load(path+"road.png");

@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "par.h"
 #include "cardynamics.h"
 #include "tobullet.h"
 #include "../ogre/common/Def_Str.h"
@@ -263,12 +264,15 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::GetWheelPositionAtDisplacement(WHEEL_POSITION wp,
 void CARDYNAMICS::ApplyForce(const MATHVECTOR<Dbl,3> & force)
 {
 	body.ApplyForce(force);
+	cam_body.ApplyForce(force * gPar.camBncF * fBncMass);
 	//chassis->applyCentralForce(ToBulletVector(force));
 }
 
 void CARDYNAMICS::ApplyForce(const MATHVECTOR<Dbl,3> & force, const MATHVECTOR<Dbl,3> & offset)
 {
 	body.ApplyForce(force, offset);
+	MATHVECTOR<Dbl,3> fo = offset * force.Magnitude();
+	cam_body.ApplyForce((force * gPar.camBncFo + fo * gPar.camBncFof) * fBncMass);
 	//chassis->applyForce(ToBulletVector(force), ToBulletVector(offset));
 }
 

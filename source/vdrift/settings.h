@@ -7,12 +7,12 @@
 
 enum eGraphType  {
 	Gh_Fps=0,
-	Gh_CarAccelG, Gh_BulletHit,
+	Gh_CarAccelG, Gh_CamBounce, Gh_BulletHit,
 	Gh_Sound,
 	Gh_TireSlips, Gh_Suspension,
 	Gh_TireEdit,
 	Gh_TorqueCurve, Gh_Engine,
-	Gh_Clutch, Gh_Diffs, //todo: tire friction circles,
+	Gh_Clutch, Gh_Diffs,
 	Gh_ALL  };  // total count
 const static std::string csGraphNames[Gh_ALL] = {
 	"Fps graphics perf.",
@@ -44,7 +44,9 @@ public:
 
 	float size_gauges, size_minimap, size_minipos, size_arrow, zoom_minimap;
 	int gauges_type, gauges_layout;
+	//  cam
 	bool cam_loop_chng;  int cam_in_loop;
+	bool cam_bounce;  float cam_bnc_mul;
 	
 	eGraphType graphs_type;
 	int car_dbgtxtclr, car_dbgtxtcnt;
@@ -53,20 +55,25 @@ public:
 	int tracks_view, tracks_sort, cars_sort,
 		tut_type, champ_type, chall_type, car_ed_tab;
 
-	//  graphics
+	//  graphics common
 	int preset;  // last set, info only
 	int anisotropy, tex_size, ter_mtr, ter_tripl;  bool bFog;
 	float view_distance, terdetail, terdist, road_dist;
+	bool horizon;
+	
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type; //eShadowType
 	bool use_imposters, imposters_only;
+	float grass, trees_dist, grass_dist;
+	bool water_reflect, water_refract;  int water_rttsize;
+	std::string shader_mode;
+
+	//  graphics
 	int refl_skip, refl_faces, refl_size;  float refl_dist;
 	int refl_mode;  // 0 static, 1 single, 2 full
-	bool water_reflect, water_refract;  int water_rttsize;
-	bool particles, trails;  float grass, trees_dist, grass_dist;
+
+	bool particles, trails;
 	float particles_len, trails_len;
 	bool boost_fov;
-
-	std::string shader_mode;
 
 	//---------------  car setup
 	bool abs[2], tcs[2],  // [2] = 0 gravel 1 asphalt

@@ -2,6 +2,7 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/GuiCom.h"
+#include "../ogre/common/CScene.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -30,9 +31,9 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 
 	//  pos on minimap *
 	if (ndPos)
-	{
-		Real x = (0.5 - mCamera->getPosition().z / sc->td.fTerWorldSize);
-		Real y = (0.5 + mCamera->getPosition().x / sc->td.fTerWorldSize);
+	{	Real w = scn->sc->td.fTerWorldSize;
+		Real x = (0.5 - mCamera->getPosition().z / w);
+		Real y = (0.5 + mCamera->getPosition().x / w);
 		ndPos->setPosition(xm1+(xm2-xm1)*x, ym1+(ym2-ym1)*y, 0);
 		//--------------------------------
 		float angrot = mCamera->getOrientation().getYaw().valueDegrees();
@@ -139,7 +140,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 
 	//  Road Point
 	//----------------------------------------------------------------
-	if (edMode == ED_Road && bEdit() && road)
+	SplineRoad* road = scn->road;
+	if (edMode == ED_Road && bEdit() && scn->road)
 	{
 		int ic = road->iChosen;  bool bCur = ic >= 0;
 		SplinePoint& sp = bCur ? road->getPoint(ic) : road->newP;
@@ -312,7 +314,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		
 		brTxt[8]->setCaption(edH ? "" : TR("#{Brush_CurrentH}"));
 		brVal[8]->setCaption(edH ? "" : fToStr(road->posHit.y,1,4));
-		brKey[8]->setCaption(edH ? "" : "");
+		brKey[8]->setCaption(brLockPos ? TR("#{Lock}") : "");
 		
 		
 		//  edit  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -364,14 +366,14 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	else if (edMode == ED_Fluids)
 	{
 		Txt *flTxt = gui->flTxt;
-		if (sc->fluids.empty())
+		if (scn->sc->fluids.empty())
 		{
 			if (flTxt[0])	flTxt[0]->setCaption("None");
 			for (int i=1; i < gui->FL_TXT; ++i)
 				if (flTxt[i])  flTxt[i]->setCaption("");
 		}else
-		{	FluidBox& fb = sc->fluids[iFlCur];
-			flTxt[0]->setCaption("Cur/All:  "+toStr(iFlCur+1)+" / "+toStr(sc->fluids.size()));
+		{	FluidBox& fb = scn->sc->fluids[iFlCur];
+			flTxt[0]->setCaption("Cur/All:  "+toStr(iFlCur+1)+" / "+toStr(scn->sc->fluids.size()));
 			flTxt[1]->setCaption(fb.name);
 			flTxt[2]->setCaption("Pos:  "+fToStr(fb.pos.x,1,4)+" "+fToStr(fb.pos.y,1,4)+" "+fToStr(fb.pos.z,1,4));
 			flTxt[3]->setCaption("");
@@ -386,7 +388,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			if (isKey(APOSTROPHE)  ||isKey(L)){  fb.tile.y *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
 
 			if (mz != 0 && bEdit())  // wheel prev/next
-			{	int fls = sc->fluids.size();
+			{	int fls = scn->sc->fluids.size();
 				if (fls > 0)  {  iFlCur = (iFlCur-mz+fls)%fls;  UpdFluidBox();  }
 			}
 		}
@@ -396,9 +398,9 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	else if (edMode == ED_Objects)
 	{
 		Txt *objTxt = gui->objTxt;
-		int objs = sc->objects.size();
+		int objs = scn->sc->objects.size();
 		bool bNew = iObjCur == -1;
-		const Object& o = bNew || sc->objects.empty() ? objNew : sc->objects[iObjCur];
+		const Object& o = bNew || scn->sc->objects.empty() ? objNew : scn->sc->objects[iObjCur];
 		const Quaternion& q = o.nd->getOrientation();
 		//Quaternion q(o.rot.w(),o.rot.x(),o.rot.y(),o.rot.z());
 		objTxt[0]->setCaption((bNew ? "#80FF80New#B0D0B0     " : "#A0D0FFCur#B0B0D0     ")
@@ -453,6 +455,7 @@ void App::editMouse()
 	if (!bEdit())  return;
 	
 	///  mouse edit Road  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+	SplineRoad* road = scn->road;	
 	if (road && edMode == ED_Road)
 	{
 		const Real fMove(5.0f), fRot(10.f);  //par speed
@@ -544,9 +547,9 @@ void App::editMouse()
 	}
 
 	///  edit fluids . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-	if (edMode == ED_Fluids && !sc->fluids.empty())
+	if (edMode == ED_Fluids && !scn->sc->fluids.empty())
 	{
-		FluidBox& fb = sc->fluids[iFlCur];
+		FluidBox& fb = scn->sc->fluids[iFlCur];
 		const Real fMove(0.5f), fRot(1.5f);  //par speed
 		if (!alt)
 		{
@@ -556,13 +559,13 @@ void App::editMouse()
 				Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
 				Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
 				fb.pos += vm;
-				vFlNd[iFlCur]->setPosition(fb.pos);  UpdFluidBox();
+				scn->vFlNd[iFlCur]->setPosition(fb.pos);  UpdFluidBox();
 			}else
 			if (mbRight)  // move y
 			{
 				Real ym = -vNew.y * fMove * moveMul;
 				fb.pos.y += ym;
-				vFlNd[iFlCur]->setPosition(fb.pos);  UpdFluidBox();
+				scn->vFlNd[iFlCur]->setPosition(fb.pos);  UpdFluidBox();
 			}
 			// rot not supported (bullet trigger isnt working, trees check & waterDepth is a lot simpler)
 			/*else
@@ -614,9 +617,9 @@ void App::editMouse()
 		//  selection, picked or new
 		std::set<int>::iterator it = vObjSel.begin();
 		int i = sel ? *it : iObjCur;
-		while (i == -1 || (i >= 0 && i < sc->objects.size()))
+		while (i == -1 || (i >= 0 && i < scn->sc->objects.size()))
 		{
-			Object& o = i == -1 ? objNew : sc->objects[i];
+			Object& o = i == -1 ? objNew : scn->sc->objects[i];
 			bool upd1 = false;
 
 			switch (objEd)

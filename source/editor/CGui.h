@@ -18,13 +18,14 @@
 
 
 namespace wraps {	class RenderBoxScene;  }
-class App;  class SETTINGS;  class Scene;  class CData;  class CGuiCom;
+class App;  class SETTINGS;  class CScene;  class Scene;  class CData;  class CGuiCom;
 
 
 class CGui : public BGui
 {
 public:
-	App* app;  SETTINGS* pSet;  Scene* sc;  CData* data;
+	App* app;  SETTINGS* pSet;
+	CScene* scn;  Scene* sc;  CData* data;
 	MyGUI::Gui* mGui;  CGuiCom* gcom;
 
 	CGui(App* app1);
@@ -150,15 +151,27 @@ public:
 	void comboTexDiff(CMB), comboTexNorm(CMB);
 	Img imgTexDiff;
 	Ck ckTexNormAuto;  bool bTexNormAuto;  // auto norm tex name
+	void btnTerLmoveL(WP),btnTerLmoveR(WP);
 
 	//  Ter blendmap
 	SV svTerLScale;
 	SV svTerLAngMin, svTerLHMin, svTerLAngSm;
 	SV svTerLAngMax, svTerLHMax, svTerLHSm;
-	SV svTerLNoise;
-	void slTerLay(SV*);
-	CK(TerLNoiseOnly);  CK(TerLayTripl);
+	//  noise
+	SV svTerLNoise, svTerLNprev, svTerLNnext2;
+	SV svTerLN_Freq[2], svTerLN_Oct[2], svTerLN_Pers[2], svTerLN_Pow[2];
+	void slTerLay(SV*), SldUpd_TerLNvis();
 
+	CK(TerLNOnly);  CK(TerLayTripl);
+	CK(DebugBlend);  bool bDebugBlend;
+	Img dbgLclr;
+
+	//  noise btns
+	Btn bRn1, bRn2;
+	void radN1(WP), radN2(WP), btnNpreset(WP);
+	void btnNrandom(WP), btnNswap(WP);
+
+	
 	//  Ter Particles
 	Ed edLDust,edLDustS,edLMud,edLSmoke, edLTrlClr;  Img clrTrail;
 	void editLDust(Ed), editLTrlClr(Ed);
@@ -177,9 +190,6 @@ public:
 	//  grass
 	Ed edGrSwayDistr, edGrSwayLen, edGrSwaySpd;
 	void editTrGr(Ed);
-	SV svGrTerMaxAngle,  svGrTerSmAngle;
-	SV svGrTerMinHeight, svGrTerMaxHeight, svGrTerSmHeight;
-
 	SV svTrRdDist;  SV svGrDensSmooth;  Ed edSceneryId;
 
 	//  model view 3d  (veget,objs)
@@ -211,7 +221,7 @@ public:
 	Tab tabsGrLayers;  void tabGrLayers(TAB);
 
 	CK(GrLayOn);  Txt valLGrAll;
-	SV svLGrDens;
+	SV svLGrDens, svGrChan;
 	SV svGrMinX, svGrMaxX;
 	SV svGrMinY, svGrMaxY;
 
@@ -219,6 +229,15 @@ public:
 	Cmb cmbGrassClr;  void comboGrassClr(CMB);
 	Img imgGrass,imgGrClr;
 
+	///  grass channels  --------
+	int idGrChan;  // tab
+	void SldUpd_GrChan();
+	Tab tabsGrChan;  void tabGrChan(TAB);
+
+	SV svGrChAngMin, svGrChAngMax, svGrChAngSm;  // ter angle,height
+	SV svGrChHMin, svGrChHMax, svGrChHSm, svGrChRdPow;
+	SV svGrChNoise, svGrChNfreq, svGrChNoct, svGrChNpers, svGrChNpow;
+	
 	
 	//  [Road]  ----
 	//  materials
@@ -233,6 +252,12 @@ public:
 	void SldUpd_Road();
 	Ed edRdSkirtLen,edRdSkirtH, edRdHeightOfs;
 	void editRoad(Ed);
+	
+	
+	//  [Game]  ----
+	SV svDamage, svWind, svGravity;
+	CK(DenyReversed);  CK(TiresAsphalt);
+	void SldUpd_Game();
 
 
 	//  [Objects]  ----

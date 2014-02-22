@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "par.h"
 #include "track.h"
 
 #include "configfile.h"
@@ -527,7 +528,7 @@ pair <MATHVECTOR<float,3>, QUATERNION<float> > TRACK::GetStart(unsigned int inde
 		else
 			sp = make_pair(MATHVECTOR<float,3>(0,0,0), QUATERNION<float>(0,0,0,1));
 			
-		MATHVECTOR<float,3> backward(-6,0,0);  // par dist back
+		MATHVECTOR<float,3> backward(-gPar.startNextDist,0,0);
 		backward = backward * (index-laststart);
 		sp.second.RotateVector(backward);
 		sp.first = sp.first + backward;

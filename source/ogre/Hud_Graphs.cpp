@@ -3,8 +3,8 @@
 #include "CGame.h"
 #include "../vdrift/game.h"
 #include "../vdrift/car.h"
-//#include "../vdrift/quickprof.h"
 #include "common/data/SceneXml.h"
+#include "common/CScene.h"
 #include "common/GraphView.h"
 #include "SplitScreen.h"
 #include <OgreSceneManager.h>
@@ -80,6 +80,26 @@ void App::CreateGraphs()
 			{
 				case 0:  gv->CreateTitle("\n\n\n\n\n\n\n0 x",					c, 0.0f, -2, 24, 12);  break;
 				case 1:  gv->CreateTitle("Car accel G's\n\n\n\n\n\n\n       y",	c, 0.f,-2, 24, 12);  break;
+				case 2:  gv->CreateTitle("\n\n\n\n\n\n\n\n\n\n\n0 z",			c, 0.f,-2, 24, 12);  break;
+			}
+			gv->SetSize(0.f, 0.24f, 0.4f, 0.30f);
+
+			gv->SetVisible(pSet->show_graphs);
+			graphs.push_back(gv);
+		}	break;
+		
+	case Gh_CamBounce:   /// cam bounce
+		for (int i=0; i < 3; ++i)
+		{
+			GraphView* gv = new GraphView(scm,mWindow,mGui);
+			const int t[3] = {0,1,2};
+			int c = t[i];
+			gv->Create(256, "graph"+toStr(c+1), i==0 ? 0.4f : 0.f);
+			if (i == 0)  gv->CreateGrid(6,0, 0.7f, 1.0f);
+			switch(i)
+			{
+				case 0:  gv->CreateTitle("\n\n\n\n\n\n\n0 x",					c, 0.0f, -2, 24, 12);  break;
+				case 1:  gv->CreateTitle("Cam bounce \n\n\n\n\n\n\n       y",	c, 0.f,-2, 24, 12);  break;
 				case 2:  gv->CreateTitle("\n\n\n\n\n\n\n\n\n\n\n0 z",			c, 0.f,-2, 24, 12);  break;
 			}
 			gv->SetSize(0.f, 0.24f, 0.4f, 0.30f);
@@ -369,6 +389,15 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				pApp->graphs[i]->AddVal( std::max(0.f, std::min(1.f, float(
 					v[i]/m *0.63f /9.81f/3.f + (i==2 ? 0.f : 0.5f) ) )));
 		}	break;
+
+	case Gh_CamBounce:  /// cam bounce x,y,z
+		if (gsi >= 3)
+		{
+			const MATHVECTOR<Dbl,3> v = dynamics.cam_body.GetPosition();
+			for (int i=0; i < 3; ++i)
+				pApp->graphs[i]->AddVal( std::max(0.f, std::min(1.f, 
+					(float)v[i] * 3.f + 0.5f)));
+		}	break;
 		
 	case Gh_TireSlips:  /// tire slide,slip
 		if (gsi >= 8)
@@ -546,7 +575,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			const bool common = 1;  // common range for all
 			const bool cust = 1;
 			//  RANGE  gui sld ..
-			const Dbl fMAX = 9000.0, max_y = pApp->sc->asphalt ? 40.0 : 80.0, max_x = 1.0;
+			const Dbl fMAX = 9000.0, max_y = pApp->scn->sc->asphalt ? 40.0 : 80.0, max_x = 1.0;
 
 			///  Fy lateral --
 			for (int i=0; i < TireNG; ++i)

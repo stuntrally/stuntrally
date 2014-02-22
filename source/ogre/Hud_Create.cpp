@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "common/Def_Str.h"
 #include "common/data/SceneXml.h"
+#include "common/CScene.h"
 #include "common/RenderConst.h"
 #include "common/GuiCom.h"
 #include "CGame.h"
@@ -14,6 +15,7 @@
 #include <OgreEntity.h>
 #include <OgreSceneNode.h>
 #include <OgreMaterialManager.h>
+#include <OgreTextureManager.h>
 #include <OgreManualObject.h>
 #include <OgrePass.h>
 #include <OgreTechnique.h>
@@ -187,7 +189,8 @@ void CHud::Create()
 	resMgr.unloadResourceGroup(sGrp);
 	resMgr.initialiseResourceGroup(sGrp);
 
-	if (app->sc->ter)
+	Scene* sc = app->scn->sc;
+	if (sc->ter)
 	{	try {  texMgr.unload(sRoad);  texMgr.load(sRoad, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  }  catch(...) {  }
 		try {  texMgr.unload(sTer);   texMgr.load(sTer,  sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  }  catch(...) {  }
 	}
@@ -204,7 +207,7 @@ void CHud::Create()
 	//  car pos tris (form all cars on all viewports)
 	SceneNode* rt = scm->getRootSceneNode();
 	asp = 1.f;  //_temp
-	moPos = Create2D("hud/CarPos", scm, 0.4f, true,true, 1.f,Vector2(1,1), RV_Hud,RQG_Hud3, plr * 6);
+	moPos = Create2D("hud/CarPos", scm, 0.0f, true,true, 1.f,Vector2(1,1), RV_Hud,RQG_Hud3, plr * 6);
 	ndPos = rt->createChildSceneNode();
 	ndPos->attachObject(moPos);
 
@@ -214,8 +217,8 @@ void CHud::Create()
 	{
 		String s = toStr(c);
 		Hud& h = hud[c];
-		if (app->sc->ter)
-		{	float t = app->sc->td.fTerWorldSize*0.5;
+		if (sc->ter)
+		{	float t = sc->td.fTerWorldSize*0.5;
 			minX = -t;  minY = -t;  maxX = t;  maxY = t;  }
 
 		float fMapSizeX = maxX - minX, fMapSizeY = maxY - minY;  // map size
@@ -227,14 +230,14 @@ void CHud::Create()
 		MaterialPtr mm = MaterialManager::getSingleton().getByName(sMat);
 		Pass* pass = mm->getTechnique(0)->getPass(0);
 		TextureUnitState* tus = pass->getTextureUnitState(0);
-		if (tus)  tus->setTextureName(app->sc->ter ? sRoad : "alpha.png");
+		if (tus)  tus->setTextureName(sc->ter ? sRoad : "alpha.png");
 		tus = pass->getTextureUnitState(2);
-		if (tus)  tus->setTextureName(app->sc->ter ? sTer : "alpha.png");
+		if (tus)  tus->setTextureName(sc->ter ? sTer : "alpha.png");
 		UpdMiniTer();
 		
 		float fHudSize = pSet->size_minimap * app->mSplitMgr->mDims[c].avgsize;
 		h.ndMap = rt->createChildSceneNode();
-		if (!app->sc->vdr)
+		if (!sc->vdr)
 		{	asp = 1.f;  //_temp
 			ManualObject* m = Create2D(sMat,scm,1, true,true, 1.f,Vector2(1,1), RV_Hud,RQG_Hud1);  h.moMap = m;
 			h.ndMap->attachObject(m);
@@ -622,7 +625,7 @@ void CHud::Show(bool hideAll)
 	if (bckMsg)
 	{
 		bool cam = pSet->show_cam && !app->isFocGui, times = pSet->show_times;
-		bool opp = pSet->show_opponents && (!app->sc->ter || app->road && app->road->getNumPoints() > 0);
+		bool opp = pSet->show_opponents && (!app->scn->sc->ter || app->scn->road && app->scn->road->getNumPoints() > 0);
 		bool bfuel = pSet->game.boost_type == 1 || pSet->game.boost_type == 2;
 		bool bdmg = pSet->game.damage_type > 0;
 		//txCamInfo->setVisible(cam);

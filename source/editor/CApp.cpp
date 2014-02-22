@@ -6,6 +6,7 @@
 #include "CApp.h"
 #include "CGui.h"
 #include "../ogre/common/GuiCom.h"
+#include "../ogre/common/CScene.h"
 #include "../road/Road.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/WaterRTT.h"
@@ -27,15 +28,13 @@ using namespace Ogre;
 //  ctor
 //----------------------------------------------------------------------------------------------------------------------
 App::App(SETTINGS* pSet1)
-	:mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)
-	,bTerUpd(0), curBr(0)
+	:bTerUpd(0), curBr(0), brLockPos(0)
 	,ndPos(0), mpos(0), asp(4.f/3.f)
 	,ndCar(0),entCar(0), ndStBox(0),entStBox(0), ndFluidBox(0),entFluidBox(0), ndObjBox(0),entObjBox(0)
-	,grass(0), trees(0), sun(0), pr(0),pr2(0)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
 	,iFlCur(0), bRecreateFluids(0)
 	
-	,bTerUpdBlend(1), track(0)
+	,bTerUpdBlend(0), track(0)
 	,world(0), config(0), dispatcher(0), broadphase(0), solver(0)  //blt
 	,trackObject(0), trackMesh(0)
 	,mStaticGeom(0), mTimer(0.f), bUpdTerPrv(0)
@@ -60,18 +59,20 @@ App::App(SETTINGS* pSet1)
 	iSnap = 0;  angSnap = crAngSnaps[iSnap];
 
 	///  new
-	mWaterRTT = new WaterRTT();
-	data = new CData();
+	scn = new CScene(this);
 
 	gcom = new CGuiCom(this);
 	gcom->mGui = mGui;
+	gcom->sc = scn->sc;
+
 	gui = new CGui(this);
 	gui->viewBox = new wraps::RenderBoxScene();
 	gui->gcom = gcom;
+	gui->sc = scn->sc;
+	gui->scn = scn;
+	gui->data = scn->data;
 	
 	track = new TRACK(std::cout, std::cerr);  //!
-	sc = new Scene();
-	gui->sc = sc;
 }
 
 const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise", "Noise2", "N-gon" };  // static
@@ -100,41 +101,11 @@ App::~App()
 	delete[] pBrFmask;  pBrFmask = 0;
 
 	delete[] mBrushData;
-	delete road;
-
-	if (mTerrainPaging)
-	{	OGRE_DELETE mTerrainPaging;
-		OGRE_DELETE mPageManager;
-	}else
-		OGRE_DELETE mTerrainGroup;
-	OGRE_DELETE mTerrainGlobals;
 
 	delete mFactory;  //!
 
-	delete sc;
-	delete mWaterRTT;
-
 	delete gcom;
 	delete gui;
-	delete data;
-}
-
-void App::destroyScene()
-{
-	mWaterRTT->destroy();
-
-	//NewCommon(false);  //?
-
-	if (road)
-	{	road->DestroyRoad();  delete road;  road = 0;  }
-
-	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
-	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
-
-	DestroyWeather();
-
-	delete[] sc->td.hfHeight;
-	delete[] sc->td.hfAngle;
 }
 	
 

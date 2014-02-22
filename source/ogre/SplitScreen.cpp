@@ -1,7 +1,9 @@
 #include "pch.h"
+#include "../vdrift/par.h"
 #include "common/Def_Str.h"
 #include "common/RenderConst.h"
 #include "common/data/SceneXml.h"
+#include "common/CScene.h"
 #include "../vdrift/settings.h"
 #include "SplitScreen.h"
 #include "CGame.h"
@@ -21,6 +23,7 @@
 #include <OgreParticleEmitter.h>
 #include <OgreCompositorManager.h>
 #include <OgreCompositorChain.h>
+#include <OgreSceneNode.h>
 #include "MyGUI_PointerManager.h"
 using namespace Ogre;
 
@@ -211,34 +214,16 @@ void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 
 		//  road lod for each viewport
 		if (mNumViewports > 1)
-		if (pApp->road)
+		if (pApp->scn->road)
 		{
-			pApp->road->mCamera = evt.source->getCamera();
-			pApp->road->UpdLodVis(pSet->road_dist);
+			pApp->scn->road->mCamera = evt.source->getCamera();
+			pApp->scn->road->UpdLodVis(pSet->road_dist);
 		}
 		
 		//  Update rain/snow - depends on camera
 		//  todo: every player/viewport needs own weather particles  pr[carId]
 		if (pSet->particles)
-		{	
-			const Vector3& pos = evt.source->getCamera()->getPosition();
-			static Vector3 oldPos = Vector3::ZERO;
-			Vector3 vel = (pos-oldPos)/ (1.0f / mWindow->getLastFPS());  oldPos = pos;
-			Vector3 dir = evt.source->getCamera()->getDirection();//, up = mCamera->getUp();
-			Vector3 par = pos + dir * 12 + vel * 0.4;
-			if (pApp->pr && pApp->sc->rainEmit > 0)
-			{
-				ParticleEmitter* pe = pApp->pr->getEmitter(0);
-				pe->setPosition(par);
-				pe->setEmissionRate(pApp->sc->rainEmit);
-			}
-			if (pApp->pr2 && pApp->sc->rain2Emit > 0)
-			{
-				ParticleEmitter* pe = pApp->pr2->getEmitter(0);
-				pe->setPosition(par);	//pe->setDirection(-up);
-				pe->setEmissionRate(pApp->sc->rain2Emit);
-			}
-		}
+			pApp->scn->UpdateWeather(evt.source->getCamera());
 
 		// Change FOV when boosting
 		if (pApp->pSet->boost_fov && carId < pApp->carModels.size())
@@ -246,8 +231,7 @@ void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 			CAR* pCar = pApp->carModels[carId]->pCar;
 			if (pCar)
 			{
-				const static Real minFOV = 45, maxFOV = 60, rangeFOV = maxFOV-minFOV;  //par
-				float fov = minFOV + rangeFOV * pCar->dynamics.fBoostFov;
+				float fov = gPar.FOVmin + gPar.FOVrange * pCar->dynamics.fBoostFov;
 				evt.source->getCamera()->setFOVy(Degree(fov));
 			}
 		}

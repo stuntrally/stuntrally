@@ -76,7 +76,9 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 
 	pApp->SaveCam();
 	delete pApp;
+	
 	settings->Save(setFile);
 	delete settings;
+
 	return 0;
 }

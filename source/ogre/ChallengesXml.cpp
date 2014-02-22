@@ -9,7 +9,7 @@ using namespace tinyxml2;
 
 
 ChallTrack::ChallTrack()  //  defaults
-	:name("J1-T"), laps(1), reversed(0)
+	:name("J1-Curly"), laps(1), reversed(0)
 	,passPoints(-1.f), timeNeeded(-1.f), passPos(-1.f)  // pass
 {	}
 

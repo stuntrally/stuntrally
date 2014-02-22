@@ -21,6 +21,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include <OgreRenderSystemCapabilities.h>
 #include <OgreHighLevelGpuProgram.h>
 #include <OgreHighLevelGpuProgramManager.h>
+#include <OgreTechnique.h>
 
 #include "WindBatchPage.h"
 #include "WindBatchedGeometry.h"
@@ -96,7 +97,7 @@ void WindBatchPage::_updateShaders()
 		}
 
 		//Compile the shader script based on various material / fade options
-		StringUtil::StrStreamType tmpName;
+		std::stringstream tmpName;
 		tmpName << "BatchPage_";
 		if (m_bFadeEnabled)
 			tmpName << "fade_";
@@ -138,7 +139,7 @@ void WindBatchPage::_updateShaders()
 
 
 		//Now that the shader is ready to be applied, apply it
-		StringUtil::StrStreamType materialSignature;
+		std::stringstream materialSignature;
 		materialSignature << "BatchMat|";
 		materialSignature << ptrMat->getName() << "|";
 		if (m_bFadeEnabled)

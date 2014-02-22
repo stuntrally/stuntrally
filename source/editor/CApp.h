@@ -22,11 +22,9 @@
 const int ciAngSnapsNum = 7;
 const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,5,15,30,45,90,180};
 
-namespace Forests {  class PagedGeometry;  }
-namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;
-	class Light;  class Rectangle2D;  class SceneNode;  class RenderTexture;  }
+namespace Ogre  {  class Rectangle2D;  class SceneNode;  class RenderTexture;  }
 namespace sh {  class Factory;  }
-class Scene;  class WaterRTT;  class CData;  class CGui;  class CGuiCom;
+class CScene;  class CGui;  class CGuiCom;
 
 enum ED_OBJ {  EO_Move=0, EO_Rotate, EO_Scale  };
 
@@ -37,19 +35,14 @@ public:
 	App(class SETTINGS* pSet1);
 	virtual ~App();
 
-
 	class Instanced* inst;
 
-	Scene* sc;  /// scene.xml
-
-	CData* data;  // xmls
+	CScene* scn;
 
 	//  materials
 	sh::Factory* mFactory;
-	//  to be executed after BaseApp init
 	void postInit(), SetFactoryDefaults();
 
-	WaterRTT* mWaterRTT;
 
 	///  Gui
 	CGui* gui;
@@ -57,18 +50,7 @@ public:
 
 	PreviewTex prvView,prvRoad,prvTer;  // track tab
 
-
-	// TODO:  CScene* scn;  //...
-	Ogre::Light* sun;
-	void UpdFog(bool bForce=false), UpdSun();
-
-	//  Weather  rain, snow
-	Ogre::ParticleSystem *pr,*pr2;
-	void CreateWeather(),DestroyWeather();
 	float mTimer;
-
-	//  trees
-	Forests::PagedGeometry *trees, *grass;
 
 	
 	///  main
@@ -97,19 +79,10 @@ public:
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	bool bNewHmap, bTrGrUpd;
-	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget), UpdTrees();
-
-	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(),
-		GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
-	void CreateTrees();
+	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget);
 
 	void CreateObjects(), DestroyObjects(bool clear);
 	void UpdObjPick(), PickObject(), ToggleObjSim();
-
-	void CreateFluids(), DestroyFluids(), CreateBltFluids();
-	void UpdFluidBox(), UpdateWaterRTT(Ogre::Camera* cam), UpdMtrWaterDepth();
-
-	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 
 
 	///  rnd to tex  minimap  * * * * * * * * *	
@@ -132,44 +105,10 @@ public:
 	virtual void postRenderTargetUpdate(const Ogre::RenderTargetEvent &evt);
 	
 
-	//  fluids to destroy
-	std::vector<Ogre::String/*MeshPtr*/> vFlSMesh;
-	std::vector<Ogre::Entity*> vFlEnt;
-	std::vector<Ogre::SceneNode*> vFlNd;
+	//  fluids
 	int iFlCur;  bool bRecreateFluids;
-
+	void UpdFluidBox(), UpdMtrWaterDepth();
 	
-	///  terrain
-	Ogre::Terrain* terrain;
-	Ogre::TerrainGlobalOptions* mTerrainGlobals;
-	Ogre::TerrainGroup* mTerrainGroup;  bool mPaging;
-	Ogre::TerrainPaging* mTerrainPaging;
-	Ogre::PageManager* mPageManager;
-	void configureTerrainDefaults(Ogre::Light* l), UpdTerErr();
-
-	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
-	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
-
-	float Noise(float x, float zoom, int octaves, float persistence);
-	float Noise(float x, float y, float zoom, int octaves, float persistance);
-	//     xa  xb
-	//1    .___.
-	//0__./     \.___
-	//   xa-s    xb+s
-	inline float linRange(const float& x, const float& xa, const float& xb, const float& s)  // min, max, smooth range
-	{
-		if (x <= xa-s || x >= xb+s)  return 0.f;
-		if (x >= xa && x <= xb)  return 1.f;
-		if (x < xa)  return (x-xa)/s+1;
-		if (x > xb)  return (xb-x)/s+1;
-		return 0.f;
-	}
-		
-	//  shadows
-	void changeShadows(), UpdPSSMMaterials();
-	Ogre::Vector4 splitPoints;
-	Ogre::ShadowCameraSetupPtr mPSSMSetup;
-
 
 	//  terrain cursor, circle mesh
 	Ogre::ManualObject* moTerC;
@@ -211,6 +150,7 @@ public:
 	int curBr;
 	bool bTerUpd,bTerUpdBlend;  char sBrushTest[512];
 	float* pBrFmask, *mBrushData;
+	bool brLockPos;
 
 	//  params
 	float terSetH, mBrFilt,mBrFiltOld;
@@ -221,6 +161,7 @@ public:
 	//  brush deform
 	bool getEditRect(Ogre::Vector3& pos, Ogre::Rect& brushrect, Ogre::Rect& maprect, int size, int& cx, int& cy);
 
+	//  terrain edit
 	void deform(Ogre::Vector3 &pos, float dtime, float brMul);
 	void height(Ogre::Vector3 &pos, float dtime, float brMul);
 

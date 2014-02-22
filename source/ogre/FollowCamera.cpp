@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "../vdrift/par.h"
 #include "common/Def_Str.h"
 #include "FollowCamera.h"
 #include "../vdrift/settings.h"
@@ -121,6 +122,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 		camPosFinal = goalLook;
 		camRotFinal = orient;
 
+		posOut->camOfsMul = ca->mOfsMul;
 		posOut->camPos = camPosFinal;  // save result in out posInfo
 		posOut->camRot = camRotFinal;
 		return;
@@ -174,9 +176,9 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 				Real vel = (posGoal - mPosNodeOld).length() / std::max(0.002f, std::min(0.1f, time));
 				mPosNodeOld = posGoal;
 				if (first)  mVel = 0.f;  else
-					mVel += (vel - mVel) * time * 8.f;  // par  vel smooth speed
+					mVel += (vel - mVel) * time * 8.f;  //par-  vel smooth speed
 				if (!first)
-					xyz *= 1.f + std::min(100.f, mVel) * 0.01f;  // par  vel dist factor
+					xyz *= 1.f + std::min(100.f, mVel) * 0.01f;  //par-  vel dist factor
 			}
 			#endif
 
@@ -261,6 +263,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 	}
 
 	//  save result in out posInfo
+	posOut->camOfsMul = ca->mOfsMul;
 	posOut->camPos = mDistReduce > 0.001f ? (camPosFinal - d * mDistReduce) : camPosFinal;
 	posOut->camRot = camRotFinal;
 
@@ -295,8 +298,11 @@ void FollowCamera::Apply(const PosInfo& posIn)
 	//boost::this_thread::sleep(boost::posix_time::milliseconds(rand()%20));
 	if (!mCamera)  return;
 
-	//mCamera->setPosition( moveAboveTerrain(posIn.camPos) );
-	mCamera->setPosition(posIn.camPos);
+	Vector3 pos = posIn.camPos;  //moveAboveTerrain(posIn.camPos);
+	if (pSet->cam_bounce)
+		pos += posIn.camOfs * posIn.camOfsMul
+			* gPar.camBncScale * pSet->cam_bnc_mul;
+	mCamera->setPosition(pos);
 	mCamera->setOrientation(posIn.camRot);
 }
 
@@ -542,10 +548,10 @@ void FollowCamera::Destroy()
 	mCameraAngles.clear();
 }
 
-CameraAngle::CameraAngle() :
-	mType(CAM_Follow), mName("Follow Default"), mMain(0),
-	mDist(7), mSpeed(10), mSpeedRot(10),
-	mYaw(0), mPitch(7),  mOffset(0,1.2,0), mHideGlass(0)
+CameraAngle::CameraAngle()
+	:mType(CAM_Follow), mName("Follow Default"), mMain(0)
+	,mDist(7), mSpeed(10), mSpeedRot(10), mOfsMul(1)
+	,mYaw(0), mPitch(7),  mOffset(0,1.2,0), mHideGlass(0)
 {	}
 
 
@@ -585,6 +591,7 @@ bool FollowCamera::loadCameras()
 			a = cam->Attribute("offset");	if (a)  c->mOffset = s2v(a);
 			a = cam->Attribute("speed");	if (a)  c->mSpeed = s2r(a);
 			a = cam->Attribute("spRot");	if (a)  c->mSpeedRot = s2r(a);  else  c->mSpeedRot = c->mSpeed;
+			a = cam->Attribute("bounce");	if (a)  c->mOfsMul = s2r(a);
 
 			if (c->mMain >= 0)  {
 				mCameraAngles.push_back(c);  miCount++;  }

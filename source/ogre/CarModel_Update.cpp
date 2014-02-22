@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "../vdrift/par.h"
 #include "common/Def_Str.h"
 #include "common/RenderConst.h"
 #include "CarModel.h"
@@ -7,6 +8,7 @@
 #include "../vdrift/track.h"
 #include "../vdrift/game.h"
 #include "common/data/SceneXml.h"
+#include "common/CScene.h"
 #include "CGame.h"
 #include "SplitScreen.h"
 #include "FollowCamera.h"
@@ -23,6 +25,9 @@
 #include <OgreParticleAffector.h>
 #include <OgreRibbonTrail.h>
 #include <OgreBillboardSet.h>
+#include <OgreSceneNode.h>
+#include <OgreTechnique.h>
+#include <OgreViewport.h>
 #include <MyGUI_TextBox.h>
 using namespace Ogre;
 
@@ -45,18 +50,18 @@ void CarModel::UpdNextCheck()
 {
 	updTimes = true;
 	if (eType != CarModel::CT_LOCAL)  return;
-	if (!ndNextChk || !pApp || !pApp->road)  return;
-	if (pApp->road->mChks.empty())  return;
+	if (!ndNextChk || !pApp || !pApp->scn->road)  return;
+	if (pApp->scn->road->mChks.empty())  return;
 
 	Vector3 p;
-	if (iNumChks == pApp->road->mChks.size() && iCurChk != -1)
+	if (iNumChks == pApp->scn->road->mChks.size() && iCurChk != -1)
 		p = vStartPos;  // finish
 	else
-		p = pApp->road->mChks[iNextChk].pos;
+		p = pApp->scn->road->mChks[iNextChk].pos;
 		
-	p.y -= 44.f;  //par lower
+	p.y -= gPar.chkBeamSy;  // lower
 	ndNextChk->setPosition(p);
-	ndNextChk->setScale(5,44,5);  //par
+	ndNextChk->setScale(gPar.chkBeamSx, gPar.chkBeamSy, gPar.chkBeamSx);
 	ndNextChk->setVisible(pSet->check_beam);
 }
 void CarModel::ShowNextChk(bool visible)
@@ -71,9 +76,9 @@ void CarModel::ResetChecks(bool bDist)  // needs to be done after road load!
 	iCurChk = -1;  iNumChks = 0;  // reset lap, chk vars
 	iLoopChk = -1;  iLoopLastCam = -1;
 	trackPercent = 0.f;
-	if (!pApp || !pApp->road)  return;
+	if (!pApp || !pApp->scn->road)  return;
 	
-	const SplineRoad* road = pApp->road;
+	const SplineRoad* road = pApp->scn->road;
 	iNextChk = pSet->game.trackreverse ? road->iChkId1Rev : road->iChkId1;
 	UpdNextCheck();
 
@@ -93,8 +98,8 @@ void CarModel::ResetChecks(bool bDist)  // needs to be done after road load!
 //--------------------------------------------------------------------------------------------------------
 void CarModel::UpdTrackPercent()
 {
-	if (!pApp || !pApp->road)  return;
-	const SplineRoad* road = pApp->road;
+	if (!pApp || !pApp->scn->road)  return;
+	const SplineRoad* road = pApp->scn->road;
 	
 	float perc = 0.f;
 	if (road && !road->mChks.empty() && !isGhost())
@@ -186,8 +191,8 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	posSph[0] = posInfo.pos + vx;  posSph[0].y += 0.5f;
 	posSph[1] = posInfo.pos - vx;  posSph[1].y += 0.5f;
 	if (ndSph)  // sph test
-	{	ndSph->setPosition(posSph[0]);		//par
-		ndSph->setScale(Vector3::UNIT_SCALE * 1.7 *2/0.6f);
+	{	ndSph->setPosition(posSph[0]);
+		ndSph->setScale(Vector3::UNIT_SCALE * 1.7 *2/0.6f);  //par
 	}
 
 	//  set camera view

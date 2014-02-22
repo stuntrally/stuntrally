@@ -1,9 +1,11 @@
 #include "pch.h"
+#include "../vdrift/par.h"
 #include "common/Def_Str.h"
 #include "common/RenderConst.h"
 #include "common/data/CData.h"
 #include "common/data/SceneXml.h"
 #include "common/data/TracksXml.h"
+#include "common/CScene.h"
 #include "../vdrift/game.h"
 #include "../vdrift/quickprof.h"
 #include "../road/Road.h"
@@ -189,7 +191,7 @@ void CHud::Update(int carId, float time)
 			//  detect change (won),  can happen more than once, if time diff < ping delay
 			if (cm->iWonPlace != cm->iWonPlaceOld)
 			{	cm->iWonPlaceOld = cm->iWonPlace;
-				cm->iWonMsgTime = 4.f;  //par in sec
+				cm->iWonMsgTime = gPar.timeWonMsg;
 				if (cm->iIndex == 0)  // for local player, show end wnd
 					app->mWndNetEnd->setVisible(true);
 			}
@@ -489,11 +491,11 @@ void CHud::Update(int carId, float time)
 				//h.txLap->setCaption(h.sLap);
 			//}
 			float a = std::min(1.f, pCarM->fLapAlpha * 2.f);
-			bool hasRoad = app->road && app->road->getNumPoints() > 2;
+			bool hasRoad = app->scn->road && app->scn->road->getNumPoints() > 2;
 			bool vis = pSet->show_times && hasRoad && a > 0.f;
 			if (vis)
 			{	if (app->iLoad1stFrames == -2)  //bLoading)  //  fade out
-				{	pCarM->fLapAlpha -= !hasRoad ? 1.f : time * 0.1f; //0.04f;
+				{	pCarM->fLapAlpha -= !hasRoad ? 1.f : time * gPar.fadeLapResults;
 					if (pCarM->fLapAlpha < 0.f)  pCarM->fLapAlpha = 0.f;
 				}
 				h.bckLap->setAlpha(a);
@@ -506,7 +508,7 @@ void CHud::Update(int carId, float time)
 
 
 	//  checkpoint warning  --------
-	if (app->road && h.bckWarn && pCarM)
+	if (app->scn->road && h.bckWarn && pCarM)
 	{
 		/* checks debug *
 		if (ov[0].oU)  {
@@ -519,7 +521,7 @@ void CHud::Update(int carId, float time)
 		}	/**/
 
 		if (pCarM->bWrongChk)
-			pCarM->fChkTime = 2.f;  //par sec
+			pCarM->fChkTime = gPar.timeShowChkWarn;
 			
 		bool show = pCarM->fChkTime > 0.f;
 		if (show)  pCarM->fChkTime -= time;
@@ -748,8 +750,8 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 	#endif
 	float angBase = app->carModels[b]->angCarY;
 	
-	bool bZoom = pSet->mini_zoomed && app->sc->ter,
-		bRot = pSet->mini_rotated && app->sc->ter;
+	bool bZoom = pSet->mini_zoomed && app->scn->sc->ter,
+		bRot = pSet->mini_rotated && app->scn->sc->ter;
 
 	const float vmin[2] = {0.f,-45.f}, rmin[2] = {0.f,-45.f},
 		vsc_mph[2] = {-180.f/100.f, -(180.f+vmin[1])/90.f},

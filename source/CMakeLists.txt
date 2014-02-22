@@ -95,6 +95,7 @@ if (BUILD_EDITOR)
 		vdrift/model_joe03.*
 		vdrift/roadpatch.*
 		vdrift/cartire.*
+		vdrift/par.*
 		ogre/common/*.cpp
 		ogre/common/*.h
 		ogre/common/*/*.cpp

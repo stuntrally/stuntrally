@@ -3,6 +3,7 @@
 #include "RenderConst.h"
 #include "../../vdrift/track.h"
 #include "GuiCom.h"
+#include "CScene.h"
 #ifndef SR_EDITOR
 	#include "../CGame.h"
 	#include "../CHud.h"
@@ -51,7 +52,7 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 			TexturePtr tex = TextureManager::getSingleton().getByName(msh.material);
 			if (tex.isNull())
 			try{
-				tex = TextureManager::getSingleton().load(msh.material, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);  }
+				tex = TextureManager::getSingleton().load(msh.material, rgDef);  }
 			catch(...){
 				found = false;  }
 			msh.found = found;  // dont create meshes for not found textures, test
@@ -112,15 +113,15 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 	ii += i;
 
 	//  static geom  -------------
-	mStaticGeom = mSceneMgr->createStaticGeometry("track");
-	mStaticGeom->setRegionDimensions(Vector3::UNIT_SCALE * 1000);  // 1000
-	mStaticGeom->setOrigin(Vector3::ZERO);
-	mStaticGeom->setCastShadows(true);
+	scn->vdrTrack = mSceneMgr->createStaticGeometry("track");
+	scn->vdrTrack->setRegionDimensions(Vector3::UNIT_SCALE * 1000);  // 1000
+	scn->vdrTrack->setOrigin(Vector3::ZERO);
+	scn->vdrTrack->setCastShadows(true);
 
 	for (std::vector<Entity*>::iterator it = ents.begin(); it != ents.end(); ++it)
-		mStaticGeom->addEntity(*it, Vector3::ZERO);
+		scn->vdrTrack->addEntity(*it, Vector3::ZERO);
 
-	mStaticGeom->build();
+	scn->vdrTrack->build();
 	//mStaticGeom->dump("_track-sg.txt");
 }
 
@@ -251,7 +252,7 @@ ManualObject* CHud::CreateVdrMinimap()
 	m->end();
 	m->setUseIdentityProjection(true);  m->setUseIdentityView(true);  // on hud
 	m->setCastShadows(false);
-	AxisAlignedBox aabInf;	aabInf.setInfinite();  m->setBoundingBox(aabInf);  // draw always
+	AxisAlignedBox aab;  aab.setInfinite();  m->setBoundingBox(aab);  // draw always
 	m->setRenderingDistance(100000.f);
 	m->setRenderQueueGroup(RQG_Hud2);  m->setVisibilityFlags(RV_Hud);
 	return m;

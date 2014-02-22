@@ -559,7 +559,7 @@
 	<Tag name="Brush_Freq">Częst</Tag>
 	<Tag name="InputStartAltLMB">alt-LPM - obróć  alt-PPM - połóż</Tag>
 	<Tag name="InputRoadAngSnap">5,6 - skok kąta</Tag>
-	<Tag name="Close">Close</Tag>
+	<Tag name="Close">Zamknij</Tag>
 	<Tag name="TerGenOfsX">Przesunięcie X</Tag>
 	<Tag name="TipTexTiling">Odległość powtarzania tekstury (mniejsza znaczy więcej powtórzeń).</Tag>
 	<Tag name="InputBrushShape">K,L - Kształt</Tag>
@@ -705,7 +705,7 @@
 	<Tag name="ChallInfo">W trybie wyzwań gra ma ustawienia, większość nie może być zmieniona. Czas lub pozycja jest wymagana. Jeśli wygrasz otrzymujesz nagrodę: bronz, srebro lub złoto.</Tag>
 	<Tag name="Tools">Narzędzia</Tag>
 	<Tag name="NetCreateGame">Stwórz grę</Tag>
-	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
+	<Tag name="TutorEndFinished">Ukończyłeś ten samouczek.</Tag>
 	<Tag name="TipGrassSwaySpd">Efekt kołysania trawy, szybkość.</Tag>
 	<Tag name="MaterialProperties">Właściwości materiału</Tag>
 	<Tag name="FrictionTread">Tarcie</Tag>
@@ -938,7 +938,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="GameVersion">2.2.1</Tag>
+	<Tag name="Gravity">Gravity</Tag>
+	<Tag name="Camera">Camera</Tag>
+	<Tag name="InputRoadShiftSel">shift - select</Tag>
+	<Tag name="DenyReversed">Deny reversed direction</Tag>
+	<Tag name="Lock">Lock</Tag>
+	<Tag name="InputLockBrush">Enter - lock brush position</Tag>
+	<Tag name="Wind">Wind</Tag>
+	<Tag name="CameraBounce">Dynamic camera bouncing</Tag>
+	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>

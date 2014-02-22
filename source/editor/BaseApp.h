@@ -31,13 +31,12 @@ public:
 
 	friend class CGui;
 	friend class CGuiCom;
+	friend class CScene;
 
-	SplineRoad* road; //-
-	
 	SETTINGS* pSet;
 
 	bool bWindowResized;
-	Ogre::SceneNode* ndSky; //-
+	Ogre::SceneNode* ndSky;  //- out to CScene?
 	
 	// stuff to be executed in App after BaseApp init
 	virtual void postInit() = 0;
@@ -76,7 +75,8 @@ protected:
 
 
 	///  Ogre
-	Ogre::Root *mRoot;  Ogre::SceneManager* mSceneMgr;
+	Ogre::Root *mRoot;
+	Ogre::SceneManager* mSceneMgr;
 	Ogre::Viewport* mViewport;
 	Ogre::RenderWindow* mWindow;
 	SDL_Window* mSDLWindow;
@@ -99,12 +99,12 @@ protected:
 	bool mbWireFrame;  void UpdWireframe();
 
 	///  camera upd
-	bool bMoveCam;  int mx,my,mz;  double mDTime;
+	bool bMoveCam;
+	int mx,my,mz;  double mDTime;
 	Ogre::Real mRotX, mRotY,  mRotKX, mRotKY,  moveMul, rotMul;
 	Ogre::Vector3 mTrans;
 
 	ED_MODE	edMode,edModeOld;
-
 
 	///  Gui  ..........................
 	bool bGuiFocus;  // gui shown

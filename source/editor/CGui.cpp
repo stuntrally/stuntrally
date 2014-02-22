@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CApp.h"
 #include "CGui.h"
+#include "../ogre/common/CScene.h"
 #include "../vdrift/pathmanager.h"
 
 
@@ -22,7 +23,8 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,cmbTexDiff(0),cmbTexNorm(0), imgTexDiff(0)
 	,valTerLAll(0),tabsHmap(0),tabsTerLayers(0)
 	, idTerLay(0),bTerLay(1)
-	,bTexNormAuto(1)
+	,bTexNormAuto(1), bDebugBlend(0), dbgLclr(0)
+	,bRn1(0),bRn2(0)
 	,edTerErrorNorm(0)
 	// ter particles
 	,edLDust(0),edLDustS(0)
@@ -46,6 +48,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	// grass layers
 	, idGrLay(0), tabsGrLayers(0), valLGrAll(0)
 	,imgGrass(0),imgGrClr(0)
+	, idGrChan(0)
 	// road
 	,edRdHeightOfs(0)
 	,edRdSkirtLen(0),edRdSkirtH(0)
@@ -77,8 +80,9 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	
 	for (i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }
 
-	sc = app1->sc;
+	sc = app1->scn->sc;
+	scn = app1->scn;
 	pSet = app1->pSet;
-	data = app->data;
+	data = app->scn->data;
 	mGui = app->mGui;
 }

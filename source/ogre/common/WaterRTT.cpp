@@ -6,6 +6,11 @@
 #include <OgreSceneManager.h>
 #include <OgrePlane.h>
 #include <OgreHardwarePixelBuffer.h>
+#include <OgreCamera.h>
+#include <OgreTextureManager.h>
+#include <OgreRenderTexture.h>
+#include <OgreViewport.h>
+#include <OgreSceneNode.h>
 
 #include "../../shiny/Main/Factory.hpp"
 
@@ -36,8 +41,9 @@ void WaterRTT::create()
 		if (i==0 && !mReflect) continue;
 		if (i==1 && !mRefract) continue;
 		
-		TexturePtr tex = TextureManager::getSingleton().createManual(i == 0 ? "PlaneReflection" : "PlaneRefraction",
-			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D, mRTTSize, mRTTSize, 0, PF_R8G8B8, TU_RENDERTARGET);
+		TexturePtr tex = TextureManager::getSingleton().createManual(
+			i == 0 ? "PlaneReflection" : "PlaneRefraction", rgDef, TEX_TYPE_2D,
+			mRTTSize, mRTTSize, 0, PF_R8G8B8, TU_RENDERTARGET);
 
 		RenderTarget* rtt = tex->getBuffer()->getRenderTarget();
 		Viewport* vp = rtt->addViewport(mCamera);

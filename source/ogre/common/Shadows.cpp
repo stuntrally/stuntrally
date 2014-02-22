@@ -3,8 +3,10 @@
 #include "../common/RenderConst.h"
 #include "../common/data/SceneXml.h"
 #include "../common/QTimer.h"
+#include "../common/CScene.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
+	#include "../../editor/CGui.h"
 	#include "../../editor/settings.h"
 	#include "../../road/Road.h"
 #else
@@ -34,11 +36,12 @@ using namespace Forests;
 
 ///  Shadows config
 //---------------------------------------------------------------------------------------------------
-void App::changeShadows()
+void CScene::changeShadows()
 {	
 	QTimer ti;  ti.update();  /// time
 	
 	//  get settings
+	SETTINGS* pSet = app->pSet;
 	bool enabled = pSet->shadow_type != Sh_None;
 	bool bDepth = pSet->shadow_type >= Sh_Depth;
 	bool bSoft = pSet->shadow_type == Sh_Soft;
@@ -52,6 +55,9 @@ void App::changeShadows()
 		pSet->shadow_dist * 0.6, // fade start
 		0, 0);
 
+	sh::Factory* mFactory = app->mFactory;
+	SceneManager* mSceneMgr = app->mSceneMgr;
+	
 	mFactory->setSharedParameter("shadowFar_fadeStart", sh::makeProperty<sh::Vector4>(fade));
 
 	if (terrain)
@@ -84,11 +90,11 @@ void App::changeShadows()
 			{
 				PSSMShadowCameraSetup* pssmSetup = new PSSMShadowCameraSetup();
 				#ifndef SR_EDITOR
-				pssmSetup->setSplitPadding(mSplitMgr->mCameras.front()->getNearClipDistance());
-				pssmSetup->calculateSplitPoints(num, mSplitMgr->mCameras.front()->getNearClipDistance(), mSceneMgr->getShadowFarDistance());
+				pssmSetup->setSplitPadding(app->mSplitMgr->mCameras.front()->getNearClipDistance());
+				pssmSetup->calculateSplitPoints(num, app->mSplitMgr->mCameras.front()->getNearClipDistance(), mSceneMgr->getShadowFarDistance());
 				#else
-				pssmSetup->setSplitPadding(mCamera->getNearClipDistance());
-				pssmSetup->calculateSplitPoints(num, mCamera->getNearClipDistance(), mSceneMgr->getShadowFarDistance());
+				pssmSetup->setSplitPadding(app->mCamera->getNearClipDistance());
+				pssmSetup->calculateSplitPoints(num, app->mCamera->getNearClipDistance(), app->mSceneMgr->getShadowFarDistance());
 				#endif
 				for (int i=0; i < num; ++i)
 				{	//int size = i==0 ? fTex : fTex2;
@@ -118,7 +124,7 @@ void App::changeShadows()
 		String shadowCasterMat;
 		if (bDepth) shadowCasterMat = "PSSM/shadow_caster";
 
-		else shadowCasterMat = StringUtil::BLANK;
+		else shadowCasterMat = ""; //StringUtil::BLANK;
 		
 		mSceneMgr->setShadowTextureCasterMaterial(shadowCasterMat);
 	}
@@ -142,7 +148,10 @@ void App::changeShadows()
 
 #if !SR_EDITOR
 	mFactory->setGlobalSetting("soft_particles", b2s(pSet->all_effects && pSet->softparticles));
-	mFactory->setGlobalSetting("mrt_output", b2s(NeedMRTBuffer()));
+	mFactory->setGlobalSetting("mrt_output", b2s(app->NeedMRTBuffer()));
+	mFactory->setGlobalSetting("debug_blend", b2s(false));
+#else
+	mFactory->setGlobalSetting("debug_blend", b2s(app->gui->bDebugBlend));
 #endif
 
 	#if 0
@@ -167,8 +176,7 @@ void App::changeShadows()
 		if (MaterialManager::getSingleton().resourceExists("Ogre/DebugTexture" + toStr(i)))
 			MaterialManager::getSingleton().remove("Ogre/DebugTexture" + toStr(i));
 		MaterialPtr debugMat = MaterialManager::getSingleton().create(
-			"Ogre/DebugTexture" + toStr(i), 
-			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+			"Ogre/DebugTexture" + toStr(i), rgDef);
 			
 		debugMat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
 		TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(tex->getName());
@@ -199,10 +207,10 @@ void App::changeShadows()
 
 
 	//  rebuild static geom after materials change
-	if (mStaticGeom)
+	if (vdrTrack)
 	{
-		mStaticGeom->destroy();
-		mStaticGeom->build();
+		vdrTrack->destroy();
+		vdrTrack->build();
 	}
 
 	ti.update();	/// time
@@ -212,13 +220,13 @@ void App::changeShadows()
 
 
 /// . . . . . . . . 
-void App::UpdPSSMMaterials()
+void CScene::UpdPSSMMaterials()
 {
-	if (pSet->shadow_type == Sh_None)  return;
+	if (app->pSet->shadow_type == Sh_None)  return;
 	
-	if (pSet->shadow_count == 1)  // 1 tex
+	if (app->pSet->shadow_count == 1)  // 1 tex
 	{
-		float dist = pSet->shadow_dist;
+		float dist = app->pSet->shadow_dist;
 		sh::Vector3* splits = new sh::Vector3(dist, 0,0);  //dist*2, dist*3);
 		sh::Factory::getInstance().setSharedParameter("pssmSplitPoints", sh::makeProperty<sh::Vector3>(splits));
 		return;

@@ -834,7 +834,7 @@ void HDRCompositor::FinalRendering(void)
 
 				if(m_GlareType != GT_NONE)
 					pass->setInput(2,"Glare");
-				if(m_StarType != GT_NONE)
+				if(m_StarType != ST_NONE)
 					pass->setInput(3,"Star");
 
 				pass->setInput(4, "LocalAdaptMap");
@@ -854,7 +854,7 @@ void HDRCompositor::FinalRendering(void)
 			if(m_GlareType != GT_NONE)
 				pass->setInput(3,"Glare");
 
-			if(m_StarType != GT_NONE)
+			if(m_StarType != ST_NONE)
 				pass->setInput(4,"Star");
 		}
 	}

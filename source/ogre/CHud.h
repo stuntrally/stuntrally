@@ -12,7 +12,7 @@
 #include <boost/thread.hpp>
 #include <MyGUI.h>
 #include <OgreShadowCameraSetup.h>
-#include <OgreOverlayElement.h>
+//#include <OgreOverlayElement.h>
 #include <OgreOverlay.h>
 
 #include "../shiny/Main/Factory.hpp"

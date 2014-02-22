@@ -13,7 +13,7 @@ namespace MyGUI
 		mWidgetStart(nullptr),
 		mWidgetEnd(nullptr),
 		mWidgetTrack(nullptr),
-		mfValue(0.f), mfDefault(0.5f)  //par
+		mfValue(0.f), mfDefault(0.5f)
 	{
 	}
 

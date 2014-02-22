@@ -14,6 +14,7 @@
 #include "forcefeedback.h"
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/data/SceneXml.h"
+#include "../ogre/common/CScene.h"
 #include "../ogre/common/QTimer.h"
 #include "../ogre/CGame.h"
 #include "../ogre/CInput.h"
@@ -456,7 +457,7 @@ void GAME::UpdateCarInputs(CAR & car)
 	//  race countdown or loading
 	bool forceBrake = timer.waiting || timer.pretime > 0.f || app->iLoad1stFrames > -2;
 
-	int i = app->sc->asphalt ? 1 : 0;
+	int i = app->scn->sc->asphalt ? 1 : 0;
 	float sss_eff = settings->sss_effect[i], sss_velf = settings->sss_velfactor[i];
 	float carspeed = car.GetSpeedDir();  //car.GetSpeed();
 	//LogO(fToStr(car.GetSpeed(),2,6)+" "+fToStr(car.GetSpeedDir(),2,6));
@@ -664,7 +665,7 @@ void GAME::ProcessNewSettings()
 {
 	if (carcontrols_local.first)
 	{
-		int i = app->sc->asphalt ? 1 : 0;
+		int i = app->scn->sc->asphalt ? 1 : 0;
 		carcontrols_local.first->SetABS(settings->abs[i]);
 		carcontrols_local.first->SetTCS(settings->tcs[i]);
 		carcontrols_local.first->SetAutoShift(settings->autoshift);

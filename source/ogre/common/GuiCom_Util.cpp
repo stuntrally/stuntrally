@@ -2,6 +2,7 @@
 #include "Def_Str.h"
 #include "Gui_Def.h"
 #include "GuiCom.h"
+#include "CScene.h"
 #include "../../vdrift/pathmanager.h"
 #ifndef SR_EDITOR
 	#include "../CGame.h"
@@ -34,7 +35,7 @@ CGuiCom::CGuiCom(App* app1)
 	,edTrkFind(0), resList(0)
 {
 	pSet = app1->pSet;
-	sc = app1->sc;
+	sc = app1->scn->sc;
 	//mGui = app1->mGui;  set in GuiInit
 
 	pathTrk[0] = PATHMANAGER::Tracks() + "/";

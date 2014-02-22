@@ -18,15 +18,16 @@ public:
 	float size_minimap;
 	int tracks_view, tracks_sort;  bool tracks_sortup;
 
-	//  graphics
+	//  graphics common
 	int preset;
 	int anisotropy, tex_size, ter_mtr, ter_tripl;
-	float shaders;
-	float view_distance, terdetail,terdist, road_dist;
+	float view_distance, terdetail, terdist, road_dist;
+	bool horizon;
+	
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type;
-	float grass, trees_dist, grass_dist;
-	bool water_reflect, water_refract; int water_rttsize;
 	bool use_imposters, imposters_only;
+	float grass, trees_dist, grass_dist;
+	bool water_reflect, water_refract;  int water_rttsize;
 	std::string shader_mode;
 
 	class GameSet

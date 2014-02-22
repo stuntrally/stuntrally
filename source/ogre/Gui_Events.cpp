@@ -2,6 +2,7 @@
 #include "common/Def_Str.h"
 #include "common/Gui_Def.h"
 #include "common/GuiCom.h"
+#include "common/CScene.h"
 #include "../vdrift/settings.h"
 #include "../vdrift/game.h"
 #include "CGame.h"
@@ -11,6 +12,7 @@
 #include "common/Slider.h"
 #include "common/MultiList2.h"
 #include <OgreCamera.h>
+#include <OgreSceneNode.h>
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;
@@ -178,8 +180,6 @@ void CGui::comboRewind(CMB)
 	pSet->gui.rewind_type = val;
 }
 	
-#define Radio2(bR1,bR2, b)  bR1->setStateSelected(b);  bR2->setStateSelected(!b);
-
 void CGui::radKmh(WP wp){	Radio2(bRkmh, bRmph, true);   pSet->show_mph = false;  hud->Size(true);  }
 void CGui::radMph(WP wp){	Radio2(bRkmh, bRmph, false);  pSet->show_mph = true;   hud->Size(true);  }
 
@@ -351,7 +351,7 @@ void CGui::chkMultiThread(WP wp)
 void CGui::chkAllEffects(Ck*)
 {
 	app->recreateCompositor();  //app->refreshCompositor();
-	app->changeShadows();
+	app->scn->changeShadows();
 }
 void CGui::chkEffUpd(Ck*)
 {		
@@ -359,7 +359,8 @@ void CGui::chkEffUpd(Ck*)
 }
 void CGui::chkEffUpdShd(Ck*)
 {
-	app->refreshCompositor();  app->changeShadows();
+	app->refreshCompositor();
+	app->scn->changeShadows();
 }
 
 void CGui::slBloom(SV*)

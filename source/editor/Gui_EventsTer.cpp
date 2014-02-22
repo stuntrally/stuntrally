@@ -5,11 +5,14 @@
 #include "CGui.h"
 #include "CApp.h"
 #include "../ogre/common/GuiCom.h"
+#include "../ogre/common/CScene.h"
 #include "../road/Road.h"
 #include "../ogre/common/Slider.h"
 #include "../vdrift/pathmanager.h"
 #include <fstream>
 #include <MyGUI.h>
+#include <OgreRenderTexture.h>
+#include "../shiny/Main/Factory.hpp"
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -42,10 +45,11 @@ void CGui::tabTerLayer(Tab wp, size_t id)
 		String sTex,sNorm, sExt;
 		StringUtil::splitBaseFilename(lay->texFile,sTex,sExt);
 		StringUtil::splitBaseFilename(lay->texNorm,sNorm,sExt);
-		bool bAuto = !sNorm.empty() && !noNorm && (sTex + "_nh" == sNorm);
+		bool bAuto = !sNorm.empty() && !noNorm && (sTex + "_nh" == sNorm);  //T "_n"
 		bTexNormAuto = bAuto;
 		ckTexNormAuto.Upd();
 		//  tex image
+	    //imgTexDiff->setImageTexture(lay->texFile);  //T
 	    imgTexDiff->setImageTexture(sTex + "_prv.jpg");
 	}
 
@@ -53,6 +57,8 @@ void CGui::tabTerLayer(Tab wp, size_t id)
 	svTerLScale.setVisible(bTerLay);
 	SetUsedStr(valTerLAll, sc->td.layers.size(), 3);
 	
+	SldUpd_TerLNvis();
+
 	//  Terrain Particles
 	edLDust->setCaption(toStr(lay->dust));	edLDustS->setCaption(toStr(lay->dustS));
 	edLMud->setCaption(toStr(lay->mud));	edLSmoke->setCaption(toStr(lay->smoke));
@@ -66,18 +72,50 @@ void CGui::tabTerLayer(Tab wp, size_t id)
 	noBlendUpd = false;
 }
 
+void CGui::SldUpd_TerLNvis()
+{
+	//  upd vis of layer noise sliders
+	//  check for valid +1,-1,+2 layers
+	int ll = sc->td.layers.size();
+	int l1 = -1, last = 8, last_2 = 8,  nu = 0, ncl = 0;
+	for (int i=0; i < TerData::ciNumLay; ++i)
+	if (sc->td.layersAll[i].on)
+	{	++nu;
+		if (i==idTerLay)  ncl = nu;
+		if (nu==1)  l1 = i;
+		if (nu==ll)  last = i;
+		if (nu==ll-2)  last_2 = i;
+	}
+	bool ok = idTerLay >= l1 && idTerLay <= last;
+	svTerLNoise.setVisible(ok && idTerLay < last);
+	svTerLNprev.setVisible(ok && idTerLay > l1);
+	svTerLNnext2.setVisible(ok && idTerLay <= last_2 && nu > 2);
+	//  dbg img clr
+	const static Colour lc[5] = {Colour::Black, Colour::Red, Colour::Green, Colour::Blue, Colour(0.5,0.5,0.5)};
+	dbgLclr->setColour(lc[ncl]);
+}
+
 void CGui::SldUpd_TerL()
 {
-	TerLayer* lay = bTerLay ? &sc->td.layersAll[idTerLay] : &sc->td.layerRoad;
-	ckTerLayOn.Upd(&lay->on);
-	ckTerLNoiseOnly.Upd(&lay->bNoiseOnly);
-	ckTerLayTripl.Upd(&lay->triplanar);
-	
-	svTerLScale.UpdF(&lay->tiling);
-	svTerLAngMin.UpdF(&lay->angMin);  svTerLHMin.UpdF(&lay->hMin);
-	svTerLAngMax.UpdF(&lay->angMax);  svTerLHMax.UpdF(&lay->hMax);
-	svTerLAngSm.UpdF(&lay->angSm);    svTerLHSm.UpdF(&lay->hSm);
-	svTerLNoise.UpdF(&lay->noise);
+	TerLayer* l = bTerLay ? &sc->td.layersAll[idTerLay] : &sc->td.layerRoad;
+	ckTerLayOn.Upd(&l->on);
+	svTerLScale.UpdF(&l->tiling);
+	ckTerLayTripl.Upd(&l->triplanar);
+	//  blmap
+	svTerLAngMin.UpdF(&l->angMin);  svTerLHMin.UpdF(&l->hMin);
+	svTerLAngMax.UpdF(&l->angMax);  svTerLHMax.UpdF(&l->hMax);
+	svTerLAngSm.UpdF(&l->angSm);    svTerLHSm.UpdF(&l->hSm);
+	ckTerLNOnly.Upd(&l->nOnly);
+	//  noise
+	svTerLNoise.UpdF(&l->noise);  svTerLNprev.UpdF(&l->nprev);
+	svTerLNnext2.UpdF(&l->nnext2);
+	//  noise params
+	for (int i=0; i<2; ++i)
+	{	svTerLN_Freq[i].UpdF(&l->nFreq[i]);
+		svTerLN_Oct[i].UpdI(&l->nOct[i]);
+		svTerLN_Pers[i].UpdF(&l->nPers[i]);
+		svTerLN_Pow[i].UpdF(&l->nPow[i]);
+	}
 }
 
 //  Tri size
@@ -117,7 +155,7 @@ void CGui::tabHmap(Tab, size_t)
 void CGui::editTerErrorNorm(Ed ed)
 {
 	Real r = std::max(0.f, s2r(ed->getCaption()) );
-	sc->td.errorNorm = r;  app->UpdTerErr();
+	sc->td.errorNorm = r;  scn->UpdTerErr();
 }
 
 
@@ -271,9 +309,9 @@ void CGui::btnTerrainMove(WP)
 	of.close();
 	delete[] hfData;
 	
-	app->road->SelAll();
-	app->road->Move(Vector3(my,0,mx) * -sc->td.fTriangleSize);
-	app->road->SelClear();
+	app->scn->road->SelAll();
+	app->scn->road->Move(Vector3(my,0,mx) * -sc->td.fTriangleSize);
+	app->scn->road->SelClear();
 	//start, objects-
 
 	app->bNewHmap = true;	app->UpdateTrack();
@@ -282,13 +320,13 @@ void CGui::btnTerrainMove(WP)
 //  Terrain  height scale  --------------------------------
 void CGui::btnScaleTerH(WP)
 {
-	if (!app->road)  return;
+	if (!app->scn->road)  return;
 	Real sf = std::max(0.1f, fScaleTer);  // scale mul
 
 	//  road
-	for (int i=0; i < app->road->getNumPoints(); ++i)
-		app->road->Scale1(i, 0.f, sf);
-	app->road->bSelChng = true;
+	for (int i=0; i < app->scn->road->getNumPoints(); ++i)
+		app->scn->road->Scale1(i, 0.f, sf);
+	app->scn->road->bSelChng = true;
 	
 	//  fluids
 	for (int i=0; i < sc->fluids.size(); ++i)
@@ -326,8 +364,8 @@ void CGui::btnScaleTerH(WP)
 
 	//  road upd
 	if (0) //road)  // doesnt work here..
-	{	app->road->UpdPointsH();
-		app->road->RebuildRoad(true);
+	{	app->scn->road->UpdPointsH();
+		app->scn->road->RebuildRoad(true);
 	}
 
 	//  start pos
@@ -343,6 +381,13 @@ void CGui::slTerGen(SV*)
 	app->bUpdTerPrv = true;
 }
 
+//  debug
+void CGui::chkDebugBlend(Ck*)
+{
+	app->mFactory->setGlobalSetting("debug_blend", b2s(bDebugBlend));
+	dbgLclr->setVisible(bDebugBlend);
+}
+
 
 ///  Terrain layers  -----------------------------
 //
@@ -350,8 +395,9 @@ void CGui::chkTerLayOn(Ck*)
 {
 	sc->td.UpdLayers();
 	SetUsedStr(valTerLAll, sc->td.layers.size(), 3);
-	//  force update, blendmap sliders crash if not, !! this doesnt save hmap if changed  todo..
+	//todo..  !! save hmap if changed
 	app->UpdateTrack();
+	SldUpd_TerLNvis();
 }
 
 void CGui::chkTerLayTripl(Ck*)
@@ -364,19 +410,22 @@ void CGui::comboTexDiff(Cmb cmb, size_t val)
 	String s = cmb->getItemNameAt(val);
 	if (bTerLay)  sc->td.layersAll[idTerLay].texFile = s;
 
-	String sTex,sNorm, sExt;
+	String sNorm = StringUtil::replaceAll(s,"_d.","_n.");
+	String sTex, sExt, sPrv;
 	StringUtil::splitBaseFilename(s,sTex,sExt);
+	sPrv = s;
+	sPrv = StringUtil::replaceAll(sTex,"_d.","_prv.") + "_prv.jpg";  //T
 	sNorm = sTex + "_nh." + sExt;  //same ext
 
 	//  auto norm
-	if (bTexNormAuto)
+	//`-if (bTexNormAuto)
 	{	size_t id = cmbTexNorm->findItemIndexWith(sNorm);
 		if (id != ITEM_NONE)  // set only if found
 			cmbTexNorm->setIndexSelected(id);
 		if (bTerLay)  sc->td.layersAll[idTerLay].texNorm = sNorm;
 	}
 	//  tex image
-    imgTexDiff->setImageTexture(sTex + "_prv.jpg");
+    imgTexDiff->setImageTexture(sPrv);
 }
 
 void CGui::comboTexNorm(Cmb cmb, size_t val)
@@ -388,12 +437,91 @@ void CGui::comboTexNorm(Cmb cmb, size_t val)
 //  Terrain BlendMap
 void CGui::slTerLay(SV*)
 {
-	app->bTerUpdBlend = true;
+	//app->bTerUpdBlend = true;
+	scn->UpdLayerPars();
+	if (scn->angleRTT.rnd)  scn->angleRTT.rnd->update();
+	if (scn->blendRTT.rnd)  scn->blendRTT.rnd->update();
+}
+void CGui::chkTerLNOnly(Ck*)
+{
+	slTerLay(0);
 }
 
-void CGui::chkTerLNoiseOnly(Ck*)
+//  move layer order
+void CGui::btnTerLmoveL(WP)  // -1
 {
-	if (/*app->terrain &&*/ bGI /*&& !noBlendUpd*/)  app->bTerUpdBlend = true;
+	if (!bTerLay || idTerLay <= 0)  return;
+
+	TerLayer& t = sc->td.layersAll[idTerLay], st,
+			&t1 = sc->td.layersAll[idTerLay-1];
+	st = t;  t = t1;  t1 = st;
+	
+	sc->td.UpdLayers();  NumTabNext(-1);
+	app->scn->UpdBlendmap();
+}
+
+void CGui::btnTerLmoveR(WP)  // +1
+{
+	if (!bTerLay || idTerLay >= TerData::ciNumLay-1)  return;
+
+	TerLayer& t = sc->td.layersAll[idTerLay], st,
+			&t1 = sc->td.layersAll[idTerLay+1];
+	st = t;  t = t1;  t1 = st;
+	
+	sc->td.UpdLayers();  NumTabNext(1);
+	app->scn->UpdBlendmap();
+}
+
+///  Noise preset buttons
+void CGui::radN1(WP) {  Radio2(bRn1, bRn2, bRn2->getStateSelected());  }
+void CGui::radN2(WP) {  Radio2(bRn1, bRn2, bRn2->getStateSelected());  }
+
+const static float ns[15][4] = {  //  freq, oct, pers, pow
+{ 30.4f, 3, 0.33f, 1.5f },{ 36.6f, 4, 0.49f, 1.9f },{ 30.7f, 3, 0.30f, 1.5f },{ 29.5f, 2, 0.13f, 1.8f },{ 40.5f, 3, 0.43f, 2.0f },
+{ 25.3f, 3, 0.30f, 1.2f },{ 31.3f, 5, 0.70f, 2.0f },{ 28.4f, 4, 0.70f, 1.5f },{ 34.5f, 4, 0.40f, 0.9f },{ 34.3f, 4, 0.54f, 1.0f },
+{ 44.6f, 2, 0.30f, 1.1f },{ 48.2f, 3, 0.12f, 1.6f },{ 56.6f, 4, 0.49f, 2.0f },{ 60.4f, 4, 0.51f, 2.0f },{ 62.6f, 3, 0.12f, 2.1f }};
+
+void CGui::btnNpreset(WP wp)
+{
+	if (!bTerLay)  return;
+	int l = bRn2->getStateSelected() ? 1 : 0;
+	String s = wp->getName();  //"TerLN_"
+	int i = s2i(s.substr(6));
+
+	TerLayer& t = sc->td.layersAll[idTerLay];
+	t.nFreq[l] = ns[i][0];
+	t.nOct[l]  = int(ns[i][1]);
+	t.nPers[l] = ns[i][2];
+	t.nPow[l]  = ns[i][3];
+	SldUpd_TerL();
+	app->scn->UpdBlendmap();
+}
+void CGui::btnNrandom(WP wp)
+{
+	if (!bTerLay)  return;
+	int l = bRn2->getStateSelected() ? 1 : 0;
+
+	TerLayer& t = sc->td.layersAll[idTerLay];
+	t.nFreq[l] = Math::RangeRandom(20.f,70.f);
+	t.nOct[l]  = Math::RangeRandom(2.f,5.f);
+	t.nPers[l] = Math::RangeRandom(0.1f,0.7f);
+	t.nPow[l]  = Math::RangeRandom(0.8f,2.4f);
+	SldUpd_TerL();
+	app->scn->UpdBlendmap();
+}
+
+//  swap noise 1 and 2 params
+void CGui::btnNswap(WP wp)
+{
+	if (!bTerLay)  return;
+
+	TerLayer& t = sc->td.layersAll[idTerLay];
+	std::swap(t.nFreq[0], t.nFreq[1]);
+	std::swap(t.nOct[0] , t.nOct[1] );
+	std::swap(t.nPers[0], t.nPers[1]);
+	std::swap(t.nPow[0] , t.nPow[1] );
+	SldUpd_TerL();
+	app->scn->UpdBlendmap();
 }
 
 

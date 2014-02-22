@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "par.h"
 #include "cardynamics.h"
 #include "collision_world.h"
 #include "settings.h"
@@ -313,7 +314,17 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 {
 	body.Integrate1(dt);
+	cam_body.Integrate1(dt);
 	//chassis->clearForces();
+
+
+	//  camera bounce sim - spring and damper
+	MATHVECTOR<Dbl,3> p = cam_body.GetPosition(), v = cam_body.GetVelocity();
+	MATHVECTOR<Dbl,3> f = p * gPar.camBncSpring + v * gPar.camBncDamp;
+	cam_body.ApplyForce(f);
+	cam_body.ApplyForce(cam_force);
+	cam_force[0]=0.0;  cam_force[1]=0.0;  cam_force[2]=0.0;
+
 
 	UpdateWheelVelocity();
 
@@ -378,16 +389,16 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	}else
 		boostVal = 0.f;
 	
-	fBoostFov += (boostVal - fBoostFov) * 0.0005f;  //par speed (delay smooth)
+	fBoostFov += (boostVal - fBoostFov) * gPar.FOVspeed;
 		
 	//  add fuel over time
 	if (pSet->game.boost_type == 2)
 	{
-		boostFuel += dt * gfBoostFuelAddSec;
-		if (boostFuel > gfBoostFuelMax)  boostFuel = gfBoostFuelMax;
+		boostFuel += dt * gPar.boostFuelAddSec;
+		if (boostFuel > gPar.boostFuelMax)  boostFuel = gPar.boostFuelMax;
 	}
-	//LogO(toStr(boostFuel));
 	///***  --------------------------------------------------
+	
 	
 	int i;
 	Dbl normal_force[WHEEL_POSITION_SIZE];
@@ -401,9 +412,8 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 		ApplyWheelTorque(dt, drive_torque[i], i, tire_friction, wheel_orientation[i]);
 	}
 
-	//sumWhTest = sum;
-
 	body.Integrate2(dt);
+	cam_body.Integrate2(dt);
 	//chassis->integrateVelocities(dt);
 
 	// update wheel state
@@ -496,11 +506,10 @@ void CARDYNAMICS::UpdateMass()
 	typedef std::pair <Dbl, MATHVECTOR<Dbl,3> > MASS_PAIR;
 
 	Dbl total_mass(0);
-
 	center_of_mass.Set(0,0,0);
 
 	// calculate the total mass, and center of mass
-	for ( std::list <MASS_PAIR>::iterator i = mass_only_particles.begin(); i != mass_only_particles.end(); ++i )
+	for (std::list <MASS_PAIR>::iterator i = mass_only_particles.begin(); i != mass_only_particles.end(); ++i)
 	{
 		// add the current mass to the total mass
 		total_mass += i->first;
@@ -511,12 +520,14 @@ void CARDYNAMICS::UpdateMass()
 
 	// account for fuel
 	total_mass += fuel_tank.GetMass();
-	center_of_mass =  center_of_mass + fuel_tank.GetPosition() * fuel_tank.GetMass();
+	center_of_mass = center_of_mass + fuel_tank.GetPosition() * fuel_tank.GetMass();
 
 	body.SetMass(total_mass);
+	cam_body.SetMass(total_mass * gPar.camBncMass);
+	fBncMass = 1350.0 / total_mass;
 
 	center_of_mass = center_of_mass * (1.0 / total_mass);
-
+	
 	// calculate the inertia tensor
 	MATRIX3 <Dbl> inertia;
 	for (int i = 0; i < 9; ++i)

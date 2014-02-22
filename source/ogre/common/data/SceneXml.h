@@ -1,13 +1,15 @@
 #pragma once
 #include <OgreCommon.h>
-#include <OgreVector3.h>
 #include <OgreVector2.h>
+#include <OgreVector3.h>
+#include <OgreVector4.h>
 #include <OgreColourValue.h>
 #include <OgreQuaternion.h>
 #include "../../../vdrift/mathvector.h"
 #include "../../../vdrift/quaternion.h"
 
 namespace Ogre {  class SceneNode;  class Entity;  }
+namespace Forests {  class GrassLayer;  }
 
 
 struct TerLayer		// terrain texture layer
@@ -19,9 +21,13 @@ struct TerLayer		// terrain texture layer
 	float dust, mud, dustS, smoke;  // particles intensities
 	Ogre::ColourValue tclr;  // trail color
 	
-	//  min,max range and smooth range for angle and height for blendmap
+	//  blendmap
+	//  min,max range and smooth range for terrain angle and height
 	float angMin,angMax,angSm, hMin,hMax,hSm;
-	float noise;  bool bNoiseOnly;  // blendmap noise
+	bool nOnly;
+	//  noise
+	float noise, nprev, nnext2;   //  factors to blend layer +1,-1,+2
+	float nFreq[2], nPers[2], nPow[2];  int nOct[2];
 	
 	//  surface params bind
 	std::string surfName;  int surfId;
@@ -33,7 +39,7 @@ class TerData		///  Terrain
 {
 public:	
 	//  height field
-	float* hfHeight,*hfAngle;
+	float* hfHeight;
 	
 	//  size
 	int iVertsX, iVertsY, iTerSize;  // size in vertices
@@ -59,12 +65,12 @@ class PagedLayer	// vegetation layer
 {
 public:
 	bool on;
-	Ogre::String name;  Ogre::Real dens;
-	Ogre::Real windFx, windFy;
+	Ogre::String name;  float dens;
+	float windFx, windFy;
 	int addRdist, maxRdist;  // add,max dist to road
-	Ogre::Real minScale, maxScale, ofsY;
-	Ogre::Real maxTerAng, minTerH, maxTerH;  // terrain
-	Ogre::Real maxDepth;  // in fluid
+	float minScale, maxScale, ofsY;
+	float maxTerAng, minTerH, maxTerH;  // terrain
+	float maxDepth;  // in fluid
 	PagedLayer();
 };
 
@@ -73,17 +79,27 @@ class SGrassLayer	// grass layer
 {
 public:
 	bool on;
-	Ogre::Real dens;
-	Ogre::Real minSx,minSy, maxSx,maxSy;  // sizes
-	Ogre::Real swayDistr, swayLen, swaySpeed;  // sway
-	Ogre::Real terMaxAng, terAngSm;       // max terrain angle, smooth
-	Ogre::Real terMinH, terMaxH, terHSm;  // terrain height
+	float dens;
+	float minSx,minSy, maxSx,maxSy;  // sizes
+	float swayDistr, swayLen, swaySpeed;  // sway
+	int iChan;  // which channel to use
 	Ogre::String material, colorMap;
+	Forests::GrassLayer *grl;  // for update
 	SGrassLayer();
 };
 
+class SGrassChannel  // grass channel
+{
+public:
+	//  min,max range and smooth range for terrain angle and height
+	float angMin,angMax,angSm, hMin,hMax,hSm;
+	float noise, nFreq, nPers, nPow;  int nOct;  // noise params
+	float rdPow;  // road border adjust
+	SGrassChannel();
+};
 
-class FluidBox		// fluid box shape - water, mud, etc.
+
+class FluidBox		/// fluid box shape - water, mud, etc.
 {
 public:
 	Ogre::Vector3 pos, rot, size;  Ogre::Vector2 tile;
@@ -116,27 +132,31 @@ public:
 };
 
 
-class Scene		///  Scene
+class Scene		///  Scene  . . . . . . .
 {
 public:
-	bool asphalt;  // use asphalt tires car
 	//  sky
 	Ogre::String skyMtr;
 	int  rainEmit,rain2Emit;  Ogre::String rainName,rain2Name;
 	//  light
-	Ogre::Real ldPitch, ldYaw;  // dir angles
+	float ldPitch, ldYaw;  // dir angles
 	Ogre::Vector3 lDir, lAmb,lDiff,lSpec;
 
 	//  fog
-	Ogre::Real fogStart, fogEnd;  // lin range
+	float fogStart, fogEnd;  // lin range
 	Ogre::Vector4 fogClr,fogClr2;  // 2colors sun-away  .a = intensity
 
 	Ogre::Vector4 fogClrH;  // height fog color
-	Ogre::Real fogHeight, fogHDensity, fogHStart, fogHEnd;
+	float fogHeight, fogHDensity, fogHStart, fogHEnd;
 
-	//  wind
+
+	//  game
+	bool asphalt;  // use asphalt tires car
+	bool denyReversed;  // track (road) dir
+
 	float windAmt;  //, windDirYaw, windTurbulFreq,windTurbulAmp;
 	float damageMul;  // reduce car damage in loops
+	float gravity;  // 9.81
 
 
 	//  particle types
@@ -149,14 +169,15 @@ public:
 
 	
 	//  Vegetation params
-	Ogre::Real densTrees, densGrass;  int grDensSmooth;
-	Ogre::Real grPage, grDist;
-	Ogre::Real trPage, trDist, trDistImp;
+	float densTrees, densGrass;  int grDensSmooth;
+	float grPage, grDist;
+	float trPage, trDist, trDistImp;
 	int trRdDist;  // dist from road to trees
 
 	//  grass layers
 	const static int ciNumGrLay = 6;  // all, for edit
 	SGrassLayer grLayersAll[ciNumGrLay];
+	SGrassChannel grChan[4];
 
 	//  paged layers  (models: trees,rocks,etc)
 	const static int ciNumPgLay = 10;  // all, for edit

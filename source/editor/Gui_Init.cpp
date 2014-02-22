@@ -254,8 +254,8 @@ void CGui::InitGui()
 	sv= &svTerGenOfsX;	sv->Init("TerGenOfsX",	&pSet->gen_ofsx, -12.f,12.f, 1.f, 3,5);  sv->DefaultF(0.14f);   Sev(TerGen);
 	sv= &svTerGenOfsY;	sv->Init("TerGenOfsY",	&pSet->gen_ofsy, -12.f,12.f, 1.f, 3,5);  sv->DefaultF(-1.54f);  Sev(TerGen);
 
-	sv= &svTerGenFreq;	sv->Init("TerGenFreq",	&pSet->gen_freq,  0.06f,3.f, 2.f, 3,5);  sv->DefaultF(0.914f);  Sev(TerGen);
-	sv= &svTerGenOct;	sv->Init("TerGenOct",	&pSet->gen_oct,    0.f, 9.f);             sv->DefaultI(4);      Sev(TerGen);
+	sv= &svTerGenFreq;	sv->Init("TerGenFreq",	&pSet->gen_freq,   0.06f,3.f, 2.f, 3,5);  sv->DefaultF(0.914f); Sev(TerGen);
+	sv= &svTerGenOct;	sv->Init("TerGenOct",	&pSet->gen_oct,    0, 9);                 sv->DefaultI(4);      Sev(TerGen);
 	sv= &svTerGenPers;	sv->Init("TerGenPers",	&pSet->gen_persist,0.f, 0.7f, 1.f, 3,5);  sv->DefaultF(0.347f); Sev(TerGen);
 	sv= &svTerGenPow;	sv->Init("TerGenPow",	&pSet->gen_pow,    0.f, 6.f,  2.f, 2,4);  sv->DefaultF(1.f);    Sev(TerGen);
 	
@@ -279,20 +279,42 @@ void CGui::InitGui()
 
 	ck= &ckTexNormAuto;	ck->Init("TexNormAuto",	&bTexNormAuto);
 	ck= &ckTerLayTripl;	ck->Init("TerLayTripl",	&b);   Cev(TerLayTripl);
+	ck= &ckDebugBlend;	ck->Init("DebugBlend",  &bDebugBlend);  Cev(DebugBlend);
+	dbgLclr = fImg("dbgTerLclr");
 
 	float f=0.f;  i=0;  // temp vars
-	sv= &svTerTriSize;	sv->Init("TerTriSize", &sc->td.fTriangleSize,  0.1f,6.f, 2.f);  sv->DefaultF(1.4f);  Sev(TerTriSize);
 	//  ter layer
+	sv= &svTerTriSize;	sv->Init("TerTriSize", &sc->td.fTriangleSize,  0.1f,6.f, 2.f);  sv->DefaultF(1.4f);  Sev(TerTriSize);
 	sv= &svTerLScale;	sv->Init("TerLScale",  &f, 4.0f, 64.f,  3.f);  sv->DefaultF(8.f);  //Sev(TerLay);  // 2 24 1.5
 	//  blendmap
 	sv= &svTerLAngMin;  sv->Init("TerLAngMin", &f, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(0.f);  Sev(TerLay);
 	sv= &svTerLAngMax;  sv->Init("TerLAngMax", &f, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(90.f);  Sev(TerLay);
 	sv= &svTerLAngSm;   sv->Init("TerLAngSm",  &f, 0.f,  90.f,  2.f, 1,4);  sv->DefaultF(20.f);  Sev(TerLay);
+
 	sv= &svTerLHMin;    sv->Init("TerLHMin",   &f,-150.f,150.f, 1.f, 0,2);  sv->DefaultF(-300.f);  Sev(TerLay);
 	sv= &svTerLHMax;    sv->Init("TerLHMax",   &f,-150.f,150.f, 1.f, 0,2);  sv->DefaultF( 300.f);  Sev(TerLay);
 	sv= &svTerLHSm;     sv->Init("TerLHSm",    &f, 0.f,  100.f, 2.f, 1,4);  sv->DefaultF(20.f);  Sev(TerLay);
-	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f,-2.f,2.f);
-	ck= &ckTerLNoiseOnly; ck->Init("TerLNoiseOnly",	&b);   Cev(TerLNoiseOnly);
+	Btn("TerLmoveL", btnTerLmoveL);
+	Btn("TerLmoveR", btnTerLmoveR);
+
+	//  noise
+	ck= &ckTerLNOnly;   ck->Init("TerLNonly",  &b);   Cev(TerLNOnly);
+	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f, 0.f,1.f);  sv->DefaultF(0.f);  Sev(TerLay);
+	sv= &svTerLNprev;   sv->Init("TerLNprev",  &f, 0.f,1.f);  sv->DefaultF(0.f);  Sev(TerLay);
+	sv= &svTerLNnext2;  sv->Init("TerLNnext2", &f, 0.f,1.f);  sv->DefaultF(0.f);  Sev(TerLay);
+	//  noise params
+	for (i=0; i<2; ++i)  {  String s = toStr(i+1);
+	sv= &svTerLN_Freq[i];  sv->Init("TerLNFreq"+s,  &f, 1.f,300.f, 2.f, 1,3);   sv->DefaultF(30.f);  Sev(TerLay);
+	sv= &svTerLN_Oct[i];   sv->Init("TerLNOct" +s,  &i, 1,5);                   sv->DefaultI(3);     Sev(TerLay);
+	sv= &svTerLN_Pers[i];  sv->Init("TerLNPers"+s,  &f, 0.1f, 0.7f, 1.f, 3,5);  sv->DefaultF(0.3f);  Sev(TerLay);
+	sv= &svTerLN_Pow[i];   sv->Init("TerLNPow" +s,  &f, 0.2f, 8.f,  2.f);       sv->DefaultF(1.f);   Sev(TerLay);  }
+	//  noise btns
+	Btn("TerLNbtn1", radN1);  bRn1 = btn;  bRn1->setStateSelected(true);
+	Btn("TerLNbtn2", radN2);  bRn2 = btn;
+	for (i=0; i < 15; ++i)
+	{  Btn("TerLN_"+toStr(i), btnNpreset);  }
+	Btn("TerLNrandom", btnNrandom);
+	Btn("TerLNswap", btnNswap);
 	
 	//  particles
 	Ed(LDust, editLDust);	Ed(LDustS, editLDust);
@@ -348,13 +370,26 @@ void CGui::InitGui()
 	///  Grass  ------------------------------------
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
 
-	SGrassLayer* g0 = &sc->grLayersAll[0];
-	sv= &svGrTerMaxAngle;	sv->Init("GrTerMaxAngle",	&g0->terMaxAng, 0.f,90.f, 1.f, 1,4);  sv->DefaultF(30.f);
-	sv= &svGrTerSmAngle;	sv->Init("GrTerSmAngle",	&g0->terAngSm,  0.f,50.f, 2.f, 1,4);  sv->DefaultF(20.f);
+	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);	imgGrass = fImg("ImgGrass");
+	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);	imgGrClr = fImg("ImgGrClr");
+
+	//  grass channels
+	sv= &svGrChAngMin;	sv->Init("GrChMinA",	&f, 0.f,90.f, 1.f, 1,4);  sv->DefaultF(30.f);
+	sv= &svGrChAngMax;	sv->Init("GrChMaxA",	&f, 0.f,90.f, 1.f, 1,4);  sv->DefaultF(30.f);
+	sv= &svGrChAngSm;	sv->Init("GrChSmA",		&f, 0.f,50.f, 2.f, 1,4);  sv->DefaultF(20.f);
 									  
-	sv= &svGrTerMinHeight;	sv->Init("GrTerMinHeight",	&g0->terMinH,-60.f,60.f,  1.f, 1,4);  sv->DefaultF(-200.f);
-	sv= &svGrTerMaxHeight;	sv->Init("GrTerMaxHeight",	&g0->terMaxH,  0.f,120.f, 1.f, 1,4);  sv->DefaultF( 200.f);
-	sv= &svGrTerSmHeight;	sv->Init("GrTerSmHeight",	&g0->terHSm,   0.f,60.f,  2.f, 1,4);  sv->DefaultF(20.f);
+	sv= &svGrChHMin;	sv->Init("GrChMinH",	&f,-60.f,60.f,  1.f, 1,4);  sv->DefaultF(-200.f);
+	sv= &svGrChHMax;	sv->Init("GrChMaxH",	&f,  0.f,120.f, 1.f, 1,4);  sv->DefaultF( 200.f);
+	sv= &svGrChHSm;		sv->Init("GrChSmH",		&f,  0.f,60.f,  2.f, 1,4);  sv->DefaultF(20.f);
+	sv= &svGrChRdPow;	sv->Init("GrChRdPow",	&f, -8.f, 8.f,  1.f, 1,4);  sv->DefaultF(0.f);
+	//  noise
+	sv= &svGrChNoise;	sv->Init("GrChNoise",	&f, 0.f,2.f,   1.f, 1,4);   sv->DefaultF(0.f);
+	sv= &svGrChNfreq;	sv->Init("GrChNFreq",	&f, 1.f,300.f, 2.f, 1,3);   sv->DefaultF(30.f);
+	sv= &svGrChNoct;	sv->Init("GrChNOct",	&i, 1,5);                   sv->DefaultI(3);
+	sv= &svGrChNpers;	sv->Init("GrChNPers",	&f, 0.1f, 0.7f, 1.f, 3,5);  sv->DefaultF(0.3f);
+	sv= &svGrChNpow;	sv->Init("GrChNPow",	&f, 0.2f, 8.f,  2.f);       sv->DefaultF(1.f);
+	Tab(tabsGrChan, "GrChanTab", tabGrChan);
+	SldUpd_GrChan();
 
 	//  grass layers
 	ck= &ckGrLayOn;		ck->Init("LGrEnabled",	&b);   Cev(GrLayOn);
@@ -365,12 +400,9 @@ void CGui::InitGui()
 	sv= &svGrMaxX;	sv->Init("GrMaxX",	&f, 0.1f,4.1, 2.f);  sv->DefaultF(1.5f);
 	sv= &svGrMinY;	sv->Init("GrMinY",	&f, 0.1f,4.1, 2.f);  sv->DefaultF(1.4f);
 	sv= &svGrMaxY;	sv->Init("GrMaxY",	&f, 0.1f,4.1, 2.f);  sv->DefaultF(1.6f);
-	
+	sv= &svGrChan;	sv->Init("LGrChan",	&i, 0,3);  sv->DefaultI(0);
 	sv= &svLGrDens;	sv->Init("LGrDens",	&f, 0.001f,1.f, 2.f, 3,5);  sv->DefaultF(0.22f);
 	SldUpd_GrL();
-
-	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);	imgGrass = fImg("ImgGrass");
-	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);	imgGrClr = fImg("ImgGrClr");
 
 	
 	///  [Road]  ------------------------------------
@@ -393,6 +425,14 @@ void CGui::InitGui()
 	
 	Ed(RdHeightOfs, editRoad);
 	Ed(RdSkirtLen, editRoad);  Ed(RdSkirtH, editRoad);
+	
+
+	///  [Game]  ------------------------------------
+	sv= &svDamage;		sv->Init("DamageMul",	&sc->damageMul, 0.f,2.f, 1.f, 2,4);  sv->DefaultF(1.f);
+	sv= &svWind;		sv->Init("WindAmt",		&sc->windAmt,  -6.f,6.f, 1.0f, 2,5);  sv->DefaultF(0.f);
+	sv= &svGravity;		sv->Init("Gravity",		&sc->gravity,   2.f,20.f, 1.5f, 2,4);  sv->DefaultF(9.81f);
+	ck= &ckDenyReversed;	ck->Init("DenyReversed",	&sc->denyReversed);
+	ck= &ckTiresAsphalt;	ck->Init("TiresAsphalt",	&sc->asphalt);
 	
 
 	///  [Tools]  ------------------------------------
@@ -436,7 +476,7 @@ void CGui::InitGui()
 	//---------------------  Skies  ---------------------
 	Cmb(cmbSky, "SkyCombo", comboSky);
 	std::string data = PATHMANAGER::Data();
-	String sMat = data +"/materials/";  // path
+	String sMat = data +"/materials/scene/";  // path
 
 	GetMaterialsMat(sMat+"sky.mat");
 	for (size_t i=0; i < vsMaterials.size(); ++i)
@@ -464,12 +504,19 @@ void CGui::InitGui()
 	PATHMANAGER::DirList(data + "/terrain2", li);
 
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
-	if (!StringUtil::match(*i, "*.txt", false))
+	if (!StringUtil::match(*i, "*.txt", false) &&
+		!StringUtil::match(*i, "*_prv.*", false))
 	{
-		if (!StringUtil::match(*i, "*_prv.*", false))
-		if (StringUtil::match(*i, "*_nh.*", false))
+		String s = *i;  //T
+		if (StringUtil::match(*i, "*_n.*", false) ||
+			StringUtil::match(*i, "*_nh.*", false))
 			cmbTexNorm->addItem(*i);
 		else
+		//if (StringUtil::match(*i, "*_d.*", false))
+		if (!StringUtil::match(*i, "*_d.*", false) &&
+			!StringUtil::match(*i, "*_s.*", false) &&
+			!StringUtil::match(*i, "*_n.*", false) &&
+			!StringUtil::match(*i, "*_h.*", false))
 			cmbTexDiff->addItem(*i);
 	}
 	
@@ -513,7 +560,6 @@ void CGui::InitGui()
 
 	//---------------------  Roads  ---------------------
 	GetMaterialsMat(sMat+"road.mat");
-	GetMaterialsMat(sMat+"road_wall_pipe.mat",false);
 	GetMaterialsMat(sMat+"pipe.mat",false);
 	for (size_t i=0; i<4; ++i)
 	{
@@ -528,9 +574,9 @@ void CGui::InitGui()
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	String s = vsMaterials[i];
 		if (StringUtil::startsWith(s,"road") && !StringUtil::startsWith(s,"road_") && !StringUtil::endsWith(s,"_ter") && s != "road")
-			for (int i=0; i<4; ++i)  cmbRoadMtr[i]->addItem(s);
+			for (int n=0; n<4; ++n)  cmbRoadMtr[n]->addItem(s);
 		if (StringUtil::startsWith(s,"pipe") && !StringUtil::startsWith(s,"pipe_"))
-			for (int i=0; i<4; ++i)  cmbPipeMtr[i]->addItem(s);
+			for (int n=0; n<4; ++n)  cmbPipeMtr[n]->addItem(s);
 		if (StringUtil::startsWith(s,"road_wall"))  cmbRoadWMtr->addItem(s);
 		if (StringUtil::startsWith(s,"pipe_wall"))  cmbPipeWMtr->addItem(s);
 		if (StringUtil::startsWith(s,"road_col"))  cmbRoadColMtr->addItem(s);
@@ -572,7 +618,7 @@ void CGui::InitGui()
 	ComboBoxPtr cmbTwk;
 	Cmb(cmbTwk, "TweakMtr", comboTweakMtr);
 
-	GetMaterialsMat(sMat+"water.mat");
+	GetMaterialsMat(data +"/materials/water.mat");
 	GetMaterialsMat(sMat+"pipe.mat",false);
 	GetMaterialsMat(sMat+"road.mat",false);
 	GetMaterialsMat(sMat+"objects_static.mat",false);

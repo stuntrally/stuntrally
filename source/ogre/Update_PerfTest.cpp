@@ -4,6 +4,7 @@
 #include "CGui.h"
 #include "CarModel.h"
 #include "common/data/SceneXml.h"
+#include "common/CScene.h"
 #include "../vdrift/game.h"
 #include <MyGUI_EditBox.h>
 #include <MyGUI_Window.h>
@@ -92,7 +93,7 @@ void App::newPerfTest(float time)
 
 			///  end accel, reached max vel
 			if (timeQM > 0.f &&
-				avg_kmh - kmhOld < 0.01f)  ///par
+				avg_kmh - kmhOld < 0.01f)  //par
 			{
 				iPerfTestStage = PT_Brake;
 				maxVel = kmh;  tiMaxVel = ti;  PerfLogVel(pCar,ti);  ti = 0.f;
@@ -164,7 +165,7 @@ void App::newPerfTest(float time)
 				//  save car stats.txt  ---------
 				{
 					std::string path, pathUser, pathUserDir;
-					bool user = gui->GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], sc->asphalt);
+					bool user = gui->GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], scn->sc->asphalt);
 					path = pathUserDir + pCar->pCarM->sDirname + "_stats.txt";
 					
 					PATHMANAGER::CreateDir(pathUserDir, pGame->error_output);

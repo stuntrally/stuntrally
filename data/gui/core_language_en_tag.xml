@@ -418,6 +418,7 @@
 	<Tag name="Textures">Textures</Tag>
 	<Tag name="Anisotropy">Anisotropy</Tag>
 	<Tag name="Triplanar">Triplanar</Tag>
+	<Tag name="HighestSlopes">Highest slopes</Tag>
 
 	<Tag name="Vegetation">Vegetation</Tag>
 	<Tag name="TreeMult">Trees multiplier</Tag>
@@ -472,9 +473,11 @@
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="OpponentsList">Opponents List</Tag>
 	<Tag name="OpponentsSorted">Opponents Sorted</Tag>
+	<Tag name="Camera">Camera</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="CameraAutoTilt">Camera auto tilt on slopes</Tag>
 	<Tag name="CameraLoopChange">Camera change in loops</Tag>
+	<Tag name="CameraBounce">Dynamic camera bouncing</Tag>
 	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
 	<Tag name="CheckBeam">Next checkpoint beam</Tag>
 	<Tag name="CountdownTime">Race countdown time</Tag>
@@ -622,7 +625,7 @@
 	<Tag name="AndUsing">and using</Tag>
 	<Tag name="ProjectPage">project&apos;s page:</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
-	<Tag name="GameVersion">2.2.1</Tag>
+	<Tag name="GameVersion">2.3</Tag>
 		
 	
 	
@@ -700,6 +703,7 @@
 	<Tag name="TerNormal">Normal</Tag>
 	<Tag name="auto">Auto</Tag>
 	<Tag name="scale">Scale</Tag>
+	<Tag name="Test">Test</Tag>
 
 	<!--  Terrain  generate  -->
 	<Tag name="Generator">Generator</Tag>
@@ -721,6 +725,8 @@
 	<Tag name="TerLHSm">Height smooth</Tag>
 	<Tag name="TerLNoise">Noise</Tag>
 	<Tag name="TerLNoiseOnly">Only Noise</Tag>
+	<Tag name="Swap">Swap</Tag>
+	
 
 	<!--  Terrain  particles  -->
 	<Tag name="DustSize">dust size</Tag>
@@ -759,6 +765,7 @@
 	<Tag name="Brush_Height">Height</Tag>
 	<Tag name="Brush_Filter">Filter</Tag>
 	<Tag name="Brush_CurrentH">Curr.H</Tag>
+	<Tag name="Lock">Lock</Tag>
 
 
 	<!--  Vegetation  -->
@@ -790,6 +797,8 @@
 	<Tag name="SceneryId">Scenery Id</Tag>
 	<Tag name="GrMaterial">Material</Tag>
 	<Tag name="GrColorMap">Color map</Tag>
+	<Tag name="Channels">Channels</Tag>
+	<Tag name="Channel">Channel</Tag>
 
 
 	<!--  Road  -->
@@ -854,6 +863,11 @@
 	<Tag name="AlignWidthAdd">Width add</Tag>
 	<Tag name="AlignWidthMul">Width multiply</Tag>
 	<Tag name="AlignSmooth">Smooth size</Tag>
+
+	<!--  Game (in ed)  -->
+	<Tag name="Gravity">Gravity</Tag>
+	<Tag name="Wind">Wind</Tag>
+	<Tag name="DenyReversed">Deny reversed direction</Tag>
 
 	<Tag name="Warnings">Warnings</Tag>
 	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
@@ -941,6 +955,7 @@
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="InputMinimapType">alt-F2,F3 - Prev,next minimap type</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
+	<Tag name="InputLockBrush">Enter - lock brush position</Tag>
 
 	<!--  Terrain  brush  -->
 	<Tag name="InputBrushParams">Brush parameters</Tag>
@@ -998,6 +1013,7 @@
 	<Tag name="InputRoadPickOne">Pick (one)</Tag>
 	<Tag name="InputRoadPick">Space - pick one/none</Tag>
 	<Tag name="InputRoadNext">PgUp,PgDn (or Wheel) - previous/next point</Tag>
+	<Tag name="InputRoadShiftSel">shift - select</Tag>
 
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
@@ -1140,6 +1156,7 @@
 	<Tag name="TipNormalTex">Normal texture (Height in alpha).</Tag>
 	<Tag name="TipTexNormAuto">When checked, Normal texture is automatically set from Diffuse texture (+ _nh in filename).</Tag>
 	<Tag name="TipTexTiling">Texture tiling length (less means more repeats).</Tag>
+	<Tag name="TipTerLMove">Move layer, changes order.</Tag>
 
 	<!--  Terrain  blendmap  -->
 	<Tag name="TipTerLAngMin">Starting terrain angle for layer.</Tag>
@@ -1148,8 +1165,7 @@
 	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
 	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
 	<Tag name="TipTerLHSm">Height smooth range (transition).</Tag>
-	<Tag name="TipTerLNoise">Factor of additional noise.</Tag>
-	<Tag name="TipTerLNoiseOnly">Use only noise (no angle or height ranges)</Tag>
+	<Tag name="TipTerLNoise">Multiplier for additional noise. +1 blends to next used layer, -1 to previous, +2 to over next.</Tag>
 
 	<!--  Terrain  particles  -->
 	<Tag name="TipDustInt">Dust particles intensity.</Tag>

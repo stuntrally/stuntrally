@@ -18,12 +18,15 @@ Scene::Scene()
 }
 void Scene::Default()
 {
-	asphalt = false;  ter = true;  vdr = false;
+	ter = true;  vdr = false;
+
+	asphalt = false;  denyReversed = false;
+	windAmt = 0.f;  damageMul = 1.f;
+	gravity = 9.81f;
 
 	skyMtr = "World/NoonSky";
 	rainEmit = 0;  rainName = "";
 	rain2Emit = 0;  rain2Name = "";
-	windAmt = 0.f;  damageMul = 1.f;
 
 	fogStart = 600;  fogEnd = 1600;
 	fogClr = fogClr2 = fogClrH = Vector4(0.73f, 0.86f, 1.0f, 1.f);
@@ -47,7 +50,6 @@ void Scene::Default()
 		gr->material = "grassJungle";  gr->colorMap = "grClrJungle.png";
 		gr->minSx = 0.6f;  gr->minSy = 0.6f;  gr->maxSx = 0.85f;  gr->maxSy = 0.9f;
 		gr->swayDistr = 4.0f;  gr->swayLen = 0.2f;  gr->swaySpeed = 0.5f;
-		gr->terMaxAng = 30.f;  gr->terMinH = -200.f;  gr->terMaxH = 200.f;
 	}
 	trPage = 200;  trDist = 200;  trDistImp = 800;  trRdDist = 3;
 
@@ -68,14 +70,20 @@ PagedLayer::PagedLayer()
 
 SGrassLayer::SGrassLayer()
 {
-	on = false;
-	dens = 0.1f;
+	on = false;  grl = 0;
+	dens = 0.1f;  iChan = 0;
 	minSx = 0.6f; minSy = 0.6f;  maxSx = 0.85f; maxSy = 0.9f;
 	swayDistr = 4.f;  swayLen = 0.2f; swaySpeed = 0.5f;
-	terMaxAng = 30.f;  terAngSm = 20.f;
-	terMinH = -100.f;  terMaxH = 100.f;  terHSm = 20.f;
 	material = "grassForest";  colorMap = "grClrForest.png";
 }
+
+SGrassChannel::SGrassChannel()
+{
+	angMin = 0.f;  angMax = 30.f;  angSm = 20.f;
+	hMin = -100.f;  hMax = 100.f;  hSm = 20.f;  rdPow = 0.f;
+	noise = 0.0f;  nFreq = 25.f;  nPers = 0.3f;  nPow = 1.2f;  nOct = 3;
+}
+
 
 FluidBox::FluidBox()
 	:cobj(0), id(-1), idParticles(0)
@@ -91,7 +99,7 @@ Object::Object()
 
 
 ///  bullet to ogre  ----------
-Quaternion Object::qrFix(0.707107, 0, 0.707107, 0);  //SetAxisAngle(PI_d/2.f, 0,1,0);
+Quaternion Object::qrFix(  0.707107, 0, 0.707107, 0);  //SetAxisAngle( PI_d/2.f, 0,1,0);
 Quaternion Object::qrFix2(-0.707107, 0, 0.707107, 0);  //SetAxisAngle(-PI_d/2.f, 0,1,0);
 
 void Object::SetFromBlt()
@@ -182,6 +190,9 @@ bool Scene::LoadXml(String file, bool bTer)
 	{
 		a = eCar->Attribute("tires");		if (a)  asphalt = s2i(a) > 0;
 		a = eCar->Attribute("damage");		if (a)  damageMul = s2r(a);
+
+		a = eCar->Attribute("denyRev");		if (a)  denyReversed = s2i(a) > 0;
+		a = eCar->Attribute("gravity");		if (a)  gravity = s2r(a);
 	}
 
 	///  sky
@@ -256,12 +267,7 @@ bool Scene::LoadXml(String file, bool bTer)
 	{
 		a = eTer->Attribute("size");		if (a)  td.iVertsX = s2i(a);
 		a = eTer->Attribute("triangle");	if (a)  td.fTriangleSize = s2r(a);
-
 		a = eTer->Attribute("errNorm");		if (a)  td.errorNorm = s2r(a);
-
-		//a = eTer->Attribute("shadowMap");	if (a)  td. = s2i(a);
-		//a = eTer->Attribute("blendMap");	if (a)  td. = s2i(a);
-		//a = eTer->Attribute("compositeMap");	if (a)  td. = s2i(a);
 		td.UpdVals();
 
 		int il = 0;
@@ -272,8 +278,10 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = eTex->Attribute("road");	if (a)  if (s2i(a)==1)  road = true;
 			
 			TerLayer lay, *l = road ? &td.layerRoad : &lay;
+			lay.nFreq[0] += (il-0.7f) * 4.f;  // default, can't be same, needs variation
+			lay.nFreq[1] += (il-0.5f) * 3.f;
 
-			a = eTex->Attribute("on");		if (a)  l->on = s2i(a);  else  l->on = 1;
+			a = eTex->Attribute("on");		if (a)  l->on = s2i(a)>0;  else  l->on = true;
 			a = eTex->Attribute("file");	if (a)  l->texFile = String(a);
 			a = eTex->Attribute("fnorm");	if (a)  l->texNorm = String(a);
 			a = eTex->Attribute("scale");	if (a)  l->tiling = s2r(a);
@@ -292,10 +300,22 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = eTex->Attribute("hMax");	if (a)  l->hMax = s2r(a);
 			a = eTex->Attribute("hSm");		if (a)  l->hSm = s2r(a);
 
-			a = eTex->Attribute("noise");	if (a)  l->noise = s2r(a);
-			a = eTex->Attribute("nOnly");	if (a)  l->bNoiseOnly = s2i(a) > 0;  else  l->bNoiseOnly = true;
+			a = eTex->Attribute("nOn");		if (a)  l->nOnly = s2i(a)>0;
 			a = eTex->Attribute("triplanar");	if (a)  l->triplanar = true;  else  l->triplanar = false;
 
+			a = eTex->Attribute("noise");	if (a)  l->noise = s2r(a);
+			a = eTex->Attribute("n_1");		if (a)  l->nprev = s2r(a);
+			a = eTex->Attribute("n2");		if (a)  l->nnext2 = s2r(a);
+
+			XMLElement* eNoi = eTex->FirstChildElement("noise");
+			if (eNoi)
+			for (int n=0; n < 2; ++n)
+			{	std::string sn = toStr(n), s;
+				s = "frq"+sn;  a = eNoi->Attribute(s.c_str());  if (a)  l->nFreq[n]= s2r(a);
+				s = "oct"+sn;  a = eNoi->Attribute(s.c_str());  if (a)  l->nOct[n] = s2i(a);
+				s = "prs"+sn;  a = eNoi->Attribute(s.c_str());  if (a)  l->nPers[n]= s2r(a);
+				s = "pow"+sn;  a = eNoi->Attribute(s.c_str());  if (a)  l->nPow[n] = s2r(a);
+			}
 			if (!road && il < td.ciNumLay)
 				td.layersAll[il++] = lay;
 			eTex = eTex->NextSiblingElement("texture");
@@ -321,26 +341,6 @@ bool Scene::LoadXml(String file, bool bTer)
 		a = ePgd->Attribute("grPage");		if (a)  grPage = s2r(a);
 		a = ePgd->Attribute("grDist");		if (a)  grDist = s2r(a);
 		a = ePgd->Attribute("grDensSmooth");	if (a)  grDensSmooth = s2i(a);
-
-	#if 1  // old scene.xml (SR ver <= 1.8), 1 grass layer
-		SGrassLayer* gr = &grLayersAll[0];  gr->dens = 1.f;
-		a = ePgd->Attribute("grMtr");		if (a)  gr->material = String(a);
-		a = ePgd->Attribute("grClr");		if (a)  gr->colorMap = String(a);
-		//  grass par
-		a = ePgd->Attribute("grMinSx");		if (a)  gr->minSx = s2r(a);
-		a = ePgd->Attribute("grMinSy");		if (a)  gr->minSy = s2r(a);
-		a = ePgd->Attribute("grMaxSx");		if (a)  gr->maxSx = s2r(a);
-		a = ePgd->Attribute("grMaxSy");		if (a)  gr->maxSy = s2r(a);
-
-		a = ePgd->Attribute("grSwayDistr");	if (a)  gr->swayDistr = s2r(a);
-		a = ePgd->Attribute("grSwayLen");	if (a)  gr->swayLen = s2r(a);
-		a = ePgd->Attribute("grSwaySpeed");	if (a)  gr->swaySpeed = s2r(a);
-
-		a = ePgd->Attribute("grTerMaxAngle");	if (a)  gr->terMaxAng = s2r(a);
-		a = ePgd->Attribute("grTerMinHeight");	if (a)  gr->terMinH = s2r(a);
-		a = ePgd->Attribute("grTerMaxHeight");	if (a)  gr->terMaxH = s2r(a);
-	#endif
-
 		//  trees
 		a = ePgd->Attribute("trPage");		if (a)  trPage = s2r(a);
 		a = ePgd->Attribute("trDist");		if (a)  trDist = s2r(a);
@@ -356,6 +356,7 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = eGrL->Attribute("mtr");		if (a)  g.material = String(a);
 			a = eGrL->Attribute("clr");		if (a)  g.colorMap = String(a);
 			a = eGrL->Attribute("dens");	if (a)  g.dens = s2r(a);
+			a = eGrL->Attribute("chan");	if (a)  g.iChan = s2i(a);
 
 			a = eGrL->Attribute("minSx");	if (a)  g.minSx = s2r(a);
 			a = eGrL->Attribute("maxSx");	if (a)  g.maxSx = s2r(a);
@@ -366,17 +367,47 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = eGrL->Attribute("swayLen");		if (a)  g.swayLen = s2r(a);
 			a = eGrL->Attribute("swaySpeed");	if (a)  g.swaySpeed = s2r(a);
 			
-			a = eGrL->Attribute("terMaxAng");	if (a)  g.terMaxAng = s2r(a);
-			a = eGrL->Attribute("terAngSm");	if (a)  g.terAngSm = s2r(a);
+		#if 1  //  old < 2.3  (no channels)
+			a = eGrL->Attribute("terMaxAng");	if (a)  grChan[0].angMax = s2r(a);
+			a = eGrL->Attribute("terAngSm");	if (a)  grChan[0].angSm = s2r(a);
 
-			a = eGrL->Attribute("terMinH");		if (a)  g.terMinH = s2r(a);
-			a = eGrL->Attribute("terMaxH");		if (a)  g.terMaxH = s2r(a);
-			a = eGrL->Attribute("terHSm");		if (a)  g.terHSm = s2r(a);
-
+			a = eGrL->Attribute("terMinH");		if (a)  grChan[0].hMin = s2r(a);
+			a = eGrL->Attribute("terMaxH");		if (a)  grChan[0].hMax = s2r(a);
+			a = eGrL->Attribute("terHSm");		if (a)  grChan[0].hSm = s2r(a);
+		#endif
 			grLayersAll[grl++] = g;
 			eGrL = eGrL->NextSiblingElement("grass");
 		}
 
+		int c;
+		for (c=0; c < 4; c++)
+			grChan[c].nFreq += c * 3.f;  // default variation
+		c = 0;
+
+		XMLElement* eGrCh = ePgd->FirstChildElement("gchan");
+		while (eGrCh && c < 4)
+		{
+			SGrassChannel& g = grChan[c++];
+			TiXmlElement gch("gchan");
+
+			a = eGrCh->Attribute("amin");	if (a)  g.angMin = s2r(a);
+			a = eGrCh->Attribute("amax");	if (a)  g.angMax = s2r(a);
+			a = eGrCh->Attribute("asm");	if (a)  g.angSm = s2r(a);
+
+			a = eGrCh->Attribute("hmin");	if (a)  g.hMin = s2r(a);
+			a = eGrCh->Attribute("hmax");	if (a)  g.hMax = s2r(a);
+			a = eGrCh->Attribute("hsm");	if (a)  g.hSm = s2r(a);
+
+			a = eGrCh->Attribute("ns");		if (a)  g.noise = s2r(a);
+			a = eGrCh->Attribute("frq");	if (a)  g.nFreq = s2r(a);
+			a = eGrCh->Attribute("oct");	if (a)  g.nOct  = s2i(a);
+			a = eGrCh->Attribute("prs");	if (a)  g.nPers = s2r(a);
+			a = eGrCh->Attribute("pow");	if (a)  g.nPow  = s2r(a);
+
+			a = eGrCh->Attribute("rd");		if (a)  g.rdPow = s2r(a);
+			eGrCh = eGrCh->NextSiblingElement("gchan");
+		}
+		
 		int pgl = 0;
 		XMLElement* ePgL = ePgd->FirstChildElement("layer");
 		while (ePgL)
@@ -387,11 +418,13 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = ePgL->Attribute("dens");		if (a)  l.dens = s2r(a);
 			a = ePgL->Attribute("minScale");	if (a)  l.minScale = s2r(a);
 			a = ePgL->Attribute("maxScale");	if (a)  l.maxScale = s2r(a);
+
 			a = ePgL->Attribute("ofsY");		if (a)  l.ofsY = s2r(a);
 			a = ePgL->Attribute("addTrRdDist");	if (a)  l.addRdist = s2i(a);
 			a = ePgL->Attribute("maxRdist");	if (a)  l.maxRdist = s2i(a);
 			a = ePgL->Attribute("windFx");		if (a)  l.windFx = s2r(a);
 			a = ePgL->Attribute("windFy");		if (a)  l.windFy = s2r(a);
+
 			a = ePgL->Attribute("maxTerAng");	if (a)  l.maxTerAng = s2r(a);
 			a = ePgL->Attribute("minTerH");		if (a)  l.minTerH = s2r(a);
 			a = ePgL->Attribute("maxTerH");		if (a)  l.maxTerH = s2r(a);
@@ -449,6 +482,11 @@ bool Scene::SaveXml(String file)
 		car.SetAttribute("tires",	asphalt ? "1":"0");
 		if (damageMul != 1.f)
 			car.SetAttribute("damage",	toStrC( damageMul ));
+
+		if (denyReversed)
+			car.SetAttribute("denyRev",	"1");
+		if (gravity != 9.81f)
+			car.SetAttribute("gravity",	toStrC( gravity ));
 	root.InsertEndChild(car);
 
 
@@ -462,7 +500,7 @@ bool Scene::SaveXml(String file)
 		{	sky.SetAttribute("rain2Name",	rain2Name.c_str());
 			sky.SetAttribute("rain2Emit",	toStrC( rain2Emit ));
 		}
-		if (windAmt > 0.f)
+		if (windAmt != 0.f)
 			sky.SetAttribute("windAmt",	toStrC( windAmt ));
 	root.InsertEndChild(sky);
 
@@ -510,7 +548,6 @@ bool Scene::SaveXml(String file)
 		ter.SetAttribute("size",		toStrC( td.iVertsX ));
 		ter.SetAttribute("triangle",	toStrC( td.fTriangleSize ));
 		ter.SetAttribute("errNorm",		fToStr( td.errorNorm, 2,4 ).c_str());
-		//terErr, shadowMap, blendMap, compositeMap
 
 		const TerLayer* l;
 		for (int i=0; i < 6; ++i)
@@ -535,9 +572,23 @@ bool Scene::SaveXml(String file)
 			tex.SetAttribute("hMin",	toStrC( l->hMin ));
 			tex.SetAttribute("hMax",	toStrC( l->hMax ));
 			tex.SetAttribute("hSm",		toStrC( l->hSm ));
-			tex.SetAttribute("noise",	toStrC( l->noise ));
-			tex.SetAttribute("nOnly",	l->bNoiseOnly ? 1 : 0);
+
+			tex.SetAttribute("nOn",		l->nOnly ? 1 : 0);
 			if (l->triplanar)  tex.SetAttribute("triplanar", 1);
+
+			tex.SetAttribute("noise",	toStrC( l->noise ));
+			tex.SetAttribute("n_1",		toStrC( l->nprev ));
+			tex.SetAttribute("n2",		toStrC( l->nnext2 ));
+
+			TiXmlElement noi("noise");
+			for (int n=0; n < 2; ++n)
+			{	std::string sn = toStr(n), s;
+				s = "frq"+sn;  noi.SetAttribute(s.c_str(),  toStrC( l->nFreq[n] ));
+				s = "oct"+sn;  noi.SetAttribute(s.c_str(),  toStrC( l->nOct[n] ));
+				s = "prs"+sn;  noi.SetAttribute(s.c_str(),  toStrC( l->nPers[n] ));
+				s = "pow"+sn;  noi.SetAttribute(s.c_str(),  toStrC( l->nPow[n] ));
+			}
+			tex.InsertEndChild(noi);
 			ter.InsertEndChild(tex);
 		}
 		l = &td.layerRoad;
@@ -569,6 +620,7 @@ bool Scene::SaveXml(String file)
 		pgd.SetAttribute("trDistImp",	toStrC( trDistImp ));
 		pgd.SetAttribute("trRdDist",	toStrC( trRdDist  ));
 
+		int i;
 		for (int i=0; i < ciNumGrLay; ++i)
 		{
 			const SGrassLayer& g = grLayersAll[i];
@@ -577,6 +629,7 @@ bool Scene::SaveXml(String file)
 			grl.SetAttribute("mtr",		g.material.c_str());
 			grl.SetAttribute("clr",		g.colorMap.c_str());
 			grl.SetAttribute("dens",	toStrC( g.dens ));
+			grl.SetAttribute("chan",	toStrC( g.iChan ));
 
 			grl.SetAttribute("minSx",	toStrC( g.minSx ));
 			grl.SetAttribute("maxSx",	toStrC( g.maxSx ));
@@ -586,20 +639,32 @@ bool Scene::SaveXml(String file)
 			grl.SetAttribute("swayDistr",	toStrC( g.swayDistr ));
 			grl.SetAttribute("swayLen",		toStrC( g.swayLen ));
 			grl.SetAttribute("swaySpeed",	toStrC( g.swaySpeed ));
-			
-			grl.SetAttribute("terMaxAng",	toStrC( g.terMaxAng ));
-			if (g.terAngSm != 20.f)
-			grl.SetAttribute("terAngSm",	toStrC( g.terAngSm ));
-
-			grl.SetAttribute("terMinH",		toStrC( g.terMinH ));
-			grl.SetAttribute("terMaxH",		toStrC( g.terMaxH ));
-			if (g.terHSm != 20.f)
-			grl.SetAttribute("terHSm",		toStrC( g.terHSm ));
-
 			pgd.InsertEndChild(grl);
 		}
 
-		for (int i=0; i < ciNumPgLay; ++i)
+		for (i=0; i < 4; ++i)
+		{
+			const SGrassChannel& g = grChan[i];
+			TiXmlElement gch("gchan");
+			gch.SetAttribute("amin",	toStrC( g.angMin ));
+			gch.SetAttribute("amax",	toStrC( g.angMax ));
+			gch.SetAttribute("asm",		toStrC( g.angSm ));
+
+			gch.SetAttribute("hmin",	toStrC( g.hMin ));
+			gch.SetAttribute("hmax",	toStrC( g.hMax ));
+			gch.SetAttribute("hsm",		toStrC( g.hSm ));
+
+			gch.SetAttribute("ns",		toStrC( g.noise ));
+			gch.SetAttribute("frq",		toStrC( g.nFreq ));
+			gch.SetAttribute("oct",		toStrC( g.nOct ));
+			gch.SetAttribute("prs",		toStrC( g.nPers ));
+			gch.SetAttribute("pow",		toStrC( g.nPow ));
+
+			gch.SetAttribute("rd",		toStrC( g.rdPow ));
+			pgd.InsertEndChild(gch);
+		}
+
+		for (i=0; i < ciNumPgLay; ++i)
 		{
 			const PagedLayer& l = pgLayersAll[i];
 			TiXmlElement pgl("layer");
@@ -608,11 +673,13 @@ bool Scene::SaveXml(String file)
 			pgl.SetAttribute("dens",		toStrC( l.dens ));
 			pgl.SetAttribute("minScale",	toStrC( l.minScale ));
 			pgl.SetAttribute("maxScale",	toStrC( l.maxScale ));
+
 			pgl.SetAttribute("ofsY",		toStrC( l.ofsY ));
 			pgl.SetAttribute("addTrRdDist",	toStrC( l.addRdist ));
 			pgl.SetAttribute("maxRdist",	toStrC( l.maxRdist ));
 			pgl.SetAttribute("windFx",		toStrC( l.windFx ));
 			pgl.SetAttribute("windFy",		toStrC( l.windFy ));
+
 			pgl.SetAttribute("maxTerAng",	toStrC( l.maxTerAng ));
 			pgl.SetAttribute("minTerH",		toStrC( l.minTerH ));
 			pgl.SetAttribute("maxTerH",		toStrC( l.maxTerH ));
@@ -629,7 +696,7 @@ bool Scene::SaveXml(String file)
 
 
 	TiXmlElement objs("objects");
-		for (int i=0; i < objects.size(); ++i)
+		for (i=0; i < objects.size(); ++i)
 		{
 			const Object* o = &objects[i];
 			TiXmlElement oe("o");
@@ -657,7 +724,7 @@ bool Scene::SaveXml(String file)
 
 TerData::TerData()
 {
-	hfHeight = NULL;  hfAngle = NULL;
+	hfHeight = NULL;
 	Default();
 }
 void TerData::Default()
@@ -675,21 +742,23 @@ void TerData::Default()
 		l.dust = 0.f;  l.mud = 1.f;  l.smoke = 0.f;
 		l.tclr = ColourValue(0.2f,0.2f,0.f,1.f);
 	}
-	layerRoad.dust = 0.f;  layerRoad.mud = 0.f;  /*layerRoad.smoke = 1.f;*/
+	layerRoad.dust = 0.f;  layerRoad.mud = 0.f;  // layerRoad.smoke = 1.f;
 	layerRoad.tclr = ColourValue(0,0,0,1);
 	
 	UpdVals();  UpdLayers();
-	//4097-! 2049  1025+ 513  257 -33t  verts
-	//layers:  1- 230 fps  2- 180 fps  3- 140 fps
 }
 
-TerLayer::TerLayer() : on(true), tiling(4.f), triplanar(false),
+TerLayer::TerLayer() :
+	on(true), tiling(4.f), triplanar(false),
 	dust(0.f),dustS(0.2f), mud(0.f), smoke(0.f), tclr(ColourValue::Black),
 	angMin(0.f),angMax(90.f), angSm(20.f),
-	hMin(-300.f),hMax(300.f), hSm(20.f),
-	noise(1.f), bNoiseOnly(1),
+	hMin(-300.f),hMax(300.f), hSm(20.f), nOnly(false),
+	noise(1.f), nprev(0.f), nnext2(0.f),
 	surfName("Default"), surfId(0)  //!
-{	}
+{
+	nFreq[0]=25.f; nPers[0]=0.30f; nPow[0]=1.5f; nOct[0]=3;
+	nFreq[1]=30.f; nPers[1]=0.40f; nPow[1]=1.2f; nOct[1]=3;
+}
 
 void TerData::UpdVals()
 {

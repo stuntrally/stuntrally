@@ -3,7 +3,7 @@
 	<Tag name="TipTreeDens">Wie viele Modelle (Bäume, Steine, etc.) auf der Strecke sichtbar sind.</Tag>
 	<Tag name="CamSpeed">Kamerageschw.</Tag>
 	<Tag name="Density">Dichte</Tag>
-	<Tag name="InputMapScreenshot">Screenshot</Tag>
+	<Tag name="InputMapScreenshot">Bildschirmfoto</Tag>
 	<Tag name="Brush_Filter">Filter</Tag>
 	<Tag name="Time">Zeit</Tag>
 	<Tag name="Damage">Schäden</Tag>
@@ -78,7 +78,7 @@
 	<Tag name="pipes">Röhren</Tag>
 	<Tag name="CarTireVisCircles">Rad-Kraftkreise-Visualisation</Tag>
 	<Tag name="InputFluidsUpdate">F10 - Depth map aktualisieren</Tag>
-	<Tag name="TBLapResults">Rundenergebnisse</Tag>
+	<Tag name="TBLapResults">Rundenwerte</Tag>
 	<Tag name="DepthOfField">Tiefenunschärfe</Tag>
 	<Tag name="Game">Spiel</Tag>
 	<Tag name="InputObjectsScale">3 - Skalieren LMT - uniform XYZ RMT: Y MMT: Z</Tag>
@@ -187,7 +187,7 @@
 	<Tag name="Chall_Endurance">Ausdauer</Tag>
 	<Tag name="InpSet_Slow">Langsam</Tag>
 	<Tag name="TimeMS">m:s</Tag>
-	<Tag name="InputAssignKey">&lt;Binden&gt;</Tag>
+	<Tag name="InputAssignKey">&lt;Zuweisen&gt;</Tag>
 	<Tag name="Wireframe">Drahtgitter</Tag>
 	<Tag name="TerUpdSkip">Terrain-Update überspr.</Tag>
 	<Tag name="Brush_Force">Kraft</Tag>
@@ -301,7 +301,7 @@
 	<Tag name="TipOneAxisThrottleBrake">Wenn Ihr Controller Gas und Bremse auf einer Achse hat, überprüfen Sie dies. Weisen Sie die Achse zu Gas zu und entfernen Sie die Zuweisung fürs Bremsen. Benutzen Sie die Umkehr-Option vom Gas, wenn benötigt.</Tag>
 	<Tag name="CarType_Terrain">Gelände</Tag>
 	<Tag name="InputObjectsRotReset">shift-2 - Umdrehung zurücksetzen</Tag>
-	<Tag name="EdInputBar">Eingabe Feld Strg-I</Tag>
+	<Tag name="EdInputBar">Eingabeleiste Strg-I</Tag>
 	<Tag name="TipFogClr2">Nebelfarbe wenn schauen gegenüber Sonne.</Tag>
 	<Tag name="Readme">Readme</Tag>
 	<Tag name="Substract">Subtrahieren</Tag>
@@ -397,7 +397,7 @@
 	<Tag name="TipGrassPatchLengthMin">Minimale Länge des Grasflecks.</Tag>
 	<Tag name="Road">Straße</Tag>
 	<Tag name="FluidCont">Gewässertyp</Tag>
-	<Tag name="TrackAutoLoad">Spiel autom. Laden</Tag>
+	<Tag name="TrackAutoLoad">Strecke autom. laden</Tag>
 	<Tag name="BoostFOV">Adaptives Sichtfeld</Tag>
 	<Tag name="DustSize">Staubgröße</Tag>
 	<Tag name="Shortcuts">Tastenkürzel</Tag>
@@ -559,7 +559,7 @@
 	<Tag name="Brush_Freq">Freq</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotieren alt-RMB - neigen</Tag>
 	<Tag name="InputRoadAngSnap">5,6 - Winkel rasten ein</Tag>
-	<Tag name="Close">Close</Tag>
+	<Tag name="Close">Schließen</Tag>
 	<Tag name="TerGenOfsX">X-Versatz</Tag>
 	<Tag name="TipTexTiling">Kachellänge der Textur (kleinerer Wert bedeutet mehr Wiederholungen)</Tag>
 	<Tag name="InputBrushShape">K,L - Gestalt</Tag>
@@ -690,7 +690,7 @@
 	<Tag name="TipGrassPageLength">Page-Länge vom Gras (niedriger Wert verursacht häufiges neu Laden, hoher Wert macht die Übergänge sichtbar)</Tag>
 	<Tag name="Shaders">Shader</Tag>
 	<Tag name="dust">Staub</Tag>
-	<Tag name="InputUnbind">Zu losbinden, RMT am Knopf drücken.</Tag>
+	<Tag name="InputUnbind">RMT auf Button: Zuweisung entfernen</Tag>
 	<Tag name="TipRainSnow1">Typ Rain/Snow 1 setzen</Tag>
 	<Tag name="TipRainSnow2">Typ Rain/Snow 2 setzen</Tag>
 	<Tag name="TipTerLNoise">Faktor für zusätzliches Rauschen.</Tag>
@@ -705,7 +705,7 @@
 	<Tag name="ChallInfo">Im Herausforderungsmodus wurde das Spiel fertig aufgesetzt, die meisten Einstellungen sind unveränderlich. Zeit oder Position ist benötigt. Wenn Sie bestehen, gewinnen sie einen Bronze-, Silber- oder Gold-Preis.</Tag>
 	<Tag name="Tools">Werkzeuge</Tag>
 	<Tag name="NetCreateGame">Erstellen</Tag>
-	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
+	<Tag name="TutorEndFinished">Die Einführung wurde beendet.</Tag>
 	<Tag name="TipGrassSwaySpd">Grasschwingung Geschw.</Tag>
 	<Tag name="MaterialProperties">Materialeinstellungen</Tag>
 	<Tag name="FrictionTread">ReibungsProfil</Tag>
@@ -938,7 +938,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="GameVersion">2.2.1</Tag>
+	<Tag name="Gravity">Gravity</Tag>
+	<Tag name="Camera">Camera</Tag>
+	<Tag name="InputRoadShiftSel">shift - select</Tag>
+	<Tag name="DenyReversed">Deny reversed direction</Tag>
+	<Tag name="Lock">Lock</Tag>
+	<Tag name="InputLockBrush">Enter - lock brush position</Tag>
+	<Tag name="Wind">Wind</Tag>
+	<Tag name="CameraBounce">Dynamic camera bouncing</Tag>
+	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>

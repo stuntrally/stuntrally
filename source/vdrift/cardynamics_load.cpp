@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "par.h"
 #include "cardynamics.h"
 #include "collision_world.h"
 #include "game.h"  // tire params map
@@ -27,7 +28,7 @@ CARDYNAMICS::CARDYNAMICS() :
 	vHitPos(0,0,0), vHitNorm(0,0,0), vHitCarN(0,0,0), vHitDmgN(0,0,0), fHitDmgA(0),
 	steerValue(0.f), velPrev(0,0,0),
 	fCarScrap(0.f), fCarScreech(0.f),
-	time(0.0), fDamage(0)
+	time(0.0), fDamage(0), fBncMass(1.0), cam_force(0,0,0)
 	//coll_R, coll_W, coll_H, coll_Hofs, coll_Wofs, coll_Lofs
 	//coll_posLfront, coll_posLback
 {
@@ -36,7 +37,7 @@ CARDYNAMICS::CARDYNAMICS() :
 		whTerMtr[i]=0;  whRoadMtr[i]=0;
 		whH[i]=0.f;  whP[i]=-1;
 	}
-	boostFuel = gfBoostFuelStart;
+	boostFuel = gPar.boostFuelStart;
 
 	for (int i=0; i<4; ++i)
 		rot_coef[i] = 0.0;
@@ -618,6 +619,8 @@ void CARDYNAMICS::Init(
 	body.SetOrientation(orientation);
 	body.SetInitialForce(zero);
 	body.SetInitialTorque(zero);
+	cam_body.SetPosition(zero);
+	cam_body.SetInitialForce(zero);
 
 	// init engine
 	engine.SetInitialConditions();
@@ -729,7 +732,7 @@ void CARDYNAMICS::Init(
 		for (int w=0; w < 4; ++w)
 		{
 			WHEEL_POSITION wp = WHEEL_POSITION(w);
-			Dbl whR = GetWheel(wp).GetRadius() * 1.2;  //bigger par..
+			Dbl whR = GetWheel(wp).GetRadius() * 1.2;  //par bigger
 			MATHVECTOR<float,3> wheelpos = GetWheelPosition(wp, 0);  //par
 			wheelpos[0] += coll_Lofs;
 			wheelpos[2] += coll_flTrig_H;

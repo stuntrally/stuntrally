@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "par.h"
 #include "car.h"
 #include "cardefs.h"
 #include "configfile.h"
@@ -8,6 +9,7 @@
 #include "settings.h"
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/data/CData.h"
+#include "../ogre/common/CScene.h"
 #include "../ogre/CGame.h"  //+ replay
 #include "../ogre/CarModel.h"  //+ camera pos
 #include "../ogre/FollowCamera.h"  //+ camera pos
@@ -129,7 +131,7 @@ bool CAR::Load(class App* pApp1,
 		rotAtStart = rotLastCheck = orientation;
 		dmgLastCheck = 0.f;
 		
-		dynamics.Init(pSet, pApp->sc, pApp->data->fluids,
+		dynamics.Init(pSet, pApp->scn->sc, pApp->scn->data->fluids,
 			world, bodymodel, wheelmodelfront, wheelmodelrear, position, orientation);
 
 		dynamics.SetABS(defaultabs);
@@ -397,7 +399,7 @@ void CAR::ResetPos(bool fromStart)
 	dynamics.SynchronizeBody();  // set body from chassis
 	if (fromStart)
 	{
-		dynamics.boostFuel = gfBoostFuelStart;  // restore boost fuel
+		dynamics.boostFuel = gPar.boostFuelStart;  // restore boost fuel
 		dynamics.fDamage = 0.f;  // clear damage
 	}else
 		dynamics.fDamage = dmgLastCheck;

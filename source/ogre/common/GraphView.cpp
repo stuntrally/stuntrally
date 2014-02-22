@@ -6,6 +6,7 @@
 #include <OgreManualObject.h>
 #include <OgreSceneManager.h>
 #include <OgreRenderWindow.h>
+#include <OgreSceneNode.h>
 #include <MyGUI_Gui.h>
 #include <MyGUI_TextBox.h>
 using namespace Ogre;
