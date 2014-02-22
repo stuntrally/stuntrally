@@ -63,10 +63,7 @@ void shadow_caster_instancing_vs(
 	
 	out float4 oPosition : POSITION,
 	out float2 oDepth : TEXCOORD0,
-	out float2 oUv : TEXCOORD1,
-	
-	
-	uniform float4x4 wvpMat)
+	out float2 oUv : TEXCOORD1)
 {
 	float3x4 worldMatrix;
 	worldMatrix[0] = uv1;

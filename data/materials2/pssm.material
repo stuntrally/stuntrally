@@ -6,7 +6,7 @@ vertex_program PSSM/shadow_caster_instancing_vs_hlsl hlsl
 
 	default_params
 	{
-		param_named_auto wvpMat worldviewproj_matrix
+		param_named_auto viewProjMatrix viewproj_matrix
 	}
 }
 
