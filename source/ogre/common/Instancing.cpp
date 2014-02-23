@@ -7,6 +7,9 @@
 #include <OgreEntity.h>
 #include <OgreInstanceManager.h>
 #include <OgreInstancedEntity.h>
+#include <OgreSceneManager.h>
+#include <OgreMesh.h>
+#include <OgreSubMesh.h>
 using namespace Ogre;
 
 
