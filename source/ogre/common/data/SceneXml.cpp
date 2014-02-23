@@ -368,12 +368,13 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = eGrL->Attribute("swaySpeed");	if (a)  g.swaySpeed = s2r(a);
 			
 		#if 1  //  old < 2.3  (no channels)
+		if (grl == 0)  {
 			a = eGrL->Attribute("terMaxAng");	if (a)  grChan[0].angMax = s2r(a);
 			a = eGrL->Attribute("terAngSm");	if (a)  grChan[0].angSm = s2r(a);
 
 			a = eGrL->Attribute("terMinH");		if (a)  grChan[0].hMin = s2r(a);
 			a = eGrL->Attribute("terMaxH");		if (a)  grChan[0].hMax = s2r(a);
-			a = eGrL->Attribute("terHSm");		if (a)  grChan[0].hSm = s2r(a);
+			a = eGrL->Attribute("terHSm");		if (a)  grChan[0].hSm = s2r(a);  }
 		#endif
 			grLayersAll[grl++] = g;
 			eGrL = eGrL->NextSiblingElement("grass");
