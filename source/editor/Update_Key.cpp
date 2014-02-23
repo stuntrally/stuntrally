@@ -137,8 +137,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			return true;
 
 		//  save, reload, update
-		case key(F4):  SaveTrack();	return true;
-		case key(F5):  LoadTrack();	return true;
+		case key(F4):  if (!alt)  SaveTrack();  return true;
+		case key(F5):  LoadTrack();  return true;
 		case key(F8):  UpdateTrack();  return true;
 
 		case key(F9):  // blendmap
