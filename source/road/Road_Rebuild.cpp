@@ -66,7 +66,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		sMax = std::min(segs-1, sMax);
 	
 	//  full rebuild
-	QTimer ti;  ti.update();  /// time	
+	QTimer ti;	
 	
 	if (iDirtyId == -1)
 	{
@@ -924,11 +924,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 	if (iDirtyId == -1)
 	//if (segs <= 4 || sMax - sMin > 4)
-	{
-		ti.update();	/// time
-		float dt = ti.dt * 1000.f;
-		LogO(String("::: Time Road Rebuild: ") + fToStr(dt,0,3) + " ms");
-	}
+		LogO(String("::: Time Road Rebuild: ") + fToStr(ti.get(),0,3) + " ms");
 }
 
 

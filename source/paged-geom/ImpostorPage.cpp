@@ -509,7 +509,7 @@ void ImpostorTexture::regenerateAll()
 
 void ImpostorTexture::renderTextures(bool force)
 {
-	QTimer ti;  ti.update();  ///T  /// time
+	QTimer ti;
 #ifdef IMPOSTOR_FILE_SAVE
 	TexturePtr renderTexture;
 #else
@@ -721,10 +721,8 @@ void ImpostorTexture::renderTextures(bool force)
 		TextureManager::getSingleton().remove(texName2);
 #endif
 
-	ti.update();	///T  /// time
-	float dt = ti.dt * 1000.f;
 	Ogre::LogManager::getSingleton().logMessage(String("::: Time Impostor: ") +
-		fToStr(dt,0,3) + " ms (" + strKey + ") " + (needsRegen ? " Generated" : (pre ? " preloaded" : " loaded")));
+		fToStr(ti.get(),0,3) + " ms (" + strKey + ") " + (needsRegen ? " Generated" : (pre ? " preloaded" : " loaded")));
 }
 
 String ImpostorTexture::removeInvalidCharacters(String s)

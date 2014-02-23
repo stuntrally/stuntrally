@@ -275,7 +275,7 @@ void CGui::btnTerGenerate(WP wp)
 		r = imgRoad.getWidth();
 	}
 
-	QTimer ti;  ti.update();  /// time
+	QTimer ti;
 
 	//  generate noise terrain hmap
 	register int a,x,y;  register float c;
@@ -308,9 +308,7 @@ void CGui::btnTerGenerate(WP wp)
 						  (hfData[a] * c * pSet->gen_mul) );
 	}	}
 
-	ti.update();  /// time
-	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time Ter Gen: ") + fToStr(dt,0,3) + " ms");
+	LogO(String("::: Time Ter Gen: ") + fToStr(ti.get(),0,3) + " ms");
 
 	std::ofstream of;
 	of.open(getHMapNew().c_str(), std::ios_base::binary);
@@ -318,9 +316,7 @@ void CGui::btnTerGenerate(WP wp)
 	of.write((const char*)&hfData[0], siz);
 	of.close();
 
-	ti.update();  /// time
-	dt = ti.dt * 1000.f;
-	LogO(String("::: Time Ter Gen save: ") + fToStr(dt,0,3) + " ms");
+	LogO(String("::: Time Ter Gen save: ") + fToStr(ti.get(),0,3) + " ms");
 
 	app->bNewHmap = true;	app->UpdateTrack();
 }

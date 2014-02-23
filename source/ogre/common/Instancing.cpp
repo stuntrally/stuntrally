@@ -1,4 +1,3 @@
-#pragma once
 #include "pch.h"
 #include "Def_Str.h"
 #include "RenderConst.h"

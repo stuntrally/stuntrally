@@ -67,7 +67,7 @@ void App::createScene()  // once, init
 	MaterialManager::getSingleton().setDefaultTextureFiltering(TFO_ANISOTROPIC);
 	MaterialManager::getSingleton().setDefaultAnisotropy(pSet->anisotropy);
 
-	QTimer ti;  ti.update();  /// time
+	QTimer ti;
 
 
 	///  _Tool_ tex ..........................
@@ -87,9 +87,7 @@ void App::createScene()  // once, init
 	
 	// TODO: ter/road layer  presets.xml
 
-	ti.update();  /// time
-	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time load xmls: ") + fToStr(dt,0,3) + " ms");
+	LogO(String("::: Time load xmls: ") + fToStr(ti.get(),0,3) + " ms");
 
 
 	///  _Tool_ scene ...........................
@@ -207,7 +205,7 @@ void App::LoadTrack()
 }
 void App::LoadTrackEv()
 {
-	QTimer ti;  ti.update();  /// time
+	QTimer ti;
 	NewCommon(false);  // full destroy
 
 	if (scn->road)
@@ -288,9 +286,7 @@ void App::LoadTrackEv()
 	if (pSet->check_load)
 		gui->WarningsCheck(scn->sc, scn->road);
 
-	ti.update();	/// time
-	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time Load Track: ") + fToStr(dt,0,3) + " ms");
+	LogO(String("::: Time Load Track: ") + fToStr(ti.get(),0,3) + " ms");
 }
 
 

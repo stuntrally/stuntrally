@@ -104,7 +104,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	std::ifstream fi(file.c_str(), std::ios::binary | std::ios::in);
 	if (!fi)  return false;
 
-	QTimer ti;  ti.update();  /// time
+	QTimer ti;
 	
 	//  header
 	char buf[ciRplHdrSize];  memset(buf,0,ciRplHdrSize);
@@ -179,9 +179,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 			+"  time: "+fToStr(GetTimeLength(0),2,5)+"  frames: "+toStr(frames[0].size()));
 	#endif
 
-	ti.update();	/// time
-	float dt = ti.dt * 1000.f;
-	LogO(Ogre::String("::: Time ReplayLoad: ") + fToStr(dt,0,3) + " ms");
+	LogO(Ogre::String("::: Time ReplayLoad: ") + fToStr(ti.get(),0,3) + " ms");
 	return true;
 }
 
@@ -453,7 +451,7 @@ bool TrackGhost::LoadFile(std::string file)
 {
 	std::ifstream fi(file.c_str(), std::ios::binary | std::ios::in);
 	if (!fi)  return false;
-	QTimer ti;  ti.update();  /// time
+	QTimer ti;
 	
 	//  header
 	char buf[ciTrkHdrSize];  memset(buf,0,ciTrkHdrSize);
@@ -490,9 +488,7 @@ bool TrackGhost::LoadFile(std::string file)
 			+"  time: "+fToStr(GetTimeLength(),2,5)+"  frames: "+toStr(frames.size()));
 	#endif
 
-	ti.update();	/// time
-	float dt = ti.dt * 1000.f;
-	LogO(Ogre::String("::: Time Load trk ghost: ") + fToStr(dt,0,3) + " ms");
+	LogO(Ogre::String("::: Time Load trk ghost: ") + fToStr(ti.get(),0,3) + " ms");
     return true;
 }
 

@@ -5,7 +5,7 @@
 
 //  ___ ___ ___ ___  Timer class  ___ ___ ___ ___
 
-QTimer::QTimer()
+QTimer::QTimer(bool upd)
 	:cc(0.0), fq(10000000.0)
 	,t(0),st(0), dt1(0),st1(0), iFR(0)
 	,dt(0.0), FR(0.0), iv(0.0), iv1(0.5), first(true)
@@ -19,6 +19,7 @@ QTimer::QTimer()
 #else
 	clock_gettime(CLOCK_MONOTONIC, &startTime);
 #endif
+	update();
 }
 
 bool QTimer::update()
@@ -61,4 +62,11 @@ bool QTimer::update()
 	startTime = newt;
 #endif
 	return true;
+}
+
+
+float QTimer::get()
+{
+	update();
+	return dt * 1000.f;  // ms
 }

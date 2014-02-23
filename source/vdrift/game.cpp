@@ -259,7 +259,7 @@ bool GAME::LoadSusp()
 
 bool GAME::InitializeSound()
 {
-	QTimer ti;  ti.update();  /// time
+	QTimer ti;
 
 	if (sound.Init(2048/*1024/*512*/, info_output, error_output))
 	{
@@ -295,9 +295,7 @@ bool GAME::InitializeSound()
 		return false;
 	}
 
-	ti.update();	/// time
-	float dt = ti.dt * 1000.f;
-	info_output << "::: Time Sounds: " << fToStr(dt,0,3) << " ms" << endl;
+	info_output << "::: Time Sounds: " << fToStr(ti.get(),0,3) << " ms" << endl;
 	return true;
 }
 

@@ -164,7 +164,7 @@ void CHud::Create()
 	//Destroy();  //
 	if (app->carModels.size() == 0)  return;
 
-	QTimer ti;  ti.update();  /// time
+	QTimer ti;
 
 	SceneManager* scm = app->mSplitMgr->mGuiSceneMgr;
 	if (hud[0].moMap || hud[0].txVel || hud[0].txTimes)
@@ -512,9 +512,7 @@ void CHud::Create()
 	app->bSizeHUD = true;
 	//SizeHUD(true);
 	
-	ti.update();	/// time
-	float dt = ti.dt * 1000.f;
-	LogO("::: Time Create Hud: "+fToStr(dt,0,3)+" ms");
+	LogO("::: Time Create Hud: "+fToStr(ti.get(),0,3)+" ms");
 }
 
 

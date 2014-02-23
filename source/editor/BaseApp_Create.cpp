@@ -270,7 +270,7 @@ bool BaseApp::configure()
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()
 {
-	QTimer ti;  ti.update();  /// time
+	QTimer ti;
 	if (pSet->rendersystem == "Default")
 	{
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -332,8 +332,7 @@ bool BaseApp::setup()
 
 	createFrameListener();
 
-	ti.update();  float dt = ti.dt * 1000.f;  /// time
-	LogO(Ogre::String("::: Time Ogre Start: ") + fToStr(dt,0,3) + " ms");
+	LogO(Ogre::String("::: Time Ogre Start: ") + fToStr(ti.get(),0,3) + " ms");
 
 	createScene();
 

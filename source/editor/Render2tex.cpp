@@ -121,7 +121,7 @@ void App::UpdMiniVis()
 ///  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 void App::SaveGrassDens()
 {
-		QTimer ti;  ti.update();  ///T  /// time
+	QTimer ti;
 
 	for (int i=0; i < RTs-1; ++i)  //-1 preview camera manual
 	{
@@ -176,9 +176,7 @@ void App::SaveGrassDens()
 	for (x = 0;  x <= f; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | left
 	for (x=w-f-1; x < w; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | right
 
-		ti.update();	///T  /// time
-		float dt = ti.dt * 1000.f;
-		LogO(String("::: Time road dens: ") + fToStr(dt,0,3) + " ms");
+	LogO(String("::: Time road dens: ") + fToStr(ti.get(),0,3) + " ms");
 
 	if (!IsVdrTrack())  // vdr trk no grass, only previews
 	{
@@ -193,9 +191,7 @@ void App::SaveGrassDens()
 	rt[0].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/road.png");
 	rt[2].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/terrain.jpg");
 
-		ti.update();	///T  /// time
-		dt = ti.dt * 1000.f;
-		LogO(String("::: Time save prv : ") + fToStr(dt,0,3) + " ms");
+	LogO(String("::: Time save prv : ") + fToStr(ti.get(),0,3) + " ms");
 }
 
 
@@ -244,7 +240,7 @@ void App::SaveWaterDepth()
 		gui->Delete(gcom->TrkDir()+"objects/waterDepth.png");  // no tex if no fluids
 		return;
 	}
-	QTimer ti;  ti.update();  ///T  /// time
+	QTimer ti;
 
 	//  2048 for bigger terrains ?
 	int w = 1024, h = w;  float fh = h-1, fw = w-1;
@@ -299,10 +295,7 @@ void App::SaveWaterDepth()
 		TextureManager::getSingleton().load("waterDepth.png", rgDef);
 	} catch(...) {  }
 
-
-	ti.update();	///T  /// time
-	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time WaterDepth: ") + fToStr(dt,0,3) + " ms");
+	LogO(String("::: Time WaterDepth: ") + fToStr(ti.get(),0,3) + " ms");
 }
 
 
@@ -348,7 +341,7 @@ void App::AlignTerToRoad()
 {
 	SplineRoad* road = scn->road;
 	if (road->vSel.empty())  return;
-	QTimer ti;  ti.update();  ///T  /// time
+	QTimer ti;
 
 	///  create bullet road for selected segments
 	road->edWmul = pSet->al_w_mul;
@@ -470,8 +463,5 @@ void App::AlignTerToRoad()
 	
 	// todo: ?restore road sel after load F5..
 
-
-	ti.update();	///T  /// time
-	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time Ter Align: ") + fToStr(dt,0,3) + " ms");
+	LogO(String("::: Time Ter Align: ") + fToStr(ti.get(),0,3) + " ms");
 }

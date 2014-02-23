@@ -76,7 +76,7 @@ void CGui::ToolTexAlpha()
 ///  check/resave all tracks scene.xml 
 void CGui::ToolSceneXml()
 {
-	QTimer ti;  ti.update();  /// time
+	QTimer ti;
 	LogO("ALL tracks scene ---------");
 	std::map<string, int> noCol,minSc;
 
@@ -117,8 +117,7 @@ void CGui::ToolSceneXml()
 		//rd.SaveFile(path+"road1.xml");  // resave
 	}
 	
-	ti.update();  float dt = ti.dt * 1000.f;  /// time
-	LogO(String("::: Time ALL tracks: ") + fToStr(dt,0,3) + " ms");
+	LogO(String("::: Time ALL tracks: ") + fToStr(ti.get(),0,3) + " ms");
 	LogO("ALL tracks scene ---------");
 	exit(0);
 }
@@ -161,7 +160,7 @@ void CGui::ToolListSceneryID()
 ///  Warning: takes about 16 sec
 void CGui::ToolTracksWarnings()
 {
-	QTimer ti;  ti.update();  /// time
+	QTimer ti;
 	LogO("ALL tracks warnings ---------\n");
 	logWarn = true;
 
@@ -178,8 +177,7 @@ void CGui::ToolTracksWarnings()
 		LogO("Track: "+trk);
 		WarningsCheck(&sc,&rd);
 	}
-	ti.update();  float dt = ti.dt * 1000.f;  /// time
-	LogO(String("::: Time ALL tracks: ") + fToStr(dt,0,3) + " ms");
+	LogO(String("::: Time ALL tracks: ") + fToStr(ti.get(),0,3) + " ms");
 	LogO("ALL tracks warnings ---------");
 }
 
@@ -405,7 +403,7 @@ void CGui::ToolGhostsConv()
 ///............................................................................................................................
 void CGui::ToolPresets()
 {
-	QTimer ti;  ti.update();  /// time
+	QTimer ti;
 	LogO("ALL tracks presets ---------\n");
 
 	std::map<Ogre::String, TerLayer> ter;
@@ -430,8 +428,7 @@ void CGui::ToolPresets()
 	}
 	LogO("ALL ter ---------");
 	LogO(toStr(ter.size()));
-	ti.update();  float dt = ti.dt * 1000.f;  /// time
-	LogO(String("::: Time ALL tracks: ") + fToStr(dt,0,3) + " ms");
+	LogO(String("::: Time ALL tracks: ") + fToStr(ti.get(),0,3) + " ms");
 	LogO("ALL tracks presets ---------");
 }
 
