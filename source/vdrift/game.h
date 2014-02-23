@@ -20,6 +20,7 @@
 #include "forcefeedback.h"
 
 #include "../ogre/common/QTimer.h"
+#include <OgreTimer.h>
 #include <boost/thread.hpp>
 
 
@@ -29,7 +30,6 @@ public:
 	class App* app;
 	double TickPeriod() const {  return framerate;  }
 	bool OneLoop(double dt);  std::string strProfInfo;
-	QTimer qtim;
 	
 	bool ParseArguments(std::list <std::string> & args);
 	bool InitializeSound();

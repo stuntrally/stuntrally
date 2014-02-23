@@ -24,6 +24,7 @@
 #include <OgreMaterialManager.h>
 #include <OgreSceneNode.h>
 #include <OgreViewport.h>
+#include <OgreTimer.h>
 #include "common/MultiList2.h"
 #include "common/Slider.h"
 #include <MyGUI.h>
@@ -39,13 +40,19 @@ using namespace MyGUI;
 
 void App::UpdThr()
 {
+	Ogre::Timer gtim;
+	//#ifdef _WIN32
+	//DWORD af = 2;
+	//gtim.setOption("QueryAffinityMask", &af);
+	//#endif
+	gtim.reset();
+
 	while (!mShutDown)
 	{
 		///  step Game  **
 
-		//  separate thread
-		pGame->qtim.update();
-		double dt = pGame->qtim.dt;
+		double dt = double(gtim.getMicroseconds()) * 0.000001;
+		gtim.reset();
 		
 		if (pSet->multi_thr == 1 && !bLoading)
 		{
