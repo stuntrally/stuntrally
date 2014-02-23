@@ -164,6 +164,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video.fullscreen", fullscreen);		Param(c,w, "video.vsync", vsync);
 	Param(c,w, "video.fsaa", fsaa);
 	Param(c,w, "video.buffer", buffer);				Param(c,w, "video.rendersystem", rendersystem);
+	Param(c,w, "video.limit_fps", limit_fps);
+	Param(c,w, "video.limit_fps_val", limit_fps_val);	Param(c,w, "video.limit_sleep", limit_sleep);
 	
 	// not in gui-
 	Param(c,w, "misc.boostFromExhaust", boostFromExhaust);
@@ -226,7 +228,8 @@ SETTINGS::SETTINGS()   ///  Defaults
 	//  video
 	,windowx(800), windowy(600)
 	,fullscreen(false), vsync(false)
-	,rendersystem("OpenGL Rendering Subsystem")
+	,limit_fps(0), limit_fps_val(60.f), limit_sleep(-1)
+	,rendersystem("Default")
 	,buffer("FBO"), fsaa(0)
 	//  video eff
 	,all_effects(false), godrays(false), filmgrain(false)

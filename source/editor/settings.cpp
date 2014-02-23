@@ -64,6 +64,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video.fullscreen", fullscreen);
 	Param(c,w, "video.fsaa", fsaa);					Param(c,w, "video.vsync", vsync);
 	Param(c,w, "video.buffer", buffer);				Param(c,w, "video.rendersystem", rendersystem);
+	Param(c,w, "video.limit_fps", limit_fps);
+	Param(c,w, "video.limit_fps_val", limit_fps_val);	Param(c,w, "video.limit_sleep", limit_sleep);
 	
 	Param(c,w, "ter_gen.scale", gen_scale);
 	Param(c,w, "ter_gen.ofsx", gen_ofsx);			Param(c,w, "ter_gen.ofsy", gen_ofsy);
@@ -105,8 +107,12 @@ SETTINGS::SETTINGS()  ///  Defaults
 	,bFog(0), bTrees(0), bWeather(0), autoBlendmap(1)
 	,cam_speed(1.f), cam_inert(1.f)
 	,ter_skip(4), road_sphr(1.f), mini_skip(4)
-	,windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false)
-	,buffer("FBO"), rendersystem("OpenGL Rendering Subsystem")
+	//  video
+	,windowx(800), windowy(600)
+	,fullscreen(false), vsync(false)
+	,limit_fps(0), limit_fps_val(60.f), limit_sleep(-1)
+	,rendersystem("Default")
+	,buffer("FBO"), fsaa(0)
 	//  ter gen
 	,gen_scale(20.f), gen_freq(0.73f), gen_oct(4), gen_persist(0.4f)
 	,gen_pow(1.0f), gen_ofsx(0.f), gen_ofsy(0.f)

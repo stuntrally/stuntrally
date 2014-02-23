@@ -366,7 +366,10 @@
 	<Tag name="NeedRestart">* need restart</Tag>
 	<Tag name="Change">Change</Tag>
 	<Tag name="PostfilterAA">Post-filter antialiasing</Tag>
-
+	<Tag name="LimitFPS">Limit frames per second</Tag>
+	<Tag name="FramesPerSec">Frames per second</Tag>
+	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
+	
 	<Tag name="GraphicsPreset">Graphics preset</Tag>
 	<Tag name="GraphicsAll_Lowest">Lowest</Tag>
 	<Tag name="GraphicsAll_Low">Low</Tag>

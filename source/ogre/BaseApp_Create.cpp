@@ -28,6 +28,7 @@
 #include "common/MyGUI_D3D11.h"
 
 #include <OgreOverlayManager.h>
+#include <OgreTimer.h>
 #include "Compositor.h"
 
 #include "../shiny/Main/Factory.hpp"
@@ -155,7 +156,22 @@ void BaseApp::Run( bool showDialog )
 	if (!setup())
 		return;
 	
-	mRoot->startRendering();
+	if (!pSet->limit_fps)
+		mRoot->startRendering();  // default
+	else
+	{	Ogre::Timer tim;
+		while (1)
+		{
+			Ogre::WindowEventUtilities::messagePump();
+			if (tim.getMicroseconds() > 1000000.0 / pSet->limit_fps_val)
+			{
+				tim.reset();
+				if (!mRoot->renderOneFrame())
+					break;
+			}else
+			if (pSet->limit_sleep >= 0)
+				boost::this_thread::sleep(boost::posix_time::milliseconds(pSet->limit_sleep));
+	}	}
 
 	destroyScene();
 }

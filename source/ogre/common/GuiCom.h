@@ -81,6 +81,10 @@ public:
 
 	void comboTexFilter(CMB), cmbAntiAliasing(CMB);
 	void btnShadows(WP), btnShaders(WP), btnTrGrReset(WP);
+	
+	Ck ckLimitFps;
+	SV svLimitFps,svLimitSleep;
+	
 
 	//  track path 
 	Ogre::String pathTrk[2];    // 0 read only  1 //U user paths for save

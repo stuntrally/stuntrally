@@ -19,6 +19,7 @@ public:
 	int tracks_view, tracks_sort;  bool tracks_sortup;
 
 	//  graphics common
+	bool limit_fps;  float limit_fps_val;  int limit_sleep;
 	int preset;
 	int anisotropy, tex_size, ter_mtr, ter_tripl;
 	float view_distance, terdetail, terdist, road_dist;

@@ -104,6 +104,11 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 		cmb->setIndexSelected(pSet->preset);
 	}
 	
+	//  video
+	ck= &ckLimitFps;   ck->Init("LimitFpsOn", &pSet->limit_fps);
+	sv= &svLimitFps;   sv->Init("LimitFps",   &pSet->limit_fps_val,	20.f,144.f);  sv->DefaultF(60.f);
+	sv= &svLimitSleep; sv->Init("LimitSleep", &pSet->limit_sleep,	-2,20, 1.5f);  sv->DefaultI(-1);
+	
 	//  screen
 	CmbC(cmb, "CmbAntiAliasing", cmbAntiAliasing);
 	int si=0;

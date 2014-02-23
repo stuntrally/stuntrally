@@ -146,6 +146,7 @@ public:
 	int windowx, windowy, fsaa;
 	bool fullscreen, vsync;
 	std::string buffer, rendersystem;
+	bool limit_fps;  float limit_fps_val;  int limit_sleep;
 	
 	//  replay
 	bool rpl_rec, rpl_ghost, rpl_bestonly;
