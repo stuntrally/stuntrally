@@ -1,10 +1,15 @@
 #pragma once
 #include "PreviewTex.h"
+#include <OgreVector3.h>
 #include <OgreVector4.h>
+#include <OgreString.h>
+#include <OgreTexture.h>
+#include <OgreShadowCameraSetup.h>
 
 namespace Forests {  class PagedGeometry;  }
-namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class PageManager;
-	class Light;  class Rectangle2D;  class SceneNode;  class RenderTexture;  class Camera;  }
+namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class StaticGeometry;
+	class Light;  class SceneNode;  class Camera;  class Texture;  class SceneManager;  class Entity;
+	class Rectangle2D;  class RenderTexture;  class Viewport;  class Root;  class ParticleSystem; }
 class App;  class Scene;  class WaterRTT;  class CData;  class SplineRoad;
 
 
