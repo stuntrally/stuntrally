@@ -58,7 +58,7 @@ void App::createScene()
 		if (pSet->cam_view[i] >= 0)
 			carsCamNum[i] = pSet->cam_view[i];
 
-	QTimer ti;  ti.update();  /// time
+	QTimer ti;
 
 	//  data xml
 	scn->data->Load();
@@ -86,9 +86,7 @@ void App::createScene()
 	LogO(String("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
 	LogO(String("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
 
-	ti.update();  /// time
-	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time load xmls: ") + fToStr(dt,0,3) + " ms");
+	LogO(String("::: Time load xmls: ") + fToStr(ti.get(),0,3) + " ms");
 
 
 	///  _Tool_ ghosts times ...........................

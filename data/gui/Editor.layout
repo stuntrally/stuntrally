@@ -2871,9 +2871,9 @@
 						</Widget>
 
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 754 478">
+					<!--<Widget type="TabItem" skin="" position="2 24 754 478">
 						<Property key="Caption" value="#90E0B0#{GrColorMap}"/>
-					</Widget>
+					</Widget>-->
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">

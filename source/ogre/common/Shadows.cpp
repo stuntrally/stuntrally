@@ -38,7 +38,7 @@ using namespace Forests;
 //---------------------------------------------------------------------------------------------------
 void CScene::changeShadows()
 {	
-	QTimer ti;  ti.update();  /// time
+	QTimer ti;
 	
 	//  get settings
 	SETTINGS* pSet = app->pSet;
@@ -208,9 +208,7 @@ void CScene::changeShadows()
 		vdrTrack->build();
 	}
 
-	ti.update();	/// time
-	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time Shadows: ") + fToStr(dt,0,3) + " ms");
+	LogO(String("::: Time Shadows: ") + fToStr(ti.get(),0,3) + " ms");
 }
 
 

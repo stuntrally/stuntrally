@@ -330,8 +330,7 @@ bool BaseApp::configure()
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()
 {
-	QTimer ti;  ti.update();  /// time
-	QTimer ti2;  ti2.update();  /// time2
+	QTimer ti,ti2;
 
 	if (pSet->rendersystem == "Default")
 	{
@@ -403,34 +402,28 @@ bool BaseApp::setup()
 
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
-		ti.update();	/// time
-		float dt = ti.dt * 1000.f;
-		LogO(Ogre::String(":::: Time setup vp: ") + fToStr(dt,0,3) + " ms");
+		LogO(Ogre::String(":::: Time setup vp: ") + fToStr(ti.get(),0,3) + " ms");
 
 
 	//  Gui
 	baseInitGui();
 
-		ti.update();  dt = ti.dt * 1000.f;  /// time
-		LogO(Ogre::String(":::: Time setup gui: ") + fToStr(dt,0,3) + " ms");
+		LogO(Ogre::String(":::: Time setup gui: ") + fToStr(ti.get(),0,3) + " ms");
 
 	createResourceListener();
 	loadResources();
 
-		ti.update();  dt = ti.dt * 1000.f;  /// time
-		LogO(Ogre::String(":::: Time resources: ") + fToStr(dt,0,3) + " ms");
+		LogO(Ogre::String(":::: Time resources: ") + fToStr(ti.get(),0,3) + " ms");
 
 	LogO("*** createFrameListener ***");
 	createFrameListener();
 
-		ti.update();  dt = ti.dt * 1000.f;  /// time
-		LogO(Ogre::String(":::: Time createFrameListener: ") + fToStr(dt,0,3) + " ms");
+		LogO(Ogre::String(":::: Time createFrameListener: ") + fToStr(ti.get(),0,3) + " ms");
 
 	LogO("*** createScene ***");
 	createScene();
 
-		ti.update();  dt = ti.dt * 1000.f;  /// time
-		LogO(Ogre::String(":::: Time createScene: ") + fToStr(dt,0,3) + " ms");
+		LogO(Ogre::String(":::: Time createScene: ") + fToStr(ti.get(),0,3) + " ms");
 
 	LogO("*** recreateCompositor ***");
 	recreateCompositor();
@@ -446,11 +439,9 @@ bool BaseApp::setup()
 
 	postInit();
 
-		ti.update();  dt = ti.dt * 1000.f;  /// time
-		LogO(Ogre::String(":::: Time post, mat factory: ") + fToStr(dt,0,3) + " ms");
+		LogO(Ogre::String(":::: Time post, mat factory: ") + fToStr(ti.get(),0,3) + " ms");
 
-	ti2.update();  dt = ti2.dt * 1000.f;  /// time2
-	LogO(Ogre::String(":::: Time setup total: ") + fToStr(dt,0,3) + " ms");
+	LogO(Ogre::String(":::: Time setup total: ") + fToStr(ti2.get(),0,3) + " ms");
 	
 	return true;
 }

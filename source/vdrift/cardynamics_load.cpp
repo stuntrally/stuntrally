@@ -76,7 +76,7 @@ static void ConvertV2to1(float & x, float & y, float & z)
 //----------------------------------------------------------------------------------------------------------------------------------
 bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 {
-	QTimer ti;  ti.update(); /// time
+	QTimer ti;
 
 	//bTerrain = false;
 	string drive = "RWD";
@@ -595,9 +595,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 
 	UpdateMass();
 
-	ti.update(); /// time
-	float dt = ti.dt * 1000.f;
-	LogO(Ogre::String(":::: Time car dynamics load: ") + fToStr(dt,0,3) + " ms");
+	LogO(Ogre::String(":::: Time car dynamics load: ") + fToStr(ti.get(),0,3) + " ms");
 	return true;
 }
 

@@ -65,7 +65,7 @@ void CScene::RecreateTrees()
 
 void CScene::CreateTrees()
 {
-	QTimer ti;  ti.update();  /// time
+	QTimer ti;
 	gTerrain = terrain;
 		
 	//-------------------------------------- Grass --------------------------------------
@@ -155,9 +155,7 @@ void CScene::CreateTrees()
 		}
 		grass->setShadersEnabled(true);
 	}
-	ti.update();  /// time
-	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time Grass: ") + fToStr(dt,0,3) + " ms");
+	LogO(String("::: Time Grass: ") + fToStr(ti.get(),0,3) + " ms");
 	
 
 	//---------------------------------------------- Trees ----------------------------------------------
@@ -427,7 +425,5 @@ void CScene::CreateTrees()
 		LogO(String("***** Vegetation objects count: ") + toStr(cntr) + "  shapes: " + toStr(cntshp));
 	}
 	//imgRoadSize = 0;
-	ti.update();  /// time
-	dt = ti.dt * 1000.f;
-	LogO(String("::: Time Trees: ") + fToStr(dt,0,3) + " ms");
+	LogO(String("::: Time Trees: ") + fToStr(ti.get(),0,3) + " ms");
 }

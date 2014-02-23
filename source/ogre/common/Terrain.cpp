@@ -177,8 +177,7 @@ void CScene::SetupHorizon()
 ///--------------------------------------------------------------------------------------------------------------
 void CScene::CreateTerrain(bool bNewHmap, bool bTer)
 {
-	QTimer tm;  tm.update();  /// time
-
+	QTimer tm;
 	terrain = 0;
 	
 	///  sky
@@ -195,7 +194,7 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer)
 	///  --------  fill HeightField data --------
 	if (bTer)
 	{
-		//QTimer ti;  ti.update();  /// time
+		//QTimer ti;
 
 		int wx = sc->td.iVertsX, wy = sc->td.iVertsY, wxy = wx * wy;  //wy=wx
 		delete[] sc->td.hfHeight;  sc->td.hfHeight = new float[wxy];
@@ -213,9 +212,7 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer)
 
 		CreateBlendTex();  //+
 
-		//ti.update();  /// time  4MB ~13ms
-		//float dt = ti.dt * 1000.f;
-		//LogO(String("::: Time Hmap: ") + fToStr(dt,0,3) + " ms");
+		//LogO(String("::: Time Hmap: ") + fToStr(ti.get(),0,3) + " ms");  // 4MB ~13ms
 	}
 	///
 
@@ -284,9 +281,7 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer)
 
 	UpdBlendmap();  //
 
-		tm.update();	/// time
-		float dt = tm.dt * 1000.f;
-		LogO(String("::: Time Terrain: ") + fToStr(dt,0,3) + " ms");
+	LogO(String("::: Time Terrain: ") + fToStr(tm.get(),0,3) + " ms");
 	
 	changeShadows();
 }
