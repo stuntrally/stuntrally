@@ -172,3 +172,16 @@ material circle_height
     fog_en false
     receives_shadows false
 }
+
+///  hw inst
+material sphere_ins
+{
+	parent base
+	diffuseMap white.png
+	ambient 0.4 0.65 0.93
+	diffuse 0.35 0.6 0.85
+	specular 0.0 0.2 0.4 32
+	//depth_bias 31
+    receives_shadows false
+    instancing true
+}

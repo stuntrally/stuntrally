@@ -30,6 +30,7 @@
 #include <OgreTextureManager.h>
 #include <OgreSceneNode.h>
 #include "../ogre/common/MessageBox/MessageBox.h"
+#include "../ogre/common/Instancing.h"
 using namespace Ogre;
 
 
@@ -165,6 +166,8 @@ void App::NewCommon(bool onlyTerVeget)
 	//  destroy all
 	if (ndSky)
 		mSceneMgr->destroySceneNode(ndSky);
+		
+	if (inst) {  delete inst;  inst=0;  }
 
 	scn->DestroyTrees();
 
@@ -252,6 +255,12 @@ void App::LoadTrackEv()
 	scn->road->Setup("sphere.mesh", 1.4f*pSet->road_sphr, scn->terrain, mSceneMgr, mCamera);
 	scn->road->LoadFile(gcom->TrkDir()+"road.xml");
 	scn->UpdPSSMMaterials();
+	
+	
+	/// HW_Inst Test  * * *
+	//inst = new Instanced();
+	//inst->Create(mSceneMgr,"sphere_inst.mesh");
+	
 	
 	CreateObjects();
 

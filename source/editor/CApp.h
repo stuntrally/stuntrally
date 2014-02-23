@@ -4,17 +4,16 @@
 #include "../vdrift/quaternion.h"
 #include "../vdrift/tracksurface.h"
 #include "../vdrift/track.h"
+#include "../ogre/common/data/SceneXml.h"  //Object-
+#include "../ogre/common/PreviewTex.h"
 
 #include <OgreCommon.h>
 #include <OgreVector3.h>
 #include <OgreString.h>
-
 #include <OgreRenderTargetListener.h>
 #include <OgreShadowCameraSetup.h>
 #include <OgreTexture.h>
-
-#include "../ogre/common/data/SceneXml.h"  //Object-
-#include "../ogre/common/PreviewTex.h"
+#include "../shiny/Main/Factory.hpp"
 
 #define BrushMaxSize  512
 
@@ -29,17 +28,22 @@ class CScene;  class CGui;  class CGuiCom;
 enum ED_OBJ {  EO_Move=0, EO_Rotate, EO_Scale  };
 
 
-class App : public BaseApp, public Ogre::RenderTargetListener
+class App : public BaseApp,
+			public sh::MaterialListener,
+			public Ogre::RenderTargetListener
 {
 public:
 	App(class SETTINGS* pSet1);
 	virtual ~App();
+
+	class Instanced* inst;
 
 	CScene* scn;
 
 	//  materials
 	sh::Factory* mFactory;
 	void postInit(), SetFactoryDefaults();
+	virtual void materialCreated(sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex);
 
 
 	///  Gui

@@ -21,7 +21,8 @@ class GAME;  class CHud;  class CGui;  class CGuiCom;
 const int CarPosCnt = 8;  // size of poses queue
 
 
-class App : public BaseApp, public sh::MaterialListener,
+class App : public BaseApp,
+			public sh::MaterialListener,
 			public ICS::ChannelListener
 {
 public:
