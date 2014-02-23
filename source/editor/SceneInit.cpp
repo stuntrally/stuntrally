@@ -257,8 +257,9 @@ void App::LoadTrackEv()
 	scn->UpdPSSMMaterials();
 	
 	
-	inst = new Instanced();
-	inst->Create(mSceneMgr,"sphere_inst.mesh");
+	/// HW_Inst Test  * * *
+	//inst = new Instanced();
+	//inst->Create(mSceneMgr,"sphere_inst.mesh");
 	
 	
 	CreateObjects();

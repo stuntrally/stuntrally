@@ -12,7 +12,7 @@ void Instanced::Create(SceneManager* mSceneMgr, String sMesh)
 	//ent->setCastShadows(false);
 	int numSubs = ent->getMesh()->getNumSubMeshes();
 	InstMesh imsh;
-	int ii = 100;
+	int ii = 100;  // test
 	
 	for (int s=0; s < numSubs; ++s)
 	{

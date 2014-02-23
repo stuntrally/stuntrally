@@ -85,9 +85,9 @@
 #endif
 
 #if INSTANCING
-		shVertexInput(float4, uv1)  // windParams
-		shVertexInput(float4, uv2)  // originPos
-		shVertexInput(float4, uv3)  // windParams
+		shVertexInput(float4, uv1)
+		shVertexInput(float4, uv2)
+		shVertexInput(float4, uv3)
 		shUniform(float4x4, viewProjMatrix) @shAutoConstant(viewProjMatrix, viewproj_matrix)
 #endif
  
@@ -129,15 +129,15 @@
 	    worldMatrix[0] = uv1;
 	    worldMatrix[1] = uv2;
 	    worldMatrix[2] = uv3;
-	    worldMatrix[3] = float4( 0, 0, 0, 1 );
+	    worldMatrix[3] = float4(0,0,0,1);
 	    
 	    #if SH_GLSL
 	    worldMatrix = transpose(worldMatrix);
 	    #endif
 
 
-	    float4 worldPos		= shMatrixMult(worldMatrix, shInputPosition);
-	    float3 worldNorm		= shMatrixMult(worldMatrix, float4(normal.xyz, 0)).xyz;
+	    float4 worldPos   = shMatrixMult(worldMatrix, shInputPosition);
+	    float3 worldNorm  = shMatrixMult(worldMatrix, float4(normal.xyz, 0)).xyz;
 	    normalPassthrough = worldNorm.xyz;
 #endif
 

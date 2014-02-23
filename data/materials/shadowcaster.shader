@@ -11,10 +11,10 @@
         shOutput(float2, UV)
 		#endif
 	#if INSTANCING
-        shUniform(float4x4, vp)   @shAutoConstant(vp, viewproj_matrix)
 		shVertexInput(float4, uv1)
 		shVertexInput(float4, uv2)
 		shVertexInput(float4, uv3)
+        shUniform(float4x4, vp)   @shAutoConstant(vp, viewproj_matrix)
  	#else
         shUniform(float4x4, wvp)  @shAutoConstant(wvp, worldviewproj_matrix)
 	#endif
