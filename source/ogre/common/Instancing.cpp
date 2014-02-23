@@ -3,6 +3,10 @@
 #include "Def_Str.h"
 #include "RenderConst.h"
 #include "Instancing.h"
+
+#include <OgreEntity.h>
+#include <OgreInstanceManager.h>
+#include <OgreInstancedEntity.h>
 using namespace Ogre;
 
 
@@ -22,7 +26,7 @@ void Instanced::Create(SceneManager* mSceneMgr, String sMesh)
 			InstanceManager::HWInstancingBasic,
 			ii/*vPoses.size()*/, IM_USEALL, s);
 
-		Ogre::String sMtr = ent->getMesh()->getSubMesh(s)->getMaterialName();
+		String sMtr = ent->getMesh()->getSubMesh(s)->getMaterialName();
 
 		///  add to instancing
 		isub.ents.reserve(ii/*vPoses.size()*/);

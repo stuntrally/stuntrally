@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <OgreString.h>
 
 namespace Ogre {  class InstanceManager;  class InstancedEntity;  class Entity;  class SceneManager;  }
 
