@@ -5,6 +5,9 @@
 #include "WaterRTT.h"
 #include "../../road/Road.h"
 
+#include <OgreTerrain.h>
+#include <OgreTerrainGroup.h>
+
 
 CScene::CScene(App* app1)
 	:app(app1)
