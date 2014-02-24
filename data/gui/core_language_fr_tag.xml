@@ -59,9 +59,10 @@
 	<Tag name="InputObjectsIns">Insér. - insérer nouveau, au curseur</Tag>
 	<Tag name="GraphicsAll_Low">Bas</Tag>
 	<Tag name="ChampEndFinished">Vous avez fini ce championnat</Tag>
+	<Tag name="Gravity">Gravité</Tag>
 	<Tag name="MessageBox_No">Non</Tag>
 	<Tag name="InputUpdBlendmap">F9 - mettre à jour la Blendmap du terrain (manuellement)</Tag>
-	<Tag name="Version">version</Tag>
+	<Tag name="Camera">Caméra</Tag>
 	<Tag name="InputRoadOnTer">Orig. - activer l'alignement sur le Terrain</Tag>
 	<Tag name="TipSunDiffuse">Couleur de la lumière du soleil. Composants R V B de 0 à 1 (exemple : 0.9 0.9 0.9)</Tag>
 	<Tag name="Progress">Progrès</Tag>
@@ -76,13 +77,12 @@
 	<Tag name="TerGenOfsY">Décalage Y</Tag>
 	<Tag name="FuelBoost">Fuel Boost</Tag>
 	<Tag name="pipes">tubes</Tag>
-	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
+	<Tag name="CarTireVisCircles">Visualisation des cercles de force sur les pneus</Tag>
 	<Tag name="InputFluidsUpdate">F10 - mettre à jour la carte de profondeur, après avoir édité du terrain près d'une côte</Tag>
 	<Tag name="TBLapResults">Résultats du tour</Tag>
 	<Tag name="DepthOfField">Profondeur du terrain</Tag>
 	<Tag name="Game">Jeu</Tag>
 	<Tag name="InputObjectsScale">3 - Échelle Clic gauche - uniforme XYZ Clic droit : Y Clic du milieu : Z</Tag>
-	<Tag name="TipTerLNoiseOnly">Utiliser le bruit seulement (pas d'angles ou de hauteurs)</Tag>
 	<Tag name="RepeatStage">Répétition du stage</Tag>
 	<Tag name="TipParType3">Particule des pneus type 3 (globale pour le circuit).</Tag>
 	<Tag name="TipParType2">Particule des pneus type 2 (globale pour le circuit).</Tag>
@@ -126,6 +126,7 @@
 	<Tag name="Road_New">Nouveau</Tag>
 	<Tag name="Top">Haut</Tag>
 	<Tag name="CarType_Racing">Course</Tag>
+	<Tag name="InputRoadShiftSel">Maj. - sélectionner</Tag>
 	<Tag name="Input">Contrôles</Tag>
 	<Tag name="AlignWidthAdd">Largeur ajoutée</Tag>
 	<Tag name="NetReady">Prêt</Tag>
@@ -236,6 +237,7 @@
 	<Tag name="Player">Joueur</Tag>
 	<Tag name="InputRoadSel">Retour arrière - ajouter ou enlever de la sélection</Tag>
 	<Tag name="Weather">Temps</Tag>
+	<Tag name="DenyReversed">Interdire le changement de direction</Tag>
 	<Tag name="RplAlpha">Fantôme transparent</Tag>
 	<Tag name="InpSet_Medium">Moyen</Tag>
 	<Tag name="TipTerrainHalf">Réduire la taille de la carte d'altitude de moitié (utilisez ceci uniquement pour réduire la taille du fichier).</Tag>
@@ -405,6 +407,7 @@
 	<Tag name="TerrainMove">Déplacer</Tag>
 	<Tag name="Friction">Friction</Tag>
 	<Tag name="InputAfterChanges">(après changements de terrain/végétation)</Tag>
+	<Tag name="Version">version</Tag>
 	<Tag name="Ambient">Ambience</Tag>
 	<Tag name="SkirtLength">Skirt Length</Tag>
 	<Tag name="InputRoadNotOnTer">quand n'est pas sur le terrain</Tag>
@@ -452,7 +455,9 @@
 	<Tag name="InputMapPrevTab">Onglet précédent</Tag>
 	<Tag name="InputTogglePreview">F7 - activer/désactiver la caméra d'aperçu</Tag>
 	<Tag name="GameBy">Un jeu de</Tag>
+	<Tag name="CameraBounce">Mouvement de caméra dynamique</Tag>
 	<Tag name="SunWeather">Soleil et Temps</Tag>
+	<Tag name="Lock">Verrouiller</Tag>
 	<Tag name="GraphicsPreset">Pré-réglage graphique</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplDelete">Supprimer</Tag>
@@ -485,6 +490,7 @@
 	<Tag name="CarChange">Changement de voiture</Tag>
 	<Tag name="LTrFlDepth">profondeur maximale dans le liquide</Tag>
 	<Tag name="InputFluidsSize">Alt-Clic gauche - taille Alt-Clic droit - profondeur</Tag>
+	<Tag name="InputLockBrush">Entrée - verrouiller la position de la brosse</Tag>
 	<Tag name="Bronze">Bronze</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Shadows">Ombres</Tag>
@@ -559,7 +565,7 @@
 	<Tag name="Brush_Freq">Fréq.</Tag>
 	<Tag name="InputStartAltLMB">Alt-Clic gauche - tourner Alt-Clic droit - tourner verticalement</Tag>
 	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
-	<Tag name="Close">Close</Tag>
+	<Tag name="Close">Fermer</Tag>
 	<Tag name="TerGenOfsX">Décalage X</Tag>
 	<Tag name="TipTexTiling">Répétitions de la texture (moins = plus de répétitions).</Tag>
 	<Tag name="InputBrushShape">K,L - forme</Tag>
@@ -705,7 +711,7 @@
 	<Tag name="ChallInfo">En mode défi le jeu est déjà paramétré, les paramètres ne peuvent être changés. Un temps ou une position sont nécessaires pour être admis. Si vous êtes admis vous recevez une médaille de bronze, d'argent ou d'or.</Tag>
 	<Tag name="Tools">Outils</Tag>
 	<Tag name="NetCreateGame">Créer une partie</Tag>
-	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
+	<Tag name="TutorEndFinished">Vous avez fini ce tutoriel.</Tag>
 	<Tag name="TipGrassSwaySpd">Vitesse du \</Tag>
 	<Tag name="MaterialProperties">Propriétés du matériau</Tag>
 	<Tag name="FrictionTread">Friction</Tag>
@@ -749,9 +755,10 @@
 	<Tag name="Road_OnPipe">Sur un tube</Tag>
 	<Tag name="Amplitude">Amplitude</Tag>
 	<Tag name="TipGrassLayerDens">Densité de l'herbe pour ce calque.</Tag>
-	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
+	<Tag name="InputRoadLoopChk">7 - marquer le point de contrôle comme début/fin de boucle (pour le changement de caméra)</Tag>
 	<Tag name="TextColor">Couleur du texte</Tag>
 	<Tag name="Reduced">Réduit</Tag>
+	<Tag name="Wind">Vent</Tag>
 	<Tag name="ColBright">Luminosité</Tag>
 	<Tag name="TipFogStartDist">Distance du début de la brume [mètres].</Tag>
 	<Tag name="InputTerDeform">D - Déformer (bouton gauche : vers le haut, bouton droit : vers le bas)</Tag>
@@ -806,7 +813,7 @@
 	<Tag name="InputRoadEdit">R - mode édition de route</Tag>
 	<Tag name="jumps">sauts</Tag>
 	<Tag name="TBBest">Meilleur</Tag>
-	<Tag name="InputObjectsCopySel">ctrl-Ins - copy selection</Tag>
+	<Tag name="InputObjectsCopySel">Ctrl-Ins. - copier la sélection</Tag>
 	<Tag name="Materials">Matériels</Tag>
 	<Tag name="Gravel">Gravier</Tag>
 	<Tag name="InputMultiplier">Multiplicateur</Tag>
@@ -938,14 +945,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet d'Options précédent/suivant (Maj. sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="Gravity">Gravity</Tag>
-	<Tag name="Camera">Camera</Tag>
-	<Tag name="InputRoadShiftSel">shift - select</Tag>
-	<Tag name="DenyReversed">Deny reversed direction</Tag>
-	<Tag name="Lock">Lock</Tag>
-	<Tag name="InputLockBrush">Enter - lock brush position</Tag>
-	<Tag name="Wind">Wind</Tag>
-	<Tag name="CameraBounce">Dynamic camera bouncing</Tag>
+	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
+	<Tag name="Swap">Swap</Tag>
+	<Tag name="HighestSlopes">Highest slopes</Tag>
+	<Tag name="Test">Test</Tag>
+	<Tag name="Channels">Channels</Tag>
+	<Tag name="LimitFPS">Limit frames per second</Tag>
+	<Tag name="Channel">Channel</Tag>
+	<Tag name="TipTerLMove">Move layer, changes order.</Tag>
+	<Tag name="FramesPerSec">Frames per second</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -59,9 +59,10 @@
 	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
 	<Tag name="GraphicsAll_Low">Alhainen</Tag>
 	<Tag name="ChampEndFinished">Olet suorittanut tämän mestaruuden loppuun.</Tag>
+	<Tag name="Gravity">Gravity</Tag>
 	<Tag name="MessageBox_No">Ei</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
-	<Tag name="Version">versio</Tag>
+	<Tag name="Camera">Camera</Tag>
 	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
 	<Tag name="TipSunDiffuse">Auringon valon väri. Puna-viher-sini komponentit 0:sta 1:een (esim. 0.9 0.9 0.9).</Tag>
 	<Tag name="Progress">Edistyminen</Tag>
@@ -82,7 +83,6 @@
 	<Tag name="DepthOfField">Syväterävyysalue</Tag>
 	<Tag name="Game">Peli</Tag>
 	<Tag name="InputObjectsScale">3 - Scale   LMB - uniform XYZ  RMB: Y  MMB: Z</Tag>
-	<Tag name="TipTerLNoiseOnly">Use only noise (no angle or height ranges)</Tag>
 	<Tag name="RepeatStage">Repeating stage</Tag>
 	<Tag name="TipParType3">Rengaspartikkelityyppi 3 (yleispätevä radalle)</Tag>
 	<Tag name="TipParType2">Rengaspartikkelityyppi 2 (yleispätevä radalle)</Tag>
@@ -126,6 +126,7 @@
 	<Tag name="Road_New">Uusi</Tag>
 	<Tag name="Top">Ylös</Tag>
 	<Tag name="CarType_Racing">Kilpailu</Tag>
+	<Tag name="InputRoadShiftSel">shift - select</Tag>
 	<Tag name="Input">Syöttö</Tag>
 	<Tag name="AlignWidthAdd">Width add</Tag>
 	<Tag name="NetReady">Valmis</Tag>
@@ -236,6 +237,7 @@
 	<Tag name="Player">Pelaaja</Tag>
 	<Tag name="InputRoadSel">Askelpalautin - lisää tai poista valinnasta</Tag>
 	<Tag name="Weather">Sää</Tag>
+	<Tag name="DenyReversed">Deny reversed direction</Tag>
 	<Tag name="RplAlpha">Läpinäkyvä haamu</Tag>
 	<Tag name="InpSet_Medium">Keskitaso</Tag>
 	<Tag name="TipTerrainHalf">Resize current terrain heightmap by half (use only for reducing file size).</Tag>
@@ -405,6 +407,7 @@
 	<Tag name="TerrainMove">Siirrä</Tag>
 	<Tag name="Friction">Kitka</Tag>
 	<Tag name="InputAfterChanges">(maaston/kasvillisuuden muutoksien jälkeen)</Tag>
+	<Tag name="Version">versio</Tag>
 	<Tag name="Ambient">Ambient</Tag>
 	<Tag name="SkirtLength">Skirt Length</Tag>
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
@@ -452,7 +455,9 @@
 	<Tag name="InputMapPrevTab">Edellinen välilehti</Tag>
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
 	<Tag name="GameBy">Pelin tarjoaa</Tag>
+	<Tag name="CameraBounce">Dynamic camera bouncing</Tag>
 	<Tag name="SunWeather">Aurinko ja sää</Tag>
+	<Tag name="Lock">Lock</Tag>
 	<Tag name="GraphicsPreset">Grafiikan esivalitsin</Tag>
 	<Tag name="RollingDrag">Vierimisvastus</Tag>
 	<Tag name="RplDelete">Poista</Tag>
@@ -485,6 +490,7 @@
 	<Tag name="CarChange">Car change</Tag>
 	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - size   alt-RMB - depth</Tag>
+	<Tag name="InputLockBrush">Enter - lock brush position</Tag>
 	<Tag name="Bronze">Pronssi</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Shadows">Varjot</Tag>
@@ -693,7 +699,7 @@
 	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
 	<Tag name="TipRainSnow1">Set 1 Rain/Snow type</Tag>
 	<Tag name="TipRainSnow2">Set 2 Rain/Snow type</Tag>
-	<Tag name="TipTerLNoise">Factor of additional noise.</Tag>
+	<Tag name="TipTerLNoise">Multiplier for additional noise. +1 blends to next used layer, -1 to previous, +2 to over next.</Tag>
 	<Tag name="TiresEdit1">PgUp/PgDn - previous, next value</Tag>
 	<Tag name="TiresEdit3">Home - toggle longitudinal / lateral parameters</Tag>
 	<Tag name="TipDiffuseTex">Diffuse texture (Specular in alpha).</Tag>
@@ -752,6 +758,7 @@
 	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
 	<Tag name="TextColor">Tekstin väri</Tag>
 	<Tag name="Reduced">Lievennetty</Tag>
+	<Tag name="Wind">Wind</Tag>
 	<Tag name="ColBright">Kirkkaus</Tag>
 	<Tag name="TipFogStartDist">Fog start distance [meters].</Tag>
 	<Tag name="InputTerDeform">D - Deform  (LMB up, RMB down)</Tag>
@@ -938,14 +945,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="Gravity">Gravity</Tag>
-	<Tag name="Camera">Camera</Tag>
-	<Tag name="InputRoadShiftSel">shift - select</Tag>
-	<Tag name="DenyReversed">Deny reversed direction</Tag>
-	<Tag name="Lock">Lock</Tag>
-	<Tag name="InputLockBrush">Enter - lock brush position</Tag>
-	<Tag name="Wind">Wind</Tag>
-	<Tag name="CameraBounce">Dynamic camera bouncing</Tag>
+	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
+	<Tag name="Swap">Swap</Tag>
+	<Tag name="HighestSlopes">Highest slopes</Tag>
+	<Tag name="Test">Test</Tag>
+	<Tag name="Channels">Channels</Tag>
+	<Tag name="LimitFPS">Limit frames per second</Tag>
+	<Tag name="Channel">Channel</Tag>
+	<Tag name="TipTerLMove">Move layer, changes order.</Tag>
+	<Tag name="FramesPerSec">Frames per second</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

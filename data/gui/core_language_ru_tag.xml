@@ -17,7 +17,7 @@
 	<Tag name="LS_MISC">Завершение</Tag>
 	<Tag name="InputHeaderTxt2">Привязка</Tag>
 	<Tag name="InputHeaderTxt3">Значение</Tag>
-	<Tag name="AndUsing">и использование</Tag>
+	<Tag name="AndUsing">и используется</Tag>
 	<Tag name="Championship">Чемпионат</Tag>
 	<Tag name="ColumnRadius">Радиус колонны</Tag>
 	<Tag name="InputKeyUnassigned">-- Нет --</Tag>
@@ -51,7 +51,7 @@
 	<Tag name="TipChangeGloss">Изменяет блеск окраски автомобиля (матовый-блестящий).</Tag>
 	<Tag name="Surface">Поверхность</Tag>
 	<Tag name="ChallEndFinished">Вы прошли этот вызов.</Tag>
-	<Tag name="About">О игре</Tag>
+	<Tag name="About">Об игре</Tag>
 	<Tag name="TBScore">Очки</Tag>
 	<Tag name="DevKeys">Разработчику. Ctrl-F всё, Alt-shift-1..6 загр. тест треки.</Tag>
 	<Tag name="InputRoadChkFirst">0   - устан. контр. точку 1-ой</Tag>
@@ -59,9 +59,10 @@
 	<Tag name="InputObjectsIns">Ins - вставить, где курсор</Tag>
 	<Tag name="GraphicsAll_Low">Низко</Tag>
 	<Tag name="ChampEndFinished">Вы закончили этот чемпионат.</Tag>
+	<Tag name="Gravity">Тяжесть</Tag>
 	<Tag name="MessageBox_No">Нет</Tag>
 	<Tag name="InputUpdBlendmap">F9 - обновить смесь ландшафтов</Tag>
-	<Tag name="Version">версия</Tag>
+	<Tag name="Camera">Камера</Tag>
 	<Tag name="InputRoadOnTer">Home - захват Ландшафта</Tag>
 	<Tag name="TipSunDiffuse">Цвет рассеянного (нормального) солнечного света. R G B значение от 0 до 1 (напр. 0.9 0.9 0.9)</Tag>
 	<Tag name="Progress">Прогресс</Tag>
@@ -82,13 +83,12 @@
 	<Tag name="DepthOfField">Прорисовка</Tag>
 	<Tag name="Game">Игра</Tag>
 	<Tag name="InputObjectsScale">3 - Масштаб LMB - все RMB: Y MMB: Z</Tag>
-	<Tag name="TipTerLNoiseOnly">Используйте только шум (не угол или высоту диапазонов)</Tag>
 	<Tag name="RepeatStage">Этап провален</Tag>
 	<Tag name="TipParType3">Частица шины тип 3 (глобально для трека).</Tag>
 	<Tag name="TipParType2">Частица шины тип 2 (глобально для трека).</Tag>
 	<Tag name="TipParType1">Частица шины тип 1 (глобально для трека).</Tag>
 	<Tag name="GrassDens">Плотность травы</Tag>
-	<Tag name="Locked">Заперто</Tag>
+	<Tag name="Locked">Заблок.</Tag>
 	<Tag name="RoadParams">Параметры дороги</Tag>
 	<Tag name="NetDirectConnect">Прямое подкл.</Tag>
 	<Tag name="Light">Освещение</Tag>
@@ -126,6 +126,7 @@
 	<Tag name="Road_New">Новая</Tag>
 	<Tag name="Top">Верх</Tag>
 	<Tag name="CarType_Racing">Гонка</Tag>
+	<Tag name="InputRoadShiftSel">shift - выбор</Tag>
 	<Tag name="Input">Ввод</Tag>
 	<Tag name="AlignWidthAdd">Ширина+</Tag>
 	<Tag name="NetReady">Готов</Tag>
@@ -236,6 +237,7 @@
 	<Tag name="Player">Игрок</Tag>
 	<Tag name="InputRoadSel">Backspace - добавить или удалить из выбранного</Tag>
 	<Tag name="Weather">Погода</Tag>
+	<Tag name="DenyReversed">Нельзя обратно</Tag>
 	<Tag name="RplAlpha">Прозрачный призрак</Tag>
 	<Tag name="InpSet_Medium">Средне</Tag>
 	<Tag name="TipTerrainHalf">Изменение размера высот текущей местности в два раза (используется только для сокращения размера файла).</Tag>
@@ -405,6 +407,7 @@
 	<Tag name="TerrainMove">Движ.</Tag>
 	<Tag name="Friction">Трение</Tag>
 	<Tag name="InputAfterChanges">(после Ланд./Раст. изменений)</Tag>
+	<Tag name="Version">версия</Tag>
 	<Tag name="Ambient">Окр. среда</Tag>
 	<Tag name="SkirtLength">Длина края</Tag>
 	<Tag name="InputRoadNotOnTer">не на ландшафте</Tag>
@@ -452,7 +455,9 @@
 	<Tag name="InputMapPrevTab">Пред. вкладка</Tag>
 	<Tag name="InputTogglePreview">F7 - войти/выйти смот. камера</Tag>
 	<Tag name="GameBy">Игра</Tag>
+	<Tag name="CameraBounce">Дин. подпрыг. камеры</Tag>
 	<Tag name="SunWeather">Солнце и погода</Tag>
+	<Tag name="Lock">Забл.</Tag>
 	<Tag name="GraphicsPreset">Заданная графика</Tag>
 	<Tag name="RollingDrag">Вращ. движ.</Tag>
 	<Tag name="RplDelete">Удалить</Tag>
@@ -485,6 +490,7 @@
 	<Tag name="CarChange">Смена авто</Tag>
 	<Tag name="LTrFlDepth">макс. глубина</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - размер alt-RMB - глубина</Tag>
+	<Tag name="InputLockBrush">Enter - забл. поз. кисти</Tag>
 	<Tag name="Bronze">Бронза</Tag>
 	<Tag name="TexCoordMul">Тех. коор.</Tag>
 	<Tag name="Shadows">Тени</Tag>
@@ -656,7 +662,7 @@
 	<Tag name="InputFocusFind">Ctrl-F  поисковик</Tag>
 	<Tag name="InputOther1">Up,Down - навигация   Enter - старт</Tag>
 	<Tag name="TipModelDens">Как часто модель будет появлятся в области трека.</Tag>
-	<Tag name="InputOther2">Enter - показать/скрыть игроков по сети в окне</Tag>
+	<Tag name="InputOther2">Enter - пок./скрыть окно игроков по сети</Tag>
 	<Tag name="InpSet_Fast">Быстро</Tag>
 	<Tag name="InputMain">Главное</Tag>
 	<Tag name="NewTerrainFlat">Новая плоскость</Tag>
@@ -752,6 +758,7 @@
 	<Tag name="InputRoadLoopChk">7   - пометить КТ как петлю начало/конец (изм. камеры авто)</Tag>
 	<Tag name="TextColor">Цвет текста</Tag>
 	<Tag name="Reduced">Умень.</Tag>
+	<Tag name="Wind">Ветер</Tag>
 	<Tag name="ColBright">Яркость</Tag>
 	<Tag name="TipFogStartDist">Начло дистанции тумана [метры].</Tag>
 	<Tag name="InputTerDeform">D - искажать  (LMB  вверх, RMB  вниз)</Tag>
@@ -938,14 +945,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред,след Опции вкладка (shift - подменю)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="Gravity">Gravity</Tag>
-	<Tag name="Camera">Camera</Tag>
-	<Tag name="InputRoadShiftSel">shift - select</Tag>
-	<Tag name="DenyReversed">Deny reversed direction</Tag>
-	<Tag name="Lock">Lock</Tag>
-	<Tag name="InputLockBrush">Enter - lock brush position</Tag>
-	<Tag name="Wind">Wind</Tag>
-	<Tag name="CameraBounce">Dynamic camera bouncing</Tag>
+	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
+	<Tag name="Swap">Swap</Tag>
+	<Tag name="HighestSlopes">Highest slopes</Tag>
+	<Tag name="Test">Test</Tag>
+	<Tag name="Channels">Channels</Tag>
+	<Tag name="LimitFPS">Limit frames per second</Tag>
+	<Tag name="Channel">Channel</Tag>
+	<Tag name="TipTerLMove">Move layer, changes order.</Tag>
+	<Tag name="FramesPerSec">Frames per second</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

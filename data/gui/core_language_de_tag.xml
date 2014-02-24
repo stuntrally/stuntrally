@@ -59,9 +59,10 @@
 	<Tag name="InputObjectsIns">EInfg - bei Cursor platzieren</Tag>
 	<Tag name="GraphicsAll_Low">Niedrig</Tag>
 	<Tag name="ChampEndFinished">Die Meisterschaft wurde erfolgreich beendet!</Tag>
+	<Tag name="Gravity">Schwerkraft</Tag>
 	<Tag name="MessageBox_No">Nein</Tag>
 	<Tag name="InputUpdBlendmap">F9 - Terrain-Blendmap aktualisieren (manuell)</Tag>
-	<Tag name="Version">Version</Tag>
+	<Tag name="Camera">Kamera</Tag>
 	<Tag name="InputRoadOnTer">Pos1 - über dem Boden an/aus</Tag>
 	<Tag name="TipSunDiffuse">Farbe des Sonnenlichts. R G B Komponenten von 0 bis 1 (z.B. 0.9 0.9 0.9)</Tag>
 	<Tag name="Progress">Gefahren</Tag>
@@ -82,7 +83,6 @@
 	<Tag name="DepthOfField">Tiefenunschärfe</Tag>
 	<Tag name="Game">Spiel</Tag>
 	<Tag name="InputObjectsScale">3 - Skalieren LMT - uniform XYZ RMT: Y MMT: Z</Tag>
-	<Tag name="TipTerLNoiseOnly">Nur Rauschen (keine automatische Winkel-/Höhen Texturanpassung)</Tag>
 	<Tag name="RepeatStage">Etappe wiederholen</Tag>
 	<Tag name="TipParType3">Reifenpartikel Typ 3 (ganze Strecke)</Tag>
 	<Tag name="TipParType2">Reifenpartikel Typ 2 (ganze Strecke)</Tag>
@@ -126,6 +126,7 @@
 	<Tag name="Road_New">Neu</Tag>
 	<Tag name="Top">Oben</Tag>
 	<Tag name="CarType_Racing">Racing</Tag>
+	<Tag name="InputRoadShiftSel">shift - wählen</Tag>
 	<Tag name="Input">Eingabe</Tag>
 	<Tag name="AlignWidthAdd">Breite addieren</Tag>
 	<Tag name="NetReady">Bereit</Tag>
@@ -236,6 +237,7 @@
 	<Tag name="Player">Spieler</Tag>
 	<Tag name="InputRoadSel">Rücktaste - zu Auswahl hinzufügen/entfernen</Tag>
 	<Tag name="Weather">Wetter</Tag>
+	<Tag name="DenyReversed">Umgekehrt nicht erlaubt</Tag>
 	<Tag name="RplAlpha">durchsichtiger Geist</Tag>
 	<Tag name="InpSet_Medium">Mittel</Tag>
 	<Tag name="TipTerrainHalf">Auflösung der Terrain-Heightmap halbieren (vermindert die Dateigröße)</Tag>
@@ -405,6 +407,7 @@
 	<Tag name="TerrainMove">Bewegen</Tag>
 	<Tag name="Friction">Reibung</Tag>
 	<Tag name="InputAfterChanges">(nach Terrain/Vegetationsveränderung)</Tag>
+	<Tag name="Version">Version</Tag>
 	<Tag name="Ambient">Umgebung</Tag>
 	<Tag name="SkirtLength">Skirt-Länge</Tag>
 	<Tag name="InputRoadNotOnTer">wenn nicht auf Terrain</Tag>
@@ -452,7 +455,9 @@
 	<Tag name="InputMapPrevTab">Vorheriger Tab</Tag>
 	<Tag name="InputTogglePreview">F7 - Vorschaukamera</Tag>
 	<Tag name="GameBy">Ein Spiel von</Tag>
+	<Tag name="CameraBounce">Dynamische Kamera schaukeln</Tag>
 	<Tag name="SunWeather">Sonne und Wetter</Tag>
+	<Tag name="Lock">Schloß</Tag>
 	<Tag name="GraphicsPreset">Grafikeinstellungen</Tag>
 	<Tag name="RollingDrag">Rollwiderstand</Tag>
 	<Tag name="RplDelete">Löschen</Tag>
@@ -485,6 +490,7 @@
 	<Tag name="CarChange">Auto wechseln</Tag>
 	<Tag name="LTrFlDepth">max. Wassertiefe</Tag>
 	<Tag name="InputFluidsSize">alt-LMB Größe, alt-RMB Tiefe</Tag>
+	<Tag name="InputLockBrush">Enter - Pinsel Position sperren</Tag>
 	<Tag name="Bronze">Bronze</Tag>
 	<Tag name="TexCoordMul">Texturkoordinaten-Faktor</Tag>
 	<Tag name="Shadows">Schatten</Tag>
@@ -752,6 +758,7 @@
 	<Tag name="InputRoadLoopChk">7 - Wegp. als Loopingsanfang/-ende markieren (für Kamera)</Tag>
 	<Tag name="TextColor">Textfarbe</Tag>
 	<Tag name="Reduced">Reduziert</Tag>
+	<Tag name="Wind">Wind</Tag>
 	<Tag name="ColBright">Helligkeit</Tag>
 	<Tag name="TipFogStartDist">Nebelanfangsdistanz (Meter)</Tag>
 	<Tag name="InputTerDeform">D - verformen (LMB hoch, RMB runter)</Tag>
@@ -938,14 +945,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="Gravity">Gravity</Tag>
-	<Tag name="Camera">Camera</Tag>
-	<Tag name="InputRoadShiftSel">shift - select</Tag>
-	<Tag name="DenyReversed">Deny reversed direction</Tag>
-	<Tag name="Lock">Lock</Tag>
-	<Tag name="InputLockBrush">Enter - lock brush position</Tag>
-	<Tag name="Wind">Wind</Tag>
-	<Tag name="CameraBounce">Dynamic camera bouncing</Tag>
+	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
+	<Tag name="Swap">Swap</Tag>
+	<Tag name="HighestSlopes">Highest slopes</Tag>
+	<Tag name="Test">Test</Tag>
+	<Tag name="Channels">Channels</Tag>
+	<Tag name="LimitFPS">Limit frames per second</Tag>
+	<Tag name="Channel">Channel</Tag>
+	<Tag name="TipTerLMove">Move layer, changes order.</Tag>
+	<Tag name="FramesPerSec">Frames per second</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
