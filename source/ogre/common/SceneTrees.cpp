@@ -155,7 +155,7 @@ void CScene::CreateTrees()
 		}
 		grass->setShadersEnabled(true);
 	}
-	LogO(String("::: Time Grass: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+	LogO(String("::: Time Grass: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 	
 
 	//---------------------------------------------- Trees ----------------------------------------------

@@ -212,7 +212,7 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer)
 
 		CreateBlendTex();  //+
 
-		//LogO(String("::: Time Hmap: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  // 4MB ~13ms
+		//LogO(String("::: Time Hmap: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();  // 4MB ~13ms
 	}
 	///
 

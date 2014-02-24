@@ -418,28 +418,28 @@ bool BaseApp::setup()
 
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
-		LogO(Ogre::String(":::: Time setup vp: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+		LogO(Ogre::String(":::: Time setup vp: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 
 	//  Gui
 	baseInitGui();
 
-		LogO(Ogre::String(":::: Time setup gui: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+		LogO(Ogre::String(":::: Time setup gui: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 	createResourceListener();
 	loadResources();
 
-		LogO(Ogre::String(":::: Time resources: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+		LogO(Ogre::String(":::: Time resources: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 	LogO("*** createFrameListener ***");
 	createFrameListener();
 
-		LogO(Ogre::String(":::: Time createFrameListener: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+		LogO(Ogre::String(":::: Time createFrameListener: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 	LogO("*** createScene ***");
 	createScene();
 
-		LogO(Ogre::String(":::: Time createScene: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+		LogO(Ogre::String(":::: Time createScene: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 	LogO("*** recreateCompositor ***");
 	recreateCompositor();
@@ -455,7 +455,7 @@ bool BaseApp::setup()
 
 	postInit();
 
-		LogO(Ogre::String(":::: Time post, mat factory: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+		LogO(Ogre::String(":::: Time post, mat factory: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 	LogO(Ogre::String(":::: Time setup total: ") + fToStr(ti2.getMilliseconds(),0,3) + " ms");
 	

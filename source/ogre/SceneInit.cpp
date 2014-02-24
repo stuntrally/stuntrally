@@ -86,7 +86,7 @@ void App::createScene()
 	LogO(String("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
 	LogO(String("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
 
-	LogO(String("::: Time load xmls: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+	LogO(String("::: Time load xmls: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 
 	///  _Tool_ ghosts times ...........................

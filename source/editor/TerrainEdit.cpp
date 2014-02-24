@@ -308,7 +308,7 @@ void CGui::btnTerGenerate(WP wp)
 						  (hfData[a] * c * pSet->gen_mul) );
 	}	}
 
-	LogO(String("::: Time Ter Gen: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+	LogO(String("::: Time Ter Gen: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 	std::ofstream of;
 	of.open(getHMapNew().c_str(), std::ios_base::binary);

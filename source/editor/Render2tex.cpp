@@ -176,7 +176,7 @@ void App::SaveGrassDens()
 	for (x = 0;  x <= f; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | left
 	for (x=w-f-1; x < w; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | right
 
-	LogO(String("::: Time road dens: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+	LogO(String("::: Time road dens: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 	if (!IsVdrTrack())  // vdr trk no grass, only previews
 	{
