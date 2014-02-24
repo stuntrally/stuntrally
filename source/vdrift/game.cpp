@@ -15,11 +15,11 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/data/SceneXml.h"
 #include "../ogre/common/CScene.h"
-#include "../ogre/common/QTimer.h"
 #include "../ogre/CGame.h"
 #include "../ogre/CInput.h"
 #include "../ogre/FollowCamera.h"
 #include "../oics/ICSInputControlSystem.h"
+#include <OgreTimer.h>
 
 #define M_PI  3.14159265358979323846
 using namespace std;
@@ -259,7 +259,7 @@ bool GAME::LoadSusp()
 
 bool GAME::InitializeSound()
 {
-	QTimer ti;
+	Ogre::Timer ti;
 
 	if (sound.Init(2048/*1024/*512*/, info_output, error_output))
 	{
@@ -295,7 +295,7 @@ bool GAME::InitializeSound()
 		return false;
 	}
 
-	info_output << "::: Time Sounds: " << fToStr(ti.get(),0,3) << " ms" << endl;
+	info_output << "::: Time Sounds: " << fToStr(ti.getMilliseconds(),0,3) << " ms" << endl;
 	return true;
 }
 

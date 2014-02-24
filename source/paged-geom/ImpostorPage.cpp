@@ -28,7 +28,6 @@ Permission is granted to anyone to use this software for any purpose, including 
 
 #include "../ogre/common/Def_Str.h"
 #include "../vdrift/pathmanager.h"
-#include "../ogre/common/QTimer.h"
 
 #include "../shiny/Main/Factory.hpp"
 #include "../shiny/Platforms/Ogre/OgreMaterial.hpp"
@@ -509,7 +508,7 @@ void ImpostorTexture::regenerateAll()
 
 void ImpostorTexture::renderTextures(bool force)
 {
-	QTimer ti;
+	Ogre::Timer ti;
 #ifdef IMPOSTOR_FILE_SAVE
 	TexturePtr renderTexture;
 #else
@@ -722,7 +721,7 @@ void ImpostorTexture::renderTextures(bool force)
 #endif
 
 	Ogre::LogManager::getSingleton().logMessage(String("::: Time Impostor: ") +
-		fToStr(ti.get(),0,3) + " ms (" + strKey + ") " + (needsRegen ? " Generated" : (pre ? " preloaded" : " loaded")));
+		fToStr(ti.getMilliseconds(),0,3) + " ms (" + strKey + ") " + (needsRegen ? " Generated" : (pre ? " preloaded" : " loaded")));
 }
 
 String ImpostorTexture::removeInvalidCharacters(String s)

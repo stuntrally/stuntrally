@@ -32,7 +32,7 @@ void CGui::InitGui()
 	popup->mPlatform = app->mPlatform;
 
 	if (!mGui)  return;
-	QTimer ti;
+	Ogre::Timer ti;
 
 
 	//  new widgets
@@ -720,5 +720,5 @@ void CGui::InitGui()
 
 	bGI = true;  // gui inited, gui events can now save vals
 	
-	LogO(String("::: Time Init Gui: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(String("::: Time Init Gui: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }

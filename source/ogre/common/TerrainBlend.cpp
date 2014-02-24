@@ -2,7 +2,6 @@
 #include "../common/RenderConst.h"
 #include "../common/Def_Str.h"
 #include "../common/data/SceneXml.h"
-#include "../common/QTimer.h"
 #include "../common/CScene.h"
 #include "../../vdrift/pathmanager.h"
 #ifdef SR_EDITOR
@@ -11,6 +10,7 @@
 	#include "../CGame.h"
 #endif
 #include <OgreRoot.h>
+#include <OgreTimer.h>
 #include <OgreTerrain.h>
 #include <OgreCamera.h>
 #include <OgreHardwarePixelBuffer.h>
@@ -106,7 +106,7 @@ void CScene::CreateBlendTex()
 //--------------------------------------------------------------------------
 void CScene::UpdBlendmap()
 {
-	QTimer ti;
+	Ogre::Timer ti;
 
 	size_t size = sc->td.iTerSize-1;  //!^ same as in create
 	float* fHmap = terrain ? terrain->getHeightData() : sc->td.hfHeight;
@@ -144,7 +144,7 @@ void CScene::UpdBlendmap()
 		//bl.rnd->writeContentsToFile(/*PATHMANAGER::DataUser()+*/ "blend.png");
 	}
 
-	LogO(String("::: Time Upd blendmap: ") + fToStr(ti.get(),1,3) + " ms");  // 1ms on 512, 4ms on 1k
+	LogO(String("::: Time Upd blendmap: ") + fToStr(ti.getMilliseconds(),0,1) + " ms");  // 1ms on 512, 4ms on 1k
 }
 
 
@@ -153,7 +153,7 @@ void CScene::UpdBlendmap()
 #ifndef SR_EDITOR
 void App::GetTerMtrIds()
 {
-	//QTimer ti;
+	//Ogre::Timer ti;
 
 	size_t size = scn->sc->td.iTerSize-1;  //!^ same as in create
 	size_t size2 = size*size;
@@ -192,7 +192,7 @@ void App::GetTerMtrIds()
 	}
 	delete[] pd;
 
-	//LogO(String("::: Time Ter Ids: ") + fToStr(ti.get(),3,5) + " ms");  // 10ms on 1k
+	//LogO(String("::: Time Ter Ids: ") + fToStr(ti.getMilliseconds(),3,5) + " ms");  // 10ms on 1k
 }
 #endif
 
@@ -247,7 +247,7 @@ void CScene::UpdGrassDens()
 {
 	if (!grassDensRTT.rnd)  return;
 
-	QTimer ti;
+	Ogre::Timer ti;
 
 	UpdGrassPars();
 	
@@ -255,7 +255,7 @@ void CScene::UpdGrassDens()
 
 	//grassDensRTT.rnd->writeContentsToFile(PATHMANAGER::DataUser()+"/grassRD.png");
 
-	LogO(String("::: Time Grass Dens: ") + fToStr(ti.get(),3,5) + " ms");
+	LogO(String("::: Time Grass Dens: ") + fToStr(ti.getMilliseconds(),0,1) + " ms");
 }
 
 void CScene::UpdGrassPars()

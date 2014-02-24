@@ -10,7 +10,6 @@
 
 #include "Localization.h"
 #include "SplitScreen.h"
-#include "common/QTimer.h"
 #include "Compositor.h"
 
 #include "CarModel.h"
@@ -27,6 +26,7 @@
 #include <MyGUI_OgrePlatform.h>
 #include "common/MyGUI_D3D11.h"
 
+#include <OgreTimer.h>
 #include <OgreOverlayManager.h>
 #include <OgreTimer.h>
 #include "Compositor.h"
@@ -346,7 +346,7 @@ bool BaseApp::configure()
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()
 {
-	QTimer ti,ti2;
+	Ogre::Timer ti,ti2;
 
 	if (pSet->rendersystem == "Default")
 	{
@@ -418,28 +418,28 @@ bool BaseApp::setup()
 
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
-		LogO(Ogre::String(":::: Time setup vp: ") + fToStr(ti.get(),0,3) + " ms");
+		LogO(Ogre::String(":::: Time setup vp: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 
 
 	//  Gui
 	baseInitGui();
 
-		LogO(Ogre::String(":::: Time setup gui: ") + fToStr(ti.get(),0,3) + " ms");
+		LogO(Ogre::String(":::: Time setup gui: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 
 	createResourceListener();
 	loadResources();
 
-		LogO(Ogre::String(":::: Time resources: ") + fToStr(ti.get(),0,3) + " ms");
+		LogO(Ogre::String(":::: Time resources: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 
 	LogO("*** createFrameListener ***");
 	createFrameListener();
 
-		LogO(Ogre::String(":::: Time createFrameListener: ") + fToStr(ti.get(),0,3) + " ms");
+		LogO(Ogre::String(":::: Time createFrameListener: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 
 	LogO("*** createScene ***");
 	createScene();
 
-		LogO(Ogre::String(":::: Time createScene: ") + fToStr(ti.get(),0,3) + " ms");
+		LogO(Ogre::String(":::: Time createScene: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 
 	LogO("*** recreateCompositor ***");
 	recreateCompositor();
@@ -455,9 +455,9 @@ bool BaseApp::setup()
 
 	postInit();
 
-		LogO(Ogre::String(":::: Time post, mat factory: ") + fToStr(ti.get(),0,3) + " ms");
+		LogO(Ogre::String(":::: Time post, mat factory: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 
-	LogO(Ogre::String(":::: Time setup total: ") + fToStr(ti2.get(),0,3) + " ms");
+	LogO(Ogre::String(":::: Time setup total: ") + fToStr(ti2.getMilliseconds(),0,3) + " ms");
 	
 	return true;
 }

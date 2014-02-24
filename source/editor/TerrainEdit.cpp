@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "../ogre/common/RenderConst.h"
 #include "../ogre/common/Def_Str.h"
-#include "../ogre/common/QTimer.h"
 #include "../ogre/common/CScene.h"
 #include "settings.h"
 #include "CApp.h"
@@ -10,6 +9,7 @@
 #include <OgreHardwarePixelBuffer.h>
 //#include "../vdrift/settings.h"
 #include <MyGUI.h>
+#include <OgreTimer.h>
 #include <OgreOverlay.h>
 #include <OgreOverlayElement.h>
 #include <OgreTextureManager.h>
@@ -275,7 +275,7 @@ void CGui::btnTerGenerate(WP wp)
 		r = imgRoad.getWidth();
 	}
 
-	QTimer ti;
+	Ogre::Timer ti;
 
 	//  generate noise terrain hmap
 	register int a,x,y;  register float c;
@@ -308,7 +308,7 @@ void CGui::btnTerGenerate(WP wp)
 						  (hfData[a] * c * pSet->gen_mul) );
 	}	}
 
-	LogO(String("::: Time Ter Gen: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(String("::: Time Ter Gen: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 
 	std::ofstream of;
 	of.open(getHMapNew().c_str(), std::ios_base::binary);
@@ -316,7 +316,7 @@ void CGui::btnTerGenerate(WP wp)
 	of.write((const char*)&hfData[0], siz);
 	of.close();
 
-	LogO(String("::: Time Ter Gen save: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(String("::: Time Ter Gen save: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 
 	app->bNewHmap = true;	app->UpdateTrack();
 }

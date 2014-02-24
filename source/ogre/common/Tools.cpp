@@ -5,7 +5,6 @@
 #include "../common/data/CData.h"
 #include "../common/data/TracksXml.h"
 #include "../common/data/BltObjects.h"
-#include "../common/QTimer.h"
 #include "../vdrift/pathmanager.h"
 #include "../../road/Road.h"
 #ifndef SR_EDITOR
@@ -18,6 +17,7 @@
 	#include "../../editor/CApp.h"
 	#include "../../editor/CGui.h"
 #endif
+#include <OgreTimer.h>
 #include <OgreResourceGroupManager.h>
 using namespace Ogre;
 using namespace std;
@@ -76,7 +76,7 @@ void CGui::ToolTexAlpha()
 ///  check/resave all tracks scene.xml 
 void CGui::ToolSceneXml()
 {
-	QTimer ti;
+	Ogre::Timer ti;
 	LogO("ALL tracks scene ---------");
 	std::map<string, int> noCol,minSc;
 
@@ -117,7 +117,7 @@ void CGui::ToolSceneXml()
 		//rd.SaveFile(path+"road1.xml");  // resave
 	}
 	
-	LogO(String("::: Time ALL tracks: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(String("::: Time ALL tracks: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 	LogO("ALL tracks scene ---------");
 	exit(0);
 }
@@ -160,7 +160,7 @@ void CGui::ToolListSceneryID()
 ///  Warning: takes about 16 sec
 void CGui::ToolTracksWarnings()
 {
-	QTimer ti;
+	Ogre::Timer ti;
 	LogO("ALL tracks warnings ---------\n");
 	logWarn = true;
 
@@ -177,7 +177,7 @@ void CGui::ToolTracksWarnings()
 		LogO("Track: "+trk);
 		WarningsCheck(&sc,&rd);
 	}
-	LogO(String("::: Time ALL tracks: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(String("::: Time ALL tracks: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 	LogO("ALL tracks warnings ---------");
 }
 
@@ -403,7 +403,7 @@ void CGui::ToolGhostsConv()
 ///............................................................................................................................
 void CGui::ToolPresets()
 {
-	QTimer ti;
+	Ogre::Timer ti;
 	LogO("ALL tracks presets ---------\n");
 
 	std::map<Ogre::String, TerLayer> ter;
@@ -428,7 +428,7 @@ void CGui::ToolPresets()
 	}
 	LogO("ALL ter ---------");
 	LogO(toStr(ter.size()));
-	LogO(String("::: Time ALL tracks: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(String("::: Time ALL tracks: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 	LogO("ALL tracks presets ---------");
 }
 

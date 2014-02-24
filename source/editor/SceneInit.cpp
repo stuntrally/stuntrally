@@ -2,7 +2,6 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/data/CData.h"
 #include "../ogre/common/ShapeData.h"
-#include "../ogre/common/QTimer.h"
 #include "../ogre/common/GuiCom.h"
 #include "../ogre/common/CScene.h"
 #include "settings.h"
@@ -16,6 +15,7 @@
 #include "btBulletDynamicsCommon.h"
 #include "../shiny/Main/Factory.hpp"
 
+#include <OgreTimer.h>
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
 #include <OgreRenderWindow.h>
@@ -67,7 +67,7 @@ void App::createScene()  // once, init
 	MaterialManager::getSingleton().setDefaultTextureFiltering(TFO_ANISOTROPIC);
 	MaterialManager::getSingleton().setDefaultAnisotropy(pSet->anisotropy);
 
-	QTimer ti;
+	Ogre::Timer ti;
 
 
 	///  _Tool_ tex ..........................
@@ -87,7 +87,7 @@ void App::createScene()  // once, init
 	
 	// TODO: ter/road layer  presets.xml
 
-	LogO(String("::: Time load xmls: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(String("::: Time load xmls: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 
 
 	///  _Tool_ scene ...........................
@@ -205,7 +205,7 @@ void App::LoadTrack()
 }
 void App::LoadTrackEv()
 {
-	QTimer ti;
+	Ogre::Timer ti;
 	NewCommon(false);  // full destroy
 
 	if (scn->road)
@@ -286,7 +286,7 @@ void App::LoadTrackEv()
 	if (pSet->check_load)
 		gui->WarningsCheck(scn->sc, scn->road);
 
-	LogO(String("::: Time Load Track: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(String("::: Time Load Track: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
 
 

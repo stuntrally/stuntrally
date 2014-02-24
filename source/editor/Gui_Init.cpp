@@ -2,7 +2,6 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/GuiCom.h"
-#include "../ogre/common/QTimer.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -13,6 +12,7 @@
 #include "../sdl4ogre/sdlcursormanager.hpp"
 #include <MyGUI.h>
 #include <MyGUI_InputManager.h>
+#include <OgreTimer.h>
 #include <OgreRenderWindow.h>
 #include "../ogre/common/RenderBoxScene.h"
 using namespace MyGUI;
@@ -32,7 +32,7 @@ void CGui::InitGui()
 	Check::bGI = &bGI;
 
 	if (!mGui)  return;
-	QTimer ti;
+	Ogre::Timer ti;
 
 
 	//  new widgets
@@ -673,7 +673,7 @@ void CGui::InitGui()
 
 	bGI = true;  // gui inited, gui events can now save vals
 
-	LogO(String("::: Time Init Gui: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(String("::: Time Init Gui: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
 
 

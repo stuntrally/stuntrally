@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
-#include "../ogre/common/QTimer.h"
 #include "settings.h"
 #include "BaseApp.h"
 #include "CApp.h" //
@@ -287,7 +286,7 @@ bool BaseApp::configure()
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()
 {
-	QTimer ti;
+	Ogre::Timer ti;
 	if (pSet->rendersystem == "Default")
 	{
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -349,7 +348,7 @@ bool BaseApp::setup()
 
 	createFrameListener();
 
-	LogO(Ogre::String("::: Time Ogre Start: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(Ogre::String("::: Time Ogre Start: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 
 	createScene();
 

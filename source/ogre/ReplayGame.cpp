@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ReplayGame.h"
 #include "common/Def_Str.h"
-#include "common/QTimer.h"
+#include <OgreTimer.h>
 
 //  replay load log and check
 #define LOG_RPL
@@ -104,7 +104,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	std::ifstream fi(file.c_str(), std::ios::binary | std::ios::in);
 	if (!fi)  return false;
 
-	QTimer ti;
+	Ogre::Timer ti;
 	
 	//  header
 	char buf[ciRplHdrSize];  memset(buf,0,ciRplHdrSize);
@@ -179,7 +179,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 			+"  time: "+fToStr(GetTimeLength(0),2,5)+"  frames: "+toStr(frames[0].size()));
 	#endif
 
-	LogO(Ogre::String("::: Time ReplayLoad: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(Ogre::String("::: Time ReplayLoad: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 	return true;
 }
 
@@ -451,7 +451,7 @@ bool TrackGhost::LoadFile(std::string file)
 {
 	std::ifstream fi(file.c_str(), std::ios::binary | std::ios::in);
 	if (!fi)  return false;
-	QTimer ti;
+	Ogre::Timer ti;
 	
 	//  header
 	char buf[ciTrkHdrSize];  memset(buf,0,ciTrkHdrSize);
@@ -488,7 +488,7 @@ bool TrackGhost::LoadFile(std::string file)
 			+"  time: "+fToStr(GetTimeLength(),2,5)+"  frames: "+toStr(frames.size()));
 	#endif
 
-	LogO(Ogre::String("::: Time Load trk ghost: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(Ogre::String("::: Time Load trk ghost: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
     return true;
 }
 

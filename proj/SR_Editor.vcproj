@@ -254,14 +254,6 @@
 				RelativePath="..\source\editor\pch.h"
 				>
 			</File>
-			<File
-				RelativePath="..\source\ogre\common\QTimer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\QTimer.h"
-				>
-			</File>
 			<Filter
 				Name="vdr_set"
 				>

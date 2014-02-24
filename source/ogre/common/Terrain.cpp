@@ -2,7 +2,6 @@
 #include "../common/Def_Str.h"
 #include "../common/RenderConst.h"
 #include "../common/ShapeData.h"
-#include "../common/QTimer.h"
 #include "../common/GuiCom.h"
 #include "../common/CScene.h"
 #include "../common/data/SceneXml.h"
@@ -19,6 +18,7 @@
 #endif
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
 #include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
+#include <OgreTimer.h>
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
 using namespace Ogre;
@@ -177,7 +177,7 @@ void CScene::SetupHorizon()
 ///--------------------------------------------------------------------------------------------------------------
 void CScene::CreateTerrain(bool bNewHmap, bool bTer)
 {
-	QTimer tm;
+	Ogre::Timer tm;
 	terrain = 0;
 	
 	///  sky
@@ -194,7 +194,7 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer)
 	///  --------  fill HeightField data --------
 	if (bTer)
 	{
-		//QTimer ti;
+		//Ogre::Timer ti;
 
 		int wx = sc->td.iVertsX, wy = sc->td.iVertsY, wxy = wx * wy;  //wy=wx
 		delete[] sc->td.hfHeight;  sc->td.hfHeight = new float[wxy];
@@ -212,7 +212,7 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer)
 
 		CreateBlendTex();  //+
 
-		//LogO(String("::: Time Hmap: ") + fToStr(ti.get(),0,3) + " ms");  // 4MB ~13ms
+		//LogO(String("::: Time Hmap: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  // 4MB ~13ms
 	}
 	///
 
@@ -281,7 +281,7 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer)
 
 	UpdBlendmap();  //
 
-	LogO(String("::: Time Terrain: ") + fToStr(tm.get(),0,3) + " ms");
+	LogO(String("::: Time Terrain: ") + fToStr(tm.getMilliseconds(),0,3) + " ms");
 	
 	changeShadows();
 }

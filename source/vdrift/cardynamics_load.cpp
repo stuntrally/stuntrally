@@ -9,7 +9,7 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/ShapeData.h"
 #include "Buoyancy.h"
-#include "../ogre/common/QTimer.h"
+#include <OgreTimer.h>
 using namespace std;
 
 
@@ -76,7 +76,7 @@ static void ConvertV2to1(float & x, float & y, float & z)
 //----------------------------------------------------------------------------------------------------------------------------------
 bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 {
-	QTimer ti;
+	Ogre::Timer ti;
 
 	//bTerrain = false;
 	string drive = "RWD";
@@ -595,7 +595,7 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 
 	UpdateMass();
 
-	LogO(Ogre::String(":::: Time car dynamics load: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(Ogre::String(":::: Time car dynamics load: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 	return true;
 }
 

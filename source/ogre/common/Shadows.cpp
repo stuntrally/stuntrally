@@ -2,7 +2,6 @@
 #include "../common/Def_Str.h"
 #include "../common/RenderConst.h"
 #include "../common/data/SceneXml.h"
-#include "../common/QTimer.h"
 #include "../common/CScene.h"
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
@@ -18,6 +17,7 @@
 #include "../../paged-geom/PagedGeometry.h"
 #include "../../paged-geom/GrassLoader.h"
 
+#include <OgreTimer.h>
 #include <OgreTerrain.h>
 #include <OgreShadowCameraSetupLiSPSM.h>
 #include <OgreShadowCameraSetupPSSM.h>
@@ -38,7 +38,7 @@ using namespace Forests;
 //---------------------------------------------------------------------------------------------------
 void CScene::changeShadows()
 {	
-	QTimer ti;
+	Ogre::Timer ti;
 	
 	//  get settings
 	SETTINGS* pSet = app->pSet;
@@ -208,7 +208,7 @@ void CScene::changeShadows()
 		vdrTrack->build();
 	}
 
-	LogO(String("::: Time Shadows: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(String("::: Time Shadows: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
 
 

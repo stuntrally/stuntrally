@@ -6,7 +6,6 @@
 #include "data/BltObjects.h"
 #include "ShapeData.h"
 #include "CScene.h"
-#include "QTimer.h"
 #include "../../road/SplineBase.h"
 #include "GuiCom.h"
 #ifdef SR_EDITOR
@@ -27,6 +26,7 @@
 #include "../../paged-geom/TreeLoader2D.h"
 #include "../../paged-geom/MersenneTwister.h"
 #include <boost/filesystem.hpp>
+#include <OgreTimer.h>
 #include <OgreTerrain.h>
 #include <OgreSubMesh.h>
 using namespace Ogre;
@@ -65,7 +65,7 @@ void CScene::RecreateTrees()
 
 void CScene::CreateTrees()
 {
-	QTimer ti;
+	Ogre::Timer ti;
 	gTerrain = terrain;
 		
 	//-------------------------------------- Grass --------------------------------------
@@ -155,7 +155,7 @@ void CScene::CreateTrees()
 		}
 		grass->setShadersEnabled(true);
 	}
-	LogO(String("::: Time Grass: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(String("::: Time Grass: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 	
 
 	//---------------------------------------------- Trees ----------------------------------------------
@@ -425,5 +425,5 @@ void CScene::CreateTrees()
 		LogO(String("***** Vegetation objects count: ") + toStr(cntr) + "  shapes: " + toStr(cntshp));
 	}
 	//imgRoadSize = 0;
-	LogO(String("::: Time Trees: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(String("::: Time Trees: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }

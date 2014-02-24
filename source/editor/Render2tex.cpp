@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/RenderConst.h"
-#include "../ogre/common/QTimer.h"
 #include "../ogre/common/GuiCom.h"
 #include "../ogre/common/CScene.h"
 #include "settings.h"
@@ -14,6 +13,7 @@
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision/CollisionDispatch/btCollisionWorld.h"
 
+#include <OgreTimer.h>
 #include <OgreTerrain.h>
 #include <OgreRenderWindow.h>
 #include <OgreManualObject.h>
@@ -121,7 +121,7 @@ void App::UpdMiniVis()
 ///  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 void App::SaveGrassDens()
 {
-	QTimer ti;
+	Ogre::Timer ti;
 
 	for (int i=0; i < RTs-1; ++i)  //-1 preview camera manual
 	{
@@ -176,7 +176,7 @@ void App::SaveGrassDens()
 	for (x = 0;  x <= f; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | left
 	for (x=w-f-1; x < w; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | right
 
-	LogO(String("::: Time road dens: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(String("::: Time road dens: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 
 	if (!IsVdrTrack())  // vdr trk no grass, only previews
 	{
@@ -191,7 +191,7 @@ void App::SaveGrassDens()
 	rt[0].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/road.png");
 	rt[2].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/terrain.jpg");
 
-	LogO(String("::: Time save prv : ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(String("::: Time save prv : ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
 
 
@@ -240,7 +240,7 @@ void App::SaveWaterDepth()
 		gui->Delete(gcom->TrkDir()+"objects/waterDepth.png");  // no tex if no fluids
 		return;
 	}
-	QTimer ti;
+	Ogre::Timer ti;
 
 	//  2048 for bigger terrains ?
 	int w = 1024, h = w;  float fh = h-1, fw = w-1;
@@ -295,7 +295,7 @@ void App::SaveWaterDepth()
 		TextureManager::getSingleton().load("waterDepth.png", rgDef);
 	} catch(...) {  }
 
-	LogO(String("::: Time WaterDepth: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(String("::: Time WaterDepth: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
 
 
@@ -341,7 +341,7 @@ void App::AlignTerToRoad()
 {
 	SplineRoad* road = scn->road;
 	if (road->vSel.empty())  return;
-	QTimer ti;
+	Ogre::Timer ti;
 
 	///  create bullet road for selected segments
 	road->edWmul = pSet->al_w_mul;
@@ -463,5 +463,5 @@ void App::AlignTerToRoad()
 	
 	// todo: ?restore road sel after load F5..
 
-	LogO(String("::: Time Ter Align: ") + fToStr(ti.get(),0,3) + " ms");
+	LogO(String("::: Time Ter Align: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }

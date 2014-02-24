@@ -1008,14 +1008,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\ogre\common\QTimer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\ogre\common\QTimer.h"
-				>
-			</File>
-			<File
 				RelativePath="..\Readme.txt"
 				>
 			</File>
