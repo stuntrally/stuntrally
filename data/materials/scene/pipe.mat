@@ -2,44 +2,54 @@ material pipe_glass
 {
 	ambient 1.0 1.0 1.0
 	diffuse 1.0 1.0 1.0 1.0
-	specular 0.4 0.4 0.4 32
-	emissive 0 0 0
 	specular 1 1 1 24
+	emissive 0 0 0
+	//if env_map true, spec power gets mul by x4
 
 	scene_blend alpha_blend
 	depth_write off
 	depth_bias 3
 	alpha_rejection default
+	cull_hardware default
 	
-	env_map false
+    lighting true
 	terrain_light_map false
 	terrain_light_map_toggleable false
-	
-	lighting true
-	soft_particles false
-		
+    receives_shadows true
+			
 	bump_scale 1
+	env_map false
 	fresnelScaleBiasPower 0.79 0.07 4
 	fresnel false
 	refl_amount 0.1  // only used when fresnel off
 	
+    //  extras1
 	tree_wind false
 	grass_wind false
 	vertex_colour false
-	specular_alpha true
-	fog_en true
-	
-	receives_shadows true
-		
+	soft_particles false
+
 	transparent false  // for shadowcaster
 	mrt_output true
 	diffuse_address_mode wrap
-	//  extras
+	fog_en true
+	instancing false
+
+	//  extras2
 	twoside_diffuse true
 	road_blend false
 	shadowBias 0
     water_particles_lit false
-	
+		
+	//  car body only
+	glossiness 0.5
+	reflectiveness 1.0
+    fresnelScaleBiasPower2 0.79 0.07 4
+	specular2 0 0 0  32
+	//  glass only
+    specular_alpha true
+    env_alpha 0 0 0 0
+
 	normalMap
 	reflMap
 	alphaMap
@@ -55,7 +65,6 @@ material pipe_glass
 		specular $specular
 		ambient $ambient
 		emissive $emissive
-		specular $specular
 		
 		cull_hardware clockwise
 	
@@ -82,6 +91,7 @@ material pipe_glass
 			mrt_output $mrt_output
 			soft_particles $soft_particles
 			fog_en $fog_en
+			instancing $instancing
 			
 			tree_wind $tree_wind
 			grass_wind $grass_wind
@@ -95,8 +105,13 @@ material pipe_glass
 			
 			fresnel $fresnel
 			fresnelScaleBiasPower $fresnelScaleBiasPower
-
 			bump_scale $bump_scale
+
+			glossiness $glossiness
+			reflectiveness $reflectiveness
+		    fresnelScaleBiasPower2 $fresnelScaleBiasPower2
+			specular2 $specular2
+			env_alpha $env_alpha
 		}
 
 		texture_unit diffuseMap
@@ -202,6 +217,7 @@ material pipe_glass
 			mrt_output $mrt_output
 			soft_particles $soft_particles
 			fog_en $fog_en
+			instancing $instancing
 			
 			tree_wind $tree_wind
 			grass_wind $grass_wind
@@ -215,8 +231,13 @@ material pipe_glass
 			
 			fresnel $fresnel
 			fresnelScaleBiasPower $fresnelScaleBiasPower
-
 			bump_scale $bump_scale
+
+			glossiness $glossiness
+			reflectiveness $reflectiveness
+		    fresnelScaleBiasPower2 $fresnelScaleBiasPower2
+			specular2 $specular2
+			env_alpha $env_alpha
 		}
 
 		texture_unit diffuseMap

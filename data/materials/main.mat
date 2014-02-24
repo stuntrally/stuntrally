@@ -2,7 +2,7 @@ material base
 {
 	ambient 1.0 1.0 1.0
 	diffuse 1.0 1.0 1.0 1.0
-	specular 0 0 0  32
+	specular 0 0 0 32
 	emissive 0 0 0
 	//if env_map true, spec power gets mul by x4
 
@@ -40,6 +40,7 @@ material base
     road_blend false
 	shadowBias 0
     water_particles_lit false
+
 	//  car body only
 	glossiness 0.5
 	reflectiveness 1.0
@@ -48,7 +49,6 @@ material base
 	//  glass only
     specular_alpha false
     env_alpha 0 0 0 0
-	
 	
 	normalMap
 	reflMap
@@ -103,14 +103,13 @@ material base
 		    
 		    fresnel $fresnel
 		    fresnelScaleBiasPower $fresnelScaleBiasPower
+		    bump_scale $bump_scale
 
 			glossiness $glossiness
 			reflectiveness $reflectiveness
 		    fresnelScaleBiasPower2 $fresnelScaleBiasPower2
 			specular2 $specular2
 			env_alpha $env_alpha
-
-		    bump_scale $bump_scale
 		}
 
 		texture_unit diffuseMap
