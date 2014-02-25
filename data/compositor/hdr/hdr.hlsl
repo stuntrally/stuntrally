@@ -1,4 +1,4 @@
-#include "hdrutils.cg"
+#include "hdrutils.hlsl"
 
 /* Downsample a 2x2 area and convert to greyscale
 */

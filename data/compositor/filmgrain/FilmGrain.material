@@ -1,13 +1,13 @@
 vertex_program FilmGrain_VS_hlsl hlsl
 {
-	source FilmGrain.cg
+	source FilmGrain.hlsl
 	target vs_2_0
 	entry_point FilmGrain_VS
 }
 
 fragment_program FilmGrain_FP_hlsl hlsl
 {
-	source FilmGrain.cg
+	source FilmGrain.hlsl
 	target ps_2_0
 	entry_point FilmGrain_FP
 

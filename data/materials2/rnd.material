@@ -1,6 +1,6 @@
 vertex_program rnd_vs_hlsl hlsl
 {
-	source rnd.cg
+	source rnd.hlsl
 	target vs_2_0
 	entry_point rnd_vs
  
@@ -11,19 +11,19 @@ vertex_program rnd_vs_hlsl hlsl
 }
 fragment_program rnd_ps_hlsl hlsl
 {
-	source rnd.cg
+	source rnd.hlsl
 	target ps_2_0
 	entry_point rnd_ps
 }
 fragment_program rnd_inv_ps_hlsl hlsl
 {
-	source rnd.cg
+	source rnd.hlsl
 	target ps_2_0
 	entry_point rnd_inv_ps
 }
 fragment_program rnd_add_ps_hlsl hlsl
 {
-	source rnd.cg
+	source rnd.hlsl
 	target ps_2_0
 	entry_point rnd_add_ps
 }
@@ -112,7 +112,7 @@ material road_minimap_inv
 //
 vertex_program circle_vs_hlsl hlsl
 {
-	source rnd.cg
+	source rnd.hlsl
 	target vs_2_0
 	entry_point circle_vs
  
@@ -123,7 +123,7 @@ vertex_program circle_vs_hlsl hlsl
 }
 fragment_program circle_ps_hlsl hlsl
 {
-	source rnd.cg
+	source rnd.hlsl
 	target ps_2_0 
 	entry_point circle_ps
 

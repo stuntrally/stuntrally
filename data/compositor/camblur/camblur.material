@@ -1,6 +1,6 @@
-vertex_program EPF_MotionBlur_VS cg
+vertex_program EPF_MotionBlur_VS hlsl
 {
-    source camblur.cg
+    source camblur.hlsl
     profiles vs_4_0 vs_1_1 arbvp1
     entry_point EPF_MotionBlur_VS
     default_params
@@ -9,9 +9,9 @@ vertex_program EPF_MotionBlur_VS cg
     }
 }
 
-fragment_program  EPF_MotionBlur_PS cg
+fragment_program  EPF_MotionBlur_PS hlsl
 {
-   source camblur.cg
+   source camblur.hlsl
    entry_point EPF_MotionBlur_PS
    profiles ps_3_0 arbfp1
 }
@@ -59,9 +59,9 @@ material EPF_MotionBlur
 //   Geometry Depth Shaders
 //
 
-vertex_program EPF_MotionBlur_Depth_VS cg
+vertex_program EPF_MotionBlur_Depth_VS hlsl
 {
-    source camblur.cg
+    source camblur.hlsl
     profiles vs_1_1 arbvp1
     entry_point EPF_MotionBlur_Depth_VS
 
@@ -71,9 +71,9 @@ vertex_program EPF_MotionBlur_Depth_VS cg
    }
 }
 
-fragment_program EPF_MotionBlur_Depth_PS cg
+fragment_program EPF_MotionBlur_Depth_PS hlsl
 {
-   source camblur.cg
+   source camblur.hlsl
    entry_point EPF_MotionBlur_Depth_PS
    // cannot use ps_1_1 because compiler complains about zero-division
    profiles ps_2_0 arbfp1

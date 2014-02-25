@@ -1,7 +1,7 @@
 // Downsample a 2x2 area & turn into luminence (unclamped)
 fragment_program Ogre/Compositor/HDR/downscale2x2LuminencePS_hlsl hlsl
 {
-	source hdr.cg
+	source hdr.hlsl
 	entry_point downscale2x2Luminence
 	target ps_2_0
 
@@ -14,7 +14,7 @@ fragment_program Ogre/Compositor/HDR/downscale2x2LuminencePS_hlsl hlsl
 // Downsample a 3x3 area
 fragment_program Ogre/Compositor/HDR/downscale3x3PS_hlsl hlsl
 {
-	source hdr.cg
+	source hdr.hlsl
 	entry_point downscale3x3
 	target ps_2_0
 
@@ -27,7 +27,7 @@ fragment_program Ogre/Compositor/HDR/downscale3x3PS_hlsl hlsl
 // Downsample a 3x3 area with adeptation
 fragment_program Ogre/Compositor/HDR/downscale3x3AdeptPS_hlsl hlsl
 {
-	source hdr.cg
+	source hdr.hlsl
 	entry_point downscale3x3Adept
 	target ps_2_0
 
@@ -41,7 +41,7 @@ fragment_program Ogre/Compositor/HDR/downscale3x3AdeptPS_hlsl hlsl
 // Copy sample
 fragment_program Ogre/Compositor/HDR/copySample_hlsl hlsl
 {
-	source hdr.cg
+	source hdr.hlsl
 	entry_point copySample
 	target ps_2_0
 }
@@ -49,7 +49,7 @@ fragment_program Ogre/Compositor/HDR/copySample_hlsl hlsl
 // Downsample a 3x3 area and perform a brightness filter pass
 fragment_program Ogre/Compositor/HDR/downscale3x3brightpassPS_hlsl hlsl
 {
-	source hdr.cg
+	source hdr.hlsl
 	entry_point downscale3x3brightpass
 	target ps_2_0
 
@@ -62,7 +62,7 @@ fragment_program Ogre/Compositor/HDR/downscale3x3brightpassPS_hlsl hlsl
 // Bloom an area using gaussian distribution
 fragment_program Ogre/Compositor/HDR/bloomPS_hlsl hlsl
 {
-	source hdr.cg
+	source hdr.hlsl
 	entry_point bloom
 	target ps_2_0
 }
@@ -70,7 +70,7 @@ fragment_program Ogre/Compositor/HDR/bloomPS_hlsl hlsl
 // Perform final tone mapping
 fragment_program Ogre/Compositor/HDR/finaltonemappingPS_hlsl hlsl
 {
-	source hdr.cg
+	source hdr.hlsl
 	entry_point finalToneMapping
 	target ps_2_0
 }
@@ -392,7 +392,7 @@ material Ogre/Compositor/HDR/ToneMapping
 
 fragment_program Ogre/Compositor/HDR/AdaptLuminance_hlsl hlsl
 {
-	source AdaptLuminance.cg
+	source AdaptLuminance.hlsl
 	entry_point PS
 	target ps_3_0
 

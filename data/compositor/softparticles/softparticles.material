@@ -1,6 +1,6 @@
 vertex_program SoftParticlesBlend_vs_hlsl hlsl
 {
-    source softparticles.cg
+    source softparticles.hlsl
     target vs_2_0
     entry_point SoftParticlesBlend_vs
     default_params
@@ -10,7 +10,7 @@ vertex_program SoftParticlesBlend_vs_hlsl hlsl
 }
 fragment_program SoftParticlesBlend_ps_hlsl hlsl
 {
-    source softparticles.cg
+    source softparticles.hlsl
     entry_point SoftParticlesBlend_ps
     target ps_2_0
     default_params
@@ -19,7 +19,7 @@ fragment_program SoftParticlesBlend_ps_hlsl hlsl
 }
 fragment_program ShowDepth_ps_hlsl hlsl
 {
-    source softparticles.cg
+    source softparticles.hlsl
     entry_point ShowDepth_ps
     target ps_2_0
     default_params

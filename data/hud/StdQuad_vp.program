@@ -1,6 +1,6 @@
-vertex_program Ogre/Compositor/StdQuad_Cg_vp hlsl
+vertex_program Ogre/Compositor/StdQuad_HLSL_vp hlsl
 {
-	source StdQuad_vp.cg
+	source StdQuad_vp.hlsl
 	entry_point StdQuad_vp
 	target vs_2_0
 
@@ -19,5 +19,5 @@ vertex_program Ogre/Compositor/StdQuad_GLSL_vp glsl
 vertex_program Ogre/Compositor/StdQuad_vp unified
 {
 	delegate Ogre/Compositor/StdQuad_GLSL_vp
-	delegate Ogre/Compositor/StdQuad_Cg_vp
+	delegate Ogre/Compositor/StdQuad_HLSL_vp
 }

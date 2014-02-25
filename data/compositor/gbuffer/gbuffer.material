@@ -1,6 +1,6 @@
 vertex_program RenderGBuffer_vp_hlsl hlsl
 {
-    source renderscene.cg
+    source renderscene.hlsl
     target vs_2_0
     entry_point RenderScene_vs
     default_params
@@ -10,7 +10,7 @@ vertex_program RenderGBuffer_vp_hlsl hlsl
 }
 fragment_program RenderGBuffer_ps_hlsl hlsl
 {
-    source renderscene.cg
+    source renderscene.hlsl
     entry_point RenderScene_ps
     target ps_2_0
     default_params

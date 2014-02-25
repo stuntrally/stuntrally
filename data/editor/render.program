@@ -2,7 +2,7 @@
 //--------------------------------------------------------------------------------------------------
 vertex_program render_vs_hlsl hlsl
 {
-	source render.cg
+	source render.hlsl
 	target vs_2_0
 	entry_point render_vs
  
@@ -15,7 +15,7 @@ vertex_program render_vs_hlsl hlsl
  
 fragment_program render_ps_hlsl hlsl
 {
-	source render.cg
+	source render.hlsl
 	target ps_2_0
 	entry_point render_ps
  
@@ -28,7 +28,7 @@ fragment_program render_ps_hlsl hlsl
 
 fragment_program render_gr_ps_hlsl hlsl
 {
-	source render.cg
+	source render.hlsl
 	target ps_2_0
 	entry_point render_gr_ps
 }
