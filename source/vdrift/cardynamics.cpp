@@ -297,8 +297,34 @@ void CARDYNAMICS::UpdateWheelTransform()
 {
 	for(int i = 0; i < WHEEL_POSITION_SIZE; ++i)
 	{
-		wheel_position[i] = GetWheelPositionAtDisplacement(WHEEL_POSITION(i), suspension[i].GetDisplacementPercent());
-		wheel_orientation[i] = Orientation() * GetWheelSteeringAndSuspensionOrientation(WHEEL_POSITION(i));
+		WHEEL_POSITION wp = WHEEL_POSITION(i);
+		Dbl disp = suspension[i].GetDisplacementPercent();
+		wheel_position[i] = GetWheelPositionAtDisplacement(wp, disp);
+		wheel_orientation[i] = Orientation() * GetWheelSteeringAndSuspensionOrientation(wp);
+
+		///  cylinder wheels update
+		MATHVECTOR<Dbl,3> wpos = GetLocalWheelPosition(wp, disp) - center_of_mass;
+		//LogO(fToStr(wpos[0],2,5)+" "+fToStr(wpos[1],2,5)+" "+fToStr(wpos[2],2,5));
+		QUATERNION<Dbl> wrot = GetWheelSteeringAndSuspensionOrientation(wp);
+		btVector3 pos = ToBulletVector(wpos);
+		btQuaternion rot = ToBulletQuaternion(wrot);
+		rot *= btQuaternion(0.f, 0.f, PI_d/2.f);
+
+		btTransform tr;  tr.setIdentity();
+		tr.setOrigin(pos);  tr.setRotation(rot);
+		compound->updateChildTransform(i+1, tr/*, false/*?*/);
+
+	#if 0
+		if (body->getChildBody(i)->isInWorld()) continue;
+
+		btQuaternion rot = suspension[i]->GetWheelOrientation();
+		rot *= btQuaternion(direction::right, -wheel[i].GetRotation());
+		btVector3 pos = suspension[i]->GetWheelPosition() + GetCenterOfMassOffset();
+		body->setChildTransform(i, btTransform(rot, pos));
+
+		wheel_position[i] = LocalToWorld(suspension[i]->GetWheelPosition());
+		wheel_orientation[i] = LocalToWorld(suspension[i]->GetWheelOrientation());
+	#endif
 	}
 }
 

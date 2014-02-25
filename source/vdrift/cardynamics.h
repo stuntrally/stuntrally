@@ -141,6 +141,7 @@ public:
 	MATHVECTOR<Dbl,3> center_of_mass;
 	COLLISION_WORLD * world;
 	btRigidBody *chassis, *whTrigs;
+	btCompoundShape* compound;
 
 	///  camera bounce
 	LINEARFRAME cam_body;

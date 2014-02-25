@@ -462,6 +462,8 @@ void CARDYNAMICS::Tick(Dbl dt)
 
 	const float tacho_factor = 0.1;
 	tacho_rpm = engine.GetRPM() * tacho_factor + tacho_rpm * (1.0 - tacho_factor);
+
+	UpdateWheelTransform();  ///
 }
 //---------------------------------------------------------------------------------
 
@@ -491,8 +493,10 @@ void CARDYNAMICS::UpdateWheelContacts()
 	{
 		COLLISION_CONTACT & wheelContact = wheel_contact[WHEEL_POSITION(i)];
 		MATHVECTOR<float,3> raystart = LocalToWorld(wheel[i].GetExtendedPosition());
-		raystart = raystart - raydir * wheel[i].GetRadius();  //*!
+		float whR = wheel[i].GetRadius();
+		raystart = raystart - raydir * whR;  //*!
 		float raylen = 1.5f;  // !par
+		//float raylen  = whR*2;
 		
 		world->CastRay( raystart, raydir, raylen, chassis, wheelContact, this,i, !pSet->game.collis_cars, false );
 	}

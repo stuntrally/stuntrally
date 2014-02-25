@@ -14,7 +14,7 @@ using namespace std;
 
 
 CARDYNAMICS::CARDYNAMICS() :
-	world(NULL), chassis(NULL), whTrigs(0),
+	world(NULL), chassis(NULL), whTrigs(0), compound(0),
 	drive(RWD), tacho_rpm(0), engine_vol_mul(1),
 	autoclutch(true), autoshift(true), autorear(true),
 	shifted(true), shift_gear(0),
@@ -620,14 +620,11 @@ void CARDYNAMICS::Init(
 	cam_body.SetPosition(zero);
 	cam_body.SetInitialForce(zero);
 
-	// init engine
+	//  init engine
 	engine.SetInitialConditions();
 
 
-	// init chassis
-	btTransform tr;
-	tr.setIdentity();
-
+	//  init chassis
 	AABB <float> box = chassisModel.GetAABB();
 	for (int i = 0; i < 4; i++)
 	{
@@ -653,12 +650,7 @@ void CARDYNAMICS::Init(
 	btVector3 size = ToBulletVector(box.GetSize() - verticalMargin);
 
 	//btCompoundShape * chassisShape = new btCompoundShape(false);
-	#if 0
-		//btBoxShape * hull = new btBoxShape( btVector3(1.8,0.8,0.5) );
-		btBoxShape * hull = new btBoxShape( btVector3(1.7,0.7,0.3) );
-		tr.setOrigin(origin + btVector3(0,0,0.2));
-		chassisShape->addChildShape(tr, hull);
-	#else
+
 		/// todo: all params in .car
 		// y| length  x- width  z^ height
 		btScalar w = size.getX()*0.2, r = size.getZ()*0.3, h = 0.45;
@@ -697,9 +689,38 @@ void CARDYNAMICS::Init(
 
 		for (i=0; i < numSph; ++i)
 			pos[i] += origin;
-		btMultiSphereShape* chassisShape = new btMultiSphereShape(pos, rad, numSph);
-		//chassisShape->setMargin(0.2f);
-	#endif
+		btMultiSphereShape* bodyShape = new btMultiSphereShape(pos, rad, numSph);
+
+		//  car  - - -
+		btCompoundShape* chassisShape = new btCompoundShape(false);
+
+		btVector3 center(0, 0, 0);
+		btTransform tr;  tr.setIdentity();
+		tr.setOrigin(center);
+
+		chassisShape->addChildShape(tr, bodyShape);
+
+		///  cylinder wheels create
+		for (int w=0; w < 4; ++w)
+		{
+			//btScalar mass = wheel[i].GetMass();
+			btScalar width = 0.3f;  //wheel[i].GetWidth();
+			btScalar radius = wheel[w].GetRadius();
+			btVector3 size(width, radius, radius);
+			btCollisionShape * wheelShape = new btCylinderShapeX(size);
+			wheelShape->setMargin(0.4); //?
+			//wheelShape->setUserPointer();
+
+			MATHVECTOR<Dbl,3> wpos = GetLocalWheelPosition(WHEEL_POSITION(w), 1.f);
+			//LogO(fToStr(wpos[0],2,5)+" "+fToStr(wpos[1],2,5)+" "+fToStr(wpos[2],2,5));
+			btVector3 pos(wpos[0], wpos[1], wpos[2]);
+
+			tr.setIdentity();  tr.setOrigin(pos);
+			chassisShape->addChildShape(tr, wheelShape);
+		}
+		compound = chassisShape;
+
+		chassisShape->setMargin(0.2f);
 
 
 	Dbl chassisMass = body.GetMass();// * 0.4;  // Magic multiplier makes collisions better - problem: mud is very different
@@ -719,6 +740,8 @@ void CARDYNAMICS::Init(
 	///  chasis^
 	chassis = world.AddRigidBody(info, true, pSet->game.collis_cars);
 	chassis->setActivationState(DISABLE_DEACTIVATION);
+	chassis->setContactProcessingThreshold(0.0);
+	chassis->setCollisionFlags(chassis->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
 	chassis->setUserPointer(new ShapeData(ST_Car, this, 0));  ///~~
 	
 	world.AddAction(this);

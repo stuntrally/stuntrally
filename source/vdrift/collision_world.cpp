@@ -102,6 +102,39 @@ void DynamicsWorld::solveConstraints(btContactSolverInfo& solverInfo)
 	}
 }
 
+///  wheel contact callback
+//-------------------------------------------------------------------------------------------------------------------------------
+const static btVector3 btUp(0,0,1);
+bool WheelContactCallback(
+	btManifoldPoint& cp,
+	const btCollisionObject* col0,
+	int partId0, int index0,
+	const btCollisionObject* col1,
+	int partId1, int index1)
+{
+	// invalidate wheel shape contact with ground as we are handling it separately (castRay)
+	const btCollisionObject* obj = col0;
+	const btCollisionShape* shape = obj->getCollisionShape();
+	const btCollisionShape* rootshape = obj->getRootCollisionShape();
+	if (//obj->getInternalType() & CO_FRACTURE_TYPE &&
+		shape->getShapeType() == CYLINDER_SHAPE_PROXYTYPE)
+	{
+		const btCompoundShape* carshape = static_cast<const btCompoundShape*>(rootshape);
+		const btCylinderShapeX* wheelshape = static_cast<const btCylinderShapeX*>(shape);
+		btVector3 contactPoint = cp.m_localPointA - carshape->getChildTransform(cp.m_index0).getOrigin();
+		if (-btUp.dot(contactPoint) > 0 * wheelshape->getRadius())
+		{							//^ par 0.. 0.5
+			cp.m_normalWorldOnB = btVector3(0, 0, 0);
+			cp.m_distance1 = 0;
+			cp.m_combinedFriction = 0;
+			cp.m_combinedRestitution = 0;
+			return true;
+		}
+	}
+	return false;
+}
+
+
 //  Sim Update
 //-------------------------------------------------------------------------------------------------------------------------------
 void COLLISION_WORLD::Update(double dt, bool profiling)
@@ -193,6 +226,7 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 
 
 ///  ctor bullet world
+extern ContactAddedCallback		gContactAddedCallback;
 COLLISION_WORLD::COLLISION_WORLD() : pApp(0),
 	config(0), dispatcher(0), broadphase(0), solver(0), world(0), cdOld(0), 
 	track(NULL), trackObject(NULL), trackMesh(NULL),
@@ -216,6 +250,7 @@ COLLISION_WORLD::COLLISION_WORLD() : pApp(0),
 	world->setForceUpdateAllAabbs(false);  //+
 
 	world->setInternalTickCallback(IntTickCallback,this,false);
+	gContactAddedCallback = &WheelContactCallback;  ///c
 }
 
 COLLISION_WORLD::~COLLISION_WORLD()
