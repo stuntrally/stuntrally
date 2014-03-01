@@ -192,7 +192,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
    			break;
    			
    		case key(SPACE):  // subtabs
-   			if (bGuiFocus && tab && !pSet->isMain)
+   			if (bGuiFocus && !edFoc && tab && !pSet->isMain)
 				if (sub)  {  int num = sub->getItemCount();
 					sub->setIndexSelected( (sub->getIndexSelected() + (shift ? -1 : 1) + num) % num );  }
 			break;
