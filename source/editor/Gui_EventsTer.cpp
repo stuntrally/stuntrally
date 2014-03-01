@@ -45,12 +45,12 @@ void CGui::tabTerLayer(Tab wp, size_t id)
 		String sTex,sNorm, sExt;
 		StringUtil::splitBaseFilename(lay->texFile,sTex,sExt);
 		StringUtil::splitBaseFilename(lay->texNorm,sNorm,sExt);
-		bool bAuto = !sNorm.empty() && !noNorm && (sTex + "_nh" == sNorm);  //T "_n"
+		bool bAuto = !sNorm.empty() && !noNorm && (sTex + "_n" == sNorm);  //_T "_n"
 		bTexNormAuto = bAuto;
 		ckTexNormAuto.Upd();
 		//  tex image
-	    //imgTexDiff->setImageTexture(lay->texFile);  //T
-	    imgTexDiff->setImageTexture(sTex + "_prv.jpg");
+	    imgTexDiff->setImageTexture(lay->texFile);  //_T
+	    //imgTexDiff->setImageTexture(sTex + "_prv.jpg");
 	}
 
 	//  scale layer
@@ -420,8 +420,8 @@ void CGui::comboTexDiff(Cmb cmb, size_t val)
 	String sTex, sExt, sPrv;
 	StringUtil::splitBaseFilename(s,sTex,sExt);
 	sPrv = s;
-	sPrv = StringUtil::replaceAll(sTex,"_d.","_prv.") + "_prv.jpg";  //T
-	sNorm = sTex + "_nh." + sExt;  //same ext
+	//sPrv = StringUtil::replaceAll(sTex,"_d.","_prv.") + "_prv.jpg";  //_T
+	//sNorm = sTex + "_nh." + sExt;  //same ext  //_T old
 
 	//  auto norm
 	//`-if (bTexNormAuto)

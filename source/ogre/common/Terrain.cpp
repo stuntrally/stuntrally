@@ -84,7 +84,7 @@ void CScene::SetupTerrain()
 
 	//  new, combine rgb,a from 2 tex
 	//----------------------
-	#if 0
+	#if 1  //_T
 		String pt = PATHMANAGER::Data()+"/terrain",
 			pt2=pt+"2/", p;  pt+="/";
 		
