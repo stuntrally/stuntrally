@@ -43,9 +43,10 @@ SH_START_PROGRAM
 	float3 vx = float3(TriSize, yx, 0);  // x+1 - x-1
 	float3 vz = float3(0, yz, TriSize);  // z+1 - z-1
 	float3 norm = normalize(-cross(vx, vz));
-	float a = acos(norm.y) * 180 / 3.1415926536;  // get angle in degrees
+	float a = max(0.0, acos(norm.y) * 180 / 3.1415926536);  // get angle in degrees
 
 	shOutputColour(0) = float4(a,a,a,a);
+	//shOutputColour(0).r = a;
 }
 
 #endif

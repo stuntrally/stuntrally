@@ -35,7 +35,7 @@ void CScene::UpdTerErr()
 void CScene::SetupTerrain()
 {
 	TerrainMaterialGeneratorPtr matGen;
-	TerrainMaterial* matGenP = new TerrainMaterial();
+	TerrainMaterial* matGenP = new TerrainMaterial(this);
 	matGen.bind(matGenP);
 
 	mTerrainGlobals->setDefaultMaterialGenerator(matGen);
@@ -135,7 +135,7 @@ void CScene::SetupTerrain()
 void CScene::SetupHorizon()
 {
 	TerrainMaterialGeneratorPtr matGen;
-	TerrainMaterial* matGenP = new TerrainMaterial();
+	TerrainMaterial* matGenP = new TerrainMaterial(this);
 	matGen.bind(matGenP);
 
 	mHorizonGlobals->setDefaultMaterialGenerator(matGen);

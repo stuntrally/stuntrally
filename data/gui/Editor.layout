@@ -1453,92 +1453,104 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#A0D8A0#{Terrain}"/>
-				<Widget type="TextBox" skin="TextBox" position="32 39 132 24">
-					<Property key="Caption" value="#{HeightmapSize}"/>
-					<Property key="TextColour" value="0.4 1 0.6"/>
-					<UserString key="tip" value="#{TipTerVertCount}"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 73 132 24">
-					<Property key="Caption" value="#{TriSize} [#{UnitM}]"/>
-					<Property key="TextColour" value="0.4 1 0.7"/>
-					<UserString key="tip" value="#{TipTerTriSize}"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="236 73 460 18" name="TerTriSize">
-					<Property key="Colour" value="0.7 1 0.8"/>
-					<UserString key="tip" value="#{TipTerTriSize}"/>
-				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="168 71 60 22" name="TerTriSizeEdit">
-					<Property key="TextColour" value="0.7 1 0.8"/>
-					<Property key="Colour" value="0.7 1 0.8"/>
-					<UserString key="tip" value="#{TipTerTriSize}"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 108 132 22">
-					<Property key="Caption" value="#{TerrainSize} [#{UnitM}]:"/>
-					<Property key="TextColour" value="0.6 1 0.8"/>
-					<UserString key="tip" value="#{TipTerSize}"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="168 108 96 24" name="TerTriSizeVal">
-					<Property key="TextColour" value="0.8 1 0.9"/>
-					<UserString key="tip" value="#{TipTerSize}"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="304 103 104 32" name="TerrainNew">
-					<Property key="Colour" value="0.2 1 0.5"/>
-					<Property key="Caption" value="#{NewTerrainFlat}"/>
-					<Property key="TextColour" value="0.7 1 0.8"/>
-					<UserString key="tip" value="#{TipNewTerrainFlat}"/>
-				</Widget>
-				<Widget type="TabControl" skin="TabControl" position="160 38 340 20" name="TabHMapSize">
-					<Property key="Colour" value="0.7 0.9 1"/>
-					<Property key="SmoothShow" value="false"/>
-					<UserString key="tip" value="#{TipTerVertCount}"/>
-					<Widget type="TabItem" skin="" position="2 24 334 -8">
-						<Property key="Caption" value="#308090128"/>
-					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 334 -8">
-						<Property key="Caption" value="#30A060256"/>
-					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 334 -8">
-						<Property key="Caption" value="#70FF40512"/>
-					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 334 -8">
-						<Property key="Caption" value="#F0F0401024"/>
-					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 334 -8">
-						<Property key="Caption" value="#8020202048"/>
-					</Widget>
-				</Widget>
-				<Widget type="ProgressBar" skin="ProgressBarFill" position="160 37 340 21">
-					<Property key="Colour" value="0.2 0.9 0.3"/>
-					<Property key="Alpha" value="0.3"/>
-					<Property key="Enabled" value="false"/>
-					<UserString key="tip" value="#{TipTerVertCount}"/>
-				</Widget>
-
-				<Widget type="TextBox" skin="TextBox" position="532 108 140 24">
-					<Property key="Caption" value="#{TerrainError} %"/>
-					<Property key="TextColour" value="0.5 0.6 0.4"/>
-					<UserString key="tip" value="#{TipTerErrorNorm}"/>
-				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="668 103 56 24" name="TerErrorNorm">
-					<Property key="Colour" value="0.5 0.6 0.4"/>
-					<Property key="TextColour" value="0.7 0.8 0.6"/>
-					<UserString key="tip" value="#{TipTerErrorNorm}"/>
-				</Widget>
-
-				<Widget type="TabControl" skin="TabControl" position="14 170 756 370" name="SubTab">
+				<Widget type="TabControl" skin="TabControl" position="16 24 760 506" name="SubTab">
 					<Property key="Colour" value="0.7 0.9 0.8"/>
 					<Property key="SmoothShow" value="false"/>
 					<UserString key="tip" value="#{TipTerLayers}"/>
 					<Widget type="TabItem" skin="" position="2 24 750 342">
+						<Property key="Caption" value="#C0E0C0#{Properties}"/>
+						<Widget type="TextBox" skin="TextBox" position="32 39 132 24">
+							<Property key="Caption" value="#{HeightmapSize}"/>
+							<Property key="TextColour" value="0.4 1 0.6"/>
+							<UserString key="tip" value="#{TipTerVertCount}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 73 132 24">
+							<Property key="Caption" value="#{TriSize} [#{UnitM}]"/>
+							<Property key="TextColour" value="0.4 1 0.7"/>
+							<UserString key="tip" value="#{TipTerTriSize}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="236 73 460 18" name="TerTriSize">
+							<Property key="Colour" value="0.7 1 0.8"/>
+							<UserString key="tip" value="#{TipTerTriSize}"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="168 71 60 22" name="TerTriSizeEdit">
+							<Property key="TextColour" value="0.7 1 0.8"/>
+							<Property key="Colour" value="0.7 1 0.8"/>
+							<UserString key="tip" value="#{TipTerTriSize}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 108 132 22">
+							<Property key="Caption" value="#{TerrainSize} [#{UnitM}]:"/>
+							<Property key="TextColour" value="0.6 1 0.8"/>
+							<UserString key="tip" value="#{TipTerSize}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="168 108 96 24" name="TerTriSizeVal">
+							<Property key="TextColour" value="0.8 1 0.9"/>
+							<UserString key="tip" value="#{TipTerSize}"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="304 103 104 32" name="TerrainNew">
+							<Property key="Colour" value="0.2 1 0.5"/>
+							<Property key="Caption" value="#{NewTerrainFlat}"/>
+							<Property key="TextColour" value="0.7 1 0.8"/>
+							<UserString key="tip" value="#{TipNewTerrainFlat}"/>
+						</Widget>
+						<Widget type="TabControl" skin="TabControl" position="160 38 340 20" name="TabHMapSize">
+							<Property key="Colour" value="0.7 0.9 1"/>
+							<Property key="SmoothShow" value="false"/>
+							<UserString key="tip" value="#{TipTerVertCount}"/>
+							<Widget type="TabItem" skin="" position="2 24 334 -8">
+								<Property key="Caption" value="#308090128"/>
+							</Widget>
+							<Widget type="TabItem" skin="" position="2 24 334 -8">
+								<Property key="Caption" value="#30A060256"/>
+							</Widget>
+							<Widget type="TabItem" skin="" position="2 24 334 -8">
+								<Property key="Caption" value="#70FF40512"/>
+							</Widget>
+							<Widget type="TabItem" skin="" position="2 24 334 -8">
+								<Property key="Caption" value="#F0F0401024"/>
+							</Widget>
+							<Widget type="TabItem" skin="" position="2 24 334 -8">
+								<Property key="Caption" value="#8020202048"/>
+							</Widget>
+						</Widget>
+						<Widget type="ProgressBar" skin="ProgressBarFill" position="160 37 340 21">
+							<Property key="Colour" value="0.2 0.9 0.3"/>
+							<Property key="Alpha" value="0.3"/>
+							<Property key="Enabled" value="false"/>
+							<UserString key="tip" value="#{TipTerVertCount}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 178 140 24">
+							<Property key="Caption" value="#{TerrainError} %"/>
+							<Property key="TextColour" value="0.6 0.7 0.5"/>
+							<UserString key="tip" value="#{TipTerErrorNorm}"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="168 173 56 24" name="TerErrorNorm">
+							<Property key="Colour" value="0.6 0.7 0.5"/>
+							<Property key="TextColour" value="0.8 0.9 0.7"/>
+							<UserString key="tip" value="#{TipTerErrorNorm}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 208 140 24">
+							<Property key="Caption" value="#{NormalsScale}"/>
+							<Property key="TextColour" value="0.5 0.6 0.7"/>
+							<UserString key="tip" value="#{TipTerErrorNorm}"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="168 203 56 24" name="TerNormScale">
+							<Property key="Colour" value="0.5 0.6 0.7"/>
+							<Property key="TextColour" value="0.7 0.8 0.9"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 750 342">
 						<Property key="Caption" value="#40E040#{Brushes}"/>
 
-						<Widget type="ScrollView" skin="ScrollViewEmpty" position="0 5 750 330" name="svBrushes">
+						<Widget type="ScrollView" skin="ScrollViewEmpty" position="0 5 750 470" name="svBrushes">
 							<Property key="CanvasSize" value="1020 1800"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 750 342">
 						<Property key="Caption" value="#A0F0B8#{Generator}"/>
-						<Widget type="Widget" skin="PanelSkin" position="0 45 750 380">
+						<Widget type="Widget" skin="PanelSkin" position="0 45 750 430">
 							<Property key="Colour" value="0.141 0.322 0.146"/>
 							<Property key="Alpha" value="0.2"/>
 						</Widget>
@@ -1563,7 +1575,7 @@
 							<Property key="TextColour" value="0.7 0.6 0.8"/>
 						</Widget>
 
-						<Widget type="ScrollView" skin="ScrollViewEmpty" position="0 50 750 300" name="svGenerator">
+						<Widget type="ScrollView" skin="ScrollViewEmpty" position="0 50 750 425" name="svGenerator">
 							<Property key="CanvasSize" value="1020 900"/>
 
 							<Widget type="TextBox" skin="TextBox" position="16 5 108 24">

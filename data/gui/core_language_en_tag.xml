@@ -685,7 +685,7 @@
 	<Tag name="HeightmapSize">Heightmap size</Tag>
 	<Tag name="TriSize">Triangle size</Tag>
 	<Tag name="TerrainSize">Terrain size</Tag>
-	<Tag name="TerrainError">Terrain Error</Tag>
+	<Tag name="NormalsScale">Normals scale</Tag>
 	
 	<Tag name="NewTerrainFlat">New flat</Tag>
 	<Tag name="NewTerrainGenerate">Generate new</Tag>

@@ -123,6 +123,7 @@ public:
 	//  Ter HMap
 	SlV(TerTriSize);  int UpdTxtTerSize(float mul=1.f);
 	Ed edTerErrorNorm;  void editTerErrorNorm(Ed);
+	Ed edTerNormScale;  void editTerNormScale(Ed);
 	
 	Ogre::String getHMapNew();
 	void btnTerrainNew(WP), btnTerGenerate(WP);

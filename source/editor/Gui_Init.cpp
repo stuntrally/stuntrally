@@ -243,6 +243,7 @@ void CGui::InitGui()
 	imgTexDiff = fImg("TerImgDiff");
 	Tab(tabsHmap, "TabHMapSize", tabHmap);
 	Ed(TerErrorNorm, editTerErrorNorm);
+	Ed(TerNormScale, editTerNormScale);
 
 	Btn("TerrainNew", btnTerrainNew);
 	Btn("TerrainGenAdd", btnTerGenerate);  Btn("TerrainGenSub", btnTerGenerate);   Btn("TerrainGenMul", btnTerGenerate);

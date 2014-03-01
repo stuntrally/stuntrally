@@ -170,6 +170,9 @@
         shUniform(float, terrainWorldSize)  @shSharedParameter(terrainWorldSize)
 #endif
 
+#if NORMAL_MAPPING
+        shUniform(float, scaleNormal)  @shUniformProperty1f(scaleNormal, scaleNormal)
+#endif
 
         // layer uv multipliers
     @shForeach(@shPropertyString(num_uv_mul))
@@ -428,6 +431,9 @@
     #endif
 
 	#if NORMAL_MAPPING
+		TSnormal.z *= scaleNormal;
+		TSnormal = normalize(TSnormal);
+		
         NdotL = max(dot(TSnormal, TSlightDir), 0);
         specular = pow(max(dot(TSnormal, TShalfAngle), 0), SPECULAR_EXPONENT) * diffuseSpec.a;
         

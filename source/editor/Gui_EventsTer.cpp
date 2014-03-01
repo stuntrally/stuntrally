@@ -158,6 +158,12 @@ void CGui::editTerErrorNorm(Ed ed)
 	sc->td.errorNorm = r;  scn->UpdTerErr();
 }
 
+void CGui::editTerNormScale(Ed ed)
+{
+	Real r = s2r(ed->getCaption());
+	sc->td.normScale = r;  //upd ter mtr par..
+}
+
 
 //  - - - -  Hmap tools  - - - -
 String CGui::getHMapNew()

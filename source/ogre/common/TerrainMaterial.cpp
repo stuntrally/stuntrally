@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Def_Str.h"
 #include "TerrainMaterial.h"
+#include "CScene.h"
+#include "data/SceneXml.h"
 
 #include <OgreTerrain.h>
 #include <OgreMaterialManager.h>
@@ -25,7 +27,8 @@ namespace
 }
 
 
-TerrainMaterial::TerrainMaterial()
+TerrainMaterial::TerrainMaterial(CScene* scn1)
+	: scn(scn1)
 {
 	mLayerDecl.samplers.push_back(TerrainLayerSampler("albedo_specular", PF_BYTE_RGBA));
 	mLayerDecl.samplers.push_back(TerrainLayerSampler("normal_height", PF_BYTE_RGBA));
@@ -36,14 +39,14 @@ TerrainMaterial::TerrainMaterial()
 	mLayerDecl.elements.push_back(TerrainLayerSamplerElement(1, TLSS_HEIGHT, 3, 1));
 
 
-	mProfiles.push_back(OGRE_NEW Profile(this, "SM2", "Profile for rendering on Shader Model 2 capable cards"));
+	mProfiles.push_back(OGRE_NEW Profile(scn1, this, "SM2", "Profile for rendering on Shader Model 2 capable cards"));
 	setActiveProfile("SM2");
 }
 
 // -----------------------------------------------------------------------------------------------------------------------
 
-TerrainMaterial::Profile::Profile(TerrainMaterialGenerator* parent, const String& name, const String& desc)
-	: TerrainMaterialGenerator::Profile(parent, name, desc)
+TerrainMaterial::Profile::Profile(CScene* scn1, TerrainMaterialGenerator* parent, const String& name, const String& desc)
+	: TerrainMaterialGenerator::Profile(parent, name, desc), scn(scn1)
 {
 }
 
@@ -83,6 +86,10 @@ void TerrainMaterial::Profile::createMaterial(const String& matName, const Terra
 
 	typedef sh::MaterialInstanceTextureUnit* MatTex;
 	
+	/// . . . . . .
+	///  custom params from scene
+	p->mShaderProperties.setProperty("scaleNormal", STR(toStr(1.f / scn->sc->td.normScale)));
+
 	//  global normal map ?-
 	MatTex normalMap = p->createTextureUnit("normalMap");
 	normalMap->setProperty("direct_texture",   STR(terrain->getTerrainNormalMap()->getName()));
@@ -104,9 +111,7 @@ void TerrainMaterial::Profile::createMaterial(const String& matName, const Terra
 	for (uint i = 0; i < numBlendTextures; ++i)
 	{
 		MatTex blendTex = p->createTextureUnit("blendMap" + toStr(i));
-		//blendTex->setProperty("direct_texture",   STR(terrain->getBlendTextureName(i)));
 		blendTex->setProperty("direct_texture",   STR("blendmapRTT"));
-		//blendTex->setProperty("direct_texture",   STR("blendmapT"));
 		blendTex->setProperty("tex_address_mode", STR("clamp"));
 	}
 

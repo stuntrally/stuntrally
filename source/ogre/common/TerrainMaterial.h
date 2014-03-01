@@ -3,10 +3,8 @@
 #include "OgreTerrainMaterialGenerator.h"
 #include "OgreGpuProgramParams.h"
 
-namespace sh
-{
-	class MaterialInstance;
-}
+namespace sh  {  class MaterialInstance;  }
+class CScene;
 
 
 class TerrainMaterial : public Ogre::TerrainMaterialGenerator
@@ -16,10 +14,11 @@ public:
 	class Profile : public Ogre::TerrainMaterialGenerator::Profile
 	{
 	public:
-		Profile(Ogre::TerrainMaterialGenerator* parent, const Ogre::String& name, const Ogre::String& desc);
+		CScene* scn;
+		Profile(CScene* scn1, Ogre::TerrainMaterialGenerator* parent, const Ogre::String& name, const Ogre::String& desc);
 		virtual ~Profile();
 
-		virtual bool isVertexCompressionSupported() const { return false; }
+		virtual bool isVertexCompressionSupported() const {  return false;  }
 
 		virtual Ogre::MaterialPtr generate(const Ogre::Terrain* terrain);
 		virtual Ogre::MaterialPtr generateForCompositeMap(const Ogre::Terrain* terrain);
@@ -31,15 +30,15 @@ public:
 
 		virtual void requestOptions(Ogre::Terrain* terrain);
 
-		virtual void setLightmapEnabled(bool) {}
+		virtual void setLightmapEnabled(bool) {  }
 
 	private:
 		sh::MaterialInstance* mMaterial;
 		Ogre::String mMatName, mMatNameComp;
 
-		void createMaterial (const Ogre::String& matName, const Ogre::Terrain* terrain, bool renderCompositeMap);
-
+		void createMaterial(const Ogre::String& matName, const Ogre::Terrain* terrain, bool renderCompositeMap);
 	};
 
-	TerrainMaterial();
+	CScene* scn;
+	TerrainMaterial(CScene* scn1);
 };

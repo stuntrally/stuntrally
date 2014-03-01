@@ -268,6 +268,7 @@ bool Scene::LoadXml(String file, bool bTer)
 		a = eTer->Attribute("size");		if (a)  td.iVertsX = s2i(a);
 		a = eTer->Attribute("triangle");	if (a)  td.fTriangleSize = s2r(a);
 		a = eTer->Attribute("errNorm");		if (a)  td.errorNorm = s2r(a);
+		a = eTer->Attribute("normSc");		if (a)  td.normScale = s2r(a);
 		td.UpdVals();
 
 		int il = 0;
@@ -549,6 +550,8 @@ bool Scene::SaveXml(String file)
 		ter.SetAttribute("size",		toStrC( td.iVertsX ));
 		ter.SetAttribute("triangle",	toStrC( td.fTriangleSize ));
 		ter.SetAttribute("errNorm",		fToStr( td.errorNorm, 2,4 ).c_str());
+		if (td.normScale != 1.f)
+		ter.SetAttribute("normSc",		toStrC( td.normScale ));
 
 		const TerLayer* l;
 		for (int i=0; i < 6; ++i)
@@ -734,6 +737,7 @@ void TerData::Default()
 	fTriangleSize = 1.f;  // scale
 	triplanar1Layer = 8;  // off
 	errorNorm = 1.7;
+	normScale = 1.f;
 
 	for (int i=0; i < ciNumLay; ++i)
 	{	
