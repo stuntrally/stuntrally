@@ -158,11 +158,11 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			break;
 
 		case key(F2):  // +-rt num
-   			if (alt)
+   			if (shift)
    			{	pSet->num_mini = (pSet->num_mini - 1 + RTs+2) % (RTs+2);  UpdMiniVis();  }
    			else
    			if (bGuiFocus && tab && !pSet->isMain)
-   				if (shift)  // prev gui subtab
+   				if (alt)  // prev gui subtab
    				{
    					if (sub)  {  int num = sub->getItemCount();
    						sub->setIndexSelected( (sub->getIndexSelected() - 1 + num) % num );  }
@@ -175,11 +175,11 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
    			break;
 
 		case key(F3):  // tabs,sub
-   			if (alt)
+   			if (shift)
    			{	pSet->num_mini = (pSet->num_mini + 1) % (RTs+2);  UpdMiniVis();  }
    			else
    			if (bGuiFocus && tab && !pSet->isMain)
-   				if (shift)  // next gui subtab
+   				if (alt)  // next gui subtab
    				{
    					if (sub)  {  int num = sub->getItemCount();
    						sub->setIndexSelected( (sub->getIndexSelected() + 1) % num );  }
@@ -550,7 +550,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 		case key(S):  gui->GuiShortcut(WND_Edit, 1);  return true;  // S Sun
 		case key(H):  gui->GuiShortcut(WND_Edit, 2);  return true;  // H Heightmap
-		 case key(D): gui->GuiShortcut(WND_Edit, 2,0);  return true;  //  D -Brushes
+		 case key(D): gui->GuiShortcut(WND_Edit, 2,1);  return true;  //  D -Brushes
 
 		case key(T):  gui->GuiShortcut(WND_Edit, 3);  return true;  // T Layers (Terrain)
 		 case key(B): gui->GuiShortcut(WND_Edit, 3,0);  return true;  //  B -Blendmap
