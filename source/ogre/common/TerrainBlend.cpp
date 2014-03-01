@@ -208,14 +208,22 @@ void CScene::UpdLayerPars()
 
 	//  blendmap
 	mat = sh::Factory::getInstance().getMaterialInstance(sBlendMat);
-
+	int i;
 	float Hmin[4],Hmax[4],Hsmt[4], Amin[4],Amax[4],Asmt[4];
 	float Nnext[4],Nprev[3],Nnext2[2], Nonly[4];
 	float Nfreq[3],Noct[3],Npers[3],Npow[3];
 	float Nfreq2[2],Noct2[2],Npers2[2],Npow2[2];
+	//  zero
+	for (i=0; i < 4; ++i)
+	{	Hmin[i]=0.f; Hmax[i]=0.f; Hsmt[i]=0.f;  Amin[i]=0.f; Amax[i]=0.f; Asmt[i]=0.f;
+		Nnext[i]=0.f;  Nonly[i]=0.f;  }
+	for (i=0; i < 3; ++i)
+	{	Nprev[i]=0.f;  Nfreq[i]=0.f; Noct[i]=0.f; Npers[i]=0.f; Npow[i]=0.f;  }
+	for (i=0; i < 2; ++i)
+	{	Nnext2[i]=0.f;  Nfreq2[i]=0.f; Noct2[i]=0.f; Npers2[i]=0.f; Npow2[i]=0.f;  }
 	
 	int nl = std::min(4, (int)sc->td.layers.size());
-	for (int i=0; i < nl; ++i)
+	for (i=0; i < nl; ++i)
 	{	//  range
 		const TerLayer& l = sc->td.layersAll[sc->td.layers[i]];
 		Hmin[i] = l.hMin;	Hmax[i] = l.hMax;	Hsmt[i] = l.hSm;
