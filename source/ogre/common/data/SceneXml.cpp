@@ -743,7 +743,7 @@ void TerData::Default()
 	{	
 		TerLayer& l = layersAll[i];  l.tiling = 4.5f;
 		l.on = i==0;
-		l.texFile = "jungle_0.dds";  l.texNorm = "jungle_0_nh.dds";
+		l.texFile = "";  l.texNorm = "";
 		l.dust = 0.f;  l.mud = 1.f;  l.smoke = 0.f;
 		l.tclr = ColourValue(0.2f,0.2f,0.f,1.f);
 	}
