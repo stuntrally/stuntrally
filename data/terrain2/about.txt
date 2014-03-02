@@ -25,7 +25,7 @@ My license is also  CC-0
 217 adesert_mntn4
 
 92,163,168 combined
-	grass_green  grass_green2y
+    grass_green  grass_green2y
 91  grass_ground
 216 grass_mix  org
 104 grass_rocky  org
