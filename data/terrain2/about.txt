@@ -1,15 +1,41 @@
-Original textures by OpenGameArt user
+--- Original textures by Nobiax/yughues
+A big thank you for your work man, you are the best.
+
+http://nobiax.deviantart.com
 http://opengameart.org/users/yughues
 
+From archives: "Free tiling textures pack" 1..55
 License: CC-0 (Public Domain)
 
---- Edited for use with ogre terrain by scrawl and CryHam
 
-jungle_rocky
-jungle_rocky2
-leaves
+--- Edited by CryHam
+number - is the original texture name from packs
+org - means it was not recolored
+Most were colored using Curves and HSV change.
+My license is also  CC-0
+---
 
-autumn_red
+69  desert_mntn  adesert_mntn
+75  desert_mntn2  adesert_mntn2
+219 desert_mntn3  adesert_mntn3
+45  desert_sand  island_sand
+111 desert_sand2  adesert_sand2  island_sand2
+196 desert_sand_big
+46  desert_mud  desert_rocky  adesert_rocky
+113 desert_cracks  adesert_cracks
+217 adesert_mntn4
+    adesert_stone
+
+70  jungle_mntn2
+72  jungle_mntn  org
+73  jungle_stone
+92  jungle_leaves  org
+104 jungle_rocky  org
+	jungle_grass   92,163,168
+
+81  lava  lava_mars
+
+85  autumn_red
 
 
 Author: Mysteryem (Submitted by qubodup)
