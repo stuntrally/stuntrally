@@ -17,30 +17,44 @@ My license is also  CC-0
 
 69  desert_mntn  adesert_mntn
 75  desert_mntn2  adesert_mntn2
-219 desert_mntn3  adesert_mntn3
 45  desert_sand  island_sand
 111 desert_sand2  adesert_sand2  island_sand2
 196 desert_sand_big
-46  desert_mud  desert_rocky  adesert_rocky
+46  desert_mud  desert_rocky  adesert_rocky  ground_mud2
 113 desert_cracks  adesert_cracks
 217 adesert_mntn4
-    adesert_stone
+
+92,163,168 combined
+	grass_green  grass_green2y
+91  grass_ground
+216 grass_mix  org
+104 grass_rocky  org
+
+265 ground_dry2
+92  ground_ferns
+88  ground_leaves
+105 ground_mud
 
 70  jungle_mntn2
 72  jungle_mntn  org
 73  jungle_stone
-92  jungle_leaves  org
-104 jungle_rocky  org
-	jungle_grass   92,163,168
+
+219 mntn_dark  amntn_dark
+76  mntn_black  org
+71  mntn_brown
+78  mntn_green
 
 81  lava  lava_mars
 
 85  autumn_red
 
+    adesert_stone..
 
+---
 Author: Mysteryem (Submitted by qubodup)
 mysteryemwarzone2100textures
 License(s):  GPL 2.0   GPL 3.0   CC-BY-SA 3.0
 http://opengameart.org/content/29-grounds-and-walls-and-water-1024x1024
 
 snow_rocky
+
