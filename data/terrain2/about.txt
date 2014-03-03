@@ -34,10 +34,11 @@ My license is also  CC-0
 92  ground_ferns
 88  ground_leaves
 105 ground_mud
+109 ground_white
 
 70  jungle_mntn2
-72  jungle_mntn  org
-73  jungle_stone
+72  jungle_mntn  org  ground_yellow
+73  jungle_stone  mntn_yellow
 
 219 mntn_dark  amntn_dark
 76  mntn_black  org
