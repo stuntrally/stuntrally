@@ -135,13 +135,16 @@ void PosInfo::FromCar(CAR* pCar)
 //-----------------------------------------------------------------------
 void ReplayFrame::FromCar(const CAR* pCar)
 {
+	//  car
 	const CARDYNAMICS& cd = pCar->dynamics;
-	pos = pos;  rot = rot;  //  car
+	pos = cd.GetPosition();
+	rot = cd.GetOrientation();
 	//  wheels
 	for (int w=0; w < 4; ++w)
-	{	whPos[w] = whPos[w];  whRot[w] = whRot[w];
+	{	WHEEL_POSITION wp = WHEEL_POSITION(w);
+		whPos[w] = cd.GetWheelPosition(wp);
+		whRot[w] = cd.GetWheelOrientation(wp);
 
-		WHEEL_POSITION wp = WHEEL_POSITION(w);
 		const TRACKSURFACE* surface = cd.GetWheelContact(wp).GetSurfacePtr();
 		surfType[w] = !surface ? TRACKSURFACE::NONE : surface->type;
 		//  squeal
