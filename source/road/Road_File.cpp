@@ -49,8 +49,9 @@ void SplineRoad::Defaults()
 	skirtLen = 1.f;  skirtH = 0.12f;  fHeight = 0.1f;
 	setMrgLen = 180.f;  bMerge = false;  lposLen = 10.f;
 	colN = 4; colR = 2.f;
+
 	iDir = -1;  vStBoxDim = Vector3(1.5f, 5,12);  // /long |height -width
-	iP1 = 0;  iChkId1 = 0;  iChkId1Rev = 0;
+	iChkId1 = 0;  iChkId1Rev = 0;
 }
 
 SplineRoad::~SplineRoad()
@@ -77,7 +78,7 @@ void SplineRoad::SetChecks()  // after xml load
 			cs.r2 = cs.r * cs.r;
 			cs.loop = mP[i].loopChk > 0;
 
-			if (i == iP1)  //1st checkpoint
+			if (mP[i].chk1st)  //1st checkpoint
 				iChkId1 = mChks.size();
 
 			mChks.push_back(cs);
@@ -263,6 +264,7 @@ bool SplineRoad::LoadFile(String fname, bool build)
 		a = n->Attribute("mergeLen");	if (a)  setMrgLen = s2r(a);
 		a = n->Attribute("lodPntLen");	if (a)  lposLen = s2r(a);
 	}
+	int iP1 = 0;
 	n = root->FirstChildElement("geom");	if (n)  {
 		a = n->Attribute("colN");	if (a)  colN = s2i(a);
 		a = n->Attribute("colR");	if (a)  colR = s2r(a);
@@ -315,6 +317,10 @@ bool SplineRoad::LoadFile(String fname, bool build)
 
 		n = n->NextSiblingElement("P");
 	}
+	//  set 1st chk
+	if (iP1 >= 0 && iP1 < getNumPoints())
+		mP[iP1].chk1st = true;
+	
 	/// create loop-
 	/*const int q = 8;
 	for (int i=0; i < q*3; ++i)
@@ -375,6 +381,12 @@ bool SplineRoad::SaveFile(String fname)
 		mrg.SetAttribute("lodPntLen",	toStrC( lposLen ));
 	root.InsertEndChild(mrg);
 
+	int num = getNumPoints();
+	int iP1 = 0;  // find 1st chk id
+	for (int i=0; i < num; ++i)
+		if (mP[i].chk1st)
+			iP1 = i;
+	
 	TiXmlElement geo("geom");
 		geo.SetAttribute("colN",	toStrC( colN ));
 		geo.SetAttribute("colR",	toStrC( colR ));
@@ -401,8 +413,7 @@ bool SplineRoad::SaveFile(String fname)
 		txt.SetAttribute("desc",	sTxtDesc.c_str());
 	root.InsertEndChild(txt);
 
-	int num = getNumPoints();		//  points
-	for (int i=0; i < num; ++i)
+	for (int i=0; i < num; ++i)		//  points
 	{
 		bool onTer = mP[i].onTer, onTer1 = mP[(i+1)%num].onTer, onTer_1 = mP[(i-1+num)%num].onTer;
 		TiXmlElement p("P");

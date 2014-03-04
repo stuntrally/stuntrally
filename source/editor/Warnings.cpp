@@ -53,9 +53,15 @@ void CGui::WarningsCheck(const Scene* sc, const SplineRoad* road)
 		Vector3 vx,vy,vz;  q1.ToAxes(vx,vy,vz);  Vector3 stDir = -vx;
 		Plane stPla(stDir, stPos);
 
-		if (road->iP1 >= 0 && road->iP1 < cnt  && road->mP[road->iP1].chkR >= 1.f)
+		int num = road->getNumPoints();
+		int iP1 = -1;  // find 1st chk id
+		for (int i=0; i < num; ++i)
+			if (road->mP[i].chk1st)
+				iP1 = i;
+
+		if (iP1 >= 0 && iP1 < cnt  && road->mP[iP1].chkR >= 1.f)
 		{
-			Vector3 ch1 = road->mP[road->iP1].pos;
+			Vector3 ch1 = road->mP[iP1].pos;
 			float d1 = stPla.getDistance(ch1);
 			Warn(TXT,"Car start to 1st check distance: "+fToStr(d1,2,4));
 			if (d1 < 0.f)
@@ -63,7 +69,7 @@ void CGui::WarningsCheck(const Scene* sc, const SplineRoad* road)
 			//Warn(NOTE,"Check1 pos "+fToStr(ch0.x,2,5)+" "+fToStr(ch0.y,2,5)+" "+fToStr(ch0.z,2,5));
 
 			//-  road dir  ----
-			Vector3 pPrev = road->mP[(road->iP1 - road->iDir + cnt) % cnt].pos;
+			Vector3 pPrev = road->mP[(iP1 - road->iDir + cnt) % cnt].pos;
 			float dPrev = stPla.getDistance(pPrev), diff = d1-dPrev;
 
 			Warn(TXT,"Distance between 1st check and its prev point: "+fToStr(diff,2,4));
@@ -101,10 +107,10 @@ void CGui::WarningsCheck(const Scene* sc, const SplineRoad* road)
 		
 		
 		//-  first chk  ----
-		if (road->iP1 < 0 || road->iP1 >= cnt)
+		if (iP1 < 0 || iP1 >= cnt)
 			Warn(ERR,"First checkpoint not set  (use ctrl-0)");
 		else
-		if (road->mP[road->iP1].chkR < 0.1f)
+		if (road->mP[iP1].chkR < 0.1f)
 			Warn(ERR,"First checkpoint not set  (use ctrl-0)");
 
 		

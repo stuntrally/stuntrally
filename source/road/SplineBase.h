@@ -38,6 +38,7 @@ public:
 	int idMtr;    // material id road/pipe
 	
 	Ogre::Real chkR;    // checkpoint sphere radius (0-none)
+	bool chk1st;  // 1st checkpoint (1), just once on road
 
 	SplinePoint();
 	void SetDefault();

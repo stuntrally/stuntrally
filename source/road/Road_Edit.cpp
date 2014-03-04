@@ -218,6 +218,8 @@ void SplineRoad::MirrorSel(bool alt)
 void SplineRoad::Insert(eIns ins)
 {
 	RoadSeg rs;  SplinePoint pt = newP;  // new
+	pt.chk1st = false;  // clear 1st chk
+	
 	if (pt.onTer && mTerrain)
 		pt.pos.y = mTerrain->getHeightAtWorldPosition(pt.pos.x, 0, pt.pos.z) + fHeight;
 
@@ -661,9 +663,12 @@ void SplineRoad::AngZero()   ///  Angles set 0
 
 void SplineRoad::Set1stChk()
 {
-	if (iChosen >= 0 && iChosen < getNumPoints())
-	if (mP[iChosen].chkR > 0.f)
-		iP1 = std::max(0, std::min(getNumPoints()-1, iChosen));
+	if (iChosen < 0 || iChosen >= getNumPoints())  return;
+	if (mP[iChosen].chkR < 0.5f)  return;
+
+	for (int i=0; i < getNumPoints(); ++i)  // clear from all
+		mP[i].chk1st = false;
+	mP[iChosen].chk1st = true;  // set this
 }
 
 //  util
