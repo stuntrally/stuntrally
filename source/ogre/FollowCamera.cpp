@@ -293,13 +293,13 @@ Vector3 FollowCamera::moveAboveTerrain(const Vector3& camPos)
 }
 
 
-void FollowCamera::Apply(const PosInfo& posIn)
+void FollowCamera::Apply(const PosInfo& posIn, bool bounce)
 {
 	//boost::this_thread::sleep(boost::posix_time::milliseconds(rand()%20));
 	if (!mCamera)  return;
 
 	Vector3 pos = posIn.camPos;  //moveAboveTerrain(posIn.camPos);
-	if (pSet->cam_bounce)
+	if (bounce)
 		pos += posIn.camOfs * posIn.camOfsMul
 			* gPar.camBncScale * pSet->cam_bnc_mul;
 	mCamera->setPosition(pos);

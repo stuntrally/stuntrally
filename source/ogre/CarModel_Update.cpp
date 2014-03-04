@@ -197,7 +197,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 
 	//  set camera view
 	if (fCam)
-		fCam->Apply(posInfoCam/*posInfo*/);
+		fCam->Apply(posInfoCam/*posInfo*/, !pApp->bRplPlay && pSet->cam_bounce);
 
 	//  upd rotY for minimap
 	Quaternion q = posInfo.rot * Quaternion(Degree(90),Vector3(0,1,0));
