@@ -243,4 +243,5 @@ void SplinePoint::SetDefault()
 	mYaw = 0;  mRoll = 0;  aType = AT_Both;
 	cols = 1;  pipe = 0;  idMtr = 0;  chkR = 0;
 	onPipe = 0;  loopChk = 0;
+	chk1st = false;
 }

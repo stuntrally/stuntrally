@@ -184,7 +184,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 
 		rdTxt[9]->setTextColour(sp.loopChk ? MyGUI::Colour(0.5,1,1) : MyGUI::Colour(0.75,0.64,0.96));
 		rdTxt[9]->setCaption(sp.loopChk ? TR("#{Road_Loop}") : TR("#{Road_ChkR}"));
-		rdVal[9]->setCaption( sp.chkR == 0.f ? "" : fToStr(sp.chkR,1,3)+"  "+ (road->iP1 == ic ? "#D0D0FF(1)":"") );
+		rdVal[9]->setCaption( sp.chkR == 0.f ? "" : fToStr(sp.chkR,1,3)+"  "+ (sp.chk1st ? "#D0D0FF(1)":"") );
 
 		if (road->vSel.size() > 0)  s = TR("#{Road_sel}")+": "+toStr(road->vSel.size());
 		else  s = fToStr(road->iChosen+1,0,2)+"/"+toStr(road->vSegs.size());

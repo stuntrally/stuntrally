@@ -192,7 +192,6 @@ public:
 	Ogre::Real chksRoadLen;   // for %, sum of all mChks[].dist (without last)
 	Ogre::Vector3 vStBoxDim;  // start/finish box half dimensions
 	int iDir;  // -1 or +1  if road points go +/-1 with car start orientation
-	int iP1;   // 1st chk - road point index (not reversed) for mP[]
 	int iChkId1,iChkId1Rev;   // 1st chekpoint index (and for reversed) for mChks[]
 
 	// params for editor tool: align terrain to road
