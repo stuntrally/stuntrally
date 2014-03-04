@@ -234,7 +234,7 @@ ManualObject* CHud::CreateVdrMinimap()
 				m->position(pos);
 				m->normal(norm);/**/
 
-				Real c = std::min(1.f, std::max(0.3f, 1.f - 2.4f * powf( abs(norm.y)
+				Real c = std::min(1.f, std::max(0.3f, 1.f - 2.4f * powf( fabs(norm.y)
 					/*norm.absDotProduct(vLi)*/, 0.7f) ));
 				m->colour(ColourValue(c,c,c,1));
 

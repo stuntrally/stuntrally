@@ -28,7 +28,7 @@ void CGui::slRplPosEv(SL)  // change play pos
 	FollowCamera* fCam = (*app->carModels.begin())->fCam;
 	fCam->First();  // instant change
 	//for (int i=0; i < 10; ++i)
-	//	fCam->update(abs(v-oldt)/10.f, 0);  //..?
+	//	fCam->update(fabs(v-oldt)/10.f, 0);  //..?
 }
 
 void CGui::btnRplLoad(WP)  // Load

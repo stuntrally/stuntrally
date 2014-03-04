@@ -408,7 +408,7 @@ void GodRaysListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 		Vector3 sunPosition = sun->getDirection() *100;
 		Vector3 worldViewPosition = cam->getViewMatrix() * sunPosition;
 		Vector3 hcsPosition = cam->getProjectionMatrix() * worldViewPosition;
-		float unclampedLuminance = abs(hcsPosition.x)+abs(hcsPosition.y);
+		float unclampedLuminance = fabs(hcsPosition.x) + fabs(hcsPosition.y);
 		clamp(hcsPosition);
 		Vector2 sunScreenSpacePosition = Vector2(0.5f + (0.5f * hcsPosition.x), 0.5f + (0.5f * -hcsPosition.y));
 		SunScreenSpacePosition = Vector4(sunScreenSpacePosition.x, sunScreenSpacePosition.y, 0, 1);

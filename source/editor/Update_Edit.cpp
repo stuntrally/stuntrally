@@ -579,8 +579,8 @@ void App::editMouse()
 		{
 			if (mbLeft)  // size xz
 			{
-				Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();  vx.x = abs(vx.x);  vx.z = abs(vx.z);
-				Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();  vz.x = abs(vz.x);  vz.z = abs(vz.z);
+				Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();  vx.x = fabs(vx.x);  vx.z = fabs(vx.z);
+				Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();  vz.x = fabs(vz.x);  vz.z = fabs(vz.z);
 				Vector3 vm = (vNew.y * vz + vNew.x * vx) * fMove * moveMul;
 				fb.size += vm;
 				if (fb.size.x < 0.2f)  fb.size.x = 0.2f;
