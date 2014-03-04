@@ -339,7 +339,7 @@ void CHud::Update(int carId, float time)
 		// motion blur slider: 1.0 = peak at 100 km/h   0.0 = peak at 400 km/h   -> 0.5 = peak at 250 km/h
 		// lerp(100, 400, 1-motionBlurIntensity)
 		float peakSpeed = 100 + (1-pSet->blur_int) * (400-100);
-		float intens = std::abs(speed) / pow((peakSpeed/3.6f), 2);
+		float intens = fabs(speed) / pow((peakSpeed/3.6f), 2);
 		
 		// higher fps = less perceived motion blur time a frame will be still visible on screen:
 		// each frame, 1-intens of the original image is lost
@@ -371,7 +371,7 @@ void CHud::Update(int carId, float time)
 		else if (gear > 0 && gear < 8)
 		{	h.txGear->setCaption(toStr(gear));  h.txGear->setTextColour(Colour(1,1-gear*0.1,0.2,cl));  }
 
-		h.txVel->setCaption(fToStr(std::abs(vel),0,3));
+		h.txVel->setCaption(fToStr(fabs(vel),0,3));
 
 		float k = pCar->GetSpeedometer() * 3.6f * 0.0025f;	// vel clr
 		#define m01(x)  std::min(1.0f, std::max(0.0f, (float) (x) ))
@@ -637,7 +637,8 @@ void CHud::Update(int carId, float time)
 
 			//  bar meters |
 			float susp = pCar->dynamics.GetSuspension(WHEEL_POSITION(w)).GetDisplacementPercent();
-			float slng = sLong/abs(sLong)*powf(abs(sLong),0.3f);  // slide*20.f
+			sLong = fabs(sLong);
+			float slng = sLong / sLong * powf(sLong, 0.3f);  // slide*20.f
 
 			ov[3-w].oR->setPosition(slng * 14.f +xp, yp + w*ln);
 			ov[3-w].oL->setPosition(sLat * 14.f +xp, yp + w*ln +y4);
@@ -762,7 +763,7 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 	//  angles
 	float angrmp = rpm*sc_rpm[ig] + rmin[ig];
 	float vsc = pSet->show_mph ? vsc_mph[ig] : vsc_kmh[ig];
-	float angvel = abs(vel)*vsc + vmin[ig];
+	float angvel = fabs(vel)*vsc + vmin[ig];
 	float angrot = app->carModels[c]->angCarY;
 	if (bRot && bZoom && !main)
 		angrot -= angBase-180.f;

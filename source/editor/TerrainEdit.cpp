@@ -120,7 +120,7 @@ void App::updateBrushPrv(bool first)
 			float k = GetAngle(fx,fy);  // 0..2Pi
 
     		float c = std::max(0.f, std::min(1.f,
-    			fQ * powf(fabs(d / (-1.f+nof + cosf(PiN) / cosf( fmodf(k, 2*PiN) - PiN ) )),fP) ));
+    			fQ * powf( fabs(d / (-1.f+nof + cosf(PiN) / cosf( fmodf(k, 2*PiN) - PiN ) )),fP) ));
 			
 			uint8 bR = c * fR, bG = c * fG, bB = c * fB;
 			*p++ = bR;  *p++ = bG;  *p++ = bB;  *p++ = bG > 32 ? 255 : 0;
@@ -132,7 +132,7 @@ void App::updateBrushPrv(bool first)
 		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
 
-			float c = powf( abs(d), fP);
+			float c = powf( fabs(d), fP);
 			
 			uint8 bR = c * fR, bG = c * fG, bB = c * fB;
 			*p++ = bR;  *p++ = bG;  *p++ = bB;  *p++ = bG > 32 ? 255 : 0;
@@ -199,7 +199,7 @@ void App::updBrush()
 			float k = GetAngle(fx,fy);  // 0..2Pi
 
 			float c = std::max(0.f, std::min(1.f,
-				fQ * powf(fabs(d / (-1.f+nof + cosf(PiN) / cosf( fmodf(k, 2*PiN) - PiN ) )),fP) ));
+				fQ * powf( fabs(d / (-1.f+nof + cosf(PiN) / cosf( fmodf(k, 2*PiN) - PiN ) )),fP) ));
 			mBrushData[a] = c;
 		}	}	break;
 
@@ -209,7 +209,7 @@ void App::updBrush()
 		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
 			
-			float c = powf( abs(d), fP);
+			float c = powf( fabs(d), fP);
 			mBrushData[a] = c;
 		}	}	break;
 	}

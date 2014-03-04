@@ -359,7 +359,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			Real l = -la0;
 
 			//  width
-			//Real wi1 = abs(mP[seg].width), wi2 = abs(mP[seg1].width), wi12 = wi2-wi1;
+			//Real wi1 = fabs(mP[seg].width), wi2 = fabs(mP[seg1].width), wi12 = wi2-wi1;
 
 			///  angles ()__
 			Real ay1 = mP[seg].aYaw, ay2 = mP[seg1].aYaw, ay21 = ay2-ay1;
@@ -482,8 +482,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 					//  color - for minimap preview
 					//  ---~~~====~~~---
-					Real brdg = min(1.f, abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
-					Real h = max(0.f, 1.f - abs(vP.y - yTer) / 30.f);  // for grass dens tex
+					Real brdg = min(1.f, fabs(vP.y - yTer) * 0.4f);  //par ] height diff mul
+					Real h = max(0.f, 1.f - fabs(vP.y - yTer) / 30.f);  // for grass dens tex
 					Vector4 c(brdg,fPipe, 1.f, h);
 					Vector2 vtc(tcw * 1.f /**2p..*/, tcL);
 
