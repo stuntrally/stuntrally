@@ -482,8 +482,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 					//  color - for minimap preview
 					//  ---~~~====~~~---
-					Real brdg = min(1.f, fabs(vP.y - yTer) * 0.4f);  //par ] height diff mul
-					Real h = max(0.f, 1.f - fabs(vP.y - yTer) / 30.f);  // for grass dens tex
+					Real brdg = min(1.f, std::abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
+					Real h = max(0.f, 1.f - std::abs(vP.y - yTer) / 30.f);  // for grass dens tex
 					Vector4 c(brdg,fPipe, 1.f, h);
 					Vector2 vtc(tcw * 1.f /**2p..*/, tcL);
 
