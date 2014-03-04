@@ -68,7 +68,7 @@ public:
 	Ogre::String sName;  bool updName;
 
 	//  apply, sets mCamera's pos and rot
-	void Apply(const PosInfo& posIn);
+	void Apply(const PosInfo& posIn, bool bounce);
 
 	void Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, Ogre::Real mx, Ogre::Real my, Ogre::Real mz );
 	Ogre::Real fMoveTime;
