@@ -74,7 +74,7 @@ void CScene::SetupTerrain()
 	}/**/
 
 
-	//  textures
+	///  layer textures
 	int ls = sc->td.layers.size();
 	di.layerList.resize(ls);
 	for (int i=0; i < ls; ++i)
@@ -82,53 +82,34 @@ void CScene::SetupTerrain()
 		TerLayer& l = sc->td.layersAll[sc->td.layers[i]];
 		di.layerList[i].worldSize = l.tiling;
 
-	//  new, combine rgb,a from 2 tex
-	//----------------------
-	#if 1  //_T
-		String pt = PATHMANAGER::Data()+"/terrain",
-			pt2=pt+"2/", p;  pt+="/";
+		//  combined rgb,a from 2 tex
+		String p = PATHMANAGER::Data()+"/terrain2/";
+		String d_d, d_s, n_n, n_h;
 		
-		///  diff  -----------
-		p = PATHMANAGER::FileExists(pt2+ l.texFile) ? pt2 : pt;
-		String tx_d, tx_s;		
-		if (!StringUtil::match(l.texFile, "*_d.*", false))
-		{	//  old no _d
-			tx_d = StringUtil::replaceAll(l.texFile,".","_d.");
-			tx_s = StringUtil::replaceAll(l.texFile,".","_s.");
-		}else
-		{	tx_d = l.texFile;  // new with _d
-			tx_s = StringUtil::replaceAll(l.texFile,"_d.","_s.");
-		}
-		//if (PATHMANAGER::FileExists(p+ tx_s))
-			texLayD[i].LoadTer(p+ tx_d, p+ tx_s, 0.f);
-		//else
-		//	texLayD[i].LoadTer(p+ tx_d, pt2+ "flat_s.png");
+		///  diff
+		d_d = l.texFile;  // ends with _d
+		d_s = StringUtil::replaceAll(l.texFile,"_d.","_s.");
 
-		///  norm  -----------
-		bool fl = l.texNorm == "flat_n.png";
-		p = fl||PATHMANAGER::FileExists(pt2+ l.texNorm) ? pt2 : pt;
-		String n_n, n_h;
-		if (fl||StringUtil::match(l.texFile, "*_nh.*", false))
-		{	//  old _nh
-			n_n = fl ? "flat_n.png" : StringUtil::replaceAll(l.texNorm,"_nh.","_n.");
-			n_h = fl ? "flat_h.png" : StringUtil::replaceAll(l.texNorm,"_nh.","_h.");
-		}else
-		{	n_n = l.texNorm;  // new with _n
-			n_h = StringUtil::replaceAll(l.texNorm,"_n.","_h.");
+		if (!PATHMANAGER::FileExists(p+ d_d))
+			texLayD[i].LoadTer(p+ "grass_green_d.jpg", p+ "grass_green_n.jpg", 0.f);
+		else
+		if (PATHMANAGER::FileExists(p+ d_s))
+			texLayD[i].LoadTer(p+ d_d, p+ d_s, 0.f);
+		else  // use _s from norm tex name
+		{	d_s = StringUtil::replaceAll(l.texNorm,"_n.","_s.");
+			texLayD[i].LoadTer(p+ d_d, p+ d_s, 0.f);
 		}
-		//if (PATHMANAGER::FileExists(p+ n_h))
+		///  norm
+		n_n = l.texNorm;  // ends with _n
+		n_h = StringUtil::replaceAll(l.texNorm,"_n.","_h.");
+
+		if (PATHMANAGER::FileExists(p+ n_n))
 			texLayN[i].LoadTer(p+ n_n, p+ n_h, 1.f);
-		//else
-		//	texLayN[i].LoadTer(p+ n_n, pt2+ "flat_h.png");
+		else
+			texLayN[i].LoadTer(p+ "flat_n.png", p+ n_h, 1.f);
 		
 		di.layerList[i].textureNames.push_back("layD"+toStr(i));
 		di.layerList[i].textureNames.push_back("layN"+toStr(i));
-	#else
-		//  old, 1 rgba tex
-		//----------------------
-		di.layerList[i].textureNames.push_back(l.texFile);
-		di.layerList[i].textureNames.push_back(l.texNorm);
-	#endif
 	}
 }
 
