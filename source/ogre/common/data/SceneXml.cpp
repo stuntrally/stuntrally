@@ -735,7 +735,7 @@ void TerData::Default()
 {
 	iVertsX = 512*2 +1;
 	fTriangleSize = 1.f;  // scale
-	triplanar1Layer = 8;  // off
+	triplanarLayer1 = 8;  triplanarLayer2 = 8;  // off
 	errorNorm = 1.7;
 	normScale = 1.f;
 
@@ -777,12 +777,17 @@ void TerData::UpdVals()
 //------------------------------------------
 void TerData::UpdLayers()
 {
-	layers.clear();  int li = 0;  triplanar1Layer = 8;
+	layers.clear();  int li = 0;
+	triplanarLayer1 = 8;  triplanarLayer2 = 8;
 	for (int i=0; i < ciNumLay; ++i)
 	{
 		if (layersAll[i].on)
 		{
-			if (layersAll[i].triplanar)  triplanar1Layer = li;
+			if (layersAll[i].triplanar)
+				if (triplanarLayer1 < 8)
+					triplanarLayer2 = li;
+				else
+					triplanarLayer1 = li;
 			++li;
 			layers.push_back(i);
 		}

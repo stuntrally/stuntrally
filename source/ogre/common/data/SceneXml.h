@@ -54,7 +54,7 @@ public:
 	TerLayer layerRoad;  // road[4]+pipe[4]  //todo...
 	void UpdLayers();
 
-	int triplanar1Layer;  // which should have triplanar most (eg high mountains)
+	int triplanarLayer1, triplanarLayer2;  // which should have triplanar most (eg high mountains)
 	float normScale;  // scale terrain normals
 	
 	//  methods

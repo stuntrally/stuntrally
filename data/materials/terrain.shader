@@ -30,12 +30,15 @@
 #define PARALLAX_SCALE  0.03
 #define PARALLAX_BIAS  -0.04
 
-#define TRIPLANAR_TYPE @shGlobalSettingString(terrain_triplanarType)
-#define TRIPLANAR_FULL (TRIPLANAR_TYPE == 2)
-#define TRIPLANAR_1 (TRIPLANAR_TYPE == 1)
-#define TRIPLANAR   (TRIPLANAR_TYPE) && !RENDER_COMPOSITE_MAP
-//  1 layer triplanar only
-#define TRIPLANAR_LAYER @shGlobalSettingString(terrain_triplanarLayer)
+///  triplanar
+#define TRIPLANAR_TYPE  @shGlobalSettingString(terrain_triplanarType)
+#define TRIPLANAR_FULL  (TRIPLANAR_TYPE == 2)
+#define TRIPLANAR_1  (TRIPLANAR_TYPE == 1)
+#define TRIPLANAR    (TRIPLANAR_TYPE) && !RENDER_COMPOSITE_MAP
+//  1 layer only
+#define TRIPLANAR_LAYER  @shGlobalSettingString(terrain_triplanarLayer)
+//  2 layers only
+#define TRIPLANAR_LAYER2  @shGlobalSettingString(terrain_triplanarLayer2)
 
 #if (MRT) || (FOG) || (SHADOWS)
 #define NEED_DEPTH 1
@@ -340,12 +343,13 @@
 ///---------------------------------------------------------------------------------------------
 #if TRIPLANAR
 
-	#if (TRIPLANAR_FULL) || (TRIPLANAR_LAYER == @shIterator)
+	#if (TRIPLANAR_FULL) || (TRIPLANAR_LAYER == @shIterator) || (TRIPLANAR_LAYER2 == @shIterator)
 		/// triplanar on all  or on this layer
 
 		coord1 = wPos.yz * uvMul@shPropertyString(uv_component_@shIterator);
 		coord2 = wPos.zx * uvMul@shPropertyString(uv_component_@shIterator);
 		coord3 = wPos.xy * uvMul@shPropertyString(uv_component_@shIterator);
+		coord3.x *= -1.f;
 		
         // parallax
         #if PARALLAX_MAPPING
@@ -355,8 +359,8 @@
         #endif
 
 		// Sample color maps for each projection, at those UV coords.
-									col1 = shSample(diffuseMap@shIterator, coord1);
-		if (blend_weights.y > 0)	col2 = shSample(diffuseMap@shIterator, coord2);
+									col1 = shSample(diffuseMap@shIterator, coord1.yx);
+		if (blend_weights.y > 0)	col2 = shSample(diffuseMap@shIterator, coord2.yx);
 		if (blend_weights.z > 0)	col3 = shSample(diffuseMap@shIterator, coord3);
 
 		// Finally, blend the results of the 3 planar projections.
@@ -364,8 +368,8 @@
 
         // normal
         #if NORMAL_MAPPING
-									col1 = shSample(normalMap@shIterator, coord1) * 2 - 1;
-		if (blend_weights.y > 0)	col2 = shSample(normalMap@shIterator, coord2) * 2 - 1;
+									col1 = shSample(normalMap@shIterator, coord1.yx) * 2 - 1;
+		if (blend_weights.y > 0)	col2 = shSample(normalMap@shIterator, coord2.yx) * 2 - 1;
 		if (blend_weights.z > 0)	col3 = shSample(normalMap@shIterator, coord3) * 2 - 1;
 		TSnormal = normalize(col1.xyz * blend_weights.xxx +  col2.xyz * blend_weights.yyy +  col3.xyz * blend_weights.zzz);
         #endif

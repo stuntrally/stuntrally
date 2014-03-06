@@ -200,7 +200,8 @@ void App::SetFactoryDefaults()
 	fct.setGlobalSetting("terrain_normal",   b2s(pSet->ter_mtr >= 2));
 	fct.setGlobalSetting("terrain_parallax", b2s(pSet->ter_mtr >= 3));
 	fct.setGlobalSetting("terrain_triplanarType", toStr(pSet->ter_tripl));
-	fct.setGlobalSetting("terrain_triplanarLayer", toStr(scn->sc->td.triplanar1Layer));
+	fct.setGlobalSetting("terrain_triplanarLayer", toStr(scn->sc->td.triplanarLayer1));
+	fct.setGlobalSetting("terrain_triplanarLayer2", toStr(scn->sc->td.triplanarLayer2));
 
 	fct.setGlobalSetting("water_reflect", b2s(pSet->water_reflect));
 	fct.setGlobalSetting("water_refract", b2s(pSet->water_refract));

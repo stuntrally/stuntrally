@@ -135,7 +135,8 @@ void CScene::changeShadows()
 	mFactory->setGlobalSetting("terrain_normal",   b2s(pSet->ter_mtr >= 2));
 	mFactory->setGlobalSetting("terrain_parallax", b2s(pSet->ter_mtr >= 3));
 	mFactory->setGlobalSetting("terrain_triplanarType", toStr(pSet->ter_tripl));
-	mFactory->setGlobalSetting("terrain_triplanarLayer", toStr(sc->td.triplanar1Layer));
+	mFactory->setGlobalSetting("terrain_triplanarLayer", toStr(sc->td.triplanarLayer1));
+	mFactory->setGlobalSetting("terrain_triplanarLayer2", toStr(sc->td.triplanarLayer2));
 
 	mFactory->setGlobalSetting("water_reflect", b2s(pSet->water_reflect));
 	mFactory->setGlobalSetting("water_refract", b2s(pSet->water_refract));
