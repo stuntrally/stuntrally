@@ -26,9 +26,10 @@ My license is also  CC-0
 
 92,163,168 combined
     grass_green  grass_green2y
-91  grass_ground
-216 grass_mix  org
+91  grass_ground  org  grass_ground2y
+216 grass_mix  org  grass_mix_ylw
 104 grass_rocky  org
+85  gr_autumn_orn  gr_autumn_red
 
 265 ground_dry2
 92  ground_ferns
@@ -38,18 +39,15 @@ My license is also  CC-0
 
 70  jungle_mntn2
 72  jungle_mntn  org  ground_yellow
-73  jungle_stone  mntn_yellow
+73  mntn_white  org  jungle_stone  mntn_yellow
 
-219 mntn_dark  amntn_dark
+219 mntn_dark  org  amntn_dark  mntn_gray
 76  mntn_black  org
-71  mntn_brown
+71  mntn_forest  org  mntn_brown
 78  mntn_green
 
 81  lava  lava_mars
 
-85  autumn_red
-
-    adesert_stone..
 
 ---
 Author: Mysteryem (Submitted by qubodup)
@@ -59,3 +57,5 @@ http://opengameart.org/content/29-grounds-and-walls-and-water-1024x1024
 
 snow_rocky
 
+...
+adesert_stone
