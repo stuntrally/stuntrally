@@ -4363,10 +4363,10 @@
 							<Property key="Caption" value="#{InputToggleVeget}"/>
 							<Property key="TextColour" value="0.6 1.0 0.2"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 186 312 20">
+						<!--<Widget type="TextBox" skin="TextBox" position="32 186 312 20">
 							<Property key="Caption" value="#{InputUpdBlendmap}"/>
 							<Property key="TextColour" value="0.5 0.7 0.0"/>
-						</Widget>
+						</Widget>-->
 						<Widget type="TextBox" skin="TextBox" position="32 230 312 20">
 							<Property key="Caption" value="#{InputLockBrush}"/>
 							<Property key="TextColour" value="0.3 0.8 0.2"/>

@@ -598,11 +598,11 @@ void App::filter(Vector3 &pos, float dtime, float brMul)
 //--------------------------------------------------------------------------------------------------------------------------
 void App::createBrushPrv()
 {
+	//  brush
 	brushPrvTex = TextureManager::getSingleton().createManual(
 		"BrushPrvTex", rgDef, TEX_TYPE_2D,
 		BrPrvSize,BrPrvSize,0, PF_BYTE_RGBA, TU_DYNAMIC);
 	 	
-	// Create a material using the texture
 	MaterialPtr material = MaterialManager::getSingleton().create(
 		"BrushPrvMtr", rgDef);
 	 
@@ -615,7 +615,7 @@ void App::createBrushPrv()
 
 	updateBrushPrv(true);
 	
-	
+	//  ter gen
 	terPrvTex = TextureManager::getSingleton().createManual(
 		"TerPrvTex", rgDef, TEX_TYPE_2D,
 		TerPrvSize,TerPrvSize,0, PF_BYTE_RGBA, TU_DYNAMIC);

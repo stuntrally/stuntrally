@@ -81,7 +81,7 @@ bool App::frameEnded(const FrameEvent& evt)
 	if (ovTerPrv)
 	if (bGuiFocus &&
 		mWndEdit && mWndEdit->getVisible() && mWndTabsEdit->getIndexSelected()==2 &&
-		gui->vSubTabsEdit.size() > 2 && gui->vSubTabsEdit[2]->getIndexSelected() == 1)
+		gui->vSubTabsEdit.size() > 2 && gui->vSubTabsEdit[2]->getIndexSelected() == 2/**/)
 		ovTerPrv->show();  else  ovTerPrv->hide();
 
 	//  track events
