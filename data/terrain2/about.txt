@@ -16,7 +16,7 @@ My license is also  CC-0
 ---
 
 69  desert_mntn  adesert_mntn
-75  desert_mntn2  adesert_mntn2
+75  desert_mntn2  adesert_mntn2  adesert_mntn2o
 45  desert_sand  island_sand
 111 desert_sand2  adesert_sand2  island_sand2
 196 desert_sand_big
@@ -31,6 +31,7 @@ My license is also  CC-0
 104 grass_rocky  org
 85  gr_autumn_orn  gr_autumn_red
 
+279 ground_dry
 265 ground_dry2
 92  ground_ferns
 88  ground_leaves
@@ -42,9 +43,10 @@ My license is also  CC-0
 73  mntn_white  org  jungle_stone  mntn_yellow
 
 219 mntn_dark  org  amntn_dark  mntn_gray
-76  mntn_black  org
+76  mntn_black  org  mntn_canyon
 71  mntn_forest  org  mntn_brown
 78  mntn_green
+79  mntn_canyon2o
 
 81  lava  lava_mars
 
