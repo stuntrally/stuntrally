@@ -56,6 +56,7 @@ public:
 
 	int triplanarLayer1, triplanarLayer2;  // which should have triplanar most (eg high mountains)
 	float normScale;  // scale terrain normals
+	bool emissive;
 	
 	//  methods
 	TerData();	void Default();

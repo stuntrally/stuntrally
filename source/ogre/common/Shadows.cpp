@@ -134,9 +134,11 @@ void CScene::changeShadows()
 	mFactory->setGlobalSetting("terrain_specular", b2s(pSet->ter_mtr >= 1));
 	mFactory->setGlobalSetting("terrain_normal",   b2s(pSet->ter_mtr >= 2));
 	mFactory->setGlobalSetting("terrain_parallax", b2s(pSet->ter_mtr >= 3));
+
 	mFactory->setGlobalSetting("terrain_triplanarType", toStr(pSet->ter_tripl));
 	mFactory->setGlobalSetting("terrain_triplanarLayer", toStr(sc->td.triplanarLayer1));
 	mFactory->setGlobalSetting("terrain_triplanarLayer2", toStr(sc->td.triplanarLayer2));
+	mFactory->setGlobalSetting("terrain_emissive_specular", b2s(sc->td.emissive));
 
 	mFactory->setGlobalSetting("water_reflect", b2s(pSet->water_reflect));
 	mFactory->setGlobalSetting("water_refract", b2s(pSet->water_refract));
@@ -151,16 +153,12 @@ void CScene::changeShadows()
 #endif
 
 	#if 0
-	// shadow tex overlay
-	// add the overlay elements to show the shadow maps:
-	// init overlay elements
+	//  shadow tex overlay
+	//  add the overlay elements to show the shadow maps
 	OverlayManager& mgr = OverlayManager::getSingleton();
-	Overlay* overlay;
-	
-	// destroy if already exists
-	if (overlay = mgr.getByName("DebugOverlay"))
+	Overlay* overlay = mgr.getByName("DebugOverlay");
+	if (overlay)
 		mgr.destroy(overlay);
-		
 	overlay = mgr.create("DebugOverlay");
 	
 	TexturePtr tex;

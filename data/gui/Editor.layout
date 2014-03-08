@@ -1084,9 +1084,13 @@
 				<Widget type="TextBox" skin="TextBox" position="380 152 60 24" name="WindAmtVal">
 					<Property key="TextColour" value="0.7 0.9 0.7"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 196 276 24" name="DenyReversed">
+				<Widget type="Button" skin="CheckBox" position="32 196 320 24" name="DenyReversed">
 					<Property key="Caption" value="#{DenyReversed}"/>
 					<Property key="TextColour" value="0.6 0.8 0.8"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 236 320 24" name="TerrainEmissive">
+					<Property key="Caption" value="#{TerrainEmissiveLight}"/>
+					<Property key="TextColour" value="1 0.6 0"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">

@@ -434,6 +434,7 @@ void CGui::InitGui()
 	sv= &svGravity;		sv->Init("Gravity",		&sc->gravity,   2.f,20.f, 1.5f, 2,4);  sv->DefaultF(9.81f);
 	ck= &ckDenyReversed;	ck->Init("DenyReversed",	&sc->denyReversed);
 	ck= &ckTiresAsphalt;	ck->Init("TiresAsphalt",	&sc->asphalt);
+	ck= &ckTerrainEmissive;	ck->Init("TerrainEmissive",	&sc->td.emissive);
 	
 
 	///  [Tools]  ------------------------------------

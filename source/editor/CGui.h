@@ -257,7 +257,7 @@ public:
 	
 	//  [Game]  ----
 	SV svDamage, svWind, svGravity;
-	CK(DenyReversed);  CK(TiresAsphalt);
+	CK(DenyReversed);  CK(TiresAsphalt);  CK(TerrainEmissive);
 	void SldUpd_Game();
 
 

@@ -22,13 +22,20 @@
 
 #define NORMAL_MAPPING  @shGlobalSettingBool(terrain_normal)
 
+//  specular
 #define SPECULAR  @shGlobalSettingBool(terrain_specular) && !RENDER_COMPOSITE_MAP
 #define SPECULAR_EXPONENT  32
 
+//  emissive
+#define EMISSIVE_SPECULAR  @shGlobalSettingBool(terrain_emissive_specular)
+
+
+//  parallax
 #define PARALLAX_MAPPING  @shGlobalSettingBool(terrain_parallax) && !RENDER_COMPOSITE_MAP && NORMAL_MAPPING
 
 #define PARALLAX_SCALE  0.03
 #define PARALLAX_BIAS  -0.04
+
 
 ///  triplanar
 #define TRIPLANAR_TYPE  @shGlobalSettingString(terrain_triplanarType)
@@ -39,6 +46,7 @@
 #define TRIPLANAR_LAYER  @shGlobalSettingString(terrain_triplanarLayer)
 //  2 layers only
 #define TRIPLANAR_LAYER2  @shGlobalSettingString(terrain_triplanarLayer2)
+
 
 #if (MRT) || (FOG) || (SHADOWS)
 #define NEED_DEPTH 1
@@ -439,7 +447,11 @@
 		TSnormal = normalize(TSnormal);
 		
         NdotL = max(dot(TSnormal, TSlightDir), 0);
-        specular = pow(max(dot(TSnormal, TShalfAngle), 0), SPECULAR_EXPONENT) * diffuseSpec.a;
+        #if EMISSIVE_SPECULAR
+			specular = pow(diffuseSpec.a, 2.f);  //par
+        #else
+			specular = pow(max(dot(TSnormal, TShalfAngle), 0), SPECULAR_EXPONENT) * diffuseSpec.a;
+		#endif
         
         #if @shIterator == 0
 	        litRes.x = NdotL;
@@ -492,7 +504,11 @@
         shOutputColour(0).xyz *= (lightAmbient.xyz + diffuse);
     #endif
         #if SPECULAR
-        shOutputColour(0).xyz +=  specular * lightSpecular0.xyz * specularAmount * shadow;
+			#if EMISSIVE_SPECULAR
+        		shOutputColour(0).xyz +=  specular * lightSpecular0.xyz * specularAmount;// * diffuse;
+			#else
+        		shOutputColour(0).xyz +=  specular * lightSpecular0.xyz * specularAmount * shadow;
+	        #endif
         #endif
 #else
 	#if DEBUG_BLEND
@@ -501,7 +517,11 @@
         shOutputColour(0).xyz *= (lightAmbient.xyz + litRes.x * lightDiffuse0.xyz * shadow);
     #endif
         #if SPECULAR
-        shOutputColour(0).xyz +=  litRes.y * lightSpecular0.xyz * shadow;
+			#if EMISSIVE_SPECULAR
+		        shOutputColour(0).xyz +=  litRes.y * lightSpecular0.xyz;// * litRes.x;
+			#else
+		        shOutputColour(0).xyz +=  litRes.y * lightSpecular0.xyz * shadow;
+	        #endif
         #endif
 #endif
         

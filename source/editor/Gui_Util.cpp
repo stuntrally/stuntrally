@@ -92,6 +92,7 @@ void CGui::SetGuiFromXmls()
 	//-----------------------------------------------
 	ckDenyReversed.Upd(&sc->denyReversed);
 	ckTiresAsphalt.Upd(&sc->asphalt);
+	ckTerrainEmissive.Upd(&sc->td.emissive);
 	SldUpd_Game();
 	
 	bGI = true;
