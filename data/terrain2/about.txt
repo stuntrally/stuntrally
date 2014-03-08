@@ -1,4 +1,13 @@
---- Original textures by Nobiax/yughues
+------ Info
+_d - diffuse
+_s - specular amount (not color)
+	if not present, will be black (no specular)
+
+_n - normal map
+_h - height (optional, if none will be white)
+
+
+------ Original textures by Nobiax/yughues
 A big thank you for your work man, you are the best.
 
 http://nobiax.deviantart.com
@@ -8,12 +17,12 @@ From archives: "Free tiling textures pack" 1..55
 License: CC-0 (Public Domain)
 
 
---- Edited by CryHam
+------ Edited by CryHam
 number - is the original texture name from packs
 org - means it was not recolored
 Most were colored using Curves and HSV change.
 My license is also  CC-0
----
+------
 
 69  desert_mntn  adesert_mntn
 75  desert_mntn2  adesert_mntn2  adesert_mntn2o
@@ -21,8 +30,8 @@ My license is also  CC-0
 111 desert_sand2  adesert_sand2  island_sand2
 196 desert_sand_big
 46  desert_mud  desert_rocky  adesert_rocky  ground_mud2
-113 desert_cracks  adesert_cracks
-217 adesert_mntn4
+113 desert_cracks  adesert_cracks  desert_cracksv  desert_crackso
+217 adesert_mntn4  adesert_mntn4v
 
 92,163,168 combined
     grass_green  grass_green2y
@@ -33,6 +42,8 @@ My license is also  CC-0
 
 279 ground_dry
 265 ground_dry2
+267 ground_crackedo  ground_crackedv  lava2
+
 92  ground_ferns
 88  ground_leaves
 105 ground_mud
@@ -49,15 +60,29 @@ My license is also  CC-0
 79  mntn_canyon2o
 
 81  lava  lava_mars
+127 lava_black
 
 
----
+------
+Author: rubberduck
+License(s): CC-0
+
+--- 50 free textures
+http://opengameart.org/content/50-free-textures
+
+024  ground_cracksv  ground_cracksy
+ ground_crackedo  ground_crackedv  lava2
+--- 50 free textures-2
+http://opengameart.org/content/50-free-textures-2
+
+062 adesert_stone
+
+
+------
 Author: Mysteryem (Submitted by qubodup)
 mysteryemwarzone2100textures
 License(s):  GPL 2.0   GPL 3.0   CC-BY-SA 3.0
 http://opengameart.org/content/29-grounds-and-walls-and-water-1024x1024
 
-snow_rocky
+snow_rocky  from violetRocks
 
-...
-adesert_stone
