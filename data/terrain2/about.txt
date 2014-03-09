@@ -10,16 +10,16 @@ _h - height (optional, if none will be white)
 ------ Original textures by Nobiax/yughues
 A big thank you for your work man, you are the best.
 
-http://nobiax.deviantart.com
-http://opengameart.org/users/yughues
-
 From archives: "Free tiling textures pack" 1..55
 License: CC-0 (Public Domain)
+
+http://nobiax.deviantart.com
+http://opengameart.org/users/yughues
 
 
 ------ Edited by CryHam
 number - is the original texture name from packs
-org - means it was not recolored
+org - means it was not recolored, same as original
 Most were colored using Curves and HSV change.
 My license is also  CC-0
 ------
@@ -28,7 +28,7 @@ My license is also  CC-0
 75  desert_mntn2  adesert_mntn2  adesert_mntn2o
 45  desert_sand  island_sand
 111 desert_sand2  adesert_sand2  island_sand2
-196 desert_sand_big
+196 desert_sand_big  desert_sand_bigx
 46  desert_mud  desert_rocky  adesert_rocky  ground_mud2
 113 desert_cracks  adesert_cracks  desert_cracksv  desert_crackso
 217 adesert_mntn4  adesert_mntn4v
@@ -38,7 +38,7 @@ My license is also  CC-0
 91  grass_ground  org  grass_ground2y
 216 grass_mix  org  grass_mix_ylw
 104 grass_rocky  org
-85  gr_autumn_orn  gr_autumn_red
+85  grass_autumn_orn  grass_autumn_red
 
 279 ground_dry
 265 ground_dry2
@@ -53,11 +53,13 @@ My license is also  CC-0
 72  jungle_mntn  org  ground_yellow
 73  mntn_white  org  jungle_stone  mntn_yellow
 
-219 mntn_dark  org  amntn_dark  mntn_gray
+219 mntn_dark  org  amntn_dark  mntn_gray  mntn_darkx
 76  mntn_black  org  mntn_canyon
 71  mntn_forest  org  mntn_brown
 78  mntn_green
 79  mntn_canyon2o
+80  mntn_x1
+86  mntn_x2
 
 81  lava  lava_mars
 127 lava_black
