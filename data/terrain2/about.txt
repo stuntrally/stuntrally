@@ -32,6 +32,7 @@ My license is also  CC-0
 46  desert_mud  desert_rocky  adesert_rocky  ground_mud2
 113 desert_cracks  adesert_cracks  desert_cracksv  desert_crackso
 217 adesert_mntn4  adesert_mntn4v
+198 desert_wet
 
 92,163,168 combined
     grass_green  grass_green2y
@@ -63,22 +64,26 @@ My license is also  CC-0
 
 81  lava  lava_mars
 127 lava_black
+276 snow_grass3
 
 
 ------
+From archives: "50 free textures"  2, 3
 Author: rubberduck
 License(s): CC-0
 
---- 50 free textures
-http://opengameart.org/content/50-free-textures
+http://opengameart.org/content/50-free-textures -2 -3
 
-024  ground_cracksv  ground_cracksy
- ground_crackedo  ground_crackedv  lava2
---- 50 free textures-2
-http://opengameart.org/content/50-free-textures-2
-
+024 ground_cracksv  ground_cracksy
 062 adesert_stone
 
+121 snow_1
+060 snow_2
+059 snow_bumpy
+063 snow_rough
+snow_grass  from grass_green and snow_1
+snow_grass2 from grass_ground_d and snow_bumpy
+snow_mud    from desert_mud and snow_1
 
 ------
 Author: Mysteryem (Submitted by qubodup)
@@ -86,5 +91,4 @@ mysteryemwarzone2100textures
 License(s):  GPL 2.0   GPL 3.0   CC-BY-SA 3.0
 http://opengameart.org/content/29-grounds-and-walls-and-water-1024x1024
 
-snow_rocky  from violetRocks
-
+snow_mntn  from violetRocks
