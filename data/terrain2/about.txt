@@ -65,6 +65,7 @@ My license is also  CC-0
 81  lava  lava_mars
 127 lava_black
 276 snow_grass3
+77  snow_mntn2
 
 
 ------
@@ -78,7 +79,7 @@ http://opengameart.org/content/50-free-textures -2 -3
 062 adesert_stone
 
 121 snow_1
-060 snow_2
+060 snow_2  snow_2ice
 059 snow_bumpy
 063 snow_rough
 snow_grass  from grass_green and snow_1
