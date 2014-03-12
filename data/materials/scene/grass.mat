@@ -91,6 +91,9 @@ material grass3o  {  parent grass
 material grass3y  {  parent grass
     diffuseMap grass3y.png  }
 
+material grass3s  {  parent grass
+    diffuseMap grass3s.png  }
+
 material grass4v {  parent grass
     diffuseMap grass4v.png  }
 
@@ -132,6 +135,9 @@ material grass12o {  parent grass
 material grass12w {  parent grass
     diffuseMap grass12w.png  }
 
+material grass12s {  parent grass
+    diffuseMap grass12s.png  }
+
 material grass12y- {  parent grass
     diffuseMap grass12y-.png  }
 
@@ -146,6 +152,9 @@ material grass15o {  parent grass
 
 material grass16g {  parent grass
     diffuseMap grass16g.png  }
+
+material grass16s {  parent grass
+    diffuseMap grass16s.png  }
 
 material grass16r {  parent grass
     diffuseMap grass16r.png  }
@@ -168,6 +177,9 @@ material grass18gw {  parent grass
 
 material grass18w {  parent grass
     diffuseMap grass18w.png  }
+
+material grass18s {  parent grass
+    diffuseMap grass18s.png  }
 
 material grass18wg {  parent grass
 	diffuseMap grass18wg.png  }
