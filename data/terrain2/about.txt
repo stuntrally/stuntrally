@@ -69,6 +69,10 @@ My license is also  CC-0
 276 snow_grass3
 77  snow_mntn2
 
+42  savanna_yellow
+43  savanna_dry
+44  savanna_green
+
 
 ------
 From archives: "50 free textures"  2, 3
