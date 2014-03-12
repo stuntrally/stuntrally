@@ -36,7 +36,9 @@ My license is also  CC-0
 
 92,163,168 combined
     grass_green  grass_green2y
-91  grass_ground  org  grass_ground2y
+89,90 combined
+    moss_plants
+91  grass_ground  org  grass_ground2y  moss_ground
 216 grass_mix  org  grass_mix_ylw
 104 grass_rocky  org
 85  grass_autumn_orn  grass_autumn_red
