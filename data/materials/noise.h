@@ -59,11 +59,12 @@ float snoise1(float2 v)
 float snoise(float2 v, float zoom, int octaves, float persistence)
 {
     float total = 0.0;
-    for (int i=0; i < octaves; ++i)
+    for (int i=0; i < 5; ++i)  // const loop
     {
         float frequency = pow(2.f, float(i));
         float amplitude = pow(persistence, float(i));
-        total += snoise1(v * frequency * zoom) * amplitude;
+        float nval = snoise1(v * frequency * zoom) * amplitude;
+        total += i < octaves ? nval : 0.f;
     }
     //return total;
     float m = (persistence - 0.1f) * -0.83f + 1.f;
