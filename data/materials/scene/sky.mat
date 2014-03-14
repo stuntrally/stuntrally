@@ -93,3 +93,9 @@ material sky/magic
     parent base_sky
     texture magic.jpg
 }
+
+material sky/magicdark
+{
+    parent base_sky
+    texture magicdark.jpg
+}

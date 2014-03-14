@@ -104,6 +104,26 @@ material roadJDarkD
 	specular 0.3 0.3 0.3 40
 }
 
+//  dark no spec
+material roadJDarkDs_ter
+{
+	parent road_terrain
+	diffuseMap roadJDarkD.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.70 0.70 0.70
+	specular 0.03 0.03 0.00 64
+	normalMap ice_3_nh1.png
+}
+
+material roadJDarkDs
+{
+	parent road
+	diffuseMap roadJDarkD.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 0.03 0.03 0.03 64
+}
+
 
 // Asphalt
 
@@ -286,8 +306,8 @@ material roadStone_ter
 material roadSandMagic
 {
     parent road
-	ambient 0.34 0.28 0.76
-	diffuse 0.42 0.52 0.92
+	ambient 0.24 0.18 0.76
+	diffuse 0.32 0.42 0.92
 	specular 0.3 0.6 1.0  16 //x4
 	diffuseMap roadSandSet.jpg
 	envMap ReflectionCube
@@ -299,8 +319,8 @@ material roadSandMagic
 material roadSandMagic_ter
 {
     parent road_terrain
-	ambient 0.34 0.28 0.76
-	diffuse 0.42 0.52 0.92
+	ambient 0.24 0.18 0.76
+	diffuse 0.32 0.42 0.92
 	specular 0.3 0.6 1.0  16 //x4
 	diffuseMap roadSandSet.jpg
 	envMap ReflectionCube
@@ -308,6 +328,37 @@ material roadSandMagic_ter
 	refl_amount 0.15
 	bump_scale 0.3
 	normalMap ice_3_nh1.png
+}
+
+
+//  Crystals ...
+
+material roadCrystal
+{
+    parent road
+	ambient 0.4 0.6 0.9
+	diffuse 0.4 0.6 0.9
+	specular 0.05 0.25 0.5  16 //x4
+	diffuseMap rdDirt.jpg
+	normalMap rdDirt_norm.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.5
+	bump_scale 0.2
+}
+
+material roadCrystal_ter
+{
+    parent road_terrain
+	ambient 0.3 0.6 0.9
+	diffuse 0.3 0.6 0.9
+	specular 0.05 0.25 0.5  16 //x4
+	diffuseMap rdDirt.jpg
+	normalMap rdDirt_norm.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.5
+	bump_scale 0.2
 }
 
 
