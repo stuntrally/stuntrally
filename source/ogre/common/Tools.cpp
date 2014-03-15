@@ -288,8 +288,8 @@ void CGui::ToolGhosts()
 	TIMER tim;
 	
 	//  all cars
-	vector<string> cars;
-	vector<float> plc;
+	std::vector<string> cars;
+	std::vector<float> plc;
 	for (int c=0; c < data->cars->cars.size(); ++c)
 	{	cars.push_back(data->cars->cars[c].name);
 		plc.push_back(0.f);  }
