@@ -33,7 +33,7 @@ using namespace std;
 void CGui::ToolTexAlpha()
 {
 	strlist li;
-	std::string data = PATHMANAGER::Data()+"/terrain";
+	string data = PATHMANAGER::Data()+"/terrain";
 	PATHMANAGER::DirList(data, li);
 	//PATHMANAGER::DirList(data+"2", li);
 
@@ -72,7 +72,7 @@ void CGui::ToolTexAlpha()
 }
 
 
-///  _Tool_ scene ...........................
+///  _Tool_ scene ......................................................
 ///  check/resave all tracks scene.xml 
 void CGui::ToolSceneXml()
 {
@@ -123,12 +123,17 @@ void CGui::ToolSceneXml()
 }
 
 
-///  _Tool_ write sceneryID
-#define sArg  const TrkL& t2, const TrkL& t1
-#define sortDef  bool t = false/*t1.test < t2.test/**/;  if (!t1.ti || !t2.ti)  return t1.name > t2.name || t;
-/* 0  name    */  bool SortT0 (sArg){  sortDef  return t1.name  < t2.name   || t;  }
+///  _Tool_ sceneryID and difference ......................................................
+bool SortT0 (const TrkL& t2, const TrkL& t1){  return t1.name < t2.name;  }
 
-void CGui::ToolListSceneryID()
+float clrD(Vector3 sc, Vector3 si)
+{
+	Vector3 d(fabs(sc.x - si.x), fabs(sc.y - si.y), fabs(sc.z - si.z));
+	float m1 = std::max(d.x, d.y), m = std::max(m1, d.z);
+	return m * 100.f;
+}
+
+void CGui::ToolSceneryID()
 {
 	LogO("ALL tracks ---------");
 
@@ -137,25 +142,71 @@ void CGui::ToolListSceneryID()
 
 	//  foreach track
 	for (std::list<TrkL>::iterator it = liTrk2.begin(); it != liTrk2.end(); ++it)
+	if ((*it).name[0] >= 'A' && (*it).name[0] <= 'Z')  // sr only
 	{
 		string trk = (*it).name, path = gcom->pathTrk[0] +"/"+ trk +"/";
 		Scene sc;  sc.LoadXml(path +"scene.xml");
+		
+		///  find
+		string scId = sc.sceneryId + "-";
+		int i=0, len = scId.length();
+		bool found = false, orig = false;
+		Scene si;  string ss;
 
+		//  same scId as track, has original lighting
+		if (trk.substr(0,len) == scId)
+			orig = true;
+		else
+		{	//  find the track this scId points to
+			while (i < data->tracks->trks.size() && ss.empty())
+			{
+				if (data->tracks->trks[i].name.substr(0,len) == scId)
+					ss = data->tracks->trks[i].name;
+				++i;
+			}
+			found = !ss.empty();
+			if (!found)
+				LogO("   Not found scId track: " + scId + " for: "+ trk);
+			else
+				si.LoadXml(gcom->pathTrk[0] +"/"+ ss +"/scene.xml");
+		}
+		bool w = !orig && found;
 		ostringstream s;
 		s << fixed << left << setw(18) << trk;
-		s << " scID: " << setw(3) << sc.sceneryId;
-		s << "  pitch " << fToStr(sc.ldPitch,0,2);
-		s << "  yaw" << fToStr(sc.ldYaw,0,4);
-		s << "  amb "<<fToStr(sc.lAmb.x, 2,4)<<" "<<fToStr(sc.lAmb.y, 2,4)<<" "<<fToStr(sc.lAmb.z, 2,4);
-		s << "  diff "<<fToStr(sc.lDiff.x,2,4)<<" "<<fToStr(sc.lDiff.y,2,4)<<" "<<fToStr(sc.lDiff.z,2,4);
-		s << "  spec "<<fToStr(sc.lSpec.x,2,4)<<" "<<fToStr(sc.lSpec.y,2,4)<<" "<<fToStr(sc.lSpec.z,2,4);
+		s << " " << setw(3) << sc.sceneryId;
+		if (orig)  s << "+";  else  if (!found)  s << "!";  else  s << " ";
+		float dP,dY,dA,dD,dS;
+
+		s << "  pi " << fToStr(sc.ldPitch,0,2);
+		dP = fabs(sc.ldPitch - si.ldPitch) / 90.f * 100.f;
+		if (w)  s <<" "<< fToStr(dP, 0,3)<<"%";  else  s << "  ---";
+
+		s << "  yaw"    << fToStr(sc.ldYaw,0,4);
+		dY = fabs(sc.ldYaw - si.ldYaw)    / 180.f * 100.f;
+		if (w)  s <<" "<< fToStr(dY, 0,3)<<"%";  else  s << "  ---";
+
+		s << "  amb "  << fToStr(sc.lAmb.x, 2,4)<<" "<<fToStr(sc.lAmb.y, 2,4)<<" "<<fToStr(sc.lAmb.z, 2,4);
+		dA = clrD(sc.lAmb, si.lAmb);
+		if (w)  s <<" "<< fToStr(dA, 0,3) <<"%";  else  s << "     ";
+
+		s << "  diff " << fToStr(sc.lDiff.x,2,4)<<" "<<fToStr(sc.lDiff.y,2,4)<<" "<<fToStr(sc.lDiff.z,2,4);
+		dD = clrD(sc.lDiff,si.lDiff);
+		if (w)  s <<" "<< fToStr(dD, 0,3)<<"%";  else  s << "     ";
+
+		s << "  spec " << fToStr(sc.lSpec.x,2,4)<<" "<<fToStr(sc.lSpec.y,2,4)<<" "<<fToStr(sc.lSpec.z,2,4);
+		dS = clrD(sc.lSpec,si.lSpec);
+		if (w)
+		{	s <<" "<< fToStr(dS, 0,3)<<"%";
+			float m0 = std::max(dP,dY), m1 = std::max(dA,dD), m2 = std::max(m0,m1);
+			s << "  max " << fToStr(m2, 0,3)<<"%";  if (m2 > 40)  s << " !!! bad";
+		}
 		LogO(s.str());
 	}
 	LogO("ALL tracks ---------");
 }
 
 
-///  _Tool_	Warnings ...........................
+///  _Tool_	Warnings ......................................................
 ///  check all tracks for warnings
 ///  Warning: takes about 16 sec
 void CGui::ToolTracksWarnings()
@@ -182,7 +233,7 @@ void CGui::ToolTracksWarnings()
 }
 
 
-///  _Tool_ brushes prv ...........................
+///  _Tool_ brushes prv ......................................................
 //  update all Brushes png
 void CGui::ToolBrushesPrv()
 {
@@ -237,8 +288,8 @@ void CGui::ToolGhosts()
 	TIMER tim;
 	
 	//  all cars
-	std::vector<string> cars;
-	std::vector<float> plc;
+	vector<string> cars;
+	vector<float> plc;
 	for (int c=0; c < data->cars->cars.size(); ++c)
 	{	cars.push_back(data->cars->cars[c].name);
 		plc.push_back(0.f);  }
@@ -406,7 +457,7 @@ void CGui::ToolPresets()
 	Ogre::Timer ti;
 	LogO("ALL tracks presets ---------\n");
 
-	std::map<Ogre::String, TerLayer> ter;
+	map<Ogre::String, TerLayer> ter;
 	for (int i=0; i < data->tracks->trks.size(); ++i)
 	{	//  foreach track
 		string trk = data->tracks->trks[i].name, path = gcom->pathTrk[0] +"/"+ trk +"/";

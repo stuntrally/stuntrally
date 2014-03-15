@@ -109,9 +109,15 @@ void App::createScene()  // once, init
 	gui->InitGui();
 	
 
+	///  _Tool_ presets .......
+	#if 0
+	gcom->ToolPresets();
+	exit(0);
+	#endif
+
 	///  _Tool_ write all trks sceneryID .......
 	#if 0
-	ToolListSceneryID();
+	gui->ToolSceneryID();
 	exit(0);
 	#endif
 
@@ -119,7 +125,7 @@ void App::createScene()  // once, init
 	//  check all tracks for warnings
 	//  Warning: takes about 16 sec
 	#if 0
-	ToolTracksWarnings();
+	gui->ToolTracksWarnings();
 	exit(0);
 	#endif
 	
@@ -130,7 +136,7 @@ void App::createScene()  // once, init
 	///  _Tool_ brushes prv ...........................
 	//  update all Brushes png
 	#if 0  // 0 in release !!
-	ToolBrushesPrv();
+	gui->ToolBrushesPrv();
 	#endif
 	
 
