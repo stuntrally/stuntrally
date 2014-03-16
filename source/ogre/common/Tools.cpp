@@ -79,38 +79,62 @@ void CGui::ToolSceneXml()
 	Ogre::Timer ti;
 	LogO("ALL tracks scene ---------");
 	std::map<string, int> noCol,minSc;
+	ResourceGroupManager& rg = ResourceGroupManager::getSingleton();
 
-	for (int i=0; i < data->tracks->trks.size(); ++i)
+	int i,n;
+	for (i=0; i < data->tracks->trks.size(); ++i)
 	{	//  foreach track
 		string trk = data->tracks->trks[i].name, path = gcom->pathTrk[0] +"/"+ trk +"/";
 		Scene sc;  sc.LoadXml(path +"scene.xml");
-		for (int l=0; l < Scene::ciNumPgLay; ++l)
+
+		int l = 17-trk.length();  // align
+		for (n=0; n < l; ++n)  trk += " ";
+
+		#if 0  // used
+		for (n=0; n < sc.td.layers.size(); ++n)
+		{	const TerLayer& l = sc.td.layersAll[sc.td.layers[n]];
+		#else  // all
+		for (n=0; n < TerData::ciNumLay; ++n)
+		{	const TerLayer& l = sc.td.layersAll[n];
+		#endif
+			if (!l.texFile.empty() && !rg.resourceExistsInAnyGroup(l.texFile))
+				LogO("Ter: " + trk + " Not Found !!!  " + l.texFile);
+
+			if (!l.texNorm.empty() && !rg.resourceExistsInAnyGroup(l.texNorm))
+				LogO("Ter: " + trk + " Not Found !!!  " + l.texNorm);
+		}
+
+		for (n=0; n < Scene::ciNumPgLay; ++n)
 		{
-			PagedLayer& lay = sc.pgLayersAll[l];
-			const String& s = lay.name;  //.mesh
+			const PagedLayer& l = sc.pgLayersAll[n];
+			const String& s = l.name;  //.mesh
 				
 			//  checks
 			if (!s.empty())
 			{
+				if (l.on && !rg.resourceExistsInAnyGroup(s))
+					LogO("Veg: " + trk + " Not Found !!!  " + s);
+
+				#if 0
+				if (l.on && !data->objs->Find(s) && noCol[s]==0)
+				if (!(s.length() > 4 && s.substr(0,4) == "rock"))
+				{	noCol[s] = 1;
+					LogO("Veg: " + trk + " no collision.xml for  " + s);
+				}
+				#endif
+
+				if (l.minScale < 0.3f && minSc[s]==0)
+				{	minSc[s] = 1;
+					LogO("Veg: " + trk + " scale < 0.3  model  " + s + "  val " + fToStr(l.minScale,2,4) +" "+ fToStr(l.maxScale,2,4));
+				}
+				//if (lay.maxScale > 4.f)   LogO("All: " + trk + "  scale > 4  model  "   + s + "  val " + fToStr(lay.maxScale,2,4));
+				
 				//  rescale for pagedgeom
 				/**if (s.substr(0,3)=="fir")
 				{
 					lay.minScale *= 10.f;  lay.maxScale *= 10.f;
 					lay.windFx *= 0.1f;  lay.windFy *= 0.1f;
 				}/**/
-
-				if (lay.on && !data->objs->Find(s) && noCol[s]==0)
-				{	noCol[s] = 1;
-					LogO("All: " + trk + "  no collision.xml for  " + s);
-				}
-				if (lay.on && !ResourceGroupManager::getSingleton().resourceExistsInAnyGroup(s))
-					LogO("All: " + trk + "  Not Found !!!  " + s);
-
-				if (lay.minScale < 0.3f && minSc[s]==0)
-				{	minSc[s] = 1;
-					LogO("All: " + trk + "  scale < 0.3  model  " + s + "  val " + fToStr(lay.minScale,2,4) +" "+ fToStr(lay.maxScale,2,4));
-				}
-				//if (lay.maxScale > 4.f)   LogO("All: " + trk + "  scale > 4  model  "   + s + "  val " + fToStr(lay.maxScale,2,4));
 		}	}
 		//sc.SaveXml(path +"scene1.xml");  /// resave
 		//SplineRoad rd(this);  rd.LoadFile(path+"road.xml");
@@ -450,37 +474,216 @@ void CGui::ToolGhostsConv()
 	}
 }
 
+#endif
+
+#ifdef SR_EDITOR
+
 //  ed presets
 ///............................................................................................................................
+
+struct PTer{   public:	TerLayer t;     string trk;  };
+struct PRoad{  public:	TerLayer t;     string trk, mtr;  };
+struct PGrass{ public:	SGrassLayer t;  string trk;  };
+struct PVeget{ public:	PagedLayer t;   string trk;  };
+
+//  sort by
+bool compT(const PTer& a,   const PTer& b){    return a.t.texFile < b.t.texFile;  }
+//bool compR(const PRoad& a,  const PRoad& b){   return a.t.surfName < b.t.surfName;  }
+bool compR(const PRoad& a,  const PRoad& b){   return a.mtr < b.mtr;  }
+bool compG(const PGrass& a, const PGrass& b){  return a.t.material < b.t.material;  }
+bool compV(const PVeget& a, const PVeget& b){  return a.t.name < b.t.name;  }
+
+string getScn(const std::set<char>& sc)
+{
+	string s;
+	for (std::set<char>::const_iterator it = sc.begin(); it != sc.end(); ++it)
+		s += *it;
+	return s;
+}
+
 void CGui::ToolPresets()
 {
-	Ogre::Timer ti;
-	LogO("ALL tracks presets ---------\n");
+	const bool all = 1;  ///par
+	const int tc = 14;  // trk chars
 
-	map<Ogre::String, TerLayer> ter;
-	for (int i=0; i < data->tracks->trks.size(); ++i)
+	std::map<string, int> it, ir, ig, ip;
+	std::list<PTer> vt;    std::list<PTer>::iterator vti;
+	std::list<PRoad> vr;   std::list<PRoad>::iterator vri;
+	std::list<PGrass> vg;  std::list<PGrass>::iterator vgi;
+	std::list<PVeget> vp;  std::list<PVeget>::iterator vpi;
+	
+
+	int i,n;
+	for (i=0; i < data->tracks->trks.size(); ++i)
 	{	//  foreach track
 		string trk = data->tracks->trks[i].name, path = gcom->pathTrk[0] +"/"+ trk +"/";
 		/**/if (!(trk[0] >= 'A' && trk[0] <= 'Z'))  continue;
 		/**/if (StringUtil::startsWith(trk,"test"))  continue;
 
-		Scene sc;  sc.LoadXml(path +"scene.xml");
-		SplineRoad rd(pGame);  rd.LoadFile(path +"road.xml");
-		LogO("Track: "+trk);
+		Scene sc;  sc.LoadXml(path+ "scene.xml");
+		SplineRoad rd(app);  rd.LoadFile(path+ "road.xml");
 
-		for (int l=0; l < sc.td.layers.size(); ++l)
+		//  terrain
+		for (n=0; n < TerData::ciNumLay; ++n)
 		{
-			const TerLayer& la = sc.td.layersAll[sc.td.layers[l]];
-			LogO(la.texFile+"  dust "+fToStr(la.dust,2,4)+" "+fToStr(la.dustS,2,4)+"  mud "+fToStr(la.mud,2,4)+
-				"  trl "+fToStr(la.tclr.r,2,4)+" "+fToStr(la.tclr.g,2,4)+" "+fToStr(la.tclr.b,2,4)+" "+fToStr(la.tclr.a,2,4));
-			ter[la.texFile] = la;
+			const TerLayer& t = sc.td.layersAll[n];
+			if (t.on)
+			{	PTer p;  p.t = t;  p.trk = trk;
+				int id = it[t.texFile];
+				if (all || id == 0)
+				{	vt.push_back(p);  it[t.texFile] = vt.size();  }
+		}	}
+
+		//  road
+		TerLayer& r = sc.td.layerRoad;
+		int id = ir[r.surfName];
+		if (all || id == 0)
+		{	PRoad p;  p.t = r;  p.trk = trk;  p.mtr = rd.sMtrRoad[0];
+			vr.push_back(p);  ir[r.surfName] = vr.size();
 		}
-		//sc.layerRoad.texFile
+
+		//  grass
+		for (n=0; n < Scene::ciNumGrLay; ++n)
+		{
+			const SGrassLayer& t = sc.grLayersAll[n];
+			if (t.on)
+			{	PGrass p;  p.t = t;  p.trk = trk;
+				int id = ig[t.material];
+				if (all || id == 0)
+				{	vg.push_back(p);  ig[t.material] = vg.size();  }
+		}	}
+
+		//  veget
+		for (n=0; n < Scene::ciNumPgLay; ++n)
+		{
+			const PagedLayer& t = sc.pgLayersAll[n];
+			if (t.on)
+			{	PVeget p;  p.t = t;  p.trk = trk;
+				int id = ip[t.name];
+				if (all || id == 0)
+				{	vp.push_back(p);  ip[t.name] = vp.size();  }
+		}	}
 	}
-	LogO("ALL ter ---------");
-	LogO(toStr(ter.size()));
-	LogO(String("::: Time ALL tracks: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
-	LogO("ALL tracks presets ---------");
+
+	///  sort  . . . .
+	vt.sort(compT);  vr.sort(compR);  vg.sort(compG);  vp.sort(compV);
+
+	//  write out
+	std::stringstream o;  string z;
+	o << fixed;  o << left;  o << endl;
+	o << "<presets>\n";
+	std::set<char> sc;
+
+	///  terrain
+	//<texture on="1" file="adesert_rocky_d.jpg" fnorm="desert_rocky_n.jpg" scale="7.06531" surf="DesertFast" dust="0.8" dustS="1" mud="0.4" smoke="0" tclr="0.48 0.26 0.08 0.7" angMin="0" angMax="8.80626" angSm="4.29007" hMin="-300" hMax="300" hSm="20" nOn="0" noise="1" n_1="0" n2="0">
+	for (vti = vt.begin(); vti != vt.end(); ++vti)
+	{
+		TerLayer& t = (*vti).t;
+		string n = (*vti).trk;
+		if (t.texFile.substr(t.texFile.length()-4)==".jpg")  t.texFile = t.texFile.substr(0, t.texFile.length()-4);
+		if (t.texNorm.substr(t.texNorm.length()-4)==".jpg")  t.texNorm = t.texNorm.substr(0, t.texNorm.length()-4);
+
+		if (z != t.texFile)  {  o << endl;  sc.clear();  }  //
+		o << "<t a=\"";
+		o.width(tc);  o << n.substr(0,tc);
+		o << "\" sc=\"" << n[0] << "\" ";  sc.insert(n[0]);
+		o << " t=";  o.width(20);  o << "\""+t.texFile+"\"";  z = t.texFile; //
+		o << " n=";  o.width(20);  o << "\""+t.texNorm+"\"";
+		o << " s=";  o.width(7);  o << "\""+fToStr(t.tiling,2,4)+"\"";
+		o << " su=";  o.width(16);  o << "\""+t.surfName+"\"";  o.width(3);
+		o << " du=";  o << "\""+fToStr(t.dust ,1,3)+"\"";
+		o << " ds=";  o << "\""+fToStr(t.dustS,1,3)+"\"";
+		o << " md=";  o << "\""+fToStr(t.mud  ,1,3)+"\"";
+		//of << "\" sm=";  of << "\""+fToStr(t.smoke,1,4);
+		o << " tr=";  o << "\""+fToStr(t.tclr.r,2,4)+" "+fToStr(t.tclr.g,2,4)+" "+fToStr(t.tclr.b,2,4)+" "+fToStr(t.tclr.a,1,3)+"\"";
+		o << "  aa=";  o.width(4);  o << "\""+fToStr(int(t.angMin),0,1)+"\"";
+		o << " ab=";   o.width(4);  o << "\""+fToStr(int(t.angMax),0,1)+"\"";
+		o << " z=\""+getScn(sc)+"\"";
+		o << " />\n";
+	}
+	o << endl;  z = "";  sc.clear();
+
+	///  road
+	//<texture road="1" surf="roadAdesert" dust="0.6" dustS="1" mud="0" smoke="0" tclr="0.54 0.3 0.22 0.7" />
+	for (vri = vr.begin(); vri != vr.end(); ++vri)
+	{
+		const TerLayer& t = (*vri).t;
+		string n = (*vri).trk, m = (*vri).mtr;
+
+		if (z != m)  {  o << endl;  sc.clear();  }  //
+		o << "<r a=\"";
+		o.width(tc);  o << n.substr(0,tc);  o.width(3);
+		o << "\" sc=\"" << n[0] << "\" ";   sc.insert(n[0]);
+		o << " m=";  o.width(16);  o << "\""+m+"\"";  z = m; //
+		o << "su=";  o.width(16);  o << "\""+t.surfName+"\"";  o.width(3);
+		o << " du=";  o << "\""+fToStr(t.dust ,1,3)+"\"";
+		o << " ds=";  o << "\""+fToStr(t.dustS,1,3)+"\"";
+		o << " md=";  o << "\""+fToStr(t.mud  ,1,4)+"\"";
+		o << " tr=";  o << "\""+fToStr(t.tclr.r,2,4)+" "+fToStr(t.tclr.g,2,4)+" "+fToStr(t.tclr.b,2,4)+" "+fToStr(t.tclr.a,1,3)+"\"";
+		o << " z=\""+getScn(sc)+"\"";
+		o << " />\n";
+	}
+	o << endl;  z = "";  sc.clear();
+
+	///  grass
+	//<grass on="1" mtr="grass16r" clr="grClrWinter.png" dens="0.141625" chan="0" minSx="1.99746" maxSx="2.3799" minSy="1.56875" maxSy="1.92518" swayDistr="4" swayLen="0.2" swaySpeed="0.5" />
+	for (vgi = vg.begin(); vgi != vg.end(); ++vgi)
+	{
+		SGrassLayer& g = (*vgi).t;
+		string n = (*vgi).trk;
+		if (g.colorMap.substr(g.colorMap.length()-4)==".png")  g.colorMap = g.colorMap.substr(0, g.colorMap.length()-4);
+
+		if (z != g.material)  {  o << endl;  sc.clear();  }  //
+		o << "<g a=\"";
+		o.width(tc);  o << n.substr(0,tc);
+		o << "\" sc=\"" << n[0] << "\" ";  sc.insert(n[0]);
+		o << " g=";  o.width(19);  o << "\""+g.material+"\"";  z = g.material; //
+		o << " c=";  o.width(19);  o << "\""+g.colorMap+"\"";  o.width(4);
+		o << " xa=\"";  o << fToStr(g.minSx,2,4);
+		o << "\" xb=\"";  o << fToStr(g.maxSx,2,4);
+		o << "\" ya=\"";  o << fToStr(g.minSy,2,4);
+		o << "\" yb=\"";  o << fToStr(g.maxSy,2,4);
+		o << "\" z=\""+getScn(sc)+"\"";
+		o << " />\n";
+	}
+	o << endl;  z = "";  sc.clear();
+
+	///  veget
+	//<layer on="0" name="farn2.mesh" dens="0.102113" minScale="0.149999" maxScale="0.249999" ofsY="0" addTrRdDist="2" maxRdist="5" windFx="7.29999" windFy="0.0599962" maxTerAng="40.2636" minTerH="-100" maxTerH="100" maxDepth="5" />
+	for (vpi = vp.begin(); vpi != vp.end(); ++vpi)
+	{
+		PagedLayer& t = (*vpi).t;
+		string n = (*vpi).trk;
+		if (t.name.substr(t.name.length()-5)==".mesh")  t.name = t.name.substr(0, t.name.length()-5);
+
+		if (z != t.name)  {  o << endl;  sc.clear();  }  //
+		o << "<v a=\"";
+		o.width(tc);  o << n.substr(0,tc);
+		o << "\" sc=\"" << n[0] << "\" ";  sc.insert(n[0]);
+		o << " p=";  o.width(21);  o << "\""+t.name+"\"";  z = t.name; //
+		o << "  sa="; o << "\""+fToStr(t.minScale,2,4)+"\"";
+		o << " sb=";  o << "\""+fToStr(t.maxScale,2,4)+"\"";
+		o << "  wx="; o << "\""+fToStr(t.windFx,2,4)+"\"";
+		o << " wy=";  o << "\""+fToStr(t.windFy,3,5)+"\"";
+		o << "  ab=";  o << "\""+fToStr(t.maxTerAng,2,5)+"\"";
+		o << " z=\""+getScn(sc)+"\"";
+		o << " />\n";
+	}
+	o << "</presets>";
+	
+	//  save file
+	ofstream f;
+	string p = PATHMANAGER::DataUser() + "/presets.xml";
+	f.open(p.c_str());
+	f << o.str();
+	f.close();
+}
+
+
+///  _Tool_ check presets ......................................................
+void CGui::ToolPresetsChk()
+{
+
 }
 
 #endif

@@ -57,7 +57,8 @@ public:
 	void SetUsedStr(Txt valUsed, int cnt, int yellowAt);
 	
 	//  _Tools_
-	void ToolTexAlpha(), ToolSceneXml(), ToolSceneryID(), ToolTracksWarnings(), ToolBrushesPrv();	
+	void ToolTexAlpha(), ToolSceneXml(), ToolSceneryID(),
+		ToolTracksWarnings(), ToolBrushesPrv(), ToolPresets(), ToolPresetsChk();
 
 
 	//  tool windows texts

@@ -91,9 +91,8 @@ void App::createScene()  // once, init
 
 
 	///  _Tool_ scene ...........................
-	//  check/resave all tracks scene.xml 
 	#if 0
-	ToolSceneXml();
+	gui->ToolSceneXml();
 	exit(0);
 	#endif
 	
@@ -111,19 +110,22 @@ void App::createScene()  // once, init
 
 	///  _Tool_ presets .......
 	#if 0
-	gcom->ToolPresets();
+	gui->ToolPresets();
+	exit(0);
+	#endif
+	#if 0
+	gui->ToolPresetsChk();
 	exit(0);
 	#endif
 
-	///  _Tool_ write all trks sceneryID .......
+	///  _Tool_ sceneryID .......
 	#if 0
 	gui->ToolSceneryID();
 	exit(0);
 	#endif
 
-	///  _Tool_	Warnings ...........................
-	//  check all tracks for warnings
-	//  Warning: takes about 16 sec
+	///  _Tool_	warnings ...........................
+	//  takes about 16 sec
 	#if 0
 	gui->ToolTracksWarnings();
 	exit(0);
