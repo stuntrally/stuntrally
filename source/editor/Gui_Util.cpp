@@ -329,7 +329,9 @@ void CGui::NumTabNext(int rel)
 	switch (id)
 	{
 		case 3:  tab = tabsTerLayers;  tabNum(tabTerLayer);  break;  // Layers
-		case 4:  tab = tabsGrLayers;  tabNum(tabGrLayers);  break;  // Grasses
+		case 4:  switch (vSubTabsEdit[id]->getIndexSelected())
+		{	case 1:  tab = tabsGrLayers;  tabNum(tabGrLayers);  break;  // Grasses
+			case 2:  tab = tabsGrChan;  tabNum(tabGrChan);  break;  }  break;
 		case 5:  tab = tabsPgLayers;  tabNum(tabPgLayers);  break;  // Vegetation
 	}
 }
