@@ -55,7 +55,8 @@ public:
 	TerLayer layerRoad;  // road[4]+pipe[4]  //todo...
 	void UpdLayers();
 
-	int triplanarLayer1, triplanarLayer2;  // which should have triplanar most (eg high mountains)
+	//  which should have triplanar most (eg high mountains)
+	int triplanarLayer1, triplanarLayer2;
 	float normScale;  // scale terrain normals
 	bool emissive;
 	
@@ -65,7 +66,7 @@ public:
 };
 
 
-class PagedLayer	// vegetation layer
+class PagedLayer	// vegetation model
 {
 public:
 	bool on;
@@ -104,38 +105,67 @@ public:
 
 
 ///  Presets xml  with common params setup
-//  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+//  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 class Presets
 {
-	// ter
-	struct Pter
+public:
+	///----  Terrain layer
+	struct PTer
 	{
+		Ogre::String texFile, texNorm, sc;
+		std::string surfName, scn;
+		float tiling;  bool triplanar;
+
+		float dust, mud, dustS;
+		Ogre::ColourValue tclr;  // trail
+	
+		float angMin,angMax;
+		PTer();
 	};
-	std::vector<Pter> ter;
+	std::vector<PTer> ter;
 	std::map<std::string, int> iter;
 	
-	// road
-	struct Proad
+	///----  Road
+	struct PRoad
 	{
+		Ogre::String mtr, sc;
+		std::string surfName, scn;
+
+		float dust, mud, dustS;
+		Ogre::ColourValue tclr;
+		PRoad();
 	};
-	std::vector<Proad> rd;
+	std::vector<PRoad> rd;
 	std::map<std::string, int> ird;
 	
-	// grass
-	struct Pgrass
+	///----  Grass
+	struct PGrass
 	{
+		Ogre::String mtr, clr, sc;  // material, colormap
+		std::string scn;
 		float minSx,minSy, maxSx,maxSy;  // sizes
-		Ogre::String /*material,*/ colorMap;
+		PGrass();
 	};
-	std::vector<Pgrass> gr;
+	std::vector<PGrass> gr;
 	std::map<std::string, int> igr;
 	
-	// veget
-	struct Pveget
+	///----  Veget model
+	struct PVeget
 	{
+		Ogre::String sc;
+		std::string name, scn;
+		float minScale, maxScale;
+		float windFx, windFy;
+
+		int addRdist;  // road dist
+		float maxTerAng;  // terrain
+		float maxDepth;  // in fluid
+		PVeget();
 	};
-	std::vector<Pveget> veg;
+	std::vector<PVeget> veg;
 	std::map<std::string, int> iveg;
+
+	bool LoadXml(std::string file);
 };
 
 
@@ -181,7 +211,7 @@ public:
 	Ogre::String skyMtr;
 	int  rainEmit,rain2Emit;  Ogre::String rainName,rain2Name;
 	//  light
-	float ldPitch, ldYaw;  // dir angles
+	float ldPitch, ldYaw;  // sun dir angles
 	Ogre::Vector3 lDir, lAmb,lDiff,lSpec;
 
 	//  fog
@@ -234,7 +264,7 @@ public:
 	//  to force regenerating impostors on different sceneries
 	std::string sceneryId;
 	
-	//  Fuids
+	//  Fluids
 	std::vector<FluidBox> fluids;
 	class FluidsXml* pFluidsXml;  // set this after Load
 	
@@ -243,6 +273,7 @@ public:
 		
 	//  methods
 	Scene();  void Default(), UpdateFluidsId(), UpdateSurfId();
+
 	class GAME* pGame;  // for all surfaces by name
 	bool LoadXml(Ogre::String file, bool bTer = true), SaveXml(Ogre::String file);
 };

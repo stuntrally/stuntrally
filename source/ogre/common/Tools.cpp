@@ -22,6 +22,7 @@
 #include <MyGUI_ComboBox.h>
 using namespace Ogre;
 using namespace std;
+using namespace MyGUI;
 
 
 #ifdef SR_EDITOR
@@ -513,17 +514,17 @@ void CGui::ToolGhostsConv()
 //  ed presets
 ///............................................................................................................................
 
-struct PTer{   public:	TerLayer t;     string trk;  };
-struct PRoad{  public:	TerLayer t;     string trk, mtr;  };
-struct PGrass{ public:	SGrassLayer t;  string trk;  };
-struct PVeget{ public:	PagedLayer t;   string trk;  };
+struct TerP{   public:	TerLayer t;     string trk;  };
+struct RoadP{  public:	TerLayer t;     string trk, mtr;  };
+struct GrassP{ public:	SGrassLayer t;  string trk;  };
+struct VegetP{ public:	PagedLayer t;   string trk;  };
 
 //  sort by
-bool compT(const PTer& a,   const PTer& b){    return a.t.texFile < b.t.texFile;  }
-//bool compR(const PRoad& a,  const PRoad& b){   return a.t.surfName < b.t.surfName;  }
-bool compR(const PRoad& a,  const PRoad& b){   return a.mtr < b.mtr;  }
-bool compG(const PGrass& a, const PGrass& b){  return a.t.material < b.t.material;  }
-bool compV(const PVeget& a, const PVeget& b){  return a.t.name < b.t.name;  }
+bool compT(const TerP& a,   const TerP& b){    return a.t.texFile < b.t.texFile;  }
+//bool compR(const RoadP& a,  const RoadP& b){   return a.t.surfName < b.t.surfName;  }
+bool compR(const RoadP& a,  const RoadP& b){   return a.mtr < b.mtr;  }
+bool compG(const GrassP& a, const GrassP& b){  return a.t.material < b.t.material;  }
+bool compV(const VegetP& a, const VegetP& b){  return a.t.name < b.t.name;  }
 
 string getScn(const std::set<char>& sc)
 {
@@ -535,19 +536,20 @@ string getScn(const std::set<char>& sc)
 
 void CGui::ToolPresets()
 {
+	LogO("ALL PRESETS ---------");
 	const bool all = 1;  ///par
 	const int tc = 14;  // trk chars
 
 	std::map<string, int> it, ir, ig, ip;
-	std::list<PTer> vt;    std::list<PTer>::iterator vti;
-	std::list<PRoad> vr;   std::list<PRoad>::iterator vri;
-	std::list<PGrass> vg;  std::list<PGrass>::iterator vgi;
-	std::list<PVeget> vp;  std::list<PVeget>::iterator vpi;
+	std::list<TerP> vt;    std::list<TerP>::iterator vti;
+	std::list<RoadP> vr;   std::list<RoadP>::iterator vri;
+	std::list<GrassP> vg;  std::list<GrassP>::iterator vgi;
+	std::list<VegetP> vp;  std::list<VegetP>::iterator vpi;
 	
 
 	int i,n;
 	for (i=0; i < data->tracks->trks.size(); ++i)
-	{	//  foreach track
+	{	///  foreach track
 		string trk = data->tracks->trks[i].name, path = gcom->pathTrk[0] +"/"+ trk +"/";
 		/**/if (!(trk[0] >= 'A' && trk[0] <= 'Z'))  continue;
 		/**/if (StringUtil::startsWith(trk,"test"))  continue;
@@ -560,7 +562,7 @@ void CGui::ToolPresets()
 		{
 			const TerLayer& t = sc.td.layersAll[n];
 			if (t.on)
-			{	PTer p;  p.t = t;  p.trk = trk;
+			{	TerP p;  p.t = t;  p.trk = trk;
 				int id = it[t.texFile];
 				if (all || id == 0)
 				{	vt.push_back(p);  it[t.texFile] = vt.size();  }
@@ -570,7 +572,7 @@ void CGui::ToolPresets()
 		TerLayer& r = sc.td.layerRoad;
 		int id = ir[r.surfName];
 		if (all || id == 0)
-		{	PRoad p;  p.t = r;  p.trk = trk;  p.mtr = rd.sMtrRoad[0];
+		{	RoadP p;  p.t = r;  p.trk = trk;  p.mtr = rd.sMtrRoad[0];
 			vr.push_back(p);  ir[r.surfName] = vr.size();
 		}
 
@@ -579,7 +581,7 @@ void CGui::ToolPresets()
 		{
 			const SGrassLayer& t = sc.grLayersAll[n];
 			if (t.on)
-			{	PGrass p;  p.t = t;  p.trk = trk;
+			{	GrassP p;  p.t = t;  p.trk = trk;
 				int id = ig[t.material];
 				if (all || id == 0)
 				{	vg.push_back(p);  ig[t.material] = vg.size();  }
@@ -590,7 +592,7 @@ void CGui::ToolPresets()
 		{
 			const PagedLayer& t = sc.pgLayersAll[n];
 			if (t.on)
-			{	PVeget p;  p.t = t;  p.trk = trk;
+			{	VegetP p;  p.t = t;  p.trk = trk;
 				int id = ip[t.name];
 				if (all || id == 0)
 				{	vp.push_back(p);  ip[t.name] = vp.size();  }
@@ -703,19 +705,29 @@ void CGui::ToolPresets()
 	}
 	o << "</presets>";
 	
+	#if 0
 	//  save file
 	ofstream f;
 	string p = PATHMANAGER::DataUser() + "/presets.xml";
 	f.open(p.c_str());
 	f << o.str();
 	f.close();
-}
+	LogO("Saved: "+p);
+	#endif
 
-
-///  _Tool_ check presets  ......................................................
-void CGui::ToolPresetsChk()
-{
-	// tex not in preset ..
+	///  check presets  ......................................................
+	LogO("ALL PRESETS check ---------");
+	
+	//  tex not in preset ..
+	for (i=0; i < data->pre->ter.size(); ++i)
+	{
+		const Presets::PTer& pt = data->pre->ter[i];
+		size_t id = cmbTexDiff->findItemIndexWith(pt.texFile+".jpg");
+		if (id == ITEM_NONE)
+			LogO("NO ter !! "+pt.texFile);
+	}
+	
+	LogO("ALL PRESETS ---------");
 }
 
 #endif

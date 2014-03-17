@@ -1,0 +1,369 @@
+<presets>
+
+
+<!-- terrain -->
+
+
+<t a="A3-Canyon     " sc="A"  t="adesert_cracks_d"   n="desert_cracks_n"    s="10.50" su="DesertFast"     du="0.6" ds="1.0" md="0.5" tr="0.48 0.30 0.20 0.8"  aa="13" ab="27" z="AV" />
+<t a="A1-StuntPark  " sc="A"  t="adesert_mntn2_d"    n="desert_mntn2_n"     s="34.04" su="DesertFast"     du="0.7" ds="1.0" md="0.4" tr="0.46 0.26 0.08 0.7"  aa="28" ab="90" z="AIR" />
+<t a="C3-Vast       " sc="C"  t="adesert_mntn2o_d"   n="desert_mntn2_n"     s="30.41" su="DesertFast"     du="0.0" ds="0.2" md="0.1" tr="0.30 0.20 0.15 0.7"  aa="28" ab="40" z="C" />
+<t a="A4-Snake      " sc="A"  t="adesert_mntn4_d"    n="adesert_mntn4_n"    s="20.29" su="DesertFast"     du="0.6" ds="1.0" md="0.5" tr="0.48 0.30 0.20 0.8"  aa="21" ab="40" z="AR" />
+<t a="V6-Crematoria " sc="V"  t="adesert_mntn4v_d"   n="adesert_mntn4_n"    s="9.04"  su="DesertFast"     du="0.0" ds="0.1" md="0.2" tr="0.25 0.25 0.14 0.6"  aa="0"  ab="30" z="V" />
+
+<t a="A3-Canyon     " sc="A"  t="adesert_mntn_d"     n="desert_mntn_n"      s="40.09" su="DesertFast"     du="0.0" ds="0.2" md="1.0" tr="0.20 0.20 0.00 1.0"  aa="42" ab="90" z="AR" />
+<t a="A1-StuntPark  " sc="A"  t="adesert_rocky_d"    n="desert_rocky_n"     s="7.07"  su="DesertFast"     du="0.8" ds="1.0" md="0.4" tr="0.48 0.26 0.08 0.7"  aa="0"  ab="8"  z="AR" />
+<t a="A1-StuntPark  " sc="A"  t="adesert_sand2_d"    n="desert_sand2_n"     s="10.40" su="DesertBumpy"    du="0.5" ds="1.0" md="0.5" tr="0.42 0.26 0.08 0.8"  aa="10" ab="27" z="ACI" />
+<t a="R2-Red        " sc="R"  t="adesert_stone_d"    n="adesert_stone_n"    s="11.54" su="DesertFast"     du="0.5" ds="1.0" md="0.7" tr="0.25 0.10 0.08 0.8"  aa="0"  ab="18" z="AR" />
+<t a="C4-Sway       " sc="C"  t="amntn_dark_d"       n="mntn_dark_n"        s="31.78" su="DesertBumpy"    du="0.0" ds="0.8" md="0.5" tr="0.20 0.10 0.10 0.5"  aa="42" ab="57" z="ACV" />
+
+<t a="D8-Technical  " sc="D"  t="desert_cracks_d"    n="desert_cracks_n"    s="9.09"  su="DesertFast"     du="0.8" ds="1.0" md="0.1" tr="0.46 0.46 0.08 0.7"  aa="8"  ab="22" z="DI" />
+<t a="V9-Craters    " sc="V"  t="desert_cracksv_d"   n="desert_cracks_n"    s="6.61"  su="DesertMud"      du="0.0" ds="0.0" md="0.1" tr="0.42 0.36 0.28 0.6"  aa="12" ab="25" z="V" />
+<t a="D2-Mntn       " sc="D"  t="desert_mntn2_d"     n="desert_mntn2_n"     s="41.30" su="DesertRocks"    du="0.0" ds="0.2" md="0.1" tr="0.20 0.20 0.00 1.0"  aa="44" ab="90" z="D" />
+<t a="D2-Mntn       " sc="D"  t="desert_mntn_d"      n="desert_mntn_n"      s="26.21" su="DesertBumpy"    du="0.4" ds="1.0" md="0.7" tr="0.42 0.36 0.08 0.8"  aa="23" ab="44" z="DI" />
+
+<t a="D1-Dunes      " sc="D"  t="desert_mud_d"       n="desert_mud_n"       s="17.81" su="DesertBumpy"    du="0.4" ds="1.0" md="0.7" tr="0.42 0.36 0.08 0.8"  aa="36" ab="90" z="D" />
+<t a="T5-Twister    " sc="T"  t="desert_mud_d"       n="desert_mud_n"       s="8.02"  su="GrassForestWet" du="0.2" ds="0.4" md="0.6" tr="0.12 0.16 0.08 0.8"  aa="19" ab="34" z="DITV" />
+
+<t a="D2-Mntn       " sc="D"  t="desert_rocky_d"     n="desert_rocky_n"     s="12.14" su="DesertBumpy"    du="0.8" ds="1.0" md="0.1" tr="0.46 0.46 0.08 0.7"  aa="25" ab="31" z="CDV" />
+<t a="D1-Dunes      " sc="D"  t="desert_sand2_d"     n="desert_sand2_n"     s="16.21" su="DesertFast"     du="0.9" ds="1.0" md="0.1" tr="0.48 0.46 0.08 0.7"  aa="15" ab="27" z="DGV" />
+<t a="D4-SBridge    " sc="D"  t="desert_sand_big_d"  n="desert_sand_big_n"  s="9.63"  su="DesertBumpy"    du="0.9" ds="1.0" md="0.1" tr="0.48 0.46 0.08 0.7"  aa="15" ab="27" z="CDI" />
+<t a="X6-Wild       " sc="X"  t="desert_sand_bigx_d" n="desert_sand_big_n"  s="7.09"  su="Default"        du="0.0" ds="0.2" md="0.0" tr="0.22 0.20 0.40 0.9"  aa="0"  ab="32" z="X" />
+
+<t a="D1-Dunes      " sc="D"  t="desert_sand_d"      n="desert_sand_n"      s="12.06" su="DesertFast"     du="0.8" ds="1.0" md="0.1" tr="0.46 0.46 0.08 0.7"  aa="0"  ab="10" z="D" />
+<t a="I13-Beauty    " sc="I"  t="desert_wet_d"       n="desert_wet_n"       s="8.78"  su="DesertFast"     du="0.5" ds="0.7" md="0.0" tr="0.50 0.50 0.20 0.7"  aa="0"  ab="13" z="I" />
+
+<t a="T3-Orange     " sc="T"  t="grass_autumn_orn_d" n="grass_autumn_n"     s="5.72"  su="GrassForest"    du="0.0" ds="0.2" md="0.4" tr="0.48 0.42 0.20 0.7"  aa="0"  ab="11" z="T" />
+<t a="T2-RedOakPark " sc="T"  t="grass_autumn_red_d" n="grass_autumn_n"     s="6.10"  su="Default"        du="0.0" ds="0.2" md="0.4" tr="0.44 0.42 0.20 0.7"  aa="0"  ab="12" z="T" />
+
+<t a="F8-Stain      " sc="F"  t="grass_green2y_d"    n="grass_green2y_n"    s="10.13" su="GrassForest"    du="0.0" ds="0.2" md="0.8" tr="0.18 0.36 0.04 0.9"  aa="0"  ab="20" z="EFIJS" />
+<t a="J11-Temple    " sc="J"  t="grass_green_d"      n="grass_green_n"      s="9.43"  su="GrassJungle"    du="0.0" ds="0.2" md="0.4" tr="0.16 0.31 0.04 0.7"  aa="0"  ab="27" z="IJS" />
+<t a="F11-Dawn      " sc="F"  t="grass_ground2y_d"   n="grass_ground_n"     s="9.10"  su="GrassForest"    du="0.0" ds="0.2" md="0.6" tr="0.15 0.20 0.10 0.9"  aa="17" ab="25" z="FST" />
+<t a="F3-Snail      " sc="F"  t="grass_ground_d"     n="grass_ground_n"     s="9.04"  su="GrassForest"    du="0.0" ds="0.2" md="0.8" tr="0.22 0.20 0.04 0.9"  aa="0"  ab="25" z="FIJ" />
+
+<t a="J7-Hilly      " sc="J"  t="grass_mix_d"        n="grass_mix_n"        s="8.02"  su="GrassJungle"    du="0.0" ds="0.2" md="0.8" tr="0.18 0.36 0.04 0.7"  aa="0"  ab="28" z="EFJMT" />
+<t a="T3-Orange     " sc="T"  t="grass_mix_ylw_d"    n="grass_mix_n"        s="7.81"  su="GrassForest"    du="0.0" ds="0.2" md="0.6" tr="0.42 0.46 0.08 0.7"  aa="14" ab="43" z="T" />
+<t a="J1-Curly      " sc="J"  t="grass_rocky_d"      n="grass_rocky_n"      s="10.81" su="GrassJungle"    du="0.0" ds="0.2" md="0.6" tr="0.42 0.46 0.08 0.7"  aa="13" ab="36" z="EFJ" />
+
+<t a="V8-Uncertain  " sc="V"  t="ground_crackedo_d"  n="ground_cracked_n"   s="6.67"  su="DesertMud"      du="0.0" ds="0.0" md="0.1" tr="0.25 0.20 0.14 0.6"  aa="13" ab="26" z="V" />
+<t a="V5-Sad        " sc="V"  t="ground_crackedv_d"  n="ground_cracked_n"   s="10.43" su="DesertBumpy"    du="0.3" ds="0.2" md="0.4" tr="0.36 0.40 0.28 0.7"  aa="0"  ab="12" z="V" />
+<t a="V1-Dark       " sc="V"  t="ground_cracks2y_d"  n="ground_cracks2_n"   s="6.93"  su="Default"        du="0.0" ds="0.6" md="0.4" tr="0.38 0.22 0.04 0.1"  aa="0"  ab="20" z="V" />
+
+<t a="M2-Bumps      " sc="M"  t="ground_dry2_d"      n="ground_dry2_n"      s="10.58" su="Default"        du="0.0" ds="0.2" md="1.0" tr="0.15 0.15 0.05 0.8"  aa="0"  ab="13" z="FJM" />
+<t a="C6-Abyss      " sc="C"  t="ground_dry_d"       n="ground_dry_n"       s="8.97"  su="DesertFast"     du="0.5" ds="0.5" md="0.0" tr="0.40 0.20 0.20 0.5"  aa="0"  ab="17" z="CD" />
+
+<t a="J10-Spiral    " sc="J"  t="ground_ferns_d"     n="ground_ferns_n"     s="4.55"  su="GrassJungle"    du="0.0" ds="0.2" md="1.0" tr="0.09 0.23 0.04 0.8"  aa="0"  ab="90" z="J" />
+<t a="J5-Pipes      " sc="J"  t="ground_leaves_d"    n="ground_leaves_n"    s="5.62"  su="GrassJungle"    du="0.0" ds="0.2" md="0.6" tr="0.32 0.40 0.08 0.7"  aa="16" ab="30" z="J" />
+
+<t a="J14-Muddy     " sc="J"  t="ground_mud2_d"      n="ground_mud2_n"      s="15.64" su="GrassJungleWet" du="0.0" ds="0.2" md="1.0" tr="0.42 0.26 0.08 0.8"  aa="32" ab="90" z="JT" />
+<t a="J6-Fun        " sc="J"  t="ground_mud_d"       n="ground_mud_n"       s="7.43"  su="GrassJungleWet" du="0.0" ds="0.2" md="0.6" tr="0.30 0.26 0.10 0.7"  aa="19" ab="34" z="JM" />
+
+<t a="G2-Coast      " sc="G"  t="ground_white_d"     n="ground_white_n"     s="8.54"  su="Default"        du="0.3" ds="0.2" md="0.4" tr="0.36 0.40 0.28 0.7"  aa="0"  ab="18" z="GI" />
+<t a="G2-Coast      " sc="G"  t="ground_yellow_d"    n="jungle_mntn_n"      s="8.91"  su="Default"        du="0.3" ds="0.2" md="0.4" tr="0.42 0.36 0.28 0.6"  aa="18" ab="30" z="G" />
+
+<t a="I1-Island     " sc="I"  t="island_sand2_d"     n="desert_sand2_n"     s="10.21" su="Default"        du="0.6" ds="0.7" md="0.0" tr="0.44 0.40 0.23 0.7"  aa="0"  ab="90" z="DI" />
+<t a="I1-Island     " sc="I"  t="island_sand_d"      n="desert_sand_n"      s="12.78" su="Default"        du="0.6" ds="0.7" md="0.0" tr="0.44 0.44 0.26 0.7"  aa="0"  ab="90" z="DI" />
+
+<t a="J22-Knotted   " sc="J"  t="jungle_mntn2_d"     n="jungle_mntn2_n"     s="26.69" su="Rocks"          du="0.0" ds="0.2" md="0.0" tr="0.20 0.20 0.20 0.6"  aa="55" ab="90" z="J" />
+<t a="J16-MudMad    " sc="J"  t="jungle_mntn_d"      n="jungle_mntn_n"      s="26.00" su="Rocks"          du="0.0" ds="0.2" md="0.0" tr="0.20 0.20 0.20 0.6"  aa="42" ab="90" z="EJ" />
+<t a="X6-Wild       " sc="X"  t="jungle_mntnx_d"     n="jungle_mntn_n"      s="21.88" su="Rocks"          du="0.0" ds="0.2" md="0.0" tr="0.32 0.31 0.80 0.9"  aa="39" ab="53" z="X" />
+<t a="J1-Curly      " sc="J"  t="jungle_stone_d"     n="jungle_stone_n"     s="26.00" su="Rocks"          du="0.0" ds="0.2" md="0.0" tr="0.20 0.20 0.20 0.6"  aa="42" ab="90" z="JO" />
+
+<t a="V9-Craters    " sc="V"  t="lava2_d"            n="ground_cracked_n"   s="14.55" su="Rocks"          du="0.0" ds="0.0" md="0.5" tr="0.32 0.32 0.32 0.3"  aa="26" ab="45" z="V" />
+<t a="V9-Craters    " sc="V"  t="lava_black_d"       n="lava_black_n"       s="5.87"  su="DesertMud"      du="0.0" ds="0.0" md="0.0" tr="0.25 0.20 0.14 0.6"  aa="0"  ab="9"  z="V" />
+<t a="V6-Crematoria " sc="V"  t="lava_d"             n="lava_n"             s="33.83" su="DesertRocks"    du="0.0" ds="0.2" md="0.0" tr="0.30 0.15 0.00 0.6"  aa="0"  ab="90" z="V" />
+<t a="R3-Hot        " sc="R"  t="lava_mars_d"        n="lava_n"             s="32.00" su="Rocks"          du="0.3" ds="1.0" md="0.8" tr="0.15 0.06 0.03 0.9"  aa="64" ab="90" z="R" />
+
+<t a="V2-Volcanic   " sc="V"  t="mntn_black_d"       n="mntn_black_n"       s="30.02" su="Rocks"          du="0.3" ds="0.2" md="0.5" tr="0.32 0.32 0.32 0.4"  aa="44" ab="90" z="IJTVX" />
+<t a="F12-HighPeaks " sc="F"  t="mntn_brown_d"       n="mntn_brown_n"       s="32.19" su="Rocks"          du="0.0" ds="0.2" md="1.0" tr="0.23 0.23 0.10 0.8"  aa="52" ab="90" z="FGJMTV" />
+
+<t a="C2-CanyonRun  " sc="C"  t="mntn_canyon2o_d"    n="adesert_stone_n"    s="19.19" su="Rocks"          du="0.8" ds="1.0" md="0.4" tr="0.48 0.26 0.08 0.7"  aa="30" ab="50" z="C" />
+<t a="C1-Hairpins   " sc="C"  t="mntn_canyon_d"      n="mntn_canyon_n"      s="29.27" su="DesertBumpy"    du="0.0" ds="0.8" md="0.5" tr="0.20 0.10 0.10 0.5"  aa="50" ab="90" z="C" />
+
+<t a="T4-Scary      " sc="T"  t="mntn_dark_d"        n="mntn_dark_n"        s="27.61" su="Rocks"          du="0.1" ds="0.2" md="0.3" tr="0.25 0.25 0.25 0.7"  aa="33" ab="90" z="DFGIJTVX" />
+<t a="X2-Swirl      " sc="X"  t="mntn_darkx_d"       n="mntn_dark_n"        s="33.83" su="Rocks"          du="0.0" ds="0.2" md="0.0" tr="0.20 0.20 0.40 1.0"  aa="51" ab="90" z="X" />
+<t a="F10-MntnTrail " sc="F"  t="mntn_forest_d"      n="mntn_brown_n"       s="33.21" su="Rocks"          du="0.0" ds="0.2" md="1.0" tr="0.20 0.20 0.00 1.0"  aa="63" ab="90" z="FO" />
+<t a="S15-Scorpio   " sc="S"  t="mntn_gray_d"        n="mntn_dark_n"        s="31.19" su="Rocks"          du="0.0" ds="0.2" md="0.8" tr="0.18 0.18 0.14 0.7"  aa="35" ab="50" z="FOS" />
+<t a="J5-Pipes      " sc="J"  t="mntn_green_d"       n="mntn_green_n"       s="32.00" su="Rocks"          du="0.0" ds="0.2" md="1.0" tr="0.32 0.32 0.32 1.0"  aa="31" ab="90" z="FGJ" />
+<t a="W13-MtFog     " sc="W"  t="mntn_white_d"       n="jungle_stone_n"     s="30.60" su="Rocks"          du="0.0" ds="0.0" md="1.0" tr="0.40 0.40 0.40 0.7"  aa="51" ab="90" z="FSTW" />
+
+<t a="X1-Magic      " sc="X"  t="mntn_x1_d"          n="mntn_x1_n"          s="26.04" su="Default"        du="0.0" ds="0.2" md="0.2" tr="0.32 0.31 0.50 0.9"  aa="28" ab="44" z="X" />
+<t a="X4-Pipeline   " sc="X"  t="mntn_x2_d"          n="mntn_x2_n"          s="12.78" su="Default"        du="0.0" ds="0.2" md="0.0" tr="0.32 0.31 0.80 0.9"  aa="33" ab="43" z="X" />
+<t a="G3-Butterfly  " sc="G"  t="mntn_yellow_d"      n="jungle_stone_n"     s="42.53" su="Rocks"          du="0.3" ds="0.2" md="0.5" tr="0.32 0.32 0.32 0.4"  aa="33" ab="90" z="FGS" />
+
+<t a="O1-Moss       " sc="O"  t="moss_ground_d"      n="grass_ground_n"     s="8.92"  su="GrassJungle"    du="0.0" ds="0.2" md="0.1" tr="0.13 0.20 0.13 0.8"  aa="17" ab="34" z="O" />
+<t a="O3-Air        " sc="O"  t="moss_plants_d"      n="moss_plants_n"      s="9.01"  su="GrassJungle"    du="0.0" ds="0.2" md="0.1" tr="0.12 0.25 0.23 0.8"  aa="0"  ab="19" z="O" />
+
+<t a="S3-Loops      " sc="S"  t="savanna_dry_d"      n="savanna_dry_n"      s="7.30"  su="Default"        du="0.0" ds="0.2" md="0.8" tr="0.38 0.36 0.04 0.7"  aa="0"  ab="21" z="S" />
+<t a="S2-Frenzy     " sc="S"  t="savanna_green_d"    n="savanna_green_n"    s="9.23"  su="Default"        du="0.0" ds="0.2" md="0.6" tr="0.42 0.46 0.08 0.7"  aa="0"  ab="90" z="S" />
+<t a="S2-Frenzy     " sc="S"  t="savanna_yellow_d"   n="savanna_yellow_n"   s="10.50" su="Default"        du="0.0" ds="0.2" md="0.4" tr="0.48 0.42 0.20 0.7"  aa="0"  ab="90" z="S" />
+
+<t a="W1-Cross      " sc="W"  t="snow1_d"            n="snow1_n"            s="10.66" su="SnowDeep"       du="1.0" ds="0.8" md="1.0" tr="0.40 0.40 0.40 0.6"  aa="0"  ab="15" z="W" />
+<t a="W3-Swing      " sc="W"  t="snow2_d"            n="snow2_n"            s="8.48"  su="SnowDeep"       du="0.4" ds="0.8" md="1.0" tr="0.40 0.40 0.40 0.6"  aa="0"  ab="90" z="W" />
+<t a="W11-Glacier   " sc="W"  t="snow2ice_d"         n="snow2_n"            s="14.93" su="SnowWet"        du="0.4" ds="0.6" md="1.0" tr="0.40 0.40 0.40 0.6"  aa="0"  ab="90" z="W" />
+<t a="W5-Circles    " sc="W"  t="snow_bumpy_d"       n="snow_bumpy_n"       s="8.97"  su="SnowMedium"     du="1.0" ds="0.8" md="1.0" tr="0.40 0.40 0.40 0.6"  aa="0"  ab="90" z="W" />
+
+<t a="W2-Wet        " sc="W"  t="snow_grass2_d"      n="snow_grass2_n"      s="10.58" su="SnowWet"        du="0.1" ds="0.8" md="0.7" tr="0.25 0.40 0.25 0.6"  aa="0"  ab="20" z="W" />
+<t a="W8-PipeCross  " sc="W"  t="snow_grass3_d"      n="snow_grass3_n"      s="8.08"  su="SnowWet"        du="0.0" ds="0.8" md="1.0" tr="0.40 0.40 0.40 0.6"  aa="0"  ab="90" z="W" />
+<t a="W2-Wet        " sc="W"  t="snow_grass_d"       n="snow_grass_n"       s="9.50"  su="SnowWet"        du="1.0" ds="0.8" md="1.0" tr="0.40 0.40 0.40 0.6"  aa="0"  ab="20" z="W" />
+<t a="W9-IceFrenzy  " sc="W"  t="snow_mntn2_d"       n="snow_mntn2_n"       s="21.00" su="SnowDeep"       du="0.0" ds="0.2" md="1.0" tr="0.20 0.20 0.00 1.0"  aa="59" ab="90" z="W" />
+<t a="W2-Wet        " sc="W"  t="snow_mntn_d"        n="snow_mntn_n"        s="51.00" su="SnowDeep"       du="0.0" ds="0.2" md="1.0" tr="0.20 0.20 0.00 1.0"  aa="21" ab="90" z="FWX" />
+<t a="W1-Cross      " sc="W"  t="snow_mud_d"         n="snow_mud_n"         s="9.50"  su="SnowDeep"       du="1.0" ds="0.8" md="1.0" tr="0.40 0.40 0.40 0.6"  aa="0"  ab="20" z="W" />
+<t a="W11-Glacier   " sc="W"  t="snow_rough_d"       n="snow_rough_n"       s="12.14" su="SnowWet"        du="0.4" ds="0.6" md="1.0" tr="0.40 0.40 0.40 0.6"  aa="11" ab="90" z="W" />
+
+
+<!-- road -->
+
+
+<r a="D16-AsphaltJum" sc="D"  m="roadAsphalt"   su="Asphalt"        du="0.0" ds="0.9" md="0.0" tr="0.00 0.00 0.00 0.0" z="D" />
+
+<r a="A1-StuntPark  " sc="A"  m="roadAdesert"   su="roadAdesert"    du="0.5" ds="0.6" md="0.0" tr="0.54 0.30 0.22 0.7" z="ACR" />
+<r a="D1-Dunes      " sc="D"  m="roadDesert"    su="roadDesert"     du="0.4" ds="0.9" md="0.0" tr="0.70 0.66 0.36 0.7" z="D" />
+<r a="G2-Coast      " sc="G"  m="roadGDesert"   su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.40 0.36 0.26 0.5" z="G" />
+
+<r a="J3-Rocky      " sc="J"  m="roadJDark"     su="roadJungle"     du="0.0" ds="0.2" md="0.2" tr="0.40 0.36 0.16 0.8" z="J" />
+<r a="V6-Crematoria " sc="V"  m="roadJDarkD"    su="roadDesert"     du="0.0" ds="0.1" md="0.0" tr="0.20 0.20 0.10 0.9" z="V" />
+<r a="V9-Craters    " sc="V"  m="roadJDarkDs"   su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.30 0.1" z="V" />
+<r a="F1-Slippery   " sc="F"  m="roadJungle"    su="roadForest"     du="0.0" ds="0.2" md="0.2" tr="0.30 0.26 0.16 0.8" z="CFGJT" />
+
+<r a="O1-Moss       " sc="O"  m="roadMoss"      su="roadJungle"     du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" z="O" />
+<r a="M1-Hills      " sc="M"  m="roadMud"       su="roadGravel"     du="0.0" ds="1.0" md="0.8" tr="0.21 0.13 0.00 0.8" z="DJMTV" />
+
+<r a="E2-Serpent    " sc="E"  m="roadNdirt"     su="roadGravel"     du="0.0" ds="1.0" md="0.6" tr="0.13 0.13 0.13 0.8" z="EVW" />
+<r a="E1-Lakes      " sc="E"  m="roadNgravel"   su="roadGravel"     du="0.0" ds="1.0" md="0.6" tr="0.13 0.13 0.13 0.8" z="EF" />
+
+<r a="I1-Island     " sc="I"  m="roadSand"      su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.35 0.5" z="DIV" />
+<r a="D8-Technical  " sc="D"  m="roadSand2"     su="roadDesert"     du="0.4" ds="0.8" md="0.0" tr="0.50 0.46 0.26 0.7" z="DI" />
+<r a="V1-Dark       " sc="V"  m="roadSandDark"  su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.30 0.1" z="IV" />
+<r a="X1-Magic      " sc="X"  m="roadSandMagic" su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.30 0.32 0.46 0.8" z="X" />
+<r a="I4-Sunset     " sc="I"  m="roadSandSet"   su="roadGravel"     du="1.3" ds="0.5" md="0.0" tr="0.48 0.32 0.22 0.7" z="I" />
+<r a="T2-RedOakPark " sc="T"  m="roadSandShore" su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.20 0.13 0.06 0.7" z="FIT" />
+
+<r a="S2-Frenzy     " sc="S"  m="roadSavannah"  su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.40 0.40 0.20 0.8" z="ST" />
+<r a="T6-Sunset     " sc="T"  m="roadStone"     su="roadForest"     du="0.0" ds="0.2" md="0.0" tr="0.30 0.20 0.10 0.7" z="DT" />
+
+<r a="W1-Cross      " sc="W"  m="roadSnow"      su="roadSnow"       du="0.9" ds="0.6" md="0.2" tr="0.60 0.60 0.60 0.5" z="W" />
+<r a="W2-Wet        " sc="W"  m="roadSnowGrn"   su="roadSnow"       du="0.4" ds="0.5" md="0.2" tr="0.30 0.40 0.30 0.8" z="W" />
+<r a="W9-IceFrenzy  " sc="W"  m="roadIce"       su="roadSnow"       du="0.3" ds="0.6" md="0.2" tr="0.60 0.60 0.60 0.5" z="W" />
+
+
+<!-- grass -->
+
+
+<g a="F1-Slippery   " sc="F"  g="gplant1"           c="grClrJungle"    xa="0.98" xb="1.31" ya="0.98" yb="1.14" z="F" />
+
+<g a="A2-PipeCoil   " sc="A"  g="grass10"           c="grClrJungle"    xa="1.58" xb="1.93" ya="1.31" yb="1.55" z="AORV" />
+
+<g a="W5-Circles    " sc="W"  g="grass11w"          c="grClrWinter"    xa="1.41" xb="1.67" ya="1.24" yb="1.58" z="W" />
+
+<g a="W2-Wet        " sc="W"  g="grass11wg"         c="grClrWinter"    xa="1.01" xb="1.49" ya="1.19" yb="1.60" z="FW" />
+<g a="X5-PipeJumps  " sc="X"  g="grass11wg"         c="grClrAustralia" xa="2.42" xb="3.00" ya="1.84" yb="2.68" z="X" />
+
+<g a="C1-Hairpins   " sc="C"  g="grass12o"          c="grClrForest"    xa="1.70" xb="1.93" ya="1.19" yb="1.51" z="ACTV" />
+<g a="S3-Loops      " sc="S"  g="grass12s"          c="grClrForest2"   xa="1.07" xb="2.69" ya="1.03" yb="1.67" z="S" />
+<g a="S5-LoopBasic  " sc="S"  g="grass12w"          c="grClrJungle2"   xa="1.07" xb="2.25" ya="1.03" yb="1.87" z="S" />
+<g a="F3-Snail      " sc="F"  g="grass12y-"         c="grClrForest2"   xa="1.24" xb="1.40" ya="1.18" yb="1.51" z="DFGTV" />
+
+<g a="F17-BadCamber " sc="F"  g="grass15"           c="grClrJungle"    xa="1.82" xb="2.15" ya="1.72" yb="2.15" z="F" />
+<g a="J13-Tropic    " sc="J"  g="grass15g"          c="grClrJungle"    xa="1.07" xb="1.34" ya="1.00" yb="1.80" z="IJ" />
+<g a="O1-Moss       " sc="O"  g="grass15o"          c="grClrJungle"    xa="1.64" xb="2.18" ya="1.49" yb="2.07" z="O" />
+
+<g a="J1-Curly      " sc="J"  g="grass16g"          c="grClrJungle"    xa="1.62" xb="2.00" ya="2.20" yb="3.16" z="FGIJ" />
+<g a="J7-Hilly      " sc="J"  g="grass16r"          c="grClrDesert"    xa="1.43" xb="2.05" ya="1.47" yb="1.98" z="ACJMTV" />
+<g a="S3-Loops      " sc="S"  g="grass16s"          c="grClrForest2"   xa="1.53" xb="2.18" ya="1.38" yb="2.04" z="S" />
+
+<g a="F1-Slippery   " sc="F"  g="grass17"           c="grClrForest"    xa="1.24" xb="1.40" ya="1.18" yb="1.51" z="EFIJMSTV" />
+<g a="A1-StuntPark  " sc="A"  g="grass17r"          c="grClrJungle"    xa="1.55" xb="1.73" ya="1.09" yb="1.25" z="AIRTV" />
+
+<g a="J1-Curly      " sc="J"  g="grass18gw"         c="grClrJungle"    xa="1.63" xb="2.09" ya="1.80" yb="2.91" z="FIJ" />
+<g a="S2-Frenzy     " sc="S"  g="grass18s"          c="grClrDark2"     xa="1.38" xb="1.52" ya="2.28" yb="2.65" z="S" />
+<g a="W1-Cross      " sc="W"  g="grass18w"          c="grClrWinter"    xa="1.11" xb="1.65" ya="1.11" yb="1.62" z="W" />
+<g a="W2-Wet        " sc="W"  g="grass18wg"         c="grClrWinter"    xa="1.35" xb="1.54" ya="1.32" yb="1.96" z="W" />
+
+<g a="F6-Banked     " sc="F"  g="grass19"           c="grClrForest"    xa="1.60" xb="1.80" ya="1.46" yb="1.67" z="ACDEFIMV" />
+
+<g a="S3-Loops      " sc="S"  g="grass2"            c="grClrSavanna"   xa="1.31" xb="1.68" ya="1.58" yb="2.09" z="DFSTV" />
+<g a="S2-Frenzy     " sc="S"  g="grass2g"           c="grClrDesert"    xa="1.25" xb="1.60" ya="1.05" yb="1.91" z="FS" />
+
+<g a="C6-Abyss      " sc="C"  g="grass20"           c="grClrWinter"    xa="1.17" xb="1.35" ya="1.60" yb="1.91" z="ACE" />
+<g a="A1-StuntPark  " sc="A"  g="grass20p"          c="grClrJungle"    xa="1.22" xb="1.44" ya="2.15" yb="2.50" z="AV" />
+
+<g a="J3-Rocky      " sc="J"  g="grass3"            c="grClrJungle"    xa="1.18" xb="1.54" ya="0.98" yb="1.32" z="JW" />
+<g a="J1-Curly      " sc="J"  g="grass3g"           c="grClrSavanna"   xa="1.18" xb="1.54" ya="1.47" yb="2.36" z="FIJ" />
+<g a="O1-Moss       " sc="O"  g="grass3o"           c="grClrJungle2"   xa="0.94" xb="2.02" ya="0.98" yb="2.11" z="O" />
+<g a="S2-Frenzy     " sc="S"  g="grass3s"           c="grClrSavanna"   xa="1.01" xb="1.44" ya="1.13" yb="2.50" z="IS" />
+<g a="G5-Climb      " sc="G"  g="grass3y"           c="grClrJungle"    xa="1.44" xb="1.68" ya="1.47" yb="1.85" z="CDFGIRTV" />
+
+<g a="D14-JumpCrazy " sc="D"  g="grass4v"           c="grClrDesert"    xa="1.82" xb="2.80" ya="1.22" yb="2.26" z="DGIO" />
+
+<g a="D6-HighJumps  " sc="D"  g="grass5"            c="grClrJungle"    xa="1.13" xb="1.44" ya="1.28" yb="1.77" z="DGIJO" />
+
+<g a="A3-Canyon     " sc="A"  g="grass6r"           c="grClrWinter"    xa="0.83" xb="1.06" ya="1.10" yb="1.27" z="AV" />
+<g a="C2-CanyonRun  " sc="C"  g="grass6s"           c="grClrWinter"    xa="1.34" xb="1.73" ya="1.09" yb="1.57" z="ACJMRV" />
+
+<g a="W7-LJs-Mntn   " sc="W"  g="grass7wg"          c="grClrJungle"    xa="1.28" xb="1.57" ya="2.00" yb="2.34" z="W" />
+<g a="W2-Wet        " sc="W"  g="grass7wy"          c="grClrJungle"    xa="1.28" xb="1.62" ya="1.51" yb="2.09" z="W" />
+
+<g a="M3-Mudlake    " sc="M"  g="grass8g"           c="grClrJungle"    xa="1.80" xb="1.93" ya="2.02" yb="2.39" z="CDFMS" />
+
+<g a="F1-Slippery   " sc="F"  g="grass9r"           c="grClrForest"    xa="1.60" xb="1.80" ya="1.46" yb="1.67" z="CFTV" />
+
+<g a="C2-CanyonRun  " sc="C"  g="grassAustralia"    c="grClrAustralia" xa="0.70" xb="1.61" ya="0.56" yb="1.17" z="CTV" />
+<g a="D1-Dunes      " sc="D"  g="grassDesert"       c="grClrDesert"    xa="1.46" xb="1.62" ya="1.13" yb="1.31" z="DFI" />
+<g a="E2-Serpent    " sc="E"  g="grassForest"       c="grClrDark3"     xa="1.43" xb="1.60" ya="1.02" yb="1.22" z="ES" />
+<g a="S4-Hills      " sc="S"  g="grassJungle"       c="grClrForest"    xa="1.58" xb="2.04" ya="1.41" yb="1.94" z="JSV" />
+<g a="D15-CityWall  " sc="D"  g="grassSavanna"      c="grClrJungle"    xa="1.18" xb="1.67" ya="1.79" yb="2.28" z="DIS" />
+<g a="W10-Whirl     " sc="W"  g="grassWinter"       c="grClrWinter"    xa="0.79" xb="1.06" ya="0.43" yb="0.65" z="W" />
+
+<g a="X1-Magic      " sc="X"  g="grassUnidentified" c="grClrSmall"     xa="2.09" xb="2.42" ya="1.60" yb="1.91" z="X" />
+<g a="X4-Pipeline   " sc="X"  g="grassX10b"         c="grClrWinter"    xa="2.80" xb="3.18" ya="3.25" yb="3.69" z="X" />
+<g a="X4-Pipeline   " sc="X"  g="grassX13p"         c="grClrJungle"    xa="2.50" xb="2.84" ya="2.32" yb="2.93" z="X" />
+<g a="X1-Magic      " sc="X"  g="grassXc"           c="grClrWinter"    xa="2.67" xb="3.23" ya="1.96" yb="2.26" z="X" />
+<g a="X6-Wild       " sc="X"  g="grassXv"           c="grClrWinter"    xa="2.86" xb="3.02" ya="2.86" yb="3.20" z="X" />
+
+
+<!-- vegetation -->
+
+
+<v a="D5-LowJumps   " sc="D"  p="cactus"               sa="0.40" sb="0.72"  wx="0.00" wy="0.000"  ab="26.93" z="DIV" />
+
+<v a="S2-Frenzy     " sc="S"  p="farn1"                sa="0.10" sb="0.25"  wx="7.30" wy="0.060"  ab="34.34" z="CDFGIJSV" />
+<v a="J1-Curly      " sc="J"  p="farn2"                sa="0.11" sb="0.30"  wx="7.30" wy="0.060"  ab="34.42" z="FIJSV" />
+
+<v a="J12-Fog       " sc="J"  p="fern"                 sa="0.15" sb="0.25"  wx="7.30" wy="0.060"  ab="30.92" z="FJV" />
+<v a="F17-BadCamber " sc="F"  p="fern2"                sa="0.30" sb="0.44"  wx="0.00" wy="0.000"  ab="29.12" z="EFOV" />
+
+<v a="C1-Hairpins   " sc="C"  p="fir05"                sa="0.04" sb="0.10"  wx="2.80" wy="0.100"  ab="30.72" z="CFM" />
+<v a="W1-Cross      " sc="W"  p="fir05w"               sa="0.04" sb="0.10"  wx="2.80" wy="0.100"  ab="25.44" z="W" />
+
+<v a="F3-Snail      " sc="F"  p="fir06"                sa="0.04" sb="0.12"  wx="1.80" wy="0.100"  ab="27.49" z="CFMW" />
+
+<v a="F7-Blur       " sc="F"  p="fir14"                sa="0.06" sb="0.09"  wx="1.80" wy="0.100"  ab="50.00" z="EFM" />
+
+<v a="A5-TopTwist   " sc="A"  p="gum_tree"             sa="0.34" sb="1.14"  wx="0.80" wy="0.014"  ab="14.34" z="AX" />
+<v a="X6-Wild       " sc="X"  p="gum_tree"             sa="1.45" sb="2.22"  wx="0.30" wy="0.004"  ab="20.48" z="AX" />
+
+<v a="S4-Hills      " sc="S"  p="jungle_tree"          sa="1.61" sb="2.05"  wx="0.40" wy="0.002"  ab="29.26" z="JOSV" />
+
+<v a="D3-Passage    " sc="D"  p="palm"                 sa="1.78" sb="2.74"  wx="0.60" wy="0.010"  ab="15.07" z="DGIJV" />
+
+<v a="D3-Passage    " sc="D"  p="palm2"                sa="2.34" sb="3.31"  wx="0.30" wy="0.115"  ab="30.03" z="DGIJV" />
+
+<v a="V2-Volcanic   " sc="V"  p="palm_plant"           sa="1.68" sb="2.21"  wx="0.06" wy="0.010"  ab="26.07" z="V" />
+
+
+<v a="W1-Cross      " sc="W"  p="pine1_full"           sa="0.72" sb="1.25"  wx="0.12" wy="0.033"  ab="32.49" z="W" />
+<v a="W2-Wet        " sc="W"  p="pine1_half"           sa="0.98" sb="1.20"  wx="0.10" wy="0.017"  ab="11.08" z="W" />
+
+<v a="F1-Slippery   " sc="F"  p="pine1_norm"           sa="0.36" sb="0.55"  wx="0.38" wy="0.010"  ab="37.67" z="CF" />
+<v a="E2-Serpent    " sc="E"  p="pine1_norm"           sa="0.79" sb="1.15"  wx="0.66" wy="0.019"  ab="16.23" z="E" />
+
+<v a="W1-Cross      " sc="W"  p="pine2_tall_full"      sa="0.89" sb="1.26"  wx="0.16" wy="0.027"  ab="25.74" z="W" />
+<v a="W2-Wet        " sc="W"  p="pine2_tall_half"      sa="0.74" sb="0.99"  wx="0.07" wy="0.026"  ab="12.80" z="W" />
+
+<v a="F1-Slippery   " sc="F"  p="pine2_tall_norm"      sa="0.53" sb="0.81"  wx="0.75" wy="0.010"  ab="26.62" z="FM" />
+<v a="E1-Lakes      " sc="E"  p="pine2_tall_norm"      sa="1.11" sb="1.78"  wx="0.41" wy="0.018"  ab="21.17" z="E" />
+<v a="C5-Obstacles  " sc="C"  p="pine2_tall_norm"      sa="0.46" sb="0.68"  wx="1.80" wy="0.100"  ab="18.62" z="C" />
+
+<v a="W7-LJs-Mntn   " sc="W"  p="pine3_fat_full"       sa="0.68" sb="1.06"  wx="0.21" wy="0.022"  ab="28.59" z="W" />
+<v a="W2-Wet        " sc="W"  p="pine3_fat_half"       sa="1.05" sb="1.51"  wx="0.07" wy="0.017"  ab=" 7.54" z="W" />
+
+<v a="F12-HighPeaks " sc="F"  p="pine3_fat_norm"       sa="0.57" sb="1.10"  wx="0.81" wy="0.018"  ab="50.00" z="EFV" />
+
+
+<v a="F8-Stain      " sc="F"  p="plant1"               sa="0.08" sb="0.15"  wx="1.80" wy="0.100"  ab="50.00" z="F" />
+
+<v a="J1-Curly      " sc="J"  p="plant_tropical"       sa="1.51" sb="1.89"  wx="0.06" wy="0.015"  ab="27.49" z="IJO" />
+
+<v a="J1-Curly      " sc="J"  p="rock.05"              sa="0.15" sb="0.22"  wx="0.00" wy="0.000"  ab="28.37" z="ACDFIJMST" />
+<v a="W4-IceSlip    " sc="W"  p="rock.05w"             sa="0.03" sb="0.15"  wx="0.00" wy="0.000"  ab="40.00" z="W" />
+
+<v a="S3-Loops      " sc="S"  p="rock.07"              sa="0.03" sb="0.21"  wx="0.00" wy="0.000"  ab="50.00" z="ACDFIJMOS" />
+<v a="W2-Wet        " sc="W"  p="rock.07w"             sa="0.04" sb="0.14"  wx="0.00" wy="0.000"  ab="44.88" z="W" />
+
+<v a="M2-Bumps      " sc="M"  p="rock"                 sa="0.74" sb="1.10"  wx="0.00" wy="0.000"  ab="34.34" z="CEFMORTVWX" />
+
+<v a="F3-Snail      " sc="F"  p="rock_B01"             sa="0.75" sb="1.26"  wx="0.00" wy="0.000"  ab="25.14" z="F" />
+<v a="F1-Slippery   " sc="F"  p="rock_B02"             sa="0.51" sb="1.07"  wx="0.00" wy="0.000"  ab="19.70" z="F" />
+<v a="E2-Serpent    " sc="E"  p="rock_B03"             sa="0.71" sb="1.27"  wx="0.00" wy="0.000"  ab="37.74" z="E" />
+
+<v a="V6-Crematoria " sc="V"  p="rock_G01"             sa="1.39" sb="1.76"  wx="0.00" wy="0.000"  ab="58.66" z="V" />
+<v a="V6-Crematoria " sc="V"  p="rock_G02"             sa="1.29" sb="2.37"  wx="0.00" wy="0.000"  ab="56.03" z="V" />
+
+<v a="R1-Mars       " sc="R"  p="rock_R2"              sa="0.77" sb="1.25"  wx="0.70" wy="0.010"  ab="30.41" z="R" />
+
+<v a="R1-Mars       " sc="R"  p="rock_R3"              sa="1.23" sb="1.61"  wx="0.60" wy="0.010"  ab="36.70" z="RV" />
+<v a="X5-PipeJumps  " sc="X"  p="rock_R3"              sa="1.73" sb="2.39"  wx="0.00" wy="0.000"  ab="41.11" z="X" />
+
+<v a="R1-Mars       " sc="R"  p="rock_R4"              sa="1.16" sb="1.89"  wx="0.27" wy="0.012"  ab="38.10" z="RV" />
+<v a="V7-Radioactive" sc="V"  p="rock_R4r"             sa="0.92" sb="1.40"  wx="7.30" wy="0.060"  ab="30.00" z="V" />
+<v a="R1-Mars       " sc="R"  p="rock_R5"              sa="0.97" sb="1.67"  wx="0.23" wy="0.015"  ab="26.75" z="CRV" />
+<v a="R1-Mars       " sc="R"  p="rock_R5f"             sa="1.90" sb="2.42"  wx="0.00" wy="0.000"  ab="33.65" z="R" />
+
+<v a="W5-Circles    " sc="W"  p="rock_W02"             sa="1.11" sb="2.03"  wx="0.05" wy="0.007"  ab="25.19" z="W" />
+<v a="W5-Circles    " sc="W"  p="rock_W03"             sa="1.21" sb="2.41"  wx="0.00" wy="0.000"  ab="50.00" z="W" />
+
+<v a="S2-Frenzy     " sc="S"  p="rock_Y01"             sa="0.79" sb="1.24"  wx="0.00" wy="0.000"  ab="46.00" z="DFGS" />
+<v a="D1-Dunes      " sc="D"  p="rock_Y02"             sa="0.79" sb="1.34"  wx="7.30" wy="0.060"  ab="11.92" z="CDFSV" />
+<v a="S3-Loops      " sc="S"  p="rock_Y03"             sa="0.84" sb="1.87"  wx="0.00" wy="0.000"  ab="50.00" z="CDFGS" />
+
+
+<v a="W1-Cross      " sc="W"  p="rock_n1-W"            sa="0.80" sb="1.80"  wx="0.00" wy="0.000"  ab="43.49" z="W" />
+<v a="X4-Pipeline   " sc="X"  p="rock_n1-W"            sa="2.23" sb="3.05"  wx="0.60" wy="0.010"  ab="28.86" z="X" />
+
+<v a="G2-Coast      " sc="G"  p="rock_n2-GYel"         sa="0.71" sb="1.26"  wx="0.00" wy="0.000"  ab="20.76" z="DGISV" />
+<v a="J22-Knotted   " sc="J"  p="rock_n2"              sa="0.51" sb="1.10"  wx="0.00" wy="0.000"  ab="36.41" z="IJV" />
+
+<v a="F1-Slippery   " sc="F"  p="rock_n3r"             sa="0.55" sb="0.96"  wx="0.00" wy="0.000"  ab="22.09" z="FIOV" />
+
+<v a="W2-Wet        " sc="W"  p="rock_n4r-W"           sa="0.90" sb="1.59"  wx="0.00" wy="0.000"  ab="23.10" z="W" />
+<v a="X5-PipeJumps  " sc="X"  p="rock_n4r-W"           sa="1.66" sb="2.25"  wx="0.00" wy="0.000"  ab="16.00" z="X" />
+
+<v a="W5-Circles    " sc="W"  p="rock_n5v-W"           sa="0.82" sb="1.34"  wx="0.00" wy="0.000"  ab="50.00" z="W" />
+<v a="X4-Pipeline   " sc="X"  p="rock_n5v-W"           sa="1.05" sb="1.43"  wx="0.00" wy="0.000"  ab="15.33" z="X" />
+
+
+<v a="X2-Swirl      " sc="X"  p="shroom1_1"            sa="2.06" sb="4.00"  wx="7.30" wy="0.060"  ab="48.86" z="X" />
+
+<v a="F1-Slippery   " sc="F"  p="shroom1_2"            sa="0.15" sb="0.25"  wx="0.00" wy="0.000"  ab="21.14" z="F" />
+<v a="X4-Pipeline   " sc="X"  p="shroom1_2"            sa="1.90" sb="3.18"  wx="0.00" wy="0.000"  ab="21.69" z="X" />
+
+<v a="X3-Cloud      " sc="X"  p="shroom1_3"            sa="2.06" sb="4.00"  wx="0.00" wy="0.000"  ab="44.13" z="X" />
+<v a="X2-Swirl      " sc="X"  p="shroom2_1"            sa="1.43" sb="4.00"  wx="0.00" wy="0.000"  ab="39.74" z="X" />
+
+<v a="F6-Banked     " sc="F"  p="shroom2_2"            sa="0.32" sb="0.49"  wx="0.00" wy="0.000"  ab="32.73" z="F" />
+<v a="X2-Swirl      " sc="X"  p="shroom2_2"            sa="3.23" sb="4.00"  wx="0.00" wy="0.000"  ab="29.03" z="X" />
+
+<v a="F3-Snail      " sc="F"  p="shroom2_3"            sa="0.20" sb="0.30"  wx="0.00" wy="0.000"  ab="21.33" z="F" />
+<v a="X1-Magic      " sc="X"  p="shroom2_3"            sa="1.43" sb="4.00"  wx="0.00" wy="0.000"  ab="25.56" z="X" />
+
+
+<v a="J11-Temple    " sc="J"  p="tree.07"              sa="0.85" sb="1.15"  wx="0.70" wy="0.010"  ab="38.53" z="ADIJSV" />
+<v a="J14-Muddy     " sc="J"  p="tree.07"              sa="2.45" sb="3.15"  wx="0.30" wy="0.004"  ab="38.18" z="ADIJSV" />
+<v a="J1-Curly      " sc="J"  p="tree.09"              sa="0.85" sb="1.15"  wx="0.60" wy="0.010"  ab="29.94" z="ADFIJS" />
+
+<v a="T3-Orange     " sc="T"  p="treeAO-25oakWMed"     sa="0.81" sb="1.48"  wx="0.60" wy="0.010"  ab="15.96" z="T" />
+<v a="T3-Orange     " sc="T"  p="treeAOG-17birTall"    sa="1.18" sb="1.64"  wx="0.60" wy="0.010"  ab="40.79" z="T" />
+<v a="T2-RedOakPark " sc="T"  p="treeAOY-27mplMed"     sa="0.92" sb="1.22"  wx="0.70" wy="0.010"  ab="38.44" z="T" />
+<v a="T2-RedOakPark " sc="T"  p="treeAR-26oakWide"     sa="1.18" sb="1.64"  wx="0.60" wy="0.010"  ab="24.72" z="T" />
+<v a="T2-RedOakPark " sc="T"  p="treeARk-12oakSm"      sa="1.27" sb="1.62"  wx="0.70" wy="0.010"  ab="21.33" z="T" />
+
+<v a="T4-Scary      " sc="T"  p="treeAW-14LLHuge7k"    sa="1.83" sb="3.00"  wx="0.70" wy="0.010"  ab="19.27" z="T" />
+<v a="T1-Autumn     " sc="T"  p="treeAY-11aspTallMed"  sa="1.58" sb="2.03"  wx="0.22" wy="0.010"  ab="19.45" z="T" />
+<v a="T1-Autumn     " sc="T"  p="treeAY-20mplWide"     sa="1.20" sb="1.42"  wx="0.70" wy="0.010"  ab="14.49" z="T" />
+<v a="T4-Scary      " sc="T"  p="treeAY-28aspTallEmp"  sa="1.90" sb="2.58"  wx="0.60" wy="0.010"  ab="21.91" z="T" />
+<v a="T1-Autumn     " sc="T"  p="treeAYG-16birTallUp"  sa="1.14" sb="1.67"  wx="0.60" wy="0.010"  ab="20.95" z="T" />
+<v a="T6-Sunset     " sc="T"  p="treeAYO-18mplTall"    sa="1.53" sb="2.29"  wx="0.70" wy="0.010"  ab="20.57" z="T" />
+
+<v a="D14-JumpCrazy " sc="D"  p="treeD-22desMed"       sa="1.30" sb="1.58"  wx="0.32" wy="0.005"  ab="26.84" z="ADGI" />
+<v a="D6-HighJumps  " sc="D"  p="treeD-34desTiny"      sa="1.22" sb="1.51"  wx="0.13" wy="0.005"  ab="25.77" z="ADGIV" />
+
+<v a="E2-Serpent    " sc="E"  p="treeG-16birTallUp"    sa="0.97" sb="1.48"  wx="0.69" wy="0.046"  ab="21.01" z="E" />
+<v a="F15-ForestTrip" sc="F"  p="treeG-17birTall"      sa="0.94" sb="1.42"  wx="0.00" wy="0.000"  ab="16.03" z="EF" />
+<v a="E1-Lakes      " sc="E"  p="treeG-17birTall"      sa="1.51" sb="2.49"  wx="0.18" wy="0.036"  ab="21.69" z="EF" />
+
+<v a="O1-Moss       " sc="O"  p="treeGC-29aspDnSwp"    sa="0.81" sb="1.61"  wx="0.60" wy="0.010"  ab="30.63" z="O" />
+<v a="D2-Mntn       " sc="D"  p="treeGC-32draUp"       sa="1.05" sb="1.29"  wx="0.06" wy="0.002"  ab="11.22" z="ADG" />
+<v a="G2-Coast      " sc="G"  p="treeGG-37acaTall"     sa="0.90" sb="1.33"  wx="0.33" wy="0.040"  ab="40.00" z="FGO" />
+<v a="G1-Long       " sc="G"  p="treeGW-41aspMid"      sa="1.15" sb="1.67"  wx="0.43" wy="0.010"  ab="11.93" z="G" />
+<v a="O1-Moss       " sc="O"  p="treeGY-36aspMed"      sa="0.92" sb="1.22"  wx="0.70" wy="0.010"  ab="30.63" z="O" />
+</presets>

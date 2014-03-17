@@ -70,14 +70,6 @@ void App::createScene()  // once, init
 	Ogre::Timer ti;
 
 
-	///  _Tool_ tex ..........................
-	//  (remove alpha channel for ter tex prv img)
-	#if 0
-	gui->ToolTexAlpha();
-	exit(0);
-	#endif
-
-
 	//  data load xml
 	scn->data->Load();
 	scn->sc->pFluidsXml = scn->data->fluids;
@@ -85,8 +77,6 @@ void App::createScene()  // once, init
 	//  surfaces.cfg
 	LoadAllSurfaces();
 	
-	// TODO: ter/road layer  presets.xml
-
 	LogO(String("::: Time load xmls: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 
 
@@ -112,10 +102,6 @@ void App::createScene()  // once, init
 	///  _Tool_ presets  .......
 	#if 0
 	gui->ToolPresets();
-	exit(0);
-	#endif
-	#if 0
-	gui->ToolPresetsChk();
 	exit(0);
 	#endif
 

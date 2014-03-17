@@ -58,7 +58,7 @@ public:
 	
 	//  _Tools_
 	void ToolTexAlpha(), ToolSceneXml(), ToolSceneryID(),
-		ToolTracksWarnings(), ToolBrushesPrv(), ToolPresets(), ToolPresetsChk();
+		ToolTracksWarnings(), ToolBrushesPrv(), ToolPresets();
 
 
 	//  tool windows texts

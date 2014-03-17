@@ -7,38 +7,13 @@ using Ogre::String;
 #include "FluidsXml.h"
 #include "BltObjects.h"
 #include "TracksXml.h"
-#ifndef SR_EDITOR
+#ifdef SR_EDITOR
+#include "SceneXml.h"
+#else
 #include "../../ChampsXml.h"
 #include "../../ChallengesXml.h"
 #endif
 
-CData::CData()
-{
-	fluids = new FluidsXml();
-	objs = new BltObjects();
-
-	tracks = new TracksXml();
-	cars = new CarsXml();
-
-	#ifndef SR_EDITOR
-	champs = new ChampsXml();
-	chall = new ChallXml();
-	#endif
-}
-
-CData::~CData()
-{
-	delete fluids;
-	delete objs;
-
-	delete tracks;
-	delete cars;
-
-	#ifndef SR_EDITOR
-	delete champs;
-	delete chall;
-	#endif
-}
 
 void CData::Load()
 {
@@ -52,10 +27,49 @@ void CData::Load()
 	tracks->LoadIni(path + "/tracks.ini");
 	cars->LoadXml(path + "/cars.xml");
 
-	#ifndef SR_EDITOR
-	champs->LoadXml(path + "/championships.xml", tracks);
-	LogO(String("**** Loaded Championships: ") + toStr(champs->all.size()));
-	chall->LoadXml(path + "/challenges.xml", tracks);
-	LogO(String("**** Loaded Challenges: ") + toStr(chall->all.size()));
+	#ifdef SR_EDITOR
+		pre->LoadXml(path + "/presets.xml");
+		LogO(String("**** Loaded Presets  ter: ") + toStr(pre->ter.size())+
+			"  road: " + toStr(pre->rd.size()) +
+			"  grass: " + toStr(pre->gr.size()) +
+			"  veget: " + toStr(pre->veg.size()) );
+	#else
+		champs->LoadXml(path + "/championships.xml", tracks);
+		LogO(String("**** Loaded Championships: ") + toStr(champs->all.size()));
+
+		chall->LoadXml(path + "/challenges.xml", tracks);
+		LogO(String("**** Loaded Challenges: ") + toStr(chall->all.size()));
+	#endif
+}
+
+CData::CData()
+{
+	fluids = new FluidsXml();
+	objs = new BltObjects();
+
+	tracks = new TracksXml();
+	cars = new CarsXml();
+
+	#ifdef SR_EDITOR
+		pre = new Presets();
+	#else
+		champs = new ChampsXml();
+		chall = new ChallXml();
+	#endif
+}
+
+CData::~CData()
+{
+	delete fluids;
+	delete objs;
+
+	delete tracks;
+	delete cars;
+
+	#ifdef SR_EDITOR
+		delete pre;
+	#else
+		delete champs;
+		delete chall;
 	#endif
 }

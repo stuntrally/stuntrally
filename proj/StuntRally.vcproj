@@ -1803,6 +1803,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\ogre\common\data\SceneXml_Load.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\ogre\common\data\TracksXml.cpp"
 					>
 				</File>

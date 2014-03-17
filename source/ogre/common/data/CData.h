@@ -6,9 +6,11 @@ class BltObjects;
 class TracksXml;
 class CarsXml;
 
-#ifndef SR_EDITOR
-class ChampsXml;
-class ChallXml;
+#ifdef SR_EDITOR
+	class Presets;
+#else
+	class ChampsXml;
+	class ChallXml;
 #endif
 
 
@@ -26,9 +28,11 @@ public:
 	TracksXml* tracks;  // tracks.ini info for Gui
 	CarsXml* cars;		// cars info for Gui
 	//UserXml* user;
-
-	#ifndef SR_EDITOR
-	ChampsXml* champs;  //ProgressXml progress[2];
-	ChallXml* chall;  //ProgressLXml progressL[2];
+	
+	#ifdef SR_EDITOR	// ed only
+		Presets* pre;
+	#else				// game only
+		ChampsXml* champs;  //ProgressXml progress[2];
+		ChallXml* chall;  //ProgressLXml progressL[2];
 	#endif
 };
