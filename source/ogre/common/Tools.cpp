@@ -26,7 +26,6 @@ using namespace std;
 #ifdef SR_EDITOR
 
 //--------  Editor Tools  --------
-///........................................................................................................
 
 ///  _Tool_ tex ..........................
 //  (split 1 rgba terrain texture to 2, 1st rgb and 2nd with alpha in red)
@@ -72,11 +71,79 @@ void CGui::ToolTexAlpha()
 }
 
 
-///  _Tool_ scene ......................................................
-///  check/resave all tracks scene.xml 
-void CGui::ToolSceneXml()
+///  _Tool_	Warnings  ......................................................
+///  check all tracks for warnings
+///  Warning: takes about 16 sec
+void CGui::ToolTracksWarnings()
 {
 	Ogre::Timer ti;
+	LogO("ALL tracks warnings ---------\n");
+	logWarn = true;
+
+	for (int i=0; i < data->tracks->trks.size(); ++i)
+	{	//  foreach track
+		string trk = data->tracks->trks[i].name, path = gcom->pathTrk[0] +"/"+ trk +"/";
+		/**/if (!(trk[0] >= 'A' && trk[0] <= 'Z'))  continue;
+		/**/if (StringUtil::startsWith(trk,"test"))  continue;
+
+		Scene sc;  sc.LoadXml(path +"scene.xml");
+		SplineRoad rd(app);  rd.LoadFile(path +"road.xml");
+		app->LoadStartPos(path, true);  // uses App vars-
+		
+		LogO("Track: "+trk);
+		WarningsCheck(&sc,&rd);
+	}
+	LogO(String("::: Time ALL tracks: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+	LogO("ALL tracks warnings ---------");
+}
+
+
+///  _Tool_ brushes prv  ......................................................
+//  update all Brushes png
+void CGui::ToolBrushesPrv()
+{
+	Image im;
+	for (int i=0; i < app->brSetsNum; ++i)
+	{
+		app->SetBrushPreset(i);
+		app->brushPrvTex->convertToImage(im);
+		im.save("data/editor/brush"+toStr(i)+".png");
+		// todo: ?brush presets in xml, auto upd prvs-
+	}
+
+	#if 1
+	///---- combine all images into one ----
+	const int ii = 86;
+	Image ir;  ir.load("brushes-e.png","General");
+	for (int i=0; i <= ii; ++i)
+	{
+		String s = "brush" + toStr(i) + ".png";
+		im.load(s,"General");
+
+		PixelBox pb = im.getPixelBox();
+		int xx = pb.getWidth(), yy = pb.getHeight();
+		
+		//void * pb.data
+		int a = (i%16)*128, b = (i/16)*128;
+		register int x,y;  ColourValue c;
+		for (y = 0; y < yy; ++y)
+		for (x = 0; x < xx; ++x)
+		{
+			c = im.getColourAt(x,y,0);
+			ir.setColourAt(c,a+x,b+y,0);
+		}
+	}
+	ir.save("brushes.png");
+	#endif
+}
+
+
+///  _Tool_ scene
+///  check/resave all tracks scene.xml 
+///............................................................................................................................
+void CGui::ToolSceneXml()
+{
+	//Ogre::Timer ti;
 	LogO("ALL tracks scene ---------");
 	std::map<string, int> noCol,minSc;
 	ResourceGroupManager& rg = ResourceGroupManager::getSingleton();
@@ -86,10 +153,12 @@ void CGui::ToolSceneXml()
 	{	//  foreach track
 		string trk = data->tracks->trks[i].name, path = gcom->pathTrk[0] +"/"+ trk +"/";
 		Scene sc;  sc.LoadXml(path +"scene.xml");
+		SplineRoad rd(app);  rd.LoadFile(path +"road.xml");
 
 		int l = 17-trk.length();  // align
 		for (n=0; n < l; ++n)  trk += " ";
 
+		///  terrain
 		#if 0  // used
 		for (n=0; n < sc.td.layers.size(); ++n)
 		{	const TerLayer& l = sc.td.layersAll[sc.td.layers[n]];
@@ -102,8 +171,37 @@ void CGui::ToolSceneXml()
 
 			if (!l.texNorm.empty() && !rg.resourceExistsInAnyGroup(l.texNorm))
 				LogO("Ter: " + trk + " Not Found !!!  " + l.texNorm);
+				
+			//if (!l.texFile.empty() && l.surfName == "Default")
+			//	LogO("Ter: " + trk + " Default surface !!!  " + l.texFile);
+		}
+		
+		///  road
+		for (n=0; n < MTRs; ++n)
+		{
+			String s = rd.sMtrRoad[n];
+			if (!s.empty() && cmbRoadMtr[0]->findItemIndexWith(s) == MyGUI::ITEM_NONE)
+				LogO("Road: " + trk + " Not Found !!!  " + s);
+
+			s = rd.sMtrPipe[n];
+			if (!s.empty() && cmbRoadMtr[0]->findItemIndexWith(s) == MyGUI::ITEM_NONE)
+				LogO("Road: " + trk + " Not Found !!!  " + s);
+
+			//sMtrWall,sMtrWallPipe, sMtrCol
+			//sc.td.layerRoad
+		}
+		
+		///  grass
+		for (n=0; n < Scene::ciNumGrLay; ++n)
+		{	const SGrassLayer& l = sc.grLayersAll[n];
+
+			String s = l.material;
+			if (!s.empty() && l.on &&
+				cmbGrassMtr->findItemIndexWith(s) == MyGUI::ITEM_NONE)
+				LogO("Grs: " + trk + " Not Found !!!  " + s);
 		}
 
+		///  veget
 		for (n=0; n < Scene::ciNumPgLay; ++n)
 		{
 			const PagedLayer& l = sc.pgLayersAll[n];
@@ -141,13 +239,14 @@ void CGui::ToolSceneXml()
 		//rd.SaveFile(path+"road1.xml");  // resave
 	}
 	
-	LogO(String("::: Time ALL tracks: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+	//LogO(String("::: Time ALL tracks: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 	LogO("ALL tracks scene ---------");
 	exit(0);
 }
 
 
-///  _Tool_ sceneryID and difference ......................................................
+///  _Tool_ sceneryID and difference
+///............................................................................................................................
 bool SortT0 (const TrkL& t2, const TrkL& t1){  return t1.name < t2.name;  }
 
 float clrD(Vector3 sc, Vector3 si)
@@ -227,74 +326,6 @@ void CGui::ToolSceneryID()
 		LogO(s.str());
 	}
 	LogO("ALL tracks ---------");
-}
-
-
-///  _Tool_	Warnings ......................................................
-///  check all tracks for warnings
-///  Warning: takes about 16 sec
-void CGui::ToolTracksWarnings()
-{
-	Ogre::Timer ti;
-	LogO("ALL tracks warnings ---------\n");
-	logWarn = true;
-
-	for (int i=0; i < data->tracks->trks.size(); ++i)
-	{	//  foreach track
-		string trk = data->tracks->trks[i].name, path = gcom->pathTrk[0] +"/"+ trk +"/";
-		/**/if (!(trk[0] >= 'A' && trk[0] <= 'Z'))  continue;
-		/**/if (StringUtil::startsWith(trk,"test"))  continue;
-
-		Scene sc;  sc.LoadXml(path +"scene.xml");
-		SplineRoad rd(app);  rd.LoadFile(path +"road.xml");
-		app->LoadStartPos(path, true);  // uses App vars-
-		
-		LogO("Track: "+trk);
-		WarningsCheck(&sc,&rd);
-	}
-	LogO(String("::: Time ALL tracks: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
-	LogO("ALL tracks warnings ---------");
-}
-
-
-///  _Tool_ brushes prv ......................................................
-//  update all Brushes png
-void CGui::ToolBrushesPrv()
-{
-	Image im;
-	for (int i=0; i < app->brSetsNum; ++i)
-	{
-		app->SetBrushPreset(i);
-		app->brushPrvTex->convertToImage(im);
-		im.save("data/editor/brush"+toStr(i)+".png");
-		// todo: ?brush presets in xml, auto upd prvs-
-	}
-
-	#if 1
-	///---- combine all images into one ----
-	const int ii = 86;
-	Image ir;  ir.load("brushes-e.png","General");
-	for (int i=0; i <= ii; ++i)
-	{
-		String s = "brush" + toStr(i) + ".png";
-		im.load(s,"General");
-
-		PixelBox pb = im.getPixelBox();
-		int xx = pb.getWidth(), yy = pb.getHeight();
-		
-		//void * pb.data
-		int a = (i%16)*128, b = (i/16)*128;
-		register int x,y;  ColourValue c;
-		for (y = 0; y < yy; ++y)
-		for (x = 0; x < xx; ++x)
-		{
-			c = im.getColourAt(x,y,0);
-			ir.setColourAt(c,a+x,b+y,0);
-		}
-	}
-	ir.save("brushes.png");
-	//exit(0);
-	#endif
 }
 
 #else
@@ -680,10 +711,10 @@ void CGui::ToolPresets()
 }
 
 
-///  _Tool_ check presets ......................................................
+///  _Tool_ check presets  ......................................................
 void CGui::ToolPresetsChk()
 {
-
+	// tex not in preset ..
 }
 
 #endif

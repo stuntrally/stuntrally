@@ -35,6 +35,7 @@ struct TerLayer		// terrain texture layer
 };
 
 
+//  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 class TerData		///  Terrain
 {
 public:	
@@ -102,6 +103,42 @@ public:
 };
 
 
+///  Presets xml  with common params setup
+//  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+class Presets
+{
+	// ter
+	struct Pter
+	{
+	};
+	std::vector<Pter> ter;
+	std::map<std::string, int> iter;
+	
+	// road
+	struct Proad
+	{
+	};
+	std::vector<Proad> rd;
+	std::map<std::string, int> ird;
+	
+	// grass
+	struct Pgrass
+	{
+		float minSx,minSy, maxSx,maxSy;  // sizes
+		Ogre::String /*material,*/ colorMap;
+	};
+	std::vector<Pgrass> gr;
+	std::map<std::string, int> igr;
+	
+	// veget
+	struct Pveget
+	{
+	};
+	std::vector<Pveget> veg;
+	std::map<std::string, int> iveg;
+};
+
+
 class FluidBox		/// fluid box shape - water, mud, etc.
 {
 public:
@@ -135,7 +172,9 @@ public:
 };
 
 
-class Scene		///  Scene  . . . . . . .
+///  Scene setup xml
+//  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+class Scene
 {
 public:
 	//  sky
