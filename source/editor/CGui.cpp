@@ -25,7 +25,6 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	, idTerLay(0),bTerLay(1)
 	,bTexNormAuto(1), bDebugBlend(0), dbgLclr(0)
 	,bRn1(0),bRn2(0)
-	,edTerErrorNorm(0)
 	// ter particles
 	,edLDust(0),edLDustS(0)
 	,edLMud(0),edLSmoke(0), edLTrlClr(0)

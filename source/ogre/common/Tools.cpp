@@ -19,6 +19,7 @@
 #endif
 #include <OgreTimer.h>
 #include <OgreResourceGroupManager.h>
+#include <MyGUI_ComboBox.h>
 using namespace Ogre;
 using namespace std;
 

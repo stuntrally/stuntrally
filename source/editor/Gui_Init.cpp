@@ -242,12 +242,12 @@ void CGui::InitGui()
 	//------------------------------------------------------------------------
 	imgTexDiff = fImg("TerImgDiff");
 	Tab(tabsHmap, "TabHMapSize", tabHmap);
-	Ed(TerErrorNorm, editTerErrorNorm);
-	Ed(TerNormScale, editTerNormScale);
+	sv= &svTerErrorNorm;  sv->Init("TerErrorNorm", &sc->td.errorNorm,  1.5f,15.f, 1.5f,1,3);  sv->DefaultF(3.f);  Sev(TerErrorNorm);
+	sv= &svTerNormScale;  sv->Init("TerNormScale", &sc->td.normScale,  0.f,2.f,   1.f, 1,3);  sv->DefaultF(1.f);  Sev(TerNormScale);
 
 	Btn("TerrainNew", btnTerrainNew);
-	Btn("TerrainGenAdd", btnTerGenerate);  Btn("TerrainGenSub", btnTerGenerate);   Btn("TerrainGenMul", btnTerGenerate);
-	Btn("TerrainHalf", btnTerrainHalf);  Btn("TerrainDouble", btnTerrainDouble);  Btn("TerrainMove", btnTerrainMove);
+	Btn("TerrainGenAdd", btnTerGenerate);  Btn("TerrainGenSub", btnTerGenerate);    Btn("TerrainGenMul", btnTerGenerate);
+	Btn("TerrainHalf",   btnTerrainHalf);  Btn("TerrainDouble", btnTerrainDouble);  Btn("TerrainMove",   btnTerrainMove);
 
 
 	///  generator  . . . . . . .

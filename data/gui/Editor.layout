@@ -1529,10 +1529,13 @@
 							<Property key="TextColour" value="0.6 0.7 0.5"/>
 							<UserString key="tip" value="#{TipTerErrorNorm}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="168 173 56 24" name="TerErrorNorm">
+						<Widget type="EditBox" skin="EditBox" position="168 173 56 24" name="TerErrorNormEdit">
 							<Property key="Colour" value="0.6 0.7 0.5"/>
 							<Property key="TextColour" value="0.8 0.9 0.7"/>
 							<UserString key="tip" value="#{TipTerErrorNorm}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="232 176 300 16" name="TerErrorNorm">
+							<Property key="Colour" value="0.8 0.9 0.7"/>
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="32 208 140 24">
@@ -1540,9 +1543,12 @@
 							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<UserString key="tip" value="#{TipTerErrorNorm}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="168 203 56 24" name="TerNormScale">
+						<Widget type="EditBox" skin="EditBox" position="168 203 56 24" name="TerNormScaleEdit">
 							<Property key="Colour" value="0.5 0.6 0.7"/>
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="232 206 300 16" name="TerNormScale">
+							<Property key="Colour" value="0.7 0.8 0.9"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 750 342">

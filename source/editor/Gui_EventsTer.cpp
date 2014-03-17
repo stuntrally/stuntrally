@@ -153,16 +153,14 @@ void CGui::tabHmap(Tab, size_t)
 	UpdTxtTerSize();
 }
 
-void CGui::editTerErrorNorm(Ed ed)
+void CGui::slTerErrorNorm(SV*sv)
 {
-	Real r = std::max(0.f, s2r(ed->getCaption()) );
-	sc->td.errorNorm = r;  scn->UpdTerErr();
+	scn->UpdTerErr();
 }
 
-void CGui::editTerNormScale(Ed ed)
+void CGui::slTerNormScale(SV*sv)
 {
-	Real r = s2r(ed->getCaption());
-	sc->td.normScale = r;  //upd ter mtr par..
+	//upd ter mtr par..
 }
 
 
