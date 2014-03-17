@@ -548,27 +548,27 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(O):  gui->GuiShortcut(WND_Track, 2);  return true;  // O Tools
 		case key(J):  gui->GuiShortcut(WND_Track, 4);  return true;  // J Warnings
 
-		case key(S):  gui->GuiShortcut(WND_Edit, 1);  return true;  // S Sun
-		case key(H):  gui->GuiShortcut(WND_Edit, 2);  return true;  // H Heightmap
-		 case key(D): gui->GuiShortcut(WND_Edit, 2,1);  return true;  //  D -Brushes
+		case key(S):  gui->GuiShortcut(WND_Edit, TAB_Sun);       return true;  // S Sun
+		case key(H):  gui->GuiShortcut(WND_Edit, TAB_Terrain);   return true;  // H Heightmap
+		 case key(D): gui->GuiShortcut(WND_Edit, TAB_Terrain,1); return true;  //  D -Brushes
 
-		case key(T):  gui->GuiShortcut(WND_Edit, 3);  return true;  // T Layers (Terrain)
-		 case key(B): gui->GuiShortcut(WND_Edit, 3,0);  return true;  //  B -Blendmap
-		 case key(P): gui->GuiShortcut(WND_Edit, 3,1);  return true;  //  P -Particles
-		 case key(U): gui->GuiShortcut(WND_Edit, 3,2);  return true;  //  U -Surfaces
+		case key(T):  gui->GuiShortcut(WND_Edit, TAB_Layers);    return true;  // T Layers (Terrain)
+		 case key(B): gui->GuiShortcut(WND_Edit, TAB_Layers,0);  return true;  //  B -Blendmap
+		 case key(P): gui->GuiShortcut(WND_Edit, TAB_Layers,1);  return true;  //  P -Particles
 
-		case key(G):  gui->GuiShortcut(WND_Edit, 4);  return true;  // G Grasses
-		 case key(F):  gui->GuiShortcut(WND_Edit, 4,2);  return true;  // F -Channels
-		case key(V):  gui->GuiShortcut(WND_Edit, 5);  return true;  // V Vegetation
-		 case key(M): gui->GuiShortcut(WND_Edit, 5,1);  return true;  //  M -Models
+		case key(G):  gui->GuiShortcut(WND_Edit, TAB_Grass);     return true;  // G Grasses
+		 case key(F): gui->GuiShortcut(WND_Edit, TAB_Grass,2);   return true;  //  F -Channels
+		case key(V):  gui->GuiShortcut(WND_Edit, TAB_Veget);     return true;  // V Vegetation
+		 case key(M): gui->GuiShortcut(WND_Edit, TAB_Veget,1);   return true;  //  M -Models
 
-		case key(R):  gui->GuiShortcut(WND_Edit, 6);  return true;  // R Road
-		case key(X):  gui->GuiShortcut(WND_Edit, 7);  return true;  // X Objects
+		case key(U):  gui->GuiShortcut(WND_Edit, TAB_Surface);   return true;  // U Surfaces
+		case key(R):  gui->GuiShortcut(WND_Edit, TAB_Road);      return true;  // R Road
+		case key(X):  gui->GuiShortcut(WND_Edit, TAB_Objects);   return true;  // X Objects
 
 		case key(C):  gui->GuiShortcut(WND_Options, 1);		return true;  // C Screen
 		//case key(N):  gui->GuiShortcut(WND_Options, 1,1);	return true;  // N --Vegetation !
-		case key(E):  gui->GuiShortcut(WND_Options, 2);    return true;  // E View /Settings
-		case key(K):  gui->GuiShortcut(WND_Options, 2,3);  return true;  // K -Tweak
+		case key(E):  gui->GuiShortcut(WND_Options, 2);     return true;  // E View /Settings
+		case key(K):  gui->GuiShortcut(WND_Options, 2,3);   return true;  // K -Tweak
 		
 		case key(I):  gui->GuiShortcut(WND_Help, 1);  return true;  // I Input/help
 	}

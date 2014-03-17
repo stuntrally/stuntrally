@@ -166,7 +166,7 @@ void TerData::Default()
 {
 	iVertsX = 512*2 +1;
 	fTriangleSize = 1.f;  // scale
-	triplanarLayer1 = 8;  triplanarLayer2 = 8;  // off
+	triplanarLayer1 = 8;  triplanarLayer2 = 8;  triplCnt = 0;  // off
 	errorNorm = 1.7;
 	normScale = 1.f;
 	emissive = false;
@@ -210,20 +210,20 @@ void TerData::UpdVals()
 void TerData::UpdLayers()
 {
 	layers.clear();  int li = 0;
-	triplanarLayer1 = 8;  triplanarLayer2 = 8;
+	triplanarLayer1 = 8;  triplanarLayer2 = 8;  triplCnt = 0;  // off
 	for (int i=0; i < ciNumLay; ++i)
 	{
 		if (layersAll[i].on)
 		{
 			if (layersAll[i].triplanar)
+			{	++triplCnt;
 				if (triplanarLayer1 < 8)
 					triplanarLayer2 = li;
 				else
-					triplanarLayer1 = li;
+					triplanarLayer1 = li;  }
 			++li;
 			layers.push_back(i);
-		}
-	}
+	}	}
 }
 
 void Scene::UpdPgLayers()

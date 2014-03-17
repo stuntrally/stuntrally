@@ -130,14 +130,14 @@ void CGui::comboGrassMtr(Cmb cmb, size_t val)
 	String s = cmb->getItemNameAt(val);
 	SGrassLayer* gr = &sc->grLayersAll[idGrLay];
 	gr->material = s;
-	if (imgGrass)	imgGrass->setImageTexture(gr->material + ".png");  // same mtr name as tex
+	imgGrass->setImageTexture(gr->material + ".png");  // same mtr name as tex
 }
 void CGui::comboGrassClr(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
 	SGrassLayer* gr = &sc->grLayersAll[idGrLay];
 	gr->colorMap = s;
-	if (imgGrClr)	imgGrClr->setImageTexture(gr->colorMap);
+	imgGrClr->setImageTexture(gr->colorMap);
 }
 
 
@@ -150,8 +150,8 @@ void CGui::tabGrLayers(Tab wp, size_t id)
 	SldUpd_GrChan();
 	const SGrassLayer* gr = &sc->grLayersAll[idGrLay], *g0 = &sc->grLayersAll[0];
 
-	if (imgGrass)	imgGrass->setImageTexture(gr->material + ".png");  // same mtr name as tex
-	if (imgGrClr)	imgGrClr->setImageTexture(gr->colorMap);
+	imgGrass->setImageTexture(gr->material + ".png");  // same mtr name as tex
+	imgGrClr->setImageTexture(gr->colorMap);
 
 	int used=0;
 	for (int i=0; i < sc->ciNumGrLay; ++i)
@@ -184,7 +184,7 @@ void CGui::SldUpd_GrL()
 ///  channels
 void CGui::tabGrChan(Tab wp, size_t id)
 {
-	idGrChan = id;
+	idGrChan = id;  // help var
 	SldUpd_GrChan();
 }
 
@@ -277,6 +277,7 @@ void CGui::comboRoadMtr(Cmb cmb, size_t val)
 
 	String s = cmb->getItemNameAt(val);
 	app->scn->road->sMtrRoad[id] = s;  app->scn->road->RebuildRoad(true);  scn->UpdPSSMMaterials();
+	UpdSurfList();
 }
 
 void CGui::comboPipeMtr(Cmb cmb, size_t val)
@@ -286,6 +287,7 @@ void CGui::comboPipeMtr(Cmb cmb, size_t val)
 
 	String s = cmb->getItemNameAt(val);
 	app->scn->road->SetMtrPipe(id, s);  app->scn->road->RebuildRoad(true);  scn->UpdPSSMMaterials();
+	UpdSurfList();
 }
 
 void CGui::comboRoadWMtr(Cmb cmb, size_t val)
@@ -433,5 +435,41 @@ void CGui::toggleTopView()
 		cam->setDirection(oldRot);
 
 		pSet->bFog = oldFog;  ckFog.Upd();  scn->UpdFog();
+	}
+}
+
+
+//  [Surface]
+//-----------------------------------------------------------------------------------------------------------
+
+void CGui::listSurf(Li, size_t id)
+{
+	if (id == ITEM_NONE) {  id = 0;  surfList->setIndexSelected(0);  }
+	if (id > 4) {  id = 4;  surfList->setIndexSelected(4);  }  ///TODO: temp 1 road mtr ...
+
+	idSurf = id;  // help var
+	TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
+
+	//  Particles
+	edLDust->setCaption(toStr(l->dust));	edLDustS->setCaption(toStr(l->dustS));
+	edLMud->setCaption(toStr(l->mud));	edLSmoke->setCaption(toStr(l->smoke));
+	edLTrlClr->setCaption(toStr(l->tclr));  clrTrail->setColour(Colour(l->tclr.r,l->tclr.g,l->tclr.b));
+	
+	//  Surface
+	cmbSurface->setIndexSelected( cmbSurface->findItemIndexWith(l->surfName));
+	UpdSurfInfo();
+}
+
+void CGui::UpdSurfList()
+{
+	if (!surfList || surfList->getItemCount() != 12)  return;
+
+	for (int n=0; n < 4; ++n)
+	{
+		String s = n >= app->scn->sc->td.layers.size() ? "" : StringUtil::replaceAll(
+			app->scn->sc->td.layersAll[app->scn->sc->td.layers[n]].texFile, "_d.jpg","");
+		surfList->setItemNameAt(n  , "#80FF00"+TR("#{Layer} ")+toStr(n+1)+"  "+ s);
+		surfList->setItemNameAt(n+4, "#FFB020"+TR("#{Road} ") +toStr(n+1)+"  "+ app->scn->road->sMtrRoad[n]);
+		surfList->setItemNameAt(n+8, "#FFFF80"+TR("#{Pipe} ") +toStr(n+1)+"  "+ app->scn->road->sMtrPipe[n]);
 	}
 }

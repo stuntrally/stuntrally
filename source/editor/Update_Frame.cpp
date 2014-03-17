@@ -79,9 +79,9 @@ bool App::frameEnded(const FrameEvent& evt)
 {
 	//  show when in gui on generator subtab
 	if (ovTerPrv)
-	if (bGuiFocus &&
-		mWndEdit && mWndEdit->getVisible() && mWndTabsEdit->getIndexSelected()==2 &&
-		gui->vSubTabsEdit.size() > 2 && gui->vSubTabsEdit[2]->getIndexSelected() == 2/**/)
+	if (bGuiFocus && mWndEdit &&
+		mWndEdit->getVisible() && mWndTabsEdit->getIndexSelected() == TAB_Terrain &&
+		gui->vSubTabsEdit.size() > TAB_Terrain && gui->vSubTabsEdit[TAB_Terrain]->getIndexSelected() == 2/**/)
 		ovTerPrv->show();  else  ovTerPrv->hide();
 
 	//  track events
@@ -320,8 +320,8 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	
 	//--  3d view upd  (is global in window)
 	static bool oldVis = false;
-	int tab = mWndTabsEdit->getIndexSelected(), st5 = gui->vSubTabsEdit[5]->getIndexSelected();
-	bool vis = mWndEdit && mWndEdit->getVisible() && (tab == 7 || tab == 5 && st5 == 1);
+	int tab = mWndTabsEdit->getIndexSelected(), st5 = gui->vSubTabsEdit[TAB_Veget]->getIndexSelected();
+	bool vis = mWndEdit && mWndEdit->getVisible() && (tab == TAB_Objects || tab == TAB_Veget && st5 == 1);
 
 	if (oldVis != vis)
 	{	oldVis = vis;

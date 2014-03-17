@@ -21,8 +21,8 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,clrFog(0),clrFog2(0),clrFogH(0)
 	// terrain
 	,cmbTexDiff(0),cmbTexNorm(0), imgTexDiff(0)
-	,valTerLAll(0),tabsHmap(0),tabsTerLayers(0)
-	, idTerLay(0),bTerLay(1)
+	,valTerLAll(0),tabsHmap(0),tabsTerLayers(0),valTriplAll(0)
+	, idTerLay(0)
 	,bTexNormAuto(1), bDebugBlend(0), dbgLclr(0)
 	,bRn1(0),bRn2(0)
 	// ter particles
@@ -52,6 +52,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,edRdHeightOfs(0)
 	,edRdSkirtLen(0),edRdSkirtH(0)
 	,cmbRoadWMtr(0),cmbPipeWMtr(0),cmbRoadColMtr(0)
+	, idSurf(0), surfList(0)
 	// tools
 	,fScale(1.f),fScaleTer(1.f)
 	// warnings

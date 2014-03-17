@@ -24,51 +24,31 @@ using namespace Ogre;
 //
 void CGui::tabTerLayer(Tab wp, size_t id)
 {
-	idTerLay = id;  // help vars
-	bTerLay = id < sc->td.ciNumLay;
-	TerLayer* lay = bTerLay ? &sc->td.layersAll[idTerLay] : &sc->td.layerRoad;
+	idTerLay = id;  // help var
+	TerLayer* l = &sc->td.layersAll[idTerLay];
 
 	noBlendUpd = true;
 	SldUpd_TerL();
 
-	cmbTexDiff->setVisible(bTerLay);  cmbTexNorm->setVisible(bTerLay);
-	ckTerLayOn.setVisible(bTerLay);   ckTexNormAuto.setVisible(bTerLay);
-	imgTexDiff->setVisible(bTerLay);  ckTerLayTripl.setVisible(bTerLay);
-	
-	if (bTerLay)
-	{
-		cmbTexDiff->setIndexSelected( cmbTexDiff->findItemIndexWith(lay->texFile) );
-		cmbTexNorm->setIndexSelected( cmbTexNorm->findItemIndexWith(lay->texNorm) );
-		bool noNorm = cmbTexNorm->getIndexSelected() == ITEM_NONE;
+	//  tex
+	cmbTexDiff->setIndexSelected( cmbTexDiff->findItemIndexWith(l->texFile) );
+	cmbTexNorm->setIndexSelected( cmbTexNorm->findItemIndexWith(l->texNorm) );
 
-		//  auto norm check  if  norm = tex + _nh
-		String sTex,sNorm, sExt;
-		StringUtil::splitBaseFilename(lay->texFile,sTex,sExt);
-		StringUtil::splitBaseFilename(lay->texNorm,sNorm,sExt);
+	//  auto norm check
+	String sTex,sNorm, sExt;
+	StringUtil::splitBaseFilename(l->texFile,sTex,sExt);
+	StringUtil::splitBaseFilename(l->texNorm,sNorm,sExt);
 
-		String sTexN = StringUtil::replaceAll(sTex,"_d","_n");
-		bool bAuto = /*!sNorm.empty() && !noNorm &&*/ sTexN == sNorm;  //_T
-		bTexNormAuto = bAuto;
-		ckTexNormAuto.Upd();
-		//  tex image
-	    imgTexDiff->setImageTexture(lay->texFile);
-	}
+	String sTexN = StringUtil::replaceAll(sTex,"_d","_n");
+	bool bAuto = sTexN == sNorm;  //_T
+	bTexNormAuto = bAuto;
+	ckTexNormAuto.Upd();
 
-	//  scale layer
-	svTerLScale.setVisible(bTerLay);
-	SetUsedStr(valTerLAll, sc->td.layers.size(), 3);
-	
+	//  image
+    imgTexDiff->setImageTexture(l->texFile);
+
+	updUsedTer();
 	SldUpd_TerLNvis();
-
-	//  Terrain Particles
-	edLDust->setCaption(toStr(lay->dust));	edLDustS->setCaption(toStr(lay->dustS));
-	edLMud->setCaption(toStr(lay->mud));	edLSmoke->setCaption(toStr(lay->smoke));
-	edLTrlClr->setCaption(toStr(lay->tclr));  if (clrTrail)  clrTrail->setColour(Colour(lay->tclr.r,lay->tclr.g,lay->tclr.b));
-	
-	//  Surfaces
-	cmbSurface->setIndexSelected( cmbSurface->findItemIndexWith(
-		!bTerLay ? sc->td.layerRoad.surfName : sc->td.layersAll[idTerLay].surfName ));
-	UpdSurfInfo();
 
 	noBlendUpd = false;
 }
@@ -98,7 +78,7 @@ void CGui::SldUpd_TerLNvis()
 
 void CGui::SldUpd_TerL()
 {
-	TerLayer* l = bTerLay ? &sc->td.layersAll[idTerLay] : &sc->td.layerRoad;
+	TerLayer* l = &sc->td.layersAll[idTerLay];
 	ckTerLayOn.Upd(&l->on);
 	svTerLScale.UpdF(&l->tiling);
 	ckTerLayTripl.Upd(&l->triplanar);
@@ -399,21 +379,31 @@ void CGui::chkDebugBlend(Ck*)
 void CGui::chkTerLayOn(Ck*)
 {
 	sc->td.UpdLayers();
-	SetUsedStr(valTerLAll, sc->td.layers.size(), 3);
+	updUsedTer();
+
 	//todo..  !! save hmap if changed
 	app->UpdateTrack();
 	SldUpd_TerLNvis();
 }
 
+void CGui::updUsedTer()
+{
+	SetUsedStr(valTerLAll, sc->td.layers.size(), 3);
+	int t = sc->td.triplCnt;
+	valTriplAll->setCaption(TR("#{Used}") + ": " + toStr(t));
+	valTriplAll->setTextColour(sUsedClr[ t > 2 ? 6 : (t + 2)]);
+}
+
 void CGui::chkTerLayTripl(Ck*)
 {
 	sc->td.UpdLayers();
+	updUsedTer();
 }
 
 void CGui::comboTexDiff(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	if (bTerLay)  sc->td.layersAll[idTerLay].texFile = s;
+	sc->td.layersAll[idTerLay].texFile = s;
 
 	//  auto norm
 	if (bTexNormAuto)
@@ -423,16 +413,17 @@ void CGui::comboTexDiff(Cmb cmb, size_t val)
 		if (id != ITEM_NONE)  // set only if found
 		{
 			cmbTexNorm->setIndexSelected(id);
-			if (bTerLay)  sc->td.layersAll[idTerLay].texNorm = sNorm;
+			sc->td.layersAll[idTerLay].texNorm = sNorm;
 	}	}
 	//  tex image
     imgTexDiff->setImageTexture(s);
+	UpdSurfList();
 }
 
 void CGui::comboTexNorm(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	if (bTerLay)  sc->td.layersAll[idTerLay].texNorm = s;
+	sc->td.layersAll[idTerLay].texNorm = s;
 }
 
 //  Terrain BlendMap
@@ -451,7 +442,7 @@ void CGui::chkTerLNOnly(Ck*)
 //  move layer order
 void CGui::btnTerLmoveL(WP)  // -1
 {
-	if (!bTerLay || idTerLay <= 0)  return;
+	if (idTerLay <= 0)  return;
 
 	TerLayer& t = sc->td.layersAll[idTerLay], st,
 			&t1 = sc->td.layersAll[idTerLay-1];
@@ -463,7 +454,7 @@ void CGui::btnTerLmoveL(WP)  // -1
 
 void CGui::btnTerLmoveR(WP)  // +1
 {
-	if (!bTerLay || idTerLay >= TerData::ciNumLay-1)  return;
+	if (idTerLay >= TerData::ciNumLay-1)  return;
 
 	TerLayer& t = sc->td.layersAll[idTerLay], st,
 			&t1 = sc->td.layersAll[idTerLay+1];
@@ -484,7 +475,6 @@ const static float ns[15][4] = {  //  freq, oct, pers, pow
 
 void CGui::btnNpreset(WP wp)
 {
-	if (!bTerLay)  return;
 	int l = bRn2->getStateSelected() ? 1 : 0;
 	String s = wp->getName();  //"TerLN_"
 	int i = s2i(s.substr(6));
@@ -499,7 +489,6 @@ void CGui::btnNpreset(WP wp)
 }
 void CGui::btnNrandom(WP wp)
 {
-	if (!bTerLay)  return;
 	int l = bRn2->getStateSelected() ? 1 : 0;
 
 	TerLayer& t = sc->td.layersAll[idTerLay];
@@ -514,8 +503,6 @@ void CGui::btnNrandom(WP wp)
 //  swap noise 1 and 2 params
 void CGui::btnNswap(WP wp)
 {
-	if (!bTerLay)  return;
-
 	TerLayer& t = sc->td.layersAll[idTerLay];
 	std::swap(t.nFreq[0], t.nFreq[1]);
 	std::swap(t.nOct[0] , t.nOct[1] );
@@ -528,24 +515,7 @@ void CGui::btnNswap(WP wp)
 
 ///  Terrain Particles  -----------------------------
 //
-void CGui::editLDust(Ed ed)
-{
-	Real r = s2r(ed->getCaption());
-	TerLayer* l = !bTerLay ? &sc->td.layerRoad : &sc->td.layersAll[idTerLay];
-	String n = ed->getName();
-
-		 if (n=="LDust")   l->dust = r;		else if (n=="LDustS")  l->dustS = r;
-	else if (n=="LMud")    l->mud = r;		else if (n=="LSmoke")  l->smoke = r;
-}
-void CGui::editLTrlClr(Ed ed)
-{
-	ColourValue c = s2c(ed->getCaption());
-	if (!bTerLay)   sc->td.layerRoad.tclr = c;
-	else  sc->td.layersAll[idTerLay].tclr = c;
-	if (clrTrail)  clrTrail->setColour(Colour(c.r,c.g,c.b));
-}
-
-void CGui::comboParDust(Cmb cmb, size_t val)
+void CGui::comboParDust(Cmb cmb, size_t val)  // par type
 {
 	String s = cmb->getItemNameAt(val);
 	String n = cmb->getName();
@@ -555,16 +525,31 @@ void CGui::comboParDust(Cmb cmb, size_t val)
 	else if (n=="CmbParSmoke")  sc->sParSmoke = s;
 }
 
+void CGui::editLDust(Ed ed)  // vals
+{
+	TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
+	Real r = s2r(ed->getCaption());
+	String n = ed->getName();
+
+		 if (n=="LDust")   l->dust = r;		else if (n=="LDustS")  l->dustS = r;
+	else if (n=="LMud")    l->mud = r;		else if (n=="LSmoke")  l->smoke = r;
+}
+void CGui::editLTrlClr(Ed ed)
+{
+	TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
+	ColourValue c = s2c(ed->getCaption());
+	l->tclr = c;
+	clrTrail->setColour(Colour(c.r,c.g,c.b));
+}
+
 
 ///  Terrain Surface  -----------------------------
 //
 void CGui::comboSurface(Cmb cmb, size_t val)
 {
+	TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
 	std::string s = cmb->getItemNameAt(val);
-	if (!bTerLay)
-		sc->td.layerRoad.surfName = s;
-	else
-		sc->td.layersAll[idTerLay].surfName = s;
+	l->surfName = s;
 	UpdSurfInfo();
 }
 

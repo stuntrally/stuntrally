@@ -142,11 +142,13 @@ public:
 	
 	
 	//  Ter Layer  ----
-	int idTerLay;  bool bTerLay;  // help vars
+	int idTerLay;  // help var
 	void SldUpd_TerL();
 	Tab tabsTerLayers;  void tabTerLayer(TAB);
 
-	CK(TerLayOn);  Txt valTerLAll;
+	CK(TerLayOn);
+	Txt valTerLAll,valTriplAll;
+	void updUsedTer();
 
 	//  texture
 	Cmb cmbTexDiff, cmbTexNorm;
@@ -203,7 +205,7 @@ public:
 	void Upd3DView(Ogre::String mesh);
 	
 	///  paged layers  --------
-	int idPgLay;  // tab
+	int idPgLay;  // help var
 	void SldUpd_PgL();
 	Tab tabsPgLayers;  void tabPgLayers(TAB);
 
@@ -218,7 +220,7 @@ public:
 	SV svLTrMinTerH, svLTrMaxTerH, svLTrFlDepth;
 
 	///  grass layers  --------
-	int idGrLay;  // tab
+	int idGrLay;  // help var
 	void SldUpd_GrL();
 	Tab tabsGrLayers;  void tabGrLayers(TAB);
 
@@ -232,7 +234,7 @@ public:
 	Img imgGrass,imgGrClr;
 
 	///  grass channels  --------
-	int idGrChan;  // tab
+	int idGrChan;  // help var
 	void SldUpd_GrChan();
 	Tab tabsGrChan;  void tabGrChan(TAB);
 
@@ -254,7 +256,13 @@ public:
 	void SldUpd_Road();
 	Ed edRdSkirtLen,edRdSkirtH, edRdHeightOfs;
 	void editRoad(Ed);
+
 	
+	//  [Surfaces]  ----
+	int idSurf;  // help var
+	Li surfList;  void listSurf(Li, size_t);
+	void UpdSurfList();
+
 	
 	//  [Game]  ----
 	SV svDamage, svWind, svGravity;

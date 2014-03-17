@@ -56,7 +56,7 @@ public:
 	void UpdLayers();
 
 	//  which should have triplanar most (eg high mountains)
-	int triplanarLayer1, triplanarLayer2;
+	int triplanarLayer1, triplanarLayer2, triplCnt;
 	float normScale;  // scale terrain normals
 	bool emissive;
 	

@@ -248,6 +248,10 @@ void CGui::InitGui()
 	Btn("TerrainNew", btnTerrainNew);
 	Btn("TerrainGenAdd", btnTerGenerate);  Btn("TerrainGenSub", btnTerGenerate);    Btn("TerrainGenMul", btnTerGenerate);
 	Btn("TerrainHalf",   btnTerrainHalf);  Btn("TerrainDouble", btnTerrainDouble);  Btn("TerrainMove",   btnTerrainMove);
+	///TODO: show window with list, chks, sceneries,  ...
+	//Btn("PickTex", btnPickTex);
+	//Btn("PickGrass", btnPickGrass);
+	//Btn("PickVeget", btnPickVeget);
 
 
 	///  generator  . . . . . . .
@@ -276,6 +280,7 @@ void CGui::InitGui()
 	bool b;
 	ck= &ckTerLayOn;	ck->Init("TerLayOn",	&b);   Cev(TerLayOn);
 	valTerLAll = fTxt("TerLayersAll");
+	valTriplAll = fTxt("TerTriplAll");
 	Tab(tabsTerLayers, "TabTerLay", tabTerLayer);
 
 	ck= &ckTexNormAuto;	ck->Init("TexNormAuto",	&bTexNormAuto);
@@ -286,7 +291,7 @@ void CGui::InitGui()
 	float f=0.f;  i=0;  // temp vars
 	//  ter layer
 	sv= &svTerTriSize;	sv->Init("TerTriSize", &sc->td.fTriangleSize,  0.1f,6.f, 2.f);  sv->DefaultF(1.4f);  Sev(TerTriSize);
-	sv= &svTerLScale;	sv->Init("TerLScale",  &f, 4.0f, 64.f,  3.f);  sv->DefaultF(8.f);  //Sev(TerLay);  // 2 24 1.5
+	sv= &svTerLScale;	sv->Init("TerLScale",  &f, 6.0f, 72.f,  2.f);  sv->DefaultF(8.f);  //Sev(TerLay);
 	//  blendmap
 	sv= &svTerLAngMin;  sv->Init("TerLAngMin", &f, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(0.f);  Sev(TerLay);
 	sv= &svTerLAngMax;  sv->Init("TerLAngMax", &f, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(90.f);  Sev(TerLay);
@@ -610,6 +615,14 @@ void CGui::InitGui()
 	}	}
 	//objList->setIndexSelected(0);  //objList->findItemIndexWith(modeSel)
 
+
+	//---------------------  Surfaces  ---------------------
+	surfList = fLi("SurfList");  Lev(surfList, Surf);
+	for (n=0; n < 4; ++n)  surfList->addItem("#80FF00"+TR("#{Layer} ")+toStr(n));
+	for (n=0; n < 4; ++n)  surfList->addItem("#FFB020"+TR("#{Road} ")+toStr(n));
+	for (n=0; n < 4; ++n)  surfList->addItem("#FFFF80"+TR("#{Pipe} ")+toStr(n));
+	surfList->setIndexSelected(0);
+	
 	
 	//---------------------  Tweak  ---------------------
 	ComboBoxPtr cmbTwk;

@@ -94,6 +94,11 @@ void CGui::SetGuiFromXmls()
 	ckTerrainEmissive.Upd(&sc->td.emissive);
 	SldUpd_Game();
 	
+	//  [Surface]
+	//-----------------------------------------------
+	UpdSurfList();
+	listSurf(surfList, idSurf);
+	
 	bGI = true;
 }
 
@@ -328,11 +333,13 @@ void CGui::NumTabNext(int rel)
 	int id = app->mWndTabsEdit->getIndexSelected();
 	switch (id)
 	{
-		case 3:  tab = tabsTerLayers;  tabNum(tabTerLayer);  break;  // Layers
-		case 4:  switch (vSubTabsEdit[id]->getIndexSelected())
-		{	case 1:  tab = tabsGrLayers;  tabNum(tabGrLayers);  break;  // Grasses
+		case TAB_Layers:  tab = tabsTerLayers;  tabNum(tabTerLayer);  break;
+		case TAB_Grass:  switch (vSubTabsEdit[id]->getIndexSelected())
+		{	case 1:  tab = tabsGrLayers;  tabNum(tabGrLayers);  break;
 			case 2:  tab = tabsGrChan;  tabNum(tabGrChan);  break;  }  break;
-		case 5:  tab = tabsPgLayers;  tabNum(tabPgLayers);  break;  // Vegetation
+		case TAB_Veget:  tab = tabsPgLayers;  tabNum(tabPgLayers);  break;
+		case TAB_Surface:  {  int t = (surfList->getIndexSelected() +5 +rel) % 5;
+			surfList->setIndexSelected(t);  listSurf(surfList, t);  }  break;
 	}
 }
 
