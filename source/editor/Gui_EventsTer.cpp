@@ -32,8 +32,8 @@ void CGui::tabTerLayer(Tab wp, size_t id)
 	SldUpd_TerL();
 
 	cmbTexDiff->setVisible(bTerLay);  cmbTexNorm->setVisible(bTerLay);
-	ckTerLayOn.setVisible(bTerLay);   ckTexNormAuto.setVisible(bTerLay);  ckTerLayTripl.setVisible(bTerLay);
-	imgTexDiff->setVisible(bTerLay);
+	ckTerLayOn.setVisible(bTerLay);   ckTexNormAuto.setVisible(bTerLay);
+	imgTexDiff->setVisible(bTerLay);  ckTerLayTripl.setVisible(bTerLay);
 	
 	if (bTerLay)
 	{
@@ -45,12 +45,13 @@ void CGui::tabTerLayer(Tab wp, size_t id)
 		String sTex,sNorm, sExt;
 		StringUtil::splitBaseFilename(lay->texFile,sTex,sExt);
 		StringUtil::splitBaseFilename(lay->texNorm,sNorm,sExt);
-		bool bAuto = !sNorm.empty() && !noNorm && (sTex + "_n" == sNorm);  //_T "_n"
+
+		String sTexN = StringUtil::replaceAll(sTex,"_d","_n");
+		bool bAuto = /*!sNorm.empty() && !noNorm &&*/ sTexN == sNorm;  //_T
 		bTexNormAuto = bAuto;
 		ckTexNormAuto.Upd();
 		//  tex image
-	    imgTexDiff->setImageTexture(lay->texFile);  //_T
-	    //imgTexDiff->setImageTexture(sTex + "_prv.jpg");
+	    imgTexDiff->setImageTexture(lay->texFile);
 	}
 
 	//  scale layer
@@ -416,22 +417,18 @@ void CGui::comboTexDiff(Cmb cmb, size_t val)
 	String s = cmb->getItemNameAt(val);
 	if (bTerLay)  sc->td.layersAll[idTerLay].texFile = s;
 
-	String sNorm = StringUtil::replaceAll(s,"_d.","_n.");
-	String sTex, sExt, sPrv;
-	StringUtil::splitBaseFilename(s,sTex,sExt);
-	sPrv = s;
-	//sPrv = StringUtil::replaceAll(sTex,"_d.","_prv.") + "_prv.jpg";  //_T
-	//sNorm = sTex + "_nh." + sExt;  //same ext  //_T old
-
 	//  auto norm
-	//`-if (bTexNormAuto)
-	{	size_t id = cmbTexNorm->findItemIndexWith(sNorm);
+	if (bTexNormAuto)
+	{	String sNorm = StringUtil::replaceAll(s,"_d.","_n.");  //_T
+
+		size_t id = cmbTexNorm->findItemIndexWith(sNorm);
 		if (id != ITEM_NONE)  // set only if found
+		{
 			cmbTexNorm->setIndexSelected(id);
-		if (bTerLay)  sc->td.layersAll[idTerLay].texNorm = sNorm;
-	}
+			if (bTerLay)  sc->td.layersAll[idTerLay].texNorm = sNorm;
+	}	}
 	//  tex image
-    imgTexDiff->setImageTexture(sPrv);
+    imgTexDiff->setImageTexture(s);
 }
 
 void CGui::comboTexNorm(Cmb cmb, size_t val)
