@@ -6,6 +6,7 @@
 #include "CApp.h"
 #include "../ogre/common/GuiCom.h"
 #include "../ogre/common/CScene.h"
+#include "../ogre/common/data/CData.h"
 #include "../road/Road.h"
 #include "../ogre/common/Slider.h"
 #include "../vdrift/pathmanager.h"
@@ -403,17 +404,30 @@ void CGui::chkTerLayTripl(Ck*)
 void CGui::comboTexDiff(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	sc->td.layersAll[idTerLay].texFile = s;
-
+	TerLayer& l = sc->td.layersAll[idTerLay];
+	l.texFile = s;
+	
 	//  auto norm
-	if (bTexNormAuto)
+	//if (bTexNormAuto)
 	{	String sNorm = StringUtil::replaceAll(s,"_d.","_n.");  //_T
+
+		//  preset
+		std::string ss = s.substr(0, s.length()-4);
+		const PTer* pt = data->pre->GetTer(ss);
+		if (pt)
+		{	sNorm = pt->texNorm+".jpg";
+			//l.surfName = pt->surfName;
+			//l.dust = pt->dust;  l.dustS = pt->dustS;
+			//l.mud = pt->mud;  l.tclr = pt->tclr;
+			//l.tiling = pt->tiling;  svTerLScale.Upd();
+			//l.triplanar = pt->triplanar;  ckTerLayTripl.Upd();
+		}
 
 		size_t id = cmbTexNorm->findItemIndexWith(sNorm);
 		if (id != ITEM_NONE)  // set only if found
 		{
 			cmbTexNorm->setIndexSelected(id);
-			sc->td.layersAll[idTerLay].texNorm = sNorm;
+			l.texNorm = sNorm;
 	}	}
 	//  tex image
     imgTexDiff->setImageTexture(s);

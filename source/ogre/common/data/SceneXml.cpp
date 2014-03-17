@@ -240,7 +240,7 @@ void Scene::UpdPgLayers()
 
 ///  Presets
 
-Presets::PTer::PTer()
+PTer::PTer()
 	:tiling(8.f), triplanar(false)
 	,dust(0.f), dustS(0.2f), mud(0.f)
 	,tclr(ColourValue::Black)
@@ -248,17 +248,17 @@ Presets::PTer::PTer()
 	,surfName("Default")
 {	}
 
-Presets::PRoad::PRoad()
+PRoad::PRoad()
 	:dust(0.f), dustS(0.2f), mud(0.f)
 	,tclr(ColourValue::Black)
 {	}
 
-Presets::PGrass::PGrass()
+PGrass::PGrass()
 	:clr("GrassClrJungle")
 	,minSx(1.2f), minSy(1.2f), maxSx(1.6f), maxSy(1.6f)
 {	}
 
-Presets::PVeget::PVeget()
+PVeget::PVeget()
 	:minScale(0.6f), maxScale(1.f)
 	,windFx(0.02f), windFy(0.002f)
 	,addRdist(1)
@@ -266,3 +266,27 @@ Presets::PVeget::PVeget()
 	,maxDepth(0.f)
 {	}
 
+
+const PTer* Presets::GetTer(std::string tex)
+{
+	int id = iter[tex]-1;
+	return id >= 0 ? &ter[id] : 0;
+}
+
+const PRoad* Presets::GetRoad(std::string mtr)
+{
+	int id = ird[mtr]-1;
+	return id >= 0 ? &rd[id] : 0;
+}
+
+const PGrass* Presets::GetGrass(std::string mtr)
+{
+	int id = igr[mtr]-1;
+	return id >= 0 ? &gr[id] : 0;
+}
+
+const PVeget* Presets::GetVeget(std::string mesh)
+{
+	int id = iveg[mesh]-1;
+	return id >= 0 ? &veg[id] : 0;
+}

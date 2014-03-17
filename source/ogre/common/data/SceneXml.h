@@ -104,66 +104,76 @@ public:
 };
 
 
-///  Presets xml  with common params setup
+//  Presets
 //  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+///----  Terrain layer
+struct PTer
+{
+	Ogre::String texFile, texNorm, sc;
+	std::string surfName, scn;
+	float tiling;  bool triplanar;
+
+	float dust, mud, dustS;
+	Ogre::ColourValue tclr;  // trail
+
+	float angMin,angMax;
+	PTer();
+};
+
+///----  Road
+struct PRoad
+{
+	Ogre::String mtr, sc;
+	std::string surfName, scn;
+
+	float dust, mud, dustS;
+	Ogre::ColourValue tclr;
+	PRoad();
+};
+
+///----  Grass
+struct PGrass
+{
+	Ogre::String mtr, clr, sc;  // material, colormap
+	std::string scn;
+	float minSx,minSy, maxSx,maxSy;  // sizes
+	PGrass();
+};
+
+///----  Veget model
+struct PVeget
+{
+	Ogre::String sc;
+	std::string name, scn;
+	float minScale, maxScale;
+	float windFx, windFy;
+
+	int addRdist;  // road dist
+	float maxTerAng;  // terrain
+	float maxDepth;  // in fluid
+	PVeget();
+};
+
+///  Presets xml  with common params setup
 class Presets
 {
 public:
-	///----  Terrain layer
-	struct PTer
-	{
-		Ogre::String texFile, texNorm, sc;
-		std::string surfName, scn;
-		float tiling;  bool triplanar;
-
-		float dust, mud, dustS;
-		Ogre::ColourValue tclr;  // trail
-	
-		float angMin,angMax;
-		PTer();
-	};
 	std::vector<PTer> ter;
 	std::map<std::string, int> iter;
+	const PTer* GetTer(std::string tex);
 	
-	///----  Road
-	struct PRoad
-	{
-		Ogre::String mtr, sc;
-		std::string surfName, scn;
-
-		float dust, mud, dustS;
-		Ogre::ColourValue tclr;
-		PRoad();
-	};
 	std::vector<PRoad> rd;
 	std::map<std::string, int> ird;
+	const PRoad* GetRoad(std::string mtr);
 	
-	///----  Grass
-	struct PGrass
-	{
-		Ogre::String mtr, clr, sc;  // material, colormap
-		std::string scn;
-		float minSx,minSy, maxSx,maxSy;  // sizes
-		PGrass();
-	};
 	std::vector<PGrass> gr;
 	std::map<std::string, int> igr;
+	const PGrass* GetGrass(std::string mtr);
 	
-	///----  Veget model
-	struct PVeget
-	{
-		Ogre::String sc;
-		std::string name, scn;
-		float minScale, maxScale;
-		float windFx, windFy;
-
-		int addRdist;  // road dist
-		float maxTerAng;  // terrain
-		float maxDepth;  // in fluid
-		PVeget();
-	};
 	std::vector<PVeget> veg;
 	std::map<std::string, int> iveg;
+	const PVeget* GetVeget(std::string mesh);
 
 	bool LoadXml(std::string file);
 };

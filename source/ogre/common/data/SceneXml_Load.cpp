@@ -628,7 +628,7 @@ bool Presets::LoadXml(string file)
 		a = eTex->Attribute("ab");	if (a)  l.angMax = s2r(a);
 		//a = eTex->Attribute("tp");	if (a)  l.triplanar = true;  else  l.triplanar = false;
 
-		ter.push_back(l);
+		ter.push_back(l);  iter[l.texFile] = ter.size();
 		eTex = eTex->NextSiblingElement("t");
 	}
 
@@ -650,7 +650,7 @@ bool Presets::LoadXml(string file)
 
 		//a = eRd->Attribute("tp");	if (a)  l.triplanar = true;  else  l.triplanar = false;
 
-		rd.push_back(l);
+		rd.push_back(l);  ird[l.mtr] = rd.size();
 		eRd = eRd->NextSiblingElement("r");
 	}
 		
@@ -670,7 +670,7 @@ bool Presets::LoadXml(string file)
 		a = eGr->Attribute("minSy");	if (a)  g.minSy = s2r(a);
 		a = eGr->Attribute("maxSy");	if (a)  g.maxSy = s2r(a);
 
-		gr.push_back(g);
+		gr.push_back(g);  igr[g.mtr] = gr.size();
 		eGr = eGr->NextSiblingElement("g");
 	}
 	
@@ -693,7 +693,7 @@ bool Presets::LoadXml(string file)
 		a = eVeg->Attribute("maxTerAng");	if (a)  l.maxTerAng = s2r(a);
 		a = eVeg->Attribute("maxDepth");	if (a)  l.maxDepth = s2r(a);
 
-		veg.push_back(l);
+		veg.push_back(l);  iveg[l.name] = veg.size();
 		eVeg = eVeg->NextSiblingElement("v");
 	}
 

@@ -721,7 +721,7 @@ void CGui::ToolPresets()
 	//  tex not in preset ..
 	for (i=0; i < data->pre->ter.size(); ++i)
 	{
-		const Presets::PTer& pt = data->pre->ter[i];
+		const PTer& pt = data->pre->ter[i];
 		size_t id = cmbTexDiff->findItemIndexWith(pt.texFile+".jpg");
 		if (id == ITEM_NONE)
 			LogO("NO ter !! "+pt.texFile);

@@ -587,6 +587,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\config\presets.xml"
+				>
+			</File>
+			<File
 				RelativePath="..\config\tracks.ini"
 				>
 			</File>
