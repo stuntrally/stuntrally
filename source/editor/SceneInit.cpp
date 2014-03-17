@@ -41,7 +41,7 @@ void App::createScene()  // once, init
 	//  prv tex
 	prvView.Create(1024,1024,"PrvView");
 	prvRoad.Create(1024,1024,"PrvRoad");
-	prvTer.Create(512,512,"PrvTer");
+	 prvTer.Create(1024,1024,"PrvTer");
 
 	scn->roadDens.Create(1025,1025,"RoadDens");
 	
@@ -90,13 +90,6 @@ void App::createScene()  // once, init
 	LogO(String("::: Time load xmls: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 
 
-	///  _Tool_ scene ...........................
-	#if 0
-	gui->ToolSceneXml();
-	exit(0);
-	#endif
-	
-
 	postInit();  // material factory
 
 	//  gui  * * *
@@ -108,7 +101,15 @@ void App::createScene()  // once, init
 	gui->InitGui();
 	
 
-	///  _Tool_ presets .......
+	/// All  #if 0  in Release !!!
+
+	///  _Tool_ scene  ...........................
+	#if 0
+	gui->ToolSceneXml();
+	exit(0);
+	#endif
+	
+	///  _Tool_ presets  .......
 	#if 0
 	gui->ToolPresets();
 	exit(0);
@@ -118,13 +119,13 @@ void App::createScene()  // once, init
 	exit(0);
 	#endif
 
-	///  _Tool_ sceneryID .......
+	///  _Tool_ sceneryID  .......
 	#if 0
 	gui->ToolSceneryID();
 	exit(0);
 	#endif
 
-	///  _Tool_	warnings ...........................
+	///  _Tool_	warnings  ...........................
 	//  takes about 16 sec
 	#if 0
 	gui->ToolTracksWarnings();
@@ -135,9 +136,8 @@ void App::createScene()  // once, init
 	TerCircleInit();
 	createBrushPrv();
 	
-	///  _Tool_ brushes prv ...........................
-	//  update all Brushes png
-	#if 0  // 0 in release !!
+	///  _Tool_ brushes prv  ...........................
+	#if 0
 	gui->ToolBrushesPrv();
 	#endif
 	
@@ -351,8 +351,8 @@ void App::SaveTrackEv()
 	//  track dir in user
 	gui->CreateDir(dir);
 	gui->CreateDir(dir+"/objects");
-	//  check if succeded ...
 
+	//  todo: save only what changed ...
 	if (scn->terrain)
 	{	float *fHmap = scn->terrain->getHeightData();
 		int size = scn->sc->td.iVertsX * scn->sc->td.iVertsY * sizeof(float);

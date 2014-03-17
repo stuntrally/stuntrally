@@ -36,7 +36,7 @@ void App::createScene()
 	//  prv tex
 	prvView.Create(1024,1024,"PrvView");
 	prvRoad.Create(1024,1024,"PrvRoad");
-	prvTer.Create(512,512,"PrvTer");
+	 prvTer.Create(1024,1024,"PrvTer");
 	//  ch stage
 	prvStCh.Create(1024,1024,"PrvStCh");
 	

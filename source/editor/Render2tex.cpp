@@ -32,12 +32,11 @@ using namespace Ogre;
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 void App::Rnd2TexSetup()
 {
-	/// rt:  0 road minimap,  1 road for grass,  2 terrain minimap,  3 track preview full
-	// visibility:  1 road  2 hud,ed  4 terrain  8 trees  16-car glass  32 sky
+	///  RT:  0 road minimap,  1 road for grass,  2 terrain minimap,  3 track preview full
 	const uint32 visMask[RTs] =
 		{ RV_Road, RV_Road+RV_Objects, RV_Terrain+RV_Objects, RV_MaskAll-RV_Hud };
 	const int dim[RTs] =  //1025: sc->td.iVertsX
-		{ 1024, 1025, 512, 1024 };
+		{ 1024, 1025, 1024, 1024 };
 		
 	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 	Real sz = pSet->size_minimap;
