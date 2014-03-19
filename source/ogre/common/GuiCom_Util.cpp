@@ -50,6 +50,37 @@ CGuiCom::CGuiCom(App* app1)
 		for (i=0; i < StTrk; ++i)  stTrk[t][i] = 0;
 		for (i=0; i < InfTrk; ++i)  infTrk[t][i] = 0;
 	}
+	
+	//  short scenery names
+	scnN["AP"]= "Asphalt";
+	scnN["J"] = "Jungle";        scnN["JD"]= "JungleDark";
+	scnN["D"] = "Desert";        scnN["DM"]= "DesertMud";
+	scnN["S"] = "Savanna";       scnN["SD"]= "SavannaDry";
+	scnN["W"] = "Winter";        scnN["WW"]= "WinterWet";
+	scnN["F"] = "Forest";        scnN["FM"]= "ForestMntn";
+	scnN["FY"]= "ForestYellow";  scnN["E"] = "Finland";
+	scnN["I"] = "Island";        scnN["ID"]= "IslandDark";
+	scnN["M"] = "Mud";           scnN["A"] = "Australia";
+	scnN["G"] = "Greece";        scnN["C"] = "Canyon";
+	scnN["T"] = "Autumn";        scnN["TD"]= "AutumnDark";
+	scnN["O"] = "Moss";          
+	scnN["V"] = "Volcanic";      scnN["VD"]= "VolcanicDark";
+	scnN["U"] = "Unidentified";  scnN["R"] = "Mars";
+	//  scenery colors for track names
+	scnClr["Asphalt"]      = "#B0E0E0";
+	scnClr["Jungle"]       = "#50FF50";  scnClr["JungleDark"]   = "#40C040";
+	scnClr["Desert"]       = "#F0F000";  scnClr["DesertMud"]    = "#B0B000";
+	scnClr["Savanna"]      = "#C0F080";  scnClr["SavannaDry"]   = "#C0D090";
+	scnClr["Winter"]       = "#D0D8D8";  scnClr["WinterWet"]    = "#90D898";
+	scnClr["Forest"]       = "#A0C000";  scnClr["ForestMntn"]   = "#A0C080";
+	scnClr["ForestYellow"] = "#C0C000";  scnClr["Finland"]      = "#A0E080";
+	scnClr["Island"]       = "#FFFF80";  scnClr["IslandDark"]   = "#909080";
+	scnClr["Mud"]          = "#A0A000";  scnClr["Australia"]    = "#FFA080";
+	scnClr["Greece"]       = "#B0FF00";  scnClr["Canyon"]       = "#E0B090";
+	scnClr["Autumn"]       = "#FFA020";  scnClr["AutumnDark"]   = "#908070";
+	scnClr["Moss"]         = "#70F0B0";
+	scnClr["Volcanic"]     = "#908030";  scnClr["VolcanicDark"] = "#706030";
+	scnClr["Unidentified"] = "#8080D0";  scnClr["Mars"]         = "#A04840";
 }
 
 int TrkL::idSort = 0;

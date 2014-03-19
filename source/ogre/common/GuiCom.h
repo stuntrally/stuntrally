@@ -95,6 +95,7 @@ public:
 
 	bool TrackExists(Ogre::String name);
 	Ogre::String GetSceneryColor(Ogre::String name);
+	std::map<Ogre::String, Ogre::String> scnClr, scnN;
 
 
 	///  [Track]

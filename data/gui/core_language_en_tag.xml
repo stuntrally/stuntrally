@@ -53,6 +53,34 @@
 	<Tag name="WrongChk">Wrong Checkpoint</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
 	<Tag name="Graphs">Graphs</Tag>
+
+	<!--  Sceneries  -->
+	<Tag name="SC_Asphalt">Asphalt</Tag>
+	<Tag name="SC_Jungle">Jungle</Tag>
+	<Tag name="SC_JungleDark">JungleDark</Tag>
+	<Tag name="SC_Desert">Desert</Tag>
+	<Tag name="SC_DesertMud">DesertMud</Tag>
+	<Tag name="SC_Savanna">Savanna</Tag>
+	<Tag name="SC_SavannaDry">SavannaDry</Tag>
+	<Tag name="SC_Winter">Winter</Tag>
+	<Tag name="SC_WinterWet">WinterWet</Tag>
+	<Tag name="SC_Forest">Forest</Tag>
+	<Tag name="SC_ForestMntn">ForestMntn</Tag>
+	<Tag name="SC_ForestYellow">ForestYellow</Tag>
+	<Tag name="SC_Finland">Finland</Tag>
+	<Tag name="SC_Island">Island</Tag>
+	<Tag name="SC_IslandDark">IslandDark</Tag>
+	<Tag name="SC_Mud">Mud</Tag>
+	<Tag name="SC_Australia">Australia</Tag>
+	<Tag name="SC_Greece">Greece</Tag>
+	<Tag name="SC_Canyon">Canyon</Tag>
+	<Tag name="SC_Autumn">Autumn</Tag>
+	<Tag name="SC_AutumnDark">AutumnDark</Tag>
+	<Tag name="SC_Moss">Moss</Tag>
+	<Tag name="SC_Volcanic">Volcanic</Tag>
+	<Tag name="SC_VolcanicDark">VolcanicDark</Tag>
+	<Tag name="SC_Unidentified">Unidentified</Tag>
+	<Tag name="SC_Mars">Mars</Tag>
 	
 <!--  ............................................................................................................................  -->
 

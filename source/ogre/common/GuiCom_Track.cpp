@@ -44,18 +44,15 @@ using namespace std;
 String CGuiCom::GetSceneryColor(String name)
 {
 	if (name.empty())  return "#707070";
-	if (name.c_str()[0]=='*')  name = name.substr(1);
 
-	String c = "#B0E0E0";  char ch = name.c_str()[0];
-	switch (ch)  {
-		case 'T':  c = (name.c_str()[1] != 'e') ? "#FFA020" : 
-			(name.length() > 5 && name.c_str()[4] == 'C') ? "#A0C0D0" : "#A0A0A0";  break;  // Test,TestC
-		case 'J':  c = "#50FF50";  break;  case 'S':  c = "#C0E080";  break;  case 'F':  c = "#A0C000";  break;
-		case 'G':  c = "#B0FF00";  break;  case 'W':  c = "#D0D8D8";  break;  case 'I':  c = "#FFFF80";  break;
-		case 'A':  c = "#FFA080";  break;  case 'D':  c = "#F0F000";  break;  case 'C':  c = "#E0B090";  break;
-		case 'V':  c = "#908030";  break;  case 'X':  c = "#8080D0";  break;  case 'M':  c = "#A0A000";  break;
-		case 'O':  c = "#70F0B0";  break;  case 'E':  c = "#A0E080";  break;  case 'R':  c = "#A04840";  break;  }
-	return c;
+	int id = app->scn->data->tracks->trkmap[name];
+	const TrackInfo* pTrk = id==0 ? 0 : &app->scn->data->tracks->trks[id-1];
+
+	char ch = name.c_str()[0];  // vdr
+	if (ch == 'T' && name.c_str()[1] == 'e')  // Test,TestC
+		return (name.length() > 5 && name.c_str()[4] == 'C') ? "#A0C0D0" : "#A0A0A0";
+	else
+		return pTrk ? scnClr[pTrk->scenery] : scnClr[scnN[name.substr(1,2)]];  // norm, *user
 }
 
 //  track difficulties colors from value
@@ -76,9 +73,9 @@ void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	if (!ti)  return;  //  details
 	int l = li->getItemCount()-1;
 	
-	li->setSubItemNameAt(1,l, c+toStr(ti->n/10)+toStr(ti->n%10));
-	li->setSubItemNameAt(2,l, c+ti->scenery);
-	li->setSubItemNameAt(3,l, c+fToStr(ti->crtver,1,3));
+	li->setSubItemNameAt(1,l, c+ toStr(ti->n/10)+toStr(ti->n%10));
+	li->setSubItemNameAt(2,l, c+ TR("#{SC_"+ti->scenery+"}"));
+	li->setSubItemNameAt(3,l, c+ fToStr(ti->crtver,1,3));
 	//list->setSubItemNameAt(4,l, ti->created);  list->setSubItemNameAt(5,l, ti->modified);
 	#define toS(clr,v)  (v > 0) ? (String(clr)+"  "+toStr(v)) : " "
 	li->setSubItemNameAt(4,l, toS(clrsDiff[ti->diff], ti->diff));
