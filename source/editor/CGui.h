@@ -144,14 +144,14 @@ public:
 	//  Ter Layer  ----
 	int idTerLay;  // help var
 	void SldUpd_TerL();
-	Tab tabsTerLayers;  void tabTerLayer(TAB);
 
+	Btn btnTexDiff;  // pick
+	Tab tabsTerLayers;  void tabTerLayer(TAB);
 	CK(TerLayOn);
 	Txt valTerLAll,valTriplAll;
 	void updUsedTer();
 
 	//  texture
-	Btn btnTexDiff;
 	Cmb cmbTexNorm;  void comboTexNorm(CMB);
 	Img imgTexDiff;
 	Ck ckTexNormAuto;  bool bTexNormAuto;  // auto norm tex name
@@ -207,8 +207,9 @@ public:
 	///  models (paged layers)  --------
 	int idPgLay;  // help var
 	void SldUpd_PgL();
+
+	Btn btnVeget;  // pick
 	Tab tabsPgLayers;  void tabPgLayers(TAB);
-	Btn btnVeget;
 	CK(PgLayOn);  Txt valLTrAll;
 
 	SV svLTrDens;
@@ -221,14 +222,15 @@ public:
 	///  grass layers  --------
 	int idGrLay;  // help var
 	void SldUpd_GrL();
-	Tab tabsGrLayers;  void tabGrLayers(TAB);
 
+	Btn btnGrassMtr;  // pick
+	Tab tabsGrLayers;  void tabGrLayers(TAB);
 	CK(GrLayOn);  Txt valLGrAll;
+
 	SV svLGrDens, svGrChan;
 	SV svGrMinX, svGrMaxX;
 	SV svGrMinY, svGrMaxY;
 
-	Btn btnGrassMtr;
 	void comboGrassMtr(CMB);
 	Cmb cmbGrassClr;  void comboGrassClr(CMB);
 	Img imgGrass,imgGrClr;
@@ -315,6 +317,7 @@ public:
 	//  [Pick]  ----
 	Mli2 liTex, liGrs, liVeg;
 	void PickShow(int n);
+	int liNext(Mli2 li, int rel);
 	void btnPickTex(WP),   wheelTex(WP, int rel), listPickTex(Mli2 li, size_t pos);
 	void btnPickGrass(WP), wheelGrs(WP, int rel), listPickGrs(Mli2 li, size_t pos);
 	void btnPickVeget(WP), wheelVeg(WP, int rel), listPickVeg(Mli2 li, size_t pos);

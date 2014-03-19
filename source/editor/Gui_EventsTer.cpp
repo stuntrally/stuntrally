@@ -9,6 +9,7 @@
 #include "../ogre/common/data/CData.h"
 #include "../road/Road.h"
 #include "../ogre/common/Slider.h"
+#include "../ogre/common/MultiList2.h"
 #include "../vdrift/pathmanager.h"
 #include <fstream>
 #include <MyGUI.h>
@@ -32,8 +33,13 @@ void CGui::tabTerLayer(Tab wp, size_t id)
 	SldUpd_TerL();
 
 	//  tex
-	btnTexDiff->setCaption(l->texFile.substr(0, l->texFile.length()-6));  // no _d.jpg
+	String s = l->texFile.substr(0, l->texFile.length()-6);
+	btnTexDiff->setCaption(s);  // no _d.jpg
 	cmbTexNorm->setIndexSelected( cmbTexNorm->findItemIndexWith(l->texNorm) );
+
+	for (int i=0; i < liTex->getItemCount(); ++i)  /// upd pick
+		if (liTex->getSubItemNameAt(1,i).substr(7) == s)
+			liTex->setIndexSelected(i);
 
 	//  auto norm check
 	String sTex,sNorm, sExt;

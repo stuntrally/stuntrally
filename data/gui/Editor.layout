@@ -639,10 +639,10 @@
 		<Property key="MinSize" value="300 300"/>
 		<Property key="MaxSize" value="2560 1600"/>
 		<Property key="Caption" value="#{Pick}"/>
-		<Property key="Alpha" value="0.9"/>
+		<Property key="Alpha" value="0.8"/>
 		<Property key="Snap" value="true"/>
 		<Property key="Visible" value="false"/>
-		<Property key="Colour" value="0.2 0.5 0.6"/>
+		<Property key="Colour" value="0.6 0.8 0.4"/>
 		<UserString key="NotSized" value="1"/>
 		<Widget type="Button" skin="CheckBox" position="306 228 124 20" name="PickT">
 			<Property key="Caption" value="#FFA020T #{SC_Autumn}"/>
@@ -696,22 +696,27 @@
 			<Property key="Caption" value="Auto set parameters, marked with ."/>
 			<Property key="Colour" value="1.0 1.0 0.5"/>
 			<Property key="TextColour" value="1 1 0.5"/>
+			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
 		<Widget type="Button" skin="RadioButton" position="306 80 96 20" name="PickRadAll">
 			<Property key="Caption" value="#{RplAll}"/>
 			<Property key="TextColour" value="0.6 1 1"/>
+			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
 		<Widget type="Button" skin="RadioButton" position="306 120 112 20" name="PickRadCur">
 			<Property key="Caption" value="#{RplCurrent}"/>
 			<Property key="TextColour" value="0.5 0.7 0.9"/>
+			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
 		<Widget type="Button" skin="RadioButton" position="306 100 92 20" name="PickRadFilter">
 			<Property key="Caption" value="Filter"/>
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
+			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
 		<Widget type="Button" skin="CheckBox" position="306 48 136 24" name="PickAutoClose">
 			<Property key="Caption" value="AutoClose"/>
 			<Property key="TextColour" value="0.6 0.75 0.9"/>
+			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="844 24 800 600" align="Center" layer="Overlapped" name="TrackWnd">

@@ -140,6 +140,7 @@ void CGui::ToolBrushesPrv()
 }
 
 
+///............................................................................................................................
 ///  _Tool_ scene
 ///  check/resave all tracks scene.xml 
 ///............................................................................................................................
@@ -156,6 +157,7 @@ void CGui::ToolSceneXml()
 		string trk = data->tracks->trks[i].name, path = gcom->pathTrk[0] +"/"+ trk +"/";
 		Scene sc;  sc.LoadXml(path +"scene.xml");
 		SplineRoad rd(app);  rd.LoadFile(path +"road.xml");
+		bool modif = false;
 
 		int l = 17-trk.length();  // align
 		for (n=0; n < l; ++n)  trk += " ";
@@ -166,16 +168,34 @@ void CGui::ToolSceneXml()
 		{	const TerLayer& l = sc.td.layersAll[sc.td.layers[n]];
 		#else  // all
 		for (n=0; n < TerData::ciNumLay; ++n)
-		{	const TerLayer& l = sc.td.layersAll[n];
+		{	TerLayer& l = sc.td.layersAll[n];
 		#endif
-			if (!l.texFile.empty() && !rg.resourceExistsInAnyGroup(l.texFile))
+			bool e = l.texFile.empty();
+			if (!e && !rg.resourceExistsInAnyGroup(l.texFile))
 				LogO("Ter: " + trk + " Not Found !!!  " + l.texFile);
 
 			if (!l.texNorm.empty() && !rg.resourceExistsInAnyGroup(l.texNorm))
 				LogO("Ter: " + trk + " Not Found !!!  " + l.texNorm);
 				
-			//if (!l.texFile.empty() && l.surfName == "Default")
-			//	LogO("Ter: " + trk + " Default surface !!!  " + l.texFile);
+			const PTer* p = data->pre->GetTer(l.texFile.substr(0, l.texFile.length()-4));
+			if (!e && !p)
+				LogO("Ter: " + trk + " Not Found in presets !!!  " + l.texFile);
+
+			if (!e && l.surfName == "Default")
+			{
+				LogO("Ter: " + trk + " Default surface !!!  " + l.texFile);
+				#if 0  //  fix from presets
+				l.surfName = p->surfName;
+				l.dust = p->dust;   l.dustS = p->dustS;
+				l.mud = p->mud;  l.smoke = 0.f;  l.tclr = p->tclr;
+				modif = true;
+				LogO("Ter:  Fixed");
+				#endif
+			}
+			#if 0
+			if (!e && p && l.surfName != p->surfName)
+				LogO("Ter: " + trk + " Different surface !  " + l.texFile + " " + l.surfName + " pre: " + p->surfName);
+			#endif
 		}
 		
 		///  road
@@ -185,10 +205,16 @@ void CGui::ToolSceneXml()
 			if (!s.empty() && cmbRoadMtr[0]->findItemIndexWith(s) == MyGUI::ITEM_NONE)
 				LogO("Road: " + trk + " Not Found !!!  " + s);
 
+			if (!s.empty() && !data->pre->GetRoad(s))
+				LogO("Road: " + trk + " Not Found in presets !!!  " + s);
+
 			s = rd.sMtrPipe[n];
-			if (!s.empty() && cmbRoadMtr[0]->findItemIndexWith(s) == MyGUI::ITEM_NONE)
+			if (!s.empty() && cmbPipeMtr[0]->findItemIndexWith(s) == MyGUI::ITEM_NONE)
 				LogO("Road: " + trk + " Not Found !!!  " + s);
 
+			//if (!s.empty() && !data->pre->GetRoad(s))
+			//	LogO("Pipe: " + trk + " Not Found in presets !!!  " + s);
+	
 			//sMtrWall,sMtrWallPipe, sMtrCol
 			//sc.td.layerRoad
 		}
@@ -198,9 +224,8 @@ void CGui::ToolSceneXml()
 		{	const SGrassLayer& l = sc.grLayersAll[n];
 
 			String s = l.material;
-			/*if (!s.empty() && l.on &&
-				cmbGrassMtr->findItemIndexWith(s) == MyGUI::ITEM_NONE)
-				LogO("Grs: " + trk + " Not Found !!!  " + s);*/
+			if (!s.empty() && l.on && !data->pre->GetGrass(s))
+				LogO("Grs: " + trk + " Not Found in presets !!!  " + s);
 		}
 
 		///  veget
@@ -214,6 +239,9 @@ void CGui::ToolSceneXml()
 			{
 				if (l.on && !rg.resourceExistsInAnyGroup(s))
 					LogO("Veg: " + trk + " Not Found !!!  " + s);
+
+				if (l.on &&/**/ !data->pre->GetVeget(s.substr(0,s.length()-5)))
+					LogO("Veg: " + trk + " Not Found in presets !!!  " + s);
 
 				#if 0
 				if (l.on && !data->objs->Find(s) && noCol[s]==0)
@@ -236,14 +264,15 @@ void CGui::ToolSceneXml()
 					lay.windFx *= 0.1f;  lay.windFy *= 0.1f;
 				}/**/
 		}	}
-		//sc.SaveXml(path +"scene1.xml");  /// resave
+
+		if (modif)
+			sc.SaveXml(path +"scene.xml");  /// resave
 		//SplineRoad rd(this);  rd.LoadFile(path+"road.xml");
 		//rd.SaveFile(path+"road1.xml");  // resave
 	}
 	
 	//LogO(String("::: Time ALL tracks: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 	LogO("ALL tracks scene ---------");
-	exit(0);
 }
 
 
@@ -608,6 +637,7 @@ void CGui::ToolPresets()
 	o << "<presets>\n";
 	std::set<char> sc;
 
+
 	///  terrain
 	//<texture on="1" file="adesert_rocky_d.jpg" fnorm="desert_rocky_n.jpg" scale="7.06531" surf="DesertFast" dust="0.8" dustS="1" mud="0.4" smoke="0" tclr="0.48 0.26 0.08 0.7" angMin="0" angMax="8.80626" angSm="4.29007" hMin="-300" hMax="300" hSm="20" nOn="0" noise="1" n_1="0" n2="0">
 	for (vti = vt.begin(); vti != vt.end(); ++vti)
@@ -705,8 +735,8 @@ void CGui::ToolPresets()
 	}
 	o << "</presets>";
 	
-	#if 0
-	//  save file
+	
+	#if 0  ///  save file
 	ofstream f;
 	string p = PATHMANAGER::DataUser() + "/presets.xml";
 	f.open(p.c_str());
@@ -716,7 +746,7 @@ void CGui::ToolPresets()
 	#endif
 
 
-	///  check not in presets  ......................................................
+	///  check data/ not in presets  ......................................................
 	LogO("ALL PRESETS check ---------");
 	
 	//  Tex diff
@@ -736,30 +766,36 @@ void CGui::ToolPresets()
 		{
 			s = s.substr(0, s.length()-4);  // no ext
 			const PTer* p = data->pre->GetTer(s);
-			if (!p)
-				LogO("Tex not in presets !! "+s);
+			if (!p)  LogO("Tex not in presets !! "+s);
 		}
 	}
 	
 	//  Grass
-	/*GetMaterialsMat(sMat+"grass.mat");
+	String sMat = sData +"/materials/scene/";
+	GetMaterialsMat(sMat+"grass.mat");
 	for (size_t i=0; i < vsMaterials.size(); ++i)
-	{	String s = vsMaterials[i];
+	{
+		String s = vsMaterials[i];
 		if (s.length() > 5)  //!= "grass")
-			cmbGrassMtr->addItem(s);
-	}*/
+		{
+			const PGrass* p = data->pre->GetGrass(s);
+			if (!p)  LogO("Grass not in presets !! "+s);
+		}
+	}
 
 	//  Trees  ---------------------
-	/*Cmb(cmbPgLay, "LTrCombo", comboPgLay);
 	strlist lt;
 	PATHMANAGER::DirList(sData + "/trees", lt);
 	PATHMANAGER::DirList(sData + "/trees2", lt);
 	PATHMANAGER::DirList(sData + "/trees-old", lt);
 	for (strlist::iterator i = lt.begin(); i != lt.end(); ++i)
-		if (StringUtil::endsWith(*i,".mesh"))  {
-			std::string s = *i;  s = s.substr(0, s.length()-5);
-			cmbPgLay->addItem(s);  }*/
-
+		if (StringUtil::endsWith(*i,".mesh"))
+		{
+			string s = *i;
+			s = s.substr(0, s.length()-5);
+			const PVeget* p = data->pre->GetVeget(s);
+			if (!p)  LogO("Veget not in presets !! "+s);
+		}
 
 	LogO("ALL PRESETS ---------");
 }

@@ -14,17 +14,17 @@ namespace Forests {  class GrassLayer;  }
 
 struct TerLayer		// terrain texture layer
 {
-	bool on, triplanar;
-	float tiling;   // texture repeat
-	Ogre::String texFile, texNorm;  // textures
+	bool on, triplanar;  // for highest slopes
+	float tiling;   // scale, texture repeat
+	Ogre::String texFile, texNorm;  // textures _d, _n
 
-	float dust, mud, dustS, smoke;  // particles intensities
+	float dust, mud, dustS, smoke;  // particles intensities, S size
 	Ogre::ColourValue tclr;  // trail color
 	
-	//  blendmap
+	///  blendmap
 	//  min,max range and smooth range for terrain angle and height
 	float angMin,angMax,angSm, hMin,hMax,hSm;
-	bool nOnly;
+	bool nOnly;  // ignores above range
 	//  noise
 	float noise, nprev, nnext2;   //  factors to blend layer +1,-1,+2
 	float nFreq[2], nPers[2], nPow[2];  int nOct[2];

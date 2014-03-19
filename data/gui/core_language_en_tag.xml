@@ -908,6 +908,10 @@
 	<Tag name="InputLoadNextTrack">Load next track (shift - previous)</Tag>
 
 
+	<!--  Pick  -->
+	<Tag name="Pick">Pick</Tag>
+
+
 	<!--  Settings  -->
 	<Tag name="Settings">Settings</Tag>
 	<Tag name="SREditorVersion">Stunt Rally - Track Editor - version</Tag>

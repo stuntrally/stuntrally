@@ -249,11 +249,6 @@ void CGui::InitGui()
 	Btn("TerrainGenAdd", btnTerGenerate);  Btn("TerrainGenSub", btnTerGenerate);    Btn("TerrainGenMul", btnTerGenerate);
 	Btn("TerrainHalf",   btnTerrainHalf);  Btn("TerrainDouble", btnTerrainDouble);  Btn("TerrainMove",   btnTerrainMove);
 
-	//  Pick ...
-	Btn("PickTex", btnPickTex);      btn->eventMouseWheel += newDelegate(this, &CGui::wheelTex);  btnTexDiff = btn;
-	Btn("PickGrass", btnPickGrass);  btn->eventMouseWheel += newDelegate(this, &CGui::wheelGrs);  btnGrassMtr = btn;
-	Btn("PickVeget", btnPickVeget);  btn->eventMouseWheel += newDelegate(this, &CGui::wheelVeg);  btnVeget = btn;
-
 
 	///  generator  . . . . . . .
 	sv= &svTerGenScale;	sv->Init("TerGenScale",	&pSet->gen_scale, 0.f,160.f, 2.f, 2,4);  sv->DefaultF(52.f);
@@ -626,7 +621,12 @@ void CGui::InitGui()
 	
 	///  [Pick window]
 	///------------------------------------------------------------------------------------------------------------
-	const char sc[17]="TJSFGWIADCVUMOER";  //"Pick"+sc[i]
+	//  Pick btns
+	Btn("PickTex", btnPickTex);      btn->eventMouseWheel += newDelegate(this, &CGui::wheelTex);  btnTexDiff = btn;
+	Btn("PickGrass", btnPickGrass);  btn->eventMouseWheel += newDelegate(this, &CGui::wheelGrs);  btnGrassMtr = btn;
+	Btn("PickVeget", btnPickVeget);  btn->eventMouseWheel += newDelegate(this, &CGui::wheelVeg);  btnVeget = btn;
+
+	const char sc[17]="TJSFGWIADCVUMOER";  //chk "Pick"+sc[i]
 	// todo: ..
 	//"PickSetPar"  "PickAutoClose"
 	//"PickRadAll" "PickRadCur" "PickRadFilter"
@@ -635,7 +635,7 @@ void CGui::InitGui()
 	Mli2 lp;  int l;
 	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
 	liTex = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickTex);
-	lp->setColour(Colour(0.8,0.9,0.7));
+	lp->setColour(Colour(0.8,0.9,0.7));  lp->setInheritsAlpha(false);
 	
 	lp->removeAllColumns();  lp->removeAllItems();
 	lp->addColumn("#90C0F0", 25);  //+TR("#{Scenery}")
@@ -659,7 +659,7 @@ void CGui::InitGui()
 	///  Grass
 	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
 	liGrs = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickGrs);
-	lp->setColour(Colour(0.7,0.9,0.7));
+	lp->setColour(Colour(0.7,0.9,0.7));  lp->setInheritsAlpha(false);
 	
 	lp->removeAllColumns();  lp->removeAllItems();
 	lp->addColumn("#90C0F0", 25);
@@ -679,7 +679,7 @@ void CGui::InitGui()
 	///  Veget
 	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
 	liVeg = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickVeg);
-	lp->setColour(Colour(0.7,0.9,0.9));
+	lp->setColour(Colour(0.7,0.9,0.9));  lp->setInheritsAlpha(false);
 	
 	lp->removeAllColumns();  lp->removeAllItems();
 	lp->addColumn("#90C0F0", 25);

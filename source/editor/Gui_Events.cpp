@@ -158,6 +158,9 @@ void CGui::tabGrLayers(Tab wp, size_t id)
 	#define _Cmb(cmb, str)  cmb->setIndexSelected( cmb->findItemIndexWith(str) );
 
 	btnGrassMtr->setCaption(gr->material);
+	for (int i=0; i < liGrs->getItemCount(); ++i)  // upd pick
+		if (liGrs->getSubItemNameAt(1,i).substr(7) == gr->material)
+			liGrs->setIndexSelected(i);
 	_Cmb(cmbGrassClr, gr->colorMap);
 
 	_Ed(GrSwayDistr, g0->swayDistr);
@@ -209,9 +212,15 @@ void CGui::tabPgLayers(Tab wp, size_t id)
 {
 	idPgLay = id;  // help var
 	SldUpd_PgL();
-	const PagedLayer& lay = sc->pgLayersAll[idPgLay];
 
-	btnVeget->setCaption(lay.name.substr(0, lay.name.length()-5));
+	const PagedLayer& lay = sc->pgLayersAll[idPgLay];
+	string s = lay.name.substr(0, lay.name.length()-5);
+
+	btnVeget->setCaption(s);
+	for (int i=0; i < liVeg->getItemCount(); ++i)  // upd pick
+		if (liVeg->getSubItemNameAt(1,i).substr(7) == s)
+			liVeg->setIndexSelected(i);
+			
 	Upd3DView(lay.name);
 	SetUsedStr(valLTrAll, sc->pgLayers.size(), 5);
 }
@@ -466,16 +475,21 @@ void CGui::UpdSurfList()
 
 ///  [Pick window]
 //-----------------------------------------------------------------------------------------------------------
+int CGui::liNext(Mli2 li, int rel)
+{
+	int cnt = li->getItemCount()-1;
+	if (cnt < 0)  return 0;
+	int i = li->getIndexSelected();
+	if (i == ITEM_NONE)  i = 0;
+	i += rel;  if (i<0) i=0;  if (i>cnt) i=cnt;
+	li->setIndexSelected(i);
+	li->beginToItemAt(std::min(cnt, std::max(0, i-20)));
+	return i;
+}
 
-void CGui::wheelTex(WP wp, int rel){  int r = rel > 0 ? 1 : -1;
-	int cnt = liTex->getItemCount();
-	int i = liTex->getIndexSelected();
-	i = (i+rel+cnt) % cnt;
-	liTex->setIndexSelected(i);  listPickTex(liTex, i);  }
-void CGui::wheelGrs(WP wp, int rel){  int r = rel > 0 ? 1 : -1, cnt = liGrs->getItemCount(), i = liGrs->getIndexSelected();
-	listPickGrs(liGrs, (i+rel+cnt) % cnt );  }
-void CGui::wheelVeg(WP wp, int rel){  int r = rel > 0 ? 1 : -1, cnt = liVeg->getItemCount(), i = liVeg->getIndexSelected();
-	listPickVeg(liVeg, (i+rel+cnt) % cnt );  }
+void CGui::wheelTex(WP wp, int rel){  int r = rel < 0 ? 1 : -1;  listPickTex(liTex, liNext(liTex, r));  }
+void CGui::wheelGrs(WP wp, int rel){  int r = rel < 0 ? 1 : -1;  listPickGrs(liGrs, liNext(liGrs, r));  }
+void CGui::wheelVeg(WP wp, int rel){  int r = rel < 0 ? 1 : -1;  listPickVeg(liVeg, liNext(liVeg, r));  }
 
 void CGui::btnPickTex(WP){    PickShow(0);  }
 void CGui::btnPickGrass(WP){  PickShow(1);  }
