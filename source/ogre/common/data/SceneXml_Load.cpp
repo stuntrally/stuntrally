@@ -626,7 +626,7 @@ bool Presets::LoadXml(string file)
 
 		a = eTex->Attribute("aa");	if (a)  l.angMin = s2r(a);
 		a = eTex->Attribute("ab");	if (a)  l.angMax = s2r(a);
-		//a = eTex->Attribute("tp");	if (a)  l.triplanar = true;  else  l.triplanar = false;
+		a = eTex->Attribute("tp");	if (a)  l.triplanar = s2i(a)>0;
 
 		ter.push_back(l);  iter[l.texFile] = ter.size();
 		eTex = eTex->NextSiblingElement("t");
@@ -648,8 +648,6 @@ bool Presets::LoadXml(string file)
 		a = eRd->Attribute("md");	if (a)  l.mud = s2r(a);
 		a = eRd->Attribute("tr");	if (a)  l.tclr = s2c(a);
 
-		//a = eRd->Attribute("tp");	if (a)  l.triplanar = true;  else  l.triplanar = false;
-
 		rd.push_back(l);  ird[l.mtr] = rd.size();
 		eRd = eRd->NextSiblingElement("r");
 	}
@@ -659,16 +657,16 @@ bool Presets::LoadXml(string file)
 	while (eGr)
 	{
 		PGrass g;
-		a = eGr->Attribute("mtr");		if (a)  g.mtr = String(a);
-		a = eGr->Attribute("clr");		if (a)  g.clr = String(a);
+		a = eGr->Attribute("g");	if (a)  g.mtr = String(a);
+		a = eGr->Attribute("c");	if (a)  g.clr = String(a);
 
-		a = eGr->Attribute("sc");		if (a)  g.sc = String(a);
-		a = eGr->Attribute("z");		if (a)  g.scn = string(a);
+		a = eGr->Attribute("sc");	if (a)  g.sc = String(a);
+		a = eGr->Attribute("z");	if (a)  g.scn = string(a);
 
-		a = eGr->Attribute("minSx");	if (a)  g.minSx = s2r(a);
-		a = eGr->Attribute("maxSx");	if (a)  g.maxSx = s2r(a);
-		a = eGr->Attribute("minSy");	if (a)  g.minSy = s2r(a);
-		a = eGr->Attribute("maxSy");	if (a)  g.maxSy = s2r(a);
+		a = eGr->Attribute("xa");	if (a)  g.minSx = s2r(a);
+		a = eGr->Attribute("xb");	if (a)  g.maxSx = s2r(a);
+		a = eGr->Attribute("ya");	if (a)  g.minSy = s2r(a);
+		a = eGr->Attribute("yb");	if (a)  g.maxSy = s2r(a);
 
 		gr.push_back(g);  igr[g.mtr] = gr.size();
 		eGr = eGr->NextSiblingElement("g");
@@ -679,19 +677,19 @@ bool Presets::LoadXml(string file)
 	while (eVeg)
 	{
 		PVeget l;
-		a = eVeg->Attribute("name");		if (a)  l.name = String(a);
-		a = eVeg->Attribute("minScale");	if (a)  l.minScale = s2r(a);
-		a = eVeg->Attribute("maxScale");	if (a)  l.maxScale = s2r(a);
+		a = eVeg->Attribute("p");	if (a)  l.name = String(a);
+		a = eVeg->Attribute("sa");	if (a)  l.minScale = s2r(a);
+		a = eVeg->Attribute("sb");	if (a)  l.maxScale = s2r(a);
 
-		a = eVeg->Attribute("sc");			if (a)  l.sc = String(a);
-		a = eVeg->Attribute("z");			if (a)  l.scn = string(a);
+		a = eVeg->Attribute("sc");	if (a)  l.sc = String(a);
+		a = eVeg->Attribute("z");	if (a)  l.scn = string(a);
 
-		//a = eVeg->Attribute("addTrRdDist");	if (a)  l.addRdist = s2i(a);
-		a = eVeg->Attribute("windFx");		if (a)  l.windFx = s2r(a);
-		a = eVeg->Attribute("windFy");		if (a)  l.windFy = s2r(a);
+		//a = eVeg->Attribute("rd");	if (a)  l.addRdist = s2i(a);
+		a = eVeg->Attribute("wx");	if (a)  l.windFx = s2r(a);
+		a = eVeg->Attribute("wy");	if (a)  l.windFy = s2r(a);
 
-		a = eVeg->Attribute("maxTerAng");	if (a)  l.maxTerAng = s2r(a);
-		a = eVeg->Attribute("maxDepth");	if (a)  l.maxDepth = s2r(a);
+		a = eVeg->Attribute("ab");	if (a)  l.maxTerAng = s2r(a);
+		//a = eVeg->Attribute("md");	if (a)  l.maxDepth = s2r(a);
 
 		veg.push_back(l);  iveg[l.name] = veg.size();
 		eVeg = eVeg->NextSiblingElement("v");

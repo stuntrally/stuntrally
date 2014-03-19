@@ -32,7 +32,7 @@ void CGui::tabTerLayer(Tab wp, size_t id)
 	SldUpd_TerL();
 
 	//  tex
-	cmbTexDiff->setIndexSelected( cmbTexDiff->findItemIndexWith(l->texFile) );
+	btnTexDiff->setCaption(l->texFile.substr(0, l->texFile.length()-6));  // no _d.jpg
 	cmbTexNorm->setIndexSelected( cmbTexNorm->findItemIndexWith(l->texNorm) );
 
 	//  auto norm check
@@ -399,39 +399,6 @@ void CGui::chkTerLayTripl(Ck*)
 {
 	sc->td.UpdLayers();
 	updUsedTer();
-}
-
-void CGui::comboTexDiff(Cmb cmb, size_t val)
-{
-	String s = cmb->getItemNameAt(val);
-	TerLayer& l = sc->td.layersAll[idTerLay];
-	l.texFile = s;
-	
-	//  auto norm
-	//if (bTexNormAuto)
-	{	String sNorm = StringUtil::replaceAll(s,"_d.","_n.");  //_T
-
-		//  preset
-		std::string ss = s.substr(0, s.length()-4);
-		const PTer* pt = data->pre->GetTer(ss);
-		if (pt)
-		{	sNorm = pt->texNorm+".jpg";
-			//l.surfName = pt->surfName;
-			//l.dust = pt->dust;  l.dustS = pt->dustS;
-			//l.mud = pt->mud;  l.tclr = pt->tclr;
-			//l.tiling = pt->tiling;  svTerLScale.Upd();
-			//l.triplanar = pt->triplanar;  ckTerLayTripl.Upd();
-		}
-
-		size_t id = cmbTexNorm->findItemIndexWith(sNorm);
-		if (id != ITEM_NONE)  // set only if found
-		{
-			cmbTexNorm->setIndexSelected(id);
-			l.texNorm = sNorm;
-	}	}
-	//  tex image
-    imgTexDiff->setImageTexture(s);
-	UpdSurfList();
 }
 
 void CGui::comboTexNorm(Cmb cmb, size_t val)

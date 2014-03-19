@@ -104,7 +104,23 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	SplineRoad* road = scn->road;
 	bool bRoad = edMode == ED_Road && road && bEdit();
 
-	//  global keys
+
+	///  Pick open  ---------------------
+	if (bGuiFocus && skey==key(TAB) && !pSet->isMain && pSet->inMenu==WND_Edit)
+	{
+		switch (tab->getIndexSelected())
+		{
+		case TAB_Layers:  gui->btnPickTex(0);
+			return true;
+		case TAB_Grass:
+			if (sub->getIndexSelected()==1)  gui->btnPickGrass(0);
+			return true;
+		case TAB_Veget:
+			if (sub->getIndexSelected()==1)  gui->btnPickVeget(0);
+			return true;
+	}	}
+
+	//  Global keys
 	//------------------------------------------------------------------------------------------------------------------------------
 	switch (skey)
 	{

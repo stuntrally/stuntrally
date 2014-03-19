@@ -151,8 +151,8 @@ public:
 	void updUsedTer();
 
 	//  texture
-	Cmb cmbTexDiff, cmbTexNorm;
-	void comboTexDiff(CMB), comboTexNorm(CMB);
+	Btn btnTexDiff;
+	Cmb cmbTexNorm;  void comboTexNorm(CMB);
 	Img imgTexDiff;
 	Ck ckTexNormAuto;  bool bTexNormAuto;  // auto norm tex name
 	void btnTerLmoveL(WP),btnTerLmoveR(WP);
@@ -204,13 +204,12 @@ public:
 	float tiViewUpd;
 	void Upd3DView(Ogre::String mesh);
 	
-	///  paged layers  --------
+	///  models (paged layers)  --------
 	int idPgLay;  // help var
 	void SldUpd_PgL();
 	Tab tabsPgLayers;  void tabPgLayers(TAB);
-
+	Btn btnVeget;
 	CK(PgLayOn);  Txt valLTrAll;
-	Cmb cmbPgLay;  void comboPgLay(CMB);
 
 	SV svLTrDens;
 	SV svLTrRdDist, svLTrRdDistMax;
@@ -229,7 +228,8 @@ public:
 	SV svGrMinX, svGrMaxX;
 	SV svGrMinY, svGrMaxY;
 
-	Cmb cmbGrassMtr;  void comboGrassMtr(CMB);
+	Btn btnGrassMtr;
+	void comboGrassMtr(CMB);
 	Cmb cmbGrassClr;  void comboGrassClr(CMB);
 	Img imgGrass,imgGrClr;
 
@@ -310,6 +310,14 @@ public:
 	//  [Tweak]  ----
 	void CreateGUITweakMtr(), slTweak(SL),edTweak(Ed);
 	void TweakSetMtrPar(std::string name, float val);  void comboTweakMtr(CMB);
+
+
+	//  [Pick]  ----
+	Mli2 liTex, liGrs, liVeg;
+	void PickShow(int n);
+	void btnPickTex(WP),   wheelTex(WP, int rel), listPickTex(Mli2 li, size_t pos);
+	void btnPickGrass(WP), wheelGrs(WP, int rel), listPickGrs(Mli2 li, size_t pos);
+	void btnPickVeget(WP), wheelVeg(WP, int rel), listPickVeg(Mli2 li, size_t pos);
 
 
 

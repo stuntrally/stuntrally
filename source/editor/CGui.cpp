@@ -20,7 +20,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,edFogClr(0),edFogClr2(0),edFogClrH(0)
 	,clrFog(0),clrFog2(0),clrFogH(0)
 	// terrain
-	,cmbTexDiff(0),cmbTexNorm(0), imgTexDiff(0)
+	,cmbTexNorm(0), imgTexDiff(0)
 	,valTerLAll(0),tabsHmap(0),tabsTerLayers(0),valTriplAll(0)
 	, idTerLay(0)
 	,bTexNormAuto(1), bDebugBlend(0), dbgLclr(0)
@@ -39,11 +39,10 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,edTrPage(0),edTrDist(0),edTrImpDist(0)
 	,edGrSwayDistr(0), edGrSwayLen(0), edGrSwaySpd(0)
 	,edSceneryId(0)
-	,cmbGrassMtr(0), cmbGrassClr(0)
+	,cmbGrassClr(0)
 	,viewCanvas(0), tiViewUpd(-1.f)
 	// paged layers, veget models
 	, idPgLay(0), tabsPgLayers(0), valLTrAll(0)
-	,cmbPgLay(0)
 	// grass layers
 	, idGrLay(0), tabsGrLayers(0), valLGrAll(0)
 	,imgGrass(0),imgGrClr(0)
@@ -59,6 +58,9 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	, cntWarn(0), logWarn(0), iLoadNext(0)
 	,edWarn(0),txWarn(0)
 	,imgWarn(0),imgInfo(0)
+	// pick
+	,btnTexDiff(0), btnGrassMtr(0), btnVeget(0)
+	,liTex(0), liGrs(0), liVeg(0)
 	// track
 	, trkName(0)
 	// gui

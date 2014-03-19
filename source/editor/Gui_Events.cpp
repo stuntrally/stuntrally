@@ -4,10 +4,12 @@
 #include "CApp.h"
 #include "CGui.h"
 #include "../ogre/common/CScene.h"
+#include "../ogre/common/data/CData.h"
 #include "../road/Road.h"
 #include <fstream>
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/Slider.h"
+#include "../ogre/common/MultiList2.h"
 #include <OgreOverlay.h>
 #include <OgreOverlayElement.h>
 #include <OgreRectangle2D.h>
@@ -16,6 +18,7 @@
 #include <MyGUI.h>
 using namespace MyGUI;
 using namespace Ogre;
+using namespace std;
 
 
 ///  used value colors  blue,green,yellow,orange,red,black  ..
@@ -125,13 +128,6 @@ void CGui::editTrGr(Ed ed)
 	else if (n=="SceneryId")  sc->sceneryId = ed->getCaption();
 }
 
-void CGui::comboGrassMtr(Cmb cmb, size_t val)
-{
-	String s = cmb->getItemNameAt(val);
-	SGrassLayer* gr = &sc->grLayersAll[idGrLay];
-	gr->material = s;
-	imgGrass->setImageTexture(gr->material + ".png");  // same mtr name as tex
-}
 void CGui::comboGrassClr(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
@@ -161,7 +157,7 @@ void CGui::tabGrLayers(Tab wp, size_t id)
 	#define _Ed(name, val)  ed##name->setCaption(toStr(val));
 	#define _Cmb(cmb, str)  cmb->setIndexSelected( cmb->findItemIndexWith(str) );
 
-	_Cmb(cmbGrassMtr, gr->material);
+	btnGrassMtr->setCaption(gr->material);
 	_Cmb(cmbGrassClr, gr->colorMap);
 
 	_Ed(GrSwayDistr, g0->swayDistr);
@@ -215,7 +211,7 @@ void CGui::tabPgLayers(Tab wp, size_t id)
 	SldUpd_PgL();
 	const PagedLayer& lay = sc->pgLayersAll[idPgLay];
 
-	cmbPgLay->setIndexSelected( cmbPgLay->findItemIndexWith(lay.name.substr(0,lay.name.length()-5)) );
+	btnVeget->setCaption(lay.name.substr(0, lay.name.length()-5));
 	Upd3DView(lay.name);
 	SetUsedStr(valLTrAll, sc->pgLayers.size(), 5);
 }
@@ -246,13 +242,6 @@ void CGui::chkPgLayOn(Ck*)
 {
 	sc->UpdPgLayers();
 	SetUsedStr(valLTrAll, sc->pgLayers.size(), 5);
-}
-
-void CGui::comboPgLay(Cmb cmb, size_t val)
-{
-	String s = cmb->getItemNameAt(val) + ".mesh";
-	sc->pgLayersAll[idPgLay].name = s;
-	Upd3DView(s);
 }
 
 void CGui::Upd3DView(String mesh)
@@ -472,4 +461,105 @@ void CGui::UpdSurfList()
 		surfList->setItemNameAt(n+4, "#FFB020"+TR("#{Road} ") +toStr(n+1)+"  "+ app->scn->road->sMtrRoad[n]);
 		surfList->setItemNameAt(n+8, "#FFFF80"+TR("#{Pipe} ") +toStr(n+1)+"  "+ app->scn->road->sMtrPipe[n]);
 	}
+}
+
+
+///  [Pick window]
+//-----------------------------------------------------------------------------------------------------------
+
+void CGui::wheelTex(WP wp, int rel){  int r = rel > 0 ? 1 : -1;
+	int cnt = liTex->getItemCount();
+	int i = liTex->getIndexSelected();
+	i = (i+rel+cnt) % cnt;
+	liTex->setIndexSelected(i);  listPickTex(liTex, i);  }
+void CGui::wheelGrs(WP wp, int rel){  int r = rel > 0 ? 1 : -1, cnt = liGrs->getItemCount(), i = liGrs->getIndexSelected();
+	listPickGrs(liGrs, (i+rel+cnt) % cnt );  }
+void CGui::wheelVeg(WP wp, int rel){  int r = rel > 0 ? 1 : -1, cnt = liVeg->getItemCount(), i = liVeg->getIndexSelected();
+	listPickVeg(liVeg, (i+rel+cnt) % cnt );  }
+
+void CGui::btnPickTex(WP){    PickShow(0);  }
+void CGui::btnPickGrass(WP){  PickShow(1);  }
+void CGui::btnPickVeget(WP){  PickShow(2);  }
+
+void CGui::PickShow(int n)
+{
+	liTex->setVisible(n==0);
+	liGrs->setVisible(n==1);
+	liVeg->setVisible(n==2);
+	app->mWndPick->setVisible(!app->mWndPick->getVisible());
+}
+
+///  Tex Diff
+void CGui::listPickTex(Mli2 li, size_t pos)
+{
+	if (pos==ITEM_NONE || pos >= data->pre->ter.size())
+	{	liTex->setIndexSelected(0);  pos = 0;  }
+	
+	string s = liTex->getSubItemNameAt(1,pos);
+	s = s.substr(7) + "_d";
+	const PTer* p = data->pre->GetTer(s);  if (!p)  return;
+	s += ".jpg";
+
+	TerLayer& l = sc->td.layersAll[idTerLay];
+	l.texFile = s;
+	
+	//  auto norm
+	//if (bTexNormAuto)
+	{	String sNorm = StringUtil::replaceAll(s,"_d.","_n.");  //_T
+		sNorm = p->texNorm+".jpg";
+
+		//if (pSet->preset)  //  preset vals ..
+		{	//l.surfName = pt->surfName;
+			//l.dust = pt->dust;  l.dustS = pt->dustS;
+			//l.mud = pt->mud;  l.tclr = pt->tclr;
+			//l.tiling = pt->tiling;  svTerLScale.Upd();
+			//l.triplanar = pt->triplanar;  ckTerLayTripl.Upd();
+		}
+
+		size_t id = cmbTexNorm->findItemIndexWith(sNorm);
+		if (id != ITEM_NONE)  // set only if found
+		{
+			cmbTexNorm->setIndexSelected(id);
+			l.texNorm = sNorm;
+	}	}
+
+	//  upd img
+	btnTexDiff->setCaption(s.substr(0, s.length()-6));  // no _d.jpg
+    imgTexDiff->setImageTexture(s);
+	UpdSurfList();
+}
+
+///  Grass
+void CGui::listPickGrs(Mli2 li, size_t pos)
+{
+	if (pos==ITEM_NONE || pos >= data->pre->gr.size())
+	{	liGrs->setIndexSelected(0);  pos = 0;  }
+	
+	string s = liGrs->getSubItemNameAt(1,pos);
+	s = s.substr(7);
+	const PGrass* p = data->pre->GetGrass(s);  if (!p)  return;
+
+	SGrassLayer* gr = &sc->grLayersAll[idGrLay];
+	gr->material = s;
+
+	//  upd img
+	btnGrassMtr->setCaption(gr->material);
+	imgGrass->setImageTexture(gr->material + ".png");  // same mtr name as tex
+}
+
+///  Veget Model
+void CGui::listPickVeg(Mli2 li, size_t pos)
+{
+	if (pos==ITEM_NONE || pos >= data->pre->veg.size())
+	{	liVeg->setIndexSelected(0);  pos = 0;  }
+	
+	string s = liVeg->getSubItemNameAt(1,pos);
+	s = s.substr(7);
+	const PVeget* p = data->pre->GetVeget(s);  if (!p)  return;
+
+	//  upd
+	btnVeget->setCaption(s);
+	s += ".mesh";
+	sc->pgLayersAll[idPgLay].name = s;
+	Upd3DView(s);
 }

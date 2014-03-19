@@ -198,9 +198,9 @@ void CGui::ToolSceneXml()
 		{	const SGrassLayer& l = sc.grLayersAll[n];
 
 			String s = l.material;
-			if (!s.empty() && l.on &&
+			/*if (!s.empty() && l.on &&
 				cmbGrassMtr->findItemIndexWith(s) == MyGUI::ITEM_NONE)
-				LogO("Grs: " + trk + " Not Found !!!  " + s);
+				LogO("Grs: " + trk + " Not Found !!!  " + s);*/
 		}
 
 		///  veget
@@ -715,18 +715,52 @@ void CGui::ToolPresets()
 	LogO("Saved: "+p);
 	#endif
 
-	///  check presets  ......................................................
+
+	///  check not in presets  ......................................................
 	LogO("ALL PRESETS check ---------");
 	
-	//  tex not in preset ..
-	for (i=0; i < data->pre->ter.size(); ++i)
+	//  Tex diff
+	strlist li;
+	std::string sData = PATHMANAGER::Data();
+	PATHMANAGER::DirList(sData + "/terrain2", li);
+
+	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
+	if (!StringUtil::match(*i, "*.txt", false))
 	{
-		const PTer& pt = data->pre->ter[i];
-		size_t id = cmbTexDiff->findItemIndexWith(pt.texFile+".jpg");
-		if (id == ITEM_NONE)
-			LogO("NO ter !! "+pt.texFile);
+		string s = *i;
+		//if (StringUtil::match(s, "*_n.*", false))
+		//	cmbTexNorm->addItem(s);
+		//else
+
+		if (StringUtil::match(s, "*_d.*", false))  //_T
+		{
+			s = s.substr(0, s.length()-4);  // no ext
+			const PTer* p = data->pre->GetTer(s);
+			if (!p)
+				LogO("Tex not in presets !! "+s);
+		}
 	}
 	
+	//  Grass
+	/*GetMaterialsMat(sMat+"grass.mat");
+	for (size_t i=0; i < vsMaterials.size(); ++i)
+	{	String s = vsMaterials[i];
+		if (s.length() > 5)  //!= "grass")
+			cmbGrassMtr->addItem(s);
+	}*/
+
+	//  Trees  ---------------------
+	/*Cmb(cmbPgLay, "LTrCombo", comboPgLay);
+	strlist lt;
+	PATHMANAGER::DirList(sData + "/trees", lt);
+	PATHMANAGER::DirList(sData + "/trees2", lt);
+	PATHMANAGER::DirList(sData + "/trees-old", lt);
+	for (strlist::iterator i = lt.begin(); i != lt.end(); ++i)
+		if (StringUtil::endsWith(*i,".mesh"))  {
+			std::string s = *i;  s = s.substr(0, s.length()-5);
+			cmbPgLay->addItem(s);  }*/
+
+
 	LogO("ALL PRESETS ---------");
 }
 

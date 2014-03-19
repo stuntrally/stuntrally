@@ -2,6 +2,7 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/GuiCom.h"
+#include "../ogre/common/data/CData.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -45,10 +46,9 @@ void CGui::InitGui()
 
 	//  wnds
 	app->mWndMain = fWnd("MainMenuWnd");
-	app->mWndTrack = fWnd("TrackWnd");
-	app->mWndEdit = fWnd("EditorWnd");
-	app->mWndOpts = fWnd("OptionsWnd");
-	app->mWndHelp = fWnd("HelpWnd");
+	app->mWndTrack = fWnd("TrackWnd");  app->mWndEdit = fWnd("EditorWnd");
+	app->mWndOpts = fWnd("OptionsWnd"); app->mWndHelp = fWnd("HelpWnd");
+	app->mWndPick = fWnd("PickWnd");
 
 	app->mWndCam =   fWnd("CamWnd");    app->mWndCam->setPosition(0,64);
 	app->mWndStart = fWnd("StartWnd");  app->mWndStart->setPosition(0,64);
@@ -248,10 +248,11 @@ void CGui::InitGui()
 	Btn("TerrainNew", btnTerrainNew);
 	Btn("TerrainGenAdd", btnTerGenerate);  Btn("TerrainGenSub", btnTerGenerate);    Btn("TerrainGenMul", btnTerGenerate);
 	Btn("TerrainHalf",   btnTerrainHalf);  Btn("TerrainDouble", btnTerrainDouble);  Btn("TerrainMove",   btnTerrainMove);
-	///TODO: show window with list, chks, sceneries,  ...
-	//Btn("PickTex", btnPickTex);
-	//Btn("PickGrass", btnPickGrass);
-	//Btn("PickVeget", btnPickVeget);
+
+	//  Pick ...
+	Btn("PickTex", btnPickTex);      btn->eventMouseWheel += newDelegate(this, &CGui::wheelTex);  btnTexDiff = btn;
+	Btn("PickGrass", btnPickGrass);  btn->eventMouseWheel += newDelegate(this, &CGui::wheelGrs);  btnGrassMtr = btn;
+	Btn("PickVeget", btnPickVeget);  btn->eventMouseWheel += newDelegate(this, &CGui::wheelVeg);  btnVeget = btn;
 
 
 	///  generator  . . . . . . .
@@ -376,8 +377,8 @@ void CGui::InitGui()
 	///  Grass  ------------------------------------
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
 
-	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);	imgGrass = fImg("ImgGrass");
-	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);	imgGrClr = fImg("ImgGrClr");
+	imgGrass = fImg("ImgGrass");  imgGrClr = fImg("ImgGrClr");
+	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);
 
 	//  grass channels
 	sv= &svGrChAngMin;	sv->Init("GrChMinA",	&f, 0.f,90.f, 1.f, 1,4);  sv->DefaultF(30.f);
@@ -402,10 +403,10 @@ void CGui::InitGui()
 	valLGrAll = fTxt("LGrAll");
 	Tab(tabsGrLayers, "LGrLayTab", tabGrLayers);
 
-	sv= &svGrMinX;	sv->Init("GrMinX",	&f, 0.1f,4.1, 2.f);  sv->DefaultF(1.3f);
-	sv= &svGrMaxX;	sv->Init("GrMaxX",	&f, 0.1f,4.1, 2.f);  sv->DefaultF(1.5f);
-	sv= &svGrMinY;	sv->Init("GrMinY",	&f, 0.1f,4.1, 2.f);  sv->DefaultF(1.4f);
-	sv= &svGrMaxY;	sv->Init("GrMaxY",	&f, 0.1f,4.1, 2.f);  sv->DefaultF(1.6f);
+	sv= &svGrMinX;	sv->Init("GrMinX",	&f, 0.5f,4.f, 1.5f);  sv->DefaultF(1.2f);
+	sv= &svGrMaxX;	sv->Init("GrMaxX",	&f, 0.5f,4.1, 1.5f);  sv->DefaultF(1.6f);
+	sv= &svGrMinY;	sv->Init("GrMinY",	&f, 0.5f,4.f, 1.5f);  sv->DefaultF(1.2f);
+	sv= &svGrMaxY;	sv->Init("GrMaxY",	&f, 0.5f,4.f, 1.5f);  sv->DefaultF(1.6f);
 	sv= &svGrChan;	sv->Init("LGrChan",	&i, 0,3);  sv->DefaultI(0);
 	sv= &svLGrDens;	sv->Init("LGrDens",	&f, 0.001f,1.f, 2.f, 3,5);  sv->DefaultF(0.22f);
 	SldUpd_GrL();
@@ -482,8 +483,8 @@ void CGui::InitGui()
 	
 	//---------------------  Skies  ---------------------
 	Cmb(cmbSky, "SkyCombo", comboSky);
-	std::string data = PATHMANAGER::Data();
-	String sMat = data +"/materials/scene/";  // path
+	std::string sData = PATHMANAGER::Data();
+	String sMat = sData +"/materials/scene/";  // path
 
 	GetMaterialsMat(sMat+"sky.mat");
 	for (size_t i=0; i < vsMaterials.size(); ++i)
@@ -491,6 +492,7 @@ void CGui::InitGui()
 		if (s != "" && s != "base_sky")
 			cmbSky->addItem(s);  //LogO(s);
 	}
+	
 	//---------------------  Weather  ---------------------
 	Cmb(cmbRain1, "Rain1Cmb", comboRain1);  cmbRain1->addItem("");
 	Cmb(cmbRain2, "Rain2Cmb", comboRain2);  cmbRain2->addItem("");
@@ -503,12 +505,10 @@ void CGui::InitGui()
 
 
 	//---------------------  Terrain  ---------------------
-	Cmb(cmbTexDiff, "TexDiffuse", comboTexDiff);
 	Cmb(cmbTexNorm, "TexNormal", comboTexNorm);  cmbTexNorm->addItem("flat_n.png");
 
 	strlist li;
-	PATHMANAGER::DirList(data + "/terrain", li);
-	PATHMANAGER::DirList(data + "/terrain2", li);
+	PATHMANAGER::DirList(sData + "/terrain2", li);
 
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 	if (!StringUtil::match(*i, "*.txt", false) &&
@@ -517,9 +517,9 @@ void CGui::InitGui()
 		String s = *i;
 		if (StringUtil::match(*i, "*_n.*", false))
 			cmbTexNorm->addItem(*i);
-		else
-		if (StringUtil::match(*i, "*_d.*", false))  //_T
-			cmbTexDiff->addItem(*i);
+		//else
+		//if (StringUtil::match(*i, "*_d.*", false))  //_T
+		//	cmbTexDiff->addItem(*i);
 	}
 	
 	//  particles
@@ -535,29 +535,12 @@ void CGui::InitGui()
 	
 
 	//---------------------  Grass  ---------------------
-	GetMaterialsMat(sMat+"grass.mat");
-	for (size_t i=0; i < vsMaterials.size(); ++i)
-	{	String s = vsMaterials[i];
-		if (s.length() > 5)  //!= "grass")
-			cmbGrassMtr->addItem(s);
-	}
-	PATHMANAGER::DirList(data + "/grass", li);
+	PATHMANAGER::DirList(sData + "/grass", li);
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 	{
 		if (StringUtil::startsWith(*i, "grClr", false))
 			cmbGrassClr->addItem(*i);
 	}
-
-	//---------------------  Trees  ---------------------
-	Cmb(cmbPgLay, "LTrCombo", comboPgLay);
-	strlist lt;
-	PATHMANAGER::DirList(data + "/trees", lt);
-	PATHMANAGER::DirList(data + "/trees2", lt);
-	PATHMANAGER::DirList(data + "/trees-old", lt);
-	for (strlist::iterator i = lt.begin(); i != lt.end(); ++i)
-		if (StringUtil::endsWith(*i,".mesh"))  {
-			std::string s = *i;  s = s.substr(0, s.length()-5);
-			cmbPgLay->addItem(s);  }
 
 
 	//---------------------  Roads  ---------------------
@@ -587,7 +570,7 @@ void CGui::InitGui()
 
 	//---------------------  Objects  ---------------------
 	app->vObjNames.clear();  strlist lo;
-	PATHMANAGER::DirList(data + "/objects", lo);
+	PATHMANAGER::DirList(sData + "/objects", lo);
 	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh") && (*i) != "sphere.mesh")
 			app->vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
@@ -608,7 +591,7 @@ void CGui::InitGui()
 			if (StringUtil::startsWith(name,"rock",false)||StringUtil::startsWith(name,"cave",false))
 				objListRck->addItem("#E0B070"+name);  // rocks
 			else 
-			if (boost::filesystem::exists(data+"/objects/"+ name + ".bullet"))
+			if (boost::filesystem::exists(sData+"/objects/"+ name + ".bullet"))
 				objListDyn->addItem("#A0E0FF"+name);  // dynamic
 			else
 				objListSt->addItem("#C8C8C8"+name);
@@ -628,7 +611,7 @@ void CGui::InitGui()
 	ComboBoxPtr cmbTwk;
 	Cmb(cmbTwk, "TweakMtr", comboTweakMtr);
 
-	GetMaterialsMat(data +"/materials/water.mat");
+	GetMaterialsMat(sData +"/materials/water.mat");
 	GetMaterialsMat(sMat+"pipe.mat",false);
 	GetMaterialsMat(sMat+"road.mat",false);
 	GetMaterialsMat(sMat+"objects_static.mat",false);
@@ -639,7 +622,90 @@ void CGui::InitGui()
 			cmbTwk->addItem(s);
 	}
 	cmbTwk->setIndexSelected( cmbTwk->findItemIndexWith(pSet->tweak_mtr) );
-	//-----------------------------------------------------
+
+	
+	///  [Pick window]
+	///------------------------------------------------------------------------------------------------------------
+	const char sc[17]="TJSFGWIADCVUMOER";  //"Pick"+sc[i]
+	// todo: ..
+	//"PickSetPar"  "PickAutoClose"
+	//"PickRadAll" "PickRadCur" "PickRadFilter"
+
+	///  Tex Diff
+	Mli2 lp;  int l;
+	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
+	liTex = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickTex);
+	lp->setColour(Colour(0.8,0.9,0.7));
+	
+	lp->removeAllColumns();  lp->removeAllItems();
+	lp->addColumn("#90C0F0", 25);  //+TR("#{Scenery}")
+	lp->addColumn("#E0FFE0"+TR("#{Diffuse}"), 160);  ///pick dim
+	lp->addColumn("#80FF80"+TR("#{Scale}"), 40);
+	//lp->addColumn("#80FF80/", 40);
+	lp->addColumn("#80FF80|"/*+TR("#{HighestSlopes}")*/, 27);
+	lp->addColumn(" ", 20);
+	
+	for (i=0; i < data->pre->ter.size(); ++i)
+	{	const PTer& t = data->pre->ter[i];
+		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
+		lp->addItem(c+ t.sc, 0);  l = lp->getItemCount()-1;
+
+		lp->setSubItemNameAt(1,l, c+ t.texFile.substr(0, t.texFile.length()-2));  // no _d
+		lp->setSubItemNameAt(2,l, c+ fToStr( t.tiling, 0,2)); //1,3
+		//lp->setSubItemNameAt(3,l, c+ fToStr( t.angMin, 0,2));
+		lp->setSubItemNameAt(3,l, c+ (t.triplanar?"1":"0"));
+	}
+
+	///  Grass
+	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
+	liGrs = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickGrs);
+	lp->setColour(Colour(0.7,0.9,0.7));
+	
+	lp->removeAllColumns();  lp->removeAllItems();
+	lp->addColumn("#90C0F0", 25);
+	lp->addColumn("#E0FFE0"+TR("#{GrMaterial}"), 152);
+	//lp->addColumn("#E0FFE0"+TR("#{GrColorMap}"), 120);
+	lp->addColumn(" ", 20);
+
+	for (i=0; i < data->pre->gr.size(); ++i)
+	{	const PGrass& t = data->pre->gr[i];
+		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
+		lp->addItem(c+ t.sc, 0);  l = lp->getItemCount()-1;
+
+		lp->setSubItemNameAt(1,l, c+ t.mtr);
+		//lp->setSubItemNameAt(2,l, c+ t.clr.substr(5));
+	}
+
+	///  Veget
+	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
+	liVeg = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickVeg);
+	lp->setColour(Colour(0.7,0.9,0.9));
+	
+	lp->removeAllColumns();  lp->removeAllItems();
+	lp->addColumn("#90C0F0", 25);
+	lp->addColumn("#E0FFE0"+TR("#{Model}"), 157);
+	lp->addColumn("#80E0E0"+TR("#{MaxScale}"), 40);
+	lp->addColumn("#80E080/"/*+TR("#{AngleMax}")*/, 30);
+	lp->addColumn(" ", 20);
+
+	for (i=0; i < data->pre->veg.size(); ++i)
+	{	const PVeget& t = data->pre->veg[i];
+		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
+		lp->addItem(c+ t.sc, 0);  l = lp->getItemCount()-1;
+
+		lp->setSubItemNameAt(1,l, c+ t.name);
+		//lp->setSubItemNameAt(2,l, c+ fToStr( t.minScale, 1,3));
+		lp->setSubItemNameAt(2,l, c+ fToStr( t.maxScale, 1,3));
+		lp->setSubItemNameAt(3,l, c+ fToStr( t.maxTerAng, 0,2));
+	}
+	
+	// todo: sorting pick lists..
+	//lp->mSortColumnIndex = pSet->tracks_sort;
+	//lp->mSortUp = pSet->tracks_sortup;
+
+    //TrackListUpd(true);  //upd
+	//listTrackChng(trkList,0);
+
 	
 
 	///  [Track]

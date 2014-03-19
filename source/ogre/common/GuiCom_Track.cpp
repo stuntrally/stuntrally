@@ -67,7 +67,7 @@ void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 {
 	String c = GetSceneryColor(name);
 
-	MultiList2* li = trkList;
+	Mli2 li = trkList;
 	li->addItem(c+name, 0);
 
 	if (!ti)  return;  //  details

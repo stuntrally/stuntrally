@@ -161,7 +161,7 @@ void CGuiCom::SortTrkList()
 //-----------------------------------------------------------------------------------------------------------
 
 //  list changed position
-void CGuiCom::listTrackChng(MultiList2* li, size_t pos)
+void CGuiCom::listTrackChng(Mli2 li, size_t pos)
 {
 	if (!li)  return;
 	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
@@ -305,5 +305,14 @@ void CGuiCom::updTrkListDim()
 		Tbi trkTab = fTbi("TabTrack");
 		const IntCoord& tc = trkTab->getCoord();
 		app->gui->panNetTrack->setCoord(0, 0.82f*tc.height, tc.width*0.64f, 0.162f*tc.height);  }
+	#endif
+
+	#ifdef SR_EDITOR
+	const IntCoord& wp = app->mWndPick->getCoord();
+	//IntCoord ic(0.01*wp.width, 0.04*wp.height, 0.38*wp.width, 0.93*wp.height);
+	IntCoord ic(0.01*wp.width, 0.055*wp.height, 0.38*wp.width, 0.89*wp.height);
+	ic.width = 280;  app->gui->liTex->setCoord(ic);  ///pick dim
+	ic.width = 205;  app->gui->liGrs->setCoord(ic);
+	ic.width = 280;  app->gui->liVeg->setCoord(ic);
 	#endif
 }

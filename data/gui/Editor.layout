@@ -635,6 +635,85 @@
 			<Property key="TextColour" value="0.7 0.75 0.9"/>
 		</Widget>
 	</Widget>
+	<Widget type="Window" skin="WindowC" position="1692 928 440 600" align="Center" layer="Popup" name="PickWnd">
+		<Property key="MinSize" value="300 300"/>
+		<Property key="MaxSize" value="2560 1600"/>
+		<Property key="Caption" value="#{Pick}"/>
+		<Property key="Alpha" value="0.9"/>
+		<Property key="Snap" value="true"/>
+		<Property key="Visible" value="false"/>
+		<Property key="Colour" value="0.2 0.5 0.6"/>
+		<UserString key="NotSized" value="1"/>
+		<Widget type="Button" skin="CheckBox" position="306 228 124 20" name="PickT">
+			<Property key="Caption" value="#FFA020T #{SC_Autumn}"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="306 148 124 20" name="PickJ">
+			<Property key="Caption" value="#50FF50J #{SC_Jungle}"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="306 268 124 20" name="PickS">
+			<Property key="Caption" value="#C0E080S #{SC_Savanna}"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="306 188 124 20" name="PickF">
+			<Property key="Caption" value="#A0C000F #{SC_Forest}"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="306 248 124 20" name="PickG">
+			<Property key="Caption" value="#B0FF00G #{SC_Greece}"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="306 408 124 20" name="PickW">
+			<Property key="Caption" value="#D0D8D8W #{SC_Winter}"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="306 308 124 20" name="PickI">
+			<Property key="Caption" value="#FFFF80I #{SC_Island}"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="306 368 124 20" name="PickA">
+			<Property key="Caption" value="#FFA080A #{SC_Australia}"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="306 348 124 20" name="PickD">
+			<Property key="Caption" value="#F0F000D #{SC_Desert}"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="306 388 124 20" name="PickC">
+			<Property key="Caption" value="#E0B090C #{SC_Canyon}"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="306 328 124 20" name="PickV">
+			<Property key="Caption" value="#908030V #{SC_Volcanic}"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="306 428 124 20" name="PickU">
+			<Property key="Caption" value="#8080D0X #{SC_Unidentified}"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="306 288 124 20" name="PickM">
+			<Property key="Caption" value="#A0A000M #{SC_Mud}"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="306 168 124 20" name="PickO">
+			<Property key="Caption" value="#70F0B0O #{SC_Moss}"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="306 208 124 20" name="PickE">
+			<Property key="Caption" value="#A0E080E #{SC_Finland}"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="306 448 124 20" name="PickR">
+			<Property key="Caption" value="#A04840R #{SC_Mars}"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="8 8 440 24" name="PickSetPar">
+			<Property key="Caption" value="Auto set parameters, marked with ."/>
+			<Property key="Colour" value="1.0 1.0 0.5"/>
+			<Property key="TextColour" value="1 1 0.5"/>
+		</Widget>
+		<Widget type="Button" skin="RadioButton" position="306 80 96 20" name="PickRadAll">
+			<Property key="Caption" value="#{RplAll}"/>
+			<Property key="TextColour" value="0.6 1 1"/>
+		</Widget>
+		<Widget type="Button" skin="RadioButton" position="306 120 112 20" name="PickRadCur">
+			<Property key="Caption" value="#{RplCurrent}"/>
+			<Property key="TextColour" value="0.5 0.7 0.9"/>
+		</Widget>
+		<Widget type="Button" skin="RadioButton" position="306 100 92 20" name="PickRadFilter">
+			<Property key="Caption" value="Filter"/>
+			<Property key="TextColour" value="0.6 0.8 1.0"/>
+		</Widget>
+		<Widget type="Button" skin="CheckBox" position="306 48 136 24" name="PickAutoClose">
+			<Property key="Caption" value="AutoClose"/>
+			<Property key="TextColour" value="0.6 0.75 0.9"/>
+		</Widget>
+	</Widget>
 	<Widget type="Window" skin="WindowC" position="844 24 800 600" align="Center" layer="Overlapped" name="TrackWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="MaxSize" value="2560 1600"/>
@@ -1910,18 +1989,16 @@
 				<Widget type="ImageBox" skin="ImageBox" position="32 56 160 160" name="TerImgDiff">
 					<UserString key="tip" value="#{TipDiffusePrev}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="206 62 72 30" name="PickTex">
+				<Widget type="Button" skin="Button" position="280 58 176 30" name="PickTex">
 					<Property key="Caption" value="#{Diffuse}"/>
 					<Property key="TextAlign" value="Left"/>
 					<Property key="Colour" value="0.7 1 0.5"/>
 					<Property key="TextColour" value="0.7 1 0.5"/>
 					<UserString key="tip" value="#{TipDiffuseTex}"/>
 				</Widget>
-				<Widget type="ComboBox" skin="ComboBox" position="280 64 176 24" name="TexDiffuse">
-					<Property key="Colour" value="0.4 0.9 0.4"/>
-					<Property key="TextColour" value="0.6 1 0.6"/>
-					<Property key="Static" value="true"/>
-					<Property key="ReadOnly" value="true"/>
+				<Widget type="TextBox" skin="TextBox" position="208 66 80 24">
+					<Property key="Caption" value="#{GrMaterial}"/>
+					<Property key="TextColour" value="0.6 1.0 0.6"/>
 					<UserString key="tip" value="#{TipDiffuseTex}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="208 98 80 24">
@@ -2392,140 +2469,138 @@
 								<UserString key="tip" value="#{TipGrassLayers}"/>
 							</Widget>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="525 95 180 180" name="ImgGrass">
+						<Widget type="ImageBox" skin="ImageBox" position="528 176 200 200" name="ImgGrass">
 							<UserString key="tip" value="#{TipGrassPrev}"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="330 244 42 42" name="ImgGrClr">
+						<Widget type="ImageBox" skin="ImageBox" position="300 92 24 24" name="ImgGrClr">
 							<UserString key="tip" value="#{TipGrassColorMap}"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="328 55 104 24" name="LGrEnabled">
+						<Widget type="Button" skin="CheckBox" position="328 55 136 24" name="LGrEnabled">
 							<Property key="Caption" value="#{Enabled}"/>
 							<Property key="Colour" value="0.6 1 0.6"/>
 							<Property key="TextColour" value="0.6 1 0.6"/>
 							<Property key="FontName" value="font.19"/>
 							<UserString key="tip" value="#{TipToggleGrass}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="448 56 112 24" name="LGrAll">
+						<Widget type="TextBox" skin="TextBox" position="480 56 124 24" name="LGrAll">
 							<Property key="Caption" value="#{Used}: "/>
 							<Property key="TextColour" value="0.6 0.8 1"/>
 							<UserString key="tip" value="#{TipGrassLayers}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 55 84 24">
+						<Widget type="TextBox" skin="TextBox" position="24 168 116 24">
 							<Property key="Caption" value="#{GrassSize}"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="32 80 72 16">
+						<Widget type="TextBox" skin="TextBox" position="56 192 80 20">
 							<Property key="Caption" value="#{min} x"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMin}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="32 100 270 16" name="GrMinX">
+						<Widget type="Slider" skin="Slider" position="196 192 300 18" name="GrMinX">
 							<Property key="Colour" value="0.6 1 0.6"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMin}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="112 80 56 20" name="GrMinXVal">
+						<Widget type="TextBox" skin="TextBox" position="136 192 56 20" name="GrMinXVal">
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<Property key="Colour" value="0.6 0.9 0.3"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMin}"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="32 120 72 16">
+						<Widget type="TextBox" skin="TextBox" position="56 220 80 20">
 							<Property key="Caption" value="#{max} x"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMax}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="32 140 270 16" name="GrMaxX">
+						<Widget type="Slider" skin="Slider" position="196 220 300 18" name="GrMaxX">
 							<Property key="Colour" value="0.6 1 0.6"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMin}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="112 120 56 20" name="GrMaxXVal">
+						<Widget type="TextBox" skin="TextBox" position="136 220 56 20" name="GrMaxXVal">
 							<Property key="Colour" value="0.6 1 0.4"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMax}"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="32 160 72 16">
+						<Widget type="TextBox" skin="TextBox" position="56 256 80 20">
 							<Property key="Caption" value="#{min} y"/>
 							<Property key="TextColour" value="0.2 0.9 0.2"/>
 							<UserString key="tip" value="#{TipGrassPatchHeightMin}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="32 180 270 16" name="GrMinY">
+						<Widget type="Slider" skin="Slider" position="196 256 298 18" name="GrMinY">
 							<Property key="Colour" value="0.2 1 0.4"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMin}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="112 160 56 20" name="GrMinYVal">
+						<Widget type="TextBox" skin="TextBox" position="136 256 56 20" name="GrMinYVal">
 							<Property key="Colour" value="0.2 0.9 0.2"/>
 							<Property key="TextColour" value="0.2 0.9 0.2"/>
 							<UserString key="tip" value="#{TipGrassPatchHeightMin}"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="32 200 72 16">
+						<Widget type="TextBox" skin="TextBox" position="56 284 80 20">
 							<Property key="Caption" value="#{max} y"/>
 							<Property key="TextColour" value="0.2 1 0.2"/>
 							<UserString key="tip" value="#{TipGrassPatchHeightMax}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="32 220 270 16" name="GrMaxY">
+						<Widget type="Slider" skin="Slider" position="196 284 300 18" name="GrMaxY">
 							<Property key="Colour" value="0.2 1 0.4"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMin}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="112 200 56 20" name="GrMaxYVal">
+						<Widget type="TextBox" skin="TextBox" position="136 284 56 20" name="GrMaxYVal">
 							<Property key="Colour" value="0.2 1 0.2"/>
 							<Property key="TextColour" value="0.2 1 0.2"/>
 							<UserString key="tip" value="#{TipGrassPatchHeightMax}"/>
 						</Widget>
 
-						<Widget type="Button" skin="Button" position="329 106 104 28" name="PickGrass">
+						<Widget type="TextBox" skin="TextBox" position="24 58 104 28">
+							<Property key="Caption" value="#{GrMaterial}"/>
+							<Property key="TextColour" value="0.2 0.9 0.2"/>
+							<UserString key="tip" value="#{TipGrassMaterial}"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="136 52 148 28" name="PickGrass">
 							<Property key="Caption" value="#{GrMaterial}"/>
 							<Property key="TextAlign" value="Left"/>
 							<Property key="Colour" value="0.2 0.9 0.2"/>
 							<Property key="TextColour" value="0.2 0.9 0.2"/>
 							<UserString key="tip" value="#{TipGrassMaterial}"/>
 						</Widget>
-						<Widget type="ComboBox" skin="ComboBox" position="330 140 170 25" name="CmbGrMtr">
-							<Property key="TextColour" value="0.4 1.0 0.3"/>
-							<Property key="Colour" value="0.3 0.7 0.2"/>
-							<Property key="Static" value="true"/>
-							<Property key="ReadOnly" value="true"/>
-							<!--<UserString key="tip" value="#{TipGrassMaterial}"/>-->
-						</Widget>
-						<Widget type="ComboBox" skin="ComboBox" position="330 208 170 25" name="CmbGrClr">
+						<Widget type="ComboBox" skin="ComboBox" position="136 92 148 25" name="CmbGrClr">
 							<Property key="TextColour" value="0.5 0.8 0.4"/>
 							<Property key="Colour" value="0.4 0.6 0.3"/>
 							<Property key="Static" value="true"/>
 							<Property key="ReadOnly" value="true"/>
 							<UserString key="tip" value="#{TipGrassColorMap}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="330 184 150 24">
+						<Widget type="TextBox" skin="TextBox" position="24 96 112 24">
 							<Property key="TextColour" value="0.6 0.8 0.4"/>
 							<Property key="Caption" value="#{GrColorMap}"/>
 							<UserString key="tip" value="#{TipGrassColorMap}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="330 316 104 24">
+						<Widget type="TextBox" skin="TextBox" position="24 136 112 24">
 							<Property key="Caption" value="#{Density}"/>
-							<Property key="TextColour" value="0.6 1 0.6"/>
-							<UserString key="tip" value="#{TipGrassLayerDens}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="444 316 56 24" name="LGrDensVal">
-							<Property key="TextColour" value="0.6 1 0.6"/>
-							<UserString key="tip" value="#{TipGrassLayerDens}"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="330 344 360 20" name="LGrDens">
-							<Property key="Colour" value="0.6 1 0.6"/>
-							<UserString key="tip" value="#{TipGrassLayerDens}"/>
-						</Widget>
-
-						<Widget type="TextBox" skin="TextBox" position="32 316 94 24">
-							<Property key="Caption" value="#{Channel}"/>
 							<Property key="TextColour" value="0.7 1 0.7"/>
 							<UserString key="tip" value="#{TipGrassLayerDens}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="124 316 56 24" name="LGrChanVal">
+						<Widget type="TextBox" skin="TextBox" position="136 136 56 24" name="LGrDensVal">
 							<Property key="TextColour" value="0.8 1 0.8"/>
 							<UserString key="tip" value="#{TipGrassLayerDens}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="32 344 210 20" name="LGrChan">
-							<Property key="Colour" value="0.8 1 0.8"/>
+						<Widget type="Slider" skin="Slider" position="196 136 328 20" name="LGrDens">
+							<Property key="Colour" value="0.7 1 0.7"/>
+							<UserString key="tip" value="#{TipGrassLayerDens}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="24 336 112 24">
+							<Property key="Caption" value="#{Channel}"/>
+							<Property key="TextColour" value="0.7 1 0.9"/>
+							<UserString key="tip" value="#{TipGrassLayerDens}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="136 336 48 24" name="LGrChanVal">
+							<Property key="TextColour" value="0.8 1 0.9"/>
+							<UserString key="tip" value="#{TipGrassLayerDens}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="196 336 210 20" name="LGrChan">
+							<Property key="Colour" value="0.8 1 0.9"/>
 							<UserString key="tip" value="#{TipGrassLayerDens}"/>
 						</Widget>
 					</Widget>
@@ -2856,11 +2931,16 @@
 								<UserString key="tip" value="#{TipVegetGroups}"/>
 							</Widget>
 						</Widget>
-						<Widget type="Button" skin="Button" position="15 52 112 30" name="PickVeget">
+						<Widget type="TextBox" skin="TextBox" position="16 58 116 24">
+							<Property key="Caption" value="#{Model}"/>
+							<Property key="TextColour" value="0.3 0.8 0.9"/>
+							<UserString key="tip" value="#{TipVegetModels}"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="136 52 148 28" name="PickVeget">
 							<Property key="Caption" value="#{Model}"/>
 							<Property key="TextAlign" value="Left"/>
 							<Property key="Colour" value="0.4 0.9 1"/>
-							<Property key="TextColour" value="0.4 0.9 1"/>
+							<Property key="TextColour" value="0.5 1 1"/>
 							<UserString key="tip" value="#{TipVegetModels}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="16 95 116 24">
@@ -2868,29 +2948,22 @@
 							<Property key="TextColour" value="0.6 1 1"/>
 							<UserString key="tip" value="#{TipModelDens}"/>
 						</Widget>
-						<Widget type="ComboBox" skin="ComboBox" position="136 55 168 25" name="LTrCombo">
-							<Property key="Colour" value="0.3 0.7 0.8"/>
-							<Property key="TextColour" value="0.5 0.9 1"/>
-							<Property key="Static" value="true"/>
-							<Property key="ReadOnly" value="true"/>
-							<UserString key="tip" value="#{TipVegetModels}"/>
-						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="136 95 56 24" name="LTrDensVal">
 							<Property key="TextColour" value="0.6 1 1"/>
 							<UserString key="tip" value="#{TipModelDens}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="196 95 420 16" name="LTrDens">
+						<Widget type="Slider" skin="Slider" position="196 95 420 20" name="LTrDens">
 							<Property key="Colour" value="0.6 1 1"/>
 							<UserString key="tip" value="#{TipModelDens}"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="328 55 104 24" name="LTrEnabled">
+						<Widget type="Button" skin="CheckBox" position="328 55 140 24" name="LTrEnabled">
 							<Property key="Caption" value="#{Enabled}"/>
 							<Property key="Colour" value="0.4 0.8 0.8"/>
 							<Property key="TextColour" value="0.4 0.8 0.8"/>
 							<Property key="FontName" value="font.19"/>
 							<UserString key="tip" value="#{TipToggleModel}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="448 56 112 24" name="LTrAll">
+						<Widget type="TextBox" skin="TextBox" position="480 56 124 24" name="LTrAll">
 							<Property key="Caption" value="#{Used}: "/>
 							<Property key="TextColour" value="0.6 0.8 1"/>
 							<UserString key="tip" value="#{TipVegetGroups}"/>
@@ -2914,11 +2987,11 @@
 							<Property key="TextColour" value="0.6 0.8 0.8"/>
 							<UserString key="tip" value="#{TipModelMaxScale}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="196 131 420 16" name="LTrMinSc">
+						<Widget type="Slider" skin="Slider" position="196 131 420 18" name="LTrMinSc">
 							<Property key="Colour" value="0.6 0.9 0.9"/>
 							<UserString key="tip" value="#{TipModelMinScale}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="196 155 420 16" name="LTrMaxSc">
+						<Widget type="Slider" skin="Slider" position="196 155 420 18" name="LTrMaxSc">
 							<Property key="Colour" value="0.6 0.9 0.9"/>
 							<UserString key="tip" value="#{TipModelMaxScale}"/>
 						</Widget>

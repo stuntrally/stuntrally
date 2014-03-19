@@ -65,7 +65,7 @@ CGuiCom::CGuiCom(App* app1)
 	scnN["T"] = "Autumn";        scnN["TD"]= "AutumnDark";
 	scnN["O"] = "Moss";          
 	scnN["V"] = "Volcanic";      scnN["VD"]= "VolcanicDark";
-	scnN["U"] = "Unidentified";  scnN["R"] = "Mars";
+	scnN["X"] = "Unidentified";  scnN["R"] = "Mars";
 	//  scenery colors for track names
 	scnClr["Asphalt"]      = "#B0E0E0";
 	scnClr["Jungle"]       = "#50FF50";  scnClr["JungleDark"]   = "#40C040";
