@@ -18,7 +18,7 @@ using Ogre::String;
 void CData::Load()
 {
 	fluids->LoadXml(PATHMANAGER::Data() + "/materials2/fluids.xml");
-	LogO(String("**** Loaded fluids.xml: ") + toStr(fluids->fls.size()));
+	LogO(String("**** Loaded Fluids: ") + toStr(fluids->fls.size()));
 
 	objs->LoadXml();  //  collisions.xml
 	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs->colsMap.size()));

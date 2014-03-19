@@ -216,12 +216,10 @@ void CGui::updReplaysList()
 		if (sRplFind == "" || strstr(slow.c_str(), sRplFind.c_str()) != 0)
 		if (pSet->rpl_listview != 1 || StringUtil::startsWith(s,pSet->game.track, false))
 		{
-			String ch = " ";  // 1st A-Z char for scenery
-			int l = s.length();
-			for (int i=0; i < l; ++i)
-				if (s[i] >= 'A' && s[i] <= 'Z') {  ch = s[i];  break;  }
-
-			rplList->addItem(gcom->GetSceneryColor(s) + s);
+			string ss = s.substr(0,1);  //gcom->scnClr[gcom->scnN[]];
+			size_type f = s.find_first_of('_');
+			if (f != string::npos)  ss = s.substr(0,f);
+			rplList->addItem(gcom->GetSceneryColor(ss) + s);
 		}
 	}
 }
