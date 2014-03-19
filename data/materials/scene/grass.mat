@@ -159,12 +159,6 @@ material grass16s {  parent grass
 material grass16r {  parent grass
     diffuseMap grass16r.png  }
 
-	material grass16rr {  parent grass
-		diffuseMap grass16rr.png  }
-
-material grass16o {  parent grass
-    diffuseMap grass16o.png  }
-
 
 material grass17 {  parent grass
     diffuseMap grass17.png  }
@@ -195,9 +189,6 @@ material grass20p {  parent grass
 
 material gplant1 {  parent grass
     diffuseMap gplant1.png  }
-
-	material gplant2 {  parent grass
-    	diffuseMap gplant2.png  }
 
 
 material grassXc {  parent grass
