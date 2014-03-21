@@ -795,8 +795,9 @@
 					<Property key="TextColour" value="1.0 1.0 0.5"/>
 				</Widget>
 
-				<Widget type="TabControl" skin="TabControl" position="28 200 348 280">
+				<Widget type="TabControl" skin="TabControl" position="28 200 348 320">
 					<Property key="Colour" value="0.8 0.86 1.0"/>
+					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 342 392">
 						<Property key="Caption" value="#80C0FF#{InputMain}"/>
 
@@ -864,24 +865,80 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 342 392">
-						<Property key="Caption" value="#9090E0#{Advanced}"/>
-						<Widget type="ImageBox" skin="ImageBox" position="12 28 32 32">
+						<Property key="Caption" value="#90C0F0#{Boost}"/>
+						<!--<Widget type="ImageBox" skin="ImageBox" position="12 28 32 32">
 							<Property key="ImageCoord" value="512 0 128 128"/>
 							<Property key="Alpha" value="1.0"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
+						</Widget>-->
+						<Widget type="TextBox" skin="TextBox" position="20 10 264 20">
+							<Property key="Caption" value="#{Brush_Force}"/>
+							<Property key="TextColour" value="0.6 0.8 0.9"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="120 30 206 16" name="Bpow">
+							<Property key="Colour" value="0.85 0.9 1"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="60 30 56 20" name="BpowVal">
+							<Property key="TextColour" value="0.8 0.8 1"/>
 						</Widget>
 
+						<Widget type="TextBox" skin="TextBox" position="20 50 264 20">
+							<Property key="Caption" value="#{max}"/>
+							<Property key="TextColour" value="0.6 0.5 0.9"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="120 70 206 16" name="Bmax">
+							<Property key="Colour" value="0.85 0.8 1"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="60 70 56 20" name="BmaxVal">
+							<Property key="TextColour" value="0.8 0.7 1"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="20 90 264 24">
+							<Property key="Caption" value="#{min}"/>
+							<Property key="TextColour" value="0.6 0.5 0.9"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="120 110 206 16" name="Bmin">
+							<Property key="Colour" value="0.85 0.9 1"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="60 110 56 24" name="BminVal">
+							<Property key="TextColour" value="0.8 0.8 1"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="20 130 264 20">
+							<Property key="Caption" value="per km"/>
+							<Property key="TextColour" value="0.6 0.8 0.9"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="120 150 206 16" name="BperKm">
+							<Property key="Colour" value="0.85 0.9 1"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="60 150 56 20" name="BperKmVal">
+							<Property key="TextColour" value="0.8 0.9 1"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="20 170 264 24">
+							<Property key="Caption" value="add per sec"/>
+							<Property key="TextColour" value="0.8 0.7 0.9"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="120 190 206 16" name="BaddSec">
+							<Property key="Colour" value="0.95 0.8 1"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="60 190 56 24" name="BaddSecVal">
+							<Property key="TextColour" value="0.9 0.7 1"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 342 392">
+						<Property key="Caption" value="#9090E0#{Damage}"/>
 						<Widget type="ImageBox" skin="ImageBox" position="12 124 32 32">
 							<Property key="ImageCoord" value="512 256 128 128"/>
 							<Property key="Alpha" value="1.0"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="120 160 206 18" name="DamageDec">
-							<Property key="Colour" value="0.85 0.8 1"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="60 132 264 24">
+						<Widget type="TextBox" skin="TextBox" position="52 132 264 24">
 							<Property key="Caption" value="#{DamageDecLap}"/>
 							<Property key="TextColour" value="0.6 0.5 0.9"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="120 160 206 18" name="DamageDec">
+							<Property key="Colour" value="0.85 0.8 1"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="60 160 56 24" name="DamageDecVal">
 							<Property key="TextColour" value="0.8 0.7 1"/>
@@ -913,7 +970,7 @@
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="424 188 256 25" name="chkStartOrderRev">
 					<Property key="Caption" value="#{ReverseStartOrder}"/>
-					<Property key="TextColour" value="0.7 0.8 1.0"/>
+					<Property key="TextColour" value="0.5 0.7 0.9"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="424 100 80 33" name="btnPlayers1">
 					<Property key="Caption" value="1"/>

@@ -508,8 +508,8 @@ void App::LoadTerrain()  // 5
 		scn->CreateBltTerrain();
 	
 
-	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		(*it)->terrain = scn->terrain;
+	for (int c=0; c < carModels.size(); ++c)
+		carModels[c]->terrain = scn->terrain;
 	
 	sh::Factory::getInstance().setTextureAlias("CubeReflection", "ReflectionCube");
 
@@ -529,9 +529,21 @@ void App::LoadRoad()  // 6
 	if (scn->road && scn->road->getNumPoints() == 0 && hud->arrow.nodeRot)
 		hud->arrow.nodeRot->setVisible(false);  // hide when no road
 
+	//  boost fuel at start  . . .
+	//  based on road length
+	float boost_start = std::min(pSet->game.boost_max, std::max(pSet->game.boost_min,
+		scn->road->st.Length * 0.001f * pSet->game.boost_per_km));
+		
+	for (int i=0; i < carModels.size(); ++i)
+	{	CAR* car = carModels[i]->pCar;
+		if (car)
+		{	car->dynamics.boostFuelStart = boost_start;
+			car->dynamics.boostFuel = boost_start;
+	}	}
+
 
 	///  Run track's ghost
-	// to get times at checkpoints
+	//  to get times at checkpoints
 	fLastTime = 1.f;
 	if (!scn->road || ghtrk.GetTimeLength() < 1.f)  return;
 	int ncs = scn->road->mChks.size();

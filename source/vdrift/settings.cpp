@@ -49,8 +49,12 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.pre_time", gui.pre_time);			Param(c,w, "game.chall_num", gui.chall_num);  //rem-
 	Param(c,w, "game.champ_num", gui.champ_num);		Param(c,w, "game.champ_rev", gui.champ_rev);
 	Param(c,w, "game.boost_type", gui.boost_type);		Param(c,w, "game.flip_type", gui.flip_type);
-	Param(c,w, "game.boost_power", gui.boost_power);	Param(c,w, "game.rewind_type", gui.rewind_type);
+	Param(c,w, "game.rewind_type", gui.rewind_type);
 	Param(c,w, "game.damage_type", gui.damage_type);	Param(c,w, "game.damage_dec", gui.damage_dec);
+
+	Param(c,w, "game.boost_power", gui.boost_power);
+	Param(c,w, "game.boost_min", gui.boost_min);		Param(c,w, "game.boost_max", gui.boost_max);
+	Param(c,w, "game.boost_per_km", gui.boost_per_km);	Param(c,w, "game.boost_add_sec", gui.boost_add_sec);
 	
 	Param(c,w, "game.collis_cars", gui.collis_cars);	Param(c,w, "game.collis_veget", gui.collis_veget);
 	Param(c,w, "game.collis_roadw", gui.collis_roadw);	Param(c,w, "game.dyn_objects", gui.dyn_objects);
@@ -263,8 +267,11 @@ SETTINGS::SETTINGS()   ///  Defaults
 	gui.local_players = 1;  gui.num_laps = 2;
 	gui.collis_veget = true;  gui.collis_cars = false;
 	gui.collis_roadw = false;  gui.dyn_objects = true;
-	gui.boost_type = 2;  gui.flip_type = 1;
-	gui.boost_power = 1.f;  gui.rewind_type = 1;
+	
+	gui.boost_type = 2;
+	gui.BoostDefault();
+
+	gui.flip_type = 1;  gui.rewind_type = 1;
 	gui.damage_type = 1;  gui.damage_dec = 0.f;
 	gui.trees = 1.f;
 	//
@@ -286,4 +293,11 @@ SETTINGS::GameSet::GameSet()
 	car_hue.resize(6);  car_sat.resize(6);  car_val.resize(6);
 	car_gloss.resize(6);  car_refl.resize(6);
 	car.resize(4);
+}
+
+void SETTINGS::GameSet::BoostDefault()
+{
+	boost_power = 1.f;
+	boost_max = 6.f;  boost_min = 2.f;
+	boost_per_km = 1.f;  boost_add_sec = 0.1f;
 }

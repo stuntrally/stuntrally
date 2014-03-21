@@ -262,6 +262,7 @@ public:
 	Ck ckVegetCollis, ckCarCollis, ckRoadWCollis, ckDynamicObjs;
 	SV svNumLaps;  SLV(RplNumViewports);  //-
 	SV svDamageDec;
+	SV svBmin,svBmax,svBpow,svBperKm,svBaddSec;
 
 
 	///  [Replay]  -----------------------------

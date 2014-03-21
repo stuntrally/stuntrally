@@ -399,7 +399,7 @@ void CAR::ResetPos(bool fromStart)
 	dynamics.SynchronizeBody();  // set body from chassis
 	if (fromStart)
 	{
-		dynamics.boostFuel = gPar.boostFuelStart;  // restore boost fuel
+		dynamics.boostFuel = dynamics.boostFuelStart;  // restore boost fuel
 		dynamics.fDamage = 0.f;  // clear damage
 	}else
 		dynamics.fDamage = dmgLastCheck;

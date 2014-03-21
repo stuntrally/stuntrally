@@ -97,8 +97,11 @@ public:
 		//  game setup
 		std::string sim_mode;
 		bool collis_veget, collis_cars, collis_roadw, dyn_objects;
-		int boost_type, flip_type, damage_type, rewind_type;  float boost_power;
+		int boost_type, flip_type, damage_type, rewind_type;
 		float trees, damage_dec;
+
+		float boost_power, boost_max, boost_min, boost_per_km, boost_add_sec;
+		void BoostDefault();
 		
 		bool rpl_rec;
 		//  champ

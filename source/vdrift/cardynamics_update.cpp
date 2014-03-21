@@ -394,8 +394,8 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	//  add fuel over time
 	if (pSet->game.boost_type == 2)
 	{
-		boostFuel += dt * gPar.boostFuelAddSec;
-		if (boostFuel > gPar.boostFuelMax)  boostFuel = gPar.boostFuelMax;
+		boostFuel += dt * pSet->game.boost_add_sec;
+		if (boostFuel > pSet->game.boost_max)  boostFuel = pSet->game.boost_max;
 	}
 	///***  --------------------------------------------------
 	

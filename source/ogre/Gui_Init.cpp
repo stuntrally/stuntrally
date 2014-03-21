@@ -257,7 +257,6 @@ void CGui::InitGui()
 
 
 	//  game  ------------------------------------------------------------
-	sv= &svDamageDec;	sv->Init("DamageDec",	&pSet->gui.damage_dec, 0.f, 100.f, 1.f, 0,1, 1.f, " %");
 	ck= &ckVegetCollis;		ck->Init("VegetCollis",		&pSet->gui.collis_veget);
 	ck= &ckCarCollis;		ck->Init("CarCollis",		&pSet->gui.collis_cars);
 	ck= &ckRoadWCollis;		ck->Init("RoadWCollis",		&pSet->gui.collis_roadw);
@@ -286,6 +285,13 @@ void CGui::InitGui()
 		cmb->addItem(TR("#{None}"));		cmb->addItem(TR("#{Always}"));
 		//cmb->addItem(TR("#{FuelLap}"));		cmb->addItem(TR("#{FuelTime}"));
 		cmb->setIndexSelected(pSet->gui.rewind_type);
+
+	sv= &svDamageDec;	sv->Init("DamageDec",	&pSet->gui.damage_dec, 0.f, 100.f, 1.f, 0,1, 1.f, " %");
+	sv= &svBmin;	sv->Init("Bmin",	&pSet->gui.boost_min,     0.f, 10.f,1.f, 1,3);  sv->DefaultF(2.f);
+	sv= &svBmax;	sv->Init("Bmax",	&pSet->gui.boost_max,     2.f, 20.f,1.f, 1,3);  sv->DefaultF(6.f);
+	sv= &svBpow;	sv->Init("Bpow",	&pSet->gui.boost_power,   0.f, 2.5f,1.f, 1,3);  sv->DefaultF(1.f);
+	sv= &svBperKm;	sv->Init("BperKm",	&pSet->gui.boost_per_km,  0.f, 4.f, 1.f, 1,3);  sv->DefaultF(1.f);
+	sv= &svBaddSec;	sv->Init("BaddSec",	&pSet->gui.boost_add_sec, 0.f, 1.f, 1.f, 2,4);  sv->DefaultF(0.1f);
 
 	//  split
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);

@@ -23,7 +23,8 @@ CARDYNAMICS::CARDYNAMICS() :
 	abs(false), tcs(false),
 	maxangle(45.0), ang_damp(0.4),
 	/*bTerrain(false),*/ pSet(0), pScene(0), poly(NULL),
-	doBoost(0), doFlip(0), boostFuel(0), boostVal(0), fBoostFov(0),
+	doBoost(0.f), doFlip(0.f), boostVal(0.f), fBoostFov(0.f),
+	boostFuel(0.f),boostFuelStart(0.f),
 	fHitTime(0), fHitForce(0), fParIntens(0), fParVel(0), //hit
 	vHitPos(0,0,0), vHitNorm(0,0,0), vHitCarN(0,0,0), vHitDmgN(0,0,0), fHitDmgA(0),
 	steerValue(0.f), velPrev(0,0,0),
@@ -37,7 +38,7 @@ CARDYNAMICS::CARDYNAMICS() :
 		whTerMtr[i]=0;  whRoadMtr[i]=0;
 		whH[i]=0.f;  whP[i]=-1;
 	}
-	boostFuel = gPar.boostFuelStart;
+	boostFuel = 0.f;  // set later when road length known
 
 	for (int i=0; i<4; ++i)
 		rot_coef[i] = 0.0;

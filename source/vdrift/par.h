@@ -8,11 +8,6 @@ struct SParams
 //  SIM
 	 raylen
 //  GAME
-//  boost fuel
-	,boostFuelStart
-	,boostFuelMax  
-	,boostFuelAddSec
-
 	,rewindSpeed
 
 //  damage factors

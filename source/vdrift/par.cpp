@@ -8,11 +8,6 @@ SParams::SParams()
 //  SIM
 	raylen = 1.5f;  // wheel ray cast length
 //  GAME
-//  boost fuel params
-	boostFuelStart = 3.f;    // seconds (each lap)
-	boostFuelMax   = 3.f;    // max val tank	
-	boostFuelAddSec = 0.1f;  // add value each second
-
 	rewindSpeed = 5.f;  // 5 secs in 1 sec
 
 /// <><> Damage factors <><>

@@ -48,7 +48,7 @@ void App::Ch_NewGame()
 		
 		pSet->game.boost_type = chl.boost_type;
 		pSet->game.flip_type = chl.flip_type;
-		pSet->game.boost_power = 1.f;
+		pSet->game.BoostDefault();  //
 		//rewind_type
 
 		//  car not set, and not allowed in chall
@@ -64,8 +64,6 @@ void App::Ch_NewGame()
 			pSet->game.car[0] = pc.car;
 
 		//TODO: ?challenge icons near denied combos,chkboxes
-		//? minimap, chk_arr, chk_beam, trk_ghost;  // deny using it if false
-		//! abs, tcs, autoshift, autorear
 		
 		pSet->game.trees = 1.5f;  //-
 		pSet->game.collis_veget = true;
@@ -88,7 +86,7 @@ void App::Ch_NewGame()
 
 		pSet->game.boost_type = 1;  // from trk.?
 		pSet->game.flip_type = 2;
-		pSet->game.boost_power = 1.f;
+		pSet->game.BoostDefault();  //
 		//pSet->game.trees = 1.f;  // >=1 ?
 		//pSet->game.collis_veget = true;
 

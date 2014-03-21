@@ -157,6 +157,7 @@ void CGui::updateGameSet()
 	pSet->game.collis_veget = netGameInfo.tree_collis>0;
 	pSet->game.trees = netGameInfo.tree_mult;
 
+	pSet->game.BoostDefault();  //
 	pSet->game.boost_type = netGameInfo.boost_type;
 	pSet->game.boost_power = netGameInfo.boost_power;
 	pSet->game.flip_type = netGameInfo.flip_type;
