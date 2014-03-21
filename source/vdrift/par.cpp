@@ -36,12 +36,6 @@ SParams::SParams()
 	ghostHideDist    = 4.f*4.f;
 	ghostHideDistTrk = 5.f*5.f;
 
-//  CAM
-//  adaptive fov from boost
-	FOVmin = 45.f;
-	FOVmax = 60.f;  FOVrange = FOVmax - FOVmin;
-	FOVspeed = 0.0005f;  // delay smooth
-
 //  camera bounce, force factors
 	camBncF  = -0.0016f;  camBncFo = -0.0016f;  camBncFof = -0.0016f;
 	camBncFHit = 1500.f;  camBncFHitY = 1000.f;

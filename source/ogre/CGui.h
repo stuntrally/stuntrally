@@ -189,6 +189,7 @@ public:
 	//  cam
 	Ck ckCamInfo, ckCamTilt, ckCamLoop;
 	Ck ckCamBnc;  SV svCamBnc;
+	SV svFov, svFovMax, svFovSm;
 	//  Times, opp
 	Ck ckTimes;
 	Ck ckOpponents, ckOppSort;

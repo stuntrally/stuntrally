@@ -45,6 +45,7 @@ public:
 	float size_gauges, size_minimap, size_minipos, size_arrow, zoom_minimap;
 	int gauges_type, gauges_layout;
 	//  cam
+	float fov_min, fov_max, fov_smooth;
 	bool cam_loop_chng;  int cam_in_loop;
 	bool cam_bounce;  float cam_bnc_mul;
 	

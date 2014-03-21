@@ -85,7 +85,9 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_size.gauges_type", gauges_type);	//Param(c,w, "hud_size.gauges_layout", gauges_layout);
 	//  cam
 	Param(c,w, "hud_size.cam_loop_chng", cam_loop_chng); Param(c,w, "hud_size.cam_in_loop", cam_in_loop);
-	Param(c,w, "hud_size.cam_bounce", cam_bounce); Param(c,w, "hud_size.cam_bnc_mul", cam_bnc_mul);
+	Param(c,w, "hud_size.fov", fov_min);		Param(c,w, "hud_size.fov_max", fov_max);
+	Param(c,w, "hud_size.fov_smooth", fov_smooth);
+	Param(c,w, "hud_size.cam_bounce", cam_bounce);		Param(c,w, "hud_size.cam_bnc_mul", cam_bnc_mul);
 
 
 	//  graphics
@@ -185,6 +187,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,gauges_type(1),gauges_layout(1), graphs_type(Gh_Fps)
 	//  cam
 	,cam_loop_chng(1), cam_in_loop(1)
+	,fov_min(90.f), fov_max(120.f), fov_smooth(5.f)
 	,cam_bounce(1), cam_bnc_mul(1.f)
 	//  gui
 	,tracks_view(0), tracks_sort(0), tracks_sortup(1), cars_sort(1), cars_sortup(1)

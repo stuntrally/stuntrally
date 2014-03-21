@@ -203,8 +203,13 @@ void CGui::InitGui()
 	ck= &ckCamInfo;		ck->Init("CamInfo",     &pSet->show_cam);   Cev(HudShow);
 	ck= &ckCamTilt;		ck->Init("CamTilt",     &pSet->cam_tilt);
 	ck= &ckCamLoop;		ck->Init("CamLoop",     &pSet->cam_loop_chng);
+
 	ck= &ckCamBnc;		ck->Init("CamBounce",   &pSet->cam_bounce);
 	sv= &svCamBnc;		sv->Init("CamBnc",		&pSet->cam_bnc_mul, 0.f, 2.f);
+
+	sv= &svFov;			sv->Init("Fov",			&pSet->fov_min,   50.f, 180.f, 1.f, 1,4);  sv->DefaultF(90.f);
+	sv= &svFovMax;		sv->Init("FovMax",		&pSet->fov_max,   50.f, 180.f, 1.f, 1,4);  sv->DefaultF(120.f);
+	sv= &svFovSm;		sv->Init("FovSm",		&pSet->fov_smooth, 0.f, 15.f, 1.5f);  sv->DefaultF(5.f);
 
 
 	//  times, opp

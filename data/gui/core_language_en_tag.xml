@@ -426,7 +426,6 @@
 	<Tag name="MotionBlur">Motion Blur</Tag>
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="godrays">God Rays</Tag>
-	<Tag name="BoostFOV">Adaptive FOV</Tag>
 	<Tag name="filmgrain">Film Grain</Tag>
 	<Tag name="softparticles">Soft Particles</Tag>
 	<Tag name="DepthOfField">Depth of Field</Tag>
@@ -504,14 +503,19 @@
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="OpponentsList">Opponents List</Tag>
 	<Tag name="OpponentsSorted">Opponents Sorted</Tag>
+
+	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
+	<Tag name="CheckBeam">Next checkpoint beam</Tag>
+	<Tag name="CountdownTime">Race countdown time</Tag>
+
 	<Tag name="Camera">Camera</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="CameraAutoTilt">Camera auto tilt on slopes</Tag>
 	<Tag name="CameraLoopChange">Camera change in loops</Tag>
 	<Tag name="CameraBounce">Dynamic camera bouncing</Tag>
-	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
-	<Tag name="CheckBeam">Next checkpoint beam</Tag>
-	<Tag name="CountdownTime">Race countdown time</Tag>
+	<Tag name="BoostFOV">Adaptive FOV</Tag>
+	<Tag name="FOV">View angle</Tag>
+
 
 	<!--  Settings  -->
 	<Tag name="Other">Other</Tag>

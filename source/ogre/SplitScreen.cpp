@@ -231,10 +231,11 @@ void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 			CAR* pCar = pApp->carModels[carId]->pCar;
 			if (pCar)
 			{
-				float fov = gPar.FOVmin + gPar.FOVrange * pCar->dynamics.fBoostFov;
-				evt.source->getCamera()->setFOVy(Degree(fov));
+				float fov = pSet->fov_min + (pSet->fov_max - pSet->fov_min) * pCar->dynamics.fBoostFov;
+				evt.source->getCamera()->setFOVy(Degree(0.5f*fov));
 			}
-		}
+		}else
+			evt.source->getCamera()->setFOVy(Degree(0.5f*pSet->fov_min));
 
 		//update soft particle Depth Target
 

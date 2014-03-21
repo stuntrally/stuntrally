@@ -36,12 +36,6 @@ struct SParams
 	,ghostHideDist
 	,ghostHideDistTrk
 
-//  CAM
-//  adaptive fov, from boost
-	,FOVmin
-	,FOVmax, FOVrange
-	,FOVspeed
-
 //  camera bounce sim
 	,camBncF, camBncFo, camBncFof
 	,camBncFHit,camBncFHitY
