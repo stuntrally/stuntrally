@@ -2557,6 +2557,24 @@
 							<Property key="Alpha" value="0.5"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
 						</Widget>
+
+						<Widget type="ImageBox" skin="ImageBox" position="630 272 56 56">
+							<Property key="ImageCoord" value="0 0 128 128"/>
+							<Property key="Alpha" value="0.5"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 366 184 24">
+							<Property key="Caption" value="#{CountdownTime}"/>
+							<Property key="TextColour" value="0.6 0.7 0.8"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 366 48 24" name="CountdownTimeVal">
+							<Property key="Colour" value="0.65 0.75 0.85"/>
+							<Property key="TextColour" value="0.65 0.75 0.85"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 364 320 18" name="CountdownTime">
+							<Property key="Colour" value="0.7 0.8 0.9"/>
+						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#60F8F8#{Minimap}"/>
@@ -2655,17 +2673,6 @@
 						<Widget type="Button" skin="CheckBox" position="232 256 152 24" name="BoostFOV">
 							<Property key="Caption" value="#{BoostFOV} (#{Boost})"/>
 							<Property key="TextColour" value="0.6 0.9 0.9"/>
-						</Widget>
-
-						<Widget type="TextBox" skin="TextBox" position="32 366 184 24">
-							<Property key="Caption" value="#{CountdownTime}"/>
-							<Property key="TextColour" value="0.6 0.7 0.8"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="296 366 48 24" name="CountdownTimeVal">
-							<Property key="TextColour" value="0.65 0.75 0.85"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="344 364 320 18" name="CountdownTime">
-							<Property key="Colour" value="0.7 0.8 0.9"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">

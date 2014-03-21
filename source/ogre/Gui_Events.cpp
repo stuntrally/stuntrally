@@ -266,7 +266,7 @@ void CGui::slSizeArrow(SV*)
 }
 void CGui::slCountdownTime(SL)
 {
-	float v = (int)(val * 6.f +slHalf) * 0.5f;	if (bGI)  pSet->gui.pre_time = v;
+	float v = (int)(val * 10.f +slHalf) * 0.5f;	if (bGI)  pSet->gui.pre_time = v;
 	if (valCountdownTime){	valCountdownTime->setCaption(fToStr(v,1,4));  }
 }
 
