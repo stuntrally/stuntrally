@@ -591,7 +591,7 @@ void CHud::Destroy()
 //---------------------------------------------------------------------------------------------------------------
 void CHud::Show(bool hideAll)
 {
-	if (hideAll || app->iLoad1stFrames >= 0)  // still loading
+	if (hideAll || app->iLoad1stFrames > -1)  // still loading
 	{
 		if (ovCarDbg)  ovCarDbg->hide();
 		if (ovCarDbgTxt)  ovCarDbgTxt->hide();

@@ -189,7 +189,7 @@ void SplitScr::AdjustRatio()
 //------------------------------------------------------------------------------------------------------------------
 void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 {
-	if (!pApp || pApp->bLoading)  return;
+	if (!pApp || pApp->bLoading || pApp->iLoad1stFrames > -1)  return;
 
 	//  What kind of viewport is being updated?
 	const String& vpName = evt.source->getCamera()->getName();

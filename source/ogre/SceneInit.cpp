@@ -681,8 +681,6 @@ void App::NewGameDoLoad()
 		LoadingOff();
 		#endif
 		mLoadingBar->SetWidth(100.f);
-				
-		hud->Show();
 
 		//-  cars need update
 		for (int i=0; i < carModels.size(); ++i)
