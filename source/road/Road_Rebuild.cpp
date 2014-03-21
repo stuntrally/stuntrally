@@ -26,6 +26,25 @@ using namespace Ogre;
 #endif
 
 
+//  2-1	 6-5
+//  | 0--7 |
+//  3______4  front wall indices
+const static int WFid[6][3] = {{2,1,0},{3,2,0},{5,4,7},{6,5,7}, {7,3,0},{4,3,7}};
+
+struct stWiPntW {  Real x,y, uv, nx,ny;  };  // wall width points
+const static int ciwW = 7;  // wall  width steps - types..
+const static stWiPntW wiPntW[ciwW+1][2] = {  // section shape
+	//  normal road                     //  pipe wall
+	{{-0.5f, -0.0f, 0.0f,  1.0f, 0.0f}, {-0.28f, 0.68f,0.0f, -1.0f, 0.0f}},
+	{{-0.5f,  1.2f, 0.5f,  0.5f, 0.5f}, {-0.28f, 0.5f, 0.2f, -0.5f, 0.5f}},
+	{{-0.56f, 1.2f, 0.2f, -0.5f, 0.5f}, {-0.28f, 0.0f, 0.2f, -0.5f, 0.0f}},
+	{{-0.56f,-0.9f, 1.6f, -0.5f,-0.5f}, {-0.2f, -0.9f, 0.5f, -0.1f,-0.5f}},
+	{{ 0.56f,-0.9f, 3.0f,  0.5f,-0.5f}, { 0.2f, -0.9f, 0.5f,  0.1f,-0.5f}},
+	{{ 0.56f, 1.2f, 1.6f,  0.5f, 0.5f}, { 0.28f, 0.0f, 0.2f,  0.5f, 0.0f}},
+	{{ 0.5f,  1.2f, 0.2f, -0.5f, 0.5f}, { 0.28f, 0.5f, 0.2f,  0.5f, 0.5f}},
+	{{ 0.5f, -0.0f, 0.5f, -1.0f, 0.0f}, { 0.28f, 0.68f,0.2f,  1.0f, 0.0f}}};
+
+
 ///  Rebuild
 //---------------------------------------------------------
 void SplineRoad::RebuildRoad(bool full)
@@ -290,7 +309,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		while (sNum > 0)
 		{
 			int seg = (segM + segs) % segs;  // iterator
-			int seg1 = getNext(seg);
+			int seg1 = getNext(seg), seg0 = getPrev(seg);
 			
 			//if (lod == 0)
 			//LogR("[Seg]  cur: " + toStr(seg) + "/" + toStr(sNumO) + "  all:" + toStr(segs));/**/
@@ -350,7 +369,6 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			
 			
 			//  seg params  -----------------
-			const int iwW = 7;  // wall  width steps - types..
 			const int iwC = colN;  // column  polygon steps
 						
 			//  steps len
@@ -515,24 +533,13 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 				///  wall ]
 				//------------------------------------------------------------------------------------
-				struct stWiPntW {  Real x,y, uv, nx,ny;  };  // wall width points
-				const static stWiPntW wiPntW[iwW+1][2] = {  // section shape
-					//  normal road                     //  pipe wall
-					{{-0.5f, -0.1f, 0.0f,  1.0f, 0.0f}, {-0.28f, 0.68f,0.0f, -1.0f, 0.0f}},
-					{{-0.5f,  1.2f, 0.5f,  0.5f, 0.5f}, {-0.28f, 0.5f, 0.2f, -0.5f, 0.5f}},
-					{{-0.56f, 1.2f, 0.2f, -0.5f, 0.5f}, {-0.28f, 0.0f, 0.2f, -0.5f, 0.0f}},
-					{{-0.56f,-0.9f, 1.6f, -0.5f,-0.5f}, {-0.2f, -0.9f, 0.5f, -0.1f,-0.5f}},
-					{{ 0.56f,-0.9f, 3.0f,  0.5f,-0.5f}, { 0.2f, -0.9f, 0.5f,  0.1f,-0.5f}},
-					{{ 0.56f, 1.2f, 1.6f,  0.5f, 0.5f}, { 0.28f, 0.0f, 0.2f,  0.5f, 0.0f}},
-					{{ 0.5f,  1.2f, 0.2f, -0.5f, 0.5f}, { 0.28f, 0.5f, 0.2f,  0.5f, 0.5f}},
-					{{ 0.5f, -0.1f, 0.5f, -1.0f, 0.0f}, { 0.28f, 0.68f,0.2f,  1.0f, 0.0f}}};
 				Real uv = 0.f;  // tc long
 
 				if (!onTer)
 				if (i >= 0 && i <= il)  // length +1
 				{	++iLmrgW;
 					Real tcLW = tc * (pipe ? tcMulPW : tcMulW);
-					for (int w=0; w <= iwW; ++w)  // width +1
+					for (int w=0; w <= ciwW; ++w)  // width +1
 					{
 						int pp = (p1 > 0.f || p2 > 0.f) ? 1 : 0;  //  pipe wall
 						stWiPntW wP = wiPntW[w][pp];
@@ -714,33 +721,38 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 				///  wall ]
 				//------------------------------------------------------------------------------------
+				bool jfw0 = !mP[seg].onTer  && mP[seg0].idMtr < 0;  // jump front wall, ends in air
+				bool jfw1 = !mP[seg1].onTer && mP[seg1].idMtr < 0;
 				bool pipeGlass = pipe && bMtrPipeGlass[ mP[seg].idMtr ];  // pipe glass mtr
 				if (wall)
 				{
 					idx.clear();
 					for (int i = 0; i < iLmrgW-1; ++i)  // length
-					{	int iiW = (i+0)*(iwW+1);
+					{	int iiW = i* (ciwW+1);
 
-						for (int w=0; w < iwW; ++w)  // width
+						for (int w=0; w < ciwW; ++w)  // width
 						{
-							int f0 = iiW + w, f1 = f0 + (iwW+1);
+							int f0 = iiW + w, f1 = f0 + (ciwW+1);
 							idx.push_back(f0+1);  idx.push_back(f1+1);  idx.push_back(f0+0);
 							idx.push_back(f1+1);  idx.push_back(f1+0);  idx.push_back(f0+0);
 						}
 					}
 					
-					//  front plates start,end
-					const int Wid[4/*6*/][3] = {{2,1,0},{3,2,0},{5,4,7},{6,5,7}/*,{7,3,0},{4,3,7}*/};
-					int i,f, b = posW.size()-iwW-1;
-
-					if (!pipe)  //  no fronts in pipes
-					for (f=0; f < 4; ++f)
+					//  front plates start,end  |_|  not in pipes
+					int i,f, b = posW.size()-ciwW-1;
+					if (!pipe)
 					{
-						for (i=0; i<=2; ++i)  idx.push_back( Wid[f][i] );
-						for (i=0; i<=2; ++i)  idx.push_back( Wid[f][2-i]+b );
+						int ff = jfw0 ? 6 : 4;
+						for (f=0; f < ff; ++f)
+							for (i=0; i<=2; ++i)  idx.push_back( WFid[f][i] );
+						
+						ff = jfw1 ? 6 : 4;
+						for (f=0; f < ff; ++f)
+							for (i=0; i<=2; ++i)  idx.push_back( WFid[f][2-i]+b );
+	
+						vSegs[seg].nTri[lod] += idx.size()/3;
 					}
-					vSegs[seg].nTri[lod] += idx.size()/3;
-
+					
 					sm = meshW->getSubMesh(0);   // for glass only..
 					rs.sMtrWall = !pipeGlass ? sMtrWall : sMtrWallPipe;
 					if (!posW.empty())
@@ -836,7 +848,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				{
 					btTriangleMesh* trimesh = new btTriangleMesh();  vbtTriMesh.push_back(trimesh);
 					#define vToBlt(v)  btVector3(v.x, -v.z, v.y)
-					#define addTriB(a,b,c)  trimesh->addTriangle(vToBlt(a), vToBlt(b), vToBlt(c));
+					#define addTriB(a,b,c)  trimesh->addTriangle(vToBlt(a), vToBlt(b), vToBlt(c))
 
 					size_t si = posBt.size(), a=0;  // %3!
 					for (size_t i=0; i < si/3; ++i,a+=3)
@@ -871,15 +883,27 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					{	trimesh = new btTriangleMesh();  vbtTriMesh.push_back(trimesh);
 						
 						for (int i = 0; i < iLmrgW-1; ++i)  // length
-						{	int iiW = i* (iwW+1);
+						{	int iiW = i* (ciwW+1);
 
-							for (int w=0; w < iwW; ++w)  // width
-							if (bRoadWFullCol || w==0 || w == iwW-1)  // only 2 sides|_| optym+
+							for (int w=0; w < ciwW; ++w)  // width
+							if (bRoadWFullCol || w==0 || w == ciwW-1)  // only 2 sides|_| optym+
 							{
-								int f = iiW + w, f1 = f + (iwW+1);
-								addTriB(posW[f+0], posW[f1+1], posW[f+1]);
-								addTriB(posW[f+0], posW[f1+0], posW[f1+1]);
+								int f0 = iiW + w, f1 = f0 + (ciwW+1);
+								addTriB(posW[f0+0], posW[f1+1], posW[f0+1]);
+								addTriB(posW[f0+0], posW[f1+0], posW[f1+1]);
 							}
+						}
+						//  front plates start,end  |_|
+						int f, b = posW.size()-ciwW-1;
+						if (!pipe)
+						{
+							int ff = jfw0 ? 6 : 4;
+							for (f=0; f < ff; ++f)
+								addTriB(posW[WFid[f][0]], posW[WFid[f][1]], posW[WFid[f][2]]);
+
+							ff = jfw1 ? 6 : 4;
+							for (f=0; f < ff; ++f)
+								addTriB(posW[WFid[f][2]+b], posW[WFid[f][1]+b], posW[WFid[f][0]+b]);
 						}
 						
 						btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
