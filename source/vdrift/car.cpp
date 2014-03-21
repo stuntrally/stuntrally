@@ -413,6 +413,7 @@ void CAR::ResetPos(bool fromStart)
 		//dynamics.wheel_velocity[w] = zero;
 	}
 	crashdetection.Update(0.f, 0.1f);  //prevent car hit sound
+	dynamics.fHitDmgA = 0.f;
 
 	//dynamics.SynchronizeChassis();
 	dynamics.UpdateWheelContacts();
@@ -437,6 +438,7 @@ void CAR::SetPosRewind(const MATHVECTOR<float,3>& pos, const QUATERNION<float>& 
 
 	dynamics.SynchronizeBody();  // set body from chassis
 	dynamics.UpdateWheelContacts();
+	dynamics.fHitDmgA = 0.f;
 
 	//  steer
 	//dynamics.SetSteering(steer);  last_steer = steer;
