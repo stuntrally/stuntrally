@@ -35,7 +35,6 @@ struct PosInfo
 	//  camera view
 	Ogre::Vector3 camPos;  Ogre::Quaternion camRot;
 	Ogre::Vector3 camOfs;  // hit bounce offset
-	float camOfsMul;  // from cam type
 
 	//  ctor
 	PosInfo();

@@ -37,7 +37,7 @@ static float GetAngle(float x, float y)
 ///  Update
 //-----------------------------------------------------------------------------------------------------
 
-void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLLISION_WORLD* world)
+void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLLISION_WORLD* world, bool bounce)
 {
 	if (!ca || !posOut)  return;
 
@@ -122,7 +122,6 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 		camPosFinal = goalLook;
 		camRotFinal = orient;
 
-		posOut->camOfsMul = ca->mOfsMul;
 		posOut->camPos = camPosFinal;  // save result in out posInfo
 		posOut->camRot = camRotFinal;
 		return;
@@ -238,15 +237,20 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 	
 	//  cast ray from car to camera, reduce dist if hit
 	//-------------------------------------------------------------------------------------------
+	Vector3 pp = camPosFinal;
+	if (bounce)
+		pp += posIn.camOfs * ca->mOfsMul
+			* gPar.camBncScale * pSet->cam_bnc_mul;
+	
 	Vector3 p = posGoal;  p.y += 1.f;  //up
 	//Vector3 d = camRotFinal * Vector3::UNIT_Z;  d.normalise();
-	Vector3 d = camPosFinal - p;  d.normalise();
+	Vector3 d = pp - p;  d.normalise();
 	
 	if (!first && ca->mType != CAM_Arena)
 	{
 		MATHVECTOR<float,3> pos1(p.x,-p.z,p.y), dir(d.x,-d.z,d.y);  //dir = dir.Normalize();
 		COLLISION_CONTACT ct;
-		float maxLen = (p - camPosFinal).length();  //cam near
+		float maxLen = (p - pp).length();  //cam near
 		world->CastRay(pos1, dir, maxLen,chassis, ct,  0,0, true, true, true/*+*/);
 		//dbgLen = -maxLen;
 	
@@ -263,8 +267,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 	}
 
 	//  save result in out posInfo
-	posOut->camOfsMul = ca->mOfsMul;
-	posOut->camPos = mDistReduce > 0.001f ? (camPosFinal - d * mDistReduce) : camPosFinal;
+	posOut->camPos = mDistReduce > 0.0001f ? (pp - d * mDistReduce) : pp;
 	posOut->camRot = camRotFinal;
 
 	//  smooth, back to normal dist
@@ -273,39 +276,14 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 }
 
 
-//  prevent camera from going under ground.
-//-----------------------------------------------------------------------------------------------------
-Vector3 FollowCamera::moveAboveTerrain(const Vector3& camPos)
-{
-	if (!mTerrain)
-		return camPos;
-
-	const static Real terOfs = 0.2f;  //  minimum distance above ground
-
-	float h = mTerrain->getHeightAtWorldPosition(camPos);
-	if (h == 0.f)  // out of terrain
-		return camPos;
-
-	if (h + terOfs > camPos.y)  // move above
-		return Vector3(camPos.x, h + terOfs, camPos.z);
-	else
-		return camPos;
-}
-
-
-void FollowCamera::Apply(const PosInfo& posIn, bool bounce)
+void FollowCamera::Apply(const PosInfo& posIn)
 {
 	//boost::this_thread::sleep(boost::posix_time::milliseconds(rand()%20));
 	if (!mCamera)  return;
 
-	Vector3 pos = posIn.camPos;  //moveAboveTerrain(posIn.camPos);
-	if (bounce)
-		pos += posIn.camOfs * posIn.camOfsMul
-			* gPar.camBncScale * pSet->cam_bnc_mul;
-	mCamera->setPosition(pos);
+	mCamera->setPosition(posIn.camPos);
 	mCamera->setOrientation(posIn.camRot);
 }
-
 
 
 ///  mouse Move

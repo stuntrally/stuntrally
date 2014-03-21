@@ -37,6 +37,7 @@ class PosInfo;  class SETTINGS;
 
 
 //#define CAM_TILT_DBG  // show wheels in ray hit poses
+class COLLISION_WORLD;
 
 
 class FollowCamera
@@ -63,12 +64,12 @@ public:
 	#endif
 
 	///  update, simulates camera
-	void update(Ogre::Real time, const PosInfo& posInPrev, PosInfo* posOut, class COLLISION_WORLD* world);
+	void update(Ogre::Real time, const PosInfo& posInPrev, PosInfo* posOut, COLLISION_WORLD* world, bool bounce);
 	bool updInfo(Ogre::Real time = 0);  char ss[512];
 	Ogre::String sName;  bool updName;
 
 	//  apply, sets mCamera's pos and rot
-	void Apply(const PosInfo& posIn, bool bounce);
+	void Apply(const PosInfo& posIn);
 
 	void Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, Ogre::Real mx, Ogre::Real my, Ogre::Real mz );
 	Ogre::Real fMoveTime;
@@ -85,7 +86,6 @@ public:
 	void updAngle(), incCur(int dir);
 	void Next(bool bPrev = false, bool bMainOnly = false);
 	void setCamera(int ang);
-	Ogre::Vector3 moveAboveTerrain(const Ogre::Vector3& camPos);
 	
 	//  info text formats
 	Ogre::String sFmt_Follow, sFmt_Free, sFmt_ExtAng, sFmt_Arena, sFmt_Car;
