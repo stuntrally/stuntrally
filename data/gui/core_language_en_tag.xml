@@ -910,6 +910,7 @@
 
 	<!--  Pick  -->
 	<Tag name="Pick">Pick</Tag>
+	<Tag name="PickSetParam">Set parameters, marked with</Tag>
 
 
 	<!--  Settings  -->

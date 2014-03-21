@@ -626,9 +626,10 @@ void CGui::InitGui()
 	Btn("PickGrass", btnPickGrass);  btn->eventMouseWheel += newDelegate(this, &CGui::wheelGrs);  btnGrassMtr = btn;
 	Btn("PickVeget", btnPickVeget);  btn->eventMouseWheel += newDelegate(this, &CGui::wheelVeg);  btnVeget = btn;
 
-	const char sc[17]="TJSFGWIADCVUMOER";  //chk "Pick"+sc[i]
+	ck= &ckPickSetPar;	ck->Init("PickSetPar",	&pSet->pick_setpar);
 	// todo: ..
-	//"PickSetPar"  "PickAutoClose"
+	const char sc[17]="TJSFGWIADCVUMOER";  //chk "Pick"+sc[i]
+	//"PickCenter"?
 	//"PickRadAll" "PickRadCur" "PickRadFilter"
 
 	///  Tex Diff

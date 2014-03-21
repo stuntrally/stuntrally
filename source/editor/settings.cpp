@@ -80,6 +80,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "teralign.w_mul", al_w_mul);			Param(c,w, "teralign.smooth", al_smooth);
 	Param(c,w, "teralign.w_add", al_w_add);
 	Param(c,w, "tweak.mtr", tweak_mtr);
+	
+	Param(c,w, "pick.set_par", pick_setpar);
 }
 
 SETTINGS::SETTINGS()  ///  Defaults
@@ -122,6 +124,8 @@ SETTINGS::SETTINGS()  ///  Defaults
 	//  align ter
 	,al_w_mul(1.f), al_w_add(8.f), al_smooth(2.f)
 	,tweak_mtr("")
+	//  pick
+	,pick_setpar(1)
 {
 	gui.track = "J1-T";
 	gui.track_user = false;

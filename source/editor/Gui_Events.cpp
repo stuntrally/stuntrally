@@ -500,20 +500,27 @@ void CGui::PickShow(int n)
 	liTex->setVisible(n==0);
 	liGrs->setVisible(n==1);
 	liVeg->setVisible(n==2);
+	const int wx = pSet->windowx, wy = pSet->windowy;
+	//if (pSet->pick_center
+	switch (n)  ///pick dim
+	{	case 0:  app->mWndPick->setCoord(wx*0.45f, 0.04f*wy, 420, 0.95f*wy);  break;
+		case 1:  app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 380, 0.95f*wy);  break;
+		case 2:  app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 420, 0.95f*wy);  break;  }
 	app->mWndPick->setVisible(!app->mWndPick->getVisible());
 }
 
-///  Tex Diff
+///  Tex Diff  ----------------------------------------------------
 void CGui::listPickTex(Mli2 li, size_t pos)
 {
 	if (pos==ITEM_NONE || pos >= data->pre->ter.size())
 	{	liTex->setIndexSelected(0);  pos = 0;  }
 	
 	string s = liTex->getSubItemNameAt(1,pos);
-	s = s.substr(7) + "_d";
+	s = s.substr(7) + "_d";  // rem #clr
 	const PTer* p = data->pre->GetTer(s);  if (!p)  return;
 	s += ".jpg";
 
+	//  set
 	TerLayer& l = sc->td.layersAll[idTerLay];
 	l.texFile = s;
 	
@@ -522,12 +529,15 @@ void CGui::listPickTex(Mli2 li, size_t pos)
 	{	String sNorm = StringUtil::replaceAll(s,"_d.","_n.");  //_T
 		sNorm = p->texNorm+".jpg";
 
-		//if (pSet->preset)  //  preset vals ..
-		{	//l.surfName = pt->surfName;
-			//l.dust = pt->dust;  l.dustS = pt->dustS;
-			//l.mud = pt->mud;  l.tclr = pt->tclr;
-			//l.tiling = pt->tiling;  svTerLScale.Upd();
-			//l.triplanar = pt->triplanar;  ckTerLayTripl.Upd();
+		//  preset
+		if (pSet->pick_setpar)
+		{	l.tiling = p->tiling;  svTerLScale.Upd();
+			l.triplanar = p->triplanar;  ckTerLayTripl.Upd();
+			//angMin angMax
+			l.surfName = p->surfName;
+			l.dust = p->dust;  l.dustS = p->dustS;
+			l.mud = p->mud;  l.tclr = p->tclr;
+			listSurf(surfList, idSurf);
 		}
 
 		size_t id = cmbTexNorm->findItemIndexWith(sNorm);
@@ -538,12 +548,12 @@ void CGui::listPickTex(Mli2 li, size_t pos)
 	}	}
 
 	//  upd img
-	btnTexDiff->setCaption(s.substr(0, s.length()-6));  // no _d.jpg
+	btnTexDiff->setCaption(s.substr(0, s.length()-6));  // rem _d.jpg
     imgTexDiff->setImageTexture(s);
 	UpdSurfList();
 }
 
-///  Grass
+///  Grass  -------------------------------------------------------
 void CGui::listPickGrs(Mli2 li, size_t pos)
 {
 	if (pos==ITEM_NONE || pos >= data->pre->gr.size())
@@ -551,17 +561,25 @@ void CGui::listPickGrs(Mli2 li, size_t pos)
 	
 	string s = liGrs->getSubItemNameAt(1,pos);
 	s = s.substr(7);
-	const PGrass* p = data->pre->GetGrass(s);  if (!p)  return;
+	const PGrass* p = data->pre->GetGrass(s);
 
-	SGrassLayer* gr = &sc->grLayersAll[idGrLay];
-	gr->material = s;
-
+	//  set
+	SGrassLayer& l = sc->grLayersAll[idGrLay];
+	l.material = s;
+	
+	//  preset
+	if (pSet->pick_setpar && p)
+	{	l.minSx = p->minSx;  svGrMinX.Upd();
+		l.maxSx = p->maxSx;  svGrMaxX.Upd();
+		l.minSy = p->minSy;  svGrMinY.Upd();
+		l.maxSy = p->maxSy;  svGrMaxY.Upd();
+	}
 	//  upd img
-	btnGrassMtr->setCaption(gr->material);
-	imgGrass->setImageTexture(gr->material + ".png");  // same mtr name as tex
+	btnGrassMtr->setCaption(s);
+	imgGrass->setImageTexture(s + ".png");  // same mtr name as tex
 }
 
-///  Veget Model
+///  Veget Model  -------------------------------------------------
 void CGui::listPickVeg(Mli2 li, size_t pos)
 {
 	if (pos==ITEM_NONE || pos >= data->pre->veg.size())
@@ -569,11 +587,25 @@ void CGui::listPickVeg(Mli2 li, size_t pos)
 	
 	string s = liVeg->getSubItemNameAt(1,pos);
 	s = s.substr(7);
-	const PVeget* p = data->pre->GetVeget(s);  if (!p)  return;
+	const PVeget* p = data->pre->GetVeget(s);
 
 	//  upd
 	btnVeget->setCaption(s);
 	s += ".mesh";
-	sc->pgLayersAll[idPgLay].name = s;
+
+	//  set
+	PagedLayer& l = sc->pgLayersAll[idPgLay];
+	l.name = s;
+	
+	//  preset
+	if (pSet->pick_setpar && p)
+	{	l.minScale = p->minScale;  svLTrMinSc.Upd();
+		l.maxScale = p->maxScale;  svLTrMaxSc.Upd();
+		l.windFx = p->windFx;  svLTrWindFx.Upd();
+		l.windFy = p->windFy;  svLTrWindFy.Upd();
+		l.maxTerAng = p->maxTerAng;  svLTrMaxTerAng.Upd();
+		l.maxDepth = p->maxDepth;  svLTrFlDepth.Upd();
+		l.addRdist = p->addRdist;  svLTrRdDist.Upd();
+	}
 	Upd3DView(s);
 }

@@ -39,8 +39,7 @@ void CGui::SetGuiFromXmls()
 	//  [Sky]
 	//-----------------------------------------------
 	_Cmb(cmbSky, sc->skyMtr);
-	svSunPitch.Upd();
-	svSunYaw.Upd();
+	svSunPitch.Upd();  svSunYaw.Upd();
 	_Ed(LiAmb, sc->lAmb);  _Ed(LiDiff, sc->lDiff);  _Ed(LiSpec, sc->lSpec);
 	_Clr(Amb, sc->lAmb);  _Clr(Diff, sc->lDiff);  _Clr(Spec, sc->lSpec);
 	//  fog
@@ -184,6 +183,7 @@ void App::UpdVisGui()
 	mWndHelp->setVisible(notMain && pSet->inMenu == WND_Help);
 	mWndOpts->setVisible(notMain && pSet->inMenu == WND_Options);
 
+	if (!bGuiFocus)  mWndPick->setVisible(false);
 	if (gcom->bnQuit)  gcom->bnQuit->setVisible(bGuiFocus);
 
 	bool vis = bGuiFocus || !bMoveCam;
@@ -297,6 +297,8 @@ void CGui::GuiShortcut(WND_Types wnd, int tab, int subtab)
 		case WND_Help:		mWndTabs = app->mWndTabsHelp;  subt = &vSubTabsHelp;  break;
 		case WND_Options:	mWndTabs = app->mWndTabsOpts;  subt = &vSubTabsOpts;  break;
 	}
+	if (wnd != WND_Edit)
+		app->mWndPick->setVisible(false);
 	toggleGui(false);
 
 

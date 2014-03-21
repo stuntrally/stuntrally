@@ -315,9 +315,10 @@ public:
 
 
 	//  [Pick]  ----
+	Ck ckPickSetPar;
+	
 	Mli2 liTex, liGrs, liVeg;
-	void PickShow(int n);
-	int liNext(Mli2 li, int rel);
+	void PickShow(int n);  int liNext(Mli2 li, int rel);
 	void btnPickTex(WP),   wheelTex(WP, int rel), listPickTex(Mli2 li, size_t pos);
 	void btnPickGrass(WP), wheelGrs(WP, int rel), listPickGrs(Mli2 li, size_t pos);
 	void btnPickVeget(WP), wheelVeg(WP, int rel), listPickVeg(Mli2 li, size_t pos);

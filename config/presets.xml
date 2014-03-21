@@ -1,6 +1,9 @@
 <presets>
 
+<!-- common:  a - from track (not used)  sc - scenery (for name and color)  z - appears on sceneries (for filters)  -->
+
 <!-- terrain -->
+<!-- t - diff tex  n - norm tex  (t,n filename no ext)  s - scale  su - surface  tp - triplanar  du - dust  ds - dust size  md - mud  tr - trail color  aa,ab - min,max ter angle  -->
 
 <t a="A3"  sc="A"  t="adesert_cracks_d"   n="desert_cracks_n"    s="10.50" su="DesertFast"     tp="0" du="0.6" ds="1.0" md="0.5" tr="0.48 0.30 0.20 0.8"  aa="13" ab="27" z="AV" />
 <t a="A1"  sc="A"  t="adesert_mntn2_d"    n="desert_mntn2_n"     s="34.04" su="Rocks"          tp="1" du="0.7" ds="1.0" md="0.4" tr="0.46 0.26 0.08 0.7"  aa="28" ab="90" z="AIR" />
@@ -113,6 +116,7 @@
 
 
 <!-- road -->
+<!-- m - road material  rest same as for t (above) -->
 
 <r a="D16" sc="D"  m="roadAsphalt"   su="Asphalt"        du="0.0" ds="0.9" md="0.0" tr="0.00 0.00 0.00 0.0" z="D" />
 
@@ -147,6 +151,7 @@
 
 
 <!-- grass -->
+<!-- g - grass material  c - colormap .png  xa,xb - min,max width  ya,yb - min,max height  -->
 
 <g a="F1"  sc="F"  g="gplant1"           c="grClrJungle"    xa="0.98" xb="1.31" ya="0.98" yb="1.14" z="F" />
 <g a="A2"  sc="A"  g="grass10"           c="grClrJungle"    xa="1.58" xb="1.93" ya="1.31" yb="1.55" z="AORV" />
@@ -217,147 +222,149 @@
 
 
 <!-- vegetation -->
+<!-- p - .mesh name  sa,sb - min,max scale  wx,wy - wind fx,fy  ab - max ter angle  rd - min road dist  fd - max fluid depth -->
 
-<v a="D5"  sc="D"  p="cactus"               sa="0.40" sb="0.72"  wx="0.00" wy="0.000"  ab="26.93" z="DIV" />
+<v a="D5"  sc="D"  p="cactus"               sa="0.40" sb="0.72"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="DIV" />
 
-<v a="S2"  sc="S"  p="farn1"                sa="0.10" sb="0.25"  wx="7.30" wy="0.060"  ab="34.34" z="CDFGIJSV" />
-<v a="J1"  sc="J"  p="farn2"                sa="0.11" sb="0.30"  wx="7.30" wy="0.060"  ab="34.42" z="FIJSV" />
+<v a="S2"  sc="S"  p="farn1"                sa="0.10" sb="0.25"  wx="7.30" wy="0.060"  ab="34.34" rd="1" fd="0.5" z="CDFGIJSV" />
+<v a="J1"  sc="J"  p="farn2"                sa="0.11" sb="0.30"  wx="7.30" wy="0.060"  ab="34.42" rd="1" fd="0.5" z="FIJSV" />
 
-<v a="J12" sc="J"  p="fern"                 sa="0.15" sb="0.25"  wx="7.30" wy="0.060"  ab="30.92" z="FJV" />
-<v a="F17" sc="F"  p="fern2"                sa="0.30" sb="0.44"  wx="0.00" wy="0.000"  ab="29.12" z="EFOV" />
+<v a="J12" sc="J"  p="fern"                 sa="0.15" sb="0.25"  wx="7.30" wy="0.060"  ab="30.92" rd="1" fd="0.5" z="FJV" />
+<v a="F17" sc="F"  p="fern2"                sa="0.30" sb="0.44"  wx="0.00" wy="0.000"  ab="29.12" rd="1" fd="0.5" z="EFOV" />
 
-<v a="C1"  sc="C"  p="fir05"                sa="0.04" sb="0.10"  wx="2.80" wy="0.100"  ab="30.72" z="CFM" />
-<v a="W1"  sc="W"  p="fir05w"               sa="0.04" sb="0.10"  wx="2.80" wy="0.100"  ab="25.44" z="W" />
-<v a="F3"  sc="F"  p="fir06"                sa="0.04" sb="0.12"  wx="1.80" wy="0.100"  ab="27.49" z="CFMW" />
-<v a="F3"  sc="W"  p="fir06w"               sa="0.04" sb="0.12"  wx="1.80" wy="0.100"  ab="27.49" z="W" />
-<v a="F7"  sc="F"  p="fir14"                sa="0.06" sb="0.09"  wx="1.80" wy="0.100"  ab="50.00" z="EFM" />
-<v a="F7"  sc="W"  p="fir14w"               sa="0.06" sb="0.09"  wx="1.80" wy="0.100"  ab="50.00" z="W" />
+<v a="C1"  sc="C"  p="fir05"                sa="0.04" sb="0.10"  wx="2.80" wy="0.100"  ab="30.72" rd="1" fd="0.0" z="CFM" />
+<v a="W1"  sc="W"  p="fir05w"               sa="0.04" sb="0.10"  wx="2.80" wy="0.100"  ab="25.44" rd="1" fd="0.0" z="W" />
+<v a="F3"  sc="F"  p="fir06"                sa="0.04" sb="0.12"  wx="1.80" wy="0.100"  ab="27.49" rd="1" fd="0.0" z="CFMW" />
+<v a="F3"  sc="W"  p="fir06w"               sa="0.04" sb="0.12"  wx="1.80" wy="0.100"  ab="27.49" rd="1" fd="0.0" z="W" />
+<v a="F7"  sc="F"  p="fir14"                sa="0.06" sb="0.09"  wx="1.80" wy="0.100"  ab="50.00" rd="1" fd="0.0" z="EFM" />
+<v a="F7"  sc="W"  p="fir14w"               sa="0.06" sb="0.09"  wx="1.80" wy="0.100"  ab="50.00" rd="1" fd="0.0" z="W" />
 
-<v a="A5"  sc="A"  p="gum_tree"             sa="0.34" sb="1.14"  wx="0.80" wy="0.014"  ab="14.34" z="AX" />
-<v a="X6"  sc="X"  p="gum_tree"             sa="1.45" sb="2.22"  wx="0.30" wy="0.004"  ab="20.48" z="AX" />
+<v a="A5"  sc="A"  p="gum_tree"             sa="0.34" sb="1.14"  wx="0.80" wy="0.014"  ab="14.34" rd="1" fd="0.0" z="AX" />
+<v a="X6"  sc="X"  p="gum_tree"             sa="1.45" sb="2.22"  wx="0.30" wy="0.004"  ab="20.48" rd="1" fd="0.0" z="AX" />
 
-<v a="S4"  sc="S"  p="jungle_tree"          sa="1.61" sb="2.05"  wx="0.40" wy="0.002"  ab="29.26" z="JOSV" />
+<v a="S4"  sc="S"  p="jungle_tree"          sa="1.61" sb="2.05"  wx="0.40" wy="0.002"  ab="29.26" rd="1" fd="0.0" z="JOSV" />
 
-<v a="D3"  sc="D"  p="palm"                 sa="1.78" sb="2.74"  wx="0.60" wy="0.010"  ab="15.07" z="DGIJV" />
-<v a="D3"  sc="D"  p="palm2"                sa="2.34" sb="3.31"  wx="0.30" wy="0.115"  ab="30.03" z="DGIJV" />
-
-
-<v a="W1"  sc="W"  p="pine1_full"           sa="0.72" sb="1.25"  wx="0.12" wy="0.033"  ab="32.49" z="W" />
-<v a="W2"  sc="W"  p="pine1_half"           sa="0.98" sb="1.20"  wx="0.10" wy="0.017"  ab="11.08" z="W" />
-
-<v a="F1"  sc="F"  p="pine1_norm"           sa="0.36" sb="0.55"  wx="0.38" wy="0.010"  ab="37.67" z="CF" />
-<v a="E2"  sc="E"  p="pine1_norm"           sa="0.79" sb="1.15"  wx="0.66" wy="0.019"  ab="16.23" z="E" />
-
-<v a="W1"  sc="W"  p="pine2_tall_full"      sa="0.89" sb="1.26"  wx="0.16" wy="0.027"  ab="25.74" z="W" />
-<v a="W2"  sc="W"  p="pine2_tall_half"      sa="0.74" sb="0.99"  wx="0.07" wy="0.026"  ab="12.80" z="W" />
-
-<v a="F1"  sc="F"  p="pine2_tall_norm"      sa="0.53" sb="0.81"  wx="0.75" wy="0.010"  ab="26.62" z="FM" />
-<v a="E1"  sc="E"  p="pine2_tall_norm"      sa="1.11" sb="1.78"  wx="0.41" wy="0.018"  ab="21.17" z="E" />
-<v a="C5"  sc="C"  p="pine2_tall_norm"      sa="0.46" sb="0.68"  wx="1.80" wy="0.100"  ab="18.62" z="C" />
-
-<v a="W7"  sc="W"  p="pine3_fat_full"       sa="0.68" sb="1.06"  wx="0.21" wy="0.022"  ab="28.59" z="W" />
-<v a="W2"  sc="W"  p="pine3_fat_half"       sa="1.05" sb="1.51"  wx="0.07" wy="0.017"  ab=" 7.54" z="W" />
-<v a="F12" sc="F"  p="pine3_fat_norm"       sa="0.57" sb="1.10"  wx="0.81" wy="0.018"  ab="50.00" z="EFV" />
+<v a="D3"  sc="D"  p="palm"                 sa="1.78" sb="2.74"  wx="0.60" wy="0.010"  ab="15.07" rd="1" fd="0.0" z="DGIJV" />
+<v a="D3"  sc="D"  p="palm2"                sa="2.34" sb="3.31"  wx="0.30" wy="0.115"  ab="30.03" rd="1" fd="0.0" z="DGIJV" />
 
 
-<v a="F8"  sc="F"  p="plant1"               sa="0.08" sb="0.15"  wx="1.80" wy="0.100"  ab="30.00" z="F" />
-<v a="F8"  sc="F"  p="plant2"               sa="0.08" sb="0.15"  wx="1.80" wy="0.100"  ab="30.00" z="F" />
-<v a="V2"  sc="V"  p="palm_plant"           sa="1.68" sb="2.21"  wx="0.06" wy="0.010"  ab="26.07" z="V" />
-<v a="J1"  sc="J"  p="plant_tropical"       sa="1.51" sb="1.89"  wx="0.06" wy="0.015"  ab="27.49" z="IJO" />
+<v a="W1"  sc="W"  p="pine1_full"           sa="0.72" sb="1.25"  wx="0.12" wy="0.033"  ab="32.49" rd="1" fd="0.0" z="W" />
+<v a="W2"  sc="W"  p="pine1_half"           sa="0.98" sb="1.20"  wx="0.10" wy="0.017"  ab="11.08" rd="1" fd="0.0" z="W" />
 
-<v a="J1"  sc="J"  p="rock.05"              sa="0.15" sb="0.22"  wx="0.00" wy="0.000"  ab="28.37" z="ACDFIJMST" />
-<v a="W4"  sc="W"  p="rock.05w"             sa="0.03" sb="0.15"  wx="0.00" wy="0.000"  ab="40.00" z="W" />
+<v a="F1"  sc="F"  p="pine1_norm"           sa="0.36" sb="0.55"  wx="0.38" wy="0.010"  ab="37.67" rd="1" fd="0.0" z="CF" />
+<v a="E2"  sc="E"  p="pine1_norm"           sa="0.79" sb="1.15"  wx="0.66" wy="0.019"  ab="16.23" rd="1" fd="0.0" z="E" />
 
-<v a="S3"  sc="S"  p="rock.07"              sa="0.03" sb="0.21"  wx="0.00" wy="0.000"  ab="50.00" z="ACDFIJMOS" />
-<v a="W2"  sc="W"  p="rock.07w"             sa="0.04" sb="0.14"  wx="0.00" wy="0.000"  ab="44.88" z="W" />
-<v a="M2"  sc="M"  p="rock"                 sa="0.74" sb="1.10"  wx="0.00" wy="0.000"  ab="34.34" z="CEFMORTVWX" />
+<v a="W1"  sc="W"  p="pine2_tall_full"      sa="0.89" sb="1.26"  wx="0.16" wy="0.027"  ab="25.74" rd="1" fd="0.0" z="W" />
+<v a="W2"  sc="W"  p="pine2_tall_half"      sa="0.74" sb="0.99"  wx="0.07" wy="0.026"  ab="12.80" rd="1" fd="0.0" z="W" />
 
-<v a="F3"  sc="F"  p="rock_B01"             sa="0.75" sb="1.26"  wx="0.00" wy="0.000"  ab="25.14" z="F" />
-<v a="F1"  sc="F"  p="rock_B02"             sa="0.51" sb="1.07"  wx="0.00" wy="0.000"  ab="19.70" z="F" />
-<v a="E2"  sc="E"  p="rock_B03"             sa="0.71" sb="1.27"  wx="0.00" wy="0.000"  ab="37.74" z="E" />
+<v a="F1"  sc="F"  p="pine2_tall_norm"      sa="0.53" sb="0.81"  wx="0.75" wy="0.010"  ab="26.62" rd="1" fd="0.0" z="FM" />
+<v a="E1"  sc="E"  p="pine2_tall_norm"      sa="1.11" sb="1.78"  wx="0.41" wy="0.018"  ab="21.17" rd="1" fd="0.0" z="E" />
+<v a="C5"  sc="C"  p="pine2_tall_norm"      sa="0.46" sb="0.68"  wx="1.80" wy="0.100"  ab="18.62" rd="1" fd="0.0" z="C" />
 
-<v a="V6"  sc="V"  p="rock_G01"             sa="1.39" sb="1.76"  wx="0.00" wy="0.000"  ab="58.66" z="V" />
-<v a="V6"  sc="V"  p="rock_G02"             sa="1.29" sb="2.37"  wx="0.00" wy="0.000"  ab="56.03" z="V" />
-<v a="V6"  sc="V"  p="rock_G03"             sa="1.39" sb="2.27"  wx="0.00" wy="0.000"  ab="52.03" z="V" />
-
-<v a="R1"  sc="R"  p="rock_R01"             sa="0.87" sb="1.15"  wx="0.00" wy="0.000"  ab="35.41" z="R" />
-<v a="R1"  sc="R"  p="rock_R02"             sa="0.77" sb="1.25"  wx="0.00" wy="0.000"  ab="30.41" z="R" />
-<v a="R1"  sc="R"  p="rock_R03"             sa="1.23" sb="1.61"  wx="0.00" wy="0.000"  ab="36.70" z="RV" />
-<v a="X5"  sc="X"  p="rock_R03"             sa="1.73" sb="2.39"  wx="0.00" wy="0.000"  ab="41.11" z="X" />
-<v a="R1"  sc="R"  p="rock_R2"              sa="0.77" sb="1.25"  wx="0.00" wy="0.000"  ab="30.41" z="R" />
-<v a="R1"  sc="R"  p="rock_R3"              sa="1.23" sb="1.61"  wx="0.00" wy="0.000"  ab="36.70" z="RV" />
-
-<v a="R1"  sc="R"  p="rock_R4"              sa="1.16" sb="1.89"  wx="0.00" wy="0.000"  ab="38.10" z="RV" />
-<v a="V7"  sc="V"  p="rock_R4r"             sa="0.92" sb="1.40"  wx="0.00" wy="0.000"  ab="30.00" z="V" />
-<v a="R1"  sc="R"  p="rock_R5"              sa="0.97" sb="1.67"  wx="0.00" wy="0.000"  ab="26.75" z="CRV" />
-<v a="R1"  sc="R"  p="rock_R5f"             sa="1.90" sb="2.42"  wx="0.00" wy="0.000"  ab="33.65" z="R" />
-
-<v a="W5"  sc="W"  p="rock_W01"             sa="1.15" sb="2.23"  wx="0.00" wy="0.000"  ab="35.19" z="W" />
-<v a="W5"  sc="W"  p="rock_W02"             sa="1.11" sb="2.03"  wx="0.00" wy="0.000"  ab="25.19" z="W" />
-<v a="W5"  sc="W"  p="rock_W03"             sa="1.21" sb="2.41"  wx="0.00" wy="0.000"  ab="50.00" z="W" />
-
-<v a="S2"  sc="S"  p="rock_Y01"             sa="0.79" sb="1.24"  wx="0.00" wy="0.000"  ab="46.00" z="DFGS" />
-<v a="D1"  sc="D"  p="rock_Y02"             sa="0.79" sb="1.34"  wx="0.00" wy="0.000"  ab="11.92" z="CDFSV" />
-<v a="S3"  sc="S"  p="rock_Y03"             sa="0.84" sb="1.87"  wx="0.00" wy="0.000"  ab="50.00" z="CDFGS" />
+<v a="W7"  sc="W"  p="pine3_fat_full"       sa="0.68" sb="1.06"  wx="0.21" wy="0.022"  ab="28.59" rd="1" fd="0.0" z="W" />
+<v a="W2"  sc="W"  p="pine3_fat_half"       sa="1.05" sb="1.51"  wx="0.07" wy="0.017"  ab=" 7.54" rd="1" fd="0.0" z="W" />
+<v a="F12" sc="F"  p="pine3_fat_norm"       sa="0.57" sb="1.10"  wx="0.81" wy="0.018"  ab="50.00" rd="1" fd="0.0" z="EFV" />
 
 
-<v a="W1"  sc="W"  p="rock_n1-W"            sa="0.80" sb="1.80"  wx="0.00" wy="0.000"  ab="43.49" z="W" />
-<v a="X4"  sc="X"  p="rock_n1-W"            sa="2.23" sb="3.05"  wx="0.00" wy="0.000"  ab="28.86" z="X" />
-
-<v a="G2"  sc="G"  p="rock_n2-GYel"         sa="0.71" sb="1.26"  wx="0.00" wy="0.000"  ab="20.76" z="DGISV" />
-<v a="J22" sc="J"  p="rock_n2"              sa="0.51" sb="1.10"  wx="0.00" wy="0.000"  ab="36.41" z="IJV" />
-<v a="F1"  sc="F"  p="rock_n3r"             sa="0.55" sb="0.96"  wx="0.00" wy="0.000"  ab="22.09" z="FIOV" />
-
-<v a="W2"  sc="W"  p="rock_n4r-W"           sa="0.90" sb="1.59"  wx="0.00" wy="0.000"  ab="23.10" z="W" />
-<v a="X5"  sc="X"  p="rock_n4r-W"           sa="1.66" sb="2.25"  wx="0.00" wy="0.000"  ab="16.00" z="X" />
-
-<v a="W5"  sc="W"  p="rock_n5v-W"           sa="0.82" sb="1.34"  wx="0.00" wy="0.000"  ab="50.00" z="W" />
-<v a="X4"  sc="X"  p="rock_n5v-W"           sa="1.05" sb="1.43"  wx="0.00" wy="0.000"  ab="15.33" z="X" />
+<v a="F8"  sc="F"  p="plant1"               sa="0.08" sb="0.15"  wx="1.80" wy="0.100"  ab="30.00" rd="1" fd="0.0" z="F" />
+<v a="F8"  sc="F"  p="plant2"               sa="0.08" sb="0.15"  wx="1.80" wy="0.100"  ab="30.00" rd="1" fd="0.0" z="F" />
+<v a="V2"  sc="V"  p="palm_plant"           sa="1.68" sb="2.21"  wx="0.06" wy="0.010"  ab="26.07" rd="1" fd="0.0" z="V" />
+<v a="J1"  sc="J"  p="plant_tropical"       sa="1.51" sb="1.89"  wx="0.06" wy="0.015"  ab="27.49" rd="1" fd="0.5" z="IJO" />
 
 
-<v a="X2"  sc="X"  p="shroom1_1"            sa="2.06" sb="4.00"  wx="7.30" wy="0.060"  ab="48.86" z="X" />
-<v a="F1"  sc="F"  p="shroom1_2"            sa="0.15" sb="0.25"  wx="0.00" wy="0.000"  ab="21.14" z="F" />
-<v a="X4"  sc="X"  p="shroom1_2"            sa="1.90" sb="3.18"  wx="0.00" wy="0.000"  ab="21.69" z="X" />
-<v a="X3"  sc="X"  p="shroom1_3"            sa="2.06" sb="4.00"  wx="0.00" wy="0.000"  ab="44.13" z="X" />
-<v a="X2"  sc="X"  p="shroom2_1"            sa="1.43" sb="4.00"  wx="0.00" wy="0.000"  ab="39.74" z="X" />
+<v a="J1"  sc="J"  p="rock.05"              sa="0.15" sb="0.22"  wx="0.00" wy="0.000"  ab="28.37" rd="1" fd="2.0" z="ACDFIJMST" />
+<v a="W4"  sc="W"  p="rock.05w"             sa="0.03" sb="0.15"  wx="0.00" wy="0.000"  ab="40.00" rd="1" fd="2.0" z="W" />
 
-<v a="F6"  sc="F"  p="shroom2_2"            sa="0.32" sb="0.49"  wx="0.00" wy="0.000"  ab="32.73" z="F" />
-<v a="X2"  sc="X"  p="shroom2_2"            sa="3.23" sb="4.00"  wx="0.00" wy="0.000"  ab="29.03" z="X" />
-<v a="F3"  sc="F"  p="shroom2_3"            sa="0.20" sb="0.30"  wx="0.00" wy="0.000"  ab="21.33" z="F" />
-<v a="X1"  sc="X"  p="shroom2_3"            sa="1.43" sb="4.00"  wx="0.00" wy="0.000"  ab="25.56" z="X" />
+<v a="S3"  sc="S"  p="rock.07"              sa="0.03" sb="0.21"  wx="0.00" wy="0.000"  ab="50.00" rd="1" fd="2.0" z="ACDFIJMOS" />
+<v a="W2"  sc="W"  p="rock.07w"             sa="0.04" sb="0.14"  wx="0.00" wy="0.000"  ab="44.88" rd="1" fd="2.0" z="W" />
+<v a="M2"  sc="M"  p="rock"                 sa="0.74" sb="1.10"  wx="0.00" wy="0.000"  ab="34.34" rd="1" fd="2.0" z="CEFMORTVWX" />
+
+<v a="F3"  sc="F"  p="rock_B01"             sa="0.75" sb="1.26"  wx="0.00" wy="0.000"  ab="25.14" rd="1" fd="2.0" z="F" />
+<v a="F1"  sc="F"  p="rock_B02"             sa="0.51" sb="1.07"  wx="0.00" wy="0.000"  ab="19.70" rd="1" fd="2.0" z="F" />
+<v a="E2"  sc="E"  p="rock_B03"             sa="0.71" sb="1.27"  wx="0.00" wy="0.000"  ab="37.74" rd="1" fd="2.0" z="E" />
+
+<v a="V6"  sc="V"  p="rock_G01"             sa="1.39" sb="1.76"  wx="0.00" wy="0.000"  ab="58.66" rd="1" fd="2.0" z="V" />
+<v a="V6"  sc="V"  p="rock_G02"             sa="1.29" sb="2.37"  wx="0.00" wy="0.000"  ab="56.03" rd="1" fd="2.0" z="V" />
+<v a="V6"  sc="V"  p="rock_G03"             sa="1.39" sb="2.27"  wx="0.00" wy="0.000"  ab="52.03" rd="1" fd="2.0" z="V" />
+
+<v a="R1"  sc="R"  p="rock_R01"             sa="0.87" sb="1.15"  wx="0.00" wy="0.000"  ab="35.41" rd="1" fd="2.0" z="R" />
+<v a="R1"  sc="R"  p="rock_R02"             sa="0.77" sb="1.25"  wx="0.00" wy="0.000"  ab="30.41" rd="1" fd="2.0" z="R" />
+<v a="R1"  sc="R"  p="rock_R03"             sa="1.23" sb="1.61"  wx="0.00" wy="0.000"  ab="36.70" rd="1" fd="2.0" z="RV" />
+<v a="X5"  sc="X"  p="rock_R03"             sa="1.73" sb="2.39"  wx="0.00" wy="0.000"  ab="41.11" rd="1" fd="2.0" z="X" />
+<v a="R1"  sc="R"  p="rock_R2"              sa="0.77" sb="1.25"  wx="0.00" wy="0.000"  ab="30.41" rd="1" fd="2.0" z="R" />
+<v a="R1"  sc="R"  p="rock_R3"              sa="1.23" sb="1.61"  wx="0.00" wy="0.000"  ab="36.70" rd="1" fd="2.0" z="RV" />
+
+<v a="R1"  sc="R"  p="rock_R4"              sa="1.16" sb="1.89"  wx="0.00" wy="0.000"  ab="38.10" rd="1" fd="2.0" z="RV" />
+<v a="V7"  sc="V"  p="rock_R4r"             sa="0.92" sb="1.40"  wx="0.00" wy="0.000"  ab="30.00" rd="1" fd="2.0" z="V" />
+<v a="R1"  sc="R"  p="rock_R5"              sa="0.97" sb="1.67"  wx="0.00" wy="0.000"  ab="26.75" rd="1" fd="2.0" z="CRV" />
+<v a="R1"  sc="R"  p="rock_R5f"             sa="1.90" sb="2.42"  wx="0.00" wy="0.000"  ab="33.65" rd="1" fd="2.0" z="R" />
+
+<v a="W5"  sc="W"  p="rock_W01"             sa="1.15" sb="2.23"  wx="0.00" wy="0.000"  ab="35.19" rd="1" fd="2.0" z="W" />
+<v a="W5"  sc="W"  p="rock_W02"             sa="1.11" sb="2.03"  wx="0.00" wy="0.000"  ab="25.19" rd="1" fd="2.0" z="W" />
+<v a="W5"  sc="W"  p="rock_W03"             sa="1.21" sb="2.41"  wx="0.00" wy="0.000"  ab="50.00" rd="1" fd="2.0" z="W" />
+
+<v a="S2"  sc="S"  p="rock_Y01"             sa="0.79" sb="1.24"  wx="0.00" wy="0.000"  ab="46.00" rd="1" fd="2.0" z="DFGS" />
+<v a="D1"  sc="D"  p="rock_Y02"             sa="0.79" sb="1.34"  wx="0.00" wy="0.000"  ab="11.92" rd="1" fd="2.0" z="CDFSV" />
+<v a="S3"  sc="S"  p="rock_Y03"             sa="0.84" sb="1.87"  wx="0.00" wy="0.000"  ab="50.00" rd="1" fd="2.0" z="CDFGS" />
 
 
-<v a="J11" sc="J"  p="tree.07"              sa="0.85" sb="1.15"  wx="0.70" wy="0.010"  ab="38.53" z="ADIJSV" />
-<v a="J14" sc="J"  p="tree.07"              sa="2.45" sb="3.15"  wx="0.30" wy="0.004"  ab="38.18" z="ADIJSV" />
-<v a="J1"  sc="J"  p="tree.09"              sa="0.85" sb="1.15"  wx="0.60" wy="0.010"  ab="29.94" z="ADFIJS" />
+<v a="W1"  sc="W"  p="rock_n1-W"            sa="0.80" sb="1.80"  wx="0.00" wy="0.000"  ab="43.49" rd="1" fd="2.0" z="W" />
+<v a="X4"  sc="X"  p="rock_n1-W"            sa="2.23" sb="3.05"  wx="0.00" wy="0.000"  ab="28.86" rd="6" fd="2.0" z="X" />
 
-<v a="T3"  sc="T"  p="treeAO-25oakWMed"     sa="0.81" sb="1.48"  wx="0.60" wy="0.010"  ab="15.96" z="T" />
-<v a="T3"  sc="T"  p="treeAOG-17birTall"    sa="1.18" sb="1.64"  wx="0.60" wy="0.010"  ab="40.79" z="T" />
-<v a="T2"  sc="T"  p="treeAOR-13oakWBig"    sa="0.81" sb="1.48"  wx="0.60" wy="0.010"  ab="17.26" z="T" />
-<v a="T2"  sc="T"  p="treeAOY-27mplMed"     sa="0.92" sb="1.22"  wx="0.70" wy="0.010"  ab="38.44" z="T" />
-<v a="T2"  sc="T"  p="treeAR-10oakMed"      sa="1.18" sb="1.64"  wx="0.60" wy="0.010"  ab="24.72" z="T" />
-<v a="T2"  sc="T"  p="treeAR-26oakWide"     sa="1.18" sb="1.64"  wx="0.60" wy="0.010"  ab="24.72" z="T" />
-<v a="T2"  sc="T"  p="treeARk-12oakSm"      sa="1.27" sb="1.62"  wx="0.70" wy="0.010"  ab="21.33" z="T" />
+<v a="G2"  sc="G"  p="rock_n2-GYel"         sa="0.71" sb="1.26"  wx="0.00" wy="0.000"  ab="20.76" rd="1" fd="2.0" z="DGISV" />
+<v a="J22" sc="J"  p="rock_n2"              sa="0.51" sb="1.10"  wx="0.00" wy="0.000"  ab="36.41" rd="1" fd="2.0" z="IJV" />
+<v a="F1"  sc="F"  p="rock_n3r"             sa="0.55" sb="0.96"  wx="0.00" wy="0.000"  ab="22.09" rd="1" fd="2.0" z="FIOV" />
 
-<v a="T4"  sc="T"  p="treeAW-14LLHuge7k"    sa="1.83" sb="3.00"  wx="0.70" wy="0.010"  ab="19.27" z="T" />
-<v a="T1"  sc="T"  p="treeAY-11aspTallMed"  sa="1.58" sb="2.03"  wx="0.22" wy="0.010"  ab="19.45" z="T" />
-<v a="T1"  sc="T"  p="treeAY-19mplBig"      sa="1.30" sb="1.52"  wx="0.70" wy="0.010"  ab="15.21" z="T" />
-<v a="T1"  sc="T"  p="treeAY-20mplWide"     sa="1.20" sb="1.42"  wx="0.70" wy="0.010"  ab="14.49" z="T" />
-<v a="T4"  sc="T"  p="treeAY-28aspTallEmp"  sa="1.90" sb="2.58"  wx="0.60" wy="0.010"  ab="21.91" z="T" />
-<v a="T1"  sc="T"  p="treeAYG-16birTallUp"  sa="1.14" sb="1.67"  wx="0.60" wy="0.010"  ab="20.95" z="T" />
-<v a="T6"  sc="T"  p="treeAYO-18mplTall"    sa="1.53" sb="2.29"  wx="0.70" wy="0.010"  ab="20.57" z="T" />
+<v a="W2"  sc="W"  p="rock_n4r-W"           sa="0.90" sb="1.59"  wx="0.00" wy="0.000"  ab="23.10" rd="1" fd="2.0" z="W" />
+<v a="X5"  sc="X"  p="rock_n4r-W"           sa="1.66" sb="2.25"  wx="0.00" wy="0.000"  ab="16.00" rd="1" fd="2.0" z="X" />
 
-<v a="D14" sc="D"  p="treeD-22desMed"       sa="1.30" sb="1.58"  wx="0.32" wy="0.005"  ab="26.84" z="ADGI" />
-<v a="D6"  sc="D"  p="treeD-34desTiny"      sa="1.22" sb="1.51"  wx="0.13" wy="0.005"  ab="25.77" z="ADGIV" />
+<v a="W5"  sc="W"  p="rock_n5v-W"           sa="0.82" sb="1.34"  wx="0.00" wy="0.000"  ab="50.00" rd="1" fd="2.0" z="W" />
+<v a="X4"  sc="X"  p="rock_n5v-W"           sa="1.05" sb="1.43"  wx="0.00" wy="0.000"  ab="15.33" rd="1" fd="2.0" z="X" />
 
-<v a="E2"  sc="E"  p="treeG-16birTallUp"    sa="0.97" sb="1.48"  wx="0.69" wy="0.046"  ab="21.01" z="E" />
-<v a="F15" sc="F"  p="treeG-17birTall"      sa="0.94" sb="1.42"  wx="0.00" wy="0.000"  ab="16.03" z="EF" />
-<v a="E1"  sc="E"  p="treeG-17birTall"      sa="1.51" sb="2.49"  wx="0.18" wy="0.036"  ab="21.69" z="EF" />
 
-<v a="O1"  sc="O"  p="treeGC-29aspDnSwp"    sa="0.81" sb="1.61"  wx="0.60" wy="0.010"  ab="30.63" z="O" />
-<v a="D2"  sc="D"  p="treeGC-32draUp"       sa="1.05" sb="1.29"  wx="0.06" wy="0.002"  ab="11.22" z="ADG" />
-<v a="G2"  sc="G"  p="treeGG-37acaTall"     sa="0.90" sb="1.33"  wx="0.33" wy="0.040"  ab="40.00" z="FGO" />
-<v a="G1"  sc="G"  p="treeGW-41aspMid"      sa="1.15" sb="1.67"  wx="0.43" wy="0.010"  ab="11.93" z="G" />
-<v a="O1"  sc="O"  p="treeGY-36aspMed"      sa="0.92" sb="1.22"  wx="0.70" wy="0.010"  ab="30.63" z="O" />
+<v a="F1"  sc="F"  p="shroom1_2"            sa="0.15" sb="0.25"  wx="0.00" wy="0.000"  ab="21.14" rd="1" fd="0.0" z="F" />
+<v a="F6"  sc="F"  p="shroom2_2"            sa="0.32" sb="0.49"  wx="0.00" wy="0.000"  ab="32.73" rd="1" fd="0.0" z="F" />
+<v a="F3"  sc="F"  p="shroom2_3"            sa="0.20" sb="0.30"  wx="0.00" wy="0.000"  ab="21.33" rd="1" fd="0.0" z="F" />
+
+<v a="X2"  sc="X"  p="shroom1_1"            sa="2.06" sb="4.00"  wx="0.00" wy="0.060"  ab="48.86" rd="6" fd="0.0" z="X" />
+<v a="X4"  sc="X"  p="shroom1_2"            sa="1.90" sb="3.18"  wx="0.00" wy="0.000"  ab="21.69" rd="6" fd="0.0" z="X" />
+<v a="X3"  sc="X"  p="shroom1_3"            sa="2.06" sb="4.00"  wx="0.00" wy="0.000"  ab="44.13" rd="6" fd="0.0" z="X" />
+<v a="X2"  sc="X"  p="shroom2_1"            sa="1.43" sb="4.00"  wx="0.00" wy="0.000"  ab="39.74" rd="6" fd="0.0" z="X" />
+<v a="X2"  sc="X"  p="shroom2_2"            sa="3.23" sb="4.00"  wx="0.00" wy="0.000"  ab="29.03" rd="6" fd="0.0" z="X" />
+<v a="X1"  sc="X"  p="shroom2_3"            sa="1.43" sb="4.00"  wx="0.00" wy="0.000"  ab="25.56" rd="6" fd="0.0" z="X" />
+
+
+<v a="J11" sc="J"  p="tree.07"              sa="0.85" sb="1.15"  wx="0.70" wy="0.010"  ab="38.53" rd="2" fd="0.0" z="ADIJSV" />
+<v a="J14" sc="J"  p="tree.07"              sa="2.45" sb="3.15"  wx="0.30" wy="0.004"  ab="38.18" rd="5" fd="0.0" z="ADIJSV" />
+<v a="J1"  sc="J"  p="tree.09"              sa="0.85" sb="1.15"  wx="0.60" wy="0.010"  ab="29.94" rd="2" fd="0.0" z="ADFIJS" />
+
+<v a="T3"  sc="T"  p="treeAO-25oakWMed"     sa="0.81" sb="1.48"  wx="0.60" wy="0.010"  ab="15.96" rd="1" fd="0.0" z="T" />
+<v a="T3"  sc="T"  p="treeAOG-17birTall"    sa="1.18" sb="1.64"  wx="0.60" wy="0.010"  ab="40.79" rd="1" fd="0.0" z="T" />
+<v a="T2"  sc="T"  p="treeAOR-13oakWBig"    sa="0.81" sb="1.48"  wx="0.60" wy="0.010"  ab="17.26" rd="1" fd="0.0" z="T" />
+<v a="T2"  sc="T"  p="treeAOY-27mplMed"     sa="0.92" sb="1.22"  wx="0.70" wy="0.010"  ab="38.44" rd="1" fd="0.0" z="T" />
+<v a="T2"  sc="T"  p="treeAR-10oakMed"      sa="1.18" sb="1.64"  wx="0.60" wy="0.010"  ab="24.72" rd="1" fd="0.0" z="T" />
+<v a="T2"  sc="T"  p="treeAR-26oakWide"     sa="1.18" sb="1.64"  wx="0.60" wy="0.010"  ab="24.72" rd="1" fd="0.0" z="T" />
+<v a="T2"  sc="T"  p="treeARk-12oakSm"      sa="1.27" sb="1.62"  wx="0.70" wy="0.010"  ab="21.33" rd="1" fd="0.0" z="T" />
+
+<v a="T4"  sc="T"  p="treeAW-14LLHuge7k"    sa="1.83" sb="3.00"  wx="0.70" wy="0.010"  ab="19.27" rd="1" fd="0.0" z="T" />
+<v a="T1"  sc="T"  p="treeAY-11aspTallMed"  sa="1.58" sb="2.03"  wx="0.22" wy="0.010"  ab="19.45" rd="1" fd="0.0" z="T" />
+<v a="T1"  sc="T"  p="treeAY-19mplBig"      sa="1.30" sb="1.52"  wx="0.70" wy="0.010"  ab="15.21" rd="1" fd="0.0" z="T" />
+<v a="T1"  sc="T"  p="treeAY-20mplWide"     sa="1.20" sb="1.42"  wx="0.70" wy="0.010"  ab="14.49" rd="1" fd="0.0" z="T" />
+<v a="T4"  sc="T"  p="treeAY-28aspTallEmp"  sa="1.90" sb="2.58"  wx="0.60" wy="0.010"  ab="21.91" rd="1" fd="0.0" z="T" />
+<v a="T1"  sc="T"  p="treeAYG-16birTallUp"  sa="1.14" sb="1.67"  wx="0.60" wy="0.010"  ab="20.95" rd="1" fd="0.0" z="T" />
+<v a="T6"  sc="T"  p="treeAYO-18mplTall"    sa="1.53" sb="2.29"  wx="0.70" wy="0.010"  ab="20.57" rd="1" fd="0.0" z="T" />
+
+<v a="D14" sc="D"  p="treeD-22desMed"       sa="1.30" sb="1.58"  wx="0.32" wy="0.005"  ab="26.84" rd="1" fd="0.0" z="ADGI" />
+<v a="D6"  sc="D"  p="treeD-34desTiny"      sa="1.22" sb="1.51"  wx="0.13" wy="0.005"  ab="25.77" rd="1" fd="0.0" z="ADGIV" />
+
+<v a="E2"  sc="E"  p="treeG-16birTallUp"    sa="0.97" sb="1.48"  wx="0.69" wy="0.046"  ab="21.01" rd="1" fd="0.0" z="E" />
+<v a="F15" sc="F"  p="treeG-17birTall"      sa="0.94" sb="1.42"  wx="0.00" wy="0.000"  ab="16.03" rd="1" fd="0.0" z="EF" />
+<v a="E1"  sc="E"  p="treeG-17birTall"      sa="1.51" sb="2.49"  wx="0.18" wy="0.036"  ab="21.69" rd="1" fd="0.0" z="EF" />
+
+<v a="O1"  sc="O"  p="treeGC-29aspDnSwp"    sa="0.81" sb="1.61"  wx="0.60" wy="0.010"  ab="30.63" rd="1" fd="0.0" z="O" />
+<v a="D2"  sc="D"  p="treeGC-32draUp"       sa="1.05" sb="1.29"  wx="0.06" wy="0.002"  ab="11.22" rd="1" fd="0.0" z="ADG" />
+<v a="G2"  sc="G"  p="treeGG-37acaTall"     sa="0.90" sb="1.33"  wx="0.33" wy="0.040"  ab="40.00" rd="1" fd="0.0" z="FGO" />
+<v a="G1"  sc="G"  p="treeGW-41aspMid"      sa="1.15" sb="1.67"  wx="0.43" wy="0.010"  ab="11.93" rd="1" fd="0.0" z="G" />
+<v a="O1"  sc="O"  p="treeGY-36aspMed"      sa="0.92" sb="1.22"  wx="0.70" wy="0.010"  ab="30.63" rd="1" fd="0.0" z="O" />
 
 </presets>

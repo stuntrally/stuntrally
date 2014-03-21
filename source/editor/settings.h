@@ -66,6 +66,8 @@ public:
 	float al_w_mul, al_w_add, al_smooth;
 	//  tweak
 	std::string tweak_mtr;
+	//  pick
+	bool pick_setpar;
 	
 //------------------------------------------
 	SETTINGS();

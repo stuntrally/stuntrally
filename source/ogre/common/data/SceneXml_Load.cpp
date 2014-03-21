@@ -684,12 +684,12 @@ bool Presets::LoadXml(string file)
 		a = eVeg->Attribute("sc");	if (a)  l.sc = String(a);
 		a = eVeg->Attribute("z");	if (a)  l.scn = string(a);
 
-		//a = eVeg->Attribute("rd");	if (a)  l.addRdist = s2i(a);
 		a = eVeg->Attribute("wx");	if (a)  l.windFx = s2r(a);
 		a = eVeg->Attribute("wy");	if (a)  l.windFy = s2r(a);
 
 		a = eVeg->Attribute("ab");	if (a)  l.maxTerAng = s2r(a);
-		//a = eVeg->Attribute("md");	if (a)  l.maxDepth = s2r(a);
+		a = eVeg->Attribute("rd");	if (a)  l.addRdist = s2i(a);
+		a = eVeg->Attribute("fd");	if (a)  l.maxDepth = s2r(a);
 
 		veg.push_back(l);  iveg[l.name] = veg.size();
 		eVeg = eVeg->NextSiblingElement("v");

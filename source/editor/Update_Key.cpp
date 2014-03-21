@@ -59,7 +59,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 	//  main menu keys
 	Widget* wf = InputManager::getInstance().getKeyFocusWidget();
-	bool edFoc = wf && wf->getTypeName() == "EditBox";
+	bool editFocus = wf && wf->getTypeName() == "EditBox";
 
 	if (pSet->isMain && bGuiFocus)
 	{
@@ -85,7 +85,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(BACKSPACE):
 			if (pSet->isMain)  break;
 			if (bGuiFocus)
-			{	if (edFoc)  break;
+			{	if (editFocus)  break;
 				pSet->isMain = true;  gui->toggleGui(false);  }
 			return true;
 		}
@@ -208,7 +208,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
    			break;
    			
    		case key(SPACE):  // subtabs
-   			if (bGuiFocus && !edFoc && tab && !pSet->isMain)
+   			if (bGuiFocus && !editFocus && tab && !pSet->isMain)
 				if (sub)  {  int num = sub->getItemCount();
 					sub->setIndexSelected( (sub->getIndexSelected() + (shift ? -1 : 1) + num) % num );  }
 			break;

@@ -644,7 +644,7 @@
 		<Property key="Visible" value="false"/>
 		<Property key="Colour" value="0.6 0.8 0.4"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="Button" skin="CheckBox" position="306 228 124 20" name="PickT">
+		<!--<Widget type="Button" skin="CheckBox" position="306 228 124 20" name="PickT">
 			<Property key="Caption" value="#FFA020T #{SC_Autumn}"/>
 		</Widget>
 		<Widget type="Button" skin="CheckBox" position="306 148 124 20" name="PickJ">
@@ -691,14 +691,14 @@
 		</Widget>
 		<Widget type="Button" skin="CheckBox" position="306 448 124 20" name="PickR">
 			<Property key="Caption" value="#A04840R #{SC_Mars}"/>
-		</Widget>
+		</Widget>-->
 		<Widget type="Button" skin="CheckBox" position="8 8 440 24" name="PickSetPar">
-			<Property key="Caption" value="Auto set parameters, marked with ."/>
+			<Property key="Caption" value="#{PickSetParam} ."/>
 			<Property key="Colour" value="1.0 1.0 0.5"/>
 			<Property key="TextColour" value="1 1 0.5"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="Button" skin="RadioButton" position="306 80 96 20" name="PickRadAll">
+		<!--<Widget type="Button" skin="RadioButton" position="306 80 96 20" name="PickRadAll">
 			<Property key="Caption" value="#{RplAll}"/>
 			<Property key="TextColour" value="0.6 1 1"/>
 			<Property key="InheritsAlpha" value="false"/>
@@ -712,12 +712,12 @@
 			<Property key="Caption" value="Filter"/>
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
-		</Widget>
-		<Widget type="Button" skin="CheckBox" position="306 48 136 24" name="PickAutoClose">
+		</Widget>-->
+		<!--<Widget type="Button" skin="CheckBox" position="306 48 136 24" name="PickAutoClose">
 			<Property key="Caption" value="AutoClose"/>
 			<Property key="TextColour" value="0.6 0.75 0.9"/>
 			<Property key="InheritsAlpha" value="false"/>
-		</Widget>
+		</Widget>-->
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="844 24 800 600" align="Center" layer="Overlapped" name="TrackWnd">
 		<Property key="MinSize" value="500 400"/>
@@ -2498,7 +2498,7 @@
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="56 192 80 20">
-							<Property key="Caption" value="#{min} x"/>
+							<Property key="Caption" value=".#{min} x"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMin}"/>
 						</Widget>
@@ -2513,7 +2513,7 @@
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="56 220 80 20">
-							<Property key="Caption" value="#{max} x"/>
+							<Property key="Caption" value=".#{max} x"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMax}"/>
 						</Widget>
@@ -2527,8 +2527,21 @@
 							<UserString key="tip" value="#{TipGrassPatchLengthMax}"/>
 						</Widget>
 
+						<Widget type="ImageBox" skin="ImageBox" position="22 204 32 20">
+							<Property key="ImageCoord" value="0 32 32 20"/>
+							<Property key="ImageTexture" value="track_icons.png"/>
+							<Property key="Colour" value="0.3 1 0.3"/>
+							<Property key="Alpha" value="0.6"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="22 268 32 20">
+							<Property key="ImageCoord" value="0 48 32 20"/>
+							<Property key="ImageTexture" value="track_icons.png"/>
+							<Property key="Colour" value="0.3 1 0.3"/>
+							<Property key="Alpha" value="0.6"/>
+						</Widget>
+
 						<Widget type="TextBox" skin="TextBox" position="56 256 80 20">
-							<Property key="Caption" value="#{min} y"/>
+							<Property key="Caption" value=".#{min} y"/>
 							<Property key="TextColour" value="0.2 0.9 0.2"/>
 							<UserString key="tip" value="#{TipGrassPatchHeightMin}"/>
 						</Widget>
@@ -2543,7 +2556,7 @@
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="56 284 80 20">
-							<Property key="Caption" value="#{max} y"/>
+							<Property key="Caption" value=".#{max} y"/>
 							<Property key="TextColour" value="0.2 1 0.2"/>
 							<UserString key="tip" value="#{TipGrassPatchHeightMax}"/>
 						</Widget>
@@ -2975,12 +2988,12 @@
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="16 131 116 20">
-							<Property key="Caption" value="#{MinScale}"/>
+							<Property key="Caption" value=".#{MinScale}"/>
 							<Property key="TextColour" value="0.6 0.8 0.8"/>
 							<UserString key="tip" value="#{TipModelMinScale}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="16 155 116 20">
-							<Property key="Caption" value="#{MaxScale}"/>
+							<Property key="Caption" value=".#{MaxScale}"/>
 							<Property key="TextColour" value="0.6 0.8 0.8"/>
 							<UserString key="tip" value="#{TipModelMaxScale}"/>
 						</Widget>
@@ -3002,12 +3015,12 @@
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="16 187 116 20">
-							<Property key="Caption" value="#{wind} Fx"/>
+							<Property key="Caption" value=".#{wind} Fx"/>
 							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<UserString key="tip" value="#{TipWindInflL}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="16 212 116 20">
-							<Property key="Caption" value="#{wind} Fy"/>
+							<Property key="Caption" value=".#{wind} Fy"/>
 							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<UserString key="tip" value="#{TipWindInflH}"/>
 						</Widget>
@@ -3029,7 +3042,7 @@
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="16 246 116 20">
-							<Property key="Caption" value="#{DistToRoad}"/>
+							<Property key="Caption" value=".#{DistToRoad}"/>
 							<Property key="TextColour" value="0.9 0.7 0.4"/>
 							<UserString key="tip" value="#{TipRoadDist2}"/>
 						</Widget>
@@ -3053,7 +3066,7 @@
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="16 328 116 24">
-							<Property key="Caption" value="#{AngleMax}"/>
+							<Property key="Caption" value=".#{AngleMax}"/>
 							<Property key="TextColour" value="0.6 0.9 0.2"/>
 							<UserString key="tip" value="#{TipLTrMaxTerAng}"/>
 						</Widget>
@@ -3095,7 +3108,7 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="16 424 120 24">
 							<Property key="TextColour" value="0.6 0.76 0.9"/>
-							<Property key="Caption" value="#{LTrFlDepth}"/>
+							<Property key="Caption" value=".#{LTrFlDepth}"/>
 							<UserString key="tip" value="#{TipLTrFlDepth}"/>
 						</Widget>
 						<Widget type="EditBox" skin="EditBox" position="136 419 48 24" name="LTrFlDepthEdit">
