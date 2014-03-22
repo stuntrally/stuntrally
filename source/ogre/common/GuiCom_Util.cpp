@@ -241,7 +241,7 @@ void CGuiCom::setToolTips(EnumeratorWidgetPtr widgets)
 	}
 }
 
-void CGuiCom::notifyToolTip(Widget *sender, const ToolTipInfo &info)
+void CGuiCom::notifyToolTip(WP wp, const ToolTipInfo &info)
 {
 	if (!mToolTip)  return;
 
@@ -254,12 +254,16 @@ void CGuiCom::notifyToolTip(Widget *sender, const ToolTipInfo &info)
 		return;
 	}
 	if (info.type == ToolTipInfo::Show)
-	{	// TODO: Tooltip isn't resizing properly ..
-		mToolTip->setSize(320, 96);  // start size for wrap
-		String s = TR(sender->getUserString("tip"));
+	{
+		mToolTip->setSize(320, 128);  // start size for wrap
+		mToolTipTxt->setSize(320, 128);
+
+		String s = TR(wp->getUserString("tip"));
 		mToolTipTxt->setCaption(s);
-		const IntSize &textsize = mToolTipTxt->getTextSize();
-		mToolTip->setSize(textsize.width*1.5, textsize.height*1.5);
+		const IntSize &si = mToolTipTxt->getTextSize();
+
+		mToolTip->setSize(si.width +8, si.height +8);
+		mToolTipTxt->setSize(si.width, si.height);
 		mToolTip->setVisible(true);
 		boundedMove(mToolTip, info.point);
 	}
