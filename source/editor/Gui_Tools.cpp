@@ -15,13 +15,12 @@ using namespace Ogre;
 ///  tools  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 /// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-//  track files
-const int cnTrkFm = 4, cnTrkFd = 2, cnTrkFo = 2, cnTrkFp = 3;
+//  track files  for copy, new 
+const int cnTrkFm = 4, cnTrkFo = 1, cnTrkFp = 3;
 const Ogre::String
-	csTrkFm[cnTrkFm] = {"/heightmap.f32", "/road.xml", "/scene.xml", "/track.txt"},  // copy, new
-	csTrkFo[cnTrkFo] = {"/grassDensity.png", "/waterDepth.png"},
-	csTrkFp[cnTrkFp] = {"/view.jpg", "/road.png", "/terrain.jpg"},
-	csTrkFd[cnTrkFd] = {"/heightmap-new.f32", "/records.txt"};  // del
+	csTrkFm[cnTrkFm] = {"/heightmap.f32", "/road.xml", "/scene.xml", "/track.txt"},  // in / 
+	csTrkFo[cnTrkFo] = {"/waterDepth.png"},							// in /objects/
+	csTrkFp[cnTrkFp] = {"/view.jpg", "/road.png", "/terrain.jpg"};	// in /preview/
 
 
 void CGui::btnTrkCopySel(WP)  // set copy source
@@ -104,15 +103,10 @@ void CGui::btnCopyTerLayers(WP)
 	sc->sParSmoke = sF.sParSmoke;
 	sc->td.UpdLayers();
 
-	//  copy grass dens only
-	String sto = from + "/objects";  // from
-	String to = gcom->TrkDir() + "objects";  // to, new
-	Copy(sto + csTrkFo[0], to + csTrkFo[0]);
-
 	SetGuiFromXmls();	app->UpdateTrack();
 }
 
-//  copy paged layers
+//  copy veget
 void CGui::btnCopyVeget(WP)
 {
 	if (!ChkTrkCopy())  return;
@@ -319,7 +313,7 @@ void CGui::msgTrackDel(Message* sender, MessageBoxStyle result)
 	for (i=0; i < cnTrkFo; ++i)  Delete(to + csTrkFo[i]);
 	for (i=0; i < cnTrkFp; ++i)  Delete(tp + csTrkFp[i]);
 	for (i=0; i < cnTrkFm; ++i)  Delete(t + csTrkFm[i]);
-	for (i=0; i < cnTrkFd; ++i)  Delete(t + csTrkFd[i]);
+	Delete(t + "/heightmap-new.f32");
 	DeleteDir(to);  DeleteDir(tp);  DeleteDir(t);
 
 	String st = pSet->gui.track;
