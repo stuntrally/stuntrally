@@ -269,6 +269,16 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer, bool terLoad)
 }
 
 
+//  save ter hmap to mem (all editing would be lost)
+void CScene::copyTerHmap()
+{
+	if (!terrain) return;
+	float *fHmap = terrain->getHeightData();
+	int size = sc->td.iVertsX * sc->td.iVertsY * sizeof(float);
+	memcpy(sc->td.hfHeight, fHmap, size);
+}
+
+
 //  Destroy
 void CScene::DestroyTerrain()
 {

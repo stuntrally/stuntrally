@@ -63,6 +63,10 @@ void CScene::RecreateTrees()
 #endif
 }
 
+void CScene::updGrsTer()
+{	gTerrain = terrain;  }
+
+
 void CScene::CreateTrees()
 {
 	Ogre::Timer ti;

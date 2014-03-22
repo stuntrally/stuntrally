@@ -278,6 +278,7 @@ void CGui::InitGui()
 	valTerLAll = fTxt("TerLayersAll");
 	valTriplAll = fTxt("TerTriplAll");
 	Tab(tabsTerLayers, "TabTerLay", tabTerLayer);
+	Btn("UpdateLayers", btnUpdateLayers);
 
 	ck= &ckTexNormAuto;	ck->Init("TexNormAuto",	&bTexNormAuto);
 	ck= &ckTerLayTripl;	ck->Init("TerLayTripl",	&b);   Cev(TerLayTripl);
@@ -296,8 +297,7 @@ void CGui::InitGui()
 	sv= &svTerLHMin;    sv->Init("TerLHMin",   &f,-150.f,150.f, 1.f, 0,2);  sv->DefaultF(-300.f);  Sev(TerLay);
 	sv= &svTerLHMax;    sv->Init("TerLHMax",   &f,-150.f,150.f, 1.f, 0,2);  sv->DefaultF( 300.f);  Sev(TerLay);
 	sv= &svTerLHSm;     sv->Init("TerLHSm",    &f, 0.f,  100.f, 2.f, 1,4);  sv->DefaultF(20.f);  Sev(TerLay);
-	Btn("TerLmoveL", btnTerLmoveL);
-	Btn("TerLmoveR", btnTerLmoveR);
+	Btn("TerLmoveL", btnTerLmoveL);  Btn("TerLmoveR", btnTerLmoveR);
 
 	//  noise
 	ck= &ckTerLNOnly;   ck->Init("TerLNonly",  &b);   Cev(TerLNOnly);

@@ -150,6 +150,7 @@ public:
 	CK(TerLayOn);
 	Txt valTerLAll,valTriplAll;
 	void updUsedTer();
+	void btnUpdateLayers(WP);
 
 	//  texture
 	Cmb cmbTexNorm;  void comboTexNorm(CMB);

@@ -1925,12 +1925,12 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#80FF00#{Layers}"/>
-                <!--<Widget type="Button" skin="Button" position="524 164 124 36" name="UpdateLayers">
+                <Widget type="Button" skin="Button" position="524 164 124 36" name="UpdateLayers">
 					<Property key="Caption" value="#{Update}"/>
 					<Property key="Colour" value="0.5 1.0 0.2"/>
 					<Property key="TextColour" value="0.5 1.0 0.2"/>
 					<Property key="Alpha" value="0.7"/>
-				</Widget>-->				
+				</Widget>				
 				<Widget type="Button" skin="Button" position="565 24 24 22" name="TerLmoveL">
 					<Property key="Colour" value="0.6 0.8 0.6"/>
 					<Property key="TextColour" value="0.2 0.5 0.2"/>

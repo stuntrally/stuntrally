@@ -67,14 +67,14 @@ public:
 	
 	//  Vegetation
 	Forests::PagedGeometry *trees, *grass;
-	void CreateTrees(), DestroyTrees(), RecreateTrees();
+	void CreateTrees(), DestroyTrees(), RecreateTrees(), updGrsTer();
 
 
 	///  Terrain
 	//-----------------------------------
 	PreviewTex texLayD[6],texLayN[6];  // layers
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true, bool terLoad=true);
-	void DestroyTerrain(), CreateBltTerrain();
+	void DestroyTerrain(), CreateBltTerrain(), copyTerHmap();
 
 	Ogre::Terrain* terrain;
 	Ogre::TerrainGlobalOptions* mTerrainGlobals;

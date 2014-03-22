@@ -190,7 +190,7 @@ void App::NewCommon(bool onlyTerVeget)
 	TextureManager::getSingleton().unloadUnreferencedResources();
 }
 
-//  create
+///  Load
 //---------------------------------------------------------------------------------------------------------------
 void App::LoadTrack()
 {
@@ -284,7 +284,7 @@ void App::LoadTrackEv()
 }
 
 
-///  Update Track
+///  Update
 //---------------------------------------------------------------------------------------------------------------
 void App::UpdateTrack()
 {
@@ -293,12 +293,8 @@ void App::UpdateTrack()
 }
 void App::UpdateTrackEv()
 {
-	//  save ter hmap to mem (all editing would be lost)
-	if (!bNewHmap && scn->terrain)
-	{	float *fHmap = scn->terrain->getHeightData();
-		int size = scn->sc->td.iVertsX * scn->sc->td.iVertsY * sizeof(float);
-		memcpy(scn->sc->td.hfHeight, fHmap, size);
-	}
+	if (!bNewHmap)
+		scn->copyTerHmap();
 
 	NewCommon(true);  // destroy only terrain and veget
 	
@@ -320,8 +316,22 @@ void App::UpdateTrackEv()
 	gui->Status("Updated",0.5,1.0,0.7);
 }
 
+//  Update btns
+void CGui::btnUpdateLayers(WP)
+{
+	if (!app->bNewHmap)
+		app->scn->copyTerHmap();
+	if (app->ndSky)
+		app->mSceneMgr->destroySceneNode(app->ndSky);
+	app->scn->DestroyTerrain();
 
-///  Save Terrain
+	app->scn->CreateTerrain(app->bNewHmap,true,false);
+	scn->road->mTerrain = scn->terrain;
+	app->scn->updGrsTer();
+}
+
+
+///  Save
 //---------------------------------------------------------------------------------------------------------------
 void App::SaveTrack()
 {
