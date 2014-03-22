@@ -56,10 +56,10 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 	//  terrain
 	sv= &svTerMtr;
 		sv->strMap[0] = TR("#{GraphicsAll_Lowest}");	sv->strMap[1] = TR("#{GraphicsAll_Medium}");
-		sv->strMap[2] = TR("#{GraphicsAll_High}");		sv->strMap[3] = "Parallax";
-						sv->Init("TerMtr",		&pSet->ter_mtr,		0,3);	sv->DefaultI(3);
+		sv->strMap[2] = TR("#{GraphicsAll_High}");		sv->strMap[3] = "Parallax-";
+						sv->Init("TerMtr",		&pSet->ter_mtr,		0,3);	sv->DefaultI(2);
 	sv= &svTerTripl;
-		sv->strMap[0] = "Off";  sv->strMap[1] = "One";  sv->strMap[2] = "Full";
+		sv->strMap[0] = TR("#{None}");  sv->strMap[1] = TR("#{max} 2");  sv->strMap[2] = TR("#{Any}");
 						sv->Init("TerTripl",	&pSet->ter_tripl,	0,2);	sv->DefaultF(1);
 
 	//  trees/grass
@@ -74,7 +74,7 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 
 	//  shadows
 	sv= &svShadowType;
-		sv->strMap[0] = "None";		sv->strMap[1] = "Depth";	sv->strMap[2] = "Soft-";
+		sv->strMap[0] = TR("#{None}");	sv->strMap[1] = "Depth";	sv->strMap[2] = "Soft-";
 						sv->Init("ShadowType",	&pSet->shadow_type,  0,1);  sv->DefaultI(1);
 	sv= &svShadowCount;	sv->Init("ShadowCount",	&pSet->shadow_count, 1,3);  sv->DefaultI(2);
 	sv= &svShadowSize;

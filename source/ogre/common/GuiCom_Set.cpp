@@ -68,28 +68,28 @@ void CGuiCom::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	case 4:  // Higher (default)  -------------
 		s.anisotropy = 4;  s.view_distance = 8000;  s.terdetail = 1.0f;  s.terdist = 500.f;  s.road_dist = 1.6;
-		s.tex_size = 1;  s.ter_mtr = 3;  s.ter_tripl = 1;  s.use_imposters = 1;  s.imposters_only = 0;
+		s.tex_size = 1;  s.ter_mtr = 2;  s.ter_tripl = 1;  s.use_imposters = 1;  s.imposters_only = 0;
 		s.water_reflect = 1;  s.water_refract = 1;  s.water_rttsize = 0;
 		s.shadow_type = Sh_Depth;  s.shadow_size = 3;  s.shadow_count = 2;  s.shadow_dist = 1300;
 		s.gui.trees = 1.5f;  s.grass = 1.f;  s.trees_dist = 1.f;  s.grass_dist = 2.f;	break;
 
 	case 5:  // Very High  -------------
 		s.anisotropy = 4;  s.view_distance = 12000;  s.terdetail = 1.0f;  s.terdist = 700.f;  s.road_dist = 2.0;
-		s.tex_size = 1;  s.ter_mtr = 3;  s.ter_tripl = 1;  s.use_imposters = 1;  s.imposters_only = 0;
+		s.tex_size = 1;  s.ter_mtr = 2;  s.ter_tripl = 1;  s.use_imposters = 1;  s.imposters_only = 0;
 		s.water_reflect = 1;  s.water_refract = 1;  s.water_rttsize = 1;
 		s.shadow_type = Sh_Depth;  s.shadow_size = 3;  s.shadow_count = 2;  s.shadow_dist = 1600;
 		s.gui.trees = 1.5f;  s.grass = 1.f;  s.trees_dist = 1.f;  s.grass_dist = 2.f;	break;
 
 	case 6:  // Ultra  -------------
 		s.anisotropy = 8;  s.view_distance = 16000;  s.terdetail = 0.9f;  s.terdist = 800.f;  s.road_dist = 2.4;
-		s.tex_size = 1;  s.ter_mtr = 3;  s.ter_tripl = 2;  s.use_imposters = 1;  s.imposters_only = 0;
+		s.tex_size = 1;  s.ter_mtr = 2;  s.ter_tripl = 2;  s.use_imposters = 1;  s.imposters_only = 0;
 		s.water_reflect = 1;  s.water_refract = 1;  s.water_rttsize = 1;
 		s.shadow_type = Sh_Depth;  s.shadow_size = 3;  s.shadow_count = 3;  s.shadow_dist = 2400;
 		s.gui.trees = 2.f;  s.grass = 2.f;  s.trees_dist = 2.f;  s.grass_dist = 3.f;	break;
 
 	case 7:  // Impossible  -------------
 		s.anisotropy = 8;  s.view_distance = 20000;  s.terdetail = 0.8f;  s.terdist = 1000.f;  s.road_dist = 3.0;
-		s.tex_size = 1;  s.ter_mtr = 3;  s.ter_tripl = 2;  s.use_imposters = 1;  s.imposters_only = 0;
+		s.tex_size = 1;  s.ter_mtr = 2;  s.ter_tripl = 2;  s.use_imposters = 1;  s.imposters_only = 0;
 		s.water_reflect = 1;  s.water_refract = 1;  s.water_rttsize = 2;
 		s.shadow_type = Sh_Depth;  s.shadow_size = 3;  s.shadow_count = 3;  s.shadow_dist = 3000;
 		s.gui.trees = 2.f;  s.grass = 2.f;  s.trees_dist = 2.f;  s.grass_dist = 3.f;	break;
