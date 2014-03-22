@@ -73,7 +73,7 @@ public:
 	///  Terrain
 	//-----------------------------------
 	PreviewTex texLayD[6],texLayN[6];  // layers
-	void CreateTerrain(bool bNewHmap=false, bool bTer=true);
+	void CreateTerrain(bool bNewHmap=false, bool bTer=true, bool terLoad=true);
 	void DestroyTerrain(), CreateBltTerrain();
 
 	Ogre::Terrain* terrain;

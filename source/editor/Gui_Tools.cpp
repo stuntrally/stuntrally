@@ -86,6 +86,7 @@ void CGui::btnCopySun(WP)
 
 	sc->ldPitch = sF.ldPitch;  sc->ldYaw = sF.ldYaw;  // light
 	sc->lAmb = sF.lAmb;  sc->lDiff = sF.lDiff;  sc->lSpec = sF.lSpec;
+
 	SetGuiFromXmls();	app->UpdateTrack();
 	app->scn->DestroyWeather();  app->scn->CreateWeather();
 }

@@ -293,10 +293,17 @@ void App::UpdateTrack()
 }
 void App::UpdateTrackEv()
 {
+	//  save ter hmap to mem (all editing would be lost)
+	if (!bNewHmap && scn->terrain)
+	{	float *fHmap = scn->terrain->getHeightData();
+		int size = scn->sc->td.iVertsX * scn->sc->td.iVertsY * sizeof(float);
+		memcpy(scn->sc->td.hfHeight, fHmap, size);
+	}
+
 	NewCommon(true);  // destroy only terrain and veget
 	
 	//CreateFluids();
-	scn->CreateTerrain(bNewHmap,true);/**/
+	scn->CreateTerrain(bNewHmap,true,false);/**/
 
 	//  road ~
 	scn->road->mTerrain = scn->terrain;

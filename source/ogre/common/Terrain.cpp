@@ -156,7 +156,7 @@ void CScene::SetupHorizon()
 ///--------------------------------------------------------------------------------------------------------------
 //  Create Terrain
 ///--------------------------------------------------------------------------------------------------------------
-void CScene::CreateTerrain(bool bNewHmap, bool bTer)
+void CScene::CreateTerrain(bool bNewHmap, bool bTer, bool terLoad)
 {
 	Ogre::Timer tm;
 	terrain = 0;
@@ -176,21 +176,22 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer)
 	if (bTer)
 	{
 		//Ogre::Timer ti;
-
-		int wx = sc->td.iVertsX, wy = sc->td.iVertsY, wxy = wx * wy;  //wy=wx
-		delete[] sc->td.hfHeight;  sc->td.hfHeight = new float[wxy];
-		const int size = wxy * sizeof(float);
-
-		String name = app->gcom->TrkDir() + (bNewHmap ? "heightmap-new.f32" : "heightmap.f32");
-
-		//  load from f32 HMap +
+		if (terLoad || bNewHmap)
 		{
-			std::ifstream fi;
-			fi.open(name.c_str(), std::ios_base::binary);
-			fi.read((char*)&sc->td.hfHeight[0], size);
-			fi.close();
-		}
+			int wx = sc->td.iVertsX, wy = sc->td.iVertsY, wxy = wx * wy;  //wy=wx
+			delete[] sc->td.hfHeight;  sc->td.hfHeight = new float[wxy];
+			const int size = wxy * sizeof(float);
 
+			String name = app->gcom->TrkDir() + (bNewHmap ? "heightmap-new.f32" : "heightmap.f32");
+
+			//  load from f32 HMap +
+			{
+				std::ifstream fi;
+				fi.open(name.c_str(), std::ios_base::binary);
+				fi.read((char*)&sc->td.hfHeight[0], size);
+				fi.close();
+			}
+		}
 		CreateBlendTex();  //+
 
 		//LogO(String("::: Time Hmap: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();  // 4MB ~13ms
