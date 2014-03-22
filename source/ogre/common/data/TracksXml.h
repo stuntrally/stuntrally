@@ -92,7 +92,7 @@ public:
 class CarInfo
 {
 public:
-	std::string id, name, type;  //, author in .car
+	std::string id, name, type, author;
 
 	int n, speed, year, rating;
 	int rateuser, drivenlaps;  // todo: user info ...

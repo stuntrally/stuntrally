@@ -383,9 +383,9 @@ void App::LoadGame()  // 2
 	pGame->NewGameDoLoadMisc(pretime);
 }
 
+
 void App::LoadScene()  // 3
 {
-
 	//  water RTT
 	scn->UpdateWaterRTT(mSplitMgr->mCameras.front());
 

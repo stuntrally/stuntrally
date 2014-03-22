@@ -212,33 +212,20 @@ string CGui::GetRplListDir()
 void CGui::listCarChng(MultiList2* li, size_t pos)
 {
 	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
-	const UString& sl = li->getItemNameAt(i).substr(7);  sListCar = sl;
+	sListCar = li->getItemNameAt(i).substr(7);
 
 	if (imgCar && !pSet->dev_no_prvs)  imgCar->setImageTexture(sListCar+".jpg");
 	if (app->mClient)  app->mClient->updatePlayerInfo(pSet->nickname, sListCar);
 	
-	//  car desc load
-	if (carDesc)
-	{
-		string path = PATHMANAGER::Cars()+"/"+sListCar+"/description.txt";
-		ifstream fi(path.c_str());
+	//  car desc txt
+	carDesc->setCaption(TR("#{CarDesc_"+sListCar+"}"));
 
-		string sdesc = "", s;  bool f1 = true;
-		while (getline(fi, s))
-		{
-			if (f1) {  f1 = false;
-				if (txCarAuthor)  txCarAuthor->setCaption(s);  }
-			else
-				sdesc += s + "\n";
-		}
-		fi.close();
-
-		carDesc->setCaption(sdesc);
-	}
 	//  car info
-	int id = data->cars->carmap[sl];
+	int id = data->cars->carmap[sListCar];
 	if (id > 0 && txCarSpeed && txCarType)
 	{	const CarInfo& ci = data->cars->cars[id-1];
+
+		txCarAuthor->setCaption(ci.author);
 		txCarSpeed->setCaption(gcom->clrsDiff[std::min(7, (int)(ci.speed*0.9f))]+ toStr(ci.speed));
 		txCarType->setCaption(data->cars->colormap[ci.type]+ TR("#{CarType_"+ci.type+"}"));
 	}
