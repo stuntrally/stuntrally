@@ -543,9 +543,8 @@ void CGui::InitGui()
 	GetMaterialsMat(sMat+"pipe.mat",false);
 	for (size_t i=0; i<4; ++i)
 	{
-		Cmb(cmbRoadMtr[i], "RdMtr"+toStr(i+1), comboRoadMtr);
 		Cmb(cmbPipeMtr[i], "RdMtrP"+toStr(i+1), comboPipeMtr);
-		if (i>0)  {  cmbRoadMtr[i]->addItem("");  cmbPipeMtr[i]->addItem("");  }
+		if (i>0)  {  cmbPipeMtr[i]->addItem("");  }
 	}
 	Cmb(cmbRoadWMtr, "RdMtrW1", comboRoadWMtr);
 	Cmb(cmbPipeWMtr, "RdMtrPW1", comboPipeWMtr);
@@ -553,8 +552,6 @@ void CGui::InitGui()
 
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	String s = vsMaterials[i];
-		if (StringUtil::startsWith(s,"road") && !StringUtil::startsWith(s,"road_") && !StringUtil::endsWith(s,"_ter") && s != "road")
-			for (int n=0; n<4; ++n)  cmbRoadMtr[n]->addItem(s);
 		if (StringUtil::startsWith(s,"pipe") && !StringUtil::startsWith(s,"pipe_"))
 			for (int n=0; n<4; ++n)  cmbPipeMtr[n]->addItem(s);
 		if (StringUtil::startsWith(s,"road_wall"))  cmbRoadWMtr->addItem(s);
@@ -625,6 +622,7 @@ void CGui::InitGui()
 	Btn("PickTex", btnPickTex);      btn->eventMouseWheel += newDelegate(this, &CGui::wheelTex);  btnTexDiff = btn;
 	Btn("PickGrass", btnPickGrass);  btn->eventMouseWheel += newDelegate(this, &CGui::wheelGrs);  btnGrassMtr = btn;
 	Btn("PickVeget", btnPickVeget);  btn->eventMouseWheel += newDelegate(this, &CGui::wheelVeg);  btnVeget = btn;
+	for (n=0; n < 4; ++n) {  Btn("RdMtr"+toStr(n+1), btnPickRoad);  btnRoad[n] = btn;  }
 
 	ck= &ckPickSetPar;	ck->Init("PickSetPar",	&pSet->pick_setpar);
 	// todo: ..
@@ -632,7 +630,7 @@ void CGui::InitGui()
 	//"PickCenter"?
 	//"PickRadAll" "PickRadCur" "PickRadFilter"
 
-	///  Tex Diff
+	///  Tex Diff  --------
 	Mli2 lp;  int l;
 	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
 	liTex = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickTex);
@@ -657,7 +655,7 @@ void CGui::InitGui()
 		lp->setSubItemNameAt(3,l, c+ (t.triplanar?"1":"0"));
 	}
 
-	///  Grass
+	///  Grass  --------
 	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
 	liGrs = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickGrs);
 	lp->setColour(Colour(0.7,0.9,0.7));  lp->setInheritsAlpha(false);
@@ -677,7 +675,7 @@ void CGui::InitGui()
 		//lp->setSubItemNameAt(2,l, c+ t.clr.substr(5));
 	}
 
-	///  Veget
+	///  Veget  --------
 	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
 	liVeg = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickVeg);
 	lp->setColour(Colour(0.7,0.9,0.9));  lp->setInheritsAlpha(false);
@@ -698,6 +696,28 @@ void CGui::InitGui()
 		//lp->setSubItemNameAt(2,l, c+ fToStr( t.minScale, 1,3));
 		lp->setSubItemNameAt(2,l, c+ fToStr( t.maxScale, 1,3));
 		lp->setSubItemNameAt(3,l, c+ fToStr( t.maxTerAng, 0,2));
+	}
+
+	///  Road  --------
+	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
+	liRd = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickRd);
+	lp->setColour(Colour(0.9,0.8,0.7));  lp->setInheritsAlpha(false);
+	
+	lp->removeAllColumns();  lp->removeAllItems();
+	lp->addColumn("#90C0F0", 25);
+	lp->addColumn("#FFE0D0"+TR("#{GrMaterial}"), 157);
+	lp->addColumn("#80E0E0"+TR("#{Surface}"), 80);
+	lp->addColumn(" ", 20);
+	lp->addItem("#102030J", 0);  lp->setSubItemNameAt(1,0, "#102030");  // ""
+
+	for (i=0; i < data->pre->rd.size(); ++i)
+	{	const PRoad& t = data->pre->rd[i];
+		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
+		lp->addItem(c+ t.sc, 0);  l = lp->getItemCount()-1;
+
+		lp->setSubItemNameAt(1,l, c+ t.mtr);
+		String su = t.surfName;  if (su.substr(0,4)=="road")  su = su.substr(4, su.length());
+		lp->setSubItemNameAt(2,l, c+ su);
 	}
 	
 	// todo: sorting pick lists..

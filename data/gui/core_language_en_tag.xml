@@ -1293,6 +1293,7 @@
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
 	<Tag name="TipModelMaxScale">Model maximal scale.</Tag>
 	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
+	<Tag name="TipRoadDistMax">Maximum distance to road. E.g. can be used for vegetation that should appear only close to road: plants, bushes etc.</Tag>
 	<Tag name="TipWindInflL">Wind influence on model, length scale.</Tag>
 	<Tag name="TipWindInflH">Wind influence on model, height scale.</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>

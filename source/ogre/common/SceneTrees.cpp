@@ -70,7 +70,7 @@ void CScene::updGrsTer()
 void CScene::CreateTrees()
 {
 	Ogre::Timer ti;
-	gTerrain = terrain;
+	updGrsTer();
 		
 	//-------------------------------------- Grass --------------------------------------
 	int imgRoadSize = 0;

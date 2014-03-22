@@ -248,9 +248,11 @@ public:
 	
 	//  [Road]  ----
 	//  materials
-	Cmb cmbRoadMtr[4], cmbPipeMtr[4],
+	int idRdPick;
+	Btn btnRoad[4];  // pick
+	Cmb cmbPipeMtr[4],
 		cmbRoadWMtr, cmbPipeWMtr, cmbRoadColMtr;
-	void comboRoadMtr(CMB), comboPipeMtr(CMB),
+	void comboPipeMtr(CMB),
 		comboRoadWMtr(CMB), comboPipeWMtr(CMB), comboRoadColMtr(CMB);
 	//  params
 	SV svRdTcMul,svRdTcMulW, svRdTcMulP,svRdTcMulPW, svRdTcMulC;
@@ -317,12 +319,12 @@ public:
 
 	//  [Pick]  ----
 	Ck ckPickSetPar;
-	
-	Mli2 liTex, liGrs, liVeg;
-	void PickShow(int n);  int liNext(Mli2 li, int rel);
+	Mli2 liTex, liGrs, liVeg, liRd;
+	void PickShow(int n, bool toggleVis=true);  int liNext(Mli2 li, int rel);
 	void btnPickTex(WP),   wheelTex(WP, int rel), listPickTex(Mli2 li, size_t pos);
 	void btnPickGrass(WP), wheelGrs(WP, int rel), listPickGrs(Mli2 li, size_t pos);
 	void btnPickVeget(WP), wheelVeg(WP, int rel), listPickVeg(Mli2 li, size_t pos);
+	void btnPickRoad(WP),  wheelRd(WP, int rel),  listPickRd(Mli2 li, size_t pos);
 
 
 

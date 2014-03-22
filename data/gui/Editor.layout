@@ -1925,12 +1925,12 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#80FF00#{Layers}"/>
-                <Widget type="Button" skin="Button" position="524 164 124 36" name="UpdateLayers">
+				<Widget type="Button" skin="Button" position="524 164 124 36" name="UpdateLayers">
 					<Property key="Caption" value="#{Update}"/>
 					<Property key="Colour" value="0.5 1.0 0.2"/>
 					<Property key="TextColour" value="0.5 1.0 0.2"/>
 					<Property key="Alpha" value="0.7"/>
-				</Widget>				
+				</Widget>
 				<Widget type="Button" skin="Button" position="565 24 24 22" name="TerLmoveL">
 					<Property key="Colour" value="0.6 0.8 0.6"/>
 					<Property key="TextColour" value="0.2 0.5 0.2"/>
@@ -2049,7 +2049,7 @@
 					<Property key="Colour" value="0.6 1 0.6"/>
 					<UserString key="tip" value="#{TipTexTiling}"/>
 				</Widget>
-				
+
 				<Widget type="Button" skin="CheckBox" position="400 216 124 20" name="DebugBlend">
 					<Property key="Caption" value="#{Test} F9"/>
 					<Property key="TextColour" value="0.6 0.8 0.4"/>
@@ -2452,12 +2452,12 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 754 478">
 						<Property key="Caption" value="#C0FF40#{Grasses}"/>
-                        <!--<Widget type="Button" skin="Button" position="352 92 124 32" name="UpdateGrasses">
+						<!--<Widget type="Button" skin="Button" position="352 92 124 32" name="UpdateGrasses">
 							<Property key="Caption" value="#{Update}"/>
                             <Property key="Colour" value="0.4 1.0 0.3"/>
                             <Property key="TextColour" value="0.4 1.0 0.3"/>
 							<Property key="Alpha" value="0.7"/>
-						</Widget>-->				
+						</Widget>-->
 						<Widget type="Widget" skin="" position="16 12 365 24">
 							<Widget type="TabControl" skin="TabControlIcon" position="0 0 528 24" name="LGrLayTab">
 								<Property key="Colour" value="0.6 0.8 0.8"/>
@@ -2920,7 +2920,7 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 754 478">
 						<Property key="Caption" value="#80F0F0#{Models}"/>
-                        <!--<Widget type="Button" skin="Button" position="612 40 116 44" name="UpdateVeget">
+						<!--<Widget type="Button" skin="Button" position="612 40 116 44" name="UpdateVeget">
                             <Property key="Caption" value="#{Update}"/>
                             <Property key="Colour" value="0.6 1.0 1.0"/>
                             <Property key="TextColour" value="0.6 1.0 1.0"/>
@@ -3080,6 +3080,7 @@
 						<Widget type="TextBox" skin="TextBox" position="16 270 116 20">
 							<Property key="Caption" value="#{max}"/>
 							<Property key="TextColour" value="0.8 0.7 0.3"/>
+							<UserString key="tip" value="#{TipRoadDistMax}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="136 270 56 20" name="LTrRdDistMaxVal">
 							<Property key="TextColour" value="0.8 0.7 0.3"/>
@@ -3370,29 +3371,25 @@
 							<Property key="TextColour" value="0.2 0.9 0.9"/>
 							<Property key="Caption" value="4"/>
 						</Widget>
-						<Widget type="ComboBox" skin="ComboBox" position="60 64 160 24" name="RdMtr1">
+						<Widget type="Button" skin="Button" position="60 64 160 24" name="RdMtr1">
 							<Property key="Colour" value="0.5 1 1"/>
 							<Property key="TextColour" value="0.5 1 1"/>
-							<Property key="Static" value="true"/>
-							<Property key="ReadOnly" value="true"/>
+							<Property key="TextAlign" value="Left"/>
 						</Widget>
-						<Widget type="ComboBox" skin="ComboBox" position="60 88 160 24" name="RdMtr2">
+						<Widget type="Button" skin="Button" position="60 88 160 24" name="RdMtr2">
 							<Property key="TextColour" value="0.5 1 1"/>
 							<Property key="Colour" value="0.5 1 1"/>
-							<Property key="Static" value="true"/>
-							<Property key="ReadOnly" value="true"/>
+							<Property key="TextAlign" value="Left"/>
 						</Widget>
-						<Widget type="ComboBox" skin="ComboBox" position="60 112 160 24" name="RdMtr3">
+						<Widget type="Button" skin="Button" position="60 112 160 24" name="RdMtr3">
 							<Property key="Colour" value="0.5 1 1"/>
 							<Property key="TextColour" value="0.5 1 1"/>
-							<Property key="Static" value="true"/>
-							<Property key="ReadOnly" value="true"/>
+							<Property key="TextAlign" value="Left"/>
 						</Widget>
-						<Widget type="ComboBox" skin="ComboBox" position="60 136 160 24" name="RdMtr4">
+						<Widget type="Button" skin="Button" position="60 136 160 24" name="RdMtr4">
 							<Property key="TextColour" value="0.5 1 1"/>
 							<Property key="Colour" value="0.5 1 1"/>
-							<Property key="Static" value="true"/>
-							<Property key="ReadOnly" value="true"/>
+							<Property key="TextAlign" value="Left"/>
 						</Widget>
 						<Widget type="ComboBox" skin="ComboBox" position="380 64 160 24" name="RdMtrW1">
 							<Property key="Colour" value="0.5 0.7 0.7"/>

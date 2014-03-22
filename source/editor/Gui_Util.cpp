@@ -77,7 +77,7 @@ void CGui::SetGuiFromXmls()
 	//-----------------------------------------------
 	SplineRoad* rd = scn->road;
 	for (int i=0; i < 4/*MTRs*/; ++i)
-	{	_Cmb(cmbRoadMtr[i], rd->sMtrRoad[i]);
+	{	btnRoad[i]->setCaption(rd->sMtrRoad[i]);
 		_Cmb(cmbPipeMtr[i], rd->sMtrPipe[i]);  }
 	_Cmb(cmbRoadWMtr, rd->sMtrWall);  _Cmb(cmbRoadColMtr, rd->sMtrCol);
 	_Cmb(cmbPipeWMtr, rd->sMtrWallPipe);

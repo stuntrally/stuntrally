@@ -202,8 +202,8 @@ void CGui::ToolSceneXml()
 		for (n=0; n < MTRs; ++n)
 		{
 			String s = rd.sMtrRoad[n];
-			if (!s.empty() && cmbRoadMtr[0]->findItemIndexWith(s) == MyGUI::ITEM_NONE)
-				LogO("Road: " + trk + " Not Found !!!  " + s);
+			//if (!s.empty() && cmbRoadMtr[0]->findItemIndexWith(s) == MyGUI::ITEM_NONE)
+			//	LogO("Road: " + trk + " Not Found !!!  " + s);
 
 			if (!s.empty() && !data->pre->GetRoad(s))
 				LogO("Road: " + trk + " Not Found in presets !!!  " + s);

@@ -106,19 +106,14 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 
 	///  Pick open  ---------------------
-	if (bGuiFocus && skey==key(TAB) && !pSet->isMain && pSet->inMenu==WND_Edit)
-	{
-		switch (tab->getIndexSelected())
-		{
-		case TAB_Layers:  gui->btnPickTex(0);
-			return true;
-		case TAB_Grass:
-			if (sub->getIndexSelected()==1)  gui->btnPickGrass(0);
-			return true;
-		case TAB_Veget:
-			if (sub->getIndexSelected()==1)  gui->btnPickVeget(0);
-			return true;
-	}	}
+	bool editGui = bGuiFocus && !pSet->isMain && pSet->inMenu==WND_Edit;
+	if (skey==key(TAB) && editGui)
+	switch (tab->getIndexSelected())
+	{	case TAB_Layers: gui->btnPickTex(0);  return true;
+		case TAB_Grass:  if (sub->getIndexSelected()==1)  gui->btnPickGrass(0);  return true;
+		case TAB_Veget:  if (sub->getIndexSelected()==1)  gui->btnPickVeget(0);  return true;
+		case TAB_Road:  if (sub->getIndexSelected()==0)  gui->btnPickRoad(0);  return true;
+	}
 
 	//  Global keys
 	//------------------------------------------------------------------------------------------------------------------------------
@@ -152,10 +147,14 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			mWindow->writeContentsToTimestampedFile(PATHMANAGER::Screenshots() + "/", ".jpg");
 			return true;
 
-		//  save, reload, update
+		//  save, reload
 		case key(F4):  if (!alt)  SaveTrack();  return true;
 		case key(F5):  LoadTrack();  return true;
-		case key(F8):  UpdateTrack();  return true;
+		
+		case key(F8):  // update
+			if (editGui && tab->getIndexSelected() == TAB_Layers)
+				gui->btnUpdateLayers(0);
+			else  UpdateTrack();  return true;
 
 		case key(F9):  // blendmap
 			if (alt)  gui->ckAutoBlendmap.Invert();

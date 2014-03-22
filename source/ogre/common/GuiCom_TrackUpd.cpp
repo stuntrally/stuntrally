@@ -314,5 +314,6 @@ void CGuiCom::updTrkListDim()
 	ic.width = 280;  app->gui->liTex->setCoord(ic);  ///pick dim
 	ic.width = 205;  app->gui->liGrs->setCoord(ic);
 	ic.width = 280;  app->gui->liVeg->setCoord(ic);
+	ic.width = 280;  app->gui->liRd->setCoord(ic);
 	#endif
 }
