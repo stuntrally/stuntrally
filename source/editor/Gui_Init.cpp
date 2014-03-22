@@ -286,7 +286,7 @@ void CGui::InitGui()
 
 	float f=0.f;  i=0;  // temp vars
 	//  ter layer
-	sv= &svTerTriSize;	sv->Init("TerTriSize", &sc->td.fTriangleSize,  0.1f,6.f, 2.f);  sv->DefaultF(1.4f);  Sev(TerTriSize);
+	sv= &svTerTriSize;	sv->Init("TerTriSize", &sc->td.fTriangleSize,  0.5f,3.f, 1.f);  sv->DefaultF(1.4f);  Sev(TerTriSize);
 	sv= &svTerLScale;	sv->Init("TerLScale",  &f, 6.0f, 72.f,  2.f);  sv->DefaultF(8.f);  //Sev(TerLay);
 	//  blendmap
 	sv= &svTerLAngMin;  sv->Init("TerLAngMin", &f, 0.f,  90.f,  1.f, 1,4);  sv->DefaultF(0.f);  Sev(TerLay);

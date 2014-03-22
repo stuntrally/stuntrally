@@ -77,17 +77,18 @@
 			<Property key="FontName" value="font.19"/>
 		</Widget>
 	</Widget>
-	<Widget type="Widget" skin="PanelSkin" position="2288 20 324 96" layer="ToolTip" name="ToolTip">
+	<Widget type="Widget" skin="PanelSkin" position="2288 20 326 98" layer="ToolTip" name="ToolTip">
 		<Property key="Alpha" value="0.8"/>
 		<Property key="Colour" value="0.3 0.5 0.9"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="EditBox" skin="WordWrapEmpty" position="4 4 318 94">
+		<Widget type="EditBox" skin="WordWrapEmpty" position="4 4 320 96">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.96 1.0"/>
 			<Property key="WordWrap" value="true"/>
 			<Property key="Static" value="true"/>
 			<Property key="TextAlign" value="Left Top"/>
 			<Property key="Caption" value="ToolTip Text"/>
+			<UserString key="NotSized" value="1"/>
 		</Widget>
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="1376 680 170 120" layer="Back" name="CamWnd">
@@ -1097,7 +1098,6 @@
 				</Widget>
 				<Widget type="Slider" skin="Slider" position="234 214 260 16" name="ScaleAllMul">
 					<Property key="Colour" value="0.8 1 0.8"/>
-					<UserString key="tip" value="#{TipTerLHMax}"/>
 				</Widget>
 				<Widget type="EditBox" skin="EditBox" position="168 248 50 24" name="ScaleTerHMulEdit">
 					<Property key="Colour" value="0.3 1 0.3"/>
@@ -1106,7 +1106,6 @@
 				</Widget>
 				<Widget type="Slider" skin="Slider" position="234 252 260 16" name="ScaleTerHMul">
 					<Property key="Colour" value="0.5 1 0.5"/>
-					<UserString key="tip" value="#{TipTerLHMax}"/>
 				</Widget>
 
 				<Widget type="TextBox" skin="TextBox" position="32 310 210 24">
@@ -1620,19 +1619,22 @@
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="232 176 300 16" name="TerErrorNorm">
 							<Property key="Colour" value="0.8 0.9 0.7"/>
+							<UserString key="tip" value="#{TipTerErrorNorm}"/>
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="32 208 140 24">
 							<Property key="Caption" value="#{NormalsScale}"/>
 							<Property key="TextColour" value="0.5 0.6 0.7"/>
-							<UserString key="tip" value="#{TipTerErrorNorm}"/>
+							<UserString key="tip" value="#{TipTerNormScale}"/>
 						</Widget>
 						<Widget type="EditBox" skin="EditBox" position="168 203 56 24" name="TerNormScaleEdit">
 							<Property key="Colour" value="0.5 0.6 0.7"/>
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
+							<UserString key="tip" value="#{TipTerNormScale}"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="232 206 300 16" name="TerNormScale">
 							<Property key="Colour" value="0.7 0.8 0.9"/>
+							<UserString key="tip" value="#{TipTerNormScale}"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 754 478">
@@ -1874,9 +1876,9 @@
 							</Widget>
 						</Widget>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 754 478">
+					<!--<Widget type="TabItem" skin="" position="2 24 754 478">
 						<Property key="Caption" value="#90C0F0#{GrColorMap}"/>
-					</Widget>
+					</Widget>-->
 					<Widget type="TabItem" skin="" position="2 24 754 478">
 						<Property key="Caption" value="#408040#{Tools}"/>
 						<Widget type="Button" skin="Button" position="32 40 128 24" name="TerrainHalf">
@@ -1923,6 +1925,12 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#80FF00#{Layers}"/>
+                <!--<Widget type="Button" skin="Button" position="524 164 124 36" name="UpdateLayers">
+					<Property key="Caption" value="#{Update}"/>
+					<Property key="Colour" value="0.5 1.0 0.2"/>
+					<Property key="TextColour" value="0.5 1.0 0.2"/>
+					<Property key="Alpha" value="0.7"/>
+				</Widget>-->				
 				<Widget type="Button" skin="Button" position="565 24 24 22" name="TerLmoveL">
 					<Property key="Colour" value="0.6 0.8 0.6"/>
 					<Property key="TextColour" value="0.2 0.5 0.2"/>
@@ -1935,18 +1943,18 @@
 					<Property key="Caption" value="&gt;"/>
 					<UserString key="tip" value="#{TipTerLMove}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="600 70 128 24" name="TerLayersAll">
+				<Widget type="TextBox" skin="TextBox" position="600 70 104 24" name="TerLayersAll">
 					<Property key="Caption" value="#{Used}: "/>
 					<Property key="TextColour" value="0.4 1 0.4"/>
 					<Property key="Colour" value="0.4 1 0.4"/>
 					<UserString key="tip" value="#{TipTerLayers}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="440 172 128 20" name="TerTriplAll">
+				<Widget type="TextBox" skin="TextBox" position="430 172 88 20" name="TerTriplAll">
 					<Property key="Caption" value="#{Used}: "/>
 					<Property key="TextColour" value="0.5 0.7 0.5"/>
 					<Property key="Alpha" value="0.7"/>
 					<Property key="Colour" value="0.5 0.7 0.5"/>
-					<UserString key="tip" value="#{TipTerLayers}"/>
+					<UserString key="tip" value="#{TipTerTripl}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="484 67 112 24" name="TerLayOn">
 					<Property key="Caption" value="#{Enabled}"/>
@@ -1955,7 +1963,7 @@
 					<Property key="FontName" value="font.19"/>
 					<UserString key="tip" value="#{TipToggleLayer}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="280 170 164 24" name="TerLayTripl">
+				<Widget type="Button" skin="CheckBox" position="280 170 156 24" name="TerLayTripl">
 					<Property key="Caption" value="#{HighestSlopes}"/>
 					<Property key="TextColour" value="0.6 0.8 0.6"/>
 					<Property key="Colour" value="0.6 0.8 0.6"/>
@@ -2041,9 +2049,11 @@
 					<Property key="Colour" value="0.6 1 0.6"/>
 					<UserString key="tip" value="#{TipTexTiling}"/>
 				</Widget>
+				
 				<Widget type="Button" skin="CheckBox" position="400 216 124 20" name="DebugBlend">
 					<Property key="Caption" value="#{Test} F9"/>
 					<Property key="TextColour" value="0.6 0.8 0.4"/>
+					<UserString key="tip" value="#{TipTestBlendmap}"/>
 				</Widget>
 				<Widget type="ImageBox" skin="CheckBox" position="370 216 20 20" name="dbgTerLclr">
 					<Property key="ImageTexture" value="white.png"/>
@@ -2182,6 +2192,7 @@
 							<Property key="Caption" value="#{TerLNoiseOnly}"/>
 							<Property key="TextColour" value="0.4 0.8 0.7"/>
 							<Property key="Colour" value="0.4 0.8 0.7"/>
+							<UserString key="tip" value="#{TipTerNoiseOnly}"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 272">
@@ -2441,6 +2452,12 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 754 478">
 						<Property key="Caption" value="#C0FF40#{Grasses}"/>
+                        <!--<Widget type="Button" skin="Button" position="352 92 124 32" name="UpdateGrasses">
+							<Property key="Caption" value="#{Update}"/>
+                            <Property key="Colour" value="0.4 1.0 0.3"/>
+                            <Property key="TextColour" value="0.4 1.0 0.3"/>
+							<Property key="Alpha" value="0.7"/>
+						</Widget>-->				
 						<Widget type="Widget" skin="" position="16 12 365 24">
 							<Widget type="TabControl" skin="TabControlIcon" position="0 0 528 24" name="LGrLayTab">
 								<Property key="Colour" value="0.6 0.8 0.8"/>
@@ -2903,6 +2920,12 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 754 478">
 						<Property key="Caption" value="#80F0F0#{Models}"/>
+                        <!--<Widget type="Button" skin="Button" position="612 40 116 44" name="UpdateVeget">
+                            <Property key="Caption" value="#{Update}"/>
+                            <Property key="Colour" value="0.6 1.0 1.0"/>
+                            <Property key="TextColour" value="0.6 1.0 1.0"/>
+                            <Property key="Alpha" value="0.7"/>
+						</Widget>-->
 						<Widget type="Widget" skin="" position="16 12 540 24">
 							<Widget type="TabControl" skin="TabControlIcon" position="0 0 628 24" name="LTrNumTab">
 								<Property key="Colour" value="0.6 0.8 0.8"/>

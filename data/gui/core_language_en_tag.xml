@@ -761,6 +761,7 @@
 	<Tag name="auto">Auto</Tag>
 	<Tag name="scale">Scale</Tag>
 	<Tag name="Test">Test</Tag>
+	<Tag name="Update">Update</Tag>
 
 	<!--  Terrain  generate  -->
 	<Tag name="Generator">Generator</Tag>
@@ -1202,6 +1203,7 @@
 	<Tag name="TipTerTriSize">Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8).</Tag>
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
 	<Tag name="TipTerErrorNorm">Default terrain error in percent. Less for flat, more for high terrains.</Tag>
+	<Tag name="TipTerNormScale">Use if needed to scale terrain texture normals, for lighting. Otherwise default 1.</Tag>
 	<Tag name="TipNewTerrainFlat">Create new, flat terrain.</Tag>
 	<Tag name="TipTerrainGenerate">Generates new terrain from noise functions using all parameters below.</Tag>
 	<Tag name="TipBrushPick">shift-LMB - on Brushes, pick only shape (don't change mode).</Tag>
@@ -1211,8 +1213,9 @@
 	<Tag name="TipTerrainMove">Move terrain.</Tag>
 	
 	<Tag name="TipToggleLayer">Turn on/off chosen texture layer.</Tag>
-	<Tag name="TipToggleTriplanar">When using graphics option triplanar one, this layer (one only) will have triplanar mapping.</Tag>
-	<Tag name="TipTerLayers">Terrain texture layers (recommended 2-3, significantly affects Fps). *Auto blendmap supports max 4.</Tag>
+	<Tag name="TipTerLayers">Recommended use 3 or 4, with noise. Affects Fps. More than 4 will not work.</Tag>
+	<Tag name="TipToggleTriplanar">Use for steep or mountain layers, max use is 2.</Tag>
+	<Tag name="TipTerTripl">When using graphics option triplanar max 2, this layer will have triplanar mapping (good textured slopes). Affects Fps.</Tag>
 	<Tag name="TipTerVertCount">Terrain vertex count on one side (squares). Apply with buttons [New Flat] or [Resize].</Tag>
 	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
 	<Tag name="TipDiffuseTex">Diffuse texture (Specular in alpha).</Tag>
@@ -1229,6 +1232,8 @@
 	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
 	<Tag name="TipTerLHSm">Height smooth range (transition).</Tag>
 	<Tag name="TipTerLNoise">Multiplier for additional noise. +1 blends to next used layer, -1 to previous, +2 to over next.</Tag>
+	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
+	<Tag name="TipTestBlendmap">Use to test blendmap clarity. The color box shows this layer's color on blendmap (is black when layer is off). Usually, a good blendmap needs to have pure layer colors with little blending (dull, mixed colors). To achieve that narrow/separate angle and height ranges and use high or low noise power.</Tag>
 
 	<!--  Terrain  particles  -->
 	<Tag name="TipDustInt">Dust particles intensity.</Tag>
