@@ -59,7 +59,8 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,edWarn(0),txWarn(0)
 	,imgWarn(0),imgInfo(0)
 	// pick
-	,btnTexDiff(0), btnGrassMtr(0), btnVeget(0), idRdPick(0)
+	, idRdPick(0), panPick(0)
+	,btnTexDiff(0), btnGrassMtr(0), btnVeget(0)
 	,liTex(0), liGrs(0), liVeg(0), liRd(0)
 	// track
 	, trkName(0)
@@ -81,6 +82,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	for (i=0; i<RI_TXT; ++i)  riTxt[i]=0;
 	
 	for (i=0; i < 4; ++i)  {  btnRoad[i]=0;  cmbPipeMtr[i]=0;  }
+	for (i=0; i < 4; ++i)  liPickW[i] = 280;
 
 	sc = app1->scn->sc;
 	scn = app1->scn;

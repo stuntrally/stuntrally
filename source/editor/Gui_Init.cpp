@@ -626,9 +626,9 @@ void CGui::InitGui()
 	for (n=0; n < 4; ++n) {  Btn("RdMtr"+toStr(n+1), btnPickRoad);  btnRoad[n] = btn;  }
 
 	ck= &ckPickSetPar;	ck->Init("PickSetPar",	&pSet->pick_setpar);
-	// todo: ..
-	const char sc[17]="TJSFGWIADCVUMOER";  //chk "Pick"+sc[i]
-	//"PickCenter"?
+	panPick = fWP("PanelPick");
+	// todo: pick filter sceneries ..
+	//const char sc[17]="TJSFGWIADCVUMOER";  //chk "Pick"+sc[i]
 	//"PickRadAll" "PickRadCur" "PickRadFilter"
 
 	///  Tex Diff  --------
@@ -644,7 +644,8 @@ void CGui::InitGui()
 	//lp->addColumn("#80FF80/", 40);
 	lp->addColumn("#80FF80|"/*+TR("#{HighestSlopes}")*/, 27);
 	lp->addColumn(" ", 20);
-	
+	liPickW[0] = 280;
+
 	for (i=0; i < data->pre->ter.size(); ++i)
 	{	const PTer& t = data->pre->ter[i];
 		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
@@ -666,6 +667,7 @@ void CGui::InitGui()
 	lp->addColumn("#E0FFE0"+TR("#{GrMaterial}"), 152);
 	//lp->addColumn("#E0FFE0"+TR("#{GrColorMap}"), 120);
 	lp->addColumn(" ", 20);
+	liPickW[1] = 205;
 
 	for (i=0; i < data->pre->gr.size(); ++i)
 	{	const PGrass& t = data->pre->gr[i];
@@ -687,6 +689,7 @@ void CGui::InitGui()
 	lp->addColumn("#80E0E0"+TR("#{MaxScale}"), 40);
 	lp->addColumn("#80E080/"/*+TR("#{AngleMax}")*/, 30);
 	lp->addColumn(" ", 20);
+	liPickW[2] = 280;
 
 	for (i=0; i < data->pre->veg.size(); ++i)
 	{	const PVeget& t = data->pre->veg[i];
@@ -709,6 +712,7 @@ void CGui::InitGui()
 	lp->addColumn("#FFE0D0"+TR("#{GrMaterial}"), 157);
 	lp->addColumn("#80E0E0"+TR("#{Surface}"), 80);
 	lp->addColumn(" ", 20);
+	liPickW[3] = 280;
 	lp->addItem("#102030J", 0);  lp->setSubItemNameAt(1,0, "#102030");  // ""
 
 	for (i=0; i < data->pre->rd.size(); ++i)

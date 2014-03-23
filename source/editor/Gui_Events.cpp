@@ -500,6 +500,7 @@ void CGui::PickShow(int n, bool toggleVis)
 	liGrs->setVisible(n==1);
 	liVeg->setVisible(n==2);
 	liRd->setVisible(n==3);
+	panPick->setPosition(liPickW[n], 36);  
 	
 	const int wx = pSet->windowx, wy = pSet->windowy;
 	//if (pSet->pick_center

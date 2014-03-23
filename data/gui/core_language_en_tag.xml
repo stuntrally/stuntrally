@@ -983,7 +983,9 @@
 	<!--  Main  -->
 	<Tag name="InputToggleCam">Tab - camera / edit mode toggle</Tag>
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
-	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
+	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
+	<Tag name="InputSubTabSpace">Space - cycle sub-tabs (shift - back)</Tag>
+	<Tag name="InputPickTab">Tab - close/open pick window</Tag>
 	<Tag name="InputNextLayTab">alt-1,2 - prev,next Layer tab</Tag>
 	<Tag name="InputContextHelp">Ctrl-F1 - context help page</Tag>
 
@@ -1017,7 +1019,7 @@
 	<Tag name="InputPaintColor">C - Paint Color</Tag>
 
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
-	<Tag name="InputMinimapType">alt-F2,F3 - Prev,next minimap type</Tag>
+	<Tag name="InputMinimapType">shift-F2,F3 - Prev,next minimap type</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
 	<Tag name="InputLockBrush">Enter - lock brush position</Tag>
 

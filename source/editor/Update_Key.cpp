@@ -569,10 +569,10 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 		case key(T):  gui->GuiShortcut(WND_Edit, TAB_Layers);    return true;  // T Layers (Terrain)
 		 case key(B): gui->GuiShortcut(WND_Edit, TAB_Layers,0);  return true;  //  B -Blendmap
-		 case key(P): gui->GuiShortcut(WND_Edit, TAB_Layers,1);  return true;  //  P -Particles
 
 		case key(G):  gui->GuiShortcut(WND_Edit, TAB_Grass);     return true;  // G Grasses
 		 case key(F): gui->GuiShortcut(WND_Edit, TAB_Grass,2);   return true;  //  F -Channels
+
 		case key(V):  gui->GuiShortcut(WND_Edit, TAB_Veget);     return true;  // V Vegetation
 		 case key(M): gui->GuiShortcut(WND_Edit, TAB_Veget,1);   return true;  //  M -Models
 
