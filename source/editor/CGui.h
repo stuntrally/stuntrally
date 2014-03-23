@@ -60,6 +60,9 @@ public:
 	void ToolTexAlpha(), ToolSceneXml(), ToolSceneryID(),
 		ToolTracksWarnings(), ToolBrushesPrv(), ToolPresets();
 
+	Ogre::String ChkSceneryID(std::string trk, const Scene& sc, bool btn=false, bool* bad=0);
+	void btnCheckScId(WP);
+	
 
 	//  tool windows texts
 	const static int MAX_TXT=11,

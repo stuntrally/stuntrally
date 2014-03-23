@@ -470,6 +470,7 @@ void CGui::InitGui()
 
 	ck= &ckCheckSave;	ck->Init("CheckSave",	&pSet->check_save);
 	ck= &ckCheckLoad;	ck->Init("CheckLoad",	&pSet->check_load);
+	Btn("CheckScId", btnCheckScId);
 	
 
 	///  Fill Combo boxes  . . . . . . .

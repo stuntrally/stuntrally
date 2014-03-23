@@ -2368,11 +2368,11 @@
 							<Property key="TextColour" value="0.6 1 0.4"/>
 							<UserString key="tip" value="#{TipGrassDens}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="90 38 320 20" name="GrassDens">
+						<Widget type="Slider" skin="Slider" position="94 38 420 20" name="GrassDens">
 							<Property key="Colour" value="0.6 1 0.3"/>
 							<UserString key="tip" value="#{TipGrassDens}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="32 36 48 26" name="GrassDensEdit">
+						<Widget type="EditBox" skin="EditBox" position="32 36 56 26" name="GrassDensEdit">
 							<Property key="TextColour" value="0.6 1 0.4"/>
 							<Property key="Colour" value="0.4 0.9 0.2"/>
 							<Property key="FontName" value="font.19"/>
@@ -2851,11 +2851,11 @@
 							<Property key="TextColour" value="0.9 0.9 0.6"/>
 							<UserString key="tip" value="#{TipTreeDens}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="90 38 320 20" name="TreesDens">
+						<Widget type="Slider" skin="Slider" position="94 38 420 20" name="TreesDens">
 							<Property key="Colour" value="1 1 0.5"/>
 							<UserString key="tip" value="#{TipTreeDens}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="32 36 48 26" name="TreesDensEdit">
+						<Widget type="EditBox" skin="EditBox" position="32 36 56 26" name="TreesDensEdit">
 							<Property key="TextColour" value="1 1 0.6"/>
 							<Property key="Colour" value="0.8 0.8 0.5"/>
 							<Property key="FontName" value="font.19"/>
@@ -2916,6 +2916,13 @@
 							<Property key="Caption" value="#{SceneryId}"/>
 							<Property key="TextColour" value="0.8 0.8 0.77"/>
 							<UserString key="tip" value="#{TipSceneryId}"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="590 260 140 25" name="CheckScId">
+							<Property key="Caption" value="#{Test}"/>
+							<Property key="Colour" value="0.5 0.5 0.4"/>
+							<Property key="TextColour" value="0.5 0.5 0.4"/>
+							<Property key="Alpha" value="0.6"/>
+							<UserString key="tip" value="#{Warnings}:  (alt-J)"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 754 478">

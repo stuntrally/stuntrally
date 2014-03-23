@@ -14,8 +14,10 @@
 	#include "../vdrift/timer.h"
 	#include "../vdrift/game.h"
 #else
+	#include "CScene.h"
 	#include "../../editor/CApp.h"
 	#include "../../editor/CGui.h"
+	#include "../../editor/settings.h"
 #endif
 #include <OgreTimer.h>
 #include <OgreResourceGroupManager.h>
@@ -287,6 +289,78 @@ float clrD(Vector3 sc, Vector3 si)
 	return m * 100.f;
 }
 
+String CGui::ChkSceneryID(string trk, const Scene& sc, bool b, bool* bad)
+{
+	///  find
+	string scId = (b ? app->scn->sc->sceneryId : sc.sceneryId) + "-";
+	int i=0, len = scId.length();
+	bool found = false, orig = false;  if (bad)  *bad = false;
+	Scene si;  string ss;  ostringstream s;
+
+	//  same scId as track, has original lighting
+	if (trk.substr(0,len) == scId)
+		orig = true;
+	else
+	{	//  find the track this scId points to
+		while (i < data->tracks->trks.size() && ss.empty())
+		{
+			if (data->tracks->trks[i].name.substr(0,len) == scId)
+				ss = data->tracks->trks[i].name;
+			++i;
+		}
+		found = !ss.empty();
+		if (found)
+			si.LoadXml(gcom->pathTrk[0] +"/"+ ss +"/scene.xml");
+	}
+	bool w = !orig && found;
+
+	s << fixed << left << setw(18);
+	if (!b)  s << trk;  else  s << "sceneryID";
+	s << " " << setw(sc.sceneryId.length() > 3 ? 6 : 3) << sc.sceneryId;
+	if (orig)  s << "+";  else  if (!found)  s << "!";  else  s << " ";
+	float dP,dY,dA,dD,dS;
+
+	if (b)  s << "\n";
+	s << "  pi " << fToStr(sc.ldPitch,0,2);
+	dP = fabs(sc.ldPitch - si.ldPitch) / 90.f * 100.f;
+	if (w)  s <<" "<< fToStr(dP, 0,3)<<"%";  else  s << "  ---";
+
+	s << "  yaw" << fToStr(sc.ldYaw,0,4);
+	dY = fabs(sc.ldYaw - si.ldYaw)    / 180.f * 100.f;
+	if (w)  s <<" "<< fToStr(dY, 0,3)<<"%";  else  s << "  ---";
+
+	if (b)  s << "\n";
+	s << "  amb "  << fToStr(sc.lAmb.x, 2,4)<<" "<<fToStr(sc.lAmb.y, 2,4)<<" "<<fToStr(sc.lAmb.z, 2,4);
+	dA = clrD(sc.lAmb, si.lAmb);
+	if (w)  s <<" "<< fToStr(dA, 0,3) <<"%";  else  s << "     ";
+
+	s << "  diff " << fToStr(sc.lDiff.x,2,4)<<" "<<fToStr(sc.lDiff.y,2,4)<<" "<<fToStr(sc.lDiff.z,2,4);
+	dD = clrD(sc.lDiff,si.lDiff);
+	if (w)  s <<" "<< fToStr(dD, 0,3)<<"%";  else  s << "     ";
+
+	s << "  spec " << fToStr(sc.lSpec.x,2,4)<<" "<<fToStr(sc.lSpec.y,2,4)<<" "<<fToStr(sc.lSpec.z,2,4);
+	dS = clrD(sc.lSpec,si.lSpec);
+	if (w)
+	{	s <<" "<< fToStr(dS, 0,3)<<"%";
+		float m0 = std::max(dP,dY), m1 = std::max(dA,dD), m2 = std::max(m0,m1);
+		if (b)  s << "\n";
+		s << "  max " << fToStr(m2, 0,3)<<"%";
+		if (m2 > 30/**/) {  s << " !!! BAD";  if (bad)  *bad = true;  }
+	}
+	if (b && orig)  s << "\nOriginal sceneryID, nothing to compare.";
+	if (!found && !orig)  s << "\n   Not found scId track: " + scId + " for: "+ trk;
+	return s.str();
+}
+
+void CGui::btnCheckScId(WP)
+{
+	bool bad = false;
+	String s = ChkSceneryID(pSet->gui.track, *app->scn->sc, true, &bad);
+	//edWarn->setCaption("");
+	Warn(bad ? WARN : NOTE, s);
+	GuiShortcut(WND_Track, 4);  // J Warnings
+}
+
 void CGui::ToolSceneryID()
 {
 	LogO("ALL tracks ---------");
@@ -300,61 +374,8 @@ void CGui::ToolSceneryID()
 	{
 		string trk = (*it).name, path = gcom->pathTrk[0] +"/"+ trk +"/";
 		Scene sc;  sc.LoadXml(path +"scene.xml");
-		
-		///  find
-		string scId = sc.sceneryId + "-";
-		int i=0, len = scId.length();
-		bool found = false, orig = false;
-		Scene si;  string ss;
-
-		//  same scId as track, has original lighting
-		if (trk.substr(0,len) == scId)
-			orig = true;
-		else
-		{	//  find the track this scId points to
-			while (i < data->tracks->trks.size() && ss.empty())
-			{
-				if (data->tracks->trks[i].name.substr(0,len) == scId)
-					ss = data->tracks->trks[i].name;
-				++i;
-			}
-			found = !ss.empty();
-			if (!found)
-				LogO("   Not found scId track: " + scId + " for: "+ trk);
-			else
-				si.LoadXml(gcom->pathTrk[0] +"/"+ ss +"/scene.xml");
-		}
-		bool w = !orig && found;
-		ostringstream s;
-		s << fixed << left << setw(18) << trk;
-		s << " " << setw(3) << sc.sceneryId;
-		if (orig)  s << "+";  else  if (!found)  s << "!";  else  s << " ";
-		float dP,dY,dA,dD,dS;
-
-		s << "  pi " << fToStr(sc.ldPitch,0,2);
-		dP = fabs(sc.ldPitch - si.ldPitch) / 90.f * 100.f;
-		if (w)  s <<" "<< fToStr(dP, 0,3)<<"%";  else  s << "  ---";
-
-		s << "  yaw"    << fToStr(sc.ldYaw,0,4);
-		dY = fabs(sc.ldYaw - si.ldYaw)    / 180.f * 100.f;
-		if (w)  s <<" "<< fToStr(dY, 0,3)<<"%";  else  s << "  ---";
-
-		s << "  amb "  << fToStr(sc.lAmb.x, 2,4)<<" "<<fToStr(sc.lAmb.y, 2,4)<<" "<<fToStr(sc.lAmb.z, 2,4);
-		dA = clrD(sc.lAmb, si.lAmb);
-		if (w)  s <<" "<< fToStr(dA, 0,3) <<"%";  else  s << "     ";
-
-		s << "  diff " << fToStr(sc.lDiff.x,2,4)<<" "<<fToStr(sc.lDiff.y,2,4)<<" "<<fToStr(sc.lDiff.z,2,4);
-		dD = clrD(sc.lDiff,si.lDiff);
-		if (w)  s <<" "<< fToStr(dD, 0,3)<<"%";  else  s << "     ";
-
-		s << "  spec " << fToStr(sc.lSpec.x,2,4)<<" "<<fToStr(sc.lSpec.y,2,4)<<" "<<fToStr(sc.lSpec.z,2,4);
-		dS = clrD(sc.lSpec,si.lSpec);
-		if (w)
-		{	s <<" "<< fToStr(dS, 0,3)<<"%";
-			float m0 = std::max(dP,dY), m1 = std::max(dA,dD), m2 = std::max(m0,m1);
-			s << "  max " << fToStr(m2, 0,3)<<"%";  if (m2 > 40)  s << " !!! bad";
-		}
-		LogO(s.str());
+		String s = ChkSceneryID(trk, sc);
+		LogO(s);
 	}
 	LogO("ALL tracks ---------");
 }
