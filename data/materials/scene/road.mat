@@ -482,10 +482,11 @@ material roadDesertD_ter
 material roadDesert
 {
     parent road
-    diffuseMap roadDesert.jpg
-	ambient 0.85 0.85 0.85
-	diffuse 0.81 0.8 0.75
+    diffuseMap roadDesertD.jpg
+	ambient 1.0 1.0 0.8
+	diffuse 0.91 0.83 0.7
 	specular 0.36 0.34 0.3 18
+    //normalMap flat_n.png
 }
 
 material roadDesert_ter
@@ -504,8 +505,8 @@ material roadDesertOrn
 {
     parent road
     diffuseMap roadDesert.jpg
-	ambient 0.85 0.85 0.85
-	diffuse 0.81 0.8 0.75
+	ambient 0.85 0.75 0.63
+	diffuse 0.81 0.7 0.55
 	specular 0.36 0.34 0.3 18
 }
 
