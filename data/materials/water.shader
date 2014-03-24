@@ -285,7 +285,6 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 		#if !(SHADOWS)
             float shadow = 1.0;
 		#endif
-		float shadowVal = (lightDiffuse.g - lightAmbient.g)*1.4;  // approx.
 		
 
 	//#if TERRAIN_LIGHT_MAP
@@ -345,7 +344,7 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 	
 		//  specular
 		float specular = pow(max(dot(R, lVec), 0.0), specColourAndPower.w) * shadow;
-		float3 waterColour = waterClr.rgb * lightDiffuse.rgb;
+		float3 waterColour = waterClr.rgb * shSaturate(lightDiffuse.rgb);
 		#if !SCREEN_REFRACTION
 			float3 refraction = shLerp( refractColour.rgb, waterColour.rgb, 0.5);  //old
 		#endif
@@ -364,9 +363,9 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 		float3 clr = refractColour.rgb * shLerp( refraction, waterColour,  depthAmount);
 		refraction = waterClr.a > 0.5 ? shLerp( clr,  waterColour, refractColour.a) : clr;  // no refraction inside mud
 
-		shOutputColour(0).rgb = shLerp( refraction, reflection,  fresnel);
-		shOutputColour(0).rgb = shLerp( refraction, shOutputColour(0).rgb,  shoreFade);
-		shOutputColour(0).rgb *= (1.0-shadowVal + shadowVal * shadow);  // darker in shadow
+		float3 finCLR = shLerp( refraction, reflection,  fresnel);
+		finCLR = shLerp( refraction, finCLR,  shoreFade);
+		shOutputColour(0).rgb = finCLR * (0.6 + 0.4 * shadow);
 
 		#if SCREEN_REFRACTION
 			shOutputColour(0).a = shoreFade;
