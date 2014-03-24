@@ -610,7 +610,7 @@ void App::editMouse()
 		{	pos0 = GetObjPos0();
 			if (objEd == EO_Rotate)
 			{	Real relA = -vNew.x * fRot * moveMul;
-				Quaternion q;  q.FromAngleAxis(Degree(relA), mbLeft ? -Vector3::UNIT_Y : (mbRight ? -Vector3::UNIT_Z : Vector3::UNIT_X));
+				Quaternion q;  q.FromAngleAxis(Degree(relA), mbLeft ? Vector3::UNIT_Y : (mbRight ? -Vector3::UNIT_Z : Vector3::UNIT_X));
 				q.ToRotationMatrix(m);
 		}	}
 
@@ -653,11 +653,10 @@ void App::editMouse()
 						Vector3 p(o.pos[0],o.pos[2],-o.pos[1]);  p = p-pos0;
 						p = m * p;
 						o.pos = MATHVECTOR<float,3>(p.x+pos0.x, -p.z-pos0.z, p.y+pos0.y);
-						///TODO: wrong local quat rot !?..
 					}
 
 					qr.FromAngleAxis(r, mbLeft ? Vector3::UNIT_Z : (mbRight ? Vector3::UNIT_Y : Vector3::UNIT_X));
-					if (alt)  q = qr * q;  else  q = q * qr;
+					if (sel || alt)  q = qr * q;  else  q = q * qr;
 					o.rot = QUATERNION<float>(q.x,q.y,q.z,q.w);
 
 					o.SetFromBlt();	 upd1 = true;
