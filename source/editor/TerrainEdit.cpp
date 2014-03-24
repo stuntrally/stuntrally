@@ -590,8 +590,6 @@ void App::filter(Vector3 &pos, float dtime, float brMul)
 	bTerUpd = true;
 }
 
-///  todo: one shot brushes / enter? - lock brush pos ..
-
 
 
 //  preview texture for brush and noise ter gen

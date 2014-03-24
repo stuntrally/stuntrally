@@ -102,8 +102,6 @@ void CScene::CreateTrees()
 	//  pos0 - original  pos - with offset
 	Vector3 pos0 = Vector3::ZERO, pos = Vector3::ZERO;  Radian yaw;
 
-	bool bWind = 1;	 /// WIND
-
 	SETTINGS* pSet = app->pSet;
 	Real fGrass = pSet->grass * sc->densGrass * 3.0f;  // std::min(pSet->grass, 
 	#ifdef SR_EDITOR
@@ -178,9 +176,8 @@ void CScene::CreateTrees()
 		//ImpostorPage* ipg = 0;
 		if (!pSet->imposters_only)
 		{
-			if (bWind)
-				 trees->addDetailLevel<WindBatchPage>(sc->trDist * pSet->trees_dist, 0);
-			else trees->addDetailLevel<BatchPage>	 (sc->trDist * pSet->trees_dist, 0);
+			trees->addDetailLevel<WindBatchPage>(sc->trDist * pSet->trees_dist, 0);
+			//trees->addDetailLevel<BatchPage>	 (sc->trDist * pSet->trees_dist, 0);  // no wind
 		}
 		if (pSet->use_imposters)
 		{

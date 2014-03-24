@@ -201,6 +201,7 @@ void App::LoadTrackEv()
 {
 	Ogre::Timer ti;
 	NewCommon(false);  // full destroy
+	iObjCur = -1;
 
 	if (scn->road)
 	{	scn->road->Destroy();  delete scn->road;  scn->road = 0;  }
