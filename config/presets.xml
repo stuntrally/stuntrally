@@ -120,7 +120,10 @@
 
 <r a="D16" sc="D"  m="roadAsphalt"   su="Asphalt"        du="0.0" ds="0.9" md="0.0" tr="0.00 0.00 0.00 0.0" z="D" />
 
-<r a="A1"  sc="A"  m="roadAdesert"   su="roadAdesert"    du="0.5" ds="0.6" md="0.0" tr="0.54 0.30 0.22 0.7" z="ACR" />
+<r a="A3"  sc="A"  m="roadAdesert"   su="roadAdesert"    du="0.5" ds="0.6" md="0.0" tr="0.54 0.30 0.22 0.7" z="ACR" />
+<r a="A1"  sc="A"  m="roadAdesertDark" su="roadAdesert"  du="0.5" ds="0.6" md="0.0" tr="0.44 0.30 0.22 0.7" z="ACR" />
+<r a="C1"  sc="C"  m="roadCdesert"   su="roadDesert"     du="0.5" ds="0.6" md="0.0" tr="0.44 0.30 0.22 0.7" z="C" />
+
 <r a="D1"  sc="D"  m="roadDesert"    su="roadDesert"     du="0.4" ds="0.9" md="0.0" tr="0.70 0.66 0.36 0.7" z="D" />
 <r a="D2"  sc="D"  m="roadDesertOrn" su="roadDesert"     du="0.4" ds="0.9" md="0.0" tr="0.70 0.61 0.36 0.7" z="D" />
 <r a="G1"  sc="G"  m="roadDesertD"   su="roadDesert"     du="0.4" ds="0.9" md="0.0" tr="0.70 0.66 0.36 0.7" z="G" />
