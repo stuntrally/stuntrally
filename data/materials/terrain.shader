@@ -22,11 +22,8 @@
 
 #define NORMAL_MAPPING  @shGlobalSettingBool(terrain_normal)
 
-//  specular
 #define SPECULAR  @shGlobalSettingBool(terrain_specular) && !RENDER_COMPOSITE_MAP
-#define SPECULAR_EXPONENT  32
 
-//  emissive
 #define EMISSIVE_SPECULAR  @shGlobalSettingBool(terrain_emissive_specular)
 
 
@@ -182,8 +179,10 @@
 #endif
 
 #if NORMAL_MAPPING
-        shUniform(float, scaleNormal)  @shUniformProperty1f(scaleNormal, scaleNormal)
+        shUniform(float, ter_scaleNormal)   @shSharedParameter(ter_scaleNormal)
 #endif
+        shUniform(float, ter_specular_pow)     @shSharedParameter(ter_specular_pow)
+        shUniform(float, ter_specular_pow_em)  @shSharedParameter(ter_specular_pow_em)
 
         // layer uv multipliers
     @shForeach(@shPropertyString(num_uv_mul))
@@ -443,14 +442,14 @@
     #endif
 
 	#if NORMAL_MAPPING
-		TSnormal.z *= scaleNormal;
+		TSnormal.z *= ter_scaleNormal;
 		TSnormal = normalize(TSnormal);
 		
         NdotL = max(dot(TSnormal, TSlightDir), 0);
         #if EMISSIVE_SPECULAR
-			specular = pow(diffuseSpec.a, 2.f);  //par
+			specular = pow(diffuseSpec.a, ter_specular_pow_em);
         #else
-			specular = pow(max(dot(TSnormal, TShalfAngle), 0), SPECULAR_EXPONENT) * diffuseSpec.a;
+			specular = pow(max(dot(TSnormal, TShalfAngle), 0), ter_specular_pow) * diffuseSpec.a;
 		#endif
         
         #if @shIterator == 0
@@ -494,7 +493,7 @@
         lightDir = normalize(lightDir);
         float3 halfAngle = normalize(lightDir + eyeDir);
         
-        float specular = pow(max(dot(normal, halfAngle), 0), SPECULAR_EXPONENT);
+        float specular = pow(max(dot(normal, halfAngle), 0), ter_specular_pow);
 
         diffuse += lightDiffuse0.xyz * max(dot(normal, lightDir), 0) * shadow;
     

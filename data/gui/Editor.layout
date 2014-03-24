@@ -1127,10 +1127,6 @@
 					<Property key="Caption" value="#{DenyReversed}"/>
 					<Property key="TextColour" value="0.6 0.8 0.8"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 236 320 24" name="TerrainEmissive">
-					<Property key="Caption" value="#{TerrainEmissiveLight}"/>
-					<Property key="TextColour" value="1 0.6 0"/>
-				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#E0A0A0#{Warnings}"/>
@@ -1578,17 +1574,55 @@
 							<UserString key="tip" value="#{TipTerErrorNorm}"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="32 208 140 24">
+						<Widget type="TextBox" skin="TextBox" position="562 236 90 24">
+							<Property key="Caption" value="#{Light}"/>
+							<Property key="TextColour" value="0.4 0.6 0.8"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 236 140 24">
 							<Property key="Caption" value="#{NormalsScale}"/>
 							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<UserString key="tip" value="#{TipTerNormScale}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="168 203 56 24" name="TerNormScaleEdit">
+						<Widget type="EditBox" skin="EditBox" position="168 233 56 24" name="TerNormScaleEdit">
 							<Property key="Colour" value="0.5 0.6 0.7"/>
-							<Property key="TextColour" value="0.7 0.8 0.9"/>
+							<Property key="TextColour" value="0.6 0.7 0.8"/>
 							<UserString key="tip" value="#{TipTerNormScale}"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="232 206 300 16" name="TerNormScale">
+						<Widget type="Slider" skin="Slider" position="232 236 300 16" name="TerNormScale">
+							<Property key="Colour" value="0.7 0.8 0.9"/>
+							<UserString key="tip" value="#{TipTerNormScale}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 266 140 24">
+							<Property key="Caption" value="#{SpecularPower}"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="tip" value="#{TipTerNormScale}"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="168 263 56 24" name="TerSpecPowEdit">
+							<Property key="Colour" value="0.5 0.7 0.9"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="tip" value="#{TipTerNormScale}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="232 266 300 16" name="TerSpecPow">
+							<Property key="Colour" value="0.7 0.9 1.0"/>
+							<UserString key="tip" value="#{TipTerNormScale}"/>
+						</Widget>
+
+						<Widget type="Button" skin="CheckBox" position="32 296 320 24" name="TerrainEmissive">
+							<Property key="Caption" value="#{TerrainEmissiveLight}"/>
+							<Property key="TextColour" value="0.7 0.7 0.9"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 326 140 24">
+							<Property key="Caption" value="#{SpecularPowerEm}"/>
+							<Property key="TextColour" value="0.6 0.75 0.9"/>
+							<UserString key="tip" value="#{TipTerNormScale}"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="168 323 56 24" name="TerSpecPowEmEdit">
+							<Property key="Colour" value="0.5 0.65 0.8"/>
+							<Property key="TextColour" value="0.6 0.75 0.9"/>
+							<UserString key="tip" value="#{TipTerNormScale}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="232 326 300 16" name="TerSpecPowEm">
 							<Property key="Colour" value="0.7 0.8 0.9"/>
 							<UserString key="tip" value="#{TipTerNormScale}"/>
 						</Widget>
@@ -1965,12 +1999,12 @@
 					<Property key="TextColour" value="0.7 1 0.5"/>
 					<UserString key="tip" value="#{TipDiffuseTex}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="208 66 80 24">
+				<Widget type="TextBox" skin="TextBox" position="208 66 72 24">
 					<Property key="Caption" value="#{GrMaterial}"/>
 					<Property key="TextColour" value="0.6 1.0 0.6"/>
 					<UserString key="tip" value="#{TipDiffuseTex}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="208 98 80 24">
+				<Widget type="TextBox" skin="TextBox" position="208 98 72 24">
 					<Property key="Caption" value="#{TerNormal}"/>
 					<Property key="TextColour" value="0.7 0.9 0.9"/>
 					<Property key="Alpha" value="0.7"/>
@@ -4268,7 +4302,8 @@
 					<Property key="Caption" value="Language"/>
 					<Property key="Static" value="true"/>
 					<Property key="ReadOnly" value="true"/>
-					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="Colour" value="0.7 0.7 0.7"/>
+					<Property key="TextColour" value="1 1 1"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="146 513 64 16">
 					<Property key="ImageCoord" value="512 991 128 32"/>

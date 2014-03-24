@@ -62,8 +62,12 @@ void CScene::changeShadows()
 
 	if (terrain)
 	{
-		sh::Factory::getInstance().setSharedParameter("terrainWorldSize", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(terrain->getWorldSize())));
-		sh::Factory::getInstance().setTextureAlias("TerrainLightMap", terrain->getLightmap()->getName());
+		mFactory->setSharedParameter("terrainWorldSize", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(terrain->getWorldSize())));
+		mFactory->setTextureAlias("TerrainLightMap", terrain->getLightmap()->getName());
+
+		mFactory->setSharedParameter("ter_scaleNormal", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(1.f / sc->td.normScale)));
+		mFactory->setSharedParameter("ter_specular_pow", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(sc->td.specularPow)));
+		mFactory->setSharedParameter("ter_specular_pow_em", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(sc->td.specularPowEm)));
 	}
 		
 	// disable 4 shadow textures (does not work because no texcoord's left in shader)

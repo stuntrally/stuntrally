@@ -243,7 +243,9 @@ void CGui::InitGui()
 	imgTexDiff = fImg("TerImgDiff");
 	Tab(tabsHmap, "TabHMapSize", tabHmap);
 	sv= &svTerErrorNorm;  sv->Init("TerErrorNorm", &sc->td.errorNorm,  1.5f,15.f, 1.5f,1,3);  sv->DefaultF(3.f);  Sev(TerErrorNorm);
-	sv= &svTerNormScale;  sv->Init("TerNormScale", &sc->td.normScale,  0.f,2.f,   1.f, 1,3);  sv->DefaultF(1.f);  Sev(TerNormScale);
+	sv= &svTerNormScale;  sv->Init("TerNormScale", &sc->td.normScale,  0.01f,3.f, 1.f, 1,3);  sv->DefaultF(1.f);  Sev(TerPar);
+	sv= &svTerSpecPow;    sv->Init("TerSpecPow",   &sc->td.specularPow,   0.2f,128.f,2.f, 1,4);  sv->DefaultF(32.f); Sev(TerPar);
+	sv= &svTerSpecPowEm;  sv->Init("TerSpecPowEm", &sc->td.specularPowEm, 0.5f,4.f,  1.f, 1,3);  sv->DefaultF(2.f);  Sev(TerPar);
 
 	Btn("TerrainNew", btnTerrainNew);
 	Btn("TerrainGenAdd", btnTerGenerate);  Btn("TerrainGenSub", btnTerGenerate);    Btn("TerrainGenMul", btnTerGenerate);

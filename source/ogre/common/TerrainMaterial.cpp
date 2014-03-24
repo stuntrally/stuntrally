@@ -85,10 +85,6 @@ void TerrainMaterial::Profile::createMaterial(const String& matName, const Terra
 	p->mShaderProperties.setProperty("composite_map", sh::makeProperty<sh::BooleanValue>(new sh::BooleanValue(renderCompositeMap)));
 
 	typedef sh::MaterialInstanceTextureUnit* MatTex;
-	
-	/// . . . . . .
-	///  custom params from scene
-	p->mShaderProperties.setProperty("scaleNormal", STR(toStr(1.f / scn->sc->td.normScale)));
 
 	//  global normal map ?-
 	MatTex normalMap = p->createTextureUnit("normalMap");

@@ -145,11 +145,13 @@ void CGui::slTerErrorNorm(SV*sv)
 	scn->UpdTerErr();
 }
 
-void CGui::slTerNormScale(SV*sv)
+//  upd ter sh par
+void CGui::slTerPar(SV*sv)
 {
-	//upd ter mtr par..
+	app->mFactory->setSharedParameter("ter_scaleNormal", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(1.f / sc->td.normScale)));
+	app->mFactory->setSharedParameter("ter_specular_pow", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(sc->td.specularPow)));
+	app->mFactory->setSharedParameter("ter_specular_pow_em", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(sc->td.specularPowEm)));
 }
-
 
 //  - - - -  Hmap tools  - - - -
 String CGui::getHMapNew()

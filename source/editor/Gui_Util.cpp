@@ -57,6 +57,7 @@ void CGui::SetGuiFromXmls()
 	updTabHmap();
 	svTerTriSize.Upd();
 	svTerErrorNorm.Upd();  svTerNormScale.Upd();
+	svTerSpecPow.Upd();  svTerSpecPowEm.Upd();
 	
 	tabTerLayer(tabsTerLayers, idTerLay);
 	_Cmb(cmbParDust, sc->sParDust);	_Cmb(cmbParMud,  sc->sParMud);

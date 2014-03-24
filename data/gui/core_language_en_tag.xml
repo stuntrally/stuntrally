@@ -739,7 +739,11 @@
 	<Tag name="HeightmapSize">Heightmap size</Tag>
 	<Tag name="TriSize">Triangle size</Tag>
 	<Tag name="TerrainSize">Terrain size</Tag>
+
 	<Tag name="NormalsScale">Normals scale</Tag>
+	<Tag name="TerrainEmissiveLight">Terrain has emissive light</Tag>
+	<Tag name="SpecularPower">Specular power</Tag>
+	<Tag name="SpecularPowerEm">Emissive power</Tag>
 	
 	<Tag name="NewTerrainFlat">New flat</Tag>
 	<Tag name="NewTerrainGenerate">Generate new</Tag>
@@ -926,7 +930,6 @@
 	<Tag name="Gravity">Gravity</Tag>
 	<Tag name="Wind">Wind</Tag>
 	<Tag name="DenyReversed">Deny reversed direction</Tag>
-	<Tag name="TerrainEmissiveLight">Terrain has emissive light</Tag>
 
 	<Tag name="Warnings">Warnings</Tag>
 	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>

@@ -202,7 +202,11 @@ void App::SetFactoryDefaults()
 	fct.setGlobalSetting("terrain_triplanarType", toStr(pSet->ter_tripl));
 	fct.setGlobalSetting("terrain_triplanarLayer", toStr(scn->sc->td.triplanarLayer1));
 	fct.setGlobalSetting("terrain_triplanarLayer2", toStr(scn->sc->td.triplanarLayer2));
+
 	fct.setGlobalSetting("terrain_emissive_specular", b2s(scn->sc->td.emissive));
+	fct.setSharedParameter("ter_scaleNormal", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(1.f)));
+	fct.setSharedParameter("ter_specular_pow", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(32.f)));
+	fct.setSharedParameter("ter_specular_pow_em", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(2.f)));
 
 	fct.setGlobalSetting("water_reflect", b2s(pSet->water_reflect));
 	fct.setGlobalSetting("water_refract", b2s(pSet->water_refract));

@@ -58,7 +58,9 @@ public:
 	//  which should have triplanar most (eg high mountains)
 	int triplanarLayer1, triplanarLayer2, triplCnt;
 	float normScale;  // scale terrain normals
-	bool emissive;
+
+	bool emissive;  // emissive light from specular
+	float specularPow, specularPowEm;  // specular power (exponent)
 	
 	//  methods
 	TerData();	void Default();

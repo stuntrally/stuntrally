@@ -123,8 +123,11 @@ bool Scene::LoadXml(String file, bool bTer)
 		a = eTer->Attribute("size");		if (a)  td.iVertsX = s2i(a);
 		a = eTer->Attribute("triangle");	if (a)  td.fTriangleSize = s2r(a);
 		a = eTer->Attribute("errNorm");		if (a)  td.errorNorm = s2r(a);
+
 		a = eTer->Attribute("normSc");		if (a)  td.normScale = s2r(a);
 		a = eTer->Attribute("emissive");	if (a)  td.emissive = s2i(a)>0;
+		a = eTer->Attribute("specPow");		if (a)  td.specularPow = s2r(a);
+		a = eTer->Attribute("specPowEm");	if (a)  td.specularPowEm = s2r(a);
 		td.UpdVals();
 
 		int il = 0;
@@ -408,9 +411,13 @@ bool Scene::SaveXml(String file)
 		ter.SetAttribute("triangle",	toStrC( td.fTriangleSize ));
 		ter.SetAttribute("errNorm",		fToStr( td.errorNorm, 2,4 ).c_str());
 		if (td.normScale != 1.f)
-		ter.SetAttribute("normSc",		toStrC( td.normScale ));
+			ter.SetAttribute("normSc",		toStrC( td.normScale ));
 		if (td.emissive)
-		ter.SetAttribute("emissive",	td.emissive ? 1 : 0);
+			ter.SetAttribute("emissive",	td.emissive ? 1 : 0);
+		if (td.specularPow != 32.f)
+			ter.SetAttribute("specPow",		toStrC( td.specularPow ));
+		if (td.specularPowEm != 2.f)
+			ter.SetAttribute("specPowEm",	toStrC( td.specularPowEm ));
 
 		const TerLayer* l;
 		for (int i=0; i < 6; ++i)

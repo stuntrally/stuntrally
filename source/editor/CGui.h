@@ -127,7 +127,7 @@ public:
 	//  Ter HMap
 	SlV(TerTriSize);  int UpdTxtTerSize(float mul=1.f);
 	SV svTerErrorNorm;  void slTerErrorNorm(SV*);
-	SV svTerNormScale;  void slTerNormScale(SV*);
+	SV svTerNormScale, svTerSpecPow, svTerSpecPowEm;  void slTerPar(SV*);
 	
 	Ogre::String getHMapNew();
 	void btnTerrainNew(WP), btnTerGenerate(WP);

@@ -167,9 +167,8 @@ void TerData::Default()
 	iVertsX = 512*2 +1;
 	fTriangleSize = 1.f;  // scale
 	triplanarLayer1 = 8;  triplanarLayer2 = 8;  triplCnt = 0;  // off
-	errorNorm = 1.7;
-	normScale = 1.f;
-	emissive = false;
+	errorNorm = 1.7;  normScale = 1.f;
+	emissive = false;  specularPow = 32.f;  specularPowEm = 2.f;
 
 	for (int i=0; i < ciNumLay; ++i)
 	{	
