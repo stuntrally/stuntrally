@@ -162,10 +162,10 @@ material roadGDesert_ter
 {
 	parent road_terrain
 	diffuseMap roadDesert.jpg
-    ambient 0.84 0.94 0.74
-	diffuse 0.63 0.65 0.62
+    ambient 0.79 0.77 0.47
+	diffuse 0.66 0.65 0.52
 	specular 0.23 0.23 0.22 32
-	normalMap volcano_7_nh1.png
+	normalMap roadDesert_n.jpg
 }
 
 
@@ -456,6 +456,27 @@ material roadSnowGrn_ter
 }
 
 
+// Desert old
+
+material roadDesertD
+{
+    parent road
+    diffuseMap roadDesertD.jpg
+	ambient 0.85 0.85 0.85
+	diffuse 0.81 0.8 0.75
+	specular 0.36 0.34 0.3 18
+}
+
+material roadDesertD_ter
+{
+    parent road_terrain
+	ambient 0.65 0.72 0.64
+	diffuse 0.87 0.95 0.88
+	specular 0.36 0.34 0.32 18
+    diffuseMap roadDesertD.jpg
+    normalMap volcano_7_nh1.png
+}
+
 // Desert
 
 material roadDesert
@@ -470,13 +491,35 @@ material roadDesert
 material roadDesert_ter
 {
     parent road_terrain
-	//ambient 0.8 0.7 0.6
-	//diffuse 0.9 0.85 0.7
-	ambient 0.8 0.7 0.6
-	diffuse 1.0 0.95 0.9
-	specular 0.36 0.34 0.32 18
-    diffuseMap roadDesert.png
-    normalMap flat_n.png
+	ambient 1.0 0.88 0.72
+	diffuse 0.95 0.87 0.72
+	specular 0.16 0.14 0.12 12
+    diffuseMap roadDesert.jpg
+    normalMap roadDesert_n.jpg
+	bump_scale 0.7
+}
+
+
+material roadDesertOrn
+{
+    parent road
+    diffuseMap roadDesert.jpg
+	ambient 0.85 0.85 0.85
+	diffuse 0.81 0.8 0.75
+	specular 0.36 0.34 0.3 18
+}
+
+material roadDesertOrn_ter
+{
+    parent road_terrain
+	//ambient 1.00 0.80 0.65
+	ambient 0.95 0.75 0.63
+	diffuse 0.90 0.8 0.6
+	specular 0.16 0.14 0.12 12
+    //alphaMap roadAlphaE.png
+    diffuseMap roadDesert.jpg
+    normalMap roadDesert_n.jpg
+	bump_scale 0.5
 }
 
 
@@ -508,7 +551,7 @@ material roadAdesert
 {
 	parent road
 	ambient 1.2 1.2 1.2
-	diffuse 0.66 0.65 0.6
+	diffuse 0.75 0.65 0.85
 	specular 0.36 0.32 0.3 32
 	diffuseMap roadAdesert.jpg
 }
@@ -516,10 +559,16 @@ material roadAdesert
 material roadAdesert_ter
 {
     parent road_terrain
-   	ambient 1.2 1.2 1.2
-	diffuse 0.66 0.65 0.6
-	specular 0.36 0.32 0.3 32
-	diffuseMap roadAdesert.jpg
+	//ambient 1.2 1.2 1.2
+	//diffuse 0.75 0.65 0.85
+   	ambient 0.99 0.89 0.81
+	diffuse 0.93 0.9 0.88
+	specular 0.32 0.32 0.32 32
+    diffuseMap roadADesert.png
+    normalMap roadDesert_n.jpg
+	//diffuseMap roadAdesert.png
+	//normalMap roadDesert_n.jpg
+	bump_scale 0.8
 }
 
 
