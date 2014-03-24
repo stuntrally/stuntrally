@@ -15,6 +15,7 @@
 #include <OgreRectangle2D.h>
 #include <OgreSceneNode.h>
 #include <OgreCamera.h>
+#include <OgreRenderWindow.h>
 #include <MyGUI.h>
 using namespace MyGUI;
 using namespace Ogre;
