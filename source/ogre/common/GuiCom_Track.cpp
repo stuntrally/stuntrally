@@ -123,13 +123,15 @@ void CGuiCom::GuiInitTrack()
 	imgMini[0] = fImg("TrackMap");  imgMini[0]->setImageTexture("PrvRoad");
 
 	//  stats text
-	int i;
+	int i, st;
 	#ifdef SR_EDITOR
-	for (i=0; i < 9;     ++i)	stTrk[0][i] = fTxt("iv"+toStr(i));
+	st = 9;
 	#else
-	for (i=0; i < StTrk; ++i)	stTrk[0][i] = fTxt("iv"+toStr(i));
+	st = StTrk;
 	#endif
-	for (i=0; i < InfTrk; ++i)	infTrk[0][i] = fTxt("ti"+toStr(i));
+	for (i=0; i < st; ++i)   stTrk[0][i] = fTxt("st"+toStr(i));
+	for (i=0; i < 4; ++i)  imStTrk[0][i] = fImg("ist"+toStr(i));
+	for (i=0; i < InfTrk; ++i){  infTrk[0][i] = fTxt("ti"+toStr(i));  imInfTrk[0][i] =  fImg("iti"+toStr(i));  }
 		
 	EdC(edTrkFind, "TrkFind", editTrkFind);
 
@@ -285,31 +287,44 @@ bool CGuiCom::TrackExists(String name/*, bool user*/)
 
 void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTrack, float timeCur, bool champ)
 {
-#ifndef SR_EDITOR  // game
+	#ifndef SR_EDITOR  // game
 	bool mph = pSet->show_mph;
-#else
+	#else
 	bool mph = false;
-#endif
+	#endif
 	float m = mph ? 0.621371f : 1.f;
 	string km = mph ? " mi" : " km";
 	int ch = champ ? 1 : 0;
 	
 	//  road stats
 	//---------------------------------------------------------------------------
-	stTrk[ch][1]->setCaption(fToStr(sc->td.fTerWorldSize*0.001f*m ,3,5)+km);
+	stTrk[ch][1]->setCaption(fToStr(sc->td.fTerWorldSize*0.001f*m ,1,3)+km);
 	if (!rd)  return;
-	float len = rd->st.Length;
-	stTrk[ch][0]->setCaption(fToStr(len*0.001f*m ,3,5)+km);
+	float len = rd->st.Length;					//3,5
+	stTrk[ch][0]->setCaption(fToStr(len*0.001f*m ,1,3)+km);
 
 	stTrk[ch][2]->setCaption(fToStr(rd->st.WidthAvg ,1,3)+" m");
 	stTrk[ch][3]->setCaption(fToStr(rd->st.HeightDiff ,0,2)+" m");
 
+	bool h = rd->st.Pipes > 99.f && rd->st.OnTer > 99.f;  // hide bridge 100% when pipe is 100%
+	float a;
 	stTrk[ch][4]->setCaption(fToStr(rd->st.OnTer ,0,1)/*+"%"*/);
+	a = h || rd->st.OnTer < 1.f ? 0.f :  (0.5f + 0.5f * rd->st.OnTer / 100.f);
+	stTrk[ch][4]->setAlpha(a);  imStTrk[ch][0]->setAlpha(a);
+	
 	stTrk[ch][5]->setCaption(fToStr(rd->st.Pipes ,0,1)/*+"%"*/);
+	a =      rd->st.Pipes < 1.f ? 0.f :  (0.4f + 0.4f * rd->st.Pipes / 100.f);
+	stTrk[ch][5]->setAlpha(a);  imStTrk[ch][1]->setAlpha(a);
 
 	stTrk[ch][6]->setCaption(fToStr(rd->st.bankAvg,0,1)+"\'");
 	stTrk[ch][7]->setCaption(fToStr(rd->st.bankMax,0,1)+"\'");
+	a = std::min(1.f,  0.3f + 0.7f * rd->st.bankMax / 80.f);  //rd->st.bankAvg / 30.f);
+	stTrk[ch][6]->setAlpha(a);  stTrk[ch][7]->setAlpha(a);  imStTrk[ch][2]->setAlpha(a);
+
 	stTrk[ch][8]->setCaption(fToStr(rd->st.OnPipe,0,1)/*+"%"*/);
+	a = rd->st.OnPipe < 0.1f ? 0.f : (0.5f + 0.5f * rd->st.OnPipe / 100.f);
+	stTrk[ch][8]->setAlpha(a);  imStTrk[ch][3]->setAlpha(a);
+
 	#ifndef SR_EDITOR
 	if (app->gui->txTrackAuthor)
 		app->gui->txTrackAuthor->setCaption("");  // user trks
@@ -320,15 +335,23 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 		if (infTrk[ch][i])  infTrk[ch][i]->setCaption("");
 	if (id > 0)
 	{	const TrackInfo& ti = app->scn->data->tracks->trks[id-1];
+
 		#define str0(v)  ((v)==0 ? "" : toStr(v))
-		infTrk[ch][0]->setCaption(str0(ti.fluids));
-		infTrk[ch][1]->setCaption(str0(ti.bumps));		infTrk[ch][2]->setCaption(str0(ti.jumps));
-		infTrk[ch][3]->setCaption(str0(ti.loops));		infTrk[ch][4]->setCaption(str0(ti.pipes));
-		infTrk[ch][5]->setCaption(str0(ti.banked));		infTrk[ch][6]->setCaption(str0(ti.frenzy));
-		infTrk[ch][7]->setCaption(clrsLong[ti.longn] + str0(ti.longn));
-		infTrk[ch][8]->setCaption(ti.diff==0   ? "" : (clrsDiff[ti.diff] + toStr(ti.diff)));
-		infTrk[ch][9]->setCaption(ti.rating==0 ? "" : (clrsRating[ti.rating] + toStr(ti.rating)));
-		infTrk[ch][10]->setCaption(str0(ti.objects));
+		#define inf(i,t,m)  infTrk[ch][i]->setCaption(str0(t));\
+			imInfTrk[ch][i]->setAlpha(t==0 ? 0.f : std::min(1.f, 0.2f + 0.8f * float(t)/m))
+
+		inf(0, ti.fluids,5);  inf(1, ti.bumps, 4);
+		inf(2, ti.jumps, 3);  inf(3, ti.loops, 4);  inf(4, ti.pipes, 5);
+		inf(5, ti.banked,4);  inf(6, ti.frenzy,4);  inf(7,ti.objects,3);
+
+		infTrk[ch][10]->setCaption(clrsLong[ti.longn] + str0(ti.longn));
+		a = ti.longn / 8.f;
+		imInfTrk[ch][10]->setAlpha(a);  infTrk[ch][10]->setAlpha(0.5f + 0.5f * a);
+		  infTrk[ch][8]->setCaption(ti.diff==0   ? "" : (clrsDiff[ti.diff] + toStr(ti.diff)));
+		imInfTrk[ch][8]->setAlpha(0.2f + 0.8f * ti.diff / 6.f);
+		  infTrk[ch][9]->setCaption(ti.rating==0 ? "" : (clrsRating[ti.rating] + toStr(ti.rating)));
+		imInfTrk[ch][9]->setAlpha(0.2f + 0.8f * ti.rating / 5.f);
+
 		#ifndef SR_EDITOR
 		if (app->gui->txTrackAuthor)
 			app->gui->txTrackAuthor->setCaption(ti.author=="CH" ? "CryHam" : ti.author);
@@ -347,6 +370,7 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	float timeT = (/*place*/1 * app->scn->data->cars->magic * timeTrk + timeTrk) / carMul;
 	bool no = timeCur < 0.1f || !rd;
 	if (ch==1)  no = false;  // show track's not current
+
 	stTrk[ch][9]->setCaption(CHud::StrTime(no ? 0.f : timeT));
 	stTrk[ch][10]->setCaption(no ? "--" : speedTrk);
 

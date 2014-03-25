@@ -611,9 +611,11 @@ void CGui::InitGui()
 	gcom->imgMini[1] = fImg("TrackMap2");  gcom->imgMini[1]->setImageTexture("PrvRoad");
 
 	//  track stats text
-	int i;
-	for (i=0; i < gcom->StTrk; ++i)   gcom->stTrk[1][i] =  fTxt("2iv"+toStr(i));
-	for (i=0; i < gcom->InfTrk; ++i)  gcom->infTrk[1][i] = fTxt("2ti"+toStr(i));
+	int i, st = gcom->StTrk;
+	for (i=0; i < st; ++i)   gcom->stTrk[1][i] = fTxt("2st"+toStr(i));
+	for (i=0; i < 4; ++i)  gcom->imStTrk[1][i] = fImg("2ist"+toStr(i));
+	for (i=0; i < gcom->InfTrk; ++i)
+	{	gcom->infTrk[1][i] = fTxt("2ti"+toStr(i));  gcom->imInfTrk[1][i] = fImg("2iti"+toStr(i));  }
 
 	edChInfo = fEd("ChampInfo");
 	if (edChInfo)  edChInfo->setVisible(pSet->champ_info);
@@ -622,7 +624,7 @@ void CGui::InitGui()
 	panCh = fWP("panCh");
 	txtCh = fTxt("txtChDetail");
 	valCh = fTxt("valChDetail");
-	for (int i=0; i<3; ++i) {  String s = toStr(i);
+	for (i=0; i<3; ++i) {  String s = toStr(i);
 		txtChP[i] = fTxt("txtChP"+s);
 		valChP[i] = fTxt("valChP"+s);  }
 	edChDesc = fEd("ChampDescr");

@@ -727,83 +727,157 @@
 				</Widget>
 
 				<Widget type="Widget" skin="PanelSkin" position="524 65 256 172">
-					<Property key="Colour" value="0.5 0.75 1.0"/>
-					<Property key="Alpha" value="0.3"/>
+					<Property key="Colour" value="0.6 0.73 0.85"/>
+					<Property key="Alpha" value="0.5"/>
 					<Widget type="Widget" skin="" position="0 0 256 172">
 						<Property key="InheritsAlpha" value="false"/>
 
-						<Widget type="TextBox" skin="TextBox" position="6 5 88 18">
+                        <Widget type="TextBox" skin="TextBox" position="6 5 82 18">
 							<Property key="Caption" value="#{TrackLength}"/>
 							<Property key="TextColour" value="0.4 0.8 1.0"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="6 25 88 18">
+                        <Widget type="TextBox" skin="TextBox" position="6 25 82 18">
 							<Property key="Caption" value="#{TrackArea}"/>
 							<Property key="TextColour" value="0.4 0.8 1.0"/>
-							<Property key="Alpha" value="0.8"/>
+							<Property key="Alpha" value="0.5"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="86 5 68 18" name="iv0">
+						<Widget type="TextBox" skin="TextBox" position="86 5 68 18" name="st0">
+							<Property key="TextColour" value="0.55 0.8 1.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="86 25 68 18" name="st1">
 							<Property key="TextColour" value="0.4 0.8 1.0"/>
+							<Property key="Alpha" value="0.5"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="86 25 68 18" name="iv1">
-							<Property key="TextColour" value="0.4 0.8 1.0"/>
-							<Property key="Alpha" value="0.8"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="208 5 56 18" name="iv2">
-							<Property key="TextColour" value="0.6 0.75 0.9"/>
+						<Widget type="TextBox" skin="TextBox" position="202 5 56 18" name="st2">
+							<Property key="TextColour" value="0.5 0.75 1.0"/>
+							<Property key="Alpha" value="1.0"/>
 							<UserString key="tip" value="#{TrackWidthAvg}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="208 25 56 18" name="iv3">
-							<Property key="TextColour" value="0.6 0.75 0.9"/>
+						<Widget type="TextBox" skin="TextBox" position="202 25 56 18" name="st3">
+							<Property key="TextColour" value="0.35 0.6 0.9"/>
+							<Property key="Alpha" value="0.9"/>
 							<UserString key="tip" value="#{TrackHeightDiff}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="152 64 36 18" name="iv4">
+						<Widget type="TextBox" skin="TextBox" position="152 64 36 18" name="st4">
 							<Property key="TextColour" value="0.5 0.9 0.9"/>
 							<Property key="Alpha" value="0.9"/>
 							<UserString key="tip" value="#{TrackInAir} %"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="152 84 36 18" name="iv5">
+						<Widget type="TextBox" skin="TextBox" position="152 84 36 18" name="st5">
 							<Property key="TextColour" value="0.9 0.9 0.5"/>
 							<Property key="Alpha" value="0.9"/>
 							<UserString key="tip" value="#{TrackPipes} %"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="208 64 28 18" name="iv6">
+						<Widget type="TextBox" skin="TextBox" position="208 64 28 18" name="st6">
 							<Property key="TextColour" value="0.7 0.75 0.8"/>
 							<UserString key="tip" value="#{TrackBankAng}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="232 64 28 18" name="iv7">
+						<Widget type="TextBox" skin="TextBox" position="232 64 28 18" name="st7">
 							<Property key="TextColour" value="0.8 0.72 0.67"/>
 							<UserString key="tip" value="#{TrackBankAng}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="208 84 36 18" name="iv8">
+						<Widget type="TextBox" skin="TextBox" position="208 84 36 18" name="st8">
 							<Property key="TextColour" value="0.9 0.4 0.2"/>
 							<Property key="Alpha" value="0.9"/>
 							<UserString key="tip" value="#{Road_OnPipe} %"/>
 						</Widget>
 
-						<Widget type="ImageBox" skin="ImageBox" position="176 5 32 40" name="trkst1">
+						<Widget type="ImageBox" skin="ImageBox" position="170 5 32 40">
 							<Property key="ImageCoord" value="0 32 32 40"/>
 							<Property key="ImageTexture" value="track_icons.png"/>
+							<Property key="Colour" value="1.0 0.9 0.7"/>
+							<Property key="Alpha" value="0.8"/>
+							<UserString key="tip" value="#{TrackWidthAvg}"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="124 63 32 40" name="trkst2">
-							<Property key="ImageCoord" value="32 32 32 40"/>
+						<Widget type="ImageBox" skin="ImageBox" position="170 25 32 20">
+							<Property key="ImageCoord" value="0 52 32 20"/>
+							<Property key="ImageTexture" value="track_icons.png"/>
+							<Property key="Colour" value="1.0 0.9 0.7"/>
+							<Property key="Alpha" value="0.7"/>
+							<UserString key="tip" value="#{TrackHeightDiff}"/>
+						</Widget>
+                        <Widget type="ImageBox" skin="ImageBox" position="124 63 32 20" name="ist0">
+                            <Property key="ImageCoord" value="32 32 32 20"/>
 							<Property key="ImageTexture" value="track_icons.png"/>
 							<Property key="Alpha" value="0.8"/>
+							<UserString key="tip" value="#{TrackInAir} %"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="184 63 32 40" name="trkst3">
-							<Property key="ImageCoord" value="64 32 32 40"/>
+                        <Widget type="ImageBox" skin="ImageBox" position="124 83 32 20" name="ist1">
+                            <Property key="ImageCoord" value="32 52 32 20"/>
+                            <Property key="ImageTexture" value="track_icons.png"/>
+                            <Property key="Alpha" value="0.18"/>
+							<UserString key="tip" value="#{TrackPipes} %"/>
+                        </Widget>
+                        <Widget type="ImageBox" skin="ImageBox" position="184 63 32 20" name="ist2">
+                            <Property key="ImageCoord" value="64 32 32 20"/>
 							<Property key="ImageTexture" value="track_icons.png"/>
-							<Property key="Alpha" value="0.8"/>
+							<Property key="Alpha" value="0.18"/>
+							<UserString key="tip" value="#{TrackBankAng}"/>
+						</Widget>
+                        <Widget type="ImageBox" skin="ImageBox" position="184 83 32 20" name="ist3">
+                            <Property key="ImageCoord" value="64 52 32 20"/>
+							<Property key="ImageTexture" value="track_icons.png"/>
+                            <Property key="Alpha" value="0.18"/>
+							<UserString key="tip" value="#{Road_OnPipe} %"/>
 						</Widget>
 
-						<Widget type="ImageBox" skin="ImageBox" position="2 116 256 32" name="trkinf7">
+						<Widget type="ImageBox" skin="ImageBox" position="1 60 32 32" name="iti8">
 							<Property key="ImageTexture" value="track_icons.png"/>
-							<Property key="ImageCoord" value="0 0 256 32"/>
-							<UserString key="tip" value="#{TrackDifficulties}"/>
+							<Property key="ImageCoord" value="96 32 32 32"/>
+                            <UserString key="tip" value="#{difficulty}"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="4 60 96 32" name="trkinf2">
+						<Widget type="ImageBox" skin="ImageBox" position="34 60 32 32" name="iti9">
 							<Property key="ImageTexture" value="track_icons.png"/>
-							<Property key="ImageCoord" value="96 32 96 32"/>
+							<Property key="ImageCoord" value="128 32 32 32"/>
+                            <UserString key="tip" value="#{rating}"/>
 						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="66 60 32 32" name="iti10">
+                            <Property key="ImageTexture" value="track_icons.png"/>
+                            <Property key="ImageCoord" value="224 0 32 32"/>
+                            <UserString key="tip" value="#{long}"/>
+						</Widget>
+						
+                        <Widget type="ImageBox" skin="ImageBox" position="1 116 32 32" name="iti0">
+                            <Property key="ImageTexture" value="track_icons.png"/>
+                            <Property key="ImageCoord" value="0 0 32 32"/>
+                            <UserString key="tip" value="#{fluids}"/>
+                        </Widget>
+                        <Widget type="ImageBox" skin="ImageBox" position="34 116 32 32" name="iti1">
+                            <Property key="ImageTexture" value="track_icons.png"/>
+                            <Property key="ImageCoord" value="32 0 32 32"/>
+                            <UserString key="tip" value="#{bumps}"/>
+                        </Widget>
+                        <Widget type="ImageBox" skin="ImageBox" position="66 116 32 32" name="iti2">
+                            <Property key="ImageTexture" value="track_icons.png"/>
+                            <Property key="ImageCoord" value="64 0 32 32"/>
+                            <UserString key="tip" value="#{jumps}"/>
+                        </Widget>
+                        <Widget type="ImageBox" skin="ImageBox" position="98 116 32 32" name="iti3">
+                            <Property key="ImageTexture" value="track_icons.png"/>
+                            <Property key="ImageCoord" value="96 0 32 32"/>
+                            <UserString key="tip" value="#{loops}"/>
+                        </Widget>
+                        <Widget type="ImageBox" skin="ImageBox" position="128 116 32 32" name="iti4">
+                            <Property key="ImageTexture" value="track_icons.png"/>
+                            <Property key="ImageCoord" value="128 0 32 32"/>
+                            <UserString key="tip" value="#{pipes}"/>
+                        </Widget>
+                        <Widget type="ImageBox" skin="ImageBox" position="162 116 32 32" name="iti5">
+                            <Property key="ImageTexture" value="track_icons.png"/>
+                            <Property key="ImageCoord" value="160 0 32 32"/>
+                            <UserString key="tip" value="#{banked}"/>
+                        </Widget>
+                        <Widget type="ImageBox" skin="ImageBox" position="194 116 32 32" name="iti6">
+                            <Property key="ImageTexture" value="track_icons.png"/>
+                            <Property key="ImageCoord" value="192 0 32 32"/>
+                            <UserString key="tip" value="#{frenzy}"/>
+                        </Widget>
+                        <Widget type="ImageBox" skin="ImageBox" position="228 116 32 32" name="iti7">
+							<Property key="ImageTexture" value="track_icons.png"/>
+							<Property key="ImageCoord" value="160 32 32 32"/>
+                            <UserString key="tip" value="#{objects}"/>
+                        </Widget>
+
 						<Widget type="TextBox" skin="TextBox" position="14 148 32 20" name="ti0">
 							<Property key="TextColour" value="0.5 0.8 1.0"/>
 							<UserString key="tip" value="#{fluids}"/>
@@ -833,8 +907,8 @@
 							<UserString key="tip" value="#{frenzy}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="238 148 32 20" name="ti7">
-							<Property key="TextColour" value="1.0 0.8 0.8"/>
-							<UserString key="tip" value="#{long}"/>
+							<Property key="TextColour" value="0.8 0.4 0.6"/>
+							<UserString key="tip" value="#{objects}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="14 92 32 20" name="ti8">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
@@ -845,12 +919,11 @@
 							<UserString key="tip" value="#{rating}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="78 92 32 20" name="ti10">
-							<Property key="TextColour" value="0.8 0.4 0.6"/>
-							<UserString key="tip" value="#{objects}"/>
+							<Property key="TextColour" value="1.0 0.8 0.8"/>
+							<UserString key="tip" value="#{long}"/>
 						</Widget>
 					</Widget>
 				</Widget>
-
 				<Widget type="ImageBox" skin="ImageBox" position="256 6 48 24" name="TrkView2icons1">
 					<Property key="ImageTexture" value="track_icons.png"/>
 					<Property key="ImageCoord" value="96 32 96 32"/>

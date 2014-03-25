@@ -48,7 +48,8 @@ CGuiCom::CGuiCom(App* app1)
 		imgPrv[t] = 0; imgMini[t] = 0; imgTer[t] = 0;
 
 		for (i=0; i < StTrk; ++i)  stTrk[t][i] = 0;
-		for (i=0; i < InfTrk; ++i)  infTrk[t][i] = 0;
+		for (i=0; i < 4; ++i)  imStTrk[t][i] = 0;
+		for (i=0; i < InfTrk; ++i){  infTrk[t][i] = 0;  imInfTrk[t][i] = 0;  }
 	}
 	
 	//  short scenery names
