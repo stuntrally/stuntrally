@@ -43,7 +43,7 @@ void TIMER::Tick(float dt)
 		i->Tick(dt);
 }
 
-bool TIMER::Lap(const int carId, const int prevsector, const int nextsector, const bool countit, bool bTrackReverse)
+bool TIMER::Lap(const int carId, const bool countit, bool bTrackReverse)
 {
 	//assert(carId < car.size());
 	if (carId >= car.size())  return false;  //-
@@ -52,7 +52,7 @@ bool TIMER::Lap(const int carId, const int prevsector, const int nextsector, con
 	if (countit)
 	{
 		std::stringstream secstr;
-		secstr << "sector " << nextsector;
+		secstr << "sector 0";
 		std::string lastcar;
 		/*if (trackrecords.GetParam("last.car", lastcar))
 		{
@@ -73,12 +73,10 @@ bool TIMER::Lap(const int carId, const int prevsector, const int nextsector, con
 		}
 	}
 
-	if (nextsector == 0)
-	{
-		car[carId].Lap(countit);
-		if (loaded)
-			trackrecords.Write(true, trackrecordsfile);
-	}
+	car[carId].Lap(countit);
+	if (loaded)
+		trackrecords.Write(true, trackrecordsfile);
+
 	return newbest;
 }
 

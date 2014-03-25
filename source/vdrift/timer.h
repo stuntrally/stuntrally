@@ -296,7 +296,7 @@ public:
 	void Unload();
 
 	void Tick(float dt);
-	bool Lap(const int carId, const int prevsector, const int nextsector, const bool countit, bool bTrackReverse);
+	bool Lap(const int carId, const bool countit, bool bTrackReverse);
 	bool LapNetworkTime(const int carId, const double curtime);  ///+
 
 	void UpdateDistance(const int carId, const double newdistance)

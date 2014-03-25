@@ -87,8 +87,6 @@ void OBJECTLOADER::CalculateNumObjects()
 
 		numobjects++;
 	}
-
-	//info_output << "!!!!!!! " << numobjects << endl;
 }
 
 bool OBJECTLOADER::GetSurfacesBool()
@@ -104,7 +102,6 @@ std::pair <bool,bool> OBJECTLOADER::ContinueObjectLoad(	TRACK* track,
 	std::map <std::string, MODEL_JOE03> & model_library,
 	std::map <std::string, TEXTURE_GL> & texture_library,
 	std::list <TRACK_OBJECT> & objects,
-	bool vertical_tracking_skyboxes,
  	const std::string & texture_size)
 {
 	std::string model_name;
@@ -115,9 +112,6 @@ std::pair <bool,bool> OBJECTLOADER::ContinueObjectLoad(	TRACK* track,
 	if (!(GetParam(objectfile, model_name)))
 	{
 		info_output << "Track loaded: " << model_library.size() << " models, " << texture_library.size() << " textures, " << /*surfaces.size() << " surfaces" << */std::endl;
-		//Optimize();
-		//info_output << "Objects before optimization: " << unoptimized_scene.GetDrawableList().size() << ", objects after optimization: " << sceneroot.GetDrawableList().size() << std::endl;
-		//unoptimized_scene.Clear();
 		return std::pair <bool,bool> (false, false);
 	}
 
@@ -245,21 +239,6 @@ std::pair <bool,bool> OBJECTLOADER::ContinueObjectLoad(	TRACK* track,
 			miscmap1 = texture_library.find(miscmap1_texture_name)->second;
 
 		TEXTURE_GL * diffuse = &texture_library[diffuse_texture_name];
-		/*DRAWABLE & d = unoptimized_scene.AddDrawable();
-		d.AddDrawList(model->GetListID());
-		d.SetDiffuseMap(diffuse);
-		if (miscmap1)
-			d.SetMiscMap1(&miscmap1.get());
-		d.SetLit(!nolighting);
-		d.SetPartialTransparency((transparent_blend==1));
-		d.SetCull(cull && (transparent_blend!=2), false);
-		d.SetRadius(model->GetRadius());
-		d.SetObjectCenter(model->GetCenter());
-		d.SetSkybox(skybox);
-		if (skybox && vertical_tracking_skyboxes)
-		{
-			d.SetVerticalTrack(true);
-		}*/
 		
 		TRACK_OBJECT object(model, diffuse, /*surfacePtr*/collideable || driveable );
 		objects.push_back(object);

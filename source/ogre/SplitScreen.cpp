@@ -206,7 +206,7 @@ void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 		pApp->hud->ShowVp(true);
 		pApp->hud->Update(carId, 1.f / mWindow->getLastFPS());
 
-		///  Set skybox pos to camera  - TODO: fix, sky is center only for last player ...
+		///  Set sky pos to camera  - TODO: fix, sky is center only for last player ...
 		//  idea: with compositor this needs separate sky nodes (own sky for each player) and showing 1 sky for 1 player
 		if (pApp->ndSky)
 			pApp->ndSky->setPosition(evt.source->getCamera()->getPosition());

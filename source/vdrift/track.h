@@ -74,12 +74,6 @@ public:
 	
 	int DeferredLoadTotalObjects();
 
-	std::pair <MATHVECTOR<float,3>, QUATERNION<float> > GetStart(unsigned int index);
-	
-	int GetNumStartPositions()
-	{
-		return start_positions.size();
-	}
 	
 	bool Loaded() const
 	{
@@ -98,31 +92,17 @@ public:
 		return roads;
 	}
 	
-	unsigned int GetSectors() const
-	{
-		return lapsequence.size();
-	}
-	
-	const BEZIER * GetLapSequence(unsigned int sector)
-	{
-		assert (sector < lapsequence.size());
-		return lapsequence[sector];
-	}
-	
 	void Unload()
 	{
 		Clear();
 	}
 	
-	bool IsReversed() const
-	{
-		return direction == DIRECTION_REVERSE;
-	}
-
 	const std::list<TRACK_OBJECT> & GetTrackObjects()
 	{
 		return objects;
 	}
+
+	std::pair <MATHVECTOR<float,3>, QUATERNION<float> > GetStart(int index);
 
 private:
 	std::ostream & info_output;
@@ -134,29 +114,18 @@ public:
 private:
 	std::map <std::string, TEXTURE_GL> texture_library;
 	std::list <TRACK_OBJECT> objects;
-	bool vertical_tracking_skyboxes;
-	std::vector <std::pair <MATHVECTOR<float,3>, QUATERNION<float> > > start_positions;
 
 private:
-	
-	enum
-	{
-		DIRECTION_FORWARD,
-		DIRECTION_REVERSE
-	} direction;
+
+	//  start
+	MATHVECTOR<float,3> start_position;
+	QUATERNION<float> start_rotation;
+
 	
 	//road information
 	std::list <ROADSTRIP> roads;
 	
-	//the sequence of beziers that a car needs to hit to do a lap
-	std::vector <const BEZIER *> lapsequence;
-	
-	//racing line data
-	//TEXTURE_GL racingline_texture;
-	
-	bool CreateRacingLines(
-		/*const std::string & texturepath,
-		const std::string & texsize*/);
+	bool CreateRacingLines();
 	
 	bool LoadParameters(const std::string & trackpath);
 	
@@ -170,7 +139,6 @@ private:
 	///returns false on error
 	bool BeginObjectLoad(
 		const std::string & trackpath,
-		//SCENENODE & sceneroot,
 		int anisotropy,
 		bool dynamicshadowsenabled,
 		bool doagressivecombining);
@@ -180,9 +148,7 @@ private:
 	
 	bool LoadRoads(const std::string & trackpath, bool reverse);
 	
-	bool LoadLapSequence(const std::string & trackpath, bool reverse);
-	
-	void ClearRoads() {roads.clear();}
+	void ClearRoads() {  roads.clear();  }
 	
 	void Reverse();
 	
@@ -214,5 +180,4 @@ private:
 	}
 	
 	bool loaded;
-	bool cull;
 };
