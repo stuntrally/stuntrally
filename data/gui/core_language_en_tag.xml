@@ -1111,7 +1111,7 @@
 	<Tag name="InputStart">Start</Tag>
 	<Tag name="InputStartPos">Q - edit car start pos</Tag>
 	<Tag name="InputStartLMB">ctrl-LMB - place   LMB - move   RMB - height</Tag>
-	<Tag name="InputStartAltLMB">alt-LMB - rotate   alt-RMB - pitch</Tag>
+	<Tag name="InputStartAltLMB">alt-LMB - rotate (shift - global)   alt-RMB - pitch (shift - roll)</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - reset rotation</Tag>
 
 	<Tag name="InputStartHeight">[,]  -  adjust start box height (bigger for pipes)</Tag>

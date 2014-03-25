@@ -4858,7 +4858,7 @@
 							<Property key="TextColour" value="0.7 0.7 1.0"/>
 							<Property key="Caption" value="#{InputStartPos}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 66 356 20">
+						<Widget type="TextBox" skin="TextBox" position="32 66 456 20">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{InputStartAltLMB}"/>
 						</Widget>

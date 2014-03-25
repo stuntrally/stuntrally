@@ -525,24 +525,26 @@ void App::editMouse()
 			}
 		}else
 		{	//  alt
-			typedef QUATERNION<float> Qf;
-			if (mbLeft)    // rot pitch
+			typedef QUATERNION<float> Qf;  Qf qr;
+			if (mbLeft)    // rot yaw
 			{
-				Qf qr;  qr.Rotate(vNew.x * fRot * moveMul, 0,0,1);
-				Qf& q = scn->sc->startRot;  // get yaw angle, add ..
-				//if (alt)  q = qr * q;  else  q = q * qr;
-				q = q * qr;  UpdStartPos();
+				qr.Rotate(vNew.x * fRot, 0,0,1);
+				Qf& q = scn->sc->startRot;
+				if (shift)  q = qr * q;  else  q = q * qr;
+				UpdStartPos();
 			}else
-			if (mbRight)   // rot yaw
+			if (mbRight)   // rot pitch, roll
 			{
-				Qf qr;  qr.Rotate(vNew.y *-fRot * moveMul, 0,1,0);
+				if (shift)  qr.Rotate(vNew.x * fRot, 1,0,0);
+				else        qr.Rotate(vNew.y *-fRot, 0,1,0);
 				Qf& q = scn->sc->startRot;
 				q = q * qr;  UpdStartPos();
 			}else
 			if (mbMiddle)  // rot reset
 			{
-				Qf qr;  qr.Rotate(0, 0,0,1);
-				Qf& q = scn->sc->startRot;	q = qr;  UpdStartPos();
+				qr.Rotate(0, 0,0,1);
+				scn->sc->startRot = qr;
+				UpdStartPos();
 			}
 		}
 	}
