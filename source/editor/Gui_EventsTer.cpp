@@ -363,8 +363,7 @@ void CGui::btnScaleTerH(WP)
 	}
 
 	//  start pos
-	const int n = 0;  // 1st..
-	app->vStartPos[n][2] *= sf;  app->UpdStartPos();
+	app->vStartPos[2] *= sf;  app->UpdStartPos();
 }
 //----------------------------------------------------------------------------------------------------------
 

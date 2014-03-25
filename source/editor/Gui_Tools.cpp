@@ -227,9 +227,8 @@ void CGui::btnScaleAll(WP)
 	}
 
 	//  start pos
-	const int n = 0;  // 1st entry - all same / edit 4..
-	app->vStartPos[n][0] *= sf;
-	app->vStartPos[n][1] *= sf;  app->UpdStartPos();
+	app->vStartPos[0] *= sf;
+	app->vStartPos[1] *= sf;  app->UpdStartPos();
 }
 
 

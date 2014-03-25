@@ -41,7 +41,7 @@ void CGui::WarningsCheck(const Scene* sc, const SplineRoad* road)
 	{
 		///-  start  -------------
 		int cnt = road->getNumPoints();
-		const float* pos = &app->vStartPos[0][0], *rot = &app->vStartRot[0][0];
+		const float* pos = &app->vStartPos[0], *rot = &app->vStartRot[0];
 		Vector3 stPos = Vector3(pos[0],pos[2],-pos[1]);
 
 		Quaternion q(rot[0],rot[1],rot[2],rot[3]);

@@ -192,8 +192,8 @@ public:
 
 	//  car start
 	bool LoadStartPos(std::string path, bool tool=false), SaveStartPos(std::string path);  void UpdStartPos();
-	std::vector <MATHVECTOR <float, 3> > vStartPos;
-	std::vector <QUATERNION <float> >    vStartRot;
+	MATHVECTOR <float,3> vStartPos;
+	QUATERNION <float>   vStartRot;
 	Ogre::SceneNode* ndCar,*ndStBox,*ndFluidBox,*ndObjBox;
 	Ogre::Entity*  entCar,*entStBox,*entFluidBox,*entObjBox;
 	void togPrvCam();
