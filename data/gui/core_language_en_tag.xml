@@ -414,6 +414,7 @@
 	
 	<Tag name="AntiAliasing">Antialiasing</Tag>
 	<Tag name="NeedRestart">* need restart</Tag>
+	<Tag name="GraphicsRightHQ">By default better quality (less Fps) is on right. Marked with + if on left.</Tag>
 	<Tag name="Change">Change</Tag>
 	<Tag name="PostfilterAA">Post-filter antialiasing</Tag>
 	<Tag name="LimitFPS">Limit frames per second</Tag>

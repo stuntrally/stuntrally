@@ -732,11 +732,11 @@
 					<Widget type="Widget" skin="" position="0 0 256 172">
 						<Property key="InheritsAlpha" value="false"/>
 
-                        <Widget type="TextBox" skin="TextBox" position="6 5 82 18">
+						<Widget type="TextBox" skin="TextBox" position="6 5 82 18">
 							<Property key="Caption" value="#{TrackLength}"/>
 							<Property key="TextColour" value="0.4 0.8 1.0"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="6 25 82 18">
+						<Widget type="TextBox" skin="TextBox" position="6 25 82 18">
 							<Property key="Caption" value="#{TrackArea}"/>
 							<Property key="TextColour" value="0.4 0.8 1.0"/>
 							<Property key="Alpha" value="0.5"/>
@@ -796,87 +796,87 @@
 							<Property key="Alpha" value="0.7"/>
 							<UserString key="tip" value="#{TrackHeightDiff}"/>
 						</Widget>
-                        <Widget type="ImageBox" skin="ImageBox" position="124 63 32 20" name="ist0">
-                            <Property key="ImageCoord" value="32 32 32 20"/>
+						<Widget type="ImageBox" skin="ImageBox" position="124 63 32 20" name="ist0">
+							<Property key="ImageCoord" value="32 32 32 20"/>
 							<Property key="ImageTexture" value="track_icons.png"/>
 							<Property key="Alpha" value="0.8"/>
 							<UserString key="tip" value="#{TrackInAir} %"/>
 						</Widget>
-                        <Widget type="ImageBox" skin="ImageBox" position="124 83 32 20" name="ist1">
-                            <Property key="ImageCoord" value="32 52 32 20"/>
-                            <Property key="ImageTexture" value="track_icons.png"/>
-                            <Property key="Alpha" value="0.18"/>
+						<Widget type="ImageBox" skin="ImageBox" position="124 83 32 20" name="ist1">
+							<Property key="ImageCoord" value="32 52 32 20"/>
+							<Property key="ImageTexture" value="track_icons.png"/>
+							<Property key="Alpha" value="0.18"/>
 							<UserString key="tip" value="#{TrackPipes} %"/>
-                        </Widget>
-                        <Widget type="ImageBox" skin="ImageBox" position="184 63 32 20" name="ist2">
-                            <Property key="ImageCoord" value="64 32 32 20"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="184 63 32 20" name="ist2">
+							<Property key="ImageCoord" value="64 32 32 20"/>
 							<Property key="ImageTexture" value="track_icons.png"/>
 							<Property key="Alpha" value="0.18"/>
 							<UserString key="tip" value="#{TrackBankAng}"/>
 						</Widget>
-                        <Widget type="ImageBox" skin="ImageBox" position="184 83 32 20" name="ist3">
-                            <Property key="ImageCoord" value="64 52 32 20"/>
+						<Widget type="ImageBox" skin="ImageBox" position="184 83 32 20" name="ist3">
+							<Property key="ImageCoord" value="64 52 32 20"/>
 							<Property key="ImageTexture" value="track_icons.png"/>
-                            <Property key="Alpha" value="0.18"/>
+							<Property key="Alpha" value="0.18"/>
 							<UserString key="tip" value="#{Road_OnPipe} %"/>
 						</Widget>
 
 						<Widget type="ImageBox" skin="ImageBox" position="1 60 32 32" name="iti8">
 							<Property key="ImageTexture" value="track_icons.png"/>
 							<Property key="ImageCoord" value="96 32 32 32"/>
-                            <UserString key="tip" value="#{difficulty}"/>
+							<UserString key="tip" value="#{difficulty}"/>
 						</Widget>
 						<Widget type="ImageBox" skin="ImageBox" position="34 60 32 32" name="iti9">
 							<Property key="ImageTexture" value="track_icons.png"/>
 							<Property key="ImageCoord" value="128 32 32 32"/>
-                            <UserString key="tip" value="#{rating}"/>
+							<UserString key="tip" value="#{rating}"/>
 						</Widget>
 						<Widget type="ImageBox" skin="ImageBox" position="66 60 32 32" name="iti10">
-                            <Property key="ImageTexture" value="track_icons.png"/>
-                            <Property key="ImageCoord" value="224 0 32 32"/>
-                            <UserString key="tip" value="#{long}"/>
+							<Property key="ImageTexture" value="track_icons.png"/>
+							<Property key="ImageCoord" value="224 0 32 32"/>
+							<UserString key="tip" value="#{long}"/>
 						</Widget>
-						
-                        <Widget type="ImageBox" skin="ImageBox" position="1 116 32 32" name="iti0">
-                            <Property key="ImageTexture" value="track_icons.png"/>
-                            <Property key="ImageCoord" value="0 0 32 32"/>
-                            <UserString key="tip" value="#{fluids}"/>
-                        </Widget>
-                        <Widget type="ImageBox" skin="ImageBox" position="34 116 32 32" name="iti1">
-                            <Property key="ImageTexture" value="track_icons.png"/>
-                            <Property key="ImageCoord" value="32 0 32 32"/>
-                            <UserString key="tip" value="#{bumps}"/>
-                        </Widget>
-                        <Widget type="ImageBox" skin="ImageBox" position="66 116 32 32" name="iti2">
-                            <Property key="ImageTexture" value="track_icons.png"/>
-                            <Property key="ImageCoord" value="64 0 32 32"/>
-                            <UserString key="tip" value="#{jumps}"/>
-                        </Widget>
-                        <Widget type="ImageBox" skin="ImageBox" position="98 116 32 32" name="iti3">
-                            <Property key="ImageTexture" value="track_icons.png"/>
-                            <Property key="ImageCoord" value="96 0 32 32"/>
-                            <UserString key="tip" value="#{loops}"/>
-                        </Widget>
-                        <Widget type="ImageBox" skin="ImageBox" position="128 116 32 32" name="iti4">
-                            <Property key="ImageTexture" value="track_icons.png"/>
-                            <Property key="ImageCoord" value="128 0 32 32"/>
-                            <UserString key="tip" value="#{pipes}"/>
-                        </Widget>
-                        <Widget type="ImageBox" skin="ImageBox" position="162 116 32 32" name="iti5">
-                            <Property key="ImageTexture" value="track_icons.png"/>
-                            <Property key="ImageCoord" value="160 0 32 32"/>
-                            <UserString key="tip" value="#{banked}"/>
-                        </Widget>
-                        <Widget type="ImageBox" skin="ImageBox" position="194 116 32 32" name="iti6">
-                            <Property key="ImageTexture" value="track_icons.png"/>
-                            <Property key="ImageCoord" value="192 0 32 32"/>
-                            <UserString key="tip" value="#{frenzy}"/>
-                        </Widget>
-                        <Widget type="ImageBox" skin="ImageBox" position="228 116 32 32" name="iti7">
+
+						<Widget type="ImageBox" skin="ImageBox" position="1 116 32 32" name="iti0">
+							<Property key="ImageTexture" value="track_icons.png"/>
+							<Property key="ImageCoord" value="0 0 32 32"/>
+							<UserString key="tip" value="#{fluids}"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="34 116 32 32" name="iti1">
+							<Property key="ImageTexture" value="track_icons.png"/>
+							<Property key="ImageCoord" value="32 0 32 32"/>
+							<UserString key="tip" value="#{bumps}"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="66 116 32 32" name="iti2">
+							<Property key="ImageTexture" value="track_icons.png"/>
+							<Property key="ImageCoord" value="64 0 32 32"/>
+							<UserString key="tip" value="#{jumps}"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="98 116 32 32" name="iti3">
+							<Property key="ImageTexture" value="track_icons.png"/>
+							<Property key="ImageCoord" value="96 0 32 32"/>
+							<UserString key="tip" value="#{loops}"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="128 116 32 32" name="iti4">
+							<Property key="ImageTexture" value="track_icons.png"/>
+							<Property key="ImageCoord" value="128 0 32 32"/>
+							<UserString key="tip" value="#{pipes}"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="162 116 32 32" name="iti5">
+							<Property key="ImageTexture" value="track_icons.png"/>
+							<Property key="ImageCoord" value="160 0 32 32"/>
+							<UserString key="tip" value="#{banked}"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="194 116 32 32" name="iti6">
+							<Property key="ImageTexture" value="track_icons.png"/>
+							<Property key="ImageCoord" value="192 0 32 32"/>
+							<UserString key="tip" value="#{frenzy}"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="228 116 32 32" name="iti7">
 							<Property key="ImageTexture" value="track_icons.png"/>
 							<Property key="ImageCoord" value="160 32 32 32"/>
-                            <UserString key="tip" value="#{objects}"/>
-                        </Widget>
+							<UserString key="tip" value="#{objects}"/>
+						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="14 148 32 20" name="ti0">
 							<Property key="TextColour" value="0.5 0.8 1.0"/>
@@ -1669,16 +1669,13 @@
 						<Widget type="TextBox" skin="TextBox" position="32 266 140 24">
 							<Property key="Caption" value="#{SpecularPower}"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
-							<UserString key="tip" value="#{TipTerNormScale}"/>
 						</Widget>
 						<Widget type="EditBox" skin="EditBox" position="168 263 56 24" name="TerSpecPowEdit">
 							<Property key="Colour" value="0.5 0.7 0.9"/>
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
-							<UserString key="tip" value="#{TipTerNormScale}"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="232 266 300 16" name="TerSpecPow">
 							<Property key="Colour" value="0.7 0.9 1.0"/>
-							<UserString key="tip" value="#{TipTerNormScale}"/>
 						</Widget>
 
 						<Widget type="Button" skin="CheckBox" position="32 296 320 24" name="TerrainEmissive">
@@ -1688,16 +1685,13 @@
 						<Widget type="TextBox" skin="TextBox" position="32 326 140 24">
 							<Property key="Caption" value="#{SpecularPowerEm}"/>
 							<Property key="TextColour" value="0.6 0.75 0.9"/>
-							<UserString key="tip" value="#{TipTerNormScale}"/>
 						</Widget>
 						<Widget type="EditBox" skin="EditBox" position="168 323 56 24" name="TerSpecPowEmEdit">
 							<Property key="Colour" value="0.5 0.65 0.8"/>
 							<Property key="TextColour" value="0.6 0.75 0.9"/>
-							<UserString key="tip" value="#{TipTerNormScale}"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="232 326 300 16" name="TerSpecPowEm">
 							<Property key="Colour" value="0.7 0.8 0.9"/>
-							<UserString key="tip" value="#{TipTerNormScale}"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 754 478">
@@ -3780,7 +3774,7 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#C0E0FF#{Screen}"/>
-				<Widget type="TabControl" skin="TabControl" position="16 15 744 460" name="SubTab">
+				<Widget type="TabControl" skin="TabControl" position="16 15 744 500" name="SubTab">
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
@@ -3842,9 +3836,21 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432" layer="Back">
 						<Property key="Caption" value="#B0B0FF#{Graphics}"/>
+						<Widget type="TextBox" skin="TextBox" position="32 388 236 24">
+							<Property key="Caption" value="*#{NeedRestart}"/>
+							<Property key="TextColour" value="0.5 0.9 1"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="582 388 236 24">
 							<Property key="Caption" value="#{NeedReload}"/>
 							<Property key="TextColour" value="0.7 1 0.5"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBoxEmpty" position="32 444 664 48">
+							<Property key="ReadOnly" value="true"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="true"/>
+							<Property key="TextColour" value="0.4 0.9 0.4"/>
+							<Property key="Alpha" value="0.6"/>
+							<Property key="Caption" value="#{GraphicsRightHQ}"/>
 						</Widget>
 						<Widget type="Button" skin="Button" position="276 380 160 32" name="NewGame2">
 							<Property key="Caption" value="#{LoadTrack}"/>
@@ -3888,38 +3894,40 @@
 									<Property key="Caption" value="*#{NeedRestart}"/>
 									<Property key="TextColour" value="0.7 1 0.5"/>
 								</Widget>
-
-								<Widget type="Button" skin="CheckBox" position="32 176 292 26" name="LimitFpsOn">
+							</Widget>
+							<Widget type="TabItem" skin="" position="2 16 694 272">
+								<Property key="Caption" value="#9090B0#{Video}2"/>
+								<Widget type="Button" skin="CheckBox" position="32 76 292 26" name="LimitFpsOn">
 									<Property key="Caption" value="#{LimitFPS} **"/>
 									<Property key="TextColour" value="0.6 0.6 0.8"/>
 								</Widget>
-								<Widget type="TextBox" skin="TextBox" position="32 210 164 24">
+								<Widget type="TextBox" skin="TextBox" position="32 110 164 24">
 									<Property key="Caption" value="#{FramesPerSec}"/>
 									<Property key="TextColour" value="0.7 0.7 0.8"/>
-									<Property key="Alpha" value="0.6"/>
+									<Property key="Alpha" value="0.8"/>
 								</Widget>
-								<Widget type="EditBox" skin="EditBox" position="200 206 60 24" name="LimitFpsEdit">
+								<Widget type="EditBox" skin="EditBox" position="200 106 60 24" name="LimitFpsEdit">
 									<Property key="TextColour" value="0.8 0.7 0.8"/>
 									<Property key="Colour" value="0.7 0.7 0.8"/>
-									<Property key="Alpha" value="0.6"/>
+									<Property key="Alpha" value="0.8"/>
 								</Widget>
-								<Widget type="Slider" skin="Slider" position="270 210 320 16" name="LimitFps">
+								<Widget type="Slider" skin="Slider" position="270 110 320 16" name="LimitFps">
 									<Property key="Colour" value="0.7 0.7 0.8"/>
-									<Property key="Alpha" value="0.6"/>
+									<Property key="Alpha" value="0.8"/>
 								</Widget>
-								<Widget type="TextBox" skin="TextBox" position="32 240 164 24">
+								<Widget type="TextBox" skin="TextBox" position="32 140 164 24">
 									<Property key="Caption" value="#{SleepMS}"/>
 									<Property key="TextColour" value="0.7 0.6 0.8"/>
-									<Property key="Alpha" value="0.6"/>
+									<Property key="Alpha" value="0.8"/>
 								</Widget>
-								<Widget type="EditBox" skin="EditBox" position="200 236 60 24" name="LimitSleepEdit">
+								<Widget type="EditBox" skin="EditBox" position="200 136 60 24" name="LimitSleepEdit">
 									<Property key="TextColour" value="0.7 0.6 0.8"/>
 									<Property key="Colour" value="0.7 0.6 0.8"/>
-									<Property key="Alpha" value="0.6"/>
+									<Property key="Alpha" value="0.8"/>
 								</Widget>
-								<Widget type="Slider" skin="Slider" position="270 240 320 16" name="LimitSleep">
+								<Widget type="Slider" skin="Slider" position="270 140 320 16" name="LimitSleep">
 									<Property key="Colour" value="0.7 0.6 0.8"/>
-									<Property key="Alpha" value="0.6"/>
+									<Property key="Alpha" value="0.8"/>
 								</Widget>
 							</Widget>
 							<Widget type="TabItem" skin="" position="2 24 694 292">
@@ -3985,6 +3993,10 @@
 							</Widget>
 							<Widget type="TabItem" skin="" position="2 24 694 292">
 								<Property key="Caption" value="#80FFD0#{Detail}"/>
+								<Widget type="TextBox" skin="TextBox" position="268 52 12 16">
+									<Property key="Caption" value="#00FF00+"/>
+									<Property key="Alpha" value="0.6"/>
+								</Widget>
 								<Widget type="TextBox" skin="TextBox" position="32 50 172 24">
 									<Property key="Caption" value="#{TerrainError}"/>
 									<Property key="Colour" value="0 0 0"/>
@@ -4144,10 +4156,6 @@
 								</Widget>
 							</Widget>
 						</Widget>
-					</Widget>
-					<Widget type="TextBox" skin="TextBox" position="582 488 300 24">
-						<Property key="Caption" value="*q wer qwe rwq er#{NeedRestart}"/>
-						<Property key="TextColour" value="0.5 0.9 1"/>
 					</Widget>
 				</Widget>
 			</Widget>
@@ -4524,7 +4532,7 @@
 						<Widget type="TextBox" skin="TextBox" position="48 204 170 20">
 							<Property key="Caption" value="#70F070 F  #{Channels}"/>
 						</Widget>
-						
+
 						<Widget type="TextBox" skin="TextBox" position="32 232 170 20">
 							<Property key="Caption" value="#80F0F0 V  #{Vegetation}"/>
 						</Widget>
