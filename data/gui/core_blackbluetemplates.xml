@@ -16,7 +16,6 @@
     </Resource>
     <Resource type="ResourceLayout" name="ScrollBarH" version="3.2.0">
         <Widget type="Widget" skin="ScrollPanelHSkin" position="25 50 125 15" name="Root">
-            <Property key="VerticalAlignment" value="false"/>
             <UserString key="LE_TargetWidgetType" value="ScrollBar"/>
             <Widget type="Widget" skin="PanelEmpty" position="14 0 98 15" align="Stretch" name="TrackPlace">
                 <Property key="NeedKey" value="false"/>
@@ -33,7 +32,6 @@
     </Resource>
     <Resource type="ResourceLayout" name="Slider" version="3.2.0">
         <Widget type="Widget" skin="ScrollPanelHSkin" position="25 50 125 15" name="Root">
-            <Property key="VerticalAlignment" value="false"/>
             <UserString key="LE_TargetWidgetType" value="ScrollBar"/>
             <Widget type="Widget" skin="PanelEmpty" position="14 0 98 15" align="Stretch" name="TrackPlace">
                 <Property key="NeedKey" value="false"/>
@@ -46,7 +44,6 @@
     </Resource>
     <Resource type="ResourceLayout" name="ScrollBarV" version="3.2.0">
         <Widget type="Widget" skin="ScrollPanelVSkin" position="25 50 15 125" name="Root">
-            <Property key="VerticalAlignment" value="true"/>
             <UserString key="LE_TargetWidgetType" value="ScrollBar"/>
             <Widget type="Widget" skin="PanelEmpty" position="0 14 15 99" align="Stretch" name="TrackPlace">
                 <Property key="NeedKey" value="false"/>
@@ -63,8 +60,6 @@
     </Resource>
     <Resource type="ResourceLayout" name="SliderH" version="3.2.0">
         <Widget type="Widget" skin="ScrollPanelHSkin" position="25 50 125 15" name="Root">
-            <Property key="MoveToClick" value="true"/>
-            <Property key="VerticalAlignment" value="false"/>
             <UserString key="LE_TargetWidgetType" value="ScrollBar"/>
             <Widget type="Widget" skin="PanelEmpty" position="2 0 122 15" align="Stretch" name="TrackPlace">
                 <Property key="NeedKey" value="false"/>
@@ -77,8 +72,6 @@
     </Resource>
     <Resource type="ResourceLayout" name="SliderV" version="3.2.0">
         <Widget type="Widget" skin="ScrollPanelVSkin" position="20 20 15 125" name="Root">
-            <Property key="MoveToClick" value="true"/>
-            <Property key="VerticalAlignment" value="true"/>
             <UserString key="LE_TargetWidgetType" value="ScrollBar"/>
             <Widget type="Widget" skin="PanelEmpty" position="0 2 15 122" align="Stretch">
                 <Widget type="Button" skin="SliderTrackVSkin" position="1 25 14 7" align="HStretch Top" name="Track"/>
@@ -89,8 +82,6 @@
     </Resource>
     <Resource type="ResourceLayout" name="SliderHEmpty" version="3.2.0">
         <Widget type="Widget" skin="PanelEmpty" position="25 50 125 15" name="Root">
-            <Property key="MoveToClick" value="true"/>
-            <Property key="VerticalAlignment" value="false"/>
             <UserString key="LE_TargetWidgetType" value="ScrollBar"/>
             <Widget type="Widget" skin="PanelEmpty" position="2 0 122 15" align="Stretch" name="TrackPlace">
                 <Property key="NeedKey" value="false"/>
@@ -103,8 +94,6 @@
     </Resource>
     <Resource type="ResourceLayout" name="SliderVEmpty" version="3.2.0">
         <Widget type="Widget" skin="PanelEmpty" position="20 20 15 125" name="Root">
-            <Property key="MoveToClick" value="true"/>
-            <Property key="VerticalAlignment" value="true"/>
             <UserString key="LE_TargetWidgetType" value="ScrollBar"/>
             <Widget type="Widget" skin="PanelEmpty" position="0 2 15 122" align="Stretch">
                 <Widget type="Button" skin="SliderTrackVSkin" position="1 25 14 7" align="HStretch Top" name="Track"/>
@@ -305,7 +294,6 @@
     </Resource>
     <Resource type="ResourceLayout" name="MenuBar" version="3.2.0">
         <Widget type="Widget" skin="MenuBarSkin" position="5 5 29 26" name="Root">
-            <Property key="VerticalAlignment" value="false"/>
             <UserString key="LE_TargetWidgetType" value="MenuBar"/>
             <UserString key="DistanceButton" value="6"/>
             <UserString key="SubMenuLayer" value="Popup"/>
@@ -333,7 +321,6 @@
     </Resource>
     <Resource type="ResourceLayout" name="PopupMenu" version="3.2.0">
         <Widget type="Widget" skin="PanelSkin" position="5 5 29 26" name="Root">
-            <Property key="VerticalAlignment" value="true"/>
             <UserString key="SubMenuLayer" value="Popup"/>
             <UserString key="SubMenuSkin" value="PopupMenu"/>
             <UserString key="LE_TargetWidgetType" value="PopupMenu"/>
@@ -371,7 +358,6 @@
     </Resource>
     <Resource type="ResourceLayout" name="ProgressBar" version="3.2.0">
         <Widget type="Widget" skin="ScrollPanelHSkin" position="25 50 125 15" name="Root">
-            <Property key="MoveToClick" value="true"/>
             <UserString key="LE_TargetWidgetType" value="ProgressBar"/>
             <UserString key="TrackWidth" value="7"/>
             <UserString key="TrackFill" value="false"/>
@@ -384,7 +370,6 @@
     </Resource>
     <Resource type="ResourceLayout" name="ProgressBarFill" version="3.2.0">
         <Widget type="Widget" skin="ScrollPanelHSkin" position="25 50 125 15" name="Root">
-            <Property key="MoveToClick" value="true"/>
             <UserString key="LE_TargetWidgetType" value="ProgressBar"/>
             <UserString key="TrackFill" value="true"/>
             <UserString key="TrackSkin" value="ProgressBarTrackHSkin"/>
