@@ -16,7 +16,7 @@ void App::UpdStartPos()
 	{ 	//  car for start pos
  		ndCar = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		entCar = mSceneMgr->createEntity("car.mesh");
-		entCar->setVisibilityFlags(RV_Hud);  ndCar->setPosition(Vector3(20000,0,0));
+		entCar->setVisibilityFlags(RV_Hud);
 		ndCar->attachObject(entCar);
 	}
 	if (!ndStBox)
@@ -55,9 +55,7 @@ void App::UpdStartPos()
 			ndObjBox->setVisible(false);
 	}	}
 
-	float* pos = &scn->sc->startPos[0];
-	float* rot = &scn->sc->startRot[0];
-
+	float* pos = &scn->sc->startPos[0], *rot = &scn->sc->startRot[0];
 	Vector3 p1 = Vector3(pos[0],pos[2],-pos[1]);
 
 	Quaternion q(rot[0],rot[1],rot[2],rot[3]);
@@ -67,9 +65,9 @@ void App::UpdStartPos()
 		QUATERNION <double> fix;  fix.Rotate(PI_d, 0, 1, 0);
 		Quaternion qr;  qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();
 	Quaternion q1;  q1.FromAngleAxis(-rad, vrot);  q1 = q1 * qr;
-	//Vector3 vcx,vcy,vcz;  q1.ToAxes(vcx,vcy,vcz);
 
 	ndCar->setPosition(p1);    ndCar->setOrientation(q1);
+	ndCar->setVisible(scn->road);  // hide before load
 
 	ndStBox->setPosition(p1);  ndStBox->setOrientation(q1);
 	if (scn->road)

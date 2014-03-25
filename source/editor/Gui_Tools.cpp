@@ -16,9 +16,9 @@ using namespace Ogre;
 /// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 //  track files  for copy, new 
-const int cnTrkFm = 4, cnTrkFo = 1, cnTrkFp = 3;
+const int cnTrkFm = 3, cnTrkFo = 1, cnTrkFp = 3;
 const Ogre::String
-	csTrkFm[cnTrkFm] = {"/heightmap.f32", "/road.xml", "/scene.xml", "/track.txt"},  // in / 
+	csTrkFm[cnTrkFm] = {"/heightmap.f32", "/road.xml", "/scene.xml"},  // in / 
 	csTrkFo[cnTrkFo] = {"/waterDepth.png"},							// in /objects/
 	csTrkFp[cnTrkFp] = {"/view.jpg", "/road.png", "/terrain.jpg"};	// in /preview/
 

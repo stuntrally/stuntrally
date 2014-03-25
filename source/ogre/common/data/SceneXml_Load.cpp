@@ -84,10 +84,8 @@ bool Scene::LoadXml(String file, bool bTer)
 	{
 		a = eSt->Attribute("pos");		if (a)  {  Vector3 v = s2v(a);   startPos = MATHVECTOR<float,3>(v.x,v.y,v.z);    }
 		a = eSt->Attribute("rot");		if (a)  {  Vector4 v = s2v4(a);  startRot = QUATERNION<float>(v.x,v.y,v.z,v.w);  }
-	}
-	else  // load it from old track.txt
-	{
-		LogO("!Old, loading start from track.txt");
+	}else
+	{	LogO("!Old, loading start from track.txt");
 		String s = StringUtil::replaceAll(file,"scene.xml","track.txt");
 		if (!LoadStartPos(s))
 			LogO("!! Can't load start from "+s);
