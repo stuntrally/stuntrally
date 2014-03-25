@@ -579,7 +579,6 @@ CAR* GAME::LoadCar(const string & pathCar, const string & carname, const MATHVEC
 				carcontrols_local.first->SetGear(1);
 		}
 	}
-
 	return &cars.back();
 }
 

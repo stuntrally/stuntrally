@@ -175,11 +175,7 @@ void CGuiCom::GuiInitTrack()
 void CGuiCom::FillTrackLists()
 {
 	liTracks.clear();  liTracksUser.clear();
-	#ifdef SR_EDITOR
 	std::string chkfile = "/scene.xml";
-	#else
-	std::string chkfile = "/track.txt";
-	#endif
 
 	PATHMANAGER::DirList(pathTrk[0], liTracks);
 	PATHMANAGER::DirList(pathTrk[1], liTracksUser);  //name duplicates

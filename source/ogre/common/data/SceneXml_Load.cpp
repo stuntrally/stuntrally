@@ -11,6 +11,34 @@ using namespace Ogre;
 using namespace tinyxml2;
 
 
+//  old
+bool Scene::LoadStartPos(Ogre::String file)
+{
+	CONFIGFILE param;
+	if (!param.Load(file))
+		return false;
+
+	float f3[3], f1;
+	QUATERNION <float> fixer;  fixer.Rotate(3.141593, 0,0,1);
+	
+	param.GetParam("start position 0", f3);
+	MATHVECTOR <float, 3> pos(f3[2], f3[0], f3[1]);
+
+	if (!param.GetParam("start orientation-xyz 0", f3))
+		return false;
+
+	if (!param.GetParam("start orientation-w 0", f1))
+		return false;
+
+	QUATERNION <float> rot(f3[2], f3[0], f3[1], f1);
+	rot = fixer * rot;
+
+	startPos = pos;
+	startRot = rot;
+	return true;
+}
+
+
 //  Load
 //--------------------------------------------------------------------------------------------------------------------------------------
 
@@ -35,7 +63,7 @@ bool Scene::LoadXml(String file, bool bTer)
 	//pgLayers.clear();
 
 	// read
-	XMLElement* eSky,*eFog,*eFogH,*eLi,*eTer,*ePgd,*eCam,*eFls,*eObjs,*eCar;
+	XMLElement* eSt,*eSky,*eFog,*eFogH,*eLi,*eTer,*ePgd,*eCam,*eFls,*eObjs,*eCar;
 	const char* a;
 
 
@@ -50,16 +78,31 @@ bool Scene::LoadXml(String file, bool bTer)
 		a = eCar->Attribute("gravity");		if (a)  gravity = s2r(a);
 	}
 
+	///  car start
+	eSt = root->FirstChildElement("start");
+	if (eSt)
+	{
+		a = eSt->Attribute("pos");		if (a)  {  Vector3 v = s2v(a);   startPos = MATHVECTOR<float,3>(v.x,v.y,v.z);    }
+		a = eSt->Attribute("rot");		if (a)  {  Vector4 v = s2v4(a);  startRot = QUATERNION<float>(v.x,v.y,v.z,v.w);  }
+	}
+	else  // load it from old track.txt
+	{
+		LogO("!Old, loading start from track.txt");
+		String s = StringUtil::replaceAll(file,"scene.xml","track.txt");
+		if (!LoadStartPos(s))
+			LogO("!! Can't load start from "+s);
+	}
+
 	///  sky
 	eSky = root->FirstChildElement("sky");
-	if (eSky)	{
-		a = eSky->Attribute("material");	if (a)  skyMtr = String(a);
+	if (eSky)
+	{	a = eSky->Attribute("material");	if (a)  skyMtr = String(a);
 		a = eSky->Attribute("rainEmit");	if (a)  rainEmit = s2i(a);
 		a = eSky->Attribute("rainName");	if (a)  rainName = String(a);
 		a = eSky->Attribute("rain2Emit");	if (a)  rain2Emit = s2i(a);
 		a = eSky->Attribute("rain2Name");	if (a)  rain2Name = String(a);
-		a = eSky->Attribute("windAmt");		if (a)  windAmt = s2r(a);	}
-		
+		a = eSky->Attribute("windAmt");		if (a)  windAmt = s2r(a);
+	}
 	///  fog
 	eFog = root->FirstChildElement("fog");
 	if (eFog)
@@ -317,7 +360,7 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = eObj->Attribute("name");	if (a)  o.name = std::string(a);
 
 			a = eObj->Attribute("pos");		if (a)  {  Vector3 v = s2v(a);  o.pos = MATHVECTOR<float,3>(v.x,v.y,v.z);  }
-			a = eObj->Attribute("rot");		if (a)  {  Vector4 v = Ogre::StringConverter::parseVector4(a);  o.rot = QUATERNION<float>(v.x,v.y,v.z,v.w);  }
+			a = eObj->Attribute("rot");		if (a)  {  Vector4 v = s2v4(a);  o.rot = QUATERNION<float>(v.x,v.y,v.z,v.w);  }
 			a = eObj->Attribute("sc");		if (a)  o.scale = s2v(a);
 
 			objects.push_back(o);
@@ -350,6 +393,15 @@ bool Scene::SaveXml(String file)
 		if (gravity != 9.81f)
 			car.SetAttribute("gravity",	toStrC( gravity ));
 	root.InsertEndChild(car);
+
+
+	TiXmlElement st("start");
+		std::string s = toStr(startPos[0])+" "+toStr(startPos[1])+" "+toStr(startPos[2]);
+		st.SetAttribute("pos",	s.c_str());
+
+		s = toStr(startRot[0])+" "+toStr(startRot[1])+" "+toStr(startRot[2])+" "+toStr(startRot[3]);
+		st.SetAttribute("rot",	s.c_str());
+	root.InsertEndChild(st);
 
 
 	TiXmlElement sky("sky");

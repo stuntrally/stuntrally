@@ -268,7 +268,7 @@ void App::LoadTrackEv()
 	
 	Rnd2TexSetup();
 	UpdVisGui();
-	LoadStartPos(gcom->TrkDir());
+	UpdStartPos();
 
 	try {
 	TexturePtr tex = TextureManager::getSingleton().getByName("waterDepth.png");
@@ -376,8 +376,6 @@ void App::SaveTrackEv()
 	/*if (!vdr)*/  SaveGrassDens();
 	if (!vdr)  SaveWaterDepth();  //?-
 
-	SaveStartPos(dir+"track.txt");  //..load/save inside
-	
 	gui->Delete(gui->getHMapNew());
 	gui->Status("Saved", 1,0.6,0.2);
 }

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "../Def_Str.h"
+#include "../vdrift/par.h"
 #include "SceneXml.h"
 #include "FluidsXml.h"
 #include "tinyxml.h"
@@ -97,6 +98,21 @@ Object::Object()
 	,pos(0,0,0),rot(0,-1,0,0)
 	,scale(Vector3::UNIT_SCALE)
 {	}
+
+
+///  start
+///------------------------------
+pair <MATHVECTOR<float,3>, QUATERNION<float> > Scene::GetStart(int index)
+{
+	pair <MATHVECTOR<float,3>, QUATERNION<float> > sp = make_pair(startPos, startRot);
+	if (index == 0)
+		return sp;
+
+	MATHVECTOR<float,3> backward(-gPar.startNextDist * index,0,0);
+	sp.second.RotateVector(backward);
+	sp.first = sp.first + backward;
+	return sp;
+}
 
 
 ///  bullet to ogre  ----------

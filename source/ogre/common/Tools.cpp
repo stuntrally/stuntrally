@@ -92,7 +92,6 @@ void CGui::ToolTracksWarnings()
 
 		Scene sc;  sc.LoadXml(path +"scene.xml");
 		SplineRoad rd(app);  rd.LoadFile(path +"road.xml");
-		app->LoadStartPos(path, true);  // uses App vars-
 		
 		LogO("Track: "+trk);
 		WarningsCheck(&sc,&rd);

@@ -52,14 +52,6 @@ public:
 	std::vector<OGRE_MESH> ogre_meshes;
 	
 	
-	///returns true if successful.  loads the entire track with this one function call.
-	bool Load(
-		const std::string & trackpath,
-		const std::string & effects_texturepath,
-		bool reverse,
-		int anisotropy,
-		const std::string & texsize);
-	
 	///returns true if successful.  only begins loading the track; the track won't be loaded until more calls to ContinueDeferredLoad().
 	///  use Loaded() to see if loading is complete yet.
 	bool DeferredLoad(
@@ -102,8 +94,6 @@ public:
 		return objects;
 	}
 
-	std::pair <MATHVECTOR<float,3>, QUATERNION<float> > GetStart(int index);
-
 private:
 	std::ostream & info_output;
 	std::ostream & error_output;
@@ -116,18 +106,11 @@ private:
 	std::list <TRACK_OBJECT> objects;
 
 private:
-
-	//  start
-	MATHVECTOR<float,3> start_position;
-	QUATERNION<float> start_rotation;
-
 	
 	//road information
 	std::list <ROADSTRIP> roads;
 	
 	bool CreateRacingLines();
-	
-	bool LoadParameters(const std::string & trackpath);
 	
 	bool LoadObjects(
 		const std::string & trackpath,

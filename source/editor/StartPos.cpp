@@ -10,60 +10,6 @@
 using namespace Ogre;
 
 
-bool App::LoadStartPos(std::string path1, bool tool)
-{
-	std::string path = path1+"track.txt";
-	CONFIGFILE param;
-	if (!param.Load(path))
-		return false;
-
-	float f3[3], f1;
-	QUATERNION <float> fixer;  fixer.Rotate(3.141593, 0,0,1);
-	
-	param.GetParam("start position 0", f3);
-	MATHVECTOR <float, 3> pos(f3[2], f3[0], f3[1]);
-
-	if (!param.GetParam("start orientation-xyz 0", f3))
-		return false;
-
-	if (!param.GetParam("start orientation-w 0", f1))
-		return false;
-
-	QUATERNION <float> rot(f3[2], f3[0], f3[1], f1);
-	rot = fixer * rot;
-
-	vStartPos = pos;
-	vStartRot = rot;
-
-	if (!tool)
-		UpdStartPos();
-	return true;
-}
-
-bool App::SaveStartPos(std::string path)
-{
-	CONFIGFILE param;
-	if (!param.Load(path))
-		return false;
-		
-	QUATERNION <float> fixer;  fixer.Rotate(-3.141593, 0,0,1);
-
-	//  pos
-	float p3[3] = {vStartPos[1], vStartPos[2], vStartPos[0]};
-	param.SetParam("start position 0", p3);
-		
-	//  rot
-	QUATERNION <float> rot = vStartRot;
-	rot = fixer * rot;
-	float f3[3] = {rot.y(), rot.z(), rot.x()}, f1 = rot.w();
-
-	param.SetParam("start orientation-xyz 0", f3);
-	param.SetParam("start orientation-w 0", f1);
-
-	return param.Write();
-}
-
-
 void App::UpdStartPos()
 {
 	if (!ndCar)
@@ -109,8 +55,8 @@ void App::UpdStartPos()
 			ndObjBox->setVisible(false);
 	}	}
 
-	float* pos = &vStartPos[0];
-	float* rot = &vStartRot[0];
+	float* pos = &scn->sc->startPos[0];
+	float* rot = &scn->sc->startRot[0];
 
 	Vector3 p1 = Vector3(pos[0],pos[2],-pos[1]);
 

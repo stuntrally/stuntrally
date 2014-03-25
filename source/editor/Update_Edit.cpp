@@ -503,16 +503,17 @@ void App::editMouse()
 					if (road && road->bHitTer)
 					{
 						Vector3 v = road->posHit;
-						vStartPos[0] = v.x;  vStartPos[1] =-v.z;
-						vStartPos[2] = v.y+0.6f;  //car h above
+						scn->sc->startPos[0] = v.x;
+						scn->sc->startPos[1] =-v.z;
+						scn->sc->startPos[2] = v.y+0.6f;  //car h above
 				}	}
 				else  // move
 				{
 					Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();
 					Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
 					Vector3 vm = (-vNew.y * vx - vNew.x * vz) * fMove * moveMul;
-					vStartPos[0] += vm.z;
-					vStartPos[1] += vm.x;
+					scn->sc->startPos[0] += vm.z;
+					scn->sc->startPos[1] += vm.x;
 				}
 				UpdStartPos();
 			}
@@ -520,7 +521,7 @@ void App::editMouse()
 			if (mbRight)
 			{
 				Real ym = -vNew.y * fMove * moveMul;
-				vStartPos[2] += ym;  UpdStartPos();
+				scn->sc->startPos[2] += ym;  UpdStartPos();
 			}
 		}else
 		{	//  alt
@@ -528,19 +529,20 @@ void App::editMouse()
 			if (mbLeft)    // rot pitch
 			{
 				Qf qr;  qr.Rotate(vNew.x * fRot * moveMul, 0,0,1);
-				Qf& q = vStartRot;  // get yaw angle, add ..
+				Qf& q = scn->sc->startRot;  // get yaw angle, add ..
+				//if (alt)  q = qr * q;  else  q = q * qr;
 				q = q * qr;  UpdStartPos();
 			}else
 			if (mbRight)   // rot yaw
 			{
 				Qf qr;  qr.Rotate(vNew.y *-fRot * moveMul, 0,1,0);
-				Qf& q = vStartRot;
+				Qf& q = scn->sc->startRot;
 				q = q * qr;  UpdStartPos();
 			}else
 			if (mbMiddle)  // rot reset
 			{
 				Qf qr;  qr.Rotate(0, 0,0,1);
-				Qf& q = vStartRot;	q = qr;  UpdStartPos();
+				Qf& q = scn->sc->startRot;	q = qr;  UpdStartPos();
 			}
 		}
 	}

@@ -227,8 +227,8 @@ void CGui::btnScaleAll(WP)
 	}
 
 	//  start pos
-	app->vStartPos[0] *= sf;
-	app->vStartPos[1] *= sf;  app->UpdStartPos();
+	app->scn->sc->startPos[0] *= sf;
+	app->scn->sc->startPos[1] *= sf;  app->UpdStartPos();
 }
 
 

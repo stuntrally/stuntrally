@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "common/Def_Str.h"
+#include "common/CScene.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/mathvector.h"
 #include "../vdrift/track.h"
@@ -119,9 +120,12 @@ void CarModel::Load(int startId)
 		}
 		int i = pSet->game.collis_cars ? startId : 0;  // offset when cars collide
 
-		MATHVECTOR<float,3> pos(0,10,0);  pos = pGame->track.GetStart(i).first;
-		QUATERNION<float> rot;  rot = pGame->track.GetStart(i).second;
+		//  start pos
+		MATHVECTOR<float,3> pos(0,0,0);  pos = pApp->scn->sc->GetStart(i).first;
+		QUATERNION<float> rot;  rot = pApp->scn->sc->GetStart(i).second;
 		vStartPos = Vector3(pos[0], pos[2], -pos[1]);
+		if (pSet->game.trackreverse)
+		{	rot.Rotate(PI_d, 0,0,1);  rot[0] = -rot[0];  rot[1] = -rot[1];  }
 
 		pCar = pGame->LoadCar(pathCar, sDirname, pos, rot, true, false, eType == CT_REMOTE, iIndex);
 

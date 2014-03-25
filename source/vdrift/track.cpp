@@ -34,44 +34,6 @@ TRACK::~TRACK()
 	Clear();
 }
 
-bool TRACK::Load(
-	const string & trackpath,
-	const string & effects_texturepath,
-	bool reverse,
-	int anisotropy,
-	const string & texsize)
-{
-	Clear();
-
-	info_output << "Loading track from path: " << trackpath << endl;
-
-	//load parameters
-	if (!LoadParameters(trackpath))
-		return false;
-	
-	//load roads
-	if (!LoadRoads(trackpath, reverse))
-	{
-		//error_output << "Error during road loading; continuing with an unsmoothed track" << endl;
-		ClearRoads();
-	}
-
-	//if (!CreateRacingLines())
-	//	return false;
-
-	//load objects
-	if (!LoadObjects(trackpath, anisotropy))
-	{
-		info_output << "Track with no objects." << endl;
-		//return false;
-	}
-
-	info_output << "Track loaded: " << model_library.size() << " models, " << texture_library.size() << " textures" << endl;
-
-	return true;
-}
-
-
 bool TRACK::DeferredLoad(
 	const string & trackpath,
 	bool reverse,
@@ -84,10 +46,6 @@ bool TRACK::DeferredLoad(
 
 	texture_size = texsize;
 	info_output << "Loading track from path: " << trackpath << endl;
-
-	//load parameters
-	if (!LoadParameters(trackpath))
-		return false;
 
 	//load roads
 	if (!LoadRoads(trackpath, reverse))
@@ -114,10 +72,10 @@ bool TRACK::ContinueDeferredLoad()
 	pair <bool,bool> loadstatus = ContinueObjectLoad();
 	if (loadstatus.first)
 		return false;
+
 	if (!loadstatus.second)
-	{
 		loaded = true;
-	}
+
 	return true;
 }
 
@@ -158,38 +116,6 @@ bool TRACK::CreateRacingLines()
 	return true;
 }
 
-bool TRACK::LoadParameters(const string & trackpath)
-{
-	string parampath = trackpath + "/track.txt";
-	CONFIGFILE param;
-	if (!param.Load(parampath))
-	{
-		//error_output << "Can't find track configfile: " << parampath << endl;
-		return false;
-	}
-
-	float f3[3], f1;
-	
-	if (!param.GetParam("start position 0", f3))
-		return false;
-
-	start_position = MATHVECTOR<float,3>(f3[2], f3[0], f3[1]);
-
-	if (!param.GetParam("start orientation-xyz 0", f3))
-		return false;
-	if (!param.GetParam("start orientation-w 0", f1))
-		return false;
-
-	QUATERNION<float> rot(f3[2], f3[0], f3[1], f1);
-	QUATERNION<float> fixer;  fixer.Rotate(PI_d, 0, 0, 1);
-	rot = fixer * rot;
-
-	start_rotation = rot;
-
-	return true;
-}
-
-
 bool TRACK::BeginObjectLoad(
 	const string & trackpath,
 	int anisotropy,
@@ -215,10 +141,10 @@ bool TRACK::LoadObjects(const string & trackpath, int anisotropy)
 {
 	BeginObjectLoad(trackpath, anisotropy, false, false);
 	pair <bool,bool> loadstatus = ContinueObjectLoad();
+
 	while (!loadstatus.first && loadstatus.second)
-	{
 		loadstatus = ContinueObjectLoad();
-	}
+
 	return !loadstatus.first;
 }
 
@@ -290,7 +216,6 @@ bool TRACK::CastRay(
 				normal = colnorm;
 				colpatch = colbez;
 			}
-
 			col = true;
 		}
 	}
@@ -348,16 +273,4 @@ optional <const BEZIER *> ROADSTRIP::FindBezierAtOffset(const BEZIER * bezier, i
 		assert(it != patches.end());
 		return optional <const BEZIER *>(&it->GetPatch());
 	}
-}
-
-pair <MATHVECTOR<float,3>, QUATERNION<float> > TRACK::GetStart(int index)
-{
-	pair <MATHVECTOR<float,3>, QUATERNION<float> > sp = make_pair(start_position, start_rotation);
-	if (index == 0)
-		return sp;
-
-	MATHVECTOR<float,3> backward(-gPar.startNextDist * index,0,0);
-	sp.second.RotateVector(backward);
-	sp.first = sp.first + backward;
-	return sp;
 }

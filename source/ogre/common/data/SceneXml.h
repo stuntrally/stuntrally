@@ -219,6 +219,11 @@ public:
 class Scene
 {
 public:
+	//  car start pos
+	MATHVECTOR <float,3> startPos;
+	QUATERNION <float>   startRot;
+	std::pair <MATHVECTOR<float,3>, QUATERNION<float> > GetStart(int index);
+
 	//  sky
 	Ogre::String skyMtr;
 	int  rainEmit,rain2Emit;  Ogre::String rainName,rain2Name;
@@ -282,10 +287,11 @@ public:
 	
 	//  Objects
 	std::vector<Object> objects;
-		
+	
 	//  methods
 	Scene();  void Default(), UpdateFluidsId(), UpdateSurfId();
 
 	class GAME* pGame;  // for all surfaces by name
+	bool LoadStartPos(Ogre::String file);
 	bool LoadXml(Ogre::String file, bool bTer = true), SaveXml(Ogre::String file);
 };

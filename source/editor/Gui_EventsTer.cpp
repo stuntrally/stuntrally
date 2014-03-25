@@ -363,7 +363,7 @@ void CGui::btnScaleTerH(WP)
 	}
 
 	//  start pos
-	app->vStartPos[2] *= sf;  app->UpdStartPos();
+	app->scn->sc->startPos[2] *= sf;  app->UpdStartPos();
 }
 //----------------------------------------------------------------------------------------------------------
 
