@@ -111,7 +111,6 @@
 <t a="W2"  sc="W"  t="snow_mntn_d"        n="snow_mntn_n"        s="51.00" su="Rocks"          tp="1" du="0.0" ds="0.2" md="1.0" tr="0.20 0.20 0.00 1.0"  aa="21" ab="90" z="FWX" />
 <t a="W1"  sc="W"  t="snow_mud_d"         n="snow_mud_n"         s="9.50"  su="SnowWet"        tp="0" du="1.0" ds="0.8" md="1.0" tr="0.40 0.40 0.40 0.6"  aa="0"  ab="20" z="W" />
 <t a="W11" sc="W"  t="snow_rough_d"       n="snow_rough_n"       s="12.14" su="SnowDeep"       tp="0" du="0.4" ds="0.6" md="1.0" tr="0.40 0.40 0.40 0.6"  aa="11" ab="90" z="W" />
-<t a="W11" sc="W"  t="snow_rocky_d"       n="snow_rocky_n"       s="50.2"  su="Rocks"          tp="1" du="0.4" ds="0.6" md="1.0" tr="0.40 0.40 0.40 0.6"  aa="51" ab="90" z="FW" />
 <t a="Tes" sc="D"  t="zAsphalt_d"         n="ground_cracks2_n"   s="10.14" su="Asphalt"        tp="0" du="0.0" ds="0.6" md="0.0" tr="0.10 0.10 0.10 0.6"  aa="0" ab="90"  z="D" />
 
 
