@@ -87,7 +87,6 @@ public:
 
 	CK(Minimap);
 	void btnSetCam(WP);
-	Ck ckAutoBlendmap;
 
 	CK(InputBar);  CK(CamPos);
 	CK(Wireframe);  Ck ckAllowSave;

@@ -145,7 +145,7 @@ void CScene::UpdBlendmap()
 		//bl.rnd->writeContentsToFile(/*PATHMANAGER::DataUser()+*/ "blend.png");
 	}
 
-	LogO(String("::: Time Upd blendmap: ") + fToStr(ti.getMilliseconds(),0,1) + " ms");  // 1ms on 512, 4ms on 1k
+	//LogO(String("::: Time Upd blendmap: ") + fToStr(ti.getMilliseconds(),0,1) + " ms");  // 1ms on 512, 4ms on 1k
 }
 
 

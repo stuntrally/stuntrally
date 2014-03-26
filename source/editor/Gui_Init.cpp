@@ -189,7 +189,6 @@ void CGui::InitGui()
 
 	sv= &svTerUpd;		sv->Init("TerUpd",		&pSet->ter_skip,  0, 20);  sv->DefaultI(1);
 	sv= &svMiniUpd;		sv->Init("MiniUpd",		&pSet->mini_skip, 0, 20);  sv->DefaultI(4);
-	ck= &ckAutoBlendmap;ck->Init("AutoBlendmap",&pSet->autoBlendmap);
 
 	ck= &ckWireframe;	ck->Init("Wireframe",	&app->mbWireFrame);  Cev(Wireframe);
 	ck= &ckCamPos;		ck->Init("CamPos",		&pSet->camPos);    Cev(CamPos);

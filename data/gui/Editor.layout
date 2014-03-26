@@ -4283,10 +4283,6 @@
 						<Widget type="Slider" skin="Slider" position="272 126 320 16" name="TerUpd">
 							<Property key="Colour" value="0.4 0.9 0.4"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 170 608 24" name="AutoBlendmap">
-							<Property key="Caption" value="#{AutoUpdateBlendmap}  alt-F9"/>
-							<Property key="TextColour" value="0.3 0.8 0.3"/>
-						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#60A0FF#{Settings}"/>

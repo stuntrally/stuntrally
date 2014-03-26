@@ -157,8 +157,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			else  UpdateTrack();  return true;
 
 		case key(F9):  // blendmap
-			if (alt)  gui->ckAutoBlendmap.Invert();
-			else  gui->ckDebugBlend.Invert();
+			gui->ckDebugBlend.Invert();
 			bTerUpdBlend = true;
 			return true;
 

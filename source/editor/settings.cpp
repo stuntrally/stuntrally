@@ -58,7 +58,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "set.weather", bWeather);
 	Param(c,w, "set.cam_speed", cam_speed);			Param(c,w, "set.cam_inert", cam_inert);
 	Param(c,w, "set.ter_skip", ter_skip);			Param(c,w, "set.road_sphr", road_sphr);
-	Param(c,w, "set.mini_skip", mini_skip);			Param(c,w, "set.autoBlendmap", autoBlendmap);
+	Param(c,w, "set.mini_skip", mini_skip);
 	
 	Param(c,w, "video.windowx", windowx);			Param(c,w, "video.windowy", windowy);
 	Param(c,w, "video.fullscreen", fullscreen);
@@ -106,7 +106,7 @@ SETTINGS::SETTINGS()  ///  Defaults
 	,isMain(1), startInMain(1), inMenu(0)
 	//  settings
 	,cam_x(0), cam_y(50),cam_z(-120),  cam_dx(0), cam_dy(0), cam_dz(1)
-	,bFog(0), bTrees(0), bWeather(0), autoBlendmap(1)
+	,bFog(0), bTrees(0), bWeather(0)
 	,cam_speed(1.f), cam_inert(1.f)
 	,ter_skip(4), road_sphr(1.f), mini_skip(4)
 	//  video

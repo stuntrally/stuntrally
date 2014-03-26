@@ -440,8 +440,7 @@ void App::deform(Vector3 &pos, float dtime, float brMul)
 		}
 	}
 	scn->terrain->dirtyRect(rcMap);
-	if (pSet->autoBlendmap)
-		scn->UpdBlendmap();
+	scn->UpdBlendmap();
 	bTerUpd = true;
 }
 
@@ -473,8 +472,7 @@ void App::height(Vector3 &pos, float dtime, float brMul)
 		}
 	}
 	scn->terrain->dirtyRect(rcMap);
-	if (pSet->autoBlendmap)
-		scn->UpdBlendmap();
+	scn->UpdBlendmap();
 	bTerUpd = true;
 }
 
@@ -542,8 +540,7 @@ void App::smoothTer(Vector3 &pos, float avg, float dtime)
 		}
 	}
 	scn->terrain->dirtyRect(rcMap);
-	if (pSet->autoBlendmap)
-		scn->UpdBlendmap();
+	scn->UpdBlendmap();
 	bTerUpd = true;
 }
 
@@ -585,8 +582,7 @@ void App::filter(Vector3 &pos, float dtime, float brMul)
 	}
 
 	scn->terrain->dirtyRect(rcMap);
-	if (pSet->autoBlendmap)
-		scn->UpdBlendmap();
+	scn->UpdBlendmap();
 	bTerUpd = true;
 }
 
