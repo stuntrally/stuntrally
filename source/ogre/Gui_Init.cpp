@@ -609,6 +609,7 @@ void CGui::InitGui()
 	gcom->imgPrv[1] = fImg("TrackImg2");   gcom->imgPrv[1]->setImageTexture("PrvView");
 	gcom->imgTer[1] = fImg("TrkTerImg2");  gcom->imgTer[1]->setImageTexture("PrvTer");
 	gcom->imgMini[1] = fImg("TrackMap2");  gcom->imgMini[1]->setImageTexture("PrvRoad");
+	gcom->initMiniPos(1);
 
 	//  track stats text
 	int i, st = gcom->StTrk;

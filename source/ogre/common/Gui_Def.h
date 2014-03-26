@@ -7,7 +7,7 @@ namespace MyGUI
 	class Widget;  class Window;  class TabControl;  class TabItem;  class ComboBox;
 	class Button;  class TextBox;  class ImageBox;  class EditBox;  class Slider;
 	class ListBox; class MultiListBox;  class MultiList2;
-	class Canvas;  class ScrollView;  class Message;
+	class Canvas;  class ScrollView;  class Message;  class RotatingSkin;
 }
 class SliderValue;  class Check;
 

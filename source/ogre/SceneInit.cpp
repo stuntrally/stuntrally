@@ -605,8 +605,10 @@ void App::LoadTrees()  // 8
 
 void App::LoadMisc()  // 9 last
 {
+	bool rev = pSet->game.trackreverse;	
 	if (pGame && pGame->cars.size() > 0)  //todo: move this into gui track tab chg evt, for cur game type
-		gcom->UpdGuiRdStats(scn->road, scn->sc, gcom->sListTrack, pGame->timer.GetBestLap(0, pSet->game.trackreverse));  // current
+		gcom->UpdGuiRdStats(scn->road, scn->sc, gcom->sListTrack,
+			pGame->timer.GetBestLap(0, rev), rev, 0);  // current
 
 
 	hud->Create();

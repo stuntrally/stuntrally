@@ -727,7 +727,7 @@ void CGui::InitGui()
 		lp->setSubItemNameAt(2,l, c+ su);
 	}
 	
-	// todo: sorting pick lists..
+	// todo: sort,filter pick lists..
 	//lp->mSortColumnIndex = pSet->tracks_sort;
 	//lp->mSortUp = pSet->tracks_sortup;
 

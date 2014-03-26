@@ -103,6 +103,13 @@ const int CGui::colChL[16] = {36, 180, 90, 100, 50, 60, 60, 60, 50};  // challs
 const int CGui::colSt [16] = {30, 170, 100, 90, 50, 80, 70};  // stages
 #endif
 
+void CGuiCom::initMiniPos(int i)
+{
+	imgMiniPos[i] = fImg(i==0 ? "TrackPos" : "TrackPos2");
+	imgMiniRot[i] = imgMiniPos[i]->getSubWidgetMain()->castType<RotatingSkin>();
+	IntSize si = imgMiniPos[i]->getSize();
+	imgMiniRot[i]->setCenter(IntPoint(si.width*0.7f, si.height*0.7f));  //0.5?
+}
 
 //  Gui Init [Track] once
 //-----------------------------------------------------------------------------------------------------------
@@ -110,9 +117,7 @@ void CGuiCom::GuiInitTrack()
 {
 	Tbi trktab = fTbi("TabTrack");
 	Mli2 li = trktab->createWidget<MultiList2>("MultiListBox",0,0,500,300, Align::Left | Align::VStretch);
-	li->setColour(Colour(0.8,0.9,0.8));
-	//li->setUserString("RelativeTo", "OptionsWnd");
-	//*li->setAlpha(0.8);*/  li->setInheritsAlpha(false);
+	li->setColour(Colour(0.8,0.9,0.8));  li->setInheritsAlpha(false);
 	trkList = li;
    	li->eventListChangePosition += newDelegate(this, &CGuiCom::listTrackChng);
    	li->setVisible(false);
@@ -121,6 +126,7 @@ void CGuiCom::GuiInitTrack()
 	imgPrv[0] = fImg("TrackImg");   imgPrv[0]->setImageTexture("PrvView");
 	imgTer[0] = fImg("TrkTerImg");  imgTer[0]->setImageTexture("PrvTer");
 	imgMini[0] = fImg("TrackMap");  imgMini[0]->setImageTexture("PrvRoad");
+	initMiniPos(0);
 
 	//  stats text
 	int i, st;
@@ -230,10 +236,11 @@ void CGuiCom::ReadTrkStats()
 	TIMER tim;  tim.Load(PATHMANAGER::Records()+"/"+ pSet->gui.sim_mode+"/"+ sListTrack+".txt", 0.f, app->pGame->error_output);
 	tim.AddCar(app->gui->sListCar);
 
-	UpdGuiRdStats(&rd,sc, sListTrack, tim.GetBestLap(0, pSet->gui.trackreverse));
+	bool reverse = pSet->gui.trackreverse;
+	UpdGuiRdStats(&rd,sc, sListTrack, tim.GetBestLap(0, reverse), reverse, 0);
 #else
 	SplineRoad rd(app);  rd.LoadFile(sRd,false);  // load
-	UpdGuiRdStats(&rd,sc, sListTrack, 0.f);
+	UpdGuiRdStats(&rd,sc, sListTrack, 0.f, false, 0);
 #endif
 	delete sc;
 }
@@ -250,7 +257,7 @@ void CGui::ReadTrkStatsChamp(String track, bool reverse)
 	TIMER tim;  tim.Load(PATHMANAGER::Records()+"/"+ pSet->gui.sim_mode+"/"+ track+".txt", 0.f, pGame->error_output);
 	tim.AddCar(sListCar);
 
-	gcom->UpdGuiRdStats(&rd,sc, track, tim.GetBestLap(0, reverse), true);
+	gcom->UpdGuiRdStats(&rd,sc, track, tim.GetBestLap(0, reverse), reverse, 1);
 }
 #endif
 
@@ -281,7 +288,8 @@ bool CGuiCom::TrackExists(String name/*, bool user*/)
 }
 
 
-void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTrack, float timeCur, bool champ)
+void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String& sTrack,
+	float timeCur, bool reverse, int ch)
 {
 	#ifndef SR_EDITOR  // game
 	bool mph = pSet->show_mph;
@@ -290,7 +298,6 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	#endif
 	float m = mph ? 0.621371f : 1.f;
 	string km = mph ? " mi" : " km";
-	int ch = champ ? 1 : 0;
 	
 	//  road stats
 	//---------------------------------------------------------------------------
@@ -406,4 +413,22 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	app->prvView.Load(path+"view.jpg");
 	app->prvRoad.Load(path+"road.png");
 	app->prvTer.Load(path+"terrain.jpg");
+
+
+	//  start pos on minimap
+	//---------------------------------------------------------------------------
+	float t = sc->td.fTerWorldSize,
+		xp = sc->startPos[1]/t, yp = sc->startPos[0]/t;
+	const IntSize& si = imgTer[ch]->getSize(), st = imgMiniPos[ch]->getSize();
+	int x = (xp + 0.5f) * si.width  - st.width *0.5f,
+		y = (yp + 0.5f) * si.height - st.height*0.5f;
+	imgMiniPos[ch]->setPosition(IntPoint(x,y));
+
+	//  rot
+	const float* rot = &sc->startRot[0];
+	Quaternion q(rot[0],rot[1],rot[2],rot[3]);
+	a = q.getPitch().valueRadians();
+	if (reverse)  a += PI_d;
+	//static float a=0.f; a+=0.1f;  //test center
+	imgMiniRot[ch]->setAngle(a);
 }

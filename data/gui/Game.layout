@@ -172,6 +172,9 @@
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrackMap">
 					<UserString key="tip" value="#{TipTrackMap}"/>
+					<Widget type="ImageBox" skin="RotatingSkin" position="64 64 16 16" name="TrackPos">
+						<Property key="ImageTexture" value="carpos0.png"/>
+					</Widget>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="528 528 88 20">
 					<Property key="Caption" value="#{Author}"/>
@@ -1416,6 +1419,9 @@
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrackMap2">
 					<UserString key="tip" value="#{TipTrackMap}"/>
+					<Widget type="ImageBox" skin="RotatingSkin" position="64 64 16 16" name="TrackPos2">
+						<Property key="ImageTexture" value="carpos0.png"/>
+					</Widget>
 				</Widget>
 				<Widget type="EditBox" skin="EditBoxEmpty" position="176 367 336 85" name="TrackDesc2">
 					<Property key="ReadOnly" value="true"/>

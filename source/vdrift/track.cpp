@@ -148,26 +148,6 @@ bool TRACK::LoadObjects(const string & trackpath, int anisotropy)
 	return !loadstatus.first;
 }
 
-void TRACK::Reverse()
-{
-/*	//flip start positions
-	for (vector <pair <MATHVECTOR<float,3>, QUATERNION<float> > >::iterator i = start_positions.begin();
-		i != start_positions.end(); ++i)
-	{
-		i->second.Rotate(PI_d, 0,0,1);
-		i->second[0] = -i->second[0];
-		i->second[1] = -i->second[1];
-		//i->second[2] = -i->second[2];
-		//i->second[3] = -i->second[3];
-	}
-
-	//reverse start positions
-	reverse(start_positions.begin(), start_positions.end());
-*/
-	//reverse roads
-	for_each(roads.begin(), roads.end(), mem_fun_ref(&ROADSTRIP::Reverse));
-}
-
 bool TRACK::LoadRoads(const string & trackpath, bool reverse)
 {
 	ClearRoads();
@@ -181,7 +161,6 @@ bool TRACK::LoadRoads(const string & trackpath, bool reverse)
 	}
 
 	int numroads=0;
-
 	trackfile >> numroads;
 
 	for (int i = 0; i < numroads && trackfile; i++)
@@ -191,7 +170,7 @@ bool TRACK::LoadRoads(const string & trackpath, bool reverse)
 	}
 
 	if (reverse)
-		Reverse();
+		for_each(roads.begin(), roads.end(), mem_fun_ref(&ROADSTRIP::Reverse));
 
 	return true;
 }

@@ -133,8 +133,6 @@ private:
 	
 	void ClearRoads() {  roads.clear();  }
 	
-	void Reverse();
-	
 	///read from the file stream and put it in "output".
 	/// return true if the get was successful, else false
 	template <typename T>

@@ -383,6 +383,8 @@ void CGui::listStageChng(MyGUI::MultiList2* li, size_t pos)
 		if (pos >= ch.trks.size())  {  LogO("Error stage sel > tracks.");  return;  }
 		trk = ch.trks[pos].name;  rev = ch.trks[pos].reversed;  all = ch.trks.size();
 	}
+	if (pSet->gui.champ_rev)  rev = !rev;
+
 	if (valTrkNet)  valTrkNet->setCaption(TR("#{Track}: ") + trk);
 	ReadTrkStatsChamp(trk, rev);
 	if (valStageNum)  valStageNum->setCaption(toStr(pos+1) +" / "+ toStr(all));

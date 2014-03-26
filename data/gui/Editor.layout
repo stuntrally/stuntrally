@@ -714,6 +714,9 @@
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="526 238 252 252" name="TrackMap">
 					<UserString key="tip" value="#{TipMinimapScrnEditor}"/>
+					<Widget type="ImageBox" skin="RotatingSkin" position="64 64 16 16" name="TrackPos">
+						<Property key="ImageTexture" value="carpos0.png"/>
+					</Widget>
 				</Widget>
 				<Widget type="EditBox" skin="EditBoxEmpty" position="176 360 336 75" name="TrackDesc">
 					<Property key="ReadOnly" value="false"/>
