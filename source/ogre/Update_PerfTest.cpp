@@ -58,7 +58,7 @@ void App::newPerfTest(float time)
 				const CARSUSPENSION& susp = pCar->dynamics.GetSuspension(wp);
 				if (!inAir && susp.GetVelocity() < 0.001)  ++whStill;
 			}
-			if (whStill == 4)  //end
+			if (whStill == 4 && iLoad1stFrames == -2)  //end
 			{
 				iPerfTestStage = PT_Accel;  ti = 0.f;
 				posSt = pCar->GetPosition();  timeQM = 0.f;
