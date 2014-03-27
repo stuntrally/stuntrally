@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
 	<Tag name="TipTreeDens">Objektien (puut, kivet, jne.) määrä.</Tag>
-	<Tag name="CamSpeed">Kameran nopeus</Tag>
+	<Tag name="InputKeyUnassigned">-- Ei mitään --</Tag>
 	<Tag name="Density">Tiheys</Tag>
 	<Tag name="InputMapScreenshot">Kuvakaappaus</Tag>
 	<Tag name="Brush_Filter">Suodin</Tag>
@@ -13,19 +13,20 @@
 	<Tag name="InputHeaderTxt4">Muokkaa</Tag>
 	<Tag name="TerrainDouble">Kaksinkertainen</Tag>
 	<Tag name="TipLoadTrkEditor">Lataa rata (muutoksien jälkeen) tai uudelleen lataa nykyinen rata.</Tag>
-	<Tag name="TipAutoGearbox">Poista valinta saadaksesi manuaali vaihteet.</Tag>
+	<Tag name="FuelBoost">Boost Fuel</Tag>
 	<Tag name="LS_MISC">Lopetellaan</Tag>
 	<Tag name="InputHeaderTxt2">Näppäinsidos</Tag>
 	<Tag name="InputHeaderTxt3">Arvo</Tag>
 	<Tag name="AndUsing">käyttäen</Tag>
 	<Tag name="Championship">Mestaruus</Tag>
 	<Tag name="ColumnRadius">Pylvään säde</Tag>
-	<Tag name="InputKeyUnassigned">-- Ei mitään --</Tag>
+	<Tag name="CamSpeed">Kameran nopeus</Tag>
 	<Tag name="Warnings">Varoitukset</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Valitse (yksi)</Tag>
 	<Tag name="Road_AngleManual">Manuaalinen</Tag>
 	<Tag name="ViewDist">Piirtoetäisyys</Tag>
+	<Tag name="CarDesc_OT">This is the slowest car. Very old and a bit creepy truck. Can drive only on flat tracks and with turtle speed.</Tag>
 	<Tag name="SimMode">Simulaatio (vaikeusaste)</Tag>
 	<Tag name="RplParticles">Hiukkaset (epäläpinäkyville haamuille)</Tag>
 	<Tag name="Road_Roll">Roll</Tag>
@@ -58,6 +59,7 @@
 	<Tag name="DevKeys">Developer keys. Ctrl-F global, Alt-shift-1..6 load test tracks.</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first  (1)</Tag>
 	<Tag name="SC_ForestMntn">ForestMntn</Tag>
+	<Tag name="NetRefreshList">Hae tuore lista</Tag>
 	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
 	<Tag name="GraphicsAll_Low">Alhainen</Tag>
 	<Tag name="ChampEndFinished">Olet suorittanut tämän mestaruuden loppuun.</Tag>
@@ -76,7 +78,7 @@
 	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
 	<Tag name="RenderSystem">Renderöintikirjasto</Tag>
 	<Tag name="TerGenOfsY">Siirtymä Y</Tag>
-	<Tag name="FuelBoost">Boost Fuel</Tag>
+	<Tag name="TipAutoGearbox">Poista valinta saadaksesi manuaali vaihteet.</Tag>
 	<Tag name="pipes">putket</Tag>
 	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
 	<Tag name="InputFluidsUpdate">F10  - update depth map, after terrain deform near shore</Tag>
@@ -85,7 +87,7 @@
 	<Tag name="Game">Peli</Tag>
 	<Tag name="InputObjectsScale">3 - Scale   LMB - uniform XYZ  RMB: Y  MMB: Z</Tag>
 	<Tag name="RepeatStage">Repeating stage</Tag>
-	<Tag name="TipParType3">Rengaspartikkelityyppi 3 (yleispätevä radalle)</Tag>
+	<Tag name="CarDesc_HR">Very heavy and slow car, best for terrain and bumps, easy to drive. But useless on fast and stunt tracks.</Tag>
 	<Tag name="SC_Finland">Finland</Tag>
 	<Tag name="TipParType1">Rengaspartikkelityyppi 1 (yleispätevä radalle)</Tag>
 	<Tag name="GrassDens">Ruohikon tiheys</Tag>
@@ -117,7 +119,7 @@
 	<Tag name="ShadowFilter">Suodin</Tag>
 	<Tag name="Rivers">Joet</Tag>
 	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass (starts fading out, for smooth angle).</Tag>
-	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
+	<Tag name="TipTerNormScale">Use if needed to scale terrain texture normals, for lighting. Otherwise default 1.</Tag>
 	<Tag name="InputMapResetGame">Resetoi peli</Tag>
 	<Tag name="smoke">savu</Tag>
 	<Tag name="MouseCapture">Kaappaa hiiri</Tag>
@@ -154,10 +156,11 @@
 	<Tag name="Restart">Restart</Tag>
 	<Tag name="Count">Lukumäärä</Tag>
 	<Tag name="InputBrushPower">; &apos;  (or alt-Wheel)  -  Power exponent</Tag>
+	<Tag name="CarDesc_S1">Second best rally car in game, drivable on all tracks with the best experience, similar to ES.</Tag>
 	<Tag name="UnitKm">km</Tag>
 	<Tag name="SC_SavannaDry">SavannaDry</Tag>
 	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>
-	<Tag name="OpponentsList">Kilpailijalista</Tag>
+	<Tag name="CarDesc_S8">Good rally car, drivable on all tracks. Similar to S1, but shorter and more steerable.</Tag>
 	<Tag name="BackMenu">Takaisin</Tag>
 	<Tag name="BasedOn">pohjautuen</Tag>
 	<Tag name="ProfilerTxt">Profiler times text </Tag>
@@ -185,6 +188,7 @@
 	<Tag name="TipToggleGrass">Enable or disable this grass layer.</Tag>
 	<Tag name="SSS_SpeedFactor">Speed Factor</Tag>
 	<Tag name="RplRecTime">Kirjattu aika</Tag>
+	<Tag name="CarDesc_TC6">Good rally car. Has low height. Is a bit older and less powerful.</Tag>
 	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass (starts fading out, for smooth distance).</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
 	<Tag name="MessageBox_Try">Kokeile</Tag>
@@ -200,6 +204,7 @@
 	<Tag name="Score">Pisteet</Tag>
 	<Tag name="SpeedSensitiveSteering">Speed Sensitive Steering</Tag>
 	<Tag name="Swap">Swap</Tag>
+	<Tag name="CarDesc_ES">Best rally car in game, great driving experience on all tracks. A bit high though.</Tag>
 	<Tag name="Suspension">Jousitus</Tag>
 	<Tag name="TerrainSize">Maaston koko</Tag>
 	<Tag name="SC_Australia">Australia</Tag>
@@ -247,6 +252,7 @@
 	<Tag name="Weather">Sää</Tag>
 	<Tag name="DenyReversed">Deny reversed direction</Tag>
 	<Tag name="RplAlpha">Läpinäkyvä haamu</Tag>
+	<Tag name="CarDesc_360">Good looking car, best fit for asphalt tracks. Can also drive on few flat terrain tracks. But completely undrivable at bumps,jumps,loops or pipes because of low suspension height.</Tag>
 	<Tag name="InpSet_Medium">Keskitaso</Tag>
 	<Tag name="TipTerrainHalf">Resize current terrain heightmap by half (use only for reducing file size).</Tag>
 	<Tag name="wind">tuuli</Tag>
@@ -320,7 +326,7 @@
 	<Tag name="TipSunDirPitch">Sun direction - pitch angle.</Tag>
 	<Tag name="Passed">Läpäisty</Tag>
 	<Tag name="InputMapHandBrake">Käsijarru</Tag>
-	<Tag name="loops">silmukat</Tag>
+	<Tag name="CarType_Other">Muu</Tag>
 	<Tag name="ProjectPage">projektin sivusto:</Tag>
 	<Tag name="Brush_Octaves">Oktaavit</Tag>
 	<Tag name="Type">Tyyppi</Tag>
@@ -337,7 +343,7 @@
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="max">maksimi</Tag>
 	<Tag name="Stage">Vaihe</Tag>
-	<Tag name="NetRefreshList">Hae tuore lista</Tag>
+	<Tag name="CarDesc_3S">Good car, suited for all tracks, but has slower acceleration, especially at high speeds.</Tag>
 	<Tag name="None">Ei mitään</Tag>
 	<Tag name="MessageBox_Abort">Keskeytä</Tag>
 	<Tag name="Brush_ShapeNoise">Kohina</Tag>
@@ -407,14 +413,13 @@
 	<Tag name="DidntPass">Didn't pass</Tag>
 	<Tag name="Road_Cur">Cur</Tag>
 	<Tag name="InputMinimapType">shift-F2,F3 - Prev,next minimap type</Tag>
-	<Tag name="TipGrassPatchLengthMin">Minimal grass patch length.</Tag>
+	<Tag name="TipGrassSwayLen">Ruohikon huojunnan pituus (skaalaus).</Tag>
 	<Tag name="Road">Tie</Tag>
 	<Tag name="FluidCont">Fluid Cont.</Tag>
 	<Tag name="TrackAutoLoad">Radan automaattinen lataus</Tag>
 	<Tag name="BoostFOV">Mukautuva näkökenttä</Tag>
 	<Tag name="DustSize">pölyn koko</Tag>
 	<Tag name="Shortcuts">Pikanäppäimet</Tag>
-	<Tag name="CarType_Other">Muu</Tag>
 	<Tag name="TerrainMove">Siirrä</Tag>
 	<Tag name="Friction">Kitka</Tag>
 	<Tag name="InputAfterChanges">(maaston/kasvillisuuden muutoksien jälkeen)</Tag>
@@ -427,8 +432,10 @@
 	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
 	<Tag name="Multiplayer">Moninpeli</Tag>
+	<Tag name="trailColor">trail color</Tag>
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="Particles">Hiukkaset</Tag>
+	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
 	<Tag name="Other">Muu</Tag>
 	<Tag name="TipTerLAngSm">Angle smooth range (transition).</Tag>
 	<Tag name="godrays">Jumalsäteet</Tag>
@@ -440,11 +447,11 @@
 	<Tag name="ColReflect">Heijastus</Tag>
 	<Tag name="Development">Kehitys</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
+	<Tag name="Gravel">Sora</Tag>
 	<Tag name="InputBrushParams">Siveltimen parametrit</Tag>
 	<Tag name="min">minimi</Tag>
 	<Tag name="SC_Asphalt">Asphalt</Tag>
-	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
+	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle  (no pipe when 0)</Tag>
 	<Tag name="TerrainEmissiveLight">Terrain has emissive light</Tag>
 	<Tag name="Finished">Päättynyt</Tag>
@@ -468,8 +475,9 @@
 	<Tag name="ScaleAll">Skaalaa kaikkia</Tag>
 	<Tag name="InpSet_KeyFull">Key Full</Tag>
 	<Tag name="InputMapPrevTab">Edellinen välilehti</Tag>
-	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
+	<Tag name="CarDesc_M3">Very old car with low power engine. Not fit for jumps. Pick if you want to drive slowly.</Tag>
 	<Tag name="GameBy">Pelin tarjoaa</Tag>
+	<Tag name="CarDesc_TW">This big, extreme vehicle is great for long and smooth tracks. But completely useless when narrow or in mud (e.g. in jungle). Also not easy to drive.</Tag>
 	<Tag name="CameraBounce">Dynamic camera bouncing</Tag>
 	<Tag name="SunWeather">Aurinko ja sää</Tag>
 	<Tag name="Lock">Lock</Tag>
@@ -501,6 +509,8 @@
 	<Tag name="CheckOnSave">Check on save</Tag>
 	<Tag name="InputTerPaint">A - Paint Textures (layers)</Tag>
 	<Tag name="NetPort">Portti</Tag>
+	<Tag name="Update">Update</Tag>
+	<Tag name="InputPickTab">Tab - close/open pick window</Tag>
 	<Tag name="CarType_Gravel">Sora</Tag>
 	<Tag name="NetMasterConnectionError">Pääpalvelimeen ei saatu yhteyttä.</Tag>
 	<Tag name="Brush_CurrentH">Curr.H</Tag>
@@ -520,6 +530,7 @@
 	<Tag name="InputFluidsDel">Del - poista nykyinen</Tag>
 	<Tag name="Leave">Poistu</Tag>
 	<Tag name="InputRoadMove">- liikuta pistettä</Tag>
+	<Tag name="CarDesc_FM">Another rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
 	<Tag name="GrassSway">Huojunta</Tag>
 	<Tag name="NetGameProtocolError">Vertaisten protokollaversiot ovat epäyhteensopivia.</Tag>
 	<Tag name="Right">Oikea</Tag>
@@ -535,6 +546,7 @@
 	<Tag name="NetGameName">Pelin nimi</Tag>
 	<Tag name="TexSize">Tekstuurien koko</Tag>
 	<Tag name="TipSunAmbient">Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)</Tag>
+	<Tag name="TipParType3">Rengaspartikkelityyppi 3 (yleispätevä radalle)</Tag>
 	<Tag name="ApplyShadows">Käytä varjoja</Tag>
 	<Tag name="ChngTrkTab">changed in [Track] tab</Tag>
 	<Tag name="TipParType2">Rengaspartikkelityyppi 2 (yleispätevä radalle)</Tag>
@@ -542,8 +554,9 @@
 	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
 	<Tag name="Laps">Kierrokset</Tag>
 	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
+	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
 	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
-	<Tag name="TipGrassSwayLen">Ruohikon huojunnan pituus (skaalaus).</Tag>
+	<Tag name="TipGrassPatchLengthMin">Minimal grass patch length.</Tag>
 	<Tag name="WaterReflection">Heijastus</Tag>
 	<Tag name="intensity">voimakkuus</Tag>
 	<Tag name="Fog">Sumu</Tag>
@@ -552,7 +565,7 @@
 	<Tag name="FrameSkip">Frames skip</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - save file and reload game</Tag>
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
-	<Tag name="trailColor">trail color</Tag>
+	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
 	<Tag name="Boost">Boost</Tag>
 	<Tag name="TipFogClr">Fog end color when looking under sun.</Tag>
 	<Tag name="NumLocalPlayers">Paikallisten pelaajien määrä</Tag>
@@ -574,7 +587,7 @@
 	<Tag name="Advanced">Advanced</Tag>
 	<Tag name="InputObjectsMode">X - edit Objects</Tag>
 	<Tag name="TipGrassVisDist">Näkyysetäisyys ruohosivuille.</Tag>
-	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
+	<Tag name="FOV">View angle</Tag>
 	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
 	<Tag name="TerGenScale">Korkeus skaalaus</Tag>
 	<Tag name="Settings">Asetukset</Tag>
@@ -582,7 +595,7 @@
 	<Tag name="Anisotropy">Anisotropia</Tag>
 	<Tag name="InputToggleCam">Tab - camera / edit mode toggle</Tag>
 	<Tag name="Brush_Freq">Taajuus</Tag>
-	<Tag name="InputStartAltLMB">alt-LMB - rotate   alt-RMB - pitch</Tag>
+	<Tag name="InputStartAltLMB">alt-LMB - rotate (shift - global)   alt-RMB - pitch (shift - roll)</Tag>
 	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
 	<Tag name="Close">Close</Tag>
 	<Tag name="TerGenOfsX">Siirtymä X</Tag>
@@ -606,8 +619,9 @@
 	<Tag name="TrackAvgSpeed">Keskimääräinen nopeus</Tag>
 	<Tag name="Yes">Kyllä</Tag>
 	<Tag name="ChampEndCongrats">Onneksi olkoon!</Tag>
+	<Tag name="TipRoadDistMax">Maximum distance to road. E.g. can be used for vegetation that should appear only close to road: plants, bushes etc.</Tag>
 	<Tag name="TerGenPers">Persistance noise</Tag>
-	<Tag name="RoadStats">Tien tilastot</Tag>
+	<Tag name="CarDesc_FR4">Quite old, heavy, broad and slow. Good for terrain but not with the best suspension. Isn't suited for faster or stunt tracks.</Tag>
 	<Tag name="SunDir">Auringon suunta</Tag>
 	<Tag name="InputRoadPick">Space - pick one/none</Tag>
 	<Tag name="SC_Canyon">Canyon</Tag>
@@ -616,6 +630,7 @@
 	<Tag name="MessageBox_Ignore">Ohita</Tag>
 	<Tag name="GraphicsAll_Impossible">Mahdoton</Tag>
 	<Tag name="ObjStatic">Staattinen</Tag>
+	<Tag name="CarDesc_CT">Good looking, but difficult to drive, having engine at rear. Fit only for asphalt and few flat tracks. Completely undrivable at bumps,jumps,loops or pipes because of low suspension height.</Tag>
 	<Tag name="Layout">Asettelu</Tag>
 	<Tag name="TipTexNormAuto">When checked, Normal texture is automatically set from Diffuse texture (+ _nh in filename).</Tag>
 	<Tag name="TrackBestTime">Paras aika</Tag>
@@ -628,8 +643,10 @@
 	<Tag name="Cars">Autot</Tag>
 	<Tag name="CarType_Slow">Hidas</Tag>
 	<Tag name="ColBright">Kirkkaus</Tag>
+	<Tag name="TipTestBlendmap">Use to test blendmap clarity. The color box shows this layer's color on blendmap (is black when layer is off). Usually, a good blendmap needs to have pure layer colors with little blending (dull, mixed colors). To achieve that narrow/separate angle and height ranges and use high or low noise power.</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
 	<Tag name="Difficulty">Vaikeusaste</Tag>
+	<Tag name="ImpostorDist">Impostors dist.</Tag>
 	<Tag name="GraphicsAll_Higher">Korkeampi</Tag>
 	<Tag name="RplRename">Muuta nimeä</Tag>
 	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
@@ -651,6 +668,7 @@
 	<Tag name="TipGrassMaterial">Grass material (type) for this layer, chosen to match track's scenery.</Tag>
 	<Tag name="TipRearThrottleInverse">Inverse throttle and brake function in rear gear.</Tag>
 	<Tag name="LS_ROAD">Ladataan tietä</Tag>
+	<Tag name="Pick">Pick</Tag>
 	<Tag name="RoadPoint">Tiepiste</Tag>
 	<Tag name="CarStartPos">Auton lähtöpaikka</Tag>
 	<Tag name="ObjRocks">Rocks</Tag>
@@ -688,7 +706,9 @@
 	<Tag name="InputOther2">Enter - show/hide players window in multiplayer</Tag>
 	<Tag name="InpSet_Fast">Nopea</Tag>
 	<Tag name="InputMain">Main</Tag>
+	<Tag name="CarDesc_UV">This big wheeled utility vehicle is powered by 4 electic engines. Suited for nearly all tracks, except when narrow. Great for exploring other planets. But has bad aerodynamics and gets stuck in mud.</Tag>
 	<Tag name="NewTerrainFlat">Uusi tasainen</Tag>
+	<Tag name="InputPaintColor">C - Maalin väri</Tag>
 	<Tag name="ColSat">Kylläisyys</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
 	<Tag name="NewTerrainGenerate">Generate new</Tag>
@@ -709,6 +729,7 @@
 	<Tag name="InputFluidsType">-,=  - change fluid type (water,mud,etc.)</Tag>
 	<Tag name="TrackWidthAvg">Width avg.</Tag>
 	<Tag name="Road_Length">Pituus</Tag>
+	<Tag name="TipTerTripl">When using graphics option triplanar max 2, this layer will have triplanar mapping (good textured slopes). Affects Fps.</Tag>
 	<Tag name="RplGhostOther">Other car ghost (when current unavailable)</Tag>
 	<Tag name="TipModelVisDist">Visibility distance for 3d models, after this they turn into 2d impostors.</Tag>
 	<Tag name="NetAddress">Osoite</Tag>
@@ -746,6 +767,7 @@
 	<Tag name="EdCamPos">Kameran sijainti</Tag>
 	<Tag name="GraphicsAll_Lowest">Alin</Tag>
 	<Tag name="InputReadyToPlay">(ready to play in game)</Tag>
+	<Tag name="CarDesc_N1">Good car for all tracks. A bit less steerable, but quite stable because of length.</Tag>
 	<Tag name="CamInertia">Kameran inertia</Tag>
 	<Tag name="TipSurfFrict">Surface friction (eg. 1.0 asphalt, 0.7 gravel, 0.5 ice).</Tag>
 	<Tag name="DynamicObjects">Dynaamiset objektit</Tag>
@@ -763,6 +785,7 @@
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 	<Tag name="InputFluidsMode">W - muokkaa nesteitä</Tag>
 	<Tag name="Front">Front</Tag>
+	<Tag name="OpponentsList">Kilpailijalista</Tag>
 	<Tag name="VegetCol">Kasvillisuuden törmäystunnistus</Tag>
 	<Tag name="Change">Muuta</Tag>
 	<Tag name="Reset">Nollaa</Tag>
@@ -792,7 +815,7 @@
 	<Tag name="SC_Savanna">Savanna</Tag>
 	<Tag name="NetHost">Isäntä</Tag>
 	<Tag name="Road_AngleAuto">Autom.</Tag>
-	<Tag name="ImpostorDist">Impostors dist.</Tag>
+	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
 	<Tag name="AlignSmooth">Smooth size</Tag>
 	<Tag name="page">sivu</Tag>
 	<Tag name="Layers">Kerrokset</Tag>
@@ -815,12 +838,13 @@
 	<Tag name="InputRoadSelectMany">Valitse (useita)</Tag>
 	<Tag name="Copy">Kopio</Tag>
 	<Tag name="Channel">Channel</Tag>
-	<Tag name="Reverse">Reverse</Tag>
+	<Tag name="CarDesc_LK4">Slow and heavy car. Can handle bumps well. Is stable and easy to drive. But isn't suited for faster tracks.</Tag>
 	<Tag name="TipFind">Enter part of name to find (filters list).</Tag>
 	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
 	<Tag name="scale">Skaala</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="HeightMin">Height Min</Tag>
+	<Tag name="RoadStats">Tien tilastot</Tag>
 	<Tag name="InputObjectsType">-,=  - change object type</Tag>
 	<Tag name="ColHue">Color - Hue</Tag>
 	<Tag name="Brush_ShapeNoise2">Noise2</Tag>
@@ -828,7 +852,7 @@
 	<Tag name="TBTime">Aika</Tag>
 	<Tag name="AlignTerrainToRoad">Align terrain to road</Tag>
 	<Tag name="TerLNoise">Kohina</Tag>
-	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
+	<Tag name="CarDesc_NS">Good driving on most tracks also rally. But a bit less powerful.</Tag>
 	<Tag name="TerLayers">Maaston kerrokset</Tag>
 	<Tag name="TipTerLMove">Move layer, changes order.</Tag>
 	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
@@ -841,10 +865,11 @@
 	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Ins - copy selection</Tag>
 	<Tag name="Materials">Materiaalit</Tag>
-	<Tag name="Gravel">Sora</Tag>
 	<Tag name="InputMultiplier">Kerroin</Tag>
+	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="InputMapShiftDown">Shift down</Tag>
 	<Tag name="InputObjectsMoveReset">shift-1 - move to cursor / reset new height</Tag>
+	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="AllEffects">Tehosteet aktivoitu</Tag>
 	<Tag name="CarCollis">Autojen törmäystunnistus</Tag>
 	<Tag name="TipTerrainDouble">Make terrain size double, leaving current heightmap part in center.</Tag>
@@ -859,6 +884,7 @@
 	<Tag name="GraphicsAll_Ultra">Huippu</Tag>
 	<Tag name="ApplyShaders">Käytä varjostimia</Tag>
 	<Tag name="TipGrassDens">How dense/rare will the grass be on terrain.</Tag>
+	<Tag name="loops">silmukat</Tag>
 	<Tag name="MinimapBorder">Reunus</Tag>
 	<Tag name="InputTerFilter">F - Suodata (poista kohinaa)</Tag>
 	<Tag name="TipSteerSurf">Steering range multiplier, for surface (Gravel,Asphalt).</Tag>
@@ -887,6 +913,7 @@
 	<Tag name="PipeWStepsMul">Pipe W steps mul.</Tag>
 	<Tag name="AllowSaveOrigTrk">Allow saving original tracks</Tag>
 	<Tag name="RplLoad">Lataa</Tag>
+	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
 	<Tag name="InpSet_AxisHalfInv">Axis Half Inversed</Tag>
 	<Tag name="ScaleTerHeight">Maaston korkeus</Tag>
 	<Tag name="TipTerLHSm">Height smooth range (transition).</Tag>
@@ -901,11 +928,13 @@
 	<Tag name="TipRoadDist">How far from road will the model appear.</Tag>
 	<Tag name="FramesPerSec">Frames per second</Tag>
 	<Tag name="ChampInfo2">Championships are usually long, have many tracks, but are easy to pass.</Tag>
+	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
 	<Tag name="EnterSave">Enter - tallenna</Tag>
 	<Tag name="DistMult">Distance mul</Tag>
 	<Tag name="InputStartWidth">; &apos;  -  adjust start box width (for road width)</Tag>
 	<Tag name="ImpostorsOnly">Impostors Only (low quality)</Tag>
 	<Tag name="Error">Virhe</Tag>
+	<Tag name="PickSetParam">Set parameters, marked with</Tag>
 	<Tag name="Resolution">Resoluutio</Tag>
 	<Tag name="GrassSize">Koko</Tag>
 	<Tag name="Left">Vasen</Tag>
@@ -948,7 +977,8 @@
 	<Tag name="UserDir">User Path (logs, configs, user data, etc)</Tag>
 	<Tag name="TipTerLayers">Recommended use 3 or 4, with noise. Affects Fps. More than 4 will not work.</Tag>
 	<Tag name="SC_Unidentified">Unidentified</Tag>
-	<Tag name="InputPaintColor">C - Maalin väri</Tag>
+	<Tag name="CarDesc_XM">Very old car but with a powerful engine. Drivable on most tracks, except bumps because of stiff suspension.</Tag>
+	<Tag name="InputSubTabSpace">Space - cycle sub-tabs (shift - back)</Tag>
 	<Tag name="TipSurfType">Type of surface, determines sound.</Tag>
 	<Tag name="NextStage">Continuing to next stage</Tag>
 	<Tag name="SC_Mud">Mud</Tag>
@@ -982,36 +1012,9 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="TipTerNormScale">Use if needed to scale terrain texture normals, for lighting. Otherwise default 1.</Tag>
-	<Tag name="CarDesc_OT">This is the slowest car. Very old and a bit creepy truck. Can drive only on flat tracks and with turtle speed.</Tag>
-	<Tag name="CarDesc_3S">Good car, suited for all tracks, but has slower acceleration, especially at high speeds.</Tag>
-	<Tag name="CarDesc_HR">Very heavy and slow car, best for terrain and bumps, easy to drive. But useless on fast and stunt tracks.</Tag>
-	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
-	<Tag name="CarDesc_S1">Second best rally car in game, drivable on all tracks with the best experience, similar to ES.</Tag>
-	<Tag name="CarDesc_S8">Good rally car, drivable on all tracks. Similar to S1, but shorter and more steerable.</Tag>
-	<Tag name="CarDesc_TC6">Good rally car. Has low height. Is a bit older and less powerful.</Tag>
-	<Tag name="CarDesc_ES">Best rally car in game, great driving experience on all tracks. A bit high though.</Tag>
-	<Tag name="CarDesc_360">Good looking car, best fit for asphalt tracks. Can also drive on few flat terrain tracks. But completely undrivable at bumps,jumps,loops or pipes because of low suspension height.</Tag>
-	<Tag name="CarDesc_M3">Very old car with low power engine. Not fit for jumps. Pick if you want to drive slowly.</Tag>
-	<Tag name="CarDesc_TW">This big, extreme vehicle is great for long and smooth tracks. But completely useless when narrow or in mud (e.g. in jungle). Also not easy to drive.</Tag>
-	<Tag name="Update">Update</Tag>
-	<Tag name="InputPickTab">Tab - close/open pick window</Tag>
-	<Tag name="CarDesc_FM">Another rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
-	<Tag name="FOV">View angle</Tag>
-	<Tag name="CarDesc_XM">Very old car but with a powerful engine. Drivable on most tracks, except bumps because of stiff suspension.</Tag>
-	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
-	<Tag name="TipRoadDistMax">Maximum distance to road. E.g. can be used for vegetation that should appear only close to road: plants, bushes etc.</Tag>
-	<Tag name="CarDesc_FR4">Quite old, heavy, broad and slow. Good for terrain but not with the best suspension. Isn't suited for faster or stunt tracks.</Tag>
-	<Tag name="CarDesc_CT">Good looking, but difficult to drive, having engine at rear. Fit only for asphalt and few flat tracks. Completely undrivable at bumps,jumps,loops or pipes because of low suspension height.</Tag>
-	<Tag name="TipTestBlendmap">Use to test blendmap clarity. The color box shows this layer's color on blendmap (is black when layer is off). Usually, a good blendmap needs to have pure layer colors with little blending (dull, mixed colors). To achieve that narrow/separate angle and height ranges and use high or low noise power.</Tag>
-	<Tag name="Pick">Pick</Tag>
-	<Tag name="CarDesc_UV">This big wheeled utility vehicle is powered by 4 electic engines. Suited for nearly all tracks, except when narrow. Great for exploring other planets. But has bad aerodynamics and gets stuck in mud.</Tag>
-	<Tag name="TipTerTripl">When using graphics option triplanar max 2, this layer will have triplanar mapping (good textured slopes). Affects Fps.</Tag>
-	<Tag name="CarDesc_N1">Good car for all tracks. A bit less steerable, but quite stable because of length.</Tag>
-	<Tag name="CarDesc_NS">Good driving on most tracks also rally. But a bit less powerful.</Tag>
-	<Tag name="PickSetParam">Set parameters, marked with</Tag>
-	<Tag name="CarDesc_LK4">Slow and heavy car. Can handle bumps well. Is stable and easy to drive. But isn't suited for faster tracks.</Tag>
-	<Tag name="InputSubTabSpace">Space - cycle sub-tabs (shift - back)</Tag>
+	<Tag name="SpecularPower">Specular power</Tag>
+	<Tag name="GraphicsRightHQ">By default better quality (less Fps) is on right. Marked with + if on left.</Tag>
+	<Tag name="SpecularPowerEm">Emissive power</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

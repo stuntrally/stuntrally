@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
 	<Tag name="TipTreeDens">Сколько объектов (деревья, скалы и т.п.) будут на треке.</Tag>
-	<Tag name="CamSpeed">Скорость камеры</Tag>
+	<Tag name="InputKeyUnassigned">-- Нет --</Tag>
 	<Tag name="Density">Плотность</Tag>
 	<Tag name="InputMapScreenshot">Скриншот</Tag>
 	<Tag name="Brush_Filter">Фильтр</Tag>
@@ -13,19 +13,20 @@
 	<Tag name="InputHeaderTxt4">Ред.</Tag>
 	<Tag name="TerrainDouble">Двойной</Tag>
 	<Tag name="TipLoadTrkEditor">Загрузить трек (после изменеия) или Перезагрузить текущий</Tag>
-	<Tag name="TipAutoGearbox">Снимите для ручного переключения передач</Tag>
+	<Tag name="FuelBoost">За нитро</Tag>
 	<Tag name="LS_MISC">Завершение</Tag>
 	<Tag name="InputHeaderTxt2">Привязка</Tag>
 	<Tag name="InputHeaderTxt3">Значение</Tag>
 	<Tag name="AndUsing">и используется</Tag>
 	<Tag name="Championship">Чемпионат</Tag>
 	<Tag name="ColumnRadius">Радиус колонны</Tag>
-	<Tag name="InputKeyUnassigned">-- Нет --</Tag>
+	<Tag name="CamSpeed">Скорость камеры</Tag>
 	<Tag name="Warnings">Оповещения</Tag>
 	<Tag name="UnitKmh">км/ч</Tag>
 	<Tag name="InputRoadPickOne">Выбор (один)</Tag>
 	<Tag name="Road_AngleManual">Ручной</Tag>
 	<Tag name="ViewDist">Видимость</Tag>
+	<Tag name="CarDesc_OT">This is the slowest car. Very old and a bit creepy truck. Can drive only on flat tracks and with turtle speed.</Tag>
 	<Tag name="SimMode">Режим симуляции (сложность)</Tag>
 	<Tag name="RplParticles">Частицы (не для призрака)</Tag>
 	<Tag name="Road_Roll">Вращ</Tag>
@@ -58,6 +59,7 @@
 	<Tag name="DevKeys">Разработчику. Ctrl-F всё, Alt-shift-1..6 загр. тест треки.</Tag>
 	<Tag name="InputRoadChkFirst">0   - устан. контр. точку 1-ой</Tag>
 	<Tag name="SC_ForestMntn">Гор.Лес</Tag>
+	<Tag name="NetRefreshList">Обновить</Tag>
 	<Tag name="InputObjectsIns">Ins - вставить, где курсор</Tag>
 	<Tag name="GraphicsAll_Low">Низко</Tag>
 	<Tag name="ChampEndFinished">Вы закончили этот чемпионат.</Tag>
@@ -76,7 +78,7 @@
 	<Tag name="TipTrackMap">Мини-карта выбранного трека, вид сверху.</Tag>
 	<Tag name="RenderSystem">Система Визуализации</Tag>
 	<Tag name="TerGenOfsY">Смещение по Y</Tag>
-	<Tag name="FuelBoost">За нитро</Tag>
+	<Tag name="TipAutoGearbox">Снимите для ручного переключения передач</Tag>
 	<Tag name="pipes">трубы</Tag>
 	<Tag name="CarTireVisCircles">Визуализ. нагр. на шины</Tag>
 	<Tag name="InputFluidsUpdate">F10 - обновить отображение глубины в ландшафте</Tag>
@@ -85,7 +87,7 @@
 	<Tag name="Game">Игра</Tag>
 	<Tag name="InputObjectsScale">3 - Масштаб LMB - все RMB: Y MMB: Z</Tag>
 	<Tag name="RepeatStage">Этап провален</Tag>
-	<Tag name="TipParType3">Частица шины тип 3 (глобально для трека).</Tag>
+	<Tag name="CarDesc_HR">Very heavy and slow car, best for terrain and bumps, easy to drive. But useless on fast and stunt tracks.</Tag>
 	<Tag name="SC_Finland">Финляндия</Tag>
 	<Tag name="TipParType1">Частица шины тип 1 (глобально для трека).</Tag>
 	<Tag name="GrassDens">Плотность травы</Tag>
@@ -100,7 +102,7 @@
 	<Tag name="TBPlace">Место</Tag>
 	<Tag name="AngleMax">Макс. угол</Tag>
 	<Tag name="objects">объекты (дин.)</Tag>
-	<Tag name="TipToggleTriplanar">Когда используешь трех плоскостную графическую опцию, этот слой (только он) будет отображаться в трех плоскостях.</Tag>
+	<Tag name="TipToggleTriplanar">Use for steep or mountain layers, max use is 2.</Tag>
 	<Tag name="TBBest">Лучш.</Tag>
 	<Tag name="InputKeyboardEmulation">Эмуляция клавиатуры</Tag>
 	<Tag name="NetGamesAvail">Доступные игры</Tag>
@@ -117,7 +119,7 @@
 	<Tag name="ShadowFilter">Фильтр</Tag>
 	<Tag name="Rivers">Реки</Tag>
 	<Tag name="TipGrTerMaxAngle">Угол ландшафта выше которого не будет какой-нибудь травы (начало исчезновения, для ровного угла).</Tag>
-	<Tag name="RestartApply">Для применения изменений перезагрузите игру.</Tag>
+	<Tag name="TipTerNormScale">Use if needed to scale terrain texture normals, for lighting. Otherwise default 1.</Tag>
 	<Tag name="InputMapResetGame">Сбросить игру</Tag>
 	<Tag name="smoke">дым</Tag>
 	<Tag name="MouseCapture">Захват мыши</Tag>
@@ -154,10 +156,11 @@
 	<Tag name="Restart">Заново</Tag>
 	<Tag name="Count">Количество</Tag>
 	<Tag name="InputBrushPower">; &apos;  (или alt-Wheel)  -  экспонента силы</Tag>
+	<Tag name="CarDesc_S1">Second best rally car in game, drivable on all tracks with the best experience, similar to ES.</Tag>
 	<Tag name="UnitKm">км</Tag>
 	<Tag name="SC_SavannaDry">СаваннаС</Tag>
 	<Tag name="InputObjectsSimulate">C - симуляция динамических объектов</Tag>
-	<Tag name="OpponentsList">Спис. опон.</Tag>
+	<Tag name="CarDesc_S8">Good rally car, drivable on all tracks. Similar to S1, but shorter and more steerable.</Tag>
 	<Tag name="BackMenu">Назад</Tag>
 	<Tag name="BasedOn">на основе</Tag>
 	<Tag name="ProfilerTxt">Сроки профайлера </Tag>
@@ -185,6 +188,7 @@
 	<Tag name="TipToggleGrass">Включить или отлючить этот травяной слой.</Tag>
 	<Tag name="SSS_SpeedFactor">Коэф. скорости</Tag>
 	<Tag name="RplRecTime">Время записи</Tag>
+	<Tag name="CarDesc_TC6">Good rally car. Has low height. Is a bit older and less powerful.</Tag>
 	<Tag name="TipGrTerMaxHeight">Высота ландшафта выше которого не будет какой-нибудь травы (начало исчезновения, на ровной дистанции).</Tag>
 	<Tag name="InputRoadYaw">- откл. вращ.</Tag>
 	<Tag name="MessageBox_Try">Пробовать</Tag>
@@ -200,6 +204,7 @@
 	<Tag name="Score">Очки</Tag>
 	<Tag name="SpeedSensitiveSteering">Чувствит. управления</Tag>
 	<Tag name="Swap">Обмен</Tag>
+	<Tag name="CarDesc_ES">Best rally car in game, great driving experience on all tracks. A bit high though.</Tag>
 	<Tag name="Suspension">Подвеска</Tag>
 	<Tag name="TerrainSize">Размер ландшафта</Tag>
 	<Tag name="SC_Australia">Австралия</Tag>
@@ -247,6 +252,7 @@
 	<Tag name="Weather">Погода</Tag>
 	<Tag name="DenyReversed">Нельзя обратно</Tag>
 	<Tag name="RplAlpha">Прозрачный призрак</Tag>
+	<Tag name="CarDesc_360">Good looking car, best fit for asphalt tracks. Can also drive on few flat terrain tracks. But completely undrivable at bumps,jumps,loops or pipes because of low suspension height.</Tag>
 	<Tag name="InpSet_Medium">Средне</Tag>
 	<Tag name="TipTerrainHalf">Изменение размера высот текущей местности в два раза (используется только для сокращения размера файла).</Tag>
 	<Tag name="wind">ветер</Tag>
@@ -320,7 +326,7 @@
 	<Tag name="TipSunDirPitch">Направление солнца - угол наклона.</Tag>
 	<Tag name="Passed">Пройдено</Tag>
 	<Tag name="InputMapHandBrake">Ручник</Tag>
-	<Tag name="loops">петли</Tag>
+	<Tag name="CarType_Other">Иной</Tag>
 	<Tag name="ProjectPage">Стр. проекта:</Tag>
 	<Tag name="Brush_Octaves">Наборы</Tag>
 	<Tag name="Type">Тип</Tag>
@@ -337,7 +343,7 @@
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="max">макс.</Tag>
 	<Tag name="Stage">Этап</Tag>
-	<Tag name="NetRefreshList">Обновить</Tag>
+	<Tag name="CarDesc_3S">Good car, suited for all tracks, but has slower acceleration, especially at high speeds.</Tag>
 	<Tag name="None">Нет</Tag>
 	<Tag name="MessageBox_Abort">Отмена</Tag>
 	<Tag name="Brush_ShapeNoise">Шум</Tag>
@@ -406,15 +412,14 @@
 	<Tag name="TipReverse">Обратное направление трека.</Tag>
 	<Tag name="DidntPass">Не пойдет</Tag>
 	<Tag name="Road_Cur">Кр.</Tag>
-	<Tag name="InputMinimapType">alt-F2,F3 - пред.,след. тип</Tag>
-	<Tag name="TipGrassPatchLengthMin">Минимальная длина участка травы.</Tag>
+	<Tag name="InputMinimapType">shift-F2,F3 - Prev,next minimap type</Tag>
+	<Tag name="TipGrassSwayLen">Длина эффекта качания травы (размер).</Tag>
 	<Tag name="Road">Дор.</Tag>
 	<Tag name="FluidCont">Жидкость</Tag>
 	<Tag name="TrackAutoLoad">Автозагр. трека</Tag>
 	<Tag name="BoostFOV">Адаптив. FOV</Tag>
 	<Tag name="DustSize">разм. пыли</Tag>
 	<Tag name="Shortcuts">Соч. клавиш</Tag>
-	<Tag name="CarType_Other">Иной</Tag>
 	<Tag name="TerrainMove">Движ.</Tag>
 	<Tag name="Friction">Трение</Tag>
 	<Tag name="InputAfterChanges">(после Ланд./Раст. изменений)</Tag>
@@ -427,8 +432,10 @@
 	<Tag name="TiresEdit2">1,2 или Num /,* - изм. знач.</Tag>
 	<Tag name="TipGrassColorMap">Отображение цвета травы для ландшафта, обычно такой же как у материала травы. Дополнительная окраска травы.</Tag>
 	<Tag name="Multiplayer">По сети</Tag>
+	<Tag name="trailColor">цвет следа</Tag>
 	<Tag name="InputToggleVeget">V - откл./вкл. растительность</Tag>
 	<Tag name="Particles">Частицы</Tag>
+	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
 	<Tag name="Other">Другое</Tag>
 	<Tag name="TipTerLAngSm">Диапазон ровного угла (переход).</Tag>
 	<Tag name="godrays">Рас. света</Tag>
@@ -440,11 +447,11 @@
 	<Tag name="ColReflect">Отраж.</Tag>
 	<Tag name="Development">Разработка</Tag>
 	<Tag name="InputRoadIns">Ins - вставить (после., alt - до)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - окно наладки (ред. авто)</Tag>
+	<Tag name="Gravel">Гравий</Tag>
 	<Tag name="InputBrushParams">Параметры кисти</Tag>
 	<Tag name="min">мин.</Tag>
 	<Tag name="SC_Asphalt">Асфальт</Tag>
-	<Tag name="BumpWavelen">Ухаб: длина волны</Tag>
+	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - угол трубы (0 нет трубы)</Tag>
 	<Tag name="TerrainEmissiveLight">Ландшафт излучает свет</Tag>
 	<Tag name="Finished">Завершено</Tag>
@@ -468,8 +475,9 @@
 	<Tag name="ScaleAll">Масш. все</Tag>
 	<Tag name="InpSet_KeyFull">1 кнопка</Tag>
 	<Tag name="InputMapPrevTab">Пред. вкладка</Tag>
-	<Tag name="InputTogglePreview">F7 - войти/выйти смот. камера</Tag>
+	<Tag name="CarDesc_M3">Very old car with low power engine. Not fit for jumps. Pick if you want to drive slowly.</Tag>
 	<Tag name="GameBy">Игра</Tag>
+	<Tag name="CarDesc_TW">This big, extreme vehicle is great for long and smooth tracks. But completely useless when narrow or in mud (e.g. in jungle). Also not easy to drive.</Tag>
 	<Tag name="CameraBounce">Дин. подпрыг. камеры</Tag>
 	<Tag name="SunWeather">Солнце и погода</Tag>
 	<Tag name="Lock">Забл.</Tag>
@@ -501,6 +509,8 @@
 	<Tag name="CheckOnSave">Пров. при сохр.</Tag>
 	<Tag name="InputTerPaint">A - Краска текстур (слоев)</Tag>
 	<Tag name="NetPort">Порт</Tag>
+	<Tag name="Update">Update</Tag>
+	<Tag name="InputPickTab">Tab - close/open pick window</Tag>
 	<Tag name="CarType_Gravel">Гравий</Tag>
 	<Tag name="NetMasterConnectionError">Главный сервер не доступен.</Tag>
 	<Tag name="Brush_CurrentH">Тек.В</Tag>
@@ -520,6 +530,7 @@
 	<Tag name="InputFluidsDel">Del - удалить</Tag>
 	<Tag name="Leave">Выход</Tag>
 	<Tag name="InputRoadMove">- двиг. точку</Tag>
+	<Tag name="CarDesc_FM">Another rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
 	<Tag name="GrassSway">Качание</Tag>
 	<Tag name="NetGameProtocolError">Несовместимая версия протокола между ровнями.</Tag>
 	<Tag name="Right">Вправо</Tag>
@@ -535,6 +546,7 @@
 	<Tag name="NetGameName">Имя игры</Tag>
 	<Tag name="TexSize">Разм. текстуры</Tag>
 	<Tag name="TipSunAmbient">Цвет окружающей среды солнечного света (константа). R G B значения от 0 до 1 (напр. 0.4 0.4 0.4)</Tag>
+	<Tag name="TipParType3">Частица шины тип 3 (глобально для трека).</Tag>
 	<Tag name="ApplyShadows">Применить тени</Tag>
 	<Tag name="ChngTrkTab">изм. в [Трек] вкладке</Tag>
 	<Tag name="TipParType2">Частица шины тип 2 (глобально для трека).</Tag>
@@ -542,8 +554,9 @@
 	<Tag name="InputRplCtrl3">[ , ] - ветер сзади/спереди (shift - слабый, ctrl,alt - сильный)</Tag>
 	<Tag name="Laps">Круги</Tag>
 	<Tag name="InputRplCtrl1">Backspace - пок./скрыть индик. (держи ctrl для мыши)</Tag>
+	<Tag name="TracksGhost">Призрак трека (лучш. езда для трека)</Tag>
 	<Tag name="InputRplCtrl4">K, L - изм. вид камеры другого игрока</Tag>
-	<Tag name="TipGrassSwayLen">Длина эффекта качания травы (размер).</Tag>
+	<Tag name="TipGrassPatchLengthMin">Минимальная длина участка травы.</Tag>
 	<Tag name="WaterReflection">Отражение</Tag>
 	<Tag name="intensity">интенсивность</Tag>
 	<Tag name="Fog">Туман</Tag>
@@ -552,7 +565,7 @@
 	<Tag name="FrameSkip">Пропуск кадра</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - сохр. файл и перезагр. игру</Tag>
 	<Tag name="InputTrackScrn">(снимок для трека)</Tag>
-	<Tag name="trailColor">цвет следа</Tag>
+	<Tag name="TweakEdit1">Alt-Z - окно наладки (ред. авто)</Tag>
 	<Tag name="Boost">Нитро</Tag>
 	<Tag name="TipFogClr">Конец тумана когда смотришь ниже солнца.</Tag>
 	<Tag name="NumLocalPlayers">Количество игроков</Tag>
@@ -574,7 +587,7 @@
 	<Tag name="Advanced">Продвинутый</Tag>
 	<Tag name="InputObjectsMode">X - ред. объекты</Tag>
 	<Tag name="TipGrassVisDist">Дистанция видимости для страниц памяти травы.</Tag>
-	<Tag name="TracksGhost">Призрак трека (лучш. езда для трека)</Tag>
+	<Tag name="FOV">View angle</Tag>
 	<Tag name="TipNewDup">Создает новый трек, дублируя выбранный трек, и использует новое имя (во-первых измени имя).</Tag>
 	<Tag name="TerGenScale">Шкала высоты</Tag>
 	<Tag name="Settings">Настройки</Tag>
@@ -606,8 +619,9 @@
 	<Tag name="TrackAvgSpeed">Ср. скор.</Tag>
 	<Tag name="Yes">Да</Tag>
 	<Tag name="ChampEndCongrats">Поздравляем !</Tag>
+	<Tag name="TipRoadDistMax">Maximum distance to road. E.g. can be used for vegetation that should appear only close to road: plants, bushes etc.</Tag>
 	<Tag name="TerGenPers">Инерция шума</Tag>
-	<Tag name="RoadStats">Стат. дороги</Tag>
+	<Tag name="CarDesc_FR4">Quite old, heavy, broad and slow. Good for terrain but not with the best suspension. Isn't suited for faster or stunt tracks.</Tag>
 	<Tag name="SunDir">Напр. солнца</Tag>
 	<Tag name="InputRoadPick">Space - 1 выбрать/нет</Tag>
 	<Tag name="SC_Canyon">Каньон</Tag>
@@ -616,6 +630,7 @@
 	<Tag name="MessageBox_Ignore">игнорировать</Tag>
 	<Tag name="GraphicsAll_Impossible">Невозможно</Tag>
 	<Tag name="ObjStatic">Статич.</Tag>
+	<Tag name="CarDesc_CT">Good looking, but difficult to drive, having engine at rear. Fit only for asphalt and few flat tracks. Completely undrivable at bumps,jumps,loops or pipes because of low suspension height.</Tag>
 	<Tag name="Layout">План</Tag>
 	<Tag name="TipTexNormAuto">Когда отмечено, нормальная текстура автоматически устанавливается из текстур распростраения (+ _nh в название файла).</Tag>
 	<Tag name="TrackBestTime">Луч. время</Tag>
@@ -628,8 +643,10 @@
 	<Tag name="Cars">Тачки</Tag>
 	<Tag name="CarType_Slow">Медленный</Tag>
 	<Tag name="ColBright">Яркость</Tag>
+	<Tag name="TipTestBlendmap">Use to test blendmap clarity. The color box shows this layer's color on blendmap (is black when layer is off). Usually, a good blendmap needs to have pure layer colors with little blending (dull, mixed colors). To achieve that narrow/separate angle and height ranges and use high or low noise power.</Tag>
 	<Tag name="InputStartMeet">авто встретиться (след+/пред-) места</Tag>
 	<Tag name="Difficulty">Сложность</Tag>
+	<Tag name="ImpostorDist">Дист. спрайта</Tag>
 	<Tag name="GraphicsAll_Higher">Выше</Tag>
 	<Tag name="RplRename">Переименовать</Tag>
 	<Tag name="TiresEdit">Ред. шины - (Схемы в режиме 4)</Tag>
@@ -651,6 +668,7 @@
 	<Tag name="TipGrassMaterial">Материал травы (тип) для этого слоя, выбран чтобы подобрать окружение трека.</Tag>
 	<Tag name="TipRearThrottleInverse">Инверсия функции газа с тормозом задней передачи.</Tag>
 	<Tag name="LS_ROAD">Загрузка дороги</Tag>
+	<Tag name="Pick">Pick</Tag>
 	<Tag name="RoadPoint">Точка дороги</Tag>
 	<Tag name="CarStartPos">Старт авто</Tag>
 	<Tag name="ObjRocks">Скалы</Tag>
@@ -688,7 +706,9 @@
 	<Tag name="InputOther2">Enter - пок./скрыть окно игроков по сети</Tag>
 	<Tag name="InpSet_Fast">Быстро</Tag>
 	<Tag name="InputMain">Главное</Tag>
+	<Tag name="CarDesc_UV">This big wheeled utility vehicle is powered by 4 electic engines. Suited for nearly all tracks, except when narrow. Great for exploring other planets. But has bad aerodynamics and gets stuck in mud.</Tag>
 	<Tag name="NewTerrainFlat">Новая плоскость</Tag>
+	<Tag name="InputPaintColor">C - цвет краски</Tag>
 	<Tag name="ColSat">Насыщен.</Tag>
 	<Tag name="TipTCS">Предотвращает кручение колеса при ускорении (по умолчанию: выключено).</Tag>
 	<Tag name="NewTerrainGenerate">Ген. новый</Tag>
@@ -709,6 +729,7 @@
 	<Tag name="InputFluidsType">-,=  - тип жидкости (вода,грязь,и т.п.)</Tag>
 	<Tag name="TrackWidthAvg">Ср. ширина</Tag>
 	<Tag name="Road_Length">Длина</Tag>
+	<Tag name="TipTerTripl">When using graphics option triplanar max 2, this layer will have triplanar mapping (good textured slopes). Affects Fps.</Tag>
 	<Tag name="RplGhostOther">Призрак другого автомобиля</Tag>
 	<Tag name="TipModelVisDist">Дистанция видимости для 3d моделей, после этого они превращаются в 2d спрайты.</Tag>
 	<Tag name="NetAddress">Адрес</Tag>
@@ -746,6 +767,7 @@
 	<Tag name="EdCamPos">Позиция камеры</Tag>
 	<Tag name="GraphicsAll_Lowest">Очень низко</Tag>
 	<Tag name="InputReadyToPlay">(готово для игры)</Tag>
+	<Tag name="CarDesc_N1">Good car for all tracks. A bit less steerable, but quite stable because of length.</Tag>
 	<Tag name="CamInertia">Инерц. камера</Tag>
 	<Tag name="TipSurfFrict">Сцепление с поверхностью (напр. 1.0 асфальт, 0.7 гравий, 0.5 лед).</Tag>
 	<Tag name="DynamicObjects">Дин. объекты</Tag>
@@ -763,6 +785,7 @@
 	<Tag name="RplBestOnly">Сохр. призрака с лучш. временем</Tag>
 	<Tag name="InputFluidsMode">W - ред. жидкости</Tag>
 	<Tag name="Front">Перед</Tag>
+	<Tag name="OpponentsList">Спис. опон.</Tag>
 	<Tag name="VegetCol">Столк. с растит.</Tag>
 	<Tag name="Change">Изменить</Tag>
 	<Tag name="Reset">Сброс</Tag>
@@ -792,7 +815,7 @@
 	<Tag name="SC_Savanna">Саванна</Tag>
 	<Tag name="NetHost">Хост</Tag>
 	<Tag name="Road_AngleAuto">Авто</Tag>
-	<Tag name="ImpostorDist">Дист. спрайта</Tag>
+	<Tag name="InputRoadAltLMB">alt-LMB (или 1,2)</Tag>
 	<Tag name="AlignSmooth">Ровность</Tag>
 	<Tag name="page">ст.</Tag>
 	<Tag name="Layers">Слои</Tag>
@@ -815,12 +838,13 @@
 	<Tag name="InputRoadSelectMany">Выбрать (много)</Tag>
 	<Tag name="Copy">Копировать</Tag>
 	<Tag name="Channel">Канал</Tag>
-	<Tag name="Reverse">Обратно</Tag>
+	<Tag name="CarDesc_LK4">Slow and heavy car. Can handle bumps well. Is stable and easy to drive. But isn't suited for faster tracks.</Tag>
 	<Tag name="TipFind">Введи часть имени, чтобы найти (фильтрует список).</Tag>
 	<Tag name="InputRoadOnPipe">8   - езда по трубе</Tag>
 	<Tag name="scale">Масштаб</Tag>
 	<Tag name="UnitMph">м/ч</Tag>
 	<Tag name="HeightMin">Мин. высота</Tag>
+	<Tag name="RoadStats">Стат. дороги</Tag>
 	<Tag name="InputObjectsType">-,=  - тип объекта</Tag>
 	<Tag name="ColHue">Цвет</Tag>
 	<Tag name="Brush_ShapeNoise2">Шум2</Tag>
@@ -828,7 +852,7 @@
 	<Tag name="TBTime">Время</Tag>
 	<Tag name="AlignTerrainToRoad">Вырав. дороги с ландшафтом</Tag>
 	<Tag name="TerLNoise">Шум</Tag>
-	<Tag name="InputRoadAltLMB">alt-LMB (или 1,2)</Tag>
+	<Tag name="CarDesc_NS">Good driving on most tracks also rally. But a bit less powerful.</Tag>
 	<Tag name="TerLayers">Слои ландш.</Tag>
 	<Tag name="TipTerLMove">Перемещает слой, изменяет порядок.</Tag>
 	<Tag name="TipLTrMaxTerH">Высота ландшафта, выше которого модель не появиться.</Tag>
@@ -841,10 +865,11 @@
 	<Tag name="SleepMS">Инт. сна [миллисек.]</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Ins - копир. выб.</Tag>
 	<Tag name="Materials">Материалы</Tag>
-	<Tag name="Gravel">Гравий</Tag>
 	<Tag name="InputMultiplier">Коэффициент</Tag>
+	<Tag name="Reverse">Обратно</Tag>
 	<Tag name="InputMapShiftDown">Передача -</Tag>
 	<Tag name="InputObjectsMoveReset">shift-1 - к курсору /сброс высоты</Tag>
+	<Tag name="BumpWavelen">Ухаб: длина волны</Tag>
 	<Tag name="AllEffects">Вкл. эффекты</Tag>
 	<Tag name="CarCollis">Столк. авто</Tag>
 	<Tag name="TipTerrainDouble">Делает двойной размер ландшафта, оставляя часть текущей высоты карты в центре.</Tag>
@@ -859,6 +884,7 @@
 	<Tag name="GraphicsAll_Ultra">Ультра</Tag>
 	<Tag name="ApplyShaders">Прим. шейдеры</Tag>
 	<Tag name="TipGrassDens">Как часто/редко трава будет на ландшафте.</Tag>
+	<Tag name="loops">петли</Tag>
 	<Tag name="MinimapBorder">Граница</Tag>
 	<Tag name="InputTerFilter">F - фильтр (уд. шум)</Tag>
 	<Tag name="TipSteerSurf">Коэффициент диапазона управления, для поверхности (гравий, асфальт).</Tag>
@@ -887,6 +913,7 @@
 	<Tag name="PipeWStepsMul">Трубы W множ. шаги</Tag>
 	<Tag name="AllowSaveOrigTrk">Сохранять ориг. треки</Tag>
 	<Tag name="RplLoad">Загрузить</Tag>
+	<Tag name="InputTogglePreview">F7 - войти/выйти смот. камера</Tag>
 	<Tag name="InpSet_AxisHalfInv">Пол оси инверсия</Tag>
 	<Tag name="ScaleTerHeight">Высота ландшафта</Tag>
 	<Tag name="TipTerLHSm">Диапазон ровной высоты (переход).</Tag>
@@ -901,11 +928,13 @@
 	<Tag name="TipRoadDist">Как далеко от дороги появиться модель.</Tag>
 	<Tag name="FramesPerSec">Кадров в секунду</Tag>
 	<Tag name="ChampInfo2">Обычно чемпионаты длинные, много треков, но легко пройти.</Tag>
+	<Tag name="RestartApply">Для применения изменений перезагрузите игру.</Tag>
 	<Tag name="EnterSave">Enter - сохр.</Tag>
 	<Tag name="DistMult">Коэф. дистанции</Tag>
 	<Tag name="InputStartWidth">; &apos;  -  регул. ширину старта (ширина дороги)</Tag>
 	<Tag name="ImpostorsOnly">Толко спрайты (низкое качество)</Tag>
 	<Tag name="Error">Ошибка</Tag>
+	<Tag name="PickSetParam">Set parameters, marked with</Tag>
 	<Tag name="Resolution">Разрешение</Tag>
 	<Tag name="GrassSize">Размер</Tag>
 	<Tag name="Left">Налево</Tag>
@@ -946,9 +975,10 @@
 	<Tag name="TerGenOct">Наборы</Tag>
 	<Tag name="Volume">Громкость</Tag>
 	<Tag name="UserDir">Путь пользователя (данные пользователя)</Tag>
-	<Tag name="TipTerLayers">Текстурные слои ландшафта (рекомендуем 2-3, сильно влияет на Fps). *Автосмешивание поддерживает максимум 4.</Tag>
+	<Tag name="TipTerLayers">Recommended use 3 or 4, with noise. Affects Fps. More than 4 will not work.</Tag>
 	<Tag name="SC_Unidentified">Неопознанный</Tag>
-	<Tag name="InputPaintColor">C - цвет краски</Tag>
+	<Tag name="CarDesc_XM">Very old car but with a powerful engine. Drivable on most tracks, except bumps because of stiff suspension.</Tag>
+	<Tag name="InputSubTabSpace">Space - cycle sub-tabs (shift - back)</Tag>
 	<Tag name="TipSurfType">Тип поверхности, определяется звуком.</Tag>
 	<Tag name="NextStage">Этап завершен</Tag>
 	<Tag name="SC_Mud">Грязь</Tag>
@@ -979,39 +1009,12 @@
 	<Tag name="Terrain">Ландш.</Tag>
 	<Tag name="smooth">ровный</Tag>
 	<Tag name="Pitch">наклон</Tag>
-	<Tag name="InputNextOptTab">F2,F3 - пред,след Опции вкладка (shift - подменю)</Tag>
+	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="TipTerNormScale">Use if needed to scale terrain texture normals, for lighting. Otherwise default 1.</Tag>
-	<Tag name="CarDesc_OT">This is the slowest car. Very old and a bit creepy truck. Can drive only on flat tracks and with turtle speed.</Tag>
-	<Tag name="CarDesc_3S">Good car, suited for all tracks, but has slower acceleration, especially at high speeds.</Tag>
-	<Tag name="CarDesc_HR">Very heavy and slow car, best for terrain and bumps, easy to drive. But useless on fast and stunt tracks.</Tag>
-	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
-	<Tag name="CarDesc_S1">Second best rally car in game, drivable on all tracks with the best experience, similar to ES.</Tag>
-	<Tag name="CarDesc_S8">Good rally car, drivable on all tracks. Similar to S1, but shorter and more steerable.</Tag>
-	<Tag name="CarDesc_TC6">Good rally car. Has low height. Is a bit older and less powerful.</Tag>
-	<Tag name="CarDesc_ES">Best rally car in game, great driving experience on all tracks. A bit high though.</Tag>
-	<Tag name="CarDesc_360">Good looking car, best fit for asphalt tracks. Can also drive on few flat terrain tracks. But completely undrivable at bumps,jumps,loops or pipes because of low suspension height.</Tag>
-	<Tag name="CarDesc_M3">Very old car with low power engine. Not fit for jumps. Pick if you want to drive slowly.</Tag>
-	<Tag name="CarDesc_TW">This big, extreme vehicle is great for long and smooth tracks. But completely useless when narrow or in mud (e.g. in jungle). Also not easy to drive.</Tag>
-	<Tag name="Update">Update</Tag>
-	<Tag name="InputPickTab">Tab - close/open pick window</Tag>
-	<Tag name="CarDesc_FM">Another rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
-	<Tag name="FOV">View angle</Tag>
-	<Tag name="CarDesc_XM">Very old car but with a powerful engine. Drivable on most tracks, except bumps because of stiff suspension.</Tag>
-	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
-	<Tag name="TipRoadDistMax">Maximum distance to road. E.g. can be used for vegetation that should appear only close to road: plants, bushes etc.</Tag>
-	<Tag name="CarDesc_FR4">Quite old, heavy, broad and slow. Good for terrain but not with the best suspension. Isn't suited for faster or stunt tracks.</Tag>
-	<Tag name="CarDesc_CT">Good looking, but difficult to drive, having engine at rear. Fit only for asphalt and few flat tracks. Completely undrivable at bumps,jumps,loops or pipes because of low suspension height.</Tag>
-	<Tag name="TipTestBlendmap">Use to test blendmap clarity. The color box shows this layer's color on blendmap (is black when layer is off). Usually, a good blendmap needs to have pure layer colors with little blending (dull, mixed colors). To achieve that narrow/separate angle and height ranges and use high or low noise power.</Tag>
-	<Tag name="Pick">Pick</Tag>
-	<Tag name="CarDesc_UV">This big wheeled utility vehicle is powered by 4 electic engines. Suited for nearly all tracks, except when narrow. Great for exploring other planets. But has bad aerodynamics and gets stuck in mud.</Tag>
-	<Tag name="TipTerTripl">When using graphics option triplanar max 2, this layer will have triplanar mapping (good textured slopes). Affects Fps.</Tag>
-	<Tag name="CarDesc_N1">Good car for all tracks. A bit less steerable, but quite stable because of length.</Tag>
-	<Tag name="CarDesc_NS">Good driving on most tracks also rally. But a bit less powerful.</Tag>
-	<Tag name="PickSetParam">Set parameters, marked with</Tag>
-	<Tag name="CarDesc_LK4">Slow and heavy car. Can handle bumps well. Is stable and easy to drive. But isn't suited for faster tracks.</Tag>
-	<Tag name="InputSubTabSpace">Space - cycle sub-tabs (shift - back)</Tag>
+	<Tag name="SpecularPower">Specular power</Tag>
+	<Tag name="GraphicsRightHQ">By default better quality (less Fps) is on right. Marked with + if on left.</Tag>
+	<Tag name="SpecularPowerEm">Emissive power</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
