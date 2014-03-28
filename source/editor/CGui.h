@@ -200,8 +200,11 @@ public:
 	SV svTrRdDist;  SV svGrDensSmooth;  Ed edSceneryId;
 
 	//  model view 3d  (veget,objs)
+	Txt txVHmin,txVHmax,txVWmin,txVWmax;
+	void updVegetInfo();
+
 	Can viewCanvas;
-	wraps::RenderBoxScene* viewBox;
+	wraps::RenderBoxScene* viewBox;  Ogre::Vector3 viewSc;
 	MyGUI::IntCoord GetViewSize();
 	Ogre::String viewMesh;
 	float tiViewUpd;
@@ -217,7 +220,7 @@ public:
 
 	SV svLTrDens;
 	SV svLTrRdDist, svLTrRdDistMax;
-	SV svLTrMinSc,  svLTrMaxSc;
+	SV svLTrMinSc,  svLTrMaxSc;  void slLTrSc(SV*);
 	SV svLTrWindFx, svLTrWindFy;
 	SV svLTrMaxTerAng;
 	SV svLTrMinTerH, svLTrMaxTerH, svLTrFlDepth;

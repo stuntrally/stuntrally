@@ -86,6 +86,12 @@ void SliderValue::UpdI(int *pI)
 	Upd();
 }
 
+float SliderValue::getF()
+{
+	if (!pFloat)  return 0.f;
+	return *pFloat;
+}
+
 //  value changed, update slided and text
 void SliderValue::Upd()
 {

@@ -70,7 +70,7 @@ public:
 	//  update slider and text (value changed)
 	void Upd();
 	//  change pointer to value (does also Upd)
-	void UpdF(float *pF);
+	void UpdF(float *pF);   float getF();
 	void UpdI(int *pI);
 	
 	void setVisible(bool vis);

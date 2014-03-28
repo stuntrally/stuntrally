@@ -226,6 +226,22 @@ void CGui::tabPgLayers(Tab wp, size_t id)
 	SetUsedStr(valLTrAll, sc->pgLayers.size(), 5);
 }
 
+void CGui::updVegetInfo()
+{
+	Vector3 va = viewSc * svLTrMinSc.getF(),
+			vb = viewSc * svLTrMaxSc.getF();
+	float wa = std::max(va.x, va.z), wb = std::max(vb.x, vb.z);
+	txVHmin->setCaption(fToStr(va.y, 1,4));
+	txVHmax->setCaption(fToStr(vb.y, 1,4));
+	txVWmin->setCaption(fToStr(wa, 1,4));
+	txVWmax->setCaption(fToStr(wb, 1,4));
+}
+
+void CGui::slLTrSc(SV*)
+{
+	updVegetInfo();
+}
+
 //  tab changed
 void CGui::SldUpd_PgL()
 {

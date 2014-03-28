@@ -356,8 +356,8 @@ void CGui::InitGui()
 	sv= &svLTrRdDist;	sv->Init("LTrRdDist",	 &i, 0,20);  sv->DefaultI(0);
 	sv= &svLTrRdDistMax;sv->Init("LTrRdDistMax", &i, 0,20);  sv->DefaultI(20);
 	
-	sv= &svLTrMinSc;	sv->Init("LTrMinSc",	 &f, 0.f,4.f, 3.f, 3,5);  sv->DefaultF(0.7f);
-	sv= &svLTrMaxSc;	sv->Init("LTrMaxSc",	 &f, 0.f,4.f, 3.f, 3,5);  sv->DefaultF(1.2f);
+	sv= &svLTrMinSc;	sv->Init("LTrMinSc",	 &f, 0.f,4.f, 3.f, 3,5);  sv->DefaultF(0.7f);  Sev(LTrSc);
+	sv= &svLTrMaxSc;	sv->Init("LTrMaxSc",	 &f, 0.f,4.f, 3.f, 3,5);  sv->DefaultF(1.2f);  Sev(LTrSc);
 	
 	sv= &svLTrWindFx;	sv->Init("LTrWindFx",	 &f, 0.f,12.f, 3.f, 3,5);  sv->DefaultF(0.5f);
 	sv= &svLTrWindFy;	sv->Init("LTrWindFy",	 &f, 0.f,0.4f, 3.f, 3,5);  sv->DefaultF(0.06f);
@@ -369,6 +369,9 @@ void CGui::InitGui()
 	sv= &svLTrFlDepth;	sv->Init("LTrFlDepth",	 &f, 0.f,5.f, 2.f, 1,4);  sv->DefaultF(0.f);
 	SldUpd_PgL();  // real &f set here
 
+	txVHmin = fTxt("LTrInfHmin");  txVHmax = fTxt("LTrInfHmax");
+	txVWmin = fTxt("LTrInfWmin");  txVWmax = fTxt("LTrInfWmax");
+	
 
 	///  Grass  ------------------------------------
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);

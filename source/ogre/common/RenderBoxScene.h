@@ -9,6 +9,7 @@
 #include <Ogre.h>
 #include <MyGUI.h>
 #include "RenderBox.h"
+#include "Def_Str.h"
 
 namespace wraps
 {
@@ -43,8 +44,9 @@ namespace wraps
 		/** Add mesh to scene and remove previous one
 			@param
 				_meshName The name of the Mesh it is to be based on (e.g. 'ogrehead.mesh').
+			returns mesh size
 		*/
-		void injectObject(const Ogre::String& _meshName, const Ogre::Vector3& _position = Ogre::Vector3::ZERO, const Ogre::Quaternion& _orientation = Ogre::Quaternion::IDENTITY, const Ogre::Vector3& _scale = Ogre::Vector3::UNIT_SCALE)
+		Ogre::Vector3 injectObject(const Ogre::String& _meshName, const Ogre::Vector3& _position = Ogre::Vector3::ZERO, const Ogre::Quaternion& _orientation = Ogre::Quaternion::IDENTITY, const Ogre::Vector3& _scale = Ogre::Vector3::UNIT_SCALE)
 		{
 			clearScene();
 
@@ -54,6 +56,7 @@ namespace wraps
 			node->attachObject(mEntity);
 
 			updateViewport();
+			return mEntity->getBoundingBox().getSize();  ///
 		}
 
 		/** Run mesh animation if animation with such name exist (else print warning in log).

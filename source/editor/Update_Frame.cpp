@@ -334,9 +334,10 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	{	gui->tiViewUpd = -1.f;
 
 		gui->viewBox->clearScene();
-		if (gui->viewMesh != "" && ResourceGroupManager::getSingleton().resourceExistsInAnyGroup(gui->viewMesh))
-			gui->viewBox->injectObject(gui->viewMesh);
-	}
+		if (!gui->viewMesh.empty() && ResourceGroupManager::getSingleton().resourceExistsInAnyGroup(gui->viewMesh))
+		{	gui->viewSc = gui->viewBox->injectObject(gui->viewMesh);
+			gui->updVegetInfo();
+	}	}
 	
 	
 	//  Update rain/snow - depends on camera
