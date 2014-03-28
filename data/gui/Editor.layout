@@ -3077,28 +3077,31 @@
 							<UserString key="tip" value="#{TipVegetGroups}"/>
 						</Widget>
 
-						<Widget type="ImageBox" skin="ImageBox" position="640 108 32 20">
+						<Widget type="TextBox" skin="TextBox" position="640 96 60 20" name="LTrInfCnt">
+							<Property key="TextColour" value="0.6 0.8 0.8"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="640 110 32 20">
 							<Property key="ImageCoord" value="0 48 32 20"/>
 							<Property key="ImageTexture" value="track_icons.png"/>
 							<Property key="Colour" value="0.2 1 0.4"/>
 							<Property key="Alpha" value="0.8"/>
 						</Widget>
-						<Widget type="ImageBox" skin="ImageBox" position="700 111 32 20">
+						<Widget type="ImageBox" skin="ImageBox" position="700 113 32 20">
 							<Property key="ImageCoord" value="0 32 32 20"/>
 							<Property key="ImageTexture" value="track_icons.png"/>
 							<Property key="Colour" value="0.2 1 0.4"/>
 							<Property key="Alpha" value="0.5"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="640 131 60 24" name="LTrInfHmin">
+						<Widget type="TextBox" skin="TextBox" position="640 132 60 20" name="LTrInfHmin">
 							<Property key="TextColour" value="0.5 0.76 1.0"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="640 155 60 24" name="LTrInfHmax">
+						<Widget type="TextBox" skin="TextBox" position="640 156 60 20" name="LTrInfHmax">
 							<Property key="TextColour" value="0.6 0.8 1.0"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="700 131 60 24" name="LTrInfWmin">
+						<Widget type="TextBox" skin="TextBox" position="700 132 60 20" name="LTrInfWmin">
 							<Property key="TextColour" value="0.3 0.5 0.7"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="700 155 60 24" name="LTrInfWmax">
+						<Widget type="TextBox" skin="TextBox" position="700 156 60 20" name="LTrInfWmax">
 							<Property key="TextColour" value="0.35 0.55 0.75"/>
 						</Widget>
 

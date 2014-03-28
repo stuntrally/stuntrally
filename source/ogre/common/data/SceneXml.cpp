@@ -63,7 +63,7 @@ void Scene::Default()
 
 PagedLayer::PagedLayer()
 {
-	on = 0;  name = "";  dens = 0.1f;
+	on = 0;  name = "";  dens = 0.1f;  cnt = 0;
 	windFx = 0.0f;  windFy = 0.0f;  addRdist = 0;  maxRdist = 100;
 	minScale = 0.1f;  maxScale = 0.25f;  ofsY = 0.f;
 	maxTerAng = 50.f;  minTerH = -100.f;  maxTerH = 100.f;

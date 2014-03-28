@@ -202,6 +202,7 @@ void CScene::CreateTrees()
 		{
 			PagedLayer& pg = sc->pgLayersAll[sc->pgLayers[l]];
 			String file = pg.name, fpng = file+".png";
+			pg.cnt = 0;
 
 			Entity* ent = app->mSceneMgr->createEntity(file);
 			ent->setVisibilityFlags(RV_Vegetation);  ///vis+  disable in render targets
@@ -341,8 +342,9 @@ void CScene::CreateTrees()
 				
 				if (!add)  continue;  //
 
+				//  add
 				treeLoader->addTree(ent, pos0, yaw, scl);
-				cntr++;
+				++pg.cnt;  ++cntr;  // count stats
 					
 				
 				///  add to bullet world

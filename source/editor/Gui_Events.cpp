@@ -224,6 +224,7 @@ void CGui::tabPgLayers(Tab wp, size_t id)
 			
 	Upd3DView(lay.name);
 	SetUsedStr(valLTrAll, sc->pgLayers.size(), 5);
+	txVCnt->setCaption(toStr(lay.cnt));
 }
 
 void CGui::updVegetInfo()

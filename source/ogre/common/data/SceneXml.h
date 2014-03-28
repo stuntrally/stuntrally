@@ -78,6 +78,7 @@ public:
 	float minScale, maxScale, ofsY;
 	float maxTerAng, minTerH, maxTerH;  // terrain
 	float maxDepth;  // in fluid
+	int cnt;  // count on track, for stats
 	PagedLayer();
 };
 

@@ -369,6 +369,7 @@ void CGui::InitGui()
 	sv= &svLTrFlDepth;	sv->Init("LTrFlDepth",	 &f, 0.f,5.f, 2.f, 1,4);  sv->DefaultF(0.f);
 	SldUpd_PgL();  // real &f set here
 
+	txVCnt = fTxt("LTrInfCnt");
 	txVHmin = fTxt("LTrInfHmin");  txVHmax = fTxt("LTrInfHmax");
 	txVWmin = fTxt("LTrInfWmin");  txVWmax = fTxt("LTrInfWmax");
 	

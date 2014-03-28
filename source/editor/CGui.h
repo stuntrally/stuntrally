@@ -200,7 +200,7 @@ public:
 	SV svTrRdDist;  SV svGrDensSmooth;  Ed edSceneryId;
 
 	//  model view 3d  (veget,objs)
-	Txt txVHmin,txVHmax,txVWmin,txVWmax;
+	Txt txVHmin,txVHmax,txVWmin,txVWmax, txVCnt;
 	void updVegetInfo();
 
 	Can viewCanvas;

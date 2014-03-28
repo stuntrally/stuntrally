@@ -41,7 +41,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,edSceneryId(0)
 	,cmbGrassClr(0)
 	,viewCanvas(0), tiViewUpd(-1.f), viewBox(0)
-	,txVHmin(0),txVHmax(0),txVWmin(0),txVWmax(0)
+	,txVHmin(0),txVHmax(0),txVWmin(0),txVWmax(0),txVCnt(0)
 	// paged layers, veget models
 	, idPgLay(0), tabsPgLayers(0), valLTrAll(0)
 	// grass layers
