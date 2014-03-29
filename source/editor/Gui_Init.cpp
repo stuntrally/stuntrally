@@ -350,6 +350,7 @@ void CGui::InitGui()
 	ck= &ckPgLayOn;		ck->Init("LTrEnabled",	&b);   Cev(PgLayOn);
 	valLTrAll = fTxt("LTrAll");
 	Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);
+	Btn("UpdateVeget", btnUpdateVeget);
 
 	sv= &svLTrDens;		sv->Init("LTrDens",		 &f, 0.f, 1.f, 2.f, 3,5);  sv->DefaultF(0.15f);
 	
@@ -402,6 +403,7 @@ void CGui::InitGui()
 	ck= &ckGrLayOn;		ck->Init("LGrEnabled",	&b);   Cev(GrLayOn);
 	valLGrAll = fTxt("LGrAll");
 	Tab(tabsGrLayers, "LGrLayTab", tabGrLayers);
+	Btn("UpdateGrass", btnUpdateGrass);
 
 	sv= &svGrMinX;	sv->Init("GrMinX",	&f, 0.5f,4.f, 1.5f);  sv->DefaultF(1.2f);
 	sv= &svGrMaxX;	sv->Init("GrMaxX",	&f, 0.5f,4.1, 1.5f);  sv->DefaultF(1.6f);

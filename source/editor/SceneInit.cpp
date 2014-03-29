@@ -317,7 +317,7 @@ void App::UpdateTrackEv()
 	gui->Status("Updated",0.5,1.0,0.7);
 }
 
-//  Update btns
+//  Update btns  ---
 void CGui::btnUpdateLayers(WP)
 {
 	if (!app->bNewHmap)
@@ -329,6 +329,20 @@ void CGui::btnUpdateLayers(WP)
 	app->scn->CreateTerrain(app->bNewHmap,true,false);
 	scn->road->mTerrain = scn->terrain;
 	app->scn->updGrsTer();
+}
+
+void CGui::btnUpdateGrass(WP)  // TODO: grass only ...
+{
+	scn->DestroyTrees();
+	if (pSet->bTrees)
+		scn->CreateTrees();
+}
+
+void CGui::btnUpdateVeget(WP)
+{
+	scn->DestroyTrees();
+	if (pSet->bTrees)
+		scn->CreateTrees();
 }
 
 

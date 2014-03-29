@@ -524,10 +524,10 @@ void CGui::PickShow(int n, bool toggleVis)
 	const int wx = pSet->windowx, wy = pSet->windowy;
 	//if (pSet->pick_center
 	switch (n)  ///pick dim
-	{	case 0:  app->mWndPick->setCoord(wx*0.45f, 0.04f*wy, 420, 0.95f*wy);  break;
-		case 1:  app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 380, 0.95f*wy);  break;
-		case 2:  app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 420, 0.95f*wy);  break;
-		case 3:  app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 420, 0.95f*wy);  break;
+	{	case 0:  app->mWndPick->setCoord(wx*0.45f, 0.04f*wy, 300, 0.95f*wy);  break;
+		case 1:  app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 280, 0.95f*wy);  break;
+		case 2:  app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 300, 0.95f*wy);  break;
+		case 3:  app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 300, 0.95f*wy);  break;
 	}
 	if (n==3)  // upd pick road
 	{	UString s = btnRoad[idRdPick]->getCaption();

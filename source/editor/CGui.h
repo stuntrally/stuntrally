@@ -217,6 +217,7 @@ public:
 	Btn btnVeget;  // pick
 	Tab tabsPgLayers;  void tabPgLayers(TAB);
 	CK(PgLayOn);  Txt valLTrAll;
+	void btnUpdateVeget(WP);
 
 	SV svLTrDens;
 	SV svLTrRdDist, svLTrRdDistMax;
@@ -232,6 +233,7 @@ public:
 	Btn btnGrassMtr;  // pick
 	Tab tabsGrLayers;  void tabGrLayers(TAB);
 	CK(GrLayOn);  Txt valLGrAll;
+	void btnUpdateGrass(WP);
 
 	SV svLGrDens, svGrChan;
 	SV svGrMinX, svGrMaxX;

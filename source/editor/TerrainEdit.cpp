@@ -597,10 +597,10 @@ void App::createBrushPrv()
 		"BrushPrvTex", rgDef, TEX_TYPE_2D,
 		BrPrvSize,BrPrvSize,0, PF_BYTE_RGBA, TU_DYNAMIC);
 	 	
-	MaterialPtr material = MaterialManager::getSingleton().create(
+	MaterialPtr mat = MaterialManager::getSingleton().create(
 		"BrushPrvMtr", rgDef);
 	 
-	Pass* pass = material->getTechnique(0)->getPass(0);
+	Pass* pass = mat->getTechnique(0)->getPass(0);
 	pass->createTextureUnitState("BrushPrvTex");
 	pass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
 
@@ -614,10 +614,10 @@ void App::createBrushPrv()
 		"TerPrvTex", rgDef, TEX_TYPE_2D,
 		TerPrvSize,TerPrvSize,0, PF_BYTE_RGBA, TU_DYNAMIC);
 	 	
-	material = MaterialManager::getSingleton().create(
+	mat = MaterialManager::getSingleton().create(
 		"TerPrvMtr", rgDef);
 	 
-	pass = material->getTechnique(0)->getPass(0);
+	pass = mat->getTechnique(0)->getPass(0);
 	pass->createTextureUnitState("TerPrvTex");
 	pass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
 

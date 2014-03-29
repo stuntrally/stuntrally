@@ -152,9 +152,13 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(F5):  LoadTrack();  return true;
 		
 		case key(F8):  // update
-			if (editGui && tab->getIndexSelected() == TAB_Layers)
-				gui->btnUpdateLayers(0);
-			else  UpdateTrack();  return true;
+			if (editGui)
+			switch (tab->getIndexSelected())
+			{	case TAB_Layers:  gui->btnUpdateLayers(0);  return true;
+				case TAB_Grass:  gui->btnUpdateGrass(0);  return true;
+				case TAB_Veget:  gui->btnUpdateVeget(0);  return true;
+			}
+			UpdateTrack();  return true;  // default full
 
 		case key(F9):  // blendmap
 			gui->ckDebugBlend.Invert();
