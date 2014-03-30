@@ -45,7 +45,7 @@ Editor tutorial:
 
 Description
 
-The game features 146 tracks in 24 sceneries and 19 cars.
+The game features 152 tracks in 24 sceneries and 19 cars.
 Game modes include: Single Race, Tutorials, Championships, Challenges,
 Multiplayer and Split Screen. Also Replays and Ghost drive are present.
 
@@ -53,8 +53,8 @@ The Track Editor allows modifying and creating tracks.
 Both run on Linux and Windows.
 
 The game aims at a rally style of driving (like in Richard Burns Rally),
-with possible stunt elements (loops, jumps).
-It also introduces road pipes, and provides a 3D spline generated road.
+with possible stunt elements (jumps, loops, pipes)
+and uses a 3D spline generated road.
 
 For full features list check: http://code.google.com/p/vdrift-ogre/wiki/Features
 
