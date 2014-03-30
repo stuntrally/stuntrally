@@ -511,13 +511,10 @@ void CGui::InitGui()
 	Cmb(cmbTexNorm, "TexNormal", comboTexNorm);  cmbTexNorm->addItem("flat_n.png");
 
 	strlist li;
-	PATHMANAGER::DirList(sData + "/terrain2", li);
+	PATHMANAGER::DirList(sData + (pSet->tex_size > 0 ? "/terrain" : "/terrain_s"), li);
 
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
-	if (!StringUtil::match(*i, "*.txt", false) &&
-		!StringUtil::match(*i, "*_prv.*", false))
-	{
-		String s = *i;
+	{	String s = *i;
 		if (StringUtil::match(*i, "*_n.*", false))
 			cmbTexNorm->addItem(*i);
 		//else

@@ -83,7 +83,7 @@ void CScene::SetupTerrain()
 		di.layerList[i].worldSize = l.tiling;
 
 		//  combined rgb,a from 2 tex
-		String p = PATHMANAGER::Data()+"/terrain2/";
+		String p = PATHMANAGER::Data() + (app->pSet->tex_size > 0 ? "/terrain/" : "/terrain_s/");
 		String d_d, d_s, n_n, n_h;
 		
 		///  diff
