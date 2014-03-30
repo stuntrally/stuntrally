@@ -13,6 +13,9 @@
 		<t name="V7-Radioactive"/>
 		<t name="R3-Hot"/>
 		<t name="W14-DangerRoad"/>
+		<t name="V8-Uncertain"/>
+		<t name="F17-BadCamber"/>
+		<t name="W15-SkiJump"/>
 	-->
 
 <!--  Tutorials  -->
@@ -132,6 +135,7 @@
 		<t name="W3-Swing"/>
 		<t name="C2-CanyonRun"/>
 		<t name="T2-RedOakPark"/>
+		<t name="C6-Abyss"/>
 	</champ>
 
 	<champ name="Bumpy shorts" ver="2" difficulty="4" type="2" 
@@ -158,11 +162,12 @@
 		<t name="G1-Long"/>
 	</champ>
 
-	<champ name="Curly shorts" ver="1" difficulty="3" type="2" 
+	<champ name="Curly shorts" ver="2" difficulty="3" type="2" 
 			descr="Short, curly and tricky tracks with sharp turns.">
+		<t name="E2-Serpent"/>
+		<t name="I12-Beach"/>
 		<t name="F3-Snail"/>
 		<t name="O2-Mouse"/>
-		<t name="I12-Beach"/>
 		<t name="D11-PersianCity"/>
 		<t name="J18-Tiny"/>
 	</champ>
@@ -260,6 +265,7 @@
 		<t name="T4-Scary"/>
 		<t name="V5-Sad"/>
 		<t name="R1-Mars"/>
+		<t name="V9-Craters"/>
 	</champ>
 
 
@@ -404,6 +410,7 @@
 		<t name="W12-Peaks"/>
 		<t name="W13-MtFog"/>
 		<t name="W14-DangerRoad"/>
+		<t name="W15-SkiJump"/>
 	</champ>
 	<champ name="Forest" ver="1" difficulty="4" type="5" 
 			descr="Forest championship. Part 1.">
@@ -424,6 +431,7 @@
 		<t name="F14-Maze"/>
 		<t name="F15-ForestTrip"/>
 		<t name="F16-Clew"/>
+		<t name="F17-BadCamber"/>
 	</champ>
 	<champ name="Island" ver="1" difficulty="2" type="5" 
 			descr="Island championship. Part 1.">
@@ -460,6 +468,7 @@
 		<t name="C3-Vast"/>
 		<t name="C4-Sway"/>
 		<t name="C5-Obstacles"/>
+		<t name="C6-Abyss"/>
 	</champ>
 	<champ name="Australia" ver="1" difficulty="4" type="6" 
 			descr="Australia championship.">
@@ -478,6 +487,11 @@
 		<t name="G4-River"/>
 		<t name="G5-Climb"/>
 		<t name="G6-Halfpipes"/>
+	</champ>
+	<champ name="Finland" ver="1" difficulty="1" type="6" 
+			descr="Finland championship.">
+		<t name="E1-Lakes"/>
+		<t name="E2-Serpent"/>
 	</champ>
 	<champ name="Autumn" ver="1" difficulty="2" type="6" 
 			descr="Autumn championship.">
@@ -504,6 +518,8 @@
 		<t name="V5-Sad"/>
 		<t name="V6-Crematoria"/>
 		<t name="V7-Radioactive"/>
+		<t name="V8-Uncertain"/>
+		<t name="V9-Craters"/>
 	</champ>
 	<champ name="Unidentified" ver="1" difficulty="4" type="6" 
 			descr="Unidentified championship.">
