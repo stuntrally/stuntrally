@@ -180,8 +180,8 @@ void CGui::comboRewind(CMB)
 	pSet->gui.rewind_type = val;
 }
 	
-void CGui::radKmh(WP wp){	Radio2(bRkmh, bRmph, true);   pSet->show_mph = false;  hud->Size(true);  }
-void CGui::radMph(WP wp){	Radio2(bRkmh, bRmph, false);  pSet->show_mph = true;   hud->Size(true);  }
+void CGui::radKmh(WP wp){	Radio2(bRkmh, bRmph, true);   pSet->show_mph = false;  hud->Size();  }
+void CGui::radMph(WP wp){	Radio2(bRkmh, bRmph, false);  pSet->show_mph = true;   hud->Size();  }
 
 void CGui::radSimEasy(WP){	Radio2(bRsimEasy, bRsimNorm, true);
 	pSet->gui.sim_mode = "easy";	bReloadSim = true;
@@ -247,7 +247,7 @@ void CGui::chkParTrl(Ck*)
 //  [View] size  . . . . . . . . . . . . . . . . . . . .
 void CGui::slHudSize(SV*)
 {
-	hud->Size(true);
+	hud->Size();
 }
 void CGui::slHudCreate(SV*)
 {

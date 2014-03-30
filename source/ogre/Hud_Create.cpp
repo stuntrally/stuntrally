@@ -29,11 +29,11 @@ using namespace MyGUI;
 
 ///  HUD resize
 //---------------------------------------------------------------------------------------------------------------
-void CHud::Size(bool full)
+void CHud::Size()
 {
 	float wx = app->mWindow->getWidth(), wy = app->mWindow->getHeight();
 	asp = wx/wy;
-	int plr = (int)app->carModels.size() -(app->isGhost2nd?1:0);  // others
+	int plr = std::max(1, (int)app->carModels.size() -(app->isGhost2nd?1:0));  // others
 
 	int cnt = pSet->game.local_players;
 	#ifdef DEBUG
@@ -61,6 +61,7 @@ void CHud::Size(bool full)
 			h.fScale = sc;
 			h.updGauges = true;
 		}
+		
 		//  minimap
 		Real sc = pSet->size_minimap * dim.avgsize;
 		const Real marg = 1.3f; //1.05f;  // from border
@@ -114,7 +115,7 @@ void CHud::Size(bool full)
 			#endif
 
 			//  times
-			bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || app->mClient;
+			//bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || app->mClient;
 			int tx = xMin + 40, ty = yMin + 40;
 			//h.bckTimes->setPosition(tx,ty);
 			//tx = 24;  ty = 4;  //(hasLaps ? 16 : 4);
@@ -168,7 +169,7 @@ void CHud::Create()
 
 	SceneManager* scm = app->mSplitMgr->mGuiSceneMgr;
 	if (hud[0].moMap || hud[0].txVel || hud[0].txTimes)
-		LogO("CreateHUD: Hud exists !");
+		LogO("Create Hud: exists !");
 
 	app->CreateGraphs();
 		
@@ -207,7 +208,7 @@ void CHud::Create()
 	//  car pos tris (form all cars on all viewports)
 	SceneNode* rt = scm->getRootSceneNode();
 	asp = 1.f;  //_temp
-	moPos = Create2D("hud/CarPos", scm, 0.0f, true,true, 1.f,Vector2(1,1), RV_Hud,RQG_Hud3, plr * 6);
+	moPos = Create2D("hud/CarPos", scm, 0.f, true,true, 1.f,Vector2(1,1), RV_Hud,RQG_Hud3, plr * 6);
 	ndPos = rt->createChildSceneNode();
 	ndPos->attachObject(moPos);
 
@@ -249,12 +250,11 @@ void CHud::Create()
 	
 		//  gauges  backgr  -----------
 		String st = toStr(pSet->gauges_type);
-		const Real sc = 0.5f;
-		h.moGauges = Create2D("hud/"+st,scm,1, true,false, sc,Vector2(0.f,0.5f), RV_Hud,RQG_Hud1, 2);
+		h.moGauges = Create2D("hud/"+st,scm, 1.f, true,false, 0.f,Vector2(0.f,0.5f), RV_Hud,RQG_Hud1, 2);
 		h.ndGauges = rt->createChildSceneNode();  h.ndGauges->attachObject(h.moGauges);  h.ndGauges->setVisible(false);
 
 		//  gauges  needles
-		h.moNeedles = Create2D("hud/"+st,scm,1, true,false, sc,Vector2(0.5f,0.5f), RV_Hud,RQG_Hud3, 2);
+		h.moNeedles = Create2D("hud/"+st,scm, 1.f, true,false, 0.f,Vector2(0.5f,0.5f), RV_Hud,RQG_Hud3, 2);
 		h.ndNeedles = rt->createChildSceneNode();  h.ndNeedles->attachObject(h.moNeedles);  h.ndNeedles->setVisible(false);
 
 
@@ -510,7 +510,7 @@ void CHud::Create()
 
 	Show();  //_
 	app->bSizeHUD = true;
-	//SizeHUD(true);
+	//Size();
 	
 	LogO("::: Time Create Hud: "+fToStr(ti.getMilliseconds(),0,3)+" ms");
 }

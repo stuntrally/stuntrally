@@ -234,7 +234,7 @@ bool App::frameStart(Real time)
 	if (bSizeHUD)
 	{	bSizeHUD = false;
 
-		hud->Size(true);
+		hud->Size();
 	}
 
 

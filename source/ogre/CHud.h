@@ -134,8 +134,7 @@ public:
 	Ogre::ManualObject* CreateVdrMinimap();  //vdr only
 
 	//  show, size
-	void Size(bool full);
-	void Show(bool hideAll=false), ShowVp(bool vp);
+	void Size(), Show(bool hideAll=false), ShowVp(bool vp);
 
 	///  update
 	void Update(int carId, float time);
