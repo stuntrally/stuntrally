@@ -33,7 +33,6 @@ void CHud::Size()
 {
 	float wx = app->mWindow->getWidth(), wy = app->mWindow->getHeight();
 	asp = wx/wy;
-	int plr = std::max(1, (int)app->carModels.size() -(app->isGhost2nd?1:0));  // others
 
 	int cnt = pSet->game.local_players;
 	#ifdef DEBUG

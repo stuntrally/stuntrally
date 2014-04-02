@@ -86,7 +86,7 @@ void CHud::Update(int carId, float time)
 	//  update HUD elements for all cars that have a viewport (local or replay)
 	//-----------------------------------------------------------------------------------
 	int cnt = std::min(6/**/, (int)app->carModels.size());  // all cars
-	int cntC = std::max(1, std::min(4/**/, cnt -(app->isGhost2nd?1:0)));  // all vis plr
+	int cntC = std::min(4/**/, cnt - (app->isGhost2nd && !app->bRplPlay ? 1 : 0));  // all vis plr
 	int c;
 	
 	//  gui viewport - done once for all
