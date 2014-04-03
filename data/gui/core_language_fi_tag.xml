@@ -130,6 +130,7 @@
 	<Tag name="InputRoadNew">ctrl-Space - set new point's values from picked</Tag>
 	<Tag name="Road_New">Uusi</Tag>
 	<Tag name="Top">Ylös</Tag>
+	<Tag name="SpecularPower">Specular power</Tag>
 	<Tag name="CarType_Racing">Kilpailu</Tag>
 	<Tag name="InputRoadShiftSel">shift - select</Tag>
 	<Tag name="Input">Syöttö</Tag>
@@ -432,7 +433,6 @@
 	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
 	<Tag name="Multiplayer">Moninpeli</Tag>
-	<Tag name="trailColor">trail color</Tag>
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="Particles">Hiukkaset</Tag>
 	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
@@ -447,8 +447,9 @@
 	<Tag name="ColReflect">Heijastus</Tag>
 	<Tag name="Development">Kehitys</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
-	<Tag name="Gravel">Sora</Tag>
+	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
 	<Tag name="InputBrushParams">Siveltimen parametrit</Tag>
+	<Tag name="InputPaintColor">C - Maalin väri</Tag>
 	<Tag name="min">minimi</Tag>
 	<Tag name="SC_Asphalt">Asphalt</Tag>
 	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
@@ -535,6 +536,7 @@
 	<Tag name="NetGameProtocolError">Vertaisten protokollaversiot ovat epäyhteensopivia.</Tag>
 	<Tag name="Right">Oikea</Tag>
 	<Tag name="Help">Apua</Tag>
+	<Tag name="CarDesc_N1">Good car for all tracks. A bit less steerable, but quite stable because of length.</Tag>
 	<Tag name="LODPointsDist">LOD points dist.</Tag>
 	<Tag name="MotionBlur">Liikesumennus</Tag>
 	<Tag name="MinimapAndSize">Pienoiskartta, koko</Tag>
@@ -565,7 +567,7 @@
 	<Tag name="FrameSkip">Frames skip</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - save file and reload game</Tag>
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
+	<Tag name="trailColor">trail color</Tag>
 	<Tag name="Boost">Boost</Tag>
 	<Tag name="TipFogClr">Fog end color when looking under sun.</Tag>
 	<Tag name="NumLocalPlayers">Paikallisten pelaajien määrä</Tag>
@@ -708,7 +710,6 @@
 	<Tag name="InputMain">Main</Tag>
 	<Tag name="CarDesc_UV">This big wheeled utility vehicle is powered by 4 electic engines. Suited for nearly all tracks, except when narrow. Great for exploring other planets. But has bad aerodynamics and gets stuck in mud.</Tag>
 	<Tag name="NewTerrainFlat">Uusi tasainen</Tag>
-	<Tag name="InputPaintColor">C - Maalin väri</Tag>
 	<Tag name="ColSat">Kylläisyys</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
 	<Tag name="NewTerrainGenerate">Generate new</Tag>
@@ -767,7 +768,7 @@
 	<Tag name="EdCamPos">Kameran sijainti</Tag>
 	<Tag name="GraphicsAll_Lowest">Alin</Tag>
 	<Tag name="InputReadyToPlay">(ready to play in game)</Tag>
-	<Tag name="CarDesc_N1">Good car for all tracks. A bit less steerable, but quite stable because of length.</Tag>
+	<Tag name="GraphicsRightHQ">By default better quality (less Fps) is on right. Marked with + if on left.</Tag>
 	<Tag name="CamInertia">Kameran inertia</Tag>
 	<Tag name="TipSurfFrict">Surface friction (eg. 1.0 asphalt, 0.7 gravel, 0.5 ice).</Tag>
 	<Tag name="DynamicObjects">Dynaamiset objektit</Tag>
@@ -777,7 +778,7 @@
 	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
 	<Tag name="TipNewGame">Start game on new track or Restart on current.</Tag>
 	<Tag name="TipNewTerrainFlat">Luo uusi, tasainen maasto.</Tag>
-	<Tag name="Brush_Power">Voima</Tag>
+	<Tag name="SpecularPowerEm">Emissive power</Tag>
 	<Tag name="Far">Far</Tag>
 	<Tag name="RplGhosts">Haamut</Tag>
 	<Tag name="CarType">Tyyppi</Tag>
@@ -793,6 +794,7 @@
 	<Tag name="TipDeleteTrk">Permanently delete selected track.</Tag>
 	<Tag name="TipTrkViewShort">Short list view.</Tag>
 	<Tag name="Setup">Setup</Tag>
+	<Tag name="Brush_Power">Voima</Tag>
 	<Tag name="ReflMode_full">Täysi</Tag>
 	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
 	<Tag name="TipTerErrorNorm">Default terrain error in percent. Less for flat, more for high terrains.</Tag>
@@ -865,6 +867,7 @@
 	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Ins - copy selection</Tag>
 	<Tag name="Materials">Materiaalit</Tag>
+	<Tag name="Gravel">Sora</Tag>
 	<Tag name="InputMultiplier">Kerroin</Tag>
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="InputMapShiftDown">Shift down</Tag>
@@ -1012,9 +1015,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="SpecularPower">Specular power</Tag>
-	<Tag name="GraphicsRightHQ">By default better quality (less Fps) is on right. Marked with + if on left.</Tag>
-	<Tag name="SpecularPowerEm">Emissive power</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

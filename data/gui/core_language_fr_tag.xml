@@ -130,6 +130,7 @@
 	<Tag name="InputRoadNew">Ctrl-Espace - définir les valeurs du nouveau point depuis la sél.</Tag>
 	<Tag name="Road_New">Nouveau</Tag>
 	<Tag name="Top">Haut</Tag>
+	<Tag name="SpecularPower">Specular power</Tag>
 	<Tag name="CarType_Racing">Course</Tag>
 	<Tag name="InputRoadShiftSel">Maj. - sélectionner</Tag>
 	<Tag name="Input">Contrôles</Tag>
@@ -432,7 +433,6 @@
 	<Tag name="TiresEdit2">1,2 ou pavé num. /,* - changer la valeur</Tag>
 	<Tag name="TipGrassColorMap">Carte de couleur pour le paysage, généralement le même choix que pour le matériau d'herbe. Permet de changer la couleur de l'herbe.</Tag>
 	<Tag name="Multiplayer">Multijoueur</Tag>
-	<Tag name="trailColor">couleur traînée</Tag>
 	<Tag name="InputToggleVeget">V - Deactiver / activer la végétation</Tag>
 	<Tag name="Particles">Particules</Tag>
 	<Tag name="CarDesc_XZ">Une voiture très puissante, peut être conduite sur la plupart des circuits. Peu adaptée aux sauts à cause d'une suspension dure.</Tag>
@@ -447,8 +447,9 @@
 	<Tag name="ColReflect">Réflexion</Tag>
 	<Tag name="Development">Développement</Tag>
 	<Tag name="InputRoadIns">Insér. - insérer nouveau (après sélection, Alt : avant sélection)</Tag>
-	<Tag name="Gravel">Gravier</Tag>
+	<Tag name="TweakEdit1">Alt-Z - afficher la fenêtre d'édition de voiture</Tag>
 	<Tag name="InputBrushParams">Paramètres de la brosse</Tag>
+	<Tag name="InputPaintColor">C - Couleur de la peinture</Tag>
 	<Tag name="min">min</Tag>
 	<Tag name="SC_Asphalt">Bitume</Tag>
 	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
@@ -535,6 +536,7 @@
 	<Tag name="NetGameProtocolError">Versions du protocole incompatibles entre les pairs.</Tag>
 	<Tag name="Right">Droite</Tag>
 	<Tag name="Help">Aide</Tag>
+	<Tag name="CarDesc_N1">Bonne voiture pour tous les circuits. Pas très maniable, mais assez stable grâce à sa longueur.</Tag>
 	<Tag name="LODPointsDist">Distance des points de LOD</Tag>
 	<Tag name="MotionBlur">Flou cinétique</Tag>
 	<Tag name="MinimapAndSize">Taille de la mini carte</Tag>
@@ -565,7 +567,7 @@
 	<Tag name="FrameSkip">Fréquence d'actualisation</Tag>
 	<Tag name="TweakEdit2">Alt-Maj.-Z - sauvegarder et recharger</Tag>
 	<Tag name="InputTrackScrn">(pour la capture d'écran du circuit)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - afficher la fenêtre d'édition de voiture</Tag>
+	<Tag name="trailColor">couleur traînée</Tag>
 	<Tag name="Boost">Turbo</Tag>
 	<Tag name="TipFogClr">Couleur de la fin de la brume quand la caméra regarde le soleil.</Tag>
 	<Tag name="NumLocalPlayers">Nombre de joueurs locaux</Tag>
@@ -595,7 +597,7 @@
 	<Tag name="Anisotropy">Filtrage anisotrope</Tag>
 	<Tag name="InputToggleCam">Tab - changer entre mode édition et caméra</Tag>
 	<Tag name="Brush_Freq">Fréq.</Tag>
-	<Tag name="InputStartAltLMB">Alt-Clic gauche - tourner Alt-Clic droit - tourner verticalement</Tag>
+	<Tag name="InputStartAltLMB">alt-LMB - rotate (shift - global)   alt-RMB - pitch (shift - roll)</Tag>
 	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
 	<Tag name="Close">Fermer</Tag>
 	<Tag name="TerGenOfsX">Décalage X</Tag>
@@ -708,7 +710,6 @@
 	<Tag name="InputMain">Principal</Tag>
 	<Tag name="CarDesc_UV">Ce gros véhicule utilitaire est propulsé par 4 moteurs électriques. Adaptée à quasiment tous les circuits, sauf les plus étroits. Excellent pour explorer d'autres planètes. Mais ce véhicule gère mal les sauts et se coince dans la boue.</Tag>
 	<Tag name="NewTerrainFlat">Créer un terrain plat</Tag>
-	<Tag name="InputPaintColor">C - Couleur de la peinture</Tag>
 	<Tag name="ColSat">Saturation</Tag>
 	<Tag name="TipTCS">Évite de tourner les roues en accélérant (par défaut : désactivé).</Tag>
 	<Tag name="NewTerrainGenerate">Générer un nouveau</Tag>
@@ -767,7 +768,7 @@
 	<Tag name="EdCamPos">Position de la caméra</Tag>
 	<Tag name="GraphicsAll_Lowest">Le plus bas</Tag>
 	<Tag name="InputReadyToPlay">(prêt à jouer)</Tag>
-	<Tag name="CarDesc_N1">Bonne voiture pour tous les circuits. Pas très maniable, mais assez stable grâce à sa longueur.</Tag>
+	<Tag name="GraphicsRightHQ">By default better quality (less Fps) is on right. Marked with + if on left.</Tag>
 	<Tag name="CamInertia">Inertie de la caméra</Tag>
 	<Tag name="TipSurfFrict">Friction de la surface (exemple : 1.0 pour l'asphalte, 0.7 pour le gravier, 0.5 pour la glace).</Tag>
 	<Tag name="DynamicObjects">Objets dynamiques</Tag>
@@ -777,7 +778,7 @@
 	<Tag name="InputMoveAxisTip">Déplacez un axe pour voir son nombre</Tag>
 	<Tag name="TipNewGame">Démarrer une partie sur un nouveau circuit ou redémarrer sur le circuit actuel.</Tag>
 	<Tag name="TipNewTerrainFlat">Créer un nouveau terrain plat.</Tag>
-	<Tag name="Brush_Power">Puissance</Tag>
+	<Tag name="SpecularPowerEm">Emissive power</Tag>
 	<Tag name="Far">Éloigné</Tag>
 	<Tag name="RplGhosts">Fantômes</Tag>
 	<Tag name="CarType">Type</Tag>
@@ -793,6 +794,7 @@
 	<Tag name="TipDeleteTrk">Supprimer le circuit sélectionné définitivement.</Tag>
 	<Tag name="TipTrkViewShort">Vue courte.</Tag>
 	<Tag name="Setup">Configuration</Tag>
+	<Tag name="Brush_Power">Puissance</Tag>
 	<Tag name="ReflMode_full">Complet</Tag>
 	<Tag name="TipDisableWeather">Désactiver les particules météo.</Tag>
 	<Tag name="TipTerErrorNorm">Erreur du terrain par défaut. Une valeur plus faible donnera des terrains plus plats.</Tag>
@@ -865,6 +867,7 @@
 	<Tag name="SleepMS">Intervalle de repos en millisecondes</Tag>
 	<Tag name="InputObjectsCopySel">Ctrl-Ins. - copier la sélection</Tag>
 	<Tag name="Materials">Matériels</Tag>
+	<Tag name="Gravel">Gravier</Tag>
 	<Tag name="InputMultiplier">Multiplicateur</Tag>
 	<Tag name="Reverse">Inverser</Tag>
 	<Tag name="InputMapShiftDown">Rétrograder</Tag>
@@ -1012,9 +1015,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="SpecularPower">Specular power</Tag>
-	<Tag name="GraphicsRightHQ">By default better quality (less Fps) is on right. Marked with + if on left.</Tag>
-	<Tag name="SpecularPowerEm">Emissive power</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

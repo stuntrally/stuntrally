@@ -130,6 +130,7 @@
 	<Tag name="InputRoadNew">ctrl-Space - imposta nuovi valori di punto da raccolto</Tag>
 	<Tag name="Road_New">Nuovo</Tag>
 	<Tag name="Top">In cima</Tag>
+	<Tag name="SpecularPower">Specular power</Tag>
 	<Tag name="CarType_Racing">Da corsa</Tag>
 	<Tag name="InputRoadShiftSel">shift - select</Tag>
 	<Tag name="Input">Input</Tag>
@@ -432,7 +433,6 @@
 	<Tag name="TiresEdit2">1,2 or Num /,* - cambia valore</Tag>
 	<Tag name="TipGrassColorMap">Colormap erba per layer, di solito stessa scelta come i materiali erba. Colorazione erba aggiuntivo.</Tag>
 	<Tag name="Multiplayer">Multigiocatore</Tag>
-	<Tag name="trailColor">colore scia</Tag>
 	<Tag name="InputToggleVeget">V - Attiva/disattiva la vegetazione</Tag>
 	<Tag name="Particles">Particelle</Tag>
 	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
@@ -447,8 +447,9 @@
 	<Tag name="ColReflect">Riflesso</Tag>
 	<Tag name="Development">Sviluppo</Tag>
 	<Tag name="InputRoadIns">Ins - inserisci nuovo (dopo aver preso, alt -prima)</Tag>
-	<Tag name="Gravel">Ghiaia</Tag>
+	<Tag name="TweakEdit1">Alt-Z - vai alla finestra ottimizza (modifica auto)</Tag>
 	<Tag name="InputBrushParams">Parametri brush</Tag>
+	<Tag name="InputPaintColor">C - Colora</Tag>
 	<Tag name="min">min</Tag>
 	<Tag name="SC_Asphalt">Asphalt</Tag>
 	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
@@ -535,6 +536,7 @@
 	<Tag name="NetGameProtocolError">Versioni del protocollo incompatibili tra i peer.</Tag>
 	<Tag name="Right">Destra</Tag>
 	<Tag name="Help">Aiuto</Tag>
+	<Tag name="CarDesc_N1">Good car for all tracks. A bit less steerable, but quite stable because of length.</Tag>
 	<Tag name="LODPointsDist">Dist. punti LOD</Tag>
 	<Tag name="MotionBlur">Motion Blur</Tag>
 	<Tag name="MinimapAndSize">Minimap, grandezza</Tag>
@@ -565,7 +567,7 @@
 	<Tag name="FrameSkip">Riduci frame</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - salva il file e ricarica il gioco</Tag>
 	<Tag name="InputTrackScrn">(per le immagini catturate delle piste)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - vai alla finestra ottimizza (modifica auto)</Tag>
+	<Tag name="trailColor">colore scia</Tag>
 	<Tag name="Boost">Turbo</Tag>
 	<Tag name="TipFogClr">Colore di fine nebbia quando si guarda sotto il sole.</Tag>
 	<Tag name="NumLocalPlayers">Numero di giocatori locali</Tag>
@@ -595,7 +597,7 @@
 	<Tag name="Anisotropy">Anisotropia</Tag>
 	<Tag name="InputToggleCam">Tab - modalità camera/modifica</Tag>
 	<Tag name="Brush_Freq">Freq</Tag>
-	<Tag name="InputStartAltLMB">alt-LMB - ruota  alt-RMB - pitch</Tag>
+	<Tag name="InputStartAltLMB">alt-LMB - rotate (shift - global)   alt-RMB - pitch (shift - roll)</Tag>
 	<Tag name="InputRoadAngSnap">5,6   - snap angoli</Tag>
 	<Tag name="Close">Chiudi</Tag>
 	<Tag name="TerGenOfsX">Offset X</Tag>
@@ -708,7 +710,6 @@
 	<Tag name="InputMain">Generale</Tag>
 	<Tag name="CarDesc_UV">This big wheeled utility vehicle is powered by 4 electic engines. Suited for nearly all tracks, except when narrow. Great for exploring other planets. But has bad aerodynamics and gets stuck in mud.</Tag>
 	<Tag name="NewTerrainFlat">Nuovo piano</Tag>
-	<Tag name="InputPaintColor">C - Colora</Tag>
 	<Tag name="ColSat">Saturazione</Tag>
 	<Tag name="TipTCS">Impedisce che le ruote girino durante l'accelerazione (default: disattivato).</Tag>
 	<Tag name="NewTerrainGenerate">Genera nuovo</Tag>
@@ -767,7 +768,7 @@
 	<Tag name="EdCamPos">Posizione della camera</Tag>
 	<Tag name="GraphicsAll_Lowest">Più bassa</Tag>
 	<Tag name="InputReadyToPlay">(pronto a giocare)</Tag>
-	<Tag name="CarDesc_N1">Good car for all tracks. A bit less steerable, but quite stable because of length.</Tag>
+	<Tag name="GraphicsRightHQ">By default better quality (less Fps) is on right. Marked with + if on left.</Tag>
 	<Tag name="CamInertia">Inerzia della camera</Tag>
 	<Tag name="TipSurfFrict">Attrito di superficie (es. 1.0 asfalto, 0.7 ghiaia, 0.5 ghiaccio).</Tag>
 	<Tag name="DynamicObjects">Oggetti dinamici</Tag>
@@ -777,7 +778,7 @@
 	<Tag name="InputMoveAxisTip">Muovi un asse per vedere il suo numero</Tag>
 	<Tag name="TipNewGame">Inizia il gioco su una nuova pista oppure riavvia quella attuale.</Tag>
 	<Tag name="TipNewTerrainFlat">Crea nuovo, terreno piano.</Tag>
-	<Tag name="Brush_Power">Potenza</Tag>
+	<Tag name="SpecularPowerEm">Emissive power</Tag>
 	<Tag name="Far">Distante</Tag>
 	<Tag name="RplGhosts">Fantasmi</Tag>
 	<Tag name="CarType">Tipo</Tag>
@@ -793,6 +794,7 @@
 	<Tag name="TipDeleteTrk">Elimina definitivamente la pista selezionata.</Tag>
 	<Tag name="TipTrkViewShort">Breve elenco.</Tag>
 	<Tag name="Setup">Configurazione</Tag>
+	<Tag name="Brush_Power">Potenza</Tag>
 	<Tag name="ReflMode_full">Completo</Tag>
 	<Tag name="TipDisableWeather">Disattiva particelle del tempo meteorologico.</Tag>
 	<Tag name="TipTerErrorNorm">Errore di terreno predefinito in percentuale. Meno per piani, più per terreni elevati.</Tag>
@@ -865,6 +867,7 @@
 	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Ins - copia selezione</Tag>
 	<Tag name="Materials">Materiali</Tag>
+	<Tag name="Gravel">Ghiaia</Tag>
 	<Tag name="InputMultiplier">Moltiplicatore</Tag>
 	<Tag name="Reverse">Invertito</Tag>
 	<Tag name="InputMapShiftDown">Scala marcia prec.</Tag>
@@ -1012,9 +1015,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Estrema</Tag>
 	<Tag name="RplAll">Tutto</Tag>
-	<Tag name="SpecularPower">Specular power</Tag>
-	<Tag name="GraphicsRightHQ">By default better quality (less Fps) is on right. Marked with + if on left.</Tag>
-	<Tag name="SpecularPowerEm">Emissive power</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
