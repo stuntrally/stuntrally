@@ -564,7 +564,7 @@ material roadAdesert_ter
 	//ambient 0.99 0.89 0.81
 	//diffuse 0.93 0.9 0.88
 	specular 0.32 0.32 0.32 32
-	diffuseMap roadADesert.jpg
+	diffuseMap roadAdesert.jpg
 	normalMap roadDesert_n.jpg
 	bump_scale 0.8
 }
@@ -586,7 +586,7 @@ material roadAdesertDark_ter
 	ambient 0.64 0.59 0.45
 	diffuse 0.77 0.67 0.71
 	specular 0.32 0.32 0.32 32
-	diffuseMap roadADesert.jpg
+	diffuseMap roadAdesert.jpg
 	normalMap roadDesert_n.jpg
 	bump_scale 0.6
 }
@@ -611,7 +611,7 @@ material roadCdesert_ter
 	ambient 0.73 0.70 0.54
 	diffuse 0.86 0.85 0.63
 	specular 0.36 0.24 0.16 32
-	diffuseMap roadADesert.jpg
+	diffuseMap roadAdesert.jpg
 	normalMap roadDesert_n.jpg
 	bump_scale 1.0
 }
