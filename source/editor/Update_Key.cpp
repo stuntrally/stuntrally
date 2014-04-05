@@ -108,11 +108,14 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	///  Pick open  ---------------------
 	bool editGui = bGuiFocus && !pSet->isMain && pSet->inMenu==WND_Edit;
 	if (skey==key(TAB) && editGui)
-	switch (tab->getIndexSelected())
-	{	case TAB_Layers: gui->btnPickTex(0);  return true;
-		case TAB_Grass:  if (sub->getIndexSelected()==1)  gui->btnPickGrass(0);  return true;
-		case TAB_Veget:  if (sub->getIndexSelected()==1)  gui->btnPickVeget(0);  return true;
-		case TAB_Road:  if (sub->getIndexSelected()==0)  gui->btnPickRoad(0);  return true;
+	{
+		switch (tab->getIndexSelected())
+		{	case TAB_Layers:  gui->btnPickTex(0);  return true;
+			case TAB_Grass:  if (sub->getIndexSelected()==1) {  gui->btnPickGrass(0);  return true;  }  break;
+			case TAB_Veget:  if (sub->getIndexSelected()==1) {  gui->btnPickVeget(0);  return true;  }  break;
+			case TAB_Road:   if (sub->getIndexSelected()==0) {  gui->btnPickRoad(0);   return true;  }  break;
+		}
+		mWndPick->setVisible(false);
 	}
 
 	//  Global keys
