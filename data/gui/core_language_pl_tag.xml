@@ -130,6 +130,7 @@
 	<Tag name="InputRoadNew">ctrl-Space - ustaw wartości nowego punktu z wybranego</Tag>
 	<Tag name="Road_New">Nowy</Tag>
 	<Tag name="Top">Góra</Tag>
+	<Tag name="SpecularPower">Potęga błysku</Tag>
 	<Tag name="CarType_Racing">Wyścigowy</Tag>
 	<Tag name="InputRoadShiftSel">shift - zaznacz</Tag>
 	<Tag name="Input">Wejście</Tag>
@@ -432,7 +433,6 @@
 	<Tag name="TiresEdit2">1,2 lub Num /,* - zmień wartość</Tag>
 	<Tag name="TipGrassColorMap">Mapa koloru trawy, dla scenerii. Zazwyczaj ten sam wybór, co dla materiału trawy. Dodatkowo koloruje trawę.</Tag>
 	<Tag name="Multiplayer">Multiplayer</Tag>
-	<Tag name="trailColor">kolor śladu</Tag>
 	<Tag name="InputToggleVeget">V - wł. / wył. wegetację</Tag>
 	<Tag name="Particles">Cząstki</Tag>
 	<Tag name="CarDesc_XZ">Auto z bardzo mocnym silnikiem, na większość tras. Niedobre na wyboje z powodu niskiego i sztywnego zawieszenia. Dodatkowo, tak duży moment obrotowy powoduje więcej buksowania kół.</Tag>
@@ -447,8 +447,9 @@
 	<Tag name="ColReflect">Odbicie</Tag>
 	<Tag name="Development">Narzędzia</Tag>
 	<Tag name="InputRoadIns">Ins - wstaw nowy (za wybranym, alt - przed)</Tag>
-	<Tag name="Gravel">Szuter</Tag>
+	<Tag name="TweakEdit1">Alt-Z - przełącz okno dostosowywania (edycja auta)</Tag>
 	<Tag name="InputBrushParams">Parametry pędzla</Tag>
+	<Tag name="InputPaintColor">C - maluj kolor</Tag>
 	<Tag name="min">min.</Tag>
 	<Tag name="SC_Asphalt">Asfalt</Tag>
 	<Tag name="TipTerNoiseOnly">Powoduje ignorowanie zakresów kąta i wysokości. Wastwa będzie widoczna tylko jeśli mnożniki szumu innych spowodują przejście do tej.</Tag>
@@ -535,6 +536,7 @@
 	<Tag name="NetGameProtocolError">Niekompatybilne wersje protokołu między graczami.</Tag>
 	<Tag name="Right">Prawo</Tag>
 	<Tag name="Help">Pomoc</Tag>
+	<Tag name="CarDesc_N1">Dobre auto na wszystkie trasy. Trochę mniej sterowne, ale dość stabilne ze względu na długość.</Tag>
 	<Tag name="LODPointsDist">Odl. punktów LOD.</Tag>
 	<Tag name="MotionBlur">Rozmycie ruchem</Tag>
 	<Tag name="MinimapAndSize">Minimapa, rozmiar</Tag>
@@ -565,7 +567,7 @@
 	<Tag name="FrameSkip">Pomijanie klatek</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - zapisz plik i przeładuj grę</Tag>
 	<Tag name="InputTrackScrn">(dla obrazu trasy)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - przełącz okno dostosowywania (edycja auta)</Tag>
+	<Tag name="trailColor">kolor śladu</Tag>
 	<Tag name="Boost">Dopalacz</Tag>
 	<Tag name="TipFogClr">Kolor mgły patrząc pod słońce.</Tag>
 	<Tag name="NumLocalPlayers">Liczba lokalnych graczy</Tag>
@@ -595,7 +597,7 @@
 	<Tag name="Anisotropy">Anizotropia</Tag>
 	<Tag name="InputToggleCam">Tab - tryb kamery / edycji</Tag>
 	<Tag name="Brush_Freq">Częst</Tag>
-	<Tag name="InputStartAltLMB">alt-LPM - obróć  alt-PPM - połóż</Tag>
+	<Tag name="InputStartAltLMB">alt-LMB - obróć (shift - globalnie)  alt-RMB - pochyl (shift - skrzyw.)</Tag>
 	<Tag name="InputRoadAngSnap">5,6 - skok kąta</Tag>
 	<Tag name="Close">Zamknij</Tag>
 	<Tag name="TerGenOfsX">Przesunięcie X</Tag>
@@ -708,7 +710,6 @@
 	<Tag name="InputMain">Główna</Tag>
 	<Tag name="CarDesc_UV">Ten użytkowy pojazd z wielkimi kołami, napędzają 4 silniki elektryczne. Dobry na większość tras, gdy nie jest wąsko. Świetny do zwiedzania innych planet. Ale ma złą aerodynamikę i utyka w błocie.</Tag>
 	<Tag name="NewTerrainFlat">Nowy płaski</Tag>
-	<Tag name="InputPaintColor">C - maluj kolor</Tag>
 	<Tag name="ColSat">Nasycenie</Tag>
 	<Tag name="TipTCS">Zapobiega poślizgowi kół przy przyśpieszaniu (domyślnie: wył.)</Tag>
 	<Tag name="NewTerrainGenerate">Generuj nowy</Tag>
@@ -767,7 +768,7 @@
 	<Tag name="EdCamPos">Pozycja kamery</Tag>
 	<Tag name="GraphicsAll_Lowest">Najniższe</Tag>
 	<Tag name="InputReadyToPlay">(gotowe do gry)</Tag>
-	<Tag name="CarDesc_N1">Dobre auto na wszystkie trasy. Trochę mniej sterowne, ale dość stabilne ze względu na długość.</Tag>
+	<Tag name="GraphicsRightHQ">Domyślnie lepsza jakość (mniej klatek Fps) jest po prawej. Zaznaczone + gdy po lewej.</Tag>
 	<Tag name="CamInertia">Bezwładność kamery</Tag>
 	<Tag name="TipSurfFrict">Tarcie powierzchni (np. 1.0 asfalt, 0.7 szuter, 0.5 lód).</Tag>
 	<Tag name="DynamicObjects">Dynamiczne Obiekty</Tag>
@@ -777,7 +778,7 @@
 	<Tag name="InputMoveAxisTip">Porusz w osi by zobaczyć</Tag>
 	<Tag name="TipNewGame">Zacznij grę na nowej trasie lub od nowa na obecnej.</Tag>
 	<Tag name="TipNewTerrainFlat">Stwórz nowy, płaski teren.</Tag>
-	<Tag name="Brush_Power">Potęga</Tag>
+	<Tag name="SpecularPowerEm">Potęga świecenia</Tag>
 	<Tag name="Far">Daleko</Tag>
 	<Tag name="RplGhosts">Duchy</Tag>
 	<Tag name="CarType">Typ</Tag>
@@ -793,6 +794,7 @@
 	<Tag name="TipDeleteTrk">Trwale usuń trasę.</Tag>
 	<Tag name="TipTrkViewShort">Krótki widok listy.</Tag>
 	<Tag name="Setup">Ustawienia</Tag>
+	<Tag name="Brush_Power">Potęga</Tag>
 	<Tag name="ReflMode_full">Pełne</Tag>
 	<Tag name="TipDisableWeather">Wyłącz cząstki pogody.</Tag>
 	<Tag name="TipTerErrorNorm">Domyślny błąd terenu w procentach. Mniej dla płaskich więcej dla wysokich terenów.</Tag>
@@ -865,6 +867,7 @@
 	<Tag name="SleepMS">Czas czekania [milisek]</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Ins - skopiuj zaznaczenie</Tag>
 	<Tag name="Materials">Materiały</Tag>
+	<Tag name="Gravel">Szuter</Tag>
 	<Tag name="InputMultiplier">Mnożnik</Tag>
 	<Tag name="Reverse">Odwrócenie</Tag>
 	<Tag name="InputMapShiftDown">Poprzedni bieg</Tag>
@@ -1012,9 +1015,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz.,następna zakładka (alt - pod-zakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="SpecularPower">Specular power</Tag>
-	<Tag name="GraphicsRightHQ">By default better quality (less Fps) is on right. Marked with + if on left.</Tag>
-	<Tag name="SpecularPowerEm">Emissive power</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
