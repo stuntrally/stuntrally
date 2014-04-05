@@ -569,7 +569,7 @@ void CGui::InitGui()
 	app->vObjNames.clear();  strlist lo;
 	PATHMANAGER::DirList(sData + "/objects", lo);
 	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
-		if (StringUtil::endsWith(*i,".mesh") && (*i) != "sphere.mesh")
+		if (StringUtil::endsWith(*i,".mesh") && !StringUtil::startsWith(*i,"sphere"))
 			app->vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
 	
 	objListDyn = fLi("ObjListDyn");  Lev(objListDyn, ObjsChng);
