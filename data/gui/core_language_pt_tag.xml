@@ -222,7 +222,7 @@
 	<Tag name="ReflMode_single">Único</Tag>
 	<Tag name="Near">Near</Tag>
 	<Tag name="FogNormal">Normal</Tag>
-	<Tag name="SetCamTo">Set camera to</Tag>
+	<Tag name="InputMinVal">Valor Mínimo</Tag>
 	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
 	<Tag name="Always">Sempre</Tag>
 	<Tag name="Brush_Offset">Deslocamento</Tag>
@@ -334,7 +334,7 @@
 	<Tag name="NetWaiting">Waiting...</Tag>
 	<Tag name="LoadTrack">Load Track</Tag>
 	<Tag name="MergeLength">Merge length</Tag>
-	<Tag name="InputMinVal">Valor Mínimo</Tag>
+	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
 	<Tag name="SingleRace">Single Race</Tag>
 	<Tag name="TipNewGameCar">Restart game.</Tag>
@@ -433,6 +433,7 @@
 	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
 	<Tag name="Multiplayer">Multiplayer</Tag>
+	<Tag name="trailColor">trail color</Tag>
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="Particles">Particles</Tag>
 	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
@@ -447,9 +448,8 @@
 	<Tag name="ColReflect">Reflection</Tag>
 	<Tag name="Development">Development</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
+	<Tag name="Gravel">Gravel</Tag>
 	<Tag name="InputBrushParams">Brush parameters</Tag>
-	<Tag name="InputPaintColor">C - Paint Color</Tag>
 	<Tag name="min">min</Tag>
 	<Tag name="SC_Asphalt">Asphalt</Tag>
 	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
@@ -567,7 +567,7 @@
 	<Tag name="FrameSkip">Frames skip</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - save file and reload game</Tag>
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
-	<Tag name="trailColor">trail color</Tag>
+	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
 	<Tag name="Boost">Boost</Tag>
 	<Tag name="TipFogClr">Fog end color when looking under sun.</Tag>
 	<Tag name="NumLocalPlayers">Number of local players</Tag>
@@ -710,6 +710,7 @@
 	<Tag name="InputMain">Principal</Tag>
 	<Tag name="CarDesc_UV">This big wheeled utility vehicle is powered by 4 electic engines. Suited for nearly all tracks, except when narrow. Great for exploring other planets. But has bad aerodynamics and gets stuck in mud.</Tag>
 	<Tag name="NewTerrainFlat">New flat</Tag>
+	<Tag name="InputPaintColor">C - Paint Color</Tag>
 	<Tag name="ColSat">Saturation</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
 	<Tag name="NewTerrainGenerate">Generate new</Tag>
@@ -867,7 +868,6 @@
 	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Ins - copy selection</Tag>
 	<Tag name="Materials">Materiais</Tag>
-	<Tag name="Gravel">Gravel</Tag>
 	<Tag name="InputMultiplier">Multiplier</Tag>
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="InputMapShiftDown">Shift down</Tag>

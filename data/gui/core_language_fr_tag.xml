@@ -222,7 +222,7 @@
 	<Tag name="ReflMode_single">Unique</Tag>
 	<Tag name="Near">Proche</Tag>
 	<Tag name="FogNormal">Normale</Tag>
-	<Tag name="SetCamTo">Caméra définie :</Tag>
+	<Tag name="InputMinVal">Valeur Minimum</Tag>
 	<Tag name="RoadWallFullCollis">Collision avec la route</Tag>
 	<Tag name="Always">Toujours</Tag>
 	<Tag name="Brush_Offset">Décalage</Tag>
@@ -334,7 +334,7 @@
 	<Tag name="NetWaiting">Attente...</Tag>
 	<Tag name="LoadTrack">Chargement du circuit</Tag>
 	<Tag name="MergeLength">Merge length</Tag>
-	<Tag name="InputMinVal">Valeur Minimum</Tag>
+	<Tag name="SetCamTo">Caméra définie :</Tag>
 	<Tag name="RplMaxNumViewports">Nombre de vues maximum</Tag>
 	<Tag name="SingleRace">Simple course</Tag>
 	<Tag name="TipNewGameCar">Redémarrer la partie</Tag>
@@ -433,6 +433,7 @@
 	<Tag name="TiresEdit2">1,2 ou pavé num. /,* - changer la valeur</Tag>
 	<Tag name="TipGrassColorMap">Carte de couleur pour le paysage, généralement le même choix que pour le matériau d'herbe. Permet de changer la couleur de l'herbe.</Tag>
 	<Tag name="Multiplayer">Multijoueur</Tag>
+	<Tag name="trailColor">couleur traînée</Tag>
 	<Tag name="InputToggleVeget">V - Deactiver / activer la végétation</Tag>
 	<Tag name="Particles">Particules</Tag>
 	<Tag name="CarDesc_XZ">Une voiture très puissante, peut être conduite sur la plupart des circuits. Peu adaptée aux sauts à cause d'une suspension dure.</Tag>
@@ -447,9 +448,8 @@
 	<Tag name="ColReflect">Réflexion</Tag>
 	<Tag name="Development">Développement</Tag>
 	<Tag name="InputRoadIns">Insér. - insérer nouveau (après sélection, Alt : avant sélection)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - afficher la fenêtre d'édition de voiture</Tag>
+	<Tag name="Gravel">Gravier</Tag>
 	<Tag name="InputBrushParams">Paramètres de la brosse</Tag>
-	<Tag name="InputPaintColor">C - Couleur de la peinture</Tag>
 	<Tag name="min">min</Tag>
 	<Tag name="SC_Asphalt">Bitume</Tag>
 	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
@@ -567,7 +567,7 @@
 	<Tag name="FrameSkip">Fréquence d'actualisation</Tag>
 	<Tag name="TweakEdit2">Alt-Maj.-Z - sauvegarder et recharger</Tag>
 	<Tag name="InputTrackScrn">(pour la capture d'écran du circuit)</Tag>
-	<Tag name="trailColor">couleur traînée</Tag>
+	<Tag name="TweakEdit1">Alt-Z - afficher la fenêtre d'édition de voiture</Tag>
 	<Tag name="Boost">Turbo</Tag>
 	<Tag name="TipFogClr">Couleur de la fin de la brume quand la caméra regarde le soleil.</Tag>
 	<Tag name="NumLocalPlayers">Nombre de joueurs locaux</Tag>
@@ -710,6 +710,7 @@
 	<Tag name="InputMain">Principal</Tag>
 	<Tag name="CarDesc_UV">Ce gros véhicule utilitaire est propulsé par 4 moteurs électriques. Adaptée à quasiment tous les circuits, sauf les plus étroits. Excellent pour explorer d'autres planètes. Mais ce véhicule gère mal les sauts et se coince dans la boue.</Tag>
 	<Tag name="NewTerrainFlat">Créer un terrain plat</Tag>
+	<Tag name="InputPaintColor">C - Couleur de la peinture</Tag>
 	<Tag name="ColSat">Saturation</Tag>
 	<Tag name="TipTCS">Évite de tourner les roues en accélérant (par défaut : désactivé).</Tag>
 	<Tag name="NewTerrainGenerate">Générer un nouveau</Tag>
@@ -867,7 +868,6 @@
 	<Tag name="SleepMS">Intervalle de repos en millisecondes</Tag>
 	<Tag name="InputObjectsCopySel">Ctrl-Ins. - copier la sélection</Tag>
 	<Tag name="Materials">Matériels</Tag>
-	<Tag name="Gravel">Gravier</Tag>
 	<Tag name="InputMultiplier">Multiplicateur</Tag>
 	<Tag name="Reverse">Inverser</Tag>
 	<Tag name="InputMapShiftDown">Rétrograder</Tag>
