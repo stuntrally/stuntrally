@@ -222,7 +222,7 @@
 	<Tag name="ReflMode_single">Одно</Tag>
 	<Tag name="Near">Близко</Tag>
 	<Tag name="FogNormal">Нормальный</Tag>
-	<Tag name="SetCamTo">Камера у</Tag>
+	<Tag name="InputMinVal">Мин. значение</Tag>
 	<Tag name="RoadWallFullCollis">Полн. столк. с дорогой</Tag>
 	<Tag name="Always">Всегда</Tag>
 	<Tag name="Brush_Offset">Смещение</Tag>
@@ -334,7 +334,7 @@
 	<Tag name="NetWaiting">Ожидание...</Tag>
 	<Tag name="LoadTrack">Загр. трек</Tag>
 	<Tag name="MergeLength">Соед. длину</Tag>
-	<Tag name="InputMinVal">Мин. значение</Tag>
+	<Tag name="SetCamTo">Камера у</Tag>
 	<Tag name="RplMaxNumViewports">Макимальное количество окон экрана</Tag>
 	<Tag name="SingleRace">Одна гонка</Tag>
 	<Tag name="TipNewGameCar">Перезапустите игру.</Tag>
@@ -433,6 +433,7 @@
 	<Tag name="TiresEdit2">1,2 или Num /,* - изм. знач.</Tag>
 	<Tag name="TipGrassColorMap">Отображение цвета травы для ландшафта, обычно такой же как у материала травы. Дополнительная окраска травы.</Tag>
 	<Tag name="Multiplayer">По сети</Tag>
+	<Tag name="trailColor">цвет следа</Tag>
 	<Tag name="InputToggleVeget">V - откл./вкл. растительность</Tag>
 	<Tag name="Particles">Частицы</Tag>
 	<Tag name="CarDesc_XZ">На авто устанавлен очень мощный двигатель, управляемый для большинства треков. Не лучший для ухабов из-за низкой и жёсткой подвески. Излишний крутящий момент также вызывает больше пробуксовки.</Tag>
@@ -447,9 +448,8 @@
 	<Tag name="ColReflect">Отраж.</Tag>
 	<Tag name="Development">Разработка</Tag>
 	<Tag name="InputRoadIns">Ins - вставить (после., alt - до)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - окно наладки (ред. авто)</Tag>
+	<Tag name="Gravel">Гравий</Tag>
 	<Tag name="InputBrushParams">Параметры кисти</Tag>
-	<Tag name="InputPaintColor">C - цвет краски</Tag>
 	<Tag name="min">мин.</Tag>
 	<Tag name="SC_Asphalt">Асфальт</Tag>
 	<Tag name="TipTerNoiseOnly">Будет игнорировать диапозон углов и высот ландшафта. Слой появиться только, если коэффициент шума других слоёв смешивает это.</Tag>
@@ -567,7 +567,7 @@
 	<Tag name="FrameSkip">Пропуск кадра</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - сохр. файл и перезагр. игру</Tag>
 	<Tag name="InputTrackScrn">(снимок для трека)</Tag>
-	<Tag name="trailColor">цвет следа</Tag>
+	<Tag name="TweakEdit1">Alt-Z - окно наладки (ред. авто)</Tag>
 	<Tag name="Boost">Нитро</Tag>
 	<Tag name="TipFogClr">Конец тумана когда смотришь ниже солнца.</Tag>
 	<Tag name="NumLocalPlayers">Количество игроков</Tag>
@@ -710,6 +710,7 @@
 	<Tag name="InputMain">Главное</Tag>
 	<Tag name="CarDesc_UV">Универсальное авто с большими колёсами, снабженный 4 электродвигателями. Подходит для почти всех треков, за исключением узких. Великолепный для исследования других планет. Но плохая аэродинамика и застревает в грязи.</Tag>
 	<Tag name="NewTerrainFlat">Новая плоскость</Tag>
+	<Tag name="InputPaintColor">C - цвет краски</Tag>
 	<Tag name="ColSat">Насыщен.</Tag>
 	<Tag name="TipTCS">Предотвращает кручение колеса при ускорении (по умолчанию: выключено).</Tag>
 	<Tag name="NewTerrainGenerate">Ген. новый</Tag>
@@ -867,7 +868,6 @@
 	<Tag name="SleepMS">Инт. сна [миллисек.]</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Ins - копир. выб.</Tag>
 	<Tag name="Materials">Материалы</Tag>
-	<Tag name="Gravel">Гравий</Tag>
 	<Tag name="InputMultiplier">Коэффициент</Tag>
 	<Tag name="Reverse">Обратно</Tag>
 	<Tag name="InputMapShiftDown">Передача -</Tag>

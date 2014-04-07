@@ -222,7 +222,7 @@
 	<Tag name="ReflMode_single">Einzel</Tag>
 	<Tag name="Near">Nah</Tag>
 	<Tag name="FogNormal">Normal</Tag>
-	<Tag name="SetCamTo">Kamera setzen</Tag>
+	<Tag name="InputMinVal">Min. Wert</Tag>
 	<Tag name="RoadWallFullCollis">Vollständige Wandkollision</Tag>
 	<Tag name="Always">Immer</Tag>
 	<Tag name="Brush_Offset">Abstand</Tag>
@@ -334,7 +334,7 @@
 	<Tag name="NetWaiting">Wartend...</Tag>
 	<Tag name="LoadTrack">Strecke laden</Tag>
 	<Tag name="MergeLength">Zusammenf. L.</Tag>
-	<Tag name="InputMinVal">Min. Wert</Tag>
+	<Tag name="SetCamTo">Kamera setzen</Tag>
 	<Tag name="RplMaxNumViewports">Max. Anzahl von Ansichten nebeneinander</Tag>
 	<Tag name="SingleRace">Schnelles Spiel</Tag>
 	<Tag name="TipNewGameCar">Neu starten.</Tag>
@@ -433,6 +433,7 @@
 	<Tag name="TiresEdit2">1,2 oder Num /,* - Wert ändern</Tag>
 	<Tag name="TipGrassColorMap">Gras Colormap, legt die Grasfarbe entlang der Karte fest.</Tag>
 	<Tag name="Multiplayer">Mehrspieler</Tag>
+	<Tag name="trailColor">Spurenfarbe</Tag>
 	<Tag name="InputToggleVeget">V - Vegetation an/aus</Tag>
 	<Tag name="Particles">Partikel</Tag>
 	<Tag name="CarDesc_XZ">Ein mit einem sehr starken Motor ausgestattes Fahrzeug, fahrbar auf den meisten Strecken. Nicht die beste Wahl für Bodenwellen, wegen der kurzen und starren Aufhängung. Daher wird ein hoher Drehmoment auch mehr Räder zum Drehen bringen.</Tag>
@@ -447,9 +448,8 @@
 	<Tag name="ColReflect">Spiegelung</Tag>
 	<Tag name="Development">Entwicklung</Tag>
 	<Tag name="InputRoadIns">Einfg - Punkt danach einfügen, mit Alt - davor</Tag>
-	<Tag name="TweakEdit1">Alt-Z - Tweak Fenster umschalten (Auto bearbeiten)</Tag>
+	<Tag name="Gravel">Schotter</Tag>
 	<Tag name="InputBrushParams">Pinseleigenschaften</Tag>
-	<Tag name="InputPaintColor">C - Anstrichfarbe</Tag>
 	<Tag name="min">min.</Tag>
 	<Tag name="SC_Asphalt">Asphalt</Tag>
 	<Tag name="TipTerNoiseOnly">Terrainwinkel und Höhenreichweiten ignorieren. Schicht wird nur dann auftauchen, wenn der Rauschfaktor in der anderen Schicht sanft übergeht.</Tag>
@@ -567,7 +567,7 @@
 	<Tag name="FrameSkip">FrameSkip</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - Datei speichern und Spiel laden.</Tag>
 	<Tag name="InputTrackScrn">(für Bildschirmfoto)</Tag>
-	<Tag name="trailColor">Spurenfarbe</Tag>
+	<Tag name="TweakEdit1">Alt-Z - Tweak Fenster umschalten (Auto bearbeiten)</Tag>
 	<Tag name="Boost">Boost</Tag>
 	<Tag name="TipFogClr">Nebelfarbe wenn schauen auf Sonne.</Tag>
 	<Tag name="NumLocalPlayers">Anzahl Spieler</Tag>
@@ -710,6 +710,7 @@
 	<Tag name="InputMain">Allgemein</Tag>
 	<Tag name="CarDesc_UV">Dieses großradige Gebrauchsfahrzeug wird von 4 Elektromotoren angetrieben. Es für für nahezu alle Strecken, außer die engen, geeignet. Großartig zum Erforschen anderer Planeten. Aber es hat eine schlechte Aerodynamik und bleibt im Schlamm stecken.</Tag>
 	<Tag name="NewTerrainFlat">Neu (leer)</Tag>
+	<Tag name="InputPaintColor">C - Anstrichfarbe</Tag>
 	<Tag name="ColSat">Sättigung</Tag>
 	<Tag name="TipTCS">Verhindert das Rutschen der Reifen beim Beschleunigen (Standard: aus)</Tag>
 	<Tag name="NewTerrainGenerate">Neu erzeugen</Tag>
@@ -867,7 +868,6 @@
 	<Tag name="SleepMS">Schlaf-Intervall [milisek]</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Einfg - Auswahl kopieren</Tag>
 	<Tag name="Materials">Materialien</Tag>
-	<Tag name="Gravel">Schotter</Tag>
 	<Tag name="InputMultiplier">Faktor</Tag>
 	<Tag name="Reverse">Rückwärts</Tag>
 	<Tag name="InputMapShiftDown">Runterschalten</Tag>
