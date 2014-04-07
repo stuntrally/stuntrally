@@ -222,7 +222,7 @@
 	<Tag name="ReflMode_single">Одно</Tag>
 	<Tag name="Near">Близко</Tag>
 	<Tag name="FogNormal">Нормальный</Tag>
-	<Tag name="InputMinVal">Мин. значение</Tag>
+	<Tag name="SetCamTo">Камера у</Tag>
 	<Tag name="RoadWallFullCollis">Полн. столк. с дорогой</Tag>
 	<Tag name="Always">Всегда</Tag>
 	<Tag name="Brush_Offset">Смещение</Tag>
@@ -334,7 +334,7 @@
 	<Tag name="NetWaiting">Ожидание...</Tag>
 	<Tag name="LoadTrack">Загр. трек</Tag>
 	<Tag name="MergeLength">Соед. длину</Tag>
-	<Tag name="SetCamTo">Камера у</Tag>
+	<Tag name="InputMinVal">Мин. значение</Tag>
 	<Tag name="RplMaxNumViewports">Макимальное количество окон экрана</Tag>
 	<Tag name="SingleRace">Одна гонка</Tag>
 	<Tag name="TipNewGameCar">Перезапустите игру.</Tag>
@@ -433,7 +433,6 @@
 	<Tag name="TiresEdit2">1,2 или Num /,* - изм. знач.</Tag>
 	<Tag name="TipGrassColorMap">Отображение цвета травы для ландшафта, обычно такой же как у материала травы. Дополнительная окраска травы.</Tag>
 	<Tag name="Multiplayer">По сети</Tag>
-	<Tag name="trailColor">цвет следа</Tag>
 	<Tag name="InputToggleVeget">V - откл./вкл. растительность</Tag>
 	<Tag name="Particles">Частицы</Tag>
 	<Tag name="CarDesc_XZ">На авто устанавлен очень мощный двигатель, управляемый для большинства треков. Не лучший для ухабов из-за низкой и жёсткой подвески. Излишний крутящий момент также вызывает больше пробуксовки.</Tag>
@@ -448,7 +447,7 @@
 	<Tag name="ColReflect">Отраж.</Tag>
 	<Tag name="Development">Разработка</Tag>
 	<Tag name="InputRoadIns">Ins - вставить (после., alt - до)</Tag>
-	<Tag name="Gravel">Гравий</Tag>
+	<Tag name="TweakEdit1">Alt-Z - окно наладки (ред. авто)</Tag>
 	<Tag name="InputBrushParams">Параметры кисти</Tag>
 	<Tag name="min">мин.</Tag>
 	<Tag name="SC_Asphalt">Асфальт</Tag>
@@ -536,7 +535,7 @@
 	<Tag name="NetGameProtocolError">Несовместимая версия протокола между ровнями.</Tag>
 	<Tag name="Right">Вправо</Tag>
 	<Tag name="Help">Помощь</Tag>
-	<Tag name="CarDesc_N1">Хорошее авто для всех треков. Немного меньше управляемость, но довольно устойчивый из‐за длины.</Tag>
+	<Tag name="CarDesc_N1">Хорошее авто для всех треков. Немного меньше управляемость, но довольно устойчивый из-за длины.</Tag>
 	<Tag name="LODPointsDist">LOD точки дист.</Tag>
 	<Tag name="MotionBlur">Движ. очертаний</Tag>
 	<Tag name="MinimapAndSize">Мини-карта, размер</Tag>
@@ -567,7 +566,7 @@
 	<Tag name="FrameSkip">Пропуск кадра</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - сохр. файл и перезагр. игру</Tag>
 	<Tag name="InputTrackScrn">(снимок для трека)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - окно наладки (ред. авто)</Tag>
+	<Tag name="trailColor">цвет следа</Tag>
 	<Tag name="Boost">Нитро</Tag>
 	<Tag name="TipFogClr">Конец тумана когда смотришь ниже солнца.</Tag>
 	<Tag name="NumLocalPlayers">Количество игроков</Tag>
@@ -868,6 +867,7 @@
 	<Tag name="SleepMS">Инт. сна [миллисек.]</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Ins - копир. выб.</Tag>
 	<Tag name="Materials">Материалы</Tag>
+	<Tag name="Gravel">Гравий</Tag>
 	<Tag name="InputMultiplier">Коэффициент</Tag>
 	<Tag name="Reverse">Обратно</Tag>
 	<Tag name="InputMapShiftDown">Передача -</Tag>
@@ -1015,6 +1015,14 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред.,след. вкладка (alt - ниже)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
+	<Tag name="Car_TimeTo">Time to</Tag>
+	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
+	<Tag name="Car_Mass">Mass</Tag>
+	<Tag name="Big">Big</Tag>
+	<Tag name="Car_MaxTorque">Max Torque</Tag>
+	<Tag name="Car_TopSpeed">Top Speed</Tag>
+	<Tag name="Small">Small</Tag>
+	<Tag name="Car_MaxPower">Max Power</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

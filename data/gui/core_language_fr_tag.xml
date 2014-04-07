@@ -222,7 +222,7 @@
 	<Tag name="ReflMode_single">Unique</Tag>
 	<Tag name="Near">Proche</Tag>
 	<Tag name="FogNormal">Normale</Tag>
-	<Tag name="InputMinVal">Valeur Minimum</Tag>
+	<Tag name="SetCamTo">Caméra définie :</Tag>
 	<Tag name="RoadWallFullCollis">Collision avec la route</Tag>
 	<Tag name="Always">Toujours</Tag>
 	<Tag name="Brush_Offset">Décalage</Tag>
@@ -334,7 +334,7 @@
 	<Tag name="NetWaiting">Attente...</Tag>
 	<Tag name="LoadTrack">Chargement du circuit</Tag>
 	<Tag name="MergeLength">Merge length</Tag>
-	<Tag name="SetCamTo">Caméra définie :</Tag>
+	<Tag name="InputMinVal">Valeur Minimum</Tag>
 	<Tag name="RplMaxNumViewports">Nombre de vues maximum</Tag>
 	<Tag name="SingleRace">Simple course</Tag>
 	<Tag name="TipNewGameCar">Redémarrer la partie</Tag>
@@ -433,7 +433,6 @@
 	<Tag name="TiresEdit2">1,2 ou pavé num. /,* - changer la valeur</Tag>
 	<Tag name="TipGrassColorMap">Carte de couleur pour le paysage, généralement le même choix que pour le matériau d'herbe. Permet de changer la couleur de l'herbe.</Tag>
 	<Tag name="Multiplayer">Multijoueur</Tag>
-	<Tag name="trailColor">couleur traînée</Tag>
 	<Tag name="InputToggleVeget">V - Deactiver / activer la végétation</Tag>
 	<Tag name="Particles">Particules</Tag>
 	<Tag name="CarDesc_XZ">Une voiture très puissante, peut être conduite sur la plupart des circuits. Peu adaptée aux sauts à cause d'une suspension dure.</Tag>
@@ -448,7 +447,7 @@
 	<Tag name="ColReflect">Réflexion</Tag>
 	<Tag name="Development">Développement</Tag>
 	<Tag name="InputRoadIns">Insér. - insérer nouveau (après sélection, Alt : avant sélection)</Tag>
-	<Tag name="Gravel">Gravier</Tag>
+	<Tag name="TweakEdit1">Alt-Z - afficher la fenêtre d'édition de voiture</Tag>
 	<Tag name="InputBrushParams">Paramètres de la brosse</Tag>
 	<Tag name="min">min</Tag>
 	<Tag name="SC_Asphalt">Bitume</Tag>
@@ -567,7 +566,7 @@
 	<Tag name="FrameSkip">Fréquence d'actualisation</Tag>
 	<Tag name="TweakEdit2">Alt-Maj.-Z - sauvegarder et recharger</Tag>
 	<Tag name="InputTrackScrn">(pour la capture d'écran du circuit)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - afficher la fenêtre d'édition de voiture</Tag>
+	<Tag name="trailColor">couleur traînée</Tag>
 	<Tag name="Boost">Turbo</Tag>
 	<Tag name="TipFogClr">Couleur de la fin de la brume quand la caméra regarde le soleil.</Tag>
 	<Tag name="NumLocalPlayers">Nombre de joueurs locaux</Tag>
@@ -868,6 +867,7 @@
 	<Tag name="SleepMS">Intervalle de repos en millisecondes</Tag>
 	<Tag name="InputObjectsCopySel">Ctrl-Ins. - copier la sélection</Tag>
 	<Tag name="Materials">Matériels</Tag>
+	<Tag name="Gravel">Gravier</Tag>
 	<Tag name="InputMultiplier">Multiplicateur</Tag>
 	<Tag name="Reverse">Inverser</Tag>
 	<Tag name="InputMapShiftDown">Rétrograder</Tag>
@@ -1015,6 +1015,14 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
+	<Tag name="Car_TimeTo">Time to</Tag>
+	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
+	<Tag name="Car_Mass">Mass</Tag>
+	<Tag name="Big">Big</Tag>
+	<Tag name="Car_MaxTorque">Max Torque</Tag>
+	<Tag name="Car_TopSpeed">Top Speed</Tag>
+	<Tag name="Small">Small</Tag>
+	<Tag name="Car_MaxPower">Max Power</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

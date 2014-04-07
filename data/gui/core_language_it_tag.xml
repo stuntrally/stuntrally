@@ -222,7 +222,7 @@
 	<Tag name="ReflMode_single">Singolo</Tag>
 	<Tag name="Near">Vicino</Tag>
 	<Tag name="FogNormal">Normale</Tag>
-	<Tag name="InputMinVal">Valore min.</Tag>
+	<Tag name="SetCamTo">Imposta la camera a</Tag>
 	<Tag name="RoadWallFullCollis">Collisione completa con strade e muri</Tag>
 	<Tag name="Always">Sempre</Tag>
 	<Tag name="Brush_Offset">Offset</Tag>
@@ -334,7 +334,7 @@
 	<Tag name="NetWaiting">In attesa...</Tag>
 	<Tag name="LoadTrack">Carica la pista</Tag>
 	<Tag name="MergeLength">Unisci lunghezza</Tag>
-	<Tag name="SetCamTo">Imposta la camera a</Tag>
+	<Tag name="InputMinVal">Valore min.</Tag>
 	<Tag name="RplMaxNumViewports">Mass. numero di finestre (guarda di meno, per maggiori replay di giocatori)</Tag>
 	<Tag name="SingleRace">Corsa singola</Tag>
 	<Tag name="TipNewGameCar">Riavvia il gioco.</Tag>
@@ -433,7 +433,6 @@
 	<Tag name="TiresEdit2">1,2 or Num /,* - cambia valore</Tag>
 	<Tag name="TipGrassColorMap">Colormap erba per layer, di solito stessa scelta come i materiali erba. Colorazione erba aggiuntivo.</Tag>
 	<Tag name="Multiplayer">Multigiocatore</Tag>
-	<Tag name="trailColor">colore scia</Tag>
 	<Tag name="InputToggleVeget">V - Attiva/disattiva la vegetazione</Tag>
 	<Tag name="Particles">Particelle</Tag>
 	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
@@ -448,7 +447,7 @@
 	<Tag name="ColReflect">Riflesso</Tag>
 	<Tag name="Development">Sviluppo</Tag>
 	<Tag name="InputRoadIns">Ins - inserisci nuovo (dopo aver preso, alt -prima)</Tag>
-	<Tag name="Gravel">Ghiaia</Tag>
+	<Tag name="TweakEdit1">Alt-Z - vai alla finestra ottimizza (modifica auto)</Tag>
 	<Tag name="InputBrushParams">Parametri brush</Tag>
 	<Tag name="min">min</Tag>
 	<Tag name="SC_Asphalt">Asphalt</Tag>
@@ -567,7 +566,7 @@
 	<Tag name="FrameSkip">Riduci frame</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - salva il file e ricarica il gioco</Tag>
 	<Tag name="InputTrackScrn">(per le immagini catturate delle piste)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - vai alla finestra ottimizza (modifica auto)</Tag>
+	<Tag name="trailColor">colore scia</Tag>
 	<Tag name="Boost">Turbo</Tag>
 	<Tag name="TipFogClr">Colore di fine nebbia quando si guarda sotto il sole.</Tag>
 	<Tag name="NumLocalPlayers">Numero di giocatori locali</Tag>
@@ -868,6 +867,7 @@
 	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Ins - copia selezione</Tag>
 	<Tag name="Materials">Materiali</Tag>
+	<Tag name="Gravel">Ghiaia</Tag>
 	<Tag name="InputMultiplier">Moltiplicatore</Tag>
 	<Tag name="Reverse">Invertito</Tag>
 	<Tag name="InputMapShiftDown">Scala marcia prec.</Tag>
@@ -1015,6 +1015,14 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Estrema</Tag>
 	<Tag name="RplAll">Tutto</Tag>
+	<Tag name="Car_TimeTo">Time to</Tag>
+	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
+	<Tag name="Car_Mass">Mass</Tag>
+	<Tag name="Big">Big</Tag>
+	<Tag name="Car_MaxTorque">Max Torque</Tag>
+	<Tag name="Car_TopSpeed">Top Speed</Tag>
+	<Tag name="Small">Small</Tag>
+	<Tag name="Car_MaxPower">Max Power</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

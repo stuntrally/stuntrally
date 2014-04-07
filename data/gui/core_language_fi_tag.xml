@@ -222,7 +222,7 @@
 	<Tag name="ReflMode_single">Yksittäinen</Tag>
 	<Tag name="Near">Near</Tag>
 	<Tag name="FogNormal">Tavallinen</Tag>
-	<Tag name="InputMinVal">Minimiarvo</Tag>
+	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="RoadWallFullCollis">Kaiteiden täysi törmäystarkistus</Tag>
 	<Tag name="Always">Aina</Tag>
 	<Tag name="Brush_Offset">Siirtymä</Tag>
@@ -334,7 +334,7 @@
 	<Tag name="NetWaiting">Odotetaan...</Tag>
 	<Tag name="LoadTrack">Lataa rata</Tag>
 	<Tag name="MergeLength">Yhdistä pituus</Tag>
-	<Tag name="SetCamTo">Set camera to</Tag>
+	<Tag name="InputMinVal">Minimiarvo</Tag>
 	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
 	<Tag name="SingleRace">Yksittäinen kilpailu</Tag>
 	<Tag name="TipNewGameCar">Restart game.</Tag>
@@ -433,7 +433,6 @@
 	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
 	<Tag name="Multiplayer">Moninpeli</Tag>
-	<Tag name="trailColor">trail color</Tag>
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="Particles">Hiukkaset</Tag>
 	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
@@ -448,7 +447,7 @@
 	<Tag name="ColReflect">Heijastus</Tag>
 	<Tag name="Development">Kehitys</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
-	<Tag name="Gravel">Sora</Tag>
+	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
 	<Tag name="InputBrushParams">Siveltimen parametrit</Tag>
 	<Tag name="min">minimi</Tag>
 	<Tag name="SC_Asphalt">Asphalt</Tag>
@@ -567,7 +566,7 @@
 	<Tag name="FrameSkip">Frames skip</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - save file and reload game</Tag>
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
+	<Tag name="trailColor">trail color</Tag>
 	<Tag name="Boost">Boost</Tag>
 	<Tag name="TipFogClr">Fog end color when looking under sun.</Tag>
 	<Tag name="NumLocalPlayers">Paikallisten pelaajien määrä</Tag>
@@ -868,6 +867,7 @@
 	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Ins - copy selection</Tag>
 	<Tag name="Materials">Materiaalit</Tag>
+	<Tag name="Gravel">Sora</Tag>
 	<Tag name="InputMultiplier">Kerroin</Tag>
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="InputMapShiftDown">Shift down</Tag>
@@ -1015,6 +1015,14 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
+	<Tag name="Car_TimeTo">Time to</Tag>
+	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
+	<Tag name="Car_Mass">Mass</Tag>
+	<Tag name="Big">Big</Tag>
+	<Tag name="Car_MaxTorque">Max Torque</Tag>
+	<Tag name="Car_TopSpeed">Top Speed</Tag>
+	<Tag name="Small">Small</Tag>
+	<Tag name="Car_MaxPower">Max Power</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
