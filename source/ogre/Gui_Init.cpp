@@ -433,19 +433,14 @@ void CGui::InitGui()
 		img->setUserString("v", toStr(v));  img->setUserString("g", toStr(g));  img->setUserString("r", toStr(r));
 	}
 	Btn("CarClrRandom", btnCarClrRandom);
-	sv= &svNumLaps;  sv->Init("NumLaps",  &pSet->gui.num_laps, 1,20);
+	sv= &svNumLaps;  sv->Init("NumLaps",  &pSet->gui.num_laps, 1,10, 1.3f);  sv->DefaultI(2);
 
-	txCarStatsTxt = fTxt("CarStatsTxt");
-	txCarStatsVals = fTxt("CarStatsVals");
+	txCarStatsTxt = fTxt("CarStatsTxt");    txCarSpeed = fTxt("CarSpeed");
+	txCarStatsVals = fTxt("CarStatsVals");  txCarType = fTxt("CarType");
 
-    txCarSpeed = fTxt("CarSpeed");
-    txCarType = fTxt("CarType");
-
-    txCarAuthor = fTxt("CarAuthor");
-    txTrackAuthor = fTxt("TrackAuthor");
+    txCarAuthor = fTxt("CarAuthor");  txTrackAuthor = fTxt("TrackAuthor");
 	
 	TabPtr tPlr = fTab("tabPlayer");  Tev(tPlr, Player);
-	
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
 	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
 	ck= &ckSplitVert;	ck->Init("chkSplitVertically",  &pSet->split_vertically);

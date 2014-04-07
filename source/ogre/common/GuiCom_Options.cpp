@@ -51,7 +51,7 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 																				SevC(ViewDist);  sv->DefaultF(8000.f);
 	sv= &svAnisotropy;	sv->Init("Anisotropy",	&pSet->anisotropy,	0,16);		SevC(Anisotropy);  sv->DefaultI(4);
 	sv= &svTexSize;
-		sv->strMap[0] = "Small";  sv->strMap[1] = "Big";
+		sv->strMap[0] = TR("#{Small}");  sv->strMap[1] = TR("#{Big}");
 						sv->Init("TexSize",		&pSet->tex_size,	0,1);	sv->DefaultI(1);
 	//  terrain
 	sv= &svTerMtr;

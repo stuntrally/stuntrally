@@ -264,6 +264,13 @@
 	<Tag name="CarType_Extreme">Extreme</Tag>
 	<Tag name="CarType_Other">Other</Tag>
 
+	<Tag name="Car_Mass">Mass</Tag>
+	<Tag name="Car_MaxTorque">Max Torque</Tag>
+	<Tag name="Car_MaxPower">Max Power</Tag>
+	<Tag name="Car_TopSpeed">Top Speed</Tag>
+	<Tag name="Car_TimeTo">Time to</Tag>
+	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
+
 
 	<!--  Multiplayer  -->
 	<Tag name="Multiplayer">Multiplayer</Tag>
@@ -454,6 +461,8 @@
 	<Tag name="DepthOfField">Depth of Field</Tag>
 	<Tag name="Near">Near</Tag>
 	<Tag name="Far">Far</Tag>
+	<Tag name="Small">Small</Tag>
+	<Tag name="Big">Big</Tag>
 
 
 	<!--  Graphics  -->

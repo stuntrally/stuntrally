@@ -262,7 +262,15 @@ void CGui::UpdCarStatsTxt()
 		}
 		fi.close();
 	}
-	txCarStatsTxt->setCaption(txt);
+	String ss = txt;
+	ss = StringUtil::replaceAll(ss, "Mass", TR("#{Car_Mass}"));
+	ss = StringUtil::replaceAll(ss, "Max Torque", TR("#{Car_MaxTorque}"));
+	ss = StringUtil::replaceAll(ss, "Max Power", TR("#{Car_MaxPower}"));
+	ss = StringUtil::replaceAll(ss, "Top Speed", TR("#{Car_TopSpeed}"));
+	ss = StringUtil::replaceAll(ss, "Time 0 to", TR("#{Car_TimeTo}"));
+	ss = StringUtil::replaceAll(ss, "Stop time", TR("#{Car_StopTimeFrom}"));
+	ss = StringUtil::replaceAll(ss, "to 0 ", "");
+	txCarStatsTxt->setCaption(ss);
 	txCarStatsVals->setCaption(vals);
 }
 
