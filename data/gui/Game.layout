@@ -3678,11 +3678,11 @@
 		<Property key="Colour" value="1 0.4 0.4"/>
 		<Property key="Visible" value="false"/>
 	</Widget>
-	<Widget type="Window" skin="WindowCS" position="224 -20 860 112" layer="Back" name="RplWnd">
+	<Widget type="Window" skin="WindowC" position="224 -20 616 92" layer="Back" name="RplWnd">
 		<Property key="Alpha" value="0.3"/>
 		<Property key="Visible" value="false"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="Slider" skin="Slider" position="4 36 600 16" name="RplSlider">
+		<Widget type="Slider" skin="Slider" position="4 36 600 19" name="RplSlider">
 			<Property key="Alpha" value="0.6"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.8 0.9 1"/>
@@ -3716,7 +3716,7 @@
 			<Property key="Colour" value="0.6 0.8 1"/>
 			<Property key="Alpha" value="0.6"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="280 4 80 26">
+		<Widget type="Widget" skin="PanelSkin" position="280 3 80 28">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.9 0.92 1"/>
 			<Property key="Alpha" value="0.6"/>
@@ -3728,7 +3728,7 @@
 				<Property key="FontName" value="font.24"/>
 			</Widget>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="380 4 100 26">
+		<Widget type="Widget" skin="PanelSkin" position="380 3 100 28">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.9 0.96 1.0"/>
 			<Property key="Alpha" value="0.6"/>
@@ -3740,7 +3740,7 @@
 				<Property key="FontName" value="font.24"/>
 			</Widget>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="500 4 100 26">
+		<Widget type="Widget" skin="PanelSkin" position="500 3 100 28">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.8 0.9 1"/>
 			<Property key="Alpha" value="0.5"/>
