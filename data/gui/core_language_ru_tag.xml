@@ -132,6 +132,7 @@
 	<Tag name="Top">Верх</Tag>
 	<Tag name="SpecularPower">Зеркал. сила</Tag>
 	<Tag name="CarType_Racing">Гонка</Tag>
+	<Tag name="Car_TimeTo">Время до</Tag>
 	<Tag name="InputRoadShiftSel">shift - выбор</Tag>
 	<Tag name="Input">Ввод</Tag>
 	<Tag name="AlignWidthAdd">Ширина+</Tag>
@@ -296,7 +297,7 @@
 	<Tag name="ReflMode">Режим</Tag>
 	<Tag name="TipCopySource">Выбираем трек для копирования, используется в [Инструменты] вкладке.</Tag>
 	<Tag name="InputBrushSize">-,=  (или Wheel) - размер</Tag>
-	<Tag name="Layer">Слой</Tag>
+	<Tag name="Car_StopTimeFrom">Вр. торм. от</Tag>
 	<Tag name="SC_JungleDark">ДжунглиС</Tag>
 	<Tag name="EscQuit">Esc выйти</Tag>
 	<Tag name="Gauges">Приборы (об., скор.)</Tag>
@@ -312,7 +313,7 @@
 	<Tag name="TipNormalTex">Нормальные текстуры (высота в альфа).</Tag>
 	<Tag name="CountdownTime">Обратный отсчет (с)</Tag>
 	<Tag name="Ghost">Призр.</Tag>
-	<Tag name="CamInfoStrings">Тип,Откл.,Накл.,Дист.,Высота,Скорость,Смещ.,Влево,Вправо,Середина,Колесо,сдвиг,Вращ.,сброс,движ.,H,Поз.</Tag>
+	<Tag name="GraphicsAll_High">Высоко</Tag>
 	<Tag name="rating">оценка</Tag>
 	<Tag name="HDR">HDR+разм.</Tag>
 	<Tag name="TipABS">Предотвращает блокировку колес при торможении (по умолчанию выключено).</Tag>
@@ -500,17 +501,20 @@
 	<Tag name="InputFluidsTile">[,] - изменить текстуру</Tag>
 	<Tag name="SC_WinterWet">ЗимаД</Tag>
 	<Tag name="TreeDens">Плотность деревьев</Tag>
+	<Tag name="Car_Mass">Масса</Tag>
 	<Tag name="WrongChk">Пропустил КТ</Tag>
+	<Tag name="Small">Мелкий</Tag>
 	<Tag name="DisableEdit">Откл. для ред.</Tag>
 	<Tag name="MinimapUpdSkip">Пропуск обновления мини-карты</Tag>
 	<Tag name="Test">Тест</Tag>
 	<Tag name="InputReloadTrack">F5 - перезагрузить трек</Tag>
 	<Tag name="InputIncreaseSensitivity">Чувствит.</Tag>
 	<Tag name="CheckOnSave">Пров. при сохр.</Tag>
+	<Tag name="Big">Большой</Tag>
 	<Tag name="InputTerPaint">A - Краска текстур (слоев)</Tag>
 	<Tag name="NetPort">Порт</Tag>
 	<Tag name="Update">Обновить</Tag>
-	<Tag name="InputPickTab">Tab - закр./откр. выбр. окно</Tag>
+	<Tag name="InputPickTab">Tab - закр./откр. это окно</Tag>
 	<Tag name="CarType_Gravel">Гравий</Tag>
 	<Tag name="NetMasterConnectionError">Главный сервер не доступен.</Tag>
 	<Tag name="Brush_CurrentH">Тек.В</Tag>
@@ -736,6 +740,8 @@
 	<Tag name="NetAddress">Адрес</Tag>
 	<Tag name="Road_sel">выб</Tag>
 	<Tag name="AutoLoad">Автозагр. трека</Tag>
+	<Tag name="Car_MaxTorque">Макс. кр. момент</Tag>
+	<Tag name="ReflMode_full">Все</Tag>
 	<Tag name="Distance">Дистанция</Tag>
 	<Tag name="RplGhost">Показать езду призрака</Tag>
 	<Tag name="TipGrassPageLength">Длина страница памяти для травы (ниже будут частые перезагрузки, выше будут визуальные переключения).</Tag>
@@ -795,7 +801,7 @@
 	<Tag name="TipTrkViewShort">Просмотр коротким списком.</Tag>
 	<Tag name="Setup">Настройка</Tag>
 	<Tag name="Brush_Power">Сила</Tag>
-	<Tag name="ReflMode_full">Все</Tag>
+	<Tag name="Layer">Слой</Tag>
 	<Tag name="TipDisableWeather">Отключить частицы погоды.</Tag>
 	<Tag name="TipTerErrorNorm">Ошибка ландшафта по умолчанию в процентах. Меньше для плоского, больше для  интенсивного.</Tag>
 	<Tag name="TrackPipes">Трубы</Tag>
@@ -808,6 +814,7 @@
 	<Tag name="TextColor">Цвет текста</Tag>
 	<Tag name="WaterRefraction">Отражение</Tag>
 	<Tag name="Wind">Ветер</Tag>
+	<Tag name="TipTrkScreenEditor">Снимок трека для игры</Tag>
 	<Tag name="TipFogStartDist">Начло дистанции тумана [метры].</Tag>
 	<Tag name="InputTerDeform">D - искажать  (LMB  вверх, RMB  вниз)</Tag>
 	<Tag name="SREditorVersion">Stunt Rally - Ред. треков - версия</Tag>
@@ -898,7 +905,7 @@
 	<Tag name="ObjDynamic">Динамич.</Tag>
 	<Tag name="InputRoadAlignTerrain">U - вырав. ландш. с дорогой (для выб. сегментов)</Tag>
 	<Tag name="Add">Добавить</Tag>
-	<Tag name="GraphicsAll_High">Высоко</Tag>
+	<Tag name="CamInfoStrings">Тип,Откл.,Накл.,Дист.,Высота,Скорость,Смещ.,Влево,Вправо,Середина,Колесо,сдвиг,Вращ.,сброс,движ.,H,Поз.</Tag>
 	<Tag name="Chall_Stunts">Трюки</Tag>
 	<Tag name="NormalsScale">Норм. масш.</Tag>
 	<Tag name="SC_Jungle">Джунгли</Tag>
@@ -937,7 +944,7 @@
 	<Tag name="InputStartWidth">; &apos;  -  регул. ширину старта (ширина дороги)</Tag>
 	<Tag name="ImpostorsOnly">Толко спрайты (низкое качество)</Tag>
 	<Tag name="Error">Ошибка</Tag>
-	<Tag name="PickSetParam">Уст. параметры, отмеч. с</Tag>
+	<Tag name="PickSetParam">Уст. параметры, по умол.</Tag>
 	<Tag name="Resolution">Разрешение</Tag>
 	<Tag name="GrassSize">Размер</Tag>
 	<Tag name="Left">Налево</Tag>
@@ -948,6 +955,7 @@
 	<Tag name="InputStartDir">Space - изм. напр. дороги (+ или -)</Tag>
 	<Tag name="GrMaterial">Материал</Tag>
 	<Tag name="Startup">Запуск</Tag>
+	<Tag name="Car_MaxPower">Макс. мощность</Tag>
 	<Tag name="Brush_ShapeTriangle">Треуг.</Tag>
 	<Tag name="distribution">распределение</Tag>
 	<Tag name="SC_ForestYellow">Зол.Лес</Tag>
@@ -961,7 +969,7 @@
 	<Tag name="Diff4">Сложно</Tag>
 	<Tag name="SkirtHeight">Высота края</Tag>
 	<Tag name="ObjBuildings">Здания</Tag>
-	<Tag name="TipTrkScreenEditor">Снимок трека для игры</Tag>
+	<Tag name="Car_TopSpeed">Макс. скор.</Tag>
 	<Tag name="InputObjectsRot">2 - местное вращ.(alt- глоб.)  LMB: Z  RMB: Y  MMB: X</Tag>
 	<Tag name="Needed">Нужно</Tag>
 	<Tag name="BulletDebug">Отладка Bullet</Tag>
@@ -1015,14 +1023,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред.,след. вкладка (alt - ниже)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="Car_TimeTo">Time to</Tag>
-	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
-	<Tag name="Car_Mass">Mass</Tag>
-	<Tag name="Big">Big</Tag>
-	<Tag name="Car_MaxTorque">Max Torque</Tag>
-	<Tag name="Car_TopSpeed">Top Speed</Tag>
-	<Tag name="Small">Small</Tag>
-	<Tag name="Car_MaxPower">Max Power</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

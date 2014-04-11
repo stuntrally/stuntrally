@@ -12,7 +12,7 @@
 	<Tag name="InpSet_AxisFull">Achse ganz</Tag>
 	<Tag name="InputHeaderTxt4">Ändern</Tag>
 	<Tag name="TerrainDouble">Doppelt</Tag>
-	<Tag name="TipLoadTrkEditor">Andere Strecke laden oder aktuelle Strecke neu Laden.</Tag>
+	<Tag name="TipLoadTrkEditor">Andere Strecke laden oder aktuelle Strecke neu laden.</Tag>
 	<Tag name="FuelBoost">Boost-Tank</Tag>
 	<Tag name="LS_MISC">Fertigstellen</Tag>
 	<Tag name="InputHeaderTxt2">Taste</Tag>
@@ -20,7 +20,7 @@
 	<Tag name="AndUsing">benutzt</Tag>
 	<Tag name="Championship">Meisterschaft</Tag>
 	<Tag name="ColumnRadius">Säulenradius</Tag>
-	<Tag name="CamSpeed">Kamerageschw.</Tag>
+	<Tag name="CamSpeed">Kamerageschwindigkeit</Tag>
 	<Tag name="Warnings">Warnungen</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Auswählen (eins)</Tag>
@@ -79,7 +79,7 @@
 	<Tag name="RenderSystem">Render-System</Tag>
 	<Tag name="TerGenOfsY">Y-Versatz</Tag>
 	<Tag name="TipAutoGearbox">Für manuelle Schaltung den Haken rausnehmen.</Tag>
-	<Tag name="pipes">Röhren</Tag>
+	<Tag name="pipes">Rohre</Tag>
 	<Tag name="CarTireVisCircles">Rad-Kraftkreise-Visualisation</Tag>
 	<Tag name="InputFluidsUpdate">F10 - Depthmap aktualisieren</Tag>
 	<Tag name="TBLapResults">Rundenwerte</Tag>
@@ -132,6 +132,7 @@
 	<Tag name="Top">Oben</Tag>
 	<Tag name="SpecularPower">Spiegelungsstärke</Tag>
 	<Tag name="CarType_Racing">Sport</Tag>
+	<Tag name="Car_TimeTo">Time to</Tag>
 	<Tag name="InputRoadShiftSel">shift - wählen</Tag>
 	<Tag name="Input">Eingabe</Tag>
 	<Tag name="AlignWidthAdd">Breite addieren</Tag>
@@ -236,7 +237,7 @@
 	<Tag name="FluidSplash">Wasser-Spritzer</Tag>
 	<Tag name="Model">Modell</Tag>
 	<Tag name="InpSet_AxisHalf">Achse halb</Tag>
-	<Tag name="PipeLStepsMul">Röhren L-Steps Mult.</Tag>
+	<Tag name="PipeLStepsMul">Rohr-L-Steps-Mult.</Tag>
 	<Tag name="Triplanar">Triplanar</Tag>
 	<Tag name="View">Ansicht</Tag>
 	<Tag name="TipModelRoadDist">Entfernung von der Straße zu den Modellen (global, zu jedem Modell-eigenem Wert addiert)</Tag>
@@ -296,7 +297,7 @@
 	<Tag name="ReflMode">Modus</Tag>
 	<Tag name="TipCopySource">Strecke als Kopierquelle für den [Werkzeuge] Tab auswählen.</Tag>
 	<Tag name="InputBrushSize">-,= (oder Mausrad) - Größe</Tag>
-	<Tag name="Layer">Schicht</Tag>
+	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
 	<Tag name="SC_JungleDark">DschungelDunkel</Tag>
 	<Tag name="EscQuit">Beenden mit Esc</Tag>
 	<Tag name="Gauges">Tacho</Tag>
@@ -312,7 +313,7 @@
 	<Tag name="TipNormalTex">Normaltextur (Höhe im Alphakanal)</Tag>
 	<Tag name="CountdownTime">Countdown-Zeit</Tag>
 	<Tag name="Ghost">Geist</Tag>
-	<Tag name="CamInfoStrings">Typ,Gierung,Neigung,Abstand,Höhe,Geschw.,Offset,LINKS,RECHTS,Mitte,Rad,shift,Rotieren,zurücks.,bewegen,H,Pos</Tag>
+	<Tag name="GraphicsAll_High">Hoch</Tag>
 	<Tag name="rating">Bewertung</Tag>
 	<Tag name="HDR">HDR+Bloom</Tag>
 	<Tag name="TipABS">Verhindert das Blockieren der Reifen beim Bremsen (Standard: aus)</Tag>
@@ -324,7 +325,7 @@
 	<Tag name="TipFogClr2">Nebelfarbe wenn schauen gegenüber Sonne.</Tag>
 	<Tag name="Readme">Liesmich</Tag>
 	<Tag name="Substract">Subtrahieren</Tag>
-	<Tag name="TipSunDirPitch">Richtung der Sonne - Neigung.</Tag>
+	<Tag name="TipSunDirPitch">Richtung der Sonne - Nickwinkel.</Tag>
 	<Tag name="Passed">Bestanden</Tag>
 	<Tag name="InputMapHandBrake">Handbremse</Tag>
 	<Tag name="CarType_Other">Andere</Tag>
@@ -378,10 +379,10 @@
 	<Tag name="TipTrkTerImg">Karte der ausgewählten Strecke, Draufsicht.</Tag>
 	<Tag name="SC_Volcanic">Vulkanisch</Tag>
 	<Tag name="HDROrigImage">Bloom-Darken</Tag>
-	<Tag name="PipeMaterials">Röhrenmaterialien</Tag>
+	<Tag name="PipeMaterials">Rohrmaterialien</Tag>
 	<Tag name="InputFluidsPrevNext">Bild/Mausrad auf/ab - Gewässer vor/zurück</Tag>
 	<Tag name="CarType_Asphalt">Asphalt</Tag>
-	<Tag name="Yaw">gieren</Tag>
+	<Tag name="Yaw">Gier</Tag>
 	<Tag name="Detail">Detail</Tag>
 	<Tag name="TriSize">Dreiecksgröße</Tag>
 	<Tag name="SplitVertically">Senkrecht teilen</Tag>
@@ -447,7 +448,7 @@
 	<Tag name="ColReflect">Spiegelung</Tag>
 	<Tag name="Development">Entwicklung</Tag>
 	<Tag name="InputRoadIns">Einfg - Punkt danach einfügen, mit Alt - davor</Tag>
-	<Tag name="TweakEdit1">Alt-Z - Tweakfenster umschalten (Auto bearbeiten)</Tag>
+	<Tag name="TweakEdit1">Alt-Z - Feineinstellungsfenster umschalten (Auto bearbeiten)</Tag>
 	<Tag name="InputBrushParams">Pinseleigenschaften</Tag>
 	<Tag name="min">min.</Tag>
 	<Tag name="SC_Asphalt">Asphalt</Tag>
@@ -500,13 +501,16 @@
 	<Tag name="InputFluidsTile">[,] - Kachelgröße ändern</Tag>
 	<Tag name="SC_WinterWet">WinterNass</Tag>
 	<Tag name="TreeDens">Baumdichte</Tag>
+	<Tag name="Car_Mass">Mass</Tag>
 	<Tag name="WrongChk">Falscher Wegpunkt</Tag>
+	<Tag name="Small">Small</Tag>
 	<Tag name="DisableEdit">Beim bear. deaktivieren</Tag>
 	<Tag name="MinimapUpdSkip">Karten-Update überspr.</Tag>
 	<Tag name="Test">Test</Tag>
 	<Tag name="InputReloadTrack">F5 - Neu laden</Tag>
 	<Tag name="InputIncreaseSensitivity">Empfindlichkeit</Tag>
 	<Tag name="CheckOnSave">Beim Speichern prüfen</Tag>
+	<Tag name="Big">Big</Tag>
 	<Tag name="InputTerPaint">A - Anstrichtextur (Schicht)</Tag>
 	<Tag name="NetPort">Port</Tag>
 	<Tag name="Update">Aktualisieren</Tag>
@@ -575,7 +579,7 @@
 	<Tag name="TipTireParType3">Reifenpartikel Typ 3</Tag>
 	<Tag name="TipTerLAngMax">Maximaler Winkel für die Terrainschicht</Tag>
 	<Tag name="TCS">TCS (Traktionskontrolle)</Tag>
-	<Tag name="NeedRestart">* Neustart erforderl.</Tag>
+	<Tag name="NeedRestart">* Neustart erforderlich</Tag>
 	<Tag name="Water">Wasser</Tag>
 	<Tag name="mud">Schlamm</Tag>
 	<Tag name="Brush_ShapeN-gon">N-eck</Tag>
@@ -647,7 +651,7 @@
 	<Tag name="TipTestBlendmap">Wird benutzt, um die Blendmap-Durchsichtigkeit zu testen. Der Farbkasten zeigt die Farbe dieser Schicht auf der Blendmap (sie ist schwarz, wenn die Schicht abgeschaltet ist). Gewöhnlicherweise braucht eine gute Blendmap reine Schichtfarben mit wenigen Übergängen (matte Farben, Mischfarben). Um diesen engen/separaten Winkel und diese Höhenreichweiten zu erlangen, benutzen sie eine hohe oder geringe Rauschstärke.</Tag>
 	<Tag name="InputStartMeet">Auto wird (nächste + / vorherige -) Streckenpunkte treffen</Tag>
 	<Tag name="Difficulty">Schwierigkeit</Tag>
-	<Tag name="ImpostorDist">impostor dist.</Tag>
+	<Tag name="ImpostorDist">Bestrügerabstand</Tag>
 	<Tag name="GraphicsAll_Higher">Höher</Tag>
 	<Tag name="RplRename">Umbenennen</Tag>
 	<Tag name="TiresEdit">Reifen bearbeiten - (Graphen in Modus 4)</Tag>
@@ -736,9 +740,11 @@
 	<Tag name="NetAddress">Adresse</Tag>
 	<Tag name="Road_sel">sel</Tag>
 	<Tag name="AutoLoad">Strecke autom. laden</Tag>
+	<Tag name="Car_MaxTorque">Max Torque</Tag>
+	<Tag name="ReflMode_full">Voll</Tag>
 	<Tag name="Distance">Distanz</Tag>
 	<Tag name="RplGhost">Geist anzeigen</Tag>
-	<Tag name="TipGrassPageLength">Page-Länge vom Gras (niedriger Wert verursacht häufiges neu Laden, hoher Wert macht die Übergänge sichtbar)</Tag>
+	<Tag name="TipGrassPageLength">Page-Länge vom Gras (niedriger Wert verursacht häufiges erneutes Laden, hoher Wert macht die Übergänge sichtbar)</Tag>
 	<Tag name="Reflections">Spiegelungen</Tag>
 	<Tag name="dust">Staub</Tag>
 	<Tag name="InputUnbind">RMT auf Button: Zuweisung entfernen</Tag>
@@ -795,10 +801,10 @@
 	<Tag name="TipTrkViewShort">Kurzansicht.</Tag>
 	<Tag name="Setup">Steuerung</Tag>
 	<Tag name="Brush_Power">Stärke</Tag>
-	<Tag name="ReflMode_full">Voll</Tag>
+	<Tag name="Layer">Schicht</Tag>
 	<Tag name="TipDisableWeather">Wetterpartikel deaktivieren</Tag>
 	<Tag name="TipTerErrorNorm">Standardmäßiger Terrainfehler in Prozent. Weniger für ebene, mehr für unebene Terrains.</Tag>
-	<Tag name="TrackPipes">Röhren</Tag>
+	<Tag name="TrackPipes">Rohre</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Höhen-Offset</Tag>
 	<Tag name="Road_OnPipe">Auf Rohr</Tag>
@@ -808,6 +814,7 @@
 	<Tag name="TextColor">Textfarbe</Tag>
 	<Tag name="WaterRefraction">Brechung</Tag>
 	<Tag name="Wind">Wind</Tag>
+	<Tag name="TipTrkScreenEditor">Bildschirmfoto der ausgewählten Strecke.</Tag>
 	<Tag name="TipFogStartDist">Nebelanfangsdistanz (Meter)</Tag>
 	<Tag name="InputTerDeform">D - verformen (LMT hoch, RMT runter)</Tag>
 	<Tag name="SREditorVersion">Stunt Rally - Streckeneditor - Version</Tag>
@@ -898,7 +905,7 @@
 	<Tag name="ObjDynamic">Dynamisch</Tag>
 	<Tag name="InputRoadAlignTerrain">U - Gelände zum Weg ausrichten (für ausgewählte Segmente)</Tag>
 	<Tag name="Add">Hinzufügen</Tag>
-	<Tag name="GraphicsAll_High">Hoch</Tag>
+	<Tag name="CamInfoStrings">Typ,Gierung,Neigung,Abstand,Höhe,Geschw.,Offset,LINKS,RECHTS,Mitte,Rad,shift,Rotieren,zurücks.,bewegen,H,Pos</Tag>
 	<Tag name="Chall_Stunts">Stunts</Tag>
 	<Tag name="NormalsScale">Normalenskalierung</Tag>
 	<Tag name="SC_Jungle">Dschungel</Tag>
@@ -913,7 +920,7 @@
 	<Tag name="Brushes">Pinsel</Tag>
 	<Tag name="TipDisableFog">Den Nebel im Editor beim Bearbeiten deaktivieren.</Tag>
 	<Tag name="long">lang</Tag>
-	<Tag name="PipeWStepsMul">Röhren W-Steps Mult.</Tag>
+	<Tag name="PipeWStepsMul">Rohr-W-Steps-Mult.</Tag>
 	<Tag name="AllowSaveOrigTrk">Speichern von Originalstrecken zulassen</Tag>
 	<Tag name="RplLoad">Laden</Tag>
 	<Tag name="InputTogglePreview">F7 - Vorschaukamera</Tag>
@@ -944,10 +951,11 @@
 	<Tag name="InputBrushOctaves">, . - Rauschoktaven (Detail)</Tag>
 	<Tag name="CarSpeed">Tempo</Tag>
 	<Tag name="TerrainBrush">Terrain Pinsel</Tag>
-	<Tag name="InputStartHeight">[,] - Starthöhe verändern (größer für Röhren)</Tag>
+	<Tag name="InputStartHeight">[,] - Starthöhe verändern (größer für Rohre)</Tag>
 	<Tag name="InputStartDir">Leer - Straßenrichtung (+ oder -)</Tag>
 	<Tag name="GrMaterial">Material</Tag>
 	<Tag name="Startup">Start</Tag>
+	<Tag name="Car_MaxPower">Max Power</Tag>
 	<Tag name="Brush_ShapeTriangle">Dreieck</Tag>
 	<Tag name="distribution">Verteilung</Tag>
 	<Tag name="SC_ForestYellow">WaldGelb</Tag>
@@ -961,7 +969,7 @@
 	<Tag name="Diff4">Schwer</Tag>
 	<Tag name="SkirtHeight">Skirt-Höhe</Tag>
 	<Tag name="ObjBuildings">Gebäude</Tag>
-	<Tag name="TipTrkScreenEditor">Bildschirmfoto der ausgewählten Strecke.</Tag>
+	<Tag name="Car_TopSpeed">Top Speed</Tag>
 	<Tag name="InputObjectsRot">2 - Drehen lokal (Alt- global) LMT: Z RMT: Y MMT: X</Tag>
 	<Tag name="Needed">Erforderlich</Tag>
 	<Tag name="BulletDebug">Bullet-Debug</Tag>
@@ -1010,19 +1018,11 @@
 	<Tag name="InputPressButtonTip">Taste drücken, um die Nummer zu sehen</Tag>
 	<Tag name="SC_Moss">Moos</Tag>
 	<Tag name="Terrain">Terrain</Tag>
-	<Tag name="smooth">glatt</Tag>
-	<Tag name="Pitch">neigen</Tag>
+	<Tag name="smooth">Glättung</Tag>
+	<Tag name="Pitch">Nick</Tag>
 	<Tag name="InputNextOptTab">F2/F3 - Vorh./nächst. Tab (Alt: Untertab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="Car_TimeTo">Time to</Tag>
-	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
-	<Tag name="Car_Mass">Mass</Tag>
-	<Tag name="Big">Big</Tag>
-	<Tag name="Car_MaxTorque">Max Torque</Tag>
-	<Tag name="Car_TopSpeed">Top Speed</Tag>
-	<Tag name="Small">Small</Tag>
-	<Tag name="Car_MaxPower">Max Power</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

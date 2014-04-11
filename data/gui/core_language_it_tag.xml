@@ -132,6 +132,7 @@
 	<Tag name="Top">In cima</Tag>
 	<Tag name="SpecularPower">Specular power</Tag>
 	<Tag name="CarType_Racing">Da corsa</Tag>
+	<Tag name="Car_TimeTo">Time to</Tag>
 	<Tag name="InputRoadShiftSel">shift - select</Tag>
 	<Tag name="Input">Input</Tag>
 	<Tag name="AlignWidthAdd">Aggiungi una largezza</Tag>
@@ -296,7 +297,7 @@
 	<Tag name="ReflMode">Modalità</Tag>
 	<Tag name="TipCopySource">Scegli la pista selezionata per copia originale, usata nella scheda [Utilità].</Tag>
 	<Tag name="InputBrushSize">-,=  (o rotellal)  -  Dimensioni</Tag>
-	<Tag name="Layer">Layer</Tag>
+	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
 	<Tag name="SC_JungleDark">JungleDark</Tag>
 	<Tag name="EscQuit">Esc chiudi il gioco</Tag>
 	<Tag name="Gauges">Indicatori (giri/min, velocità)</Tag>
@@ -312,7 +313,7 @@
 	<Tag name="TipNormalTex">Texture normale ( altezza in alfa)</Tag>
 	<Tag name="CountdownTime">Conto alla rovescia</Tag>
 	<Tag name="Ghost">Fantasma</Tag>
-	<Tag name="CamInfoStrings">Tipo,Yaw,Pitch,Dist,Altezza,Velocità,Offset,SINISTRA,DESTRA,Metà,Ruota,marcia,Rotazione,riavvia,muovi,H,Pos</Tag>
+	<Tag name="GraphicsAll_High">Alto</Tag>
 	<Tag name="rating">valutazione</Tag>
 	<Tag name="HDR">HDR+Bloom</Tag>
 	<Tag name="TipABS">Impedisce il bloccaggio delle ruote in frenata (default: disattivato)</Tag>
@@ -500,13 +501,16 @@
 	<Tag name="InputFluidsTile">[,]  - cambia texture tiling</Tag>
 	<Tag name="SC_WinterWet">WinterWet</Tag>
 	<Tag name="TreeDens">Densità alberi</Tag>
+	<Tag name="Car_Mass">Mass</Tag>
 	<Tag name="WrongChk">Checkpoint errato</Tag>
+	<Tag name="Small">Small</Tag>
 	<Tag name="DisableEdit">Disattiva per modificare</Tag>
 	<Tag name="MinimapUpdSkip">Salta aggiornamento minimap</Tag>
 	<Tag name="Test">Test</Tag>
 	<Tag name="InputReloadTrack">F5 - ricarica la pista</Tag>
 	<Tag name="InputIncreaseSensitivity">Sensitività</Tag>
 	<Tag name="CheckOnSave">Verifica al salvataggio</Tag>
+	<Tag name="Big">Big</Tag>
 	<Tag name="InputTerPaint">A - Colora le texture (layer)</Tag>
 	<Tag name="NetPort">Porta</Tag>
 	<Tag name="Update">Update</Tag>
@@ -736,6 +740,8 @@
 	<Tag name="NetAddress">Indirizzo</Tag>
 	<Tag name="Road_sel">sel</Tag>
 	<Tag name="AutoLoad">Avvio automatico della pista</Tag>
+	<Tag name="Car_MaxTorque">Max Torque</Tag>
+	<Tag name="ReflMode_full">Completo</Tag>
 	<Tag name="Distance">Distanza</Tag>
 	<Tag name="RplGhost">Mostra la guida fantasma - miglior giro</Tag>
 	<Tag name="TipGrassPageLength">Lunghezza pagine erba (bassa si ricarica spesso, alta causa commutazione visibile).</Tag>
@@ -795,7 +801,7 @@
 	<Tag name="TipTrkViewShort">Breve elenco.</Tag>
 	<Tag name="Setup">Configurazione</Tag>
 	<Tag name="Brush_Power">Potenza</Tag>
-	<Tag name="ReflMode_full">Completo</Tag>
+	<Tag name="Layer">Layer</Tag>
 	<Tag name="TipDisableWeather">Disattiva particelle del tempo meteorologico.</Tag>
 	<Tag name="TipTerErrorNorm">Errore di terreno predefinito in percentuale. Meno per piani, più per terreni elevati.</Tag>
 	<Tag name="TrackPipes">Tubi</Tag>
@@ -808,6 +814,7 @@
 	<Tag name="TextColor">Colore del testo</Tag>
 	<Tag name="WaterRefraction">Rifrazione</Tag>
 	<Tag name="Wind">Wind</Tag>
+	<Tag name="TipTrkScreenEditor">Immagine di gioco per la pista selezionata.</Tag>
 	<Tag name="TipFogStartDist">Distanza iniziale della nebbia [metri].</Tag>
 	<Tag name="InputTerDeform">D - Deforma  (LMB su, RMB giù)</Tag>
 	<Tag name="SREditorVersion">Stunt Rally - Editor di piste - versione</Tag>
@@ -898,7 +905,7 @@
 	<Tag name="ObjDynamic">Dinamico</Tag>
 	<Tag name="InputRoadAlignTerrain">U - Allinea terreno alla strada (per segmenti selezionati)</Tag>
 	<Tag name="Add">Aggiungi</Tag>
-	<Tag name="GraphicsAll_High">Alto</Tag>
+	<Tag name="CamInfoStrings">Tipo,Yaw,Pitch,Dist,Altezza,Velocità,Offset,SINISTRA,DESTRA,Metà,Ruota,marcia,Rotazione,riavvia,muovi,H,Pos</Tag>
 	<Tag name="Chall_Stunts">Acrobazie</Tag>
 	<Tag name="NormalsScale">Normals scale</Tag>
 	<Tag name="SC_Jungle">Jungle</Tag>
@@ -948,6 +955,7 @@
 	<Tag name="InputStartDir">Spazio - cambia direzione stradale (+ o -)</Tag>
 	<Tag name="GrMaterial">Materiale</Tag>
 	<Tag name="Startup">Avvio</Tag>
+	<Tag name="Car_MaxPower">Max Power</Tag>
 	<Tag name="Brush_ShapeTriangle">Triang</Tag>
 	<Tag name="distribution">distribuzione</Tag>
 	<Tag name="SC_ForestYellow">ForestYellow</Tag>
@@ -961,7 +969,7 @@
 	<Tag name="Diff4">Difficile</Tag>
 	<Tag name="SkirtHeight">Altezza margine</Tag>
 	<Tag name="ObjBuildings">Edifici</Tag>
-	<Tag name="TipTrkScreenEditor">Immagine di gioco per la pista selezionata.</Tag>
+	<Tag name="Car_TopSpeed">Top Speed</Tag>
 	<Tag name="InputObjectsRot">2 - Ruota locale (alt- globale)  LMB: Z  RMB: Y  MMB: X</Tag>
 	<Tag name="Needed">Necessario</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
@@ -1015,14 +1023,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Estrema</Tag>
 	<Tag name="RplAll">Tutto</Tag>
-	<Tag name="Car_TimeTo">Time to</Tag>
-	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
-	<Tag name="Car_Mass">Mass</Tag>
-	<Tag name="Big">Big</Tag>
-	<Tag name="Car_MaxTorque">Max Torque</Tag>
-	<Tag name="Car_TopSpeed">Top Speed</Tag>
-	<Tag name="Small">Small</Tag>
-	<Tag name="Car_MaxPower">Max Power</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

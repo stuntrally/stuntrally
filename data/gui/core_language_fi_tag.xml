@@ -132,6 +132,7 @@
 	<Tag name="Top">Ylös</Tag>
 	<Tag name="SpecularPower">Specular power</Tag>
 	<Tag name="CarType_Racing">Kilpailu</Tag>
+	<Tag name="Car_TimeTo">Time to</Tag>
 	<Tag name="InputRoadShiftSel">shift - select</Tag>
 	<Tag name="Input">Syöttö</Tag>
 	<Tag name="AlignWidthAdd">Width add</Tag>
@@ -296,7 +297,7 @@
 	<Tag name="ReflMode">Tila</Tag>
 	<Tag name="TipCopySource">Pick selected track for copy source, used in [Tools] tab.</Tag>
 	<Tag name="InputBrushSize">-,=  (or Wheel)  -  Size</Tag>
-	<Tag name="Layer">Taso</Tag>
+	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
 	<Tag name="SC_JungleDark">JungleDark</Tag>
 	<Tag name="EscQuit">Esc lopettaa</Tag>
 	<Tag name="Gauges">Mittarit (moottorin kierrosmäärä, nopeus)</Tag>
@@ -312,7 +313,7 @@
 	<Tag name="TipNormalTex">Normaalitekstuuri (korkeus alpha-kanavassa).</Tag>
 	<Tag name="CountdownTime">Kilpailun lähtölaskenta</Tag>
 	<Tag name="Ghost">Haamu</Tag>
-	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
+	<Tag name="GraphicsAll_High">Korkea</Tag>
 	<Tag name="rating">arvostelu</Tag>
 	<Tag name="HDR">HDR+Bloom</Tag>
 	<Tag name="TipABS">Estää jarrujen lukkiutumisen (oletus: pois)</Tag>
@@ -500,13 +501,16 @@
 	<Tag name="InputFluidsTile">[,]  - change texture tiling</Tag>
 	<Tag name="SC_WinterWet">WinterWet</Tag>
 	<Tag name="TreeDens">Puutiheys</Tag>
+	<Tag name="Car_Mass">Mass</Tag>
 	<Tag name="WrongChk">Väärä tarkistuspiste</Tag>
+	<Tag name="Small">Small</Tag>
 	<Tag name="DisableEdit">Disable for edit</Tag>
 	<Tag name="MinimapUpdSkip">Minimap update skip</Tag>
 	<Tag name="Test">Test</Tag>
 	<Tag name="InputReloadTrack">F5 - lataa rata uudelleen</Tag>
 	<Tag name="InputIncreaseSensitivity">Herkkyys</Tag>
 	<Tag name="CheckOnSave">Check on save</Tag>
+	<Tag name="Big">Big</Tag>
 	<Tag name="InputTerPaint">A - Paint Textures (layers)</Tag>
 	<Tag name="NetPort">Portti</Tag>
 	<Tag name="Update">Update</Tag>
@@ -736,6 +740,8 @@
 	<Tag name="NetAddress">Osoite</Tag>
 	<Tag name="Road_sel">sel</Tag>
 	<Tag name="AutoLoad">Lataa rata automaattisesti</Tag>
+	<Tag name="Car_MaxTorque">Max Torque</Tag>
+	<Tag name="ReflMode_full">Täysi</Tag>
 	<Tag name="Distance">Etäisyys</Tag>
 	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
 	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
@@ -795,7 +801,7 @@
 	<Tag name="TipTrkViewShort">Short list view.</Tag>
 	<Tag name="Setup">Setup</Tag>
 	<Tag name="Brush_Power">Voima</Tag>
-	<Tag name="ReflMode_full">Täysi</Tag>
+	<Tag name="Layer">Taso</Tag>
 	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
 	<Tag name="TipTerErrorNorm">Default terrain error in percent. Less for flat, more for high terrains.</Tag>
 	<Tag name="TrackPipes">Putket</Tag>
@@ -808,6 +814,7 @@
 	<Tag name="TextColor">Tekstin väri</Tag>
 	<Tag name="WaterRefraction">Taittuminen</Tag>
 	<Tag name="Wind">Wind</Tag>
+	<Tag name="TipTrkScreenEditor">Kuvankaappaus pelitilanteesta valitulla radalla.</Tag>
 	<Tag name="TipFogStartDist">Fog start distance [meters].</Tag>
 	<Tag name="InputTerDeform">D - Deform  (LMB up, RMB down)</Tag>
 	<Tag name="SREditorVersion">Stunt Rally - Rataeditori - versio</Tag>
@@ -898,7 +905,7 @@
 	<Tag name="ObjDynamic">Dynaaminen</Tag>
 	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
 	<Tag name="Add">Add</Tag>
-	<Tag name="GraphicsAll_High">Korkea</Tag>
+	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
 	<Tag name="Chall_Stunts">Stuntit</Tag>
 	<Tag name="NormalsScale">Normals scale</Tag>
 	<Tag name="SC_Jungle">Jungle</Tag>
@@ -948,6 +955,7 @@
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="GrMaterial">Materiaali</Tag>
 	<Tag name="Startup">Käynnistys</Tag>
+	<Tag name="Car_MaxPower">Max Power</Tag>
 	<Tag name="Brush_ShapeTriangle">Triang</Tag>
 	<Tag name="distribution">distribution</Tag>
 	<Tag name="SC_ForestYellow">ForestYellow</Tag>
@@ -961,7 +969,7 @@
 	<Tag name="Diff4">Vaikea</Tag>
 	<Tag name="SkirtHeight">Skirt Height</Tag>
 	<Tag name="ObjBuildings">Rakennukset</Tag>
-	<Tag name="TipTrkScreenEditor">Kuvankaappaus pelitilanteesta valitulla radalla.</Tag>
+	<Tag name="Car_TopSpeed">Top Speed</Tag>
 	<Tag name="InputObjectsRot">2 - Rotate local (alt- global)  LMB: Z  RMB: Y  MMB: X</Tag>
 	<Tag name="Needed">Needed</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
@@ -1015,14 +1023,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="Car_TimeTo">Time to</Tag>
-	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
-	<Tag name="Car_Mass">Mass</Tag>
-	<Tag name="Big">Big</Tag>
-	<Tag name="Car_MaxTorque">Max Torque</Tag>
-	<Tag name="Car_TopSpeed">Top Speed</Tag>
-	<Tag name="Small">Small</Tag>
-	<Tag name="Car_MaxPower">Max Power</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
