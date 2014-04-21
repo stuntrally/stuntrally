@@ -520,6 +520,7 @@
 		<t name="V7-Radioactive"/>
 		<t name="V8-Uncertain"/>
 		<t name="V9-Craters"/>
+		<t name="V10-MtSulphur"/>
 	</champ>
 	<champ name="Unidentified" ver="1" difficulty="4" type="6" 
 			descr="Unidentified championship.">
