@@ -65,8 +65,8 @@ SH_START_PROGRAM
 {
 	float2 uv1 = float2(uv.x, 1-uv.y);
 	float2 tuv = uv1 * terrainWorldSize / 512.f;
-	float h = shSample(samHMap, uv1);
-	float a = shSample(samAng,  uv);
+	float h = shSample(samHMap, uv1).x;
+	float a = shSample(samAng,  uv).x;
 	
 	//  ter ang,h ranges  (turned off if noise only)
 	float l0a = Nonly.x < 0.1f ? 0.f : linRange(a, Amin.x, Amax.x, Asmt.x) * linRange(h, Hmin.x, Hmax.x, Hsmt.x), l0 = l0a;
