@@ -19,10 +19,6 @@
 #ifndef SHARED_DATA_DIR
 #define SHARED_DATA_DIR "data"
 #endif
-// Optionally comes from CMake
-#ifndef OGRE_PLUGIN_DIR
-#define OGRE_PLUGIN_DIR ""
-#endif
 
 
 // TODO: Create a PORTABLE_INSTALL flag that allows disabling the usage of system dirs
@@ -53,34 +49,11 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 		char *plugindir = getenv("OGRE_PLUGIN_DIR");
 		if (plugindir) {
 			ogre_plugin = plugindir;
-		#ifndef _WIN32
-		} else if (fs::exists(fs::path(OGRE_PLUGIN_DIR) / "RenderSystem_GL.so")) {
-			ogre_plugin = OGRE_PLUGIN_DIR;
-		#endif
 		} else {
 			#ifdef _WIN32
 			ogre_plugin = ".";
 			#else
-			Paths dirs;
-			#if defined(__amd64__) || defined(__amd64) || defined(__x86_64__) || defined(_M_X64)
-			dirs.push_back("/usr/local/lib64");
-			dirs.push_back("/usr/lib64");
-			#else
-			dirs.push_back("/usr/local/lib32");
-			dirs.push_back("/usr/lib32");
-			#endif
-			dirs.push_back("/usr/local/lib");
-			dirs.push_back("/usr/lib");
-			// Loop through the paths and pick the first one that contain a plugin
-			for (Paths::const_iterator p = dirs.begin(); p != dirs.end(); ++p) {
-				if (fs::exists(*p / "OGRE/RenderSystem_GL.so")) {
-					ogre_plugin = (*p / "OGRE").string();
-					break;
-				} else if (fs::exists(*p / "ogre/RenderSystem_GL.so")) {
-					ogre_plugin = (*p / "ogre").string();
-					break;
-				}
-			}
+			ogre_plugin = OGRE_PLUGIN_DIR_REL;
 			#endif
 		}
 	}
