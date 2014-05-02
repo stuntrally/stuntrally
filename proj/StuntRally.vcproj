@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1250"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="StuntRally"
 	ProjectGUID="{692198B5-48DF-45D6-8822-0871A2297385}"
 	RootNamespace="StuntRally"
@@ -49,8 +49,8 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zm1000 /MP"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\source\bullet;..\source\tinyxml"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;ENET_DLL;DEBUG;_USE_MATH_DEFINES;NOMINMAX;"
+				AdditionalIncludeDirectories="..\source\bullet;..\source\tinyxml;..\source;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;DEBUG;_USE_MATH_DEFINES;NOMINMAX;"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="pch.h"
@@ -76,11 +76,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain_d.lib OgreOverlay_d.lib OgreTerrain_d.lib OgrePaging_d.lib OgreRTShaderSystem_d.lib MyGUIEngine_d.lib MyGUI.OgrePlatform_d.lib enet_d.lib BulletCollision_debug.lib BulletDynamics_debug.lib LinearMath_debug.lib BulletFileLoader_debug.lib BulletWorldImporter_debug.lib"
+				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain_d.lib OgreOverlay_d.lib OgreTerrain_d.lib OgrePaging_d.lib OgreRTShaderSystem_d.lib MyGUIEngine_d.lib MyGUI.OgrePlatform_d.lib BulletCollision_debug.lib BulletDynamics_debug.lib LinearMath_debug.lib BulletFileLoader_debug.lib BulletWorldImporter_debug.lib ws2_32.lib winmm.lib"
 				OutputFile="StuntRally_d.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Debug;c:\v\ogre\Dependencies\lib\Debug;c:\v\mygui\bin\lib\Debug;&quot;c:\v\enet-1.3.4\Debug&quot;;&quot;c:\v\bullet\bullet-2.79\bin\lib\Debug&quot;;&quot;c:\v\SDL2-2.0.0\lib\Debug&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Debug&quot;;&quot;c:\v\libogg-1.3.0\lib\Debug&quot;"
+				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Debug;c:\v\ogre\Dependencies\lib\Debug;c:\v\mygui\bin\lib\Debug;&quot;c:\v\bullet\bullet-2.79\bin\lib\Debug&quot;;&quot;c:\v\SDL2-2.0.0\lib\Debug&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Debug&quot;;&quot;c:\v\libogg-1.3.0\lib\Debug&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="StuntRally_d.pdb"
@@ -147,8 +147,8 @@
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="..\source\bullet;..\source\tinyxml"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;ENET_DLL;_USE_MATH_DEFINES;NOMINMAX;"
+				AdditionalIncludeDirectories="..\source\bullet;..\source\tinyxml;..\source;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;NOMINMAX;"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableEnhancedInstructionSet="1"
@@ -175,11 +175,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain.lib OgreOverlay.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib enet.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib"
+				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain.lib OgreOverlay.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib ws2_32.lib winmm.lib"
 				OutputFile="StuntRally.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Release;c:\v\ogre\Dependencies\lib\Release;c:\v\mygui\bin\lib\Release;&quot;c:\v\enet-1.3.4\Release&quot;;&quot;c:\v\bullet\bullet-2.79\bin\lib\Release&quot;;&quot;c:\v\SDL2-2.0.0\lib\Release&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Release&quot;;&quot;c:\v\libogg-1.3.0\lib\Release&quot;"
+				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Release;c:\v\ogre\Dependencies\lib\Release;c:\v\mygui\bin\lib\Release;&quot;c:\v\bullet\bullet-2.79\bin\lib\Release&quot;;&quot;c:\v\SDL2-2.0.0\lib\Release&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Release&quot;;&quot;c:\v\libogg-1.3.0\lib\Release&quot;"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
 				TargetMachine="1"
@@ -240,8 +240,8 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zm1000 /MP"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\source\bullet;..\source\tinyxml"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;ENET_DLL;_USE_MATH_DEFINES;NOMINMAX;"
+				AdditionalIncludeDirectories="..\source\bullet;..\source\tinyxml;..\source;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;NOMINMAX;"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -269,11 +269,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib enet.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib"
+				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib enet.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib ws2_32.lib winmm.lib"
 				OutputFile="StuntRally_rd.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\RelWithDebInfo;c:\v\ogre\Dependencies\lib\Release;c:\v\mygui\bin\lib\Release;&quot;c:\v\enet-1.3.4\Release&quot;;&quot;c:\v\bullet\bullet-2.79\bin\lib\Release&quot;;&quot;c:\v\SDL2-2.0.0\lib\Release&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Release&quot;;&quot;c:\v\libogg-1.3.0\lib\Release&quot;"
+				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\RelWithDebInfo;c:\v\ogre\Dependencies\lib\Release;c:\v\mygui\bin\lib\Release;&quot;c:\v\bullet\bullet-2.79\bin\lib\Release&quot;;&quot;c:\v\SDL2-2.0.0\lib\Release&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Release&quot;;&quot;c:\v\libogg-1.3.0\lib\Release&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="StuntRally_rd.pdb"
@@ -2352,6 +2352,298 @@
 				</File>
 				<File
 					RelativePath="..\source\oics\ICSPrerequisites.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="enet"
+				>
+				<File
+					RelativePath="..\source\enet\callbacks.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\enet\callbacks.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\enet\compress.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\enet\enet.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\enet\host.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\enet\list.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\enet\list.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\enet\packet.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\enet\peer.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\enet\protocol.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\enet\protocol.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\enet\time.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\enet\types.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\enet\unix.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\enet\unix.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\enet\utility.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\enet\win32.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\source\enet\win32.h"
 					>
 				</File>
 			</Filter>
