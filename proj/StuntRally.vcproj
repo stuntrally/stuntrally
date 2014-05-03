@@ -76,7 +76,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain_d.lib OgreOverlay_d.lib OgreTerrain_d.lib OgrePaging_d.lib OgreRTShaderSystem_d.lib MyGUIEngine_d.lib MyGUI.OgrePlatform_d.lib BulletCollision_debug.lib BulletDynamics_debug.lib LinearMath_debug.lib BulletFileLoader_debug.lib BulletWorldImporter_debug.lib ws2_32.lib winmm.lib"
+				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain_d.lib OgreOverlay_d.lib OgreTerrain_d.lib OgrePaging_d.lib MyGUIEngine_d.lib MyGUI.OgrePlatform_d.lib BulletCollision_debug.lib BulletDynamics_debug.lib LinearMath_debug.lib BulletFileLoader_debug.lib BulletWorldImporter_debug.lib ws2_32.lib winmm.lib"
 				OutputFile="StuntRally_d.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -175,7 +175,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain.lib OgreOverlay.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib ws2_32.lib winmm.lib"
+				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain.lib OgreOverlay.lib OgreTerrain.lib OgrePaging.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib ws2_32.lib winmm.lib"
 				OutputFile="StuntRally.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -269,7 +269,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib enet.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib ws2_32.lib winmm.lib"
+				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain.lib OgreTerrain.lib OgrePaging.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib enet.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib ws2_32.lib winmm.lib"
 				OutputFile="StuntRally_rd.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
