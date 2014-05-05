@@ -29,7 +29,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_show.tracks_sort", tracks_sort);		Param(c,w, "hud_show.tracks_sortup", tracks_sortup);
 
 	Param(c,w, "graph_detail.preset", preset);
-	Param(c,w, "graph_detail.anisotropy", anisotropy);		Param(c,w, "graph_detail.view_dist", view_distance);
+	Param(c,w, "graph_detail.tex_filter", tex_filt);			Param(c,w, "graph_detail.anisotropy", anisotropy);
+	Param(c,w, "graph_detail.view_dist", view_distance);
 	Param(c,w, "graph_detail.ter_detail", terdetail);		Param(c,w, "graph_detail.ter_dist", terdist);
 	Param(c,w, "graph_detail.road_dist", road_dist);		Param(c,w, "graph_detail.tex_size", tex_size);
 	Param(c,w, "graph_detail.ter_mtr", ter_mtr);			Param(c,w, "graph_detail.ter_tripl", ter_tripl);
@@ -91,7 +92,7 @@ SETTINGS::SETTINGS()  ///  Defaults
 	,tracks_view(0), tracks_sort(0), tracks_sortup(0)
 	//  graphics
 	,preset(4)
-	,anisotropy(8),	view_distance(3600)
+	,tex_filt(2), anisotropy(8), view_distance(3600)
 	,terdetail(1.f), terdist(300), road_dist(1.0), tex_size(1), ter_mtr(2), ter_tripl(0)
 	,horizon(0)
 	,shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(Sh_Depth)

@@ -2294,10 +2294,6 @@
 							<Widget type="TabItem" skin="" position="2 24 694 292">
 								<Property key="Caption" value="#60FF60#{Textures}"/>
 								<Widget type="ComboBox" skin="ComboBox" position="210 47 136 24" name="TexFiltering">
-									<Property key="Caption" value="Anisotropic"/>
-									<Property key="AddItem" value="Bilinear"/>
-									<Property key="AddItem" value="Trilinear"/>
-									<Property key="AddItem" value="Anisotropic"/>
 									<Property key="Static" value="true"/>
 									<Property key="ReadOnly" value="true"/>
 									<Property key="TextColour" value="0.2 1 0.2"/>

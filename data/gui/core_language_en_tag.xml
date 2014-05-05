@@ -30,6 +30,7 @@
 	
 	<!--  Loading tags  -->
 	<Tag name="LoadingDesc">Loading, please wait...</Tag>
+	<Tag name="Initializing">Initializing</Tag>
 	<Tag name="LS_CLEANUP">Cleaning up</Tag>
 	<Tag name="LS_GAME">Loading game</Tag>
 	<Tag name="LS_SCENE">Loading scene</Tag>
@@ -477,7 +478,11 @@
 	<Tag name="TerHQDist">Terrain HQ dist</Tag>
 	<Tag name="ViewDist">View distance</Tag>
 	<Tag name="RoadQual">Road far quality</Tag>
+
 	<Tag name="Textures">Textures</Tag>
+	<Tag name="Bilinear">Bilinear</Tag>
+	<Tag name="Trilinear">Trilinear</Tag>
+	<Tag name="Anisotropic">Anisotropic</Tag>
 	<Tag name="Anisotropy">Anisotropy</Tag>
 	<Tag name="Triplanar">Triplanar</Tag>
 	<Tag name="HighestSlopes">Highest slopes</Tag>

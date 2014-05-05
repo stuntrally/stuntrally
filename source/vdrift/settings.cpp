@@ -96,7 +96,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	//  graphics
 	Param(c,w, "graph_detail.preset", preset);
-	Param(c,w, "graph_detail.anisotropy", anisotropy);		Param(c,w, "graph_detail.view_dist", view_distance);
+	Param(c,w, "graph_detail.tex_filter", tex_filt);		Param(c,w, "graph_detail.anisotropy", anisotropy);
+	Param(c,w, "graph_detail.view_dist", view_distance);
 	Param(c,w, "graph_detail.ter_detail", terdetail);		Param(c,w, "graph_detail.ter_dist", terdist);
 	Param(c,w, "graph_detail.road_dist", road_dist);		Param(c,w, "graph_detail.tex_size", tex_size);
 	Param(c,w, "graph_detail.ter_mtr", ter_mtr);			Param(c,w, "graph_detail.ter_tripl", ter_tripl);
@@ -198,7 +199,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,champ_type(0),tut_type(0),chall_type(0), car_ed_tab(0), champ_info(1)
 	//  graphics
 	,preset(4)
-	,anisotropy(4),	view_distance(2000), bFog(0)
+	,tex_filt(2), anisotropy(4), view_distance(2000), bFog(0)
 	,terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2), ter_tripl(0)
 	,horizon(0)
 	,refl_skip(200), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode(1)

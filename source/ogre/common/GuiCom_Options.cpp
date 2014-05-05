@@ -46,6 +46,11 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 
 	//  textures
 	CmbC(cmb, "TexFiltering", comboTexFilter);
+	cmb->removeAllItems();
+	cmb->addItem(TR("#{Bilinear}"));
+	cmb->addItem(TR("#{Trilinear}"));
+	cmb->addItem(TR("#{Anisotropic}"));
+	cmb->setIndexSelected(pSet->tex_filt);  comboTexFilter(cmb, pSet->tex_filt);
 
 	sv= &svViewDist;	sv->Init("ViewDist",	&pSet->view_distance, 50.f,20000.f, 2.f, 1,4, 0.001f," km");
 																				SevC(ViewDist);  sv->DefaultF(8000.f);
@@ -157,6 +162,7 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 
 void CGuiCom::comboTexFilter(CMB)
 {
+	pSet->tex_filt = val;
 	TextureFilterOptions tfo;
 	switch (val)  {
 		case 0:	 tfo = TFO_BILINEAR;	break;
