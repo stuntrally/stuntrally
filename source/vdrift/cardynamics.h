@@ -20,7 +20,7 @@
 #include "collision_contact.h"
 #include "../btOgre/BtOgreDebug.h"
 
-class MODEL;  class CONFIGFILE;  class COLLISION_WORLD;  class FluidBox;
+class MODEL;  class CONFIGFILE;  class COLLISION_WORLD;  class FluidBox;  class GAME;
 
 
 class CARDYNAMICS : public btActionInterface
@@ -36,7 +36,8 @@ public:
 	CARDYNAMICS();
 	~CARDYNAMICS();
 	
-	bool Load(class GAME* pGame, CONFIGFILE & c, std::ostream & error_output);
+	GAME* pGame;
+	bool Load(GAME* game, CONFIGFILE & c, std::ostream & error_output);
 
 	void Init(
 		class SETTINGS* pSet1, class Scene* pScene1, class FluidsXml* pFluids1,
