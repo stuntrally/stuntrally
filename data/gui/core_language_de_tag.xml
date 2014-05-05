@@ -42,7 +42,7 @@
 	<Tag name="TipChangeSat">Sättigung ändern</Tag>
 	<Tag name="Diff5">Sehr schwierig</Tag>
 	<Tag name="TerNormal">Normal</Tag>
-	<Tag name="NeedNewGame">* neues Spiel erforderlich</Tag>
+	<Tag name="NeedNewGame">* neues Spiel nötig</Tag>
 	<Tag name="InputRoadAngZero">Alt-Umschalt-1 - Nullwinkel</Tag>
 	<Tag name="InputRoadChkCtrl">mit Strg - Benutzerradius erzwingen</Tag>
 	<Tag name="LS_SCENE">Lade Szene</Tag>
@@ -132,7 +132,7 @@
 	<Tag name="Top">Oben</Tag>
 	<Tag name="SpecularPower">Spiegelungsstärke</Tag>
 	<Tag name="CarType_Racing">Sport</Tag>
-	<Tag name="Car_TimeTo">Time to</Tag>
+	<Tag name="Car_TimeTo">Zeit bis</Tag>
 	<Tag name="InputRoadShiftSel">shift - wählen</Tag>
 	<Tag name="Input">Eingabe</Tag>
 	<Tag name="AlignWidthAdd">Breite addieren</Tag>
@@ -170,7 +170,7 @@
 	<Tag name="banked">schräg</Tag>
 	<Tag name="frenzy">viele Kurven</Tag>
 	<Tag name="InputRoadChkRadius">K,L - Wegpunkt-Radius</Tag>
-	<Tag name="TipCarSpeed">Geschwindigkeit des Autos - je höher sie ist, desto schneller ist das Fahrzeug. Achtung, zu schnelle Autos werden auf Kies nicht schneller sein, da sie nicht über genügend Halt verfügen.</Tag>
+	<Tag name="TipCarSpeed">Geschwindigkeitsklasse des Autos - je höher sie ist, desto schneller ist das Fahrzeug. Achtung, zu schnelle Autos werden auf Kies nicht schneller sein, da sie nicht über genügend Halt verfügen.</Tag>
 	<Tag name="InputRoadInsAlt">Alt-Shift - am Anfang Alt-Strg - am Ende</Tag>
 	<Tag name="RearThrottleInverse">Bremse=Rückwärts</Tag>
 	<Tag name="MessageBox_Yes">Ja</Tag>
@@ -217,7 +217,7 @@
 	<Tag name="TipChangeReflect">Wähle Auto-Farbenreflektion (matt bis spiegelnd)</Tag>
 	<Tag name="filmgrain">Filmkörnung</Tag>
 	<Tag name="InputMapSteering">Lenkung</Tag>
-	<Tag name="AutoRear">Autom. Rückwärtsgang</Tag>
+	<Tag name="AutoRear">Automatischer Rückwärtsgang</Tag>
 	<Tag name="TerGenFreq">Frequenz-Zoom</Tag>
 	<Tag name="Road_OnTerrain">Am Feld</Tag>
 	<Tag name="ReflMode_single">Einzel</Tag>
@@ -281,7 +281,7 @@
 	<Tag name="Multiply">Multiplizieren</Tag>
 	<Tag name="TipSpeedSensitiveSteering">Reduziert die Lenkreichweite bei hoher Geschwindigkeit.</Tag>
 	<Tag name="HDRTab">HDR</Tag>
-	<Tag name="Sound">Sound</Tag>
+	<Tag name="Sound">Geräusch</Tag>
 	<Tag name="InputFluidsIns">Einfg - neues Gewässer</Tag>
 	<Tag name="TipVegetGroups">Vegetationsgruppen (empfohlen: 4-6), Einfluss auf Performance.</Tag>
 	<Tag name="Car">Auto</Tag>
@@ -295,13 +295,13 @@
 	<Tag name="Road_Column">Säule</Tag>
 	<Tag name="TipTerLHMin">Minimale Terrainhöhe der Ebene.</Tag>
 	<Tag name="ReflMode">Modus</Tag>
-	<Tag name="TipCopySource">Strecke als Kopierquelle für den [Werkzeuge] Tab auswählen.</Tag>
+	<Tag name="TipCopySource">Strecke als Kopierquelle für den »Werkzeuge«-Tab auswählen.</Tag>
 	<Tag name="InputBrushSize">-,= (oder Mausrad) - Größe</Tag>
-	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
+	<Tag name="Car_StopTimeFrom">Stoppzeit ab</Tag>
 	<Tag name="SC_JungleDark">DschungelDunkel</Tag>
 	<Tag name="EscQuit">Beenden mit Esc</Tag>
 	<Tag name="Gauges">Tacho</Tag>
-	<Tag name="LengthDim">Längendim.</Tag>
+	<Tag name="LengthDim">Längendimensionalität</Tag>
 	<Tag name="Bloom">Überstrahlung</Tag>
 	<Tag name="TipRenameTrk">Ausgewählte Strecke umbenennen (zuerst Namen ändern)</Tag>
 	<Tag name="TerrainHalf">Halbieren</Tag>
@@ -334,7 +334,7 @@
 	<Tag name="Type">Typ</Tag>
 	<Tag name="NetWaiting">Wartend...</Tag>
 	<Tag name="LoadTrack">Strecke laden</Tag>
-	<Tag name="MergeLength">Zusammenf. L.</Tag>
+	<Tag name="MergeLength">Zusammenfassungslänge</Tag>
 	<Tag name="InputMinVal">Min. Wert</Tag>
 	<Tag name="RplMaxNumViewports">Max. Anzahl von Ansichten nebeneinander</Tag>
 	<Tag name="SingleRace">Schnelles Spiel</Tag>
@@ -343,7 +343,7 @@
 	<Tag name="TipGrassPatchLengthMax">Maximale Länge eines Grasbüschels.</Tag>
 	<Tag name="Vegetation">Vegetation</Tag>
 	<Tag name="ssao">SSAO</Tag>
-	<Tag name="max">max</Tag>
+	<Tag name="max">Max.</Tag>
 	<Tag name="Stage">Abschnitt</Tag>
 	<Tag name="CarDesc_3S">Gutes Auto, geeignet für alle Strecken, aber es hat eine langsamere Beschleunigung, besonders bei hohem Tempo.</Tag>
 	<Tag name="None">Keine</Tag>
@@ -410,7 +410,7 @@
 	<Tag name="InputCameraMode">Kameramodus</Tag>
 	<Tag name="Enabled">Aktiviert</Tag>
 	<Tag name="SC_Desert">Wüste</Tag>
-	<Tag name="TipCarType">Autotyp, Hauptzweck. Manche Autos können auf Schotter fahren, auch wenn sie dafür nicht geeignet sind.</Tag>
+	<Tag name="TipCarType">Wagenklasse, Hauptzweck. Manche Autos können auf Schotter fahren, auch wenn sie dafür nicht geeignet sind.</Tag>
 	<Tag name="TipReverse">Streckenrichtung umkehren.</Tag>
 	<Tag name="DidntPass">Durchgefallen</Tag>
 	<Tag name="Road_Cur">Akt</Tag>
@@ -501,16 +501,16 @@
 	<Tag name="InputFluidsTile">[,] - Kachelgröße ändern</Tag>
 	<Tag name="SC_WinterWet">WinterNass</Tag>
 	<Tag name="TreeDens">Baumdichte</Tag>
-	<Tag name="Car_Mass">Mass</Tag>
+	<Tag name="Car_Mass">Masse</Tag>
 	<Tag name="WrongChk">Falscher Wegpunkt</Tag>
-	<Tag name="Small">Small</Tag>
-	<Tag name="DisableEdit">Beim bear. deaktivieren</Tag>
+	<Tag name="Small">Klein</Tag>
+	<Tag name="DisableEdit">Beim Bearbeiten deaktivieren</Tag>
 	<Tag name="MinimapUpdSkip">Karten-Update überspr.</Tag>
 	<Tag name="Test">Test</Tag>
 	<Tag name="InputReloadTrack">F5 - Neu laden</Tag>
 	<Tag name="InputIncreaseSensitivity">Empfindlichkeit</Tag>
 	<Tag name="CheckOnSave">Beim Speichern prüfen</Tag>
-	<Tag name="Big">Big</Tag>
+	<Tag name="Big">Groß</Tag>
 	<Tag name="InputTerPaint">A - Anstrichtextur (Schicht)</Tag>
 	<Tag name="NetPort">Port</Tag>
 	<Tag name="Update">Aktualisieren</Tag>
@@ -540,7 +540,7 @@
 	<Tag name="Right">Rechts</Tag>
 	<Tag name="Help">Hilfe</Tag>
 	<Tag name="CarDesc_N1">Gutes Auto für alle Strecken. Ein bisschen unlenkbarer, aber dafür ziemlich stabil aufgrund der Länge.</Tag>
-	<Tag name="LODPointsDist">LOD-Punkte-Dist.</Tag>
+	<Tag name="LODPointsDist">LOD-Punkte-Distanz</Tag>
 	<Tag name="MotionBlur">Bewegungsunschärfe</Tag>
 	<Tag name="MinimapAndSize">Kartengröße</Tag>
 	<Tag name="TipChangeHue">Farbe ändern (Farbton)</Tag>
@@ -553,7 +553,7 @@
 	<Tag name="TipSunAmbient">Sonnenlicht-Umgebungsfarbe (konstant). R-, G-, B-Komponenten von 0 bis 1 (z.B. 0.4 0.4 0.4).</Tag>
 	<Tag name="TipParType3">Reifenpartikel Typ 3 (ganze Strecke)</Tag>
 	<Tag name="ApplyShadows">Schatten anwenden</Tag>
-	<Tag name="ChngTrkTab">ausw. im Tab [Strecke]</Tag>
+	<Tag name="ChngTrkTab">aus dem Tab »Strecke«</Tag>
 	<Tag name="TipParType2">Reifenpartikel Typ 2 (ganze Strecke)</Tag>
 	<Tag name="InputRplCtrl2">P - Replay pausieren/fortsetzen</Tag>
 	<Tag name="InputRplCtrl3">[ , ] - vor/zurückspulen (shift - langsam, ctrl,alt - schnell)</Tag>
@@ -675,7 +675,7 @@
 	<Tag name="LS_ROAD">Lade Straßen</Tag>
 	<Tag name="Pick">Auswählen</Tag>
 	<Tag name="RoadPoint">Straßenpunkt</Tag>
-	<Tag name="CarStartPos">Auto Startpos.</Tag>
+	<Tag name="CarStartPos">Auto-Startpos.</Tag>
 	<Tag name="ObjRocks">Steine</Tag>
 	<Tag name="ShortcutsInfo">Mit Alt drücken für schnellen Zugriff auf Tab (oder Untertab). Nochmal drücken wird durchrotieren.</Tag>
 	<Tag name="AlignWidthMul">Breite multiplizieren</Tag>
@@ -695,7 +695,7 @@
 	<Tag name="NetNew">Neues spiel</Tag>
 	<Tag name="Road_Width">Breite</Tag>
 	<Tag name="Size">Größe</Tag>
-	<Tag name="AutoGearbox">Autom. Schaltung</Tag>
+	<Tag name="AutoGearbox">Automatikgetriebe</Tag>
 	<Tag name="ReplaysMenu">Wiederholungen</Tag>
 	<Tag name="InputSlowFast">Shift - langs. Strg - schnell</Tag>
 	<Tag name="InputRoadMirror">Alt-Pos1 - Auswahl spiegeln</Tag>
@@ -740,7 +740,7 @@
 	<Tag name="NetAddress">Adresse</Tag>
 	<Tag name="Road_sel">sel</Tag>
 	<Tag name="AutoLoad">Strecke autom. laden</Tag>
-	<Tag name="Car_MaxTorque">Max Torque</Tag>
+	<Tag name="Car_MaxTorque">Max. Drehmoment</Tag>
 	<Tag name="ReflMode_full">Voll</Tag>
 	<Tag name="Distance">Distanz</Tag>
 	<Tag name="RplGhost">Geist anzeigen</Tag>
@@ -787,7 +787,7 @@
 	<Tag name="SpecularPowerEm">Strahlungsstärke</Tag>
 	<Tag name="Far">Weit</Tag>
 	<Tag name="RplGhosts">Geister</Tag>
-	<Tag name="CarType">Typ</Tag>
+	<Tag name="CarType">Klasse</Tag>
 	<Tag name="InputReturnDelay">Zurückkehren</Tag>
 	<Tag name="RplBestOnly">Geist nur für beste Zeit speichern</Tag>
 	<Tag name="InputFluidsMode">W - Gewässer bearbeiten</Tag>
@@ -853,7 +853,7 @@
 	<Tag name="scale">Skalierung</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="HeightMin">Min. Höhe</Tag>
-	<Tag name="RoadStats">Straßen Statist.</Tag>
+	<Tag name="RoadStats">Straßen-Statist.</Tag>
 	<Tag name="InputObjectsType">-,= - Objekttyp wechseln</Tag>
 	<Tag name="ColHue">Farbton</Tag>
 	<Tag name="Brush_ShapeNoise2">Rauschen2</Tag>
@@ -955,7 +955,7 @@
 	<Tag name="InputStartDir">Leer - Straßenrichtung (+ oder -)</Tag>
 	<Tag name="GrMaterial">Material</Tag>
 	<Tag name="Startup">Start</Tag>
-	<Tag name="Car_MaxPower">Max Power</Tag>
+	<Tag name="Car_MaxPower">Max. Leistung</Tag>
 	<Tag name="Brush_ShapeTriangle">Dreieck</Tag>
 	<Tag name="distribution">Verteilung</Tag>
 	<Tag name="SC_ForestYellow">WaldGelb</Tag>
@@ -969,7 +969,7 @@
 	<Tag name="Diff4">Schwer</Tag>
 	<Tag name="SkirtHeight">Skirt-Höhe</Tag>
 	<Tag name="ObjBuildings">Gebäude</Tag>
-	<Tag name="Car_TopSpeed">Top Speed</Tag>
+	<Tag name="Car_TopSpeed">Höchstgeschwindigkeit</Tag>
 	<Tag name="InputObjectsRot">2 - Drehen lokal (Alt- global) LMT: Z RMT: Y MMT: X</Tag>
 	<Tag name="Needed">Erforderlich</Tag>
 	<Tag name="BulletDebug">Bullet-Debug</Tag>
@@ -990,7 +990,7 @@
 	<Tag name="SC_Unidentified">Unbekannt</Tag>
 	<Tag name="CarDesc_XM">Sehr altes Fahrzeug, aber mit einem starken Motor. Fahrbar auf den meisten Strecken, außer auf Bodenwellen aufgrund der starren Aufhängung.</Tag>
 	<Tag name="InputSubTabSpace">Leer - durch Untertabs blättern (Umschalt: zurück)</Tag>
-	<Tag name="TipSurfType">Typ der Oberfläche, bestimmt den Sound.</Tag>
+	<Tag name="TipSurfType">Typ der Oberfläche, bestimmt das Geräusch.</Tag>
 	<Tag name="NextStage">Nächste Etappe</Tag>
 	<Tag name="SC_Mud">Schlamm</Tag>
 	<Tag name="Engine">Motor</Tag>
