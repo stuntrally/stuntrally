@@ -37,8 +37,8 @@ SH_BEGIN_PROGRAM
 SH_START_PROGRAM
 {
 	float s = InvTerSize;  // close tex points/vertices
-	float yx = shSample(samHMap, float2(uv.x + s, 1-uv.y    )) - shSample(samHMap, float2(uv.x - s, 1-uv.y    )).x;
-	float yz = shSample(samHMap, float2(uv.x,     1-uv.y + s)) - shSample(samHMap, float2(uv.x,     1-uv.y - s)).x;
+	float yx = shSample(samHMap, float2(uv.x + s, 1-uv.y    )).x - shSample(samHMap, float2(uv.x - s, 1-uv.y    )).x;
+	float yz = shSample(samHMap, float2(uv.x,     1-uv.y + s)).x - shSample(samHMap, float2(uv.x,     1-uv.y - s)).x;
 
 	float3 vx = float3(TriSize, yx, 0);  // x+1 - x-1
 	float3 vz = float3(0, yz, TriSize);  // z+1 - z-1

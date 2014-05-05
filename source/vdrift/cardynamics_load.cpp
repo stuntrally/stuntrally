@@ -14,7 +14,7 @@ using namespace std;
 
 
 CARDYNAMICS::CARDYNAMICS() :
-	world(NULL), chassis(NULL), whTrigs(0),
+	world(NULL), chassis(NULL), whTrigs(0), pGame(0),
 	drive(RWD), tacho_rpm(0), engine_vol_mul(1),
 	autoclutch(true), autoshift(true), autorear(true),
 	shifted(true), shift_gear(0),
@@ -75,8 +75,9 @@ static void ConvertV2to1(float & x, float & y, float & z)
 //----------------------------------------------------------------------------------------------------------------------------------
 ///  Load  (.car file)
 //----------------------------------------------------------------------------------------------------------------------------------
-bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
+bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 {
+	pGame = game;
 	Ogre::Timer ti;
 
 	//bTerrain = false;
@@ -349,19 +350,19 @@ bool CARDYNAMICS::Load(GAME* pGame, CONFIGFILE & c, ostream & error_output)
 			string file;
 			if (c.GetParam("suspension-"+posstr+".factors-file", file))
 			{
-				int id = pGame->suspS_map[file]-1;
+				int id = game->suspS_map[file]-1;
 				if (id == -1)  {  id = 0;
 					error_output << "Can't find suspension spring factors file: " << file << endl;  }
 
-				suspension[posl].SetSpringFactorPoints(pGame->suspS[id]);
-				suspension[posr].SetSpringFactorPoints(pGame->suspS[id]);
+				suspension[posl].SetSpringFactorPoints(game->suspS[id]);
+				suspension[posr].SetSpringFactorPoints(game->suspS[id]);
 
-				id = pGame->suspD_map[file]-1;
+				id = game->suspD_map[file]-1;
 				if (id == -1)  {  id = 0;
 					error_output << "Can't find suspension damper factors file: " << file << endl;  }
 				
-				suspension[posl].SetDamperFactorPoints(pGame->suspD[id]);
-				suspension[posr].SetDamperFactorPoints(pGame->suspD[id]);
+				suspension[posl].SetDamperFactorPoints(game->suspD[id]);
+				suspension[posr].SetDamperFactorPoints(game->suspD[id]);
 			}else
 			{	//  factor points
 				vector <pair <double, double> > damper, spring;

@@ -3877,7 +3877,7 @@
 							<Property key="Caption" value="#{NeedReload}"/>
 							<Property key="TextColour" value="0.7 1 0.5"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBoxEmpty" position="32 444 664 48">
+						<Widget type="EditBox" skin="EditBoxEmpty" position="32 424 664 72">
 							<Property key="ReadOnly" value="true"/>
 							<Property key="MultiLine" value="true"/>
 							<Property key="WordWrap" value="true"/>

@@ -58,7 +58,7 @@ public:
 
 	//  graphics common
 	int preset;  // last set, info only
-	int anisotropy, tex_size, ter_mtr, ter_tripl;  bool bFog;
+	int anisotropy, tex_filt, tex_size, ter_mtr, ter_tripl;  bool bFog;
 	float view_distance, terdetail, terdist, road_dist;
 	bool horizon;
 	

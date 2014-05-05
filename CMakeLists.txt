@@ -61,6 +61,8 @@ mark_as_advanced(SHARE_INSTALL)
 #      but that would break other build systems for good.
 add_definitions(-DSHARED_DATA_DIR="${SHARE_INSTALL}")
 
+add_definitions(-DOGRE_PLUGIN_DIR_REL="${OGRE_PLUGIN_DIR_REL}")
+add_definitions(-DOGRE_PLUGIN_DIR_DBG="${OGRE_PLUGIN_DIR_DBG}")
 
 if (DEFINED CMAKE_BUILD_TYPE)
 	if (CMAKE_BUILD_TYPE STREQUAL "Debug")

@@ -146,7 +146,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL2.lib OgreMain.lib OgreOverlay.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib"
+				AdditionalDependencies="SDL2.lib OgreMain.lib OgreOverlay.lib OgreTerrain.lib OgrePaging.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib"
 				OutputFile="$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Release;c:\v\ogre\Dependencies\lib\Release;c:\v\mygui\bin\lib\Release;&quot;c:\v\bullet\bullet-2.79\bin\lib\Release&quot;;&quot;c:\v\SDL2-2.0.0\lib\Release&quot;"

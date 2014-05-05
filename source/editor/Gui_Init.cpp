@@ -467,7 +467,7 @@ void CGui::InitGui()
 	
 	///  [Warnings]  ------------------------------------
 	edWarn = fEd("Warnings");
-	txWarn = mGui->createWidget<TextBox>("TextBox", 300,20, 360,32, Align::Left, "Back");
+	txWarn = mGui->createWidget<TextBox>("TextBox", 300,20, 360,32, Align::Default, "Back");
 	txWarn->setTextShadow(true);  txWarn->setTextShadowColour(Colour::Black);
 	txWarn->setTextColour(Colour(1.0,0.4,0.2));  txWarn->setFontHeight(24);
 	txWarn->setVisible(false);

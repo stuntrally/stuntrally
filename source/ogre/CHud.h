@@ -70,7 +70,7 @@ public:
 
 		//  boost fuel, damage %, rewind time
 		MyGUI::TextBox  *txBFuel, *txDamage, *txRewind;
-		MyGUI::ImageBox *icoBFuel,*icoDamage,*icoRewind;
+		MyGUI::ImageBox *icoBFuel,*icoBInf,*icoDamage,*icoRewind;
 		
 		//  current camera name
 		MyGUI::TextBox *txCam;

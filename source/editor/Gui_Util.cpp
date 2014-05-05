@@ -119,19 +119,19 @@ void App::UpdEditWnds()
 {
 	if (mWndBrush)
 	{	if (edMode == ED_Deform)
-		{	mWndBrush->setCaption("Terrain Deform");
+		{	mWndBrush->setCaption(TR("#{Terrain} #{TerDeform}"));
 			mWndBrush->setColour(Colour(0.5f, 0.9f, 0.3f));
 			mWndBrush->setVisible(true);  }
 		else if (edMode == ED_Filter)
-		{	mWndBrush->setCaption("Terrain Filter");
+		{	mWndBrush->setCaption(TR("#{Terrain} #{TerFilter}"));
 			mWndBrush->setColour(Colour(0.5f, 0.75f, 1.0f));
 			mWndBrush->setVisible(true);  }
 		else if (edMode == ED_Smooth)
-		{	mWndBrush->setCaption("Terrain Smooth");
+		{	mWndBrush->setCaption(TR("#{Terrain} #{TerSmooth}"));
 			mWndBrush->setColour(Colour(0.3f, 0.8f, 0.8f));
 			mWndBrush->setVisible(true);  }
 		else if (edMode == ED_Height)
-		{	mWndBrush->setCaption("Terrain Height");
+		{	mWndBrush->setCaption(TR("#{Terrain} #{TerHeight}"));
 			mWndBrush->setColour(Colour(0.7f, 1.0f, 0.7f));
 			mWndBrush->setVisible(true);  }
 		else
