@@ -751,6 +751,10 @@
 
 	<!--  Terrain  -->
 	<Tag name="Terrain">Terrain</Tag>
+	<Tag name="TerDeform">Deform</Tag>
+	<Tag name="TerFilter">Filter</Tag>
+	<Tag name="TerSmooth">Smooth</Tag>
+	<Tag name="TerHeight">Height</Tag>
 	<Tag name="HeightmapSize">Heightmap size</Tag>
 	<Tag name="TriSize">Triangle size</Tag>
 	<Tag name="TerrainSize">Terrain size</Tag>
