@@ -104,6 +104,7 @@ void CHud::Size()
 			}
 			h.txBFuel ->setPosition(gxL-83,   gy-60);
 			h.icoBFuel->setPosition(gxL-83+54,gy-60-5+2);
+			//h.icoBInf ->setPosition(gxL-83+14,gy-60-5+2);
 			#else
 			if (h.txDamage)
 			{	h.txDamage ->setPosition(bx-70,   by-70);
@@ -288,7 +289,13 @@ void CHud::Create()
 		h.icoBFuel = h.parent->createWidget<ImageBox>("ImageBox",
 			0,y, 40,40, Align::Left, "IFuel"+s);  //h.icoBFuel->setVisible(false);
 		h.icoBFuel->setImageTexture("gui_icons.png");
+		//if (pSet->game.boost_type == 3)
 		h.icoBFuel->setImageCoord(IntCoord(512,0,128,128));
+
+		//h.icoBInf = h.parent->createWidget<ImageBox>("ImageBox",
+		//	0,y, 40,40, Align::Right, "IInf"+s);
+		//h.icoBInf->setImageTexture("gui_icons.png");
+		//h.icoBInf->setImageCoord(IntCoord(512,768,128,128));
 
 		//  damage %
 		if (pSet->game.damage_type > 0)
@@ -301,7 +308,10 @@ void CHud::Create()
 			h.icoDamage = h.parent->createWidget<ImageBox>("ImageBox",
 				0,y, 40,40, Align::Left, "IDmg"+s);  //h.icoDamage->setVisible(false);
 			h.icoDamage->setImageTexture("gui_icons.png");
-			h.icoDamage->setImageCoord(IntCoord(512,256,128,128));
+			if (pSet->game.damage_type == 1)
+				h.icoDamage->setImageCoord(IntCoord(512,256,128,128));
+			else
+				h.icoDamage->setImageCoord(IntCoord(640,384,128,128));
 		}
 		
 		//  rewind <<
@@ -536,7 +546,7 @@ CHud::Hud::Hud()
 	,txAbs(0), txTcs(0),  txCam(0)
 
 	,txBFuel(0), txDamage(0), txRewind(0)
-	,icoBFuel(0), icoDamage(0), icoRewind(0)
+	,icoBFuel(0), icoBInf(0), icoDamage(0), icoRewind(0)
 
 	,moMap(0), ndMap(0)
 {
@@ -566,7 +576,7 @@ void CHud::Destroy()
 		Dest(h.txAbs)  Dest(h.txTcs)  Dest(h.txCam)
 		
 		Dest(h.txBFuel)  Dest(h.txDamage)  Dest(h.txRewind)
-		Dest(h.icoBFuel)  Dest(h.icoDamage)  Dest(h.icoRewind)
+		Dest(h.icoBFuel)  Dest(h.icoBInf)  Dest(h.icoDamage)  Dest(h.icoRewind)
 
 		for (i=0; i < 3; ++i)  Dest(h.txOpp[i])
 		Dest(h.bckOpp)
@@ -623,7 +633,9 @@ void CHud::Show(bool hideAll)
 	{
 		bool cam = pSet->show_cam && !app->isFocGui, times = pSet->show_times;
 		bool opp = pSet->show_opponents && (!app->scn->sc->ter || app->scn->road && app->scn->road->getNumPoints() > 0);
-		bool bfuel = pSet->game.boost_type == 1 || pSet->game.boost_type == 2;
+		bool bfuel = pSet->game.boost_type >= 1; // && pSet->game.boost_type <= 3;
+		bool btxt = pSet->game.boost_type == 1 || pSet->game.boost_type == 2;
+		//bool binf = pSet->game.boost_type == 3;
 		bool bdmg = pSet->game.damage_type > 0;
 		//txCamInfo->setVisible(cam);
 
@@ -633,9 +645,9 @@ void CHud::Show(bool hideAll)
 			if (h.parent && h.txGear)
 			{	h.parent->setVisible(true);
 			
-				h.txGear->setVisible(pSet->show_digits);
-				h.txVel->setVisible(pSet->show_digits);
-				h.txBFuel->setVisible(show && bfuel);  h.icoBFuel->setVisible(show && bfuel);
+				h.txGear->setVisible(pSet->show_digits);  h.txVel->setVisible(pSet->show_digits);
+				h.txBFuel->setVisible(show && btxt);
+				h.icoBFuel->setVisible(show && bfuel);  //h.icoBInf->setVisible(show && binf);
 				if (h.txDamage)
 				{	h.txDamage->setVisible(show && bdmg);  h.icoDamage->setVisible(show && bdmg);	}
 				//txRewind;icoRewind;
