@@ -1023,6 +1023,14 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz.,następna zakładka (alt - pod-zakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
+	<Tag name="TerDeform">Deform</Tag>
+	<Tag name="TerSmooth">Smooth</Tag>
+	<Tag name="Bilinear">Bilinear</Tag>
+	<Tag name="Anisotropic">Anisotropic</Tag>
+	<Tag name="TerHeight">Height</Tag>
+	<Tag name="TerFilter">Filter</Tag>
+	<Tag name="Initializing">Initializing</Tag>
+	<Tag name="Trilinear">Trilinear</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
