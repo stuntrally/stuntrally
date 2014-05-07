@@ -1,0 +1,16 @@
+Mass
+1336 kg
+Max Torque
+600 Nm at 4230 rpm
+Max Power
+391 bhp at 5740 rpm
+Top Speed
+223 kmh at 28.8 s
+Time 0 to 100 kmh
+ 3.7 s
+Time 0 to 160 kmh
+ 8.7 s
+Time 0 to 200 kmh
+16.2 s
+Stop time 100 to 0 kmh
+ 2.6 s
