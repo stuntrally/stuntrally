@@ -271,6 +271,7 @@
 	<Tag name="Car_TopSpeed">Top Speed</Tag>
 	<Tag name="Car_TimeTo">Time to</Tag>
 	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
+	<!--<Tag name="Car_StatsUnits">kg1,Nm2,at3,rpm4,bhp5,kmh6,s7</Tag>-->
 
 
 	<!--  Multiplayer  -->
@@ -378,6 +379,7 @@
 	<Tag name="SimMode">Simulation mode (difficulty)</Tag>
 	<Tag name="SimModeEasy">Easy (beginner)</Tag>
 	<Tag name="SimModeNormal">Normal (simulation)</Tag>
+	<Tag name="SimModeHard">Hard (difficult)</Tag>
 			
 
 	<!--  Replay  -->

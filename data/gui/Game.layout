@@ -871,8 +871,12 @@
 					<Property key="Caption" value="#{SimModeNormal}"/>
 					<Property key="TextColour" value="1.0 1.0 0.5"/>
 				</Widget>
+				<Widget type="Button" skin="RadioButton" position="64 154 226 28" name="SimModeHard">
+					<Property key="Caption" value="#{SimModeHard} - #{Test}"/>
+					<Property key="TextColour" value="1.0 0.6 0.3"/>
+				</Widget>
 
-				<Widget type="TabControl" skin="TabControl" position="28 200 348 320">
+				<Widget type="TabControl" skin="TabControl" position="28 220 348 300">
 					<Property key="Colour" value="0.8 0.86 1.0"/>
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 342 292">

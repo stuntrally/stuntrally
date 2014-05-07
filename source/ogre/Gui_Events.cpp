@@ -183,14 +183,18 @@ void CGui::comboRewind(CMB)
 void CGui::radKmh(WP wp){	Radio2(bRkmh, bRmph, true);   pSet->show_mph = false;  hud->Size();  }
 void CGui::radMph(WP wp){	Radio2(bRkmh, bRmph, false);  pSet->show_mph = true;   hud->Size();  }
 
-void CGui::radSimEasy(WP){	Radio2(bRsimEasy, bRsimNorm, true);
-	pSet->gui.sim_mode = "easy";	bReloadSim = true;
+void CGui::setSimMode(std::string mode)
+{
+	pSet->gui.sim_mode = mode;  bReloadSim = true;
+	bRsimEasy->setStateSelected(mode == "easy");
+	bRsimNorm->setStateSelected(mode == "normal");
+	bRsimHard->setStateSelected(mode == "hard");
 	tabTireSet(0,iTireSet);  listCarChng(carList,0);
 }
-void CGui::radSimNorm(WP){	Radio2(bRsimEasy, bRsimNorm, false);
-	pSet->gui.sim_mode = "normal";	bReloadSim = true;
-	tabTireSet(0,iTireSet);  listCarChng(carList,0);
-}
+
+void CGui::radSimEasy(WP){	setSimMode("easy");  }
+void CGui::radSimNorm(WP){	setSimMode("normal");  }
+void CGui::radSimHard(WP){	setSimMode("hard");  }
 
 void CGui::btnNumPlayers(WP wp)
 {

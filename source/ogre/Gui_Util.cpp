@@ -254,24 +254,27 @@ void CGui::UpdCarStatsTxt()
 		int i = 0;
 		while (getline(fi, s))
 		{
-			if (i % 2 == 0)
-				txt += s + "\n";
-			else
-				vals += s + "\n";
+			if (i % 2 == 0)  txt += s + "\n";
+			else            vals += s + "\n";
 			++i;
 		}
 		fi.close();
 	}
 	String ss = txt;
-	ss = StringUtil::replaceAll(ss, "Mass", TR("#{Car_Mass}"));
-	ss = StringUtil::replaceAll(ss, "Max Torque", TR("#{Car_MaxTorque}"));
-	ss = StringUtil::replaceAll(ss, "Max Power", TR("#{Car_MaxPower}"));
-	ss = StringUtil::replaceAll(ss, "Top Speed", TR("#{Car_TopSpeed}"));
-	ss = StringUtil::replaceAll(ss, "Time 0 to", TR("#{Car_TimeTo}"));
-	ss = StringUtil::replaceAll(ss, "Stop time", TR("#{Car_StopTimeFrom}"));
-	ss = StringUtil::replaceAll(ss, "to 0 ", "");
+	#define REP(s1,s2)  ss = StringUtil::replaceAll(ss, "Mass", TR("#{Car_Mass}"))
+	REP("Mass", TR("#{Car_Mass}"));
+	REP("Max Torque", TR("#{Car_MaxTorque}"));
+	REP("Max Power", TR("#{Car_MaxPower}"));
+	REP("Top Speed", TR("#{Car_TopSpeed}"));
+	REP("Time 0 to", TR("#{Car_TimeTo}"));
+	REP("Stop time", TR("#{Car_StopTimeFrom}"));
+	REP("to 0 ", "");
 	txCarStatsTxt->setCaption(ss);
-	txCarStatsVals->setCaption(vals);
+	
+	//kg,Nm,at,rpm,bhp,kmh,s
+	ss = vals;
+	//REP("");
+	txCarStatsVals->setCaption(ss);
 }
 
 

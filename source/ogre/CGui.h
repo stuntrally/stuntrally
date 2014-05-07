@@ -255,8 +255,10 @@ public:
 	Btn bRkmh, bRmph;  // km/h, mph
 	void radKmh(WP), radMph(WP);
 
-	Btn bRsimEasy, bRsimNorm;  // sim easy, normal
-	void radSimEasy(WP), radSimNorm(WP);  bool bReloadSim;
+	Btn bRsimEasy, bRsimNorm, bRsimHard;  // sim mode
+	void radSimEasy(WP), radSimNorm(WP), radSimHard(WP);
+	void setSimMode(std::string mode);
+	bool bReloadSim;
 
 	//  [Game] setup
 	Ck ckVegetCollis, ckCarCollis, ckRoadWCollis, ckDynamicObjs;
@@ -327,6 +329,7 @@ public:
 		txCarSpeed, txCarType,
 		txCarAuthor,txTrackAuthor;
 	void UpdCarStatsTxt();
+	std::vector<Ogre::String> vsu; //CarStatsUnits
 
 	Img imgCar;  Ed carDesc;
 	Cmb cmbBoost, cmbFlip, cmbDamage, cmbRewind;
