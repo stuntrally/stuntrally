@@ -152,7 +152,7 @@ bool App::frameStart(Real time)
 
 	//...................................................................
 	///* tire edit */
-	if (pSet->graphs_type == Gh_TireEdit && carModels.size() > 0)
+	if ((pSet->graphs_type == Gh_TireEdit || pSet->graphs_type == Gh_Tires4Edit) && carModels.size() > 0)
 	{
 		int k = (isKey(SDL_SCANCODE_1) || isKey(SDL_SCANCODE_KP_DIVIDE)  ? -1 : 0)
 			  + (isKey(SDL_SCANCODE_2) || isKey(SDL_SCANCODE_KP_MULTIPLY) ? 1 : 0);

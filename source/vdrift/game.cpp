@@ -162,7 +162,7 @@ bool GAME::LoadAllSurfaces()
 	return true;
 }
 
-///  Tires  all in data/cars/_tires/*.tire
+///  Tires  all in data/carsim/normal/tires/*.tire
 //------------------------------------------------------------------------------------------------------------------------------
 bool GAME::LoadTires()
 {
@@ -175,6 +175,7 @@ bool GAME::LoadTires()
 	for (list <string>::iterator i = li.begin(); i != li.end(); ++i)
 	{
 		string file = *i;
+		//LogO("Loading tire: "+file);
 		if (file.find(".tire") != string::npos)
 		{
 			CONFIGFILE c;
