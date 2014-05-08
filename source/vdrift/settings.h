@@ -6,23 +6,26 @@
 
 
 enum eGraphType  {
-	Gh_Fps=0,
-	Gh_CarAccelG, Gh_CamBounce, Gh_BulletHit,
+	Gh_Fps=0, Gh_CarAccelG,
+	Gh_CamBounce, Gh_BulletHit,
 	Gh_Sound,
-	Gh_TireSlips, Gh_Suspension,
+	Gh_Suspension,
+	Gh_TireSlips,
 	Gh_TireEdit,
+	Gh_Diffs,
 	Gh_TorqueCurve, Gh_Engine,
-	Gh_Clutch, Gh_Diffs,
+	Gh_Clutch,
 	Gh_ALL  };  // total count
 const static std::string csGraphNames[Gh_ALL] = {
-	"Fps graphics perf.",
-	"Car Accel G's", "Car Hit chassis",
+	"Fps graphics perf.", "Car Accel G's",
+	"Camera bounce", "Car Hit chassis",
 	"Sound volume & pan, wave",
-	"Tires slip| & slide-", "Suspension pos & vel",
+	"Suspension pos & vel",
+	"Tires slip| & slide-",
 	"Tire Edit (Pacejka coeffs)*",
+	"Differentials",
 	"Torque Curve, gears", "Engine torque & power",
-	"Clutch, Rpm, Gear", "Differentials"
-	};
+	"Clutch, Rpm, Gear" };
 
 enum eShadowType  {  Sh_None=0, Sh_Depth, Sh_Soft  };
 
