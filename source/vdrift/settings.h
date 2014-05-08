@@ -11,7 +11,7 @@ enum eGraphType  {
 	Gh_Sound,
 	Gh_Suspension,
 	Gh_TireSlips,
-	Gh_TireEdit,
+	Gh_TireEdit, Gh_Tires4Edit,
 	Gh_Diffs,
 	Gh_TorqueCurve, Gh_Engine,
 	Gh_Clutch,
@@ -22,7 +22,7 @@ const static std::string csGraphNames[Gh_ALL] = {
 	"Sound volume & pan, wave",
 	"Suspension pos & vel",
 	"Tires slip| & slide-",
-	"Tire Edit (Pacejka coeffs)*",
+	"Tire Edit (Pacejka coeffs)*", "All Tires Pacejka vis and edit*",
 	"Differentials",
 	"Torque Curve, gears", "Engine torque & power",
 	"Clutch, Rpm, Gear" };

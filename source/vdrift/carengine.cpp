@@ -65,7 +65,7 @@ void CARENGINE::ComputeForces()
 	Dbl friction_factor = 1.0; //used to make sure we allow friction to work if we're out of gas or above the rev limit
 	Dbl rev_limit = rpm_max+500; //rpm_limit;
 	if (rev_limit_exceeded)
-		rev_limit -= 200.0; //tweakable
+		rev_limit -= 400.0;  ///par
 	
 	if (GetRPM() < rev_limit)
 		rev_limit_exceeded = false;
