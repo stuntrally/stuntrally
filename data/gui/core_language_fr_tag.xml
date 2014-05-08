@@ -47,6 +47,7 @@
 	<Tag name="InputRoadChkCtrl">avec Ctrl. - forcer un rayon personnalisé</Tag>
 	<Tag name="LS_SCENE">Chargement de la scène</Tag>
 	<Tag name="TipTrackImg">Capture d'écran du jeu pour la piste sélectionnée.</Tag>
+	<Tag name="TerDeform">Deform</Tag>
 	<Tag name="TerLNoiseOnly">Bruit seulement</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
 	<Tag name="SteerRange">Steering range multipliers</Tag>
@@ -114,6 +115,7 @@
 	<Tag name="SC_Winter">Hiver</Tag>
 	<Tag name="TipTrackList">Liste des circuits, cliquez pour sélectionner et voir l'information. Appuyez sur Entrée ou [Nouvelle partie] pour conduire dessus.</Tag>
 	<Tag name="GrDensSmooth">Adoucir la densité de l'herbe</Tag>
+	<Tag name="TerSmooth">Smooth</Tag>
 	<Tag name="TerHeightMap">Heightmap du terrain</Tag>
 	<Tag name="bumps">bosses (terrain)</Tag>
 	<Tag name="ShadowFilter">Filtre</Tag>
@@ -223,7 +225,7 @@
 	<Tag name="ReflMode_single">Unique</Tag>
 	<Tag name="Near">Proche</Tag>
 	<Tag name="FogNormal">Normale</Tag>
-	<Tag name="SetCamTo">Caméra définie :</Tag>
+	<Tag name="InputMinVal">Valeur Minimum</Tag>
 	<Tag name="RoadWallFullCollis">Collision avec la route</Tag>
 	<Tag name="Always">Toujours</Tag>
 	<Tag name="Brush_Offset">Décalage</Tag>
@@ -259,6 +261,7 @@
 	<Tag name="TipTerrainHalf">Réduire la taille de la carte d'altitude de moitié (utilisez ceci uniquement pour réduire la taille du fichier).</Tag>
 	<Tag name="wind">vent</Tag>
 	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
+	<Tag name="Bilinear">Bilinear</Tag>
 	<Tag name="TipDustSize">Taille des particules de sable.</Tag>
 	<Tag name="LS_CAR">Chargement de la voiture</Tag>
 	<Tag name="Author">Auteur(s)</Tag>
@@ -267,6 +270,7 @@
 	<Tag name="NetNickname">Surnom</Tag>
 	<Tag name="NetPassword">Mot de passe</Tag>
 	<Tag name="UseImposters">Utiliser des sprites</Tag>
+	<Tag name="Anisotropic">Anisotropic</Tag>
 	<Tag name="NetSettings">Paramètres</Tag>
 	<Tag name="TipModelMaxScale">Taille maximale du modèle.</Tag>
 	<Tag name="TerrainError">Erreur du terrain</Tag>
@@ -335,7 +339,7 @@
 	<Tag name="NetWaiting">Attente...</Tag>
 	<Tag name="LoadTrack">Chargement du circuit</Tag>
 	<Tag name="MergeLength">Merge length</Tag>
-	<Tag name="InputMinVal">Valeur Minimum</Tag>
+	<Tag name="SetCamTo">Caméra définie :</Tag>
 	<Tag name="RplMaxNumViewports">Nombre de vues maximum</Tag>
 	<Tag name="SingleRace">Simple course</Tag>
 	<Tag name="TipNewGameCar">Redémarrer la partie</Tag>
@@ -572,6 +576,7 @@
 	<Tag name="InputTrackScrn">(pour la capture d'écran du circuit)</Tag>
 	<Tag name="trailColor">couleur traînée</Tag>
 	<Tag name="Boost">Turbo</Tag>
+	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="TipFogClr">Couleur de la fin de la brume quand la caméra regarde le soleil.</Tag>
 	<Tag name="NumLocalPlayers">Nombre de joueurs locaux</Tag>
 	<Tag name="UnitM">m</Tag>
@@ -698,6 +703,7 @@
 	<Tag name="AutoGearbox">Boîte de rapports automatique</Tag>
 	<Tag name="ReplaysMenu">Replays</Tag>
 	<Tag name="InputSlowFast">Maj. - lent Ctrl - rapide</Tag>
+	<Tag name="TerHeight">Height</Tag>
 	<Tag name="InputRoadMirror">Alt-Orig. - Mirroir de la sélection</Tag>
 	<Tag name="GrassMult">Multi. d'herbe</Tag>
 	<Tag name="ABS">ABS (anti blocage des roues)</Tag>
@@ -879,7 +885,7 @@
 	<Tag name="Reverse">Inverser</Tag>
 	<Tag name="InputMapShiftDown">Rétrograder</Tag>
 	<Tag name="InputObjectsMoveReset">Maj.-1 - déplacer au curseur/réinit. la nouvelle hauteur</Tag>
-	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
+	<Tag name="TerFilter">Filter</Tag>
 	<Tag name="AllEffects">Effets activés</Tag>
 	<Tag name="CarCollis">Collision des voitures</Tag>
 	<Tag name="TipTerrainDouble">Doubler la taille du terrain tout en gardant l'Heightmap au centre.</Tag>
@@ -973,6 +979,7 @@
 	<Tag name="InputObjectsRot">2 - tourner localement (Alt - globalement) Clic gauche : Z Clic droit : Y Clic du milieu : X</Tag>
 	<Tag name="Needed">Nécessaire</Tag>
 	<Tag name="BulletDebug">Débogage Bullet</Tag>
+	<Tag name="Initializing">Initializing</Tag>
 	<Tag name="InputRoadHeight">- changer la hauteur</Tag>
 	<Tag name="TipSunSpecular">Couleur des reflets de la lumière du soleil. Composants R V B de 0 à 1 (exemple : 0.6 0.6 0.6)</Tag>
 	<Tag name="LS_TER">Chargement du terrain</Tag>
@@ -999,6 +1006,7 @@
 	<Tag name="InputSaveTrack">F4 - sauvegarde du circuit</Tag>
 	<Tag name="InputUpdate">F8 - mettre à jour la piste</Tag>
 	<Tag name="CameraAutoTilt">Orientation de la caméra automatique</Tag>
+	<Tag name="Trilinear">Trilinear</Tag>
 	<Tag name="InputUndo">(permet d'annuler des changements)</Tag>
 	<Tag name="InputObjectsScaleReset">Maj.-3 - réinit. l'échelle à 1 (avec Maj. à 0.5)</Tag>
 	<Tag name="FPS">IPS, triangles, batches</Tag>
@@ -1023,14 +1031,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="TerDeform">Deform</Tag>
-	<Tag name="TerSmooth">Smooth</Tag>
-	<Tag name="Bilinear">Bilinear</Tag>
-	<Tag name="Anisotropic">Anisotropic</Tag>
-	<Tag name="TerHeight">Height</Tag>
-	<Tag name="TerFilter">Filter</Tag>
-	<Tag name="Initializing">Initializing</Tag>
-	<Tag name="Trilinear">Trilinear</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -47,6 +47,7 @@
 	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
 	<Tag name="LS_SCENE">Se încarcă scena</Tag>
 	<Tag name="TipTrackImg">Captură de ecran pentru traseul selectat</Tag>
+	<Tag name="TerDeform">Deform</Tag>
 	<Tag name="TerLNoiseOnly">Only Noise</Tag>
 	<Tag name="InputValueChange">Fiecare mișcare(mouse/tastă) sau valoare se schimbă cu </Tag>
 	<Tag name="SteerRange">Steering range multipliers</Tag>
@@ -114,6 +115,7 @@
 	<Tag name="SC_Winter">Winter</Tag>
 	<Tag name="TipTrackList">Tracks list, click to select and see info. Press Enter or [New Game] to drive on it.</Tag>
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
+	<Tag name="TerSmooth">Smooth</Tag>
 	<Tag name="TerHeightMap">Înăltimea terenului</Tag>
 	<Tag name="bumps">bumps (bumpy terrain)</Tag>
 	<Tag name="ShadowFilter">Filter</Tag>
@@ -223,7 +225,7 @@
 	<Tag name="ReflMode_single">Singur</Tag>
 	<Tag name="Near">Near</Tag>
 	<Tag name="FogNormal">Normal</Tag>
-	<Tag name="SetCamTo">Setează camera la</Tag>
+	<Tag name="InputMinVal">Min. Value</Tag>
 	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
 	<Tag name="Always">Always</Tag>
 	<Tag name="Brush_Offset">Offset</Tag>
@@ -259,6 +261,7 @@
 	<Tag name="TipTerrainHalf">Resize current terrain heightmap by half (use only for reducing file size).</Tag>
 	<Tag name="wind">Vânt</Tag>
 	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
+	<Tag name="Bilinear">Bilinear</Tag>
 	<Tag name="TipDustSize">Mărimea particulelor de praf.</Tag>
 	<Tag name="LS_CAR">Se încarcă mașina</Tag>
 	<Tag name="Author">Author(s)</Tag>
@@ -267,6 +270,7 @@
 	<Tag name="NetNickname">Nickname</Tag>
 	<Tag name="NetPassword">Password</Tag>
 	<Tag name="UseImposters">Use Impostors</Tag>
+	<Tag name="Anisotropic">Anisotropic</Tag>
 	<Tag name="NetSettings">Settings</Tag>
 	<Tag name="TipModelMaxScale">Scală maximă model.</Tag>
 	<Tag name="TerrainError">Terrain error</Tag>
@@ -335,7 +339,7 @@
 	<Tag name="NetWaiting">Waiting...</Tag>
 	<Tag name="LoadTrack">Load Track</Tag>
 	<Tag name="MergeLength">Îmbină lungimea</Tag>
-	<Tag name="InputMinVal">Min. Value</Tag>
+	<Tag name="SetCamTo">Setează camera la</Tag>
 	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
 	<Tag name="SingleRace">Single Race</Tag>
 	<Tag name="TipNewGameCar">Restart game.</Tag>
@@ -572,6 +576,7 @@
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
 	<Tag name="trailColor">trail color</Tag>
 	<Tag name="Boost">Boost</Tag>
+	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="TipFogClr">Fog end color when looking under sun.</Tag>
 	<Tag name="NumLocalPlayers">Number of local players</Tag>
 	<Tag name="UnitM">m</Tag>
@@ -698,6 +703,7 @@
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
 	<Tag name="ReplaysMenu">Replays</Tag>
 	<Tag name="InputSlowFast">shift - slow   ctrl - fast</Tag>
+	<Tag name="TerHeight">Height</Tag>
 	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
 	<Tag name="ABS">ABS (antiblocare frâne)</Tag>
@@ -879,7 +885,7 @@
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="InputMapShiftDown">Shift down</Tag>
 	<Tag name="InputObjectsMoveReset">shift-1 - move to cursor / reset new height</Tag>
-	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
+	<Tag name="TerFilter">Filter</Tag>
 	<Tag name="AllEffects">Effects Enabled</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
 	<Tag name="TipTerrainDouble">Make terrain size double, leaving current heightmap part in center.</Tag>
@@ -973,6 +979,7 @@
 	<Tag name="InputObjectsRot">2 - Rotate local (alt- global)  LMB: Z  RMB: Y  MMB: X</Tag>
 	<Tag name="Needed">Needed</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
+	<Tag name="Initializing">Initializing</Tag>
 	<Tag name="InputRoadHeight">- change height</Tag>
 	<Tag name="TipSunSpecular">Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)</Tag>
 	<Tag name="LS_TER">Se încarcă terenul</Tag>
@@ -999,6 +1006,7 @@
 	<Tag name="InputSaveTrack">F4 - save track</Tag>
 	<Tag name="InputUpdate">F8 - update track</Tag>
 	<Tag name="CameraAutoTilt">Camera auto tilt on slopes</Tag>
+	<Tag name="Trilinear">Trilinear</Tag>
 	<Tag name="InputUndo">(one time undo)</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="FPS">Fps,triunghiuri, mulțimi</Tag>
@@ -1023,14 +1031,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="TerDeform">Deform</Tag>
-	<Tag name="TerSmooth">Smooth</Tag>
-	<Tag name="Bilinear">Bilinear</Tag>
-	<Tag name="Anisotropic">Anisotropic</Tag>
-	<Tag name="TerHeight">Height</Tag>
-	<Tag name="TerFilter">Filter</Tag>
-	<Tag name="Initializing">Initializing</Tag>
-	<Tag name="Trilinear">Trilinear</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
