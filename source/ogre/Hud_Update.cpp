@@ -687,7 +687,7 @@ void CHud::Update(int carId, float time)
 		const Real z = 8000.f, m_z = 2.f * z;  // scale, max factor
 		const int na = 32;  // circle quality
 		const Real ad = 2.f*PI_d/na, u = 0.02f;  // u line thickness
-		const ColourValue cb(0.8,0.8,0.8),cl(0.2,1,0.2),cc(1,1,0);
+		const ColourValue cb(0.8,0.8,0.8),cl(0.2,1,0.2),cr(0.9,0.4,0),cc(1,1,0);
 		
 		for (int i=0; i < 4; ++i)
 		{
@@ -711,6 +711,12 @@ void CHud::Update(int carId, float time)
 			for (int x=-2; x<=2; ++x)  {
 				m->position(0  +x*u, 0  +y*u, 0);  m->colour(cl);
 				m->position(lx +x*u, ly +y*u, 0);  m->colour(cl);  }
+
+			/*lx = off ? 0.f : t.Fy/z / t.fy_ar;  ly = off ? 0.f : t.Fx/z / t.fx_sr;
+			for (int y=-1; y<=1; ++y)
+			for (int x=-1; x<=1; ++x)  {
+				m->position(0  +x*u, 0  +y*u, 0);  m->colour(cr);
+				m->position(lx +x*u, ly +y*u, 0);  m->colour(cr);  }*/
 
 			//  max circle o
 			Real rx = off || t.Fym > m_z ? 0.f : t.Fym/z,

@@ -3050,6 +3050,39 @@
 							<Property key="TextColour" value="0.65 0.45 0.4"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="416 332 100 16" name="DbgTxtClr"/>
+
+						<Widget type="TextBox" skin="TextBox" position="32 380 144 30">
+							<Property key="Caption" value="#{max} Fy - Pacejka #{Graphs}"/>
+							<Property key="TextColour" value="0.8 0.85 1.0"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="248 380 320 16" name="TE_yf"/>
+						<Widget type="TextBox" skin="TextBox" position="180 380 60 24" name="TE_yfVal">
+							<Property key="TextColour" value="0.8 0.85 1.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 400 144 30">
+							<Property key="Caption" value="#{max} x Fx"/>
+							<Property key="TextColour" value="0.75 0.8 1.0"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="248 400 320 16" name="TE_xfx"/>
+						<Widget type="TextBox" skin="TextBox" position="180 400 60 24" name="TE_xfxVal">
+							<Property key="TextColour" value="0.75 0.8 1.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 420 144 30">
+							<Property key="Caption" value="#{max} x Fy"/>
+							<Property key="TextColour" value="0.75 0.8 1.0"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="248 420 320 16" name="TE_xfy"/>
+						<Widget type="TextBox" skin="TextBox" position="180 420 60 24" name="TE_xfyVal">
+							<Property key="TextColour" value="0.75 0.8 1.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 440 144 30">
+							<Property key="Caption" value="pow x"/>
+							<Property key="TextColour" value="0.6 0.75 1.0"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="248 440 320 16" name="TE_xpow"/>
+						<Widget type="TextBox" skin="TextBox" position="180 440 60 24" name="TE_xpowVal">
+							<Property key="TextColour" value="0.6 0.75 1.0"/>
+						</Widget>
 					</Widget>
 				</Widget>
 			</Widget>

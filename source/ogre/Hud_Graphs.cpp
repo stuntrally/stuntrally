@@ -443,8 +443,11 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 	bool tireEdit = false;
 
 	//  RANGE  gui sld ..
-	//const Dbl fMAX = 9000.0, max_y = pApp->scn->sc->asphalt ? 40.0 : 80.0, max_x = 1.0;
-	const Dbl fMAX = 7000.0, max_y = pApp->scn->sc->asphalt ? 40.0 : 180.0, max_x = 12.0, pow_x = 1.5f;
+	//const Dbl fMAX = 9000.0, max_y = 80.0, max_x = 1.0;
+	//const Dbl fMAX = 7000.0, max_y = 180.0, max_x = 12.0, pow_x = 1.0;
+	//const Dbl fMAX = 7000.0, max_y = 5080.0, max_x = 502.0, pow_x = 5.5;
+	Dbl fMAX = pSet->te_yf, max_y = pSet->te_xfy, max_x = pSet->te_xfx, pow_x = pSet->te_xf_pow;
+	if (pApp->scn->sc->asphalt)  max_y *= 0.5;
 
 	switch (pApp->pSet->graphs_type)
 	{
@@ -667,9 +670,9 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
 				
 				for (int x=0; x < TireLenG; ++x)
-				{
+				{	Dbl x0 = Dbl(x) / TireLenG;
 					//Dbl yy = max_y * 2.0 * (x-LEN*0.5) / LEN;
-					Dbl yy = max_y * x / TireLenG;
+					Dbl yy = max_y * pow(x0, pow_x);
 					Dbl n = (TireNG-1-i+1) * 0.65;
 					Dbl fy = !pApp->iTireLoad ? tire->Pacejka_Fy(yy, n, 0, 1.0, maxF)  // normF
 											: tire->Pacejka_Fy(yy, 3, n-2, 1.0, maxF); // camber
@@ -689,10 +692,8 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				pApp->graphs[i]->SetUpdate();
 
 				if (i==0)
-					pApp->graphs[i]->UpdTitle("Fy Lateral--\n"  //#33FF77
-						//"min: "+fToStr((float)fmin,2,4)+"\n"+
-						"max y "+fToStr((float)fmax,0,1)+
-						"  x "+fToStr(max_y,0,1)+"\n");
+					pApp->graphs[i]->UpdTitle("Fy Lateral--\n"
+						"max y "+fToStr((float)fmax,0,1)+"  x "+fToStr(max_y,0,1)+"\n");
 			}
 
 			///  Fx long |
@@ -703,9 +704,8 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
 				
 				for (int x=0; x < TireLenG; ++x)
-				{
-					//Dbl xx = max_x * 2.0 * (x-LEN*0.5) / LEN;
-					Dbl xx = max_x * x / TireLenG;
+				{	Dbl x0 = Dbl(x) / TireLenG;	//Dbl xx = max_x * 2.0 * (x-LEN*0.5) / LEN;
+					Dbl xx = max_x * pow(x0, pow_x);
 					Dbl n = (TireNG-1-i+1) * 0.65;
 					Dbl fx = pApp->iEdTire != 2 ? tire->Pacejka_Fx(xx, n, 1.0, maxF)  // normF
 							 : (!pApp->iTireLoad ? tire->Pacejka_Mz(xx, 0, n, 0.0, 1.0, maxF)    // align- norm
@@ -727,9 +727,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 
 				if (i==0)
 					pApp->graphs[i+TireNG]->UpdTitle("Fx Longit |\n"
-						//"min: "+fToStr((float)fmin,2,4)+"\n"+
-						"max y "+fToStr((float)fmax,0,1)+
-						"  x "+fToStr(max_x,0,1)+"\n");
+						"max y "+fToStr((float)fmax,0,1)+"  x "+fToStr(max_x,0,1)+"\n");
 			}
 			delete[]ft;
 		}
@@ -763,10 +761,9 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				
 				Dbl yyo=0;
 				for (int x=0; x < TireLenG; ++x)
-				{
-					Dbl yy = max_y * x / TireLenG;
-					Dbl n = (TireNG-1-i+1) * 0.65;
-					Dbl fy = fabs(t.fy_ar * tire->Pacejka_Fy(yy, t.Fz, t.gamma, t.frict, maxF));
+				{	Dbl x0 = Dbl(x) / TireLenG;
+					Dbl yy = max_y * pow(x0, pow_x);
+					Dbl fy = fabs(/*t.fy_ar */ tire->Pacejka_Fy(yy, t.Fz, t.gamma, t.frict, maxF));
 
 					if (t.fy_rar > yyo && t.fy_rar <= yy)
 						fy = 0.0;  // cur mark |
@@ -788,8 +785,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 
 				if (i==0)
 					pApp->graphs[i]->UpdTitle("Fy Lateral --   "
-						/*"max y "+fToStr((float)fmax,0,1)+
-						"  x "+fToStr(max_y,0,1)+"\n"/**/);
+						/*"max y "+fToStr((float)fmax,0,1)+"  x "+fToStr(max_y,0,1)+"\n"/**/);
 			}
 
 			///  Fx long |  ........
@@ -806,9 +802,8 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				
 				Dbl xxo=0;
 				for (int x=0; x < TireLenG; ++x)
-				{
-					Dbl xx = max_x * x / TireLenG;
-					Dbl n = (TireNG-1-i+1) * 0.65;
+				{	Dbl x0 = Dbl(x) / TireLenG;
+					Dbl xx = max_x * pow(x0, pow_x);
 					Dbl fx = fabs(t.fx_sr * tire->Pacejka_Fx(xx, t.Fz, t.frict, maxF));
 
 					if (t.fx_rsr > xxo && t.fx_rsr <= xx)
@@ -831,8 +826,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 
 				if (i==0)
 					pApp->graphs[i+TireNG]->UpdTitle("Fx Longit |   "
-						/*"max y "+fToStr((float)fmax,0,1)+
-						"  x "+fToStr(max_x,0,1)+"\n"/**/);
+						/*"max y "+fToStr((float)fmax,0,1)+"  x "+fToStr(max_x,0,1)+"\n"/**/);
 			}
 			delete[]ft;
 		}

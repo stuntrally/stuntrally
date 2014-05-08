@@ -193,6 +193,8 @@ public:
 	//  Times, opp
 	Ck ckTimes;
 	Ck ckOpponents, ckOppSort;
+	//  tire edit
+	SV svTE_yf,svTE_xfx,svTE_xfy,svTE_xpow;
 	
 	//  Hud dbg,other
 	Ck ckFps;  CK(Wireframe);
