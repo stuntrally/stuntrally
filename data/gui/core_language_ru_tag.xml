@@ -47,7 +47,7 @@
 	<Tag name="InputRoadChkCtrl">с ctrl - сила задан. радиуса</Tag>
 	<Tag name="LS_SCENE">Загрузка сцены</Tag>
 	<Tag name="TipTrackImg">Снимок трека для игры</Tag>
-	<Tag name="TerDeform">Deform</Tag>
+	<Tag name="TerDeform">Деформ.</Tag>
 	<Tag name="TerLNoiseOnly">Только шум</Tag>
 	<Tag name="InputValueChange">Жми или двинь (мышь/кнопка) </Tag>
 	<Tag name="SteerRange">Коэф. диапазона управления</Tag>
@@ -115,7 +115,7 @@
 	<Tag name="SC_Winter">Зима</Tag>
 	<Tag name="TipTrackList">Список треков. Кликни, чтобы выбрать и увидеть инфо. Нажми Enter или [Новая игра], чтобы на нем поехать.</Tag>
 	<Tag name="GrDensSmooth">Плотн. ровн. травы</Tag>
-	<Tag name="TerSmooth">Smooth</Tag>
+	<Tag name="TerSmooth">Ровная</Tag>
 	<Tag name="TerHeightMap">Высота карты ландш.</Tag>
 	<Tag name="bumps">ухабы</Tag>
 	<Tag name="ShadowFilter">Фильтр</Tag>
@@ -261,7 +261,7 @@
 	<Tag name="TipTerrainHalf">Изменение размера высот текущей местности в два раза (используется только для сокращения размера файла).</Tag>
 	<Tag name="wind">ветер</Tag>
 	<Tag name="TipTerLHMax">Окончание высоты ландшафта на слое.</Tag>
-	<Tag name="Bilinear">Bilinear</Tag>
+	<Tag name="Bilinear">Билинейный</Tag>
 	<Tag name="TipDustSize">Размер частиц пыли.</Tag>
 	<Tag name="LS_CAR">Загрузка авто</Tag>
 	<Tag name="Author">Автор(ы)</Tag>
@@ -270,13 +270,13 @@
 	<Tag name="NetNickname">Никнейм</Tag>
 	<Tag name="NetPassword">Пароль</Tag>
 	<Tag name="UseImposters">Исп. спрайты</Tag>
-	<Tag name="Anisotropic">Anisotropic</Tag>
+	<Tag name="Anisotropic">Анизотропный</Tag>
 	<Tag name="NetSettings">Настройки</Tag>
 	<Tag name="TipModelMaxScale">Максимальный масштаб модели.</Tag>
 	<Tag name="TerrainError">Ошибка ландшафта</Tag>
 	<Tag name="InputGraphsType">изменить тип схем в игре</Tag>
 	<Tag name="Reduced">Умень.</Tag>
-	<Tag name="NetMasterProtocolError">несовместимая версия протокола - обнови Stunt Rally или свяжись с сервером администратора.</Tag>
+	<Tag name="NetMasterProtocolError">Несовместимая версия протокола - обнови Stunt Rally или свяжись с сервером администратора.</Tag>
 	<Tag name="InputRoadModify">Изменить</Tag>
 	<Tag name="No">Нет</Tag>
 	<Tag name="CheckOnLoad">Пров. при загр.</Tag>
@@ -703,7 +703,7 @@
 	<Tag name="AutoGearbox">АКПП</Tag>
 	<Tag name="ReplaysMenu">Повторы</Tag>
 	<Tag name="InputSlowFast">shift - медлено   ctrl - быстро</Tag>
-	<Tag name="TerHeight">Height</Tag>
+	<Tag name="TerHeight">Высота</Tag>
 	<Tag name="InputRoadMirror">alt-Home - выбор отображ.</Tag>
 	<Tag name="GrassMult">Коэф. травы</Tag>
 	<Tag name="ABS">АБС</Tag>
@@ -885,7 +885,7 @@
 	<Tag name="Reverse">Обратно</Tag>
 	<Tag name="InputMapShiftDown">Передача -</Tag>
 	<Tag name="InputObjectsMoveReset">shift-1 - к курсору /сброс высоты</Tag>
-	<Tag name="TerFilter">Filter</Tag>
+	<Tag name="TerFilter">Фильтр</Tag>
 	<Tag name="AllEffects">Вкл. эффекты</Tag>
 	<Tag name="CarCollis">Столк. авто</Tag>
 	<Tag name="TipTerrainDouble">Делает двойной размер ландшафта, оставляя часть текущей высоты карты в центре.</Tag>
@@ -979,7 +979,7 @@
 	<Tag name="InputObjectsRot">2 - местное вращ.(alt- глоб.)  LMB: Z  RMB: Y  MMB: X</Tag>
 	<Tag name="Needed">Нужно</Tag>
 	<Tag name="BulletDebug">Отладка Bullet</Tag>
-	<Tag name="Initializing">Initializing</Tag>
+	<Tag name="Initializing">Инициализация</Tag>
 	<Tag name="InputRoadHeight">- изменить высоту</Tag>
 	<Tag name="TipSunSpecular">Отражающий цвет солнечного света. R G B значения от 0 до 1 (напр. 0.6 0.6 0.6)</Tag>
 	<Tag name="LS_TER">Загрузка ландшафта</Tag>
@@ -1006,7 +1006,7 @@
 	<Tag name="InputSaveTrack">F4 - сохр. трек</Tag>
 	<Tag name="InputUpdate">F8 - обновить трек</Tag>
 	<Tag name="CameraAutoTilt">Автонаклон на склонах</Tag>
-	<Tag name="Trilinear">Trilinear</Tag>
+	<Tag name="Trilinear">Трилинейный</Tag>
 	<Tag name="InputUndo">(1 раз отмена)</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - сброс шкалы до 1 (с shift до 0.5)</Tag>
 	<Tag name="FPS">Fps, Треуг., Пакеты</Tag>
