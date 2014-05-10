@@ -131,21 +131,63 @@ void CGui::TweakCarLoad()
 	}
 }
 
-void CGui::CmbTweakCarSet(CMB)
-{
-}
-void CGui::CmbTweakTireSet(CMB)
-{
-}
-
-void CGui::CmbEdTweakCarSet(EditPtr ed)
-{
-}
-void CGui::CmbEdTweakTireSet(EditPtr ed)
+void CGui::editTweakTireSet(Ed ed)
 {
 	if (txtTweakTire)
 		txtTweakTire->setCaption("");
 }														
+
+
+const String CGui::csLateral[15][2] = {
+	"  a0","#F0FFFFShape factor",
+	"  a1","#C0E0FFLoad infl. on friction coeff",
+	"  a2","#F0FFFFLateral friction coeff at load = 0",
+	"  a3","#F0FFFFMaximum stiffness",
+	"  a4","#F0FFFFLoad at maximum stiffness",
+	"  a5","#C0E0FF-Camber infl. on stiffness",
+	"  a6","Curvature change with load",
+	"  a7","Curvature at load = 0",
+	"  a8","#A0C0D0  -Horiz. shift because of camber",
+	"  a9","  Load infl. on horizontal shift",
+	" a10","  Horizontal shift at load = 0",
+	"a111","  -Camber infl. on vertical shift",
+	"a112","  -Camber infl. on vertical shift",
+	" a12","  Load infl. on vertical shift",
+	" a13","  Vertical shift at load = 0" };
+const String CGui::csLongit[13][2] = {
+	"  b0","#FFFFF0Shape factor",
+	"  b1","#F0F0A0Load infl. on long. friction coeff",
+	"  b2","#FFFFF0Longit. friction coeff at load = 0",
+	"  b3","#F0F0A0Curvature factor of stiffness",
+	"  b4","#F0F0A0Change of stiffness with load at load = 0",
+	"  b5","#E0C080Change of progressivity/load",  //of stiffness
+	"  b6","Curvature change with load^2",
+	"  b7","Curvature change with load",
+	"  b8","Curvature at load = 0",
+	"  b9","#D0D0A0  Load infl. on horizontal shift",
+	" b10","  Horizontal shift at load = 0",
+	" b11","  Load infl. on vertical shift",
+	" b12","  Vertical shift at load = 0" };
+const String CGui::csAlign[18][2] = {
+	" c0","#E0FFE0Shape factor",
+	" c1","Load infl. of peak value",
+	" c2","Load infl. of peak value",
+	" c3","Curvature factor of stiffness",
+	" c4","Change of stiffness with load at load = 0",
+	" c5","Change of progressivity/load",
+	" c6","-Camber infl. on stiffness",
+	" c7","Curvature change with load",
+	" c8","Curvature change with load",
+	" c9","Curvature at load = 0",
+	"c10","-Camber infl. of stiffness",
+	"c11","  -Camber infl. on horizontal shift",
+	"c12","  Load infl. on horizontal shift",
+	"c13","  Horizontal shift at load = 0",
+	"c14","  -Camber infl. on vertical shift",
+	"c15","  -Camber infl. on vertical shift",
+	"c16","  Load infl. on vertical shift",
+	"c17","  Vertical shift at load = 0" };
+const String CGui::sCommon = "#C8C8F0Pacejka's Magic Formula coeffs\n";
 
 
 //  tweak save car and reload game
@@ -160,7 +202,7 @@ void CGui::TweakTireSave()
 	const std::vector <Dbl>& a = tire->lateral, b = tire->longitudinal, c = tire->aligning;
 	//#define f2s(f)  fToStr(f, 4,6);
 	
-	string file = cmbTweakTireSet->getCaption();
+	string file = edTweakTireSet->getCaption();
 	string pathUserT = PATHMANAGER::DataUser() + "/carsim/" + pSet->game.sim_mode + "/tires/";
 	PATHMANAGER::CreateDir(pathUserT, pGame->error_output);
 	file = pathUserT+"/"+file+".tire";
