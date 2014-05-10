@@ -64,6 +64,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.start_order", gui.start_order);	Param(c,w, "game.split_vertically", split_vertically);
 	
 	//  graphs
+	Param(c,w, "graphs.tc_r", tc_r);			Param(c,w, "graphs.tc_xr", tc_xr);
 	Param(c,w, "graphs.te_yf", te_yf);			Param(c,w, "graphs.te_xf_pow", te_xf_pow);
 	Param(c,w, "graphs.te_xfx", te_xfx);		Param(c,w, "graphs.te_xfy", te_xfy);
 
@@ -237,6 +238,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,game_fq(82.f), blt_fq(160.f), blt_iter(24), dyn_iter(30)
 	,multi_thr(0), thread_sleep(5), perf_speed(100000)
 	//  graphs
+	,tc_r(6000), tc_xr(1.f)
 	,te_yf(7000), te_xf_pow(1.0), te_xfy(160), te_xfx(12)
 
 	//  sound

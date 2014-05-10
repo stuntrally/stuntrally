@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "common/Def_Str.h"
 #include "CGame.h"
+#include "CGui.h"
 #include "../vdrift/game.h"
 #include "../vdrift/car.h"
 #include "common/data/SceneXml.h"
@@ -382,58 +383,6 @@ void App::GraphsNewVals()				// Game
 	}
 }
 
-//  update edit values text and descr
-///----------------------------------------------------
-const static String csLateral[15][2] = {
-	"  a0","#F0FFFFShape factor",
-	"  a1","#C0E0FFLoad infl. on friction coeff",
-	"  a2","#F0FFFFLateral friction coeff at load = 0",
-	"  a3","#F0FFFFMaximum stiffness",
-	"  a4","#F0FFFFLoad at maximum stiffness",
-	"  a5","#C0E0FF-Camber infl. on stiffness",
-	"  a6","Curvature change with load",
-	"  a7","Curvature at load = 0",
-	"  a8","#A0C0D0  -Horiz. shift because of camber",
-	"  a9","  Load infl. on horizontal shift",
-	" a10","  Horizontal shift at load = 0",
-	"a111","  -Camber infl. on vertical shift",
-	"a112","  -Camber infl. on vertical shift",
-	" a12","  Load infl. on vertical shift",
-	" a13","  Vertical shift at load = 0" };
-const static String csLongit[13][2] = {
-	"  b0","#FFFFF0Shape factor",
-	"  b1","#F0F0A0Load infl. on long. friction coeff",
-	"  b2","#FFFFF0Longit. friction coeff at load = 0",
-	"  b3","#F0F0A0Curvature factor of stiffness",
-	"  b4","#F0F0A0Change of stiffness with load at load = 0",
-	"  b5","#E0C080Change of progressivity/load",  //of stiffness
-	"  b6","Curvature change with load^2",
-	"  b7","Curvature change with load",
-	"  b8","Curvature at load = 0",
-	"  b9","#D0D0A0  Load infl. on horizontal shift",
-	" b10","  Horizontal shift at load = 0",
-	" b11","  Load infl. on vertical shift",
-	" b12","  Vertical shift at load = 0" };
-const static String csAlign[18][2] = {
-	" c0","#E0FFE0Shape factor",
-	" c1","Load infl. of peak value",
-	" c2","Load infl. of peak value",
-	" c3","Curvature factor of stiffness",
-	" c4","Change of stiffness with load at load = 0",
-	" c5","Change of progressivity/load",
-	" c6","-Camber infl. on stiffness",
-	" c7","Curvature change with load",
-	" c8","Curvature change with load",
-	" c9","Curvature at load = 0",
-	"c10","-Camber infl. of stiffness",
-	"c11","  -Camber infl. on horizontal shift",
-	"c12","  Load infl. on horizontal shift",
-	"c13","  Horizontal shift at load = 0",
-	"c14","  -Camber infl. on vertical shift",
-	"c15","  -Camber infl. on vertical shift",
-	"c16","  Load infl. on vertical shift",
-	"c17","  Vertical shift at load = 0" };
-const static String sCommon = "#C8C8F0Pacejka's Magic Formula coeffs\n";
 
 
 //-----------------------------------------------------------------------------------
@@ -670,8 +619,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
 				
 				for (int x=0; x < TireLenG; ++x)
-				{	Dbl x0 = Dbl(x) / TireLenG;
-					//Dbl yy = max_y * 2.0 * (x-LEN*0.5) / LEN;
+				{	Dbl x0 = Dbl(x) / TireLenG;	 //Dbl yy = max_y * 2.0 * (x-LEN*0.5) / LEN;
 					Dbl yy = max_y * pow(x0, pow_x);
 					Dbl n = (TireNG-1-i+1) * 0.65;
 					Dbl fy = !pApp->iTireLoad ? tire->Pacejka_Fy(yy, n, 0, 1.0, maxF)  // normF
@@ -704,7 +652,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
 				
 				for (int x=0; x < TireLenG; ++x)
-				{	Dbl x0 = Dbl(x) / TireLenG;	//Dbl xx = max_x * 2.0 * (x-LEN*0.5) / LEN;
+				{	Dbl x0 = Dbl(x) / TireLenG;
 					Dbl xx = max_x * pow(x0, pow_x);
 					Dbl n = (TireNG-1-i+1) * 0.65;
 					Dbl fx = pApp->iEdTire != 2 ? tire->Pacejka_Fx(xx, n, 1.0, maxF)  // normF
@@ -763,7 +711,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				for (int x=0; x < TireLenG; ++x)
 				{	Dbl x0 = Dbl(x) / TireLenG;
 					Dbl yy = max_y * pow(x0, pow_x);
-					Dbl fy = fabs(/*t.fy_ar */ tire->Pacejka_Fy(yy, t.Fz, t.gamma, t.frict, maxF));
+					Dbl fy = fabs(t.fy_ar * tire->Pacejka_Fy(yy, t.Fz, t.gamma, t.frict, maxF));
 
 					if (t.fy_rar > yyo && t.fy_rar <= yy)
 						fy = 0.0;  // cur mark |
@@ -835,12 +783,12 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 	}
 
 	if (tireEdit)
-	{
+	{	const CGui* g = pApp->gui;
 		const CARTIRE* tire = dynamics.GetTire(FRONT_LEFT);
 		String ss,sd;
 		if (pApp->iEdTire == 0)
 		{
-			ss += "#A0F0FF--Lateral--\n";  sd += sCommon;
+			ss += "#A0F0FF--Lateral--\n";  sd += g->sCommon;
 			for (int i=0; i < tire->lateral.size(); ++i)
 			{
 				float f = tire->lateral[i];
@@ -848,9 +796,9 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				bool cur = (i == pApp->iCurLat);
 
 				ss += cur ? "#A0EEFF" : "#E0FFFF";
-				ss += csLateral[i][0] +" "+ fToStr(f, p,5);
+				ss += g->csLateral[i][0] +" "+ fToStr(f, p,5);
 				ss += cur ? "  <\n" : "\n";
-				sd += csLateral[i][1] +"\n";
+				sd += g->csLateral[i][1] +"\n";
 			}
 
 			ss += "\n#C0F0F0alpha hat\n";
@@ -861,7 +809,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		}
 		else if (pApp->iEdTire == 1)
 		{
-			ss += "#FFFF70| Longit |\n";  sd += sCommon;
+			ss += "#FFFF70| Longit |\n";  sd += g->sCommon;
 			for (int i=0; i < tire->longitudinal.size(); ++i)
 			{
 				float f = tire->longitudinal[i];
@@ -869,9 +817,9 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				bool cur = (i == pApp->iCurLong);
 
 				ss += cur ? "#FFE090" : "#FFFFD0";
-				ss += csLongit[i][0] +" "+ fToStr(f, p,5);
+				ss += g->csLongit[i][0] +" "+ fToStr(f, p,5);
 				ss += cur ? "  <\n" : "\n";
-				sd += csLongit[i][1] +"\n";
+				sd += g->csLongit[i][1] +"\n";
 			}
 
 			ss += "\n#F0F0C0sigma hat\n";

@@ -132,13 +132,14 @@ public:
 	Tab tabTweak, tabEdCar;
 	void tabCarEdChng(Tab, size_t);
 
-	Cmb cmbTweakCarSet, cmbTweakTireSet;
-	void CmbTweakCarSet(CMB), CmbTweakTireSet(CMB);
-	void CmbEdTweakCarSet(Ed), CmbEdTweakTireSet(Ed);
+	Ed edTweakTireSet;  void editTweakTireSet(Ed);
 
 	void TweakToggle();
 	void TweakCarSave(),TweakCarLoad(), TweakTireSave();
+
 	void TweakColUpd(bool user), TweakColLoad(),TweakColSave();
+
+	const static Ogre::String csLateral[15][2], csLongit[13][2], csAlign[18][2], sCommon;
 
 	void btnTweakCarSave(WP),  btnTweakCarLoad(WP);
 	void btnTweakTireSave(WP), btnTweakColSave(WP);
@@ -193,8 +194,10 @@ public:
 	//  Times, opp
 	Ck ckTimes;
 	Ck ckOpponents, ckOppSort;
-	//  tire edit
-	SV svTE_yf,svTE_xfx,svTE_xfy,svTE_xpow;
+
+	//  graphs
+	SV svTC_r, svTC_xr;
+	SV svTE_yf, svTE_xfx, svTE_xfy, svTE_xpow;
 	
 	//  Hud dbg,other
 	Ck ckFps;  CK(Wireframe);

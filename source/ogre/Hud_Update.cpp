@@ -684,7 +684,8 @@ void CHud::Update(int carId, float time)
 	///  tire vis circles  + + + +
 	if (pCar && moTireVis[0] && pSet->car_tirevis)
 	{
-		const Real z = 8000.f, m_z = 2.f * z;  // scale, max factor
+		const Real z = 6000.f / pSet->tc_r, zy = pSet->tc_xr,
+			m_z = 2.f * z;  // scale, max factor
 		const int na = 32;  // circle quality
 		const Real ad = 2.f*PI_d/na, u = 0.02f;  // u line thickness
 		const ColourValue cb(0.8,0.8,0.8),cl(0.2,1,0.2),cr(0.9,0.4,0),cc(1,1,0);
@@ -705,18 +706,20 @@ void CHud::Update(int carId, float time)
 			m->position(0,-1,0);  m->colour(cb);
 			m->position(0, 1,0);  m->colour(cb);
 			
+			//  tire combine
+			//Real lx = off ? 0.f : t.preFy/t.Fy,  ly = off ? 0.f : t.preFx/t.Fx;
+			Real lx = off ? 0.f : t.preFy/z*zy,  ly = off ? 0.f : t.preFx/z;
+			for (int y=-1; y<=1; ++y)
+			for (int x=-1; x<=1; ++x)  {
+				m->position(0  +x*u, 0  +y*u, 0);  m->colour(cr);
+				m->position(lx +x*u, ly +y*u, 0);  m->colour(cr);  }
+
 			//  tire line /
-			Real lx = off ? 0.f : t.Fy/z, ly = off ? 0.f : t.Fx/z;
+			lx = off ? 0.f : t.Fy/z*zy;  ly = off ? 0.f : t.Fx/z;
 			for (int y=-2; y<=2; ++y)
 			for (int x=-2; x<=2; ++x)  {
 				m->position(0  +x*u, 0  +y*u, 0);  m->colour(cl);
 				m->position(lx +x*u, ly +y*u, 0);  m->colour(cl);  }
-
-			/*lx = off ? 0.f : t.Fy/z / t.fy_ar;  ly = off ? 0.f : t.Fx/z / t.fx_sr;
-			for (int y=-1; y<=1; ++y)
-			for (int x=-1; x<=1; ++x)  {
-				m->position(0  +x*u, 0  +y*u, 0);  m->colour(cr);
-				m->position(lx +x*u, ly +y*u, 0);  m->colour(cr);  }*/
 
 			//  max circle o
 			Real rx = off || t.Fym > m_z ? 0.f : t.Fym/z,
@@ -725,7 +728,7 @@ void CHud::Update(int carId, float time)
 			
 			for (int n=0; n <= na; ++n)
 			{
-				p.x = rx*cosf(a);  p.y =-ry*sinf(a);
+				p.x = rx*cosf(a)*zy;  p.y =-ry*sinf(a);
 				if (n > 0)  {
 					m->position(po);  m->colour(cc);
 					m->position(p);   m->colour(cc);  }

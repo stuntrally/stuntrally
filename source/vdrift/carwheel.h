@@ -40,11 +40,11 @@ public:
 		Dbl fx_sr, fx_rsr;
 		Dbl fy_ar, fy_rar;
 		Dbl frict,gamma;
-		Dbl Fx,Fxm,Fy,Fym,Fz;  // tire vis circle
+		Dbl Fx,Fxm,preFx, Fy,Fym,preFy, Fz;  // tire vis circle
 
 		SlideSlip()
-			:slide(0),slip(0),slideratio(0),slipratio(0)
-			,Fx(0),Fxm(0),Fy(0),Fym(0),Fz(0)
+			:slide(0),slip(0), slideratio(0),slipratio(0)
+			,Fx(0),Fxm(0),preFx(0), Fy(0),Fym(0),preFy(0), Fz(0)
 			,fx_sr(0), fx_rsr(0)
 			,fy_ar(0), fy_rar(0)
 			,frict(0),gamma(0)

@@ -142,6 +142,7 @@ public:
 	int blt_iter, dyn_iter,  multi_thr, thread_sleep;
 	
 	//  graphs vis
+	float tc_r, tc_xr;  // tire circles max
 	float te_yf, te_xfx, te_xfy, te_xf_pow;  // tire edit max
 
 	

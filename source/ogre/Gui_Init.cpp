@@ -518,11 +518,15 @@ void CGui::InitGui()
 	edUserDir->setCaption(PATHMANAGER::UserConfigDir());
 
 	
-	//  graphs  ----
-	sv= &svTE_yf;	sv->Init("TE_yf",	&pSet->te_yf, 0.f, 12000.f, 1.f, 0,4);	sv->DefaultF(7000.f);
-	sv= &svTE_xfx;	sv->Init("TE_xfx",	&pSet->te_xfx, 0.f, 500.f, 4.f, 1,4);	sv->DefaultF(12.f);
-	sv= &svTE_xfy;	sv->Init("TE_xfy",	&pSet->te_xfy, 0.f, 5000.f, 4.f, 0,3);	sv->DefaultF(160.f);
-	sv= &svTE_xpow;	sv->Init("TE_xpow",	&pSet->te_xf_pow, 0.f, 8.f, 1.f, 1,3);	sv->DefaultF(1.f);
+	///  graphs  ----
+	sv= &svTC_r;	sv->Init("TC_r",	&pSet->tc_r,  0.5f, 2.f, 1.5f, 1,4);	sv->DefaultF(1.f);
+	sv= &svTC_xr;	sv->Init("TC_xr",	&pSet->tc_xr, 0.f, 5.f,  1.5f, 1,4);	sv->DefaultF(1.f);
+
+	sv= &svTE_yf;	sv->Init("TE_yf",	&pSet->te_yf, 5000.f, 10000.f, 1.f, 0,4);	sv->DefaultF(7000.f);
+	sv= &svTE_xfx;	sv->Init("TE_xfx",	&pSet->te_xfx, 4.f, 42.f,  2.f, 1,4);	sv->DefaultF(12.f);
+	sv= &svTE_xfy;	sv->Init("TE_xfy",	&pSet->te_xfy, 90.f, 560.f, 2.f, 0,3);	sv->DefaultF(160.f);
+	sv= &svTE_xpow;	sv->Init("TE_xpow",	&pSet->te_xf_pow, 1.f, 2.f, 1.f, 1,3);	sv->DefaultF(1.f);
+
 
 	///  tweak  ----
 	for (int i=0; i < ciEdCar; ++i)
@@ -538,8 +542,8 @@ void CGui::InitGui()
 
 	Btn("TweakCarSave", btnTweakCarSave);  Btn("TweakTireSave", btnTweakTireSave);
 	Btn("TweakColSave", btnTweakColSave);
-	Cmb(cmbTweakTireSet,"TweakTireSet",CmbTweakTireSet);
-	cmbTweakTireSet->eventEditTextChange += newDelegate(this, &CGui::CmbEdTweakTireSet);
+
+	Edt(edTweakTireSet, "TweakTireSet", editTweakTireSet);
 
 
 	///  input tab  -------

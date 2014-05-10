@@ -108,9 +108,9 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 
 	Dbl V = hub_velocity[0];
 
-	Dbl denom = std::max ( std::abs ( V ), 0.1 );
+	Dbl denom = std::max ( std::abs ( V ), 0.01 );
 
-	sigma = ( patch_speed - V ) /denom;
+	sigma = ( patch_speed - V ) / denom;
 
 	tan_alpha = hub_velocity[1] / denom;
 
@@ -148,12 +148,16 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 	Dbl max_Mz(0);
 	Dbl Mz = Pacejka_Mz( sigma, alpha, Fz, gamma, friction_coeff, max_Mz );
 
+	if (slips)  // out vis
+	{
+		slips->preFx = Fx;
+		slips->preFy = Fy;
+	}
 	//Dbl slip_x = -sigma / ( 1.0 + generic_abs ( sigma ) );
 	//Dbl slip_y = tan_alpha / ( 1.0+generic_abs ( sigma-1.0 ) );
 	//Dbl total_slip = std::sqrt ( slip_x * slip_x + slip_y * slip_y );
 
 	//Dbl maxforce = longitudinal_parameters[2] * 7.0;
-	//std::cout << maxforce << ", " << max_Fx << ", " << max_Fy << ", " << Fx << ", " << Fy << std::endl;
 
 	//combining method 0: no combining
 
