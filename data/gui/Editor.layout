@@ -1698,13 +1698,13 @@
 					<Widget type="TabItem" skin="" position="2 24 754 478">
 						<Property key="Caption" value="#40E040#{Brushes}"/>
 
-						<Widget type="ScrollView" skin="ScrollViewEmpty" position="0 5 750 470" name="svBrushes">
+						<Widget type="ScrollView" skin="ScrollViewEmpty" position="0 5 750 488" name="svBrushes">
 							<Property key="CanvasSize" value="1020 1800"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 754 478">
 						<Property key="Caption" value="#A0F0B8#{Generator}"/>
-						<Widget type="Widget" skin="PanelSkin" position="0 45 750 430">
+						<Widget type="Widget" skin="PanelSkin" position="0 45 750 436">
 							<Property key="Colour" value="0.141 0.322 0.146"/>
 							<Property key="Alpha" value="0.2"/>
 						</Widget>
@@ -1729,7 +1729,7 @@
 							<Property key="TextColour" value="0.7 0.6 0.8"/>
 						</Widget>
 
-						<Widget type="ScrollView" skin="ScrollViewEmpty" position="0 52 750 425" name="svGenerator">
+						<Widget type="ScrollView" skin="ScrollViewEmpty" position="0 52 750 440" name="svGenerator">
 							<Property key="CanvasSize" value="1020 900"/>
 
 							<Widget type="TextBox" skin="TextBox" position="16 5 128 24">
@@ -4379,8 +4379,8 @@
 							<Property key="Static" value="true"/>
 							<Property key="ReadOnly" value="true"/>
 						</Widget>
-						<Widget type="ScrollView" skin="ScrollViewEmpty" position="30 50 700 480" name="TweakView">
-							<Property key="CanvasSize" value="740 1200"/>
+						<Widget type="ScrollView" skin="ScrollViewEmpty" position="30 50 700 398" name="TweakView">
+							<Property key="CanvasSize" value="1020 1200"/>
 						</Widget>
 					</Widget>
 				</Widget>
