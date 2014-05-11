@@ -61,9 +61,6 @@ mark_as_advanced(SHARE_INSTALL)
 #      but that would break other build systems for good.
 add_definitions(-DSHARED_DATA_DIR="${SHARE_INSTALL}")
 
-add_definitions(-DOGRE_PLUGIN_DIR_REL="${OGRE_PLUGIN_DIR_REL}")
-add_definitions(-DOGRE_PLUGIN_DIR_DBG="${OGRE_PLUGIN_DIR_DBG}")
-
 if (DEFINED CMAKE_BUILD_TYPE)
 	if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 		add_definitions(-D_DEBUG="")
@@ -98,6 +95,8 @@ if(BUILD_GAME OR BUILD_EDITOR)
         if (OGRE_VERSION_MAJOR GREATER 1 OR OGRE_VERSION_MINOR GREATER 8)
             list(APPEND LIBS ${OGRE_Overlay_LIBRARIES})
         endif()
+        add_definitions(-DOGRE_PLUGIN_DIR_REL="${OGRE_PLUGIN_DIR_REL}")
+        add_definitions(-DOGRE_PLUGIN_DIR_DBG="${OGRE_PLUGIN_DIR_DBG}")
 
 	#find_package(Bullet REQUIRED QUIET)
 	#include_directories(${BULLET_INCLUDE_DIRS})
