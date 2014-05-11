@@ -2955,7 +2955,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472">
-						<Property key="Caption" value="#C0A0E0#{Other}"/>
+						<Property key="Caption" value="#D0C0A0#{Other}"/>
 						<Widget type="Button" skin="CheckBox" position="32 62 320 24" name="Fps">
 							<Property key="Caption" value="#{FPS}  F11"/>
 							<Property key="TextColour" value="0.7 0.7 1.0"/>
@@ -2991,7 +2991,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472">
-						<Property key="Caption" value="#C0A0E0#{Graphs}"/>
+						<Property key="Caption" value="#C0A0F0#{Graphs}"/>
 						<Widget type="ImageBox" skin="ImageBox" position="32 24 50 50">
 							<Property key="ImageCoord" value="384 640 128 128"/>
 							<Property key="Alpha" value="0.8"/>
@@ -3052,7 +3052,7 @@
 						<Widget type="Slider" skin="Slider" position="416 332 100 16" name="DbgTxtClr"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472">
-						<Property key="Caption" value="#C0A0D0#{Graphs}2"/>
+						<Property key="Caption" value="#E0A0E0#{Graphs}2"/>
 						<Widget type="TextBox" skin="TextBox" position="32 300 144 20">
 							<Property key="Caption" value="#{scale} - Tire circles"/>
 							<Property key="TextColour" value="0.8 1 0.85"/>
