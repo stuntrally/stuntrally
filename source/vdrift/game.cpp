@@ -97,7 +97,13 @@ bool GAME::LoadAllSurfaces()
 	surfaces.clear();
 	surf_map.clear();
 
-	string path = PATHMANAGER::CarSim() + "/" + settings->game.sim_mode + "/surfaces.cfg";
+	string path, file = "/" + settings->game.sim_mode + "/surfaces.cfg";
+	path = PATHMANAGER::CarSimU() + file;
+	if (!PATHMANAGER::FileExists(path))  // user or orig
+		path = PATHMANAGER::CarSim() + file;
+	else
+		info_output << "Using user surfaces" << endl;
+	
 	CONFIGFILE param;
 	if (!param.Load(path))
 	{
@@ -137,6 +143,7 @@ bool GAME::LoadAllSurfaces()
 		param.GetParam(*section + ".RollingDrag", temp, error_output);
 		surf.rollingDrag = temp;
 
+
 		///---  Tire  ---
 		string tireFile;
 		//if (!param.GetParam(*section + "." + "Tire", tireFile, error_output))
@@ -148,7 +155,7 @@ bool GAME::LoadAllSurfaces()
 		id = tires_map[tireFile]-1;
 		if (id == -1)
 		{	id = 0;
-			error_output << "Surface: Tire id not found in map, using 0." << endl;
+			error_output << "Surface: Tire id not found in map, using 0, " << tireFile << endl;
 		}
 		//error_output << "Tires size: " << pGame->tires.size() << endl;
 		surf.tire = &tires[id];
@@ -162,63 +169,77 @@ bool GAME::LoadAllSurfaces()
 	return true;
 }
 
+
 ///  Tires  all in data/carsim/normal/tires/*.tire
 //------------------------------------------------------------------------------------------------------------------------------
+bool GAME::LoadTire(CARTIRE& ct, string path, string& file)
+{
+	CONFIGFILE c;
+	if (!c.Load(path+"/"+file))
+	{	error_output << "Error loading tire file " << file << "\n";
+		return false;
+	}
+	file = file.substr(0, file.length()-5);  // no ext .tire
+	float value;
+
+	for (int i = 0; i < 15; ++i)
+	{
+		int numinfile = i;
+		if (i == 11)		numinfile = 111;
+		else if (i == 12)	numinfile = 112;
+		else if (i > 12)	numinfile -= 1;
+		stringstream str;  str << "params.a" << numinfile;
+		if (!c.GetParam(str.str(), value, error_output))  return false;
+		ct.lateral[i] = value;
+	}
+	for (int i = 0; i < 11; ++i)
+	{
+		stringstream str;  str << "params.b" << i;
+		if (!c.GetParam(str.str(), value, error_output))  return false;
+		ct.longitudinal[i] = value;
+	}
+	for (int i = 0; i < 18; ++i)
+	{
+		stringstream str;  str << "params.c" << i;
+		if (!c.GetParam(str.str(), value, error_output))  return false;
+		ct.aligning[i] = value;
+	}
+	ct.CalculateSigmaHatAlphaHat();
+	return true;
+}
+
 bool GAME::LoadTires()
 {
 	tires.clear();
 	tires_map.clear();
 	
-	string path = PATHMANAGER::CarSim() + "/" + settings->game.sim_mode + "/tires";
-	list <string> li;
-	PATHMANAGER::DirList(path, li);
-	for (list <string>::iterator i = li.begin(); i != li.end(); ++i)
+	//  load from both user and orig dirs
+	for (int u=0; u < 2; ++u)
 	{
-		string file = *i;
-		//LogO("Loading tire: "+file);
-		if (file.find(".tire") != string::npos)
+		string path = u == 1 ? PATHMANAGER::CarSimU() : PATHMANAGER::CarSim();
+		path += "/" + settings->game.sim_mode + "/tires";
+		list <string> li;
+		PATHMANAGER::DirList(path, li);
+
+		for (list <string>::iterator i = li.begin(); i != li.end(); ++i)
 		{
-			CONFIGFILE c;
-			if (!c.Load(path+"/"+file))
-			{	error_output << "Error loading tire file " << file << "\n";
-				return false;  }
-
-			file = file.substr(0, file.length()-5);
-			CARTIRE ct;  float value;
-
-			for (int i = 0; i < 15; ++i)
+			string file = *i;
+			if (file.find(".tire") != string::npos)
 			{
-				int numinfile = i;
-				if (i == 11)		numinfile = 111;
-				else if (i == 12)	numinfile = 112;
-				else if (i > 12)	numinfile -= 1;
-				stringstream str;  str << "params.a" << numinfile;
-				if (!c.GetParam(str.str(), value, error_output))  return false;
-				ct.lateral[i] = value;
+				CARTIRE ct;
+				if (LoadTire(ct, path, file))
+				{
+					tires.push_back(ct);
+					tires_map[file] = (int)tires.size();  //+1, 0 = not found
+					TRACKSURFACE::pTireDefault = &ct;  //-
+				}else
+					LogO("Error Loading tire: "+file);
 			}
-			for (int i = 0; i < 11; ++i)
-			{
-				stringstream str;  str << "params.b" << i;
-				if (!c.GetParam(str.str(), value, error_output))  return false;
-				ct.longitudinal[i] = value;
-			}
-			for (int i = 0; i < 18; ++i)
-			{
-				stringstream str;  str << "params.c" << i;
-				if (!c.GetParam(str.str(), value, error_output))  return false;
-				ct.aligning[i] = value;
-			}
-			ct.CalculateSigmaHatAlphaHat();
-
-			
-			tires.push_back(ct);
-			tires_map[file] = (int)tires.size();  //+1, 0 = not found
-			TRACKSURFACE::pTireDefault = &ct;  //-
-		}
-	}
+	}	}
 	return true;
 }
 CARTIRE* TRACKSURFACE::pTireDefault = 0;  //-
+
 
 ///  Suspension factors
 //------------------------------------------------------------------------------------------------------------------------------

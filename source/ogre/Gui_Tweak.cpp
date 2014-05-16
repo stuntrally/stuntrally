@@ -21,7 +21,7 @@ using namespace Ogre;
 using namespace MyGUI;
 
 
-///  Tweak
+///  Tweak Car
 //-----------------------------------------------------------------------------------------------------------
 
 void CGui::TweakCarSave()
@@ -45,6 +45,7 @@ void CGui::TweakCarSave()
 	app->NewGame();
 }
 
+//  fill gui with .car sections
 void CGui::TweakCarLoad()
 {
 	std::string path, pathUser, pathUserDir;
@@ -131,13 +132,153 @@ void CGui::TweakCarLoad()
 	}
 }
 
+
+//  buttons, events
+//-----------------------------------------------------------------------------------------------------------
+
+void CGui::btnTweakCarSave(WP){		TweakCarSave();  }
+void CGui::btnTweakCarLoad(WP){		TweakCarLoad();  }
+void CGui::btnTweakTireSave(WP){	TweakTireSave();  }
+
 void CGui::editTweakTireSet(Ed ed)
 {
 	if (txtTweakTire)
 		txtTweakTire->setCaption("");
 }														
 
+void CGui::listTwkTiresUser(Li, size_t)
+{
+	liTwkTiresOrig->setIndexSelected(ITEM_NONE);
+}
+void CGui::listTwkTiresOrig(Li, size_t)
+{
+	liTwkTiresOrig->setIndexSelected(ITEM_NONE);
+}
 
+void CGui::btnTweakTireLoad(WP)
+{
+	// load as current ? rename ?
+}
+void CGui::btnTweakTireLoadRef(WP)
+{
+	// todo: reference tire graphs ..
+}
+
+
+//  Tweak collisions
+//-----------------------------------------------------------------------------------------------------------
+
+void CGui::TweakColSave()
+{
+	String text = edTweakCol->getCaption();
+	if (text == "")  return;
+	text = StringUtil::replaceAll(text, "##", "#");
+	//text = StringUtil::replaceAll(text, "#E5F4FF", "");  //!
+
+	std::string path = PATHMANAGER::DataUser() + "/trees";
+	PATHMANAGER::CreateDir(path, pGame->error_output);
+	path += "/collisions.xml";
+	std::ofstream fo(path.c_str());
+	fo << text.c_str();
+	fo.close();
+	TweakColUpd(true);
+	
+	app->scn->data->objs->LoadXml();
+	LogO(String("**** Loaded Vegetation objects: ") + toStr(app->scn->data->objs->colsMap.size()));
+	app->NewGame();
+}
+
+void CGui::TweakColUpd(bool user)
+{
+	txtTweakPathCol->setCaption((user ? "User" : "Original"));
+	txtTweakPathCol->setTextColour(user ? Colour(1,1,0.5) : Colour(0.5,1,1));
+}
+
+void CGui::TweakColLoad()
+{
+	bool user = true;
+	std::string name = "/trees/collisions.xml",  // user
+		file = PATHMANAGER::DataUser() + name;
+	if (!PATHMANAGER::FileExists(file))  // original
+	{	file = PATHMANAGER::Data() + name;  user = false;  }
+
+	std::ifstream fi(file.c_str());
+	String text = "", s;
+	while (getline(fi,s))
+		text += s + "\n";
+	fi.close();
+
+	text = StringUtil::replaceAll(text, "#", "##");
+	//text = StringUtil::replaceAll(text, "#E5F4FF", "");  //!
+	edTweakCol->setCaption(UString(text));
+	
+	TweakColUpd(user);
+		
+	MyGUI::InputManager::getInstance().resetKeyFocusWidget();
+	MyGUI::InputManager::getInstance().setKeyFocusWidget(edTweakCol);
+}
+
+void CGui::btnTweakColSave(WP){	TweakColSave();  }
+
+
+///  Tweak read / save file
+//-----------------------------------------------------------------------------------------------------------
+void CGui::TweakToggle()
+{
+	//  window
+	bool vis = !app->mWndTweak->getVisible();
+	app->mWndTweak->setVisible(vis);
+
+	std::string path, pathUser, pathUserDir;
+	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0]);
+	
+	//  load  if car changed
+	static string lastPath = "";
+	if (lastPath != path || app->ctrl)  // force reload  ctrl-alt-Z
+	{	lastPath = path;
+		TweakCarLoad();
+		TweakColLoad();
+	}
+	
+	//  save and reload  shift-alt-Z
+	if (!vis && app->shift)
+	if (tabTweak && tabTweak->getIndexSelected() < 2)
+		TweakCarSave();
+	else
+		TweakColSave();
+}
+
+void CGui::tabCarEdChng(MyGUI::TabPtr, size_t id)
+{
+	pSet->car_ed_tab = id;
+}
+
+
+//  Get car file path
+bool CGui::GetCarPath(std::string* pathCar,
+	std::string* pathSave, std::string* pathSaveDir,
+	std::string carname, /*std::string tweakSetup,*/ bool forceOrig)
+{
+	std::string file = carname + ".car",
+		pathOrig  = PATHMANAGER::CarSim()  + "/" + pSet->game.sim_mode + "/cars/" + file,
+		pathUserD = PATHMANAGER::CarSimU() + "/" + pSet->game.sim_mode + "/cars/",
+		pathUser  = pathUserD + file;                       // (tweakSetup != "" ? tweakSetup+"/" : "")
+
+	if (pathSave)  *pathSave = pathUser;
+	if (pathSaveDir)  *pathSaveDir = pathUserD;
+	
+	if (!forceOrig && PATHMANAGER::FileExists(pathUser))
+	{
+		*pathCar = pathUser;
+		return true;
+	}
+	*pathCar = pathOrig;
+	return false;
+}
+
+
+//  Tire edit const
+//----------------------------------------------------------------------------------------------------------------------
 const String CGui::csLateral[15][2] = {
 	"  a0","#F0FFFFShape factor",
 	"  a1","#C0E0FFLoad infl. on friction coeff",
@@ -203,7 +344,7 @@ void CGui::TweakTireSave()
 	//#define f2s(f)  fToStr(f, 4,6);
 	
 	string file = edTweakTireSet->getCaption();
-	string pathUserT = PATHMANAGER::DataUser() + "/carsim/" + pSet->game.sim_mode + "/tires/";
+	string pathUserT = PATHMANAGER::CarSimU() + "/" + pSet->game.sim_mode + "/tires/";
 	PATHMANAGER::CreateDir(pathUserT, pGame->error_output);
 	file = pathUserT+"/"+file+".tire";
 	if (PATHMANAGER::FileExists(file))
@@ -269,120 +410,4 @@ void CGui::TweakTireSave()
 	if (txtTweakTire)
 	{	txtTweakTire->setCaption("Saved.");
 		txtTweakTire->setTextColour(Colour(0.2,1,0.2));  }
-}
-
-void CGui::btnTweakCarSave(WP){	TweakCarSave();  }
-void CGui::btnTweakCarLoad(WP){	TweakCarLoad();  }
-void CGui::btnTweakTireSave(WP){	TweakTireSave();  }
-
-
-//  Tweak collisions
-//-----------------------------------------------------------------------------------------
-
-void CGui::TweakColSave()
-{
-	String text = edTweakCol->getCaption();
-	if (text == "")  return;
-	text = StringUtil::replaceAll(text, "##", "#");
-	//text = StringUtil::replaceAll(text, "#E5F4FF", "");  //!
-
-	std::string path = PATHMANAGER::DataUser() + "/trees";
-	PATHMANAGER::CreateDir(path, pGame->error_output);
-	path += "/collisions.xml";
-	std::ofstream fo(path.c_str());
-	fo << text.c_str();
-	fo.close();
-	TweakColUpd(true);
-	
-	app->scn->data->objs->LoadXml();
-	LogO(String("**** Loaded Vegetation objects: ") + toStr(app->scn->data->objs->colsMap.size()));
-	app->NewGame();
-}
-
-void CGui::TweakColUpd(bool user)
-{
-	txtTweakPathCol->setCaption((user ? "User" : "Original"));
-	txtTweakPathCol->setTextColour(user ? Colour(1,1,0.5) : Colour(0.5,1,1));
-}
-
-void CGui::TweakColLoad()
-{
-	bool user = true;
-	std::string name = "/trees/collisions.xml",  // user
-		file = PATHMANAGER::DataUser() + name;
-	if (!PATHMANAGER::FileExists(file))  // original
-	{	file = PATHMANAGER::Data() + name;  user = false;  }
-
-	std::ifstream fi(file.c_str());
-	String text = "", s;
-	while (getline(fi,s))
-		text += s + "\n";
-	fi.close();
-
-	text = StringUtil::replaceAll(text, "#", "##");
-	//text = StringUtil::replaceAll(text, "#E5F4FF", "");  //!
-	edTweakCol->setCaption(UString(text));
-	
-	TweakColUpd(user);
-		
-	MyGUI::InputManager::getInstance().resetKeyFocusWidget();
-	MyGUI::InputManager::getInstance().setKeyFocusWidget(edTweakCol);
-}
-
-void CGui::btnTweakColSave(WP){	TweakColSave();  }
-
-
-///  Tweak read / save file
-//-----------------------------------------------------------------------------------------
-void CGui::TweakToggle()
-{
-	//  window
-	bool vis = !app->mWndTweak->getVisible();
-	app->mWndTweak->setVisible(vis);
-
-	std::string path, pathUser, pathUserDir;
-	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0]);
-	
-	//  load  if car changed
-	static string lastPath = "";
-	if (lastPath != path || app->ctrl)  // force reload  ctrl-alt-Z
-	{	lastPath = path;
-		TweakCarLoad();
-		TweakColLoad();
-	}
-	
-	//  save and reload  shift-alt-Z
-	if (!vis && app->shift)
-	if (tabTweak && tabTweak->getIndexSelected() < 2)
-		TweakCarSave();
-	else
-		TweakColSave();
-}
-
-void CGui::tabCarEdChng(MyGUI::TabPtr, size_t id)
-{
-	pSet->car_ed_tab = id;
-}
-
-
-//  Get car file path
-bool CGui::GetCarPath(std::string* pathCar,
-	std::string* pathSave, std::string* pathSaveDir,
-	std::string carname, /*std::string tweakSetup,*/ bool forceOrig)
-{
-	std::string file = carname + ".car",
-		pathOrig  = PATHMANAGER::CarSim()          + "/" + pSet->game.sim_mode + "/cars/" + file,
-		pathUserD = PATHMANAGER::DataUser() + "/carsim/" + pSet->game.sim_mode + "/cars/",
-		pathUser  = pathUserD + file;                          // (tweakSetup != "" ? tweakSetup+"/" : "")
-
-	if (pathSave)  *pathSave = pathUser;
-	if (pathSaveDir)  *pathSaveDir = pathUserD;
-	
-	if (!forceOrig && PATHMANAGER::FileExists(pathUser))
-	{
-		*pathCar = pathUser;
-		return true;
-	}
-	*pathCar = pathOrig;
-	return false;
 }

@@ -133,6 +133,9 @@ public:
 	void tabCarEdChng(Tab, size_t);
 
 	Ed edTweakTireSet;  void editTweakTireSet(Ed);
+	Li liTwkTiresUser, liTwkTiresOrig;
+	void listTwkTiresUser(Li, size_t), listTwkTiresOrig(Li, size_t);
+	void btnTweakTireLoad(WP), btnTweakTireLoadRef(WP);
 
 	void TweakToggle();
 	void TweakCarSave(),TweakCarLoad(), TweakTireSave();

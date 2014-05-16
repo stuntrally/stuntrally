@@ -528,22 +528,29 @@ void CGui::InitGui()
 	sv= &svTE_xpow;	sv->Init("TE_xpow",	&pSet->te_xf_pow, 1.f, 2.f, 1.f, 1,3);	sv->DefaultF(1.f);
 
 
-	///  tweak  ----
+	///  tweak car  ----
 	for (int i=0; i < ciEdCar; ++i)
 		edCar[i] = fEd("EdCar"+toStr(i));
-	edTweakCol = fEd("TweakEditCol");
 	edPerfTest = fEd("TweakPerfTest");
 	tabEdCar = fTab("TabEdCar");  Tev(tabEdCar, CarEdChng);  tabEdCar->setIndexSelected(pSet->car_ed_tab);
 
-	tabTweak = fTab("TabTweak");
+	tabTweak = fTab("TabTweak");  /**/tabTweak->setIndexSelected(1);
 	txtTweakPath = fTxt("TweakPath");
-	txtTweakPathCol = fTxt("TweakPathCol");
-	txtTweakTire = fTxt("TweakTireSaved");
+	Btn("TweakCarSave", btnTweakCarSave);
 
-	Btn("TweakCarSave", btnTweakCarSave);  Btn("TweakTireSave", btnTweakTireSave);
+	edTweakCol = fEd("TweakEditCol");
+	txtTweakPathCol = fTxt("TweakPathCol");
 	Btn("TweakColSave", btnTweakColSave);
 
+	///  tweak tires
+	Btn("TweakTireSave", btnTweakTireSave);
+	txtTweakTire = fTxt("TweakTireTxtSaved");
 	Edt(edTweakTireSet, "TweakTireSet", editTweakTireSet);
+
+	liTwkTiresUser = fLi("TweakTiresUser");  Lev(liTwkTiresUser, TwkTiresUser);
+	liTwkTiresOrig = fLi("TweakTiresOrig");  Lev(liTwkTiresOrig, TwkTiresOrig);
+	Btn("TweakTireLoad",    btnTweakTireLoad);
+	Btn("TweakTireLoadRef", btnTweakTireLoadRef);
 
 
 	///  input tab  -------

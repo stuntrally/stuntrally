@@ -706,7 +706,7 @@ void CHud::Update(int carId, float time)
 			m->position(0,-1,0);  m->colour(cb);
 			m->position(0, 1,0);  m->colour(cb);
 			
-			//  tire combine
+			//  tire, before combine
 			Real lx = off ? 0.f : t.preFy/z*zy,  ly = off ? 0.f : t.preFx/z;
 			for (int y=-1; y<=1; ++y)
 			for (int x=-1; x<=1; ++x)  {
