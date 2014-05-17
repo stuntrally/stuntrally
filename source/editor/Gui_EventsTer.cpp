@@ -552,7 +552,7 @@ void CGui::UpdSurfInfo()
 	txtSuBumpWave->setCaption(fToStr(su.bumpWaveLength, 1,3));
 	txtSuBumpAmp->setCaption(fToStr(su.bumpAmplitude, 2,4));
 	txtSuRollDrag->setCaption(fToStr(su.rollingDrag, 1,3));
-	txtSuFrict->setCaption(fToStr(su.frictionTread, 2,4));
+	txtSuFrict->setCaption(fToStr(su.friction, 2,4));
 	txtSurfType->setCaption(csTRKsurf[su.type]);
 }
 
@@ -586,23 +586,14 @@ bool App::LoadAllSurfaces()
 		surf.setType(id);
 		
 		float temp = 0.0;
-		param.GetParam(*section + ".BumpWaveLength", temp);
-		surf.bumpWaveLength = temp;
+		param.GetParam(*section + ".BumpWaveLength", temp);		surf.bumpWaveLength = temp;
+		param.GetParam(*section + ".BumpAmplitude", temp);		surf.bumpAmplitude = temp;
+
+		//frictionX, frictionY, bumpWaveLength2, bumpAmplitude2, not shown ..
+		param.GetParam(*section + ".FrictionTread", temp);		surf.friction = temp;
 		
-		param.GetParam(*section + ".BumpAmplitude", temp);
-		surf.bumpAmplitude = temp;
-		
-		//param.GetParam(*section + ".FrictionNonTread", temp);  //not used
-		//surf.frictionNonTread = temp;
-		
-		param.GetParam(*section + ".FrictionTread", temp);
-		surf.frictionTread = temp;
-		
-		if (param.GetParam(*section + ".RollResistance", temp))
-			surf.rollingResist = temp;
-		
-		param.GetParam(*section + ".RollingDrag", temp);
-		surf.rollingDrag = temp;
+		if (param.GetParam(*section + ".RollResistance", temp))	surf.rollingResist = temp;
+		param.GetParam(*section + ".RollingDrag", temp);		surf.rollingDrag = temp;
 
 		///---  Tire  ---
 		std::string tireFile;
