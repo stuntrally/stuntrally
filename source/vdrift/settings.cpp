@@ -63,6 +63,12 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.local_players", gui.local_players); Param(c,w, "game.num_laps", gui.num_laps);
 	Param(c,w, "game.start_order", gui.start_order);	Param(c,w, "game.split_vertically", split_vertically);
 	
+	//  graphs
+	Param(c,w, "graphs.tc_r", tc_r);			Param(c,w, "graphs.tc_xr", tc_xr);
+	Param(c,w, "graphs.te_yf", te_yf);			Param(c,w, "graphs.te_xf_pow", te_xf_pow);
+	Param(c,w, "graphs.te_xfx", te_xfx);		Param(c,w, "graphs.te_xfy", te_xfy);
+
+	
 	//  hud
 	Param(c,w, "hud_show.fps", show_fps);				Param(c,w, "hud_show.mph", show_mph);
 	Param(c,w, "hud_show.gauges", show_gauges);			Param(c,w, "hud_show.show_digits", show_digits);
@@ -208,6 +214,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,lightmap_size(0) //-
 	,grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(true), imposters_only(false)
 	,particles(true), trails(true), particles_len(1.f), trails_len(1.f), boost_fov(true)
+
 	//  car
 	,autoshift(1), autorear(1), rear_inv(1), show_mph(0)
 	//  misc
@@ -230,6 +237,10 @@ SETTINGS::SETTINGS()   ///  Defaults
 	//  sim
 	,game_fq(82.f), blt_fq(160.f), blt_iter(24), dyn_iter(30)
 	,multi_thr(0), thread_sleep(5), perf_speed(100000)
+	//  graphs
+	,tc_r(6000), tc_xr(1.f)
+	,te_yf(7000), te_xf_pow(1.0), te_xfy(160), te_xfx(12)
+
 	//  sound
 	,vol_master(1.f), vol_engine(0.6f), vol_tires(1.f), vol_env(1.f), vol_susp(1.f)
 	,vol_fl_splash(1.f),vol_fl_cont(1.f), vol_car_crash(1.f),vol_car_scrap(1.f)

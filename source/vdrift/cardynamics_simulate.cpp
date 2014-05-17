@@ -164,8 +164,8 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::ApplyTireForce(int i, const Dbl normal_force, con
 	Dbl patch_speed = wheel.GetAngularVelocity() * wheel.GetRadius();
 
 	//  friction force in tire space
-	//Dbl friction_coeff = tire.GetTread() * surface.frictionTread + (1.0 - tire.GetTread()) * surface.frictionNonTread;
-	Dbl friction_coeff = surface.frictionTread;
+	//Dbl friction_coeff = tire.GetTread() * surface.friction + (1.0 - tire.GetTread()) * surface.frictionNonTread;
+	Dbl friction_coeff = surface.friction;
 	//Dbl roll_friction_coeff = surface.rollResistanceCoefficient;
 	MATHVECTOR<Dbl,3> friction_force(0);
 	if (friction_coeff > 0)
@@ -173,6 +173,10 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::ApplyTireForce(int i, const Dbl normal_force, con
 			normal_force, friction_coeff, //roll_friction_coeff,
 			hub_velocity, patch_speed, camber_rad, &wheel.slips);
 
+	///  multipliers x,y test
+	friction_force[0] *= surface.frictionX;
+	friction_force[1] *= surface.frictionY;
+	
 	//  set force feedback (aligning torque in tire space)
 	wheel.SetFeedback(friction_force[2]);
 

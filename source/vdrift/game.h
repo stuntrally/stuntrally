@@ -104,6 +104,7 @@ public:
 	// todo: move outside of GAME..
 	std::vector <CARTIRE> tires;  /// New  all tires
 	std::map <std::string, int> tires_map;  // name to tires id
+	bool LoadTire(CARTIRE& ct, std::string path, std::string& file);
 	bool LoadTires();
 
 	std::vector <TRACKSURFACE> surfaces;  /// New  all surfaces

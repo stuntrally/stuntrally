@@ -95,12 +95,10 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 	if (Fz > 30)
 		Fz = 30;
 
-	//std::cout << normal_force << std::endl;
 	const Dbl EPSILON = 1e-6;
 	if (Fz < EPSILON)
 	{
 		MATHVECTOR<Dbl,3> zero(0);
-		//std::cout << "Tire off ground detected: " << normal_force << ", " << Fz << std::endl;
 		return zero;
 	}
 
@@ -110,9 +108,9 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 
 	Dbl V = hub_velocity[0];
 
-	Dbl denom = std::max ( std::abs ( V ), 0.1 );
+	Dbl denom = std::max ( std::abs ( V ), 0.01 );
 
-	sigma = ( patch_speed - V ) /denom;
+	sigma = ( patch_speed - V ) / denom;
 
 	tan_alpha = hub_velocity[1] / denom;
 
@@ -122,7 +120,8 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 	if (isnan(alpha) || isnan(1.f/sigma_hat))
 	{
 		MATHVECTOR<Dbl,3> outvec(0, 0, 0);
-		return outvec;	}
+		return outvec;
+	}
 	
 	assert(!isnan(alpha));
 
@@ -131,28 +130,34 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 	//beckman method for pre-combining longitudinal and lateral forces
 	Dbl s = sigma / sigma_hat;
 	assert(!isnan(s));
+
 	Dbl a = alpha / alpha_hat;
 	assert(!isnan(a));
-	Dbl rho = std::max ( sqrt ( s*s+a*a ), 0.0001); //the constant is arbitrary; just trying to avoid divide-by-zero
+
+	Dbl rho = std::max( sqrt( s*s+a*a ), 0.0001); //avoid divide by zero
 	assert(!isnan(rho));
 
 	Dbl max_Fx(0);
-	Dbl Fx = ( s / rho ) *Pacejka_Fx ( rho*sigma_hat, Fz, friction_coeff, max_Fx );
-	//std::cout << "s=" << s << ", rho=" << rho << ", sigma_hat=" << sigma_hat << ", Fz=" << Fz << ", friction_coeff=" << friction_coeff << ", Fx=" << Fx << std::endl;
+	Dbl Fx = (s / rho) * Pacejka_Fx( rho*sigma_hat, Fz, friction_coeff, max_Fx );
 	assert(!isnan(Fx));
-	Dbl max_Fy(0);
-	Dbl Fy = ( a / rho ) *Pacejka_Fy ( rho*alpha_hat, Fz, gamma, friction_coeff, max_Fy );
-	//std::cout << "s=" << s << ", a=" << a << ", rho=" << rho << ", Fy=" << Fy << std::endl;
-	assert(!isnan(Fy));
-	Dbl max_Mz(0);
-	Dbl Mz = Pacejka_Mz ( sigma, alpha, Fz, gamma, friction_coeff, max_Mz );
 
+	Dbl max_Fy(0);
+	Dbl Fy = (a / rho) * Pacejka_Fy( rho*alpha_hat, Fz, gamma, friction_coeff, max_Fy );
+	assert(!isnan(Fy));
+
+	Dbl max_Mz(0);
+	Dbl Mz = Pacejka_Mz( sigma, alpha, Fz, gamma, friction_coeff, max_Mz );
+
+	if (slips)  // out vis
+	{
+		slips->preFx = Fx;
+		slips->preFy = Fy;
+	}
 	//Dbl slip_x = -sigma / ( 1.0 + generic_abs ( sigma ) );
 	//Dbl slip_y = tan_alpha / ( 1.0+generic_abs ( sigma-1.0 ) );
 	//Dbl total_slip = std::sqrt ( slip_x * slip_x + slip_y * slip_y );
 
 	//Dbl maxforce = longitudinal_parameters[2] * 7.0;
-	//std::cout << maxforce << ", " << max_Fx << ", " << max_Fy << ", " << Fx << ", " << Fy << std::endl;
 
 	//combining method 0: no combining
 
@@ -221,10 +226,14 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 		slips->slip  = alpha;
 		slips->slideratio = s;
 		slips->slipratio  = a;
-		slips->Fx  = Fx;
-		slips->Fxm = max_Fx;
-		slips->Fy  = Fy;
-		slips->Fym = max_Fy;
+		slips->fx_sr = s / rho;  slips->fx_rsr = rho*sigma_hat;
+		slips->fy_ar = a / rho;  slips->fy_rar = rho*alpha_hat;
+		slips->frict = friction_coeff;
+		//Dbl Fx = (s / rho) * Pacejka_Fx( rho*sigma_hat, Fz, friction_coeff, max_Fx );
+		//Dbl Fy = (a / rho) * Pacejka_Fy( rho*alpha_hat, Fz, gamma, friction_coeff, max_Fy );
+		slips->Fx = Fx;  slips->Fxm = max_Fx;
+		slips->Fy = Fy;  slips->Fym = max_Fy;
+		slips->Fz = Fz;
 	}
 
 	//std::cout << slide << ", " << slip << std::endl;
@@ -406,6 +415,8 @@ Dbl CARTIRE::GetOptimumSteeringAngle(Dbl load) const
 		s.aligning[i++] = -1.029;
 		s.aligning[i++] = 0.27;
 		s.aligning[i++] = -1.1;
+		s.name = "None";
+		s.user = 0;
 
 		s.CalculateSigmaHatAlphaHat();
 	}

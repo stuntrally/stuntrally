@@ -34,6 +34,7 @@ public:
 	static std::string TracksUser() {      return user_data + "/tracks"; }
 
 	static std::string CarSim() {          return game_data + "/carsim"; }
+	static std::string CarSimU() {         return user_data + "/data/carsim"; }
 	static std::string Cars() {            return game_data + "/cars"; }
 
 	static std::string Replays() {         return user_data + "/replays"; }

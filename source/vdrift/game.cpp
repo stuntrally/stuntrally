@@ -97,7 +97,13 @@ bool GAME::LoadAllSurfaces()
 	surfaces.clear();
 	surf_map.clear();
 
-	string path = PATHMANAGER::CarSim() + "/" + settings->game.sim_mode + "/surfaces.cfg";
+	string path, file = "/" + settings->game.sim_mode + "/surfaces.cfg";
+	path = PATHMANAGER::CarSimU() + file;
+	if (!PATHMANAGER::FileExists(path))  // user or orig
+		path = PATHMANAGER::CarSim() + file;
+	else
+		info_output << "Using user surfaces" << endl;
+	
 	CONFIGFILE param;
 	if (!param.Load(path))
 	{
@@ -118,24 +124,19 @@ bool GAME::LoadAllSurfaces()
 		//-assert(indexnum >= 0 && indexnum < (int)tracksurfaces.size());
 		surf.setType(id);
 		
-		float temp = 0.0;
-		param.GetParam(*section + ".BumpWaveLength", temp, error_output);
-		surf.bumpWaveLength = temp;
+		float f = 0.f;
+		param.GetParam(*section + ".BumpWaveLength", f, error_output);	surf.bumpWaveLength = f;
+		param.GetParam(*section + ".BumpAmplitude", f, error_output);	surf.bumpAmplitude = f;
+		if (param.GetParam(*section + ".BumpWaveLength2", f, error_output))	surf.bumpWaveLength2 = f;
+		if (param.GetParam(*section + ".BumpAmplitude2", f, error_output))	surf.bumpAmplitude2 = f;
 		
-		param.GetParam(*section + ".BumpAmplitude", temp, error_output);
-		surf.bumpAmplitude = temp;
+		param.GetParam(*section + ".FrictionTread", f, error_output);	surf.friction = f;
+		if (param.GetParam(*section + ".FrictionX", f, error_output))	surf.frictionX = f;
+		if (param.GetParam(*section + ".FrictionY", f, error_output))	surf.frictionY = f;
 		
-		//param.GetParam(*section + ".FrictionNonTread", temp, error_output);  //not used
-		//surf.frictionNonTread = temp;
-		
-		param.GetParam(*section + ".FrictionTread", temp, error_output);
-		surf.frictionTread = temp;
-		
-		if (param.GetParam(*section + ".RollResistance", temp))
-			surf.rollingResist = temp;
-		
-		param.GetParam(*section + ".RollingDrag", temp, error_output);
-		surf.rollingDrag = temp;
+		if (param.GetParam(*section + ".RollResistance", f))			surf.rollingResist = f;
+		param.GetParam(*section + ".RollingDrag", f, error_output);		surf.rollingDrag = f;
+
 
 		///---  Tire  ---
 		string tireFile;
@@ -148,7 +149,7 @@ bool GAME::LoadAllSurfaces()
 		id = tires_map[tireFile]-1;
 		if (id == -1)
 		{	id = 0;
-			error_output << "Surface: Tire id not found in map, using 0." << endl;
+			error_output << "Surface: Tire id not found in map, using 0, " << tireFile << endl;
 		}
 		//error_output << "Tires size: " << pGame->tires.size() << endl;
 		surf.tire = &tires[id];
@@ -162,62 +163,79 @@ bool GAME::LoadAllSurfaces()
 	return true;
 }
 
-///  Tires  all in data/cars/_tires/*.tire
+
+///  Tires  all in data/carsim/normal/tires/*.tire
 //------------------------------------------------------------------------------------------------------------------------------
+bool GAME::LoadTire(CARTIRE& ct, string path, string& file)
+{
+	CONFIGFILE c;
+	if (!c.Load(path+"/"+file))
+	{	error_output << "Error loading tire file " << file << "\n";
+		return false;
+	}
+	file = file.substr(0, file.length()-5);  // no ext .tire
+	float value;
+
+	for (int i = 0; i < 15; ++i)
+	{
+		int numinfile = i;
+		if (i == 11)		numinfile = 111;
+		else if (i == 12)	numinfile = 112;
+		else if (i > 12)	numinfile -= 1;
+		stringstream str;  str << "params.a" << numinfile;
+		if (!c.GetParam(str.str(), value, error_output))  return false;
+		ct.lateral[i] = value;
+	}
+	for (int i = 0; i < 11; ++i)
+	{
+		stringstream str;  str << "params.b" << i;
+		if (!c.GetParam(str.str(), value, error_output))  return false;
+		ct.longitudinal[i] = value;
+	}
+	for (int i = 0; i < 18; ++i)
+	{
+		stringstream str;  str << "params.c" << i;
+		if (!c.GetParam(str.str(), value, error_output))  return false;
+		ct.aligning[i] = value;
+	}
+	ct.name = file;
+	ct.CalculateSigmaHatAlphaHat();
+	return true;
+}
+
 bool GAME::LoadTires()
 {
 	tires.clear();
 	tires_map.clear();
 	
-	string path = PATHMANAGER::CarSim() + "/" + settings->game.sim_mode + "/tires";
-	list <string> li;
-	PATHMANAGER::DirList(path, li);
-	for (list <string>::iterator i = li.begin(); i != li.end(); ++i)
+	//  load from both user and orig dirs
+	for (int u=0; u < 2; ++u)
 	{
-		string file = *i;
-		if (file.find(".tire") != string::npos)
+		string path = u == 1 ? PATHMANAGER::CarSimU() : PATHMANAGER::CarSim();
+		path += "/" + settings->game.sim_mode + "/tires";
+		list <string> li;
+		PATHMANAGER::DirList(path, li);
+
+		for (list <string>::iterator i = li.begin(); i != li.end(); ++i)
 		{
-			CONFIGFILE c;
-			if (!c.Load(path+"/"+file))
-			{	error_output << "Error loading tire file " << file << "\n";
-				return false;  }
-
-			file = file.substr(0, file.length()-5);
-			CARTIRE ct;  float value;
-
-			for (int i = 0; i < 15; ++i)
+			string file = *i;
+			if (file.find(".tire") != string::npos)
 			{
-				int numinfile = i;
-				if (i == 11)		numinfile = 111;
-				else if (i == 12)	numinfile = 112;
-				else if (i > 12)	numinfile -= 1;
-				stringstream str;  str << "params.a" << numinfile;
-				if (!c.GetParam(str.str(), value, error_output))  return false;
-				ct.lateral[i] = value;
+				CARTIRE ct;
+				ct.user = u;
+				if (LoadTire(ct, path, file))
+				{
+					tires.push_back(ct);
+					tires_map[file] = (int)tires.size();  //+1, 0 = not found
+					TRACKSURFACE::pTireDefault = &ct;  //-
+				}else
+					LogO("Error Loading tire: "+file);
 			}
-			for (int i = 0; i < 11; ++i)
-			{
-				stringstream str;  str << "params.b" << i;
-				if (!c.GetParam(str.str(), value, error_output))  return false;
-				ct.longitudinal[i] = value;
-			}
-			for (int i = 0; i < 18; ++i)
-			{
-				stringstream str;  str << "params.c" << i;
-				if (!c.GetParam(str.str(), value, error_output))  return false;
-				ct.aligning[i] = value;
-			}
-			ct.CalculateSigmaHatAlphaHat();
-
-			
-			tires.push_back(ct);
-			tires_map[file] = (int)tires.size();  //+1, 0 = not found
-			TRACKSURFACE::pTireDefault = &ct;  //-
-		}
-	}
+	}	}
 	return true;
 }
 CARTIRE* TRACKSURFACE::pTireDefault = 0;  //-
+
 
 ///  Suspension factors
 //------------------------------------------------------------------------------------------------------------------------------

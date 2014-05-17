@@ -1,0 +1,249 @@
+drive = AWD
+version = 2
+# all positions have x,y,z dir going + to: right, front, up
+
+[ steering ]
+max-angle = 26
+angular-damping = 0.0
+
+[ rot_drag ]
+roll  = 200.0
+pitch = 400.0
+yaw   = 500.0
+yaw2  = 2.0
+
+[ flares ]
+brake-pos0 = 0.60,-2.12, -0.02
+brake-pos1 =-0.60,-2.12, -0.02
+brake-size = 0.46
+brake-color = 1, 0, 0
+
+[ model_ofs ]
+rot_fix = on
+boost-z = 0.07
+boost-y = -0.6
+exhaust-x = 2.2
+exhaust-y = 0.45
+exhaust-z = 0.56
+exhaust-mirror-second = 0
+
+
+#  collision shape params
+#---------------------------
+[ collision ]
+com_ofs_H = 0.0
+radius = 0.304
+width = 0.67
+height = 0.64
+posLrear = -1.80
+posLfront = 1.95
+offsetL = -0.22
+offsetW = 0.03
+offsetH = 0.22
+start-offsetY = 0.79
+fluidTrigH = -0.1
+friction = 0.4
+
+
+#  engine
+#---------------------------
+[ engine ]
+position = 0.0, 1.33, 0.44
+mass = 180.0
+rpm-limit = 6300
+inertia = 0.30
+start-rpm = 1000
+stall-rpm = 400
+fuel-consumption = 1e-9
+friction = 230
+torque-val-mul = 0.75
+torque-curve-00 = 1000, 355
+torque-curve-01 = 1500, 410
+torque-curve-02 = 2000, 450
+torque-curve-03 = 2500, 500
+torque-curve-04 = 3000, 555
+torque-curve-05 = 3500, 623
+torque-curve-06 = 4000, 644
+torque-curve-07 = 4500, 625
+torque-curve-08 = 5000, 579
+torque-curve-09 = 5500, 530
+torque-curve-10 = 6000, 493
+torque-curve-11 = 6500, 461
+torque-curve-12 = 7000, 440
+real-pow-tq-mul = 1.2
+
+[ clutch ]
+max-torque-mul = 1.1
+
+#  gearbox
+#---------------------------
+[ transmission ]
+gears = 6
+gear-ratio-r = -3.045
+gear-ratio-1 = 3.384
+gear-ratio-2 = 1.913
+gear-ratio-3 = 1.258
+gear-ratio-4 = 0.918
+gear-ratio-5 = 0.731
+gear-ratio-6 = 0.561
+shift-delay = 0.14
+
+[ differential ]
+final-drive = 8.3
+anti-slip = 600.0
+
+[ fuel-tank ]
+position = -0.17, -0.26, -0.56 
+capacity = 60.0
+volume = 60.0
+fuel-density = 1.0
+
+
+#  suspension
+#---------------------------
+[ suspension-front ]
+spring-constant = 62000
+bounce = 11000
+rebound = 8000
+travel = 0.62
+camber = -1.33
+caster = 6.12
+toe = 0.0
+anti-roll = 10000
+factors-file = first
+
+[ suspension-rear ]
+spring-constant = 58000
+bounce = 11000
+rebound = 8000
+travel = 0.62
+camber = -0.45
+caster = 0.28
+toe = 0.0
+anti-roll = 8000
+factors-file = first
+
+
+#  tires (more in .tire)
+#---------------------------
+[ tire-both ]
+radius = 0.41
+rolling-resistance = 1.3e-2, 6.5e-6
+rotational-inertia = 2.1
+tread = 0.0
+width-trail = 0.3
+
+
+#  brakes
+#---------------------------
+[ brakes-front ]
+friction = 0.93
+max-pressure = 3.2e6
+bias = 0.60
+radius = 0.18
+area = 0.014
+
+[ brakes-rear ]
+friction = 0.93
+max-pressure = 3.2e6
+bias = 0.40
+radius = 0.18
+area = 0.014
+handbrake = 4.1
+
+
+[ driver ]
+position = 0.35, -0.13, 0.05
+mass = 50.0
+view-position = -0.07, -0.50, 0.49
+hood-position = -0.58, 0, 0.52
+
+
+#  aerodynamics
+#---------------------------
+[ drag ]
+position = 0.0, 0.0, 0.2
+frontal-area = 2
+drag-coefficient = 0.3
+
+[ wing-front ]
+position = 0.0, 1.9, 0.20
+frontal-area = 0.1
+drag-coefficient = 0.0
+surface-area = 0.7
+lift-coefficient = -4.0
+efficiency = 0.94
+
+[ wing-rear ]
+position = 0.0, -1.7, 0.30
+frontal-area = 0.05
+drag-coefficient = 0.0
+surface-area = 0.5
+lift-coefficient = -5.3
+efficiency = 0.94
+
+
+# wheels front (position and suspension mount)
+#---------------------------
+[ wheel-FR ]
+position = 0.78, 1.47, -0.6
+roll-height = 0.95
+mass = 40
+restitution = 0.1
+
+[ suspension-FR ]
+position = 0.70, 1.47, -0.2
+hinge = -3.70, 1.1, -0.43
+
+[ wheel-FL ]
+position = -0.78, 1.47, -0.6
+roll-height = 0.95
+mass = 40
+restitution = 0.1
+
+[ suspension-FL ]
+position = -0.70, 1.47, -0.2
+hinge = 3.70, 1.1, -0.43
+
+
+# wheels rear (position and suspension mount)
+#---------------------------
+[ wheel-RR ]
+position = 0.78, -1.38, -0.6
+roll-height = 0.95
+mass = 40
+restitution = 0.1
+
+[ suspension-RR ]
+position = 0.70, -1.38, -0.2
+hinge = -3.70, -1.0, -0.43
+
+[ wheel-RL ]
+position = -0.78, -1.38, -0.6
+roll-height = 0.95
+mass = 40
+restitution = 0.1
+
+[ suspension-RL ]
+position = -0.70, -1.38, -0.2
+hinge = 3.70, -1.0, -0.43
+
+
+# used to calculate the weight distribution and balance
+# (for car total mass and inertia) also use engine mass and position
+#---------------------------
+[ particle-00 ]  # rear
+mass = 400.0
+position =  1.0,-1.3, 0.1
+
+[ particle-01 ]
+mass = 400.0
+position = -1.0,-1.3, 0.1
+
+[ particle-02 ]  # front
+mass = 400.0
+position =  1.0, 1.3, 0.1
+
+[ particle-03 ]
+mass = 400.0
+position = -1.0, 1.3, 0.1

@@ -497,8 +497,8 @@ void CHud::Create()
 
 			moTireVis[i] = m;
 			ndTireVis[i] = rt->createChildSceneNode();  ndTireVis[i]->attachObject(moTireVis[i]);
-			ndTireVis[i]->setPosition((i%2 ? 1.f :-1.f) * 0.14f - 0.7f,
-									  (i/2 ?-1.f : 1.f) * 0.22f - 0.5f, 0.f);
+			ndTireVis[i]->setPosition((i%2 ? 1.f :-1.f) * 0.13f - 0.7f,
+									  (i/2 ?-1.f : 1.f) * 0.22f - 0.6f, 0.f);
 			const Real s = 0.06f;  // par
 			ndTireVis[i]->setScale(s, s*asp, 1.f);
 	}	}

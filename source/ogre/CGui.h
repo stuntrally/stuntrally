@@ -132,20 +132,33 @@ public:
 	Tab tabTweak, tabEdCar;
 	void tabCarEdChng(Tab, size_t);
 
-	Cmb cmbTweakCarSet, cmbTweakTireSet;
-	void CmbTweakCarSet(CMB), CmbTweakTireSet(CMB);
-	void CmbEdTweakCarSet(Ed), CmbEdTweakTireSet(Ed);
+	///  tire
+	Ed edTweakTireSet;  void editTweakTireSet(Ed);
+	Li liTwkTiresUser, liTwkTiresOrig;
+	void listTwkTiresUser(Li, size_t), listTwkTiresOrig(Li, size_t);
+	void btnTweakTireLoad(WP), btnTweakTireLoadRef(WP);
+	void FillTweakLists();
+	
+	///  surface
+	Li liTwkSurfaces;  void listTwkSurfaces(Li, size_t);
+	int idTwkSurf;  void btnTwkSurfPick(WP), updSld_TwkSurf(int id);
+	SV svSuFrict, svSuFrictX, svSuFrictY, svSuRollDrag, svSuRollRes;
+	SV svSuBumpWave, svSuBumpAmp, svSuBumpWave2, svSuBumpAmp2;
+	Cmb cmbSurfTire, cmbSurfType;  void comboSurfTire(CMB), comboSurfType(CMB);
 
 	void TweakToggle();
 	void TweakCarSave(),TweakCarLoad(), TweakTireSave();
+
 	void TweakColUpd(bool user), TweakColLoad(),TweakColSave();
+
+	const static Ogre::String csLateral[15][2], csLongit[13][2], csAlign[18][2], sCommon;
 
 	void btnTweakCarSave(WP),  btnTweakCarLoad(WP);
 	void btnTweakTireSave(WP), btnTweakColSave(WP);
 
 	bool GetCarPath(std::string* pathCar/*out*/,
 		std::string* pathSave/*=0*/, std::string* pathSaveDir/*=0*/,
-		std::string carname, /*std::string tweakSetup="",*/ bool forceOrig=false);
+		std::string carname, bool forceOrig=false);
 
 	//  graphs
 	Cmb cmbGraphs;  void comboGraphs(CMB);  Txt valGraphsType;
@@ -193,6 +206,10 @@ public:
 	//  Times, opp
 	Ck ckTimes;
 	Ck ckOpponents, ckOppSort;
+
+	//  graphs
+	SV svTC_r, svTC_xr;
+	SV svTE_yf, svTE_xfx, svTE_xfy, svTE_xpow;
 	
 	//  Hud dbg,other
 	Ck ckFps;  CK(Wireframe);
@@ -255,8 +272,10 @@ public:
 	Btn bRkmh, bRmph;  // km/h, mph
 	void radKmh(WP), radMph(WP);
 
-	Btn bRsimEasy, bRsimNorm;  // sim easy, normal
-	void radSimEasy(WP), radSimNorm(WP);  bool bReloadSim;
+	Btn bRsimEasy, bRsimNorm, bRsimHard;  // sim mode
+	void radSimEasy(WP), radSimNorm(WP), radSimHard(WP);
+	void setSimMode(std::string mode);
+	bool bReloadSim;
 
 	//  [Game] setup
 	Ck ckVegetCollis, ckCarCollis, ckRoadWCollis, ckDynamicObjs;
@@ -327,6 +346,7 @@ public:
 		txCarSpeed, txCarType,
 		txCarAuthor,txTrackAuthor;
 	void UpdCarStatsTxt();
+	std::vector<Ogre::String> vsu; //CarStatsUnits
 
 	Img imgCar;  Ed carDesc;
 	Cmb cmbBoost, cmbFlip, cmbDamage, cmbRewind;

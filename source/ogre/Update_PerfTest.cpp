@@ -19,7 +19,7 @@ void App::PerfLogVel(CAR* pCar, float time)
 		//<< ", clu " << fToStr(pCar->GetClutch(), 1,4)
 		//<< ", sli " << fToStr(pCar->dynamics.tire[0].slide, 1,4)
 		//<< ", slp " << fToStr(pCar->dynamics.tire[1].slip, 1,4)
-		//<< ", f " << pCar->GetWheelContact(WHEEL_POSITION(0)).surface->frictionTread
+		//<< ", f " << pCar->GetWheelContact(WHEEL_POSITION(0)).surface->friction
 		// !... downforce, drag
 		<< std::endl;
 }

@@ -17,7 +17,7 @@ CGui::CGui(App* app1)
 	//  view
 	,bRkmh(0),bRmph(0)
 	//  car
-	, bRsimEasy(0), bRsimNorm(0), bReloadSim(true)
+	, bRsimEasy(0), bRsimNorm(0), bRsimHard(0), bReloadSim(true)
 	,valRplNumViewports(0)
 	//  setup
 	, iTireSet(0)
@@ -68,8 +68,10 @@ CGui::CGui(App* app1)
 	//  other
 	,edPerfTest(0),edTweakCol(0)
 	,tabTweak(0),tabEdCar(0)
-	,txtTweakPath(0),cmbTweakCarSet(0)
-	,cmbTweakTireSet(0),txtTweakTire(0)
+	,txtTweakPath(0)
+	,edTweakTireSet(0),txtTweakTire(0)
+	,liTwkTiresUser(0),liTwkTiresOrig(0)
+	, idTwkSurf(-1), liTwkSurfaces(0)
 	,txtTweakPathCol(0)
 	, loadReadme(1)
 	, iCurCar(0)

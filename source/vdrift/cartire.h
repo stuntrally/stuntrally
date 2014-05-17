@@ -20,6 +20,8 @@ public:
 	std::vector <Dbl> alpha_hat;	///< maximum grip in the lateral direction
 
 	// no variables - 1 tire for all wheels
+	std::string name;  // .tire file for info
+	int user;  // 1user/0orig file
 
 	void FindSigmaHatAlphaHat(Dbl load, Dbl & output_sigmahat, Dbl & output_alphahat, int iterations = 400);
 
@@ -30,6 +32,7 @@ public:
 		longitudinal.resize(11, 0.0);
 		lateral.resize(15, 0.0);
 		aligning.resize(18, 0.0);
+		user = 0;
 	}
 	
 	void LookupSigmaHatAlphaHat(Dbl normalforce, Dbl & sh, Dbl & ah) const;

@@ -269,11 +269,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain.lib OgreTerrain.lib OgrePaging.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib enet.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib ws2_32.lib winmm.lib"
+				AdditionalDependencies="SDL2.lib libvorbisfile.lib OgreMain.lib OgreOverlay.lib OgreTerrain.lib OgrePaging.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib BulletFileLoader.lib BulletWorldImporter.lib ws2_32.lib winmm.lib"
 				OutputFile="StuntRally_rd.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\RelWithDebInfo;c:\v\ogre\Dependencies\lib\Release;c:\v\mygui\bin\lib\Release;&quot;c:\v\bullet\bullet-2.79\bin\lib\Release&quot;;&quot;c:\v\SDL2-2.0.0\lib\Release&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Release&quot;;&quot;c:\v\libogg-1.3.0\lib\Release&quot;"
+				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Release;c:\v\ogre\Dependencies\lib\Release;c:\v\mygui\bin\lib\Release;&quot;c:\v\bullet\bullet-2.79\bin\lib\Release&quot;;&quot;c:\v\SDL2-2.0.0\lib\Release&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Release&quot;;&quot;c:\v\libogg-1.3.0\lib\Release&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="StuntRally_rd.pdb"

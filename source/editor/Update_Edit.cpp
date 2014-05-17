@@ -350,8 +350,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		Txt *stTxt = gui->stTxt;
 		Vector3 p;  if (ndCar)  p = ndCar->getPosition();
 		stTxt[0]->setCaption("");
-		stTxt[1]->setCaption("width "+fToStr(road->vStBoxDim.z,1,4));
-		stTxt[2]->setCaption("height "+fToStr(road->vStBoxDim.y,1,4));
+		stTxt[1]->setCaption(TR("#{Road_Width} ")+fToStr(road->vStBoxDim.z,1,4));
+		stTxt[2]->setCaption(TR("#{Road_Height} ")+fToStr(road->vStBoxDim.y,1,4));
 		stTxt[3]->setCaption("road dir "+ (road->iDir == 1 ? String("+1") : String("-1")) );
 
 		//  edit
@@ -373,7 +373,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 				if (flTxt[i])  flTxt[i]->setCaption("");
 		}else
 		{	FluidBox& fb = scn->sc->fluids[iFlCur];
-			flTxt[0]->setCaption("Cur/All:  "+toStr(iFlCur+1)+" / "+toStr(scn->sc->fluids.size()));
+			flTxt[0]->setCaption(TR("#{Road_Cur}/#{RplAll}")+":  "+toStr(iFlCur+1)+" / "+toStr(scn->sc->fluids.size()));
 			flTxt[1]->setCaption(fb.name);
 			flTxt[2]->setCaption("Pos:  "+fToStr(fb.pos.x,1,4)+" "+fToStr(fb.pos.y,1,4)+" "+fToStr(fb.pos.z,1,4));
 			flTxt[3]->setCaption("");

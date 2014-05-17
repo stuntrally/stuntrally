@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "common/Def_Str.h"
 #include "CGame.h"
+#include "CGui.h"
 #include "../vdrift/game.h"
 #include "../vdrift/car.h"
 #include "common/data/SceneXml.h"
@@ -49,6 +50,7 @@ void App::CreateGraphs()
 {
 	if (!graphs.empty())  return;
 	SceneManager* scm = mSplitMgr->mGuiSceneMgr;
+	bool tireEdit = false;
 
 	switch (pSet->graphs_type)
 	{
@@ -208,20 +210,27 @@ void App::CreateGraphs()
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
 		}
-		{	//  edit vals area
-			GraphView* gv = new GraphView(scm,mWindow,mGui);
-			gv->Create(1, "graphA6", 0.4f);  gv->CreateTitle("", 5+1, 0.f, -2, 24, 30/*, true*/);
-			gv->SetSize(0.73f, 0.48f, 0.07f, 0.44f);
-			gv->SetVisible(pSet->show_graphs);
-			graphs.push_back(gv);
+		tireEdit = true;
+		break;
 
-			//  vals descr
-			gv = new GraphView(scm,mWindow,mGui);
-			gv->Create(1, "graphB6", 0.3f);  gv->CreateTitle("", 5+8, 0.f, -2, 24, 30/*, true*/);
-			gv->SetSize(0.80f, 0.48f, 0.20f, 0.44f);
+	case Gh_Tires4Edit:  /// all tires pacejka vis,edit
+		for (int i=0; i < TireNG*2; ++i)
+		{
+			GraphView* gv = new GraphView(scm,mWindow,mGui);
+			int c = 2;  bool b = i >= TireNG;
+			gv->Create(TireLenG, String("graph")+(b?"B":"A")+toStr(c), b ? 0.f : 0.3f, true);
+			gv->CreateGrid(6,6, 0.2f, 0.4f);
+			if (b)	gv->CreateTitle("", 5+8+1 +2, 0.f, -2, 24);
+			else	gv->CreateTitle("", 5+1   +2, 1.f,-2, 24);
+			
+			const float sx = 0.175f, sy = 0.245f, m = 1.f; //0.97f;
+			gv->SetSize((i%2   == 0 ? 0.f : sx),
+						(i/2%2 == 1 ? 0.f : sy) + 0.41f, sx*m, sy*m);
+
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
 		}
+		tireEdit = true;
 		break;
 	
 
@@ -311,6 +320,23 @@ void App::CreateGraphs()
 	default:
 		break;
 	}
+
+	if (tireEdit)
+	{
+		//  edit vals area
+		GraphView* gv = new GraphView(scm,mWindow,mGui);
+		gv->Create(1, "graphA6", 0.4f);  gv->CreateTitle("", 5+1, 0.f, -2, 24, 30/*, true*/);
+		gv->SetSize(0.73f, 0.48f, 0.07f, 0.44f);
+		gv->SetVisible(pSet->show_graphs);
+		graphs.push_back(gv);
+
+		//  vals descr
+		gv = new GraphView(scm,mWindow,mGui);
+		gv->Create(1, "graphB6", 0.3f);  gv->CreateTitle("", 5+8, 0.f, -2, 24, 30/*, true*/);
+		gv->SetSize(0.80f, 0.48f, 0.20f, 0.44f);
+		gv->SetVisible(pSet->show_graphs);
+		graphs.push_back(gv);
+	}
 }
 
 ///  add new Values to graphs (each frame)
@@ -357,11 +383,21 @@ void App::GraphsNewVals()				// Game
 	}
 }
 
+
+
 //-----------------------------------------------------------------------------------
 void CAR::GraphsNewVals(double dt)		 // CAR
 {	
 	size_t gsi = pApp->graphs.size();
-	if (pApp->pSet->graphs_type != Gh_TireEdit)
+	bool tireEdit = false;
+
+	//  RANGE  gui sld ..
+	//const Dbl fMAX = 9000.0, max_y = 80.0, max_x = 1.0;
+	//const Dbl fMAX = 7000.0, max_y = 180.0, max_x = 12.0, pow_x = 1.0;
+	//const Dbl fMAX = 7000.0, max_y = 5080.0, max_x = 502.0, pow_x = 5.5;
+	Dbl fMAX = pSet->te_yf, max_y = pSet->te_xfy, max_x = pSet->te_xfx, pow_x = pSet->te_xf_pow;
+	if (pApp->scn->sc->asphalt)  max_y *= 0.5;
+
 	switch (pApp->pSet->graphs_type)
 	{
 	case Gh_BulletHit:  /// bullet hit  force,normvel, sndnum,scrap,screech
@@ -560,8 +596,8 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			pApp->graphs[i]->AddVal(d);
 		}	break;
 		
-	}
-	else  ///Gh_TireEdit:  /// tire pacejka
+
+	case Gh_TireEdit:  /// tire pacejka
 	//. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 	{	static int ii = 0;  ++ii;  // skip upd cntr
 		const int im = pApp->iUpdTireGr > 0 ? 2 : 8;  // faster when editing val
@@ -574,8 +610,6 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			Dbl fmin, fmax, frng, maxF;
 			const bool common = 1;  // common range for all
 			const bool cust = 1;
-			//  RANGE  gui sld ..
-			const Dbl fMAX = 9000.0, max_y = pApp->scn->sc->asphalt ? 40.0 : 80.0, max_x = 1.0;
 
 			///  Fy lateral --
 			for (int i=0; i < TireNG; ++i)
@@ -585,9 +619,8 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
 				
 				for (int x=0; x < TireLenG; ++x)
-				{
-					//Dbl yy = max_y * 2.0 * (x-LEN*0.5) / LEN;
-					Dbl yy = max_y * x / TireLenG;
+				{	Dbl x0 = Dbl(x) / TireLenG;	 //Dbl yy = max_y * 2.0 * (x-LEN*0.5) / LEN;
+					Dbl yy = max_y * pow(x0, pow_x);
 					Dbl n = (TireNG-1-i+1) * 0.65;
 					Dbl fy = !pApp->iTireLoad ? tire->Pacejka_Fy(yy, n, 0, 1.0, maxF)  // normF
 											: tire->Pacejka_Fy(yy, 3, n-2, 1.0, maxF); // camber
@@ -607,10 +640,8 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				pApp->graphs[i]->SetUpdate();
 
 				if (i==0)
-					pApp->graphs[i]->UpdTitle("Fy Lateral--\n"  //#33FF77
-						//"min: "+fToStr((float)fmin,2,4)+"\n"+
-						"max y "+fToStr((float)fmax,0,1)+
-						"  x "+fToStr(max_y,0,1)+"\n");
+					pApp->graphs[i]->UpdTitle("Fy Lateral--\n"
+						"max y "+fToStr((float)fmax,0,1)+"  x "+fToStr(max_y,0,1)+"\n");
 			}
 
 			///  Fx long |
@@ -621,9 +652,8 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
 				
 				for (int x=0; x < TireLenG; ++x)
-				{
-					//Dbl xx = max_x * 2.0 * (x-LEN*0.5) / LEN;
-					Dbl xx = max_x * x / TireLenG;
+				{	Dbl x0 = Dbl(x) / TireLenG;
+					Dbl xx = max_x * pow(x0, pow_x);
 					Dbl n = (TireNG-1-i+1) * 0.65;
 					Dbl fx = pApp->iEdTire != 2 ? tire->Pacejka_Fx(xx, n, 1.0, maxF)  // normF
 							 : (!pApp->iTireLoad ? tire->Pacejka_Mz(xx, 0, n, 0.0, 1.0, maxF)    // align- norm
@@ -645,135 +675,161 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 
 				if (i==0)
 					pApp->graphs[i+TireNG]->UpdTitle("Fx Longit |\n"
-						//"min: "+fToStr((float)fmin,2,4)+"\n"+
-						"max y "+fToStr((float)fmax,0,1)+
-						"  x "+fToStr(max_x,0,1)+"\n");
+						"max y "+fToStr((float)fmax,0,1)+"  x "+fToStr(max_x,0,1)+"\n");
 			}
 			delete[]ft;
-			
-			//  update edit values text and descr
-			///----------------------------------------------------
-			const static String sLateral[15][2] = {
-				"  a0","#F0FFFFShape factor",
-				"  a1","#C0E0FFLoad infl. on friction coeff",
-				"  a2","#F0FFFFLateral friction coeff at load = 0",
-				"  a3","#F0FFFFMaximum stiffness",
-				"  a4","#F0FFFFLoad at maximum stiffness",
-				"  a5","#C0E0FF-Camber infl. on stiffness",
-				"  a6","Curvature change with load",
-				"  a7","Curvature at load = 0",
-				"  a8","#A0C0D0  -Horiz. shift because of camber",
-				"  a9","  Load infl. on horizontal shift",
-				" a10","  Horizontal shift at load = 0",
-				"a111","  -Camber infl. on vertical shift",
-				"a112","  -Camber infl. on vertical shift",
-				" a12","  Load infl. on vertical shift",
-				" a13","  Vertical shift at load = 0" };
-			const static String sLongit[13][2] = {
-				"  b0","#FFFFF0Shape factor",
-				"  b1","#F0F0A0Load infl. on long. friction coeff",
-				"  b2","#FFFFF0Longit. friction coeff at load = 0",
-				"  b3","#F0F0A0Curvature factor of stiffness",
-				"  b4","#F0F0A0Change of stiffness with load at load = 0",
-				"  b5","#E0C080Change of progressivity/load",  //of stiffness
-				"  b6","Curvature change with load^2",
-				"  b7","Curvature change with load",
-				"  b8","Curvature at load = 0",
-				"  b9","#D0D0A0  Load infl. on horizontal shift",
-				" b10","  Horizontal shift at load = 0",
-				" b11","  Load infl. on vertical shift",
-				" b12","  Vertical shift at load = 0" };
-			const static String sAlign[18][2] = {
-				" c0","#E0FFE0Shape factor",
-				" c1","Load infl. of peak value",
-				" c2","Load infl. of peak value",
-				" c3","Curvature factor of stiffness",
-				" c4","Change of stiffness with load at load = 0",
-				" c5","Change of progressivity/load",
-				" c6","-Camber infl. on stiffness",
-				" c7","Curvature change with load",
-				" c8","Curvature change with load",
-				" c9","Curvature at load = 0",
-				"c10","-Camber infl. of stiffness",
-				"c11","  -Camber infl. on horizontal shift",
-				"c12","  Load infl. on horizontal shift",
-				"c13","  Horizontal shift at load = 0",
-				"c14","  -Camber infl. on vertical shift",
-				"c15","  -Camber infl. on vertical shift",
-				"c16","  Load infl. on vertical shift",
-				"c17","  Vertical shift at load = 0" };
-			const static String sCommon = "#C8C8F0Pacejka's Magic Formula coeffs\n";
-
-			String ss,sd;
-			if (pApp->iEdTire == 0)
-			{
-				ss += "#A0F0FF--Lateral--\n";  sd += sCommon;
-				for (int i=0; i < tire->lateral.size(); ++i)
-				{
-					//ss += (i == pApp->iCurLat) ? "." : "  ";
-					float f = tire->lateral[i];
-					char p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
-					bool cur = (i == pApp->iCurLat);
-
-					ss += cur ? "#A0EEFF" : "#E0FFFF";
-					ss += sLateral[i][0] +" "+ fToStr(f, p,5);
-					ss += cur ? "  <\n" : "\n";
-					sd += sLateral[i][1] +"\n";
-				}
-
-				ss += "\n#C0F0F0alpha hat\n";
-				//for (int a=0; a < tire->alpha_hat.size(); ++a)
-				//	ss += "  "+fToStr( tire->alpha_hat[a], 3,5) + "\n";
-
-				int z = (int)tire->alpha_hat.size()-1;
-				ss += "  "+fToStr( tire->alpha_hat[0], 3,5) + "\n";
-				ss += "  "+fToStr( tire->alpha_hat[z/2], 3,5) + "\n";
-				ss += "  "+fToStr( tire->alpha_hat[z], 3,5) + "\n";
-			}
-			else if (pApp->iEdTire == 1)
-			{
-				ss += "#FFFF70| Longit |\n";  sd += sCommon;
-				for (int i=0; i < tire->longitudinal.size(); ++i)
-				{
-					//ss += (i == pApp->iCurLong) ? "." : "  ";
-					float f = tire->longitudinal[i];
-					char p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
-					bool cur = (i == pApp->iCurLong);
-
-					ss += cur ? "#FFE090" : "#FFFFD0";
-					ss += sLongit[i][0] +" "+ fToStr(f, p,5);
-					ss += cur ? "  <\n" : "\n";
-					sd += sLongit[i][1] +"\n";
-				}
-
-				ss += "\n#F0F0C0sigma hat\n";
-				//for (int a=0; a < tire->sigma_hat.size(); ++a)
-				//	ss += "  "+fToStr( tire->sigma_hat[a], 3,5) + "\n";
-
-				int z = (int)tire->sigma_hat.size()-1;
-				ss += "  "+fToStr( tire->sigma_hat[0], 3,5) + "\n";
-				ss += "  "+fToStr( tire->sigma_hat[z/2], 3,5) + "\n";
-				ss += "  "+fToStr( tire->sigma_hat[z], 3,5) + "\n";
-			}
-			else //if (pApp->iEdTire == 2)
-			{
-				ss += "#D0FFD0o Align o\n";  sd += sCommon;
-				for (int i=0; i < tire->aligning.size(); ++i)
-				{
-					float f = tire->aligning[i];
-					char p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
-					bool cur = (i == pApp->iCurAlign);
-
-					ss += cur ? "#80FF80" : "#E0FFE0";
-					ss += sAlign[i][0] +" "+ fToStr(f, p,5);
-					ss += cur ? "  <\n" : "\n";
-					sd += sAlign[i][1] +"\n";
-				}
-			}
-			
-			pApp->graphs[gsi-2]->UpdTitle(ss);
-			pApp->graphs[gsi-1]->UpdTitle(sd);
-			pApp->graphs[2]->UpdTitle(TireVar[pApp->iTireLoad]); //-
 		}
+	}	tireEdit = true;
+	break;
+	
+	case Gh_Tires4Edit:  /// all tires pacejka vis, edit
+	//. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+	{	static int ii = 0;  ++ii;  // skip upd cntr
+		const int im = 1;  //pApp->iUpdTireGr > 0 ? 2 : 8;  // faster when editing val
+		if (ii >= im && gsi >= TireNG*2)
+		{	ii = 0;  pApp->iUpdTireGr = 0;
+
+			Dbl* ft = new Dbl[TireLenG];
+
+			Dbl fmin, fmax, frng, maxF;
+			const bool common = 1;  // common range for all
+			const bool cust = 1;
+
+			///  Fy lateral --  ........
+			for (int i=0; i < TireNG; ++i)
+			{
+				WHEEL_POSITION wp = (WHEEL_POSITION)i;
+				const CARTIRE* tire = dynamics.GetTire(wp);
+				const CARWHEEL& wh = dynamics.GetWheel(wp);
+				const CARWHEEL::SlideSlip& t = wh.slips;
+
+				bool comi = common || i == 0;
+				if (comi)
+				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
+				
+				Dbl yyo=0;
+				for (int x=0; x < TireLenG; ++x)
+				{	Dbl x0 = Dbl(x) / TireLenG;
+					Dbl yy = max_y * pow(x0, pow_x);
+					Dbl fy = fabs(t.fy_ar * tire->Pacejka_Fy(yy, t.Fz, t.gamma, t.frict, maxF));
+
+					if (t.fy_rar > yyo && t.fy_rar <= yy)
+						fy = 0.0;  // cur mark |
+					yyo = yy;
+
+					ft[x] = fy;
+					if (comi)  // get min, max
+					{	if (fy < fmin)  fmin = fy;
+						if (fy > fmax)  fmax = fy;  }
+				}
+				if (comi)  // get range
+					frng = 1.0 / (fmax - fmin);
+				if (cust)
+				{	fmax = fMAX;  fmin = 0.0;  frng = 1.0 / (fmax - fmin);  }
+				
+				for (int x = 0; x < TireLenG; ++x)
+					pApp->graphs[i]->AddVal( (ft[x] - fmin) * frng );
+				pApp->graphs[i]->SetUpdate();
+
+				if (i==0)
+					pApp->graphs[i]->UpdTitle("Fy Lateral --   "
+						/*"max y "+fToStr((float)fmax,0,1)+"  x "+fToStr(max_y,0,1)+"\n"/**/);
+			}
+
+			///  Fx long |  ........
+			for (int i=0; i < TireNG; ++i)
+			{
+				WHEEL_POSITION wp = (WHEEL_POSITION)i;
+				const CARTIRE* tire = dynamics.GetTire(wp);
+				const CARWHEEL& wh = dynamics.GetWheel(wp);
+				const CARWHEEL::SlideSlip& t = wh.slips;
+
+				bool comi = common || i == 0;
+				if (comi)
+				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
+				
+				Dbl xxo=0;
+				for (int x=0; x < TireLenG; ++x)
+				{	Dbl x0 = Dbl(x) / TireLenG;
+					Dbl xx = max_x * pow(x0, pow_x);
+					Dbl fx = fabs(t.fx_sr * tire->Pacejka_Fx(xx, t.Fz, t.frict, maxF));
+
+					if (t.fx_rsr > xxo && t.fx_rsr <= xx)
+						fx = 0.0;  // cur mark |
+					xxo = xx;
+
+					ft[x] = fx;
+					if (comi)  // get min, max
+					{	if (fx < fmin)  fmin = fx;
+						if (fx > fmax)  fmax = fx;  }
+				}
+				if (comi)  // get range
+					frng = 1.0 / (fmax - fmin);
+				if (cust)
+				{	fmax = fMAX;  fmin = 0.0;  frng = 1.0 / (fmax - fmin);  }
+				
+				for (int x = 0; x < TireLenG; ++x)
+					pApp->graphs[i+TireNG]->AddVal( (ft[x] - fmin) * frng );
+				pApp->graphs[i+TireNG]->SetUpdate();
+
+				if (i==0)
+					pApp->graphs[i+TireNG]->UpdTitle("Fx Longit |   "
+						/*"max y "+fToStr((float)fmax,0,1)+"  x "+fToStr(max_x,0,1)+"\n"/**/);
+			}
+			delete[]ft;
+		}
+	}	tireEdit = true;
+	break;
+	}
+
+	if (tireEdit)
+	{	const CGui* g = pApp->gui;
+		const CARTIRE* tire = dynamics.GetTire(FRONT_LEFT);
+		String ss,sd;
+		if (pApp->iEdTire == 0)
+		{
+			ss += "#A0F0FF--Lateral--\n";  sd += g->sCommon;
+			for (int i=0; i < tire->lateral.size(); ++i)
+			{
+				float f = tire->lateral[i];
+				char p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
+				bool cur = (i == pApp->iCurLat);
+
+				ss += cur ? "#A0EEFF" : "#E0FFFF";
+				ss += g->csLateral[i][0] +" "+ fToStr(f, p,5);
+				ss += cur ? "  <\n" : "\n";
+				sd += g->csLateral[i][1] +"\n";
+			}
+
+			ss += "\n#C0F0F0alpha hat\n";
+			int z = (int)tire->alpha_hat.size()-1;
+			ss += "  "+fToStr( tire->alpha_hat[0], 3,5) + "\n";
+			ss += "  "+fToStr( tire->alpha_hat[z/2], 3,5) + "\n";
+			ss += "  "+fToStr( tire->alpha_hat[z], 3,5) + "\n";
+		}
+		else if (pApp->iEdTire == 1)
+		{
+			ss += "#FFFF70| Longit |\n";  sd += g->sCommon;
+			for (int i=0; i < tire->longitudinal.size(); ++i)
+			{
+				float f = tire->longitudinal[i];
+				char p = f > 100 ? 0 : (f > 10 ? 1 : (f > 1 ? 2 : 3));
+				bool cur = (i == pApp->iCurLong);
+
+				ss += cur ? "#FFE090" : "#FFFFD0";
+				ss += g->csLongit[i][0] +" "+ fToStr(f, p,5);
+				ss += cur ? "  <\n" : "\n";
+				sd += g->csLongit[i][1] +"\n";
+			}
+
+			ss += "\n#F0F0C0sigma hat\n";
+			int z = (int)tire->sigma_hat.size()-1;
+			ss += "  "+fToStr( tire->sigma_hat[0], 3,5) + "\n";
+			ss += "  "+fToStr( tire->sigma_hat[z/2], 3,5) + "\n";
+			ss += "  "+fToStr( tire->sigma_hat[z], 3,5) + "\n";
+		}
+		
+		pApp->graphs[gsi-2]->UpdTitle(ss);
+		pApp->graphs[gsi-1]->UpdTitle(sd);
 	}
 }

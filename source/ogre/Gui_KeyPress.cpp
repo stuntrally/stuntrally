@@ -130,7 +130,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 
 	/// tire edit
-	if (pSet->graphs_type == Gh_TireEdit && !tweak)
+	if (pSet->graphs_type == Gh_TireEdit || pSet->graphs_type == Gh_Tires4Edit && !tweak)
 	{
 		int& iCL = iEdTire==1 ? iCurLong : (iEdTire==0 ? iCurLat : iCurAlign);
 		int iCnt = iEdTire==1 ? 11 : (iEdTire==0 ? 15 : 18);

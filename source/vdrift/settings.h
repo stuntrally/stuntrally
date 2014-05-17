@@ -11,7 +11,7 @@ enum eGraphType  {
 	Gh_Sound,
 	Gh_Suspension,
 	Gh_TireSlips,
-	Gh_TireEdit,
+	Gh_TireEdit, Gh_Tires4Edit,
 	Gh_Diffs,
 	Gh_TorqueCurve, Gh_Engine,
 	Gh_Clutch,
@@ -22,7 +22,7 @@ const static std::string csGraphNames[Gh_ALL] = {
 	"Sound volume & pan, wave",
 	"Suspension pos & vel",
 	"Tires slip| & slide-",
-	"Tire Edit (Pacejka coeffs)*",
+	"Tire Edit (Pacejka coeffs)*", "All Tires Pacejka vis and edit*",
 	"Differentials",
 	"Torque Curve, gears", "Engine torque & power",
 	"Clutch, Rpm, Gear" };
@@ -59,6 +59,7 @@ public:
 	int tracks_view, tracks_sort, cars_sort,
 		tut_type, champ_type, chall_type, car_ed_tab;
 
+
 	//  graphics common
 	int preset;  // last set, info only
 	int anisotropy, tex_filt, tex_size, ter_mtr, ter_tripl;  bool bFog;
@@ -78,6 +79,7 @@ public:
 	bool particles, trails;
 	float particles_len, trails_len;
 	bool boost_fov;
+
 
 	//---------------  car setup
 	bool abs[2], tcs[2],  // [2] = 0 gravel 1 asphalt
@@ -117,6 +119,7 @@ public:
 	}  game,  // current game, changed only on new game start
 		gui;  // gui only config
 	//---------------
+
 	
 	//  misc
 	bool isMain;  int inMenu;  // last menu id
@@ -137,6 +140,11 @@ public:
 	//  sim freq (1/interval timestep)
 	float game_fq, blt_fq,  perf_speed;
 	int blt_iter, dyn_iter,  multi_thr, thread_sleep;
+	
+	//  graphs vis
+	float tc_r, tc_xr;  // tire circles max
+	float te_yf, te_xfx, te_xfy, te_xf_pow;  // tire edit max
+
 	
 	//  effects
 	bool all_effects, bloom, blur, hdr;
