@@ -771,7 +771,6 @@
 	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
 	<Tag name="TipGrassSwaySpd">Ruohikon huojunnan nopeus.</Tag>
 	<Tag name="MaterialProperties">Materiaalin ominaisuudet</Tag>
-	<Tag name="FrictionTread">FrictionTread</Tag>
 	<Tag name="HeightmapSize">Korkeuskartan koko</Tag>
 	<Tag name="TipToggleLayer">Kytke valittu tekstuurikerros päälle/pois.</Tag>
 	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
@@ -1031,6 +1030,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
+	<Tag name="SimModeHard">Hard (difficult)</Tag>
+	<Tag name="RollingResist">Rolling Resistance</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
