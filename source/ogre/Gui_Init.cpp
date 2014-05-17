@@ -33,6 +33,7 @@ void CGui::InitGui()
 
 	if (!mGui)  return;
 	Ogre::Timer ti;
+	int i;
 
 
 	//  new widgets
@@ -74,14 +75,14 @@ void CGui::InitGui()
 
 	//  get sub tabs
 	vSubTabsGame.clear();
-	for (size_t i=0; i < app->mWndTabsGame->getItemCount(); ++i)
+	for (i=0; i < app->mWndTabsGame->getItemCount(); ++i)
 	{	// todo: startsWith("SubTab")..
 		sub = (Tab)app->mWndTabsGame->getItemAt(i)->findWidget(
 			i==TAB_Champs ? "ChampType" : (i==TAB_Multi ? "tabsNet" : "tabPlayer") );
 		vSubTabsGame.push_back(sub);  // 0 for not found
 	}
 	vSubTabsOpts.clear();
-	for (size_t i=0; i < app->mWndTabsOpts->getItemCount(); ++i)
+	for (i=0; i < app->mWndTabsOpts->getItemCount(); ++i)
 	{
 		sub = (Tab)app->mWndTabsOpts->getItemAt(i)->findWidget(
 			i==TABo_Input ? "InputTab" : "SubTab");
@@ -128,7 +129,7 @@ void CGui::InitGui()
 	Cmb(cmb, "CmbGraphsType", comboGraphs);  cmbGraphs = cmb;
 	if (cmb)
 	{	cmb->removeAllItems();
-		for (int i=0; i < Gh_ALL; ++i)
+		for (i=0; i < Gh_ALL; ++i)
 			cmb->addItem(csGraphNames[i]);
 		cmb->setIndexSelected(pSet->graphs_type);
 	}
@@ -143,7 +144,7 @@ void CGui::InitGui()
 	sv= &svReflSkip;	sv->Init("ReflSkip",	&pSet->refl_skip,    0,1000, 2.f);  sv->DefaultI(0);
 	sv= &svReflFaces;	sv->Init("ReflFaces",	&pSet->refl_faces,   1,6);  sv->DefaultI(1);
 	sv= &svReflSize;
-		for (int i=0; i < ciShadowSizesNum; ++i)  sv->strMap[i] = toStr(ciShadowSizesA[i]);
+		for (i=0; i < ciShadowSizesNum; ++i)  sv->strMap[i] = toStr(ciShadowSizesA[i]);
 						sv->Init("ReflSize",	&pSet->refl_size,    0,ciShadowSizesNum-1);  sv->DefaultI(1.5f);
 
 	sv= &svReflDist;	sv->Init("ReflDist",	&pSet->refl_dist,   20.f,1500.f, 2.f, 0,4, 1.f," m");
@@ -423,7 +424,7 @@ void CGui::InitGui()
 	{0.83,0.31,0.31, 0.0, 0.6}, {0.91,0.40,0.37, 0.0, 1.0}, {0.20,0.40,0.37, 0.05,1.0},  // orng-white-
 	{0.24,0.90,0.26, 0.04,0.8}, {0.28,0.57,0.17, 0.3, 1.0}, {0.27,0.38,0.23, 0.03,0.6},  // dark violet
 	};
-	for (int i=0; i < clrBtn; ++i)
+	for (i=0; i < clrBtn; ++i)
 	{
 		Img img = fImg("carClr"+toStr(i));
 		Real h = hsv[i][0], s = hsv[i][1], v = hsv[i][2], g = hsv[i][3], r = hsv[i][4];
@@ -528,8 +529,9 @@ void CGui::InitGui()
 	sv= &svTE_xpow;	sv->Init("TE_xpow",	&pSet->te_xf_pow, 1.f, 2.f, 1.f, 1,3);	sv->DefaultF(1.f);
 
 
-	///  tweak car  ----
-	for (int i=0; i < ciEdCar; ++i)
+	///  tweak car
+	//------------------------------------------------------------
+	for (i=0; i < ciEdCar; ++i)
 		edCar[i] = fEd("EdCar"+toStr(i));
 	edPerfTest = fEd("TweakPerfTest");
 	tabEdCar = fTab("TabEdCar");  Tev(tabEdCar, CarEdChng);  tabEdCar->setIndexSelected(pSet->car_ed_tab);
@@ -542,7 +544,8 @@ void CGui::InitGui()
 	txtTweakPathCol = fTxt("TweakPathCol");
 	Btn("TweakColSave", btnTweakColSave);
 
-	///  tweak tires
+
+	///  tweak tires  ----
 	Btn("TweakTireSave", btnTweakTireSave);
 	txtTweakTire = fTxt("TweakTireTxtSaved");
 	Edt(edTweakTireSet, "TweakTireSet", editTweakTireSet);
@@ -551,6 +554,28 @@ void CGui::InitGui()
 	liTwkTiresOrig = fLi("TweakTiresOrig");  Lev(liTwkTiresOrig, TwkTiresOrig);
 	Btn("TweakTireLoad",    btnTweakTireLoad);
 	Btn("TweakTireLoadRef", btnTweakTireLoadRef);
+
+	///  tweak surfaces  ----
+	liTwkSurfaces = fLi("TweakSurfaces");  Lev(liTwkSurfaces, TwkSurfaces);
+	//<Widget type="ComboBox" name="TweakSurface">
+	Btn("TweakSurfPickWh", btnTwkSurfPick);
+	sv= &svSuFrict;		sv->Init("SuFrict",     &f, 0.f, 1.5f,  1.0f, 2,4);	sv->DefaultF(0.65f);
+	sv= &svSuFrictX;	sv->Init("SuFrictX",    &f, 0.f, 1.5f,  1.0f, 2,4);	sv->DefaultF(1.f);
+	sv= &svSuFrictY;	sv->Init("SuFrictY",    &f, 0.f, 1.5f,  1.0f, 2,4);	sv->DefaultF(1.f);
+	sv= &svSuBumpWave;	sv->Init("SuBumpWave",	&f, 0.f, 50.f,  1.2f, 1,4);	sv->DefaultF(20.f);
+	sv= &svSuBumpAmp;	sv->Init("SuBumpAmp",	&f, 0.f, 0.4f,  1.0f, 2,4);	sv->DefaultF(0.15f);
+	sv= &svSuBumpWave2;	sv->Init("SuBumpWave2",	&f, 0.f, 50.f,  1.2f, 1,4);	sv->DefaultF(20.f);
+	sv= &svSuBumpAmp2;	sv->Init("SuBumpAmp2",	&f, 0.f, 0.4f,  1.0f, 2,4);	sv->DefaultF(0.15f);
+	sv= &svSuRollDrag;	sv->Init("SuRollDrag",	&f, 0.f, 200.f,  2.f, 0,3);	sv->DefaultF(60.f);
+	sv= &svSuRollRes;	sv->Init("SuRollRes",	&f, 0.f, 200.f,  2.f, 0,3);	sv->DefaultF(1.f);
+	//TODO: <Widget type="Button" name="TweakSurfSave">
+	
+	Cmb(cmb, "CmbSuTire", comboSurfTire);  cmbSurfTire = cmb;
+	Cmb(cmb, "CmbSuType", comboSurfType);  cmbSurfType = cmb;
+	cmb->removeAllItems();
+	for (i=0; i < TRACKSURFACE::NumTypes; ++i)
+		cmb->addItem(csTRKsurf[i]);
+		
 
 
 	///  input tab  -------
@@ -608,7 +633,7 @@ void CGui::InitGui()
 	//<UserString key="RelativeTo" value="OptionsWnd"/>
 
     //  new game
-    for (int i=1; i<=3; ++i)
+    for (i=1; i<=3; ++i)
     {	Btn("NewGame"+toStr(i), btnNewGame);  if (i==2)  btNewGameCar = btn;  }
 
 	//  championships
@@ -625,7 +650,7 @@ void CGui::InitGui()
 	gcom->initMiniPos(1);
 
 	//  track stats text
-	int i, st = gcom->StTrk;
+	int st = gcom->StTrk;
 	for (i=0; i < st; ++i)   gcom->stTrk[1][i] = fTxt("2st"+toStr(i));
 	for (i=0; i < 4; ++i)  gcom->imStTrk[1][i] = fImg("2ist"+toStr(i));
 	for (i=0; i < gcom->InfTrk; ++i)

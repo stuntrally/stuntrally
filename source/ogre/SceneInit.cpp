@@ -268,6 +268,10 @@ void App::LoadGame()  // 2
 	if (gui->bReloadSim)
 	{	gui->bReloadSim = false;
 		pGame->ReloadSimData();
+
+		static bool f1 = true;
+		if (f1) {  f1 = false;
+			gui->updSld_TwkSurf(0);  }
 	}
 	
 	//  load scene.xml - default if not found

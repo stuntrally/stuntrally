@@ -124,24 +124,18 @@ bool GAME::LoadAllSurfaces()
 		//-assert(indexnum >= 0 && indexnum < (int)tracksurfaces.size());
 		surf.setType(id);
 		
-		float temp = 0.0;
-		param.GetParam(*section + ".BumpWaveLength", temp, error_output);
-		surf.bumpWaveLength = temp;
+		float f = 0.f;
+		param.GetParam(*section + ".BumpWaveLength", f, error_output);	surf.bumpWaveLength = f;
+		param.GetParam(*section + ".BumpAmplitude", f, error_output);	surf.bumpAmplitude = f;
+		if (param.GetParam(*section + ".BumpWaveLength2", f, error_output))	surf.bumpWaveLength2 = f;
+		if (param.GetParam(*section + ".BumpAmplitude2", f, error_output))	surf.bumpAmplitude2 = f;
 		
-		param.GetParam(*section + ".BumpAmplitude", temp, error_output);
-		surf.bumpAmplitude = temp;
+		param.GetParam(*section + ".FrictionTread", f, error_output);	surf.friction = f;
+		if (param.GetParam(*section + ".FrictionX", f, error_output))	surf.frictionX = f;
+		if (param.GetParam(*section + ".FrictionY", f, error_output))	surf.frictionY = f;
 		
-		//param.GetParam(*section + ".FrictionNonTread", temp, error_output);  //not used
-		//surf.frictionNonTread = temp;
-		
-		param.GetParam(*section + ".FrictionTread", temp, error_output);
-		surf.frictionTread = temp;
-		
-		if (param.GetParam(*section + ".RollResistance", temp))
-			surf.rollingResist = temp;
-		
-		param.GetParam(*section + ".RollingDrag", temp, error_output);
-		surf.rollingDrag = temp;
+		if (param.GetParam(*section + ".RollResistance", f))			surf.rollingResist = f;
+		param.GetParam(*section + ".RollingDrag", f, error_output);		surf.rollingDrag = f;
 
 
 		///---  Tire  ---
@@ -204,6 +198,7 @@ bool GAME::LoadTire(CARTIRE& ct, string path, string& file)
 		if (!c.GetParam(str.str(), value, error_output))  return false;
 		ct.aligning[i] = value;
 	}
+	ct.name = file;
 	ct.CalculateSigmaHatAlphaHat();
 	return true;
 }
@@ -227,6 +222,7 @@ bool GAME::LoadTires()
 			if (file.find(".tire") != string::npos)
 			{
 				CARTIRE ct;
+				ct.user = u;
 				if (LoadTire(ct, path, file))
 				{
 					tires.push_back(ct);

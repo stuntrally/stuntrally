@@ -415,6 +415,8 @@ Dbl CARTIRE::GetOptimumSteeringAngle(Dbl load) const
 		s.aligning[i++] = -1.029;
 		s.aligning[i++] = 0.27;
 		s.aligning[i++] = -1.1;
+		s.name = "None";
+		s.user = 0;
 
 		s.CalculateSigmaHatAlphaHat();
 	}

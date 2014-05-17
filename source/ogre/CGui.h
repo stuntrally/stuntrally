@@ -132,10 +132,19 @@ public:
 	Tab tabTweak, tabEdCar;
 	void tabCarEdChng(Tab, size_t);
 
+	///  tire
 	Ed edTweakTireSet;  void editTweakTireSet(Ed);
 	Li liTwkTiresUser, liTwkTiresOrig;
 	void listTwkTiresUser(Li, size_t), listTwkTiresOrig(Li, size_t);
 	void btnTweakTireLoad(WP), btnTweakTireLoadRef(WP);
+	void FillTweakLists();
+	
+	///  surface
+	Li liTwkSurfaces;  void listTwkSurfaces(Li, size_t);
+	int idTwkSurf;  void btnTwkSurfPick(WP), updSld_TwkSurf(int id);
+	SV svSuFrict, svSuFrictX, svSuFrictY, svSuRollDrag, svSuRollRes;
+	SV svSuBumpWave, svSuBumpAmp, svSuBumpWave2, svSuBumpAmp2;
+	Cmb cmbSurfTire, cmbSurfType;  void comboSurfTire(CMB), comboSurfType(CMB);
 
 	void TweakToggle();
 	void TweakCarSave(),TweakCarLoad(), TweakTireSave();
@@ -149,7 +158,7 @@ public:
 
 	bool GetCarPath(std::string* pathCar/*out*/,
 		std::string* pathSave/*=0*/, std::string* pathSaveDir/*=0*/,
-		std::string carname, /*std::string tweakSetup="",*/ bool forceOrig=false);
+		std::string carname, bool forceOrig=false);
 
 	//  graphs
 	Cmb cmbGraphs;  void comboGraphs(CMB);  Txt valGraphsType;

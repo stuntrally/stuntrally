@@ -581,7 +581,7 @@ void CarModel::UpdWhTerMtr()
 				"  " + tsu->name + " " + csTRKsurf[tsu->type] + //" [" + lay.texFile + "] " +
 				"\n      "+ tsu->tireName + "\n     "+
 				" dr " + fToStr(tsu->rollingDrag, 0,3) + " rr " + fToStr(tsu->rollingResist, 1,3) +
-				"  fr " + fToStr(tsu->frictionTread, 2,4) +
+				"  fr " + fToStr(tsu->friction, 2,4) +
 				"  ba " + fToStr(tsu->bumpAmplitude, 2,4) + " bw " + fToStr(tsu->bumpWaveLength, 2,4) +
 				"  b0 " + fToStr(tsu->tire->longitudinal[0], 3,5)
 				//,lay.dust, lay.mud, lay.dustS	//,lay.tclr.r, lay.tclr.g, lay.tclr.b, lay.tclr.a

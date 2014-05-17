@@ -152,7 +152,7 @@ void CGui::listTwkTiresUser(Li, size_t)
 }
 void CGui::listTwkTiresOrig(Li, size_t)
 {
-	liTwkTiresOrig->setIndexSelected(ITEM_NONE);
+	liTwkTiresUser->setIndexSelected(ITEM_NONE);
 }
 
 void CGui::btnTweakTireLoad(WP)
@@ -162,6 +162,86 @@ void CGui::btnTweakTireLoad(WP)
 void CGui::btnTweakTireLoadRef(WP)
 {
 	// todo: reference tire graphs ..
+}
+
+void CGui::FillTweakLists()
+{
+	//  clear
+	liTwkTiresUser->removeAllItems();
+	liTwkTiresOrig->removeAllItems();
+	cmbSurfTire->removeAllItems();
+	liTwkSurfaces->removeAllItems();
+
+	//  tires
+	for (int i=0; i < pGame->tires.size(); ++i)
+	{
+		const CARTIRE& ct = pGame->tires[i];
+		if (ct.user)
+			liTwkTiresUser->addItem("#C0F0F0"+ct.name);
+		else
+			liTwkTiresOrig->addItem("#A0D0F0"+ct.name);
+		cmbSurfTire->addItem(ct.name);
+	}
+	//  surf
+	for (int i=0; i < pGame->surfaces.size(); ++i)
+	{
+		const TRACKSURFACE& su = pGame->surfaces[i];
+		liTwkSurfaces->addItem("#C0C0F0"+su.name);
+	}
+}
+
+//  surfaces
+//-----------------------------------------------------------------------------------------------------------
+void CGui::listTwkSurfaces(Li, size_t id)
+{
+	if (id == ITEM_NONE)  return;
+	updSld_TwkSurf(id);
+}
+
+void CGui::btnTwkSurfPick(WP)
+{
+	if (app->carModels.size() < 1)  return;
+	CAR* pCar = app->carModels[0]->pCar;
+	if (!pCar)  return;
+
+	CARDYNAMICS& cd = pCar->dynamics;
+	const TRACKSURFACE& tsu = cd.GetWheelContact(FRONT_LEFT).GetSurface();
+	int id=-1;  // find in game, not const
+	for (size_t i=0; i < pGame->surfaces.size(); ++i)
+		if (pGame->surfaces[i] == tsu)  id = i;
+	if (id==-1)  return;
+	updSld_TwkSurf(id);
+}
+
+void CGui::updSld_TwkSurf(int id)
+{
+	if (id < 0 || id >= pGame->surfaces.size())  return;
+	idTwkSurf = id;
+	
+	TRACKSURFACE* su = &pGame->surfaces[id];
+	svSuFrict.UpdF(&su->friction);  svSuFrictX.UpdF(&su->frictionX);  svSuFrictY.UpdF(&su->frictionY);
+	svSuBumpWave.UpdF(&su->bumpWaveLength);  svSuBumpAmp.UpdF(&su->bumpAmplitude);
+	svSuBumpWave2.UpdF(&su->bumpWaveLength2);  svSuBumpAmp2.UpdF(&su->bumpAmplitude2);
+	svSuRollDrag.UpdF(&su->rollingDrag);  svSuRollRes.UpdF(&su->rollingResist);
+	//cmbSurfTire
+	//cmbSurfType->setIndexSelected(su->type);
+}
+
+void CGui::comboSurfTire(Cmb cmb, size_t val)
+{
+	if (idTwkSurf==-1)  return;
+	//  find tire for name
+	string s = cmb->getItemNameAt(val);
+	s = s.substr(7);
+	int id = pGame->tires_map[s]-1;
+	if (id == -1)  return;
+	pGame->surfaces[idTwkSurf].tire = &pGame->tires[id];
+}
+
+void CGui::comboSurfType(Cmb cmb, size_t val)
+{
+	if (idTwkSurf==-1)  return;
+	pGame->surfaces[idTwkSurf].type = TRACKSURFACE::TYPE(val);
 }
 
 
@@ -238,6 +318,7 @@ void CGui::TweakToggle()
 	{	lastPath = path;
 		TweakCarLoad();
 		TweakColLoad();
+		FillTweakLists();
 	}
 	
 	//  save and reload  shift-alt-Z
@@ -257,12 +338,12 @@ void CGui::tabCarEdChng(MyGUI::TabPtr, size_t id)
 //  Get car file path
 bool CGui::GetCarPath(std::string* pathCar,
 	std::string* pathSave, std::string* pathSaveDir,
-	std::string carname, /*std::string tweakSetup,*/ bool forceOrig)
+	std::string carname, bool forceOrig)
 {
 	std::string file = carname + ".car",
 		pathOrig  = PATHMANAGER::CarSim()  + "/" + pSet->game.sim_mode + "/cars/" + file,
 		pathUserD = PATHMANAGER::CarSimU() + "/" + pSet->game.sim_mode + "/cars/",
-		pathUser  = pathUserD + file;                       // (tweakSetup != "" ? tweakSetup+"/" : "")
+		pathUser  = pathUserD + file;
 
 	if (pathSave)  *pathSave = pathUser;
 	if (pathSaveDir)  *pathSaveDir = pathUserD;

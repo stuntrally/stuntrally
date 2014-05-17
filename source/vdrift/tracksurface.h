@@ -13,21 +13,23 @@ public:
 	enum TYPE
 	{	NONE=0, ASPHALT, GRASS, GRAVEL, CONCRETE, SAND, COBBLES, NumTypes	};
 
-	TYPE type;
-	float bumpWaveLength, bumpAmplitude;
-	float frictionTread;  //, frictionNonTread;
+	float friction, frictionX, frictionY;  // x,y - multipliers
+	float bumpWaveLength, bumpAmplitude, bumpWaveLength2, bumpAmplitude2;
 	float rollingDrag, rollingResist;
-	std::string name, tireName;  // .tire file source (without ".tire")
 
+	TYPE type;
+	std::string name, tireName;  // .tire file source (without ".tire")
 	CARTIRE* tire;  /// tire params set
 	
 	static CARTIRE* pTireDefault;
 	
 	TRACKSURFACE() :
-		type(GRASS),
+		friction(1.0f),
+		frictionX(1.0f), frictionY(1.0f),
 		bumpWaveLength(10.f), bumpAmplitude(0.f),
-		frictionTread(1.0f), //frictionNonTread(0.9f),
+		bumpWaveLength2(10.f), bumpAmplitude2(0.f),
 		rollingDrag(1.f), rollingResist(1.f),
+		type(GRASS),
 		tireName("DEFAULT"),
 		tire(CARTIRE::None())
 	{	}
@@ -40,15 +42,17 @@ public:
 	bool operator==(const TRACKSURFACE& t) const
 	{
 		return (type == t.type)
-			&& (bumpWaveLength == t.bumpWaveLength)	&& (bumpAmplitude == t.bumpAmplitude)
-			&& (frictionTread == t.frictionTread) //&& (frictionNonTread == t.frictionNonTread)
+			&& (bumpWaveLength == t.bumpWaveLength) && (bumpAmplitude == t.bumpAmplitude)
+			&& (friction == t.friction)
+			&& (rollingDrag == t.rollingDrag) && (tire == t.tire)
 			&& (rollingResist == t.rollingResist)
-			&& (rollingDrag == t.rollingDrag) && (tire == t.tire);
+			&& (frictionX == t.frictionX) && (frictionY == t.frictionY)
+			&& (bumpWaveLength2 == t.bumpWaveLength2) && (bumpAmplitude2 == t.bumpAmplitude2);
 	}
 	
-	static const TRACKSURFACE * None()
+	static TRACKSURFACE * None()
 	{
-		static const TRACKSURFACE s;
+		static TRACKSURFACE s;
 		return &s;
 	}
 };

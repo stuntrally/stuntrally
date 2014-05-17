@@ -10,8 +10,9 @@ PERFORMANCE_TESTING::PERFORMANCE_TESTING()
 {
 	surface.type = TRACKSURFACE::ASPHALT;
 	surface.bumpWaveLength = 10;  surface.bumpAmplitude = 0.01;
-	surface.frictionTread = 1;  //surface.frictionNonTread = 1;
-	surface.rollingDrag = 1.0;  //surface.rollResistanceCoefficient = 0.2;
+	surface.bumpWaveLength2 = 10;  surface.bumpAmplitude2 = 0.0;
+	surface.friction = 1.0;  surface.frictionX = 1.0;  surface.frictionY = 1.0;
+	surface.rollingDrag = 1.0;  surface.rollingResist = 1.0;
 }
 
 void PERFORMANCE_TESTING::ResetCar()

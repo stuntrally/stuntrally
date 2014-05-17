@@ -825,8 +825,8 @@
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="Amplitude">Amplitude</Tag>
 	<Tag name="Friction">Friction</Tag>
-	<Tag name="FrictionTread">FrictionTread</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
+	<Tag name="RollingResist">Rolling Resistance</Tag>
 
 
 	<!--  Terrain  Brush  wnd  -->
