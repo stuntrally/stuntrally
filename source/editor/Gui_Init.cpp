@@ -628,8 +628,10 @@ void CGui::InitGui()
 	Btn("PickTex", btnPickTex);      btn->eventMouseWheel += newDelegate(this, &CGui::wheelTex);  btnTexDiff = btn;
 	Btn("PickGrass", btnPickGrass);  btn->eventMouseWheel += newDelegate(this, &CGui::wheelGrs);  btnGrassMtr = btn;
 	Btn("PickVeget", btnPickVeget);  btn->eventMouseWheel += newDelegate(this, &CGui::wheelVeg);  btnVeget = btn;
-	for (n=0; n < 4; ++n) {  Btn("RdMtr"+toStr(n+1), btnPickRoad);  btnRoad[n] = btn;  }
-
+	for (n=0; n < 4; ++n)
+	{	Btn("RdMtr"+toStr(n+1), btnPickRoad);  btnRoad[n] = btn;
+		btnRoad[n]->eventMouseWheel += newDelegate(this, &CGui::wheelRd);
+	}
 	ck= &ckPickSetPar;	ck->Init("PickSetPar",	&pSet->pick_setpar);
 	panPick = fWP("PanelPick");
 	// todo: pick filter sceneries ..

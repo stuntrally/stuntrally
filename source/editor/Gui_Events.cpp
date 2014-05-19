@@ -496,7 +496,12 @@ int CGui::liNext(Mli2 li, int rel)
 void CGui::wheelTex(WP wp, int rel){  int r = rel < 0 ? 1 : -1;  listPickTex(liTex, liNext(liTex, r));  }
 void CGui::wheelGrs(WP wp, int rel){  int r = rel < 0 ? 1 : -1;  listPickGrs(liGrs, liNext(liGrs, r));  }
 void CGui::wheelVeg(WP wp, int rel){  int r = rel < 0 ? 1 : -1;  listPickVeg(liVeg, liNext(liVeg, r));  }
-void CGui::wheelRd(WP wp, int rel){   int r = rel < 0 ? 1 : -1;  listPickRd(liRd, liNext(liRd, r));  }
+void CGui::wheelRd(WP wp, int rel)
+{
+	String sn = wp->getName().substr(String("RdMtr").length(), wp->getName().length());
+	idRdPick = atoi(sn.c_str())-1;
+	int r = rel < 0 ? 1 : -1;  listPickRd(liRd, liNext(liRd, r));
+}
 
 void CGui::btnPickTex(WP){    PickShow(0);  }
 void CGui::btnPickGrass(WP){  PickShow(1);  }

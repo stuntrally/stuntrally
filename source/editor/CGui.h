@@ -326,7 +326,7 @@ public:
 
 	//  [Pick]  ----
 	Ck ckPickSetPar;  WP panPick;
-	Mli2 liTex, liGrs, liVeg, liRd; 
+	Mli2 liTex, liGrs, liVeg, liRd;
 	int liPickW[4];
 	void PickShow(int n, bool toggleVis=true);  int liNext(Mli2 li, int rel);
 	void btnPickTex(WP),   wheelTex(WP, int rel), listPickTex(Mli2 li, size_t pos);
