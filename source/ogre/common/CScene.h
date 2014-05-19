@@ -38,8 +38,8 @@ public:
 	
 	//  Sun
 	Ogre::Light* sun;
-	void UpdFog(bool bForce=false), UpdSun();
-	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
+	void UpdFog(bool bForce=false), UpdSun(), UpdSky();
+	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale, float yaw);
 
 	//  Weather  rain, snow
 	Ogre::ParticleSystem *pr,*pr2;

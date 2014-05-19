@@ -25,7 +25,7 @@ using namespace Ogre;
 
 //  Sky Dome
 //-------------------------------------------------------------------------------------
-void CScene::CreateSkyDome(String sMater, Vector3 sc)
+void CScene::CreateSkyDome(String sMater, Vector3 sc, float yaw)
 {
 	ManualObject* m = app->mSceneMgr->createManualObject();
 	m->begin(sMater, RenderOperation::OT_TRIANGLE_LIST);
@@ -71,6 +71,8 @@ void CScene::CreateSkyDome(String sMater, Vector3 sc)
 	app->ndSky = app->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	app->ndSky->attachObject(m);
 	app->ndSky->setScale(sc);
+	Quaternion q;  q.FromAngleAxis(Degree(-yaw), Vector3::UNIT_Y);
+	app->ndSky->setOrientation(q);
 }
 
 
@@ -81,10 +83,17 @@ inline ColourValue Clr3(const Vector3& v)
 	return ColourValue(v.x, v.y, v.z);
 }
 
+void CScene::UpdSky()
+{
+	Quaternion q;  q.FromAngleAxis(Degree(-sc->skyYaw), Vector3::UNIT_Y);
+	app->ndSky->setOrientation(q);
+	UpdSun();
+}
+
 void CScene::UpdSun()
 {
 	if (!sun)  return;
-	Vector3 dir = SplineRoad::GetRot(sc->ldYaw, -sc->ldPitch);
+	Vector3 dir = SplineRoad::GetRot(sc->ldYaw - sc->skyYaw, -sc->ldPitch);
 	sun->setDirection(dir);
 	sun->setDiffuseColour(Clr3(sc->lDiff));
 	sun->setSpecularColour(Clr3(sc->lSpec));

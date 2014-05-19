@@ -102,8 +102,8 @@ public:
 	void comboSky(CMB), comboRain1(CMB),comboRain2(CMB);
 
 	SV svRain1Rate, svRain2Rate;
-	SV svSunPitch, svSunYaw;
-	void slUpdSun(SV*), slUpdFog(SV*);
+	SV svSunPitch, svSunYaw, svSkyYaw;
+	void slUpdSky(SV*), slUpdSun(SV*), slUpdFog(SV*);
 
 	SV svFogStart, svFogEnd;
 	SV svFogHStart, svFogHEnd;  // Hfog

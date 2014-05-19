@@ -57,11 +57,8 @@ void CGui::comboRain2(Cmb cmb, size_t val)
 	app->scn->DestroyWeather();  app->scn->CreateWeather();
 }
 
-//  sun pitch, yaw
-void CGui::slUpdSun(SV*)
-{
-	scn->UpdSun();
-}
+void CGui::slUpdSky(SV*){	scn->UpdSky();	}
+void CGui::slUpdSun(SV*){	scn->UpdSun();	}
 
 //  light clrs
 void CGui::editLiAmb(Ed ed)

@@ -179,8 +179,9 @@ void CGuiCom::slAnisotropy(SV*)
 void CGuiCom::slViewDist(SV* sv)
 {
 	Vector3 sc = pSet->view_distance * Vector3::UNIT_SCALE;
+	if (app->ndSky)
+		app->ndSky->setScale(sc);
 
-	if (app->ndSky)  app->ndSky->setScale(sc);
 	#ifndef SR_EDITOR
 		app->mSplitMgr->UpdateCamDist();  // game, for all cams
 	#else

@@ -212,6 +212,7 @@ void CGui::InitGui()
 
 	///  [Sun]
 	//----------------------------------------------------------------------------------------------
+	sv= &svSkyYaw;		sv->Init("SkyYaw",		&sc->skyYaw,  -180.f,180.f, 1.f, 1,4);  sv->DefaultF(0.f);  Sev(UpdSky);
 	sv= &svSunPitch;	sv->Init("SunPitch",	&sc->ldPitch,    0.f,90.f,  1.f, 1,4);  sv->DefaultF(54.f);    Sev(UpdSun);
 	sv= &svSunYaw;		sv->Init("SunYaw",		&sc->ldYaw,   -180.f,180.f, 1.f, 1,4);  sv->DefaultF(-123.f);  Sev(UpdSun);
 	sv= &svRain1Rate;	sv->Init("Rain1Rate",	&sc->rainEmit,   0.f,6000.f);  sv->DefaultF(1000.f);

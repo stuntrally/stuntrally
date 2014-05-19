@@ -26,7 +26,7 @@ void Scene::Default()
 	windAmt = 0.f;  damageMul = 1.f;
 	gravity = 9.81f;
 
-	skyMtr = "World/NoonSky";
+	skyMtr = "World/NoonSky";  skyYaw = 0.f;
 	rainEmit = 0;  rainName = "";
 	rain2Emit = 0;  rain2Name = "";
 

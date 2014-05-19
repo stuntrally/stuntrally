@@ -226,7 +226,7 @@ public:
 	std::pair <MATHVECTOR<float,3>, QUATERNION<float> > GetStart(int index);
 
 	//  sky
-	Ogre::String skyMtr;
+	Ogre::String skyMtr;  float skyYaw;
 	int  rainEmit,rain2Emit;  Ogre::String rainName,rain2Name;
 	//  light
 	float ldPitch, ldYaw;  // sun dir angles

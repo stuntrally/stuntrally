@@ -100,6 +100,7 @@ bool Scene::LoadXml(String file, bool bTer)
 		a = eSky->Attribute("rain2Emit");	if (a)  rain2Emit = s2i(a);
 		a = eSky->Attribute("rain2Name");	if (a)  rain2Name = String(a);
 		a = eSky->Attribute("windAmt");		if (a)  windAmt = s2r(a);
+		a = eSky->Attribute("skyYaw");		if (a)  skyYaw = s2r(a);
 	}
 	///  fog
 	eFog = root->FirstChildElement("fog");
@@ -414,6 +415,8 @@ bool Scene::SaveXml(String file)
 		}
 		if (windAmt != 0.f)
 			sky.SetAttribute("windAmt",	toStrC( windAmt ));
+		if (skyYaw != 0.f)
+			sky.SetAttribute("skyYaw",	toStrC( skyYaw ));
 	root.InsertEndChild(sky);
 
 	TiXmlElement fog("fog");
