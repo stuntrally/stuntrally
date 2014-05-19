@@ -484,18 +484,9 @@ void CGui::InitGui()
 	///  Fill Combo boxes  . . . . . . .
 	//------------------------------------------------------------------------------------------------------------
 
-	
-	//---------------------  Skies  ---------------------
-	Cmb(cmbSky, "SkyCombo", comboSky);
 	std::string sData = PATHMANAGER::Data();
 	String sMat = sData +"/materials/scene/";  // path
 
-	GetMaterialsMat(sMat+"sky.mat");
-	for (size_t i=0; i < vsMaterials.size(); ++i)
-	{	const String& s = vsMaterials[i];
-		if (s != "" && s != "base_sky")
-			cmbSky->addItem(s);  //LogO(s);
-	}
 	
 	//---------------------  Weather  ---------------------
 	Cmb(cmbRain1, "Rain1Cmb", comboRain1);  cmbRain1->addItem("");
@@ -625,6 +616,7 @@ void CGui::InitGui()
 	///  [Pick window]
 	///------------------------------------------------------------------------------------------------------------
 	//  Pick btns
+	Btn("PickSky", btnPickSky);      btn->eventMouseWheel += newDelegate(this, &CGui::wheelSky);  btnSky = btn;
 	Btn("PickTex", btnPickTex);      btn->eventMouseWheel += newDelegate(this, &CGui::wheelTex);  btnTexDiff = btn;
 	Btn("PickGrass", btnPickGrass);  btn->eventMouseWheel += newDelegate(this, &CGui::wheelGrs);  btnGrassMtr = btn;
 	Btn("PickVeget", btnPickVeget);  btn->eventMouseWheel += newDelegate(this, &CGui::wheelVeg);  btnVeget = btn;
@@ -634,12 +626,35 @@ void CGui::InitGui()
 	}
 	ck= &ckPickSetPar;	ck->Init("PickSetPar",	&pSet->pick_setpar);
 	panPick = fWP("PanelPick");
+
 	// todo: pick filter sceneries ..
 	//const char sc[17]="TJSFGWIADCVUMOER";  //chk "Pick"+sc[i]
 	//"PickRadAll" "PickRadCur" "PickRadFilter"
 
-	///  Tex Diff  --------
+
+	///  Sky Mtr  --------
 	Mli2 lp;  int l;
+	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
+	liSky = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickSky);
+	lp->setColour(Colour(0.7,0.85,1.0));  lp->setInheritsAlpha(false);
+	
+	lp->removeAllColumns();  lp->removeAllItems();
+	lp->addColumn("#90C0F0", 15);
+	lp->addColumn("#E0F0FF"+TR("#{Sky}"), 170);
+	lp->addColumn("#E0F0FF"+TR("#{Pitch}"), 60);
+	lp->addColumn(" ", 20);
+	liPickW[P_Sky] = 280;
+
+	for (i=0; i < data->pre->sky.size(); ++i)
+	{	const PSky& s = data->pre->sky[i];
+		String c = s.clr;
+		lp->addItem(c, 0);  l = lp->getItemCount()-1;
+
+		lp->setSubItemNameAt(1,l, c+ s.mtr);
+		lp->setSubItemNameAt(2,l, c+ fToStr( s.ldPitch, 0,2));
+	}
+
+	///  Tex Diff  --------
 	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
 	liTex = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickTex);
 	lp->setColour(Colour(0.8,0.9,0.7));  lp->setInheritsAlpha(false);
@@ -651,7 +666,7 @@ void CGui::InitGui()
 	//lp->addColumn("#80FF80/", 40);
 	lp->addColumn("#80FF80|"/*+TR("#{HighestSlopes}")*/, 27);
 	lp->addColumn(" ", 20);
-	liPickW[0] = 280;
+	liPickW[P_Tex] = 280;
 
 	for (i=0; i < data->pre->ter.size(); ++i)
 	{	const PTer& t = data->pre->ter[i];
@@ -674,7 +689,7 @@ void CGui::InitGui()
 	lp->addColumn("#E0FFE0"+TR("#{GrMaterial}"), 152);
 	//lp->addColumn("#E0FFE0"+TR("#{GrColorMap}"), 120);
 	lp->addColumn(" ", 20);
-	liPickW[1] = 205;
+	liPickW[P_Grs] = 205;
 
 	for (i=0; i < data->pre->gr.size(); ++i)
 	{	const PGrass& t = data->pre->gr[i];
@@ -696,7 +711,7 @@ void CGui::InitGui()
 	lp->addColumn("#80E0E0"+TR("#{MaxScale}"), 40);
 	lp->addColumn("#80E080/"/*+TR("#{AngleMax}")*/, 30);
 	lp->addColumn(" ", 20);
-	liPickW[2] = 280;
+	liPickW[P_Veg] = 280;
 
 	for (i=0; i < data->pre->veg.size(); ++i)
 	{	const PVeget& t = data->pre->veg[i];
@@ -719,7 +734,7 @@ void CGui::InitGui()
 	lp->addColumn("#FFE0D0"+TR("#{GrMaterial}"), 157);
 	lp->addColumn("#80E0E0"+TR("#{Surface}"), 80);
 	lp->addColumn(" ", 20);
-	liPickW[3] = 280;
+	liPickW[P_Rd] = 280;
 	lp->addItem("#102030J", 0);  lp->setSubItemNameAt(1,0, "#102030");  // ""
 
 	for (i=0; i < data->pre->rd.size(); ++i)

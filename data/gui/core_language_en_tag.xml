@@ -1202,7 +1202,7 @@
 	<Tag name="TipDeleteTrk">Permanently delete selected track.</Tag>
 
 	<!--  Sky  -->
-	<Tag name="TipSkyMats">Sky material names (from SkyDome.material).</Tag>
+	<Tag name="TipSkyMats">Sky material names.</Tag>
 	<Tag name="TipSunDirPitch">Sun direction - pitch angle.</Tag>
 	<Tag name="TipSunDirYaw">Sun direction - yaw angle.</Tag>
 	<Tag name="TipSunAmbient">Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)</Tag>

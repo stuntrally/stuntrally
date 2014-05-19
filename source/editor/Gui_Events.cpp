@@ -493,6 +493,7 @@ int CGui::liNext(Mli2 li, int rel)
 	return i;
 }
 
+void CGui::wheelSky(WP wp, int rel){  int r = rel < 0 ? 1 : -1;  listPickSky(liSky, liNext(liSky, r));  }
 void CGui::wheelTex(WP wp, int rel){  int r = rel < 0 ? 1 : -1;  listPickTex(liTex, liNext(liTex, r));  }
 void CGui::wheelGrs(WP wp, int rel){  int r = rel < 0 ? 1 : -1;  listPickGrs(liGrs, liNext(liGrs, r));  }
 void CGui::wheelVeg(WP wp, int rel){  int r = rel < 0 ? 1 : -1;  listPickVeg(liVeg, liNext(liVeg, r));  }
@@ -503,35 +504,36 @@ void CGui::wheelRd(WP wp, int rel)
 	int r = rel < 0 ? 1 : -1;  listPickRd(liRd, liNext(liRd, r));
 }
 
-void CGui::btnPickTex(WP){    PickShow(0);  }
-void CGui::btnPickGrass(WP){  PickShow(1);  }
-void CGui::btnPickVeget(WP){  PickShow(2);  }
+void CGui::btnPickSky(WP){    PickShow(P_Sky);  }
+void CGui::btnPickTex(WP){    PickShow(P_Tex);  }
+void CGui::btnPickGrass(WP){  PickShow(P_Grs);  }
+void CGui::btnPickVeget(WP){  PickShow(P_Veg);  }
 void CGui::btnPickRoad(WP wp)
-{
-	if (!wp) {  PickShow(3, true);  return;  }
+{	if (!wp) {
+		PickShow(P_Rd, true);  return;  }
 	String sn = wp->getName().substr(String("RdMtr").length(), wp->getName().length());
 	int idRdOld = idRdPick;  idRdPick = atoi(sn.c_str())-1;
-	PickShow(3, idRdOld==idRdPick);
+	PickShow(P_Rd, idRdOld==idRdPick);
 }
 
 //  show Pick window
-void CGui::PickShow(int n, bool toggleVis)
+void CGui::PickShow(EPick n, bool toggleVis)
 {
-	liTex->setVisible(n==0);
-	liGrs->setVisible(n==1);
-	liVeg->setVisible(n==2);
-	liRd->setVisible(n==3);
-	panPick->setPosition(liPickW[n], 36);  
-	
+	liSky->setVisible(n==P_Sky);  liTex->setVisible(n==P_Tex);
+	liGrs->setVisible(n==P_Grs);  liVeg->setVisible(n==P_Veg);  liRd->setVisible(n==P_Rd);
+	panPick->setPosition(liPickW[n], 36);
+
 	const int wx = pSet->windowx, wy = pSet->windowy;
 	//if (pSet->pick_center
 	switch (n)  ///pick dim
-	{	case 0:  app->mWndPick->setCoord(wx*0.45f, 0.04f*wy, 300, 0.95f*wy);  break;
-		case 1:  app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 280, 0.95f*wy);  break;
-		case 2:  app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 300, 0.95f*wy);  break;
-		case 3:  app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 300, 0.95f*wy);  break;
+	{
+		case P_Sky:  app->mWndPick->setCoord(wx*0.45f, 0.04f*wy, 300, 0.95f*wy);  break;
+		case P_Tex:  app->mWndPick->setCoord(wx*0.45f, 0.04f*wy, 300, 0.95f*wy);  break;
+		case P_Grs:  app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 280, 0.95f*wy);  break;
+		case P_Veg:  app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 300, 0.95f*wy);  break;
+		case P_Rd:   app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 300, 0.95f*wy);  break;
 	}
-	if (n==3)  // upd pick road
+	if (n==P_Rd)  // upd pick road
 	{	UString s = btnRoad[idRdPick]->getCaption();
 		for (int i=0; i < liRd->getItemCount(); ++i)
 			if (liRd->getSubItemNameAt(1,i).substr(7) == s)
@@ -539,8 +541,31 @@ void CGui::PickShow(int n, bool toggleVis)
 	}
 
 	bool vis = app->mWndPick->getVisible();
-	if (n != 3 || toggleVis || !vis)
+	if (n != P_Rd || toggleVis || !vis)
 		app->mWndPick->setVisible(!vis);
+}
+
+
+///  Sky Mtr  ----------------------------------------------------
+void CGui::listPickSky(Mli2 li, size_t pos)
+{
+	if (pos==ITEM_NONE || pos >= data->pre->sky.size())
+	{	liSky->setIndexSelected(0);  pos = 0;  }
+	
+	string s = liSky->getSubItemNameAt(1,pos);
+	s = s.substr(7);
+	const PSky* p = data->pre->GetSky(s);  if (!p)  return;
+
+	//  set
+	sc->skyMtr = p->mtr;
+	/*if (pSet->pick_setpar)  // TODO ..
+	{	sc->ldPitch = p->ldPitch;
+		sc->ldYaw = p->ldYaw;
+		scn->UpdSun();
+	}/**/
+	//  upd img
+	btnSky->setCaption(s);
+	app->UpdateTrack();
 }
 
 ///  Tex Diff  ----------------------------------------------------
@@ -559,7 +584,6 @@ void CGui::listPickTex(Mli2 li, size_t pos)
 	l.texFile = s;
 	
 	//  auto norm
-	//if (bTexNormAuto)
 	{	String sNorm = StringUtil::replaceAll(s,"_d.","_n.");  //_T
 		sNorm = p->texNorm+".jpg";
 

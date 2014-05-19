@@ -255,6 +255,11 @@ void Scene::UpdPgLayers()
 
 ///  Presets
 
+PSky::PSky()
+	:mtr("sky"), clr("#C0E0FF")
+	,ldYaw(0.f), ldPitch(0.f)
+{	}
+
 PTer::PTer()
 	:tiling(8.f), triplanar(false)
 	,dust(0.f), dustS(0.2f), mud(0.f)
@@ -281,6 +286,12 @@ PVeget::PVeget()
 	,maxDepth(0.f)
 {	}
 
+
+const PSky* Presets::GetSky(std::string mtr)
+{
+	int id = isky[mtr]-1;
+	return id >= 0 ? &sky[id] : 0;
+}
 
 const PTer* Presets::GetTer(std::string tex)
 {

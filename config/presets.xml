@@ -1,5 +1,24 @@
 <presets>
 
+<!-- skies -->
+<!-- m - material name from sky.mat  c - color (for list)  y - sun yaw  p - pitch -->
+
+<s m="sky/dust"         c="#C0C090"    y="0"  p="1" />
+<s m="sky/duskred"      c="#E05020"    y="0"  p="1" />
+<s m="sky/white"        c="#B0C0D0"    y="0"  p="1" />
+<s m="sky/white2"       c="#D0D0D0"    y="0"  p="1" />
+<s m="sky/light_blue"   c="#90C0FF"    y="0"  p="1" />
+<s m="sky/blue_clouds"  c="#C0E0FF"    y="0"  p="1" />
+<s m="sky/gray_clouds"  c="#A0A0A0"    y="0"  p="1" />
+<s m="sky/dark_clouds"  c="#707070"    y="0"  p="1" />
+<s m="sky/sunset"       c="#F0C090"    y="0"  p="1" />
+<s m="sky/dawn"         c="#E4E090"    y="0"  p="1" />
+<s m="sky/duskstormy"   c="#A09040"    y="0"  p="1" />
+<s m="sky/dayovercast"  c="#B8C8D0"    y="0"  p="1" />
+<s m="sky/magic"        c="#A0A0E0"    y="0"  p="1" />
+<s m="sky/magicdark"    c="#7070A0"    y="0"  p="1" />
+
+
 <!-- common:  a - from track (not used)  sc - scenery (for name and color)  z - appears on sceneries (for filters)  -->
 
 <!-- terrain -->

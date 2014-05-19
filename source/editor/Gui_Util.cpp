@@ -38,8 +38,8 @@ void CGui::SetGuiFromXmls()
 
 	//  [Sky]
 	//-----------------------------------------------
-	_Cmb(cmbSky, sc->skyMtr);
-	svSunPitch.Upd();  svSunYaw.Upd();
+	btnSky->setCaption(sc->skyMtr);
+	svSkyYaw.Upd();  svSunPitch.Upd();  svSunYaw.Upd();
 	_Ed(LiAmb, sc->lAmb);  _Ed(LiDiff, sc->lDiff);  _Ed(LiSpec, sc->lSpec);
 	_Clr(Amb, sc->lAmb);  _Clr(Diff, sc->lDiff);  _Clr(Spec, sc->lSpec);
 	//  fog

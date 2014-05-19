@@ -12,7 +12,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,bGI(0)
 	,brImg(0), wndTabs(0)  // brush
 	// sun
-	,cmbSky(0), cmbRain1(0),cmbRain2(0)
+	,btnSky(0),cmbRain1(0),cmbRain2(0)
 	// light
 	,edLiAmb(0),edLiDiff(0),edLiSpec(0)
 	,clrAmb(0),clrDiff(0),clrSpec(0)

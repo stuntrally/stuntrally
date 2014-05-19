@@ -311,9 +311,10 @@ void CGuiCom::updTrkListDim()
 	const IntCoord& wp = app->mWndPick->getCoord();
 	//IntCoord ic(0.01*wp.width, 0.04*wp.height, 0.38*wp.width, 0.93*wp.height);
 	IntCoord ic(0.01*wp.width, 0.055*wp.height, 0.38*wp.width, 0.89*wp.height);
-	ic.width = app->gui->liPickW[0];  app->gui->liTex->setCoord(ic);  ///pick dim
-	ic.width = app->gui->liPickW[1];  app->gui->liGrs->setCoord(ic);
-	ic.width = app->gui->liPickW[2];  app->gui->liVeg->setCoord(ic);
-	ic.width = app->gui->liPickW[3];  app->gui->liRd->setCoord(ic);
+	ic.width = app->gui->liPickW[CGui::P_Sky];  app->gui->liSky->setCoord(ic);  ///pick dim
+	ic.width = app->gui->liPickW[CGui::P_Tex];  app->gui->liTex->setCoord(ic);
+	ic.width = app->gui->liPickW[CGui::P_Grs];  app->gui->liGrs->setCoord(ic);
+	ic.width = app->gui->liPickW[CGui::P_Veg];  app->gui->liVeg->setCoord(ic);
+	ic.width = app->gui->liPickW[CGui::P_Rd ];  app->gui->liRd->setCoord(ic);
 	#endif
 }

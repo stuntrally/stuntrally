@@ -663,8 +663,23 @@ bool Presets::LoadXml(string file)
 	veg.clear();  iveg.clear();
 
 	//  read
-	XMLElement* eTex,*eRd,*eVeg,*eGr;
+	XMLElement* eSky,*eTex,*eRd,*eVeg,*eGr;
 	const char* a;
+
+	///  sky
+	eSky = root->FirstChildElement("s");
+	while (eSky)
+	{
+		PSky s;
+		a = eSky->Attribute("m");	if (a)  s.mtr = String(a);
+		a = eSky->Attribute("c");	if (a)  s.clr = String(a);
+
+		a = eSky->Attribute("y");	if (a)  s.ldYaw = s2r(a);
+		a = eSky->Attribute("p");	if (a)  s.ldPitch = s2r(a);
+
+		sky.push_back(s);  isky[s.mtr] = sky.size();
+		eSky = eSky->NextSiblingElement("s");
+	}
 
 	///  terrain
 	eTex = root->FirstChildElement("t");

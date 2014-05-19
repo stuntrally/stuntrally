@@ -110,6 +110,14 @@ public:
 //  Presets
 //  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+///----  Sky
+struct PSky
+{
+	Ogre::String mtr, clr;
+	float ldYaw, ldPitch;  // sun dir
+	PSky();
+};
+
 ///----  Terrain layer
 struct PTer
 {
@@ -162,6 +170,10 @@ struct PVeget
 class Presets
 {
 public:
+	std::vector<PSky> sky;
+	std::map<std::string, int> isky;
+	const PSky* GetSky(std::string mtr);
+	
 	std::vector<PTer> ter;
 	std::map<std::string, int> iter;
 	const PTer* GetTer(std::string tex);

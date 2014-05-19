@@ -29,7 +29,8 @@ void CData::Load()
 
 	#ifdef SR_EDITOR
 		pre->LoadXml(path + "/presets.xml");
-		LogO(String("**** Loaded Presets  ter: ") + toStr(pre->ter.size())+
+		LogO(String("**** Loaded Presets  sky: ") + toStr(pre->sky.size())+
+			"  ter: " + toStr(pre->ter.size()) +
 			"  road: " + toStr(pre->rd.size()) +
 			"  grass: " + toStr(pre->gr.size()) +
 			"  veget: " + toStr(pre->veg.size()) );

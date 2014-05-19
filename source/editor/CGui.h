@@ -98,7 +98,8 @@ public:
 
 
 	//  [Sky]  ----
-	Cmb cmbSky, cmbRain1,cmbRain2;
+	Btn btnSky;  // pick
+	Cmb cmbRain1,cmbRain2;
 	void comboSky(CMB), comboRain1(CMB),comboRain2(CMB);
 
 	SV svRain1Rate, svRain2Rate;
@@ -326,9 +327,12 @@ public:
 
 	//  [Pick]  ----
 	Ck ckPickSetPar;  WP panPick;
-	Mli2 liTex, liGrs, liVeg, liRd;
-	int liPickW[4];
-	void PickShow(int n, bool toggleVis=true);  int liNext(Mli2 li, int rel);
+	Mli2 liSky, liTex, liGrs, liVeg, liRd;
+	enum EPick { P_Sky=0, P_Tex, P_Grs, P_Veg, P_Rd, P_All };
+	int liPickW[P_All];
+	void PickShow(EPick n, bool toggleVis=true);  int liNext(Mli2 li, int rel);
+
+	void btnPickSky(WP),   wheelSky(WP, int rel), listPickSky(Mli2 li, size_t pos);
 	void btnPickTex(WP),   wheelTex(WP, int rel), listPickTex(Mli2 li, size_t pos);
 	void btnPickGrass(WP), wheelGrs(WP, int rel), listPickGrs(Mli2 li, size_t pos);
 	void btnPickVeget(WP), wheelVeg(WP, int rel), listPickVeg(Mli2 li, size_t pos);
