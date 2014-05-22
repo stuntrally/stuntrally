@@ -411,17 +411,6 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Fast cars" ver="1" difficulty="2" type="2" 
-			descr="Fastest cars on asphalt tracks.">
-		<cartype names="Asphalt" />
-		<pass avgPoints="10" />
-		<tracks>
-			<t name="mosport"   passPoints="8" />
-			<t name="weekend"   passPoints="8" />
-			<t name="virginia"  passPoints="8" />
-		</tracks>
-	</challenge>
-
 	<challenge name="Turtle Slow" ver="1" difficulty="2" type="2" 
 			descr="Few tracks driven with the slowest truck. Patience needed.">
 		<sim boost="0" />

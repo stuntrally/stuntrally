@@ -47,12 +47,6 @@
 		<t name="D1-Dunes"/>
 	</champ>
 
-	<champ name="Tutorial Asphalt" ver="1" difficulty="2" type="0" 
-			descr="Tutorial on asphalt tracks, on 2 circuits.">
-		<t name="brands"/>
-		<t name="zandvoort"/>
-	</champ>
-
 <!--  Tutorials Hard  -->
 
 	<champ name="Tutorial Curly" ver="1" difficulty="3" type="1" 
@@ -185,17 +179,6 @@
 		<t name="V3-Crater"/>
 		<t name="W12-Peaks"/>
 		<t name="I8-Pharaoh"/>
-	</champ>
-
-	<champ name="Asphalt circuits" ver="1" difficulty="3" type="2" 
-			descr="Curly tracks, driven mad. Require lots of steering, determination and experience.">
-		<t name="zandvoort"/>
-		<t name="detroit"/>
-		<t name="weekend"/>
-		<t name="virginia"/>
-		<t name="ruudskogen"/>
-		<t name="mosport"/>
-		<t name="brands"/>
 	</champ>
 
 
