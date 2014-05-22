@@ -98,11 +98,9 @@
 	<!--	unused tracks
 			<t name="S2-Frenzy"    
 			<t name="F3-Snail"     
-			<t name="J9-Sharp"     
 
 			<t name="I1-Island"     
 			<t name="I2-Sandy"        
-			<t name="D9-Mud"       
 			<t name="V3-Crater"    
 
 			<t name="S9-Short"      
@@ -110,7 +108,6 @@
 			<t name="D3-Passage"         
 			<t name="F14-Maze"     
 
-			<t name="J4-Pipe8"     
 			<t name="S10-PipeCurl"   
 			<t name="A2-PipeCoil"  
 
@@ -151,12 +148,11 @@
 	</challenge>
 
 
-	<challenge name="Short easy" ver="1" difficulty="1" type="0" 
+	<challenge name="Short easy" ver="2" difficulty="1" type="0" 
 			descr="Short easy tracks.">
 		<cartype names="Gravel|Racing|Terrain" />
 		<pass avgPoints="11" />
 		<tracks>
-			<t name="O1-Moss"      passPoints="9" />
 			<t name="G3-Butterfly" passPoints="9" />
 			<t name="I12-Beach"    passPoints="9" />
 			<t name="G4-River"     passPoints="9" />
@@ -290,13 +286,12 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Mossy Jungle" ver="1" difficulty="2" type="1" 
+	<challenge name="Mossy Jungle" ver="2" difficulty="2" type="1" 
 			descr="Banked and mossy jungle tracks.">
 		<cartype names="Gravel|Terrain" />
 		<car names="N1|M3" />
 		<pass avgPoints="11" />
 		<tracks>
-			<t name="O1-Moss"       passPoints="9" />
 			<t name="O2-Mouse"      passPoints="9" />
 			<t name="O4-MossyMntn"  passPoints="9" />
 		</tracks>
@@ -369,12 +364,11 @@
 	</challenge>
 
 
-	<challenge name="Bumpy rocks" ver="1" difficulty="3" type="2" 
+	<challenge name="Bumpy rocks" ver="2" difficulty="3" type="2" 
 			descr="Short but very bumpy tracks. Drive cautiously, slower to not jump on bumps.">
 		<cartype names="Gravel|Terrain|Extreme" />
 		<pass avgPoints="12" factor="2" />
 		<tracks>
-			<t name="M1-Hills"   passPoints="9" />
 			<t name="M2-Bumps"   passPoints="9" />
 			<t name="D2-Mntn"    passPoints="9" />
 		</tracks>

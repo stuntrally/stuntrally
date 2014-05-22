@@ -6,7 +6,6 @@
 <!-- by default:  laps="1"/>-->
 
 	<!--  unused tracks
-		<t name="J4-Pipe8"/>
 		<t name="D13-Winding"/>
 		<t name="D14-JumpCrazy"/>
 		<t name="D15-CityWall"/>
@@ -84,7 +83,7 @@
 
 <!--  Easy  -->
 
-	<champ name="Short Rally" ver="2" difficulty="2" type="2" 
+	<champ name="Short Rally" ver="3" difficulty="2" type="2" 
 			descr="Best short tracks in game, for rally fans, in interesting sceneries.">
 		<t name="I4-Sunset"/>
 		<t name="F11-Dawn"/>
@@ -92,7 +91,6 @@
 		<t name="W7-LJs-Mntn"/>
 		<t name="I1-Island"/>
 		<t name="J12-Fog"/>
-		<t name="M1-Hills"/>
 	</champ>
 
 	<champ name="Beauty Rally" ver="1" difficulty="3" type="2" 
@@ -104,10 +102,9 @@
 		<t name="O4-MossyMntn"/>
 	</champ>
 
-	<champ name="Yet more rally" ver="3" difficulty="3" type="2" 
+	<champ name="Yet more rally" ver="4" difficulty="3" type="2" 
 			descr="Other short tracks in game. Some quite circullar.">
 		<t name="G3-Butterfly"/>
-		<t name="J9-Sharp"/>
 		<t name="D3-Passage"/>
 		<t name="G4-River"/>
 		<t name="F4-OSquare"/>
@@ -117,13 +114,12 @@
 		<t name="T6-Sunset"/>
 	</champ>
 
-	<champ name="Fast fun" ver="1" difficulty="3" type="2" 
+	<champ name="Fast fun" ver="2" difficulty="3" type="2" 
 			descr="Fast, short tracks in game. Some quite curly and banked. Driven flat-out.">
 		<t name="D1-Dunes"/>
 		<t name="F7-Blur"/>
 		<t name="T3-Orange"/>
 		<t name="J1-Curly"/>
-		<t name="O1-Moss"/>
 		<t name="F6-Banked"/>
 		<t name="J8-Round"/>
 		<t name="W3-Swing"/>
@@ -194,10 +190,9 @@
 		<t name="I5-Shore"/>
 	</champ>
 
-	<champ name="Mud and water fan" ver="2" difficulty="4" type="3" 
+	<champ name="Mud and water fan" ver="3" difficulty="4" type="3" 
 			descr="A collection of tracks that have either water or mud drive through areas. Mostly in jungle, some are slippery and tricky.">
 		<t name="I3-Islands"/>
-		<t name="D9-Mud"/>
 		<t name="J11-Temple"/>
 		<t name="J12-Fog"/>
 		<t name="J14-Muddy"/>
@@ -318,9 +313,8 @@
 		<t name="D7-CrossJumps"/>
 		<t name="D8-Technical"/>
 	</champ>
-	<champ name="Desert 2nd" ver="2" difficulty="2" type="5" 
+	<champ name="Desert 2nd" ver="3" difficulty="2" type="5" 
 			descr="Desert champ. Part 2.">
-		<t name="D9-Mud"/>
 		<t name="D10-MudBath"/>
 		<t name="D11-PersianCity"/>
 		<t name="D12-Sandstorm"/>
@@ -328,16 +322,14 @@
 		<t name="D14-JumpCrazy"/>
 		<t name="D15-CityWall"/>
 	</champ>
-	<champ name="Jungle" ver="2" difficulty="3" type="5" 
+	<champ name="Jungle" ver="3" difficulty="3" type="5" 
 			descr="Jungle championship. Part 1.">
 		<t name="J1-Curly"/>
 		<t name="J3-Rocky"/>
-		<t name="J4-Pipe8"/>
 		<t name="J5-Pipes"/>
 		<t name="J6-Fun"/>
 		<t name="J7-Hilly"/>
 		<t name="J8-Round"/>
-		<t name="J9-Sharp"/>
 		<t name="J10-Spiral"/>
 	</champ>
 	<champ name="Jungle 2nd" ver="2" difficulty="4" type="5" 
@@ -438,9 +430,8 @@
 	
 	
 <!--  Senery champs,  part 2  -->
-	<champ name="Mud" ver="1" difficulty="2" type="6" 
+	<champ name="Mud" ver="2" difficulty="2" type="6" 
 			descr="Mud championship.">
-		<t name="M1-Hills"/>
 		<t name="M2-Bumps"/>
 		<t name="M3-Mudlake"/>
 	</champ>
@@ -485,9 +476,8 @@
 		<t name="T5-Twister"/>
 		<t name="T6-Sunset"/>
 	</champ>
-	<champ name="Moss" ver="1" difficulty="2" type="6" 
+	<champ name="Moss" ver="2" difficulty="2" type="6" 
 			descr="Moss championship.">
-		<t name="O1-Moss"/>
 		<t name="O2-Mouse"/>
 		<t name="O3-Air"/>
 		<t name="O4-MossyMntn"/>
