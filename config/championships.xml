@@ -83,13 +83,12 @@
 
 <!--  Easy  -->
 
-	<champ name="Short Rally" ver="3" difficulty="2" type="2" 
+	<champ name="Short Rally" ver="4" difficulty="2" type="2" 
 			descr="Best short tracks in game, for rally fans, in interesting sceneries.">
 		<t name="I4-Sunset"/>
 		<t name="F11-Dawn"/>
 		<t name="F8-Stain"/>
 		<t name="W7-LJs-Mntn"/>
-		<t name="I1-Island"/>
 		<t name="J12-Fog"/>
 	</champ>
 
@@ -114,7 +113,7 @@
 		<t name="T6-Sunset"/>
 	</champ>
 
-	<champ name="Fast fun" ver="2" difficulty="3" type="2" 
+	<champ name="Fast fun" ver="3" difficulty="3" type="2" 
 			descr="Fast, short tracks in game. Some quite curly and banked. Driven flat-out.">
 		<t name="D1-Dunes"/>
 		<t name="F7-Blur"/>
@@ -122,7 +121,6 @@
 		<t name="J1-Curly"/>
 		<t name="F6-Banked"/>
 		<t name="J8-Round"/>
-		<t name="W3-Swing"/>
 		<t name="C2-CanyonRun"/>
 		<t name="T2-RedOakPark"/>
 		<t name="C6-Abyss"/>
@@ -162,7 +160,7 @@
 		<t name="J18-Tiny"/>
 	</champ>
 
-	<champ name="Fancy circles" ver="3" difficulty="3" type="2" 
+	<champ name="Fancy circles" ver="4" difficulty="3" type="2" 
 			descr="The most circullar tracks. Usualy banked, sometimes with easy pipe turns. Require much steering but mostly in same direction.">
 		<t name="J10-Spiral"/>
 		<t name="S9-Short"/>
@@ -172,7 +170,6 @@
 		<t name="C2-CanyonRun"/>
 		<t name="W5-Circles"/>
 		<t name="X1-Magic"/>
-		<t name="V3-Crater"/>
 		<t name="W12-Peaks"/>
 		<t name="I8-Pharaoh"/>
 	</champ>
@@ -366,11 +363,10 @@
 		<t name="S14-Refinery"/>
 		<t name="S15-Scorpio"/>
 	</champ>
-	<champ name="Winter" ver="1" difficulty="3" type="5" 
+	<champ name="Winter" ver="2" difficulty="3" type="5" 
 			descr="Winter championship. Part 1.">
 		<t name="W1-Cross"/>
 		<t name="W2-Wet"/>
-		<t name="W3-Swing"/>
 		<t name="W4-IceSlip"/>
 		<t name="W5-Circles"/>
 		<t name="W6-SnowyEights"/>
@@ -410,7 +406,6 @@
 	</champ>
 	<champ name="Island" ver="1" difficulty="2" type="5" 
 			descr="Island championship. Part 1.">
-		<t name="I1-Island"/>
 		<t name="I2-Sandy"/>
 		<t name="I3-Islands"/>
 		<t name="I4-Sunset"/>
@@ -482,11 +477,10 @@
 		<t name="O3-Air"/>
 		<t name="O4-MossyMntn"/>
 	</champ>
-	<champ name="Volcanic" ver="1" difficulty="4" type="6" 
+	<champ name="Volcanic" ver="2" difficulty="4" type="6" 
 			descr="Volcanic championship.">
 		<t name="V1-Dark"/>
 		<t name="V2-Volcanic"/>
-		<t name="V3-Crater"/>
 		<t name="V4-Spikeland"/>
 		<t name="V5-Sad"/>
 		<t name="V6-Crematoria"/>

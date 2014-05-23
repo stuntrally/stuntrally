@@ -98,10 +98,7 @@
 	<!--	unused tracks
 			<t name="S2-Frenzy"    
 			<t name="F3-Snail"     
-
-			<t name="I1-Island"     
 			<t name="I2-Sandy"        
-			<t name="V3-Crater"    
 
 			<t name="S9-Short"      
 			<t name="J19-ShortFun"    
@@ -247,14 +244,13 @@
 	</challenge>
 
 	
-	<challenge name="Winter Sleep" ver="1" difficulty="2" type="1" 
+	<challenge name="Winter Sleep" ver="2" difficulty="2" type="1" 
 			descr="Winter rally, slippery snow tracks.">
 		<cartype names="Gravel" />
 		<car names="N1" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="W1-Cross"     passPoints="9" />
-			<t name="W3-Swing"     passPoints="9" />
 			<t name="W7-LJs-Mntn"  passPoints="9" />
 			<t name="W10-Whirl"    passPoints="9" />
 		</tracks>

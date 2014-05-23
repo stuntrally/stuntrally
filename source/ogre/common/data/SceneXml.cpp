@@ -34,7 +34,7 @@ void Scene::Default()
 	fogClr = fogClr2 = fogClrH = Vector4(0.73f, 0.86f, 1.0f, 1.f);
 	fogHeight = -300.f;  fogHDensity = 100.f;  fogHStart = 0;  fogHEnd = 400;
 
-	ldPitch = 50.f, ldYaw = 30.f;
+	ldPitch = 50.f;  ldYaw = 30.f;
 	lDir  = Vector3(0.0f, -1.0f, 0.0f);	lAmb  = Vector3(0.45f, 0.45f, 0.45f);
 	lDiff = Vector3(0.7f, 0.7f, 0.7f);	lSpec = Vector3(0.99f, 0.99f, 0.97f);
 
