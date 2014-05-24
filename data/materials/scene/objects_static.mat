@@ -10,6 +10,20 @@ material pers_struct_dds
 	bump_scale 1.3
 }
 
+material ptol_struct
+{
+	parent base
+	diffuseMap ptol_struct.jpg
+	normalMap ptol_struct_norm.jpg
+	specMap ptol_struct_spec.jpg
+	ambient 1.1 1.1 1.1
+	diffuse 0.75 0.75 0.75
+	specular 0.2 0.2 0.2 12
+	terrain_light_map true
+	bump_scale 1.3
+}
+
+
 material pyramid_small
 {
 	parent base
