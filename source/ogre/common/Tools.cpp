@@ -324,8 +324,8 @@ String CGui::ChkSceneryID(string trk, const Scene& sc, bool b, bool* bad)
 	dP = fabs(sc.ldPitch - si.ldPitch) / 90.f * 100.f;
 	if (w)  s <<" "<< fToStr(dP, 0,3)<<"%";  else  s << "  ---";
 
-	s << "  yaw" << fToStr(sc.ldYaw,0,4);
-	dY = fabs(sc.ldYaw - si.ldYaw)    / 180.f * 100.f;
+	s << "  yaw" << fToStr(sc.ldYaw -sc.skyYaw, 0,4);
+	dY = fabs( (sc.ldYaw -sc.skyYaw) - (si.ldYaw -si.skyYaw) ) / 180.f * 100.f;
 	if (w)  s <<" "<< fToStr(dY, 0,3)<<"%";  else  s << "  ---";
 
 	if (b)  s << "\n";
