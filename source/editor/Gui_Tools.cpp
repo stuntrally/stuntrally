@@ -75,7 +75,7 @@ void CGui::btnCopySun(WP)
 	Scene sF;  sF.LoadXml(from + "/scene.xml");
 
 	sc->skyMtr = sF.skyMtr;  // sky
-	sc->skyYaw = sF->skyYaw;
+	sc->skyYaw = sF.skyYaw;
 	sc->rainEmit = sF.rainEmit;  sc->rain2Emit = sF.rain2Emit;
 	sc->rainName = sF.rainName;  sc->rain2Name = sF.rain2Name;
 
