@@ -52,7 +52,7 @@ String CGuiCom::GetSceneryColor(String name)
 	if (ch == 'T' && name.c_str()[1] == 'e')  // Test,TestC
 		return (name.length() > 5 && name.c_str()[4] == 'C') ? "#A0C0D0" : "#A0A0A0";
 	else
-		return pTrk ? scnClr[pTrk->scenery] : scnClr[scnN[name.substr(1,2)]];  // norm, *user
+		return pTrk ? scnClr[pTrk->scenery] : scnClr[scnN[name.substr(1,1)]];  // norm, *user
 }
 
 //  track difficulties colors from value
