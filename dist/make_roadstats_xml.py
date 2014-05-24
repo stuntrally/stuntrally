@@ -8,7 +8,7 @@ def get_dirs(dir):
 pre = '..';  # path
 tdir = pre+'/data/tracks';
 trks = get_dirs(tdir)
-#print trks
+#print(trks)
 
 stats = open('roadstats.xml','w')  # out file
 stats.write('<roadstats>\n');
@@ -23,7 +23,7 @@ for line in times:
 		trk = tr[1]
 		tim = tr[30]
 		map[trk] = tim
-		#print trk + " " + tim
+		#print(trk + " " + tim)
 times.close()
 	
 for t in trks:
@@ -35,12 +35,12 @@ for t in trks:
 		
 		dom = parseString(data)
 		xTag = dom.getElementsByTagName('stats')[0].toxml()
-		#print xTag
+		#print(xTag)
 		xNew = xTag.replace('<stats','<s n="'+t+'" t="'+map.get(t,'0')+'"').replace('yaw="0"','').replace('pitch="0" ','').replace('roll="0" ','')
 		xNew = xNew.replace('height=','h=').replace('length=','l=').replace('width=','w=').replace('bnkAvg=','ba=').replace('bnkMax=','bm=')
 		xNew = xNew.replace('onPipe=','op=').replace('onTer=','ot=').replace('pipes=','p=')
-		#print xNew
-		print t
+		#print(xNew)
+		print(t)
 		stats.write(xNew+'\n');
 
 stats.write('</roadstats>');
