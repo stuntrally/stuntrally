@@ -45,10 +45,6 @@ Author: B65ISP
 License: CC0
 http://www.blendswap.com/blends/architecture/wood-parts/
 
-----  0 A.D. resources  ----  see: readme 0 A.D.txt
-pers_*.mesh  pyramid*.mesh  obelisk.mesh
-	binaries\data\mods\public\art\meshes\structural\pers_house_b.dae
-	binaries\data\mods\public\art\textures\skins\structural\pers_struct.dds
 
 ----  watchtower.mesh
 wooden watch tower
