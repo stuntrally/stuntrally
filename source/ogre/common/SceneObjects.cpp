@@ -113,7 +113,8 @@ void App::CreateObjects()
 	for (map<string,bool>::iterator it = objExists.begin(); it != objExists.end(); ++it)
 	{
 		bool ex = PATHMANAGER::FileExists(PATHMANAGER::Data()+"/objects/"+ (*it).first + ".mesh");
-		(*it).second = ex;
+		bool ex0 = PATHMANAGER::FileExists(PATHMANAGER::Data()+"/objects0/"+ (*it).first + ".mesh");
+		(*it).second = ex || ex0;
 		if (!ex)  LogO("CreateObjects mesh doesn't exist: " + (*it).first + ".mesh");
 	}
 	for (map<string,bool>::iterator it = objHasBlt.begin(); it != objHasBlt.end(); ++it)

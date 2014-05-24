@@ -574,9 +574,6 @@ void CGui::InitGui()
 	{	const std::string& name = app->vObjNames[i];
 		if (name != "sphere")
 		{
-			if (StringUtil::startsWith(name,"pers_",false))
-				objListBld->addItem("#E0E070"+name);  // buildings
-			else
 			if (StringUtil::startsWith(name,"rock",false)||StringUtil::startsWith(name,"cave",false))
 				objListRck->addItem("#E0B070"+name);  // rocks
 			else 
@@ -585,6 +582,16 @@ void CGui::InitGui()
 			else
 				objListSt->addItem("#C8C8C8"+name);
 	}	}
+	//  buildings
+	lo.clear();
+	PATHMANAGER::DirList(sData + "/objects0", lo);
+	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
+		if (StringUtil::endsWith(*i,".mesh"))
+		{	std::string name = (*i).substr(0,(*i).length()-5);
+			app->vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
+			objListBld->addItem("#E0E070"+name);
+		}
+
 	//objList->setIndexSelected(0);  //objList->findItemIndexWith(modeSel)
 
 
