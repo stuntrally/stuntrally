@@ -1,10 +1,5 @@
 -----
 file from:  0 A.D.\binaries\data\mods\public\art\LICENSE.txt
-appiles to:
-
-obelisk*
-pers_*
-pyramid*
 -----
 
 The files in this directory are Copyright (C) 2009 Wildfire Games.
