@@ -424,6 +424,18 @@ material pipeGlassYellow
 	bump_scale 1
 }
 
+material pipeGlassCrystal
+{
+	parent pipe_glass
+	ambient 0.0 0.1 0.2
+	diffuse 0.2 0.5 0.7
+	diffuseMap roadGlassD.png
+	specular 0.1 0.3 0.5 128
+	specMap roadGlass_spec0.png
+	normalMap normal_1.png
+	bump_scale 0.1
+}
+
 
 //  asphalt pipes
 //----------------------------------------------------

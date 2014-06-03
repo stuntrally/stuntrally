@@ -19,7 +19,7 @@
 <s m="sky/magicdark"    c="#7070A0"    y="0"  p="1" />
 
 
-<!-- common:  a - from track (not used)  sc - scenery (for name and color)  z - appears on sceneries (for filters)  -->
+<!-- common:  a - from track (not used)  sc - scenery (for name and color)  z - appears on sceneries (not used, for filters)  -->
 
 <!-- terrain -->
 <!-- t - diff tex  n - norm tex  (t,n filename no ext)  s - scale  su - surface  tp - triplanar  du - dust  ds - dust size  md - mud  tr - trail color  aa,ab - min,max ter angle  -->
@@ -130,6 +130,16 @@
 <t a="W2"  sc="W"  t="snow_mntn_d"        n="snow_mntn_n"        s="51.00" su="Rocks"          tp="1" du="0.0" ds="0.2" md="1.0" tr="0.20 0.20 0.00 1.0"  aa="21" ab="90" z="FWX" />
 <t a="W1"  sc="W"  t="snow_mud_d"         n="snow_mud_n"         s="9.50"  su="SnowWet"        tp="0" du="1.0" ds="0.8" md="1.0" tr="0.40 0.40 0.40 0.6"  aa="0"  ab="20" z="W" />
 <t a="W11" sc="W"  t="snow_rough_d"       n="snow_rough_n"       s="12.14" su="SnowDeep"       tp="0" du="0.4" ds="0.6" md="1.0" tr="0.40 0.40 0.40 0.6"  aa="11" ab="90" z="W" />
+
+<t a="Y1"  sc="Y"  t="ycrystals_fine_d"   n="ycrystals_fine_n"   s="17.15" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.16 0.16 0.16 0.7"  aa="0"  ab="10" z="Y" />
+<t a="Y1"  sc="Y"  t="ycrystals_med_d"    n="ycrystals_med_n"    s="12.59" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.16 0.16 0.16 0.7"  aa="14" ab="31" z="Y" />
+<t a="Y1"  sc="Y"  t="ycrystals_big_d"    n="ycrystals_big_n"    s="17.15" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.16 0.16 0.16 0.7"  aa="38" ab="90" z="Y" />
+<!--
+<t a="Z1"  sc="Z"  t="zdesert_sand2_d"    n="desert_sand2_n"     s="16.21" su="DesertFast"     tp="0" du="0.9" ds="1.0" md="0.1" tr="0.16 0.16 0.16 0.7"  aa="15" ab="27" z="Z" />
+<t a="Z4"  sc="Z"  t="zdesert_sand_big_d" n="desert_sand_big_n"  s="9.63"  su="DesertBumpy"    tp="0" du="0.9" ds="1.0" md="0.1" tr="0.16 0.16 0.16 0.7"  aa="15" ab="27" z="Z" />
+<t a="Z1"  sc="Z"  t="zdesert_sand_d"     n="desert_sand_n"      s="12.06" su="DesertFast"     tp="0" du="0.8" ds="1.0" md="0.1" tr="0.16 0.16 0.16 0.7"  aa="0"  ab="10" z="Z" />
+<t a="Z1"  sc="Z"  t="zdesert_wet_d"      n="desert_wet_n"       s="8.78"  su="DesertFast"     tp="0" du="0.5" ds="0.7" md="0.0" tr="0.20 0.20 0.20 0.7"  aa="0"  ab="13" z="Z" />
+-->
 <t a="Tes" sc="D"  t="zAsphalt_d"         n="ground_cracks2_n"   s="10.14" su="Asphalt"        tp="0" du="0.0" ds="0.6" md="0.0" tr="0.10 0.10 0.10 0.6"  aa="0" ab="90"  z="D" />
 
 
@@ -248,6 +258,14 @@
 <!-- p - .mesh name  sa,sb - min,max scale  wx,wy - wind fx,fy  ab - max ter angle  rd - min road dist  fd - max fluid depth -->
 
 <v a="D5"  sc="D"  p="cactus"               sa="0.40" sb="0.72"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="DIV" />
+
+<v a="Y1"  sc="Y"  p="crystal1"             sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
+<v a="Y1"  sc="Y"  p="crystal2"             sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
+<v a="Y1"  sc="Y"  p="crystal_cube4"        sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
+
+<v a="Y1"  sc="Y"  p="crystal_form1"        sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
+<v a="Y1"  sc="Y"  p="crystal_form2"        sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
+<v a="Y1"  sc="Y"  p="crystal_form3"        sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
 
 <v a="S2"  sc="S"  p="farn1"                sa="0.10" sb="0.25"  wx="7.30" wy="0.060"  ab="34.34" rd="1" fd="0.5" z="CDFGIJSV" />
 <v a="J1"  sc="J"  p="farn2"                sa="0.11" sb="0.30"  wx="7.30" wy="0.060"  ab="34.42" rd="1" fd="0.5" z="FIJSV" />

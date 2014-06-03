@@ -478,3 +478,128 @@ material rock_R5f
 	diffuse 1.0 0.8 0.7
 	//specular 0.9 0.9 0.9 24
 }
+
+
+//  Crystals
+//------------------------------------------------------------------
+material crystal1
+{
+    parent base
+	diffuseMap crystal_form3.jpg
+	normalMap crystal_form3_n.jpg
+
+	ambient 0.1 0.3 0.3
+	diffuse 0.3 0.6 0.6
+	specular 0.05 0.2 0.25 64
+
+	transparent true
+	scene_blend add
+	//scene_blend alpha_blend
+	//cull_hardware none
+
+	depth_write off
+	depth_check off
+	twoside_diffuse true
+
+	tree_wind false
+	terrain_light_map true
+	receives_shadows false
+}
+
+material crystal6
+{
+    parent base
+	diffuseMap crystal_form2.jpg
+	normalMap crystal_form2_n.jpg
+
+	//ambient 1 1 1
+	ambient 0.08 0.1 0.12
+	diffuse 0.22 0.25 0.3
+	specular 0.2 0.2 0.3 64
+
+	transparent true
+	scene_blend add
+	//scene_blend alpha_blend
+	cull_hardware none
+
+	depth_write off
+	depth_check off
+	twoside_diffuse true
+
+	tree_wind false
+	terrain_light_map true
+	receives_shadows false
+}
+
+//  -
+material crystal_cube4
+{
+    parent base
+	diffuseMap crystal_form3.jpg
+	normalMap crystal_form3_n.jpg
+
+	ambient 0.34 0.80 0.78
+	diffuse 0.20 0.90 0.85
+	specular 0.5 0.95 1.0 128
+
+	tree_wind false
+	terrain_light_map true
+	twoside_diffuse true
+	//receives_shadows false
+	shadowBias 0.0001
+	bump_scale 3
+}
+
+material crystal_form1
+{
+    parent base
+	diffuseMap crystal_form1.jpg
+	normalMap crystal_form1_n.jpg
+
+	ambient 0.75 0.85 0.9
+	diffuse 0.6 0.80 0.90
+	specular 0.3 0.4 1.0 20
+
+	env_map true
+	envMap ReflectionCube
+	refl_amount 0.2
+
+	tree_wind false
+	terrain_light_map true
+	bump_scale 1
+}
+
+material crystalForm4
+{
+    parent base
+	diffuseMap crystal_form2.jpg
+	normalMap crystal_form2_n.jpg
+
+	ambient 0.9 0.9 0.9
+	diffuse 0.85 0.8 0.85
+	specular 0.05 0.4 0.4 64
+
+	tree_wind false
+	terrain_light_map true
+	bump_scale 2
+}
+
+material crystal_form3
+{
+    parent base
+	diffuseMap crystal_form3.jpg
+	normalMap crystal_form3_n.jpg
+
+	ambient 0.8 0.85 0.9
+	diffuse 0.8 0.85 0.9
+	specular 0.3 0.35 0.4 32
+
+	env_map true
+	envMap ReflectionCube
+	refl_amount 0.2
+
+	tree_wind false
+	terrain_light_map true
+	bump_scale 3
+}
+

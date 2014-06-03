@@ -331,16 +331,16 @@ material roadSandMagic_ter
 }
 
 
-//  Crystals ...
+//  Crystals
 
 material roadCrystal
 {
 	parent road
-	ambient 0.4 0.6 0.9
-	diffuse 0.4 0.6 0.9
+	ambient 0.4 0.8 1.4
+	diffuse 0.4 0.8 1.4
 	specular 0.05 0.25 0.5  16 //x4
-	diffuseMap rdDirt.jpg
-	normalMap rdDirt_norm.jpg
+	diffuseMap rdGravel.jpg
+	normalMap rdGravel_norm.jpg
 	envMap ReflectionCube
 	env_map true
 	refl_amount 0.5
@@ -350,11 +350,12 @@ material roadCrystal
 material roadCrystal_ter
 {
 	parent road_terrain
-	ambient 0.3 0.6 0.9
-	diffuse 0.3 0.6 0.9
-	specular 0.05 0.25 0.5  16 //x4
-	diffuseMap rdDirt.jpg
-	normalMap rdDirt_norm.jpg
+	ambient 0.3 0.6 1.4
+	diffuse 0.3 0.6 1.4
+	specular 0.05 0.4 0.8  16 //x4
+	diffuseMap rdGravel.jpg
+	normalMap rdGravel_norm.jpg
+	specMap rdGravel.jpg
 	envMap ReflectionCube
 	env_map true
 	refl_amount 0.5
