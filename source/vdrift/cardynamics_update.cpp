@@ -111,6 +111,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 				MATHVECTOR<float,3> wheelpos = GetWheelPosition(wp, 0);
 				wheelpos[2] -= whR;
 				whP[w] = fp.idParticles;
+				whDmg[w] = fp.fDamage;
 				
 				//  height in fluid:  0 just touching surface, 1 fully in fluid
 				//  wheel plane distance  water.plane.normal.z = 1  water.plane.offset = fl.pos.y;
@@ -332,6 +333,40 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	ApplyEngineTorqueToBody();
 
 	ApplyAerodynamicsToBody(dt);
+	
+
+	//  extra damage from scene <><>
+	if (pScene && pSet->game.damage_type > 0)
+	{
+		float fRed = pSet->game.damage_type==1 ? 0.5f : 1.f;
+
+		/// <><> terrain layer damage _
+		int w;
+		for (w=0; w<4; ++w)
+		if (!iWhOnRoad[w])
+		{
+			float d = 0.5f * wheel_contact[w].GetDepth() / wheel[w].GetRadius();
+			int mtr = whTerMtr[w]-1;
+			if (d < 1.f && mtr >= 0 && mtr < pScene->td.layers.size())
+			{
+				const TerLayer& lay = pScene->td.layersAll[pScene->td.layers[mtr]];
+				if (lay.fDamage > 0.f)
+					fDamage += lay.fDamage * fRed * dt;
+		}	}
+
+		/// <><> height fog damage _
+		if (pScene->fHDamage > 0.f && chassisPosition[2] < pScene->fogHeight)
+		{
+			float h = (pScene->fogHeight - chassisPosition[2]) / pScene->fogHDensity;
+			if (h > 0.2f)  //par
+				fDamage += pScene->fHDamage * h * fRed * dt;
+		}
+
+		/// <><> fluid damage _
+		for (w=0; w<4; ++w)
+		if (whH[w] > 0.01f)
+			fDamage += whDmg[w] * whH[w] * fRed * dt;
+	}
 	
 
 	///***  wind ~->

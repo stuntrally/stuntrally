@@ -120,6 +120,7 @@ bool Scene::LoadXml(String file, bool bTer)
 		a = eFogH->Attribute("dens");		if (a)  fogHDensity = s2r(a);
 		a = eFogH->Attribute("linStart");	if (a)  fogHStart = s2r(a);
 		a = eFogH->Attribute("linEnd");		if (a)  fogHEnd = s2r(a);
+		a = eFogH->Attribute("dmg");		if (a)  fHDamage = s2r(a);
 	}
 
 	///  light
@@ -194,6 +195,7 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = eTex->Attribute("mud");		if (a)  l->mud = s2r(a);
 			a = eTex->Attribute("smoke");	if (a)  l->smoke = s2r(a);
 			a = eTex->Attribute("tclr");	if (a)  l->tclr = s2c(a);
+			a = eTex->Attribute("dmg");		if (a)  l->fDamage = s2r(a);
 
 			a = eTex->Attribute("angMin");	if (a)  l->angMin = s2r(a);
 			a = eTex->Attribute("angMax");	if (a)  l->angMax = s2r(a);
@@ -432,6 +434,8 @@ bool Scene::SaveXml(String file)
 		fogH.SetAttribute("dens",		toStrC( fogHDensity ));
 		fogH.SetAttribute("linStart",	toStrC( fogHStart ));
 		fogH.SetAttribute("linEnd",		toStrC( fogHEnd ));
+		if (fHDamage > 0.f)
+			fogH.SetAttribute("dmg",	toStrC( fHDamage ));
 	root.InsertEndChild(fogH);
 
 	TiXmlElement li("light");
@@ -489,6 +493,9 @@ bool Scene::SaveXml(String file)
 				tex.SetAttribute("smoke",	toStrC( l->smoke )); \
 				tex.SetAttribute("tclr",	toStrC( l->tclr ));
 			setDmst();
+			if (l->fDamage > 0.f)
+				tex.SetAttribute("dmg",	toStrC( l->fDamage ));
+
 			tex.SetAttribute("angMin",	toStrC( l->angMin ));
 			tex.SetAttribute("angMax",	toStrC( l->angMax ));
 			tex.SetAttribute("angSm",	toStrC( l->angSm ));

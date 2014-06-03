@@ -19,6 +19,7 @@ public:
 	float whMaxAngVel, whSpinDamp, whForceLong, whForceUp, whSteerMul;
 	float bumpFqX, bumpFqY, bumpAmp, bumpAng;
 	int idParticles;  // index for wheel particles (0water, 1mud soft, 2mud hard, -1 none)
+	float fDamage;  // damage per sec, per wheel (div by 4)
 	
 	FluidParams();
 };

@@ -150,6 +150,7 @@ public:
 	///  buoyancy
 	float whH[4];  // wheel submerge 0..1
 	int whP[4];  // fluid particles id
+	float whDmg[4];  // damage from fluid
 	struct Polyhedron* poly;
 	float body_mass;  btVector3 body_inertia;
 

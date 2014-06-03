@@ -36,7 +36,7 @@ CARDYNAMICS::CARDYNAMICS() :
 	for (int i=0; i<4; ++i)
 	{	iWhOnRoad[i]=0;
 		whTerMtr[i]=0;  whRoadMtr[i]=0;
-		whH[i]=0.f;  whP[i]=-1;
+		whH[i]=0.f;  whP[i]=-1.f;  whDmg[i]=0.f;
 	}
 	boostFuel = 0.f;  // set later when road length known
 

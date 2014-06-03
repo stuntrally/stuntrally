@@ -33,6 +33,7 @@ void Scene::Default()
 	fogStart = 600;  fogEnd = 1600;
 	fogClr = fogClr2 = fogClrH = Vector4(0.73f, 0.86f, 1.0f, 1.f);
 	fogHeight = -300.f;  fogHDensity = 100.f;  fogHStart = 0;  fogHEnd = 400;
+	fHDamage = 0.f;
 
 	ldPitch = 50.f;  ldYaw = 30.f;
 	lDir  = Vector3(0.0f, -1.0f, 0.0f);	lAmb  = Vector3(0.45f, 0.45f, 0.45f);
@@ -188,14 +189,15 @@ void TerData::Default()
 
 	for (int i=0; i < ciNumLay; ++i)
 	{	
-		TerLayer& l = layersAll[i];  l.tiling = 4.5f;
+		TerLayer& l = layersAll[i];  l.tiling = 8.5f;
 		l.on = i==0;
 		l.texFile = "";  l.texNorm = "";
 		l.dust = 0.f;  l.mud = 1.f;  l.smoke = 0.f;
 		l.tclr = ColourValue(0.2f,0.2f,0.f,1.f);
+		l.fDamage = 0.f;
 	}
 	layerRoad.dust = 0.f;  layerRoad.mud = 0.f;  // layerRoad.smoke = 1.f;
-	layerRoad.tclr = ColourValue(0,0,0,1);
+	layerRoad.tclr = ColourValue(0,0,0,1);  layerRoad.fDamage = 0.f;
 	
 	UpdVals();  UpdLayers();
 }
@@ -206,7 +208,8 @@ TerLayer::TerLayer() :
 	angMin(0.f),angMax(90.f), angSm(20.f),
 	hMin(-300.f),hMax(300.f), hSm(20.f), nOnly(false),
 	noise(1.f), nprev(0.f), nnext2(0.f),
-	surfName("Default"), surfId(0)  //!
+	surfName("Default"), surfId(0),  //!
+	fDamage(0.f)
 {
 	nFreq[0]=25.f; nPers[0]=0.30f; nPow[0]=1.5f; nOct[0]=3;
 	nFreq[1]=30.f; nPers[1]=0.40f; nPow[1]=1.2f; nOct[1]=3;

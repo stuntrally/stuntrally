@@ -28,6 +28,7 @@ struct TerLayer		// terrain texture layer
 	//  noise
 	float noise, nprev, nnext2;   //  factors to blend layer +1,-1,+2
 	float nFreq[2], nPers[2], nPow[2];  int nOct[2];
+	float fDamage;  // car damage per sec
 	
 	//  surface params bind
 	std::string surfName;  int surfId;
@@ -250,6 +251,7 @@ public:
 
 	Ogre::Vector4 fogClrH;  // height fog color
 	float fogHeight, fogHDensity, fogHStart, fogHEnd;
+	float fHDamage;  // damage from low height fog
 
 
 	//  game
