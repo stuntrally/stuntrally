@@ -1572,6 +1572,17 @@
 							<Property key="TextColour" value="0.7 0.9 1"/>
 							<UserString key="tip" value="#{TipFogEndDist}"/>
 						</Widget>
+                        
+						<Widget type="TextBox" skin="TextBox" position="44 380 104 24">
+                            <Property key="Caption" value="#{Damage}"/>
+                            <Property key="TextColour" value="0.8 0.6 0.6"/>
+                        </Widget>
+                        <Widget type="Slider" skin="Slider" position="216 380 320 16" name="FogHDmg">
+                            <Property key="Colour" value="0.9 0.8 0.8"/>
+                        </Widget>
+                        <Widget type="TextBox" skin="TextBox" position="152 380 64 24" name="FogHDmgVal">
+                            <Property key="TextColour" value="0.9 0.6 0.6"/>
+                        </Widget>
 					</Widget>
 				</Widget>
 			</Widget>
@@ -2267,6 +2278,17 @@
 							<Property key="Colour" value="0.4 0.8 0.7"/>
 							<UserString key="tip" value="#{TipTerNoiseOnly}"/>
 						</Widget>
+
+                        <Widget type="TextBox" skin="TextBox" position="466 228 130 20">
+                            <Property key="Caption" value="#{Damage}"/>
+                            <Property key="TextColour" value="0.7 0.4 0.4"/>
+                        </Widget>
+                        <Widget type="TextBox" skin="TextBox" position="466 248 56 22" name="TerLDmgVal">
+                            <Property key="TextColour" value="0.8 0.4 0.4"/>
+                        </Widget>
+                        <Widget type="Slider" skin="Slider" position="512 248 220 16" name="TerLDmg">
+                            <Property key="Colour" value="0.9 0.8 0.8"/>
+                        </Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 272">
 						<Property key="Caption" value="#90E0C0#{TerLNoise}"/>

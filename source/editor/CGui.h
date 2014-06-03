@@ -108,7 +108,7 @@ public:
 
 	SV svFogStart, svFogEnd;
 	SV svFogHStart, svFogHEnd;  // Hfog
-	SV svFogHeight, svFogHDensity;
+	SV svFogHeight, svFogHDensity, svFogHDmg;
 
 	Ed edLiAmb,edLiDiff,edLiSpec, edFogClr,edFogClr2,edFogClrH;
 	Img clrAmb, clrDiff, clrSpec, clrFog, clrFog2, clrFogH;
@@ -166,7 +166,7 @@ public:
 	SV svTerLAngMin, svTerLHMin, svTerLAngSm;
 	SV svTerLAngMax, svTerLHMax, svTerLHSm;
 	//  noise
-	SV svTerLNoise, svTerLNprev, svTerLNnext2;
+	SV svTerLNoise, svTerLNprev, svTerLNnext2, svTerLDmg;
 	SV svTerLN_Freq[2], svTerLN_Oct[2], svTerLN_Pers[2], svTerLN_Pow[2];
 	void slTerLay(SV*), SldUpd_TerLNvis();
 

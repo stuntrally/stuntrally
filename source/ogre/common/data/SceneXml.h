@@ -130,6 +130,7 @@ struct PTer
 	Ogre::ColourValue tclr;  // trail
 
 	float angMin,angMax;
+	float dmg;
 	PTer();
 };
 

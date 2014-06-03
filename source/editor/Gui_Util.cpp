@@ -47,7 +47,7 @@ void CGui::SetGuiFromXmls()
 	_Ed(FogClr, sc->fogClr);  _Ed(FogClr2, sc->fogClr2);  _Ed(FogClrH, sc->fogClrH);
 	svFogStart.Upd();	svFogEnd.Upd();
 	svFogHStart.Upd();	svFogHEnd.Upd();
-	svFogHeight.Upd();	svFogHDensity.Upd();
+	svFogHeight.Upd();	svFogHDensity.Upd();  svFogHDmg.Upd();
 	svRain1Rate.Upd();	svRain2Rate.Upd();	
 	_Cmb(cmbRain1, sc->rainName);
 	_Cmb(cmbRain2, sc->rain2Name);

@@ -38,7 +38,7 @@
 
 <t a="D8"  sc="D"  t="desert_cracks_d"    n="desert_cracks_n"    s="9.09"  su="DesertFast"     tp="0" du="0.8" ds="1.0" md="0.1" tr="0.46 0.46 0.08 0.7"  aa="8"  ab="22" z="DI" />
 <t a="V9"  sc="V"  t="desert_crackso_d"   n="desert_cracks_n"    s="6.61"  su="DesertFast"     tp="0" du="0.0" ds="0.0" md="0.1" tr="0.42 0.36 0.28 0.6"  aa="12" ab="25" z="V" />
-<t a="V9"  sc="V"  t="desert_cracksv_d"   n="desert_cracks_n"    s="6.61"  su="DesertFast"     tp="0" du="0.0" ds="0.0" md="0.1" tr="0.42 0.36 0.28 0.6"  aa="12" ab="25" z="V" />
+<t a="V9"  sc="V"  t="desert_cracksv_d"   n="desert_cracks_n"    s="6.61"  su="DesertFast"     tp="0" du="0.0" ds="0.0" md="0.1" tr="0.42 0.36 0.28 0.6"  aa="12" ab="25" z="V" d="0.4" />
 <t a="D2"  sc="D"  t="desert_mntn2_d"     n="desert_mntn2_n"     s="41.30" su="Rocks"          tp="1" du="0.0" ds="0.2" md="0.1" tr="0.20 0.20 0.00 1.0"  aa="44" ab="90" z="D" />
 <t a="D2"  sc="D"  t="desert_mntn_d"      n="desert_mntn_n"      s="26.21" su="Rocks"          tp="1" du="0.4" ds="1.0" md="0.7" tr="0.42 0.36 0.08 0.8"  aa="23" ab="44" z="DI" />
 
@@ -89,10 +89,10 @@
 <t a="X6"  sc="X"  t="jungle_mntnx_d"     n="jungle_mntn_n"      s="21.88" su="Rocks"          tp="1" du="0.0" ds="0.2" md="0.0" tr="0.32 0.31 0.80 0.9"  aa="39" ab="53" z="X" />
 <t a="J1"  sc="J"  t="jungle_stone_d"     n="jungle_stone_n"     s="26.00" su="Rocks"          tp="1" du="0.0" ds="0.2" md="0.0" tr="0.20 0.20 0.20 0.6"  aa="42" ab="90" z="JO" />
 
-<t a="V9"  sc="V"  t="lava2_d"            n="ground_cracked_n"   s="14.55" su="Rocks"          tp="0" du="0.0" ds="0.0" md="0.5" tr="0.32 0.32 0.32 0.3"  aa="26" ab="45" z="V" />
-<t a="V9"  sc="V"  t="lava_black_d"       n="lava_black_n"       s="5.87"  su="DesertMud"      tp="0" du="0.0" ds="0.0" md="0.0" tr="0.25 0.20 0.14 0.6"  aa="0"  ab="9"  z="V" />
-<t a="V6"  sc="V"  t="lava_d"             n="lava_n"             s="33.83" su="DesertRocks"    tp="1" du="0.0" ds="0.2" md="0.0" tr="0.30 0.15 0.00 0.6"  aa="0"  ab="90" z="V" />
-<t a="R3"  sc="R"  t="lava_mars_d"        n="lava_n"             s="32.00" su="Rocks"          tp="1" du="0.3" ds="1.0" md="0.8" tr="0.15 0.06 0.03 0.9"  aa="64" ab="90" z="R" />
+<t a="V9"  sc="V"  t="lava2_d"            n="ground_cracked_n"   s="14.55" su="Rocks"          tp="0" du="0.0" ds="0.0" md="0.5" tr="0.32 0.32 0.32 0.3"  aa="26" ab="45" z="V" d="2" />
+<t a="V9"  sc="V"  t="lava_black_d"       n="lava_black_n"       s="5.87"  su="DesertMud"      tp="0" du="0.0" ds="0.0" md="0.0" tr="0.25 0.20 0.14 0.6"  aa="0"  ab="9"  z="V" d="0.1" />
+<t a="V6"  sc="V"  t="lava_d"             n="lava_n"             s="33.83" su="DesertRocks"    tp="1" du="0.0" ds="0.2" md="0.0" tr="0.30 0.15 0.00 0.6"  aa="0"  ab="90" z="V" d="4" />
+<t a="R3"  sc="R"  t="lava_mars_d"        n="lava_n"             s="32.00" su="Rocks"          tp="1" du="0.3" ds="1.0" md="0.8" tr="0.15 0.06 0.03 0.9"  aa="64" ab="90" z="R" d="2" />
 
 <t a="V2"  sc="V"  t="mntn_black_d"       n="mntn_black_n"       s="30.02" su="Rocks"          tp="1" du="0.3" ds="0.2" md="0.5" tr="0.32 0.32 0.32 0.4"  aa="44" ab="90" z="IJTVX" />
 <t a="F12" sc="F"  t="mntn_brown_d"       n="mntn_brown_n"       s="32.19" su="Rocks"          tp="1" du="0.0" ds="0.2" md="1.0" tr="0.23 0.23 0.10 0.8"  aa="52" ab="90" z="FGJMTV" />
@@ -131,9 +131,9 @@
 <t a="W1"  sc="W"  t="snow_mud_d"         n="snow_mud_n"         s="9.50"  su="SnowWet"        tp="0" du="1.0" ds="0.8" md="1.0" tr="0.40 0.40 0.40 0.6"  aa="0"  ab="20" z="W" />
 <t a="W11" sc="W"  t="snow_rough_d"       n="snow_rough_n"       s="12.14" su="SnowDeep"       tp="0" du="0.4" ds="0.6" md="1.0" tr="0.40 0.40 0.40 0.6"  aa="11" ab="90" z="W" />
 
-<t a="Y1"  sc="Y"  t="ycrystals_fine_d"   n="ycrystals_fine_n"   s="17.15" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.16 0.16 0.16 0.7"  aa="0"  ab="10" z="Y" />
-<t a="Y1"  sc="Y"  t="ycrystals_med_d"    n="ycrystals_med_n"    s="12.59" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.16 0.16 0.16 0.7"  aa="14" ab="31" z="Y" />
-<t a="Y1"  sc="Y"  t="ycrystals_big_d"    n="ycrystals_big_n"    s="17.15" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.16 0.16 0.16 0.7"  aa="38" ab="90" z="Y" />
+<t a="Y1"  sc="Y"  t="ycrystals_fine_d"   n="ycrystals_fine_n"   s="17.15" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.16 0.16 0.16 0.7"  aa="0"  ab="10" z="Y" d="" />
+<t a="Y1"  sc="Y"  t="ycrystals_med_d"    n="ycrystals_med_n"    s="12.59" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.16 0.16 0.16 0.7"  aa="14" ab="31" z="Y" d="" />
+<t a="Y1"  sc="Y"  t="ycrystals_big_d"    n="ycrystals_big_n"    s="17.15" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.16 0.16 0.16 0.7"  aa="38" ab="90" z="Y" d="" />
 <!--
 <t a="Z1"  sc="Z"  t="zdesert_sand2_d"    n="desert_sand2_n"     s="16.21" su="DesertFast"     tp="0" du="0.9" ds="1.0" md="0.1" tr="0.16 0.16 0.16 0.7"  aa="15" ab="27" z="Z" />
 <t a="Z4"  sc="Z"  t="zdesert_sand_big_d" n="desert_sand_big_n"  s="9.63"  su="DesertBumpy"    tp="0" du="0.9" ds="1.0" md="0.1" tr="0.16 0.16 0.16 0.7"  aa="15" ab="27" z="Z" />

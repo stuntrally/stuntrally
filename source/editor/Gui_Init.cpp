@@ -224,6 +224,7 @@ void CGui::InitGui()
 	sv= &svFogHEnd;		sv->Init("FogHEnd",		&sc->fogHEnd,    0.f,2000.f, 2.f, 0,3);  sv->DefaultF(60.f);   Sev(UpdFog);
 	sv= &svFogHeight;	sv->Init("FogHeight",	&sc->fogHeight, -200.f,200.f, 1.f, 1,4);  sv->DefaultF(-300.f);  Sev(UpdFog);
 	sv= &svFogHDensity;	sv->Init("FogHDensity",	&sc->fogHDensity,  0.f,200.f, 2.f, 1,4);  sv->DefaultF(60.f);  Sev(UpdFog);
+	sv= &svFogHDmg;		sv->Init("FogHDmg",		&sc->fHDamage,    0.f, 30.f, 1.5f, 1,3);  sv->DefaultF(0.f);
 
 	ck= &ckFog;			ck->Init("FogDisable",		&pSet->bFog);  Cev(Fog);
 	ck= &ckWeather;		ck->Init("WeatherDisable",	&pSet->bWeather);
@@ -306,6 +307,7 @@ void CGui::InitGui()
 	sv= &svTerLNoise;   sv->Init("TerLNoise",  &f, 0.f,1.f);  sv->DefaultF(0.f);  Sev(TerLay);
 	sv= &svTerLNprev;   sv->Init("TerLNprev",  &f, 0.f,1.f);  sv->DefaultF(0.f);  Sev(TerLay);
 	sv= &svTerLNnext2;  sv->Init("TerLNnext2", &f, 0.f,1.f);  sv->DefaultF(0.f);  Sev(TerLay);
+	sv= &svTerLDmg;     sv->Init("TerLDmg",    &f, 0.f, 6.f, 1.5f, 1,3);  sv->DefaultF(0.f);
 	//  noise params
 	for (i=0; i<2; ++i)  {  String s = toStr(i+1);
 	sv= &svTerLN_Freq[i];  sv->Init("TerLNFreq"+s,  &f, 1.f,300.f, 2.f, 1,3);   sv->DefaultF(30.f);  Sev(TerLay);

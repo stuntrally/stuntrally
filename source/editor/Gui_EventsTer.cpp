@@ -97,6 +97,7 @@ void CGui::SldUpd_TerL()
 	//  noise
 	svTerLNoise.UpdF(&l->noise);  svTerLNprev.UpdF(&l->nprev);
 	svTerLNnext2.UpdF(&l->nnext2);
+	svTerLDmg.UpdF(&l->fDamage);
 	//  noise params
 	for (int i=0; i<2; ++i)
 	{	svTerLN_Freq[i].UpdF(&l->nFreq[i]);

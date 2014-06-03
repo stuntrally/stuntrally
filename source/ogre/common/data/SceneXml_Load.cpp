@@ -705,6 +705,7 @@ bool Presets::LoadXml(string file)
 		a = eTex->Attribute("ds");	if (a)  l.dustS = s2r(a);
 		a = eTex->Attribute("md");	if (a)  l.mud = s2r(a);
 		a = eTex->Attribute("tr");	if (a)  l.tclr = s2c(a);
+		a = eTex->Attribute("d");	if (a)  l.dmg = s2r(a);
 
 		a = eTex->Attribute("aa");	if (a)  l.angMin = s2r(a);
 		a = eTex->Attribute("ab");	if (a)  l.angMax = s2r(a);

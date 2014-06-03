@@ -267,7 +267,7 @@ PTer::PTer()
 	:tiling(8.f), triplanar(false)
 	,dust(0.f), dustS(0.2f), mud(0.f)
 	,tclr(ColourValue::Black)
-	,angMin(0.f), angMax(90.f)
+	,angMin(0.f), angMax(90.f), dmg(0.f)
 	,surfName("Default")
 {	}
 

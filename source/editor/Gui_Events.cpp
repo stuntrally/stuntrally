@@ -595,6 +595,7 @@ void CGui::listPickTex(Mli2 li, size_t pos)
 			l.surfName = p->surfName;
 			l.dust = p->dust;  l.dustS = p->dustS;
 			l.mud = p->mud;  l.tclr = p->tclr;
+			l.fDamage = p->dmg;  svTerLDmg.Upd();
 			listSurf(surfList, idSurf);
 		}
 
