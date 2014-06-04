@@ -363,6 +363,7 @@
 	<Tag name="TipMinimapScrnEditor">Мини-карта выбранного трека, вид сверху.</Tag>
 	<Tag name="RplVersion">Версия</Tag>
 	<Tag name="Stages">Этапы</Tag>
+	<Tag name="OpponentsList">Спис. опон.</Tag>
 	<Tag name="Options">Опции</Tag>
 	<Tag name="Delete">Удалить</Tag>
 	<Tag name="Rename">Переименовать</Tag>
@@ -797,7 +798,7 @@
 	<Tag name="RplBestOnly">Сохр. призрака с лучш. временем</Tag>
 	<Tag name="InputFluidsMode">W - ред. жидкости</Tag>
 	<Tag name="Front">Перед</Tag>
-	<Tag name="OpponentsList">Спис. опон.</Tag>
+	<Tag name="SimModeHard">Тяжело</Tag>
 	<Tag name="VegetCol">Столк. с растит.</Tag>
 	<Tag name="Change">Изменить</Tag>
 	<Tag name="Reset">Сброс</Tag>
@@ -831,6 +832,7 @@
 	<Tag name="Road_AngleAuto">Авто</Tag>
 	<Tag name="InputRoadAltLMB">alt-LMB (или 1,2)</Tag>
 	<Tag name="AlignSmooth">Ровность</Tag>
+	<Tag name="RollingResist">Сопротив. вращ.</Tag>
 	<Tag name="page">ст.</Tag>
 	<Tag name="Layers">Слои</Tag>
 	<Tag name="Quit">Выйти</Tag>
@@ -1030,8 +1032,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред.,след. вкладка (alt - ниже)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="SimModeHard">Hard (difficult)</Tag>
-	<Tag name="RollingResist">Rolling Resistance</Tag>
+	<Tag name="SC_Crystals">Crystals</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

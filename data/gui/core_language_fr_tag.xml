@@ -50,7 +50,7 @@
 	<Tag name="TerDeform">Déformer</Tag>
 	<Tag name="TerLNoiseOnly">Bruit seulement</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
-	<Tag name="SteerRange">Steering range multipliers</Tag>
+	<Tag name="SteerRange">Multiplicateurs d'angles de braquage</Tag>
 	<Tag name="Chall_Rally">Rally</Tag>
 	<Tag name="TipChangeGloss">Changer la brillance de la peinture (mat/brillant).</Tag>
 	<Tag name="Surface">Surface</Tag>
@@ -141,7 +141,7 @@
 	<Tag name="NetReady">Prêt</Tag>
 	<Tag name="Road_Height">Hauteur</Tag>
 	<Tag name="InputNoJS">Pas de joystick</Tag>
-	<Tag name="InputRoadAngType">alt-1,2   - angles type</Tag>
+	<Tag name="InputRoadAngType">Alt-1,2 - type d'angle</Tag>
 	<Tag name="NetMasterPort">Port du serveur maître</Tag>
 	<Tag name="InpSet_KeyHalf">Touche partielle</Tag>
 	<Tag name="TerLHSm">Adoucir la hauteur</Tag>
@@ -363,6 +363,7 @@
 	<Tag name="TipMinimapScrnEditor">Mini-carte de la piste sélectionnée, vue de dessus.</Tag>
 	<Tag name="RplVersion">Version</Tag>
 	<Tag name="Stages">Étapes</Tag>
+	<Tag name="OpponentsList">Liste des opposants</Tag>
 	<Tag name="Options">Options</Tag>
 	<Tag name="Delete">Effacer</Tag>
 	<Tag name="Rename">Renommer</Tag>
@@ -378,7 +379,7 @@
 	<Tag name="length">longueur</Tag>
 	<Tag name="MessageBox_No">Non</Tag>
 	<Tag name="TipFogClrH">Couleur de la brume volumétrique.</Tag>
-	<Tag name="ColumnNSides">Column N sides</Tag>
+	<Tag name="ColumnNSides">Côtés d'une colonne</Tag>
 	<Tag name="RplAutoRec">Enregistrer un replay automatiquement</Tag>
 	<Tag name="TipTrkTerImg">Minicarte de la piste sélectionnée, vue de dessus.</Tag>
 	<Tag name="SC_Volcanic">Volcanique</Tag>
@@ -669,7 +670,7 @@
 	<Tag name="LS_GAME">Chargement du jeu</Tag>
 	<Tag name="TipSceneryId">ID d'un circuit qui a un éclairage similaire (ou celui de ce circuit s'il est unique). Utilisé pour la génération de sprites.</Tag>
 	<Tag name="TreeMult">Multi. d'arbres</Tag>
-	<Tag name="InputObjectsPaste">shift-Ins - paste copied</Tag>
+	<Tag name="InputObjectsPaste">Maj.-Insér. - coller le presse-papiers</Tag>
 	<Tag name="Gold">Or</Tag>
 	<Tag name="InputTopView">Alt-Z - activer la vue du dessus</Tag>
 	<Tag name="FogStart">début</Tag>
@@ -789,7 +790,7 @@
 	<Tag name="InputMoveAxisTip">Déplacez un axe pour voir son nombre</Tag>
 	<Tag name="TipNewGame">Démarrer une partie sur un nouveau circuit ou redémarrer sur le circuit actuel.</Tag>
 	<Tag name="TipNewTerrainFlat">Créer un nouveau terrain plat.</Tag>
-	<Tag name="SpecularPowerEm">Emissive power</Tag>
+	<Tag name="SpecularPowerEm">Puissance des reflets</Tag>
 	<Tag name="Far">Éloigné</Tag>
 	<Tag name="RplGhosts">Fantômes</Tag>
 	<Tag name="CarType">Type</Tag>
@@ -797,7 +798,7 @@
 	<Tag name="RplBestOnly">Enregistrer le fantôme pour le meilleur temps seulement</Tag>
 	<Tag name="InputFluidsMode">W - éditer les liquides</Tag>
 	<Tag name="Front">Avant</Tag>
-	<Tag name="OpponentsList">Liste des opposants</Tag>
+	<Tag name="SimModeHard">Hard (difficult)</Tag>
 	<Tag name="VegetCol">Collision avec les végétaux</Tag>
 	<Tag name="Change">Modifier</Tag>
 	<Tag name="Reset">Réinitialiser</Tag>
@@ -831,6 +832,7 @@
 	<Tag name="Road_AngleAuto">Automatique</Tag>
 	<Tag name="InputRoadAltLMB">Alt-Clic gauche (ou 1,2)</Tag>
 	<Tag name="AlignSmooth">Taille d'adoucissement</Tag>
+	<Tag name="RollingResist">Rolling Resistance</Tag>
 	<Tag name="page">page</Tag>
 	<Tag name="Layers">Calques</Tag>
 	<Tag name="Quit">Quitter</Tag>
@@ -902,7 +904,7 @@
 	<Tag name="loops">boucles</Tag>
 	<Tag name="MinimapBorder">Bordure</Tag>
 	<Tag name="InputTerFilter">F - filtre (suppression de bruit)</Tag>
-	<Tag name="TipSteerSurf">Steering range multiplier, for surface (Gravel,Asphalt).</Tag>
+	<Tag name="TipSteerSurf">Multiplicateur d'angle de braquage, pour la surface (gravier ou asphalte).</Tag>
 	<Tag name="InputRoadRebuild">B - reconstruire la route (après changements de terrain, etc.)</Tag>
 	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="Generator">Générateur</Tag>
@@ -1027,11 +1029,10 @@
 	<Tag name="Terrain">Terrain</Tag>
 	<Tag name="smooth">doux</Tag>
 	<Tag name="Pitch">angle vertical</Tag>
-	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
+	<Tag name="InputNextOptTab">F2,F3 - onglet précédent/suivant (Alt. - sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="SimModeHard">Hard (difficult)</Tag>
-	<Tag name="RollingResist">Rolling Resistance</Tag>
+	<Tag name="SC_Crystals">Crystals</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
