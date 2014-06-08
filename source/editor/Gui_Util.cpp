@@ -39,6 +39,11 @@ void CGui::SetGuiFromXmls()
 	//  [Sky]
 	//-----------------------------------------------
 	btnSky->setCaption(sc->skyMtr);
+	String s = sc->skyMtr;  s = s.substr(4, s.length());  // sel on pick list
+	for (size_t i=0; i < liSky->getItemCount(); ++i)
+		if (liSky->getSubItemNameAt(1, i).substr(7) == s)
+			liSky->setIndexSelected(i);
+
 	svSkyYaw.Upd();  svSunPitch.Upd();  svSunYaw.Upd();
 	_Ed(LiAmb, sc->lAmb);  _Ed(LiDiff, sc->lDiff);  _Ed(LiSpec, sc->lSpec);
 	_Clr(Amb, sc->lAmb);  _Clr(Diff, sc->lDiff);  _Clr(Spec, sc->lSpec);

@@ -553,16 +553,16 @@ void CGui::listPickSky(Mli2 li, size_t pos)
 	{	liSky->setIndexSelected(0);  pos = 0;  }
 	
 	string s = liSky->getSubItemNameAt(1,pos);
-	s = s.substr(7);
+	s = "sky/" + s.substr(7);
 	const PSky* p = data->pre->GetSky(s);  if (!p)  return;
 
 	//  set
 	sc->skyMtr = p->mtr;
-	/*if (pSet->pick_setpar)  // TODO ..
-	{	sc->ldPitch = p->ldPitch;
-		sc->ldYaw = p->ldYaw;
+	if (pSet->pick_setpar)
+	{	sc->ldPitch = p->ldPitch;  svSunPitch.Upd();
+		sc->ldYaw = p->ldYaw;  svSunYaw.Upd();
 		scn->UpdSun();
-	}/**/
+	}
 	//  upd img
 	btnSky->setCaption(s);
 	app->UpdateTrack();

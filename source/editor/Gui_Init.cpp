@@ -659,7 +659,7 @@ void CGui::InitGui()
 		String c = s.clr;
 		lp->addItem(c, 0);  l = lp->getItemCount()-1;
 
-		lp->setSubItemNameAt(1,l, c+ s.mtr);
+		lp->setSubItemNameAt(1,l, c+ s.mtr.substr(4, s.mtr.length()));  // no sky/
 		lp->setSubItemNameAt(2,l, c+ fToStr( s.ldPitch, 0,2));
 	}
 
