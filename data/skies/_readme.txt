@@ -1,9 +1,11 @@
-#Blender Game Engine Resource Kit skybox textures
-#Created by Mike Pan: mikepan.com
+360x90 degree spherical Skybox textures, UV map them to a hemisphere for best result.
 
-360x180 degree spherical Skybox textures, UV map them to a hemisphere for best result.
-
-
-
-sky_* maps from:
+- (old)  sky_*.jpg also d* m*
+Free high res skymaps (Massive 07 update!) 
+by: 0ptikz
 http://blenderartists.org/forum/showthread.php?24038-Free-high-res-skymaps-%28Massive-07-update
+
+- (new)  gen_*.jpg, sky-*.jpg
+New High resolution sky pack for Blender
+by: 0ptikz
+http://blenderartists.org/forum/showthread.php?224065-New-High-resolution-sky-pack-for-Blender
