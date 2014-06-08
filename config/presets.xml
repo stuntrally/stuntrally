@@ -3,20 +3,49 @@
 <!-- skies -->
 <!-- m - material name from sky.mat  c - color (for list)  y - sun yaw  p - pitch -->
 
-<s m="sky/dust"         c="#C0C090"    y="0"  p="1" />
-<s m="sky/duskred"      c="#E05020"    y="0"  p="1" />
-<s m="sky/white"        c="#B0C0D0"    y="0"  p="1" />
-<s m="sky/white2"       c="#D0D0D0"    y="0"  p="1" />
-<s m="sky/light_blue"   c="#90C0FF"    y="0"  p="1" />
-<s m="sky/blue_clouds"  c="#C0E0FF"    y="0"  p="1" />
-<s m="sky/gray_clouds"  c="#A0A0A0"    y="0"  p="1" />
-<s m="sky/dark_clouds"  c="#707070"    y="0"  p="1" />
-<s m="sky/sunset"       c="#F0C090"    y="0"  p="1" />
-<s m="sky/dawn"         c="#E4E090"    y="0"  p="1" />
-<s m="sky/duskstormy"   c="#A09040"    y="0"  p="1" />
-<s m="sky/dayovercast"  c="#B8C8D0"    y="0"  p="1" />
-<s m="sky/magic"        c="#A0A0E0"    y="0"  p="1" />
-<s m="sky/magicdark"    c="#7070A0"    y="0"  p="1" />
+<s m="sky/day_bright"      c="#A0C8F0"   p="21"  y="-45"  />
+<s m="sky/day_blue"        c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="sky/day_blue2"       c="#D0E0F8"   p="60"  y="-40"  />
+<s m="sky/day_clouds"      c="#B0C0D0"   p="33"  y="-40"  />
+								   
+<s m="sky/cloudy"          c="#90B0D0"   p="23"  y=" 59"  />
+<s m="sky/gray_clouded"    c="#A8B0B8"   p="40"  y="105"  />
+								   
+<s m="sky/foggy_gen"       c="#90B0D0"   p="24"  y=" 47"  />
+<s m="sky/big_clouds_gen"  c="#7890A8"   p="16"  y=" 45"  />
+<s m="sky/big_clouds2_gen" c="#6080A0"   p="12"  y="  0"  />
+								   
+<s m="sky/dawn_cloudy"     c="#C0C0A0"   p="16"  y=" 88"  />
+<s m="sky/sunset_rays_gen" c="#D06010"   p=" 8"  y="  0"  />
+<s m="sky/sunset_blue_gen" c="#E09060"   p="16"  y=" 57"  />
+<s m="sky/sunset_gen"      c="#E080A0"   p="16"  y=" 45"  />
+								   
+<s m="sky/morning_gen"     c="#C0B0A0"   p="30"  y=" -8"  />
+<s m="sky/morning2_gen"    c="#D0D090"   p="30"  y="  8"  />
+								   
+<s m="sky/twighlight_gen"  c="#806030"   p=" 8"  y=" 48"  />
+<s m="sky/night_blue"      c="#3070B0"   p="12"  y=" 78"  />
+<s m="sky/offworld_gen"    c="#B0A090"   p="14"  y=" 27"  />
+
+<!-- skies, old  (lower quality) -->
+<s m="sky/dust"            c="#C0C090"   p="32"  y=" 60"  />
+<s m="sky/duskred"         c="#903820"   p="27"  y=" 15"  />
+											
+<s m="sky/white"           c="#B0C0D0"   p="26"  y=" 60"  />
+<s m="sky/white2"          c="#D0D0D0"   p="40"  y=" 60"  />
+											
+<s m="sky/light_blue"      c="#80C0FF"   p="20"  y=" 60"  />
+<s m="sky/blue_clouds"     c="#C0E0FF"   p="57"  y=" 62"  />
+<s m="sky/gray_clouds"     c="#A0A0A0"   p="38"  y=" 41"  />
+<s m="sky/dark_clouds"     c="#707070"   p="36"  y=" 41"  />
+											
+<s m="sky/sunset"          c="#E8B0C0"   p="40"  y="-40"  />
+<s m="sky/dawn"            c="#D4D090"   p="28"  y=" -7"  />
+<s m="sky/duskstormy"      c="#A09040"   p="17"  y=" 18"  />
+											
+<s m="sky/dayovercast"     c="#A0C0D0"   p="30"  y="124"  />
+<s m="sky/magic"           c="#A0A0FF"   p="30"  y="-41"  />
+<s m="sky/magicdark"       c="#7070B0"   p="31"  y="-30"  />
 
 
 <!-- common:  a - from track (not used)  sc - scenery (for name and color)  z - appears on sceneries (not used, for filters)  -->
@@ -259,14 +288,6 @@
 
 <v a="D5"  sc="D"  p="cactus"               sa="0.40" sb="0.72"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="DIV" />
 
-<v a="Y1"  sc="Y"  p="crystal1"             sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
-<v a="Y1"  sc="Y"  p="crystal2"             sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
-<v a="Y1"  sc="Y"  p="crystal_cube4"        sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
-
-<v a="Y1"  sc="Y"  p="crystal_form1"        sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
-<v a="Y1"  sc="Y"  p="crystal_form2"        sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
-<v a="Y1"  sc="Y"  p="crystal_form3"        sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
-
 <v a="S2"  sc="S"  p="farn1"                sa="0.10" sb="0.25"  wx="7.30" wy="0.060"  ab="34.34" rd="1" fd="0.5" z="CDFGIJSV" />
 <v a="J1"  sc="J"  p="farn2"                sa="0.11" sb="0.30"  wx="7.30" wy="0.060"  ab="34.42" rd="1" fd="0.5" z="FIJSV" />
 
@@ -407,5 +428,13 @@
 <v a="G2"  sc="G"  p="treeGG-37acaTall"     sa="0.90" sb="1.33"  wx="0.33" wy="0.040"  ab="40.00" rd="1" fd="0.0" z="FGO" />
 <v a="G1"  sc="G"  p="treeGW-41aspMid"      sa="1.15" sb="1.67"  wx="0.43" wy="0.010"  ab="11.93" rd="1" fd="0.0" z="G" />
 <v a="O1"  sc="O"  p="treeGY-36aspMed"      sa="0.92" sb="1.22"  wx="0.70" wy="0.010"  ab="30.63" rd="1" fd="0.0" z="O" />
+
+<v a="Y1"  sc="Y"  p="crystal1"             sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
+<v a="Y1"  sc="Y"  p="crystal2"             sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
+<v a="Y1"  sc="Y"  p="crystal_cube4"        sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
+
+<v a="Y1"  sc="Y"  p="crystal_form1"        sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
+<v a="Y1"  sc="Y"  p="crystal_form2"        sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
+<v a="Y1"  sc="Y"  p="crystal_form3"        sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
 
 </presets>

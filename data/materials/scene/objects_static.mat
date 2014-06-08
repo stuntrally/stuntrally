@@ -193,3 +193,16 @@ material well
 	terrain_light_map true
 	shadowBias 0.0001
 }
+
+
+//  big
+
+material water_plane_big
+{
+	parent base
+	diffuseMap water_plane_big.jpg
+	ambient 1.0 1.1 1.1
+	diffuse 1.0 1.04 1.05
+	specular 0.4 0.5 0.6 32
+	shadowBias 0.0001
+}

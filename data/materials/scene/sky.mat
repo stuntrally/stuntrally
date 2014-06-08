@@ -99,3 +99,113 @@ material sky/magicdark
     parent base_sky
     texture magicdark.jpg
 }
+
+
+//  new
+material sky/morning_gen
+{
+    parent base_sky
+    texture gen-brightday.jpg
+}
+
+material sky/morning2_gen
+{
+    parent base_sky
+    texture gen-brightday2.jpg
+}
+
+material sky/foggy_gen
+{
+    parent base_sky
+    texture gen-foggy.jpg
+}
+
+material sky/sunset_rays_gen
+{
+    parent base_sky
+    texture gen-godrays.jpg
+}
+
+material sky/sunset_blue_gen
+{
+    parent base_sky
+    texture gen-morning.jpg
+}
+
+material sky/offworld_gen
+{
+    parent base_sky
+    texture gen-offworld.jpg
+}
+
+material sky/big_clouds_gen
+{
+    parent base_sky
+    texture gen-bigclouds.jpg
+}
+
+material sky/big_clouds2_gen
+{
+    parent base_sky
+    texture gen-bigclouds2.jpg
+}
+
+material sky/sunset_gen
+{
+    parent base_sky
+    texture gen-sunset.jpg
+}
+
+material sky/dawn_cloudy
+{
+    parent base_sky
+    texture sky-sunset.jpg
+}
+
+material sky/gray_clouded
+{
+    parent base_sky
+    texture sky-darkclouds.jpg
+}
+
+material sky/day_bright
+{
+    parent base_sky
+    texture sky-clearday.jpg
+}
+
+material sky/day_blue
+{
+    parent base_sky
+    texture sky-clearday1.jpg
+}
+
+material sky/day_clouds
+{
+    parent base_sky
+    texture sky-clearday2.jpg
+}
+
+material sky/day_blue2
+{
+    parent base_sky
+    texture sky-1day.jpg
+}
+
+material sky/cloudy
+{
+    parent base_sky
+    texture sky-2clouds.jpg
+}
+
+material sky/twighlight_gen
+{
+    parent base_sky
+    texture gen-twighlight.jpg
+}
+
+material sky/night_blue
+{
+    parent base_sky
+    texture sky-night.jpg
+}
