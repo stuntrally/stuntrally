@@ -121,3 +121,20 @@ made by rubberduck from these:
 Artist: yughues
 License: CC0
 http://opengameart.org/content/rocks-0
+
+
+---- water_plane_big
+Plane Martin m 130 Cycles
+Author: noenmaster
+License: CC0
+http://www.blendswap.com/blends/view/66829
+
+---- balloon1
+Author: assiscezar
+License: CC0
+http://www.blendswap.com/blends/view/69727
+
+---- balloon2
+Author: dvachib
+License: CC0
+http://www.blendswap.com/blends/view/70780
