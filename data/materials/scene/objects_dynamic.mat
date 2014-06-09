@@ -85,7 +85,7 @@ material plastic_barrel
 	parent base
 	diffuseMap plastic_diffuse.jpg
 	normalMap plastic_normal.jpg
-	specMap plastic_specular.png
+	specMap plastic_specular.jpg
 	terrain_light_map true
 	ambient 1.00 1.00 1.00
 	diffuse 1.00 1.00 1.00
