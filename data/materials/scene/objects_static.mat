@@ -213,16 +213,13 @@ material balloon1
 	diffuseMap balloon1.jpg
 	ambient 0.7 0.7 0.7
 	diffuse 0.8 0.8 0.8
-	specular 0.3 0.3 0.3 24
+	specular 0.3 0.3 0.3 20
 }
 
 material balloon1b
 {
-	parent base
+	parent balloon1
 	diffuseMap balloon1b.jpg
-	ambient 0.7 0.7 0.7
-	diffuse 0.8 0.8 0.8
-	specular 0.3 0.3 0.3 24
 }
 
 material balloon2
@@ -232,4 +229,22 @@ material balloon2
 	ambient 0.8 0.8 0.8
 	diffuse 0.9 0.9 0.9
 	specular 0.2 0.2 0.2 16
+}
+
+material balloon2b
+{
+	parent balloon2
+	diffuseMap balloon2b.png
+}
+
+material balloon2cl
+{
+	parent balloon2
+	diffuseMap balloon2cl.png
+}
+
+material balloon2clr
+{
+	parent balloon2
+	diffuseMap balloon2clr.png
 }
