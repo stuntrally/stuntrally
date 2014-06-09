@@ -291,7 +291,7 @@
 	<Tag name="Car">Mașină</Tag>
 	<Tag name="Challenge">Challenge</Tag>
 	<Tag name="FuelLap">Fuel each lap</Tag>
-	<Tag name="TipSkyMats">Nume material cer (din SkyDome.material).</Tag>
+	<Tag name="TipSkyMats">Sky material names.</Tag>
 	<Tag name="Simulation">Simulation</Tag>
 	<Tag name="HDRVignettingDarkness">Vignetting Darken</Tag>
 	<Tag name="VolMaster">Principal</Tag>
@@ -933,6 +933,7 @@
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
 	<Tag name="InpSet_AxisHalfInv">Axis Half Inversed</Tag>
 	<Tag name="ScaleTerHeight">Terrain Height</Tag>
+	<Tag name="SC_Crystals">Crystals</Tag>
 	<Tag name="TipTerLHSm">Height smooth range (transition).</Tag>
 	<Tag name="SimModeNormal">Normal (simulation)</Tag>
 	<Tag name="ColGloss">Glossiness</Tag>
@@ -1032,7 +1033,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="SC_Crystals">Crystals</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

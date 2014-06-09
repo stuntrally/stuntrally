@@ -291,7 +291,7 @@
 	<Tag name="Car">Авто</Tag>
 	<Tag name="Challenge">Вызов</Tag>
 	<Tag name="FuelLap">Нитро за круг</Tag>
-	<Tag name="TipSkyMats">Названия материалов для неба (из SkyDome.material).</Tag>
+	<Tag name="TipSkyMats">Sky material names.</Tag>
 	<Tag name="Simulation">Симуляция</Tag>
 	<Tag name="HDRVignettingDarkness">Затем. кашир.</Tag>
 	<Tag name="VolMaster">Общий</Tag>
@@ -933,6 +933,7 @@
 	<Tag name="InputTogglePreview">F7 - войти/выйти смот. камера</Tag>
 	<Tag name="InpSet_AxisHalfInv">Пол оси инверсия</Tag>
 	<Tag name="ScaleTerHeight">Высота ландшафта</Tag>
+	<Tag name="SC_Crystals">Crystals</Tag>
 	<Tag name="TipTerLHSm">Диапазон ровной высоты (переход).</Tag>
 	<Tag name="SimModeNormal">Норма (симуляция)</Tag>
 	<Tag name="ColGloss">Блеск</Tag>
@@ -1032,7 +1033,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред.,след. вкладка (alt - ниже)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="SC_Crystals">Crystals</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

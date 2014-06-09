@@ -291,7 +291,7 @@
 	<Tag name="Car">Auto</Tag>
 	<Tag name="Challenge">Wyzwanie</Tag>
 	<Tag name="FuelLap">Paliwo co okrążenie</Tag>
-	<Tag name="TipSkyMats">Nazwa materiału nieba (z SkyDome.material).</Tag>
+	<Tag name="TipSkyMats">Nazwy matriałów nieba.</Tag>
 	<Tag name="Simulation">Symulacja</Tag>
 	<Tag name="HDRVignettingDarkness">Winietowanie ciemniej</Tag>
 	<Tag name="VolMaster">Główny</Tag>
@@ -933,6 +933,7 @@
 	<Tag name="InputTogglePreview">F7 - wejdź/wyjdź z kamery podglądu</Tag>
 	<Tag name="InpSet_AxisHalfInv">Oś, połowa, przeciwnie</Tag>
 	<Tag name="ScaleTerHeight">Wysokość terenu</Tag>
+	<Tag name="SC_Crystals">Kryształy</Tag>
 	<Tag name="TipTerLHSm">Wysokość zakres przejścia</Tag>
 	<Tag name="SimModeNormal">Normalny (Symulacja)</Tag>
 	<Tag name="ColGloss">Połysk</Tag>
@@ -1032,7 +1033,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz.,następna zakładka (alt - pod-zakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="SC_Crystals">Crystals</Tag>
 	<Tag name="GameVersion">2.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
