@@ -446,7 +446,7 @@ void CarModel::Create(int car)
 			Entity* eWh = mSceneMgr->createEntity(siw, sDirname + sMesh, sCarI);
 			if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
-			if (bLogInfo && w==0)  LogMeshInfo(eWh, name, 4);
+			if (bLogInfo && w==0 || w==2)  LogMeshInfo(eWh, name, 2);
 		}else
 		{	ManualObject* mWh = pApp->CreateModel(mSceneMgr, sMtr[Mtr_CarBody]+siw, &pCar->wheelmodelfront.mesh, vPofs, true, false, siw);
 			if (mWh)  {
