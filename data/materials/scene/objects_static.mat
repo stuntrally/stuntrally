@@ -270,3 +270,12 @@ material city_house2
 	diffuse 0.9 0.9 0.9
 	specular 0.2 0.2 0.2 16
 }
+
+material city_house3
+{
+	parent base
+	diffuseMap city_house3.jpg
+	ambient 0.8 0.8 0.8
+	diffuse 0.9 0.9 0.9
+	specular 0.2 0.2 0.2 16
+}
