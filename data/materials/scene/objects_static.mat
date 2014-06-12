@@ -288,3 +288,12 @@ material city_house4
 	diffuse 0.9 0.9 0.9
 	specular 0.2 0.2 0.2 16
 }
+
+material city_shop
+{
+	parent base
+	diffuseMap city_shop.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.9 0.9 0.9
+	specular 0.2 0.2 0.2 16
+}

@@ -22,3 +22,8 @@ Author: Reino
 License: CC-BY-SA
 http://www.blendswap.com/blends/view/73728
 
+----  city_shop
+Supermarket
+Author: KainEden
+License: CC-BY 3.0
+http://opengameart.org/content/supermarket
