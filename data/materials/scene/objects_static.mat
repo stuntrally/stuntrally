@@ -249,12 +249,23 @@ material balloon2clr
 	diffuseMap balloon2clr.png
 }
 
-//
+
+//  city
 material city_house1
 {
 	parent base
 	diffuseMap city_house1.jpg
 	normalMap city_house1_n.jpg
+	ambient 0.8 0.8 0.8
+	diffuse 0.9 0.9 0.9
+	specular 0.2 0.2 0.2 16
+}
+
+material city_house2
+{
+	parent base
+	diffuseMap city_house2.jpg
+	normalMap city_house2_n.jpg
 	ambient 0.8 0.8 0.8
 	diffuse 0.9 0.9 0.9
 	specular 0.2 0.2 0.2 16
