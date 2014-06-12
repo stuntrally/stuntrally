@@ -15,3 +15,10 @@ City Building
 Author: victorbied1
 License: CC-BY
 http://www.blendswap.com/blends/view/71056
+
+----  city_house4, _tall
+NYC apartment building 
+Author: Reino
+License: CC-BY-SA
+http://www.blendswap.com/blends/view/73728
+
