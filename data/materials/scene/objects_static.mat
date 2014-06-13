@@ -297,3 +297,20 @@ material city_shop
 	diffuse 0.9 0.9 0.9
 	specular 0.2 0.2 0.2 16
 }
+
+material Building
+{
+	parent base
+	diffuseMap skyscraper.jpg
+	normalMap skyscraper_norm.jpg
+	specMap skyscraper_spec.jpg
+	reflMap skyscraper_refl.jpg
+	
+	ambient 0.8 0.8 0.8
+	diffuse 0.9 0.9 0.9
+	specular 0.4 0.4 0.4 32
+	
+	env_map true
+    fresnel false
+    refl_amount 0.3
+}
