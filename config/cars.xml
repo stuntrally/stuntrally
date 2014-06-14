@@ -31,8 +31,8 @@
 	<car id="ES"  name="ES"  crtver="1.2" speed="6" year="2006" type="Gravel"   easy="0.99" norm="1.04"  author="VeTi (blendswap)" />
 	<car id="S1"  name="S1"  crtver="1.8" speed="6" year="2005" type="Gravel"   easy="0.97" norm="1.01"  author="(Super Racing)" />
 																										
-	<car id="TU"  name="TU"  crtver="2.4" speed="8" year="2012" type="Extreme"  easy="0.92" norm="0.94"  author="carlospanganiban (blendswap)" />
 	<car id="TW"  name="TW"  crtver="2.1" speed="7" year="2011" type="Extreme"  easy="0.92" norm="0.94"  author="irokrhus (blendswap)" />
+	<car id="TU"  name="TU"  crtver="2.4" speed="7" year="2012" type="Extreme"  easy="0.92" norm="0.94"  author="carlospanganiban (blendswap)" />
 	<car id="CT"  name="CT"  crtver="0.2" speed="7" year="1998" type="Asphalt"  easy="0.97" norm="1.02"  author="Dick Maurer,.. (VDrift)" />
 
 	<car id="XM"  name="XM"  crtver="1.0" speed="8" year="1995" type="Asphalt"  easy="0.98" norm="1.02"  author="Nicolas Lafortune (VDrift)" />

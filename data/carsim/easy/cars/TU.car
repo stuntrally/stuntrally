@@ -36,7 +36,7 @@ exhaust-mirror-second = 0
 #---------------------------
 [ collision ]
 com_ofs_L = 0.1
-com_ofs_H = -0.0
+com_ofs_H = -0.2
 radius = 0.304
 width = 1.0
 height = 0.3
@@ -61,7 +61,7 @@ start-rpm = 1000
 stall-rpm = 400
 fuel-consumption = 1e-9
 friction = 130
-torque-val-mul = 1.1
+torque-val-mul = 0.85
 torque-curve-00 = 1000, 400
 torque-curve-01 = 1500, 460
 torque-curve-02 = 2000, 500
@@ -75,7 +75,7 @@ torque-curve-09 = 5500, 530
 torque-curve-10 = 6000, 493
 torque-curve-11 = 6500, 451
 torque-curve-12 = 7000, 410
-real-pow-tq-mul = 1.2
+real-pow-tq-mul = 1.1
 
 [ clutch ]
 max-torque-mul = 1.1
@@ -95,7 +95,7 @@ shift-delay = 0.04
 
 [ differential ]
 final-drive = 8.0
-anti-slip = 400.0
+anti-slip = 600.0
 
 [ fuel-tank ]
 position = -0.0, -0.16, -0.16
@@ -150,14 +150,14 @@ width-trail = 0.55
 #---------------------------
 [ brakes-front ]
 friction = 0.98
-max-pressure = 6.2e6
+max-pressure = 5.2e6
 bias = 0.45
 radius = 0.18
 area = 0.016
 
 [ brakes-rear ]
 friction = 0.98
-max-pressure = 6.2e6
+max-pressure = 5.2e6
 bias = 0.55
 radius = 0.18
 area = 0.016
