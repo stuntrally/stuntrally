@@ -1080,6 +1080,58 @@ material TW_wheel_rear
 }
 
 
+//  TU  --------------------------
+material car_body_TU
+{
+	parent car_body
+	reflMap TU_body00_red.png
+	specMap TU_body00_red.png
+}
+
+material TU_glass
+{
+	parent car_interior
+	diffuseMap white.png
+	ambient 0.0 0.08 0.1
+	diffuse 0.0 0.09 0.1
+	specular 0.23 0.27 0.3 8
+	env_map true
+    refl_amount 0.4
+	fresnel false
+	fresnelScaleBiasPower 0.7 0.15 4
+}
+material TU_interior
+{
+	parent car_interior
+	diffuseMap TU_interior.png
+	reflMap TU_interior_refl.png
+	specMap TU_interior_spec.png
+	specular 0.9 0.9 0.9 16
+	env_map true
+    refl_amount 0.3
+}
+material TU_wheel_front
+{
+	parent car_wheel
+	diffuseMap TU_wheel_front.png
+	reflMap TU_wheel_front_refl.png
+	specMap TU_wheel_front_refl.png
+	specular 0.5 0.5 0.5 32
+	env_map true
+    refl_amount 0.3
+}
+material TU_wheel_rear
+{
+	parent car_wheel
+	diffuseMap TU_wheel_rear.png
+	reflMap TU_wheel_rear_refl.png
+	specMap TU_wheel_rear_refl.png
+	specular 0.5 0.5 0.5 32
+	env_map true
+    refl_amount 0.3
+}
+
+
 //  FN  ...
 material FN_glass
 {

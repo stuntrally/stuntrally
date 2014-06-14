@@ -154,3 +154,55 @@ particle_system BoostRed
    	    rate 0.30
     }
 }
+
+
+//  TW Red Boost  -----------------------
+
+particle_system BoostViol
+{
+    material        	Boost_Red
+    particle_width  	0.25
+    particle_height 	0.25
+    cull_each       	false
+    quota           	300
+    billboard_type  	point
+    sorted				false
+    local_space			true
+
+    // Area emitter  Point
+    emitter Cylinder
+    {
+		width 0.08
+		height 0.08
+		depth 0.04
+	    angle 0
+	    position 0 0 0
+	    direction 1 0 0
+
+	    emission_rate 20
+		time_to_live 0.2
+	    velocity_min 2.80
+	    velocity_max 3.00
+
+        colour 0.4 0.15 0.6 0.9
+    }
+
+	affector DirectionRandomiser
+	{
+		randomness  1
+	}
+
+    // Fader
+    affector ColourFader
+    {
+        red   -2.7
+        green -0.2
+        blue  -0.1
+        alpha -0.9
+    }
+
+    affector Scaler
+    {
+   	    rate 0.30
+    }
+}

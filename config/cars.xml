@@ -23,13 +23,15 @@
 	<car id="TC6" name="TC6" crtver="1.4" speed="4" year="1994" type="Gravel"   easy="0.94" norm="1.00"  author="Ny (VDrift)" />
 	<car id="NS"  name="NS"  crtver="1.4" speed="4" year="1989" type="Racing"   easy="0.96" norm="0.99"  author="Zachary (VDrift)" />
 																										
-	<car id="FM"  name="FM"  crtver="1.2" speed="5" year="2000" type="Gravel"   easy="0.99" norm="1.00"  author="scrawl (blendswap)" />
+<car id="FM"  name="FM"  crtver="1.2" speed="5" year="2000" type="Gravel"   easy="0.99" norm="1.00"  author="scrawl (blendswap)" />
+<!--<car id="FN"  name="FM"  crtver="2.4" speed="5" year="2000" type="Gravel"   easy="0.99" norm="1.00"  author="Neubi (blendswap)" />-->
 	<car id="S8"  name="S8"  crtver="2.0" speed="5" year="2008" type="Gravel"   easy="0.96" norm="1.00"  author="lubomircenovsky (blendswap)" />
 	<car id="N1"  name="N1"  crtver="2.0" speed="5" year="1999" type="Racing"   easy="0.96" norm="1.015" author="(Super Racing)" />
 																										
 	<car id="ES"  name="ES"  crtver="1.2" speed="6" year="2006" type="Gravel"   easy="0.99" norm="1.04"  author="VeTi (blendswap)" />
 	<car id="S1"  name="S1"  crtver="1.8" speed="6" year="2005" type="Gravel"   easy="0.97" norm="1.01"  author="(Super Racing)" />
 																										
+	<car id="TU"  name="TU"  crtver="2.4" speed="8" year="2012" type="Extreme"  easy="0.92" norm="0.94"  author="carlospanganiban (blendswap)" />
 	<car id="TW"  name="TW"  crtver="2.1" speed="7" year="2011" type="Extreme"  easy="0.92" norm="0.94"  author="irokrhus (blendswap)" />
 	<car id="CT"  name="CT"  crtver="0.2" speed="7" year="1998" type="Asphalt"  easy="0.97" norm="1.02"  author="Dick Maurer,.. (VDrift)" />
 
