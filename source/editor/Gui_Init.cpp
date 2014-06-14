@@ -562,7 +562,6 @@ void CGui::InitGui()
 	//---------------------  Objects  ---------------------
 	app->vObjNames.clear();  strlist lo;
 	PATHMANAGER::DirList(sData + "/objects", lo);
-	PATHMANAGER::DirList(sData + "/objectsC", lo);//-
 	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh") && !StringUtil::startsWith(*i,"sphere"))
 			app->vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
@@ -588,6 +587,7 @@ void CGui::InitGui()
 	//  buildings
 	lo.clear();
 	PATHMANAGER::DirList(sData + "/objects0", lo);
+	PATHMANAGER::DirList(sData + "/objectsC", lo);//-
 	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh"))
 		{	std::string name = (*i).substr(0,(*i).length()-5);
