@@ -123,23 +123,32 @@ License: CC0
 http://opengameart.org/content/rocks-0
 
 
----- water_plane_big
+---- water_plane_big.mesh
 Plane Martin m 130 Cycles
 Author: noenmaster
 License: CC0
 http://www.blendswap.com/blends/view/66829
 
----- balloon1
+---- balloon1.mesh
 Author: assiscezar
 License: CC0
 http://www.blendswap.com/blends/view/69727
 
----- balloon2
+---- balloon2.mesh
 Author: dvachib
 License: CC0
 http://www.blendswap.com/blends/view/70780
 
----- tree_trunks
+
+---- statue_buddha.mesh
+Buddha Statue 
+Author: GiovanniLucca
+License: CC-BY
+http://www.blendswap.com/blends/view/38409
+
+---- tree_trunks.mesh
+Tree trunks 
 Author: ahedov
 License: CC-BY-SA
 http://www.blendswap.com/blends/view/69221
+
