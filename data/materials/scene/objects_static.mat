@@ -338,3 +338,14 @@ material tree_trunks
 	diffuse 0.9 0.9 0.9
 	specular 0.1 0.1 0.1 32
 }
+
+material chapel
+{
+	parent base
+	diffuseMap chapel.jpg
+	normalMap chapel_norm.jpg
+	
+	ambient 0.8 0.8 0.8
+	diffuse 0.9 0.9 0.9
+	specular 0.1 0.1 0.1 32
+}

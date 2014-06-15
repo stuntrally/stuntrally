@@ -141,14 +141,19 @@ http://www.blendswap.com/blends/view/70780
 
 
 ---- statue_buddha.mesh
-Buddha Statue 
+Buddha Statue
 Author: GiovanniLucca
 License: CC-BY
 http://www.blendswap.com/blends/view/38409
 
 ---- tree_trunks.mesh
-Tree trunks 
+Tree trunks
 Author: ahedov
 License: CC-BY-SA
 http://www.blendswap.com/blends/view/69221
 
+---- chapel.mesh
+Graveyard chapel
+Author: ahedov
+License: CC-BY-SA
+http://www.blendswap.com/blends/view/69364
