@@ -22,7 +22,6 @@
 																										
 	<car id="UV"  name="UV"  crtver="2.1" speed="4" year="2008" type="Extreme"  easy="0.87" norm="0.965" author="greyoxide (blendswap)" />
 	<car id="TC6" name="TC6" crtver="1.4" speed="4" year="1994" type="Gravel"   easy="0.94" norm="1.00"  author="Ny (VDrift)" />
-	<car id="NS"  name="NS"  crtver="1.4" speed="4" year="1989" type="Racing"   easy="0.96" norm="0.99"  author="Zachary (VDrift)" />
 																										
 <car id="FM"  name="FM"  crtver="1.2" speed="5" year="2000" type="Gravel"   easy="0.99" norm="1.00"  author="scrawl (blendswap)" />
 <!--<car id="FN"  name="FM"  crtver="2.4" speed="5" year="2000" type="Gravel"   easy="0.99" norm="1.00"  author="Neubi (blendswap)" />-->

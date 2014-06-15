@@ -166,25 +166,6 @@ material M3_wheel
 }
 
 
-material NS_glass
-{
-	parent car_glass2
-	diffuseMap NS_glass.png
-}
-material NS_interior
-{
-	parent car_interior
-	diffuseMap NS_interior.png
-	ambient 0.3 0.3 0.3
-	diffuse 0.6 0.6 0.6
-}
-material NS_wheel
-{
-	parent car_wheel
-	diffuseMap NS_wheel.png
-}
-
-
 material TC6_glass
 {
 	parent car_glass2
@@ -1043,7 +1024,7 @@ material TU_glass
 	diffuseMap white.png
 	ambient 0.0 0.08 0.1
 	diffuse 0.0 0.09 0.1
-	specular 0.23 0.27 0.3 8
+	specular 0.9 0.9 0.9 32
 	env_map true
     refl_amount 0.4
 	fresnel false
@@ -1102,7 +1083,7 @@ material FN_wheel
 material car_body_SZ
 {
 	parent car_body
-	shadowBias 0.0001
+	shadowBias 0.00006
 }
 material SZ_glass
 {
@@ -1113,10 +1094,12 @@ material SZ_interior
 {
 	parent car_interior
 	diffuseMap SZ_interior.png
-	ambient 0.4 0.4 0.4
-	diffuse 0.4 0.4 0.4
-	specular 0.3 0.3 0.3 4
-	shadowBias 0.0001
+	reflMap SZ_interior_refl.png
+	specMap SZ_interior_spec.png
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.5 0.5 0.5 32
+	shadowBias 0.00006
 }
 material SZ_wheel
 {
