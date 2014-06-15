@@ -209,22 +209,6 @@ material TC6_wheel
 }
 
 
-material XM_glass
-{
-	parent car_glass2
-	diffuseMap XM_glass.png
-}
-material XM_interior
-{
-	parent car_interior
-	diffuseMap XM_interior.png
-}
-material XM_wheel
-{
-	parent car_wheel
-	diffuseMap XM_wheel.png
-}
-
 //------------------------------------------------------------------------
 
 
@@ -360,41 +344,6 @@ material UPG16000_metalwheel
 	normalMap TC6_MetalWheel_norm.png
 	ambient 0.8 0.8 0.8
 	diffuse 0.9 0.9 0.9
-	specular 1 1 1 32
-	env_map true
-	fresnel true
-	fresnelScaleBiasPower 0.7 0.15 3
-    //fresnel false
-    //refl_amount 0.2
-}
-
-//  XM
-material UPG36000_Tire
-{
-	parent car_base
-	diffuseMap XM_Tire.png
-	normalMap XM_Tire_norm.png
-	ambient 0.6 0.6 0.6
-	diffuse 0.5 0.5 0.5
-	specular 0.1 0.1 0.1 4
-}
-
-material UPG36000_brake
-{
-	parent car_base
-	diffuseMap XM_Brake.png
-	ambient 0.6 0.6 0.6
-	diffuse 0.5 0.5 0.5
-	specular 1 1 1 8
-}
-
-material UPG36000_metalWheel
-{
-	parent car_base
-	diffuseMap XM_metalWheel.png
-	normalMap XM_metalWheel_norm.png
-	ambient 0.6 0.6 0.6
-	diffuse 0.7 0.7 0.7
 	specular 1 1 1 32
 	env_map true
 	fresnel true
@@ -1147,4 +1096,35 @@ material FN_wheel
 {
 	parent car_wheel
 	diffuseMap FN_wheel.png
+}
+
+//  SZ  ...
+material car_body_SZ
+{
+	parent car_body
+	shadowBias 0.0001
+}
+material SZ_glass
+{
+	parent car_glass2
+	diffuseMap SZ_glass.png
+}
+material SZ_interior
+{
+	parent car_interior
+	diffuseMap SZ_interior.png
+	ambient 0.4 0.4 0.4
+	diffuse 0.4 0.4 0.4
+	specular 0.3 0.3 0.3 4
+	shadowBias 0.0001
+}
+material SZ_wheel
+{
+	parent car_wheel
+	diffuseMap SZ_wheel.png
+	reflMap SZ_wheel_refl.png
+	specMap SZ_wheel_refl.png
+	specular 0.5 0.5 0.5 32
+	env_map true
+    refl_amount 0.3
 }
