@@ -160,7 +160,7 @@ void App::newPerfTest(float time)
 				//if (!mWndTweak->getVisible())  // show
 				//	TweakToggle();
 				mWndTweak->setVisible(true);
-				gui->tabTweak->setIndexSelected(2);
+				gui->tabTweak->setIndexSelected(3);
 				
 				//  save car stats.txt  ---------
 				{

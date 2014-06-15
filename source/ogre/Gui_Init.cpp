@@ -536,7 +536,7 @@ void CGui::InitGui()
 	edPerfTest = fEd("TweakPerfTest");
 	tabEdCar = fTab("TabEdCar");  Tev(tabEdCar, CarEdChng);  tabEdCar->setIndexSelected(pSet->car_ed_tab);
 
-	tabTweak = fTab("TabTweak");  /**/tabTweak->setIndexSelected(1);
+	tabTweak = fTab("TabTweak");  //tabTweak->setIndexSelected(1);
 	txtTweakPath = fTxt("TweakPath");
 	Btn("TweakCarSave", btnTweakCarSave);
 
