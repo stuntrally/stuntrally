@@ -38,6 +38,7 @@
 	<car id="CT"  name="CT"  crtver="0.2" speed="7" year="1998" type="Asphalt"  easy="0.97" norm="1.02"  author="Dick Maurer,.. (VDrift)" />
 	<car id="360" name="360" crtver="0.2" speed="8" year="1999" type="Asphalt"  easy="1.03" norm="1.07"  author="Tyler Fric (VDrift)" />
 
+	<car id="SZ"  name="SZ"  crtver="0.2" speed="8" year="1996" type="Asphalt"  easy="1.03" norm="1.07"  author="cobe571 (blendswap)" />
 	<car id="XZ"  name="XZ"  crtver="2.0" speed="9" year="2007" type="Asphalt"  easy="1.01" norm="1.03"  author="Neubi (blendswap)" />
 	
 	<!--easy and norm are the car time multipliers for simultation modes-->

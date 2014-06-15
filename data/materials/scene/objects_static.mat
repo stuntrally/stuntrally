@@ -345,7 +345,7 @@ material chapel
 	diffuseMap chapel.jpg
 	normalMap chapel_norm.jpg
 	
-	ambient 0.8 0.8 0.8
+	ambient 1.0 1.0 1.0
 	diffuse 0.9 0.9 0.9
 	specular 0.1 0.1 0.1 32
 }
