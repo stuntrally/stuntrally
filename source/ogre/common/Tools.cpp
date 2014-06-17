@@ -397,7 +397,7 @@ void CGui::ToolGhosts()
 	std::vector<string> cars;
 	std::vector<float> plc;
 	for (int c=0; c < data->cars->cars.size(); ++c)
-	{	cars.push_back(data->cars->cars[c].name);
+	{	cars.push_back(data->cars->cars[c].id);
 		plc.push_back(0.f);  }
 
 	//  foreach track

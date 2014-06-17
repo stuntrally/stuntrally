@@ -37,11 +37,9 @@ void LoadingBar::start( RenderWindow* window,
 	}
 
 	int i = 1;  // count background images
-	while (1)
-	{
-		if (ResourceGroupManager::getSingleton().resourceExists("General", "loading" + toStr(i) + ".jpg"))  ++i;
-		else  break;
-	}
+	while (ResourceGroupManager::getSingleton().resourceExists("General", "loading" + toStr(i) + ".jpg"))
+		++i;
+
 	if (i == 1)  // none
 	{
 		pApp->imgLoad->setVisible(false);
