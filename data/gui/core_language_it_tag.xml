@@ -868,7 +868,6 @@
 	<Tag name="TBTime">Tempo</Tag>
 	<Tag name="AlignTerrainToRoad">Allinea il terreno alla strada</Tag>
 	<Tag name="TerLNoise">Disturbo</Tag>
-	<Tag name="CarDesc_NS">Buona guida sulla maggior parte delle piste, anche di tipo rally. Ma poco potente.</Tag>
 	<Tag name="TerLayers">Layer di terreno</Tag>
 	<Tag name="TipTerLMove">Muovi il layer, cambia l'ordine.</Tag>
 	<Tag name="TipLTrMaxTerH">Altezza terreno posto sopra dove il modello non apparirà.</Tag>
@@ -997,7 +996,6 @@
 	<Tag name="UserDir">Percorso utente (log, config, user data, ecc.)</Tag>
 	<Tag name="TipTerLayers">Con disturboo, si raccomanda di usare 3 o 4. Afflige gli fps. Più di 4 non funzionerà.</Tag>
 	<Tag name="SC_Unidentified">Non identificato</Tag>
-	<Tag name="CarDesc_XM">Auto molto vecchia ma con un motore potente. Guidabile sulla maggior parte delle piste, salvo collisioni a causa della sospensione rigida.</Tag>
 	<Tag name="InputSubTabSpace">Spazio - cicla sottoschede (shift - indietro)</Tag>
 	<Tag name="TipSurfType">Tipo di superficie, determina il suono.</Tag>
 	<Tag name="NextStage">Continua lo stage seguente</Tag>
@@ -1033,7 +1031,11 @@
 	<Tag name="InputNextOptTab">F2,F3 - prec.,pross. scheda (alt - sottoschede)</Tag>
 	<Tag name="Diff6">Estrema</Tag>
 	<Tag name="RplAll">Tutto</Tag>
-	<Tag name="GameVersion">2.3</Tag>
+	<Tag name="CarDesc_SZ">Fastest car meant for gravel. Light and with a powerful engine.</Tag>
+	<Tag name="ScreenshotPng">Screenshots saved as .png</Tag>
+	<Tag name="CarDesc_TU">Very futuristic and fast vehicle. Not suited for narrow roads, jumps or mud.</Tag>
+	<Tag name="CarDesc_FN">Another good rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
+	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>
