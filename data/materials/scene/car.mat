@@ -57,13 +57,11 @@ material car_ghost
 	parent base
 	diffuseMap white.png
 }
-
 material car_interior
 {
 	parent car_base
 	diffuseMap interior.png
 }
-
 material car_wheel
 {
 	parent car_base
@@ -90,7 +88,7 @@ material SphereTest
 //  cars
 //------------------------------------------------------------------------
 
-
+//  360
 material 360_glass
 {
 	parent car_glass2
@@ -108,13 +106,12 @@ material 360_wheel
 {
 	parent car_wheel
 	diffuseMap 360_wheel.png
-	//normalMap 360_wheel_norm.png
 	ambient 0.8 0.8 0.8
 	diffuse 0.8 0.8 0.8
 	specular 0.1 0.1 0.1 16
 }
 
-
+//  3S
 material 3S_glass
 {
 	parent car_glass2
@@ -131,7 +128,7 @@ material 3S_wheel
 	diffuseMap 3S_wheel.png
 }
 
-
+//  CT
 material CT_glass
 {
 	parent car_glass2
@@ -148,7 +145,7 @@ material CT_wheel
 	diffuseMap CT_wheel.png
 }
 
-
+//  M3
 material M3_glass
 {
 	parent car_glass2
@@ -165,7 +162,7 @@ material M3_wheel
 	diffuseMap M3_wheel.png
 }
 
-
+//  TC6
 material TC6_glass
 {
 	parent car_glass2
@@ -189,33 +186,24 @@ material TC6_wheel
 	specular 1 1 1 8
 }
 
-
-//------------------------------------------------------------------------
-
-
 // 3S
-
 material car_body_3S
 {
 	parent car_body
 	specMap 3S_spec.png
 }
 
-
 // FM
-
 material car_body_FM
 {
    	parent car_body
 	normalMap FM_normal.png
 }
-
 material FM_glass
 {
 	parent car_glass
 	diffuseMap FM_glass.png
 }
-
 material FM_interior
 {
 	parent car_interior
@@ -242,8 +230,7 @@ material FM_brake
 }
 
 
-//------------------------------------------------------------------------
-//  wheels
+//  wheels  --------------------------------------------------------------
 
 //  3S
 material UPG06000_details
@@ -254,7 +241,6 @@ material UPG06000_details
 	diffuse 0.6 0.6 0.6
 	specular 0.6 0.6 0.6 8
 }
-
 material UPG06000_metalwheel
 {
 	parent car_base
@@ -265,10 +251,7 @@ material UPG06000_metalwheel
 	env_map true
 	fresnel true
 	fresnelScaleBiasPower 0.7 0.15 3
-    //fresnel false
-    //refl_amount 0.2
 }
-
 material UPG06000_tire
 {
 	parent car_base
@@ -278,7 +261,6 @@ material UPG06000_tire
 	diffuse 0.5 0.5 0.5
 	specular 0.1 0.1 0.1 4
 }
-
 material UPG06000_brake
 {
 	parent car_base
@@ -308,7 +290,6 @@ material UPG16000_tire
 	diffuse 0.5 0.5 0.5
 	specular 0.1 0.1 0.1 4
 }
-
 material UPG16000_brake
 {
 	parent car_base
@@ -317,7 +298,6 @@ material UPG16000_brake
 	diffuse 0.3 0.3 0.3
 	specular 1 1 1 8
 }
-
 material UPG16000_metalwheel
 {
 	parent car_base
@@ -334,7 +314,6 @@ material UPG16000_metalwheel
 }
 
 
-//---------------------------------------------------------------
 // ES
 //---------------------------------------------------------------
 
@@ -344,7 +323,6 @@ material car_body_ES
 	normalMap ES_normal.png
 	specMap ES_spec.png
 }
-
 material ES_glass
 {
 	parent car_glass
@@ -375,8 +353,8 @@ material ES_brake
 }
 
 
-//---------------------------------------------------------------
-//  S1	// todo: reduce materials, unwrap
+//  S1  -------------------------------------------------------
+// TODO: reduce materials, unwrap
 
 material UPG15000_body  // those 3 not used, but in mesh
 {
@@ -390,39 +368,33 @@ material UPG15000_solider
 {
 	parent car_body
 }
-
 material UPG15000_details
 {
 	parent car_base
 	diffuseMap S1_Details.png
 }
-
 material UPG15000_detailsA
 {
 	parent car_base
 	diffuseMap S1_opacity.png
 	alpha_rejection greater 192
 }
-
 material UPG15000_light  // back red lights
 {
 	parent car_base
 	diffuseMap S1_Lights.png
 	diffuse 0.8 0.8 0.8
 }
-
 material UPG15000_window
 {
 	parent car_glass
 	diffuseMap S1_window.png
 }
-
 material UPG15000_lightglass  // front lights
 {
 	parent car_glass
 	diffuseMap S1_light.png
 }
-
 material UPG15000_metal  // front lights frame (silver)
 {
 	parent car_base
@@ -431,7 +403,6 @@ material UPG15000_metal  // front lights frame (silver)
 	diffuse 0.4 0.4 0.4
 	specular 0.9 0.9 0.9 8
 }
-
 material UPG15000_wheel  // rubber parts between metal (black)
 {
 	parent car_base
@@ -444,7 +415,6 @@ material UPG15000_brake  // old not used
 	parent car_base
 	diffuseMap S1_brake_old.png
 }
-
 material UPG15000_metalwheel  // yellow
 {
 	parent car_base
@@ -453,7 +423,6 @@ material UPG15000_metalwheel  // yellow
 	diffuse 0.8 0.7 0.3 1
 	specular 1 1 0.5 32
 }
-
 material UPG15000_tire
 {
 	parent car_base
@@ -462,7 +431,6 @@ material UPG15000_tire
 	diffuse 0.5 0.5 0.5
 	specular 0.1 0.1 0.1 8
 }
-
 material S1_brake  // disc,caliper
 {
 	parent car_base
@@ -473,9 +441,7 @@ material S1_brake  // disc,caliper
 }
 
 
-//---------------------------------------------------------------
-//  N1
-
+//  N1  -------------------------------------------------------
 material UPG13000_body
 {
 	parent car_body
@@ -488,33 +454,28 @@ material UPG13000_solider
 {
 	parent car_body
 }
-
 material UPG13000_details  // interior, bottom, front low
 {
 	parent car_base
 	diffuseMap N1_details.png
 }
-
 material UPG13000_detailsA  // rubber right side (small between metal)
 {
 	parent car_base
 	diffuseMap N1_opacity.png
 	alpha_rejection greater 192
 }
-
 material UPG13000_light  // back red lights
 {
 	parent car_base
 	diffuseMap N1_lights.png
 	diffuse 0.8 0.8 0.8
 }
-
 material UPG13000_window
 {
 	parent car_glass
 	diffuseMap N1_window.png
 }
-
 material UPG13000_lightglass
 {
 	parent car_glass
@@ -539,7 +500,6 @@ material UPG13000_wheel  // rubber left side (small between metal)
 	diffuse 0.15 0.15 0.15
 	//specular 0 0 0 4
 }
-
 material UPG13000_metalwheel  // wheel rim
 {
 	parent car_base
@@ -547,12 +507,8 @@ material UPG13000_metalwheel  // wheel rim
 	ambient 0.8 0.8 0.8
 	diffuse 0.8 0.8 0.8
 	specular 1 1 1  4 //x4
-	//reflMap refl.png
 	env_map true
-	//fresnelScaleBiasPower 0.75 0.15 4
 }
-
-
 material UPG13000_brake
 {
 	parent car_base
@@ -561,7 +517,6 @@ material UPG13000_brake
 	diffuse 1.0 1.0 1.0
 	specular 0.5 0.5 0.5 16
 }
-
 material UPG13000_tire
 {
 	parent car_base
@@ -573,15 +528,12 @@ material UPG13000_tire
 }
 
 
-//---------------------------------------------------------------
-//  S8
-
+//  S8  -------------------------------------------------------
 material S8_glass
 {
 	parent car_glass
 	diffuseMap S8_window.png
 }
-
 material S8_rear_lights
 {
 	parent car_base
@@ -590,7 +542,6 @@ material S8_rear_lights
 	diffuse 1.0 0.2 0.2
 	specular 0.3 0.1 0.1 24
 }
-
 material S8_interior
 {
 	parent car_interior
@@ -609,7 +560,6 @@ material S8_rim  // yellow
 	diffuse 0.8 0.7 0.3 1
 	specular 1 1 0.5 32
 }
-
 material S8_tire
 {
 	parent car_base
@@ -619,7 +569,6 @@ material S8_tire
 	diffuse 0.5 0.5 0.5
 	specular 0.1 0.1 0.1 8
 }
-
 material S8_brake  // disc,caliper
 {
 	parent car_base
@@ -637,6 +586,15 @@ material XZ_glass
 {
 	parent car_glass
 	diffuseMap XZ_glass.png
+}
+
+material XZ_interior
+{
+	parent car_base
+	diffuseMap XZ_interior.png
+	ambient 0.7 0.7 0.7
+	diffuse 0.5 0.5 0.5
+	specular 0.1 0.1 0.1 4
 }
 
 material XZ_material
@@ -748,152 +706,37 @@ material XZ_tire
 }
 
 
-//---------------------------------------------------------------
-//  LK4   // Todo: reduce material count, use texture
-
-material LK4_rim
-{
-	parent car_base
-	diffuseMap white.png
-	ambient 0.4 0.4 0.4
-	diffuse 0.5 0.5 0.5
-	specular 1 1 1 4
-	env_map true
-	fresnel true
-	fresnelScaleBiasPower 0.7 0.15 4
-}
-
-material LK4_tire
-{
-	parent car_base
-	diffuseMap white.png
-	//normalMap XZ_Tire_norm.png
-	ambient 0.3 0.3 0.3
-	diffuse 0.2 0.2 0.2
-	specular 0.2 0.2 0.2 8
-	//bump_scale 1.5
-}
-
-material LK4_body  //-
-{
-	parent car_base
-	diffuseMap white.png
-	ambient 0.6 0.6 0.1
-	diffuse 0.7 0.7 0.1
-	specular 0.1 0.1 0.1 4
-}
-
-material LK4_metmat  // rear mid
-{
-	parent car_base
-	diffuseMap white.png
-	ambient 0.4 0.4 0.4
-	diffuse 0.5 0.5 0.5
-	specular 0.2 0.2 0.2 4
-}
-
-material LK4_chrome
-{
-	parent car_base
-	diffuseMap white.png
-	ambient 0.3 0.3 0.3
-	diffuse 0.5 0.5 0.5
-	specular 0.8 0.8 0.8 8
-}
-
-//  lights
-material LK4_lights  // front
-{
-	parent car_base
-	diffuseMap white.png
-	ambient 0.9 0.9 0.9
-	diffuse 0.9 0.9 0.9
-	specular 0.6 0.6 0.6 8
-}
-//material LK4_red
-//{
-//	parent car_base
-//	diffuseMap white.png
-//	ambient 0.7 0.15 0.15
-//	diffuse 0.7 0.15 0.15
-//	specular 0.1 0.1 0.1 4
-//}
-
-material LK4_orange  // side
-{
-	parent car_base
-	diffuseMap white.png
-	ambient 0.7 0.35 0.1
-	diffuse 0.7 0.35 0.1
-	specular 0.1 0.1 0.1 4
-}
-material LK4_reds  // rear red
-{
-	parent car_base
-	diffuseMap white.png
-	ambient 0.7 0.15 0.15
-	diffuse 0.7 0.15 0.15
-	specular 0.1 0.1 0.1 4
-}
-
-material LK4_plast1  // bottom, over wheels
-{
-	parent car_base
-	diffuseMap white.png
-	ambient 0.4 0.4 0.4
-	diffuse 0.5 0.5 0.5
-	specular 0.2 0.2 0.2 6
-}
-
-material LK4_plast2  // inside
-{
-	parent car_base
-	diffuseMap white.png
-	ambient 0.2 0.2 0.2
-	diffuse 0.3 0.3 0.3
-	specular 0.1 0.1 0.1 4
-}
-
-material LK4_inside  // chairs
-{
-	parent car_base
-	diffuseMap white.png
-	ambient 0.3 0.3 0.3
-	diffuse 0.4 0.4 0.4
-	specular 0.1 0.1 0.1 4
-}
-
-
+//  LK4
 material LK4_glass
 {
 	parent car_glass2
 	diffuseMap LK4_glass.png
 }
-
-
-//---------------------------------------------------------------
-//  UV
-material UV_Tire
+material LK4_interior
 {
 	parent car_base
-	diffuseMap UV_wheel.png
-	specMap UV_wheel_spec.png
-	reflMap UV_wheel_refl.png
-	ambient 0.5 0.5 0.5
-	diffuse 0.6 0.6 0.6
-	specular 1 1 1 4
+	diffuseMap LK4_interior.png
+	specMap LK4_interior_spec.png
+	reflMap LK4_interior_refl.png
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 1 1 1 8
 	env_map true
 	fresnel true
 	fresnelScaleBiasPower 0.7 0.15 4
 }
-
-material UV_interior
+material LK4_wheel
 {
 	parent car_base
-	diffuseMap UV_interior.png
+	diffuseMap LK4_wheel.png
+	specMap LK4_wheel_refl.png
+	reflMap LK4_wheel_refl.png
 	ambient 0.5 0.5 0.5
 	diffuse 0.7 0.7 0.7
-	specular 0.4 0.4 0.4 12
+	specular 1 1 1 8
+	env_map true
+	fresnel true
+	fresnelScaleBiasPower 0.7 0.15 4
 }
 
 //  HR
@@ -906,15 +749,12 @@ material HR_interior
 {
 	parent car_interior
 	diffuseMap HR_interior.png
-	//normalMap HR_interior_norm.png
 	specular 0.1 0.1 0.1 8
 }
 material HR_wheel
 {
 	parent car_base
 	diffuseMap HR_wheel.png
-	//normalMap HR_wheel_norm.png
-	//specMap HR_wheel_spec.png
 	reflMap HR_wheel.png
 	env_map true
 	fresnel true
@@ -974,7 +814,30 @@ material FR4_wheel
 }
 
 
-//  TW  --------------------------
+//  UV  -------------------------------------------------------
+material UV_Tire
+{
+	parent car_base
+	diffuseMap UV_wheel.png
+	specMap UV_wheel_spec.png
+	reflMap UV_wheel_refl.png
+	ambient 0.5 0.5 0.5
+	diffuse 0.6 0.6 0.6
+	specular 1 1 1 4
+	env_map true
+	fresnel true
+	fresnelScaleBiasPower 0.7 0.15 4
+}
+material UV_interior
+{
+	parent car_base
+	diffuseMap UV_interior.png
+	ambient 0.5 0.5 0.5
+	diffuse 0.7 0.7 0.7
+	specular 0.4 0.4 0.4 12
+}
+
+//  TW  -------------------------------------------------------
 material TW_glass
 {
 	parent car_interior
@@ -992,6 +855,7 @@ material TW_interior
 	parent car_interior
 	diffuseMap TW_interior.png
 }
+
 material TW_wheel_front
 {
 	parent car_wheel
@@ -1009,15 +873,13 @@ material TW_wheel_rear
     refl_amount 0.15
 }
 
-
-//  TU  --------------------------
+//  TU  -------------------------------------------------------
 material car_body_TU
 {
 	parent car_body
 	reflMap TU_body00_red.png
 	specMap TU_body00_red.png
 }
-
 material TU_glass
 {
 	parent car_interior
@@ -1040,6 +902,7 @@ material TU_interior
 	env_map true
     refl_amount 0.3
 }
+
 material TU_wheel_front
 {
 	parent car_wheel
@@ -1060,26 +923,9 @@ material TU_wheel_rear
 	env_map true
     refl_amount 0.3
 }
+//-------------------------------------------------------
 
-
-//  FN  ...
-material FN_glass
-{
-	parent car_glass2
-	diffuseMap FN_glass.png
-}
-material FN_interior
-{
-	parent car_interior
-	diffuseMap FN_interior.png
-}
-material FN_wheel
-{
-	parent car_wheel
-	diffuseMap FN_wheel.png
-}
-
-//  SZ  ...
+//  SZ
 material car_body_SZ
 {
 	parent car_body
@@ -1111,3 +957,21 @@ material SZ_wheel
 	env_map true
     refl_amount 0.3
 }
+
+//  FN  ...
+material FN_glass
+{
+	parent car_glass2
+	diffuseMap FN_glass.png
+}
+material FN_interior
+{
+	parent car_interior
+	diffuseMap FN_interior.png
+}
+material FN_wheel
+{
+	parent car_wheel
+	diffuseMap FN_wheel.png
+}
+
