@@ -325,6 +325,7 @@ void CGui::InitGui()
 	ck= &ckShowPics;	ck->Init("ShowPictures",&pSet->loadingbackground);
 	Chk("MultiThread", chkMultiThread, pSet->multi_thr > 0);
 	ck= &ckDevKeys;		ck->Init("DevKeys",		&pSet->dev_keys);
+	ck= &ckScreenPng;   ck->Init("ScreenPng",   &pSet->screen_png);
 
 	
 	//  effects

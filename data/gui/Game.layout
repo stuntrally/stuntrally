@@ -3380,6 +3380,10 @@
 					<Property key="TextColour" value="0.6 0.7 0.8"/>
 					<Property key="Caption" value="#{MouseCapture}"/>
 				</Widget>
+				<Widget type="Button" skin="CheckBox" position="362 190 256 24" name="ScreenPng">
+					<Property key="TextColour" value="0.55 0.6 0.65"/>
+					<Property key="Caption" value="#{ScreenshotPng}"/>
+				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#B090E0#{Sound}"/>

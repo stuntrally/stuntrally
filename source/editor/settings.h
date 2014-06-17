@@ -45,7 +45,7 @@ public:
 	//  misc
 	std::string language;
 	bool isMain, startInMain;  int inMenu;  // last menu id
-	bool check_load, check_save;
+	bool check_load, check_save, screen_png;
 
 	//  settings
 	bool bFog, bTrees, bWeather;

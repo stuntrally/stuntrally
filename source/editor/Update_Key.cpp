@@ -147,7 +147,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			return true;
 
 		case key(F12):  //  screenshot
-			mWindow->writeContentsToTimestampedFile(PATHMANAGER::Screenshots() + "/", ".jpg");
+			mWindow->writeContentsToTimestampedFile(PATHMANAGER::Screenshots() + "/",
+				pSet->screen_png ? ".png" : ".jpg");
 			return true;
 
 		//  save, reload

@@ -224,7 +224,7 @@ public:
 	Ck ckAutoStart, ckEscQuits;
 	Ck ckStartInMain, ckOgreDialog;
 	Ck ckBltLines, ckShowPics;
-	Ck ckMouseCapture, ckDevKeys;
+	Ck ckMouseCapture, ckDevKeys, ckScreenPng;
 	void chkMultiThread(WP);
 	
 	//  [Effects]

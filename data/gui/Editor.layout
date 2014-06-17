@@ -4386,6 +4386,14 @@
 							<Property key="Caption" value="#{MouseCapture}"/>
 							<Property key="TextColour" value="0.55 0.6 0.65"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="368 158 356 24" name="MouseCapture">
+							<Property key="Caption" value="#{MouseCapture}"/>
+							<Property key="TextColour" value="0.55 0.6 0.65"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="368 190 256 24" name="ScreenPng">
+							<Property key="TextColour" value="0.55 0.6 0.65"/>
+							<Property key="Caption" value="#{ScreenshotPng}"/>
+						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="32 222 284 24">
 							<Property key="TextColour" value="0.75 0.6 0.6"/>

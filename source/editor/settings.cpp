@@ -50,6 +50,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.version", version);			Param(c,w, "misc.autostart", autostart);
 	Param(c,w, "misc.ogredialog", ogre_dialog);		Param(c,w, "misc.escquit", escquit);
 	Param(c,w, "misc.language", language);			Param(c,w, "misc.mouse_capture", mouse_capture);
+	Param(c,w, "misc.screenshot_png", screen_png);
 	Param(c,w, "misc.check_load", check_load);		Param(c,w, "misc.check_save", check_save);
 	
 	Param(c,w, "set_cam.px",cam_x);  Param(c,w, "set_cam.py",cam_y);  Param(c,w, "set_cam.pz",cam_z);
@@ -101,7 +102,8 @@ SETTINGS::SETTINGS()  ///  Defaults
 	,water_reflect(0), water_refract(0), water_rttsize(0)
 	,shader_mode("")
 	//  startup
-	,autostart(0), ogre_dialog(1), escquit(0), language(""), allow_save(0)
+	,autostart(0), ogre_dialog(1), escquit(0), language("")
+	,allow_save(0), screen_png(0)
 	,check_load(0), check_save(1), mouse_capture(true)
 	,inputBar(0), camPos(0)
 	,isMain(1), startInMain(1), inMenu(0)

@@ -132,7 +132,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.profilerTxt", profilerTxt);	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);
 	Param(c,w, "misc.language", language);			Param(c,w, "misc.loadingback", loadingbackground);
 	Param(c,w, "misc.dev_keys", dev_keys);			Param(c,w, "misc.dev_no_prvs", dev_no_prvs);
-	Param(c,w, "misc.mouse_capture", mouse_capture);
+	Param(c,w, "misc.screenshot_png", screen_png);	Param(c,w, "misc.mouse_capture", mouse_capture);
 
 	Param(c,w, "network.nickname", nickname);		Param(c,w, "network.master_server_address", master_server_address);
 	Param(c,w, "network.local_port", local_port);	Param(c,w, "network.master_server_port", master_server_port);
@@ -219,7 +219,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,autoshift(1), autorear(1), rear_inv(1), show_mph(0)
 	//  misc
 	,isMain(1), startInMain(1), inMenu(0), rpl_rec(0)
-	,dev_keys(0), dev_no_prvs(0)
+	,screen_png(0), dev_keys(0), dev_no_prvs(0)
 	,split_vertically(true), language("") // "" = autodetect lang
 	//  misc
 	,autostart(0), ogre_dialog(0), escquit(0)

@@ -79,7 +79,7 @@ public:
 
 	//  [settings]
 	Ck ckAutoStart, ckEscQuits;  // startup
-	Ck ckStartInMain, ckOgreDialog, ckMouseCapture;
+	Ck ckStartInMain, ckOgreDialog, ckMouseCapture, ckScreenPng;
 
 	SlV(SizeMinimap);  SlV(SizeRoadP);
 	SV svCamSpeed, svCamInert;

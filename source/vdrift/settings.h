@@ -123,7 +123,7 @@ public:
 	
 	//  misc
 	bool isMain;  int inMenu;  // last menu id
-	bool dev_keys, dev_no_prvs;  // dev
+	bool screen_png, dev_keys, dev_no_prvs;  // dev
 	std::string language;
 	bool split_vertically;
 	

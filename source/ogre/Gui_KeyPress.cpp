@@ -405,6 +405,7 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 	
 	//  Screen shot
 	if (action(A_Screenshot))
-		mWindow->writeContentsToTimestampedFile(PATHMANAGER::Screenshots() + "/", ".jpg");
+		mWindow->writeContentsToTimestampedFile(PATHMANAGER::Screenshots() + "/",
+			pSet->screen_png ? ".png" : ".jpg");
 	
 }
