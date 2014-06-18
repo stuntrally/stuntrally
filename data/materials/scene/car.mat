@@ -85,8 +85,7 @@ material SphereTest
 }
 
 
-//  cars
-//------------------------------------------------------------------------
+//  cars  ---------------------------------------------
 
 //  360
 material 360_glass
@@ -186,14 +185,14 @@ material TC6_wheel
 	specular 1 1 1 8
 }
 
-// 3S
+//  3S
 material car_body_3S
 {
 	parent car_body
 	specMap 3S_spec.png
 }
 
-// FM
+//  FM
 material car_body_FM
 {
    	parent car_body
@@ -230,7 +229,7 @@ material FM_brake
 }
 
 
-//  wheels  --------------------------------------------------------------
+//  wheels  -------------------------------
 
 //  3S
 material UPG06000_details
@@ -314,9 +313,7 @@ material UPG16000_metalwheel
 }
 
 
-// ES
-//---------------------------------------------------------------
-
+//  ES  -------------------------------
 material car_body_ES
 {
 	parent car_body
@@ -440,7 +437,6 @@ material S1_brake  // disc,caliper
 	specular 0.8 0.8 0.8 24
 }
 
-
 //  N1  -------------------------------------------------------
 material UPG13000_body
 {
@@ -528,7 +524,7 @@ material UPG13000_tire
 }
 
 
-//  S8  -------------------------------------------------------
+//  S8  -------------------------------
 material S8_glass
 {
 	parent car_glass
@@ -579,132 +575,45 @@ material S8_brake  // disc,caliper
 }
 
 
-//---------------------------------------------------------------
-//  XZ
-
+//  XZ  -------------------------------
 material XZ_glass
 {
 	parent car_glass
 	diffuseMap XZ_glass.png
 }
-
 material XZ_interior
 {
 	parent car_base
 	diffuseMap XZ_interior.png
+	specMap XZ_interior_refl.png
+	reflMap XZ_interior_refl.png
 	ambient 0.7 0.7 0.7
 	diffuse 0.5 0.5 0.5
-	specular 0.1 0.1 0.1 4
+	specular 0.9 0.9 0.9 16
 }
-
-material XZ_material
-{
-	parent car_base
-	diffuseMap white.png
-	ambient 0.6 0.6 0.6
-	diffuse 0.6 0.6 0.6
-	specular 0.9 0.9 0.9 8
-}
-
-material XZ_plastic  // interior, wing, over wheels, bottom
-{
-	parent car_base
-	diffuseMap XZ_interior.png
-	ambient 0.7 0.7 0.7
-	diffuse 0.5 0.5 0.5
-	specular 0.1 0.1 0.1 4
-}
-
-material XZ_blinker  // back red lights
-{
-	parent car_base
-	diffuseMap XZ_rear_lights.png
-	ambient 0.8 0.8 0.8
-	diffuse 0.8 0.8 0.8
-	specular 0.8 0.8 0.8 32
-}
-
-material XZ_chrome  // grille front
-{
-	parent car_base
-	diffuseMap white.png
-	ambient 0.2 0.2 0.2
-	diffuse 0.2 0.2 0.2
-	specular 0.2 0.2 0.2 16
-}
-
-material XZ_chrome_matt
-{
-	parent car_base
-	diffuseMap white.png
-	ambient 0.3 0.3 0.3
-	diffuse 0.3 0.3 0.3
-	specular 0.1 0.1 0.1 4
-}
-
-material XZ_light  // front lights o
-{
-	parent car_base
-	diffuseMap white.png
-	ambient 0.9 0.9 0.8
-	diffuse 0.9 0.9 0.8
-	specular 0.9 0.9 0.9 8
-}
-
-material XZ_insides
-{
-	parent car_base
-	diffuseMap XZ_interior.png
-	ambient 0.4 0.4 0.4
-	diffuse 0.5 0.5 0.5
-	specular 0.1 0.1 0.1 4
-}
-
-//  XZ wheel
-
-material XZ_wheel_chrome  // rim
+material XZ_wheel
 {
 	parent car_base
 	diffuseMap XZ_Tire.png
-	ambient 0.1 0.1 0.1
-	diffuse 0.1 0.1 0.1
+	normalMap XZ_Tire_norm.png
+	specMap XZ_Tire_spec.png
+	reflMap XZ_Tire_refl.png
+	ambient 0.4 0.4 0.4
+	diffuse 0.4 0.4 0.4
 	specular 1 1 1 4
 	env_map true
 	fresnel true
 	fresnelScaleBiasPower 0.6 0.15 4
 }
-
-material XZ_wheel_chrome2  // caliper
+material XZ_brake
 {
 	parent car_base
 	diffuseMap XZ_Tire.png
 	normalMap XZ_Tire_norm.png
-	ambient 0.6 0.6 0.6
-	diffuse 0.6 0.6 0.6
-	specular 0.6 0.6 0.6 8
-}
-
-material XZ_wheel_disc
-{
-	parent car_base
-	diffuseMap XZ_Tire.png
-	normalMap XZ_Tire_norm.png
-	ambient 0.6 0.6 0.6
+	ambient 0.5 0.5 0.5
 	diffuse 0.5 0.5 0.5
-	specular 0.4 0.4 0.3 8
+	specular 0.6 0.6 0.6 4
 }
-
-material XZ_tire
-{
-	parent car_base
-	diffuseMap XZ_Tire.png
-	normalMap XZ_Tire_norm.png
-	ambient 0.4 0.4 0.4
-	diffuse 0.2 0.2 0.2
-	specular 0.2 0.2 0.2 8
-	//bump_scale 1.5
-}
-
 
 //  LK4
 material LK4_glass
@@ -814,7 +723,7 @@ material FR4_wheel
 }
 
 
-//  UV  -------------------------------------------------------
+//  UV  -------------------------------------------------
 material UV_Tire
 {
 	parent car_base
@@ -837,7 +746,7 @@ material UV_interior
 	specular 0.4 0.4 0.4 12
 }
 
-//  TW  -------------------------------------------------------
+//  TW  -------------------------------
 material TW_glass
 {
 	parent car_interior
@@ -873,7 +782,7 @@ material TW_wheel_rear
     refl_amount 0.15
 }
 
-//  TU  -------------------------------------------------------
+//  TU  -------------------------------
 material car_body_TU
 {
 	parent car_body
