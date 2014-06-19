@@ -431,14 +431,10 @@ void CarModel::Create(int car)
 		ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
 		String sMesh = "_wheel.mesh";  // custom
-		if (w <  2  && FileExists(sCar + "_wheel_front.mesh"))  sMesh = "_wheel_front.mesh"; else  // 2|
-		if (w >= 2  && FileExists(sCar + "_wheel_rear.mesh") )  sMesh = "_wheel_rear.mesh";  else
+		if (w <  2   && FileExists(sCar + "_wheel_front.mesh"))  sMesh = "_wheel_front.mesh"; else  // 2|
+		if (w >= 2   && FileExists(sCar + "_wheel_rear.mesh") )  sMesh = "_wheel_rear.mesh";  else
 		if (w%2 == 0 && FileExists(sCar + "_wheel_left.mesh") )  sMesh = "_wheel_left.mesh";  else  // 2-
-		if (w%2 == 1 && FileExists(sCar + "_wheel_right.mesh"))  sMesh = "_wheel_right.mesh"; /*else
-		if (w == 0  && FileExists(sCar + "_wheel_fl.mesh"))  sMesh = "_wheel_fl.mesh"; else  // all 4
-		if (w == 1  && FileExists(sCar + "_wheel_fr.mesh"))  sMesh = "_wheel_fr.mesh"; else
-		if (w == 2  && FileExists(sCar + "_wheel_rl.mesh"))  sMesh = "_wheel_rl.mesh"; else
-		if (w == 3  && FileExists(sCar + "_wheel_rr.mesh"))  sMesh = "_wheel_rr.mesh"; /**/
+		if (w%2 == 1 && FileExists(sCar + "_wheel_right.mesh"))  sMesh = "_wheel_right.mesh";
 		
 		if (FileExists(sCar + sMesh))
 		{
@@ -446,7 +442,7 @@ void CarModel::Create(int car)
 			Entity* eWh = mSceneMgr->createEntity(siw, sDirname + sMesh, sCarI);
 			if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
-			if (bLogInfo && w==0 || w==2)  LogMeshInfo(eWh, name, 2);
+			if (bLogInfo && (w==0 || w==2))  LogMeshInfo(eWh, name, 2);
 		}else
 		{	ManualObject* mWh = pApp->CreateModel(mSceneMgr, sMtr[Mtr_CarBody]+siw, &pCar->wheelmodelfront.mesh, vPofs, true, false, siw);
 			if (mWh)  {
