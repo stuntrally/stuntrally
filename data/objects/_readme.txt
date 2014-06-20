@@ -157,3 +157,17 @@ Graveyard chapel
 Author: ahedov
 License: CC-BY-SA
 http://www.blendswap.com/blends/view/69364
+
+---- statue_woman.mesh
+Photorealistic Statue
+Author: farly
+License: CC-BY
+http://www.blendswap.com/blends/view/68706
+
+---- statue_angel.mesh
+Angel statue
+Author: Aye
+License: CC-0
+http://www.blendswap.com/blends/view/60795
+texture: baked A0 and 214 from nobiax CC0 packs
+

@@ -345,11 +345,20 @@ material chapel
 	specular 0.1 0.1 0.1 32
 }
 
+material statue_angel
+{
+	parent base
+	diffuseMap statue_angel.jpg
+	ambient 1.0 0.98 1.0
+	diffuse 0.9 0.88 0.9
+	specular 0.12 0.12 0.12 6
+}
+
 material statue_woman
 {
 	parent base
 	diffuseMap statue_woman.jpg
 	ambient 1.0 1.0 1.0
-	diffuse 0.9 0.9 0.9
-	specular 0.1 0.1 0.1 32
+	diffuse 0.7 0.7 0.7
+	specular 0.1 0.1 0.1 24
 }
