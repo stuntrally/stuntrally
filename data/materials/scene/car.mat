@@ -795,15 +795,22 @@ material FN_wheel
 {
 	parent car_wheel
 	diffuseMap FN_wheel.png
-	normalMap Fn_wheel_normal.png
-}
-material FN_rim
-{
-	parent FN_wheel
+	normalMap FN_wheel_norm.png
+	reflMap FN_wheel_refl.png
+	specMap FN_wheel_spec.png
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 1.0 1.0 1.0 6
+	env_map true
+    refl_amount 0.2
 }
 material FN_brake
 {
-	parent FN_wheel
+	parent car_base
+	diffuseMap FN_brake.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.8 0.8 0.8 20
 }
 
 //  NG ...
