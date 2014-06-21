@@ -10,36 +10,36 @@
 	<!--global multipliers for car factors, magic - see App::GetRacePos-->
 	<global easy="0.94" norm="0.95" magic="0.010"/>
 
-	<car id="OT"  crtver="2.1" speed="0" year="1965" type="Slow"     easy="0.66" norm="0.67"  author="irokrhus (blendswap)" />
+	<car id="OT"  crtver="2.1" speed="0" year="1965" type="Slow"     easy="0.66" norm="0.67"  author="irokrhus" />
 
-	<car id="FR4" crtver="2.1" speed="2" year="1986" type="Terrain"  easy="0.86" norm="0.90"  author="computergeekman (blendswap)" />
-	<car id="HR"  crtver="2.1" speed="2" year="1996" type="Terrain"  easy="0.88" norm="0.93"  author="thiagohenrinrique (blendswap)" />
+	<car id="FR4" crtver="2.1" speed="2" year="1986" type="Terrain"  easy="0.86" norm="0.90"  author="computergeekman" />
+	<car id="HR"  crtver="2.1" speed="2" year="1996" type="Terrain"  easy="0.88" norm="0.93"  author="thiagohenrinrique" />
 																		
-	<car id="LK4" crtver="2.0" speed="3" year="2008" type="Terrain"  easy="0.89" norm="0.94"  author="clarabox (blendswap)" />
+	<car id="LK4" crtver="2.0" speed="3" year="2008" type="Terrain"  easy="0.89" norm="0.94"  author="clarabox" />
 
 	<car id="3S"  crtver="0.1" speed="3" year="2003" type="Racing"   easy="0.89" norm="0.97"  author="Kevin Miller, Dick Maurer (VDrift)" />
 	<car id="M3"  crtver="1.0" speed="3" year="1985" type="Racing"   easy="0.92" norm="0.96"  author="FlashG (VDrift)" />
 																						
-	<car id="UV"  crtver="2.1" speed="4" year="2008" type="Extreme"  easy="0.87" norm="0.965" author="greyoxide (blendswap)" />
+	<car id="UV"  crtver="2.1" speed="4" year="2008" type="Extreme"  easy="0.87" norm="0.965" author="greyoxide" />
 	<car id="TC6" crtver="1.4" speed="4" year="1994" type="Gravel"   easy="0.94" norm="1.00"  author="Ny (VDrift)" />
 																						
-	<car id="FN"  crtver="2.4" speed="5" year="2000" type="Gravel"   easy="0.99" norm="1.00"  author="Neubi (blendswap)" />
-	<car id="S8"  crtver="2.0" speed="5" year="2008" type="Gravel"   easy="0.96" norm="1.00"  author="lubomircenovsky (blendswap)" />
+	<car id="FN"  crtver="2.4" speed="5" year="2000" type="Gravel"   easy="0.99" norm="1.00"  author="Neubi" />
+	<car id="S8"  crtver="2.0" speed="5" year="2008" type="Gravel"   easy="0.96" norm="1.00"  author="lubomircenovsky" />
 
 	<car id="N1"  crtver="2.0" speed="5" year="1999" type="Racing"   easy="0.96" norm="1.015" author="(Super Racing)" />
-	<car id="NG"  crtver="2.4" speed="5" year="2004" type="Racing"   easy="0.96" norm="1.015" author="Neubi (blendswap)" />
+	<car id="NG"  crtver="2.4" speed="5" year="2004" type="Racing"   easy="0.96" norm="1.015" author="Neubi" />
 																						
-	<car id="ES"  crtver="1.2" speed="6" year="2006" type="Gravel"   easy="0.99" norm="1.04"  author="VeTi (blendswap)" />
+	<car id="ES"  crtver="1.2" speed="6" year="2006" type="Gravel"   easy="0.99" norm="1.04"  author="VeTi" />
 	<car id="S1"  crtver="1.8" speed="6" year="2005" type="Gravel"   easy="0.97" norm="1.01"  author="(Super Racing)" />
 																						
-	<car id="TW"  crtver="2.1" speed="7" year="2011" type="Extreme"  easy="0.92" norm="0.94"  author="irokrhus (blendswap)" />
-	<car id="TU"  crtver="2.4" speed="7" year="2012" type="Extreme"  easy="0.92" norm="0.94"  author="carlospanganiban (blendswap)" />
+	<car id="TW"  crtver="2.1" speed="7" year="2011" type="Extreme"  easy="0.92" norm="0.94"  author="irokrhus" />
+	<car id="TU"  crtver="2.4" speed="7" year="2012" type="Extreme"  easy="0.92" norm="0.94"  author="carlospanganiban" />
 
 	<car id="CT"  crtver="0.2" speed="7" year="1998" type="Asphalt"  easy="0.97" norm="1.02"  author="Dick Maurer,.. (VDrift)" />
 	<car id="360" crtver="0.2" speed="8" year="1999" type="Asphalt"  easy="1.03" norm="1.07"  author="Tyler Fric (VDrift)" />
 
-	<car id="SZ"  crtver="2.4" speed="8" year="1996" type="Gravel"   easy="1.01" norm="1.03"  author="cobe571 (blendswap)" />
-	<car id="XZ"  crtver="2.0" speed="9" year="2007" type="Asphalt"  easy="1.01" norm="1.03"  author="Neubi (blendswap)" />
+	<car id="SZ"  crtver="2.4" speed="8" year="1996" type="Gravel"   easy="1.01" norm="1.03"  author="cobe571" />
+	<car id="XZ"  crtver="2.0" speed="9" year="2007" type="Asphalt"  easy="1.01" norm="1.03"  author="Neubi" />
 	
 	<!--easy and norm are the car time multipliers for simultation modes-->
 	<!--less means bigger track time (more points, easier to qualify)-->
