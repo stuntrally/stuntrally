@@ -356,3 +356,23 @@ material container_big
     fresnel false
     refl_amount 0.05
 }
+
+material windmill
+{
+	parent base
+	diffuseMap windmill.jpg
+	normalMap windmill_norm.jpg
+	specMap windmill_spec.png
+	ambient 0.9 0.9 0.9
+	diffuse 1.5 1.5 1.5
+	specular 1.5 1.5 1.5 8
+}
+material windmill_fan
+{
+	parent base
+	diffuseMap windmill_fan.jpg
+	normalMap windmill_fan_norm.jpg
+	ambient 0.9 0.9 0.9
+	diffuse 1.4 1.4 1.4
+	specular 0.4 0.4 0.4 16
+}

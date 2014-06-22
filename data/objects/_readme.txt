@@ -177,3 +177,9 @@ Blue Shipping Crate
 Author: SparkGamingCo
 License: CC-0
 http://www.blendswap.com/blends/view/60310
+
+---- windmill
+Windmill
+Author: ahedov
+License: CC-BY-SA
+http://www.blendswap.com/blends/view/69174
