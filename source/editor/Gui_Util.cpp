@@ -74,7 +74,6 @@ void CGui::SetGuiFromXmls()
 	_Ed(TrPage, sc->trPage);  _Ed(TrDist, sc->trDist);
 	_Ed(GrPage, sc->grPage);  _Ed(GrDist, sc->grDist);  _Ed(TrImpDist, sc->trDistImp);
 	svTrRdDist.Upd();  svGrDensSmooth.Upd();
-	edSceneryId->setCaption(sc->sceneryId);
 
 	tabGrLayers(tabsGrLayers, idGrLay);
 	tabPgLayers(tabsPgLayers, idPgLay);

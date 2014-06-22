@@ -57,11 +57,8 @@ public:
 	void SetUsedStr(Txt valUsed, int cnt, int yellowAt);
 	
 	//  _Tools_
-	void ToolTexAlpha(), ToolSceneXml(), ToolSceneryID(),
+	void ToolTexAlpha(), ToolSceneXml(),
 		ToolTracksWarnings(), ToolBrushesPrv(), ToolPresets();
-
-	Ogre::String ChkSceneryID(std::string trk, const Scene& sc, bool btn=false, bool* bad=0);
-	void btnCheckScId(WP);
 	
 
 	//  tool windows texts
@@ -198,7 +195,7 @@ public:
 	//  grass
 	Ed edGrSwayDistr, edGrSwayLen, edGrSwaySpd;
 	void editTrGr(Ed);
-	SV svTrRdDist;  SV svGrDensSmooth;  Ed edSceneryId;
+	SV svTrRdDist;  SV svGrDensSmooth;
 
 	//  model view 3d  (veget,objs)
 	Txt txVHmin,txVHmax,txVWmin,txVWmax, txVCnt;

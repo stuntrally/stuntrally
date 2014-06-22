@@ -348,7 +348,6 @@ void CGui::InitGui()
 	
 	sv= &svTrRdDist;	sv->Init("TrRdDist",	&sc->trRdDist,     0,6);   sv->DefaultI(1);
 	sv= &svGrDensSmooth;sv->Init("GrDensSmooth",&sc->grDensSmooth, 0,10);  sv->DefaultI(3);
-	Ed(SceneryId, editTrGr);
 
 	//  veget models
 	ck= &ckPgLayOn;		ck->Init("LTrEnabled",	&b);   Cev(PgLayOn);
@@ -481,7 +480,6 @@ void CGui::InitGui()
 
 	ck= &ckCheckSave;	ck->Init("CheckSave",	&pSet->check_save);
 	ck= &ckCheckLoad;	ck->Init("CheckLoad",	&pSet->check_load);
-	Btn("CheckScId", btnCheckScId);
 	
 
 	///  Fill Combo boxes  . . . . . . .

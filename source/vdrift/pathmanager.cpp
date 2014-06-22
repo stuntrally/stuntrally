@@ -199,6 +199,7 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 	#endif
 	// Create cache dir
 	CreateDir(CacheDir(), error_output);
+	CreateDir(CacheDir()+"/tracks", error_output);
 	CreateDir(ShaderDir(), error_output);
 
 	// Print diagnostic info

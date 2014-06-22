@@ -95,6 +95,14 @@ void CScene::CreateTrees()
 		for (StringVector::const_iterator it=locations->begin(); it!=locations->end(); ++it)
 			resMgr.removeResourceLocation( (*it), "BinFolder" );
 	}
+	
+	std::string sCache = PATHMANAGER::CacheDir() + "/tracks/";
+	#ifndef SR_EDITOR
+	sCache += app->pSet->game.track;
+	#else  // ed
+	sCache += app->pSet->gui.track;
+	#endif
+	
 
 	using namespace Forests;
 	Real tws = sc->td.fTerWorldSize * 0.5f;
@@ -119,8 +127,8 @@ void CScene::CreateTrees()
 		#endif
 		
 		// create dir if not exist
-		boost::filesystem::create_directory(PATHMANAGER::CacheDir() + "/" + sc->sceneryId);
-		grass->setTempDir(PATHMANAGER::CacheDir() + "/" + sc->sceneryId + "/");
+		boost::filesystem::create_directory(sCache);
+		grass->setTempDir(sCache + "/");
 		
 		grass->addDetailLevel<GrassPage>(sc->grDist * pSet->grass_dist);
 
@@ -170,8 +178,8 @@ void CScene::CreateTrees()
 		#endif
 		
 		// create dir if not exist
-		boost::filesystem::create_directory(PATHMANAGER::CacheDir() + "/" + sc->sceneryId);
-		trees->setTempDir(PATHMANAGER::CacheDir() + "/" + sc->sceneryId + "/");
+		boost::filesystem::create_directory(sCache);
+		trees->setTempDir(sCache + "/");
 
 		//ImpostorPage* ipg = 0;
 		if (!pSet->imposters_only)

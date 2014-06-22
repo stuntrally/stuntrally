@@ -880,7 +880,6 @@
 	<Tag name="GrassSway">Sway</Tag>
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
 	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
-	<Tag name="SceneryId">Scenery Id</Tag>
 	<Tag name="GrMaterial">Material</Tag>
 	<Tag name="GrColorMap">Color map</Tag>
 	<Tag name="Channels">Channels</Tag>
@@ -1293,8 +1292,7 @@
 	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each model's own value).</Tag>
 	<Tag name="TipImpDist">Far distance at which the 2d impostors dissapear.</Tag>
 	<Tag name="TipGrDensSmooth">Grass density map - smooth size. Higher will make a smoother transition from road to grass.</Tag>
-	<Tag name="TipSceneryId">Name id of track, that has similar lighting (or this track's if has unique). Used for impostors generation.</Tag>
-
+	
 	<Tag name="TipGrassPatchLengthMin">Minimal grass patch length.</Tag>
 	<Tag name="TipGrassPatchLengthMax">Maximal grass patch length.</Tag>
 	<Tag name="TipGrassPatchHeightMin">Minimal grass patch height.</Tag>

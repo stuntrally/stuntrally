@@ -127,7 +127,6 @@ bool Scene::LoadXml(String file, bool bTer)
 	eLi = root->FirstChildElement("light");
 	if (eLi)
 	{
-		a = eLi->Attribute("sceneryId");	if (a)  sceneryId = std::string(a);  ///
 		a = eLi->Attribute("pitch");		if (a)  ldPitch = s2r(a);
 		a = eLi->Attribute("yaw");			if (a)  ldYaw = s2r(a);
 		a = eLi->Attribute("dir");			if (a)  {  lDir = s2v(a);
@@ -439,7 +438,6 @@ bool Scene::SaveXml(String file)
 	root.InsertEndChild(fogH);
 
 	TiXmlElement li("light");
-		li.SetAttribute("sceneryId",	sceneryId.c_str() );
 		li.SetAttribute("pitch",		toStrC( ldPitch ));
 		li.SetAttribute("yaw",			toStrC( ldYaw ));
 		li.SetAttribute("ambient",		toStrC( lAmb ));

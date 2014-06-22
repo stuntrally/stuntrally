@@ -57,7 +57,7 @@ void Scene::Default()
 	trPage = 200;  trDist = 200;  trDistImp = 800;  trRdDist = 3;
 
 	camPos = Vector3(10.f,20.f,10.f);  camDir = Vector3(0.f,-0.3f,1.f);
-	sceneryId = "0";
+
 	fluids.clear();  //
 	objects.clear();  //
 }

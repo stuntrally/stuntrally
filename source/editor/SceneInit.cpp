@@ -105,12 +105,6 @@ void App::createScene()  // once, init
 	exit(0);
 	#endif
 
-	///  _Tool_ sceneryID  .......
-	#if 0
-	gui->ToolSceneryID();
-	exit(0);
-	#endif
-
 	///  _Tool_	warnings  ...........................
 	//  takes about 16 sec
 	#if 0

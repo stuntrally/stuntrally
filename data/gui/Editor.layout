@@ -3002,23 +3002,6 @@
 							<Property key="TextColour" value="1 0.7 0.4"/>
 							<UserString key="tip" value="#{TipModelRoadDist}"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="512 260 56 25" name="SceneryId">
-							<Property key="TextColour" value="0.8 0.8 0.77"/>
-							<Property key="Colour" value="0.5 0.5 0.46"/>
-							<UserString key="tip" value="#{TipSceneryId}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="352 264 156 25">
-							<Property key="Caption" value="#{SceneryId}"/>
-							<Property key="TextColour" value="0.8 0.8 0.77"/>
-							<UserString key="tip" value="#{TipSceneryId}"/>
-						</Widget>
-						<Widget type="Button" skin="Button" position="590 260 140 25" name="CheckScId">
-							<Property key="Caption" value="#{Test}"/>
-							<Property key="Colour" value="0.5 0.5 0.4"/>
-							<Property key="TextColour" value="0.5 0.5 0.4"/>
-							<Property key="Alpha" value="0.6"/>
-							<UserString key="tip" value="#{Warnings}:  (alt-J)"/>
-						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 754 478">
 						<Property key="Caption" value="#80E0E0#{Models}"/>

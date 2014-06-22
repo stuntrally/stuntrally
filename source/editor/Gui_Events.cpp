@@ -122,8 +122,6 @@ void CGui::editTrGr(Ed ed)
 	else if (n=="GrSwayDistr")  g0->swayDistr = r;
 	else if (n=="GrSwayLen")  g0->swayLen = r;
 	else if (n=="GrSwaySpd")  g0->swaySpeed = r;
-
-	else if (n=="SceneryId")  sc->sceneryId = ed->getCaption();
 }
 
 void CGui::comboGrassClr(Cmb cmb, size_t val)

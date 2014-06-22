@@ -38,7 +38,6 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,edGrPage(0),edGrDist(0)
 	,edTrPage(0),edTrDist(0),edTrImpDist(0)
 	,edGrSwayDistr(0), edGrSwayLen(0), edGrSwaySpd(0)
-	,edSceneryId(0)
 	,cmbGrassClr(0)
 	,viewCanvas(0), tiViewUpd(-1.f), viewBox(0)
 	,txVHmin(0),txVHmax(0),txVWmin(0),txVWmax(0),txVCnt(0)
