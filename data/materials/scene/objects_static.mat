@@ -34,7 +34,6 @@ material rome
 	terrain_light_map true
 	bump_scale 1.3
 }
-
 material rome2
 {
 	parent base
@@ -58,7 +57,6 @@ material pyramid_small
 	specular 0.05 0.05 0.05 24
 	terrain_light_map true
 }
-
 material pyramid_big
 {
 	parent base
@@ -113,7 +111,6 @@ material watchtower
 	diffuse 0.8 0.8 0.8
 	specular 0.5 0.5 0.45 16
 }
-
 material watchtower2
 {
 	parent base
@@ -153,28 +150,24 @@ material house
 	specular 0.3 0.3 0.3 64
 	terrain_light_map true
 }
-
 material house_1_4
 {
 	parent house
 	diffuseMap house_1.jpg
 	normalMap house_1_norm.jpg
 }
-
 material house_2_4
 {
 	parent house
 	diffuseMap house_2.jpg
 	normalMap house_2_norm.jpg
 }
-
 material house_3_4
 {
 	parent house
 	diffuseMap house_3.jpg
 	normalMap house_3_norm.jpg
 }
-
 material house_4_4
 {
 	parent house
@@ -196,7 +189,6 @@ material well
 
 
 //  big
-
 material water_plane_big
 {
 	parent base
@@ -215,13 +207,11 @@ material balloon1
 	diffuse 0.8 0.8 0.8
 	specular 0.3 0.3 0.3 20
 }
-
 material balloon1b
 {
 	parent balloon1
 	diffuseMap balloon1b.jpg
 }
-
 material balloon2
 {
 	parent base
@@ -230,19 +220,16 @@ material balloon2
 	diffuse 0.9 0.9 0.9
 	specular 0.2 0.2 0.2 16
 }
-
 material balloon2b
 {
 	parent balloon2
 	diffuseMap balloon2b.png
 }
-
 material balloon2cl
 {
 	parent balloon2
 	diffuseMap balloon2cl.png
 }
-
 material balloon2clr
 {
 	parent balloon2
@@ -250,7 +237,7 @@ material balloon2clr
 }
 
 
-//  city
+//  city  - not used
 material city_house1
 {
 	parent base
@@ -260,7 +247,6 @@ material city_house1
 	diffuse 0.9 0.9 0.9
 	specular 0.2 0.2 0.2 16
 }
-
 material city_house2
 {
 	parent base
@@ -270,7 +256,6 @@ material city_house2
 	diffuse 0.9 0.9 0.9
 	specular 0.2 0.2 0.2 16
 }
-
 material city_house3
 {
 	parent base
@@ -279,7 +264,6 @@ material city_house3
 	diffuse 0.9 0.9 0.9
 	specular 0.2 0.2 0.2 16
 }
-
 material city_house4
 {
 	parent base
@@ -288,7 +272,6 @@ material city_house4
 	diffuse 0.9 0.9 0.9
 	specular 0.2 0.2 0.2 16
 }
-
 material city_shop
 {
 	parent base
@@ -297,7 +280,6 @@ material city_shop
 	diffuse 0.9 0.9 0.9
 	specular 0.2 0.2 0.2 16
 }
-
 material Building
 {
 	parent base
@@ -325,6 +307,33 @@ material Buddha_Statue
 	specular 1.0 1.0 1.0 8
 }
 
+material chapel
+{
+	parent base
+	diffuseMap chapel.jpg
+	normalMap chapel_norm.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 0.9 0.9 0.9
+	specular 0.1 0.1 0.1 32
+}
+material statue_angel
+{
+	parent base
+	diffuseMap statue_angel.jpg
+	ambient 1.0 0.98 1.0
+	diffuse 0.9 0.88 0.9
+	specular 0.12 0.12 0.12 6
+}
+material statue_woman
+{
+	parent base
+	diffuseMap statue_woman.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 0.1 0.1 0.1 24
+}
+
+
 material tree_trunks
 {
 	parent base
@@ -335,30 +344,15 @@ material tree_trunks
 	specular 0.1 0.1 0.1 32
 }
 
-material chapel
+material container_big
 {
 	parent base
-	diffuseMap chapel.jpg
-	normalMap chapel_norm.jpg
+	diffuseMap container_big.jpg
+	normalMap container_big_norm.jpg
 	ambient 1.0 1.0 1.0
-	diffuse 0.9 0.9 0.9
-	specular 0.1 0.1 0.1 32
-}
-
-material statue_angel
-{
-	parent base
-	diffuseMap statue_angel.jpg
-	ambient 1.0 0.98 1.0
-	diffuse 0.9 0.88 0.9
-	specular 0.12 0.12 0.12 6
-}
-
-material statue_woman
-{
-	parent base
-	diffuseMap statue_woman.jpg
-	ambient 1.0 1.0 1.0
-	diffuse 0.7 0.7 0.7
-	specular 0.1 0.1 0.1 24
+	diffuse 1.0 1.0 1.0
+	specular 0.7 0.7 0.7 20
+	env_map true
+    fresnel false
+    refl_amount 0.05
 }
