@@ -168,7 +168,7 @@ material sky/gray_clouded
     texture sky-darkclouds.jpg
 }
 
-material sky/day_bright
+material sky/dawn_bright
 {
     parent base_sky
     texture sky-clearday.jpg
