@@ -37,16 +37,16 @@ exhaust-mirror-second = 1
 #---------------------------
 [ collision ]
 com_ofs_L = 0.2
-com_ofs_H = 0.0
+com_ofs_H = -0.08
 radius = 0.364
 width = 0.63
 height = 0.44
 posLrear = -2.0
 posLfront = 2.05
 offsetL = 0.0
-offsetW = -0.01
-offsetH = 0.13
-start-offsetY = 0.62
+offsetW = -0.02
+offsetH = 0.2
+start-offsetY = 0.56
 fluidTrigH = 0.0
 friction = 0.4
 
@@ -54,7 +54,7 @@ friction = 0.4
 #  engine
 #---------------------------
 [ engine ]
-position = 0.0, 0.52, 0.45
+position = 0.0, 0.52, 0.25
 mass = 230.0
 rpm-limit = 8000
 inertia = 0.30
@@ -102,7 +102,7 @@ final-drive = 5.0
 anti-slip = 500.0
 
 [ fuel-tank ]
-position = -0.12, -0.66, -0.56
+position = -0.02, -0.66, -0.26
 capacity = 0.0492
 volume = 0.0492
 fuel-density = 730.0
@@ -166,7 +166,7 @@ handbrake = 3.1
 
 
 [ driver ]
-position = -0.1, -0.15, -0.5
+position = -0.02, -0.15, -0.2
 mass = 80.0
 view-position = -0.02, -0.40, 0.30
 hood-position = -0.4, 0, 0.50
@@ -180,19 +180,19 @@ frontal-area = 2.0
 drag-coefficient = 0.16
 
 [ wing-front ]
-position = 0.0, 1.2, 0.20
+position = 0.0, 1.35, 0.20
 frontal-area = 0.0
 drag-coefficient = 0.0
-surface-area = 0.55
+surface-area = 0.65
 lift-coefficient = -4.0
 efficiency = 0.90
 
 [ wing-rear ]
-position = 0.0, -1.4, 0.30
+position = 0.0, -1.2, 0.30
 frontal-area = 0.0
 drag-coefficient = 0.0
 surface-area = 0.6
-lift-coefficient = -2.9
+lift-coefficient = -3.0
 efficiency = 0.90
 
 
@@ -247,16 +247,16 @@ hinge = -1.1, 0, 0
 #---------------------------
 [ particle-00 ]  # front
 mass = 253.0
-position =  0.7, 1.1, 0.01
+position =  0.7, 1.1, -0.06
 
 [ particle-01 ]
 mass = 253.0
-position = -0.7, 1.1, 0.01
+position = -0.7, 1.1, -0.06
 
 [ particle-02 ]  # rear
 mass = 253.0
-position =  0.7, -1.17, 0.01
+position =  0.7, -1.17, -0.06
 
 [ particle-03 ]
 mass = 253.0
-position = -0.7, -1.17, 0.01
+position = -0.7, -1.17, -0.06
