@@ -3884,29 +3884,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472" layer="Back">
-						<Property key="Caption" value="#B0B0FF#{Graphics}"/>
-						<Widget type="TextBox" skin="TextBox" position="32 388 236 24">
-							<Property key="Caption" value="*#{NeedRestart}"/>
-							<Property key="TextColour" value="0.5 0.9 1"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="582 388 236 24">
-							<Property key="Caption" value="#{NeedReload}"/>
-							<Property key="TextColour" value="0.7 1 0.5"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBoxEmpty" position="32 424 664 72">
-							<Property key="ReadOnly" value="true"/>
-							<Property key="MultiLine" value="true"/>
-							<Property key="WordWrap" value="true"/>
-							<Property key="TextColour" value="0.4 0.9 0.4"/>
-							<Property key="Alpha" value="0.6"/>
-							<Property key="Caption" value="#{GraphicsRightHQ}"/>
-						</Widget>
-						<Widget type="Button" skin="Button" position="276 380 160 32" name="NewGame2">
-							<Property key="Caption" value="#{LoadTrack}"/>
-							<Property key="Colour" value="0.6 1.0 0.3"/>
-							<Property key="TextColour" value="0.3 1 0.2"/>
-							<UserString key="tip" value="#{TipLoadTrkEditor}"/>
-						</Widget>
+						<Property key="Caption" value="#60D0FF#{Video}"/>
 						<Widget type="TabControl" skin="TabControl" position="16 48 700 320" name="SubTab">
 							<Property key="ButtonAutoWidth" value="true"/>
 							<Property key="Colour" value="0.73 0.88 1"/>
@@ -3979,6 +3957,40 @@
 									<Property key="Alpha" value="0.8"/>
 								</Widget>
 							</Widget>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 388 236 24">
+							<Property key="Caption" value="*#{NeedRestart}"/>
+							<Property key="TextColour" value="0.5 0.9 1"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 738 472" layer="Back">
+						<Property key="Caption" value="#B0B0FF#{Graphics}"/>
+						<Widget type="TextBox" skin="TextBox" position="32 388 236 24">
+							<Property key="Caption" value="*#{NeedRestart}"/>
+							<Property key="TextColour" value="0.5 0.9 1"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="582 388 236 24">
+							<Property key="Caption" value="#{NeedReload}"/>
+							<Property key="TextColour" value="0.7 1 0.5"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBoxEmpty" position="32 424 664 72">
+							<Property key="ReadOnly" value="true"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="true"/>
+							<Property key="TextColour" value="0.4 0.9 0.4"/>
+							<Property key="Alpha" value="0.6"/>
+							<Property key="Caption" value="#{GraphicsRightHQ}"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="276 380 160 32" name="NewGame2">
+							<Property key="Caption" value="#{LoadTrack}"/>
+							<Property key="Colour" value="0.6 1.0 0.3"/>
+							<Property key="TextColour" value="0.3 1 0.2"/>
+							<UserString key="tip" value="#{TipLoadTrkEditor}"/>
+						</Widget>
+						<Widget type="TabControl" skin="TabControl" position="16 48 700 320" name="SubTab">
+							<Property key="ButtonAutoWidth" value="true"/>
+							<Property key="Colour" value="0.73 0.88 1"/>
+							<Property key="SmoothShow" value="false"/>
 							<Widget type="TabItem" skin="" position="2 24 694 292">
 								<Property key="Caption" value="#D0FF60#{Materials}"/>
 								<Widget type="TextBox" skin="TextBox" position="32 50 172 24">

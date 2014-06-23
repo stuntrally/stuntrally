@@ -2167,41 +2167,13 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472" layer="Back">
-						<Property key="Caption" value="#B0B0FF#{Graphics}"/>
-						<Widget type="TextBox" skin="TextBox" position="32 388 236 24">
-							<Property key="Caption" value="*#{NeedRestart}"/>
-							<Property key="TextColour" value="0.5 0.9 1"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="582 388 170 24">
-							<Property key="Caption" value="#{NeedNewGame}"/>
-							<Property key="TextColour" value="0.7 1 0.5"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBoxEmpty" position="32 424 664 72">
-							<Property key="ReadOnly" value="true"/>
-							<Property key="MultiLine" value="true"/>
-							<Property key="WordWrap" value="true"/>
-							<Property key="TextColour" value="0.4 0.9 0.4"/>
-							<Property key="Alpha" value="0.6"/>
-							<Property key="Caption" value="#{GraphicsRightHQ}"/>
-						</Widget>
-						<Widget type="Button" skin="Button" position="276 380 160 32" name="NewGame3">
-							<Property key="Caption" value="#{NewGame}"/>
-							<Property key="Colour" value="0.6 1.0 0.3"/>
-							<Property key="TextColour" value="0.3 1 0.2"/>
-							<UserString key="tip" value="#{RestartApply}"/>
-							<Widget type="ImageBox" skin="ImageBox" position="2 4 24 24">
-								<Property key="ImageCoord" value="256 0 128 128"/>
-								<Property key="Alpha" value="0.5"/>
-								<Property key="ImageTexture" value="gui_icons.png"/>
-								<Property key="NeedMouse" value="false"/>
-							</Widget>
-						</Widget>
+						<Property key="Caption" value="#60D0FF#{Video}"/>
 						<Widget type="TabControl" skin="TabControl" position="16 32 700 320" name="SubTab">
 							<Property key="ButtonAutoWidth" value="true"/>
 							<Property key="Colour" value="0.73 0.88 1"/>
 							<Property key="SmoothShow" value="false"/>
 							<Widget type="TabItem" skin="" position="2 24 694 292">
-								<Property key="Caption" value="#B0F0FF#{Video}"/>
+								<Property key="Caption" value="#60D0FF#{Video}"/>
 								<Widget type="Button" skin="CheckBox" position="32 48 176 24" name="VSync">
 									<Property key="Caption" value="#{VSync} **"/>
 									<Property key="TextColour" value="0.5 0.9 1"/>
@@ -2268,6 +2240,46 @@
 									<Property key="Alpha" value="0.8"/>
 								</Widget>
 							</Widget>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 388 236 24">
+							<Property key="Caption" value="*#{NeedRestart}"/>
+							<Property key="TextColour" value="0.5 0.9 1"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 738 472" layer="Back">
+						<Property key="Caption" value="#B0B0FF#{Graphics}"/>
+						<Widget type="TextBox" skin="TextBox" position="32 388 236 24">
+							<Property key="Caption" value="*#{NeedRestart}"/>
+							<Property key="TextColour" value="0.5 0.9 1"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="582 388 170 24">
+							<Property key="Caption" value="#{NeedNewGame}"/>
+							<Property key="TextColour" value="0.7 1 0.5"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBoxEmpty" position="32 424 664 72">
+							<Property key="ReadOnly" value="true"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="true"/>
+							<Property key="TextColour" value="0.4 0.9 0.4"/>
+							<Property key="Alpha" value="0.6"/>
+							<Property key="Caption" value="#{GraphicsRightHQ}"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="276 380 160 32" name="NewGame3">
+							<Property key="Caption" value="#{NewGame}"/>
+							<Property key="Colour" value="0.6 1.0 0.3"/>
+							<Property key="TextColour" value="0.3 1 0.2"/>
+							<UserString key="tip" value="#{RestartApply}"/>
+							<Widget type="ImageBox" skin="ImageBox" position="2 4 24 24">
+								<Property key="ImageCoord" value="256 0 128 128"/>
+								<Property key="Alpha" value="0.5"/>
+								<Property key="ImageTexture" value="gui_icons.png"/>
+								<Property key="NeedMouse" value="false"/>
+							</Widget>
+						</Widget>
+						<Widget type="TabControl" skin="TabControl" position="16 32 700 320" name="SubTab">
+							<Property key="ButtonAutoWidth" value="true"/>
+							<Property key="Colour" value="0.73 0.88 1"/>
+							<Property key="SmoothShow" value="false"/>
 							<Widget type="TabItem" skin="" position="2 24 694 292">
 								<Property key="Caption" value="#D0FF60#{Materials}"/>
 								<Widget type="TextBox" skin="TextBox" position="32 50 176 24">
