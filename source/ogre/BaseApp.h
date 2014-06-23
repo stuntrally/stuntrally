@@ -18,7 +18,7 @@ class MasterClient;  class P2PGameClient;
 //  gui
 enum MNU_Btns {  MNU_Single=0, MNU_Tutorial, MNU_Champ, MNU_Challenge, MNU_Replays, MNU_Help, MNU_Options, ciMainBtns  };
 enum TAB_Game {  TAB_Back=0, TAB_Track,TAB_Car, TAB_Setup,TAB_Game, TAB_Multi, TAB_Champs,TAB_Stages,TAB_Stage  };
-enum TAB_Options {  TABo_Back=0, TABo_Screen, TABo_View, TABo_Input, TABo_Settings, TABo_Sound  };
+enum TAB_Options {  TABo_Back=0, TABo_Screen, TABo_Input, TABo_View, TABo_Graphics, TABo_Settings, TABo_Sound, TABo_Tweak  };
 enum LobbyState { DISCONNECTED, HOSTING, JOINED };
 
 

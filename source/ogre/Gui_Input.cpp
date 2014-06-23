@@ -93,7 +93,7 @@ void CGui::CreateInputTab(int iTab, bool player,
 	const int sx = 150, sy = 24,  // button size
 		//  columns positon x  txt,btn,bar,>
 		x0 = 16, x1 = 160, x2 = 325, x3 = 464,
-		yHdr = 10,  // header start
+		yHdr0 = 12, yHdr = yHdr0+6,  // header start
 		yAdd = 14,  // y add with new row
 		s0 = x1-x0-5;  // descr size x
 
@@ -104,33 +104,38 @@ void CGui::CreateInputTab(int iTab, bool player,
 	
 
 	///  Headers  action, binding, value
-	CreateText(x0,yHdr, sx,sy, "hdrTxt1_"+sPlr, TR("#90B0F0#{InputHeaderTxt1}"));
-	CreateText(x1,yHdr, sx,sy, "hdrTxt2_"+sPlr, TR("#A0C0FF#{InputHeaderTxt2}"));
+	CreateText(x0,yHdr0, sx,sy, "hdrTxt1_"+sPlr, TR("#90B0F0#{InputHeaderTxt1}"));
+	CreateText(x1,yHdr0, sx,sy, "hdrTxt2_"+sPlr, TR("#A0C0FF#{InputHeaderTxt2}"));
 	if (player)  {
-		CreateText(x2,yHdr, sx,sy, "hdrTxt3_"+sPlr, TR("#90B0F0#{InputHeaderTxt3}"));
-		CreateText(x3,yHdr, sx,sy, "hdrTxt4_"+sPlr, TR("#80A0E0#{InputHeaderTxt4}"));  }
+		CreateText(x2,yHdr0, sx,sy, "hdrTxt3_"+sPlr, TR("#90B0F0#{InputHeaderTxt3}"));
+		CreateText(x3,yHdr0, sx,sy, "hdrTxt4_"+sPlr, TR("#80A0E0#{InputHeaderTxt4}"));  }
 
 	//  spacing for add y
 	static std::map <std::string, int> yRow;
+	int y = 2;
 	if (yRow.empty())
 	{	//  player
-		yRow["Throttle"] = 2;   yRow["Brake"] = 2;  yRow["Steering"] = 2 +1;
-		yRow["HandBrake"] = 2;  yRow["Boost"] = 2;  yRow["Flip"] = 2 +2;
-		yRow["ShiftUp"] = 2;    yRow["ShiftDown"] = 2 +1;
-		yRow["PrevCamera"] = 2; yRow["NextCamera"] = 2+1;
-		yRow["LastChk"] = 2;    yRow["Rewind"] = 2;
+		yRow["Throttle"]=y;   y+=2;     yRow["Brake"]=y;       y+=2;
+		yRow["Steering"]=y;   y+=2 +1;  yRow["HandBrake"]=y;   y+=2;
+		yRow["Boost"]=y;      y+=2;     yRow["Flip"]=y;        y+=2;
+		yRow["Rewind"]=y;     y+=2 +2;
+		yRow["NextCamera"]=y; y+=2;     yRow["PrevCamera"]=y;  y+=2 +1;
+		yRow["ShiftUp"]=y;    y+=2;     yRow["ShiftDown"]=y;   y+=2 +1;
+		yRow["LastChk"]=y;    y+=2;
 		//  general
-		yRow["ShowOptions"] = 2+1;
-		yRow["PrevTab"] = 2;      yRow["NextTab"] = 2+1;
-		yRow["RestartGame"] = 2;  yRow["ResetGame"] = 2+1;
-		yRow["Screenshot"] = 2;
+		y = 2;
+		yRow["ShowOptions"]=y; y+=2 +1;
+		yRow["RestartGame"]=y; y+=2;    yRow["ResetGame"]=y;  y+=2 +1;
+		yRow["Screenshot"]=y;  y+=2 +1;
+		yRow["PrevTab"]=y;     y+=2;    yRow["NextTab"]=y;    y+=2 +2;
 	}
 
 	///  Actions  ------------------------------------------------
-	int i = 0, y = yHdr + 2*yAdd;
+	int i = 0;
 	for (std::vector<InputAction>::const_iterator it = actions.begin(); it != actions.end(); ++it)
 	{
 		std::string name = it->mName;
+		y = yHdr + yRow[name] * yAdd;
 
 		//  description label  ----------------
 		Txt desc = tabitem->createWidget<TextBox>("TextBox",
@@ -138,11 +143,13 @@ void CGui::CreateInputTab(int iTab, bool player,
 		gcom->setOrigPos(desc, "OptionsWnd");
 		desc->setCaption( TR("#{InputMap" + name + "}") );
 		desc->setTextColour( !player ?
-			Colour(0.86f,0.93f,1.f) :  // general
+			(i==0||i==3||i==4 ? Colour(0.86f,0.93f,1.f) : Colour(0.6f,0.8f,0.95f)) :  // general
+
 			i==11 ? Colour(0.8f,0.6f,1.f) : // rewind
-			i==10 ? Colour(0.55f,0.5f,0.6f) : // last chk
-			(i==4||i==5) ? Colour(0.5f,1.f,1.f) : // boost,flip
-			(i>=6 ? Colour(0.7f,0.9f,0.7f) : // gear,cam
+			i==10 ? Colour(0.55f,0.5f,0.6f) : // last chk-
+			(i==4||i==5) ? Colour(0.4f,1.f,1.f) : // boost,flip
+			(i==6||i==7) ? Colour(0.7f,0.7f,0.7f) : // gear
+			(i>=8 ? Colour(0.6f,0.75f,1.f) : // camera
 			Colour(0.75f,0.88f,1.f)) );  // car steer
 		//desc->setTextShadow(true);
 
@@ -207,12 +214,11 @@ void CGui::CreateInputTab(int iTab, bool player,
 			//case 7:  CrtImg(x1,y, 512,256);  break;  // damage
 			case 11:  CrtImg(x1,y, 512,384);  break; // rewind
 		}	++i;
-		y += yRow[name] * yAdd;
 	}
 
 	if (player)
-	{	y+=yAdd;
-		CreateText(x1,y, 500,24, "txtunb" + sPlr, TR("#80B0F0#{InputUnbind}"));  y+=yAdd;
+	{	y = yHdr + 32 * yAdd;
+		CreateText(x1,y, 500,24, "txtunb" + sPlr, TR("#80B0F0#{InputUnbind}"));
 	}
 }
 
@@ -244,9 +250,9 @@ void CGui::InitInputGui()
 	}
 	
 	///  fill global and 4 players tabs
-	CreateInputTab(0, false, app->input->mInputActions, app->mInputCtrl);
+	CreateInputTab(4, false, app->input->mInputActions, app->mInputCtrl);
 	for (int i=0; i < 4; ++i)
-		CreateInputTab(i+1, true, app->input->mInputActionsPlayer[i], app->mInputCtrlPlayer[i]);
+		CreateInputTab(i, true, app->input->mInputActionsPlayer[i], app->mInputCtrlPlayer[i]);
 }
 
 
@@ -386,8 +392,8 @@ void CGui::tabInputChg(TabPtr tab, size_t val)
 bool CGui::TabInputId(int* pId)
 {
 	if (!tabInput)  return false;
-	int id = tabInput->getIndexSelected();  if (id == 0)  return false;
-	id -= 1;  if (id > 3)  return false;
+	int id = tabInput->getIndexSelected();
+	if (id > 3)  return false;
 	*pId = id;  return true;
 }
 
@@ -398,15 +404,15 @@ void CGui::comboInputKeyAllPreset(ComboBoxPtr cmb, size_t val)
 
 	const int numActs = 6;  // these actions have key emul params (analog)
 	int keyActs[numActs] = {A_Boost, A_Brake, A_Flip, A_HandBrake, A_Steering, A_Throttle};
-	const Real speeds[3] = {2,3,4};
+	const Real speeds[3] = {2.f, 3.f, 4.f};
 	Real vInc = speeds[val-1];
 
 	for (int i=0; i < numActs; ++i)
 	{
 		ICS::Control* control = app->mInputCtrlPlayer[id]->getControl(keyActs[i]);
 
-		control->setStepSize(0.1);
-		control->setStepsPerSeconds(vInc*10);
+		control->setStepSize(0.1f);
+		control->setStepsPerSeconds(vInc*10.f);
 	}
 	if (edInputIncrease)  edInputIncrease->setCaption(toStr(vInc));
 }
