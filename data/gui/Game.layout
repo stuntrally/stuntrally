@@ -3436,11 +3436,8 @@
 					<Widget type="TabItem" skin="" position="2 24 510 492">
 						<Property key="Caption" value="#D0D0FF#{Tweak}"/>
 
-						<Widget type="TextBox" skin="TextBox" position="20 32 500 24">
-							<Property key="Caption" value="#A0D8FF#{InputOther1}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="20 58 500 24">
-							<Property key="Caption" value="#A0D8FF#{InputOther2}"/>
+						<Widget type="TextBox" skin="TextBox" position="20 30 500 24">
+							<Property key="Caption" value="#C8B0E0#{InputMapPrevTab}/#{InputMapNextTab} - #{InputGraphsType}"/>
 						</Widget>
 
 						<Widget type="ImageBox" skin="ImageBox" position="20 120 80 80">
@@ -3464,22 +3461,18 @@
 							<Property key="Caption" value="#C0A0B0#{TiresEdit4}"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="20 284 500 24">
-							<Property key="Caption" value="#D8C0F0#{InputMapPrevTab}/#{InputMapNextTab} - #{InputGraphsType}"/>
-						</Widget>
-
-						<Widget type="ImageBox" skin="ImageBox" position="20 350 60 60">
+						<Widget type="ImageBox" skin="ImageBox" position="20 300 60 60">
 							<Property key="ImageCoord" value="256 640 128 128"/>
 							<Property key="Alpha" value="0.4"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="106 342 500 24">
+						<Widget type="TextBox" skin="TextBox" position="106 292 500 24">
 							<Property key="Caption" value="#A0B8D0#{TweakEdit1}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="106 368 500 24">
+						<Widget type="TextBox" skin="TextBox" position="106 318 500 24">
 							<Property key="Caption" value="#A0B8D0#{TweakEdit2}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="106 406 500 24">
+						<Widget type="TextBox" skin="TextBox" position="106 356 500 24">
 							<Property key="Caption" value="#90B0C8#{TweakEdit3}"/>
 						</Widget>
 					</Widget>

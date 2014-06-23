@@ -4626,14 +4626,14 @@
 						<Widget type="TextBox" skin="TextBox" position="32 184 170 20">
 							<Property key="Caption" value="#B0F040 G  #{Grasses}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="48 204 170 20">
+                        <Widget type="TextBox" skin="TextBox" position="48 204 152 20">
 							<Property key="Caption" value="#70F070 F  #{Channels}"/>
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="32 232 170 20">
 							<Property key="Caption" value="#80F0F0 V  #{Vegetation}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="48 252 170 20">
+                        <Widget type="TextBox" skin="TextBox" position="48 252 152 20">
 							<Property key="Caption" value="#80E0E0 M  #{Models}"/>
 						</Widget>
 
@@ -4653,21 +4653,27 @@
 						<Widget type="TextBox" skin="TextBox" position="204 88 168 20">
 							<Property key="Caption" value="#B0A0FF O  #{Tools}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="204 144 170 20">
+                        <Widget type="TextBox" skin="TextBox" position="204 156 170 20">
 							<Property key="Caption" value="#C0E0FF C  #{Screen}"/>
 						</Widget>
+                        <Widget type="TextBox" skin="TextBox" position="204 176 170 20">
+							<Property key="Caption" value="#C0C0F0 A  #{Graphics}"/>
+						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="204 174 170 20">
+                        <Widget type="TextBox" skin="TextBox" position="204 204 170 20">
 							<Property key="Caption" value="#60A0FF E  #{Settings}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="220 196 154 20">
+                        <Widget type="TextBox" skin="TextBox" position="220 224 154 20">
 							<Property key="Caption" value="#6868B0 K  #{Tweak}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="204 224 170 20">
+                        <Widget type="TextBox" skin="TextBox" position="204 252 170 20">
 							<Property key="Caption" value="#FFFF60 I  #{InputHelp}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="204 112 170 20">
+                        <Widget type="TextBox" skin="TextBox" position="204 132 170 20">
 							<Property key="Caption" value="#E0A0A0 J  #{Warnings}"/>
+						</Widget>
+                        <Widget type="TextBox" skin="TextBox" position="204 112 170 20">
+							<Property key="Caption" value="#C090B0 W  #{Game}"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 714 444">
