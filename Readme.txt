@@ -27,7 +27,7 @@ Links
 Project's Homepage:  (all links, Wiki pages)
         http://code.google.com/p/vdrift-ogre/
 
-Releases:  (Windows installer, Linux binary)
+Releases:  (Linux binaries, Windows installer)
         https://sourceforge.net/projects/stuntrally/files/
 Git repositories:  (for latest sources, data, and tracks)
         https://github.com/stuntrally/
@@ -45,7 +45,7 @@ Editor tutorial:
 
 Description
 
-The game features 153 tracks in 24 sceneries and 19 cars.
+The game features 144 tracks in 25 sceneries and 19 cars.
 Game modes include: Single Race, Tutorials, Championships, Challenges,
 Multiplayer and Split Screen. Also Replays and Ghost drive are present.
 
@@ -63,13 +63,12 @@ For full features list check: http://code.google.com/p/vdrift-ogre/wiki/Features
 Hardware requirements
 
 The minimum hardware is:
-a CPU with 2 cores, above 2.0GHz,
-and GPU: GeForce 9600 GT or Radeon HD 3870,
+ CPU: with 2 cores, above 2.0GHz,
+ GPU: GeForce 9600 GT or Radeon HD 3870,
 with Shader Model 3.0 supported and 256 MB GPU RAM (512 on higher settings).
-A good GPU for smooth play at Higher preset is GTX 560 Ti (no effects).
 
-It is possible to run on older, but
-integrated GPUs or laptops can't handle the game well (or at all).
+A good GPU for smooth play at Higher preset is GTX 560 Ti (no effects).
+Integrated GPUs or laptops don't handle the game well or at all.
 
 ----------------------------------------------------------------------------------
 
@@ -85,7 +84,7 @@ Keys used in game can be seen in Options tab [Input].
 If you want to reassign keys, or have a game controller
 go to tab [Input] to configure it and test range.
 
-By default, drive with arrow keys, use backspace to rewind after crashes.
+By default, drive with Arrow keys, use Backspace to rewind after crashes.
 Change cameras with C/X (with shift for main cameras only).
 Cameras can be adjusted in game, by mouse - move mouse to see actions.
 
@@ -119,9 +118,8 @@ project's Wiki page [Compiling].
 
 Help is welcomed
 
-Currently there is 1 active programmer.
-We are looking for skilled and motivated people
-that can help improving the game or editor.
+There is 1 active developer/programmer.
+I'm looking for skilled and motivated people.
 
 Testers
     If you are able to build from sources,
@@ -129,14 +127,11 @@ Testers
 
 Programmers
     If you know C++, OGRE or shaders, and could
-    handle one (or some) of the project's [Issues], 
-    or want to do something better and know how to.
+    handle some of the project's tasks or [Issues].
 
 Artists
-    Help exporting existing models from Blender to Ogre.
     Editing meshes for game, uv unwrap, texturing etc.
-    If you can create/edit 3D models and textures
-	or record/edit sounds for the game.
+    If you can record/edit sounds for the game.
 
 Track creators
     If you manage to create an interesting track,
@@ -148,4 +143,4 @@ Translators
 
 If so, tell us on IRC at #stuntrally on freenode,
 or by posting on Forum,
-or email me at: cryham (at) g m a i l (dot) com.
+or email me at: cryham [at] g m a i l {dot} com.
