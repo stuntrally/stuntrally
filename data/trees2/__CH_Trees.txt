@@ -2,8 +2,8 @@ The new trees made using SnappyTree (web generator tool).
 
 Author: Crystal Hammer
 
-License: CC-BY-NC-SA
-http://creativecommons.org/licenses/by-nc-sa/3.0/
+License: CC-BY-SA
+http://creativecommons.org/licenses/by-sa/3.0/
 
 
 Applies to all meshes starting with tree*.mesh (no . in name).
