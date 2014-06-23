@@ -458,8 +458,8 @@
             </Widget>
             <Widget type="Widget" skin="PanelEmpty" position="7 0 78 33" align="HStretch Top" name="HeaderPlace">
                 <Widget type="Widget" skin="TabHeaderEmptySkin" position="2 0 56 33" name="Controls">
-                    <Widget type="Button" skin="ButtonRightSkin" position="24 4 24 24" name="Right"/>
-                    <Widget type="Button" skin="ButtonLeftSkin" position="1 4 24 24" name="Left"/>
+                    <Widget type="Button" skin="ButtonRightSkinTab" position="24 4 24 24" name="Right"/>
+                    <Widget type="Button" skin="ButtonLeftSkinTab" position="1 4 24 24" name="Left"/>
                 </Widget>
                 <Widget type="Widget" skin="TabHeaderEmptySkin" position="0 0 52 33" name="Empty"/>
             </Widget>
@@ -482,8 +482,8 @@
             </Widget>
             <Widget type="Widget" skin="PanelEmpty" position="7 0 78 23" align="HStretch Top" name="HeaderPlace">
                 <Widget type="Widget" skin="TabHeaderEmptySkin" position="52 0 26 23" name="Controls">
-                    <Widget type="Button" skin="ButtonRightSkin" position="14 4 12 14" name="Right"/>
-                    <Widget type="Button" skin="ButtonLeftSkin" position="1 4 12 14" name="Left"/>
+                    <Widget type="Button" skin="ButtonRightSkinTab" position="14 4 12 14" name="Right"/>
+                    <Widget type="Button" skin="ButtonLeftSkinTab" position="1 4 12 14" name="Left"/>
                 </Widget>
                 <Widget type="Widget" skin="TabHeaderEmptySkin" position="0 0 52 23" name="Empty"/>
             </Widget>

@@ -36,6 +36,7 @@ namespace MyGUI
 			mWidgetTrack->setVisible(false);
 		}
 
+		/*
 		assignWidget(mWidgetStart, "Start");
 		if (mWidgetStart != nullptr)
 		{
@@ -47,7 +48,7 @@ namespace MyGUI
 		{
 			mWidgetEnd->eventMouseButtonPressed += newDelegate(this, &Slider::notifyMouse);
 			mWidgetEnd->eventMouseWheel += newDelegate(this, &Slider::notifyMouseWheel);
-		}
+		}*/
 	}
 
 	void Slider::shutdownOverride()

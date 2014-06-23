@@ -84,6 +84,22 @@
             <State name="pushed" offset="95 228 12 14"/>
         </BasisSkin>
     </Resource>
+    <Resource type="ResourceSkin" name="ButtonLeftSkinTab" size="12 14" texture="core_blackblueskins.png">
+        <BasisSkin type="SubSkin" offset="0 0 12 14" align="Stretch">
+            <State name="disabled" offset="55 114 12 14"/>
+            <State name="normal" offset="55 130 12 14"/>
+            <State name="highlighted" offset="55 146 12 14"/>
+            <State name="pushed" offset="55 162 12 14"/>
+        </BasisSkin>
+    </Resource>
+    <Resource type="ResourceSkin" name="ButtonRightSkinTab" size="12 14" texture="core_blackblueskins.png">
+        <BasisSkin type="SubSkin" offset="0 0 12 14" align="Stretch">
+            <State name="disabled" offset="55 180 12 14"/>
+            <State name="normal" offset="55 196 12 14"/>
+            <State name="highlighted" offset="55 212 12 14"/>
+            <State name="pushed" offset="55 228 12 14"/>
+        </BasisSkin>
+    </Resource>
     <Resource type="ResourceSkin" name="SliderTrackVSkin" size="14 7" texture="core_blackblueskins.png">
         <BasisSkin type="SubSkin" offset="8 0 6 7" align="Right VStretch">
             <State name="disabled" offset="57 7 6 7"/>
