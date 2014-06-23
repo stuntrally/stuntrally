@@ -785,7 +785,7 @@ void CGui::InitGui()
 	Btn("TrackDelete",	btnTrackDel);
 	
     //  load = new game
-    for (int i=1; i<=2; ++i)
+    for (int i=1; i<=3; ++i)
     {	Btn("NewGame"+toStr(i), btnNewGame);  }
 
 	CreateGUITweakMtr();

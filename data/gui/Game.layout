@@ -2314,75 +2314,78 @@
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{ShortcutsInfo}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="20 82 200 24">
+						<Widget type="TextBox" skin="TextBox" position="20 72 200 24">
 							<Property key="Caption" value="#60FF60 Q  #{Track}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="20 102 200 24">
+						<Widget type="TextBox" skin="TextBox" position="20 96 200 24">
 							<Property key="Caption" value="#FF6050 C  #{Car}"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="20 132 200 24">
-							<Property key="Caption" value="#90A0A0 T  #{Setup}"/>
+						<Widget type="TextBox" skin="TextBox" position="20 128 200 24">
+							<Property key="Caption" value="#90A0A0 W  #{Setup}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="20 152 200 24">
-							<Property key="Caption" value="#C0C080 W  #{Game}"/>
+							<Property key="Caption" value="#C0C080 G  #{Game}"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="36 182 200 24">
+						<Widget type="TextBox" skin="TextBox" position="36 184 200 24">
 							<Property key="Caption" value="#FFC060 J  #{Tutorial}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="36 202 200 24">
+						<Widget type="TextBox" skin="TextBox" position="36 208 200 24">
 							<Property key="Caption" value="#80C0FF H  #{Championship}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="36 222 200 24">
+						<Widget type="TextBox" skin="TextBox" position="36 232 200 24">
 							<Property key="Caption" value="#80FFCC L  #{Challenge}"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="20 252 200 24">
+						<Widget type="TextBox" skin="TextBox" position="20 264 200 24">
 							<Property key="Caption" value="#A0A0FF U  #{Multiplayer}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="20 282 200 24">
+						<Widget type="TextBox" skin="TextBox" position="20 296 200 24">
 							<Property key="Caption" value="#FFA050 R  #{Replay}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="20 322 200 24">
+						<Widget type="TextBox" skin="TextBox" position="20 332 200 24">
 							<Property key="Caption" value="#60D060 #{InputFocusFind}"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="250 82 200 24">
+						<Widget type="TextBox" skin="TextBox" position="252 72 200 24">
 							<Property key="Caption" value="#C0E0FF S  #{Screen}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="266 102 200 24">
-							<Property key="Caption" value="#B0B0FF G  #{Graphics}"/>
+						<Widget type="TextBox" skin="TextBox" position="252 184 200 24">
+							<Property key="Caption" value="#B0B0FF A  #{Graphics}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="266 122 200 24">
+						<Widget type="TextBox" skin="TextBox" position="264 208 200 24">
 							<Property key="Caption" value="#E0C080 E  #{Effects}"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="250 152 200 24">
+						<Widget type="TextBox" skin="TextBox" position="252 128 200 24">
 							<Property key="Caption" value="#D0FFFF V  #{View}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="266 172 200 24">
+						<Widget type="TextBox" skin="TextBox" position="264 152 200 24">
 							<Property key="Caption" value="#60F8F8 M  #{Minimap}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="266 192 200 24">
-							<Property key="Caption" value="#C0A0E0 O  #{Graphs}"/>
+						<Widget type="TextBox" skin="TextBox" position="252 296 200 24">
+							<Property key="Caption" value="#C0A0E0 O  #{Tweak}"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="250 222 200 24">
+						<Widget type="TextBox" skin="TextBox" position="252 240 200 24">
+							<Property key="Caption" value="#60A0FF T  #{Settings}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="252 96 200 24">
 							<Property key="Caption" value="#FFFF60 I  #{Input}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="250 252 200 24">
+						<Widget type="TextBox" skin="TextBox" position="252 264 200 24">
 							<Property key="Caption" value="#B090E0 P  #{Sound}"/>
 						</Widget>
 					</Widget>
 				</Widget>
-                <Widget type="Button" skin="CheckBox" position="548 96 300 24" name="OneAxisThrBrk">
+				<Widget type="Button" skin="CheckBox" position="548 96 300 24" name="OneAxisThrBrk">
 					<Property key="Caption" value="#{OneAxisThrottleBrake}"/>
 					<Property key="Colour" value="0.6 0.95 1"/>
 					<Property key="TextColour" value="0.6 0.95 1"/>
 					<UserString key="tip" value="#{TipOneAxisThrottleBrake}"/>
 				</Widget>
-                <Widget type="Widget" skin="PanelSkin" position="532 156 236 116" name="PanKey1">
+				<Widget type="Widget" skin="PanelSkin" position="532 156 236 116" name="PanKey1">
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<Property key="Alpha" value="0.55"/>
 					<Property key="InheritsAlpha" value="false"/>
@@ -2392,11 +2395,11 @@
 					<Property key="Alpha" value="0.45"/>
 					<Property key="InheritsAlpha" value="false"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="548 172 216 20" name="InputDetail">
+				<Widget type="TextBox" skin="TextBox" position="548 172 216 20" name="InputDetail">
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<Property key="Caption" value="#{InputDetailsFor}"/>
 				</Widget>
-                <Widget type="Button" skin="CheckBox" position="548 232 132 20" name="InputInv">
+				<Widget type="Button" skin="CheckBox" position="548 232 132 20" name="InputInv">
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<Property key="Caption" value="#{InputInverse}"/>
 				</Widget>
@@ -2422,7 +2425,7 @@
 					<Property key="Colour" value="0.7 1.0 0.7"/>
 					<Property key="TextColour" value="0.7 1.0 0.7"/>
 				</Widget>
-                <Widget type="Widget" skin="PanelSkin" position="532 152 236 236" name="PanInputDetail">
+				<Widget type="Widget" skin="PanelSkin" position="532 152 236 236" name="PanInputDetail">
 					<Property key="Colour" value="0.7 0.8 0.9"/>
 					<Property key="Alpha" value="0.8"/>
 					<Property key="InheritsAlpha" value="false"/>
@@ -2679,10 +2682,12 @@
 						<Widget type="TextBox" skin="TextBox" position="32 388 236 24">
 							<Property key="Caption" value="*#{NeedRestart}"/>
 							<Property key="TextColour" value="0.5 0.9 1"/>
+							<Property key="Alpha" value="0.7"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="582 388 170 24">
+						<Widget type="TextBox" skin="TextBox" position="32 360 236 24">
 							<Property key="Caption" value="#{NeedNewGame}"/>
-							<Property key="TextColour" value="0.7 1 0.5"/>
+							<Property key="TextColour" value="0.5 1 0.9"/>
+							<Property key="Alpha" value="0.7"/>
 						</Widget>
 						<Widget type="EditBox" skin="EditBoxEmpty" position="32 424 664 72">
 							<Property key="ReadOnly" value="true"/>
@@ -2692,7 +2697,7 @@
 							<Property key="Alpha" value="0.6"/>
 							<Property key="Caption" value="#{GraphicsRightHQ}"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="276 380 160 32" name="NewGame3">
+						<Widget type="Button" skin="Button" position="276 360 160 32" name="NewGame3">
 							<Property key="Caption" value="#{NewGame}"/>
 							<Property key="Colour" value="0.6 1.0 0.3"/>
 							<Property key="TextColour" value="0.3 1 0.2"/>
@@ -2704,11 +2709,11 @@
 								<Property key="NeedMouse" value="false"/>
 							</Widget>
 						</Widget>
-						<Widget type="TabControl" skin="TabControl" position="16 32 700 320" name="SubTab">
+						<Widget type="TabControl" skin="TabControl" position="16 32 700 300" name="SubTab">
 							<Property key="ButtonAutoWidth" value="true"/>
-							<Property key="Colour" value="0.73 0.88 1"/>
+							<Property key="Colour" value="0.73 1 0.98"/>
 							<Property key="SmoothShow" value="false"/>
-							<Widget type="TabItem" skin="" position="2 24 694 292">
+							<Widget type="TabItem" skin="" position="2 24 694 272">
 								<Property key="Caption" value="#90FF30#{Vegetation}"/>
 								<Widget type="Button" skin="Button" position="464 180 136 26" name="TrGrReset">
 									<Property key="Caption" value="#{Reset}"/>
@@ -2760,7 +2765,7 @@
 									<Property key="TextColour" value="0.6 1 0.3"/>
 								</Widget>
 							</Widget>
-							<Widget type="TabItem" skin="" position="2 24 694 292">
+							<Widget type="TabItem" skin="" position="2 24 694 272">
 								<Property key="Caption" value="#B0B0B0#{Shadows}"/>
 								<Widget type="Button" skin="Button" position="32 180 200 26" layer="Back" name="Apply">
 									<Property key="Caption" value="#{ApplyShadows}"/>
@@ -2804,7 +2809,7 @@
 									<Property key="TextColour" value="0.7 0.8 0.9"/>
 								</Widget>
 							</Widget>
-							<Widget type="TabItem" skin="" position="2 24 694 292">
+							<Widget type="TabItem" skin="" position="2 24 694 272">
 								<Property key="Caption" value="#60B0FF#{Water}"/>
 								<Widget type="Button" skin="CheckBox" position="32 48 200 24" name="WaterReflection">
 									<Property key="Caption" value="#{WaterReflection}"/>
@@ -2829,7 +2834,7 @@
 									<Property key="TextColour" value="0.5 0.75 1.0"/>
 								</Widget>
 							</Widget>
-							<Widget type="TabItem" skin="" position="2 24 694 292">
+							<Widget type="TabItem" skin="" position="2 24 694 272">
 								<Property key="Caption" value="#FFD8B0#{Reflections}"/>
 								<Widget type="TextBox" skin="TextBox" position="268 52 12 16">
 									<Property key="Caption" value="#00FF00+"/>
@@ -2888,10 +2893,12 @@
 						<Widget type="TextBox" skin="TextBox" position="32 388 236 24">
 							<Property key="Caption" value="*#{NeedRestart}"/>
 							<Property key="TextColour" value="0.5 0.9 1"/>
+							<Property key="Alpha" value="0.7"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="582 388 170 24">
+						<Widget type="TextBox" skin="TextBox" position="32 360 236 24">
 							<Property key="Caption" value="#{NeedNewGame}"/>
-							<Property key="TextColour" value="0.7 1 0.5"/>
+							<Property key="TextColour" value="0.5 1 0.9"/>
+							<Property key="Alpha" value="0.7"/>
 						</Widget>
 						<Widget type="EditBox" skin="EditBoxEmpty" position="32 424 664 72">
 							<Property key="ReadOnly" value="true"/>
@@ -2901,7 +2908,7 @@
 							<Property key="Alpha" value="0.6"/>
 							<Property key="Caption" value="#{GraphicsRightHQ}"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="276 380 160 32" name="NewGame3">
+						<Widget type="Button" skin="Button" position="276 360 160 32" name="NewGame4">
 							<Property key="Caption" value="#{NewGame}"/>
 							<Property key="Colour" value="0.6 1.0 0.3"/>
 							<Property key="TextColour" value="0.3 1 0.2"/>
@@ -2913,11 +2920,11 @@
 								<Property key="NeedMouse" value="false"/>
 							</Widget>
 						</Widget>
-						<Widget type="TabControl" skin="TabControl" position="16 32 700 320" name="SubTab">
+						<Widget type="TabControl" skin="TabControl" position="16 32 700 300" name="SubTab">
 							<Property key="ButtonAutoWidth" value="true"/>
-							<Property key="Colour" value="0.73 0.88 1"/>
+							<Property key="Colour" value="0.73 1 0.98"/>
 							<Property key="SmoothShow" value="false"/>
-							<Widget type="TabItem" skin="" position="2 24 694 292">
+							<Widget type="TabItem" skin="" position="2 24 694 272">
 								<Property key="Caption" value="#D0FF60#{Materials}"/>
 								<Widget type="TextBox" skin="TextBox" position="32 50 176 24">
 									<Property key="Caption" value="#{Terrain}"/>
@@ -2943,7 +2950,7 @@
 									<Property key="TextColour" value="0.8 1.0 0.7"/>
 								</Widget>
 							</Widget>
-							<Widget type="TabItem" skin="" position="2 24 694 292">
+							<Widget type="TabItem" skin="" position="2 24 694 272">
 								<Property key="Caption" value="#60FF60#{Textures}"/>
 								<Widget type="ComboBox" skin="ComboBox" position="210 47 136 24" name="TexFiltering">
 									<Property key="Static" value="true"/>
@@ -2974,7 +2981,7 @@
 									<Property key="TextColour" value="0.6 0.9 0.6"/>
 								</Widget>
 							</Widget>
-							<Widget type="TabItem" skin="" position="2 24 694 292">
+							<Widget type="TabItem" skin="" position="2 24 694 272">
 								<Property key="Caption" value="#80FFD0#{Detail}"/>
 								<Widget type="TextBox" skin="TextBox" position="268 52 12 16">
 									<Property key="Caption" value="#00FF00+"/>
@@ -3017,7 +3024,7 @@
 									<Property key="TextColour" value="0.3 0.9 0.9"/>
 								</Widget>
 							</Widget>
-							<Widget type="TabItem" skin="" position="2 24 694 292">
+							<Widget type="TabItem" skin="" position="2 24 694 272">
 								<Property key="Caption" value="#A0A060#{Particles}"/>
 								<Widget type="Slider" skin="Slider" position="280 50 320 18" name="Particles"/>
 								<Widget type="Slider" skin="Slider" position="280 80 320 18" name="Trails"/>
@@ -3197,13 +3204,13 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#60A0FF#{Settings}"/>
-				<Widget type="TextBox" skin="TextBox" position="32 32 184 24">
-					<Property key="Caption" value="#{Startup}"/>
+				<Widget type="TextBox" skin="TextBox" position="32 32 252 24">
 					<Property key="TextColour" value="0.68 0.74 0.8"/>
+					<Property key="Caption" value="#{Startup}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 62 256 24" name="MultiThread">
-					<Property key="TextColour" value="0.7 0.89 1.0"/>
-					<Property key="Caption" value="#{MultiThread} *"/>
+				<Widget type="Button" skin="CheckBox" position="32 62 256 24" name="StartInMain">
+					<Property key="TextColour" value="0.6 0.7 0.8"/>
+					<Property key="Caption" value="#{StartInMain}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="32 94 256 24" name="AutoStart">
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
@@ -3213,25 +3220,26 @@
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
 					<Property key="Caption" value="#{EscQuit}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="362 62 256 24" name="StartInMain">
+				<Widget type="Button" skin="CheckBox" position="32 158 256 24" name="OgreDialog">
+					<Property key="TextColour" value="0.4 0.5 0.6"/>
+					<Property key="Caption" value="#{OgreDialog}"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 222 256 24" name="MouseCapture">
 					<Property key="TextColour" value="0.6 0.7 0.8"/>
-					<Property key="Caption" value="#{StartInMain}"/>
+					<Property key="Caption" value="#{MouseCapture}"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 254 256 24" name="ScreenPng">
+					<Property key="TextColour" value="0.55 0.6 0.65"/>
+					<Property key="Caption" value="#{ScreenshotPng}"/>
+				</Widget>
+
+				<Widget type="Button" skin="CheckBox" position="362 62 256 24" name="MultiThread">
+					<Property key="TextColour" value="0.7 0.89 1.0"/>
+					<Property key="Caption" value="#{MultiThread} *"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="362 94 300 24" name="ShowPictures">
 					<Property key="TextColour" value="0.5 0.6 0.7"/>
 					<Property key="Caption" value="#{ShowPictures} *"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="362 126 256 24" name="OgreDialog">
-					<Property key="TextColour" value="0.4 0.5 0.6"/>
-					<Property key="Caption" value="#{OgreDialog}"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="362 158 256 24" name="MouseCapture">
-					<Property key="TextColour" value="0.6 0.7 0.8"/>
-					<Property key="Caption" value="#{MouseCapture}"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="362 190 256 24" name="ScreenPng">
-					<Property key="TextColour" value="0.55 0.6 0.65"/>
-					<Property key="Caption" value="#{ScreenshotPng}"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
@@ -3425,6 +3433,56 @@
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="416 332 100 16" name="DbgTxtClr"/>
 					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 510 492">
+						<Property key="Caption" value="#D0D0FF#{Tweak}"/>
+
+						<Widget type="TextBox" skin="TextBox" position="20 32 500 24">
+							<Property key="Caption" value="#A0D8FF#{InputOther1}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="20 58 500 24">
+							<Property key="Caption" value="#A0D8FF#{InputOther2}"/>
+						</Widget>
+
+						<Widget type="ImageBox" skin="ImageBox" position="20 120 80 80">
+							<Property key="ImageCoord" value="384 640 128 128"/>
+							<Property key="Alpha" value="0.5"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="106 110 500 24">
+							<Property key="Caption" value="#D8B8C8#{TiresEdit} *6"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="106 136 500 24">
+							<Property key="Caption" value="#C0A0B0#{TiresEdit1}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="106 162 500 24">
+							<Property key="Caption" value="#C0A0B0#{TiresEdit2}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="106 188 500 24">
+							<Property key="Caption" value="#C0A0B0#{TiresEdit3}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="106 214 500 24">
+							<Property key="Caption" value="#C0A0B0#{TiresEdit4}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="20 284 500 24">
+							<Property key="Caption" value="#D8C0F0#{InputMapPrevTab}/#{InputMapNextTab} - #{InputGraphsType}"/>
+						</Widget>
+
+						<Widget type="ImageBox" skin="ImageBox" position="20 350 60 60">
+							<Property key="ImageCoord" value="256 640 128 128"/>
+							<Property key="Alpha" value="0.4"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="106 342 500 24">
+							<Property key="Caption" value="#A0B8D0#{TweakEdit1}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="106 368 500 24">
+							<Property key="Caption" value="#A0B8D0#{TweakEdit2}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="106 406 500 24">
+							<Property key="Caption" value="#90B0C8#{TweakEdit3}"/>
+						</Widget>
+					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472">
 						<Property key="Caption" value="#E0A0E0#{Graphs}2"/>
 						<Widget type="TextBox" skin="TextBox" position="32 300 144 20">
@@ -3493,56 +3551,6 @@
 						<Widget type="EditBox" skin="EditBox" position="180 438 60 20" name="TE_xpowVal">
 							<Property key="Colour" value="0.6 0.75 1.0"/>
 							<Property key="TextColour" value="0.6 0.75 1.0"/>
-						</Widget>
-					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 510 492">
-						<Property key="Caption" value="#C0C0FF#{Other}"/>
-
-						<Widget type="TextBox" skin="TextBox" position="20 32 500 24">
-							<Property key="Caption" value="#A0D8FF#{InputOther1}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="20 58 500 24">
-							<Property key="Caption" value="#A0D8FF#{InputOther2}"/>
-						</Widget>
-
-						<Widget type="ImageBox" skin="ImageBox" position="20 120 80 80">
-							<Property key="ImageCoord" value="384 640 128 128"/>
-							<Property key="Alpha" value="0.5"/>
-							<Property key="ImageTexture" value="gui_icons.png"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="106 110 500 24">
-							<Property key="Caption" value="#D8B8C8#{TiresEdit} *6"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="106 136 500 24">
-							<Property key="Caption" value="#C0A0B0#{TiresEdit1}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="106 162 500 24">
-							<Property key="Caption" value="#C0A0B0#{TiresEdit2}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="106 188 500 24">
-							<Property key="Caption" value="#C0A0B0#{TiresEdit3}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="106 214 500 24">
-							<Property key="Caption" value="#C0A0B0#{TiresEdit4}"/>
-						</Widget>
-
-						<Widget type="TextBox" skin="TextBox" position="20 284 500 24">
-							<Property key="Caption" value="#D8C0F0#{InputMapPrevTab}/#{InputMapNextTab} - #{InputGraphsType}"/>
-						</Widget>
-
-						<Widget type="ImageBox" skin="ImageBox" position="20 350 60 60">
-							<Property key="ImageCoord" value="256 640 128 128"/>
-							<Property key="Alpha" value="0.4"/>
-							<Property key="ImageTexture" value="gui_icons.png"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="106 342 500 24">
-							<Property key="Caption" value="#A0B8D0#{TweakEdit1}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="106 368 500 24">
-							<Property key="Caption" value="#A0B8D0#{TweakEdit2}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="106 406 500 24">
-							<Property key="Caption" value="#90B0C8#{TweakEdit3}"/>
 						</Widget>
 					</Widget>
 				</Widget>
@@ -3915,7 +3923,7 @@
 					<Property key="TextColour" value="1 0.75 0.3"/>
 					<UserString key="tip" value="#{TipRollRes}"/>
 				</Widget>
-				
+
 				<!--<Widget type="Button" skin="Button" position="380 6 140 26" name="TweakSurfSave">
 					<Property key="Caption" value="#{RplSave}"/>
 					<Property key="TextColour" value="0.8 0.8 1"/>

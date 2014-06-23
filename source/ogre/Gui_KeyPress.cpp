@@ -82,27 +82,26 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(Q):	gui->GuiShortcut(MNU_Single, TAB_Track);return true;  // Q Track
 			case key(C):	gui->GuiShortcut(MNU_Single, TAB_Car);	return true;  // C Car
 
-			case key(T):	gui->GuiShortcut(MNU_Single, TAB_Setup);return true;  // T Car Setup
-			case key(W):	gui->GuiShortcut(MNU_Single, TAB_Game);	return true;  // W Game Setup
+			case key(W):	gui->GuiShortcut(MNU_Single, TAB_Setup);return true;  // W Car Setup
+			case key(G):	gui->GuiShortcut(MNU_Single, TAB_Game);	return true;  // G Game Setup
 
 			case key(J):	gui->GuiShortcut(MNU_Tutorial, TAB_Champs);	return true;  // J Tutorials
 			case key(H):	gui->GuiShortcut(MNU_Champ,    TAB_Champs);	return true;  // H Champs
 			case key(L):	gui->GuiShortcut(MNU_Challenge,TAB_Champs);	return true;  // L Challenges
 
-			case key(U):	gui->GuiShortcut(MNU_Single, TAB_Multi);	return true;	// U Multiplayer
-			case key(R):	gui->GuiShortcut(MNU_Replays, 1);	return true;			// R Replays
+			case key(U):	gui->GuiShortcut(MNU_Single, TAB_Multi);	return true;  // U Multiplayer
+			case key(R):	gui->GuiShortcut(MNU_Replays, 1);	return true;		  // R Replays
 
-			case key(S):	gui->GuiShortcut(MNU_Options, TABo_Screen);		return true;  // S Screen
-			 case key(G):	gui->GuiShortcut(MNU_Options, TABo_Screen,1);	return true;  // G -Graphics
-			 //case key(N):	gui->GuiShortcut(MNU_Options, TABo_Screen,1,3);	return true;  // N --Vegetation !
-			 case key(E):	gui->GuiShortcut(MNU_Options, TABo_Screen,2);	return true;  // E -Effects
-
-			case key(V):	gui->GuiShortcut(MNU_Options, TABo_View);	return true;  // V View
-			 case key(M):	gui->GuiShortcut(MNU_Options, TABo_View,1);	return true;  // M -Minimap
-			 case key(O):	gui->GuiShortcut(MNU_Options, TABo_View,4);	return true;  // O -Graphs
-			
+			case key(S):	gui->GuiShortcut(MNU_Options, TABo_Screen);	return true;  // S Screen
 			case key(I):	gui->GuiShortcut(MNU_Options, TABo_Input);	return true;  // I Input
+			case key(V):	gui->GuiShortcut(MNU_Options, TABo_View);	return true;  // V View
+
+			case key(A):	gui->GuiShortcut(MNU_Options, TABo_Graphics);	return true;  // A Graphics
+			 case key(E):	gui->GuiShortcut(MNU_Options, TABo_Graphics,2);	return true;  // E -Effects
+
+			case key(T):	gui->GuiShortcut(MNU_Options, TABo_Settings);	return true;  // T Settings
 			case key(P):	gui->GuiShortcut(MNU_Options, TABo_Sound);	return true;  // P Sound
+			case key(O):	gui->GuiShortcut(MNU_Options, TABo_Tweak);  return true;  // O Tweak
 		}
 
 

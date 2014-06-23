@@ -634,7 +634,7 @@ void CGui::InitGui()
 	//<UserString key="RelativeTo" value="OptionsWnd"/>
 
     //  new game
-    for (i=1; i<=3; ++i)
+    for (i=1; i<=4; ++i)
     {	Btn("NewGame"+toStr(i), btnNewGame);  if (i==2)  btNewGameCar = btn;  }
 
 	//  championships
