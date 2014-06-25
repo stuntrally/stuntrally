@@ -142,6 +142,7 @@ public:
 	MATHVECTOR<Dbl,3> center_of_mass;
 	COLLISION_WORLD * world;
 	btRigidBody *chassis, *whTrigs;
+		MATHVECTOR<Dbl,3> au;
 
 	///  camera bounce
 	LINEARFRAME cam_body;
@@ -178,6 +179,7 @@ public:
 	std::vector <CARBRAKE> brake;
 	std::vector <CARWHEEL> wheel;
 	
+	bool hover;  //> false for cars
 	enum { FWD = 3, RWD = 12, AWD = 15 } drive;
 	Dbl driveshaft_rpm, tacho_rpm;  float engine_vol_mul;
 

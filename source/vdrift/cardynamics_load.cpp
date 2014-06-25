@@ -15,7 +15,8 @@ using namespace std;
 
 CARDYNAMICS::CARDYNAMICS() :
 	world(NULL), chassis(NULL), whTrigs(0), pGame(0),
-	drive(RWD), tacho_rpm(0), engine_vol_mul(1),
+	hover(false),
+	drive(AWD), tacho_rpm(0), engine_vol_mul(1),
 	autoclutch(true), autoshift(true), autorear(true),
 	shifted(true), shift_gear(0),
 	last_auto_clutch(1.0), remaining_shift_time(0.0),
@@ -192,9 +193,14 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 	//load the differential(s)
 	string drivetype;
 	if (!c.GetParam("drive", drivetype, error_output))  return false;
-	SetDrive(drivetype);
+	if (drivetype == "hover")  //>
+	{	hover = true;
+		drivetype = "AWD";
+	}
+	//if (!hover)
+		SetDrive(drivetype);
+
 	float final_drive, a, a_tq(0), a_tq_dec(0);
-	
 	///  new 3 sets
 	if (drivetype == "AWD" &&
 		c.GetParam("diff-center.final-drive", a))
@@ -657,9 +663,10 @@ void CARDYNAMICS::Init(
 	//btCompoundShape * chassisShape = new btCompoundShape(false);
 	#if 0
 		//btBoxShape * hull = new btBoxShape( btVector3(1.8,0.8,0.5) );
-		btBoxShape * hull = new btBoxShape( btVector3(1.7,0.7,0.3) );
-		tr.setOrigin(origin + btVector3(0,0,0.2));
-		chassisShape->addChildShape(tr, hull);
+		//btBoxShape * hull = new btBoxShape( btVector3(1.7,0.7,0.3) );
+		//tr.setOrigin(origin + btVector3(0,0,0.2));
+		btSphereShape * chassisShape = new btSphereShape(1.f);
+		//chassisShape->addChildShape(tr, hull);
 	#else
 		/// todo: all params in .car
 		// y| length  x- width  z^ height

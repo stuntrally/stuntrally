@@ -184,7 +184,12 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 			out << "com: W right+ " << -center_of_mass[1] << " L front+ " << center_of_mass[0] << " H up+ " << center_of_mass[2] << endl;
 			out.precision(0);
 			out << "mass: " << body.GetMass();
-			
+
+			if (hover)			
+			{	MATHVECTOR<Dbl,3> sv = -GetVelocity();
+				(-Orientation()).RotateVector(sv);
+				out << " vel: " << sv << endl << "  au: " << au << endl;
+			}
 			//  wheel pos, com ratio
 			Dbl whf = wheel[0].GetExtendedPosition()[0], whr = wheel[2].GetExtendedPosition()[0];
 			out.precision(2);
@@ -328,11 +333,14 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	cam_force[0]=0.0;  cam_force[1]=0.0;  cam_force[2]=0.0;
 
 
-	UpdateWheelVelocity();
+	if (!hover)  // car
+	{
+		UpdateWheelVelocity();
 
-	ApplyEngineTorqueToBody();
+		ApplyEngineTorqueToBody();
 
-	ApplyAerodynamicsToBody(dt);
+		ApplyAerodynamicsToBody(dt);
+	}
 	
 
 	//  extra damage from scene <><>
@@ -436,16 +444,63 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	///***  --------------------------------------------------
 	
 	
+	///  HOVER  * * * * *
+	if (hover)  // WIP ...
+	{
+		//  steer  5000 3500
+		MATHVECTOR<Dbl,3> av = GetAngularVelocity();
+		MATHVECTOR<Dbl,3> t(0,0, -6000 * steerValue);  // steerability
+		Orientation().RotateVector(t);
+		ApplyTorque(t - av * 3000);  // rotation damping
+		
+		//  engine
+		float f = body.GetMass() * 12.f * inputsCopy[CARINPUT::THROTTLE];  // power
+		MATHVECTOR<Dbl,3> vf(f,0,0);
+		Orientation().RotateVector(vf);
+		ApplyForce(vf);
+
+		//  side vel damping
+		MATHVECTOR<Dbl,3> sv = -GetVelocity();
+		(-Orientation()).RotateVector(sv);
+		Dbl vz = sv[2];
+		sv[0] *= 0.02 + 0.4 * inputsCopy[CARINPUT::BRAKE];  // air res, brake strength
+		sv[1] *= 1.0;
+		sv[2] *= sv[2] > 0.0 ? 0.0 : 0.5;  // height
+		Orientation().RotateVector(sv);
+		ApplyForce(sv * 2500);
+
+		//  anti gravity, hover force
+		COLLISION_CONTACT ct;
+		MATHVECTOR<Dbl,3> dn = GetDownVector();
+		
+		Dbl len = 2.0;
+		world->CastRay(GetPosition(), dn, len, chassis, ct,  0,0, true, false);
+		Dbl d = ct.GetDepth();
+		if (d > 0.0 && d < len)
+		{
+			MATHVECTOR<Dbl,3> fg(0,0, (len -d) * (1.0 + 1.1 * vz) //PAR..
+				 * GetMass()*9.81); // * -dn[2]);  //dot z
+			ApplyForce(fg);
+			
+			au = dn.cross(ct.GetNormal());
+			ApplyTorque(-au*7000);  // align straight torque
+		}
+	}
+	// * * * * * * * * * 
+
 	int i;
 	Dbl normal_force[WHEEL_POSITION_SIZE];
-	for (i = 0; i < WHEEL_POSITION_SIZE; ++i)
+	if (!hover)
 	{
-		MATHVECTOR<Dbl,3> suspension_force = UpdateSuspension(i, dt);
-		normal_force[i] = suspension_force.dot(wheel_contact[i].GetNormal());
-		if (normal_force[i] < 0) normal_force[i] = 0;
+		for (i = 0; i < WHEEL_POSITION_SIZE; ++i)
+		{
+			MATHVECTOR<Dbl,3> suspension_force = UpdateSuspension(i, dt);
+			normal_force[i] = suspension_force.dot(wheel_contact[i].GetNormal());
+			if (normal_force[i] < 0) normal_force[i] = 0;
 
-		MATHVECTOR<Dbl,3> tire_friction = ApplyTireForce(i, normal_force[i], wheel_orientation[i]);
-		ApplyWheelTorque(dt, drive_torque[i], i, tire_friction, wheel_orientation[i]);
+			MATHVECTOR<Dbl,3> tire_friction = ApplyTireForce(i, normal_force[i], wheel_orientation[i]);
+			ApplyWheelTorque(dt, drive_torque[i], i, tire_friction, wheel_orientation[i]);
+		}
 	}
 
 	body.Integrate2(dt);
@@ -453,17 +508,20 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	//chassis->integrateVelocities(dt);
 
 	// update wheel state
-	for (i = 0; i < WHEEL_POSITION_SIZE; ++i)
+	if (!hover)
 	{
-		wheel_position[i] = GetWheelPositionAtDisplacement(WHEEL_POSITION(i), suspension[i].GetDisplacementPercent());
-		wheel_orientation[i] = Orientation() * GetWheelSteeringAndSuspensionOrientation(WHEEL_POSITION(i));
-	}
-	InterpolateWheelContacts(dt);
+		for (i = 0; i < WHEEL_POSITION_SIZE; ++i)
+		{
+			wheel_position[i] = GetWheelPositionAtDisplacement(WHEEL_POSITION(i), suspension[i].GetDisplacementPercent());
+			wheel_orientation[i] = Orientation() * GetWheelSteeringAndSuspensionOrientation(WHEEL_POSITION(i));
+		}
+		InterpolateWheelContacts(dt);
 
-	for (i = 0; i < WHEEL_POSITION_SIZE; ++i)
-	{
-		if (abs)  DoABS(i, normal_force[i]);
-		if (tcs)  DoTCS(i, normal_force[i]);
+		for (i = 0; i < WHEEL_POSITION_SIZE; ++i)
+		{
+			if (abs)  DoABS(i, normal_force[i]);
+			if (tcs)  DoTCS(i, normal_force[i]);
+		}
 	}
 }
 

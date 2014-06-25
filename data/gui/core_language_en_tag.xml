@@ -266,6 +266,7 @@
 	<Tag name="CarType_Terrain">Terrain</Tag>
 	<Tag name="CarType_Extreme">Extreme</Tag>
 	<Tag name="CarType_Other">Other</Tag>
+	<Tag name="CarType_Hover">Hovercraft</Tag>
 
 	<Tag name="Car_Mass">Mass</Tag>
 	<Tag name="Car_MaxTorque">Max Torque</Tag>

@@ -134,7 +134,7 @@ public:
 	/// return the speedometer reading (based on the driveshaft speed) in m/s
 	float GetSpeedometer() const
 	{
-		return dynamics.GetSpeedMPS();
+		return dynamics.hover ? dynamics.GetVelocity().Magnitude() : dynamics.GetSpeedMPS();
 	}
 
 	std::string GetCarType() const
