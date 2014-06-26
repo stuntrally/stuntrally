@@ -75,8 +75,8 @@ material SphereTest
 	diffuseMap white.png
 	//reflMap refl.png
 	env_map true
-    fresnel false
-    refl_amount 1.0
+	fresnel false
+	refl_amount 1.0
 	//fresnel true
 	//fresnelScaleBiasPower 0.81 0.67 4
   	ambient 0.3 0.3 0.3
@@ -272,8 +272,8 @@ material UPG16000_metalwheel
 	env_map true
 	fresnel true
 	fresnelScaleBiasPower 0.7 0.15 3
-    //fresnel false
-    //refl_amount 0.2
+	//fresnel false
+	//refl_amount 0.2
 }
 
 
@@ -329,7 +329,7 @@ material S1_interior
 	terrain_light_map true
 	terrain_light_map_toggleable true
 	env_map true
-    refl_amount 0.2
+	refl_amount 0.2
 }
 
 material S1_wheel
@@ -343,7 +343,7 @@ material S1_wheel
 	diffuse 0.8 0.8 0.8
 	specular 0.7 0.7 0.4 32
 	env_map true
-    refl_amount 0.1
+	refl_amount 0.1
 }
 material S1_brake  // disc- caliper
 {
@@ -476,7 +476,7 @@ material S8_wheel
 	diffuse 0.8 0.8 0.8
 	specular 0.7 0.7 0.4 32
 	env_map true
-    refl_amount 0.1
+	refl_amount 0.1
 }
 material S8_brake
 {
@@ -619,7 +619,7 @@ material FR4_interior
 	reflMap FR4_interior_refl.png
 	specular 0.3 0.3 0.3 4
 	env_map true
-    refl_amount 0.3
+	refl_amount 0.3
 	fresnel false
 	fresnelScaleBiasPower 0.7 0.15 4
 }
@@ -667,7 +667,7 @@ material TW_glass
 	diffuse 0.0 0.0 0.0
 	specular 0.3 0.3 0.3 4
 	env_map true
-    refl_amount 0.3
+	refl_amount 0.3
 	fresnel false
 	fresnelScaleBiasPower 0.7 0.15 4
 }
@@ -683,7 +683,7 @@ material TW_wheel_front
 	diffuseMap TW_wheel_front.png
 	reflMap TW_wheel_front_refl.png
 	env_map true
-    refl_amount 0.3
+	refl_amount 0.3
 }
 material TW_wheel_rear
 {
@@ -691,7 +691,7 @@ material TW_wheel_rear
 	diffuseMap TW_wheel_rear.png
 	reflMap TW_wheel_rear_refl.png
 	env_map true
-    refl_amount 0.15
+	refl_amount 0.15
 }
 
 //  TU  -------------------------------
@@ -709,7 +709,7 @@ material TU_glass
 	diffuse 0.0 0.09 0.1
 	specular 0.9 0.9 0.9 32
 	env_map true
-    refl_amount 0.4
+	refl_amount 0.4
 	fresnel false
 	fresnelScaleBiasPower 0.7 0.15 4
 }
@@ -721,7 +721,7 @@ material TU_interior
 	specMap TU_interior_spec.png
 	specular 0.9 0.9 0.9 16
 	env_map true
-    refl_amount 0.3
+	refl_amount 0.3
 }
 
 material TU_wheel_front
@@ -732,7 +732,7 @@ material TU_wheel_front
 	specMap TU_wheel_front_refl.png
 	specular 0.5 0.5 0.5 32
 	env_map true
-    refl_amount 0.3
+	refl_amount 0.3
 }
 material TU_wheel_rear
 {
@@ -742,7 +742,7 @@ material TU_wheel_rear
 	specMap TU_wheel_rear_refl.png
 	specular 0.5 0.5 0.5 32
 	env_map true
-    refl_amount 0.3
+	refl_amount 0.3
 }
 //-------------------------------------------------------
 
@@ -776,7 +776,7 @@ material SZ_wheel
 	specMap SZ_wheel_refl.png
 	specular 0.5 0.5 0.5 32
 	env_map true
-    refl_amount 0.3
+	refl_amount 0.3
 }
 
 //  FN
@@ -802,7 +802,7 @@ material FN_wheel
 	diffuse 0.9 0.9 0.9
 	specular 1.0 1.0 1.0 6
 	env_map true
-    refl_amount 0.2
+	refl_amount 0.2
 }
 material FN_brake
 {
@@ -813,4 +813,15 @@ material FN_brake
 	specular 0.8 0.8 0.8 20
 }
 
-//  NG ...
+
+//  V1
+material V1_interior
+{
+	parent car_interior
+	diffuseMap V1_interior.png
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 1.0 1.0 1.0 6
+	//env_map true
+	//refl_amount 0.2
+}
