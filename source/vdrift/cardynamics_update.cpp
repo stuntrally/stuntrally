@@ -449,7 +449,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	{
 		//  steer  5000 3500
 		MATHVECTOR<Dbl,3> av = GetAngularVelocity();
-		MATHVECTOR<Dbl,3> t(0,0, -6000 * steerValue);  // steerability
+		MATHVECTOR<Dbl,3> t(0,0, -7000 * steerValue);  // steerability
 		Orientation().RotateVector(t);
 		ApplyTorque(t - av * 3000);  // rotation damping
 		
@@ -473,18 +473,30 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 		COLLISION_CONTACT ct;
 		MATHVECTOR<Dbl,3> dn = GetDownVector();
 		
-		Dbl len = 2.0;
-		world->CastRay(GetPosition(), dn, len, chassis, ct,  0,0, true, false);
+		Dbl len = 3.0;
+		MATHVECTOR<Dbl,3> p = GetPosition() - dn * 0.5;
+		world->CastRay(p, dn, len, chassis, ct,  0,0, true, false);
 		Dbl d = ct.GetDepth();
 		if (d > 0.0 && d < len)
 		{
-			MATHVECTOR<Dbl,3> fg(0,0, (len -d) * (1.0 + 1.1 * vz) //PAR..
-				 * GetMass()*9.81); // * -dn[2]);  //dot z
-			ApplyForce(fg);
-			
 			au = dn.cross(ct.GetNormal());
-			ApplyTorque(-au*7000);  // align straight torque
+			ApplyTorque(-au*12000);  // align straight torque
 		}
+		
+		///  susp  //
+		Dbl new_displ = (len - d) * 1.f;
+		static Dbl displ = 0.0;
+		Dbl velocity = (new_displ - displ) / dt;
+		
+		// clamp velocity (workaround for very high damping values)
+		if (velocity > 1) velocity = 1;
+		else if (velocity < -1) velocity = -1;
+
+		displ = new_displ;
+		Dbl force = suspension[0].GetForce(displ, velocity);
+			suspension[0].displacement = displ;
+			suspension[0].velocity = velocity;
+		ApplyForce(dn * force * 0.8f);
 	}
 	// * * * * * * * * * 
 

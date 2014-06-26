@@ -67,6 +67,7 @@ const Dbl CARSUSPENSION::GetForce(Dbl displacement, Dbl velocity)
 
 	//compute spring factor based on curve
 	Dbl springfactor = spring_factors.Interpolate(displacement);
+	//LogO("sus: "+fToStr(springfactor,2,4)+" dmp: "+fToStr(dampfactor,2,4));
 
 	Dbl spring_force = -displacement * spring_constant * springfactor; //when compressed, the spring force will push the car in the positive z direction
 	Dbl damp_force = -velocity * damping * dampfactor; //when compression is increasing, the damp force will push the car in the positive z direction

@@ -29,19 +29,19 @@ exhaust-mirror-second = 0
 #  collision shape params
 #---------------------------
 [ collision ]
-com_ofs_L = 0.0
-com_ofs_H = -0.05
-radius = 0.4
-width = 0.49
-height = 0.43
-posLrear = -1.92
-posLfront = 1.93
-offsetL = -0.1
+com_ofs_L = 0.2
+com_ofs_H = -0.0
+radius = 0.5
+width = 0.7
+height = 0.6
+posLrear = -1.22
+posLfront = 1.23
+offsetL = 0.0
 offsetW = 0.0
-offsetH = 0.22
-start-offsetY = 0.64
+offsetH = 0.0
+start-offsetY = 0.24
 fluidTrigH = 0.05
-friction = 0.4
+friction = 0.1
 
 
 #  engine
@@ -105,26 +105,26 @@ fuel-density = 0.08
 #  suspension
 #---------------------------
 [ suspension-front ]
-spring-constant = 100000.0
-bounce = 14000.0
-rebound = 7500.0
-travel = 0.32
+spring-constant = 9000.0
+bounce = 5100.0
+rebound = 5200.0
+travel = 2.0
 camber = -1.33
-caster = 0.32
+caster = 2.02
 toe = 0.0
 anti-roll = 26000.0
-factors-file = first
+factors-file = hover
 
 [ suspension-rear ]
-spring-constant = 100000.0
-bounce = 13000.0
-rebound = 6000.0
-travel = 0.33
+spring-constant = 9000.0
+bounce = 5000.0
+rebound = 5000.0
+travel = 2.0
 camber = -0.45
 caster = 0.33
 toe = 0.2
 anti-roll = 20000.0
-factors-file = first
+factors-file = hover
 
 
 #  tires (more in .tire)
@@ -235,17 +235,17 @@ hinge = 0.25, -1.94, 0.0
 # (for car total mass and inertia) also use engine mass and position
 #---------------------------
 [ particle-00 ]  # rear
-mass = 245
-position =  0.8, -1.1, -0.06
+mass = 145
+position =  1.2, -1.2, -0.0
 
 [ particle-01 ]
-mass = 245
-position = -0.8, -1.1, -0.06
+mass = 145
+position = -1.2, -1.2, -0.0
 
 [ particle-02 ]  # front
-mass = 245
-position =  0.8,  1.1, -0.06
+mass = 145
+position =  1.2,  1.2, -0.0
 
 [ particle-03 ]
-mass = 245
-position = -0.8,  1.1, -0.06
+mass = 145
+position = -1.2,  1.2, -0.0

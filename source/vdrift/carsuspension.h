@@ -25,6 +25,7 @@ private:
 	Dbl caster;		///< caster angle in degrees. sign convention depends on the side
 	Dbl toe;		///< toe angle in degrees. sign convention depends on the side
 
+public:
 	// variables
 	Dbl overtravel;		///< the amount past the travel that the suspension was requested to compress
 	Dbl displacement;	///< a linear representation of the suspension displacement.  in actuality the displacement is about the arc formed by the hinge
