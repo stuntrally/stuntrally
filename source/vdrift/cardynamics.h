@@ -142,7 +142,6 @@ public:
 	MATHVECTOR<Dbl,3> center_of_mass;
 	COLLISION_WORLD * world;
 	btRigidBody *chassis, *whTrigs;
-		MATHVECTOR<Dbl,3> au;
 
 	///  camera bounce
 	LINEARFRAME cam_body;
@@ -172,7 +171,7 @@ public:
 
 // driveline state  -----------------
 	CARFUELTANK fuel_tank;
-	CARENGINE engine;
+	CARENGINE engine;  float hov_throttle;
 	CARCLUTCH clutch;
 	CARTRANSMISSION transmission;
 	CARDIFFERENTIAL diff_front, diff_rear, diff_center;
@@ -239,6 +238,7 @@ public:
 
 	void Tick(Dbl dt);  /// update simulation
 	void UpdateBody(Dbl dt, Dbl drive_torque[]);	// advance chassis(body, suspension, wheels) simulation by dt
+	void SimulateHover(Dbl dt);
 
 	void UpdateMass();  Dbl fBncMass;
 	void SynchronizeBody();

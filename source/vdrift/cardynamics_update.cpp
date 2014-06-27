@@ -9,6 +9,7 @@
 #include "../ogre/common/data/CData.h"
 #include "../ogre/common/data/SceneXml.h"
 #include "../ogre/common/data/FluidsXml.h"
+#include "../ogre/common/ShapeData.h"
 #include "../ogre/CGame.h"
 #include "Buoyancy.h"
 
@@ -185,11 +186,11 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 			out.precision(0);
 			out << "mass: " << body.GetMass();
 
-			if (hover)			
+			/*if (hover)			
 			{	MATHVECTOR<Dbl,3> sv = -GetVelocity();
 				(-Orientation()).RotateVector(sv);
-				out << " vel: " << sv << endl << "  au: " << au << endl;
-			}
+				out << " vel: " << sv << endl << "  au: " << al << endl;
+			}/**/
 			//  wheel pos, com ratio
 			Dbl whf = wheel[0].GetExtendedPosition()[0], whr = wheel[2].GetExtendedPosition()[0];
 			out.precision(2);
@@ -444,61 +445,9 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	///***  --------------------------------------------------
 	
 	
-	///  HOVER  * * * * *
-	if (hover)  // WIP ...
-	{
-		//  steer  5000 3500
-		MATHVECTOR<Dbl,3> av = GetAngularVelocity();
-		MATHVECTOR<Dbl,3> t(0,0, -7000 * steerValue);  // steerability
-		Orientation().RotateVector(t);
-		ApplyTorque(t - av * 3000);  // rotation damping
-		
-		//  engine
-		float f = body.GetMass() * 12.f * inputsCopy[CARINPUT::THROTTLE];  // power
-		MATHVECTOR<Dbl,3> vf(f,0,0);
-		Orientation().RotateVector(vf);
-		ApplyForce(vf);
-
-		//  side vel damping
-		MATHVECTOR<Dbl,3> sv = -GetVelocity();
-		(-Orientation()).RotateVector(sv);
-		Dbl vz = sv[2];
-		sv[0] *= 0.02 + 0.4 * inputsCopy[CARINPUT::BRAKE];  // air res, brake strength
-		sv[1] *= 1.0;
-		sv[2] *= sv[2] > 0.0 ? 0.0 : 0.5;  // height
-		Orientation().RotateVector(sv);
-		ApplyForce(sv * 2500);
-
-		//  anti gravity, hover force
-		COLLISION_CONTACT ct;
-		MATHVECTOR<Dbl,3> dn = GetDownVector();
-		
-		Dbl len = 3.0;
-		MATHVECTOR<Dbl,3> p = GetPosition() - dn * 0.5;
-		world->CastRay(p, dn, len, chassis, ct,  0,0, true, false);
-		Dbl d = ct.GetDepth();
-		if (d > 0.0 && d < len)
-		{
-			au = dn.cross(ct.GetNormal());
-			ApplyTorque(-au*12000);  // align straight torque
-		}
-		
-		///  susp  //
-		Dbl new_displ = (len - d) * 1.f;
-		static Dbl displ = 0.0;
-		Dbl velocity = (new_displ - displ) / dt;
-		
-		// clamp velocity (workaround for very high damping values)
-		if (velocity > 1) velocity = 1;
-		else if (velocity < -1) velocity = -1;
-
-		displ = new_displ;
-		Dbl force = suspension[0].GetForce(displ, velocity);
-			suspension[0].displacement = displ;
-			suspension[0].velocity = velocity;
-		ApplyForce(dn * force * 0.8f);
-	}
-	// * * * * * * * * * 
+	///  hover
+	if (hover)
+		SimulateHover(dt);
 
 	int i;
 	Dbl normal_force[WHEEL_POSITION_SIZE];
@@ -658,4 +607,107 @@ void CARDYNAMICS::UpdateMass()
 	}
 	// inertia.DebugPrint(std::cout);
 	body.SetInertia( inertia );
+}
+
+
+///  HOVER
+///..........................................................................................................
+void CARDYNAMICS::SimulateHover(Dbl dt)
+{
+	float dmg = fDamage > 50.f ? 1.f - (fDamage-50.f)*0.02f : 1.f;
+
+	//  cast ray down .
+	COLLISION_CONTACT ct;
+	MATHVECTOR<Dbl,3> dn = GetDownVector();
+
+	Dbl len = 2.0, rlen = len*2;  // par above
+	MATHVECTOR<Dbl,3> p = GetPosition();  // - dn * 0.1;
+	world->CastRay(p, dn, rlen, chassis, ct,  0,0, false, false);
+	float d = ct.GetDepth();
+
+	bool pipe = false;
+	if (ct.GetColObj())
+	{
+		int su = (int)ct.GetColObj()->getCollisionShape()->getUserPointer();
+		if (su >= SU_Pipe && su < SU_RoadWall)
+			pipe = true;
+	}
+	MATHVECTOR<Dbl,3> sv = -GetVelocity();
+	(-Orientation()).RotateVector(sv);
+
+	//  steer < >
+	bool rear = transmission.GetGear() < 0;
+	Dbl str = rear ? 8000 : -10000;  // steerability
+	MATHVECTOR<Dbl,3> av = GetAngularVelocity();
+	MATHVECTOR<Dbl,3> t(0,0, str * steerValue);
+	Orientation().RotateVector(t);
+	ApplyTorque(t - av * (pipe ? 2000 : 5000));  // rotation damping
+	
+	//  engine ^
+	//float pv = 1.f - pow(fabs(sv[0]*0.01), 1.5);
+	float pwr = rear ? -10.f : 10.f;  // power
+	float brk = rear ? 20.f : -20.f;  // brake
+	float f = body.GetMass() * (pwr * hov_throttle + brk * brake[0].GetBrakeFactor());
+	MATHVECTOR<Dbl,3> vf(f,0,0);
+	Orientation().RotateVector(vf);
+	ApplyForce(vf);
+
+
+	//  side vel damping --
+	Dbl vz = sv[2];
+	sv[0] *= 0.02;  // air res, brake strength
+	sv[1] *= 1.0;
+	//sv[2] *= 0.0;
+	sv[2] *= sv[2] > 0.0 ? 0.5 : 1.5;  // height |
+	Orientation().RotateVector(sv);
+	Dbl ss = pipe ? 10000 : 2100;
+	ApplyForce(sv * ss);
+
+	
+	//  align straight torque /\ 
+	MATHVECTOR <float,3> n = (d > 0.f && d < rlen)
+		? ct.GetNormal()  // ground
+		: MATHVECTOR <float,3>(0,0,1);  // in air
+
+	MATHVECTOR<Dbl,3> al = dn.cross(n);
+	if (pipe)
+	{	al[0] *= -42000;  al[1] *= -42000;  al[2] *= -32000;  }
+	else		// roll?		// pitch
+	{	al[0] *= -21000;  al[1] *= -21000;  al[2] *= -21000;  }
+	ApplyTorque(al);  // strength 
+
+	
+	#if 0
+	///  susp  anti gravity force  v
+	Dbl new_displ = (len - d) * 1.f;
+	static Dbl displ = 0.0;
+	Dbl velocity = (new_displ - displ) / dt;
+	
+	if (velocity > 2)  velocity = 2;  // clamp vel
+	else if (velocity < -2) velocity = -2;
+
+	displ = new_displ;
+	Dbl force = suspension[0].GetForce(displ, velocity);
+		//suspension[0].displacement = new_displ;
+		//suspension[0].velocity = velocity;
+	ApplyForce(dn * force * 1.f * dmg);
+	#endif
+
+
+	///  heavy landing damp  __
+	vz = chassis->getLinearVelocity().dot(ToBulletVector(n));
+		suspension[1].velocity = vz * 0.384;  // for graphs
+		suspension[1].displacement = d / len;
+		suspension[0].displacement = d / rlen;
+	
+	float aa = std::min(1.0, vz * 0.384);
+	float df = vz > 0 ? (1.0 - 0.98 * aa) : 1.0;
+	float dm = d > len*0.9 ? 0 : (0.5+0.5*d/len) * df * (pipe ? 0.5 : 3.6);
+		suspension[2].displacement = dm;
+		suspension[3].displacement = (d < len*0.9 ? (len-d) * 1.f : 0.f);
+	float fn =
+		(d > len*0.9 ? (pipe ? -500.f : -500.f) : 0.f) +  // fall down force v
+		(d < len*0.9 ? (len*0.9-d) * 6000.f : 0.f) +  // anti grav force ^
+		dm * -1000.f * vz;
+	chassis->applyCentralForce(ToBulletVector(-dn * fn * dmg));
 }

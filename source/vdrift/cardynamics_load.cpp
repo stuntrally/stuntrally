@@ -15,7 +15,7 @@ using namespace std;
 
 CARDYNAMICS::CARDYNAMICS() :
 	world(NULL), chassis(NULL), whTrigs(0), pGame(0),
-	hover(false),
+	hover(false), hov_throttle(0.f),
 	drive(AWD), tacho_rpm(0), engine_vol_mul(1),
 	autoclutch(true), autoshift(true), autorear(true),
 	shifted(true), shift_gear(0),
@@ -687,22 +687,23 @@ void CARDYNAMICS::Init(
 
 		const int numSph = 14;  int i = 0;
 		btScalar rad[numSph];  btVector3 pos[numSph];
-		pos[i] = btVector3( l1 , -w,    -h);    	rad[i] = r2;  ++i;  // front
-		pos[i] = btVector3( l1 ,  w,    -h);    	rad[i] = r2;  ++i;
-		pos[i] = btVector3( l1m, -w,    -h);    	rad[i] = r;   ++i;  // front near
-		pos[i] = btVector3( l1m,  w,    -h);    	rad[i] = r;   ++i;
+		float ww = hover ? 0.2f : 1.f;  ///
+		pos[i] = btVector3( l1 , -w*ww, -h);    	rad[i] = r2;  ++i;  // front
+		pos[i] = btVector3( l1 ,  w*ww, -h);    	rad[i] = r2;  ++i;
+		pos[i] = btVector3( l1m, -w*ww, -h);    	rad[i] = r;   ++i;  // front near
+		pos[i] = btVector3( l1m,  w*ww, -h);    	rad[i] = r;   ++i;
 
 		pos[i] = btVector3( l2m, -w,    -h);    	rad[i] = r;   ++i;  // rear near
 		pos[i] = btVector3( l2m,  w,    -h);    	rad[i] = r;   ++i;
 		pos[i] = btVector3( l2 , -w,    -h);    	rad[i] = r2;  ++i;  // rear
 		pos[i] = btVector3( l2 ,  w,    -h);    	rad[i] = r2;  ++i;
 
-		pos[i] = btVector3( 0.4, -w*0.8, h*0.2);	rad[i] = r2;  ++i;  // top
-		pos[i] = btVector3( 0.4,  w*0.8, h*0.2);	rad[i] = r2;  ++i;
-		pos[i] = btVector3(-0.3, -w*0.8, h*0.4);	rad[i] = r2;  ++i;
-		pos[i] = btVector3(-0.3,  w*0.8, h*0.4);	rad[i] = r2;  ++i;
-		pos[i] = btVector3(-1.1, -w*0.8, h*0.2);	rad[i] = r2;  ++i;  // top rear
-		pos[i] = btVector3(-1.1,  w*0.8, h*0.2);	rad[i] = r2;  ++i;
+		pos[i] = btVector3( 0.4, -w*0.8*ww, h*0.2);	rad[i] = r2;  ++i;  // top
+		pos[i] = btVector3( 0.4,  w*0.8*ww, h*0.2);	rad[i] = r2;  ++i;
+		pos[i] = btVector3(-0.3, -w*0.8*ww, h*0.4);	rad[i] = r2;  ++i;
+		pos[i] = btVector3(-0.3,  w*0.8*ww, h*0.4);	rad[i] = r2;  ++i;
+		pos[i] = btVector3(-1.1, -w*0.8*ww, h*0.2);	rad[i] = r2;  ++i;  // top rear
+		pos[i] = btVector3(-1.1,  w*0.8*ww, h*0.2);	rad[i] = r2;  ++i;
 
 		for (i=0; i < numSph; ++i)
 			pos[i] += origin;

@@ -449,7 +449,8 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		for (int i=0; i < 4; ++i)
 		{
 			const CARSUSPENSION& susp = dynamics.GetSuspension((WHEEL_POSITION)i);
-			pApp->graphs[i+4]->AddVal(negPow(susp.GetVelocity(), 0.5) * 0.2f +0.5f);
+			pApp->graphs[i+4]->AddVal( dynamics.hover ?
+				susp.GetVelocity() * 0.2f +0.5f : negPow(susp.GetVelocity(), 0.5) * 0.2f +0.5f);
 			pApp->graphs[i]->AddVal(susp.GetDisplacementPercent());
 		}	break;
 

@@ -87,7 +87,10 @@ void CARDYNAMICS::SetThrottle(float value)
 	/// <><> damage reduce  from 50 %
 	float dmg = fDamage >= 100.f ? 0.f : (1.f - 0.6f * std::max(0.f, fDamage-50.f)/50.f);
 
-	engine.SetThrottle(value * dmg);
+	if (hover)
+		hov_throttle = value * dmg;
+	else
+		engine.SetThrottle(value * dmg);
 }
 
 void CARDYNAMICS::SetBrake(float value)
