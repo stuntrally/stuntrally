@@ -105,6 +105,7 @@
 	<Tag name="CarDesc_UV">This big wheeled utility vehicle is powered by 4 electic engines. Suited for nearly all tracks, except when narrow. Great for exploring other planets. But has bad aerodynamics and gets stuck in mud.</Tag>
 	<Tag name="CarDesc_SZ">Fastest car meant for gravel. Light and with a powerful engine. Has great aerodynamics and steerability.</Tag>
 	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
+	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer.</Tag>
 	
 	
 <!--  ............................................................................................................................  -->
