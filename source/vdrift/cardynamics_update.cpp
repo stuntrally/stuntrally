@@ -669,8 +669,7 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 
 	
 	//  align straight torque /\ 
-	MATHVECTOR <float,3> n = (d > 0.f && d < rlen)
-		? ct.GetNormal()  // ground
+	MATHVECTOR <float,3> n = (d > 0.f && d < rlen) ? ct.GetNormal()  // ground
 		: MATHVECTOR <float,3>(0,0,1);  // in air
 
 	MATHVECTOR<Dbl,3> al = dn.cross(n);
