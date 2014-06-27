@@ -633,7 +633,7 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 	bool pipe = false;
 	if (ct.GetColObj())
 	{
-		int su = (int)ct.GetColObj()->getCollisionShape()->getUserPointer();
+		int su = (long)ct.GetColObj()->getCollisionShape()->getUserPointer();
 		if (su >= SU_Pipe && su < SU_RoadWall)
 			pipe = true;
 	}
