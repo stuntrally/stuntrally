@@ -97,7 +97,7 @@ void CScene::CreateBlendTex()
 	angleRTT.Setup(app->mRoot, "ang", angleRTex, sAngMat);
 	grassDensRTT.Setup(app->mRoot, "grd", grassDensRTex, sGrassDensMat);
 	
-	UpdBlendmap();  //
+	//UpdBlendmap();  //
 }
 
 

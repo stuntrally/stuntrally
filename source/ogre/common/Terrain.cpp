@@ -261,11 +261,11 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer, bool terLoad)
 	}
 	}
 
-	UpdBlendmap();  //
-
 	LogO(String("::: Time Terrain: ") + fToStr(tm.getMilliseconds(),0,3) + " ms");
 	
 	changeShadows();
+
+	UpdBlendmap();  //
 }
 
 
