@@ -5,7 +5,7 @@
 	<color type="Slow"    color="#B0B080" />
 	<color type="Terrain" color="#90F090" />
 	<color type="Extreme" color="#C898E8" />
-	<color type="Other"   color="#C0D0E0" />
+	<color type="Other"   color="#3080E0" />
 	<color type="Hover"   color="#40A0FF" />
 
 	<!--global multipliers for car factors, magic - see App::GetRacePos-->
@@ -42,7 +42,8 @@
 	<car id="SZ"  crtver="2.4" speed="8" year="1996" type="Gravel"   easy="1.01" norm="1.03"  author="cobe571" />
 	<car id="XZ"  crtver="2.0" speed="9" year="2007" type="Asphalt"  easy="1.01" norm="1.03"  author="Neubi" />
 	
-	<car id="V1"  crtver="2.4" speed="7" year="2133" type="Hover"    easy="1.10" norm="1.20"  author="benja" />
+	<car id="V1"  crtver="2.4" speed="11" year="2133" type="Hover"   easy="1.10" norm="1.20"  author="benja" />
+	<car id="O"   crtver="2.4" speed="12" year="2144" type="Other"   easy="1.01" norm="1.03"  author="" />
 	
 	<!--easy and norm are the car time multipliers for simultation modes-->
 	<!--less means bigger track time (more points, easier to qualify)-->
