@@ -26,8 +26,8 @@ material ptol_struct
 material rome
 {
 	parent base
-	diffuseMap rome_struct_2.png
-	normalMap rome_struct_2_norm.png
+	diffuseMap rome_struct_2.jpg
+	normalMap rome_struct_2_norm.jpg
 	ambient 1.1 1.1 1.1
 	diffuse 0.75 0.75 0.75
 	specular 0.2 0.2 0.2 12
@@ -37,8 +37,8 @@ material rome
 material rome2
 {
 	parent base
-	diffuseMap rome_struct_1.png
-	normalMap rome_struct_1_norm.png
+	diffuseMap rome_struct_1.jpg
+	normalMap rome_struct_1_norm.jpg
 	ambient 1.1 1.1 1.1
 	diffuse 0.75 0.75 0.75
 	specular 0.2 0.2 0.2 12
