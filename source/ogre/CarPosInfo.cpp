@@ -100,9 +100,14 @@ void PosInfo::FromCar(CAR* pCar)
 	const CARDYNAMICS* cd = &pCar->dynamics;
 	//  car
 	Axes::toOgre(pos, cd->GetPosition());
-	rot = Axes::toOgre(cd->GetOrientation());
-	carY = rot * Vector3::UNIT_Y;
-
+	if (cd->sphere)
+	{	rot.FromAngleAxis(Radian(-cd->sphereYaw), Vector3::UNIT_Y);
+		carY = Vector3::UNIT_Y;
+	}
+	else
+	{	rot = Axes::toOgre(cd->GetOrientation());
+		carY = rot * Vector3::UNIT_Y;
+	}
 	speed = pCar->GetSpeed();
 	fboost = cd->boostVal;	//posInfo.steer = cd->steer;
 	braking = cd->IsBraking();  //percent = outside

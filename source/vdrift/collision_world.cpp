@@ -130,6 +130,7 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 		Ogre::Vector3 vel(vcar[0], vcar[2], -vcar[1]);
 		Ogre::Vector3 norm(hit.norm.getX(), hit.norm.getZ(), -hit.norm.getY());
 		float vlen = vel.length(), normvel = abs(vel.dotProduct(norm));
+		if (cd->sphere)  {  vlen *= 0.1f;  normvel *= 0.06f;  }
 
 		//  Sparks emit params
 		cd->vHitPos = Ogre::Vector3(hit.pos.getX(), hit.pos.getZ(), -hit.pos.getY());

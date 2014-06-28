@@ -178,7 +178,8 @@ public:
 	std::vector <CARBRAKE> brake;
 	std::vector <CARWHEEL> wheel;
 	
-	bool hover;  //> false for cars
+	bool hover, sphere;  //> false for cars
+	float sphereYaw;  // dir
 	enum { FWD = 3, RWD = 12, AWD = 15 } drive;
 	Dbl driveshaft_rpm, tacho_rpm;  float engine_vol_mul;
 
@@ -238,7 +239,7 @@ public:
 
 	void Tick(Dbl dt);  /// update simulation
 	void UpdateBody(Dbl dt, Dbl drive_torque[]);	// advance chassis(body, suspension, wheels) simulation by dt
-	void SimulateHover(Dbl dt);
+	void SimulateHover(Dbl dt), SimulateSphere(Dbl dt);
 
 	void UpdateMass();  Dbl fBncMass;
 	void SynchronizeBody();

@@ -334,7 +334,8 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	cam_force[0]=0.0;  cam_force[1]=0.0;  cam_force[2]=0.0;
 
 
-	if (!hover)  // car
+	bool car = !hover && !sphere;
+	if (car)
 	{
 		UpdateWheelVelocity();
 
@@ -448,10 +449,15 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	///  hover
 	if (hover)
 		SimulateHover(dt);
+		
+	///  sphere
+	if (sphere)
+		SimulateSphere(dt);
+	
 
 	int i;
 	Dbl normal_force[WHEEL_POSITION_SIZE];
-	if (!hover)
+	if (car)
 	{
 		for (i = 0; i < WHEEL_POSITION_SIZE; ++i)
 		{
@@ -469,7 +475,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	//chassis->integrateVelocities(dt);
 
 	// update wheel state
-	if (!hover)
+	if (car)
 	{
 		for (i = 0; i < WHEEL_POSITION_SIZE; ++i)
 		{
@@ -619,17 +625,20 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 	//  cast ray down .
 	COLLISION_CONTACT ct,ct2;
 	MATHVECTOR<Dbl,3> dn = GetDownVector();
-	MATHVECTOR<Dbl,3> dx(1.4, 0, 0);
-	Orientation().RotateVector(dx);
 
 	Dbl len = 2.0, rlen = len*2;  // par above
 	MATHVECTOR<Dbl,3> p = GetPosition();  // - dn * 0.1;
 	world->CastRay(p, dn, rlen, chassis, ct,  0,0, false, false);
 	float d = ct.GetDepth();
 
+	//  2nd in front for pitch
+	MATHVECTOR<Dbl,3> dx(1.4, 0, 0);
+	Orientation().RotateVector(dx);
+
 	world->CastRay(p+dx, dn, rlen, chassis, ct2,  0,0, false, false);
 	float d2 = ct2.GetDepth();
 
+	//  common
 	bool pipe = false;
 	if (ct.GetColObj())
 	{
@@ -640,6 +649,7 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 	MATHVECTOR<Dbl,3> sv = -GetVelocity();
 	(-Orientation()).RotateVector(sv);
 	float roll = sv[1] * -1000.f;  // vis only
+
 
 	//  steer < >
 	bool rear = transmission.GetGear() < 0;
@@ -720,4 +730,37 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 		(d < ll ? (ll-d) * (pipe ? 2000.f : 6000.f) : 0.f) +  // anti grav force ^  TODO: goes crazy in pipes
 		dm * -1000.f * vz;
 	chassis->applyCentralForce(ToBulletVector(-dn * fn * dmg));
+}
+
+
+///  SPHERE
+///..........................................................................................................
+void CARDYNAMICS::SimulateSphere(Dbl dt)
+{
+	float f = hov_throttle - brake[0].GetBrakeFactor();
+	if (transmission.GetGear() < 0)  f *= -1.f;
+	//  rotate dir
+	sphereYaw += steerValue * dt * 70.f* PI_d/180.f;  // steerability
+	MATHVECTOR<Dbl,3> dir(cosf(sphereYaw), -sinf(sphereYaw), 0);
+
+	f *= body.GetMass() * -1.0;
+	chassis->applyCentralForce(ToBulletVector(dir * f)
+		+ btVector3(0,0,-100));  // fall down force
+
+	//  handbrake damping
+	btVector3 v = chassis->getLinearVelocity();
+	Dbl d = brake[0].GetHandbrakeFactor();
+	if (d > 0.01f)
+	{
+		chassis->applyCentralForce(v * d * -10);
+
+		btVector3 av = chassis->getAngularVelocity();
+		chassis->applyTorque(av * d * -10);
+	}
+
+	//  side damp --
+	btVector3 vv(dir[1], -dir[0], 0.f);
+	float dot = v.getX()*vv.getX() + v.getY()*vv.getY();
+	chassis->applyCentralForce(vv * dot * -100
+		/*- btVector3(0,0, v.getZ()*100)*/ );
 }

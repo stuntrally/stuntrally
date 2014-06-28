@@ -16,6 +16,7 @@ using namespace std;
 CARDYNAMICS::CARDYNAMICS() :
 	world(NULL), chassis(NULL), whTrigs(0), pGame(0),
 	hover(false), hov_throttle(0.f),
+	sphere(false), sphereYaw(0.f),
 	drive(AWD), tacho_rpm(0), engine_vol_mul(1),
 	autoclutch(true), autoshift(true), autorear(true),
 	shifted(true), shift_gear(0),
@@ -193,10 +194,11 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 	//load the differential(s)
 	string drivetype;
 	if (!c.GetParam("drive", drivetype, error_output))  return false;
+
 	if (drivetype == "hover")  //>
-	{	hover = true;
-		drivetype = "AWD";
-	}
+	{	hover = true;  drivetype = "AWD";  }
+	else if (drivetype == "sphere")
+	{	sphere = true;  drivetype = "AWD";  }
 	//if (!hover)
 		SetDrive(drivetype);
 
@@ -660,15 +662,12 @@ void CARDYNAMICS::Init(
 	btVector3 origin = ToBulletVector(box.GetCenter() + verticalMargin - center_of_mass);
 	btVector3 size = ToBulletVector(box.GetSize() - verticalMargin);
 
-	//btCompoundShape * chassisShape = new btCompoundShape(false);
-	#if 0
-		//btBoxShape * hull = new btBoxShape( btVector3(1.8,0.8,0.5) );
-		//btBoxShape * hull = new btBoxShape( btVector3(1.7,0.7,0.3) );
-		//tr.setOrigin(origin + btVector3(0,0,0.2));
-		btSphereShape * chassisShape = new btSphereShape(1.f);
-		//chassisShape->addChildShape(tr, hull);
-	#else
-		/// todo: all params in .car
+	btCollisionShape* chassisShape;
+	if (sphere)
+	{	chassisShape = new btSphereShape(1.f);
+		//chassisShape->setMargin(1.2f);  //!? doesnt work
+	}else
+	{	/// todo: all params in .car
 		// y| length  x- width  z^ height
 		btScalar w = size.getX()*0.2, r = size.getZ()*0.3, h = 0.45;
 
@@ -707,12 +706,11 @@ void CARDYNAMICS::Init(
 
 		for (i=0; i < numSph; ++i)
 			pos[i] += origin;
-		btMultiSphereShape* chassisShape = new btMultiSphereShape(pos, rad, numSph);
-		//chassisShape->setMargin(0.2f);
-	#endif
+		chassisShape = new btMultiSphereShape(pos, rad, numSph);
+	}
 
 
-	Dbl chassisMass = body.GetMass();// * 0.4;  // Magic multiplier makes collisions better - problem: mud is very different
+	Dbl chassisMass = body.GetMass();
 	MATRIX3 <Dbl> inertia = body.GetInertia();
 	btVector3 chassisInertia(inertia[0], inertia[4], inertia[8]);
 
