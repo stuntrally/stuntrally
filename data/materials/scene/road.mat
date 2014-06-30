@@ -421,8 +421,8 @@ material roadIce_ter
 material roadSnow
 {
 	parent road
-	ambient 1.0 1.0 1.0
-	diffuse 0.8 0.8 0.8
+	ambient 1.1 1.05 1.05
+	diffuse 0.9 0.85 0.85
 	specular 0.6 0.62 0.62 18
 	diffuseMap roadSnow.jpg
 }
@@ -430,8 +430,8 @@ material roadSnow
 material roadSnow_ter
 {
 	parent road_terrain
-	ambient 1.0 1.0 1.0
-	diffuse 0.8 0.8 0.8
+	ambient 1.1 1.05 1.05
+	diffuse 0.9 0.85 0.85
 	specular 0.6 0.62 0.62 18
 	diffuseMap roadSnow.jpg
 	normalMap normal_1.png
