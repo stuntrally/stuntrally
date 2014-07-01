@@ -168,18 +168,22 @@ public:
 	btVector3 velPrev;
 	Dbl time;  // for wind only
 	
+	///  other vehicles  *  *  *
+	bool hover, sphere;  //> false for cars
+	float sphereYaw;  // dir
+	float hov_throttle, hov_roll;
+	void SimulateHover(Dbl dt), SimulateSphere(Dbl dt);
 
+	
 // driveline state  -----------------
 	CARFUELTANK fuel_tank;
-	CARENGINE engine;  float hov_throttle;
+	CARENGINE engine;
 	CARCLUTCH clutch;
 	CARTRANSMISSION transmission;
 	CARDIFFERENTIAL diff_front, diff_rear, diff_center;
 	std::vector <CARBRAKE> brake;
 	std::vector <CARWHEEL> wheel;
 	
-	bool hover, sphere;  //> false for cars
-	float sphereYaw;  // dir
 	enum { FWD = 3, RWD = 12, AWD = 15 } drive;
 	Dbl driveshaft_rpm, tacho_rpm;  float engine_vol_mul;
 
@@ -239,7 +243,6 @@ public:
 
 	void Tick(Dbl dt);  /// update simulation
 	void UpdateBody(Dbl dt, Dbl drive_torque[]);	// advance chassis(body, suspension, wheels) simulation by dt
-	void SimulateHover(Dbl dt), SimulateSphere(Dbl dt);
 
 	void UpdateMass();  Dbl fBncMass;
 	void SynchronizeBody();

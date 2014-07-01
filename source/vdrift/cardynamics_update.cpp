@@ -414,7 +414,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	}
 
 	///***  boost  -------------------------------------------
-	if (doBoost > 0.01f	&& pSet->game.boost_type > 0)
+	if (!sphere && doBoost > 0.01f && pSet->game.boost_type > 0)
 	{
 		/// <><> damage reduce
 		float dmg = fDamage >= 80.f ? 0.f : (130.f - fDamage)*0.01f;
