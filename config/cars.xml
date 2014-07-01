@@ -43,7 +43,7 @@
 	<car id="XZ"  crtver="2.0" speed="9" year="2007" type="Asphalt"  easy="1.01" norm="1.03"  author="Neubi" />
 	
 	<car id="V1"  crtver="2.4" speed="11" year="2133" type="Hover"   easy="1.10" norm="1.20"  author="benja" />
-	<car id="O"   crtver="2.4" speed="12" year="2144" type="Other"   easy="1.01" norm="1.03"  author="" />
+	<car id="O"   crtver="2.4" speed="12" year="2144" type="Other"   easy="1.01" norm="1.03"  author="cryham" />
 	
 	<!--easy and norm are the car time multipliers for simultation modes-->
 	<!--less means bigger track time (more points, easier to qualify)-->
