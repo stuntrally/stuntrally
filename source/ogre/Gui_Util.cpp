@@ -261,7 +261,7 @@ void CGui::UpdCarStatsTxt()
 		fi.close();
 	}
 	String ss = txt;
-	#define REP(s1,s2)  ss = StringUtil::replaceAll(ss, "Mass", TR("#{Car_Mass}"))
+	#define REP(s1,s2)  ss = StringUtil::replaceAll(ss, s1, s2)
 	REP("Mass", TR("#{Car_Mass}"));
 	REP("Max Torque", TR("#{Car_MaxTorque}"));
 	REP("Max Power", TR("#{Car_MaxPower}"));
