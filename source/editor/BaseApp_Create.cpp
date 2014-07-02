@@ -529,6 +529,6 @@ void BaseApp::baseInitGui()
 
 	txFps = mGui->createWidget<TextBox>("TextBox",
 		1,1, 212,25, Align::Default, "Pointer", "FpsT");
-	txFps->setFontName("fps.17");
+	txFps->setFontName("hud.fps");
 
 }

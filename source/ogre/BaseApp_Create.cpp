@@ -745,7 +745,7 @@ void BaseApp::baseInitGui()
 
 	txFps = bckFps->createWidget<TextBox>("TextBox",
 		1,1, 212,25, Align::Default, "FpsT");
-	txFps->setFontName("fps.17");
+	txFps->setFontName("hud.fps");
 
 	bckFps->setVisible(false);
 
@@ -769,12 +769,12 @@ void BaseApp::baseInitGui()
 
 	txLoadBig = bckLoad->createWidget<TextBox>("TextBox",
 		10,8, 400,30, Align::Default, "LoadTbig");
-	txLoadBig->setFontName("font.20");  txLoadBig->setTextColour(Colour(0.7,0.83,1));
+	txLoadBig->setFontName("hud.text");  txLoadBig->setTextColour(Colour(0.7,0.83,1));
 	txLoadBig->setCaption(TR("#{LoadingDesc}"));
 
 	txLoad = bckLoad->createWidget<TextBox>("TextBox",
 		10,77, 400,24, Align::Default, "LoadT");
-	txLoad->setFontName("font.17");  txLoad->setTextColour(Colour(0.65,0.78,1));
+	txLoad->setFontName("hud.text");  txLoad->setTextColour(Colour(0.65,0.78,1));
 	txLoad->setCaption(TR("#{Initializing}..."));
 
 

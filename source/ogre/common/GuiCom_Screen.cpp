@@ -142,6 +142,18 @@ void CGuiCom::InitGuiScreenRes()
 	BtnC("ResChange",btnResChng);
 }
 
+//  gui margin
+float CGuiCom::GetGuiMargin()
+{
+	const int yN = 7, wy = pSet->windowy;
+	const Real yw[yN] = {400.f, 600.f, 720.f, 768.f, 960.f, 1024.f, 1050.f};
+	//  how much empty space for screen y size, 0 = full window
+	const Real yf[yN] = {0.0f,  0.0f,  0.05f, 0.1f,  0.15f,  0.2f,  0.22f};
+	float ym = 0.f;
+	for (int i=0; i < yN; ++i)
+		if (wy >= yw[i]-10)  ym = yf[i];
+	return ym;
+}
 
 //  resize Options wnd
 void CGuiCom::ResizeOptWnd()
@@ -149,13 +161,8 @@ void CGuiCom::ResizeOptWnd()
 	if (!app->mWndOpts)  return;
 
 	const int wx = pSet->windowx, wy = pSet->windowy;
-	const int yN = 7;
-	const Real yw[yN] = {400.f, 600.f, 720.f, 768.f, 960.f, 1024.f, 1200.f};
-	const Real yf[yN] = {0.0f,  0.0f,  0.05f, 0.1f,  0.2f,  0.3f,   0.3f};
 
-	Real xm = 0.f, ym = 0.f;  // margin
-	for (int i=0; i < yN; ++i)
-		if (wy >= yw[i]-10)  ym = yf[i];
+	Real xm = 0.f, ym = GetGuiMargin();  // margin
 
 	Real yo = (1.f - ym)*wy, xo = 4.f/3.f * yo;  // opt wnd size in pix
 	ym = (wy - yo)*0.5f;  xm = (wx - xo)*0.5f;

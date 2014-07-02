@@ -21,8 +21,10 @@
 #include <MyGUI_Gui.h>
 #include <MyGUI_Window.h>
 #include <MyGUI_TabControl.h>
+#include <MyGUI_ResourceTrueTypeFont.h>
 using namespace MyGUI;
 using namespace Ogre;
+using namespace std;
 
 
 CGuiCom::CGuiCom(App* app1)
@@ -152,7 +154,7 @@ void CGuiCom::doSizeGUI(EnumeratorWidgetPtr widgets)
 	while (widgets.next())
 	{
 		WP wp = widgets.current();
-		std::string relativeTo = wp->getUserString("RelativeTo");
+		string relativeTo = wp->getUserString("RelativeTo");
 
 		if (relativeTo != "")
 		{
@@ -306,7 +308,7 @@ void CGuiCom::GuiInitLang()
 	ComboBoxPtr combo = fCmb("Lang");
 	if (!combo)  return;
 	combo->eventComboChangePosition += newDelegate(this, &CGuiCom::comboLanguage);
-	for (std::map<std::string, UString>::const_iterator it = languages.begin();
+	for (std::map<string, UString>::const_iterator it = languages.begin();
 		it != languages.end(); ++it)
 	{
 		combo->addItem(it->second);
@@ -320,7 +322,7 @@ void CGuiCom::comboLanguage(MyGUI::ComboBox* wp, size_t val)
 	if (val == MyGUI::ITEM_NONE)  return;
 	MyGUI::UString sel = wp->getItemNameAt(val);
 	
-	for (std::map<std::string, MyGUI::UString>::const_iterator it = languages.begin();
+	for (std::map<string, MyGUI::UString>::const_iterator it = languages.begin();
 		it != languages.end(); ++it)
 	{
 		if (it->second == sel)
@@ -384,4 +386,55 @@ void CGuiCom::tabMainMenu(Tab tab, size_t id)
 	tab->setIndexSelected(1);  // dont switch to 0
 	pSet->isMain = true;
 	app->gui->toggleGui(false);  // back to main
+}
+
+
+///  create fonts
+//----------------------------------------------------------------------------------------------------------------
+void CGuiCom::CreateFonts()
+{
+	MyGUI::ResourceManager& mgr = MyGUI::ResourceManager::getInstance();
+	MyGUI::IResource* resource = mgr.findByName("hud.text");  // based on this font
+	MyGUI::ResourceTrueTypeFont* bfont = resource != nullptr ? resource->castType<MyGUI::ResourceTrueTypeFont>(false) : 0;
+	if (!bfont)  LogO("Error !! Can't find font: hud.text");
+
+	const int cnt = 3;
+	string names[cnt] = {"font.small","font.normal","font.big"};
+	float sizes[cnt] = {26.f, 30.f, 34.f};  // par
+	
+	for (int i=0; i < cnt; ++i)
+	{
+		//  del old
+		const string name = names[i];
+		if (mgr.isExist(name))
+			mgr.removeByName(name);
+
+		//  create
+		string resourceCategory = mgr.getCategoryName();
+		ResourceTrueTypeFont* font = FactoryManager::getInstance().createObject<ResourceTrueTypeFont>(resourceCategory);
+		font->setResourceName(name);
+
+		//  setup font				   // par
+		float size = sizes[i] * (1.f - 1.5f * (0.22f - GetGuiMargin()));
+		LogO("-- "+name+"  size: "+fToStr(size,2,4));
+		
+		font->setSource("DejaVuLGCSans.ttf");
+		font->setSize(size);  font->setResolution(50);  font->setAntialias(false);  //font->setHinting("");
+		font->setTabWidth(8);  font->setDistance(4);  font->setOffsetHeight(0);
+		//font->setSubstituteCode(_data->getPropertyValue<int>("SubstituteCode"));
+
+		//  char ranges
+		if (bfont)
+		{	const std::vector<pair<Char, Char> >& vv = bfont->getCodePointRanges();
+			for (std::vector<pair<Char, Char> >::const_iterator it = vv.begin(); it != vv.end(); ++it)
+			if ((*it).first > 10 && (*it).first < 10000)
+			{	//LogO("aa "+toStr((*it).first)+" "+toStr((*it).second));
+				font->addCodePointRange((*it).first, (*it).second);  }
+		}else
+			font->addCodePointRange(33,255);
+
+		//  add
+		font->initialise();
+		mgr.addResource(font);
+	}
 }

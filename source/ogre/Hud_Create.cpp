@@ -302,7 +302,7 @@ void CHud::Create()
 		{
 			h.txDamage = h.parent->createWidget<TextBox>("TextBox",
 				0,y, 240,80, Align::Right, "Dmg"+s);  //h.txDamage->setVisible(false);
-			h.txDamage->setFontName("font.24");  //h.txDamage->setFontHeight(64);
+			h.txDamage->setFontName("hud.replay");  //h.txDamage->setFontHeight(64);
 			h.txDamage->setTextColour(Colour(0.7,0.7,0.7));  h.txDamage->setTextShadow(true);
 
 			h.icoDamage = h.parent->createWidget<ImageBox>("ImageBox",
@@ -338,7 +338,7 @@ void CHud::Create()
 
 		h.txTimTxt = h.parent->createWidget<TextBox>("TextBox",
 			0,y, 120,260, Align::Left, "TimT"+s);
-		h.txTimTxt->setFontName("font.22");  h.txTimTxt->setTextShadow(true);
+		h.txTimTxt->setFontName("hud.times");  h.txTimTxt->setTextShadow(true);
 		h.txTimTxt->setInheritsAlpha(false);
 		h.txTimTxt->setCaption(
 			(hasLaps ? String("#90D0C0")+TR("#{TBLap}") : "")+
@@ -351,7 +351,7 @@ void CHud::Create()
 		h.txTimes = h.parent->createWidget<TextBox>("TextBox",
 			0,y, 230,260, Align::Left, "Tim"+s);
 		h.txTimes->setInheritsAlpha(false);
-		h.txTimes->setFontName("font.22");  h.txTimes->setTextShadow(true);
+		h.txTimes->setFontName("hud.times");  h.txTimes->setTextShadow(true);
 
 
 		///  lap results  ----------------------
@@ -363,7 +363,7 @@ void CHud::Create()
 
 		h.txLapTxt = h.parent->createWidget<TextBox>("TextBox",
 			0,y, 120,300, Align::Left, "LapT"+s);
-		h.txLapTxt->setFontName("font.22");  h.txLapTxt->setTextShadow(true);
+		h.txLapTxt->setFontName("hud.times");  h.txLapTxt->setTextShadow(true);
 		h.txLapTxt->setInheritsAlpha(false);
 		h.txLapTxt->setCaption(//String("\n")+
 			//(hasLaps ? String("#D0F8F0")+TR("#{TBLap}") : "")+
@@ -377,7 +377,7 @@ void CHud::Create()
 		h.txLap = h.parent->createWidget<TextBox>("TextBox",
 			0,y, 230,320, Align::Left, "Lap"+s);
 		h.txLap->setInheritsAlpha(false);
-		h.txLap->setFontName("font.22");  h.txLap->setTextShadow(true);
+		h.txLap->setFontName("hud.times");  h.txLap->setTextShadow(true);
 		h.txLap->setVisible(false);
 
 
@@ -391,7 +391,7 @@ void CHud::Create()
 		{
 			h.txOpp[n] = h.parent->createWidget<TextBox>("TextBox",
 				n*80+10,0, 90,180, n == 2 ? Align::Left : Align::Right, "Opp"+toStr(n)+s);
-			h.txOpp[n]->setFontName("font.20");  h.txOpp[n]->setVisible(false);
+			h.txOpp[n]->setFontName("hud.text");  h.txOpp[n]->setVisible(false);
 			if (n==0)  h.txOpp[n]->setTextShadow(true);
 		}
 		h.lastOppH = -1;  // upd size
@@ -403,7 +403,7 @@ void CHud::Create()
 
 		h.txWarn = h.bckWarn->createWidget<TextBox>("TextBox",
 			0,0, 400,60, Align::Left, "WarnT"+s);
-		h.txWarn->setFontName("font.20");  h.txWarn->setTextShadow(true);
+		h.txWarn->setFontName("hud.text");  h.txWarn->setTextShadow(true);
 		h.txWarn->setTextColour(Colour(1,0.3,0));  h.txWarn->setTextAlign(Align::Center);
 		h.txWarn->setCaption(TR("#{WrongChk}"));
 
@@ -414,7 +414,7 @@ void CHud::Create()
 
 		h.txPlace = h.bckPlace->createWidget<TextBox>("TextBox",
 			0,0, 400,60, Align::Left, "PlcT"+s);
-		h.txPlace->setFontName("font.20");  h.txPlace->setTextShadow(true);
+		h.txPlace->setFontName("hud.text");  h.txPlace->setTextShadow(true);
 		h.txPlace->setTextAlign(Align::Center);
 
 		//  start countdown
@@ -426,25 +426,25 @@ void CHud::Create()
 		//  abs, tcs
 		h.txAbs = h.parent->createWidget<TextBox>("TextBox",
 			0,y, 120,60, Align::Left, "AbsT"+s);
-		h.txAbs->setFontName("font.19");  h.txAbs->setTextShadow(true);
+		h.txAbs->setFontName("hud.text");  h.txAbs->setTextShadow(true);
 		h.txAbs->setCaption("ABS");  h.txAbs->setTextColour(Colour(1,1,0.6));
 
 		h.txTcs = h.parent->createWidget<TextBox>("TextBox",
 			0,y, 120,60, Align::Left, "TcsT"+s);
-		h.txTcs->setFontName("font.19");  h.txTcs->setTextShadow(true);
+		h.txTcs->setFontName("hud.text");  h.txTcs->setTextShadow(true);
 		h.txTcs->setCaption("TCS");  h.txTcs->setTextColour(Colour(0.6,1,1));
 
 		//  camera name
 		h.txCam = h.parent->createWidget<TextBox>("TextBox",
 			0,0, 200,30, Align::Left, "CamT"+s);
-		h.txCam->setFontName("font.20");  h.txCam->setTextShadow(true);
+		h.txCam->setFontName("hud.text");  h.txCam->setTextShadow(true);
 		h.txCam->setTextColour(Colour(0.65,0.85,0.85));
 	}
 
 	//  camera info
 	txCamInfo = app->mGui->createWidget<TextBox>("TextBox",
 		0,y, 800,100, Align::Left, "Back", "CamIT");  txCamInfo->setVisible(false);
-	txCamInfo->setFontName("font.20");  txCamInfo->setTextShadow(true);
+	txCamInfo->setFontName("hud.text");  txCamInfo->setTextShadow(true);
 	txCamInfo->setTextColour(Colour(0.8,0.9,0.9));
 
 	//  chat msg  -----------
@@ -457,7 +457,7 @@ void CHud::Create()
 	txMsg = bckMsg->createWidget<TextBox>("TextBox",
 		16,10, 800,80, Align::Left, "PlcT");
 	txMsg->setInheritsAlpha(false);
-	txMsg->setFontName("font.20");  txMsg->setTextShadow(true);
+	txMsg->setFontName("hud.text");  txMsg->setTextShadow(true);
 	txMsg->setTextColour(Colour(0.95,0.95,1.0));
 
 	///  tex

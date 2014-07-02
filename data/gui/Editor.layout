@@ -38,7 +38,7 @@
 			<Property key="Colour" value="0.7 1.0 1.0"/>
 			<Property key="TextColour" value="0.7 1.0 1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="FontName" value="font.19"/>
+			<Property key="FontName" value="font.big"/>
 		</Widget>
 		<Widget type="Widget" skin="PanelSkin" position="88 128 272 80" name="PanMenu1">
 			<Property key="Colour" value="0.5 1.0 0.4"/>
@@ -50,7 +50,7 @@
 			<Property key="Colour" value="0.5 1.0 0.4"/>
 			<Property key="TextColour" value="0.5 1.0 0.4"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="FontName" value="font.19"/>
+			<Property key="FontName" value="font.big"/>
 		</Widget>
 		<Widget type="Widget" skin="PanelSkin" position="88 212 272 80" name="PanMenu2">
 			<Property key="Colour" value="0.4 0.7 1"/>
@@ -62,7 +62,7 @@
 			<Property key="Colour" value="0.4 0.7 1"/>
 			<Property key="TextColour" value="0.75 0.9 1"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="FontName" value="font.19"/>
+			<Property key="FontName" value="font.big"/>
 		</Widget>
 		<Widget type="Widget" skin="PanelSkin" position="88 296 272 80" name="PanMenu3">
 			<Property key="Colour" value="0.7 0.7 1"/>
@@ -74,7 +74,7 @@
 			<Property key="Colour" value="0.7 0.7 1"/>
 			<Property key="TextColour" value="0.8 0.8 1"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="FontName" value="font.19"/>
+			<Property key="FontName" value="font.big"/>
 		</Widget>
 	</Widget>
 	<Widget type="Widget" skin="PanelSkin" position="2288 20 326 98" layer="ToolTip" name="ToolTip">
@@ -87,6 +87,7 @@
 			<Property key="WordWrap" value="true"/>
 			<Property key="Static" value="true"/>
 			<Property key="TextAlign" value="Left Top"/>
+			<Property key="FontName" value="font.small"/>
 			<Property key="Caption" value="ToolTip Text"/>
 			<UserString key="NotSized" value="1"/>
 		</Widget>
@@ -119,119 +120,119 @@
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="TextBox" skin="TextBox" position="4 5 70 20" name="brTxt0">
+		<Widget type="TextBox" skin="TextBoxS" position="4 5 70 20" name="brTxt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="74 5 60 20" name="brVal0">
+		<Widget type="TextBox" skin="TextBoxS" position="74 5 60 20" name="brVal0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="134 5 60 20" name="brKey0">
+		<Widget type="TextBox" skin="TextBoxS" position="134 5 60 20" name="brKey0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.5 0.76 1.0"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 25 70 20" name="brTxt1">
+		<Widget type="TextBox" skin="TextBoxS" position="4 25 70 20" name="brTxt1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="74 25 60 20" name="brVal1">
+		<Widget type="TextBox" skin="TextBoxS" position="74 25 60 20" name="brVal1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="134 25 60 20" name="brKey1">
+		<Widget type="TextBox" skin="TextBoxS" position="134 25 60 20" name="brKey1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.5 0.76 1.0"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 50 70 20" name="brTxt2">
+		<Widget type="TextBox" skin="TextBoxS" position="4 50 70 20" name="brTxt2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.8 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="74 50 60 20" name="brVal2">
+		<Widget type="TextBox" skin="TextBoxS" position="74 50 60 20" name="brVal2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.8 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="134 50 60 20" name="brKey2">
+		<Widget type="TextBox" skin="TextBoxS" position="134 50 60 20" name="brKey2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.5 0.9 0.9"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 70 70 20" name="brTxt3">
+		<Widget type="TextBox" skin="TextBoxS" position="4 70 70 20" name="brTxt3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="74 70 60 20" name="brVal3">
+		<Widget type="TextBox" skin="TextBoxS" position="74 70 60 20" name="brVal3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="134 70 60 20" name="brKey3">
+		<Widget type="TextBox" skin="TextBoxS" position="134 70 60 20" name="brKey3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.5 0.85 0.85"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 95 70 20" name="brTxt4">
+		<Widget type="TextBox" skin="TextBoxS" position="4 95 70 20" name="brTxt4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.85 0.7 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="74 95 60 20" name="brVal4">
+		<Widget type="TextBox" skin="TextBoxS" position="74 95 60 20" name="brVal4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.85 0.7 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="134 95 60 20" name="brKey4">
+		<Widget type="TextBox" skin="TextBoxS" position="134 95 60 20" name="brKey4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.8 1.0"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 115 80 20" name="brTxt5">
+		<Widget type="TextBox" skin="TextBoxS" position="4 115 80 20" name="brTxt5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.73 0.73 0.83"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="84 115 60 20" name="brVal5">
+		<Widget type="TextBox" skin="TextBoxS" position="84 115 60 20" name="brVal5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.73 0.73 0.83"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="134 115 60 20" name="brKey5">
+		<Widget type="TextBox" skin="TextBoxS" position="134 115 60 20" name="brKey5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.8 0.8 0.9"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 135 70 20" name="brTxt6">
+		<Widget type="TextBox" skin="TextBoxS" position="4 135 70 20" name="brTxt6">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.7 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="74 135 60 20" name="brVal6">
+		<Widget type="TextBox" skin="TextBoxS" position="74 135 60 20" name="brVal6">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.7 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="134 135 60 20" name="brKey6">
+		<Widget type="TextBox" skin="TextBoxS" position="134 135 60 20" name="brKey6">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.8 0.8 1.0"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 160 70 20" name="brTxt7">
+		<Widget type="TextBox" skin="TextBoxS" position="4 160 70 20" name="brTxt7">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.9 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="74 160 50 20" name="brVal7">
+		<Widget type="TextBox" skin="TextBoxS" position="74 160 50 20" name="brVal7">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.76 0.9 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="124 160 60 20" name="brKey7">
+		<Widget type="TextBox" skin="TextBoxS" position="124 160 60 20" name="brKey7">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.5 1.0 0.5"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 180 70 20" name="brTxt8">
+		<Widget type="TextBox" skin="TextBoxS" position="4 180 70 20" name="brTxt8">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.9 0.7"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="74 180 60 20" name="brVal8">
+		<Widget type="TextBox" skin="TextBoxS" position="74 180 60 20" name="brVal8">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.9 0.7"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="119 180 60 20" name="brKey8">
+		<Widget type="TextBox" skin="TextBoxS" position="119 180 60 20" name="brKey8">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.84 0.9 0.84"/>
 		</Widget>
@@ -243,27 +244,27 @@
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="TextBox" skin="TextBox" position="4 5 150 20" name="stTxt0">
+		<Widget type="TextBox" skin="TextBoxS" position="4 5 150 20" name="stTxt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 25 150 20" name="stTxt1">
+		<Widget type="TextBox" skin="TextBoxS" position="4 25 150 20" name="stTxt1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 50 150 20" name="stTxt2">
+		<Widget type="TextBox" skin="TextBoxS" position="4 50 150 20" name="stTxt2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.8 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 70 150 20" name="stTxt3">
+		<Widget type="TextBox" skin="TextBoxS" position="4 70 150 20" name="stTxt3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.78 0.82 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 95 150 20" name="stTxt4">
+		<Widget type="TextBox" skin="TextBoxS" position="4 95 150 20" name="stTxt4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.76 0.9 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 115 150 20" name="stTxt5">
+		<Widget type="TextBox" skin="TextBoxS" position="4 115 150 20" name="stTxt5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.76 0.9 1.0"/>
 		</Widget>
@@ -274,27 +275,27 @@
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="TextBox" skin="TextBox" position="4 0 160 20" name="flTxt0">
+		<Widget type="TextBox" skin="TextBoxS" position="4 0 160 20" name="flTxt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 20 160 20" name="flTxt1">
+		<Widget type="TextBox" skin="TextBoxS" position="4 20 160 20" name="flTxt1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.8 0.9 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 40 160 20" name="flTxt2">
+		<Widget type="TextBox" skin="TextBoxS" position="4 40 160 20" name="flTxt2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.75 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 60 160 20" name="flTxt3">
+		<Widget type="TextBox" skin="TextBoxS" position="4 60 160 20" name="flTxt3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.75 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 80 160 20" name="flTxt4">
+		<Widget type="TextBox" skin="TextBoxS" position="4 80 160 20" name="flTxt4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 100 160 20" name="flTxt5">
+		<Widget type="TextBox" skin="TextBoxS" position="4 100 160 20" name="flTxt5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
@@ -306,27 +307,27 @@
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="TextBox" skin="TextBox" position="4 0 160 20" name="riTxt0">
+		<Widget type="TextBox" skin="TextBoxS" position="4 0 160 20" name="riTxt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 20 160 20" name="riTxt1">
+		<Widget type="TextBox" skin="TextBoxS" position="4 20 160 20" name="riTxt1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.8 0.9 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 40 160 20" name="riTxt2">
+		<Widget type="TextBox" skin="TextBoxS" position="4 40 160 20" name="riTxt2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.75 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 60 160 20" name="riTxt3">
+		<Widget type="TextBox" skin="TextBoxS" position="4 60 160 20" name="riTxt3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.75 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 80 160 20" name="riTxt4">
+		<Widget type="TextBox" skin="TextBoxS" position="4 80 160 20" name="riTxt4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 100 160 20" name="riTxt5">
+		<Widget type="TextBox" skin="TextBoxS" position="4 100 160 20" name="riTxt5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
@@ -337,23 +338,23 @@
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="TextBox" skin="TextBox" position="4 0 220 20" name="objTxt0">
+		<Widget type="TextBox" skin="TextBoxS" position="4 0 220 20" name="objTxt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.9 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 20 220 20" name="objTxt1">
+		<Widget type="TextBox" skin="TextBoxS" position="4 20 220 20" name="objTxt1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.9 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 50 220 20" name="objTxt2">
+		<Widget type="TextBox" skin="TextBoxS" position="4 50 220 20" name="objTxt2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.75 0.85 0.95"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 70 220 20" name="objTxt3">
+		<Widget type="TextBox" skin="TextBoxS" position="4 70 220 20" name="objTxt3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.65 0.81 0.95"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 90 220 20" name="objTxt4">
+		<Widget type="TextBox" skin="TextBoxS" position="4 90 220 20" name="objTxt4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.61 0.75 0.85"/>
 		</Widget>
@@ -363,7 +364,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Visible" value="false"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 120 220 20" name="objTxt5">
+		<Widget type="TextBox" skin="TextBoxS" position="4 120 220 20" name="objTxt5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.9 1.0"/>
 		</Widget>
@@ -374,157 +375,157 @@
 		<Property key="Caption" value="#{RoadPoint}"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="TextBox" skin="TextBox" position="4 0 130 20" name="rdTxt0">
+		<Widget type="TextBox" skin="TextBoxS" position="4 0 130 20" name="rdTxt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 1.0 0.5"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="80 2 60 20" name="rdVal0">
-			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.7 1.0 0.5"/>
-			<Property key="FontHeight" value="16"/>
-		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="144 2 70 20" name="rdKey0">
+		<Widget type="TextBox" skin="TextBoxS" position="80 2 60 20" name="rdVal0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 1.0 0.5"/>
 			<Property key="FontHeight" value="16"/>
 		</Widget>
+		<Widget type="TextBox" skin="TextBoxS" position="144 2 70 20" name="rdKey0">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 1.0 0.5"/>
+			<Property key="FontHeight" value="16"/>
+		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 20 70 20" name="rdTxt1">
+		<Widget type="TextBox" skin="TextBoxS" position="4 20 70 20" name="rdTxt1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.5 1.0 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="80 20 70 20" name="rdVal1">
+		<Widget type="TextBox" skin="TextBoxS" position="80 20 70 20" name="rdVal1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.5 1.0 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="154 20 70 20" name="rdKey1">
+		<Widget type="TextBox" skin="TextBoxS" position="154 20 70 20" name="rdKey1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.5 1.0 0.9"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 50 70 20" name="rdTxt2">
+		<Widget type="TextBox" skin="TextBoxS" position="4 50 70 20" name="rdTxt2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="1.0 0.7 0.5"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="80 50 70 20" name="rdVal2">
+		<Widget type="TextBox" skin="TextBoxS" position="80 50 70 20" name="rdVal2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="1.0 0.7 0.5"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="154 50 70 20" name="rdKey2">
+		<Widget type="TextBox" skin="TextBoxS" position="154 50 70 20" name="rdKey2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="1.0 0.7 0.5"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 73 70 20" name="rdTxt3">
+		<Widget type="TextBox" skin="TextBoxS" position="4 73 70 20" name="rdTxt3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.6 0.5"/>
 			<Property key="FontHeight" value="16"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="80 73 70 20" name="rdVal3">
+		<Widget type="TextBox" skin="TextBoxS" position="80 73 70 20" name="rdVal3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.6 0.5"/>
 			<Property key="FontHeight" value="16"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="157 73 70 20" name="rdKey3">
+		<Widget type="TextBox" skin="TextBoxS" position="157 73 70 20" name="rdKey3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.6 0.5"/>
 			<Property key="FontHeight" value="16"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 93 140 20" name="rdTxt4">
+		<Widget type="TextBox" skin="TextBoxS" position="4 93 140 20" name="rdTxt4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.6 0.8"/>
 			<Property key="FontHeight" value="16"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="80 93 70 20" name="rdVal4">
+		<Widget type="TextBox" skin="TextBoxS" position="80 93 70 20" name="rdVal4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.6 0.8"/>
 			<Property key="FontHeight" value="16"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="157 93 70 20" name="rdKey4">
+		<Widget type="TextBox" skin="TextBoxS" position="157 93 70 20" name="rdKey4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.6 0.8"/>
 			<Property key="FontHeight" value="16"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 113 70 20" name="rdTxt5">
+		<Widget type="TextBox" skin="TextBoxS" position="4 113 70 20" name="rdTxt5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.75 0.45 0.55"/>
 			<Property key="FontHeight" value="16"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="80 111 70 20" name="rdVal5">
+		<Widget type="TextBox" skin="TextBoxS" position="80 111 70 20" name="rdVal5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.8 0.5 0.6"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="157 113 70 20" name="rdKey5">
+		<Widget type="TextBox" skin="TextBoxS" position="157 113 70 20" name="rdKey5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.8 0.5 0.6"/>
 			<Property key="FontHeight" value="16"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 140 70 20" name="rdTxt6">
+		<Widget type="TextBox" skin="TextBoxS" position="4 140 70 20" name="rdTxt6">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.86 0.86 0.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="80 140 70 20" name="rdVal6">
+		<Widget type="TextBox" skin="TextBoxS" position="80 140 70 20" name="rdVal6">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.86 0.86 0.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="154 140 70 20" name="rdKey6">
+		<Widget type="TextBox" skin="TextBoxS" position="154 140 70 20" name="rdKey6">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.86 0.86 0.0"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 163 70 20" name="rdTxt7">
+		<Widget type="TextBox" skin="TextBoxS" position="4 163 70 20" name="rdTxt7">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.74 0.77 0.8"/>
 			<Property key="FontHeight" value="16"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="80 160 70 20" name="rdVal7">
+		<Widget type="TextBox" skin="TextBoxS" position="80 160 70 20" name="rdVal7">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.74 0.77 0.8"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="154 163 70 20" name="rdKey7">
+		<Widget type="TextBox" skin="TextBoxS" position="154 163 70 20" name="rdKey7">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.74 0.77 0.8"/>
 			<Property key="FontHeight" value="16"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 185 140 20" name="rdTxt8">
+		<Widget type="TextBox" skin="TextBoxS" position="4 185 140 20" name="rdTxt8">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 0.96"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="80 185 70 20" name="rdVal8">
+		<Widget type="TextBox" skin="TextBoxS" position="80 185 70 20" name="rdVal8">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 0.86"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="154 185 70 20" name="rdKey8">
+		<Widget type="TextBox" skin="TextBoxS" position="154 185 70 20" name="rdKey8">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 0.86"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 215 70 20" name="rdTxt9">
+		<Widget type="TextBox" skin="TextBoxS" position="4 215 70 20" name="rdTxt9">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.75 0.64 0.96"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="80 215 70 20" name="rdVal9">
+		<Widget type="TextBox" skin="TextBoxS" position="80 215 70 20" name="rdVal9">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.8 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="154 215 70 20" name="rdKey9">
+		<Widget type="TextBox" skin="TextBoxS" position="154 215 70 20" name="rdKey9">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.75 0.64 0.96"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 240 70 20" name="rdTxt10">
+		<Widget type="TextBox" skin="TextBoxS" position="4 240 70 20" name="rdTxt10">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="80 240 75 20" name="rdVal10">
+		<Widget type="TextBox" skin="TextBoxS" position="80 240 75 20" name="rdVal10">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="149 240 70 20" name="rdKey10">
+		<Widget type="TextBox" skin="TextBoxS" position="149 240 70 20" name="rdKey10">
 			<Property key="TextColour" value="0.5 1.0 0.0"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
@@ -537,101 +538,101 @@
 		<Property key="Snap" value="true"/>
 		<Property key="Visible" value="false"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="TextBox" skin="TextBox" position="4 0 80 20" name="rdTxtSt0">
+		<Widget type="TextBox" skin="TextBoxS" position="4 0 80 20" name="rdTxtSt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.68 0.82 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="84 0 80 20" name="rdValSt0">
+		<Widget type="TextBox" skin="TextBoxS" position="84 0 80 20" name="rdValSt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.68 0.82 1.0"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 20 80 20" name="rdTxtSt1">
+		<Widget type="TextBox" skin="TextBoxS" position="4 20 80 20" name="rdTxtSt1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.56 0.76 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="84 20 80 20" name="rdValSt1">
-			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.56 0.76 1.0"/>
-		</Widget>
-
-		<Widget type="TextBox" skin="TextBox" position="4 40 80 20" name="rdTxtSt2">
-			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.56 0.76 1.0"/>
-		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="84 40 80 20" name="rdValSt2">
+		<Widget type="TextBox" skin="TextBoxS" position="84 20 80 20" name="rdValSt1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.56 0.76 1.0"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 68 80 20" name="rdTxtSt3">
+		<Widget type="TextBox" skin="TextBoxS" position="4 40 80 20" name="rdTxtSt2">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.56 0.76 1.0"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBoxS" position="84 40 80 20" name="rdValSt2">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.56 0.76 1.0"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBoxS" position="4 68 80 20" name="rdTxtSt3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 1.0 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="84 68 80 20" name="rdValSt3">
+		<Widget type="TextBox" skin="TextBoxS" position="84 68 80 20" name="rdValSt3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 1.0 1.0"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 88 80 20" name="rdTxtSt4">
+		<Widget type="TextBox" skin="TextBoxS" position="4 88 80 20" name="rdTxtSt4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="1.0 1.0 0.4"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="84 88 80 20" name="rdValSt4">
+		<Widget type="TextBox" skin="TextBoxS" position="84 88 80 20" name="rdValSt4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="1.0 1.0 0.4"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 108 90 20" name="rdTxtSt5">
+		<Widget type="TextBox" skin="TextBoxS" position="4 108 90 20" name="rdTxtSt5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="1.0 0.45 0.25"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="94 108 80 20" name="rdValSt5">
+		<Widget type="TextBox" skin="TextBoxS" position="94 108 80 20" name="rdValSt5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="1.0 0.45 0.25"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 132 70 20" name="rdTxtSt6">
+		<Widget type="TextBox" skin="TextBoxS" position="4 132 70 20" name="rdTxtSt6">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.75 0.8 0.85"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="84 132 80 20" name="rdValSt6">
+		<Widget type="TextBox" skin="TextBoxS" position="84 132 80 20" name="rdValSt6">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.75 0.8 0.85"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 156 110 20" name="rdTxtSt7">
+		<Widget type="TextBox" skin="TextBoxS" position="4 156 110 20" name="rdTxtSt7">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 0.6"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="114 156 80 20" name="rdValSt7">
+		<Widget type="TextBox" skin="TextBoxS" position="114 156 80 20" name="rdValSt7">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 0.6"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 176 110 20" name="rdTxtSt8">
+		<Widget type="TextBox" skin="TextBoxS" position="4 176 110 20" name="rdTxtSt8">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.8 0.7"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="114 176 80 20" name="rdValSt8">
+		<Widget type="TextBox" skin="TextBoxS" position="114 176 80 20" name="rdValSt8">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.8 0.7"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 200 90 20" name="rdTxtSt9">
+		<Widget type="TextBox" skin="TextBoxS" position="4 200 90 20" name="rdTxtSt9">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.75 0.8"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="54 200 80 20" name="rdValSt9">
+		<Widget type="TextBox" skin="TextBoxS" position="54 200 80 20" name="rdValSt9">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.75 0.8"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="4 220 90 20" name="rdTxtSt10">
+		<Widget type="TextBox" skin="TextBoxS" position="4 220 90 20" name="rdTxtSt10">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.75 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="54 220 80 20" name="rdValSt10">
+		<Widget type="TextBox" skin="TextBoxS" position="54 220 80 20" name="rdValSt10">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.75 0.9"/>
 		</Widget>
@@ -654,7 +655,7 @@
 		<Widget type="Widget" skin="" position="306 36 160 400" name="PanelPick">
 			<Property key="Colour" value="0.5 0.75 1.0"/>
 			<Property key="Alpha" value="0.3"/>
-			<Widget type="TextBox" skin="TextBox" position="12 0 160 20">
+			<Widget type="TextBox" skin="TextBoxS" position="12 0 160 20">
 				<Property key="TextColour" value="0.8 0.9 0.9"/>
 				<Property key="Caption" value="#{InputPickTab}"/>
 				<Property key="InheritsAlpha" value="false"/>
@@ -2040,7 +2041,7 @@
 					<Property key="Caption" value="#{Enabled}"/>
 					<Property key="TextColour" value="0.4 1 0.4"/>
 					<Property key="Colour" value="0.4 1 0.4"/>
-					<Property key="FontName" value="font.19"/>
+					<Property key="FontName" value="font.big"/>
 					<UserString key="tip" value="#{TipToggleLayer}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="280 170 156 24" name="TerLayTripl">
@@ -2470,7 +2471,7 @@
 						<Widget type="EditBox" skin="EditBox" position="32 36 56 26" name="GrassDensEdit">
 							<Property key="TextColour" value="0.6 1 0.4"/>
 							<Property key="Colour" value="0.4 0.9 0.2"/>
-							<Property key="FontName" value="font.19"/>
+							<Property key="FontName" value="font.big"/>
 							<UserString key="tip" value="#{TipGrassDens}"/>
 						</Widget>
 
@@ -2596,7 +2597,7 @@
 							<Property key="Caption" value="#{Enabled}"/>
 							<Property key="Colour" value="0.6 1 0.6"/>
 							<Property key="TextColour" value="0.6 1 0.6"/>
-							<Property key="FontName" value="font.19"/>
+							<Property key="FontName" value="font.big"/>
 							<UserString key="tip" value="#{TipToggleGrass}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="604 58 128 24" name="LGrAll">
@@ -2953,7 +2954,7 @@
 						<Widget type="EditBox" skin="EditBox" position="32 36 56 26" name="TreesDensEdit">
 							<Property key="TextColour" value="1 1 0.6"/>
 							<Property key="Colour" value="0.8 0.8 0.5"/>
-							<Property key="FontName" value="font.19"/>
+							<Property key="FontName" value="font.big"/>
 							<UserString key="tip" value="#{TipTreeDens}"/>
 						</Widget>
 
@@ -3086,7 +3087,7 @@
 							<Property key="Caption" value="#{Enabled}"/>
 							<Property key="Colour" value="0.4 0.8 0.8"/>
 							<Property key="TextColour" value="0.4 0.8 0.8"/>
-							<Property key="FontName" value="font.19"/>
+							<Property key="FontName" value="font.big"/>
 							<UserString key="tip" value="#{TipToggleModel}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="604 58 124 24" name="LTrAll">
@@ -3837,26 +3838,26 @@
 							<Property key="Caption" value="#{Resolution}"/>
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.8 0.92 1"/>
-							<Property key="FontName" value="font.19"/>
+							<Property key="FontName" value="font.big"/>
 							<Property key="TextShadow" value="true"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="164 156 190 24" name="FullScreen">
 							<Property key="Caption" value="#{Fullscreen}"/>
 							<Property key="TextColour" value="0.6 0.8 1"/>
-							<Property key="FontName" value="font.19"/>
+							<Property key="FontName" value="font.big"/>
 						</Widget>
 						<Widget type="ComboBox" skin="ComboBox" position="164 92 190 32" name="ResList">
 							<Property key="Static" value="true"/>
 							<Property key="ReadOnly" value="true"/>
 							<Property key="Colour" value="0.7 0.86 1"/>
 							<Property key="TextColour" value="0.8 0.9 1"/>
-							<Property key="FontName" value="font.19"/>
+							<Property key="FontName" value="font.big"/>
 						</Widget>
 						<Widget type="Button" skin="Button" position="384 96 108 24" name="ResChange">
 							<Property key="Caption" value="#{Change}"/>
 							<Property key="TextColour" value="0.7 0.85 1"/>
 							<Property key="Colour" value="0.6 0.8 1"/>
-							<Property key="FontName" value="font.19"/>
+							<Property key="FontName" value="font.big"/>
 						</Widget>
 
 						<Widget type="ImageBox" skin="ImageBox" position="32 236 96 96">
@@ -3867,7 +3868,7 @@
 						<Widget type="TextBox" skin="TextBox" position="164 244 322 24">
 							<Property key="Caption" value="#{GraphicsPreset} **"/>
 							<Property key="TextColour" value="0.7 1 1"/>
-							<Property key="FontName" value="font.19"/>
+							<Property key="FontName" value="font.big"/>
 							<Property key="TextShadow" value="true"/>
 						</Widget>
 						<Widget type="ComboBox" skin="ComboBox" position="164 280 190 32" name="CmbGraphicsAll">
@@ -3875,12 +3876,12 @@
 							<Property key="ReadOnly" value="true"/>
 							<Property key="Colour" value="0.4 0.9 0.9"/>
 							<Property key="TextColour" value="0.8 1 1"/>
-							<Property key="FontName" value="font.19"/>
+							<Property key="FontName" value="font.big"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="384 288 260 24">
 							<Property key="Caption" value="*#{NeedRestart}"/>
 							<Property key="TextColour" value="0.5 0.8 0.8"/>
-							<Property key="FontName" value="font.19"/>
+							<Property key="FontName" value="font.big"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472" layer="Back">

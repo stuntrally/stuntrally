@@ -127,6 +127,14 @@
             <UserString key="LE_TargetWidgetType" value="TextBox"/>
         </Widget>
     </Resource>
+    <Resource type="ResourceLayout" name="TextBoxS" version="3.2.0">
+        <Widget type="Widget" skin="TextBoxSkin" position="20 20 16 16" name="Root">
+            <Property key="TextAlign" value="Default"/>
+            <Property key="FontName" value="font.small"/>
+            <Property key="TextColour" value="1 1 1"/>
+            <UserString key="LE_TargetWidgetType" value="TextBox"/>
+        </Widget>
+    </Resource>
     <Resource type="ResourceLayout" name="EditBox" version="3.2.0">
         <Widget type="Widget" skin="EditBoxSkin" position="65 10 29 26" name="Root">
             <UserString key="LE_TargetWidgetType" value="EditBox"/>
@@ -382,7 +390,7 @@
     </Resource>
     <Resource type="ResourceLayout" name="ListBoxItem" version="3.2.0">
         <Widget type="Widget" skin="ListBoxItemSkin" position="20 20 43 13" name="Root">
-            <Property key="FontName" value="Default"/>
+            <Property key="FontName" value="font.small"/>
             <Property key="TextAlign" value="Left VCenter"/>
             <UserString key="LE_TargetWidgetType" value="Button"/>
         </Widget>
@@ -436,7 +444,7 @@
             <Property key="FontName" value="Default"/>
             <Property key="TextAlign" value="Center"/>
             <UserString key="LE_TargetWidgetType" value="Button"/>
-			<Property key="FontName" value="font.19"/>
+			<Property key="FontName" value="font.big"/>
 		<!--<Widget type="ImageBox" skin="ImageBox" position="4 4 26 26" name="TabImage">-->
 			<!--<Widget type="ImageBox" skin="ImageBox" position="2 2 28 28" name="TabImage">
 				--><!--<Property key="ImageResource" value="MultiListButtonImage"/>
@@ -467,7 +475,7 @@
     </Resource>
 
     <Resource type="ResourceLayout" name="TabHeaderButton" version="3.2.0">
-        <Widget type="Widget" skin="TabHeaderButtonSkin" position="20 25 52 23" name="Root">
+        <Widget type="Widget" skin="TabHeaderButtonSkin" position="20 25 52 25" name="Root">
             <Property key="FontName" value="Default"/>
             <Property key="TextAlign" value="Center"/>
             <UserString key="LE_TargetWidgetType" value="Button"/>

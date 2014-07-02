@@ -42,6 +42,7 @@ public:
 	//  resize
 	void SizeGUI(), doSizeGUI(MyGUI::EnumeratorWidgetPtr);
 	void setOrigPos(WP wp, const char* relToWnd);
+	void CreateFonts();
 
 	//  tooltip
 	WP mToolTip;  Ed mToolTipTxt;
@@ -150,6 +151,7 @@ public:
 	///  [Screen]
 	Cmb resList;
 	void InitGuiScreenRes(), ResizeOptWnd();
+	float GetGuiMargin();
 
 	CK(VidFullscr);  CK(VidVSync);
 	void btnResChng(WP);
