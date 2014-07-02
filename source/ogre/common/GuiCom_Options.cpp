@@ -132,6 +132,7 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 	}
 
 	//  render systems
+	#if 0
 	CmbC(cmb, "CmbRendSys", comboRenderSystem);
 	if (cmb)
 	{	cmb->removeAllItems();
@@ -155,6 +156,7 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 		//for (int i=0; i < rsl.size(); ++i)
 		//	combo->addItem(rsl[i]->getName());
 	}
+	#endif
 }
 
 

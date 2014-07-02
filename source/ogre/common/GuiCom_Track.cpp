@@ -95,7 +95,7 @@ void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 //  * * * *  CONST  * * * *
 //  column widths in MultiList2
 const int wi = 26;  // track detailed
-const int CGuiCom::colTrk[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
+const int CGuiCom::colTrk[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 24};
 #ifndef SR_EDITOR
 const int CGui::colCar[16] = {34, 17, 35, 40, 20};  // car
 const int CGui::colCh [16] = {30, 180, 120, 50, 80, 80, 60, 40};  // champs
