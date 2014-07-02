@@ -240,7 +240,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	//  boost
 	if (pSet->particles)
 	for (int i=0; i < 2; i++)
-	if (parBoost[i])
+	if (parBoost[i] && pCar)
 	{
 		/// <><> damage reduce
 		float dmg = pCar->dynamics.fDamage >= 80.f ? 0.f : std::max(0.f, 1.4f - pCar->dynamics.fDamage*0.01f);

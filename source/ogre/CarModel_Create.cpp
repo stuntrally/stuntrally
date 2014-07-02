@@ -333,9 +333,9 @@ void CarModel::CreatePart(SceneNode* ndCar, Vector3 vPofs,
 //-------------------------------------------------------------------------------------------------------
 //  Create
 //-------------------------------------------------------------------------------------------------------
-void CarModel::Create(int car)
+void CarModel::Create()
 {
-	if (!pCar)  return;
+	//if (!pCar)  return;
 
 	String strI = toStr(iIndex)+ (eType == CT_TRACK ? "Z" : (eType == CT_GHOST2 ? "V" :""));
 	mtrId = strI;
@@ -361,7 +361,7 @@ void CarModel::Create(int car)
 	SceneNode* ndCar = pMainNode->createChildSceneNode();
 
 	//  --------  Follow Camera  --------
-	if (mCamera)
+	if (mCamera && pCar)
 	{
 		fCam = new FollowCamera(mCamera, pSet);
 		fCam->chassis = pCar->dynamics.chassis;
@@ -414,14 +414,14 @@ void CarModel::Create(int car)
 		ndCar->setOrientation(Quaternion(Degree(90),Vector3::UNIT_Y)*Quaternion(Degree(180),Vector3::UNIT_X));
 
 
-	CreatePart(ndCar, vPofs, sCar, sCarI, "_body.mesh",     "",  ghost, RV_Car,  &bodyBox,  sMtr[Mtr_CarBody], &pCar->bodymodel.mesh,     bLogInfo);
+	CreatePart(ndCar, vPofs, sCar, sCarI, "_body.mesh",     "",  ghost, RV_Car,  &bodyBox,  sMtr[Mtr_CarBody], pCar ? &pCar->bodymodel.mesh : 0,     bLogInfo);
 
 	vPofs = Vector3(interiorOffset[0],interiorOffset[1],interiorOffset[2]);  //x+ back y+ down z+ right
 	if (!ghost)
-	CreatePart(ndCar, vPofs, sCar, sCarI, "_interior.mesh", "i", ghost, RV_Car,      0, sMtr[Mtr_CarBody]+"i", &pCar->interiormodel.mesh, bLogInfo);
+	CreatePart(ndCar, vPofs, sCar, sCarI, "_interior.mesh", "i", ghost, RV_Car,      0, sMtr[Mtr_CarBody]+"i", pCar ? &pCar->interiormodel.mesh : 0, bLogInfo);
 
 	vPofs = Vector3::ZERO;
-	CreatePart(ndCar, vPofs, sCar, sCarI, "_glass.mesh",    "g", ghost, RV_CarGlass, 0, sMtr[Mtr_CarBody]+"g", &pCar->glassmodel.mesh,    bLogInfo);
+	CreatePart(ndCar, vPofs, sCar, sCarI, "_glass.mesh",    "g", ghost, RV_CarGlass, 0, sMtr[Mtr_CarBody]+"g", pCar ? &pCar->glassmodel.mesh : 0,    bLogInfo);
 	
 
 	//  wheels  ----------------------
@@ -444,7 +444,7 @@ void CarModel::Create(int car)
 			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 			if (bLogInfo && (w==0 || w==2))  LogMeshInfo(eWh, name, 2);
 		}else
-		{	ManualObject* mWh = pApp->CreateModel(mSceneMgr, sMtr[Mtr_CarBody]+siw, &pCar->wheelmodelfront.mesh, vPofs, true, false, siw);
+		{	ManualObject* mWh = pApp->CreateModel(mSceneMgr, sMtr[Mtr_CarBody]+siw, pCar ? &pCar->wheelmodelfront.mesh : 0, vPofs, true, false, siw);
 			if (mWh)  {
 			if (ghost)  {  mWh->setRenderQueueGroup(g);  mWh->setCastShadows(false);  }
 			ndWh[w]->attachObject(mWh);  mWh->setVisibilityFlags(RV_Car);  }
@@ -465,6 +465,7 @@ void CarModel::Create(int car)
 	
 	
 	///  brake flares  ++ ++
+	if (pCar)
 	if (!brakePos.empty())
 	{
 		SceneNode* nd = ndCar->createChildSceneNode();

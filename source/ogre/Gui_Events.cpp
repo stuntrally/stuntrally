@@ -13,6 +13,7 @@
 #include "common/MultiList2.h"
 #include <OgreCamera.h>
 #include <OgreSceneNode.h>
+#include "../ogre/common/RenderBoxScene.h"
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;
@@ -377,4 +378,44 @@ void CGui::slBloom(SV*)
 void CGui::slVolMaster(SV*)
 {
 	pGame->ProcessNewSettings();
+}
+
+
+///  3d car view  TODO ...
+//--------------------------------------------
+
+IntCoord CGui::GetViewSize()
+{
+	IntCoord ic = app->mWndGame->getClientCoord();
+	return IntCoord(ic.width*0.56f, ic.height*0.38f, ic.width*0.43f, ic.height*0.57f);
+}
+
+void CGui::InitCarPrv()
+{
+	viewCanvas = app->mWndGame->createWidget<Canvas>("Canvas", GetViewSize(), Align::Stretch);
+	viewCanvas->setInheritsAlpha(false);
+	viewCanvas->setPointer("hand");
+	viewCanvas->setVisible(true);
+	viewBox->setCanvas(viewCanvas);
+	viewBox->setBackgroundColour(Colour(0.32,0.35,0.37,1));
+	//viewBox->setAutoRotation(true);
+	viewBox->setMouseRotation(true);
+
+	//viewBox->injectObject("sphere.mesh");
+	viewCar = new CarModel(3, 0, CarModel::CT_GHOST, "XZ", viewBox->mScene, pSet, pGame, app->scn->sc, 0, app);
+	viewCar->Load();
+	viewCar->Create();
+	viewCar->ChangeClr();
+
+	PosInfo p;  p.bNew = true;
+	p.pos = Vector3(0,0,0);
+	p.rot = Quaternion(Degree(180),Vector3(1,0,0)) * Quaternion(Degree(50),Vector3(0,1,0));
+	p.whPos[0] = Vector3(0,-1,-1);  p.whRot[0] = p.rot;
+	
+	viewCar->Update(p, p, 0.f);
+	viewBox->mCamera->setPosition(Vector3(0,4,-7));
+	viewBox->mCamera->setDirection(-Vector3(0,4,-7));
+	//viewBox->mCameraNode->setPosition(Vector3(0,2,4));
+	//viewBox->mCameraNode->lookAt(Vector3(0,0,0), Node::TS_WORLD);
+	//viewBox->updateViewport();
 }

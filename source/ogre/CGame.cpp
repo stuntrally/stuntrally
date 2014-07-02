@@ -22,6 +22,7 @@
 #include <OgreManualObject.h>
 #include <OgreTechnique.h>
 #include "../shiny/Platforms/Ogre/OgreMaterial.hpp"
+#include "../ogre/common/RenderBoxScene.h"
 using namespace Ogre;
 
 
@@ -62,6 +63,7 @@ App::App(SETTINGS *settings, GAME *game)
 	gui->gcom = gcom;
 	hud->gui = gui;
 	gui->popup = new GuiPopup();
+	gui->viewBox = new wraps::RenderBoxScene();
 
 	mBindListner = gui;
 	input = new CInput(this);
@@ -78,6 +80,9 @@ App::~App()
 		mThread.join();
 
 	OGRE_DELETE dbgdraw;
+
+	gui->viewBox->destroy();
+	delete gui->viewBox;
 
 	delete gui->popup;
 	delete gcom;

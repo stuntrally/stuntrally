@@ -19,6 +19,7 @@ CGui::CGui(App* app1)
 	//  car
 	, bRsimEasy(0), bRsimNorm(0), bRsimHard(0), bReloadSim(true)
 	,valRplNumViewports(0)
+	,viewBox(0), viewCar(0)
 	//  setup
 	, iTireSet(0)
 	,bchAbs(0),bchTcs(0)

@@ -223,6 +223,8 @@ bool App::frameStart(Real time)
 			if (scn->grass)  scn->grass->setCamera(cam1);
 			if (scn->trees)  scn->trees->setCamera(cam1);
 		}
+
+		///gui->InitCarPrv();
 	}
 
 	//  hud update sizes, after res change

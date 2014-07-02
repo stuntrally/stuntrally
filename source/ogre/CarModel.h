@@ -71,7 +71,7 @@ public:
 
 
 	///--------  Create
-	void Load(int startId=-1), Create(int car), CreateReflection();
+	void Load(int startId=-1), Create(), CreateReflection();
 	void CreatePart(Ogre::SceneNode* ndCar, Ogre::Vector3 vPofs,
 		Ogre::String sCar2, Ogre::String sCarI, Ogre::String sMesh, Ogre::String sEnt,
 		bool ghost, Ogre::uint32 visFlags,

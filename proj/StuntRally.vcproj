@@ -1554,6 +1554,18 @@
 						>
 					</File>
 					<File
+						RelativePath="..\source\ogre\common\RenderBox.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\RenderBoxScene.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\ogre\common\RenderBoxScene.h"
+						>
+					</File>
+					<File
 						RelativePath="..\source\ogre\common\Slider.cpp"
 						>
 					</File>

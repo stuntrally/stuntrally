@@ -423,7 +423,7 @@ void App::LoadCar()  // 4
 	for (int i=0; i < carModels.size(); ++i)
 	{
 		CarModel* c = carModels[i];
-		c->Create(i);
+		c->Create();
 
 		///  challenge off abs,tcs
 		if (gui->pChall && c->pCar)

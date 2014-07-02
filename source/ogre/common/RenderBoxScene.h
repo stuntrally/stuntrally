@@ -265,11 +265,12 @@ namespace wraps
 			updateViewport();
 		}
 
-	private:
+	public:
 		Ogre::SceneManager* mScene;
 		Ogre::SceneNode* mNode;
 		Ogre::SceneNode* mCameraNode;
 		Ogre::Camera* mCamera;
+	private:
 		Ogre::Entity* mEntity;
 		Ogre::AnimationState* mAnimationState;
 

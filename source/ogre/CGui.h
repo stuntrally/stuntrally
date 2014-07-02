@@ -15,6 +15,7 @@
 
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;  }
 namespace MyGUI{  class MultiList2;  class Slider;  class Message;  }
+namespace wraps {	class RenderBoxScene;  }
 class Scene;  class SplineRoad;  class GAME;  class CHud;  class CData;
 class CGuiCom;  class CarInfo;  class GuiPopup;
 
@@ -241,6 +242,14 @@ public:
 	SV svHDRParam1, svHDRParam2, svHDRParam3;
 	SV svHDRBloomInt, svHDRBloomOrig, svHDRAdaptScale;
 	SV svHDRVignRadius, svHDRVignDark;
+
+
+	///  Car 3d view  ---
+	CarModel* viewCar;
+	Can viewCanvas;
+	wraps::RenderBoxScene* viewBox;  Ogre::Vector3 viewSc;
+	MyGUI::IntCoord GetViewSize();
+	void InitCarPrv();
 
 
 	///  [Car] color  --===---
