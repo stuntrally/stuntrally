@@ -369,13 +369,14 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	//  track time
 	float carMul = app->GetCarTimeMul(pSet->gui.car[0], pSet->gui.sim_mode);
 	float timeTrk = app->scn->data->tracks->times[sTrack];
+	bool noTrk = timeTrk < 2.f;
 	std::string speedTrk = fToStr(len / timeTrk * m, 0,3) + unit;
 	float timeT = (/*place*/1 * app->scn->data->cars->magic * timeTrk + timeTrk) / carMul;
 	bool no = timeCur < 0.1f || !rd;
 	if (ch==1)  no = false;  // show track's not current
 
-	stTrk[ch][9]->setCaption(CHud::StrTime(no ? 0.f : timeT));
-	stTrk[ch][10]->setCaption(no ? "--" : speedTrk);
+	stTrk[ch][9]->setCaption(CHud::StrTime(noTrk ? 0.f : timeT));
+	stTrk[ch][10]->setCaption(noTrk ? "--" : speedTrk);
 
 	if (ch==0)
 	if (no)
