@@ -21,6 +21,7 @@
 #include <MyGUI_Gui.h>
 #include <MyGUI_Window.h>
 #include <MyGUI_TabControl.h>
+#include <MyGUI_FactoryManager.h>
 #include <MyGUI_ResourceTrueTypeFont.h>
 using namespace MyGUI;
 using namespace Ogre;
