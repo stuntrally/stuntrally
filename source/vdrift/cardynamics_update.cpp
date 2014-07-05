@@ -71,8 +71,13 @@ void CARDYNAMICS::UpdateBuoyancy()
 			///  body initial conditions
 			//  pos & rot
 			body.x.x = chassisPosition[0];  body.x.y = chassisPosition[1];  body.x.z = chassisPosition[2];
-			body.q.x = chassisRotation[0];  body.q.y = chassisRotation[1];  body.q.z = chassisRotation[2];  body.q.w = chassisRotation[3];
-			body.q.Normalize();//
+			if (sphere)
+			{	body.q.x = 0.f;  body.q.y = 0.f;  body.q.z = 0.f;  body.q.w = 1.f;  // no rot
+			}else
+			{	body.q.x = chassisRotation[0];  body.q.y = chassisRotation[1];  body.q.z = chassisRotation[2];  body.q.w = chassisRotation[3];
+				body.q.Normalize();//
+			}
+			//LogO(fToStr(body.q.x,2,4)+" "+fToStr(body.q.y,2,4)+" "+fToStr(body.q.z,2,4)+" "+fToStr(body.q.w,2,4));
 			//  vel, ang vel
 			btVector3 v = chassis->getLinearVelocity();
 			btVector3 a = chassis->getAngularVelocity();
@@ -86,6 +91,8 @@ void CARDYNAMICS::UpdateBuoyancy()
 			///  add buoyancy force
 			if (ComputeBuoyancy(body, *poly, water, 9.8f))
 			{
+				if (sphere||hover)
+				{	body.F.x *= 0.15f;  body.F.y *= 0.15f;  }
 				chassis->applyCentralForce( btVector3(body.F.x,body.F.y,body.F.z) );
 				chassis->applyTorque(       btVector3(body.T.x,body.T.y,body.T.z) );
 			}	

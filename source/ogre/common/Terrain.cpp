@@ -299,7 +299,7 @@ void CScene::CreateBltTerrain()
 {
 	btHeightfieldTerrainShape* hfShape = new btHeightfieldTerrainShape(
 		sc->td.iVertsX, sc->td.iVertsY, sc->td.hfHeight, sc->td.fTriangleSize,
-		/*>?*/-200.f,200.f, 2, PHY_FLOAT,false);
+		/*>?*/-300.f,300.f, 2, PHY_FLOAT,false);
 	
 	hfShape->setUseDiamondSubdivision(true);
 

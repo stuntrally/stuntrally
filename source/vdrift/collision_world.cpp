@@ -209,9 +209,13 @@ COLLISION_WORLD::COLLISION_WORLD() : pApp(0),
 
 	world->setGravity(btVector3(0.0, 0.0, -9.81)); ///~
 	//world->getSolverInfo().m_numIterations = 36;  //-
+	//world->getSolverInfo().m_splitImpulse = true;
+	//world->getSolverInfo().m_splitImpulsePenetrationThreshold = -0.12f;
+	//world->getSolverInfo().m_linearSlop = btScalar(0.05);
+	//world->getSolverInfo().m_warmstartingFactor = btScalar(0.85);
+	//world->getSolverInfo().m_restingContactRestitutionThreshold = 3;
 	//world->getSolverInfo().m_erp = 0.3;
 	//world->getSolverInfo().m_erp2 = 0.2;
-	//world->getSolverInfo().m_splitImpulse = true;
 	world->getSolverInfo().m_restitution = 0.0f;
 	world->getDispatchInfo().m_enableSPU = true;
 	world->setForceUpdateAllAabbs(false);  //+

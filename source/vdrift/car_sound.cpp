@@ -346,6 +346,7 @@ void CAR::UpdateSounds(float dt)
 	}
 
 	//  susp bump
+	if (!dynamics.sphere && !dynamics.hover)
 	for (int i = 0; i < 4; i++)
 	{
 		suspbump[i].Update(suspVel[i], suspDisp[i], dt);

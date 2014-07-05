@@ -665,7 +665,8 @@ void CARDYNAMICS::Init(
 	btCollisionShape* chassisShape;
 	if (sphere)
 	{	chassisShape = new btSphereShape(1.f);
-		//chassisShape->setMargin(1.2f);  //!? doesnt work
+		//chassisShape = new btBoxShape(btVector3(1.f,1.f,0.2f));
+		chassisShape->setMargin(0.05f);  //!? doesnt work, bounces too much
 	}else
 	{	/// todo: all params in .car
 		// y| length  x- width  z^ height
@@ -707,6 +708,7 @@ void CARDYNAMICS::Init(
 		for (i=0; i < numSph; ++i)
 			pos[i] += origin;
 		chassisShape = new btMultiSphereShape(pos, rad, numSph);
+		chassisShape->setMargin(0.02f);
 	}
 
 
