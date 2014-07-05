@@ -82,20 +82,21 @@ void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	li->setSubItemNameAt(5,l, toS(clrsRating[ti->rating], ti->rating));
 	//todo: rateuser drivenlaps
 	li->setSubItemNameAt(6,l, toS("#D070A0",ti->objects));
-	li->setSubItemNameAt(7,l, toS("#80C0FF",ti->fluids));
-	li->setSubItemNameAt(8,l, toS("#40FF00",ti->bumps));
-	li->setSubItemNameAt(9,l, toS("#FFA030",ti->jumps));
-	li->setSubItemNameAt(10,l,toS("#00FFFF",ti->loops));
-	li->setSubItemNameAt(11,l,toS("#FFFF00",ti->pipes));
-	li->setSubItemNameAt(12,l,toS("#C0C0C0",ti->banked));
-	li->setSubItemNameAt(13,l,toS("#C080FF",ti->frenzy));
-	li->setSubItemNameAt(14,l,toS(clrsLong[ti->longn], ti->longn));
+	li->setSubItemNameAt(7,l, toS("#C09060",ti->obstacles));
+	li->setSubItemNameAt(8,l, toS("#80C0FF",ti->fluids));
+	li->setSubItemNameAt(9,l, toS("#40FF00",ti->bumps));
+	li->setSubItemNameAt(10,l,toS("#FFA030",ti->jumps));
+	li->setSubItemNameAt(11,l,toS("#00FFFF",ti->loops));
+	li->setSubItemNameAt(12,l,toS("#FFFF00",ti->pipes));
+	li->setSubItemNameAt(13,l,toS("#C0C0C0",ti->banked));
+	li->setSubItemNameAt(14,l,toS("#C080FF",ti->frenzy));
+	li->setSubItemNameAt(15,l,toS(clrsLong[ti->longn], ti->longn));
 }
 
 //  * * * *  CONST  * * * *
 //  column widths in MultiList2
 const int wi = 26;  // track detailed
-const int CGuiCom::colTrk[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 24};
+const int CGuiCom::colTrk[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 24};
 #ifndef SR_EDITOR
 const int CGui::colCar[16] = {34, 17, 35, 40, 20};  // car
 const int CGui::colCh [16] = {30, 180, 120, 50, 80, 80, 60, 40};  // champs
@@ -153,7 +154,9 @@ void CGuiCom::GuiInitTrack()
 
 	li->addColumn("#C0D0FF""diff", colTrk[c++]);  //todo: rateuser, drivenlaps ..
 	li->addColumn("#C0E0FF""*", colTrk[c++]);   // rating
+
 	li->addColumn("#FF80C0""o", colTrk[c++]);   // objects
+	li->addColumn("#C09060""c", colTrk[c++]);   // obstacles
 	li->addColumn("#80C0FF""f", colTrk[c++]);   // fluids
 	li->addColumn("#40FF00""B", colTrk[c++]);   // Bumps
 	li->addColumn("#FFA030""J", colTrk[c++]);   // Jumps
@@ -345,15 +348,16 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 
 		inf(0, ti.fluids,5);  inf(1, ti.bumps, 4);
 		inf(2, ti.jumps, 3);  inf(3, ti.loops, 4);  inf(4, ti.pipes, 5);
-		inf(5, ti.banked,4);  inf(6, ti.frenzy,4);  inf(7,ti.objects,3);
+		inf(5, ti.banked,4);  inf(6, ti.frenzy,4);
+		inf(7, ti.obstacles,3);  inf(8, ti.objects,3);
 
-		infTrk[ch][10]->setCaption(clrsLong[ti.longn] + str0(ti.longn));
+		infTrk[ch][11]->setCaption(clrsLong[ti.longn] + str0(ti.longn));
 		a = ti.longn / 8.f;
-		imInfTrk[ch][10]->setAlpha(a);  infTrk[ch][10]->setAlpha(0.5f + 0.5f * a);
-		  infTrk[ch][8]->setCaption(ti.diff==0   ? "" : (clrsDiff[ti.diff] + toStr(ti.diff)));
-		imInfTrk[ch][8]->setAlpha(0.2f + 0.8f * ti.diff / 6.f);
-		  infTrk[ch][9]->setCaption(ti.rating==0 ? "" : (clrsRating[ti.rating] + toStr(ti.rating)));
-		imInfTrk[ch][9]->setAlpha(0.2f + 0.8f * ti.rating / 5.f);
+		imInfTrk[ch][11]->setAlpha(a);  infTrk[ch][11]->setAlpha(0.5f + 0.5f * a);
+		  infTrk[ch][9]->setCaption(ti.diff==0   ? "" : (clrsDiff[ti.diff] + toStr(ti.diff)));
+		imInfTrk[ch][9]->setAlpha(0.2f + 0.8f * ti.diff / 6.f);
+		  infTrk[ch][10]->setCaption(ti.rating==0 ? "" : (clrsRating[ti.rating] + toStr(ti.rating)));
+		imInfTrk[ch][10]->setAlpha(0.2f + 0.8f * ti.rating / 5.f);
 
 		#ifndef SR_EDITOR
 		if (app->gui->txTrackAuthor)
@@ -363,7 +367,7 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 
 #ifndef SR_EDITOR  // game
 	//  best time, avg vel
-	std::string unit = mph ? " mph" : " kmh";
+	std::string unit = mph ? TR(" #{UnitMph}") : TR(" #{UnitKmh}");
 	m = pSet->show_mph ? 2.23693629f : 3.6f;
 
 	//  track time

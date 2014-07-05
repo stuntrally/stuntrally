@@ -218,6 +218,7 @@
 	<Tag name="difficulty">difficulty</Tag>
 	<Tag name="rating">rating</Tag>
 	<Tag name="objects">objects (dynamic)</Tag>
+	<Tag name="obstacles">obstacles (on road or in pipe)</Tag>
 	
 
 	<!--  Track stats  -->
@@ -252,6 +253,7 @@
 	<Tag name="TipChangeGloss">Change car color glossiness (matte-shiny).</Tag>
 	<Tag name="TipChangeReflect">Change car color reflectiveness (matte-mirror).</Tag>
 	<Tag name="CarClrRandom">Random</Tag>
+	<Tag name="Adjust">Adjust</Tag>
 
 	<Tag name="Author">Author(s)</Tag>
 	<Tag name="CarSpeed">Speed</Tag>
@@ -275,7 +277,7 @@
 	<Tag name="Car_TopSpeed">Top Speed</Tag>
 	<Tag name="Car_TimeTo">Time to</Tag>
 	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
-	<!--<Tag name="Car_StatsUnits">kg1,Nm2,at3,rpm4,bhp5,kmh6,s7</Tag>-->
+	<!--<Tag name="Car_StatsUnits">kg,Nm,at,rpm,bhp,s</Tag>-->
 
 
 	<!--  Multiplayer  -->
@@ -745,7 +747,7 @@
 	<Tag name="Fog">Fog</Tag>
 	<Tag name="FogNormal">Normal</Tag>
 	<Tag name="FogHeight">Height</Tag>
-	<Tag name="Color">color</Tag>
+	<Tag name="Color">Color</Tag>
 	<Tag name="FogStart">start</Tag>
 	<Tag name="FogEnd">end</Tag>
 

@@ -412,7 +412,7 @@ void CGui::InitGui()
 
 	///  Car
 	//------------------------------------------------------------
-	const int clrBtn = 30;
+	const int clrBtn = 30, clrRow = 10;
 	Real hsv[clrBtn][5] = {  // color buttons  hue,sat,val, gloss,refl
 	{0.05,0.64,0.27, 0.10,0.9}, {0.00,0.97,0.90, 0.3, 1.2},  // cherry, red
 	{0.91,1.00,1.00, 0.5, 1.0}, {0.86,1.00,0.97, 0.8, 0.6},  // orange, yellow
@@ -428,9 +428,15 @@ void CGui::InitGui()
 	{0.83,0.31,0.31, 0.0, 0.6}, {0.91,0.40,0.37, 0.0, 1.0}, {0.20,0.40,0.37, 0.05,1.0},  // orng-white-
 	{0.24,0.90,0.26, 0.04,0.8}, {0.28,0.57,0.17, 0.3, 1.0}, {0.27,0.38,0.23, 0.03,0.6},  // dark violet
 	};
+	Tbi tbc = fTbi("CarClrs");
 	for (i=0; i < clrBtn; ++i)
 	{
-		Img img = fImg("carClr"+toStr(i));
+		int x = i % clrRow, y = i / clrRow;
+		Img img = tbc->createWidget<ImageBox>("ImageBox",
+			6+x*20, 6+y*20, 18,18, Align::Left, "carClr"+toStr(i));
+		img->setImageTexture("white.png");
+		gcom->setOrigPos(img, "GameWnd");
+
 		Real h = hsv[i][0], s = hsv[i][1], v = hsv[i][2], g = hsv[i][3], r = hsv[i][4];
 		ColourValue c;  c.setHSB(1.f-h, s, v);
 		img->setColour(Colour(c.r,c.g,c.b));

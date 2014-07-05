@@ -28,7 +28,8 @@ public:
 	Date created, modified;
 
 	//  track characteristics  (char)
-	int fluids,bumps,jumps,loops,pipes,banked,frenzy,longn,objects;
+	int fluids,bumps, jumps,loops,pipes;
+	int	banked,frenzy,longn, objects,obstacles;
 	int diff, rating;
 
 	int nn;  // number got from name eg. for D15-.. it is 15

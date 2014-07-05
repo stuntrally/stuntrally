@@ -41,6 +41,7 @@ public:
 
 	//  resize
 	void SizeGUI(), doSizeGUI(MyGUI::EnumeratorWidgetPtr);
+	float GetGuiMargin(int wy);
 	void setOrigPos(WP wp, const char* relToWnd);
 	void CreateFonts();
 
@@ -118,7 +119,7 @@ public:
 	MyGUI::RotatingSkin* imgMiniRot[2];
 
 	//  st - road stats,dim  inf - tracks.ini ratings
-	const static int StTrk = 14, InfTrk = 11;
+	const static int StTrk = 14, InfTrk = 12;
 	Txt stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
 	Img imStTrk[2][4], imInfTrk[2][InfTrk];
 
@@ -151,7 +152,6 @@ public:
 	///  [Screen]
 	Cmb resList;
 	void InitGuiScreenRes(), ResizeOptWnd();
-	float GetGuiMargin();
 
 	CK(VidFullscr);  CK(VidVSync);
 	void btnResChng(WP);

@@ -266,17 +266,17 @@ void CGuiCom::updTrkListDim()
 	for (c=0; c < cnt; ++c)
 	{
 		int w = c==cnt-1 ? 18 : (full || c==0 || c==cnt-1 ?
-			float(colTrk[c]) / sum * 0.63/*width*/ * wi.width * 0.97/*frame*/ : 0);
+			float(colTrk[c]) / sum * 0.65/*width*/ * wi.width * 0.97/*frame*/ : 0);
 		trkList->setColumnWidthAt(c, w);
 		sw += w;
 		if (c == 4)  wico = w;
 		if (c < 4)  xico1 += w;
-		if (c < 7)  xico2 += w;
+		if (c < 8)  xico2 += w;
 	}
 
 	int xt = 0.018*wi.width, yt = 0.06*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
 	trkList->setCoord(xt, yt, sw + 8/*frame*/, 0.70/*height*/*wi.height);
-	imgTrkIco1->setCoord(xt + xico1+2, yico, 3*wico, wico);
+	imgTrkIco1->setCoord(xt + xico1+2, yico, 4*wico, wico);
 	imgTrkIco2->setCoord(xt + xico2+2, yico, 8*wico, wico);
 	#ifndef SR_EDITOR
 	bool hid = app->gui->panNetTrack && app->gui->panNetTrack->getVisible();
@@ -291,7 +291,7 @@ void CGuiCom::updTrkListDim()
 
 	for (c=0; c < cnt; ++c)
 	{
-		int w = (c==cnt-1) ? 18 : (float(app->gui->colCar[c]) / sum * 0.21/*width*/ * wi.width * 0.97/*frame*/);
+		int w = (c==cnt-1) ? 18 : (float(app->gui->colCar[c]) / sum * 0.22/*width*/ * wi.width * 0.97/*frame*/);
 		app->gui->carList->setColumnWidthAt(c, w);
 		sw += w;
 	}

@@ -416,7 +416,7 @@ void CGuiCom::CreateFonts()
 		font->setResourceName(name);
 
 		//  setup font				   // par
-		float size = sizes[i] * (1.f - 1.5f * (0.22f - GetGuiMargin()));
+		float size = sizes[i] * (1.f - 1.5f * (GetGuiMargin(2000) - GetGuiMargin(pSet->windowy)));
 		LogO("-- "+name+"  size: "+fToStr(size,2,4));
 		
 		font->setSource("DejaVuLGCSans.ttf");

@@ -124,12 +124,13 @@ bool TracksXml::LoadIni(std::string file)
 		{
 		//114,E1-Lakes  v=2.0 06/04/13 07/04/13 :Finland  |o=0 w=1 ~=1 J=2 L=0 P=0 /=1 s=1 l=2 !=2 *=4  T=107.8  a:CH
 			sscanf(s,
-			"%d,%s v=%f %d/%d/%d %u/%u/%u :%s |o=%d w=%d ~=%d J=%d L=%d P=%d /=%d s=%d l=%d !=%d *=%d  T=%f a:%s"
+			"%d,%s v=%f %d/%d/%d %u/%u/%u :%s |o=%d c=%d w=%d ~=%d J=%d L=%d P=%d /=%d s=%d l=%d !=%d *=%d  T=%f a:%s"
 				,&t.n, name, &t.crtver
 					,&t.created.day, &t.created.month, &t.created.year
 					,&t.modified.day, &t.modified.month, &t.modified.year
 				,scenery
-				,&t.objects, &t.fluids, &t.bumps, &t.jumps, &t.loops, &t.pipes
+				,&t.objects, &t.obstacles
+				,&t.fluids, &t.bumps, &t.jumps, &t.loops, &t.pipes
 				,&t.banked, &t.frenzy, &t.longn, &t.diff, &t.rating
 				,&time, author);
 
