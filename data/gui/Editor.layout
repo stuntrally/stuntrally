@@ -92,23 +92,23 @@
 			<UserString key="NotSized" value="1"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="1376 680 170 120" layer="Back" name="CamWnd">
+	<Widget type="Window" skin="WindowC" position="1376 680 186 120" layer="Back" name="CamWnd">
 		<Property key="Caption" value="#{PreviewCam}"/>
 		<Property key="Colour" value="0.7 0.85 1.0"/>
 		<Property key="Alpha" value="0.5"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="TextBox" skin="TextBox" position="4 0 150 20" name="cam0">
+		<Widget type="TextBox" skin="TextBoxS" position="4 0 180 20" name="cam0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="F7 - #{Leave}"/>
 			<Property key="TextColour" value="0.8 0.9 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 30 150 20" name="cam1">
+		<Widget type="TextBox" skin="TextBoxS" position="4 30 180 20" name="cam1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="#{EnterSave}"/>
 			<Property key="TextColour" value="0.66 0.86 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="34 50 150 20" name="cam2">
+		<Widget type="TextBox" skin="TextBoxS" position="34 50 180 20" name="cam2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="#{Screenshot}"/>
 			<Property key="TextColour" value="0.66 0.86 1.0"/>
@@ -239,7 +239,7 @@
 
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="572 652 152 190" layer="Back" name="StartWnd">
-		<Property key="Caption" value="#{CarStartPos}"/>
+		<Property key="Caption" value="#{CarStart}"/>
 		<Property key="Colour" value="0.7 0.7 1.0"/>
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
@@ -726,6 +726,7 @@
 					<Property key="WordWrap" value="true"/>
 					<Property key="VisibleHScroll" value="false"/>
 					<Property key="VisibleVScroll" value="true"/>
+					<Property key="FontName" value="font.small"/>
 					<Property key="TextColour" value="0.6 1.0 0.8"/>
 					<Property key="Colour" value="0.4 1 0.7"/>
 					<UserString key="tip" value="#{TipTrackDescEditor}"/>

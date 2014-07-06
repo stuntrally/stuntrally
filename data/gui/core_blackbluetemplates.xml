@@ -226,7 +226,7 @@
                 <Widget type="TextBox" skin="TextBox" position="7 1 52 22" align="HStretch Top" name="Caption">
                     <Property key="TextColour" value="1 1 1"/>
                     <Property key="TextAlign" value="Center"/>
-                    <Property key="FontName" value="Default"/>
+                    <Property key="FontName" value="font.small"/>
                 </Widget>
             </Widget>
             <Widget type="Widget" skin="WindowFrameSkin" position="0 28 68 20" align="Stretch">
