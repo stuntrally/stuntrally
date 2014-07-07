@@ -20,6 +20,7 @@
 #include <MyGUI_ImageBox.h>
 #include <MyGUI_Window.h>
 using namespace Ogre;
+using namespace MyGUI;
 
 
 //  Update  input, info
