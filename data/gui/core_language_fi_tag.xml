@@ -145,6 +145,7 @@
 	<Tag name="NetMasterPort">Pääpalvelimen portti</Tag>
 	<Tag name="InpSet_KeyHalf">Key Half</Tag>
 	<Tag name="TerLHSm">Korkeus pehmennys</Tag>
+	<Tag name="CarDesc_SZ">Fastest car meant for gravel. Light and with a powerful engine. Has great aerodynamics and steerability.</Tag>
 	<Tag name="CopySource">Aseta kopiointilähteeksi</Tag>
 	<Tag name="CarCrash">Car Crash</Tag>
 	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
@@ -239,7 +240,7 @@
 	<Tag name="FluidSplash">Nesteroiske</Tag>
 	<Tag name="Model">Malli</Tag>
 	<Tag name="InpSet_AxisHalf">Axis Half</Tag>
-	<Tag name="PipeLStepsMul">Pipe L steps mul.</Tag>
+	<Tag name="ScreenshotPng">Screenshots saved as .png</Tag>
 	<Tag name="Triplanar">Triplanar</Tag>
 	<Tag name="View">Näkymä</Tag>
 	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each model's own value).</Tag>
@@ -402,6 +403,7 @@
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="Screenshot">kuvankaappaus</Tag>
 	<Tag name="Models">Mallit</Tag>
+	<Tag name="PipeLStepsMul">Pipe L steps mul.</Tag>
 	<Tag name="Screen">Näyttö</Tag>
 	<Tag name="FuelTime">Polttoainetta ajan myötä</Tag>
 	<Tag name="InputRoadMostSel">useimmat toimivat myös valintaan</Tag>
@@ -420,7 +422,7 @@
 	<Tag name="DidntPass">Didn't pass</Tag>
 	<Tag name="Road_Cur">Cur</Tag>
 	<Tag name="InputMinimapType">shift-F2,F3 - Prev,next minimap type</Tag>
-	<Tag name="TipGrassSwayLen">Ruohikon huojunnan pituus (skaalaus).</Tag>
+	<Tag name="TipGrassPatchLengthMin">Minimal grass patch length.</Tag>
 	<Tag name="Road">Tie</Tag>
 	<Tag name="FluidCont">Fluid Cont.</Tag>
 	<Tag name="TrackAutoLoad">Radan automaattinen lataus</Tag>
@@ -447,7 +449,6 @@
 	<Tag name="godrays">Jumalsäteet</Tag>
 	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
 	<Tag name="InputRoadNext">PgUp,PgDn (or Wheel) - previous/next point</Tag>
-	<Tag name="SceneryId">Scenery Id</Tag>
 	<Tag name="TipTerTriSize">Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8).</Tag>
 	<Tag name="HDRIntensity">Bloom Intensity</Tag>
 	<Tag name="ColReflect">Heijastus</Tag>
@@ -484,6 +485,7 @@
 	<Tag name="CarDesc_M3">Very old car with low power engine. Not fit for jumps. Pick if you want to drive slowly.</Tag>
 	<Tag name="GameBy">Pelin tarjoaa</Tag>
 	<Tag name="CarDesc_TW">This big, extreme vehicle is great for long and smooth tracks. But completely useless when narrow or in mud (e.g. in jungle). Also not easy to drive.</Tag>
+	<Tag name="CarDesc_TU">Very futuristic and fast vehicle. Not suited for narrow roads, jumps or mud.</Tag>
 	<Tag name="CameraBounce">Dynamic camera bouncing</Tag>
 	<Tag name="SunWeather">Aurinko ja sää</Tag>
 	<Tag name="Lock">Lock</Tag>
@@ -539,7 +541,7 @@
 	<Tag name="InputFluidsDel">Del - poista nykyinen</Tag>
 	<Tag name="Leave">Poistu</Tag>
 	<Tag name="InputRoadMove">- liikuta pistettä</Tag>
-	<Tag name="CarDesc_FM">Another rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
+	<Tag name="CarDesc_FN">Another good rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
 	<Tag name="GrassSway">Huojunta</Tag>
 	<Tag name="NetGameProtocolError">Vertaisten protokollaversiot ovat epäyhteensopivia.</Tag>
 	<Tag name="Right">Oikea</Tag>
@@ -566,7 +568,7 @@
 	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
 	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
 	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
-	<Tag name="TipGrassPatchLengthMin">Minimal grass patch length.</Tag>
+	<Tag name="TipGrassSwayLen">Ruohikon huojunnan pituus (skaalaus).</Tag>
 	<Tag name="WaterReflection">Heijastus</Tag>
 	<Tag name="intensity">voimakkuus</Tag>
 	<Tag name="Fog">Sumu</Tag>
@@ -657,7 +659,6 @@
 	<Tag name="TipTestBlendmap">Use to test blendmap clarity. The color box shows this layer's color on blendmap (is black when layer is off). Usually, a good blendmap needs to have pure layer colors with little blending (dull, mixed colors). To achieve that narrow/separate angle and height ranges and use high or low noise power.</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
 	<Tag name="Difficulty">Vaikeusaste</Tag>
-	<Tag name="ImpostorDist">Impostors dist.</Tag>
 	<Tag name="GraphicsAll_Higher">Korkeampi</Tag>
 	<Tag name="RplRename">Muuta nimeä</Tag>
 	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
@@ -668,7 +669,6 @@
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
 	<Tag name="LS_GAME">Ladataan peliä</Tag>
-	<Tag name="TipSceneryId">Name id of track, that has similar lighting (or this track's if has unique). Used for impostors generation.</Tag>
 	<Tag name="TreeMult">Trees multiplier</Tag>
 	<Tag name="InputObjectsPaste">shift-Ins - paste copied</Tag>
 	<Tag name="Gold">Kulta</Tag>
@@ -681,7 +681,6 @@
 	<Tag name="LS_ROAD">Ladataan tietä</Tag>
 	<Tag name="Pick">Pick</Tag>
 	<Tag name="RoadPoint">Tiepiste</Tag>
-	<Tag name="CarStartPos">Auton lähtöpaikka</Tag>
 	<Tag name="ObjRocks">Rocks</Tag>
 	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
 	<Tag name="AlignWidthMul">Width multiply</Tag>
@@ -720,7 +719,6 @@
 	<Tag name="InputMain">Main</Tag>
 	<Tag name="CarDesc_UV">This big wheeled utility vehicle is powered by 4 electic engines. Suited for nearly all tracks, except when narrow. Great for exploring other planets. But has bad aerodynamics and gets stuck in mud.</Tag>
 	<Tag name="NewTerrainFlat">Uusi tasainen</Tag>
-	<Tag name="InputPaintColor">C - Maalin väri</Tag>
 	<Tag name="ColSat">Kylläisyys</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
 	<Tag name="NewTerrainGenerate">Generate new</Tag>
@@ -830,7 +828,7 @@
 	<Tag name="SC_Savanna">Savanna</Tag>
 	<Tag name="NetHost">Isäntä</Tag>
 	<Tag name="Road_AngleAuto">Autom.</Tag>
-	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
+	<Tag name="ImpostorDist">Impostors dist.</Tag>
 	<Tag name="AlignSmooth">Smooth size</Tag>
 	<Tag name="RollingResist">Rolling Resistance</Tag>
 	<Tag name="page">sivu</Tag>
@@ -868,6 +866,7 @@
 	<Tag name="TBTime">Aika</Tag>
 	<Tag name="AlignTerrainToRoad">Align terrain to road</Tag>
 	<Tag name="TerLNoise">Kohina</Tag>
+	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
 	<Tag name="TerLayers">Maaston kerrokset</Tag>
 	<Tag name="TipTerLMove">Move layer, changes order.</Tag>
 	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
@@ -996,6 +995,7 @@
 	<Tag name="UserDir">User Path (logs, configs, user data, etc)</Tag>
 	<Tag name="TipTerLayers">Recommended use 3 or 4, with noise. Affects Fps. More than 4 will not work.</Tag>
 	<Tag name="SC_Unidentified">Unidentified</Tag>
+	<Tag name="InputPaintColor">C - Maalin väri</Tag>
 	<Tag name="InputSubTabSpace">Space - cycle sub-tabs (shift - back)</Tag>
 	<Tag name="TipSurfType">Type of surface, determines sound.</Tag>
 	<Tag name="NextStage">Continuing to next stage</Tag>
@@ -1031,10 +1031,17 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="CarDesc_SZ">Fastest car meant for gravel. Light and with a powerful engine.</Tag>
-	<Tag name="ScreenshotPng">Screenshots saved as .png</Tag>
-	<Tag name="CarDesc_TU">Very futuristic and fast vehicle. Not suited for narrow roads, jumps or mud.</Tag>
-	<Tag name="CarDesc_FN">Another good rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
+	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But currently impossible to use in pipes.</Tag>
+	<Tag name="Road_Dir">Direction</Tag>
+	<Tag name="Obj_Rot">Rot.</Tag>
+	<Tag name="Obj_Pos">Pos.</Tag>
+	<Tag name="CarType_Hover">Hovercraft</Tag>
+	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy. And currently impossible to use in pipes.</Tag>
+	<Tag name="Adjust">Adjust</Tag>
+	<Tag name="obstacles">obstacles (on road or in pipe)</Tag>
+	<Tag name="Tile">Tile</Tag>
+	<Tag name="TipCarYear">Year when this car's production started.</Tag>
+	<Tag name="CarStart">Car Start</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -145,6 +145,7 @@
 	<Tag name="NetMasterPort">Masterserver-Port</Tag>
 	<Tag name="InpSet_KeyHalf">Taste halb</Tag>
 	<Tag name="TerLHSm">Höhenglättung</Tag>
+	<Tag name="CarDesc_SZ">Das schnellste für Kies vorgesehene Auto. Leicht und mit einem starken Motor.</Tag>
 	<Tag name="CopySource">Als Kopierquelle setzen</Tag>
 	<Tag name="CarCrash">Auto-Crash</Tag>
 	<Tag name="TipSteerSim">Lenkungsreichweiten-Faktor, für Simulationsmodus (Leicht, Normal).</Tag>
@@ -239,7 +240,7 @@
 	<Tag name="FluidSplash">Wasser-Spritzer</Tag>
 	<Tag name="Model">Modell</Tag>
 	<Tag name="InpSet_AxisHalf">Achse halb</Tag>
-	<Tag name="PipeLStepsMul">Rohr-L-Steps-Mult.</Tag>
+	<Tag name="ScreenshotPng">Screenshots als .png speichern</Tag>
 	<Tag name="Triplanar">Triplanar</Tag>
 	<Tag name="View">Ansicht</Tag>
 	<Tag name="TipModelRoadDist">Entfernung von der Straße zu den Modellen (global, zu jedem Modell-eigenem Wert addiert)</Tag>
@@ -291,7 +292,7 @@
 	<Tag name="Car">Auto</Tag>
 	<Tag name="Challenge">Herausforderung</Tag>
 	<Tag name="FuelLap">Jede Runde auffüllen</Tag>
-	<Tag name="TipSkyMats">Sky material names.</Tag>
+	<Tag name="TipSkyMats">Namen der Himmelstexturen.</Tag>
 	<Tag name="Simulation">Simulation</Tag>
 	<Tag name="HDRVignettingDarkness">Vignetting-Darken</Tag>
 	<Tag name="VolMaster">Haupt</Tag>
@@ -402,6 +403,7 @@
 	<Tag name="TimesBar">Zeitanzeige</Tag>
 	<Tag name="Screenshot">Bildschirmfoto</Tag>
 	<Tag name="Models">Modelle</Tag>
+	<Tag name="PipeLStepsMul">Rohr-L-Steps-Mult.</Tag>
 	<Tag name="Screen">Bildschirm</Tag>
 	<Tag name="FuelTime">Mit der Zeit auffüllen</Tag>
 	<Tag name="InputRoadMostSel">Das meiste funktioniert auch mit der Auswahl</Tag>
@@ -420,7 +422,7 @@
 	<Tag name="DidntPass">Durchgefallen</Tag>
 	<Tag name="Road_Cur">Akt</Tag>
 	<Tag name="InputMinimapType">Umschalt-F2/F3 - Vorh./nächst. Kartentyp</Tag>
-	<Tag name="TipGrassSwayLen">Grasschwingungslänge (Skal.)</Tag>
+	<Tag name="TipGrassPatchLengthMin">Minimale Länge eines Grasbüschels.</Tag>
 	<Tag name="Road">Straße</Tag>
 	<Tag name="FluidCont">Gewässertyp</Tag>
 	<Tag name="TrackAutoLoad">Strecke autom. laden</Tag>
@@ -447,7 +449,6 @@
 	<Tag name="godrays">Sonnenlichteffekt</Tag>
 	<Tag name="TweakEdit3">Strg-F5 - Auto-Leistungstest starten</Tag>
 	<Tag name="InputRoadNext">Bild/Mausrad auf/ab - Punkt vor/zurück</Tag>
-	<Tag name="SceneryId">Landschafts-ID</Tag>
 	<Tag name="TipTerTriSize">Dreiecksgröße des Terrains (in Metern) (empfohlen: 1-2, größerer Wert für größere Fläche). Nach Aktualisierung (F8) angewendet.</Tag>
 	<Tag name="HDRIntensity">Bloom-Intensität</Tag>
 	<Tag name="ColReflect">Spiegelung</Tag>
@@ -484,6 +485,7 @@
 	<Tag name="CarDesc_M3">Ein sehr altes Auto mit einem schwachen Motor. Nicht für Sprünge geeignet. Wählen sie es, wenn sie langsam fahren wollen.</Tag>
 	<Tag name="GameBy">Ein Spiel von</Tag>
 	<Tag name="CarDesc_TW">Dieses große extreme Fahrzeug ist großartig für lange und glatte Strecken. Aber völlig nutzlos in engen oder matschigen Strecken, zum Beispiel wie im Dschungel. Es ist außerdem nicht leicht zum Fahren.</Tag>
+	<Tag name="CarDesc_TU">Sehr futuristisches und schnelles Fahrzeug. Ungeeignet für enge Straßen, Sprünge oder Schlamm.</Tag>
 	<Tag name="CameraBounce">Dynamische Kamera schaukeln</Tag>
 	<Tag name="SunWeather">Sonne und Wetter</Tag>
 	<Tag name="Lock">Schloß</Tag>
@@ -539,7 +541,7 @@
 	<Tag name="InputFluidsDel">Entf - löschen</Tag>
 	<Tag name="Leave">Verlassen</Tag>
 	<Tag name="InputRoadMove">- Punkt bewegen</Tag>
-	<Tag name="CarDesc_FM">Noch ein Rallyeauto, geeignet für alle Strecken. Es ist nicht so lang und somit einfacher zu lenken.</Tag>
+	<Tag name="CarDesc_FN">Ein weiteres gutes Rallyefahrzeug, geeignet für alle Strecken. Es ist nicht so lang und somit leicher zu lenken.</Tag>
 	<Tag name="GrassSway">Schaukeln</Tag>
 	<Tag name="NetGameProtocolError">Inkompatibles Protokoll zwischen den Peers.</Tag>
 	<Tag name="Right">Rechts</Tag>
@@ -566,7 +568,7 @@
 	<Tag name="InputRplCtrl1">Rücktaste - Steuerung zeigen/verbergen (Ctrl für Maus)</Tag>
 	<Tag name="TracksGhost">Streckengeist (beste Fahrt eines ES-Autos)</Tag>
 	<Tag name="InputRplCtrl4">K, L - Anderen Spieler für Kamera auswählen</Tag>
-	<Tag name="TipGrassPatchLengthMin">Minimale Länge eines Grasbüschels.</Tag>
+	<Tag name="TipGrassSwayLen">Grasschwingungslänge (Skal.)</Tag>
 	<Tag name="WaterReflection">Spiegelung</Tag>
 	<Tag name="intensity">Intensität</Tag>
 	<Tag name="Fog">Nebel</Tag>
@@ -657,7 +659,6 @@
 	<Tag name="TipTestBlendmap">Wird benutzt, um die Blendmap-Durchsichtigkeit zu testen. Der Farbkasten zeigt die Farbe dieser Schicht auf der Blendmap (sie ist schwarz, wenn die Schicht abgeschaltet ist). Gewöhnlicherweise braucht eine gute Blendmap reine Schichtfarben mit wenigen Übergängen (matte Farben, Mischfarben). Um diesen engen/separaten Winkel und diese Höhenreichweiten zu erlangen, benutzen sie eine hohe oder geringe Rauschstärke.</Tag>
 	<Tag name="InputStartMeet">Auto wird (nächste + / vorherige -) Streckenpunkte treffen</Tag>
 	<Tag name="Difficulty">Schwierigkeit</Tag>
-	<Tag name="ImpostorDist">Bestrügerabstand</Tag>
 	<Tag name="GraphicsAll_Higher">Höher</Tag>
 	<Tag name="RplRename">Umbenennen</Tag>
 	<Tag name="TiresEdit">Reifen bearbeiten - (Graphen in Modus 4)</Tag>
@@ -668,7 +669,6 @@
 	<Tag name="InputRoadDel">Entf - ausgew. löschen</Tag>
 	<Tag name="InputFluidsTileY">; &apos; - Kachelgröße eindimensional ändern</Tag>
 	<Tag name="LS_GAME">Lade Spiel</Tag>
-	<Tag name="TipSceneryId">Namens-ID der Strecke, welche ähnliche Lichtverhältnisse hat (oder die ID dieser Strecke, wenn sie einzigartige Lichtverhältnisse hat). Benutzt für die Erzeugung der Betrüger.</Tag>
 	<Tag name="TreeMult">Baumanzahl</Tag>
 	<Tag name="InputObjectsPaste">Umschalt-Einfg - Kopie einfügen</Tag>
 	<Tag name="Gold">Gold</Tag>
@@ -681,7 +681,6 @@
 	<Tag name="LS_ROAD">Lade Straßen</Tag>
 	<Tag name="Pick">Auswählen</Tag>
 	<Tag name="RoadPoint">Straßenpunkt</Tag>
-	<Tag name="CarStartPos">Auto-Startpos.</Tag>
 	<Tag name="ObjRocks">Steine</Tag>
 	<Tag name="ShortcutsInfo">Mit Alt drücken für schnellen Zugriff auf Tab (oder Untertab). Nochmal drücken wird durchrotieren.</Tag>
 	<Tag name="AlignWidthMul">Breite multiplizieren</Tag>
@@ -720,7 +719,6 @@
 	<Tag name="InputMain">Allgemein</Tag>
 	<Tag name="CarDesc_UV">Dieses großradige Gebrauchsfahrzeug wird von 4 Elektromotoren angetrieben. Es für für nahezu alle Strecken, außer die engen, geeignet. Großartig zum Erforschen anderer Planeten. Aber es hat eine schlechte Aerodynamik und bleibt im Schlamm stecken.</Tag>
 	<Tag name="NewTerrainFlat">Neu (leer)</Tag>
-	<Tag name="InputPaintColor">C - Anstrichfarbe</Tag>
 	<Tag name="ColSat">Sättigung</Tag>
 	<Tag name="TipTCS">Verhindert das Rutschen der Reifen beim Beschleunigen (Standard: aus)</Tag>
 	<Tag name="NewTerrainGenerate">Neu erzeugen</Tag>
@@ -830,7 +828,7 @@
 	<Tag name="SC_Savanna">Savanne</Tag>
 	<Tag name="NetHost">Host</Tag>
 	<Tag name="Road_AngleAuto">Auto</Tag>
-	<Tag name="InputRoadAltLMB">Alt-LMT (oder 1,2)</Tag>
+	<Tag name="ImpostorDist">Bestrügerabstand</Tag>
 	<Tag name="AlignSmooth">Glättungsgröße</Tag>
 	<Tag name="RollingResist">Rollwiderstand</Tag>
 	<Tag name="page">Page</Tag>
@@ -868,6 +866,7 @@
 	<Tag name="TBTime">Zeit</Tag>
 	<Tag name="AlignTerrainToRoad">Gelände zum Weg ausrichten</Tag>
 	<Tag name="TerLNoise">Rauschen</Tag>
+	<Tag name="InputRoadAltLMB">Alt-LMT (oder 1,2)</Tag>
 	<Tag name="TerLayers">Terrainschichten</Tag>
 	<Tag name="TipTerLMove">Schicht bewegen, ändert Reihenfolge.</Tag>
 	<Tag name="TipLTrMaxTerH">max. Terrainhöhe, ab der das Objekt nicht mehr erscheint.</Tag>
@@ -996,6 +995,7 @@
 	<Tag name="UserDir">Benutzerpfad (Logs, Konfiguration, Benutzerdaten, etc.)</Tag>
 	<Tag name="TipTerLayers">Empfohlene Werte sind 3 oder 4, mit Rauschen. Beeinträchtigt die Bildwiederholrate. Werte über 4 werden nicht funktionieren.</Tag>
 	<Tag name="SC_Unidentified">Unbekannt</Tag>
+	<Tag name="InputPaintColor">C - Anstrichfarbe</Tag>
 	<Tag name="InputSubTabSpace">Leer - durch Untertabs blättern (Umschalt: zurück)</Tag>
 	<Tag name="TipSurfType">Typ der Oberfläche, bestimmt das Geräusch.</Tag>
 	<Tag name="NextStage">Nächste Etappe</Tag>
@@ -1031,10 +1031,17 @@
 	<Tag name="InputNextOptTab">F2/F3 - Vorh./nächst. Tab (Alt: Untertab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="CarDesc_SZ">Fastest car meant for gravel. Light and with a powerful engine.</Tag>
-	<Tag name="ScreenshotPng">Screenshots saved as .png</Tag>
-	<Tag name="CarDesc_TU">Very futuristic and fast vehicle. Not suited for narrow roads, jumps or mud.</Tag>
-	<Tag name="CarDesc_FN">Another good rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
+	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But currently impossible to use in pipes.</Tag>
+	<Tag name="Road_Dir">Direction</Tag>
+	<Tag name="Obj_Rot">Rot.</Tag>
+	<Tag name="Obj_Pos">Pos.</Tag>
+	<Tag name="CarType_Hover">Hovercraft</Tag>
+	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy. And currently impossible to use in pipes.</Tag>
+	<Tag name="Adjust">Adjust</Tag>
+	<Tag name="obstacles">obstacles (on road or in pipe)</Tag>
+	<Tag name="Tile">Tile</Tag>
+	<Tag name="TipCarYear">Year when this car's production started.</Tag>
+	<Tag name="CarStart">Car Start</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

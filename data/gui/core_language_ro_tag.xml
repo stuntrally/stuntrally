@@ -145,6 +145,7 @@
 	<Tag name="NetMasterPort">Master Server Port</Tag>
 	<Tag name="InpSet_KeyHalf">Key Half</Tag>
 	<Tag name="TerLHSm">Height smooth</Tag>
+	<Tag name="CarDesc_SZ">Fastest car meant for gravel. Light and with a powerful engine. Has great aerodynamics and steerability.</Tag>
 	<Tag name="CopySource">Setează ca sursă copiată</Tag>
 	<Tag name="CarCrash">Car Crash</Tag>
 	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
@@ -239,7 +240,7 @@
 	<Tag name="FluidSplash">Fluid Splash</Tag>
 	<Tag name="Model">Model</Tag>
 	<Tag name="InpSet_AxisHalf">Axis Half</Tag>
-	<Tag name="PipeLStepsMul">Multiplicare pași L conductă</Tag>
+	<Tag name="ScreenshotPng">Screenshots saved as .png</Tag>
 	<Tag name="Triplanar">Triplanar</Tag>
 	<Tag name="View">Vizualizează</Tag>
 	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each model's own value).</Tag>
@@ -402,6 +403,7 @@
 	<Tag name="TimesBar">Bara de timpi</Tag>
 	<Tag name="Screenshot">captură de ecran</Tag>
 	<Tag name="Models">Models</Tag>
+	<Tag name="PipeLStepsMul">Multiplicare pași L conductă</Tag>
 	<Tag name="Screen">Ecran</Tag>
 	<Tag name="FuelTime">Fuel over time</Tag>
 	<Tag name="InputRoadMostSel">majoritatea merg de asemenea selectând</Tag>
@@ -420,7 +422,7 @@
 	<Tag name="DidntPass">Didn't pass</Tag>
 	<Tag name="Road_Cur">Cur</Tag>
 	<Tag name="InputMinimapType">shift-F2,F3 - Prev,next minimap type</Tag>
-	<Tag name="TipGrassSwayLen">Grass sway effect length (scale).</Tag>
+	<Tag name="TipGrassPatchLengthMin">Minimal grass patch length.</Tag>
 	<Tag name="Road">Drum</Tag>
 	<Tag name="FluidCont">Fluid Cont.</Tag>
 	<Tag name="TrackAutoLoad">Încarcă automat traseul</Tag>
@@ -447,7 +449,6 @@
 	<Tag name="godrays">God Rays</Tag>
 	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
 	<Tag name="InputRoadNext">PgUp,PgDn (or Wheel) - previous/next point</Tag>
-	<Tag name="SceneryId">Scenery Id</Tag>
 	<Tag name="TipTerTriSize">Mărime triunghiuri teren în [metri](recomandat: 1 - 2,  folosește mai multe pentru zone ale terenului mai mari).Se schimbă după Actualizare(F8).</Tag>
 	<Tag name="HDRIntensity">Bloom Intensity</Tag>
 	<Tag name="ColReflect">Reflection</Tag>
@@ -484,6 +485,7 @@
 	<Tag name="CarDesc_M3">Very old car with low power engine. Not fit for jumps. Pick if you want to drive slowly.</Tag>
 	<Tag name="GameBy">A game by</Tag>
 	<Tag name="CarDesc_TW">This big, extreme vehicle is great for long and smooth tracks. But completely useless when narrow or in mud (e.g. in jungle). Also not easy to drive.</Tag>
+	<Tag name="CarDesc_TU">Very futuristic and fast vehicle. Not suited for narrow roads, jumps or mud.</Tag>
 	<Tag name="CameraBounce">Dynamic camera bouncing</Tag>
 	<Tag name="SunWeather">Soare si vreme</Tag>
 	<Tag name="Lock">Lock</Tag>
@@ -539,7 +541,7 @@
 	<Tag name="InputFluidsDel">Del - delete current</Tag>
 	<Tag name="Leave">Leave (exit)</Tag>
 	<Tag name="InputRoadMove">- mișcă punctul</Tag>
-	<Tag name="CarDesc_FM">Another rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
+	<Tag name="CarDesc_FN">Another good rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
 	<Tag name="GrassSway">Sway</Tag>
 	<Tag name="NetGameProtocolError">Incompatible protocol versions between peers.</Tag>
 	<Tag name="Right">Dreapta</Tag>
@@ -566,7 +568,7 @@
 	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
 	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
 	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
-	<Tag name="TipGrassPatchLengthMin">Minimal grass patch length.</Tag>
+	<Tag name="TipGrassSwayLen">Grass sway effect length (scale).</Tag>
 	<Tag name="WaterReflection">Reflection</Tag>
 	<Tag name="intensity">intensitate</Tag>
 	<Tag name="Fog">Ceață</Tag>
@@ -657,7 +659,6 @@
 	<Tag name="TipTestBlendmap">Use to test blendmap clarity. The color box shows this layer's color on blendmap (is black when layer is off). Usually, a good blendmap needs to have pure layer colors with little blending (dull, mixed colors). To achieve that narrow/separate angle and height ranges and use high or low noise power.</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
 	<Tag name="Difficulty">Difficulty</Tag>
-	<Tag name="ImpostorDist">Impostors dist.</Tag>
 	<Tag name="GraphicsAll_Higher">Higher</Tag>
 	<Tag name="RplRename">Rename</Tag>
 	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
@@ -668,7 +669,6 @@
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
 	<Tag name="LS_GAME">Loading game</Tag>
-	<Tag name="TipSceneryId">Name id of track, that has similar lighting (or this track's if has unique). Used for impostors generation.</Tag>
 	<Tag name="TreeMult">Trees multiplier</Tag>
 	<Tag name="InputObjectsPaste">shift-Ins - paste copied</Tag>
 	<Tag name="Gold">Gold</Tag>
@@ -681,7 +681,6 @@
 	<Tag name="LS_ROAD">Loading Road</Tag>
 	<Tag name="Pick">Pick</Tag>
 	<Tag name="RoadPoint">Road Point</Tag>
-	<Tag name="CarStartPos">Car Start Pos</Tag>
 	<Tag name="ObjRocks">Rocks</Tag>
 	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
 	<Tag name="AlignWidthMul">Width multiply</Tag>
@@ -720,7 +719,6 @@
 	<Tag name="InputMain">Main</Tag>
 	<Tag name="CarDesc_UV">This big wheeled utility vehicle is powered by 4 electic engines. Suited for nearly all tracks, except when narrow. Great for exploring other planets. But has bad aerodynamics and gets stuck in mud.</Tag>
 	<Tag name="NewTerrainFlat">New flat</Tag>
-	<Tag name="InputPaintColor">C- Vopsește</Tag>
 	<Tag name="ColSat">Saturation</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
 	<Tag name="NewTerrainGenerate">Generate new</Tag>
@@ -830,7 +828,7 @@
 	<Tag name="SC_Savanna">Savanna</Tag>
 	<Tag name="NetHost">Host</Tag>
 	<Tag name="Road_AngleAuto">Auto</Tag>
-	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
+	<Tag name="ImpostorDist">Impostors dist.</Tag>
 	<Tag name="AlignSmooth">Smooth size</Tag>
 	<Tag name="RollingResist">Rolling Resistance</Tag>
 	<Tag name="page">page</Tag>
@@ -868,6 +866,7 @@
 	<Tag name="TBTime">Time</Tag>
 	<Tag name="AlignTerrainToRoad">Align terrain to road</Tag>
 	<Tag name="TerLNoise">Noise</Tag>
+	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
 	<Tag name="TerLayers">Straturi teren</Tag>
 	<Tag name="TipTerLMove">Move layer, changes order.</Tag>
 	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
@@ -996,6 +995,7 @@
 	<Tag name="UserDir">User Path (logs, configs, user data, etc)</Tag>
 	<Tag name="TipTerLayers">Recommended use 3 or 4, with noise. Affects Fps. More than 4 will not work.</Tag>
 	<Tag name="SC_Unidentified">Unidentified</Tag>
+	<Tag name="InputPaintColor">C- Vopsește</Tag>
 	<Tag name="InputSubTabSpace">Space - cycle sub-tabs (shift - back)</Tag>
 	<Tag name="TipSurfType">Type of surface, determines sound.</Tag>
 	<Tag name="NextStage">Continuing to next stage</Tag>
@@ -1031,10 +1031,17 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="CarDesc_SZ">Fastest car meant for gravel. Light and with a powerful engine.</Tag>
-	<Tag name="ScreenshotPng">Screenshots saved as .png</Tag>
-	<Tag name="CarDesc_TU">Very futuristic and fast vehicle. Not suited for narrow roads, jumps or mud.</Tag>
-	<Tag name="CarDesc_FN">Another good rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
+	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But currently impossible to use in pipes.</Tag>
+	<Tag name="Road_Dir">Direction</Tag>
+	<Tag name="Obj_Rot">Rot.</Tag>
+	<Tag name="Obj_Pos">Pos.</Tag>
+	<Tag name="CarType_Hover">Hovercraft</Tag>
+	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy. And currently impossible to use in pipes.</Tag>
+	<Tag name="Adjust">Adjust</Tag>
+	<Tag name="obstacles">obstacles (on road or in pipe)</Tag>
+	<Tag name="Tile">Tile</Tag>
+	<Tag name="TipCarYear">Year when this car's production started.</Tag>
+	<Tag name="CarStart">Car Start</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
