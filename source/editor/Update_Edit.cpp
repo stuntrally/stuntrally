@@ -403,9 +403,11 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		const Object& o = bNew || scn->sc->objects.empty() ? objNew : scn->sc->objects[iObjCur];
 		const Quaternion& q = o.nd->getOrientation();
 		//Quaternion q(o.rot.w(),o.rot.x(),o.rot.y(),o.rot.z());
-		objTxt[0]->setCaption((bNew ? "#80FF80"+TR("#{Road_New}")+"#B0D0B0     " : "#A0D0FF"+TR("#{Road_Cur}")+"#B0B0D0     ")
-							+(vObjSel.empty() ? (bNew ? "-" : toStr(iObjCur+1))+" / "+toStr(objs)
-							: "#00FFFF"+TR("#{Road_sel}  ")+toStr(vObjSel.size())));
+		objTxt[0]->setCaption((bNew
+			? UString("#80FF80")+TR("#{Road_New}")+"#B0D0B0     "
+			: UString("#A0D0FF")+TR("#{Road_Cur}")+"#B0B0D0     ")
+				+(vObjSel.empty() ? (bNew ? "-" : toStr(iObjCur+1))+" / "+toStr(objs)
+					: UString("#00FFFF")+TR("#{Road_sel}  ")+toStr(vObjSel.size())));
 		objTxt[1]->setCaption(bNew ? vObjNames[iObjTNew] : o.name);
 		objTxt[2]->setCaption(String(objEd==EO_Move  ?"#60FF60":"")+ TR("#{Obj_Pos}  ") +fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
 		objTxt[3]->setCaption(String(objEd==EO_Rotate?"#FFA0A0":"")+ TR("#{Obj_Rot}  y ") +fToStr(q.getYaw().valueDegrees(),0,3)+" p "+fToStr(q.getPitch().valueDegrees(),0,3)+" r "+fToStr(q.getRoll().valueDegrees(),0,3));

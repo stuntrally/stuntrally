@@ -415,11 +415,11 @@ void CGuiCom::CreateFonts()
 		LogO("-- "+name+"  size: "+fToStr(size,2,4));
 
 		//  create
+	#if 0  //  mygui from svn
 		string cat = mgr.getCategoryName();   // createObject("Resource", "ResourceTrueTypeFont"));
 		ResourceTrueTypeFont* font = FactoryManager::getInstance().createObject<ResourceTrueTypeFont>(cat);
 		font->setResourceName(name);
-		
-	#if 0  //  mygui from svn
+
 		font->setSource("DejaVuLGCSans.ttf");
 		font->setSize(size);  font->setResolution(50);  font->setAntialias(false);  //font->setHinting("");
 		font->setTabWidth(8);  font->setDistance(4);  font->setOffsetHeight(0);
@@ -437,6 +437,8 @@ void CGuiCom::CreateFonts()
 
 		font->initialise();
 	#else
+		ResourceTrueTypeFont* font = (ResourceTrueTypeFont*)FactoryManager::getInstance().createObject("Resource", "ResourceTrueTypeFont");
+
 		//  Loading from XML, data members are private in MyGUI 3.2.0
 		xml::Document doc;
 		xml::ElementPtr root = doc.createRoot("ResourceTrueTypeFont"), e;
