@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1250"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="SR-Editor"
 	ProjectGUID="{A5CF81A7-BE81-471E-B546-F7CB2BF78A83}"
 	RootNamespace="SR-Editor"
@@ -560,6 +560,10 @@
 			</File>
 			<File
 				RelativePath="..\data\gui\core_blackbluetemplates.xml"
+				>
+			</File>
+			<File
+				RelativePath="..\data\gui\core_font.xml"
 				>
 			</File>
 			<File

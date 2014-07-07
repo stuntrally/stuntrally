@@ -410,15 +410,16 @@ void CGuiCom::CreateFonts()
 		if (mgr.isExist(name))
 			mgr.removeByName(name);
 
-		//  create
-		string resourceCategory = mgr.getCategoryName();
-		ResourceTrueTypeFont* font = FactoryManager::getInstance().createObject<ResourceTrueTypeFont>(resourceCategory);
-		font->setResourceName(name);
-
 		//  setup font				   // par
 		float size = sizes[i] * (1.f - 1.5f * (GetGuiMargin(2000) - GetGuiMargin(pSet->windowy)));
 		LogO("-- "+name+"  size: "+fToStr(size,2,4));
+
+		//  create
+		string cat = mgr.getCategoryName();   // createObject("Resource", "ResourceTrueTypeFont"));
+		ResourceTrueTypeFont* font = FactoryManager::getInstance().createObject<ResourceTrueTypeFont>(cat);
+		font->setResourceName(name);
 		
+	#if 0  //  mygui from svn
 		font->setSource("DejaVuLGCSans.ttf");
 		font->setSize(size);  font->setResolution(50);  font->setAntialias(false);  //font->setHinting("");
 		font->setTabWidth(8);  font->setDistance(4);  font->setOffsetHeight(0);
@@ -434,8 +435,36 @@ void CGuiCom::CreateFonts()
 		}else
 			font->addCodePointRange(33,255);
 
-		//  add
 		font->initialise();
+	#else
+		//  Loading from XML, data members are private in MyGUI 3.2.0
+		xml::Document doc;
+		xml::ElementPtr root = doc.createRoot("ResourceTrueTypeFont"), e;
+		root->addAttribute("name", name);
+
+		#define AddE(key, val)  e = root->createChild("Property");  e->addAttribute("key", key);  e->addAttribute("value", val)
+		AddE("Source", "DejaVuLGCSans.ttf");
+		AddE("Size", toStr(size));  AddE("Resolution", "50");  AddE("Antialias", "false");
+		AddE("TabWidth", "8");  AddE("Distance", "4");  AddE("OffsetHeight", "0");
+
+		xml::ElementPtr codes = root->createChild("Codes"), c;
+		//  char ranges
+		if (bfont)
+		{	const std::vector<pair<Char, Char> >& vv = bfont->getCodePointRanges();
+			for (std::vector<pair<Char, Char> >::const_iterator it = vv.begin(); it != vv.end(); ++it)
+			if ((*it).first > 10 && (*it).first < 10000)
+			{
+				c = codes->createChild("Code");
+				c->addAttribute("range", toStr((*it).first)+" "+toStr((*it).second));
+			}
+		}else
+		{	c = codes->createChild("Code");
+			c->addAttribute("range", "33 255");
+		}
+		//doc.save(string("aaa.txt"));
+		font->deserialization(root, Version(3,2,0));
+	#endif
+		//  add
 		mgr.addResource(font);
 	}
 }
