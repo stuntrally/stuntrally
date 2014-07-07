@@ -454,9 +454,9 @@ void CGui::InitGui()
 	Btn("CarClrRandom", btnCarClrRandom);
 	sv= &svNumLaps;  sv->Init("NumLaps",  &pSet->gui.num_laps, 1,10, 1.3f);  sv->DefaultI(2);
 
-	txCarStatsTxt = fTxt("CarStatsTxt");    txCarSpeed = fTxt("CarSpeed");
-	txCarStatsVals = fTxt("CarStatsVals");  txCarType = fTxt("CarType");
-
+	txCarStatsTxt = fTxt("CarStatsTxt");  txCarStatsVals = fTxt("CarStatsVals");
+	txCarSpeed = fTxt("CarSpeed");  txCarType = fTxt("CarType");  txCarYear = fTxt("CarYear");
+	barCarSpeed = fImg("CarSpeedBar");
     txCarAuthor = fTxt("CarAuthor");  txTrackAuthor = fTxt("TrackAuthor");
 	
 	TabPtr tPlr = fTab("tabPlayer");  Tev(tPlr, Player);

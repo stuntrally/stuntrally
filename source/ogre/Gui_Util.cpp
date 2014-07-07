@@ -222,12 +222,15 @@ void CGui::listCarChng(MultiList2* li, size_t pos)
 
 	//  car info
 	int id = data->cars->carmap[sListCar];
-	if (id > 0 && txCarSpeed && txCarType)
+	if (id > 0 && txCarSpeed && barCarSpeed)
 	{	const CarInfo& ci = data->cars->cars[id-1];
 
 		txCarAuthor->setCaption(ci.author);
 		txCarSpeed->setCaption(gcom->clrsDiff[std::min(7, (int)(ci.speed*0.9f))]+ toStr(ci.speed));
 		txCarType->setCaption(data->cars->colormap[ci.type]+ TR("#{CarType_"+ci.type+"}"));
+		txCarYear->setCaption(toStr(ci.year));
+		float v = (1.f - ci.speed/13.f) * 128.f;
+		barCarSpeed->setImageCoord(IntCoord(v,0,128,16));
 	}
 
 	changeCar();
@@ -256,6 +259,7 @@ void CGui::UpdCarStatsTxt()
 		{
 			if (i % 2 == 0)  txt += s + "\n";
 			else            vals += s + "\n";
+			//if (txt.find )
 			++i;
 		}
 		fi.close();

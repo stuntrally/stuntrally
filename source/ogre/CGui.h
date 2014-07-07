@@ -352,8 +352,9 @@ public:
 
 	//  [Car] stats
 	Txt txCarStatsTxt, txCarStatsVals,
-		txCarSpeed, txCarType,
+		txCarSpeed, txCarType, txCarYear,
 		txCarAuthor,txTrackAuthor;
+	Img barCarSpeed;
 	void UpdCarStatsTxt();
 	std::vector<Ogre::String> vsu; //CarStatsUnits
 
