@@ -22,12 +22,12 @@ using namespace MyGUI;
 
 namespace
 {
-	string yesno(bool cond)
+	UString YesNo(bool cond)
 	{
 		return cond ? TR("#{Yes}") : TR("#{No}");
 	}
 
-	void inline raiseError(const string& what, const string& title = TR("#{Error}"))
+	void inline MsgError(const UString& what, const UString& title = TR("#{Error}"))
 	{
 		Message::createMessageBox("Message", title, what, MessageBoxStyle::IconError | MessageBoxStyle::Ok);
 	}
@@ -49,10 +49,10 @@ void CGui::rebuildGameList()
 		li->setSubItemNameAt(1,l, "#50FF50"+ string(it->second.track));
 		li->setSubItemNameAt(2,l, "#80FFC0"+ toStr((int)it->second.laps));
 		li->setSubItemNameAt(3,l, "#FFFF00"+ toStr((int)it->second.players));
-		li->setSubItemNameAt(4,l, "#80FFFF"+ yesno((bool)it->second.collisions));
+		li->setSubItemNameAt(4,l, "#80FFFF"+ YesNo((bool)it->second.collisions));
 		li->setSubItemNameAt(5,l, "#D0D0FF"+ string(it->second.sim_mode));
 		li->setSubItemNameAt(6,l, "#A0D0FF"+ TR(sBoost[it->second.boost_type]));
-		li->setSubItemNameAt(iColLock,l, "#FF6060"+ yesno((bool)it->second.locked));
+		li->setSubItemNameAt(iColLock,l, "#FF6060"+ YesNo((bool)it->second.locked));
 		li->setSubItemNameAt(iColHost,l, "#FF9000"+ net::IPv4(it->second.address));
 		li->setSubItemNameAt(iColPort,l, "#FFB000"+ toStr((int)it->second.port));
 	}
@@ -70,7 +70,7 @@ void CGui::rebuildPlayerList()
 	li->setSubItemNameAt(1,0, "#80FFFF"+ sListCar);
 	li->setSubItemNameAt(2,0, "#F0F060"+ toStr(peerCount));
 	li->setSubItemNameAt(3,0, "#C0F0F0" "0");  bool rd = app->mClient->isReady();
-	li->setSubItemNameAt(4,0, (rd?"#60FF60":"#FF8080")+ yesno(rd));
+	li->setSubItemNameAt(4,0, (rd?"#60FF60":"#FF8080")+ YesNo(rd));
 
 	//  Add others
 	bool allReady = true;
@@ -88,7 +88,7 @@ void CGui::rebuildPlayerList()
 		li->setSubItemNameAt(1,l, "#80FFFF"+ it->second.car);
 		li->setSubItemNameAt(2,l, "#F0F060"+ toStr(it->second.peers));
 		li->setSubItemNameAt(3,l, "#C0F0F0"+ toStr(it->second.ping));  bool rd = it->second.ready;
-		li->setSubItemNameAt(4,l, (rd?"#60FF60":"#FF8080")+ yesno(rd));
+		li->setSubItemNameAt(4,l, (rd?"#60FF60":"#FF8080")+ YesNo(rd));
 	}
 	//  Allow host to start the game
 	if (app->mLobbyState == HOSTING)
@@ -119,15 +119,15 @@ void CGui::updateGameInfoGUI()
 
 	String s;  const protocol::GameInfo& g = netGameInfo;
 	s += TR("#40FF40#{Track}:      ") + gcom->sListTrack +"\n";
-	s += TR("#60A060#{Reverse}:  ") + yesno(g.reversed) +"\n";
+	s += TR("#60A060#{Reverse}:  ") + YesNo(g.reversed) +"\n";
 	s += "\n";
 	s += TR("#80F0F0#{Laps}:   ") + toStr(g.laps) +"\n";
-	s += TR("#409090#{ReverseStartOrder}:  ") + yesno(g.start_order) +"\n";
+	s += TR("#409090#{ReverseStartOrder}:  ") + YesNo(g.start_order) +"\n";
 	s += TR("#F0F040#{Players}:  ") + toStr(g.players) +"\n";
 	s += "\n";
 	s += TR("#D090E0#{Game}") +"\n";
 	s += TR("#90B0E0  #{Simulation}:  ") + String(g.sim_mode) +"\n";
-	s += TR("#A0D0D0  #{CarCollis}:  ") + yesno(g.collisions) +"\n";
+	s += TR("#A0D0D0  #{CarCollis}:  ") + YesNo(g.collisions) +"\n";
 	s += "\n";
 	#define cmbs(cmb, i)  (i>=0 && i < cmb->getItemCount() ? cmb->getItemNameAt(i) : TR("#{Any}"))
 	s += TR("#80C0FF  #{Boost}:  ") + "#90D0FF"+ cmbs(cmbBoost, g.boost_type) +"\n";
@@ -251,7 +251,7 @@ void CGui::peerConnected(PeerInfo peer)
 	if (app->mLobbyState == HOSTING)  uploadGameInfo();
 	// Schedule Gui updates
 	boost::mutex::scoped_lock lock(netGuiMutex);
-	AddChatMsg("#00FF00", UString("Connected: ") + peer.name);
+	AddChatMsg("#00FF00", TR("#{Connected}: ") + peer.name);
 	bRebuildPlayerList = true;
 }
 
@@ -262,7 +262,7 @@ void CGui::peerDisconnected(PeerInfo peer)
 	if (app->mLobbyState == HOSTING)  uploadGameInfo();
 	// Schedule Gui updates
 	boost::mutex::scoped_lock lock(netGuiMutex);
-	AddChatMsg("#FF8000", UString("Disconnected: ") + peer.name);
+	AddChatMsg("#FF8000", TR("#{Disconnected}: ") + peer.name);
 	bRebuildPlayerList = true;
 }
 
@@ -340,7 +340,7 @@ void CGui::timeInfo(ClientID id, uint8_t lap, double time)
 void CGui::error(string what)
 {
 	boost::mutex::scoped_lock lock(netGuiMutex);
-	AddChatMsg("#FF3030", UString("ERROR! ") + what);
+	AddChatMsg("#FF3030", TR("#{Error}! ") + what);
 }
 
 void CGui::join(string host, string port, string password)
@@ -350,9 +350,9 @@ void CGui::join(string host, string port, string password)
 		app->mClient->updatePlayerInfo(pSet->nickname, sListCar);
 		app->mClient->connect(host, boost::lexical_cast<int>(port), password); // Lobby phase started automatically
 		boost::mutex::scoped_lock lock(netGuiMutex);
-		AddChatMsg("#00FFFF", TR("Connecting to ") + host + ":" + port, false);  // clears chat
+		AddChatMsg("#00FFFF", TR("#{ConnectingTo}") + host + ":" + port, false);  // clears chat
 	}catch (...)
-	{	raiseError(TR("Failed to initialize networking.\nTry different local port and make sure your firewall is properly configured."), TR("Network Error"));
+	{	MsgError(TR("#{NewtworkFailed}"), TR("NetworkError"));
 		return;
 	}
 
@@ -417,7 +417,7 @@ void CGui::evBtnNetCreate(WP)
 			app->mClient->startLobby();
 		}
 		catch (...)
-		{	raiseError(TR("Failed to initialize networking.\nTry different local port and make sure your firewall is properly configured."), TR("Network Error"));
+		{	MsgError(TR("#{NewtworkFailed}"), TR("NetworkError"));
 			return;
 		}
 		app->mLobbyState = HOSTING;
@@ -436,7 +436,7 @@ void CGui::evBtnNetCreate(WP)
 		panNetTrack->setVisible(false);  gcom->trkList->setVisible(true);
 
 		boost::mutex::scoped_lock lock(netGuiMutex);
-		AddChatMsg("#00FFC0", TR("Listening on port ")  + toStr(pSet->local_port) + "...", false);  //clears chat
+		AddChatMsg("#00FFC0", TR("#{ListeningOnPort} ")  + toStr(pSet->local_port) + "...", false);  //clears chat
 	}
 }
 

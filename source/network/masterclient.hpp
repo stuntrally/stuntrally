@@ -9,6 +9,7 @@
 #include "enet-wrapper.hpp"
 #include "protocol.hpp"
 #include "networkcallbacks.hpp"
+#include "MyGUI_UString.h"
 
 /**
  * @brief Client for connecting to the master server.
@@ -53,7 +54,7 @@ public:
 	void gameInfoSenderThread();
 
 	/// Get error message, if any. Clears it also.
-	std::string getError();
+	MyGUI::UString getError();
 
 	/// Callback from networking
 	void connectionEvent(net::NetworkTraffic const& e);
@@ -73,7 +74,7 @@ private:
 	protocol::GameList m_games;
 	protocol::GameInfo m_game;
 	std::string m_password;
-	std::string m_error;
+	MyGUI::UString m_error;
 	int m_updateInterval;
 	bool m_sendUpdates;
 	volatile bool m_connectionOk;

@@ -79,10 +79,10 @@ void MasterClient::gameInfoSenderThread()
 	}
 }
 
-std::string MasterClient::getError()
+MyGUI::UString MasterClient::getError()
 {
 	boost::mutex::scoped_lock lock(m_mutex);
-	std::string error = m_error;
+	MyGUI::UString error = m_error;
 	m_error = "";
 	return error;
 }

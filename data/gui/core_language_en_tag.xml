@@ -322,6 +322,13 @@
 	<Tag name="FinishedCommaPlace">finished, place</Tag>
 	<Tag name="NetWaitingForOthers">Waiting for others</Tag>
 
+	<Tag name="ListeningOnPort">Listening on port</Tag>
+	<Tag name="ConnectingTo">Connecting to</Tag>
+	<Tag name="Connected">Connected</Tag>
+	<Tag name="Disconnected">Disconnected</Tag>
+	<Tag name="NetworkError">Network Error</Tag>
+	<Tag name="NewtworkFailed">Failed to initialize networking. Try different local port and make sure your firewall is properly configured.</Tag>
+
 	<!-- Settings -->
 	<Tag name="NetSettings">Settings</Tag>
 	<Tag name="NetNickname">Nickname</Tag>
