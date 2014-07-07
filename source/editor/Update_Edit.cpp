@@ -350,9 +350,9 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		Txt *stTxt = gui->stTxt;
 		Vector3 p;  if (ndCar)  p = ndCar->getPosition();
 		stTxt[0]->setCaption("");
-		stTxt[1]->setCaption(TR("#{Road_Width} ")+fToStr(road->vStBoxDim.z,1,4));
+		stTxt[1]->setCaption(TR("#{Road_Width} ") +fToStr(road->vStBoxDim.z,1,4));
 		stTxt[2]->setCaption(TR("#{Road_Height} ")+fToStr(road->vStBoxDim.y,1,4));
-		stTxt[3]->setCaption("road dir "+ (road->iDir == 1 ? String("+1") : String("-1")) );
+		stTxt[3]->setCaption(TR("#{Road_Dir}  ") +(road->iDir == 1 ? "+1" : "-1") );
 
 		//  edit
 		if (isKey(LEFTBRACKET) ||isKey(O)){  road->AddBoxH(-q*0.2);  UpdStartPos();  }
@@ -368,18 +368,18 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		Txt *flTxt = gui->flTxt;
 		if (scn->sc->fluids.empty())
 		{
-			if (flTxt[0])	flTxt[0]->setCaption("None");
+			if (flTxt[0])	flTxt[0]->setCaption(TR("#{None}"));
 			for (int i=1; i < gui->FL_TXT; ++i)
 				if (flTxt[i])  flTxt[i]->setCaption("");
 		}else
 		{	FluidBox& fb = scn->sc->fluids[iFlCur];
-			flTxt[0]->setCaption(TR("#{Road_Cur}/#{RplAll}")+":  "+toStr(iFlCur+1)+" / "+toStr(scn->sc->fluids.size()));
+			flTxt[0]->setCaption(TR("#{Road_Cur}") +"  "+toStr(iFlCur+1)+" / "+toStr(scn->sc->fluids.size()));
 			flTxt[1]->setCaption(fb.name);
-			flTxt[2]->setCaption("Pos:  "+fToStr(fb.pos.x,1,4)+" "+fToStr(fb.pos.y,1,4)+" "+fToStr(fb.pos.z,1,4));
+			flTxt[2]->setCaption(TR("#{Obj_Pos}  ") +fToStr(fb.pos.x,1,4)+" "+fToStr(fb.pos.y,1,4)+" "+fToStr(fb.pos.z,1,4));
 			flTxt[3]->setCaption("");
-			//flTxt[3]->setCaption("Rot:  "+fToStr(fb.rot.x,1,4));
-			flTxt[3]->setCaption("Size:  "+fToStr(fb.size.x,1,4)+" "+fToStr(fb.size.y,1,4)+" "+fToStr(fb.size.z,1,4));
-			flTxt[4]->setCaption("Tile:  "+fToStr(fb.tile.x,3,5)+" "+fToStr(fb.tile.y,3,5));
+			//flTxt[3]->setCaption(TR("#{Obj_Rot}:  ")+fToStr(fb.rot.x,1,4));
+			flTxt[3]->setCaption(TR("#{scale}  ") +fToStr(fb.size.x,1,4)+" "+fToStr(fb.size.y,1,4)+" "+fToStr(fb.size.z,1,4));
+			flTxt[4]->setCaption(TR("#{Tile}  ") +fToStr(fb.tile.x,3,5)+" "+fToStr(fb.tile.y,3,5));
 
 			//  edit
 			if (isKey(LEFTBRACKET) ||isKey(O)){  fb.tile   *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
@@ -403,16 +403,16 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		const Object& o = bNew || scn->sc->objects.empty() ? objNew : scn->sc->objects[iObjCur];
 		const Quaternion& q = o.nd->getOrientation();
 		//Quaternion q(o.rot.w(),o.rot.x(),o.rot.y(),o.rot.z());
-		objTxt[0]->setCaption((bNew ? "#80FF80New#B0D0B0     " : "#A0D0FFCur#B0B0D0     ")
+		objTxt[0]->setCaption((bNew ? "#80FF80"+TR("#{Road_New}")+"#B0D0B0     " : "#A0D0FF"+TR("#{Road_Cur}")+"#B0B0D0     ")
 							+(vObjSel.empty() ? (bNew ? "-" : toStr(iObjCur+1))+" / "+toStr(objs)
-							: "#00FFFFSel  "+toStr(vObjSel.size())));
+							: "#00FFFF"+TR("#{Road_sel}  ")+toStr(vObjSel.size())));
 		objTxt[1]->setCaption(bNew ? vObjNames[iObjTNew] : o.name);
-		objTxt[2]->setCaption(String(objEd==EO_Move  ?"#60FF60":"")+"Pos:  "+fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
-		objTxt[3]->setCaption(String(objEd==EO_Rotate?"#FFA0A0":"")+"Rot:  y "+fToStr(q.getYaw().valueDegrees(),0,3)+" p "+fToStr(q.getPitch().valueDegrees(),0,3)+" r "+fToStr(q.getRoll().valueDegrees(),0,3));
-		objTxt[4]->setCaption(String(objEd==EO_Scale ?"#60F0FF":"")+"Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
+		objTxt[2]->setCaption(String(objEd==EO_Move  ?"#60FF60":"")+ TR("#{Obj_Pos}  ") +fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
+		objTxt[3]->setCaption(String(objEd==EO_Rotate?"#FFA0A0":"")+ TR("#{Obj_Rot}  y ") +fToStr(q.getYaw().valueDegrees(),0,3)+" p "+fToStr(q.getPitch().valueDegrees(),0,3)+" r "+fToStr(q.getRoll().valueDegrees(),0,3));
+		objTxt[4]->setCaption(String(objEd==EO_Scale ?"#60F0FF":"")+ TR("#{scale}  ") +fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
 
-		objTxt[5]->setCaption(String("Sim: ") + (objSim?"ON":"off") + "      "+toStr(world->getNumCollisionObjects()));
-		objTxt[5]->setTextColour(objSim ? MyGUI::Colour(1.0,0.9,1.0) : MyGUI::Colour(0.77,0.77,0.8));
+		objTxt[5]->setCaption(TR("#{Simulation}:  ") + TR(objSim?"#{Yes}":"#{No}")); // +"      "+toStr(world->getNumCollisionObjects()));
+		objTxt[5]->setTextColour(objSim ? MyGUI::Colour(1.0,0.9,1.0) : MyGUI::Colour(0.6,0.6,0.63));
 
 		//  edit
 		if (mz != 0 && bEdit())  // wheel prev/next

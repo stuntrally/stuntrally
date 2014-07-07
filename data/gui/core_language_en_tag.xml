@@ -89,7 +89,6 @@
 	<Tag name="CarDesc_360">Good looking car, best fit for asphalt tracks. Can also drive on few flat terrain tracks. But completely undrivable at bumps,jumps,loops or pipes because of low suspension height.</Tag>
 	<Tag name="CarDesc_CT">Good looking, but difficult to drive, having engine at rear. Fit only for asphalt and few flat tracks. Completely undrivable at bumps,jumps,loops or pipes because of low suspension height.</Tag>
 	<Tag name="CarDesc_ES">Best rally car in game, great driving experience on all tracks. A bit high though.</Tag>
-	<Tag name="CarDesc_FM">Another rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
 	<Tag name="CarDesc_FN">Another good rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
 	<Tag name="CarDesc_FR4">Quite old, heavy, broad and slow. Good for terrain but not with the best suspension. Isn't suited for faster or stunt tracks.</Tag>
 	<Tag name="CarDesc_HR">Very heavy and slow car, best for terrain and bumps, easy to drive. But useless on fast and stunt tracks.</Tag>
@@ -100,12 +99,15 @@
 	<Tag name="CarDesc_S1">Second best rally car in game, drivable on all tracks with the best experience, similar to ES.</Tag>
 	<Tag name="CarDesc_S8">Good rally car, drivable on all tracks. Similar to S1, but shorter and more steerable.</Tag>
 	<Tag name="CarDesc_TC6">Good rally car. Has low height. Is a bit older and less powerful.</Tag>
+
 	<Tag name="CarDesc_TW">This big, extreme vehicle is great for long and smooth tracks. But completely useless when narrow or in mud (e.g. in jungle). Also not easy to drive.</Tag>
 	<Tag name="CarDesc_TU">Very futuristic and fast vehicle. Not suited for narrow roads, jumps or mud.</Tag>
 	<Tag name="CarDesc_UV">This big wheeled utility vehicle is powered by 4 electic engines. Suited for nearly all tracks, except when narrow. Great for exploring other planets. But has bad aerodynamics and gets stuck in mud.</Tag>
 	<Tag name="CarDesc_SZ">Fastest car meant for gravel. Light and with a powerful engine. Has great aerodynamics and steerability.</Tag>
 	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
-	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer.</Tag>
+
+	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But currently impossible to use in pipes.</Tag>
+	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy. And currently impossible to use in pipes.</Tag>
 	
 	
 <!--  ............................................................................................................................  -->
@@ -261,6 +263,7 @@
 	<Tag name="CarType">Type</Tag>
 	<Tag name="TipCarSpeed">Car speed rating, more means faster car. Warning, on gravel too fast cars won't be faster because they don't have enough grip.</Tag>
 	<Tag name="TipCarType">Car type, primary destination. But some cars can be used on gravel even if not meant for it.</Tag>
+	<Tag name="TipCarYear">Year when this car's production started.</Tag>
 	
 	<Tag name="CarType_Asphalt">Asphalt</Tag>
 	<Tag name="CarType_Racing">Racing</Tag>
@@ -932,7 +935,14 @@
 	<Tag name="Road_AngleManual">Manual</Tag>
 	<Tag name="Road_AngleAuto">Auto</Tag>
 	<Tag name="Road_AngleBoth">Both</Tag>
-
+	<Tag name="Road_Dir">Direction</Tag>
+	
+	
+	<!--  Objects, Fluids  wnd  -->
+	<Tag name="Obj_Pos">Pos.</Tag>
+	<Tag name="Obj_Rot">Rot.</Tag>
+	<Tag name="Tile">Tile</Tag>
+	
 
 	<!--  Tools  -->
 	<Tag name="Tools">Tools</Tag>
@@ -1133,7 +1143,7 @@
 
 
 	<!--  Start pos  -->
-	<Tag name="CarStartPos">Car Start Pos</Tag>
+	<Tag name="CarStart">Car Start</Tag>
 	<Tag name="InputStart">Start</Tag>
 	<Tag name="InputStartPos">Q - edit car start pos</Tag>
 	<Tag name="InputStartLMB">ctrl-LMB - place   LMB - move   RMB - height</Tag>
