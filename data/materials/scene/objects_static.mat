@@ -1,3 +1,4 @@
+//  0AD buildings
 material pers_struct_dds
 {
 	parent base
@@ -49,15 +50,15 @@ material rome2
 material kart
 {
 	parent base
-	diffuseMap kart_struct.dds
-	normalMap kart_struct_norm.png
+	diffuseMap kart_struct.png
+	normalMap kart_struct_norm.jpg
 	ambient 1.1 1.1 1.1
-	diffuse 0.75 0.75 0.75
-	specular 0.2 0.2 0.2 12
+	diffuse 0.9 0.9 0.9
+	specular 0.3 0.3 0.3 12
 	terrain_light_map true
 }
 
-
+//  0AD obj
 material pyramid_small
 {
 	parent base
@@ -89,6 +90,8 @@ material obelisk
 	specular 0.2 0.2 0.2 8
 	terrain_light_map true
 }
+
+//---------------------------------------------------
 
 material Temple
 {
