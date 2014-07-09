@@ -114,6 +114,9 @@
 <t a="I1"  sc="I"  t="island_sand2_d"     n="desert_sand2_n"     s="10.21" su="DesertFast"     tp="0" du="0.6" ds="0.7" md="0.0" tr="0.44 0.40 0.23 0.7"  aa="0"  ab="90" z="DI" />
 <t a="I1"  sc="I"  t="island_sand_d"      n="desert_sand_n"      s="12.78" su="DesertFast"     tp="0" du="0.6" ds="0.7" md="0.0" tr="0.44 0.44 0.26 0.7"  aa="0"  ab="90" z="DI" />
 
+<t a="G8"  sc="G"  t="island_sand2w_d"    n="desert_sand2_n"     s="10.21" su="DesertFast"     tp="0" du="0.6" ds="0.8" md="0.0" tr="0.52 0.52 0.5 0.7"   aa="0"  ab="90" z="GI" />
+<t a="G8"  sc="G"  t="island_sandw_d"     n="desert_sand_n"      s="12.78" su="DesertFast"     tp="0" du="0.6" ds="0.8" md="0.0" tr="0.52 0.52 0.5 0.7"   aa="0"  ab="90" z="GI" />
+
 <t a="J22" sc="J"  t="jungle_mntn2_d"     n="jungle_mntn2_n"     s="26.69" su="Rocks"          tp="1" du="0.0" ds="0.2" md="0.0" tr="0.20 0.20 0.20 0.6"  aa="55" ab="90" z="J" />
 <t a="J16" sc="J"  t="jungle_mntn_d"      n="jungle_mntn_n"      s="26.00" su="Rocks"          tp="1" du="0.0" ds="0.2" md="0.0" tr="0.20 0.20 0.20 0.6"  aa="42" ab="90" z="EJ" />
 <t a="X6"  sc="X"  t="jungle_mntnx_d"     n="jungle_mntn_n"      s="21.88" su="Rocks"          tp="1" du="0.0" ds="0.2" md="0.0" tr="0.32 0.31 0.80 0.9"  aa="39" ab="53" z="X" />
@@ -200,10 +203,13 @@
 
 <r a="I1"  sc="I"  m="roadSand"      su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.35 0.5" z="DIV" />
 <r a="D8"  sc="D"  m="roadSand2"     su="roadDesert"     du="0.4" ds="0.8" md="0.0" tr="0.50 0.46 0.26 0.7" z="DI" />
+
 <r a="V1"  sc="V"  m="roadSandDark"  su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.30 0.1" z="IV" />
 <r a="X1"  sc="X"  m="roadSandMagic" su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.30 0.32 0.46 0.8" z="X" />
+
 <r a="I4"  sc="I"  m="roadSandSet"   su="roadGravel"     du="1.3" ds="0.5" md="0.0" tr="0.48 0.32 0.22 0.7" z="I" />
 <r a="T2"  sc="T"  m="roadSandShore" su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.20 0.13 0.06 0.7" z="FIT" />
+<r a="G8"  sc="G"  m="roadSandWhite" su="roadDesert"     du="0.3" ds="0.6" md="0.0" tr="0.70 0.70 0.70 0.7" z="G" />
 
 <r a="S2"  sc="S"  m="roadSavannah"  su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.40 0.40 0.20 0.8" z="ST" />
 <r a="T6"  sc="T"  m="roadStone"     su="roadForest"     du="0.0" ds="0.2" md="0.0" tr="0.30 0.20 0.10 0.7" z="DT" />
