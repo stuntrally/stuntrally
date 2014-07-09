@@ -134,6 +134,52 @@ particle_system DustSmall
 	}
 }
 
+particle_system DustW
+{
+	material			Dust
+	quota				1000
+	particle_width		1.5
+	particle_height		1.5
+	cull_each			true
+	billboard_type		point
+	//renderer			billboard
+    sorted				true
+
+	emitter Box
+	{
+		angle	30
+		position	0 0.2 0
+		direction	0 1 0
+		width	0.45
+		height	0.35
+		depth	0.45  //h
+
+		colour				0.84 0.84 0.75  0.65
+		colour_range_start	0.84 0.84 0.74  0.6
+		colour_range_end	0.87 0.87 0.80  0.7
+
+		//emission_rate	20
+		velocity_min	0.1
+		velocity_max	0.4
+		time_to_live_min	5
+		time_to_live_max	7
+	}
+
+	affector Scaler
+	{
+		rate	0.5
+	}
+
+	affector ColourFader
+	{
+		red		-0.006
+		green	-0.006
+		blue	-0.006
+		alpha	-0.130
+	}
+}
+
+
 //  Mud  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 particle_system Mud

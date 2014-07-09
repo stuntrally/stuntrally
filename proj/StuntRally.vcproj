@@ -932,6 +932,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\data\particles\car.particle"
+				>
+			</File>
+			<File
 				RelativePath="..\config\cars.xml"
 				>
 			</File>
@@ -965,6 +969,10 @@
 			</File>
 			<File
 				RelativePath="..\source\vdrift\configfile.h"
+				>
+			</File>
+			<File
+				RelativePath="..\data\particles\fluids.particle"
 				>
 			</File>
 			<File
@@ -1020,7 +1028,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\data\particles\tires.particle"
+				>
+			</File>
+			<File
 				RelativePath="..\config\tracks.ini"
+				>
+			</File>
+			<File
+				RelativePath="..\data\particles\weather.particle"
 				>
 			</File>
 		</Filter>

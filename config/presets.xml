@@ -209,7 +209,7 @@
 
 <r a="I4"  sc="I"  m="roadSandSet"   su="roadGravel"     du="1.3" ds="0.5" md="0.0" tr="0.48 0.32 0.22 0.7" z="I" />
 <r a="T2"  sc="T"  m="roadSandShore" su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.20 0.13 0.06 0.7" z="FIT" />
-<r a="G8"  sc="G"  m="roadSandWhite" su="roadDesert"     du="0.3" ds="0.6" md="0.0" tr="0.70 0.70 0.70 0.7" z="G" />
+<r a="G8"  sc="G"  m="roadSandWhite" su="roadDesert"     du="0.6" ds="0.6" md="0.0" tr="0.70 0.70 0.70 0.7" z="G" />
 
 <r a="S2"  sc="S"  m="roadSavannah"  su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.40 0.40 0.20 0.8" z="ST" />
 <r a="T6"  sc="T"  m="roadStone"     su="roadForest"     du="0.0" ds="0.2" md="0.0" tr="0.30 0.20 0.10 0.7" z="DT" />
