@@ -212,6 +212,27 @@ material roadSand2_ter
 	normalMap normal_1.png
 }	
 
+// Sand white island
+
+material roadSandWhite
+{
+	parent road
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 0.23 0.23 0.23 32
+	diffuseMap roadSandW.jpg
+}
+
+material roadSandWhite_ter
+{
+	parent road_terrain
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 0.23 0.23 0.23 32
+	diffuseMap roadSandW.jpg
+	normalMap normal_1.png
+}	
+
 
 // Sand shore
 

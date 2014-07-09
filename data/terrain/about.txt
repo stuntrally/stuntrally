@@ -26,8 +26,8 @@ My license is also  CC-0
 
 69  desert_mntn  adesert_mntn
 75  desert_mntn2  adesert_mntn2  adesert_mntn2o
-45  desert_sand  island_sand
-111 desert_sand2  adesert_sand2  island_sand2
+45  desert_sand  island_sand  island_sandw
+111 desert_sand2  adesert_sand2  island_sand2  island_sand2w
 196 desert_sand_big  desert_sand_bigx
 46  desert_mud  desert_rocky  adesert_rocky  ground_mud2
 113 desert_cracks  adesert_cracks  desert_cracksv  desert_crackso
@@ -54,7 +54,7 @@ My license is also  CC-0
 
 70  jungle_mntn2
 72  jungle_mntn  org  ground_yellow
-73  mntn_white  org  jungle_stone  mntn_yellow
+73  mntn_white  org  jungle_stone  mntn_yellow  mntn_white2
 
 219 mntn_dark  org  amntn_dark  mntn_gray  mntn_darkx
 76  mntn_black  org  mntn_canyon
