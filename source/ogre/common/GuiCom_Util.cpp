@@ -71,7 +71,7 @@ CGuiCom::CGuiCom(App* app1)
 	scnN["O"] = "Moss";          
 	scnN["V"] = "Volcanic";      scnN["VD"]= "VolcanicDark";
 	scnN["X"] = "Unidentified";  scnN["R"] = "Mars";
-	scnN["Y"] = "Crystals";
+	scnN["Y"] = "Crystals";      scnN["GW"]= "GreeceWhite";
 	//  scenery colors for track names
 	scnClr["Asphalt"]      = "#B0E0E0";
 	scnClr["Jungle"]       = "#50FF50";  scnClr["JungleDark"]   = "#40C040";
@@ -87,7 +87,7 @@ CGuiCom::CGuiCom(App* app1)
 	scnClr["Moss"]         = "#70F0B0";
 	scnClr["Volcanic"]     = "#908030";  scnClr["VolcanicDark"] = "#706030";
 	scnClr["Unidentified"] = "#8080D0";  scnClr["Mars"]         = "#A04840";
-	scnClr["Crystals"]     = "#4090F0";
+	scnClr["Crystals"]     = "#4090F0";  scnClr["GreeceWhite"]  = "#C0C0A0";
 }
 
 int TrkL::idSort = 0;
