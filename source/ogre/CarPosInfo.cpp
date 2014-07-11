@@ -103,8 +103,7 @@ void PosInfo::FromCar(CAR* pCar)
 	if (cd->sphere)
 	{	rot.FromAngleAxis(Radian(-cd->sphereYaw), Vector3::UNIT_Y);
 		carY = Vector3::UNIT_Y;
-	}
-	else
+	}else
 	{	rot = Axes::toOgre(cd->GetOrientation());
 		carY = rot * Vector3::UNIT_Y;
 	}
@@ -144,6 +143,7 @@ void ReplayFrame::FromCar(const CAR* pCar)
 	const CARDYNAMICS& cd = pCar->dynamics;
 	pos = cd.GetPosition();
 	rot = cd.GetOrientation();
+	if (cd.sphere)  rot[0] = cd.sphereYaw; //o
 	//  wheels
 	for (int w=0; w < 4; ++w)
 	{	WHEEL_POSITION wp = WHEEL_POSITION(w);

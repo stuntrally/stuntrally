@@ -576,7 +576,7 @@
 					<Property key="TextColour" value="0.76 0.73 0.7"/>
 					<UserString key="tip" value="#{TipCarSpeed}"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="300 202 132 20" name="CarSpeedBar">
+				<Widget type="ImageBox" skin="ImageBox" position="300 204 132 16" name="CarSpeedBar">
 					<Property key="ImageTexture" value="stats_bar.png"/>
 					<Property key="Alpha" value="0.7"/>
 				</Widget>

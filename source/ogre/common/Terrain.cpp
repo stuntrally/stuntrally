@@ -312,6 +312,7 @@ void CScene::CreateBltTerrain()
 	//col->setWorldTransform(tr);
 	col->setFriction(0.9);   //+
 	col->setRestitution(0.0);
+	//col->setHitFraction(0.1f);
 	col->setCollisionFlags(col->getCollisionFlags() |
 		btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 	#ifndef SR_EDITOR  // game
