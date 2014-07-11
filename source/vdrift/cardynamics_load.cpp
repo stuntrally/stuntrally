@@ -8,6 +8,7 @@
 #include "settings.h"
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/ShapeData.h"
+#include "../ogre/CarPosInfo.h"
 #include "Buoyancy.h"
 #include <OgreTimer.h>
 using namespace std;
@@ -630,6 +631,11 @@ void CARDYNAMICS::Init(
 	cam_body.SetPosition(zero);
 	cam_body.SetInitialForce(zero);
 
+	if (sphere)
+	{	Ogre::Quaternion q = Axes::toOgre(orientation);
+		sphereYaw = PI_d - q.getYaw().valueRadians();
+	}
+	
 	// init engine
 	engine.SetInitialConditions();
 
