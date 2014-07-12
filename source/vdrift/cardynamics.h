@@ -138,12 +138,6 @@ public:
 	void DebugPrint(std::ostream & out, bool p1, bool p2, bool p3, bool p4);
 
 public:
-// chassis state
-	RIGIDBODY body;
-	MATHVECTOR<Dbl,3> center_of_mass;
-	COLLISION_WORLD * world;
-	btRigidBody *chassis, *whTrigs;
-
 	///  camera bounce
 	LINEARFRAME cam_body;
 	MATHVECTOR<Dbl,3> cam_force;
@@ -175,6 +169,26 @@ public:
 	float hov_throttle, hov_roll;
 	void SimulateHover(Dbl dt), SimulateSphere(Dbl dt);
 
+	///  -- sim params (from .car)
+	struct HoverPar
+	{
+		float hAbove, hRayLen;
+		float steerForce, steerDamp, steerDampP;
+		float engineForce, engineVelDec, brakeForce;
+		float dampAirRes, dampSide, dampUp, dampDn, dampPmul;
+		MATHVECTOR <float,3> alt, alp;  // align torque, pipe
+		float pitchTq;
+		float hov_vz, hov_vsat, hov_dsat;  // hover
+		float hov_dampP, hov_damp;
+		float hov_fall, hov_riseP, hov_rise;
+		void Default();
+	} hov;
+
+// chassis state  -----------------
+	RIGIDBODY body;
+	MATHVECTOR<Dbl,3> center_of_mass;
+	COLLISION_WORLD * world;
+	btRigidBody *chassis, *whTrigs;
 	
 // driveline state  -----------------
 	CARFUELTANK fuel_tank;

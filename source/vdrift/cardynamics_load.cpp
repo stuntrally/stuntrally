@@ -56,6 +56,32 @@ CARDYNAMICS::CARDYNAMICS() :
 	brake.resize( WHEEL_POSITION_SIZE );
 	abs_active.resize( WHEEL_POSITION_SIZE, false );
 	tcs_active.resize( WHEEL_POSITION_SIZE, false );
+
+	hov.Default();
+}
+
+void CARDYNAMICS::HoverPar::Default()
+{
+	//  hover defaults
+	hAbove = 2.0f;  hRayLen = 4.0f;
+
+	steerForce = 20.f;
+	steerDamp = 10.f;  steerDampP = 14.f;
+
+	engineForce = 17.5f;  engineVelDec = 0.006f;
+	brakeForce  = 18.f;
+
+	dampAirRes = 42.f;  dampSide = 2100.f;
+	dampUp = 1050.f;  dampDn = 3150.f;
+	dampPmul = 2.86f;
+
+	alp[0] = 42;  alp[1] = 42;  alp[2] = 32;
+	alt[0] = 21;  alt[1] = 21;  alt[2] = 21;
+	pitchTq = 30.f;
+
+	hov_vz = 0.384f;  hov_vsat = 0.98f;  hov_dsat = 0.9f;
+	hov_dampP = 0.5;  hov_damp = 3.6;
+	hov_fall = 500.f;  hov_riseP = 2000.f;  hov_rise = 6000.f;
 }
 
 CARDYNAMICS::~CARDYNAMICS()

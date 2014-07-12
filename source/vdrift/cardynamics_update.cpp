@@ -635,17 +635,18 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 		chassis->applyCentralForce(v * -20);
 
 		btVector3 av = chassis->getAngularVelocity();
-		chassis->applyTorque(av * -20);
+		chassis->applyTorque(av * -40);
 		return;
 	}
 
 	float dmg = fDamage > 50.f ? 1.f - (fDamage-50.f)*0.02f : 1.f;
+	float dmgE = 1.f - 0.2 * dmg;
 
 	//  cast ray down .
 	COLLISION_CONTACT ct,ct2;
 	MATHVECTOR<Dbl,3> dn = GetDownVector();
 
-	Dbl len = 2.0, rlen = len*2;  // par above
+	const Dbl len = hov.hAbove, rlen = hov.hRayLen;
 	MATHVECTOR<Dbl,3> p = GetPosition();  // - dn * 0.1;
 	world->CastRay(p, dn, rlen, chassis, ct,  0,0, false, false);
 	float d = ct.GetDepth();
@@ -676,34 +677,30 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 	hov_roll = std::max(-90.f, std::min(90.f, hov_roll));
 
 
-	//  steer < >
+	//  steer  < >
 	bool rear = transmission.GetGear() < 0;
 	float r = rear ? -1.f : 1.f;
-	const float str = 20000;  // steerability
-	MATHVECTOR<Dbl,3> t(0,0, -r * str * steerValue);
+	MATHVECTOR<Dbl,3> t(0,0, -1000.0 * r * hov.steerForce * steerValue * dmgE);
 	Orientation().RotateVector(t);
-	Dbl damp = pipe ? 14000 : 10000;  //damp *= 1 - fabs(steerValue);
-	ApplyTorque(t - av * damp);  // rotation damping
+	Dbl damp = pipe ? hov.steerDamp : hov.steerDamp;  //damp *= 1 - fabs(steerValue);
+	ApplyTorque(t - av * damp * 1000.0);  // rotation damping
 	
-	//  engine ^
-	float pwr = 7.f;  // power
-	float brk = 18.f;  // brake
-	float v = sv.Magnitude(),
-		ve = 2.5f - std::min(2.5f, 0.015f * v);  // not linear
-	pwr *= ve;
-	float f = pwr * hov_throttle - brk * brake[0].GetBrakeFactor();
+	//  engine  ^
+	float vel = sv.Magnitude(),  //  decrease power with velocity
+		velMul = 1.f - std::min(1.f, hov.engineVelDec * vel);
+	float f = hov.engineForce * velMul * hov_throttle * dmgE
+			- hov.brakeForce * brake[0].GetBrakeFactor() * dmgE;
 	MATHVECTOR<Dbl,3> vf(body.GetMass() * f * r, 0,0);
 	Orientation().RotateVector(vf);
 	ApplyForce(vf);
 
 
-	//  side vel damping --
-	sv[0] *= 0.02;  // air res
-	sv[1] *= 1.0;
-	//sv[2] *= 0.0;
-	sv[2] *= sv[2] > 0.0 ? 0.5 : 1.5;  // height |
+	//  side, vel damping  --
+	sv[0] *= hov.dampAirRes;
+	sv[1] *= hov.dampSide;
+	sv[2] *= sv[2] > 0.0 ? hov.dampUp : hov.dampDn;
 	Orientation().RotateVector(sv);
-	Dbl ss = pipe ? 6000 : 2100;
+	Dbl ss = pipe ? hov.dampPmul : 1;
 	ApplyForce(sv * ss);
 
 	
@@ -711,14 +708,13 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 	MATHVECTOR <float,3> n = ct.GetNormal();  // ground
 	if (!(d > 0.f && d < rlen))  n = MATHVECTOR <float,3>(0,0,1);  // in air
 	MATHVECTOR<Dbl,3> al = dn.cross(n);
-	if (pipe)
-	{	al[0] *= -42000;  al[1] *= -42000;  al[2] *= -32000;  }
-	else		// roll?		// pitch
-	{	al[0] *= -21000;  al[1] *= -21000;  al[2] *= -21000;  }
-	ApplyTorque(al);  // strength 
+	if (pipe) {  al[0] *= hov.alp[0];  al[1] *= hov.alp[1];  al[2] *= hov.alp[2];  }
+	else      {  al[0] *= hov.alt[0];  al[1] *= hov.alt[1];  al[2] *= hov.alt[2];  }
+	ApplyTorque(al * -1000.0);
 
-	//  torque /)
-	Dbl pitch = (d < len && d2 < len) ? (d2 - d) *30000.f : 0.f;
+
+	//  pitch torque )
+	Dbl pitch = (d < len && d2 < len) ? (d2 - d) * hov.pitchTq * 1000.f : 0.f;
 	MATHVECTOR<Dbl,3> tq(/*roll*/0, pitch, 0);
 	Orientation().RotateVector(tq);
 	ApplyTorque(tq);
@@ -726,21 +722,22 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 
 	///  heavy landing damp  __
 	Dbl vz = chassis->getLinearVelocity().dot(ToBulletVector(n));
-		suspension[1].velocity = vz * 0.384;  // for graphs
+		suspension[1].velocity = vz * hov.hov_vz;  // for graphs
 		suspension[1].displacement = d / len;
 		suspension[0].displacement = d / rlen;
 	
-	float aa = std::min(1.0, vz * 0.384);
-	float df = vz > 0 ? (1.0 - 0.98 * aa) : 1.0;
-	float dm = d > len*0.9 ? 0 : (0.5+0.5*d/len) * df * (pipe ? 0.5 : 3.6);
+	float aa = std::min(1.0, vz * hov.hov_vz);
+	float df = vz > 0 ? (1.0 - hov.hov_vsat * aa) : 1.0;
+	float dlen = len * hov.hov_dsat;
+	float dm = d > dlen ? 0 : (0.5+0.5*d/len) * df * (pipe ? hov.hov_dampP : hov.hov_damp);
 		suspension[2].displacement = dm;
-		suspension[3].displacement = (d < len*0.9 ? (len-d) * 1.f : 0.f);
-	float ll = len * 0.9f;
+		suspension[3].displacement = (d < dlen ? (len-d) * 1.f : 0.f);
 	float fn =
-		(d > ll ? -500.f : 0.f) +  // fall down force v
-		(d < ll ? (ll-d) * (pipe ? 2000.f : 6000.f) : 0.f) +  // anti grav force ^  TODO: goes crazy in pipes
+		(d > dlen ? -hov.hov_fall : 0.f) +  // fall down force v
+		//  anti grav force  TODO: goes crazy in pipes
+		(d < dlen ? (dlen-d) * (pipe ? hov.hov_riseP : hov.hov_rise) : 0.f) +
 		dm * -1000.f * vz;
-	chassis->applyCentralForce(ToBulletVector(-dn * fn * dmg));
+	chassis->applyCentralForce(ToBulletVector(-dn * fn * dmgE));
 }
 
 
