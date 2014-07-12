@@ -65,11 +65,11 @@ void CARDYNAMICS::HoverPar::Default()
 	//  hover defaults
 	hAbove = 2.0f;  hRayLen = 4.0f;
 
-	steerForce = 20.f;
+	steerForce = 25.f;
 	steerDamp = 10.f;  steerDampP = 14.f;
 
-	engineForce = 17.5f;  engineVelDec = 0.006f;
-	brakeForce  = 18.f;
+	engineForce = 18.f;  engineVelDec = 0.006f;
+	brakeForce  = 22.f;
 
 	dampAirRes = 42.f;  dampSide = 2100.f;
 	dampUp = 1050.f;  dampDn = 3150.f;
@@ -628,6 +628,33 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 			position.Set(pos[0], pos[1], pos[2]);
 			AddAerodynamicDevice(position, drag_area, drag_c, lift_area, lift_c, lift_eff);
 		}
+	}
+
+	//  hover params
+	if (hover /*|| sphere*/)
+	{
+		c.GetParam("hover.hAbove",		 hov.hAbove);		c.GetParam("hover.hRayLen",		 hov.hRayLen);
+										 
+		c.GetParam("hover.steerForce",	 hov.steerForce);
+		c.GetParam("hover.steerDamp",	 hov.steerDamp);	c.GetParam("hover.steerDampP",	 hov.steerDampP);
+										 
+		c.GetParam("hover.engineForce",	 hov.engineForce);	c.GetParam("hover.engineVelDec", hov.engineVelDec);
+		c.GetParam("hover.brakeForce",	 hov.brakeForce);
+										 
+		c.GetParam("hover.dampAirRes",	 hov.dampAirRes);	c.GetParam("hover.dampSide",	 hov.dampSide);
+		c.GetParam("hover.dampUp",		 hov.dampUp);		c.GetParam("hover.dampDn",		 hov.dampDn);
+		c.GetParam("hover.dampPmul",	 hov.dampPmul);
+
+		float al[3];
+		c.GetParam("hover.alignTqP", al);  hov.alp.Set(al[0],al[1],al[2]);
+		c.GetParam("hover.alignTq",  al);  hov.alt.Set(al[0],al[1],al[2]);
+		c.GetParam("hover.pitchTq",  hov.pitchTq);
+
+		c.GetParam("hover.hov_vz",	 hov.hov_vz);		c.GetParam("hover.hov_vsat", hov.hov_vsat);
+		c.GetParam("hover.hov_dsat", hov.hov_dsat);
+		c.GetParam("hover.hov_dampP",hov.hov_dampP);	c.GetParam("hover.hov_damp", hov.hov_damp);
+		c.GetParam("hover.hov_fall", hov.hov_fall);
+		c.GetParam("hover.hov_riseP",hov.hov_riseP);	c.GetParam("hover.hov_rise", hov.hov_rise);
 	}
 
 	UpdateMass();
