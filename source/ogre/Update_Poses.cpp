@@ -148,6 +148,7 @@ void App::newPoses(float time)  // time only for camera update
 			
 			fr.pos = cd.body.GetPosition();
 			fr.rot = cd.body.GetOrientation();
+			if (cd.sphere)  fr.rot[0] = cd.sphereYaw; //o
 			fr.vel = cd.GetVelocity();
 			fr.angvel = cd.GetAngularVelocity();
 			fr.fDamage = cd.fDamage;

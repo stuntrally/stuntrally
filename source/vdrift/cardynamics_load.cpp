@@ -16,7 +16,7 @@ using namespace std;
 
 CARDYNAMICS::CARDYNAMICS() :
 	world(NULL), chassis(NULL), whTrigs(0), pGame(0),
-	hover(false), hov_throttle(0.f),
+	hover(false), hov_throttle(0.f), hov_roll(0.f),
 	sphere(false), sphereYaw(0.f),
 	drive(AWD), tacho_rpm(0), engine_vol_mul(1),
 	autoclutch(true), autoshift(true), autorear(true),

@@ -645,7 +645,7 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 	world->CastRay(p+dx, dn, rlen, chassis, ct2,  0,0, false, false);
 	float d2 = ct2.GetDepth();
 
-	//  common
+	//  pipe..?
 	bool pipe = false;
 	if (ct.GetColObj())
 	{
@@ -653,24 +653,42 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 		if (su >= SU_Pipe && su < SU_RoadWall)
 			pipe = true;
 	}
+	//  vel
 	MATHVECTOR<Dbl,3> sv = -GetVelocity();
 	(-Orientation()).RotateVector(sv);
-	float roll = sv[1] * -1000.f;  // vis only
+	MATHVECTOR<Dbl,3> av = GetAngularVelocity();
 
+	//  roll /  vis only
+	//float roll = sv[1] * -1000.f;
+	hov_roll = sv[1] * 5.f;  // max roll
+	hov_roll = std::max(-90.f, std::min(90.f, hov_roll));
+
+	//  destroyed  high damp-
+	if (fDamage >= 100.f)
+	{
+		sv[2] *= 0.1;
+		ApplyForce(sv * 5000);
+		ApplyTorque(av * -10000);
+		return;  ///!
+	}
 
 	//  steer < >
 	bool rear = transmission.GetGear() < 0;
-	Dbl str = rear ? 8000 : -10000;  // steerability
-	MATHVECTOR<Dbl,3> av = GetAngularVelocity();
-	MATHVECTOR<Dbl,3> t(0,0, str * steerValue);
+	float r = rear ? -1.f : 1.f;
+	const float str = 20000;  // steerability
+	MATHVECTOR<Dbl,3> t(0,0, -r * str * steerValue);
 	Orientation().RotateVector(t);
-	ApplyTorque(t - av * (pipe ? 7000 : 5000));  // rotation damping
+	Dbl damp = pipe ? 14000 : 10000;  //damp *= 1 - fabs(steerValue);
+	ApplyTorque(t - av * damp);  // rotation damping
 	
 	//  engine ^
-	float pwr = rear ? -10.f : 10.f;  // power
-	float brk = rear ? 20.f : -20.f;  // brake
-	float f = pwr * hov_throttle + brk * brake[0].GetBrakeFactor();
-	MATHVECTOR<Dbl,3> vf(body.GetMass() * f, 0,0);
+	float pwr = 7.f;  // power
+	float brk = 18.f;  // brake
+	float v = sv.Magnitude(),
+		ve = 2.5f - std::min(2.5f, 0.015f * v);  // not linear
+	pwr *= ve;
+	float f = pwr * hov_throttle - brk * brake[0].GetBrakeFactor();
+	MATHVECTOR<Dbl,3> vf(body.GetMass() * f * r, 0,0);
 	Orientation().RotateVector(vf);
 	ApplyForce(vf);
 
@@ -688,7 +706,6 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 	//  align straight torque
 	MATHVECTOR <float,3> n = ct.GetNormal();  // ground
 	if (!(d > 0.f && d < rlen))  n = MATHVECTOR <float,3>(0,0,1);  // in air
-
 	MATHVECTOR<Dbl,3> al = dn.cross(n);
 	if (pipe)
 	{	al[0] *= -42000;  al[1] *= -42000;  al[2] *= -32000;  }
@@ -698,26 +715,9 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 
 	//  torque /)
 	Dbl pitch = (d < len && d2 < len) ? (d2 - d) *30000.f : 0.f;
-	MATHVECTOR<Dbl,3> tq(roll, pitch, 0);
+	MATHVECTOR<Dbl,3> tq(/*roll*/0, pitch, 0);
 	Orientation().RotateVector(tq);
 	ApplyTorque(tq);
-
-	
-	#if 0
-	///  susp  anti gravity force  v
-	Dbl new_displ = (len - d) * 1.f;
-	static Dbl displ = 0.0;
-	Dbl velocity = (new_displ - displ) / dt;
-	
-	if (velocity > 2)  velocity = 2;  // clamp vel
-	else if (velocity < -2) velocity = -2;
-
-	displ = new_displ;
-	Dbl force = suspension[0].GetForce(displ, velocity);
-		//suspension[0].displacement = new_displ;
-		//suspension[0].velocity = velocity;
-	ApplyForce(dn * force * 1.f * dmg);
-	#endif
 
 
 	///  heavy landing damp  __

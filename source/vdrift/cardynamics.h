@@ -55,6 +55,7 @@ public:
 	const MATHVECTOR<Dbl,3> & GetCenterOfMassPosition() const	{	return chassisCenterOfMass;		}
 	const MATHVECTOR<Dbl,3> & GetPosition() const	{	return chassisPosition;		}
 	const QUATERNION<Dbl> & GetOrientation() const	{	return chassisRotation;		}
+
 	MATHVECTOR<Dbl,3> GetWheelPosition(WHEEL_POSITION wp) const;
 	MATHVECTOR<Dbl,3> GetWheelPosition(WHEEL_POSITION wp, Dbl displacement_percent) const; // for debugging
 	QUATERNION<Dbl> GetWheelOrientation(WHEEL_POSITION wp) const;
