@@ -84,6 +84,17 @@
 	<Tag name="SC_Mars">Mars</Tag>
 	<Tag name="SC_Crystals">Crystals</Tag>
 	<Tag name="SC_GreeceWhite">GreeceWhite</Tag>
+
+	<!--  CarTypes  -->
+	<Tag name="CarType_Asphalt">Asphalt</Tag>
+	<Tag name="CarType_Racing">Racing</Tag>
+	<Tag name="CarType_Gravel">Gravel</Tag>
+	<Tag name="CarType_Slow">Slow</Tag>
+	<Tag name="CarType_Terrain">Terrain</Tag>
+	<Tag name="CarType_Extreme">Extreme</Tag>
+	<Tag name="CarType_Other">Other</Tag>
+	<Tag name="CarType_Hover">Hovercraft</Tag>
+	<Tag name="CarType_Spaceship">Spaceship</Tag>
 	
 	<!--  Cars  -->
 	<Tag name="CarDesc_3S">Good car, suited for all tracks, but has slower acceleration, especially at high speeds.</Tag>
@@ -266,15 +277,6 @@
 	<Tag name="TipCarType">Car type, primary destination. But some cars can be used on gravel even if not meant for it.</Tag>
 	<Tag name="TipCarYear">Year when this car's production started.</Tag>
 	
-	<Tag name="CarType_Asphalt">Asphalt</Tag>
-	<Tag name="CarType_Racing">Racing</Tag>
-	<Tag name="CarType_Gravel">Gravel</Tag>
-	<Tag name="CarType_Slow">Slow</Tag>
-	<Tag name="CarType_Terrain">Terrain</Tag>
-	<Tag name="CarType_Extreme">Extreme</Tag>
-	<Tag name="CarType_Other">Other</Tag>
-	<Tag name="CarType_Hover">Hovercraft</Tag>
-
 	<Tag name="Car_Mass">Mass</Tag>
 	<Tag name="Car_MaxTorque">Max Torque</Tag>
 	<Tag name="Car_MaxPower">Max Power</Tag>

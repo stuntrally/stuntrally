@@ -623,10 +623,22 @@ void CARDYNAMICS::UpdateMass()
 }
 
 
-///  HOVER
+///  HOVER Spaceship
 ///..........................................................................................................
 void CARDYNAMICS::SimulateHover(Dbl dt)
 {
+	//  destroyed  damping
+	if (fDamage >= 100.f)
+	{
+		btVector3 v = chassis->getLinearVelocity();
+		v[2] *= 0.1;
+		chassis->applyCentralForce(v * -20);
+
+		btVector3 av = chassis->getAngularVelocity();
+		chassis->applyTorque(av * -20);
+		return;
+	}
+
 	float dmg = fDamage > 50.f ? 1.f - (fDamage-50.f)*0.02f : 1.f;
 
 	//  cast ray down .
@@ -663,14 +675,6 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 	hov_roll = sv[1] * 5.f;  // max roll
 	hov_roll = std::max(-90.f, std::min(90.f, hov_roll));
 
-	//  destroyed  high damp-
-	if (fDamage >= 100.f)
-	{
-		sv[2] *= 0.1;
-		ApplyForce(sv * 5000);
-		ApplyTorque(av * -10000);
-		return;  ///!
-	}
 
 	//  steer < >
 	bool rear = transmission.GetGear() < 0;
@@ -744,6 +748,18 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 ///..........................................................................................................
 void CARDYNAMICS::SimulateSphere(Dbl dt)
 {
+	//  destroyed  damping
+	if (fDamage >= 100.f)
+	{
+		btVector3 v = chassis->getLinearVelocity();
+		v[2] *= 0.1;
+		chassis->applyCentralForce(v * -10);
+
+		btVector3 av = chassis->getAngularVelocity();
+		chassis->applyTorque(av * -10);
+		return;
+	}
+
 	float f = hov_throttle - brake[0].GetBrakeFactor();
 	if (transmission.GetGear() < 0)  f *= -1.f;
 	//  rotate dir
