@@ -44,6 +44,9 @@ void App::newPerfTest(float time)
 	CAR* pCar = carM->pCar;
 	static MATHVECTOR<Dbl,3> posSt, dist;
 	float kmh = pCar->GetSpeed()*3.6f;
+	
+	static std::vector<float> tkmh,ttim;
+	static float kmhP=0.f;
 
 	switch (iPerfTestStage)
 	{
@@ -69,6 +72,8 @@ void App::newPerfTest(float time)
 			t0to60=0; t0to100=0; t0to160=0; t0to200=0;
 			tMaxTo0=0; tMaxTo60=0; tMaxTo100=0; tMaxTo160=0;
 			drag60=0; down60=0; drag100=0; down100=0; drag160=0; down160=0; drag200=0; down200=0;
+			kmhP = 0.f;
+			tkmh.clear();  ttim.clear();
 		}	break;
 	
 		case PT_Accel:
@@ -87,17 +92,27 @@ void App::newPerfTest(float time)
 			if (kmh >= 100.f  && t0to100==0) {  t0to100 = ti;  drag100 = drag;  down100 = down;  PerfLogVel(pCar,ti);  } else
 			if (kmh >= 160.f  && t0to160==0) {  t0to160 = ti;  drag160 = drag;  down160 = down;  PerfLogVel(pCar,ti);  } else
 			if (kmh >= 200.f  && t0to200==0) {  t0to200 = ti;  drag200 = drag;  down200 = down;  PerfLogVel(pCar,ti);  }
-			
+						
 			avg_kmh += (kmh - avg_kmh) * 0.02f;  // smoothed
-			//LogO("kmh "+ fToStr(kmh,3,6) + "avg_kmh "+ fToStr(avg_kmh,3,6) + "  d "+ fToStr(avg_kmh - kmhOld,3,6));
+			//LogO("t "+ fToStr(ti, 4,7) + " kmh "+ fToStr(kmh,3,6) + " avg_kmh "+ fToStr(avg_kmh,3,6) + "  d "+ fToStr(avg_kmh - kmhOld,3,6));
+
+			//  graph  ---------
+			if (kmh - kmhP > 5.f)
+			{	kmhP = kmh;
+				tkmh.push_back(kmh);  ttim.push_back(ti);
+				//LogO("t "+ fToStr(ti, 4,7) +" kmh "+ fToStr(kmh,3,6));
+			}
 
 			///  end accel, reached max vel
 			if (timeQM > 0.f &&
 				avg_kmh - kmhOld < 0.01f)  //par
 			{
 				iPerfTestStage = PT_Brake;
-				maxVel = kmh;  tiMaxVel = ti;  PerfLogVel(pCar,ti);  ti = 0.f;
+				maxVel = kmh;  tiMaxVel = ti;  PerfLogVel(pCar,ti);
+				tkmh.push_back(kmh);  ttim.push_back(ti);  //
+				ti = 0.f;
 			}
+
 		}	break;
 	
 		case PT_Brake:
@@ -128,11 +143,20 @@ void App::newPerfTest(float time)
 					//	pGame->info_output << "rpm: "+fToStr(r,0,4)+" Nm:"+fToStr(tq,0,4)+" bhp:"+fToStr(pwr*1.341,0,4)+"\n";
 				}
 
-				//  summary
+				//  summary  gui txt
 				//------------------------------------------------
 				maxPwr *= 1.341;  // kW to bhp
 				Dbl m = eng.real_pow_tq_mul;  // factor to match real cars data
-				const MATHVECTOR<Dbl,3>& com = pCar->dynamics.center_of_mass;
+				CARDYNAMICS& cd = pCar->dynamics;
+				const MATHVECTOR<Dbl,3>& com = cd.center_of_mass;
+				Dbl ratio = maxPwr / (pCar->GetMass() * 0.001);
+
+				//  com ratio
+				Dbl whf = cd.wheel[0].GetExtendedPosition()[0], whr = cd.wheel[2].GetExtendedPosition()[0];
+				float comFrontPercent = (com[0]+whf) / (whf-whr)*100.f;
+				MATRIX3 <Dbl> inertia = cd.body.GetInertiaConst();
+				float inert[3];  inert[0] = inertia[0];  inert[1] = inertia[4];  inert[2] = inertia[8];  
+
 				std::string sResult = 
 					"Car:  "+pCar->pCarM->sDirname+"\n"+
 					"Center of mass [m] L,W,H:  "+fToStr(com[0],3,5)+", "+fToStr(com[1],3,5)+", "+fToStr(com[2],3,5)+"\n"+
@@ -140,7 +164,7 @@ void App::newPerfTest(float time)
 					"---\n"+
 					"Max torque [Nm]:  " +fToStr(maxTrq*m,1,5)+" ("+fToStr(maxTrq,1,5)+") at "+fToStr(rpmMaxTq ,0,4)+" rpm\n"+
 					"Max power  [bhp]:  "+fToStr(maxPwr*m,1,5)+" ("+fToStr(maxPwr,1,5)+") at "+fToStr(rpmMaxPwr,0,4)+" rpm\n"+
-					"Ratio [bhp/tonne]:  "+fToStr(maxPwr / (pCar->GetMass() * 0.001) ,1,5)+"\n"+
+					"Ratio [bhp/tonne]:  "+fToStr(ratio,1,5)+"\n"+
 					"Top speed: "+fToStr(maxVel,1,5)+" kmh  at time:  "+fToStr(tiMaxVel,1,4)+" s\n"+
 					"------\n"+
 					"Time [s] 0.. 60 kmh:  "+fToStr(t0to60 ,2,5)+"  down "+fToStr(down60 ,0,4)+"  drag "+fToStr(drag60 ,0,4)+"\n"+
@@ -162,25 +186,89 @@ void App::newPerfTest(float time)
 				mWndTweak->setVisible(true);
 				gui->tabTweak->setIndexSelected(3);
 				
-				//  save car stats.txt  ---------
+
+				//  save car _stats.xml
+				//------------------------------------------------
 				{
 					std::string path, pathUser, pathUserDir;
 					bool user = gui->GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], scn->sc->asphalt);
-					path = pathUserDir + pCar->pCarM->sDirname + "_stats.txt";
+					path = pathUserDir + pCar->pCarM->sDirname + "_stats.xml";
 					
 					PATHMANAGER::CreateDir(pathUserDir, pGame->error_output);
-					std::ofstream fo(path.c_str());
-					//fo << sResult;
-					fo << "Mass\n" << fToStr(pCar->GetMass(),0,4) << " kg\n";
-					fo << "Max Torque\n" << fToStr(maxTrq*m,0,3) << " Nm at " << fToStr(rpmMaxTq ,0,4) << " rpm\n";
-					fo << "Max Power\n"  << fToStr(maxPwr*m,0,3) << " bhp at " << fToStr(rpmMaxPwr,0,4) << " rpm\n";
-					fo << "Top Speed\n" << fToStr(maxVel,0,3) << " kmh at " << fToStr(tiMaxVel,1,4) << " s\n";
-					fo << "Time 0 to 100 kmh\n" << fToStr(t0to100,1,4) << " s\n";
-					if (maxVel > 160.f)
-					fo << "Time 0 to 160 kmh\n" << fToStr(t0to160,1,4) << " s\n";
-					if (maxVel > 200.f)
-					fo << "Time 0 to 200 kmh\n" << fToStr(t0to200,1,4) << " s\n";
-					fo << "Stop time 100 to 0 kmh\n" << fToStr(tMaxTo0-tMaxTo100,1,4) << " s\n";
+
+					TiXmlDocument xml;	TiXmlElement root("perf");
+					std::string s;
+
+					TiXmlElement car("car");
+						car.SetAttribute("mass",	toStrC(pCar->GetMass()) );
+						s = fToStr(inert[0],0,3)+", "+fToStr(inert[1],0,3)+", "+fToStr(inert[2],0,3);
+						car.SetAttribute("inertia",	s.c_str() );
+					root.InsertEndChild(car);
+
+					TiXmlElement co("com");
+						co.SetAttribute("frontPercent",	toStrC(comFrontPercent) );
+						s = fToStr(com[0],3,5)+", "+fToStr(com[1],3,5)+", "+fToStr(com[2],3,5);
+						co.SetAttribute("pos",		s.c_str());
+						co.SetAttribute("whf",		toStrC(whf));
+						co.SetAttribute("whr",		toStrC(whr));
+					root.InsertEndChild(co);
+
+					TiXmlElement tq("torque");
+						tq.SetAttribute("max",		toStrC(maxTrq*m) );
+						tq.SetAttribute("rpm",		toStrC(rpmMaxTq) );
+						tq.SetAttribute("mul",		toStrC(m) );
+					root.InsertEndChild(tq);
+
+					TiXmlElement pw("power");
+						pw.SetAttribute("max",		toStrC(maxPwr*m) );
+						pw.SetAttribute("rpm",		toStrC(rpmMaxPwr) );
+					root.InsertEndChild(pw);
+
+					TiXmlElement bh("bhpPerTon");
+						bh.SetAttribute("val",		toStrC(ratio) );
+					root.InsertEndChild(bh);
+
+					TiXmlElement tp("top");
+						tp.SetAttribute("speed",	toStrC(maxVel) );
+						tp.SetAttribute("time",		toStrC(tiMaxVel) );
+					root.InsertEndChild(tp);
+
+					TiXmlElement qm("quarterMile");
+						qm.SetAttribute("time",		toStrC(timeQM) );
+						qm.SetAttribute("vel",		toStrC(velAtQM) );
+					root.InsertEndChild(qm);
+
+					TiXmlElement ta("accel"), dn("downForce");
+						ta.SetAttribute("t60",		toStrC(t0to60) );
+						ta.SetAttribute("t100",		toStrC(t0to100) );	dn.SetAttribute("d100",	toStrC(down100) );
+						if (maxVel > 160.f)
+						{	ta.SetAttribute("t160",	toStrC(t0to160) );	dn.SetAttribute("d160",	toStrC(down160) );  }
+						if (maxVel > 200.f)
+						{	ta.SetAttribute("t200",	toStrC(t0to200) );	dn.SetAttribute("d200",	toStrC(down200) );  }
+					root.InsertEndChild(ta);
+					root.InsertEndChild(dn);
+
+					TiXmlElement st("stop");
+						st.SetAttribute("s160",		toStrC(tMaxTo0-tMaxTo160) );
+						st.SetAttribute("s100",		toStrC(tMaxTo0-tMaxTo100) );
+						st.SetAttribute("s60",		toStrC(tMaxTo0-tMaxTo60) );
+					root.InsertEndChild(st);
+
+
+					/*  speed graph points  */
+					TiXmlElement acc("velGraph");
+					for (int i=0; i < ttim.size(); ++i)
+					{
+						TiXmlElement p("p");
+						p.SetAttribute("t",		fToStr(ttim[i],2,4).c_str() );
+						p.SetAttribute("v",		fToStr(tkmh[i],1,3).c_str() );
+						acc.InsertEndChild(p);
+					}
+					root.InsertEndChild(acc);
+					/**/
+
+					xml.InsertEndChild(root);
+					xml.SaveFile(path.c_str());
 				}
 			}
 		}	break;
