@@ -32,6 +32,7 @@
 	<Tag name="Road_Roll">Вращ</Tag>
 	<Tag name="TipFogHStart">Начальная высота тумана [метры], от которой туман густеет на ровной дистанции.</Tag>
 	<Tag name="PostfilterAA">Фильтр сглаживания</Tag>
+	<Tag name="NewtworkFailed">Failed to initialize networking. Try different local port and make sure your firewall is properly configured.</Tag>
 	<Tag name="Prize">Приз</Tag>
 	<Tag name="TipLTrMinTerH">Высота ландшафта, ниже которой модель не появится.</Tag>
 	<Tag name="SimModeEasy">Легко</Tag>
@@ -56,7 +57,9 @@
 	<Tag name="Surface">Поверхность</Tag>
 	<Tag name="ChallEndFinished">Вы прошли этот вызов.</Tag>
 	<Tag name="About">Об игре</Tag>
+	<Tag name="NewTerrainGenerate">Ген. новый</Tag>
 	<Tag name="TBScore">Очки</Tag>
+	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But currently impossible to use in pipes.</Tag>
 	<Tag name="DevKeys">Разработчику. Ctrl-F всё, Alt-shift-1..6 загр. тест треки.</Tag>
 	<Tag name="InputRoadChkFirst">0   - устан. контр. точку 1-ой</Tag>
 	<Tag name="SC_ForestMntn">Гор.Лес</Tag>
@@ -93,7 +96,7 @@
 	<Tag name="TipParType1">Частица шины тип 1 (глобально для трека).</Tag>
 	<Tag name="GrassDens">Плотность травы</Tag>
 	<Tag name="Locked">Заблок.</Tag>
-	<Tag name="LimitFPS">Предел кадров в сек.</Tag>
+	<Tag name="VSync">Верт. синхр.</Tag>
 	<Tag name="RoadParams">Параметры дороги</Tag>
 	<Tag name="NetDirectConnect">Прямое подкл.</Tag>
 	<Tag name="Light">Освещение</Tag>
@@ -145,7 +148,7 @@
 	<Tag name="NetMasterPort">Гл. порт серевера</Tag>
 	<Tag name="InpSet_KeyHalf">2 кнопки</Tag>
 	<Tag name="TerLHSm">Ровная высота</Tag>
-	<Tag name="CarDesc_SZ">Самое быстрое авто для гравия. Лёгкий с мощным двигателем.</Tag>
+	<Tag name="CarDesc_SZ">Fastest car meant for gravel. Light and with a powerful engine. Has great aerodynamics and steerability.</Tag>
 	<Tag name="CopySource">Сделать копию источника</Tag>
 	<Tag name="CarCrash">Авария авто</Tag>
 	<Tag name="TipSteerSim">Множитель диапазона управляемости, для режима симуляции (Легко, Нормально).</Tag>
@@ -174,6 +177,7 @@
 	<Tag name="frenzy">безумие (фигурные дороги)</Tag>
 	<Tag name="InputRoadChkRadius">K,L - пределы контр. точки (КТ 0 - нет)</Tag>
 	<Tag name="TipCarSpeed">Оценка скорости автомобиля. Чем больше, тем быстрее автомобиль. Предупреждаем, на гравии слишком быстрые автомобили не будут быстрее, потому что у них не достаточно сцепления с дорогой.</Tag>
+	<Tag name="TipCarYear">Year when this car's production started.</Tag>
 	<Tag name="InputRoadInsAlt">Alt-Shift - в начале Alt-Ctrl - в конце</Tag>
 	<Tag name="RearThrottleInverse">Инверсия газа</Tag>
 	<Tag name="MessageBox_Yes">Да</Tag>
@@ -230,11 +234,11 @@
 	<Tag name="RoadWallFullCollis">Полн. столк. с дорогой</Tag>
 	<Tag name="Always">Всегда</Tag>
 	<Tag name="Brush_Offset">Смещение</Tag>
-	<Tag name="softparticles">Мягкие частицы</Tag>
+	<Tag name="NetworkError">Network Error</Tag>
 	<Tag name="TipSunDirYaw">Направление солнца - угол отклонения.</Tag>
 	<Tag name="Players">Игроки</Tag>
 	<Tag name="Road_ChkR">КТ</Tag>
-	<Tag name="Continue">Продолжить</Tag>
+	<Tag name="ABS">АБС</Tag>
 	<Tag name="Length">Длина</Tag>
 	<Tag name="TipCarsList">Список автомобилей. Нажми Enter или [Новая игра], чтобы на нем поехать.</Tag>
 	<Tag name="FluidSplash">Брызги</Tag>
@@ -337,6 +341,7 @@
 	<Tag name="ProjectPage">Стр. проекта:</Tag>
 	<Tag name="Brush_Octaves">Наборы</Tag>
 	<Tag name="Type">Тип</Tag>
+	<Tag name="Disconnected">Disconnected</Tag>
 	<Tag name="NetWaiting">Ожидание...</Tag>
 	<Tag name="LoadTrack">Загр. трек</Tag>
 	<Tag name="MergeLength">Соед. длину</Tag>
@@ -346,6 +351,7 @@
 	<Tag name="TipNewGameCar">Перезапустите игру.</Tag>
 	<Tag name="Intensity">Интен.</Tag>
 	<Tag name="TipGrassPatchLengthMax">Максимальная длина участка травы.</Tag>
+	<Tag name="Connected">Connected</Tag>
 	<Tag name="Vegetation">Растит.</Tag>
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="max">макс.</Tag>
@@ -399,6 +405,7 @@
 	<Tag name="MinScale">мин. масштаб</Tag>
 	<Tag name="NetStart">Старт</Tag>
 	<Tag name="QuickHelpText">----  Быстрая помощь  ----@@Используй мышь или Up,Down,Enter,Backspace, чтобы управлять меню.@@Для изменения разрешения иди в Опции, вкладка Экран. Используй заранее установленные графические настройки, чтобы быстро настроить свое графическое устройство.@@Чтобы увидеть все используемые кнопки в игре и сконфигурировать ввод  иди в Опции, вкладка Ввод. Если у Вас игровой контроллер, посмотрите здесь:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Необходим порт главного компьютера для многопользовательской игры. Для соединения с существующей игрой это не нужно.@@Если у тебя проблемы или  предложения, используй наш форум:@http://forum.freegamedev.net/viewforum.php?f=77@@Для болшей информации смотри Прочти или нашего проекта Wiki страницы.@</Tag>
+	<Tag name="Road_Dir">Direction</Tag>
 	<Tag name="InputObjectsMove">1 - движ. LMB - по XZ  RMB - Y высота</Tag>
 	<Tag name="TimesBar">Панель инфо</Tag>
 	<Tag name="Screenshot">снимок экрана</Tag>
@@ -410,6 +417,7 @@
 	<Tag name="InputTerHeight">E - высоты (RMB изм. знач. высоты)</Tag>
 	<Tag name="InputStartPos">Q - изм. поз. авто</Tag>
 	<Tag name="SC_Mars">Марс</Tag>
+	<Tag name="TipModelMinScale">Минимальный масштаб модели.</Tag>
 	<Tag name="TireTrails">Следы шины</Tag>
 	<Tag name="TipFogClrRGBA">R G B A значения от 0 до 1 (напр. 0.7 0.8 0.9 1). Последний используется для уменьшения максимальной густоты (1 является полной).</Tag>
 	<Tag name="Language">Язык</Tag>
@@ -438,9 +446,10 @@
 	<Tag name="SkirtLength">Длина края</Tag>
 	<Tag name="InputRoadNotOnTer">не на ландшафте</Tag>
 	<Tag name="CameraLoopChange">Изм. камеру в петлях</Tag>
-	<Tag name="TiresEdit2">1,2 или Num /,* - изм. знач.</Tag>
+	<Tag name="obstacles">obstacles (on road or in pipe)</Tag>
 	<Tag name="TipGrassColorMap">Отображение цвета травы для ландшафта, обычно такой же как у материала травы. Дополнительная окраска травы.</Tag>
 	<Tag name="Multiplayer">По сети</Tag>
+	<Tag name="ListeningOnPort">Listening on port</Tag>
 	<Tag name="InputToggleVeget">V - откл./вкл. растительность</Tag>
 	<Tag name="Particles">Частицы</Tag>
 	<Tag name="CarDesc_XZ">На авто устанавлен очень мощный двигатель, управляемый для большинства треков. Не лучший для ухабов из-за низкой и жёсткой подвески. Излишний крутящий момент также вызывает больше пробуксовки.</Tag>
@@ -466,6 +475,7 @@
 	<Tag name="InputInverse">Инвер.</Tag>
 	<Tag name="InputMapRestartGame">Новая игра</Tag>
 	<Tag name="Graphics">Графика</Tag>
+	<Tag name="Gold">Золото</Tag>
 	<Tag name="InputMapNextCamera">След. камера</Tag>
 	<Tag name="CarClrRandom">Наобум</Tag>
 	<Tag name="HUD">HUD</Tag>
@@ -477,6 +487,7 @@
 	<Tag name="TipGrassPrev">Предварительный просмотр изображения слоя травы (изменяется вместе с материалом).</Tag>
 	<Tag name="TipMudInt">Интенсивность частиц грязи.</Tag>
 	<Tag name="HeightMax">Макс. высота</Tag>
+	<Tag name="Obj_Rot">Rot.</Tag>
 	<Tag name="NetWrongPassword">Неверный пароль.</Tag>
 	<Tag name="RplRewindGhost">Перемотка призрака</Tag>
 	<Tag name="ScaleAll">Масш. все</Tag>
@@ -500,6 +511,7 @@
 	<Tag name="NewDup">Новый (дубликат)</Tag>
 	<Tag name="TutorInfo">В обучениях мало треков. Их пройти легко, показывают разные элементы трека.</Tag>
 	<Tag name="TrackHeightDiff">Разл. высоты</Tag>
+	<Tag name="Obj_Pos">Pos.</Tag>
 	<Tag name="RoadMaterials">Материалы</Tag>
 	<Tag name="Fullscreen">Во весь экран</Tag>
 	<Tag name="BulletLines">Линии отладки Bullet</Tag>
@@ -514,6 +526,7 @@
 	<Tag name="DisableEdit">Откл. для ред.</Tag>
 	<Tag name="MinimapUpdSkip">Пропуск обновления мини-карты</Tag>
 	<Tag name="Test">Тест</Tag>
+	<Tag name="Continue">Продолжить</Tag>
 	<Tag name="InputReloadTrack">F5 - перезагрузить трек</Tag>
 	<Tag name="InputIncreaseSensitivity">Чувствит.</Tag>
 	<Tag name="CheckOnSave">Пров. при сохр.</Tag>
@@ -525,6 +538,7 @@
 	<Tag name="CarType_Gravel">Гравий</Tag>
 	<Tag name="NetMasterConnectionError">Главный сервер не доступен.</Tag>
 	<Tag name="Brush_CurrentH">Тек.В</Tag>
+	<Tag name="TipDiffuseTex">Текстура распространения (зеркальная в альфа).</Tag>
 	<Tag name="CarChange">Смена авто</Tag>
 	<Tag name="LTrFlDepth">макс. глубина</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - размер alt-RMB - глубина</Tag>
@@ -537,7 +551,7 @@
 	<Tag name="SSS_Effect">Эффект</Tag>
 	<Tag name="Chall_Extreme">Экстрим</Tag>
 	<Tag name="PreviewCam">Смот. камера</Tag>
-	<Tag name="TipModelMinScale">Минимальный масштаб модели.</Tag>
+	<Tag name="CarType_Hover">Hovercraft</Tag>
 	<Tag name="InputFluidsDel">Del - удалить</Tag>
 	<Tag name="Leave">Выход</Tag>
 	<Tag name="InputRoadMove">- двиг. точку</Tag>
@@ -652,6 +666,7 @@
 	<Tag name="TipTerVertCount">Количество вершин ландшафта на одной стороне (квадраты). Применяется с кнопками [Новая равнина] или [Менять размеры].</Tag>
 	<Tag name="RplCurrent">Текущий</Tag>
 	<Tag name="InputBrushFreq">O,P  -  частота шума (шкала)</Tag>
+	<Tag name="Diff4">Сложно</Tag>
 	<Tag name="InputCamControl2">LMB - вращ.  RMB - движ.  MMB - масшт.</Tag>
 	<Tag name="Cars">Тачки</Tag>
 	<Tag name="CarType_Slow">Медленный</Tag>
@@ -671,7 +686,7 @@
 	<Tag name="LS_GAME">Загрузка игры</Tag>
 	<Tag name="TreeMult">Коэф. деревьев</Tag>
 	<Tag name="InputObjectsPaste">shift-Ins - вставить выб.</Tag>
-	<Tag name="Gold">Золото</Tag>
+	<Tag name="ConnectingTo">Connecting to</Tag>
 	<Tag name="InputTopView">Alt-Z - вид сверху</Tag>
 	<Tag name="FogStart">начало</Tag>
 	<Tag name="InputToggleGUIMode">F1 или ` - режим GUI</Tag>
@@ -694,7 +709,7 @@
 	<Tag name="InputRoadMat">-,=  - дорога/труба материал  (-1 скрыт)</Tag>
 	<Tag name="TipTrkNameEditor">Выбранное имя трека, используется также для переименования трека и как новое имя трека.</Tag>
 	<Tag name="InputRoadStats">T - окно стат. дороги</Tag>
-	<Tag name="VSync">Верт. синхр.</Tag>
+	<Tag name="LimitFPS">Предел кадров в сек.</Tag>
 	<Tag name="Tweak">Наладка</Tag>
 	<Tag name="TipChangeBright">Изменяет яркость цвета автомобиля (темный-светлый).</Tag>
 	<Tag name="NetNew">Новая игра</Tag>
@@ -706,7 +721,6 @@
 	<Tag name="TerHeight">Высота</Tag>
 	<Tag name="InputRoadMirror">alt-Home - выбор отображ.</Tag>
 	<Tag name="GrassMult">Коэф. травы</Tag>
-	<Tag name="ABS">АБС</Tag>
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="Back">Назад</Tag>
 	<Tag name="TipDiffusePrev">Распространяет текстуру предварительного просмотра изображения.</Tag>
@@ -721,7 +735,7 @@
 	<Tag name="NewTerrainFlat">Новая плоскость</Tag>
 	<Tag name="ColSat">Насыщен.</Tag>
 	<Tag name="TipTCS">Предотвращает кручение колеса при ускорении (по умолчанию: выключено).</Tag>
-	<Tag name="NewTerrainGenerate">Ген. новый</Tag>
+	<Tag name="RplGhost">Показать езду призрака</Tag>
 	<Tag name="InputRoadColumn">End - вкл./выкл. колонну</Tag>
 	<Tag name="InputRoadMerge">M - слияние сегментов дороги</Tag>
 	<Tag name="Brush_Height">Высота</Tag>
@@ -748,7 +762,7 @@
 	<Tag name="Car_MaxTorque">Макс. кр. момент</Tag>
 	<Tag name="ReflMode_full">Все</Tag>
 	<Tag name="Distance">Дистанция</Tag>
-	<Tag name="RplGhost">Показать езду призрака</Tag>
+	<Tag name="Adjust">Adjust</Tag>
 	<Tag name="TipGrassPageLength">Длина страница памяти для травы (ниже будут частые перезагрузки, выше будут визуальные переключения).</Tag>
 	<Tag name="Reflections">Отражения</Tag>
 	<Tag name="dust">пыль</Tag>
@@ -758,9 +772,9 @@
 	<Tag name="TipTerLNoise">Коэффициент для дополнительного шума. +1 смешать со следующим используемым слоем, -1 с предыдущим, +2 наверху следующего.</Tag>
 	<Tag name="TiresEdit1">PgUp/PgDn - пред., след. знач.</Tag>
 	<Tag name="TiresEdit3">Home - прод. / попер. параметры</Tag>
-	<Tag name="TipDiffuseTex">Текстура распространения (зеркальная в альфа).</Tag>
+	<Tag name="TiresEdit2">1,2 или Num /,* - изм. знач.</Tag>
 	<Tag name="TiresEdit4">End - знач. параметров в ряд</Tag>
-	<Tag name="AntiAliasing">Сглаживание</Tag>
+	<Tag name="Track">Трек</Tag>
 	<Tag name="Tutorial">Обучение</Tag>
 	<Tag name="FinishedCommaPlace">финиш, место</Tag>
 	<Tag name="InputObjectsDel">Del - удалить текущий</Tag>
@@ -792,12 +806,14 @@
 	<Tag name="Far">Даль</Tag>
 	<Tag name="RplGhosts">Призраки</Tag>
 	<Tag name="CarType">Тип</Tag>
+	<Tag name="Tile">Tile</Tag>
 	<Tag name="InputReturnDelay">Скор. возврата</Tag>
 	<Tag name="RplBestOnly">Сохр. призрака с лучш. временем</Tag>
 	<Tag name="InputFluidsMode">W - ред. жидкости</Tag>
 	<Tag name="Front">Перед</Tag>
 	<Tag name="SimModeHard">Тяжело</Tag>
 	<Tag name="VegetCol">Столк. с растит.</Tag>
+	<Tag name="softparticles">Мягкие частицы</Tag>
 	<Tag name="Change">Изменить</Tag>
 	<Tag name="Reset">Сброс</Tag>
 	<Tag name="ParAmount">Количество частиц</Tag>
@@ -972,7 +988,7 @@
 	<Tag name="Diff1">Легче</Tag>
 	<Tag name="InputObjectsPrevNext">PgUp,PgDn (или Wheel) - пред./след. объект</Tag>
 	<Tag name="Diff7">Ультра</Tag>
-	<Tag name="Diff4">Сложно</Tag>
+	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy. And currently impossible to use in pipes.</Tag>
 	<Tag name="SkirtHeight">Высота края</Tag>
 	<Tag name="ObjBuildings">Здания</Tag>
 	<Tag name="Car_TopSpeed">Макс. скор.</Tag>
@@ -986,7 +1002,7 @@
 	<Tag name="Collis.">Столк.</Tag>
 	<Tag name="Scenery">Окружение</Tag>
 	<Tag name="SC_Autumn">Осень</Tag>
-	<Tag name="Track">Трек</Tag>
+	<Tag name="AntiAliasing">Сглаживание</Tag>
 	<Tag name="ScaleMul">Коэф. масштаба</Tag>
 	<Tag name="Shaders">Шейдеры</Tag>
 	<Tag name="Never">Никогда</Tag>
@@ -1009,6 +1025,7 @@
 	<Tag name="Trilinear">Трилинейный</Tag>
 	<Tag name="InputUndo">(1 раз отмена)</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - сброс шкалы до 1 (с shift до 0.5)</Tag>
+	<Tag name="CarStart">Car Start</Tag>
 	<Tag name="FPS">Fps, Треуг., Пакеты</Tag>
 	<Tag name="NetJoinGame">Соединить</Tag>
 	<Tag name="LS_TREES">Загрузка деревьев</Tag>
@@ -1020,7 +1037,7 @@
 	<Tag name="InputBrushOffset">9,0  -  ген. смещения шума (позиция)</Tag>
 	<Tag name="CarYear">Год</Tag>
 	<Tag name="TipFogEndDist">Конец дистанции тумана [метры].</Tag>
-	<Tag name="Color">цвет</Tag>
+	<Tag name="Color">Color</Tag>
 	<Tag name="CarScrap">Лом авто</Tag>
 	<Tag name="RplSave">Сохранить</Tag>
 	<Tag name="InputPressButtonTip">Нажми кнопку для теста</Tag>
@@ -1031,23 +1048,18 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред.,след. вкладка (alt - ниже)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="NewtworkFailed">Failed to initialize networking. Try different local port and make sure your firewall is properly configured.</Tag>
-	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But currently impossible to use in pipes.</Tag>
-	<Tag name="NetworkError">Network Error</Tag>
-	<Tag name="Connected">Connected</Tag>
-	<Tag name="Road_Dir">Direction</Tag>
-	<Tag name="ListeningOnPort">Listening on port</Tag>
-	<Tag name="Obj_Rot">Rot.</Tag>
-	<Tag name="Obj_Pos">Pos.</Tag>
-	<Tag name="CarType_Hover">Hovercraft</Tag>
-	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy. And currently impossible to use in pipes.</Tag>
-	<Tag name="ConnectingTo">Connecting to</Tag>
-	<Tag name="Adjust">Adjust</Tag>
-	<Tag name="Disconnected">Disconnected</Tag>
-	<Tag name="obstacles">obstacles (on road or in pipe)</Tag>
-	<Tag name="Tile">Tile</Tag>
-	<Tag name="TipCarYear">Year when this car's production started.</Tag>
-	<Tag name="CarStart">Car Start</Tag>
+	<Tag name="CarType_Spaceship">Spaceship</Tag>
+	<Tag name="UnitRpm">rpm</Tag>
+	<Tag name="UnitKg">kg</Tag>
+	<Tag name="Car_BhpPerTon">Bhp per tonne</Tag>
+	<Tag name="UnitMi">mi</Tag>
+	<Tag name="UnitS">s</Tag>
+	<Tag name="Car_MassFront">Mass on front</Tag>
+	<Tag name="UnitNm">Nm</Tag>
+	<Tag name="SC_GreeceWhite">GreeceWhite</Tag>
+	<Tag name="NotRecommended">Not recommended</Tag>
+	<Tag name="UnitBhp">bhp</Tag>
+	<Tag name="at">at</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

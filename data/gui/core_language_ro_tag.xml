@@ -32,6 +32,7 @@
 	<Tag name="Road_Roll">Roll</Tag>
 	<Tag name="TipFogHStart">Height fog start height [meters] at which fog starts getting denser for smooth distance.</Tag>
 	<Tag name="PostfilterAA">Post-filter antialiasing</Tag>
+	<Tag name="NewtworkFailed">Failed to initialize networking. Try different local port and make sure your firewall is properly configured.</Tag>
 	<Tag name="Prize">Prize</Tag>
 	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
 	<Tag name="SimModeEasy">Easy (beginner)</Tag>
@@ -56,7 +57,9 @@
 	<Tag name="Surface">Suprafaţă</Tag>
 	<Tag name="ChallEndFinished">You have passed this challenge.</Tag>
 	<Tag name="About">About</Tag>
+	<Tag name="NewTerrainGenerate">Generate new</Tag>
 	<Tag name="TBScore">Punctaj</Tag>
+	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But currently impossible to use in pipes.</Tag>
 	<Tag name="DevKeys">Developer keys. Ctrl-F global, Alt-shift-1..6 load test tracks.</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first  (1)</Tag>
 	<Tag name="SC_ForestMntn">ForestMntn</Tag>
@@ -93,7 +96,7 @@
 	<Tag name="TipParType1">Anvelopă de tip 1 (global pentru traseu)</Tag>
 	<Tag name="GrassDens">Densitatea ierbii</Tag>
 	<Tag name="Locked">Locked</Tag>
-	<Tag name="LimitFPS">Limit frames per second</Tag>
+	<Tag name="VSync">VSync</Tag>
 	<Tag name="RoadParams">Parametrii drumului</Tag>
 	<Tag name="NetDirectConnect">Direct connect</Tag>
 	<Tag name="Light">Lumină</Tag>
@@ -174,6 +177,7 @@
 	<Tag name="frenzy">frenzy (curly road)</Tag>
 	<Tag name="InputRoadChkRadius">K,L  - checkpoint radius  (ChkR 0 - none)</Tag>
 	<Tag name="TipCarSpeed">Car speed rating, more means faster car. Warning, on gravel too fast cars won't be faster because they don't have enough grip.</Tag>
+	<Tag name="TipCarYear">Year when this car's production started.</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - at start   alt-ctrl - at end</Tag>
 	<Tag name="RearThrottleInverse">Rear throttle inverse</Tag>
 	<Tag name="MessageBox_Yes">Yes</Tag>
@@ -230,11 +234,11 @@
 	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
 	<Tag name="Always">Always</Tag>
 	<Tag name="Brush_Offset">Offset</Tag>
-	<Tag name="softparticles">Soft Particles</Tag>
+	<Tag name="NetworkError">Network Error</Tag>
 	<Tag name="TipSunDirYaw">Direcția soarelui - unghiul de giraţie.</Tag>
 	<Tag name="Players">Players</Tag>
 	<Tag name="Road_ChkR">ChkR</Tag>
-	<Tag name="Continue">Continue</Tag>
+	<Tag name="ABS">ABS (antiblocare frâne)</Tag>
 	<Tag name="Length">Lungimea</Tag>
 	<Tag name="TipCarsList">Cars list. Press Enter or [New Game] to drive with it.</Tag>
 	<Tag name="FluidSplash">Fluid Splash</Tag>
@@ -337,6 +341,7 @@
 	<Tag name="ProjectPage">project&apos;s page:</Tag>
 	<Tag name="Brush_Octaves">Octaves</Tag>
 	<Tag name="Type">Tipul</Tag>
+	<Tag name="Disconnected">Disconnected</Tag>
 	<Tag name="NetWaiting">Waiting...</Tag>
 	<Tag name="LoadTrack">Load Track</Tag>
 	<Tag name="MergeLength">Îmbină lungimea</Tag>
@@ -346,6 +351,7 @@
 	<Tag name="TipNewGameCar">Restart game.</Tag>
 	<Tag name="Intensity">Intensitate</Tag>
 	<Tag name="TipGrassPatchLengthMax">Lungime maximă patch iarbă.</Tag>
+	<Tag name="Connected">Connected</Tag>
 	<Tag name="Vegetation">Vegetation</Tag>
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="max">max</Tag>
@@ -399,6 +405,7 @@
 	<Tag name="MinScale">scala minimă</Tag>
 	<Tag name="NetStart">Start</Tag>
 	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions use our Forum:@http://forum.freegamedev.net/viewforum.php?f=77@@For more info see Readme and our project's Wiki pages.@</Tag>
+	<Tag name="Road_Dir">Direction</Tag>
 	<Tag name="InputObjectsMove">1 - Move   LMB - plane XZ  RMB - Y height</Tag>
 	<Tag name="TimesBar">Bara de timpi</Tag>
 	<Tag name="Screenshot">captură de ecran</Tag>
@@ -410,6 +417,7 @@
 	<Tag name="InputTerHeight">E - Height set  (RMB change height value)</Tag>
 	<Tag name="InputStartPos">Q - modifică pozițiile de start</Tag>
 	<Tag name="SC_Mars">Mars</Tag>
+	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
 	<Tag name="TireTrails">Tire Trails</Tag>
 	<Tag name="TipFogClrRGBA">R G B A components 0 to 1 (eg. 0.7 0.8 0.9 1). Last can be used to lower maximum density (1 is full).</Tag>
 	<Tag name="Language">Language</Tag>
@@ -438,9 +446,10 @@
 	<Tag name="SkirtLength">Lungime fustă drum</Tag>
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
 	<Tag name="CameraLoopChange">Camera change in loops</Tag>
-	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
+	<Tag name="obstacles">obstacles (on road or in pipe)</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
 	<Tag name="Multiplayer">Multiplayer</Tag>
+	<Tag name="ListeningOnPort">Listening on port</Tag>
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="Particles">Particule</Tag>
 	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
@@ -466,6 +475,7 @@
 	<Tag name="InputInverse">Inverse</Tag>
 	<Tag name="InputMapRestartGame">New game</Tag>
 	<Tag name="Graphics">Grafică</Tag>
+	<Tag name="Gold">Gold</Tag>
 	<Tag name="InputMapNextCamera">Next Camera</Tag>
 	<Tag name="CarClrRandom">Random</Tag>
 	<Tag name="HUD">HUD</Tag>
@@ -477,6 +487,7 @@
 	<Tag name="TipGrassPrev">Preview image of this grass layer (changed with material).</Tag>
 	<Tag name="TipMudInt">Intensitate particule noroi</Tag>
 	<Tag name="HeightMax">Height Max</Tag>
+	<Tag name="Obj_Rot">Rot.</Tag>
 	<Tag name="NetWrongPassword">Wrong password.</Tag>
 	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
 	<Tag name="ScaleAll">Scalează tot</Tag>
@@ -500,6 +511,7 @@
 	<Tag name="NewDup">Nou (copie)</Tag>
 	<Tag name="TutorInfo">Tutorials have just a few tracks. They are easy to pass and show various track elements.</Tag>
 	<Tag name="TrackHeightDiff">Diferență de nivel</Tag>
+	<Tag name="Obj_Pos">Pos.</Tag>
 	<Tag name="RoadMaterials">Materiale drum</Tag>
 	<Tag name="Fullscreen">Ecran complet</Tag>
 	<Tag name="BulletLines">Bullet debug lines</Tag>
@@ -514,6 +526,7 @@
 	<Tag name="DisableEdit">Dezactivează pentru editare</Tag>
 	<Tag name="MinimapUpdSkip">Ignoră actualizarea mini-hărții</Tag>
 	<Tag name="Test">Test</Tag>
+	<Tag name="Continue">Continue</Tag>
 	<Tag name="InputReloadTrack">F5 - reîncarcă traseul</Tag>
 	<Tag name="InputIncreaseSensitivity">Sensitivity</Tag>
 	<Tag name="CheckOnSave">Check on save</Tag>
@@ -525,6 +538,7 @@
 	<Tag name="CarType_Gravel">Gravel</Tag>
 	<Tag name="NetMasterConnectionError">Couldn't reach the master server.</Tag>
 	<Tag name="Brush_CurrentH">Curr.H</Tag>
+	<Tag name="TipDiffuseTex">Diffuse texture (Specular in alpha).</Tag>
 	<Tag name="CarChange">Car change</Tag>
 	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - size   alt-RMB - depth</Tag>
@@ -537,7 +551,7 @@
 	<Tag name="SSS_Effect">Effect</Tag>
 	<Tag name="Chall_Extreme">Extreme</Tag>
 	<Tag name="PreviewCam">Preview Camera</Tag>
-	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
+	<Tag name="CarType_Hover">Hovercraft</Tag>
 	<Tag name="InputFluidsDel">Del - delete current</Tag>
 	<Tag name="Leave">Leave (exit)</Tag>
 	<Tag name="InputRoadMove">- mișcă punctul</Tag>
@@ -652,6 +666,7 @@
 	<Tag name="TipTerVertCount">Terrain vertex count on one side (squares). Apply with buttons [New Flat] or [Resize].</Tag>
 	<Tag name="RplCurrent">Current</Tag>
 	<Tag name="InputBrushFreq">O,P  -  noise Frequency (scale)</Tag>
+	<Tag name="Diff4">Hard</Tag>
 	<Tag name="InputCamControl2">LMB - rotate  RMB - move  MMB - zoom</Tag>
 	<Tag name="Cars">Cars</Tag>
 	<Tag name="CarType_Slow">Slow</Tag>
@@ -671,7 +686,7 @@
 	<Tag name="LS_GAME">Loading game</Tag>
 	<Tag name="TreeMult">Trees multiplier</Tag>
 	<Tag name="InputObjectsPaste">shift-Ins - paste copied</Tag>
-	<Tag name="Gold">Gold</Tag>
+	<Tag name="ConnectingTo">Connecting to</Tag>
 	<Tag name="InputTopView">Alt-Z - toggle top view</Tag>
 	<Tag name="FogStart">start</Tag>
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
@@ -694,7 +709,7 @@
 	<Tag name="InputRoadMat">-,=  - road/pipe material  (-1 hidden)</Tag>
 	<Tag name="TipTrkNameEditor">Selected track name, used also for renaming track and as new track name.</Tag>
 	<Tag name="InputRoadStats">T - road stats window</Tag>
-	<Tag name="VSync">VSync</Tag>
+	<Tag name="LimitFPS">Limit frames per second</Tag>
 	<Tag name="Tweak">Tweak</Tag>
 	<Tag name="TipChangeBright">Change car color brightness (dark-light).</Tag>
 	<Tag name="NetNew">New game</Tag>
@@ -706,7 +721,6 @@
 	<Tag name="TerHeight">Height</Tag>
 	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
-	<Tag name="ABS">ABS (antiblocare frâne)</Tag>
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="Back">Înapoi</Tag>
 	<Tag name="TipDiffusePrev">Textură difuză a previzualizării.</Tag>
@@ -721,7 +735,7 @@
 	<Tag name="NewTerrainFlat">New flat</Tag>
 	<Tag name="ColSat">Saturation</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
-	<Tag name="NewTerrainGenerate">Generate new</Tag>
+	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
 	<Tag name="InputRoadColumn">End - on/off column</Tag>
 	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="Brush_Height">Height</Tag>
@@ -748,7 +762,7 @@
 	<Tag name="Car_MaxTorque">Max Torque</Tag>
 	<Tag name="ReflMode_full">Full</Tag>
 	<Tag name="Distance">Distance</Tag>
-	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
+	<Tag name="Adjust">Adjust</Tag>
 	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
 	<Tag name="Reflections">Reflections</Tag>
 	<Tag name="dust">dust</Tag>
@@ -758,9 +772,9 @@
 	<Tag name="TipTerLNoise">Multiplier for additional noise. +1 blends to next used layer, -1 to previous, +2 to over next.</Tag>
 	<Tag name="TiresEdit1">PgUp/PgDn - previous, next value</Tag>
 	<Tag name="TiresEdit3">Home - toggle longitudinal / lateral parameters</Tag>
-	<Tag name="TipDiffuseTex">Diffuse texture (Specular in alpha).</Tag>
+	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
 	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
-	<Tag name="AntiAliasing">Antialiasing</Tag>
+	<Tag name="Track">Track</Tag>
 	<Tag name="Tutorial">Tutorial</Tag>
 	<Tag name="FinishedCommaPlace">finished, place</Tag>
 	<Tag name="InputObjectsDel">Del - delete current</Tag>
@@ -792,12 +806,14 @@
 	<Tag name="Far">Far</Tag>
 	<Tag name="RplGhosts">Ghosts</Tag>
 	<Tag name="CarType">Type</Tag>
+	<Tag name="Tile">Tile</Tag>
 	<Tag name="InputReturnDelay">Return speed</Tag>
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 	<Tag name="InputFluidsMode">W - edit fluids</Tag>
 	<Tag name="Front">Front</Tag>
 	<Tag name="SimModeHard">Hard (difficult)</Tag>
 	<Tag name="VegetCol">Vegetation collision</Tag>
+	<Tag name="softparticles">Soft Particles</Tag>
 	<Tag name="Change">Change</Tag>
 	<Tag name="Reset">Reset</Tag>
 	<Tag name="ParAmount">Numărul de particule</Tag>
@@ -972,7 +988,7 @@
 	<Tag name="Diff1">Very Easy</Tag>
 	<Tag name="InputObjectsPrevNext">PgUp,PgDn (or Wheel) - previous/next object</Tag>
 	<Tag name="Diff7">Ultra</Tag>
-	<Tag name="Diff4">Hard</Tag>
+	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy. And currently impossible to use in pipes.</Tag>
 	<Tag name="SkirtHeight">Skirt Height</Tag>
 	<Tag name="ObjBuildings">Buildings</Tag>
 	<Tag name="Car_TopSpeed">Top Speed</Tag>
@@ -986,7 +1002,7 @@
 	<Tag name="Collis.">Collis.</Tag>
 	<Tag name="Scenery">Scenery</Tag>
 	<Tag name="SC_Autumn">Autumn</Tag>
-	<Tag name="Track">Track</Tag>
+	<Tag name="AntiAliasing">Antialiasing</Tag>
 	<Tag name="ScaleMul">Scale multiplier</Tag>
 	<Tag name="Shaders">Shadere</Tag>
 	<Tag name="Never">Never</Tag>
@@ -1009,6 +1025,7 @@
 	<Tag name="Trilinear">Trilinear</Tag>
 	<Tag name="InputUndo">(one time undo)</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - reset scale to 1 (with shift to 0.5)</Tag>
+	<Tag name="CarStart">Car Start</Tag>
 	<Tag name="FPS">Fps,triunghiuri, mulțimi</Tag>
 	<Tag name="NetJoinGame">Join game</Tag>
 	<Tag name="LS_TREES">Loading Trees</Tag>
@@ -1020,7 +1037,7 @@
 	<Tag name="InputBrushOffset">9,0  -  noise generate Offset (position)</Tag>
 	<Tag name="CarYear">Year</Tag>
 	<Tag name="TipFogEndDist">Fog end distance [meters].</Tag>
-	<Tag name="Color">culoare</Tag>
+	<Tag name="Color">Color</Tag>
 	<Tag name="CarScrap">Car Scrap</Tag>
 	<Tag name="RplSave">Save</Tag>
 	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
@@ -1031,23 +1048,18 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="NewtworkFailed">Failed to initialize networking. Try different local port and make sure your firewall is properly configured.</Tag>
-	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But currently impossible to use in pipes.</Tag>
-	<Tag name="NetworkError">Network Error</Tag>
-	<Tag name="Connected">Connected</Tag>
-	<Tag name="Road_Dir">Direction</Tag>
-	<Tag name="ListeningOnPort">Listening on port</Tag>
-	<Tag name="Obj_Rot">Rot.</Tag>
-	<Tag name="Obj_Pos">Pos.</Tag>
-	<Tag name="CarType_Hover">Hovercraft</Tag>
-	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy. And currently impossible to use in pipes.</Tag>
-	<Tag name="ConnectingTo">Connecting to</Tag>
-	<Tag name="Adjust">Adjust</Tag>
-	<Tag name="Disconnected">Disconnected</Tag>
-	<Tag name="obstacles">obstacles (on road or in pipe)</Tag>
-	<Tag name="Tile">Tile</Tag>
-	<Tag name="TipCarYear">Year when this car's production started.</Tag>
-	<Tag name="CarStart">Car Start</Tag>
+	<Tag name="CarType_Spaceship">Spaceship</Tag>
+	<Tag name="UnitRpm">rpm</Tag>
+	<Tag name="UnitKg">kg</Tag>
+	<Tag name="Car_BhpPerTon">Bhp per tonne</Tag>
+	<Tag name="UnitMi">mi</Tag>
+	<Tag name="UnitS">s</Tag>
+	<Tag name="Car_MassFront">Mass on front</Tag>
+	<Tag name="UnitNm">Nm</Tag>
+	<Tag name="SC_GreeceWhite">GreeceWhite</Tag>
+	<Tag name="NotRecommended">Not recommended</Tag>
+	<Tag name="UnitBhp">bhp</Tag>
+	<Tag name="at">at</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

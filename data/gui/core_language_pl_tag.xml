@@ -32,6 +32,7 @@
 	<Tag name="Road_Roll">Pochyl</Tag>
 	<Tag name="TipFogHStart">Wysokość startowa mgły [metry], od której mgła zaczyna być gęstsza przez dlugłość przejścia.</Tag>
 	<Tag name="PostfilterAA">Filtr krawędzi (antyaliasing)</Tag>
+	<Tag name="NewtworkFailed">Failed to initialize networking. Try different local port and make sure your firewall is properly configured.</Tag>
 	<Tag name="Prize">Nagroda</Tag>
 	<Tag name="TipLTrMinTerH">Wyoskość terenu poniżej której model nie występuje.</Tag>
 	<Tag name="SimModeEasy">Łatwy (początkujący)</Tag>
@@ -56,7 +57,9 @@
 	<Tag name="Surface">Nawierzchnia</Tag>
 	<Tag name="ChallEndFinished">Wygrałeś to wyzwanie.</Tag>
 	<Tag name="About">O grze</Tag>
+	<Tag name="NewTerrainGenerate">Generuj nowy</Tag>
 	<Tag name="TBScore">Punkty</Tag>
+	<Tag name="CarDesc_V1">Statek kosmiczny przerobiony na poduszkowiec. Bardzo szybki i łatwy w prowadzeniu. Nie przeszkadają mu wyboje terenu. Ale obecnie niemożliwe użycie w rurach.</Tag>
 	<Tag name="DevKeys">Klawisze deweloperów. Ctrl-F globalne, Alt-shift-1..6 wczytuje trasy testowe.</Tag>
 	<Tag name="InputRoadChkFirst">0 - ustaw sferę kontrolną jako pierwszą (1)</Tag>
 	<Tag name="SC_ForestMntn">LasGóry</Tag>
@@ -93,7 +96,7 @@
 	<Tag name="TipParType1">typ 3 cząstek z opon (dla trasy)</Tag>
 	<Tag name="GrassDens">Gęstość trawy</Tag>
 	<Tag name="Locked">Zablokowana</Tag>
-	<Tag name="LimitFPS">Ogranicz klatki na sekundę</Tag>
+	<Tag name="VSync">Synchr. pionowa</Tag>
 	<Tag name="RoadParams">Parametry drogi</Tag>
 	<Tag name="NetDirectConnect">Połącz bezpośrednio</Tag>
 	<Tag name="Light">Światło</Tag>
@@ -145,7 +148,7 @@
 	<Tag name="NetMasterPort">Port serwera</Tag>
 	<Tag name="InpSet_KeyHalf">Klawisz, połowa</Tag>
 	<Tag name="TerLHSm">Wysokość przejście</Tag>
-	<Tag name="CarDesc_SZ">Najszybsze auto przeznaczone na szuter. Lekkie oraz z mocnym silnikiem.</Tag>
+	<Tag name="CarDesc_SZ">Najszybsze auto na szuter. Lekkie i z mocnym silnikiem. Ma świetną aerodynamikę i sterowność.</Tag>
 	<Tag name="CopySource">Wybierz jako źródło kopiowania</Tag>
 	<Tag name="CarCrash">Auto zderzenie</Tag>
 	<Tag name="TipSteerSim">Mnożnik zakresu sterowania, dla typu symulacji (Łatwy, Normalny).</Tag>
@@ -174,6 +177,7 @@
 	<Tag name="frenzy">krętość (drogi)</Tag>
 	<Tag name="InputRoadChkRadius">K,L - promień sfery kontrolnej (ChkR 0 - brak)</Tag>
 	<Tag name="TipCarSpeed">Ocena szybkości auta, więcej oznacza szybsze. Uwaga, na szutrze szybkie auta nie będą szybsze gdyż nie mają przyczepności.</Tag>
+	<Tag name="TipCarYear">Rok, w którym zaczęto produkcję tego auta.</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - na pocz. alt-ctrl - na końcu</Tag>
 	<Tag name="RearThrottleInverse">Odwrotnie gaz na R</Tag>
 	<Tag name="MessageBox_Yes">Tak</Tag>
@@ -230,11 +234,11 @@
 	<Tag name="RoadWallFullCollis">Pełne kolizje ścian dróg</Tag>
 	<Tag name="Always">Zawsze</Tag>
 	<Tag name="Brush_Offset">Pozycja</Tag>
-	<Tag name="softparticles">Gładkie cząstki</Tag>
+	<Tag name="NetworkError">Błąd sieci</Tag>
 	<Tag name="TipSunDirYaw">Kierunek słońca - obrót.</Tag>
 	<Tag name="Players">Gracze</Tag>
 	<Tag name="Road_ChkR">ChkR</Tag>
-	<Tag name="Continue">Kontynuuj</Tag>
+	<Tag name="ABS">ABS (nieblokowanie kół)</Tag>
 	<Tag name="Length">Długość</Tag>
 	<Tag name="TipCarsList">Lista aut. Naciśnij Enter lub [Nowa Gra] by jechać wybranym.</Tag>
 	<Tag name="FluidSplash">Ciecze uderzenie</Tag>
@@ -337,6 +341,7 @@
 	<Tag name="ProjectPage">Strona projektu</Tag>
 	<Tag name="Brush_Octaves">Oktawy</Tag>
 	<Tag name="Type">Typ</Tag>
+	<Tag name="Disconnected">Rozłączono</Tag>
 	<Tag name="NetWaiting">Oczekiwanie...</Tag>
 	<Tag name="LoadTrack">Wczytaj trasę</Tag>
 	<Tag name="MergeLength">odległość złączania</Tag>
@@ -346,6 +351,7 @@
 	<Tag name="TipNewGameCar">Restart gry.</Tag>
 	<Tag name="Intensity">Intensywność</Tag>
 	<Tag name="TipGrassPatchLengthMax">Maksymalna wysokość trawy.</Tag>
+	<Tag name="Connected">Połączono</Tag>
 	<Tag name="Vegetation">Wegetacja</Tag>
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="max">maks</Tag>
@@ -399,6 +405,7 @@
 	<Tag name="MinScale">min. skala</Tag>
 	<Tag name="NetStart">Start</Tag>
 	<Tag name="QuickHelpText">---- Szybka pomoc ----@@Użyj myszy lub Góra,Lewo,Enter,Backspace do nawigacji po menu.@@Aby dostosować rozdzielczość wejdź do Opcji na zakładkę Ekran,@użyj zestawów Ustawień grafiki by szybko dostosować grafikę do swojego sprzętu.@@Wszystkie klawisze używane w grze można zmienić w Opcjach, na zakładce Wejście.@Jeśli posiadasz kontroler gry zobacz:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Stworzenie gry muliplayer wymaga przekierowanych portów.@Dołączenie do istniejącej gry, nie wymaga, pod warunkiem że inni mają.@@Jeśli posiadasz problemy lub sugestie, use our Forum (in English):@http://forum.freegamedev.net/viewforum.php?f=77@@Więcej informacji w Czytaj, i na stronach Wiki projektu.@</Tag>
+	<Tag name="Road_Dir">Kierunek</Tag>
 	<Tag name="InputObjectsMove">1 - Przesuń  LMB płasz. XZ  RMB - Y wysok.</Tag>
 	<Tag name="TimesBar">Czasy</Tag>
 	<Tag name="Screenshot">zrzut ekranu</Tag>
@@ -410,6 +417,7 @@
 	<Tag name="InputTerHeight">E - ustaw Wysokość (RMB zmień jej wartość)</Tag>
 	<Tag name="InputStartPos">Q - edytuj start auta</Tag>
 	<Tag name="SC_Mars">Mars</Tag>
+	<Tag name="TipModelMinScale">Minimalna skala modelu</Tag>
 	<Tag name="TireTrails">Ślady opon</Tag>
 	<Tag name="TipFogClrRGBA">R G B A składowe 0 do 1 (np. 0.7 0.8 0.9 1). Ostatnią można użyć do zmniejszenia maksymalnej gęstości (1 pełna).</Tag>
 	<Tag name="Language">Język</Tag>
@@ -438,9 +446,10 @@
 	<Tag name="SkirtLength">Długość łaty</Tag>
 	<Tag name="InputRoadNotOnTer">gdy nie na terenie</Tag>
 	<Tag name="CameraLoopChange">Zmień kamerę w pętlach</Tag>
-	<Tag name="TiresEdit2">1,2 lub Num /,* - zmień wartość</Tag>
+	<Tag name="obstacles">przeszkody (na drodze lub w rurze)</Tag>
 	<Tag name="TipGrassColorMap">Mapa koloru trawy, dla scenerii. Zazwyczaj ten sam wybór, co dla materiału trawy. Dodatkowo koloruje trawę.</Tag>
 	<Tag name="Multiplayer">Multiplayer</Tag>
+	<Tag name="ListeningOnPort">Nasłuchiwanie na porcie</Tag>
 	<Tag name="InputToggleVeget">V - wł. / wył. wegetację</Tag>
 	<Tag name="Particles">Cząstki</Tag>
 	<Tag name="CarDesc_XZ">Auto z bardzo mocnym silnikiem, na większość tras. Niedobre na wyboje z powodu niskiego i sztywnego zawieszenia. Dodatkowo, tak duży moment obrotowy powoduje więcej buksowania kół.</Tag>
@@ -466,6 +475,7 @@
 	<Tag name="InputInverse">Odwróć</Tag>
 	<Tag name="InputMapRestartGame">Nowa gra</Tag>
 	<Tag name="Graphics">Grafika</Tag>
+	<Tag name="Gold">Złoto</Tag>
 	<Tag name="InputMapNextCamera">Następny widok</Tag>
 	<Tag name="CarClrRandom">Losowy</Tag>
 	<Tag name="HUD">HUD</Tag>
@@ -477,6 +487,7 @@
 	<Tag name="TipGrassPrev">Obraz podglądu tej warstwy trawy (zmiana materiałem).</Tag>
 	<Tag name="TipMudInt">Intensywność cząstek błota.</Tag>
 	<Tag name="HeightMax">Wysokość Max</Tag>
+	<Tag name="Obj_Rot">Obr.</Tag>
 	<Tag name="NetWrongPassword">Nieprawidłowe hasło.</Tag>
 	<Tag name="RplRewindGhost">Cofaj ducha</Tag>
 	<Tag name="ScaleAll">Skaluj wszystko</Tag>
@@ -500,6 +511,7 @@
 	<Tag name="NewDup">Nowy (duplikuj)</Tag>
 	<Tag name="TutorInfo">Samouczki mają tylko parę tras. Są łatwe do ukończenia i pokazują różne elementy tras.</Tag>
 	<Tag name="TrackHeightDiff">Różnica wys.</Tag>
+	<Tag name="Obj_Pos">Poz.</Tag>
 	<Tag name="RoadMaterials">Materiały drogi</Tag>
 	<Tag name="Fullscreen">Pełny ekran</Tag>
 	<Tag name="BulletLines">linie debug Bullet</Tag>
@@ -514,6 +526,7 @@
 	<Tag name="DisableEdit">Wyłącz do edycji</Tag>
 	<Tag name="MinimapUpdSkip">Pominięć odśw. minimapy</Tag>
 	<Tag name="Test">Test</Tag>
+	<Tag name="Continue">Kontynuuj</Tag>
 	<Tag name="InputReloadTrack">F5 - przeładuj trasę</Tag>
 	<Tag name="InputIncreaseSensitivity">Czułość</Tag>
 	<Tag name="CheckOnSave">Sprawdź przy zapisywaniu</Tag>
@@ -525,6 +538,7 @@
 	<Tag name="CarType_Gravel">Szuter</Tag>
 	<Tag name="NetMasterConnectionError">Brak dostępu do serwera głównego.</Tag>
 	<Tag name="Brush_CurrentH">Obecna</Tag>
+	<Tag name="TipDiffuseTex">Tekstura koloru (specular w alpha)</Tag>
 	<Tag name="CarChange">Zmiana auta</Tag>
 	<Tag name="LTrFlDepth">max Głębokość w cieczy</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - rozmiar alt-RMB - głębokość</Tag>
@@ -537,7 +551,7 @@
 	<Tag name="SSS_Effect">Efekt</Tag>
 	<Tag name="Chall_Extreme">Ekstremalne</Tag>
 	<Tag name="PreviewCam">Poprzedni widok</Tag>
-	<Tag name="TipModelMinScale">Minimalna skala modelu</Tag>
+	<Tag name="CarType_Hover">Poduszkowiec</Tag>
 	<Tag name="InputFluidsDel">Del - zmaż wybraną</Tag>
 	<Tag name="Leave">Opuść (wyjdź)</Tag>
 	<Tag name="InputRoadMove">- przesuń punkt</Tag>
@@ -652,6 +666,7 @@
 	<Tag name="TipTerVertCount">7</Tag>
 	<Tag name="RplCurrent">Bieżące</Tag>
 	<Tag name="InputBrushFreq">O,P - częstotliwość szumu (skala)</Tag>
+	<Tag name="Diff4">Trudny</Tag>
 	<Tag name="InputCamControl2">LMB - obrót RMB - przesuń MMB - zbliż</Tag>
 	<Tag name="Cars">Auta</Tag>
 	<Tag name="CarType_Slow">Wolny</Tag>
@@ -671,7 +686,7 @@
 	<Tag name="LS_GAME">Wczytywanie gry</Tag>
 	<Tag name="TreeMult">Mnożnik drzew</Tag>
 	<Tag name="InputObjectsPaste">shift-Ins - wklej skopiowane</Tag>
-	<Tag name="Gold">Złoto</Tag>
+	<Tag name="ConnectingTo">Łączenie z</Tag>
 	<Tag name="InputTopView">Alt-Z - przełącz widok z góry</Tag>
 	<Tag name="FogStart">start</Tag>
 	<Tag name="InputToggleGUIMode">F1 lub ` - tryb GUI (Opcje)</Tag>
@@ -694,7 +709,7 @@
 	<Tag name="InputRoadMat">-,=   -  materiał drogi/rury (-1 ukryty)</Tag>
 	<Tag name="TipTrkNameEditor">Nazwa wybranej trasy, używana również przy zmianie nazwy i jako nazwa nowej trasy.</Tag>
 	<Tag name="InputRoadStats">T - okno statystyki drogi</Tag>
-	<Tag name="VSync">Synchr. pionowa</Tag>
+	<Tag name="LimitFPS">Ogranicz klatki na sekundę</Tag>
 	<Tag name="Tweak">Dostrajanie</Tag>
 	<Tag name="TipChangeBright">Zmień jasność koloru auta.</Tag>
 	<Tag name="NetNew">Nowa gra</Tag>
@@ -706,7 +721,6 @@
 	<Tag name="TerHeight">Wysokość</Tag>
 	<Tag name="InputRoadMirror">alt-Home - Lustrzane odbicie zaznaczenia</Tag>
 	<Tag name="GrassMult">Mnożnik trawy</Tag>
-	<Tag name="ABS">ABS (nieblokowanie kół)</Tag>
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="Back">Tył</Tag>
 	<Tag name="TipDiffusePrev">Podgląd tekstury koloru diffuse.</Tag>
@@ -721,7 +735,7 @@
 	<Tag name="NewTerrainFlat">Nowy płaski</Tag>
 	<Tag name="ColSat">Nasycenie</Tag>
 	<Tag name="TipTCS">Zapobiega poślizgowi kół przy przyśpieszaniu (domyślnie: wył.)</Tag>
-	<Tag name="NewTerrainGenerate">Generuj nowy</Tag>
+	<Tag name="RplGhost">Pokaż przejazd ducha</Tag>
 	<Tag name="InputRoadColumn">End - wył./wł. kolumnę</Tag>
 	<Tag name="InputRoadMerge">M - przełącz łączenie segm. (dla testu)</Tag>
 	<Tag name="Brush_Height">Wysokość</Tag>
@@ -748,7 +762,7 @@
 	<Tag name="Car_MaxTorque">Maks. moment</Tag>
 	<Tag name="ReflMode_full">Pełne</Tag>
 	<Tag name="Distance">Odległość</Tag>
-	<Tag name="RplGhost">Pokaż przejazd ducha</Tag>
+	<Tag name="Adjust">Dostosuj</Tag>
 	<Tag name="TipGrassPageLength">Rozmiar strony trawy (niski będzie ładował często, wysoki spowoduje widoczne przeskoki).</Tag>
 	<Tag name="Reflections">Odbicia</Tag>
 	<Tag name="dust">kurz</Tag>
@@ -758,9 +772,9 @@
 	<Tag name="TipTerLNoise">Mnożnik dodatkowego szumu. +1 dla przejścia do następnej użytej warstwy, -1 do porzedniej, +2 do za następnej</Tag>
 	<Tag name="TiresEdit1">PgUp/PgDn - poprz., nast. wartość</Tag>
 	<Tag name="TiresEdit3">Home - przełącz parametry wzdłużne / poprzeczne</Tag>
-	<Tag name="TipDiffuseTex">Tekstura koloru (specular w alpha)</Tag>
+	<Tag name="TiresEdit2">1,2 lub Num /,* - zmień wartość</Tag>
 	<Tag name="TiresEdit4">End - przełącz parametry momentu wyrównania</Tag>
-	<Tag name="AntiAliasing">Wygładzanie krawędzi</Tag>
+	<Tag name="Track">Trasa</Tag>
 	<Tag name="Tutorial">Samouczek</Tag>
 	<Tag name="FinishedCommaPlace">ukończył, miejsce</Tag>
 	<Tag name="InputObjectsDel">Del - usuń bieżący</Tag>
@@ -792,12 +806,14 @@
 	<Tag name="Far">Daleko</Tag>
 	<Tag name="RplGhosts">Duchy</Tag>
 	<Tag name="CarType">Typ</Tag>
+	<Tag name="Tile">Rozciąg</Tag>
 	<Tag name="InputReturnDelay">Szybk. powrotu</Tag>
 	<Tag name="RplBestOnly">Zapisuj ducha tylko dla lepszych czasów</Tag>
 	<Tag name="InputFluidsMode">W - edytuj ciecze</Tag>
 	<Tag name="Front">Przód</Tag>
 	<Tag name="SimModeHard">Trudny (skomplikowany)</Tag>
 	<Tag name="VegetCol">Kolizja z wegetacją</Tag>
+	<Tag name="softparticles">Gładkie cząstki</Tag>
 	<Tag name="Change">Zmień</Tag>
 	<Tag name="Reset">Przywróć</Tag>
 	<Tag name="ParAmount">Ilość cząstek</Tag>
@@ -972,7 +988,7 @@
 	<Tag name="Diff1">Bardzo łatwy</Tag>
 	<Tag name="InputObjectsPrevNext">PgUp, PgDn (lub scroll) - poprzedni/następny objekt</Tag>
 	<Tag name="Diff7">Ultra</Tag>
-	<Tag name="Diff4">Trudny</Tag>
+	<Tag name="CarDesc_O">Eksperymentalna, idealnie stabilizowana, obracająca się sfera. Używa zaawansowanych napędów ze statków kosmicznych by łatwo poruszać się w dowolnym kierunku. Bardzo szybka ale bardzo skoczna. I obecnie nie możliwa do użycia w rurach.</Tag>
 	<Tag name="SkirtHeight">Wysokość łaty</Tag>
 	<Tag name="ObjBuildings">Budynki</Tag>
 	<Tag name="Car_TopSpeed">Maks. prędkość</Tag>
@@ -986,7 +1002,7 @@
 	<Tag name="Collis.">Kolizje</Tag>
 	<Tag name="Scenery">Sceneria</Tag>
 	<Tag name="SC_Autumn">Jesień</Tag>
-	<Tag name="Track">Trasa</Tag>
+	<Tag name="AntiAliasing">Wygładzanie krawędzi</Tag>
 	<Tag name="ScaleMul">Mnożnik skali</Tag>
 	<Tag name="Shaders">Cieniowanie</Tag>
 	<Tag name="Never">Nigdy</Tag>
@@ -1009,6 +1025,7 @@
 	<Tag name="Trilinear">Trójliniowe</Tag>
 	<Tag name="InputUndo">(jednorazowe cofnij)</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - resetuj skalę na 1 (shift na 0.5)</Tag>
+	<Tag name="CarStart">Start auta</Tag>
 	<Tag name="FPS">Klatek na sek, trójkątów, wsadów</Tag>
 	<Tag name="NetJoinGame">Dołącz do gry</Tag>
 	<Tag name="LS_TREES">Ładowanie drzew</Tag>
@@ -1020,7 +1037,7 @@
 	<Tag name="InputBrushOffset">9,0 - przesunięcie generacji szumu (pozycja)</Tag>
 	<Tag name="CarYear">Rok</Tag>
 	<Tag name="TipFogEndDist">Odległość końcowa mgły [metr].</Tag>
-	<Tag name="Color">kolor</Tag>
+	<Tag name="Color">Kolor</Tag>
 	<Tag name="CarScrap">Auto ocieranie</Tag>
 	<Tag name="RplSave">Zapisz</Tag>
 	<Tag name="InputPressButtonTip">Naciśnij przycisk by zobaczyć</Tag>
@@ -1031,23 +1048,18 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz.,następna zakładka (alt - pod-zakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="NewtworkFailed">Failed to initialize networking. Try different local port and make sure your firewall is properly configured.</Tag>
-	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But currently impossible to use in pipes.</Tag>
-	<Tag name="NetworkError">Network Error</Tag>
-	<Tag name="Connected">Connected</Tag>
-	<Tag name="Road_Dir">Direction</Tag>
-	<Tag name="ListeningOnPort">Listening on port</Tag>
-	<Tag name="Obj_Rot">Rot.</Tag>
-	<Tag name="Obj_Pos">Pos.</Tag>
-	<Tag name="CarType_Hover">Hovercraft</Tag>
-	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy. And currently impossible to use in pipes.</Tag>
-	<Tag name="ConnectingTo">Connecting to</Tag>
-	<Tag name="Adjust">Adjust</Tag>
-	<Tag name="Disconnected">Disconnected</Tag>
-	<Tag name="obstacles">obstacles (on road or in pipe)</Tag>
-	<Tag name="Tile">Tile</Tag>
-	<Tag name="TipCarYear">Year when this car's production started.</Tag>
-	<Tag name="CarStart">Car Start</Tag>
+	<Tag name="CarType_Spaceship">Spaceship</Tag>
+	<Tag name="UnitRpm">rpm</Tag>
+	<Tag name="UnitKg">kg</Tag>
+	<Tag name="Car_BhpPerTon">Bhp per tonne</Tag>
+	<Tag name="UnitMi">mi</Tag>
+	<Tag name="UnitS">s</Tag>
+	<Tag name="Car_MassFront">Mass on front</Tag>
+	<Tag name="UnitNm">Nm</Tag>
+	<Tag name="SC_GreeceWhite">GreeceWhite</Tag>
+	<Tag name="NotRecommended">Not recommended</Tag>
+	<Tag name="UnitBhp">bhp</Tag>
+	<Tag name="at">at</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
