@@ -149,7 +149,7 @@ void App::newPerfTest(float time)
 				Dbl m = eng.real_pow_tq_mul;  // factor to match real cars data
 				CARDYNAMICS& cd = pCar->dynamics;
 				const MATHVECTOR<Dbl,3>& com = cd.center_of_mass;
-				Dbl ratio = maxPwr / (pCar->GetMass() * 0.001);
+				Dbl bhpPerTon = maxPwr / (pCar->GetMass() * 0.001);
 
 				//  com ratio
 				Dbl whf = cd.wheel[0].GetExtendedPosition()[0], whr = cd.wheel[2].GetExtendedPosition()[0];
@@ -164,7 +164,7 @@ void App::newPerfTest(float time)
 					"---\n"+
 					"Max torque [Nm]:  " +fToStr(maxTrq*m,1,5)+" ("+fToStr(maxTrq,1,5)+") at "+fToStr(rpmMaxTq ,0,4)+" rpm\n"+
 					"Max power  [bhp]:  "+fToStr(maxPwr*m,1,5)+" ("+fToStr(maxPwr,1,5)+") at "+fToStr(rpmMaxPwr,0,4)+" rpm\n"+
-					"Ratio [bhp/tonne]:  "+fToStr(ratio,1,5)+"\n"+
+					"Ratio [bhp/tonne]:  "+fToStr(bhpPerTon,1,5)+"\n"+
 					"Top speed: "+fToStr(maxVel,1,5)+" kmh  at time:  "+fToStr(tiMaxVel,1,4)+" s\n"+
 					"------\n"+
 					"Time [s] 0.. 60 kmh:  "+fToStr(t0to60 ,2,5)+"  down "+fToStr(down60 ,0,4)+"  drag "+fToStr(drag60 ,0,4)+"\n"+
@@ -179,10 +179,8 @@ void App::newPerfTest(float time)
 					"Stop time 100..0 kmh:  "+fToStr(tMaxTo0-tMaxTo100,2,5)+"\n"+
 					"Stop time  60..0 kmh:  "+fToStr(tMaxTo0-tMaxTo60,2,5)+"\n";
 				
-				pGame->info_output << std::string("====  CAR Perf test summary  ====\n") + sResult + "====\n";
+				//pGame->info_output << std::string("====  CAR Perf test summary  ====\n") + sResult + "====\n";
 				gui->edPerfTest->setCaption(sResult);
-				//if (!mWndTweak->getVisible())  // show
-				//	TweakToggle();
 				mWndTweak->setVisible(true);
 				gui->tabTweak->setIndexSelected(3);
 				
@@ -201,13 +199,13 @@ void App::newPerfTest(float time)
 
 					TiXmlElement car("car");
 						car.SetAttribute("mass",	toStrC(pCar->GetMass()) );
-						s = fToStr(inert[0],0,3)+", "+fToStr(inert[1],0,3)+", "+fToStr(inert[2],0,3);
+						s = fToStr(inert[0],0,3)+" "+fToStr(inert[1],0,3)+" "+fToStr(inert[2],0,3);
 						car.SetAttribute("inertia",	s.c_str() );
 					root.InsertEndChild(car);
 
 					TiXmlElement co("com");
 						co.SetAttribute("frontPercent",	toStrC(comFrontPercent) );
-						s = fToStr(com[0],3,5)+", "+fToStr(com[1],3,5)+", "+fToStr(com[2],3,5);
+						s = fToStr(com[0],3,5)+" "+fToStr(com[1],3,5)+" "+fToStr(com[2],3,5);
 						co.SetAttribute("pos",		s.c_str());
 						co.SetAttribute("whf",		toStrC(whf));
 						co.SetAttribute("whr",		toStrC(whr));
@@ -225,7 +223,7 @@ void App::newPerfTest(float time)
 					root.InsertEndChild(pw);
 
 					TiXmlElement bh("bhpPerTon");
-						bh.SetAttribute("val",		toStrC(ratio) );
+						bh.SetAttribute("val",		toStrC(bhpPerTon) );
 					root.InsertEndChild(bh);
 
 					TiXmlElement tp("top");

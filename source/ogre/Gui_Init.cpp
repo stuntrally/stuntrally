@@ -454,7 +454,12 @@ void CGui::InitGui()
 	Btn("CarClrRandom", btnCarClrRandom);
 	sv= &svNumLaps;  sv->Init("NumLaps",  &pSet->gui.num_laps, 1,10, 1.3f);  sv->DefaultI(2);
 
-	txCarStatsTxt = fTxt("CarStatsTxt");  txCarStatsVals = fTxt("CarStatsVals");
+	//  car stats
+	for (i=0; i < iCarSt; ++i)
+	{	txCarStTxt[i] = fTxt("cst"+toStr(i));
+		txCarStVals[i] = fTxt("csv"+toStr(i));
+		barCarSt[i] = fImg("cb"+toStr(i));  
+	}
 	txCarSpeed = fTxt("CarSpeed");  txCarType = fTxt("CarType");  txCarYear = fTxt("CarYear");
 	barCarSpeed = fImg("CarSpeedBar");
     txCarAuthor = fTxt("CarAuthor");  txTrackAuthor = fTxt("TrackAuthor");

@@ -351,11 +351,13 @@ public:
 	void changeCar(), changeTrack();
 
 	//  [Car] stats
-	Txt txCarStatsTxt, txCarStatsVals,
+	const static int iCarSt = 10;
+	Img barCarSt[iCarSt];
+	Txt txCarStTxt[iCarSt], txCarStVals[iCarSt],
 		txCarSpeed, txCarType, txCarYear,
 		txCarAuthor,txTrackAuthor;
 	Img barCarSpeed;
-	void UpdCarStatsTxt();
+	void UpdCarStats();
 	std::vector<Ogre::String> vsu; //CarStatsUnits
 
 	Img imgCar;  Ed carDesc;

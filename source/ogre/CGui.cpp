@@ -27,7 +27,6 @@ CGui::CGui(App* app1)
 	,imgCar(0),carDesc(0)
 	,cmbBoost(0), cmbFlip(0), cmbDamage(0), cmbRewind(0)
 	,valLocPlayers(0)
-	,txCarStatsTxt(0), txCarStatsVals(0)
 	,txCarSpeed(0),txCarType(0),txCarYear(0), barCarSpeed(0)
 	,txCarAuthor(0),txTrackAuthor(0)
 	,valRplPerc(0), valRplCur(0), valRplLen(0)
@@ -89,8 +88,11 @@ CGui::CGui(App* app1)
 	data = app1->scn->data;
 
 	int i,c;
-	for (i=0; i<3; ++i)
+	for (i=0; i < 3; ++i)
 	{	txtChP[i]=0;  valChP[i]=0;  }
+
+	for (i=0; i < iCarSt; ++i)
+	{	txCarStTxt[i]=0;  txCarStVals[i]=0;  barCarSt[i]=0;  }
 
 	sListCar = "";
 

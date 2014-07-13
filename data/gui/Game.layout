@@ -517,15 +517,9 @@
 						<Property key="NeedMouse" value="false"/>
 					</Widget>
 				</Widget>
-				<Widget type="Widget" skin="PanelSkin" position="194 196 244 76" name="PanCarS">
+				<Widget type="Widget" skin="PanelSkin" position="194 192 244 72" name="PanCarS">
 					<Property key="Colour" value="0.7 0.8 0.6"/>
 					<Property key="Alpha" value="0.6"/>
-					<Property key="InheritsAlpha" value="false"/>
-					<UserString key="tip" value="#{TipCarDesc}"/>
-				</Widget>
-				<Widget type="Widget" skin="PanelSkin" position="14 276 420 136" name="PanCarStats">
-					<Property key="Colour" value="0.1 0.4 0.7"/>
-					<Property key="Alpha" value="0.15"/>
 					<Property key="InheritsAlpha" value="false"/>
 					<UserString key="tip" value="#{TipCarDesc}"/>
 				</Widget>
@@ -535,17 +529,136 @@
 					<Property key="InheritsAlpha" value="false"/>
 					<UserString key="tip" value="#{TipCarDesc}"/>
 				</Widget>
+				<Widget type="Widget" skin="PanelSkin" position="14 272 420 154" name="PanCarStats">
+					<Property key="Colour" value="0.1 0.4 0.7"/>
+					<Property key="Alpha" value="0.15"/>
+					<Property key="InheritsAlpha" value="false"/>
+					<UserString key="tip" value="#{TipCarDesc}"/>
+				</Widget>
 
-				<Widget type="TextBox" skin="TextBox" position="16 288 200 136" name="CarStatsTxt">
+				<Widget type="ImageBox" skin="ImageBox" position="240 275 132 12" name="cb0">
+					<Property key="ImageTexture" value="stats_bar.png"/>
+					<Property key="Alpha" value="0.7"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="16 274 200 14" name="cst0">
 					<Property key="TextAlign" value="Right Top"/>
-					<Property key="TextColour" value="0.63 0.85 1.0"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="240 288 180 136" name="CarStatsVals">
+				<Widget type="TextBox" skin="TextBox" position="240 274 180 14" name="csv0">
 					<Property key="TextAlign" value="Left Top"/>
-					<Property key="TextColour" value="0.74 0.88 1.0"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="240 289 132 12" name="cb1">
+					<Property key="ImageTexture" value="stats_bar.png"/>
+					<Property key="Alpha" value="0.7"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="16 288 200 14" name="cst1">
+					<Property key="TextAlign" value="Right Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="240 288 180 14" name="csv1">
+					<Property key="TextAlign" value="Left Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+
+				<Widget type="ImageBox" skin="ImageBox" position="240 309 132 12" name="cb2">
+					<Property key="ImageTexture" value="stats_bar.png"/>
+					<Property key="Alpha" value="0.7"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="16 308 200 14" name="cst2">
+					<Property key="TextAlign" value="Right Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="240 308 180 14" name="csv2">
+					<Property key="TextAlign" value="Left Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="240 321 132 12" name="cb3">
+					<Property key="ImageTexture" value="stats_bar.png"/>
+					<Property key="Alpha" value="0.7"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="16 320 200 14" name="cst3">
+					<Property key="TextAlign" value="Right Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="240 320 180 14" name="csv3">
+					<Property key="TextAlign" value="Left Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="240 333 132 12" name="cb4">
+					<Property key="ImageTexture" value="stats_bar.png"/>
+					<Property key="Alpha" value="0.7"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="16 332 200 14" name="cst4">
+					<Property key="TextAlign" value="Right Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="240 332 180 14" name="csv4">
+					<Property key="TextAlign" value="Left Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="240 349 132 12" name="cb5">
+					<Property key="ImageTexture" value="stats_bar.png"/>
+					<Property key="Alpha" value="0.7"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="16 348 200 14" name="cst5">
+					<Property key="TextAlign" value="Right Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="240 348 180 14" name="csv5">
+					<Property key="TextAlign" value="Left Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+
+				<Widget type="ImageBox" skin="ImageBox" position="240 369 132 12" name="cb6">
+					<Property key="ImageTexture" value="stats_bar.png"/>
+					<Property key="Alpha" value="0.7"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="16 368 200 14" name="cst6">
+					<Property key="TextAlign" value="Right Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="240 368 180 14" name="csv6">
+					<Property key="TextAlign" value="Left Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="240 381 132 12" name="cb7">
+					<Property key="ImageTexture" value="stats_bar.png"/>
+					<Property key="Alpha" value="0.7"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="16 380 200 14" name="cst7">
+					<Property key="TextAlign" value="Right Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="240 380 180 14" name="csv7">
+					<Property key="TextAlign" value="Left Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="240 393 132 12" name="cb8">
+					<Property key="ImageTexture" value="stats_bar.png"/>
+					<Property key="Alpha" value="0.7"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="16 392 200 14" name="cst8">
+					<Property key="TextAlign" value="Right Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="240 392 180 14" name="csv8">
+					<Property key="TextAlign" value="Left Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="240 409 132 12" name="cb9">
+					<Property key="ImageTexture" value="stats_bar.png"/>
+					<Property key="Alpha" value="0.7"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="16 408 200 14" name="cst9">
+					<Property key="TextAlign" value="Right Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="240 408 180 14" name="csv9">
+					<Property key="TextAlign" value="Left Top"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+
 				<Widget type="EditBox" skin="EditBoxEmpty" position="18 432 416 56" name="CarDesc">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
@@ -571,37 +684,39 @@
 					<Property key="TextColour" value="0.4 0.5 0.6"/>
 				</Widget>
 
-				<Widget type="TextBox" skin="TextBox" position="204 204 80 22">
+				<Widget type="TextBox" skin="TextBox" position="204 202 80 22">
 					<Property key="Caption" value="#{CarSpeed}"/>
 					<Property key="TextColour" value="0.76 0.73 0.7"/>
 					<UserString key="tip" value="#{TipCarSpeed}"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="300 204 132 16" name="CarSpeedBar">
+				<Widget type="ImageBox" skin="ImageBox" position="300 202 132 16" name="CarSpeedBar">
 					<Property key="ImageTexture" value="stats_bar.png"/>
 					<Property key="Alpha" value="0.7"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="284 204 88 22" name="CarSpeed">
+				<Widget type="TextBox" skin="TextBox" position="284 202 88 22" name="CarSpeed">
 					<Property key="TextColour" value="0.76 0.73 0.7"/>
 					<UserString key="tip" value="#{TipCarSpeed}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="204 224 80 22">
+				<Widget type="TextBox" skin="TextBox" position="204 222 80 22">
 					<Property key="Caption" value="#{CarType}"/>
 					<Property key="TextColour" value="0.8 0.84 0.86"/>
 					<UserString key="tip" value="#{TipCarType}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="284 224 124 22" name="CarType">
+				<Widget type="TextBox" skin="TextBox" position="284 222 124 22" name="CarType">
 					<Property key="TextColour" value="0.8 0.84 0.86"/>
 					<UserString key="tip" value="#{TipCarType}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="204 244 80 22">
+				<Widget type="TextBox" skin="TextBox" position="204 242 80 22">
 					<Property key="Caption" value="#{CarYear}"/>
 					<Property key="TextColour" value="0.7 0.7 0.6"/>
 					<Property key="Alpha" value="0.7"/>
+					<Property key="FontName" value="font.small"/>
 					<UserString key="tip" value="#{TipCarYear}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="284 244 124 22" name="CarYear">
+				<Widget type="TextBox" skin="TextBox" position="284 242 124 22" name="CarYear">
 					<Property key="TextColour" value="0.74 0.74 0.64"/>
 					<Property key="Alpha" value="0.9"/>
+					<Property key="FontName" value="font.small"/>
 					<UserString key="tip" value="#{TipCarYear}"/>
 				</Widget>
 

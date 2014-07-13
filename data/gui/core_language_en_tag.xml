@@ -55,6 +55,21 @@
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
 	<Tag name="Graphs">Graphs</Tag>
 
+	<!--  Units  -->
+	<Tag name="UnitKmh">km/h</Tag>
+	<Tag name="UnitMph">mph</Tag>
+	<Tag name="UnitKm">km</Tag>
+	<Tag name="UnitMi">mi</Tag>
+	<Tag name="UnitM">m</Tag>
+	<Tag name="UnitMB">MB</Tag>
+	<Tag name="UnitKg">kg</Tag>
+	<Tag name="UnitNm">Nm</Tag>
+	<Tag name="at">at</Tag>
+	<Tag name="UnitRpm">rpm</Tag>
+	<Tag name="UnitBhp">bhp</Tag>
+	<Tag name="UnitS">s</Tag>
+	
+	
 	<!--  Sceneries  -->
 	<Tag name="SC_Asphalt">Asphalt</Tag>
 	<Tag name="SC_Jungle">Jungle</Tag>
@@ -120,7 +135,7 @@
 
 	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But currently impossible to use in pipes.</Tag>
 	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy. And currently impossible to use in pipes.</Tag>
-	
+
 	
 <!--  ............................................................................................................................  -->
 
@@ -239,9 +254,7 @@
 	<Tag name="TrackBestTime">Best time</Tag>
 	<Tag name="TrackAvgSpeed">Avg. speed</Tag>
 	<Tag name="TrackLength">Length</Tag>
-	<Tag name="UnitKm">km</Tag>
 	<Tag name="TrackArea">Area</Tag>
-	<Tag name="UnitM">m</Tag>
 	<Tag name="TrackWidthAvg">Width avg.</Tag>
 	<Tag name="TrackHeightDiff">Height diff.</Tag>
 	<Tag name="TrackInAir">In air</Tag>
@@ -278,12 +291,13 @@
 	<Tag name="TipCarYear">Year when this car's production started.</Tag>
 	
 	<Tag name="Car_Mass">Mass</Tag>
+	<Tag name="Car_MassFront">Mass on front</Tag>
 	<Tag name="Car_MaxTorque">Max Torque</Tag>
 	<Tag name="Car_MaxPower">Max Power</Tag>
+	<Tag name="Car_BhpPerTon">Bhp per tonne</Tag>
 	<Tag name="Car_TopSpeed">Top Speed</Tag>
 	<Tag name="Car_TimeTo">Time to</Tag>
 	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
-	<!--<Tag name="Car_StatsUnits">kg,Nm,at,rpm,bhp,s</Tag>-->
 
 
 	<!--  Multiplayer  -->
@@ -349,6 +363,7 @@
 	<Tag name="TipABS">Prevents wheel lock when braking (default: off).</Tag>
 	<Tag name="TCS">TCS (traction control)</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
+	<Tag name="NotRecommended">Not recommended</Tag>
 
 	<Tag name="Gravel">Gravel</Tag>
 	<Tag name="Asphalt">Asphalt</Tag>
@@ -427,7 +442,6 @@
 	<Tag name="RplTime">Time</Tag>
 	<Tag name="RplVersion">Version</Tag>
 	
-	<Tag name="UnitMB">MB</Tag>
 	<Tag name="RplSize">size</Tag>
 	<Tag name="RplFileSize">File size</Tag>
 	<Tag name="RplRecTime">Recorded   time</Tag>
@@ -548,8 +562,6 @@
 	<Tag name="HUD">HUD</Tag>
 	<Tag name="Digits">Digits (gear, speed)</Tag>
 	<Tag name="SpeedUnit">Speed unit</Tag>
-	<Tag name="UnitKmh">km/h</Tag>
-	<Tag name="UnitMph">mph</Tag>
 	<Tag name="Gauges">Gauges (rpm, speed)</Tag>
 	<Tag name="Layout">Layout</Tag>
 	<Tag name="Minimap">Minimap</Tag>

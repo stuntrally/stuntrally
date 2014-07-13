@@ -20,9 +20,11 @@
 #include <MyGUI_Window.h>
 #include <MyGUI_ImageBox.h>
 #include <MyGUI_MultiListBox.h>
+#include "../tinyxml/tinyxml2.h"
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;
+using namespace tinyxml2;
 
 
 ///  Car list
@@ -234,7 +236,7 @@ void CGui::listCarChng(MultiList2* li, size_t pos)
 	}
 
 	changeCar();
-	UpdCarStatsTxt();
+	UpdCarStats();
 }	
 void CGui::changeCar()
 {
@@ -242,43 +244,151 @@ void CGui::changeCar()
 		pSet->gui.car[iCurCar] = sListCar;
 }
 
-///  car stats txt
-void CGui::UpdCarStatsTxt()
-{
-	string path;
-	//GetCarPath(&path, 0, 0, sListCar, true);
-	//path = path.substr(0, path.length()-4) + "_stats.txt";
-	path = PATHMANAGER::CarSim() + "/" + pSet->gui.sim_mode + "/cars/" + sListCar + "_stats.txt";
 
-	string txt(""), vals(""), s;
-	ifstream fi(path.c_str());
-	if (fi.good())
+///  load car stats xml
+//-----------------------------------------------------------------------------------------------------------
+void CGui::UpdCarStats()
+{
+	string path = PATHMANAGER::CarSim() + "/" + pSet->gui.sim_mode + "/cars/" + sListCar + "_stats.xml";
+	float f;
+	#define bar(n,sc)  f = std::min(1.f, (1.f - sc)) * 128.f;  barCarSt[n]->setImageCoord(IntCoord(f,0,128,16))
+
+	XMLDocument doc;
+	XMLError er = doc.LoadFile(path.c_str());
+	if (er != XML_SUCCESS)
 	{
-		int i = 0;
-		while (getline(fi, s))
-		{
-			if (i % 2 == 0)  txt += s + "\n";
-			else            vals += s + "\n";
-			//if (txt.find )
-			++i;
-		}
-		fi.close();
+		for (int i=0; i < iCarSt; ++i)	
+		{	txCarStTxt[i]->setCaption("");  txCarStVals[i]->setCaption("");  bar(i, 0.f);  }
+		return;
 	}
-	String ss = txt;
-	#define REP(s1,s2)  ss = StringUtil::replaceAll(ss, s1, s2)
-	REP("Mass", TR("#{Car_Mass}"));
-	REP("Max Torque", TR("#{Car_MaxTorque}"));
-	REP("Max Power", TR("#{Car_MaxPower}"));
-	REP("Top Speed", TR("#{Car_TopSpeed}"));
-	REP("Time 0 to", TR("#{Car_TimeTo}"));
-	REP("Stop time", TR("#{Car_StopTimeFrom}"));
-	REP("to 0 ", "");
-	txCarStatsTxt->setCaption(ss);
-	
-	//kg,Nm,at,rpm,bhp,kmh,s
-	ss = vals;
-	//REP("");
-	txCarStatsVals->setCaption(ss);
+	XMLElement* root = doc.RootElement();
+	if (!root)  return;
+
+	//  read xml
+	XMLElement* e;  const char* a;
+	float mass=0.f, comFront=0.f,  maxTrq=0.f, rpmMaxTq=0.f, maxPwr=0.f, rpmMaxPwr=0.f, bhpPerTon=0.f,
+		maxVel=0.f, tiMaxVel=0.f,  t0to60=0.f, t0to100=0.f, t0to160=0.f, t0to200=0.f,
+		stop60=0.f, stop100=0.f, stop160=0.f,  down100=0.f, down160=0.f, down200=0.f;
+
+	e = root->FirstChildElement("car");
+	if (e)
+	{	a = e->Attribute("mass");	if (a)  mass = s2r(a);
+		//a = e->Attribute("inertia");	if (a)  inert = s2v(a);
+	}
+	e = root->FirstChildElement("com");
+	if (e)
+	{	a = e->Attribute("frontPercent");	if (a)  comFront = s2r(a);
+		//a = e->Attribute("pos");	if (a)  com = s2v(a);
+		//a = e->Attribute("whf");	if (a)  whf = s2r(a);
+		//a = e->Attribute("whr");	if (a)  whr = s2r(a);
+	}
+	e = root->FirstChildElement("torque");
+	if (e)
+	{	a = e->Attribute("max");	if (a)  maxTrq = s2r(a);
+		a = e->Attribute("rpm");	if (a)  rpmMaxTq = s2r(a);
+		//a = e->Attribute("mul");	if (a)  mul = s2r(a);
+	}
+	e = root->FirstChildElement("power");
+	if (e)
+	{	a = e->Attribute("max");	if (a)  maxPwr = s2r(a);
+		a = e->Attribute("rpm");	if (a)  rpmMaxPwr = s2r(a);
+	}
+	e = root->FirstChildElement("bhpPerTon");
+	if (e)
+	{	a = e->Attribute("val");	if (a)  bhpPerTon = s2r(a);
+	}
+	e = root->FirstChildElement("top");
+	if (e)
+	{	a = e->Attribute("speed");	if (a)  maxVel = s2r(a);
+		a = e->Attribute("time");	if (a)  tiMaxVel = s2r(a);
+	}
+	/*e = root->FirstChildElement("quarterMile");
+	if (e)
+	{	a = e->Attribute("time");	if (a)  timeQM = s2r(a);
+		a = e->Attribute("vel");	if (a)  velAtQM = s2r(a);
+	}*/
+	e = root->FirstChildElement("accel");
+	if (e)
+	{	a = e->Attribute("t60");	if (a)  t0to60 = s2r(a);
+		a = e->Attribute("t100");	if (a)  t0to100 = s2r(a);
+		a = e->Attribute("t160");	if (a)  t0to160 = s2r(a);
+		a = e->Attribute("t200");	if (a)  t0to200 = s2r(a);
+	}
+	/*e = root->FirstChildElement("downForce");
+	if (e)
+	{	a = e->Attribute("d100");	if (a)  down100 = s2r(a);
+		a = e->Attribute("d160");	if (a)  down160 = s2r(a);
+		a = e->Attribute("d200");	if (a)  down200 = s2r(a);
+	}*/
+	e = root->FirstChildElement("stop");
+	if (e)
+	{	//a = e->Attribute("s160");	if (a)  stop160 = s2r(a);
+		a = e->Attribute("s100");	if (a)  stop100 = s2r(a);
+		//a = e->Attribute("s60");	if (a)  stop60 = s2r(a);
+	}
+
+	//  speed graph points
+	e = root->FirstChildElement("velGraph");
+	if (e)
+	{	std::vector<float> ttim,tkmh;	float t,v;
+		XMLElement* p = e->FirstChildElement("p");
+		while (p)
+		{	a = e->Attribute("t");  if (a) {  t = s2r(a);
+			a = e->Attribute("v");	if (a) {  v = s2r(a);
+				ttim.push_back(t);  tkmh.push_back(v);
+			}	}
+			p = p->NextSiblingElement("p");
+	}	}
+
+	//  todo upd graph ..
+
+	//  upd text  --------
+	bool kmh = !pSet->show_mph;  float k2m = 0.621371f;
+	String s[iCarSt], v[iCarSt];
+
+	s[0]= "#80E080"+ TR("#{Car_Mass}");
+	v[0]= "#90FF90"+ fToStr(mass,0,3) +TR(" #{UnitKg}");
+	bar(0, mass / 3000.f);
+	s[1]= "#B0E0B0"+ TR("#{Car_MassFront}");
+	v[1]= "#C0FFC0"+ fToStr(comFront,0,3) +"%";
+	bar(1, comFront / 100.f);
+
+	s[2]= "#E0C0A0"+ TR("#{Car_MaxTorque}");
+	v[2]= "#F0D0B0"+ fToStr(maxTrq,0,3) +TR(" #{UnitNm}");//  #{at} ")+ fToStr(rpmMaxTq,0,3) +TR(" #{UnitRpm} ");
+	bar(2, maxTrq / 900.f);
+	s[3]= "#E0B090"+ TR("#{Car_MaxPower}");
+	v[3]= "#F0C0A0"+ fToStr(maxPwr,0,3) +TR(" #{UnitBhp}");//  #{at} ")+ fToStr(rpmMaxPwr,0,3) +TR(" #{UnitRpm} ");
+	bar(3, maxPwr / 900.f);
+	s[4]= "#E0E0A0"+ TR("#{Car_BhpPerTon}");
+	v[4]= "#F0F0B0"+ fToStr(bhpPerTon,0,3);
+	bar(4, bhpPerTon / 600.f);
+
+	#define sVel(s,v)  \
+		if (kmh)  s += fToStr(v, 0,3) +TR(" #{UnitKmh}");  \
+		    else  s += fToStr(v*k2m, 0,3) +TR(" #{UnitMph}");
+
+	s[5]= "#80C0F0"+ TR("#{Car_TopSpeed}");
+	v[5]= "#90D0FF";  sVel(v[5], maxVel);  //v[5]+= TR("  #{at} ")+ fToStr(tiMaxVel,1,4) +TR(" #{UnitS} ");
+	bar(5, maxVel / 300.f);
+
+	s[6]= "#80C0F0"+ TR("#{Car_TimeTo} ");  sVel(s[6], 100.f);
+	v[6]= "#90D0FF"+ fToStr(t0to100,1,4) +TR(" #{UnitS} ");
+	bar(6, t0to100 / 8.f);
+
+	s[7]= "#80C0F0"+ TR("#{Car_TimeTo} ");  sVel(s[7], 160.f);
+	v[7]= "#90D0FF"+ fToStr(t0to160,1,4) +TR(" #{UnitS} ");
+	bar(7, t0to160 / 12.f);
+		  
+	s[8]= "#80C0F0"+ TR("#{Car_TimeTo} ");  sVel(s[8], 200.f);
+	v[8]= "#90D0FF"+ fToStr(t0to200,1,4) +TR(" #{UnitS} ");
+	bar(8, t0to200 / 18.f);
+		  
+	s[9]= "#80E0E0"+ TR("#{Car_StopTimeFrom} ");  sVel(s[9], 100.f);
+	v[9]= "#90F0F0"+ fToStr(stop100,1,4) +TR(" #{UnitS} ");
+	bar(9, stop100 / 5.f);
+
+	for (int i=0; i < iCarSt; ++i)	
+	{	txCarStTxt[i]->setCaption(s[i]);  txCarStVals[i]->setCaption(v[i]);  }
 }
 
 
