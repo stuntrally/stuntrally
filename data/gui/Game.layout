@@ -587,7 +587,7 @@
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="240 333 180 11" name="cb4">
 					<Property key="ImageTexture" value="stats_bar.png"/>
-					<Property key="Alpha" value="0.7"/>
+					<Property key="Alpha" value="0.8"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="16 332 200 14" name="cst4">
 					<Property key="TextAlign" value="Right Top"/>
@@ -599,7 +599,7 @@
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="240 349 180 11" name="cb5">
 					<Property key="ImageTexture" value="stats_bar.png"/>
-					<Property key="Alpha" value="0.8"/>
+					<Property key="Alpha" value="0.7"/>
 				</Widget>
                 <Widget type="TextBox" skin="TextBox" position="16 348 200 14" name="cst5">
 					<Property key="TextAlign" value="Right Top"/>

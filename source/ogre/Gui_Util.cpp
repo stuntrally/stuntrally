@@ -234,7 +234,7 @@ void CGui::listCarChng(MultiList2* li, size_t pos)
 
 		float v = std::max(0.f, 1.f - ci.speed/13.f);
 		barCarSpeed->setImageCoord(IntCoord(v*128.f,0,128,16));
-		barCarSpeed->setColour(Colour(1.f, 0.2f + 0.8f * v, v * 0.3f, 1.f));
+		barCarSpeed->setColour(Colour(1.f, 0.2f + 0.8f * v, v * 0.3f));
 	}
 
 	changeCar();
