@@ -231,8 +231,10 @@ void CGui::listCarChng(MultiList2* li, size_t pos)
 		txCarSpeed->setCaption(gcom->clrsDiff[std::min(7, (int)(ci.speed*0.9f))]+ toStr(ci.speed));
 		txCarType->setCaption(data->cars->colormap[ci.type]+ TR("#{CarType_"+ci.type+"}"));
 		txCarYear->setCaption(toStr(ci.year));
-		float v = (1.f - ci.speed/13.f) * 128.f;
-		barCarSpeed->setImageCoord(IntCoord(v,0,128,16));
+
+		float v = std::max(0.f, 1.f - ci.speed/13.f);
+		barCarSpeed->setImageCoord(IntCoord(v*128.f,0,128,16));
+		barCarSpeed->setColour(Colour(1.f, 0.2f + 0.8f * v, v * 0.3f, 1.f));
 	}
 
 	changeCar();
@@ -251,18 +253,20 @@ void CGui::UpdCarStats()
 {
 	string path = PATHMANAGER::CarSim() + "/" + pSet->gui.sim_mode + "/cars/" + sListCar + "_stats.xml";
 	float f;
-	#define bar(n,sc)  f = std::min(1.f, (1.f - sc)) * 128.f;  barCarSt[n]->setImageCoord(IntCoord(f,0,128,16))
+	#define  vis(i,v)  \
+		{  txCarStTxt[i]->setVisible(v);  txCarStVals[i]->setVisible(v);  barCarSt[i]->setVisible(v);  }
 
-	XMLDocument doc;
+	XMLDocument doc;  int i;
 	XMLError er = doc.LoadFile(path.c_str());
 	if (er != XML_SUCCESS)
 	{
-		for (int i=0; i < iCarSt; ++i)	
-		{	txCarStTxt[i]->setCaption("");  txCarStVals[i]->setCaption("");  bar(i, 0.f);  }
+		for (i=0; i < iCarSt; ++i)	vis(i,false);
 		return;
 	}
 	XMLElement* root = doc.RootElement();
 	if (!root)  return;
+
+	for (i=0; i < iCarSt; ++i)	vis(i,true);
 
 	//  read xml
 	XMLElement* e;  const char* a;
@@ -346,22 +350,26 @@ void CGui::UpdCarStats()
 	bool kmh = !pSet->show_mph;  float k2m = 0.621371f;
 	String s[iCarSt], v[iCarSt];
 
+	#define bar(n,sc, r,g,b)  \
+		f = std::max(0.f, (1.f - sc)) * 128.f;  barCarSt[n]->setImageCoord(IntCoord(f,0,128,16));  \
+		barCarSt[n]->setColour(Colour(r,g,b));
+
 	s[0]= "#80E080"+ TR("#{Car_Mass}");
 	v[0]= "#90FF90"+ fToStr(mass,0,3) +TR(" #{UnitKg}");
-	bar(0, mass / 3000.f);
+	bar(0, mass / 3000.f, 0.6,1.0,0.6);
 	s[1]= "#B0E0B0"+ TR("#{Car_MassFront}");
 	v[1]= "#C0FFC0"+ fToStr(comFront,0,3) +"%";
-	bar(1, comFront / 100.f);
+	bar(1, comFront / 100.f, 0.8,1.0,0.8);
 
 	s[2]= "#E0C0A0"+ TR("#{Car_MaxTorque}");
 	v[2]= "#F0D0B0"+ fToStr(maxTrq,0,3) +TR(" #{UnitNm}");//  #{at} ")+ fToStr(rpmMaxTq,0,3) +TR(" #{UnitRpm} ");
-	bar(2, maxTrq / 900.f);
+	bar(2, maxTrq / 900.f, 0.9,0.8,0.6);
 	s[3]= "#E0B090"+ TR("#{Car_MaxPower}");
 	v[3]= "#F0C0A0"+ fToStr(maxPwr,0,3) +TR(" #{UnitBhp}");//  #{at} ")+ fToStr(rpmMaxPwr,0,3) +TR(" #{UnitRpm} ");
-	bar(3, maxPwr / 900.f);
+	bar(3, maxPwr / 900.f, 0.9,0.7,0.5);
 	s[4]= "#E0E0A0"+ TR("#{Car_BhpPerTon}");
 	v[4]= "#F0F0B0"+ fToStr(bhpPerTon,0,3);
-	bar(4, bhpPerTon / 600.f);
+	bar(4, bhpPerTon / 600.f, 1.0,1.0,0.6);
 
 	#define sVel(s,v)  \
 		if (kmh)  s += fToStr(v, 0,3) +TR(" #{UnitKmh}");  \
@@ -369,25 +377,25 @@ void CGui::UpdCarStats()
 
 	s[5]= "#80C0F0"+ TR("#{Car_TopSpeed}");
 	v[5]= "#90D0FF";  sVel(v[5], maxVel);  //v[5]+= TR("  #{at} ")+ fToStr(tiMaxVel,1,4) +TR(" #{UnitS} ");
-	bar(5, maxVel / 300.f);
+	bar(5, maxVel / 300.f, 0.8,1.0,0.8);
 
 	s[6]= "#80C0F0"+ TR("#{Car_TimeTo} ");  sVel(s[6], 100.f);
 	v[6]= "#90D0FF"+ fToStr(t0to100,1,4) +TR(" #{UnitS} ");
-	bar(6, t0to100 / 8.f);
+	bar(6, t0to100 / 8.f, 0.8,1.0,1.0);
 
 	s[7]= "#80C0F0"+ TR("#{Car_TimeTo} ");  sVel(s[7], 160.f);
 	v[7]= "#90D0FF"+ fToStr(t0to160,1,4) +TR(" #{UnitS} ");
-	bar(7, t0to160 / 12.f);
+	bar(7, t0to160 / 17.f, 0.8,1.0,1.0);  vis(7, t0to160 > 0.f);
 		  
 	s[8]= "#80C0F0"+ TR("#{Car_TimeTo} ");  sVel(s[8], 200.f);
 	v[8]= "#90D0FF"+ fToStr(t0to200,1,4) +TR(" #{UnitS} ");
-	bar(8, t0to200 / 18.f);
+	bar(8, t0to200 / 25.f, 0.7,1.0,1.0);  vis(8, t0to200 > 0.f);
 		  
 	s[9]= "#80E0E0"+ TR("#{Car_StopTimeFrom} ");  sVel(s[9], 100.f);
 	v[9]= "#90F0F0"+ fToStr(stop100,1,4) +TR(" #{UnitS} ");
-	bar(9, stop100 / 5.f);
+	bar(9, stop100 / 5.f, 0.7,1.0,1.0);
 
-	for (int i=0; i < iCarSt; ++i)	
+	for (i=0; i < iCarSt; ++i)	
 	{	txCarStTxt[i]->setCaption(s[i]);  txCarStVals[i]->setCaption(v[i]);  }
 }
 

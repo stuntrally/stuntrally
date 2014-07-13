@@ -536,7 +536,7 @@
 					<UserString key="tip" value="#{TipCarDesc}"/>
 				</Widget>
 
-				<Widget type="ImageBox" skin="ImageBox" position="240 275 132 12" name="cb0">
+				<Widget type="ImageBox" skin="ImageBox" position="240 275 180 11" name="cb0">
 					<Property key="ImageTexture" value="stats_bar.png"/>
 					<Property key="Alpha" value="0.7"/>
 				</Widget>
@@ -548,7 +548,7 @@
 					<Property key="TextAlign" value="Left Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="240 289 132 12" name="cb1">
+				<Widget type="ImageBox" skin="ImageBox" position="240 289 180 11" name="cb1">
 					<Property key="ImageTexture" value="stats_bar.png"/>
 					<Property key="Alpha" value="0.7"/>
 				</Widget>
@@ -561,7 +561,7 @@
 					<Property key="FontName" value="font.small"/>
 				</Widget>
 
-				<Widget type="ImageBox" skin="ImageBox" position="240 309 132 12" name="cb2">
+				<Widget type="ImageBox" skin="ImageBox" position="240 309 180 11" name="cb2">
 					<Property key="ImageTexture" value="stats_bar.png"/>
 					<Property key="Alpha" value="0.7"/>
 				</Widget>
@@ -573,7 +573,7 @@
 					<Property key="TextAlign" value="Left Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="240 321 132 12" name="cb3">
+				<Widget type="ImageBox" skin="ImageBox" position="240 321 180 11" name="cb3">
 					<Property key="ImageTexture" value="stats_bar.png"/>
 					<Property key="Alpha" value="0.7"/>
 				</Widget>
@@ -585,7 +585,7 @@
 					<Property key="TextAlign" value="Left Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="240 333 132 12" name="cb4">
+				<Widget type="ImageBox" skin="ImageBox" position="240 333 180 11" name="cb4">
 					<Property key="ImageTexture" value="stats_bar.png"/>
 					<Property key="Alpha" value="0.7"/>
 				</Widget>
@@ -597,9 +597,9 @@
 					<Property key="TextAlign" value="Left Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="240 349 132 12" name="cb5">
+				<Widget type="ImageBox" skin="ImageBox" position="240 349 180 11" name="cb5">
 					<Property key="ImageTexture" value="stats_bar.png"/>
-					<Property key="Alpha" value="0.7"/>
+					<Property key="Alpha" value="0.8"/>
 				</Widget>
                 <Widget type="TextBox" skin="TextBox" position="16 348 200 14" name="cst5">
 					<Property key="TextAlign" value="Right Top"/>
@@ -610,9 +610,9 @@
 					<Property key="FontName" value="font.small"/>
 				</Widget>
 
-				<Widget type="ImageBox" skin="ImageBox" position="240 369 132 12" name="cb6">
+				<Widget type="ImageBox" skin="ImageBox" position="240 369 180 11" name="cb6">
 					<Property key="ImageTexture" value="stats_bar.png"/>
-					<Property key="Alpha" value="0.7"/>
+					<Property key="Alpha" value="0.8"/>
 				</Widget>
                 <Widget type="TextBox" skin="TextBox" position="16 368 200 14" name="cst6">
 					<Property key="TextAlign" value="Right Top"/>
@@ -622,9 +622,9 @@
 					<Property key="TextAlign" value="Left Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="240 381 132 12" name="cb7">
+				<Widget type="ImageBox" skin="ImageBox" position="240 381 180 11" name="cb7">
 					<Property key="ImageTexture" value="stats_bar.png"/>
-					<Property key="Alpha" value="0.7"/>
+					<Property key="Alpha" value="0.8"/>
 				</Widget>
                 <Widget type="TextBox" skin="TextBox" position="16 380 200 14" name="cst7">
 					<Property key="TextAlign" value="Right Top"/>
@@ -634,9 +634,9 @@
 					<Property key="TextAlign" value="Left Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="240 393 132 12" name="cb8">
+				<Widget type="ImageBox" skin="ImageBox" position="240 393 180 11" name="cb8">
 					<Property key="ImageTexture" value="stats_bar.png"/>
-					<Property key="Alpha" value="0.7"/>
+					<Property key="Alpha" value="0.8"/>
 				</Widget>
                 <Widget type="TextBox" skin="TextBox" position="16 392 200 14" name="cst8">
 					<Property key="TextAlign" value="Right Top"/>
@@ -646,9 +646,9 @@
 					<Property key="TextAlign" value="Left Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="240 409 132 12" name="cb9">
+				<Widget type="ImageBox" skin="ImageBox" position="240 409 180 11" name="cb9">
 					<Property key="ImageTexture" value="stats_bar.png"/>
-					<Property key="Alpha" value="0.7"/>
+					<Property key="Alpha" value="0.8"/>
 				</Widget>
                 <Widget type="TextBox" skin="TextBox" position="16 408 200 14" name="cst9">
 					<Property key="TextAlign" value="Right Top"/>
@@ -691,7 +691,7 @@
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="300 202 132 16" name="CarSpeedBar">
 					<Property key="ImageTexture" value="stats_bar.png"/>
-					<Property key="Alpha" value="0.7"/>
+					<!--<Property key="Alpha" value="0.7"/>-->
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="284 202 88 22" name="CarSpeed">
 					<Property key="TextColour" value="0.76 0.73 0.7"/>
