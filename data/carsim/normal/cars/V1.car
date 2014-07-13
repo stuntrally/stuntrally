@@ -70,6 +70,8 @@ dampPmul = 2.86
 alignTqP = 42, 42, 32
 alignTq  = 21, 21, 21
 pitchTq = 30
+rollTq = 0
+roll = 3
 
 hov_vz = 0.384
 hov_vsat = 0.98
@@ -84,7 +86,7 @@ hov_rise = 6000
 #  engine
 #---------------------------
 [ engine ]
-position = 0.04, 0.4, 0.3
+position = 0.0, 0.0, 0.0
 mass = 250.0
 rpm-limit = 6500
 inertia = 0.27
@@ -96,6 +98,7 @@ torque-val-mul = 0.83
 torque-curve-00 = 1000, 305
 torque-curve-01 = 7000, 400
 real-pow-tq-mul = 1.25
+sound-vol-mul = 0.3
 
 [ clutch ]
 max-torque-mul = 1.1

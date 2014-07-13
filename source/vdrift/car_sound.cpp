@@ -78,12 +78,13 @@ void CAR::GetSoundList(std::list <SOUNDSOURCE *> & li)
 		i = enginesounds.begin(); i != enginesounds.end(); ++i)
 		li.push_back(&i->second);
 
-	for (int i = 0; i < 4; ++i)  li.push_back(&tiresqueal[i]);
-	for (int i = 0; i < 4; ++i)  li.push_back(&grasssound[i]);
-	for (int i = 0; i < 4; ++i)  li.push_back(&gravelsound[i]);
-	for (int i = 0; i < 4; ++i)  li.push_back(&tirebump[i]);
+	int i;
+	for (i = 0; i < 4; ++i)  li.push_back(&tiresqueal[i]);
+	for (i = 0; i < 4; ++i)  li.push_back(&grasssound[i]);
+	for (i = 0; i < 4; ++i)  li.push_back(&gravelsound[i]);
+	for (i = 0; i < 4; ++i)  li.push_back(&tirebump[i]);
 
-	for (int i = 0; i < Ncrashsounds; ++i)
+	for (i = 0; i < Ncrashsounds; ++i)
 		li.push_back(&crashsound[i]);
 	li.push_back(&crashscrap);
 	li.push_back(&crashscreech);
@@ -91,7 +92,7 @@ void CAR::GetSoundList(std::list <SOUNDSOURCE *> & li)
 	li.push_back(&roadnoise);
 	li.push_back(&boostsnd);
 
-	for (int i = 0; i < Nwatersounds; ++i)
+	for (i = 0; i < Nwatersounds; ++i)
 		li.push_back(&watersnd[i]);
 	li.push_back(&mudsnd);
 	
@@ -162,7 +163,7 @@ void CAR::UpdateSounds(float dt)
 	{
 		pos = dynamics.GetPosition();  rot = dynamics.GetOrientation();
 		rpm = GetEngineRPM();
-		throttle = dynamics.GetEngine().GetThrottle();
+		throttle = dynamics.GetThrottle();
 		engPos = dynamics.GetEnginePosition();
 		speed = GetSpeed();
 		dynVel = dynamics.GetVelocity().Magnitude();
@@ -282,8 +283,15 @@ void CAR::UpdateSounds(float dt)
 		if (gain > loudest)  loudest = gain;
 		gainlist.push_back(std::pair <SOUNDSOURCE*, float> (&sound, gain));
 
-		float pitch = rpm / info.naturalrpm;
-		sound.SetPitch(pitch);
+		if (dynamics.hover)  //,sphere?
+		{
+			sound.SetPitch(1.0);
+			gain = total_gain = throttle;
+		}else
+		{	// car
+			float pitch = rpm / info.naturalrpm;
+			sound.SetPitch(pitch);
+		}
 		sound.SetPosition(engPos);
 	}
 
@@ -300,6 +308,7 @@ void CAR::UpdateSounds(float dt)
 
 		//if (i->second == loudest) std::cout << i->first->GetSoundBuffer().GetName() << ": " << i->second << std::endl;
 	}
+
 
 	// tire squeal
 	for (int i = 0; i < 4; i++)

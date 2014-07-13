@@ -90,7 +90,7 @@ public:
 
 // driveline
 	// driveline input
-	void StartEngine();					void ShiftGear(int value);
+	void StartEngine();					void ShiftGear(int value);		float GetThrottle() const;
 	void SetThrottle(float value);		void SetClutch(float value);
 	void SetBrake(float value);			void SetHandBrake(float value);
 	void SetAutoClutch(bool value);		void SetAutoShift(bool value);	void SetAutoRear(bool value);
@@ -177,7 +177,7 @@ public:
 		float engineForce, engineVelDec, brakeForce;
 		float dampAirRes, dampSide, dampUp, dampDn, dampPmul;
 		MATHVECTOR <float,3> alt, alp;  // align torque, pipe
-		float pitchTq;
+		float pitchTq, rollTq, roll;
 		float hov_vz, hov_vsat, hov_dsat;  // hover
 		float hov_dampP, hov_damp;
 		float hov_fall, hov_riseP, hov_rise;

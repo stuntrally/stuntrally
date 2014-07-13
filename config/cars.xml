@@ -7,7 +7,7 @@
 	<color type="Extreme"   color="#C898E8" />
 	<color type="Other"     color="#3080E0" />
 	<color type="Hover"     color="#A0FFA0" />
-	<color type="Spaceship" color="#A0A0C0" />
+	<color type="Spaceship" color="#C0C0D0" />
 
 	<!--global multipliers for car factors, magic - see App::GetRacePos-->
 	<global easy="0.94" norm="0.95" magic="0.010"/>

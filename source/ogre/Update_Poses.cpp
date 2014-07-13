@@ -152,6 +152,7 @@ void App::newPoses(float time)  // time only for camera update
 			fr.vel = cd.GetVelocity();
 			fr.angvel = cd.GetAngularVelocity();
 			fr.fDamage = cd.fDamage;
+			fr.hov_roll = cd.hov_roll;
 
 			rewind.AddFrame(fr, c);  // rec rewind
 		}

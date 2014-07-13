@@ -183,7 +183,11 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 
 	//  set car pos and rot
 	pMainNode->setPosition(posInfo.pos);
-	pMainNode->setOrientation(posInfo.rot);
+	if (posInfo.hov_roll != 0.f)
+	{	//  hover roll  vis only
+		pMainNode->setOrientation(posInfo.rot * Quaternion(Degree(posInfo.hov_roll),Vector3::UNIT_X));
+	}else
+		pMainNode->setOrientation(posInfo.rot);
 	
 	///()  grass sphere pos
 	Vector3 vx(1,0,0);  // car x dir

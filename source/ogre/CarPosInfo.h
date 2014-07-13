@@ -24,6 +24,7 @@ struct PosInfo
 	int whTerMtr[4],whRoadMtr[4];
 
 	float fboost,steer, percent;  char braking;
+	float hov_roll;
 
 	//  fluids
 	float whH[4],whAngVel[4], speed, whSteerAng[4];  int whP[4];

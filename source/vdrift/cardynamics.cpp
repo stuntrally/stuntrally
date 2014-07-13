@@ -82,6 +82,12 @@ void CARDYNAMICS::SetClutch(float value)
 	clutch.SetClutch(value);
 }
 
+float CARDYNAMICS::GetThrottle() const
+{
+	if (hover)  return hov_throttle;  //
+	return engine.GetThrottle();
+}
+
 void CARDYNAMICS::SetThrottle(float value)
 {
 	/// <><> damage reduce  from 50 %

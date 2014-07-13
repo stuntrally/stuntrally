@@ -77,7 +77,7 @@ void CARDYNAMICS::HoverPar::Default()
 
 	alp[0] = 42;  alp[1] = 42;  alp[2] = 32;
 	alt[0] = 21;  alt[1] = 21;  alt[2] = 21;
-	pitchTq = 30.f;
+	pitchTq = 30.f;  rollTq = 0.f;  roll = 3.f;
 
 	hov_vz = 0.384f;  hov_vsat = 0.98f;  hov_dsat = 0.9f;
 	hov_dampP = 0.5;  hov_damp = 3.6;
@@ -649,6 +649,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 		c.GetParam("hover.alignTqP", al);  hov.alp.Set(al[0],al[1],al[2]);
 		c.GetParam("hover.alignTq",  al);  hov.alt.Set(al[0],al[1],al[2]);
 		c.GetParam("hover.pitchTq",  hov.pitchTq);
+		c.GetParam("hover.rollTq",   hov.rollTq);		c.GetParam("hover.roll",     hov.roll);
 
 		c.GetParam("hover.hov_vz",	 hov.hov_vz);		c.GetParam("hover.hov_vsat", hov.hov_vsat);
 		c.GetParam("hover.hov_dsat", hov.hov_dsat);

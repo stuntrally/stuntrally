@@ -636,6 +636,7 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 
 		btVector3 av = chassis->getAngularVelocity();
 		chassis->applyTorque(av * -40);
+		hov_roll = 0.f;  //-
 		return;
 	}
 
@@ -672,8 +673,8 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 	MATHVECTOR<Dbl,3> av = GetAngularVelocity();
 
 	//  roll /  vis only
-	//float roll = sv[1] * -1000.f;
-	hov_roll = sv[1] * 5.f;  // max roll
+	float roll = sv[1] * hov.rollTq * -1000.f;  // tq
+	hov_roll = sv[1] * hov.roll;  // vis degrees
 	hov_roll = std::max(-90.f, std::min(90.f, hov_roll));
 
 
@@ -715,7 +716,7 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 
 	//  pitch torque )
 	Dbl pitch = (d < len && d2 < len) ? (d2 - d) * hov.pitchTq * 1000.f : 0.f;
-	MATHVECTOR<Dbl,3> tq(/*roll*/0, pitch, 0);
+	MATHVECTOR<Dbl,3> tq(roll, pitch, 0);
 	Orientation().RotateVector(tq);
 	ApplyTorque(tq);
 
