@@ -393,6 +393,7 @@ struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 				return 1.0;
 			
 			//  car ignores fluids (camera not)
+			//  hovercrafts treat fluids as solids
 			if (!bCamTilt && sd->type == ST_Fluid && !sd->pFluid->solid)
 				return 1.0;
 
@@ -444,7 +445,7 @@ bool COLLISION_WORLD::CastRay(
 	const btCollisionObject * caster,
 	COLLISION_CONTACT & contact,  //out
 	CARDYNAMICS* cd, int w, //out pCarDyn, nWheel
-	bool ignoreCars, bool camTilt, bool camDist) const
+	bool ignoreCars, bool camTilt/*or treat fluids as solid*/, bool camDist) const
 {
 	btVector3 from = ToBulletVector(origin);
 	btVector3 to = ToBulletVector(origin + direction * length);

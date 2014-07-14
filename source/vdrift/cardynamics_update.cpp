@@ -648,15 +648,15 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 	MATHVECTOR<Dbl,3> dn = GetDownVector();
 
 	const Dbl len = hov.hAbove, rlen = hov.hRayLen;
-	MATHVECTOR<Dbl,3> p = GetPosition();  // - dn * 0.1;
-	world->CastRay(p, dn, rlen, chassis, ct,  0,0, false, false);
+	MATHVECTOR<Dbl,3> p = GetPosition();  // - dn * 0.1;  // v fluids as solids
+	world->CastRay(p, dn, rlen, chassis, ct,  0,0, false, true);
 	float d = ct.GetDepth();
 
 	//  2nd in front for pitch
 	MATHVECTOR<Dbl,3> dx(1.4, 0, 0);
 	Orientation().RotateVector(dx);
-
-	world->CastRay(p+dx, dn, rlen, chassis, ct2,  0,0, false, false);
+	
+	world->CastRay(p+dx, dn, rlen, chassis, ct2,  0,0, false, true);
 	float d2 = ct2.GetDepth();
 
 	//  pipe..?
