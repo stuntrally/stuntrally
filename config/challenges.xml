@@ -560,7 +560,7 @@
 		<tracks>
 			<t name="A4-Snake"       passPoints="9" />
 			<t name="J22-Knotted"    passPoints="9" />
-			<t name="G6-Halfpipes"   passPoints="9" />
+			<t name="G6-Halfpipes"   passPoints="8" />
 		</tracks>
 	</challenge>
 
