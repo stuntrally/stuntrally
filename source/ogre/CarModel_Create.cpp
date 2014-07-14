@@ -61,8 +61,9 @@ CarModel::CarModel(int index, int colorId, eCarType type, const std::string& nam
 		ndWh[w] = 0;  ndWhE[w] = 0;  whTrail[w] = 0;  ndBrake[w] = 0;
 		whTemp[w] = 0.f;  whWidth[w] = 0.2f;
 	}
-	for (int i=0; i < 2; i++)
-		parBoost[i] = 0;
+	int i;
+	for (i=0; i < 2; ++i)  parBoost[i] = 0;
+	for (i=0; i < 2; ++i)  parThrust[i] = 0;
 	parHit = 0;
 
 	qFixWh[0].Rotate(2*PI_d,0,0,1);
@@ -77,6 +78,7 @@ void CarModel::Defaults()
 	{
 		driver_view[i] = 0.f;  hood_view[i] = 0.f;
 		interiorOffset[i] = 0.f;  boostOffset[i] = 0.f;  exhaustPos[i] = 0.f;
+		thrusterOfs[3],thrusterSizeZ;
 	}
 	brakePos.clear();
 	brakeClr = ColourValue(1,0,0);
@@ -84,6 +86,7 @@ void CarModel::Defaults()
 
 	bRotFix = false;
 	sBoostParName = "Boost";  boostSizeZ = 1.f;
+	sThrusterPar = "";  thrusterSizeZ = 0.f;
 
 	for (int w=0; w<4; ++w)
 	{
@@ -143,21 +146,22 @@ CarModel::~CarModel()
 	delete fCam;  fCam = 0;
 	
 	//  hide trails
-	for (int w=0; w<4; ++w)  if (whTrail[w]) {  whTemp[w] = 0.f;
+	int w,i;
+	for (w=0; w<4; ++w)  if (whTrail[w]) {  whTemp[w] = 0.f;
 		whTrail[w]->setVisible(false);	whTrail[w]->setInitialColour(0, 0.5,0.5,0.5, 0);	}
 
 	//  destroy cloned materials
-	for (int i=0; i<NumMaterials; ++i)
+	for (i=0; i<NumMaterials; ++i)
 		MaterialManager::getSingleton().remove(sMtr[i]);
 	
 	//  destroy par sys
-	for (int w=0; w < 4; ++w)
-	{	for (int p=0; p < PAR_ALL; ++p)
-			if (par[p][w]) {  mSceneMgr->destroyParticleSystem(par[p][w]);  par[p][w]=0;  }
+	for (w=0; w < 4; ++w)
+	{	for (i=0; i < PAR_ALL; ++i)
+			if (par[i][w]) {  mSceneMgr->destroyParticleSystem(par[i][w]);  par[i][w]=0;  }
 		if (ndBrake[w])  mSceneMgr->destroySceneNode(ndBrake[w]);
 	}
-	for (int i=0; i < 2; i++)
-		if (parBoost[i]) {  mSceneMgr->destroyParticleSystem(parBoost[i]);  parBoost[i]=0;  }
+	for (i=0; i < 2; ++i)  if (parBoost[i]) {  mSceneMgr->destroyParticleSystem(parBoost[i]);  parBoost[i]=0;  }
+	for (i=0; i < 2; ++i)  if (parThrust[i]) {  mSceneMgr->destroyParticleSystem(parThrust[i]);  parThrust[i]=0;  }
 	if (parHit) {  mSceneMgr->destroyParticleSystem(parHit);  parHit=0;  }
 						
 	if (brakes)  mSceneMgr->destroyBillboardSet(brakes);
@@ -198,6 +202,14 @@ void CarModel::LoadConfig(const std::string & pathCar)
 	cf.GetParam("model_ofs.boost-z", boostOffset[2]);
 	cf.GetParam("model_ofs.boost-size-z", boostSizeZ);
 	cf.GetParam("model_ofs.boost-name", sBoostParName);
+	
+	//  thruster  spaceship hover
+	cf.GetParam("model_ofs.thrust-x", thrusterOfs[0]);
+	cf.GetParam("model_ofs.thrust-y", thrusterOfs[1]);
+	cf.GetParam("model_ofs.thrust-z", thrusterOfs[2]);
+	cf.GetParam("model_ofs.thrust-size-z", thrusterSizeZ);
+	cf.GetParam("model_ofs.thrust-name", sThrusterPar);
+	
 
 	//~  brake flares
 	float pos[3];  bool ok=true;  int i=0;
@@ -496,8 +508,8 @@ void CarModel::Create()
 		for (int i=0; i < 2; i++)
 		{
 			String si = strI + "_" +toStr(i);
-			if (!parBoost[i])  {
-				parBoost[i] = mSceneMgr->createParticleSystem("Boost"+si, sBoostParName);
+			if (!parBoost[i])
+			{	parBoost[i] = mSceneMgr->createParticleSystem("Boost"+si, sBoostParName);
 				parBoost[i]->setVisibilityFlags(RV_Particles);
 				if (!pSet->boostFromExhaust || !manualExhaustPos)
 				{
@@ -513,8 +525,8 @@ void CarModel::Create()
 					vp += Vector3(boostOffset[0],boostOffset[1],boostOffset[2]);
 					SceneNode* nb = pMainNode->createChildSceneNode(bcenter+vp);
 					nb->attachObject(parBoost[i]);
-				}else{
-					// use exhaust pos values from car file
+				}else
+				{	// use exhaust pos values from car file
 					Vector3 pos;
 					if (i==0)
 						pos = Vector3(exhaustPos[0], exhaustPos[1], exhaustPos[2]);
@@ -529,6 +541,23 @@ void CarModel::Create()
 				parBoost[i]->getEmitter(0)->setEmissionRate(0);
 			}
 		}
+		///  spaceship thrusters ^  ------------------------
+		if (!sThrusterPar.empty())
+		{  int ii = thrusterSizeZ > 0.f ? 2 : 1;
+			for (int i=0; i < ii; i++)
+			{
+				String si = strI + "_" +toStr(i);
+				if (!parThrust[i])
+				{	parThrust[i] = mSceneMgr->createParticleSystem("Thrust"+si, sThrusterPar);
+					parThrust[i]->setVisibilityFlags(RV_Particles);
+
+					Vector3 vp = Vector3(thrusterOfs[0],thrusterOfs[1],
+						thrusterOfs[2] + (i-1)*2*thrusterSizeZ);
+					SceneNode* nb = pMainNode->createChildSceneNode(vp);
+					nb->attachObject(parThrust[i]);
+
+					parThrust[i]->getEmitter(0)->setEmissionRate(0);
+		}	}	}
 
 		///  wheel emitters  ------------------------
 		if (!ghost)

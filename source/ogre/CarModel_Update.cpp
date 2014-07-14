@@ -162,12 +162,13 @@ void CarModel::UpdTrackPercent()
 void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 {	
 	pReflect->camPosition = pMainNode->getPosition();
+	int w,p;
 
 	//  stop/resume par sys
 	float fa = pGame->pause ? 0.f : 1.f;
-	for (int w=0; w < 4; ++w)
+	for (w=0; w < 4; ++w)
 	{
-		for (int p=0; p < PAR_ALL; ++p)
+		for (p=0; p < PAR_ALL; ++p)
 			if (par[p][w])  par[p][w]->setSpeedFactor(fa);
 		if (w < 2 && parBoost[w])  parBoost[w]->setSpeedFactor(fa);
 		if (parHit)  parHit->setSpeedFactor(fa);
@@ -242,15 +243,24 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 
 	//  update particle emitters
 	//  boost
-	if (pSet->particles)
-	for (int i=0; i < 2; i++)
-	if (parBoost[i] && pCar)
+	if (pSet->particles && pCar)
 	{
 		/// <><> damage reduce
-		float dmg = pCar->dynamics.fDamage >= 80.f ? 0.f : std::max(0.f, 1.4f - pCar->dynamics.fDamage*0.01f);
-		float emitB = posInfo.fboost * 40.f * dmg;  // par
-		ParticleEmitter* pe = parBoost[i]->getEmitter(0);
-		pe->setEmissionRate(emitB);
+		int i;
+		for (i=0; i < 2; i++)  if (parBoost[i])
+		{
+			float dmg = pCar->dynamics.fDamage >= 80.f ? 0.f : std::max(0.f, 1.4f - pCar->dynamics.fDamage*0.01f);
+			float emitB = posInfo.fboost * 40.f * dmg;  // par
+			ParticleEmitter* pe = parBoost[i]->getEmitter(0);
+			pe->setEmissionRate(emitB);
+		}
+		for (i=0; i < 2; i++)  if (parThrust[i])  // spaceship thrusters
+		{
+			float dmg = 1.f - 0.5f * pCar->dynamics.fDamage*0.01f;
+			float emitT = posInfo.hov_throttle * 60.f * dmg;  // par
+			ParticleEmitter* pe = parThrust[i]->getEmitter(0);
+			pe->setEmissionRate(emitT);
+		}
 	}
 
 	//  world hit
@@ -271,7 +281,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	const float trlC = !sc->asphalt ? 0.14f : 0.f,  // const trail alpha
 		trlH = sc->ter ? 0.90f : 0.76f;  // vdr needs up (ter bumps), no ter  ..get from wheel contact ?rpl
 
-	for (int w=0; w < 4; ++w)
+	for (w=0; w < 4; ++w)
 	{
 		float wR = posInfo.whR[w];
 		#ifdef CAM_TILT_DBG  // cam debug test only
@@ -415,7 +425,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	UpdWhTerMtr();
 	
 	//  update brake meshes orientation
-	for (int w=0; w<4; ++w)
+	for (w=0; w<4; ++w)
 	{
 		if (ndBrake[w])
 		{
@@ -541,13 +551,13 @@ void CarModel::UpdParsTrails(bool visible)
 	for (int w=0; w < 4; ++w)
 	{
 		Ogre::uint8 grp = RQG_CarTrails;  //9=road  after glass
-		if (w < 2 &&
-			parBoost[w])	{	parBoost[w]->setVisible(vis);  parBoost[w]->setRenderQueueGroup(grp);  }
+		if (w < 2 && parBoost[w]) {  parBoost[w]->setVisible(vis);  parBoost[w]->setRenderQueueGroup(grp);  }
+		if (w < 2 && parThrust[w]) {  parThrust[w]->setVisible(vis);  parThrust[w]->setRenderQueueGroup(grp);  }
 		if (whTrail[w]){  whTrail[w]->setVisible(visible && pSet->trails);  whTrail[w]->setRenderQueueGroup(grp);  }
 		grp = RQG_CarParticles;
 		for (int p=0; p < PAR_ALL; ++p)
 			if (par[p][w]){  par[p][w]->setVisible(vis);  par[p][w]->setRenderQueueGroup(grp);  }
-		if (parHit && w==0)	{	parHit->setVisible(vis);     parHit->setRenderQueueGroup(grp);  }
+		if (parHit && w==0)	{  parHit->setVisible(vis);  parHit->setRenderQueueGroup(grp);  }
 	}
 }
 

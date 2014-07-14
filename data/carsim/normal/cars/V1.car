@@ -8,9 +8,9 @@ angular-damping = 0.0
 
 [ rot_drag ]
 roll  = 200.0
-pitch = 400.0
-yaw   = 500.0
-yaw2  = 2.0
+pitch = 200.0
+yaw   = 200.0
+yaw2  = 1.0
 
 [ flares ]
 brake-pos0 = 0.3,-0.9, -0.05
@@ -20,10 +20,16 @@ brake-color = 1, 0, 0
 
 [ model_ofs ]
 rot_fix = on
-boost-x = -0.4
+boost-x = -0.45
 boost-y = 0.13
-boost-z = -0.64
+boost-z = -0.63
 boost-size-z = 0.49
+boost-name = ThrusterV1s
+thrust-x = 1.03
+thrust-y = 0.065
+thrust-z = 0.015
+thrust-size-z = 0
+thrust-name = ThrusterV1
 exhaust-x = 2.2
 exhaust-y = 0.39
 exhaust-z = -0.5
@@ -177,8 +183,8 @@ handbrake = 3.9
 [ driver ]
 position = -0.3, 0.4, 0.2
 mass = 50.0
-view-position = 0.15, -0.4, 0.35
-hood-position = -0.55, 0, 0.46
+view-position = -0.52, 0.0, 0.14
+hood-position = -1.1, 0, 0.07
 
 
 #  aerodynamics

@@ -11,7 +11,7 @@ using namespace Ogre;
 PosInfo::PosInfo()
 	:bNew(false)  // not inited
 	,pos(0,-200,0), percent(0.f), braking(0)
-	,hov_roll(0.f)
+	,hov_roll(0.f), hov_throttle(0.f)
 	//,carY, camPos, camRot
 {	}
 
@@ -72,7 +72,7 @@ void PosInfo::FromRpl(const ReplayFrame* rf)
 	speed = rf->speed;
 	fboost = rf->fboost;  steer = rf->steer;
 	braking = rf->braking;  percent = rf->percent;
-	hov_roll = rf->hov_roll;
+	hov_roll = rf->hov_roll;  hov_throttle = rf->throttle;
 
 	fHitTime = rf->fHitTime;  fParIntens = rf->fParIntens;  fParVel = rf->fParVel;
 	vHitPos = rf->vHitPos;  vHitNorm = rf->vHitNorm;
@@ -112,7 +112,7 @@ void PosInfo::FromCar(CAR* pCar)
 	speed = pCar->GetSpeed();
 	fboost = cd->boostVal;	//posInfo.steer = cd->steer;
 	braking = cd->IsBraking();  //percent = outside
-	hov_roll = cd->hov_roll;
+	hov_roll = cd->hov_roll;  hov_throttle = cd->hov_throttle;
 	
 	fHitTime = cd->fHitTime;  fParIntens = cd->fParIntens;  fParVel = cd->fParVel;
 	vHitPos = cd->vHitPos;  vHitNorm = cd->vHitNorm;
@@ -146,8 +146,6 @@ void ReplayFrame::FromCar(const CAR* pCar)
 	const CARDYNAMICS& cd = pCar->dynamics;
 	pos = cd.GetPosition();
 	rot = cd.GetOrientation();
-	//if (cd.hover)
-	//	rot = rot * Quaternion(Degree(cd->hov_roll), Vector3::UNIT_X);
 	if (cd.sphere)  rot[0] = cd.sphereYaw; //o
 
 	//  wheels
