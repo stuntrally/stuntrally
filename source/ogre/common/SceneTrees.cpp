@@ -176,6 +176,7 @@ void CScene::CreateTrees()
 		#else
 		trees = new PagedGeometry(app->mCamera, sc->trPage);
 		#endif
+		bool imp = pSet->use_imposters || (!pSet->use_imposters && pSet->imposters_only);
 		
 		// create dir if not exist
 		boost::filesystem::create_directory(sCache);
@@ -187,7 +188,7 @@ void CScene::CreateTrees()
 			trees->addDetailLevel<WindBatchPage>(sc->trDist * pSet->trees_dist, 0);
 			//trees->addDetailLevel<BatchPage>	 (sc->trDist * pSet->trees_dist, 0);  // no wind
 		}
-		if (pSet->use_imposters)
+		if (imp)
 		{
 			trees->addDetailLevel<ImpostorPage>(sc->trDistImp * pSet->trees_dist, 0);
 			resMgr.addResourceLocation(trees->getTempDir(), "FileSystem", "BinFolder");
@@ -233,7 +234,7 @@ void CScene::CreateTrees()
 			if (!resMgr.resourceExistsInAnyGroup(file))
 				file = "sphere.mesh";  // if not found, put white sphere
 			else
-			if (pSet->use_imposters)  /// preload impostor textures
+			if (imp)  /// preload impostor textures
 			{
 				if (!resMgr.resourceExistsInAnyGroup(fpng))
 				{
@@ -422,7 +423,7 @@ void CScene::CreateTrees()
 				#endif
 			}
 		}
-		if (pSet->use_imposters)
+		if (imp)
 		{
 			resMgr.initialiseResourceGroup("BinFolder");
 			try  {
