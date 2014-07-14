@@ -94,11 +94,13 @@ class CarInfo
 {
 public:
 	std::string id, type, author;
+	bool car;
 
 	int n, speed, year, rating;
 	int rateuser, drivenlaps;  // todo: user info ...
 	
-	float easy, norm;  // time mul factors, for race postion, in sim modes
+	//  time mul factors, for race postion, in sim modes
+	float easy, norm;
 
 	CarInfo();
 };

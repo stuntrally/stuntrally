@@ -357,7 +357,7 @@ public:
 		txCarSpeed, txCarType, txCarYear,
 		txCarAuthor,txTrackAuthor;
 	Img barCarSpeed;
-	void UpdCarStats();
+	void UpdCarStats(bool car);
 	std::vector<Ogre::String> vsu; //CarStatsUnits
 
 	Img imgCar;  Ed carDesc;

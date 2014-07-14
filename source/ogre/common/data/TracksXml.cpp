@@ -168,7 +168,7 @@ bool TracksXml::LoadIni(std::string file)
 
 
 CarInfo::CarInfo()
-	:id("AA"), type("Other")
+	:id("AA"), type("Other"), car(true)
 	,n(-1), speed(5), year(2005), rating(5)
 	,easy(0.96f), norm(1.f), author("")
 {	}
@@ -210,6 +210,7 @@ bool CarsXml::LoadXml(std::string file)
 		CarInfo c;
 		a = eCar->Attribute("id");		if (a)  c.id = string(a);
 		a = eCar->Attribute("type");	if (a)  c.type = string(a);
+		a = eCar->Attribute("car");		if (a)  c.car = s2i(a) > 0;
 
 		a = eCar->Attribute("n");		if (a)  c.n = s2i(a);
 		a = eCar->Attribute("speed");	if (a)  c.speed = s2i(a);

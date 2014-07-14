@@ -223,9 +223,11 @@ void CGui::listCarChng(MultiList2* li, size_t pos)
 	carDesc->setCaption(TR("#{CarDesc_"+sListCar+"}"));
 
 	//  car info
+	bool car = true;
 	int id = data->cars->carmap[sListCar];
 	if (id > 0 && txCarSpeed && barCarSpeed)
 	{	const CarInfo& ci = data->cars->cars[id-1];
+		car = ci.car;
 
 		txCarAuthor->setCaption(ci.author);
 		txCarSpeed->setCaption(gcom->clrsDiff[std::min(7, (int)(ci.speed*0.9f))]+ toStr(ci.speed));
@@ -238,7 +240,7 @@ void CGui::listCarChng(MultiList2* li, size_t pos)
 	}
 
 	changeCar();
-	UpdCarStats();
+	UpdCarStats(car);
 }	
 void CGui::changeCar()
 {
@@ -249,7 +251,7 @@ void CGui::changeCar()
 
 ///  load car stats xml
 //-----------------------------------------------------------------------------------------------------------
-void CGui::UpdCarStats()
+void CGui::UpdCarStats(bool car)
 {
 	string path = PATHMANAGER::CarSim() + "/" + pSet->gui.sim_mode + "/cars/" + sListCar + "_stats.xml";
 	float f;
@@ -363,13 +365,13 @@ void CGui::UpdCarStats()
 
 	s[2]= "#E0C0A0"+ TR("#{Car_MaxTorque}");
 	v[2]= "#F0D0B0"+ fToStr(maxTrq,0,3) +TR(" #{UnitNm}");//  #{at} ")+ fToStr(rpmMaxTq,0,3) +TR(" #{UnitRpm} ");
-	bar(2, maxTrq / 900.f, 0.9,0.8,0.6);
+	bar(2, maxTrq / 900.f, 0.9,0.8,0.6);  vis(2,car);
 	s[3]= "#E0B090"+ TR("#{Car_MaxPower}");
 	v[3]= "#F0C0A0"+ fToStr(maxPwr,0,3) +TR(" #{UnitBhp}");//  #{at} ")+ fToStr(rpmMaxPwr,0,3) +TR(" #{UnitRpm} ");
-	bar(3, maxPwr / 900.f, 0.9,0.7,0.5);
+	bar(3, maxPwr / 900.f, 0.9,0.7,0.5);  vis(3,car);
 	s[4]= "#E0E0A0"+ TR("#{Car_BhpPerTon}");
 	v[4]= "#F0F0B0"+ fToStr(bhpPerTon,0,3);
-	bar(4, bhpPerTon / 600.f, 1.0,1.0,0.6);
+	bar(4, bhpPerTon / 600.f, 1.0,1.0,0.6);  vis(4,car);
 
 	#define sVel(s,v)  \
 		if (kmh)  s += fToStr(v, 0,3) +TR(" #{UnitKmh}");  \
