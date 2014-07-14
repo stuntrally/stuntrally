@@ -97,6 +97,9 @@ void CHud::Update(int carId, float time)
 		//  hud rpm,vel
 		float vel=0.f, rpm=0.f, clutch=1.f;  int gear=1;
 		GetVals(c,&vel,&rpm,&clutch,&gear);
+
+		if (!app->carModels[c]->bIsCar)
+			rpm = -1.f;  // hide rpm gauge
 		
 		//  update all mini pos tri
 		for (int i=0; i < cnt; ++i)
@@ -810,9 +813,11 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 	    
     //  rpm,vel needles
     float r = 0.55f, v = 0.85f;
+    bool bRpm = rpm >= 0.f;
 	if (main && h.moNeedles)
 	{
 		h.moNeedles->beginUpdate(0);
+		if (bRpm)
 		for (p=0; p<4; ++p)  {
 			h.moNeedles->position(
 				h.vcRpm.x + rx[p]*r,
@@ -822,7 +827,8 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 				h.vcVel.x + vx[p]*v,
 				h.vcVel.y + vy[p]*v, 0);  h.moNeedles->textureCoord(tn[p][0], tn[p][1]);  }
 		h.moNeedles->quad(0,1,3,2);
-		h.moNeedles->quad(4,5,7,6);
+		if (bRpm)
+			h.moNeedles->quad(4,5,7,6);
  		h.moNeedles->end();
 	}
 	//  rpm,vel gauges backgr
@@ -831,6 +837,7 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 		Real o = pSet->show_mph ? 0.5f : 0.f;
 	
 		h.moGauges->beginUpdate(0);
+		if (bRpm)
 		for (p=0; p<4; ++p)  {
 			h.moGauges->position(
 				h.vcRpm.x + tp[p][0]*h.fScale*r,
@@ -840,7 +847,8 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 				h.vcVel.x + tp[p][0]*h.fScale*v,
 				h.vcVel.y + tp[p][1]*h.fScale*asp*v, 0);  h.moGauges->textureCoord(tc[p][0]*0.5f+o, tc[p][1]*0.5f);  }
 		h.moGauges->quad(0,1,3,2);
-		h.moGauges->quad(4,5,7,6);
+		if (bRpm)
+			h.moGauges->quad(4,5,7,6);
 		h.moGauges->end();
 	}
 

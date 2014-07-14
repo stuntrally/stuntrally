@@ -39,7 +39,7 @@ using namespace Ogre;
 CarModel::CarModel(int index, int colorId, eCarType type, const std::string& name,
 	SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Camera* cam, App* app)
 	:mSceneMgr(sceneMgr), pSet(set), pGame(game), sc(s), mCamera(cam), pApp(app)
-	,iIndex(index), iColor(colorId % 6), sDirname(name), eType(type)
+	,iIndex(index), iColor(colorId % 6), sDirname(name), eType(type), bIsCar(true)
 	,fCam(0), pMainNode(0), pCar(0), terrain(0), ndSph(0), brakes(0)
 	,pReflect(0), color(0,1,0)
 	,hideTime(1.f), mbVisible(true), bLightMapEnabled(true), bBraking(false)
@@ -131,6 +131,7 @@ void CarModel::Load(int startId)
 		{	rot.Rotate(PI_d, 0,0,1);  rot[0] = -rot[0];  rot[1] = -rot[1];  }
 
 		pCar = pGame->LoadCar(pathCar, sDirname, pos, rot, true, false, eType == CT_REMOTE, iIndex);
+		bIsCar = !pCar->dynamics.hover && !pCar->dynamics.sphere;
 
 		if (!pCar)  LogO("Error creating car " + sDirname + "  path: " + pathCar);
 		else  pCar->pCarM = this;
@@ -539,8 +540,8 @@ void CarModel::Create()
 					nb->attachObject(parBoost[i]); 
 				}
 				parBoost[i]->getEmitter(0)->setEmissionRate(0);
-			}
-		}
+		}	}
+
 		///  spaceship thrusters ^  ------------------------
 		if (!sThrusterPar.empty())
 		{  int ii = thrusterSizeZ > 0.f ? 2 : 1;
@@ -598,8 +599,7 @@ void CarModel::Create()
 				whTrail[w]->setInitialColour(0, 0.1f,0.1f,0.1f, 0);
 				whTrail[w]->setColourChange(0, 0.0,0.0,0.0, /*fade*/0.08f * 1.f / pSet->trails_len);
 				whTrail[w]->setInitialWidth(0, 0.f);
-			}
-		}
+		}	}
 		UpdParsTrails();
 	}
 

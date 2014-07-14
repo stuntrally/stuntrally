@@ -140,7 +140,7 @@ public:
 	void Update(int carId, float time);
 
 	//  update internal
-	void UpdRot(int baseCarId, int carId, float vel, float rpm);
+	void UpdRot(int baseCarId, int carId, float vel, float rpm);  // rpm < 0.f to hide
 	void GetVals(int id, float* vel, float* rpm, float* clutch, int* gear);
 	void UpdMiniTer(), UpdDbgTxtClr();
 
