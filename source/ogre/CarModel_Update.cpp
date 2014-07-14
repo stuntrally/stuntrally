@@ -162,15 +162,16 @@ void CarModel::UpdTrackPercent()
 void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 {	
 	pReflect->camPosition = pMainNode->getPosition();
-	int w,p;
+	int w,i;
 
 	//  stop/resume par sys
 	float fa = pGame->pause ? 0.f : 1.f;
 	for (w=0; w < 4; ++w)
 	{
-		for (p=0; p < PAR_ALL; ++p)
-			if (par[p][w])  par[p][w]->setSpeedFactor(fa);
+		for (i=0; i < PAR_ALL; ++i)
+			if (par[i][w])  par[i][w]->setSpeedFactor(fa);
 		if (w < 2 && parBoost[w])  parBoost[w]->setSpeedFactor(fa);
+		if (w < 2 && parThrust[w])  parThrust[w]->setSpeedFactor(fa);
 		if (parHit)  parHit->setSpeedFactor(fa);
 	}
 
@@ -242,19 +243,19 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		
 
 	//  update particle emitters
-	//  boost
 	if (pSet->particles && pCar)
 	{
-		/// <><> damage reduce
-		int i;
+		//  boost
 		for (i=0; i < 2; i++)  if (parBoost[i])
 		{
+			/// <><> damage reduce
 			float dmg = pCar->dynamics.fDamage >= 80.f ? 0.f : std::max(0.f, 1.4f - pCar->dynamics.fDamage*0.01f);
 			float emitB = posInfo.fboost * 40.f * dmg;  // par
 			ParticleEmitter* pe = parBoost[i]->getEmitter(0);
 			pe->setEmissionRate(emitB);
 		}
-		for (i=0; i < 2; i++)  if (parThrust[i])  // spaceship thrusters
+		//  spaceship thrusters
+		for (i=0; i < 2; i++)  if (parThrust[i])
 		{
 			float dmg = 1.f - 0.5f * pCar->dynamics.fDamage*0.01f;
 			float emitT = posInfo.hov_throttle * 60.f * dmg;  // par
