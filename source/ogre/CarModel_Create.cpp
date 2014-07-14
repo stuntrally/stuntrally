@@ -131,7 +131,7 @@ void CarModel::Load(int startId)
 		{	rot.Rotate(PI_d, 0,0,1);  rot[0] = -rot[0];  rot[1] = -rot[1];  }
 
 		pCar = pGame->LoadCar(pathCar, sDirname, pos, rot, true, false, eType == CT_REMOTE, iIndex);
-		bIsCar = !pCar->dynamics.hover && !pCar->dynamics.sphere;
+		bIsCar = !(pCar->dynamics.hover || pCar->dynamics.sphere);
 
 		if (!pCar)  LogO("Error creating car " + sDirname + "  path: " + pathCar);
 		else  pCar->pCarM = this;

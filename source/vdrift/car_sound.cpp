@@ -346,9 +346,11 @@ void CAR::UpdateSounds(float dt)
 	//  wind
 	{
 		float gain = dynVel;
-		if (gain < 0)	gain = -gain;
-		gain *= 0.02;	gain *= gain;
-		if (gain > 1.0)	gain = 1.0;
+		if (dynamics.hover)   gain *= 0.7f;
+		//if (dynamics.sphere)  gain *= 0.9f;
+		if (gain < 0.f)	gain = -gain;
+		gain *= 0.02f;	gain *= gain;
+		if (gain > 1.f)	gain = 1.f;
 		roadnoise.SetGain(gain * pSet->vol_env);
 		roadnoise.SetPosition(engPos); //
 		//std::cout << gain << std::endl;
