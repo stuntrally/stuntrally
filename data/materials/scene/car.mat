@@ -754,6 +754,7 @@ material V1_interior
 {
 	parent car_interior
 	diffuseMap V1_interior.png
+	specMap V1_interior_spec.png
 	ambient 0.9 0.9 0.9
 	diffuse 0.9 0.9 0.9
 	specular 1.0 1.0 1.0 6
