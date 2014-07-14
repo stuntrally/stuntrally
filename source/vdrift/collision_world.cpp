@@ -387,16 +387,19 @@ struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 					
 		//  no other cars collision (for wheel raycasts)
 		ShapeData* sd = (ShapeData*)obj->getUserPointer();
-		if (bIgnoreCars && sd && sd->type == ST_Car)
-			return 1.0;
-		
-		//  car ignores fluids (camera not)
-		if (!bCamTilt && sd && sd->type == ST_Fluid)
-			return 1.0;
+		if (sd)
+		{
+			if (bIgnoreCars && sd->type == ST_Car)
+				return 1.0;
+			
+			//  car ignores fluids (camera not)
+			if (!bCamTilt && sd->type == ST_Fluid && !sd->pFluid->solid)
+				return 1.0;
 
-		//  always ignore wheel triggers
-		if (sd && sd->type == ST_Wheel)  // && (obj->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE))
-			return 1.0;
+			//  always ignore wheel triggers
+			if (sd->type == ST_Wheel)  // && (obj->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE))
+				return 1.0;
+		}
 
 		//  cam ingores dynamic objects (car not)
 		if (bCamTilt && !obj->isStaticObject())
@@ -511,6 +514,7 @@ bool COLLISION_WORLD::CastRay(
 				//case SU_RoadWall: //case SU_RoadColumn:
 				//case SU_Vegetation: case SU_Border:
 				//case SU_ObjectStatic: //case SU_ObjectDynamic:
+				//  fluids.. ?
 				default:
 				{
 					int id = td.layerRoad.surfId;

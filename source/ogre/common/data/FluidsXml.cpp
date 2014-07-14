@@ -11,7 +11,7 @@ FluidParams::FluidParams()
 	,bWhForce(false), whMaxAngVel(100.f), whSpinDamp(10)
 	,whForceLong(30.f), whForceUp(50.f), whSteerMul(1.f)
 	,bumpFqX(20.f), bumpFqY(30.f),bumpAmp(0.2f), bumpAng(0.5f)
-	,idParticles(0), fDamage(0.f)
+	,idParticles(0), fDamage(0.f), solid(false)
 {	}
 
 
@@ -61,6 +61,7 @@ bool FluidsXml::LoadXml(std::string file)
 		
 		a = eFl->Attribute("idParticles");	if (a)  fp.idParticles = s2i(a);
 		a = eFl->Attribute("fDamage");		if (a)  fp.fDamage = s2r(a);
+		a = eFl->Attribute("solid");		if (a)  fp.solid = s2i(a) > 0;
 		//
 
 		fls.push_back(fp);

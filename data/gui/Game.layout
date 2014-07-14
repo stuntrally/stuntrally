@@ -728,7 +728,7 @@
 						<Property key="Caption" value="#C0E0FF#{Color}"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 574 112" name="TabTrack">
-						<Property key="Caption" value="#FFE0C0#{Adjust}"/>
+						<Property key="Caption" value="#80E0F0#{Adjust}"/>
 
 						<Widget type="ImageBox" skin="ImageBox" position="160 2 472 8">
 							<Property key="ImageTexture" value="hue_bar.png"/>

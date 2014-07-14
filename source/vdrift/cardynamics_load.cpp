@@ -631,7 +631,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 	}
 
 	//  hover params
-	if (hover /*|| sphere*/)
+	if (hover || sphere)
 	{
 		c.GetParam("hover.hAbove",		 hov.hAbove);		c.GetParam("hover.hRayLen",		 hov.hRayLen);
 										 

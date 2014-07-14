@@ -92,9 +92,13 @@ void CScene::CreateBltFluids()
 		btCollisionObject* bco = new btCollisionObject();
 		bco->setActivationState(DISABLE_SIMULATION);
 		bco->setCollisionShape(bshp);	bco->setWorldTransform(tr);
-		//bco->setFriction(shp->friction);	bco->setRestitution(shp->restitution);
-		bco->setCollisionFlags(bco->getCollisionFlags() |
-			/*btCollisionObject::CF_STATIC_OBJECT |*/ btCollisionObject::CF_NO_CONTACT_RESPONSE/**/);
+
+		const FluidParams& fp = sc->pFluidsXml->fls[fb.id];
+		if (!fp.solid)  // fluid
+			bco->setCollisionFlags(bco->getCollisionFlags() |
+				/*btCollisionObject::CF_STATIC_OBJECT |*/ btCollisionObject::CF_NO_CONTACT_RESPONSE/**/);
+		else  // solid
+		{	bco->setFriction(0.6f);  bco->setRestitution(0.f);  }  //par?..
 		
 		bco->setUserPointer(new ShapeData(ST_Fluid, 0, &fb));  ///~~
 		#ifndef SR_EDITOR
