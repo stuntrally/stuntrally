@@ -207,23 +207,23 @@ void App::newPerfTest(float time)
 						co.SetAttribute("frontPercent",	toStrC(comFrontPercent) );
 						s = fToStr(com[0],3,5)+" "+fToStr(com[1],3,5)+" "+fToStr(com[2],3,5);
 						co.SetAttribute("pos",		s.c_str());
-						co.SetAttribute("whf",		toStrC(whf));
-						co.SetAttribute("whr",		toStrC(whr));
+						co.SetAttribute("whf",		toStrC(Ogre::Real(whf)));
+						co.SetAttribute("whr",		toStrC(Ogre::Real(whr)));
 					root.InsertEndChild(co);
 
 					TiXmlElement tq("torque");
-						tq.SetAttribute("max",		toStrC(maxTrq*m) );
+						tq.SetAttribute("max",		toStrC(Ogre::Real(maxTrq*m)) );
 						tq.SetAttribute("rpm",		toStrC(rpmMaxTq) );
-						tq.SetAttribute("mul",		toStrC(m) );
+						tq.SetAttribute("mul",		toStrC(Ogre::Real(m)) );
 					root.InsertEndChild(tq);
 
 					TiXmlElement pw("power");
-						pw.SetAttribute("max",		toStrC(maxPwr*m) );
+						pw.SetAttribute("max",		toStrC(Ogre::Real(maxPwr*m)) );
 						pw.SetAttribute("rpm",		toStrC(rpmMaxPwr) );
 					root.InsertEndChild(pw);
 
 					TiXmlElement bh("bhpPerTon");
-						bh.SetAttribute("val",		toStrC(bhpPerTon) );
+						bh.SetAttribute("val",		toStrC(Ogre::Real(bhpPerTon)) );
 					root.InsertEndChild(bh);
 
 					TiXmlElement tp("top");
