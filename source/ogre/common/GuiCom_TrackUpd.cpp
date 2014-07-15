@@ -228,24 +228,21 @@ void CGui::edRplFind(EditPtr ed)
 
 //  view change
 //-----------------------------------------------------------------------------------------------------------
-void CGuiCom::btnTrkView1(WP wp)
-{
-	pSet->tracks_view = 0;  ChangeTrackView();
-}
-void CGuiCom::btnTrkView2(WP wp)
-{
-	pSet->tracks_view = 1;  ChangeTrackView();
-}
+#ifndef SR_EDITOR
+void CGui::btnCarView1(WP wp) {  pSet->cars_view = 0;  gcom->updTrkListDim();  }
+void CGui::btnCarView2(WP wp) {  pSet->cars_view = 1;  gcom->updTrkListDim();  }
+#endif
+
+void CGuiCom::btnTrkView1(WP wp) {  pSet->tracks_view = 0;  ChangeTrackView();  }
+void CGuiCom::btnTrkView2(WP wp) {  pSet->tracks_view = 1;  ChangeTrackView();  }
 
 void CGuiCom::ChangeTrackView()
 {
 	bool full = pSet->tracks_view;
 
 	if (!imgPrv[0])  return;
-	imgPrv[0]->setVisible(!full);
-	trkDesc[0]->setVisible(!full);
-	imgTrkIco1->setVisible(full);
-	imgTrkIco2->setVisible(full);
+	imgPrv[0]->setVisible(!full);   imgTrkIco1->setVisible(full);
+	trkDesc[0]->setVisible(!full);	imgTrkIco2->setVisible(full);
 
 	updTrkListDim();  // change size, columns
 }
@@ -253,7 +250,8 @@ void CGuiCom::ChangeTrackView()
 //  adjust list size, columns
 void CGuiCom::updTrkListDim()
 {
-	//  tracks list  ----------
+	//  tracks list
+	//-------------------------------
 	if (!trkList)  return;
 	bool full = pSet->tracks_view;
 
@@ -265,8 +263,8 @@ void CGuiCom::updTrkListDim()
 
 	for (c=0; c < cnt; ++c)
 	{
-		int w = c==cnt-1 ? 18 : (full || c==0 || c==cnt-1 ?
-			float(colTrk[c]) / sum * 0.65/*width*/ * wi.width * 0.97/*frame*/ : 0);
+		float wf = float(colTrk[c]) / sum * 0.65/*width*/ * wi.width * 0.97/*frame*/;
+		int w = c==cnt-1 ? 18 : (full || c==0 || c==cnt-1 ? wf : 0);
 		trkList->setColumnWidthAt(c, w);
 		sw += w;
 		if (c == 4)  wico = w;
@@ -284,20 +282,24 @@ void CGuiCom::updTrkListDim()
 	#endif
 		trkList->setVisible(true);
 
-	//  car list  ----------
+	//  car list
+	//-------------------------------
 	#ifndef SR_EDITOR
+	full = pSet->cars_view;
+
 	sum = 0;  sw = 0;  cnt = app->gui->carList->getColumnCount();
 	for (c=0; c < cnt; ++c)  sum += app->gui->colCar[c];
 
 	for (c=0; c < cnt; ++c)
 	{
-		int w = (c==cnt-1) ? 18 : (float(app->gui->colCar[c]) / sum * 0.22/*width*/ * wi.width * 0.97/*frame*/);
+		float wf = float(app->gui->colCar[c]) / sum * 0.23/*width*/ * wi.width * 0.97/*frame*/;
+		int w = c==cnt-1 ? (full ? 18 : 36) : (full || c < 2 || c==cnt-1 ? wf : 0);
 		app->gui->carList->setColumnWidthAt(c, w);
 		sw += w;
 	}
 
-	xt = 0.018*wi.width;  yt = 0.024*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
-	app->gui->carList->setCoord(xt, yt, sw + 8/*frame*/, 0.41/*height*/*wi.height);
+	xt = 0.018*wi.width;  yt = 0.0242*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
+	app->gui->carList->setCoord(xt, yt, sw + 8/*frame*/, 0.411/*height*/*wi.height);
 	#endif
 	
 	#ifndef SR_EDITOR

@@ -57,7 +57,7 @@ String CGuiCom::GetSceneryColor(String name)
 
 //  track difficulties colors from value
 const String CGuiCom::clrsDiff[9] =  // difficulty
-	{"#60C0FF", "#00FF00", "#60FF00", "#C0FF00", "#FFFF00", "#FFC000", "#FF6000", "#FF4040", "#B060B0"};
+	{"#60C0FF", "#00FF00", "#60FF00", "#C0FF00", "#FFFF00", "#FFC000", "#FF6000", "#FF4040", "#FF7090"};
 const String CGuiCom::clrsRating[6] =  // rating
 	{"#808080", "#606060", "#7090A0", "#60C8D8", "#A0D0F0", "#E0F0FF"};
 const String CGuiCom::clrsLong[10] =  // long
@@ -98,7 +98,7 @@ void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 const int wi = 26;  // track detailed
 const int CGuiCom::colTrk[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 24};
 #ifndef SR_EDITOR
-const int CGui::colCar[16] = {34, 17, 35, 40, 20};  // car
+const int CGui::colCar[16] = {34, 27, 37, 52, 24};  // car
 const int CGui::colCh [16] = {30, 180, 120, 50, 80, 80, 60, 40};  // champs
 const int CGui::colChL[16] = {36, 180, 90, 100, 50, 60, 60, 60, 50};  // challs
 const int CGui::colSt [16] = {30, 170, 100, 90, 50, 80, 70};  // stages

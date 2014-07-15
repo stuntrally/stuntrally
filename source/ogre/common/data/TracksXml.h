@@ -96,7 +96,8 @@ public:
 	std::string id, type, author;
 	bool car;
 
-	int n, speed, year, rating;
+	float speed;
+	int n, year, rating;
 	int rateuser, drivenlaps;  // todo: user info ...
 	
 	//  time mul factors, for race postion, in sim modes

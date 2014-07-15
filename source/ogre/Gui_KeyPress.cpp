@@ -376,7 +376,8 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 	{
 		bPerfTest = ctrl;  // ctrl-F5 start perf test
 		if (bPerfTest)
-		{	pSet->gui.track = "Test10-FlatPerf";
+		{	gui->BackFromChs();
+			pSet->gui.track = "Test10-FlatPerf";
 			pSet->gui.track_user = false;  }
 		iPerfTestStage = PT_StartWait;
 		NewGame();  return;

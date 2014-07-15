@@ -347,6 +347,7 @@ public:
 
 	Mli2 carList;
 	void listCarChng(Mli2, size_t);
+	void btnCarView1(WP), btnCarView2(WP);
 
 	void changeCar(), changeTrack();
 

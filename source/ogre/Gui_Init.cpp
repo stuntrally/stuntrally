@@ -37,7 +37,7 @@ void CGui::InitGui()
 
 	//  fonts
 	gcom->CreateFonts();
-	
+
 	//  new widgets
 	FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
 	FactoryManager::getInstance().registerFactory<Slider>("Widget");
@@ -234,7 +234,7 @@ void CGui::InitGui()
 	ck= &ckCarDbgBars;	ck->Init("CarDbgBars",  &pSet->car_dbgbars);   Cev(HudShow);
 	ck= &ckCarDbgTxt;	ck->Init("CarDbgTxt",   &pSet->car_dbgtxt);    Cev(HudShow);
 	ck= &ckCarDbgSurf;	ck->Init("CarDbgSurf",  &pSet->car_dbgsurf);   Cev(HudShow);
-	
+
 	ck= &ckTireVis;		ck->Init("CarTireVis",  &pSet->car_tirevis);   Cev(HudCreate);
 	ck= &ckGraphs;		ck->Init("Graphs",		&pSet->show_graphs);   Cev(Graphs);
 
@@ -245,13 +245,13 @@ void CGui::InitGui()
 	//  car setup  todo: for each player ..
 	Chk("CarABS",  chkAbs, pSet->abs[0]);  bchAbs = bchk;
 	Chk("CarTCS",  chkTcs, pSet->tcs[0]);  bchTcs = bchk;
-	
+
 	ck= &ckCarGear;		ck->Init("CarGear",		&pSet->autoshift);  Cev(Gear);
 	ck= &ckCarRear;		ck->Init("CarRear",		&pSet->autorear);   Cev(Gear);
 	ck= &ckCarRearInv;	ck->Init("CarRearThrInv",&pSet->rear_inv);  Cev(Gear);
 
 	TabPtr tTires = fTab("tabCarTires");  Tev(tTires, TireSet);
-	
+
 	sv= &svSSSEffect;		sv->Init("SSSEffect",		&f, 0.f, 1.f);
 	sv= &svSSSVelFactor;	sv->Init("SSSVelFactor",	&f, 0.f, 2.f);
 	sv= &svSteerRangeSurf;	sv->Init("SteerRangeSurf",	&f, 0.3f, 1.3f);
@@ -300,7 +300,7 @@ void CGui::InitGui()
 	//  split
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
 	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
-	
+
 	ck= &ckSplitVert;	ck->Init("chkSplitVertically", &pSet->split_vertically);
 	Chk("chkStartOrderRev", chkStartOrd, pSet->gui.start_order);
 	valLocPlayers = fTxt("valLocPlayers");
@@ -330,7 +330,7 @@ void CGui::InitGui()
 	ck= &ckDevKeys;		ck->Init("DevKeys",		&pSet->dev_keys);
 	ck= &ckScreenPng;   ck->Init("ScreenPng",   &pSet->screen_png);
 
-	
+
 	//  effects
 	ck= &ckAllEffects;	ck->Init("AllEffects",	&pSet->all_effects);  Cev(AllEffects);
 	ck= &ckBoostFOV;	ck->Init("BoostFOV",	&pSet->boost_fov);
@@ -338,14 +338,14 @@ void CGui::InitGui()
 	ck= &ckBloom;		ck->Init("Bloom",		&pSet->bloom);  Cev(EffUpd);
 	sv= &svBloomInt;	sv->Init("BloomInt",	&pSet->bloom_int);   sv->DefaultF(0.13f);
 	sv= &svBloomOrig;	sv->Init("BloomOrig",	&pSet->bloom_orig);	 sv->DefaultF(0.91f);
-	
+
 	ck= &ckBlur;		ck->Init("MotionBlur",	&pSet->blur);  Cev(EffUpdShd);
 	sv= &svBlurIntens;	sv->Init("BlurIntens",	&pSet->blur_int);	sv->DefaultF(0.4f);
 
 	ck= &ckSSAO;		ck->Init("SSAO",		&pSet->ssao);  Cev(EffUpdShd);
 	ck= &ckSoftPar;		ck->Init("SoftParticles",&pSet->softparticles);  Cev(EffUpdShd);
 	ck= &ckGodRays;		ck->Init("GodRays",		&pSet->godrays);  Cev(EffUpdShd);
-	
+
 	ck= &ckDoF;			ck->Init("DepthOfField",&pSet->dof);  Cev(EffUpdShd);
 	sv= &svDofFocus;	sv->Init("DofFocus",	&pSet->dof_focus, 0.f, 2000.f, 2.f, 0,3);	sv->DefaultF(100.f);
 	sv= &svDofFar;		sv->Init("DofFar",		&pSet->dof_far,   0.f, 2000.f, 2.f, 0,4);	sv->DefaultF(1000.f);
@@ -360,8 +360,8 @@ void CGui::InitGui()
 	sv= &svHDRBloomOrig;	sv->Init("HDRBloomOrig",	&pSet->hdrBloomorig);  sv->DefaultF(0.34f);
 	sv= &svHDRVignRadius;	sv->Init("HDRVignRadius",	&pSet->vignRadius, 0.f, 10.f);  sv->DefaultF(2.85f);
 	sv= &svHDRVignDark;		sv->Init("HDRVignDark",		&pSet->vignDarkness);  sv->DefaultF(0.34f);
-	
-	
+
+
 	//  replays  ------------------------------------------------------------
 	Btn("RplLoad",   btnRplLoad);    Btn("RplSave",   btnRplSave);
 	Btn("RplDelete", btnRplDelete);  Btn("RplRename", btnRplRename);
@@ -370,7 +370,7 @@ void CGui::InitGui()
 	ck= &ckRplBestOnly;		ck->Init("RplChkBestOnly",	&pSet->rpl_bestonly);
 	ck= &ckRplGhost;		ck->Init("RplChkGhost",		&pSet->rpl_ghost);
 	ck= &ckRplParticles;	ck->Init("RplChkParticles",	&pSet->rpl_ghostpar);
-		   
+
 	ck= &ckRplRewind;		ck->Init("RplChkRewind",	&pSet->rpl_ghostrewind);
 	ck= &ckRplGhostOther;	ck->Init("RplChkGhostOther",&pSet->rpl_ghostother);
 	ck= &ckRplTrackGhost;	ck->Init("RplChkTrackGhost",&pSet->rpl_trackghost);
@@ -383,21 +383,21 @@ void CGui::InitGui()
 	btn = pSet->rpl_listview == 0 ? rbRplAll : rbRplCur;
 	if (btn)  btn->setStateSelected(true);
 
-	
-    if (app->mWndRpl)
+
+	if (app->mWndRpl)
 	{	//  replay controls
 		Btn("RplToStart", btnRplToStart);  Btn("RplToEnd", btnRplToEnd)
 		Btn("RplPlay", btnRplPlay);  btRplPl = btn;
 		btn = fBtn("RplBack");		btn->eventMouseButtonPressed += newDelegate(this, &CGui::btnRplBackDn);  btn->eventMouseButtonReleased += newDelegate(this, &CGui::btnRplBackUp);
 		btn = fBtn("RplForward");	btn->eventMouseButtonPressed += newDelegate(this, &CGui::btnRplFwdDn);   btn->eventMouseButtonReleased += newDelegate(this, &CGui::btnRplFwdUp);
-		
+
 		//  info
 		slRplPos = (Slider*)app->mWndRpl->findWidget("RplSlider");
 		if (slRplPos)  slRplPos->eventValueChanged += newDelegate(this, &CGui::slRplPosEv);
 
 		valRplPerc = fTxt("RplPercent");
-    	valRplCur = fTxt("RplTimeCur");
-    	valRplLen = fTxt("RplTimeLen");
+		valRplCur = fTxt("RplTimeCur");
+		valRplLen = fTxt("RplTimeLen");
 	}
 	//  text desc, stats
 	valRplName = fTxt("RplName");  valRplName2 = fTxt("RplName2");
@@ -462,8 +462,8 @@ void CGui::InitGui()
 	}
 	txCarSpeed = fTxt("CarSpeed");  txCarType = fTxt("CarType");  txCarYear = fTxt("CarYear");
 	barCarSpeed = fImg("CarSpeedBar");
-    txCarAuthor = fTxt("CarAuthor");  txTrackAuthor = fTxt("TrackAuthor");
-	
+	txCarAuthor = fTxt("CarAuthor");  txTrackAuthor = fTxt("TrackAuthor");
+
 	TabPtr tPlr = fTab("tabPlayer");  Tev(tPlr, Player);
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
 	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
@@ -477,7 +477,7 @@ void CGui::InitGui()
 		//t1->setEnabled(0);
 	//int num = tabsNet ? tabsNet->getItemCount() : 0;
 	//tabsNet->setIndexSelected( (tabsNet->getIndexSelected() - 1 + num) % num );
-	
+
 	//  server, games
 	listServers = fMli("MListServers");  int c=0;
 	Mli ml = listServers;
@@ -517,11 +517,11 @@ void CGui::InitGui()
 	panNetServer = fWP("panelNetServer");  panNetServer->setVisible(false);
 	panNetGame = fWP("panelNetGame");      panNetGame->setVisible(true);
 
-    //  chat
-    edNetChat = fEd("edNetChat");  // chat area
-    edNetChatMsg = fEd("edNetChatMsg");  // user text
-    //  track,game text
-    valNetGameInfo = fTxt("valNetGameInfo");
+	//  chat
+	edNetChat = fEd("edNetChat");  // chat area
+	edNetChatMsg = fEd("edNetChatMsg");  // user text
+	//  track,game text
+	valNetGameInfo = fTxt("valNetGameInfo");
 
 	//  settings
 	Edt(edNetNick,		"edNetNick",		evEdNetNick);		edNetNick->setCaption(		pSet->nickname);
@@ -529,7 +529,7 @@ void CGui::InitGui()
 	Edt(edNetServerPort,"edNetServerPort",	evEdNetServerPort);	edNetServerPort->setCaption(toStr(pSet->master_server_port));
 	Edt(edNetLocalPort,	"edNetLocalPort",	evEdNetLocalPort);	edNetLocalPort->setCaption(	toStr(pSet->local_port));
 
-	
+
 	//  quick help text  ----
 	Ed edHelp = fEd("QuickHelpText");
 	String s = TR("#{QuickHelpText}");
@@ -537,10 +537,10 @@ void CGui::InitGui()
 	edHelp->setCaption(s);
 
 	//  user dir
-    Ed edUserDir = fEd("EdUserDir");
+	Ed edUserDir = fEd("EdUserDir");
 	edUserDir->setCaption(PATHMANAGER::UserConfigDir());
 
-	
+
 	///  graphs  ----
 	sv= &svTC_r;	sv->Init("TC_r",	&pSet->tc_r,  0.5f, 2.f, 1.5f, 1,4);	sv->DefaultF(1.f);
 	sv= &svTC_xr;	sv->Init("TC_xr",	&pSet->tc_xr, 0.f, 5.f,  1.5f, 1,4);	sv->DefaultF(1.f);
@@ -591,27 +591,27 @@ void CGui::InitGui()
 	sv= &svSuRollDrag;	sv->Init("SuRollDrag",	&f, 0.f, 200.f,  2.f, 0,3);	sv->DefaultF(60.f);
 	sv= &svSuRollRes;	sv->Init("SuRollRes",	&f, 0.f, 200.f,  2.f, 0,3);	sv->DefaultF(1.f);
 	//TODO: <Widget type="Button" name="TweakSurfSave">
-	
+
 	Cmb(cmb, "CmbSuTire", comboSurfTire);  cmbSurfTire = cmb;
 	Cmb(cmb, "CmbSuType", comboSurfType);  cmbSurfType = cmb;
 	cmb->removeAllItems();
 	for (i=0; i < TRACKSURFACE::NumTypes; ++i)
 		cmb->addItem(csTRKsurf[i]);
-		
+
 
 
 	///  input tab  -------
 	InitInputGui();
-		
-	
+
+
 	///  cars list
-    //------------------------------------------------------------------------
+	//------------------------------------------------------------------------
 	Tbi carTab = fTbi("TabCar");
 	Mli2 li = carTab->createWidget<MultiList2>("MultiListBox",16,48,200,110, Align::Left | Align::VStretch);
 	li->setColour(Colour(0.7,0.85,1.0));
 	li->removeAllColumns();  int n=0;
 	li->addColumn("#FF8888"+TR("#{Car}"), colCar[n++]);
-	li->addColumn("#FFC080"+TR("#{CarSpeed}"), colCar[n++]);
+	li->addColumn("#C0B0A0""*"/*TR("#{CarSpeed}")*/, colCar[n++]);
 	li->addColumn("#B0B8C0"+TR("#{CarYear}"), colCar[n++]);
 	li->addColumn("#C0C0E0"+TR("#{CarType}"), colCar[n++]);
 	li->addColumn(" ", colCar[n++]);
@@ -623,21 +623,23 @@ void CGui::InitGui()
 	li->mSortUp = pSet->cars_sortup;
 	Lev(carList, CarChng);
 
-   	CarListUpd(false);  //upd
+	CarListUpd(false);  //upd
 
-    sListCar = pSet->gui.car[0];
-    imgCar = fImg("CarImg");
-    carDesc = fEd("CarDesc");
-    listCarChng(carList,0);
+	sListCar = pSet->gui.car[0];
+	imgCar = fImg("CarImg");
+	carDesc = fEd("CarDesc");
+	listCarChng(carList,0);
+
+	Btn("CarView1", btnCarView1);  Btn("CarView2", btnCarView2);
 
 
-    ///  tracks list, text, chg btn
-    //------------------------------------------------------------------------
+	///  tracks list, text, chg btn
+	//------------------------------------------------------------------------
 
 	gcom->trkDesc[0] = fEd("TrackDesc");
 	gcom->sListTrack = pSet->gui.track;
 
-    gcom->GuiInitTrack();
+	gcom->GuiInitTrack();
 
 	Ed ed;
 	Edt(ed,"RplFind",edRplFind);
@@ -654,16 +656,16 @@ void CGui::InitGui()
 	panNetTrack = wp;
 	//<UserString key="RelativeTo" value="OptionsWnd"/>
 
-    //  new game
-    for (i=1; i<=4; ++i)
-    {	Btn("NewGame"+toStr(i), btnNewGame);  if (i==2)  btNewGameCar = btn;  }
+	//  new game
+	for (i=1; i<=4; ++i)
+	{	Btn("NewGame"+toStr(i), btnNewGame);  if (i==2)  btNewGameCar = btn;  }
 
 	//  championships
 	//------------------------------------------------------------------------
 
 	//  track stats 2nd set
 	gcom->trkDesc[1] = fEd("TrackDesc2");
-    valTrkNet = fTxt("TrackText");
+	valTrkNet = fTxt("TrackText");
 
 	//  preview images
 	gcom->imgPrv[1] = fImg("TrackImg2");   gcom->imgPrv[1]->setImageTexture("PrvView");
@@ -695,7 +697,7 @@ void CGui::InitGui()
 	Tbi trktab = fTbi("TabChamps");
 	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
 	Lev(li, ChampChng);  li->setVisible(false);
-	
+
 	li->removeAllColumns();  c=0;
 	li->addColumn("#80A080N", colCh[c++]);
 	li->addColumn(TR("#40F040#{Name}"), colCh[c++]);		li->addColumn(TR("#F0F040#{Difficulty}"), colCh[c++]);
@@ -707,7 +709,7 @@ void CGui::InitGui()
 	//  Challs list  -------------
 	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
 	Lev(li, ChallChng);  li->setVisible(false);
-	
+
 	li->removeAllColumns();  c=0;
 	li->addColumn("#80A080N", colChL[c++]);
 	li->addColumn(TR("#60F060#{Name}"), colChL[c++]);		li->addColumn(TR("#F0D040#{Difficulty}"), colChL[c++]);
@@ -723,7 +725,7 @@ void CGui::InitGui()
 	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
 	li->setColour(Colour(0.7,0.73,0.76));
 	Lev(li, StageChng);  li->setVisible(false);
-	
+
 	li->removeAllColumns();  c=0;
 	li->addColumn("#80A080N", colSt[c++]);
 	li->addColumn(TR("#50F050#{Track}"), colSt[c++]);		li->addColumn(TR("#80FF80#{Scenery}"), colSt[c++]);
@@ -753,7 +755,7 @@ void CGui::InitGui()
 
 	//  ch other
 	ck= &ckChampRev;	ck->Init("ChampRev",    &pSet->gui.champ_rev);   Cev(ChampRev);
-	
+
 	Btn("btnChampStageBack", btnChampStageBack);
 	Btn("btnChampStageStart",btnChampStageStart);  btChampStage = btn;
 	Btn("btnChampEndClose",  btnChampEndClose);
@@ -764,14 +766,14 @@ void CGui::InitGui()
 
 	Btn("btnStageNext", btnStageNext);
 	Btn("btnStagePrev", btnStagePrev);
-    valStageNum = fTxt("StageNum");
+	valStageNum = fTxt("StageNum");
 
 	edChampStage = fEd("ChampStageText");  edChampEnd = fEd("ChampEndText");
 	edChallStage = fEd("ChallStageText");  edChallEnd = fEd("ChallEndText");
 	//  stage prv
 	imgChampStage = fImg("ChampStageImg");  imgChampStage->setImageTexture("PrvStCh");
 	imgChallStage = fImg("ChallStageImg");	imgChallStage->setImageTexture("PrvStCh");
-	
+
 	imgChampEndCup = fImg("ChampEndImgCup"); txChampEndF = fTxt("ChampEndFinished");
 	imgChallFail = fImg("ChallEndImgFail");  txChallEndF = fTxt("ChallEndFinished");
 	imgChallCup  = fImg("ChallEndImgCup");   txChallEndC = fTxt("ChallEndCongrats");
@@ -790,9 +792,9 @@ void CGui::InitGui()
 	li->addColumn(TR("#{TBTime}"), 120);	li->addColumn(TR("#{TBBest}"), 120);
 	li->addColumn(TR("#{TBLap}"), 60);
 	liNetEnd = li;
-	
+
 
 	bGI = true;  // gui inited, gui events can now save vals
-	
+
 	LogO(String("::: Time Init Gui: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
