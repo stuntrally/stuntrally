@@ -30,6 +30,9 @@
 		<Info name="it">
 			<Source>core_language_it_tag.xml</Source>
 		</Info>
+		<Info name="sk">
+			<Source>core_language_sk_tag.xml</Source>
+		</Info>
 	</Language>
 
 </MyGUI>

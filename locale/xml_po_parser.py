@@ -23,7 +23,7 @@ msgstr \"\"\n\
 \"Content-Type: text/plain; charset=CHARSET\"\n\
 \"Content-Transfer-Encoding: 8bit\"\n"
 
-ignore_tags = ["GameVersion", "PageURL", "LANG_EN", "LANG_DE", "LANG_FI", "LANG_PL", "LANG_RO", "LANG_FR", "LANG_RU", "LANG_PT", "LANG_IT"]
+ignore_tags = ["GameVersion", "PageURL", "LANG_EN", "LANG_DE", "LANG_FI", "LANG_PL", "LANG_RO", "LANG_FR", "LANG_RU", "LANG_PT", "LANG_IT", "LANG_SK" ]
 
 def usage():
 	print "Usage: " + sys.argv[0] + " someFile.xml someFile.pot"

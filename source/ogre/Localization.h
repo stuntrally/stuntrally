@@ -35,6 +35,7 @@ static std::string getSystemLanguage()
 		else if (!strcmp(buf,"Russian"))    loc = "ru";
 		else if (!strcmp(buf,"Portuguese")) loc = "pt";
 		else if (!strcmp(buf,"Italian"))    loc = "it";
+		else if (!strcmp(buf,"Slovakian"))  loc = "sk";
 	#endif
 
 	// We parse here only the first part of two part codes (e.g.fi_FI).
