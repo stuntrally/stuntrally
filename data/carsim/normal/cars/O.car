@@ -48,6 +48,42 @@ fluidTrigH = 0.0
 friction = 1.9
 
 
+#---------------------------
+[ hover ]
+hAbove = 2.0
+hRayLen = 4.0
+
+steerForce = 25
+steerDamp = 10
+steerDampP = 14
+
+engineForce = 18
+engineVelDec = 0.006
+brakeForce  = 22
+
+dampAirRes = 42
+dampSide = 2100
+dampUp = 1050
+dampDn = 3150
+dampPmul = 2.86
+
+alignTqP = 42, 42, 32
+alignTq  = 21, 21, 21
+pitchTq = 30
+rollTq = 0
+roll = 3
+
+[ hover_h ]
+hov_vz = 0.384
+hov_vsat = 0.98
+hov_dsat = 0.9
+hov_dampP = 0.5
+hov_damp = 3.6
+hov_fall = 500
+hov_riseP = 2000
+hov_rise = 6000
+
+
 #  engine
 #---------------------------
 [ engine ]
@@ -61,22 +97,7 @@ fuel-consumption = 1e-9
 friction = 230
 torque-val-mul = 0.83
 torque-curve-00 = 1000, 305
-torque-curve-01 = 1500, 375
-torque-curve-02 = 2100, 425
-torque-curve-03 = 2600, 465
-torque-curve-04 = 3000, 506
-torque-curve-05 = 3300, 549
-torque-curve-06 = 3500, 573
-torque-curve-07 = 3800, 594
-torque-curve-08 = 4000, 604
-torque-curve-09 = 4200, 608
-torque-curve-10 = 4400, 604
-torque-curve-11 = 4600, 585
-torque-curve-12 = 4900, 550
-torque-curve-13 = 5500, 510
-torque-curve-14 = 6000, 468
-torque-curve-15 = 6300, 441
-torque-curve-16 = 7000, 400
+torque-curve-01 = 7000, 400
 real-pow-tq-mul = 1.25
 
 [ clutch ]

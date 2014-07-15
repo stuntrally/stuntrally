@@ -88,6 +88,9 @@ void CGui::TweakCarLoad()
 				if (sn == 1 && s.find("hover") != std::string::npos)
 				{	found = true;  ++sec;  ++sec0;  }
 				else
+				if (sn == 2 && s.find("hover_h") != std::string::npos)
+				{	found = true;  ++sec;  ++sec0;  }
+				else
 				if (s.find(sSecNames[sn]) != std::string::npos)
 				{	found = true;  ++sec;  ++sec0;  }
 				++sn;

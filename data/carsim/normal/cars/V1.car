@@ -30,10 +30,6 @@ thrust-y = 0.065
 thrust-z = 0.015
 thrust-size-z = 0
 thrust-name = ThrusterV1
-exhaust-x = 2.2
-exhaust-y = 0.39
-exhaust-z = -0.5
-exhaust-mirror-second = 0
 
 
 #  collision shape params
@@ -51,7 +47,7 @@ offsetW = 0.0
 offsetH = 0.0
 start-offsetY = 1.64
 fluidTrigH = 0.05
-friction = 0.0
+friction = 0.1
 
 
 #---------------------------
@@ -79,6 +75,7 @@ pitchTq = 30
 rollTq = 0
 roll = 3
 
+[ hover_h ]
 hov_vz = 0.384
 hov_vsat = 0.98
 hov_dsat = 0.9
@@ -104,7 +101,7 @@ torque-val-mul = 0.83
 torque-curve-00 = 1000, 305
 torque-curve-01 = 7000, 400
 real-pow-tq-mul = 1.25
-sound-vol-mul = 0.3
+sound-vol-mul = 0.35
 
 [ clutch ]
 max-torque-mul = 1.1

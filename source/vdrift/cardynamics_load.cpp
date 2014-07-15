@@ -651,11 +651,11 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 		c.GetParam("hover.pitchTq",  hov.pitchTq);
 		c.GetParam("hover.rollTq",   hov.rollTq);		c.GetParam("hover.roll",     hov.roll);
 
-		c.GetParam("hover.hov_vz",	 hov.hov_vz);		c.GetParam("hover.hov_vsat", hov.hov_vsat);
-		c.GetParam("hover.hov_dsat", hov.hov_dsat);
-		c.GetParam("hover.hov_dampP",hov.hov_dampP);	c.GetParam("hover.hov_damp", hov.hov_damp);
-		c.GetParam("hover.hov_fall", hov.hov_fall);
-		c.GetParam("hover.hov_riseP",hov.hov_riseP);	c.GetParam("hover.hov_rise", hov.hov_rise);
+		c.GetParam("hover_h.hov_vz",   hov.hov_vz);		c.GetParam("hover_h.hov_vsat", hov.hov_vsat);
+		c.GetParam("hover_h.hov_dsat", hov.hov_dsat);
+		c.GetParam("hover_h.hov_dampP",hov.hov_dampP);	c.GetParam("hover_h.hov_damp", hov.hov_damp);
+		c.GetParam("hover_h.hov_fall", hov.hov_fall);
+		c.GetParam("hover_h.hov_riseP",hov.hov_riseP);	c.GetParam("hover_h.hov_rise", hov.hov_rise);
 	}
 
 	UpdateMass();
