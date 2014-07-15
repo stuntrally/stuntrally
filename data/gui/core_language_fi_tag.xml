@@ -43,6 +43,7 @@
 	<Tag name="TipChangeSat">Muokkaa auton värin saturaatiota.</Tag>
 	<Tag name="Diff5">Erittäin vaikea</Tag>
 	<Tag name="TerNormal">Normaali</Tag>
+	<Tag name="CarType_Spaceship">Spaceship</Tag>
 	<Tag name="NeedNewGame">* peli tarvitsee aloittaa alusta</Tag>
 	<Tag name="InputRoadAngZero">alt-shift-1  - zero angles</Tag>
 	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
@@ -80,6 +81,7 @@
 	<Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
 	<Tag name="InputCamControl">W,S A,D Q,E - liiku Nuolet - käännä</Tag>
 	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
+	<Tag name="UnitRpm">rpm</Tag>
 	<Tag name="RenderSystem">Renderöintikirjasto</Tag>
 	<Tag name="TerGenOfsY">Siirtymä Y</Tag>
 	<Tag name="TipAutoGearbox">Poista valinta saadaksesi manuaali vaihteet.</Tag>
@@ -152,7 +154,7 @@
 	<Tag name="CopySource">Aseta kopiointilähteeksi</Tag>
 	<Tag name="CarCrash">Car Crash</Tag>
 	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
-	<Tag name="Tracks">Radat</Tag>
+	<Tag name="CarType_Gravel">Sora</Tag>
 	<Tag name="LS_OBJS">Ladataan objekteja</Tag>
 	<Tag name="MessageBox_Cancel">Peruuta</Tag>
 	<Tag name="TreeRoadDist">Trees to road dist.</Tag>
@@ -171,7 +173,7 @@
 	<Tag name="CarDesc_S8">Good rally car, drivable on all tracks. Similar to S1, but shorter and more steerable.</Tag>
 	<Tag name="BackMenu">Takaisin</Tag>
 	<Tag name="BasedOn">pohjautuen</Tag>
-	<Tag name="ProfilerTxt">Profiler times text </Tag>
+	<Tag name="UnitKg">kg</Tag>
 	<Tag name="NetLeaveGame">Poistu pelistä</Tag>
 	<Tag name="banked">kallistettu</Tag>
 	<Tag name="frenzy">frenzy (curly road)</Tag>
@@ -238,7 +240,7 @@
 	<Tag name="TipSunDirYaw">Sun direction - yaw angle.</Tag>
 	<Tag name="Players">Pelaajat</Tag>
 	<Tag name="Road_ChkR">ChkR</Tag>
-	<Tag name="ABS">ABS (lukkiutumattomat jarrut)</Tag>
+	<Tag name="Continue">Jatka</Tag>
 	<Tag name="Length">Pituus</Tag>
 	<Tag name="TipCarsList">Cars list. Press Enter or [New Game] to drive with it.</Tag>
 	<Tag name="FluidSplash">Nesteroiske</Tag>
@@ -337,7 +339,7 @@
 	<Tag name="TipSunDirPitch">Sun direction - pitch angle.</Tag>
 	<Tag name="Passed">Läpäisty</Tag>
 	<Tag name="InputMapHandBrake">Käsijarru</Tag>
-	<Tag name="CarType_Other">Muu</Tag>
+	<Tag name="loops">silmukat</Tag>
 	<Tag name="ProjectPage">projektin sivusto:</Tag>
 	<Tag name="Brush_Octaves">Oktaavit</Tag>
 	<Tag name="Type">Tyyppi</Tag>
@@ -419,6 +421,7 @@
 	<Tag name="SC_Mars">Mars</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
 	<Tag name="TireTrails">Rengasjäljet</Tag>
+	<Tag name="Car_BhpPerTon">Bhp per tonne</Tag>
 	<Tag name="TipFogClrRGBA">R G B A components 0 to 1 (eg. 0.7 0.8 0.9 1). Last can be used to lower maximum density (1 is full).</Tag>
 	<Tag name="Language">Language</Tag>
 	<Tag name="InputMapShowOptions">Näytä valinnat</Tag>
@@ -475,7 +478,6 @@
 	<Tag name="InputInverse">Käänteinen</Tag>
 	<Tag name="InputMapRestartGame">Uusi peli</Tag>
 	<Tag name="Graphics">Grafiikat</Tag>
-	<Tag name="Gold">Kulta</Tag>
 	<Tag name="InputMapNextCamera">Seuraava kamera</Tag>
 	<Tag name="CarClrRandom">Satunnainen</Tag>
 	<Tag name="HUD">HUD</Tag>
@@ -526,7 +528,6 @@
 	<Tag name="DisableEdit">Disable for edit</Tag>
 	<Tag name="MinimapUpdSkip">Minimap update skip</Tag>
 	<Tag name="Test">Test</Tag>
-	<Tag name="Continue">Jatka</Tag>
 	<Tag name="InputReloadTrack">F5 - lataa rata uudelleen</Tag>
 	<Tag name="InputIncreaseSensitivity">Herkkyys</Tag>
 	<Tag name="CheckOnSave">Check on save</Tag>
@@ -535,7 +536,7 @@
 	<Tag name="NetPort">Portti</Tag>
 	<Tag name="Update">Update</Tag>
 	<Tag name="InputPickTab">Tab - close/open pick window</Tag>
-	<Tag name="CarType_Gravel">Sora</Tag>
+	<Tag name="Tracks">Radat</Tag>
 	<Tag name="NetMasterConnectionError">Pääpalvelimeen ei saatu yhteyttä.</Tag>
 	<Tag name="Brush_CurrentH">Curr.H</Tag>
 	<Tag name="TipDiffuseTex">Diffuse texture (Specular in alpha).</Tag>
@@ -607,6 +608,7 @@
 	<Tag name="Brush_ShapeN-gon">N-gon</Tag>
 	<Tag name="ChampInfo">In tutorial/championship mode you drive a series of tracks. Minimum score (depending on your time) is needed to pass to next stage. Car changing is possible.</Tag>
 	<Tag name="AutoUpdateBlendmap">Auto update blendmap (slow for big size brushes)</Tag>
+	<Tag name="UnitS">s</Tag>
 	<Tag name="TrackNotFound">Track not found !</Tag>
 	<Tag name="InputMapThrottle">Kiihdytys</Tag>
 	<Tag name="TBLap">Kierros</Tag>
@@ -616,12 +618,12 @@
 	<Tag name="TipGrassVisDist">Näkyysetäisyys ruohosivuille.</Tag>
 	<Tag name="FOV">View angle</Tag>
 	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
-	<Tag name="TerGenScale">Korkeus skaalaus</Tag>
+	<Tag name="UnitMi">mi</Tag>
 	<Tag name="Settings">Asetukset</Tag>
 	<Tag name="InputRoadRMB">RMB (or Num +,-)</Tag>
 	<Tag name="Anisotropy">Anisotropia</Tag>
 	<Tag name="InputToggleCam">Tab - camera / edit mode toggle</Tag>
-	<Tag name="Brush_Freq">Taajuus</Tag>
+	<Tag name="Car_MassFront">Mass on front</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotate (shift - global)   alt-RMB - pitch (shift - roll)</Tag>
 	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
 	<Tag name="Close">Close</Tag>
@@ -702,8 +704,10 @@
 	<Tag name="NetMasterIp">Pääpalvelimen IP-osoite</Tag>
 	<Tag name="LoadingDesc">Ladataan, ole hyvä ja odota...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
+	<Tag name="Needed">Needed</Tag>
 	<Tag name="Road_Pipe">Putki</Tag>
 	<Tag name="SC_VolcanicDark">VolcanicDark</Tag>
+	<Tag name="Brush_Freq">Taajuus</Tag>
 	<Tag name="Diffuse">Diffuse</Tag>
 	<Tag name="Tires">Renkaat</Tag>
 	<Tag name="InputRoadMat">-,=  - road/pipe material  (-1 hidden)</Tag>
@@ -721,6 +725,8 @@
 	<Tag name="TerHeight">Height</Tag>
 	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
+	<Tag name="UnitNm">Nm</Tag>
+	<Tag name="ABS">ABS (lukkiutumattomat jarrut)</Tag>
 	<Tag name="UnitMB">Mt</Tag>
 	<Tag name="Back">Takaisin</Tag>
 	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
@@ -769,6 +775,7 @@
 	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
 	<Tag name="TipRainSnow1">Set 1 Rain/Snow type</Tag>
 	<Tag name="TipRainSnow2">Set 2 Rain/Snow type</Tag>
+	<Tag name="TerGenScale">Korkeus skaalaus</Tag>
 	<Tag name="TipTerLNoise">Multiplier for additional noise. +1 blends to next used layer, -1 to previous, +2 to over next.</Tag>
 	<Tag name="TiresEdit1">PgUp/PgDn - previous, next value</Tag>
 	<Tag name="TiresEdit3">Home - toggle longitudinal / lateral parameters</Tag>
@@ -841,6 +848,7 @@
 	<Tag name="InputRoadAfterPick">after picked, center at mouse</Tag>
 	<Tag name="TipTrackDesc">Radan kuvaus teksti.</Tag>
 	<Tag name="RplFileSize">Tiedostokoko</Tag>
+	<Tag name="SC_GreeceWhite">GreeceWhite</Tag>
 	<Tag name="SC_Savanna">Savanna</Tag>
 	<Tag name="NetHost">Isäntä</Tag>
 	<Tag name="Road_AngleAuto">Autom.</Tag>
@@ -861,6 +869,7 @@
 	<Tag name="MultiThread">Monisäikeinen</Tag>
 	<Tag name="TipRollDrag">Drag for wheels, bigger will make them slow down faster (eg. 140 for snow, 80 for grass).</Tag>
 	<Tag name="Editor">Editori</Tag>
+	<Tag name="NotRecommended">Not recommended</Tag>
 	<Tag name="Any">Any</Tag>
 	<Tag name="TipTrkViewDetailed">Detailed list view.</Tag>
 	<Tag name="AndContributors">ja avustajat.</Tag>
@@ -915,7 +924,6 @@
 	<Tag name="GraphicsAll_Ultra">Huippu</Tag>
 	<Tag name="ApplyShaders">Käytä varjostimia</Tag>
 	<Tag name="TipGrassDens">How dense/rare will the grass be on terrain.</Tag>
-	<Tag name="loops">silmukat</Tag>
 	<Tag name="MinimapBorder">Reunus</Tag>
 	<Tag name="InputTerFilter">F - Suodata (poista kohinaa)</Tag>
 	<Tag name="TipSteerSurf">Steering range multiplier, for surface (Gravel,Asphalt).</Tag>
@@ -927,6 +935,7 @@
 	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
 	<Tag name="Add">Add</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
+	<Tag name="Gold">Kulta</Tag>
 	<Tag name="Chall_Stunts">Stuntit</Tag>
 	<Tag name="NormalsScale">Normals scale</Tag>
 	<Tag name="SC_Jungle">Jungle</Tag>
@@ -944,6 +953,7 @@
 	<Tag name="PipeWStepsMul">Pipe W steps mul.</Tag>
 	<Tag name="AllowSaveOrigTrk">Allow saving original tracks</Tag>
 	<Tag name="RplLoad">Lataa</Tag>
+	<Tag name="UnitBhp">bhp</Tag>
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
 	<Tag name="InpSet_AxisHalfInv">Axis Half Inversed</Tag>
 	<Tag name="ScaleTerHeight">Maaston korkeus</Tag>
@@ -993,7 +1003,8 @@
 	<Tag name="ObjBuildings">Rakennukset</Tag>
 	<Tag name="Car_TopSpeed">Top Speed</Tag>
 	<Tag name="InputObjectsRot">2 - Rotate local (alt- global)  LMB: Z  RMB: Y  MMB: X</Tag>
-	<Tag name="Needed">Needed</Tag>
+	<Tag name="CarType_Other">Muu</Tag>
+	<Tag name="at">at</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="Initializing">Initializing</Tag>
 	<Tag name="InputRoadHeight">- muuta korkeutta</Tag>
@@ -1026,6 +1037,7 @@
 	<Tag name="InputUndo">(one time undo)</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="CarStart">Car Start</Tag>
+	<Tag name="ProfilerTxt">Profiler times text </Tag>
 	<Tag name="FPS">Fps, Triangles, Batches</Tag>
 	<Tag name="NetJoinGame">Liity peliin</Tag>
 	<Tag name="LS_TREES">Ladataan puita</Tag>
@@ -1048,18 +1060,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="CarType_Spaceship">Spaceship</Tag>
-	<Tag name="UnitRpm">rpm</Tag>
-	<Tag name="UnitKg">kg</Tag>
-	<Tag name="Car_BhpPerTon">Bhp per tonne</Tag>
-	<Tag name="UnitMi">mi</Tag>
-	<Tag name="UnitS">s</Tag>
-	<Tag name="Car_MassFront">Mass on front</Tag>
-	<Tag name="UnitNm">Nm</Tag>
-	<Tag name="SC_GreeceWhite">GreeceWhite</Tag>
-	<Tag name="NotRecommended">Not recommended</Tag>
-	<Tag name="UnitBhp">bhp</Tag>
-	<Tag name="at">at</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -43,6 +43,7 @@
 	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
 	<Tag name="Diff5">Very Hard</Tag>
 	<Tag name="TerNormal">Normal</Tag>
+	<Tag name="CarType_Spaceship">Spaceship</Tag>
 	<Tag name="NeedNewGame">* necessita Novo Jogo</Tag>
 	<Tag name="InputRoadAngZero">alt-shift-1  - zero angles</Tag>
 	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
@@ -80,6 +81,7 @@
 	<Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
 	<Tag name="InputCamControl">W,S A,D Q,E - mover Setas - girar</Tag>
 	<Tag name="TipTrackMap">Minimapa da pista selecionada, vista do topo.</Tag>
+	<Tag name="UnitRpm">rpm</Tag>
 	<Tag name="RenderSystem">Sistema de renderização</Tag>
 	<Tag name="TerGenOfsY">Deslocamento Y</Tag>
 	<Tag name="TipAutoGearbox">Desmarque a opção para a marcha manual.</Tag>
@@ -152,7 +154,7 @@
 	<Tag name="CopySource">Set as copy source</Tag>
 	<Tag name="CarCrash">Batida de carro</Tag>
 	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
-	<Tag name="Tracks">Tracks</Tag>
+	<Tag name="CarType_Gravel">Gravel</Tag>
 	<Tag name="LS_OBJS">Carregando Objetos</Tag>
 	<Tag name="MessageBox_Cancel">Cancel</Tag>
 	<Tag name="TreeRoadDist">Trees to road dist.</Tag>
@@ -171,7 +173,7 @@
 	<Tag name="CarDesc_S8">Good rally car, drivable on all tracks. Similar to S1, but shorter and more steerable.</Tag>
 	<Tag name="BackMenu">Voltar</Tag>
 	<Tag name="BasedOn">baseado em</Tag>
-	<Tag name="ProfilerTxt">Profiler times text </Tag>
+	<Tag name="UnitKg">kg</Tag>
 	<Tag name="NetLeaveGame">Deixar jogo</Tag>
 	<Tag name="banked">banked</Tag>
 	<Tag name="frenzy">frenzy (curly road)</Tag>
@@ -238,7 +240,7 @@
 	<Tag name="TipSunDirYaw">Direção do Sol - ângulo de yaw</Tag>
 	<Tag name="Players">Jogadores</Tag>
 	<Tag name="Road_ChkR">ChkR</Tag>
-	<Tag name="ABS">ABS (freio antibloqueio)</Tag>
+	<Tag name="Continue">Continue</Tag>
 	<Tag name="Length">Length</Tag>
 	<Tag name="TipCarsList">Lista de carros. Pressione Enter ou [Novo Jogo] para dirigir com ele.</Tag>
 	<Tag name="FluidSplash">Fluid Splash</Tag>
@@ -337,7 +339,7 @@
 	<Tag name="TipSunDirPitch">Sun direction - pitch angle.</Tag>
 	<Tag name="Passed">Passed</Tag>
 	<Tag name="InputMapHandBrake">Handbrake</Tag>
-	<Tag name="CarType_Other">Other</Tag>
+	<Tag name="loops">loops</Tag>
 	<Tag name="ProjectPage">project&apos;s page:</Tag>
 	<Tag name="Brush_Octaves">Octaves</Tag>
 	<Tag name="Type">Type</Tag>
@@ -419,6 +421,7 @@
 	<Tag name="SC_Mars">Mars</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
 	<Tag name="TireTrails">Tire Trails</Tag>
+	<Tag name="Car_BhpPerTon">Bhp per tonne</Tag>
 	<Tag name="TipFogClrRGBA">R G B A components 0 to 1 (eg. 0.7 0.8 0.9 1). Last can be used to lower maximum density (1 is full).</Tag>
 	<Tag name="Language">Language</Tag>
 	<Tag name="InputMapShowOptions">Mostrar opções</Tag>
@@ -475,7 +478,6 @@
 	<Tag name="InputInverse">Inverse</Tag>
 	<Tag name="InputMapRestartGame">New game</Tag>
 	<Tag name="Graphics">Graphics</Tag>
-	<Tag name="Gold">Gold</Tag>
 	<Tag name="InputMapNextCamera">Next Camera</Tag>
 	<Tag name="CarClrRandom">Random</Tag>
 	<Tag name="HUD">HUD</Tag>
@@ -526,7 +528,6 @@
 	<Tag name="DisableEdit">Disable for edit</Tag>
 	<Tag name="MinimapUpdSkip">Pular atualização do minimapa</Tag>
 	<Tag name="Test">Test</Tag>
-	<Tag name="Continue">Continue</Tag>
 	<Tag name="InputReloadTrack">F5 - reload track</Tag>
 	<Tag name="InputIncreaseSensitivity">Sensitivity</Tag>
 	<Tag name="CheckOnSave">Check on save</Tag>
@@ -535,7 +536,7 @@
 	<Tag name="NetPort">Port</Tag>
 	<Tag name="Update">Update</Tag>
 	<Tag name="InputPickTab">Tab - close/open pick window</Tag>
-	<Tag name="CarType_Gravel">Gravel</Tag>
+	<Tag name="Tracks">Tracks</Tag>
 	<Tag name="NetMasterConnectionError">Couldn't reach the master server.</Tag>
 	<Tag name="Brush_CurrentH">Curr.H</Tag>
 	<Tag name="TipDiffuseTex">Diffuse texture (Specular in alpha).</Tag>
@@ -607,6 +608,7 @@
 	<Tag name="Brush_ShapeN-gon">N-gon</Tag>
 	<Tag name="ChampInfo">In tutorial/championship mode you drive a series of tracks. Minimum score (depending on your time) is needed to pass to next stage. Car changing is possible.</Tag>
 	<Tag name="AutoUpdateBlendmap">Auto update blendmap (slow for big size brushes)</Tag>
+	<Tag name="UnitS">s</Tag>
 	<Tag name="TrackNotFound">Track not found !</Tag>
 	<Tag name="InputMapThrottle">Throttle</Tag>
 	<Tag name="TBLap">Lap</Tag>
@@ -616,12 +618,12 @@
 	<Tag name="TipGrassVisDist">Visibility distance for grass pages.</Tag>
 	<Tag name="FOV">View angle</Tag>
 	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
-	<Tag name="TerGenScale">Scale Height</Tag>
+	<Tag name="UnitMi">mi</Tag>
 	<Tag name="Settings">Settings</Tag>
 	<Tag name="InputRoadRMB">RMB (or Num +,-)</Tag>
 	<Tag name="Anisotropy">Anisotropy</Tag>
 	<Tag name="InputToggleCam">Tab - camera / edit mode toggle</Tag>
-	<Tag name="Brush_Freq">Freq</Tag>
+	<Tag name="Car_MassFront">Mass on front</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotate (shift - global)   alt-RMB - pitch (shift - roll)</Tag>
 	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
 	<Tag name="Close">Close</Tag>
@@ -702,8 +704,10 @@
 	<Tag name="NetMasterIp">Master Server IP</Tag>
 	<Tag name="LoadingDesc">Loading, please wait...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
+	<Tag name="Needed">Needed</Tag>
 	<Tag name="Road_Pipe">Pipe</Tag>
 	<Tag name="SC_VolcanicDark">VolcanicDark</Tag>
+	<Tag name="Brush_Freq">Freq</Tag>
 	<Tag name="Diffuse">Diffuse</Tag>
 	<Tag name="Tires">Tires</Tag>
 	<Tag name="InputRoadMat">-,=  - road/pipe material  (-1 hidden)</Tag>
@@ -721,6 +725,8 @@
 	<Tag name="TerHeight">Height</Tag>
 	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
+	<Tag name="UnitNm">Nm</Tag>
+	<Tag name="ABS">ABS (freio antibloqueio)</Tag>
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="Back">Back</Tag>
 	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
@@ -769,6 +775,7 @@
 	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
 	<Tag name="TipRainSnow1">Set 1 Rain/Snow type</Tag>
 	<Tag name="TipRainSnow2">Set 2 Rain/Snow type</Tag>
+	<Tag name="TerGenScale">Scale Height</Tag>
 	<Tag name="TipTerLNoise">Multiplier for additional noise. +1 blends to next used layer, -1 to previous, +2 to over next.</Tag>
 	<Tag name="TiresEdit1">PgUp/PgDn - previous, next value</Tag>
 	<Tag name="TiresEdit3">Home - toggle longitudinal / lateral parameters</Tag>
@@ -841,6 +848,7 @@
 	<Tag name="InputRoadAfterPick">after picked, center at mouse</Tag>
 	<Tag name="TipTrackDesc">Track description text.</Tag>
 	<Tag name="RplFileSize">File size</Tag>
+	<Tag name="SC_GreeceWhite">GreeceWhite</Tag>
 	<Tag name="SC_Savanna">Savanna</Tag>
 	<Tag name="NetHost">Host</Tag>
 	<Tag name="Road_AngleAuto">Auto</Tag>
@@ -861,6 +869,7 @@
 	<Tag name="MultiThread">Multi Threaded</Tag>
 	<Tag name="TipRollDrag">Arrasto para as rodas, maior irá fazer elas pararem mais rápido (ex. 140 para neve, 80 para grama).</Tag>
 	<Tag name="Editor">Editor</Tag>
+	<Tag name="NotRecommended">Not recommended</Tag>
 	<Tag name="Any">Any</Tag>
 	<Tag name="TipTrkViewDetailed">Detailed list view.</Tag>
 	<Tag name="AndContributors">and contributors.</Tag>
@@ -915,7 +924,6 @@
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 	<Tag name="ApplyShaders">Apply shaders</Tag>
 	<Tag name="TipGrassDens">How dense/rare will the grass be on terrain.</Tag>
-	<Tag name="loops">loops</Tag>
 	<Tag name="MinimapBorder">Borda</Tag>
 	<Tag name="InputTerFilter">F - Filter  (remove noise)</Tag>
 	<Tag name="TipSteerSurf">Steering range multiplier, for surface (Gravel,Asphalt).</Tag>
@@ -927,6 +935,7 @@
 	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
 	<Tag name="Add">Add</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
+	<Tag name="Gold">Gold</Tag>
 	<Tag name="Chall_Stunts">Stunts</Tag>
 	<Tag name="NormalsScale">Normals scale</Tag>
 	<Tag name="SC_Jungle">Jungle</Tag>
@@ -944,6 +953,7 @@
 	<Tag name="PipeWStepsMul">Pipe W steps mul.</Tag>
 	<Tag name="AllowSaveOrigTrk">Allow saving original tracks</Tag>
 	<Tag name="RplLoad">Load</Tag>
+	<Tag name="UnitBhp">bhp</Tag>
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
 	<Tag name="InpSet_AxisHalfInv">Axis Half Inversed</Tag>
 	<Tag name="ScaleTerHeight">Terrain Height</Tag>
@@ -993,7 +1003,8 @@
 	<Tag name="ObjBuildings">Buildings</Tag>
 	<Tag name="Car_TopSpeed">Top Speed</Tag>
 	<Tag name="InputObjectsRot">2 - Rotate local (alt- global)  LMB: Z  RMB: Y  MMB: X</Tag>
-	<Tag name="Needed">Needed</Tag>
+	<Tag name="CarType_Other">Other</Tag>
+	<Tag name="at">at</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="Initializing">Initializing</Tag>
 	<Tag name="InputRoadHeight">- alterar altura</Tag>
@@ -1026,6 +1037,7 @@
 	<Tag name="InputUndo">(one time undo)</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="CarStart">Car Start</Tag>
+	<Tag name="ProfilerTxt">Profiler times text </Tag>
 	<Tag name="FPS">Fps, Triangles, Batches</Tag>
 	<Tag name="NetJoinGame">Join game</Tag>
 	<Tag name="LS_TREES">Loading Trees</Tag>
@@ -1048,18 +1060,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="CarType_Spaceship">Spaceship</Tag>
-	<Tag name="UnitRpm">rpm</Tag>
-	<Tag name="UnitKg">kg</Tag>
-	<Tag name="Car_BhpPerTon">Bhp per tonne</Tag>
-	<Tag name="UnitMi">mi</Tag>
-	<Tag name="UnitS">s</Tag>
-	<Tag name="Car_MassFront">Mass on front</Tag>
-	<Tag name="UnitNm">Nm</Tag>
-	<Tag name="SC_GreeceWhite">GreeceWhite</Tag>
-	<Tag name="NotRecommended">Not recommended</Tag>
-	<Tag name="UnitBhp">bhp</Tag>
-	<Tag name="at">at</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
