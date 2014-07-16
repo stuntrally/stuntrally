@@ -45,11 +45,9 @@ void CGui::SetGuiFromXmls()
 			liSky->setIndexSelected(i);
 
 	svSkyYaw.Upd();  svSunPitch.Upd();  svSunYaw.Upd();
-	_Ed(LiAmb, sc->lAmb);  _Ed(LiDiff, sc->lDiff);  _Ed(LiSpec, sc->lSpec);
 	_Clr(Amb, sc->lAmb);  _Clr(Diff, sc->lDiff);  _Clr(Spec, sc->lSpec);
 	//  fog
 	_Clr(Fog, sc->fogClr);  _Clr(Fog2, sc->fogClr2);  _Clr(FogH, sc->fogClrH);
-	_Ed(FogClr, sc->fogClr);  _Ed(FogClr2, sc->fogClr2);  _Ed(FogClrH, sc->fogClrH);
 	svFogStart.Upd();	svFogEnd.Upd();
 	svFogHStart.Upd();	svFogHEnd.Upd();
 	svFogHeight.Upd();	svFogHDensity.Upd();  svFogHDmg.Upd();
@@ -410,15 +408,15 @@ void CGui::btnClrSet(WP w)
 	if (w == clrAmb)   v = &sc->lAmb;   else
 	if (w == clrDiff)  v = &sc->lDiff;  else
 	if (w == clrSpec)  v = &sc->lSpec;
-	wpClrSet = w;
+	bool oth = wpClrSet != w;  wpClrSet = w;
 
 	svAlp.setVisible(false);
 	svHue.UpdF(&v->x);  svSat.UpdF(&v->y);  svVal.UpdF(&v->z);
-	imgClr->setColour(Colour(v->x, v->y, v->z));  imgClr->setAlpha(1.f);
 
 	IntPoint p = w->getAbsolutePosition();  p.left += 50;  p.top -= 35;
 	wndColor->setPosition(p);
-	wndColor->setVisible(!wndColor->getVisible());
+	if (!(wndColor->getVisible() && oth))  // dont hide if changed
+		wndColor->setVisible(!wndColor->getVisible());
 }
 void CGui::btnClrSetA(WP w)
 {
@@ -429,15 +427,15 @@ void CGui::btnClrSetA(WP w)
 	if (w == clrTrail) {
 		TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
 		v = &l->tclr;  }
-	wpClrSet = w;
+	bool oth = wpClrSet != w;  wpClrSet = w;
 
 	svAlp.setVisible(true);
 	svHue.UpdF(&v->x);  svSat.UpdF(&v->y);  svVal.UpdF(&v->z);  svAlp.UpdF(&v->w);
-	imgClr->setColour(Colour(v->x, v->y, v->z));
 
 	IntPoint p = w->getAbsolutePosition();  p.left += 50;  p.top -= 35;
 	wndColor->setPosition(p);
-	wndColor->setVisible(!wndColor->getVisible());
+	if (!(wndColor->getVisible() && oth))
+		wndColor->setVisible(!wndColor->getVisible());
 }
 
 void CGui::slUpdClr(SV* sv)
@@ -445,8 +443,6 @@ void CGui::slUpdClr(SV* sv)
 	Vector4 c(svHue.getF(), svSat.getF(), svVal.getF(), svAlp.getF());
 	Vector3 cc(c.x, c.y, c.z);
 	Colour cl(c.x, c.y, c.z/*, c.w*/);
-
-	imgClr->setColour(cl);  imgClr->setAlpha(c.w);
 	wpClrSet->setColour(cl);
 
 	WP w = wpClrSet;

@@ -95,9 +95,9 @@ public:
 
 
 	//  Color tool wnd  ----
-	Wnd wndColor;  Img imgClr;
+	Wnd wndColor;  WP wpClrSet;
 	SV svHue,svSat,svVal,svAlp;
-	void btnClrSet(WP), btnClrSetA(WP), slUpdClr(SV*);  WP wpClrSet;
+	void btnClrSet(WP), btnClrSetA(WP), slUpdClr(SV*);
 	
 
 	//  [Sky]  ----
@@ -113,11 +113,7 @@ public:
 	SV svFogHStart, svFogHEnd;  // Hfog
 	SV svFogHeight, svFogHDensity, svFogHDmg;
 
-	Ed edLiAmb,edLiDiff,edLiSpec, edFogClr,edFogClr2,edFogClrH;
 	Img clrAmb, clrDiff, clrSpec, clrFog, clrFog2, clrFogH;
-
-	void editFogClr(Ed), editFogClr2(Ed), editFogClrH(Ed);
-	void editLiAmb(Ed), editLiDiff(Ed), editLiSpec(Ed);
 
 	CK(Fog);  Ck ckWeather;
 
@@ -184,8 +180,8 @@ public:
 
 	
 	//  Ter Particles
-	Ed edLDust,edLDustS,edLMud,edLSmoke, edLTrlClr;  Img clrTrail;
-	void editLDust(Ed), editLTrlClr(Ed);
+	Ed edLDust,edLDustS,edLMud,edLSmoke;  Img clrTrail;
+	void editLDust(Ed);
 	Cmb cmbParDust,cmbParMud,cmbParSmoke;  void comboParDust(CMB);
 	
 	//  Ter Surfaces

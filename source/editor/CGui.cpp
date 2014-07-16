@@ -14,10 +14,8 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	// sun
 	,btnSky(0),cmbRain1(0),cmbRain2(0)
 	// light
-	,edLiAmb(0),edLiDiff(0),edLiSpec(0)
 	,clrAmb(0),clrDiff(0),clrSpec(0)
 	// fog
-	,edFogClr(0),edFogClr2(0),edFogClrH(0)
 	,clrFog(0),clrFog2(0),clrFogH(0)
 	// terrain
 	,cmbTexNorm(0), imgTexDiff(0)
@@ -27,7 +25,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,bRn1(0),bRn2(0)
 	// ter particles
 	,edLDust(0),edLDustS(0)
-	,edLMud(0),edLSmoke(0), edLTrlClr(0)
+	,edLMud(0),edLSmoke(0)
 	,cmbParDust(0),cmbParMud(0),cmbParSmoke(0), clrTrail(0)
 	// ter surfaces
 	,cmbSurface(0)
@@ -69,7 +67,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	// obj
 	,objListSt(0),objListDyn(0),objListRck(0),objListBld(0), objPan(0)
 	// clr
-	,wndColor(0), imgClr(0), wpClrSet(0)
+	,wndColor(0), wpClrSet(0)
 {	
 	strFSerrors = "";
 

@@ -523,13 +523,6 @@ void CGui::editLDust(Ed ed)  // vals
 		 if (n=="LDust")   l->dust = r;		else if (n=="LDustS")  l->dustS = r;
 	else if (n=="LMud")    l->mud = r;		else if (n=="LSmoke")  l->smoke = r;
 }
-void CGui::editLTrlClr(Ed ed)
-{
-	TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
-	Vector4 c = s2v4(ed->getCaption());
-	l->tclr = c;
-	clrTrail->setColour(Colour(c.x,c.y,c.z));
-}
 
 
 ///  Terrain Surface  -----------------------------

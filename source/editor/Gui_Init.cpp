@@ -182,7 +182,7 @@ void CGui::InitGui()
 	float f=0.f;  i=0;  // temp vars
 	
 	///  Color tool wnd  ----
-	wndColor = fWnd("ColorWnd");  imgClr = fImg("clrImg");
+	wndColor = fWnd("ColorWnd");
 	sv= &svHue;		sv->Init("clrHue",	&f, 0.f,1.f, 1.f, 3,5);  sv->DefaultF(0.5f);  Sev(UpdClr);
 	sv= &svSat;		sv->Init("clrSat",	&f, 0.f,1.f, 1.f, 3,5);  sv->DefaultF(0.5f);  Sev(UpdClr);
 	sv= &svVal;		sv->Init("clrVal",	&f, 0.f,1.f, 1.f, 3,5);  sv->DefaultF(0.5f);  Sev(UpdClr);
@@ -242,10 +242,7 @@ void CGui::InitGui()
 	ck= &ckFog;			ck->Init("FogDisable",		&pSet->bFog);  Cev(Fog);
 	ck= &ckWeather;		ck->Init("WeatherDisable",	&pSet->bWeather);
 
-	//  light
-	Ed(LiAmb,  editLiAmb);   Ed(LiDiff,  editLiDiff);   Ed(LiSpec,  editLiSpec);
-	Ed(FogClr, editFogClr);  Ed(FogClr2, editFogClr2);  Ed(FogClrH, editFogClrH);
-
+	//  clr imgs
 	ImgB(clrAmb,  "ClrAmb",  btnClrSet);  ImgB(clrDiff, "ClrDiff",  btnClrSet);
 	ImgB(clrSpec, "ClrSpec", btnClrSet);
 	ImgB(clrFog,  "ClrFog",  btnClrSetA); ImgB(clrFog2, "ClrFog2",  btnClrSetA);
@@ -339,7 +336,6 @@ void CGui::InitGui()
 	//  particles
 	Ed(LDust, editLDust);	Ed(LDustS, editLDust);
 	Ed(LMud,  editLDust);	Ed(LSmoke, editLDust);
-	Ed(LTrlClr, editLTrlClr);
 	Cmb(cmbParDust, "CmbParDust", comboParDust);
 	Cmb(cmbParMud,  "CmbParMud",  comboParDust);
 	Cmb(cmbParSmoke,"CmbParSmoke",comboParDust);

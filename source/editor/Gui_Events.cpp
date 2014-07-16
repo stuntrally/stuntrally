@@ -60,43 +60,10 @@ void CGui::comboRain2(Cmb cmb, size_t val)
 void CGui::slUpdSky(SV*){	scn->UpdSky();	}
 void CGui::slUpdSun(SV*){	scn->UpdSun();	}
 
-//  light clrs
-void CGui::editLiAmb(Ed ed)
-{
-	Vector3 c = s2v(ed->getCaption());	sc->lAmb = c;  scn->UpdSun();
-	clrAmb->setColour(Colour(c.x,c.y,c.z));
-}
-void CGui::editLiDiff(Ed ed)
-{
-	Vector3 c = s2v(ed->getCaption());	sc->lDiff = c;  scn->UpdSun();
-	clrDiff->setColour(Colour(c.x,c.y,c.z));
-}
-void CGui::editLiSpec(Ed ed)
-{
-	Vector3 c = s2v(ed->getCaption());	sc->lSpec = c;  scn->UpdSun();
-	clrSpec->setColour(Colour(c.x,c.y,c.z));
-}
-
 //  fog
 void CGui::slUpdFog(SV*)
 {
 	scn->UpdFog();
-}
-
-void CGui::editFogClr(Ed ed)
-{
-	Vector4 c = s2v4(ed->getCaption());  sc->fogClr = c;  scn->UpdFog();
-	clrFog->setColour(Colour(c.x,c.y,c.z));
-}
-void CGui::editFogClr2(Ed ed)
-{
-	Vector4 c = s2v4(ed->getCaption());  sc->fogClr2 = c;  scn->UpdFog();
-	clrFog2->setColour(Colour(c.x,c.y,c.z));
-}
-void CGui::editFogClrH(Ed ed)
-{
-	Vector4 c = s2v4(ed->getCaption());  sc->fogClrH = c;  scn->UpdFog();
-	clrFogH->setColour(Colour(c.x,c.y,c.z));
 }
 
 //  chk disable
@@ -455,7 +422,7 @@ void CGui::listSurf(Li, size_t id)
 	//  Particles
 	edLDust->setCaption(toStr(l->dust));	edLDustS->setCaption(toStr(l->dustS));
 	edLMud->setCaption(toStr(l->mud));	edLSmoke->setCaption(toStr(l->smoke));
-	edLTrlClr->setCaption(toStr(l->tclr));  clrTrail->setColour(Colour(l->tclr.x,l->tclr.y,l->tclr.z));
+	clrTrail->setColour(Colour(l->tclr.x,l->tclr.y,l->tclr.z));
 	
 	//  Surface
 	cmbSurface->setIndexSelected( cmbSurface->findItemIndexWith(l->surfName));
