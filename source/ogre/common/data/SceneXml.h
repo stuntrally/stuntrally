@@ -248,7 +248,7 @@ public:
 	int  rainEmit,rain2Emit;  Ogre::String rainName,rain2Name;
 	//  light
 	float ldPitch, ldYaw;  // sun dir angles
-	Ogre::Vector3 lDir, lAmb,lDiff,lSpec;
+	Ogre::Vector3 lAmb,lDiff,lSpec;
 
 	//  fog
 	float fogStart, fogEnd;  // lin range

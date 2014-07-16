@@ -45,8 +45,8 @@ bool Scene::LoadStartPos(Ogre::String file)
 bool Scene::LoadXml(String file, bool bTer)
 {
 	XMLDocument doc;
-	XMLError e = doc.LoadFile(file.c_str());
-	if (e != XML_SUCCESS)
+	XMLError er = doc.LoadFile(file.c_str());
+	if (er != XML_SUCCESS)
 	{	LogO("!Can't load scene.xml: "+file);  return false;  }
 		
 	XMLElement* root = doc.RootElement();
@@ -63,27 +63,32 @@ bool Scene::LoadXml(String file, bool bTer)
 	//pgLayers.clear();
 
 	// read
-	XMLElement* eSt,*eSky,*eFog,*eFogH,*eLi,*eTer,*ePgd,*eCam,*eFls,*eObjs,*eCar;
+	XMLElement* e, *u;
 	const char* a;
 
 
+ 	///  ed version
+ 	int ver = 2300;  // old
+ 	e = root->FirstChildElement("ver");
+	if (e)
+	{	a = e->Attribute("num");		if (a)  ver = s2i(a);
+	}
+	
  	///  car setup
- 	eCar = root->FirstChildElement("car");
-	if (eCar)
-	{
-		a = eCar->Attribute("tires");		if (a)  asphalt = s2i(a) > 0;
-		a = eCar->Attribute("damage");		if (a)  damageMul = s2r(a);
+ 	e = root->FirstChildElement("car");
+	if (e)
+	{	a = e->Attribute("tires");		if (a)  asphalt = s2i(a) > 0;
+		a = e->Attribute("damage");		if (a)  damageMul = s2r(a);
 
-		a = eCar->Attribute("denyRev");		if (a)  denyReversed = s2i(a) > 0;
-		a = eCar->Attribute("gravity");		if (a)  gravity = s2r(a);
+		a = e->Attribute("denyRev");	if (a)  denyReversed = s2i(a) > 0;
+		a = e->Attribute("gravity");	if (a)  gravity = s2r(a);
 	}
 
 	///  car start
-	eSt = root->FirstChildElement("start");
-	if (eSt)
-	{
-		a = eSt->Attribute("pos");		if (a)  {  Vector3 v = s2v(a);   startPos = MATHVECTOR<float,3>(v.x,v.y,v.z);    }
-		a = eSt->Attribute("rot");		if (a)  {  Vector4 v = s2v4(a);  startRot = QUATERNION<float>(v.x,v.y,v.z,v.w);  }
+	e = root->FirstChildElement("start");
+	if (e)
+	{	a = e->Attribute("pos");		if (a)  {  Vector3 v = s2v(a);   startPos = MATHVECTOR<float,3>(v.x,v.y,v.z);    }
+		a = e->Attribute("rot");		if (a)  {  Vector4 v = s2v4(a);  startRot = QUATERNION<float>(v.x,v.y,v.z,v.w);  }
 	}else
 	{	LogO("!Old, loading start from track.txt");
 		String s = StringUtil::replaceAll(file,"scene.xml","track.txt");
@@ -92,125 +97,117 @@ bool Scene::LoadXml(String file, bool bTer)
 	}
 
 	///  sky
-	eSky = root->FirstChildElement("sky");
-	if (eSky)
-	{	a = eSky->Attribute("material");	if (a)  skyMtr = String(a);
-		a = eSky->Attribute("rainEmit");	if (a)  rainEmit = s2i(a);
-		a = eSky->Attribute("rainName");	if (a)  rainName = String(a);
-		a = eSky->Attribute("rain2Emit");	if (a)  rain2Emit = s2i(a);
-		a = eSky->Attribute("rain2Name");	if (a)  rain2Name = String(a);
-		a = eSky->Attribute("windAmt");		if (a)  windAmt = s2r(a);
-		a = eSky->Attribute("skyYaw");		if (a)  skyYaw = s2r(a);
+	e = root->FirstChildElement("sky");
+	if (e)
+	{	a = e->Attribute("material");	if (a)  skyMtr = String(a);
+		a = e->Attribute("rainEmit");	if (a)  rainEmit = s2i(a);
+		a = e->Attribute("rainName");	if (a)  rainName = String(a);
+		a = e->Attribute("rain2Emit");	if (a)  rain2Emit = s2i(a);
+		a = e->Attribute("rain2Name");	if (a)  rain2Name = String(a);
+		a = e->Attribute("windAmt");	if (a)  windAmt = s2r(a);
+		a = e->Attribute("skyYaw");		if (a)  skyYaw = s2r(a);
 	}
 	///  fog
-	eFog = root->FirstChildElement("fog");
-	if (eFog)
-	{
-		a = eFog->Attribute("linStart");	if (a)  fogStart = s2r(a);
-		a = eFog->Attribute("linEnd");		if (a)  fogEnd = s2r(a);
-		a = eFog->Attribute("color");		if (a)  fogClr = s2v4(a);
-		a = eFog->Attribute("color2");		if (a)  fogClr2 = s2v4(a);  else  fogClr2 = fogClr;
+	e = root->FirstChildElement("fog");
+	if (e)
+	{	a = e->Attribute("linStart");	if (a)  fogStart = s2r(a);
+		a = e->Attribute("linEnd");		if (a)  fogEnd = s2r(a);
+		a = e->Attribute("color");		if (a)  fogClr = s2v4(a);
+		a = e->Attribute("color2");		if (a)  fogClr2 = s2v4(a);  else  fogClr2 = fogClr;
 	}
 	///  fog H
-	eFogH = root->FirstChildElement("fogH");
-	if (eFogH)
-	{
-		a = eFogH->Attribute("color");		if (a)  fogClrH = s2v4(a);
-		a = eFogH->Attribute("height");		if (a)  fogHeight = s2r(a);
-		a = eFogH->Attribute("dens");		if (a)  fogHDensity = s2r(a);
-		a = eFogH->Attribute("linStart");	if (a)  fogHStart = s2r(a);
-		a = eFogH->Attribute("linEnd");		if (a)  fogHEnd = s2r(a);
-		a = eFogH->Attribute("dmg");		if (a)  fHDamage = s2r(a);
+	e = root->FirstChildElement("fogH");
+	if (e)
+	{	a = e->Attribute("color");		if (a)  fogClrH = s2v4(a);
+		a = e->Attribute("height");		if (a)  fogHeight = s2r(a);
+		a = e->Attribute("dens");		if (a)  fogHDensity = s2r(a);
+		a = e->Attribute("linStart");	if (a)  fogHStart = s2r(a);
+		a = e->Attribute("linEnd");		if (a)  fogHEnd = s2r(a);
+		a = e->Attribute("dmg");		if (a)  fHDamage = s2r(a);
 	}
 
 	///  light
-	eLi = root->FirstChildElement("light");
-	if (eLi)
-	{
-		a = eLi->Attribute("pitch");		if (a)  ldPitch = s2r(a);
-		a = eLi->Attribute("yaw");			if (a)  ldYaw = s2r(a);
-		a = eLi->Attribute("dir");			if (a)  {  lDir = s2v(a);
-			Vector3 d(lDir.normalisedCopy());  // old _
-			ldPitch = -asin(d.y) * 180.f/PI_d;
-			ldYaw = (atan2(d.z, d.x) + PI_d/2.0) * 180.f/PI_d;  if (ldYaw > 180.f)  ldYaw -= 360.f;  }
-		a = eLi->Attribute("ambient");		if (a)  lAmb = s2v(a);
-		a = eLi->Attribute("diffuse");		if (a)  lDiff = s2v(a);
-		a = eLi->Attribute("specular");		if (a)  lSpec = s2v(a);
+	e = root->FirstChildElement("light");
+	if (e)
+	{	a = e->Attribute("pitch");		if (a)  ldPitch = s2r(a);
+		a = e->Attribute("yaw");		if (a)  ldYaw = s2r(a);
+
+		a = e->Attribute("ambient");	if (a)  lAmb = s2v(a);
+		a = e->Attribute("diffuse");	if (a)  lDiff = s2v(a);
+		a = e->Attribute("specular");	if (a)  lSpec = s2v(a);
 	}
 	
 	///  fluids
-	eFls = root->FirstChildElement("fluids");
-	if (eFls)
-	{
-		XMLElement* eFl = eFls->FirstChildElement("fluid");
-		while (eFl)
+	e = root->FirstChildElement("fluids");
+	if (e)
+	{	u = e->FirstChildElement("fluid");
+		while (u)
 		{
 			FluidBox fb;
-			a = eFl->Attribute("name");		if (a)  fb.name = std::string(a);
+			a = u->Attribute("name");	if (a)  fb.name = std::string(a);
 
-			a = eFl->Attribute("pos");		if (a)  fb.pos = s2v(a);
-			a = eFl->Attribute("rot");		if (a)  fb.rot = s2v(a);
-			a = eFl->Attribute("size");		if (a)  fb.size = s2v(a);
-			a = eFl->Attribute("tile");		if (a)  fb.tile = Ogre::StringConverter::parseVector2(a);
+			a = u->Attribute("pos");	if (a)  fb.pos = s2v(a);
+			a = u->Attribute("rot");	if (a)  fb.rot = s2v(a);
+			a = u->Attribute("size");	if (a)  fb.size = s2v(a);
+			a = u->Attribute("tile");	if (a)  fb.tile = s2v2(a);
 
 			fluids.push_back(fb);
-			eFl = eFl->NextSiblingElement("fluid");
+			u = u->NextSiblingElement("fluid");
 		}
 	}
 	
 	///  terrain
-	eTer = root->FirstChildElement("terrain");
-	if (eTer)
-	{
-		a = eTer->Attribute("size");		if (a)  td.iVertsX = s2i(a);
-		a = eTer->Attribute("triangle");	if (a)  td.fTriangleSize = s2r(a);
-		a = eTer->Attribute("errNorm");		if (a)  td.errorNorm = s2r(a);
+	e = root->FirstChildElement("terrain");
+	if (e)
+	{	a = e->Attribute("size");		if (a)  td.iVertsX = s2i(a);
+		a = e->Attribute("triangle");	if (a)  td.fTriangleSize = s2r(a);
+		a = e->Attribute("errNorm");	if (a)  td.errorNorm = s2r(a);
 
-		a = eTer->Attribute("normSc");		if (a)  td.normScale = s2r(a);
-		a = eTer->Attribute("emissive");	if (a)  td.emissive = s2i(a)>0;
-		a = eTer->Attribute("specPow");		if (a)  td.specularPow = s2r(a);
-		a = eTer->Attribute("specPowEm");	if (a)  td.specularPowEm = s2r(a);
+		a = e->Attribute("normSc");		if (a)  td.normScale = s2r(a);
+		a = e->Attribute("emissive");	if (a)  td.emissive = s2i(a)>0;
+		a = e->Attribute("specPow");	if (a)  td.specularPow = s2r(a);
+		a = e->Attribute("specPowEm");	if (a)  td.specularPowEm = s2r(a);
 		td.UpdVals();
 
 		int il = 0;
-		XMLElement* eTex = eTer->FirstChildElement("texture");
-		while (eTex)
+		u = e->FirstChildElement("texture");
+		while (u)
 		{
 			bool road = false;
-			a = eTex->Attribute("road");	if (a)  if (s2i(a)==1)  road = true;
+			a = u->Attribute("road");	if (a)  if (s2i(a)==1)  road = true;
 			
 			TerLayer lay, *l = road ? &td.layerRoad : &lay;
 			lay.nFreq[0] += (il-0.7f) * 4.f;  // default, can't be same, needs variation
 			lay.nFreq[1] += (il-0.5f) * 3.f;
 
-			a = eTex->Attribute("on");		if (a)  l->on = s2i(a)>0;  else  l->on = true;
-			a = eTex->Attribute("file");	if (a)  l->texFile = String(a);
-			a = eTex->Attribute("fnorm");	if (a)  l->texNorm = String(a);
-			a = eTex->Attribute("scale");	if (a)  l->tiling = s2r(a);
-			a = eTex->Attribute("surf");	if (a)  l->surfName = String(a);
+			a = u->Attribute("on");		if (a)  l->on = s2i(a)>0;  else  l->on = true;
+			a = u->Attribute("file");	if (a)  l->texFile = String(a);
+			a = u->Attribute("fnorm");	if (a)  l->texNorm = String(a);
+			a = u->Attribute("scale");	if (a)  l->tiling = s2r(a);
+			a = u->Attribute("surf");	if (a)  l->surfName = String(a);
 
-			a = eTex->Attribute("dust");	if (a)  l->dust = s2r(a);
-			a = eTex->Attribute("dustS");	if (a)  l->dustS = s2r(a);
-			a = eTex->Attribute("mud");		if (a)  l->mud = s2r(a);
-			a = eTex->Attribute("smoke");	if (a)  l->smoke = s2r(a);
-			a = eTex->Attribute("tclr");	if (a)  l->tclr = s2v4(a);
-			a = eTex->Attribute("dmg");		if (a)  l->fDamage = s2r(a);
+			a = u->Attribute("dust");	if (a)  l->dust = s2r(a);
+			a = u->Attribute("dustS");	if (a)  l->dustS = s2r(a);
+			a = u->Attribute("mud");	if (a)  l->mud = s2r(a);
+			a = u->Attribute("smoke");	if (a)  l->smoke = s2r(a);
+			a = u->Attribute("tclr");	if (a)  l->tclr = s2v4(a);
+			a = u->Attribute("dmg");	if (a)  l->fDamage = s2r(a);
 
-			a = eTex->Attribute("angMin");	if (a)  l->angMin = s2r(a);
-			a = eTex->Attribute("angMax");	if (a)  l->angMax = s2r(a);
-			a = eTex->Attribute("angSm");	if (a)  l->angSm = s2r(a);
-			a = eTex->Attribute("hMin");	if (a)  l->hMin = s2r(a);
-			a = eTex->Attribute("hMax");	if (a)  l->hMax = s2r(a);
-			a = eTex->Attribute("hSm");		if (a)  l->hSm = s2r(a);
+			a = u->Attribute("angMin");	if (a)  l->angMin = s2r(a);
+			a = u->Attribute("angMax");	if (a)  l->angMax = s2r(a);
+			a = u->Attribute("angSm");	if (a)  l->angSm = s2r(a);
+			a = u->Attribute("hMin");	if (a)  l->hMin = s2r(a);
+			a = u->Attribute("hMax");	if (a)  l->hMax = s2r(a);
+			a = u->Attribute("hSm");	if (a)  l->hSm = s2r(a);
 
-			a = eTex->Attribute("nOn");		if (a)  l->nOnly = s2i(a)>0;
-			a = eTex->Attribute("triplanar");	if (a)  l->triplanar = true;  else  l->triplanar = false;
+			a = u->Attribute("nOn");		if (a)  l->nOnly = s2i(a)>0;
+			a = u->Attribute("triplanar");	if (a)  l->triplanar = true;  else  l->triplanar = false;
 
-			a = eTex->Attribute("noise");	if (a)  l->noise = s2r(a);
-			a = eTex->Attribute("n_1");		if (a)  l->nprev = s2r(a);
-			a = eTex->Attribute("n2");		if (a)  l->nnext2 = s2r(a);
+			a = u->Attribute("noise");	if (a)  l->noise = s2r(a);
+			a = u->Attribute("n_1");	if (a)  l->nprev = s2r(a);
+			a = u->Attribute("n2");		if (a)  l->nnext2 = s2r(a);
 
-			XMLElement* eNoi = eTex->FirstChildElement("noise");
+			XMLElement* eNoi = u->FirstChildElement("noise");
 			if (eNoi)
 			for (int n=0; n < 2; ++n)
 			{	std::string sn = toStr(n), s;
@@ -221,66 +218,64 @@ bool Scene::LoadXml(String file, bool bTer)
 			}
 			if (!road && il < td.ciNumLay)
 				td.layersAll[il++] = lay;
-			eTex = eTex->NextSiblingElement("texture");
+			u = u->NextSiblingElement("texture");
 		}
 		td.UpdLayers();
 
-		XMLElement* ePar = eTer->FirstChildElement("par");
-		if (ePar)
-		{
-			a = ePar->Attribute("dust");	if (a)  sParDust = String(a);
-			a = ePar->Attribute("mud");		if (a)  sParMud = String(a);
-			a = ePar->Attribute("smoke");	if (a)  sParSmoke = String(a);
+		u = e->FirstChildElement("par");
+		if (u)
+		{	a = u->Attribute("dust");	if (a)  sParDust = String(a);
+			a = u->Attribute("mud");	if (a)  sParMud = String(a);
+			a = u->Attribute("smoke");	if (a)  sParSmoke = String(a);
 		}
 	}
 	
 	///  paged
- 	ePgd = root->FirstChildElement("paged");
-	if (ePgd)
-	{
-		a = ePgd->Attribute("densTrees");	if (a)  densTrees = s2r(a);
-		a = ePgd->Attribute("densGrass");	if (a)  densGrass = s2r(a);
+ 	e = root->FirstChildElement("paged");
+	if (e)
+	{	a = e->Attribute("densTrees");		if (a)  densTrees = s2r(a);
+		a = e->Attribute("densGrass");		if (a)  densGrass = s2r(a);
 		//  grass
-		a = ePgd->Attribute("grPage");		if (a)  grPage = s2r(a);
-		a = ePgd->Attribute("grDist");		if (a)  grDist = s2r(a);
-		a = ePgd->Attribute("grDensSmooth");	if (a)  grDensSmooth = s2i(a);
+		a = e->Attribute("grPage");			if (a)  grPage = s2r(a);
+		a = e->Attribute("grDist");			if (a)  grDist = s2r(a);
+		a = e->Attribute("grDensSmooth");	if (a)  grDensSmooth = s2i(a);
 		//  trees
-		a = ePgd->Attribute("trPage");		if (a)  trPage = s2r(a);
-		a = ePgd->Attribute("trDist");		if (a)  trDist = s2r(a);
-		a = ePgd->Attribute("trDistImp");	if (a)  trDistImp = s2r(a);
-		a = ePgd->Attribute("trRdDist");	if (a)  trRdDist = s2i(a);
+		a = e->Attribute("trPage");			if (a)  trPage = s2r(a);
+		a = e->Attribute("trDist");			if (a)  trDist = s2r(a);
+		a = e->Attribute("trDistImp");		if (a)  trDistImp = s2r(a);
+		a = e->Attribute("trRdDist");		if (a)  trRdDist = s2i(a);
 
 		int grl = 0;
-		XMLElement* eGrL = ePgd->FirstChildElement("grass");
-		while (eGrL)
+		u = e->FirstChildElement("grass");
+		while (u)
 		{
 			SGrassLayer g;
-			a = eGrL->Attribute("on");		if (a)  g.on = s2i(a);  else  g.on = 1;
-			a = eGrL->Attribute("mtr");		if (a)  g.material = String(a);
-			a = eGrL->Attribute("clr");		if (a)  g.colorMap = String(a);
-			a = eGrL->Attribute("dens");	if (a)  g.dens = s2r(a);
-			a = eGrL->Attribute("chan");	if (a)  g.iChan = s2i(a);
+			a = u->Attribute("on");			if (a)  g.on = s2i(a);  else  g.on = 1;
+			a = u->Attribute("mtr");		if (a)  g.material = String(a);
+			a = u->Attribute("clr");		if (a)  g.colorMap = String(a);
+			a = u->Attribute("dens");		if (a)  g.dens = s2r(a);
+			a = u->Attribute("chan");		if (a)  g.iChan = s2i(a);
+										
+			a = u->Attribute("minSx");		if (a)  g.minSx = s2r(a);
+			a = u->Attribute("maxSx");		if (a)  g.maxSx = s2r(a);
+			a = u->Attribute("minSy");		if (a)  g.minSy = s2r(a);
+			a = u->Attribute("maxSy");		if (a)  g.maxSy = s2r(a);
 
-			a = eGrL->Attribute("minSx");	if (a)  g.minSx = s2r(a);
-			a = eGrL->Attribute("maxSx");	if (a)  g.maxSx = s2r(a);
-			a = eGrL->Attribute("minSy");	if (a)  g.minSy = s2r(a);
-			a = eGrL->Attribute("maxSy");	if (a)  g.maxSy = s2r(a);
-
-			a = eGrL->Attribute("swayDistr");	if (a)  g.swayDistr = s2r(a);
-			a = eGrL->Attribute("swayLen");		if (a)  g.swayLen = s2r(a);
-			a = eGrL->Attribute("swaySpeed");	if (a)  g.swaySpeed = s2r(a);
+			a = u->Attribute("swayDistr");	if (a)  g.swayDistr = s2r(a);
+			a = u->Attribute("swayLen");	if (a)  g.swayLen = s2r(a);
+			a = u->Attribute("swaySpeed");	if (a)  g.swaySpeed = s2r(a);
 			
 		#if 1  //  old < 2.3  (no channels)
 		if (grl == 0)  {
-			a = eGrL->Attribute("terMaxAng");	if (a)  grChan[0].angMax = s2r(a);
-			a = eGrL->Attribute("terAngSm");	if (a)  grChan[0].angSm = s2r(a);
+			a = u->Attribute("terMaxAng");	if (a)  grChan[0].angMax = s2r(a);
+			a = u->Attribute("terAngSm");	if (a)  grChan[0].angSm = s2r(a);
 
-			a = eGrL->Attribute("terMinH");		if (a)  grChan[0].hMin = s2r(a);
-			a = eGrL->Attribute("terMaxH");		if (a)  grChan[0].hMax = s2r(a);
-			a = eGrL->Attribute("terHSm");		if (a)  grChan[0].hSm = s2r(a);  }
+			a = u->Attribute("terMinH");		if (a)  grChan[0].hMin = s2r(a);
+			a = u->Attribute("terMaxH");		if (a)  grChan[0].hMax = s2r(a);
+			a = u->Attribute("terHSm");		if (a)  grChan[0].hSm = s2r(a);  }
 		#endif
 			grLayersAll[grl++] = g;
-			eGrL = eGrL->NextSiblingElement("grass");
+			u = u->NextSiblingElement("grass");
 		}
 
 		int c;
@@ -288,85 +283,82 @@ bool Scene::LoadXml(String file, bool bTer)
 			grChan[c].nFreq += c * 3.f;  // default variation
 		c = 0;
 
-		XMLElement* eGrCh = ePgd->FirstChildElement("gchan");
-		while (eGrCh && c < 4)
+		u = e->FirstChildElement("gchan");
+		while (u && c < 4)
 		{
 			SGrassChannel& g = grChan[c++];
 			TiXmlElement gch("gchan");
 
-			a = eGrCh->Attribute("amin");	if (a)  g.angMin = s2r(a);
-			a = eGrCh->Attribute("amax");	if (a)  g.angMax = s2r(a);
-			a = eGrCh->Attribute("asm");	if (a)  g.angSm = s2r(a);
+			a = u->Attribute("amin");	if (a)  g.angMin = s2r(a);
+			a = u->Attribute("amax");	if (a)  g.angMax = s2r(a);
+			a = u->Attribute("asm");	if (a)  g.angSm = s2r(a);
 
-			a = eGrCh->Attribute("hmin");	if (a)  g.hMin = s2r(a);
-			a = eGrCh->Attribute("hmax");	if (a)  g.hMax = s2r(a);
-			a = eGrCh->Attribute("hsm");	if (a)  g.hSm = s2r(a);
+			a = u->Attribute("hmin");	if (a)  g.hMin = s2r(a);
+			a = u->Attribute("hmax");	if (a)  g.hMax = s2r(a);
+			a = u->Attribute("hsm");	if (a)  g.hSm = s2r(a);
 
-			a = eGrCh->Attribute("ns");		if (a)  g.noise = s2r(a);
-			a = eGrCh->Attribute("frq");	if (a)  g.nFreq = s2r(a);
-			a = eGrCh->Attribute("oct");	if (a)  g.nOct  = s2i(a);
-			a = eGrCh->Attribute("prs");	if (a)  g.nPers = s2r(a);
-			a = eGrCh->Attribute("pow");	if (a)  g.nPow  = s2r(a);
+			a = u->Attribute("ns");		if (a)  g.noise = s2r(a);
+			a = u->Attribute("frq");	if (a)  g.nFreq = s2r(a);
+			a = u->Attribute("oct");	if (a)  g.nOct  = s2i(a);
+			a = u->Attribute("prs");	if (a)  g.nPers = s2r(a);
+			a = u->Attribute("pow");	if (a)  g.nPow  = s2r(a);
 
-			a = eGrCh->Attribute("rd");		if (a)  g.rdPow = s2r(a);
-			eGrCh = eGrCh->NextSiblingElement("gchan");
+			a = u->Attribute("rd");		if (a)  g.rdPow = s2r(a);
+			u = u->NextSiblingElement("gchan");
 		}
 		
 		///  veget
 		int pgl = 0;
-		XMLElement* ePgL = ePgd->FirstChildElement("layer");
-		while (ePgL)
+		u = e->FirstChildElement("layer");
+		while (u)
 		{
 			PagedLayer l;
-			a = ePgL->Attribute("on");			if (a)  l.on = s2i(a);  else  l.on = 1;
-			a = ePgL->Attribute("name");		if (a)  l.name = String(a);
-			a = ePgL->Attribute("dens");		if (a)  l.dens = s2r(a);
-			a = ePgL->Attribute("minScale");	if (a)  l.minScale = s2r(a);
-			a = ePgL->Attribute("maxScale");	if (a)  l.maxScale = s2r(a);
+			a = u->Attribute("on");			if (a)  l.on = s2i(a);  else  l.on = 1;
+			a = u->Attribute("name");		if (a)  l.name = String(a);
+			a = u->Attribute("dens");		if (a)  l.dens = s2r(a);
+			a = u->Attribute("minScale");	if (a)  l.minScale = s2r(a);
+			a = u->Attribute("maxScale");	if (a)  l.maxScale = s2r(a);
 
-			a = ePgL->Attribute("ofsY");		if (a)  l.ofsY = s2r(a);
-			a = ePgL->Attribute("addTrRdDist");	if (a)  l.addRdist = s2i(a);
-			a = ePgL->Attribute("maxRdist");	if (a)  l.maxRdist = s2i(a);
-			a = ePgL->Attribute("windFx");		if (a)  l.windFx = s2r(a);
-			a = ePgL->Attribute("windFy");		if (a)  l.windFy = s2r(a);
+			a = u->Attribute("ofsY");		if (a)  l.ofsY = s2r(a);
+			a = u->Attribute("addTrRdDist");if (a)  l.addRdist = s2i(a);
+			a = u->Attribute("maxRdist");	if (a)  l.maxRdist = s2i(a);
+			a = u->Attribute("windFx");		if (a)  l.windFx = s2r(a);
+			a = u->Attribute("windFy");		if (a)  l.windFy = s2r(a);
 
-			a = ePgL->Attribute("maxTerAng");	if (a)  l.maxTerAng = s2r(a);
-			a = ePgL->Attribute("minTerH");		if (a)  l.minTerH = s2r(a);
-			a = ePgL->Attribute("maxTerH");		if (a)  l.maxTerH = s2r(a);
-			a = ePgL->Attribute("maxDepth");	if (a)  l.maxDepth = s2r(a);
+			a = u->Attribute("maxTerAng");	if (a)  l.maxTerAng = s2r(a);
+			a = u->Attribute("minTerH");	if (a)  l.minTerH = s2r(a);
+			a = u->Attribute("maxTerH");	if (a)  l.maxTerH = s2r(a);
+			a = u->Attribute("maxDepth");	if (a)  l.maxDepth = s2r(a);
 
 			pgLayersAll[pgl++] = l;
-			ePgL = ePgL->NextSiblingElement("layer");
+			u = u->NextSiblingElement("layer");
 		}
 		UpdPgLayers();
 	}
 	
  	///  camera
- 	eCam = root->FirstChildElement("cam");
-	if (eCam)
-	{
-		a = eCam->Attribute("pos");		if (a)  camPos = s2v(a);
-		a = eCam->Attribute("dir");		if (a)  camDir = s2v(a);
+ 	e = root->FirstChildElement("cam");
+	if (e)
+	{	a = e->Attribute("pos");		if (a)  camPos = s2v(a);
+		a = e->Attribute("dir");		if (a)  camDir = s2v(a);
 	}
 	
 	///  objects
-	eObjs = root->FirstChildElement("objects");
-	if (eObjs)
-	{
-		XMLElement* eObj = eObjs->FirstChildElement("o");
-		while (eObj)
+	e = root->FirstChildElement("objects");
+	if (e)
+	{	u = e->FirstChildElement("o");
+		while (u)
 		{
 			Object o;
-			a = eObj->Attribute("name");	if (a)  o.name = std::string(a);
+			a = u->Attribute("name");	if (a)  o.name = std::string(a);
 
-			a = eObj->Attribute("pos");		if (a)  {  Vector3 v = s2v(a);  o.pos = MATHVECTOR<float,3>(v.x,v.y,v.z);  }
-			a = eObj->Attribute("rot");		if (a)  {  Vector4 v = s2v4(a);  o.rot = QUATERNION<float>(v.x,v.y,v.z,v.w);  }
-			a = eObj->Attribute("sc");		if (a)  o.scale = s2v(a);
+			a = u->Attribute("pos");		if (a)  {  Vector3 v = s2v(a);  o.pos = MATHVECTOR<float,3>(v.x,v.y,v.z);  }
+			a = u->Attribute("rot");		if (a)  {  Vector4 v = s2v4(a);  o.rot = QUATERNION<float>(v.x,v.y,v.z,v.w);  }
+			a = u->Attribute("sc");		if (a)  o.scale = s2v(a);
 
 			objects.push_back(o);
-			eObj = eObj->NextSiblingElement("o");
-		}
-	}
+			u = u->NextSiblingElement("o");
+	}	}
 	
 	UpdateFluidsId();
 
