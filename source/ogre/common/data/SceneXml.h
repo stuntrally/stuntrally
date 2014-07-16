@@ -305,6 +305,9 @@ public:
 	//  Objects
 	std::vector<Object> objects;
 	
+	//  base track (new from) for info
+	std::string baseTrk;
+	
 	//  methods
 	Scene();  void Default(), UpdateFluidsId(), UpdateSurfId();
 

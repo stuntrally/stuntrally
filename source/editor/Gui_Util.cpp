@@ -413,7 +413,7 @@ void CGui::btnClrSet(WP w)
 	svAlp.setVisible(false);
 	svHue.UpdF(&v->x);  svSat.UpdF(&v->y);  svVal.UpdF(&v->z);
 
-	IntPoint p = w->getAbsolutePosition();  p.left += 50;  p.top -= 35;
+	IntPoint p = w->getAbsolutePosition();  p.left += 100;  p.top -= 35;
 	wndColor->setPosition(p);
 	if (!(wndColor->getVisible() && oth))  // dont hide if changed
 		wndColor->setVisible(!wndColor->getVisible());
@@ -432,7 +432,7 @@ void CGui::btnClrSetA(WP w)
 	svAlp.setVisible(true);
 	svHue.UpdF(&v->x);  svSat.UpdF(&v->y);  svVal.UpdF(&v->z);  svAlp.UpdF(&v->w);
 
-	IntPoint p = w->getAbsolutePosition();  p.left += 50;  p.top -= 35;
+	IntPoint p = w->getAbsolutePosition();  p.left += 100;  p.top -= 35;
 	wndColor->setPosition(p);
 	if (!(wndColor->getVisible() && oth))
 		wndColor->setVisible(!wndColor->getVisible());

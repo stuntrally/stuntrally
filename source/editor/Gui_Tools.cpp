@@ -252,6 +252,7 @@ void CGui::btnTrackNew(WP)
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 		return;  }
 
+	sc->baseTrk = gcom->sListTrack;
 	String st = gcom->PathListTrk(),  t = gcom->pathTrk[1] + name,
 		sto = st + "/objects", stp = st + "/preview",  // from
 		to = t + "/objects",   tp = t + "/preview";  // to,new

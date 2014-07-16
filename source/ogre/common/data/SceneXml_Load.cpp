@@ -72,6 +72,7 @@ bool Scene::LoadXml(String file, bool bTer)
  	e = root->FirstChildElement("ver");
 	if (e)
 	{	a = e->Attribute("num");		if (a)  ver = s2i(a);
+		a = e->Attribute("baseTrk");	if (a)  baseTrk = string(a);
 	}
 	
  	///  car setup
@@ -144,7 +145,7 @@ bool Scene::LoadXml(String file, bool bTer)
 		while (u)
 		{
 			FluidBox fb;
-			a = u->Attribute("name");	if (a)  fb.name = std::string(a);
+			a = u->Attribute("name");	if (a)  fb.name = string(a);
 
 			a = u->Attribute("pos");	if (a)  fb.pos = s2v(a);
 			a = u->Attribute("rot");	if (a)  fb.rot = s2v(a);
@@ -210,7 +211,7 @@ bool Scene::LoadXml(String file, bool bTer)
 			XMLElement* eNoi = u->FirstChildElement("noise");
 			if (eNoi)
 			for (int n=0; n < 2; ++n)
-			{	std::string sn = toStr(n), s;
+			{	string sn = toStr(n), s;
 				s = "frq"+sn;  a = eNoi->Attribute(s.c_str());  if (a)  l->nFreq[n]= s2r(a);
 				s = "oct"+sn;  a = eNoi->Attribute(s.c_str());  if (a)  l->nOct[n] = s2i(a);
 				s = "prs"+sn;  a = eNoi->Attribute(s.c_str());  if (a)  l->nPers[n]= s2r(a);
@@ -270,8 +271,8 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = u->Attribute("terMaxAng");	if (a)  grChan[0].angMax = s2r(a);
 			a = u->Attribute("terAngSm");	if (a)  grChan[0].angSm = s2r(a);
 
-			a = u->Attribute("terMinH");		if (a)  grChan[0].hMin = s2r(a);
-			a = u->Attribute("terMaxH");		if (a)  grChan[0].hMax = s2r(a);
+			a = u->Attribute("terMinH");	if (a)  grChan[0].hMin = s2r(a);
+			a = u->Attribute("terMaxH");	if (a)  grChan[0].hMax = s2r(a);
 			a = u->Attribute("terHSm");		if (a)  grChan[0].hSm = s2r(a);  }
 		#endif
 			grLayersAll[grl++] = g;
@@ -350,7 +351,7 @@ bool Scene::LoadXml(String file, bool bTer)
 		while (u)
 		{
 			Object o;
-			a = u->Attribute("name");	if (a)  o.name = std::string(a);
+			a = u->Attribute("name");	if (a)  o.name = string(a);
 
 			a = u->Attribute("pos");		if (a)  {  Vector3 v = s2v(a);  o.pos = MATHVECTOR<float,3>(v.x,v.y,v.z);  }
 			a = u->Attribute("rot");		if (a)  {  Vector4 v = s2v4(a);  o.rot = QUATERNION<float>(v.x,v.y,v.z,v.w);  }
@@ -375,6 +376,13 @@ bool Scene::SaveXml(String file)
 {
 	TiXmlDocument xml;	TiXmlElement root("scene");
 
+	TiXmlElement ver("ver");
+		int v = SET_VER;
+		ver.SetAttribute("num",		toStrC( v ));
+		ver.SetAttribute("baseTrk",	baseTrk.c_str());
+	root.InsertEndChild(ver);
+
+
 	TiXmlElement car("car");
 		car.SetAttribute("tires",	asphalt ? "1":"0");
 		if (damageMul != 1.f)
@@ -388,7 +396,7 @@ bool Scene::SaveXml(String file)
 
 
 	TiXmlElement st("start");
-		std::string s = toStr(startPos[0])+" "+toStr(startPos[1])+" "+toStr(startPos[2]);
+		string s = toStr(startPos[0])+" "+toStr(startPos[1])+" "+toStr(startPos[2]);
 		st.SetAttribute("pos",	s.c_str());
 
 		s = toStr(startRot[0])+" "+toStr(startRot[1])+" "+toStr(startRot[2])+" "+toStr(startRot[3]);
@@ -502,7 +510,7 @@ bool Scene::SaveXml(String file)
 
 			TiXmlElement noi("noise");
 			for (int n=0; n < 2; ++n)
-			{	std::string sn = toStr(n), s;
+			{	string sn = toStr(n), s;
 				s = "frq"+sn;  noi.SetAttribute(s.c_str(),  toStrC( l->nFreq[n] ));
 				s = "oct"+sn;  noi.SetAttribute(s.c_str(),  toStrC( l->nOct[n] ));
 				s = "prs"+sn;  noi.SetAttribute(s.c_str(),  toStrC( l->nPers[n] ));
@@ -622,7 +630,7 @@ bool Scene::SaveXml(String file)
 			TiXmlElement oe("o");
 			oe.SetAttribute("name",		o->name.c_str() );
 
-			std::string s = toStr(o->pos[0])+" "+toStr(o->pos[1])+" "+toStr(o->pos[2]);
+			string s = toStr(o->pos[0])+" "+toStr(o->pos[1])+" "+toStr(o->pos[2]);
 			oe.SetAttribute("pos",		s.c_str());
 
 			s = toStr(o->rot[0])+" "+toStr(o->rot[1])+" "+toStr(o->rot[2])+" "+toStr(o->rot[3]);
