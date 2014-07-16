@@ -6,7 +6,7 @@
 
 
 //  ctor
-//----------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------
 CGui::CGui(App* app1)  //  gui wigdets--
 	: app(app1)
 	,bGI(0)
@@ -68,6 +68,8 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	, bTopView(0), noBlendUpd(0)
 	// obj
 	,objListSt(0),objListDyn(0),objListRck(0),objListBld(0), objPan(0)
+	// clr
+	,wndColor(0), imgClr(0), wpClrSet(0)
 {	
 	strFSerrors = "";
 

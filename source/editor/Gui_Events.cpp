@@ -455,7 +455,7 @@ void CGui::listSurf(Li, size_t id)
 	//  Particles
 	edLDust->setCaption(toStr(l->dust));	edLDustS->setCaption(toStr(l->dustS));
 	edLMud->setCaption(toStr(l->mud));	edLSmoke->setCaption(toStr(l->smoke));
-	edLTrlClr->setCaption(toStr(l->tclr));  clrTrail->setColour(Colour(l->tclr.r,l->tclr.g,l->tclr.b));
+	edLTrlClr->setCaption(toStr(l->tclr));  clrTrail->setColour(Colour(l->tclr.x,l->tclr.y,l->tclr.z));
 	
 	//  Surface
 	cmbSurface->setIndexSelected( cmbSurface->findItemIndexWith(l->surfName));

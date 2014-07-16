@@ -179,6 +179,16 @@ void CGui::InitGui()
 	//scv->setCanvasSize(1020,j*90+300);
 
 
+	float f=0.f;  i=0;  // temp vars
+	
+	///  Color tool wnd  ----
+	wndColor = fWnd("ColorWnd");  imgClr = fImg("clrImg");
+	sv= &svHue;		sv->Init("clrHue",	&f, 0.f,1.f, 1.f, 3,5);  sv->DefaultF(0.5f);  Sev(UpdClr);
+	sv= &svSat;		sv->Init("clrSat",	&f, 0.f,1.f, 1.f, 3,5);  sv->DefaultF(0.5f);  Sev(UpdClr);
+	sv= &svVal;		sv->Init("clrVal",	&f, 0.f,1.f, 1.f, 3,5);  sv->DefaultF(0.5f);  Sev(UpdClr);
+	sv= &svAlp;		sv->Init("clrAlp",	&f, 0.f,1.f, 1.f, 3,5);  sv->DefaultF(1.f);   Sev(UpdClr);
+
+
 	///  [Settings]
 	//------------------------------------------------------------------------
 	sv= &svCamSpeed;	sv->Init("CamSpeed",	&pSet->cam_speed, 0.1f,4.f);  sv->DefaultF(0.9f);
@@ -214,7 +224,7 @@ void CGui::InitGui()
 	
 
 	///  [Sun]
-	//----------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------
 	sv= &svSkyYaw;		sv->Init("SkyYaw",		&sc->skyYaw,  -180.f,180.f, 1.f, 1,4);  sv->DefaultF(0.f);  Sev(UpdSky);
 	sv= &svSunPitch;	sv->Init("SunPitch",	&sc->ldPitch,    0.f,90.f,  1.f, 1,4);  sv->DefaultF(54.f);    Sev(UpdSun);
 	sv= &svSunYaw;		sv->Init("SunYaw",		&sc->ldYaw,   -180.f,180.f, 1.f, 1,4);  sv->DefaultF(-123.f);  Sev(UpdSun);
@@ -233,13 +243,14 @@ void CGui::InitGui()
 	ck= &ckWeather;		ck->Init("WeatherDisable",	&pSet->bWeather);
 
 	//  light
-	Ed(LiAmb, editLiAmb);  Ed(LiDiff, editLiDiff);  Ed(LiSpec, editLiSpec);
+	Ed(LiAmb,  editLiAmb);   Ed(LiDiff,  editLiDiff);   Ed(LiSpec,  editLiSpec);
 	Ed(FogClr, editFogClr);  Ed(FogClr2, editFogClr2);  Ed(FogClrH, editFogClrH);
 
-	clrAmb = fImg("ClrAmb");   clrDiff = fImg("ClrDiff");
-	clrSpec= fImg("ClrSpec");  clrTrail= fImg("ClrTrail");
-	clrFog = fImg("ClrFog");   clrFog2 = fImg("ClrFog2");
-	clrFogH= fImg("ClrFogH");  //Todo: on click event - open color dialog
+	ImgB(clrAmb,  "ClrAmb",  btnClrSet);  ImgB(clrDiff, "ClrDiff",  btnClrSet);
+	ImgB(clrSpec, "ClrSpec", btnClrSet);
+	ImgB(clrFog,  "ClrFog",  btnClrSetA); ImgB(clrFog2, "ClrFog2",  btnClrSetA);
+	ImgB(clrFogH, "ClrFogH", btnClrSetA);
+	ImgB(clrTrail,"ClrTrail",btnClrSetA);
 
 
 	///  [Terrain]
@@ -278,7 +289,8 @@ void CGui::InitGui()
 	sv= &svTerGenHSm;	sv->Init("TerGenHSm",	&pSet->gen_terSmH,  0.f,  100.f, 2.f, 1,4);  sv->DefaultF(20.f);
 
 
-	///  [Layers]  ------------------------------------
+	///  [Layers]
+	//------------------------------------------------------------------------
 	bool b;
 	ck= &ckTerLayOn;	ck->Init("TerLayOn",	&b);   Cev(TerLayOn);
 	valTerLAll = fTxt("TerLayersAll");
@@ -291,7 +303,6 @@ void CGui::InitGui()
 	ck= &ckDebugBlend;	ck->Init("DebugBlend",  &bDebugBlend);  Cev(DebugBlend);
 	dbgLclr = fImg("dbgTerLclr");
 
-	float f=0.f;  i=0;  // temp vars
 	//  ter layer
 	sv= &svTerTriSize;	sv->Init("TerTriSize", &sc->td.fTriangleSize,  0.5f,3.f, 1.f);  sv->DefaultF(1.4f);  Sev(TerTriSize);
 	sv= &svTerLScale;	sv->Init("TerLScale",  &f, 6.0f, 72.f,  2.f);  sv->DefaultF(8.f);  //Sev(TerLay);
@@ -341,7 +352,8 @@ void CGui::InitGui()
 	SldUpd_TerL();
 
 	
-	///  [Vegetation]  ------------------------------------
+	///  [Vegetation]
+	//------------------------------------------------------------------------
 	sv= &svGrassDens;	sv->Init("GrassDens",	&sc->densGrass, 0.f, 1.f, 2.f);  sv->DefaultF(0.2f);
 	sv= &svTreesDens;	sv->Init("TreesDens",	&sc->densTrees, 0.f, 3.f, 2.f);  sv->DefaultF(0.3f);
 
@@ -380,7 +392,8 @@ void CGui::InitGui()
 	txVWmin = fTxt("LTrInfWmin");  txVWmax = fTxt("LTrInfWmax");
 	
 
-	///  Grass  ------------------------------------
+	///  Grass
+	//------------------------------------------------------------------------
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
 
 	imgGrass = fImg("ImgGrass");  imgGrClr = fImg("ImgGrClr");
@@ -419,7 +432,8 @@ void CGui::InitGui()
 	SldUpd_GrL();
 
 	
-	///  [Road]  ------------------------------------
+	///  [Road]
+	//------------------------------------------------------------------------
 	sv= &svRdTcMul; 	sv->Init("RdTcMul", 	&f, 0.01f,0.3f, 1.5f, 3,5);  sv->DefaultF(0.1f);
 	sv= &svRdTcMulW;	sv->Init("RdTcMulW",	&f, 0.01f,0.4f, 1.5f, 3,5);  sv->DefaultF(0.1f);
 	sv= &svRdTcMulP;	sv->Init("RdTcMulP",	&f, 0.01f,0.3f, 1.5f, 3,5);  sv->DefaultF(0.2f);

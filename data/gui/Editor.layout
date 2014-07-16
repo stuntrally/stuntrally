@@ -5123,6 +5123,89 @@
 			</Widget>
 		</Widget>
 	</Widget>
+	<Widget type="Window" skin="WindowC" position="160 160 550 310" layer="Popup" name="ColorWnd">
+		<Property key="Caption" value="#{Color}"/>
+		<Property key="Colour" value="0.6 0.75 0.9"/>
+		<Property key="Alpha" value="0.9"/>
+		<Property key="Snap" value="true"/>
+		<Property key="Visible" value="false"/>
+		<UserString key="NotSized" value="1"/>
+		<Widget type="ImageBox" skin="ImageBox" position="6 6 100 100" name="clrImg">
+			<Property key="ImageTexture" value="white.png"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBoxS" position="120 20 280 22">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.86 1.0"/>
+			<Property key="FontName" value="font.small"/>
+			<!--<Property key="Caption" value="#{ColHue}"/>-->
+			<Property key="Caption" value="R"/>
+		</Widget>
+		<Widget type="EditBox" skin="EditBox" position="315 18 80 26" name="clrHueEdit">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.6 0.7 0.8"/>
+			<Property key="TextColour" value="0.7 0.86 1"/>
+			<Property key="Caption" value="1.0"/>
+		</Widget>
+		<Widget type="Slider" skin="Slider" position="120 50 416 22" name="clrHue">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.8 0.9 1"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBoxS" position="120 80 280 22">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.86 1.0"/>
+			<Property key="FontName" value="font.small"/>
+			<!--<Property key="Caption" value="#{ColSat}"/>-->
+			<Property key="Caption" value="G"/>
+		</Widget>
+		<Widget type="EditBox" skin="EditBox" position="315 78 80 26" name="clrSatEdit">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.6 0.7 0.8"/>
+			<Property key="TextColour" value="0.7 0.86 1"/>
+			<Property key="Caption" value="1.0"/>
+		</Widget>
+		<Widget type="Slider" skin="Slider" position="120 110 416 22" name="clrSat">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.8 0.9 1"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBoxS" position="120 140 280 22">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.86 1.0"/>
+			<Property key="FontName" value="font.small"/>
+			<!--<Property key="Caption" value="#{ColBright}"/>-->
+			<Property key="Caption" value="B"/>
+		</Widget>
+		<Widget type="EditBox" skin="EditBox" position="315 138 80 26" name="clrValEdit">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.6 0.7 0.8"/>
+			<Property key="TextColour" value="0.7 0.86 1"/>
+			<Property key="Caption" value="1.0"/>
+		</Widget>
+		<Widget type="Slider" skin="Slider" position="120 170 416 22" name="clrVal">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.8 0.9 1"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBoxS" position="120 200 280 22">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.86 1.0"/>
+			<Property key="FontName" value="font.small"/>
+			<!--<Property key="Caption" value="#{Transparency}"/>-->
+			<Property key="Caption" value="A"/>
+		</Widget>
+		<Widget type="EditBox" skin="EditBox" position="315 198 80 26" name="clrAlpEdit">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.6 0.7 0.8"/>
+			<Property key="TextColour" value="0.7 0.86 1"/>
+			<Property key="Caption" value="1.0"/>
+		</Widget>
+		<Widget type="Slider" skin="Slider" position="120 230 416 22" name="clrAlp">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.8 0.9 1"/>
+		</Widget>
+	</Widget>
 	<Widget type="Button" skin="Button" position_real="0.908462 0 0.0892308 0.0273077" layer="Popup" name="Quit">
 		<Property key="Caption" value="#{Quit}"/>
 		<Property key="Colour" value="1 0.4 0.4"/>

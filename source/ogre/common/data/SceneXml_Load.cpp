@@ -193,7 +193,7 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = eTex->Attribute("dustS");	if (a)  l->dustS = s2r(a);
 			a = eTex->Attribute("mud");		if (a)  l->mud = s2r(a);
 			a = eTex->Attribute("smoke");	if (a)  l->smoke = s2r(a);
-			a = eTex->Attribute("tclr");	if (a)  l->tclr = s2c(a);
+			a = eTex->Attribute("tclr");	if (a)  l->tclr = s2v4(a);
 			a = eTex->Attribute("dmg");		if (a)  l->fDamage = s2r(a);
 
 			a = eTex->Attribute("angMin");	if (a)  l->angMin = s2r(a);
@@ -702,7 +702,7 @@ bool Presets::LoadXml(string file)
 		a = eTex->Attribute("du");	if (a)  l.dust = s2r(a);
 		a = eTex->Attribute("ds");	if (a)  l.dustS = s2r(a);
 		a = eTex->Attribute("md");	if (a)  l.mud = s2r(a);
-		a = eTex->Attribute("tr");	if (a)  l.tclr = s2c(a);
+		a = eTex->Attribute("tr");	if (a)  l.tclr = s2v4(a);
 		a = eTex->Attribute("d");	if (a)  l.dmg = s2r(a);
 
 		a = eTex->Attribute("aa");	if (a)  l.angMin = s2r(a);
@@ -727,7 +727,7 @@ bool Presets::LoadXml(string file)
 		a = eRd->Attribute("du");	if (a)  l.dust = s2r(a);
 		a = eRd->Attribute("ds");	if (a)  l.dustS = s2r(a);
 		a = eRd->Attribute("md");	if (a)  l.mud = s2r(a);
-		a = eRd->Attribute("tr");	if (a)  l.tclr = s2c(a);
+		a = eRd->Attribute("tr");	if (a)  l.tclr = s2v4(a);
 
 		rd.push_back(l);  ird[l.mtr] = rd.size();
 		eRd = eRd->NextSiblingElement("r");

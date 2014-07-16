@@ -84,6 +84,11 @@ public:
 	btn = fBtn(name);  \
 	if (btn && btn->eventMouseButtonClick.empty())  btn->eventMouseButtonClick += newDelegate(this, &CGuiCom::event);
 
+//  img btn
+#define ImgB(img, name, event)  \
+	img = fImg(name);  \
+	if (img && img->eventMouseButtonClick.empty())  img->eventMouseButtonClick += newDelegate(this, &CGui::event);
+
 
 //  check
 #define Chk(name, event, var)  \

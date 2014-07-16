@@ -117,7 +117,7 @@ void CGui::btnNewGame(WP)
 
 
 //  Update  input, info
-//---------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 //  tool wnds show/hide
 void App::UpdEditWnds()
 {
@@ -161,6 +161,7 @@ void App::UpdEditWnds()
 
 
 //  change editor mode
+//-----------------------------------------------
 void App::SetEdMode(ED_MODE newMode)
 {
 	static bool first = true;
@@ -179,6 +180,7 @@ void App::SetEdMode(ED_MODE newMode)
 
 
 //  wnd vis
+//-----------------------------------------------
 void App::UpdVisGui()
 {
 	bool notMain = bGuiFocus && !pSet->isMain;
@@ -189,6 +191,7 @@ void App::UpdVisGui()
 	mWndOpts->setVisible(notMain && pSet->inMenu == WND_Options);
 
 	if (!bGuiFocus)  mWndPick->setVisible(false);
+	if (!bGuiFocus && gui->wndColor)  gui->wndColor->setVisible(false);
 	if (gcom->bnQuit)  gcom->bnQuit->setVisible(bGuiFocus);
 
 	bool vis = bGuiFocus || !bMoveCam;
@@ -282,6 +285,7 @@ void App::togPrvCam()
 
 
 //  Gui Shortcut  alt-letters
+//.......................................................................................
 void CGui::GuiShortcut(WND_Types wnd, int tab, int subtab)
 {
 	if (subtab == -1 && (!app->bGuiFocus || pSet->inMenu != wnd))  subtab = -2;  // cancel subtab cycling
@@ -326,6 +330,7 @@ void CGui::GuiShortcut(WND_Types wnd, int tab, int subtab)
 
 
 //  next num tab  alt-1,2
+//.......................................................................................
 void CGui::NumTabNext(int rel)
 {
 	if (!app->bGuiFocus || pSet->isMain /*|| pSet->inMenu != WND_Edit*/)  return;
@@ -395,4 +400,65 @@ void CGui::GuiUpdate()
 		//LoadTrack();  // shouldnt be needed ...
 	}
 
+}
+
+///  Color tool window
+//...............................................................................
+void CGui::btnClrSet(WP w)
+{
+	Vector3* v;  // rgb
+	if (w == clrAmb)   v = &sc->lAmb;   else
+	if (w == clrDiff)  v = &sc->lDiff;  else
+	if (w == clrSpec)  v = &sc->lSpec;
+	wpClrSet = w;
+
+	svAlp.setVisible(false);
+	svHue.UpdF(&v->x);  svSat.UpdF(&v->y);  svVal.UpdF(&v->z);
+	imgClr->setColour(Colour(v->x, v->y, v->z));  imgClr->setAlpha(1.f);
+
+	IntPoint p = w->getAbsolutePosition();  p.left += 50;  p.top -= 35;
+	wndColor->setPosition(p);
+	wndColor->setVisible(!wndColor->getVisible());
+}
+void CGui::btnClrSetA(WP w)
+{
+	Vector4* v;  // rgba
+	if (w == clrFog)   v = &sc->fogClr;   else
+	if (w == clrFog2)  v = &sc->fogClr2;  else
+	if (w == clrFogH)  v = &sc->fogClrH;  else
+	if (w == clrTrail) {
+		TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
+		v = &l->tclr;  }
+	wpClrSet = w;
+
+	svAlp.setVisible(true);
+	svHue.UpdF(&v->x);  svSat.UpdF(&v->y);  svVal.UpdF(&v->z);  svAlp.UpdF(&v->w);
+	imgClr->setColour(Colour(v->x, v->y, v->z));
+
+	IntPoint p = w->getAbsolutePosition();  p.left += 50;  p.top -= 35;
+	wndColor->setPosition(p);
+	wndColor->setVisible(!wndColor->getVisible());
+}
+
+void CGui::slUpdClr(SV* sv)
+{
+	Vector4 c(svHue.getF(), svSat.getF(), svVal.getF(), svAlp.getF());
+	Vector3 cc(c.x, c.y, c.z);
+	Colour cl(c.x, c.y, c.z/*, c.w*/);
+
+	imgClr->setColour(cl);  imgClr->setAlpha(c.w);
+	wpClrSet->setColour(cl);
+
+	WP w = wpClrSet;
+	if (w == clrAmb) {  sc->lAmb = cc;    scn->UpdSun();  }else
+	if (w == clrDiff){  sc->lDiff = cc;   scn->UpdSun();  }else
+	if (w == clrSpec){  sc->lSpec = cc;   scn->UpdSun();  }else
+
+	if (w == clrFog) {  sc->fogClr = c;   scn->UpdFog();  }else
+	if (w == clrFog2){  sc->fogClr2 = c;  scn->UpdFog();  }else
+	if (w == clrFogH){  sc->fogClrH = c;  scn->UpdFog();  }else
+
+	if (w == clrTrail) {
+		TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
+		l->tclr = c;  }
 }

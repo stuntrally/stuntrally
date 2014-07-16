@@ -282,6 +282,7 @@
 	<Tag name="TipChangeReflect">Change car color reflectiveness (matte-mirror).</Tag>
 	<Tag name="CarClrRandom">Random</Tag>
 	<Tag name="Adjust">Adjust</Tag>
+	<Tag name="Transparency">Transparency</Tag>
 
 	<Tag name="Author">Author(s)</Tag>
 	<Tag name="CarSpeed">Speed</Tag>

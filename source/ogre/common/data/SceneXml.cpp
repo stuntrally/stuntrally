@@ -194,18 +194,18 @@ void TerData::Default()
 		l.on = i==0;
 		l.texFile = "";  l.texNorm = "";
 		l.dust = 0.f;  l.mud = 1.f;  l.smoke = 0.f;
-		l.tclr = ColourValue(0.2f,0.2f,0.f,1.f);
+		l.tclr = Vector4(0.2f,0.2f,0.f,1.f);
 		l.fDamage = 0.f;
 	}
 	layerRoad.dust = 0.f;  layerRoad.mud = 0.f;  // layerRoad.smoke = 1.f;
-	layerRoad.tclr = ColourValue(0,0,0,1);  layerRoad.fDamage = 0.f;
+	layerRoad.tclr = Vector4(0.2f,0.2f,0.f,1.f);  layerRoad.fDamage = 0.f;
 	
 	UpdVals();  UpdLayers();
 }
 
 TerLayer::TerLayer() :
 	on(true), tiling(4.f), triplanar(false),
-	dust(0.f),dustS(0.2f), mud(0.f), smoke(0.f), tclr(ColourValue::Black),
+	dust(0.f),dustS(0.2f), mud(0.f), smoke(0.f), tclr(0.2f,0.2f,0.1f,0.6f),
 	angMin(0.f),angMax(90.f), angSm(20.f),
 	hMin(-300.f),hMax(300.f), hSm(20.f), nOnly(false),
 	noise(1.f), nprev(0.f), nnext2(0.f),
@@ -267,14 +267,14 @@ PSky::PSky()
 PTer::PTer()
 	:tiling(8.f), triplanar(false)
 	,dust(0.f), dustS(0.2f), mud(0.f)
-	,tclr(ColourValue::Black)
+	,tclr(0.2f, 0.2f, 0.1f, 0.6f)
 	,angMin(0.f), angMax(90.f), dmg(0.f)
 	,surfName("Default")
 {	}
 
 PRoad::PRoad()
 	:dust(0.f), dustS(0.2f), mud(0.f)
-	,tclr(ColourValue::Black)
+	,tclr(0.2f, 0.2f, 0.1f, 0.6f)
 {	}
 
 PGrass::PGrass()

@@ -526,9 +526,9 @@ void CGui::editLDust(Ed ed)  // vals
 void CGui::editLTrlClr(Ed ed)
 {
 	TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
-	ColourValue c = s2c(ed->getCaption());
+	Vector4 c = s2v4(ed->getCaption());
 	l->tclr = c;
-	clrTrail->setColour(Colour(c.r,c.g,c.b));
+	clrTrail->setColour(Colour(c.x,c.y,c.z));
 }
 
 
@@ -544,6 +544,10 @@ void CGui::comboSurface(Cmb cmb, size_t val)
 
 void CGui::UpdSurfInfo()
 {
+	//TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
+	//std::string s = cmb->getItemNameAt(val);
+	//l->surfName = s;
+
 	std::string s = cmbSurface->getCaption();
 	int id = app->surf_map[s]-1;
 	if (id == -1)  return;  //not found..

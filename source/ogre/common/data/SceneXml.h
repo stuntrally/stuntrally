@@ -19,7 +19,7 @@ struct TerLayer		// terrain texture layer
 	Ogre::String texFile, texNorm;  // textures _d, _n
 
 	float dust, mud, dustS, smoke;  // particles intensities, S size
-	Ogre::ColourValue tclr;  // trail color
+	Ogre::Vector4 tclr;  // trail color
 	
 	///  blendmap
 	//  min,max range and smooth range for terrain angle and height
@@ -127,7 +127,7 @@ struct PTer
 	float tiling;  bool triplanar;
 
 	float dust, mud, dustS;
-	Ogre::ColourValue tclr;  // trail
+	Ogre::Vector4 tclr;  // trail
 
 	float angMin,angMax;
 	float dmg;
@@ -141,7 +141,7 @@ struct PRoad
 	std::string surfName, scn;
 
 	float dust, mud, dustS;
-	Ogre::ColourValue tclr;
+	Ogre::Vector4 tclr;
 	PRoad();
 };
 

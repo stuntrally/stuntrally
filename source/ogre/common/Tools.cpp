@@ -577,7 +577,7 @@ void CGui::ToolPresets()
 		o << " ds=";  o << "\""+fToStr(t.dustS,1,3)+"\"";
 		o << " md=";  o << "\""+fToStr(t.mud  ,1,3)+"\"";
 		//of << "\" sm=";  of << "\""+fToStr(t.smoke,1,4);
-		o << " tr=";  o << "\""+fToStr(t.tclr.r,2,4)+" "+fToStr(t.tclr.g,2,4)+" "+fToStr(t.tclr.b,2,4)+" "+fToStr(t.tclr.a,1,3)+"\"";
+		o << " tr=";  o << "\""+fToStr(t.tclr.x,2,4)+" "+fToStr(t.tclr.y,2,4)+" "+fToStr(t.tclr.z,2,4)+" "+fToStr(t.tclr.w,1,3)+"\"";
 		o << "  aa=";  o.width(4);  o << "\""+fToStr(int(t.angMin),0,1)+"\"";
 		o << " ab=";   o.width(4);  o << "\""+fToStr(int(t.angMax),0,1)+"\"";
 		o << " z=\""+getScn(sc)+"\"";
@@ -601,7 +601,7 @@ void CGui::ToolPresets()
 		o << " du=";  o << "\""+fToStr(t.dust ,1,3)+"\"";
 		o << " ds=";  o << "\""+fToStr(t.dustS,1,3)+"\"";
 		o << " md=";  o << "\""+fToStr(t.mud  ,1,4)+"\"";
-		o << " tr=";  o << "\""+fToStr(t.tclr.r,2,4)+" "+fToStr(t.tclr.g,2,4)+" "+fToStr(t.tclr.b,2,4)+" "+fToStr(t.tclr.a,1,3)+"\"";
+		o << " tr=";  o << "\""+fToStr(t.tclr.x,2,4)+" "+fToStr(t.tclr.y,2,4)+" "+fToStr(t.tclr.z,2,4)+" "+fToStr(t.tclr.w,1,3)+"\"";
 		o << " z=\""+getScn(sc)+"\"";
 		o << " />\n";
 	}

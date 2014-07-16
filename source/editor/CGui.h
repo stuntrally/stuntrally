@@ -94,6 +94,12 @@ public:
 	Ogre::Vector3 oldPos,oldRot;
 
 
+	//  Color tool wnd  ----
+	Wnd wndColor;  Img imgClr;
+	SV svHue,svSat,svVal,svAlp;
+	void btnClrSet(WP), btnClrSetA(WP), slUpdClr(SV*);  WP wpClrSet;
+	
+
 	//  [Sky]  ----
 	Btn btnSky;  // pick
 	Cmb cmbRain1,cmbRain2;
