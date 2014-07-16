@@ -415,7 +415,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 			float al = ((pipe ? 0.f : trlC) + 0.6f * std::min(1.f, 0.7f * whTemp[w]) ) * onGr;  // par+
 			if (whTrail[w])
 			{	whTrail[w]->setInitialColour(0,
-				lay.tclr.r,lay.tclr.g,lay.tclr.b, lay.tclr.a * al/**/);
+				lay.tclr.x,lay.tclr.y,lay.tclr.z, lay.tclr.w * al/**/);
 				if (iFirst > 10)  //par
 					whTrail[w]->setInitialWidth(0, whWidth[w]);
 			}
