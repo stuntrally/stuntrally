@@ -78,11 +78,6 @@ void CScene::CreateSkyDome(String sMater, Vector3 sc, float yaw)
 
 //  Sun
 //-------------------------------------------------------------------------------------
-inline ColourValue Clr3(const Vector3& v)
-{
-	return ColourValue(v.x, v.y, v.z);
-}
-
 void CScene::UpdSky()
 {
 	Quaternion q;  q.FromAngleAxis(Degree(-sc->skyYaw), Vector3::UNIT_Y);
@@ -95,9 +90,9 @@ void CScene::UpdSun()
 	if (!sun)  return;
 	Vector3 dir = SplineRoad::GetRot(sc->ldYaw - sc->skyYaw, -sc->ldPitch);
 	sun->setDirection(dir);
-	sun->setDiffuseColour(Clr3(sc->lDiff));
-	sun->setSpecularColour(Clr3(sc->lSpec));
-	app->mSceneMgr->setAmbientLight(Clr3(sc->lAmb));
+	sun->setDiffuseColour( sc->lDiff.GetClr());
+	sun->setSpecularColour(sc->lSpec.GetClr());
+	app->mSceneMgr->setAmbientLight(sc->lAmb.GetClr());
 }
 
 //  Fog
@@ -110,9 +105,13 @@ void CScene::UpdFog(bool bForce)
 	else
 		app->mSceneMgr->setFog(FOG_NONE, clr, 1.f, 9000, 9200);
 
-	app->mFactory->setSharedParameter("fogColorSun",  sh::makeProperty<sh::Vector4>(new sh::Vector4(sc->fogClr2.x, sc->fogClr2.y, sc->fogClr2.z, sc->fogClr2.w)));
-	app->mFactory->setSharedParameter("fogColorAway", sh::makeProperty<sh::Vector4>(new sh::Vector4(sc->fogClr.x,  sc->fogClr.y,  sc->fogClr.z,  sc->fogClr.w)));
-	app->mFactory->setSharedParameter("fogColorH",    sh::makeProperty<sh::Vector4>(new sh::Vector4(sc->fogClrH.x, sc->fogClrH.y, sc->fogClrH.z, sc->fogClrH.w)));
+	Vector4 v;
+	v = sc->fogClr2.GetRGBA();
+	app->mFactory->setSharedParameter("fogColorSun",  sh::makeProperty<sh::Vector4>(new sh::Vector4(v.x, v.y, v.z, v.w)));
+	v = sc->fogClr.GetRGBA();
+	app->mFactory->setSharedParameter("fogColorAway", sh::makeProperty<sh::Vector4>(new sh::Vector4(v.x, v.y, v.z, v.w)));
+	v = sc->fogClrH.GetRGBA();
+	app->mFactory->setSharedParameter("fogColorH",    sh::makeProperty<sh::Vector4>(new sh::Vector4(v.x, v.y, v.z, v.w)));
 	app->mFactory->setSharedParameter("fogParamsH",   sh::makeProperty<sh::Vector4>(new sh::Vector4(
 		sc->fogHeight, ok ? 1.f/sc->fogHDensity : 0.f, sc->fogHStart, 1.f/(sc->fogHEnd - sc->fogHStart) )));
 }

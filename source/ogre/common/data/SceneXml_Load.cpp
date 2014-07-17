@@ -39,6 +39,92 @@ bool Scene::LoadStartPos(Ogre::String file)
 }
 
 
+///  Color  . . . . . . . .
+SColor::SColor()
+	:h(0.f), s(0.f), v(0.f), a(0.f), n(0.f)
+{	}
+SColor::SColor(float h1, float s1, float v1, float a1, float n1)
+	:h(h1), s(s1), v(v1), a(a1), n(n1)
+{	}
+
+//  load from old rgb
+void SColor::LoadRGB(Ogre::Vector3 rgb)
+{
+	Vector3 u = rgb;
+    float vMin = std::min(u.x, std::min(u.y, u.z));
+    n = vMin < 0.f ? -vMin : 0.f;  // neg = minimum  only for negative colors
+    if (vMin < 0.f)  u += Vector3(n,n,n);  // cancel, normalize to 0
+
+    float vMax = std::max(u.x, std::max(u.y, u.z));  // get max for above 1 colors
+    v = vMax;
+    if (vMax > 1.f)  u /= v;  // above, normalize to 1
+
+    ColourValue cl(u.x, u.y, u.z);  // get hue and sat
+    float vv;  // not important or 1
+    cl.getHSB(&h, &s, &vv);
+}	
+
+//  get clr
+Vector3 SColor::GetRGB1() const
+{
+	ColourValue cl;
+	cl.setHSB(h, s, 1.f);
+	float vv = std::min(1.f, v);  // * (1.f - n)
+	return Vector3(
+		cl.r * vv,
+		cl.g * vv,
+		cl.b * vv);
+}
+Vector3 SColor::GetRGB() const
+{
+	ColourValue cl;
+	cl.setHSB(h, s, 1.f);
+	return Vector3(
+		cl.r * v -n,
+		cl.g * v -n,
+		cl.b * v -n);
+}
+ColourValue SColor::GetClr() const
+{
+	Vector3 c = SColor::GetRGB();
+	return ColourValue(c.x, c.y, c.z);
+}
+Vector4 SColor::GetRGBA() const
+{
+	Vector3 c = GetRGB();
+	return Vector4(c.x, c.y, c.z, a);
+}
+
+//  string
+void SColor::Load(const char* ss)
+{
+	a = 1.f;  n = 0.f;
+	int n = sscanf(ss, "%f %f %f %f %f", &h,&s,&v,&a,&n);
+	if (n == 5)
+		return;  // new
+
+	if (n < 3 || n > 5)
+	{	LogO("NOT 3..5 components color!");  }
+
+	//  rgb old < 2.4
+	//float r=h,g=s,b=v,u=a;
+	LoadRGB(Vector3(h,s,v));
+
+	//  test back
+	/*Vector4 c = GetRGBA();
+	float d = fabs(c.x-r) + fabs(c.y-g) + fabs(c.z-b) + fabs(c.w-u);
+	LogO(String("CLR CHK ")+ss);
+	LogO("CLR CHK r "+fToStr(c.x-r,2,5)+" g "+fToStr(c.y-g,2,5)+" b "+fToStr(c.z-b,2,5)+" a "+fToStr(c.w-u,2,5)
+		+"  d "+fToStr(d,2,4) + (d > 0.01f ? " !!! BAD " : " ok"));/**/
+}
+
+string SColor::Save() const
+{
+	string ss = fToStr(h,3,5)+" "+fToStr(s,3,5)+" "+fToStr(v,3,5)+" "+fToStr(a,3,5)+" "+fToStr(n,3,5);
+	return ss;
+}
+
+
 //  Load
 //--------------------------------------------------------------------------------------------------------------------------------------
 
@@ -113,13 +199,13 @@ bool Scene::LoadXml(String file, bool bTer)
 	if (e)
 	{	a = e->Attribute("linStart");	if (a)  fogStart = s2r(a);
 		a = e->Attribute("linEnd");		if (a)  fogEnd = s2r(a);
-		a = e->Attribute("color");		if (a)  fogClr = s2v4(a);
-		a = e->Attribute("color2");		if (a)  fogClr2 = s2v4(a);  else  fogClr2 = fogClr;
+		a = e->Attribute("color");		if (a)  fogClr.Load(a);
+		a = e->Attribute("color2");		if (a)  fogClr2.Load(a);  else  fogClr2 = fogClr;
 	}
 	///  fog H
 	e = root->FirstChildElement("fogH");
 	if (e)
-	{	a = e->Attribute("color");		if (a)  fogClrH = s2v4(a);
+	{	a = e->Attribute("color");		if (a)  fogClrH.Load(a);
 		a = e->Attribute("height");		if (a)  fogHeight = s2r(a);
 		a = e->Attribute("dens");		if (a)  fogHDensity = s2r(a);
 		a = e->Attribute("linStart");	if (a)  fogHStart = s2r(a);
@@ -133,10 +219,11 @@ bool Scene::LoadXml(String file, bool bTer)
 	{	a = e->Attribute("pitch");		if (a)  ldPitch = s2r(a);
 		a = e->Attribute("yaw");		if (a)  ldYaw = s2r(a);
 
-		a = e->Attribute("ambient");	if (a)  lAmb = s2v(a);
-		a = e->Attribute("diffuse");	if (a)  lDiff = s2v(a);
-		a = e->Attribute("specular");	if (a)  lSpec = s2v(a);
+		a = e->Attribute("ambient");	if (a)  lAmb.Load(a);
+		a = e->Attribute("diffuse");	if (a)  lDiff.Load(a);
+		a = e->Attribute("specular");	if (a)  lSpec.Load(a);
 	}
+	
 	
 	///  fluids
 	e = root->FirstChildElement("fluids");
@@ -191,7 +278,7 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = u->Attribute("dustS");	if (a)  l->dustS = s2r(a);
 			a = u->Attribute("mud");	if (a)  l->mud = s2r(a);
 			a = u->Attribute("smoke");	if (a)  l->smoke = s2r(a);
-			a = u->Attribute("tclr");	if (a)  l->tclr = s2v4(a);
+			a = u->Attribute("tclr");	if (a)  l->tclr.Load(a);
 			a = u->Attribute("dmg");	if (a)  l->fDamage = s2r(a);
 
 			a = u->Attribute("angMin");	if (a)  l->angMin = s2r(a);
@@ -353,8 +440,8 @@ bool Scene::LoadXml(String file, bool bTer)
 			Object o;
 			a = u->Attribute("name");	if (a)  o.name = string(a);
 
-			a = u->Attribute("pos");		if (a)  {  Vector3 v = s2v(a);  o.pos = MATHVECTOR<float,3>(v.x,v.y,v.z);  }
-			a = u->Attribute("rot");		if (a)  {  Vector4 v = s2v4(a);  o.rot = QUATERNION<float>(v.x,v.y,v.z,v.w);  }
+			a = u->Attribute("pos");	if (a)  {  Vector3 v = s2v(a);  o.pos = MATHVECTOR<float,3>(v.x,v.y,v.z);  }
+			a = u->Attribute("rot");	if (a)  {  Vector4 v = s2v4(a);  o.rot = QUATERNION<float>(v.x,v.y,v.z,v.w);  }
 			a = u->Attribute("sc");		if (a)  o.scale = s2v(a);
 
 			objects.push_back(o);
@@ -421,14 +508,14 @@ bool Scene::SaveXml(String file)
 	root.InsertEndChild(sky);
 
 	TiXmlElement fog("fog");
-		fog.SetAttribute("color",		toStrC( fogClr ));
-		fog.SetAttribute("color2",		toStrC( fogClr2 ));
+		fog.SetAttribute("color",		fogClr.Save().c_str() );
+		fog.SetAttribute("color2",		fogClr2.Save().c_str() );
 		fog.SetAttribute("linStart",	toStrC( fogStart ));
 		fog.SetAttribute("linEnd",		toStrC( fogEnd ));
 	root.InsertEndChild(fog);
 
 	TiXmlElement fogH("fogH");
-		fogH.SetAttribute("color",		toStrC( fogClrH ));
+		fogH.SetAttribute("color",		fogClrH.Save().c_str() );
 		fogH.SetAttribute("height",		toStrC( fogHeight ));
 		fogH.SetAttribute("dens",		toStrC( fogHDensity ));
 		fogH.SetAttribute("linStart",	toStrC( fogHStart ));
@@ -440,9 +527,9 @@ bool Scene::SaveXml(String file)
 	TiXmlElement li("light");
 		li.SetAttribute("pitch",		toStrC( ldPitch ));
 		li.SetAttribute("yaw",			toStrC( ldYaw ));
-		li.SetAttribute("ambient",		toStrC( lAmb ));
-		li.SetAttribute("diffuse",		toStrC( lDiff ));
-		li.SetAttribute("specular",		toStrC( lSpec ));
+		li.SetAttribute("ambient",		lAmb.Save().c_str() );
+		li.SetAttribute("diffuse",		lDiff.Save().c_str() );
+		li.SetAttribute("specular",		lSpec.Save().c_str() );
 	root.InsertEndChild(li);
 	
 
@@ -489,7 +576,7 @@ bool Scene::SaveXml(String file)
 				tex.SetAttribute("dustS",	toStrC( l->dustS )); \
 				tex.SetAttribute("mud",		toStrC( l->mud ));   \
 				tex.SetAttribute("smoke",	toStrC( l->smoke )); \
-				tex.SetAttribute("tclr",	toStrC( l->tclr ));
+				tex.SetAttribute("tclr",	l->tclr.Save().c_str() );
 			setDmst();
 			if (l->fDamage > 0.f)
 				tex.SetAttribute("dmg",	toStrC( l->fDamage ));
@@ -702,7 +789,7 @@ bool Presets::LoadXml(string file)
 		a = eTex->Attribute("du");	if (a)  l.dust = s2r(a);
 		a = eTex->Attribute("ds");	if (a)  l.dustS = s2r(a);
 		a = eTex->Attribute("md");	if (a)  l.mud = s2r(a);
-		a = eTex->Attribute("tr");	if (a)  l.tclr = s2v4(a);
+		a = eTex->Attribute("tr");	if (a)  l.tclr.Load(a);
 		a = eTex->Attribute("d");	if (a)  l.dmg = s2r(a);
 
 		a = eTex->Attribute("aa");	if (a)  l.angMin = s2r(a);
@@ -727,7 +814,7 @@ bool Presets::LoadXml(string file)
 		a = eRd->Attribute("du");	if (a)  l.dust = s2r(a);
 		a = eRd->Attribute("ds");	if (a)  l.dustS = s2r(a);
 		a = eRd->Attribute("md");	if (a)  l.mud = s2r(a);
-		a = eRd->Attribute("tr");	if (a)  l.tclr = s2v4(a);
+		a = eRd->Attribute("tr");	if (a)  l.tclr.Load(a);
 
 		rd.push_back(l);  ird[l.mtr] = rd.size();
 		eRd = eRd->NextSiblingElement("r");

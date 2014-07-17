@@ -31,8 +31,9 @@ void CGui::SetGuiFromXmls()
 	if (!app->mWndEdit)  return;
 	bGI = false;
 	
+	Vector3 c;
 	#define _Ed(name, val)  ed##name->setCaption(toStr(val))
-	#define _Clr(name, val)  clr##name->setColour(Colour(val.x,val.y,val.z))
+	#define _Clr(name, val)  c = val.GetRGB1();  clr##name->setColour(Colour(c.x,c.y,c.z))
 	#define _Cmb(cmb, str)  cmb->setIndexSelected( cmb->findItemIndexWith(str) )
 	
 
@@ -404,23 +405,24 @@ void CGui::GuiUpdate()
 //...............................................................................
 void CGui::btnClrSet(WP w)
 {
-	Vector3* v;  // rgb
+	SColor* v;  // rgb
 	if (w == clrAmb)   v = &sc->lAmb;   else
 	if (w == clrDiff)  v = &sc->lDiff;  else
 	if (w == clrSpec)  v = &sc->lSpec;
 	bool oth = wpClrSet != w;  wpClrSet = w;
 
 	svAlp.setVisible(false);
-	svHue.UpdF(&v->x);  svSat.UpdF(&v->y);  svVal.UpdF(&v->z);
+	svHue.UpdF(&v->h);  svSat.UpdF(&v->s);  svVal.UpdF(&v->v);
+	svNeg.UpdF(&v->n);
 
-	IntPoint p = w->getAbsolutePosition();  p.left += 100;  p.top -= 35;
+	IntPoint p = w->getAbsolutePosition();  p.left += 100;  p.top -= 50;
 	wndColor->setPosition(p);
 	if (!(wndColor->getVisible() && oth))  // dont hide if changed
 		wndColor->setVisible(!wndColor->getVisible());
 }
 void CGui::btnClrSetA(WP w)
 {
-	Vector4* v;  // rgba
+	SColor* v;  // rgba
 	if (w == clrFog)   v = &sc->fogClr;   else
 	if (w == clrFog2)  v = &sc->fogClr2;  else
 	if (w == clrFogH)  v = &sc->fogClrH;  else
@@ -430,9 +432,10 @@ void CGui::btnClrSetA(WP w)
 	bool oth = wpClrSet != w;  wpClrSet = w;
 
 	svAlp.setVisible(true);
-	svHue.UpdF(&v->x);  svSat.UpdF(&v->y);  svVal.UpdF(&v->z);  svAlp.UpdF(&v->w);
+	svHue.UpdF(&v->h);  svSat.UpdF(&v->s);  svVal.UpdF(&v->v);
+	svAlp.UpdF(&v->a);  svNeg.UpdF(&v->n);
 
-	IntPoint p = w->getAbsolutePosition();  p.left += 100;  p.top -= 35;
+	IntPoint p = w->getAbsolutePosition();  p.left += 100;  p.top -= 50;
 	wndColor->setPosition(p);
 	if (!(wndColor->getVisible() && oth))
 		wndColor->setVisible(!wndColor->getVisible());
@@ -440,15 +443,14 @@ void CGui::btnClrSetA(WP w)
 
 void CGui::slUpdClr(SV* sv)
 {
-	Vector4 c(svHue.getF(), svSat.getF(), svVal.getF(), svAlp.getF());
-	Vector3 cc(c.x, c.y, c.z);
-	Colour cl(c.x, c.y, c.z/*, c.w*/);
-	wpClrSet->setColour(cl);
+	SColor c(svHue.getF(), svSat.getF(), svVal.getF(), svAlp.getF(), svNeg.getF());
+	Vector3 cc = c.GetRGB1();
+	wpClrSet->setColour(Colour(cc.x,cc.y,cc.z));  // img
 
 	WP w = wpClrSet;
-	if (w == clrAmb) {  sc->lAmb = cc;    scn->UpdSun();  }else
-	if (w == clrDiff){  sc->lDiff = cc;   scn->UpdSun();  }else
-	if (w == clrSpec){  sc->lSpec = cc;   scn->UpdSun();  }else
+	if (w == clrAmb) {  sc->lAmb = c;    scn->UpdSun();  }else
+	if (w == clrDiff){  sc->lDiff = c;   scn->UpdSun();  }else
+	if (w == clrSpec){  sc->lSpec = c;   scn->UpdSun();  }else
 
 	if (w == clrFog) {  sc->fogClr = c;   scn->UpdFog();  }else
 	if (w == clrFog2){  sc->fogClr2 = c;  scn->UpdFog();  }else

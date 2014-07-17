@@ -96,7 +96,7 @@ public:
 
 	//  Color tool wnd  ----
 	Wnd wndColor;  WP wpClrSet;
-	SV svHue,svSat,svVal,svAlp;
+	SV svHue,svSat,svVal, svAlp,svNeg;
 	void btnClrSet(WP), btnClrSetA(WP), slUpdClr(SV*);
 	
 

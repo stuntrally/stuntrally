@@ -182,11 +182,13 @@ void CGui::InitGui()
 	float f=0.f;  i=0;  // temp vars
 	
 	///  Color tool wnd  ----
-	wndColor = fWnd("ColorWnd");
-	sv= &svHue;		sv->Init("clrHue",	&f, 0.f,1.f, 1.f, 3,5);  sv->DefaultF(0.5f);  Sev(UpdClr);
-	sv= &svSat;		sv->Init("clrSat",	&f, 0.f,1.f, 1.f, 3,5);  sv->DefaultF(0.5f);  Sev(UpdClr);
-	sv= &svVal;		sv->Init("clrVal",	&f, 0.f,1.f, 1.f, 3,5);  sv->DefaultF(0.5f);  Sev(UpdClr);
-	sv= &svAlp;		sv->Init("clrAlp",	&f, 0.f,1.f, 1.f, 3,5);  sv->DefaultF(1.f);   Sev(UpdClr);
+	wndColor = fWnd("ColorWnd");											 //0.165
+	sv= &svHue;		sv->Init("clrHue",	&f, 0.f,1.f, 1.f, 3,5);  sv->DefaultF(0.53f);  Sev(UpdClr);
+	sv= &svSat;		sv->Init("clrSat",	&f, 0.f,1.f, 1.f, 3,5);  sv->DefaultF(0.1f);  Sev(UpdClr);
+	sv= &svVal;		sv->Init("clrVal",	&f, 0.f,3.f, 2.f, 3,5);  sv->DefaultF(0.5f);  Sev(UpdClr);
+
+	sv= &svAlp;		sv->Init("clrAlp",	&f, 0.f,2.f, 2.f, 3,5);  sv->DefaultF(1.f);   Sev(UpdClr);
+	sv= &svNeg;		sv->Init("clrNeg",	&f, 0.f,1.f, 1.f, 3,5);  sv->DefaultF(0.f);   Sev(UpdClr);
 
 
 	///  [Settings]

@@ -217,6 +217,7 @@
 <r a="W1"  sc="W"  m="roadSnow"      su="roadSnow"       du="0.9" ds="0.6" md="0.2" tr="0.60 0.60 0.60 0.5" z="W" />
 <r a="W2"  sc="W"  m="roadSnowGrn"   su="roadSnow"       du="0.4" ds="0.5" md="0.2" tr="0.30 0.40 0.30 0.8" z="W" />
 <r a="W9"  sc="W"  m="roadIce"       su="roadSnow"       du="0.3" ds="0.6" md="0.2" tr="0.60 0.60 0.60 0.5" z="W" />
+<r a="W9"  sc="W"  m="roadCrystal"   su="roadDesert"     du="0.0" ds="0.0" md="0.0" tr="0.00 0.10 0.20 0.5" z="Y" />
 
 
 <!-- grass -->

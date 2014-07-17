@@ -31,13 +31,13 @@ void Scene::Default()
 	rain2Emit = 0;  rain2Name = "";
 
 	fogStart = 600;  fogEnd = 1600;
-	fogClr = fogClr2 = fogClrH = Vector4(0.73f, 0.86f, 1.0f, 1.f);
+	fogClr = fogClr2 = fogClrH = SColor(0.73f, 0.86f, 1.0f, 1.f);
 	fogHeight = -300.f;  fogHDensity = 100.f;  fogHStart = 0;  fogHEnd = 400;
 	fHDamage = 0.f;
 
 	ldPitch = 50.f;  ldYaw = 30.f;
-	lAmb  = Vector3(0.45f, 0.45f, 0.45f);
-	lDiff = Vector3(0.7f, 0.7f, 0.7f);	lSpec = Vector3(0.99f, 0.99f, 0.97f);
+	lAmb  = SColor(0.45f, 0.45f, 0.45f);
+	lDiff = SColor(0.7f, 0.7f, 0.7f);	lSpec = SColor(0.99f, 0.99f, 0.97f);
 
 	sParDust = "Dust";  sParMud = "Mud";  sParSmoke = "Smoke";
 
@@ -194,18 +194,19 @@ void TerData::Default()
 		l.on = i==0;
 		l.texFile = "";  l.texNorm = "";
 		l.dust = 0.f;  l.mud = 1.f;  l.smoke = 0.f;
-		l.tclr = Vector4(0.2f,0.2f,0.f,1.f);
+		l.tclr = SColor(0.16f,0.5f,0.2f,0.7f);
 		l.fDamage = 0.f;
 	}
 	layerRoad.dust = 0.f;  layerRoad.mud = 0.f;  // layerRoad.smoke = 1.f;
-	layerRoad.tclr = Vector4(0.2f,0.2f,0.f,1.f);  layerRoad.fDamage = 0.f;
+	layerRoad.tclr = SColor(0.16f,0.5f,0.2f,0.7f);  layerRoad.fDamage = 0.f;
 	
 	UpdVals();  UpdLayers();
 }
 
 TerLayer::TerLayer() :
 	on(true), tiling(4.f), triplanar(false),
-	dust(0.f),dustS(0.2f), mud(0.f), smoke(0.f), tclr(0.2f,0.2f,0.1f,0.6f),
+	dust(0.f),dustS(0.2f), mud(0.f), smoke(0.f),
+	tclr(0.16f,0.5f,0.2f,0.7f),
 	angMin(0.f),angMax(90.f), angSm(20.f),
 	hMin(-300.f),hMax(300.f), hSm(20.f), nOnly(false),
 	noise(1.f), nprev(0.f), nnext2(0.f),
