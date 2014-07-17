@@ -197,8 +197,10 @@ void TerData::Default()
 		l.tclr = SColor(0.16f,0.5f,0.2f,0.7f);
 		l.fDamage = 0.f;
 	}
-	layerRoad.dust = 0.f;  layerRoad.mud = 0.f;  // layerRoad.smoke = 1.f;
-	layerRoad.tclr = SColor(0.16f,0.5f,0.2f,0.7f);  layerRoad.fDamage = 0.f;
+	TerLayer& r = layerRoad;
+	r.dust = 0.f;  r.mud = 0.f;  // r.smoke = 1.f;
+	r.tclr = SColor(0.16f,0.5f,0.2f,0.7f);  r.tcl = r.tclr.GetRGBA();
+	r.fDamage = 0.f;
 	
 	UpdVals();  UpdLayers();
 }

@@ -47,7 +47,7 @@ struct TerLayer		// terrain texture layer
 	Ogre::String texFile, texNorm;  // textures _d, _n
 
 	float dust, mud, dustS, smoke;  // particles intensities, S size
-	SColor tclr;  // trail color
+	SColor tclr;  Ogre::Vector4 tcl;  // trail color, rgba copy
 	
 	///  blendmap
 	//  min,max range and smooth range for terrain angle and height

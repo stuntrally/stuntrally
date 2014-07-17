@@ -278,7 +278,7 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = u->Attribute("dustS");	if (a)  l->dustS = s2r(a);
 			a = u->Attribute("mud");	if (a)  l->mud = s2r(a);
 			a = u->Attribute("smoke");	if (a)  l->smoke = s2r(a);
-			a = u->Attribute("tclr");	if (a)  l->tclr.Load(a);
+			a = u->Attribute("tclr");	if (a){ l->tclr.Load(a);  l->tcl = l->tclr.GetRGBA();  }
 			a = u->Attribute("dmg");	if (a)  l->fDamage = s2r(a);
 
 			a = u->Attribute("angMin");	if (a)  l->angMin = s2r(a);
